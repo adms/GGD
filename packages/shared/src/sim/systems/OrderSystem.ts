@@ -54,24 +54,32 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
-      // Every branch below is an EXPLICIT seat action, so `attackTargetAuto`
-      // goes false: whatever the target ends up being, the seat chose it and
-      // the auto-acquire pass must leave it alone (task #221).
-      nav.attackTargetAuto = false;
       switch (order.kind) {
         case "move":
         case "attackMove":
           nav.moveTarget = order.point ? { x: order.point.x, z: order.point.z } : null;
-          nav.attackTarget = null;
+          // A GROUND order re-points MOVEMENT, not targeting (task #274).
+          //   - an EXPLICIT target is superseded, LoL-style: right-clicking the
+          //     ground while attacking someone cancels that attack order;
+          //   - the SIM'S OWN auto target is left standing. It was never the
+          //     player's decision to make, and dropping it here would re-roll it
+          //     from scratch on every one of the 30 orders a second an analog
+          //     stick emits — defeating the leash/swap hysteresis in
+          //     autoAcquirePass and, worse, blanking `attackTarget` for the whole
+          //     of a committed wind-up (the A-click case that held a target 86%
+          //     of the round and still landed 2 hits).
+          if (!nav.attackTargetAuto) nav.attackTarget = null;
           break;
         case "attackTarget":
           nav.attackTarget = order.entity ?? null;
+          nav.attackTargetAuto = false; // the seat chose it: hands off (task #221)
           nav.moveTarget = null;
           break;
         case "stop":
         case "hold":
           nav.moveTarget = null;
           nav.attackTarget = null;
+          nav.attackTargetAuto = false;
           break;
       }
       break; // one entity per seat
@@ -103,6 +111,17 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       nav.attackTargetAuto = false;
       continue;
     }
+    // ---- task #274: A LIVE WALK OWNS THE MOVEMENT CHANNEL ----
+    // THIS is the line that actually conflicts with a player's move order —
+    // not the acquisition. Having a target only makes you SWING (BasicAttack-
+    // System gates on reach alone); it is the chase below that rewrites
+    // `moveTarget`. So while an explicit `move` order is still walking, the
+    // chase stands down and the destination the player asked for is left
+    // exactly as ordered: you swing at whatever you pass, and you keep going
+    // where you were going. `attackMove` is deliberately NOT covered — A-click
+    // means "engage what you meet", and it is that chase which holds a champion
+    // inside its own reach through the wind-up.
+    if (nav.order?.kind === "move" && nav.moveTarget !== null) continue;
     const sc = world.stats.get(id);
     // Flowers are wide (0.7) STATIC props with no combat identity: keep the
     // legacy "walk up and touch" approach for them (a ranged champ holding at
@@ -147,12 +166,17 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
  *                     so `attackTarget` is already null) does the order get
  *                     consumed — otherwise one manual click that later dies
  *                     would suppress auto-attack for the rest of the match.
- *   - `move`          a right-click walk does NOT auto-attack (LoL semantics).
- *                     Suppression lasts exactly as long as the walk: the arrival
- *                     pass above clears the order, and idle re-acquires.
- *   - `attackMove`    A-click MEANS "engage what you meet" → acquisition ON while
- *                     moving. (It was previously a plain move order for every
- *                     input device — nothing ever acquired for it.)
+ *   - `move`          acquisition STAYS ON while walking (task #274). What a
+ *                     walk suppresses is the CHASE — see the chase loop above —
+ *                     so the player keeps the wheel and still swings at whatever
+ *                     comes inside reach on the way past. #221 suppressed
+ *                     ACQUISITION here instead, which silently switched
+ *                     auto-attack off for the whole match for anyone using a
+ *                     stick (a fresh move order every frame) or anyone who
+ *                     right-clicked one unreachable spot.
+ *   - `attackMove`    A-click MEANS "engage what you meet" → acquisition ON AND
+ *                     the chase runs, so the champion closes and holds inside
+ *                     its own reach through the wind-up.
  *   - `stop`          a real INTERRUPT, then over: the switch above clears the
  *                     targets, this pass skips acquisition for that one tick so
  *                     the press is observable, and clears `nav.order` so idle
@@ -213,10 +237,20 @@ function autoAcquirePass(world: SimWorld): void {
       continue;
     }
 
-    // A swing is already committed at a specific target: do not re-point it
-    // mid-wind-up (BasicAttackSystem would cancel it and the hero would never
-    // land a blow).
-    if (world.abilities.get(id)?.windup) continue;
+    // A swing is already committed at a specific target: do not RE-POINT it
+    // mid-wind-up. The wind-up itself carries its own target and survives
+    // `nav.attackTarget` changing (BasicAttackSystem advances `ab.windup`
+    // before it ever reads nav), but the CHASE reads nav — so re-pointing here
+    // would walk the champion off the enemy it is already swinging at and the
+    // blow would whiff.
+    //
+    // An EMPTY slot is a different thing entirely: it is a vacuum like any
+    // other, and refusing to fill it was half of #274. A ground order blanks
+    // `attackTarget`, the pass then skipped every tick of the wind-up, so the
+    // chase had nothing to hold the champion in place with and the player's own
+    // move order walked it out of its own range before the damage point —
+    // 86.3% of ticks holding a target, 2 hits landed.
+    if (world.abilities.get(id)?.windup && nav.attackTarget !== null) continue;
 
     // ---- explicit-order suppression ----
     let holdPosition = false;
@@ -228,8 +262,22 @@ function autoAcquirePass(world: SimWorld): void {
           nav.order = null; // it died / vanished — back to idle, re-acquire below
           break;
         case "move":
-          if (nav.moveTarget !== null) continue; // still walking where told
-          nav.order = null;
+          // NO LONGER A SUPPRESSION (task #274). A walk owns MOVEMENT, and that
+          // is enforced where movement is actually decided — the chase above.
+          // Acquisition keeps running, so walking past an enemy makes you swing
+          // at it without ever taking the wheel off the player.
+          //
+          // The old `if (nav.moveTarget !== null) continue` made every analog
+          // stick a permanent auto-attack OFF switch: GamepadInput synthesises a
+          // fresh `{kind:"move"}` order 4 u ahead EVERY FRAME it is deflected
+          // (TouchInput does the same), so `moveTarget` was non-null on every
+          // tick of the match and this pass skipped the seat forever. One
+          // right-click on a spot the body can never stand on — outside the
+          // zone, or inside a pillar — did it just as permanently.
+          //
+          // A FINISHED walk is still consumed here so a spent order does not
+          // linger and keep the chase suppressed.
+          if (nav.moveTarget === null) nav.order = null;
           break;
         case "attackMove":
           break; // A-click: engage while moving

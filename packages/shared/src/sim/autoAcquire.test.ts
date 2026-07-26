@@ -363,18 +363,127 @@ describe("#221 an EXPLICIT player action always wins", () => {
     expect(world.nav.get(me)!.attackTargetAuto).toBe(false);
   });
 
-  it("an explicit MOVE order suppresses acquisition for the whole walk", () => {
+  it("an explicit MOVE order suppresses the CHASE, not the acquisition (#274)", () => {
+    // REPLACES the #221 assertion 「a move order suppresses acquisition for the
+    // whole walk」. That contract was wrong in the only place it mattered: an
+    // analog stick emits a fresh move order EVERY FRAME (GamepadInput MOVE_LEAD
+    // / TouchInput), so "for the whole walk" meant "for the whole match" — 0
+    // basic attacks over 67 s of held stick, and the same for one right-click on
+    // a spot the body can never stand on. See
+    // apps/game-server/src/match/autoAcquireWhileMoving.test.ts for the live
+    // end-to-end measurement.
+    //
+    // The new contract splits the two channels: TARGETING is filled, MOVEMENT is
+    // the player's. So the hero acquires the enemy it walks past, and still
+    // walks past it.
     const world = combatWorld();
     const me = spawnFighter(world, 0, 0, at(0), 1.6);
-    spawnDummy(world, 1, 1, at(2));
+    // OFF the walking line (3.5 u to the side): inside the 6 u acquisition
+    // radius at the start, but never in body contact — a dummy standing ON the
+    // line gets BULLDOZED along by soft separation and would never leave the
+    // leash, which would measure the physics, not the leash.
+    const enemy = spawnDummy(world, 1, 1, at(2, 3.5));
+    // 18 u down the clear lane — inside the zone (r24) and far enough that the
+    // walk outlives the assertions below.
+    const dest = at(18);
 
-    world.step(order({ kind: "move", point: at(12) }));
+    world.step(order({ kind: "move", point: dest }));
+    expect(world.nav.get(me)!.attackTarget).toBe(enemy); // acquired ON the walk
+    expect(world.nav.get(me)!.attackTargetAuto).toBe(true);
+
     for (let k = 0; k < 25; k++) {
       world.step(NO_INTENTS);
-      expect(world.nav.get(me)!.attackTarget).toBeNull();
+      // MOVEMENT AUTHORITY: the destination is never re-pointed at the enemy,
+      // no matter what is acquired.
+      const nav = world.nav.get(me)!;
+      expect(nav.order?.kind).toBe("move");
+      expect(nav.moveTarget).toEqual({ x: dest.x, z: dest.z });
     }
     // and it is walking AWAY, not standing and fighting
     expect(world.transform.get(me)!.pos.x).toBeGreaterThan(Z0.center.x + 2);
+    // keep walking: the AUTO target is leashed, so it is dropped once the walk
+    // has carried the hero past `radius + ACQUIRE_LEASH` — the hero never turns
+    // round to chase it.
+    for (let k = 0; k < 60; k++) {
+      world.step(NO_INTENTS);
+      expect(world.nav.get(me)!.moveTarget).toEqual({ x: dest.x, z: dest.z });
+    }
+    expect(world.nav.get(me)!.attackTarget).toBeNull();
+    expect(world.transform.get(me)!.pos.x).toBeGreaterThan(Z0.center.x + 14);
+  });
+
+  it("walking PAST an enemy actually lands blows — targeting and movement are independent", () => {
+    // The player's own report: 「Saber 似乎不會自動攻擊」 while moving. A hero
+    // ordered to walk THROUGH an enemy must swing at it on the way past.
+    const world = combatWorld();
+    const me = spawnFighter(world, 0, 0, at(-6), 1.6);
+    spawnDummy(world, 1, 1, at(0));
+    const dest = at(6);
+
+    let attacks = 0;
+    for (let k = 0; k < 90; k++) {
+      // a stick held down: the SAME destination re-ordered every single tick,
+      // exactly as GamepadInput/TouchInput do
+      world.step(order({ kind: "move", point: dest }));
+      attacks += world.events.filter((e) => e.type === "basicAttack" && e.data.source === me).length;
+      expect(world.nav.get(me)!.moveTarget).toEqual({ x: dest.x, z: dest.z });
+    }
+    expect(attacks).toBeGreaterThan(0);
+    // it walked the whole way, it did not stop to brawl
+    expect(world.transform.get(me)!.pos.x).toBeGreaterThan(Z0.center.x + 5);
+  });
+
+  it("holding the stick does NOT re-roll the auto target every tick (#274)", () => {
+    // THE INVARIANT: the targeting RULE must not depend on how often the client
+    // happens to re-send an equivalent order. A gamepad emits a fresh move order
+    // 30x a second; a mouse emits one and stops. Both mean "walk there", so both
+    // must target identically.
+    //
+    // If a ground order blanked the AUTO target, the pass would re-pick from
+    // scratch on every one of those 30 frames with the FULL comparator
+    // (kind→threat→hp→distance) while the same player standing still would get
+    // the stable leash/swap rule. That difference is invisible in hit counts and
+    // is exactly the class of bug #274 exists to kill, so it is pinned here.
+    const world = combatWorld();
+    // immobile hero: it must not walk out of the geometry this test asserts on
+    const me = spawnFighter(world, 0, 0, at(0), 1.6, 5000, IMMOBILE);
+    const held = spawnDummy(world, 1, 1, at(2), 100); // lowest HP → picked first
+    const juicier = spawnDummy(world, 2, 1, at(3), 5000);
+    const dest = at(18);
+
+    world.step(order({ kind: "move", point: dest }));
+    expect(world.nav.get(me)!.attackTarget).toBe(held);
+    expect(world.nav.get(me)!.attackTargetAuto).toBe(true);
+
+    // Now make the OTHER one strictly better on the comparator's HP key — but
+    // NOT categorically better (same kind, neither is a threat). The stability
+    // prefix must refuse the swap.
+    world.health.get(held)!.hp = 5000;
+    world.health.get(juicier)!.hp = 10;
+
+    for (let k = 0; k < 30; k++) {
+      // a held stick: the same destination re-ordered EVERY tick
+      world.step(order({ kind: "move", point: dest }));
+      expect(world.nav.get(me)!.attackTarget).toBe(held);
+      expect(world.nav.get(me)!.attackTargetAuto).toBe(true);
+    }
+  });
+
+  it("a move order still CANCELS an explicit attack-target (LoL right-click semantics)", () => {
+    const world = combatWorld();
+    const me = spawnFighter(world, 0, 0, at(0), 1.6);
+    const chosen = spawnDummy(world, 1, 1, at(2));
+    world.step(order({ kind: "attackTarget", entity: chosen }));
+    expect(world.nav.get(me)!.attackTarget).toBe(chosen);
+    expect(world.nav.get(me)!.attackTargetAuto).toBe(false);
+
+    // Walk away: the EXPLICIT pick is dropped. (Auto-acquire may hand back the
+    // same body a tick later — it is the only enemy present — but it comes back
+    // as an AUTO target, which is leashed and re-rankable, not as the player's
+    // sticky order.)
+    world.step(order({ kind: "move", point: at(12) }));
+    expect(world.nav.get(me)!.order?.kind).toBe("move");
+    expect(world.nav.get(me)!.attackTargetAuto).toBe(true);
   });
 
   it("ATTACK-MOVE does acquire — the A-click that used to be a plain move", () => {
