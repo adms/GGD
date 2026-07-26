@@ -142,6 +142,7 @@
     "mob": {
       "maxHp": 24,
       "attackDamage": 1.2,
+      "moveSpeed": 3,
       "attackRange": 1.8,
       "attackCdSec": 1.0,
       "radius": 0.6,

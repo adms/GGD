@@ -449,6 +449,10 @@ export const zMobWavesConfig = z
         maxHp: z.number().positive(),
         /** melee packet amount */
         attackDamage: z.number().min(0),
+        /** #215 — the mob's OWN walk speed (u/s). Without it a mob inherits
+         *  MovementSystem's BASE_MOVE_SPEED, which is a GENERAL fallback and
+         *  not a mob knob. */
+        moveSpeed: z.number().min(0).optional(),
         /** melee reach (GGD units; stored/compared squared in the sim) */
         attackRange: z.number().positive(),
         /** melee cooldown in seconds */
@@ -519,6 +523,7 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // curve below nor a registered champion doc is available.
     maxHp: 24,
     attackDamage: 1.2,
+    moveSpeed: 3,
     attackRange: 1.8,
     attackCdSec: 1.0,
     radius: 0.6,

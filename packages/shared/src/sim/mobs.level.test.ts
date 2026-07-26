@@ -442,3 +442,125 @@ describe("#215 mob balance — the owner's 20% hp / 10% attack / half-count pass
     }
   });
 });
+
+/**
+ * The mob's WALK SPEED — owner 2026-07-27: 「肉鴿殭屍除了生命跟攻擊減弱以外，
+ * 移動速度也會減半」.
+ *
+ * Before this, a mob had no speed of its own at all. It carries no StatsComp
+ * (deliberate — see components.ts MobComp), so `MovementSystem` fell straight
+ * through to `BASE_MOVE_SPEED = 6`: a GENERAL fallback for "anything that moves
+ * without stats", which the mob happened to be the only user of. The number
+ * that fallback holds was never a balance decision about zombies — and at 6 u/s
+ * the trash mob walked at TWICE the 3.0 `ms` of 喪標麥可, the champion it is a
+ * copy of.
+ *
+ * So halving it is done the #244 way: the mob card owns the number, exactly as
+ * it already owns hp/regen, and the shared constant stays a neutral fallback.
+ */
+describe("#215 the mob walks at its OWN speed, not a general fallback", () => {
+  it("the shipped card halves it: 6 → 3, in BOTH files", () => {
+    cover("mob-215-speed-half");
+    expect(ARENA_RULES.mobWaves.mob.moveSpeed).toBe(3);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.moveSpeed).toBe(3);
+  });
+
+  it("…and it really reaches MobRules, not just the doc", () => {
+    cover("mob-215-speed-wired");
+    // The reader has to be live: a rules object that silently drops the field
+    // would leave MovementSystem on the fallback and this whole change inert.
+    expect(mobRulesFromConfig(CFG, DT, 3).moveSpeed).toBe(3);
+    expect(mobRulesFromConfig(CFG, DT, 9).moveSpeed).toBe(3); // flat, not levelled
+  });
+
+  it("an un-authored card falls back to 6 — the fallback is NOT a balance change", () => {
+    cover("mob-215-speed-fallback");
+    const bare: MobWavesConfig = { ...CFG, mob: { ...CFG.mob, moveSpeed: undefined } };
+    // 6 is MovementSystem's BASE_MOVE_SPEED. If someone lowers one and not the
+    // other, a card that says nothing silently changes what mobs do.
+    expect(mobRulesFromConfig(bare, DT, 3).moveSpeed).toBe(6);
+  });
+
+  it("the mob is no longer faster than the champion it copies", () => {
+    cover("mob-215-speed-vs-hero");
+    // 喪標麥可's own `ms` (owner 2026-07-27 also asked for him to be 稍慢一點).
+    // The mob being FASTER than its own hero was the thing that read wrong.
+    const hero = JSON.parse(
+      readFileSync(join(CONTENT_DIR, "champions", "godie-zombiex.json"), "utf8"),
+    ) as { baseStats: { ms: number } };
+    expect(hero.baseStats.ms).toBe(2.6);
+    const mob = ARENA_RULES.mobWaves.mob.moveSpeed!;
+    // Not a strict "slower than" — the owner set them independently. What must
+    // not come back is the 2× gap.
+    expect(mob / hero.baseStats.ms).toBeLessThan(1.5);
+  });
+});
+
+/**
+ * THE GUARD THE BLOCK ABOVE WAS MISSING.
+ *
+ * Everything above asserts DATA — the card says 3, `MobRules` carries 3. None
+ * of it asserts that MovementSystem ever READS that number. Deleting the whole
+ * wiring line
+ *
+ *     world.stats.get(id)?.final[Stat.MoveSpeed] ||
+ *       (world.mob.has(id) ? (world.mobRules?.moveSpeed ?? BASE_MOVE_SPEED) : BASE_MOVE_SPEED)
+ *
+ * back to the bare `|| BASE_MOVE_SPEED` leaves the mob walking at 6 again — and
+ * **all 1182 shared tests stayed green**. That is this repo's signature defect
+ * (#259 #265 #73 #221), caught here only because the mutation was actually run.
+ *
+ * So this measures the thing the player experiences: how far a real mob really
+ * travels in a real second of a real sim.
+ */
+describe("#215 the mob's own speed actually MOVES it (the wiring, not the doc)", () => {
+  const TICKS_PER_SEC = 30;
+
+  /** Distance a spawned mob covers in one combat second, walking at a far target. */
+  function measuredSpeed(cfg: MobWavesConfig): number {
+    const w = new SimWorld(SKELETON_ARENA, 1);
+    w.combatActive = true;
+    const rules = mobRulesFromConfig({ ...cfg, firstWaveSec: DT }, DT, 3);
+    beginCombatMobs(w, rules, [0]);
+    w.step(new Map());
+    const [id] = [...w.mob.keys()];
+    const t = w.transform.get(id!)!;
+    const nav = w.nav.get(id!)!;
+    // Walk it straight along +x toward a point far enough that it never arrives
+    // and never decelerates inside the window.
+    const from = { x: t.pos.x, z: t.pos.z };
+    nav.moveTarget = { x: from.x + 1000, z: from.z };
+    // Skip the acceleration ramp (MovementSystem ramps over ACCEL_TICKS) by
+    // measuring the SECOND second, not the first.
+    for (let i = 0; i < TICKS_PER_SEC; i++) w.step(new Map());
+    const mid = { x: t.pos.x, z: t.pos.z };
+    for (let i = 0; i < TICKS_PER_SEC; i++) w.step(new Map());
+    return Math.hypot(t.pos.x - mid.x, t.pos.z - mid.z);
+  }
+
+  it("a mob really walks at the CARD's 3 u/s, not the fallback 6", () => {
+    cover("mob-215-speed-measured");
+    const got = measuredSpeed(CFG);
+    // Measured 2.33 u/s against a nominal 3.0, and that gap is expected, not a
+    // bug: this counts straight-line DISPLACEMENT, while `MobSystem` re-points
+    // `nav.moveTarget` at its real target every tick, so the mob's actual path
+    // curves away from the +x line the measurement is taken along. Path length
+    // >= displacement, always.
+    //
+    // The band only has to separate "the card" from "the fallback": at 3 u/s
+    // this reads ~2.33, at 6 u/s it reads ~4.7. Anything in [2.0, 3.6] is the
+    // card; the fallback cannot land there.
+    expect(got, `measured ${got.toFixed(2)} u/s`).toBeGreaterThan(2.0);
+    expect(got, `measured ${got.toFixed(2)} u/s — this is the FALLBACK, not the card`).toBeLessThan(3.6);
+  });
+
+  it("…and it tracks the card: double the number, the mob really goes faster", () => {
+    cover("mob-215-speed-tracks-card");
+    // The decisive one. A hard-coded 3 would pass the test above and fail here;
+    // an unread card fails both. Ratio rather than absolutes so terrain effects
+    // divide out.
+    const slow = measuredSpeed(CFG);
+    const fast = measuredSpeed({ ...CFG, mob: { ...CFG.mob, moveSpeed: 6 } });
+    expect(fast / slow, `3 u/s → ${slow.toFixed(2)}, 6 u/s → ${fast.toFixed(2)}`).toBeGreaterThan(1.6);
+  });
+});

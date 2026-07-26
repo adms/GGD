@@ -154,7 +154,15 @@ export function movementSystem(world: SimWorld): void {
       const d = len(to);
       if (d > 1e-6) {
         moved = true;
-        const baseSpeed = world.stats.get(id)?.final[Stat.MoveSpeed] || BASE_MOVE_SPEED;
+        // A mob has NO StatsComp (deliberate, see components.ts MobComp), so it
+        // used to fall straight through to BASE_MOVE_SPEED — a GENERAL fallback
+        // that happens to be 6, i.e. TWICE the 3.0 `ms` of 喪標麥可, the very
+        // champion it is a copy of. Since #215 the mob card owns its own speed
+        // (owner 2026-07-27: 「移動速度也會減半」), read from `world.mobRules`
+        // rather than a new MobComp field so the digest is untouched.
+        const baseSpeed =
+          world.stats.get(id)?.final[Stat.MoveSpeed] ||
+          (world.mob.has(id) ? (world.mobRules?.moveSpeed ?? BASE_MOVE_SPEED) : BASE_MOVE_SPEED);
         // acceleration ramp: full speed reached over ACCEL_TICKS ticks
         const ramp = Math.min(1, (t.accel ?? 0) + 1 / ACCEL_TICKS);
         t.accel = ramp;

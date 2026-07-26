@@ -50,6 +50,14 @@ import { championStatBase } from "./stats/attributes";
 import { COMBAT_ENV_DEFAULTS, type CombatEnvMultipliers } from "./combatEnv";
 
 /**
+ * What a mob walks at when its card does not say. Deliberately equal to
+ * MovementSystem's BASE_MOVE_SPEED so an un-authored card behaves exactly as it
+ * did before #215 gave mobs their own knob — the fallback must never be a
+ * silent balance change.
+ */
+const MOB_FALLBACK_MOVE_SPEED = 6;
+
+/**
  * The CHAMPION DOC a mob is an avatar OF (task #217, re-scoped by #244). A mob
  * carries NO ChampionComp — the neutrality contract is untouched.
  *
@@ -117,6 +125,8 @@ export interface MobRules {
   modelKey: string;
   /** melee packet amount */
   attackDamage: number;
+  /** mob walk speed in u/s (#215). Owned by the mob card, NOT the shared fallback. */
+  moveSpeed: number;
   /** SQUARED melee reach (compared against distSq — trig/pow-free) */
   attackRangeSq: number;
   /** melee cooldown in ticks (round(attackCdSec/dt)) */
@@ -142,6 +152,7 @@ export interface MobWavesConfigLike {
   mob: {
     maxHp: number;
     attackDamage: number;
+    moveSpeed?: number;
     attackRange: number;
     attackCdSec: number;
     radius: number;
@@ -261,6 +272,7 @@ export function mobRulesFromConfig(
     hpRegenPerSec,
     modelKey: cfg.mob.modelKey ?? MOB_MODEL_KEY,
     attackDamage: cfg.mob.attackDamage,
+    moveSpeed: cfg.mob.moveSpeed ?? MOB_FALLBACK_MOVE_SPEED,
     attackRangeSq: cfg.mob.attackRange * cfg.mob.attackRange,
     attackCdTicks: ticks(cfg.mob.attackCdSec),
     radius: cfg.mob.radius,
