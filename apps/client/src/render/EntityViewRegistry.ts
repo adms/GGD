@@ -84,6 +84,16 @@ export interface EntityViewState {
    */
   flags?: number;
   /**
+   * Champions only (task #247): fly height in GGD units and the AIRBORNE flag.
+   * Absent = grounded, which is every other kind and every pre-#247 caller.
+   *
+   * `airborne` is deliberately a FLAG rather than `h > 0`: it is also true on the
+   * takeoff and landing ticks, where the height is exactly 0, and locomotion has
+   * to stay suppressed for the whole flight.
+   */
+  h?: number;
+  airborne?: boolean;
+  /**
    * Revive circles (kind 3) only — decoded by the caller from the reused
    * EntityState float slots (see protocol ENTITY_KIND). Absent for every other
    * kind, so the shape stays a strict superset of the old one.
@@ -210,7 +220,7 @@ export interface SyncArgs {
   /** pose override seam: interpolation (remotes) / prediction (local) */
   poseFor: (
     e: EntityViewState,
-  ) => { x: number; z: number; fx: number; fz: number };
+  ) => { x: number; z: number; fx: number; fz: number; h?: number };
   nowMs: number;
   dtMs: number;
   /** try to upgrade champions to .glb models (disabled in headless tests) */
@@ -605,7 +615,10 @@ export class EntityViewRegistry {
       this.applyTint(e, view, tier);
       view.setGrowthTier(tier, args.nowMs);
       const pose = args.poseFor(e);
-      view.setPose(pose.x, pose.z, pose.fx, pose.fz);
+      // #247: the interpolated height rides the same pose seam as x/z. The
+      // AIRBORNE flag comes off the entity (not off `h > 0`) so takeoff and
+      // landing ticks, where h is exactly 0, still count as in-flight.
+      view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, e.airborne === true);
 
       // draw-distance cull: hide champions beyond the configured radius
       if (args.cull) {
@@ -632,10 +645,16 @@ export class EntityViewRegistry {
       // into the run-rate EMA would fire off a phantom sprint. Ignore the frame
       // for animation purposes and resync from the new position next frame.
       const teleported = distSq > TELEPORT_STEP_UNITS * TELEPORT_STEP_UNITS;
-      const moving = last && !teleported ? distSq > 1e-6 * args.dtMs : false;
+      // #247: a LEAPING champion is not locomoting. It covers ~0.33 u/tick of
+      // planar distance — comfortably under TELEPORT_STEP_UNITS — so without
+      // this gate the run clip would play and the champion would run through the
+      // air with its legs cycling. Forced to standing for the whole flight, the
+      // flag being true on the takeoff/landing ticks too.
+      const flying = e.airborne === true;
+      const moving = last && !teleported && !flying ? distSq > 1e-6 * args.dtMs : false;
       // smoothed ground speed (u/s) → run-clip rate sync (foot-slide fix)
       const instSpeed =
-        last && !teleported ? (Math.sqrt(distSq) / Math.max(args.dtMs, 1)) * 1000 : 0;
+        last && !teleported && !flying ? (Math.sqrt(distSq) / Math.max(args.dtMs, 1)) * 1000 : 0;
       const prevSpeed = this.speedEma.get(e.id) ?? instSpeed;
       const speed = prevSpeed + (instSpeed - prevSpeed) * SPEED_SMOOTH;
       this.speedEma.set(e.id, speed);

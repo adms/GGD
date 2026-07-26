@@ -7,15 +7,15 @@
   "attackType": "melee",
   "modelKey": "imported.luffe",
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 364,
-    "manaRegen": 1.68,
-    "ad": 32,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 6,
+    "armor": 0,
     "mr": 28,
-    "as": 0.53,
+    "as": 0.526316,
     "ms": 8.0,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 14,
+    "int": 22,
+    "strGrowth": 2.95,
+    "agiGrowth": 1.6,
+    "intGrowth": 1.5,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -207,32 +217,42 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              600.0,
-              900.0,
-              1200.0
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "inPlace",
+          "apexHeight": 4.0,
+          "durationSec": 0.84,
+          "landRadius": 6.97,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  600.0,
+                  900.0,
+                  1200.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.6
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 2.0,
-          "stun": true
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 2.0,
+              "stun": true
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.ki.bolt-lg",
       "targetsEnemies": true,
-      "radius": 3.67,
+      "radius": 6.97,
       "castTimeSec": 0.9
     }
   },
@@ -252,5 +272,21 @@
   ],
   "exAbility": "godie-u00o.ex",
   "passiveAbility": "godie-u00o.passive",
-  "icon": "assets/icons/champions/godie-u00o.png"
+  "icon": "assets/icons/champions/godie-u00o.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-u00n",
+    "normalUnitRawcode": "U00N",
+    "alternateUnitRawcode": "U00O",
+    "triggerAbility": {
+      "rawcode": "A0IR",
+      "name": "76-00 二檔",
+      "durationSec": {
+        "1": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0
+      }
+    }
+  }
 }

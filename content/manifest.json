@@ -1,14 +1,14 @@
 {
-  "contentVersion": "cv_1d819a2dfc74",
+  "contentVersion": "cv_576b00dfda10",
   "collections": {
     "champions": {
-      "hash": "6953625a0069",
-      "count": 114,
+      "hash": "2be9be238206",
+      "count": 115,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "10e29817ff9f",
-      "count": 668,
+      "hash": "bd94984a8ec4",
+      "count": 673,
       "path": "abilities/_index.json"
     },
     "items": {
@@ -27,8 +27,8 @@
       "path": "projectiles/_index.json"
     },
     "status-effects": {
-      "hash": "5bbbcf3981b7",
-      "count": 5,
+      "hash": "e115818e13bd",
+      "count": 6,
       "path": "status-effects/_index.json"
     },
     "loot-tables": {
@@ -42,7 +42,7 @@
       "path": "arenas/_index.json"
     },
     "config": {
-      "hash": "efbf2665411c",
+      "hash": "d97737eb1294",
       "count": 11,
       "path": "config/_index.json"
     },
@@ -62,7 +62,7 @@
       "path": "skins/_index.json"
     },
     "ability-templates": {
-      "hash": "294b7bd98025",
+      "hash": "bbf9306296bd",
       "count": 29,
       "path": "ability-templates/_index.json"
     }

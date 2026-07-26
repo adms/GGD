@@ -35,6 +35,14 @@
  *      stamp, which is strictly worse than the status quo where the owner at
  *      least has to think about each name.
  */
+import {
+  championStatBase,
+  championStatGrowth,
+  type AttributeCarrier,
+  type ChampionAttributes,
+} from "@ggd/shared/sim/stats/attributes";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import type { BulkRequest } from "./curation";
 
 // ---------------------------------------------------------------- slots ----
@@ -119,7 +127,33 @@ export function halfEnabledChampions(
 
 // ------------------------------------------------------- the 數值體檢 ------
 
-/** The champion stats this module compares. Absent fields stay undefined. */
+/**
+ * The champion stats this module compares — EFFECTIVE level-1 values, not the
+ * raw card.
+ *
+ * WHY THAT DISTINCTION IS THE WHOLE POINT (the #248 regression). Before #248 a
+ * champion doc's `baseStats.maxHealth` WAS its level-1 health, so reading the
+ * field raw was correct. #248 rebased `baseStats` onto the source map's raw
+ * w3x card and moved the 三圍 term into the sim, so today 100 of the 114 docs
+ * literally read `"maxHealth": 150` and the real number is
+ * `150 + strToMaxHealth × STR`. Reading the field raw collapsed this page:
+ *
+ *   - the peer median HP fell 480 → 150 and armour 7.5 → 0, so
+ *     `cand.maxHealth < median × 0.5` became `150 < 75` — unfireable, and the
+ *     armour finding (guarded by `median > 0`) became dead code
+ *   - 喪標麥可's real 「護甲 0 — 完全不減傷」 finding silently stopped firing
+ *   - 克勞薩先生 printed 「血量 -450 … −300%」 off his raw card
+ *
+ * …and every test still passed, because the suite fed synthetic fixtures and
+ * never one real champion doc. So the numbers below now come through the SIM'S
+ * OWN SEAM (`championStatBase`), the same one `recomputeStats`, the shop
+ * preview and the champ-select 屬性 tab use. What the owner approves on is what
+ * the game computes.
+ *
+ * UNITS: content units at level 1 — the layer BEFORE the combat-env ×factors
+ * (血量 ×4 …), exactly like the codex and champ-select sheets. Candidate and
+ * peer median are both on that scale, so the comparison is apples to apples.
+ */
 export interface ChampionStats {
   id: string;
   name: string;
@@ -129,31 +163,115 @@ export interface ChampionStats {
   armor?: number;
   mr?: number;
   ms?: number;
+  /**
+   * true when the doc carried a readable `attributes` block, so the numbers
+   * above went through the 三圍 derivation. false means the doc predates #248
+   * or is hand-authored and `baseStats` really is the level-1 truth for it.
+   */
+  attributeDerived: boolean;
 }
 
 function num(v: unknown): number | undefined {
   return typeof v === "number" && Number.isFinite(v) ? v : undefined;
 }
 
-/** Project a fetched champion doc down to the compared fields. */
-export function parseChampionStats(id: string, raw: unknown): ChampionStats {
-  const out: ChampionStats = { id, name: id, role: "" };
+function numRecord(v: unknown): Record<string, number> {
+  const out: Record<string, number> = {};
+  if (v === null || typeof v !== "object") return out;
+  for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
+    const n = num(val);
+    if (n !== undefined) out[k] = n;
+  }
+  return out;
+}
+
+/**
+ * The 三圍 block, or undefined when the doc has none / it is malformed.
+ *
+ * Deliberately strict: a HALF-read attributes block would derive a wrong
+ * number and present it as authoritative, which is worse than falling back to
+ * the raw card and worse than showing "?". All six numbers or nothing.
+ */
+function parseAttributes(v: unknown): ChampionAttributes | undefined {
+  if (v === null || typeof v !== "object") return undefined;
+  const a = v as Record<string, unknown>;
+  const str = num(a["str"]);
+  const agi = num(a["agi"]);
+  const int = num(a["int"]);
+  const strGrowth = num(a["strGrowth"]);
+  const agiGrowth = num(a["agiGrowth"]);
+  const intGrowth = num(a["intGrowth"]);
+  if (
+    str === undefined ||
+    agi === undefined ||
+    int === undefined ||
+    strGrowth === undefined ||
+    agiGrowth === undefined ||
+    intGrowth === undefined
+  ) {
+    return undefined;
+  }
+  const primary = a["primary"];
+  const source = a["source"];
+  return {
+    str,
+    agi,
+    int,
+    strGrowth,
+    agiGrowth,
+    intGrowth,
+    primary: primary === "AGI" || primary === "INT" ? primary : "STR",
+    source: source === "authored" ? "authored" : "w3x",
+  };
+}
+
+/**
+ * Project a fetched champion doc down to the compared fields, resolving each
+ * one through `championStatBase` at level 1.
+ *
+ * `env` is the LIVE combat-env table when the page could read it, so a coefficient
+ * the operator retuned in 戰鬥系統 shows up here too; omitting it uses the shipped
+ * coefficients. Either way the peer median is computed from champions parsed with
+ * the SAME table, so the comparison never mixes two scales.
+ */
+export function parseChampionStats(
+  id: string,
+  raw: unknown,
+  env?: CombatEnvMultipliers,
+): ChampionStats {
+  const out: ChampionStats = { id, name: id, role: "", attributeDerived: false };
   if (raw === null || typeof raw !== "object") return out;
   const doc = raw as Record<string, unknown>;
   if (typeof doc["name"] === "string" && doc["name"] !== "") out.name = doc["name"];
   if (typeof doc["role"] === "string") out.role = doc["role"];
-  const base = doc["baseStats"];
-  if (base !== null && typeof base === "object") {
-    const b = base as Record<string, unknown>;
-    out.maxHealth = num(b["maxHealth"]);
-    out.armor = num(b["armor"]);
-    out.mr = num(b["mr"]);
-    out.ms = num(b["ms"]);
-  }
-  const growth = doc["growth"];
-  if (growth !== null && typeof growth === "object") {
-    out.growthHealth = num((growth as Record<string, unknown>)["maxHealth"]);
-  }
+
+  const baseStats = numRecord(doc["baseStats"]);
+  const growth = numRecord(doc["growth"]);
+  const attributes = parseAttributes(doc["attributes"]);
+  out.attributeDerived = attributes !== undefined;
+
+  // A stat the card is silent about stays undefined — `championStatBase` would
+  // happily answer 0 + coefficient·attr for a missing row, and "護甲 0" read off
+  // a card that never mentioned armour is a fabricated finding, not a reading.
+  const carrier: AttributeCarrier = {
+    baseStats: baseStats as AttributeCarrier["baseStats"],
+    growth: growth as AttributeCarrier["growth"],
+    ...(attributes !== undefined ? { attributes } : {}),
+  };
+  const at1 = (key: string, stat: Stat): number | undefined =>
+    key in baseStats || key in growth ? championStatBase(carrier, stat, 1, env) : undefined;
+
+  out.maxHealth = at1("maxHealth", Stat.MaxHealth);
+  out.armor = at1("armor", Stat.Armor);
+  out.mr = at1("mr", Stat.MagicResist);
+  out.ms = at1("ms", Stat.MoveSpeed);
+  // 每級 for health includes the attribute growth (str_growth × strToMaxHealth),
+  // which is the only reason a champion with `growth.maxHealth: 0` can still
+  // gain health per level — and the reason 熊貓 (all three growths 0) does not.
+  out.growthHealth =
+    "maxHealth" in baseStats || "maxHealth" in growth
+      ? championStatGrowth(carrier, Stat.MaxHealth, env)
+      : undefined;
   return out;
 }
 
@@ -212,16 +330,20 @@ export interface StatAudit {
  * "slightly under-tuned", because a page that cries wolf gets clicked through.
  */
 export function auditStats(cand: ChampionStats, base: PeerBaseline): StatAudit {
+  // Derived values are rarely round (a 2.8 str growth × 23 hp is 64.4), and a
+  // readout the owner scans in two seconds must not turn into 120.39999999999999.
+  const show = (v: number | undefined): string =>
+    v === undefined ? "?" : `${Math.round(v * 100) / 100}`;
   const parts: string[] = [];
-  parts.push(cand.maxHealth === undefined ? "血量 ?" : `血量 ${cand.maxHealth}`);
-  if (cand.growthHealth !== undefined) parts.push(`每級 +${cand.growthHealth}`);
-  parts.push(cand.armor === undefined ? "護甲 ?" : `護甲 ${cand.armor}`);
-  parts.push(cand.mr === undefined ? "魔抗 ?" : `魔抗 ${cand.mr}`);
-  parts.push(cand.ms === undefined ? "移速 ?" : `移速 ${cand.ms}`);
+  parts.push(cand.maxHealth === undefined ? "血量 ?" : `血量 ${show(cand.maxHealth)}`);
+  if (cand.growthHealth !== undefined) parts.push(`每級 +${show(cand.growthHealth)}`);
+  parts.push(cand.armor === undefined ? "護甲 ?" : `護甲 ${show(cand.armor)}`);
+  parts.push(cand.mr === undefined ? "魔抗 ?" : `魔抗 ${show(cand.mr)}`);
+  parts.push(cand.ms === undefined ? "移速 ?" : `移速 ${show(cand.ms)}`);
   const line =
     `${parts.join(" · ")}` +
     (base.count > 0
-      ? `　（已開放 ${base.count} 名英雄的中位數：血量 ${base.maxHealth ?? "?"} · 護甲 ${base.armor ?? "?"} · 魔抗 ${base.mr ?? "?"} · 移速 ${base.ms ?? "?"}）`
+      ? `　（已開放 ${base.count} 名英雄的中位數：血量 ${show(base.maxHealth)} · 護甲 ${show(base.armor)} · 魔抗 ${show(base.mr)} · 移速 ${show(base.ms)}）`
       : "　（沒有可比較的已開放英雄）");
 
   if (cand.maxHealth === undefined || base.count === 0 || base.maxHealth === undefined) {

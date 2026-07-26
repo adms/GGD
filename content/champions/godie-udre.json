@@ -8,15 +8,15 @@
   "modelKey": "imported.heromusashimiyamoto",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 560,
-    "healthRegen": 1.35,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 33,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 8,
+    "armor": 0,
     "mr": 28,
-    "as": 0.53,
+    "as": 0.526316,
     "ms": 6.1,
     "critChance": 0,
     "critDamage": 1.75,
@@ -33,6 +33,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 22,
+    "agi": 14,
+    "int": 18,
+    "strGrowth": 2.8,
+    "agiGrowth": 1.65,
+    "intGrowth": 1.65,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
@@ -247,5 +257,27 @@
   ],
   "exAbility": "godie-udre.ex",
   "passiveAbility": "godie-udre.passive",
-  "icon": "assets/icons/champions/godie-udre.png"
+  "icon": "assets/icons/champions/godie-udre.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u01u",
+    "normalUnitRawcode": "UDRE",
+    "alternateUnitRawcode": "U01U",
+    "triggerAbility": {
+      "rawcode": "A10N",
+      "name": "11-002 武裝色霸氣",
+      "durationSec": {
+        "1": 15.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -20,11 +20,11 @@
   },
   "coverage": {
     "names": 92,
-    "ids": 113,
-    "real": 82,
+    "ids": 114,
+    "real": 83,
     "original": 31,
     "byGender": {
-      "male": 72,
+      "male": 73,
       "female": 28,
       "neutral": 13
     }
@@ -1181,6 +1181,18 @@
       "source": "魔法少女リリカルなのは（高町なのは）",
       "real": true,
       "clip": "assets/audio/voices/quotes/godie-o01z.mp3"
+    },
+    "godie-o02n": {
+      "name": "阿瞞大人",
+      "character": "阿瞞大人 / 三國演義",
+      "gender": "male",
+      "voice": "Otoya (Enhanced)",
+      "jpQuote": "寧教我負天下人，休教天下人負我。",
+      "romaji": "Mushiro ware tenka no hito ni somuku tomo, tenka no hito wo shite ware ni somukashimuru nakare.",
+      "zhGloss": "寧可我負天下人，不教天下人負我。",
+      "source": "三國演義（曹操）",
+      "real": true,
+      "clip": "assets/audio/voices/quotes/godie-o02n.mp3"
     },
     "godie-o02o": {
       "name": "阿瞞大人",

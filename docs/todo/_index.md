@@ -35,12 +35,14 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | WC3 dummy-effect-units + orbs → spawnVfx/ambient (化繁為簡) | [dummy-orb.md](dummy-orb.md) | game + content + client |
 | Themed arenas + map select + cast bar | [arenas.md](arenas.md) | client + game + content |
 | Sim determinism | [sim-determinism.md](sim-determinism.md) | game |
+| Leap — parabolic jump primitive (JASS parabola + on-screen framing gate) | [leap.md](leap.md) | game + content + client + editor |
 | Victory settlement (stats + grade + rank + freeze) | [settlement.md](settlement.md) | game + client |
 | Victory fireworks (round volley + 吃雞 roast-chicken) | [victory-fireworks.md](victory-fireworks.md) | client |
 | 中場 intermission scene + centre-stage shop | [intermission.md](intermission.md) | game + client + content |
 | Combat timing v2 (cast time + basic-attack overhaul) | [combat-timing.md](combat-timing.md) | game + content |
 | 戰鬥系統 global multipliers + admin dynamic config | [combat-env.md](combat-env.md) | game + platform + admin |
 | TTK tuning — maxHealth for round length (≥120s min, ~180s avg) | [ttk-tuning.md](ttk-tuning.md) | game + content |
+| 三圍 STR/AGI/INT attribute derivation from the w3x | [attributes.md](attributes.md) | game + content + admin |
 | Planar collision | [collision.md](collision.md) | game |
 | Content pipeline | [content-pipeline.md](content-pipeline.md) | content |
 | EX 技能 per-hero ultimate (lvl-30 gate) | [ex-skills.md](ex-skills.md) | content + game + client |
@@ -61,10 +63,12 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Champion role taxonomy (six real roles, not `fighter`/`marksman`) | [role-taxonomy.md](role-taxonomy.md) | content |
 | Platform web UI (auth/lobby/rooms/store) | [web-ui.md](web-ui.md) | client |
 | Operations admin backend + console SPA | [admin.md](admin.md) | platform + admin |
+| 資料搬遷 — whole-platform ZIP export/import (#243) | [platform-archive.md](platform-archive.md) | platform + admin |
 | Content whitelist (default-empty curation) | [whitelist.md](whitelist.md) | platform + admin + client + game |
 | 兩台後台的內容同步 (tick-box, field-level arbitration) | [content-sync.md](content-sync.md) | platform + admin + content |
 | 內容圖鑑 codex (live item/champion/ability browser) | [content-codex.md](content-codex.md) | client + content |
 | AI icon/text generation (proxy + admin config + editor) | [ai.md](ai.md) | platform + admin + editor |
+| 資料搬遷封存：匯入前備份的保留與可見性 (#243) | [platform-archive.md](platform-archive.md) | platform + admin |
 | Infra & one-click K8s | [infra.md](infra.md) | infra |
 | Warcraft III map importer | [w3x-import.md](w3x-import.md) | content |
 | WC3 particle port (vfx/ribbon/ambient engine) | [particles.md](particles.md) | content + client |

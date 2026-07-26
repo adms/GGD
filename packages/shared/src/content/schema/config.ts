@@ -597,9 +597,15 @@ export const zConfigArenaRulesDoc = z
  * factor per environment quantity; each factor is applied at exactly one sim
  * formula site (see `sim/combatEnv.ts` for the site table). 1.0 = neutral.
  * Keys are OPTIONAL (a sparse admin override is valid) and normalized onto
- * the all-1.0 default via `normalizeCombatEnv` before entering the sim.
+ * COMBAT_ENV_DEFAULTS via `normalizeCombatEnv` before entering the sim.
  * The key set is generated from the sim's COMBAT_ENV_KEYS, so the schema can
  * never drift from the engine.
+ *
+ * The eight #248 三圍 coefficients (`strToMaxHealth` …) ride the same table but
+ * are COEFFICIENTS, not ×factors: their neutral value is the shipped WC3 number
+ * (25 hp per strength point), not 1.0, and their legal band is 0..100 — which is
+ * why `zEnvFactor` has always allowed 100 and why an omitted coefficient falls
+ * back to `defaultForKey`, never to 1.0.
  */
 const zEnvFactor = z.number().min(0).max(100);
 

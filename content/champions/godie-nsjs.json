@@ -9,15 +9,15 @@
   "missileSpeed": 17.4,
   "attackDamagePoint": 0.3,
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 400,
-    "manaRegen": 1.8,
-    "ad": 36,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 8,
+    "armor": 1,
     "mr": 28,
-    "as": 0.53,
+    "as": 0.526316,
     "ms": 5.8,
     "critChance": 0,
     "critDamage": 1.75,
@@ -34,6 +34,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 14,
+    "int": 25,
+    "strGrowth": 1.85,
+    "agiGrowth": 1.8,
+    "intGrowth": 2.65,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -233,5 +243,27 @@
   ],
   "exAbility": "godie-nsjs.ex",
   "passiveAbility": "godie-nsjs.passive",
-  "icon": "assets/icons/champions/godie-nsjs.png"
+  "icon": "assets/icons/champions/godie-nsjs.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-n00p",
+    "normalUnitRawcode": "NSJS",
+    "alternateUnitRawcode": "N00P",
+    "triggerAbility": {
+      "rawcode": "A0IH",
+      "name": "18-03 妖狐變化",
+      "durationSec": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

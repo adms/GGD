@@ -41,7 +41,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
-import { zVfxDoc } from "@ggd/shared/content";
+import { isAlternateForm, zVfxDoc } from "@ggd/shared/content";
 import { rosterBindings, abilityVfxKeys, curatedDocs, vfxKeyFor } from "./bindings";
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "../../../../..");
@@ -88,13 +88,28 @@ describe("roster bindings cover the 50 whitelisted champions (ability-vfx-bindin
     // assertion below vacuous, which is the failure mode this file just had.
     expect(roster.length, "starter.go yielded no champions — the parse broke").toBe(ROSTER_SIZE);
     const binds = rosterBindings();
-    expect(binds).toHaveLength(roster.length * 5);
     for (const champ of roster) {
       const slots = binds.filter((b) => b.abilityId.startsWith(`${champ}.`)).map((b) => b.abilityId);
       expect(new Set(slots)).toEqual(
         new Set([`${champ}.q`, `${champ}.w`, `${champ}.e`, `${champ}.r`, `${champ}.ex`]),
       );
     }
+    // The table COVERS the roster; anything beyond it must be a 變身 form. Task
+    // #249 swapped 10 roster slots from the alternate body to the base, and the
+    // alternate rows were KEPT rather than deleted — the two halves of a pair
+    // share one kit, so the alt already needs the same bindings the moment the
+    // transform mechanic (task #119) can put a player in that body. An extra
+    // row that is NOT an alternate form is a mistake and still fails here.
+    const rosterIds = new Set(roster);
+    const extra = [...new Set(binds.map((b) => b.abilityId.replace(/\.[a-z]+$/, "")))].filter(
+      (id) => !rosterIds.has(id),
+    );
+    for (const id of extra) {
+      expect(isAlternateForm(id), `${id} is bound but is neither on the roster nor a 變身 form`).toBe(
+        true,
+      );
+    }
+    expect(binds).toHaveLength((roster.length + extra.length) * 5);
   });
 
   it("no roster ability keeps the generic fire placeholder", () => {

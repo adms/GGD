@@ -2,10 +2,12 @@
  * marqueeRoster — the pure, testable half of the login ChampionMarquee. Turns a
  * loaded champion roster into the flat list of tiles the strip renders.
  *
- *   1. NON-SELECTABLE forms are excluded. Alt/transform bodies (tagged
- *      "transform-form") are not pickable heroes, so they never appear in the
- *      showcase — the marquee mirrors what a player can actually choose.
- *      Test/placeholder heroes (測試英雄) are excluded for the same reason.
+ *   1. NON-SELECTABLE forms are excluded. A 變身 (transform) body is not a hero
+ *      a player can pick, so it never appears in the showcase — the marquee
+ *      mirrors what champ-select actually offers. Decided by the w3x form link
+ *      (`isAlternateForm`, the 26 `Eme1`/`Emeu` pairs in championForms.ts),
+ *      NOT by a shared portrait; see `isSelectableChampion`. Test/placeholder
+ *      heroes (測試英雄) are excluded for the same reason.
  *   2. ONE TILE PER CHARACTER, decided by the SHARED IDENTITY RULE
  *      (`@ggd/shared/content` → championIdentity). See below.
  *   3. NO VISIBLY DUPLICATE PORTRAITS — a SEPARATE, purely cosmetic pass over a
@@ -60,7 +62,7 @@
  * icon that 404s at load time), but the roster never intentionally emits one.
  * No React / Babylon imports here → clean node unit test.
  */
-import { compareCanonical, distinctCharacters } from "@ggd/shared/content";
+import { compareCanonical, distinctCharacters, isAlternateForm } from "@ggd/shared/content";
 import { contentAssetUrl } from "../../content/ContentDb";
 
 /** Minimal champion shape the marquee needs (subset of the registry ChampionDef). */
@@ -104,7 +106,13 @@ export interface MarqueeTile {
   tintCss: string | null;
 }
 
-/** Tags marking a body that is NOT a pickable hero (alt/transform form). */
+/**
+ * Legacy escape hatch: a doc may declare itself non-pickable with this tag. No
+ * shipped champion carries it today — the AUTHORITY for "is this a transformed
+ * body?" is the w3x form link (`isAlternateForm`, see `isSelectableChampion`).
+ * Kept so a hand-authored non-w3x body can still opt out without inventing a
+ * second mechanism.
+ */
 const NON_SELECTABLE_TAGS: ReadonlySet<string> = new Set(["transform-form"]);
 
 /**
@@ -121,6 +129,17 @@ const NON_SELECTABLE_TAGS: ReadonlySet<string> = new Set(["transform-form"]);
  * fails until it does) and no entry can quietly outlive the bug it describes.
  * Order does not matter: the tile that survives is chosen by the SHARED
  * `compareCanonical` ranking, never by hand.
+ *
+ * ⚠️ THIS IS NOT A TRANSFORM TABLE — do NOT regenerate it from the 變身 form
+ * link (task #249). The two overlap by coincidence and diverge in both
+ * directions. SIX groups here have nothing to do with transforms at all —
+ * 傑洛士/涼宮, 涅吉/白色之翼, 初音/志志雄, 賈修/阿強一號, e00j/e015/harf and
+ * 皮卡丘/曹操 — and deriving the table from form pairs would delete every one of
+ * them, resurrecting the duplicate-picture bug it exists to hide. Conversely
+ * 妙蛙花, 草泥馬's 臥 body and 傑桑 are real transform forms that are NOT here,
+ * because their portraits differ. Form visibility is decided in
+ * `isSelectableChampion`; this table only ever answers "would two tiles draw
+ * the same bitmap?".
  */
 export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
   ["godie-u011", "godie-u012"], // 克勞薩先生 / 克勞薩II世
@@ -137,7 +156,9 @@ export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
   ["godie-e007", "godie-ewar"], // 天地志狼
   ["godie-u00l", "godie-umal"], // 拳四郎 ×2 (distinct skins, one portrait)
   ["godie-e002", "godie-e00l", "godie-e00q"], // Saber ×2 + 黑化Saber (tint saves it)
-  ["godie-o02l", "godie-o02o", "godie-ofar"], // 皮卡丘 ×2 + 曹操 wearing its icon
+  // 皮卡丘 ×2 + BOTH 曹操孟德 forms wearing its icon (o02n is the base unit
+  // O02N, imported by task #249; it inherits the same mis-assigned portrait).
+  ["godie-o02l", "godie-o02n", "godie-o02o", "godie-ofar"],
   ["godie-u00n", "godie-u00o"], // 魯夫
   ["godie-o01z", "godie-o02v"], // 高町奈葉
   ["godie-h020", "godie-hjai"], // 莉娜因巴斯
@@ -186,14 +207,27 @@ export function isTestHero(name: string): boolean {
 }
 
 /**
- * True unless the champion is a transform form or a test hero.
+ * True unless the champion is a transformed body or a test hero.
  *
- * NOTE this is deliberately a PER-CHAMPION question only. "Is this a duplicate
- * of some other entry?" cannot be answered one champion at a time — that is
- * what `distinctCharacters()` does over the whole roster, and it is why the old
- * id blocklists lived here and got it wrong.
+ * WHY THE TRANSFORM CHECK LIVES HERE AND NOT IN THE PORTRAIT PASS (task #249).
+ * 變身 forms used to fall out of the strip by ACCIDENT: 12 of them happened to
+ * share a portrait bitmap with their base, so `SHARED_PORTRAIT_GROUPS` hid the
+ * tile. That was the icon-extraction bug doing the roster's job — it would have
+ * stopped working the moment someone fixed an icon, and it never covered 妙蛙花
+ * or 草泥馬's 臥 body at all (their portraits are their own). The question "is
+ * this a hero or a hero mid-transform?" is now answered by the w3x `Eme1`/`Emeu`
+ * fields (`isAlternateForm`, `@ggd/shared/content`), the same closed 26-pair
+ * table the roster and the identity rule read. The two concerns are separate
+ * again: FORM decides visibility, PORTRAIT BYTES decide only which of two
+ * otherwise-identical pictures is drawn.
+ *
+ * NOTE this stays deliberately a PER-CHAMPION question. "Is this a duplicate of
+ * some other entry?" cannot be answered one champion at a time — that is what
+ * `distinctCharacters()` does over the whole roster, and it is why the old id
+ * blocklists lived here and got it wrong.
  */
 export function isSelectableChampion(c: MarqueeChampion): boolean {
+  if (isAlternateForm(c.id)) return false;
   if ((c.tags ?? []).some((t) => NON_SELECTABLE_TAGS.has(t))) return false;
   if (isTestHero(c.name)) return false;
   return true;

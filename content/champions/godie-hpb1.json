@@ -7,15 +7,15 @@
   "attackType": "melee",
   "modelKey": "imported.herotoshiiemaeda",
   "baseStats": {
-    "maxHealth": 640,
-    "healthRegen": 1.55,
-    "maxMana": 256,
-    "manaRegen": 1.32,
-    "ad": 37,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 8,
+    "armor": 2,
     "mr": 28,
-    "as": 0.53,
+    "as": 0.526316,
     "ms": 6.0,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 26,
+    "agi": 15,
+    "int": 13,
+    "strGrowth": 2.1,
+    "agiGrowth": 2,
+    "intGrowth": 1.7,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 3,
@@ -116,6 +126,12 @@
               }
             ]
           }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 1.0,
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
@@ -129,7 +145,7 @@
       "icon": "assets/icons/abilities/godie-hpb1.e.webp",
       "description": "[主動攻擊]\n65秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(力量*2)+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(敏捷係數*5)傷害，30級之後可增加(敏捷係數*10)傷害",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         65.0,
@@ -144,30 +160,52 @@
         310.0
       ],
       "range": 14.0,
+      "radius": 6.05,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              450.0,
-              550.0,
-              650.0,
-              750.0
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 2.4,
+          "durationSec": 1.44,
+          "landRadius": 6.05,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  450.0,
+                  550.0,
+                  650.0,
+                  750.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.5
+                  }
+                ]
+              },
+              "comboBonus": {
+                "statusId": "moon-combo",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 1.25
+                    }
+                  ]
+                }
               }
-            ]
-          }
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     },
     "R": {
       "id": "godie-hpb1.r",

@@ -8,13 +8,13 @@
   "modelKey": "imported.long",
   "attackDamagePoint": 0.3,
   "baseStats": {
-    "maxHealth": 520,
-    "healthRegen": 1.25,
-    "maxMana": 340,
-    "manaRegen": 1.6,
-    "ad": 38,
+    "maxHealth": 150,
+    "healthRegen": 2.5,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 18,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.7,
@@ -33,6 +33,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 20,
+    "agi": 16,
+    "int": 20,
+    "strGrowth": 1.2,
+    "agiGrowth": 1.5,
+    "intGrowth": 2.6,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -255,5 +265,27 @@
   ],
   "exAbility": "godie-n003.ex",
   "passiveAbility": "godie-n003.passive",
-  "icon": "assets/icons/champions/godie-n003.png"
+  "icon": "assets/icons/champions/godie-n003.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-n01g",
+    "normalUnitRawcode": "N003",
+    "alternateUnitRawcode": "N01G",
+    "triggerAbility": {
+      "rawcode": "A06K",
+      "name": "42-002 魔力印章",
+      "durationSec": {
+        "1": 7.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

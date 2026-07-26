@@ -326,6 +326,46 @@ export class EntityState extends Schema {
   declare alive: boolean;
   /** bitmask: 1 dashing, 2 rooted, 4 stunned, 8 slowed */
   declare flags: number;
+  /**
+   * AIRBORNE HEIGHT above the arena floor, GGD units (task #247). 0 = grounded,
+   * which is the overwhelming case — and because Colyseus patches are DELTA-
+   * ENCODED (a field only reaches the wire on the ticks its value changes), a
+   * match in which nobody leaps pays EXACTLY ZERO bytes for this field. The
+   * cost is bounded by actual leap-seconds: one 蒼月潮 E is 43 ticks × ~5 B ≈
+   * 215 B for the whole ability.
+   *
+   * Not folded into an existing float slot the way a revive circle borrows
+   * `shield`/`hp`: a circle has no health component at all, whereas a leaping
+   * CHAMPION is using every one of those slots for real HP/mana/shield. 4 bytes
+   * of honest field beats a shield bar that flickers during a jump.
+   */
+  declare h: number;
+  /*
+   * NO `sc` (temporary model scale) FIELD — deliberately removed, #247
+   * follow-up. #247 shipped a uint8 `sc` percent channel end to end (wire →
+   * interpolation → ChampionView) for godie-hapm.r 巨神一擊, but the sim never
+   * wrote anything but 1: the whole lane was dead weight with a green test that
+   * hand-fed it fabricated numbers, so the test proved nothing about the game.
+   *
+   * WHY IT WAS NOT SIMPLY WIRED UP. 巨神一擊 (JASS rawcode A0U8,
+   * `Trig_Gigantomakhia_*`, war3map.j j:51866-52040) IS the only ability in the
+   * map that scales the CASTER, and its real numbers are: absolute
+   * SetUnitScalePercent 130 → 190 in 10-point steps over 7 ticks of a 0.04 s
+   * timer (j:51931-51932, `Size = 190 - Color*2` with `Color` counting 30→0),
+   * held through the charge, then restored to 120 at the blast (j:52028) —
+   * which is the hero's own base scale (`Hapm.scale = 1.2` in OBJECTS.json), so
+   * as a multiplier over GGD's #150-normalised size the ramp is 1.083 → 1.583
+   * and back to 1.0.
+   *
+   * But that ability is NOT a leap — it is a paused grow-then-charge with no
+   * `SetUnitFlyHeightBJ` anywhere in its cluster — so `LeapSystem`, the only
+   * thing that owns `world.airborne`, cannot drive it. Wiring it needs a new
+   * EffectDef kind, a new per-entity ramp store, its own death/round-reset
+   * teardown and a digest fold: a new sim feature, not the completion of a
+   * wire, and out of scope for a follow-up fix. It belongs with #249 (變身系統)
+   * / #50 (per-invocation art params), which own unit scaling; the JASS numbers
+   * are recorded here so whoever picks it up does not have to re-derive them.
+   */
 
   constructor() {
     super();
@@ -345,6 +385,7 @@ export class EntityState extends Schema {
     this.shield = 0;
     this.alive = true;
     this.flags = 0;
+    this.h = 0;
   }
 }
 defineTypes(EntityState, {
@@ -364,6 +405,7 @@ defineTypes(EntityState, {
   shield: "float32",
   alive: "boolean",
   flags: "uint16",
+  h: "float32",
 });
 
 export class MatchState extends Schema {
@@ -572,6 +614,24 @@ export const ENTITY_FLAG = {
    * lookup (EntityViewRegistry is deliberately walled off from the seat table).
    */
   MUD_BOSS: 1024,
+  /**
+   * champion only: MID-LEAP this tick (task #247) — the body is out of the
+   * planar physics world and its `h` is authoritative.
+   *
+   * Preferred over `h > 0` by every render consumer because it is ALSO true on
+   * the takeoff and landing ticks, where the height is exactly 0. That matters:
+   * locomotion must be suppressed for the whole flight, and a champion covering
+   * ~0.33 u/tick planar would otherwise RUN THROUGH THE AIR with its legs
+   * cycling. Costs zero extra bytes — it rides the existing uint16 `flags`.
+   *
+   * BIT ASSIGNMENT (integration batch A): #247 originally authored this as 512,
+   * but #244 黑泥吞噬 had already shipped MUD_SWELL=512 / MUD_BOSS=1024 to main.
+   * Both features are load-bearing, so the UNMERGED side moved: AIRBORNE is
+   * 2048, the next free bit. Nothing persists a raw flags word, so no migration
+   * is owed — but every producer/consumer and every test asserting the literal
+   * was re-pointed in the same commit.
+   */
+  AIRBORNE: 2048,
 } as const;
 
 /**

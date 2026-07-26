@@ -6,15 +6,15 @@
   "attackType": "melee",
   "modelKey": "champ.skin.barbarian",
   "baseStats": {
-    "maxHealth": 100,
-    "healthRegen": 1.4,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 22,
+    "maxHealth": -450,
+    "healthRegen": 0,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 5,
+    "armor": -10,
     "mr": 28,
-    "as": 0.5,
+    "as": 0.526316,
     "ms": 5.5,
     "critChance": 0,
     "critDamage": 1.75,
@@ -31,6 +31,16 @@
     "armor": 0.4,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 23,
+    "agi": 14,
+    "int": 18,
+    "strGrowth": 2.8,
+    "agiGrowth": 1.5,
+    "intGrowth": 1.8,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 3,
@@ -233,5 +243,15 @@
     0.5882,
     0.5882,
     0.5882
-  ]
+  ],
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-u012",
+    "normalUnitRawcode": "U012",
+    "alternateUnitRawcode": "U011",
+    "triggerAbility": {
+      "rawcode": "Aphx",
+      "name": "61-00百連我殺 效果"
+    }
+  }
 }

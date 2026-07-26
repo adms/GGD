@@ -39,6 +39,7 @@ import type {
   CodexSlot,
   CodexWhitelist,
 } from "@ggd/shared/codex/codexTypes";
+import type { ChampionAttributes } from "@ggd/shared/sim/stats/attributes";
 
 /** Content mount (dev: vite `serveContent`; prod: nginx). */
 export const CONTENT_BASE = "/content";
@@ -161,6 +162,34 @@ function numRecord(v: unknown): Record<string, number> {
   const out: Record<string, number> = {};
   for (const [k, val] of Object.entries(src)) if (typeof val === "number" && Number.isFinite(val)) out[k] = val;
   return out;
+}
+/**
+ * The 三圍 block (task #248). All six numbers must be present and finite — a
+ * partial block would make `championStatBase` derive from garbage, so a
+ * malformed one degrades to null (= no attribute derivation) rather than to
+ * zeros. Stays a runtime read of the fetched doc, per the liveness contract.
+ */
+function championAttributes(v: unknown): ChampionAttributes | null {
+  const src = asRecord(v);
+  if (!src) return null;
+  const n = (k: string): number | null => {
+    const x = src[k];
+    return typeof x === "number" && Number.isFinite(x) ? x : null;
+  };
+  const [st, ag, it, sg, agg, ig] = [n("str"), n("agi"), n("int"), n("strGrowth"), n("agiGrowth"), n("intGrowth")];
+  if (st === null || ag === null || it === null || sg === null || agg === null || ig === null) return null;
+  const primary = src["primary"];
+  const source = src["source"];
+  return {
+    str: st,
+    agi: ag,
+    int: it,
+    strGrowth: sg,
+    agiGrowth: agg,
+    intGrowth: ig,
+    primary: primary === "AGI" || primary === "INT" ? primary : "STR",
+    source: source === "authored" ? "authored" : "w3x",
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -291,6 +320,7 @@ export function normaliseChampion(raw: unknown): CodexChampion | null {
     icon: str(doc["icon"]),
     baseStats: numRecord(doc["baseStats"]),
     growth: numRecord(doc["growth"]),
+    attributes: championAttributes(doc["attributes"]),
     abilityIds,
     exAbilityId,
     buildPriority: strArray(doc["buildPriority"]),

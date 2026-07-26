@@ -26,6 +26,7 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { spawnChampion } from "../spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilitySystem";
 import { Stat } from "../stats/statTypes";
+import { championStatBase } from "../stats/attributes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import type { CoreAbilitySlot } from "../intents";
 
@@ -85,6 +86,20 @@ function topUpMana(world: SimWorld, id: EntityId): void {
 
 function stats(world: SimWorld, id: EntityId): Record<Stat, number> {
   return world.stats.get(id)!.final;
+}
+
+/**
+ * The champion's LEVEL-1 base for `stat`, 三圍 included (task #248).
+ *
+ * These fidelity assertions are all of the form "the passive adds exactly N on
+ * top of the hero's own base", so the baseline has to be the hero's REAL base.
+ * `def.baseStats[stat]` is no longer that: since #248 it is the raw w3x card
+ * (呂布 `ad` 6, not the 33 he fights with) and the attribute term is added by
+ * `recomputeStats`. Reading it directly would make every one of these tests
+ * assert the wrong number while still looking correct.
+ */
+function champBase(championId: string, stat: Stat): number {
+  return championStatBase(Champions.get(championId as ChampionId), stat, 1);
 }
 
 /**
@@ -188,9 +203,8 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     const world = new SimWorld(SKELETON_ARENA, 3);
     // Q starts LEARNED at spawn, so its passive must already be attached
     const lubu = mk(world, "godie-h01u", 0, -3);
-    const def = Champions.get("godie-h01u" as ChampionId);
-    const baseAd = def.baseStats.ad ?? 0;
-    const baseArmor = def.baseStats.armor ?? 0;
+    const baseAd = champBase("godie-h01u", Stat.AttackDamage);
+    const baseArmor = champBase("godie-h01u", Stat.Armor);
 
     // JASS skill1 -> A0N5 Iatt lv2 = +25 AD, A0N4 Idef lv2 = -3 armor
     expect(stats(world, lubu)[Stat.AttackDamage]).toBeCloseTo(baseAd + 25, 4);
@@ -235,9 +249,8 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     cover("fidelity-passive-aura");
     const world = new SimWorld(SKELETON_ARENA, 9);
     const konoka = mk(world, "godie-etyr", 0, -3);
-    const def = Champions.get("godie-etyr" as ChampionId);
-    const baseAs = def.baseStats.as ?? 0;
-    const baseMs = def.baseStats.ms ?? 0;
+    const baseAs = champBase("godie-etyr", Stat.AttackSpeed);
+    const baseMs = champBase("godie-etyr", Stat.MoveSpeed);
 
     toRank(world, konoka, "W", 1); // w3a 增加攻擊速度 35 %, 增加移動速度 5 %
     expect(stats(world, konoka)[Stat.AttackSpeed]).toBeCloseTo(baseAs * 1.35, 5);
@@ -252,7 +265,7 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     cover("fidelity-passive-ex");
     const world = new SimWorld(SKELETON_ARENA, 13);
     const konoka = mk(world, "godie-etyr", 0, -3);
-    const base = Champions.get("godie-etyr" as ChampionId).baseStats.manaRegen ?? 0;
+    const base = champBase("godie-etyr", Stat.ManaRegen);
 
     expect(stats(world, konoka)[Stat.ManaRegen]).toBeCloseTo(base, 5);
     expect(learnEx(world, konoka)).toBe(true);
@@ -290,9 +303,8 @@ describe("the Aamk leak: attribute buttons are stat passives, not damage nukes",
     const world = new SimWorld(SKELETON_ARENA, 23);
     const saber = mk(world, "godie-e00q", 0, -2);
     const victim = mk(world, "godie-hart", 1, 2);
-    const def = Champions.get("godie-e00q" as ChampionId);
-    const baseAd = def.baseStats.ad ?? 0;
-    const baseHp = def.baseStats.maxHealth ?? 0;
+    const baseAd = champBase("godie-e00q", Stat.AttackDamage);
+    const baseHp = champBase("godie-e00q", Stat.MaxHealth);
 
     // Q is learned at spawn: w3a 力量加成 4 -> ad +4, maxHealth +88 (22/STR)
     expect(stats(world, saber)[Stat.AttackDamage]).toBeCloseTo(baseAd + 4, 4);
@@ -313,9 +325,8 @@ describe("the Aamk leak: attribute buttons are stat passives, not damage nukes",
     cover("fidelity-aamk-agi");
     const world = new SimWorld(SKELETON_ARENA, 29);
     const sasuke = mk(world, "godie-edem", 0, -2);
-    const def = Champions.get("godie-edem" as ChampionId);
-    const baseArmor = def.baseStats.armor ?? 0;
-    const baseAs = def.baseStats.as ?? 0;
+    const baseArmor = champBase("godie-edem", Stat.Armor);
+    const baseAs = champBase("godie-edem", Stat.AttackSpeed);
 
     toRank(world, sasuke, "R", 1); // w3a 靈敏度加成 12 -> armor +3.6, as +24 %
     expect(stats(world, sasuke)[Stat.Armor]).toBeCloseTo(baseArmor + 3.6, 4);
@@ -326,7 +337,7 @@ describe("the Aamk leak: attribute buttons are stat passives, not damage nukes",
     cover("fidelity-aamk-mana");
     const world = new SimWorld(SKELETON_ARENA, 31);
     const saber = mk(world, "godie-e00q", 0, -2);
-    const baseMana = Champions.get("godie-e00q" as ChampionId).baseStats.maxMana ?? 0;
+    const baseMana = champBase("godie-e00q", Stat.MaxMana);
 
     toRank(world, saber, "R", 1); // war3map.w3q Rhpt effect1 rmnx = 500/level
     expect(stats(world, saber)[Stat.MaxMana]).toBeCloseTo(baseMana + 500, 3);

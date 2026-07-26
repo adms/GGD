@@ -7,15 +7,15 @@
   "attackType": "melee",
   "modelKey": "champ.thorne",
   "baseStats": {
-    "maxHealth": 660,
-    "healthRegen": 1.7,
-    "maxMana": 168,
-    "manaRegen": 1.36,
-    "ad": 35,
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 0,
+    "manaRegen": 0.1,
+    "ad": 7,
     "ap": 0,
-    "armor": 5,
+    "armor": 0,
     "mr": 28,
-    "as": 0.53,
+    "as": 0.526316,
     "ms": 5.8,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.4,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 29,
+    "agi": 13,
+    "int": 14,
+    "strGrowth": 2.8,
+    "agiGrowth": 1.4,
+    "intGrowth": 1.7,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 4,
@@ -110,22 +120,34 @@
       "range": 5.5,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              350.0,
-              450.0,
-              550.0,
-              650.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
+          "kind": "leap",
+          "applyTo": "target",
+          "mode": "toPoint",
+          "apexHeight": 1.2,
+          "durationSec": 0.42,
+          "throwDistance": 7.33,
+          "dragToCaster": true,
+          "landRadius": 4.95,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  350.0,
+                  450.0,
+                  550.0,
+                  650.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.5
+                  }
+                ]
               }
-            ]
-          }
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",

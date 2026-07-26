@@ -21,6 +21,8 @@ const PACK: ChampionVoicePack = {
     "godie-e001": {
       engine: "cosyvoice3",
       variant: "cv3-0.5b",
+      // its OWN pack, not borrowed across a 變身 form link (see resolveVoicePackId)
+      sharedFrom: null,
       lines: {
         "skill-name.q": [clip("assets/audio/voices/lines/godie-e001/skill-name.q.mp3")],
         crit: [clip("assets/audio/voices/lines/godie-e001/crit.mp3")],

@@ -23,7 +23,13 @@ export interface DegradeNote {
  * about what their skill will do in game.
  */
 const PLANS: Readonly<Record<string, string>> = {
-  leap: "拋物線跳躍未支援 — 將以 dash 位移 + 落點傷害近似，飛行弧線與滯空時間不表現",
+  // NOTE (task #247): `leap` USED to live here — 「拋物線跳躍未支援 — 將以 dash
+  // 位移 + 落點傷害近似」. The sim now has a real parabolic leap (LeapSystem +
+  // the wire height channel), so SIM_CAPABILITIES.leap flipped to available and
+  // this line became unreachable. Deleting it rather than leaving it is the
+  // point: a stale confession in the ledger is how a future reader concludes the
+  // feature does not exist. The generic fallback at the bottom of degradeNotes
+  // covers any regression.
   knockback: "敵方強制位移未支援 — 範圍傷害照常結算，擊退/拉扯不會發生",
   summon: "召喚單位未支援 — 召喚物不會出現，僅保留施法端的數值效果",
   combo: "鎖定連段未支援 — 一次施放只跑一輪效果，分段時序不表現",

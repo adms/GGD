@@ -7,13 +7,13 @@
   "attackType": "ranged",
   "modelKey": "imported.herolight",
   "baseStats": {
-    "maxHealth": 420,
-    "healthRegen": 1.0,
-    "maxMana": 264,
-    "manaRegen": 1.68,
-    "ad": 35,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 0,
+    "manaRegen": 0.1,
+    "ad": 12,
     "ap": 0,
-    "armor": 8,
+    "armor": 2,
     "mr": 28,
     "as": 0.5,
     "ms": 5.8,
@@ -32,6 +32,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 15,
+    "agi": 19,
+    "int": 22,
+    "strGrowth": 1.75,
+    "agiGrowth": 1.5,
+    "intGrowth": 2.7,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

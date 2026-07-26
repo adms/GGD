@@ -40,6 +40,79 @@ export const round2 = (x: number): number => Math.round(x * 100) / 100;
 export const toLen = (wc3: number): number => round2(wc3 * GGD_PER_WC3);
 
 // ---------------------------------------------------------------------------
+// ALTITUDE CONVERSION — the VERTICAL axis is NOT the planar axis (task #247b)
+// ---------------------------------------------------------------------------
+
+/**
+ * WC3 FLY HEIGHT → GGD altitude. EXACTLY 1/250, i.e. the vertical axis is
+ * compressed 4.58× relative to the planar `GGD_PER_WC3` = 11/600.
+ *
+ * THIS IS A DELIBERATE OVERRIDE OF THE FAITHFUL-IMPORT RULE, AND ONLY ON THIS
+ * ONE AXIS. Read the reasoning before changing it.
+ *
+ * What went wrong. #247 ported the ten `SetUnitFlyHeightBJ` apexes through the
+ * PLANAR scale (A=600 → 11.00 u) on the assumption that one map has one scale.
+ * Measured through the game's real CameraRig at the shipped default
+ * (DOLLY_DEFAULT = DOLLY_MIN = 10, pitch 68°, fov 0.8 rad), 蒼月潮's 07-03 was
+ * off-screen for 73% of its 44 ticks and spent part of the arc FULLY BEHIND THE
+ * NEAR PLANE — the model turns inside-out and vanishes. That is #93 again: a
+ * spectacle nobody can see. The rule this project recorded from #93 is
+ * 「驗證畫面必須用遊戲真正的 68° 鏡頭拍」, and this constant is what that rule
+ * costs when the two cameras disagree.
+ *
+ * Why a second scale is CORRECT and not a fudge. The planar scale is fixed by
+ * the map's own geometry: 763 → 14.00 u because the arena has that shape. The
+ * vertical scale is fixed by the CAMERA, and GGD's camera is not WC3's:
+ *
+ *                        pitch      eye→target     vertical FOV
+ *     WC3 default        ~30°       1650 u         ~70°
+ *     GGD combat          68°         10 u         ~45.8° (0.8 rad)
+ *
+ * Solving "how far above the camera target may a body rise and stay inside the
+ * frustum" for each rig gives the VERTICAL HEADROOM, and that is the quantity a
+ * fly height is really expressed in:
+ *
+ *     WC3  ≈ 950 WC3 u of headroom      GGD ≈ 5.51 GGD u of headroom
+ *
+ * So one unit of GGD headroom buys ~172 WC3 units of headroom — not 54.5. The
+ * planar constant is simply the wrong ruler for this axis; using it inflated
+ * every apex by ~3.2× in screen terms. Porting the value at 1/250 keeps every
+ * arc inside the frame the player actually has, which is the behaviour the
+ * source had on the screen the source shipped with.
+ *
+ * Why 1/250 exactly. It is the round number that puts the LARGEST arc in the
+ * whole JASS family (A0RZ, A = 1000, 76-04 巨人迴旋彈) at 4.00 u — under the
+ * 4.61 u ceiling where a champion's mid-body leaves the viewport, and above the
+ * 3.71 u ceiling where the top of its head does, so the biggest leap in the game
+ * (and only that one) gets the dramatic apex peek. Every other site is framed
+ * head-to-toe for its entire flight. All of it is measured, not asserted:
+ * apps/client/src/render/leapFraming.test.ts drives the real CameraRig and the
+ * real client-side interpolation over EVERY leap in content.
+ *
+ * ORDERING IS PRESERVED, which is the part of faithfulness that survives: the
+ * map's own hierarchy of arcs (1000 > 600 > 400 > 300 > 250) is intact, because
+ * this is one linear factor and not a per-ability hand-tune.
+ *
+ * NOT APPLIED TO ANYTHING ELSE. `range`, `radius`, `landRadius` and
+ * `throwDistance` are planar and keep `GGD_PER_WC3` untouched.
+ */
+export const GGD_APEX_PER_WC3 = 1 / 250;
+
+/**
+ * Round to 3 decimals — MILLI-units, which is the resolution the leap actually
+ * runs at: `startLeap` stores `Math.round(apexHeight * 1000)` and integrates in
+ * integer milli-units for determinism (sim/movement/leap.ts). Planar lengths use
+ * `round2` because that is the precision content stores lengths at, but reusing
+ * it here would quantise altitude to 2.5 WC3 units per step and silently swallow
+ * small authored changes — the exact "live form field the expander ignores"
+ * failure paramsSchema.test.ts exists to catch.
+ */
+export const round3 = (x: number): number => Math.round(x * 1000) / 1000;
+
+/** Convert a WC3 fly height to a GGD altitude, at the sim's own milli resolution. */
+export const toApex = (wc3: number): number => round3(wc3 * GGD_APEX_PER_WC3);
+
+// ---------------------------------------------------------------------------
 // SIM CAPABILITY TABLE (design §2.4) — the editor colours a template's
 // requires[] badge red when a required capability is not `available`.
 // ---------------------------------------------------------------------------
@@ -58,7 +131,17 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   applyStatus: { p: 1, available: true },
   auras: { p: 1, available: true },
   dash: { p: 2, available: true }, // kind exists, but no P1 family uses it
-  leap: { p: 2, available: false },
+  // task #247 — the `leap` EffectDef, LeapSystem, the wire height/scale channel
+  // and the client arc all shipped, ported from the map's own nine
+  // SetUnitFlyHeightBJ parabolas. Flipping this one flag is load-bearing and
+  // free downstream: `missingCaps` stops returning "leap", so the editor's
+  // degrade panel drops its red badge and grows a green ✓ chip with NO editor
+  // change at all — which is exactly what the shared table was for.
+  leap: { p: 2, available: true },
+  // UNCHANGED, deliberately. The knockback in combat/damage.ts is a REACTION to
+  // a landed hit, not an EffectDef a template author can emit — there is no
+  // `knockback` kind. #247's `applyTo: "target"` is not it either: that is a
+  // parabola, not a directed impulse. False stays the honest answer.
   knockback: { p: 2, available: false },
   summon: { p: 3, available: false },
   combo: { p: 3, available: false },
@@ -117,7 +200,10 @@ function has(t: TemplateDoc, params: Record<string, unknown>, name: string): boo
   return slot.default !== undefined && slot.default !== null;
 }
 
-/** A numeric slot, range-checked. `wc3u` slots are length-converted. */
+/**
+ * A numeric slot, range-checked. `wc3u` slots are PLANAR-length-converted;
+ * `wc3h` slots are ALTITUDE-converted (a different ruler — see GGD_APEX_PER_WC3).
+ */
 function num(t: TemplateDoc, params: Record<string, unknown>, name: string): number {
   const slot = t.params[name]!;
   const v = raw(t, params, name);
@@ -130,7 +216,9 @@ function num(t: TemplateDoc, params: Record<string, unknown>, name: string): num
   if (slot.max !== undefined && v > slot.max) {
     throw new ExpandError(`template ${t.id}: param "${name}"=${v} above max ${slot.max}`);
   }
-  return slot.unit === "wc3u" ? toLen(v) : v;
+  if (slot.unit === "wc3u") return toLen(v);
+  if (slot.unit === "wc3h") return toApex(v);
+  return v;
 }
 
 function str(t: TemplateDoc, params: Record<string, unknown>, name: string): string {
@@ -269,6 +357,40 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       ...(has(t, p, "internalCooldown") ? { internalCooldown: num(t, p, "internalCooldown") } : {}),
     };
     return { castType: "self", innateKind: "passive", effects: [], passive: procPassive(hook) };
+  },
+
+  // 9. 跳躍落地 (task #247) — the map's own parabola. Every default is the REAL
+  // A0G3 number, so an empty form expands to 蒼月潮's 07-03 列、在、前 and the
+  // template documents itself against the source. `wc3u` slots go through
+  // `toLen`, so apexHeight 600 reaches the sim as 11.00 and landRadius 330 as
+  // 6.05 — no second conversion constant anywhere.
+  //
+  // castType is always "ground": a leap targets a POINT (the JASS reads
+  // GetSpellTargetLoc at j:34196), never a unit.
+  "leap-strike": (t, p) => {
+    const landRadius = num(t, p, "landRadius");
+    const mode = str(t, p, "mode") as "toPoint" | "inPlace";
+    const applyTo = str(t, p, "applyTo") as "self" | "target";
+    const onLand: EffectDef[] = [
+      damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+    ];
+    return {
+      castType: "ground",
+      targetsEnemies: true,
+      radius: landRadius,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "leap",
+          mode,
+          applyTo,
+          apexHeight: num(t, p, "apexHeight"),
+          durationSec: num(t, p, "durationSec"),
+          landRadius,
+          onLand,
+        },
+      ],
+    };
   },
 
   // 8. 變身強化(數值面) — self stat buff, NUMERIC side only. 戰鬥涅吉 82-04 闇之魔法.

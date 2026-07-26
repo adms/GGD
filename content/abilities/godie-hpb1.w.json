@@ -40,6 +40,12 @@
           }
         ]
       }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "moon-combo",
+      "duration": 1.0,
+      "applyTo": "self"
     }
   ],
   "vfxKey": "fx.prim.physical.pulse-sm",

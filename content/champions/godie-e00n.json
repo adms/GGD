@@ -6,15 +6,15 @@
   "attackType": "melee",
   "modelKey": "imported.renaryugu2",
   "baseStats": {
-    "maxHealth": 460,
-    "healthRegen": 1.1,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 93,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 70,
     "ap": 0,
-    "armor": 9,
+    "armor": 0,
     "mr": 28,
-    "as": 0.67,
+    "as": 0.666667,
     "ms": 7.7,
     "critChance": 0,
     "critDamage": 1.75,
@@ -31,6 +31,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 23,
+    "int": 20,
+    "strGrowth": 1.75,
+    "agiGrowth": 2.8,
+    "intGrowth": 1.65,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
@@ -217,5 +227,27 @@
   ],
   "exAbility": "godie-e00n.ex",
   "passiveAbility": "godie-e00n.passive",
-  "icon": "assets/icons/champions/godie-e00n.png"
+  "icon": "assets/icons/champions/godie-e00n.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-e001",
+    "normalUnitRawcode": "E001",
+    "alternateUnitRawcode": "E00N",
+    "triggerAbility": {
+      "rawcode": "A02Q",
+      "name": "22-04 雛見澤症候群L5",
+      "durationSec": {
+        "1": 7.0,
+        "2": 14.0,
+        "3": 21.0,
+        "4": 28.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 75.0
+      }
+    }
+  }
 }

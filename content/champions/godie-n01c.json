@@ -8,13 +8,13 @@
   "modelKey": "imported.sd2",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 460,
-    "healthRegen": 1.1,
-    "maxMana": 256,
-    "manaRegen": 1.32,
-    "ad": 40,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 15,
     "ap": 0,
-    "armor": 10,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.9,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 25,
+    "int": 13,
+    "strGrowth": 1.7,
+    "agiGrowth": 2.7,
+    "intGrowth": 1.8,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
@@ -234,5 +244,27 @@
   ],
   "exAbility": "godie-n01c.ex",
   "passiveAbility": "godie-n01c.passive",
-  "icon": "assets/icons/champions/godie-n01c.png"
+  "icon": "assets/icons/champions/godie-n01c.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-nbbc",
+    "normalUnitRawcode": "NBBC",
+    "alternateUnitRawcode": "N01C",
+    "triggerAbility": {
+      "rawcode": "A0T1",
+      "name": "08-002 龍魔人",
+      "durationSec": {
+        "1": 20.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

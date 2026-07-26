@@ -21,6 +21,7 @@ import {
   paramsSchemaFor,
   defaultParamsFor,
   toLen,
+  toApex,
   zAbilityDoc,
   zChampionDoc,
   type TemplateDoc,
@@ -271,7 +272,12 @@ export function ForgeStudio({ template, onBack }: { template: TemplateDoc; onBac
   );
 }
 
-/** wc3u slots show what the sim will actually receive, in sim units. */
+/**
+ * wc3u / wc3h slots show what the sim will actually receive, in sim units.
+ * The two rulers are DIFFERENT (planar vs altitude — see GGD_APEX_PER_WC3), so
+ * the hint names the unit it converted from; otherwise an author reading
+ * "600 = 11" for a radius and "600 = 2.4" for an apex would think one is a bug.
+ */
 function UnitHints({
   template,
   params,
@@ -280,8 +286,8 @@ function UnitHints({
   params: Record<string, unknown>;
 }) {
   const rows = Object.entries(template.params)
-    .filter(([, slot]) => slot.unit === "wc3u")
-    .map(([name]) => ({ name, value: params[name] }))
+    .filter(([, slot]) => slot.unit === "wc3u" || slot.unit === "wc3h")
+    .map(([name, slot]) => ({ name, unit: slot.unit, value: params[name] }))
     .filter((r) => typeof r.value === "number");
   if (rows.length === 0) return null;
   return (
@@ -290,7 +296,8 @@ function UnitHints({
       {rows.map((r) => (
         <span key={r.name} className="forge-unit">
           {" "}
-          {r.name} {String(r.value)} wc3u = {toLen(r.value as number)} sim u
+          {r.name} {String(r.value)} {r.unit} ={" "}
+          {r.unit === "wc3h" ? toApex(r.value as number) : toLen(r.value as number)} sim u
         </span>
       ))}
     </p>

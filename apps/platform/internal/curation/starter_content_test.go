@@ -13,6 +13,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/ggd/platform/internal/curation"
+	"github.com/ggd/platform/internal/wallet"
 	"github.com/ggd/platform/pkg/testkit"
 )
 
@@ -554,17 +555,25 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 // (賈修貝爾 #05). Adding a champion here is deliberate and reviewable — that is
 // the whole point of the pin. The new-hero checklist that must be walked before
 // an id lands in this list is docs/新英雄上架SOP.md.
+// TASK #249 SWAPPED TEN OF THESE from the 變身 form to the BASE unit. Each swap
+// is `alternate → base` for one hero, so the roster SIZE and the set of hero
+// 編號 are unchanged; what changed is which BODY the player picks:
+//
+//	#04 h020→hjai  #08 n01c→nbbc  #09 o00x→ogrh  #11 u01u→udre  #12 e007→ewar
+//	#18 n00p→nsjs  #25 u00l→umal  #38 u010→uvng  #90 h02r→hgam  #92 h02u→h02v
+//
+// Owner ruling 2026-07-26:「換成本體，變身態改由技能觸發」.
 var firstOpenRoster = []string{
-	"godie-e001", "godie-e002", "godie-e007", "godie-e008", "godie-e00k",
-	"godie-e00r", "godie-e00w", "godie-edem", "godie-efur", "godie-emfr",
-	"godie-emns", "godie-etyr", "godie-h00l", "godie-h01n", "godie-h01u",
-	"godie-h020", "godie-h02k", "godie-h02r", "godie-h02u", "godie-hapm",
-	"godie-hart", "godie-hblm", "godie-hpal", "godie-hpb1", "godie-huth",
-	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-n00p",
-	"godie-n01c", "godie-nplh", "godie-o00k", "godie-o00l", "godie-o00x",
-	"godie-o02p", "godie-ofar", "godie-ogld", "godie-orkn", "godie-osam",
-	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00l", "godie-u00n",
-	"godie-u00v", "godie-u010", "godie-u01u", "godie-ubal", "godie-udea",
+	"godie-e001", "godie-e002", "godie-e008", "godie-e00k", "godie-e00r",
+	"godie-e00w", "godie-edem", "godie-efur", "godie-emfr", "godie-emns",
+	"godie-etyr", "godie-ewar", "godie-h00l", "godie-h01n", "godie-h01u",
+	"godie-h02k", "godie-h02v", "godie-hapm", "godie-hart", "godie-hblm",
+	"godie-hgam", "godie-hjai", "godie-hpal", "godie-hpb1", "godie-huth",
+	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-nbbc",
+	"godie-nplh", "godie-nsjs", "godie-o00k", "godie-o00l", "godie-o02p",
+	"godie-ofar", "godie-ogld", "godie-ogrh", "godie-orkn", "godie-osam",
+	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00n", "godie-u00v",
+	"godie-ubal", "godie-udea", "godie-udre", "godie-umal", "godie-uvng",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
@@ -586,6 +595,121 @@ func TestFirstOpenRoster(t *testing.T) {
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
 		"the starter bundle's enabled champion set must be EXACTLY the 50 canonical first-open-roster ids")
+}
+
+// storePricesDoc is the championPrices half of content/config/store.json —
+// the same field wallet.LoadCatalog reads into Catalog.ChampionPrices.
+type storePricesDoc struct {
+	ChampionPrices map[string]int `json:"championPrices"`
+}
+
+// FREE / PRICED is the ECONOMY SHAPE the owner has deliberately decided not to
+// change (2026-07-26:「藍水晶本來就是獎勵 有人抱怨我們再來改」). The roster may
+// move ids; it may not quietly move these two numbers.
+const (
+	starterFreeChampions   = 12
+	starterPricedChampions = 38
+)
+
+// whitelist-store-prices: content/config/store.json's championPrices map and
+// the first open roster are the SAME SET, in both directions.
+//
+// WHY THIS EXISTS (task #249 regression). Nothing pinned the relationship, so
+// when R6 swapped ten roster slots from the 變身 alternate to the base unit,
+// store.json was left untouched and BOTH directions drifted at once:
+//
+//   - a roster id with NO price entry is FREE on both sides — the client's
+//     lockStateOf returns "free" for `price === undefined`, and the server's
+//     wallet.OwnsChampion returns true for `!priced`. The ten swapped-in bases
+//     silently bypassed the 300-crystal unlock and the crystal SINK fell from
+//     38 priced champions to 31.
+//   - a PRICED id that is no longer on the roster is worse: Catalog.
+//     FreeChampions() seeds a new account's OwnedChampions from `price == 0`,
+//     so every registration was still granted godie-h020 / godie-o00x /
+//     godie-u01u — three ids nobody can pick. The lobby store also renders one
+//     dead row per orphan.
+//
+// Every gate stayed green through all of that, which is why this one names the
+// specific ids on BOTH sides rather than reporting a count: whoever moves a
+// roster id next is told exactly which store.json lines to move with it.
+func TestStarterRosterMatchesChampionPrices(t *testing.T) {
+	testkit.Cover(t, "whitelist-store-prices")
+	root := contentRoot()
+	storePath := filepath.Join(root, "config", "store.json")
+	if _, err := os.Stat(storePath); err != nil {
+		t.Skipf("content tree not present at %s — skipping roster/price reconciliation", storePath)
+	}
+
+	prices := readJSON[storePricesDoc](t, storePath).ChampionPrices
+	require.NotEmpty(t, prices, "%s carries no championPrices", storePath)
+
+	roster := curation.StarterSet().Champions
+	inRoster := make(map[string]struct{}, len(roster))
+	for _, id := range roster {
+		inRoster[id] = struct{}{}
+	}
+
+	var unpriced []string // on the roster, absent from store.json → FREE by accident
+	for _, id := range roster {
+		if _, ok := prices[id]; !ok {
+			unpriced = append(unpriced, id)
+		}
+	}
+	var orphaned []string // in store.json, off the roster → seeded but unpickable
+	for id := range prices {
+		if _, ok := inRoster[id]; !ok {
+			orphaned = append(orphaned, fmt.Sprintf("%s (price %d)", id, prices[id]))
+		}
+	}
+	sort.Strings(unpriced)
+	sort.Strings(orphaned)
+
+	assert.Emptyf(t, unpriced,
+		"%d first-open-roster champion(s) have NO championPrices entry in %s, which makes them FREE "+
+			"on both the client (lockStateOf: price===undefined → \"free\") and the server "+
+			"(wallet.OwnsChampion: !priced → true). Add a price for each — %v",
+		len(unpriced), storePath, unpriced)
+
+	assert.Emptyf(t, orphaned,
+		"%d championPrices entr(ies) in %s name a champion that is NOT on the first open roster. "+
+			"A 0-price orphan is seeded into every NEW ACCOUNT by Catalog.FreeChampions() and a priced "+
+			"one renders a dead lobby-store row — in both cases for an id nobody can pick. Remove each "+
+			"(or add it to starterChampions on purpose) — %v",
+		len(orphaned), storePath, orphaned)
+
+	// The SHAPE, not just the membership. Every price is either free or exactly
+	// the flat crystal unlock cost the client mirrors in walletMeta.ts
+	// (CRYSTAL_UNLOCK_COST) — a third value would show the player one number in
+	// champ-select and charge another (Catalog.PriceDrift warns about this at
+	// boot; here it is a hard gate on the shipped content).
+	free, priced := 0, 0
+	var offPrice []string
+	for _, id := range roster {
+		switch p := prices[id]; {
+		case p == 0:
+			free++
+		case p == wallet.CrystalUnlockCost:
+			priced++
+		default:
+			offPrice = append(offPrice, fmt.Sprintf("%s = %d", id, p))
+		}
+	}
+	sort.Strings(offPrice)
+	assert.Emptyf(t, offPrice,
+		"every roster champion must cost 0 (free starter) or exactly %d crystals "+
+			"(wallet.CrystalUnlockCost, mirrored by the client's CRYSTAL_UNLOCK_COST); these disagree — %v",
+		wallet.CrystalUnlockCost, offPrice)
+
+	assert.Equalf(t, starterFreeChampions, free,
+		"the roster ships %d FREE champions, expected %d. The crystal economy's shape is a deliberate "+
+			"owner decision (2026-07-26:「藍水晶本來就是獎勵 有人抱怨我們再來改」) — moving a roster id "+
+			"must carry its price across, not change how many heroes are free. If this change IS "+
+			"intended, update starterFreeChampions/starterPricedChampions here so it is reviewed.",
+		free, starterFreeChampions)
+	assert.Equalf(t, starterPricedChampions, priced,
+		"the roster ships %d PRICED champions, expected %d — that is the crystal SINK. See the note on "+
+			"starterFreeChampions before changing this pin.",
+		priced, starterPricedChampions)
 }
 
 // whitelist-starter-shape: the bundle's three lists are internally consistent

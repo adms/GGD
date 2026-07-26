@@ -7,15 +7,15 @@
   "attackType": "melee",
   "modelKey": "imported.mfls",
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 34,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 9,
+    "armor": 0,
     "mr": 28,
-    "as": 0.59,
+    "as": 0.588235,
     "ms": 10.1,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 24,
+    "int": 16,
+    "strGrowth": 1.8,
+    "agiGrowth": 2.85,
+    "intGrowth": 1.65,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
@@ -239,5 +249,27 @@
   ],
   "exAbility": "godie-e00x.ex",
   "passiveAbility": "godie-e00x.passive",
-  "icon": "assets/icons/champions/godie-e00x.png"
+  "icon": "assets/icons/champions/godie-e00x.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-e00w",
+    "normalUnitRawcode": "E00W",
+    "alternateUnitRawcode": "E00X",
+    "triggerAbility": {
+      "rawcode": "A0JG",
+      "name": "77-03 GLADIARIA ALAT",
+      "durationSec": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

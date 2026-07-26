@@ -8,13 +8,13 @@
   "attackType": "melee",
   "modelKey": "imported.horse",
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 352,
-    "manaRegen": 1.64,
-    "ad": 29,
+    "maxHealth": 150,
+    "healthRegen": 0.5,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 9,
+    "armor": 2,
     "mr": 28,
     "as": 0.5,
     "ms": 5.5,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 23,
+    "int": 21,
+    "strGrowth": 1.5,
+    "agiGrowth": 2.5,
+    "intGrowth": 2,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -275,5 +285,27 @@
         ]
       }
     ]
+  },
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-h02v",
+    "normalUnitRawcode": "H02V",
+    "alternateUnitRawcode": "H02U",
+    "triggerAbility": {
+      "rawcode": "A0W9",
+      "name": "92-01 臥草泥馬",
+      "durationSec": {
+        "1": 10.0,
+        "2": 10.0,
+        "3": 5.0,
+        "4": 5.0
+      },
+      "cooldownSec": {
+        "1": 40.0,
+        "2": 40.0,
+        "3": 20.0,
+        "4": 20.0
+      }
+    }
   }
 }

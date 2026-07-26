@@ -8,13 +8,13 @@
   "modelKey": "imported.herohehi",
   "attackDamagePoint": 0.3,
   "baseStats": {
-    "maxHealth": 420,
-    "healthRegen": 1.0,
-    "maxMana": 268,
-    "manaRegen": 1.36,
-    "ad": 37,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 12,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 6.0,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 15,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 1.95,
+    "agiGrowth": 2.65,
+    "intGrowth": 1.65,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
@@ -291,5 +301,21 @@
   ],
   "exAbility": "godie-uvng.ex",
   "passiveAbility": "godie-uvng.passive",
-  "icon": "assets/icons/champions/godie-uvng.png"
+  "icon": "assets/icons/champions/godie-uvng.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u010",
+    "normalUnitRawcode": "UVNG",
+    "alternateUnitRawcode": "U010",
+    "triggerAbility": {
+      "rawcode": "A0OH",
+      "name": "38-00 邪眼全開",
+      "durationSec": {
+        "1": 10.0
+      },
+      "cooldownSec": {
+        "1": 60.0
+      }
+    }
+  }
 }

@@ -7,15 +7,15 @@
   "attackType": "melee",
   "modelKey": "imported.goku",
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 316,
-    "manaRegen": 1.52,
-    "ad": 28,
+    "maxHealth": 150,
+    "healthRegen": 0.3,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
-    "as": 0.83,
+    "as": 0.833333,
     "ms": 7.7,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.7,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 18,
+    "int": 18,
+    "strGrowth": 2.6,
+    "agiGrowth": 2.3,
+    "intGrowth": 1.5,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -222,5 +232,27 @@
   ],
   "exAbility": "godie-o00x.ex",
   "passiveAbility": "godie-o00x.passive",
-  "icon": "assets/icons/champions/godie-o00x.png"
+  "icon": "assets/icons/champions/godie-o00x.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-ogrh",
+    "normalUnitRawcode": "OGRH",
+    "alternateUnitRawcode": "O00X",
+    "triggerAbility": {
+      "rawcode": "A09E",
+      "name": "09-03 超級賽亞人",
+      "durationSec": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -20,7 +20,9 @@ import {
   NEUTRAL,
   STEP,
   changedKeys,
+  defaultForKey,
   emptyCombatEnvDoc,
+  isAttributeEnvKey,
   formFromDoc,
   formValid,
   formatFactor,
@@ -96,8 +98,9 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
 
   it("every sim key is labelled in zh-Hant and shown in exactly one group", () => {
     cover("adminui-combatenv");
-    // the page's key list IS the sim's — no drift possible
-    expect(COMBAT_ENV_KEYS).toHaveLength(18);
+    // the page's key list IS the sim's — no drift possible.
+    // 18 ×factors + the 8 三圍 coefficients #248 added to the same table.
+    expect(COMBAT_ENV_KEYS).toHaveLength(26);
     for (const k of COMBAT_ENV_KEYS) {
       expect(COMBAT_ENV_LABELS[k].zh, `label for ${k}`).toBeTruthy();
       expect(COMBAT_ENV_LABELS[k].note, `note for ${k}`).toBeTruthy();
@@ -127,7 +130,7 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
 describe("combat-env form editing (adminui-combatenv)", () => {
   const doc = normalizeCombatEnvDoc(SAVED);
 
-  it("per-row reset returns just that key to 1.0; 全部重設 neutralizes the table", () => {
+  it("per-row reset returns just that key to its default; 全部重設 does the table", () => {
     cover("adminui-combatenv");
     const form = formFromDoc(doc);
     const oneReset = resetField(form, "cooldown");
@@ -137,7 +140,18 @@ describe("combat-env form editing (adminui-combatenv)", () => {
 
     const all = resetAll();
     expect(all).toEqual(neutralForm());
-    for (const k of COMBAT_ENV_KEYS) expect(all[k]).toBe("1");
+    // #248: "reset" is the SHIPPED value, not a blanket 1.0 — resetting
+    // 力量→生命 to 1 would not be neutral, it would delete 96% of every
+    // champion's health. Only the eighteen ×factors go back to 1.
+    for (const k of COMBAT_ENV_KEYS) {
+      expect(all[k], k).toBe(isAttributeEnvKey(k) ? String(defaultForKey(k)) : "1");
+    }
+    // The literals are the SOURCE MAP's, not Blizzard's: war3mapMisc.txt says
+    // StrHitPointBonus=23 where MiscGame.txt says 25. Spelled out rather than
+    // read from defaultForKey so a silent drift back to the WC3 number someone
+    // half-remembers fails here as well as in attributeCoefficients.test.ts.
+    expect(resetField(form, "strToMaxHealth").strToMaxHealth).toBe("23");
+    expect(resetField(form, "intToMaxMana").intToMaxMana).toBe("15");
   });
 
   it("± step nudges by 0.05 and clamps to the legal range", () => {

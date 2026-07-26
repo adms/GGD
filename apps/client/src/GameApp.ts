@@ -961,7 +961,15 @@ export class GameApp {
     const seen = new Set<number>();
     state.entities.forEach((es) => {
       seen.add(es.id);
-      this.interp.push(es.id, { tick: state.tick, x: es.x, z: es.z, fx: es.fx, fz: es.fz });
+      // #247: fly height interpolates on the same seam as x/z.
+      this.interp.push(es.id, {
+        tick: state.tick,
+        x: es.x,
+        z: es.z,
+        fx: es.fx,
+        fz: es.fz,
+        h: es.h,
+      });
     });
     this.interp.prune(seen);
 
@@ -1376,7 +1384,7 @@ export class GameApp {
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
       if (!e) {
-        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0 };
+        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0, h: 0, airborne: false };
         this.entityPool[i] = e;
       }
       e.id = es.id;
@@ -1393,6 +1401,9 @@ export class GameApp {
       // reads only the two GROWTH bits from it; everything else in this file
       // keeps reading `es.flags` directly, so nothing else changed.
       e.flags = es.flags;
+      // #247 airborne channel (champions only in practice; 0/false for everyone else)
+      e.h = es.h;
+      e.airborne = (es.flags & ENTITY_FLAG.AIRBORNE) !== 0;
       // revive circles (kind 3) reuse the float slots for their own state —
       // see protocol ENTITY_KIND for the mapping. Decoded once here so the
       // render layer never has to know about the packing.

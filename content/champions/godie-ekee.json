@@ -9,13 +9,13 @@
   "modelKey": "champ.sela",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.15,
-    "maxMana": 388,
-    "manaRegen": 1.76,
-    "ad": 43,
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 18,
     "ap": 0,
-    "armor": 6,
+    "armor": 2,
     "mr": 28,
     "as": 0.5,
     "ms": 6.1,
@@ -34,6 +34,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 18,
+    "agi": 15,
+    "int": 24,
+    "strGrowth": 1.5,
+    "agiGrowth": 1.8,
+    "intGrowth": 2.9,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

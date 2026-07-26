@@ -8,13 +8,13 @@
   "modelKey": "imported.heropikachu",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 420,
-    "healthRegen": 1.1,
-    "maxMana": 228,
-    "manaRegen": 1.56,
-    "ad": 29,
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 0,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 6,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 6.2,
@@ -33,6 +33,16 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 18,
+    "int": 19,
+    "strGrowth": 1.5,
+    "agiGrowth": 2.9,
+    "intGrowth": 1.6,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -320,5 +330,27 @@
   ],
   "exAbility": "godie-ofar.ex",
   "passiveAbility": "godie-ofar.passive",
-  "icon": "assets/icons/champions/godie-ofar.png"
+  "icon": "assets/icons/champions/godie-ofar.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-o02l",
+    "normalUnitRawcode": "OFAR",
+    "alternateUnitRawcode": "O02L",
+    "triggerAbility": {
+      "rawcode": "A040",
+      "name": "58-04 瘋狂皮卡丘",
+      "durationSec": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -5,6 +5,7 @@
  */
 import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
 import type { Stat, StatBlock } from "../stats/statTypes";
+import type { ChampionAttributes } from "../stats/attributes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
 import type { AuraDef } from "../aura/aura";
 import type { EffectDef } from "../effects/effect";
@@ -116,9 +117,27 @@ export interface ChampionDef {
   role: string;
   attackType: "melee" | "ranged";
   modelKey: string;
+  /**
+   * The RAW per-champion stat card. Since #248 the attribute-derived rows
+   * (maxHealth / healthRegen / ad / armor / as / maxMana / manaRegen / ap) hold
+   * the source map's own numbers WITHOUT the 三圍 term — read them through
+   * `stats/attributes.ts championStatBase`, never directly, or you are showing
+   * a champion 150 hp instead of 575.
+   */
   baseStats: Partial<StatBlock>;
-  /** additive per level beyond 1 */
+  /**
+   * Additive per level beyond 1 — the per-hero designer knob. Since #248 it is
+   * a deliberate SECOND, additive source alongside `attributes.*Growth`:
+   * `stat(L) = baseStats + attr(L)·coef + growth·(L−1)`. `growth.mr` is the one
+   * row with no attribute term at all (WC3 has no magic-resist attribute).
+   */
   growth: Partial<Record<Stat, number>>;
+  /**
+   * 三圍 — STR/AGI/INT and their per-level growths, recovered from the source
+   * map (task #248). Absent = no attribute derivation at all, which is the
+   * pre-#248 behaviour and what the skeleton/test content uses.
+   */
+  attributes?: ChampionAttributes;
   /**
    * Ranged auto-attack projectile speed (GGD units/sec, ~= WC3 missile speed
    * × the import distance factor). Ignored for melee. Default applied by the
@@ -164,6 +183,29 @@ export interface ChampionDef {
   tint?: [number, number, number];
   /** Opacity 0..1; absent = 1 (opaque). Visual only, like `tint`. */
   alpha?: number;
+  /**
+   * 變身 form link recovered from the map's WC3 Metamorphosis fields `Eme1` /
+   * `Emeu` (task #249) — see `content/schema/champion.ts` for the full contract
+   * and `content/championForms.ts` for the shipped 26-pair table.
+   *
+   * DATA ONLY: the sim never reads this. It rides along exactly like `icon` and
+   * `tint` so registry reads stay typed, and so the transform MECHANIC (task
+   * #119) can be built without another trip into the .w3x. `role: "alternate"`
+   * marks a body that is NOT independently pickable.
+   */
+  transform?: {
+    role: "base" | "alternate";
+    counterpartId?: ChampionId;
+    normalUnitRawcode: string;
+    alternateUnitRawcode: string;
+    triggerAbility: {
+      rawcode: string;
+      name?: string;
+      /** per level, keyed "1".."4"; absent = toggle / death-state morph */
+      durationSec?: Record<string, number>;
+      cooldownSec?: Record<string, number>;
+    };
+  };
   /** AI hints (Q/W/E/R only) */
   skillOrder: CoreAbilitySlot[];
   buildPriority: ItemId[];

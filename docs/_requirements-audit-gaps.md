@@ -3239,3 +3239,523 @@ wiring 完整、51 支語音包 kill-1..5 / first-blood / unstoppable 齊全、
 落在 8–10 秒之間的那一刀：**結算板記一次 multikill，英雄的嘴巴卻重新喊「一殺」**，
 觀眾歡呼也跟著降一階。改成從 sim 常數推導（`MULTIKILL_WINDOW_TICKS / TICK_HZ * 1000`），
 唯讀相依，sim 那邊改數字語音階梯就跟著走。sim 是權威 —— 它是發錢和計分的那個計數器。
+---
+
+#### 🚦 2026-07-26 #247b：leap 的頂點是用「錯的尺」換算的 —— 玩家有 73% 的飛行時間看不到人
+驗證者用**遊戲真正的 CameraRig**（`DOLLY_DEFAULT = DOLLY_MIN = 10`、pitch 68°、
+fov 0.8 rad、eye ≈ 9.27u、standoff ≈ 3.75u）量 #247 出貨的蒼月潮 07-03（apex 11.00u）：
+44 tick 裡有 **32 tick 在畫面外**，而且**有一段完全在近裁面之內**——模型會內外翻轉或整個消失。
+兩支 `inPlace` R（apex 18.33u）更糟。
+
+**根因不是「跳太高」，是「用平面的尺量垂直」。** #247 把 JASS 的 `SetUnitFlyHeightBJ`
+振幅 A 乘上平面匯入常數 `GGD_PER_WC3 = 11/600`。平面那把尺由**地圖幾何**決定
+（763 → 14.00u，這是對的）；垂直那把尺由**鏡頭**決定，而 GGD 的鏡頭不是 WC3 的：
+WC3 ~30° / 1650u / ~70° fov，GGD 68° / 10u / 0.8 rad。解「目標點正上方還有多少高度仍在視錐內」
+得到 WC3 約 950 WC3u、GGD 約 5.51 GGDu 的餘裕，也就是**每 1 GGDu 買到約 172 WC3u**，不是 54.5。
+用平面尺換算等於把每一條弧在畫面上放大約 3.2 倍。
+
+**修法**：只在垂直軸加第二個換算 `GGD_APEX_PER_WC3 = 1/250`（`toApex`），
+template slot 的單位從 `wc3u` 改成新的 `wc3h`；`range`/`radius`/`landRadius`/`throwDistance`
+一律不動。因為是**單一線性因子**，地圖自己的弧線階序完整保留
+（1000 > 600 > 400 > 300 > 250 → 4.00 > 2.40 > 1.60 > 1.20 > 1.00）。
+
+**這是明知故犯地覆寫「已驗證的 WC3 數值勝過理智上限」這條規則，而且只覆寫這一軸。**
+理由：它不是理智上限，值仍然是從原始碼透過一個量測出來的常數移植過來的，
+而那個常數正是原作鏡頭自己蘊含的那一個。**看不到的跳躍不是跳躍**——這正是 #93 的教訓
+「驗證畫面必須用遊戲真正的 68° 鏡頭拍」，只是換了一個功能重演一次。
+
+**閘門**：`apps/client/src/render/leapFraming.test.ts` 在 NullEngine 上開一個**真的 CameraRig**，
+用出貨的 follow-lerp 推它、render 出真的投影矩陣、再問 `rig.projectToScreen`
+腳底與頭頂落在哪個像素——對 `content/` 裡**每一個** leap（獨立 doc + champion 內嵌鏡像）
+的四個行進方向都跑。餵進去的高度是**畫面上的**高度（sim `leapHeightAt` → client `catmullRom1D`），
+所以頂點的樣條 overshoot 也在數字裡。上限：近裁面 0 格（是牆不是預算）、
+完全看不到 ≤15%、頭被切 ≤35%。今天實測：全部 **0 近裁面、0% 看不到**，
+只有兩支 A0RZ 被切 **27%**——那是全地圖最大一條弧刻意留的頂點露頭。
+
+**沒做、也刻意不做的**：(b) 飛行中動鏡頭——只救得了「跳的人剛好是本地玩家」，
+敵人跳過來、或 `applyTo:"target"` 被丟出去的受害者一樣看不到，而且會撞 #29/#161 固定視角契約
+與 #107 安全區契約。(c) 只加地面提示——影子已經隨高度縮小淡出、隊伍圈也留在地上，
+但腳都不在畫面上時再多的地面提示也換不回一個看得見的角色；專門的落點預告是 #233 的範圍。
+量測不涵蓋 EX 特寫 punch-in（dolly 5，高度餘裕減半，260ms）與「鏡頭沒跟著跳的人」的情況，
+理由都寫在測試檔頭。
+
+---
+
+#### 🦘 2026-07-26 追記：#247 leap 的滾動日誌補登 + 三個對抗式驗證發現的修正
+
+**先認錯**：#247（從 JASS 重建 leap）整批做完、合併，卻**一行 todo 都沒寫**，`docs/_requirements-audit-gaps.md` 也沒動。專案的鐵律是「每一條需求當下就登錄」，這次是純粹漏做，不是判斷差異。現已補上 `docs/todo/leap.md`（leap-01..15，其中 14 條 `done` 皆有真實 `cover()` 對應、1 條 `pending`）與本段。
+
+**對抗式驗證確認保住的東西**（不得回歸）：同 seed 60 tick digest 逐位元相同（且飛行中）；真的飛過柱子（腳印內 22 tick 高度 >1u，走路則 0）；高度 1:1 上畫面、影子與隊伍圈留在地面且影子隨高度縮小淡出；拋物線代數對得上 war3map.j 全部十處 `SetUnitFlyHeightBJ`。
+
+**這次修的四件事**：
+
+1. **編輯器真的被擋紅了**（`apps/editor/src/form/walk.test.ts:90` 釘死 EffectDef union tag 清單，#247 加了 `leap` 沒同步）。但**只補 tag 是在騙那條測試** —— 那條測試存在的意義是「schema 長出新 kind 時逼編輯器跟上」。實際查過之後：表單那半其實是好的（walker 走 zod 產出 enum/number/array 小工具，`onLand` 是同一張 union 卡再一層，遞迴在 depth cap 收斂）；**壞掉的是預覽那半** —— `apps/editor/src/preview/PreviewController.ts` 的 `effectLines` switch 沒有 `leap` case，所以一個「只有 leap」的技能（正是 #247 的主角 `godie-hpb1.e` 蒼月潮 07-03）在編輯器裡預覽成**一片空白的效果清單**。這正是同一個檔案自己在 `restore`/`spawnVfx` 上記過的坑，第三次發生。現在補了 leap case（含 `onLand` 遞迴逐 rank 傷害），並在 `default` 放 `never` 收斂 —— 下一個 kind 由**編譯器**擋，不用再等測試。
+
+2. **`resolveLandingPoint` 的射程夾限是保證不會觸發的死碼**。唯一呼叫端傳的是 `len(requested - flyer.pos)`，也就是它要夾的那個點自己的距離，`d > maxRange` 永遠為假。判斷是**刪掉而不是「把它變真」**：射程在上游就已經綁住了 —— `ground` 施法在 `abilitySystem` 就用 `clampLen(target - caster, resolveAbilityRange(def.range))` 夾過，`targeted` 直接拒絕超距目標，被丟的受害者（`applyTo:"target"`）飛的是自己的 `throwDistance`（已過 #136 係數）。而且對被丟的受害者來說，量距的原點根本是**受害者**不是施法者，「受害者不得被丟得比施法者射程遠、從受害者站的地方量」不是 JASS 也不是設計有的規則。刪掉之後補了 `leap-reach-upstream`：用真的 `godie-hpb1.e`（range 14、#136 係數 0.6 → 8.4u）點 60u 外，跑完真的施法路徑後量落點 —— 停在 8.4u。
+
+3. **`EntityState.sc`（暫時模型縮放）整條線是出貨的死線路**：sim 每個寫入點都是字面量 1，wire/內插/ChampionView/測試全在，但那條測試是自己餵 1.2/1.9/1.0 給 buffer，**證明不了遊戲裡任何事**。查過真的 JASS 之後決定**移除**而不是接上：全地圖唯一會縮放**施法者**的技能是 A0U8 巨神一擊（`Trig_Gigantomakhia_*`，j:51866-52040），數值是 `SetUnitScalePercent` 絕對值 130→190（7 tick × 0.04s，`Size = 190 - Color*2`，Color 30→0），衝完在 j:52028 回到 120 —— 而 120 正是這位英雄自己的 base（`Hapm.scale = 1.2`），換算成 GGD #150 正規化尺寸的乘數是 1.083 → 1.583 → 1.0。**但它不是 leap**（它那一整串裡沒有任何 `SetUnitFlyHeightBJ`，是「暫停→變大→貼地衝刺→爆」），所以擁有 `world.airborne` 的 `LeapSystem` 根本驅動不了它。要接上得新增一種 EffectDef、一個 ramp store、它自己的死亡/回合重置拆線、digest 摺入 —— 那是**新功能**不是「把線接完」，不屬於這次收尾。真實數值已寫進 `packages/shared/src/protocol/schema.ts` 原欄位的位置，交給 #249（變身系統）/#50（逐次美術參數），並登記為 `leap-15 pending`。移除範圍：schema 欄位 + `defineTypes` + snapshot 寫入 + `world.airborne.scaleMul` + digest 摺入 + `InterpSample/InterpPose.sc` + `EntityViewState.sc` + `ChampionView.baseScale/scaleMul` + 那條假測試。副作用是好的：`glbRoot.scaling` 現在**一輩子只寫一次**（載入時），#150 的正規化尺寸從「乘數剛好是 1」升級成「結構上碰不到」。
+
+4. **`leapSystem` 邊走 `world.transform` 邊跑落地 payload**。JS Map 的 `for..of` **會走訪迭代中插入的項目**，而 `runEffects` 是允許增刪實體的（`spawnProjectile` 會 `world.spawn()`）。今天出貨的 `onLand` 只有傷害/狀態所以碰不到 —— 問題正在這裡：**安全性是內容的性質，不是程式的性質**，schema 和 `tpl-leap-strike` 都沒有東西擋作者從（現在會正確渲染的）編輯器卡片裡塞一個 `spawnProjectile` 進 `onLand`。改成兩段式：先走完所有弧線，再依同樣的 id 順序引爆。順序語意也順便變乾淨了 —— 舊寫法下「落地把還在飛的人再丟一次」會依兩者 id 大小決定新弧線是否在同一 tick 就前進一格（id 大的 `elapsed` 直接變 1），現在一律 0。這一條有**會紅的**測試（`leap-detonate-order`：把兩段式改回交錯就紅）。
+
+---
+
+#### 🎯 2026-07-26 #247 追修：四支 leap 技能的 JASS 對帳（landRadius / 連段 / 拖回）
+
+Owner 的標準（2026-07-26 逐字）：「war3 編輯器設定 設定不了 JASS 實作效果，遇到這種情形一律以 JASS 實際參數為準」。
+優先序是 **JASS > w3a/w3u 物件列 > tooltip**，逐欄適用。物件列跟觸發不合是**預期**，不是資料品質意外——
+WC3 物件編輯器根本表達不了觸發做的事，所以只要觸發覆蓋了物件列，物件列就是一具過期的空殼。
+四筆全部就地改成 JASS 值，並把來源行號寫進斷言訊息（`packages/shared/src/sim/leapJassFidelity.test.ts`），
+測試自己會去讀 `war3map.j` 那一行，行號漂掉就變紅。
+
+| 技能 | 原本（哪來的） | 改成（哪一行） |
+| --- | --- | --- |
+| `godie-hart.w` A0UX 隕石擊 | landRadius/radius 5.50（＝w3a 範圍 300） | **4.58**（j:33722 `GetUnitsInRangeOfLocMatching(250.00)`） |
+| `godie-u00n.r` / `godie-u00o.r` A0RZ 巨人迴旋彈 | landRadius/radius 3.67（＝wc3 200） | **6.97**（j:36781 的 380，圓心是 j:36660 的施法者位置） |
+| `godie-hpb1.w` 者、皆、陣 | 只有傷害 | 追加 `applyStatus moon-combo 1.0s applyTo:self`（j:34438→j:34440） |
+| `godie-hpb1.e` 列、在、前 | 描述有連段、程式沒有 | `comboBonus`：窗口內 +ad×1.25（j:34189 判定、j:34214 的 5×AGI） |
+| `godie-hapm.w` A0U1 蹂躪編年史 | 從受害者原地丟 | `dragToCaster: true` —— 先抓回施法者（j:51749 判定／j:51760 每格 50 單位），再從**施法者**位置丟（j:51765） |
+
+**A0RZ 的 perRank 沒有錯，錯的是 JASS 自己的註解。** 驗證者說 `[600,900,1200]` 與 JASS 不合；
+實際執行的是 j:36719 `300 + 300×level + STR×2` → 600/900/1200，跟地圖 tooltip「600+力量*2傷害」一致。
+j:36779 的註解 `300+(sLV*200)+(力量*3)` 從來不會執行。**規則是 JASS 為準，而 JASS 指的是會跑的那一行**，
+2 票對 1 票，perRank 維持不動並加測試釘住這個結論。
+
+**新的模擬器機制（兩個，都很小）**：
+- `applyStatus.applyTo: "self"` —— 連段窗口必須落在施法者身上。者、皆、陣是單體指定技，
+  沒有這個欄位，marker 會蓋到被打的人身上。
+- `damage.comboBonus: { statusId, amount }` —— 只在施法者仍持有該 status 時加成，
+  **在 target 迴圈之前解析一次**（JASS 也是在施法當下讀一次 `udg_MoonCombo` 然後把結果烤進
+  `udg_MoonDamage`，逐目標讀會變成另一個技能）。不會被消耗，只會過期——JASS 也是只有過期。
+- `leap.dragToCaster` + `startLeap({ from })` + `resolveLandingPoint(…, anchor)` —— 拋物線的**起點**
+  也要跟著搬，否則落點會差掉整段「施法者→受害者」距離（這技能施程 5.5u，最壞差 75%）。
+
+**誠實講三件做不到的事**：
+
+1. **GGD 沒有敏捷這個屬性。** JASS 的連段加成是 `5.00 × AGI`（j:34214）。GGD 的 stat 表只有
+   ad/ap/as…，敏捷要等 #248 才會從 w3u 重建。所以敏捷項掛在 **ad** 上，倍率用**這份文件自己的換算率**
+   推出來：它的 `力量*2`（j:34211）出貨成 `ad × 0.5`，也就是每一點 WC3 屬性倍率 = 0.25 ad 係數，
+   於是 5 × 0.25 = **1.25**。是從文件推的，不是我發明的，而且測試把這條推導也寫成斷言——
+   哪天有人改了基礎項的係數，這一條會跟著紅。**這是近似值，#248 應該回來重算。**
+2. **EX 模式那半實作不出來。** j:34216 在 `udg_EX_Mode[player] == true` 時給 +10×AGI。
+   GGD 沒有「每位玩家的 EX 模式旗標」這種東西（`exAbility` 是一個技能格，不是一個模式），
+   要做得先有一個全域的 per-player 模式狀態機。登記為 `jass-247-07` **deferred**。
+   描述文字（w3x 原文）維持不動——那是地圖原文，不是我們寫的。
+3. **者、皆、陣自己的連段（+3×AGI，j:34342 判定／j:34398 加成）沒做。** 它需要 Q(臨、兵、鬥)
+   再放一個 marker 形成 Q→W→E 三段鏈；本次任務只點名 E，所以只補了 W→E 這一段。
+   `godie-hpb1.w` 的描述因此**仍然多承諾了它自己那半**。登記為 `jass-247-08` deferred，不要當成沒事。
+
+**另外：拖回被壓縮成起跳那一格。** JASS 的拖回是每 0.05s 拉 50 wc3、直到距施法者 50 以內
+（最遠 0.3 秒），GGD 直接把弧線起點設成施法者位置。落點因此完全正確，代價是少了那 ≤0.3 秒的拉扯過程，
+而且殘留 ≤50 wc3（0.92 GGD）的接觸間隙沒有模擬。
+
+**閘門**：`go run ./cmd/testrunner -once -mode all`。這次順手修了三支**因為 #247 自己**而紅的測試
+（`apps/editor` walk.test 的 EffectDef union 少了 `leap`——在 ba72202e 上覆驗就是紅的；
+`loader.test` / `fieldAdoption.test` 的狀態列表因為新增 `moon-combo` 而需要更新，後者的
+`enum:status-effects.polarity=buff` 豁免條目已被採用，依測試自己的指示刪除）。
+`internal/opsenv` 與 `internal/combatenv` 兩支 Go 紅屬既有，由另一條工作流處理。
+
+---
+
+#### 🎯 2026-07-26 #247 追修 2：連段加成「實作了、測綠了、真的一場遊戲裡不可能發生」
+
+**上一條（`jass-247-05`）被對抗式驗證推翻。** 缺陷不在數字，在**時機**：
+
+- **JASS 是施法當下就烤好**。`Trig_Jump_Start_Actions`（j:34195）在 SPELL_EFFECT 動作裡
+  算出完整的 `udg_MoonDamage`——**含** `udg_MoonCombo == 2` 那條加成（判定 j:34189/34212、
+  非 EX +5×AGI j:34214、EX +10×AGI j:34216）——**然後才**打開弧線觸發（j:34226）。
+  弧線 `Trig_Jump_Effect` 整段（j:34241-34314）**一次都沒有再讀** `udg_MoonCombo`；
+  `Index >= 41`（j:34274）時發出的 AoE 打的是已經烤好的變數（j:34262）。
+  窗口在飛行途中過期在 WC3 裡完全無所謂，**正因為數字在施法當下就凍結了**。
+- **GGD 原本相反**。`comboBonus` 在 `applyEffect` 的 damage 分支解析，而那份傷害是
+  **落地**才跑。弧線 41 tick × (0.35/10) = **1.435 秒**（GGD 43 tick / 1.44 秒），
+  窗口 **1.00 秒**（30 tick）。也就是說**傷害解析時窗口一定已經關了**——
+  這個加成在任何時機、任何操作下都不可能觸發。
+
+**為什麼會過關**：舊測試把 damage effect 單獨拿出來 apply，中間沒有飛行。
+「完成宣告要問這條觸發在正常一場遊戲裡真的會發生嗎」——這條規則的又一次學費。
+
+**修法**：新增 `bakeCastTimeConditionals()`（`sim/effects/effectRunner.ts`）。
+在 payload **離開施法那一刻**（`leap` 起跳、`spawnProjectile` 發射）把條件項解析掉，
+解析出來的數額摺進 payload 自己的 `amount.flat`，`comboBonus` 一併從飛出去的那份拿掉——
+**還帶著條件飛的 payload 就是缺陷本身**。立即傷害（instant cast / cast time 結算那一格）
+apply-time 就是 cast-time，維持原路徑不變。
+
+**新測試（都在真 `SimWorld` 上飛完整條弧線）**：
+- `jass-fid-a0g3-flight-open`：窗口開著時施法 → 飛滿 43 tick → 落地 **520**
+  （450 + ad×0.5 + ad×1.25，ad=40）。而且斷言**窗口確實在半空中關掉了**，
+  否則這條測試什麼都沒證明。
+- `jass-fid-a0g3-flight-lapsed`：先讓窗口過期（31 tick）再施法 → 落地 **470**。
+- 反向對照跑過：把 bake 那行拿掉，第一條立刻紅成 `expected 470 to be close to 520`——
+  就是缺陷本身的數字。
+
+**同類普查（cast-time vs apply-time）**：全 content 掃過 `leap.onLand` / `spawnProjectile.onHit`
+兩個延遲 payload 通道，**條件式加成只有 1 處**（`godie-hpb1.e`，已修）。
+另外 9 處是**只有屬性係數**的延遲項（`godie-hapm.w`/`godie-hart.w`/`godie-u00n.r`/
+`godie-u00o.r` 的 onLand，`godie-u00n.e`/`godie-u010.e`/`sela.q`/`thorne.e`/`storm-arrow`
+的 onHit）：它們**一定會觸發**，只是飛行途中 buff 過期會讓數值飄——與「永遠不觸發」不同級，
+且改成快照會動到全遊戲每一支飛彈。登記 `jass-247-14` deferred，**不擴大範圍**。
+`canCrit` 在落地才擲骰：JASS 沒有這個項（crit 是 GGD 自己的物品模型），不算不一致。
+
+**閘門**：`pnpm -r --if-present typecheck`（順手修好 `leapJassFidelity.test.ts` 在
+ba72202e+a16f6ddf 上就已經紅的 6 個 `DashOverride | LeapOverride` 收窄錯誤——
+上一條的閘門紀錄只跑了 Go testrunner，沒跑 tsc）、`pnpm todo:check`、
+`pnpm --filter @ggd/{shared,client} test`。
+
+---
+
+---
+
+## 2026-07-26 — #243 後台一鍵 ZIP 匯出／匯入平台資料（無痛移機）
+
+**需求原話（owner）**：「後台增加一個功能，是一鍵打包 zip 遊戲平台資料匯出/匯入，
+方便變更主機的時候重新匯入可以無痛移機」。依 rolling-log 紀律，需求一出現就立刻登錄。
+
+**主場景是「搬到一台全新主機」**（舊主機匯出 → 新主機空的 data/ 匯入 → 家人用原本的
+帳號密碼登入）。覆蓋一台已經有資料的主機是次要且危險的情境，UI 用橘底標明。
+
+### 為什麼開新 Kind 而不是 opstate v2
+
+`opstate`（#179）帶的是**營運選擇**（白名單 + 戰鬥系統 + 系統運維），而且**刻意拒絕**
+帳號與邀請碼。#243 帶的正好相反：密碼雜湊、未兌換邀請碼、錢包、整棵 data 樹。語意不同
+就開新 Kind（`docs/design/content-sync.md` 立下的規矩）：`ggd-platform-archive` v1。
+`ggd-operator-state` v1 原封不動，`make family-restore` 繼續指向它。
+
+### 落點
+
+- Go：`apps/platform/internal/platformarchive/`（scope / manifest / export / inspect /
+  plan / apply / backup / staging / reindex / freespace / service / handlers）
+  + CLI `cmd/platformarchive`（export / inspect / plan / apply，烤進 platform 映像）。
+- 平台改動：`internal/server/server.go`（路由 + **路徑感知的 body cap 豁免**）、
+  `internal/auth/password.go`（抽出 `ReauthPassword`，ChangePassword 行為不變）。
+- 前端：`apps/admin/src/archive.ts`、`ui/DataMigrationPage.tsx`、`api.ts`、`session.ts`、
+  `store.ts`、`ui/App.tsx`、`migrationGate.test.ts`。
+- 其他：`nginx/nginx.conf`（一條 exact-match location）、`Makefile`（archive-* /
+  family-archive-*）、`docs/runbooks/platform-migration.md`（新）。
+
+### 這次真正買下來的東西（不是設計稿，是程式碼裡的性質）
+
+1. **匯出永不 `WalkDir(dataDir)`。** 只走一張明確的規則表（`scope.go`），所以
+   `owner-setup-token`（DATA_DIR 根、持有即可宣告新部署擁有權）與 `journal/`
+   是**結構上到不了**，不是被 denylist 擋掉。denylist 會被下一個新增的集合繞過。
+2. **枚舉一律 `Scan`，不用 `List`。** `readIndex` 把 index 缺失讀成空集合（fail-OPEN），
+   一台 index 損毀的來源主機會匯出「零個帳號」而且匯入完全成功。#225 已為同一理由選過
+   `Scan`。測試：刪掉 fixture 的 `accounts/_index.json`，匯出仍須含 35 個帳號。
+3. **絕不半寫。** jsonstore 只有單物件原子性（結算為此養了一整套 WAL）。所以
+   驗證整包 → 解析每個名字（走 `Store.Path`，即 jsonstore 自己的 `resolve`）→ 算完整份
+   plan → 比對 `planDigest` → 做完備份，**全部在寫入之前**。
+4. **`planDigest`。** commit 會重算 plan 並和操作者核准的 digest 比對，不同就 409、
+   一個位元組都不寫。這是「你核准的內容 = 實際寫下去的內容」的機制保證。
+5. **`admin-audit` 是 AppendOnly。** 目標已有當天的檔案就一律略過，永不覆寫也永不合併 ——
+   覆寫等於偽造目標主機自己的稽核軌跡，而且會蓋掉記錄「這次匯入」的那一行。
+6. **匯入後的 Redis 重建不呼叫 `boot.Rebuild`。** 那支用 `SetNX`，不會修正被搬遷取代的
+   使用者名稱索引（症狀：密碼正確但登進錯的帳號，**重啟平台也修不好**）；而且它的第一步
+   是重播 WAL intent。本套件的 `reindex.go` 用 `SET`（+ 被擠掉的映射先 `DEL`）。
+7. **兩個 1 MiB body cap。** 平台 `server.go` 的全域 cap 與 nginx 的 `client_max_body_size`
+   任一漏掉，每一次匯入都會 413 而且兩邊都不解釋。平台改成**路徑感知**（exact match，
+   不是 prefix），nginx 加一條 exact-match location，兩邊都是 512 MiB。
+8. **匯出與匯入都要再輸入自己的密碼。** 判例是 `/account/password`：session 本身不足以
+   構成憑證動作的授權。一次匯出就等於整台部署的每一個密碼雜湊。
+9. **身分衝突是一級檢查。** 新主機為了能登入後台先註冊的帳號幾乎必然與舊主機撞名；
+   若當成普通 Additive「略過」，結果是「密碼正確、登進去是空帳號」而且沒有訊息。
+   預設整包拒絕；`adopt-archive` 才改指，且**被擠掉的帳號絕不刪除**。
+10. **這一頁必須在正式 bundle 裡。** `App.tsx` 有兩個裸 `if (!import.meta.env.DEV) return;`
+    守著動態 import，rollup 會整塊折掉。最容易做錯的方式是把新頁塞進
+    `ui/ContentPage.tsx` 的 `CONTENT_ROUTES`（#229 的鑄形工坊就在那）。正確做法是
+    **靜態 top-level import + NAV 條目**，並由新的 `migrationGate.test.ts` 釘住「存在」
+    （`contentGate.test.ts` 只釘「缺席」，此前沒有任何東西釘存在）。
+
+### 刻意不帶
+
+`config/ai-provider`（明文金鑰）、`config/slack-notify`（webhook 密鑰）、`journal/`、
+`owner-setup-token`、`blizzard-overlay/`（84 MB 素材，隨映像走 —— **UI 主動說「新主機
+看起來很空是正常的」**）、`content-backups/`、`icon-src-original/`、`_index.json`、
+`_migration/`。每一條都逐字寫進 manifest 的 `scope.excluded` 與 UI 表格，
+因為「不在裡面」和「我忘了」看起來一模一樣。
+
+### 安全差（必須說出來，不能默默繼承）
+
+#179 把 `accounts` 設成 opt-in、`invites` 完全不帶。#243 **定義上反轉這兩項** ——
+不帶就不叫搬遷。這個反轉就是整個安全差，已寫進 `archive.ts` 的 `SECURITY_DELTA`
+並由測試釘住它出現在 UI 文案裡。
+
+### 還沒做，不在本次 scope
+
+- **ZIP 的 central directory 是明文**，`unzip -l` 就能看到全家人的使用者名稱與 email
+  （那兩個 id 就是登入解析的 key）。這不是可以靠工程消除的，只在 UI 與 runbook 揭露。
+- **對戰回放預設關**。它是 game-server 的檔案、在另一個掛載點，UI 直接建議
+  `scp -r data/replays/`。
+- **家用主機 nginx 前面還有 Caddy**。依 owner 2026-07-26 指令，本次**完全沒有連線到
+  ggd.adms.ai**，所以看不到主機上的 Caddyfile；若上傳在邊緣就 413，要查的是
+  `request_body max_size`。這條寫進 runbook，實際改動是 owner 在主機上的動作。
+- 本功能**永遠不刪任何東西**。若日後希望匯入後自動清掉臨時管理員帳號，那會是這個
+  功能唯一會刪東西的地方，需要 owner 明確指示。
+
+---
+
+## 2026-07-26 — #243 修正：試算會說謊（PLAN ≠ COMMIT）
+
+**驗證者判定 SUSPECT，這一條單獨就足以擋下合併。**
+
+### 症狀（實測，全在合成 fixture 上）
+
+把同一包封存**匯入第二次**：
+
+```
+BEFORE   plan.Writes = 0    apply.Written = 169   apply.Added = 169
+AFTER    plan.Writes = 0    apply.Written = 0     apply.Unchanged = 169
+```
+
+169 是本 repo `fixture_test.go` 用 `-groups all` 匯出的全部 entry 數。也就是說：
+畫面上寫「將寫入 0 筆」，按下確認之後，目標主機上**每一個文件都被重寫了一遍**。
+
+### 為什麼是致命而不是美觀問題
+
+這個功能的**全部**安全故事就是「看試算，再核准」。一個讀到 「這次不會寫入任何東西」
+才按下確認的操作者，不可以得到 169 個文件被改寫的結果。而且重跑正是最容易發生的情境：
+不確定第一次有沒有成功的人，就是會再跑一次。
+
+### 根因
+
+`CollectionPlan.Items` 只收「值得注意」的項目（`written` / `skipped` / `blocked`），
+`added` 與 `unchanged` 都不入列。`Apply` 走的是**另一條路**：它自己再枚舉一次
+`a.ByCollection[col]`，在 `verdicts` map 裡查不到就 `verdict = ResultAdded` 然後
+`Put`。於是所有 `unchanged` 的 entry 一律被當成新增重寫。
+
+digest 也擋不住 —— 它算的是那份**殘缺**的 plan，兩邊都「一致」，所以 409 從來不會觸發。
+
+### 修法（結構性，不是防禦性）
+
+1. **plan 是完整的**：`cp.Items` 現在收每一個 entry，含 `added` / `unchanged`。
+   Console 端自己過濾顯示（`notableItems` + 「展開時列出每一筆文件」切換），
+   伺服器永遠不縮短這份清單。
+2. **只有一條路徑能變成寫入**：新增 `Plan.Executable(a)`，把核准過的 plan 逐筆
+   解析回封存的 entry，回傳 `[]PlannedWrite`。`Apply` 只跑這份清單。
+   判定只由 `planEntry` 產生一次；沒有第二個地方能自己決定判定，所以兩邊不可能再漂移。
+   plan 與封存對不起來（少一筆／多一筆）是**硬錯誤**，不是默默略過也不是默默多寫，
+   而且在備份之前就發生 ⇒ 零寫入。
+3. **digest 因此涵蓋逐筆判定**：`Items` 完整，`planDigest` 就自動涵蓋每一筆的
+   verdict，不只是 entry 集合。`TestPlanDigestCoversPerEntryVerdicts` 用兩個
+   「entry 集合相同、彙總數字相同、只有逐筆判定對調」的目標證明 digest 會不同 ——
+   舊的 digest 會高高興興地放行這個 bug 本身。
+4. **實際結果是觀測來的，不是抄 plan 的**：`ApplyResult.Results` 在每次寫入前
+   `targetHas()` 問一次目標，所以它**可以**和 plan 不一致；不一致就進 warning、
+   進 UI 紅字、進 `archive.commit_end` 稽核（`promisedWrites` 與 `written` 並列）。
+
+### 測試（`internal/platformarchive/contract_test.go`，全部 `t.TempDir()`）
+
+- `TestReImportWritesNothingItDidNotPromise` —— 匯入、再匯入同一包，逐檔用
+  **mtime** 斷言沒有被重寫。byte 比對做不到這件事：重新 `Put` 一份相同的文件會產生
+  完全相同的位元組，正是這個 bug 藏身的地方。
+- `TestPlanVerdictMapEqualsApplyResultMapExactly` —— **真正的交付物**。24 個
+  seed，每個 seed 隨機決定每一份文件在目標上的狀態（不存在／相同／不同／比封存新）
+  以及 `allowOverwrite`，斷言 plan 的逐筆判定 map 與 apply 的逐筆結果 map
+  `reflect.DeepEqual` **完全相等**，並且檔案系統同意（只有 added/written 的檔案
+  mtime 有動）。blocked 的 plan 另外斷言零寫入。最後檢查隨機真的走過五種判定，
+  否則這個性質證明的比它宣稱的少。
+- `TestPlanDigestCoversPerEntryVerdicts`、
+  `TestApplyRefusesAPlanThatDoesNotMatchTheArchive`。
+- 反向驗證：把 bug 重新注入（`ResultUnchanged` 落回寫入），前兩個測試立刻紅
+  （`plan promised 0 write(s), the commit performed 169`）。
+
+### UI 文案（同一個 bug 的另一半）
+
+「即將寫入 0 個文件」配一顆紅色的「我確認，開始匯入」，正是操作者被騙的那一幕。
+改成 `commitPromise(plan)`：零寫入時直接說「這次不會寫入任何文件…按下確認只會產生
+一份備份，資料不會有任何改動」；有寫入時把新增／覆蓋／相同／略過都說出來。
+確認步驟加上 `PLAN_IS_THE_CONTRACT`（「試算就是契約…一筆不多、一筆不少」），
+完成畫面用 `importOutcome` + `outcomeMatchesPlan` 把「承諾 N 筆 / 實際 M 筆」並列，
+不一致就轉紅並指向備份。
+
+### 仍然成立、沒有被動到的
+
+路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
+真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
+adopt-archive 照樣不刪任何帳號。本次**完全沒有連線 ggd.adms.ai**。
+
+---
+
+## #243 · 「那份要操作者自己去婉拒的清單」本身是錯的（blocker 2 重做）
+
+**日期**：2026-07-26　**分支**：`fix/243-recovery-honesty-v2`（接在 blocker 1 的
+`8b3e9596`「試算就是契約」之後）
+
+### 前一次嘗試被打回的理由，要先記住
+
+上一版選了 option (B)：還原不刪除，但每一個介面都要把「救得回什麼／救不回什麼」
+講清楚。**這個選擇是對的，而且那支 `RestoreCommand` 是真的可用**（驗證者親自跑完
+adopt-archive 鎖死的情境，帳號索引與密碼雜湊都回來了）。被打回的是另一半：
+
+(B) 的整個承諾是「這裡是這次匯入新增的清單，多出來的自己處理」。那份清單是從
+`ApplyResult.AddedDocs` 產生的，而 `AddedDocs` 是在寫入迴圈裡**第二次**累加出來的，
+所以完整繼承了 blocker 1 的 bug：plan.go 當時不列 `added`/`unchanged`，apply 把
+清單裡找不到的項目一律當 `ResultAdded`。於是**每一份位元組完全相同的文件都被指名
+為「新增」**。
+
+驗證者的判詞值得抄下來：「一個被灌水的整數是抽象的。這個分支把它變成了一條指名道姓、
+會留在磁碟上、對著操作者說話的指令。半夜照著這個分支自己的新 runbook、跑完這個分支
+自己的新還原指令的非 DBA，會被叫去婉拒他自己家人的帳號。」
+
+### 實測（同一份 repo fixture，同一個情境）
+
+| | before（`e5e865a7`） | after（本分支） |
+| --- | --- | --- |
+| 重匯完全相同的封存 · plan | `Writes=0` | `Writes=0`、`Unchanged=169` |
+| 重匯完全相同的封存 · apply | `Written=163  Added=163` | `Written=0  Added=0` |
+| 收據 | `addedDocs` 列出全部 163 筆，含 admin | `addedDocs=[]`，且 note 明說「這次沒有新增任何文件」 |
+| 跑完還原之後 | `added=1`，指名 `accounts/u_TARGET_OWNER` —— **本機自己的管理員** | `added=0`、`addedDocs=[]` |
+
+（163 vs 169 只是兩個 commit 之間 fixture 的預設 group 不同，兩邊都是整包；
+結論的形狀不受影響。）
+
+### 修法：清單是投影，不是第二份帳
+
+`AddedDocs` 現在只有一個賦值點：`res.AddedDocs = addedDocsOf(res.Results)`。
+`Results` 是寫入前對目標**實際觀測**的結果，`Results` 又被 blocker 1 的性質測試
+釘死等於 plan 的逐筆判定。所以清單沒有可以漂移的對象。
+守衛：`TestAddedDocsAgreeWithThePlanForEveryEntry`（24 seed × 隨機目標狀態，
+比對「清單」對「試算」，並且用 fixture 自己記下的 seed 狀態獨立確認每一個被指名的
+文件在匯入前確實不存在）。
+
+### runbook 那兩顆按鈕，這次真的按了
+
+「多出來的帳號去婉拒、多出來的邀請碼去撤銷」以前從來沒有針對**匯入進來的**文件
+驗證過。合理的懷疑是：玩家頁的搜尋讀的是衍生的 `_index.json`，一個只丟檔案不維護
+索引的匯入器會讓那個帳號在後台**根本看不到** —— 看不到就婉拒不了。
+
+`apps/platform/internal/server/archive_recovery_runbook_test.go` 用兩台完整啟動的
+平台（miniredis + t.TempDir，不碰任何線上主機）跑完整條 HTTP：舊主機註冊玩家 +
+鑄 2 組邀請碼（1 組用掉、1 組留著）→ 匯出 → 新主機 stage/plan/commit →
+玩家頁看得到 → 用舊密碼登得進去 → 婉拒 → 登入變成 403 `account_denied`；
+邀請碼頁看得到那組還活著的碼 → 撤銷 → 拿它註冊被拒。
+
+**結論：runbook 的建議是對的，不用改功能。** 但發現一個必須誠實寫出來的例外：
+匯入進來的、**在舊主機上已經被用掉**的邀請碼，撤銷會回 409「已被使用的邀請碼無法
+撤銷」（那份文件是「誰進來過」的稽核紀錄，故意不給刪）。它本來就沒有效力了，要處理
+的是它帶進來的那個帳號 —— 這一條現在寫進 `RestoreLimits` 並且有測試盯著。
+
+### 文案：一份資料，四個介面
+
+`RestoreRecovers`（救得回來）與 `RestoreLimits`（救不回來）是
+`internal/platformarchive/restore.go` 裡的 `[]string`，runbook §5.5、CLI、後台頁面、
+備份 sidecar 全部直接印同一份；`apps/admin/src/archiveRestore.test.ts` 逐字比對 Go
+原始碼，兩邊漂移就紅。順序是刻意的：先講救得回什麼（嚇壞的人要先知道重要的那一半
+回得來），再講救不回什麼，而且每一條救不回來的後面都接一顆具體的按鈕。
+sidecar 的 `restoreWith` 也順手修掉了 —— 它以前寫的是**沒有** `-resolve-collisions`
+的那條指令，在最需要它的情境下是零寫入拒絕。
+
+### 仍然成立、沒有被動到的
+
+路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
+真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
+還原照樣不刪任何文件（owner 2026-07-26 的決定，沒有重新討論）。
+本次**完全沒有連線 ggd.adms.ai**，全部在 t.TempDir 與 miniredis 上跑。
+
+---
+
+## 2026-07-26 · #249 變身 form link + 出貨名單 10 個「變身態」換回本體（含 #32/#150 妙蛙種子假說結論）
+
+**一句話**：`war3map.w3a` 的 WC3 Metamorphosis 欄位對 `Eme1`（本體 unit）/`Emeu`（變身 unit）
+一共 26 組，匯入器把這兩欄丟掉（#56 白名單只收 180 個 w3u 欄位裡的約 30 個），所以
+**出貨名單 50 格裡有 10 格放的是「變身態」，被當成英雄給玩家選**。已依 owner 2026-07-26 裁決
+「換成本體，變身態改由技能觸發」全數換回本體，並把關係寫成資料（**不做機制**，機制是 #119）。
+
+### 這批修正的關鍵事實（可重跑驗證）
+
+- `Eme1`/`Emeu` 是**分等級欄位**；作者複製技能時只重指 level 1，2–4 等仍留著捐贈者的 rawcode
+  （`A10N 11-002 武裝色霸氣` level 1 = 索隆、level 2–4 = 安云）。用「last writer wins」讀會有
+  約 9/26 組是錯的並且互相串線。**只讀 level 1**。
+- 方向由地圖自證：本體 `unsf` 是純編號「(NN)」、變身態是「(NN變身名)」，26/26 成立。
+- 只有 **3 組沒有時限**（不是 4 組）：`A0DZ 20-01 風王結界`、`A0O6 70-00 紮根` 是切換式（完全沒有
+  `ahdu`），`Aphx 61-00 百連我殺` 是死亡態瞬變（`adur` 0.01 秒）。這是查到的事實，不是缺資料。
+- 產生器：`tools/w3x-import/extract_transform_forms.py` → `out/GoDieEX22s-src/TRANSFORM_FORMS.json`。
+
+### #32 / #150 妙蛙種子假說 —— **調查結論：縮放沒有調錯對象，但調到了玩家看不到的那一隻**
+
+假說是「出貨名單一直放 usca 3.0 的妙蛙花，所以 #32/#150 的尺寸修正可能在補償錯的模型」。
+逐條核對後 **假說不成立**，而且 #150 其實分得很清楚：
+
+| 事實 | 值 |
+| --- | --- |
+| w3x `Hgam` 妙蛙種子 `usca` | **1.2** |
+| w3x `H02R` 妙蛙花 `usca` | **3.0**（同一個 `Bulbasaur.mdl`，2.5×） |
+| `_standin-overrides.json` `godie-hgam` | `relativeScale` **0.62**，附註明寫「其進化型 妙蛙花（godie-h02r）維持全尺寸」 |
+| `_standin-overrides.json` `godie-h02r` | **沒有條目**（= 1.0，全尺寸） |
+
+也就是說 **#150 把 0.62 掛在妙蛙種子、刻意讓妙蛙花維持 1.0，方向與 w3x 一致**——沒有任何
+覆寫是對著錯的 unit 手調出來的，所以**不需要也不應該改動這兩個數字**。
+
+真正的問題是另一件事，而且值得記錄：**那個 0.62 從來沒有被玩家看到過**，因為出貨名單放的是
+`godie-h02r`（沒有覆寫，全尺寸）。#32 的另一半（3.13u 剪影 + 缺貼圖）是 **模型層級**缺陷，
+兩個形態共用 `imported.bulbasaur`，所以那一半確實有生效。換回本體之後 0.62 第一次真的上場，
+妙蛙種子在畫面上會明顯變小——這是預期且正確的。
+
+（附帶：content 的 0.62 vs 1.0 是 1.61×，地圖是 1.2→3.0 = 2.5×。沒有動它：#150 的值是 owner
+可見的手調 lore 值，本任務的守備範圍是資料關係與名單，不是重新縮放內容。）
+
+### 其他兩個順帶查到的事實
+
+- **`godie-o02n`（87 曹操孟德本體）之前被當成重複刪掉了。** `standinRoster.test.ts` 把它列在
+  「exact-name twins」的 PRUNED_IDS，但那個「同名雙胞胎」關係正是 `Eme1`/`Emeu`——刪掉的是本體、
+  留下的是 87-03 天下號令 的變身態，所以這位英雄在遊戲裡**只以變身狀態存在**。已匯入。
+  另外 4 個（`H00W`/`O030`/`N01B`/`E010`）確實是還沒匯入的變身態，維持不匯入，但本體文件仍宣告連結。
+- **`SHARED_PORTRAIT_GROUPS` 不是變身表**，不能從 form link 推導：其中六組（傑洛士/涼宮、涅吉、
+  初音/志志雄、賈修/阿強一號、e00j/e015/harf、皮卡丘/曹操）與變身無關，推導會把它們刪掉並讓
+  重複圖示的 bug 復活；反過來 妙蛙花 / 臥草泥馬 / 傑桑 是真變身態但**不在**那張表裡（圖不同）。
+  兩件事已徹底分離：**form link 決定「顯不顯示」，圖片 bytes 只決定「同一張圖畫幾次」**。
+
+## #249 的連帶回歸：換名冊沒有連帶換價目表（`fix/249-store-alignment`，已修）
+
+**缺口本身**：`starterChampions`（Go）與 `content/config/store.json` 的 `championPrices`（content）
+是同一組 50 個 id 被寫了兩次，而**沒有任何測試釘住這層關係**。#249 換掉 10 格，價目表原封不動，
+兩個方向同時漂掉 10 筆，所有閘門仍是綠的。
+
+| | 免費 | 付費 | 備註 |
+| --- | --- | --- | --- |
+| 換名冊前 | 12 | 38 | roster 50 = prices 50，兩邊零落差 |
+| 換名冊後（壞掉） | **19** | **31** | 沒價格 = 免費（client `lockStateOf`、server `OwnsChampion` 兩邊都是）；`FreeChampions()` 還在送 `h020`/`o00x`/`u01u` 給每個新帳號 |
+| 修好後 | 12 | 38 | 每個本體**繼承它取代的變身態的價位**，10 個舊 id 移除；價格一律 300 |
+
+**守衛**（重點在這，不在修）：`TestStarterRosterMatchesChampionPrices`（`whitelist-store-prices`）
+＋ `curationVsContentModel.test.ts` 的 TS 鏡像。兩個方向都驗、**失敗訊息列出漂掉的 id 本身**，
+並且把 `12 / 38` 的形狀一起釘死，因為 owner 已裁示藍水晶不動。starter.go 新增 **R7** 條款。
+
+**同批普查的其餘消費端**：`champion-voices` / `victory-taunts` / `quotes` / VFX provenance 都是
+全 113 位覆蓋，沒漂；頭像覆蓋率**完全沒變**（缺圖的前後都是 #90 妙蛙種子與 #92 草泥馬本人）；
+champ-select / codex / 白名單一律吃 `starterChampions`。**唯一還漂著的是戰鬥語音包**：
+`content/assets/audio/voices/lines/` 的 50 個目錄正好是舊名冊，換進來的 10 個本體一個 clip 都沒有
+（各需 46 支 CosyVoice）。那是資產產線工作，**沒有加守衛因為現在加就是紅的** → `tform-13` / #142。
+
+**〔2026-07-26 更新〕owner 裁示：「變身前/後共用就好」——所以 460 支 clip 不用生。** #249 的整個結論
+就是本體與變身態是**同一個角色**（地圖自己的 `Eme1`/`Emeu`，加上 `unsf` 副名：本體一律「(NN)」、
+變身態一律「(NN變身名)」，26/26）。悟空與超級賽亞人-悟空是同一個人，聲音本來就該是同一份。
+
+**實作在哪裡（先普查，不用猜）**：語音系統有五套，只有**最後一套**是短的。
+`content/config/champion-voices.json`（115 key，兩態都在，rung-1 map quip ＋ soundset）、
+champ-select 稱號/全名 call-out（`names/MANIFEST.json`，114 位）、名言（`quotes/quotes.json`，114 位）、
+勝利嘲諷（`victory-taunts.json` `roundWin`，113 位）——**四套都已經兩態齊全，不需要 fallback**。
+會漏的只有 `champions/MANIFEST.json`（由 `lines/` 索引出來的 CosyVoice 包），它只有 51 個 key，
+而且是**唯一**餵給 `contextualVoice.ts` 的來源：點擊聲有 rung 4/5 撐著從來沒啞過，**戰鬥語音沒有底層**，
+所以那 10 位在場上是完全無聲（技能名、受傷、擊殺、陣亡、勝利全部沒有）。
+
+**唯一的 reader 是 `packClips()`**，`contextualVoice` 與 ladder rung-2 都走它，所以 fallback 只加在那裡：
+`resolveVoicePackId()` 找不到自己的包時，用 `counterpartFormId()` 借對面那一態的。**雙向**——今天是
+10 個 alternate→base，另外 9 對是 base→alternate（#119 變身後借本體的，就靠這個方向）。
+自己有包的一律不借（不會蓋掉真資產），兩態都沒有的**回空陣列不丟例外**。
+`tools/voice-gen/index-lines.mjs` 也在 build 時把同一份 plan 烤進 manifest（`sharedFrom` ＋ `formShares`
+表頭）讓它在產物裡看得見；runtime 那層是**產物過期時的安全網**——這不是假設，見下一條。
+
+**⚠ 順手撞到的既有紅燈（不是這次改的）**：`pnpm voice:index` 在 main 上就跑不起來。
+`godie-zombiex` 的 `skill-name.{q,e,r,ex}` 四支過不了 byte gate——status.json 記了四個**從來沒被算出來的
+take**（磁碟上的音檔講的還是 #244 改名前的技能名）。順帶查到 committed manifest 對
+`godie-huth`/`godie-hvwd`/`godie-ogld`/`godie-osam`/`godie-udea` 也已經過期（`apply_skill_readings` 跑過
+之後沒重新索引）。這需要**重新合成**，不是改 metadata，所以沒動 completeness gate、也沒動 ROSTER.json
+（那是產生出來的狀態快照，手改就是偽造產線狀態）→ `tform-16` / #244。
+
+**最愛（favourites）**：`ToggleFavourite` 本來就擋不存在的英雄，所以壞資料寫不進去；壞法是名冊在
+合法 pin 底下被抽走。改成**讀取時過濾**（`liveFavourites`，`meta.go`）而非資料遷移——遷移要永久刪掉
+耐久紀錄裡那一筆，可是英雄會回來（白名單可編輯、#119 之後變身態可能重新可選）；過濾冪等、免遷移、
+不會弄丟一筆日後會再合法的 pin。空 catalog 不當證據（平台沒掛 content 也會開機），原樣放行。
+
+**owner 螢幕上會看到的**：拳四郎從 `imported.heropikachu`（那是北斗之鼠的模型）掉回 CC0 替身
+`champ.skin.barbarian`。**這是修正的必然結果**——地圖給本體的模型是 Blizzard 內建 VillagerMan1，
+拿不到；且符合 starter.go 早就寫明的政策。不要為了好看把名冊換回變身態。

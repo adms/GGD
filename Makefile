@@ -451,3 +451,91 @@ family-restore:
 	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform \
 		/opstate restore -in - -data /data -content /srv/content $(if $(FORCE),-force,) < $(BUNDLE)
 	@echo "  (a running platform picks the new whitelist up within ~5s; no restart needed)"
+
+# ---------------------------------------------------------------------------
+# #243 資料搬遷 — the WHOLE platform data tree as one ZIP (無痛移機).
+#
+# NOT the same thing as opstate above, and the difference is the whole point:
+#   opstate            = the operator's CHOICES (whitelist + combat-env). It
+#                        deliberately refuses credentials, and family-restore
+#                        stays pointed at it.
+#   platformarchive    = accounts WITH PASSWORD HASHES, unredeemed invite codes,
+#                        wallets, rankings, the content overlay. A migration.
+#
+# THE ARCHIVE IS A CREDENTIAL. Move it with scp or a USB stick, never email or
+# chat, and delete both copies once the new host is up.
+#
+#   make archive-export                        # local DATA_DIR → ARCHIVE
+#   make archive-inspect ARCHIVE=…             # what is in it (writes nothing)
+#   make archive-plan  DATA=… ARCHIVE=…        # dry run against a target
+#   make archive-apply DATA=… ARCHIVE=…        # write (auto-backs-up first)
+#   make family-archive-export                 # HOST → a local ARCHIVE
+#   make family-archive-apply ARCHIVE=…        # a local ARCHIVE → the HOST
+#
+# UNDOING an import = re-applying the automatic backup, and it needs BOTH flags:
+#
+#   make family-archive-apply ARCHIVE=<backup>.zip OVERWRITE=1 ADOPT=1
+#
+# ADOPT=1 is not optional. A bad import run with adopt-archive repointed the
+# usernames, so the backup's own refs now read as a fresh collision and a restore
+# without it is REFUSED — zero bytes written. With no collisions it is a no-op.
+# The restore never DELETES either, so whatever the bad import ADDED is still
+# there afterwards; every apply prints that list by name (and stores it in the
+# backup's .json), and an import that added nothing says so. Deal with the
+# residue in the console: 玩家 page → 婉拒, 邀請碼 page → 撤銷.
+# Read docs/runbooks/platform-migration.md §5.5 before running it.
+# ---------------------------------------------------------------------------
+ARCHIVE ?= ggd-platform-archive.zip
+# GROUPS selects the optional data: matches,history,audit,replays (core always).
+GROUPS  ?=
+
+.PHONY: archive-export
+archive-export:
+	$(call need,go,brew install go   # Go 1.23+)
+	go -C apps/platform run ./cmd/platformarchive export \
+		-data $(abspath data) -content $(abspath content) -out $(abspath $(ARCHIVE)) $(if $(GROUPS),-groups $(GROUPS),)
+
+.PHONY: archive-inspect
+archive-inspect:
+	$(call need,go,brew install go   # Go 1.23+)
+	@test -f $(ARCHIVE) || { echo "✗ no archive at $(ARCHIVE)"; exit 1; }
+	go -C apps/platform run ./cmd/platformarchive inspect -in $(abspath $(ARCHIVE))
+
+.PHONY: archive-plan
+archive-plan:
+	$(call need,go,brew install go   # Go 1.23+)
+	@test -n "$(DATA)" || { echo "usage: make archive-plan DATA=<target DATA_DIR> ARCHIVE=…"; exit 1; }
+	go -C apps/platform run ./cmd/platformarchive plan \
+		-in $(abspath $(ARCHIVE)) -data $(DATA) $(if $(GROUPS),-groups $(GROUPS),) \
+		$(if $(OVERWRITE),-allow-overwrite,) $(if $(ADOPT),-resolve-collisions=adopt-archive,)
+
+.PHONY: archive-apply
+archive-apply:
+	$(call need,go,brew install go   # Go 1.23+)
+	@test -n "$(DATA)" || { echo "usage: make archive-apply DATA=<target DATA_DIR> ARCHIVE=…"; exit 1; }
+	go -C apps/platform run ./cmd/platformarchive apply \
+		-in $(abspath $(ARCHIVE)) -data $(DATA) -content $(abspath content) $(if $(GROUPS),-groups $(GROUPS),) \
+		$(if $(OVERWRITE),-allow-overwrite,) $(if $(ADOPT),-resolve-collisions=adopt-archive,)
+
+# Export FROM the running family platform. Streamed over stdout, so the host
+# filesystem is never written to — same shape as family-restore's stdin.
+.PHONY: family-archive-export
+family-archive-export:
+	@echo "→ exporting the platform data tree from the family host into $(ARCHIVE)"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform \
+		/platformarchive export -data /data -content /srv/content -out - $(if $(GROUPS),-groups $(GROUPS),) > $(ARCHIVE)
+	@echo "  ⚠ $(ARCHIVE) contains PASSWORD HASHES and live invite codes. scp/USB only; delete it when done."
+
+# Apply a LOCAL archive INTO the running family platform. THE documented first
+# step on a brand-new host: run this BEFORE registering any account there, so
+# there is no identity collision to resolve.
+.PHONY: family-archive-apply
+family-archive-apply:
+	@test -f $(ARCHIVE) || { echo "✗ no archive at $(ARCHIVE) — export one first: make archive-export"; exit 1; }
+	@echo "→ importing $(ARCHIVE) into the family platform container"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform \
+		/platformarchive apply -in - -data /data -content /srv/content \
+		$(if $(GROUPS),-groups $(GROUPS),) $(if $(OVERWRITE),-allow-overwrite,) \
+		$(if $(ADOPT),-resolve-collisions=adopt-archive,) < $(ARCHIVE)
+	@echo "  now restart the platform so Redis rebuilds its indexes from the imported account JSON:"
+	@echo "    docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) restart platform"

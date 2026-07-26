@@ -30,8 +30,19 @@ const ICON_DIR = join(CONTENT_DIR, "assets", "icons");
 /** Coverage floors from the extraction run (ICONS.md); regeneration may only grow them. */
 const FLOOR = { champions: 85, abilities: 13, items: 15 } as const;
 
-/** Pruned duplicate champions — must never get icon PNGs resurrected. */
-const PRUNED_IDS = ["godie-e010", "godie-o02n", "godie-h00w", "godie-n01b", "godie-o030"];
+/**
+ * Pruned duplicate champions — must never get icon PNGs resurrected.
+ *
+ * `godie-o02n` LEFT this list at task #249. It was never a duplicate: the w3x
+ * `Eme1`/`Emeu` fields show O02N is 曹操孟德's BASE unit and the shipped
+ * `godie-o02o` is its 87-03 天下號令 TRANSFORM, so pruning the base left the hero
+ * existing only in his transformed state. It is imported now and carries the
+ * same (mis-assigned 皮卡丘) portrait bytes as its alternate form, which the
+ * marquee's SHARED_PORTRAIT_GROUPS records.
+ *
+ * The four that remain really are un-imported alternate bodies with no docs.
+ */
+const PRUNED_IDS = ["godie-e010", "godie-h00w", "godie-n01b", "godie-o030"];
 
 const ICON_RE = /^assets\/icons\/(champions|abilities|items)\/[a-z0-9.-]+\.(png|webp)$/;
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);

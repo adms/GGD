@@ -2,15 +2,34 @@
  * Quick Approval (task #242) — the derivation, the union contract and the
  * warning that must fire.
  *
- * Every fixture here is SYNTHETIC. That is deliberate and it is the point of
- * the design: the page must contain no baked answer about today's roster, so
- * these tests cannot assert "the delta is {賈修, 揍敵客}" either — they assert
- * the RULE that produces it, which is the thing that has to stay true after the
- * next re-import, on the family host, and on a deploy whose whitelist nobody
- * here has ever seen.
+ * TWO KINDS OF FIXTURE, AND WHY BOTH ARE NEEDED.
+ *
+ * The ROSTER/PLAN half is SYNTHETIC on purpose: the page must contain no baked
+ * answer about today's roster, so these tests cannot assert "the delta is
+ * {賈修, 揍敵客}" either — they assert the RULE that produces it, which is the
+ * thing that has to stay true after the next re-import, on the family host, and
+ * on a deploy whose whitelist nobody here has ever seen.
+ *
+ * The 數值體檢 half ALSO reads REAL CHAMPION DOCS off disk, which it did not
+ * before — and that omission is exactly what let the page ship dead. #248
+ * rebased `baseStats` onto the raw w3x card (100 of the 114 docs now literally
+ * say `"maxHealth": 150`) while `parseChampionStats` still read the field raw.
+ * Peer median HP collapsed 480 → 150, so `cand < median × 0.5` became
+ * `150 < 75` and could never fire again; the armour finding, guarded by
+ * `median > 0`, became dead code; and 克勞薩先生 printed 「血量 -450」 off his
+ * raw card. ALL 428 admin tests still passed, because every fixture was a
+ * hand-written `healthy()` / `mobLike()` object carrying post-derivation
+ * numbers the documents no longer carry.
+ *
+ * So the synthetic cases stay (they pin the THRESHOLD rules with no roster
+ * dependency) and real-doc cases sit on top of them (they pin that the page
+ * reads the numbers the GAME computes). A synthetic-only suite is what armed
+ * the trap; fixing the code without fixing the suite would leave it armed.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   ABILITY_SLOTS,
@@ -40,7 +59,17 @@ import {
 
 /** A healthy champion, near the middle of a normal roster. */
 function healthy(id: string, name = id): ChampionStats {
-  return { id, name, role: "fighter", maxHealth: 480, growthHealth: 54, armor: 6, mr: 28, ms: 5.9 };
+  return {
+    id,
+    name,
+    role: "fighter",
+    maxHealth: 480,
+    growthHealth: 54,
+    armor: 6,
+    mr: 28,
+    ms: 5.9,
+    attributeDerived: false,
+  };
 }
 
 /**
@@ -49,7 +78,33 @@ function healthy(id: string, name = id): ChampionStats {
  * Named after nothing: the check must fire on the NUMBERS.
  */
 function mobLike(id: string, name = id): ChampionStats {
-  return { id, name, role: "tank", maxHealth: 100, growthHealth: 100, armor: 0, mr: 0, ms: 3.0 };
+  return {
+    id,
+    name,
+    role: "tank",
+    maxHealth: 100,
+    growthHealth: 100,
+    armor: 0,
+    mr: 0,
+    ms: 3.0,
+    attributeDerived: false,
+  };
+}
+
+// --- real champion documents, read off disk ---------------------------------
+
+const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../content");
+
+/** The shipped document for one champion, exactly as the admin page fetches it. */
+function realDoc(id: string): unknown {
+  return JSON.parse(readFileSync(join(CONTENT, "champions", `${id}.json`), "utf8"));
+}
+
+/** Every shipped champion, parsed the way the page's peer baseline parses them. */
+function realRoster(): ChampionStats[] {
+  return readdirSync(join(CONTENT, "champions"))
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map((f) => parseChampionStats(f.slice(0, -5), realDoc(f.slice(0, -5))));
 }
 
 function statsMap(...s: ChampionStats[]): Map<string, ChampionStats> {
@@ -147,8 +202,10 @@ describe("half-enabled champions", () => {
 // ------------------------------------------------------------- the 體檢 ----
 
 describe("數值體檢 — a rule about numbers, not a list of names", () => {
-  it("parses the champion doc shape actually on disk", () => {
+  it("a doc with NO attributes block reduces to the pre-#248 law exactly", () => {
     cover("adminui-quick-approval");
+    // Hand-authored / pre-#248 documents must keep reading as they always did:
+    // baseStats IS the level-1 truth for them, and growth IS the per-level step.
     const s = parseChampionStats("h", {
       name: "英雄",
       role: "tank",
@@ -164,7 +221,55 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
       armor: 0,
       mr: 0,
       ms: 3.0,
+      attributeDerived: false,
     });
+  });
+
+  it("a doc WITH attributes is resolved through the sim, not read raw", () => {
+    cover("adminui-quick-approval");
+    // The exact #248 shape: a 150-HP raw card whose real level-1 health is
+    // 150 + strToMaxHealth(23) × 20 = 610, and whose armour is
+    // 0 + agiToArmor(0.15) × 20 = 3. Reading the card raw would say 150 / 0.
+    const s = parseChampionStats("h", {
+      name: "英雄",
+      role: "fighter",
+      baseStats: { maxHealth: 150, armor: 0, mr: 28, ms: 5.9 },
+      growth: { maxHealth: 40 },
+      attributes: {
+        str: 20,
+        agi: 20,
+        int: 10,
+        strGrowth: 2,
+        agiGrowth: 1,
+        intGrowth: 1,
+        primary: "STR",
+        source: "w3x",
+      },
+    });
+    expect(s.attributeDerived).toBe(true);
+    expect(s.maxHealth).toBe(610);
+    expect(s.armor).toBeCloseTo(3, 10);
+    // 每級 is growth.maxHealth PLUS str_growth × strToMaxHealth — the only
+    // reason a champion with `growth.maxHealth: 0` can still gain health.
+    expect(s.growthHealth).toBeCloseTo(40 + 2 * 23, 10);
+    // a stat with no attribute source is untouched
+    expect(s.mr).toBe(28);
+    expect(s.ms).toBe(5.9);
+  });
+
+  it("a MALFORMED attributes block falls back to the raw card, never half-derives", () => {
+    cover("adminui-quick-approval");
+    // Half-reading the 三圍 would produce a wrong number and present it as
+    // authoritative — strictly worse than falling back or saying "?".
+    const s = parseChampionStats("h", {
+      name: "x",
+      baseStats: { maxHealth: 150, armor: 2 },
+      growth: {},
+      attributes: { str: 20, agi: 20 },
+    });
+    expect(s.attributeDerived).toBe(false);
+    expect(s.maxHealth).toBe(150);
+    expect(s.armor).toBe(2);
   });
 
   it("leaves unreadable fields UNDEFINED rather than defaulting them to 0", () => {
@@ -174,6 +279,31 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
     const s = parseChampionStats("h", { name: "x", baseStats: { maxHealth: "lots" } });
     expect(s.maxHealth).toBeUndefined();
     expect(s.armor).toBeUndefined();
+  });
+
+  it("a stat the CARD never mentions stays undefined even when attributes exist", () => {
+    cover("adminui-quick-approval");
+    // `championStatBase` would happily answer `0 + coefficient × AGI` for a
+    // missing armour row. "護甲 3" read off a card with no armour row is a
+    // fabricated reading, and the row must say 「?」 instead.
+    const s = parseChampionStats("h", {
+      name: "x",
+      baseStats: { maxHealth: 150 },
+      growth: {},
+      attributes: {
+        str: 20,
+        agi: 20,
+        int: 10,
+        strGrowth: 0,
+        agiGrowth: 0,
+        intGrowth: 0,
+        primary: "STR",
+        source: "w3x",
+      },
+    });
+    expect(s.maxHealth).toBe(610);
+    expect(s.armor).toBeUndefined();
+    expect(s.mr).toBeUndefined();
   });
 
   it("median handles even/odd/empty", () => {
@@ -213,7 +343,10 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
     cover("adminui-quick-approval");
     // "I could not check" must never render as "checked and fine" — that is the
     // exact failure mode that hands the family a 100-HP hero.
-    const unknownCand = auditStats({ id: "z", name: "z", role: "" }, peerBaseline([healthy("a")]));
+    const unknownCand = auditStats(
+      { id: "z", name: "z", role: "", attributeDerived: false },
+      peerBaseline([healthy("a")]),
+    );
     expect(unknownCand.ok).toBe(false);
     expect(unknownCand.unknown).toBe(true);
     const noPeers = auditStats(healthy("z"), peerBaseline([]));
@@ -225,6 +358,84 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
     cover("adminui-quick-approval");
     const squishy: ChampionStats = { ...healthy("s"), maxHealth: 420, ms: 5.5 };
     expect(auditStats(squishy, peerBaseline([healthy("a"), healthy("b")])).ok).toBe(true);
+  });
+});
+
+// ------------------------------------------ the 體檢, against REAL documents --
+
+describe("數值體檢 on the SHIPPED champion documents (the #248 regression)", () => {
+  it("the roster median is a HERO's health, not the raw w3x card's 150", () => {
+    cover("adminui-quick-approval");
+    const roster = realRoster();
+    expect(roster.length).toBeGreaterThan(50);
+    // Nearly every doc carries a 三圍 block; if that ever stops being true the
+    // readings below stop meaning what they say.
+    expect(roster.filter((r) => r.attributeDerived).length).toBeGreaterThan(roster.length * 0.9);
+
+    const base = peerBaseline(roster);
+    // THE REGRESSION, stated as a number. Reading `baseStats.maxHealth` raw
+    // gives a median of 150 (100 of the docs literally hold that value) and an
+    // armour median of 0, which makes the HP finding `x < 75` — unfireable —
+    // and the armour finding, guarded by `median > 0`, dead code.
+    expect(base.maxHealth).toBeGreaterThan(300);
+    expect(base.armor).toBeGreaterThan(0);
+  });
+
+  it("a healthy shipped hero reads green, with his REAL numbers", () => {
+    cover("adminui-quick-approval");
+    // 亞瑟王・Saber: raw card 150 HP / 0 armour, real level 1 is
+    // 150 + 23×23 = 679 and 0 + 0.15×16 = 2.4.
+    const saber = parseChampionStats("godie-e002", realDoc("godie-e002"));
+    expect(saber.maxHealth).toBeCloseTo(679, 6);
+    expect(saber.armor).toBeCloseTo(2.4, 6);
+
+    const audit = auditStats(saber, peerBaseline(realRoster()));
+    expect(audit.unknown).toBe(false);
+    expect(audit.ok).toBe(true);
+    expect(audit.line).toContain("血量 679");
+    // and the readout must never show the raw hull the owner would not recognise
+    expect(audit.line).not.toContain("血量 150");
+  });
+
+  it("godie-zombiex still fires 護甲 — the finding #244 asked for", () => {
+    cover("adminui-quick-approval");
+    // 喪標麥可 is the deliberately fragile one: #244 pinned him at a low base
+    // and his agility buys almost no armour, so the roster's armour median
+    // still leaves him at or below zero. Before this fix the finding was dead
+    // code (peer median armour had collapsed to 0), so it silently stopped.
+    const zx = parseChampionStats("godie-zombiex", realDoc("godie-zombiex"));
+    const audit = auditStats(zx, peerBaseline(realRoster()));
+    expect(zx.armor).toBeLessThanOrEqual(0);
+    expect(audit.ok).toBe(false);
+    expect(audit.findings.some((f) => f.includes("護甲"))).toBe(true);
+  });
+
+  it("godie-u011 is judged on 79 real HP, never on his -450 raw card", () => {
+    cover("adminui-quick-approval");
+    // 克勞薩先生's w3x card really does say maxHealth -450 / armor -10; the
+    // 三圍 term is what makes him a playable −450 + 23×23 = 79. Reading the card
+    // raw produced 「血量 -450 … -300% — 會被秒殺」, a number that appears
+    // nowhere in the game.
+    const k = parseChampionStats("godie-u011", realDoc("godie-u011"));
+    expect(k.maxHealth).toBeCloseTo(79, 6);
+    const audit = auditStats(k, peerBaseline(realRoster()));
+    expect(audit.line).not.toContain("-450");
+    // 79 against a ~560 median is a genuine 會被秒殺 — the finding SHOULD fire,
+    // it just has to fire on the real number.
+    expect(audit.ok).toBe(false);
+    expect(audit.findings.some((f) => f.includes("會被秒殺"))).toBe(true);
+    expect(audit.findings.join(" ")).toContain("79");
+  });
+
+  it("no shipped champion makes the readout print a raw-card artefact", () => {
+    cover("adminui-quick-approval");
+    // A blanket guard rather than a list of ids: if a future re-import lands a
+    // negative or absurd card and the derivation is bypassed anywhere, this
+    // catches it without anyone having to remember to add a case.
+    for (const s of realRoster()) {
+      if (!s.attributeDerived) continue;
+      expect(s.maxHealth, `${s.id} has non-positive effective HP`).toBeGreaterThan(0);
+    }
   });
 });
 

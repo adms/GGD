@@ -23,10 +23,12 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { championVoicesFromDoc } from "./championVoice";
 import { championNamesFromDoc, championQuotesFromDoc } from "./nameVoice";
+import { baseFormIdOf } from "@ggd/shared/content/championForms";
 import {
   EXCLUDED_NAME_CLIPS,
   VOICE_PACK_MANIFEST_PATH,
   resolveSelectVoice,
+  resolveVoicePackId,
   voicePackFromDoc,
   type SelectVoiceInputs,
   type SelectVoiceTier,
@@ -62,7 +64,8 @@ function sha(rel: string): string {
 describe("select-voice coverage on the PUBLIC tier", () => {
   it("answers for every champion, with files that exist", () => {
     cover("voice-select-coverage");
-    expect(CHAMP_IDS).toHaveLength(114);
+    // 115 since task #249 imported godie-o02n (曹操孟德's BASE unit O02N).
+    expect(CHAMP_IDS).toHaveLength(115);
 
     const silent: string[] = [];
     const missing: string[] = [];
@@ -85,7 +88,16 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // The generated voice pack (51 CosyVoice3 heroes) now answers rung 2 for the
     // 42 packed heroes without an authored map-quip; authored stays 16, and the
     // 42 are drawn out of what was previously the name rung (95 → 54, task #184).
-    expect(byTier).toEqual({ authored: 16, generated: 42, name: 54, quote: 2 });
+    // name 54 → 55: task #249 imported godie-o02n (曹操孟德's BASE unit O02N),
+    // which answers on the name rung exactly like its 天下號令 form.
+    //
+    // generated 42 → 57, name 55 → 40 (owner 2026-07-26 「變身前/後共用就好」):
+    // a champion with no pack of its own now answers with its w3x FORM
+    // COUNTERPART's, so 15 more champions climb off the TTS name rung onto a
+    // real cloned voice. 51 packs cover 66 champions across the 26 pairs; the
+    // 15 are the shares that are not ALSO map-quip champions (rung 1 still
+    // wins) and that appear in this 115-key config.
+    expect(byTier).toEqual({ authored: 16, generated: 57, name: 40, quote: 2 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -97,18 +109,34 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // you are. Grouped by file content, not by path, because that is the
     // property a listener has.
     const quotes = QUOTES?.quotes ?? {};
-    const byFile = new Map<string, { tier: SelectVoiceTier; who: Set<string>; clip: string }>();
+    const byFile = new Map<
+      string,
+      { tier: SelectVoiceTier; who: Set<string>; ids: Set<string>; clip: string }
+    >();
     for (const id of CHAMP_IDS) {
       const rung = resolveSelectVoice(id, PUBLIC);
       if (!rung) continue;
       for (const clip of rung.clips) {
         const key = sha(clip);
-        const slot = byFile.get(key) ?? { tier: rung.tier, who: new Set<string>(), clip };
+        const slot = byFile.get(key) ?? {
+          tier: rung.tier,
+          who: new Set<string>(),
+          ids: new Set<string>(),
+          clip,
+        };
         slot.who.add(quotes[id]?.name ?? id);
+        slot.ids.add(id);
         byFile.set(key, slot);
       }
     }
-    const collisions = [...byFile.values()].filter((s) => s.who.size > 1);
+    // Two halves of ONE w3x transform pair sharing a clip is not a collision —
+    // it is the point (owner 2026-07-26 「變身前/後共用就好」). 妙蛙種子 and its
+    // 超進化 妙蛙花 are one character with two 名言 names, proven by the map's own
+    // Eme1/Emeu + unsf evidence, so collapse each pair onto its base before
+    // asking whether two DIFFERENT characters are sharing audio.
+    const collisions = [...byFile.values()].filter(
+      (s) => new Set([...s.ids].map(baseFormIdOf)).size > 1 && s.who.size > 1,
+    );
 
     // The rungs THIS task added are clean: no two characters share a clip.
     expect(collisions.filter((c) => c.tier !== "authored")).toEqual([]);
@@ -174,8 +202,15 @@ describe("the generated voice pack, as shipped today", () => {
         .filter(([, v]) => v.source === "map-quip" && v.select.length > 0)
         .map(([id]) => id),
     );
-    const packedNonAuthored = Object.keys(PACK?.champions ?? {}).filter((id) => !authoredIds.has(id));
+    // "Packed" now means RESOLVABLE, not "a key in the manifest": a champion
+    // with no pack of its own reaches one through its w3x form counterpart
+    // (resolveVoicePackId, owner 2026-07-26 「變身前/後共用就好」). Computed from
+    // the same resolver the player hears, so this stays an equality both ways
+    // rather than a number someone has to keep in step.
+    const packedNonAuthored = CHAMP_IDS.filter(
+      (id) => !authoredIds.has(id) && resolveVoicePackId(PACK, id) !== null,
+    );
     expect(generated.sort()).toEqual(packedNonAuthored.sort());
-    expect(generated.length).toBe(42);
+    expect(generated.length).toBe(57);
   });
 });

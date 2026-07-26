@@ -69,6 +69,8 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-e002": { q: ["holy", "pulse", "sm"], w: ["wind", "tornado"], e: ["holy", "beam"], r: ["holy", "nova"], ex: ["holy", "beam"] },
   // 天地志狼 — martial ki
   "godie-e007": { q: ["ki", "pulse", "sm"], w: ["nature", "pulse"], e: ["ki", "shockwave"], r: ["ki", "explosion"], ex: ["ki", "pulse"] },
+  // 12 天地志狼 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-ewar": { q: ["ki", "pulse", "sm"], w: ["nature", "pulse"], e: ["ki", "shockwave"], r: ["ki", "explosion"], ex: ["ki", "pulse"] },
   // 夏娜 — fire
   "godie-e008": { q: ["fire", "slash"], w: ["fire", "nova"], e: ["fire", "explosion"], r: ["fire", "explosion"], ex: ["fire", "explosion"] },
   // 安云 Azumi — blade assassin
@@ -93,12 +95,18 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-h01u": { q: ["physical", "shockwave"], w: ["physical", "slash"], e: ["physical", "beam"], r: ["physical", "shockwave"], ex: ["physical", "pulse"] },
   // 莉娜因巴斯 Lina — fire / dragon-slave / giga-slave
   "godie-h020": { q: ["fire", "explosion"], w: ["fire", "explosion"], e: ["fire", "beam"], r: ["void", "explosion"], ex: ["void", "nova"] },
+  // 04 莉娜因巴斯 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-hjai": { q: ["fire", "explosion"], w: ["fire", "explosion"], e: ["fire", "beam"], r: ["void", "explosion"], ex: ["void", "nova"] },
   // 熊貓 Panda — comedic physical
   "godie-h02k": { q: ["physical", "shockwave"], w: ["nature", "explosion"], e: ["physical", "swarm"], r: ["physical", "shockwave"], ex: ["fire", "explosion"] },
   // 妙蛙花 Venusaur — grass
   "godie-h02r": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "beam"], r: ["nature", "beam"], ex: ["nature", "pulse"] },
+  // 90 妙蛙種子 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-hgam": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "beam"], r: ["nature", "beam"], ex: ["nature", "pulse"] },
   // 草泥馬 — comedic nature
   "godie-h02u": { q: ["physical", "shockwave"], w: ["physical", "shockwave"], e: ["nature", "nova"], r: ["nature", "explosion"], ex: ["nature", "explosion"] },
+  // 92 草泥馬 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-h02v": { q: ["physical", "shockwave"], w: ["physical", "shockwave"], e: ["nature", "nova"], r: ["nature", "explosion"], ex: ["nature", "explosion"] },
   // Berserker Hercules — physical rage
   "godie-hapm": { q: ["physical", "pulse"], w: ["physical", "shockwave"], e: ["physical", "slash"], r: ["physical", "shockwave"], ex: ["fire", "explosion"] },
   // 克勞德 Cloud — buster sword + meteor
@@ -119,8 +127,12 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-n00b": { q: ["wind", "beam"], w: ["arcane", "pulse"], e: ["arcane", "pulse", "sm"], r: ["wind", "tornado"], ex: ["arcane", "nova"] },
   // 藏馬 Kurama — plant / rose whip
   "godie-n00p": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "pulse"], r: ["nature", "shockwave"], ex: ["nature", "swarm"] },
+  // 18 南野秀一 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-nsjs": { q: ["nature", "slash"], w: ["nature", "swarm"], e: ["nature", "pulse"], r: ["nature", "shockwave"], ex: ["nature", "swarm"] },
   // 勇者小呆 Dai — dragon knight (fire + raiden lightning)
   "godie-n01c": { q: ["fire", "pulse"], w: ["lightning", "beam"], e: ["fire", "beam"], r: ["physical", "slash"], ex: ["fire", "explosion"] },
+  // 08 勇者小呆 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-nbbc": { q: ["fire", "pulse"], w: ["lightning", "beam"], e: ["fire", "beam"], r: ["physical", "slash"], ex: ["fire", "explosion"] },
   // 麻倉葉 Yoh — spirit sword / buddha slash
   "godie-nplh": { q: ["holy", "pulse", "sm"], w: ["holy", "nova"], e: ["holy", "beam"], r: ["holy", "slash"], ex: ["holy", "beam"] },
   // 皮卡娘 Pikachu-girl — lightning
@@ -129,6 +141,8 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-o00l": { q: ["void", "beam"], w: ["fire", "explosion"], e: ["arcane", "pulse"], r: ["fire", "explosion"], ex: ["void", "nova"] },
   // 悟空 Goku — ki / kamehameha
   "godie-o00x": { q: ["ki", "pulse"], w: ["ki", "pulse", "sm"], e: ["ki", "pulse"], r: ["ki", "beam"], ex: ["ki", "beam"] },
+  // 09 悟空 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-ogrh": { q: ["ki", "pulse"], w: ["ki", "pulse", "sm"], e: ["ki", "pulse"], r: ["ki", "beam"], ex: ["ki", "beam"] },
   // 初音 Miku — idol / sound (teal)
   "godie-o02p": { q: ["sound", "nova"], w: ["sound", "pulse"], e: ["sound", "explosion"], r: ["holy", "nova"], ex: ["sound", "swarm"] },
   // 皮卡丘 Pikachu — lightning + steel tail
@@ -147,14 +161,20 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-u00k": { q: ["void", "explosion"], w: ["void", "beam"], e: ["void", "swarm"], r: ["void", "nova"], ex: ["void", "explosion"] },
   // 拳四郎 Kenshiro — hokuto fist / hundred fists
   "godie-u00l": { q: ["physical", "beam"], w: ["physical", "pulse", "sm"], e: ["physical", "swarm"], r: ["physical", "pulse"], ex: ["physical", "shockwave"] },
+  // 25 拳四郎 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-umal": { q: ["physical", "beam"], w: ["physical", "pulse", "sm"], e: ["physical", "swarm"], r: ["physical", "pulse"], ex: ["physical", "shockwave"] },
   // 魯夫 Luffy — rubber / gear / haki
   "godie-u00n": { q: ["physical", "shockwave"], w: ["physical", "beam"], e: ["physical", "swarm"], r: ["physical", "shockwave"], ex: ["void", "nova"] },
   // 基廉列克 — mafia fist (steel / earth / rising dragon / elbow)
   "godie-u00v": { q: ["physical", "beam"], w: ["earth", "shockwave"], e: ["ki", "beam"], r: ["physical", "beam"], ex: ["physical", "pulse"] },
   // 飛影 Hiei — dark flame / black dragon wave
   "godie-u010": { q: ["fire", "slash"], w: ["fire", "explosion"], e: ["void", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
+  // 38 飛影 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-uvng": { q: ["fire", "slash"], w: ["fire", "explosion"], e: ["void", "beam"], r: ["void", "pulse"], ex: ["void", "explosion"] },
   // 索隆 Zoro — three-sword style
   "godie-u01u": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
+  // 11 索隆 本體 — same 編號, same five ability docs as its 變身 form above (#249)
+  "godie-udre": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
   // 巴恩大魔王 Vearn — dark lord / black core
   "godie-ubal": { q: ["void", "beam"], w: ["void", "shockwave"], e: ["void", "explosion"], r: ["void", "pulse"], ex: ["void", "explosion"] },
   // 飛鼠先生 — arcane senior / ice shatter / judgment

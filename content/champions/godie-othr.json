@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "champ.thorne",
   "baseStats": {
-    "maxHealth": 640,
-    "healthRegen": 1.55,
-    "maxMana": 304,
-    "manaRegen": 1.48,
-    "ad": 37,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.8,
@@ -32,6 +32,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 26,
+    "agi": 17,
+    "int": 17,
+    "strGrowth": 2.5,
+    "agiGrowth": 1.7,
+    "intGrowth": 1.8,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

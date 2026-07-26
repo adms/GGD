@@ -7,15 +7,15 @@
   "modelKey": "imported.heroichigo",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 456,
-    "manaRegen": 1.32,
-    "ad": 28,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 300,
+    "manaRegen": 0.2,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 1,
     "mr": 28,
-    "as": 0.83,
+    "as": 0.833333,
     "ms": 7.7,
     "critChance": 0,
     "critDamage": 1.75,
@@ -32,6 +32,16 @@
     "armor": 0.4,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 24,
+    "agi": 17,
+    "int": 13,
+    "strGrowth": 2.75,
+    "agiGrowth": 1.45,
+    "intGrowth": 1.6,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 3,
@@ -241,5 +251,27 @@
   ],
   "exAbility": "godie-h01o.ex",
   "passiveAbility": "godie-h01o.passive",
-  "icon": "assets/icons/champions/godie-h01o.png"
+  "icon": "assets/icons/champions/godie-h01o.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-h01n",
+    "normalUnitRawcode": "H01N",
+    "alternateUnitRawcode": "H01O",
+    "triggerAbility": {
+      "rawcode": "A0LN",
+      "name": "79-04 卍解",
+      "durationSec": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 25.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 30.0
+      }
+    }
+  }
 }

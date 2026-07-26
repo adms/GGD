@@ -18,8 +18,32 @@
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import {
+  championStatBase,
+  championStatGrowth,
+  type AttributeCarrier,
+} from "@ggd/shared/sim/stats/attributes";
+import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
 
 export type Attr = "STR" | "AGI" | "INT";
+
+/**
+ * The champion's RESOLVED stat sheet — `baseStats`/`growth` plus the 三圍 term
+ * (task #248), at the shipped coefficients. The raw records are no longer the
+ * hero: `baseStats.maxHealth` is the source map's 150, not the 575 the sim
+ * gives the champion, so classifying on them would score every hero as a
+ * fragile low-damage blob.
+ */
+function resolvedSheet(doc: AttributeCarrier, level: 1 | 2): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const s of ALL_STATS) {
+    out[s as string] =
+      level === 1 ? championStatBase(doc, s as Stat, 1) : championStatGrowth(doc, s as Stat);
+  }
+  return out;
+}
+const resolvedBase = (doc: AttributeCarrier): Record<string, number> => resolvedSheet(doc, 1);
+const resolvedGrowth = (doc: AttributeCarrier): Record<string, number> => resolvedSheet(doc, 2);
 
 export interface Features {
   id: string;
@@ -255,8 +279,11 @@ export function extractFeatures(repoRoot: string): Features[] {
 
   return files.map((file) => {
     const doc = readJson(join(champDir, file));
-    const b = doc.baseStats ?? {};
-    const g = doc.growth ?? {};
+    // #248: `baseStats`/`growth` are the RAW w3x card — the 三圍 term is added
+    // by the sim. Read the resolved sheet, or every hero looks like a 150 hp
+    // 25 ad blob and the whole classification is scored on the wrong numbers.
+    const b = resolvedBase(doc);
+    const g = resolvedGrowth(doc);
 
     // ---- kit: embedded Q/W/E/R plus the standalone EX doc ----------------
     const t = emptyTally();

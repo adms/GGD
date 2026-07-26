@@ -26,3 +26,5 @@ that "變相介紹有哪些英雄" — showcases the pickable roster over the da
 | marquee-03 | Roster is duplicated for a seamless loop (`copies × distinct` tiles, keys unique per copy, copy-2 mirrors copy-1) with a stable per-id chip hue | champ-marquee-loop | unit | done |
 | marquee-04 | Test heroes are dropped and duplicate ENTRIES fold via the shared identity rule (`distinctCharacters`) — never via a hand-kept id blocklist | champ-marquee-dedup | unit | done |
 | marquee-05 | Stable chip hue, `copies` clamped to ≥2, empty roster → no tiles | champ-marquee-misc | unit | done |
+| marquee-06 | 變身 forms are excluded by the w3x FORM LINK (`isAlternateForm`), not by a shared portrait — 妙蛙花 and 草泥馬's 臥 body have their own portraits and used to slip through | champ-marquee-form-exclusion | regression | done |
+| marquee-07 | The SIX non-transform icon-dedup groups survive: `SHARED_PORTRAIT_GROUPS` is an icon-BYTES table and must never be derived from the form link | champ-marquee-icon-groups-survive | regression | done |

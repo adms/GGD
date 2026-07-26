@@ -38,18 +38,70 @@ export interface TeamComp {
   seatId: SeatId;
 }
 
+/** Forced linear displacement integrated by MovementSystem with collision. */
+export interface DashOverride {
+  kind: "dash" | "knockback";
+  dir: Vec2;
+  speed: number;
+  remaining: number;
+}
+
+/**
+ * A parabolic LEAP in flight (task #247) — integrated by LeapSystem, which runs
+ * immediately before MovementSystem and owns the whole arc (planar position,
+ * height, and the landing detonation).
+ *
+ * Absolute-parametric by design: position and height are pure functions of
+ * `(from, to, elapsed, ticks)`, never accumulated, so the arc cannot drift and a
+ * hitstop freeze / replay seek resumes on exactly the same curve.
+ */
+export interface LeapOverride {
+  kind: "leap";
+  /** takeoff position (snapshotted) */
+  from: Vec2;
+  /** LEGAL landing point, proved at takeoff (movement/leap.ts) */
+  to: Vec2;
+  /** apex height in integer MILLI-units (determinism — see movement/leap.ts) */
+  apexMilli: number;
+  /** integer tick budget, derived once from the content's durationSec */
+  ticks: number;
+  /** integer ticks elapsed, 0..ticks */
+  elapsed: number;
+  /** effects run on the LANDING tick, centred on `to` */
+  onLand: import("./effects/effect").EffectDef[];
+  /** rank of the spawning ability (for scaling in onLand) */
+  rank: number;
+  /** landing burst radius in GGD units (0 = the flyer alone) */
+  landRadius: number;
+  /** who owns the landing effects (differs from the flyer for thrown targets) */
+  casterId: EntityId;
+  /** provenance for the landing damage, e.g. "ability:godie-hpb1.e" */
+  origin: string;
+  /** slot of the spawning ability (for slot-conditioned hooks) */
+  slot?: CastableSlot;
+}
+
 /** Navigation state driven by OrderSystem, consumed by MovementSystem. */
 export interface Navigation {
   order: Order | null;
   /** resolved current move target (or null when idle/arrived) */
   moveTarget: Vec2 | null;
   /**
-   * movement override (dash/knockback) — wins over normal movement. `knockback`
-   * is a forced impulse applied by a landed hit (combat/damage.ts): identical
-   * integration to a dash (moveWithCollision, so it never clips walls) but tagged
-   * so the client can play a hurt-slide instead of a dash animation.
+   * movement override (dash/knockback/leap) — wins over normal movement.
+   *
+   * `knockback` is a forced impulse applied by a landed hit (combat/damage.ts):
+   * identical integration to a dash (moveWithCollision, so it never clips walls)
+   * but tagged so the client can play a hurt-slide instead of a dash animation.
+   *
+   * `leap` (task #247) is a DIFFERENT INTEGRATOR in the SAME SLOT — see
+   * movement/leap.ts for why it is not a dash variant (a dash's per-tick body is
+   * `moveWithCollision`, which is precisely the call that stops a body at a
+   * wall) and why it nevertheless shares the slot (everything already built
+   * around "an override exists" — hitstop, root-immunity, ENTITY_FLAG.DASHING,
+   * every death/reset path that nulls the override — stays correct for free,
+   * and "dash OR leap, never both" becomes true by construction).
    */
-  override: { kind: "dash" | "knockback"; dir: Vec2; speed: number; remaining: number } | null;
+  override: DashOverride | LeapOverride | null;
   /** basic-attack target acquired by attack-move / attackTarget orders */
   attackTarget: EntityId | null;
   /**

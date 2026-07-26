@@ -8,13 +8,13 @@
   "attackType": "melee",
   "modelKey": "imported.bulbasaur",
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 316,
-    "manaRegen": 1.52,
-    "ad": 35,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 15,
     "ap": 0,
-    "armor": 9,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.8,
@@ -33,6 +33,16 @@
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 20,
+    "int": 18,
+    "strGrowth": 1.5,
+    "agiGrowth": 2,
+    "intGrowth": 2.3,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,
@@ -233,5 +243,23 @@
     "godie"
   ],
   "exAbility": "godie-hgam.ex",
-  "passiveAbility": "godie-hgam.passive"
+  "passiveAbility": "godie-hgam.passive",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-h02r",
+    "normalUnitRawcode": "HGAM",
+    "alternateUnitRawcode": "H02R",
+    "triggerAbility": {
+      "rawcode": "A0VG",
+      "name": "90-002 超進化! 妙蛙花",
+      "durationSec": {
+        "1": 18.0,
+        "4": 25.0
+      },
+      "cooldownSec": {
+        "1": 75.0,
+        "4": 30.0
+      }
+    }
+  }
 }

@@ -1,0 +1,33 @@
+{
+  "_source": "Blizzard Units\\MiscGame.txt from war3.mpq, War3x.mpq, War3Patch.mpq (later archives win)",
+  "_generator": "tools/w3x-import/stock_misc_data.py",
+  "_note": "Blizzard's DEFAULT gameplay constants. The source map overrides several of them in tools/w3x-import/out/GoDieEX22s-src/raw/war3mapMisc.txt, and the MAP wins — see ATTRIBUTE_ENV_DEFAULTS in packages/shared/src/sim/combatEnv.ts.",
+  "heroConstants": {
+    "StrAttackBonus": "1.0",
+    "StrHitPointBonus": "25",
+    "StrRegenBonus": "0.05",
+    "AgiDefenseBonus": "0.30",
+    "AgiDefenseBase": "-2",
+    "AgiAttackSpeedBonus": "0.02",
+    "AgiMoveBonus": "0",
+    "IntManaBonus": "15",
+    "IntRegenBonus": "0.05",
+    "MaxHeroLevel": "10",
+    "MaxUnitLevel": "20",
+    "DefenseArmor": "0.06"
+  },
+  "seenIn": {
+    "StrAttackBonus": "War3Patch.mpq",
+    "StrHitPointBonus": "War3Patch.mpq",
+    "StrRegenBonus": "War3Patch.mpq",
+    "AgiDefenseBonus": "War3Patch.mpq",
+    "AgiDefenseBase": "War3Patch.mpq",
+    "AgiAttackSpeedBonus": "War3Patch.mpq",
+    "AgiMoveBonus": "War3Patch.mpq",
+    "IntManaBonus": "War3Patch.mpq",
+    "IntRegenBonus": "War3Patch.mpq",
+    "MaxHeroLevel": "War3Patch.mpq",
+    "MaxUnitLevel": "War3Patch.mpq",
+    "DefenseArmor": "War3Patch.mpq"
+  }
+}

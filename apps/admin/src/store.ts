@@ -133,6 +133,16 @@ export type Page =
    * (recordings carry player names), so session-gated below.
    */
   | "replays"
+  /**
+   * 資料搬遷 (task #243) — the whole-platform ZIP export/import. SHIPS IN
+   * PRODUCTION and is session-gated below, both for the same reason: a
+   * migration tool that only works on localhost cannot migrate a host, and one
+   * export is every family member's password hash plus every unredeemed invite
+   * code. #162's loopback no-login does NOT extend here — the page's two
+   * dangerous actions re-confirm the operator's own password, and there is no
+   * password to re-confirm without a real account.
+   */
+  | "dataMigration"
   | "audit";
 
 export interface AdminAccount {
@@ -225,6 +235,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "mcoinGrant",
   "invites",
   "replays",
+  // #243: the archive page. NOT reachable through the loopback drop-in — its
+  // export and commit both re-confirm the caller's OWN password against their
+  // account, so there is nothing to check without a real session. This is not a
+  // weakening of loopbackOnly; it is a refusal to extend it.
+  "dataMigration",
   "audit",
 ]);
 

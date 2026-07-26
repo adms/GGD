@@ -33,6 +33,7 @@ import { projectileSystem } from "./systems/ProjectileSystem";
 import { flowerRulesFromConfig, spawnFlower } from "./flowers";
 import type { IntentFrame } from "./intents";
 import {
+  ATTRIBUTE_ENV_DEFAULTS,
   COMBAT_ENV_KEYS,
   DEFAULT_COMBAT_ENV,
   STAT_ENV_KEY,
@@ -104,11 +105,20 @@ describe("combat-env stat multipliers (env-01)", () => {
     cover("combat-env-stat-map");
     const mapped = new Set(Object.keys(STAT_ENV_KEY));
     expect(new Set(STAT_CASES.map((c) => c.stat))).toEqual(mapped as Set<unknown>);
-    // the only env keys WITHOUT a stat mapping are the formula-site ones
+    // the only env keys WITHOUT a stat mapping are the formula-site ones and
+    // the eight #248 三圍 coefficients (which BUILD a stat's base rather than
+    // multiplying the finished value — see stats/attributes.ts).
     const statKeys = new Set(Object.values(STAT_ENV_KEY));
     const nonStat = COMBAT_ENV_KEYS.filter((k) => !statKeys.has(k));
     expect(nonStat.sort()).toEqual(
-      ["cooldown", "damageDealt", "healing", "shield", "abilityRange"].sort(),
+      [
+        "cooldown",
+        "damageDealt",
+        "healing",
+        "shield",
+        "abilityRange",
+        ...Object.keys(ATTRIBUTE_ENV_DEFAULTS),
+      ].sort(),
     );
   });
 

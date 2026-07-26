@@ -231,6 +231,24 @@ export class ChampionView {
   /** The render scale actually applied to the adopted .glb — the height-normalized
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
+  /**
+   * TASK #247 airborne state.
+   *
+   * `groundOffsetY` is the model's foot offset in the ALREADY-SCALED frame —
+   * the `position.y = -min.y` shift `tryUpgradeToGlb` computes — kept so that
+   * `applyAirborne` can rewrite `glbRoot.position.y` every frame (fly height +
+   * offset) without re-measuring the bounding box.
+   *
+   * (#247 also shipped a `scaleMul` here, fed by the wire's `sc` percent. The
+   * sim never wrote anything but 1, so the whole lane was removed as dead — see
+   * protocol/schema.ts. Nothing in this file scales `glbRoot` any more, which is
+   * what keeps #150's normalised size untouchable by an ability.)
+   */
+  private groundOffsetY = 0;
+  /** interpolated fly height in GGD units (0 = grounded). */
+  private leapY = 0;
+  /** ENTITY_FLAG.AIRBORNE this frame — true on the takeoff/landing ticks too. */
+  private airborne = false;
   private upgradeStarted = false;
   private walkPhase = 0;
   private lastPose = { x: 0, z: 0 };
@@ -671,7 +689,12 @@ export class ChampionView {
    * TARGET here (the yaw eases toward it in `update`), except on the very first
    * pose where there is no prior orientation to preserve, so we snap once.
    */
-  setPose(x: number, z: number, fx: number, fz: number): void {
+  setPose(x: number, z: number, fx: number, fz: number, h = 0, airborne = false): void {
+    // TASK #247: height is recorded here and APPLIED in `update`, which is where
+    // the dissolve/bob/idle writers also live so all of them compose on the
+    // correct nodes instead of fighting over `root`.
+    this.leapY = h;
+    this.airborne = airborne;
     const dx = x - this.lastPose.x;
     const dz = z - this.lastPose.z;
     const step = Math.sqrt(dx * dx + dz * dz);
@@ -679,7 +702,10 @@ export class ChampionView {
     // respawn, blink) would spin the walk cycle through a random phase in one
     // frame. A step this large is never locomotion (the fastest dash covers
     // ~1 u per 30 Hz tick), so treat it as a teleport and hold the phase.
-    if (step < TELEPORT_STEP_UNITS) this.walkPhase += step * 4.2;
+    // A leaping champion covers ~0.33 u/tick planar — under TELEPORT_STEP_UNITS
+    // — so without the airborne gate it would RUN THROUGH THE AIR with its legs
+    // cycling. Hold the phase for the whole flight (#247).
+    if (step < TELEPORT_STEP_UNITS && !airborne) this.walkPhase += step * 4.2;
     this.lastPose = { x, z };
     this.root.position.x = x;
     this.root.position.z = z;
@@ -959,6 +985,7 @@ export class ChampionView {
     // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
     // left to animate, so the rest of the frame is skipped entirely.
     if (this.updateDissolve(state, nowMs)) return;
+    this.applyAirborne(); // #247 fly height + temporary scale (see below)
     const frozen = nowMs < this.hitstopUntilMs; // hitstop window
     this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body
     if (this.clipAnimator?.hasClips) {
@@ -1027,9 +1054,54 @@ export class ChampionView {
     this.armR.rotation.x += (armR - this.armR.rotation.x) * k;
     this.legL.rotation.x += (leg - this.legL.rotation.x) * k;
     this.legR.rotation.x += (-leg - this.legR.rotation.x) * k;
-    this.bodyRoot.position.y = this.bodyRoot.position.y + bob;
+    // Writers of bodyRoot.position.y, in order: the death sink (above), this
+    // bob, and #247's leapY. They COMPOSE additively and all three belong on
+    // bodyRoot — never on `root`, which also parents the team ring and the blob
+    // shadow (see applyAirborne).
+    this.bodyRoot.position.y = this.bodyRoot.position.y + bob + this.leapY;
 
     this.applyFlash(nowMs);
+  }
+
+  /**
+   * TASK #247 — apply the interpolated fly height.
+   *
+   * NOT ON `root`. `root` parents four things: bodyRoot, glbRoot, the TEAM RING
+   * and the BLOB SHADOW. Writing height there would fly the ring and the shadow
+   * into the air with the body, destroying the one cue that tells a player where
+   * a leaper is going to land. So the height goes on the BODY nodes only, and
+   * the shadow instead shrinks and fades with altitude — the classic, and free,
+   * jump-readability cue.
+   *
+   * No conflict with the #220 dissolve (which writes `root.position.y`) or with
+   * the idle bob (which writes `bodyRoot.position.y`): different nodes /
+   * additive composition, both documented at their own sites.
+   *
+   * SCALE IS NOT TOUCHED HERE. #247 shipped a `scaleMul` composed on top of
+   * #150's normalised `glbRoot.scaling`, but the sim only ever sent 1, so the
+   * lane was removed (see protocol/schema.ts). `glbRoot.scaling` is now written
+   * exactly once, at adoption — plus #244's growth factor, which is the ONLY
+   * other writer and owns the size for the whole match.
+   *
+   * THE GROUND OFFSET STILL HAS TO FOLLOW #244's GROWTH (integration batch A).
+   * `groundOffsetY` is `-min.y` measured in the ADOPTION-scale frame, and this
+   * method rewrites `glbRoot.position.y` every frame — so on a grown champion it
+   * would overwrite the re-ground `applyGrowthScale` just did and sink a quarter
+   * of the body through the floor. `min.y` scales linearly with `glbRoot.scaling`
+   * (the scale is about glbRoot's own origin), so multiplying the stored offset
+   * by `growthFactor` reproduces the re-measured value exactly, and is identity
+   * at tier 0. The shadow multiplies growth by the altitude shrink for the same
+   * reason — a big champion mid-leap casts a big shadow that shrinks with height.
+   */
+  private applyAirborne(): void {
+    if (this.glbRoot) {
+      this.glbRoot.position.y = this.leapY + this.groundOffsetY * this.growthFactor;
+    }
+    // Ground cues stay ON THE GROUND; the shadow reads the altitude instead.
+    const shrink = 1 / (1 + Math.max(0, this.leapY) * 0.15);
+    this.blobShadow.scaling.setAll(this.growthFactor * shrink);
+    const shadowMat = this.blobShadow.material as { alpha?: number } | null;
+    if (shadowMat) shadowMat.alpha = 0.38 * shrink;
   }
 
   /**
@@ -1200,6 +1272,12 @@ export class ChampionView {
         glbRoot.computeWorldMatrix(true);
         const { min } = glbRoot.getHierarchyBoundingVectors(true);
         if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
+        // #247: remember the ground offset, because `applyAirborne` REWRITES
+        // `glbRoot.position.y` every frame (fly height + offset) and would
+        // otherwise clobber the shift measured on the line above. Kept in the
+        // scaled frame — `glbRoot.scaling` is written exactly once, right here,
+        // and nothing may change it afterwards (that is what keeps #150).
+        this.groundOffsetY = Number.isFinite(min.y) ? -min.y : 0;
         this.glbRoot = glbRoot;
         this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
         // #226 per-champion palette/proportions/props. MUST run before the

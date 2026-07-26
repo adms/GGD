@@ -63,6 +63,8 @@ const PACK: ChampionVoicePack = {
       {
         engine: "cosyvoice3",
         variant: "cv3-0.5b",
+        // its OWN pack, not borrowed across a 變身 form link (see resolveVoicePackId)
+        sharedFrom: null,
         lines: {
           hurt: [clip(src(id, "hurt"))],
           "hurt-heavy": [clip(src(id, "hurt-heavy"))],

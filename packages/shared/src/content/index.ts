@@ -72,6 +72,8 @@ export {
   groupCharacters,
   characterKeys,
   distinctCharacters,
+  alternateForms,
+  baseFormOf,
   sameCharacterInRoster,
   heroNumberCollisions,
   type IdentityAbility,
@@ -79,6 +81,27 @@ export {
   type CharacterGroup,
   type HeroNumberCollision,
 } from "./championIdentity";
+export {
+  CHAMPION_FORM_PAIRS,
+  FORM_PAIR_BY_ALTERNATE_ID,
+  FORM_PAIR_BY_BASE_ID,
+  isAlternateForm,
+  isAlternateFormId,
+  isBaseForm,
+  counterpartFormId,
+  baseFormIdOf,
+  isW3xFormPair,
+  type ChampionFormPair,
+  type PerLevelSeconds,
+} from "./championForms";
+// 「變身前/後共用就好」 (owner 2026-07-26): a base and its alternate are ONE
+// character, so one generated voice pack serves both halves of a w3x form pair.
+export {
+  planFormVoiceShares,
+  applyFormVoiceShares,
+  type FormVoiceShare,
+  type FormShareDirection,
+} from "./voiceFormSharing";
 export {
   BLOCKING_FOOTPRINTS,
   NON_BLOCKING,
@@ -96,6 +119,11 @@ export {
   GGD_PER_WC3,
   round2,
   toLen,
+  // the SEPARATE vertical ruler (#247b) — altitude is set by the camera, not by
+  // the map's geometry, so a fly height never goes through `toLen`.
+  GGD_APEX_PER_WC3,
+  round3,
+  toApex,
   SIM_CAPABILITIES,
   missingCaps,
   expand,

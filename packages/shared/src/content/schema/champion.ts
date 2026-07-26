@@ -13,6 +13,76 @@ import {
 import { zHookDef } from "./effect";
 import { zAbilityDef, zHitFeel } from "./ability";
 
+/**
+ * Per-level numbers off a WC3 ability, keyed by the LEVEL as a string ("1".."4").
+ * A MAP, not an array, because the source really is sparse: `A0VG 90-002 超進化!
+ * 妙蛙花` only defines levels 1 and 4, and an array would have to invent the
+ * holes.
+ */
+const zPerLevelSeconds = z.record(z.string().regex(/^[1-9]\d?$/), z.number().nonnegative());
+
+/**
+ * 變身 — the base⇄alternate FORM LINK, recovered from the source map's WC3
+ * Metamorphosis fields `Eme1` (normal-form unit) / `Emeu` (alternate-form unit).
+ *
+ * DATA ONLY (task #249). Nothing in the sim reads this yet: it records WHICH
+ * champion doc is the other half of a transform and WHICH ability performs it,
+ * so the mechanic (task #119) can be built without another trip into the .w3x.
+ * The owner has not yet decided the auto-trigger conditions for the four
+ * passive-slot transforms, so no behaviour is wired here on purpose.
+ *
+ * WHY IT MATTERS EVEN AS PURE DATA: all 26 transforms in the map are a COMPLETE
+ * second unit definition (own model, scale, movement speed, ability list), and
+ * the importer dropped `Eme1`/`Emeu` (task #56 — it whitelists ~30 of 180 w3u
+ * field codes). Nothing downstream could tell a hero from its transformed body,
+ * so 10 of the 50 first-open-roster slots shipped the ALTERNATE form as if it
+ * were the hero — including 草泥馬's lying-down 臥 body (w3x movement speed 0).
+ *
+ * BOTH halves of a pair carry the SAME w3x facts and differ only in `role`, so
+ * a doc can be read on its own without loading its counterpart.
+ */
+const zTransformLink = z
+  .object({
+    /**
+     * Which half of the pair THIS doc is. `"base"` = the hero a player picks;
+     * `"alternate"` = the transformed body, which is NOT independently
+     * selectable — it is reached only by casting the transform ability
+     * (owner ruling 2026-07-26: 「換成本體，變身態改由技能觸發」).
+     */
+    role: z.enum(["base", "alternate"]),
+    /**
+     * The champion doc on the OTHER side of the link. ABSENT when that form was
+     * never imported — four alternate bodies (H00W 26洨者狀態, O030 30變態紳士,
+     * N01B 40萬解, E010 70紮根) still have no champion doc, and an absent
+     * counterpart is a recovered fact, not a TODO. The rawcodes below always
+     * name both halves, imported or not.
+     */
+    counterpartId: zRef<ChampionId>("champions").optional(),
+    /** `Eme1` — the rawcode of the NORMAL-form unit in war3map.w3u. */
+    normalUnitRawcode: z.string().min(4).max(4),
+    /** `Emeu` — the rawcode of the ALTERNATE-form unit in war3map.w3u. */
+    alternateUnitRawcode: z.string().min(4).max(4),
+    /** The transform ability, as the map's own w3a entry describes it. */
+    triggerAbility: z
+      .object({
+        /** w3a rawcode, e.g. "A0VG". The link's provenance, not a content ref. */
+        rawcode: z.string().min(4).max(4),
+        /** The map's ability name, `NN-0X …` per the task #11 convention. */
+        name: z.string().min(1).optional(),
+        /**
+         * `ahdu` (HERO duration) per level, in seconds. ABSENT = the form does
+         * not time out: `A0DZ 20-01 風王結界` and `A0O6 70-00 紮根` are TOGGLES
+         * (the body persists until re-cast) and `Aphx 61-00 百連我殺` is a
+         * death-state morph (`adur` 0.01s — an instant swap). Three of 26.
+         */
+        durationSec: zPerLevelSeconds.optional(),
+        /** `acdn` per level, in seconds. Absent on the two toggles. */
+        cooldownSec: zPerLevelSeconds.optional(),
+      })
+      .strict(),
+  })
+  .strict();
+
 export const zChampionDef = z
   .object({
     id: zIdFor<ChampionId>(),
@@ -27,9 +97,58 @@ export const zChampionDef = z
     role: z.string().min(1),
     attackType: z.enum(["melee", "ranged"]),
     modelKey: zRef("models"),
+    /**
+     * The RAW stat card. Since #248 the eight attribute-derived rows hold the
+     * source map's own numbers, WITHOUT the 三圍 term — `maxHealth` on
+     * godie-e001 is the map's 150, and the sim adds `25 × STR` on top of it
+     * (sim/stats/attributes.ts). Read it through `championStatBase`, never
+     * directly, or a stat table shows 150 where the hero really has 575.
+     */
     baseStats: zPartialStatBlock,
-    /** additive per level beyond 1 */
+    /**
+     * Additive per level beyond 1 — the per-hero DESIGNER KNOB, and since #248
+     * a deliberate SECOND source alongside `attributes.*Growth`:
+     *
+     *     stat(L) = baseStats + attr(L)·coefficient + growth·(L−1)
+     *
+     * The two are summed, not reconciled. That is not double-counting: the
+     * attribute term carries the w3x-faithful part of the curve, `growth`
+     * carries the tuning laid on top, so a hero's progression is not locked to
+     * his three attributes (owner ruling on #248 —「growth 區塊就是重複來源
+     * => 本來就可以重複沒有衝突」). `championGrowthLayers.test.ts` pins the
+     * three-layer sum so a reader cannot silently apply only two of the three.
+     *
+     * `growth.mr` is simply the row where the attribute term is zero: Warcraft
+     * III has no magic-resistance attribute, so 魔抗 is growth-only by nature,
+     * not by omission.
+     */
     growth: zPartialStatBlock,
+    /**
+     * 三圍 — STRENGTH / AGILITY / INTELLIGENCE + per-level growths (task #248),
+     * recovered from the source map by walking each unit's `base` chain into
+     * the Blizzard stock tables. `source` is provenance: "w3x" for the 111
+     * champions the map can answer for, "authored" for the three it cannot
+     * (godie-zombiex, sela, thorne), whose numbers were chosen to reproduce
+     * their shipped level-1 sheet exactly.
+     *
+     * OPTIONAL in the schema, REQUIRED in the shipped tree: a doc without it
+     * simply gets no attribute term (the pre-#248 law), which keeps hand-written
+     * test fixtures valid, and `championAttributes.test.ts` asserts every real
+     * champion has one so the roster can never silently lose it.
+     */
+    attributes: z
+      .object({
+        str: z.number().finite(),
+        agi: z.number().finite(),
+        int: z.number().finite(),
+        strGrowth: z.number().finite(),
+        agiGrowth: z.number().finite(),
+        intGrowth: z.number().finite(),
+        primary: z.enum(["STR", "AGI", "INT"]),
+        source: z.enum(["w3x", "authored"]),
+      })
+      .strict()
+      .optional(),
     /** ranged auto-attack projectile speed (GGD units/sec) */
     missileSpeed: z.number().positive().optional(),
     /** wind-up (seconds) before a basic attack's hit lands */
@@ -102,6 +221,12 @@ export const zChampionDef = z
       })
       .strict()
       .optional(),
+    /**
+     * 變身 form link — see `zTransformLink`. Present on both halves of each of
+     * the 26 w3x transform pairs; absent on every champion that has no second
+     * form. DATA ONLY: no behaviour reads it yet.
+     */
+    transform: zTransformLink.optional(),
     /** AI hints (Q/W/E/R only; EX is auto-unlocked, never in skill order) */
     skillOrder: z.array(zCoreAbilitySlot),
     buildPriority: z.array(zRef<ItemId>("items")),
