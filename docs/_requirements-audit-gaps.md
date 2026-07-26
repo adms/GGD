@@ -3176,3 +3176,66 @@ dev layout 掛了 `nginx/dev/` 才會。
 本來只看狀態碼。路由拿掉之後 `/editor/` 會落到 `try_files … /index.html` 而**回 200**，
 所以那一列會在已經修好的部署上永遠喊「確實對外開著」。改成 GET 讀 body 找編輯器自己的
 `<title>`；判斷的是「回話的是不是編輯器」。永遠亮著的安全警示等於沒有警示。
+
+## #238 — 火圈聲仍會播進商店：#216 修的是「停」，漏的是「起」 (2026-07-26)
+
+### 查證，不是推測
+
+`#216` 的修法是給 sustained bed 一條 STOP 路：`SFX_LOOPABLE` 的 bed 會被記成 voice，
+`AudioDirector` 把 `stopSustainedSfx()` 掛在 `isCombatEnd` 這個 phase edge 上。
+那條路本身是對的，而且**真的有效** —— 但它只涵蓋「鐘響時已經在播的 bed」。
+
+漏掉的是**鐘響之後才開始播的 bed**。客戶端有兩個時鐘：
+
+* teardown 是 **React effect**，deps `[phase]`，在帶著新 phase 的那次 commit 跑一次；
+* `fireRingLoop` 由 `combatSfx.combatSfxKey` 產生，而它掛在 GameApp 每幀的
+  `conn.drainEvents()` 上 —— 一個 **requestAnimationFrame** 時鐘，和 React commit
+  沒有同步。
+
+於是「phase commit → teardown 開火 → 下一個 rAF frame 才 drain 到還排在佇列裡的
+`fireRingStart`」這個順序，會在回合已經結束之後點起一段 ~60 秒的燃燒 bed，
+而 teardown 這個 edge 已經用掉了。下一次 `combat→X` 是一整個商店階段之後的事。
+**這就是被打倒的玩家坐在商店裡聽火圈燒的那條路。**
+
+edge 補不了這個洞：edge 只開一次火，而點燃 bed 的事件在它之後才到。
+
+### 修法：level gate，不是第二個 edge
+
+新增 `apps/client/src/audio/combatBedGate.ts`（純函式，phase 用參數傳，不 import store），
+`combatSfxKey` 過一層 `gateCombatBed`。問的是「**此刻**這場仗還在打嗎」，
+沒有時間窗，所以不管佇列晚一幀還是兩幀都一樣。
+
+刻意**只**擋三支戰鬥語意的 bed：`fireRingLoop` / `arenaAmbience` / `reviveChannel`。
+`merchantAmbience`（商店市集床）和 `legendaryRoll`（抽獎）本來就是場外的，
+拿 combat 去擋會擋反。transient（打擊、施法、金幣、觀眾歡呼）一律不動 ——
+**這不是「戰鬥外靜音」，是三支 ambience bed 的門**。
+
+順手擋掉一個會被這次修復製造出來的假警報：`fireRingStart` 那個 case 裡有 `#132`
+的 drift tripwire，它比對 `phaseSecondsLeft` 和 config 推導值。落在 combat 之外時
+`phaseSecondsLeft` 是**商店的鐘**，比對下去會印出一個不存在的 drift。
+tripwire 一併吃 phase gate。
+
+### 測試（刻意不是查布林值）
+
+`combatBedGate.test.ts` 的 regression block 用 `syncHudFromState` ——
+網路層真正在呼叫的那個 projection —— 驅動 **combat → resolution → intermission →
+combat** 的真實 phase 轉換，然後對真正的 `combatSfxKey(event)` 斷言**靜音**。
+第 5 步特意再回 combat 斷言 bed 又被允許：**一個卡死關上的 gate 和一個從不關的
+gate 一樣壞**。
+
+**驗證過會紅：** 暫時把 `gateCombatBed` 改成 `return key` 之後，3 個 test 失敗
+（含那個真實 phase transition 的），還原後 286 檔 / 3340 test 全綠。
+
+### 順帶查出的第二個問題（#234 的擊殺連段）
+
+`#234` 的擊殺語音 + 觀眾歡呼**已經是上一輪出貨過的**（commit `27555465`），
+wiring 完整、51 支語音包 kill-1..5 / first-blood / unstoppable 齊全、
+兩支 cheer clip 在 `content/assets/audio/sfx/fx/`。但**連段窗口有兩個各自為政的計數器**：
+
+* sim `matchStats.MULTIKILL_WINDOW_TICKS = 300` ticks = **10 秒**（結算板
+  `stats.multikills` 和 #25 評分吃的就是它）；
+* client `sfxEdges.MULTIKILL_WINDOW_MS` 當時是自己寫死的 **8 秒**。
+
+落在 8–10 秒之間的那一刀：**結算板記一次 multikill，英雄的嘴巴卻重新喊「一殺」**，
+觀眾歡呼也跟著降一階。改成從 sim 常數推導（`MULTIKILL_WINDOW_TICKS / TICK_HZ * 1000`），
+唯讀相依，sim 那邊改數字語音階梯就跟著走。sim 是權威 —— 它是發錢和計分的那個計數器。

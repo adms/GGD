@@ -67,13 +67,22 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
     cover("juice-sfx-key");
     expect(combatSfxKey(ev("buffApply", { source: 1, target: 2 }))).toBe("buffApply");
     expect(combatSfxKey(ev("explosion", { caster: 1, x: 0, z: 0 }))).toBe("explosion");
-    expect(combatSfxKey(ev("reviveChannel", { id: 5, channeller: 1 }))).toBe("reviveChannel");
+    // `reviveChannel` is a SUSTAINED combat bed, so the #238 phase gate applies:
+    // it passes through by name only while the match is in combat. Pinned here
+    // rather than left to the store's default so this stays a statement about
+    // the RENAME, not an accident of whatever phase the store happens to hold.
+    expect(combatSfxKey(ev("reviveChannel", { id: 5, channeller: 1 }), null, "combat")).toBe(
+      "reviveChannel",
+    );
+    // `reviveComplete` is a transient — ungated, correct in any phase.
     expect(combatSfxKey(ev("reviveComplete", { id: 5, ownerId: 3 }))).toBe("reviveComplete");
   });
 
   it("fireRingStart renames to the fireRingLoop closing-ring bed (#132)", () => {
     cover("juice-sfx-key");
-    expect(combatSfxKey(ev("fireRingStart", { atTick: 900 }))).toBe("fireRingLoop");
+    // In combat, where the ring actually burns. Outside it the #238 gate returns
+    // null instead — see combatBedGate.test.ts for that half.
+    expect(combatSfxKey(ev("fireRingStart", { atTick: 900 }), null, "combat")).toBe("fireRingLoop");
   });
 
   describe("per-weapon basic-attack routing (全用)", () => {

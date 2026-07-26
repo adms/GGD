@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { TICK_HZ } from "@ggd/shared/constants";
+import { MULTIKILL_WINDOW_TICKS } from "@ggd/shared/sim/stats/matchStats";
 import {
   crossedIntoLowHealth,
   diffTally,
@@ -17,6 +19,35 @@ const base: TallySnapshot = {
   exRank: 0,
   allyDeaths: 0,
 };
+
+describe("the multikill window is the SIM's, not a second opinion (#234)", () => {
+  it("derives MULTIKILL_WINDOW_MS from matchStats.MULTIKILL_WINDOW_TICKS", () => {
+    cover("audio-tally-edges");
+    // The sim's `recordChampionDeath` chains a killer's streak on this window —
+    // the same streak that credits `stats.multikills` on the settlement board.
+    // The voice ladder (一殺/二殺…) and the crowd cheer read the CLIENT streak,
+    // so if these two numbers part company the hero says 「一殺」 for a kill the
+    // scoreboard just counted as a multikill. Pinned, not assumed: this fails if
+    // either side is retuned without the other.
+    expect(MULTIKILL_WINDOW_MS).toBe((MULTIKILL_WINDOW_TICKS / TICK_HZ) * 1_000);
+    expect(MULTIKILL_WINDOW_MS).toBe(10_000);
+  });
+
+  it("chains a kill that lands in the 8–10 s band the old 8 s constant dropped", () => {
+    cover("audio-tally-edges");
+    // 9 s after the previous kill: the sim counts a multikill here. Before the
+    // derivation the client restarted the ladder at 一殺 and the crowd
+    // de-escalated with it. Now both say 二殺.
+    const r = diffTally(
+      { ...base, kills: 1 },
+      { ...base, kills: 2 },
+      { nowMs: 9_000, lastKillMs: 0, killStreak: 1, everKilled: true },
+    );
+    expect(r.events).toEqual(["multiKill"]);
+    expect(r.killStreak).toBe(2);
+    expect(r.killVoice).toBe("kill-2");
+  });
+});
 
 describe("diffTally", () => {
   it("fires kill on a first kill and records the timestamp", () => {
