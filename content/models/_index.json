@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "cde5abb6e313",
+  "hash": "e1418d079315",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -13,6 +13,12 @@
       "path": "models/champ.godie-zombiex.json",
       "hash": "9efa43cc9c0e",
       "size": 550
+    },
+    {
+      "id": "champ.mob.zombie",
+      "path": "models/champ.mob.zombie.json",
+      "hash": "795266615946",
+      "size": 1635
     },
     {
       "id": "champ.sela",

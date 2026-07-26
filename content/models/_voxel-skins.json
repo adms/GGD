@@ -11,27 +11,69 @@
   "overrides": {
     "godie-h02s": {
       "note": "死亡騎士 — no 稱號, no w3x model row, and it shares champ.thorne, the same four vfx families AND hero number 91 with godie-h02z (an un-renumbered map clone). The generator separates them on id entropy alone, which is correct but arbitrary; these two are authored so the difference is INTENTIONAL.",
-      "palette": { "outfitPrimary": "#3b3550", "outfitSecondary": "#22202e", "metal": "#8d93a3" },
-      "hair": { "style": "bald" },
-      "face": { "eye": "visor-bar", "mouth": "stitch", "mark": "scar" },
-      "outfit": { "top": "plate", "legs": "greaves", "emblem": "skull" },
-      "motifs": { "head": "horns", "shoulder": "pauldrons", "back": "cape" }
+      "palette": {
+        "outfitPrimary": "#3b3550",
+        "outfitSecondary": "#22202e",
+        "metal": "#8d93a3"
+      },
+      "hair": {
+        "style": "bald"
+      },
+      "face": {
+        "eye": "visor-bar",
+        "mouth": "stitch",
+        "mark": "scar"
+      },
+      "outfit": {
+        "top": "plate",
+        "legs": "greaves",
+        "emblem": "skull"
+      },
+      "motifs": {
+        "head": "horns",
+        "shoulder": "pauldrons",
+        "back": "cape"
+      }
     },
     "godie-h02z": {
       "note": "不良少年 — the other half of the h02s clone pair. Deliberately the opposite silhouette: street, not armour.",
-      "palette": { "outfitPrimary": "#8a5a2b", "outfitSecondary": "#2f2a26", "accent": "#e8c04a" },
-      "hair": { "style": "spiky", "tone": "gold" },
-      "face": { "eye": "slash", "mouth": "grin", "mark": "scar" },
-      "outfit": { "top": "jacket", "legs": "trousers", "emblem": "bolt" },
-      "motifs": { "head": "headband", "shoulder": "none", "back": "scarf-tail" }
+      "palette": {
+        "outfitPrimary": "#8a5a2b",
+        "outfitSecondary": "#2f2a26",
+        "accent": "#e8c04a"
+      },
+      "hair": {
+        "style": "spiky",
+        "tone": "gold"
+      },
+      "face": {
+        "eye": "slash",
+        "mouth": "grin",
+        "mark": "scar"
+      },
+      "outfit": {
+        "top": "jacket",
+        "legs": "trousers",
+        "emblem": "bolt"
+      },
+      "motifs": {
+        "head": "headband",
+        "shoulder": "none",
+        "back": "scarf-tail"
+      }
     },
     "godie-zombiex": {
-      "note": "聖杯黑泥醬 — in-house original with no icon file and no w3x row, so it has the least identity data on the roster. Authored to read as the 喪標麥可 zombie wave leader it is (see #217, which owns the eventual real model).",
-      "palette": { "skin": "#6f7f6a", "outfitPrimary": "#4a5a3a", "outfitSecondary": "#2b3324", "accent": "#9ad14f" },
-      "hair": { "style": "tufts", "tone": "ash" },
-      "face": { "eye": "closed", "mouth": "stitch", "mark": "tear-line" },
-      "outfit": { "top": "coat", "legs": "trousers", "emblem": "bone" },
-      "motifs": { "head": "none", "shoulder": "shawl", "back": "none" }
+      "note": "聖杯黑泥醬 - 喪標麥可。owner 2026-07-26：『他應該是綠色系為主』。走 L1 是刻意的 —— 這一層優先於關鍵字規則、技能特效元素與 id 雜湊三層推導，所以不必去動產生器（那條路 #264 正在改，而且改規則會波及其他角色）。\n綠要讀起來像腐敗不像草地：屍綠的皮膚配暗掉的橄欖布料，金屬是鏽掉的，只有眼睛用高彩度的病黃綠當唯一的亮點 —— 一隻整身同一個綠的殭屍看起來像玩具。",
+      "palette": {
+        "skin": "#6d8f4e",
+        "hair": "#3f4a2a",
+        "outfitPrimary": "#46553a",
+        "outfitSecondary": "#2f3a28",
+        "metal": "#6b6f5e",
+        "eye": "#c8e64a",
+        "accent": "#8fbf3f"
+      },
+      "preferVoxelBody": true
     }
   }
 }
