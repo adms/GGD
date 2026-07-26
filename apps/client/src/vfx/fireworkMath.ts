@@ -323,6 +323,100 @@ export function framePoint(
 }
 
 /**
+ * THE #235 FIX, in one number: the WORLD HEIGHT the tier-1 volley bursts at.
+ *
+ * Camera-space framing alone put the round-win volley `SMALL_REF_DISTANCE`
+ * straight down the view axis — and the shipped combat camera's view axis DIVES
+ * at 68°, so every shell of every volley landed 9–10.4 world units BELOW an
+ * opaque, depth-writing arena floor. On-frame in NDC, alive, 209 particles,
+ * zero pixels. Nobody ever saw a round firework.
+ *
+ * So the shells are anchored to a real height ABOVE THE ARENA instead — a
+ * fireworks display happens in the sky, not at a fixed distance from your eye —
+ * and the frame coordinates (u, v) now say WHERE ON THAT SKY PLANE, which keeps
+ * the "always framed, whatever the camera is doing" property that made
+ * camera-space placement attractive in the first place.
+ *
+ * 5.0 u clears every champion (≈1.7 u), the 2.4 u prop-height cap, and the
+ * fire-ring band, and sits under the 9.27 u eye so the plane is actually in
+ * front of a downward-looking camera at all.
+ */
+export const SMALL_SKY_Y = 5.0;
+
+/**
+ * The distance the tier-1 look was TUNED at. It is no longer where the shells
+ * are placed — it is the reference the placement scales sizes against, so the
+ * on-screen size of a peony is exactly what it was when the effect was
+ * authored, even though it now sits 5 u from the eye instead of 22.
+ */
+export const SMALL_REF_DISTANCE = 22;
+
+/** Never place a shell closer than this to the eye (near-plane sanity). */
+export const SMALL_MIN_DISTANCE = 2.5;
+
+/**
+ * ON-SCREEN SIZE GAIN for the tier-1 volley, over the size it was authored at.
+ *
+ * Measured, not chosen for taste. Rendered through the REAL combat camera onto
+ * the REAL arena floor and diffed against the same frame with the effect off
+ * (`scripts/captureRealCamera.mjs`), the volley at its own peak changed **0.42%**
+ * of the frame — against **3.83%** for the routine cast telegraph a player is
+ * already expected to notice mid-fight. A once-a-round CELEBRATION that is an
+ * order of magnitude quieter than a Q press is not a celebration.
+ *
+ * The reason it is quiet is the same #161 camera change that buried it: the
+ * tier-1 look was tuned against a 21° eye-level shot where the floor was a
+ * narrow dark band, and at 68° the frame is filled with high-contrast
+ * stonework. Gain is applied to sizes, speeds and gravity together, so the
+ * burst grows without changing its shape or its timing.
+ */
+export const SMALL_SCREEN_GAIN = 2.8;
+
+export interface SkyPlacement {
+  /** distance from the eye along the view ray through (u, v) */
+  distance: number;
+  /**
+   * Size/speed/gravity multiplier that keeps the burst's ON-SCREEN size equal
+   * to what it was at `SMALL_REF_DISTANCE`. A firework placed 4× closer must be
+   * 4× smaller, and its gravity 4× weaker, or a peony swallows the screen.
+   */
+  scale: number;
+}
+
+/**
+ * Where on the view ray through frame position `v` does the sky plane sit?
+ *
+ * The camera has no roll in either shipped rig, so `right.y` is 0 and the
+ * horizontal frame coordinate cannot change a point's height — only `v` can.
+ * That makes this exact rather than iterative:
+ *
+ *     y(d) = eyeY + d · (fwdY + v · tan(fov/2) · upY)  =  skyY
+ *
+ * A camera whose ray never reaches the plane (looking away from it, or exactly
+ * along it) falls back to the reference distance, which is the pre-#235
+ * behaviour — wrong, but no worse than it was, and it never divides by zero.
+ */
+export function skyPlacement(
+  v: number,
+  fovY: number,
+  eyeY: number,
+  fwdY: number,
+  upY: number,
+  skyY: number = SMALL_SKY_Y,
+  refDistance: number = SMALL_REF_DISTANCE,
+): SkyPlacement {
+  const dirY = fwdY + v * Math.tan(fovY / 2) * upY;
+  const need = skyY - eyeY;
+  let d = refDistance;
+  if (Math.abs(dirY) > 1e-4) {
+    const solved = need / dirY;
+    if (solved > 0) d = solved;
+  }
+  d = Math.min(refDistance, Math.max(SMALL_MIN_DISTANCE, d));
+  return { distance: d, scale: (d / refDistance) * SMALL_SCREEN_GAIN };
+}
+
+/**
  * Scale (shape units → world units) that makes a `shapeW × shapeH` silhouette
  * cover `coverage` of the SHORTER frame axis at `distance`. Fitting to the
  * shorter axis is what keeps the chicken whole on a phone in portrait as well

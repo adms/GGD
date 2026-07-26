@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>真鏡頭確認 — 煙火 / 光束預告 (#235 / #233)</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.88); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; max-width:380px; }
+  #panel h1 { margin:0 0 4px; font-size:15px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--dim); font-size:12px; white-space:pre-wrap; }
+  #err { top:14px; left:14px; right:14px; max-width:680px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud"></div>
+
+<div id="panel" class="hud">
+  <h1>真鏡頭確認台 · through the REAL camera</h1>
+  <p>
+    這頁用的是遊戲<strong>真正的</strong> <code>CameraRig</code>（68°、dolly 10、fov 0.8）與
+    真正的 <code>buildZoneGround</code> 地板。#93 的試聽頁用的是遊戲裡不存在的 21° 鏡頭，
+    所以「已驗證」的煙火從來沒有人看過。
+  </p>
+  <p>
+    <code>?fx=none|volley|chicken|pillar</code> ·
+    <code>&amp;cam=combat|settlement</code> ·
+    <code>&amp;step=780</code>（frame-stepped，固定 1/60 s 一格）·
+    <code>&amp;round=2</code> · <code>&amp;castMs=600</code> ·
+    <code>&amp;casterZ=2</code>
+  </p>
+</div>
+
+<div id="stats" class="hud"></div>
+
+<script type="module">
+  const q = new URLSearchParams(location.search);
+  const num = (k, d) => (q.has(k) ? Number(q.get(k)) : d);
+  const err = document.getElementById("err");
+  const stats = document.getElementById("stats");
+  const canvas = document.getElementById("view");
+  // `?hud=0` strips the overlay panels — a capture must show the FRAME, not the
+  // instrumentation sitting on top of it.
+  if (q.get("hud") === "0") {
+    for (const el of document.querySelectorAll(".hud")) el.style.display = "none";
+  }
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  try {
+    const { startPresentationAudition } = await import("/src/render/presentationAudition.ts");
+    const handle = startPresentationAudition(canvas, {
+      fx: q.get("fx") ?? "none",
+      cam: q.get("cam") === "settlement" ? "settlement" : "combat",
+      round: num("round", 1),
+      casterX: num("casterX", 0),
+      casterZ: num("casterZ", 0),
+      castMs: num("castMs", 600),
+    });
+    // Always frame-stepped: a capture must be independent of renderer speed.
+    handle.stepTo(num("step", 780));
+    window.__audition = handle;
+    // The capture script polls these two.
+    Object.defineProperty(window, "__settled", { get: () => handle.settled });
+    window.__probe = () => handle.probe();
+    if (q.get("hud") !== "0") {
+      setInterval(() => {
+        stats.textContent = JSON.stringify(handle.probe(), null, 1);
+      }, 250);
+    }
+  } catch (e) {
+    err.style.display = "block";
+    err.textContent = String(e && e.stack ? e.stack : e);
+  }
+</script>
+</body>
+</html>

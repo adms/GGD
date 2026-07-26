@@ -54,6 +54,7 @@ import { envFactor } from "../ui/displayFinal";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { KIND_FLOWER, KIND_GUARDIAN } from "../render/overheadAnchors";
 import { qualityController } from "../render/QualityController";
+import { poseLookingAt, verticalHeadroom } from "../render/effectFraming";
 import {
   ShadowLayer,
   SHADOW_CHAMPION_RADIUS,
@@ -79,6 +80,9 @@ import { CastPillarFx } from "./CastPillarFx";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
+
+/** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
+const HEADROOM_F = new Vector3();
 
 export interface VfxContext {
   /** rendered position of an entity (view space), or null if unknown */
@@ -451,13 +455,48 @@ export class VfxSystem {
     this.castDecals = new GroundDecalPool(scene, { maxDecals: MAX_CAST_DECALS });
     this.pillars = new CastPillarFx(
       scene,
-      { entityPos: (id) => this.ctx.entityPos(id) },
+      {
+        entityPos: (id) => this.ctx.entityPos(id),
+        // TASK #233 — the beam is framed against the camera that is actually
+        // presenting. `scene.activeCamera` is the right one in the single-view
+        // case and the last-rendered viewport in the 4-up couch split; in the
+        // split the four rigs share a pitch and a dolly, so the height they
+        // disagree about is at most the difference their targets make, which is
+        // far smaller than the 6.4 u constant this replaces.
+        headroomAt: (x, z) => this.headroomAt(x, z),
+      },
       { getScale: () => this.budgetScale() },
     );
     this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
     this.telegraphLayer = new TelegraphLayer(scene, {
       entityPos: (id) => this.ctx.entityPos(id),
       castProgress: (id, nowMs) => this.ctx.castProgress?.(id, nowMs) ?? null,
+    });
+  }
+
+  /**
+   * Vertical budget above a ground point through the LIVE camera (task #233).
+   *
+   * Reads the real camera's eye + fov + aspect rather than reconstructing the
+   * rig from constants, so a zoomed-out or panned camera gets the budget it
+   * really has. Returns null when there is no camera (NullEngine tests), and
+   * `castBeamPlan` falls back to the shipped default.
+   */
+  private headroomAt(x: number, z: number): number | null {
+    const cam = this.scene.activeCamera;
+    if (!cam) return null;
+    const eye = cam.globalPosition;
+    const m = cam.getWorldMatrix();
+    const fwd = Vector3.TransformNormalFromFloatsToRef(0, 0, 1, m, HEADROOM_F).normalize();
+    const target = {
+      x: eye.x + fwd.x,
+      y: eye.y + fwd.y,
+      z: eye.z + fwd.z,
+    };
+    const pose = poseLookingAt({ x: eye.x, y: eye.y, z: eye.z }, target);
+    return verticalHeadroom(pose, { x, z }, {
+      fovRad: (cam as unknown as { fov?: number }).fov ?? undefined,
+      aspect: this.scene.getEngine().getAspectRatio(cam),
     });
   }
 

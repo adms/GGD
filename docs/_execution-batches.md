@@ -52,6 +52,68 @@ nginx **有**擋這條路徑的規則（`nginx/nginx.conf:365-366`），它沒�
 
 ---
 
+---
+
+## 🔬 2026-07-26 · #235 / #233 —— 「做完了但玩家看不到」的第四次，這次量給你看
+
+分支 `feat/253-client-presentation`（off main `5e9595f0`）。三道閘全綠：
+`pnpm -r --if-present typecheck` · `pnpm todo:check`（1278 items）· `pnpm --filter @ggd/client test`（**290 檔 / 3381 測試**）。
+
+### #235 根因（不是猜的，是用真鏡頭量出來的）
+
+| 事實 | 證據 |
+|---|---|
+| 回合煙火 4 發全部落在世界 **y ≈ −9.0 ~ −10.4** | `SMALL_DISTANCE = 22` × 68° 視軸（`fwd.y = −0.927`），眼睛 9.27 u |
+| 它們 **100% 在畫面內** | frustum 佔用率 vRatio 0.24–0.68，全部 < 1 |
+| 它們 **100% 被地板遮住** | `buildZoneGround` 半徑 24、不透明、寫深度 |
+| **實拍證明**：無頭 Chrome + 真 `CameraRig` + frame-stepped，跟「特效關掉」同一格比對 | **changedPixels = 0**（0.0%） |
+| 修好之後同一組實拍 | **3.0–3.4%** 的畫面改變（跟施法光柱 3.83% 同一量級） |
+| **烤雞沒有壞** | 真結算鏡頭 **25.9%**、真戰鬥鏡頭 **25.7%**。`fix/235-fireworks-visible` 的偽造證據，是因為那半根本沒東西可修 |
+
+**烤雞為什麼 owner 沒看到，客戶端這邊查不出來。** 幾何、深度、rendering group、`MatchEndPanel` 的
+罩色（held 版只有 0.16–0.32 alpha、刻意沒有 brightness）全部正常，`MatchEndPanel` 也不會抑制 arena 繪製。
+剩下唯一的可疑點是 `outcomeDecided && placement === 1` 這個邊緣在一場正常對戰裡到底發不發生
+（#193「match-over 必須經過結算畫面」還在跑）。**這條我不假裝解決，留給 game-server / 結算流程那條線。**
+
+### #233 —— 沒有蓋第三個預告，而是把第二個放進畫面裡
+
+`PILLAR_HEIGHT = 6.4` 這個常數，在遊戲真正看得到的地面位置上，**整根在畫面內的比例只有 6%**。
+頭上空間實測：畫面底部 8.46 u、正中 5.17 u、上緣 0.79 u、再往上連腳都出框。可見地面只有 ~8 × 14 u。
+→ 高度改成每幀從真 headroom 反推（`castBeamPlan`），加尖端爆閃讓光束**看得到終點**，
+施法者貼邊時整根收掉只留地面光暈。守門測試走過每一個可見地面位置 × 五種 dolly。
+
+**而且它現在不說謊。** 對 669 份真實 ability doc 算反應預算：
+`reactable` 107（16.0%）· `marginal` 94（14.1%）· `notice` 379（56.7%）· `instant` 88（13.2%）。
+新增的「下墜倒數光點」**只在前兩類畫**——向一個 0.3 秒前搖的技能倒數是騙人。
+帳本每次跑測試重新推導成 `docs/_cast-beam-scope-233.md`。
+**要讓那 379 支可閃，唯一的辦法是拉長 `castTimeSec`，那是內容決策不是特效決策。**
+
+### 第四個「驗收鏡頭是假的」案例（這條規則要升級成硬性）
+
+| 驗收面 | 它用的鏡頭 | 遊戲真正的鏡頭 |
+|---|---|---|
+| `firework-audition.html`（#93） | `(0, 6.5, −13)` ≈ **21°** | **68°**, dolly 10 |
+| #93 單元測試 | `(0, 6, −12)` ≈ **24.6°** | 同上 |
+| `castPillarAudition.ts:83`（#228） | `(0, 11.5, −12.5)` ≈ **38.4°**, dist 16 | 同上 |
+
+**三個驗收面，三個遊戲裡不存在的鏡頭。** 新的 `presentation-audition.html` 直接 `new CameraRig(scene, …)`，
+連相機物件都不自己造；`captureRealCamera.mjs` 除了截圖還**對著「特效關掉」的同一格做像素差**，
+因為「畫面裡有煙火」是判斷，「這一格跟關掉時差 N 像素」是量測 —— 而 0 像素正是這個病的簽名。
+
+### 給下一個人的工具
+
+- `apps/client/src/render/effectFraming.ts` —— 相機模型 + **遮擋**判定 + `verticalHeadroom`（垂直預算）。
+  這是 #247 `leapFraming.ts` 的推廣：#247 只問「在不在畫面裡」，#93 死在「在畫面裡但被擋住」。
+- `apps/client/scripts/captureRealCamera.mjs` —— 無頭 CDP 逐格截圖 + 像素差。
+- 任何新的視覺效果，**先問 `effectFraming` 再畫**。
+
+### 沒做的事（明講）
+
+- **沒有碰** `GameApp.ts` / `snapshot.ts` / `schema.ts`（整併中）。煙火與光柱的接線本來就在 vfx/render 裡，不需要動。
+- **沒有碰** production：所有實拍都在 `127.0.0.1:5199` 的本機 vite dev server 上跑，零 ssh / curl 到 ggd.adms.ai。
+- **沒有跑真人試玩**。守門測試 + 實拍能證明「像素到得了螢幕」，證明不了「好不好看」；`SMALL_SCREEN_GAIN = 2.8`
+  是對著「跟施法光柱同一量級」這個可量測目標調的，不是對著手感調的，owner 看了可能還想再調。
+
 ## 📋 2026-07-26 · 批次重整（v0.5.18 後的作戰序）
 
 線上 **v0.5.16** · main **v0.5.18**（已推未部署）· 跑中工作流 **3** 條。
