@@ -4,15 +4,15 @@
  *
  * ── WHY A CENSUS AND NOT A PILE OF NEW FILES ────────────────────────────────
  * #226's brief reads "every champion missing a model gets one", and the
- * tempting reading is 43 new `.glb` files. That reading fails the task's OWN
+ * tempting reading is 44 new `.glb` files. That reading fails the task's OWN
  * premise. The four KayKit Adventurers were retired for weight; minting one
- * baked file per stand-in champion would cost 43 × ~52 KB ≈ 2.18 MB against the
+ * baked file per stand-in champion would cost 44 × ~52 KB ≈ 2.23 MB against the
  * 5 × ~52 KB ≈ 255 KB actually shipped — an 8.5× regression on the single
  * number the owner raised the task about, in exchange for looks the runtime
  * path already produces for free.
  *
  * What ships instead: FIVE baked meshes, and a per-champion `VoxelSkinRecipe`
- * (#231) painted at view-construction time, so each of the 43 gets its own
+ * (#231) painted at view-construction time, so each of the 44 gets its own
  * palette, face, hair, outfit and motifs at ZERO additional shipped bytes.
  * "Gets a model" is therefore true in the sense the player experiences — a
  * distinct character on screen — and false only in the sense of "a file per
@@ -138,6 +138,9 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "godie-n01l",
     "godie-nbst",
     "godie-nman",
+    // 曹操本體。#249 把他從地圖裡帶進來時，這份普查已經寫好了 ——
+    // 他的變身型態 godie-o02o 早就在名單上，本體卻是新的。
+    "godie-o02n",
     "godie-o02o",
     "godie-obla",
   ],
@@ -159,12 +162,12 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     }
   });
 
-  it("43 champions in total have no model of their own", () => {
+  it("44 champions in total have no model of their own", () => {
     cover("model-standin-census");
     const borrowers = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
-    expect(borrowers.length).toBe(43);
+    expect(borrowers.length).toBe(44);
     // and nobody is double counted
-    expect(new Set(borrowers).size).toBe(43);
+    expect(new Set(borrowers).size).toBe(44);
   });
 
   it("every stand-in model doc really points at a generated blocky mesh", () => {
@@ -189,7 +192,7 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
 
   it("every borrower is covered by a per-champion generated skin", () => {
     cover("model-standin-census");
-    // This is the sentence that makes "one mesh, 43 champions" honest: each of
+    // This is the sentence that makes "one mesh, 44 champions" honest: each of
     // them has its OWN recipe and is flagged to wear the voxel body rather than
     // the borrowed silhouette.
     const overrides = (
@@ -211,7 +214,7 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     expect(new Set(sigs).size, "two borrowers share a palette").toBe(borrowers.length);
   });
 
-  it("THE BUDGET: 5 shipped meshes, not 43 — and the arithmetic is stated", () => {
+  it("THE BUDGET: 5 shipped meshes, not 44 — and the arithmetic is stated", () => {
     cover("model-standin-census");
     const dir = join(CONTENT, "assets/models/champions");
     const files = readdirSync(dir).filter((f) => /^blocky-[a-z]+\.glb$/.test(f));
@@ -219,11 +222,11 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     const sizes = files.map((f) => statSync(join(dir, f)).size);
     const shipped = sizes.reduce((a, b) => a + b, 0);
     for (const s of sizes) expect(s).toBeLessThan(64 * 1024);
-    // what is actually on disk for all 43 borrowers plus the undead mob
+    // what is actually on disk for all 44 borrowers plus the undead mob
     expect(shipped).toBeLessThan(300 * 1024);
     // the file-per-champion alternative, priced at the same per-file cost
     const perFile = Math.round(shipped / files.length);
-    const alternative = perFile * 43;
+    const alternative = perFile * 44;
     expect(alternative).toBeGreaterThan(shipped * 8);
   });
 
