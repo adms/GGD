@@ -215,7 +215,8 @@ func (s *Service) Plan(actorID, stageID string, opts PlanOptions) (*Plan, error)
 		return nil, err
 	}
 	s.audit(actorID, ActionPlan, st.ID, map[string]any{
-		"writes": plan.Writes, "blocked": plan.Blocked, "digest": plan.Digest,
+		"writes": plan.Writes, "unchanged": plan.Unchanged, "skipped": plan.Skipped,
+		"blocked": plan.Blocked, "digest": plan.Digest,
 	})
 	return plan, nil
 }
@@ -266,7 +267,14 @@ func (s *Service) Commit(ctx context.Context, actorID, password, stageID, expect
 			s.audit(actorID, ActionCommitBegin, st.ID, detail)
 		},
 		AuditEnd: func(res *ApplyResult, err error) {
-			detail := map[string]any{"written": res.Written, "added": res.Added}
+			// promisedWrites sits next to written on purpose. The two diverging is
+			// the worst thing this feature can do, and the audit line is where it
+			// has to remain discoverable long after the console has been closed.
+			detail := map[string]any{
+				"written": res.Written, "added": res.Added,
+				"unchanged": res.Unchanged, "skipped": res.Skipped,
+				"promisedWrites": res.Plan.Writes,
+			}
 			if res.Backup != nil {
 				detail["backup"] = res.Backup.Path
 			}

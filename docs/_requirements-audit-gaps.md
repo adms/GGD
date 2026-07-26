@@ -3035,3 +3035,85 @@ git 也不含它（`.gitignore:34-36` 吃掉 `/data/**`，所以 `git pull` 也�
   `request_body max_size`。這條寫進 runbook，實際改動是 owner 在主機上的動作。
 - 本功能**永遠不刪任何東西**。若日後希望匯入後自動清掉臨時管理員帳號，那會是這個
   功能唯一會刪東西的地方，需要 owner 明確指示。
+
+---
+
+## 2026-07-26 — #243 修正：試算會說謊（PLAN ≠ COMMIT）
+
+**驗證者判定 SUSPECT，這一條單獨就足以擋下合併。**
+
+### 症狀（實測，全在合成 fixture 上）
+
+把同一包封存**匯入第二次**：
+
+```
+BEFORE   plan.Writes = 0    apply.Written = 169   apply.Added = 169
+AFTER    plan.Writes = 0    apply.Written = 0     apply.Unchanged = 169
+```
+
+169 是本 repo `fixture_test.go` 用 `-groups all` 匯出的全部 entry 數。也就是說：
+畫面上寫「將寫入 0 筆」，按下確認之後，目標主機上**每一個文件都被重寫了一遍**。
+
+### 為什麼是致命而不是美觀問題
+
+這個功能的**全部**安全故事就是「看試算，再核准」。一個讀到 「這次不會寫入任何東西」
+才按下確認的操作者，不可以得到 169 個文件被改寫的結果。而且重跑正是最容易發生的情境：
+不確定第一次有沒有成功的人，就是會再跑一次。
+
+### 根因
+
+`CollectionPlan.Items` 只收「值得注意」的項目（`written` / `skipped` / `blocked`），
+`added` 與 `unchanged` 都不入列。`Apply` 走的是**另一條路**：它自己再枚舉一次
+`a.ByCollection[col]`，在 `verdicts` map 裡查不到就 `verdict = ResultAdded` 然後
+`Put`。於是所有 `unchanged` 的 entry 一律被當成新增重寫。
+
+digest 也擋不住 —— 它算的是那份**殘缺**的 plan，兩邊都「一致」，所以 409 從來不會觸發。
+
+### 修法（結構性，不是防禦性）
+
+1. **plan 是完整的**：`cp.Items` 現在收每一個 entry，含 `added` / `unchanged`。
+   Console 端自己過濾顯示（`notableItems` + 「展開時列出每一筆文件」切換），
+   伺服器永遠不縮短這份清單。
+2. **只有一條路徑能變成寫入**：新增 `Plan.Executable(a)`，把核准過的 plan 逐筆
+   解析回封存的 entry，回傳 `[]PlannedWrite`。`Apply` 只跑這份清單。
+   判定只由 `planEntry` 產生一次；沒有第二個地方能自己決定判定，所以兩邊不可能再漂移。
+   plan 與封存對不起來（少一筆／多一筆）是**硬錯誤**，不是默默略過也不是默默多寫，
+   而且在備份之前就發生 ⇒ 零寫入。
+3. **digest 因此涵蓋逐筆判定**：`Items` 完整，`planDigest` 就自動涵蓋每一筆的
+   verdict，不只是 entry 集合。`TestPlanDigestCoversPerEntryVerdicts` 用兩個
+   「entry 集合相同、彙總數字相同、只有逐筆判定對調」的目標證明 digest 會不同 ——
+   舊的 digest 會高高興興地放行這個 bug 本身。
+4. **實際結果是觀測來的，不是抄 plan 的**：`ApplyResult.Results` 在每次寫入前
+   `targetHas()` 問一次目標，所以它**可以**和 plan 不一致；不一致就進 warning、
+   進 UI 紅字、進 `archive.commit_end` 稽核（`promisedWrites` 與 `written` 並列）。
+
+### 測試（`internal/platformarchive/contract_test.go`，全部 `t.TempDir()`）
+
+- `TestReImportWritesNothingItDidNotPromise` —— 匯入、再匯入同一包，逐檔用
+  **mtime** 斷言沒有被重寫。byte 比對做不到這件事：重新 `Put` 一份相同的文件會產生
+  完全相同的位元組，正是這個 bug 藏身的地方。
+- `TestPlanVerdictMapEqualsApplyResultMapExactly` —— **真正的交付物**。24 個
+  seed，每個 seed 隨機決定每一份文件在目標上的狀態（不存在／相同／不同／比封存新）
+  以及 `allowOverwrite`，斷言 plan 的逐筆判定 map 與 apply 的逐筆結果 map
+  `reflect.DeepEqual` **完全相等**，並且檔案系統同意（只有 added/written 的檔案
+  mtime 有動）。blocked 的 plan 另外斷言零寫入。最後檢查隨機真的走過五種判定，
+  否則這個性質證明的比它宣稱的少。
+- `TestPlanDigestCoversPerEntryVerdicts`、
+  `TestApplyRefusesAPlanThatDoesNotMatchTheArchive`。
+- 反向驗證：把 bug 重新注入（`ResultUnchanged` 落回寫入），前兩個測試立刻紅
+  （`plan promised 0 write(s), the commit performed 169`）。
+
+### UI 文案（同一個 bug 的另一半）
+
+「即將寫入 0 個文件」配一顆紅色的「我確認，開始匯入」，正是操作者被騙的那一幕。
+改成 `commitPromise(plan)`：零寫入時直接說「這次不會寫入任何文件…按下確認只會產生
+一份備份，資料不會有任何改動」；有寫入時把新增／覆蓋／相同／略過都說出來。
+確認步驟加上 `PLAN_IS_THE_CONTRACT`（「試算就是契約…一筆不多、一筆不少」），
+完成畫面用 `importOutcome` + `outcomeMatchesPlan` 把「承諾 N 筆 / 實際 M 筆」並列，
+不一致就轉紅並指向備份。
+
+### 仍然成立、沒有被動到的
+
+路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
+真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
+adopt-archive 照樣不刪任何帳號。本次**完全沒有連線 ggd.adms.ai**。
