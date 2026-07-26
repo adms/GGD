@@ -13,8 +13,27 @@
  * the per-frame MSG.EVENT drain, which this layer deliberately never touches.
  */
 
-/** Two kills inside this window read as a multi-kill (one flows into the next). */
-export const MULTIKILL_WINDOW_MS = 8_000;
+import { TICK_HZ } from "@ggd/shared/constants";
+import { MULTIKILL_WINDOW_TICKS } from "@ggd/shared/sim/stats/matchStats";
+
+/**
+ * Two kills inside this window read as a multi-kill (one flows into the next).
+ *
+ * DERIVED FROM THE SIM, NOT CHOSEN (task #234). `matchStats.recordChampionDeath`
+ * already keeps a per-killer streak — it is what credits `stats.multikills` on
+ * the settlement scoreboard and feeds the #25 rating — and it chains on
+ * `MULTIKILL_WINDOW_TICKS` (300 ticks = 10 s @30 Hz). This constant was an
+ * independently authored 8_000 ms, so for a kill landing 8–10 s after the
+ * previous one the two DISAGREED: the scoreboard counted a multikill while the
+ * champion's own voice restarted the ladder at 「一殺」, and the crowd cheer
+ * (which reads the same streak) dropped a tier with it.
+ *
+ * The sim is the authority — it is the counter that pays and scores — so this is
+ * now its number, converted, rather than a second opinion about the same
+ * question. Editing the sim's window moves the voice ladder with it. Read-only
+ * dependency: nothing here writes sim state, and the ladder stays client-only.
+ */
+export const MULTIKILL_WINDOW_MS = (MULTIKILL_WINDOW_TICKS / TICK_HZ) * 1_000;
 
 /**
  * HP fraction at or below which the local champion is "in danger" and the

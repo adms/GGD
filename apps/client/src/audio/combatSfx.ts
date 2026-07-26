@@ -83,6 +83,7 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { fullAssetsEnabled } from "../config/fullAssets";
 import { hudStore } from "../net/RoomStore";
 import { noteFireRingIgnition } from "./fireRingWindow";
+import { COMBAT_PHASE, gateCombatBed } from "./combatBedGate";
 
 /** Events that keep their own name as the SFX key (already in the audio map). */
 const PASSTHROUGH = new Set<string>([
@@ -456,8 +457,32 @@ export function coinRewardKey(ev: EventMessage, seatId: number | null): string |
  *
  * `seatId` defaults to the seat the AudioDirector published, so the hot-path
  * caller keeps its one-argument shape; tests pass it explicitly.
+ *
+ * PHASE GATE (#238). The result passes through `gateCombatBed`, which drops a
+ * SUSTAINED combat bed (`fireRingLoop`, `reviveChannel`, `arenaAmbience`) unless
+ * the match is actually in `combat` RIGHT NOW. #216 gave those beds a stop path
+ * hung on the `isCombatEnd` React edge, but this mapper runs on the GameApp's
+ * requestAnimationFrame drain — a different clock — so a `fireRingStart` still
+ * sitting in the event queue when the phase committed would start a ~60 s
+ * burning-fire bed AFTER the teardown edge had already fired, and nothing would
+ * stop it until the next round. That is the shop the owner heard the ring in.
+ * `phase` is defaulted (not passed by the hot-path caller) so tests can pin it;
+ * production reads the live store.
  */
-export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeatId): string | null {
+export function combatSfxKey(
+  ev: EventMessage,
+  seatId: number | null = localSeatId,
+  phase: string = hudStore.getState().phase,
+): string | null {
+  return gateCombatBed(combatSfxKeyUngated(ev, seatId, phase), phase);
+}
+
+/**
+ * The raw event → SFX-key mapping, BEFORE the #238 phase gate. Split out only so
+ * `combatSfxKey` has one place to apply the gate instead of one per `return`.
+ * Not exported: every caller must go through the gated form.
+ */
+function combatSfxKeyUngated(ev: EventMessage, seatId: number | null, phase: string): string | null {
   const d = ev.data;
   switch (ev.type) {
     case "damage": {
@@ -526,6 +551,15 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
       // apart from #132 landing until 2026-07-24 — the very first round played
       // prints both numbers. Deleting this call restores the silence that let
       // the drift live for months. See fireRingWindow.noteFireRingIgnition.
+      //
+      // GATED ON THE PHASE (#238), for the tripwire's sake as much as the bed's.
+      // Outside `combat` the event is a straggler drained after the bell, and
+      // `phaseSecondsLeft` is then the SHOP clock — comparing that against the
+      // combat-clock derivation would print a drift alarm about a drift that
+      // does not exist. `gateCombatBed` would drop the returned key anyway; this
+      // keeps the side effect from running past it. A real ignition is always in
+      // combat, so nothing genuine is suppressed.
+      if (phase !== COMBAT_PHASE) return null;
       noteFireRingIgnition(hudStore.getState().phaseSecondsLeft);
       return "fireRingLoop";
     case "guardianImpact":
