@@ -176,6 +176,40 @@
 
 ---
 
+## 平行度與殘局回收（owner 2026-07-27 訂正）
+
+**機器是 M5 Max / 128 GB / 18 核。owner 明確表示：20 個 agent 同時跑全套測試套件都沒問題。**
+**不要自我設限降低平行度 —— 那不是瓶頸。**
+
+### 真正的瓶頸是「沒人收殘局」
+
+一次把機器壓到 owner 連字都打不了的事件（5 分鐘負載平均 **104**），根因不是當下跑幾條，而是累積：
+
+| | 累積量 |
+|---|---|
+| 死掉的工作流留下的 worktree | **81 個 / 52 GB** |
+| 孤兒 dev server（vite / game-server / wsfeed）still watching | **12 個** |
+| `trustd` 對那幾十萬個 node_modules 二進位檔反覆驗簽章 | 常駐 ~25% |
+
+**工作流被停掉或隨 session 死掉時，它的子行程與 worktree 都不會自動收。**
+
+### 規則
+
+1. **每個 agent 的交辦都要寫明：做完要 `git worktree remove` 自己的 worktree、殺掉自己起的 dev server。**
+2. **長 session 中主動收殘局**（尤其每次停掉工作流之後）：
+   `git worktree list` · `ps -eo pid,command | grep -E "vite|wsfeed|tsx src/index"`
+3. **診斷卡頓看 `uptime` 的三個負載平均**，不要看瞬時 CPU%。
+   1 分鐘遠低於 5/15 分鐘 = 正在恢復；反過來 = 還在惡化。
+4. `ecosystemanalyticsd` / `trustd` / `WindowServer` 衝高**是結果不是原因**。
+
+### ⛔ 另一個真正的上限：帳號月度用量
+
+2026-07-27 撞到過一次 —— 四個驗證 agent 同時回
+`You've hit your monthly spend limit`，**一個都沒跑成**。
+出現這個時**不要重開工作流**（每次重試都再燒一點），先告訴 owner。
+
+---
+
 ## 這個專案一直在犯的同一個錯（先讀這段，再讀批次）
 
 到今天為止有 **八個**確認案例：功能寫完了、測試全綠、但**在執行期不可能發生**。
