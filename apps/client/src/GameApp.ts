@@ -39,6 +39,7 @@ import {
   recordDeathEvent,
   recordSettlement,
   recordShopEvent,
+  recordKillComboEvent,
   isShopEvent,
   resetSettlement,
   hudStore,
@@ -1093,6 +1094,12 @@ export class GameApp {
       // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
       // line above; all the logic lives in ui/castAnnounce.
       recordCastEvent(ev, localId, nowMs);
+      // 連殺 combo (owner 2026-07-27). The COUNT was decided in the sim off
+      // world.tick and arrives on this event; this is the one line that carries
+      // it to the screen. Gated on the local SEAT inside (the number in the
+      // middle of your screen has to be your chain, not a teammate's), so a
+      // spectator's or an enemy's sweep is dropped here rather than rendered.
+      recordKillComboEvent(ev, nowMs);
       // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
       // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
       // SAME record path so a knocked-out player's leave-flow already holds their

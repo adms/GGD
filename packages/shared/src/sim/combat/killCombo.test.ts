@@ -31,6 +31,7 @@ import { MOB_MODEL_KEY, type MobRules } from "../mobs";
 import { beginCombatMobs } from "../systems/MobSystem";
 import { TICK_HZ } from "../../constants";
 import {
+  KILL_COMBO_EVENT,
   KILL_COMBO_MIN_SHOWN,
   KILL_COMBO_WINDOW_MS,
   KILL_COMBO_WINDOW_TICKS,
@@ -108,12 +109,12 @@ function execute(w: SimWorld, killer: EntityId, victim: EntityId): void {
 
 /** Every `killCombo` count emitted on the tick that just ran, in emit order. */
 function comboCounts(w: SimWorld): number[] {
-  return w.events.filter((e) => e.type === "killCombo").map((e) => e.data.count as number);
+  return w.events.filter((e) => e.type === KILL_COMBO_EVENT).map((e) => e.data.count as number);
 }
 
 /** The whole `killCombo` payloads emitted on the tick that just ran. */
 function comboEvents(w: SimWorld): Record<string, unknown>[] {
-  return w.events.filter((e) => e.type === "killCombo").map((e) => e.data);
+  return w.events.filter((e) => e.type === KILL_COMBO_EVENT).map((e) => e.data);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

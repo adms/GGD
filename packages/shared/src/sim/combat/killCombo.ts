@@ -65,6 +65,17 @@ import { TICK_HZ } from "../../constants";
 import type { SimWorld } from "../SimWorld";
 
 /**
+ * The wire name of the combo event, for the consumers (`eventFanout`, the HUD).
+ *
+ * ⚠️ The EMIT SITE below still writes the literal, and must: `eventFanout.test.ts`
+ * rejects any `world.emit(<identifier>, …)` outright, because a computed event
+ * name is invisible to the scrape that proves every sim event is classified.
+ * The two are pinned together by `killCombo.test.ts`, which filters the emitted
+ * events through THIS constant — rename one without the other and it goes red.
+ */
+export const KILL_COMBO_EVENT = "killCombo";
+
+/**
  * The owner's 5 seconds, in ticks. Derived from TICK_HZ rather than typed as
  * `150` so a tick-rate change cannot silently turn it into 2.5 seconds.
  *

@@ -9,6 +9,7 @@
 import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { TICK_HZ } from "@ggd/shared/constants";
+import { KILL_COMBO_EVENT } from "@ggd/shared/sim/combat/killCombo";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 
@@ -234,6 +235,28 @@ export interface HudState {
    * player's first purchase attempt of the match.
    */
   shopEvent: ShopEventView | null;
+  /**
+   * The LOCAL player's live 連殺 chain (owner, 2026-07-27), or null.
+   *
+   * Discrete and event-driven, like `shopEvent` and `settlement` above — NOT a
+   * snapshot projection. The count is decided in the sim off `world.tick`
+   * (shared/sim/combat/killCombo) and arrives on the `killCombo` event; it is
+   * deliberately NOT replicated on `MatchState`, because a 5-second transient
+   * would then cost bandwidth every tick to say "still nothing".
+   */
+  killCombo: KillComboView | null;
+}
+
+/**
+ * One live combo. `atMs` is a `performance.now()`-style stamp (monotone — it
+ * cannot jump when the OS clock is corrected mid-fight); `seq` bumps on every
+ * credited kill so the HUD can restart its pop animation on a re-hit, which
+ * re-assigning the same CSS animation name would not do.
+ */
+export interface KillComboView {
+  count: number;
+  atMs: number;
+  seq: number;
 }
 
 const initial: HudState = {
@@ -262,6 +285,7 @@ const initial: HudState = {
   localPlayers: [],
   settlement: null,
   shopEvent: null,
+  killCombo: null,
 };
 
 let shopEventSeq = 0;
@@ -500,6 +524,59 @@ export function recordDeathEvent(ev: EventMessage, state: MatchState): void {
 
 export function recordReject(reason: string): void {
   hudStore.setState({ lastReject: reason });
+}
+
+/* ── 連殺 COMBO (owner 2026-07-27) ──────────────────────────────────────────
+ * 「戰鬥時擊殺殭屍或英雄間隔5秒內會顯示 combo 連殺數量」.
+ *
+ * The COUNT is not computed here — the sim decides it off `world.tick`, so
+ * every client and the replay agree (shared/sim/combat/killCombo.ts). This is
+ * only the projection of the `killCombo` event onto the HUD store, and it lives
+ * in THIS file because `architecture.test.ts` (client-08) allows zustand
+ * `setState` in exactly one place: an event fan-out that writes stores from all
+ * over the client is how a per-frame re-render storm gets in.
+ *
+ * WHOSE COMBO: yours. `killerSeatId` gates it exactly as `guardianSlain` /
+ * `coinPickedUp` gate their cues on the local seat — a teammate's zombie sweep
+ * reading as your own chain would break the feedback loop the feature is for.
+ */
+
+/**
+ * PURE: the chain length this event credits to `localSeatId`, or null when it
+ * is not a combo, not ours, or malformed. Split out so 「someone else's kill
+ * must not show on my screen」 is a direct assertion, not a store inference.
+ */
+export function localKillComboCount(ev: EventMessage, localSeatId: number | null): number | null {
+  if (ev.type !== KILL_COMBO_EVENT) return null;
+  if (localSeatId === null || localSeatId === undefined) return null;
+  const seat = ev.data.killerSeatId;
+  if (typeof seat !== "number" || seat !== localSeatId) return null;
+  const count = ev.data.count;
+  if (typeof count !== "number" || !Number.isFinite(count) || count < 1) return null;
+  return count;
+}
+
+/** Record one drained `killCombo` event (called from GameApp's event drain). */
+export function recordKillComboEvent(ev: EventMessage, nowMs: number = comboNowMs()): void {
+  const prev = hudStore.getState();
+  const count = localKillComboCount(ev, prev.localSeatId);
+  if (count === null) return;
+  hudStore.setState({
+    killCombo: { count, atMs: nowMs, seq: (prev.killCombo?.seq ?? 0) + 1 },
+  });
+}
+
+/**
+ * The clock the counter lives on: `performance.now()` where it exists,
+ * `Date.now()` otherwise. Both the stamp above and the HUD's expiry poll read
+ * THIS function, so they can never be measured against different clocks.
+ * (Wall time is fine here and banned in the sim for the same reason — this side
+ * only decides when to stop DRAWING; the count itself was decided in ticks.)
+ */
+export function comboNowMs(): number {
+  return typeof performance !== "undefined" && typeof performance.now === "function"
+    ? performance.now()
+    : Date.now();
 }
 
 /**
