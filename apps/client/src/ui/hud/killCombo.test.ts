@@ -9,14 +9,30 @@
  *
  *   ① drawn off-screen / on top of something    → `where it lands`
  *   ② computed but never delivered to the HUD   → `the wire → the store`
- *   ③ deletable from the render tree, still green → `it is actually mounted`
+ *   ③ deletable from the render tree, still green → `the mounted HUD`
  *   ④ asserted in the wrong direction            → every expiry test asserts
  *                                                  the NULL, not the value
  *   ⑤ testing something that is not the thing    → the view is RENDERED with
  *                                                  renderToStaticMarkup and the
  *                                                  digits are read back out
  *
- * The mutations actually run against this file are listed in the commit body.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ WHAT THE FIRST VERSION OF THIS FILE GOT WRONG (fixed here)
+ *
+ * `KillCombo.tsx` exports TWO things — `KillComboView` (pure props→markup) and
+ * `KillCombo` (the container HudRoot actually mounts: the combat/couch gate, the
+ * expiry poll, the placement). Every test imported the VIEW. Not one imported
+ * the CONTAINER. MEASURED: putting `return null` at the top of `KillCombo` — the
+ * player never sees a combo number again — left all 30 tests green.
+ *
+ * What claimed to guard the mount was `expect(src).toMatch(/<KillCombo\s*\/>/)`,
+ * a TEXT SCAN of HudRoot.tsx. That proves a tag was typed into a file. It does
+ * not prove the tag produces a single pixel, and it is exactly failure shape ③
+ * wearing the costume of a guard.
+ *
+ * The replacement renders the real thing: `<HudRoot />` and `<KillCombo />` go
+ * through react-dom/server against the REAL store, and the digits are read back
+ * out of the markup. `return null` anywhere in that path is now four failures.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -40,12 +56,17 @@ import {
   type KillComboState,
 } from "./killComboModel";
 import {
+  comboNowMs,
   hudStore,
   localKillComboCount,
   recordKillComboEvent,
   resetHudStore,
+  type HudState,
+  type LocalPlayerView,
 } from "../../net/RoomStore";
-import { KillComboView } from "./KillCombo";
+import { KillCombo, KillComboView } from "./KillCombo";
+import { HudRoot } from "../HudRoot";
+import { hudTouch } from "./HudSlot";
 import { hudRectInViewport } from "./hudLayout";
 
 const clientSrc = (p: string): string => readFileSync(join(__dirname, "..", "..", p), "utf8");
@@ -303,24 +324,228 @@ describe("the wire → the store", () => {
 });
 
 /* ═══════════════════════════════════════════════════════════════════════════
- * ③ IT IS ACTUALLY MOUNTED, AND ACTUALLY FED
+ * ③ IT IS ACTUALLY MOUNTED — RENDERED, NOT GREPPED
+ *
+ * Everything below renders the CONTAINER (`KillCombo`) or the whole HUD tree
+ * (`HudRoot`) against the REAL store and reads the digits back out of the
+ * markup. No source scans: a tag typed into a file is not a pixel.
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-describe("it is actually on screen", () => {
-  it("HudRoot imports AND renders it", () => {
-    const src = clientSrc("ui/HudRoot.tsx");
-    expect(src).toContain('from "./hud/KillCombo"');
-    expect(src).toMatch(/<KillCombo\s*\/>/);
+/**
+ * ⚠️ THE ONE LINE THAT MAKES CONTAINER TESTS POSSIBLE AT ALL — and the reason
+ * this repo never had one.
+ *
+ * The client vitest env is `node`, so the only renderer available is
+ * react-dom/server, and the server renderer answers EVERY
+ * `useSyncExternalStore` with its third argument, the server snapshot. zustand
+ * v5 passes `api.getInitialState()` there (zustand/esm/react.mjs) — the
+ * pristine boot state captured when RoomStore was first imported: phase
+ * "connecting", killCombo null, for ever. So a server render of ANY
+ * store-backed container paints an empty match no matter what the store holds,
+ * and the only testable surface left is the pure view — which is precisely how
+ * a container that returns null unconditionally kept 30 tests green.
+ *
+ * This app never server-renders and never hydrates (main.tsx: `createRoot`), so
+ * `getInitialState` has no other consumer in the running game. Pointing it at
+ * the live state changes the SNAPSHOT SOURCE and nothing else: the gates, the
+ * expiry, the placement, the model and the view exercised below are all the
+ * real ones, reading the real store.
+ */
+hudStore.getInitialState = hudStore.getState;
+
+const seat = (seatId: number): LocalPlayerView => ({
+  player: 0,
+  accountId: `acct-${seatId}`,
+  seatId,
+  entityId: null,
+  teamId: 1,
+  displayName: "me",
+  hp: 92,
+  maxHp: 100,
+  mana: 0,
+  maxMana: 0,
+  shield: 0,
+});
+
+/**
+ * A live single-player combat HUD, seat 2 is ours. Every test perturbs ONE
+ * field of it, so a null answer can only be blamed on that field.
+ */
+function inCombat(over: Partial<HudState> = {}): void {
+  resetHudStore();
+  hudStore.setState({
+    connected: true,
+    phase: "combat",
+    round: 3,
+    localSeatId: 2,
+    localMaxHp: 100,
+    localHp: 92,
+    localAlive: true,
+    localPlayers: [seat(2)],
+    ...over,
+  });
+}
+
+/** Credit the local seat with a chain, stamped `ageMs` in the past. */
+function chain(count: number, ageMs = 0): void {
+  recordKillComboEvent(
+    { type: KILL_COMBO_EVENT, tick: 10, data: { killerSeatId: 2, count } },
+    comboNowMs() - ageMs,
+  );
+}
+
+const renderCombo = (): string => renderToStaticMarkup(createElement(KillCombo));
+const renderHud = (): string => renderToStaticMarkup(createElement(HudRoot));
+
+/**
+ * Run `fn` as if on a landscape phone (812x375, touch). `useViewport` falls back
+ * to 1280x800 when `window` is absent, and `__ggdForceTouch` is the dev
+ * harness's own touch seam (input/mobileDetect) — not a hook invented for this
+ * test. Needed because the legend/counter contest for the corridor only bites
+ * where the corridor is ~70px tall; every desktop size fits both.
+ */
+function onPhone<T>(fn: () => T): T {
+  const g = globalThis as unknown as Record<string, unknown>;
+  g.window = { innerWidth: 812, innerHeight: 375 };
+  g.__ggdForceTouch = true;
+  try {
+    return fn();
+  } finally {
+    delete g.window;
+    delete g.__ggdForceTouch;
+  }
+}
+
+describe("the mounted HUD really paints it", () => {
+  it("renders in the env these numbers assume (no DOM, 1280x800 fallback)", () => {
+    // Stated out loud: if the client suite ever gains a DOM env, the desktop
+    // rect assertions below change meaning, and this is the line that says so.
+    expect(typeof window).toBe("undefined");
+    expect(typeof document).toBe("undefined");
+    expect(hudTouch()).toBe(false);
   });
 
-  it("the mount is not disabled", () => {
-    // The three shapes that leave a component in the tree while showing nothing.
-    const src = clientSrc("ui/HudRoot.tsx");
-    expect(src).not.toMatch(/\{\s*false\s*&&\s*<KillCombo/);
-    expect(src).not.toMatch(/\/\/\s*<KillCombo/);
-    expect(src).not.toMatch(/\{\s*\/\*[^*]*<KillCombo/);
+  it("the whole HUD tree, as the game mounts it, shows the DIGITS", () => {
+    // ⚠️ THE MUTATION THAT USED TO SURVIVE: `return null` at the top (or the
+    // bottom) of the `KillCombo` CONTAINER. 30/30 stayed green — the player just
+    // never saw a combo number again. Deleting `<KillCombo />` from HudRoot,
+    // or wrapping it in `{false && …}`, dies here too: this is HudRoot's own
+    // output, not a regex over its source.
+    inCombat();
+    chain(12);
+    const html = renderHud();
+    expect(html).toContain('data-kill-combo="root"');
+    expect(html).toContain("12 連殺");
+    expect(html).toContain("血洗");
   });
 
+  it("…and paints NO counter when there is no chain", () => {
+    // The failing direction for "just always draw it": same mounted HUD, no
+    // kill credited, and the counter must be absent from the markup — while the
+    // rest of the HUD is demonstrably still there (so this cannot pass by the
+    // whole tree rendering nothing).
+    inCombat();
+    const html = renderHud();
+    expect(html).not.toContain("data-kill-combo");
+    expect(html).not.toContain("連殺");
+    expect(html.length).toBeGreaterThan(500);
+  });
+
+  it("the CONTAINER itself: markup with a chain, nothing without one", () => {
+    inCombat();
+    chain(7);
+    const shown = renderCombo();
+    expect(shown).toContain("7 連殺");
+    expect(shown.length).toBeGreaterThan(200);
+    inCombat();
+    expect(renderCombo()).toBe("");
+  });
+});
+
+describe("the container's own gate (previously uncovered)", () => {
+  it("combat ONLY — a live chain paints in no other phase", () => {
+    // ⚠️ THE MUTATION: drop `phase !== "combat"` from the gate. Each phase below
+    // is a screen the leftover number would float over — the shop card, the
+    // champ-select grid, the settlement.
+    for (const phase of ["connecting", "champSelect", "intermission", "resolution", "matchEnd"]) {
+      inCombat({ phase });
+      chain(9);
+      expect(renderCombo(), `phase=${phase}`).toBe("");
+    }
+    // and the gate is not simply refusing everything:
+    inCombat({ phase: "combat" });
+    chain(9);
+    expect(renderCombo()).toContain("9 連殺");
+  });
+
+  it("split-screen gets nothing — ONE centred number cannot serve four seats", () => {
+    // ⚠️ THE MUTATION: drop `|| couch`. Up to four local players share this
+    // screen and the chain belongs to one of them; CouchHudGrid is where that
+    // would have to be solved.
+    inCombat({ localPlayers: [seat(2), seat(3)] });
+    chain(9);
+    expect(renderCombo()).toBe("");
+    // same state, one seat: it paints — so `couch` is what decided, not a
+    // second missing piece.
+    inCombat({ localPlayers: [seat(2)] });
+    chain(9);
+    expect(renderCombo()).toContain("9 連殺");
+  });
+
+  it("the container RETIRES a stale chain (it asks the clock, every poll)", () => {
+    // ⚠️ THE MUTATION: have the container ignore `killComboDisplay`'s null (or
+    // pass a frozen `now`). The store still holds the last combo of the round —
+    // it is the container that must stop drawing it.
+    inCombat();
+    chain(9, KILL_COMBO_WINDOW_MS + KILL_COMBO_EXIT_MS + 500);
+    expect(renderCombo()).toBe("");
+    expect(hudStore.getState().killCombo?.count).toBe(9); // still stored, not drawn
+    // mid-exit it is still on screen, fading — the window did not just vanish
+    inCombat();
+    chain(9, KILL_COMBO_WINDOW_MS + KILL_COMBO_EXIT_MS / 2);
+    expect(renderCombo()).toContain('data-kill-combo-phase="out"');
+  });
+
+  it("paints at the rect the LAYOUT resolved, not a rect of its own", () => {
+    // ⚠️ THE MUTATION: hand `KillComboView` a constant rect (or the viewport's
+    // centre) instead of `killComboRect(...)`. The digits would still be in the
+    // DOM — on top of the player's own bars.
+    inCombat();
+    chain(12);
+    const rect = killComboRect(
+      { width: 1280, height: 800 },
+      { touch: hudTouch(), legendUp: false, couchPlayers: 1 },
+    )!;
+    const html = renderCombo();
+    expect(html).toContain(`left:${rect.x}px`);
+    expect(html).toContain(`top:${rect.y}px`);
+    expect(html).toContain(`width:${rect.w}px`);
+  });
+
+  it("stands down for the round-1 legend — the #107 precedence, through the container", () => {
+    // ⚠️ THE MUTATION: hard-code `legendUp: false` (or the round) in the
+    // container. On a landscape phone the corridor is ~70px and cannot hold the
+    // legend strip AND the counter, so round 1 must paint NOTHING.
+    onPhone(() => {
+      inCombat({ round: 1 });
+      chain(9);
+      expect(renderCombo()).toBe("");
+      // round 2 — the first round that can even have zombies — brings it back,
+      // so the yield is a real decision and not a dead phone viewport.
+      inCombat({ round: 2 });
+      chain(9);
+      expect(renderCombo()).toContain("9 連殺");
+      // and the panel signal is threaded too: a DEFEATED player is shopping mid
+      // combat, the covering shop card takes the legend away (#107), and the
+      // corridor is the counter's again — in round 1.
+      inCombat({ round: 1, localAlive: false });
+      chain(9);
+      expect(renderCombo()).toContain("9 連殺");
+    });
+  });
+});
+
+describe("the wiring no render can prove", () => {
   it("GameApp's event drain really calls the recorder", () => {
     // ⚠️ THE MUTATION: delete `recordKillComboEvent(ev)` from GameApp's drain
     // loop and this goes red. Without it the sim counts perfectly and no screen
