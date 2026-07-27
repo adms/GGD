@@ -54,12 +54,16 @@ describe("#193 / owner 2026-07-27 — the settlement stays put", () => {
     }
   });
 
-  it("both exits are still reachable — staying must not mean being trapped", () => {
+  it("the exit is still reachable — staying must not mean being trapped", () => {
     // The counterpart failure to the one being fixed: delete the countdown AND
     // the button it replaced, and the player sits on the settlement forever.
+    //
+    // 返回大廳 is now the ONLY exit on this screen, deliberately. 「查看戰績變化」
+    // used to be a second one (it called viewRankChange, which navigates); owner
+    // 2026-07-27 made it expand the per-round chart IN PLACE instead. See
+    // matchEndProgress.test.ts, which owns that half.
     const c = code();
     expect(c).toMatch(/onClick=\{\(\) => void returnToLobby\(\)\}/);
-    expect(c).toMatch(/onClick=\{\(\) => viewRankChange\(\)\}/);
   });
 
   it("the presentation timers ARE still there", () => {

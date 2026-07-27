@@ -16,7 +16,7 @@
  * file is the JSX shell. Falls back to the old team-placement list until the
  * settlement payload arrives (or if it never does — e.g. a very old server).
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
@@ -57,6 +57,8 @@ import {
   type AutoScrollToRowHandle,
 } from "../scroll/useAutoScrollToRow";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { ProgressChartPanel } from "./ProgressChartPanel";
+import { buildProgressSeries, progressAdvice } from "./progressChart";
 
 /**
  * REMOVED — the settlement no longer auto-advances (owner, 2026-07-27:
@@ -320,7 +322,6 @@ export function MatchEndPanel(): React.JSX.Element {
   const settlement = useHud((s) => s.settlement);
   const localSeatId = useHud((s) => s.localSeatId);
   const seats = useHud((s) => s.seats);
-  const viewRankChange = useApp((s) => s.viewRankChange);
   const returnToLobby = useApp((s) => s.returnToLobby);
 
   const hasPayload = settlement !== null && settlement.perPlayer.length > 0;
@@ -458,6 +459,42 @@ export function MatchEndPanel(): React.JSX.Element {
     audioSystem.playSfx("settlementReveal");
   }, [cardShown, settlement]);
 
+  // 「查看戰績變化」 — the in-place per-round panel (owner, 2026-07-27). Closed
+  // by default: the grade, the breakdown and the auto-scrolling ranking are what
+  // this screen opens with, and the chart is what a player asks for afterwards.
+  const [showProgress, setShowProgress] = useState(false);
+
+  // The chart's inputs, derived once per settlement rather than per render: the
+  // MVP ranking re-scores all 12 players in every round, so recomputing it on a
+  // re-render (the chicken hold, the taunt subtitle, the auto-scroll) would be
+  // pure waste. Hooks run before the fallback early-return below.
+  const myTeamSeats = useMemo(() => {
+    const myTeam = players.find((p) => p.seatId === localSeatId)?.teamId ?? null;
+    if (myTeam === null) return localSeatId === null ? [] : [localSeatId];
+    // team order, so the legend and the line colours are stable
+    return players.filter((p) => p.teamId === myTeam).map((p) => p.seatId).sort((a, b) => a - b);
+  }, [players, localSeatId]);
+
+  const progressSeries = useMemo(
+    () => buildProgressSeries(settlement?.rounds ?? [], myTeamSeats, localSeatId),
+    [settlement, myTeamSeats, localSeatId],
+  );
+
+  // The signed-in seat's UNSPENT gold at match end — the settlement payload has
+  // `goldEarned` (lifetime income) but not the balance, and 「你還有 3200 金沒花」
+  // is a claim about the BALANCE. SeatView.gold is that balance.
+  const myGoldLeft = seats.find((s) => s.seatId === localSeatId)?.gold ?? 0;
+  const progressTips = useMemo(() => {
+    if (localSeatId === null || !local) return [];
+    return progressAdvice({
+      rounds: settlement?.rounds ?? [],
+      localSeatId,
+      teamSeatIds: myTeamSeats,
+      stats: local.stats,
+      goldLeft: myGoldLeft,
+    });
+  }, [settlement, localSeatId, local, myTeamSeats, myGoldLeft]);
+
   if (!hasPayload) return <TeamPlacementFallback />;
 
   const won = wonMatch;
@@ -555,15 +592,32 @@ export function MatchEndPanel(): React.JSX.Element {
           scroll={scroll}
         />
 
+        {/* 查看戰績變化 — expands IN PLACE (owner, 2026-07-27). It used to call
+            store.viewRankChange(), which IS a navigation: it sets lobbyView and
+            then awaits returnToLobby(). That flow is correct and untouched where
+            it belongs (the lobby leaderboard); what was wrong was hanging it on
+            the one screen the owner had just asked to STAY on. There were TWO
+            such buttons here (查看戰績變化 + 查看排名變化) — both left. */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 18 }}>
-          <Btn kind="primary" onClick={() => viewRankChange()} style={{ flex: 1 }}>
-            查看戰績變化
+          <Btn
+            kind="primary"
+            onClick={() => setShowProgress((v) => !v)}
+            style={{ flex: 1 }}
+            aria-expanded={showProgress}
+          >
+            {showProgress ? "收起戰績變化" : "查看戰績變化"}
           </Btn>
           <Btn onClick={() => void returnToLobby()}>返回大廳</Btn>
-          <Btn kind="primary" onClick={() => viewRankChange()}>
-            查看排名變化
-          </Btn>
         </div>
+
+        {showProgress ? (
+          <ProgressChartPanel
+            series={progressSeries}
+            advice={progressTips}
+            nameForSeat={nameForSeat}
+            onClose={() => setShowProgress(false)}
+          />
+        ) : null}
       </div>
     </div>
   );
