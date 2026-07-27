@@ -129,6 +129,120 @@ export function pickRoundArena<T extends { id: string }>(
   return pool[idx]!;
 }
 
+// ===========================================================================
+// THE FINAL-ROUND ROYALE ARENA (owner directive 2026-07-27)
+// ===========================================================================
+//
+// 「第10回合 … 所有隊伍在同一個場地大混戰」 + 「用現有的 zone，只把半徑放大…
+//  出生點改成環狀均分」. Rounds 1-9 keep the two-zone PairedDuels geometry; the
+// finale needs ONE zone that holds twelve champions and four spawn clusters that
+// keep teammates together while pushing the four teams apart.
+//
+// WHY THIS IS A CONSTANT AND *ALSO* A CONTENT DOC (`content/arenas/arena.royale.json`).
+// The client does NOT receive arena geometry over the wire — `GameApp.applyArena`
+// fetches the arena DOC by the `mapId` the snapshot broadcasts and builds the
+// ground/minimap/fire-ring visuals from that. So a server-side "just scale the
+// radius at runtime" would have moved the collision boundary to 42 while every
+// player still saw (and read the fire ring against) a 24-radius disc — the sim
+// and the picture would disagree by 18 units. The finale therefore ships as a
+// REAL arena doc with its own id, exactly like the five rotation maps, and the
+// server merely SELECTS it for the final round. This constant is the built-in
+// fallback for a boot with no content tree (unit tests, skeleton boot); the
+// shipped doc is pinned byte-for-byte against it by `royaleArena.test.ts`, so
+// the two can never drift into "the test passes on geometry nobody plays".
+//
+// NO TRIGONOMETRY. `sim/purity.test.ts` bans Math.cos/sin under src/sim, and the
+// ban is right: an "equidistant ring" built from trig is a float that can differ
+// by an ulp across engines. Four groups on the ±x/±z AXES are exactly equidistant
+// with integer coordinates and no transcendental in sight — adjacent groups sit
+// `ROYALE_SPAWN_RING * √2` ≈ 42.4 units apart, which is further than the whole
+// diameter of a duel zone.
+
+/** Boundary radius of the finale zone. 24 (a duel zone) holds 6; this holds 12. */
+export const ROYALE_ZONE_RADIUS = 42;
+/** Distance from the finale zone's centre to each team's spawn cluster. */
+export const ROYALE_SPAWN_RING = 30;
+/** Spacing between the three teammates inside one spawn cluster. */
+export const ROYALE_SPAWN_SPACING = 4;
+/** Teams the finale zone is laid out for (four clusters of {@link TEAM_SIZE}). */
+export const ROYALE_TEAM_SLOTS = 4;
+
+/**
+ * The twelve finale spawn points, GROUPED: index `g * 3 + s` is slot `s` of
+ * team-group `g`. Groups run E, N, W, S — four axis-aligned clusters, so no team
+ * starts nearer the centre (or nearer any rival) than another.
+ *
+ * Written out rather than generated so the numbers in the content doc, the
+ * numbers here, and the numbers a reader checks are literally the same list.
+ */
+export const ROYALE_SPAWNS: readonly Vec2[] = [
+  // group 0 — EAST
+  { x: 30, z: -4 },
+  { x: 30, z: 0 },
+  { x: 30, z: 4 },
+  // group 1 — NORTH
+  { x: -4, z: 30 },
+  { x: 0, z: 30 },
+  { x: 4, z: 30 },
+  // group 2 — WEST
+  { x: -30, z: -4 },
+  { x: -30, z: 0 },
+  { x: -30, z: 4 },
+  // group 3 — SOUTH
+  { x: -4, z: -30 },
+  { x: 0, z: -30 },
+  { x: 4, z: -30 },
+];
+
+/**
+ * Built-in geometry for the final-round royale: ONE circular zone, four pillars
+ * on the DIAGONALS (so they are cover on the approach lanes and never block a
+ * spawn cluster or the zone centre where the neutral guardian stands — the same
+ * "nothing on the centre" rule task #218 imposed on the duel zones).
+ *
+ * `spawns` is the schema's 2-tuple, so the twelve points are packed six-and-six:
+ * side 0 carries groups 0+1, side 1 carries groups 2+3. The controller reads them
+ * back as one flat list of twelve (see `royaleSpawnAt`), which is why the packing
+ * is an encoding detail and not a "two sides" claim.
+ */
+export const ROYALE_ARENA: ArenaDef = {
+  id: "arena.royale",
+  name: "終局大混戰",
+  zones: [
+    {
+      id: "zone-0",
+      center: { x: 0, z: 0 },
+      boundaryRadius: ROYALE_ZONE_RADIUS,
+      obstacles: [
+        { kind: "circle", center: { x: 14, z: 14 }, radius: 2.2 },
+        { kind: "circle", center: { x: 14, z: -14 }, radius: 2.2 },
+        { kind: "circle", center: { x: -14, z: 14 }, radius: 2.2 },
+        { kind: "circle", center: { x: -14, z: -14 }, radius: 2.2 },
+      ],
+      spawns: [ROYALE_SPAWNS.slice(0, 6).map((s) => ({ ...s })), ROYALE_SPAWNS.slice(6).map((s) => ({ ...s }))] as [
+        Vec2[],
+        Vec2[],
+      ],
+    },
+  ],
+};
+
+/**
+ * Spawn point for team-group `group` (0..3), slot `slot` (0..2) of a royale zone,
+ * read out of the zone's own packed `spawns` — NOT out of {@link ROYALE_SPAWNS}.
+ * Reading the ZONE means an operator who re-authors `arena.royale.json` moves the
+ * champions, instead of moving the picture while the sim keeps the constant.
+ *
+ * Falls back by wrapping when a zone offers fewer than 12 points (a hand-made
+ * test arena), so a short spawn list degrades to overlapping starts rather than
+ * an undefined position — `royaleArena.test.ts` pins the SHIPPED zone at ≥12.
+ */
+export function royaleSpawnAt(zone: ZoneDef, group: number, slot: number): Vec2 {
+  const flat = [...zone.spawns[0], ...zone.spawns[1]];
+  const i = group * 3 + slot;
+  return flat[i % flat.length]!;
+}
+
 /** Built-in skeleton arena: two circular zones with a pillar each. */
 export const SKELETON_ARENA: ArenaDef = {
   id: "arena.skeleton",

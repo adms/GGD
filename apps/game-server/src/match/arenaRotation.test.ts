@@ -14,9 +14,10 @@ import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { zArenaDoc, type ArenaDoc } from "@ggd/shared/content";
 import { Arenas } from "@ggd/shared/content";
-import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
+import { SKELETON_ARENA, ROYALE_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import { MatchController, type SeatSpec } from "./MatchController";
+import { FINAL_ROUND } from "./PairedDuels";
 import { resolveArenaPool } from "./arenaSelect";
 import { projectSnapshot } from "../net/snapshot";
 
@@ -75,13 +76,21 @@ describe("per-round arena rotation (arena-rotation-e2e)", () => {
     const { perRound } = runRecordingArenas(ctl);
 
     expect(perRound.size, "the match ran several combat rounds").toBeGreaterThanOrEqual(2);
-    // every recorded arena is a real member of the pool
+    // THE FINALE IS NOT PART OF THE ROTATION. Round FINAL_ROUND is the twelve-player
+    // royale and always uses `arena.royale` — a single 42-radius zone with four
+    // spawn clusters — so it is excluded from ARENA_ROTATION_IDS and asserted
+    // separately here rather than being allowed to weaken the pool assertion.
+    expect(perRound.get(FINAL_ROUND)).toBe(ROYALE_ARENA.id);
+    const duelRounds = [...perRound.entries()].filter(([r]) => r < FINAL_ROUND);
+    expect(duelRounds.length).toBeGreaterThanOrEqual(2);
+    // every recorded DUEL-round arena is a real member of the pool
     const poolIds = new Set(pool.map((a) => a.id));
-    for (const id of perRound.values()) expect(poolIds.has(id)).toBe(true);
+    expect(poolIds.has(ROYALE_ARENA.id), "the finale map must stay OUT of the rotation").toBe(false);
+    for (const [, id] of duelRounds) expect(poolIds.has(id)).toBe(true);
     // ACROSS rounds the arena actually VARIES (the whole point of #145)
-    expect(new Set(perRound.values()).size, "arena never changed across rounds").toBeGreaterThan(1);
+    expect(new Set(duelRounds.map(([, id]) => id)).size, "arena never changed across rounds").toBeGreaterThan(1);
     // consecutive rounds never repeat the same map
-    const rounds = [...perRound.keys()].sort((a, b) => a - b);
+    const rounds = duelRounds.map(([r]) => r).sort((a, b) => a - b);
     for (let i = 1; i < rounds.length; i++) {
       if (rounds[i] === rounds[i - 1]! + 1) {
         expect(perRound.get(rounds[i]!)).not.toBe(perRound.get(rounds[i - 1]!));
@@ -127,6 +136,11 @@ describe("per-round arena rotation (arena-rotation-e2e)", () => {
     const ctl = new MatchController("rot-fixed", 555, allBots(), FAST);
     const { perRound } = runRecordingArenas(ctl);
     expect(perRound.size).toBeGreaterThanOrEqual(1);
-    expect(new Set(perRound.values())).toEqual(new Set([SKELETON_ARENA.id]));
+    // …for every DUEL round. The finale still switches to the royale map: it is
+    // not a rotation pick, it is the shape round FINAL_ROUND is played in, and a
+    // match "with no rotation" still has to be playable by twelve champions at once.
+    const duelMaps = new Set([...perRound.entries()].filter(([r]) => r < FINAL_ROUND).map(([, id]) => id));
+    expect(duelMaps).toEqual(new Set([SKELETON_ARENA.id]));
+    expect(perRound.get(FINAL_ROUND)).toBe(ROYALE_ARENA.id);
   });
 });

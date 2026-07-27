@@ -4,7 +4,7 @@ import { asSeatId, asTeamId, type TeamId } from "@ggd/shared/ids";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { PhaseMachine } from "./PhaseMachine";
-import { pairTeams, livesLost, teamHealthLost, HIGH_STAKES_REWARD } from "./PairedDuels";
+import { pairTeams, livesLost, teamHealthLost, FINAL_ROUND, HIGH_STAKES_REWARD } from "./PairedDuels";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import { projectSnapshot } from "../net/snapshot";
 import { HumanDriver } from "../seat/HumanDriver";
@@ -122,12 +122,15 @@ describe("full bot match (match-04, match-09, match-10)", () => {
 
     const placements = ctl.result!.teams.map((t) => t.placement).sort();
     expect(placements).toEqual([1, 2, 3, 4]);
-    // exactly one team still has lives (the winner)
-    const winners = [...ctl.lives.entries()].filter(([, l]) => l > 0);
-    expect(winners).toHaveLength(1);
-    expect(ctl.placements.get(winners[0]![0])).toBe(1);
-    // rounds actually happened and kills were recorded
-    expect(ctl.result!.rounds).toBeGreaterThanOrEqual(2);
+    // THE WINNER IS THE FINALE'S SURVIVOR, NOT THE LAST TEAM WITH HEALTH.
+    // This assertion used to read "exactly one team still has lives"; since the
+    // owner's 2026-07-27 ruling nobody is eliminated, so several teams can (and
+    // usually do) finish with health left. Place 1 belongs to whoever survived
+    // round FINAL_ROUND — possibly a team on 0 health, which is the design.
+    expect(ctl.royaleWinner).not.toBeNull();
+    expect(ctl.placements.get(ctl.royaleWinner!)).toBe(1);
+    // the match ran the FULL ten rounds and stopped there
+    expect(ctl.result!.rounds).toBe(FINAL_ROUND);
     const totalKills = [...ctl.kills.values()].reduce((a, b) => a + b, 0);
     expect(totalKills).toBeGreaterThan(0);
   });

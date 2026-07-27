@@ -60,7 +60,14 @@ const OPEN: ShopAccess = { open: true };
 const DENY_COMBAT_ALIVE: ShopAccess = { open: false, reason: "combat-alive" };
 const DENY_PHASE: ShopAccess = { open: false, reason: "phase-closed" };
 const DENY_NO_CHAMPION: ShopAccess = { open: false, reason: "no-champion" };
+/**
+ * @deprecated Never returned since the 2026-07-27 no-elimination ruling (see
+ * {@link shopOpen}). Kept so the reason code stays a live, referenced member of
+ * {@link ShopDenyReason} — the client's `shopFeedback.ts` still maps it, and a
+ * silently-orphaned union member is how a dead branch comes back to life later.
+ */
 const DENY_ELIMINATED: ShopAccess = { open: false, reason: "team-eliminated" };
+void DENY_ELIMINATED;
 
 /**
  * THE RULE, pure. `alive` is the REQUESTER's own state — during combat only a
@@ -68,16 +75,23 @@ const DENY_ELIMINATED: ShopAccess = { open: false, reason: "team-eliminated" };
  * head start on the next round instead of pure dead time.
  */
 export function shopOpen(phase: ShopPhase, alive: boolean, eliminated = false): ShopAccess {
-  // ELIMINATION OUTRANKS EVERYTHING. `alive` is a per-ROUND fact — your champion
-  // is down until the next spawn — but team health hitting 0 ends the MATCH for
-  // that team. The owner watched the shop open for a team that was already out:
-  // 「如果我已經完全沒有團隊生命，不應該再出現商店讓我購買」.
+  // ⚠️ THE ELIMINATION DENY IS RETIRED (owner directive 2026-07-27), and this is
+  // a REVERSAL of an earlier owner call, so the history matters.
   //
-  // The sim-side gate never actually let the purchase through (an eliminated
-  // team's champions are not spawned, so shopAccess returns no-champion), which
-  // is exactly why this survived: nothing was broken except what the player was
-  // shown. A shop you can open and cannot buy from is worse than no shop.
-  if (eliminated) return DENY_ELIMINATED;
+  // It used to read `if (eliminated) return DENY_ELIMINATED;` — team health at 0
+  // ended the match for that team, so 「如果我已經完全沒有團隊生命，不應該再出現
+  // 商店讓我購買」. That premise is gone: 「不管前面被淘汰與否，大家都回來打第 10
+  // 回合…繼續正常打，只是生命已經見底」 and, explicitly, 照樣進商店. A team at 0
+  // now plays every remaining round and spends its per-round gold like anyone
+  // else, so hiding its shop would take away the purchase the ruling grants.
+  //
+  // WHY THE PARAMETER AND THE REASON CODE STAY. `eliminated` is passed by
+  // `apps/client/src/ui/panels/shopGate.ts` (a lane this change does not own) and
+  // `team-eliminated` is mapped to a message in `shopFeedback.ts`; dropping
+  // either would be a compile break in files that have nothing to do with this
+  // rule. The flag is accepted and deliberately ignored — and `void` says so out
+  // loud rather than leaving a silently-unused argument for a reader to wonder at.
+  void eliminated;
   if (phase === "prep") return OPEN;
   if (phase === "combat") return alive ? DENY_COMBAT_ALIVE : OPEN;
   return DENY_PHASE;

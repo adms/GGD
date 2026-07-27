@@ -18,6 +18,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { MatchController, type SeatSpec } from "./MatchController";
+import { FINAL_ROUND } from "./PairedDuels";
 
 /** Fast phases so a full match runs in a few hundred ticks. */
 const FAST = { champSelectTicks: 5, intermissionTicks: 30, combatMaxTicks: 1200, resolutionTicks: 5 };
@@ -149,10 +150,14 @@ describe("tick resilience — a bad tick never freezes the countdown (#46/#100)"
     }
     expect(ctl.phase.phase).toBe("matchEnd");
     expect(ctl.faultCount).toBeGreaterThan(0);
-    // lives strictly fell to a single survivor (the combat failsafe charges one
-    // life per round), so the match genuinely ended rather than cycling forever.
-    const alive = [...ctl.lives.entries()].filter(([, l]) => l > 0);
-    expect(alive.length).toBe(1);
+    // CONVERGENCE NO LONGER COMES FROM DRAINING LIVES. It used to: the assertion
+    // here was "exactly one team still has lives", because the combat failsafe
+    // charged health until only one team was left. Nobody is eliminated any more
+    // (owner 2026-07-27), so the thing that proves the match ended on purpose is
+    // the ROUND CAP — a permanently faulting match still stops at FINAL_ROUND
+    // with a full 1/2/3/4 board instead of cycling phases forever.
+    expect(ctl.phase.round).toBe(FINAL_ROUND);
+    expect([...ctl.placements.values()].sort()).toEqual([1, 2, 3, 4]);
   });
 
   it("a healthy match is UNAFFECTED — no faults, normal result (no regression)", () => {

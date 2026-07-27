@@ -1,0 +1,47 @@
+{
+  "id": "arena.royale",
+  "schema": "arena@1",
+  "name": "終局大混戰",
+  "zones": [
+    {
+      "id": "zone-0",
+      "center": { "x": 0, "z": 0 },
+      "boundaryRadius": 42,
+      "obstacles": [
+        { "kind": "circle", "center": { "x": 14, "z": 14 }, "radius": 2.2 },
+        { "kind": "circle", "center": { "x": 14, "z": -14 }, "radius": 2.2 },
+        { "kind": "circle", "center": { "x": -14, "z": 14 }, "radius": 2.2 },
+        { "kind": "circle", "center": { "x": -14, "z": -14 }, "radius": 2.2 }
+      ],
+      "spawns": [
+        [
+          { "x": 30, "z": -4 },
+          { "x": 30, "z": 0 },
+          { "x": 30, "z": 4 },
+          { "x": -4, "z": 30 },
+          { "x": 0, "z": 30 },
+          { "x": 4, "z": 30 }
+        ],
+        [
+          { "x": -30, "z": -4 },
+          { "x": -30, "z": 0 },
+          { "x": -30, "z": 4 },
+          { "x": -4, "z": -30 },
+          { "x": 0, "z": -30 },
+          { "x": 4, "z": -30 }
+        ]
+      ]
+    }
+  ],
+  "decor": [
+    { "model": "assets/models/props/torch.glb", "x": 39, "z": 0, "rotQuarter": 2, "scale": 1.8 },
+    { "model": "assets/models/props/torch.glb", "x": 0, "z": 39, "rotQuarter": 3, "scale": 1.8 },
+    { "model": "assets/models/props/torch.glb", "x": -39, "z": 0, "rotQuarter": 0, "scale": 1.8 },
+    { "model": "assets/models/props/torch.glb", "x": 0, "z": -39, "rotQuarter": 1, "scale": 1.8 },
+    { "model": "assets/models/props/pillar.glb", "x": 14, "z": 14, "rotQuarter": 0, "scale": 2.2 },
+    { "model": "assets/models/props/pillar.glb", "x": 14, "z": -14, "rotQuarter": 1, "scale": 2.2 },
+    { "model": "assets/models/props/pillar.glb", "x": -14, "z": 14, "rotQuarter": 2, "scale": 2.2 },
+    { "model": "assets/models/props/pillar.glb", "x": -14, "z": -14, "rotQuarter": 3, "scale": 2.2 }
+  ],
+  "groundStyle": "stone"
+}

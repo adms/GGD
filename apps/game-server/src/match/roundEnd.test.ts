@@ -93,30 +93,37 @@ describe("round ends the instant every duel is decided (#208)", () => {
     expect(ctl.duelWinnerOf(second!.zone)).toBe(second!.sideB);
   });
 
-  it("a bye round concludes on its single duel and never blocks on the bye team (#173)", () => {
+  it("a team on ZERO team health still fights — no bye, no elimination (owner 2026-07-27)", () => {
     cover("round-end-immediate");
-    // Force a 3-team round by eliminating team 3 before combat is armed, so
-    // pairTeams yields ONE duel + a rotating bye.
+    // This test used to drain team 3 to 0 and assert that `pairTeams` then produced
+    // ONE duel plus a rotating bye — i.e. that 0 health REMOVED the team. Owner's
+    // ruling reverses exactly that: 「不管前面被淘汰與否，大家都回來打」, so a team
+    // at 0 keeps its seat in the pairing and the bye never happens in a 4-team
+    // match. The bye branch of `pairTeams` is still correct and still pinned
+    // directly in match.test.ts; what is pinned HERE is that the controller no
+    // longer takes it.
     const ctl = new MatchController("re-bye", 77, allBots(), CFG);
     while (ctl.phase.phase === "champSelect") ctl.tick();
-    ctl.teamHealth.set(asTeamId(3), 0); // eliminate one team during intermission
+    const broke = asTeamId(3);
+    ctl.teamHealth.set(broke, 0); // health pool spent during the intermission
     let guard = 0;
     while (ctl.phase.phase !== "combat" && guard++ < 5000) ctl.tick();
 
-    expect(ctl.pairings.length).toBe(1); // 3 alive → one duel
-    expect(ctl.bye).not.toBeNull();
-    const bye = ctl.bye!;
-    const byeHealthBefore = ctl.teamHealth.get(bye)!;
+    expect(ctl.pairings.length).toBe(2); // still FOUR teams → two duels
+    expect(ctl.bye).toBeNull();
+    // …and the broke team is genuinely IN one of them, spawned and alive
+    const inPairing = ctl.pairings.some((p) => p.sideA === broke || p.sideB === broke);
+    expect(inPairing).toBe(true);
+    const brokeSeat = [...ctl.seats.values()].find((s) => s.teamId === broke)!;
+    expect(ctl.world.health.get(brokeSeat.entityId!)?.alive).toBe(true);
 
-    const p = ctl.pairings[0]!;
-    wipeSideInZone(ctl, p.sideB, p.zone);
+    // #208 still holds: the moment BOTH duels are decided the round concludes on
+    // the spot rather than waiting for the phase timer.
+    for (const p of ctl.pairings) wipeSideInZone(ctl, p.sideB, p.zone);
     const before = ctl.phase.ticksLeft;
-
     ctl.tick();
-    expect(ctl.phase.phase).toBe("resolution"); // one duel decided → round over
+    expect(ctl.phase.phase).toBe("resolution");
     expect(CFG.combatMaxTicks - before).toBeLessThan(5000); // not the timer
-    expect(ctl.duelWinnerOf(p.zone)).toBe(p.sideA);
-    // the bye team fought no duel and lost no health from the conclusion
-    expect(ctl.teamHealth.get(bye)).toBe(byeHealthBefore);
+    for (const p of ctl.pairings) expect(ctl.duelWinnerOf(p.zone)).toBe(p.sideA);
   });
 });

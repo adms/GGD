@@ -1,6 +1,6 @@
 {
   "collection": "arenas",
-  "hash": "0847ea9ec68d",
+  "hash": "7e762999ac04",
   "entries": [
     {
       "id": "arena.castle",
@@ -25,6 +25,12 @@
       "path": "arenas/arena.godie.json",
       "hash": "ec3a3c16cdb7",
       "size": 17405
+    },
+    {
+      "id": "arena.royale",
+      "path": "arenas/arena.royale.json",
+      "hash": "322fd05ab6d1",
+      "size": 1824
     },
     {
       "id": "arena.skeleton",

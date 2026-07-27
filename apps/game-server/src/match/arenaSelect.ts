@@ -6,7 +6,7 @@
  * never loaded — so a match ALWAYS gets a valid, playable map.
  */
 import { Arenas } from "@ggd/shared/content";
-import { SKELETON_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
+import { SKELETON_ARENA, ROYALE_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 
 export function resolveArena(mapId?: string): ArenaDef {
   if (!mapId || mapId === SKELETON_ARENA.id) return SKELETON_ARENA;
@@ -34,6 +34,24 @@ export const ARENA_ROTATION_IDS: readonly string[] = [
   "arena.dota",
   "arena.godie",
 ];
+
+/**
+ * The FINALE map (`arena.royale`) — deliberately NOT in {@link ARENA_ROTATION_IDS}.
+ *
+ * It is a single 42-radius zone laid out for twelve champions in four spawn
+ * clusters; rolling it into an ordinary 3v3 round would put two teams in a field
+ * built for four and leave two thirds of it empty. The MatchController selects it
+ * by name for round `FINAL_ROUND` and only then.
+ *
+ * Falls back to the built-in {@link ROYALE_ARENA} when the content tree is not
+ * loaded (unit tests, skeleton boot). The shipped doc and the constant are pinned
+ * to each other by `royaleArena.test.ts`, so the fallback is the same arena a
+ * player sees — never a second, untested geometry.
+ */
+export function resolveRoyaleArena(): ArenaDef {
+  const doc = Arenas.tryGet(ROYALE_ARENA.id);
+  return doc ? arenaDefFromDoc(doc) : ROYALE_ARENA;
+}
 
 /**
  * Resolve {@link ARENA_ROTATION_IDS} to the loaded {@link ArenaDef}s, in order,
