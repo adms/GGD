@@ -22,11 +22,11 @@
  * no-elimination rule is asserted on a team driven to 0 health in round 1 and
  * then followed to the final round.
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { asTeamId, type TeamId } from "@ggd/shared/ids";
 import { TICK_HZ } from "@ggd/shared/constants";
-import { MatchState } from "@ggd/shared/protocol/schema";
+import { MatchState, ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { ROYALE_ARENA, ROYALE_ZONE_RADIUS } from "@ggd/shared/sim/world/ArenaDef";
 import { currentFireRingRadius } from "@ggd/shared/sim/fireRing";
 import { guardiansAliveInZone } from "@ggd/shared/sim/systems/GuardianSystem";
@@ -354,6 +354,193 @@ describe("finishing round 10 is the only end condition (royale-match-end)", () =
     runToEnd(ctl);
     // Under the old model this was an instant match end (one team "alive").
     expect(ctl.phase.round).toBe(FINAL_ROUND);
+  });
+});
+
+// ===========================================================================
+// THE NUMBER ITSELF — 10, written out
+// ===========================================================================
+describe("the finale is round TEN, as a number (royale-match-end)", () => {
+  /**
+   * ⚠️ THE ONLY TEST IN THIS FILE THAT DOES NOT READ `FINAL_ROUND` ON BOTH SIDES.
+   *
+   * Everything else here says `tickToCombat(ctl, FINAL_ROUND)` and
+   * `expect(ctl.phase.round).toBe(FINAL_ROUND)`, which is exactly as true at 8,
+   * at 12 or at 2: those tests pin the SHAPE of the finale, not WHICH round it
+   * is. Ten is not an implementation detail — it is the owner's 2026-07-27
+   * reward table (`content/config/arena-rules.json` authors a row per round and
+   * the mob-wave schedule ends 8 → 10/30, 9 → 20/60, 10 → 0/0 for a clean
+   * decider), and it is the wall-clock budget a family sitting was measured
+   * against. So it is written out here, once, on both the constant and the match
+   * the constant produces.
+   */
+  it("plays ten rounds — the literal 10, not 「whatever the constant says」", () => {
+    cover("royale-match-end");
+    expect(FINAL_ROUND).toBe(10);
+    expect(isRoyaleRound(9)).toBe(false);
+    expect(isRoyaleRound(10)).toBe(true);
+
+    // …and a real match REACHES ten and stops there. Counted independently of
+    // the constant: every distinct combat round the phase machine enters.
+    const ctl = new MatchController("roy-ten", 24680, allBots(), FAST);
+    const combatRounds = new Set<number>();
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n++ < 400_000) {
+      ctl.tick();
+      if (ctl.phase.phase === "combat") combatRounds.add(ctl.phase.round);
+    }
+    expect(ctl.phase.phase).toBe("matchEnd");
+    expect([...combatRounds].sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(ctl.phase.round).toBe(10);
+    expect(ctl.result!.rounds).toBe(10);
+  });
+});
+
+// ===========================================================================
+// RE-ENTERING THE FINALE — the stale-champion trap (commit d090d77d)
+// ===========================================================================
+describe("a re-entered finale is fought again, not re-awarded (royale-match-end)", () => {
+  /**
+   * `isRoyaleRound` is `round >= FINAL_ROUND`, so round 11 is ALSO a royale —
+   * and the #46 tick failsafe can get there: if `maybeFinish` throws on round
+   * 10's resolution, `forceAdvanceOnFault` pushes the phase machine forward
+   * instead of ending the match, and the next combat entry arms the finale a
+   * second time.
+   *
+   * `checkRoyaleEnd`'s first line is `if (this.royaleWinner !== null) return
+   * true`. A champion left over from the first finale therefore decides the
+   * second one ON ITS FIRST COMBAT TICK, before a blow is struck — the wrong
+   * team crowned, from a flag nobody reset. This drives that exact path with the
+   * shipped failsafe (no source-string peeking) and asserts the bout is decided
+   * by WHO IS STANDING NOW.
+   */
+  it("clears the previous champion, so the survivor of the RE-RUN takes it", () => {
+    cover("royale-match-end");
+    const ctl = new MatchController("roy-reentry", 31415, allBots(), FAST);
+    tickToCombat(ctl, FINAL_ROUND);
+
+    // ARM THE #46 FAILSAFE: the resolution phase can no longer end the match.
+    // (The failsafe logs the contained fault; the spy keeps the run readable and
+    // doubles as proof that the path we are driving really is the fault path.)
+    const logged = vi.spyOn(console, "error").mockImplementation(() => {});
+    (ctl as unknown as { maybeFinish: () => boolean }).maybeFinish = () => {
+      throw new Error("simulated #46 fault so the finale is entered twice");
+    };
+
+    let stale: TeamId | null = null;
+    let n = 0;
+    while (!(ctl.phase.phase === "combat" && ctl.phase.round === FINAL_ROUND + 1) && n++ < 400_000) {
+      ctl.tick();
+      if (stale === null && ctl.royaleWinner !== null) stale = ctl.royaleWinner;
+    }
+    expect(ctl.phase.round, "never re-entered the finale").toBe(FINAL_ROUND + 1);
+    expect(ctl.faultCount, "the #46 failsafe never fired — this is not the path").toBeGreaterThan(0);
+    expect(logged).toHaveBeenCalled();
+    logged.mockRestore();
+    expect(isRoyaleRound(ctl.phase.round)).toBe(true);
+    expect(ctl.royale).not.toBeNull();
+    expect(stale, "the first finale crowned nobody, so there is no stale flag to clear").not.toBeNull();
+
+    // the flag the first finale latched must NOT have survived the re-arm
+    expect(ctl.royaleWinner).toBeNull();
+
+    // …and behaviourally: hand the second bout to a DIFFERENT team by wiping
+    // everyone else, then let it settle. A stale flag would crown `stale`.
+    const survivor = ctl.royale!.teams.find((t) => t !== stale)!;
+    for (const seat of ctl.seats.values()) {
+      if (seat.teamId === survivor) continue;
+      const hp = ctl.world.health.get(seat.entityId!)!;
+      hp.alive = false;
+      hp.hp = 0;
+    }
+    ctl.tick();
+    expect(ctl.royaleWinner, "the re-run was awarded to the OLD champion").toBe(survivor);
+    expect(ctl.royaleWinner).not.toBe(stale);
+  });
+});
+
+// ===========================================================================
+// roundWins — what the finale's bump is actually for
+// ===========================================================================
+describe("the finale is a round the champion WON (royale-match-end)", () => {
+  /**
+   * WHAT `roundWins` REALLY DRIVES — because the hand-off got this wrong.
+   *
+   * The claim was 「the client's victory gate edge-detects roundWins, so the
+   * finale must bump it or the champion gets no firework」. IT DOES NOT. Read
+   * `apps/client/src/vfx/victoryTrigger.ts`: the MATCH-WIN branch is checked
+   * FIRST and it does not look at the counter at all — it fires on
+   * `outcomeDecided && placement === 1` and then re-baselines `lastRoundWins`.
+   * Its own test ("reports the FINAL round as a match win only, never both at
+   * once") pins that. Worse, `outcomeDecided` latches one resolution phase
+   * BEFORE `placements` is written, so during that window the champion takes the
+   * gate's loser path, which re-baselines the counter too. No firework depends
+   * on this bump.
+   *
+   * What DOES depend on it:
+   *   • `TeamState.roundWins` on the wire — the replicated 「你到目前贏了幾場」.
+   *     Without the bump the champion's own scoreboard is permanently one short
+   *     of the rounds it actually won, forever, on every client;
+   *   • `replay/digest.ts`, which hashes it as host state;
+   *   • `finalStandings`' second sort key. (That one is NOT affected by the
+   *     finale's bump — the champion is filtered out of `rest` before the sort —
+   *     which is precisely why a standings assertion cannot guard this line.)
+   *
+   * So the contract asserted here is the counter's own definition: it equals the
+   * number of rounds this team was recorded WON, finale included, and the wire
+   * carries that value.
+   */
+  it("counts it: roundWins equals the rounds recorded WON, and the wire agrees", () => {
+    cover("royale-match-end");
+    const ctl = new MatchController("roy-wins", 8642, allBots(), FAST);
+    const state = new MatchState();
+    const wireWins = (): Map<number, number> => {
+      projectSnapshot(ctl, state, new Map());
+      const m = new Map<number, number>();
+      for (const t of state.teams) m.set(t.teamId, t.roundWins);
+      return m;
+    };
+
+    const wonRounds = new Map<number, number>();
+    let wireBeforeFinaleSettles = new Map<number, number>();
+    let prev = ctl.phase.phase;
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n++ < 400_000) {
+      if (ctl.phase.phase === "combat" && ctl.phase.round === FINAL_ROUND) {
+        wireBeforeFinaleSettles = wireWins(); // last projection before the settle
+      }
+      ctl.tick();
+      // settleRound / settleRoyale both run in the tick that enters `resolution`
+      if (ctl.phase.phase === "resolution" && prev !== "resolution") {
+        for (const [teamId, outcome] of ctl.roundOutcome) {
+          if (outcome === ROUND_OUTCOME.WON) wonRounds.set(teamId, (wonRounds.get(teamId) ?? 0) + 1);
+        }
+      }
+      prev = ctl.phase.phase;
+    }
+
+    const champion = ctl.royaleWinner!;
+    expect(champion).not.toBeNull();
+    // the finale itself was recorded as a WIN for the champion…
+    expect(ctl.roundOutcome.get(champion)).toBe(ROUND_OUTCOME.WON);
+    // …so the lifetime counter must include it, for EVERY team
+    for (const [teamId, won] of wonRounds) {
+      expect(ctl.roundWins.get(asTeamId(teamId)), `team ${teamId} 贏了幾場`).toBe(won);
+    }
+    expect(wonRounds.get(champion as number)).toBeGreaterThanOrEqual(1);
+
+    // …and the CLIENT sees the increment: the champion's replicated counter is
+    // one higher after the finale settles than it was while it was still being
+    // fought. (Every other team's is unchanged — the finale pays one winner.)
+    const after = wireWins();
+    expect(after.get(champion as number)).toBe(
+      (wireBeforeFinaleSettles.get(champion as number) ?? 0) + 1,
+    );
+    expect(after.get(champion as number)).toBe(ctl.roundWins.get(champion));
+    for (const [teamId, before] of wireBeforeFinaleSettles) {
+      if (teamId === (champion as number)) continue;
+      expect(after.get(teamId)).toBe(before);
+    }
   });
 });
 
