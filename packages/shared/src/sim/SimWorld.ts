@@ -29,6 +29,7 @@ import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
 import { accumulateTimeAlive } from "./stats/matchStats";
 import type { DamagePacket } from "./combat/damage";
+import type { KillComboState } from "./combat/killCombo";
 import { SpatialHash } from "./collision/spatialHash";
 import type { ArenaDef } from "./world/ArenaDef";
 import { TICK_MS } from "../constants";
@@ -165,6 +166,22 @@ export class SimWorld {
 
   /** Multikill streak bookkeeping per killer (tick of last kill + streak len). */
   readonly killTracking = new Map<EntityId, { lastKillTick: number; streak: number }>();
+
+  /**
+   * 連殺 COMBO per killer (owner, 2026-07-27): tick of the last kill + the chain
+   * length. ZOMBIES AND CHAMPIONS SHARE THIS ONE NUMBER — see
+   * sim/combat/killCombo.ts for the ruling and for why neither `mobKills` nor
+   * `killTracking` could carry it.
+   *
+   * OUT OF `digest()`, on the `killTracking` / `recentDamagers` precedent and
+   * for the same reason: this map changes nothing else in the world. It grants
+   * no gold, no xp, no level and no stat — its ONLY observable effect is the
+   * `killCombo` event, and an event stream that disagreed between replicas would
+   * have to come from a kill that disagreed, which every existing digest field
+   * (hp/alive/gold/xp/mobKills) already catches at its source. Folding a
+   * pure-presentation counter in would add digest churn without adding reach.
+   */
+  readonly killCombo = new Map<EntityId, KillComboState>();
 
   /**
    * Victims (champion entity ids) whose KILL BOUNTY has already been paid (task
@@ -466,6 +483,9 @@ export class SimWorld {
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
+    // 連殺 combo: a recycled entityId must never inherit a stale chain — the
+    // same defensive contract every other per-entity store here follows.
+    this.killCombo.delete(id);
     this.bountyPaid.delete(id);
   }
 

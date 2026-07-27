@@ -191,6 +191,28 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "coinDropped",
   "coinPickedUp",
   "coinDropRejected",
+  // 連殺 COMBO (owner, 2026-07-27: 「戰鬥時擊殺殭屍或英雄間隔5秒內會顯示 combo
+  // 連殺數量」). The count is computed in the SIM (sim/combat/killCombo.ts) off
+  // `world.tick`, so every client shows the same number and the replay
+  // reproduces it. This event is the ONLY way it reaches a screen — the count
+  // is not on `MatchState`, deliberately: it is a 5-second transient, and
+  // replicating a field that is stale 5 s later at snapshot rate would cost
+  // bandwidth every tick to say "still nothing".
+  //
+  // CADENCE: one per KILL, never per tick. It is bounded by exactly the same
+  // thing `mobSlain` and `death` are bounded by — and it rides beside them, so a
+  // wave clear that already sends N `mobSlain` now sends N pairs. That is the
+  // ceiling, and round 9 (20/wave, 60 alive) is where it is highest.
+  //
+  // PAYLOAD `{ killer, killerSeatId, victim, victimKind, count, windowTicks,
+  // windowMs }`. `killerSeatId` is what the HUD gates on — the counter shown is
+  // YOUR chain, the same way `guardianSlain`/`coinPickedUp` gate their cues on
+  // the local seat. `windowMs` travels so the display's expiry cannot drift from
+  // the sim's window.
+  //
+  // NO DOUBLE-FIRE: nothing else derives a combo. `audio/sfxEdges.ts` diffs
+  // kills/deaths off the schema for its own cues and has no notion of a chain.
+  "killCombo",
 ]);
 
 /**

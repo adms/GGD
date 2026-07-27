@@ -6,6 +6,7 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { grantXp, grantGold, XP_REWARDS, GOLD_REWARDS } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
+import { creditKillCombo } from "../combat/killCombo";
 import { recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
 import { cancelLeap } from "../movement/leap";
 
@@ -63,6 +64,13 @@ export function deathSystem(world: SimWorld): void {
           grantGold(world, killer, GOLD_REWARDS.killBounty);
         }
         fireHooks(world, killer, "onKill", id);
+        // 連殺 COMBO (owner, 2026-07-27). A CHAMPION kill feeds the very same
+        // counter a zombie kill does — the owner's ruling is that they add up on
+        // one number. This is the second and last credit site; the other is
+        // MobSystem's payout branch. Deliberately AFTER the gold/xp/bounty/hook
+        // bookkeeping so the ordering of `killCombo` against the other events of
+        // this death is fixed and replayable.
+        creditKillCombo(world, killer, id, "champion");
       }
     }
   }
