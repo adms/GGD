@@ -33,6 +33,27 @@
  * The replacement renders the real thing: `<HudRoot />` and `<KillCombo />` go
  * through react-dom/server against the REAL store, and the digits are read back
  * out of the markup. `return null` anywhere in that path is now four failures.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ WHAT THE SECOND VERSION GOT WRONG (fixed here): AN INVISIBLE STRING
+ *
+ * Rendering the container was the right move; reading `html.toContain("12 連殺")`
+ * off the RAW markup was not. `KillCombo.tsx` carries
+ * `aria-label={`${killComboText(view.count)} ${view.label}`}` — so the digits
+ * are in the markup TWICE, once where a player can read them and once inside an
+ * attribute that paints nothing. MEASURED: empty BOTH visible spans
+ * (`{killComboText(view.count)}` → `{""}` and `{view.label}` → `{""}`), leaving
+ * a blank box on screen, and 37/37 stayed green off the aria-label alone.
+ *
+ * That is failure shape ⑤ again, one layer down: the previous version scanned
+ * SOURCE, this one scanned MARKUP ATTRIBUTES. Neither is a pixel.
+ *
+ * So every "the player sees it" assertion now runs through `visibleText()`,
+ * which deletes `<style>` bodies and every tag WITH its attributes and keeps
+ * only the text nodes a browser would paint. The aria-label is NOT removed from
+ * the component — #252 is adding accessible names, not taking them away — it is
+ * simply no longer able to answer for the visible text, and one test asserts
+ * both halves separately so neither can stand in for the other.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -67,7 +88,17 @@ import {
 import { KillCombo, KillComboView } from "./KillCombo";
 import { HudRoot } from "../HudRoot";
 import { hudTouch } from "./HudSlot";
-import { hudRectInViewport } from "./hudLayout";
+import {
+  HUD_SLOTS,
+  hudRectInViewport,
+  hudRectsOverlap,
+  hudSlotRect,
+  hudStampBandRect,
+  type HudRect,
+  type HudSlotId,
+  type HudViewport,
+} from "./hudLayout";
+import { ABILITY_CLUSTER_H, ABILITY_CLUSTER_W } from "../controlLegendModel";
 
 const clientSrc = (p: string): string => readFileSync(join(__dirname, "..", "..", p), "utf8");
 
@@ -109,6 +140,35 @@ const SQUEEZED = [
 ];
 
 const state = (count: number, atMs = 0, seq = 1): KillComboState => ({ count, atMs, seq });
+
+/**
+ * THE ONLY THING A PLAYER CAN READ: the markup's text nodes, with every tag —
+ * and therefore every ATTRIBUTE — deleted, plus the `<style>` bodies (scoped
+ * keyframes are CSS, not a sentence anyone reads).
+ *
+ * ⚠️ THE MUTATION THIS EXISTS FOR: blank the two visible spans in
+ * `KillComboView` and leave the `aria-label` alone. The raw markup still says
+ * 「12 連殺」 — inside an attribute — while the screen shows an empty box. Every
+ * assertion that goes through here dies on that; every assertion that reads
+ * `html` directly does not, which is why the visible-text ones all use this.
+ *
+ * Deliberately NOT a DOM parse: this suite runs in the node env with no DOM (see
+ * the first test in "the mounted HUD really paints it"), and `renderToStaticMarkup`
+ * emits well-formed tags, so a regex strip is exact here.
+ */
+function visibleText(html: string): string {
+  return html
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, " ")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * ① / ④  LIFETIME — the 5-second window, seen from the screen
@@ -398,6 +458,47 @@ const renderCombo = (): string => renderToStaticMarkup(createElement(KillCombo))
 const renderHud = (): string => renderToStaticMarkup(createElement(HudRoot));
 
 /**
+ * The box that ACTUALLY SHIPPED, read back off the rendered root's own style
+ * string — never re-derived by calling `killComboRect` a second time. That is
+ * the whole point: a guard that recomputes the placement with the same inputs
+ * moves whenever the placement moves and can only ever agree with itself.
+ */
+function paintedRect(html: string): HudRect {
+  const style = /data-kill-combo="root"[^>]*?style="([^"]*)"/.exec(html)?.[1];
+  if (!style) throw new Error(`no kill-combo root in markup (len ${html.length})`);
+  const num = (prop: string): number => {
+    const m = new RegExp(`(?:^|;)${prop}:(-?\\d+(?:\\.\\d+)?)px`).exec(style);
+    if (!m) throw new Error(`no ${prop} in style "${style}"`);
+    return Number(m[1]);
+  };
+  return { x: num("left"), y: num("top"), w: num("width"), h: num("height") };
+}
+
+/**
+ * Which persistent chrome a GIVEN rect lands on — the same independent
+ * re-derivation `killComboCollisions` documents (slot rects from `HUD_SLOTS`,
+ * the two centred clusters, the stamp gutter), except the rect is an argument
+ * instead of another call to `killComboRect`. Named ids so a failure says WHICH
+ * piece of the HUD the counter covered.
+ */
+function chromeHitBy(rect: HudRect, viewport: HudViewport, touch: boolean): string[] {
+  const hits: string[] = [];
+  for (const s of HUD_SLOTS) {
+    if (s.transient) continue;
+    if (hudRectsOverlap(rect, hudSlotRect(s.id as HudSlotId, viewport, touch))) hits.push(s.id);
+  }
+  const cluster: HudRect = {
+    x: Math.max(0, (viewport.width - ABILITY_CLUSTER_W) / 2),
+    y: Math.max(0, viewport.height - ABILITY_CLUSTER_H),
+    w: Math.min(ABILITY_CLUSTER_W, viewport.width),
+    h: Math.min(ABILITY_CLUSTER_H, viewport.height),
+  };
+  if (hudRectsOverlap(rect, cluster)) hits.push("ability-cluster");
+  if (hudRectsOverlap(rect, hudStampBandRect(viewport))) hits.push("stamp-band");
+  return hits.sort();
+}
+
+/**
  * Run `fn` as if on a landscape phone (812x375, touch). `useViewport` falls back
  * to 1280x800 when `window` is absent, and `__ggdForceTouch` is the dev
  * harness's own touch seam (input/mobileDetect) — not a hook invented for this
@@ -416,6 +517,17 @@ function onPhone<T>(fn: () => T): T {
   }
 }
 
+describe("visibleText — the reader the guards below trust", () => {
+  // A stripper that quietly stopped stripping would make every "the player sees
+  // it" assertion vacuous again, so it is pinned here before anything uses it.
+  it("keeps text nodes and drops tags, attributes and <style> bodies", () => {
+    expect(visibleText('<div aria-label="12 連殺 血洗"><span>12 連殺</span></div>')).toBe("12 連殺");
+    expect(visibleText('<div aria-label="12 連殺"><span></span></div>')).toBe("");
+    expect(visibleText("<div><style>.a{content:'9 連殺'}</style><b>7 連殺</b></div>")).toBe("7 連殺");
+    expect(visibleText("<p>a</p><p>b</p>")).toBe("a b");
+  });
+});
+
 describe("the mounted HUD really paints it", () => {
   it("renders in the env these numbers assume (no DOM, 1280x800 fallback)", () => {
     // Stated out loud: if the client suite ever gains a DOM env, the desktop
@@ -431,19 +543,41 @@ describe("the mounted HUD really paints it", () => {
     // never saw a combo number again. Deleting `<KillCombo />` from HudRoot,
     // or wrapping it in `{false && …}`, dies here too: this is HudRoot's own
     // output, not a regex over its source.
+    //
+    // ⚠️ AND THE SECOND MUTATION: blank the two spans and keep the aria-label.
+    // The raw markup still carries 「12 連殺」; the SCREEN does not. Read through
+    // `visibleText`, which is the only reader that can tell those apart.
     inCombat();
     chain(12);
     const html = renderHud();
     expect(html).toContain('data-kill-combo="root"');
-    expect(html).toContain("12 連殺");
-    expect(html).toContain("血洗");
+    expect(visibleText(html)).toContain("12 連殺");
+    expect(visibleText(html)).toContain("血洗");
+  });
+
+  it("the digits are PAINTED, not merely announced — and the label is BOTH", () => {
+    // Two independent obligations, asserted separately so neither can answer for
+    // the other:
+    //   • the player READS the number       → it is in the visible text;
+    //   • a screen reader HEARS it (#252)   → it is in the accessible name.
+    // Blanking the spans kills the first; deleting `aria-label` kills the second.
+    inCombat();
+    chain(23);
+    const html = renderCombo();
+    expect(visibleText(html)).toContain("23 連殺");
+    expect(visibleText(html)).toContain("修羅");
+    expect(html).toContain('aria-label="23 連殺 修羅"');
+    // …and the accessible name is NOT what the visible assertion just read: strip
+    // the tags and the attribute is gone, yet the digits survive.
+    expect(visibleText(html)).not.toContain("aria-label");
   });
 
   it("…and paints NO counter when there is no chain", () => {
     // The failing direction for "just always draw it": same mounted HUD, no
     // kill credited, and the counter must be absent from the markup — while the
     // rest of the HUD is demonstrably still there (so this cannot pass by the
-    // whole tree rendering nothing).
+    // whole tree rendering nothing). RAW markup on purpose here: the counter
+    // must be gone from the tree entirely, attributes and all.
     inCombat();
     const html = renderHud();
     expect(html).not.toContain("data-kill-combo");
@@ -455,7 +589,7 @@ describe("the mounted HUD really paints it", () => {
     inCombat();
     chain(7);
     const shown = renderCombo();
-    expect(shown).toContain("7 連殺");
+    expect(visibleText(shown)).toContain("7 連殺");
     expect(shown.length).toBeGreaterThan(200);
     inCombat();
     expect(renderCombo()).toBe("");
@@ -475,7 +609,7 @@ describe("the container's own gate (previously uncovered)", () => {
     // and the gate is not simply refusing everything:
     inCombat({ phase: "combat" });
     chain(9);
-    expect(renderCombo()).toContain("9 連殺");
+    expect(visibleText(renderCombo())).toContain("9 連殺");
   });
 
   it("split-screen gets nothing — ONE centred number cannot serve four seats", () => {
@@ -489,7 +623,7 @@ describe("the container's own gate (previously uncovered)", () => {
     // second missing piece.
     inCombat({ localPlayers: [seat(2)] });
     chain(9);
-    expect(renderCombo()).toContain("9 連殺");
+    expect(visibleText(renderCombo())).toContain("9 連殺");
   });
 
   it("the container RETIRES a stale chain (it asks the clock, every poll)", () => {
@@ -506,10 +640,17 @@ describe("the container's own gate (previously uncovered)", () => {
     expect(renderCombo()).toContain('data-kill-combo-phase="out"');
   });
 
-  it("paints at the rect the LAYOUT resolved, not a rect of its own", () => {
+  it("ASKS the layout for its box (same inputs ⇒ same numbers)", () => {
     // ⚠️ THE MUTATION: hand `KillComboView` a constant rect (or the viewport's
-    // centre) instead of `killComboRect(...)`. The digits would still be in the
-    // DOM — on top of the player's own bars.
+    // centre) instead of `killComboRect(...)`.
+    //
+    // ⚠️ HONEST SCOPE — this one test is a TAUTOLOGY and says so. Both sides call
+    // `killComboRect` with the same arguments, so all it can prove is that the
+    // container consults the layout with the viewport/touch/legend inputs it is
+    // supposed to, rather than inventing a box. It CANNOT see a change inside
+    // `killComboRect` itself: MEASURED, adding +160 to the returned `y` left this
+    // green (both sides moved together) and only the collision tests noticed.
+    // The next test is the one that pins the geometry.
     inCombat();
     chain(12);
     const rect = killComboRect(
@@ -520,6 +661,46 @@ describe("the container's own gate (previously uncovered)", () => {
     expect(html).toContain(`left:${rect.x}px`);
     expect(html).toContain(`top:${rect.y}px`);
     expect(html).toContain(`width:${rect.w}px`);
+  });
+
+  it("the box it PAINTS covers no chrome and is centred — read off the markup", () => {
+    // ⚠️ THE MUTATION: move the rect `killComboRect` returns (e.g. `y + 160`, or
+    // stop centring it). Nothing here re-runs `killComboRect`: the four numbers
+    // come out of the rendered style string and are judged against the slot rects
+    // and the two centred clusters, derived independently — the same duplication
+    // rule `killComboCollisions` documents, applied to the box that really shipped.
+    inCombat();
+    chain(12);
+    const painted = paintedRect(renderCombo());
+    const vp = { width: 1280, height: 800 };
+
+    // ① inside the viewport at all
+    expect(hudRectInViewport(painted, vp)).toBe(true);
+    // ② horizontally centred — an off-centre combo number reads as a bug
+    expect(Math.abs(painted.x + painted.w / 2 - vp.width / 2)).toBeLessThanOrEqual(1);
+    // ③ legible
+    expect(painted.w).toBeGreaterThanOrEqual(KILL_COMBO_MIN_W);
+    expect(painted.h).toBeGreaterThanOrEqual(KILL_COMBO_MIN_H);
+    // ④ ON NO PERSISTENT CHROME — named, so a failure says what it landed on
+    expect(chromeHitBy(painted, vp, false).join(",")).toBe("");
+  });
+
+  it("the box MOVES with the viewport — it is not one baked constant", () => {
+    // The other half of "asks the layout": a container that hard-coded a rect
+    // would paint the same four numbers on a 1280x800 desktop and a 812x375
+    // phone. These must differ, and both must still be clean.
+    inCombat();
+    chain(12);
+    const desktop = paintedRect(renderCombo());
+    const phone = onPhone(() => {
+      inCombat({ round: 2 });
+      chain(12);
+      return paintedRect(renderCombo());
+    });
+    expect(phone).not.toEqual(desktop);
+    const phoneVp = { width: 812, height: 375 };
+    expect(hudRectInViewport(phone, phoneVp)).toBe(true);
+    expect(chromeHitBy(phone, phoneVp, true).join(",")).toBe("");
   });
 
   it("stands down for the round-1 legend — the #107 precedence, through the container", () => {
@@ -534,13 +715,13 @@ describe("the container's own gate (previously uncovered)", () => {
       // so the yield is a real decision and not a dead phone viewport.
       inCombat({ round: 2 });
       chain(9);
-      expect(renderCombo()).toContain("9 連殺");
+      expect(visibleText(renderCombo())).toContain("9 連殺");
       // and the panel signal is threaded too: a DEFEATED player is shopping mid
       // combat, the covering shop card takes the legend away (#107), and the
       // corridor is the counter's again — in round 1.
       inCombat({ round: 1, localAlive: false });
       chain(9);
-      expect(renderCombo()).toContain("9 連殺");
+      expect(visibleText(renderCombo())).toContain("9 連殺");
     });
   });
 });
@@ -587,14 +768,28 @@ describe("the rendered counter", () => {
     );
 
   it("puts the DIGITS in the DOM at the derived offsets", () => {
-    // Not "the model returned 12" — the markup a browser would paint contains
-    // the string a player reads, at the rectangle the layout proved is free.
+    // Not "the model returned 12", and not "an attribute somewhere says 12" —
+    // the VISIBLE text of the markup a browser would paint carries the string a
+    // player reads, at the rectangle the layout proved is free.
     const out = html(12);
-    expect(out).toContain("12 連殺");
-    expect(out).toContain("血洗");
+    expect(visibleText(out)).toContain("12 連殺");
+    expect(visibleText(out)).toContain("血洗");
     expect(out).toContain(`left:${rect.x}px`);
     expect(out).toContain(`top:${rect.y}px`);
     expect(out).toContain(`width:${rect.w}px`);
+  });
+
+  it("the number and the tier name are separate visible nodes, both non-empty", () => {
+    // ⚠️ THE MUTATION: `{killComboText(view.count)}` → `{""}` (or the same to
+    // `{view.label}`). Either one alone leaves the aria-label whole and the box
+    // half-empty, so each span is asserted on its own rather than as one blob.
+    const out = html(12);
+    const spans = [...out.matchAll(/<span\b[^>]*>([\s\S]*?)<\/span>/g)].map((m) =>
+      visibleText(m[1]!),
+    );
+    expect(spans).toContain("12 連殺");
+    expect(spans).toContain("血洗");
+    expect(spans.filter((s) => s.length > 0).length).toBeGreaterThanOrEqual(2);
   });
 
   it("a bigger combo really renders bigger type", () => {
