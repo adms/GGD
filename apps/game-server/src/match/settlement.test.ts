@@ -330,50 +330,42 @@ describe("bye rounds are marked, so the sit-out team is never presented (round-m
     }
   };
 
-  /**
-   * Force the 3-alive-team state that produces a bye. Seed-hunting for it would
-   * be brittle; knocking team 3 out through the PUBLIC lives/placements maps is
-   * exactly the state a natural elimination leaves behind.
-   */
-  const forceThreeTeams = (ctl: MatchController): void => {
-    ctl.lives.set(asTeamId(3), 0);
-    ctl.placements.set(asTeamId(3), 4);
-  };
-
-  it("leaves the bye team NONE while the duelists are marked WON / LOST", () => {
+  it("a SPENT team is FOUGHT, not NONE — the bye is unreachable now (owner 2026-07-27)", () => {
     cover("round-mvp-bye");
+    // WHAT THIS TEST USED TO DO, and why it changed. It set team 3's health to 0
+    // to force the 3-alive state `pairTeams` answers with one duel + a bye, then
+    // pinned the bye team's roundOutcome at NONE — the #173 fingerprint that
+    // separates 「輪空」 from 「被團滅」. Owner's ruling removes elimination, so a
+    // 0-health team is never dropped from the pairing and a 4-team match can no
+    // longer produce a bye at all. `pairTeams`' bye branch is still correct and
+    // is still pinned as a pure function in match.test.ts.
+    //
+    // The behaviour worth pinning HERE is the replacement: a team whose pool is
+    // spent is placed into a duel like everyone else, so it reads FOUGHT (then
+    // WON/LOST), NOT the NONE that would make the round-end presentation skip it.
     const ctl = new MatchController("bye1", 9090, allBots(), FAST);
     tickUntil(ctl, "intermission");
-    forceThreeTeams(ctl);
+    const spent = asTeamId(3);
+    ctl.lives.set(spent, 0);
     tickUntil(ctl, "combat");
     expect(ctl.phase.phase).toBe("combat");
-    expect(ctl.bye).not.toBeNull();
-    const bye = ctl.bye!;
+    expect(ctl.bye).toBeNull();
 
-    // combat entry already marks participation — before any duel is decided
-    expect(ctl.roundOutcome.get(bye)).toBe(ROUND_OUTCOME.NONE);
+    // combat entry marks participation for ALL FOUR teams — including the spent one
     for (const pairing of ctl.pairings) {
       expect(ctl.roundOutcome.get(pairing.sideA)).toBe(ROUND_OUTCOME.FOUGHT);
       expect(ctl.roundOutcome.get(pairing.sideB)).toBe(ROUND_OUTCOME.FOUGHT);
     }
+    expect(ctl.roundOutcome.get(spent)).toBe(ROUND_OUTCOME.FOUGHT);
 
     tickUntil(ctl, "resolution");
     expect(ctl.phase.phase).toBe("resolution");
 
-    // the settled round: exactly one winner, one loser, and the bye still NONE
-    const outcomes = [...ctl.roundOutcome.entries()].filter(([t]) => t !== asTeamId(3));
-    expect(outcomes.filter(([, o]) => o === ROUND_OUTCOME.WON)).toHaveLength(1);
-    expect(outcomes.filter(([, o]) => o === ROUND_OUTCOME.LOST)).toHaveLength(1);
-    expect(ctl.roundOutcome.get(bye)).toBe(ROUND_OUTCOME.NONE);
-
-    // …and this is the regression fingerprint: on the wire the bye team is
-    // indistinguishable from a wiped one WITHOUT roundOutcome.
-    for (const seat of ctl.seats.values()) {
-      if (seat.teamId !== bye || seat.entityId === null) continue;
-      expect(ctl.world.health.get(seat.entityId)!.alive).toBe(false);
-      expect(ctl.roundKills.get(seat.seatId)).toBe(0);
-      expect(ctl.roundDeaths.get(seat.seatId)).toBe(0);
-    }
+    // two duels settled → two winners, two losers, nobody left on NONE
+    const outcomes = [...ctl.roundOutcome.values()];
+    expect(outcomes.filter((o) => o === ROUND_OUTCOME.WON)).toHaveLength(2);
+    expect(outcomes.filter((o) => o === ROUND_OUTCOME.LOST)).toHaveLength(2);
+    expect(outcomes.filter((o) => o === ROUND_OUTCOME.NONE)).toHaveLength(0);
 
     // the snapshot mirrors it, so every client (including a late joiner) agrees
     const state = new MatchState();
@@ -381,14 +373,17 @@ describe("bye rounds are marked, so the sit-out team is never presented (round-m
     const wire = state.teams.map((t) => ({ teamId: t.teamId, roundOutcome: t.roundOutcome }));
     expect(wire).toHaveLength(4);
     for (const t of wire) expect(t.roundOutcome).toBe(ctl.roundOutcome.get(asTeamId(t.teamId)));
-    expect(wire.find((t) => t.teamId === (bye as number))!.roundOutcome).toBe(ROUND_OUTCOME.NONE);
+    // …and the spent team's `eliminated` flag KEEPS its 生命耗盡 meaning (#193's
+    // leave-through-settlement gate reads exactly this), it just no longer
+    // removes anyone from the match.
+    expect(state.teams.find((t) => t.teamId === (spent as number))!.eliminated).toBe(true);
   });
 
   it("survives the whole resolution beat, then resets at the next combat entry", () => {
     cover("round-mvp-bye");
     const ctl = new MatchController("bye2", 9090, allBots(), FAST);
     tickUntil(ctl, "intermission");
-    forceThreeTeams(ctl);
+    ctl.lives.set(asTeamId(3), 0); // pool spent — still plays (owner 2026-07-27)
     tickUntil(ctl, "combat");
     tickUntil(ctl, "resolution");
     const atRoundEnd = [...ctl.roundOutcome.values()];

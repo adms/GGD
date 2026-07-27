@@ -8,11 +8,18 @@ import {
   SEAT_COUNT,
   TEAM_COUNT,
   TEAM_SIZE,
+  TICK_HZ,
 } from "@ggd/shared/constants";
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
-import { SKELETON_ARENA, pickRoundArena, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
+import {
+  SKELETON_ARENA,
+  ROYALE_ARENA,
+  pickRoundArena,
+  royaleSpawnAt,
+  type ArenaDef,
+} from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Abilities, LootTables } from "@ggd/shared/sim/content/registry";
 import { Models } from "@ggd/shared/content";
@@ -77,13 +84,20 @@ import { Ownership } from "../curation/ownership";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import {
   pairTeams,
+  royaleBout,
+  isRoyaleRound,
   teamHealthLost,
   isHighStakesRound,
+  FINAL_ROUND,
   HIGH_STAKES_REWARD,
+  ROYALE_COMBAT_SEC,
+  ROYALE_FIRE_RING_START_SEC,
   DEFAULT_STARTING_TEAM_HEALTH,
   type DuelPairing,
+  type RoyaleBout,
 } from "./PairedDuels";
 import { DEFAULT_ARENA_RULES, grantForRound, type ArenaRules } from "./arenaRules";
+import { resolveRoyaleArena } from "./arenaSelect";
 
 /**
  * Strip the FIGHTING half of a produced intent while combat is not live, so a
@@ -190,10 +204,14 @@ export class MatchController {
   readonly seats = new Map<SeatId, Seat>();
   readonly phase: PhaseMachine;
   /**
-   * TEAM HEALTH per team — LoL Arena's elimination model (20-point pool, −2/−4/−6
-   * per lost duel by round band, +15 to a High Stakes winner, eliminated at 0).
-   * Drained in {@link settleRound}; read for elimination, placement and the
-   * `aliveTeams` gate everywhere else.
+   * TEAM HEALTH per team — LoL Arena's 20-point pool, −2/−4/−6 per lost duel by
+   * round band, +15 to a High Stakes winner. Drained in {@link settleRound}.
+   *
+   * SINCE 2026-07-27 IT IS A SCOREBOARD, NOT A LIFE BAR. Owner: 「只是計分板，
+   * 不影響決賽」. Reaching 0 no longer removes a team from anything — it decides
+   * places 2/3/4 ({@link finalStandings}) and sets the wire's `eliminated` flag,
+   * which the client's #193 leave-through-settlement flow reads. Place 1 belongs
+   * to whoever survives the finale, however little health they have left.
    */
   readonly teamHealth = new Map<TeamId, number>();
   readonly placements = new Map<TeamId, number>();
@@ -271,9 +289,25 @@ export class MatchController {
    * caps at 255 — a match is a handful of rounds, so the clamp is unreachable.
    */
   readonly roundWins = new Map<TeamId, number>();
-  /** current round's pairings + bye */
+  /**
+   * Current round's pairings + bye. EMPTY on the finale — round
+   * {@link FINAL_ROUND} is one twelve-player bout, not a set of 3v3s, and it
+   * lives in {@link royale} instead. Anything that iterates `pairings` therefore
+   * no-ops on the finale by construction, which is why every consumer below has
+   * an explicit royale branch rather than a silent zero-length loop.
+   */
   pairings: DuelPairing[] = [];
   bye: TeamId | null = null;
+  /**
+   * The FINALE bout (round {@link FINAL_ROUND}) — all teams, one zone — or null
+   * on an ordinary duel round. Mutually exclusive with `pairings`.
+   */
+  royale: RoyaleBout | null = null;
+  /**
+   * The team that WON the finale: the match champion (owner: 「最後存活的那一隊
+   * 就是全場冠軍…不看團隊生命」). Null until the finale settles.
+   */
+  royaleWinner: TeamId | null = null;
   /** open intermission offers per seat (offerId -> augment/item offer) */
   readonly offers = new Map<string, StoredOffer>();
   result: MatchResult | null = null;
@@ -307,6 +341,15 @@ export class MatchController {
    * matchEnd settlement (maybeFinish), so it is never double-broadcast.
    */
   private eliminationSettlements: { teamId: number; settlement: MatchSettlement }[] = [];
+
+  /**
+   * Teams already announced through {@link eliminationSettlements}. Replaces the
+   * old `!this.placements.has(teamId)` test, which only worked because a placement
+   * WAS an elimination; placements are now assigned once at match end, so the
+   * "have we told this team yet" fact needs its own home or every subsequent round
+   * would re-queue the same card.
+   */
+  private readonly healthSpentAnnounced = new Set<TeamId>();
 
   /**
    * Dev-cheat toggles (offline testing only; MatchRoom hard-gates the channel).
@@ -557,15 +600,48 @@ export class MatchController {
 
   // ---------- round lifecycle ----------
 
-  private aliveTeams(): TeamId[] {
-    return [...this.teamHealth.entries()].filter(([, hp]) => hp > 0).map(([t]) => t);
+  /**
+   * Every team in the match — which, since the owner's 2026-07-27 ruling, is
+   * every team, always. 「不管前面被淘汰與否，大家都回來打第 10 回合」.
+   *
+   * ⚠️ THIS REPLACED `aliveTeams()`, and the rename is the whole change. The old
+   * predicate was `teamHealth > 0`, and it gated FIVE different things: who gets
+   * paired, who gets the round's levels/gold/augments, who gets a revive charge,
+   * whose Ready the intermission waits for, and when the match ends. Team health
+   * reaching 0 therefore removed a team from the match entirely. Owner's ruling
+   * keeps team health as a SCOREBOARD (it orders places 2/3/4 — see
+   * {@link finalStandings}) and strips it of that removal power, so every one of
+   * those five gates now reads this list instead.
+   *
+   * What did NOT change is the MEANING of `teams[].eliminated` on the wire:
+   * `net/snapshot.ts` still derives it as `lives <= 0`, i.e. 「生命耗盡」, and
+   * `leaveSettlement.localTeamEliminated` (#193 — a knocked-out player must pass
+   * through the settlement screen before leaving) still keys off it. Forcing that
+   * flag to a constant false would have silently deleted that whole path; the
+   * flag keeps its meaning and merely stops ending anyone's match.
+   */
+  private participatingTeams(): TeamId[] {
+    return [...this.teamHealth.keys()];
   }
 
-  /** seats that still play (spawned + team not eliminated), in map order. */
+  /**
+   * Teams whose health pool is SPENT (0). Not "out of the match" — see
+   * {@link participatingTeams} — just bottom of the scoreboard. Used for the
+   * #193 settlement queue and for the final 2/3/4 ordering.
+   */
+  private healthSpentTeams(): TeamId[] {
+    return [...this.teamHealth.entries()].filter(([, hp]) => hp <= 0).map(([t]) => t);
+  }
+
+  /**
+   * Seats that still play, in map order. Every spawned seat qualifies: a team at
+   * 0 health keeps 「照樣正常參戰、照樣拿每回合的等級/金錢/三選一」, so the old
+   * `teamHealth <= 0 → skip` gate (which silently starved such a team of levels,
+   * gold, EX unlocks and augment cards) is gone.
+   */
   private *activeSeats(): Generator<[SeatId, Seat, EntityId]> {
     for (const [seatId, seat] of this.seats) {
       if (seat.entityId === null) continue;
-      if ((this.teamHealth.get(seat.teamId) ?? 0) <= 0) continue;
       yield [seatId, seat, seat.entityId];
     }
   }
@@ -724,10 +800,40 @@ export class MatchController {
    * fire-ring/flower arming below all key off this same active arena.
    */
   private selectRoundArena(): void {
+    // THE FINALE OVERRIDES THE ROTATION. Round FINAL_ROUND is a twelve-player
+    // royale and the rotation maps are two 24-radius duel zones — half the room
+    // and the wrong shape. `arena.royale` is one 42-radius zone with four spawn
+    // clusters (see ArenaDef.ROYALE_ARENA), and picking it here is what makes the
+    // enlarged boundary REACH THE PLAYER: `net/snapshot` publishes `ctl.arena.id`
+    // as `mapId` every tick, the client's GameApp.applyArena re-fetches the doc
+    // with that id and rebuilds the ground, the minimap terrain and the fire-ring
+    // band from it. Scaling a zone in server memory instead would have moved the
+    // collision boundary while every client still drew (and read the ring
+    // against) the old 24-radius disc.
+    if (isRoyaleRound(this.phase.round)) {
+      const royale = this.royaleArena();
+      this.arena = royale;
+      this.world.setArena(royale);
+      return;
+    }
     const picked = pickRoundArena(this.arenaPool, this.matchSeed, this.phase.round);
     if (!picked) return; // empty pool → keep the current (fixed) arena
     this.arena = picked;
     this.world.setArena(picked);
+  }
+
+  /**
+   * The finale map: the loaded `arena.royale` content doc when the content tree
+   * is present (live play, and any test that loads content), otherwise the
+   * built-in {@link ROYALE_ARENA} with the same id and the same geometry.
+   *
+   * The two are pinned together by `royaleArena.test.ts`, which parses the
+   * SHIPPED json and compares it field-by-field with the constant — so the "no
+   * content" fallback can never quietly become a different arena from the one
+   * players get, and the doc can never be deleted without a red test.
+   */
+  private royaleArena(): ArenaDef {
+    return resolveRoyaleArena();
   }
 
   /**
@@ -770,9 +876,33 @@ export class MatchController {
       if (seat.entityId !== null) commitShopSession(this.world, seat.entityId);
     }
 
-    const { pairings, bye } = pairTeams(this.aliveTeams(), this.phase.round);
-    this.pairings = pairings;
-    this.bye = bye;
+    // THE FINALE (round FINAL_ROUND): one bout, every team, one zone. On any
+    // other round the classic round-robin split into two duel zones.
+    if (isRoyaleRound(this.phase.round)) {
+      this.pairings = [];
+      this.bye = null;
+      this.royale = royaleBout(this.participatingTeams());
+      // …and give the round the clock it needs. `config.match@1` ships
+      // combatMaxSec: 100, but the finale's fire ring does not ignite until 180 s
+      // (owner: 決賽要給玩家足夠時間真的打一場). Left on the normal phase timer the
+      // round would be force-settled on HP percentages at 100 s and the delayed
+      // ring would be a number nobody ever sees. Written straight onto the phase
+      // machine's counter — the phase was entered one line before this call, so
+      // this is the same instant `enter()` set it, and `Math.max` means a config
+      // with an ALREADY longer combat phase is never shortened.
+      //
+      // Gated on a configured ring on purpose: with `fireRing === null` (unit
+      // tests, skeleton boot) there is nothing to wait for, so the finale keeps
+      // the caller's own combat length and those matches stay fast.
+      if (this.fireRing) {
+        this.phase.ticksLeft = Math.max(this.phase.ticksLeft, Math.round(ROYALE_COMBAT_SEC * TICK_HZ));
+      }
+    } else {
+      this.royale = null;
+      const { pairings, bye } = pairTeams(this.participatingTeams(), this.phase.round);
+      this.pairings = pairings;
+      this.bye = bye;
+    }
 
     // park everyone dead first; revive the fighters at their duel spawns
     for (const seat of this.seats.values()) {
@@ -794,11 +924,12 @@ export class MatchController {
       // override and the airborne entry are cleared together, always.
       this.world.airborne.delete(seat.entityId);
     }
-    // The champions actually SCHEDULED into a duel this round — filled by the
-    // placement loop below and handed to beginCombatCoins. A bye team and an
-    // eliminated team never reach that loop, so they get no coin budget and
-    // therefore cannot throw into someone else's duel (task #191).
+    // The champions actually SCHEDULED into a bout this round — filled by the
+    // placement loop below (or by placeRoyale on the finale) and handed to
+    // beginCombatCoins. A bye team never reaches that loop, so it gets no coin
+    // budget and therefore cannot throw into someone else's duel (task #191).
     const fighters: EntityId[] = [];
+    if (this.royale) this.placeRoyale(this.royale, fighters);
     for (const pairing of this.pairings) {
       const zoneDef = this.arena.zones[pairing.zone]!;
       for (const [side, teamId] of [
@@ -840,7 +971,7 @@ export class MatchController {
       beginCombatFlowers(
         this.world,
         flowerRulesFromConfig(this.rules.flowers, this.world.dt),
-        this.pairings.map((p) => p.zone),
+        this.activeZones(),
       );
     } else {
       endCombatFlowers(this.world);
@@ -854,7 +985,7 @@ export class MatchController {
       beginCombatRevives(
         this.world,
         reviveRulesFromConfig(this.rules.reviveCircles, this.world.dt),
-        this.aliveTeams(),
+        this.participatingTeams(),
       );
     } else {
       endCombatRevives(this.world);
@@ -867,8 +998,16 @@ export class MatchController {
     // so the instant a round settles (task #100 flips it false in concludeCombat)
     // the ring stops: a LIVE-combat finish accelerator, never a post-settle
     // grinder. Absent config = OFF, exactly like the flowers' legacy-compat rule.
-    if (this.fireRing) {
-      beginCombatFireRing(this.world, fireRingRulesFromConfig(this.fireRing, this.world.dt));
+    //
+    // #E (owner 2026-07-27): the FINALE ignites at 180 s instead of 60 s, and its
+    // start radius is the royale zone's own 42 — the ring reads `boundaryRadius`
+    // off the ACTIVE zone (fireRing.ts `currentFireRingRadius`), so selecting the
+    // bigger arena above already widened the first circle. Had it not, the very
+    // first contraction would have started 18 units inside the field and wiped
+    // every team at once.
+    const ring = this.fireRingForRound(this.phase.round);
+    if (ring) {
+      beginCombatFireRing(this.world, fireRingRulesFromConfig(ring, this.world.dt));
     } else {
       endCombatFireRing(this.world);
     }
@@ -883,7 +1022,7 @@ export class MatchController {
       beginCombatGuardians(
         this.world,
         guardianRulesFromConfig(this.rules.guardianTower, this.world.dt),
-        this.pairings.map((p) => p.zone),
+        this.activeZones(),
         this.phase.round,
       );
     } else {
@@ -927,11 +1066,85 @@ export class MatchController {
       beginCombatMobs(
         this.world,
         mobRulesFromConfig(this.rules.mobWaves, this.world.dt, this.phase.round),
-        this.pairings.map((p) => p.zone),
+        this.activeZones(),
       );
     } else {
       endCombatMobs(this.world);
     }
+  }
+
+  /**
+   * The zones a bout is being fought in this round: the two duel zones normally,
+   * the single royale zone on the finale. Flowers, guardians and mob waves are
+   * all armed per active zone, so this is the one place the "the finale is one
+   * zone" fact needs to be stated for all three.
+   *
+   * ⚠️ ONE GUARDIAN ON THE FINALE, by construction — a list of one zone arms one
+   * tower at that zone's centre (#89's rule is "one per active zone", not "two").
+   */
+  private activeZones(): number[] {
+    if (this.royale) return [this.royale.zone];
+    return this.pairings.map((p) => p.zone);
+  }
+
+  /**
+   * The fire-ring schedule for `round`: the authored block, except on the FINALE
+   * where `startSec` becomes {@link ROYALE_FIRE_RING_START_SEC} (180 s).
+   *
+   * PER-ROUND, NOT GLOBAL: rounds 1-9 keep the shipped 60 s from #195 untouched.
+   * Returning a fresh object rather than mutating `this.fireRing` matters — the
+   * config object is also written into the replay header, and mutating it would
+   * make round 10 retroactively rewrite what rounds 1-9 recorded.
+   */
+  private fireRingForRound(round: number): FireRingConfig | null {
+    if (!this.fireRing) return null;
+    if (!isRoyaleRound(round)) return this.fireRing;
+    return { ...this.fireRing, startSec: ROYALE_FIRE_RING_START_SEC };
+  }
+
+  /**
+   * Place every team into the FINALE zone: four clusters of three, one cluster
+   * per team, spaced around the rim (owner: 「出生點改成環狀均分（每隊 3 人一組、
+   * 四組等距，讓隊友生在一起而四隊互相拉開）」).
+   *
+   * The cluster a team gets is its index in the bout's ASCENDING team list, so
+   * the layout is a pure function of who is playing — deterministic, and
+   * identical under same-seed replay.
+   *
+   * FACING is computed toward the zone centre rather than read from a table, so
+   * it stays correct if an operator re-authors `arena.royale.json` into a
+   * different shape. Only +-*\/ and Math.sqrt, all IEEE-correctly-rounded, so two
+   * replicas agree bit-for-bit (the same standard the sim's own purity gate
+   * holds; no trig, no transcendentals).
+   */
+  private placeRoyale(bout: RoyaleBout, fighters: EntityId[]): void {
+    const zoneDef = this.arena.zones[bout.zone] ?? this.arena.zones[0]!;
+    bout.teams.forEach((teamId, group) => {
+      // Same seam as the duel path: FOUGHT is written exactly where a team's
+      // seats are placed, so a team that never got placed reads NONE.
+      this.roundOutcome.set(teamId, ROUND_OUTCOME.FOUGHT);
+      let slot = 0;
+      for (const seat of this.seats.values()) {
+        if (seat.teamId !== teamId || seat.entityId === null) continue;
+        const t = this.world.transform.get(seat.entityId)!;
+        const spawn = royaleSpawnAt(zoneDef, group, slot % TEAM_SIZE);
+        t.pos = { x: spawn.x, z: spawn.z };
+        t.zone = bout.zone;
+        const dx = zoneDef.center.x - spawn.x;
+        const dz = zoneDef.center.z - spawn.z;
+        const len = Math.sqrt(dx * dx + dz * dz);
+        t.facing = len > 0 ? { x: dx / len, z: dz / len } : { x: 1, z: 0 };
+        const hp = this.world.health.get(seat.entityId)!;
+        hp.alive = true;
+        hp.hp = hp.maxHp;
+        hp.mana = hp.maxMana;
+        hp.shields = [];
+        const st = this.world.status.get(seat.entityId);
+        if (st) st.effects = [];
+        fighters.push(seat.entityId);
+        slot++;
+      }
+    });
   }
 
   private teamAliveCount(teamId: TeamId, zone: number): number {
@@ -982,6 +1195,11 @@ export class MatchController {
    * never counted here and never blocks the conclusion.
    */
   private checkCombatEnd(timerExpired: boolean): boolean {
+    // ⚠️ THE FINALE MUST BE CHECKED FIRST. The duel path below concludes when
+    // `duelWinners.size === pairings.length`, and on the finale BOTH are 0 — so
+    // falling through would declare round 10 finished on its very first combat
+    // tick, before a single blow was struck. The royale has its own end rule.
+    if (this.royale) return this.checkRoyaleEnd(this.royale, timerExpired);
     for (const pairing of this.pairings) {
       if (this.duelWinners.has(pairing.zone)) continue;
       const aAlive = this.teamAliveCount(pairing.sideA, pairing.zone);
@@ -1027,6 +1245,56 @@ export class MatchController {
   }
 
   /**
+   * THE FINALE'S END RULE: the last team with anyone still standing in the royale
+   * zone takes the match (owner: 「最後存活的那一隊就是全場冠軍…不看團隊生命」).
+   *
+   * Three ways it ends, all deterministic:
+   *  · ONE team left standing → that team, immediately (the same 「只剩一隊存活
+   *    時立即宣佈」 beat as #208, now at match scale rather than duel scale);
+   *  · EVERYBODY down in the same instant (a mutual wipe, or the closed fire ring
+   *    burning out the last survivors together) → an rng coin among the entrants,
+   *    exactly how the existing double-KO tie-break behaves;
+   *  · TIMER expiry with several teams alive → most surviving team HP fraction,
+   *    with rng breaking an exact tie.
+   *
+   * `world.rng` — never Math.random / Date.now — so a same-seed replay picks the
+   * same champion. Ties are compared on `>` with a symmetric coin, so the answer
+   * cannot depend on iteration order beyond the ascending-team-id list.
+   */
+  private checkRoyaleEnd(bout: RoyaleBout, timerExpired: boolean): boolean {
+    if (this.royaleWinner !== null) return true;
+    const standing = bout.teams.filter((t) => this.teamAliveCount(t, bout.zone) > 0);
+    if (standing.length === 1) return this.recordRoyaleWinner(bout, standing[0]!);
+    if (standing.length === 0) {
+      // total wipe: nobody outlived anybody, so the crown is a coin among entrants
+      return this.recordRoyaleWinner(bout, bout.teams[this.world.rng.int(bout.teams.length)]!);
+    }
+    if (!timerExpired) return false;
+    let best = standing[0]!;
+    let bestPct = this.teamHpPct(best, bout.zone);
+    for (const t of standing.slice(1)) {
+      const pct = this.teamHpPct(t, bout.zone);
+      if (pct > bestPct || (pct === bestPct && this.world.rng.chance(0.5))) {
+        best = t;
+        bestPct = pct;
+      }
+    }
+    return this.recordRoyaleWinner(bout, best);
+  }
+
+  /**
+   * Latch the finale's winner and tell the SIM the zone is settled — the same
+   * `settledZones` write `recordDuelWinner` does, and for the same #216 reason:
+   * the fire ring and the mob waves both skip a settled zone, so without it the
+   * ring would keep burning the champion while the victory screen came up.
+   */
+  private recordRoyaleWinner(bout: RoyaleBout, winner: TeamId): boolean {
+    this.royaleWinner = winner;
+    this.world.settledZones.add(bout.zone);
+    return true;
+  }
+
+  /**
    * Settle every decided duel into TEAM HEALTH, then lock any eliminations.
    *
    * The model is LoL Arena's, which the owner chose over the old lives table:
@@ -1036,11 +1304,22 @@ export class MatchController {
    *     `HIGH_STAKES_REWARD` (+15) — the mechanic that lets a winning team
    *     pull far enough ahead that the match has a long tail instead of four
    *     teams dying within a round of each other;
-   *   • 0 = eliminated, and placement is locked by elimination order.
+   *   • 0 = the pool is SPENT — which since the owner's 2026-07-27 ruling costs
+   *     the team nothing but standing: it keeps playing every remaining round
+   *     (see {@link participatingTeams}) and its final place is 2/3/4 by health.
    *
    * See `PairedDuels.isHighStakesRound` for why a BYE round pays nobody.
    */
   private settleRound(): void {
+    // THE FINALE settles on its own terms: a champion, no team-health movement.
+    // Owner point 5 scopes the health drain to 「第 1~9 回合」, and it would be
+    // meaningless here anyway — health orders places 2/3/4 and the finale decides
+    // place 1, so charging the finale's losers would only scramble the very
+    // ranking the ten rounds were played to earn.
+    if (this.royale) {
+      this.settleRoyale(this.royale);
+      return;
+    }
     // Same round + same bye for every pairing, so hoist the payout decision out
     // of the loop: a High Stakes round pays EVERY duel winner, or none of them.
     const highStakes = isHighStakesRound(this.phase.round, this.bye !== null);
@@ -1110,28 +1389,90 @@ export class MatchController {
       }
     }
 
-    // eliminations lock placements from the bottom; teams eliminated in the
-    // SAME round get distinct consecutive placements (deterministic: health-map
-    // iteration order = ascending team id gets the worse placement first)
-    const newlyEliminated = [...this.teamHealth.entries()]
-      .filter(([teamId, l]) => l <= 0 && !this.placements.has(teamId))
-      .map(([teamId]) => teamId);
-    let place = this.aliveTeams().length + newlyEliminated.length;
-    for (const teamId of newlyEliminated) this.placements.set(teamId, place--);
+    this.queueHealthSpentSettlements();
+  }
 
-    // #193: the moment a team is knocked out — while the match is STILL RUNNING
-    // for the survivors — snapshot the scoreboard and queue it per eliminated
-    // team, so their players can open the evaluation screen before they leave.
-    // Skip the elimination that DECIDES the match (<=1 team left): maybeFinish
-    // broadcasts the authoritative final settlement then, and a duplicate
-    // mid-match card would only race it. `buildSettlement()` is a pure read
-    // (matchStats + rating), so building it here draws no rng and moves no digest.
-    if (newlyEliminated.length > 0 && this.aliveTeams().length >= 2) {
-      const snapshot = this.buildSettlement();
-      for (const teamId of newlyEliminated) {
-        this.eliminationSettlements.push({ teamId, settlement: snapshot });
+  /**
+   * Settle the FINALE: the survivor is the match champion, everyone else lost the
+   * decider. No team-health movement (see settleRound's royale branch) and no
+   * placements yet — the full 1/2/3/4 board is assembled once, in
+   * {@link finalStandings}, so the champion and the health ranking are decided by
+   * one function instead of two that could disagree.
+   */
+  private settleRoyale(bout: RoyaleBout): void {
+    const winner = this.royaleWinner;
+    for (const teamId of bout.teams) {
+      this.roundOutcome.set(teamId, teamId === winner ? ROUND_OUTCOME.WON : ROUND_OUTCOME.LOST);
+    }
+    if (winner !== null) {
+      // The client's victory gate (vfx/victoryTrigger) edge-detects roundWins, so
+      // the finale must bump it exactly like any other round win or the champion
+      // gets no firework at the one moment the fireworks exist for (#93/#235).
+      this.roundWins.set(winner, Math.min(255, (this.roundWins.get(winner) ?? 0) + 1));
+    }
+    for (const seat of this.seats.values()) {
+      if (seat.entityId === null) continue;
+      if (seat.teamId === winner) {
+        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundWin);
+        grantXp(this.world, seat.entityId, XP_REWARDS.roundSurvive);
+      } else {
+        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose);
+        grantXp(this.world, seat.entityId, Math.floor(XP_REWARDS.roundSurvive / 2));
       }
     }
+  }
+
+  /**
+   * #193: the moment a team's health pool hits 0 — while the match is STILL
+   * RUNNING for everyone, itself included — snapshot the scoreboard and queue it
+   * for that team, so its players can open the evaluation screen before leaving.
+   *
+   * ⚠️ THIS PATH SURVIVED THE NO-ELIMINATION RULING ON PURPOSE. `teams[].eliminated`
+   * is still `lives <= 0` on the wire and the client's leave-flow still gates on
+   * it (`leaveSettlement.localTeamEliminated`), so a team draining to 0 must still
+   * produce the settlement card that flow expects — the only thing that changed is
+   * that the team then walks back into the next round instead of leaving. Deleting
+   * this queue because "nobody is eliminated any more" would have been a silent
+   * feature withdrawal, which is exactly what the hand-off warned about.
+   *
+   * Suppressed on the finale: `maybeFinish` broadcasts the authoritative final
+   * settlement seconds later and a duplicate card would only race it.
+   */
+  private queueHealthSpentSettlements(): void {
+    const newlySpent = this.healthSpentTeams().filter((t) => !this.healthSpentAnnounced.has(t));
+    if (newlySpent.length === 0) return;
+    for (const teamId of newlySpent) this.healthSpentAnnounced.add(teamId);
+    if (isRoyaleRound(this.phase.round)) return;
+    const snapshot = this.buildSettlement();
+    for (const teamId of newlySpent) {
+      this.eliminationSettlements.push({ teamId, settlement: snapshot });
+    }
+  }
+
+  /**
+   * The FINAL 1/2/3/4 board, assembled once at match end.
+   *
+   *   • place 1 = the FINALE's survivor, whatever its team health is. Owner:
+   *     「最後存活的那一隊就是全場冠軍。不看團隊生命。」 A champion sitting on 0
+   *     health is not a contradiction, it is the design — ten rounds of team
+   *     health decide who played best, one royale decides who wins.
+   *   • places 2/3/4 = the rest by TEAM HEALTH descending — 「它決定這十回合誰
+   *     打得好與全場 2/3/4 名」 — then by round wins, then by team id. The chain
+   *     is total and made of integers, so it is deterministic and replay-stable.
+   */
+  private finalStandings(): TeamId[] {
+    const champion = this.royaleWinner;
+    const rest = this.participatingTeams().filter((t) => t !== champion);
+    rest.sort((a, b) => {
+      const ha = this.teamHealth.get(a) ?? 0;
+      const hb = this.teamHealth.get(b) ?? 0;
+      if (ha !== hb) return hb - ha;
+      const wa = this.roundWins.get(a) ?? 0;
+      const wb = this.roundWins.get(b) ?? 0;
+      if (wa !== wb) return wb - wa;
+      return a - b;
+    });
+    return champion === null ? rest : [champion, ...rest];
   }
 
   /**
@@ -1147,11 +1488,10 @@ export class MatchController {
   }
 
   /**
-   * Wrap up a finished combat round: despawn flowers, settle team health/placements,
-   * stop time-alive accrual, and — if the MATCH is now decided (<=1 team left) —
-   * latch outcomeDecided and freeze every champion so the settlement front-view
-   * shows a still hero. Shared by the normal combat→resolution transition and
-   * the skipPhase cheat.
+   * Wrap up a finished combat round: despawn flowers, settle team health, stop
+   * time-alive accrual, and — if the MATCH is now decided — latch outcomeDecided
+   * and freeze every champion so the settlement front-view shows a still hero.
+   * Shared by the normal combat→resolution transition and the skipPhase cheat.
    */
   private concludeCombat(): void {
     endCombatFlowers(this.world); // round over: all flowers despawn
@@ -1169,7 +1509,11 @@ export class MatchController {
     // the intent seam (freezeCombatIntent, gated on combatActive) keeps them
     // frozen until enterCombat re-parks and re-arms combat next round.
     this.freezeControls();
-    if (this.aliveTeams().length <= 1) {
+    // THE MATCH IS DECIDED WHEN THE FINALE IS OVER — not when someone runs out of
+    // team health, because nobody is removed by that any more. This is the same
+    // predicate `maybeFinish` uses one resolution phase later; latching it here
+    // is what stops the bots trading blows through the victory beat (#100).
+    if (isRoyaleRound(this.phase.round)) {
       this.outcomeDecided = true;
     }
   }
@@ -1328,10 +1672,22 @@ export class MatchController {
     });
   }
 
+  /**
+   * End the match — iff the FINALE has been played.
+   *
+   * ⚠️ THIS IS THE ONLY END CONDITION LEFT, and it is the load-bearing half of
+   * the owner's ruling. The old test was `aliveTeams().length <= 1`, i.e. "team
+   * health eliminated everyone but one"; with elimination gone that predicate is
+   * unreachable and a match would cycle intermission→combat→resolution forever.
+   * Reaching round {@link FINAL_ROUND}'s resolution ends it, and the standings are
+   * written here in one place ({@link finalStandings}).
+   */
   private maybeFinish(): boolean {
-    const alive = this.aliveTeams();
-    if (alive.length > 1) return false;
-    if (alive.length === 1) this.placements.set(alive[0]!, 1);
+    if (!isRoyaleRound(this.phase.round)) return false;
+    // 1/2/3/4 for EVERY team — champion first, then team health. Assigning all
+    // four (rather than only the winner) is what keeps the settlement board a
+    // total order instead of "#1 and three blanks".
+    this.finalStandings().forEach((teamId, i) => this.placements.set(teamId, i + 1));
     // outcome is final — freeze input for the settlement (idempotent; normally
     // already latched by concludeCombat one resolution phase earlier)
     this.outcomeDecided = true;
@@ -1365,10 +1721,14 @@ export class MatchController {
 
   // ---------- per-tick ----------
 
+  /**
+   * Every spawned seat has readied up. The old `teamHealth <= 0 → skip` clause is
+   * gone with elimination: a 0-health team is still shopping and still playing, so
+   * the intermission must wait for its Ready exactly like anyone else's.
+   */
   get allSeatsReady(): boolean {
     for (const seat of this.seats.values()) {
       if (seat.entityId === null) continue;
-      if ((this.teamHealth.get(seat.teamId) ?? 0) <= 0) continue;
       if (!seat.ready) return false;
     }
     return true;
@@ -1623,23 +1983,21 @@ export class MatchController {
         }
         break;
       case "combat": {
-        // We could not compute the duel outcome; charge one life to a
-        // deterministically-chosen alive team so team health still falls and the match
-        // converges instead of cycling combat rounds forever.
-        const alive = this.aliveTeams();
-        if (alive.length > 1) {
-          const loser = alive[this.world.rng.int(alive.length)]!;
-          // Charge the ROUND'S FULL team-health cost, not a token 1. Under the
-          // old lives model 1 WAS the round-1 cost, so the failsafe converged at
-          // the normal rate; against a 20-point pool a flat −1 would need twenty
-          // faulting rounds to eliminate one team, which is not a failsafe.
+        // We could not compute the bout's outcome. CONVERGENCE IS NO LONGER THIS
+        // BRANCH'S JOB: the match now ends at round FINAL_ROUND whatever happens,
+        // so even a match that faults every single round terminates on schedule.
+        // What is still worth doing is charging the round's team-health cost to a
+        // deterministically-chosen team, so a faulting round still MOVES the
+        // scoreboard that decides places 2/3/4 instead of leaving four teams tied
+        // at their starting reservoir. No placement is locked here — placements
+        // are assigned once, in maybeFinish.
+        const teams = this.participatingTeams();
+        if (teams.length > 1) {
+          const loser = teams[this.world.rng.int(teams.length)]!;
           this.teamHealth.set(
             loser,
             Math.max(0, (this.teamHealth.get(loser) ?? 0) - teamHealthLost(this.phase.round)),
           );
-          if ((this.teamHealth.get(loser) ?? 0) <= 0 && !this.placements.has(loser)) {
-            this.placements.set(loser, this.aliveTeams().length + 1);
-          }
         }
         this.phase.advance(); // -> resolution
         break;

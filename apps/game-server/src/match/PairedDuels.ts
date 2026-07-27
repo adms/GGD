@@ -1,9 +1,16 @@
 /**
- * PairedDuels round format: each round the surviving teams split into
- * simultaneous 3v3 duels across the arena's two zones, following a rotating
+ * PairedDuels round format: rounds 1..{@link FINAL_ROUND}-1 split the four teams
+ * into simultaneous 3v3 duels across the arena's two zones, following a rotating
  * round-robin schedule. A duel is won when the opposing three are down; the
  * losing team loses TEAM HEALTH (escalating with round), and on a High Stakes
- * round the winner GAINS Team Health. Last team standing wins.
+ * round the winner GAINS Team Health.
+ *
+ * ROUND {@link FINAL_ROUND} IS DIFFERENT (owner directive 2026-07-27): all four
+ * teams drop into ONE zone and fight a single twelve-player royale, and the team
+ * left standing is the match CHAMPION. Team Health no longer eliminates anybody —
+ * it is a scoreboard that orders places 2/3/4 — so every team plays all ten
+ * rounds and the ONLY thing that ends a match is finishing the final round. See
+ * {@link FINAL_ROUND} for the full chain of consequences.
  */
 import type { TeamId } from "@ggd/shared/ids";
 
@@ -12,6 +19,93 @@ export interface DuelPairing {
   sideA: TeamId; // spawns[0]
   sideB: TeamId; // spawns[1]
 }
+
+/**
+ * The finale. Round {@link FINAL_ROUND} is not a pair of duels but ONE bout with
+ * every team in it, in a single zone — hence `teams`, not sideA/sideB.
+ */
+export interface RoyaleBout {
+  zone: number;
+  /** every participating team, ascending by id (deterministic) */
+  teams: TeamId[];
+}
+
+/**
+ * THE LAST ROUND — and, since owner's 2026-07-27 ruling, the ONLY thing that
+ * ends a match.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY THIS CONSTANT CARRIES SO MUCH
+ * ---------------------------------------------------------------------------
+ * The ruling was five sentences, but four of them delete a mechanic:
+ *
+ *   A. 「不管前面被淘汰與否，大家都回來打第 10 回合」 — team health hitting 0
+ *      ELIMINATES NOBODY. All four teams play all ten rounds, keep taking the
+ *      per-round levels/gold/3-choose-1, and keep shopping.
+ *   B. team health is 「只是計分板，不影響決賽」 — it orders places 2/3/4.
+ *   C. round 10 is a four-team royale in one zone; the survivor is the champion,
+ *      regardless of team health.
+ *
+ * (A) removes the ONLY previous end condition. `maybeFinish` used to fire when
+ * `aliveTeams().length <= 1`, and "alive" meant "health > 0"; with nothing
+ * draining a team out of the match, that predicate can never be reached and a
+ * match would run forever. The replacement end condition is this constant: the
+ * match ends when round {@link FINAL_ROUND}'s resolution completes, full stop.
+ *
+ * A NOTE ON TASK #283 (the "ten-round cap"), because the hand-off assumed it was
+ * already in main and it is NOT: there is no `resolveMaxRounds` anywhere in the
+ * tree (grep for it — zero hits, definition included), and `MatchRoom.onCreate`
+ * passes twelve positional arguments to the MatchController ending at
+ * `ownership`. The cap arrives HERE, with this change, or the finale is prose.
+ *
+ * WHY A CONSTANT AND NOT A CONFIG KNOB: a thirteenth positional constructor
+ * parameter that only MatchRoom could fill is precisely the shape of a feature
+ * that lands and never reaches a player — every unit test, the replay player and
+ * the dev boot would keep the old default and only production would differ. The
+ * round table in `content/config/arena-rules.json` is authored through round 13
+ * plus an overflow rule and this lane may not touch it, so the cap cannot be
+ * derived from content either. One constant, read by every path, is the version
+ * that cannot silently not-apply.
+ */
+export const FINAL_ROUND = 10;
+
+/** Is `round` the all-in finale rather than a pair of 3v3 duels? */
+export function isRoyaleRound(round: number): boolean {
+  return round >= FINAL_ROUND;
+}
+
+/**
+ * The finale bout: every participating team, in ONE zone.
+ *
+ * DETERMINISM: the team list is sorted ascending, and the zone is fixed at 0 —
+ * the royale arena has exactly one zone. Nothing here draws from rng, so a
+ * same-seed replay lays the finale out identically (task #145's contract).
+ */
+export function royaleBout(teams: readonly TeamId[]): RoyaleBout {
+  return { zone: 0, teams: [...teams].sort((a, b) => a - b) };
+}
+
+/**
+ * Combat-elapsed seconds before the fire ring ignites in the FINALE, replacing
+ * the authored `match.fireRing.startSec` (60 since #195) for that round only.
+ *
+ * Owner: 「決賽要給玩家足夠時間真的打一場，而不是一開場就被逼到中間」. Rounds 1-9
+ * keep 60 s exactly — this is a per-round substitution in `MatchController`,
+ * never an edit to the shipped config doc.
+ */
+export const ROYALE_FIRE_RING_START_SEC = 180;
+
+/**
+ * Combat-phase length for the finale, in seconds.
+ *
+ * ⚠️ THIS IS NOT DECORATION, it is what makes the 180 s ring reachable at all.
+ * `config.match@1` ships `combatMaxSec: 100`, so a finale left on the normal
+ * phase clock would be force-settled on team-HP percentages at 100 s and the ring
+ * would never ignite — the delay owner asked for would be a number no player ever
+ * experiences. 210 s = ignition (180) + the full 20 s shrink + a 10 s tail for
+ * the closed ring to finish the job.
+ */
+export const ROYALE_COMBAT_SEC = ROYALE_FIRE_RING_START_SEC + 30;
 
 /** Classic 4-team round-robin rotation (circle method), repeats every 3 rounds. */
 const FOUR_TEAM_SCHEDULE: [number, number][][] = [
