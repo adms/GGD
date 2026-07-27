@@ -45,13 +45,28 @@ import {
   PX,
   TEX_EDGE,
   emitBox,
+  emitBoxAtlas,
+  type UvRect,
 } from "./boxman";
+import {
+  ATLAS_FACES,
+  ATLAS_H,
+  ATLAS_W,
+  MOTIF_CELLS,
+  type FaceRects,
+} from "../content/voxelSkin/types";
 import { CLIPS, DRIVEN_ROTATION_JOINTS, type ClipDef, type DrivenJoint, type Euler } from "./clips";
 import { ARCHETYPES, type Archetype, type Palette } from "./archetypes";
 import { GlbBuilder, q, translationMat } from "./glbWrite";
 import { encodePng } from "./pngWrite";
 import { sha256Hex } from "./bytes";
-import { lookFromArchetype, type ShapedJoint, type Vec3, type VoxelLook } from "./look";
+import {
+  lookForChampion,
+  lookFromArchetype,
+  type ShapedJoint,
+  type Vec3,
+  type VoxelLook,
+} from "./look";
 
 // ---------------------------------------------------------------------------
 // Palette texture
@@ -161,6 +176,91 @@ export function buildGeometry(): BakeGeometry {
       g.weights.push(1, 0, 0, 0);
     }
     // Winding is REVERSED because the X mirror is orientation-reversing.
+    for (let i = 0; i < indices.length; i += 3) {
+      g.indices.push(base + indices[i]!, base + indices[i + 2]!, base + indices[i + 1]!);
+    }
+    g.triangles += indices.length / 3;
+  }
+  return g;
+}
+
+/**
+ * Which SKIN-ATLAS rects each box of the figure samples, for the 特徵生成 bake.
+ *
+ * The five body boxes take their part's rects (both legs share `legs`, exactly
+ * as the atlas layout intends). The `face` box — the thin dark bar on the
+ * head's +Z side — takes a ONE-TEXEL-TALL strip of `head.front` at the eye row,
+ * so it reads as an eye bar in the barcode's own colours instead of punching a
+ * palette-coloured hole in the skin. Every prop box takes a motif cell; props
+ * are collapsed to joint scale 0 on a barcode figure, but a box with no valid
+ * UV would still be a landmine the day someone turns one on.
+ */
+export const ATLAS_BOX_RECTS: Readonly<Record<string, Readonly<Record<string, UvRect>>>> = (() => {
+  const same = (r: UvRect): Readonly<Record<string, UvRect>> =>
+    Object.freeze({ front: r, back: r, right: r, left: r, top: r, bottom: r });
+  const asRects = (f: FaceRects): Readonly<Record<string, UvRect>> =>
+    Object.freeze({
+      front: f.front,
+      back: f.back,
+      right: f.right,
+      left: f.left,
+      top: f.top,
+      bottom: f.bottom,
+    });
+  const eyeBar: UvRect = {
+    x: ATLAS_FACES.head.front.x,
+    y: ATLAS_FACES.head.front.y + 4,
+    w: ATLAS_FACES.head.front.w,
+    h: 1,
+  };
+  return Object.freeze({
+    torso: asRects(ATLAS_FACES.torso),
+    head: asRects(ATLAS_FACES.head),
+    armLeft: asRects(ATLAS_FACES.armL),
+    armRight: asRects(ATLAS_FACES.armR),
+    legLeft: asRects(ATLAS_FACES.legs),
+    legRight: asRects(ATLAS_FACES.legs),
+    face: same(eyeBar),
+    hat: same(MOTIF_CELLS[0]!),
+    pack: same(MOTIF_CELLS[1]!),
+    belt: same(MOTIF_CELLS[2]!),
+    pauldronLeft: same(MOTIF_CELLS[3]!),
+    pauldronRight: same(MOTIF_CELLS[3]!),
+    weaponGrip: same(MOTIF_CELLS[4]!),
+    weaponHead: same(MOTIF_CELLS[5]!),
+  });
+})();
+
+/**
+ * The same 14 boxes as `buildGeometry`, but UV-mapped onto the 64×64 skin
+ * atlas instead of the 16×16 palette LUT. This is what lets one box show a
+ * STACK of colours, which is the whole difference between a palette figure and
+ * a barcode figure.
+ */
+export function buildAtlasGeometry(): BakeGeometry {
+  const g: BakeGeometry = {
+    positions: [],
+    normals: [],
+    uvs: [],
+    joints: [],
+    weights: [],
+    indices: [],
+    triangles: 0,
+  };
+  for (const box of BOXES) {
+    const ji = JOINT_INDEX[box.joint];
+    if (ji === undefined) throw new Error(`box ${box.name} binds unknown joint ${box.joint}`);
+    const rects = ATLAS_BOX_RECTS[box.name];
+    if (!rects) throw new Error(`box ${box.name} has no atlas rects — the skin would be unmapped`);
+    const base = g.positions.length / 3;
+    const { verts, indices } = emitBoxAtlas(box, ji, rects, ATLAS_W, ATLAS_H);
+    for (const v of verts) {
+      g.positions.push(...mirrorVec3(v.pos[0], v.pos[1], v.pos[2]));
+      g.normals.push(...mirrorVec3(v.normal[0], v.normal[1], v.normal[2]));
+      g.uvs.push(v.uv[0], v.uv[1]);
+      g.joints.push(v.joint, 0, 0, 0);
+      g.weights.push(1, 0, 0, 0);
+    }
     for (let i = 0; i < indices.length; i += 3) {
       g.indices.push(base + indices[i]!, base + indices[i + 2]!, base + indices[i + 1]!);
     }
@@ -286,6 +386,20 @@ export interface BakeResult {
 }
 
 /**
+ * The two things a bake needs beyond the look: the mesh and the image its UVs
+ * address. Everything else — joints, clips, inverse binds, node tree, material
+ * — is identical for a palette figure and a barcode figure, which is why there
+ * is one assembler and not two.
+ */
+export interface BakeSkin {
+  geometry: BakeGeometry;
+  /** PNG bytes, embedded verbatim as the material's base-colour texture */
+  imagePng: Uint8Array;
+  /** reported in `BakeStats.texEdge`; the image is square */
+  texEdge: number;
+}
+
+/**
  * Emit a complete, playable .glb for one authored look.
  *
  * `key` becomes the material name (`blocky-<key>`) and nothing else — it does
@@ -293,7 +407,39 @@ export interface BakeResult {
  * only by their `VoxelLook`.
  */
 export function bakeLook(key: string, look: VoxelLook): BakeResult {
-  const geo = buildGeometry();
+  return bakeLookWith(key, look, {
+    geometry: buildGeometry(),
+    imagePng: paletteImage(look.palette),
+    texEdge: TEX_EDGE,
+  });
+}
+
+/**
+ * The 特徵生成 bake: the same figure, wearing a champion's 64×64 barcode atlas.
+ *
+ * `atlasRgba` is exactly what `paintVoxelAtlas` returned — not a re-render, not
+ * a resize. That is the point: the PNG inside this .glb and the texture the
+ * client uploads at runtime are the same bytes, so "the model shows the
+ * barcode" and "the runtime skin shows the barcode" cannot drift apart.
+ */
+export function bakeBarcodeLook(
+  key: string,
+  look: VoxelLook,
+  atlasRgba: Uint8Array,
+): BakeResult {
+  if (atlasRgba.length !== ATLAS_W * ATLAS_H * 4) {
+    throw new Error(`bakeBarcodeLook: atlas is ${atlasRgba.length} bytes, expected ${ATLAS_W * ATLAS_H * 4}`);
+  }
+  return bakeLookWith(key, look, {
+    geometry: buildAtlasGeometry(),
+    imagePng: encodePng(ATLAS_W, ATLAS_H, atlasRgba),
+    texEdge: ATLAS_W,
+  });
+}
+
+/** The shared assembler. Nothing here knows which texture it is embedding. */
+export function bakeLookWith(key: string, look: VoxelLook, skin: BakeSkin): BakeResult {
+  const geo = skin.geometry;
   const b = new GlbBuilder();
 
   const accPos = b.addFloat("VEC3", geo.positions, { minMax: true, target: 34962 });
@@ -338,7 +484,7 @@ export function bakeLook(key: string, look: VoxelLook): BakeResult {
   }
 
   // --- palette image -------------------------------------------------------
-  const png = paletteImage(look.palette);
+  const png = skin.imagePng;
   b.addRawView(png, "palette");
   const imageView = b.rawViewSlot(0);
 
@@ -435,7 +581,7 @@ export function bakeLook(key: string, look: VoxelLook): BakeResult {
       channelsPerFrame,
       materials: 1,
       meshes: 1,
-      texEdge: TEX_EDGE,
+      texEdge: skin.texEdge,
       textureBytes: png.length,
       sha256: sha256Hex(bytes),
     },
@@ -445,6 +591,28 @@ export function bakeLook(key: string, look: VoxelLook): BakeResult {
 /** The shipped bake of one of the five archetypes. */
 export function bakeArchetype(arch: Archetype): BakeResult {
   return bakeLook(arch.key, lookFromArchetype(arch.key));
+}
+
+/** The archetype a barcode figure is built on: the most neutral of the five. */
+export const BARCODE_ARCHETYPE = "knight";
+
+/**
+ * The look a barcode figure wears.
+ *
+ * PROPS ARE OFF, deliberately. A hat box and a pack box would sample motif
+ * cells the barcode never authored, so an accessory in the L3 generator's
+ * colours would stick out of a hand-authored character — and worse, a brim hat
+ * would hide the very band (魯夫's 帽帶) that identifies him. Everything else is
+ * the champion's own seeded look, so two barcode champions still differ in
+ * proportion rather than being one silhouette in different paint.
+ */
+export function barcodeFigureLook(championId: string): VoxelLook {
+  return { ...lookForChampion(championId, BARCODE_ARCHETYPE), props: [], teamTint: false };
+}
+
+/** The file names a 特徵生成 build writes for one champion. */
+export function barcodeFileNames(championId: string): { png: string; glb: string } {
+  return { png: `voxel-${championId}.png`, glb: `voxel-${championId}.glb` };
 }
 
 /** Native silhouette height in world units. Baked to exactly TARGET_HEIGHT. */

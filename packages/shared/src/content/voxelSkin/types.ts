@@ -441,3 +441,255 @@ export const STAND_IN_MODEL_KEYS: readonly string[] = Object.freeze([
   "champ.skin.barbarian",
   "champ.skin.rogue",
 ]);
+
+// ===========================================================================
+// THE BARCODE — 特徵生成 (docs/_體素特徵生成規格.md)
+// ===========================================================================
+//
+// WHY THIS EXISTS AT ALL, NEXT TO THE RECIPE ABOVE.
+// `VoxelSkinRecipe` optimises for "no two champions look alike": it is a hash
+// chain, and its own file header records WHY it refuses to sample the hero
+// icons (141 icon files, only 87 distinct byte-hashes, 24 duplicate groups —
+// sampling them CLONES looks instead of separating them).
+//
+// The barcode optimises for the OPPOSITE thing: "does it look like the actual
+// character". Two green-haired characters SHOULD look alike. The two standards
+// genuinely fight, so the barcode does not replace the recipe — it is a higher
+// authority laid on top of it, for the minority of champions where a real-world
+// "本人" exists to compare against. The generator stays the L3 floor for every
+// w3x original unit, which has no likeness to be faithful to.
+//
+// THE MODEL. A character is a standing rectangle; the top-to-bottom stack of
+// flat colour bands IS the character's signature. 香吉士 = yellow hair / skin /
+// black suit / black shoes. 魯夫 = straw brown + RED HAT BAND + black brim /
+// skin / red vest / blue shorts / BARE SHINS / brown sandals.
+
+/**
+ * One band of the barcode.
+ *
+ * `frac` is a share of the WHOLE FIGURE's height, not of its part — that is
+ * what makes the admin's CSS preview (a stack of `<div style="height:N%">`)
+ * the same object as the 3D skin. `barcodeToParts` re-normalises per part.
+ */
+export interface BarcodeBand {
+  /** '#rrggbb', lowercase or uppercase; compared case-insensitively. */
+  hex: string;
+  /** Share of total figure height, 0..1 exclusive of 0. Present bands sum to 1. */
+  frac: number;
+}
+
+/**
+ * THE ELEVEN SLOTS, IN ANATOMICAL ORDER — top of the head to the sole.
+ *
+ * ORDER IS THE DATA. This array is not a lookup convenience: index 0 is the
+ * topmost band on the figure and index 10 is the bottom-most, and
+ * `barcodeToParts` lays the bands out in exactly this sequence. Reordering it
+ * re-stacks every character (Luffy's red hat band would migrate down his face).
+ * Append is meaningless here too — a new slot has an anatomical POSITION, so it
+ * must be inserted where it belongs and every stored barcode re-checked.
+ *
+ * WHY `top` AND `pants` ARE TWO SLOTS AND MAY NEVER BE MERGED.
+ * Sanji's black suit is two blocks with a hairline between them. They are the
+ * same hex. They are NOT the same band, because the hairline is the HIP JOINT:
+ * `top` paints `torso` and `pants` paints `legs`, and those are two boxes that
+ * rotate independently. Merge them because the colours match and the figure
+ * stops being able to walk.
+ *
+ *   色帶是外觀，分節是結構，兩者不可互相吃掉。
+ *
+ * The same argument holds for every cross-part neighbour pair (`face`/`collar`
+ * at the neck, `waist`/`pants` at the hip). Colour equality is never a reason
+ * to collapse two slots.
+ */
+export const BARCODE_SLOTS = Object.freeze([
+  "hair",
+  "hatBand",
+  "hatBrim",
+  "face",
+  "collar",
+  "chestTrim",
+  "top",
+  "waist",
+  "pants",
+  "shin",
+  "shoe",
+] as const);
+
+export type BarcodeSlot = (typeof BARCODE_SLOTS)[number];
+
+/** The three boxes a barcode paints. `armL`/`armR` are driven by `sleeve`. */
+export type BarcodePart = "head" | "torso" | "legs";
+
+/** Part order, top to bottom — the order `barcodeToParts` reports them in. */
+export const BARCODE_PARTS: readonly BarcodePart[] = Object.freeze([
+  "head",
+  "torso",
+  "legs",
+] as const);
+
+/**
+ * Slot → part (規格 §7). Fixed: this is anatomy, not configuration.
+ * head 1–4 · torso 5–8 · legs 9–11.
+ */
+export const BARCODE_SLOT_PART: Readonly<Record<BarcodeSlot, BarcodePart>> = Object.freeze({
+  hair: "head",
+  hatBand: "head",
+  hatBrim: "head",
+  face: "head",
+  collar: "torso",
+  chestTrim: "torso",
+  top: "torso",
+  waist: "torso",
+  pants: "legs",
+  shin: "legs",
+  shoe: "legs",
+});
+
+/**
+ * Typical whole-figure share per slot (規格 §2.2), as `[min, max]`.
+ *
+ * ADVISORY, NOT A CONSTRAINT — `validateBarcode` reports a violation at `warn`,
+ * never `error`. The table is not simultaneously satisfiable: a character
+ * wearing only hair/face/top/pants/shoe (Sanji) has a maximum total of
+ * 0.20+0.14+0.26+0.28+0.08 = 0.96, so normalising him to 1.0 MUST push at least
+ * one band out of range. Treating the table as hard would reject a correct
+ * barcode. See `BAND_FRAC_TYPICAL_INFEASIBLE_NOTE`.
+ *
+ * `shin`'s floor is 0 because a bare shin is the ABSENT case (Sanji has none) —
+ * a band that is present always carries frac > 0, which is a separate check.
+ */
+export const BARCODE_TYPICAL_FRAC: Readonly<
+  Record<BarcodeSlot, readonly [number, number]>
+> = Object.freeze({
+  hair: Object.freeze([0.12, 0.2] as const),
+  hatBand: Object.freeze([0.02, 0.04] as const),
+  hatBrim: Object.freeze([0.01, 0.03] as const),
+  face: Object.freeze([0.08, 0.14] as const),
+  collar: Object.freeze([0.02, 0.05] as const),
+  chestTrim: Object.freeze([0.02, 0.04] as const),
+  top: Object.freeze([0.18, 0.26] as const),
+  waist: Object.freeze([0.03, 0.08] as const),
+  pants: Object.freeze([0.18, 0.28] as const),
+  shin: Object.freeze([0.0, 0.12] as const),
+  shoe: Object.freeze([0.03, 0.08] as const),
+});
+
+/**
+ * The eleven slots, every key present, absent ones explicitly `null`.
+ *
+ * A total `Record` and not a `Partial` on purpose: "this character has no
+ * shin" is a STATEMENT, and a stored barcode that simply omits the key is
+ * indistinguishable from one an editor truncated. Explicit nulls also make
+ * the seed JSON self-documenting about the fixed slot order.
+ */
+export type BarcodeBands = Readonly<Record<BarcodeSlot, BarcodeBand | null>>;
+
+/**
+ * Sleeve rule (規格 §2.4) — the arms are NOT in the barcode, because the
+ * barcode is a mid-axis section. `long` = whole arm in `top`'s colour;
+ * `short` = upper half `top`, lower half `face` (skin); `none` = all skin.
+ */
+export type SleeveKind = "long" | "short" | "none";
+
+/**
+ * WHO DECIDED THIS BARCODE. MANDATORY — never optional, never defaulted.
+ *
+ * Three months from now, an ugly champion raises exactly one question: did the
+ * owner ask for this, or did the extractor produce garbage? The two answers
+ * have OPPOSITE remedies — leave it alone versus re-extract and fix the guard —
+ * and nothing else in the record can tell them apart. `manual` outranks
+ * `extracted` outranks `keyword` outranks `generated` (規格 §3, L0..L3).
+ */
+export type BarcodeSource = "manual" | "extracted" | "keyword" | "generated";
+
+/** Extraction verdict — same four-valued shape as `scan_ability_effects.py`. */
+export type BarcodeVerdict = "PASS" | "SUSPECT" | "FAIL" | "DUPLICATE";
+
+/** Evidence an `extracted` barcode carries so its verdict can be re-judged. */
+export interface BarcodeExtraction {
+  refImage: string;
+  verdict: BarcodeVerdict;
+  reasons: string[];
+  /** Largest pairwise ΔE among the extracted bands — the 泥巴柱 guard (§4.2). */
+  maxPairwiseDeltaE: number;
+  /** Share of pixels left after background removal; < 0.4 is a FAIL. */
+  foregroundRatio: number;
+}
+
+/**
+ * ONE CHARACTER'S SIGNATURE. The single contract between the two halves of the
+ * system: 後台永遠不產生像素，地端永遠不決定顏色.
+ */
+export interface VoxelBarcode {
+  /** schema tag, so a stored barcode can be rejected when the model moves on */
+  v: 1;
+  /**
+   * The champion this describes. Real champion ids only — with the single
+   * exception of the `placeholder.` namespace, for a character the owner named
+   * that the roster does not (yet) contain. See `PLACEHOLDER_BARCODE_PREFIX`.
+   */
+  championId: string;
+  bands: BarcodeBands;
+  sleeve: SleeveKind;
+  /**
+   * Colours for the face decals painted on `head.front` only. The STYLES stay
+   * on the existing `EyeStyle`/`MouthStyle`/`FaceMark` ladders — this is the
+   * colour channel they never had. 多拉A夢's black eyes and red nose are these,
+   * not bands: they do not wrap the head, they sit on its front (規格 §2.3②).
+   */
+  faceColors: { eye: string; nose: string | null; mouth: string };
+  /** MANDATORY audit field — see `BarcodeSource`. */
+  source: BarcodeSource;
+  /** Present iff `source === "extracted"`. */
+  extraction?: BarcodeExtraction;
+  /** Free-text authoring note. Never read by the painter or the renderer. */
+  note?: string;
+}
+
+/**
+ * Id namespace for a character the owner specified that has no champion doc.
+ * Kept as a real, greppable prefix rather than a boolean flag so the census
+ * test can hold every OTHER id to "resolves to a champion on disk" without an
+ * escape hatch that a typo could fall into.
+ */
+export const PLACEHOLDER_BARCODE_PREFIX = "placeholder.";
+
+/** True for the id namespace above. */
+export function isPlaceholderBarcodeId(championId: string): boolean {
+  return championId.startsWith(PLACEHOLDER_BARCODE_PREFIX);
+}
+
+/** Shape of `content/models/_voxel-barcodes.json`. */
+export interface VoxelBarcodesFile {
+  schema?: string;
+  note?: string;
+  /**
+   * The file's own copy of `BARCODE_SLOTS`, written out so the anatomical order
+   * is legible to a human editing the JSON — and so a test can catch a tool
+   * that rewrote the file with the keys sorted alphabetically (which would put
+   * `chestTrim` above `face` and re-stack every character).
+   */
+  slotOrder?: readonly string[];
+  barcodes: Record<string, VoxelBarcode>;
+}
+
+export const VOXEL_BARCODES_SCHEMA = "voxel-barcodes@1";
+
+/**
+ * The 泥巴柱 (mud-column) floor, ΔE*ab (CIE76). A figure whose bands are all
+ * within this of each other is a single smear, not a character — §4.2 grades it
+ * FAIL. Measured, not defensive: the icon corpus is known to contain 24 groups
+ * of byte-identical files, so extraction WILL produce these.
+ */
+export const BARCODE_MUD_COLUMN_DELTA_E = 25;
+
+/** Fewest present bands before §4.2 calls the barcode SUSPECT. */
+export const BARCODE_MIN_BANDS = 4;
+
+/**
+ * Why `BARCODE_TYPICAL_FRAC` is advisory. Kept as an exported string so the
+ * admin editor can show the author the same sentence the validator applies.
+ */
+export const BAND_FRAC_TYPICAL_INFEASIBLE_NOTE =
+  "§2.2 的典型佔比表無法同時滿足：只有 5 個槽的角色（例：香吉士 hair/face/top/pants/shoe）" +
+  "上限總和僅 0.96，正規化到 1.0 必然把至少一條帶推出區間。因此超界只警告，不判錯。";

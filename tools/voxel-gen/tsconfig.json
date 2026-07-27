@@ -6,5 +6,5 @@
     "types": ["node"],
     "skipLibCheck": true
   },
-  "include": ["gen.ts", "gen.test.ts"]
+  "include": ["gen.ts", "gen.test.ts", "build.ts", "build.test.ts"]
 }
