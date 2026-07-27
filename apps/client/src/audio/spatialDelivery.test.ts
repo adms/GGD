@@ -412,6 +412,14 @@ describe("the queue is WIRED into the frame loop (spatial-delivery)", () => {
     // stale — asserted by position, since that ordering is the whole reason the
     // queue exists rather than an inline playSfx at the drain.
     expect(src.indexOf("this.sfxQueue.flush(")).toBeGreaterThan(src.indexOf("frameBus.cameraView ="));
-    expect(src.indexOf("this.sfxQueue.flush(")).toBeGreaterThan(src.indexOf("this.sfxQueue.push(sfxKey"));
+    // …and after the DRAIN that fills it. The push itself now lives in
+    // `handleDrainedEvent` (lifted onto the prototype so ui/hud/killCombo.test.ts
+    // can run the real drain instead of grepping for it), which is defined below
+    // `frame` — so the ordering has to be read off the frame's two CALL SITES,
+    // not off where the push happens to be written in the file.
+    expect(src.indexOf("this.sfxQueue.flush(")).toBeGreaterThan(
+      src.indexOf("this.drainNetworkEvents("),
+    );
+    expect(src.indexOf("this.drainNetworkEvents(")).toBeGreaterThan(-1);
   });
 });

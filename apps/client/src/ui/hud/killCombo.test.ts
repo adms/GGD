@@ -85,8 +85,14 @@ import {
   type HudState,
   type LocalPlayerView,
 } from "../../net/RoomStore";
+import { stripComments } from "@ggd/shared/testkit/stripComments";
 import { KillCombo, KillComboView } from "./KillCombo";
 import { HudRoot } from "../HudRoot";
+// The real frame-loop drain. GameApp cannot be CONSTRUCTED headlessly, but the
+// module imports fine and `drainNetworkEvents` / `handleDrainedEvent` live on
+// the prototype precisely so this file can run them — see "THE DRAIN, ACTUALLY
+// RUN" below for the mutation that made a source scan insufficient.
+import { GameApp } from "../../GameApp";
 import { hudTouch } from "./HudSlot";
 import {
   HUD_SLOTS,
@@ -726,14 +732,111 @@ describe("the container's own gate (previously uncovered)", () => {
   });
 });
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ② THE DRAIN, ACTUALLY RUN
+ *
+ * ⚠️ WHAT THIS REPLACES, AND WHY. This used to be a SOURCE SCAN over GameApp.ts
+ * (`expect(src).toContain("recordKillComboEvent,")` +
+ * `expect(src).toMatch(/recordKillComboEvent\(ev, nowMs\)/)`). MEASURED: leave
+ * both greppable strings byte-for-byte intact and make the call unreachable —
+ *
+ *     if (String(ev.type) === "__never_fires__") recordKillComboEvent(ev, nowMs);
+ *
+ * — and the regex still matches, the sim's combo never reaches the store, the
+ * game never shows a combo number, and 37/37 stayed green. A grep proves a line
+ * was TYPED. It does not prove it RUNS.
+ *
+ * So the drain is run for real instead. GameApp cannot be constructed headlessly
+ * (Babylon engine, canvas, sockets) and `frame` is an instance arrow field, so
+ * the loop was lifted onto the prototype as `drainNetworkEvents` /
+ * `handleDrainedEvent` — no runtime change, same calls in the same order — and
+ * is invoked here with a stub `this` whose `conn.drainEvents()` returns a real
+ * batch. Everything between the queue and `hudStore` is the production code.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * A GameApp whose PROTOTYPE is the real one — so `drainNetworkEvents` and the
+ * `handleDrainedEvent` it calls are production code — with the canvas/audio/
+ * network collaborators shadowed by inert own-properties. Nothing here stubs the
+ * store or the recorders: that is the path under test.
+ */
+interface DrainSeam {
+  drainNetworkEvents(state: null, localId: number | null, nowMs: number): void;
+}
+
+function drainStub(events: unknown[]): DrainSeam {
+  const noop = (): void => {};
+  return Object.assign(Object.create(GameApp.prototype) as object, {
+    // `conn` is a getter over `sessions.primary` — feed the seam it reads, so
+    // the drain really goes through GameApp's own connection accessor.
+    sessions: { primary: { drainEvents: () => events } },
+    vfx: { handleEvent: noop, statusFx: { set: noop } },
+    views: { handleEvent: noop },
+    casts: { handleEvent: noop },
+    sfxQueue: { push: noop },
+    deathFocus: { noteDeath: noop },
+    applyCombatFeedback: noop,
+    dispatchContextualVoice: noop,
+    audioEntityPos: () => null,
+    audioTeamOf: () => null,
+    batchProfiled: false,
+    frameKicks: 0,
+    // `drainNetworkEvents` is PRIVATE, so it is invisible to the type system
+    // here even though it is right there on the prototype — hence the cast.
+  }) as unknown as DrainSeam;
+}
+
+/** Run GameApp's REAL step-1 drain over `events`, as the frame loop does. */
+function runDrain(events: unknown[], nowMs: number): void {
+  drainStub(events).drainNetworkEvents(null, null, nowMs);
+}
+
 describe("the wiring no render can prove", () => {
-  it("GameApp's event drain really calls the recorder", () => {
-    // ⚠️ THE MUTATION: delete `recordKillComboEvent(ev)` from GameApp's drain
-    // loop and this goes red. Without it the sim counts perfectly and no screen
-    // in the game ever hears about it — the exact 「算出來但沒送到端點」 shape.
-    const src = clientSrc("GameApp.ts");
-    expect(src).toContain("recordKillComboEvent,");
-    expect(src).toMatch(/recordKillComboEvent\(ev, nowMs\)/);
+  beforeEach(() => {
+    resetHudStore();
+    hudStore.setState({ localSeatId: 2 });
+  });
+
+  it("GameApp's event drain really DELIVERS the combo to the store", () => {
+    // ⚠️ THE MUTATION: make `recordKillComboEvent(ev, nowMs)` unreachable while
+    // leaving the text in place (`if (String(ev.type) === "__never_fires__") …`),
+    // or delete it outright. Either way the store never moves and this goes red —
+    // which the grep it replaced could not do.
+    expect(hudStore.getState().killCombo).toBeNull();
+    runDrain([ev({ count: 4 })], 1000);
+    expect(hudStore.getState().killCombo).toEqual({ count: 4, atMs: 1000, seq: 1 });
+  });
+
+  it("…and it is the LOOP, not one lucky event — a whole batch drains in order", () => {
+    // ⚠️ THE MUTATION: `for (const ev of events)` → dispatch only `events[0]`, or
+    // drop the loop. The last combo in the batch is the one the screen must show.
+    runDrain([ev({ count: 2 }), ev({}, "damage"), ev({ count: 3 }), ev({ count: 5 })], 2000);
+    expect(hudStore.getState().killCombo).toEqual({ count: 5, atMs: 2000, seq: 3 });
+  });
+
+  it("the drain honours the seat gate — a teammate's sweep is not your number", () => {
+    // The same real path, asserted in the FAILING direction: nothing is recorded.
+    runDrain([ev({ killerSeatId: 5, count: 9 })], 3000);
+    expect(hudStore.getState().killCombo).toBeNull();
+  });
+
+  it("an empty batch changes nothing (no phantom combo from an idle frame)", () => {
+    runDrain([], 4000);
+    expect(hudStore.getState().killCombo).toBeNull();
+  });
+
+  it("the ONE line no headless test can reach: frame() calls the drain", () => {
+    // Honest scope. Everything above runs `drainNetworkEvents` for real; what
+    // no test in a node env can run is `frame` itself (an instance arrow field
+    // on a class that needs a Babylon engine, a canvas and a socket). So this
+    // single call site is a source anchor, and it is deliberately the LAST
+    // remaining one: deleting it does not just silence the combo counter, it
+    // kills every VFX, SFX, cast bar, death, shop line and settlement in the
+    // game at once — a failure no playtest could miss.
+    const src = stripComments(clientSrc("GameApp.ts"));
+    expect(src).toMatch(/this\.drainNetworkEvents\(state, localId, nowMs\);/);
+    // and the drain still ends at the recorder — the chain this file guards
+    expect(src).toMatch(/for \(const ev of events\) this\.handleDrainedEvent\(/);
   });
 
   it("the server really fans the event out — no silent whitelist drop", () => {

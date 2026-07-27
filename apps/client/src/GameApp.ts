@@ -1043,71 +1043,7 @@ export class GameApp {
 
     // 1) drain network events (queued by socket callbacks)
     const localId = hudStore.getState().localEntityId;
-    const events = this.conn.drainEvents();
-    // Camera-wave per-batch state, settled BEFORE anything is dispatched:
-    //   • batchProfiled — `damage` arrives before its `hitImpact` twin, so the
-    //     legacy scalar shake has to know up-front that the directional kick is
-    //     coming and stand down (else one hit shakes twice);
-    //   • frameKicks — the teamfight crowding index, reset each batch.
-    this.batchProfiled = batchCarriesImpactProfile(events);
-    this.frameKicks = 0;
-    for (const ev of events) {
-      this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
-      this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
-      this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
-      this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
-      // Per-frame combat SFX. QUEUED, not played: the listener frame is only
-      // current after the camera update (step 5), and the batch has to be sorted
-      // by priority before the SfxGate sees it — `abilityCast` admits ONE voice
-      // per 1.2 s arena-wide, so without the sort the cast you hear in a twelve
-      // body fight is decided by packet order. See audio/SpatialSfxQueue.
-      //
-      // `resolveSpatial` returning null is NOT "drop it": it means the event is
-      // deliberately centred (guardianSlain's gold chime, rankUp, fireRingStart)
-      // or its position is not resolvable this frame, and a null source plays
-      // exactly as it does today. Only `spatialMix` (inside the flush) decides
-      // that something is out of range and must not play at all.
-      const sfxKey = combatSfxKey(ev);
-      if (sfxKey) {
-        this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
-      }
-      // CONTEXTUAL VOICE (client-only cosmetic, owner directive 2026-07-25):
-      // event → the champion's own cloned line. Rides audioSystem.playClip inside
-      // contextualVoice, so all mixer gates + the per-category throttle apply;
-      // heroes without a pack no-op. Never touches sim / world.rng.
-      this.dispatchContextualVoice(ev, localId);
-      if (ev.type === "death" && state) {
-        recordDeathEvent(ev, state);
-        // task #85: the ONLY signal that means "you died", as opposed to the
-        // four other ways a champion can read `alive === false` (champ-select,
-        // the whole intermission, a bye team, the resolution/settlement
-        // phases). DeathSystem emits it solely on the hp<=0 crossing, so a
-        // seat parked dead by enterCombat never produces one.
-        this.deathFocus.noteDeath(Number(ev.data.id));
-      }
-      // shop outcomes for THIS player — the purchase/sale confirmations and,
-      // the point of task #60, every rejection with its reason. The HUD turns
-      // them into a readable line + the 効果音ラボ cue (ui/panels/shopFeedback).
-      if (isShopEvent(ev.type)) recordShopEvent(ev, localId);
-      // cast outcomes for THIS player (playtest P7): `castRejected` becomes the
-      // sentence 「冷卻中，還有 3 秒」 + a red shake on the button, and
-      // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
-      // line above; all the logic lives in ui/castAnnounce.
-      recordCastEvent(ev, localId, nowMs);
-      // 連殺 combo (owner 2026-07-27). The COUNT was decided in the sim off
-      // world.tick and arrives on this event; this is the one line that carries
-      // it to the screen. Gated on the local SEAT inside (the number in the
-      // middle of your screen has to be your chain, not a teammate's), so a
-      // spectator's or an enemy's sweep is dropped here rather than rendered.
-      recordKillComboEvent(ev, nowMs);
-      // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
-      // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
-      // SAME record path so a knocked-out player's leave-flow already holds their
-      // card; the final matchEnd payload overwrites it with the decided board.
-      if (ev.type === SETTLEMENT_EVENT || ev.type === TEAM_SETTLEMENT_EVENT) {
-        recordSettlement(ev.data as unknown as MatchSettlement);
-      }
-    }
+    this.drainNetworkEvents(state, localId, nowMs);
     // (The frame's voice lines were SCORED during the drain and are dispatched
     // in step 5b, next to the SFX flush — see there for why they had to move.)
 
@@ -1379,6 +1315,112 @@ export class GameApp {
     const workMs = performance.now() - nowMs;
     this.samplePerf(nowMs, dtMs, workMs);
   };
+
+  /**
+   * STEP 1 OF THE FRAME: take everything the socket queued and dispatch it.
+   *
+   * ⚠️ WHY THIS AND `handleDrainedEvent` ARE PROTOTYPE METHODS RATHER THAN
+   * INLINE IN `frame`.
+   *
+   * `frame` is an instance arrow FIELD and GameApp cannot be constructed
+   * headlessly (Babylon engine, canvas, sockets), so the drain used to be
+   * unreachable from any test. The only "guard" over the recorder calls was a
+   * grep of this file — and MEASURED, a grep is not a call: leave
+   * `recordKillComboEvent(ev, nowMs)` textually intact but make it unreachable
+   * (`if (String(ev.type) === "__never_fires__") …`) and the sim keeps counting
+   * perfectly while no screen in the game ever hears about it. That is the
+   * repo's 「算出來但沒送到端點」 shape, and it kept 37/37 green.
+   *
+   * These two methods change NOTHING at runtime — same calls, same order, once
+   * per event — and make the drain callable with a stub `this`, so
+   * `ui/hud/killCombo.test.ts` runs the real loop over a real batch and asserts
+   * the store actually moved.
+   *
+   * Camera-wave per-batch state is settled BEFORE anything is dispatched:
+   *   • batchProfiled — `damage` arrives before its `hitImpact` twin, so the
+   *     legacy scalar shake has to know up-front that the directional kick is
+   *     coming and stand down (else one hit shakes twice);
+   *   • frameKicks — the teamfight crowding index, reset each batch.
+   */
+  private drainNetworkEvents(
+    state: MatchState | null,
+    localId: number | null,
+    nowMs: number,
+  ): void {
+    const events = this.conn.drainEvents();
+    this.batchProfiled = batchCarriesImpactProfile(events);
+    this.frameKicks = 0;
+    for (const ev of events) this.handleDrainedEvent(ev, state, localId, nowMs);
+  }
+
+  /**
+   * ONE drained wire event → every sink that consumes it: vfx, entity views,
+   * cast bars, camera feedback, the spatial SFX queue, contextual voice, and the
+   * HUD RECORDERS (death / shop / cast / 連殺 combo / settlement). Order is
+   * load-bearing; see `drainNetworkEvents` for why this is a prototype method.
+   */
+  private handleDrainedEvent(
+    ev: EventMessage,
+    state: MatchState | null,
+    localId: number | null,
+    nowMs: number,
+  ): void {
+    this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
+    this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
+    this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
+    this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
+    // Per-frame combat SFX. QUEUED, not played: the listener frame is only
+    // current after the camera update (step 5), and the batch has to be sorted
+    // by priority before the SfxGate sees it — `abilityCast` admits ONE voice
+    // per 1.2 s arena-wide, so without the sort the cast you hear in a twelve
+    // body fight is decided by packet order. See audio/SpatialSfxQueue.
+    //
+    // `resolveSpatial` returning null is NOT "drop it": it means the event is
+    // deliberately centred (guardianSlain's gold chime, rankUp, fireRingStart)
+    // or its position is not resolvable this frame, and a null source plays
+    // exactly as it does today. Only `spatialMix` (inside the flush) decides
+    // that something is out of range and must not play at all.
+    const sfxKey = combatSfxKey(ev);
+    if (sfxKey) {
+      this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
+    }
+    // CONTEXTUAL VOICE (client-only cosmetic, owner directive 2026-07-25):
+    // event → the champion's own cloned line. Rides audioSystem.playClip inside
+    // contextualVoice, so all mixer gates + the per-category throttle apply;
+    // heroes without a pack no-op. Never touches sim / world.rng.
+    this.dispatchContextualVoice(ev, localId);
+    if (ev.type === "death" && state) {
+      recordDeathEvent(ev, state);
+      // task #85: the ONLY signal that means "you died", as opposed to the
+      // four other ways a champion can read `alive === false` (champ-select,
+      // the whole intermission, a bye team, the resolution/settlement
+      // phases). DeathSystem emits it solely on the hp<=0 crossing, so a
+      // seat parked dead by enterCombat never produces one.
+      this.deathFocus.noteDeath(Number(ev.data.id));
+    }
+    // shop outcomes for THIS player — the purchase/sale confirmations and,
+    // the point of task #60, every rejection with its reason. The HUD turns
+    // them into a readable line + the 効果音ラボ cue (ui/panels/shopFeedback).
+    if (isShopEvent(ev.type)) recordShopEvent(ev, localId);
+    // cast outcomes for THIS player (playtest P7): `castRejected` becomes the
+    // sentence 「冷卻中，還有 3 秒」 + a red shake on the button, and
+    // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
+    // line above; all the logic lives in ui/castAnnounce.
+    recordCastEvent(ev, localId, nowMs);
+    // 連殺 combo (owner 2026-07-27). The COUNT was decided in the sim off
+    // world.tick and arrives on this event; this is the one line that carries
+    // it to the screen. Gated on the local SEAT inside (the number in the
+    // middle of your screen has to be your chain, not a teammate's), so a
+    // spectator's or an enemy's sweep is dropped here rather than rendered.
+    recordKillComboEvent(ev, nowMs);
+    // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
+    // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
+    // SAME record path so a knocked-out player's leave-flow already holds their
+    // card; the final matchEnd payload overwrites it with the decided board.
+    if (ev.type === SETTLEMENT_EVENT || ev.type === TEAM_SETTLEMENT_EVENT) {
+      recordSettlement(ev.data as unknown as MatchSettlement);
+    }
+  }
 
   /** Feed the adaptive manager the frame COST and publish perf stats. */
   private samplePerf(nowMs: number, dtMs: number, workMs: number): void {
