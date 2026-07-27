@@ -39,6 +39,13 @@ import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 // the platform overlay, and it emits the real .glb in the browser.
 // voxelFoundryBundle.test.ts fails if this line moves under a DEV gate.
 import { VoxelFoundryPage } from "./VoxelFoundryPage";
+// 體素條碼 (特徵生成 batch one) — EAGER, third page in the same family and for
+// the same reason: its save is a platform `putOverlayDoc`, so it is safe in
+// production BY AUTHORISATION and must exist in the production bundle. It also
+// costs the bundle nothing extra — the page renders its preview as a stack of
+// coloured divs and imports no graphics code at all.
+// voxelBarcodeBundle.test.ts fails if this line moves under a DEV gate.
+import { VoxelBarcodePage } from "./VoxelBarcodePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -112,6 +119,11 @@ const NAV: NavItem[] = [
   // it survive `vite build`; the dev studio's label travels with its chunk and
   // does not.
   { page: "voxelForge", label: "體素鑄造廠", emoji: "🧰", section: SEC_ASSETS },
+  // 特徵生成 batch one — the 11-slot colour barcode that says WHO a champion is
+  // (黃髮／膚／黑西裝／黑鞋). Sits next to the two pages that consume it: the
+  // 鑄造廠 bakes figures and the 對照表 reviews them. The label is written HERE,
+  // in the eager shell, which is what makes it survive `vite build`.
+  { page: "voxelBarcode", label: "體素條碼", emoji: "🎨", section: SEC_ASSETS },
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
@@ -554,6 +566,7 @@ function Console(): React.JSX.Element {
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voxelForge" && <VoxelFoundryPage />}
+            {page === "voxelBarcode" && <VoxelBarcodePage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

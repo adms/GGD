@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "4363b358c1b8",
+  "hash": "855d5359121f",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -67,6 +67,12 @@
       "path": "config/victory-taunts.json",
       "hash": "0fccc289c0ff",
       "size": 108780
+    },
+    {
+      "id": "voxel-barcodes",
+      "path": "config/voxel-barcodes.json",
+      "hash": "494b633baa8a",
+      "size": 1241
     }
   ]
 }
