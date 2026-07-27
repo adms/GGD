@@ -20,7 +20,9 @@
  *     function the pad system calls every frame) a synthetic one-button frame
  *     and reports the Order/Command that comes back. A binding that moves,
  *     appears or disappears changes this legend in the same commit, with no
- *     second table to remember. Sticks are probed the same way.
+ *     second table to remember. Sticks are probed the same way — and so is the
+ *     LONG PRESS, which is the one binding a press-shaped probe would have
+ *     missed entirely (see `probeGamepadLongPress` for why that mattered).
  *   • KEYBOARD ABILITIES — read straight out of `SLOT_BY_CODE`, the table
  *     `InputCapture` itself dispatches on.
  *
@@ -68,7 +70,6 @@
 import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import {
   BTN,
-  GAMEPAD_MODIFIER_BTN,
   mapGamepadFrame,
   type GamepadFrame,
   type GamepadPlayerCtx,
@@ -105,10 +106,12 @@ export type LegendAction =
   | { kind: "cast"; slot: CastableSlot }
   | { kind: "order"; order: "move" | "attackMove" | "attackTarget" | "stop" }
   | { kind: "command"; command: "recall" | "ready" }
-  /** modifier layer (task #197): a spent skill point on one of the rankable slots */
+  /** a spent skill point on one of the rankable slots (a LONG PRESS) */
   | { kind: "rankUp"; slot: AbilitySlot }
-  /** modifier layer (task #197): a camera op (client-only, never a sim intent) */
-  | { kind: "camera"; camera: "zoomIn" | "zoomOut" | "pan" | "toggleFollow" };
+  /** a long press with no point to spend: the ability explains itself */
+  | { kind: "describe"; slot: CastableSlot }
+  /** a camera op (client-only, never a sim intent) */
+  | { kind: "camera"; camera: "zoomCycle" | "pan" | "toggleFollow" };
 
 /**
  * Slot → caption. The sixth slot's name comes from `passiveSlot` so the legend
@@ -135,11 +138,10 @@ const COMMAND_LABEL: Record<Extract<LegendAction, { kind: "command" }>["command"
   ready: "準備完成",
 };
 
-/** Camera-op caption (modifier layer). Mirrors the keyboard camera captions. */
+/** Camera-op caption. Mirrors the keyboard camera captions. */
 const CAMERA_LABEL: Record<Extract<LegendAction, { kind: "camera" }>["camera"], string> = {
-  zoomIn: "鏡頭拉近",
-  zoomOut: "鏡頭拉遠",
-  pan: "平移鏡頭",
+  zoomCycle: "鏡頭拉遠一級（再按一次歸位）",
+  pan: "平移鏡頭（關掉跟隨後）",
   toggleFollow: "鏡頭跟隨開關",
 };
 
@@ -161,6 +163,14 @@ export function legendActionLabel(action: LegendAction): string {
     if (!label) throw new Error(`controlLegend: no caption for rank-up slot "${action.slot}"`);
     return `升級${label}`;
   }
+  if (action.kind === "describe") {
+    const label = SLOT_LABEL[action.slot];
+    if (!label) throw new Error(`controlLegend: no caption for describe slot "${action.slot}"`);
+    // 「看說明 · X」 rather than 「看X說明」: two of the six slot captions already
+    // carry a parenthetical (「天生技（第六格）」), and wrapping那 in more words
+    // reads as one long noun instead of an instruction.
+    return `看說明 · ${label}`;
+  }
   if (action.kind === "camera") {
     const label = CAMERA_LABEL[action.camera];
     if (!label) throw new Error(`controlLegend: no caption for camera op "${action.camera}"`);
@@ -180,7 +190,7 @@ export function legendActionLabel(action: LegendAction): string {
 
 const PROBE_SELF = { x: 0, z: 0 };
 
-function probeCtx(): GamepadPlayerCtx {
+function probeCtx(skillPoints = 0): GamepadPlayerCtx {
   return {
     selfPos: PROBE_SELF,
     facing: { x: 0, z: 1 },
@@ -189,6 +199,7 @@ function probeCtx(): GamepadPlayerCtx {
     // hovered target, so a missing binding is the only reason a row disappears
     ability: () => ({ castType: "skillshot", range: 6 }),
     nearestEnemy: () => 1,
+    skillPoints,
   };
 }
 
@@ -205,6 +216,10 @@ export function probeGamepadButton(button: number): LegendAction | null {
   if (order && (order.kind === "move" || order.kind === "attackMove" || order.kind === "attackTarget" || order.kind === "stop")) {
     return { kind: "order", order: order.kind };
   }
+  // camera ops are base-layer bindings now (L3 / R3), not a modifier combo
+  const cam = intent.camera;
+  if (cam?.toggleFollow) return { kind: "camera", camera: "toggleFollow" };
+  if (cam?.zoomCycle) return { kind: "camera", camera: "zoomCycle" };
   return null;
 }
 
@@ -215,38 +230,50 @@ export function probeGamepadSticks(): { move: boolean; aim: boolean } {
   return { move: moved.order?.kind === "move", aim: aimed.aim !== undefined };
 }
 
-/**
- * Run one button through the real mapping WITH the modifier (right bumper)
- * held — the same way the pad system engages the second layer (task #197). null
- * = that button does nothing while the modifier is held. Derived, never a copy:
- * move rank-up off A or zoom off LT and this legend moves with it.
- */
-export function probeGamepadModifierButton(button: number): LegendAction | null {
-  const frame: GamepadFrame = {
-    move: null,
-    aim: null,
-    justPressed: [button],
-    // RB held from a PREVIOUS frame (in `held`, not `justPressed`) is what
-    // engages the layer; see GAMEPAD_MODIFIER_BTN.
-    held: [GAMEPAD_MODIFIER_BTN, button],
-  };
-  const intent = mapGamepadFrame(frame, probeCtx());
-  for (const cmd of intent.commands) {
-    if (cmd.kind === "rankUpAbility") return { kind: "rankUp", slot: cmd.slot };
-  }
-  const cam = intent.camera;
-  if (cam?.toggleFollow) return { kind: "camera", camera: "toggleFollow" };
-  if (cam?.zoom !== undefined) return { kind: "camera", camera: cam.zoom < 0 ? "zoomIn" : "zoomOut" };
-  return null;
-}
-
-/** Does the RIGHT stick free-pan the camera while the modifier is held? */
-export function probeGamepadModifierPan(): boolean {
+/** Does the RIGHT stick still offer the camera a free-pan vector? */
+export function probeGamepadPan(): boolean {
   const intent = mapGamepadFrame(
-    { move: null, aim: { x: 1, z: 0 }, justPressed: [], held: [GAMEPAD_MODIFIER_BTN] },
+    { move: null, aim: { x: 1, z: 0 }, justPressed: [] },
     probeCtx(),
   );
   return intent.camera?.pan !== undefined;
+}
+
+/**
+ * ════════════════════════════════════════════════════════════════════════════
+ * THE LONG PRESS IS PROBED TOO — it is not a hand-written row
+ * ════════════════════════════════════════════════════════════════════════════
+ * A long press is NOT a button press, so `probeGamepadButton` (a synthetic
+ * `justPressed` frame) structurally cannot see it: the rank-up gesture would
+ * compile, pass every test, derive a legend — and be completely absent from the
+ * legend a first-time player reads, which is the same as not shipping it.
+ *
+ * The fix is not to hand-write a row (a hand-written row is a copy, and a copy
+ * becomes a lie — see this file's header). It is to give the probe the frame
+ * shape a long press really has: `longPressed` / `longHeld`, exactly what
+ * `GamepadInput.poll` emits once a button has been down for
+ * `GAMEPAD_LONG_PRESS_MS`. Move the rank-up off A and this row moves with it;
+ * delete the long press entirely and these rows vanish (and
+ * `controlLegendModel.test.ts` goes red for the missing 升級 row).
+ *
+ * `skillPoints` is the branch: with a point to spend the hold ranks up, with
+ * none it shows the description. Both are probed, because both are real.
+ */
+export function probeGamepadLongPress(button: number, skillPoints: number): LegendAction | null {
+  const frame: GamepadFrame = {
+    move: null,
+    aim: null,
+    justPressed: [],
+    held: [button],
+    longPressed: [button],
+    longHeld: [button],
+  };
+  const intent = mapGamepadFrame(frame, probeCtx(skillPoints));
+  for (const cmd of intent.commands) {
+    if (cmd.kind === "rankUpAbility") return { kind: "rankUp", slot: cmd.slot };
+  }
+  if (intent.describe) return { kind: "describe", slot: intent.describe };
+  return null;
 }
 
 /**
@@ -268,7 +295,15 @@ const PAD_FACE: Record<string, string> = {
   RT: "RT",
   BACK: "Back",
   START: "Start",
+  // 「按下」 spelled out: a stick CLICK is the one control a first-time pad
+  // player does not know exists, and "L3" alone is jargon on a box that prints
+  // no such label anywhere on it.
+  L3: "左類比按下",
+  R3: "右類比按下",
   DPAD_UP: "十字鍵 ↑",
+  DPAD_DOWN: "十字鍵 ↓",
+  DPAD_LEFT: "十字鍵 ←",
+  DPAD_RIGHT: "十字鍵 →",
 };
 
 export function padFace(name: string): string {
@@ -294,27 +329,27 @@ export function gamepadLegend(): LegendRow[] {
     if (!action) continue;
     rows.push({ id: `btn-${name}`, control: padFace(name), label: legendActionLabel(action) });
   }
-  // ── THE MODIFIER LAYER (task #197): hold the right bumper for rank-up + camera.
-  // Each row is derived by running the map with RB held, exactly like the base
-  // rows above — a binding that moves in `mapGamepadFrame` moves here too.
-  const modName = Object.entries(BTN).find(([, index]) => index === GAMEPAD_MODIFIER_BTN)?.[0];
-  const modFace = modName ? padFace(modName) : String(GAMEPAD_MODIFIER_BTN);
-  for (const [name, index] of Object.entries(BTN)) {
-    if (index === GAMEPAD_MODIFIER_BTN) continue; // the modifier itself, not a combo
-    const action = probeGamepadModifierButton(index);
-    if (!action) continue;
+  if (probeGamepadPan()) {
     rows.push({
-      id: `mod-${name}`,
-      control: `${modFace} + ${padFace(name)}`,
-      label: legendActionLabel(action),
-    });
-  }
-  if (probeGamepadModifierPan()) {
-    rows.push({
-      id: "mod-stick-right",
-      control: `${modFace} + 右類比`,
+      id: "stick-right-pan",
+      control: "右類比",
       label: legendActionLabel({ kind: "camera", camera: "pan" }),
     });
+  }
+  // ── LONG PRESS — one row per button, exactly like every other binding, and
+  // every one of them PROBED (see probeGamepadLongPress). Both branches are
+  // probed: what the hold does with a point in hand, and what it does with
+  // none. A button whose long press does nothing gets no row.
+  for (const [name, index] of Object.entries(BTN)) {
+    const withPoint = probeGamepadLongPress(index, 1);
+    const without = probeGamepadLongPress(index, 0);
+    const action = withPoint ?? without;
+    if (!action) continue;
+    let label = legendActionLabel(action);
+    // the same hold does a second thing when there is no point to spend — say
+    // so on the same row rather than inventing a second one
+    if (withPoint?.kind === "rankUp" && without?.kind === "describe") label += "（沒點數看說明）";
+    rows.push({ id: `long-${name}`, control: `長按 ${padFace(name)}`, label });
   }
   return rows;
 }
@@ -417,8 +452,25 @@ export interface LegendRect {
   h: number;
 }
 
-/** Width of the left-flank column. Fits 「十字鍵 ↑」 + a 10-character caption. */
+/**
+ * MINIMUM width of the left-flank column. It used to be the only width, a flat
+ * 218 that fit 「十字鍵 ↑」 plus a 10-character caption — and the column renders
+ * its captions `nowrap` + `textOverflow: ellipsis`, so anything longer was
+ * silently cut to 「有技能點時升…」. That is the same "confident, incomplete
+ * answer" the row COUNT bug produced one function down, in the one place a
+ * first-time player reads to learn the game. The real width is now derived from
+ * the rows (see {@link legendColumnWidth}); this is the floor.
+ */
 export const LEGEND_COLUMN_W = 218;
+/**
+ * Ceiling. Past this the column is eating the arena, and the honest answer is
+ * the wrapping strip (which cannot clip) rather than a wider and wider card.
+ */
+export const LEGEND_COLUMN_MAX_W = 320;
+/** 9px left + 9px right padding (ControlLegend's Column). */
+const COLUMN_PAD_X = 18;
+/** Gap between the key-cap gutter and the caption (the row's flex `gap`). */
+const COLUMN_ROW_GAP = 6;
 
 /*
  * The column is sized to its CONTENT, and the numbers below are MEASURED off a
@@ -481,8 +533,37 @@ export function approxTextWidth(text: string, fontPx: number): number {
 
 /** Width one 「chip + caption」 pill occupies in the strip. */
 export function legendPillWidth(row: LegendRow): number {
-  const chip = Math.max(CHIP_MIN_W, approxTextWidth(row.control, 11)) + CHIP_BOX_EXTRA;
-  return chip + PILL_INNER_GAP + approxTextWidth(row.label, 10.5);
+  return legendChipWidth(row) + PILL_INNER_GAP + approxTextWidth(row.label, 10.5);
+}
+
+/** Box width of one row's key-cap chip. */
+function legendChipWidth(row: LegendRow): number {
+  return Math.max(CHIP_MIN_W, approxTextWidth(row.control, 11)) + CHIP_BOX_EXTRA;
+}
+
+/**
+ * The column's key-cap gutter: as wide as its WIDEST chip. It was a flat 62px,
+ * which 「左鍵點自己」 (a shipping keyboard row) already overflowed and every
+ * 「長按 …」 row would overflow further — a chip spilling into the caption beside
+ * it. ControlLegend's Column reads this so the two cannot disagree.
+ */
+export function legendChipColumnWidth(rows: readonly LegendRow[]): number {
+  let w = CHIP_MIN_W + CHIP_BOX_EXTRA;
+  for (const row of rows) w = Math.max(w, legendChipWidth(row));
+  return Math.ceil(w);
+}
+
+/**
+ * The width this binding set needs so that NO caption is ellipsised, clamped
+ * into [{@link LEGEND_COLUMN_W}, {@link LEGEND_COLUMN_MAX_W}]. A set that wants
+ * more than the ceiling gets no column at all (see `columnRect`) and falls
+ * through to the strip, which wraps instead of clipping.
+ */
+export function legendColumnWidth(rows: readonly LegendRow[]): number {
+  let caption = 0;
+  for (const row of rows) caption = Math.max(caption, approxTextWidth(row.label, 11));
+  const needed = legendChipColumnWidth(rows) + COLUMN_ROW_GAP + Math.ceil(caption) + COLUMN_PAD_X;
+  return Math.max(LEGEND_COLUMN_W, needed);
 }
 
 /** How many wrapped lines these rows need inside `innerWidth` of usable space. */
@@ -611,7 +692,7 @@ export function controlLegendRect(
   // top-gutter strip rather than clipping rows off the bottom — the strip
   // wraps, so it can hold the same content in less height.
   return (
-    columnRect(viewport, touch, legendColumnHeight(rows.length)) ??
+    columnRect(viewport, touch, legendColumnHeight(rows.length), legendColumnWidth(rows)) ??
     stripRect(viewport, touch, couchPlayers, rows)
   );
 }
@@ -621,9 +702,18 @@ export function controlLegendRect(
  * whose reserved rect shares the column's x-range — the bottom-left telemetry
  * chips normally, and on a narrow window the bottom-right minimap too.
  */
-function columnRect(viewport: HudViewport, touch: boolean, needed: number): LegendRect | null {
+function columnRect(
+  viewport: HudViewport,
+  touch: boolean,
+  needed: number,
+  width: number,
+): LegendRect | null {
   const x = HUD_EDGE;
-  const w = LEGEND_COLUMN_W;
+  // Too wide for a hint box → no column. The strip WRAPS, so it can carry the
+  // same captions without ellipsising any of them; a wider and wider card over
+  // the arena is the wrong answer to a long caption.
+  if (width > LEGEND_COLUMN_MAX_W) return null;
+  const w = width;
   const top = hudStackEnd("top-left", touch, { skipTransient: true }) + HUD_GAP;
   let bottomLimit = viewport.height - HUD_EDGE;
   for (const r of reservedRects(viewport, touch)) {

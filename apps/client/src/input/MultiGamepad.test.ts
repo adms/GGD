@@ -13,7 +13,9 @@ import {
   MultiGamepadSystem,
   connectedPadIndices,
   BTN,
+  GAMEPAD_LONG_PRESS_MS,
   MOVE_LEAD,
+  type GamepadCameraIntent,
   type PadState,
   type GamepadPlayerCtx,
 } from "./GamepadInput";
@@ -37,22 +39,35 @@ interface Recorded {
   orders: [number, Order][];
   aims: [number, Vec2][];
   commands: [number, Command][];
+  cameras: [number, GamepadCameraIntent][];
   buttons: [number, number][];
   padsChanged: number[][];
 }
 
-function harness(players: number, positions: (Vec2 | null)[] = []): {
+function harness(
+  players: number,
+  positions: (Vec2 | null)[] = [],
+  skillPoints: (player: number) => number = () => 0,
+): {
   rec: Recorded;
   sys: MultiGamepadSystem;
   setPads: (pads: (PadState | null)[]) => void;
 } {
-  const rec: Recorded = { orders: [], aims: [], commands: [], buttons: [], padsChanged: [] };
+  const rec: Recorded = {
+    orders: [],
+    aims: [],
+    commands: [],
+    cameras: [],
+    buttons: [],
+    padsChanged: [],
+  };
   let pads: (PadState | null)[] = [];
   const ctx = (player: number): Omit<GamepadPlayerCtx, "lastAimDir"> => ({
     selfPos: positions[player] ?? { x: player * 100, z: 0 },
     facing: { x: 1, z: 0 },
     ability: (slot) => ABILITIES[slot],
     nearestEnemy: () => null,
+    skillPoints: skillPoints(player),
   });
   const sys = new MultiGamepadSystem(
     () => players,
@@ -60,6 +75,7 @@ function harness(players: number, positions: (Vec2 | null)[] = []): {
       onOrder: (p, o) => rec.orders.push([p, o]),
       onAim: (p, a) => rec.aims.push([p, a]),
       onCommand: (p, c) => rec.commands.push([p, c]),
+      onCamera: (p, cam) => rec.cameras.push([p, cam]),
       onButton: (p, b) => rec.buttons.push([p, b]),
       onPadsChanged: (i) => rec.padsChanged.push(i),
     },
@@ -161,6 +177,70 @@ describe("intent isolation (couch-intent-isolation)", () => {
     expect(cast0.target.dir.z).toBeCloseTo(0);
     expect(cast1.target.dir.x).toBeCloseTo(0);
     expect(cast1.target.dir.z).toBeCloseTo(1);
+  });
+
+  /**
+   * The owner's 2026-07-27 remap has to hold for EVERY seat, not just player 0.
+   * These press real buttons on pad k and read the intents that come out of
+   * player k's sink — the same shape as the single-pad guards.
+   */
+  it("the remap holds for every player index (LB=EX, RB=天生技, RT=attack, ↑=stop, ↓=recall)", () => {
+    cover("couch-pad-routing");
+    for (const player of [0, 1, 2, 3]) {
+      const { rec, sys, setPads } = harness(4);
+      const pads = [0, 1, 2, 3].map((k) =>
+        pad([0, 0, 0, 0], k === player ? [BTN.LB, BTN.RB, BTN.DPAD_DOWN] : []),
+      );
+      setPads(pads);
+      sys.poll();
+      const mine = rec.commands.filter(([p]) => p === player).map(([, c]) => c);
+      expect(mine).toEqual([
+        expect.objectContaining({ kind: "castAbility", slot: "EX" }),
+        expect.objectContaining({ kind: "castAbility", slot: "PASSIVE" }),
+        { kind: "recall" },
+      ]);
+      // nobody else received anything
+      expect(rec.commands.filter(([p]) => p !== player)).toEqual([]);
+
+      // …and the orders half of the map, on the same seat
+      const stop = harness(4);
+      stop.setPads(
+        [0, 1, 2, 3].map((k) => pad([0, 0, 0, 0], k === player ? [BTN.DPAD_UP] : [])),
+      );
+      stop.sys.poll();
+      expect(stop.rec.orders).toEqual([[player, { kind: "stop" }]]);
+    }
+  });
+
+  it("L3 / R3 camera ops are routed per player, never shared", () => {
+    cover("couch-intent-isolation");
+    const { rec, sys, setPads } = harness(2);
+    setPads([pad([0, 0, 0, 0], [BTN.L3]), pad([0, 0, 0, 0], [BTN.R3])]);
+    sys.poll();
+    expect(rec.cameras).toEqual([
+      [0, { toggleFollow: true }],
+      [1, { zoomCycle: true }],
+    ]);
+  });
+
+  it("a long press spends the point of the player who is HOLDING it", () => {
+    cover("couch-intent-isolation");
+    // only player 1 has a skill point; both hold X for well over the threshold
+    const { rec, sys, setPads } = harness(2, [], (p) => (p === 1 ? 2 : 0));
+    const perf = globalThis.performance;
+    const realNow = perf.now.bind(perf);
+    let now = 0;
+    perf.now = () => now;
+    try {
+      setPads([pad([0, 0, 0, 0], [BTN.X]), pad([0, 0, 0, 0], [BTN.X])]);
+      sys.poll(); // press edge → both CAST E
+      now += GAMEPAD_LONG_PRESS_MS;
+      sys.poll(); // threshold → only player 1 ranks up
+      const ranks = rec.commands.filter(([, c]) => c.kind === "rankUpAbility");
+      expect(ranks).toEqual([[1, { kind: "rankUpAbility", slot: "E" }]]);
+    } finally {
+      perf.now = realNow;
+    }
   });
 
   it("button edge state is per pad: player 1 holding A doesn't eat player 0's press", () => {
