@@ -104,9 +104,74 @@ export interface SettlementPlayer {
   tierAfter?: string;
 }
 
+/**
+ * ONE PLAYER'S CONTRIBUTION IN ONE ROUND — a DELTA, never a running total.
+ *
+ * This shape exists because per-round performance was, until now, unobtainable
+ * anywhere in the system. `PlayerMatchStats` lives in SimWorld, is cumulative
+ * from champion spawn and is never reset per round (roundReport.ts §2(a) says
+ * so at length: 「there is no such number as "the damage I did this round"
+ * anywhere in the system, server included」). The only per-round facts on the
+ * wire were `SeatState.roundKills/roundDeaths` — four integers, no damage, no
+ * healing, no mob kills. A per-round chart cannot be drawn from that.
+ *
+ * So MatchController snapshots the cumulative scoreboard at every combat settle
+ * and ships the DIFFERENCE against the previous settle. Deltas rather than
+ * running totals on purpose: a chart of cumulative damage only ever slopes up
+ * and says nothing about which round a player actually showed up in.
+ *
+ * `hpRatio` is the exception and is deliberately NOT a delta — it is a level,
+ * read off `Health` at the instant the round settled (0 when dead). It is the
+ * 存活HP比例 the MVP formula rewards.
+ */
+export interface RoundStatDelta {
+  seatId: number;
+  /** hp / maxHp at the moment the round settled, clamped to [0,1]; 0 if dead. */
+  hpRatio: number;
+  kills: number;
+  deaths: number;
+  assists: number;
+  /** damage to ENEMY CHAMPIONS only — recordDamage drops non-champion targets. */
+  damageDealt: number;
+  /** HP actually lost. Includes zombie damage (#215) — owner-accepted. */
+  damageTaken: number;
+  damageBlocked: number;
+  healingDone: number;
+  ccAppliedTicks: number;
+  /** ticks alive while combat was live — how long you lasted THIS round. */
+  timeAliveTicks: number;
+  revivesPerformed: number;
+  /** world.mobKills delta: 殭屍 this player put down this round (#215). */
+  mobKills: number;
+  /**
+   * This seat's team drew the BYE (TeamState.roundOutcome === NONE) — it never
+   * fought. Every counter above is 0 and hpRatio is 0, because enterCombat
+   * parks a bye team's seats DEAD without emitting a death: byte-identical to
+   * a team that was instantly wiped (#173 is the bug that proved it). Without
+   * this flag the chart would plot a sat-out round as "ranked last, zero
+   * damage" — a lie about play that never happened. Consumers must SKIP these
+   * rounds rather than score them.
+   */
+  bye: boolean;
+}
+
+/** Every player's delta for one settled combat round. */
+export interface RoundStatsEntry {
+  /** 1-based round number this delta covers (PhaseMachine.round at settle). */
+  round: number;
+  players: RoundStatDelta[];
+}
+
 export interface MatchSettlement {
   matchId: string;
   /** team id that placed 1st (winner), or -1 if undecided */
   winnerTeam: number;
   perPlayer: SettlementPlayer[];
+  /**
+   * Per-round history, oldest round first — the input to the settlement's
+   * 每回合戰績變化 chart. OPTIONAL because a pre-feature server (and every
+   * hand-built test fixture) simply has no such field; the client falls back to
+   * "no per-round data" rather than drawing a chart out of nothing.
+   */
+  rounds?: RoundStatsEntry[];
 }

@@ -19,7 +19,12 @@ import { Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import { grade, perMatchRanks } from "@ggd/shared/sim/stats/rating";
-import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type {
+  MatchSettlement,
+  RoundStatDelta,
+  RoundStatsEntry,
+  SettlementPlayer,
+} from "@ggd/shared/protocol/messages";
 import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import {
   beginCombatFlowers,
@@ -307,6 +312,29 @@ export class MatchController {
    * matchEnd settlement (maybeFinish), so it is never double-broadcast.
    */
   private eliminationSettlements: { teamId: number; settlement: MatchSettlement }[] = [];
+
+  /**
+   * PER-ROUND HISTORY — the settlement chart's only possible data source.
+   *
+   * `PlayerMatchStats` is cumulative from champion spawn and is never reset per
+   * round, so "the damage I did in round 7" does not exist as a stored number
+   * anywhere, server included. This array is how it comes to exist: at every
+   * combat settle we diff the cumulative scoreboard against the previous settle
+   * and keep the DELTA.
+   *
+   * NOT sim state and never serialized into the schema or the digest — it is
+   * derived, append-only host bookkeeping, exactly like eliminationSettlements.
+   * A replay of the same seed produces the same deltas because the counters it
+   * reads are themselves part of the deterministic world state.
+   */
+  private readonly roundHistory: RoundStatsEntry[] = [];
+
+  /**
+   * The cumulative scoreboard AS OF the previous round settle, keyed by seat —
+   * the subtrahend for the next delta. Seeded lazily: a seat absent here diffs
+   * against zero, which is correct for the first round a champion exists.
+   */
+  private readonly lastRoundCumulative = new Map<SeatId, RoundStatDelta>();
 
   /**
    * Dev-cheat toggles (offline testing only; MatchRoom hard-gates the channel).
@@ -1160,6 +1188,14 @@ export class MatchController {
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
+    // PER-ROUND SNAPSHOT — must run BEFORE settleRound(). settleRound is where
+    // a team can be ELIMINATED, and an elimination there immediately builds a
+    // #193 settlement for the knocked-out players. Recording afterwards would
+    // hand those players a card whose per-round history is missing the very
+    // round that just knocked them out, while its whole-match totals include it
+    // — the two halves of one payload disagreeing. roundHistory.test.ts pins
+    // this by summing an elimination payload's rounds against its own totals.
+    this.recordRoundHistory();
     this.settleRound();
     this.world.combatActive = false;
     // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the
@@ -1212,6 +1248,61 @@ export class MatchController {
   }
 
   /**
+   * Snapshot THIS round's contribution for every seat and append it to
+   * {@link roundHistory}. Called once per settled combat round, from
+   * concludeCombat, BEFORE settleRound pays out — nothing it reads is touched
+   * by the payout, but reading first keeps "the instant combat ended" literal.
+   *
+   * Every counter is stored as a DELTA against the previous settle; `hpRatio`
+   * is a LEVEL (see RoundStatDelta). Pure reads of world state + a Map write on
+   * the controller: no rng, no clock, no digest movement.
+   */
+  private recordRoundHistory(): void {
+    const players: RoundStatDelta[] = [];
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const s = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
+      const hp = this.world.health.get(seat.entityId);
+      const ratio = hp && hp.alive && hp.maxHp > 0 ? hp.hp / hp.maxHp : 0;
+      const cur: RoundStatDelta = {
+        seatId,
+        hpRatio: ratio < 0 ? 0 : ratio > 1 ? 1 : ratio,
+        kills: s.kills,
+        deaths: s.deaths,
+        assists: s.assists,
+        damageDealt: s.damageDealt,
+        damageTaken: s.damageTaken,
+        damageBlocked: s.damageBlocked,
+        healingDone: s.healingDone,
+        ccAppliedTicks: s.ccAppliedTicks,
+        timeAliveTicks: s.timeAliveTicks,
+        revivesPerformed: s.revivesPerformed,
+        mobKills: this.world.mobKills.get(seat.entityId) ?? 0,
+        bye: this.roundOutcome.get(seat.teamId) === ROUND_OUTCOME.NONE,
+      };
+      const prev = this.lastRoundCumulative.get(seatId);
+      players.push({
+        seatId,
+        hpRatio: cur.hpRatio, // a level, never differenced
+        kills: cur.kills - (prev?.kills ?? 0),
+        deaths: cur.deaths - (prev?.deaths ?? 0),
+        assists: cur.assists - (prev?.assists ?? 0),
+        damageDealt: cur.damageDealt - (prev?.damageDealt ?? 0),
+        damageTaken: cur.damageTaken - (prev?.damageTaken ?? 0),
+        damageBlocked: cur.damageBlocked - (prev?.damageBlocked ?? 0),
+        healingDone: cur.healingDone - (prev?.healingDone ?? 0),
+        ccAppliedTicks: cur.ccAppliedTicks - (prev?.ccAppliedTicks ?? 0),
+        timeAliveTicks: cur.timeAliveTicks - (prev?.timeAliveTicks ?? 0),
+        revivesPerformed: cur.revivesPerformed - (prev?.revivesPerformed ?? 0),
+        mobKills: cur.mobKills - (prev?.mobKills ?? 0),
+        bye: cur.bye,
+      });
+      this.lastRoundCumulative.set(seatId, cur);
+    }
+    this.roundHistory.push({ round: this.phase.round, players });
+  }
+
+  /**
    * Assemble the victory-settlement payload: every player's scoreboard, their
    * role-normalised grade (vs the lobby), and their per-match rank 1..N, plus
    * the winning team. Pure read of world.matchStats + the rating module. The
@@ -1246,7 +1337,15 @@ export class MatchController {
     });
     let winnerTeam = -1;
     for (const [teamId, place] of this.placements) if (place === 1) winnerTeam = teamId;
-    return { matchId: this.matchId, winnerTeam, perPlayer: players };
+    // DEEP-COPIED per round, not handed out by reference: the elimination path
+    // (#193) builds a settlement mid-match and the controller keeps recording
+    // rounds afterwards. A shared array would let an already-broadcast payload
+    // grow rounds the player never saw when it was sent.
+    const rounds = this.roundHistory.map((r) => ({
+      round: r.round,
+      players: r.players.map((p) => ({ ...p })),
+    }));
+    return { matchId: this.matchId, winnerTeam, perPlayer: players, rounds };
   }
 
   /**
