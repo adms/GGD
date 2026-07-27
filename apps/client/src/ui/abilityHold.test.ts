@@ -15,6 +15,7 @@ import {
   setHeldAbility,
   subscribeHeldAbility,
   describeHeldAbility,
+  UNRANKABLE_NOTE,
   type HeldSeat,
 } from "./abilityHold";
 
@@ -140,5 +141,37 @@ describe("describeHeldAbility (task-152)", () => {
 
   it("returns null for an unknown champion", () => {
     expect(describeHeldAbility({ ...seat, championId: "nope" }, "Q")).toBeNull();
+  });
+
+  /**
+   * OWNER RULING, 2026-07-27 (gamepad remap): long-press-to-level stays, but the
+   * two slots it CANNOT level must say why. On a pad, LB/RB use the identical
+   * 400 ms gesture that levels Q/W/E/R — so with points in hand, silence reads
+   * as a dead button, not as a rule.
+   *
+   * Asserted against the SHIPPED constants, and in the failing direction: the
+   * defect is the absence of the line, so the test demands its presence in the
+   * panel a player actually holds open. Deleting either `meta.push` turns this
+   * red; so does emptying the string, because the constant is asserted to be
+   * non-trivial and to name the skill point.
+   */
+  it("says WHY EX and 天生技 refuse a skill point", () => {
+    const ex = describeHeldAbility(seat, "EX")!;
+    expect(ex.meta).toContainEqual({ label: "等級", value: UNRANKABLE_NOTE.EX });
+
+    // both notes must actually mention the point — an empty or vague string
+    // satisfies `toContainEqual` above while telling the player nothing
+    for (const note of [UNRANKABLE_NOTE.EX, UNRANKABLE_NOTE.PASSIVE]) {
+      expect(note.length).toBeGreaterThan(4);
+      expect(note).toContain("技能點");
+    }
+
+    // the four rankable slots must NOT carry it — a note on Q would be a lie,
+    // and this is the assertion that stops the fix from being applied blanket
+    for (const slot of ["Q", "W", "E", "R"] as const) {
+      const info = describeHeldAbility(seat, slot);
+      if (!info) continue;
+      expect(info.meta.some((m) => m.label === "等級")).toBe(false);
+    }
   });
 });

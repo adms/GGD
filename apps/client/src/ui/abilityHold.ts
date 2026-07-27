@@ -86,6 +86,25 @@ export function useHeldAbility(): ChampionAbilitySlot | null {
 
 const SLOT_INDEX: Record<CoreAbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3 };
 
+/**
+ * Why a long press on EX / 天生技 spends no skill point (owner ruling,
+ * 2026-07-27, on the gamepad remap: keep long-press-to-level, but a slot that
+ * CANNOT level must say so rather than appear to do nothing).
+ *
+ * These two slots are structurally unrankable — `CommandSystem` refuses a
+ * `rankUpAbility` naming EX or the innate, so the pad's `RANK_BY_LONG_PRESS`
+ * deliberately omits LB and RB and falls through to this panel. Without a line
+ * saying why, a player holding LB with points in hand reads it as a dead
+ * button; the four core slots level under the identical gesture, so the
+ * inconsistency is the thing that needs explaining, not the description.
+ *
+ * Exported so the test asserts the SHIPPED string and cannot drift from it.
+ */
+export const UNRANKABLE_NOTE = {
+  EX: "固定強度 · 不吃技能點",
+  PASSIVE: "天生 1 級 · 不吃技能點",
+} as const;
+
 /** The seat fields the resolver reads (SeatView satisfies this structurally). */
 export interface HeldSeat extends ExSlotSeat {
   championId: string;
@@ -133,6 +152,7 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
       meta.push({ label: "快捷", value: "D / ✛↑" });
     }
     meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
+    meta.push({ label: "等級", value: UNRANKABLE_NOTE.PASSIVE });
     const info: HeldAbilityInfo = {
       slot,
       name: innate.displayName,
@@ -152,6 +172,7 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
     ];
     if (ex.manaCost !== undefined) meta.push({ label: "魔力", value: `${ex.manaCost}` });
     meta.push({ label: "快捷", value: "F / Back" });
+    meta.push({ label: "等級", value: UNRANKABLE_NOTE.EX });
     const info: HeldAbilityInfo = {
       slot,
       name: stripAbilityNumber(ex.name),

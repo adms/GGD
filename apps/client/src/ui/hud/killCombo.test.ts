@@ -927,3 +927,97 @@ describe("the rendered counter", () => {
     expect(html(30)).toContain("prefers-reduced-motion");
   });
 });
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑥ RENDERED BUT INVISIBLE — the hole this suite could not close by rendering
+ *
+ * The three previous rounds all landed on the same wall: `renderToStaticMarkup`
+ * runs in the node env, which has NO LAYOUT ENGINE. It produces the markup a
+ * browser WOULD paint; it does not paint. So `display:none` on the outer box,
+ * or `opacity:0`, or a zero font-size, leaves every text-based assertion in
+ * this file green while the player sees nothing. MEASURED: 7 of 9 such CSS
+ * mutations survived the full suite.
+ *
+ * ⚠️ THE LIMIT, STATED HONESTLY. This is NOT a general fix, and it must not be
+ * read as one. The class "CSS that hides an element" is unbounded — a
+ * `clip-path`, a `z-index` under an opaque sibling, a `color` equal to the
+ * background, a transform off the viewport, all still pass. A general fix needs
+ * a real layout engine (jsdom does not compute layout either; it would take a
+ * headless browser), which this suite deliberately does not carry.
+ *
+ * A repo-wide grep confirmed ZERO of the 25 HUD components carry a guard like
+ * this one, so the gap is a property of the whole node-env HUD suite, not of
+ * this feature. What follows is therefore a BOUNDED DENYLIST: the specific
+ * declarations that actually shipped as survivors, pinned so that re-applying
+ * any of them turns this file red. It buys back the measured hole and nothing
+ * more.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("rendered AND visible", () => {
+  /** Every inline `style="…"` on the rendered markup, in document order. */
+  const styleAttrs = (html: string): string[] =>
+    [...html.matchAll(/style="([^"]*)"/g)].map((m) =>
+      m[1]!.replace(/&quot;/g, '"').replace(/&#x27;/g, "'"),
+    );
+
+  /**
+   * Declarations that make a box paint nothing. Each entry was an ACTUAL
+   * survivor of the mutation round, not a hypothetical.
+   */
+  const HIDES_IT: { name: string; re: RegExp }[] = [
+    { name: "display:none", re: /display:\s*none/i },
+    { name: "visibility:hidden", re: /visibility:\s*(hidden|collapse)/i },
+    { name: "opacity:0", re: /opacity:\s*0(?:\.0+)?(?:[;\s]|$)/i },
+    { name: "font-size:0", re: /font-size:\s*0(?:\.0+)?(?:px|em|rem)?(?:[;\s]|$)/i },
+    { name: "zero width", re: /(?:^|[;\s])width:\s*0(?:\.0+)?(?:px|%)?(?:[;\s]|$)/i },
+    { name: "zero height", re: /(?:^|[;\s])height:\s*0(?:\.0+)?(?:px|%)?(?:[;\s]|$)/i },
+    { name: "scale(0)", re: /scale\(\s*0(?:\.0+)?\s*\)/i },
+    { name: "fully transparent colour", re: /color:\s*(transparent|rgba\([^)]*,\s*0(?:\.0+)?\s*\))/i },
+  ];
+
+  /**
+   * The counter at its LOUDEST — mid-window, well before the fade begins. The
+   * exit phase legitimately drives opacity and scale toward zero, so asserting
+   * there would forbid the animation this feature is made of; asserting here
+   * forbids only "it never appeared".
+   */
+  const atFullStrength = (): string => {
+    const rect = killComboRect({ width: 1546, height: 900 }, { touch: false, legendUp: false })!;
+    return renderToStaticMarkup(
+      createElement(KillComboView, { rect, view: killComboDisplay(state(12), 0)! }),
+    );
+  };
+
+  for (const { name, re } of HIDES_IT) {
+    it(`does not ship ${name}`, () => {
+      const offenders = styleAttrs(atFullStrength()).filter((s) => re.test(s));
+      expect(
+        offenders,
+        `a style attribute matching ${name} means the markup renders but paints nothing: ${offenders.join(" | ")}`,
+      ).toEqual([]);
+    });
+  }
+
+  it("the mounted container is subject to the same rule", () => {
+    // Not just the pure view: the thing HudRoot mounts. A `display:none` added
+    // to the container's wrapper hides the counter just as completely.
+    inCombat();
+    chain(12);
+    const attrs = styleAttrs(renderCombo());
+    expect(attrs.length, "the container rendered nothing at all").toBeGreaterThan(0);
+    for (const { name, re } of HIDES_IT) {
+      expect(attrs.filter((s) => re.test(s)), `mounted container ships ${name}`).toEqual([]);
+    }
+  });
+
+  it("the number is painted at a size a person can read", () => {
+    // font-size:0 is in the denylist above; this pins the other direction — a
+    // 1px number is not "shipped", and the tier styling exists to make the
+    // count legible across a room.
+    const sizes = [...atFullStrength().matchAll(/font-size:(\d+(?:\.\d+)?)px/g)].map((m) =>
+      Number(m[1]),
+    );
+    expect(sizes.length, "no font-size shipped at all").toBeGreaterThan(0);
+    expect(Math.max(...sizes)).toBeGreaterThanOrEqual(16);
+  });
+});

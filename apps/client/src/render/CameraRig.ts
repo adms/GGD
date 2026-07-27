@@ -105,9 +105,16 @@ export interface CameraUpdateArgs {
   cursor: CursorState | null;
   panKeys: PanKeys | null;
   /**
-   * Analog free-pan direction (world XZ unit vector) from the gamepad modifier
-   * layer (task #197). Summed with the arrow-key / edge-pan sources and, like
-   * them, only bites while follow is off. Null/absent = no pad pan this frame.
+   * Analog free-pan direction (world XZ unit vector) from the gamepad's RIGHT
+   * STICK. Summed with the arrow-key / edge-pan sources and, like them, only
+   * bites while follow is off — L3 is what turns follow off. Null/absent = no
+   * pad pan this frame.
+   *
+   * It used to come from a held-modifier layer (task #197); that layer was
+   * deleted with the 2026-07-27 remap, because the right stick already aims and
+   * a stick that aims can deflect the camera for free. Do not re-introduce a
+   * modifier for panning — there is no button left to spare, and follow-off is
+   * now the mode that grants panning.
    */
   panVec?: Vec2 | null;
   viewportWidth: number;
@@ -498,8 +505,8 @@ export class CameraRig {
         if (args.cursor.y <= EDGE_PX) panZ += 1;
         else if (args.cursor.y >= args.viewportHeight - EDGE_PX) panZ -= 1;
       }
-      // gamepad modifier-layer free-pan (task #197): analog, summed with the
-      // key/edge sources above so a pad and a keyboard never fight for sign.
+      // gamepad right-stick free-pan: analog, summed with the key/edge sources
+      // above so a pad and a keyboard never fight for sign.
       if (args.panVec) {
         panX += args.panVec.x;
         panZ += args.panVec.z;
