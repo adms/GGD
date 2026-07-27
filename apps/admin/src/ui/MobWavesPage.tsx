@@ -350,7 +350,9 @@ function RoundTr(props: {
   return (
     <tr style={{ background: row.cleanFinale ? "#231d10" : undefined }}>
       <Td>
-        <b style={{ color: row.active ? TEXT_MAIN : TEXT_DIM }}>第 {row.round} 回合</b>
+        {/* one string, not `第 {n} 回合` — three text nodes would let a test
+            that greps for the label pass against a table with no numbers */}
+        <b style={{ color: row.active ? TEXT_MAIN : TEXT_DIM }}>{`第 ${row.round} 回合`}</b>
       </Td>
       <Td dim={!row.active}>
         {editable && cell ? (

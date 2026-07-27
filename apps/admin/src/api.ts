@@ -324,10 +324,14 @@ export function getOverlayLog(): Promise<OverlayLogLine[]> {
  * doc from here means the console and the shard can never disagree about what
  * "現在生效的值" is. Returns null when this doc has no overlay entry, which the
  * caller answers by falling back to the shipped doc.
+ *
+ * Sent WITH the operator's token even though the route is public: every overlay
+ * call this console makes is authenticated (contentOverlay.test.ts pins that),
+ * and an admin page reading admin state should not be the one exception.
  */
 export function getOverlayDoc(collection: string, id: string): Promise<unknown | null> {
   return api
-    .request<{ docs?: Record<string, unknown> }>("/content-overlay/bundle", { auth: false })
+    .request<{ docs?: Record<string, unknown> }>("/content-overlay/bundle")
     .then((body) => body?.docs?.[`${collection}/${id}`] ?? null);
 }
 
