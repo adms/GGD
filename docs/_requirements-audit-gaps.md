@@ -4678,3 +4678,74 @@ HUD 測試套件的性質，不是這一項的疏漏。而且這個類別是**�
 順手修掉的殘留：`render/CameraRig.ts` 兩處註解還在說 `panVec` 來自
 「gamepad modifier layer (task #197)」，但那一層在這次重配對裡已刪除，現在來自
 **右類比 + L3 解鎖跟隨**。註解寫進了「不要再引入 modifier 來平移」的理由。
+
+---
+
+## 2026-07-27 · owner 回報兩個「後台看不到」,稽核結果
+
+owner:「https://ggd.adms.ai/editor/ 沒辦法看,並且殭屍與手把對應設定、連殺設定、
+每回合戰鬥條件設定這些都在後台沒看到」→ 接著:「/editor/ 應該在 ggd.adms.ai/admin
+後台也要能正常使用才對」。
+
+13 個 agent 的唯讀稽核(4 路普查 + 8 路反駁 + 合成),結論如下。
+
+### `/editor/` 判定 NOT_COPIED —— 不是壞掉,是刻意拔掉的
+
+兩段同時斷:
+- `docker/edge.Dockerfile:96` `ARG GGD_INCLUDE_EDITOR="0"` 預設關,**全 repo 沒有任何
+  部署路徑傳過 `=1`**(compose / Makefile / helm / skaffold 零命中)→ `:142` 那行 COPY
+  的來源是**空目錄**,線上映像裡沒有 editor 的任何一個 byte。
+- `nginx/nginx.conf:322-331` 的 `location /editor/` 已移除,搬到 `nginx/dev/editor.conf`,
+  而 `docker/compose.family.yaml:155-164` 的 edge volumes **從來沒掛 `nginx/dev`**。
+
+所以現象是「200 但看到遊戲登入頁」而不是 404 —— 請求落回 `location /` 的
+`try_files … /index.html`。
+
+`tools/testrunner/internal/infracheck/editor_exposure_test.go:45-80` 兩支守衛釘住這件事,
+**改回去會直接紅**。→ **任務 #241 記的「烤進正式映像且完全沒有驗證」已經過時,
+修復早就落地在樹裡,該關掉**;否則下一輪又會有人來「修」一個已經修好的東西。
+
+⚠️ 且就算部署上去也沒用:`apps/editor/src/api/client.ts:29`
+`WRITES_ENABLED = isDevBuild()` 在 `vite build` 會**常數摺疊成 false**,
+所有儲存按鈕都是死的。它的後端 content-api 線上也沒有路由。
+
+### 四個設定域的真實覆蓋率 —— 三種「沒看到」必須分開講
+
+| 域 | 判定 | 真相 |
+|---|---|---|
+| 殭屍波 | **(a) 做了,可能沒部署** | **有完整專頁**。`MobWavesPage.tsx` 是 **v0.9.1 才 ADD 的**(`12380139`,`git tag --contains` 只有 v0.9.1),v0.9.0 該檔不存在 → 部署前看必然看不到 |
+| 　└ 逐回合指定英雄 | **(b) 做了一半** | 存得住、看得到、**對戰中無效**。schema 自己標了 AUTHORED BUT NOT YET CONSUMED(`config.ts:492-499`),後台也標了(`mobWaves.ts:881`)。`sim/mobs.ts:153` 的 schedule 型別根本沒宣告這欄位 |
+| 每回合戰鬥條件 | **(c) 線上沒有,但不是沒做** | **`/editor/` 有完整的 schema 驅動逐欄位表單** —— `form/walk.ts:126-146` 把 `rounds` 這個 ZodRecord 展成每格獨立控件,`NumberField.tsx:14-18` 直接吃 Zod 的 min/max。只是鎖在 DEV 且沒部署。線上只剩「內容覆蓋層」生 JSON 的逃生門 |
+| 手把按鍵對應 | **(c) 從來沒做** | CODE_CONSTANT。**而且不只 `SLOT_BY_BUTTON`** —— 至少還有 `padFocusNav.ts:50-54` 等 3 張獨立硬編碼表 |
+| 連殺 combo | **(c) 從來沒做** | CODE_CONSTANT。`grep -i combo apps/admin/src` = **0 筆** |
+| 第10回合大混戰 / 火圈延後 | **(c) + 編譯常數** | `PairedDuels.ts:70 FINAL_ROUND=10`(`:61-69` 明文寫了 WHY A CONSTANT AND NOT A CONFIG KNOB)、`:96 ROYALE_FIRE_RING_START_SEC=180` |
+
+### 兩個橫向事實(這次才浮出來,值得記住)
+
+**① 正式 build 的後台只有 21 項,不是 30 項。**「內容·素材管理」底下 9 項走
+`App.tsx:165-219` 的 `import.meta.env.DEV` 動態 import 閘,rollup 把整個 chunk 折掉 ——
+**正式 build 連字串都沒有**。很多「後台沒看到」的體感來自這裡。
+
+**② 平台早就在發失效事件,TypeScript 端沒訂。**
+`apps/platform/internal/contentoverlay/contentoverlay.go:624` 已在
+`PublishContentInvalidation`,但 `apps/game-server/src/config/contentBus.ts:94` 的
+`CONTENT_KINDS = ["curation","combat-env","server-ops"]` **沒有 `"content-overlay"`**,
+`:315` 直接當 unknown kind 丟掉**只計數**。
+
+→ 所以殭屍波後台改了值要**重啟 game-server 容器**才生效
+(`contentOverlay.ts:14-21` 自己寫了 `WHY BOOT, NOT LIVE`,後台誠實標在 `mobWaves.ts:864`)。
+**1 個檔 + 抽 1 個既有函式,就能讓所有走 overlay 的內容變成「存檔即下一場生效」。**
+沿用既有的 NEW MATCHES ONLY 邊界即可 —— arena rules 本來就在 `MatchRoom.ts:380`
+凍結進 `ArenaRules`。
+
+### 這一輪我自己講錯又被反駁者糾正的三條
+
+1. 我說「每回合戰鬥條件從來沒做」—— **錯**,editor 做得很好,只是沒部署。
+2. 我給的 editor「選項 B」(部署上去) —— **錯**,`WRITES_ENABLED` 已 dead-fold,
+   存檔全是死的。正確版本是**把 editor 的表單搬進 admin**(owner 隨後也正是這樣要求)。
+3. 我說 #241 解釋了現象 —— 方向對,但 **#241 的修復其實已經落地**,狀態該從 pending 關掉。
+
+**教訓**:「某功能在後台看不到」有**四種**成因,混在一起講是最糟的答覆 ——
+(a) 做了但沒部署 · (b) 做了一半(存得住但沒人讀) · (c) 從來沒做 ·
+(d) **做了但被建置期閘門折掉**。第四種這次才第一次遇到,而它從程式碼上完全看不出來,
+因為原始碼裡那 9 個頁面**看起來是存在的**。
