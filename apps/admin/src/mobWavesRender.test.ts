@@ -14,9 +14,18 @@
  *   2. EVERY FIELD HAS A REAL CONTROL — the page is server-rendered and each of
  *      the 22 knobs must appear as an input carrying `data-field="<key>"`, not
  *      merely as a label. Delete one input from the form and this file goes red.
- *   3. THE SAVE GOES SOMEWHERE DURABLE — the write is the platform overlay
- *      (`putOverlayDoc`), never the loopback content-api, because only the
- *      former survives a deploy on ggd.adms.ai.
+ *   3. THE SAVE NEVER GOES TO THE LOOPBACK CONTENT-API — a NEGATIVE source
+ *      check, which is the one thing a rendered page cannot demonstrate: an
+ *      absent call produces no output to assert on.
+ *
+ * WHAT THIS FILE DELIBERATELY NO LONGER CLAIMS. It used to "guard" the durable
+ * write with `expect(src).toMatch(/putOverlayDoc\(ARENA_RULES_COLLECTION…/)`.
+ * That asserts the call EXISTS and nothing about its PAYLOAD: swapping
+ * `configFromForm(form)` for `SHIPPED_MOB_WAVES` — the owner's 22 edits thrown
+ * away on every save — left this file, and the whole console suite, green.
+ * The payload, the champion `<select>`, and the per-round column are now
+ * asserted by DRIVING the page in `mobWavesSave.test.ts`. Do not re-add a
+ * source regex here and call the write guarded.
  *
  * `renderToString` needs no DOM (the console's vitest runs in plain node), and
  * effects do not fire under SSR — so what is asserted is the FIRST PAINT, seeded
@@ -109,24 +118,17 @@ describe("the route exists, is eager, and is session-gated", () => {
   });
 });
 
-describe("the save is the durable one", () => {
-  it("writes through the platform overlay, to config/arena-rules", () => {
-    cover("admin-mob-waves");
-    const src = code(PAGE_SRC);
-    expect(src).toMatch(/putOverlayDoc\(ARENA_RULES_COLLECTION, ARENA_RULES_ID/);
-  });
-
+describe("the save cannot go to the loopback content-api", () => {
+  // The POSITIVE claims about the write — that it targets config/arena-rules,
+  // that the payload is the operator's form, that the sibling blocks ride along
+  // — are asserted by calling the page's real onSave in mobWavesSave.test.ts.
+  // Only the NEGATIVE one lives here, because "this call is absent" leaves
+  // nothing behind to observe at runtime.
   it("never touches the loopback content-api (it has no production route)", () => {
     cover("admin-mob-waves");
     const src = code(PAGE_SRC);
     expect(src).not.toContain("contentApi");
     expect(src).not.toContain("/content-api");
-  });
-
-  it("carries the whole arena-rules doc, so sibling blocks survive the write", () => {
-    cover("admin-mob-waves");
-    const src = code(PAGE_SRC);
-    expect(src).toMatch(/patchArenaRules\(/);
   });
 });
 

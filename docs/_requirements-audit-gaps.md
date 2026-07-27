@@ -4422,3 +4422,59 @@ M4 是這一批裡最重要的一個：欄位還在登錄表、標籤還在、**
 測試之所以抓得到，是因為它斷言的是 SSR 出來的 HTML 裡有沒有 `data-field="mob.moveSpeed"`
 這個**真的控制項**，而且那份 22 個欄位的清單是**手寫在測試裡**的 ——
 從被測登錄表推導出來的清單，登錄表空了也會全綠。
+
+### 六、上面那 11 個變異不夠 —— 獨立驗證者兩個全綠變異（2026-07-27 修復輪）
+
+功能本體沒被推翻，被推翻的是守衛。獨立驗證者下了兩個變異，**全套 0 failed、typecheck 也 0**：
+
+| 倖存變異 | 它造成的真實傷害 |
+|---|---|
+| **P2** 頁面裡 `patchArenaRules(base, configFromForm(form))` → `patchArenaRules(base, SHIPPED_MOB_WAVES)` | owner 改完 22 個旋鈕按儲存，**寫進耐久覆蓋層的是出貨預設值，他的每一筆編輯都被丟掉**，而畫面照樣顯示「✓ 已寫入耐久覆蓋層」 |
+| **P1** `ChampionPicker` 的 `if (props.options.length === 0)` → `if (true)` | 整頁的英雄下拉全部退回裸 `godie-*` 文字框 —— 這頁的第三個賣點消失 |
+
+**為什麼原本抓不到**，兩個原因是同一種病：
+
+1. 守「耐久寫入」的是**對原始碼字串做 regex**：`expect(src).toMatch(/putOverlayDoc\(ARENA_RULES_COLLECTION, ARENA_RULES_ID/)`。
+   它只斷言這個呼叫**存在**，完全不管它**寫進去什麼**。上表的 M6/M7 之所以會紅，是因為那兩個
+   變異下在 `configFromForm` / `patchArenaRules` **裡面**（純函式，有真的單元測試盯著）；
+   P2 下在**頁面呼叫它們的那一行**，那條路上一個行為斷言都沒有。
+2. `data-field="mob.championId"` 這個斷言**分不出 `<input>` 和 `<select>`** —— `TextInput` 退化路徑
+   也會發同一個屬性。SSR 又只看得到第一次繪製，`onSave` 根本沒被進入過。
+
+**補法：真的去驅動這一頁。** 這個 monorepo 沒有 jsdom，所以 `apps/admin/src/testkit/headlessUi.ts`
+自己實作 React 表單需要的那一小塊（hook 狀態、effect、setState 後同步重繪），把函式元件算成
+純物件 host 樹；元件建立仍然是真的 `react/jsx-runtime`，只換 hook dispatcher，不碰 React 內部欄位。
+`apps/admin/src/mobWavesSave.test.ts` 的 13 條全部是「在真的控制項打字 → 按真的儲存鍵 →
+斷言送進 `putOverlayDoc` 的 payload」。
+
+同時**退役**了那條假守衛：`mobWavesRender.test.ts` 不再宣稱它守得住寫入，只留下行為測不到的
+**否定**斷言（`not.toContain("contentApi")` —— 一個不存在的呼叫在執行期沒有東西可觀察）。
+
+修復輪 17 個變異，**17 紅 0 綠**（每個都跑全套 admin 一次）：
+
+| 變異 | 變紅 |
+|---|---|
+| **P2** 存檔改送 `SHIPPED_MOB_WAVES` | **6 條** |
+| **P1** 英雄下拉恆走文字框退化路徑 | **3 條** |
+| M1 存檔改送它「載進來的」那份 doc（`next` → `base`） | **6 條** |
+| M2 payload 改由 `shippedForm()` 生 | **6 條** |
+| M3 `patchArenaRules({}, …)` 蓋掉 rounds/flowers/guardianTower | **1 條** |
+| M4 完全不呼叫 `putOverlayDoc` | **11 條** |
+| M5 成功訊息的 generation 寫死 1（不報平台回的） | **1 條** |
+| M6 `putNum("hpPerLevel", …)` 刪掉 | **7 條** |
+| M7 `putText("championId", …)` 刪掉（整場的由誰擔任） | **8 條** |
+| M8 逐回合 `championId` 在存檔時被丟掉 | **3 條** |
+| M9 逐回合每波數量改寫成基準值 | **5 條** |
+| M10 存活上限恆存出貨值 | **5 條** |
+| M11 清空逐回合英雄後卡在寫死的 id | **6 條** |
+| M12 下拉只列 `godie-*` slug，沒有中文名 | **1 條** |
+| M13 roster 以外的 id 不再可選（開頁就被悄悄改寫） | **1 條** |
+| M14 `TextInput` 不再發 `data-field` | **9 條** |
+| M15 逐回合英雄控制項的 field id 打錯 | **5 條** |
+
+基準線：`apps/admin` 44 檔 **569 綠**（原 558 + 新 13 − 退役的 2 條假守衛）、typecheck 0。
+
+**這一輪的教訓，一句話**：`expect(src).toMatch(/foo(/)` 證明的是「那個呼叫被打進檔案裡」，
+不是「它產出正確的東西」。凡是「按下去會寫出去」的頁面，守衛就必須攔住那個出口、
+斷言送出去的**內容**，而且要能分辨「使用者的編輯」和「出貨預設值」——
+金錢必然上升那種與缺陷方向無關的斷言，測不到任何東西。
