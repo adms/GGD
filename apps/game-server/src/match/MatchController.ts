@@ -1341,6 +1341,12 @@ export class MatchController {
     // (#193) builds a settlement mid-match and the controller keeps recording
     // rounds afterwards. A shared array would let an already-broadcast payload
     // grow rounds the player never saw when it was sent.
+    //
+    // PINNED BY roundHistory.test.ts —— 「the elimination payload does NOT grow」
+    // (the outer array) and 「every payload is an independent tree」 (entries,
+    // players array, and each delta). Both assert against the UN-COPIED object
+    // the controller handed out; a test that deep-copies the payload first
+    // cannot see this defect at all, which is how it went unguarded once.
     const rounds = this.roundHistory.map((r) => ({
       round: r.round,
       players: r.players.map((p) => ({ ...p })),

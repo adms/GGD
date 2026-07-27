@@ -37,6 +37,48 @@ function finished(seed = 4242): MatchController {
   return ctl;
 }
 
+/**
+ * Run seed 99 to the end, capturing the FIRST mid-match elimination payload
+ * (#193) two different ways — and the difference between the two is the whole
+ * point of the aliasing tests below.
+ *
+ *  · `live` is the exact object `takeEliminationSettlements()` returned. Not
+ *    copied, not touched. It is the only thing that can ever show a leak.
+ *  · `captured` is that payload frozen at drain time, the way MatchRoom freezes
+ *    it when it serialises to JSON on the same tick. Needed for the ARITHMETIC
+ *    assertions, because `SettlementPlayer.stats` is the live `world.matchStats`
+ *    object and keeps moving until the match ends.
+ *
+ * Asserting aliasing on `captured` is a contradiction: JSON.parse(JSON.stringify)
+ * hands back a brand-new tree, so its length is frozen and its references are
+ * all fresh no matter what `buildSettlement` did. The previous version of this
+ * suite did exactly that and its "it was a copy" check could not fail.
+ */
+function runToFirstElimination(): {
+  ctl: MatchController;
+  live: MatchSettlement | null;
+  captured: MatchSettlement | null;
+  /** how many rounds the LIVE payload carried at the instant it was drained */
+  roundsAtDrain: number;
+} {
+  const ctl = new MatchController("rh-elim", 99, allBots(), FAST);
+  let live: MatchSettlement | null = null;
+  let captured: MatchSettlement | null = null;
+  let roundsAtDrain = 0;
+  for (let i = 0; i < 200000 && ctl.phase.phase !== "matchEnd"; i++) {
+    ctl.tick();
+    if (live === null) {
+      const drained = ctl.takeEliminationSettlements();
+      if (drained.length > 0) {
+        live = drained[0]!.settlement;
+        roundsAtDrain = live.rounds!.length;
+        captured = JSON.parse(JSON.stringify(live)) as MatchSettlement;
+      }
+    }
+  }
+  return { ctl, live, captured, roundsAtDrain };
+}
+
 describe("per-round history reaches the settlement payload", () => {
   it("the settlement carries one entry per settled combat round", () => {
     const ctl = finished();
@@ -135,43 +177,28 @@ describe("per-round history reaches the settlement payload", () => {
     }
   });
 
-  it("a mid-match elimination settlement (#193) is internally CONSISTENT and does not alias", () => {
-    // Two defects in one test, both about the #193 path that builds a payload
-    // while the match is still running:
+  it("a mid-match elimination settlement (#193) is internally CONSISTENT", () => {
+    // ORDERING. `recordRoundHistory()` runs BEFORE `settleRound()`, and
+    // settleRound is what eliminates a team and snapshots its card. Move the
+    // recorder after it and the knocked-out player's card carries whole-match
+    // totals that INCLUDE the round that just killed them but a per-round
+    // history that does NOT — so the sums stop matching.
     //
-    //  (a) ORDERING. `recordRoundHistory()` runs BEFORE `settleRound()`, and
-    //      settleRound is what eliminates a team and snapshots its card. Move
-    //      the recorder after it and the knocked-out player's card carries
-    //      whole-match totals that INCLUDE the round that just killed them but
-    //      a per-round history that does NOT — so the sums stop matching. That
-    //      is what the sum check below detects.
-    //  (b) ALIASING. Handing out the live array by reference lets an already
-    //      broadcast payload keep growing rounds.
-    //
-    // NOTE ON THE DEEP COPY: `buildSettlement` puts the LIVE `world.matchStats`
-    // object into `SettlementPlayer.stats` by reference, so those totals keep
-    // moving after the card is built. Harmless in production (MatchRoom
-    // serialises the payload to JSON on the very tick it drains it) but fatal
-    // to an in-process assertion — reading `.stats` at the end of the match
-    // compares this round's history against a LATER total and fails for a
-    // reason that has nothing to do with this feature. So the test freezes the
+    // NOTE ON THE FROZEN COPY: `buildSettlement` puts the LIVE
+    // `world.matchStats` object into `SettlementPlayer.stats` by reference, so
+    // those totals keep moving after the card is built. Harmless in production
+    // (MatchRoom serialises the payload to JSON on the very tick it drains it)
+    // but fatal to an in-process assertion — reading `.stats` at the end of the
+    // match compares this round's history against a LATER total and fails for a
+    // reason that has nothing to do with this feature. So THIS test freezes the
     // payload exactly the way the wire does, at drain time.
-    const ctl = new MatchController("rh-elim", 99, allBots(), FAST);
-    let captured: MatchSettlement | null = null;
-    let capturedRounds = 0;
-    for (let i = 0; i < 200000 && ctl.phase.phase !== "matchEnd"; i++) {
-      ctl.tick();
-      if (captured === null) {
-        const drained = ctl.takeEliminationSettlements();
-        if (drained.length > 0) {
-          captured = JSON.parse(JSON.stringify(drained[0]!.settlement)) as MatchSettlement;
-          capturedRounds = captured.rounds!.length;
-        }
-      }
-    }
+    //
+    // That freeze is also why the aliasing claim gets its OWN test below rather
+    // than riding along here: a JSON round-trip destroys every shared reference,
+    // so nothing asserted against `captured` can ever see aliasing.
+    const { captured } = runToFirstElimination();
     expect(captured, "seed 99 produced no mid-match elimination — this test is vacuous").not.toBeNull();
-    expect(capturedRounds).toBeGreaterThan(0);
-    // (a) the two halves of the SAME payload must agree
+    expect(captured!.rounds!.length).toBeGreaterThan(0);
     for (const player of captured!.perPlayer) {
       const mine = captured!.rounds!.map((r) => r.players.find((p) => p.seatId === player.seatId)!);
       const dealt = mine.reduce((acc, p) => acc + p.damageDealt, 0);
@@ -183,11 +210,74 @@ describe("per-round history reaches the settlement payload", () => {
       const kills = mine.reduce((acc, p) => acc + p.kills, 0);
       expect(kills).toBe(player.stats.kills);
     }
-    // (b) it was a copy
+  });
+
+  // ─────────────────────────────── the deep copy, checked on the LIVE object ──
+  //
+  // THE DEFECT: `buildSettlement` ends with
+  //
+  //     const rounds = this.roundHistory.map((r) => ({
+  //       round: r.round,
+  //       players: r.players.map((p) => ({ ...p })),
+  //     }));
+  //
+  // Replace that with `const rounds = this.roundHistory;` and the elimination
+  // payload — already handed to MatchRoom, already conceptually sent — keeps
+  // growing rounds the knocked-out player was never in. Every assertion below
+  // must therefore be stated on the object the controller ACTUALLY handed out.
+  // Deep-copy it first (as the previous version of this suite did) and the
+  // defect is destroyed before it can be observed: JSON.parse(JSON.stringify(x))
+  // returns a fresh tree whose length is frozen and whose references are all
+  // new, so the check can only ever compare a snapshot against itself. See
+  // {@link runToFirstElimination}, which keeps both objects for that reason.
+
+  it("the elimination payload does NOT grow after it was handed out", () => {
+    const { ctl, live, roundsAtDrain } = runToFirstElimination();
+    expect(live, "seed 99 produced no mid-match elimination — this test is vacuous").not.toBeNull();
+    expect(roundsAtDrain).toBeGreaterThan(0);
+    // the match kept going, so the controller kept recording — that is what
+    // makes the next assertion able to fail at all
+    const atEnd = ctl.settlement!.rounds!.length;
     expect(
-      captured!.rounds!.length,
-      "the elimination payload grew after it was handed out — it aliases the live array",
-    ).toBe(capturedRounds);
-    expect(ctl.settlement!.rounds!.length).toBeGreaterThan(capturedRounds);
+      atEnd,
+      `the match recorded no further rounds after the elimination (${atEnd} vs ${roundsAtDrain}) — ` +
+        `nothing could have leaked in, so this test proves nothing`,
+    ).toBeGreaterThan(roundsAtDrain);
+    expect(
+      live!.rounds!.length,
+      `the payload was handed out with ${roundsAtDrain} rounds and now has ` +
+        `${live!.rounds!.length} — it aliases the controller's live array`,
+    ).toBe(roundsAtDrain);
+  });
+
+  it("…and every payload is an independent tree, down to the individual delta", () => {
+    // The shallower halves of the same defect: `this.roundHistory.map((r) => r)`
+    // shares the round ENTRIES, and `players: r.players` shares the player
+    // arrays. Neither grows, so the length check above cannot see them. Stated
+    // as MUTATION rather than reference identity, because independence is the
+    // property that matters — writing into one payload must not be visible in
+    // another.
+    const { ctl, live } = runToFirstElimination();
+    expect(live).not.toBeNull();
+    const fin = ctl.settlement!;
+    expect(fin.rounds!.length).toBeGreaterThan(0);
+
+    const r0 = live!.rounds![0]!;
+    const finR0 = fin.rounds!.find((r) => r.round === r0.round);
+    expect(finR0, `round ${r0.round} is in the elimination card but not the final one`).toBeDefined();
+
+    const before = r0.players[0]!.damageDealt;
+    const finP0 = finR0!.players.find((p) => p.seatId === r0.players[0]!.seatId)!;
+    finP0.damageDealt = -424242;
+    expect(
+      r0.players[0]!.damageDealt,
+      "writing into the final settlement changed the elimination payload — the two share objects",
+    ).toBe(before);
+
+    finR0!.players.push({ ...finP0, seatId: 99 });
+    expect(
+      r0.players.some((p) => p.seatId === 99),
+      "pushing into the final settlement's players changed the elimination payload's",
+    ).toBe(false);
   });
 });
