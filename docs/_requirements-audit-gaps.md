@@ -4432,3 +4432,65 @@ owner：「在商店 shop 時，玩家角色會隨機輪播動作跟語音」。
 **另記一個測試工藝陷阱**：`new AnimationGroup(name)` 沒有 targeted animation 時，`play()` 之後
 `isPlaying` 仍是 `false` —— 用空 group 斷言「clip 有播」等於什麼都沒測（失敗形狀③）。
 本輪的 group 都掛一支真的 keyframe 動畫在暫存節點上。
+## 2026-07-27 · 商店輪播修復輪 —— 兩個真出貨缺陷 + 生產接縫零覆蓋
+
+上一輪（本檔 4354 行那則）的機制本體是對的，但守衛擋不住它自己宣稱的關鍵行。
+獨立稽核給了四個確切的倖存變異，這輪把每一條打紅，並修掉一路挖出來的兩個真缺陷。
+
+### 一、真缺陷 1：休息姿勢從不查禁播清單 → 4 位英雄站著走路
+
+`pickIdleClip` 只看 `/idle|stand/`。WC3 rig 會把一整段序列串成一個名字，所以
+**「Attack Walk Stand Spin」的 `/stand/` 只是巧合** —— 它是走路＋攻擊的合成 clip。
+解 115 位英雄的 `.glb` 實測，拿它當商店櫃檯循環休息姿勢的有 4 位：
+
+| 英雄 | model | main 原本 | 上一輪之後 |
+|---|---|---|---|
+| godie-opgh | imported.zy3 | `Stand Defend` | `Attack Walk Stand Spin` ← **淨退步** |
+| godie-u01q / u01u / udre | imported.heromusashimiyamoto | 同左 | 同左（舊疾） |
+
+四支 rig 裡都有乾淨的 `Stand`。而 idlePerform.ts 自己的註解就寫著 walk clip
+「會讓釘住的模型滑行」—— 規則寫對了，只是沒接到休息姿勢那一半。
+
+**修法**：禁播清單收斂成單一 predicate（`isShowable` / `isRotatable`），休息姿勢與
+輪播池共用同一份，唯一差別只剩 idle 家族本身（休息的必須是 stand，輪播的不准重播它）。
+修完 4 位都回到 `Stand`。
+
+### 二、真缺陷 2：禁播清單在今天的 roster 上完全惰性
+
+實測（在上一輪的碼上，把 `EXCLUDE` 關掉再跑）：**115 位的池子一個都沒變，14 檔 125 測全綠。**
+原因是合成 clip 已經被當成休息姿勢吃掉，剩下的 attack 名額被乾淨的揮劍先填滿（per-kind cap = 2）。
+所以那條「refuses the clips that would read as a disaster at a market stall」是**空的**。
+
+修好缺陷 1 之後它自動變成 load-bearing：武藏三位的 clip 順序是
+`… Attack Walk Stand Spin(4) … Attack(8) Attack Slam(9) …`，合成 clip 排在填滿名額的兩支**之前**，
+所以只剩禁播擋著它。關掉禁播 → 4 紅（含本來就存在但一直踩不到的 roster 普查那條）。
+
+### 三、生產接縫：`setChampion` 之前零覆蓋
+
+三個場景測試全部用 `priv.performPool = [...]` 直接注入，所以**唯一把真 .glb clip 名餵進
+`performPool` 的生產線**沒有任何測試經過。實測倖存：
+
+| 變異 | 修前 | 修後 |
+|---|---|---|
+| `this.performPool = []` | 320 檔 3777 測**全綠**（feature 退化成「每 9 秒抖一下」） | **4 紅** |
+| 休息姿勢那行改回 main 原樣（實測影響 115 位裡 29 位） | **0 紅** | **3 紅** |
+| `pickIdleClip` 不查禁播（＝缺陷 1 本身） | 0 紅 | **5 紅** |
+| 禁播清單改成什麼都不擋 | 0 紅 | **5 紅** |
+| 只拿掉輪播池那側的禁播 | 0 紅 | **4 紅** |
+| 首次表演不排程 | 0 紅 | **2 紅** |
+| 換英雄不重設輪播游標 | 0 紅 | **1 紅** |
+
+補的守衛全部走真接縫：拿真的 `AssetContainer`（掛真的 keyframe AnimationGroup，
+clip 名是 sesshomaru / heromusashimiyamoto 兩支 rig 的逐字清單）餵進 `assets.load`，
+`await setChampion(...)`，然後斷言池子非空且內容逐項正確、休息姿勢是 `im-Stand`、
+**再跑 20 秒 render loop 斷言真的播出池子裡的 clip 且沒有一次退化成 nod**。
+（`place()` 用 `(n) => \`im-${n}\`` 實體化，所以生產端看到的名字有 `im-` 前綴 —— 斷言前綴名是刻意的。）
+
+### 四、測試工藝：oracle 不准問實作要答案
+
+第一版的休息姿勢普查用 `isShowable()` 判斷「這支 clip 該不該被擋」。它跟被測規則是同一份，
+所以把禁播整個關掉時普查不會變紅，只會**變成空的**（實測 4 紅而非 5 紅，少的正是這條）。
+改成普查自己寫死禁播家族（輪播那條普查本來就這樣寫），並把 `isShowable` 收回不匯出。
+這是這輪抓到的假守衛 species 的第三種變形，前兩種是：原始碼字串掃描（證明標籤被打進檔案，
+不證明它產出東西）、以及斷言方向與缺陷方向無關。
+
