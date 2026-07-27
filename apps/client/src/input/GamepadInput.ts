@@ -11,19 +11,33 @@
  *   - `GamepadSystem` — connect/disconnect tracking; wires the most recently
  *     connected pad into the intent path (single-player wiring for now).
  *
- * Mapping: LEFT stick moves (continuous move orders, IntentSender coalesces;
- * release does NOT stop — the last point finishes, matching mouse feel).
- * RIGHT stick aims (streamed; remembered as lastAimDir). A/B/X/Y cast
- * Q/W/E/R resolved per castType exactly like the mouse AimResolver. RT
- * attack-moves, LT basic-attacks the nearest enemy, LB recalls, RB stops,
- * Back casts the per-hero EX skill, D-pad up casts the 天生技 innate (6th slot),
- * Start readies. Coexists with mouse/keyboard: both feed the same
- * IntentSender, last writer wins. NO @babylonjs imports here (client-08).
+ * ════════════════════════════════════════════════════════════════════════════
+ * THE MAP (owner's 2026-07-27 ruling — this REPLACED the original scheme)
+ * ════════════════════════════════════════════════════════════════════════════
+ *   左搖桿  移動        右搖桿  瞄準
+ *   A → Q    B → W    X → E    Y → R
+ *   LB → EX          RB → 天生技
+ *   RT → 基本攻擊    LT → attack-move
+ *   長按 A/B/X/Y → 升級該技能（有技能點時）／顯示技能說明（沒點數時）
+ *   長按 LB / RB → 顯示 EX / 天生技說明（那兩格沒有等級可加）
+ *   D-pad ↑ stop    ↓ recall    ← → 留給選單導航（task #197）
+ *   L3 切換鏡頭跟隨   R3 鏡頭拉遠一級／繞回預設（歸位）
+ *   START ready      BACK 空著（記分板是 #197 的事）
+ *
+ * LEFT stick moves (continuous move orders, IntentSender coalesces; release
+ * does NOT stop — the last point finishes, matching mouse feel). RIGHT stick
+ * aims (streamed; remembered as lastAimDir) and, once L3 has unlocked follow,
+ * also free-pans the camera. A/B/X/Y/LB/RB cast their slot resolved per
+ * castType exactly like the mouse AimResolver. Coexists with mouse/keyboard:
+ * both feed the same IntentSender, last writer wins — and the KEYBOARD map is
+ * untouched by all of this (still QWER + F for the EX + D for the innate).
+ * NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { AbilitySlot, CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Command, CoreAbilitySlot, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
+import { getHeldAbility, setHeldAbility } from "../ui/abilityHold";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 import { isPadMenuCapturing } from "./padMenuCapture";
 
@@ -37,7 +51,21 @@ export const GROUND_CAST_MAX = 6;
 /** LT basic-attack target search radius. */
 export const BASIC_ATTACK_RANGE = 12;
 
-/** Standard-mapping button indices. */
+/**
+ * Button indices of the W3C **Standard Gamepad** mapping (`Gamepad.buttons[]`),
+ * which every XInput-class pad reports in a browser:
+ *
+ *   0-3   A B X Y (bottom, right, left, top of the face cluster)
+ *   4-7   LB RB LT RT
+ *   8-9   Back/View, Start/Menu
+ *   10    LEFT STICK PRESSED  (L3)
+ *   11    RIGHT STICK PRESSED (R3)
+ *   12-15 D-pad up, down, left, right
+ *
+ * L3/R3 are 10/11 straight out of that spec order — NOT guessed. The 12-15
+ * d-pad block is independently confirmed by `input/padFocusNav`'s `NAV_DPAD`,
+ * which has been reading exactly those four indices for the menu layer.
+ */
 export const BTN = {
   A: 0,
   B: 1,
@@ -47,81 +75,130 @@ export const BTN = {
   RB: 5,
   LT: 6,
   RT: 7,
+  /**
+   * Back/View. DELIBERATELY UNBOUND since the 2026-07-27 remap: it used to be
+   * the EX and is now free. The owner's map earmarks it for 「記分板（按住顯
+   * 示）」, which is a HUD panel that does not exist yet — that belongs to task
+   * #197 (pad drives the whole UI flow), not here. Left listed so the legend's
+   * probe reports "nothing" for it honestly rather than not knowing it exists.
+   */
   BACK: 8,
   START: 9,
-  /**
-   * D-pad UP (standard mapping index 12). The 天生技's pad binding — see
-   * {@link SLOT_BY_BUTTON}. The other three d-pad directions stay unbound.
-   */
+  /** left stick pressed — camera follow toggle (was RB + LB). */
+  L3: 10,
+  /** right stick pressed — zoom notch / camera home (was RB + LT/RT). */
+  R3: 11,
   DPAD_UP: 12,
+  DPAD_DOWN: 13,
+  /**
+   * D-pad ← →. Bound to NOTHING in combat ON PURPOSE: they are reserved for
+   * menu navigation in task #197, and a direction that steers a champion in
+   * combat and a menu everywhere else is the ambiguity that task has to solve
+   * once, globally. Declared here so the reservation is visible at the map.
+   */
+  DPAD_LEFT: 14,
+  DPAD_RIGHT: 15,
 } as const;
 
 /**
- * Pad button → castable slot. Includes the SIXTH slot so the 天生技 is not a
- * keyboard-only ability: a couch player must be able to press every button the
- * hero owns, or the pad is quietly a five-slot version of the game.
+ * Pad button → castable slot. All SIX slots are on the pad: a couch player must
+ * be able to press every button the hero owns, or the pad is quietly a
+ * four-slot version of the game.
  *
- * WHY THE D-PAD AND NOT A FACE BUTTON: A/B/X/Y are Q/W/E/R and Back is the EX —
- * every face button is spoken for, and re-assigning one would break the mapping
- * players already have. That leaves a stick click or the d-pad; the d-pad wins
- * because it is discrete (no accidental fire while moving), it is reachable
- * without leaving the left stick, and UP is its most findable direction. The
- * innate is a once-per-40-seconds button, not a rotation key, so the small
- * thumb move off the stick costs nothing in practice.
+ * WHY EX MOVED OFF BACK ONTO LB (owner, 2026-07-27). Back/View is the smallest,
+ * most central, hardest-to-reach key on the whole controller — you cannot press
+ * it without breaking your grip. The EX is the ability that unlocks in round 7
+ * and gets pressed at the tightest moment of the match. The hardest button on
+ * the pad is the wrong home for the thing you press when it matters most.
+ *
+ * WHY 天生技 MOVED OFF D-PAD ↑ ONTO RB (owner, 2026-07-27). The left thumb
+ * lives on the left stick; reaching the d-pad means LETTING GO OF MOVEMENT.
+ * A shoulder does not.
+ *
+ * ⚠️ THE KNOWN, ACCEPTED COST: most heroes' 天生技 is a permanent 被動 (the
+ * dashed-border tile of #166), so for them RB casts nothing at all — `ability()`
+ * returns null and no command is sent. The owner's ruling is 「直覺比頻率重要」.
+ *
+ * ⚠️ DO NOT "OPTIMISE" THIS INTO A CONTEXTUAL BUTTON — i.e. do not make RB mean
+ * 天生技 for the heroes that have an active one and `stop` (or anything else)
+ * for the rest. One button doing different things on different heroes is the
+ * single most confusing thing a pad map can do; a button that is honestly inert
+ * on your hero is learnable in one round. A long press on RB still explains
+ * itself (it shows the 天生技's description — see the long-press block below),
+ * which is a better answer to "why did nothing happen" than a second meaning.
  */
 const SLOT_BY_BUTTON: Partial<Record<number, CastableSlot>> = {
   [BTN.A]: "Q",
   [BTN.B]: "W",
   [BTN.X]: "E",
   [BTN.Y]: "R",
-  [BTN.BACK]: "EX", // per-hero "EX 技能" (5th slot); no-op until unlocked
-  [BTN.DPAD_UP]: "PASSIVE", // 天生技 (6th slot); owned from level 1, active kind only
+  [BTN.LB]: "EX", // per-hero "EX 技能" (5th slot); no-op until unlocked
+  [BTN.RB]: "PASSIVE", // 天生技 (6th slot); owned from level 1, active kind only
 };
 
 /**
  * ════════════════════════════════════════════════════════════════════════════
- * THE HELD-SHOULDER MODIFIER LAYER (task #197)
+ * LONG PRESS = 升級 / 說明  (replaces the retired held-shoulder modifier layer)
  * ════════════════════════════════════════════════════════════════════════════
- * The base layer above spends EVERY face + shoulder + menu button, so the two
- * things a pad still could not reach — spending a skill point (rankUpAbility)
- * and steering the camera (zoom / free-pan / follow-toggle) — need a second
- * layer, not a seventh button. Holding the RIGHT BUMPER opens it:
+ * The old scheme reached rank-up and the camera through a held RIGHT BUMPER
+ * modifier (RB + A/B/X/Y, RB + LT/RT, RB + LB). That layer is GONE — RB is the
+ * 天生技 now, and a modifier you have to hold is a second mapping to memorise.
+ * Everything it did has a home of its own:
  *
- *   RB + A/B/X/Y      →  rank up Q / W / E / R  (the `+` a mouse clicks)
- *   RB + LT / RT      →  zoom out / zoom in     (the wheel)
- *   RB + LB           →  toggle camera follow   (Space)
- *   RB + right stick  →  free-pan the camera    (arrow keys / edge-pan)
+ *   rank up Q/W/E/R  →  LONG PRESS the very button that casts it (below)
+ *   zoom             →  R3
+ *   follow toggle    →  L3
+ *   free-pan         →  the right stick, once L3 has unlocked follow
  *
- * WHY RB, AND WHY "HELD FROM A PREVIOUS FRAME". Every shoulder already has a
- * base action, so the modifier button unavoidably fires its own base action on
- * the press that starts the hold. RB's base action is `stop` — the ONE base
- * action that is safe to fire spuriously: you rank up while standing still after
- * a level, and an extra stop-order there is a no-op. (Recall on LB or an
- * attack-move on RT would not be.) The layer therefore only engages once RB has
- * been down for at least one frame — `held` contains it but `justPressed` does
- * not — so a quick RB tap is still a clean `stop`, and the base loop is skipped
- * only while the modifier is genuinely engaged.
+ * WHY LONG PRESS, AND WHY IT COSTS NOTHING TO LEARN: you already know A is Q.
+ * Holding A ranks up Q. There is no second table.
+ *
+ * ⚠️ THE CAST IS NEVER DELAYED. The cast fires on the PRESS EDGE, exactly as it
+ * always did, and the rank-up fires later off a separate edge — so holding A to
+ * rank up Q also casts Q. That is a deliberate trade: waiting ~0.4 s to find out
+ * whether a press was "cast" or "rank up" would put a quarter-second of input
+ * lag on every ability in an action game, to save an occasional wasted cast in
+ * the calm moment right after a level-up. Immediacy wins; do not "fix" this by
+ * deferring the cast.
  */
-export const GAMEPAD_MODIFIER_BTN = BTN.RB;
+/**
+ * How long a button must be down before it counts as a long press.
+ *
+ * 400 ms, chosen between two real bounds: a deliberate hard tap in a fight
+ * comfortably clears 200 ms (so a lower threshold would rank up during combat by
+ * accident, and a skill point spent is not undoable), while past ~500 ms a
+ * player has already concluded that nothing is going to happen and lets go. It
+ * also matches `padFocusNav.NAV_INITIAL_DELAY_MS` (420 ms) closely enough that
+ * "hold something for a beat" feels like one gesture across the whole product.
+ */
+export const GAMEPAD_LONG_PRESS_MS = 400;
 
-/** Modifier layer: face button → the rankable slot its `+` raises. */
-const RANK_BY_BUTTON: Partial<Record<number, AbilitySlot>> = {
+/**
+ * Long press → the rankable slot it spends a point on. Only the FOUR core
+ * slots are here: EX (LB) is unlocked by the round-7 event and 天生技 (RB) is
+ * owned at rank 1 from spawn — neither has a rank a point can raise (the sim
+ * agrees: `CommandSystem` drops a `rankUpAbility` naming EX or the innate). A
+ * long press on those two therefore always falls through to the description,
+ * rather than sending a command that would be silently thrown away.
+ */
+const RANK_BY_LONG_PRESS: Partial<Record<number, CoreAbilitySlot>> = {
   [BTN.A]: "Q",
   [BTN.B]: "W",
   [BTN.X]: "E",
   [BTN.Y]: "R",
 };
 
-/** Wheel-equivalent zoom step per modifier trigger press (see CameraRig.zoomBy). */
-export const GAMEPAD_ZOOM_STEP = 120;
-
 /** Camera ops a pad frame asks for (client-only; never a sim intent). */
 export interface GamepadCameraIntent {
-  /** wheel-equivalent dolly delta; positive = out, negative = in. */
-  zoom?: number;
+  /**
+   * R3 — step the camera one notch further out, or home it. The notch counter
+   * and the reset live in `input/padCamera` (the rig owns the dolly, and this
+   * mapping is pure), which is also where "歸位" is defined.
+   */
+  zoomCycle?: true;
   /** continuous free-pan direction (world XZ unit vector) while the stick holds. */
   pan?: Vec2;
-  /** flip the camera follow-lock this frame. */
+  /** flip the camera follow-lock this frame (L3). */
   toggleFollow?: boolean;
 }
 
@@ -151,12 +228,21 @@ export interface GamepadFrame {
   aim: Vec2 | null;
   /** button indices that went down since the previous poll (edge detect) */
   justPressed: number[];
-  /**
-   * button indices held DOWN this frame (level, not edge). Optional so the
-   * legend's synthetic single-button probes and older callers stay valid; the
-   * modifier layer (task #197) reads it to know the RIGHT BUMPER is engaged.
-   */
+  /** button indices held DOWN this frame (level, not edge). */
   held?: number[];
+  /**
+   * Buttons that crossed {@link GAMEPAD_LONG_PRESS_MS} ON THIS POLL — an EDGE,
+   * fired exactly once per physical press (see `GamepadInput.poll`). This is
+   * what spends a skill point, so a repeat would spend the whole level's worth
+   * of points in three frames.
+   */
+  longPressed?: number[];
+  /**
+   * Buttons currently held PAST the threshold (level, not edge) — the "still
+   * holding it" state the description preview follows, so releasing the button
+   * takes the panel away. Superset of `longPressed` on the frame it fires.
+   */
+  longHeld?: number[];
 }
 
 /** Everything about ONE local player the pure mapping needs. */
@@ -169,6 +255,14 @@ export interface GamepadPlayerCtx {
   ability(slot: CastableSlot): AimAbility | null;
   /** nearest valid enemy from a point, biased along aimDir when given */
   nearestEnemy(from: Vec2, maxRange: number, aimDir: Vec2 | null): number | null;
+  /**
+   * Unspent skill points this player is holding (`seat.unspentPoints`). It is
+   * REQUIRED, not optional-with-a-default, on purpose: it is the one thing that
+   * decides whether a long press spends a point or explains the ability, and a
+   * silent `?? 0` default would let a caller forget to wire it and ship a
+   * rank-up gesture that can never fire. Let the compiler ask.
+   */
+  skillPoints: number;
 }
 
 export interface GamepadIntent {
@@ -176,8 +270,16 @@ export interface GamepadIntent {
   /** streamed aim (right stick), when deflected */
   aim?: Vec2;
   commands: Command[];
-  /** camera ops from the held-shoulder modifier layer (task #197). */
+  /** camera ops (L3 follow toggle / R3 zoom-home / right-stick free-pan). */
   camera?: GamepadCameraIntent;
+  /**
+   * The slot whose DESCRIPTION should be showing right now — a long press with
+   * no point to spend (or on a slot that has no rank at all). Level, not edge:
+   * absent means "nothing held", which is what takes the panel back down. The
+   * systems below push it into `ui/abilityHold`, the same seam the touch hold
+   * (#152) and the mouse-down on an ability tile use.
+   */
+  describe?: CastableSlot;
 }
 
 /** PURE frame → intent mapping (reused per local player). */
@@ -188,8 +290,12 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   const self = ctx.selfPos;
   const aimDir = frame.aim ?? ctx.lastAimDir ?? ctx.facing ?? null;
 
-  // LEFT stick — continuous move order toward a short lead point (BOTH layers:
-  // you may still reposition while ranking up / panning).
+  let camera: GamepadCameraIntent | undefined;
+  const cam = (patch: GamepadCameraIntent): void => {
+    camera = { ...camera, ...patch };
+  };
+
+  // LEFT stick — continuous move order toward a short lead point.
   if (frame.move && self) {
     order = {
       kind: "move",
@@ -197,35 +303,12 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
     };
   }
 
-  // MODIFIER LAYER — RIGHT BUMPER held from a previous frame (so a plain RB tap
-  // stays a clean `stop`; see GAMEPAD_MODIFIER_BTN). While engaged, the base
-  // per-button loop is skipped and the right stick pans instead of aiming.
-  const held = frame.held;
-  if (held && held.includes(GAMEPAD_MODIFIER_BTN) && !frame.justPressed.includes(GAMEPAD_MODIFIER_BTN)) {
-    let camera: GamepadCameraIntent | undefined;
-    const cam = (patch: GamepadCameraIntent): void => {
-      camera = { ...camera, ...patch };
-    };
-    for (const b of frame.justPressed) {
-      const rankSlot = RANK_BY_BUTTON[b];
-      if (rankSlot) {
-        commands.push({ kind: "rankUpAbility", slot: rankSlot });
-      } else if (b === BTN.LT) {
-        cam({ zoom: (camera?.zoom ?? 0) + GAMEPAD_ZOOM_STEP }); // wheel out
-      } else if (b === BTN.RT) {
-        cam({ zoom: (camera?.zoom ?? 0) - GAMEPAD_ZOOM_STEP }); // wheel in
-      } else if (b === BTN.LB) {
-        cam({ toggleFollow: true });
-      }
-    }
-    // right stick → free-pan (only bites once follow is off, exactly like the
-    // arrow keys); a deflected stick pans, a centred one leaves `pan` unset.
-    if (frame.aim) cam({ pan: frame.aim });
-    const modOut: GamepadIntent = { commands };
-    if (order) modOut.order = order;
-    if (camera) modOut.camera = camera;
-    return modOut;
-  }
+  // RIGHT stick — aims AND offers the same deflection as a camera free-pan. The
+  // rig sums `panVec` with the arrow-key/edge sources and, like them, only
+  // applies it while follow is OFF (CameraRig.update), so this costs nothing in
+  // the normal following case and is the whole free-pan story once L3 unlocks
+  // it. That is why no modifier is needed to pan any more.
+  if (frame.aim) cam({ pan: frame.aim });
 
   for (const b of frame.justPressed) {
     const slot = SLOT_BY_BUTTON[b];
@@ -241,7 +324,8 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
         ability.castType === "targeted" ? ctx.nearestEnemy(self, ability.range, aimDir) : null;
       const cmd = buildCastCommand(slot, ability, { selfPos: self, cursorGround, hoveredEntityId: hovered });
       if (cmd) commands.push(cmd);
-    } else if (b === BTN.RT && self) {
+    } else if (b === BTN.LT && self) {
+      // LT = attack-move (owner, 2026-07-27: the triggers swapped)
       const dir = frame.move ?? aimDir;
       if (dir) {
         order = {
@@ -249,31 +333,92 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
           point: { x: self.x + dir.x * ATTACK_MOVE_LEAD, z: self.z + dir.z * ATTACK_MOVE_LEAD },
         };
       }
-    } else if (b === BTN.LT && self) {
+    } else if (b === BTN.RT && self) {
+      // RT = basic attack. The right trigger is the primary action everywhere
+      // else on a console, and #221's auto-attack means the manual one is now a
+      // correction rather than a rotation key.
       const id = ctx.nearestEnemy(self, BASIC_ATTACK_RANGE, aimDir);
       if (id !== null) order = { kind: "attackTarget", entity: asEntityId(id) };
-    } else if (b === BTN.RB) {
+    } else if (b === BTN.DPAD_UP) {
       order = { kind: "stop" };
-    } else if (b === BTN.LB) {
+    } else if (b === BTN.DPAD_DOWN) {
       commands.push({ kind: "recall" });
+    } else if (b === BTN.L3) {
+      cam({ toggleFollow: true });
+    } else if (b === BTN.R3) {
+      cam({ zoomCycle: true });
     } else if (b === BTN.START) {
       commands.push({ kind: "ready" });
     }
   }
 
+  // ── LONG PRESS ───────────────────────────────────────────────────────────
+  // Level first: while a skill button is held past the threshold AND that hold
+  // is not going to spend a point, the ability explains itself. Same semantics
+  // as the touch hold (#152) and a mouse-down on an ability tile.
+  let describe: CastableSlot | undefined;
+  for (const b of frame.longHeld ?? []) {
+    const slot = SLOT_BY_BUTTON[b];
+    if (!slot) continue;
+    if (RANK_BY_LONG_PRESS[b] && ctx.skillPoints > 0) continue; // this hold is a rank-up
+    describe = slot;
+  }
+  // Edge: spend the point. Fires once per physical press (see poll), and only
+  // when there is a point to spend — otherwise the hold stays a description.
+  for (const b of frame.longPressed ?? []) {
+    const rankSlot = RANK_BY_LONG_PRESS[b];
+    if (rankSlot && ctx.skillPoints > 0) commands.push({ kind: "rankUpAbility", slot: rankSlot });
+  }
+
   const out: GamepadIntent = { commands };
   if (order) out.order = order;
   if (frame.aim) out.aim = frame.aim;
+  if (camera) out.camera = camera;
+  if (describe) out.describe = describe;
   return out;
+}
+
+/**
+ * The pad's stake in the GLOBAL held-ability store (`ui/abilityHold`), which it
+ * shares with the mouse and the touch bar. It may only ever clear what IT set —
+ * blindly writing `null` every frame would rip a mouse-held description off the
+ * screen while the player is still holding the tile.
+ */
+class PadDescribeHold {
+  private mine: CastableSlot | null = null;
+
+  set(slot: CastableSlot | null): void {
+    if (slot === this.mine) return;
+    if (slot) setHeldAbility(slot);
+    else if (getHeldAbility() === this.mine) setHeldAbility(null);
+    this.mine = slot;
+  }
+}
+
+/** Monotonic-ish clock for the long-press timer (injectable for tests). */
+function defaultNow(): number {
+  return typeof performance !== "undefined" && typeof performance.now === "function"
+    ? performance.now()
+    : Date.now();
 }
 
 /** Reads one physical pad by index (injectable for tests). */
 export class GamepadInput {
   private prevPressed: boolean[] = [];
+  /** when each button went down (ms on `now`'s clock); index-aligned. */
+  private downAt: number[] = [];
+  /**
+   * Per-button LATCH: has this press already fired its long press? Cleared on
+   * RELEASE, never on time — that is the whole debounce. Without it a held
+   * button crosses the threshold on every subsequent poll too and dumps a
+   * level's worth of skill points in a few frames.
+   */
+  private longFired: boolean[] = [];
 
   constructor(
     readonly gamepadIndex: number,
     private readonly readPad?: () => PadState | null,
+    private readonly now: () => number = defaultNow,
   ) {}
 
   private currentPad(): PadState | null {
@@ -286,17 +431,40 @@ export class GamepadInput {
   poll(): GamepadFrame | null {
     const pad = this.currentPad();
     if (!pad || !pad.connected) {
+      // A pad that comes back re-arms EVERY edge, including the long-press
+      // timers: a button that was down when it vanished must not resolve as a
+      // multi-second hold the instant it reappears.
       this.prevPressed = [];
+      this.downAt = [];
+      this.longFired = [];
       return null;
     }
+    const now = this.now();
     const justPressed: number[] = [];
     const held: number[] = [];
+    const longPressed: number[] = [];
+    const longHeld: number[] = [];
     const pressed: boolean[] = [];
     for (let i = 0; i < pad.buttons.length; i++) {
       const down = pad.buttons[i]?.pressed === true;
       pressed.push(down);
-      if (down) held.push(i);
-      if (down && !this.prevPressed[i]) justPressed.push(i);
+      if (!down) {
+        this.longFired[i] = false; // release re-arms the latch
+        continue;
+      }
+      held.push(i);
+      if (!this.prevPressed[i]) {
+        justPressed.push(i);
+        this.downAt[i] = now;
+        this.longFired[i] = false;
+      }
+      if (now - (this.downAt[i] ?? now) >= GAMEPAD_LONG_PRESS_MS) {
+        if (!this.longFired[i]) {
+          this.longFired[i] = true;
+          longPressed.push(i);
+        }
+        longHeld.push(i);
+      }
     }
     this.prevPressed = pressed;
     return {
@@ -304,6 +472,8 @@ export class GamepadInput {
       aim: stickToWorld(pad.axes[2] ?? 0, pad.axes[3] ?? 0),
       justPressed,
       held,
+      longPressed,
+      longHeld,
     };
   }
 }
@@ -335,7 +505,7 @@ export interface GamepadSinks {
   onOrder(order: Order): void;
   onAim(aim: Vec2): void;
   onCommand(cmd: Command): void;
-  /** camera op from the modifier layer (zoom / free-pan / follow-toggle). */
+  /** camera op (L3 follow toggle / R3 zoom-home / right-stick free-pan). */
   onCamera?(camera: GamepadCameraIntent): void;
   /** connected pad indices changed (discrete-rate; HUD indicator) */
   onPadsChanged(indices: number[]): void;
@@ -355,6 +525,7 @@ export class GamepadSystem {
   private lastAimDir: Vec2 | null = null;
   private lastIndicesKey = "";
   private readonly disposers: (() => void)[] = [];
+  private readonly describeHold = new PadDescribeHold();
 
   constructor(
     private readonly sinks: GamepadSinks,
@@ -381,6 +552,7 @@ export class GamepadSystem {
     for (const d of this.disposers) d();
     this.disposers.length = 0;
     this.inputs.clear();
+    this.describeHold.set(null);
   }
 
   /** Poll once per rAF frame (before IntentSender.update). */
@@ -398,7 +570,10 @@ export class GamepadSystem {
     if (this.activeIndex === null || !indices.includes(this.activeIndex)) {
       this.activeIndex = indices.length > 0 ? indices[indices.length - 1]! : null;
     }
-    if (this.activeIndex === null) return;
+    if (this.activeIndex === null) {
+      this.describeHold.set(null); // pad gone → its description panel goes too
+      return;
+    }
 
     let input = this.inputs.get(this.activeIndex);
     if (!input) {
@@ -407,15 +582,21 @@ export class GamepadSystem {
       this.inputs.set(idx, input);
     }
     const frame = input.poll();
-    if (!frame) return;
+    if (!frame) {
+      this.describeHold.set(null);
+      return;
+    }
 
     const intent = mapGamepadFrame(frame, { ...this.ctxProvider(), lastAimDir: this.lastAimDir });
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
     if (intent.aim) this.sinks.onAim(intent.aim);
     if (intent.camera) this.sinks.onCamera?.(intent.camera);
+    // long press with no point to spend → the ability explains itself (#152's
+    // description panel + floor telegraph), and releasing takes it away.
+    this.describeHold.set(intent.describe ?? null);
     for (const cmd of intent.commands) {
-      // pad A/B/X/Y/Back/d-pad-up cast → same click cue as tile/key (de-duped)
+      // pad A/B/X/Y/LB/RB cast → same click cue as tile/key (de-duped)
       if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
       this.sinks.onCommand(cmd);
     }
@@ -431,7 +612,7 @@ export interface MultiGamepadSinks {
   onOrder(player: number, order: Order): void;
   onAim(player: number, aim: Vec2): void;
   onCommand(player: number, cmd: Command): void;
-  /** camera op from player k's modifier layer (zoom / free-pan / follow). */
+  /** camera op for player k (L3 follow / R3 zoom-home / right-stick pan). */
   onCamera?(player: number, camera: GamepadCameraIntent): void;
   /** raw button edge — GameApp uses this for champ-select pad picking */
   onButton?(player: number, button: number): void;
@@ -450,6 +631,14 @@ export class MultiGamepadSystem {
   private readonly inputs = new Map<number, GamepadInput>();
   private readonly lastAim = new Map<number, Vec2>();
   private lastIndicesKey = "";
+  /**
+   * ONE describe-hold, for local player 0. `ui/abilityHold` is a singleton that
+   * drives the single top-of-screen description panel + the floor telegraph, so
+   * it belongs to the seat those two are drawn for. A couch player 1-3 holding a
+   * button would otherwise yank player 0's panel around — a shared global is not
+   * something four pads can each own a quarter of.
+   */
+  private readonly describeHold = new PadDescribeHold();
 
   constructor(
     private readonly playerCount: () => number,
@@ -461,6 +650,7 @@ export class MultiGamepadSystem {
   dispose(): void {
     this.inputs.clear();
     this.lastAim.clear();
+    this.describeHold.set(null);
   }
 
   /** Poll once per rAF frame (before the IntentSender flushes). */
@@ -487,10 +677,16 @@ export class MultiGamepadSystem {
         this.inputs.set(padIndex, input);
       }
       const frame = input.poll();
-      if (!frame) continue;
+      if (!frame) {
+        if (player === 0) this.describeHold.set(null);
+        continue;
+      }
       // Poll ran (edges stay fresh, so releasing the menu never fires a stale
       // press), but a menu-owned pad 0 emits NOTHING to the sim this frame.
-      if (player === 0 && menuOwnsPad0) continue;
+      if (player === 0 && menuOwnsPad0) {
+        this.describeHold.set(null);
+        continue;
+      }
 
       for (const b of frame.justPressed) this.sinks.onButton?.(player, b);
 
@@ -502,6 +698,7 @@ export class MultiGamepadSystem {
       if (intent.order) this.sinks.onOrder(player, intent.order);
       if (intent.aim) this.sinks.onAim(player, intent.aim);
       if (intent.camera) this.sinks.onCamera?.(player, intent.camera);
+      if (player === 0) this.describeHold.set(intent.describe ?? null);
       for (const cmd of intent.commands) {
         // pad cast → the shared button click cue (de-duped per slot)
         if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);

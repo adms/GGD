@@ -53,6 +53,7 @@ import { TimeSync } from "./net/TimeSync";
 import { LocalPrediction } from "./predict/LocalPrediction";
 import { InputCapture } from "./input/InputCapture";
 import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/GamepadInput";
+import { PadCameraControl } from "./input/padCamera";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
 import type { AimAbility } from "./input/AimResolver";
 import { isTouchDevice, readTouchEnv } from "./input/mobileDetect";
@@ -426,12 +427,15 @@ export class GameApp {
   private readonly champCursor = new Map<number, number>();
   /**
    * Per-player pad free-pan vector for the frame in flight (task #197). The
-   * modifier layer's right-stick pan is continuous, so it is latched here by
-   * the pad `onCamera` sink and consumed by that player's CameraRig.update the
-   * same frame; the frame loop clears it before each poll, so a centred stick
-   * (no pan emitted) leaves it null and the camera holds still.
+   * right-stick pan is continuous, so it is latched here by the pad `onCamera`
+   * sink and consumed by that player's CameraRig.update the same frame; the
+   * frame loop clears it before each poll, so a centred stick (no pan emitted)
+   * leaves it null and the camera holds still. (The rig only applies it while
+   * follow is off — L3 is what turns follow off.)
    */
   private readonly padCameraPan: (Vec2 | null)[] = [];
+  /** Per-player R3 zoom-notch state (see input/padCamera). */
+  private readonly padCamera: PadCameraControl[] = [];
 
   /** primary connection — the single source of rendered state */
   private get conn(): RoomConnection {
@@ -707,6 +711,9 @@ export class GameApp {
         ability: (slot) => this.playerAbility(player, slot),
         nearestEnemy: (from, maxRange, aimDir) =>
           pickNearestUnit(from, this.enemyUnitsFor(this.playerTeam(player)), maxRange, aimDir),
+        // what a LONG PRESS on a skill button does: spend this point, or (with
+        // none) show that ability's description (owner's 2026-07-27 pad map)
+        skillPoints: this.playerSkillPoints(player),
       }),
     );
   }
@@ -747,15 +754,15 @@ export class GameApp {
   }
 
   /**
-   * Pad modifier-layer camera op for local player `player` (task #197). Zoom and
-   * follow-toggle are one-shots applied straight to that player's rig; the pan
+   * Pad camera op for local player `player`. The discrete parts (L3's follow
+   * toggle, R3's zoom notch / home) are one-shots handed to `input/padCamera`,
+   * which owns the notch counter and is unit-tested against a fake rig; the pan
    * is continuous, so it is latched into `padCameraPan[player]` and the camera
    * update step reads it this same frame (cleared at the top of the next frame).
    */
   private applyPadCamera(player: number, cam: GamepadCameraIntent): void {
     const rig = this.viewports.rigFor(player);
-    if (cam.zoom) rig.zoomBy(cam.zoom);
-    if (cam.toggleFollow) rig.toggleFollow();
+    (this.padCamera[player] ??= new PadCameraControl()).apply(rig, cam);
     if (cam.pan) this.padCameraPan[player] = cam.pan;
   }
 
@@ -1090,8 +1097,8 @@ export class GameApp {
     // During the settlement freeze predAccumMs is pinned to 0, so use alpha = 1
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
     const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
-    // Clear last frame's pad free-pan latch BEFORE polling: the modifier layer
-    // only re-emits `pan` while the stick is deflected, so a released stick must
+    // Clear last frame's pad free-pan latch BEFORE polling: the pad map only
+    // re-emits `pan` while the right stick is deflected, so a released stick must
     // leave these null (camera holds) rather than drifting on a stale vector.
     this.padCameraPan.length = 0;
     this.gamepads.poll(); // pads → per-player orders/aim/commands + camera before the flush
@@ -2139,6 +2146,19 @@ export class GameApp {
   private playerAbility(player: number, slot: CastableSlot): AimAbility | null {
     if (player === 0) return this.localAbility(slot);
     return this.abilityForSeat(this.playerView(player)?.seatId ?? null, slot);
+  }
+
+  /**
+   * Unspent skill points held by couch player k — what decides whether a LONG
+   * PRESS on A/B/X/Y spends a point or explains the ability (see
+   * `input/GamepadInput`'s long-press block). 0 before the seat materialises,
+   * which is the safe answer: no seat, nothing to spend.
+   */
+  private playerSkillPoints(player: number): number {
+    const hud = hudStore.getState();
+    const seatId = player === 0 ? hud.localSeatId : (this.playerView(player)?.seatId ?? null);
+    if (seatId === null) return 0;
+    return hud.seats.find((s) => s.seatId === seatId)?.unspentPoints ?? 0;
   }
 
   private playerTeam(player: number): number {

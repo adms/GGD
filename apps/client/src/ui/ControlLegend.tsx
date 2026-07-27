@@ -29,6 +29,7 @@ import { useHud } from "../net/RoomStore";
 import {
   controlLegendRect,
   controlLegendVisible,
+  legendChipColumnWidth,
   legendRows,
   readLegendDismissed,
   writeLegendDismissed,
@@ -222,7 +223,12 @@ function Column({
       <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
         {rows.map((row) => (
           <div key={row.id} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <span style={{ flex: "0 0 62px", textAlign: "right" }}>
+            {/* The gutter is as wide as the WIDEST chip in this binding set, not
+                a flat 62px — 「左鍵點自己」 and every 「長按 …」 chip are wider
+                than that, and an overflowing chip lands on the caption beside
+                it. `controlLegendModel` sizes the whole column from the same
+                number, so the two cannot disagree. */}
+            <span style={{ flex: `0 0 ${legendChipColumnWidth(rows)}px`, textAlign: "right" }}>
               <Chip text={row.control} />
             </span>
             <span

@@ -19,7 +19,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { BTN } from "../input/GamepadInput";
+import { BTN, GAMEPAD_LONG_PRESS_MS, GamepadInput } from "../input/GamepadInput";
 import { SLOT_BY_CODE } from "../input/InputCapture";
 import {
   HUD_SLOTS,
@@ -31,6 +31,7 @@ import {
 import {
   ABILITY_CLUSTER_H,
   ABILITY_CLUSTER_W,
+  approxTextWidth,
   controlLegendRect,
   controlLegendVisible,
   gamepadLegend,
@@ -47,7 +48,11 @@ import {
   MOUSE_BINDINGS,
   padFace,
   probeGamepadButton,
+  probeGamepadLongPress,
   probeGamepadSticks,
+  legendChipColumnWidth,
+  legendColumnWidth,
+  LEGEND_COLUMN_MAX_W,
   TOP_CENTRE_BAND_END,
   touchLegend,
   TOUCH_BINDINGS,
@@ -68,12 +73,85 @@ const TOUCH_CONTROLS = readSrc("ui/TouchControls.tsx");
 describe("legend rows are DERIVED from the pad mapping", () => {
   it("probes the real mapGamepadFrame, not a copy of its table", () => {
     // A is Q by SLOT_BY_BUTTON; the probe must find that by running the map.
+    // (owner 2026-07-27: EX moved Back→LB, 天生技 moved d-pad↑→RB, and the
+    // d-pad took over stop/recall. These are the new bindings, not a drift.)
     expect(probeGamepadButton(BTN.A)).toEqual({ kind: "cast", slot: "Q" });
-    expect(probeGamepadButton(BTN.BACK)).toEqual({ kind: "cast", slot: "EX" });
-    expect(probeGamepadButton(BTN.DPAD_UP)).toEqual({ kind: "cast", slot: "PASSIVE" });
-    expect(probeGamepadButton(BTN.RB)).toEqual({ kind: "order", order: "stop" });
-    expect(probeGamepadButton(BTN.LB)).toEqual({ kind: "command", command: "recall" });
+    expect(probeGamepadButton(BTN.LB)).toEqual({ kind: "cast", slot: "EX" });
+    expect(probeGamepadButton(BTN.RB)).toEqual({ kind: "cast", slot: "PASSIVE" });
+    expect(probeGamepadButton(BTN.DPAD_UP)).toEqual({ kind: "order", order: "stop" });
+    expect(probeGamepadButton(BTN.DPAD_DOWN)).toEqual({ kind: "command", command: "recall" });
     expect(probeGamepadButton(BTN.START)).toEqual({ kind: "command", command: "ready" });
+    expect(probeGamepadButton(BTN.L3)).toEqual({ kind: "camera", camera: "toggleFollow" });
+    expect(probeGamepadButton(BTN.R3)).toEqual({ kind: "camera", camera: "zoomCycle" });
+    // Back is deliberately unbound now (its 記分板 job belongs to task #197)
+    expect(probeGamepadButton(BTN.BACK)).toBeNull();
+  });
+
+  /**
+   * ════════════════════════════════════════════════════════════════════════
+   * THE GUARD THAT MATTERS MOST (owner, 2026-07-27)
+   * ════════════════════════════════════════════════════════════════════════
+   * 長按升級 is not a button press. The legend's probe is press-shaped, so it
+   * would have compiled, tested green, derived a legend — and left the gesture
+   * COMPLETELY INVISIBLE, which for a binding nobody can guess is identical to
+   * never shipping it. This asserts `gamepadLegend()`'s RETURN VALUE, not the
+   * source text: delete the long-press rows (or the long press itself) and this
+   * goes red.
+   */
+  it("the legend really TELLS the player about 長按 → 升級", () => {
+    const rows = gamepadLegend();
+    const rankRows = rows.filter((r) => r.control.includes("長按") && r.label.includes("升級"));
+    expect(rankRows.length, "no 長按→升級 row: the gesture is unfindable").toBeGreaterThan(0);
+    // …and it names the buttons a player can actually try
+    const faces = rankRows.map((r) => r.control).join(" ");
+    for (const f of ["A", "B", "X", "Y"]) expect(faces).toContain(f);
+    // …and says what the SAME hold does with no point to spend
+    expect(rankRows.some((r) => r.label.includes("說明"))).toBe(true);
+    // the two slots that have no rank get their own honest row
+    const infoRows = rows.filter((r) => r.control.includes("長按") && !r.label.includes("升級"));
+    expect(infoRows.map((r) => r.control).join(" ")).toContain("LB");
+    expect(infoRows.every((r) => r.label.includes("說明"))).toBe(true);
+  });
+
+  it("the long-press rows are PROBED, so a slot that moves takes its row with it", () => {
+    // with a point: the hold ranks that button's own slot
+    expect(probeGamepadLongPress(BTN.A, 1)).toEqual({ kind: "rankUp", slot: "Q" });
+    expect(probeGamepadLongPress(BTN.Y, 1)).toEqual({ kind: "rankUp", slot: "R" });
+    // without: the same hold explains it
+    expect(probeGamepadLongPress(BTN.A, 0)).toEqual({ kind: "describe", slot: "Q" });
+    // EX / 天生技 have no rank, so they describe even with points in hand
+    expect(probeGamepadLongPress(BTN.LB, 9)).toEqual({ kind: "describe", slot: "EX" });
+    expect(probeGamepadLongPress(BTN.RB, 9)).toEqual({ kind: "describe", slot: "PASSIVE" });
+    // a button with no slot has no long press at all
+    expect(probeGamepadLongPress(BTN.START, 9)).toBeNull();
+  });
+
+  /**
+   * The probe above feeds `mapGamepadFrame` a SYNTHETIC long-press frame, which
+   * proves the mapping — but not that a real pad can ever produce that frame.
+   * Break the clock (threshold → Infinity) and the legend would happily keep
+   * advertising a gesture no hold can reach. This closes that loop: a real
+   * `GamepadInput`, a real hold, the real edge the probe assumes.
+   */
+  it("a REAL hold can actually produce the frame the long-press row promises", () => {
+    let now = 0;
+    const buttons = Array.from({ length: 17 }, (_, i) => ({ pressed: i === BTN.A }));
+    const input = new GamepadInput(0, () => ({ connected: true, axes: [0, 0, 0, 0], buttons }), () => now);
+    expect(input.poll()!.longPressed).toEqual([]);
+    now += GAMEPAD_LONG_PRESS_MS;
+    const held = input.poll()!;
+    expect(held.longPressed, "no hold can ever reach the advertised 長按").toEqual([BTN.A]);
+    expect(held.longHeld).toEqual([BTN.A]);
+    expect(Number.isFinite(GAMEPAD_LONG_PRESS_MS)).toBe(true);
+  });
+
+  it("the camera rows exist too — L3/R3 are base bindings, not a lost layer", () => {
+    const rows = gamepadLegend();
+    const l3 = rows.find((r) => r.id === "btn-L3");
+    const r3 = rows.find((r) => r.id === "btn-R3");
+    expect(l3?.label).toContain("跟隨");
+    expect(r3?.label).toContain("鏡頭");
+    expect(rows.find((r) => r.id === "stick-right-pan")?.label).toContain("平移");
   });
 
   it("finds NO bound button outside the BTN table (an unlisted binding fails)", () => {
@@ -257,9 +335,49 @@ describe("control legend placement obeys the safe-area contract (#107)", () => {
   it("uses the left flank on a classic desktop viewport", () => {
     const rect = controlLegendRect({ width: 1546, height: 900 }, PC(false, 1, legendRows("keyboard")));
     expect(rect?.shape).toBe("column");
-    expect(rect?.w).toBe(LEGEND_COLUMN_W);
+    expect(rect?.w).toBeGreaterThanOrEqual(LEGEND_COLUMN_W);
     // below the top-left stack (☰ / 隊伍 / 復活 / 敵隊), not beside the ability bar
     expect(rect!.y).toBeGreaterThan(300);
+  });
+
+  /**
+   * The column paints captions `nowrap` + `textOverflow: ellipsis`, so a row
+   * that does not fit is not "a bit tight" — it is SILENTLY TRUNCATED. That is
+   * the same shape of failure as the strip clipping at 「F EX 技能」, and the
+   * long-press rows ("長按 A" → "升級技能 Q（沒點數看說明）") are much wider than
+   * the 218px the column used to be fixed at.
+   */
+  describe("no column row is ever ellipsised", () => {
+    for (const mode of MODES) {
+      it(`fits every ${mode} row inside the width it asks for`, () => {
+        const rows = legendRows(mode);
+        const w = legendColumnWidth(rows);
+        const gutter = legendChipColumnWidth(rows);
+        for (const row of rows) {
+          // chip + gap + caption + the 9+9 padding must all be inside `w`
+          const needed = gutter + 6 + approxTextWidth(row.label, 11) + 18;
+          expect(needed, `「${row.control} ${row.label}」 does not fit`).toBeLessThanOrEqual(w);
+        }
+      });
+    }
+
+    it("a set too wide for the ceiling gets NO column (the strip wraps instead)", () => {
+      const monster: LegendRow[] = [
+        { id: "x", control: "長按 十字鍵 ←", label: "一段長得離譜的說明文字一段長得離譜的說明文字" },
+      ];
+      expect(legendColumnWidth(monster)).toBeGreaterThan(LEGEND_COLUMN_MAX_W);
+      const rect = controlLegendRect({ width: 1546, height: 900 }, PC(false, 1, monster));
+      expect(rect?.shape).not.toBe("column");
+    });
+
+    it("the gutter really grows with the widest chip", () => {
+      const narrow = legendChipColumnWidth([{ id: "a", control: "A", label: "x" }]);
+      const wide = legendChipColumnWidth([
+        { id: "a", control: "A", label: "x" },
+        { id: "b", control: "長按 十字鍵 ↑", label: "x" },
+      ]);
+      expect(wide).toBeGreaterThan(narrow);
+    });
   });
 
   it("switches to the top-gutter strip on touch and in couch play", () => {
@@ -307,8 +425,9 @@ describe("legendRows picks the binding set for the mode in play", () => {
     const pad = legendRows("gamepad").map((r) => r.control);
     expect(kb).toContain("Q");
     expect(kb.some((c) => c === "Back" || c === "十字鍵 ↑")).toBe(false);
-    expect(pad).toContain("Back");
     expect(pad).toContain("十字鍵 ↑");
+    expect(pad).toContain("十字鍵 ↓");
+    expect(pad.some((c) => c === "Back")).toBe(false); // unbound since the remap
     expect(pad.some((c) => c === "Q" || c === "滾輪")).toBe(false);
     expect(legendRows("touch").map((r) => r.control)).toContain("左側搖桿");
   });
