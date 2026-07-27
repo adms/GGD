@@ -25,6 +25,7 @@ import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
 import { audioSystem } from "../audio/AudioSystem";
 import { playChampionSelectVoice } from "../audio/championVoice";
+import { playShopPerformVoice, shopPerformVoice } from "../audio/shopPerformVoice";
 import { HeroReactionBubble } from "./HeroReactionBubble";
 import { MerchantTipBox } from "./MerchantTipBox";
 import { shopCatalogue } from "./panels/champSelectFilter";
@@ -49,6 +50,15 @@ export function IntermissionStage(): React.JSX.Element | null {
   );
   // a COMPLETED purchase makes the merchant hand something over
   const purchaseSeq = useHud((s) => (s.shopEvent?.kind === "bought" ? s.shopEvent.seq : 0));
+
+  // The scene is built ONCE per intermission (see the lifecycle effect below)
+  // but the champion arrives a tick later and can be swapped. The idle
+  // performance callback therefore reads the champion through a ref: capturing
+  // `championId` in the constructor closure would pin the empty string it holds
+  // on mount, and every performance would be mute for the whole visit —
+  // "computed but never delivered", with nothing on screen to show for it.
+  const championIdRef = useRef(championId);
+  championIdRef.current = championId;
 
   // ---- WHO OWNS THE SCREEN (playtest P2, task #107) ------------------------
   // The ambient surfaces in this portal (the merchant's tip box) live OUTSIDE
@@ -107,7 +117,20 @@ export function IntermissionStage(): React.JSX.Element | null {
     const canvas = canvasRef.current;
     if (!canvas) return;
     hudActions.setArenaRenderSuppressed(true);
-    const scene = new IntermissionScene(canvas, { teamId });
+    // ---- THE HERO PERFORMS WHILE YOU SHOP (owner 2026-07-27) --------------
+    // 「在商店 shop 時，玩家角色會隨機輪播動作跟語音」. The scene rotates his own
+    // baked clips on a 7.5–11.5 s random gap (render/intermission/idlePerform);
+    // this callback is the LINE that goes with each one. It rides
+    // contextualVoice, so the #14 unlock gate, the SFX slider/mute and the #62
+    // test-mode silence all apply — a muted or headless session performs
+    // silently rather than not at all.
+    shopPerformVoice.reset(); // a fresh visit starts with no rotation memory
+    const scene = new IntermissionScene(canvas, {
+      teamId,
+      onPerform: (kind) => {
+        playShopPerformVoice(championIdRef.current, kind);
+      },
+    });
     sceneRef.current = scene;
     // ease the shot in from further back while the merchant waves you over
     scene.playEnterTransition(() => setReady(true));
