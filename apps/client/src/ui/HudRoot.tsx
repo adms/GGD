@@ -21,6 +21,7 @@ import { GoldLevel } from "./components/GoldLevel";
 import { PhaseTimer } from "./components/PhaseTimer";
 import { TeamLivesBar } from "./components/TeamLivesBar";
 import { SpectateNotice } from "./hud/SpectateNotice";
+import { KillCombo } from "./hud/KillCombo";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -209,6 +210,11 @@ export function HudRoot(): React.JSX.Element {
               slot (bottom-right desktop / top-right touch, task #107). */}
           <EquipmentBar />
           <SpectatorHint />
+          {/* 連殺 combo (owner 2026-07-27). Mounted inside the in-game,
+              non-couch group beside the other personal readouts; it owns its
+              own combat gate and its own placement (hud/killComboModel), and
+              returns null when the corridor has no room. */}
+          <KillCombo />
           <ExUnlockToast />
         </>
       )}

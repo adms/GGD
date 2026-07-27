@@ -48,6 +48,7 @@ import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
 import { grantGold, grantXp, grantLevels } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
+import { creditKillCombo } from "../combat/killCombo";
 import {
   type MobRules,
   MONSTER_TEAM,
@@ -167,6 +168,18 @@ export function mobSystem(world: SimWorld): void {
       // entity is still alive in `world.mob` at this point, which is what lets a
       // hook's `victim: "mob"` filter tell a 部隊 kill from a 英雄 kill.
       fireHooks(world, killer, "onKill", id);
+      // 連殺 COMBO (owner, 2026-07-27): 「殭屍與英雄的擊殺都算」, on ONE shared
+      // counter. Credited HERE — on the same line that bumps `mobKills` — rather
+      // than in a system of its own, so the sim keeps exactly one place that
+      // decides 「a mob died and X killed it」. `mobKills` itself could not carry
+      // the combo (match-cumulative, mob-only, no timestamp); see
+      // sim/combat/killCombo.ts.
+      //
+      // This is the round-9 firehose: 20-per-wave / 60-alive zombies mean one AoE
+      // can land a dozen credits inside this very loop, all on the same tick, all
+      // chaining. Round 10 schedules zero mobs, so the identical code path simply
+      // never runs there and the final's combo is pure champion kills.
+      creditKillCombo(world, killer, id, "mob");
       world.emit("mobSlain", {
         id,
         killer,
