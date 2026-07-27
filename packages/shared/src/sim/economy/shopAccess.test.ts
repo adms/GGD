@@ -125,31 +125,35 @@ describe("shop gate through the sim (server authority)", () => {
   });
 });
 
-describe("an eliminated team gets no shop (shop-eliminated)", () => {
+describe("a SPENT team still shops (shop-eliminated)", () => {
   /**
-   * Team health reaching 0 ends the MATCH for that team — 「團隊生命已經沒了
-   * 整個遊戲都輸了 不是輸了回合」. The pre-existing `alive` flag is a per-ROUND
-   * fact and cannot express it, so an eliminated player was still shown a shop.
+   * REVERSED BY THE OWNER, 2026-07-27. This block used to pin the opposite rule:
+   * team health at 0 ended the match for that team — 「團隊生命已經沒了 整個遊戲
+   * 都輸了 不是輸了回合」 — so the shop was denied with `team-eliminated`.
    *
-   * Nothing was broken except what he was SHOWN: an eliminated team's champions
-   * are never spawned, so the sim-side gate already returned no-champion and the
-   * purchase could not have gone through. That is exactly why it survived — a
-   * shop you can open and cannot buy from looks like a working shop until you
-   * try. Which is this project's whole pathology in one screen.
+   * The finale ruling removes elimination outright: 「不管前面被淘汰與否，大家都
+   * 回來打第 10 回合」, 「繼續正常打，只是生命已經見底」, and a spent team keeps
+   * taking its per-round gold, its 3-choose-1 and 照樣進商店. Denying it the shop
+   * would hand it gold it could never spend — the same "shown a thing that does
+   * not work" pathology as the original bug, pointed the other way.
+   *
+   * The parameter and the `team-eliminated` reason code survive because two files
+   * in other lanes (`ui/panels/shopGate.ts`, `ui/panels/shopFeedback.ts`) pass and
+   * map them; the rule no longer fires.
    */
-  it("outranks prep, outranks being down, outranks everything", () => {
+  it("does NOT close the shop — the flag is accepted and ignored", () => {
     for (const phase of ["prep", "combat", "closed"] as const) {
       for (const alive of [true, false]) {
-        const a = shopOpen(phase, alive, true);
-        expect(a.open, `${phase}/alive=${alive} must stay closed when eliminated`).toBe(false);
-        if (!a.open) expect(a.reason).toBe("team-eliminated");
+        // identical to the same call without the flag: 0 health changes nothing
+        expect(shopOpen(phase, alive, true)).toEqual(shopOpen(phase, alive, false));
       }
     }
+    // and concretely: an intermission shop is OPEN for a team on 0 team health
+    expect(shopOpen("prep", true, true).open).toBe(true);
+    expect(shopOpen("prep", false, true).open).toBe(true);
   });
 
   it("changes nothing for a team still in the match", () => {
-    // the default and an explicit false must agree, or the flag has leaked into
-    // the ordinary path
     for (const phase of ["prep", "combat", "closed"] as const) {
       for (const alive of [true, false]) {
         expect(shopOpen(phase, alive, false)).toEqual(shopOpen(phase, alive));
