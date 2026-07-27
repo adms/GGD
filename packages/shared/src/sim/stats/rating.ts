@@ -204,9 +204,55 @@ export function grade(playerStats: PlayerMatchStats, lobbyStats: readonly Player
   return gradeFromScore(compositeScore(playerStats, lobby, role));
 }
 
+/**
+ * Points added to the settlement score for EACH ROUND this player was still
+ * standing when the round settled (owner, 2026-07-27: 「每回合 RANK 計算，存活
+ * 下來的人額外 +200分」).
+ *
+ * WHY IT EXISTS: 「明明活到最後卻不是贏家很怪」. Before this, placement came
+ * only from the damage/KDA composite, so a player who turtled to the last man
+ * could place BELOW someone who died early with a big damage number. Staying
+ * alive is the thing the mode is actually about; it now scores.
+ *
+ * WHY 200 IS THE RIGHT ORDER OF MAGNITUDE: the composite is [0,1] and is shown
+ * as `Math.round(composite * 1000)`, so a flawless combat performance is worth
+ * ~1000 points. One survived round is therefore worth a fifth of a perfect
+ * game, and surviving five rounds outweighs any single-round heroics. That is
+ * the intended pressure — this is a survival mode.
+ */
+export const SURVIVAL_BONUS_PER_ROUND = 200;
+
+/** The combat composite's contribution, so the two live on one scale. */
+export const COMBAT_SCORE_SCALE = 1000;
+
 export interface RankEntry {
   stats: PlayerMatchStats;
   role: string;
+  /**
+   * Rounds this player was alive for at settle time. Host bookkeeping, not sim
+   * state — MatchController counts it off the same `hpRatio > 0` it already
+   * computes for the per-round chart. Absent (a pre-feature server, a
+   * hand-built fixture) is treated as 0, never as "unknown", so an old payload
+   * ranks exactly as it used to.
+   */
+  roundsSurvived?: number;
+}
+
+/**
+ * THE NUMBER ON THE SETTLEMENT SCREEN — combat composite plus survival.
+ *
+ * Split out from `perMatchRanks` on purpose: the settlement DISPLAYS this, and
+ * a rank computed from one formula while the screen shows another is the exact
+ * shape of 「做了但玩家拿不到」. One function, one truth, both callers.
+ */
+export function rankScore(entry: RankEntry, lobby: readonly PlayerMatchStats[]): number {
+  const combat = Math.round(compositeScore(entry.stats, lobby, entry.role) * COMBAT_SCORE_SCALE);
+  return combat + survivalBonus(entry);
+}
+
+/** The survival half, alone — so the settlement can show it as its own line. */
+export function survivalBonus(entry: RankEntry): number {
+  return Math.max(0, Math.trunc(entry.roundsSurvived ?? 0)) * SURVIVAL_BONUS_PER_ROUND;
 }
 
 /**
@@ -217,7 +263,9 @@ export interface RankEntry {
  */
 export function perMatchRanks(entries: readonly RankEntry[]): number[] {
   const lobby = entries.map((e) => e.stats);
-  const scored = entries.map((e, i) => ({ i, score: compositeScore(e.stats, lobby, e.role), stats: e.stats }));
+  // rankScore, not compositeScore — the placement and the number the settlement
+  // screen prints must come from the SAME expression, or one of them is a lie.
+  const scored = entries.map((e, i) => ({ i, score: rankScore(e, lobby), stats: e.stats }));
   scored.sort((a, b) => {
     if (b.score !== a.score) return b.score - a.score;
     if (b.stats.kills !== a.stats.kills) return b.stats.kills - a.stats.kills;

@@ -98,6 +98,19 @@ export interface SettlementPlayer {
   /** 1..N placement across ALL players in the match */
   rank: number;
   stats: PlayerMatchStats;
+  /**
+   * THE NUMBER ON THE SETTLEMENT SCREEN — `rankScore`, i.e. the very expression
+   * `perMatchRanks` sorted on. Optional only because a pre-feature server does
+   * not send it; the panel then shows the rank alone rather than inventing one.
+   */
+  score?: number;
+  /**
+   * The survival half of `score`, alone (owner, 2026-07-27: 「每回合 RANK 計算，
+   * 存活下來的人額外 +200分」). Broken out so the settlement can SHOW why a
+   * turtle out-placed a damage dealer — otherwise the bonus is invisible and
+   * the player cannot tell it exists, which is this repo's #1 failure.
+   */
+  survivalBonus?: number;
   /** ranked-ladder deltas — filled by the platform layer, not the game server */
   pointsDelta?: number;
   tierBefore?: string;

@@ -162,6 +162,37 @@ export class LocalPrediction {
     if (stats) stats.final[Stat.AttackRange] = units;
   }
 
+  /**
+   * Swap the arena the shadow collides against — per-round rotation, and the
+   * round-10 royale finale.
+   *
+   * ⚠️ WHY THIS EXISTS (owner, 2026-07-27: 「第十回合 人物抖動、來回拉扯亂跳」).
+   * The shadow used to be built once with `SKELETON_ARENA` and never told about
+   * a map change, while the server swapped arenas every round. `MovementSystem`
+   * runs `clampToBoundary` UNCONDITIONALLY on every transform every tick — even
+   * standing still — so the shadow was being pulled onto a circle the server
+   * had stopped using.
+   *
+   * Rounds 1–9 survived that ONLY BY COINCIDENCE: all five rotation arenas ship
+   * the identical pair of zones, (-40,0) r24 and (40,0) r24, which is exactly
+   * SKELETON_ARENA's geometry. `arena.royale` is a single (0,0) r42 zone, so
+   * round 10 is the first round where the two circles differ at all — and there
+   * the shadow of a champion standing at (30,0) was yanked to (-16.6,0), which
+   * is 46.6 units, i.e. the edge of the WEST DUEL ARENA from rounds 1–9. That
+   * is why the owner described it as 「點到別的場地會拉扯」: it was literally
+   * being dragged toward another arena.
+   *
+   * MEASURED (predictionArenaParity.test.ts): round 10 maxErr 46.53u and a hard
+   * teleport on 89 of 90 frames; round 9 maxErr 0.000u and zero teleports.
+   *
+   * No re-anchor is needed after the swap: the next authoritative snapshot will
+   * differ by more than TELEPORT_EPS, so GameApp's reconcile takes the teleport
+   * branch and snaps the shadow onto the server's truth by itself.
+   */
+  setArena(arena: ArenaDef): void {
+    this.world.setArena(arena);
+  }
+
   /** Hard teleport (round reset / zone change): snap and forget history. */
   teleport(pos: Vec2, zone: number): void {
     if (this.id === null) return;

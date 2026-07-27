@@ -937,6 +937,16 @@ export class GameApp {
       .then((doc) => {
         if (this.disposed || this.applyingMapId !== mapId) return; // superseded
         const def = doc ? arenaDefFromDoc(doc) : SKELETON_ARENA;
+        // THE PREDICTION SHADOW SWAPS TOO — before any rendering work, so the
+        // two can never be one round apart. `def` here is the same value the
+        // SERVER built from the same doc via the same `arenaDefFromDoc`, which
+        // is what makes this the parity seam rather than a second opinion.
+        //
+        // Omitting this line is the round-10 jitter (owner, 2026-07-27): the
+        // shadow keeps clamping to the previous arena's circle while the server
+        // uses the new one, and every snapshot then hard-teleports it back. See
+        // LocalPrediction.setArena for the measurements.
+        this.prediction.setArena(def);
         disposeArena(this.renderer.scene, this.arenaHandles);
         // groundStyle picks the floor's PBR texture set (task #80); it lives on
         // the authored doc, not the collision-truth ArenaDef, so it is threaded

@@ -25,7 +25,7 @@ import { Champions, Abilities, LootTables } from "@ggd/shared/sim/content/regist
 import { Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
-import { grade, perMatchRanks } from "@ggd/shared/sim/stats/rating";
+import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry } from "@ggd/shared/sim/stats/rating";
 import type {
   MatchSettlement,
   RoundStatDelta,
@@ -371,6 +371,17 @@ export class MatchController {
    * reads are themselves part of the deterministic world state.
    */
   private readonly roundHistory: RoundStatsEntry[] = [];
+
+  /**
+   * ROUNDS THIS SEAT WAS STILL STANDING AT SETTLE TIME (owner, 2026-07-27:
+   * 「每回合 RANK 計算，存活下來的人額外 +200分」·「明明活到最後卻不是贏家很怪」).
+   *
+   * Derived host bookkeeping, exactly like {@link roundHistory} — NOT sim state,
+   * never serialized into the schema or the digest, so replays stay
+   * deterministic. It is counted off the SAME `hpRatio > 0` the per-round chart
+   * already computes, rather than a second opinion about who was alive.
+   */
+  private readonly roundsSurvived = new Map<SeatId, number>();
 
   /**
    * The cumulative scoreboard AS OF the previous round settle, keyed by seat —
@@ -1645,6 +1656,11 @@ export class MatchController {
         mobKills: cur.mobKills - (prev?.mobKills ?? 0),
         bye: cur.bye,
       });
+      // 「活下來」= still standing when the round settled. A bye round does not
+      // count: nobody fought, so nobody survived anything.
+      if (cur.hpRatio > 0 && !cur.bye) {
+        this.roundsSurvived.set(seatId, (this.roundsSurvived.get(seatId) ?? 0) + 1);
+      }
       this.lastRoundCumulative.set(seatId, cur);
     }
     this.roundHistory.push({ round: this.phase.round, players });
@@ -1659,13 +1675,13 @@ export class MatchController {
    */
   private buildSettlement(): MatchSettlement {
     const players: SettlementPlayer[] = [];
-    const entries: { stats: PlayerMatchStats; role: string }[] = [];
+    const entries: RankEntry[] = [];
     for (const [seatId, seat] of this.seats) {
       if (seat.entityId === null) continue;
       const stats = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
       const cdef = Champions.tryGet(seat.championId as ChampionId);
       const role = cdef?.role ?? "fighter";
-      entries.push({ stats, role });
+      entries.push({ stats, role, roundsSurvived: this.roundsSurvived.get(seatId) ?? 0 });
       players.push({
         seatId,
         accountId: seat.accountId,
@@ -1682,6 +1698,10 @@ export class MatchController {
     players.forEach((p, i) => {
       p.grade = grade(entries[i]!.stats, lobby, entries[i]!.role);
       p.rank = ranks[i]!;
+      // The SAME expression the placement sorted on. Printing a different number
+      // beside the rank it did not produce is how a scoreboard starts lying.
+      p.score = rankScore(entries[i]!, lobby);
+      p.survivalBonus = survivalBonus(entries[i]!);
     });
     let winnerTeam = -1;
     for (const [teamId, place] of this.placements) if (place === 1) winnerTeam = teamId;

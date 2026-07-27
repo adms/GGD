@@ -210,6 +210,7 @@ function RankingTable(props: {
         <span style={{ width: 26 }} />
         <span style={{ flex: 1 }}>玩家</span>
         <span style={{ width: 34, textAlign: "center" }}>評級</span>
+        <span style={{ width: 76, textAlign: "right" }}>分數</span>
         <span style={{ width: 66, textAlign: "right" }}>K / D / A</span>
         <span style={{ width: 60, textAlign: "right" }}>傷害</span>
       </div>
@@ -248,6 +249,23 @@ function RankingTable(props: {
                 {won && <span style={{ color: "#f2c637", marginLeft: 5 }}>👑</span>}
               </span>
               <span style={{ width: 34, textAlign: "center", fontWeight: 900, color: gc }}>{p.grade}</span>
+              {/* THE SCORE THE RANK WAS SORTED ON (owner: 「存活下來的人額外
+                  +200分」). Shown with its survival half broken out, because a
+                  bonus nobody can see is a bonus nobody believes in — and the
+                  whole complaint was 「明明活到最後卻不是贏家很怪」. */}
+              <span
+                style={{ width: 76, textAlign: "right", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}
+                title="RANK 分數 = 戰鬥表現 + 生存加成"
+              >
+                <span style={{ color: TEXT_MAIN, fontWeight: 700 }}>
+                  {p.score === undefined ? "—" : p.score.toLocaleString("en-US")}
+                </span>
+                {p.survivalBonus !== undefined && p.survivalBonus > 0 && (
+                  <span style={{ color: "#6fdc9a", fontSize: 11, marginLeft: 4 }}>
+                    +{p.survivalBonus}
+                  </span>
+                )}
+              </span>
               <span style={{ width: 66, textAlign: "right", color: TEXT_MAIN }}>{formatKda(p.stats)}</span>
               <span style={{ width: 60, textAlign: "right", color: TEXT_DIM }}>{Math.round(p.stats.damageDealt).toLocaleString("en-US")}</span>
             </div>
