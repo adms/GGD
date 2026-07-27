@@ -277,6 +277,37 @@ describe("shop idle performance — it becomes due on its own", () => {
     s.dispose();
   });
 
+  it("never cuts into a performance / reaction that is still running", () => {
+    cover("shop-idle-perform");
+    // The belt to the purchase-reschedule's braces. If a one-shot's end
+    // observable never arrives (a stalled engine, a clip with no keyframes) the
+    // due tick must RE-ARM, not stop the running clip and start another —
+    // otherwise the hero twitches through a new pose every gap and, worse, a
+    // performance can talk straight over the purchase quip.
+    let now = 0;
+    const seen: PerformKind[] = [];
+    const s = makeScene({ now: () => now, performRand: () => 0.5, onPerform: (k) => seen.push(k) });
+    const { priv, groups } = giveChampion(s, ["Stand", "cheer", "Attack"], "Stand");
+    priv.performPool = [
+      { clip: "cheer", kind: "celebrate" },
+      { clip: "Attack", kind: "attack" },
+    ];
+    // a reaction is mid-flight and will never report its end
+    const held = groups.find((g) => g.name === "cheer")!;
+    priv.championReaction = held;
+    priv.nextPerformAt = 0.1;
+
+    for (let t = 0; t < 30_000; t += 20) {
+      now = t;
+      priv.frame();
+    }
+    expect(priv.championReaction, "a due performance stole the body mid-clip").toBe(held);
+    expect(seen, "a performance fired while another was still running").toEqual([]);
+    // …and it kept re-arming rather than latching to "due" forever
+    expect(priv.nextPerformAt).toBeGreaterThan(0.1);
+    s.dispose();
+  });
+
   it("stops dead once the scene is disposed", () => {
     cover("shop-idle-perform");
     const seen: PerformKind[] = [];

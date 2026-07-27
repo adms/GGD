@@ -49,6 +49,19 @@ describe("idlePerform — which clips are worth showing at the counter", () => {
     const pool = buildPerformPool(["Stand", "Stand 2", "Stand Ready"], "Stand");
     expect(pool.map((p) => p.clip)).toEqual(["Stand 2", "Stand Ready"]);
     expect(pool.every((p) => p.clip !== "Stand")).toBe(true);
+
+    // …and the case that makes the identity check load-bearing rather than
+    // decorative: when the RESTING clip is itself something a tier would want.
+    // No champion on today's roster is like this (measured: 0 of 115), but
+    // `pickIdleClip` falls back to a variant, and then to the first clip at all,
+    // so the next imported hero can be — and rotating a hero into the pose he
+    // is already holding is a performance the player cannot see.
+    expect(buildPerformPool(["Stand Ready", "Attack"], "Stand Ready").map((p) => p.clip)).toEqual([
+      "Attack",
+    ]);
+    // a rig whose ONLY clip is the one it rests in has nothing to rotate → nod
+    expect(buildPerformPool(["Attack"], "Attack")).toEqual([]);
+    expect(buildPerformPool(["cheer", "Attack"], "cheer").map((p) => p.clip)).toEqual(["Attack"]);
   });
 
   it("refuses the clips that would read as a disaster at a market stall", () => {
