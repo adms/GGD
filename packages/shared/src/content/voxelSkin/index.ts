@@ -9,6 +9,9 @@
  * "114 champions, 114 distinct looks".
  */
 export * from "./types";
+// 特徵生成 (docs/_體素特徵生成規格.md) batch one: the barcode contract + its
+// pure maths. Sits ABOVE generate.ts, which stays the L3 floor untouched.
+export * from "./barcode";
 export * from "./hash";
 export * from "./palette";
 export * from "./rules";
