@@ -21,6 +21,7 @@ import {
   PERFORM_GAP_MIN_SEC,
   PER_KIND_CAP,
   buildPerformPool,
+  isShowable,
   nextPerformIndex,
   performGapSec,
   pickIdleClip,
@@ -93,6 +94,38 @@ describe("idlePerform — which clips are worth showing at the counter", () => {
     expect(attacks).toHaveLength(PER_KIND_CAP);
     // the single alternate stand still gets its slot — variety by construction
     expect(pool.some((p) => p.kind === "pose")).toBe(true);
+  });
+
+  it("never RESTS the hero in a clip it would refuse to rotate him into", () => {
+    cover("shop-idle-perform");
+    // THE DEFECT THIS PINS. `pickIdleClip` used to consult /idle|stand/ and
+    // nothing else, so a WC3 composite whose name merely CONTAINS "Stand" was a
+    // valid resting pose: 4 shipped champions looped「Attack Walk Stand Spin」at
+    // the counter — a walking sword swing as a market-stall idle — while this
+    // module's own header said walk clips「slide a rooted model」.
+    //
+    // The pool ban and the resting-pose ban are now one predicate, so this is a
+    // property, not a spot fix: whatever the rotation refuses to SHOW, the
+    // resting slot refuses too.
+    const zy3 = [
+      "Attack",
+      "Attack Defend 5",
+      "Death",
+      "Walk",
+      "Stand Defend",
+      "Attack Walk Stand Spin",
+      "Stand",
+      "Stand 2",
+    ];
+    expect(pickIdleClip(zy3)).toBe("Stand");
+    // …the rig where the composite is ALSO the first /stand/ substring match
+    const musashi = ["Walk", "Attack Walk Stand Spin", "Stand", "Stand 2", "Attack"];
+    expect(pickIdleClip(musashi)).toBe("Stand");
+    // a walk/death/hurt clip is never a resting pose, whatever else is on offer
+    expect(pickIdleClip(["Walk Stand", "Stand Hurt", "Attack"])).toBe("Attack");
+    // …and a rig with NOTHING showable still gets a pose rather than nothing:
+    // a T-posing statue is worse than a bad loop, so the last ditch stands
+    expect(pickIdleClip(["Death", "Walk"])).toBe("Death");
   });
 
   it("rests the hero in his BASE stand, not in whichever variant is listed first", () => {
@@ -281,5 +314,55 @@ describe("idlePerform — the shipped roster actually performs", () => {
       }
     }
     expect(offences).toEqual([]);
+  });
+
+  it("never RESTS a shipped champion in a death / hurt / walk clip either", () => {
+    cover("shop-idle-perform");
+    // The rotation census above has always been here; the RESTING pose had no
+    // census at all, and that is exactly where the roster was broken. Measured
+    // before the fix: 4 champions stood at the counter in "Attack Walk Stand
+    // Spin" — godie-opgh (imported.zy3, which rested in a clean "Stand Defend"
+    // before this feature existed, i.e. a net regression) plus godie-u01q /
+    // godie-u01u / godie-udre (imported.heromusashimiyamoto), every one of which
+    // ships a clean "Stand" the picker walked straight past.
+    const offences = roster
+      .map((r) => ({ r, idle: idleClipFor(r.clips) }))
+      .filter(({ idle }) => idle !== null && !isShowable(idle))
+      .map(({ r, idle }) => `${r.championId} (${r.modelKey}) rests in ${idle}`);
+    expect(offences, "champions whose resting pose is a banned clip").toEqual([]);
+  });
+
+  it("the ban is LOAD-BEARING on today's roster, not decoration", () => {
+    cover("shop-idle-perform");
+    // Guarding the guard. `buildPerformPool`'s ban was completely inert against
+    // the shipped roster while `pickIdleClip` was broken: disabling it changed
+    // 0 of 115 pools, because the composite it exists to reject was already
+    // being consumed as the RESTING clip, and the per-kind cap filled from the
+    // clean swings anyway. A test can only be trusted to catch the ban being
+    // deleted if the roster actually presents the ban with something to reject.
+    const composite = roster.filter((r) => r.clips.includes("Attack Walk Stand Spin"));
+    expect(composite.length, "the rig this rule was written for left the roster").toBeGreaterThan(
+      0,
+    );
+    for (const r of composite) {
+      const idle = idleClipFor(r.clips);
+      const pool = buildPerformPool(r.clips, idle);
+      expect(idle).not.toBe("Attack Walk Stand Spin");
+      expect(pool.map((p) => p.clip)).not.toContain("Attack Walk Stand Spin");
+    }
+    // …and on at least one of them the CAP is not what saved us: the composite
+    // is listed ahead of the swings that did fill the attack slots, so removing
+    // the ban puts a walking swing straight into the rotation.
+    const reachable = composite.filter((r) => {
+      const at = r.clips.indexOf("Attack Walk Stand Spin");
+      const attacks = buildPerformPool(r.clips, idleClipFor(r.clips)).filter(
+        (p) => p.kind === "attack",
+      );
+      return attacks.length > 0 && attacks.every((p) => r.clips.indexOf(p.clip) > at);
+    });
+    expect(
+      reachable.map((r) => r.championId),
+      "no champion reaches the ban before the per-kind cap fills — it is inert again",
+    ).not.toEqual([]);
   });
 });

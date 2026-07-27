@@ -77,15 +77,54 @@ const TIERS: readonly { readonly kind: PerformKind; readonly re: RegExp }[] = [
 ];
 
 /**
- * Clips that must never enter the rotation. A death/decay/dissipate pose in the
- * shop reads as the hero dropping dead at the counter; hurt/hit reads as being
- * mugged; walk/run/swim slide a rooted model; birth/morph/portrait are one-shot
- * spawn or UI clips that leave the rig in a state the idle loop does not
- * restore. This is reactionClip's EXCLUDE plus the four the shop specifically
- * cannot survive (birth, morph, bare portrait, decay).
+ * Clips the shop must never SHOW AT ALL, in any slot. A death/decay/dissipate
+ * pose in the shop reads as the hero dropping dead at the counter; hurt/hit
+ * reads as being mugged; walk/run/swim slide a rooted model; birth/morph/
+ * portrait are one-shot spawn or UI clips that leave the rig in a state the
+ * idle loop does not restore. This is reactionClip's EXCLUDE plus the four the
+ * shop specifically cannot survive (birth, morph, bare portrait, decay), MINUS
+ * the "idle" term — see {@link isRotatable}.
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * WHY THIS IS ONE PREDICATE AND NOT TWO REGEXES
+ * ═══════════════════════════════════════════════════════════════════════════
+ * The rotation ban and the resting-pose ban were separate ideas, and the
+ * resting pose HAD NO BAN AT ALL: `pickIdleClip` matched /idle|stand/ and
+ * nothing else, so four shipped champions rested at the counter in
+ * "Attack Walk Stand Spin" — a walk/attack composite whose /stand/ substring is
+ * pure coincidence. 犬妖-殺生丸's rig proves the rule is not theoretical, and
+ * this file's own comment already said walk clips「slide a rooted model」.
+ * Measured on today's 115-champion roster: godie-opgh (imported.zy3) — a NET
+ * REGRESSION, it rested in a clean "Stand Defend" before this module existed —
+ * plus godie-u01q / godie-u01u / godie-udre (imported.heromusashimiyamoto),
+ * every one of which ships a clean "Stand" the picker walked straight past.
+ *
+ * So there is now ONE list of unshowable clips, consulted by both the picker
+ * and the pool, and the only difference between the two is the idle family
+ * itself: the resting clip must BE a stand, the rotation must never REPEAT it.
  */
-const EXCLUDE =
-  /idle|death|dead|\bdie\b|decay|dissipate|dissolve|hurt|damage|\bhit\b|block|dodge|sleep|\blie\b|\bsit\b|birth|morph|\bwalk\b|\brun\b|swim|portrait(?!\s*talk)/i;
+const UNSHOWABLE =
+  /death|dead|\bdie\b|decay|dissipate|dissolve|hurt|damage|\bhit\b|block|dodge|sleep|\blie\b|\bsit\b|birth|morph|\bwalk\b|\brun\b|swim|portrait(?!\s*talk)/i;
+
+/**
+ * May this clip be SHOWN at the market stall at all (in any slot)?
+ *
+ * Exported so a test can hold the roster to it without re-declaring the rule —
+ * a second copy of the pattern is how the two bans drifted apart in the first
+ * place.
+ */
+export function isShowable(name: string): boolean {
+  return !UNSHOWABLE.test(name);
+}
+
+/**
+ * May this clip enter the ROTATION? Everything `isShowable` allows, minus the
+ * idle family — the hero is already standing in one of those, and rotating him
+ * into another is a performance the player cannot see.
+ */
+function isRotatable(name: string): boolean {
+  return isShowable(name) && !/idle/i.test(name);
+}
 
 /** At most this many clips per kind, so no one family floods the rotation. */
 export const PER_KIND_CAP = 2;
@@ -114,7 +153,7 @@ export function buildPerformPool(
     for (const name of names) {
       if (used >= PER_KIND_CAP) break;
       if (name === idleName || taken.has(name)) continue;
-      if (EXCLUDE.test(name) || !tier.re.test(name)) continue;
+      if (!isRotatable(name) || !tier.re.test(name)) continue;
       taken.add(name);
       out.push({ clip: name, kind: tier.kind });
       used++;
@@ -177,17 +216,30 @@ export function performGapSec(rand: () => number = Math.random): number {
  * his alternate pose while his canonical "Stand" went unused — and the rotation
  * inherited the mistake, losing its only non-attack option with it.
  *
- * So: prefer a BASE idle (a stand/idle with no variant qualifier), fall back to
- * any stand/idle, and finally to the first clip at all. Pure, so the preference
- * is unit-tested without a GPU.
+ * So: throw out the clips no shop pose may use AT ALL ({@link isShowable} —
+ * this is the step that was missing, and it is why 4 champions stood at the
+ * counter mid-walk), then prefer a BASE idle (a stand/idle with no variant
+ * qualifier), fall back to any stand/idle, then to any showable clip, and only
+ * as a last ditch to the first clip at all. Pure, so the preference is
+ * unit-tested without a GPU.
+ *
+ * THE /stand/ SUBSTRING IS NOT A PROMISE. "Attack Walk Stand Spin" contains it
+ * and is a walk-attack composite: WC3 rigs concatenate every animation this
+ * sequence serves into one name, so matching a family by substring MUST be
+ * paired with the ban list or it silently accepts the union of five families.
  */
 const IDLE_LIKE = /idle|stand/i;
 const IDLE_VARIANT = /stand\s*-?\s*[2-9]|ready|channel|victory|hit|alternate|defend|\btalk\b/i;
 
 export function pickIdleClip(names: readonly string[]): string | null {
-  const idleLike = names.filter((n) => IDLE_LIKE.test(n));
+  const showable = names.filter(isShowable);
+  const idleLike = showable.filter((n) => IDLE_LIKE.test(n));
   return (
-    idleLike.find((n) => !IDLE_VARIANT.test(n)) ?? idleLike[0] ?? names[0] ?? null
+    idleLike.find((n) => !IDLE_VARIANT.test(n)) ??
+    idleLike[0] ??
+    showable[0] ??
+    names[0] ??
+    null
   );
 }
 

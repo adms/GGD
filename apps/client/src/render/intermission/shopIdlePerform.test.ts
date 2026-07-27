@@ -28,9 +28,12 @@ import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import type { Engine } from "@babylonjs/core/Engines/engine";
+import type { Scene } from "@babylonjs/core/scene";
+import { AssetContainer } from "@babylonjs/core/assetContainer";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { Animation } from "@babylonjs/core/Animations/animation";
+import type { AssetManager } from "../AssetManager";
 import { IntermissionScene, type IntermissionSceneOptions } from "./IntermissionScene";
 import {
   FIRST_PERFORM_SEC,
@@ -81,6 +84,7 @@ interface ScenePrivate {
   championBaseScale: number;
   championBaseY: number;
   performPool: PerformOption[];
+  performIndex: number;
   nextPerformAt: number;
   frame(): void;
 }
@@ -317,6 +321,237 @@ describe("shop idle performance — it becomes due on its own", () => {
     s.dispose();
     expect(s.performOnce()).toBeNull();
     expect(seen).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// THE PRODUCTION SEAM: setChampion
+// ---------------------------------------------------------------------------
+
+/**
+ * A real, playable AssetContainer whose animation groups carry a REAL rig's
+ * clip names — the one input `setChampion` actually receives in the browser.
+ *
+ * Everything above this line injects `priv.performPool` and `priv.championIdle`
+ * by hand, which is fine for testing what the scene DOES with a pool but proves
+ * nothing about where the pool comes from. `setChampion` is the only production
+ * line that turns .glb clip names into a rotation, and it was reachable by no
+ * test at all: `this.performPool = []` and reverting the idle pick to main's
+ * `groups.find(/idle|stand/)` both left the whole suite green while the feature
+ * silently died on screen.
+ *
+ * NOTE the `im-` prefix on every asserted name: `place()` instantiates the
+ * container with `(n) => \`im-${n}\``, so the names the rule actually sees in
+ * production are prefixed. Asserting the prefixed names is deliberate — it is
+ * what the shipped code compares against.
+ */
+function makeRigContainer(scene: Scene, clipNames: readonly string[]): AssetContainer {
+  const container = new AssetContainer(scene);
+  const rig = new TransformNode("rig", scene);
+  container.rootNodes.push(rig);
+  container.transformNodes.push(rig);
+  for (const name of clipNames) {
+    const anim = new Animation(`a-${name}`, "position.x", 30, Animation.ANIMATIONTYPE_FLOAT);
+    anim.setKeys([
+      { frame: 0, value: 0 },
+      { frame: 30, value: 1 },
+    ]);
+    const group = new AnimationGroup(name, scene);
+    group.addTargetedAnimation(anim, rig);
+    container.animationGroups.push(group);
+  }
+  return container;
+}
+
+/** An AssetManager that hands `setChampion` one prepared rig. */
+function rigAssets(container: AssetContainer): AssetManager {
+  return {
+    load: () => Promise.resolve(container),
+  } as unknown as AssetManager;
+}
+
+/**
+ * Two REAL rigs, verbatim from their .glb `animations[]` (parse them yourself
+ * with idlePerform.test.ts's `glbAnimationNames`). Both are picked because they
+ * break a DIFFERENT naive rule:
+ *
+ *  • sesshomaru lists its alternate pose FIRST, so "the first /idle|stand/
+ *    match" rests 犬妖-殺生丸 in "Stand - 2" (29 of 115 champions change idle
+ *    under that rule; this is the canonical one).
+ *  • heromusashimiyamoto lists "Attack Walk Stand Spin" — a walk/attack
+ *    composite — BEFORE its clean "Stand" AND before its clean "Attack", so it
+ *    is both the first /stand/ match and an early attack-tier candidate. It is
+ *    the rig that proves the unshowable-clip ban is load-bearing rather than
+ *    shadowed by the per-kind cap.
+ */
+const SESSHOMARU_CLIPS = [
+  "Stand - 2",
+  "Attack",
+  "Attack Slam",
+  "Death",
+  "Walk",
+  "Stand",
+  "Attack 2",
+  "Dissipate",
+] as const;
+const MUSASHI_CLIPS = [
+  "Spell",
+  "Death",
+  "Walk",
+  "Dissipate",
+  "Attack Walk Stand Spin",
+  "Stand",
+  "Stand 2",
+  "Stand Ready",
+  "Attack",
+  "Attack Slam",
+  "Attack 2",
+  "Spell Slam",
+] as const;
+
+describe("shop idle performance — the production seam (setChampion)", () => {
+  it("builds a REAL rotation from a real rig's clips — not an empty pool", async () => {
+    cover("shop-idle-perform");
+    const s = makeScene({ performRand: () => 0.5 });
+    const container = makeRigContainer(s.scene, MUSASHI_CLIPS);
+    (s as unknown as { assets: AssetManager }).assets = rigAssets(container);
+
+    await s.setChampion("assets/models/champions/heromusashimiyamoto.glb", 1);
+
+    const priv = s as unknown as ScenePrivate;
+    // ① the pool is POPULATED — `this.performPool = []` dies here
+    expect(priv.performPool.length, "setChampion produced no rotation at all").toBeGreaterThan(0);
+    // ② …and it is the RIGHT pool: two poses, two spells, two swings, capped
+    expect(priv.performPool).toEqual([
+      { clip: "im-Stand 2", kind: "pose" },
+      { clip: "im-Stand Ready", kind: "pose" },
+      { clip: "im-Spell", kind: "spell" },
+      { clip: "im-Spell Slam", kind: "spell" },
+      { clip: "im-Attack", kind: "attack" },
+      { clip: "im-Attack Slam", kind: "attack" },
+    ]);
+    // ③ every entry names a clip this rig really owns, or performOnce nods
+    const live = new Set(priv.championGroups.map((g) => g.name));
+    for (const option of priv.performPool) expect(live.has(option.clip)).toBe(true);
+    // ④ …and the first performance is ARMED, not left at ∞
+    expect(priv.nextPerformAt).toBeCloseTo(FIRST_PERFORM_SEC, 6);
+    s.dispose();
+  });
+
+  it("the rotation it built actually RUNS a clip on the render loop", async () => {
+    cover("shop-idle-perform");
+    // The pool assertions above are state; this is the behaviour. An empty pool
+    // does not crash — it degrades to the nod — so "the hero still moves" is NOT
+    // enough. What must be true is that he moves by playing one of HIS clips.
+    let now = 0;
+    const seen: PerformKind[] = [];
+    const s = makeScene({ now: () => now, performRand: () => 0.5, onPerform: (k) => seen.push(k) });
+    (s as unknown as { assets: AssetManager }).assets = rigAssets(
+      makeRigContainer(s.scene, MUSASHI_CLIPS),
+    );
+    await s.setChampion("assets/models/champions/heromusashimiyamoto.glb", 1);
+    const priv = s as unknown as ScenePrivate;
+
+    const played: string[] = [];
+    for (let t = 0; t < 20_000; t += 20) {
+      now = t;
+      priv.frame();
+      const live = priv.championReaction;
+      if (live) {
+        played.push(live.name);
+        live.onAnimationGroupEndObservable.notifyObservers(live);
+      }
+    }
+
+    expect(seen.length, "a real rig stood still for 20 s").toBeGreaterThan(0);
+    expect(seen, "every performance degraded to the procedural nod").not.toContain("nod");
+    const poolClips = priv.performPool.map((p) => p.clip);
+    expect(new Set(played).size).toBeGreaterThan(0);
+    for (const name of played) expect(poolClips).toContain(name);
+    s.dispose();
+  });
+
+  it("rests the hero in his BASE stand at the seam, not the first /stand/ match", async () => {
+    cover("shop-idle-perform");
+    // REGRESSION GUARD. `pickIdleClip` is unit-tested next door, but the defect
+    // it fixes lives on the CALL SITE: reverting this one line of setChampion to
+    // main's `groups.find((g) => /idle|stand/i.test(g.name))` used to leave every
+    // test in the repo green while 29 of 115 champions changed pose.
+    for (const clips of [SESSHOMARU_CLIPS, MUSASHI_CLIPS]) {
+      const s = makeScene({ performRand: () => 0.5 });
+      (s as unknown as { assets: AssetManager }).assets = rigAssets(
+        makeRigContainer(s.scene, clips),
+      );
+      await s.setChampion("assets/models/champions/rig.glb", 1);
+      const priv = s as unknown as ScenePrivate;
+
+      expect(priv.championIdle?.name, `wrong resting pose for [${clips.join(", ")}]`).toBe(
+        "im-Stand",
+      );
+      expect(priv.championIdle?.isPlaying, "the resting clip is not looping").toBe(true);
+      // …and only that one: every other clip was stopped before it started
+      const running = priv.championGroups.filter((g) => g.isPlaying).map((g) => g.name);
+      expect(running).toEqual(["im-Stand"]);
+      // the rotation inherits the choice — it must not offer the pose he holds
+      expect(priv.performPool.map((p) => p.clip)).not.toContain("im-Stand");
+      s.dispose();
+    }
+  });
+
+  it("refuses the walking composite at the seam, in BOTH slots", async () => {
+    cover("shop-idle-perform");
+    // The unshowable-clip ban, on the real production path. "Attack Walk Stand
+    // Spin" is the first /stand/ match on this rig (so it reached the resting
+    // slot) AND an attack-tier match that appears at index 4, BEFORE the clean
+    // "Attack" at index 8 (so the per-kind cap cannot be what keeps it out).
+    const s = makeScene({ performRand: () => 0.5 });
+    (s as unknown as { assets: AssetManager }).assets = rigAssets(
+      makeRigContainer(s.scene, MUSASHI_CLIPS),
+    );
+    await s.setChampion("assets/models/champions/heromusashimiyamoto.glb", 1);
+    const priv = s as unknown as ScenePrivate;
+
+    expect(priv.championIdle?.name).not.toBe("im-Attack Walk Stand Spin");
+    expect(priv.performPool.map((p) => p.clip)).not.toContain("im-Attack Walk Stand Spin");
+    // …and it is genuinely reachable: the swings that DID fill the attack slots
+    // are listed AFTER it, so only the ban stands between it and the rotation
+    const order = MUSASHI_CLIPS.map((n) => `im-${n}`);
+    const attacks = priv.performPool.filter((p) => p.kind === "attack");
+    expect(attacks.length).toBeGreaterThan(0);
+    for (const a of attacks) {
+      expect(order.indexOf(a.clip)).toBeGreaterThan(order.indexOf("im-Attack Walk Stand Spin"));
+    }
+    s.dispose();
+  });
+
+  it("a champion SWAP re-derives the rotation instead of keeping the old hero's", async () => {
+    cover("shop-idle-perform");
+    // setChampion is called again whenever the HUD's champion changes; a pool
+    // left over from the previous rig names clips this one does not own, and
+    // every performance would silently degrade to the nod.
+    const s = makeScene({ performRand: () => 0.5 });
+    const priv = s as unknown as ScenePrivate;
+    const box = { current: makeRigContainer(s.scene, MUSASHI_CLIPS) };
+    (s as unknown as { assets: AssetManager }).assets = {
+      load: () => Promise.resolve(box.current),
+    } as unknown as AssetManager;
+
+    await s.setChampion("assets/models/champions/heromusashimiyamoto.glb", 1);
+    expect(priv.performPool.map((p) => p.clip)).toContain("im-Spell");
+    priv.performIndex = 3; // mid-rotation on the old hero
+
+    box.current = makeRigContainer(s.scene, SESSHOMARU_CLIPS);
+    await s.setChampion("assets/models/champions/sesshomaru.glb", 1);
+
+    expect(priv.performPool).toEqual([
+      { clip: "im-Stand - 2", kind: "pose" },
+      { clip: "im-Attack", kind: "attack" },
+      { clip: "im-Attack Slam", kind: "attack" },
+    ]);
+    expect(priv.performIndex, "the new hero inherited the old one's cursor").toBe(-1);
+    const live = new Set(priv.championGroups.map((g) => g.name));
+    for (const option of priv.performPool) expect(live.has(option.clip)).toBe(true);
+    s.dispose();
   });
 });
 
