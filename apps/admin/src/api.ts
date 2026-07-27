@@ -313,6 +313,24 @@ export function getOverlayLog(): Promise<OverlayLogLine[]> {
   return api.request<unknown>("/content-overlay/log").then(normalizeLog);
 }
 
+/**
+ * The overlay's OWN copy of one doc, read out of the public bundle.
+ *
+ * `/content-overlay/status` lists WHICH docs are overlaid but not their bytes,
+ * and `/content-overlay/shipped/...` deliberately returns the repo's version.
+ * A page that edits a doc IN PLACE (rather than pasting JSON) needs the third
+ * thing: what is LIVE right now. The bundle is exactly that — it is the same
+ * body the game-server lays over the shipped tree at boot — so reading the live
+ * doc from here means the console and the shard can never disagree about what
+ * "現在生效的值" is. Returns null when this doc has no overlay entry, which the
+ * caller answers by falling back to the shipped doc.
+ */
+export function getOverlayDoc(collection: string, id: string): Promise<unknown | null> {
+  return api
+    .request<{ docs?: Record<string, unknown> }>("/content-overlay/bundle", { auth: false })
+    .then((body) => body?.docs?.[`${collection}/${id}`] ?? null);
+}
+
 /** What the SHIPPED (repo) tree currently says for a doc — the editor's starting point. */
 export function getShippedDoc(
   collection: string,

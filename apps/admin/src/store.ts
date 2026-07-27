@@ -64,6 +64,15 @@ export type Page =
   | "voxelStudio"
   | "combatEnv"
   /**
+   * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
+   * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
+   * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
+   * is a `putOverlayDoc` — the platform's admin-only durable data/ overlay — so
+   * it SHIPS IN THE PRODUCTION BUNDLE (eagerly imported in ui/App.tsx) and is
+   * session-gated below; it never touches the loopback content-api.
+   */
+  | "mobWaves"
+  /**
    * 系統運維 (server ops) — the operational numbers: 同時對戰上限 + 快照頻率
    * writable, everything else visible and read-only with its safety class.
    */
@@ -244,6 +253,10 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "voxelForge",
   "ai",
   "combatEnv",
+  // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
+  // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
+  // 儲存 would 401 and read as a broken page rather than a missing sign-in.
+  "mobWaves",
   "serverOps",
   "mcoinGrant",
   "invites",
