@@ -21,7 +21,6 @@ import {
   PERFORM_GAP_MIN_SEC,
   PER_KIND_CAP,
   buildPerformPool,
-  isShowable,
   nextPerformIndex,
   performGapSec,
   pickIdleClip,
@@ -325,9 +324,16 @@ describe("idlePerform — the shipped roster actually performs", () => {
     // before this feature existed, i.e. a net regression) plus godie-u01q /
     // godie-u01u / godie-udre (imported.heromusashimiyamoto), every one of which
     // ships a clean "Stand" the picker walked straight past.
+    //
+    // The pattern below is written out RATHER THAN imported from the module. An
+    // oracle that asks the implementation「is this clip allowed?」agrees with the
+    // implementation by construction: neutering the ban would make this census
+    // vacuous instead of red. (Measured: it does. The rotation census above uses
+    // its own literal for exactly this reason.)
+    const BANNED = /death|decay|dissipate|hurt|walk|\brun\b|birth|morph|\bhit\b/i;
     const offences = roster
       .map((r) => ({ r, idle: idleClipFor(r.clips) }))
-      .filter(({ idle }) => idle !== null && !isShowable(idle))
+      .filter(({ idle }) => idle !== null && BANNED.test(idle))
       .map(({ r, idle }) => `${r.championId} (${r.modelKey}) rests in ${idle}`);
     expect(offences, "champions whose resting pose is a banned clip").toEqual([]);
   });

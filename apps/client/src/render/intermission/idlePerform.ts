@@ -109,11 +109,13 @@ const UNSHOWABLE =
 /**
  * May this clip be SHOWN at the market stall at all (in any slot)?
  *
- * Exported so a test can hold the roster to it without re-declaring the rule —
- * a second copy of the pattern is how the two bans drifted apart in the first
- * place.
+ * Deliberately NOT exported. A test that asks this function「is this clip
+ * allowed?」 agrees with it by construction, so neutering the ban would make
+ * the roster census pass VACUOUSLY instead of failing (measured: it does).
+ * Both censuses in idlePerform.test.ts spell the forbidden families out
+ * themselves, so the oracle is independent of the rule it is judging.
  */
-export function isShowable(name: string): boolean {
+function isShowable(name: string): boolean {
   return !UNSHOWABLE.test(name);
 }
 
