@@ -882,6 +882,10 @@ export class MatchController {
       this.pairings = [];
       this.bye = null;
       this.royale = royaleBout(this.participatingTeams());
+      // Re-arming the finale re-opens it. Only the skipPhase cheat and the
+      // fault failsafe can enter round FINAL_ROUND twice, but a stale winner
+      // would make `checkRoyaleEnd` return true on the re-entry's first tick.
+      this.royaleWinner = null;
       // …and give the round the clock it needs. `config.match@1` ships
       // combatMaxSec: 100, but the finale's fire ring does not ignite until 180 s
       // (owner: 決賽要給玩家足夠時間真的打一場). Left on the normal phase timer the
