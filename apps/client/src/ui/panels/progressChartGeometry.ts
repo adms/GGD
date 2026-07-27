@@ -37,7 +37,16 @@ export interface ChartBox {
 export const CHART_BOX: ChartBox = {
   width: 300,
   height: 150,
-  padLeft: 30,
+  /**
+   * 36, not 30. The widest value label the damage axis can print is 5 glyphs
+   * ("12.3k"), right-anchored 4 units inside the axis: at AXIS_LABEL_SIZE that
+   * is ~27 units, so a 30-unit gutter started the text at x = −1 and pushed it
+   * out of the box (the svg is `overflow: visible`, so it did not clip — it
+   * overlapped the NEIGHBOURING chart in the grid, which is worse than clipping
+   * because it looks like a rendering glitch rather than a layout bug).
+   * progressChartRender's gutter test recomputes this.
+   */
+  padLeft: 36,
   padRight: 10,
   padTop: 12,
   padBottom: 20,
@@ -164,4 +173,34 @@ export function valueDomain(lines: readonly { points: readonly ChartPoint[] }[])
 export function axisTicks(min: number, max: number, count = 3): number[] {
   if (count < 2 || !(max > min)) return [min];
   return Array.from({ length: count }, (_, i) => min + ((max - min) * i) / (count - 1));
+}
+
+// ─────────────────────────────────────────── legibility on a real screen ──
+//
+// A `viewBox` chart scales its TEXT along with its geometry, so an axis label
+// authored at "8" is not 8 px on screen — it is `8 × columnWidth / viewBoxWidth`.
+// That is the trap these three constants exist to close, and it bit for real:
+// with the grid's minimum column at 200 px, THREE charts fitted across the
+// 760 px settlement card and the labels rendered at 6.0 CSS px. Unreadable — and
+// on the DESKTOP, not the phone (a 390 px phone gets one column, ~9 px, and was
+// always fine). Nothing about "it fits" would have caught it; the numbers had to
+// be computed.
+
+/**
+ * Smallest column the responsive grid may hand a chart. Sized so the settlement
+ * card (min(760px, 96vw)) fits TWO charts per row rather than three — see
+ * {@link labelPxAt}. Raising the count back to three shrinks the labels below
+ * legibility; `progressChartRender.test.ts` fails if this constant is lowered.
+ */
+export const MIN_CHART_COL_PX = 280;
+
+/** Author-space size of the axis labels (see {@link labelPxAt} for real px). */
+export const AXIS_LABEL_SIZE = 9;
+
+/** Smallest label size, in real CSS pixels, that is still readable on a phone. */
+export const MIN_READABLE_LABEL_PX = 9;
+
+/** What an axis label ACTUALLY measures on screen inside a `colPx`-wide column. */
+export function labelPxAt(colPx: number, box: ChartBox = CHART_BOX): number {
+  return (AXIS_LABEL_SIZE * colPx) / box.width;
 }

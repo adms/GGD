@@ -26,7 +26,11 @@ import type { RoundStatDelta, RoundStatsEntry } from "@ggd/shared/protocol/messa
 import { ProgressChartPanel } from "./ProgressChartPanel";
 import { buildProgressSeries, type ProgressAdvice, type ProgressSeries } from "./progressChart";
 import {
+  AXIS_LABEL_SIZE,
   CHART_BOX,
+  MIN_CHART_COL_PX,
+  MIN_READABLE_LABEL_PX,
+  labelPxAt,
   plotBottom,
   plotLeft,
   plotRight,
@@ -252,5 +256,68 @@ describe("the panel actually paints", () => {
     expect(out).toContain(`viewBox="0 0 ${CHART_BOX.width} ${CHART_BOX.height}"`);
     expect(out).toContain('width="100%"');
     expect(out).not.toMatch(/<svg[^>]*width="\d+px"/);
+  });
+});
+
+describe("the axis labels are actually READABLE at every real viewport", () => {
+  // A viewBox scales TEXT along with geometry, so `fontSize={9}` is not 9 px on
+  // screen — it is 9 × columnWidth / viewBoxWidth. This was a REAL defect found
+  // by computing it rather than by looking: at a 200 px grid minimum, THREE
+  // charts fitted across the 760 px settlement card and the labels rendered at
+  // 6.0 CSS px. And the worst case was the DESKTOP, not the phone — a 390 px
+  // phone gets one wide column and was never in trouble. "It fits on mobile"
+  // would have passed the whole time.
+  //
+  // The viewports are the ones the task names, minus the card's own chrome
+  // (card padding 20 + panel padding 12, both sides).
+  const CARD_CHROME = 2 * (20 + 12);
+  const GAP = 10;
+
+  /** Columns `repeat(auto-fit, minmax(MIN,1fr))` yields inside `inner` px. */
+  function columns(inner: number): number {
+    return Math.max(1, Math.floor((inner + GAP) / (MIN_CHART_COL_PX + GAP)));
+  }
+  function columnPx(inner: number): number {
+    const n = columns(inner);
+    return (inner - (n - 1) * GAP) / n;
+  }
+
+  const VIEWPORTS: { name: string; cardPx: number }[] = [
+    // the settlement card is width: min(760px, 96vw)
+    { name: "phone 390×844", cardPx: Math.min(760, 390 * 0.96) },
+    { name: "handheld landscape 780×360", cardPx: Math.min(760, 780 * 0.96) },
+    { name: "desktop", cardPx: 760 },
+  ];
+
+  for (const v of VIEWPORTS) {
+    it(`${v.name}: labels render at ≥ ${MIN_READABLE_LABEL_PX} CSS px`, () => {
+      const inner = v.cardPx - CARD_CHROME;
+      const px = labelPxAt(columnPx(inner));
+      expect(
+        px,
+        `${v.name}: ${columns(inner)} column(s) of ${columnPx(inner).toFixed(0)}px → ` +
+          `axis labels at ${px.toFixed(1)} CSS px. Raise MIN_CHART_COL_PX or ` +
+          `AXIS_LABEL_SIZE, or narrow CHART_BOX.width.`,
+      ).toBeGreaterThanOrEqual(MIN_READABLE_LABEL_PX);
+    });
+  }
+
+  it("the round labels do not collide, even on a full 10-round match", () => {
+    // 10 rounds is the longest a match can run (#215's round-10 clean final is
+    // the last). Two-digit labels at AXIS_LABEL_SIZE must fit the x-spacing.
+    const spacing = plotX(1, 10) - plotX(0, 10);
+    const widest = 2 * AXIS_LABEL_SIZE * 0.6; // 2 digits, generous advance width
+    expect(
+      spacing,
+      `10 rounds spaced ${spacing.toFixed(1)} apart cannot hold a ${widest.toFixed(1)}-wide label`,
+    ).toBeGreaterThan(widest);
+  });
+
+  it("the value labels fit their gutter instead of spilling off the left edge", () => {
+    // The widest label the damage axis can print is "12.3k" (5 chars), right-
+    // anchored 4 units left of the axis. Spilling past x=0 clips it.
+    const widest = 5 * AXIS_LABEL_SIZE * 0.6;
+    const leftEdge = CHART_BOX.padLeft - 4 - widest;
+    expect(leftEdge, `value labels start at x=${leftEdge.toFixed(1)} — off-canvas`).toBeGreaterThan(0);
   });
 });

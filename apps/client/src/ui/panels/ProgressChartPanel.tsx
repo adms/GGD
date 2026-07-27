@@ -25,16 +25,27 @@
  * small line charts do not justify a dependency. All geometry lives in
  * ./progressChartGeometry (pure, unit-tested).
  *
- * MOBILE: the three charts sit in a `repeat(auto-fit, minmax(200px, 1fr))`
- * grid, so they are a row on a desktop card and a single column on a 390 px
- * phone. Each `<svg>` is `width: 100%` over a fixed viewBox, so it scales
- * rather than clipping, and the panel scrolls inside its own max-height on a
- * 780×360 landscape handheld where the card itself has ~330 px to give.
+ * MOBILE / LEGIBILITY: the charts sit in a
+ * `repeat(auto-fit, minmax(MIN_CHART_COL_PX, 1fr))` grid — two per row on the
+ * settlement card, one per row on a 390 px phone. Each `<svg>` is `width: 100%`
+ * over a fixed viewBox, so it scales instead of clipping, and the panel scrolls
+ * inside its own max-height on a 780×360 landscape handheld where the card has
+ * only ~330 px to give.
+ *
+ * `MIN_CHART_COL_PX` is 280 and NOT smaller for a measured reason. A viewBox
+ * scales its TEXT too, so an axis label is `size × columnWidth / viewBoxWidth`
+ * real pixels. At a 200 px minimum, THREE charts fitted across the 760 px card
+ * and the labels came out at 6.0 CSS px — illegible, and on the DESKTOP rather
+ * than the phone (a phone gets one wide column and was always fine). 280 forces
+ * two columns and lands the labels at ~10 px everywhere. progressChartRender's
+ * legibility test recomputes this and fails if the constant is lowered.
  */
 import type { ProgressAdvice, ProgressSeries, SeriesLine } from "./progressChart";
 import { NO_ADVICE_LINE } from "./progressChart";
 import {
+  AXIS_LABEL_SIZE,
   CHART_BOX,
+  MIN_CHART_COL_PX,
   axisTicks,
   plotBottom,
   plotLeft,
@@ -56,7 +67,6 @@ import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 const MATE_COLORS = ["#6fa8ff", "#79d6a8"] as const;
 
 const AXIS_COLOR = "rgba(140,160,200,0.28)";
-const LABEL_SIZE = 8;
 
 /** Per-seat colour: gold for me, then the muted palette in seat order. */
 function seatColor(line: SeriesLine, mateIndex: number): string {
@@ -105,7 +115,7 @@ function LineChart(props: ChartProps): React.JSX.Element {
           return (
             <g key={`t${i}`}>
               <line x1={l} y1={y} x2={r} y2={y} stroke={AXIS_COLOR} strokeWidth={0.6} />
-              <text x={l - 4} y={y + 3} fontSize={LABEL_SIZE} fill={TEXT_DIM} textAnchor="end">
+              <text x={l - 4} y={y + 3} fontSize={AXIS_LABEL_SIZE} fill={TEXT_DIM} textAnchor="end">
                 {fmt(v)}
               </text>
             </g>
@@ -117,7 +127,7 @@ function LineChart(props: ChartProps): React.JSX.Element {
             key={`r${rd}`}
             x={plotX(i, rounds.length, box)}
             y={b + 12}
-            fontSize={LABEL_SIZE}
+            fontSize={AXIS_LABEL_SIZE}
             fill={TEXT_DIM}
             textAnchor="middle"
           >
@@ -233,7 +243,7 @@ export function ProgressChartPanel(props: ProgressChartPanelProps): React.JSX.El
             style={{
               display: "grid",
               // one column on a phone, up to three across on a desktop card
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gridTemplateColumns: `repeat(auto-fit, minmax(${MIN_CHART_COL_PX}px, 1fr))`,
               gap: 10,
             }}
           >
