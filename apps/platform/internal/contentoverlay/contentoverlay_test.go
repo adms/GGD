@@ -228,7 +228,17 @@ func TestPublicEndpointsDoNotLeakUpdatedBy(t *testing.T) {
 		json.RawMessage(`{"id":"godie-e001","name":"X"}`), adminID)
 	require.NoError(t, err)
 
-	h := contentoverlay.NewHandlers(svc, nil)
+	// A real middleware, not nil. Passing nil used to be tolerated and silently
+	// produced an admin surface with NO authorization (P0-2, fixed 2026-07-27);
+	// NewHandlers now panics on nil, which is the point. This test only exercises
+	// the PUBLIC routes, so the gate is never invoked — but it must still be a
+	// gate, because MountPublic and Mount share the same handler value.
+	denyAll := func(http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			w.WriteHeader(http.StatusForbidden)
+		})
+	}
+	h := contentoverlay.NewHandlers(svc, denyAll)
 	r := chi.NewRouter()
 	h.MountPublic(r)
 

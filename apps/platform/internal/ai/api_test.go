@@ -89,16 +89,24 @@ func TestAPIAdminConfig(t *testing.T) {
 	assert.Equal(t, true, r.Body["hasKey"])
 }
 
-// ai-api-icon-stub: /ai/icon is authed (any valid token) and, unconfigured,
+// ai-api-icon-stub: /ai/icon is ADMIN-ONLY (P0-1, 2026-07-27) and, unconfigured,
 // returns the stub placeholder shape { pngBase64, dataUrl, mime, stub:true }.
 func TestAPIIconStub(t *testing.T) {
 	testkit.Cover(t, "ai-api-icon-stub")
 	ts := testutil.New(t)
+	player := ts.Register("player")
 	user := ts.Register("editor")
+	grantAdmin(t, ts, user.ID)
 
 	// No token → 401.
 	r := ts.Do(http.MethodPost, "/api/v1/ai/icon", "", map[string]any{"prompt": "a dragon"})
 	assert.Equal(t, http.StatusUnauthorized, r.Status)
+
+	// P0-1 (2026-07-27): an APPROVED PLAYER must not be able to spend the
+	// operator's paid AI quota. Until this date the next line returned 200.
+	r = ts.Do(http.MethodPost, "/api/v1/ai/icon", player.Access, map[string]any{"prompt": "a dragon"})
+	assert.Equal(t, http.StatusForbidden, r.Status)
+	assert.Equal(t, "admin_required", r.ErrCode())
 
 	// Authed, unconfigured → stub PNG.
 	r = ts.Do(http.MethodPost, "/api/v1/ai/icon", user.Access, map[string]any{
@@ -118,16 +126,22 @@ func TestAPIIconStub(t *testing.T) {
 	assert.Equal(t, "bad_request", r.ErrCode())
 }
 
-// ai-api-tts-stub: /ai/tts is authed and, unconfigured, answers a 501-style
+// ai-api-tts-stub: /ai/tts is ADMIN-ONLY (P0-1) and, unconfigured, answers a 501-style
 // JSON { stub:true } (NO audio) so client tooling keeps its local clips.
 func TestAPITTSStub(t *testing.T) {
 	testkit.Cover(t, "ai-api-tts-stub")
 	ts := testutil.New(t)
+	player := ts.Register("player")
 	user := ts.Register("voagent")
+	grantAdmin(t, ts, user.ID)
 
 	// No token → 401.
 	r := ts.Do(http.MethodPost, "/api/v1/ai/tts", "", map[string]any{"text": "歡迎", "lang": "zh-TW"})
 	assert.Equal(t, http.StatusUnauthorized, r.Status)
+
+	// P0-1: paid route, admin only.
+	r = ts.Do(http.MethodPost, "/api/v1/ai/tts", player.Access, map[string]any{"text": "歡迎", "lang": "zh-TW"})
+	assert.Equal(t, http.StatusForbidden, r.Status)
 
 	// Authed, unconfigured → 501 Not Implemented with stub:true (no audio field).
 	r = ts.Do(http.MethodPost, "/api/v1/ai/tts", user.Access, map[string]any{
@@ -144,15 +158,21 @@ func TestAPITTSStub(t *testing.T) {
 	assert.Equal(t, "bad_request", r.ErrCode())
 }
 
-// ai-api-text-stub: /ai/text is authed and, unconfigured, returns
+// ai-api-text-stub: /ai/text is ADMIN-ONLY (P0-1) and, unconfigured, returns
 // { text, stub:true } with a non-empty canned string.
 func TestAPITextStub(t *testing.T) {
 	testkit.Cover(t, "ai-api-text-stub")
 	ts := testutil.New(t)
+	player := ts.Register("player")
 	user := ts.Register("editor")
+	grantAdmin(t, ts, user.ID)
 
 	r := ts.Do(http.MethodPost, "/api/v1/ai/text", "", map[string]any{"prompt": "x", "field": "description"})
 	assert.Equal(t, http.StatusUnauthorized, r.Status)
+
+	// P0-1: paid route, admin only.
+	r = ts.Do(http.MethodPost, "/api/v1/ai/text", player.Access, map[string]any{"prompt": "x", "field": "description"})
+	assert.Equal(t, http.StatusForbidden, r.Status)
 
 	r = ts.Do(http.MethodPost, "/api/v1/ai/text", user.Access, map[string]any{
 		"prompt": "生成英雄描述", "field": "description", "context": "name: 火龍騎士",
@@ -163,13 +183,14 @@ func TestAPITextStub(t *testing.T) {
 	assert.NotEmpty(t, text)
 }
 
-// ai-api-music-stub: /ai/music is authed and, unconfigured, answers a 501-style
+// ai-api-music-stub: /ai/music is ADMIN-ONLY (P0-1) and, unconfigured, answers a 501-style
 // JSON { stub:true } naming the LOCAL generator (tools/bgm-gen) rather than
 // pretending to produce a track.
 func TestAPIMusicStub(t *testing.T) {
 	testkit.Cover(t, "ai-api-music-stub")
 	ts := testutil.New(t)
 	user := ts.Register("composer")
+	grantAdmin(t, ts, user.ID)
 
 	// No token → 401.
 	r := ts.Do(http.MethodPost, "/api/v1/ai/music", "", map[string]any{"prompt": "battle theme"})

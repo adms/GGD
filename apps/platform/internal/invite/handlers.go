@@ -26,6 +26,14 @@ type Handlers struct {
 // NewHandlers wires handlers around the service. adminOnly must be the
 // platform's admin-role middleware; it runs after auth.Middleware.
 func NewHandlers(svc *Service, adminOnly func(http.Handler) http.Handler) *Handlers {
+	// FAIL-CLOSED AT WIRING TIME. Until 2026-07-27 every one of these packages
+	// wrote `if h.adminOnly != nil { ar.Use(h.adminOnly) }`, so passing nil here
+	// SILENTLY mounted an admin surface with no authorization at all — it did not
+	// fail to compile, and no test went red. A missing gate must be a crash on
+	// boot, never a quietly open door.
+	if adminOnly == nil {
+		panic("invite: adminOnly middleware is required; an admin surface must never mount unguarded")
+	}
 	return &Handlers{svc: svc, adminOnly: adminOnly}
 }
 
@@ -33,9 +41,7 @@ func NewHandlers(svc *Service, adminOnly func(http.Handler) http.Handler) *Handl
 // subrouter (auth.Middleware must run first).
 func (h *Handlers) Mount(r chi.Router) {
 	r.Group(func(ar chi.Router) {
-		if h.adminOnly != nil {
-			ar.Use(h.adminOnly)
-		}
+		ar.Use(h.adminOnly)
 		ar.Get("/admin/invites", h.list)
 		ar.Post("/admin/invites", h.mint)
 		ar.Post("/admin/invites/{code}/revoke", h.revoke)

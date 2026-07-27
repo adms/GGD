@@ -32,21 +32,36 @@ type Handlers struct {
 // NewHandlers wires handlers around the service. adminOnly must be the
 // platform's admin-role middleware; it runs after auth.Middleware.
 func NewHandlers(svc *Service, adminOnly func(http.Handler) http.Handler) *Handlers {
+	// FAIL-CLOSED AT WIRING TIME. Until 2026-07-27 every one of these packages
+	// wrote `if h.adminOnly != nil { ar.Use(h.adminOnly) }`, so passing nil here
+	// SILENTLY mounted an admin surface with no authorization at all — it did not
+	// fail to compile, and no test went red. A missing gate must be a crash on
+	// boot, never a quietly open door.
+	if adminOnly == nil {
+		panic("ai: adminOnly middleware is required; an admin surface must never mount unguarded")
+	}
 	return &Handlers{svc: svc, adminOnly: adminOnly}
 }
 
 // Mount registers the routes on an already-authenticated subrouter
-// (auth.Middleware must run first). Config writes are additionally admin-gated.
+// (auth.Middleware must run first).
+//
+// EVERY route here is admin-gated, generation included. Until 2026-07-27 the
+// four generation routes sat OUTSIDE the group, on the merely-authenticated
+// router — so any APPROVED PLAYER could spend the operator's paid AI quota by
+// calling /ai/icon in a loop. The per-route limiter (ai.go, 30/min, music
+// 4/min) bounds the rate, not the bill, and it is not an authorization control.
+//
+// There is no legitimate player caller: a repo-wide sweep found the game client
+// touches only /ai/readiness (public, boolean-only); /ai/icon|text|tts|music
+// are called solely from apps/admin and apps/editor, both operator tools.
 func (h *Handlers) Mount(r chi.Router) {
-	r.Post("/ai/icon", h.icon)
-	r.Post("/ai/text", h.text)
-	r.Post("/ai/tts", h.tts)
-	r.Post("/ai/music", h.music)
-
 	r.Group(func(ar chi.Router) {
-		if h.adminOnly != nil {
-			ar.Use(h.adminOnly)
-		}
+		ar.Use(h.adminOnly)
+		ar.Post("/ai/icon", h.icon)
+		ar.Post("/ai/text", h.text)
+		ar.Post("/ai/tts", h.tts)
+		ar.Post("/ai/music", h.music)
 		ar.Get("/admin/ai/config", h.getConfig)
 		ar.Put("/admin/ai/config", h.putConfig)
 	})

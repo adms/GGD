@@ -44,15 +44,21 @@ type Handlers struct {
 // NewHandlers wires handlers around the service. adminOnly must be the
 // platform's admin-role middleware; it runs after auth.Middleware.
 func NewHandlers(svc *Service, adminOnly func(http.Handler) http.Handler) *Handlers {
+	// FAIL-CLOSED AT WIRING TIME. Until 2026-07-27 every one of these packages
+	// wrote `if h.adminOnly != nil { ar.Use(h.adminOnly) }`, so passing nil here
+	// SILENTLY mounted an admin surface with no authorization at all — it did not
+	// fail to compile, and no test went red. A missing gate must be a crash on
+	// boot, never a quietly open door.
+	if adminOnly == nil {
+		panic("platformarchive: adminOnly middleware is required; an admin surface must never mount unguarded")
+	}
 	return &Handlers{svc: svc, adminOnly: adminOnly}
 }
 
 // Mount registers the routes on an already-authenticated subrouter.
 func (h *Handlers) Mount(r chi.Router) {
 	r.Route("/admin/platform-archive", func(ar chi.Router) {
-		if h.adminOnly != nil {
-			ar.Use(h.adminOnly)
-		}
+		ar.Use(h.adminOnly)
 		ar.Get("/status", h.status)
 		ar.Post("/preview", h.preview)
 		ar.Post("/export", h.export)
