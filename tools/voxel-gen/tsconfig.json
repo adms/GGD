@@ -6,5 +6,15 @@
     "types": ["node"],
     "skipLibCheck": true
   },
-  "include": ["gen.ts", "gen.test.ts"]
+  "include": [
+    "gen.ts",
+    "gen.test.ts",
+    "pngRead.ts",
+    "pngRead.test.ts",
+    "barcodeExtract.ts",
+    "barcodeExtract.test.ts",
+    "extract.ts",
+    "extract.test.ts",
+    "testImages.ts"
+  ]
 }
