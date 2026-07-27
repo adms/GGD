@@ -4348,3 +4348,149 @@ ping 帶在左端，是第一個撞上它的東西。
 五個變異全部被抓到，且每一條的失敗訊息都直接說出「刪了會怎樣」。
 純函式測試（`pingReadout.test.ts` / `tickHealth.test.ts`）在**每一個**變異下都維持全綠 ——
 這正是它們自己檔頭寫明的、它們證明不了的事。
+
+---
+
+## 2026-07-27 · 商店輪播動作 + 語音 —— 先量 clip 普查，再決定規則
+
+owner：「在商店 shop 時，玩家角色會隨機輪播動作跟語音」。
+
+### 一、先查既有素材（不重造）
+
+| 既有 | 結論 |
+|---|---|
+| #146 商店場景玩家模型在右邊 | 模型已經在場上，只是永遠 loop 一支 idle |
+| #111「買東西要有反應」 | **整條路徑重用**：同一個 `championReaction` 槽、同一個 `onAnimationGroupEndObservable` 回 idle、同一個程序化 pulse 退化 |
+| #27 點英雄播語音 / #184 反污染 / #253 空間化 | 語音全部走 `contextualVoice`，沒有另建播放器 |
+| `content/assets/audio/voices/champions/MANIFEST.json` | 51 位英雄 × 46 個 category 的 CosyVoice3 pack |
+
+### 二、clip 普查（這題的核心事實）
+
+解 330 個 `.glb` 的 glTF JSON chunk 取 `animations[]`，再用
+`content/champions/*.json → modelKey → content/models/*.json` 對回 **115 位**有模型的英雄：
+
+| clip 家族 | 覆蓋 | 實際名字 |
+|---|---|---|
+| attack | **115 / 115** | `Attack`、`Attack Slam`、`Attack 2`、`Attack - 1`… |
+| spell | 105 / 115 | `Spell`、`Spell Slam`、`Spell Throw`、`Channel` |
+| 替代站姿 | 63 / 115 | `Stand Ready` ×44、`Stand 2` ×33、`Stand 3`… |
+| 慶祝 | 48 / 115 | `cheer` ×45（體素家族）＋ `Stand Victory` ×3 |
+| 說話 | 19 / 115 | `Portrait Talk`、`Portrait Talk 2` |
+
+**全 roster 沒有共通的「歡呼」clip**。以慶祝 clip 為主的輪播，115 位裡有 67 位會安靜站著 ——
+這正是失敗形狀⑤（測的主體不是真的那個東西）。所以 tier 依「站在攤位前好不好看」排：
+`celebrate > talk > pose > spell > attack`，每位英雄都至少落在一層。
+
+排除：死亡/腐爛/消散/受傷/走跑/`Birth`/`Morph`/**裸 `Portrait`**（WC3 的頭部專用 clip，
+播在全身上通常等於沒動）。每個 kind 最多取 2 支：帶 4 支 Attack 的 WC3 英雄否則會把商店變成兵器展示。
+
+### 三、設計判斷與理由
+
+| 判斷 | 值 | 理由 |
+|---|---|---|
+| 多久一次 | 首次 5 秒，之後 7.5–11.5 秒隨機 | 商店 40 秒（`config.match.intermissionSec`）→ 一次 3–5 演；進場運鏡 900 ms + 店員招呼要讓開；隨機是為了不變成節拍器 |
+| 哪些動作 | 見上表 tier | 缺的優雅退化成一個很小的程序化點頭（amp 0.04 / lift 0.05，購買 pop 是 0.12 / 0.18），不會卡 T-pose 也不會丟例外 |
+| 語音怎麼配 | kind → 兩個 category，第一個被機率骰掉才試第二個 | 對得上（歡呼→taunt、說話→名言、站姿→watch、施法→charge）；同 kind 連抽兩次時上次講過的降到第二順位 |
+| 不蓋台 | 購買時把下次表演往後推一整個間隔 | 這是兩套系統唯一會撞的地方（購買台詞 + 表演台詞同時上 SFX bus） |
+
+選的 `taunt / thumbs-up / thanks / watch / free-move / charge` 都是 grep 過確認**戰鬥沒有呼叫點**的
+死語音 —— 花的是沒人用的內容，不是搶戰鬥提示。刻意**不用** `attack-light`（prob 0.08 / 12 秒冷卻，
+借來這裡既幾乎不會響、又會燒掉戰鬥提示的冷卻）。
+
+### 四、路上撿到的兩個舊洞
+
+1. **#111 的回歸破口**：pulse 結束時把 `position.y` 寫死回 `0`，但 #111 的修法是把腳墊到地面
+   （皮卡丘 bind box 到 y = −0.58）。原本只有買東西才踩到，輪播一場會點頭 3–5 次 → 每場都踩到。
+   改成記住 `groundChampion` 算出的 `championBaseY`。
+2. **犬妖-殺生丸站錯姿勢**：`setChampion` 取第一個 `/idle|stand/` 命中，而 `imported/sesshomaru.glb`
+   把 `Stand - 2` 排在 `Stand` 前面 → 他在商店裡一直用替代姿勢站著，輪播也只剩揮刀。
+   新增 `pickIdleClip`：優先挑沒有變體修飾詞的 base stand。
+
+### 五、對抗式驗證：10 個變異，2 個一開始沒被抓到
+
+| 變異 | 變紅 |
+|---|---|
+| ① `frame()` 不再 `tickPerform()` | 1（跑滿 35 秒 render loop 那條） |
+| ② 算出 kind 但不呼叫 `onPerform` | 2 |
+| ③ `IntermissionStage` 拿掉 `playShopPerformVoice` | 1（原始碼接線斷言） |
+| ④ pulse 彈回 `y = 0` | 1 |
+| ⑤ 休息中的 idle 放回輪播池 | **0 → 補測後 1** |
+| ⑥ 購買不再推遲下次表演 | 1 |
+| ⑦ `pickIdleClip` 退回「第一個命中」 | 2（含 roster 普查那條） |
+| ⑧ `nod` 失去語音配對 | 1 |
+| ⑨ 語音 category 打錯字 | 5 |
+| ⑩ 表演可以打斷還在播的反應 | **0 → 補測後 1** |
+
+⑤ 一開始全綠的原因寫在測試裡：現有 roster **0 / 115** 的休息 clip 會撞到任何 tier
+（`Stand` 本身不符合 pose 規則），所以 `name === idleName` 這個守衛在今天的內容上踩不到 ——
+但 `pickIdleClip` 會退回變體、再退回 `names[0]`，下一隻英雄就可能撞到。補了會踩到的案例。
+
+⑩ 一開始全綠是因為購買本來就會重排，一般路徑撞不到；但 `onAnimationGroupEndObservable`
+沒送達時（引擎停住、clip 沒 keyframe）舊碼每個 gap 換一個新姿勢，而且表演語音會直接壓在
+購買台詞上。補了跑 30 秒、反應永不結束的案例。
+
+**另記一個測試工藝陷阱**：`new AnimationGroup(name)` 沒有 targeted animation 時，`play()` 之後
+`isPlaying` 仍是 `false` —— 用空 group 斷言「clip 有播」等於什麼都沒測（失敗形狀③）。
+本輪的 group 都掛一支真的 keyframe 動畫在暫存節點上。
+## 2026-07-27 · 商店輪播修復輪 —— 兩個真出貨缺陷 + 生產接縫零覆蓋
+
+上一輪（本檔 4354 行那則）的機制本體是對的，但守衛擋不住它自己宣稱的關鍵行。
+獨立稽核給了四個確切的倖存變異，這輪把每一條打紅，並修掉一路挖出來的兩個真缺陷。
+
+### 一、真缺陷 1：休息姿勢從不查禁播清單 → 4 位英雄站著走路
+
+`pickIdleClip` 只看 `/idle|stand/`。WC3 rig 會把一整段序列串成一個名字，所以
+**「Attack Walk Stand Spin」的 `/stand/` 只是巧合** —— 它是走路＋攻擊的合成 clip。
+解 115 位英雄的 `.glb` 實測，拿它當商店櫃檯循環休息姿勢的有 4 位：
+
+| 英雄 | model | main 原本 | 上一輪之後 |
+|---|---|---|---|
+| godie-opgh | imported.zy3 | `Stand Defend` | `Attack Walk Stand Spin` ← **淨退步** |
+| godie-u01q / u01u / udre | imported.heromusashimiyamoto | 同左 | 同左（舊疾） |
+
+四支 rig 裡都有乾淨的 `Stand`。而 idlePerform.ts 自己的註解就寫著 walk clip
+「會讓釘住的模型滑行」—— 規則寫對了，只是沒接到休息姿勢那一半。
+
+**修法**：禁播清單收斂成單一 predicate（`isShowable` / `isRotatable`），休息姿勢與
+輪播池共用同一份，唯一差別只剩 idle 家族本身（休息的必須是 stand，輪播的不准重播它）。
+修完 4 位都回到 `Stand`。
+
+### 二、真缺陷 2：禁播清單在今天的 roster 上完全惰性
+
+實測（在上一輪的碼上，把 `EXCLUDE` 關掉再跑）：**115 位的池子一個都沒變，14 檔 125 測全綠。**
+原因是合成 clip 已經被當成休息姿勢吃掉，剩下的 attack 名額被乾淨的揮劍先填滿（per-kind cap = 2）。
+所以那條「refuses the clips that would read as a disaster at a market stall」是**空的**。
+
+修好缺陷 1 之後它自動變成 load-bearing：武藏三位的 clip 順序是
+`… Attack Walk Stand Spin(4) … Attack(8) Attack Slam(9) …`，合成 clip 排在填滿名額的兩支**之前**，
+所以只剩禁播擋著它。關掉禁播 → 4 紅（含本來就存在但一直踩不到的 roster 普查那條）。
+
+### 三、生產接縫：`setChampion` 之前零覆蓋
+
+三個場景測試全部用 `priv.performPool = [...]` 直接注入，所以**唯一把真 .glb clip 名餵進
+`performPool` 的生產線**沒有任何測試經過。實測倖存：
+
+| 變異 | 修前 | 修後 |
+|---|---|---|
+| `this.performPool = []` | 320 檔 3777 測**全綠**（feature 退化成「每 9 秒抖一下」） | **4 紅** |
+| 休息姿勢那行改回 main 原樣（實測影響 115 位裡 29 位） | **0 紅** | **3 紅** |
+| `pickIdleClip` 不查禁播（＝缺陷 1 本身） | 0 紅 | **5 紅** |
+| 禁播清單改成什麼都不擋 | 0 紅 | **5 紅** |
+| 只拿掉輪播池那側的禁播 | 0 紅 | **4 紅** |
+| 首次表演不排程 | 0 紅 | **2 紅** |
+| 換英雄不重設輪播游標 | 0 紅 | **1 紅** |
+
+補的守衛全部走真接縫：拿真的 `AssetContainer`（掛真的 keyframe AnimationGroup，
+clip 名是 sesshomaru / heromusashimiyamoto 兩支 rig 的逐字清單）餵進 `assets.load`，
+`await setChampion(...)`，然後斷言池子非空且內容逐項正確、休息姿勢是 `im-Stand`、
+**再跑 20 秒 render loop 斷言真的播出池子裡的 clip 且沒有一次退化成 nod**。
+（`place()` 用 `(n) => \`im-${n}\`` 實體化，所以生產端看到的名字有 `im-` 前綴 —— 斷言前綴名是刻意的。）
+
+### 四、測試工藝：oracle 不准問實作要答案
+
+第一版的休息姿勢普查用 `isShowable()` 判斷「這支 clip 該不該被擋」。它跟被測規則是同一份，
+所以把禁播整個關掉時普查不會變紅，只會**變成空的**（實測 4 紅而非 5 紅，少的正是這條）。
+改成普查自己寫死禁播家族（輪播那條普查本來就這樣寫），並把 `isShowable` 收回不匯出。
+這是這輪抓到的假守衛 species 的第三種變形，前兩種是：原始碼字串掃描（證明標籤被打進檔案，
+不證明它產出東西）、以及斷言方向與缺陷方向無關。
+

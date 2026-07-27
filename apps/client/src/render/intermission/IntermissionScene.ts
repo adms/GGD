@@ -62,6 +62,15 @@ import { glbYawOffset } from "../views/glbFacing";
 import { championTintForId } from "../views/championTint";
 import { applyModelTint, releaseModelTint } from "../views/modelTint";
 import { pickReactionClip } from "./reactionClip";
+import {
+  FIRST_PERFORM_SEC,
+  buildPerformPool,
+  nextPerformIndex,
+  performGapSec,
+  pickIdleClip,
+  type PerformKind,
+  type PerformOption,
+} from "./idlePerform";
 import { groundShiftY } from "./stance";
 import { writeCameraDrift } from "../menu/procedural/math";
 import { enterCameraPose } from "../menu/procedural/transition";
@@ -133,6 +142,21 @@ export interface IntermissionSceneOptions {
    * actually did to the loaded meshes. Production never passes it.
    */
   assets?: AssetManager;
+  /**
+   * Fired the moment the hero STARTS an idle performance (owner 2026-07-27
+   * 「隨機輪播動作跟語音」). The scene owns the action; the caller owns the LINE,
+   * because the audio layer must not be imported behind the render seam and
+   * because the champion whose voice should play is HUD state, not scene state.
+   * `IntermissionStage` wires this to `audio/shopPerformVoice`; leaving it out
+   * gives a silent (but still moving) hero, which is what headless tests get.
+   */
+  onPerform?: (kind: PerformKind) => void;
+  /**
+   * Client rng for the rotation + the gap between performances. Injected in
+   * tests so a performance schedule is deterministic. NEVER world.rng: this is
+   * pure presentation and must never touch sim determinism/replay.
+   */
+  performRand?: () => number;
 }
 
 /** Merchant animation the scene can be asked to play. */
@@ -185,8 +209,30 @@ export class IntermissionScene {
   private championReaction: AnimationGroup | null = null;
   /** the champion root's resting uniform scale, so the pop springs back to it */
   private championBaseScale = 1;
-  /** live procedural "pop" for a hero with no usable reaction clip (null = none) */
-  private championPulse: { start: number; dur: number } | null = null;
+  /**
+   * The champion root's resting HEIGHT after `groundChampion` lifted its feet
+   * onto the paving (#111). The pulse below springs back to THIS, not to 0:
+   * 皮卡丘's bind box dips to y = −0.58, so a pulse that reset to 0 buried him
+   * half a unit into the market floor — the exact defect #111 fixed — and the
+   * idle rotation fires the pulse several times per visit, not once per buy.
+   */
+  private championBaseY = 0;
+  /**
+   * Live procedural pulse — the graceful degradation for a hero with no usable
+   * clip. `amp` (extra scale) and `lift` (hop height) are carried per-pulse so
+   * a purchase POP can be emphatic while an idle NOD stays a breath.
+   */
+  private championPulse: { start: number; dur: number; amp: number; lift: number } | null = null;
+
+  // ---- idle performance (owner 2026-07-27 「隨機輪播動作跟語音」) --------------
+  /** the hero's rotatable clips, resolved from the .glb once per champion */
+  private performPool: PerformOption[] = [];
+  /** index of the last performance played, for the no-immediate-repeat pick */
+  private performIndex = -1;
+  /** `elapsed` (seconds) at which the next performance is due; ∞ = never */
+  private nextPerformAt = Number.POSITIVE_INFINITY;
+  private readonly onPerform: ((kind: PerformKind) => void) | null;
+  private readonly performRand: () => number;
 
   private readonly particles: ParticleSystem[] = [];
   private readonly lanterns: Lantern[] = [];
@@ -219,6 +265,8 @@ export class IntermissionScene {
   constructor(canvas: HTMLCanvasElement, opts: IntermissionSceneOptions = {}) {
     this.now = opts.now ?? (() => (typeof performance !== "undefined" ? performance.now() : Date.now()));
     this.teamId = opts.teamId ?? -1;
+    this.onPerform = opts.onPerform ?? null;
+    this.performRand = opts.performRand ?? Math.random;
 
     this.engine = opts.engineFactory
       ? opts.engineFactory(canvas)
@@ -786,13 +834,25 @@ export class IntermissionScene {
     // loop an idle clip when the .glb ships one — a hero frozen in its bind
     // pose at a market stall looks broken, and every rig names it differently,
     // so this is a tolerant substring match that degrades to "stands still".
-    const idle = groups.find((g) => /idle|stand/i.test(g.name)) ?? groups[0];
+    // `pickIdleClip` prefers a BASE stand over a numbered variant — taking the
+    // first /idle|stand/ match rested 犬妖-殺生丸 in his "Stand - 2" pose,
+    // because that is the clip his .glb happens to list first (see its header).
+    const idleName = pickIdleClip(groups.map((g) => g.name));
+    const idle = groups.find((g) => g.name === idleName) ?? groups[0];
     for (const g of groups) g.stop();
     idle?.play(true);
     this.championRoot = root;
     this.championGroups = groups;
     this.championIdle = idle ?? null;
     this.championBaseScale = scale;
+    // …and start the idle ROTATION for this hero: which of its clips are worth
+    // showing at a market stall, and when the first one is due.
+    this.performPool = buildPerformPool(
+      groups.map((g) => g.name),
+      idle?.name ?? null,
+    );
+    this.performIndex = -1;
+    this.schedulePerform(FIRST_PERFORM_SEC);
   }
 
   /**
@@ -806,6 +866,9 @@ export class IntermissionScene {
     root.computeWorldMatrix(true);
     const { min, max } = root.getHierarchyBoundingVectors(true);
     root.position.y += groundShiftY(min, max);
+    // remember where "standing on the paving" IS for this rig, so every pulse
+    // springs back to it instead of to a hard-coded 0 (see championBaseY)
+    this.championBaseY = root.position.y;
   }
 
   /**
@@ -840,9 +903,14 @@ export class IntermissionScene {
     // in-character line (HeroReactionBubble) carries the personality either way.
     const usable = pick && (!opts?.celebratoryOnly || pick.kind === "victory") ? pick : null;
     const clip = usable ? (this.championGroups.find((g) => g.name === usable.clip) ?? null) : null;
+    // A BUY OWNS THE HERO. Push the idle rotation out by a full gap so the
+    // purchase animation is not cut short by a performance a beat later, and —
+    // more audibly — so the purchase quip and a performance line can never
+    // stack on the SFX bus. This is the one place the two systems can collide.
+    this.schedulePerform();
     if (!clip) {
       // no usable reaction clip — a legible squash-pop so the buy still lands
-      this.championPulse = { start: this.elapsed, dur: 0.5 };
+      this.championPulse = { start: this.elapsed, dur: 0.5, amp: 0.12, lift: 0.18 };
       return;
     }
     this.championPulse = null;
@@ -855,6 +923,88 @@ export class IntermissionScene {
       this.championIdle?.play(true);
     });
     clip.play(false);
+  }
+
+  // -------------------------------------------------------------------------
+  // idle performance (owner 2026-07-27 「在商店 shop 時，玩家角色會隨機輪播動作跟語音」)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Arm the next performance. `delay` in seconds; omitted = a random gap from
+   * `idlePerform.performGapSec`. Measured on `elapsed`, which only advances on
+   * RENDERED frames — so a hidden tab (the loop is stopped on `visibilitychange`)
+   * accrues no debt and the hero does not fire four performances at once when
+   * the player comes back.
+   */
+  private schedulePerform(delay?: number): void {
+    this.nextPerformAt = this.elapsed + (delay ?? performGapSec(this.performRand));
+  }
+
+  /**
+   * Due-check, called once per rendered frame. Deliberately NOT a setInterval:
+   * a timer would keep firing behind a hidden tab and would survive a stopped
+   * loop, which is how a "shop idle" turns into a hero performing over the next
+   * round's combat.
+   */
+  private tickPerform(): void {
+    if (this.disposed || !this.championRoot) return;
+    if (this.elapsed < this.nextPerformAt) return;
+    // something else already owns the hero (a purchase reaction mid-clip, or a
+    // pulse still springing back) — re-arm rather than interrupt or stack.
+    if (this.championReaction || this.championPulse) {
+      this.schedulePerform();
+      return;
+    }
+    this.performOnce();
+  }
+
+  /**
+   * Play ONE random performance now and arm the next one. Returns the kind
+   * performed, or null when there is no hero in frame (a silent no-op).
+   *
+   * Reuses the purchase-reaction path wholesale — same one-shot-over-idle
+   * mechanism, same `championReaction` slot, same return-to-idle observable —
+   * so a purchase arriving mid-performance simply replaces it and idle still
+   * resumes. That reuse is the reason nothing here can leave a hero frozen.
+   *
+   * DEGRADATION IS THE POINT. Clip inventories differ wildly (see
+   * idlePerform.ts's measured census): a rig with no rotatable clip at all
+   * performs a small procedural NOD instead — visibly alive, never a T-pose,
+   * never an exception.
+   */
+  performOnce(): PerformKind | null {
+    if (this.disposed || !this.championRoot) return null;
+    this.schedulePerform();
+    const pool = this.performPool;
+    if (pool.length === 0) {
+      // gentler than the purchase pop on purpose: this fires several times a
+      // visit, and a full squash-hop every 9 s would read as a bouncing toy.
+      this.championPulse = { start: this.elapsed, dur: 0.6, amp: 0.04, lift: 0.05 };
+      this.onPerform?.("nod");
+      return "nod";
+    }
+    this.performIndex = nextPerformIndex(this.performIndex, pool.length, this.performRand);
+    const option = pool[this.performIndex];
+    const clip = option ? (this.championGroups.find((g) => g.name === option.clip) ?? null) : null;
+    if (!option || !clip) {
+      this.championPulse = { start: this.elapsed, dur: 0.6, amp: 0.04, lift: 0.05 };
+      this.onPerform?.("nod");
+      return "nod";
+    }
+    this.championPulse = null;
+    this.championReaction?.stop();
+    this.championIdle?.stop();
+    this.championReaction = clip;
+    clip.onAnimationGroupEndObservable.addOnce(() => {
+      if (this.disposed || this.championReaction !== clip) return;
+      this.championReaction = null;
+      this.championIdle?.play(true);
+    });
+    clip.play(false);
+    // The LINE is the caller's: the scene never imports the audio layer, and
+    // the champion whose voice this is lives in HUD state, not here.
+    this.onPerform?.(option.kind);
+    return option.kind;
   }
 
   /**
@@ -951,17 +1101,22 @@ export class IntermissionScene {
     // a single squash-and-hop that springs back to the resting scale. One arch
     // (sin 0→1→0), never a loop, so it cannot strobe or leave the hero stuck.
     if (this.championPulse && this.championRoot) {
-      const k = (e - this.championPulse.start) / this.championPulse.dur;
+      const pulse = this.championPulse;
+      const k = (e - pulse.start) / pulse.dur;
       if (k >= 1) {
         this.championRoot.scaling.setAll(this.championBaseScale);
-        this.championRoot.position.y = 0;
+        // back to the GROUNDED height (#111), not to 0 — see championBaseY
+        this.championRoot.position.y = this.championBaseY;
         this.championPulse = null;
       } else {
         const s = Math.sin(k * Math.PI);
-        this.championRoot.scaling.setAll(this.championBaseScale * (1 + 0.12 * s));
-        this.championRoot.position.y = 0.18 * s;
+        this.championRoot.scaling.setAll(this.championBaseScale * (1 + pulse.amp * s));
+        this.championRoot.position.y = this.championBaseY + pulse.lift * s;
       }
     }
+
+    // …and the idle rotation itself: is another performance due this frame?
+    this.tickPerform();
 
     this.scene.render();
   }
@@ -1019,6 +1174,10 @@ export class IntermissionScene {
     this.championIdle = null;
     this.championReaction = null;
     this.championPulse = null;
+    // the rotation must not outlive the scene: with the pool cleared and the
+    // due-time pushed to ∞, a late frame() can neither pick a clip nor arm one
+    this.performPool = [];
+    this.nextPerformAt = Number.POSITIVE_INFINITY;
     // shelf nodes hang off `stage`, which scene.dispose() takes with it; the
     // handles are cleared so a late setShelfGoods on a disposed scene cannot
     // reach into freed meshes.
