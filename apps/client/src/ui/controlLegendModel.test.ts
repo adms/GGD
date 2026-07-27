@@ -19,7 +19,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { BTN } from "../input/GamepadInput";
+import { BTN, GAMEPAD_LONG_PRESS_MS, GamepadInput } from "../input/GamepadInput";
 import { SLOT_BY_CODE } from "../input/InputCapture";
 import {
   HUD_SLOTS,
@@ -124,6 +124,25 @@ describe("legend rows are DERIVED from the pad mapping", () => {
     expect(probeGamepadLongPress(BTN.RB, 9)).toEqual({ kind: "describe", slot: "PASSIVE" });
     // a button with no slot has no long press at all
     expect(probeGamepadLongPress(BTN.START, 9)).toBeNull();
+  });
+
+  /**
+   * The probe above feeds `mapGamepadFrame` a SYNTHETIC long-press frame, which
+   * proves the mapping — but not that a real pad can ever produce that frame.
+   * Break the clock (threshold → Infinity) and the legend would happily keep
+   * advertising a gesture no hold can reach. This closes that loop: a real
+   * `GamepadInput`, a real hold, the real edge the probe assumes.
+   */
+  it("a REAL hold can actually produce the frame the long-press row promises", () => {
+    let now = 0;
+    const buttons = Array.from({ length: 17 }, (_, i) => ({ pressed: i === BTN.A }));
+    const input = new GamepadInput(0, () => ({ connected: true, axes: [0, 0, 0, 0], buttons }), () => now);
+    expect(input.poll()!.longPressed).toEqual([]);
+    now += GAMEPAD_LONG_PRESS_MS;
+    const held = input.poll()!;
+    expect(held.longPressed, "no hold can ever reach the advertised 長按").toEqual([BTN.A]);
+    expect(held.longHeld).toEqual([BTN.A]);
+    expect(Number.isFinite(GAMEPAD_LONG_PRESS_MS)).toBe(true);
   });
 
   it("the camera rows exist too — L3/R3 are base bindings, not a lost layer", () => {
