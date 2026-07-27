@@ -1154,8 +1154,8 @@ export class GameApp {
     // During the settlement freeze predAccumMs is pinned to 0, so use alpha = 1
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
     const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
-    // Clear last frame's pad free-pan latch BEFORE polling: the modifier layer
-    // only re-emits `pan` while the stick is deflected, so a released stick must
+    // Clear last frame's pad free-pan latch BEFORE polling: the pad map only
+    // re-emits `pan` while the right stick is deflected, so a released stick must
     // leave these null (camera holds) rather than drifting on a stale vector.
     this.padCameraPan.length = 0;
     this.gamepads.poll(); // pads → per-player orders/aim/commands + camera before the flush
