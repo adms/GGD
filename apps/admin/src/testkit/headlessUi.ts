@@ -37,8 +37,6 @@
  * false green this file exists to prevent.
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 type Props = Record<string, unknown>;
 
 /** A rendered host element: `<div>`, `<input>`, `<select>`… */
