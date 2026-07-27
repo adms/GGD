@@ -242,6 +242,84 @@ const FACES: readonly {
 ];
 
 /**
+ * `FACES` index → the ATLAS face name it is.
+ *
+ * `FACES` is authored by NORMAL (+X, -X, +Y, -Y, +Z, -Z); `ATLAS_FACES` is
+ * authored by NAME (front/back/right/left/top/bottom) against Babylon's
+ * `CreateBox` face order, where +Z is front and +X is right. This array is the
+ * one place the two vocabularies meet, so a future re-order of either has
+ * exactly one line to fix instead of six silent mis-mappings.
+ */
+export const FACE_NAME_BY_NORMAL = Object.freeze([
+  "right", // +X
+  "left", // -X
+  "top", // +Y
+  "bottom", // -Y
+  "front", // +Z
+  "back", // -Z
+] as const);
+
+/** A rect in a 64×64 atlas, origin top-left — mirrors `voxelSkin.AtlasRect`. */
+export interface UvRect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+/**
+ * Emit one box with PER-FACE ATLAS UVs instead of a palette texel.
+ *
+ * `emitBox` (below) points all 24 vertices at one texel of the 16×16 lookup
+ * table, which is why a box baked that way can only ever be ONE flat colour —
+ * and a barcode is by definition several. So the 特徵生成 bake uses this
+ * emitter, which maps each face onto its own rect of the 64×64 skin atlas.
+ * Nothing about the geometry changes: same corners, same normals, same rigid
+ * binding, same winding, so the two emitters are interchangeable everywhere
+ * except in what the fragment shader reads.
+ *
+ * VERTICAL ORIENTATION IS THE LOAD-BEARING PART. A barcode is a stack of
+ * horizontal bands, so `v` must increase DOWNWARD (glTF's UV origin is the
+ * top-left of the image, and the atlas is authored top-down): the top of the
+ * box has to sample the top of the rect or the character comes out upside
+ * down while still passing any "it has a texture" check.
+ */
+export function emitBoxAtlas(
+  box: BoxDef,
+  jointIndex: number,
+  rects: Readonly<Record<string, UvRect>>,
+  atlasW: number,
+  atlasH: number,
+): { verts: Vertex[]; indices: number[] } {
+  const [cx, cy, cz] = box.center;
+  const hx = box.size[0] / 2;
+  const hy = box.size[1] / 2;
+  const hz = box.size[2] / 2;
+  const verts: Vertex[] = [];
+  const indices: number[] = [];
+  FACES.forEach((face, fi) => {
+    const rect = rects[FACE_NAME_BY_NORMAL[fi]!]!;
+    const base = verts.length;
+    // Which corner components are the face's own horizontal / vertical axes.
+    // For ±Y (a horizontal face) the in-plane "vertical" is Z.
+    const horizontal = fi < 2 ? 2 : 0; // ±X faces run along Z, everything else along X
+    const vertical = fi < 2 || fi >= 4 ? 1 : 2; // ±Y faces run along Z
+    for (const c of face.corners) {
+      const u = (rect.x + (c[horizontal]! > 0 ? rect.w : 0)) / atlasW;
+      const v = (rect.y + (c[vertical]! > 0 ? 0 : rect.h)) / atlasH;
+      verts.push({
+        pos: [(cx + c[0] * hx) * PX, (cy + c[1] * hy) * PX, (cz + c[2] * hz) * PX],
+        normal: [...face.normal] as [number, number, number],
+        uv: [u, v],
+        joint: jointIndex,
+      });
+    }
+    indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+  });
+  return { verts, indices };
+}
+
+/**
  * Emit one box as 24 vertices (per-face normals + per-face UVs) and 36 indices,
  * all rigidly bound to `box.joint`. Positions are in WORLD units (voxel px × PX).
  */

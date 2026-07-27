@@ -6,6 +6,8 @@
   "scripts": {
     "voxel:gen": "tsx gen.ts",
     "voxel:check": "tsx gen.ts --check",
+    "voxel:build": "tsx build.ts",
+    "voxel:build:check": "tsx build.ts --check",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },

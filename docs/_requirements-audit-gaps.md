@@ -4678,3 +4678,93 @@ HUD 測試套件的性質，不是這一項的疏漏。而且這個類別是**�
 順手修掉的殘留：`render/CameraRig.ts` 兩處註解還在說 `panVec` 來自
 「gamepad modifier layer (task #197)」，但那一層在這次重配對裡已刪除，現在來自
 **右類比 + L3 解鎖跟隨**。註解寫進了「不要再引入 modifier 來平移」的理由。
+
+---
+
+## 2026-07-27 · 體素特徵生成 批次三：條碼變成真的像素
+
+owner 的原話：「體素要的是**特徵生成**。角色是一個直立矩形，從頭到腳的色塊條碼就是
+那個角色的特徵主視覺顏色。」規格全文在 `docs/_體素特徵生成規格.md`；批次一交付
+`VoxelBarcode` 契約與三個名角的手填條碼，這一批把那份 JSON 變成**貼圖**。
+
+| 交付 | 落在哪 |
+|---|---|
+| 條碼底帶（每部位按 frac 正規化到 AtlasRect 高度，六面都畫） | `content/voxelSkin/paint.ts` `paintBarcodeBase` + `barcodeRowsByPart` |
+| 分帶列配置（規格 §7 的算術） | `voxel/texture.ts` `bandRows` / `bandCenterRow` / `bandRowAt` |
+| 袖子規則 long / short / none（規格 §2.4） | `paint.ts` 走 `barcode.sleeveColors`，upper/lower 各半支手臂 |
+| `pnpm voxel:build` → PNG + glb 落 `content/assets/models/champions/` | `tools/voxel-gen/build.ts`（`--check` 是棘輪） |
+| 條碼 UV 的方塊人幾何 | `voxel/boxman.ts` `emitBoxAtlas` · `voxel/bake.ts` `buildAtlasGeometry` / `bakeBarcodeLook` |
+
+### ① 一個「測試自己算出同樣的錯答案」的陷阱 —— 差點就簽收了
+
+第一版像素驗收是這樣寫的：跑 `barcodeRowsByPart()` 拿到每一帶的列範圍，再去 atlas
+上讀那些列的像素。看起來很硬 —— 讀的是真的 texel。
+
+**它殺不掉「帶色全部寫死成第一帶」這個變異。** 因為期望值是從 `bandRows()` 算出來的，
+實作壞掉的時候，期望值**跟著一起壞**，兩邊仍然相等。11 條測試裡只有 5 條紅，而且紅的
+全是別條，那條掛著「§8 像素驗收」名字的反而綠著。
+
+改法：期望值**只能來自 `_voxel-barcodes.json` 的 `bands`**（規格資料），實作那一側只
+提供像素。讀法改成「沿著某一欄由上往下切出等色 run」，斷言 run 的**顏色序列 === 作者
+寫的十一槽順序**、每條 run 的中心 texel === 該帶 hex、run 高度 ±1 texel 落在 frac 算出
+的比例上。同一個變異現在殺 11 條（含三個名角各自的序列斷言）。
+
+> 這是第 ⑧ 種「做了但玩家拿不到」：**期望值與實作同源**。它跟源碼掃描（⑥）、屬性掃描
+> （⑦）不同——測試確實讀了像素，只是問錯了問題。
+
+### ② 細帶會被四捨五入吃掉 —— 這不是假想
+
+魯夫的頭有四條帶，部位內佔比 0.4444 / 0.1111 / 0.0833 / 0.3611，而 head rect **只有
+八個 texel 高**。各自獨立四捨五入 → 切點 0, 4, 4, 5, 8 —— **紅帽帶拿到零列**，直接消失。
+規格 §2.1 寫得很清楚：「魯夫拿掉紅帽帶，就只是『一頂褐色帽子』」。
+
+`bandRows` 因此是**先保證每帶至少一列，再用最大餘數法分配剩下的列**；順序反過來就會
+產生上面那個結果。列數不夠時**丟例外**而不是丟帶——安靜地畫出四條裡的三條，正是這個
+repo 頭號故障的形狀。
+
+### ③ 底層與面層的界線，是「驗收要能量什麼」決定的
+
+規格 §2.3② 說底層條碼環繞全身、面層（眼/鼻/嘴/印記）只畫 head 的 front。實作上這條
+界線還有第二個用途：**驗收把兩個 decal 視窗排除在外**，所以視窗一旦被放大，被檢查的
+面積就會安靜縮小。`HEAD_DECAL_RECT` / `TORSO_DECAL_RECT` 因此是 export 的常數、被測試
+釘死，而且另有一條測試斷言「視窗裡確實有東西不是帶色」——刪掉面層會紅，畫出視窗會紅。
+
+既有 style 繪製一行沒刪：`paintFaceDecals` / `paintChestEmblem` 是從 `paintHead` /
+`paintTorso` **原封不動搬出來**的兩個函式，兩條路徑都呼叫它們。沒有條碼的英雄走的還是
+#231 的 L3 hash 生成器，`paintVoxelAtlas(recipe)` 與 `paintVoxelAtlas(recipe, null)` 的
+bytes 完全相同（有測試釘）。
+
+### ④ 驗收在**產物**上量，而且量兩次
+
+- 磁碟上的 `.png`：自己 inflate IDAT，逐欄切 run，比對規格 hex。
+- `.glb` 裡面那張：把 GLB 拆開、抓 `images[0].bufferView`、**再驗一次**。
+  「旁邊的 png 是對的、模型裡包的是另一張」正是本 repo 第 ② 種故障形狀。
+- 再往前一步：讀 `TEXCOORD_0` accessor，跟著**模型自己的 UV** 走到 head box 指向的
+  那塊 rect，把角色的色序讀回來；並用 `POSITION` 的 y 對照 v，斷言**沒有上下顛倒**
+  ——貼圖顛倒的人偶通過所有「有沒有貼圖」的檢查，但那是另一個角色。
+
+### ⑤ 自己跑過的變異（全部先確認紅才收工）
+
+| # | 變異 | 紅 |
+|--:|---|---|
+| 1 | `texture.ts` 的帶色全部寫死成第一帶 | 20（shared 11 + voxel-gen 9） |
+| 2 | `paint.ts` 的 barcode 路徑包 `if (false)` | 28（19 + 9） |
+| 3 | `top` 與 `pants` 同色時在 `presentBands` 合併 | 8（6 + 2，含香吉士的 PNG） |
+| 4 | `sleeveColors` 的 switch 恆為 `"long"` | 5（4 + 1） |
+| 5 | `buildAtlasGeometry` 退回 `emitBox`（16×16 調色盤 UV） | 3 |
+| 6 | `bakeBarcodeLook` 改嵌 `paletteImage` 而非條碼 atlas | 6 |
+| 7 | `emitBoxAtlas` 的 v 上下翻轉 | 3 |
+
+> 變異 5–7 是自己加的：它們全部**只**打到 .glb 那一段，而前四個變異一個都沒碰到那裡。
+> 沒有它們，「條碼有沒有真的貼到網格上」就沒有任何斷言在守。
+
+### ⑥ 這一批**沒有**做完的（誠實記錄）
+
+- **執行期還沒吃到條碼**。`paintVoxelAtlas` 已經收第二個參數，但 client 的
+  `voxelSkinFor` / `voxelSkinTexture` 還沒把 `_voxel-barcodes.json` 串進去，`ContentDb`
+  也還沒抓那個 sidecar。目前條碼只影響 `voxel:build` 的產物。
+- **產物還沒被任何英雄引用**。沒有寫 `model@1` 文件、沒有改 `modelKey`，所以
+  `content/assets/models/champions/voxel-*.glb` 目前是**孤兒檔案**——批次五（全 115 位
+  普查 + 補完）才會把它們接上去。這是刻意留的，但它就是第 ② 種故障形狀的雛形，寫在這裡
+  免得三個月後沒人記得。
+- **臉部 decal 仍用 L3 recipe 的顏色**，不是 `barcode.faceColors`；那是批次四。
