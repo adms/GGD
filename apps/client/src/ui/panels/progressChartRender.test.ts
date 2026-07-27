@@ -242,6 +242,17 @@ describe("the panel actually paints", () => {
     expect(polylineCoords(empty).length).toBe(0);
   });
 
+  it("a SPECTATOR gets its own explanation, not three empty pairs of axes", () => {
+    // Rounds exist but no seat belongs to the viewer (spectator, or #130's
+    // never-locked player). Falling through to the charts paints empty axes,
+    // which reads as a rendering bug; and printing 「這場沒有逐回合紀錄」 would
+    // send them looking for a server problem that is not there.
+    const spectator = html(buildProgressSeries(HISTORY, [], null), []);
+    expect(spectator).toContain("你這場沒有上場的隊伍");
+    expect(spectator).not.toContain("這場沒有逐回合紀錄");
+    expect(polylineCoords(spectator).length).toBe(0);
+  });
+
   it("falls back to an honest line rather than inventing advice", () => {
     const none = html(SERIES, []);
     expect(none).toContain("這場沒有明顯的短板");

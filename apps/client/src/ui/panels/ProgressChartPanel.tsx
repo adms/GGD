@@ -189,7 +189,17 @@ export interface ProgressChartPanelProps {
  */
 export function ProgressChartPanel(props: ProgressChartPanelProps): React.JSX.Element {
   const { series, advice } = props;
-  const hasData = series.rounds.length > 0;
+  // TWO different empty states, because they have different causes and a player
+  // who is told the wrong one will go looking for the wrong problem:
+  //   · no ROUNDS  — the server sent no per-round history (older build, or the
+  //                  match ended before a round settled).
+  //   · no LINES   — there are rounds, but no seats to draw: a SPECTATOR, or a
+  //                  player who never locked a champion (#130). Falling through
+  //                  to the charts here paints three empty pairs of axes, which
+  //                  reads as a rendering bug rather than as "you weren't in it".
+  const hasRounds = series.rounds.length > 0;
+  const hasLines = series.rank.length > 0;
+  const hasData = hasRounds && hasLines;
   const dmg = valueDomain(series.damage);
   const mob = valueDomain(series.mobKills);
 
@@ -235,7 +245,9 @@ export function ProgressChartPanel(props: ProgressChartPanelProps): React.JSX.El
 
       {!hasData ? (
         <div style={{ fontSize: 12, color: TEXT_DIM, padding: "10px 2px" }}>
-          這場沒有逐回合紀錄 —— 伺服器要在每回合結束時留下快照，舊版本的對戰沒有這份資料。
+          {!hasRounds
+            ? "這場沒有逐回合紀錄 —— 伺服器要在每回合結束時留下快照，舊版本的對戰沒有這份資料。"
+            : "你這場沒有上場的隊伍 —— 觀戰或沒有選到英雄時，沒有屬於你的每回合曲線可以畫。"}
         </div>
       ) : (
         <>
