@@ -24,7 +24,12 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import type { RoundStatDelta, RoundStatsEntry } from "@ggd/shared/protocol/messages";
 import { ProgressChartPanel } from "./ProgressChartPanel";
-import { buildProgressSeries, type ProgressAdvice, type ProgressSeries } from "./progressChart";
+import {
+  buildProgressSeries,
+  type ProgressAdvice,
+  type ProgressSeries,
+  type SeriesLine,
+} from "./progressChart";
 import {
   AXIS_LABEL_SIZE,
   CHART_BOX,
@@ -104,6 +109,62 @@ function polylineCoords(markup: string): { x: number; y: number }[][] {
   );
 }
 
+// ── reading the CHART, not the helpers it happens to call ───────────────────
+//
+// Everything below slices the rendered markup. That distinction is the whole
+// point: `plotY(v, min, max, box, true)` proves the HELPER can invert, which
+// says nothing about whether the rank <LineChart> ever passes `invert`. These
+// readers only ever see what a browser would paint.
+
+/** The one `<svg>…</svg>` whose `aria-label` is `title`. */
+function chartOf(markup: string, title: string): string {
+  const at = markup.indexOf(`aria-label="${title}"`);
+  expect(at, `no chart labelled 「${title}」 in the markup`).toBeGreaterThan(-1);
+  const start = markup.lastIndexOf("<svg", at);
+  const end = markup.indexOf("</svg>", at);
+  expect(start, `chart 「${title}」 has no <svg>`).toBeGreaterThan(-1);
+  expect(end, `chart 「${title}」 is unterminated`).toBeGreaterThan(start);
+  return markup.slice(start, end + "</svg>".length);
+}
+
+/** Everything one seat's `<g>` actually paints inside `chart`. */
+function seatGroup(chart: string, seatId: number): string {
+  const at = chart.indexOf(`<g data-seat="${seatId}"`);
+  expect(at, `seat ${seatId} never reached this chart`).toBeGreaterThan(-1);
+  const end = chart.indexOf("</g>", at);
+  expect(end, `seat ${seatId}'s group is unterminated`).toBeGreaterThan(at);
+  return chart.slice(at, end);
+}
+
+/** Every y-coordinate one seat's line PAINTS: polyline vertices and markers. */
+function seatYs(chart: string, seatId: number): number[] {
+  const g = seatGroup(chart, seatId);
+  const ys = [
+    ...polylineCoords(g)
+      .flat()
+      .map((c) => c.y),
+    ...[...g.matchAll(/cy="([-\d.]+)"/g)].map((m) => Number(m[1])),
+  ];
+  expect(ys.length, `seat ${seatId} emitted a group but painted no geometry`).toBeGreaterThan(0);
+  for (const y of ys) expect(Number.isFinite(y), `seat ${seatId} painted y=${y}`).toBe(true);
+  return ys;
+}
+
+/**
+ * Seat groups in the order the markup emits them — which IS the SVG paint
+ * order. SVG has no z-index: the LAST sibling is the one drawn on top.
+ */
+function paintOrder(chart: string): { seatId: number; local: boolean }[] {
+  return [...chart.matchAll(/<g data-seat="(\d+)" data-local="([01])"/g)].map((m) => ({
+    seatId: Number(m[1]),
+    local: m[2] === "1",
+  }));
+}
+
+const RANK_TITLE = "MVP 排名（1 最好）";
+const DAMAGE_TITLE = "對英雄傷害";
+const MOB_TITLE = "殭屍擊殺";
+
 const SERIES = buildProgressSeries(HISTORY, [0, 1, 2], 0);
 
 // ──────────────────────────────────────────────────────────── the geometry ──
@@ -149,9 +210,12 @@ describe("geometry never escapes the viewBox", () => {
     expect(dom.max).toBeGreaterThan(dom.min);
   });
 
-  it("RANK is inverted: rank 1 paints ABOVE rank 12", () => {
-    // The single most invertible assertion in the file, and the one a reversed
-    // sign would sail past if it only checked "the value changed".
+  it("plotY CAN invert when asked — the helper's own contract, nothing more", () => {
+    // NAMED CAREFULLY. This test passes `invert` in ITSELF, so all it can prove
+    // is that the helper honours the flag. It says NOTHING about whether the
+    // rank <LineChart> ever sets it — deleting the word `invert` from the panel
+    // leaves this green. The guard that actually covers the chart is
+    // 「the RANK chart really is drawn upside-down」 below, stated on the markup.
     const yBest = plotY(1, 1, 12, box, true);
     const yWorst = plotY(12, 1, 12, box, true);
     expect(yBest).toBeLessThan(yWorst); // smaller y === higher on screen
@@ -267,6 +331,130 @@ describe("the panel actually paints", () => {
     expect(out).toContain(`viewBox="0 0 ${CHART_BOX.width} ${CHART_BOX.height}"`);
     expect(out).toContain('width="100%"');
     expect(out).not.toMatch(/<svg[^>]*width="\d+px"/);
+  });
+});
+
+// ───────────────────────────────────── the y-axis really points the right way ──
+
+describe("the RANK chart is drawn upside-down, and only the RANK chart", () => {
+  // THE DEFECT THIS EXISTS FOR: delete the word `invert` from the rank
+  // <LineChart> and the chart still renders — three tidy lines, correct
+  // spacing, no NaN, everything inside the viewBox — but rank 1 lands at the
+  // BOTTOM and a worse-placed teammate is painted ABOVE the player, under a
+  // heading that says 「1 最好」. A chart that is confidently upside-down is
+  // worse than a missing one, because the player believes it.
+  //
+  // The series is hand-built rather than run through buildProgressSeries so
+  // the probe is about the AXIS and nothing else: two seats, one placed 1st and
+  // one placed 12th, one round. The MVP arithmetic that would normally produce
+  // those placements is progressChart.test.ts's job.
+  const line = (seatId: number, isLocal: boolean, value: number): SeriesLine => ({
+    seatId,
+    isLocal,
+    points: [{ round: 1, value }],
+  });
+  const PROBE: ProgressSeries = {
+    rounds: [1],
+    // rank 1 (best) for the local seat, rank 12 (worst) for the mate
+    rank: [line(0, true, 1), line(1, false, 12)],
+    // …and on the value axes the local seat is the BIG number, the mate small
+    damage: [line(0, true, 4000), line(1, false, 100)],
+    mobKills: [line(0, true, 30), line(1, false, 1)],
+    maxRank: 12,
+  };
+  const probe = html(PROBE, []);
+  const top = plotTop(CHART_BOX);
+  const bottom = plotBottom(CHART_BOX);
+
+  it("rank 1 paints ABOVE rank 12 in the emitted markup", () => {
+    const chart = chartOf(probe, RANK_TITLE);
+    const best = Math.max(...seatYs(chart, 0)); // rank 1
+    const worst = Math.min(...seatYs(chart, 1)); // rank 12
+    expect(
+      best,
+      `rank 1 painted at y=${best}, rank 12 at y=${worst} — the chart is upside-down ` +
+        `while its title says 「${RANK_TITLE}」`,
+    ).toBeLessThan(worst);
+  });
+
+  it("…and it is pinned to the ends of the axis, not merely ordered", () => {
+    // Ordering alone would still pass if the whole line collapsed into a sliver
+    // somewhere. rank 1 belongs ON the top gridline, rank 12 ON the bottom one.
+    const chart = chartOf(probe, RANK_TITLE);
+    for (const y of seatYs(chart, 0)) expect(y).toBeCloseTo(top, 5);
+    for (const y of seatYs(chart, 1)) expect(y).toBeCloseTo(bottom, 5);
+  });
+
+  it("the axis labels agree with the paint: 「1」 sits at the top gridline", () => {
+    // The tick labels are drawn by the same `invert`. If the paint flipped but
+    // the labels did not (or vice-versa) the chart would contradict itself.
+    const chart = chartOf(probe, RANK_TITLE);
+    const ticks = [
+      ...chart.matchAll(/<text x="[\d.]+" y="([\d.]+)"[^>]*text-anchor="end">(\d+)<\/text>/g),
+    ].map((m) => ({ y: Number(m[1]), label: Number(m[2]) }));
+    expect(ticks.length, "the rank chart printed no value labels").toBeGreaterThanOrEqual(2);
+    const one = ticks.find((t) => t.label === 1);
+    const twelve = ticks.find((t) => t.label === 12);
+    expect(one, "no 「1」 label on the rank axis").toBeDefined();
+    expect(twelve, "no 「12」 label on the rank axis").toBeDefined();
+    expect(one!.y, "the rank axis prints 1 below 12").toBeLessThan(twelve!.y);
+  });
+
+  it("the VALUE charts are NOT inverted — more damage paints HIGHER", () => {
+    // The other direction of the same defect: "fixing" the rank axis by
+    // inverting every chart would make 4000 damage read as a collapse.
+    for (const title of [DAMAGE_TITLE, MOB_TITLE]) {
+      const chart = chartOf(probe, title);
+      const big = Math.max(...seatYs(chart, 0));
+      const small = Math.min(...seatYs(chart, 1));
+      expect(big, `${title}: the bigger number painted BELOW the smaller one`).toBeLessThan(small);
+      expect(big).toBeCloseTo(top, 5); // the max sits on the top gridline
+    }
+  });
+});
+
+// ────────────────────────────────────────── the local line paints on top ──
+
+describe("the local player's line is painted LAST, so nothing covers it", () => {
+  // 「自己要能一眼認出來」. SVG has no z-index: paint order IS sibling order, so
+  // the gold line is only on top if its <g> is emitted last. Delete the sort in
+  // LineChart and the markup still contains every line, every colour and every
+  // stroke width — the player's own line just disappears under a teammate's
+  // wherever the two cross. Nothing about "the tag is present" can see that.
+  const out = html(SERIES);
+
+  it("the fixture feeds local FIRST — otherwise this whole describe is vacuous", () => {
+    // buildProgressSeries preserves the seatIds order it was given, and the
+    // local seat is 0. If that ever changes, the sort is no longer being
+    // exercised and these tests must be re-aimed rather than trusted.
+    expect(SERIES.rank[0]!.isLocal, "local is already last in the input; the sort is untested").toBe(
+      true,
+    );
+  });
+
+  for (const title of [RANK_TITLE, DAMAGE_TITLE, MOB_TITLE]) {
+    it(`${title}: the gold group is the last sibling`, () => {
+      const order = paintOrder(chartOf(out, title));
+      expect(order.length, `${title} drew ${order.length} seats, expected 3`).toBe(3);
+      expect(
+        order[order.length - 1]!.local,
+        `${title} paint order = ${order.map((o) => `${o.seatId}${o.local ? "(me)" : ""}`).join(" → ")} ` +
+          `— my line is painted under a teammate's`,
+      ).toBe(true);
+      expect(order.slice(0, -1).some((o) => o.local), `${title}: two seats claim to be local`).toBe(
+        false,
+      );
+    });
+  }
+
+  it("and the group that paints last is the one carrying the gold stroke", () => {
+    // Ties the ordering back to the pixels: 'last' only matters if 'last' is
+    // the line the player is looking for.
+    const chart = chartOf(out, RANK_TITLE);
+    const order = paintOrder(chart);
+    const last = seatGroup(chart, order[order.length - 1]!.seatId);
+    expect(last, "the top-most line is not the gold one").toContain("#f2c637");
+    expect(last).toContain('stroke-width="2.2"');
   });
 });
 
