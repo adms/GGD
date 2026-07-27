@@ -4494,3 +4494,130 @@ clip 名是 sesshomaru / heromusashimiyamoto 兩支 rig 的逐字清單）餵進
 這是這輪抓到的假守衛 species 的第三種變形，前兩種是：原始碼字串掃描（證明標籤被打進檔案，
 不證明它產出東西）、以及斷言方向與缺陷方向無關。
 
+## 2026-07-27 · 後台「殭屍波系統」專屬頁 —— 一條真的缺口，和它逼出來的「存不存得住」
+
+owner：「殭屍每波數量跟上限、殭屍的能力數值、甚至設定每回合殭屍指定哪個英雄來擔任，
+都幫我確定後台有專屬頁面可以設定」。
+
+### 一、缺口是真的（先證明，再動手）
+
+`grep -rln "arena-rules\|mobWaves" apps/admin/src/` → **零命中**。後台 30 個頁面沒有任何一個
+碰過 `config/arena-rules.json`。唯一勉強能改的是 #189 的「內容覆蓋層」頁 —— 一個貼原始 JSON
+的 textarea，沒有標籤、沒有邊界、也沒有任何一個數字告訴你它會影響什麼。所以這不是
+「已經有只是難找」。
+
+### 二、三件事的落點
+
+| owner 的話 | 落在哪 | 形狀 |
+|---|---|---|
+| 每波數量跟上限 | 逐回合表，一列一個回合 | 第 1–2 回合也印出來（標「還沒開始出殭屍」），否則「第 3 回合才開始」讀不出來 |
+| 殭屍的能力數值 | 22 個純量欄位，5 組 | 每個欄位旁邊印「目前生效：X」＋「出貨版 Y」＋一行「它會影響什麼」 |
+| 每回合指定哪個英雄擔任 | `schedule[]` 新增選填 `championId` | **schema + 後台 + 寫入做了，sim 端刻意沒接** |
+
+第 10 回合的 `0/0` 是 owner 定的「乾淨總決賽」。在表格裡 `0/0` 和「設錯了」長得一模一樣，
+所以那一列有自己的 `cleanFinale` 旗標與金色徽章「乾淨總決賽 · 一隻都沒有」——
+`roundRows()` 算出來，測試斷言**只有**第 10 回合被這樣標。
+
+### 三、「這頁在線上改了，部署一次會不會被蓋掉？」—— 不會，而且是查出來的不是猜的
+
+任務書說 #189 是 in_progress、分支是空的。**實查與這個描述不符**：#189 的三段都在 main 上。
+
+1. 寫入 = `PUT /api/v1/content-overlay/docs/config/arena-rules`
+   （`apps/platform/internal/contentoverlay/handlers.go`，admin JWT + 稽核，
+   `collectionRe`/`idRe` 都放行 `config`/`arena-rules`，**沒有** collection 白名單）；
+2. 落點 = `DATA_DIR/content-overlay/overlay.json`。`docker/compose.yaml` 的 platform
+   服務掛 `../data:/data`，`.gitignore` 有 `/data/**` —— image 外、git 外；
+   同一份 compose 把 `../content` 掛成 **`:ro`**，那份才是 `git pull` 會覆蓋的東西。
+   所以「不要寫 content/」不是偏好，是這頁能不能用的分水嶺。
+3. 讀回 = `apps/game-server/src/index.ts:294` `fetchOverlayBundle(PLATFORM_URL)`
+   → `OverlayContentSource` 疊在 `FsContentSource` 上 → `Configs.tryGet("arena-rules")`。
+   **開機時**套用，不是即時；而部署本來就會重啟容器，所以「下一次部署生效」。
+   `GGD_PLATFORM_URL: http://platform:8080` 在 compose.yaml 的 game 服務上有設（#48 的修正），
+   `make family-up` 用 `-f compose.yaml -f compose.family.yaml`，base 有被吃到 → 這條路是通的。
+
+唯一會蒸發的寫法，是走 loopback content-api 去改 repo 裡的 `content/` ——
+那正是這頁**不**做的事，並且由 `mobWavesRender.test.ts` 斷言（`not.toContain("contentApi")`）。
+
+### 四、刻意沒做的那一半，寫在欄位標題上
+
+`mobRulesFromConfig`（`packages/shared/src/sim/mobs.ts:270`）只讀 `cfg.mob.championId`，
+沒有逐回合分支。逐回合那一欄目前**只存不吃**。這件事寫在三個地方：schema 註解、頁面上
+一塊黃色告示、以及那一欄的表頭「由誰擔任（尚未接上對戰端）」——
+一個安靜地什麼都不做的旋鈕，正是這個專案累計 11 次的招牌失敗。
+
+### 五、對抗式驗證：11 個變異，逐字記錄
+
+| 變異 | 變紅 |
+|---|---|
+| M1 拿掉側欄 NAV 那一列 | **1 條**（`route exists > App.tsx carries the sidebar entry`） |
+| M2 拿掉 `page === "mobWaves" && <MobWavesPage />` | **1 條** |
+| M3 從欄位登錄表刪掉 `reward.xp` | **11 條** |
+| M4 從顯示分組刪掉 `mob.moveSpeed`（登錄表留著，只是畫面上沒有） | **3 條** |
+| M5 schema 拿掉 `schedule[].championId` | **3 條** |
+| M6 `reward.xp` 不再從表單讀（送出時寫死出貨值） | **1 條**（「算出來但沒送到端點」） |
+| M7 `patchArenaRules` 只送 mobWaves（蓋掉 rounds/flowers/…） | **2 條** |
+| M8 逐回合 championId 不再覆蓋整場設定 | **1 條** |
+| M9 `SHIPPED_MOB_WAVES.reward.killsPerLevel` 6→30 | **2 條** |
+| M10 `cleanFinale` 恆為 false（第 10 回合的 0/0 不再被標成刻意） | **1 條** |
+| M11 存檔不再呼叫 `putOverlayDoc` | **1 條** |
+
+M4 是這一批裡最重要的一個：欄位還在登錄表、標籤還在、**只是沒有輸入框**。
+測試之所以抓得到，是因為它斷言的是 SSR 出來的 HTML 裡有沒有 `data-field="mob.moveSpeed"`
+這個**真的控制項**，而且那份 22 個欄位的清單是**手寫在測試裡**的 ——
+從被測登錄表推導出來的清單，登錄表空了也會全綠。
+
+### 六、上面那 11 個變異不夠 —— 獨立驗證者兩個全綠變異（2026-07-27 修復輪）
+
+功能本體沒被推翻，被推翻的是守衛。獨立驗證者下了兩個變異，**全套 0 failed、typecheck 也 0**：
+
+| 倖存變異 | 它造成的真實傷害 |
+|---|---|
+| **P2** 頁面裡 `patchArenaRules(base, configFromForm(form))` → `patchArenaRules(base, SHIPPED_MOB_WAVES)` | owner 改完 22 個旋鈕按儲存，**寫進耐久覆蓋層的是出貨預設值，他的每一筆編輯都被丟掉**，而畫面照樣顯示「✓ 已寫入耐久覆蓋層」 |
+| **P1** `ChampionPicker` 的 `if (props.options.length === 0)` → `if (true)` | 整頁的英雄下拉全部退回裸 `godie-*` 文字框 —— 這頁的第三個賣點消失 |
+
+**為什麼原本抓不到**，兩個原因是同一種病：
+
+1. 守「耐久寫入」的是**對原始碼字串做 regex**：`expect(src).toMatch(/putOverlayDoc\(ARENA_RULES_COLLECTION, ARENA_RULES_ID/)`。
+   它只斷言這個呼叫**存在**，完全不管它**寫進去什麼**。上表的 M6/M7 之所以會紅，是因為那兩個
+   變異下在 `configFromForm` / `patchArenaRules` **裡面**（純函式，有真的單元測試盯著）；
+   P2 下在**頁面呼叫它們的那一行**，那條路上一個行為斷言都沒有。
+2. `data-field="mob.championId"` 這個斷言**分不出 `<input>` 和 `<select>`** —— `TextInput` 退化路徑
+   也會發同一個屬性。SSR 又只看得到第一次繪製，`onSave` 根本沒被進入過。
+
+**補法：真的去驅動這一頁。** 這個 monorepo 沒有 jsdom，所以 `apps/admin/src/testkit/headlessUi.ts`
+自己實作 React 表單需要的那一小塊（hook 狀態、effect、setState 後同步重繪），把函式元件算成
+純物件 host 樹；元件建立仍然是真的 `react/jsx-runtime`，只換 hook dispatcher，不碰 React 內部欄位。
+`apps/admin/src/mobWavesSave.test.ts` 的 13 條全部是「在真的控制項打字 → 按真的儲存鍵 →
+斷言送進 `putOverlayDoc` 的 payload」。
+
+同時**退役**了那條假守衛：`mobWavesRender.test.ts` 不再宣稱它守得住寫入，只留下行為測不到的
+**否定**斷言（`not.toContain("contentApi")` —— 一個不存在的呼叫在執行期沒有東西可觀察）。
+
+修復輪 17 個變異，**17 紅 0 綠**（每個都跑全套 admin 一次）：
+
+| 變異 | 變紅 |
+|---|---|
+| **P2** 存檔改送 `SHIPPED_MOB_WAVES` | **6 條** |
+| **P1** 英雄下拉恆走文字框退化路徑 | **3 條** |
+| M1 存檔改送它「載進來的」那份 doc（`next` → `base`） | **6 條** |
+| M2 payload 改由 `shippedForm()` 生 | **6 條** |
+| M3 `patchArenaRules({}, …)` 蓋掉 rounds/flowers/guardianTower | **1 條** |
+| M4 完全不呼叫 `putOverlayDoc` | **11 條** |
+| M5 成功訊息的 generation 寫死 1（不報平台回的） | **1 條** |
+| M6 `putNum("hpPerLevel", …)` 刪掉 | **7 條** |
+| M7 `putText("championId", …)` 刪掉（整場的由誰擔任） | **8 條** |
+| M8 逐回合 `championId` 在存檔時被丟掉 | **3 條** |
+| M9 逐回合每波數量改寫成基準值 | **5 條** |
+| M10 存活上限恆存出貨值 | **5 條** |
+| M11 清空逐回合英雄後卡在寫死的 id | **6 條** |
+| M12 下拉只列 `godie-*` slug，沒有中文名 | **1 條** |
+| M13 roster 以外的 id 不再可選（開頁就被悄悄改寫） | **1 條** |
+| M14 `TextInput` 不再發 `data-field` | **9 條** |
+| M15 逐回合英雄控制項的 field id 打錯 | **5 條** |
+
+基準線：`apps/admin` 44 檔 **569 綠**（原 558 + 新 13 − 退役的 2 條假守衛）、typecheck 0。
+
+**這一輪的教訓，一句話**：`expect(src).toMatch(/foo(/)` 證明的是「那個呼叫被打進檔案裡」，
+不是「它產出正確的東西」。凡是「按下去會寫出去」的頁面，守衛就必須攔住那個出口、
+斷言送出去的**內容**，而且要能分辨「使用者的編輯」和「出貨預設值」——
+金錢必然上升那種與缺陷方向無關的斷言，測不到任何東西。

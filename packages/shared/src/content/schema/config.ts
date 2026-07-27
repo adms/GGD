@@ -479,6 +479,26 @@ export const zMobWavesConfig = z
             mobsPerWaveCap: z.number().int().min(0),
             /** cap on mobs ALIVE per zone in that round (0 = none) */
             maxAlivePerZone: z.number().int().min(0),
+            /**
+             * PER-ROUND MOB FACE (owner 2026-07-27, 後台殭屍波系統頁).
+             *
+             * 「甚至設定每回合殭屍指定哪個英雄來擔任」 — the champion doc this
+             * round's mobs wear the face of, overriding `mob.championId` for
+             * this round only. Absent (the normal case) ⇒ inherit
+             * `mob.championId`, which is itself optional and falls back to
+             * MOB_CHAMPION_ID — so every legacy doc keeps its exact behaviour
+             * and nothing about the shipped schedule changes.
+             *
+             * ⚠️ AUTHORED BUT NOT YET CONSUMED. `mobRulesFromConfig` (sim/mobs.ts)
+             * still resolves the mob's champion from `cfg.mob.championId` alone;
+             * it has no per-round branch, and adding one is a `sim/` change that
+             * was deliberately kept out of the admin-page task that introduced
+             * this field. Until that lands, a value here is DURABLY STORED and
+             * VISIBLE IN THE CONSOLE but has NO in-match effect. The admin page
+             * (apps/admin/src/ui/MobWavesPage.tsx) says so on the column itself
+             * rather than letting the operator assume otherwise.
+             */
+            championId: z.string().min(1).optional(),
           })
           .strict(),
       )

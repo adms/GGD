@@ -88,6 +88,13 @@ export function TextInput(props: {
   autoFocus?: boolean;
   /** Renders read-only and visually dimmed (e.g. a knob whose range admits one value). */
   disabled?: boolean;
+  /**
+   * Machine-readable field id, emitted as `data-field`. Lets a test assert that
+   * a named knob still has a REAL CONTROL, not merely a label that survived —
+   * 殭屍波系統 uses it so deleting one input from the form fails the suite.
+   */
+  dataField?: string;
+  title?: string;
   style?: React.CSSProperties;
 }): React.JSX.Element {
   return (
@@ -97,6 +104,8 @@ export function TextInput(props: {
       placeholder={props.placeholder}
       autoFocus={props.autoFocus}
       disabled={props.disabled}
+      data-field={props.dataField}
+      title={props.title}
       onChange={(e) => props.onChange(e.target.value)}
       onKeyDown={(e) => {
         if (e.key === "Enter") props.onEnter?.();

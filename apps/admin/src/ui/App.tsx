@@ -19,6 +19,13 @@ import { AnnouncementsPage } from "./AnnouncementsPage";
 import { CurationPage } from "./CurationPage";
 import { ContentOverlayPage } from "./ContentOverlayPage";
 import { CombatEnvPage } from "./CombatEnvPage";
+// 殭屍波系統 (task #215's config surface) — EAGER, like 內容覆蓋層 / 體素鑄造廠
+// and for the same reason: its save is a platform admin `putOverlayDoc`, so it
+// is safe in production BY AUTHORISATION and must exist in the production
+// bundle. A zombie-tuning page that only runs on localhost cannot tune the host
+// the family actually plays on. mobWaves.test.ts fails if this line ever moves
+// under a DEV gate or the nav label leaves the shell.
+import { MobWavesPage } from "./MobWavesPage";
 import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
@@ -108,6 +115,11 @@ const NAV: NavItem[] = [
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
+  // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
+  // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
+  // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
+  // one PvE pressure source those multipliers act on.
+  { page: "mobWaves", label: "殭屍波系統", emoji: "🧟", section: SEC_SYS },
   { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
   // #243 — 一鍵打包 ZIP 匯出／匯入平台資料，無痛移機. Session-gated (see
   // store.ts) and PRESENT IN THE PRODUCTION BUNDLE, because a migration tool
@@ -534,6 +546,7 @@ function Console(): React.JSX.Element {
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入內容·素材管理…</div>
             )}
             {page === "combatEnv" && <CombatEnvPage />}
+            {page === "mobWaves" && <MobWavesPage />}
             {page === "serverOps" && <ServerOpsPage />}
             {page === "dataMigration" && <DataMigrationPage />}
             {page === "ai" && <AiSettingsPage />}
