@@ -75,6 +75,11 @@ import {
   killComboText,
   killComboTier,
   type KillComboState,
+  killComboNumberSize,
+  killComboTextEm,
+  COMBO_EM_DIGIT,
+  COMBO_EM_SPACE,
+  COMBO_EM_CJK,
 } from "./killComboModel";
 import {
   comboNowMs,
@@ -1019,5 +1024,115 @@ describe("rendered AND visible", () => {
     );
     expect(sizes.length, "no font-size shipped at all").toBeGreaterThan(0);
     expect(Math.max(...sizes)).toBeGreaterThanOrEqual(16);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑧ IT MUST NOT WRAP — owner, 2026-07-27:
+ *   「顯示 xx連殺的時候 殺字有時候會換行 特別是數量大的時候」
+ *
+ * ROOT CAUSE: the glyph size was `min(tierFontSize, rect.h * 0.62)` — HEIGHT
+ * ONLY. Nothing ever consulted the box WIDTH. At the 天災 tier (96px) the
+ * string 「50 連殺」 needs ≈3.46em ≈ 332px and the corridor is 260px, so the
+ * line wrapped and 「殺」 landed on a line of its own.
+ *
+ * The old suite could not have caught this: it asserted `size <= phone.h`,
+ * i.e. the same height axis the bug lived outside of. That is failure shape ④
+ * — the assertion direction had nothing to do with the defect direction.
+ *
+ * These guards therefore assert the WIDTH axis explicitly, in em (the only
+ * unit meaningful without a layout engine), and pin the hard `nowrap` too.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("the counter never wraps", () => {
+  const box = killComboRect({ width: 1546, height: 900 }, { touch: false, legendUp: false })!;
+
+  it("the shipped text fits the shipped box at EVERY tier", () => {
+    // one count per tier, plus the 3-digit case the box comment claimed to support
+    for (const count of [2, 5, 10, 20, 50, 137, 999]) {
+      const view = killComboDisplay(state(count), 0)!;
+      const size = killComboNumberSize(count, box.w, box.h, view.fontSize);
+      const widthPx = size * killComboTextEm(count);
+      expect(
+        widthPx,
+        `「${killComboText(count)}」 at tier ${view.tier} renders ${Math.round(widthPx)}px wide ` +
+          `inside a ${box.w}px box — it will wrap and drop 「殺」 to its own line`,
+      ).toBeLessThanOrEqual(box.w);
+    }
+  });
+
+  it("a BIG number is what actually shrinks — not every number", () => {
+    // The failing direction: a fix that clamps everything down would also pass
+    // "it fits". So assert that a SHORT count still gets its full tier size,
+    // and only the long one is reduced.
+    const small = killComboDisplay(state(2), 0)!;
+    expect(killComboNumberSize(2, box.w, box.h, small.fontSize)).toBe(
+      Math.min(small.fontSize, Math.round(box.h * 0.62)),
+    );
+
+    const huge = killComboDisplay(state(999), 0)!;
+    expect(killComboNumberSize(999, box.w, box.h, huge.fontSize)).toBeLessThan(
+      Math.min(huge.fontSize, Math.round(box.h * 0.62)),
+    );
+  });
+
+  it("more digits never means a BIGGER glyph", () => {
+    const view = killComboDisplay(state(50), 0)!;
+    const sizes = [2, 20, 200, 2000].map((c) => killComboNumberSize(c, box.w, box.h, view.fontSize));
+    for (let i = 1; i < sizes.length; i++) {
+      expect(sizes[i]!, `${sizes[i]}px at ${i} extra digits`).toBeLessThanOrEqual(sizes[i - 1]!);
+    }
+  });
+
+  it("the em measure counts the CJK pair, the space AND the digits", () => {
+    // Pinned so a "simplification" that drops a term cannot pass silently.
+    expect(killComboTextEm(1)).toBeCloseTo(COMBO_EM_DIGIT + COMBO_EM_SPACE + 2 * COMBO_EM_CJK, 5);
+    expect(killComboTextEm(50) - killComboTextEm(5)).toBeCloseTo(COMBO_EM_DIGIT, 5);
+    expect(killComboTextEm(999) - killComboTextEm(99)).toBeCloseTo(COMBO_EM_DIGIT, 5);
+  });
+
+  it("the SHIPPED markup carries white-space:nowrap on the number", () => {
+    // The belt to the braces above: even if the em estimate is off on some font
+    // stack, the line still cannot break. Read off the real rendered markup.
+    const out = renderToStaticMarkup(
+      createElement(KillComboView, { rect: box, view: killComboDisplay(state(50), 0)! }),
+    );
+    const countSpan = out.match(/data-kill-combo="count"[^>]*style="([^"]*)"/)?.[1] ?? "";
+    expect(countSpan, "the count span lost its nowrap").toMatch(/white-space:\s*nowrap/i);
+  });
+
+  it("the RENDERED font-size fits the box width — at every tier", () => {
+    // ⚠️ THE MUTATION THE REST OF THIS BLOCK MISSED, and it is failure shape ⑤:
+    // every other test here calls `killComboNumberSize` directly, so the VIEW
+    // could stop calling it entirely — revert to the old height-only
+    // `Math.min(view.fontSize, rect.h * 0.62)` — and all of them stay green
+    // while 「殺」 goes back to wrapping. MEASURED: 62/62 green on that revert.
+    //
+    // So this one reads the size off the SHIPPED MARKUP and applies the width
+    // rule to it. The model can be perfect and unused; only the rendered number
+    // is evidence.
+    for (const count of [2, 5, 10, 20, 50, 137, 999]) {
+      const out = renderToStaticMarkup(
+        createElement(KillComboView, { rect: box, view: killComboDisplay(state(count), 0)! }),
+      );
+      const style = out.match(/data-kill-combo="count"[^>]*style="([^"]*)"/)?.[1] ?? "";
+      const px = Number(style.match(/font-size:\s*(\d+(?:\.\d+)?)px/)?.[1]);
+      expect(px, `no font-size rendered for ${count}`).toBeGreaterThan(0);
+      const widthPx = px * killComboTextEm(count);
+      expect(
+        widthPx,
+        `RENDERED 「${killComboText(count)}」 at ${px}px is ${Math.round(widthPx)}px wide in a ` +
+          `${box.w}px box — the view is not applying the width bound`,
+      ).toBeLessThanOrEqual(box.w);
+    }
+  });
+
+  it("the whole line stays ONE line in the visible text", () => {
+    // ⑤ the real thing: the digits and 連殺 must remain a single contiguous
+    // string in what a browser would paint, for the loudest tier there is.
+    const out = renderToStaticMarkup(
+      createElement(KillComboView, { rect: box, view: killComboDisplay(state(137), 0)! }),
+    );
+    expect(visibleText(out)).toContain("137 連殺");
   });
 });

@@ -45,6 +45,7 @@ import {
   killComboDisplay,
   killComboRect,
   killComboText,
+  killComboNumberSize,
   type KillComboDisplay,
 } from "./killComboModel";
 
@@ -71,9 +72,10 @@ export function KillComboView({
   view: KillComboDisplay;
 }): React.JSX.Element {
   // The number scales with the tier, but never past the box the layout proved
-  // is free: a 96px glyph inside a 66px-tall corridor on a 780x360 phone would
-  // spill over the ability bar, which is exactly what the rect exists to stop.
-  const numberSize = Math.min(view.fontSize, Math.round(rect.h * 0.62));
+  // is free — bounded on BOTH axes. Height alone was the old rule and it let
+  // 「50 連殺」 at the 天災 tier overflow the 260px corridor and wrap, dropping
+  // 「殺」 onto its own line. See killComboNumberSize.
+  const numberSize = killComboNumberSize(view.count, rect.w, rect.h, view.fontSize);
   const labelSize = Math.max(11, Math.round(numberSize * 0.3));
   return (
     <div
@@ -124,6 +126,11 @@ export function KillComboView({
         style={{
           fontSize: numberSize,
           lineHeight: 1,
+          // HARD guarantee. killComboNumberSize already shrinks to fit, but that
+          // is an estimate; this makes wrapping impossible even if the estimate
+          // is off by a few percent on some font stack. A hair of clipping is a
+          // far better failure than 「殺」 alone on line two.
+          whiteSpace: "nowrap",
           fontWeight: 900,
           fontVariantNumeric: "tabular-nums",
           color: view.color,

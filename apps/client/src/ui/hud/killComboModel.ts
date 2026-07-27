@@ -203,6 +203,52 @@ export function killComboText(count: number): string {
   return `${count} 連殺`;
 }
 
+/**
+ * Advance widths in `em`, for measuring `killComboText` WITHOUT a layout engine.
+ *
+ * The counter renders in a heavy sans with `font-variant-numeric: tabular-nums`,
+ * so every digit is the same width by construction — that is what makes a
+ * static estimate honest here rather than a guess. CJK ideographs are full-width
+ * by definition of the script, not by font choice.
+ *
+ * Deliberately a slight OVER-estimate: erring wide shrinks the glyph a little
+ * more than strictly needed, which is invisible. Erring narrow puts 「殺」 on
+ * its own line, which is the bug this exists to kill.
+ */
+export const COMBO_EM_DIGIT = 0.58;
+export const COMBO_EM_SPACE = 0.3;
+export const COMBO_EM_CJK = 1.0;
+
+/** Width of `killComboText(count)` in `em`, at any font size. */
+export function killComboTextEm(count: number): number {
+  const digits = String(Math.max(0, Math.trunc(count))).length;
+  // 「連殺」 = two ideographs; the space is the one in killComboText
+  return digits * COMBO_EM_DIGIT + COMBO_EM_SPACE + 2 * COMBO_EM_CJK;
+}
+
+/**
+ * The glyph size that actually fits the box — bounded by BOTH axes.
+ *
+ * ⚠️ THE BUG THIS FIXES (owner, 2026-07-27: 「殺字有時候會換行 特別是數量大的時候」).
+ * The size used to be `min(tierFontSize, rect.h * 0.62)` — HEIGHT ONLY. At the
+ * 天災 tier (96px) 「50 連殺」 needs 3.46em ≈ 332px, and the corridor is 260px
+ * wide, so the line wrapped and 「殺」 dropped to a line of its own. The box was
+ * authored believing it was "wide enough for 「137 連殺」 at the top tier"; that
+ * was never measured, and 137 at 96px needs ~377px.
+ *
+ * Shrinking beats widening: `rect` is the box the layout proved is FREE, and
+ * widening it would walk into the ability bar / legend the placement rules
+ * exist to avoid. A slightly smaller 天災 is still enormous.
+ */
+export function killComboNumberSize(count: number, boxW: number, boxH: number, tierFontSize: number): number {
+  const byHeight = Math.round(boxH * 0.62);
+  // 4% side breathing room so the glow does not sit flush against the edge
+  const byWidth = Math.floor((boxW * 0.96) / killComboTextEm(count));
+  // never below 12px: at that point the counter has stopped being juice and is
+  // just noise, and the placement rules should have returned null instead
+  return Math.max(12, Math.min(tierFontSize, byHeight, byWidth));
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
  * ② PLACEMENT
  * ═══════════════════════════════════════════════════════════════════════════ */
