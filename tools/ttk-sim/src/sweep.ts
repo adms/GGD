@@ -8,23 +8,15 @@
  * bot-vs-bot duels per value in BOTH modes (natural = ring off, production =
  * ring on), aggregates per-value round-length statistics, interpolates the
  * multiplier that meets the target (≥120 s min, ~180 s avg), prints a table, and
- * writes data/reports/ttk-experiment-153.md.
- *
- * ⚠️ THE OUTPUT PATH IS DELIBERATELY OUTSIDE VERSION CONTROL (GH#56). It used
- * to be `docs/_ttk-experiment-153.md`, a TRACKED file that this sweep silently
- * overwrote — so anyone who ran the tool dirtied the working tree, and the
- * committed copy was a frozen snapshot that started lying the moment
- * combat-env.json moved (its conclusion, maxHealth ≈ 15.7, was superseded the
- * next day and never shipped). `/data/**` is gitignored, so the report is a
- * product now rather than a document.
+ * writes docs/_ttk-experiment-153.md.
  */
-import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadRoster, runMatchDuels, CONTENT_DIR, MID_MATCH_GRANT, COMBAT_ENV_BASE, type DuelSample } from "./harness";
 import { mean, median, min, max, percentile, linfit, solveX } from "./stats";
 
 const REPO_ROOT = join(new URL("../../..", import.meta.url).pathname);
-const REPORT_PATH = join(REPO_ROOT, "data/reports/ttk-experiment-153.md");
+const REPORT_PATH = join(REPO_ROOT, "docs/_ttk-experiment-153.md");
 const COMBAT_ENV_PATH = join(REPO_ROOT, "content/config/combat-env.json");
 
 /**
@@ -32,7 +24,7 @@ const COMBAT_ENV_PATH = join(REPO_ROOT, "content/config/combat-env.json");
  * round CANNOT exceed it). Natural mode uses a higher cap so slow-but-resolvable
  * fights are not censored — resolvable matchups finish by ~315 s even at ×20, so
  * 600 s cleanly separates them from the true Tier-0 stalemates (which never
- * resolve). The generated report's own "Caveats" section restates this.
+ * resolve). See docs/_ttk-experiment-153.md "Caveats".
  */
 const PRODUCTION_CAP_SEC = 240;
 

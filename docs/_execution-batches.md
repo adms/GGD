@@ -1,15 +1,11 @@
 # GGD 執行批次計畫（Execution Batches）
 
 > **這份檔案只放兩種東西：還沒做完的事，以及做事的規則。**
+> 做完而且沒有下游相依的，一律搬到歷史檔：
+> [`_execution-batches-history-20260726.md`](_execution-batches-history-20260726.md)（v0.4.9→v0.5.16、舊批次 0–9、訂正區）
+> · [`_execution-batches-history-20260727.md`](_execution-batches-history-20260727.md)（v0.6.x 部署、那一夜四份被推翻的交付的完整驗屍與量測）
 >
-> 做完而且沒有下游相依的就從這裡拿掉 —— **不要再搬進歷史檔**。
-> 2026-07-28 的 docs 分流把三份逐日封存（20260725/26/27）與三份 session 交接
-> **移到 `docs/legacy/`**（owner:「你不應該刪除而是移到 legacy」）：
-> 它們記的事 `git log` 已經記了一次，而它們額外攜帶的東西只有過期的判定
-> （例：標「godie-hblm 仍待辦」，實際 #212 早已完成）。逐日封存本身就是一種
-> 會腐爛的重複記錄。
->
-> **重啟 session 的前情提要看 `git log` 與 GitHub issues。**
+> **重啟 session 的前情提要在 [`_session-handover.md`](_session-handover.md)。**
 >
 > 最後重整：2026-07-27，main `a6b1609d`，線上 **v0.7.0**。
 

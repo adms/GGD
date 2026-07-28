@@ -23,7 +23,7 @@ MODEL SELECTION (env, no code edit needed)
 
 The default is a permissively-licensed anime SD1.5 that needs NO auth to pull,
 so the pipeline proves out on any machine. To use a Civitai checkpoint instead,
-download the .safetensors (a token is required; setup notes retired 2026-07-28 — see batch.py)
+download the .safetensors (a token is required — see docs/_local-image-gen-setup.md)
 and point ICON_GEN_MODEL at the file.
 """
 from __future__ import annotations

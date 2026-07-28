@@ -6,7 +6,7 @@
 >
 > **相關**：`docs/todo/content-sync.md`（驗收列）、`docs/todo/content-api.md`（localhost 寫入路徑）、
 > `docs/_requirements-audit-gaps.md`「兩台機器的內容同步＝逐項打勾裁決」（2026-07-24 的來源需求）、
-> #189（為什麼遠端 內容管理 曾經不能用；當時的 session 交接已刪，見 git log）、#179（可複用的 bundle 信封）。
+> `docs/_session-handoff-2026-07-24.md`（為什麼遠端 內容管理 今天不能用）、#179（可複用的 bundle 信封）。
 
 ---
 

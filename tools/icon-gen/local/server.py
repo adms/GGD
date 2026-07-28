@@ -10,7 +10,7 @@ provider-agnostic: for images it POSTs an OpenAI-shaped request
 and reads back { "data": [ { "b64_json": ... } ] }. So the ENTIRE existing path
 — tools/icon-gen -> platform /ai/icon -> provider — works against a LOCAL model
 with NO Go change at all: run this server and point the image provider at it in
-the admin console (setup notes retired 2026-07-28; see batch.py / daemon.py):
+the admin console (see docs/_local-image-gen-setup.md):
 
     imageBaseUrl = http://127.0.0.1:8188/v1
     imageModel   = local-sd            (any non-empty string)
