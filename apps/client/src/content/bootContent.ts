@@ -21,6 +21,8 @@ import {
   OverlayContentSource,
   registerAll,
   type ContentSource,
+  type ContentStore,
+  type Manifest,
   type HttpContentSourceOptions,
 } from "@ggd/shared/content";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
@@ -67,6 +69,13 @@ export interface ContentBootResult {
    * is diagnosable from the console instead of being invisible.
    */
   overlayGeneration?: number;
+  /**
+   * Set when the overlay was fetched but its merged tree FAILED to load, so the
+   * shipped tree was used instead. `ok` is still true — the game works — but the
+   * operator's edits are silently absent, which is exactly the state that must
+   * not be invisible.
+   */
+  overlayError?: string;
 }
 
 export interface ContentBootOptions {
@@ -131,10 +140,46 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
   // what it loaded before — including the shipped contentVersion that stamps
   // asset URLs.
   const overlay = opts.source || opts.disableOverlay ? null : await fetchOverlayBundle();
+  const shippedSource = source;
   if (overlay) source = new OverlayContentSource(source, overlay);
 
+  /** One load attempt. `withOverlay` chooses which source is used. */
+  const attempt = async (
+    withOverlay: boolean,
+  ): Promise<{ store: ContentStore; manifest: Manifest }> =>
+    new ContentLoader(withOverlay ? source : shippedSource).load();
+
+  let overlayApplied = overlay !== null;
+  let overlayError: string | undefined;
   try {
-    const { store, manifest } = await new ContentLoader(source).load();
+    let loaded: { store: ContentStore; manifest: Manifest };
+    try {
+      loaded = await attempt(overlayApplied);
+    } catch (err) {
+      // ⚠️ A BAD OVERLAY MUST NEVER BRICK THE CLIENT — and before this retry it
+      // did, ASYMMETRICALLY: the game-server has had exactly this fallback since
+      // #189 (index.ts loadFrom("overlay") → retry "shipped"), so one bad
+      // operator edit would have left the SHARD healthy and dropped every
+      // BROWSER to the 2-champion skeleton. The game would look completely
+      // broken to the players while every server-side check said fine.
+      //
+      // Retry the shipped tree alone: the operator's other content is worth far
+      // more than one bad edit, and the console validates on save, so this is
+      // the belt to that suspenders.
+      if (!overlayApplied) throw err;
+      overlayApplied = false;
+      overlayError = err instanceof Error ? err.message : String(err);
+      console.error(
+        "[client] content load WITH the durable overlay failed — retrying the shipped tree " +
+          "alone (the overlay is NOT applied). Fix the offending overlay doc in 後台 → 內容覆蓋層.",
+        err,
+      );
+      // The bundle transport may have been consumed by the failed attempt; the
+      // FallbackContentSource is stateful about `didFallback`, which is only a
+      // REPORTING field, so reusing it is safe and keeps the reason accurate.
+      loaded = await attempt(false);
+    }
+    const { store, manifest } = loaded;
     registerAll(store);
     // Publish the tree's cache key. Every content ASSET url (glb / mp3 / icon)
     // is stamped `?h=<contentVersion>` from here on, which is the ONLY thing that
@@ -148,7 +193,10 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
       contentVersion: manifest.contentVersion,
       ...(transport ? { transport } : {}),
       ...(fallback?.fallbackReason ? { transportReason: fallback.fallbackReason } : {}),
-      ...(overlay ? { overlayGeneration: overlay.generation } : {}),
+      // `overlayGeneration` reports what was APPLIED, not what was fetched — a
+      // rejected overlay must not read as a successful one on the boot report.
+      ...(overlayApplied && overlay ? { overlayGeneration: overlay.generation } : {}),
+      ...(overlayError ? { overlayError } : {}),
     };
   } catch (err) {
     registerSkeletonContent();
@@ -157,6 +205,7 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
       championCount: Champions.ids().length,
       error: err instanceof Error ? err.message : String(err),
       ...(fallback?.fallbackReason ? { transportReason: fallback.fallbackReason } : {}),
+      ...(overlayError ? { overlayError } : {}),
     };
   }
 }

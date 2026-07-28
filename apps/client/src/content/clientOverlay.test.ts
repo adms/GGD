@@ -172,6 +172,64 @@ describe("#189 客戶端內容覆蓋層 (client-content-overlay)", () => {
     expect(doc.bonus.maxHealth, "後台的值沒有蓋過出貨值 —— overlay 沒被套用").toBe(777);
   });
 
+  it("壞掉的 overlay **不會**把客戶端打到骨架內容 —— 退回出貨樹", async () => {
+    cover("client-content-overlay");
+    // ⚠️ 這條補的是一個非對稱:game-server 從 #189 起就有這個退路
+    // (index.ts loadFrom("overlay") → retry "shipped"),客戶端沒有。
+    // 沒有它的話,操作者一次壞編輯會讓**伺服器健康、每一個瀏覽器掉到 2 隻英雄**
+    // 的骨架內容 —— 玩家看到的是整個遊戲壞了,而每一項伺服器檢查都說正常。
+    const badDoc = { id: "base-bonus", schema: "config.base-bonus@1", bonus: "not-an-object" };
+    const shippedDoc = { id: "base-bonus", schema: "config.base-bonus@1", bonus: { maxHealth: 300 } };
+    const bundle = {
+      schema: "content-bundle@1",
+      contentVersion: "cv_overlaybad0",
+      collections: {
+        champions: { hash: HASH, entries: [{ id: "mockchamp", hash: HASH, doc: CHAMPION }] },
+        abilities: {
+          hash: HASH,
+          entries: (["Q", "W", "E", "R"] as const).map((sl) => ({
+            id: `mockchamp.${sl.toLowerCase()}`,
+            hash: HASH,
+            doc: { ...ability(sl), schema: "ability@1" },
+          })),
+        },
+        models: { hash: HASH, entries: [{ id: "mock.model", hash: HASH, doc: MODEL }] },
+        config: { hash: HASH, entries: [{ id: "base-bonus", hash: HASH, doc: shippedDoc }] },
+      },
+    };
+    globalThis.fetch = vi.fn((input: unknown) => {
+      const url = String(input);
+      if (url === OVERLAY_BUNDLE_URL) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve({ generation: 4, docs: { "config/base-bonus": badDoc }, deleted: {} }),
+        } as unknown as Response);
+      }
+      if (url.split("?")[0] === "/content/bundle.json") {
+        const body = JSON.stringify(bundle);
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          text: () => Promise.resolve(body),
+          json: () => Promise.resolve(bundle as unknown),
+        } as unknown as Response);
+      }
+      return Promise.resolve({ ok: false, status: 404 } as Response);
+    }) as unknown as typeof fetch;
+
+    const res = await loadAllContent();
+    // 遊戲**能玩** —— 這是最重要的那一條
+    expect(res.ok, res.error).toBe(true);
+    expect(Champions.ids()).toContain("mockchamp");
+    // 而且出貨值真的在(不是骨架的 2 隻英雄)
+    const doc = Configs.tryGet("base-bonus") as unknown as { bonus: Record<string, number> };
+    expect(doc.bonus.maxHealth).toBe(300);
+    // ⚠️ 但這件事**不可以是無聲的**:操作者的編輯沒生效必須看得見。
+    expect(res.overlayError, "壞 overlay 被吞掉了,沒有任何地方會說").toBeTruthy();
+    expect(res.overlayGeneration, "被拒絕的 overlay 不該報告成套用成功").toBeUndefined();
+  });
+
   it("disableOverlay 時完全不打那個端點 —— 斷言出貨樹的測試不會被 overlay 干擾", async () => {
     cover("client-content-overlay");
     const seen: string[] = [];
