@@ -33,6 +33,8 @@ import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
+import { sharedBaseBonusCache } from "../config/baseBonus";
+import { normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
 import { PLATFORM_URL } from "../config/platformUrl";
 import { sanitizeInputMessage } from "../net/validateInput";
@@ -93,6 +95,11 @@ export interface MatchRoomOptions {
    * defaults — see config/combatEnv.ts).
    */
   combatEnv?: Partial<Record<CombatEnvKey, number>>;
+  /**
+   * 基礎加成 override (tests / dev callers). Absent = resolve from the platform
+   * overlay through `sharedBaseBonusCache()` — see config/baseBonus.ts (#278).
+   */
+  baseBonus?: BaseBonusTable;
   /**
    * PER-ROOM roguelite-mob toggle (#215). Flows client → Go room → gamelink →
    * this bag. `undefined` (any room created before the toggle, and the whole
@@ -351,6 +358,16 @@ export class MatchRoom extends Room<MatchState> {
         ? normalizeCombatEnv(options.combatEnv)
         : await sharedCombatEnvCache().get();
 
+    // 基礎加成 (task #278): resolved AT MATCH CREATION through the same TTL-cache
+    // shape, so the admin page's 「下一場生效」 is finally true. It used to be read
+    // from the boot-time `Configs` registry inside MatchController, which meant an
+    // operator edit needed a game-server RESTART. Frozen for the match and written
+    // into the replay header below, exactly like `combatEnv`.
+    const baseBonus =
+      options.baseBonus !== undefined
+        ? normalizeBaseBonus(options.baseBonus)
+        : await sharedBaseBonusCache().get();
+
     // arena rules come from the config.arena-rules@1 doc when the content
     // tree is loaded (boot); absent doc -> legacy skeleton behavior
     const arena = resolveArena(options.mapId);
@@ -406,6 +423,7 @@ export class MatchRoom extends Room<MatchState> {
       // Per-round arena rotation pool (task #145).
       arenaPool,
       ownership,
+      baseBonus,
     );
     for (const h of humanSeats) {
       this.seatByAccount.set(h.accountId, asSeatId(h.seatId));
@@ -446,6 +464,7 @@ export class MatchRoom extends Room<MatchState> {
         arena,
         arenaPool,
         combatEnv,
+        baseBonus,
         phaseConfig: phaseCfg,
         fireRing,
         arenaRules,

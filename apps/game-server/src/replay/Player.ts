@@ -30,7 +30,8 @@ import { MatchController, type SeatSpec } from "../match/MatchController";
 import type { Seat, SeatDriver } from "../seat/Seat";
 import { hostDigest } from "./digest";
 import { buildStamp, registryFingerprint } from "./fingerprint";
-import { rebuildArena, rebuildRules, rebuildWhitelist } from "./headerCodec";
+import { rebuildArena, rebuildBaseBonus, rebuildRules, rebuildWhitelist } from "./headerCodec";
+import { Ownership } from "../curation/ownership";
 import { REPLAY_FORMAT_VERSION, type ReplayHeader, type ReplayLine } from "./format";
 import { loadReplay } from "./store";
 
@@ -214,6 +215,11 @@ export class ReplayPlayer {
       h.combatEnv,
       h.fireRing,
       pool,
+      // ownership is not recorded: a replay never runs champ-select, so the
+      // per-account gate has nothing to gate. Passed explicitly so the 基礎加成
+      // table after it lands in the right slot (#278).
+      Ownership.allowAll(),
+      rebuildBaseBonus(h),
     );
     // Replace every driver with a playback driver BEFORE tick 0, and apply the
     // swap immediately so no AI brain ever runs. `driver` in the header is the

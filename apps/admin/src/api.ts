@@ -10,7 +10,7 @@ import { normalizeOpsPayload } from "./serverOps";
 import type { OpsPayload, OpsSave } from "./serverOps";
 import { normalizeInvitePayload } from "./invites";
 import type { InvitePayload } from "./invites";
-import { normalizeLog, normalizeStatus } from "./contentOverlay";
+import { normalizeLog, normalizeStatus, validateOverlayDoc } from "./contentOverlay";
 import type { OverlayHead, OverlayLogLine, OverlayStatus } from "./contentOverlay";
 import type {
   ApplyResp,
@@ -352,12 +352,25 @@ export function getShippedDoc(
  * at this moment as the entry's merge base — the console deliberately does not
  * supply it, so a stale browser tab cannot stamp an edit as verified against a
  * doc it read an hour ago.
+ *
+ * ⚠️ THE ZOD GATE IS HERE, NOT AT THE CALL SITES (task #283). Nine pages write
+ * through this one function; a check bolted onto each of them is a check the
+ * tenth page will not have. Rejecting BEFORE the request means a bad doc never
+ * reaches `data/content-overlay/overlay.json` — which since the client started
+ * reading the overlay is a file that lands on the shard AND on every browser at
+ * once. Both sides have fallbacks, but a fallback is insurance, not validation.
+ *
+ * A collection with no schema (the platform accepts any name matching its regex)
+ * is written UNCHECKED and says so on the throw path's sibling — see
+ * `validateOverlayDoc`, which returns `validated: false` rather than pretending.
  */
 export function putOverlayDoc(
   collection: string,
   id: string,
   doc: Record<string, unknown>,
 ): Promise<OverlayHead> {
+  const verdict = validateOverlayDoc(collection, id, doc);
+  if (!verdict.ok) return Promise.reject(new Error(`拒絕寫入：${verdict.error}`));
   return api.request<OverlayHead>(
     `/content-overlay/docs/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
     { method: "PUT", body: doc },

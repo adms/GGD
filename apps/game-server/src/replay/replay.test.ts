@@ -10,6 +10,7 @@
  * in a real match.
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 import { mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -20,6 +21,10 @@ import { Arenas, Configs } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { asSeatId } from "@ggd/shared/ids";
 import { DEFAULT_COMBAT_ENV, normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
+import { DEFAULT_BASE_BONUS, baseBonusFor, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import { Ownership } from "../curation/ownership";
+import { rebuildBaseBonus } from "./headerCodec";
 import { DEFAULT_GOLD_DROP_CONFIG } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "../match/MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "../match/arenaRules";
@@ -94,6 +99,7 @@ function makeController(
   seed: number,
   whitelist = Whitelist.allowAll(),
   fireRing: FireRingConfig | null = null,
+  baseBonus: BaseBonusTable | undefined = undefined,
 ): MatchController {
   return new MatchController(
     matchId,
@@ -107,6 +113,8 @@ function makeController(
     ENV,
     fireRing,
     [],
+    Ownership.allowAll(),
+    baseBonus ?? DEFAULT_BASE_BONUS,
   );
 }
 
@@ -116,6 +124,7 @@ function headerFor(
   seed: number,
   cv = CV,
   fireRing: FireRingConfig | null = null,
+  baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS,
 ): ReplayHeader {
   return buildHeader({
     matchId,
@@ -127,6 +136,7 @@ function headerFor(
     arena: SKELETON_ARENA,
     arenaPool: [],
     combatEnv: ENV,
+    baseBonus,
     phaseConfig: FAST,
     fireRing,
     arenaRules: DEFAULT_ARENA_RULES,
@@ -145,9 +155,13 @@ async function recordMatch(
   seed: number,
   onTick?: (ctl: MatchController) => void,
   fireRing: FireRingConfig | null = null,
+  baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS,
 ): Promise<{ ctl: MatchController; ticks: number; finalWorld: number; finalHost: number }> {
-  const ctl = makeController(matchId, seed, Whitelist.allowAll(), fireRing);
-  const rec = await MatchRecorder.open(matchId, headerFor(ctl, matchId, seed, CV, fireRing));
+  const ctl = makeController(matchId, seed, Whitelist.allowAll(), fireRing, baseBonus);
+  const rec = await MatchRecorder.open(
+    matchId,
+    headerFor(ctl, matchId, seed, CV, fireRing, baseBonus),
+  );
   expect(rec).not.toBeNull();
   ctl.recorder = rec;
   let n = 0;
@@ -232,6 +246,62 @@ describe("replay header", () => {
     expect(h.whitelist.champions).toEqual(["sela"]);
     expect(h.whitelist.items).toEqual(["itm-a", "itm-b"]);
     expect(h.whitelist.abilities).toEqual(["ab-1"]);
+  });
+});
+
+/**
+ * 基礎加成 must be REPLAYED FROM THE HEADER, not re-resolved at playback time
+ * (task #278 — 稽核補的一組, verifier).
+ *
+ * ⚠️ 為什麼這一組非有不可。#278 把 基礎加成 從「開機時的常數」變成「每一場從
+ * 耐久覆蓋層解析」,所以同一個 process 上的兩場比賽可以合法地用不同的表。
+ * 錄影因此必須把當時那張表寫進 header —— 否則操作者在後台改一個數字,昨天的
+ * 錄影就會用今天的數字重播,digest 分岔,而報告會說「主機不一致」。
+ *
+ * 這一組是稽核加上的,因為原本的守衛**分不出對錯兩種實作**:所有錄影測試都用
+ * `DEFAULT_BASE_BONUS`,而 `rebuildBaseBonus` 的回退路徑(讀本機內容)在測試
+ * 環境剛好也回同一張表。把 `rebuildBaseBonus` 改成「永遠忽略 header、只讀內容」
+ * (= 缺陷原狀)之後,整個 game-server 套件 549 條全綠。
+ *
+ * 下面錄的那一場刻意用 `maxHealth: 1500` —— 和本機內容值(出貨 300)**不同**,
+ * 所以「讀 header」和「讀內容」會給出不同的血量,digest 一定會分岔。
+ */
+describe("replay 用的是錄影當下的 基礎加成 (replay-basebonus-header)", () => {
+  const RECORDED: BaseBonusTable = Object.freeze({ [Stat.MaxHealth]: 1500 });
+
+  it("header 帶著錄影當下那張表,重播照它跑 —— 不是重播時再解析一次", async () => {
+    cover("replay-basebonus-header");
+    // 本機內容/註冊表給的是出貨預設(300);錄影當下用的是 1500。
+    expect(baseBonusFor(rebuildBaseBonus({} as ReplayHeader), Stat.MaxHealth)).toBe(
+      baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth),
+    );
+
+    const rec = await recordMatch("bb-hdr-1", 20260728, undefined, null, RECORDED);
+    expect(baseBonusFor(rec.ctl.world.baseBonus, Stat.MaxHealth)).toBe(1500);
+    expect(rec.ticks).toBeGreaterThan(200);
+
+    const p = await playFully("bb-hdr-1");
+    // (a) 重播的 sim 真的拿到 1500,不是本機的 300
+    expect(
+      baseBonusFor(p.ctl.world.baseBonus, Stat.MaxHealth),
+      "重播用的是本機現在的值,不是錄影當下的值",
+    ).toBe(1500);
+    // (b) 而且逐 tick 不分岔 —— 血量不同會讓整場打法不同
+    expect(p.divergence, "重播分岔了 —— 基礎加成沒有從 header 還原").toBeNull();
+    expect(p.finished).toBe(true);
+    expect(p.ctl.world.digest()).toBe(rec.finalWorld);
+    expect(hostDigest(p.ctl)).toBe(rec.finalHost);
+  }, 60_000);
+
+  it("#278 之前的舊錄影(沒有這個欄位)回退到本機內容值,而不是空表", () => {
+    cover("replay-basebonus-header");
+    const legacy = { matchId: "old", seed: 1 } as unknown as ReplayHeader;
+    expect(baseBonusFor(rebuildBaseBonus(legacy), Stat.MaxHealth)).toBe(
+      baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth),
+    );
+    // 而有欄位的錄影一定走 header,兩條路徑的答案在這裡是不同的
+    const modern = { baseBonus: { maxHealth: 1500 } } as unknown as ReplayHeader;
+    expect(baseBonusFor(rebuildBaseBonus(modern), Stat.MaxHealth)).toBe(1500);
   });
 });
 
@@ -662,6 +732,7 @@ describe("dead-player gold drop (task #191)", () => {
       arena: SKELETON_ARENA,
       arenaPool: [],
       combatEnv: COIN_ENV,
+      baseBonus: DEFAULT_BASE_BONUS,
       phaseConfig: COIN_PHASES,
       fireRing: null,
       arenaRules: COIN_RULES,

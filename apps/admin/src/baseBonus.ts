@@ -25,6 +25,8 @@ import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
 import {
   DEFAULT_BASE_BONUS,
   STAT_LABEL_ZH,
+  baseBonusBounds,
+  baseBonusFinalClamp,
   baseBonusFor,
   normalizeBaseBonus,
   type BaseBonusTable,
@@ -72,6 +74,16 @@ export interface BonusRow {
   shipped: number;
   /** what actually applies today */
   effective: number;
+  /** legal input range for this stat (task #277) — the SAME numbers the sim clamps to */
+  min: number;
+  max: number;
+  /**
+   * The FINAL-VALUE clamp this stat is subject to, or null (task #279).
+   * Present = a number the operator types here can be silently eaten by
+   * `finalizeStat`, and the page has to say so — the copy promises
+   * 「填 300 玩家就是多 300」, which is false for these six stats.
+   */
+  finalClamp: readonly [number, number] | null;
 }
 
 /**
@@ -89,14 +101,55 @@ export function bonusRows(bonus: Record<string, number> | null): BonusRow[] {
     const shipped = baseBonusFor(DEFAULT_BASE_BONUS, stat);
     const raw = bonus?.[stat];
     const operator = typeof raw === "number" && Number.isFinite(raw) ? raw : null;
+    const [min, max] = baseBonusBounds(stat);
     return {
       stat,
       label: STAT_LABEL_ZH[stat],
       operator,
       shipped,
       effective: table === null ? shipped : baseBonusFor(table, stat),
+      min,
+      max,
+      finalClamp: baseBonusFinalClamp(stat),
     };
   });
+}
+
+// ------------------------------------------------------------ validation ----
+
+/**
+ * Field-level validation for one input box (task #277), mirroring
+ * `baseBonusBounds` — the SAME function the Zod schema and the sim clamp use,
+ * so a value this page accepts is a value the write and the engine accept.
+ * Returns a zh-Hant message, or "" when the value is legal.
+ *
+ * ⚠️ 為什麼是「即時」而不是「按下儲存才擋」。這一頁的每個欄位都是全域的:
+ * `maxHealth: -9999` 會讓 115 位英雄全部開場即死。操作者應該在**打字的當下**
+ * 就看見紅框,而不是先送出去、再從一個 400 猜自己做錯了什麼。
+ */
+export function validateBonusInput(text: string, stat: Stat): string {
+  const t = text.trim();
+  if (t === "") return "請輸入數字（0 = 沒有贈禮）";
+  const n = Number(t);
+  if (!Number.isFinite(n)) return "必須是數字";
+  const [min, max] = baseBonusBounds(stat);
+  if (n < min) return `不能是負數（下限 ${min}）—— 要全域下修請用「戰鬥系統」的倍率`;
+  if (n > max) return `超過這一項的上限 ${max}`;
+  return "";
+}
+
+/**
+ * The 「這一列有上限」 note, or null (task #279).
+ *
+ * The page's own copy says 「填 300 玩家就是多 300」. For the six stats that
+ * carry a `STAT_CLAMPS` entry that is NOT TRUE: `finalizeStat` clamps AFTER
+ * adding the grant, so an operator who types 3 into 攻擊速度 gets 4.0 (the
+ * ceiling) on every champion and no message anywhere. This is the message.
+ */
+export function bonusClampNote(row: BonusRow): string | null {
+  if (!row.finalClamp) return null;
+  const [lo, hi] = row.finalClamp;
+  return `⚠ 最終值夾在 ${lo} ~ ${hi}：加完之後超過 ${hi} 的部分會被吃掉，玩家拿不到`;
 }
 
 /** Set one stat's grant. `0` is a real value (「這一項沒有贈禮」), not a clear. */

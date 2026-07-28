@@ -35,7 +35,8 @@ interface RoomTestHandle {
   maxClients: number;
   autoDispose: boolean;
   seatBySession: Map<string, number>;
-  humanDrivers: Map<number, { mailbox: { drain(): { commands: unknown[] } } }>;
+  // `drain` takes the ABSOLUTE sim tick since #280 (the aim carry-forward's clock).
+  humanDrivers: Map<number, { mailbox: { drain(tick: number): { commands: unknown[] } } }>;
 }
 
 function fakeClient(sessionId: string): FakeClient {
@@ -134,10 +135,10 @@ describe("MatchRoom INPUT ingress — sanitization + rate limit (sec-room-input)
         ],
       }),
     ).not.toThrow();
-    expect(mailbox.drain().commands).toHaveLength(0);
+    expect(mailbox.drain(0).commands).toHaveLength(0);
 
     input(client, { seq: 2, commands: [{ kind: "ready" }] });
-    expect(mailbox.drain().commands).toEqual([{ kind: "ready" }]);
+    expect(mailbox.drain(1).commands).toEqual([{ kind: "ready" }]);
 
     room.onDispose();
   });
@@ -155,7 +156,7 @@ describe("MatchRoom INPUT ingress — sanitization + rate limit (sec-room-input)
       input(client, { seq: i, commands: [{ kind: "ready" }] });
     }
     // rate limit + mailbox cap keep the buffered work tiny vs the 5000 sent
-    expect(mailbox.drain().commands.length).toBeLessThanOrEqual(MAX_BUFFERED_COMMANDS);
+    expect(mailbox.drain(0).commands.length).toBeLessThanOrEqual(MAX_BUFFERED_COMMANDS);
     // sustained flooding tripped the disconnect
     expect(client.leave).toHaveBeenCalled();
 

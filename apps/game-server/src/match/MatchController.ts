@@ -13,7 +13,7 @@ import {
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
-import { baseBonusFromDoc } from "@ggd/shared/sim/baseBonus";
+import { baseBonusFromDoc, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import {
   SKELETON_ARENA,
   ROYALE_ARENA,
@@ -505,18 +505,26 @@ export class MatchController {
      * whitelisted (available) AND owned. See curation/ownership.ts.
      */
     public readonly ownership: Ownership = Ownership.allowAll(),
+    /**
+     * 基礎加成 (`config.base-bonus@1`, owner 2026-07-28) — flat per-stat grants
+     * applied AFTER the combat-env multiplier, so they do NOT ride the倍率.
+     *
+     * ⚠️ IT IS A CONSTRUCTOR ARGUMENT SINCE #278, not a `Configs.tryGet` in the
+     * body. Reading it here meant the value was whatever the PROCESS BOOTED
+     * WITH: the admin page's 「下一場生效」 was a lie and an operator edit needed
+     * a shard restart. MatchRoom now resolves it AT MATCH CREATION through the
+     * same TTL-cache shape combat-env uses (config/baseBonus.ts), and the replay
+     * player passes the table recorded in the header. The default keeps every
+     * unit test and dev caller byte-identical to the pre-#278 behaviour.
+     */
+    baseBonus: BaseBonusTable = baseBonusFromDoc(Configs.tryGet("base-bonus")),
   ) {
     this.matchSeed = seed;
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
-    // 基礎加成 (`config.base-bonus@1`, owner 2026-07-28) — flat per-stat grants
-    // applied AFTER the combat-env multiplier. Resolved from CONTENT here rather
-    // than threaded through the constructor because it is a content doc like the
-    // arena rules and the fire ring: the durable overlay carries the operator's
-    // edit to the shard at boot, and a replay is only valid against the
-    // contentVersion it was recorded on, which pins this doc with everything else.
-    this.world.baseBonus = baseBonusFromDoc(Configs.tryGet("base-bonus"));
+    // Snapshotted before tick 0 — a match in progress can never see a change.
+    this.world.baseBonus = baseBonus;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

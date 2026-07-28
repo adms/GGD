@@ -17,8 +17,10 @@ export class HumanDriver implements SeatDriver {
     this.mailbox.clear();
   }
 
-  produceIntent(_seat: Seat, _world: SimWorld, _tick: number): IntentFrame {
-    const { order, aim, commands } = this.mailbox.drain();
+  produceIntent(_seat: Seat, _world: SimWorld, tick: number): IntentFrame {
+    // The ABSOLUTE tick goes into the drain: it is the clock the #280 aim
+    // carry-forward expires on (no per-tick decrement, no ordering trap).
+    const { order, aim, commands } = this.mailbox.drain(tick);
     return { order, aim, commands };
   }
 }

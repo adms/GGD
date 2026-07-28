@@ -384,11 +384,11 @@ describe("input mailbox (match-11)", () => {
     mb.push({ seq: 3, order: { kind: "move", point: { x: 3, z: 3 } } });
     mb.push({ seq: 2, order: { kind: "move", point: { x: 2, z: 2 } } }); // stale
     mb.push({ seq: 4, commands: [{ kind: "ready" }] });
-    const frame = mb.drain();
+    const frame = mb.drain(0);
     expect(frame.order).toEqual({ kind: "move", point: { x: 3, z: 3 } });
     expect(frame.commands).toEqual([{ kind: "ready" }]);
     // drained
-    const empty = mb.drain();
+    const empty = mb.drain(1);
     expect(empty.order).toBeUndefined();
     expect(empty.commands).toEqual([]);
   });

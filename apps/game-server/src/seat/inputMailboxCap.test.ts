@@ -15,7 +15,7 @@ describe("InputMailbox buffered-command cap (sec-mailbox-01)", () => {
   it("truncates a single oversized message to the cap", () => {
     const mb = new InputMailbox();
     mb.push({ seq: 1, commands: Array.from({ length: 100_000 }, ready) });
-    expect(mb.drain().commands.length).toBe(MAX_BUFFERED_COMMANDS);
+    expect(mb.drain(0).commands.length).toBe(MAX_BUFFERED_COMMANDS);
   });
 
   it("caps the total buffered across many messages before a drain", () => {
@@ -24,19 +24,19 @@ describe("InputMailbox buffered-command cap (sec-mailbox-01)", () => {
     for (let seq = 1; seq <= 10; seq++) {
       mb.push({ seq, commands: Array.from({ length: 100 }, ready) });
     }
-    expect(mb.drain().commands.length).toBe(MAX_BUFFERED_COMMANDS);
+    expect(mb.drain(0).commands.length).toBe(MAX_BUFFERED_COMMANDS);
   });
 
   it("a normal small batch is buffered intact", () => {
     const mb = new InputMailbox();
     mb.push({ seq: 1, commands: [ready(), ready(), ready()] });
-    expect(mb.drain().commands).toHaveLength(3);
+    expect(mb.drain(0).commands).toHaveLength(3);
   });
 
   it("drain empties the buffer so the next tick starts fresh", () => {
     const mb = new InputMailbox();
     mb.push({ seq: 1, commands: Array.from({ length: 100_000 }, ready) });
-    mb.drain();
-    expect(mb.drain().commands).toHaveLength(0);
+    mb.drain(0);
+    expect(mb.drain(1).commands).toHaveLength(0);
   });
 });

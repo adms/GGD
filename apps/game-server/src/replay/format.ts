@@ -116,6 +116,16 @@ export interface ReplayHeader {
    * would play a completely different game.
    */
   combatEnv: CombatEnvMultipliers;
+  /**
+   * 基礎加成 —— the FLAT per-stat grants snapshotted at creation (task #278).
+   * OPTIONAL for backward compatibility: a recording made before #278 has no
+   * such field, and the player then falls back to this host's content default,
+   * which is exactly what that recording ran on. Recorded from #278 on because
+   * the table is no longer a boot-time constant — it is resolved per match from
+   * the durable overlay, so two matches on the SAME process can legitimately
+   * disagree, and `maxHealth` feeds the sim digest.
+   */
+  baseBonus?: Record<string, number>;
   /** Phase durations from `config.match@1` — they retime every round. */
   phaseConfig: {
     champSelectTicks: number;

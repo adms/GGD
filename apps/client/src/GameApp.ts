@@ -96,7 +96,7 @@ import {
   KIND_REVIVE_CIRCLE,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
-import { shouldRenderFrame } from "./render/frameCap";
+import { driveFrame, type FrameWork } from "./render/frameCap";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 import { VfxSystem } from "./vfx/VfxSystem";
 import { AmbientVfx } from "./vfx/AmbientVfx";
@@ -627,7 +627,11 @@ export class GameApp {
     setLocalAccounts(this.sessions.localAccountIds());
     // prediction covers player 0 only; other viewports render authoritative
     this.sender.onSent = (msg) => {
-      if (msg.order) this.prediction.recordInput(msg.seq, msg.order);
+      // BOTH halves (task #281). `msg.aim` used to be dropped here, so the
+      // shadow world replayed movement with no aim at all and the local hero's
+      // facing was decided by its move direction until the authority caught up
+      // — one full RTT of wrong facing on the champion the player is watching.
+      if (msg.order || msg.aim) this.prediction.recordInput(msg.seq, msg.order, msg.aim);
       // ping estimate: stamp each seq so the ack delta measures RTT
       this.connStats.noteSent(msg.seq, performance.now());
       // hum idle latch: any issued input means you are NOT idle (voice §三).
@@ -1051,15 +1055,50 @@ export class GameApp {
     if (this.disposed) return; // teardown raced a scheduled frame — do not reschedule
     this.raf = requestAnimationFrame(this.frame);
     const nowMs = performance.now();
-
-    // fps cap: skip the whole frame body until the target interval elapses.
-    // The rAF keeps ticking at display rate; we render on a throttled cadence.
-    // (prediction/interp stay time-based off dtMs, so skipping is lossless.)
+    // WHAT A FRAME DOES lives in render/frameCap.driveFrame (task #282): the
+    // input pump runs on EVERY animation frame, only the draw is fps-capped.
     // 規則本身在 render/frameCap —— 四條 render loop 共用同一份，不再各抄一份。
-    if (!shouldRenderFrame(nowMs, this.lastFrameMs, this.renderParams.fpsCap)) return;
+    this.lastFrameMs = driveFrame(nowMs, this.lastFrameMs, this.renderParams.fpsCap, this.frameWork);
+  };
 
+  /**
+   * The two halves of a frame, as one stable object (never re-allocated per
+   * frame). `pump` is deliberately tiny and render-free — see driveFrame.
+   */
+  private readonly frameWork: FrameWork = {
+    pump: (nowMs: number) => this.pumpInput(nowMs),
+    render: (nowMs: number) => this.renderFrame(nowMs),
+  };
+
+  /**
+   * INPUT SAMPLING + INTENT TRANSMISSION (task #282). Runs on every animation
+   * frame, BEFORE the fps gate, because none of it draws anything:
+   *
+   *   · pad/touch polling is how an analog stick becomes an `Order`/`aim` at all
+   *     (mouse/keyboard are event-driven and never needed a frame),
+   *   · `sessions.update` is what lets each IntentSender's own 30 Hz throttle
+   *     actually fire.
+   *
+   * Capping these at the render rate is what pinned a 30 fps phone to ~15.6
+   * intents/second: the sender was ready to send and was simply never asked.
+   */
+  private pumpInput(nowMs: number): void {
+    // Clear last frame's pad free-pan latch BEFORE polling: the pad map only
+    // re-emits `pan` while the right stick is deflected, so a released stick must
+    // leave these null (camera holds) rather than drifting on a stale vector.
+    this.padCameraPan.length = 0;
+    this.gamepads.poll(); // pads → per-player orders/aim/commands + camera
+    if (this.touch) this.touch.poll(); // joystick → move orders + aim state onto touchFrame
+    // freeze mirrors the server: stop flushing intents so a held move order can't
+    // steer the frozen hero (the server ignores them anyway — this keeps the
+    // still hero in the front-view shot instead of drifting under prediction).
+    if (this.conn.room?.state?.outcomeDecided !== true) {
+      this.sessions.update(nowMs); // flush EVERY local player's sender
+    }
+  }
+
+  private renderFrame(nowMs: number): void {
     const dtMs = Math.min(Math.max(nowMs - this.lastFrameMs, 1), 100);
-    this.lastFrameMs = nowMs;
 
     const state = this.conn.room?.state ?? null;
 
@@ -1125,12 +1164,8 @@ export class GameApp {
     // During the settlement freeze predAccumMs is pinned to 0, so use alpha = 1
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
     const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
-    // Clear last frame's pad free-pan latch BEFORE polling: the pad map only
-    // re-emits `pan` while the right stick is deflected, so a released stick must
-    // leave these null (camera holds) rather than drifting on a stale vector.
-    this.padCameraPan.length = 0;
-    this.gamepads.poll(); // pads → per-player orders/aim/commands + camera before the flush
-    if (this.touch) this.touch.poll(); // joystick → move orders + aim state onto touchFrame
+    // (Pad/touch polling + the intent flush happened in `pumpInput`, BEFORE the
+    // fps gate — task #282. `touchFrame` below is therefore this frame's.)
     // Ground aim/preview telegraph, both platforms (task #152): a live touch
     // drag-aim wins; otherwise a PRESSED-AND-HELD ability button (touch finger or
     // desktop mouse — the ui/abilityHold seam) shows its dashed range + AoE.
@@ -1142,10 +1177,6 @@ export class GameApp {
       }
       this.aimIndicator.update(indicator);
     }
-    // freeze mirrors the server: stop flushing intents so a held move order can't
-    // steer the frozen hero (the server ignores them anyway — this keeps the
-    // still hero in the front-view shot instead of drifting under prediction).
-    if (!frozen) this.sessions.update(nowMs); // flush EVERY local player's sender
 
     // 4) entity views — imperative transform writes
     const localPose = this.prediction.active ? this.prediction.renderPose(dtMs, renderAlpha) : null;
@@ -1494,7 +1525,7 @@ export class GameApp {
       this.views.championCount + this.views.projectileCount + this.views.flowerCount;
     perfBus.drawCount = rstats.meshes;
     perfBus.particleCount = rstats.particleSystems;
-  };
+  }
 
   // ------------------------------------------------------------- helpers --
 

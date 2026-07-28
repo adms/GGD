@@ -25,6 +25,7 @@ import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { MatchRoom, type MatchRoomOptions } from "./MatchRoom";
 import { Whitelist } from "../curation/whitelist";
 import { sharedCombatEnvCache } from "../config/combatEnv";
+import { sharedBaseBonusCache } from "../config/baseBonus";
 
 interface TestRoom {
   onCreate(options: MatchRoomOptions): Promise<void>;
@@ -56,6 +57,11 @@ const baseOptions: MatchRoomOptions = {
 afterEach(() => {
   Configs.clear();
   sharedCombatEnvCache().invalidate();
+  // #278: the room now resolves 基礎加成 through a TTL cache over the platform
+  // overlay (config/baseBonus.ts), exactly like combat-env. With no platform
+  // running the fetch fails safe to the CONTENT doc these tests register — but
+  // the answer is cached, so it has to be dropped between tests.
+  sharedBaseBonusCache().reset();
 });
 
 describe("MatchRoom.onCreate — 基礎加成 snapshot (bb-room)", () => {
@@ -110,7 +116,13 @@ describe("MatchRoom.onCreate — 基礎加成 snapshot (bb-room)", () => {
 
     // 操作者改了設定,新房間拿到新值,舊房間原封不動(決定性:跑到一半的比賽
     // 不可以換數值,和 combat-env 的 env-28 同一條規矩)
+    //
+    // #278 之後「操作者改了設定」有兩步:改文件 + 讓 shard 重新解析。真實環境
+    // 的第二步是 5 秒 TTL 到期(或內容匯流排的通知);測試裡就是 invalidate。
+    // 這一步在 #278 之前根本不存在 —— 當時的值是 process boot 時讀的,改完要
+    // 重啟整個遊戲伺服器,而頁面卻寫著「從下一場開始生效」。
     registerBonusDoc({ maxHealth: 800 });
+    sharedBaseBonusCache().invalidate();
     const second = makeRoom();
     await second.onCreate({ ...baseOptions, matchId: "m-next" });
     expect(baseBonusFor(second.ctl.world.baseBonus, Stat.MaxHealth)).toBe(800);

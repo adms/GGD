@@ -9,6 +9,8 @@
  * why they live in one file, next to each other.
  */
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
+import { baseBonusFromDoc, normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { Configs } from "@ggd/shared/content";
 import { arenaDefFromDoc, SKELETON_ARENA, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { Arenas } from "@ggd/shared/content";
 import type { FireRingConfig } from "@ggd/shared/content";
@@ -32,6 +34,7 @@ export interface BuildHeaderInput {
   arena: ArenaDef;
   arenaPool: readonly ArenaDef[];
   combatEnv: CombatEnvMultipliers;
+  baseBonus: BaseBonusTable;
   phaseConfig: PhaseConfig;
   fireRing: FireRingConfig | null;
   arenaRules: ArenaRules;
@@ -66,6 +69,7 @@ export function buildHeader(input: BuildHeaderInput): ReplayHeader {
     arenaId: input.arena.id,
     arenaPoolIds: input.arenaPool.map((a) => a.id),
     combatEnv: input.combatEnv,
+    baseBonus: { ...input.baseBonus },
     phaseConfig: { ...input.phaseConfig },
     fireRing: input.fireRing,
     arenaRules: rules,
@@ -116,4 +120,17 @@ export function rebuildArena(id: string): ArenaDef | null {
   if (id === SKELETON_ARENA.id) return SKELETON_ARENA;
   const doc = Arenas.tryGet(id);
   return doc ? arenaDefFromDoc(doc) : null;
+}
+
+/**
+ * Rebuild the 基礎加成 table the match actually ran on (task #278).
+ *
+ * A PRE-#278 recording has no `baseBonus` field. Falling back to this host's
+ * content doc is right for exactly that case — back then the table WAS the
+ * boot-time content value, and there was no other source. From #278 on the
+ * field is always written, so the fallback only ever serves old files.
+ */
+export function rebuildBaseBonus(header: ReplayHeader): BaseBonusTable {
+  if (!header.baseBonus) return baseBonusFromDoc(Configs.tryGet("base-bonus"));
+  return normalizeBaseBonus(header.baseBonus);
 }

@@ -34,6 +34,8 @@
  * other platform call.
  */
 
+import { COLLECTIONS, COLLECTION_NAMES, isCollectionName } from "@ggd/shared/content";
+
 // ------------------------------------------------------------ the states ----
 
 /**
@@ -366,6 +368,89 @@ export function parseDocInput(text: string): ParseResult {
     return { ok: false, error: "內容必須是一個 JSON 物件 {...}，不能是陣列或純值" };
   }
   return { ok: true, value: parsed as Record<string, unknown> };
+}
+
+// ------------------------------------------------------- schema validation ---
+/**
+ * 覆蓋層寫入前的 Zod 驗證 (task #283).
+ *
+ * ── 這段程式碼補的是一句**假話** ────────────────────────────────────────────
+ * `packages/shared/src/content/overlay.ts` 的檔頭寫著:
+ *
+ *     NOT the schema authority: overlay docs are validated by the game loader's
+ *     Zod schemas on ingest … and BY THE ADMIN CONSOLE BEFORE IT EVER WRITES.
+ *
+ * 後半句不成立。`putOverlayDoc` 直接 PUT,平台端也不驗;`parseDocInput`(上面)
+ * 只檢查「是不是一個 JSON 物件」,而且它自己的註解就明說**刻意不驗 schema**。
+ * 於是一份壞文件會直接落進 `data/content-overlay/overlay.json`,而那份檔案
+ * 現在同時餵給 shard **和每一個瀏覽器**(client 也讀 overlay)。兩邊各自有
+ * 退路,但退路是保險,不是驗證 —— 保險的意思是「壞了以後不要一起死」,而
+ * 操作者要的是「一開始就不要壞」。
+ *
+ * ── 誰驗得到、誰驗不到(不要假裝全部都驗了) ─────────────────────────────────
+ * 有 schema 的是 `COLLECTIONS` 表裡的那些 collection —— champions / abilities /
+ * items / augments / projectiles / status-effects / loot-tables / arenas /
+ * config / models / vfx / skins / ability-templates。平台接受**任何**符合正規式
+ * 的 collection 名字,所以一個不在表裡的名字(例如手打的 `experiments`)是
+ * **驗不到的**:那種情況回傳 `validated: false` 並附上理由,呼叫端要把它顯示
+ * 出來,而不是靜靜當成通過。
+ */
+
+/** The collections that have a Zod schema (i.e. that this gate can actually check). */
+export const VALIDATED_COLLECTIONS: readonly string[] = COLLECTION_NAMES;
+
+export type OverlayValidation =
+  /** parsed clean against the collection's schema */
+  | { ok: true; validated: true }
+  /** no schema exists for this collection — written unchecked, and says so */
+  | { ok: true; validated: false; reason: string }
+  /** the doc is wrong and must NOT be written */
+  | { ok: false; error: string };
+
+/** Compact zh-Hant rendering of the first few Zod issues. */
+function issueText(err: { issues: { path: (string | number)[]; message: string }[] }): string {
+  const parts = err.issues.slice(0, 4).map((i) => {
+    const at = i.path.length > 0 ? i.path.join(".") : "(根)";
+    return `${at}: ${i.message}`;
+  });
+  const more = err.issues.length > parts.length ? `（另有 ${err.issues.length - parts.length} 項）` : "";
+  return parts.join("；") + more;
+}
+
+/**
+ * Validate one doc against its collection's schema. Never throws.
+ *
+ * The `id` check is deliberate and comes FIRST: the overlay is keyed
+ * `collection/id`, but the doc carries its own `id` field, and the merged tree
+ * indexes by the KEY while every consumer reads the FIELD. A mismatch is a doc
+ * that exists under one name and calls itself another — which no schema can
+ * catch, because both halves are individually valid.
+ */
+export function validateOverlayDoc(
+  collection: string,
+  id: string,
+  doc: unknown,
+): OverlayValidation {
+  if (typeof doc !== "object" || doc === null || Array.isArray(doc)) {
+    return { ok: false, error: "內容必須是一個 JSON 物件 {...}" };
+  }
+  const docId = (doc as { id?: unknown }).id;
+  if (typeof docId === "string" && docId !== id) {
+    return { ok: false, error: `文件的 id 是 "${docId}",但要寫到 "${id}" —— 兩者必須一致` };
+  }
+  if (!isCollectionName(collection)) {
+    return {
+      ok: true,
+      validated: false,
+      reason: `collection「${collection}」沒有對應的 schema，這次寫入未經驗證`,
+    };
+  }
+  const spec = COLLECTIONS[collection];
+  const parsed = spec.schema.safeParse(doc);
+  if (!parsed.success) {
+    return { ok: false, error: `不符合 ${collection} 的 schema —— ${issueText(parsed.error)}` };
+  }
+  return { ok: true, validated: true };
 }
 
 /** MIRRORS the platform's collectionRe / idRe so a typo is caught before the PUT. */

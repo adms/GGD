@@ -35,6 +35,7 @@
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { orderSystem } from "@ggd/shared/sim/systems/OrderSystem";
 import { movementSystem } from "@ggd/shared/sim/systems/MovementSystem";
+import { AimHold } from "@ggd/shared/sim/aimHold";
 import { SKELETON_ARENA, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { asSeatId, type ChampionId, type EntityId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { Stat, zeroStats } from "@ggd/shared/sim/stats/statTypes";
@@ -48,7 +49,16 @@ export function seqLE(a: number, b: number): boolean {
 
 interface HistoryEntry {
   seq: number;
-  order: Order;
+  /** the navigation order this message carried (absent = aim-only message) */
+  order?: Order;
+  /**
+   * 瞄準方向 (#281). The shadow used to replay ORDERS ONLY, so the local hero's
+   * facing was decided by its MOVE DIRECTION until an authoritative snapshot
+   * arrived — i.e. both facing features (#264 出手鎖 / #275 瞄準優先) were a
+   * full RTT late on the one champion the player is actually looking at.
+   * Recorded per message and fed into the replayed IntentFrame below.
+   */
+  aim?: Vec2;
   /** prediction ticks stepped while this was the newest order */
   ticks: number;
   /** whether the order has been fed into orderSystem yet */
@@ -95,6 +105,13 @@ export class LocalPrediction {
    * folded into `err` on every snapshot (SNAPSHOT_HZ) and accumulate.
    */
   private lastAlpha = 1;
+  /**
+   * #280/#281 — the SAME carry-forward the server mailbox uses, so the shadow
+   * and the authority agree about which ticks count as 「玩家正在瞄」. Without it
+   * the shadow reproduces the every-other-tick facing flicker locally, and the
+   * reconcile then fights it on every snapshot.
+   */
+  private readonly aimHold = new AimHold();
 
   constructor(
     arena: ArenaDef = SKELETON_ARENA,
@@ -135,6 +152,7 @@ export class LocalPrediction {
     this.id = id;
     this.history = [];
     this.baseOrder = null;
+    this.aimHold.clear();
     this.err = { x: 0, z: 0 };
     // SNAP, never glide: a fresh spawn has no previous tick to blend from.
     this.prevPos = { x: setup.pos.x, z: setup.pos.z };
@@ -146,6 +164,7 @@ export class LocalPrediction {
     this.id = null;
     this.history = [];
     this.baseOrder = null;
+    this.aimHold.clear();
   }
 
   /** Keep the shadow's speed in sync with authoritative stat changes. */
@@ -208,6 +227,7 @@ export class LocalPrediction {
     nav.override = null;
     this.history = [];
     this.baseOrder = null;
+    this.aimHold.clear();
     this.err = { x: 0, z: 0 };
     // SNAP, never glide: respawn / round reset / zone change must NOT smear the
     // hero across the arena, so collapse the blend segment onto the new spot.
@@ -215,21 +235,28 @@ export class LocalPrediction {
     this.lastAlpha = 1;
   }
 
-  /** Record an order the IntentSender just transmitted with `seq`. */
-  recordInput(seq: number, order: Order): void {
-    this.history.push({ seq, order, ticks: 0, applied: false });
+  /**
+   * Record a message the IntentSender just transmitted with `seq`.
+   *
+   * BOTH halves are recorded (#281). An aim-only message (right stick moved,
+   * feet still) carries no order and used to be dropped on the floor — which is
+   * exactly the input the two facing features live on.
+   */
+  recordInput(seq: number, order?: Order, aim?: Vec2): void {
+    if (!order && !aim) return;
+    this.history.push({ seq, order, aim, ticks: 0, applied: false });
   }
 
   /** Advance the shadow world one fixed tick (30 Hz). */
   stepTick(): void {
     if (this.id === null) return;
     const cur = this.history[this.history.length - 1];
-    let newOrder: Order | undefined;
+    let fresh: HistoryEntry | undefined;
     if (cur && !cur.applied) {
-      newOrder = cur.order;
+      fresh = cur;
       cur.applied = true;
     }
-    this.tickOnce(newOrder);
+    this.tickOnce(fresh);
     if (cur) cur.ticks++;
   }
 
@@ -247,10 +274,13 @@ export class LocalPrediction {
     const beforeSnap = { x: t.pos.x, z: t.pos.z };
     let replayed = 0;
 
-    // absorb acked inputs — the newest acked order keeps steering the server
+    // absorb acked inputs — the newest acked order keeps steering the server.
+    // An AIM-ONLY entry carries no order and must NOT blank `baseOrder`: aim is
+    // per-tick, the navigation order is continuous state the server still holds.
     let i = 0;
     while (i < this.history.length && seqLE(this.history[i]!.seq, ackSeq)) {
-      this.baseOrder = this.history[i]!.order;
+      const acked = this.history[i]!.order;
+      if (acked) this.baseOrder = acked;
       i++;
     }
     if (i > 0) this.history = this.history.slice(i);
@@ -269,13 +299,13 @@ export class LocalPrediction {
     // replay unacked inputs: each replays the ticks it was active for
     for (const e of this.history) {
       if (e.ticks === 0) {
-        // recorded but not yet stepped — just (re)stage the order
-        this.applyOrderOnly(e.order);
+        // recorded but not yet stepped — just (re)stage the order/aim
+        this.applyOrderOnly(e.order, e.aim);
         e.applied = true;
         continue;
       }
       for (let k = 0; k < e.ticks; k++) {
-        this.tickOnce(k === 0 ? e.order : undefined);
+        this.tickOnce(k === 0 ? e : undefined);
         replayed++;
       }
       e.applied = true;
@@ -370,26 +400,40 @@ export class LocalPrediction {
     return this.id === null ? null : { x: this.prevPos.x, z: this.prevPos.z };
   }
 
-  /** One shared-sim tick: orderSystem → movementSystem (the server's order). */
-  private tickOnce(order?: Order): void {
+  /**
+   * One shared-sim tick: orderSystem → movementSystem (the server's order).
+   *
+   * `input` is the message that FIRST becomes active on this tick, or undefined
+   * when this tick received none. That distinction is what `AimHold` needs: a
+   * tick with no message carries the previous aim forward (the 30Hz-vs-30Hz
+   * phase gap), a message that arrived WITHOUT aim releases it (#280).
+   */
+  private tickOnce(input?: { order?: Order; aim?: Vec2 }): void {
     // Snapshot the pre-integration position for the render blend. This lives in
     // `tickOnce` (not `stepTick`) on purpose: a single render frame may run 0,
     // 1 or 2+ ticks, and the alpha must interpolate across the LAST tick that
     // executed — the same reason reconcile's replay leaves it correctly set.
     const t0 = this.world.transform.get(this.id!);
     if (t0) this.prevPos = { x: t0.pos.x, z: t0.pos.z };
+    if (input) this.aimHold.push(input.aim);
+    const aim = this.aimHold.drain(this.world.tick);
     const intents = new Map<SeatId, IntentFrame>();
-    intents.set(this.seatId, { order, commands: [] });
+    const frame: IntentFrame = { order: input?.order, commands: [] };
+    if (aim) frame.aim = aim;
+    intents.set(this.seatId, frame);
     this.world.rebuildGrid();
     orderSystem(this.world, intents);
     movementSystem(this.world);
     this.world.tick++;
   }
 
-  /** Stage an order into nav state without integrating movement. */
-  private applyOrderOnly(order: Order): void {
+  /** Stage an order/aim into nav+facing state without integrating movement. */
+  private applyOrderOnly(order?: Order, aim?: Vec2): void {
+    if (!order && !aim) return;
     const intents = new Map<SeatId, IntentFrame>();
-    intents.set(this.seatId, { order, commands: [] });
+    const frame: IntentFrame = { order, commands: [] };
+    if (aim) frame.aim = aim;
+    intents.set(this.seatId, frame);
     orderSystem(this.world, intents);
   }
 }

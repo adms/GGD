@@ -20,6 +20,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
 import { DEFAULT_COMBAT_ENV } from "@ggd/shared/sim/combatEnv";
+import { DEFAULT_BASE_BONUS } from "@ggd/shared/sim/baseBonus";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
@@ -120,6 +121,7 @@ describe("mob toggle round-trips through the replay header (#215 mob-replay-pari
       arena: SKELETON_ARENA,
       arenaPool: [],
       combatEnv: DEFAULT_COMBAT_ENV,
+      baseBonus: DEFAULT_BASE_BONUS,
       phaseConfig: FAST,
       fireRing: null,
       arenaRules: rules,

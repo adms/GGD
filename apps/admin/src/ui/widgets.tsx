@@ -50,6 +50,13 @@ export function Btn(props: {
   small?: boolean;
   title?: string;
   style?: React.CSSProperties;
+  /**
+   * Stable test hook (`data-field`). Needed whenever a page renders SEVERAL
+   * buttons with the SAME label — a per-row 儲存, say — because the headless
+   * harness's `click(label)` can only find the first one, and a guard that can
+   * only press row 0 is a guard that cannot tell the rows apart.
+   */
+  dataField?: string;
   children: React.ReactNode;
 }): React.JSX.Element {
   const kind = props.kind ?? "ghost";
@@ -73,7 +80,13 @@ export function Btn(props: {
     base.border = `1px solid ${DANGER}`;
   }
   return (
-    <button onClick={props.onClick} disabled={props.disabled} title={props.title} style={base}>
+    <button
+      onClick={props.onClick}
+      disabled={props.disabled}
+      title={props.title}
+      data-field={props.dataField}
+      style={base}
+    >
       {props.children}
     </button>
   );

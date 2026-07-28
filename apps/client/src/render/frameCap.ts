@@ -85,6 +85,48 @@ export function shouldRenderFrame(nowMs: number, lastRenderMs: number, capFps: n
 }
 
 /**
+ * 一個 animation frame 到底要做哪些事 (task #282)。
+ *
+ * ⚠️ 這個函式存在的理由,是「fps 上限」與「輸入送出率」被綁在一起這個 bug。
+ * `GameApp.frame` 原本長這樣:
+ *
+ *     if (!shouldRenderFrame(...)) return;      // ← 手機 30fps 在這裡擋掉
+ *     ...
+ *     this.gamepads.poll(); this.touch.poll();  // ← 搖桿/虛擬搖桿只在這裡取樣
+ *     this.sessions.update(nowMs);              // ← intent 只在這裡送出
+ *
+ * `IntentSender` 自己是 30Hz 節流的,但它只有在**被呼叫**時才可能送。把整個
+ * frame body 擋掉,等於連取樣與送出一起擋掉:桌機 60fps 量到 ~25 筆/秒,
+ * 手機 30fps 掉到 15.6–21.8 筆/秒 —— #274 的省電改動順手把手機的操作解析度
+ * 砍了一半,而且沒有任何測試看得到,因為兩件事在同一個 `if` 的同一側。
+ *
+ * 所以「一幀要做哪些事」變成一個**有名字、可測**的決定:`pump` 每一幀都跑
+ * (取樣輸入 + 送出 intent —— 這與畫面無關),`render` 才受 fps 上限節流。
+ *
+ * @returns 新的 `lastRenderMs`(沒畫就原樣回傳 —— 被跳過的幀不可以推進它,
+ *          否則上限會失效,見 `shouldRenderFrame`)。
+ */
+export interface FrameWork {
+  /** 每一個 animation frame 都跑:輸入取樣 + intent 送出。與渲染無關。 */
+  pump: (nowMs: number) => void;
+  /** 只有真的要畫的那幾幀才跑。 */
+  render: (nowMs: number) => void;
+}
+
+export function driveFrame(
+  nowMs: number,
+  lastRenderMs: number,
+  capFps: number,
+  work: FrameWork,
+): number {
+  // INPUT FIRST, UNCONDITIONALLY. 這一行在 gate **之前**就是這個修正的全部。
+  work.pump(nowMs);
+  if (!shouldRenderFrame(nowMs, lastRenderMs, capFps)) return lastRenderMs;
+  work.render(nowMs);
+  return nowMs;
+}
+
+/**
  * 有狀態的版本：自己記住上一次畫的時刻。給那些「loop 就是一個 method」的
  * 場景用，讓它們只要寫一行 `if (!this.pacer.take(t)) return;`。
  */
