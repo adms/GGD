@@ -15,6 +15,20 @@ export enum ModOp {
   PercentAdd = "pctAdd",
   PercentMult = "pctMult",
   Override = "override",
+  /**
+   * 解鎖上限 (GH#286). `value` 是「把這條屬性的上限**抬到多少**」—— 不是加成、
+   * 不是倍率、不乘 `stacks`。多個來源取 **max**(5 和 7 給的是 7,不是 12),
+   * 而且抬不過 `sim/statCaps.ts` 的 `unlocked` 硬上限(攻速 10.0)。
+   *
+   * owner:「一般上限是 4.0,搭配特殊條件如技能、道具...等效果,可以解鎖最多
+   * 到 10.0」. 它是一個 op 而不是新的 effect kind,正是因為 `applyBuff` /
+   * 道具 / 三選一 / 靈氣 全部已經吃 `StatModifier[]`,而 `zModOp` 是整份
+   * enum —— 加在這裡就等於同時開放給每一種內容,content schema 不用動。
+   *
+   * ⚠️ 一個 `CapRaise` 自己**不會給任何數值**。它只是把天花板搬高;要真的打到
+   * 新的上限,還是得有 Flat / PercentAdd 把值推上去。
+   */
+  CapRaise = "capRaise",
 }
 
 export interface StatModifier {

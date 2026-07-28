@@ -35,6 +35,7 @@ import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
 import { sharedBaseBonusCache } from "../config/baseBonus";
 import { normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { statCapsFromDoc } from "@ggd/shared/sim/statCaps";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
 import { PLATFORM_URL } from "../config/platformUrl";
 import { sanitizeInputMessage } from "../net/validateInput";
@@ -424,6 +425,10 @@ export class MatchRoom extends Room<MatchState> {
       arenaPool,
       ownership,
       baseBonus,
+      // 屬性上限 (#286) —— 和 baseBonus 一樣在這裡解析並凍結。走 Configs 是
+      // 因為 stat-caps 還沒有自己的 TTL cache;#278 的教訓已經套在 baseBonus 上,
+      // 這一份留在 boot-time 是**已知且刻意**的,記在 docs 的驗收表裡。
+      statCapsFromDoc(Configs.tryGet("stat-caps")),
     );
     for (const h of humanSeats) {
       this.seatByAccount.set(h.accountId, asSeatId(h.seatId));
@@ -440,6 +445,9 @@ export class MatchRoom extends Room<MatchState> {
     // from disagreeing with the health bar. Never re-read the doc here: two
     // readers is how the two numbers drift apart.
     this.state.baseBonusJson = JSON.stringify(this.ctl.world.baseBonus);
+    // 屬性上限 (GH#286) —— 同上,同一份物件。面板要顯示「攻速天花板」時必須用
+    // 這一份,否則後台調過的一般上限只有伺服器知道。
+    this.state.statCapsJson = JSON.stringify(this.ctl.world.statCaps);
     // CONTENT VERSION. The schema field has existed (and been replicated) since
     // the protocol was written, and until task #175 nothing ever assigned it —
     // the wire value was the empty string on every room, while the one process

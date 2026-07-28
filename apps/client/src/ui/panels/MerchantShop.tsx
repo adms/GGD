@@ -58,6 +58,7 @@ import { skillRows, slotLabel } from "./skillDetails";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { useDisplayBaseBonus } from "../displayBaseBonus";
+import { useDisplayStatCaps } from "../displayStatCaps";
 import {
   STAT_META,
   attributeRows,
@@ -624,6 +625,10 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
   const baseBonus = useDisplayBaseBonus();
   const baseBonusSig = JSON.stringify(baseBonus);
 
+  // 屬性上限 (GH#286):解鎖了攻速上限的英雄,他的攻速裝在預覽裡不能被夾在 4.0。
+  const statCaps = useDisplayStatCaps();
+  const statCapsSig = JSON.stringify(statCaps);
+
   // A stable signature of everything the pipeline reads, so the (world-building)
   // stat computes only re-run when the champion or the env actually changes.
   const sig = useMemo(
@@ -646,12 +651,14 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
         props.combatEnvJson,
         // 後台改了基礎加成,面板必須跟著重算 —— 少了它,memo 會凍在舊值。
         baseBonusSig,
+        // 同理:後台改了上限,預覽必須跟著重算。
+        statCapsSig,
       ]),
-    [seat, props.combatEnvJson, baseBonusSig],
+    [seat, props.combatEnvJson, baseBonusSig, statCapsSig],
   );
 
   const env = useMemo(() => parseCombatEnvJson(props.combatEnvJson), [props.combatEnvJson]);
-  const ctx = useMemo(() => statContextFromSeat(seat, env, baseBonus), [sig, baseBonus]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ctx = useMemo(() => statContextFromSeat(seat, env, baseBonus, statCaps), [sig, baseBonus, statCaps]); // eslint-disable-line react-hooks/exhaustive-deps
   const panelBlock = useMemo(() => computeStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
   // the same champion with an EMPTY build — the subtrahend behind every (+xxx)
   const baseBlock = useMemo(() => computeBaseStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -40,6 +40,13 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     let pctAdd = 0;
     let pctMult = 1;
     let override: number | null = null;
+    /**
+     * 這個單位、這條屬性身上最高的一個 `ModOp.CapRaise`。**取 max,不加總**
+     * (GH#286):兩個 5.0 / 7.0 的解鎖給的是 7.0,不是 12.0。0 = 沒有任何解鎖
+     * 來源 → `effectiveCap` 回一般上限。不乘 `stacks` —— 它是一個目標高度,
+     * 不是一份加成。
+     */
+    let maxCapRaise = 0;
 
     for (const src of sc.sources) {
       if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
@@ -60,6 +67,9 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
           case ModOp.Override:
             override = m.value;
             break;
+          case ModOp.CapRaise:
+            if (m.value > maxCapRaise) maxCapRaise = m.value;
+            break;
         }
       }
     }
@@ -68,7 +78,12 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     // 環境倍率 → 基礎加成 → clamp,全部由 sim/baseBonus.ts finalizeStat 定義。
     // 這三步**不在這裡展開**,是因為顯示面板(championSheet / quickApproval)必須
     // 走同一份順序 —— #125 要求玩家看到的數字就是他實際拿到的數字。
-    next[stat] = finalizeStat(modified, stat, world.combatEnv, world.baseBonus);
+    next[stat] = finalizeStat(modified, stat, {
+      env: world.combatEnv,
+      baseBonus: world.baseBonus,
+      caps: world.statCaps,
+      capRaise: maxCapRaise,
+    });
   }
 
   sc.final = next;

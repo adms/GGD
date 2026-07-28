@@ -25,6 +25,7 @@ import {
 } from "@ggd/shared/sim/stats/attributes";
 import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
 import { DEFAULT_BASE_BONUS, finalizeStat, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { DEFAULT_STAT_CAPS, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 
 /** One row of the stat table: the level-1 value and the per-level increment. */
@@ -59,6 +60,13 @@ export function championSheetRows(
   def: AttributeCarrier,
   env?: CombatEnvMultipliers,
   baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS,
+  /**
+   * 屬性上限表 (GH#286). 缺 = **出貨預設**,不是空表 —— 空表會讓 `capFor` 退回
+   * `STAT_CLAMPS`,於是後台把攻速一般上限調到 5.0 之後,面板還是印 4.0 而伺服器
+   * 給 5.0。這張卡本身沒有 buff,所以這裡永遠沒有 `capRaise`:面板顯示的是
+   * 「這位英雄裸裝的天花板」。
+   */
+  caps: StatCapTable = DEFAULT_STAT_CAPS,
 ): ChampionSheetRow[] {
   const base = def.baseStats as Readonly<Record<string, number | undefined>>;
   const growth = def.growth as Readonly<Record<string, number | undefined>>;
@@ -78,7 +86,7 @@ export function championSheetRows(
         // A hand-edited unknown key has no Stat, so there is nothing to finalize
         // — the doc value IS the number, and inventing a multiplier for it would
         // be worse than showing none.
-        final: stat === undefined || b === undefined ? undefined : finalizeStat(b, stat, env, baseBonus),
+        final: stat === undefined || b === undefined ? undefined : finalizeStat(b, stat, { env, baseBonus, caps }),
       };
     }
     const g = championStatGrowth(def, stat, env);
@@ -88,7 +96,7 @@ export function championSheetRows(
       base: b,
       growth: Math.abs(g) < EPS ? undefined : g,
       fromAttribute: true,
-      final: finalizeStat(b, stat, env, baseBonus),
+      final: finalizeStat(b, stat, { env, baseBonus, caps }),
     };
   });
 }

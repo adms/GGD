@@ -27,6 +27,7 @@
  */
 import { ALL_STATS, STAT_CLAMPS, Stat } from "./stats/statTypes";
 import { STAT_ENV_KEY, DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
+import { DEFAULT_STAT_CAPS, effectiveCap, type StatCapTable } from "./statCaps";
 
 /** championId-independent, stat-keyed flat grants. Missing key = 0. */
 export type BaseBonusTable = Readonly<Partial<Record<Stat, number>>>;
@@ -163,19 +164,41 @@ export function baseBonusFromDoc(doc: unknown): BaseBonusTable {
  * 它們後面不是隨意的:一件 +10% 生命的裝備放大的是英雄自己掙來的血量,不是這份
  * 系統贈禮。
  */
+export interface FinalizeStatOptions {
+  /** 戰鬥系統倍率表。缺 = 中性全 1.0。 */
+  env?: CombatEnvMultipliers;
+  /** 基礎加成表。缺 = **出貨預設**(生命 +300),不是空表。 */
+  baseBonus?: BaseBonusTable;
+  /**
+   * 屬性上限表 (`config.stat-caps@1`, GH#286)。缺 = **出貨預設**,不是空表 ——
+   * 空表會讓 `capFor` 退回 `STAT_CLAMPS` 而且 `unlocked === base`,解鎖功能靜默
+   * 消失。見 sim/statCaps.ts。
+   */
+  caps?: StatCapTable;
+  /**
+   * 這個單位、這條屬性身上所有 `ModOp.CapRaise` **取 max** 的結果(0 = 沒有
+   * 任何解鎖來源)。不是加總:見 modifiers.ts `CapRaise`。
+   */
+  capRaise?: number;
+}
+
 export function finalizeStat(
   v: number,
   stat: Stat,
-  env: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
-  baseBonus: BaseBonusTable | undefined = DEFAULT_BASE_BONUS,
+  opts: FinalizeStatOptions = {},
 ): number {
+  const env = opts.env ?? DEFAULT_COMBAT_ENV;
   const envKey = STAT_ENV_KEY[stat];
   let out = envKey !== undefined ? v * env[envKey] : v;
   // 位置就是語意:在 `*=` **之後** = 不參與倍率(owner 2026-07-28);在 clamp
   // **之前** = 上限仍然管得到它。
-  out += baseBonusFor(baseBonus, stat);
+  out += baseBonusFor(opts.baseBonus ?? DEFAULT_BASE_BONUS, stat);
+  // 上界來自 cap 表 + 這個單位的解鎖量;下界永遠是 STAT_CLAMPS 的(cap 表只描述
+  // 天花板,`CapRaise` 沒有「解鎖下限」的語意)。
   const clamp = STAT_CLAMPS[stat];
-  return clamp ? Math.max(clamp[0], Math.min(clamp[1], out)) : out;
+  const lo = clamp ? clamp[0] : Number.NEGATIVE_INFINITY;
+  const hi = effectiveCap(opts.caps ?? DEFAULT_STAT_CAPS, stat, opts.capRaise ?? 0);
+  return Math.max(lo, Math.min(hi, out));
 }
 
 /** 中文標籤,後台表格與 codex 共用一份,避免兩邊叫法不同。 */

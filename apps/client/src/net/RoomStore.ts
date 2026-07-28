@@ -221,6 +221,13 @@ export interface HudState {
    */
   baseBonusJson: string;
   /**
+   * 屬性上限表 as JSON (`MatchState.statCapsJson`, GH#286) —— 每條屬性的一般上限
+   * 與解鎖上限 (sim/statCaps.ts)。"" = 「這一場沒帶」,讀取端解成**出貨預設表**,
+   * 不是空表:空表會讓解鎖上限塌回一般上限,面板於是永遠印不出 4.0 以上的攻速,
+   * 而伺服器照樣讓玩家打到 10.0。
+   */
+  statCapsJson: string;
+  /**
    * FIRE RING (#195), replicated straight off `MatchState` — the sim's
    * combat-elapsed ring counter (-1 = disarmed) and the ring's CURRENT world
    * radius. The minimap's danger rim is drawn at this radius rather than at the
@@ -312,6 +319,7 @@ const initial: HudState = {
   localEntityId: null,
   combatEnvJson: "",
   baseBonusJson: "",
+  statCapsJson: "",
   fireRingTicks: -1,
   fireRingRadius: 0,
   seats: [],
@@ -380,6 +388,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
 
   if (prev.combatEnvJson !== state.combatEnvJson) patch.combatEnvJson = state.combatEnvJson;
   if (prev.baseBonusJson !== state.baseBonusJson) patch.baseBonusJson = state.baseBonusJson;
+  if (prev.statCapsJson !== state.statCapsJson) patch.statCapsJson = state.statCapsJson;
 
   // fire ring (#195): change-guarded like everything else here, but the radius
   // moves 0.039 u per sim tick while shrinking, so in practice it patches on

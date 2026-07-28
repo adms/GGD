@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ea1ad8b69ed7",
+  "hash": "6bc3f4f7c044",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -55,6 +55,12 @@
       "path": "config/icon-plan.json",
       "hash": "2ae649af96ee",
       "size": 1542
+    },
+    {
+      "id": "stat-caps",
+      "path": "config/stat-caps.json",
+      "hash": "e02d5cdc4f55",
+      "size": 135
     },
     {
       "id": "store",

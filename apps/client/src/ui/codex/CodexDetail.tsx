@@ -23,6 +23,7 @@ import { Fragment, useState } from "react";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
 import { useDisplayBaseBonus } from "../displayBaseBonus";
+import { useDisplayStatCaps } from "../displayStatCaps";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import { CodexIcon } from "./CodexIcon";
 import { championSheetRows } from "../championSheet";
@@ -259,12 +260,15 @@ function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
   const edit = useDetailEdit();
   const env = useDisplayEnv();
   const baseBonus = useDisplayBaseBonus();
+  // 屬性上限 (GH#286) —— 同 ProfileBlock,圖鑑和選角讀同一張表。
+  const caps = useDisplayStatCaps();
   const base: Readonly<Record<string, number | undefined>> = champ.baseStats;
   const growth: Readonly<Record<string, number | undefined>> = champ.growth;
   const rows = championSheetRows(
     { baseStats: champ.baseStats, growth: champ.growth, attributes: champ.attributes ?? undefined },
     env,
     baseBonus,
+    caps,
   );
   const rowByKey = new Map(rows.map((r) => [r.key, r]));
   const keys = rows.map((r) => r.key);

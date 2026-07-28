@@ -14,6 +14,7 @@ import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, typ
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { baseBonusFromDoc, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import {
   SKELETON_ARENA,
   ROYALE_ARENA,
@@ -518,6 +519,12 @@ export class MatchController {
      * unit test and dev caller byte-identical to the pre-#278 behaviour.
      */
     baseBonus: BaseBonusTable = baseBonusFromDoc(Configs.tryGet("base-bonus")),
+    /**
+     * 屬性上限表 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
+     * 和 `baseBonus` 同一條路:由**呼叫端**在建立比賽時解析並凍結,不在這裡讀
+     * `Configs`。預設值只服務單元測試與骨架開機。
+     */
+    statCaps: StatCapTable = statCapsFromDoc(Configs.tryGet("stat-caps")),
   ) {
     this.matchSeed = seed;
     registerSkeletonContent();
@@ -525,6 +532,14 @@ export class MatchController {
     this.world.combatEnv = combatEnv;
     // Snapshotted before tick 0 — a match in progress can never see a change.
     this.world.baseBonus = baseBonus;
+    // 屬性上限 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
+    //
+    // ⚠️ 走**建構子參數**,和 baseBonus 同一條路,不是在這裡讀 `Configs`。
+    // 合併 v0.9.11 三組時,攻速那一組寫的是 `statCapsFromDoc(Configs.tryGet(...))`
+    // —— 那正是 #278 剛剛修掉的缺陷:`Configs` 是 **boot 時**載入的,所以後台存檔
+    // 之後要重啟 shard 才生效,而頁面上寫著「從下一場開始生效」。一個修好了、
+    // 隔壁又原樣長回來,是最容易在合併時發生的事。
+    this.world.statCaps = statCaps;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

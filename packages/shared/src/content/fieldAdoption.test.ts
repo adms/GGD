@@ -251,6 +251,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands.",
   },
 
+  "enum:abilities.effects[]#applyBuff.modifiers[].op=capRaise": {
+    status: "landing",
+    since: "2026-07-28",
+    why: "GH#286 攻速解鎖上限. The op is the WHOLE mechanism owner asked for (「一般上限是 4.0…可以解鎖最多到 10.0…也可以是技能模板的其中一項技能效果」), and it is live end to end today: `sim/statCaps.test.ts` proves a `CapRaise 6` buff really lifts a champion's attack speed to 6.0 and a `CapRaise 999` stops at the 10.0 hard ceiling, and the 後台 屬性上限 page + `config.stat-caps@1` + `MatchState.statCapsJson` carry the two numbers to sim AND panel. What is NOT decided is WHICH champion's ability gets an attack-speed unlock — that is a balance call on a specific hero (and a mirrored edit to both the standalone ability doc and the champion's `abilities.Q/W/E/R`), so it belongs to the owner, not to the commit that builds the mechanism. Delete this entry the moment the first ability authors it.",
+  },
+
   // --- an enum member with a documented decision to stay unused.
   "enum:arenas.groundStyle=wood": {
     status: "default-live",

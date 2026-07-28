@@ -26,6 +26,7 @@ import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
+import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
 import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
@@ -406,6 +407,14 @@ export class SimWorld {
    * owner 2026-07-28:「並且不參與倍率計算」.
    */
   baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS;
+
+  /**
+   * 屬性上限表 (see statCaps.ts) — 一般上限 / 解鎖上限。攻速 4.0 → 最多解鎖到
+   * 10.0 (owner 2026-07-28, GH#286)。和 `combatEnv` / `baseBonus` 同一條規矩:
+   * 開賽前指派一次,之後不再動 —— sim 從不讀 config/globals,所以決定性自動成立。
+   * 預設是**出貨表**,不是空表:空表會讓解鎖靜默失效。
+   */
+  statCaps: StatCapTable = DEFAULT_STAT_CAPS;
 
   /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat
