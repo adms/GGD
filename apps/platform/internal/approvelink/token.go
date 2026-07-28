@@ -51,6 +51,11 @@ const clockSkew = 2 * time.Minute
 
 // tokenDomain domain-separates the approve-link HMAC from every other use of the
 // signing secret (notably the access JWT), so the two can never be interchanged.
+//
+// #nosec G101 -- 這是**領域分隔標籤**，不是密鑰：它被當成 HMAC 的輸入前綴，
+// 公開、固定、且刻意寫死在版控裡（換掉它等同於讓所有既發出的連結失效）。真正的
+// 密鑰是傳進 sign/verify 的 signing secret，永遠來自環境變數。gosec 只是看到
+// 常數名含 "token" 又指向字串字面量，Confidence 也標 LOW。
 const tokenDomain = "ggd:approve:v1"
 
 // Actions the token may authorize.

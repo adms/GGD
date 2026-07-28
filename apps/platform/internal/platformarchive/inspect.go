@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"sort"
 	"strings"
@@ -207,11 +208,28 @@ func OpenReaderAt(r io.ReaderAt, size int64) (*Archive, error) {
 		if declared > limit {
 			return nil, reject("項目 %q 宣告 %d bytes，超過該種類上限 %d", name, declared, limit)
 		}
+		// 這兩個欄位都是 ZIP 標頭裡「攻擊者說了算」的 uint64，而下面兩道檢查是
+		// 拿它們跟 int64 比大小 —— 轉換的正負號因此是防線的一部分，不是型別雜訊。
+		//
+		// `declared` 在上面已經被夾在 [0, 64 MiB]，所以 int64 這一側是安全的。
+		// #nosec G115 -- x < 2^63 時 int64(x)==declared 等價於 x==declared；
+		// x >= 2^63 轉出負數，而 declared >= 0，必不相等 → 大檔案一定被拒，
+		// 沒有任何 uint64 值能讓這個等式假通過。
 		if int64(f.UncompressedSize64) != declared {
 			return nil, reject("項目 %q 的 ZIP 標頭說 %d bytes，manifest 說 %d bytes",
 				name, f.UncompressedSize64, declared)
 		}
+		// ⚠️ 這裡的溢位是真的會關掉檢查的，所以先擋掉再轉。
+		// `CompressedSize64 >= 2^63` 時 int64() 轉出**負數**，ratio 跟著變負，
+		// `ratio > MaxCompressionRatio` 於是恆假 —— zip bomb 比例防線被靜默跳過，
+		// 而且不會有任何錯誤訊息。標頭宣告 9.2 EB 壓縮量本身就是不可能的檔案，
+		// 所以直接拒收比夾住再算誠實：那是一份壞掉或惡意的 ZIP，不是邊界情況。
+		if f.CompressedSize64 > math.MaxInt64 {
+			return nil, reject("項目 %q 的 ZIP 標頭宣告 %d bytes 壓縮量，不是一個可能的檔案",
+				name, f.CompressedSize64)
+		}
 		if declared >= MinRatioCheckBytes && f.CompressedSize64 > 0 {
+			// #nosec G115 -- 上一行已擋掉 > math.MaxInt64，這裡不可能溢位
 			if ratio := declared / int64(f.CompressedSize64); ratio > MaxCompressionRatio {
 				return nil, reject("項目 %q 的壓縮比 %d:1 超過上限 %d:1（zip bomb 防線）",
 					name, ratio, MaxCompressionRatio)

@@ -42,6 +42,26 @@ env:
   # apps/platform. Raise it, never lower it.
   GO_VERSION: "1.25.12"
 
+  # SECURITY SCANNERS — pinned for the same reason GO_VERSION is, and it is not
+  # paperwork: these two were on `@latest`, which pins the tool to WHATEVER IS
+  # RELEASED THE MORNING CI HAPPENS TO RUN. A scanner's answer is a function of
+  # its RULE SET, so `@latest` means the pass/fail verdict can change with zero
+  # commits to this repo — the one property a gate must not have.
+  #
+  # MEASURED on the same apps/platform tree (2026-07-28), before the fixes that
+  # ship alongside this pin:
+  #   gosec v2.22.9  → 1×G101 + 4×G115, NO G703 (that rule did not exist yet)
+  #   gosec v2.28.0  → 1×G101 + 3×G115 + 1×G703 (path traversal, taint analysis)
+  # and afterwards v2.22.9 still flags internal/ai/stub.go:126 (a loop counter
+  # that cannot be negative) while v2.28.0 has dropped that class of noise. Two
+  # tags, two different verdicts, identical code. Whichever is right, "it depends
+  # on the date" is not a gate.
+  #
+  # RAISE THESE DELIBERATELY, never silently: bumping is a code review, because a
+  # new tag may add rules that need real fixes or new #nosec justifications.
+  GOSEC_VERSION: "v2.28.0"
+  GOVULNCHECK_VERSION: "v1.6.0"
+
 jobs:
   # ---- setup: install + prime the pnpm store cache ---------------------------
   setup:
@@ -144,12 +164,12 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: govulncheck (testrunner + platform when present)
         run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
+          go install golang.org/x/vuln/cmd/govulncheck@${{ env.GOVULNCHECK_VERSION }}
           (cd tools/testrunner && govulncheck ./...)
           if [ -f apps/platform/go.mod ]; then (cd apps/platform && govulncheck ./...); fi
       - name: gosec
         run: |
-          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          go install github.com/securego/gosec/v2/cmd/gosec@${{ env.GOSEC_VERSION }}
           (cd tools/testrunner && gosec -quiet ./...)
           if [ -f apps/platform/go.mod ]; then (cd apps/platform && gosec -quiet ./...); fi
       - name: pnpm audit (high+)
