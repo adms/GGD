@@ -89,29 +89,29 @@ export class SeatState extends Schema {
   declare statStacks: number;
   declare statCapstonePct: number;
   /**
-   * WHAT the 能力屬性強化 ticks actually rolled — one count per entry of
-   * `STAT_TICK_ROLLS` (economy/itemTiers), same order, same length.
+   * WHAT the 能力屬性強化 purchases actually bought — the three 三圍 totals
+   * (力 / 敏 / 智), index-aligned with `ATTR_KEYS` (sim/stats/attributes).
    *
    * Without this the client could not show a player what their own purchases
-   * DID. `statStacks` above is a bare streak counter, and the rolled sources
-   * (`stat:<N>`, economy/statPath) were the ONE stat source that never rode the
-   * wire — so ui/panels/statPreview reconstructed the champion from items +
-   * augments + capstone only, came out short by every tick ever bought, and
-   * shipped an 「≈ 屬性強化未同步，實際以戰鬥面板為準」 disclaimer instead of a
-   * number. The owner's report was the direct consequence: 「購買屬性看不到加多少
-   * 屬性跟次數」 — you paid 375g and the panel did not move.
+   * DID. `statStacks` above is a bare streak counter, and the bought attributes
+   * live on `ChampionComp.attrBonus` — server-side state the client has no other
+   * view of. Before the pre-#260 version of this field existed, ui/panels/
+   * statPreview reconstructed the champion from items + augments + capstone
+   * only, came out short by every tick ever bought, and shipped an
+   * 「≈ 屬性強化未同步，實際以戰鬥面板為準」 disclaimer instead of a number.
    *
-   * COUNTS, not modifiers: the rolls are a fixed 9-entry table both sides
-   * already import, so an index count reconstructs the exact StatModifier list.
-   * Nine uint8s beat shipping 15 floats of resolved block, and they only change
-   * on a purchase — Colyseus sends nothing on the other ~30 ticks per second.
+   * ⚠️ It replaced `statRollCounts` (nine uint8 roll counts) IN PLACE, keeping
+   * the declaration index, because #260 replaced what a tick grants: nine fixed
+   * stat modifiers became a 力/敏/智 三選一 whose payload is an ATTRIBUTE. Three
+   * float32s carry it exactly, and they only change on a pick — Colyseus sends
+   * nothing on the other ~30 ticks per second.
    *
-   * It also outlives `statStacks`: buying a real item ZEROES the streak while
-   * the rolled sources stay attached (the reset rule is about the capstone, not
-   * about confiscating stats), so after a dabble-then-buy this array is the only
-   * honest account of what the champion is carrying.
+   * It outlives `statStacks`: buying a real item ZEROES the streak while the
+   * bought attributes stay (the reset rule is about the capstone, not about
+   * confiscating what was paid for), so after a dabble-then-buy this array is
+   * the only honest account of what the champion is carrying.
    */
-  declare statRollCounts: ArraySchema<number>;
+  declare attrBonus: ArraySchema<number>;
   /**
    * YOUR OWN ACTIVE STATUS EFFECTS — the doc ids, and when each expires.
    *
@@ -205,7 +205,7 @@ export class SeatState extends Schema {
     this.passiveCooldown = 0;
     this.statStacks = 0;
     this.statCapstonePct = 0;
-    this.statRollCounts = new ArraySchema<number>();
+    this.attrBonus = new ArraySchema<number>();
     this.statusIds = new ArraySchema<string>();
     this.statusRemainTicks = new ArraySchema<number>();
     this.undoDepth = 0;
@@ -240,7 +240,7 @@ defineTypes(SeatState, {
   passiveCooldown: "uint16",
   statStacks: "uint8",
   statCapstonePct: "uint8",
-  statRollCounts: ["uint8"],
+  attrBonus: ["float32"],
   undoDepth: "uint8",
   roundKills: "uint8",
   roundDeaths: "uint8",

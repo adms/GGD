@@ -72,6 +72,7 @@ import {
 } from "@ggd/shared/sim/economy/draft";
 import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
+import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
 import { rankUpAbility, learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
   grantGold,
@@ -187,13 +188,29 @@ export interface MatchResult {
 }
 
 /**
- * A stored intermission offer: an augment draft OR a free-item ("legendary
- * weapon") draft. Both expose tier/choices/picked, so the OfferState snapshot
- * projection and the AI auto-pick path stay kind-agnostic.
+ * The 能力屬性強化 三選一 (#260) as the host stores it. Deliberately the same
+ * entity/tier/choices/picked shape as the other two, so the OfferState snapshot
+ * projection, the AI auto-pick and the #207 expiry net stay kind-agnostic.
+ */
+export interface AttrOffer {
+  entity: EntityId;
+  /** always ATTR_OFFER_TIER — discriminates from AugmentTier / weapon offers */
+  tier: string;
+  /** encoded 力/敏/智 cards, e.g. "attr:str:14" (economy/attrDraft) */
+  choices: string[];
+  picked: string | null;
+}
+
+/**
+ * A stored intermission offer: an augment draft, a free-item ("legendary
+ * weapon") draft, or the 能力屬性強化 力/敏/智 card. All three expose
+ * tier/choices/picked, so the OfferState snapshot projection and the AI
+ * auto-pick path stay kind-agnostic.
  */
 export type StoredOffer = (
   | ({ kind: "augment" } & AugmentOffer)
   | ({ kind: "item" } & ItemOffer)
+  | ({ kind: "attr" } & AttrOffer)
 ) & {
   seatId: SeatId;
   createdTick: number;
@@ -1763,6 +1780,12 @@ export class MatchController {
       // match.
       if (offer.reservesSlot) releaseOrbSlot(this.world, offer.entity);
       applyItemPick(this.world, offer, choice as ItemId);
+    } else if (offer.kind === "attr") {
+      // 能力屬性強化 (#260). The 375g was charged when the card OPENED, so the
+      // pick is a pure grant: it adds the rolled 力/敏/智 magnitude into
+      // `champ.attrBonus`, which `championStatBase` folds into the base stat.
+      // No slot is reserved — 屬性強化 has never occupied one.
+      if (applyAttrPick(this.world, offer.entity, choice)) offer.picked = choice;
     } else {
       applyAugmentPick(this.world, offer, choice as AugmentId);
     }
@@ -1798,6 +1821,27 @@ export class MatchController {
       seatId: seat.seatId,
       createdTick: this.world.tick,
       reservesSlot: true,
+    });
+  }
+
+  /**
+   * Register the 力/敏/智 三選一 a purchased 能力屬性強化 rolled (#260).
+   *
+   * Keyed by tick + seat exactly like the 傳說寶玉 card, so a player who buys
+   * two ticks in one shopping phase gets two distinct cards instead of silently
+   * overwriting the first (they paid 750g).
+   */
+  private registerAttrOffer(entity: EntityId, choices: string[]): void {
+    const seat = [...this.seats.values()].find((s) => s.entityId === entity);
+    if (!seat || choices.length === 0) return;
+    this.offers.set(`attr:${this.world.tick}:${seat.seatId}`, {
+      kind: "attr",
+      entity,
+      tier: ATTR_OFFER_TIER,
+      choices: [...choices],
+      picked: null,
+      seatId: seat.seatId,
+      createdTick: this.world.tick,
     });
   }
 
@@ -1842,10 +1886,79 @@ export class MatchController {
           })),
       })),
     };
+    // Everything that landed AFTER the final round's snapshot belongs to that
+    // round — otherwise the settlement's per-round chart and its own totals
+    // disagree. See foldFinalRoundResidual.
+    this.foldFinalRoundResidual();
     // victory settlement (per-player scoreboard + grade + rank), broadcast by
     // MatchRoom on MSG.EVENT for the client's settlement screen
     this.settlement = this.buildSettlement();
     return true;
+  }
+
+  /**
+   * THE LAST ROUND'S TAIL (found while re-seeding for #260, fixed here).
+   *
+   * `recordRoundHistory` snapshots at `concludeCombat`, and combat does not stop
+   * dead there: a projectile already in flight, a DoT tick or a mob swing can
+   * still land during the `resolution` phase that follows. For rounds 1..n−1
+   * that is harmless — the straggler simply lands inside the NEXT round's delta
+   * and the sum is still right. For the FINAL round there is no next snapshot,
+   * so the damage is counted in `world.matchStats` (which the settlement's
+   * totals read) and in NO round bucket at all.
+   *
+   * Measured: 12-bot match seed 4242 lost 96.4 of one seat's 19,123 damage, and
+   * 2–4 of any 10 seeds show the same gap. `roundHistory.test.ts`'s
+   * 「the per-round deltas SUM to the whole-match totals」 is the guard that
+   * catches it; it passed for years only because its pinned seed happened to end
+   * with nothing in flight. #260/#261 changed which match that seed plays and
+   * the gap surfaced.
+   *
+   * The fix folds the residual into the LAST recorded round rather than
+   * appending an extra one: no new round appears on the chart, `hpRatio` (a
+   * LEVEL, not a delta) and `bye` are left alone, and `lastRoundCumulative` is
+   * advanced so a second call is a no-op. Called ONLY from `maybeFinish`, so a
+   * mid-match #193 elimination payload — built while the match is still running
+   * — is untouched.
+   */
+  private foldFinalRoundResidual(): void {
+    const last = this.roundHistory[this.roundHistory.length - 1];
+    if (!last) return;
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const s = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
+      const prev = this.lastRoundCumulative.get(seatId);
+      if (!prev) continue;
+      const delta = last.players.find((p) => p.seatId === seatId);
+      if (!delta) continue;
+      const mobKills = this.world.mobKills.get(seat.entityId) ?? 0;
+      delta.kills += s.kills - prev.kills;
+      delta.deaths += s.deaths - prev.deaths;
+      delta.assists += s.assists - prev.assists;
+      delta.damageDealt += s.damageDealt - prev.damageDealt;
+      delta.damageTaken += s.damageTaken - prev.damageTaken;
+      delta.damageBlocked += s.damageBlocked - prev.damageBlocked;
+      delta.healingDone += s.healingDone - prev.healingDone;
+      delta.ccAppliedTicks += s.ccAppliedTicks - prev.ccAppliedTicks;
+      delta.timeAliveTicks += s.timeAliveTicks - prev.timeAliveTicks;
+      delta.revivesPerformed += s.revivesPerformed - prev.revivesPerformed;
+      delta.mobKills += mobKills - prev.mobKills;
+      // advance the baseline so calling this twice adds nothing
+      this.lastRoundCumulative.set(seatId, {
+        ...prev,
+        kills: s.kills,
+        deaths: s.deaths,
+        assists: s.assists,
+        damageDealt: s.damageDealt,
+        damageTaken: s.damageTaken,
+        damageBlocked: s.damageBlocked,
+        healingDone: s.healingDone,
+        ccAppliedTicks: s.ccAppliedTicks,
+        timeAliveTicks: s.timeAliveTicks,
+        revivesPerformed: s.revivesPerformed,
+        mobKills,
+      });
+    }
   }
 
   // ---------- per-tick ----------
@@ -1992,6 +2105,13 @@ export class MatchController {
         // filtered BEFORE the roll (world.itemEligible), so unlike the round
         // cards this can never arrive empty.
         this.registerOrbOffer(ev.data.id as EntityId, ev.data.choices as ItemId[]);
+      } else if (ev.type === "statUpgradeBought") {
+        // 能力屬性強化 (#260) — the same sim/host split as the orb above: the SIM
+        // rolled the three magnitudes off world.rng (so a replay reproduces them
+        // byte for byte) and the OFFER is host state, registered here. Without
+        // this branch the 375g would buy a card that never appears — the player
+        // pays and nothing at all happens.
+        this.registerAttrOffer(ev.data.id as EntityId, ev.data.choices as string[]);
       } else if (ev.type === "ready") {
         const seat = [...this.seats.values()].find((s) => s.seatId === (ev.data.seatId as SeatId));
         if (seat) seat.ready = true;
@@ -2438,6 +2558,20 @@ export class MatchController {
       if (offer.kind === "augment") {
         const fresh = offerAugments(this.world, entity, offer.tier, this.rules.offerCount);
         this.offers.set(offerId, { kind: "augment", ...fresh, seatId, createdTick: this.world.tick });
+      } else if (offer.kind === "attr") {
+        // 能力屬性強化 (#260): re-roll the three magnitudes off world.rng, keeping
+        // the one-card-per-attribute shape. Routed through the same
+        // `rollAttrChoices` a purchase uses so the dev cheat can never produce a
+        // card the real path could not.
+        this.offers.set(offerId, {
+          kind: "attr",
+          entity,
+          tier: offer.tier,
+          choices: rollAttrChoices(this.world),
+          picked: null,
+          seatId,
+          createdTick: this.world.tick,
+        });
       } else {
         // item offers don't retain their table id; re-roll from the same choices' pool
         const fresh = offerItems(this.world, entity, offer.tier, this.rules.offerCount);

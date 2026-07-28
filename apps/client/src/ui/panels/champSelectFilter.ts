@@ -4,6 +4,7 @@
  * uniform-random pick. No React / registry imports so it unit-tests cleanly.
  */
 import { isShopService, itemHasEffect } from "@ggd/shared/sim/economy/itemTiers";
+import { shelfListable, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
 
 export interface RosterChampion {
   id: string;
@@ -141,14 +142,31 @@ export function applyItemWhitelist<T extends { id: string }>(items: readonly T[]
  */
 export function shopCatalogue<
   T extends { id: string; cost?: number; craftRole?: string; modifiers?: unknown; passive?: unknown },
->(items: readonly T[], wl: Whitelist): T[] {
+>(
+  items: readonly T[],
+  wl: Whitelist,
+  /**
+   * 武器貨架 open/closed (#261). Defaults to the shipped flag, so the SHOP
+   * calls this with no third argument and gets 暫時下架 for free. Explicit only
+   * where a caller needs the other state — the whitelist/craftRole guards below
+   * pass `true` so a closed shelf cannot mask what THEY are asserting, and
+   * `shopShelfListing.test.ts` pins the closed default on its own.
+   */
+  shelfOpen: boolean = WEAPON_SHELF_OPEN,
+): T[] {
   // A final crafted weapon is buyable only when it does SOMETHING the sim can
   // apply. Six finals (雷神之鎚/黑色魔書/…) carry only an active ability item@1
   // cannot express yet (blocked on #56); the sim refuses to sell them, so
   // listing one is a dead 1200g button. They stay classified `final` but off
   // the shelf until the schema grows — exactly the shop's S3 gate.
   const isFinal = (i: T) => i.craftRole === "final" && itemHasEffect(i as never);
-  const buyable = items.filter((i) => isFinal(i) || isShopService(i.id));
+  // 暫時下架 (#261) — the LAST word on every branch below, so no fallback path
+  // can re-list a weapon the shelf flag closed. The two SERVICES always pass
+  // (`shelfListable`), which is exactly 「除了能力屬性強化、及傳說寶玉外」.
+  // The DRAFT/loot path never calls this function, so 「隨機三選一仍然可以隨機
+  // 到」 holds by construction — see economy/shopShelf.ts.
+  const shelved = (list: readonly T[]): T[] => list.filter((i) => shelfListable(i.id, shelfOpen));
+  const buyable = shelved(items.filter((i) => isFinal(i) || isShopService(i.id)));
   if (wl.enforced) return applyItemWhitelist(buyable, wl);
   // Unenforced / offline dev is where the shop actually gets played, and the
   // final/service rule holds there too. The ONLY concession is the bare
@@ -158,8 +176,12 @@ export function shopCatalogue<
   // this branch never runs in the product.
   if (buyable.some((i) => i.craftRole === "final")) return buyable;
   const services = items.filter((i) => isShopService(i.id));
-  const demo = items.filter((i) => (i.cost ?? 0) > 0 && !isShopService(i.id));
-  return demo.length > 0 ? [...services, ...demo] : [...items];
+  const demo = shelved(items.filter((i) => (i.cost ?? 0) > 0 && !isShopService(i.id)));
+  if (demo.length > 0) return [...services, ...demo];
+  // last-resort skeleton branch: still shelf-filtered, so a closed shelf shows
+  // the services alone rather than the entire unfiltered content box.
+  const all = shelved(items);
+  return all.length > 0 ? all : [...services];
 }
 
 /**

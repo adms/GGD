@@ -134,34 +134,17 @@ export function shopServicePrice(itemId: string): number | null {
 }
 
 /**
- * THE STAT-TICK ROLL POOL — nine entries, each worth 6.5 AEP (= B_SIMPLE) at
- * the level-5 reference, rolled uniformly on `world.rng`.
+ * WHAT ONE 375g TICK NOW BUYS — nothing directly. #260 replaced the nine-entry
+ * flat roll pool that used to live here with a 力/敏/智 三選一 whose magnitudes
+ * are rolled 0.1–2.0 (economy/attrDraft.ts) and applied as 三圍, not as stats.
  *
- * WHAT IS DELIBERATELY MISSING, and why. These are not oversights; each is a
- * stat this sim cannot pay for:
- *   cdr        10% cdr measures at 0.047 AEP — a 6.5-AEP roll would need cdr
- *              13.9 against a hard 0.45 clamp. It is an unbuyable stat here.
- *   maxMana    0.034 AEP/point at L5, collapsing to 0.007 at L8: with Q/W on
- *              25s and E/R on 55-60s against a ~19s duel, casts are COOLDOWN-
- *              limited, never mana-limited. One roll would be +190 mana.
- *   manaRegen  same cause; one roll would be +626%.
- *   critDamage identically 0 AEP at the champion base critChance of 0 (all 113
- *              champions ship critChance 0), so it may never be offered alone.
- *
- * Armour stacking needs no cap and has none: 20 armour rolls = 340 armour, but
- * with ~40% of incoming damage magic the eHP multiple tops out at 2.34x.
+ * The old pool was DELETED rather than kept beside the new one: it was the
+ * tick's whole payload, so leaving it would have shipped a nine-row table that
+ * nothing reads and that reviewers would keep trying to reconcile with the
+ * cards on screen. The AEP reasoning it carried now lives with the roll range,
+ * in economy/attrDraft.ts and itemTiers.test.ts — where it can be checked
+ * against the attribute coefficients that actually decide what a point is worth.
  */
-export const STAT_TICK_ROLLS: readonly StatModifier[] = [
-  { stat: Stat.AttackDamage, op: ModOp.Flat, value: 6.5 },
-  { stat: Stat.MaxHealth, op: ModOp.Flat, value: 66 },
-  { stat: Stat.Armor, op: ModOp.Flat, value: 17 },
-  { stat: Stat.MagicResist, op: ModOp.Flat, value: 38 },
-  { stat: Stat.AbilityPower, op: ModOp.Flat, value: 32 },
-  { stat: Stat.AttackSpeed, op: ModOp.PercentAdd, value: 0.154 },
-  { stat: Stat.MoveSpeed, op: ModOp.Flat, value: 0.83 },
-  { stat: Stat.CritChance, op: ModOp.Flat, value: 0.23 },
-  { stat: Stat.Lifesteal, op: ModOp.Flat, value: 0.27 },
-];
 
 /**
  * 傳說·萬象強化 — the capstone granted on the 20th clean tick.

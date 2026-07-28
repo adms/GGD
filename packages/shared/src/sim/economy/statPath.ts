@@ -36,7 +36,8 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { attachSource } from "../stats/statPipeline";
-import type { StatModifier } from "../stats/modifiers";
+import { rollAttrChoices } from "./attrDraft";
+import { ATTR_KEYS, zeroAttrBonus, type AttrBonus } from "../stats/attributes";
 import {
   CAPSTONE_ITEM_ID,
   CAPSTONE_MAX_PCT,
@@ -44,7 +45,6 @@ import {
   CAPSTONE_STEPS,
   STAT_TICK_PRICE,
   STAT_TICK_TARGET,
-  STAT_TICK_ROLLS,
   capstoneModifiers,
 } from "./itemTiers";
 
@@ -74,8 +74,18 @@ export interface StatTickOutcome {
   result: StatTickResult;
   /** stack count AFTER the purchase (unchanged on failure) */
   stacks: number;
-  /** the stat roll this purchase granted, or null when it failed */
-  roll: StatModifier | null;
+  /**
+   * The 3-choose-1 this purchase OPENED — one encoded 力/敏/智 card per
+   * attribute (economy/attrDraft), empty when the purchase failed.
+   *
+   * #260 changed what 375 gold buys. It used to grant one of nine fixed stat
+   * modifiers INSTANTLY; it now buys a CARD, and the attribute only lands when
+   * the player picks. The host registers the card exactly as it registers a
+   * 傳說寶玉 roll, so the whole existing lifecycle — pick command, AI auto-pick,
+   * the "intermission cannot end with an open offer" rule, and the expiry
+   * safety net (#207) — applies with no special case.
+   */
+  choices: string[];
   /** rolled capstone percentage 10..100 when this tick earned it, else 0 */
   capstonePct: number;
 }
@@ -129,50 +139,41 @@ export function statPathView(stacks: number, capstonePct: number): StatPathView 
 }
 
 /**
- * The champion's stat-tick history as one COUNT PER ROLL, indexed exactly like
- * {@link STAT_TICK_ROLLS}. This is what rides the wire (`SeatState.statRollCounts`)
- * so the shop can finally answer 「這 375g 買到什麼」.
+ * WHAT the 能力屬性強化 purchases actually bought, as the three 三圍 totals —
+ * the wire projection (`SeatState.attrBonus`) that lets the shop answer
+ * 「這 375g 買到什麼」 (#260, replacing the pre-#260 per-roll counts).
  *
- * Counted from the LIVE sources, never from a mirrored field. Two reasons:
- * the sources are the pipeline's own truth, and they OUTLIVE `statStacks` —
- * buying a real item zeroes the streak (the commitment rule) while every
- * `stat:<N>` source stays attached, because the reset withdraws the CAPSTONE's
- * progress, not stats already paid for. A player who bought 8 ticks then an item
- * still carries those 8 rolls, and until now no client could see them.
+ * Read straight off `champ.attrBonus`, which is the sim's own accumulator and
+ * OUTLIVES `statStacks`: buying a real item zeroes the streak (the commitment
+ * rule) but never confiscates attributes already paid for. A player who bought
+ * 8 ticks then a weapon still carries those 8 attribute points, and the panel
+ * has to show them.
  *
- * Each roll owns a distinct {@link Stat}, so matching on `stat` is exact —
- * there is no roll that could be confused for another.
+ * Ordered exactly like {@link ATTR_KEYS}, so index i on the wire is attribute i
+ * on both sides and there is no name table to drift.
  */
-export function statRollCounts(world: SimWorld, id: EntityId): number[] {
-  const counts = STAT_TICK_ROLLS.map(() => 0);
-  const sc = world.stats.get(id);
-  if (!sc) return counts;
-  for (const src of sc.sources) {
-    if (!src.id.startsWith("stat:")) continue;
-    for (const m of src.modifiers ?? []) {
-      const idx = STAT_TICK_ROLLS.findIndex((r) => r.stat === m.stat);
-      if (idx >= 0) counts[idx] = (counts[idx] ?? 0) + 1;
-    }
-  }
-  return counts;
+export function attrBonusArray(world: SimWorld, id: EntityId): number[] {
+  const champ = world.champion.get(id);
+  if (!champ) return ATTR_KEYS.map(() => 0);
+  return ATTR_KEYS.map((k) => champ.attrBonus[k]);
 }
 
 /**
- * The inverse, for the CLIENT: counts → the exact `StatModifier` list those
- * ticks attached. `ui/panels/statPreview` feeds this back into the same
- * `attachSource` the server used, which is what makes its reconstructed panel
- * exact instead of short-by-every-tick-ever-bought.
+ * The inverse, for the CLIENT: the wire's 3-number array → an {@link AttrBonus}
+ * the shared `championStatBase` accepts. `ui/panels/statPreview` feeds this into
+ * the same field the server writes, which is what makes its reconstructed panel
+ * exact rather than short by every attribute ever bought.
  *
- * Tolerant of a short/absent array (a legacy snapshot, or a seat with no
- * champion yet) — those read as "no ticks", which is what they were.
+ * Tolerant of a short/absent array (a legacy snapshot, a seat with no champion
+ * yet) — those read as "nothing bought", which is what they were.
  */
-export function statRollModifiers(counts: readonly number[] | undefined): StatModifier[] {
-  const out: StatModifier[] = [];
-  if (!counts) return out;
-  for (let i = 0; i < STAT_TICK_ROLLS.length; i++) {
-    const n = counts[i] ?? 0;
-    for (let k = 0; k < n; k++) out.push({ ...STAT_TICK_ROLLS[i]! });
-  }
+export function attrBonusFromArray(values: readonly number[] | undefined): AttrBonus {
+  const out = zeroAttrBonus();
+  if (!values) return out;
+  ATTR_KEYS.forEach((k, i) => {
+    const v = values[i];
+    if (typeof v === "number" && Number.isFinite(v)) out[k] = v;
+  });
   return out;
 }
 
@@ -184,10 +185,16 @@ export function statTicksRemaining(world: SimWorld, id: EntityId): number {
 }
 
 /**
- * Buy one 能力屬性強化. Deducts gold, increments the streak, rolls ONE entry of
- * {@link STAT_TICK_ROLLS} uniformly and attaches it as a permanent modifier
- * source that occupies NO inventory slot — that slot-freedom is exactly what
- * the 25% price premium rents.
+ * Buy one 能力屬性強化. Deducts gold, increments the streak, and OPENS a
+ * 力/敏/智 三選一 (#260) — it no longer grants anything by itself.
+ *
+ * WHY THE GRANT MOVED TO THE PICK. Owner: 「購買能力屬性加成也是三選一 力/敏/智
+ * 隨機加點 0.1-2 顯示在卡片上面」. The purchase is the trigger, the CARD is the
+ * reward, and the attribute lands in `applyAttrPick`. The streak still ticks
+ * here, at the moment gold moves, because the streak is a record of PURCHASES
+ * (the 沒有購買任何道具 commitment) and not of picks — an unanswered card is
+ * auto-picked by the host anyway (#207), so the two can only differ inside a
+ * single intermission.
  *
  * On the {@link STAT_TICK_TARGET}-th consecutive tick it also grants the
  * capstone, once per champion — but never before {@link CAPSTONE_ROUND_GATE}
@@ -197,27 +204,18 @@ export function statTicksRemaining(world: SimWorld, id: EntityId): number {
  */
 export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   const champ = world.champion.get(id);
-  if (!champ) return { result: "no-champion", stacks: 0, roll: null, capstonePct: 0 };
+  if (!champ) return { result: "no-champion", stacks: 0, choices: [], capstonePct: 0 };
   if (champ.gold < STAT_TICK_PRICE) {
-    return { result: "no-gold", stacks: champ.statStacks, roll: null, capstonePct: 0 };
+    return { result: "no-gold", stacks: champ.statStacks, choices: [], capstonePct: 0 };
   }
 
   champ.gold -= STAT_TICK_PRICE;
   champ.statStacks += 1;
-  const roll = STAT_TICK_ROLLS[world.rng.int(STAT_TICK_ROLLS.length)]!;
-  // Source id carries the stack index so 20 ticks are 20 independent sources
-  // and the stat pipeline sums them (rather than one overwriting the next).
-  attachSource(world, id, {
-    id: `stat:${champ.statStacks}`,
-    kind: "augment",
-    modifiers: [{ ...roll }],
-  });
+  const choices = rollAttrChoices(world);
   world.emit("statUpgradeBought", {
     id,
     stacks: champ.statStacks,
-    stat: roll.stat,
-    op: roll.op,
-    value: roll.value,
+    choices,
     gold: champ.gold,
   });
 
@@ -229,7 +227,7 @@ export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   ) {
     capstonePct = grantCapstone(world, id);
   }
-  return { result: "ok", stacks: champ.statStacks, roll, capstonePct };
+  return { result: "ok", stacks: champ.statStacks, choices, capstonePct };
 }
 
 /**

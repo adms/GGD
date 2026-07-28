@@ -87,6 +87,13 @@ beforeAll(() => {
 const CENTER = SKELETON_ARENA.zones[0]!.center;
 
 function spawnHero(world: SimWorld, championId = "thorne", level = 6): EntityId {
+  // #261: this whole suite proves 「the preview equals what the sim actually
+  // does when you BUY」, so it needs a buyable weapon. The 武器貨架 being
+  // 暫時下架 today does not change the preview↔sim contract — it takes the
+  // weapons off sale — so every scratch world here runs with the shelf open.
+  // The closed shelf has its own guards (economy/shopShelf.test.ts for the sim
+  // refusal, shopShelfListing.test.ts for the listing).
+  world.weaponShelfOpen = true;
   const id = spawnChampion(world, {
     championId: championId as ChampionId,
     seatId: asSeatId(0),

@@ -30,7 +30,11 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
   const next = zeroStats();
 
   for (const stat of ALL_STATS) {
-    const base = championStatBase(def, stat, level, world.combatEnv);
+    // `champ.attrBonus` — the 三圍 bought this match (#260). It rides into the
+    // BASE, not into the modifier loop below, because an attribute is not a
+    // stat: see stats/attributes.ts. Passing it here is the ONE wiring that
+    // makes a 能力屬性強化 pick move any number at all.
+    const base = championStatBase(def, stat, level, world.combatEnv, champ.attrBonus);
 
     let flat = 0;
     let pctAdd = 0;

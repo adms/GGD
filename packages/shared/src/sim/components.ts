@@ -6,6 +6,7 @@
 import type { EntityId, SeatId, TeamId, ChampionId, ItemId, AugmentId, ProjectileId, StatusId } from "../ids";
 import type { Vec2 } from "./math/vec2";
 import type { CastableSlot, Order } from "./intents";
+import type { AttrBonus } from "./stats/attributes";
 
 /** Planar transform: position (x,z), unit facing, collision radius. NO y. */
 export interface Transform {
@@ -164,6 +165,21 @@ export interface ChampionComp {
    * only the capstone is once-per-match.
    */
   statStacks: number;
+  /**
+   * 三圍 BOUGHT this match — the running sum of every 能力屬性強化 三選一 pick
+   * (#260). Owner: 「購買能力屬性加成也是三選一 力/敏/智 隨機加點 0.1-2」.
+   *
+   * It is an ATTRIBUTE total, not a stat total, and `championStatBase` folds it
+   * in exactly where a champion's innate 三圍 goes — so +1 STR pays the same
+   * maxHealth/regen/ad it pays an innate point, at the operator's LIVE
+   * `strToMaxHealth`, and +1 AGI keeps attack speed's multiplicative form.
+   * See stats/attributes.ts for why baking it into StatModifiers would be wrong.
+   *
+   * SURVIVES the 歸零 reset (`resetStatPath`) exactly like the pre-#260 rolls
+   * did: buying an item withdraws progress toward the CAPSTONE, it does not
+   * confiscate attributes already paid for.
+   */
+  attrBonus: AttrBonus;
   /**
    * Rolled magnitude of the 傳說·萬象強化 capstone, 10..100 (percent), or 0
    * when it has not been granted. Doubles as the once-only guard.

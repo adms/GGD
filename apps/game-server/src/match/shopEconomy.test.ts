@@ -30,6 +30,8 @@ import {
   STAT_TICK_ITEM_ID,
   STAT_TICK_PRICE,
   STAT_TICK_TARGET,
+  CAPSTONE_MIN_PCT,
+  CAPSTONE_MAX_PCT,
   isShopService,
 } from "@ggd/shared/sim/economy/itemTiers";
 import { STARTING_GOLD } from "@ggd/shared/sim/economy/progression";
@@ -51,6 +53,12 @@ beforeAll(async () => {
 
 function spawnedMatch(seed = 31): MatchController {
   const ctl = new MatchController(`econ-${seed}`, seed, allBots(), FAST, 3, DEFAULT_ARENA_RULES);
+  // #261 — the weapon shelf ships 暫時下架. This suite exists to prove the GOLD
+  // rules (rule-1 refusals, the stat-path fork, the undo's no-arbitrage
+  // invariant), all of which need a buyable weapon; the shelf being closed today
+  // does not retire them, so the match runs with the shelf open. The closed-shelf
+  // behaviour has its own guard: packages/shared/.../shopShelf.test.ts.
+  ctl.world.weaponShelfOpen = true;
   let n = 0;
   while (ctl.phase.phase !== "intermission" && n++ < 500) ctl.tick();
   expect(ctl.phase.phase).toBe("intermission");
@@ -340,8 +348,14 @@ describe("the stat path, through the controller's own economy", () => {
     // through the REAL command path: CommandSystem -> shopAccess -> buyItem
     for (let i = 0; i < STAT_TICK_TARGET; i++) buy(STAT_TICK_ITEM_ID);
     expect(champ.statStacks).toBe(STAT_TICK_TARGET);
-    expect(champ.statCapstonePct).toBeGreaterThanOrEqual(10);
-    expect(champ.statCapstonePct).toBeLessThanOrEqual(100);
+    // Bounds read from the CONSTANTS, not re-typed. The literals here used to be
+    // 10..100 — the pre-2026-07-26 range — and passed only because this seed's
+    // capstone roll happened to fall inside it; the owner's 60~150 widening
+    // (itemTiers) had left them stale and unnoticed. #260 shifted the rng stream
+    // (a tick now draws three magnitudes instead of one stat), the roll moved to
+    // 130, and the stale literal finally spoke up.
+    expect(champ.statCapstonePct).toBeGreaterThanOrEqual(CAPSTONE_MIN_PCT);
+    expect(champ.statCapstonePct).toBeLessThanOrEqual(CAPSTONE_MAX_PCT);
     expect(champ.gold).toBe(0);
     // …and it cost every slot's worth of gold: the player owns no items.
     expect(champ.items.every((s) => s === null)).toBe(true);

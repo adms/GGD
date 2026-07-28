@@ -30,7 +30,12 @@ beforeAll(() => registerSkeletonContent());
 const Z = (): { x: number; z: number } => SKELETON_ARENA.zones[0]!.center;
 
 function makeWorld(seed = 42): SimWorld {
-  return new SimWorld(SKELETON_ARENA, seed);
+  const w = new SimWorld(SKELETON_ARENA, seed);
+  // #261: the weapon shelf is 暫時下架 by default. These suites buy weapons to
+  // exercise the item pipeline, so they run with the shelf OPEN — the rules they
+  // guard are unchanged, only the storefront is closed today.
+  w.weaponShelfOpen = true;
+  return w;
 }
 
 /** Sela (seat 0, team 0) and Thorne (seat 1, team 1) facing each other. */

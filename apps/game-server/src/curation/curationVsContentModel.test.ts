@@ -140,6 +140,22 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //   reason: "godie-i0xx 四魂之玉的碎片-3 is deliberately unlisted; see gate D4.",
   //   owner: "#70",
   // },
+  "shop.tier-coverage": {
+    reason:
+      "#261 暫時下架: the owner took every weapon off the shelf — 「除了能力屬性強化、及傳說寶玉外，" +
+      "其他武器道具先全部暫時下架無法選擇」 — so BOTH price tiers are legitimately absent from the " +
+      "shelf right now. The curation data is UNCHANGED and still lists them; the shelf is closed by " +
+      "economy/shopShelf.ts (WEAPON_SHELF_OPEN=false), a single reversible boolean. Flip it back and " +
+      "this exemption must be deleted, which is what the stale-exemption guard below enforces.",
+    owner: "#261",
+  },
+  "shop.inventory-fill": {
+    reason:
+      "#261 暫時下架, same cause: with the shelf closed the buyable-weapon count is 0 by design. The " +
+      "6 inventory slots are still fillable — through the 3-choose-1 cards and the 傳說寶玉, which " +
+      "the flag deliberately does NOT gate (「隨機三選一仍然可以隨機到」, pinned by shopShelf.test.ts).",
+    owner: "#261",
+  },
 };
 
 // ---------------------------------------------------------------------------

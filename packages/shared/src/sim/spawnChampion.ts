@@ -4,6 +4,7 @@ import type { SimWorld } from "./SimWorld";
 import type { Vec2 } from "./math/vec2";
 import { Champions } from "./content/registry";
 import { zeroStats } from "./stats/statTypes";
+import { zeroAttrBonus } from "./stats/attributes";
 import { recomputeStats } from "./stats/statPipeline";
 import { createMatchStats } from "./stats/matchStats";
 import { INVENTORY_SLOTS } from "./economy/shop";
@@ -40,6 +41,9 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     items: new Array(INVENTORY_SLOTS).fill(null),
     augments: [],
     statStacks: 0,
+    // 三圍 bought this match (#260) — starts empty; every 能力屬性強化 pick adds
+    // into it and `recomputeStats` feeds it straight into `championStatBase`.
+    attrBonus: zeroAttrBonus(),
     statCapstonePct: 0,
     pendingOrbSlots: 0,
     undoStack: [],

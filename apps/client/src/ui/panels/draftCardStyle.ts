@@ -11,6 +11,7 @@
  * exactly like LoL-Arena rarities.
  */
 import { Items } from "@ggd/shared/sim/content/registry";
+import { ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
 import type { ItemId } from "@ggd/shared/ids";
 import { GOLD } from "../theme";
 import { buildItemRow, formatAuthoredBonus, type RowItem } from "./itemStats";
@@ -50,6 +51,10 @@ export const DRAFT_TIER_COLOR: Record<string, string> = {
   gold: "#f2c637",
   prismatic: "#c67ef2",
   weapon: "#f28a37",
+  // 能力屬性強化 (#260) — a teal that belongs to no augment rarity, because the
+  // card is not a rarity roll: all three magnitudes come off the same uniform
+  // 0.1–2.0 draw, so tinting it silver/gold would promise a quality it never has.
+  [ATTR_OFFER_TIER]: "#5fd6c4",
 };
 
 /** The accent colour for a tier, falling back to GOLD for an unknown tier. */
@@ -60,6 +65,7 @@ export function tierColor(tier: string): string {
 /** Bespoke header labels; unknown tiers render as "<TIER> AUGMENT". */
 export const DRAFT_TIER_LABEL: Record<string, string> = {
   weapon: "傳說武器 · WEAPON",
+  [ATTR_OFFER_TIER]: "能力屬性強化 · 力／敏／智",
 };
 
 /** The tier header text (e.g. "GOLD AUGMENT", "傳說武器 · WEAPON"). */

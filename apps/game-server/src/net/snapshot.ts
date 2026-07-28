@@ -12,7 +12,7 @@ import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
 import { MOB_MODEL_KEY } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
-import { statRollCounts } from "@ggd/shared/sim/economy/statPath";
+import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
@@ -133,15 +133,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // it needs so a player can never destroy 19 stacks unknowingly.
         ss.statStacks = Math.min(champ.statStacks, 255);
         ss.statCapstonePct = champ.statCapstonePct;
-        // WHAT those ticks rolled, as one count per STAT_TICK_ROLLS entry.
-        // `statStacks` above is only a streak COUNTER, and the rolled sources
-        // (`stat:<N>`) never rode the wire — so the shop reconstructed the
-        // champion without them and could not answer 「這 375g 買到什麼」.
-        // Counted from the live sources rather than mirrored into a new
-        // ChampionComp field: the sources ARE the truth (the streak resets on an
-        // item purchase while they stay attached), and a mirror is one more
-        // thing that can silently drift out of step with the pipeline.
-        setArray(ss.statRollCounts, statRollCounts(world, seat.entityId));
+        // WHAT those ticks bought, as the three 三圍 totals (#260 — 力/敏/智,
+        // ATTR_KEYS order). `statStacks` above is only a streak COUNTER, and the
+        // bought attributes live on `ChampionComp.attrBonus`, which the client
+        // has no other view of — without this the shop reconstructs the champion
+        // without them and cannot answer 「這 375g 買到什麼」.
+        setArray(ss.attrBonus, attrBonusArray(world, seat.entityId));
         // buy/sell undo depth (task #121) — the client shows 「↩ 復原上一步」
         // exactly when > 0. Clamped to the uint8 wire field.
         ss.undoDepth = Math.min(champ.undoStack.length, 255);

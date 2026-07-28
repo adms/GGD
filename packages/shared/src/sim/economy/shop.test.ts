@@ -66,6 +66,11 @@ beforeAll(() => {
 
 function makeWorld(seed = 7, gold = 100_000): { world: SimWorld; id: EntityId } {
   const world = new SimWorld(SKELETON_ARENA, seed);
+  // #261: these guards describe the rules that apply WHEN the weapon shelf is
+  // open. The shelf being 暫時下架 today does not retire them — it takes the
+  // weapons off sale — so the world is opened explicitly rather than deleting
+  // the coverage that comes back the moment the owner flips the flag.
+  world.weaponShelfOpen = true;
   const c = SKELETON_ARENA.zones[0]!.center;
   const id = spawnChampion(world, {
     championId: "sela" as ChampionId,

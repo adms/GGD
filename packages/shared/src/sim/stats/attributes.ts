@@ -120,6 +120,44 @@ export interface ChampionAttributes {
 /** The three attribute slots, as they appear on `ChampionAttributes`. */
 export type AttrKey = "str" | "agi" | "int";
 
+/** 力 / 敏 / 智, in the ONE order every surface iterates them in. */
+export const ATTR_KEYS: readonly AttrKey[] = ["str", "agi", "int"];
+
+/**
+ * 繁中 labels for the three. Lives here, next to the model, so the shop panel,
+ * the 三選一 card and the codex can never disagree about which is which.
+ */
+export const ATTR_LABEL: Readonly<Record<AttrKey, string>> = {
+  str: "力量",
+  agi: "敏捷",
+  int: "智慧",
+};
+
+/**
+ * A per-ENTITY 三圍 bonus earned during a match (#260 — the 能力屬性強化 三選一).
+ *
+ * WHY THIS IS NOT A `StatModifier` LIST. An attribute is not a stat: one point
+ * of STR feeds maxHealth, healthRegen AND ad, and one point of AGI feeds armor
+ * additively but attack speed MULTIPLICATIVELY on the champion's own base
+ * (`base × (1 + coef·AGI)`, see the note above). Baking a bought attribute into
+ * equivalent stat modifiers would therefore need the champion's authored base
+ * and the live combat-env coefficients AT ATTACH TIME, and would go stale the
+ * moment an operator retunes `agiToAttackSpeed`. Carrying the ATTRIBUTE instead
+ * keeps `championStatBase` the single definition of 三圍 → 數值 — the same seam
+ * #248 built — so a bought point behaves exactly like an innate one.
+ */
+export interface AttrBonus {
+  str: number;
+  agi: number;
+  int: number;
+}
+
+export function zeroAttrBonus(): AttrBonus {
+  return { str: 0, agi: 0, int: 0 };
+}
+
+export const NO_ATTR_BONUS: AttrBonus = { str: 0, agi: 0, int: 0 };
+
 /** How one stat draws on one attribute. */
 export interface AttrStatSource {
   readonly attr: AttrKey;
@@ -170,6 +208,27 @@ export function attributeAtLevel(a: ChampionAttributes, which: AttrKey, level: n
 }
 
 /**
+ * THE champion's EFFECTIVE attribute: the doc's innate value at `level` plus
+ * everything bought this match ({@link AttrBonus}).
+ *
+ * The `bonus` term is added even when the champion doc carries NO `attributes`
+ * block. A doc-less champion (skeleton fixtures, hand-authored test content) has
+ * an innate 0 in all three, and a bought point is a per-ENTITY fact that does not
+ * depend on the doc having one — silently discarding it would make 375 gold buy
+ * nothing on exactly the champions whose sheets nobody hand-verified. With a
+ * zero bonus this is `attributeAtLevel` verbatim, so nothing pre-#260 moves.
+ */
+export function championAttribute(
+  def: AttributeCarrier,
+  which: AttrKey,
+  level: number,
+  bonus: AttrBonus = NO_ATTR_BONUS,
+): number {
+  const innate = def.attributes === undefined ? 0 : attributeAtLevel(def.attributes, which, level);
+  return innate + bonus[which];
+}
+
+/**
  * The champion's BASE value for `stat` at `level`, attributes included and
  * combat-env coefficients applied — i.e. everything before item/augment/buff
  * modifiers and before the stat's own combat-env multiplier and clamp.
@@ -182,15 +241,23 @@ export function championStatBase(
   stat: Stat,
   level: number,
   env: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
+  /**
+   * Attributes BOUGHT this match (#260). Defaults to zero, so every pre-#260
+   * caller — champ-select, the codex, the mob curve — is byte-identical.
+   */
+  bonus: AttrBonus = NO_ATTR_BONUS,
 ): number {
   const authored = (def.baseStats[stat] ?? 0) + (def.growth[stat] ?? 0) * (Math.max(1, level) - 1);
   const src = ATTR_STAT_SOURCE[stat];
-  const attrs = def.attributes;
-  if (src === undefined || attrs === undefined) return authored;
+  if (src === undefined) return authored;
+  // NOTE: no early-out on `def.attributes === undefined` any more. A champion
+  // with no 三圍 block still has to be able to SPEND 375 gold on one — see
+  // `championAttribute`, which answers 0 + bonus for exactly that case.
+  if (def.attributes === undefined && bonus[src.attr] === 0) return authored;
 
   const coef = env[src.key];
   const factor = typeof coef === "number" && Number.isFinite(coef) ? coef : 0;
-  const value = attributeAtLevel(attrs, src.attr, level);
+  const value = championAttribute(def, src.attr, level, bonus);
   return src.mode === "add" ? authored + factor * value : authored * (1 + factor * value);
 }
 

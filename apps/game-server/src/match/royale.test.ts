@@ -281,18 +281,28 @@ describe("team health no longer removes anybody (royale-no-elimination)", () => 
     // sees `eliminated`. Removing elimination must NOT have removed the card.
     const ctl = new MatchController("roy-193", 55, allBots(), FAST);
     let cards: { teamId: number }[] = [];
+    // Health AT THE MOMENT the card was drained. Asserting on the FINAL health
+    // instead was wrong and this test said so two paragraphs up: 「its health may
+    // CLIMB again — a spent team can still win a High Stakes round and be paid
+    // +15」. A team that hit 0, got its card, then won a High Stakes bout ends the
+    // match at 15 and made the old check fail for the right reason at the wrong
+    // time. It passed only while the pinned seed never produced that sequence;
+    // #260/#261 changed which match seed 55 plays and it did.
+    const healthAtCard = new Map<number, number>();
     let n = 0;
     while (ctl.phase.phase !== "matchEnd" && n++ < 400_000) {
       ctl.tick();
-      cards = cards.concat(ctl.takeEliminationSettlements());
+      const fresh = ctl.takeEliminationSettlements();
+      for (const c of fresh) healthAtCard.set(c.teamId, ctl.teamHealth.get(asTeamId(c.teamId)) ?? -1);
+      cards = cards.concat(fresh);
     }
     expect(cards.length).toBeGreaterThan(0);
     // exactly one card per team, never a repeat every subsequent round
     const perTeam = new Map<number, number>();
     for (const c of cards) perTeam.set(c.teamId, (perTeam.get(c.teamId) ?? 0) + 1);
     for (const [, count] of perTeam) expect(count).toBe(1);
-    // …and every team that got one really did hit 0
-    for (const [teamId] of perTeam) expect(ctl.teamHealth.get(asTeamId(teamId))).toBe(0);
+    // …and every team that got one really was AT 0 when it got it
+    for (const [teamId] of perTeam) expect(healthAtCard.get(teamId)).toBe(0);
   });
 });
 
