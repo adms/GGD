@@ -27,6 +27,7 @@ import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
+import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
@@ -440,6 +441,14 @@ export class SimWorld {
    * 預設是**出貨表**,不是空表:空表會讓解鎖靜默失效。
    */
   statCaps: StatCapTable = DEFAULT_STAT_CAPS;
+
+  /**
+   * 戰鬥手感規則 (see combatFeel.ts) —— 擊退法則 (GH#193) + 打就站定開關。
+   * 和 `combatEnv` / `baseBonus` / `statCaps` 同一條規矩:開賽前指派一次,
+   * 之後不再動,sim 從不讀 config/globals,所以決定性自動成立。
+   * 預設是**出貨表**,不是空表 —— 空表會讓擊退/站定兩條規則靜默消失。
+   */
+  combatFeel: CombatFeelRules = DEFAULT_COMBAT_FEEL;
 
   /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat

@@ -276,10 +276,14 @@ identically.
 | cj-s10 | Hitstop scales with damage, caps at 6 ticks; chip damage never freezes | cj-hitstop-scale | unit | done |
 | cj-s11 | Hitstop is replay-deterministic: two seeded fights produce an identical digest | cj-hitstop-determinism | determinism | done |
 | cj-s12 | Knockback shoves the victim away from the source (direction) | cj-knockback-dir | unit | done |
-| cj-s13 | Knockback magnitude scales by damage + dmgType | cj-knockback-mag | unit | done |
-| cj-s14 | Chip damage applies no knockback (autos/DoTs don't shove) | cj-knockback-chip | unit | done |
-| cj-s15 | A blocked hit knocks back much less than the same unblocked hit | cj-knockback-blocked | unit | done |
+| cj-s13 | Knockback distance = % of the victim's MAX hp, minus the current gap (GH#193) | cj-knockback-mag | unit | done |
+| cj-s14 | A hit below `minPct` of max hp never shoves, however close | cj-knockback-chip | unit | done |
 | cj-s16 | Knockback respects the zone boundary — a big shove never clips outside | cj-knockback-noclip | unit | done |
+| cj-kb1 | THE DISTANCE SUBTRACTION: same hit, same victim — melee shoves, ranged does not | cj-knockback-range | unit | done |
+| cj-kb2 | The denominator is MAX hp, not current hp — a nearly-dead victim is not launched | cj-knockback-maxhp | unit | done |
+| cj-kb3 | 殭屍王 (6000 hp) shrugs off the blow that shoves a 600 hp champion | cj-knockback-boss | unit | done |
+| cj-kb4 | The three knockback numbers are operator-tunable (raising `minPct` switches a shove off) | cj-knockback-config | unit | done |
+| cj-kb5 | `maxBodies` is the ceiling: a 100%-hp one-shot pushes 10 bodies, not 100 | cj-knockback-cap | unit | done |
 | cj-s17 | A heavy unblocked hit emits `knockdown` | cj-knockdown | unit | done |
 | cj-s18 | Knockdown counts down to getup in exactly N ticks | cj-knockdown-getup | unit | done |
 | cj-s19 | A knocked-down victim is rooted while prone, then moves again on getup | cj-knockdown-root | unit | done |

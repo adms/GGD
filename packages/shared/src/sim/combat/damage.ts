@@ -11,7 +11,8 @@ import { Stat } from "../stats/statTypes";
 import { fireHooks } from "../effects/hooks";
 import { recordDamage } from "../stats/matchStats";
 import { healTarget } from "./restore";
-import { normalize, sub, lenSq } from "../math/vec2";
+import { normalize, sub, lenSq, dist } from "../math/vec2";
+import { knockbackRaw, afterGap } from "../combatFeel";
 import { Abilities, Champions } from "../content/registry";
 import { noteAbilityConnect } from "../abilities/abilityRecovery";
 import {
@@ -209,15 +210,19 @@ function isCounterHit(world: SimWorld, target: EntityId): boolean {
   return !!ab.windup || !!ab.cast;
 }
 
-/** Knockback only for meaningful blows (autos/DoTs stay put; abilities shove). */
-const KB_MIN_IMPACT = 70;
-/** units of push at 100 impact, physical, unblocked (scaled linearly). */
-const KB_UNIT_AT_100 = 1.6;
-const KB_MAX_DIST = 4;
-/** how physical > magic (contract): physical shoves hardest, true a bit less. */
-const KB_TYPE_MULT: Record<DamageType, number> = { physical: 1.0, magic: 0.6, true: 0.85 };
-/** a blocked (shielded / DR-buffed) hit shoves much less. */
-const KB_BLOCK_MULT = 0.35;
+// ---------------------------------------------------------------- KNOCKBACK
+// GH#193 — 擊退是**百分比驅動 + 減距離**的,不再是絕對傷害分級。整條法則
+// (含三個後台可調的參數) 住在 sim/combatFeel.ts 的 `knockbackDistance`;這裡只
+// 負責量出「這一擊打掉多少血」和「兩人現在差多遠」再把結果交給它。
+//
+// ⚠️ 三件在這裡最容易被之後的人「優化掉」的事,先寫死:
+//   1. 分母是**最大生命**,不是當前生命。用當前生命的話,殘血的人會被一巴掌
+//      推到天邊 —— 一個把追擊變成處決的隱形機制,沒有人要求過。
+//   2. 減距離讓**遠程打出的擊退天然比近戰小**(遠程隔 8.2 打,raw 要超過 8.2
+//      才推得動)。擊退從此是近戰的工具,遠程不能靠推人永久風箏。
+//   3. 傷害類型(physical/magic/true)與 blocked **不再**改變擊退距離。舊法有
+//      ×0.6/×0.85/×0.35 三個係數,owner 的新規則沒有它們,而把它們偷留下來會讓
+//      「傷害百分比 → 擊退身位」這個玩家看得懂的關係說謊。
 /** slide speed of the knockback impulse (units/sec). */
 const KB_SPEED = 16;
 
@@ -295,18 +300,21 @@ function applyImpact(
   let kbDir = { x: 0, z: 0 };
   let kbMag = 0;
   if (nav && tt && st) {
-    // damage-derived default distance (only meaningful blows shove by default)
-    let distance = 0;
-    if (impact >= KB_MIN_IMPACT) {
-      distance = (impact / 100) * KB_UNIT_AT_100 * KB_TYPE_MULT[type];
-      if (blocked) distance *= KB_BLOCK_MULT;
-      distance = Math.min(KB_MAX_DIST, distance);
-    }
+    // GH#193 damage-derived RAW distance: 打掉幾 % 的最大生命 → 幾個身位。
+    // 整條法則(和它的三個後台參數)在 combatFeel.ts。
+    const victimMaxHp = world.health.get(target)?.maxHp ?? 0;
+    let raw = knockbackRaw(world.combatFeel.knockback, impact, victimMaxHp);
     // explicit override wins (an author can shove on an otherwise-light hit, or
     // suppress a shove with 0), clamped to the override cap.
     if (hf?.knockbackMag !== undefined) {
-      distance = Math.min(KB_OVERRIDE_MAX, Math.max(0, hf.knockbackMag));
+      raw = Math.min(KB_OVERRIDE_MAX, Math.max(0, hf.knockbackMag));
     }
+    // ⚠️ 減距離套用在**覆寫之後**,也就是作者寫的 `hitFeel.knockbackMag` 一樣要
+    // 減。這不是順手為之:出貨內容裡 114/115 位英雄的**普攻**都帶著一個
+    // knockbackMag(0/0.25/0.3/0.45),覆寫若跳過這條減法,#193 的新法則對普攻
+    // 就完全無效 —— 而普攻正是 #45 抱怨的那件事。所以覆寫值的語意是
+    // 「距離 0 時要推多遠」,不是「無論多遠都推這麼遠」。見 combatFeel.afterGap。
+    const distance = afterGap(raw, dist(tt.pos, st.pos));
     if (distance > 0) {
       let dir = normalize(sub(tt.pos, st.pos));
       if (lenSq(dir) < 1e-12) {

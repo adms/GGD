@@ -25,6 +25,7 @@ import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade } from "../combat/evasion";
 import { armFacingLock, FACING_FOLLOW_THROUGH_TICKS } from "../facingLock";
+import { standstillBlocks } from "../combatFeel";
 
 /**
  * Fallback wind-up (seconds) when a champion doc omits attackDamagePoint.
@@ -187,6 +188,40 @@ export function basicAttackSystem(world: SimWorld): void {
     // defender a free counter-swing mid-shove. See combat/damage.ts.
     if ((world.hitstun.get(id) ?? 0) > 0) continue;
 
+    // ---- 打就站定:移動中不得出手 (owner 2026-07-28, 後台可關) ----
+    //
+    // 這條規則之前**完全不存在**。前搖只在「目標死了 / 目標跑出射程」時才取消,
+    // 於是「能不能邊走邊打」實際上是被**射程**夾出來的副作用 —— 近戰 1.6、遠程
+    // 8.2,差五倍。量到的完整數字與這條規則的來由寫在 sim/combatFeel.ts。
+    //
+    // 補法照 WC3(這批英雄本來就是 WC3 英雄單位改的):要攻擊就得停下來。傷害點
+    // 之後沒有任何鎖,所以「結算完立刻走」仍然免費 —— hit-and-run 微操是自然
+    // 浮現的,不是額外做的。
+    //
+    // 五件刻意的事:
+    //   1. 讀 `Transform.vel`(movementSystem 這一 tick **實際**走出去的位移/dt),
+    //      不是 `nav.moveTarget` 那種「想走」。撞牆推不動的人位移是 0,所以他
+    //      **還是能打**;一次點到場外的滑鼠失誤不會讓那個人整局不能攻擊。
+    //      被 separation 推開也不算移動 —— `separatePair` 直接改 `pos`,不寫 `vel`。
+    //   2. 兩段都要擋。有前搖就取消;沒前搖就連開都不准開 —— 冷卻是在起手那一刻
+    //      整段付掉的,若只取消不阻擋,一個一直在走的人會每輪燒掉一次冷卻卻永遠
+    //      打不出東西。起手那個閘刻意放在冷卻 commit **之前**。
+    //   3. 取消**不退冷卻**,和現有的「目標跑出射程」取消同一個待遇:想拉開距離
+    //      就要付一次攻擊循環,這正是這條規則的全部價值。
+    //      ⚠️ 這一條在 GH#193 的擊退改完之後**重新評估過**:那時「前搖被取消但
+    //      冷卻已扣」的主要來源是自己打出的擊退把目標推出射程(#45),現在
+    //      autoAttackCensus 的債務清單從 6 位掉到 1 位,而剩下那位是被 knockdown
+    //      + stun 打斷,不是被走位打斷。所以退還冷卻已經不是必要的補償,
+    //      而它會讓「走位取消」變成零成本 —— 那等於這條規則不存在。
+    //   4. **不**觸發 whiff(揮空前衝)。whiff 是「打到空氣」的過度投入;自己走開
+    //      是玩家的決定,安靜取消,LoL / WC3 都是這樣。
+    //   5. 被擊退／自己衝刺同樣算移動:擊退把人往**遠離攻擊者**的方向推,靠近
+    //      速度是負的,一定會取消 —— 被打飛就別想把那一刀揮完。
+    //
+    // 唯一的例外是「正在朝目標靠近」,而它是**量出來的**(拿掉就有近戰十秒打不出
+    // 一下) —— 見 `combatFeel.standstillBlocks`。
+    const ss = world.combatFeel.standstill;
+
     const champ = world.champion.get(id);
     const cdef = champ ? Champions.tryGet(champ.championId as ChampionId) : undefined;
     const attackType = cdef?.attackType ?? "melee";
@@ -210,6 +245,11 @@ export function basicAttackSystem(world: SimWorld): void {
         // (target left well before the damage point) stays a silent cancel,
         // LoL-style, so cadence is unchanged.
         if (w.ticksLeft <= 1) whiff(world, id, t, attackType);
+        continue;
+      }
+      // 打就站定:走動就作廢這一刀(朝目標靠近除外)。安靜取消,不 whiff,不退冷卻。
+      if (standstillBlocks(ss, t.vel, t.pos, tgtT.pos)) {
+        ab.windup = null;
         continue;
       }
       // 揮劍轉向 (task #264)：整段前搖每 tick 重新瞄準。目標會走位，所以不能只在
@@ -239,6 +279,9 @@ export function basicAttackSystem(world: SimWorld): void {
     }
     const reach = reachTo(sc, t.radius, tgtT.radius);
     if (distSq(t.pos, tgtT.pos) > reach * reach) continue; // still chasing
+    // 打就站定:走動中不開新的一刀(朝目標靠近除外)。擋在冷卻 commit **之前**,
+    // 所以走位不會白白燒掉一次攻擊間隔 —— 停下來的那一 tick 就能立刻出手。
+    if (standstillBlocks(ss, t.vel, t.pos, tgtT.pos)) continue;
 
     // commit the whole-interval cooldown now; the wind-up is part of it.
     const baseAttackTime = cdef?.baseAttackTime ?? 1.0;

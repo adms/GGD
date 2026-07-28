@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "031350cc07a6",
+  "hash": "88e87f2b845b",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -37,6 +37,12 @@
       "path": "config/combat-env.json",
       "hash": "e040bebc796b",
       "size": 722
+    },
+    {
+      "id": "combat-feel",
+      "path": "config/combat-feel.json",
+      "hash": "03304795be9a",
+      "size": 233
     },
     {
       "id": "config.match",
