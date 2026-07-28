@@ -81,6 +81,32 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     regenPerLevel: 0,
   },
   reward: { gold: 20, xp: 40, killsPerLevel: 6 },
+  // 殭屍王 + 特殊殭屍 (#262). Restated from `DEFAULT_MOB_WAVES_CONFIG` for the
+  // same reason as everything above, and pinned against it by mobWaves.test.ts.
+  boss: {
+    enabled: true,
+    killThreshold: 100,
+    repeatable: true,
+    maxHp: 6000,
+    attackDamage: 12,
+    moveSpeed: 2.4,
+    attackRange: 2.6,
+    attackCdSec: 1.4,
+    radius: 1.8,
+    modelKey: "champ.mob.zombie-king",
+    bountyGold: 3000,
+    bountyXp: 1200,
+    lastHitMultiplier: 2,
+  },
+  special: {
+    chancePercent: 5,
+    hpMult: 2,
+    damageMult: 1.5,
+    moveSpeedMult: 1.25,
+    radiusMult: 1.8,
+    rewardMult: 3,
+    modelKey: "champ.mob.zombie-special",
+  },
 };
 
 // ----------------------------------------------------------------- fields ---
@@ -114,10 +140,32 @@ export type MobWavesFieldKey =
   | "mob.regenPerLevel"
   | "reward.gold"
   | "reward.xp"
-  | "reward.killsPerLevel";
+  | "reward.killsPerLevel"
+  // 殭屍王 (#262)
+  | "boss.enabled"
+  | "boss.killThreshold"
+  | "boss.repeatable"
+  | "boss.maxHp"
+  | "boss.attackDamage"
+  | "boss.attackCdSec"
+  | "boss.attackRange"
+  | "boss.moveSpeed"
+  | "boss.radius"
+  | "boss.modelKey"
+  | "boss.bountyGold"
+  | "boss.bountyXp"
+  | "boss.lastHitMultiplier"
+  // 特殊殭屍 (#262)
+  | "special.chancePercent"
+  | "special.hpMult"
+  | "special.damageMult"
+  | "special.moveSpeedMult"
+  | "special.radiusMult"
+  | "special.rewardMult"
+  | "special.modelKey";
 
 /** How a box is typed + validated. `champion`/`model` are text with a picker. */
-export type FieldKind = "int" | "num" | "text" | "champion" | "model";
+export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool";
 
 export interface MobWavesFieldSpec {
   /** 中文名稱 — the row's first column */
@@ -133,6 +181,13 @@ export interface MobWavesFieldSpec {
   optional: boolean;
   /** what an empty box means, in words (only for `optional` fields) */
   emptyMeans?: string;
+  /**
+   * `bool` fields only: what the two states are CALLED. A boolean stored as a
+   * bare "1"/"0" is unreadable in a console — the operator has to guess which
+   * way round it is — so the picker renders these words and the raw value never
+   * reaches the screen.
+   */
+  boolLabels?: { on: string; off: string };
 }
 
 /**
@@ -162,6 +217,26 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "reward.gold",
   "reward.xp",
   "reward.killsPerLevel",
+  "boss.enabled",
+  "boss.killThreshold",
+  "boss.repeatable",
+  "boss.modelKey",
+  "boss.maxHp",
+  "boss.attackDamage",
+  "boss.attackCdSec",
+  "boss.attackRange",
+  "boss.moveSpeed",
+  "boss.radius",
+  "boss.bountyGold",
+  "boss.bountyXp",
+  "boss.lastHitMultiplier",
+  "special.chancePercent",
+  "special.modelKey",
+  "special.hpMult",
+  "special.damageMult",
+  "special.moveSpeedMult",
+  "special.radiusMult",
+  "special.rewardMult",
 ] as const;
 
 /**
@@ -347,6 +422,164 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 1,
     optional: false,
   },
+
+  // ── 殭屍王 (#262) ────────────────────────────────────────────────────────
+  "boss.enabled": {
+    zh: "開啟殭屍王",
+    note: "關掉就完全不會有殭屍王：不召喚、不發獎金，其他殭屍照舊",
+    unit: "",
+    kind: "bool",
+    optional: false,
+    boolLabels: { on: "開啟", off: "關閉" },
+  },
+  "boss.killThreshold": {
+    zh: "累積幾隻召喚殭屍王",
+    note: "算的是「單一英雄」自己的累計擊殺，而且跨回合累積。兩個人各 50 隻不會召喚",
+    unit: "隻",
+    kind: "int",
+    min: 1,
+    optional: false,
+  },
+  "boss.repeatable": {
+    zh: "可重複召喚",
+    note: "開 = 每滿 N 隻就再來一隻（100、200、300…）；關 = 整場只在剛好第 N 隻那次召喚一次",
+    unit: "",
+    kind: "bool",
+    optional: false,
+    boolLabels: { on: "每滿 N 隻都召喚", off: "整場只召喚一次" },
+  },
+  "boss.modelKey": {
+    zh: "殭屍王模型",
+    note: "王要看得出來是王：這份模型文件的體型比一般殭屍大得多。留空 = 跟一般殭屍同一個模型",
+    unit: "",
+    kind: "model",
+    optional: true,
+    emptyMeans: "留空 = 用一般殭屍的模型（玩家會分不出來）",
+  },
+  "boss.maxHp": {
+    zh: "殭屍王血量",
+    note: "固定值，不隨回合成長（王是任務獎勵，不是波次的一部分）",
+    unit: "點",
+    kind: "num",
+    optional: false,
+  },
+  "boss.attackDamage": {
+    zh: "殭屍王攻擊力",
+    note: "每次普攻打掉玩家多少血（走完一般減傷）",
+    unit: "點",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
+  "boss.attackCdSec": {
+    zh: "殭屍王攻擊間隔",
+    note: "兩次普攻之間幾秒",
+    unit: "秒",
+    kind: "num",
+    optional: false,
+  },
+  "boss.attackRange": {
+    zh: "殭屍王攻擊距離",
+    note: "追到多近才動手（王的身體半徑大，這個值也要跟著大）",
+    unit: "單位",
+    kind: "num",
+    optional: false,
+  },
+  "boss.moveSpeed": {
+    zh: "殭屍王移動速度",
+    note: "走多快（英雄一般約 6，一般殭屍 3）",
+    unit: "單位/秒",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
+  "boss.radius": {
+    zh: "殭屍王身體半徑",
+    note: "碰撞體積。一般殭屍是 0.6，這裡放大就是「王很大隻」的手感來源",
+    unit: "單位",
+    kind: "num",
+    optional: false,
+  },
+  "boss.bountyGold": {
+    zh: "殭屍王獎金總額",
+    note: "這是「全部人加起來」的總金額，不是每人。照傷害比例分，最後一刀的人權重加倍",
+    unit: "金",
+    kind: "int",
+    min: 0,
+    optional: false,
+  },
+  "boss.bountyXp": {
+    zh: "殭屍王經驗總額",
+    note: "同上，也是總量，用同一套比例分下去",
+    unit: "XP",
+    kind: "int",
+    min: 0,
+    optional: false,
+  },
+  "boss.lastHitMultiplier": {
+    zh: "最後一刀權重倍率",
+    note: "2 = 補刀的人「每點傷害」算兩倍。因為是權重，總額仍然剛好等於上面的總金額",
+    unit: "倍",
+    kind: "num",
+    min: 1,
+    optional: false,
+  },
+
+  // ── 特殊殭屍 (#262) ──────────────────────────────────────────────────────
+  "special.chancePercent": {
+    zh: "特殊殭屍出現機率",
+    note: "每生一隻殭屍就擲一次。0 = 完全不出現（而且完全不抽亂數）",
+    unit: "%",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
+  "special.modelKey": {
+    zh: "特殊殭屍模型",
+    note: "要跟一般殭屍長得不一樣，玩家才知道自己遇到了什麼。留空 = 跟一般殭屍同一個模型",
+    unit: "",
+    kind: "model",
+    optional: true,
+    emptyMeans: "留空 = 用一般殭屍的模型（玩家會分不出來）",
+  },
+  "special.hpMult": {
+    zh: "血量倍率",
+    note: "相對同一回合的一般殭屍。2 = 兩倍血",
+    unit: "倍",
+    kind: "num",
+    optional: false,
+  },
+  "special.damageMult": {
+    zh: "攻擊力倍率",
+    note: "相對一般殭屍的攻擊力",
+    unit: "倍",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
+  "special.moveSpeedMult": {
+    zh: "移動速度倍率",
+    note: "相對一般殭屍的移速。>1 = 追得比較兇",
+    unit: "倍",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
+  "special.radiusMult": {
+    zh: "體型倍率",
+    note: "身體半徑與攻擊距離一起放大，所以牠看起來大一圈、也打得到人",
+    unit: "倍",
+    kind: "num",
+    optional: false,
+  },
+  "special.rewardMult": {
+    zh: "獎勵倍率",
+    note: "打死牠給的金錢與經驗都乘這個數（升級進度算一隻，不變）",
+    unit: "倍",
+    kind: "num",
+    min: 0,
+    optional: false,
+  },
 };
 
 /** Display grouping — every field appears in EXACTLY ONE group (unit-tested). */
@@ -390,6 +623,39 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     title: "擊殺獎勵 · 打殭屍換什麼",
     blurb: "獎勵只給最後一擊的人。",
     keys: ["reward.gold", "reward.xp", "reward.killsPerLevel"],
+  },
+  {
+    title: "殭屍王 · 單一英雄累積擊殺後召喚",
+    blurb:
+      "門檻算的是「一個人自己」的累計擊殺，而且跨回合不歸零；王會出現在那個人的戰場。獎金是總額，照參戰傷害比例分，補刀的人權重加倍。",
+    keys: [
+      "boss.enabled",
+      "boss.killThreshold",
+      "boss.repeatable",
+      "boss.modelKey",
+      "boss.maxHp",
+      "boss.attackDamage",
+      "boss.attackCdSec",
+      "boss.attackRange",
+      "boss.moveSpeed",
+      "boss.radius",
+      "boss.bountyGold",
+      "boss.bountyXp",
+      "boss.lastHitMultiplier",
+    ],
+  },
+  {
+    title: "特殊殭屍 · 殭屍群裡的那一隻",
+    blurb: "每生一隻就擲一次機率。機率填 0 就完全關掉，連亂數都不抽。",
+    keys: [
+      "special.chancePercent",
+      "special.modelKey",
+      "special.hpMult",
+      "special.damageMult",
+      "special.moveSpeedMult",
+      "special.radiusMult",
+      "special.rewardMult",
+    ],
   },
 ];
 
@@ -473,6 +739,51 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.reward.xp);
     case "reward.killsPerLevel":
       return formatNum(cfg.reward.killsPerLevel);
+    // #262 — an ABSENT `boss` / `special` block reads as EMPTY, not as 0/false.
+    // Empty is what `validateField` rejects for these required fields and what
+    // `configFromForm` turns back into an omitted block, so a doc authored
+    // before #262 round-trips through this page unchanged instead of silently
+    // gaining a disabled king.
+    case "boss.enabled":
+      return cfg.boss === undefined ? "" : cfg.boss.enabled ? "1" : "0";
+    case "boss.repeatable":
+      return cfg.boss === undefined ? "" : cfg.boss.repeatable ? "1" : "0";
+    case "boss.killThreshold":
+      return formatNum(cfg.boss?.killThreshold);
+    case "boss.maxHp":
+      return formatNum(cfg.boss?.maxHp);
+    case "boss.attackDamage":
+      return formatNum(cfg.boss?.attackDamage);
+    case "boss.attackCdSec":
+      return formatNum(cfg.boss?.attackCdSec);
+    case "boss.attackRange":
+      return formatNum(cfg.boss?.attackRange);
+    case "boss.moveSpeed":
+      return formatNum(cfg.boss?.moveSpeed);
+    case "boss.radius":
+      return formatNum(cfg.boss?.radius);
+    case "boss.modelKey":
+      return cfg.boss?.modelKey ?? "";
+    case "boss.bountyGold":
+      return formatNum(cfg.boss?.bountyGold);
+    case "boss.bountyXp":
+      return formatNum(cfg.boss?.bountyXp);
+    case "boss.lastHitMultiplier":
+      return formatNum(cfg.boss?.lastHitMultiplier);
+    case "special.chancePercent":
+      return formatNum(cfg.special?.chancePercent);
+    case "special.hpMult":
+      return formatNum(cfg.special?.hpMult);
+    case "special.damageMult":
+      return formatNum(cfg.special?.damageMult);
+    case "special.moveSpeedMult":
+      return formatNum(cfg.special?.moveSpeedMult);
+    case "special.radiusMult":
+      return formatNum(cfg.special?.radiusMult);
+    case "special.rewardMult":
+      return formatNum(cfg.special?.rewardMult);
+    case "special.modelKey":
+      return cfg.special?.modelKey ?? "";
   }
 }
 
@@ -555,7 +866,12 @@ export function parseNum(text: string): number | null {
 export function validateField(key: MobWavesFieldKey, text: string): string {
   const spec = MOB_WAVES_LABELS[key];
   const t = text.trim();
+  // #262 — a `bool`/required field inside an ABSENT block is legal EMPTY: the
+  // whole block is simply not authored. `blockEmpty` (below) is what decides
+  // that, so `validateField` alone treats empty as 必填 and the form-level
+  // `validateForm` waives it for a block nobody has filled in at all.
   if (t === "") return spec.optional ? "" : "必填";
+  if (spec.kind === "bool") return t === "1" || t === "0" ? "" : "只能是開或關";
   if (spec.kind === "text" || spec.kind === "champion" || spec.kind === "model") return "";
   const n = Number(t);
   if (!Number.isFinite(n)) return "必須是數字";
@@ -580,9 +896,25 @@ export interface MobWavesErrors {
   general: string[];
 }
 
+/**
+ * True when EVERY field of an optional block (`boss.` / `special.`) is blank —
+ * i.e. the operator has not authored the block at all, which the schema allows.
+ * Without this, opening the page on a pre-#262 arena-rules doc would light up
+ * twenty 必填 errors and gate Save on filling in a mechanic nobody asked for.
+ */
+export function blockEmpty(form: MobWavesForm, prefix: "boss." | "special."): boolean {
+  return MOB_WAVES_FIELD_ORDER.filter((k) => k.startsWith(prefix)).every(
+    (k) => form.fields[k].trim() === "",
+  );
+}
+
 export function validateForm(form: MobWavesForm): MobWavesErrors {
   const fields: Partial<Record<MobWavesFieldKey, string>> = {};
+  const bossOff = blockEmpty(form, "boss.");
+  const specialOff = blockEmpty(form, "special.");
   for (const k of MOB_WAVES_FIELD_ORDER) {
+    if (bossOff && k.startsWith("boss.")) continue;
+    if (specialOff && k.startsWith("special.")) continue;
     const e = validateField(k, form.fields[k]);
     if (e) fields[k] = e;
   }
@@ -639,6 +971,14 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     const t = form.fields[key].trim();
     return t === "" ? undefined : t;
   };
+  // "1"/"0" ⇒ true/false. Anything else (blank, or a value the picker could not
+  // have produced) falls back to the SHIPPED setting rather than to `false` —
+  // silently disabling a mechanic is the worst possible default for a box
+  // nobody managed to fill in.
+  const bool = (key: MobWavesFieldKey, fallback: boolean): boolean => {
+    const t = form.fields[key].trim();
+    return t === "1" ? true : t === "0" ? false : fallback;
+  };
 
   const mob: MobWavesConfig["mob"] = {
     maxHp: num("mob.maxHp", SHIPPED_MOB_WAVES.mob.maxHp),
@@ -694,6 +1034,48 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   // An EMPTY table means "no per-round overrides" — write no key at all rather
   // than `schedule: []`, so the doc goes back to exactly the legacy shape.
   if (schedule.length > 0) out.schedule = schedule;
+
+  // #262 — 殭屍王 / 特殊殭屍. A block whose fields are ALL blank is OMITTED, not
+  // written as zeros: an omitted block is how the sim is told the sub-mechanic
+  // is off (`MobRules.boss === null`), and writing `enabled: false` instead
+  // would be a different, louder statement than the operator made. Partially
+  // filled blocks cannot reach here — `formValid` gates Save on them — but the
+  // shipped value is used as the fallback anyway so this can never emit a doc
+  // the schema rejects.
+  if (!blockEmpty(form, "boss.")) {
+    const sb = SHIPPED_MOB_WAVES.boss!;
+    const boss: NonNullable<MobWavesConfig["boss"]> = {
+      enabled: bool("boss.enabled", sb.enabled),
+      killThreshold: num("boss.killThreshold", sb.killThreshold),
+      repeatable: bool("boss.repeatable", sb.repeatable),
+      maxHp: num("boss.maxHp", sb.maxHp),
+      attackDamage: num("boss.attackDamage", sb.attackDamage),
+      moveSpeed: num("boss.moveSpeed", sb.moveSpeed),
+      attackRange: num("boss.attackRange", sb.attackRange),
+      attackCdSec: num("boss.attackCdSec", sb.attackCdSec),
+      radius: num("boss.radius", sb.radius),
+      bountyGold: num("boss.bountyGold", sb.bountyGold),
+      bountyXp: num("boss.bountyXp", sb.bountyXp),
+      lastHitMultiplier: num("boss.lastHitMultiplier", sb.lastHitMultiplier),
+    };
+    const bm = optText("boss.modelKey");
+    if (bm !== undefined) boss.modelKey = bm;
+    out.boss = boss;
+  }
+  if (!blockEmpty(form, "special.")) {
+    const ss = SHIPPED_MOB_WAVES.special!;
+    const special: NonNullable<MobWavesConfig["special"]> = {
+      chancePercent: num("special.chancePercent", ss.chancePercent),
+      hpMult: num("special.hpMult", ss.hpMult),
+      damageMult: num("special.damageMult", ss.damageMult),
+      moveSpeedMult: num("special.moveSpeedMult", ss.moveSpeedMult),
+      radiusMult: num("special.radiusMult", ss.radiusMult),
+      rewardMult: num("special.rewardMult", ss.rewardMult),
+    };
+    const sm = optText("special.modelKey");
+    if (sm !== undefined) special.modelKey = sm;
+    out.special = special;
+  }
   return out;
 }
 

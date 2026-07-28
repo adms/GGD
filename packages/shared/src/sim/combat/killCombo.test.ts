@@ -62,6 +62,12 @@ const RULES: MobRules = {
   rewardGold: 20,
   rewardXp: 40,
   killsPerLevel: 30,
+  // #262 EXPLICITLY DISARMED. Every assertion in this file predates the
+  // 殭屍王 / 特殊殭屍 sub-mechanics and must keep measuring exactly what it
+  // measured before: `special: null` in particular means spawnMob draws
+  // NOTHING from `world.rng`, so the shared stream stays where #215 left it.
+  boss: null,
+  special: null,
 };
 
 const newWorld = (seed = 7): SimWorld => {

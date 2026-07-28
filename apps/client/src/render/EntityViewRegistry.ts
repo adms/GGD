@@ -22,7 +22,7 @@ import { ReviveCircleView } from "./views/ReviveCircleView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import { mudTintFor, type GrowthTier } from "./views/growthTier";
-import { growthTierFromFlags } from "@ggd/shared/protocol/schema";
+import { growthTierFromFlags, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -210,6 +210,37 @@ export interface ModelDocOverride {
 export function relativeScaleOf(override: ModelDocOverride | null | undefined): number {
   const r = override?.relativeScale;
   return typeof r === "number" && r > 0 ? r : 1;
+}
+
+/**
+ * SIZE OVERRIDE FOR A MOB (task #262) — why 一般殭屍 / 特殊殭屍 / 殭屍王 are
+ * three different sizes on screen instead of three names for the same one.
+ *
+ * #262 gave each mob kind its own model doc (`champ.godie-zombiex` scale 1.0 /
+ * `champ.mob.zombie-special` 1.22 / `champ.mob.zombie-king` 2.45) and routed the
+ * kind onto the wire through `EntityState.key`. That is necessary and NOT
+ * sufficient: since #150 `ChampionView.tryUpgradeToGlb` HEIGHT-NORMALIZES every
+ * adopted .glb to `TARGET_HEIGHT` (1.8u) and treats `doc.scale` as dead data —
+ * the on-screen size comes from `relativeScale` alone. All three mob docs point
+ * at the SAME `blocky-undead.glb`, so all three normalized to the identical
+ * 1.8u: a 6,000 hp king that looked exactly like the 100 hp zombie next to it.
+ * (`mobModelKeyFor` returning three distinct strings is an ATTRIBUTE, not the
+ * behaviour — the three keys resolved to three docs that rendered the same.)
+ *
+ * The per-champion override path cannot cover this: it is keyed by championId
+ * via the seat table, and a mob has `seatId === -1` and no seat. So for a MOB —
+ * and ONLY a mob — the doc's declared `scale` becomes the relative multiplier,
+ * i.e. 「這隻是普通殭屍的 N 倍大」. Champions are untouched (`kind !== MOB`
+ * returns null here), which is what keeps #150's normalization intact for the
+ * roster it was written for.
+ */
+export function mobModelSizeOverride(
+  e: Pick<EntityViewState, "kind">,
+  doc: ModelDoc | null | undefined,
+): ModelDocOverride | null {
+  if (e.kind !== ENTITY_KIND.MOB) return null;
+  const s = doc?.scale;
+  return typeof s === "number" && Number.isFinite(s) && s > 0 ? { relativeScale: s } : null;
 }
 
 /** Apply a per-champion override to a resolved model doc (task #77). */

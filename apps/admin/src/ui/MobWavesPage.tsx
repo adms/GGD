@@ -456,7 +456,11 @@ function FieldRow(props: {
       ? (spec.emptyMeans ?? "（未設定）")
       : spec.kind === "champion"
         ? championLabel(props.live, props.champions)
-        : `${props.live}${spec.unit}`;
+        : spec.kind === "bool"
+          ? // #262: never print the raw "1"/"0" — an operator reading 「目前生效：1」
+            // has to guess which way round it is.
+            (props.live.trim() === "1" ? (spec.boolLabels?.on ?? "開啟") : (spec.boolLabels?.off ?? "關閉"))
+          : `${props.live}${spec.unit}`;
 
   return (
     <div
@@ -488,7 +492,15 @@ function FieldRow(props: {
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-        {spec.kind === "champion" ? (
+        {spec.kind === "bool" ? (
+          <BoolPicker
+            value={props.value}
+            labels={spec.boolLabels ?? { on: "開啟", off: "關閉" }}
+            disabled={props.disabled}
+            dataField={props.fieldKey}
+            onChange={props.onChange}
+          />
+        ) : spec.kind === "champion" ? (
           <ChampionPicker
             value={props.value}
             options={props.champions}
@@ -586,6 +598,44 @@ function ChampionPicker(props: {
           {o.name === o.id ? o.id : `${o.name}（${o.id}）`}
         </option>
       ))}
+    </select>
+  );
+}
+
+/**
+ * A boolean knob (task #262 殭屍王). A two-option `<select>` rather than a
+ * checkbox for one reason: the third state, EMPTY, is real — an arena that does
+ * not author the 殭屍王 block at all leaves every one of its fields blank, and a
+ * checkbox has nowhere to render that. Blank shows as 「（未設定）」 and stays
+ * blank until the operator picks a side.
+ */
+function BoolPicker(props: {
+  value: string;
+  labels: { on: string; off: string };
+  disabled: boolean;
+  dataField: string;
+  onChange: (v: string) => void;
+}): React.JSX.Element {
+  return (
+    <select
+      value={props.value}
+      disabled={props.disabled}
+      data-field={props.dataField}
+      onChange={(e) => props.onChange(e.target.value)}
+      style={{
+        padding: "6px 8px",
+        borderRadius: 8,
+        border: "1px solid #2c3448",
+        background: "#10141f",
+        color: TEXT_MAIN,
+        fontSize: 12.5,
+        width: "100%",
+        maxWidth: 200,
+      }}
+    >
+      <option value="">（未設定 — 整個區塊不寫入）</option>
+      <option value="1">{props.labels.on}</option>
+      <option value="0">{props.labels.off}</option>
     </select>
   );
 }

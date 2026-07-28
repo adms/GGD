@@ -79,6 +79,7 @@ import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
 import {
   EntityViewRegistry,
+  mobModelSizeOverride,
   type EntityViewState,
   type ModelDocOverride,
 } from "./render/EntityViewRegistry";
@@ -851,6 +852,15 @@ export class GameApp {
    * exceptions (小叮噹 0.65 → ~1.17u … 初號機 1.55 → ~2.79u) reach the renderer.
    */
   private modelOverrideFor(e: EntityViewState): ModelDocOverride | null {
+    // #262 — A MOB HAS NO SEAT, so the championId hop below returns null and the
+    // #150 normalization would render 一般殭屍 / 特殊殭屍 / 殭屍王 at the same
+    // 1.8u (all three docs share one .glb; only their `scale` differs, and #150
+    // stopped reading `scale`). For a mob the doc's `scale` IS the size ratio,
+    // so it is turned into the relative multiplier here — the same seam, one
+    // branch earlier. `mobModelSizeOverride` returns null for every non-mob, so
+    // champions keep the normalized size exactly as #150 left it.
+    const mob = mobModelSizeOverride(e, this.modelDocFor(e.key));
+    if (mob) return mob;
     const championId = this.championIdForSeat(e.seatId);
     if (!championId) return null;
     const base = this.contentDb.modelOverrideFor(championId);

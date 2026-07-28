@@ -118,6 +118,12 @@ const RULES: MobRules = {
   rewardGold: 20,
   rewardXp: 40,
   killsPerLevel: 30,
+  // #262 EXPLICITLY DISARMED. Every assertion in this file predates the
+  // 殭屍王 / 特殊殭屍 sub-mechanics and must keep measuring exactly what it
+  // measured before: `special: null` in particular means spawnMob draws
+  // NOTHING from `world.rng`, so the shared stream stays where #215 left it.
+  boss: null,
+  special: null,
 };
 
 const newWorld = (seed = 1): SimWorld => {
@@ -229,7 +235,7 @@ describe("#244 (C) stacking replaces one-source-per-proc", () => {
     // does and assert the invariant that matters: source count is O(1).
     for (let i = 0; i < 100; i++) {
       const mob = w.spawn();
-      w.mob.set(mob, { zone: 0, team: MONSTER_TEAM, target: -1, attackCdTicks: 0, spawnTick: 0 });
+      w.mob.set(mob, { zone: 0, team: MONSTER_TEAM, target: -1, attackCdTicks: 0, spawnTick: 0, kind: "normal" });
       w.health.set(mob, { hp: 1, maxHp: 1, mana: 0, maxMana: 0, alive: true, shields: [] });
       fireHooks(w, me, "onKill", mob);
       w.mob.delete(mob);
@@ -247,7 +253,7 @@ describe("#244 (C) stacking replaces one-source-per-proc", () => {
     const sc = w.stats.get(me)!;
     for (let i = 0; i < 250; i++) {
       const mob = w.spawn();
-      w.mob.set(mob, { zone: 0, team: MONSTER_TEAM, target: -1, attackCdTicks: 0, spawnTick: 0 });
+      w.mob.set(mob, { zone: 0, team: MONSTER_TEAM, target: -1, attackCdTicks: 0, spawnTick: 0, kind: "normal" });
       w.health.set(mob, { hp: 1, maxHp: 1, mana: 0, maxMana: 0, alive: true, shields: [] });
       fireHooks(w, me, "onKill", mob);
       w.mob.delete(mob);

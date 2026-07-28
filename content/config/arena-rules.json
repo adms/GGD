@@ -186,6 +186,30 @@
       "gold": 20,
       "xp": 40,
       "killsPerLevel": 6
+    },
+    "boss": {
+      "enabled": true,
+      "killThreshold": 100,
+      "repeatable": true,
+      "maxHp": 6000,
+      "attackDamage": 12,
+      "moveSpeed": 2.4,
+      "attackRange": 2.6,
+      "attackCdSec": 1.4,
+      "radius": 1.8,
+      "modelKey": "champ.mob.zombie-king",
+      "bountyGold": 3000,
+      "bountyXp": 1200,
+      "lastHitMultiplier": 2
+    },
+    "special": {
+      "chancePercent": 5,
+      "hpMult": 2,
+      "damageMult": 1.5,
+      "moveSpeedMult": 1.25,
+      "radiusMult": 1.8,
+      "rewardMult": 3,
+      "modelKey": "champ.mob.zombie-special"
     }
   }
 }

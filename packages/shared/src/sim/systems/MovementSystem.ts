@@ -27,6 +27,7 @@ import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } f
 import { steerAroundObstacles } from "../collision/avoid";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
+import { mobProfile } from "../mobs";
 
 /** Fallback move speed (units/sec) for entities without a stats component. */
 const BASE_MOVE_SPEED = 6;
@@ -184,9 +185,17 @@ export function movementSystem(world: SimWorld): void {
         // champion it is a copy of. Since #215 the mob card owns its own speed
         // (owner 2026-07-27: 「移動速度也會減半」), read from `world.mobRules`
         // rather than a new MobComp field so the digest is untouched.
+        // #262: read the speed for THIS mob's KIND (一般 / 特殊 / 殭屍王), not
+        // the wave's — a king that walked at zombie speed would be a zombie with
+        // more hp. `mobProfile` is the one place any system resolves it.
+        const mobComp = world.mob.get(id);
+        const mobSpeed =
+          mobComp && world.mobRules !== null
+            ? mobProfile(world.mobRules, mobComp.kind).moveSpeed
+            : BASE_MOVE_SPEED;
         const baseSpeed =
           world.stats.get(id)?.final[Stat.MoveSpeed] ||
-          (world.mob.has(id) ? (world.mobRules?.moveSpeed ?? BASE_MOVE_SPEED) : BASE_MOVE_SPEED);
+          (world.mob.has(id) ? mobSpeed : BASE_MOVE_SPEED);
         // acceleration ramp: full speed reached over ACCEL_TICKS ticks
         const ramp = Math.min(1, (t.accel ?? 0) + 1 / ACCEL_TICKS);
         t.accel = ramp;

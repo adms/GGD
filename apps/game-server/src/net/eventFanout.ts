@@ -107,6 +107,28 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // contract as every other combat visual, so the ReplayRoom forwards them too.
   "mobSpawn",
   "mobSlain",
+  // 殭屍王 (task #262). Both are MANDATORY here, and the reason is the whole
+  // point of this file: the king is summoned and paid out ENTIRELY in the sim,
+  // so without these two names the mechanic is a server-side spreadsheet —
+  // 100 zombies of work produces a monster that appears with no announcement
+  // and a 3,000g prize that lands as an unexplained jump in a gold counter.
+  //
+  //   mobBossSpawn — `{ id, zone, x, z, maxHp, summoner, summonerSeatId, kills }`.
+  //                  The 殭屍王降臨 banner + its entry cue. `summonerSeatId` is
+  //                  what gates 「YOUR quest fired」 on the local seat, exactly
+  //                  like `guardianSlain` / `coinPickedUp` do.
+  //   mobBossSlain — the SETTLEMENT: `{ id, killer, killerSeatId, totalGold,
+  //                  totalXp, lastHitMultiplier, shares[] }`, where each share
+  //                  is `{ id, seatId, damage, gold, xp, lastHit }`. The whole
+  //                  split travels because the client has no way to recompute
+  //                  it (the damage ledger is sim-only) and because 「照傷害比例
+  //                  發獎金,最後一刀翻倍」 is a rule players must be able to SEE
+  //                  being applied.
+  //
+  // CADENCE: one of each per king. A king is summoned at 100 personal zombie
+  // kills, so this is orders of magnitude rarer than `mobSlain`.
+  "mobBossSpawn",
+  "mobBossSlain",
   // FLOATING COMBAT TEXT (task #92): 補血 / 補魔 — the half `damage` does not
   // carry. Emitted only for DISCRETE restores, so no steady-state regen spam.
   "heal",

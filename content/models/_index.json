@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "8d32218d3353",
+  "hash": "ff3008781a33",
   "entries": [
     {
       "id": "champ.blocky.undead",
@@ -19,6 +19,18 @@
       "path": "models/champ.mob.zombie.json",
       "hash": "191e622f6e0a",
       "size": 497
+    },
+    {
+      "id": "champ.mob.zombie-king",
+      "path": "models/champ.mob.zombie-king.json",
+      "hash": "e9a615e60ce6",
+      "size": 502
+    },
+    {
+      "id": "champ.mob.zombie-special",
+      "path": "models/champ.mob.zombie-special.json",
+      "hash": "a5936b7c53c3",
+      "size": 505
     },
     {
       "id": "champ.sela",
