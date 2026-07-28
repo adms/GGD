@@ -1,0 +1,44 @@
+{
+  "id": "endless-edge",
+  "schema": "item@1",
+  "name": "無盡連刃",
+  "description": "武器\n效能\n攻擊速度上限+10\n每次普攻命中攻擊速度增加10%，可無限疊加，3秒內沒有新的普攻命中則全部層數歸零\n\n解說\n只有近戰英雄揮得動。停下來，它就冷掉了。",
+  "cost": 0,
+  "tier": 5,
+  "tags": [
+    "legendary",
+    "attack-speed",
+    "melee",
+    "on-hit"
+  ],
+  "requiresAttackType": "melee",
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "capRaise",
+      "value": 10.0
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "duration": 3,
+          "stackKey": "endless-edge"
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/items/endless-edge.png",
+  "craftRole": "none"
+}

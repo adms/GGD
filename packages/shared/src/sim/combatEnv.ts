@@ -4,7 +4,20 @@
  * applied at exactly ONE formula site in the sim:
  *
  *   cooldown      × ability cooldown seconds (abilities/abilitySystem.ts castAbility;
- *                   covers Q/W/E/R AND the EX slot — all pay through that one seam)
+ *                   covers Q/W/E/R AND the EX slot — all pay through that one seam).
+ *                   ABILITIES ONLY since #189 — see `itemCooldown` below.
+ *   itemCooldown  × an ITEM passive's internal cooldown seconds (effects/hooks.ts
+ *                   fireHooks, and ONLY for a source whose `kind === "item"`;
+ *                   champion passives, augments, auras and buffs keep their own
+ *                   ICDs unscaled). owner 2026-07-28: 道具冷卻要能獨立調,
+ *                   既有的 `cooldown` 只管技能.
+ *
+ *                   ⚠️ IT SHIPS AT 1.0 AND THAT IS NOT A PLACEHOLDER. Before
+ *                   #189 an item ICD was scaled by NOTHING at all, so 1.0 is the
+ *                   value that keeps every existing item byte-identical; the
+ *                   knob exists so the operator can move item cadence WITHOUT
+ *                   dragging every ability cooldown with it, which is exactly
+ *                   what the single `cooldown` factor used to force.
  *   damageDealt   × every DamagePacket amount pre-mitigation (combat/damage.ts
  *                   combatResolveSystem; basics, abilities, item/augment procs
  *                   and DoTs all drain through the one queue)
@@ -86,6 +99,10 @@ export const COMBAT_ENV_KEYS = [
   "lifesteal",
   "attackRange",
   "abilityRange",
+  // #189 — 道具冷卻, independent of the ability `cooldown` above. Appended at
+  // the END: `combatenv.Keys` in apps/platform mirrors this array and
+  // keysync_test.go compares them element by element.
+  "itemCooldown",
   "strToMaxHealth",
   "strToHealthRegen",
   "strToAttackDamage",

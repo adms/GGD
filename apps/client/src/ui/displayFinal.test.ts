@@ -34,6 +34,20 @@ describe("displayFinal (hud-display-final)", () => {
     expect(displayFinal(35, "cooldown", DEFAULT_COMBAT_ENV)).toBe(35);
   });
 
+  it("道具冷卻走自己的 key,不是技能冷卻 (#189)", () => {
+    cover("hud-display-final");
+    // #125 的規則:顯示的數字必須是玩家真正吃到的最終值。#189 把道具冷卻拆成
+    // 自己的倍率,所以任何顯示道具內部冷卻的地方都必須走 `itemCooldown` ——
+    // 走 `cooldown` 會在兩顆旋鈕不同值時直接說謊。
+    const SPLIT = normalizeCombatEnv({ cooldown: 0.25, itemCooldown: 2 });
+    expect(resolveFactorKey("itemCooldown")).toBe("itemCooldown");
+    expect(displayFinal(1, "itemCooldown", SPLIT)).toBe(2);
+    // 拿同一個表用錯 key,得到的是完全不同的數字 —— 這正是這條守衛存在的理由。
+    expect(displayFinal(1, "cooldown", SPLIT)).toBe(0.25);
+    // 中性表下兩者都不動基底。
+    expect(displayFinal(1, "itemCooldown", DEFAULT_COMBAT_ENV)).toBe(1);
+  });
+
   it("maps friendly aliases onto the right env key", () => {
     cover("hud-display-final");
     expect(resolveFactorKey("damage")).toBe("damageDealt");

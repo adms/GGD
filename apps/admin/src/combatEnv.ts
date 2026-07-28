@@ -132,7 +132,10 @@ export interface CombatEnvLabel {
  * to the sim makes this map a type error until it is labelled here.
  */
 export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
-  cooldown: { zh: "技能冷卻時間", note: "技能冷卻秒數（含 EX）。大於 1 = 冷卻更久" },
+  cooldown: { zh: "技能冷卻時間", note: "技能冷卻秒數（含 EX）。只影響技能，不影響道具。大於 1 = 冷卻更久" },
+  // #189 — 獨立於上面的技能冷卻。出貨 1.0：在 #189 之前道具冷卻完全沒有被任何
+  // 倍率碰過，所以 1.0 才是「維持原狀」的值，不是佔位符。
+  itemCooldown: { zh: "道具冷卻時間", note: "道具被動的內部冷卻秒數。與技能冷卻互不影響。大於 1 = 冷卻更久" },
   damageDealt: { zh: "造成傷害", note: "所有傷害（減傷前），含普攻、技能、持續傷害" },
   defense: { zh: "防禦力", note: "護甲與魔法抗性" },
   attackDamage: { zh: "物理攻擊力", note: "AD" },
@@ -175,7 +178,10 @@ export interface CombatEnvGroup {
  * `groupsCoverAllKeys`, unit-tested) so the page can never drop a multiplier.
  */
 export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
-  { title: "輸出 · 傷害與技能", keys: ["damageDealt", "cooldown", "attackDamage", "abilityPower", "abilityRange"] },
+  {
+    title: "輸出 · 傷害與技能",
+    keys: ["damageDealt", "cooldown", "itemCooldown", "attackDamage", "abilityPower", "abilityRange"],
+  },
   { title: "生存 · 防禦與回復", keys: ["maxHealth", "healthRegen", "defense", "shield", "healing", "lifesteal"] },
   { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
   { title: "暴擊", keys: ["critChance", "critDamage"] },

@@ -37,6 +37,7 @@ import type { EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { Items, LootTables } from "../content/registry";
 import { LEGENDARY_ORB_PRICE, LEGENDARY_POOL_TABLE, itemHasEffect } from "./itemTiers";
+import { itemOfferableTo } from "./offerEligibility";
 
 export type OrbResult =
   | "ok"
@@ -94,7 +95,16 @@ export function legendaryPool(world: SimWorld, id: EntityId): ItemId[] {
   const eligible = world.itemEligible;
   return table.entries
     .map((e) => e.itemId)
-    .filter((itemId) => !owned.has(itemId) && (eligible === null || eligible(itemId)) && orbEligible(itemId));
+    .filter(
+      (itemId) =>
+        !owned.has(itemId) &&
+        (eligible === null || eligible(itemId)) &&
+        orbEligible(itemId) &&
+        // #189 近戰限定 — see economy/offerEligibility.ts. Filtered here, BEFORE
+        // the roll, for the reason spelled out in this file's header: an empty
+        // pool must refuse the 2400g purchase, never charge for a dead card.
+        itemOfferableTo(world, id, itemId),
+    );
 }
 
 /**

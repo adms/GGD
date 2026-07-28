@@ -10,6 +10,7 @@ import type { AugmentTier } from "../content/defs";
 import { Augments, LootTables } from "../content/registry";
 import { attachSource } from "../stats/statPipeline";
 import { grantItemFree } from "./shop";
+import { itemOfferableTo } from "./offerEligibility";
 
 export interface AugmentOffer {
   entity: EntityId;
@@ -159,7 +160,12 @@ export function offerItems(world: SimWorld, entity: EntityId, tableId: string, c
   const champ = world.champion.get(entity);
   const owned = new Set(champ?.items ?? []);
   const table = LootTables.tryGet(tableId);
-  const working = (table?.entries ?? []).filter((e) => !owned.has(e.itemId)).map((e) => ({ ...e }));
+  // #189 — the attack-type gate runs BEFORE the roll, exactly like the orb's.
+  // Post-filtering a rolled offer is how task #47's silent empty cards happened,
+  // and it would also make the rng draw depend on cards that were never legal.
+  const working = (table?.entries ?? [])
+    .filter((e) => !owned.has(e.itemId) && itemOfferableTo(world, entity, e.itemId))
+    .map((e) => ({ ...e }));
 
   const choices: ItemId[] = [];
   while (choices.length < count && working.length > 0) {

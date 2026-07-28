@@ -21,6 +21,7 @@
     "lifesteal": 1.0,
     "attackRange": 1.0,
     "abilityRange": 0.6,
+    "itemCooldown": 1.0,
     "strToMaxHealth": 23,
     "strToHealthRegen": 0.04,
     "strToAttackDamage": 1,

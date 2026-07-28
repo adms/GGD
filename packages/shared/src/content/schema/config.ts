@@ -737,9 +737,21 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   // 殭屍王 (#262). 100 personal kills, and — because `killsPerLevel` is 6 — a
   // champion who summons one is already ~16 levels up from zombies alone, so the
   // king is authored as a genuine wall rather than a big zombie: 6,000 hp against
-  // the round-9 zombie's 200, and a 12 attack against its 1.2. 3,000 gold is
-  // roughly HALF the ~7,600g deterministic match income the price ladder is
-  // derived against (#82) — a real prize, still not a second economy.
+  // the round-9 zombie's 200, and a 12 attack against its 1.2.
+  //
+  // BOUNTY, owner 2026-07-28 (#187): 「殭屍王 總獎金也要後台能設定 預設是
+  // 30,000」. It was 3,000 — deliberately「roughly HALF the ~7,600g deterministic
+  // match income」so the king was a prize and not a second economy. 30,000 is a
+  // knowing REVERSAL of that framing: the king is now worth ~4x a whole match's
+  // baseline income, i.e. summoning one IS the economy for whoever kills it.
+  // That is the owner's call, not an inference — the number is his, and the 後台
+  // 小怪波 page can retune it live (`boss.bountyGold`).
+  //
+  // ⚠️ THIS DEFAULT IS WRITTEN THREE TIMES. `apps/admin/src/mobWaves.ts` mirrors
+  // it (so the console can render a default before the GET resolves) and
+  // `content/config/arena-rules.json` is the doc the sim actually loads;
+  // apps/admin/src/mobWaves.test.ts pins all three together. Changing one alone
+  // makes the console show a default the server does not use.
   boss: {
     enabled: true,
     killThreshold: 100,
@@ -753,7 +765,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // the silhouette cue that says 「這不是雜魚」 before any model loads.
     radius: 1.8,
     modelKey: "champ.mob.zombie-king",
-    bountyGold: 3000,
+    bountyGold: 30000,
+    // owner only named the GOLD. XP is deliberately left at 1,200 — raising it
+    // to match would hand the killer ~7 extra levels and that was not asked for.
     bountyXp: 1200,
     lastHitMultiplier: 2,
   },

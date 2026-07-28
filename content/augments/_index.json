@@ -1,6 +1,6 @@
 {
   "collection": "augments",
-  "hash": "a540fdb3f023",
+  "hash": "d22834c05d11",
   "entries": [
     {
       "id": "aegis-surge",
@@ -109,6 +109,12 @@
       "path": "augments/last-stand.json",
       "hash": "8e4a7a3ab262",
       "size": 676
+    },
+    {
+      "id": "limit-breaker",
+      "path": "augments/limit-breaker.json",
+      "hash": "d63b6df1c2f6",
+      "size": 449
     },
     {
       "id": "momentum-core",

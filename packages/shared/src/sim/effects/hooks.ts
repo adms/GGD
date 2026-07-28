@@ -41,9 +41,21 @@ export function fireHooks(
         if (!ok) continue;
       }
 
-      // internal cooldown
+      // Internal cooldown.
+      //
+      // `combatEnv.itemCooldown` (#189) scales this and ONLY this, and only for
+      // an ITEM source: owner asked for 道具冷卻 to be tunable independently of
+      // the ability `cooldown` factor, which multiplies ability cast cooldowns
+      // in abilities/abilitySystem.ts and has never touched an item.
+      //
+      // The kind check is what keeps the knob honest — champion passives,
+      // augments, auras and timed buffs all reach this same line, and scaling
+      // their ICDs from a factor labelled 道具冷卻 in the console would be a
+      // number that does not do what it says. Shipped at 1.0, so every existing
+      // hook keeps its exact pre-#189 cadence.
       if (hook.internalCooldown) {
-        const icdTicks = Math.round(hook.internalCooldown / world.dt);
+        const factor = src.kind === "item" ? world.combatEnv.itemCooldown : 1;
+        const icdTicks = Math.round((hook.internalCooldown * factor) / world.dt);
         if (world.tick - src.hookLastFired[hi]! < icdTicks) continue;
       }
       // proc chance (WC3 Hbh1/Ocr1/War1 …) — seeded rng, so a replay of the
