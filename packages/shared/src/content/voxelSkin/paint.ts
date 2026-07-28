@@ -20,16 +20,20 @@
  * UV convention is taken from Mojang/Minecraft or from any copyrighted
  * character art. The layout is this project's own (see types.ts).
  */
+import { bandRows, type BandRow } from "../../voxel/texture";
 import { dither } from "./hash";
 import { fromHex, type Rgb } from "./palette";
 import { textureSeed } from "./generate";
+import { barcodeToParts, hexToRgb255, sleeveColors } from "./barcode";
 import {
   ATLAS_H,
   ATLAS_W,
   ATLAS_FACES,
+  BARCODE_PARTS,
   MOTIF_CELLS,
   type AtlasRect,
   type BoxFace,
+  type VoxelBarcode,
   type VoxelSkinRecipe,
 } from "./types";
 
@@ -109,6 +113,47 @@ class Sheet {
     if (x < 0 || y < 0 || x >= r.w || y >= r.h) return;
     this.px(r.x + x, r.y + y, c, grain);
   }
+
+  // -- EXACT writers: 0..255 bytes straight in, no dither, no float ----------
+  //
+  // The barcode path uses these and never `px`. 規格 §8's acceptance is that
+  // the shipped PNG's band-centre texel EQUALS the authored hex, and the two
+  // things that would quietly break that are the ±grain dither and the
+  // hex → 0..1 float → ×255 round-trip (`(232/255)*255` is not obliged to land
+  // back on 232 before `|0` truncates it). Both are avoided here BY
+  // CONSTRUCTION rather than by a tolerance in the test.
+
+  /** One texel, exactly these bytes. */
+  pxExact(x: number, y: number, c: readonly [number, number, number]): void {
+    if (x < 0 || y < 0 || x >= ATLAS_W || y >= ATLAS_H) return;
+    const i = (y * ATLAS_W + x) * 4;
+    this.data[i] = c[0];
+    this.data[i + 1] = c[1];
+    this.data[i + 2] = c[2];
+    this.data[i + 3] = 255;
+  }
+
+  /** Fill a sub-rect exactly, in the rect's own local coordinates. */
+  fillExact(
+    r: AtlasRect,
+    x0: number,
+    y0: number,
+    w: number,
+    h: number,
+    c: readonly [number, number, number],
+  ): void {
+    for (let y = y0; y < y0 + h; y++) {
+      for (let x = x0; x < x0 + w; x++) {
+        if (x < 0 || y < 0 || x >= r.w || y >= r.h) continue;
+        this.pxExact(r.x + x, r.y + y, c);
+      }
+    }
+  }
+
+  /** Fill the whole rect exactly. */
+  allExact(r: AtlasRect, c: readonly [number, number, number]): void {
+    this.fillExact(r, 0, 0, r.w, r.h, c);
+  }
 }
 
 /** Rows of hair on each side face, per style: `[front, back, side, topFull]`. */
@@ -157,7 +202,24 @@ function paintHead(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string, Rgb>
     s.set(F.front, 6, 1, hair);
   }
 
-  // ---- eyes: the cheapest identity read on an 8×8 face ----
+  paintFaceDecals(s, r, p);
+}
+
+/**
+ * The FACE LAYER — eyes, mouth, mark. Painted on `head.front` and nowhere else.
+ *
+ * Split out of `paintHead` so the barcode path can reuse it verbatim (規格
+ * §2.3②: the barcode is 1-D and wraps the whole body, but a face is a PATTERN
+ * on one face — 多拉A夢's black eyes and red nose do not go round his head).
+ * Nothing was deleted or rewritten in the move; this is the same switch.
+ *
+ * ⚠ EVERY WRITE BELOW MUST STAY INSIDE `HEAD_DECAL_RECT`. That rect is what
+ * the barcode acceptance test uses to decide which texels the bands must own,
+ * so a decal that strayed outside it would silently shrink the checked area
+ * instead of failing. `paint.test.ts` asserts the containment directly.
+ */
+function paintFaceDecals(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string, Rgb>>): void {
+  const F = ATLAS_FACES.head;
   const eye = p.eye as Rgb;
   const white = lift(p.skin as Rgb, 0.85);
   const dark = shade(p.skin as Rgb, 0.25);
@@ -307,17 +369,7 @@ function paintTorso(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string, Rgb
       break;
   }
 
-  // ---- chest emblem (in-house 3×3 glyph) ----
-  const glyph = GLYPHS[r.outfit.emblem] ?? GLYPHS.cross;
-  if (glyph) {
-    const acc = p.accent as Rgb;
-    for (let gy = 0; gy < 3; gy++) {
-      const row = glyph[gy] as number;
-      for (let gx = 0; gx < 3; gx++) {
-        if ((row >> (2 - gx)) & 1) s.set(F.front, 2 + gx, 2 + gy, acc, 3);
-      }
-    }
-  }
+  paintChestEmblem(s, r, p);
 
   // ---- belt (always last, so it sits over the garment) ----
   s.fill(F.front, 0, 9, 8, 1, metal);
@@ -325,6 +377,27 @@ function paintTorso(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string, Rgb
   s.fill(F.right, 0, 9, 4, 1, shade(metal, 0.9));
   s.fill(F.left, 0, 9, 4, 1, shade(metal, 0.9));
   s.fill(F.front, 3, 9, 2, 1, p.accent as Rgb, 3); // buckle
+}
+
+/**
+ * The chest emblem — an in-house 3×3 glyph on `torso.front`, at local (2,2).
+ *
+ * Extracted from `paintTorso` (not rewritten) so the barcode path keeps it:
+ * a totem is the spec's own example of style art that belongs ON TOP of the
+ * bands. It must stay inside `TORSO_DECAL_RECT` for the same reason the face
+ * decals must stay inside theirs.
+ */
+function paintChestEmblem(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string, Rgb>>): void {
+  const F = ATLAS_FACES.torso;
+  const glyph = GLYPHS[r.outfit.emblem] ?? GLYPHS.cross;
+  if (!glyph) return;
+  const acc = p.accent as Rgb;
+  for (let gy = 0; gy < 3; gy++) {
+    const row = glyph[gy] as number;
+    for (let gx = 0; gx < 3; gx++) {
+      if ((row >> (2 - gx)) & 1) s.set(F.front, 2 + gx, 2 + gy, acc, 3);
+    }
+  }
 }
 
 function paintArm(
@@ -447,11 +520,141 @@ function paintMotifCells(s: Sheet, r: VoxelSkinRecipe, p: Readonly<Record<string
   }
 }
 
+// ===========================================================================
+// 條碼底帶 — 特徵生成 (docs/_體素特徵生成規格.md §7)
+// ===========================================================================
+
+/**
+ * The ONLY region of `head.front` the style layer may write when a barcode is
+ * present: the face decals (eyes / mouth / mark) sit in local y 2..7.
+ *
+ * Exported because the acceptance test is defined against it — every texel of
+ * every part rect OUTSIDE these two rects must carry its band's exact hex.
+ * Widening one of these rects therefore *shrinks* what the test checks, which
+ * is why `paint.test.ts` also asserts that the decal painters never write
+ * outside them.
+ */
+export const HEAD_DECAL_RECT: AtlasRect = Object.freeze({
+  x: ATLAS_FACES.head.front.x,
+  y: ATLAS_FACES.head.front.y + 2,
+  w: 8,
+  h: 6,
+});
+
+/** The 3×3 chest-emblem cell on `torso.front` — the other permitted overlay. */
+export const TORSO_DECAL_RECT: AtlasRect = Object.freeze({
+  x: ATLAS_FACES.torso.front.x + 2,
+  y: ATLAS_FACES.torso.front.y + 2,
+  w: 3,
+  h: 3,
+});
+
+/** Both overlay windows, for the containment guard and for the census. */
+export const BARCODE_OVERLAY_RECTS: readonly AtlasRect[] = Object.freeze([
+  HEAD_DECAL_RECT,
+  TORSO_DECAL_RECT,
+]);
+
+/** The four side faces of a box — the ones a horizontal band actually stripes. */
+const SIDE_FACES: readonly BoxFace[] = Object.freeze(["front", "back", "right", "left"] as const);
+
+/**
+ * The texel rows each of a barcode's three parts resolves to.
+ *
+ * The single place the 3D path turns fractions into rows, so the painter, the
+ * .glb bake and every assertion are reading the same allocation. `bandRows`
+ * (voxel/texture.ts) does the arithmetic and guarantees each band at least one
+ * row; this function only supplies the rect heights.
+ */
+export function barcodeRowsByPart(
+  barcode: VoxelBarcode,
+): Readonly<Record<"head" | "torso" | "legs", readonly BandRow[]>> {
+  const parts = barcodeToParts(barcode);
+  const out = {} as Record<"head" | "torso" | "legs", readonly BandRow[]>;
+  for (const part of BARCODE_PARTS) {
+    const bands = parts[part];
+    // The four side faces of a part all share one height (head 8, torso 12,
+    // legs 12) — the whole reason a single row allocation can serve all of them.
+    const height = ATLAS_FACES[part].front.h;
+    out[part] = Object.freeze(
+      bands.length === 0 ? [] : bandRows(bands.map((b) => ({ hex: b.hex, frac: b.frac })), height),
+    );
+  }
+  return Object.freeze(out);
+}
+
+/**
+ * LAY THE BANDS. 規格 §7: each part's bands are normalised to that part's
+ * `AtlasRect` height and drawn as horizontal stripes on ALL SIX FACES, because
+ * the barcode wraps the whole body rather than facing the camera.
+ *
+ * The two horizontal faces are not striped: a top face is a cross-section at
+ * one height, so it is entirely the topmost band's colour, and the bottom face
+ * entirely the bottom-most band's (the head's bottom face is the neck, which is
+ * skin, and the legs' bottom face is the sole, which is shoe). Striping them
+ * would draw a band structure that does not exist on that plane.
+ *
+ * ARMS ARE NOT BANDS (§2.4). The barcode is a mid-axis section, so the sleeve
+ * rule derives them: `long` = the whole arm in `top`'s colour, `short` = upper
+ * half `top` and lower half skin, `none` = all skin. `sleeveColors` returns
+ * null when the barcode lacks the colour a rule needs, and then the arms are
+ * left to whatever the layer below painted rather than being given an invented
+ * colour.
+ */
+function paintBarcodeBase(s: Sheet, barcode: VoxelBarcode): void {
+  const rowsByPart = barcodeRowsByPart(barcode);
+  for (const part of BARCODE_PARTS) {
+    const rows = rowsByPart[part];
+    // An empty part is reported as an `error` by `validateBarcode`; painting a
+    // grey filler here would make an unpaintable barcode look paintable.
+    if (rows.length === 0) continue;
+    const F = ATLAS_FACES[part];
+    for (const f of SIDE_FACES) {
+      const r = F[f];
+      for (const row of rows) {
+        s.fillExact(r, 0, row.y0, r.w, row.y1 - row.y0, hexToRgb255(row.hex));
+      }
+    }
+    s.allExact(F.top, hexToRgb255(rows[0]!.hex));
+    s.allExact(F.bottom, hexToRgb255(rows[rows.length - 1]!.hex));
+  }
+
+  const sleeve = sleeveColors(barcode);
+  if (!sleeve) return;
+  const upper = hexToRgb255(sleeve.upper);
+  const lower = hexToRgb255(sleeve.lower);
+  for (const which of ["armL", "armR"] as const) {
+    const F = ATLAS_FACES[which];
+    for (const f of SIDE_FACES) {
+      const r = F[f];
+      const mid = Math.floor(r.h / 2);
+      s.fillExact(r, 0, 0, r.w, mid, upper);
+      s.fillExact(r, 0, mid, r.w, r.h - mid, lower);
+    }
+    s.allExact(F.top, upper); // shoulder cap
+    s.allExact(F.bottom, lower); // palm
+  }
+}
+
 /**
  * PAINT ONE CHAMPION'S ATLAS. The single entry point; returns freshly allocated
  * RGBA bytes, fully opaque, ready for `RawTexture.CreateRGBATexture`.
+ *
+ * TWO LAYERS WHEN A BARCODE IS PRESENT (規格 §7 / §2.3②):
+ *   底層  the barcode's bands, wrapping every part on all six faces;
+ *   面層  the style layer's DECALS — face and chest emblem — which are patterns
+ *         on one face and could never be expressed as a 1-D stack.
+ *
+ * The style layer's full-rect garment fills are NOT run in barcode mode, and
+ * that is the point rather than an omission: they exist to give an un-authored
+ * champion an outfit, and re-running them would paint the generator's guess
+ * over the colours a human chose. The generator (`generate.ts`, the L3 floor)
+ * is untouched and still paints every champion that has no barcode.
  */
-export function paintVoxelAtlas(recipe: VoxelSkinRecipe): Uint8ClampedArray {
+export function paintVoxelAtlas(
+  recipe: VoxelSkinRecipe,
+  barcode?: VoxelBarcode | null,
+): Uint8ClampedArray {
   const data = new Uint8ClampedArray(ATLAS_BYTES);
   const s = new Sheet(data, textureSeed(recipe));
   const p: Record<string, Rgb> = {
@@ -469,11 +672,17 @@ export function paintVoxelAtlas(recipe: VoxelSkinRecipe): Uint8ClampedArray {
   // them into a face edge as a dark halo. Filling the sheet opaque makes the
   // atlas safe under any sampling mode, at zero cost.
   s.all({ x: 0, y: 0, w: ATLAS_W, h: ATLAS_H }, shade(p.outfitPrimary as Rgb, 0.5), 0);
-  paintHead(s, recipe, p);
-  paintTorso(s, recipe, p);
-  paintArm(s, recipe, p, "armL");
-  paintArm(s, recipe, p, "armR");
-  paintLegs(s, recipe, p);
+  if (barcode) {
+    paintBarcodeBase(s, barcode);
+    paintFaceDecals(s, recipe, p);
+    paintChestEmblem(s, recipe, p);
+  } else {
+    paintHead(s, recipe, p);
+    paintTorso(s, recipe, p);
+    paintArm(s, recipe, p, "armL");
+    paintArm(s, recipe, p, "armR");
+    paintLegs(s, recipe, p);
+  }
   paintMotifCells(s, recipe, p);
   return data;
 }

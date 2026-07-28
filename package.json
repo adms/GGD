@@ -20,6 +20,8 @@
     "voice:index": "tsx tools/voice-gen/index-lines.mjs",
     "voxel:gen": "pnpm --filter @ggd/voxel-gen voxel:gen",
     "voxel:check": "pnpm --filter @ggd/voxel-gen voxel:check",
+    "voxel:build": "pnpm --filter @ggd/voxel-gen voxel:build",
+    "voxel:build:check": "pnpm --filter @ggd/voxel-gen voxel:build:check",
     "content:build": "pnpm --filter @ggd/shared content:build",
     "content:validate": "pnpm --filter @ggd/shared content:validate",
     "docs:reference": "python3 tools/reference/gen_reference.py",

@@ -175,13 +175,24 @@ describe("retired KayKit Adventurers characters (#226 owner directive / #240 gua
     const present = readdirSync(champs)
       .filter((f) => f.endsWith(".glb"))
       .sort();
-    expect(present).toEqual([
-      "blocky-barbarian.glb",
-      "blocky-knight.glb",
-      "blocky-mage.glb",
-      "blocky-rogue.glb",
-      "blocky-undead.glb",
-    ]);
+    expect(present).toEqual(
+      expect.arrayContaining([
+        "blocky-barbarian.glb",
+        "blocky-knight.glb",
+        "blocky-mage.glb",
+        "blocky-rogue.glb",
+        "blocky-undead.glb",
+      ]),
+    );
+    // …and NOTHING ELSE may appear here except the generator's own output.
+    // 特徵生成 (docs/_體素特徵生成規格.md) adds `voxel-<championId>.glb`, written
+    // by `pnpm voxel:build` from the barcode JSON. Both prefixes are emitted by
+    // `tools/voxel-gen`, so this stays a real guard against a hand-dropped
+    // character model sneaking back in — it just no longer freezes the count.
+    const unexpected = present.filter(
+      (f) => !f.startsWith("blocky-") && !f.startsWith("voxel-"),
+    );
+    expect(unexpected, `an un-generated character model is in champions/.${WHY}`).toEqual([]);
   });
 
   it("no shipped source, content doc, manifest, LOD table or built bundle references one", () => {
