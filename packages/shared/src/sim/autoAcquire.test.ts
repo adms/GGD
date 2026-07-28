@@ -29,6 +29,7 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import { Stat, zeroStats } from "./stats/statTypes";
+import { zeroAttrBonus } from "./stats/attributes";
 import type { AbilitiesComp } from "./stats/statsComp";
 import type { IntentFrame } from "./intents";
 import { MONSTER_TEAM } from "./mobs";
@@ -91,6 +92,7 @@ function spawnFighter(
     items: [],
     augments: [],
     statStacks: 0,
+    attrBonus: zeroAttrBonus(),
     statCapstonePct: 0,
     pendingOrbSlots: 0,
     undoStack: [],

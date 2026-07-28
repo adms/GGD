@@ -102,19 +102,19 @@ export interface SeatView {
   statStacks: number;
   statCapstonePct: number;
   /**
-   * WHAT those ticks rolled — one count per `STAT_TICK_ROLLS` entry (#82's
-   * 9-roll table). `statStacks` alone is a streak counter and answers nothing
-   * about the stats you actually bought; this is what lets the shop panel print
-   * a real (+xxx) and drop its 「≈ 屬性強化未同步」 disclaimer.
-   * Empty on a legacy snapshot or a seat with no champion — both mean "no ticks".
-   * OPTIONAL so the many hand-built SeatView fixtures across the test suite stay
-   * valid: this is a display detail, and a fixture that omits it is asserting
-   * "no ticks", which is exactly what an absent array means on the wire too.
+   * WHAT those ticks bought — the three 三圍 totals 力/敏/智, in `ATTR_KEYS`
+   * order (#260). `statStacks` alone is a streak counter and answers nothing
+   * about what you actually bought; this is what lets the shop panel print a
+   * real 三圍 row and a real (+xxx), and drop its 「≈ 屬性強化未同步」 disclaimer.
+   * Empty on a legacy snapshot or a seat with no champion — both mean "nothing
+   * bought". OPTIONAL so the many hand-built SeatView fixtures across the test
+   * suite stay valid: a fixture that omits it is asserting "no attributes
+   * bought", which is exactly what an absent array means on the wire too.
    */
-  statRollCounts?: number[];
+  attrBonus?: number[];
   /**
    * YOUR OWN active status effects — doc ids, and TICKS REMAINING on each.
-   * Index-aligned. OPTIONAL for the same reason `statRollCounts` is: a hand-built
+   * Index-aligned. OPTIONAL for the same reason `attrBonus` is: a hand-built
    * fixture that omits them is asserting 「沒有任何狀態」, which is exactly what
    * an absent array means on the wire.
    */
@@ -438,7 +438,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       passiveCooldown: ss.passiveCooldown,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
-      statRollCounts: [...(ss.statRollCounts ?? [])],
+      attrBonus: [...(ss.attrBonus ?? [])],
       statusIds: [...(ss.statusIds ?? [])],
       statusRemainTicks: [...(ss.statusRemainTicks ?? [])],
       undoDepth: ss.undoDepth,

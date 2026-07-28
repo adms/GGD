@@ -6,6 +6,7 @@ import { Items, LootTables } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
 import { LEGENDARY_ORB_ITEM_ID, STAT_TICK_ITEM_ID, itemHasEffect } from "./itemTiers";
 import { buyLegendaryOrb, purchasableSlots } from "./legendaryOrb";
+import { shelfListable } from "./shopShelf";
 import { buyStatUpgrade, resetStatPath } from "./statPath";
 
 export const INVENTORY_SLOTS = 6;
@@ -47,7 +48,21 @@ export type BuyResult =
    * not a listing rule — `starter.go` keeps these three off the shop by not
    * whitelisting them, but that is a membership accident, not an invariant.
    */
-  | "no-effect";
+  | "no-effect"
+  /**
+   * 暫時下架 (#261): the item is real, priced and effectful, but the weapon
+   * SHELF is closed — 「除了能力屬性強化、及傳說寶玉外，其他武器道具先全部暫時
+   * 下架無法選擇」.
+   *
+   * This is a SIM refusal for the same reason `not-purchasable` is: the client's
+   * `shopCatalogue` already keeps the weapons off the shelf, but a listing rule
+   * is not an invariant — a modified client, a stale bundle or a hand-rolled
+   * command could still name a whitelisted 1200g id here. It carries its own
+   * reason so the HUD can say 「暫時下架」 rather than a wrong "傳說武器" line,
+   * and so re-opening the shelf is one boolean rather than a hunt for the branch
+   * that silently swallowed the buy.
+   */
+  | "shelf-closed";
 
 /**
  * THE ONE gold-purchase entry point — and therefore the one place the stat
@@ -87,6 +102,12 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
     champ.undoStack.length = 0;
     return "ok";
   }
+
+  // 暫時下架 (#261) — checked FIRST on the inventory path, and above every gold
+  // move, so a closed shelf can never take a coin. Both SERVICES were already
+  // dispatched by id above, so this only ever refuses a normal weapon. It does
+  // NOT touch `grantItemFree` / the draft path: 「隨機三選一仍然可以隨機到」.
+  if (!shelfListable(itemId, world.weaponShelfOpen)) return "shelf-closed";
 
   const def = Items.tryGet(itemId);
   if (!def) return "unknown-item";

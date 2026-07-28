@@ -85,6 +85,15 @@ describe("filter application (client-whitelist-filter)", () => {
   // SAME whitelist is still excluded (the owner's 只有最終合成武器 rule; the
   // enforced whitelist narrows the final set, it can never widen past it).
   const EFFECT = [{ stat: "attackDamage", op: "flat", value: 10 }];
+  /**
+   * #261 — these guards are about the WHITELIST + craftRole rules, so they run
+   * with the 武器貨架 OPEN. The 暫時下架 flag is a separate, later gate whose own
+   * guards live in shopShelfListing.test.ts (client shelf) and
+   * economy/shopShelf.test.ts (sim refusal + the untouched drop path); letting
+   * it empty the catalogue here would make these three assertions vacuously
+   * green about a rule they no longer exercise.
+   */
+  const SHELF_OPEN = true;
   it("items: an enforced whitelist admits a non-godie FINAL by craftRole, never a component/book/quest item", () => {
     cover("client-whitelist-filter");
     const catalogue = [
@@ -97,7 +106,7 @@ describe("filter application (client-whitelist-filter)", () => {
     ];
     // whitelist enables ALL six ids — the final-only rule must still drop three
     const wl = whitelistFromDoc({ items: catalogue.map((i) => i.id) });
-    expect(shopCatalogue(catalogue, wl).map((i) => i.id)).toEqual([
+    expect(shopCatalogue(catalogue, wl, SHELF_OPEN).map((i) => i.id)).toEqual([
       "godie-i05t",
       "swift-boots",
       "serrated-edge",
@@ -111,11 +120,11 @@ describe("filter application (client-whitelist-filter)", () => {
       { id: "godie-i05t", craftRole: "final", modifiers: EFFECT },
       { id: "ember-rod", cost: 300 }, // skeleton demo stick, no craftRole
     ];
-    expect(shopCatalogue(mixed, NO_FILTER).map((i) => i.id)).toEqual(["godie-i05t"]);
+    expect(shopCatalogue(mixed, NO_FILTER, SHELF_OPEN).map((i) => i.id)).toEqual(["godie-i05t"]);
     // skeleton-only context (unit tests / bare `pnpm dev`, no imported finals):
     // fall back to the priced demo sticks rather than render an empty grid
     const skeletonOnly = [{ id: "ember-rod", cost: 300 }, { id: "swift-boots", cost: 300 }];
-    expect(shopCatalogue(skeletonOnly, NO_FILTER)).toHaveLength(2);
+    expect(shopCatalogue(skeletonOnly, NO_FILTER, SHELF_OPEN)).toHaveLength(2);
   });
 });
 

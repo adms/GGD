@@ -78,6 +78,11 @@ describe("shop gate through the sim (server authority)", () => {
   it("a LIVING champion cannot buy mid-combat, and is TOLD why", () => {
     cover("shop-gate-server");
     const world = new SimWorld(SKELETON_ARENA, 42);
+    // #261: these guards describe the rules that apply WHEN the weapon shelf is
+    // open. The shelf being 暫時下架 today does not retire them — it takes the
+    // weapons off sale — so the world is opened explicitly rather than deleting
+    // the coverage that comes back the moment the owner flips the flag.
+    world.weaponShelfOpen = true;
     const buyer = spawnBuyer(world);
     world.economyOpen = false;
     world.combatActive = true; // duel is live, buyer is standing
@@ -89,6 +94,11 @@ describe("shop gate through the sim (server authority)", () => {
   it("a champion DOWN this round keeps buying until the round resolves", () => {
     cover("shop-gate-server");
     const world = new SimWorld(SKELETON_ARENA, 42);
+    // #261: these guards describe the rules that apply WHEN the weapon shelf is
+    // open. The shelf being 暫時下架 today does not retire them — it takes the
+    // weapons off sale — so the world is opened explicitly rather than deleting
+    // the coverage that comes back the moment the owner flips the flag.
+    world.weaponShelfOpen = true;
     const buyer = spawnBuyer(world);
     world.economyOpen = false;
     world.combatActive = true;
@@ -106,6 +116,11 @@ describe("shop gate through the sim (server authority)", () => {
   it("surfaces every BuyResult instead of swallowing it (task #60)", () => {
     cover("shop-gate-reasons");
     const world = new SimWorld(SKELETON_ARENA, 42);
+    // #261: these guards describe the rules that apply WHEN the weapon shelf is
+    // open. The shelf being 暫時下架 today does not retire them — it takes the
+    // weapons off sale — so the world is opened explicitly rather than deleting
+    // the coverage that comes back the moment the owner flips the flag.
+    world.weaponShelfOpen = true;
     const buyer = spawnBuyer(world);
     world.economyOpen = true;
 

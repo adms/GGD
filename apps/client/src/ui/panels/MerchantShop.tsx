@@ -57,7 +57,15 @@ import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
-import { STAT_META, formatStatValue, formatStatDelta, isVisibleDelta } from "./statDisplay";
+import {
+  STAT_META,
+  attributeRows,
+  formatAttrValue,
+  formatStatValue,
+  formatStatDelta,
+  isVisibleDelta,
+} from "./statDisplay";
+import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
 import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
@@ -85,6 +93,9 @@ import {
 const CARD_WIDTH = "min(45vw, 560px)";
 const ACCENT = "#f2a13c";
 const GOOD = "#7fe0a0";
+/** 三圍 accent (#260) — the same teal the 能力屬性強化 draft card wears, so the
+ *  panel row and the card a player just picked read as the same mechanic. */
+const ATTR_ACCENT = "#5fd6c4";
 
 /**
  * Which screen edge the shop card hugs (task #94). Read STRAIGHT from the
@@ -619,11 +630,12 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
         seat.items,
         seat.augments,
         seat.statCapstonePct,
-        // WITHOUT this the panel would not recompute on a stat-tick purchase:
-        // `sig` is the only dependency the memo has, and buying a tick moves
-        // neither items nor augments nor the capstone. The (+xxx) would sit
-        // frozen at its pre-purchase value — the exact silence being fixed here.
-        seat.statRollCounts,
+        // WITHOUT this the panel would not recompute when a 能力屬性強化 card is
+        // picked: `sig` is the only dependency the memo has, and a 三圍 pick
+        // moves neither items nor augments nor the capstone. The 三圍 row and
+        // every (+xxx) it feeds would sit frozen at their pre-pick values —
+        // the exact silence #260's predecessor was opened for.
+        seat.attrBonus,
         props.combatEnvJson,
       ]),
     [seat, props.combatEnvJson],
@@ -680,6 +692,8 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
           statStacks={seat.statStacks}
           statTarget={STAT_TICK_TARGET}
           capstonePct={seat.statCapstonePct}
+          championId={seat.championId}
+          attrBonus={seat.attrBonus}
         />
       )}
 
@@ -745,7 +759,12 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
 // stat panel — all 15, fixed 2-column grid, resolved through the pipeline
 // ---------------------------------------------------------------------------
 
-function StatPanel(props: {
+/**
+ * EXPORTED for MerchantShop.test.ts: the 三圍 rows (#260) are asserted by
+ * server-rendering THIS component and reading the markup, not by scanning the
+ * source — a source scan cannot tell a rendered row from a comment about one.
+ */
+export function StatPanel(props: {
   block: StatBlock;
   /**
    * The same champion at the same LEVEL with nothing bought — items, augments,
@@ -763,8 +782,20 @@ function StatPanel(props: {
   statStacks: number;
   statTarget: number;
   capstonePct: number;
+  /** the hero, so the 三圍 rows can read its own 力/敏/智 at this level (#260). */
+  championId: string;
+  /** SeatView.attrBonus — the 三圍 BOUGHT this match, ATTR_KEYS order (#260). */
+  attrBonus?: readonly number[];
 }): React.JSX.Element {
   const { block, base, preview, exact } = props;
+  // 三圍 (#260) — 「力敏智三屬性也要顯示在 SHOP 的玩家角色屬性表」. Read through
+  // the SHARED `championAttribute` (statDisplay.attributeRows), so this row and
+  // the sim's own base-stat maths are one number with one definition.
+  const attrRows = attributeRows(
+    Champions.tryGet(props.championId as ChampionId),
+    props.level,
+    attrBonusFromArray(props.attrBonus),
+  );
   const colA = STAT_META.filter((m) => m.column === 0);
   const colB = STAT_META.filter((m) => m.column === 1);
 
@@ -903,6 +934,42 @@ function StatPanel(props: {
           <span style={{ marginLeft: "auto", fontSize: 9, color: GOOD }}>預覽中 · +為裝上此道具後</span>
         )}
       </div>
+      {/* ── 三圍 力／敏／智 (#260) ────────────────────────────────────────
+          Above the 15-stat grid on purpose: the attributes are what the shop
+          now SELLS (能力屬性強化 三選一), so a shopper deciding whether to spend
+          375g has to see their current 力/敏/智 before the stats those feed.
+          Hidden only when the champion is not in the registry — the same
+          "render nothing rather than something wrong" rule the panel uses. */}
+      {attrRows.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            padding: "2px 0 5px",
+            marginBottom: 4,
+            borderBottom: "1px solid rgba(95,214,196,0.2)",
+          }}
+        >
+          <span style={{ fontSize: 10, color: ATTR_ACCENT, fontWeight: "bold" }}>三圍</span>
+          {attrRows.map((row) => (
+            <span
+              key={row.key}
+              style={{ display: "flex", alignItems: "baseline", gap: 3, fontSize: 11 }}
+              title={`${row.label} —— 天生 ${formatAttrValue(row.innate)} ＋ 屬性強化 ${formatAttrValue(row.bought)}`}
+            >
+              <span style={{ color: TEXT_DIM, fontSize: 10 }}>{row.label}</span>
+              <span style={{ color: TEXT_MAIN, fontVariantNumeric: "tabular-nums" }}>
+                {formatAttrValue(row.total)}
+              </span>
+              {row.bought > 0 && (
+                <span style={{ color: ATTR_ACCENT, fontSize: 10, fontVariantNumeric: "tabular-nums" }}>
+                  (+{formatAttrValue(row.bought)})
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", columnGap: 14 }}>
         <div>{colA.map(cell)}</div>
         <div>{colB.map(cell)}</div>

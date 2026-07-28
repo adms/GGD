@@ -28,7 +28,14 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { ContentLoader } from "../../content/loader";
 import { FsContentSource } from "../../content/node/FsContentSource";
 import type { ItemDoc } from "../../content/schema/item";
-import { Stat, STAT_CLAMPS } from "../stats/statTypes";
+import { Stat } from "../stats/statTypes";
+import { ATTR_KEYS, ATTR_STAT_SOURCE, type AttrKey } from "../stats/attributes";
+import { ATTRIBUTE_ENV_DEFAULTS, type AttributeEnvKey } from "../combatEnv";
+import {
+  ATTR_ROLL_MIN_TENTHS,
+  ATTR_ROLL_MAX_TENTHS,
+  ATTR_ROLL_STEPS,
+} from "./attrDraft";
 import { ModOp } from "../stats/modifiers";
 import { STARTING_GOLD } from "./progression";
 import {
@@ -40,7 +47,6 @@ import {
   STAT_TICK_ITEM_ID,
   STAT_TICK_PRICE,
   STAT_TICK_TARGET,
-  STAT_TICK_ROLLS,
   CAPSTONE_STATS,
   CAPSTONE_STEPS,
   capstoneModifiers,
@@ -186,37 +192,82 @@ describe("the two shop services", () => {
   });
 });
 
-describe("the 能力屬性強化 roll pool", () => {
-  it("every roll is worth one SIMPLE item, within 2%", () => {
-    cover("econ-stat-roll-parity");
-    for (const roll of STAT_TICK_ROLLS) {
-      const rate = AEP_PER_POINT[roll.stat];
-      expect(rate, `${roll.stat} has no measured AEP rate — it cannot be priced`).toBeDefined();
-      const delta = roll.op === ModOp.PercentAdd ? REFERENCE_BASE_AS * roll.value : roll.value;
-      const aep = rate! * delta;
-      expect(aep / TIER_AEP_BUDGET.SIMPLE, `${roll.stat} roll is off budget`).toBeCloseTo(1, 1);
+/**
+ * WHAT 375 GOLD IS NOW WORTH (#260).
+ *
+ * The nine-entry flat roll pool this block used to check is gone: a tick now
+ * opens a 力/敏/智 三選一 whose magnitude is a uniform 0.1–2.0 ATTRIBUTE points.
+ * The pricing question therefore moved from "is every roll 6.5 AEP" to
+ * "what does an attribute point buy", and the answer has to be derived from the
+ * SHIPPED 三圍 coefficients rather than restated — which is exactly what these
+ * two do, using the same AEP rate card above.
+ *
+ * ⚠️ THIS BLOCK IS ALSO THE RECORD OF A REAL BALANCE SHIFT. The pre-#260 tick
+ * paid a flat 6.5 AEP every time. The new one pays between ~5% and ~100% of
+ * that, uniformly — which is precisely the 「有可能你想要的屬性但加很少」 the
+ * owner asked for, and roughly HALVES the expected value of the 7,500-gold stat
+ * path. The numbers are asserted here so that trade-off is visible and can be
+ * re-tuned deliberately (see openQuestions in the #260 report).
+ */
+describe("the 能力屬性強化 三選一 (#260)", () => {
+  /** AEP of ONE point of an attribute, through the shipped coefficients. */
+  const aepPerAttrPoint = (attr: AttrKey): number => {
+    let aep = 0;
+    for (const [stat, src] of Object.entries(ATTR_STAT_SOURCE) as [Stat, { attr: AttrKey; key: AttributeEnvKey; mode: string }][]) {
+      if (src.attr !== attr) continue;
+      const rate = AEP_PER_POINT[stat];
+      if (rate === undefined) continue; // maxMana/manaRegen: measured worthless
+      const coef = ATTRIBUTE_ENV_DEFAULTS[src.key];
+      // attack speed is the one multiplicative row: coef·AGI scales the BASE
+      const delta = src.mode === "scaleBase" ? REFERENCE_BASE_AS * coef : coef;
+      aep += rate * delta;
     }
+    return aep;
+  };
+
+  it("the roll spans 0.1–2.0 in ten-per-point steps, uniformly", () => {
+    cover("econ-attr-roll-range");
+    expect(ATTR_ROLL_MIN_TENTHS).toBe(1);
+    expect(ATTR_ROLL_MAX_TENTHS).toBe(20);
+    // the draw is `MIN + rng.int(STEPS)`, so STEPS must span the closed range —
+    // an off-by-one here silently makes +2.0 unreachable (or +2.1 reachable).
+    expect(ATTR_ROLL_STEPS).toBe(ATTR_ROLL_MAX_TENTHS - ATTR_ROLL_MIN_TENTHS + 1);
   });
 
-  it("excludes every stat this sim cannot pay for", () => {
-    cover("econ-stat-roll-exclusions");
-    const offered = new Set(STAT_TICK_ROLLS.map((r) => r.stat));
-    // cdr measures 0.047 AEP per 10%; maxMana/manaRegen are worth ~nothing
-    // because casts are cooldown-limited, not mana-limited; critDamage is
-    // identically 0 at the champion base critChance of 0.
-    for (const dead of [Stat.CooldownReduction, Stat.MaxMana, Stat.ManaRegen, Stat.CritDamage]) {
-      expect(offered.has(dead), `${dead} is a dead stat in this sim and must not be a roll`).toBe(false);
-    }
-    expect(new Set(offered).size).toBe(STAT_TICK_ROLLS.length); // no duplicate stat
+  it("the BEST possible card (+2.0 力量) is worth about one SIMPLE item", () => {
+    cover("econ-attr-roll-ceiling");
+    const maxPoints = ATTR_ROLL_MAX_TENTHS / 10;
+    const minPoints = ATTR_ROLL_MIN_TENTHS / 10;
+    const str = aepPerAttrPoint("str");
+    // 力量 → 生命 ×23 + 攻擊力 ×1 ⇒ 3.256 AEP per point, so a jackpot lands
+    // within a couple of percent of B_SIMPLE. The 375g tick therefore tops out
+    // at roughly what 300g of item buys — it never dominates the item path.
+    expect(str * maxPoints / TIER_AEP_BUDGET.SIMPLE).toBeCloseTo(1, 1);
+    // …and the 「加很少」 floor really is a dud: a twentieth of the ceiling.
+    expect(str * minPoints).toBeLessThan(TIER_AEP_BUDGET.SIMPLE * 0.1);
   });
 
-  it("a roll never exceeds the stat's own runtime clamp on its own", () => {
-    cover("econ-stat-roll-clamped");
-    for (const roll of STAT_TICK_ROLLS) {
-      const clamp = STAT_CLAMPS[roll.stat];
-      if (!clamp || roll.op !== ModOp.Flat) continue;
-      expect(roll.value, `one ${roll.stat} roll alone busts its clamp`).toBeLessThanOrEqual(clamp[1]);
+  it("RECORDS the 力≫敏≫智 asymmetry the shipped coefficients produce", () => {
+    cover("econ-attr-roll-asymmetry");
+    const str = aepPerAttrPoint("str");
+    const agi = aepPerAttrPoint("agi");
+    const int = aepPerAttrPoint("int");
+    // Every attribute must buy SOMETHING, or its card would be a visible no-op.
+    for (const [name, v] of [["str", str], ["agi", agi], ["int", int]] as const) {
+      expect(v, `${name} buys nothing measurable — its card would be a no-op`).toBeGreaterThan(0);
     }
+    // THE FACT, pinned so it cannot drift silently and so a re-tune is a
+    // deliberate act. Under the map's own coefficients one point of 力量 is
+    // worth ~3.6 points of 敏捷 and ~15.8 points of 智慧, because 力量 feeds
+    // 23 maxHealth + 1 ad while 智慧 feeds only `ap` (its maxMana/manaRegen
+    // measure at ~0 AEP in this sim — casts are cooldown-limited).
+    //
+    // ⚠️ DESIGN CONSEQUENCE, for the owner: a 力/敏/智 三選一 whose three cards
+    // are rolled from the SAME 0.1–2.0 range therefore is not a choice between
+    // equals — 力量 dominates unless the roll is lopsided. Raised in the #260
+    // report; the numbers live here so the decision has something to argue with.
+    expect(str / agi).toBeGreaterThan(3);
+    expect(str / int).toBeGreaterThan(10);
   });
 });
 

@@ -30,19 +30,20 @@
  *   items                  ← SeatView.items
  *   augments               ← SeatView.augments
  *   capstone (傳說·萬象強化) ← capstoneModifiers(SeatView.statCapstonePct)
+ *   三圍 bought (能力屬性強化)  ← SeatView.attrBonus, written onto the scratch
+ *                              champion's own `attrBonus` (#260)
  *
- * The 20 stat-tick rolls (`stat:<N>`, economy/statPath.ts) are the ONE source
- * NOT on the wire: only the streak COUNT rides `SeatView.statStacks`, and the
- * streak resets to 0 on any item purchase while the rolled sources stay
- * attached — so a player who dabbled in the stat path then bought an item
- * carries flat bonuses the client cannot see. We detect that honestly rather
- * than paper over it: `previewExactness` compares the reconstructed maxHealth /
- * maxMana against the authoritative values the wire DOES carry (EntityState hp)
- * and reports whether the panel can be trusted to the last point. For every
- * UNCLAMPED stat the item DELTA is exact regardless (a hidden flat never shifts
- * another source's multiplier); only a clamped stat's delta can be off, and only
- * when a hidden tick rolled that same stat — which is what the exactness flag
- * warns about.
+ * The bought attributes are NOT a modifier source: `championStatBase` folds them
+ * into the champion's BASE exactly as it folds in an innate 三圍 point, so the
+ * reconstruction sets the same field the server sets rather than inventing an
+ * equivalent stat modifier that would go stale the moment an operator retunes a
+ * coefficient (see sim/stats/attributes.ts).
+ *
+ * `previewExactness` still compares the reconstructed maxHealth / maxMana with
+ * the authoritative values the wire carries anyway (EntityState hp) and reports
+ * whether the panel can be trusted to the last point — a genuine end-to-end
+ * guard that catches ANY future source going missing from this reconstruction,
+ * whether or not someone remembered to add a flag for it.
  */
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
@@ -51,7 +52,7 @@ import { syncAbilityPassives } from "@ggd/shared/sim/abilities/abilityPassives";
 import { attachSource, recomputeStats } from "@ggd/shared/sim/stats/statPipeline";
 import { Champions, Items, Augments } from "@ggd/shared/sim/content/registry";
 import { capstoneModifiers } from "@ggd/shared/sim/economy/itemTiers";
-import { statRollModifiers } from "@ggd/shared/sim/economy/statPath";
+import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
 import { ALL_STATS, Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
 import {
   DEFAULT_COMBAT_ENV,
@@ -79,13 +80,13 @@ export interface ChampionStatContext {
   augments: readonly string[];
   statCapstonePct: number;
   /**
-   * SeatView.statRollCounts — one count per `STAT_TICK_ROLLS` entry. Reattached
-   * below through the same `attachSource` the server used, which is what makes
-   * this reconstruction EXACT. Before it rode the wire these were the one stat
-   * source the client could not see, and the panel silently under-reported every
-   * champion who had ever bought a tick.
+   * SeatView.attrBonus — the three 三圍 totals bought this match (#260), in
+   * `ATTR_KEYS` order. Written below onto the scratch champion's OWN
+   * `attrBonus`, i.e. the exact field the server writes, so the shared
+   * `championStatBase` folds it in identically on both sides. Without it the
+   * panel silently under-reports every champion who has ever bought a tick.
    */
-  statRollCounts?: readonly number[];
+  attrBonus?: readonly number[];
   /** live combat-env table; defaults to neutral if absent. */
   env?: CombatEnvMultipliers;
 }
@@ -128,6 +129,14 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
   // items (owned) into their reported slots, attached exactly as buyItem does
   const champ = world.champion.get(id);
   if (champ) {
+    // 能力屬性強化 三選一 picks (#260) — written onto the champion's OWN
+    // attrBonus, the same field `applyAttrPick` writes on the server, so
+    // `recomputeStats` → `championStatBase` folds them in through one shared
+    // definition. This is the whole reason a bought 力/敏/智 moves the panel.
+    const bonus = attrBonusFromArray(ctx.attrBonus);
+    champ.attrBonus.str = bonus.str;
+    champ.attrBonus.agi = bonus.agi;
+    champ.attrBonus.int = bonus.int;
     const items = ctx.items.length > 0 ? ctx.items : ZERO_ITEMS;
     items.forEach((itemId, slot) => {
       if (!itemId || slot >= champ.items.length) return;
@@ -154,13 +163,6 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
       hooks: def.hooks,
     });
   }
-
-  // 能力屬性強化 ticks (statPath.ts buyStatUpgrade) — one source per tick, with
-  // the SAME `stat:<N>` id shape, so the pipeline sums them exactly as the
-  // server's does rather than letting one overwrite the next.
-  statRollModifiers(ctx.statRollCounts).forEach((mod, i) => {
-    attachSource(world, id, { id: `stat:${i + 1}`, kind: "augment", modifiers: [mod] });
-  });
 
   // capstone (statPath.ts grantCapstone) — rebuilt from its rolled magnitude
   if (ctx.statCapstonePct > 0) {
@@ -212,7 +214,7 @@ export function computeBaseStatBlock(ctx: ChampionStatContext): StatBlock | null
     items: ZERO_ITEMS,
     augments: [],
     statCapstonePct: 0,
-    statRollCounts: undefined,
+    attrBonus: undefined,
     env: ctx.env,
   });
 }
@@ -276,7 +278,7 @@ export interface Exactness {
  *
  * `statStacks > 0` USED to be an automatic no: the rolls were not on the wire,
  * so any champion mid-streak was reconstructed short by every tick it had
- * bought, and the panel had to hedge. `SeatState.statRollCounts` now carries
+ * bought, and the panel had to hedge. `SeatState.attrBonus` now carries
  * them, `buildWorld` reattaches them, and a streak on its own proves nothing
  * about accuracy — so that tell is gone, and with it the permanent 「≈」 every
  * stat-path player used to read.
@@ -324,7 +326,7 @@ export function statContextFromSeat(
     items: readonly string[];
     augments: readonly string[];
     statCapstonePct: number;
-    statRollCounts?: readonly number[];
+    attrBonus?: readonly number[];
   },
   env?: CombatEnvMultipliers,
 ): ChampionStatContext {
@@ -337,7 +339,7 @@ export function statContextFromSeat(
     items: seat.items,
     augments: seat.augments,
     statCapstonePct: seat.statCapstonePct,
-    statRollCounts: seat.statRollCounts,
+    attrBonus: seat.attrBonus,
     env,
   };
 }

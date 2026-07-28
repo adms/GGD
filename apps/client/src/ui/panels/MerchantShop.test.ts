@@ -221,7 +221,10 @@ describe("MerchantShop shelves list real stock (#94)", () => {
   it("builds shelves from the Items registry, carrying real ids and prices", () => {
     cover("shop-shelves-real-stock");
     // exactly the pipeline GoodsTab feeds ShelfBlock: registry → catalogue → shelves
-    const catalogue = shopCatalogue(Items.all(), NO_FILTER);
+    // #261: the 武器貨架 is 暫時下架 by default; these two guards are about SHELF
+    // GROUPING and item NAMES, which need stock to group and name. The closed
+    // default has its own guard in shopShelfListing.test.ts.
+    const catalogue = shopCatalogue(Items.all(), NO_FILTER, true);
     const shelves = groupCatalogue(catalogue as unknown as ShelfItem[]);
 
     // the shelves are populated from real stock, not empty/decorative
@@ -325,7 +328,10 @@ describe("MerchantShop never shows a raw item id (#202)", () => {
 
   it("no shelf item in the whole live catalogue resolves to its own id", () => {
     cover("store-shows-item-name-not-id");
-    const catalogue = shopCatalogue(Items.all(), NO_FILTER);
+    // #261: the 武器貨架 is 暫時下架 by default; these two guards are about SHELF
+    // GROUPING and item NAMES, which need stock to group and name. The closed
+    // default has its own guard in shopShelfListing.test.ts.
+    const catalogue = shopCatalogue(Items.all(), NO_FILTER, true);
     expect(catalogue.length).toBeGreaterThan(0);
     for (const item of catalogue) {
       // the name the shop shows is never the raw id, for every real shelf entry

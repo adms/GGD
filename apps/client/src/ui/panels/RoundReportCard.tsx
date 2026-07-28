@@ -93,7 +93,7 @@ export function RoundReportCard(): React.JSX.Element | null {
 
   const gold = seat?.gold ?? 0;
   const affordable = useMemo(
-    () => affordableFrom(shopCatalogue(Items.all(), whitelist), gold),
+    () => affordableFrom(shopCatalogue(Items.all(), whitelist, true), gold),
     [whitelist, gold],
   );
 

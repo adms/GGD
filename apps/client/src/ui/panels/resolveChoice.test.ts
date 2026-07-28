@@ -9,7 +9,10 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { Abilities, Augments, Items } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, AugmentId, ItemId } from "@ggd/shared/ids";
 import type { AbilityDef, AugmentDef, ItemDef } from "@ggd/shared/sim/content/defs";
+import { encodeAttrChoice } from "@ggd/shared/sim/economy/attrDraft";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { resolveChoice } from "./resolveChoice";
+import { statLabel } from "./statDisplay";
 
 const ABILITY_ICONED = "godie-draft.ex" as AbilityId;
 const ABILITY_PLAIN = "godie-draft.plain" as AbilityId;
@@ -97,5 +100,42 @@ describe("resolveChoice (hud-draft-choice-icon)", () => {
     // an unknown id degrades to a bare text card
     const unknown = resolveChoice("no-such-choice");
     expect(unknown).toEqual({ name: "no-such-choice", desc: "" });
+  });
+});
+
+/**
+ * #260 — the 能力屬性強化 card must PRINT its rolled magnitude.
+ *
+ * owner: 「隨機加點 0.1-2 顯示在卡片上面」. The number rides in the card's NAME,
+ * which is also the string `draftA11y` feeds to `aria-label`, so it is on screen
+ * AND spoken. Losing it would make all three cards read 「力量／敏捷／智慧」 with
+ * nothing to choose between — the exact 「有可能你想要的屬性但加很少」 tension the
+ * owner asked for, deleted.
+ */
+describe("能力屬性強化 三選一 cards (#260)", () => {
+  it("names the attribute AND the rolled number", () => {
+    cover("hud-draft-choice-icon");
+    expect(resolveChoice(encodeAttrChoice("str", 14)).name).toBe("力量 +1.4");
+    expect(resolveChoice(encodeAttrChoice("agi", 1)).name).toBe("敏捷 +0.1");
+    expect(resolveChoice(encodeAttrChoice("int", 20)).name).toBe("智慧 +2.0");
+  });
+
+  it("says WHICH stats the attribute feeds, from the shared 三圍 table", () => {
+    cover("hud-draft-choice-icon");
+    // derived from ATTR_STAT_SOURCE, never re-typed — 力量 feeds three stats,
+    // 敏捷 two, 智慧 three, and a card that named the wrong ones would be worse
+    // than a card that named none.
+    expect(resolveChoice(encodeAttrChoice("str", 5)).desc).toBe(
+      [Stat.MaxHealth, Stat.HealthRegen, Stat.AttackDamage].map(statLabel).join("・"),
+    );
+    expect(resolveChoice(encodeAttrChoice("agi", 5)).desc).toBe(
+      [Stat.Armor, Stat.AttackSpeed].map(statLabel).join("・"),
+    );
+  });
+
+  it("a malformed attribute id degrades to a text card, never a fake +0", () => {
+    cover("hud-draft-choice-icon");
+    // out of range: the resolver must NOT invent a card for it
+    expect(resolveChoice("attr:str:99")).toEqual({ name: "attr:str:99", desc: "" });
   });
 });

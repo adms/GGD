@@ -20,6 +20,15 @@
  * catalogue item moves.
  */
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
+import {
+  ATTR_KEYS,
+  ATTR_LABEL,
+  championAttribute,
+  type AttrBonus,
+  type AttrKey,
+  type AttributeCarrier,
+} from "@ggd/shared/sim/stats/attributes";
+import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 
 /** How a stat's magnitude reads as text. */
 type StatUnit =
@@ -153,6 +162,62 @@ export function formatStatDelta(stat: Stat, delta: number): string {
  * 0.4-of-a-percent rounding artefact would paint a `+0%` chip on a stat the
  * item does not touch.
  */
+/**
+ * ── 三圍 (#260) ─────────────────────────────────────────────────────────────
+ * One row of the shop's 力／敏／智 panel. Owner: 「記得 力敏智三屬性也要顯示在
+ * SHOP 的玩家角色屬性表」.
+ *
+ * `total` is the number the panel prints; `bought` is the 能力屬性強化 part of
+ * it, shown as the `(+x.x)` beside it exactly as the stat grid shows its own.
+ * `innate` is the champion's own value at this level, so `total = innate +
+ * bought` is visible arithmetic rather than a claim.
+ */
+export interface AttrRow {
+  key: AttrKey;
+  label: string;
+  innate: number;
+  bought: number;
+  total: number;
+}
+
+/**
+ * Build the three rows for a champion at a level, with what was bought.
+ *
+ * Resolved through the SHARED `championAttribute` — the same function
+ * `championStatBase` calls — so the panel's 力量 and the sim's 力量 are one
+ * number with one definition. A champion with no 三圍 block reads 0 + bought,
+ * which is exactly what the sim gives it.
+ *
+ * `env` is accepted (and ignored by `championAttribute`) because an attribute is
+ * NOT env-scaled: the combat-env coefficients scale attribute → STAT, and those
+ * are applied where the stat is computed. Taking the parameter keeps the caller
+ * honest about that instead of leaving the reader to wonder whether #125's
+ * post-multiplier rule was forgotten here.
+ */
+export function attributeRows(
+  def: AttributeCarrier | undefined,
+  level: number,
+  bought: AttrBonus,
+  _env?: CombatEnvMultipliers,
+): AttrRow[] {
+  if (!def) return [];
+  return ATTR_KEYS.map((key) => {
+    const innate = championAttribute(def, key, level);
+    return {
+      key,
+      label: ATTR_LABEL[key],
+      innate,
+      bought: bought[key],
+      total: innate + bought[key],
+    };
+  });
+}
+
+/** 三圍 print format: one decimal, so a bought +0.1 is never rounded away. */
+export function formatAttrValue(value: number): string {
+  return value.toFixed(1);
+}
+
 export function isVisibleDelta(stat: Stat, delta: number): boolean {
   if (delta === 0) return false;
   const unit = META_BY_STAT[stat]?.unit ?? "num1";

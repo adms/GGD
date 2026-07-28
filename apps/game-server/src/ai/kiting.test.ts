@@ -21,6 +21,7 @@ import {
   type EntityId,
 } from "@ggd/shared/ids";
 import { Stat, zeroStats } from "@ggd/shared/sim/stats/statTypes";
+import { zeroAttrBonus } from "@ggd/shared/sim/stats/attributes";
 import type { AbilitiesComp } from "@ggd/shared/sim/stats/statsComp";
 import type { IntentFrame } from "@ggd/shared/sim/intents";
 import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
@@ -59,6 +60,7 @@ function spawnFighter(
     items: new Array(INVENTORY_SLOTS).fill(null),
     augments: [],
     statStacks: 0,
+    attrBonus: zeroAttrBonus(),
     statCapstonePct: 0,
     pendingOrbSlots: 0,
     undoStack: [],

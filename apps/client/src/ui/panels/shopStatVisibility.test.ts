@@ -2,87 +2,125 @@
  * shopStatVisibility — the shop must show what a purchase BOUGHT.
  *
  * owner, 2026-07-27: 「在 shop 時候，購買屬性看不到加多少屬性跟次數 等級也是，
- * 應該在上方屬性多顯示等級及屬性旁邊多 (+xxx)」.
+ * 應該在上方屬性多顯示等級及屬性旁邊多 (+xxx)」
+ * owner, 2026-07-28 (#260): 「記得 力敏智三屬性也要顯示在 SHOP 的玩家角色屬性表」
  *
- * That report had a mechanical cause, not a layout one. The 20 能力屬性強化
- * rolls (economy/statPath) were the ONE stat source that never rode the wire —
- * statPreview's own header said so — so the panel reconstructed every champion
- * WITHOUT them, printed a number that did not move when you spent 375g, and
- * shipped an 「≈ 屬性強化未同步」 disclaimer in place of the answer.
+ * Two halves, and both are asserted against something a player could see:
  *
- * These are wiring guards, not formatting ones. Each asserts something that
- * BREAKS if a link in the chain is removed:
+ *  1. WIRING — `SeatView.attrBonus` → `statContextFromSeat` → `buildWorld` →
+ *     `championStatBase`. Each assertion BREAKS if a link is removed.
+ *  2. PIXELS — the 三圍 row and the `(+xxx)` column are asserted by
+ *     SERVER-RENDERING the exported `StatPanel` and reading the markup. This
+ *     replaces the pre-#260 version of this file, which scanned MerchantShop.tsx
+ *     with `expect(src).toMatch(...)`: a source scan cannot tell a rendered row
+ *     from a comment about one, and it stays green when the element is deleted
+ *     from the tree so long as the string survives somewhere in the file.
  *
- *   schema → snapshot fill → SeatView → statContextFromSeat → buildWorld
- *
- * The DOM half (Lv in the header, `(+xxx)` in its own column) is asserted in
- * roundReportMount-style source form, because a jsdom render of MerchantShop
- * drags in Babylon and the whole content DB for what is a two-line question.
+ * The client's vitest runs in the `node` env, so the render goes through
+ * `react-dom/server` — the same approach MerchantShop.test.ts and draftA11y.test.ts
+ * use. MerchantShop imports no Babylon (its layout constants are plain numbers),
+ * so importing it here is cheap.
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { beforeAll, describe, expect, it } from "vitest";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
-import { Stat } from "@ggd/shared/sim/stats/statTypes";
-import { STAT_TICK_ROLLS } from "@ggd/shared/sim/economy/itemTiers";
-import { statRollModifiers } from "@ggd/shared/sim/economy/statPath";
+import { Champions } from "@ggd/shared/sim/content/registry";
+import { Stat, zeroStats } from "@ggd/shared/sim/stats/statTypes";
+import {
+  ATTR_KEYS,
+  ATTR_LABEL,
+  championAttribute,
+} from "@ggd/shared/sim/stats/attributes";
+import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
+import type { ChampionId } from "@ggd/shared/ids";
 import { computeStatBlock, computeBaseStatBlock } from "./statPreview";
-
-const SRC = join(__dirname, "MerchantShop.tsx");
-const shopSource = (): string => readFileSync(SRC, "utf8");
+import { StatPanel } from "./MerchantShop";
 
 /**
  * The skeleton content set's champion. Deliberately NOT a real roster id: this
- * file asserts the WIRING (do the rolls reach the pipeline, does the bonus
- * subtract), and pinning it to shipped content would make it fail the day that
- * champion is retuned — a false alarm about a mechanism that still works.
+ * file asserts the WIRING, and pinning it to shipped content would make it fail
+ * the day that champion is retuned — a false alarm about a mechanism that works.
  */
 const CHAMP = "thorne";
+const LEVEL = 5;
 
 beforeAll(() => {
   registerSkeletonContent();
 });
 
-function ctx(rolls?: number[]) {
+function ctx(attrBonus?: number[]) {
   return {
     championId: CHAMP,
-    level: 5,
+    level: LEVEL,
     abilityRanks: [1, 0, 0, 0],
     items: ["", "", "", "", "", ""],
     augments: [],
     statCapstonePct: 0,
-    statRollCounts: rolls,
+    attrBonus,
   };
 }
 
+/** Render the shop's attribute panel exactly as MerchantShop mounts it. */
+function renderPanel(attrBonus?: number[]): string {
+  const block = computeStatBlock(ctx(attrBonus)) ?? zeroStats();
+  const base = computeBaseStatBlock(ctx());
+  return renderToStaticMarkup(
+    createElement(StatPanel, {
+      block,
+      base,
+      preview: null,
+      exact: true,
+      authMaxHp: 0,
+      authMaxMana: 0,
+      level: LEVEL,
+      statStacks: 3,
+      statTarget: 20,
+      capstonePct: 0,
+      championId: CHAMP,
+      attrBonus,
+    }),
+  );
+}
+
 describe("屬性強化 reaches the client at all", () => {
-  it("counts → the exact modifiers the server attached", () => {
-    // index 0 is the AttackDamage roll; three of them is three flat adds.
-    const three = statRollModifiers([3, 0, 0, 0, 0, 0, 0, 0, 0]);
-    expect(three).toHaveLength(3);
-    expect(three.every((m) => m.stat === STAT_TICK_ROLLS[0]!.stat)).toBe(true);
-    // absent / short arrays read as "no ticks", never as a crash
-    expect(statRollModifiers(undefined)).toEqual([]);
-    expect(statRollModifiers([])).toEqual([]);
+  it("the wire array → the AttrBonus the shared pipeline accepts", () => {
+    const b = attrBonusFromArray([1.4, 0, 0.5]);
+    expect(b).toEqual({ str: 1.4, agi: 0, int: 0.5 });
+    // absent / short / garbage arrays read as "nothing bought", never a crash
+    expect(attrBonusFromArray(undefined)).toEqual({ str: 0, agi: 0, int: 0 });
+    expect(attrBonusFromArray([])).toEqual({ str: 0, agi: 0, int: 0 });
+    expect(attrBonusFromArray([Number.NaN, 2])).toEqual({ str: 0, agi: 2, int: 0 });
   });
 
-  it("a bought tick actually MOVES the panel's number", () => {
-    // THE regression guard for the owner's report. Deleting the `statRollModifiers`
-    // attach loop in statPreview.buildWorld makes these two blocks identical and
-    // this fails — which is exactly the silence being fixed: 375g spent, panel
-    // frozen. Asserting the DIRECTION too, because a delta of the wrong sign
+  it("a picked 力量 card actually MOVES the panel's numbers", () => {
+    // THE regression guard. Deleting the `champ.attrBonus` write in
+    // statPreview.buildWorld makes these two blocks identical and this fails —
+    // which is exactly the silence being guarded against: 375g spent, panel
+    // frozen. The DIRECTION is asserted too, because a delta of the wrong sign
     // would still be "a difference".
-    const withoutTicks = computeStatBlock(ctx());
-    const withTicks = computeStatBlock(ctx([4, 0, 0, 0, 0, 0, 0, 0, 0]));
-    expect(withoutTicks).not.toBeNull();
-    expect(withTicks).not.toBeNull();
-    const gained = withTicks![Stat.AttackDamage] - withoutTicks![Stat.AttackDamage];
+    const without = computeStatBlock(ctx());
+    const withStr = computeStatBlock(ctx([4, 0, 0]));
+    expect(without).not.toBeNull();
+    expect(withStr).not.toBeNull();
+    const gained = withStr![Stat.MaxHealth] - without![Stat.MaxHealth];
     expect(gained).toBeGreaterThan(0);
-    // 4 ticks of the AD roll, so the gain scales with the count rather than
-    // being a one-shot "any ticks at all" flag.
-    const one = computeStatBlock(ctx([1, 0, 0, 0, 0, 0, 0, 0, 0]))!;
-    const oneGain = one[Stat.AttackDamage] - withoutTicks![Stat.AttackDamage];
+    // …and it SCALES with the amount bought rather than being an on/off flag
+    const one = computeStatBlock(ctx([1, 0, 0]))!;
+    const oneGain = one[Stat.MaxHealth] - without![Stat.MaxHealth];
     expect(gained).toBeGreaterThan(oneGain * 2);
+  });
+
+  it("each attribute drives its OWN stats — the three are not interchangeable", () => {
+    const base = computeStatBlock(ctx())!;
+    const str = computeStatBlock(ctx([5, 0, 0]))!;
+    const int = computeStatBlock(ctx([0, 0, 5]))!;
+    // 力量 → 生命, and NOT 法術強度
+    expect(str[Stat.MaxHealth]).toBeGreaterThan(base[Stat.MaxHealth]);
+    expect(str[Stat.AbilityPower]).toBeCloseTo(base[Stat.AbilityPower], 6);
+    // 智慧 → 法術強度, and NOT 生命
+    expect(int[Stat.AbilityPower]).toBeGreaterThan(base[Stat.AbilityPower]);
+    expect(int[Stat.MaxHealth]).toBeCloseTo(base[Stat.MaxHealth], 6);
   });
 
   it("the (+xxx) subtrahend strips the build but KEEPS the level", () => {
@@ -95,49 +133,48 @@ describe("屬性強化 reaches the client at all", () => {
 
     // …and with an empty build the bonus is exactly zero, not merely small.
     const live = computeStatBlock(ctx())!;
-    expect(live[Stat.AttackDamage] - base5[Stat.AttackDamage]).toBeCloseTo(0, 6);
+    expect(live[Stat.MaxHealth] - base5[Stat.MaxHealth]).toBeCloseTo(0, 6);
 
-    // with ticks it is the whole gain
-    const bought = computeStatBlock(ctx([2, 0, 0, 0, 0, 0, 0, 0, 0]))!;
-    expect(bought[Stat.AttackDamage] - base5[Stat.AttackDamage]).toBeGreaterThan(0);
+    // with bought attributes it is the whole gain
+    const bought = computeStatBlock(ctx([0, 0, 8]))!;
+    expect(bought[Stat.AbilityPower] - base5[Stat.AbilityPower]).toBeGreaterThan(0);
   });
 });
 
-describe("the shop panel renders what the owner asked for", () => {
-  it("prints the hero LEVEL in the attribute header", () => {
-    expect(shopSource()).toMatch(/Lv \{props\.level\}/);
+describe("the shop panel RENDERS what the owner asked for", () => {
+  it("prints all three 三圍 rows with the champion's real values", () => {
+    const html = renderPanel();
+    const def = Champions.get(CHAMP as ChampionId);
+    for (const key of ATTR_KEYS) {
+      expect(html, `${ATTR_LABEL[key]} row missing from the shop panel`).toContain(ATTR_LABEL[key]);
+      const innate = championAttribute(def, key, LEVEL);
+      expect(html, `${ATTR_LABEL[key]} shows no value`).toContain(innate.toFixed(1));
+    }
   });
 
-  it("prints the 屬性強化 purchase COUNT", () => {
-    const src = shopSource();
-    expect(src).toMatch(/屬性強化 \{props\.statStacks\} \/ \{props\.statTarget\} 次/);
+  it("prints the BOUGHT amount beside the 三圍 total", () => {
+    // 「隨機加點 0.1-2」 — a +0.1 must survive to the screen, so the row is
+    // formatted to one decimal rather than rounded to an int.
+    const html = renderPanel([1.4, 0.1, 0]);
+    const def = Champions.get(CHAMP as ChampionId);
+    expect(html).toContain("(+1.4)");
+    expect(html).toContain("(+0.1)");
+    // …and the TOTAL moved with it, not just the badge
+    expect(html).toContain((championAttribute(def, "str", LEVEL) + 1.4).toFixed(1));
   });
 
-  it("prints a (+xxx) column driven by the base block", () => {
-    const src = shopSource();
-    // the column exists…
-    expect(src).toMatch(/\(\$\{formatStatDelta\(meta\.stat, bonus!\)\}\)/);
-    // …and it is fed by the real subtraction, not a hard-coded string
-    expect(src).toMatch(/const bonusOf =/);
-    expect(src).toMatch(/return shown\(stat\) - base\[stat\];/);
+  it("prints the hero LEVEL and the 屬性強化 purchase COUNT", () => {
+    const html = renderPanel();
+    expect(html).toContain(`Lv ${LEVEL}`);
+    expect(html).toContain("屬性強化 3 / 20 次");
   });
 
-  it("recomputes when a tick is bought — statRollCounts is in the memo signature", () => {
-    // Without this the panel is correct and STILL never moves: `sig` is the only
-    // dependency of the useMemo that produces the block, and buying a tick moves
-    // neither items nor augments nor the capstone.
-    const src = shopSource();
-    const sig = src.slice(src.indexOf("const sig = useMemo("), src.indexOf("const env = useMemo("));
-    expect(sig).toContain("seat.statRollCounts");
-  });
-
-  it("StatPanel is actually GIVEN the base block and the level", () => {
-    // The component could be perfect and mounted with `base={null}` — then every
-    // (+xxx) is silently withheld and the screen looks exactly like the bug.
-    const src = shopSource();
-    const mount = src.slice(src.indexOf("<StatPanel"), src.indexOf("<StatPanel") + 500);
-    expect(mount).toContain("base={baseBlock}");
-    expect(mount).toContain("level={seat.level}");
-    expect(mount).toContain("statStacks={seat.statStacks}");
+  it("prints a (+xxx) column driven by the real base subtraction", () => {
+    // With attributes bought, the stats they feed must carry a visible bonus
+    // chip. Rendering with base=null (the "silently withheld" failure) or with
+    // an unfed panel would drop it.
+    const html = renderPanel([0, 0, 8]);
+    // 智慧 ×1 → +8 法術強度 at the default coefficient
+    expect(html).toContain("+8");
   });
 });

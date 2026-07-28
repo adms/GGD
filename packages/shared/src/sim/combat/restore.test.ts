@@ -15,6 +15,7 @@ import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { Stat, zeroStats } from "../stats/statTypes";
+import { zeroAttrBonus } from "../stats/attributes";
 import { combatResolveSystem } from "./damage";
 import { healTarget, restoreMana, RESTORE_EPSILON } from "./restore";
 import { runEffects } from "../effects/effectRunner";
@@ -67,6 +68,7 @@ function spawnDummy(
     items: [null, null, null, null, null, null],
     augments: [],
     statStacks: 0,
+    attrBonus: zeroAttrBonus(),
     statCapstonePct: 0,
     pendingOrbSlots: 0,
     undoStack: [],

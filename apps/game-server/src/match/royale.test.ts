@@ -309,6 +309,10 @@ describe("team health no longer removes anybody (royale-no-elimination)", () => 
     // carded team win its way back to 15 and the assertion went red for a
     // reason that had nothing to do with the card. Sampling at the firing tick
     // is the condition the card actually encodes.
+    // ⚠️ 合併註記:#22/#265(平衡)與 #17/#260(三選一)兩組**各自獨立**踩到這條、
+    // 而且各自獨立得出同一個修法 —— 在發卡當下取樣,而不是在比賽結束時。
+    // 兩次都是因為改了數值之後 seed 55 走到不同的分支。同一個結論被兩條互不知情的
+    // 路徑得到,是這個修法對的最強證據。
     for (const [teamId] of perTeam) expect(healthWhenCarded.get(teamId)).toBe(0);
   });
 });

@@ -7,8 +7,12 @@
  * — icon-less choices fall back to the text card.
  */
 import { Abilities, Augments, Items } from "@ggd/shared/sim/content/registry";
+import { parseAttrChoice } from "@ggd/shared/sim/economy/attrDraft";
+import { ATTR_STAT_SOURCE, type AttrKey } from "@ggd/shared/sim/stats/attributes";
+import type { Stat } from "@ggd/shared/sim/stats/statTypes";
 import type { AbilityId, AugmentId, ItemId } from "@ggd/shared/ids";
 import { docDescription } from "../components/abilityText";
+import { statLabel } from "./statDisplay";
 
 export interface ResolvedChoice {
   name: string;
@@ -17,7 +21,34 @@ export interface ResolvedChoice {
   icon?: string;
 }
 
+/**
+ * WHAT an attribute point BUYS, derived from the shared 三圍→數值 table rather
+ * than re-typed: 力量 feeds 生命/生命回復/攻擊力, 敏捷 feeds 護甲/攻擊速度,
+ * 智慧 feeds 魔力/魔力回復/法術強度.
+ *
+ * It deliberately names the STATS and not the coefficients. The coefficients are
+ * live combat-env values an operator can retune, so printing them here would be
+ * a number that can go stale on a card that cannot be re-rendered — and #125's
+ * rule is that a SHOWN number must be the post-multiplier final one. The
+ * magnitude the player is choosing between (`+1.4`) is exact and IS shown.
+ */
+export function attrFeedsLabel(attr: AttrKey): string {
+  return (Object.entries(ATTR_STAT_SOURCE) as [Stat, { attr: AttrKey }][])
+    .filter(([, src]) => src.attr === attr)
+    .map(([stat]) => statLabel(stat))
+    .join("・");
+}
+
 export function resolveChoice(choice: string): ResolvedChoice {
+  // 能力屬性強化 三選一 (#260). The magnitude lives IN the id, so the number the
+  // player reads is byte-identical to the one the server applies — and it rides
+  // in the card's NAME, which is also what the a11y label speaks (draftA11y),
+  // so 「顯示在卡片上面」 holds for eyes and screen readers alike.
+  const attr = parseAttrChoice(choice);
+  if (attr) {
+    return { name: attr.label, desc: attrFeedsLabel(attr.attr) };
+  }
+
   // Augments carry no w3x art (they are our own pool, not imported), and the
   // `augment@1` schema is `.strict()` with NO `icon` field — so unlike abilities
   // and items their art can NOT be announced by a doc field, and

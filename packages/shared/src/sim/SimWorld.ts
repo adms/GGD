@@ -25,6 +25,7 @@ import type { MobRules } from "./mobs";
 import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
+import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
 import { accumulateTimeAlive } from "./stats/matchStats";
@@ -314,6 +315,23 @@ export class SimWorld {
    * on every replica, never mutated by a system.
    */
   itemEligible: ((itemId: ItemId) => boolean) | null = null;
+
+  /**
+   * 武器貨架 open/closed (#261) — 「除了能力屬性強化、及傳說寶玉外，其他武器道具
+   * 先全部暫時下架無法選擇」.
+   *
+   * Defaults to the shipped {@link WEAPON_SHELF_OPEN} flag (today: closed), so
+   * a match behaves as the owner asked without any host wiring. It is a FIELD
+   * rather than a bare import so a caller can run the full catalogue — every
+   * weapon-economy test does exactly that, because those rules did not go away
+   * when the shelf closed and their guards must keep standing.
+   *
+   * It gates ONLY `buyItem`. The draft / loot / 傳說寶玉 path never reads it —
+   * 「隨機三選一仍然可以隨機到」 — and economy/shopShelf.test.ts pins that split.
+   * Host CONFIG assigned before tick 0, never mutated by a system, so it
+   * perturbs no rng stream and replays identically.
+   */
+  weaponShelfOpen: boolean = WEAPON_SHELF_OPEN;
 
   /**
    * Arena-rules override for the ultimate rank gate. false (default) keeps the

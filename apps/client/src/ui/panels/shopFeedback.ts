@@ -50,6 +50,13 @@ export type ShopEventReason =
    * book would be a lie pointing at the wrong shop.
    */
   | "no-effect"
+  /**
+   * 暫時下架 (#261) — the weapon SHELF is closed (economy/shopShelf.ts), so only
+   * 能力屬性強化 and 傳說寶玉 are on sale. Its own reason, because the other two
+   * refusals would both mislead: 「只能三選一抽取」 is the wrong instruction
+   * (the item is not legendary) and 「沒有效果」 is simply false.
+   */
+  | "shelf-closed"
   // ShopDenyReason values from sim/economy/shopAccess.ts
   | "combat-alive"
   | "phase-closed"
@@ -98,6 +105,7 @@ export const REJECT_TEXT: Record<ShopEventReason, string> = {
   "empty-pool": "傳說武器池已空（沒有可抽的傳說武器，未扣除金幣）",
   "not-purchasable": "傳說武器無法購買，只能三選一抽取（可用傳說寶玉）",
   "no-effect": "這件道具在本版本沒有任何效果，不開放購買",
+  "shelf-closed": "武器道具暫時下架，目前只販售能力屬性強化與傳說寶玉（三選一仍可抽到）",
   "combat-alive": "戰鬥中無法使用商店",
   "phase-closed": "現在不是備戰時間",
   "no-champion": "尚未選擇英雄",

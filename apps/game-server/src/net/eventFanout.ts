@@ -267,6 +267,11 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "gachaItem",
   "legendaryOrbRolled",
   "statUpgradeBought",
+  // #260 — the picked 力/敏/智 magnitude. Its RESULT is replicated twice over
+  // (`SeatState.attrBonus`, and every stat the attribute feeds), and the card
+  // itself arrived as `SeatState.offers`; a fanned-out echo would add nothing
+  // the client cannot already see.
+  "attrUpgradePicked",
   "statCapstoneGranted",
   "statPathReset",
   // Command echoes from CommandSystem: the seat's ready flag and the accepted

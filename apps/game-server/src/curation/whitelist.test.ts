@@ -210,6 +210,11 @@ describe("shop catalogue enforcement (wl-07)", () => {
     cover("wl-shop-filter");
     // whitelist champion so the match spawns; allow ONLY swift-boots in the shop
     const ctl = newController(new Whitelist(doc({ champions: ["sela"], items: ["swift-boots"] }), false));
+    // #261: this is the WHITELIST guard — it must prove the whitelist filters a
+    // buy, which needs a buyable weapon. The 暫時下架 shelf is a SEPARATE gate
+    // with its own guard (shopShelf.test.ts), so it is opened here rather than
+    // letting it mask what this test is actually about.
+    ctl.world.weaponShelfOpen = true;
     tickUntil(ctl, "intermission");
 
     const seatId = asSeatId(0);

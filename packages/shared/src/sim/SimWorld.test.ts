@@ -6,6 +6,7 @@ import { PILLAR_ARENA } from "../../testkit/arenas";
 import { asSeatId, asTeamId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 import * as V from "./math/vec2";
+import { zeroAttrBonus } from "./stats/attributes";
 import { beginCombatCoins, coinRulesFromConfig, dropCoinCommand } from "./coins";
 
 /** The shipped goldDrop contract (content/config/arena-rules.json). */
@@ -165,6 +166,7 @@ describe("coin arming is a strict no-op when disabled (task #191)", () => {
         items: [],
         augments: [],
         statStacks: 0,
+        attrBonus: zeroAttrBonus(),
         statCapstonePct: 0,
         pendingOrbSlots: 0,
         undoStack: [],

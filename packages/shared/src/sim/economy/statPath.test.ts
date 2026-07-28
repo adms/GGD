@@ -24,6 +24,8 @@ import { Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 import { buyItem, grantItemFree } from "./shop";
 import { buyStatUpgrade, grantCapstone, statPathLive, statTicksRemaining, CAPSTONE_ROUND_GATE } from "./statPath";
+import { applyAttrPick, parseAttrChoice } from "./attrDraft";
+import { ATTR_KEYS } from "../stats/attributes";
 import { deathSystem } from "../systems/DeathSystem";
 import { GOLD_REWARDS } from "./progression";
 import {
@@ -33,7 +35,6 @@ import {
   STAT_TICK_ITEM_ID,
   STAT_TICK_PRICE,
   STAT_TICK_TARGET,
-  STAT_TICK_ROLLS,
   CAPSTONE_MIN_PCT,
   CAPSTONE_MAX_PCT,
 } from "./itemTiers";
@@ -62,6 +63,11 @@ beforeAll(() => {
 
 function makeWorld(seed = 5, gold = 100_000): { world: SimWorld; id: EntityId } {
   const world = new SimWorld(SKELETON_ARENA, seed);
+  // #261: these guards describe the rules that apply WHEN the weapon shelf is
+  // open. The shelf being 暫時下架 today does not retire them — it takes the
+  // weapons off sale — so the world is opened explicitly rather than deleting
+  // the coverage that comes back the moment the owner flips the flag.
+  world.weaponShelfOpen = true;
   const c = SKELETON_ARENA.zones[0]!.center;
   const id = spawnChampion(world, {
     championId: "sela" as ChampionId,
@@ -77,16 +83,46 @@ function makeWorld(seed = 5, gold = 100_000): { world: SimWorld; id: EntityId } 
 const tick = (world: SimWorld, id: EntityId): void => void buyItem(world, id, STAT_TICK_ITEM_ID);
 
 describe("「隨機的能力屬性強化」 — the repeatable tick", () => {
-  it("charges 375g, adds one stack and attaches one rolled stat", () => {
+  it("charges 375g, adds one stack and OPENS a 力/敏/智 三選一 (#260)", () => {
     cover("statpath-tick");
     const { world, id } = makeWorld();
     const out = buyStatUpgrade(world, id);
     expect(out.result).toBe("ok");
     expect(out.stacks).toBe(1);
-    expect(out.roll).not.toBeNull();
-    expect(STAT_TICK_ROLLS).toContainEqual(out.roll);
+    // three cards, one per attribute, each carrying its own rolled magnitude
+    expect(out.choices).toHaveLength(ATTR_KEYS.length);
+    expect(out.choices.map((c) => parseAttrChoice(c)!.attr)).toEqual([...ATTR_KEYS]);
     expect(world.champion.get(id)!.gold).toBe(100_000 - STAT_TICK_PRICE);
-    expect(world.stats.get(id)!.sources.filter((s) => s.id.startsWith("stat:"))).toHaveLength(1);
+    // …and grants NOTHING yet: the attribute lands on the PICK, not the buy.
+    const champ = world.champion.get(id)!;
+    expect(champ.attrBonus).toEqual({ str: 0, agi: 0, int: 0 });
+  });
+
+  it("the PICK is what grants the attribute, and it is the rolled magnitude", () => {
+    cover("statpath-attr-pick");
+    const { world, id } = makeWorld();
+    const out = buyStatUpgrade(world, id);
+    const chosen = out.choices[1]!; // the 敏捷 card
+    const parsed = parseAttrChoice(chosen)!;
+    expect(applyAttrPick(world, id, chosen)).toBe(true);
+    expect(world.champion.get(id)!.attrBonus.agi).toBeCloseTo(parsed.value, 10);
+    // and it MOVES a real stat: agility feeds armour additively.
+    recomputeStats(world, id);
+    const armorAfter = world.stats.get(id)!.final[Stat.Armor];
+    const fresh = makeWorld();
+    recomputeStats(fresh.world, fresh.id);
+    expect(armorAfter).toBeGreaterThan(fresh.world.stats.get(fresh.id)!.final[Stat.Armor]);
+  });
+
+  it("refuses a malformed / out-of-range card instead of granting it", () => {
+    cover("statpath-attr-pick-guard");
+    const { world, id } = makeWorld();
+    buyStatUpgrade(world, id);
+    // a tampered magnitude must not hand out 999 strength
+    expect(applyAttrPick(world, id, "attr:str:9999")).toBe(false);
+    expect(applyAttrPick(world, id, "attr:luck:5")).toBe(false);
+    expect(applyAttrPick(world, id, "godie-i001")).toBe(false);
+    expect(world.champion.get(id)!.attrBonus).toEqual({ str: 0, agi: 0, int: 0 });
   });
 
   it("CONSUMES NO INVENTORY SLOT — that slot-freedom is what the 25% premium rents", () => {
@@ -97,17 +133,25 @@ describe("「隨機的能力屬性強化」 — the repeatable tick", () => {
     expect(world.champion.get(id)!.statStacks).toBe(10);
   });
 
-  it("stacks additively — 20 ticks are 20 independent sources, not one overwrite", () => {
+  it("stacks additively — 20 picks SUM into 三圍, they do not overwrite", () => {
     cover("statpath-stacks-add");
     const { world, id } = makeWorld();
-    for (let i = 0; i < STAT_TICK_TARGET; i++) tick(world, id);
-    const sources = world.stats.get(id)!.sources.filter((s) => s.id.startsWith("stat:"));
-    // 20 ticks + the capstone earned on the 20th
-    expect(sources).toHaveLength(STAT_TICK_TARGET + 1);
-    expect(new Set(sources.map((s) => s.id)).size).toBe(sources.length);
+    let expectedStr = 0;
+    for (let i = 0; i < STAT_TICK_TARGET; i++) {
+      const out = buyStatUpgrade(world, id);
+      const strCard = out.choices[0]!; // always take 力量, so the sum is checkable
+      expectedStr += parseAttrChoice(strCard)!.value;
+      expect(applyAttrPick(world, id, strCard)).toBe(true);
+    }
+    expect(world.champion.get(id)!.attrBonus.str).toBeCloseTo(expectedStr, 6);
+    // 20 picks of 0.1–2.0 cannot be a single overwrite: the floor of the sum is
+    // 20 × 0.1 = 2.0, strictly above the largest single roll.
+    expect(world.champion.get(id)!.attrBonus.str).toBeGreaterThan(2.0 - 1e-9);
     recomputeStats(world, id);
-    // every roll is a real stat gain, so SOMETHING measurably moved
     expect(world.stats.get(id)!.final[Stat.MaxHealth]).toBeGreaterThan(0);
+    // the capstone earned on the 20th tick is still its own source
+    const sources = world.stats.get(id)!.sources.filter((s) => s.id.startsWith("stat:"));
+    expect(sources.map((s) => s.id)).toEqual(["stat:capstone"]);
   });
 
   it("refuses without charging when the purse is short", () => {
@@ -119,11 +163,11 @@ describe("「隨機的能力屬性強化」 — the repeatable tick", () => {
     expect(world.champion.get(id)!.gold).toBe(STAT_TICK_PRICE - 1);
   });
 
-  it("is deterministic: same seed, same twenty rolls", () => {
+  it("is deterministic: same seed, same twenty cards", () => {
     cover("statpath-deterministic");
     const rolls = (seed: number): string[] => {
       const { world, id } = makeWorld(seed);
-      return Array.from({ length: 20 }, () => JSON.stringify(buyStatUpgrade(world, id).roll));
+      return Array.from({ length: 20 }, () => buyStatUpgrade(world, id).choices.join("|"));
     };
     expect(rolls(99)).toEqual(rolls(99));
     expect(rolls(99)).not.toEqual(rolls(100));
@@ -278,6 +322,11 @@ describe("kill bounty (task #90) — a one-time premium per enemy", () => {
     cover("eco-kill-bounty");
     const run = (seed: number): { afterFirst: number; afterSecond: number } => {
       const world = new SimWorld(SKELETON_ARENA, seed);
+      // #261: these guards describe the rules that apply WHEN the weapon shelf is
+      // open. The shelf being 暫時下架 today does not retire them — it takes the
+      // weapons off sale — so the world is opened explicitly rather than deleting
+      // the coverage that comes back the moment the owner flips the flag.
+      world.weaponShelfOpen = true;
       const c = SKELETON_ARENA.zones[0]!.center;
       const killer = spawnChampion(world, {
         championId: "sela" as ChampionId,
