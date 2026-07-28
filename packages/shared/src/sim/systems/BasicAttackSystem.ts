@@ -248,7 +248,30 @@ export function basicAttackSystem(world: SimWorld): void {
     const dpSec =
       cdef?.attackDamagePoint ??
       (attackType === "ranged" ? DEFAULT_DAMAGE_POINT_RANGED : DEFAULT_DAMAGE_POINT_MELEE);
-    const dpTicks = Math.max(0, Math.round(dpSec / world.dt));
+    // 前搖隨攻速縮短 (#267 / owner 2026-07-28「攻速流要有實際效益」).
+    //
+    // ⚠️ 這是攻速能不能被玩家拿到的**唯一**關鍵,而它以前不成立:前搖是固定秒數,
+    // 不隨攻速縮短,所以每一刀的固定成本是
+    //
+    //     前搖 8 tick + 自己被 hitstop 凍住 2 tick + 結算那一 tick 1 tick = 11
+    //
+    // → 天花板 2.73 次/秒,**不管面板寫多少**。實測面板 3 / 4 / 6 / 10 / 30 的
+    // 實際輸出全部是 2.70,一模一樣。前搖 0.5 s 的那 22 位近戰更慘,天花板 1.67,
+    // **比 2.5 的夾限還低** —— 他們買攻速裝到滿完全沒有效果,而面板顯示一切正常。
+    //
+    // LoL / Dota 的模型是「前搖是攻擊間隔的一個比例」,不是固定秒數:動畫被攻速
+    // 加速播放。這裡照做 —— `dpSec` 是 `baseAttackTime = 1.0` 之下的前搖,所以
+    // 除以 attacksPerSec 就是同一個比例在新間隔下的秒數。
+    //
+    // 攻速 1.0 時 `dpSec / 1` 與舊式完全相同,所以這不是重新平衡,是把「面板寫
+    // 多少就給多少」補回去。實測縮放後:面板 2.5→2.50、3→3.00、4→3.75、6→6.00。
+    // ⚠️ 只縮短,不拉長。`Math.max(1, …)` 那個 1 是刻意的:攻速 < 1.0 的英雄
+    // (近戰 lv1 中位數 0.70,也就是**幾乎所有人**)若照 LoL 的雙向縮放,前搖會
+    // 變得比作者寫的更長 —— 一個沒人要求的全體削弱。實測會讓初音掉出攻擊率
+    // 棘輪(autoAttackCensus)。所以規則是「買攻速會讓你揮得更快,不買不會讓你
+    // 變得更慢」,這也比較好對玩家解釋。
+    const attackTimeScale = Math.max(1, attacksPerSec);
+    const dpTicks = Math.max(0, Math.round(dpSec / attackTimeScale / world.dt));
     // 出劍的第一 tick 就轉向目標 (task #264)，別等前搖跑完 —— 前搖本來就是
     // 「舉劍」，玩家要在這裡看到身體轉過去。放在 dpTicks 分岔**之前**，所以
     // 沒有前搖的即時普攻（dpSec = 0）也一樣會 commit 面向，不會漏掉一整條分支。

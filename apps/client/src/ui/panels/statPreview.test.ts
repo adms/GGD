@@ -183,7 +183,7 @@ describe("statPreview — predict, buy, confirm equal", () => {
     const world2 = new SimWorld(SKELETON_ARENA, 1);
     const id2 = spawnHero(world2);
     const as = predictThenBuy(world2, id2, "tp-as-huge");
-    expect(as.after[Stat.AttackSpeed]).toBeCloseTo(2.5, 6); // AS clamp [0.2,2.5]
+    expect(as.after[Stat.AttackSpeed]).toBeCloseTo(4.0, 6); // AS clamp [0.2,4.0] —— 一般上限,見 sim/stats/statTypes.ts
     expectBlocksEqual(as.preview.after, as.after);
   });
 

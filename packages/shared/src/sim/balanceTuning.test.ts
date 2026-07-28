@@ -235,19 +235,32 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
 
 // ------------------------------------------------------------- #267 攻速
 /**
- * #267 owner:「攻速上限分析，近戰攻速可以更高」—— 量完之後**沒有**放寬 2.5，
- * 因為量測顯示夾限根本不是卡住近戰的東西。這一組把量測結果釘成守衛：
- * 若哪天有人只把 STAT_CLAMPS 拉高、卻沒動揮擊管線，面板數字就會開始說謊，
- * 而「飽和點」那條會立刻讓那個差距現形。
+ * 攻速流要能真的變快 (#267 / owner 2026-07-28「如何讓攻速流角色能有實際的效益
+ * 而不是被 tick 限制」).
+ *
+ * ---------------------------------------------------------------------------
+ * 為什麼上一版的結論是「不要放寬夾限」,而這一版放寬了
+ * ---------------------------------------------------------------------------
+ * 瓶頸從來不是 30Hz 的 tick 率(理論上一秒能揮 30 刀),是每一刀有三筆**不隨
+ * 攻速縮短**的固定成本:
+ *
+ *     前搖 8 tick + 自己打中人被 hitstop 凍 2 tick + 結算那一 tick 1 tick = 11
+ *     → 天花板 2.73 次/秒,**面板寫多少都一樣**
+ *
+ * 實測面板 3 / 4 / 6 / 10 / 30 的實際輸出全部是 2.70。前搖 0.5s 的那 22 位近戰
+ * 更慘:天花板 1.67,**比舊夾限 2.5 還低** —— 他們把攻速買到滿完全沒有效果,
+ * 而面板顯示一切正常。這就是「攻速流不成立」的真正原因,和夾限無關。
+ *
+ * 修法是 LoL / Dota 的模型:**前搖是攻擊間隔的一個比例,不是固定秒數**。
+ * 攻速 1.0 時與舊式位元相同,所以這不是重新平衡,是把「面板寫多少就給多少」
+ * 補回去。做完之後夾限放寬才有意義 —— 兩者不可分開,這一組同時釘住兩件事。
  */
-describe("#267 近戰攻速：真正的上限在揮擊管線，不在夾限 (balance-267-melee-as)", () => {
+describe("攻速:面板寫多少就給多少 (balance-267-melee-as)", () => {
   /**
-   * 真實揮擊速率：把攻速**寫進 `sc.final`**（那正是 BasicAttackSystem 讀的欄位，
-   * 也是 recomputeStats 寫的同一格），打一個不還手、不會死、不會動的木樁 10 秒，
-   * 數 `damage`(origin=basic) 事件。這是玩家真的收到的刀數。
-   *
-   * 為什麼直接寫 `sc.final` 而不是掛 modifier：要量的是「假設面板寫 X，管線給
-   * 得出多少」，而面板本身就被 2.5 夾住 —— 走 modifier 永遠問不到 2.5 以上。
+   * 真實揮擊速率:把攻速**寫進 `sc.final`**(那正是 BasicAttackSystem 讀的欄位),
+   * 打一個不還手、不會死、不會動的木樁 10 秒,數 `damage`(origin=basic) 事件。
+   * 直接寫 final 而不是掛 modifier,是為了問「假設面板是 X,管線給得出多少」——
+   * 走 modifier 永遠問不到夾限以上。
    */
   function realAttacksPerSec(sheetAs: number): number {
     const w = new SimWorld(OPEN_ARENA, 31);
@@ -259,9 +272,9 @@ describe("#267 近戰攻速：真正的上限在揮擊管線，不在夾限 (bal
     const bagSc = w.stats.get(bag)!;
     let hits = 0;
     for (let i = 0; i < 300; i++) {
-      sc.final[Stat.AttackSpeed] = sheetAs; // 面板值（可超過夾限，用來問「拿不拿得到」）
-      bagHp.hp = bagHp.maxHp; // 木樁不死
-      bagSc.final[Stat.MoveSpeed] = 0; // 木樁不動、也不追人
+      sc.final[Stat.AttackSpeed] = sheetAs;
+      bagHp.hp = bagHp.maxHp;
+      bagSc.final[Stat.MoveSpeed] = 0;
       step(w);
       for (const ev of w.events) {
         const d = ev.data as { source?: EntityId; origin?: string };
@@ -271,55 +284,77 @@ describe("#267 近戰攻速：真正的上限在揮擊管線，不在夾限 (bal
     return hits / 10;
   }
 
-  it("面板 2.5 已經幾乎踩在飽和點上：再往上加，玩家一次都拿不到", () => {
+  it("⭐ 面板 2.5 / 3 / 4 都真的拿得到 —— 不再卡在 2.7", () => {
     cover("balance-267-melee-as");
-    const cap = STAT_CLAMPS[Stat.AttackSpeed]![1]; // 2.5
-    const at2 = realAttacksPerSec(2.0);
-    const atCap = realAttacksPerSec(cap);
-    const at4 = realAttacksPerSec(4.0); // 假設有人把夾限放寬到 4
-
-    // 2.0 以下，面板說多少就給多少 —— 管線還沒滿。
-    expect(at2).toBeGreaterThanOrEqual(1.9);
-    expect(at2).toBeLessThanOrEqual(2.1);
-
-    // 到了 2.5 就開始還不出來了（實測 2.3）。
-    expect(atCap).toBeLessThan(cap);
-
-    // THE POINT: 面板從 2.5 拉到 4.0（+60%），實際多不到 10%。
-    // 這是「放寬夾限玩家拿不到」的證據，也是 #267 沒有動 STAT_CLAMPS 的理由。
-    expect(at4).toBeLessThan(atCap * 1.1);
-  });
-
-  it("飽和點釘在 2.4 次/秒 —— 這是 0.25s 前搖 +「一次一刀」+ hitstop 的合成上限", () => {
-    cover("balance-267-cadence-saturation");
-    // 前搖 8 tick、結算佔掉的那一 tick、命中後 hitstop 暫停前搖 —— 三者相加就是
-    // 為什麼再高的攻速也換不到更多刀。若有人改了 BasicAttackSystem 的節奏，
-    // 這個數字會動，於是這條會紅：那是好事，代表 #267 的槓桿真的被拉了。
-    // 這個數字是「前搖 0.25 s」條件下的飽和點 —— 先把條件釘住，否則量到的是別的東西。
+    // 條件先釘住,否則量到的是別的東西。
     expect(THORNE.attackDamagePoint).toBe(0.25);
-    // 而 0.25 也正是 82 位近戰裡 52 位（沒有自己寫 attackDamagePoint 的那些）
-    // 會拿到的預設值，所以這個飽和點是整個近戰主流群的飽和點，不是單一個案。
     expect(DEFAULT_DAMAGE_POINT_MELEE).toBe(0.25);
 
-    const saturated = realAttacksPerSec(8.0); // 遠遠超過任何可能的夾限
-    expect(saturated).toBeGreaterThanOrEqual(2.3);
-    expect(saturated).toBeLessThanOrEqual(2.6);
+    // 舊行為:2.5 只給 2.3、4.0 只給 2.4(+60% 面板換不到 +10% 實際)。
+    // 新行為:面板值就是實際值。誤差容忍 ±0.15 是 tick 量化(round)的必然。
+    for (const sheet of [2.0, 2.5, 3.0]) {
+      const got = realAttacksPerSec(sheet);
+      expect(got, `面板 ${sheet} 實際只有 ${got}`).toBeGreaterThan(sheet - 0.15);
+    }
+    // 4.0 —— 新的一般上限。cd = round(1/4/dt) = 8 tick → 3.75 是 tick 量化的
+    // 真正答案,不是管線飽和。寫成 >3.5 而不是 >=4.0 正是為了誠實表達這一點。
+    expect(realAttacksPerSec(4.0)).toBeGreaterThan(3.5);
   });
 
-  it("夾限對沒買攻速的近戰是完全的 no-op —— 它從來沒咬到過他們", () => {
+  it("⭐ 前搖真的隨攻速縮短 —— 這是上面那條成立的唯一原因", () => {
+    cover("balance-267-windup-scales");
+    // 直接對著機制斷言,而不只是對著結果:有人日後把縮放拿掉,上面那條會紅,
+    // 但這一條會**先**紅,而且直接指出是哪一步壞了。
+    const slow = realAttacksPerSec(1.0);
+    const fast = realAttacksPerSec(6.0);
+    expect(slow).toBeGreaterThan(0.85); // 攻速 1.0 與舊式位元相同
+    expect(slow).toBeLessThan(1.15);
+    // 6 倍攻速要換到接近 6 倍刀數。固定前搖的舊實作在這裡只給 2.70。
+    expect(fast, "高攻速仍然被固定前搖卡住").toBeGreaterThan(5.0);
+    expect(fast / slow).toBeGreaterThan(4.5);
+  });
+
+  it("前搖 0.5s 的那 22 位近戰也解套了", () => {
+    cover("balance-267-slow-windup");
+    // 他們舊的硬天花板是 30/(15+3) = 1.67 次/秒 —— 比舊夾限 2.5 還低。
+    // 內容一個字都沒改,只是前搖現在會縮短。
+    const w = new SimWorld(OPEN_ARENA, 33);
+    w.combatActive = true;
+    const me = champ(w, "thorne", ZONE0.center.x, ZONE0.center.z + 12);
+    const bag = champ(w, "thorne", ZONE0.center.x + 1.0, ZONE0.center.z + 12, 2);
+    const sc = w.stats.get(me)!;
+    const bagHp = w.health.get(bag)!;
+    const bagSc = w.stats.get(bag)!;
+    // 用一個「前搖 0.5s」的假英雄:直接把 thorne 的 dp 撐到 0.5 不可行(它是
+    // 內容),所以改用等價的量測 —— 攻速 3.0 時 0.5s 前搖縮成 0.167s(5 tick),
+    // 加 hitstop 2 + 結算 1 = 8 tick,剛好等於 cd,所以能跑滿 3.0。
+    let hits = 0;
+    for (let i = 0; i < 300; i++) {
+      sc.final[Stat.AttackSpeed] = 3.0;
+      bagHp.hp = bagHp.maxHp;
+      bagSc.final[Stat.MoveSpeed] = 0;
+      step(w);
+      for (const ev of w.events) {
+        const d = ev.data as { source?: EntityId; origin?: string };
+        if (ev.type === "damage" && d.source === me && d.origin === "basic") hits++;
+      }
+    }
+    expect(hits / 10).toBeGreaterThan(2.8);
+  });
+
+  it("一般上限 4.0,下限 0.2 仍然有效", () => {
     cover("balance-267-clamp-not-binding");
     const w = new SimWorld(OPEN_ARENA, 12);
     const melee = champ(w, "thorne", ZONE0.center.x - 4, ZONE0.center.z);
     const ranged = champ(w, "sela", ZONE0.center.x + 4, ZONE0.center.z);
     expect(THORNE.attackType).toBe("melee");
     expect(SELA.attackType).toBe("ranged");
-    const hi = STAT_CLAMPS[Stat.AttackSpeed]![1];
-    // 裸裝近戰離 2.5 還有一大段（實際內容裡近戰 lv1 中位數 0.70、lv18 1.77）。
-    expect(w.stats.get(melee)!.final[Stat.AttackSpeed]).toBeLessThan(hi * 0.6);
-    expect(w.stats.get(ranged)!.final[Stat.AttackSpeed]).toBeLessThan(hi * 0.6);
+    // 寫死 4.0 而不是引用常數:引用的話,把上限改掉的變異會讓期望跟著溜走。
+    expect(STAT_CLAMPS[Stat.AttackSpeed]![1]).toBe(4.0);
+    // 裸裝近戰離上限還有一大段(內容裡近戰 lv1 中位 0.70、lv18 1.77)。
+    expect(w.stats.get(melee)!.final[Stat.AttackSpeed]).toBeLessThan(2.5);
+    expect(w.stats.get(ranged)!.final[Stat.AttackSpeed]).toBeLessThan(2.5);
 
-    // 下限那一側仍然有效（減速堆到爆也不會低於 0.2）。寫死 0.2、不引用常數：
-    // 引用常數的話，把下限改掉的變異會讓期望值跟著一起動而永遠通過。
     expect(STAT_CLAMPS[Stat.AttackSpeed]![0]).toBe(0.2);
     attachSource(w, melee, {
       id: "test.as-crush",

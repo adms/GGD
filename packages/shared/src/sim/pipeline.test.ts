@@ -106,7 +106,7 @@ describe("stat pipeline", () => {
     });
     recomputeStats(world, sela);
     const f = world.stats.get(sela)!.final;
-    expect(f[Stat.AttackSpeed]).toBe(2.5);
+    expect(f[Stat.AttackSpeed]).toBe(4.0); // 一般上限 (owner 2026-07-28,舊值 2.5)
     expect(f[Stat.CooldownReduction]).toBe(0.45);
     expect(f[Stat.CritChance]).toBe(1);
     expect(f[Stat.MoveSpeed]).toBe(14);

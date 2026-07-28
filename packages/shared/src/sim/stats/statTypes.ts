@@ -35,11 +35,18 @@ export const ALL_STATS: readonly Stat[] = Object.values(Stat);
 
 export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
   /**
-   * 2.5 attacks/sec (LoL's ceiling). #267 asked whether melee should be allowed
-   * higher; it was measured and the answer was NO — see THE ATTACK-SPEED
-   * CEILING below this table for the numbers and for where the real lever is.
+   * 4.0 attacks/sec —— 一般上限 (owner 2026-07-28)。**解鎖**到 10.0 走
+   * `sim/statCaps.ts` 的 `ModOp.CapRaise`,見那個檔案。
+   *
+   * ⚠️ 這裡的 4.0 是「沒有內容文件時的結構性預設」,真正生效的是
+   * `config.stat-caps@1`(後台可調)。`finalizeStat` 只在拿不到那張表時才落到
+   * 這個值 —— 和 combat-env / 基礎加成 同一個分層。
+   *
+   * 2026-07-28 之前這裡是 2.5,而且 #267 量完的結論是「不要放寬」—— 因為當時
+   * 前搖是固定秒數,天花板 2.73 次/秒,放寬只會讓面板說謊。前提在同一天被修掉
+   * (BasicAttackSystem 的前搖隨攻速縮短),所以放寬才有意義。**兩者不可分開。**
    */
-  [Stat.AttackSpeed]: [0.2, 2.5],
+  [Stat.AttackSpeed]: [0.2, 4.0],
   [Stat.CooldownReduction]: [0, 0.45],
   [Stat.CritChance]: [0, 1],
   [Stat.MoveSpeed]: [2, 14],

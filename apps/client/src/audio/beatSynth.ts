@@ -94,7 +94,7 @@ export const SIM_TICK_SEC = 1 / 30;
 
 /**
  * The nominal AttackSpeed clamp on `main`
- * (`STAT_CLAMPS[Stat.AttackSpeed] = [0.2, 2.5]`).
+ * (`STAT_CLAMPS[Stat.AttackSpeed] = [0.2, 4.0]`).
  */
 export const ATTACK_SPEED_MIN = 0.2;
 export const ATTACK_SPEED_MAX_MAIN = 2.5;

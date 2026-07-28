@@ -157,7 +157,7 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   [Stat.AbilityPower]: 400, // 200
   [Stat.Armor]: 150, // 45
   [Stat.MagicResist]: 200, // 100
-  [Stat.AttackSpeed]: 2.5, // STAT_CLAMPS upper bound
+  [Stat.AttackSpeed]: 4.0, // STAT_CLAMPS upper bound (一般上限,owner 2026-07-28)
   [Stat.MoveSpeed]: 5, // 1.36
   // A rate, not a count — 0..1. NOTE this band is one of the few that sits on
   // a QUALITATIVE cliff rather than merely a big number: `critChance 1` is not

@@ -65,7 +65,7 @@ describe("championSheet 的 戰鬥實際 欄 (client-sheet-final)", () => {
       DEFAULT_COMBAT_ENV,
       normalizeBaseBonus({ as: 99 }),
     );
-    expect(rows.find((r) => r.key === "as")!.final).toBe(2.5);
+    expect(rows.find((r) => r.key === "as")!.final).toBe(4.0); // 一般上限 (owner 2026-07-28)
   });
 
   it("拿不到 wire 表時退回內容/出貨預設,不是 0", () => {
