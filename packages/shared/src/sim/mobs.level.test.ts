@@ -378,7 +378,27 @@ describe("#217 determinism", () => {
       b.step(new Map());
     }
     expect(a.mob.size).toBeGreaterThan(0);
-    expect(a.rng.state).toBe(rngBefore); // no rng draw from spawn/level/regen
+    // #262 UPDATE. `CFG` here is the SHIPPED block, which now authors a
+    // 特殊殭屍 chance — and that roll is a deliberate `world.rng` draw (see
+    // `rollMobKind`). So the #217 invariant is restated precisely rather than
+    // dropped: LEVELLING / REGEN / EDGE-SPAWN still draw nothing, and the ONLY
+    // draw is the one special roll per spawned mob. Proven by construction: run
+    // the identical world with the special block stripped and the stream must
+    // sit exactly where it started.
+    const noSpecial = new SimWorld(SKELETON_ARENA, 42);
+    noSpecial.combatActive = true;
+    beginCombatMobs(
+      noSpecial,
+      mobRulesFromConfig({ ...CFG, firstWaveSec: DT, special: undefined }, DT, 5),
+      [0],
+    );
+    const noSpecialBefore = noSpecial.rng.state;
+    for (let i = 0; i < 90; i++) noSpecial.step(new Map());
+    expect(noSpecial.mob.size).toBeGreaterThan(0);
+    expect(noSpecial.rng.state).toBe(noSpecialBefore); // level/regen/spawn: zero draws
+    // …and with the block armed the stream HAS moved, so the assertion above is
+    // measuring a real absence rather than a code path that never ran.
+    expect(a.rng.state).not.toBe(rngBefore);
     expect(a.digest()).toBe(b.digest());
     // …and a DIFFERENT round is observably different state (hp is digested),
     // which is what makes a level mismatch surface as a digest mismatch.

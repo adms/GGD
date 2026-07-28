@@ -10,7 +10,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
-import { MOB_MODEL_KEY } from "@ggd/shared/sim/mobs";
+import { mobModelKeyFor } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
 import type { ChampionId } from "@ggd/shared/ids";
@@ -332,7 +332,11 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // only the fallback for a world armed by a pre-#217 caller.
         es.kind = ENTITY_KIND.MOB;
         es.seatId = -1;
-        es.key = world.mobRules?.modelKey ?? MOB_MODEL_KEY;
+        // #262: PER MOB, not per wave. 一般 / 特殊 / 殭屍王 each carry their own
+        // model doc, and `key` is the only channel that differentiates them on
+        // the wire (EntityState has no radius/scale field), so a king that
+        // resolved to the zombie's key would be a zombie with more hp on screen.
+        es.key = mobModelKeyFor(world.mobRules, mob.kind);
         const hp = world.health.get(id);
         if (hp) {
           es.hp = hp.hp;

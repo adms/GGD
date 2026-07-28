@@ -571,10 +571,107 @@ export const zMobWavesConfig = z
         killsPerLevel: z.number().int().min(1),
       })
       .strict(),
+    /**
+     * 殭屍王 (task #262, owner 2026-07-28: 「殭屍王 有機會上線嗎 包括單個英雄擊敗
+     * 100 隻殭屍招喚跟後台設定?」).
+     *
+     * A BATTLEFIELD QUEST hung on `world.mobKills`, which is already PER
+     * CHAMPION and already MATCH-CUMULATIVE (#215 owner decision): when ONE
+     * champion's personal tally reaches `killThreshold`, a boss is summoned into
+     * THAT champion's duel zone. Two champions on 50 kills each summon nothing —
+     * the counter that fires is one person's, never the team's sum.
+     *
+     * ABSENT = the whole sub-mechanic is off, exactly like an absent `mobWaves`
+     * turns the waves off. That is what keeps every pre-#262 arena, every unit
+     * test and the client's prediction shadow byte-identical.
+     */
+    boss: z
+      .object({
+        /** master switch; false keeps the block authored but inert */
+        enabled: z.boolean(),
+        /**
+         * ONE champion's cumulative zombie kills that summon the king (owner:
+         * 100). Compared against `world.mobKills.get(champion)`, so it spans
+         * rounds — that is the 「跨回合累積」 in the task title.
+         */
+        killThreshold: z.number().int().min(1),
+        /**
+         * true  = every Nth kill summons another king (100, 200, 300 …)
+         * false = ONCE per champion per match, on exactly the Nth kill.
+         * Owner ruling pending (see the task's openQuestions); the shipped
+         * default is `true` because `mobKills` never resets inside a match and a
+         * once-only king would leave rounds 7-10 with nothing to chase.
+         */
+        repeatable: z.boolean(),
+        /** the king's hit points (flat — it has no level curve of its own) */
+        maxHp: z.number().positive(),
+        /** melee packet amount */
+        attackDamage: z.number().min(0),
+        /** walk speed in GGD units/second */
+        moveSpeed: z.number().min(0),
+        /** melee reach (stored/compared squared in the sim) */
+        attackRange: z.number().positive(),
+        /** melee cooldown in seconds */
+        attackCdSec: z.number().positive(),
+        /** collision/body radius — also what makes the king LOOK like a king */
+        radius: z.number().positive(),
+        /** model doc id (resolved client-side); absent = the normal mob's */
+        modelKey: z.string().min(1).optional(),
+        /**
+         * THE WHOLE PRIZE POOL, in gold. Split among every champion that damaged
+         * the king, in proportion to that damage — and the payout is EXACTLY
+         * this number, remainder included (see `splitBossBounty` in
+         * sim/mobBoss.ts). It is not a per-hero amount.
+         */
+        bountyGold: z.number().int().min(0),
+        /** the same, in XP */
+        bountyXp: z.number().int().min(0),
+        /**
+         * 最後一刀翻倍 (owner). The last hitter's damage counts this many times
+         * over when the shares are computed — 2 = 翻倍. Because it is a WEIGHT
+         * and not a post-hoc bonus, the pool total is still exactly
+         * `bountyGold`; the king does not mint gold by being executed.
+         */
+        lastHitMultiplier: z.number().min(1),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 特殊殭屍 (owner 2026-07-28: 「殭屍群裡面會有一隻特殊殭屍」).
+     *
+     * Every spawned mob rolls once against `chancePercent`; a winner is a
+     * SPECIAL zombie — its own model, its own size, its own stats and its own
+     * reward multiplier. The roll is `world.rng`, so the same seed reproduces
+     * the same zombies (see sim/mobs.ts `rollMobKind`).
+     *
+     * ABSENT (or chancePercent 0) = no special zombies, and NO rng draw at all,
+     * so a pre-#262 arena leaves the shared random stream untouched.
+     */
+    special: z
+      .object({
+        /** probability per spawned mob, in PERCENT (0 = off, 100 = always) */
+        chancePercent: z.number().min(0).max(100),
+        /** maxHp multiplier against the normal mob of the same round */
+        hpMult: z.number().positive(),
+        /** melee damage multiplier */
+        damageMult: z.number().min(0),
+        /** walk-speed multiplier */
+        moveSpeedMult: z.number().min(0),
+        /** body-radius multiplier — the 「看得出來」 half of the feature */
+        radiusMult: z.number().positive(),
+        /** gold AND xp multiplier on the kill reward */
+        rewardMult: z.number().min(0),
+        /** model doc id (resolved client-side); absent = the normal mob's */
+        modelKey: z.string().min(1).optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
 export type MobWavesConfig = z.infer<typeof zMobWavesConfig>;
+export type MobBossConfig = NonNullable<MobWavesConfig["boss"]>;
+export type MobSpecialConfig = NonNullable<MobWavesConfig["special"]>;
 
 /** Contract defaults for the mobWaves block (dev cheats / fallbacks). */
 export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
@@ -632,6 +729,42 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // arrive once a round now arrives several times, which is the point —
     // 「肉鴿」 is supposed to feel like a climb, not like homework.
     killsPerLevel: 6,
+  },
+  // 殭屍王 (#262). 100 personal kills, and — because `killsPerLevel` is 6 — a
+  // champion who summons one is already ~16 levels up from zombies alone, so the
+  // king is authored as a genuine wall rather than a big zombie: 6,000 hp against
+  // the round-9 zombie's 200, and a 12 attack against its 1.2. 3,000 gold is
+  // roughly HALF the ~7,600g deterministic match income the price ladder is
+  // derived against (#82) — a real prize, still not a second economy.
+  boss: {
+    enabled: true,
+    killThreshold: 100,
+    repeatable: true,
+    maxHp: 6000,
+    attackDamage: 12,
+    moveSpeed: 2.4,
+    attackRange: 2.6,
+    attackCdSec: 1.4,
+    // 1.8 against the zombie's 0.6 — the king is THREE TIMES as wide, which is
+    // the silhouette cue that says 「這不是雜魚」 before any model loads.
+    radius: 1.8,
+    modelKey: "champ.mob.zombie-king",
+    bountyGold: 3000,
+    bountyXp: 1200,
+    lastHitMultiplier: 2,
+  },
+  // 特殊殭屍 (#262). One in twenty, so a wave of 20 carries about one — 「殭屍群
+  // 裡面會有一隻特殊殭屍」 read literally. Double size and double hp make it
+  // legible at a glance even before it has its own model; triple reward is what
+  // makes hunting it a decision rather than trivia.
+  special: {
+    chancePercent: 5,
+    hpMult: 2,
+    damageMult: 1.5,
+    moveSpeedMult: 1.25,
+    radiusMult: 1.8,
+    rewardMult: 3,
+    modelKey: "champ.mob.zombie-special",
   },
 };
 

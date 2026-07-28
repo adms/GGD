@@ -4875,3 +4875,122 @@ bytes 完全相同（有測試釘）。
 
 **教訓**:六個守衛的測試各自用一張只帶單一缺陷的合成圖,而不是真實資產。
 真實資產的測試只證明「這個檔案現在會踩到這條守衛」——重新匯出圖示就會無故變綠或變紅。
+
+---
+
+## 2026-07-28 · #262 殭屍王 + 特殊殭屍 —— 一個錯的錨點，和三條「總額必須守恆」的算術
+
+owner 這一輪講了三件事：
+
+> 「殭屍王 有機會上線嗎 包括單個英雄擊敗100隻殭屍招喚跟後台設定?」
+> 「打死殭屍王的話,結算參與傷害的英雄,照傷害比例發獎金,補最後一刀的人獎金翻倍」
+> 「殭屍群裡面會有一隻特殊殭屍」
+
+### 交付摘要
+
+| 需求 | 落點 | 守衛 |
+|---|---|---|
+| 單一英雄累積 100 隻 → 召喚殭屍王 | `sim/mobBoss.ts` `bossSummonsAt` + `MobSystem` 的擊殺結算段（掛在 `world.mobKills` 那一行旁） | 99 不召喚 / 100 召喚；兩人各 2+1 隻不召喚 |
+| 王的血/攻/速/半徑/模型/獎金全部後台可調 | `config.arena-rules@1` 的 `mobWaves.boss`；後台 `apps/admin/src/mobWaves.ts` 13 個欄位 + 新的 `bool` 欄位型別 | 每個欄位都要真的進 payload（既有的 EVERY_FIELD 測試已擴充） |
+| 照傷害比例發獎金、最後一刀翻倍 | `splitBossBounty`（純算術，無 SimWorld） | 比例、翻倍、總額三條各自可證偽 |
+| 特殊殭屍（機率走 rng、外觀/數值/獎勵不同） | `rollMobKind` + `mobProfile` + 兩份新 model doc | 同 seed 可重現、會變化、三種 kind 三個 model key |
+| 王死掉的事件真的上得了協定（②） | `mobBossSpawn` / `mobBossSlain` 進 `FANNED_OUT_EVENT_TYPES` | `apps/game-server/src/net/mobBossWire.test.ts` |
+
+### ⚠️ 任務書給的錨點是錯的 —— `recentDamagers` 存的是 tick，不是傷害
+
+任務書寫「`world.recentDamagers` 已經在記『誰對誰造成多少傷害』，傷害比例分紅直接用它」。
+**它不是。** `stats/matchStats.ts:158` 寫進去的是 `m.set(source, world.tick)` —— 值是
+**tick**，而 `sim/targeting.ts:154` 把它讀回去當威脅記憶的時間戳。更致命的是同一個函式
+在記帳前就 `if (!tgtChamp) return`：**目標不是英雄的封包一律丟掉**，所以打在殭屍王身上的
+傷害從來就沒進過那張表。
+
+照任務書做會同時（a）拿 tick 當傷害算比例、（b）永遠拿到空表。改成新開一張
+`world.bossDamage: Map<boss, Map<champion, damage>>`，只在 `kind === "boss"` 時寫，
+一般殭屍完全不配置。這是**與任務書刻意不同**的做法，理由寫在 `SimWorld.ts` 的欄位註解裡。
+
+### 三條「數字必須守恆」的決定
+
+1. **翻倍是權重，不是事後加碼。** 先算完比例再把最後一刀的份額 ×2，會讓**總支出取決於
+   誰補刀** —— 低傷害的人搶尾刀，王就憑空多印錢。改成把補刀者的傷害在計算權重時算
+   `lastHitMultiplier` 次，`sum(payout) === bountyGold` 恆成立，而補刀者「每點傷害」仍嚴格
+   高於別人，這才是「獎金翻倍」要的東西。
+2. **餘數有名字。** 每份 `floor` 會漏掉最多 (n-1) 金。不能讓它蒸發（玩家看到的總額不是
+   設定值），也不能改 `Math.round`（會**超付**而且與順序有關）。全部餘數給**一個指定的人**：
+   補刀者在名單裡就給補刀者，否則給 entity id 最小的那個。
+3. **遍歷前先依 EntityId 升冪排序。** `bossDamage` 的內層 Map 是**插入順序**（＝誰先打到王），
+   那是兩台 host 可以合法不一致的東西。排序讓分紅只是「傷害表」的函數。
+
+### owner 需要裁決的：`repeatable` 預設值
+
+一場只召喚一次，還是每 100 隻一次？做成後台布林 `mobWaves.boss.repeatable`，**預設 true**
+（每滿 100 隻都召喚）。理由：`mobKills` 是**整場累積、不跨場重置**（#215 owner 決定），
+`killsPerLevel` 又已經降到 6，所以到第 7–10 回合一個認真清怪的人早就過 100 隻；若只召喚
+一次，後半場這條任務線就是死的。若 owner 想要「一場一隻王」，後台把它切成「關閉」即可，
+不需要改程式。
+
+### 變異紀錄（16 條，全部紅）
+
+M1 門檻早一隻(4) · M2 改成全隊加總(1) · M3 拿掉補刀權重(2) · M4 拿掉取整餘數(2) ·
+M5 拿掉升冪排序(1) · M6 rollMobKind 恆回 normal(5) · M7 王吃一般殭屍數值(6) ·
+M8 特殊殭屍 == 一般(3) · M9 不發 `mobBossSlain`(4) · M10 不記王身上的傷害(3) ·
+M11 特殊殭屍獎勵倍率忽略(1) · M12 打王也算進 mobKills(5) · M13 王固定生在 zone 0(1) ·
+M14 `endCombatMobs` 不清帳本(1) · M15 snapshot 回到「整波共用一個 modelKey」(1) ·
+M16 `mobBossSlain` 從白名單刪掉(2)。
+
+M14 第一次跑是**綠的**：`destroy()` 本來就會刪掉每一隻王的帳本，所以 `bossDamage.clear()`
+在測試走的路徑上是多餘的。沒有把那行刪掉（它防的是「帳本的 key 不在 `world.mob` 裡」這
+種殘留），而是補了一條直接製造那個狀態的斷言，讓那行變成有人量得到的程式碼。
+
+### 已知的取捨
+
+- **特殊殭屍的機率會消耗共用 rng stream。** #215 當初刻意讓小怪一滴 rng 都不抽（怕擾動
+  爆擊/迴避/傳說寶玉）。owner 這次明確要求「機率必須走 `world.rng`」，所以改了；
+  `chancePercent: 0` 或未設定 `special` 區塊時**一滴都不抽**，舊競技場的隨機流原地不動，
+  這條有測試釘住（兩邊都測：關掉時 state 不動、打開時 state 有動）。
+- **王的體型在協定上只靠 `modelKey`。** `EntityState` 沒有 radius/scale 欄位，所以「看得
+  出來是王」是用兩份新的 model doc（`champ.mob.zombie-king` scale 2.45 / `-special` 1.22，
+  共用同一個 glb）達成的，不是靠 sim 的 radius。
+
+### 對抗式驗證（#262 verifier pass, 2026-07-28）
+
+實作者那 16 條變異證明的是他**想得到**的部分。獨立設計的 14 條變異裡有 8 條**活下來**
+（改壞了程式，四個 suite 全綠），另有 1 條是真正的缺陷已修：
+
+**已修 —— 三種殭屍在畫面上一樣大（失敗形狀 ①，宣稱做到但沒有）**
+上面「王的體型只靠 `modelKey`」那條的結論是**錯的**。三份 model doc 指向同一個
+`blocky-undead.glb`，而 #150 起 `ChampionView.tryUpgradeToGlb` 會把每個 glb **高度正規化**
+到 `TARGET_HEIGHT`（1.8u）並且**完全不讀 `doc.scale`** —— 尺寸只由 `relativeScale` 決定，
+而那條路徑是靠座位表解 championId 的，小怪 `seatId === -1` 拿不到。所以 6000 血的王和
+100 血的殭屍在螢幕上是**同一個高度**。「三個 kind 解析出三個不同 modelKey」是**屬性**
+（失敗形狀 ⑦），不是行為。修法：`mobModelSizeOverride`（render/EntityViewRegistry.ts）
+把 MOB 的 `doc.scale` 轉成 `relativeScale`，GameApp 在 championId 那一跳之前先問它；
+守衛 `apps/client/src/render/mobSizeWiring.test.ts` 量的是 `declaredScale`（王 4.41u /
+特殊 2.20u / 一般 1.80u），改回去 2 條紅。
+
+**活下來的守衛缺口（已補測試，每條都證明會紅）**
+- N2 餘數的**收件人**沒人量（改成給陣列最後一格仍然全綠）—— 「餘數給補刀者」是檔頭寫死
+  的規則，之前所有分紅案例剛好都整除。
+- N4 `mobBossSlain.shares[].xp` 有斷言，**錢包沒有** —— 刪掉 `grantXp` 全綠。這是 #125
+  「顯示的數字必須是玩家真正拿到的」在沒人看的方向上失守。（量的要是
+  `matchStats.xp`，`champion.xp` 是會被升級吃掉的進度條。）
+- N6 只有 `special: null` 的世界測過一般殭屍的獎勵，只有 `chance: 1` 的世界測過 3 倍獎勵，
+  所以**沒有任何測試殺過「special 已武裝時的一般殭屍」**：把 `rewardMult` 無條件套用
+  （全場殭屍 60 金而非 20 金，整個經濟三倍）全綠。
+- N8 `summonMobBoss` 用 `kills` 當生成點 key 是檔頭寫的承諾，但兩隻王疊在同一點沒人量。
+- N9 `destroy()` 清內層帳本（某隻王的**傷害者**被回收）沒人量，只量了外層。
+- N10 MovementSystem 那段改動**完全沒有行為守衛**：改回 `world.mobRules.moveSpeed`
+  （王用殭屍的移速跑）全綠。`mobProfile(...).moveSpeed === 2.4` 是純函式的屬性。
+- N13 王的擊殺不進 `onKill` / 連殺 combo，全綠。
+- N5' 帳本記的是 `impact`，而 `mitigate()` **不會**依剩餘血量封頂 —— 所以**溢傷全額計入**。
+  檔頭原本寫「overkill cannot inflate one player's share」，那句是假的（已更正註解）。
+
+**等 owner 裁決**
+1. 溢傷要不要計入分紅？現況：對只剩 100 血的王丟 4000 傷害的人，權重就是 4000（再 ×2），
+   幾乎整包獎金都是他的。要改就是把帳本改記 `hpLoss` 並加封頂；現況已用測試釘住，不會
+   無聲漂移。
+2. 玩家**看不到這條任務**。`mobBossSpawn` / `mobBossSlain` 有進 `FANNED_OUT_EVENT_TYPES`
+   （會過線），但**客戶端沒有任何 handler** —— 沒有「殭屍王降臨」橫幅、沒有分紅結算面板；
+   獎金只表現為金幣數字跳一下。門檻 100 也不在協定上，所以 HUD 沒辦法顯示 87/100。
+3. **部署風險**：`data/` 的 durable content overlay（#189）會蓋掉 `content/config/arena-rules.json`。
+   線上若已經存過一次後台小怪波頁，存下來的是 **pre-#262 的 doc（沒有 boss/special 區塊）**，
+   那麼這次 deploy 之後王仍然不會出現。上線前要確認 overlay 內容（本輪禁止碰正式主機）。

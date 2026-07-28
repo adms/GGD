@@ -104,6 +104,28 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "reward.gold",
   "reward.xp",
   "reward.killsPerLevel",
+  // 殭屍王 (#262)
+  "boss.enabled",
+  "boss.killThreshold",
+  "boss.repeatable",
+  "boss.maxHp",
+  "boss.attackDamage",
+  "boss.attackCdSec",
+  "boss.attackRange",
+  "boss.moveSpeed",
+  "boss.radius",
+  "boss.modelKey",
+  "boss.bountyGold",
+  "boss.bountyXp",
+  "boss.lastHitMultiplier",
+  // 特殊殭屍 (#262)
+  "special.chancePercent",
+  "special.hpMult",
+  "special.damageMult",
+  "special.moveSpeedMult",
+  "special.radiusMult",
+  "special.rewardMult",
+  "special.modelKey",
 ];
 
 // ---------------------------------------------------------------------------
@@ -300,21 +322,44 @@ describe("每一個欄位 are reachable and labelled", () => {
       "reward.gold": "66",
       "reward.xp": "77",
       "reward.killsPerLevel": "8",
+      "boss.enabled": "1",
+      "boss.killThreshold": "150",
+      "boss.repeatable": "0",
+      "boss.maxHp": "7500",
+      "boss.attackDamage": "14",
+      "boss.attackCdSec": "1.6",
+      "boss.attackRange": "3.1",
+      "boss.moveSpeed": "2.9",
+      "boss.radius": "2.1",
+      "boss.modelKey": "champ.mob.king-double",
+      "boss.bountyGold": "4200",
+      "boss.bountyXp": "1600",
+      "boss.lastHitMultiplier": "3",
+      "special.chancePercent": "12",
+      "special.hpMult": "2.5",
+      "special.damageMult": "1.75",
+      "special.moveSpeedMult": "1.4",
+      "special.radiusMult": "2.2",
+      "special.rewardMult": "4",
+      "special.modelKey": "champ.mob.special-double",
     };
     let form = formFromConfig(SHIPPED_MOB_WAVES);
     for (const [k, v] of Object.entries(edits)) form = setField(form, k as MobWavesFieldKey, v);
     const cfg = configFromForm(form) as unknown as Record<string, unknown>;
-    const mob = cfg["mob"] as Record<string, unknown>;
-    const reward = cfg["reward"] as Record<string, unknown>;
     const at = (key: MobWavesFieldKey): unknown => {
       const [head, tail] = key.split(".");
       if (tail === undefined) return cfg[head!];
-      return (head === "mob" ? mob : reward)[tail];
+      const block = cfg[head!] as Record<string, unknown> | undefined;
+      return block?.[tail];
     };
     for (const key of EVERY_FIELD) {
-      const expected = MOB_WAVES_LABELS[key].kind === "int" || MOB_WAVES_LABELS[key].kind === "num"
-        ? Number(edits[key])
-        : edits[key];
+      const kind = MOB_WAVES_LABELS[key].kind;
+      const expected =
+        kind === "int" || kind === "num"
+          ? Number(edits[key])
+          : kind === "bool"
+            ? edits[key] === "1"
+            : edits[key];
       expect(at(key), `${key} never reached the payload`).toBe(expected);
     }
   });

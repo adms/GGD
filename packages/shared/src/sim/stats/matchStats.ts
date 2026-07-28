@@ -138,6 +138,32 @@ export function recordDamage(
 ): void {
   const srcChamp = world.champion.has(source);
   const tgtChamp = world.champion.has(target);
+
+  // 殭屍王傷害帳本 (task #262). BEFORE the early return below, because the king
+  // is a NEUTRAL and that return is exactly what drops every packet aimed at
+  // one. `output` (post-mitigation, pre-shield) is used rather than the hp
+  // actually lost so the ledger measures the same thing `damageDealt` does.
+  //
+  // ⚠️ CONSEQUENCE, PINNED BY TEST, NOT YET RULED ON BY THE OWNER: `output` is
+  // NOT capped at the king's remaining hp (`mitigate()` clamps only a
+  // STRUCTURE's per-packet cap), so a finisher's OVERKILL counts in full. A
+  // 4,000-damage ult on a king with 100 hp left weighs 4,000 — before the ×2
+  // last-hit multiplier — and takes almost the whole pool. Whether that is
+  // 「補最後一刀的人獎金翻倍」 working as intended or a burst-steal to be capped
+  // at `hpLoss` is a DESIGN call; the current behaviour is guarded in
+  // mobs.boss.test.ts so it cannot drift silently either way.
+  //
+  // Gated on the mob's KIND, not on the ledger's existence, so an ordinary
+  // zombie never allocates a map and a world with no king is untouched.
+  if (srcChamp && world.mob.get(target)?.kind === "boss" && output > 0) {
+    let ledger = world.bossDamage.get(target);
+    if (!ledger) {
+      ledger = new Map<EntityId, number>();
+      world.bossDamage.set(target, ledger);
+    }
+    ledger.set(source, (ledger.get(source) ?? 0) + output);
+  }
+
   if (!tgtChamp) return; // damage to flowers / neutrals never scores
 
   if (srcChamp && source !== target) {

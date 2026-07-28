@@ -136,6 +136,31 @@ export class SimWorld {
   readonly mobKills = new Map<EntityId, number>();
 
   /**
+   * 殭屍王傷害帳本 (task #262): boss entity -> (champion entity -> damage that
+   * champion has done to it). Read exactly once, when the king dies, to split
+   * the bounty in proportion (`splitBossBounty`, sim/mobBoss.ts).
+   *
+   * WHY A NEW MAP AND NOT `recentDamagers`. `recentDamagers` looks like the
+   * right home — it is even called 「誰對誰造成多少傷害」 in conversation — but
+   * its value is a TICK, not an amount (`m.set(source, world.tick)` in
+   * stats/matchStats.ts), and `targeting.ts` reads it back as a tick for threat
+   * memory. It also drops every packet whose TARGET is not a champion, so a
+   * king's damage never entered it at all. Overloading it would have silently
+   * broken assist credit and bot threat targeting to store a number it cannot
+   * hold.
+   *
+   * Written by `recordDamage` for BOSS mobs only, so an ordinary zombie costs
+   * nothing and a world with no king never allocates. Cleared per boss on death
+   * (via `destroy`) and wholesale by `endCombatMobs`.
+   *
+   * OUT OF `digest()`, on the `recentDamagers` / `bountyPaid` precedent: its
+   * only observable effect is the gold/xp it grants, and `matchStats.goldEarned`
+   * + `champion.gold` are already digested, so a replica that accumulated a
+   * different ledger says so on the tick the king dies.
+   */
+  readonly bossDamage = new Map<EntityId, Map<EntityId, number>>();
+
+  /**
    * Duel zones armed for mob waves this combat (task #215). Host state like
    * `flowerZones`: assigned identically on every replica from a deterministic
    * source (the round's pairings), never mutated by a system, so it stays out of
@@ -527,6 +552,12 @@ export class SimWorld {
     // the same defensive contract every other per-entity store follows).
     this.mob.delete(id);
     this.mobKills.delete(id);
+    // #262: the king's damage ledger dies with the king. Two entries to clear —
+    // this id AS a boss (the outer key) and this id as a DAMAGER of some other
+    // boss (an inner key), because a recycled entityId that inherited a stale
+    // contribution would be paid for damage it never did.
+    this.bossDamage.delete(id);
+    for (const ledger of this.bossDamage.values()) ledger.delete(id);
     this.hitstop.delete(id);
     this.knockdown.delete(id);
     this.hitstun.delete(id);

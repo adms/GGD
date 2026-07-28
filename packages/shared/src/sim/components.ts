@@ -331,11 +331,32 @@ export interface CoinComp {
  * `modelKey` is NOT stored — it is presentation-only (resolved client-side from
  * ENTITY_KIND.MOB like the guardian/flower), so it stays out of the digest.
  */
+/**
+ * 一般殭屍 / 特殊殭屍 / 殭屍王 (task #262).
+ *
+ * DECLARED HERE, not in sim/mobs.ts, purely so `MobComp` stays importable
+ * without dragging the mobs module (and through it SimWorld + collision) into
+ * anything that only wants the component shapes. `sim/mobs.ts` re-exports it.
+ */
+export type MobKind = "normal" | "special" | "boss";
+
 export interface MobComp {
   /** duel zone the mob fights in (a mob only ever chases/attacks in its zone) */
   zone: number;
   /** the sentinel MONSTER team id it is on (always {@link MONSTER_TEAM}) */
   team: TeamId;
+  /**
+   * 一般殭屍 / 特殊殭屍 / 殭屍王 (task #262). Written ONCE at spawn and never
+   * mutated. Everything that differs between them — hp, melee damage, walk
+   * speed, body radius, the model on the wire, and what dying pays — is derived
+   * from this one field through `mobProfile` (sim/mobs.ts), so a king cannot end
+   * up hitting for a zombie's damage because one call site read `rules.x` raw.
+   *
+   * Authoritative sim state, but NOT digested directly: the observable effects
+   * (spawn hp, positions, gold) are all already in the digest at their source,
+   * exactly like `MobComp.zone` and `spawnTick`.
+   */
+  kind: MobKind;
   /** current AI target (nearest enemy champion), resolved each tick; -1 = none */
   target: EntityId | -1;
   /** integer melee-cooldown countdown (0 = ready to swing) */

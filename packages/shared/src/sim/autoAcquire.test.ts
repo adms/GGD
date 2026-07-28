@@ -141,7 +141,7 @@ function spawnMob(world: SimWorld, pos: V.Vec2, hp = 100): EntityId {
   });
   // MobComp carries no level of its own — #217 put the mob's effective level on
   // the arm-time MobRules instead, so it is immutable state no system can drift.
-  world.mob.set(id, { zone: 0, team: MONSTER_TEAM, target: -1 as EntityId, attackCdTicks: 0, spawnTick: 0 });
+  world.mob.set(id, { zone: 0, team: MONSTER_TEAM, target: -1 as EntityId, attackCdTicks: 0, spawnTick: 0, kind: "normal" });
   return id;
 }
 

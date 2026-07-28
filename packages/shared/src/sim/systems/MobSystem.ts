@@ -53,8 +53,11 @@ import {
   type MobRules,
   MONSTER_TEAM,
   spawnMob,
+  summonMobBoss,
+  mobProfile,
   mobsAliveInZone,
 } from "../mobs";
+import { bossSummonsAt, splitBossBounty, type BossDamageEntry } from "../mobBoss";
 
 export function mobSystem(world: SimWorld): void {
   const rules = world.mobRules;
@@ -118,6 +121,12 @@ export function mobSystem(world: SimWorld): void {
     const nav = world.nav.get(mobId);
     if (nav) nav.attackTarget = target === -1 ? null : target;
 
+    // #262 — THIS mob's numbers, not the wave's. A king and a 特殊殭屍 differ
+    // from a plain zombie in melee damage, reach and swing cadence, and reading
+    // `rules.attackDamage` straight here is exactly how a 6,000 hp boss ends up
+    // punching for 1.2.
+    const prof = mobProfile(rules, mob.kind);
+
     // 3b) REGEN (task #217) — a mob has no StatsComp, so RegenSystem skips it.
     //     Apply the LEVELLED hp regen baked into the rules with the exact same
     //     `hp + perSec * dt` form RegenSystem uses for champions. Zero when the
@@ -127,16 +136,16 @@ export function mobSystem(world: SimWorld): void {
     }
 
     // 4) MELEE — in range + cooldown ready → queue one packet; else age the cd.
-    if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= rules.attackRangeSq) {
+    if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= prof.attackRangeSq) {
       world.damageQueue.push({
         source: mobId,
         target,
-        amount: rules.attackDamage,
+        amount: prof.attackDamage,
         type: "physical",
         crit: false,
         origin: "mob",
       });
-      mob.attackCdTicks = rules.attackCdTicks;
+      mob.attackCdTicks = prof.attackCdTicks;
     } else if (mob.attackCdTicks > 0) {
       mob.attackCdTicks--;
     }
@@ -149,11 +158,34 @@ export function mobSystem(world: SimWorld): void {
   for (const ev of world.events) {
     if (ev.type !== "death") continue;
     const id = ev.data.id as EntityId;
-    if (!world.mob.has(id)) continue;
+    const dead = world.mob.get(id);
+    if (!dead) continue;
     const killer = (ev.data.killer as EntityId | null) ?? null;
+
+    // ── 殭屍王 (task #262) ────────────────────────────────────────────────
+    // A KING PAYS ITS POOL, NOT THE PER-ZOMBIE REWARD, and it does NOT bump
+    // `mobKills`: it is the quest's PRIZE, not another zombie, so killing one
+    // must never count toward summoning the next one (with `repeatable` on,
+    // that would be a 100-kill loop that ends one kill early forever).
+    // Returned to the flat path for nothing — the branch is total.
+    if (dead.kind === "boss") {
+      payBossBounty(world, id, killer, rules);
+      // A boss kill is still A KILL: `onKill` passives and the 連殺 combo fire
+      // exactly as they do for a zombie (#244's ruling), before the entity goes.
+      if (killer !== null && world.champion.has(killer)) {
+        fireHooks(world, killer, "onKill", id);
+        creditKillCombo(world, killer, id, "mob");
+      }
+      world.destroy(id);
+      continue;
+    }
+
     if (killer !== null && world.champion.has(killer)) {
-      grantGold(world, killer, rules.rewardGold);
-      grantXp(world, killer, rules.rewardXp);
+      // #262: a 特殊殭屍 pays `rewardMult`× — the reason to hunt it. Rounded so
+      // gold stays integral (the wallet and every display treat it as whole).
+      const mult = mobProfile(rules, dead.kind).rewardMult;
+      grantGold(world, killer, Math.round(rules.rewardGold * mult));
+      grantXp(world, killer, Math.round(rules.rewardXp * mult));
       const n = (world.mobKills.get(killer) ?? 0) + 1;
       world.mobKills.set(killer, n);
       if (rules.killsPerLevel > 0 && n % rules.killsPerLevel === 0) {
@@ -184,14 +216,96 @@ export function mobSystem(world: SimWorld): void {
         id,
         killer,
         killerSeatId: world.team.get(killer)?.seatId ?? -1,
-        gold: rules.rewardGold,
+        gold: Math.round(rules.rewardGold * mult),
         kills: n,
+        kind: dead.kind,
       });
+
+      // 殭屍王召喚 (task #262). LAST in the kill bookkeeping, on purpose: the
+      // tally, the level grant and the slain event all describe the zombie that
+      // just died, and a king appearing mid-way through that would let a hook
+      // observe a half-written state. `n` is THIS ONE CHAMPION's cumulative
+      // total (`world.mobKills` is per-champion and match-cumulative since
+      // #215), so two players on 50 kills each summon nothing — the boundary
+      // and the per-hero-ness both live in `bossSummonsAt`.
+      if (bossSummonsAt(rules.boss, n)) {
+        // The king spawns in the SUMMONER's zone: the quest belongs to the
+        // player who did the work, and their duel is where the fight has to
+        // happen. Falls back to the dead zombie's zone if the champion somehow
+        // has no transform (it always does — it just landed a killing blow).
+        const zone = world.transform.get(killer)?.zone ?? dead.zone;
+        summonMobBoss(world, zone, rules, killer, n);
+      }
     } else {
-      world.emit("mobSlain", { id, killer: null, killerSeatId: -1, gold: 0, kills: 0 });
+      world.emit("mobSlain", { id, killer: null, killerSeatId: -1, gold: 0, kills: 0, kind: dead.kind });
     }
     world.destroy(id);
   }
+}
+
+/**
+ * Pay out the king's prize pool (task #262) and announce the split.
+ *
+ * The arithmetic — proportional shares, the last hitter's 翻倍 weight, and the
+ * rounding remainder — lives in `sim/mobBoss.ts` as a pure function. This
+ * wrapper does only the three things that need the world: read the ledger,
+ * filter it to entities that are still CHAMPIONS (a damager who has since
+ * disconnected/despawned cannot be paid), and grant.
+ *
+ * ORDER IS FIXED: `splitBossBounty` sorts by ascending entity id, and the grants
+ * below walk that sorted array, so two hosts replaying the same match hand out
+ * byte-identical amounts in a byte-identical order.
+ */
+function payBossBounty(
+  world: SimWorld,
+  bossId: EntityId,
+  killer: EntityId | null,
+  rules: MobRules,
+): void {
+  const boss = rules.boss;
+  const ledger = world.bossDamage.get(bossId);
+  const damagers: BossDamageEntry[] = [];
+  if (ledger) {
+    for (const [id, dmg] of ledger) {
+      if (world.champion.has(id)) damagers.push([id, dmg]);
+    }
+  }
+  const lastHitter = killer !== null && world.champion.has(killer) ? killer : null;
+  const shares =
+    boss === null
+      ? []
+      : splitBossBounty(
+          damagers,
+          { gold: boss.bountyGold, xp: boss.bountyXp },
+          lastHitter,
+          boss.lastHitMultiplier,
+        );
+  for (const s of shares) {
+    if (s.gold > 0) grantGold(world, s.id, s.gold);
+    if (s.xp > 0) grantXp(world, s.id, s.xp);
+  }
+  // FAILURE SHAPE ② (「算出來了但從沒送到客戶端」): without this the whole
+  // mechanic is server-side arithmetic. The payload carries the WHOLE split —
+  // every participant, their damage, their gold/xp and who doubled — so the
+  // client can show the settlement instead of guessing from a gold counter that
+  // jumped. `killerSeatId` is what a local-seat cue gates on, exactly like
+  // `guardianSlain` / `coinPickedUp`.
+  world.emit("mobBossSlain", {
+    id: bossId,
+    killer: lastHitter,
+    killerSeatId: lastHitter === null ? -1 : (world.team.get(lastHitter)?.seatId ?? -1),
+    totalGold: shares.reduce((a, s) => a + s.gold, 0),
+    totalXp: shares.reduce((a, s) => a + s.xp, 0),
+    lastHitMultiplier: boss?.lastHitMultiplier ?? 1,
+    shares: shares.map((s) => ({
+      id: s.id,
+      seatId: world.team.get(s.id)?.seatId ?? -1,
+      damage: s.damage,
+      gold: s.gold,
+      xp: s.xp,
+      lastHit: s.lastHit,
+    })),
+  });
 }
 
 /**
@@ -228,6 +342,11 @@ export function beginCombatMobs(
 export function endCombatMobs(world: SimWorld): void {
   for (const id of [...world.mob.keys()]) world.destroy(id);
   world.mob.clear();
+  // #262: a king despawned at round end pays NOBODY (same silent-despawn rule
+  // every mob follows here), so its damage ledger is dead weight. Cleared
+  // wholesale rather than relying on `destroy` alone, so a ledger keyed by an id
+  // that never reached `world.mob` cannot survive the round either.
+  world.bossDamage.clear();
   world.mobZones.clear();
   world.mobRules = null;
   world.mobTicks = -1;

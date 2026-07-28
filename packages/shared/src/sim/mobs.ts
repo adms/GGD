@@ -42,6 +42,7 @@
 import type { ChampionId, EntityId, TeamId } from "../ids";
 import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
+import type { MobKind } from "./components";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
 import { Champions } from "./content/registry";
@@ -140,6 +141,164 @@ export interface MobRules {
   rewardXp: number;
   /** every Nth mob kill grants the killer +1 level */
   killsPerLevel: number;
+
+  /**
+   * 殭屍王 (task #262). `null` = the sub-mechanic is OFF, which is what every
+   * pre-#262 caller, every unit-test fixture and the client's prediction shadow
+   * mean — a world armed with `boss: null` behaves exactly as it did before, so
+   * the "byte-identical when disarmed" contract survives one level deeper.
+   */
+  boss: MobBossRules | null;
+  /**
+   * 特殊殭屍 (task #262). `null` = no special zombies AND — this is the part
+   * that matters — no `world.rng` draw at all, so an arena that does not author
+   * the block leaves the shared random stream (crits / evasion / the legendary
+   * orb) exactly where #215 left it.
+   */
+  special: MobSpecialRules | null;
+}
+
+/**
+ * WHAT KIND OF ZOMBIE this is. Stored on `MobComp` because everything
+ * downstream — hp at spawn, melee damage, walk speed, body radius, the model on
+ * the wire, the reward on death — forks on it, and a per-entity fork needs
+ * per-entity state. It is authoritative sim state written ONCE at spawn and
+ * never mutated, so no system can drift it. Declared in `sim/components.ts`
+ * beside the component it lives on; re-exported here because this module is
+ * where every consumer of it already imports from.
+ */
+export type { MobKind } from "./components";
+
+/** 殭屍王 rules in TICKS / squared distances (converted from the config doc). */
+export interface MobBossRules {
+  enabled: boolean;
+  /** ONE champion's cumulative `world.mobKills` that summons the king */
+  killThreshold: number;
+  /** true = every Nth kill summons another; false = once per champion per match */
+  repeatable: boolean;
+  maxHp: number;
+  attackDamage: number;
+  moveSpeed: number;
+  /** SQUARED melee reach (compared against distSq — trig/pow-free) */
+  attackRangeSq: number;
+  attackCdTicks: number;
+  radius: number;
+  /** model doc id sent as EntityState.key (presentation only, never digested) */
+  modelKey: string;
+  /** THE WHOLE PRIZE POOL in gold, split by damage share (see sim/mobBoss.ts) */
+  bountyGold: number;
+  /** the same, in XP */
+  bountyXp: number;
+  /** the last hitter's damage counts this many times over when sharing */
+  lastHitMultiplier: number;
+}
+
+/** 特殊殭屍 rules — multipliers against the normal mob of the same round. */
+export interface MobSpecialRules {
+  /** probability per spawned mob as a FRACTION in [0,1] (config carries percent) */
+  chance: number;
+  hpMult: number;
+  damageMult: number;
+  moveSpeedMult: number;
+  radiusMult: number;
+  /** gold AND xp multiplier on the kill reward */
+  rewardMult: number;
+  modelKey: string;
+}
+
+/**
+ * The stats one mob of `kind` actually fights with. ONE function so no system
+ * can read a different number than another: MobSystem's melee, MovementSystem's
+ * walk speed, `spawnMob`'s hp/radius and the snapshot's model key all resolve
+ * here. Before #262 every one of these was `rules.<field>` read directly, which
+ * is exactly how a boss ends up hitting for a zombie's 1.2 damage.
+ */
+export interface MobProfile {
+  maxHp: number;
+  attackDamage: number;
+  moveSpeed: number;
+  attackRangeSq: number;
+  attackCdTicks: number;
+  radius: number;
+  modelKey: string;
+  /** multiplier applied to `rewardGold` / `rewardXp` on this mob's death */
+  rewardMult: number;
+}
+
+export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
+  if (kind === "boss" && rules.boss !== null) {
+    const b = rules.boss;
+    return {
+      maxHp: b.maxHp,
+      attackDamage: b.attackDamage,
+      moveSpeed: b.moveSpeed,
+      attackRangeSq: b.attackRangeSq,
+      attackCdTicks: b.attackCdTicks,
+      radius: b.radius,
+      modelKey: b.modelKey,
+      // A king pays its BOUNTY POOL, never the per-zombie reward — MobSystem
+      // takes the boss branch and never reaches the flat reward at all. 0 here
+      // so a future caller that forgets that gets nothing rather than a silent
+      // double payout.
+      rewardMult: 0,
+    };
+  }
+  const base: MobProfile = {
+    maxHp: rules.maxHp,
+    attackDamage: rules.attackDamage,
+    moveSpeed: rules.moveSpeed,
+    attackRangeSq: rules.attackRangeSq,
+    attackCdTicks: rules.attackCdTicks,
+    radius: rules.radius,
+    modelKey: rules.modelKey,
+    rewardMult: 1,
+  };
+  if (kind !== "special" || rules.special === null) return base;
+  const s = rules.special;
+  return {
+    maxHp: Math.max(1, Math.round(base.maxHp * s.hpMult)),
+    attackDamage: base.attackDamage * s.damageMult,
+    moveSpeed: base.moveSpeed * s.moveSpeedMult,
+    // radius scales, so reach scales with it — a body twice as wide that still
+    // has to walk into melee range measured from its centre would stand INSIDE
+    // its target and never connect.
+    attackRangeSq: base.attackRangeSq * s.radiusMult * s.radiusMult,
+    attackCdTicks: base.attackCdTicks,
+    radius: base.radius * s.radiusMult,
+    modelKey: s.modelKey,
+    rewardMult: s.rewardMult,
+  };
+}
+
+/**
+ * The model doc id for a mob of `kind` — the ONE seam between the sim's kind and
+ * what the client actually renders. Lives here (not in the snapshot encoder) so
+ * the wire and any future consumer cannot disagree about which mesh a king gets.
+ */
+export function mobModelKeyFor(rules: MobRules | null, kind: MobKind): string {
+  if (rules === null) return MOB_MODEL_KEY;
+  return mobProfile(rules, kind).modelKey;
+}
+
+/**
+ * Roll ONE spawn's kind against `special.chance`, drawing from `world.rng`.
+ *
+ * WHY THE SHARED STREAM, when #215 went out of its way to keep mobs off it: the
+ * owner asked for a CHANCE (「殭屍群裡面會有一隻特殊殭屍」), and a chance that
+ * does not come off the seeded stream is either `Math.random` (banned by
+ * `sim/purity.test.ts`, and un-replayable) or a hash of the spawn index, which
+ * is not a probability at all — it is a fixed pattern that players would learn.
+ * `world.rng` is seeded per match and its state is folded into `digest()`, so
+ * the same seed reproduces the same zombies and a replica that rolled
+ * differently says so on the tick it happens.
+ *
+ * NO DRAW AT ALL when the block is absent or the chance is zero, so every
+ * pre-#262 arena's crit/evasion/orb rolls land exactly where they used to.
+ */
+export function rollMobKind(world: SimWorld, rules: MobRules): MobKind {
+  const s = rules.special;
+  if (s === null || s.chance <= 0) return "normal";
+  return world.rng.next() < s.chance ? "special" : "normal";
 }
 
 /** Seconds-based mob-wave config (mirror of config.arena-rules@1 `mobWaves`). */
@@ -173,6 +332,32 @@ export interface MobWavesConfigLike {
     gold: number;
     xp: number;
     killsPerLevel: number;
+  };
+  /** 殭屍王 (#262); absent = the sub-mechanic is off */
+  boss?: {
+    enabled: boolean;
+    killThreshold: number;
+    repeatable: boolean;
+    maxHp: number;
+    attackDamage: number;
+    moveSpeed: number;
+    attackRange: number;
+    attackCdSec: number;
+    radius: number;
+    modelKey?: string;
+    bountyGold: number;
+    bountyXp: number;
+    lastHitMultiplier: number;
+  };
+  /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
+  special?: {
+    chancePercent: number;
+    hpMult: number;
+    damageMult: number;
+    moveSpeedMult: number;
+    radiusMult: number;
+    rewardMult: number;
+    modelKey?: string;
   };
 }
 
@@ -320,6 +505,44 @@ export function mobRulesFromConfig(
     rewardGold: cfg.reward.gold,
     rewardXp: cfg.reward.xp,
     killsPerLevel: cfg.reward.killsPerLevel,
+    // #262 — both sub-blocks convert here, at arm time, for exactly the reason
+    // the rest of this function exists: seconds→ticks and percent→fraction
+    // happen ONCE, so no per-tick divide can round differently on another host.
+    // An absent block stays `null` all the way down rather than becoming a
+    // zeroed struct, so "off" is representable and testable.
+    boss:
+      cfg.boss === undefined
+        ? null
+        : {
+            enabled: cfg.boss.enabled,
+            killThreshold: cfg.boss.killThreshold,
+            repeatable: cfg.boss.repeatable,
+            maxHp: cfg.boss.maxHp,
+            attackDamage: cfg.boss.attackDamage,
+            moveSpeed: cfg.boss.moveSpeed,
+            attackRangeSq: cfg.boss.attackRange * cfg.boss.attackRange,
+            attackCdTicks: ticks(cfg.boss.attackCdSec),
+            radius: cfg.boss.radius,
+            modelKey: cfg.boss.modelKey ?? cfg.mob.modelKey ?? MOB_MODEL_KEY,
+            bountyGold: cfg.boss.bountyGold,
+            bountyXp: cfg.boss.bountyXp,
+            lastHitMultiplier: cfg.boss.lastHitMultiplier,
+          },
+    special:
+      cfg.special === undefined
+        ? null
+        : {
+            // percent → fraction ONCE. The config is authored in percent because
+            // that is what an operator types into the console; the sim compares
+            // against `rng.next()`, which is [0,1).
+            chance: Math.max(0, Math.min(1, cfg.special.chancePercent / 100)),
+            hpMult: cfg.special.hpMult,
+            damageMult: cfg.special.damageMult,
+            moveSpeedMult: cfg.special.moveSpeedMult,
+            radiusMult: cfg.special.radiusMult,
+            rewardMult: cfg.special.rewardMult,
+            modelKey: cfg.special.modelKey ?? cfg.mob.modelKey ?? MOB_MODEL_KEY,
+          },
   };
 }
 
@@ -399,18 +622,83 @@ export function mobSpawnPos(world: SimWorld, zone: number, k: number, i: number,
  * `mobSpawn {id, zone, x, z, maxHp}`.
  */
 export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: number, i: number): EntityId {
-  const pos = mobSpawnPos(world, zone, k, i, rules.radius);
+  // ROLL FIRST, then place: the body radius (and therefore the edge inset) is
+  // kind-dependent, so a special zombie spawned at the normal inset would clip
+  // through the boundary on its first tick.
+  const kind = rollMobKind(world, rules);
+  const profile = mobProfile(rules, kind);
+  const pos = mobSpawnPos(world, zone, k, i, profile.radius);
+  const id = spawnMobBody(world, zone, kind, profile, pos);
+  world.emit("mobSpawn", { id, zone, x: pos.x, z: pos.z, maxHp: profile.maxHp, kind });
+  return id;
+}
+
+/**
+ * Summon the 殭屍王 into `zone` (task #262). Called from MobSystem the instant
+ * ONE champion's cumulative zombie tally crosses `boss.killThreshold`.
+ *
+ * The entity is an ordinary mob in every structural sense — MONSTER team, no
+ * ChampionComp, no StatsComp, driven by the same MobSystem AI — so nothing
+ * about duel resolution, the scoreboard, team lives or placement has to learn
+ * about kings. Only {@link MobComp}'s `kind` differs, and everything that forks
+ * on it forks through {@link mobProfile}.
+ *
+ * The spawn point comes from the SAME pure `mobSpawnPos` table the waves use,
+ * keyed by (zone, {@link BOSS_SPAWN_WAVE}, kills): the king walks in from the
+ * rim like everything else, deterministically, without touching `world.rng`.
+ * `kills` is in the key so two kings summoned in one zone in one match do not
+ * stack on the same rim point.
+ */
+export function summonMobBoss(
+  world: SimWorld,
+  zone: number,
+  rules: MobRules,
+  summoner: EntityId,
+  kills: number,
+): EntityId | null {
+  if (rules.boss === null || !rules.boss.enabled) return null;
+  const profile = mobProfile(rules, "boss");
+  const pos = mobSpawnPos(world, zone, BOSS_SPAWN_WAVE, kills, profile.radius);
+  const id = spawnMobBody(world, zone, "boss", profile, pos);
+  world.emit("mobBossSpawn", {
+    id,
+    zone,
+    x: pos.x,
+    z: pos.z,
+    maxHp: profile.maxHp,
+    summoner,
+    summonerSeatId: world.team.get(summoner)?.seatId ?? -1,
+    kills,
+  });
+  return id;
+}
+
+/**
+ * The wave index the king's spawn position is keyed by. A large constant well
+ * clear of any real wave `k`, so a king can never land on the same rim point as
+ * the wave that summoned it.
+ */
+export const BOSS_SPAWN_WAVE = 9001;
+
+/** The component set every mob carries, kind-independent. */
+function spawnMobBody(
+  world: SimWorld,
+  zone: number,
+  kind: MobKind,
+  profile: MobProfile,
+  pos: Vec2,
+): EntityId {
   const id = world.spawn();
   world.transform.set(id, {
     pos: { x: pos.x, z: pos.z },
     vel: { x: 0, z: 0 },
     facing: { x: 1, z: 0 },
-    radius: rules.radius,
+    radius: profile.radius,
     zone,
   });
   world.health.set(id, {
-    hp: rules.maxHp,
-    maxHp: rules.maxHp,
+    hp: profile.maxHp,
+    maxHp: profile.maxHp,
     mana: 0,
     maxMana: 0,
     alive: true,
@@ -423,10 +711,10 @@ export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: numb
   world.mob.set(id, {
     zone,
     team: MONSTER_TEAM,
+    kind,
     target: -1,
     attackCdTicks: 0,
     spawnTick: world.mobTicks,
   });
-  world.emit("mobSpawn", { id, zone, x: pos.x, z: pos.z, maxHp: rules.maxHp });
   return id;
 }
