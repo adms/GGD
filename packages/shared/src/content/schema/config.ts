@@ -723,6 +723,27 @@ export const zConfigCombatEnvDoc = z
   .strict();
 
 /**
+ * config.base-bonus@1 — 基礎加成 (`config/base-bonus.json`): a FLAT grant added
+ * to every champion's final stat, AFTER the combat-env multiplier and therefore
+ * NOT scaled by it. owner 2026-07-28:「初始HP/MP/AP/AD/... 增加數值也要放到後台
+ * 設定 並且不參與倍率計算」.
+ *
+ * ⚠️ 為什麼是自己一份文件,不是塞進 `config.combat-env@1`。那份文件的每個 key 都
+ * 是**倍率**,而這裡每個 key 都是**加數**。合在一起的話,後台一個表格裡會有兩種
+ * 語意相反的欄位共用同一種外觀 —— 把 300 打進倍率欄位是 300 倍傷害。
+ *
+ * 語意見 sim/baseBonus.ts。未列的 stat = 0(沒有贈禮),不是「沿用預設」。
+ */
+export const zConfigBaseBonusDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.base-bonus@1"),
+    /** stat key ("maxHealth" / "ad" / "ap" …) -> flat grant. 缺鍵 = 0。 */
+    bonus: z.record(z.string().min(1), z.number().finite()),
+  })
+  .strict();
+
+/**
  * config.ambient-vfx@1 — AMBIENT vfx bindings (`config/ambient-vfx.json`):
  * per-model attachments that live while the entity lives (WC3 hero glows,
  * smolder trails, ribbon wings). Each binding names a `vfx` doc id from the
@@ -1259,6 +1280,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigVictoryTauntsDoc,
   zConfigVoxelBarcodesDoc,
   zConfigVoxelBodiesDoc,
+  zConfigBaseBonusDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -1289,4 +1311,5 @@ export type VictoryTauntTaggedLine = z.infer<typeof zVictoryTauntTaggedLine>;
 export type VictoryTauntChampionEntry = z.infer<typeof zVictoryTauntChampionEntry>;
 export type ConfigVictoryTauntsDoc = z.infer<typeof zConfigVictoryTauntsDoc>;
 export type ConfigVoxelBarcodesDoc = z.infer<typeof zConfigVoxelBarcodesDoc>;
+export type ConfigBaseBonusDoc = z.infer<typeof zConfigBaseBonusDoc>;
 export type AnyConfigDoc = z.infer<typeof zConfigDoc>;

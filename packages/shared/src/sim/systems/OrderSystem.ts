@@ -48,6 +48,17 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
         if (l2 > 1e-12) {
           const l = Math.sqrt(l2);
           t.facing = { x: frame.aim.x / l, z: frame.aim.z / l };
+          // 瞄準優先 (owner 2026-07-28:「面向是瞄準優先」)。
+          //
+          // ⚠️ 只寫 `t.facing` 是不夠的,而這正是這個 bug 的形狀:這一行跑在
+          // slot 4,而 slot 5 的 movementSystem 會把面向鎖(#264 出手 commit 的
+          // 方向)重新蓋回去。也就是說「玩家正在推右類比」這件事,在同一個 tick
+          // 之內被寫進去又被抹掉,而且沒有任何東西會紅 —— 兩邊各自的測試都只看
+          // 自己那一半。標記在這裡,由 movementSystem 讓位。
+          //
+          // 退化向量(長度 0)不算瞄準:它進不了這個 if,所以「手放開類比」不會
+          // 被誤判成「還在瞄」而永久壓住出手轉向。
+          world.aimTick.set(id, world.tick);
         }
       }
 

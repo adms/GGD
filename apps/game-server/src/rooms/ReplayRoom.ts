@@ -97,6 +97,11 @@ export class ReplayRoom extends Room<MatchState> {
     this.state.seed = this.player.header.seed;
     this.state.contentVersion = this.player.header.contentVersion;
     this.state.combatEnvJson = JSON.stringify(this.player.header.combatEnv);
+    // 基礎加成 —— the controller resolved it from content (config.base-bonus@1);
+    // publishing the SAME object is what keeps the champ-profile / shop preview
+    // from disagreeing with the health bar. Never re-read the doc here: two
+    // readers is how the two numbers drift apart.
+    this.state.baseBonusJson = JSON.stringify(this.player.ctl.world.baseBonus);
     projectSnapshot(this.player.ctl, this.state, this.noDrivers);
 
     this.onMessage(REPLAY_MSG.CONTROL, (client, msg: ReplayControlAction) => {

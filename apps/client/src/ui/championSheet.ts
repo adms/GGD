@@ -24,6 +24,7 @@ import {
   type AttributeCarrier,
 } from "@ggd/shared/sim/stats/attributes";
 import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
+import { DEFAULT_BASE_BONUS, finalizeStat, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 
 /** One row of the stat table: the level-1 value and the per-level increment. */
@@ -36,6 +37,15 @@ export interface ChampionSheetRow {
   readonly growth: number | undefined;
   /** true when an attribute contributes to this row (drives the 三圍 hint) */
   readonly fromAttribute: boolean;
+  /**
+   * 戰鬥實際 —— the value the player will really have at level 1: env multiplier,
+   * then 基礎加成, then the stat clamp, via the SIM's own `finalizeStat`.
+   *
+   * ⚠️ 這一欄不能由呼叫端自己算成 `base × 倍率`。基礎加成是**加在倍率之後**的
+   * (sim/baseBonus.ts),自己乘的面板會少掉那 300,而且畫面上完全看不出來 ——
+   * 它只是一個「比較小的合理數字」。undefined = 這張卡對這一項沒有意見。
+   */
+  readonly final: number | undefined;
 }
 
 const EPS = 1e-9;
@@ -48,6 +58,7 @@ const STAT_BY_KEY = new Map<string, Stat>(ALL_STATS.map((s) => [s as string, s])
 export function championSheetRows(
   def: AttributeCarrier,
   env?: CombatEnvMultipliers,
+  baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS,
 ): ChampionSheetRow[] {
   const base = def.baseStats as Readonly<Record<string, number | undefined>>;
   const growth = def.growth as Readonly<Record<string, number | undefined>>;
@@ -58,14 +69,26 @@ export function championSheetRows(
       stat !== undefined && def.attributes !== undefined && ATTR_STAT_SOURCE[stat] !== undefined;
     if (stat === undefined || !derived) {
       // no attribute source (or a hand-edited unknown key) — the doc IS the truth
-      return { key, base: base[key], growth: growth[key], fromAttribute: false };
+      const b = base[key];
+      return {
+        key,
+        base: b,
+        growth: growth[key],
+        fromAttribute: false,
+        // A hand-edited unknown key has no Stat, so there is nothing to finalize
+        // — the doc value IS the number, and inventing a multiplier for it would
+        // be worse than showing none.
+        final: stat === undefined || b === undefined ? undefined : finalizeStat(b, stat, env, baseBonus),
+      };
     }
     const g = championStatGrowth(def, stat, env);
+    const b = championStatBase(def, stat, 1, env);
     return {
       key,
-      base: championStatBase(def, stat, 1, env),
+      base: b,
       growth: Math.abs(g) < EPS ? undefined : g,
       fromAttribute: true,
+      final: finalizeStat(b, stat, env, baseBonus),
     };
   });
 }

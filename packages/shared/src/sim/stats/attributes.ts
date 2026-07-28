@@ -31,12 +31,11 @@
  *
  *     stat(L) = baseStats + attr(L)·coefficient + growth·(L−1)
  *
- * plus, for maxHealth ONLY, the flat 全英雄 +300 the owner asked for in #265
- * (`CHAMPION_BASE_HEALTH_BONUS` below — level-independent, so it never touches
- * the per-level growth), then item/augment/buff modifiers (statPipeline.ts),
- * then the stat's own combat-env ×factor, then the clamp. THREE additive
- * sources is exactly the shape where a reader silently applies two of the
- * three, which is why the whole sum is computed here and only here.
+ * then item/augment/buff modifiers (statPipeline.ts), then the stat's own
+ * combat-env ×factor, then the 基礎加成 flat grant (sim/baseBonus.ts), then the
+ * clamp. Everything up to and including the attribute term is computed here and
+ * ONLY here; everything after it is `finalizeStat`. 全英雄初始 +300 生命 (#265)
+ * 曾經住在這裡 —— 見 baseBonus.ts 說明它為什麼搬走。
  *
  * `growth` was NOT deleted when the attributes landed. The owner ruled on it
  * directly —「growth 區塊就是重複來源 => 本來就可以重複沒有衝突」— because the
@@ -196,40 +195,21 @@ export interface AttributeCarrier {
   readonly attributes?: ChampionAttributes;
 }
 
-/**
- * 全英雄「初始生命 +300」(#265). Owner:「所有英雄初始 HP 增加300，但是生命倍率
- * 4=>3」—— 兩句是同一次調整的兩半，所以 +300 必須加在 **倍率之前**：
+/*
+ * 全英雄「初始生命 +300」(#265) 不在這個檔案裡 —— 它是 sim/baseBonus.ts 的
+ * `DEFAULT_BASE_BONUS`,由 `finalizeStat` 在**環境倍率之後**加上去。
  *
- *     final = (w3x_hp + strToMaxHealth·STR + 300 + growth·(L−1)) × env.maxHealth
+ * 為什麼搬走。v0.9.8 把它放在這裡(倍率之前),於是 `maxHealth: 3.0` 也把它乘了
+ * 三倍:後台寫 300,玩家實際拿到 900。owner 2026-07-28 定的規則是
+ *「初始HP/MP/AP/AD/...增加數值也要放到後台設定 並且不參與倍率計算」——
+ * 倍率放大英雄自己掙來的血量,不放大這份系統贈禮。
  *
- * WHY BEFORE THE MULTIPLIER, NOT AFTER. 若加在倍率後（`base×3 + 300`），中位英雄
- * 會從 2164 掉到 1923 —— 比調整前更脆，和「增加」兩個字相反。加在倍率前是
- * 2164 → 2523 (+17%)，而 4→3 的削弱正好被 +300 抵掉大半，這才是 owner 把兩句話
- * 講在一起的意思。
- *
- * WHY IT IS A FLAT TERM AND NOT A HIGHER MULTIPLIER. 倍率是等比的：它把「基礎
- * 血量本來就很低」的英雄一起壓在地板上。實測 w3x 卡片的 `baseStats.maxHealth`
- * 從 −450（U011 死亡老二）到 4977（H02N 打我阿笨蛋）跨兩個數量級，最脆的
- * 克勞薩先生在 ×4 之下只有 316 點血。+300 這個平移項專門救的就是他們：
- * 316 → 1137，而 20000 血的 H02N 只是從 20000 降到 15900。壓縮差距，不是放大。
- *
- * WHY IT LIVES HERE. `championStatBase` 是全專案唯一算「這個英雄的基礎數值」的
- * 地方（sim 的 recomputeStats、客戶端 championSheet 的選角/圖鑑表、商店預覽、
- * admin quickApproval 全部走這條）。放在這裡，#125「顯示的數字必須是最終值」
- * 自動成立；放在 recomputeStats 就只有戰鬥會漲，選角畫面會少 900 點。
+ * 順帶消失的是 `ChampionStatBaseOpts.championHealthBonus`。它本來是給
+ * sim/mobs.ts 的退出口(#244:英雄的數值調整不得移動肉鴿小怪的曲線)。加成搬到
+ * `recomputeStats` 之後,那條界線變成**結構性的**:`recomputeStats` 沒有
+ * ChampionComp 就提早 return,而小怪從來不走它 —— 所以不再需要一個旗標來說
+ * 「這隻不是英雄」。
  */
-export const CHAMPION_BASE_HEALTH_BONUS = 300;
-
-/** Opt-outs for `championStatBase`. Omitted = the full champion sheet. */
-export interface ChampionStatBaseOpts {
-  /**
-   * false = 不要加 `CHAMPION_BASE_HEALTH_BONUS`。只有 **小兵借用英雄卡當頭像**
-   * 的那條路會傳 false（sim/mobs.ts 的 pre-#244 legacy tier）。#244 的規則是
-   * 「英雄的數值調整不得移動肉鴿小怪的曲線」—— 喪標麥可同時是可選英雄和 #215
-   * 的殭屍，所以英雄加血必須止步於這條界線，否則就把 #244 拆掉的耦合裝回去。
-   */
-  readonly championHealthBonus?: boolean;
-}
 
 /** STR/AGI/INT at `level` (level 1 = the base value, no growth applied). */
 export function attributeAtLevel(a: ChampionAttributes, which: AttrKey, level: number): number {
@@ -278,7 +258,6 @@ export function championStatBase(
   stat: Stat,
   level: number,
   env: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
-  opts: ChampionStatBaseOpts = {},
   /**
    * Attributes BOUGHT this match (#260). Defaults to zero, so every pre-#260
    * caller — champ-select, the codex, the mob curve — is byte-identical.
@@ -286,29 +265,17 @@ export function championStatBase(
   bonus: AttrBonus = NO_ATTR_BONUS,
 ): number {
   const authored = (def.baseStats[stat] ?? 0) + (def.growth[stat] ?? 0) * (Math.max(1, level) - 1);
-  // #265 全英雄初始生命 +300。加在 authored 上（倍率之前、成長之外），所以它
-  // 是一次性的平移而不是每級都拿一次 —— championStatGrowth 是 base(2)−base(1)，
-  // 常數項在相減時抵銷，每級成長完全不受影響。
-  const flat =
-    stat === Stat.MaxHealth && opts.championHealthBonus !== false ? CHAMPION_BASE_HEALTH_BONUS : 0;
   const src = ATTR_STAT_SOURCE[stat];
-  // ⚠️ 合併點:#265 的 `flat`(全英雄 +300 生命)與 #260 的 `bonus`(買來的三圍)
-  // 是兩個獨立的加法,兩邊都必須留。任何一邊在這裡掉了都不會有測試變紅 ——
-  // 它們各自的守衛只看自己那一項,對方為 0 時仍然通過。
-  if (src === undefined) return authored + flat;
+  if (src === undefined) return authored;
   // NOTE: no early-out on `def.attributes === undefined` any more. A champion
   // with no 三圍 block still has to be able to SPEND 375 gold on one — see
   // `championAttribute`, which answers 0 + bonus for exactly that case.
-  if (def.attributes === undefined && bonus[src.attr] === 0) return authored + flat;
+  if (def.attributes === undefined && bonus[src.attr] === 0) return authored;
 
   const coef = env[src.key];
   const factor = typeof coef === "number" && Number.isFinite(coef) ? coef : 0;
   const value = championAttribute(def, src.attr, level, bonus);
-  // `scaleBase`(只有攻速)永遠不是 MaxHealth,所以 `flat` 在那條路上恆為 0;
-  // 寫成 `authored + flat` 只是讓兩條路的形狀一致,不是額外的分支。
-  return src.mode === "add"
-    ? authored + flat + factor * value
-    : (authored + flat) * (1 + factor * value);
+  return src.mode === "add" ? authored + factor * value : authored * (1 + factor * value);
 }
 
 /**

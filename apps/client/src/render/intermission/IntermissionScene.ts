@@ -72,7 +72,8 @@ import {
   type PerformOption,
 } from "./idlePerform";
 import { groundShiftY } from "./stance";
-import { MENU_FPS_CAP, minFrameMs } from "../frameCap";
+import { menuFpsCap, minFrameMs } from "../frameCap";
+import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
 import { writeCameraDrift } from "../menu/procedural/math";
 import { enterCameraPose } from "../menu/procedural/transition";
 import { makeSoftDotTexture } from "../menu/procedural/sprites";
@@ -115,7 +116,13 @@ import {
  * soft cap so a 120 Hz panel doesn't render a static market at 120 fps.
  * 共用 `render/frameCap` 的同一條規則 —— 見 LoginScene 的同名常數。
  */
-const MIN_FRAME_MS = minFrameMs(MENU_FPS_CAP);
+/**
+ * ⚠️ 一個**函式**,不是模組常數。上限自 v0.9.9 起看平台(手機 30 / 桌機 60,
+ * owner 2026-07-28),而模組常數在 import 時就定死了 —— 那個時刻連
+ * `window.matchMedia` 都還不保證可用,結果會是手機永遠拿到桌機的值,而且沒有
+ * 任何地方會看出來。
+ */
+const minFrameMsNow = (): number => minFrameMs(menuFpsCap(isTouchDevice(readTouchEnv())));
 /** clamp per-frame dt so a hidden-then-shown tab doesn't fast-forward the scene */
 const MAX_DT = 0.1;
 
@@ -1084,7 +1091,7 @@ export class IntermissionScene {
     const dtRaw = this.lastFrameMs === null ? 0 : (t - this.lastFrameMs) / 1000;
     this.lastFrameMs = t;
     const dt = dtRaw < 0 ? 0 : dtRaw > MAX_DT ? MAX_DT : dtRaw;
-    if (t - this.lastRenderMs < MIN_FRAME_MS) return; // soft fps cap
+    if (t - this.lastRenderMs < minFrameMsNow()) return; // soft fps cap
     this.lastRenderMs = t;
     this.elapsed += dt;
     const e = this.elapsed;

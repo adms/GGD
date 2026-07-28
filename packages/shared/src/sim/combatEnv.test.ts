@@ -22,6 +22,7 @@ import {
 import { Stat, STAT_CLAMPS } from "./stats/statTypes";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, recomputeStats } from "./stats/statPipeline";
+import { DEFAULT_BASE_BONUS, baseBonusFor } from "./baseBonus";
 import {
   castAbility,
   resolveAbilityRange,
@@ -135,9 +136,15 @@ describe("combat-env stat multipliers (env-01)", () => {
       recomputeStats(w, sela);
       return w.stats.get(sela)!.final[stat];
     };
-    expect(run()).toBeCloseTo(pin, 6); // baseline: override wins outright
-    expect(run(env({ [key]: 2 }))).toBeCloseTo(pin * 2, 6);
-    expect(run(env({ [key]: 0.5 }))).toBeCloseTo(pin * 0.5, 6);
+    // ⚠️ 基礎加成 (v0.9.9, sim/baseBonus.ts) 是加在倍率**之後**的一個平移項,
+    // 所以「×2 就是兩倍」只在扣掉那個平移之後成立。直接寫 `pin * 2` 會在
+    // maxHealth 這一列紅掉 —— 而那不是倍率壞了,正是加成沒有被倍率放大的證據。
+    const gift = baseBonusFor(DEFAULT_BASE_BONUS, stat);
+    expect(run()).toBeCloseTo(pin + gift, 6); // baseline: override wins outright
+    expect(run(env({ [key]: 2 }))).toBeCloseTo(pin * 2 + gift, 6);
+    expect(run(env({ [key]: 0.5 }))).toBeCloseTo(pin * 0.5 + gift, 6);
+    // 而且那個平移**真的沒動** —— 兩個倍率之下的差,恰好是 pin 的差。
+    expect(run(env({ [key]: 2 })) - run(env({ [key]: 0.5 }))).toBeCloseTo(pin * 1.5, 6);
   });
 
   it("clamps still apply AFTER the env factor (env-02)", () => {
@@ -162,7 +169,9 @@ describe("combat-env stat multipliers (env-01)", () => {
     const maxBefore = hp.maxHp;
     w.combatEnv = env({ maxHealth: 2 });
     recomputeStats(w, sela);
-    expect(hp.maxHp).toBeCloseTo(maxBefore * 2, 6);
+    // 只有英雄**自己掙來的**血量被 ×2;基礎加成不動(owner 2026-07-28)。
+    const gift = baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth);
+    expect(hp.maxHp).toBeCloseTo((maxBefore - gift) * 2 + gift, 6);
     expect(hp.hp / hp.maxHp).toBeCloseTo(0.5, 6);
   });
 });

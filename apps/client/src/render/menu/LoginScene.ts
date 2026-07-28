@@ -83,7 +83,8 @@ import {
   CombatFlashController,
   type FxController,
 } from "./procedural/fx";
-import { MENU_FPS_CAP, minFrameMs } from "../frameCap";
+import { menuFpsCap, minFrameMs } from "../frameCap";
+import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
 
 /**
  * Semi-realistic Western fire dragon (炎龍) served from the content mount:
@@ -228,7 +229,13 @@ interface ReturnState {
  * 規則，第四條就這樣以 120 fps 跑了整段。順帶拿到 slack：`1000/62` 只留 0.5 ms
  * 餘裕，在 60 Hz 面板上一次 rAF 抖動就會把 60 fps 砍成 30。
  */
-const MIN_FRAME_MS = minFrameMs(MENU_FPS_CAP);
+/**
+ * ⚠️ 一個**函式**,不是模組常數。上限自 v0.9.9 起看平台(手機 30 / 桌機 60,
+ * owner 2026-07-28),而模組常數在 import 時就定死了 —— 那個時刻連
+ * `window.matchMedia` 都還不保證可用,結果會是手機永遠拿到桌機的值,而且沒有
+ * 任何地方會看出來。
+ */
+const minFrameMsNow = (): number => minFrameMs(menuFpsCap(isTouchDevice(readTouchEnv())));
 /** clamp per-frame dt so a hidden-then-shown tab doesn't fast-forward the scene */
 const MAX_DT = 0.1;
 
@@ -686,7 +693,7 @@ export class LoginScene {
     this.lastFrameMs = t;
     const dt = dtRaw < 0 ? 0 : dtRaw > MAX_DT ? MAX_DT : dtRaw;
     // soft fps cap: skip the draw (but keep the clock) if we're ahead of budget
-    if (t - this.lastRenderMs < MIN_FRAME_MS) return;
+    if (t - this.lastRenderMs < minFrameMsNow()) return;
     this.lastRenderMs = t;
     this.elapsed += dt;
     const e = this.elapsed;

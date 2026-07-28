@@ -7,13 +7,13 @@
  * network changes apply live.
  */
 import {
-  DEFAULT_GRAPHICS,
   DEFAULT_NETWORK,
   SETTINGS_STORAGE_KEY,
   SETTINGS_VERSION,
   clampGraphics,
   clampNetwork,
   cloneSettings,
+  defaultGraphicsFor,
   migrateSettings,
   type GraphicsSettings,
   type NetworkSettings,
@@ -21,6 +21,7 @@ import {
   type Settings,
 } from "./types";
 import { applyPreset, autoDetectPreset, type DetectEnv } from "./presets";
+import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
 
 type Persist = Pick<Storage, "getItem" | "setItem">;
 
@@ -45,17 +46,38 @@ export class SettingsStore {
   private settings: Settings;
   private readonly listeners = new Set<(s: Settings) => void>();
 
-  constructor(private storage: Persist | null = safeLocalStorage()) {
+  /**
+   * Is this a touch device? Captured ONCE at construction (owner 2026-07-28:
+   * 手機預設 30 fps). Injectable so the platform split is unit-testable without
+   * a DOM — reading `readTouchEnv()` inline would make the rule untestable and
+   * would re-evaluate it on every read.
+   */
+  private readonly touch: boolean;
+
+  constructor(
+    private storage: Persist | null = safeLocalStorage(),
+    touch: boolean = isTouchDevice(readTouchEnv()),
+  ) {
+    this.touch = touch;
     this.settings = this.read();
+  }
+
+  /** Fresh-install defaults FOR THIS PLATFORM (only `fpsCap` differs). */
+  private fresh(): Settings {
+    return cloneSettings({
+      version: SETTINGS_VERSION,
+      graphics: defaultGraphicsFor(this.touch),
+      network: { ...DEFAULT_NETWORK },
+    });
   }
 
   private read(): Settings {
     const raw = this.storage?.getItem(SETTINGS_STORAGE_KEY);
-    if (!raw) return cloneSettings({ version: SETTINGS_VERSION, graphics: { ...DEFAULT_GRAPHICS }, network: { ...DEFAULT_NETWORK } });
+    if (!raw) return this.fresh();
     try {
-      return migrateSettings(JSON.parse(raw));
+      return migrateSettings(JSON.parse(raw), { touch: this.touch });
     } catch {
-      return cloneSettings({ version: SETTINGS_VERSION, graphics: { ...DEFAULT_GRAPHICS }, network: { ...DEFAULT_NETWORK } });
+      return this.fresh();
     }
   }
 
@@ -116,7 +138,7 @@ export class SettingsStore {
     const preset = autoDetectPreset(env);
     this.commit({
       version: SETTINGS_VERSION,
-      graphics: clampGraphics(applyPreset({ ...DEFAULT_GRAPHICS }, preset)),
+      graphics: clampGraphics(applyPreset(defaultGraphicsFor(this.touch), preset, this.touch)),
       network: { ...DEFAULT_NETWORK },
     });
     return preset;

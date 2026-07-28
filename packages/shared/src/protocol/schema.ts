@@ -520,6 +520,14 @@ export class MatchState extends Schema {
    */
   declare combatEnvJson: string;
   /**
+   * 基礎加成 table (`config.base-bonus@1`) as JSON — the FLAT per-stat grants the
+   * sim adds AFTER the combat-env multiplier (sim/baseBonus.ts). On the wire for
+   * the same reason `combatEnvJson` is: the HUD, the shop preview and the champ
+   * profile must show the number the player actually has, and the grant is not
+   * derivable from the champion doc. Empty string = the shipped default table.
+   */
+  declare baseBonusJson: string;
+  /**
    * True once the MATCH outcome is decided (one team left standing) — set at the
    * end of the final combat, so it flips during the last `resolution` phase, a
    * few seconds BEFORE phase becomes matchEnd. The server FREEZES all input from
@@ -565,6 +573,7 @@ export class MatchState extends Schema {
     this.seed = 0;
     this.contentVersion = "";
     this.combatEnvJson = "";
+    this.baseBonusJson = "";
     this.outcomeDecided = false;
     // `declare` + constructor assignment, never a field initializer: a class
     // field would run AFTER Schema's own constructor and clobber the encoder's
@@ -596,6 +605,10 @@ defineTypes(MatchState, {
   entities: { map: EntityState },
   // APPEND-ONLY: Colyseus encodes fields by declaration index — never reorder.
   duels: [DuelState],
+  // APPEND-ONLY (v0.9.9): 基礎加成 table. Declared LAST on purpose — putting it
+  // next to `combatEnvJson`, where it belongs by meaning, would shift every
+  // later field's index and desync any client that is still running.
+  baseBonusJson: "string",
 });
 
 /**

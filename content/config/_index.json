@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "b300ce8af287",
+  "hash": "ea1ad8b69ed7",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -19,6 +19,12 @@
       "path": "config/audio-map.json",
       "hash": "699bac00e1c5",
       "size": 28096
+    },
+    {
+      "id": "base-bonus",
+      "path": "config/base-bonus.json",
+      "hash": "65702863ef0b",
+      "size": 99
     },
     {
       "id": "champion-voices",

@@ -25,6 +25,7 @@ import type { MobRules } from "./mobs";
 import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
+import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
 import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
@@ -268,6 +269,16 @@ export class SimWorld {
   readonly facingLock = new Map<EntityId, import("./facingLock").FacingLock>();
 
   /**
+   * 瞄準優先 (owner 2026-07-28:「面向是瞄準優先」) —— entity → 最後一次收到
+   * **明確瞄準輸入** 的 tick。`aimTick.get(id) === tick` 就是「這一 tick 玩家正在
+   * 瞄」,那一 tick 的面向鎖必須讓位。
+   *
+   * 存 tick 而不是 boolean,是為了不需要一個「每 tick 清空」的步驟 —— 沒有清空
+   * 步驟就沒有「誰先跑」的順序陷阱,和 facingLock 用絕對 tick 到期是同一個理由。
+   */
+  readonly aimTick = new Map<EntityId, number>();
+
+  /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
    * floor }. ABSENT = grounded.
    *
@@ -388,6 +399,13 @@ export class SimWorld {
    * prediction shadow world behave byte-identically to the pre-env sim.
    */
   combatEnv: CombatEnvMultipliers = DEFAULT_COMBAT_ENV;
+
+  /**
+   * 基礎加成 (see baseBonus.ts) — flat grants added AFTER `combatEnv` scales
+   * the stat, so a 3× health multiplier does not also triple the gift.
+   * owner 2026-07-28:「並且不參與倍率計算」.
+   */
+  baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS;
 
   /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat
@@ -514,6 +532,7 @@ export class SimWorld {
     this.hitstun.delete(id);
     // task #264: 回收的 entityId 不得繼承上一個單位的瞄準方向。
     this.facingLock.delete(id);
+    this.aimTick.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);

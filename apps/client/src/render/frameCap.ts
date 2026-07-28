@@ -35,6 +35,33 @@ export const FRAME_CAP_SLACK_MS = 3;
 export const MENU_FPS_CAP = 60;
 
 /**
+ * 平台預設 fps 上限 (owner 2026-07-28:「FPS強制都是60，除非額外調整，
+ * 手機則是預設30」)。
+ *
+ * ⚠️ 這是**預設值**,不是硬上限。玩家在設定裡選過什麼就是什麼 —— 「除非額外調整」
+ * 那半句和前半句一樣重要,壓成硬鎖等於拿走玩家的選擇權。
+ *
+ * 為什麼手機是 30 而不是「跟桌機一樣 60 再靠自適應降級」:`AdaptiveQuality` 是
+ * **事後補救** —— 幀掉了才降解析度/粒子,而發燙是持續滿載造成的,不是掉幀造成的。
+ * 手機以 60 跑滿一整場,自適應會忠實地維持 60 並且把裝置烤熱。30 是先驗的省電,
+ * 兩者互補而不重疊。
+ */
+export const DESKTOP_FPS_CAP = 60;
+export const MOBILE_FPS_CAP = 30;
+
+export function defaultFpsCap(touch: boolean): number {
+  return touch ? MOBILE_FPS_CAP : DESKTOP_FPS_CAP;
+}
+
+/**
+ * 選單場景的上限也跟著平台走 —— 手機在大廳、選角、商店待的時間比在戰鬥裡還長,
+ * 只鎖戰鬥那條 loop 會讓「手機一場就發燙」只解決一半。
+ */
+export function menuFpsCap(touch: boolean): number {
+  return touch ? MOBILE_FPS_CAP : MENU_FPS_CAP;
+}
+
+/**
  * 距離上一次「真的畫了」至少要過多久，才允許再畫一張。
  * `capFps <= 0` 代表不設限（玩家在設定裡選了「無上限」）→ 回傳 0。
  */

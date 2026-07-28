@@ -27,6 +27,7 @@ import { spawnChampion } from "../spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilitySystem";
 import { Stat } from "../stats/statTypes";
 import { championStatBase } from "../stats/attributes";
+import { finalizeStat } from "../baseBonus";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import type { CoreAbilitySlot } from "../intents";
 
@@ -99,7 +100,12 @@ function stats(world: SimWorld, id: EntityId): Record<Stat, number> {
  * assert the wrong number while still looking correct.
  */
 function champBase(championId: string, stat: Stat): number {
-  return championStatBase(Champions.get(championId as ChampionId), stat, 1);
+  // ...and since v0.9.9 it is not `championStatBase` alone either: the pipeline
+  // finishes with 環境倍率 → 基礎加成 → clamp (`finalizeStat`, sim/baseBonus.ts).
+  // Stopping at the card would put every assertion below 300 HP under what the
+  // hero actually fights with — the same class of wrongness the note above
+  // describes, one layer further out.
+  return finalizeStat(championStatBase(Champions.get(championId as ChampionId), stat, 1), stat);
 }
 
 /**

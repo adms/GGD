@@ -213,6 +213,14 @@ export interface HudState {
    */
   combatEnvJson: string;
   /**
+   * 基礎加成 table as JSON (`MatchState.baseBonusJson`) — the FLAT per-stat
+   * grants the sim adds AFTER the combat-env multiplier (sim/baseBonus.ts).
+   * "" = 「這一場沒帶」, which the reader resolves to the shipped default table,
+   * NOT to zero: an empty string must never quietly cost the player 300 HP on
+   * the display while the server still gives it to them.
+   */
+  baseBonusJson: string;
+  /**
    * FIRE RING (#195), replicated straight off `MatchState` — the sim's
    * combat-elapsed ring counter (-1 = disarmed) and the ring's CURRENT world
    * radius. The minimap's danger rim is drawn at this radius rather than at the
@@ -303,6 +311,7 @@ const initial: HudState = {
   localSeatId: null,
   localEntityId: null,
   combatEnvJson: "",
+  baseBonusJson: "",
   fireRingTicks: -1,
   fireRingRadius: 0,
   seats: [],
@@ -370,6 +379,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   if (prev.phaseSecondsLeft !== secondsLeft) patch.phaseSecondsLeft = secondsLeft;
 
   if (prev.combatEnvJson !== state.combatEnvJson) patch.combatEnvJson = state.combatEnvJson;
+  if (prev.baseBonusJson !== state.baseBonusJson) patch.baseBonusJson = state.baseBonusJson;
 
   // fire ring (#195): change-guarded like everything else here, but the radius
   // moves 0.039 u per sim tick while shrinking, so in practice it patches on

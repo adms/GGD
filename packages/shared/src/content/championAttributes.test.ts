@@ -88,7 +88,7 @@ function sheet(
   level: number,
   env: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
 ): number {
-  return championStatBase(c, stat, level, env, { championHealthBonus: false });
+  return championStatBase(c, stat, level, env);
 }
 
 describe("#248 attr-01 — the derivation law holds for every champion", () => {

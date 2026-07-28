@@ -180,14 +180,12 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // #248: the hero sheet's level-3 health is `championStatBase(…, 3)`, not
     // `baseStats + growth*2` — the 三圍 term is outside those two records now.
     //
-    // #265 (2026-07-28) adds a flat +300 to every CHAMPION's base health. A mob
-    // wearing a hero's face is not a champion, so this tier opts out
-    // (`championHealthBonus: false`, see mobs.ts) — the sibling tripwire below
-    // asserts the gap is exactly 300, so an opt-out that silently stopped
-    // working cannot pass both.
+    // #265 的全英雄 +300 生命**不會**出現在這裡,而且不需要旗標來擋:它住在
+    // `finalizeStat`(sim/baseBonus.ts),而小怪從不走 `recomputeStats`。這條界線
+    // 從「記得傳 championHealthBonus:false」變成結構性的 —— 見 attributes.ts。
     expect(legacy.maxHp).toBe(
       Math.round(
-        championStatBase(HERO_DEF, Stat.MaxHealth, 3, undefined, { championHealthBonus: false }),
+        championStatBase(HERO_DEF, Stat.MaxHealth, 3),
       ),
     );
   });
@@ -208,16 +206,15 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // Asserting the EFFECTIVE level-1 value (not the raw field) is what keeps
     // #244's deliberate tuning pinned through both re-derivations.
     //
-    // #265 (2026-07-28) is the THIRD thing that tried to move it: a flat +300
-    // on every CHAMPION's base health. 喪標麥可 is both a pickable hero and the
-    // #215 mob, so the bonus is gated on `championHealthBonus` and the mob path
-    // passes false — which is exactly what keeps this 380 a mob number. The
-    // HERO's own sheet is now 680 at level 1, on purpose; that side is pinned in
-    // sim/balanceTuning.test.ts.
-    expect(
-      championStatBase(HERO_DEF, Stat.MaxHealth, 1, undefined, { championHealthBonus: false }),
-    ).toBe(380);
-    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380 + 300);
+    // #265 (2026-07-28) 是第三個試圖移動它的東西:全英雄初始生命 +300。喪標麥可
+    // 同時是可選英雄與 #215 的小怪,所以這個 380 必須撐得住。它撐得住的方式在
+    // v0.9.9 變了:加成不再是 `championStatBase` 的一個可選旗標,而是搬到
+    // `finalizeStat`(倍率之後),而**小怪根本不走那條路**——`recomputeStats` 沒有
+    // ChampionComp 就提早 return,小怪的血在 sim/mobs.ts 自己算。
+    //
+    // 這一行因此是純粹的英雄卡面數字,兩邊共用。玩家實際拿到的 680(380+300)
+    // 釘在 sim/balanceTuning.test.ts。
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380);
 
     // THE +45 IS TWO LAYERS, AND THEY NO LONGER COINCIDE.
     // #244 authored `growth.maxHealth = 45`. #248 gave the hero STR +1.8/level,
@@ -236,20 +233,11 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // The owner's own sanity number, end to end: level 12, maxHealth ×4. It was
     // 5480 under the 25 and is 5321.6 under the map's 23 — a consequence of the
     // corrected coefficient, logged for him in docs/_execution-batches.md.
-    // #265 (2026-07-28) does NOT move it either: this line asks the ATTRIBUTE
-    // sheet (bonus off, ×4 as #248 computed it). What the player now sees is
-    // `(1330.4 + 300) × 3`, pinned in sim/balanceTuning.test.ts.
+    // #265 也沒有移動它:這一行問的是屬性卡面(×4,#248 當時的算法)。玩家現在
+    // 實際看到的是 `1330.4 × 3 + 300`,釘在 sim/balanceTuning.test.ts。
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(5321.6, 6);
     expect(
-      championStatBase(HERO_DEF, Stat.MaxHealth, 12, undefined, { championHealthBonus: false }) * 4,
-    ).toBeCloseTo(5321.6, 6);
-    expect(
-      championStatBase(
-        Champions.get(MOB_CHAMPION_ID as ChampionId),
-        Stat.MaxHealth,
-        1,
-        undefined,
-        { championHealthBonus: false },
-      ),
+      championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1),
     ).toBe(380);
     // …and the mob curve does not budge.
     expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);

@@ -93,7 +93,17 @@ export function movementSystem(world: SimWorld): void {
     // 過去把施法轉身吃掉的地方（搖桿每幀都合成 move 訂單，所以走位中施法的轉身
     // 存活 0 tick）。讀在這裡而不是用到的那兩行旁邊，是為了讓過期項目對每一個
     // 可導航單位都被回收一次（facingLockDir 讀到過期就刪）。
-    const aimLock = facingLockDir(world, id);
+    // ⚠️ 永遠呼叫 facingLockDir,即使結果要丟掉 —— 它同時負責回收過期項目。
+    // 用一個 `if` 把它跳過的話,`world.facingLock` 會在一場比賽裡單調長大。
+    const lockDir = facingLockDir(world, id);
+    // 瞄準優先 (owner 2026-07-28:「面向是瞄準優先」)。玩家這一 tick 有明確的
+    // 瞄準輸入時,出手 commit 的方向讓位。
+    //
+    // 這改的是**誰贏**,不是把 #264 拆掉:沒有瞄準輸入時(鍵鼠、觸控、bot、以及
+    // 手放開右類比的那一刻起)鎖照舊生效,「揮劍會轉向目標」仍然成立。改掉的是
+    // 「出手就是承諾」那 200–300ms —— 那段時間玩家推右類比會推不動,而 owner
+    // 要的是推得動。
+    const aimLock = world.aimTick.get(id) === world.tick ? null : lockDir;
 
     // Status: root/stun stop movement; slows scale speed; stun also freezes
     // turning (rooted units may still rotate in place, LoL-style).

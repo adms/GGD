@@ -64,6 +64,12 @@ export type Page =
   | "voxelStudio"
   | "combatEnv"
   /**
+   * 基礎加成 (`config/base-bonus.json`): 每位英雄一開始就多拿的固定數值。
+   * 與 combatEnv 分開的頁面,因為那一頁每格是**倍率**、這一頁每格是**加數**,
+   * 而且這裡的值刻意不參與倍率計算 (owner 2026-07-28)。
+   */
+  | "baseBonus"
+  /**
    * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
    * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
    * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
@@ -269,6 +275,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "voxelBody",
   "ai",
   "combatEnv",
+  "baseBonus",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.

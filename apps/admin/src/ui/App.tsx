@@ -50,6 +50,7 @@ import { VoxelBarcodePage } from "./VoxelBarcodePage";
 // reason: a lazy chunk that never loads is indistinguishable from a page that
 // does not exist, and this one is the switch the owner was told to use.
 import { VoxelBodyPage } from "./VoxelBodyPage";
+import { BaseBonusPage } from "./BaseBonusPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -132,6 +133,10 @@ const NAV: NavItem[] = [
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
+  // 基礎加成 — sits right after 戰鬥系統 because it is the OTHER half of the same
+  // question, and the adjacency is the warning: that page holds MULTIPLIERS,
+  // this one holds FLAT GRANTS that deliberately escape them.
+  { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_SYS },
   // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
   // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
   // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
@@ -573,6 +578,7 @@ function Console(): React.JSX.Element {
             {page === "voxelForge" && <VoxelFoundryPage />}
             {page === "voxelBarcode" && <VoxelBarcodePage />}
             {page === "voxelBody" && <VoxelBodyPage />}
+            {page === "baseBonus" && <BaseBonusPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

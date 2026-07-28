@@ -4,6 +4,7 @@
  * adaptive manager owns those fields). Unit-tested; no DOM/Babylon.
  */
 import type { FpsCap, GraphicsSettings, QualityPreset } from "./types";
+import { defaultFpsCap } from "../render/frameCap";
 
 /** The concrete graphics values a fixed preset writes. */
 export interface PresetParams {
@@ -42,17 +43,34 @@ export const PRESET_PARAMS: Record<"low" | "medium" | "high", PresetParams> = {
   },
 };
 
-/** Concrete params for a fixed preset; null for "auto" (adaptive delegates). */
-export function paramsForPreset(preset: QualityPreset): PresetParams | null {
-  return preset === "auto" ? null : PRESET_PARAMS[preset];
+/**
+ * Concrete params for a fixed preset; null for "auto" (adaptive delegates).
+ *
+ * ⚠️ `fpsCap` is overridden by the PLATFORM, not by the preset. All three
+ * presets author 60 — that field never distinguished them, it was just「預設值」
+ * copied three times. Since owner 2026-07-28 the default is 60 desktop / 30
+ * mobile, so leaving the literal here would make picking any preset on a phone
+ * silently undo the platform default, with the settings page still showing the
+ * preset the player chose.
+ */
+export function paramsForPreset(
+  preset: QualityPreset,
+  touch = false,
+): PresetParams | null {
+  if (preset === "auto") return null;
+  return { ...PRESET_PARAMS[preset], fpsCap: defaultFpsCap(touch) as FpsCap };
 }
 
 /**
  * Apply a preset onto a graphics settings object. Fixed presets overwrite the
  * concrete fields; "auto" only flips the selector (adaptive controls values).
  */
-export function applyPreset(g: GraphicsSettings, preset: QualityPreset): GraphicsSettings {
-  const p = paramsForPreset(preset);
+export function applyPreset(
+  g: GraphicsSettings,
+  preset: QualityPreset,
+  touch = false,
+): GraphicsSettings {
+  const p = paramsForPreset(preset, touch);
   if (!p) return { ...g, qualityPreset: "auto" };
   return { ...g, qualityPreset: preset, ...p };
 }

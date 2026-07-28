@@ -20,6 +20,7 @@ import { registerSkeletonContent } from "../content/skeleton";
 import { Items, LootTables } from "../content/registry";
 import { spawnChampion } from "../spawnChampion";
 import { recomputeStats } from "../stats/statPipeline";
+import { baseBonusFor } from "../baseBonus";
 import { Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 import { buyItem, grantItemFree } from "./shop";
@@ -271,10 +272,20 @@ describe("「隨機出現加強 10~100%能力屬性強化傳說道具」 — the
     recomputeStats(world, id);
     const after = world.stats.get(id)!.final;
     const r = pct / 100;
-    expect(after[Stat.MaxHealth]).toBeCloseTo(before[Stat.MaxHealth] * (1 + r), 3);
-    expect(after[Stat.AttackDamage]).toBeCloseTo(before[Stat.AttackDamage] * (1 + r), 3);
-    expect(after[Stat.Armor]).toBeCloseTo(before[Stat.Armor] * (1 + r), 3);
-    expect(after[Stat.MagicResist]).toBeCloseTo(before[Stat.MagicResist] * (1 + r), 3);
+    // ⚠️ 「乘上去」只作用在英雄自己掙來的部分。基礎加成 (sim/baseBonus.ts) 是加在
+    // 倍率之後的平移項,寶玉不會把它一起放大 —— 所以比較前要先把它扣掉,否則
+    // maxHealth 這一行會紅,而紅的原因恰好是這個設計成立的證據。
+    const earned = (v: number, stat: Stat): number => v - baseBonusFor(world.baseBonus, stat);
+    for (const stat of [Stat.MaxHealth, Stat.AttackDamage, Stat.Armor, Stat.MagicResist]) {
+      expect(earned(after[stat] as number, stat), `${stat}`).toBeCloseTo(
+        earned(before[stat] as number, stat) * (1 + r),
+        3,
+      );
+    }
+    // 而那份贈禮確實原封不動地留著 —— 不是被扣掉了才「剛好對」。
+    expect(
+      (after[Stat.MaxHealth] as number) - earned(after[Stat.MaxHealth] as number, Stat.MaxHealth),
+    ).toBeCloseTo(baseBonusFor(world.baseBonus, Stat.MaxHealth), 6);
   });
 
   it("is granted at most once per champion", () => {

@@ -13,8 +13,8 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import { ALL_STATS, STAT_CLAMPS, zeroStats, type Stat, type StatBlock } from "./statTypes";
-import { STAT_ENV_KEY } from "../combatEnv";
+import { ALL_STATS, zeroStats, type Stat, type StatBlock } from "./statTypes";
+import { finalizeStat } from "../baseBonus";
 import { championStatBase } from "./attributes";
 import { ModOp, type ModifierSource } from "./modifiers";
 import { Champions } from "../content/registry";
@@ -34,10 +34,7 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     // BASE, not into the modifier loop below, because an attribute is not a
     // stat: see stats/attributes.ts. Passing it here is the ONE wiring that
     // makes a 能力屬性強化 pick move any number at all.
-    // ⚠️ 兩個可選參數的順序在合併時定案:`opts`(#265 的 +300 開關)在前、
-    // `bonus`(#260 買來的三圍)在後。這裡傳 `{}` 不是佔位 —— 英雄**要**吃
-    // +300,關掉它的是小怪那條路(mobs.ts 傳 championHealthBonus:false)。
-    const base = championStatBase(def, stat, level, world.combatEnv, {}, champ.attrBonus);
+    const base = championStatBase(def, stat, level, world.combatEnv, champ.attrBonus);
 
     let flat = 0;
     let pctAdd = 0;
@@ -67,15 +64,11 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       }
     }
 
-    let v = override ?? (base + flat) * (1 + pctAdd) * pctMult;
-    // Global combat-env factor (world.combatEnv, see combatEnv.ts): the
-    // ENVIRONMENT scales the final value — after every modifier layer
-    // including Override, before the clamp. All-1.0 default = no-op.
-    const envKey = STAT_ENV_KEY[stat];
-    if (envKey !== undefined) v *= world.combatEnv[envKey];
-    const clamp = STAT_CLAMPS[stat];
-    if (clamp) v = Math.max(clamp[0], Math.min(clamp[1], v));
-    next[stat] = v;
+    const modified = override ?? (base + flat) * (1 + pctAdd) * pctMult;
+    // 環境倍率 → 基礎加成 → clamp,全部由 sim/baseBonus.ts finalizeStat 定義。
+    // 這三步**不在這裡展開**,是因為顯示面板(championSheet / quickApproval)必須
+    // 走同一份順序 —— #125 要求玩家看到的數字就是他實際拿到的數字。
+    next[stat] = finalizeStat(modified, stat, world.combatEnv, world.baseBonus);
   }
 
   sc.final = next;

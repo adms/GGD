@@ -21,7 +21,8 @@
  */
 import { Fragment, useState } from "react";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
-import { displayFinal, isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
+import { isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
+import { useDisplayBaseBonus } from "../displayBaseBonus";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import { CodexIcon } from "./CodexIcon";
 import { championSheetRows } from "../championSheet";
@@ -257,11 +258,13 @@ function AttributeRow({ a }: { a: ChampionAttributes }): React.JSX.Element {
 function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
   const edit = useDetailEdit();
   const env = useDisplayEnv();
+  const baseBonus = useDisplayBaseBonus();
   const base: Readonly<Record<string, number | undefined>> = champ.baseStats;
   const growth: Readonly<Record<string, number | undefined>> = champ.growth;
   const rows = championSheetRows(
     { baseStats: champ.baseStats, growth: champ.growth, attributes: champ.attributes ?? undefined },
     env,
+    baseBonus,
   );
   const rowByKey = new Map(rows.map((r) => [r.key, r]));
   const keys = rows.map((r) => r.key);
@@ -288,7 +291,10 @@ function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
         const b = edit ? base[k] : row?.base;
         const g = edit ? growth[k] : row?.growth;
         const factor = statDisplayFactor(k);
-        const showFinal = b !== undefined && isScaled(factor, env);
+        // 見 ProfileBlock 的同一行:基礎加成不是倍率,所以只看 isScaled 會在
+        // 倍率設回 1.0 時把那 300 從畫面上抹掉。
+        const f = row?.final;
+        const showFinal = b !== undefined && f !== undefined && (isScaled(factor, env) || f !== b);
         return (
           <Fragment key={k}>
             <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
@@ -299,7 +305,7 @@ function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
             )}
             {!edit && (
               <div style={{ textAlign: "right", color: showFinal ? "#6fd3a8" : TEXT_DIM }}>
-                {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+                {showFinal ? num(f) : "—"}
               </div>
             )}
             {edit ? (

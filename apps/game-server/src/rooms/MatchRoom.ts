@@ -417,6 +417,11 @@ export class MatchRoom extends Room<MatchState> {
     this.state.seed = seed;
     // ACTIVE multiplier snapshot -> clients (prediction parity; set once)
     this.state.combatEnvJson = JSON.stringify(combatEnv);
+    // 基礎加成 —— the controller resolved it from content (config.base-bonus@1);
+    // publishing the SAME object is what keeps the champ-profile / shop preview
+    // from disagreeing with the health bar. Never re-read the doc here: two
+    // readers is how the two numbers drift apart.
+    this.state.baseBonusJson = JSON.stringify(this.ctl.world.baseBonus);
     // CONTENT VERSION. The schema field has existed (and been replicated) since
     // the protocol was written, and until task #175 nothing ever assigned it —
     // the wire value was the empty string on every room, while the one process

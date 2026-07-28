@@ -20,13 +20,10 @@ import { registerSkeletonContent, THORNE, SELA } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import { normalizeCombatEnv, DEFAULT_COMBAT_ENV } from "./combatEnv";
-import {
-  CHAMPION_BASE_HEALTH_BONUS,
-  championStatBase,
-  championStatGrowth,
-} from "./stats/attributes";
+import { championStatBase, championStatGrowth } from "./stats/attributes";
+import { DEFAULT_BASE_BONUS, baseBonusFor, baseBonusFromDoc, normalizeBaseBonus } from "./baseBonus";
 import { attachSource, recomputeStats } from "./stats/statPipeline";
-import { STAT_CLAMPS, Stat } from "./stats/statTypes";
+import { ALL_STATS, STAT_CLAMPS, Stat } from "./stats/statTypes";
 import { ModOp } from "./stats/modifiers";
 import { DEFAULT_DAMAGE_POINT_MELEE } from "./systems/BasicAttackSystem";
 import { beginCombatFireRing, fireRingRulesFromConfig } from "./fireRing";
@@ -63,44 +60,83 @@ const step = (w: SimWorld, n = 1): void => {
 const rawCard = (def: typeof THORNE, stat: Stat): number => def.baseStats[stat] ?? 0;
 
 // ---------------------------------------------------------------- #265 HP
-describe("#265 全英雄初始 HP +300，加在生命倍率之前 (balance-265-base-hp)", () => {
-  it("+300 進的是 BASE，所以 ×倍率之後是 (raw+attr+300)×env，不是 base×env+300", () => {
+/**
+ * 全英雄初始生命 +300 (#265),以及 owner 2026-07-28 對它的第二道指示:
+ *「初始HP/MP/AP/AD/...增加數值也要放到後台設定 並且不參與倍率計算」。
+ *
+ * ⚠️ 這一組守的是**加法排在乘法的哪一邊**。v0.9.8 把 +300 加在 base 裡(倍率
+ * 之前),於是 `maxHealth: 3.0` 也乘了它:後台寫 300,玩家實際拿到 900。那個差異
+ * 不會讓任何測試變紅 —— 兩個讀法都是「有加到」。所以下面每一條都寫成
+ * **差值必須正好等於後台那個數字**,而不是「有變大」。
+ */
+describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-base-hp)", () => {
+  it("加成不參與倍率 —— ×3.0 之下,最終血量只多 300,不是 900", () => {
     cover("balance-265-base-hp");
-    // owner 的數字，寫死。其餘斷言用常數是為了好讀，但如果只用常數，把常數改成 0
-    // 的變異會讓「期望」跟著一起變 0 而全部通過 —— 所以先在這裡把它釘死。
-    expect(CHAMPION_BASE_HEALTH_BONUS).toBe(300);
     const env = normalizeCombatEnv({ maxHealth: 3.0 });
 
-    // 手算英雄卡的三層：w3x 原始值 + 力量項 + #265 的平移項。
+    /** 同一個世界、同一張卡,只換 baseBonus。 */
+    const maxHpWith = (bonus: Record<string, number>): number => {
+      const w = new SimWorld(OPEN_ARENA, 7);
+      w.combatEnv = env;
+      w.baseBonus = normalizeBaseBonus(bonus);
+      const id = champ(w, "thorne", ZONE0.center.x, ZONE0.center.z);
+      return w.health.get(id)!.maxHp;
+    };
+
+    const none = maxHpWith({});
+    const gift = maxHpWith({ maxHealth: 300 });
+
+    // owner 的規則,一行:後台寫 300,玩家就是多 300。
+    expect(gift - none).toBeCloseTo(300, 6);
+    // 而且明確**不是** v0.9.8 的那個讀法(加在 base 裡 → 被 ×3 放大成 900)。
+    expect(gift - none).not.toBeCloseTo(300 * env.maxHealth, 6);
+    // 反方向也釘住:沒有加成時,最終值就是卡面 × 倍率,一點多的都沒有。
+    const card = championStatBase(THORNE, Stat.MaxHealth, 1, env);
+    expect(none).toBeCloseTo(card * env.maxHealth, 6);
+    expect(gift).toBeCloseTo(card * env.maxHealth + 300, 6);
+  });
+
+  it("倍率換成 1.0 也一樣多 300 —— 加成與倍率完全無關", () => {
+    cover("balance-265-bonus-multiplier-independent");
+    // 這條是上一條的「另一個 env」。只有一組倍率的話,`× 1` 與 `+ 300` 這兩種
+    // 錯誤實作在數字上分不開;換一個倍率,任何殘留的耦合都會現形。
+    const delta = (mult: number): number => {
+      const env = normalizeCombatEnv({ maxHealth: mult });
+      const mk = (bonus: Record<string, number>): number => {
+        const w = new SimWorld(OPEN_ARENA, 7);
+        w.combatEnv = env;
+        w.baseBonus = normalizeBaseBonus(bonus);
+        return w.health.get(champ(w, "thorne", ZONE0.center.x, ZONE0.center.z))!.maxHp;
+      };
+      return mk({ maxHealth: 300 }) - mk({});
+    };
+    expect(delta(1.0)).toBeCloseTo(300, 6);
+    expect(delta(3.0)).toBeCloseTo(300, 6);
+    expect(delta(7.5)).toBeCloseTo(300, 6);
+  });
+
+  it("出貨預設就是 300 生命,而且只有生命 —— 其餘 15 項都是 0", () => {
+    cover("balance-265-default-table");
+    // 寫死 300:引用常數的話,把常數改成 0 的變異會讓期望值跟著溜走。
+    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth)).toBe(300);
+    for (const stat of ALL_STATS) {
+      if (stat === Stat.MaxHealth) continue;
+      expect(baseBonusFor(DEFAULT_BASE_BONUS, stat), `${stat} 不該有加成`).toBe(0);
+    }
+  });
+
+  it("加成不進卡面 —— championStatBase 回的仍是 w3x 原始值 + 三圍", () => {
+    cover("balance-265-card-clean");
+    const env = DEFAULT_COMBAT_ENV;
     const attrTerm = env.strToMaxHealth * THORNE.attributes!.str;
-    const withoutBonus = rawCard(THORNE, Stat.MaxHealth) + attrTerm;
-    const expectedBase = withoutBonus + CHAMPION_BASE_HEALTH_BONUS;
-
-    expect(championStatBase(THORNE, Stat.MaxHealth, 1, env)).toBeCloseTo(expectedBase, 9);
-
-    // 出貨路徑：spawnChampion → recomputeStats → world.health.maxHp。
-    const w = new SimWorld(OPEN_ARENA, 7);
-    w.combatEnv = env;
-    const id = champ(w, "thorne", ZONE0.center.x, ZONE0.center.z);
-    const maxHp = w.health.get(id)!.maxHp;
-
-    // 這才是 owner 要的那個讀法。
-    expect(maxHp).toBeCloseTo(expectedBase * env.maxHealth, 6);
-    // 而且明確**不是**另外兩種讀法 —— 這兩行就是「方向」：
-    //   倍率後才加 300（會比調整前更脆）
-    expect(maxHp).not.toBeCloseTo(withoutBonus * env.maxHealth + CHAMPION_BASE_HEALTH_BONUS, 6);
-    //   完全沒加
-    expect(maxHp).not.toBeCloseTo(withoutBonus * env.maxHealth, 6);
-    // 300 的實際重量：在 ×3 之下是 900 點血。
-    expect(maxHp - withoutBonus * env.maxHealth).toBeCloseTo(
-      CHAMPION_BASE_HEALTH_BONUS * env.maxHealth,
-      6,
+    expect(championStatBase(THORNE, Stat.MaxHealth, 1, env)).toBeCloseTo(
+      rawCard(THORNE, Stat.MaxHealth) + attrTerm,
+      9,
     );
   });
 
-  it("+300 是一次性平移，不是每級都拿 —— 每級成長完全不動", () => {
+  it("加成是一次性平移，不是每級都拿 —— 每級成長完全不動", () => {
     cover("balance-265-growth-untouched");
-    // 常數項在 base(2)−base(1) 相減時抵銷。若有人把它寫成 ×level，這裡會爆。
     const perLevel =
       (THORNE.growth[Stat.MaxHealth] ?? 0) +
       DEFAULT_COMBAT_ENV.strToMaxHealth * THORNE.attributes!.strGrowth;
@@ -110,23 +146,15 @@ describe("#265 全英雄初始 HP +300，加在生命倍率之前 (balance-265-b
       championStatBase(THORNE, Stat.MaxHealth, 1) + perLevel * 4,
       9,
     );
-  });
-
-  it("只有 maxHealth 拿到 +300 —— 魔力/攻擊/護甲一點都沒動", () => {
-    cover("balance-265-health-only");
-    const env = DEFAULT_COMBAT_ENV;
-    for (const stat of [Stat.MaxMana, Stat.AttackDamage, Stat.Armor, Stat.HealthRegen]) {
-      const src = { str: THORNE.attributes!.str, agi: THORNE.attributes!.agi, int: THORNE.attributes!.int };
-      const attr =
-        stat === Stat.MaxMana
-          ? env.intToMaxMana * src.int
-          : stat === Stat.AttackDamage
-            ? env.strToAttackDamage * src.str
-            : stat === Stat.Armor
-              ? env.agiToArmor * src.agi
-              : env.strToHealthRegen * src.str;
-      expect(championStatBase(THORNE, stat, 1, env)).toBeCloseTo(rawCard(THORNE, stat) + attr, 9);
-    }
+    // 出貨路徑也一樣:加成在 lv1 與 lv18 是同一個 300,不隨等級長大。
+    const w = new SimWorld(OPEN_ARENA, 7);
+    w.baseBonus = normalizeBaseBonus({ maxHealth: 300 });
+    const id = champ(w, "thorne", ZONE0.center.x, ZONE0.center.z);
+    const lv1 = w.health.get(id)!.maxHp;
+    w.champion.get(id)!.level = 5;
+    recomputeStats(w, id);
+    const lv5 = w.health.get(id)!.maxHp;
+    expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
   it("出貨的 combat-env 表把生命倍率鎖在 3.0 (owner: 4=>3)", () => {
@@ -137,6 +165,32 @@ describe("#265 全英雄初始 HP +300，加在生命倍率之前 (balance-265-b
     expect(doc.multipliers.maxHealth).toBe(3.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
+  });
+
+  it("出貨的 config.base-bonus@1 內容文件就是後台預設值", () => {
+    cover("balance-265-content-doc");
+    const doc = JSON.parse(
+      readFileSync(join(__dirname, "../../../../content/config/base-bonus.json"), "utf8"),
+    ) as { schema: string; bonus: Record<string, number> };
+    expect(doc.schema).toBe("config.base-bonus@1");
+    expect(doc.bonus.maxHealth).toBe(300);
+    // 內容檔與程式預設必須一致 —— 否則後台顯示的、和沒設定過時實際生效的,
+    // 會是兩個不同的數字,而且沒有任何地方會說。
+    expect(normalizeBaseBonus(doc.bonus)).toEqual(DEFAULT_BASE_BONUS);
+  });
+
+  it("讀不到內容文件時,退回的是出貨預設,不是「沒有加成」", () => {
+    cover("balance-265-doc-fallback");
+    // ⚠️ 這兩個 fallback 的差別是 300 點血,而且**兩邊都不會報錯**。
+    // 「缺文件 = 0」看起來是安全的保守選擇,實際上是把 owner 設定過的東西
+    // 在內容載入失敗的那一台機器上靜默拿掉,而面板還是照樣顯示 300。
+    for (const junk of [undefined, null, {}, "nope", { schema: "config.combat-env@1" }]) {
+      expect(baseBonusFor(baseBonusFromDoc(junk), Stat.MaxHealth), String(junk)).toBe(300);
+    }
+    // 但一份 SCHEMA 正確、內容真的是空的文件,是操作者的明確意思:全部歸零。
+    expect(
+      baseBonusFor(baseBonusFromDoc({ schema: "config.base-bonus@1", bonus: {} }), Stat.MaxHealth),
+    ).toBe(0);
   });
 
   it("#244 的解耦還在：英雄加血不得移動肉鴿小怪的曲線", () => {
@@ -162,17 +216,20 @@ describe("#265 全英雄初始 HP +300，加在生命倍率之前 (balance-265-b
       reward: { gold: 20, xp: 40, killsPerLevel: 6 },
     };
     const rules = mobRulesFromConfig(cfg, DT, 3);
-    const level = rules.level;
-    const heroSheet = championStatBase(THORNE, Stat.MaxHealth, level);
-    // 小兵讀到的是「不含 #265 平移」的那張表。
-    expect(rules.maxHp).toBe(
-      Math.round(championStatBase(THORNE, Stat.MaxHealth, level, DEFAULT_COMBAT_ENV, {
-        championHealthBonus: false,
-      })),
+    // 小兵讀到的就是卡面,沒有系統贈禮。
+    expect(rules.maxHp).toBe(Math.round(championStatBase(THORNE, Stat.MaxHealth, rules.level)));
+
+    // 而這條界線現在是**結構性的**:`recomputeStats` 沒有 ChampionComp 就提早
+    // return,小怪從不走它。把加成調成 9999 也不會動到小兵一分血 —— 這正是
+    // v0.9.9 拿掉 `championHealthBonus` 旗標之後仍然成立的理由。
+    const before = mobRulesFromConfig(cfg, DT, 3).maxHp;
+    const w = new SimWorld(OPEN_ARENA, 7);
+    w.baseBonus = normalizeBaseBonus({ maxHealth: 9999 });
+    expect(mobRulesFromConfig(cfg, DT, 3).maxHp).toBe(before);
+    // 而英雄那邊確實吃到了 —— 否則上面那條會是「兩邊都沒效果」的假綠。
+    expect(w.health.get(champ(w, "thorne", ZONE0.center.x, ZONE0.center.z))!.maxHp).toBeGreaterThan(
+      9999,
     );
-    // 而且和英雄自己的血量差距正好是那 300 —— 若解耦破了，這條會變成 0。
-    // 寫死 300 而不是引用常數：常數被改成 0 的變異不能讓期望值跟著溜走。
-    expect(Math.round(heroSheet) - rules.maxHp).toBe(300);
   });
 });
 

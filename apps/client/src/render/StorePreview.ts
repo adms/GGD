@@ -40,7 +40,8 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { ModelDoc } from "@ggd/shared/content";
 import { AssetManager } from "./AssetManager";
 import { ClipAnimator } from "./ClipAnimator";
-import { FramePacer, MENU_FPS_CAP } from "./frameCap";
+import { FramePacer, menuFpsCap } from "./frameCap";
+import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
 import { glbYawOffset } from "./views/glbFacing";
 import { championTintForId } from "./views/championTint";
 import { applyModelTint, releaseModelTint } from "./views/modelTint";
@@ -114,7 +115,8 @@ export class StorePreview {
    * 注意上限是「跳過畫面」而不是「降低 rAF 頻率」：rAF 照樣以面板頻率喚醒，
    * 但被跳過的那一張完全不碰 GPU，這才是省電的那一半。
    */
-  private readonly pacer = new FramePacer(MENU_FPS_CAP);
+  // 平台上限 (v0.9.9):手機 30 / 桌機 60。見 render/frameCap.ts。
+  private readonly pacer = new FramePacer(menuFpsCap(isTouchDevice(readTouchEnv())));
   private readonly now: () => number;
 
   /**

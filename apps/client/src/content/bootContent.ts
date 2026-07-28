@@ -18,6 +18,7 @@ import {
   ContentLoader,
   FallbackContentSource,
   HttpContentSource,
+  OverlayContentSource,
   registerAll,
   type ContentSource,
   type HttpContentSourceOptions,
@@ -25,6 +26,7 @@ import {
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { setContentAssetVersion } from "./assetVersion";
+import { fetchOverlayBundle } from "./clientOverlay";
 
 /** Default content mount — nginx serves it in prod; the vite plugin in dev. */
 export const CONTENT_BASE_URL = "/content";
@@ -59,6 +61,12 @@ export interface ContentBootResult {
   transport?: "bundle" | "per-doc";
   /** why the bundle was abandoned, when `transport === "per-doc"`. */
   transportReason?: string;
+  /**
+   * Generation of the durable content overlay (#189) applied on top of the
+   * shipped tree, or undefined when none was. Surfaced so 「後台改了但玩家沒看到」
+   * is diagnosable from the console instead of being invisible.
+   */
+  overlayGeneration?: number;
 }
 
 export interface ContentBootOptions {
@@ -71,6 +79,11 @@ export interface ContentBootOptions {
    * fetching. Production always leaves this off.
    */
   disableBundle?: boolean;
+  /**
+   * Skip the durable content-overlay fetch (#189). Tests that assert the
+   * SHIPPED tree set this so a stray /api call cannot change what they load.
+   */
+  disableOverlay?: boolean;
 }
 
 /**
@@ -107,6 +120,19 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
     source = fallback;
   }
 
+  // #189 —— THE OPERATOR'S EDITS. `/content/**` is a read-only static mount; the
+  // 內容管理 console writes to `data/content-overlay/`. Without this the browser
+  // loads only the baked tree, so any purely-CLIENT content decision (the GH#31
+  // 體素身體 switch is one) reads as saved in the console and has zero effect on
+  // the player, with nothing anywhere reporting a problem. See ./clientOverlay.ts.
+  //
+  // Best-effort by construction: `fetchOverlayBundle` answers null on ANY failure
+  // AND on an empty overlay, so an un-edited or offline host loads byte-for-byte
+  // what it loaded before — including the shipped contentVersion that stamps
+  // asset URLs.
+  const overlay = opts.source || opts.disableOverlay ? null : await fetchOverlayBundle();
+  if (overlay) source = new OverlayContentSource(source, overlay);
+
   try {
     const { store, manifest } = await new ContentLoader(source).load();
     registerAll(store);
@@ -122,6 +148,7 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
       contentVersion: manifest.contentVersion,
       ...(transport ? { transport } : {}),
       ...(fallback?.fallbackReason ? { transportReason: fallback.fallbackReason } : {}),
+      ...(overlay ? { overlayGeneration: overlay.generation } : {}),
     };
   } catch (err) {
     registerSkeletonContent();

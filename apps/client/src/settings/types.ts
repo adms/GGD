@@ -6,6 +6,7 @@
  * onto the Babylon engine + vfx budgets.
  */
 import { INTERP_DELAY_MS, SNAPSHOT_MS } from "@ggd/shared/constants";
+import { defaultFpsCap } from "../render/frameCap";
 
 /** Top-level graphics selector. "auto" hands quality to the adaptive manager. */
 export type QualityPreset = "low" | "medium" | "high" | "auto";
@@ -83,7 +84,7 @@ export interface Settings {
 }
 
 /** Bump when the persisted shape changes; migrateSettings deep-merges forward. */
-export const SETTINGS_VERSION = 3;
+export const SETTINGS_VERSION = 4;
 
 /**
  * Floor for the interpolation-delay slider, DERIVED from the snapshot rate.
@@ -108,6 +109,17 @@ export const INTERP_MAX_DELAY_MS = 200;
  * tuning and is preserved.
  */
 const LEGACY_INTERP_DELAY_MS = 100;
+
+/**
+ * fps 上限在 v4 之前是全平台 60。手機上那個 60 從來不是玩家「選的」,它就是預設,
+ * 所以 v3→v4 對**觸控裝置**上正好等於 60 的 blob 採用新的平台預設 30
+ * (owner 2026-07-28)。和上面 interpolationDelay 的做法同形,理由也同形:
+ * 不這樣做的話,這個改動對「已經玩過的人」——也就是全部的人——完全沒有效果。
+ *
+ * ⚠️ 代價要說清楚:手機上**刻意**選過 60 的玩家會被改成 30。設定頁還在,改回去
+ * 是一次點擊,而且改回去之後 version 已經是 4,不會再被動到。桌機一律不受影響。
+ */
+export const LEGACY_UNIVERSAL_FPS_CAP: FpsCap = 60;
 
 export const DEFAULT_GRAPHICS: GraphicsSettings = {
   qualityPreset: "high",
@@ -192,8 +204,9 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
  * Migrate/merge a persisted blob (any older/partial shape) onto the current
  * defaults, clamping every field. Unknown → default; bumps to SETTINGS_VERSION.
  */
-export function migrateSettings(raw: unknown): Settings {
+export function migrateSettings(raw: unknown, opts: { touch?: boolean } = {}): Settings {
   const obj = (raw ?? {}) as Partial<Settings>;
+  const touch = opts.touch === true;
   const g = (obj.graphics ?? {}) as Partial<GraphicsSettings>;
   const n = { ...((obj.network ?? {}) as Partial<NetworkSettings>) };
   // v2 → v3: the snapshot rate went 20 → 30 Hz and the interpolation delay
@@ -206,11 +219,25 @@ export function migrateSettings(raw: unknown): Settings {
   if (priorVersion < 3 && n.interpolationDelayMs === LEGACY_INTERP_DELAY_MS) {
     n.interpolationDelayMs = DEFAULT_NETWORK.interpolationDelayMs;
   }
+  // v3 → v4: fps 上限改成看平台(桌機 60 / 手機 30)。見 LEGACY_UNIVERSAL_FPS_CAP。
+  const gg = { ...g };
+  if (priorVersion < 4 && touch && gg.fpsCap === LEGACY_UNIVERSAL_FPS_CAP) {
+    gg.fpsCap = defaultFpsCap(true) as FpsCap;
+  }
   return {
     version: SETTINGS_VERSION,
-    graphics: clampGraphics({ ...DEFAULT_GRAPHICS, ...g }),
+    graphics: clampGraphics({ ...defaultGraphicsFor(touch), ...gg }),
     network: clampNetwork({ ...DEFAULT_NETWORK, ...n }),
   };
+}
+
+/**
+ * The shipped graphics defaults FOR THIS PLATFORM. Only `fpsCap` differs;
+ * everything else is `DEFAULT_GRAPHICS` verbatim, so there is exactly one place
+ * that knows the platform matters at all.
+ */
+export function defaultGraphicsFor(touch: boolean): GraphicsSettings {
+  return { ...DEFAULT_GRAPHICS, fpsCap: defaultFpsCap(touch) as FpsCap };
 }
 
 export function cloneSettings(s: Settings): Settings {

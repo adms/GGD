@@ -13,6 +13,7 @@ import {
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
+import { baseBonusFromDoc } from "@ggd/shared/sim/baseBonus";
 import {
   SKELETON_ARENA,
   ROYALE_ARENA,
@@ -22,7 +23,7 @@ import {
 } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Abilities, LootTables } from "@ggd/shared/sim/content/registry";
-import { Models } from "@ggd/shared/content";
+import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry } from "@ggd/shared/sim/stats/rating";
@@ -509,6 +510,13 @@ export class MatchController {
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
+    // 基礎加成 (`config.base-bonus@1`, owner 2026-07-28) — flat per-stat grants
+    // applied AFTER the combat-env multiplier. Resolved from CONTENT here rather
+    // than threaded through the constructor because it is a content doc like the
+    // arena rules and the fire ring: the durable overlay carries the operator's
+    // edit to the shard at boot, and a replay is only valid against the
+    // contentVersion it was recorded on, which pins this doc with everything else.
+    this.world.baseBonus = baseBonusFromDoc(Configs.tryGet("base-bonus"));
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

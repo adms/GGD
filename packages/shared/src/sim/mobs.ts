@@ -286,13 +286,11 @@ export function mobRulesFromConfig(
         ? cfg.mob.maxHp
         : Math.max(
             1,
-            // #265 加的「全英雄初始生命 +300」是英雄的、不是小兵的。這條 legacy
-            // tier 只是把英雄卡當頭像用，而 #244 立的規矩就是「英雄的數值調整
-            // 不得移動肉鴿曲線」—— 喪標麥可同時是可選英雄與 #215 的殭屍，所以
-            // 這裡明確關掉那 300，否則 #244 拆掉的耦合會從這個縫回來。
-            Math.round(
-              championStatBase(def, Stat.MaxHealth, level, env, { championHealthBonus: false }),
-            ),
+            // #244 的規矩:英雄的數值調整不得移動肉鴿曲線。這條 legacy tier 只是
+            // 把英雄卡當頭像用。v0.9.9 起「全英雄初始生命 +300」住在
+            // `finalizeStat`(sim/baseBonus.ts),而這裡呼叫的是 `championStatBase`
+            // —— 卡面,不含系統贈禮 —— 所以那條界線不再靠記得傳旗標維持。
+            Math.round(championStatBase(def, Stat.MaxHealth, level, env)),
           );
   const hpRegenPerSec =
     cfg.mob.baseRegen !== undefined

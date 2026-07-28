@@ -32,7 +32,8 @@ import { splitChampionName } from "../../codex/codexData";
 import { attackTypeLabel, num, SLOT_COLOR, statLabel } from "../../codex/codexLabels";
 import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skillDetails";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../../passiveSlot";
-import { displayFinal, displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
+import { displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
+import { useDisplayBaseBonus } from "../../displayBaseBonus";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
 import { championSheetRows } from "../../championSheet";
 import {
@@ -160,10 +161,11 @@ const BATTLE_FINAL_COLOR = "#6fd3a8";
 function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element {
   const def = Champions.get(championId);
   const env = useDisplayEnv();
+  const baseBonus = useDisplayBaseBonus();
   // 三圍 (#248): rows come from the SIM's championStatBase/Growth, never from
   // def.baseStats directly — those hold the raw w3x numbers without the
   // attribute term. See ui/championSheet.ts.
-  const rows = championSheetRows(def, env);
+  const rows = championSheetRows(def, env, baseBonus);
   const a = def.attributes;
   return (
     <div>
@@ -181,15 +183,18 @@ function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element
         {/* 說明數值最終化: base × combat-env multiplier (maxHealth ×4 → 600 = 2400) */}
         <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>
         <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>每級成長</div>
-        {rows.map(({ key: k, base: b, growth: g }) => {
+        {rows.map(({ key: k, base: b, growth: g, final: f }) => {
           const factor = statDisplayFactor(k);
-          const showFinal = b !== undefined && isScaled(factor, env);
+          // 顯示 戰鬥實際 的條件從「倍率不是 1」放寬成「最終值跟基礎不一樣」——
+          // 基礎加成不是倍率,倍率 1.0 之下它仍然把數字改了 300。只看 isScaled
+          // 的話,把 maxHealth 倍率設回 1.0 就會讓那 300 從面板上消失。
+          const showFinal = b !== undefined && f !== undefined && (isScaled(factor, env) || f !== b);
           return (
             <div key={k} style={{ display: "contents" }}>
               <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
               <div style={{ textAlign: "right", color: TEXT_MAIN }}>{b === undefined ? "—" : num(b)}</div>
               <div style={{ textAlign: "right", color: showFinal ? BATTLE_FINAL_COLOR : TEXT_DIM }}>
-                {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+                {showFinal ? num(f) : "—"}
               </div>
               <div style={{ textAlign: "right", color: g ? GOLD : TEXT_DIM }}>
                 {g === undefined || g === 0 ? "—" : `+${num(g)}`}

@@ -271,7 +271,14 @@ describe("content boot — one-request bundle transport", () => {
     expect(res.ok).toBe(true);
     expect(res.transport).toBe("bundle");
     expect(res.contentVersion).toBe("cv_test00000000");
-    expect(calls).toEqual(["/content/bundle.json"]);
+    // ONE request FOR CONTENT. #189's overlay probe is a second request to a
+    // different service (/api/v1/content-overlay/bundle) and is asserted
+    // separately below — filtering rather than dropping the claim, so the
+    // 1-vs-1,453 transport guarantee this test exists for still bites.
+    expect(calls.filter((u) => u.startsWith("/content/"))).toEqual(["/content/bundle.json"]);
+    expect(calls, "#189: the browser must ask for the durable overlay").toContain(
+      "/api/v1/content-overlay/bundle",
+    );
     // ...and the SAME registry state the per-doc path produces
     expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
     expect(Abilities.get("mockchamp.q" as AbilityId).slot).toBe("Q");
@@ -316,7 +323,7 @@ describe("content boot — one-request bundle transport", () => {
     expect(res.ok).toBe(true); // NOT the skeleton fallback — the full set loaded
     expect(res.transport).toBe("per-doc");
     expect(res.transportReason).toMatch(/404/);
-    expect(calls[0]).toBe("/content/bundle.json");
+    expect(calls.filter((u) => u.startsWith("/content/"))[0]).toBe("/content/bundle.json");
     expect(calls.length).toBeGreaterThan(1); // it really went back to per-doc
     expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
   });
