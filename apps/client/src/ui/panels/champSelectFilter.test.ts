@@ -81,7 +81,7 @@ describe("champ-select random pick (client-champ-random)", () => {
   it("routes the pick through the normal SELECT_CHAMPION action", () => {
     cover("client-champ-random");
     const sent: string[] = [];
-    registerHudActions({ sendCommand: () => {}, selectChampion: (id) => sent.push(id), sendCheat: () => {}, focusWorld: () => {}, sendOrder: () => {}, setArenaRenderSuppressed: () => {}, localChampionModel: () => null });
+    registerHudActions({ sendCommand: () => {}, selectChampion: (id) => sent.push(id), sendCheat: () => {}, focusWorld: () => {}, sendOrder: () => {}, setArenaRenderSuppressed: () => {}, localChampionModel: () => null, spectateGoTo: () => {}, spectateReturn: () => {} });
     // exactly what the panel's 🎲 button does
     const id = pickRandomId(ids, () => 0.5);
     if (id) hudActions.selectChampion(id);

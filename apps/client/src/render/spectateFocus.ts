@@ -68,3 +68,50 @@ export function pickSpectateZone(ownZone: number | null, duels: readonly DuelVie
   }
   return pick;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * #269 — 「不要跳去看別人的競技場，但可以跳出按鈕前往/返回」 (owner, 2026-07-28)
+ *
+ * The decision above is UNCHANGED; only what the caller does with it changed.
+ * `pickSpectateZone` used to be an instruction ("point the camera here") and is
+ * now an OFFER ("this is what the 前往觀戰 button may take you to"). The two
+ * helpers below are the rest of that contract, and they live here rather than
+ * inline in GameApp for the same reason the pick does: the camera-ownership
+ * rules are exactly the kind of thing that is easy to get subtly wrong, and
+ * GameApp needs a canvas to instantiate, so anything inside it is untested.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * May the player be sent to `zone` right now?
+ *
+ * The HUD button is painted from the offer the frame loop published, but a
+ * click arrives one frame LATER — and a duel can end in that frame. So the
+ * request is re-checked against the CURRENT offer instead of trusted: a stale
+ * click after the fight ended, or any zone that was never on offer, is refused.
+ * A refusal is silent by design; the button that produced it is already gone.
+ */
+export function mayGoTo(zone: number, offer: number | null): boolean {
+  return offer !== null && zone === offer;
+}
+
+/**
+ * Must an existing watch be DROPPED this frame?
+ *
+ * This is the one thing that stays automatic after #269, and it has to be: the
+ * zone you travelled to can finish while you are standing in it, and leaving
+ * the camera parked on an empty floor is the exact failure #208 existed to
+ * prevent. No button press can be expected in time.
+ *
+ * `watching === null` (not watching) is never a release — there is nothing to
+ * release, and returning true would re-lock follow every single frame and make
+ * free-panning your own arena impossible.
+ */
+export function spectateRelease(
+  watching: number | null,
+  inCombat: boolean,
+  duels: readonly DuelView[],
+): boolean {
+  if (watching === null) return false;
+  if (!inCombat) return true; // combat ended — nothing anywhere is being fought
+  return !duels.some((d) => d.zone === watching && d.live);
+}

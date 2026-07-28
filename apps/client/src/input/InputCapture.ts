@@ -258,6 +258,18 @@ export class InputCapture {
         ev.preventDefault();
         this.deps.onToggleFollow();
         break;
+      case "KeyY":
+        // 鏡頭跟隨鎖定 (#268). The owner asked for Y by name — 「預設跟隨視角
+        // (按Y解除/鎖定)」 — and Y is kept ALONGSIDE Space rather than replacing
+        // it: Space is what this client has always used and what the ONE
+        // existing legend row documents, so removing it would break the hands
+        // of the only person who has played this build. Both call the same
+        // toggle, so there is no second follow state to drift.
+        //
+        // ⚠️ NOT in SLOT_BY_CODE and NOT a pan key: Y sits outside the WASD
+        // cluster and outside the ability row, so it steals nothing.
+        if (!ev.repeat) this.deps.onToggleFollow();
+        break;
       default:
         this.setPanKey(ev.code, true);
     }

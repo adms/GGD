@@ -23,6 +23,7 @@ import { TeamLivesBar } from "./components/TeamLivesBar";
 import { SpectateNotice } from "./hud/SpectateNotice";
 import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
+import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -217,6 +218,11 @@ export function HudRoot(): React.JSX.Element {
               returns null when the corridor has no room. */}
           <KillCombo />
           <SelfStatusBar />
+          {/* 殭屍來襲 + 即時已擊殺數 (task #258). The roguelite waves have
+              shipped since #215 and the word 殭屍 appeared NOWHERE in combat;
+              the kill tally was not even on the wire. Owns its own gate
+              (combat + something to say) and its own derived placement. */}
+          <ZombieWaveBar />
           <ExUnlockToast />
         </>
       )}

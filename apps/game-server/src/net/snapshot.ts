@@ -149,6 +149,13 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // reconnect-safe: the dead player's 「丟金幣 n/10」 button must read the
         // same number after a socket blink as before it.
         ss.coinsLeft = Math.min(world.coinBudget.get(seat.entityId) ?? 0, 255);
+        // 殭屍擊殺數 (task #258). `world.mobKills` is MATCH-CUMULATIVE and keyed
+        // by champion entity — the same counter MobSystem grants a level off
+        // every 30 kills — so the HUD's live number and the level the player is
+        // being granted can never disagree. It reached the client only through
+        // the round-settle progress chart before this line existed; mid-combat
+        // there was nothing on the wire to show.
+        ss.mobKills = Math.min(world.mobKills.get(seat.entityId) ?? 0, 65535);
         // YOUR OWN ACTIVE STATUS EFFECTS (owner: 「我也看不出來自己暈眩還是
         // 發生什麼事情」). Two index-aligned arrays; polarity and display name
         // stay on the content doc, which the client already has.

@@ -101,12 +101,15 @@ function captureHarness(
   commands: Command[];
   selects: number[];
   selfPicks: Vec2[];
+  /** one entry per onToggleFollow call (task #268: Y / Space camera lock) */
+  follows: number[];
   cap: InputCapture;
 } {
   const orders: Order[] = [];
   const commands: Command[] = [];
   const selects: number[] = [];
   const selfPicks: Vec2[] = [];
+  const follows: number[] = [];
   const el = new FakeTarget();
   const win = new FakeTarget();
   vi.stubGlobal("window", win); // attach() registers key handlers on window
@@ -123,10 +126,10 @@ function captureHarness(
     onCommand: (c) => commands.push(c),
     onSelectSelf: () => selects.push(1),
     onZoom: () => {},
-    onToggleFollow: () => {},
+    onToggleFollow: () => follows.push(1),
   });
   cap.attach();
-  return { el, win, orders, commands, selects, selfPicks, cap };
+  return { el, win, orders, commands, selects, selfPicks, follows, cap };
 }
 
 const click = (x: number, y: number, button = 0): object => ({ button, clientX: x, clientY: y });
@@ -353,5 +356,65 @@ describe("the SIXTH slot has a key (P0-3)", () => {
     const bound = Object.values(SLOT_BY_CODE);
     expect(new Set(bound).size).toBe(bound.length); // no key casts two slots
     expect(new Set(bound)).toEqual(new Set(["Q", "W", "E", "R", "EX", "PASSIVE"]));
+  });
+});
+
+
+/**
+ * 鏡頭跟隨鎖定 (#268) — owner: 「預設跟隨視角(按Y解除/鎖定)」.
+ *
+ * TWO facts have to hold, and only one is about Y:
+ *   • Y reaches `onToggleFollow` (GameApp wires that straight through to
+ *     `CameraRig.toggleFollow`), and
+ *   • FOLLOW IS ON BY DEFAULT — otherwise 「預設跟隨」 is unmet no matter how
+ *     good the key is, and the toggle would be switching the feature ON rather
+ *     than off. That half is asserted against `CameraRig`'s own initial state.
+ */
+describe("camera follow: default ON, Y toggles (task #268)", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const ykey = (repeat = false): object => ({ code: "KeyY", target: null, repeat });
+
+  it("Y toggles the camera follow lock", () => {
+    cover("client-intent-mapping");
+    const h = captureHarness();
+    h.win.dispatch("keydown", ykey());
+    expect(h.follows).toHaveLength(1);
+    h.cap.dispose();
+  });
+
+  it("Space still toggles it too — the old binding is not broken", () => {
+    cover("client-intent-mapping");
+    const h = captureHarness();
+    h.win.dispatch("keydown", {
+      code: "Space",
+      target: null,
+      repeat: false,
+      preventDefault: () => {},
+    });
+    expect(h.follows).toHaveLength(1);
+    h.cap.dispose();
+  });
+
+  it("a HELD Y does not strobe the lock", () => {
+    // Auto-repeat fires keydown ~30x/s; without the repeat guard, holding Y
+    // would flip follow on and off dozens of times a second.
+    cover("client-intent-mapping");
+    const h = captureHarness();
+    h.win.dispatch("keydown", ykey());
+    h.win.dispatch("keydown", ykey(true));
+    h.win.dispatch("keydown", ykey(true));
+    expect(h.follows).toHaveLength(1);
+    h.cap.dispose();
+  });
+
+  it("Y is not a pan key, casts nothing and issues no order", () => {
+    cover("client-intent-mapping");
+    const h = captureHarness();
+    h.win.dispatch("keydown", ykey());
+    expect(h.cap.panKeys).toEqual({ up: false, down: false, left: false, right: false });
+    expect(h.commands).toHaveLength(0);
+    expect(h.orders).toHaveLength(0);
+    h.cap.dispose();
   });
 });

@@ -380,7 +380,12 @@ export const KEYBOARD_ORDER_BINDINGS: readonly DeclaredBinding[] = [
   // is listed unconditionally: the legend documents the key map, and a binding
   // that appears only once you are already dead is one nobody discovers.
   { id: "KeyG", control: "G", label: "陣亡時丟出 100 金", source: 'case "KeyG"' },
-  { id: "Space", control: "空白鍵", label: "鏡頭跟隨開關", source: 'case "Space"' },
+  // 鏡頭跟隨 (#268). TWO keys, ONE toggle: the owner named Y — 「預設跟隨視角
+  // (按Y解除/鎖定)」 — and Space is what this build has always used, so both are
+  // bound and both are listed. Listing only one would leave a working key
+  // undiscoverable, which is the same silence a missing binding produces.
+  { id: "KeyY", control: "Y", label: "鏡頭跟隨鎖定/解除", source: 'case "KeyY"' },
+  { id: "Space", control: "空白鍵", label: "同上（舊鍵位保留）", source: 'case "Space"' },
   { id: "Arrows", control: "方向鍵", label: "平移鏡頭", source: '"ArrowUp"' },
 ];
 

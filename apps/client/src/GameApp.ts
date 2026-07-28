@@ -74,7 +74,7 @@ import { RoundWinnerStage } from "./render/RoundWinnerStage";
 // the window can never be shortened below the taunt delay and silently mute it.
 import { ROUND_PRESENT_MS } from "./render/victoryPresentation";
 import type { CameraRig } from "./render/CameraRig";
-import { ownDuelDecided, pickSpectateZone, type DuelView } from "./render/spectateFocus";
+import { mayGoTo, ownDuelDecided, pickSpectateZone, spectateRelease, type DuelView } from "./render/spectateFocus";
 import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
 import {
@@ -670,6 +670,9 @@ export class GameApp {
       // the local champion's model, so the intermission market can stand the
       // player's OWN hero at the counter instead of a stand-in
       localChampionModel: () => this.localChampionModel(),
+      // #269 前往/返回觀戰 — the two buttons that replaced #208's automatic jump.
+      spectateGoTo: (zone) => this.spectateGoTo(zone),
+      spectateReturn: () => this.spectateReturn(),
     });
 
     // iPhone touch controls — virtual joystick + ability buttons feed player
@@ -1490,11 +1493,16 @@ export class GameApp {
     const scratch = this.entityScratch;
     scratch.length = 0;
     this.reviveOwnerSeats.clear(); // task #220 — refilled from this frame's kind 3s
+    // #268 — the LOCAL champion's entity id, read ONCE per frame. The registry
+    // cannot resolve this itself (client-08 walls render/** off from the seat
+    // table), so the composition root supplies it, exactly like the #49 tint and
+    // #231 voxel-skin seams next to it.
+    const localId = hudStore.getState().localEntityId;
     let i = 0;
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
       if (!e) {
-        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0, h: 0, airborne: false };
+        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0, h: 0, airborne: false, isLocal: false };
         this.entityPool[i] = e;
       }
       e.id = es.id;
@@ -1507,6 +1515,10 @@ export class GameApp {
       e.fx = es.fx;
       e.fz = es.fz;
       e.alive = es.alive;
+      // #268 — 「自己角色更顯眼」. Champions only (kind 0): a projectile or a
+      // dropped coin has no owner to BE, and a stale true on a pooled slot that
+      // got reused by another kind would put a caret over a flying bolt.
+      e.isLocal = es.kind === 0 && localId !== null && es.id === localId;
       // #244 — the authoritative flags word, forwarded verbatim. The registry
       // reads only the two GROWTH bits from it; everything else in this file
       // keeps reading `es.flags` directly, so nothing else changed.
@@ -2519,31 +2531,69 @@ export class GameApp {
   }
 
   /**
-   * #208 — once player `player`'s OWN duel is decided AND another zone is still
-   * fighting, redirect the combat camera to that live zone so they watch the
-   * action instead of their finished/empty zone. The jump fires ONCE per newly
-   * -chosen live zone (edge-tracked in `spectateZoneByPlayer`) so manual free
-   * -pan stays usable between jumps; when the redirect ends (own duel live again
-   * next round, or nothing left to watch) follow-lock is restored for an alive
-   * winner. A dead spectator's follow state is owned by `setDead` (respawn re
-   * -locks), so we don't touch it there. For player 0 the chosen zone is also
-   * published to the minimap (frameBus.spectateZone, #67).
+   * #269 — THE CAMERA NO LONGER MOVES ITSELF.
+   *
+   * owner, 2026-07-28: 「不要跳去看別人的競技場，但可以跳出按鈕前往/返回」.
+   *
+   * #208 shipped the opposite: the instant your own duel was decided the combat
+   * camera was teleported to another zone. That is a good thing to be OFFERED
+   * and a bad thing to have DONE to you — your hero is still standing there,
+   * your corpse is still claimable by a revive circle, and the screen cutting to
+   * strangers is indistinguishable from a bug (which is why #208 needed
+   * SpectateNotice at all). So the pure decision is kept verbatim and only its
+   * CONSUMER changes: `pickSpectateZone` now produces an OFFER published on
+   * `frameBus.spectateOffer`, and the actual camera move happens in
+   * `spectateGoTo`, called from a button.
+   *
+   * What is still automatic — and must be — is RETRACTION: a watch whose zone
+   * has stopped being a live duel (that fight ended, or combat itself ended) is
+   * dropped here, because leaving the camera parked on a finished zone is the
+   * very failure #208 existed to prevent and no button press can be expected in
+   * time. A dead spectator's follow state is owned by `setDead` (respawn
+   * re-locks), so `releaseSpectate` does not touch that rig.
+   *
+   * Only player 0 gets the offer: the button lives in the single-player HUD, and
+   * a couch viewport has no HUD of its own to press it from.
    */
   private updateSpectateFollow(player: number, rig: CameraRig, state: MatchState): void {
     const inCombat = state.phase === "combat";
-    const desired = inCombat
-      ? pickSpectateZone(this.ownZoneOf(player, state), this.duelViews(state))
-      : null;
-    const current = this.spectateZoneByPlayer.get(player);
-    if (desired === null) {
-      if (current !== undefined) this.releaseSpectate(player, rig);
-    } else if (desired !== current) {
-      // edge: point the camera at the newly-chosen live zone exactly once.
-      this.spectateZoneByPlayer.set(player, desired);
-      const c = this.zoneCenter(desired);
-      if (c) rig.focusOn(c); // breaks follow-lock + jumps (no-op in settlement)
+    const duels = this.duelViews(state);
+    const offer = inCombat ? pickSpectateZone(this.ownZoneOf(player, state), duels) : null;
+    const watching = this.spectateZoneByPlayer.get(player) ?? null;
+    if (spectateRelease(watching, inCombat, duels)) this.releaseSpectate(player, rig);
+    if (player === 0) {
+      frameBus.spectateZone = this.spectateZoneByPlayer.get(0) ?? null;
+      frameBus.spectateOffer = offer;
     }
-    if (player === 0) frameBus.spectateZone = this.spectateZoneByPlayer.get(0) ?? null;
+  }
+
+  /**
+   * 前往觀戰 (#269) — the button's implementation for the primary player.
+   *
+   * Refuses anything that is not the CURRENT offer, so the HUD can never send
+   * the camera to a zone the rules do not allow (a stale click after the fight
+   * ended, or a zone that was never on offer). The refusal is silent because the
+   * button that produced it is gone by then — there is nothing left to explain.
+   */
+  spectateGoTo(zone: number): void {
+    if (!mayGoTo(zone, frameBus.spectateOffer)) return;
+    const rig = this.cameraRig;
+    this.spectateZoneByPlayer.set(0, zone);
+    frameBus.spectateZone = zone;
+    const c = this.zoneCenter(zone);
+    if (c) rig.focusOn(c); // breaks follow-lock + jumps (no-op in settlement)
+  }
+
+  /** 返回自己的競技場 (#269) — drop the watch and re-follow your own hero. */
+  spectateReturn(): void {
+    const rig = this.cameraRig;
+    this.releaseSpectate(0, rig);
+    frameBus.spectateZone = null;
+    // snap back to the player's own champion immediately rather than waiting for
+    // the follow lerp to drag the camera across the map: the button says 「返回」
+    // and a two-second glide reads as an unresponsive button.
+    const own = this.localSelfPos();
+    if (own) rig.jumpTo(own);
   }
 
   /** Drop player `player`'s live-zone redirect and restore an alive winner's follow-lock. */
