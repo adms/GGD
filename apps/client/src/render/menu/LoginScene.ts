@@ -83,6 +83,7 @@ import {
   CombatFlashController,
   type FxController,
 } from "./procedural/fx";
+import { MENU_FPS_CAP, minFrameMs } from "../frameCap";
 
 /**
  * Semi-realistic Western fire dragon (炎龍) served from the content mount:
@@ -219,8 +220,15 @@ interface ReturnState {
   completed: boolean;
 }
 
-/** soft cap so a 120 Hz ProMotion panel doesn't render the menu at 120 fps */
-const MIN_FRAME_MS = 1000 / 62;
+/**
+ * soft cap so a 120 Hz ProMotion panel doesn't render the menu at 120 fps.
+ *
+ * 這裡以前寫死 `1000 / 62`。改成共用 `render/frameCap` 的原因不是重複本身，
+ * 而是那份抄寫**漏掉了 StorePreview**（大廳英靈殿）—— 四條 render loop 抄三份
+ * 規則，第四條就這樣以 120 fps 跑了整段。順帶拿到 slack：`1000/62` 只留 0.5 ms
+ * 餘裕，在 60 Hz 面板上一次 rAF 抖動就會把 60 fps 砍成 30。
+ */
+const MIN_FRAME_MS = minFrameMs(MENU_FPS_CAP);
 /** clamp per-frame dt so a hidden-then-shown tab doesn't fast-forward the scene */
 const MAX_DT = 0.1;
 

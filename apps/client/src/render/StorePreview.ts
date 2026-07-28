@@ -40,6 +40,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { ModelDoc } from "@ggd/shared/content";
 import { AssetManager } from "./AssetManager";
 import { ClipAnimator } from "./ClipAnimator";
+import { FramePacer, MENU_FPS_CAP } from "./frameCap";
 import { glbYawOffset } from "./views/glbFacing";
 import { championTintForId } from "./views/championTint";
 import { applyModelTint, releaseModelTint } from "./views/modelTint";
@@ -103,14 +104,33 @@ export class StorePreview {
    * (and the auto-orbit) without tearing down the engine, so resuming is free.
    */
   private paused = false;
+  /**
+   * FPS 上限 (task #23 / #266). `runRenderLoop` 是 requestAnimationFrame 驅動的，
+   * 所以在 120 Hz 的 ProMotion 手機上這個 loop 本來每秒畫 120 張 —— 而它同時
+   * 出現在大廳英靈殿、選角側邊立繪、回合勝者卡三個畫面，全都是玩家會「停在
+   * 那裡不動」的畫面。LoginScene / IntermissionScene 早就各自有軟上限，這條
+   * loop 是唯一漏掉的一條；現在四條 loop 共用 `render/frameCap` 同一份規則。
+   *
+   * 注意上限是「跳過畫面」而不是「降低 rAF 頻率」：rAF 照樣以面板頻率喚醒，
+   * 但被跳過的那一張完全不碰 GPU，這才是省電的那一半。
+   */
+  private readonly pacer = new FramePacer(MENU_FPS_CAP);
+  private readonly now: () => number;
 
   /**
    * @param host  a real `<canvas>` (production) OR an existing `Scene`
    *              (headless tests: a NullEngine scene, so no WebGL context is
    *              needed to exercise loading + framing).
    * @param assets optional AssetManager injection (tests feed a stub container).
+   * @param opts.now ms clock (default performance.now) — the fps-cap seam, so a
+   *   test can drive `frame()` on a fake 120 Hz clock and COUNT the draws.
    */
-  constructor(host: HTMLCanvasElement | Scene, assets?: AssetManager) {
+  constructor(
+    host: HTMLCanvasElement | Scene,
+    assets?: AssetManager,
+    opts: { now?: () => number } = {},
+  ) {
+    this.now = opts.now ?? ((): number => (typeof performance !== "undefined" ? performance.now() : Date.now()));
     if (host instanceof Scene) {
       this.scene = host;
       this.engine = host.getEngine() as Engine;
@@ -156,9 +176,7 @@ export class StorePreview {
 
     if (this.ownsScene) {
       // only drive the loop / resize when we own the engine (a canvas host)
-      this.engine.runRenderLoop(() => {
-        if (!this.disposed && !this.paused) this.scene.render();
-      });
+      this.engine.runRenderLoop(() => this.frame());
       if (host instanceof HTMLCanvasElement && typeof ResizeObserver !== "undefined") {
         const ro = new ResizeObserver(() => this.engine.resize());
         ro.observe(host);
@@ -173,12 +191,27 @@ export class StorePreview {
   }
 
   /**
+   * ONE frame of the preview loop — the exact body `runRenderLoop` drives.
+   *
+   * 順序很重要：pacer 必須在 `disposed`/`paused` **之後**才被消費，否則暫停
+   * 期間每一次 rAF 都會白白推進 lastRenderMs，恢復時第一張反而要多等一輪。
+   */
+  private frame(): void {
+    if (this.disposed || this.paused) return;
+    if (!this.pacer.take(this.now())) return; // fps 上限：這一張不畫
+    this.scene.render();
+  }
+
+  /**
    * Stop / resume drawing without disposing the engine (#258). Paused, the
    * render loop still runs but does nothing, so the GPU goes idle; the camera's
    * auto-rotation is driven by the scene, so it freezes with it. Callers gate
    * on `document.hidden` and on the card being scrolled off-screen.
    */
   setPaused(paused: boolean): void {
+    // 恢復時清掉節拍器：暫停可能長達好幾分鐘，用那個很舊的時間戳去比沒有意義，
+    // 而且會讓「重新出現的那一瞬間」多等一格才亮起來。
+    if (this.paused && !paused) this.pacer.reset();
     this.paused = paused;
   }
 

@@ -89,6 +89,17 @@ export class StatusAuraFx {
   }
 
   /**
+   * ROUND BOUNDARY (#16 / #259): forget EVERY tracked body at once.
+   *
+   * 沒有這一行的話，一個在回合結束那一瞬間還被暈住的角色，會在商店場景裡
+   * 繼續脈動 STALE_MS 這麼久 —— 而且是脈動在一個已經不存在的座標上。
+   * 池子（BurstPool）不動：它有 per-key 上限，不是會長大的東西。
+   */
+  clear(): void {
+    this.tracked.clear();
+  }
+
+  /**
    * Fire any pulses that came due, drop stale entities, reap idle systems.
    * Call once per frame AFTER the per-entity `set` pass.
    */

@@ -1384,6 +1384,61 @@ export class VfxSystem {
     this.pillars.update(nowMs);
   }
 
+  /**
+   * ROUND BOUNDARY CLEANUP (task #16 / #259 —— owner:「戰鬥開始前/結束 特效、
+   * 物件單位是否都有清理乾淨的機制？」).
+   *
+   * 查證的結果是：**完全沒有**。在這之前，這個 class 唯一的回收路徑是
+   * `dispose()`，而 `dispose()` 只在整個 GameApp 被銷毀（離開比賽）時被呼叫。
+   * 回合切換一次也沒有清過。
+   *
+   * 量到的後果（`VfxSystem.roundReset.test.ts` 就是釘這件事的）：
+   * `pool` 是「每個 vfx doc id 一條 free-list、最多 4 個 ParticleSystem」，
+   * 而且**只會長不會縮**。一場比賽裡出現過的技能種類是一直增加的 —— 英雄
+   * 升級解鎖 R/EX、第 3 回合起殭屍加入、每回合換地圖 —— 所以
+   * `scene.particleSystems` 是單調成長的。在測試 harness 裡跑四個回合，
+   * 每回合 40 種效果，數字是 40 → 80 → 120 → 160，中間就算閒置 30 秒也不會掉。
+   * 那些系統早就沒人會再用到，但每一張 frame 仍然在場景裡被走訪 ——
+   * 這就是「越打越鈍」。
+   *
+   * 第二類問題是**正確性**而不是效能：回合結束那一瞬間還在飛的預告圈、
+   * 施法光柱、焦痕、暈眩光環，會整個被帶進商店場景（#216 修的是同一種病，
+   * 只是修在血條那一半）。
+   *
+   * 所以這個 method 做兩件事：
+   *   1. 把「一次性、有生命週期」的東西全部就地結束（telegraph / spark /
+   *      cast 光柱 / 焦痕 / 狀態光環 / 腳下影子）；
+   *   2. 把「只會長不會縮的池子」整個還給 Babylon（`pool` 與 rig）。
+   *      下一次 `play()` 會自然重建 —— 池子本來就是 lazy 的。
+   *
+   * 刻意**不**碰的：blood / feedback 這些 BurstPool 有 per-key 上限，
+   * 是有界的；把它們也丟掉只是讓下一回合第一次揮刀要重新配置。
+   */
+  resetForRound(): void {
+    // 1) 一次性效果：就地結束（dispose 會把 pooled mesh 還回 free-list）
+    for (const t of this.telegraphs) t.dispose();
+    this.telegraphs = [];
+    for (const s of this.sparks) s.dispose();
+    this.sparks = [];
+    this.telegraphLayer.clear(); // 每個施法者的地面預告圈
+    this.pillars.clear(); // 向天光束（#233）
+    this.castDecals.clear(); // 地面焦痕 —— 下一回合可能是完全不同的地圖
+    this.status.clear(); // 暈/定身/緩速光環
+    this.shadows.sync([]); // 腳下影子：這一刻場上沒有任何身體
+
+    // 2) 只會長不會縮的池子：整個還回去
+    for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
+    this.pool.clear();
+    this.w3xCast.resetForRound();
+
+    // 3) 上一回合的 per-entity 記憶。entity id 不會跨回合重用，留著只是
+    //    永遠不會被讀到的垃圾（殭屍每回合最多 30 隻，都是新 id）。
+    this.aim.clear();
+    this.walkTrail.clear();
+    // dt 從下一次 update() 重新起算，否則跨越整段商店時間的 dt 會被算進去
+    this.lastUpdateMs = null;
+  }
+
   dispose(): void {
     for (const t of this.telegraphs) t.dispose();
     this.telegraphLayer.dispose();

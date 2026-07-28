@@ -314,6 +314,29 @@ export class W3xCastFx {
   }
 
   /**
+   * ROUND BOUNDARY (task #16 / #259). Give every Babylon object the rig is
+   * holding back to the driver, WITHOUT killing this layer.
+   *
+   * 為什麼要整個丟掉 rig 而不是只清 live effects：rig 的 free-list 是
+   * 「per-doc-id、只會長不會縮」—— 每個這回合出現過的技能都在池子裡留下
+   * ParticleSystem + emitter mesh，下一回合換了英雄／換了場地，那些系統就
+   * 永遠不會再被取用，但每一張 frame 都還在 scene 裡被走訪。回合之間沒有
+   * 任何人在看畫面，這是把它們還回去最便宜的一刻。
+   *
+   * `rigFailed` 故意保留：一個建不起來的 rig 換一個回合也還是建不起來，
+   * 重試只會每回合多噴一次 exception。
+   */
+  resetForRound(): void {
+    if (this.disposed) return;
+    for (const c of this.live) c.handle.cancel();
+    this.live = [];
+    this.committedParticles = 0;
+    this.committedSystems = 0;
+    this.rig?.dispose();
+    this.rig = null; // 下一次 promoted cast 會經由 rigOrNull() 重建
+  }
+
+  /**
    * Release everything. After this the rig owns no Babylon object at all —
    * `rigTotalSystems` is 0, which is what the leak test asserts.
    */

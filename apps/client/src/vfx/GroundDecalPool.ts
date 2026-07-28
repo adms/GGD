@@ -159,6 +159,20 @@ export class GroundDecalPool {
     return this.decals[index]?.mat.alpha ?? 0;
   }
 
+  /**
+   * ROUND BOUNDARY (#16 / #259): every splat off the floor NOW, without
+   * throwing the pool away. 焦痕是「上一場打到哪裡」的紀錄 —— 進商店、換場地
+   * 之後它就只是垃圾；等它自己 fade 完是不行的，因為場地會在下一回合換掉，
+   * 焦痕會留在新地圖上完全對不上的位置。池子本身留著（有 cap，不會長大）。
+   */
+  clear(): void {
+    for (const d of this.decals) {
+      d.active = false;
+      d.mat.alpha = 0;
+      d.mesh.setEnabled(false);
+    }
+  }
+
   dispose(): void {
     for (const d of this.decals) {
       d.mesh.dispose(false, true);
