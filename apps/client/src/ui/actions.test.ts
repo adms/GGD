@@ -48,6 +48,8 @@ describe("hudActions.selectChampion → champion name VO", () => {
       sendOrder: () => {},
       setArenaRenderSuppressed: () => {},
       localChampionModel: () => null,
+      spectateGoTo: () => {},
+      spectateReturn: () => {},
     });
 
     hudActions.selectChampion("godie-o02l");
@@ -76,6 +78,8 @@ describe("hudActions.selectChampion → champion name VO", () => {
       sendOrder: () => {},
       setArenaRenderSuppressed: () => {},
       localChampionModel: () => null,
+      spectateGoTo: () => {},
+      spectateReturn: () => {},
     });
     expect(() => hudActions.selectChampion("godie-e001")).not.toThrow();
     expect(sent).toEqual(["godie-e001"]); // the room message went out regardless
@@ -87,7 +91,7 @@ describe("hudActions.selectChampion → champion name VO", () => {
     cover("name-vo-boot-warm");
     // node test env: no `window`, so boot must NOT kick a relative-URL fetch
     expect(typeof window).toBe("undefined");
-    registerHudActions({ sendCommand: () => {}, selectChampion: () => {}, sendCheat: () => {}, focusWorld: () => {}, sendOrder: () => {}, setArenaRenderSuppressed: () => {}, localChampionModel: () => null });
+    registerHudActions({ sendCommand: () => {}, selectChampion: () => {}, sendCheat: () => {}, focusWorld: () => {}, sendOrder: () => {}, setArenaRenderSuppressed: () => {}, localChampionModel: () => null, spectateGoTo: () => {}, spectateReturn: () => {} });
     expect(warmed.n).toBe(0);
     registerHudActions(null);
   });

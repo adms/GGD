@@ -177,6 +177,28 @@ export class SeatState extends Schema {
    * blinked. Authoritative, reset by the server at every combat entry.
    */
   declare coinsLeft: number;
+  /**
+   * 殭屍擊殺數 — `world.mobKills` for this seat's champion (task #258).
+   *
+   * ⚠️ THIS FIELD IS THE WHOLE OF #258's FIRST HALF. `world.mobKills` has
+   * existed since #215 and drives real mechanics (every 30th kill grants a
+   * LEVEL, `sim/systems/MobSystem`), but it reached a client through exactly
+   * ONE path: `RoundStatDelta.mobKills`, assembled at ROUND SETTLE for the
+   * settlement progress chart. Mid-combat there was no field on the wire at
+   * all, so 「戰鬥中即時已擊殺數」 was not a missing panel — the number was
+   * never sent, and no amount of HUD work could have shown it.
+   *
+   * MATCH-CUMULATIVE, deliberately, because the counter it mirrors is: #215's
+   * owner decision is that the tally CARRIES OVER between rounds (it is the
+   * path past the round-grant level ceiling), and `MobSystem`'s round teardown
+   * explicitly does not clear it. A per-round number here would disagree with
+   * the levels the player is actually being granted.
+   *
+   * uint16, not uint8: 30 kills = 1 level, the intended path runs to LV99, and
+   * the alive cap is 30 per zone with a wave every 2 s — 255 is reachable in a
+   * long match, and a counter that silently stops at 255 is worse than none.
+   */
+  declare mobKills: number;
 
   constructor() {
     super();
@@ -212,6 +234,7 @@ export class SeatState extends Schema {
     this.roundKills = 0;
     this.roundDeaths = 0;
     this.coinsLeft = 0;
+    this.mobKills = 0;
   }
 }
 defineTypes(SeatState, {
@@ -248,6 +271,11 @@ defineTypes(SeatState, {
   coinsLeft: "uint8",
   statusIds: ["string"],
   statusRemainTicks: ["uint16"],
+  // APPEND-ONLY (see above): 殭屍擊殺數, task #258. LAST, because it is the
+  // newest field — @colyseus/schema encodes by DECLARATION INDEX, so inserting
+  // it anywhere else would silently re-number every field after it and desync
+  // any client built against the old order.
+  mobKills: "uint16",
 });
 
 /**

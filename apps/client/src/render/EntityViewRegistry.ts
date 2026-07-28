@@ -94,6 +94,16 @@ export interface EntityViewState {
   h?: number;
   airborne?: boolean;
   /**
+   * Champions only (task #268): is this the LOCAL player's own champion?
+   *
+   * Optional, so every existing fixture and caller stays valid; absent reads as
+   * "not mine", which is the correct answer for eleven of the twelve bodies in
+   * a match and for every headless test. Supplied by GameApp, because the
+   * entity → local-seat hop needs the HUD store that render/** is walled off
+   * from (client-08) — the same seam `championTintFor` / `voxelSkinFor` use.
+   */
+  isLocal?: boolean;
+  /**
    * Revive circles (kind 3) only — decoded by the caller from the reused
    * EntityState float slots (see protocol ENTITY_KIND). Absent for every other
    * kind, so the shape stays a strict superset of the old one.
@@ -614,6 +624,14 @@ export class EntityViewRegistry {
       const tier = growthTierFromFlags(e.flags ?? 0);
       this.applyTint(e, view, tier);
       view.setGrowthTier(tier, args.nowMs);
+      // #268 「自己角色更顯眼」 — the halo + caret that say WHICH of the twelve
+      // bodies is yours. Driven by a flag on the entity rather than resolved
+      // here: `localEntityId` lives in the HUD store that render/** is walled
+      // off from (client-08), exactly like the tint / voxel-look seams above.
+      // Written every sync (the method early-returns on no change), so a
+      // champion that becomes local mid-match — the entity id is re-issued on
+      // every respawn — picks the marker up on the next frame.
+      view.setSelfMarker(e.isLocal === true);
       const pose = args.poseFor(e);
       // #247: the interpolated height rides the same pose seam as x/z. The
       // AIRBORNE flag comes off the entity (not off `h > 0`) so takeoff and

@@ -300,6 +300,13 @@ export class ChampionView {
   private targetFacing: Facing2 = { x: 0, z: 1 };
   private facingInit = false;
 
+  // ---- #268 「自己角色更顯眼」 ----
+  /** true while this body is the LOCAL player's champion (registry-driven). */
+  private selfMarkerOn = false;
+  /** Lazily built the first time this view is told it is the local champion. */
+  private selfRing: Mesh | null = null;
+  private selfCaret: Mesh | null = null;
+
   // ---- #244 GROWTH TIER (黑泥吞噬) ----
   /** Tier the SERVER says this body is at (0/1/2), from two EntityState flag bits. */
   private growthTier: GrowthTier = 0;
@@ -681,6 +688,132 @@ export class ChampionView {
     this.mudRing = ring;
   }
 
+  /* ═══════════════════════════════════════════════════════════════════════
+   * #268 — 「玩家自己角色可否更顯眼」 (owner, 2026-07-28)
+   *
+   * WHAT WAS ACTUALLY MISSING. In the 3D scene the local player's champion was
+   * marked in exactly one way: `WorldAnchorLayer` renders its NAME in bold.
+   * The `teamRing` under the feet is the same torus, in the same colour, on all
+   * three members of your team — that is TEAM identity, not YOU. The minimap
+   * has a real self marker (`hud/minimapMath.isSelfMarker`), so the player
+   * could find themselves on a 116px map and not in the arena. That is the
+   * defect: not "the highlight is too subtle", but "there is no self highlight".
+   *
+   * WHY A RING PLUS A CARET, and not a colour change. Recolouring the body
+   * would collide with three things that already own champion colour — the #49
+   * w3x vertex tint, the #226/#231 voxel palette, and the #85 death-spectator
+   * desaturation — and with team identity, which #231 flags as the highest-risk
+   * surface in the project. A ring + a floating caret ADD a mark instead of
+   * repainting one, so nothing about the champion's own look changes.
+   *
+   * FAILURE SHAPE ① (「畫在畫面外或地板下」) IS THE REAL RISK HERE, and both
+   * pieces are placed against it:
+   *   • the ring sits at y = 0.06 — ABOVE the team ring (0.04), the blob shadow
+   *     (0.03) and the mud ring (0.02), so it is never z-fought into the floor;
+   *   • the caret floats at TARGET_HEIGHT + margin, i.e. above the normalised
+   *     champion height (#150), so it clears the head of every champion rather
+   *     than a specific one's.
+   * Both are asserted numerically in EntityViewRegistry.selfMarker.test.ts.
+   * ═══════════════════════════════════════════════════════════════════════ */
+
+  /** Ground ring radius. Wider than teamRing's 1.25 diameter so it reads as a halo. */
+  static readonly SELF_RING_DIAMETER = 1.9;
+  /** Height of the ring above the floor — above every other ground mark. */
+  static readonly SELF_RING_Y = 0.06;
+  /** Resting height of the caret: clear of the #150 normalised champion height. */
+  static readonly SELF_CARET_Y = TARGET_HEIGHT + 0.55;
+  /** Peak-to-peak bob, world units. */
+  static readonly SELF_CARET_BOB = 0.16;
+  /** Bob period (ms). Slow enough to read as "hovering", not as a glitch. */
+  static readonly SELF_CARET_PERIOD_MS = 1400;
+
+  /** True once the self marker exists (test/diagnostics seam). */
+  get hasSelfMarker(): boolean {
+    return this.selfRing !== null;
+  }
+
+  /** Is this body currently flagged as the local player's? */
+  get isSelfMarked(): boolean {
+    return this.selfMarkerOn;
+  }
+
+  /**
+   * Flag/unflag this body as the LOCAL player's champion. Called every sync by
+   * `EntityViewRegistry`, so it early-returns on no change; the meshes are
+   * built lazily on the first `true`, which means the 11 other champions in a
+   * match never allocate them at all.
+   */
+  setSelfMarker(on: boolean): void {
+    if (this.disposed || on === this.selfMarkerOn) return;
+    this.selfMarkerOn = on;
+    if (on) this.ensureSelfMarker();
+    this.selfRing?.setEnabled(on);
+    this.selfCaret?.setEnabled(on);
+  }
+
+  /** Build the halo ring + the floating caret. Idempotent. */
+  private ensureSelfMarker(): void {
+    if (this.selfRing || this.disposed) return;
+    const scene = this.root.getScene();
+    const mat = new StandardMaterial(`champ-${this.entityId}-selfmark-mat`, scene);
+    // Deliberately NOT the team colour: this mark answers 「哪個是我」, and a
+    // team-coloured halo is exactly the question it fails to answer.
+    mat.emissiveColor = new Color3(1, 0.92, 0.45);
+    mat.diffuseColor = new Color3(0, 0, 0);
+    mat.specularColor = new Color3(0, 0, 0);
+    mat.disableLighting = true;
+    mat.alpha = 0.9;
+    this.ownedMaterials.push(mat);
+
+    const ring = MeshBuilder.CreateTorus(
+      `champ-${this.entityId}-selfring`,
+      { diameter: ChampionView.SELF_RING_DIAMETER, thickness: 0.11, tessellation: 44 },
+      scene,
+    );
+    ring.material = mat;
+    ring.parent = this.root;
+    ring.position.y = ChampionView.SELF_RING_Y;
+    ring.isPickable = false;
+    this.selfRing = ring;
+
+    // A downward-pointing cone — the arcade 「你在這」 caret. Parented to `root`
+    // (never `bodyRoot`) so the #244 growth scale, the death sink and the idle
+    // bob cannot drag it, exactly like the team ring and the blob shadow.
+    const caret = MeshBuilder.CreateCylinder(
+      `champ-${this.entityId}-selfcaret`,
+      { diameterTop: 0.42, diameterBottom: 0, height: 0.42, tessellation: 4 },
+      scene,
+    );
+    caret.material = mat;
+    caret.parent = this.root;
+    caret.position.y = ChampionView.SELF_CARET_Y;
+    caret.isPickable = false;
+    this.selfCaret = caret;
+  }
+
+  /**
+   * Per-frame self-marker animation: a slow bob + a slow spin, and the DEAD
+   * gate. Driven off the same `nowMs` the rest of this view uses, so there is
+   * no second clock.
+   *
+   * A corpse keeps no marker — 「哪個是我」 is answered by the #85 death wash and
+   * the 觀戰中 banner at that point, and a caret hovering over a body that is
+   * about to dissolve (#220) would outlive the body itself.
+   */
+  private updateSelfMarker(state: AnimState, nowMs: number): void {
+    const ring = this.selfRing;
+    const caret = this.selfCaret;
+    if (!ring || !caret) return;
+    const show = this.selfMarkerOn && state !== "death";
+    ring.setEnabled(show);
+    caret.setEnabled(show);
+    if (!show) return;
+    const phase = (nowMs % ChampionView.SELF_CARET_PERIOD_MS) / ChampionView.SELF_CARET_PERIOD_MS;
+    caret.position.y =
+      ChampionView.SELF_CARET_Y + Math.sin(phase * Math.PI * 2) * (ChampionView.SELF_CARET_BOB / 2);
+    caret.rotation.y = phase * Math.PI * 2;
+  }
+
   /**
    * Per-frame growth animation: the 0.35 s scale ease and the ring's fade +
    * slow pulse. Driven off the `nowMs` the registry already threads into
@@ -970,6 +1103,10 @@ export class ChampionView {
       // #244: the mud ring is a ground mark of a LIVING body — a corpse must not
       // leave one behind. Re-enabled by `resetDissolve` with the other two.
       this.mudRing?.setEnabled(false);
+      // #268: likewise the self marker — a caret hovering over a body that has
+      // already ascended (#220) would outlive the body itself.
+      this.selfRing?.setEnabled(false);
+      this.selfCaret?.setEnabled(false);
       // An AnimationGroup is NOT a node: a hidden body whose death clip is still
       // "playing" keeps costing per-frame work in scene.animationGroups. Stop
       // them all; `play()` restarts cleanly if this body is ever revived.
@@ -1002,6 +1139,10 @@ export class ChampionView {
     // #244: the growth ease + the tier-2 mud ring, before the dissolve early-out
     // (a corpse's ring is switched off by setBodyVisible, not by skipping this).
     this.updateGrowth(nowMs);
+    // #268: the local player's halo + caret. BEFORE the dissolve early-out on
+    // purpose — a corpse must have its marker switched OFF, and the early-out
+    // would skip the frame that does it.
+    this.updateSelfMarker(state, nowMs);
     // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
     // left to animate, so the rest of the frame is skipped entirely.
     if (this.updateDissolve(state, nowMs)) return;

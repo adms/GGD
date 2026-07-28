@@ -39,6 +39,15 @@ export interface HudActions {
    * an equipped skin applies here too. Null before champ-select confirms.
    */
   localChampionModel(): { glbPath: string; scale: number; modelKey: string } | null;
+  /**
+   * 前往觀戰別的競技場 (#269). Camera-only, and REFUSED by the implementation
+   * unless `zone` is the offer the frame loop is currently publishing — the HUD
+   * asks, the game decides. Nothing here touches the order path, so a spectating
+   * player still cannot act on a fight that is not theirs.
+   */
+  spectateGoTo(zone: number): void;
+  /** 返回自己的競技場 (#269): drop the watch and re-follow your own champion. */
+  spectateReturn(): void;
 }
 
 let impl: HudActions | null = null;
@@ -77,4 +86,6 @@ export const hudActions: HudActions = {
   sendOrder: (order) => impl?.sendOrder(order),
   setArenaRenderSuppressed: (suppressed) => impl?.setArenaRenderSuppressed(suppressed),
   localChampionModel: () => impl?.localChampionModel() ?? null,
+  spectateGoTo: (zone) => impl?.spectateGoTo(zone),
+  spectateReturn: () => impl?.spectateReturn(),
 };

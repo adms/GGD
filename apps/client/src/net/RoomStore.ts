@@ -11,6 +11,7 @@ import { useStore } from "zustand";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { KILL_COMBO_EVENT } from "@ggd/shared/sim/combat/killCombo";
 import type { MatchState } from "@ggd/shared/protocol/schema";
+import { ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 
 export interface OfferView {
@@ -151,6 +152,15 @@ export interface SeatView {
    * client-side tally off `coinDropped` events has no history to count.
    */
   coinsLeft: number;
+  /**
+   * 殭屍擊殺數 — server-authoritative (`SeatState.mobKills`, task #258),
+   * MATCH-cumulative, the same counter that grants a level every 30 kills.
+   *
+   * OPTIONAL for the same reason `statRollCounts` is: the many hand-built
+   * SeatView fixtures across the suite omit it, and omitting it asserts 「零隻」,
+   * which is exactly what an absent field means on the wire too.
+   */
+  mobKills?: number;
   offers: OfferView[];
 }
 
@@ -253,6 +263,23 @@ export interface HudState {
    * would then cost bandwidth every tick to say "still nothing".
    */
   killCombo: KillComboView | null;
+  /**
+   * 殭屍來襲 (task #258) — how many roguelite MOBS are alive in the LOCAL
+   * player's own duel zone right now.
+   *
+   * WHY IT IS COUNTED FROM THE ENTITY MAP AND NOT SENT AS ITS OWN FIELD. The
+   * mobs are already on the wire: they are `EntityState` rows with
+   * `kind === ENTITY_KIND.MOB`, and the client renders every one of them. A
+   * dedicated counter would be a SECOND opinion about how many zombies exist,
+   * which is exactly how a HUD number starts disagreeing with the screen. This
+   * is a projection of the authoritative set, so 「來襲」 fires on the same
+   * snapshot that puts the first zombie on the floor.
+   *
+   * SCOPED TO YOUR OWN ZONE, like the minimap (#67): the other arena's wave is
+   * not coming for you, and a count that includes it would make the banner fire
+   * while your own floor is still empty.
+   */
+  mobsAlive: number;
 }
 
 /**
@@ -294,6 +321,7 @@ const initial: HudState = {
   settlement: null,
   shopEvent: null,
   killCombo: null,
+  mobsAlive: 0,
 };
 
 let shopEventSeq = 0;
@@ -417,6 +445,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,
       coinsLeft: ss.coinsLeft,
+      // 殭屍擊殺數 (#258). `?? 0` covers a legacy/unprojected snapshot, which
+      // reads as 「還沒殺過」 — the same degradation every other appended field
+      // gets here.
+      mobKills: ss.mobKills ?? 0,
       offers: ss.offers.map((o) => ({
         offerId: o.offerId,
         tier: o.tier,
@@ -485,6 +517,23 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
     localsCacheKey = localsKey;
     patch.localPlayers = locals;
   }
+
+  // ---- 殭屍來襲 (#258): mobs alive in the LOCAL player's own duel zone ----
+  // Counted from the authoritative entity map rather than sent as its own
+  // field: the zombies are already replicated (kind 6) and already rendered, so
+  // a second counter could only ever disagree with the screen. Zone-scoped like
+  // the minimap (#67) — the other arena's wave is not coming for you.
+  let mobsAlive = 0;
+  if (localEntityId !== null) {
+    const me = state.entities.get(String(localEntityId));
+    if (me) {
+      const myZone = me.zone;
+      state.entities.forEach((es) => {
+        if (es.kind === ENTITY_KIND.MOB && es.alive && es.zone === myZone) mobsAlive++;
+      });
+    }
+  }
+  if (prev.mobsAlive !== mobsAlive) patch.mobsAlive = mobsAlive;
 
   // ---- local resource bars (integers to bound update rate) ----
   if (localEntityId !== null) {

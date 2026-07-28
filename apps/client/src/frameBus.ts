@@ -217,12 +217,30 @@ export interface FrameBus {
   cameraView: CameraGroundView | null;
   /**
    * Duel zone the primary player is currently SPECTATING (task #208): set when
-   * their own duel is decided and the combat camera has been redirected to a
-   * still-live zone, else null (follow your own zone). The minimap (#67) reads
-   * it so the scoped map follows the fight you are actually watching, not your
-   * finished/empty zone.
+   * the combat camera is pointed at another zone, else null (follow your own
+   * zone). The minimap (#67) reads it so the scoped map follows the fight you
+   * are actually watching, not your finished/empty zone.
+   *
+   * ⚠️ SINCE #269 THIS IS ONLY EVER SET BY AN EXPLICIT PLAYER ACTION
+   * (`hudActions.spectateGoTo`). #208 used to write it from the camera's own
+   * auto-redirect; the owner's ruling — 「不要跳去看別人的競技場，但可以跳出
+   * 按鈕前往/返回」 — makes the jump a button, so nothing in the frame loop
+   * moves the camera off your own arena any more.
    */
   spectateZone: number | null;
+  /**
+   * The duel zone the primary player COULD go and watch right now, or null.
+   *
+   * This is what is left of #208's auto-redirect after #269 turned it into a
+   * button: the same pure decision (`render/spectateFocus.pickSpectateZone` —
+   * your own duel is decided AND another zone is still live) is still computed
+   * every frame, but its answer is now an OFFER the HUD renders as 「前往觀戰」
+   * instead of a camera move. Kept OUT of `spectateZone` deliberately: 「有得看」
+   * and 「正在看」 are different states and the banner says different things
+   * about each, and conflating them is exactly how the camera would start
+   * moving on its own again.
+   */
+  spectateOffer: number | null;
 }
 
 /** Pre-allocated, never resized: the pool IS the store (see CombatTextEntry). */
@@ -255,6 +273,7 @@ export const frameBus: FrameBus = {
   arenaId: null,
   cameraView: null,
   spectateZone: null,
+  spectateOffer: null,
 };
 
 let nextCombatTextId = 1;

@@ -120,4 +120,67 @@ describe("schema encode regression (match-13)", () => {
     expect(decoded.fireRingTicks).toBe(-1);
     expect(decoded.fireRingRadius).toBe(24);
   });
+
+  /**
+   * 殭屍擊殺數 REACHES THE CLIENT (task #258).
+   *
+   * THE FAILURE THIS EXISTS FOR is the repo's second failure shape — 「算出來了
+   * 但從來沒送到客戶端」 — and #258 was a live instance of it, not a hypothetical:
+   * `world.mobKills` has driven a real mechanic since #215 (every 30th kill
+   * grants a LEVEL), yet the ONLY path it ever took to a client was
+   * `RoundStatDelta`, assembled at ROUND SETTLE for the settlement chart. There
+   * was no field on the wire mid-combat, so no HUD could show it.
+   *
+   * So this asserts the whole lane end to end — the sim's own map, through
+   * `projectSnapshot`, through a REAL encode/decode — rather than the
+   * projection alone. Deleting `ss.mobKills = …` from snapshot.ts, or the
+   * `defineTypes` entry, or shadowing the accessor with a class-field
+   * initializer, each fail it.
+   */
+  it("SeatState.mobKills carries world.mobKills to the client", () => {
+    cover("schema-encode");
+    const ctl = new MatchController(
+      "enc-mobkills",
+      11,
+      Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true })),
+      FAST,
+    );
+    while (ctl.phase.phase !== "combat") ctl.tick();
+    ctl.tick();
+
+    // Two seats with a champion, so the test also proves the number is PER SEAT
+    // and not accidentally broadcast from one entity to everybody.
+    const withEntity = [...ctl.seats.values()].filter((s) => s.entityId !== null);
+    expect(withEntity.length).toBeGreaterThanOrEqual(2);
+    const a = withEntity[0]!;
+    const b = withEntity[1]!;
+    // exactly what MobSystem's payout pass does on a mob death
+    ctl.world.mobKills.set(a.entityId!, 37);
+    ctl.world.mobKills.set(b.entityId!, 0);
+
+    const state = new MatchState();
+    const encoder = new Encoder(state);
+    projectSnapshot(ctl, state, new Map());
+
+    const decoded = new MatchState();
+    new Decoder(decoded).decode(encoder.encodeAll());
+    expect(decoded.seats.get(String(a.seatId))!.mobKills).toBe(37);
+    expect(decoded.seats.get(String(b.seatId))!.mobKills).toBe(0);
+
+    // …and it keeps arriving on INCREMENTAL patches, which is what makes it a
+    // LIVE counter rather than a join-time snapshot.
+    ctl.world.mobKills.set(a.entityId!, 38);
+    ctl.tick();
+    projectSnapshot(ctl, state, new Map());
+    new Decoder(decoded).decode(encoder.encode());
+    expect(decoded.seats.get(String(a.seatId))!.mobKills).toBe(38);
+
+    // uint16, not uint8: 30 kills = 1 level and the path runs to LV99, so a
+    // counter that silently wrapped at 255 would be worse than no counter.
+    ctl.world.mobKills.set(a.entityId!, 700);
+    ctl.tick();
+    projectSnapshot(ctl, state, new Map());
+    new Decoder(decoded).decode(encoder.encode());
+    expect(decoded.seats.get(String(a.seatId))!.mobKills).toBe(700);
+  });
 });

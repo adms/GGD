@@ -670,6 +670,22 @@ const BAND_LEDGER: readonly LedgerRow[] = [
       "the derivation itself.",
   },
   {
+    file: "hud/ZombieWaveBar.tsx",
+    value: "`calc(env(safe-area-inset-bottom",
+    count: 1,
+    why:
+      "殭屍來襲 + 已擊殺數 (task #258). The offset is `zombieBarBottom(touch)` = " +
+      "`hudStackEnd(\"bottom-left\", touch, {skipTransient:true}) + HUD_GAP` — DERIVED from " +
+      "the corner registry, not a number, so it starts exactly where the bottom-left " +
+      "stack ends and moves if that stack does. It cannot reach the band by " +
+      "arithmetic: `hudStackEnd` starts at HUD_EDGE and only grows, and " +
+      "HUD_STAMP_BAND === HUD_EDGE is pinned by the first test in this file, so the " +
+      "offset is always >= the band height, and the bar stacks UPWARD from there. " +
+      "The scanner cannot fold a template literal, which is why it lands here rather " +
+      "than being evaluated — the value it could not read IS the derivation. " +
+      "zombieWave.test.ts asserts the clearance numerically on every guard viewport.",
+  },
+  {
     file: "mobile.css",
     value: "env(safe-area-inset-bottom",
     count: 1,
