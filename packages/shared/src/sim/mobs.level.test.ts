@@ -179,7 +179,17 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     );
     // #248: the hero sheet's level-3 health is `championStatBase(…, 3)`, not
     // `baseStats + growth*2` — the 三圍 term is outside those two records now.
-    expect(legacy.maxHp).toBe(Math.round(championStatBase(HERO_DEF, Stat.MaxHealth, 3)));
+    //
+    // #265 (2026-07-28) adds a flat +300 to every CHAMPION's base health. A mob
+    // wearing a hero's face is not a champion, so this tier opts out
+    // (`championHealthBonus: false`, see mobs.ts) — the sibling tripwire below
+    // asserts the gap is exactly 300, so an opt-out that silently stopped
+    // working cannot pass both.
+    expect(legacy.maxHp).toBe(
+      Math.round(
+        championStatBase(HERO_DEF, Stat.MaxHealth, 3, undefined, { championHealthBonus: false }),
+      ),
+    );
   });
 
   it("#244 TRIPWIRE — the hero sheet can never move the mob curve again", () => {
@@ -197,7 +207,17 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // only way to keep #244's number rather than let it drift to 356.
     // Asserting the EFFECTIVE level-1 value (not the raw field) is what keeps
     // #244's deliberate tuning pinned through both re-derivations.
-    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380);
+    //
+    // #265 (2026-07-28) is the THIRD thing that tried to move it: a flat +300
+    // on every CHAMPION's base health. 喪標麥可 is both a pickable hero and the
+    // #215 mob, so the bonus is gated on `championHealthBonus` and the mob path
+    // passes false — which is exactly what keeps this 380 a mob number. The
+    // HERO's own sheet is now 680 at level 1, on purpose; that side is pinned in
+    // sim/balanceTuning.test.ts.
+    expect(
+      championStatBase(HERO_DEF, Stat.MaxHealth, 1, undefined, { championHealthBonus: false }),
+    ).toBe(380);
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380 + 300);
 
     // THE +45 IS TWO LAYERS, AND THEY NO LONGER COINCIDE.
     // #244 authored `growth.maxHealth = 45`. #248 gave the hero STR +1.8/level,
@@ -216,8 +236,21 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // The owner's own sanity number, end to end: level 12, maxHealth ×4. It was
     // 5480 under the 25 and is 5321.6 under the map's 23 — a consequence of the
     // corrected coefficient, logged for him in docs/_execution-batches.md.
-    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(5321.6, 6);
-    expect(championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1)).toBe(380);
+    // #265 (2026-07-28) does NOT move it either: this line asks the ATTRIBUTE
+    // sheet (bonus off, ×4 as #248 computed it). What the player now sees is
+    // `(1330.4 + 300) × 3`, pinned in sim/balanceTuning.test.ts.
+    expect(
+      championStatBase(HERO_DEF, Stat.MaxHealth, 12, undefined, { championHealthBonus: false }) * 4,
+    ).toBeCloseTo(5321.6, 6);
+    expect(
+      championStatBase(
+        Champions.get(MOB_CHAMPION_ID as ChampionId),
+        Stat.MaxHealth,
+        1,
+        undefined,
+        { championHealthBonus: false },
+      ),
+    ).toBe(380);
     // …and the mob curve does not budge.
     expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);
     expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(120);

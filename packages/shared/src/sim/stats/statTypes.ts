@@ -34,6 +34,11 @@ export type StatBlock = Record<Stat, number>;
 export const ALL_STATS: readonly Stat[] = Object.values(Stat);
 
 export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
+  /**
+   * 2.5 attacks/sec (LoL's ceiling). #267 asked whether melee should be allowed
+   * higher; it was measured and the answer was NO — see THE ATTACK-SPEED
+   * CEILING below this table for the numbers and for where the real lever is.
+   */
   [Stat.AttackSpeed]: [0.2, 2.5],
   [Stat.CooldownReduction]: [0, 0.45],
   [Stat.CritChance]: [0, 1],
@@ -50,6 +55,41 @@ export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
    */
   [Stat.Evasion]: [0, 0.8],
 };
+
+/*
+ * THE ATTACK-SPEED CEILING —— 近戰攻速的真正上限 —— 為什麼 2.5 沒有被拉高 (#267).
+ *
+ * Owner:「攻速上限分析，近戰攻速可以更高」. 這條上限被實測過，結論是：**它不是
+ * 卡住近戰的東西**，拉高它只會讓面板說謊。
+ *
+ * 量測 A — 這條夾限幾乎不咬人。115 張英雄卡、等級 1..18、不帶任何道具：近戰的
+ * 攻速中位數是 lv1 0.70、lv18 1.77，**沒有一位**靠基礎值＋敏捷碰到 2.5。唯一被
+ * 夾的是 godie-h02n 腦包英雄，他的 `baseStats.as = 10` 忠實對應原圖的
+ * `attack_cooldown = 0.1`（tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json），
+ * 是惡搞英雄不是匯入錯誤，而且不在開放名單上。要撞到 2.5 得靠疊攻速裝
+ * （lv18 近戰中位數還差 +41%，名刀-天狼一把就是 +123%）。
+ *
+ * 量測 B — 揮擊管線在 2.4 次/秒就飽和了。`BasicAttackSystem` 一次只揮一刀：
+ * 前搖 0.25 s（8 tick）跑完才會放行下一刀，再加上結算那一 tick 本身，以及命中
+ * 後 hitstop 會**暫停前搖**。thorne（前搖 0.25 s）在 30 Hz 打不還手的木樁 10 秒：
+ *
+ *     面板攻速   2.00  2.50  3.00  3.50  4.00
+ *     實際次數/秒 2.00  2.30  2.40  2.40  2.40
+ *
+ * 也就是說 2.5 已經幾乎踩在飽和點上；把夾限拉到 4.0 只多 +4%（2.30 → 2.40），
+ * 面板卻會從 2.50 跳成 4.00 —— 對玩家謊報 67%，正面違反 #125「顯示的數字必須
+ * 是最終值」。而 82 位近戰裡有 22 位把前搖寫成 0.5 s，他們的真正天花板是
+ * 2 次/秒，比這條夾限還低，拉高夾限對他們是完全的 no-op。
+ *
+ * 所以要讓「近戰攻速可以更高」真的發生，槓桿在 BasicAttackSystem（結算後那一
+ * tick 的空窗、以及攻擊者自己的 hitstop 暫停自己的前搖）與 `attackDamagePoint`
+ * 的內容值，不在這張表。那是一次會動到全體 DPS 手感的改動，需要 owner 拍板。
+ *
+ * 如果將來管線修好了、真的要放寬，這裡是唯一的地方：把上界改掉即可，
+ * `recomputeStats` 是唯一讀它的人（商店即時預覽跑的也是同一支函式）。
+ *
+ * END OF THE #267 NOTE — the declaration below is unrelated.
+ */
 
 export const zeroStats = (): StatBlock => {
   const b = {} as StatBlock;

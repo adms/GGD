@@ -284,7 +284,16 @@ export function mobRulesFromConfig(
       ? Math.max(1, Math.round(cfg.mob.baseHp + (cfg.mob.hpPerLevel ?? 0) * perLevel))
       : def === undefined
         ? cfg.mob.maxHp
-        : Math.max(1, Math.round(championStatBase(def, Stat.MaxHealth, level, env)));
+        : Math.max(
+            1,
+            // #265 加的「全英雄初始生命 +300」是英雄的、不是小兵的。這條 legacy
+            // tier 只是把英雄卡當頭像用，而 #244 立的規矩就是「英雄的數值調整
+            // 不得移動肉鴿曲線」—— 喪標麥可同時是可選英雄與 #215 的殭屍，所以
+            // 這裡明確關掉那 300，否則 #244 拆掉的耦合會從這個縫回來。
+            Math.round(
+              championStatBase(def, Stat.MaxHealth, level, env, { championHealthBonus: false }),
+            ),
+          );
   const hpRegenPerSec =
     cfg.mob.baseRegen !== undefined
       ? Math.max(0, cfg.mob.baseRegen + (cfg.mob.regenPerLevel ?? 0) * perLevel)
