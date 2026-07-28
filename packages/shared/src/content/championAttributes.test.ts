@@ -75,6 +75,22 @@ function envWith(overrides: Partial<Record<CombatEnvKey, number>>): CombatEnvMul
   return Object.freeze({ ...COMBAT_ENV_DEFAULTS, ...overrides }) as CombatEnvMultipliers;
 }
 
+/**
+ * 這個檔案釘的是 #248 的三層加法律 —— 而 2026-07-28 的 #265 在 maxHealth 上又
+ * 疊了一個「全英雄初始生命 +300」的平移項，它不屬於三圍模型（不隨等級、不隨
+ * 屬性、也不是 designer 的 growth 旋鈕）。這裡一律把它關掉，讓每一條斷言仍然
+ * 只在講屬性解析；那 300 本身由 sim/balanceTuning.test.ts 直接釘死，連「它必須
+ * 落在 combat-env 倍率之前」都一起釘。
+ */
+function sheet(
+  c: Parameters<typeof championStatBase>[0],
+  stat: Stat,
+  level: number,
+  env: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
+): number {
+  return championStatBase(c, stat, level, env, { championHealthBonus: false });
+}
+
 describe("#248 attr-01 — the derivation law holds for every champion", () => {
   it("derived stat == baseStats + attr(L)·coefficient + growth·(L−1), at 5 levels", () => {
     cover("attr-248-derivation-law");
@@ -96,7 +112,7 @@ describe("#248 attr-01 — the derivation law holds for every champion", () => {
             // shortens the attack cooldown rather than adding attacks/sec.
             expected = src.mode === "add" ? authored + coef * attr : authored * (1 + coef * attr);
           }
-          const actual = championStatBase(c, stat, level);
+          const actual = sheet(c, stat, level);
           if (Math.abs(actual - expected) > 1e-9) {
             problems.push(`${c.id} ${stat}@L${level}: got ${actual}, law says ${expected}`);
           }
@@ -115,7 +131,7 @@ describe("#248 attr-01 — the derivation law holds for every champion", () => {
         // championStatGrowth must equal base(2)−base(1) AND, for the additive
         // rows, must be the SUM of the two layers — never one of them.
         const g = championStatGrowth(c, stat);
-        expect(g).toBeCloseTo(championStatBase(c, stat, 2) - championStatBase(c, stat, 1), 9);
+        expect(g).toBeCloseTo(sheet(c, stat, 2) - sheet(c, stat, 1), 9);
         if (src.mode === "add") {
           const coef = ATTRIBUTE_ENV_DEFAULTS[src.key as keyof typeof ATTRIBUTE_ENV_DEFAULTS];
           const attrLayer = coef * (rawAttrAt(c, src.attr, 2) - rawAttrAt(c, src.attr, 1));
@@ -158,7 +174,7 @@ describe("#248 attr-02 — the three layers are separable", () => {
             src.mode === "add"
               ? base + growth * (level - 1)
               : (base + growth * (level - 1)) * 1; // ×(1+0·attr) = ×1
-          expect(championStatBase(c, stat, level, off)).toBeCloseTo(expected, 9);
+          expect(sheet(c, stat, level, off)).toBeCloseTo(expected, 9);
         }
       }
     }
@@ -173,8 +189,8 @@ describe("#248 attr-02 — the three layers are separable", () => {
     for (const level of LEVELS) {
       const attrTerm = ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * rawAttrAt(c, "str", level);
       const authored = base + growth * (level - 1);
-      expect(championStatBase(c, stat, level)).toBeCloseTo(authored + attrTerm, 9);
-      expect(championStatBase(c, stat, level, envWith({ [key]: ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * 2 }))).toBeCloseTo(
+      expect(sheet(c, stat, level)).toBeCloseTo(authored + attrTerm, 9);
+      expect(sheet(c, stat, level, envWith({ [key]: ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * 2 }))).toBeCloseTo(
         authored + attrTerm * 2,
         9,
       );
@@ -188,7 +204,7 @@ describe("#248 attr-02 — the three layers are separable", () => {
     for (const stat of ALL_STATS) {
       const { base, growth } = raw(c, stat);
       for (const level of LEVELS) {
-        expect(championStatBase(without, stat, level)).toBeCloseTo(base + growth * (level - 1), 9);
+        expect(sheet(without, stat, level)).toBeCloseTo(base + growth * (level - 1), 9);
       }
     }
   });
@@ -298,6 +314,14 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
     // These are a CONSEQUENCE of a corrected coefficient, not a re-tune. If the
     // owner wants the old totals back, the lever is the combat-env maxHealth
     // ×factor, not the imported coefficient.
+    //
+    // 2026-07-28 (#265): THE SHIPPED NUMBERS ARE NO LONGER THESE. The owner set
+    // maxHealth ×4 → ×3 and added a flat +300 to every champion's base, so what
+    // a player actually sees at level 12 is `(sheet + 300) × 3`. This test
+    // deliberately keeps ×4 and the bonus OFF, because what it guards is the
+    // ATTRIBUTE RESOLUTION agreeing with the owner's #248 arithmetic — a pin
+    // that has to survive every later balance pass or it stops being a pin. The
+    // shipped multiplier and the +300 are pinned in sim/balanceTuning.test.ts.
     const MULT = 4;
     const expected: Record<string, number> = {
       "godie-e002": 7824, // 亞瑟王 - Saber
@@ -307,7 +331,7 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
     };
     for (const [id, want] of Object.entries(expected)) {
       const c = champs.find((x) => x.id === id)!;
-      const got = championStatBase(c, Stat.MaxHealth, 12) * MULT;
+      const got = sheet(c, Stat.MaxHealth, 12) * MULT;
       expect(`${id}:${Math.round(got)}`).toBe(`${id}:${want}`);
     }
   });
@@ -327,7 +351,7 @@ describe("#248 attr-05 — godie-zombiex keeps #244's deliberate tuning", () => 
     // 80 -> 104 so that `104 + 23 × 12` is still exactly 380. Leaving it would
     // have silently dropped him to 356 and quietly undone #244.
     expect(z.attributes!.source).toBe("authored");
-    expect(championStatBase(z, Stat.MaxHealth, 1)).toBe(380);
+    expect(sheet(z, Stat.MaxHealth, 1)).toBe(380);
     expect(z.attributes!.str).toBe(12);
     expect(z.attributes!.strGrowth).toBe(1.8);
     // WHAT COULD NOT BE PRESERVED, stated plainly. Under 25 the attribute layer

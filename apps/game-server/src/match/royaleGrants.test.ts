@@ -151,6 +151,15 @@ function ledgerThrough(ctl: MatchController, lastRound: number, keepASlotFree = 
     // 「生命見底」 held true at the instant the grants run — a High Stakes win
     // would otherwise refill the pool and quietly retire the condition.
     ctl.teamHealth.set(BROKE, 0);
+    // …and the CONTROL arm is pinned FULL for the mirror-image reason (#265,
+    // 2026-07-28). It used to be left to whatever the seeded bot match did, and
+    // the #265 balance pass (每位英雄基礎生命 +300、倍率 4→3) shifted enough
+    // round outcomes that CONTROL also bottomed out at 0 — which does not break
+    // the feature, it breaks the EXPERIMENT: a "spent team is paid the same as a
+    // healthy team" comparison whose control arm is also spent proves nothing.
+    // Pinning both arms makes the only difference between them the one under
+    // test, instead of leaving it to a seed.
+    ctl.teamHealth.set(CONTROL, ctl.startingTeamHealth);
     // The gacha no-ops on a champion with six full slots, so by round 9 a
     // well-shopped bot rolls nothing for reasons that have nothing to do with
     // this contract. Free one slot on the LAST resolution tick — before the

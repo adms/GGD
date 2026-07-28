@@ -26,8 +26,18 @@ import { fireHooks } from "../effects/hooks";
 import { rollEvade } from "../combat/evasion";
 import { armFacingLock, FACING_FOLLOW_THROUGH_TICKS } from "../facingLock";
 
-/** Fallback wind-up (seconds) when a champion doc omits attackDamagePoint. */
-const DEFAULT_DAMAGE_POINT_MELEE = 0.25;
+/**
+ * Fallback wind-up (seconds) when a champion doc omits attackDamagePoint.
+ *
+ * EXPORTED for #267. This system runs ONE SWING AT A TIME (see the wind-up
+ * block below — `continue`), so a champion's REAL attack cadence is bounded by
+ * the wind-up, not by `Stat.AttackSpeed`: the measured saturation for this
+ * 0.25 s default is 2.4 attacks/sec, BELOW the 2.5 stat ceiling. That is why
+ * #267's "raise the melee cap" was measured and rejected — the numbers, and
+ * where the real lever is, are on `STAT_CLAMPS` in stats/statTypes.ts, and
+ * sim/balanceTuning.test.ts pins the saturation so a regression here is visible.
+ */
+export const DEFAULT_DAMAGE_POINT_MELEE = 0.25;
 const DEFAULT_DAMAGE_POINT_RANGED = 0.3;
 /** Fallback ranged projectile speed (GGD units/sec). */
 const DEFAULT_MISSILE_SPEED = 20;

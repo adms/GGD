@@ -281,18 +281,35 @@ describe("team health no longer removes anybody (royale-no-elimination)", () => 
     // sees `eliminated`. Removing elimination must NOT have removed the card.
     const ctl = new MatchController("roy-193", 55, allBots(), FAST);
     let cards: { teamId: number }[] = [];
+    /** health each team was on AT THE MOMENT its card fired — see below. */
+    const healthWhenCarded = new Map<number, number>();
     let n = 0;
     while (ctl.phase.phase !== "matchEnd" && n++ < 400_000) {
       ctl.tick();
-      cards = cards.concat(ctl.takeEliminationSettlements());
+      const fired = ctl.takeEliminationSettlements();
+      for (const c of fired) {
+        if (!healthWhenCarded.has(c.teamId))
+          healthWhenCarded.set(c.teamId, ctl.teamHealth.get(asTeamId(c.teamId)) ?? -1);
+      }
+      cards = cards.concat(fired);
     }
     expect(cards.length).toBeGreaterThan(0);
     // exactly one card per team, never a repeat every subsequent round
     const perTeam = new Map<number, number>();
     for (const c of cards) perTeam.set(c.teamId, (perTeam.get(c.teamId) ?? 0) + 1);
     for (const [, count] of perTeam) expect(count).toBe(1);
-    // …and every team that got one really did hit 0
-    for (const [teamId] of perTeam) expect(ctl.teamHealth.get(asTeamId(teamId))).toBe(0);
+    // …and every team that got one really was at 0 WHEN IT GOT IT.
+    //
+    // This used to read the health at MATCH END, which is a different claim and
+    // the design says it can be false: the sibling test above spells out that a
+    // spent team stays in the bout and 「its health may CLIMB again — a spent
+    // team can still win a High Stakes round and be paid +15. 0 is a scoreboard
+    // low, not a death.」 The end-of-match reading only happened to be 0 under
+    // the old numbers; #265's balance pass (基礎生命 +300、倍率 4→3) let one
+    // carded team win its way back to 15 and the assertion went red for a
+    // reason that had nothing to do with the card. Sampling at the firing tick
+    // is the condition the card actually encodes.
+    for (const [teamId] of perTeam) expect(healthWhenCarded.get(teamId)).toBe(0);
   });
 });
 
