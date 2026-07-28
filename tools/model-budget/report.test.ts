@@ -55,9 +55,27 @@ describe("the generator reproduces the cross-checked baseline", () => {
     expect(report.totals.shipping).toBeGreaterThanOrEqual(158);
     expect(report.totals.shippingTriangles).toBeGreaterThanOrEqual(144_827);
   });
-  itWithOverlay("VRAM matches the independent texture scan to the byte", () => {
-    // 230,859,342 bytes was the number both texture scanners produced
-    expect(report.totals.vramBytes).toBeGreaterThanOrEqual(230_000_000);
+  itWithOverlay("the VRAM scan found the texture tree at all", () => {
+    // WAS: `>= 230_000_000`, pinned to the 230,859,342 bytes both texture
+    // scanners produced when this file was written. Measured 2026-07-28 on a
+    // machine WITH the overlay: 219,572,151 — the tree genuinely got leaner
+    // (#226 retired four high-poly CC0 characters for voxel bodies, #150
+    // normalised champion heights, and the overlay itself has been re-cut
+    // since). So the old number was a stale snapshot, not a broken scan.
+    //
+    // ⚠️ A `>=` floor never checked what the title claimed ("matches … to the
+    // byte") — an equality cross-check against a second scanner would, and
+    // that scanner is not wired here. What a floor CAN honestly catch is the
+    // failure that actually matters: the scanner silently finding nothing
+    // (a path change, a glob that stopped matching, an ENOENT swallowed
+    // upstream) and the report reading as a budget win. 150 MB is far below
+    // any real tree and far above zero, so it fails loudly on a broken scan
+    // and stops re-failing every time art gets cheaper.
+    //
+    // The tool-contract question the header raises — a SHIPPING budget should
+    // not count DEV-ONLY overlay bytes at all — is still open and still logged
+    // rather than decided here.
+    expect(report.totals.vramBytes).toBeGreaterThanOrEqual(150_000_000);
   });
 });
 
@@ -97,11 +115,34 @@ describe("the same-screen budget is per-frame, not per-repository", () => {
   it("combat scenes carry median/best draft variants (the roster spread is 7×)", () => {
     const combat = report.screens.filter((s: any) => s.id.startsWith("combat-"));
     expect(combat.every((s: any) => s.variants.length === 2)).toBe(true);
-    // the worst case must be no cheaper than the median on every axis
+    // ⚠️ WORST-CASE IS DEFINED ON ONE AXIS, SO IT ONLY DOMINATES ON THAT AXIS.
+    //
+    // The screen row is "12 copies of the heaviest-TRIANGLE champion"; the
+    // `median` variant is "12 different median champions". Triangles multiply
+    // per instance, so the worst case necessarily wins there. Animation
+    // channels do not follow: 12 copies of one model contribute that ONE
+    // model's channel count twelve times, while twelve DIFFERENT models each
+    // contribute their own — and the heaviest-triangle model happens to be
+    // animation-light.
+    //
+    // Measured 2026-07-28 across all six combat scenes, worst vs median:
+    //   triangles      73,346 / 44,366 · 81,560 / 52,580 · 94,200 / 65,220 …
+    //   animChannels      216 /    516 · in EVERY scene (18 vs 43 per model)
+    //
+    // The old `animChannels` assertion therefore asserted something that was
+    // never true of a triangle-selected worst case; it went red the moment the
+    // roster's heaviest model changed (v0.9.6/v0.9.7 adopted 40 Warcraft III
+    // models). Dropping it is the fix — NOT re-baselining the number, which
+    // would re-break on the next roster change.
+    //
+    // This is the same conflation the file header warns about: texture (and
+    // channel) cost dedupes per distinct .glb, geometry multiplies per
+    // instance. Do not "restore symmetry" here by adding the channel check
+    // back — if a per-axis worst case is wanted, the generator has to emit a
+    // per-axis worst variant.
     for (const s of combat) {
       const median = s.variants.find((v: any) => v.id === "median");
       expect(s.triangles).toBeGreaterThanOrEqual(median.triangles);
-      expect(s.animChannels).toBeGreaterThanOrEqual(median.animChannels);
     }
   });
 });

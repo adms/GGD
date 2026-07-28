@@ -1,43 +1,43 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-26T05:38:08.775Z",
+ "generatedAt": "2026-07-28T14:10:18.496Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "077d3b43bd97a143",
-   "bytes": 17389,
-   "mtime": "2026-07-26T05:32:49.184Z"
+   "sha256": "3ed8ebadaf1d5246",
+   "bytes": 17832,
+   "mtime": "2026-07-28T12:02:59.249Z"
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "61d04c0e0daf10be",
-   "bytes": 741,
-   "mtime": "2026-07-26T05:32:49.174Z"
+   "sha256": "5adf0468723014e9",
+   "bytes": 873,
+   "mtime": "2026-07-28T12:02:59.239Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "816881163b084d25",
-   "bytes": 14997,
-   "mtime": "2026-07-26T05:32:49.060Z"
+   "sha256": "b7336ab674e2e21f",
+   "bytes": 15128,
+   "mtime": "2026-07-28T12:02:59.163Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
    "sha256": "c4416a17c22c0c9f",
    "bytes": 27203,
-   "mtime": "2026-07-26T05:08:12.774Z"
+   "mtime": "2026-07-22T07:39:35.433Z"
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
    "sha256": "870cbcc6f771756f",
    "bytes": 23574,
-   "mtime": "2026-07-26T05:08:12.777Z"
+   "mtime": "2026-07-24T04:47:12.033Z"
   },
   {
    "path": "tools/model-budget/limits.ts",
    "sha256": "a313b5a41b460512",
    "bytes": 12428,
-   "mtime": "2026-07-26T05:08:13.597Z"
+   "mtime": "2026-07-22T09:13:17.082Z"
   }
  ],
  "limits": [
@@ -325,14 +325,14 @@
    "procedural": [],
    "extraDraws": null,
    "extraVram": {
-    "bytes": 77616469,
-    "why": "973 張圖示（英雄/技能/道具）：860 張 128² WEBP + 113 張 64² PNG，瀏覽器解成 RGBA8。"
+    "bytes": 78075221,
+    "why": "979 張圖示（英雄/技能/道具）：865 張 128² WEBP + 114 張 64² PNG，瀏覽器解成 RGBA8。"
    },
    "triangles": 0,
    "drawCalls": 0,
    "animChannels": 0,
    "textureBytes": 0,
-   "vramBytes": 77616469,
+   "vramBytes": 78075221,
    "limits": [
     {
      "key": "triangles",
@@ -441,7 +441,7 @@
      "count": 78
     },
     {
-     "id": "assets/models/props/guardian_skeleton.glb",
+     "id": "assets/models/imported/cloud.glb",
      "count": 1
     }
    ],
@@ -461,11 +461,11 @@
     "bytes": 4194304,
     "why": "1024² 陰影貼圖本身。"
    },
-   "triangles": 35355,
-   "drawCalls": 259,
-   "animChannels": 180,
-   "textureBytes": 190716,
-   "vramBytes": 71303164,
+   "triangles": 33337,
+   "drawCalls": 254,
+   "animChannels": 75,
+   "textureBytes": 467304,
+   "vramBytes": 66934097,
    "limits": [
     {
      "key": "triangles",
@@ -515,7 +515,7 @@
   {
    "id": "combat-castle",
    "label": "戰鬥 · 城堡競技場（室內）",
-   "note": "12 名英雄以最壞合法陣容計（12 份 guardian_skeleton.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
      "id": "assets/models/props/pillar.glb",
@@ -554,7 +554,7 @@
      "count": 1
     },
     {
-     "id": "assets/models/props/guardian_skeleton.glb",
+     "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
    ],
@@ -586,11 +586,11 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 97562,
-   "drawCalls": 163,
-   "animChannels": 1476,
-   "textureBytes": 159183,
-   "vramBytes": 72897866,
+   "triangles": 73346,
+   "drawCalls": 103,
+   "animChannels": 216,
+   "textureBytes": 435771,
+   "vramBytes": 67917129,
    "limits": [
     {
      "key": "triangles",
@@ -632,22 +632,22 @@
    "verdicts": {
     "triangles": "ok",
     "drawCalls": "ok",
-    "animChannels": "over",
+    "animChannels": "ok",
     "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 ye-wuqi1 —— 名冊面數中位數）",
-     "triangles": 44714,
-     "drawCalls": 67,
-     "animChannels": 192,
-     "textureBytes": 204436,
-     "vramBytes": 56273575,
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 44366,
+     "drawCalls": 139,
+     "animChannels": 516,
+     "textureBytes": 211323,
+     "vramBytes": 56382801,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "ok",
+      "animChannels": "warn",
       "vramBytes": "over"
      }
     },
@@ -671,7 +671,7 @@
   {
    "id": "combat-colosseum",
    "label": "戰鬥 · 羅馬大擂台（室外）",
-   "note": "12 名英雄以最壞合法陣容計（12 份 guardian_skeleton.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
      "id": "assets/models/props/pillar.glb",
@@ -706,7 +706,7 @@
      "count": 2
     },
     {
-     "id": "assets/models/props/guardian_skeleton.glb",
+     "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
    ],
@@ -738,11 +738,11 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 105776,
-   "drawCalls": 189,
-   "animChannels": 1476,
-   "textureBytes": 143389,
-   "vramBytes": 67305461,
+   "triangles": 81560,
+   "drawCalls": 129,
+   "animChannels": 216,
+   "textureBytes": 419977,
+   "vramBytes": 62324724,
    "limits": [
     {
      "key": "triangles",
@@ -783,23 +783,23 @@
    ],
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
-    "animChannels": "over",
+    "drawCalls": "ok",
+    "animChannels": "ok",
     "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 ye-wuqi1 —— 名冊面數中位數）",
-     "triangles": 52928,
-     "drawCalls": 93,
-     "animChannels": 192,
-     "textureBytes": 188642,
-     "vramBytes": 50681170,
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 52580,
+     "drawCalls": 165,
+     "animChannels": 516,
+     "textureBytes": 195529,
+     "vramBytes": 50790396,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "ok",
+      "animChannels": "warn",
       "vramBytes": "over"
      }
     },
@@ -823,7 +823,7 @@
   {
    "id": "combat-dota",
    "label": "戰鬥 · Dota 三路河道（迷你）",
-   "note": "12 名英雄以最壞合法陣容計（12 份 guardian_skeleton.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
    "models": [
     {
      "id": "assets/models/hex/hex_water.glb",
@@ -862,7 +862,7 @@
      "count": 2
     },
     {
-     "id": "assets/models/props/guardian_skeleton.glb",
+     "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
    ],
@@ -894,275 +894,11 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 118416,
-   "drawCalls": 201,
-   "animChannels": 1476,
-   "textureBytes": 159084,
-   "vramBytes": 72897866,
-   "limits": [
-    {
-     "key": "triangles",
-     "label": "同畫面三角面數",
-     "unit": "tris",
-     "warn": 250000,
-     "limit": 400000,
-     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
-     "overridden": false
-    },
-    {
-     "key": "drawCalls",
-     "label": "同畫面 mesh / draw call 數",
-     "unit": "meshes",
-     "warn": 168,
-     "limit": 240,
-     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
-     "overridden": false
-    },
-    {
-     "key": "animChannels",
-     "label": "同畫面每幀動畫通道數",
-     "unit": "channels",
-     "warn": 476,
-     "limit": 680,
-     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
-     "overridden": false
-    },
-    {
-     "key": "vramBytes",
-     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
-     "unit": "bytes",
-     "warn": 33554432,
-     "limit": 50331648,
-     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
-     "overridden": false
-    }
-   ],
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "animChannels": "over",
-    "vramBytes": "over"
-   },
-   "variants": [
-    {
-     "id": "median",
-     "label": "中位陣容（12 隻 ye-wuqi1 —— 名冊面數中位數）",
-     "triangles": 65568,
-     "drawCalls": 105,
-     "animChannels": 192,
-     "textureBytes": 204337,
-     "vramBytes": 56273575,
-     "verdicts": {
-      "triangles": "ok",
-      "drawCalls": "ok",
-      "animChannels": "ok",
-      "vramBytes": "over"
-     }
-    },
-    {
-     "id": "best",
-     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 56976,
-     "drawCalls": 105,
-     "animChannels": 96,
-     "textureBytes": 143155,
-     "vramBytes": 55925415,
-     "verdicts": {
-      "triangles": "ok",
-      "drawCalls": "ok",
-      "animChannels": "ok",
-      "vramBytes": "over"
-     }
-    }
-   ]
-  },
-  {
-   "id": "combat-godie",
-   "label": "戰鬥 · 去死團的逆襲 EX 2.2s",
-   "note": "12 名英雄以最壞合法陣容計（12 份 guardian_skeleton.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
-   "models": [
-    {
-     "id": "assets/models/imported/japanesecherry.glb",
-     "count": 50
-    },
-    {
-     "id": "assets/models/props/guardian_skeleton.glb",
-     "count": 12
-    }
-   ],
-   "procedural": [
-    {
-     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
-     "triangles": 14868,
-     "meshes": 4,
-     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
-    },
-    {
-     "label": "障礙柱 + 牆",
-     "triangles": 5280,
-     "meshes": 55,
-     "note": "55 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
-    },
-    {
-     "label": "出生台座",
-     "triangles": 960,
-     "meshes": 12,
-     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
-    },
-    {
-     "label": "接地陰影（thin instance）",
-     "triangles": 7000,
-     "meshes": 1,
-     "note": "50 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
-    }
-   ],
-   "extraDraws": null,
-   "extraVram": null,
-   "triangles": 95264,
-   "drawCalls": 280,
-   "animChannels": 1526,
-   "textureBytes": 105636,
-   "vramBytes": 22828365,
-   "limits": [
-    {
-     "key": "triangles",
-     "label": "同畫面三角面數",
-     "unit": "tris",
-     "warn": 250000,
-     "limit": 400000,
-     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
-     "overridden": false
-    },
-    {
-     "key": "drawCalls",
-     "label": "同畫面 mesh / draw call 數",
-     "unit": "meshes",
-     "warn": 168,
-     "limit": 240,
-     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
-     "overridden": false
-    },
-    {
-     "key": "animChannels",
-     "label": "同畫面每幀動畫通道數",
-     "unit": "channels",
-     "warn": 476,
-     "limit": 680,
-     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
-     "overridden": false
-    },
-    {
-     "key": "vramBytes",
-     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
-     "unit": "bytes",
-     "warn": 33554432,
-     "limit": 50331648,
-     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
-     "overridden": false
-    }
-   ],
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "over",
-    "animChannels": "over",
-    "vramBytes": "ok"
-   },
-   "variants": [
-    {
-     "id": "median",
-     "label": "中位陣容（12 隻 ye-wuqi1 —— 名冊面數中位數）",
-     "triangles": 42416,
-     "drawCalls": 184,
-     "animChannels": 242,
-     "textureBytes": 150889,
-     "vramBytes": 6204074,
-     "verdicts": {
-      "triangles": "ok",
-      "drawCalls": "warn",
-      "animChannels": "ok",
-      "vramBytes": "ok"
-     }
-    },
-    {
-     "id": "best",
-     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
-     "triangles": 33824,
-     "drawCalls": 184,
-     "animChannels": 146,
-     "textureBytes": 89707,
-     "vramBytes": 5855914,
-     "verdicts": {
-      "triangles": "ok",
-      "drawCalls": "warn",
-      "animChannels": "ok",
-      "vramBytes": "ok"
-     }
-    }
-   ]
-  },
-  {
-   "id": "combat-skeleton",
-   "label": "戰鬥 · Skeleton Arena",
-   "note": "12 名英雄以最壞合法陣容計（12 份 guardian_skeleton.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
-   "models": [
-    {
-     "id": "assets/models/props/torch.glb",
-     "count": 16
-    },
-    {
-     "id": "assets/models/props/banner_shield_blue.glb",
-     "count": 1
-    },
-    {
-     "id": "assets/models/props/banner_shield_red.glb",
-     "count": 1
-    },
-    {
-     "id": "assets/models/props/banner_shield_green.glb",
-     "count": 1
-    },
-    {
-     "id": "assets/models/props/banner_shield_yellow.glb",
-     "count": 1
-    },
-    {
-     "id": "assets/models/props/guardian_skeleton.glb",
-     "count": 12
-    }
-   ],
-   "procedural": [
-    {
-     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
-     "triangles": 14868,
-     "meshes": 4,
-     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
-    },
-    {
-     "label": "障礙柱 + 牆",
-     "triangles": 384,
-     "meshes": 4,
-     "note": "4 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
-    },
-    {
-     "label": "出生台座",
-     "triangles": 960,
-     "meshes": 12,
-     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
-    },
-    {
-     "label": "接地陰影（thin instance）",
-     "triangles": 2800,
-     "meshes": 1,
-     "note": "20 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
-    }
-   ],
-   "extraDraws": null,
-   "extraVram": null,
-   "triangles": 88480,
-   "drawCalls": 149,
-   "animChannels": 1476,
-   "textureBytes": 96007,
-   "vramBytes": 50528246,
+   "triangles": 94200,
+   "drawCalls": 141,
+   "animChannels": 216,
+   "textureBytes": 435672,
+   "vramBytes": 67917129,
    "limits": [
     {
      "key": "triangles",
@@ -1204,22 +940,414 @@
    "verdicts": {
     "triangles": "ok",
     "drawCalls": "ok",
-    "animChannels": "over",
+    "animChannels": "ok",
     "vramBytes": "over"
    },
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 ye-wuqi1 —— 名冊面數中位數）",
-     "triangles": 35632,
-     "drawCalls": 53,
-     "animChannels": 192,
-     "textureBytes": 141260,
-     "vramBytes": 33903955,
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 65220,
+     "drawCalls": 177,
+     "animChannels": 516,
+     "textureBytes": 211224,
+     "vramBytes": 56382801,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "warn",
+      "animChannels": "warn",
+      "vramBytes": "over"
+     }
+    },
+    {
+     "id": "best",
+     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
+     "triangles": 56976,
+     "drawCalls": 105,
+     "animChannels": 96,
+     "textureBytes": 143155,
+     "vramBytes": 55925415,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
       "animChannels": "ok",
+      "vramBytes": "over"
+     }
+    }
+   ]
+  },
+  {
+   "id": "combat-godie",
+   "label": "戰鬥 · 去死團的逆襲 EX 2.2s",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "models": [
+    {
+     "id": "assets/models/imported/japanesecherry.glb",
+     "count": 50
+    },
+    {
+     "id": "assets/models/imported/cloud.glb",
+     "count": 12
+    }
+   ],
+   "procedural": [
+    {
+     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
+     "triangles": 14868,
+     "meshes": 4,
+     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
+    },
+    {
+     "label": "障礙柱 + 牆",
+     "triangles": 5280,
+     "meshes": 55,
+     "note": "55 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
+    },
+    {
+     "label": "出生台座",
+     "triangles": 960,
+     "meshes": 12,
+     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
+    },
+    {
+     "label": "接地陰影（thin instance）",
+     "triangles": 7000,
+     "meshes": 1,
+     "note": "50 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+    }
+   ],
+   "extraDraws": null,
+   "extraVram": null,
+   "triangles": 71048,
+   "drawCalls": 220,
+   "animChannels": 266,
+   "textureBytes": 382224,
+   "vramBytes": 17847628,
+   "limits": [
+    {
+     "key": "triangles",
+     "label": "同畫面三角面數",
+     "unit": "tris",
+     "warn": 250000,
+     "limit": 400000,
+     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
+     "overridden": false
+    },
+    {
+     "key": "drawCalls",
+     "label": "同畫面 mesh / draw call 數",
+     "unit": "meshes",
+     "warn": 168,
+     "limit": 240,
+     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "animChannels",
+     "label": "同畫面每幀動畫通道數",
+     "unit": "channels",
+     "warn": 476,
+     "limit": 680,
+     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "vramBytes",
+     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
+     "unit": "bytes",
+     "warn": 33554432,
+     "limit": 50331648,
+     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
+     "overridden": false
+    }
+   ],
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "animChannels": "ok",
+    "vramBytes": "ok"
+   },
+   "variants": [
+    {
+     "id": "median",
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 42068,
+     "drawCalls": 256,
+     "animChannels": 566,
+     "textureBytes": 157776,
+     "vramBytes": 6313300,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "over",
+      "animChannels": "warn",
+      "vramBytes": "ok"
+     }
+    },
+    {
+     "id": "best",
+     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
+     "triangles": 33824,
+     "drawCalls": 184,
+     "animChannels": 146,
+     "textureBytes": 89707,
+     "vramBytes": 5855914,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "warn",
+      "animChannels": "ok",
+      "vramBytes": "ok"
+     }
+    }
+   ]
+  },
+  {
+   "id": "combat-royale",
+   "label": "戰鬥 · 終局大混戰",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "models": [
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/props/pillar.glb",
+     "count": 4
+    },
+    {
+     "id": "assets/models/imported/cloud.glb",
+     "count": 12
+    }
+   ],
+   "procedural": [
+    {
+     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
+     "triangles": 11328,
+     "meshes": 2,
+     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
+    },
+    {
+     "label": "障礙柱 + 牆",
+     "triangles": 0,
+     "meshes": 0,
+     "note": "4 根程序柱在 dressArena 被 dispose（decor 有 pillar 模型代表障礙），只剩 0 面牆。"
+    },
+    {
+     "label": "出生台座",
+     "triangles": 960,
+     "meshes": 12,
+     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
+    },
+    {
+     "label": "接地陰影（thin instance）",
+     "triangles": 1120,
+     "meshes": 1,
+     "note": "8 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+    }
+   ],
+   "extraDraws": null,
+   "extraVram": null,
+   "triangles": 54056,
+   "drawCalls": 71,
+   "animChannels": 216,
+   "textureBytes": 325213,
+   "vramBytes": 28770294,
+   "limits": [
+    {
+     "key": "triangles",
+     "label": "同畫面三角面數",
+     "unit": "tris",
+     "warn": 250000,
+     "limit": 400000,
+     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
+     "overridden": false
+    },
+    {
+     "key": "drawCalls",
+     "label": "同畫面 mesh / draw call 數",
+     "unit": "meshes",
+     "warn": 168,
+     "limit": 240,
+     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "animChannels",
+     "label": "同畫面每幀動畫通道數",
+     "unit": "channels",
+     "warn": 476,
+     "limit": 680,
+     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "vramBytes",
+     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
+     "unit": "bytes",
+     "warn": 33554432,
+     "limit": 50331648,
+     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
+     "overridden": false
+    }
+   ],
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "animChannels": "ok",
+    "vramBytes": "ok"
+   },
+   "variants": [
+    {
+     "id": "median",
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 25076,
+     "drawCalls": 107,
+     "animChannels": 516,
+     "textureBytes": 100765,
+     "vramBytes": 17235966,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "ok",
+      "animChannels": "warn",
+      "vramBytes": "ok"
+     }
+    },
+    {
+     "id": "best",
+     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
+     "triangles": 16832,
+     "drawCalls": 35,
+     "animChannels": 96,
+     "textureBytes": 32696,
+     "vramBytes": 16778580,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "ok",
+      "animChannels": "ok",
+      "vramBytes": "ok"
+     }
+    }
+   ]
+  },
+  {
+   "id": "combat-skeleton",
+   "label": "戰鬥 · Skeleton Arena",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "models": [
+    {
+     "id": "assets/models/props/torch.glb",
+     "count": 16
+    },
+    {
+     "id": "assets/models/props/banner_shield_blue.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/props/banner_shield_red.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/props/banner_shield_green.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/props/banner_shield_yellow.glb",
+     "count": 1
+    },
+    {
+     "id": "assets/models/imported/cloud.glb",
+     "count": 12
+    }
+   ],
+   "procedural": [
+    {
+     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
+     "triangles": 14868,
+     "meshes": 4,
+     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
+    },
+    {
+     "label": "障礙柱 + 牆",
+     "triangles": 384,
+     "meshes": 4,
+     "note": "4 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
+    },
+    {
+     "label": "出生台座",
+     "triangles": 960,
+     "meshes": 12,
+     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
+    },
+    {
+     "label": "接地陰影（thin instance）",
+     "triangles": 2800,
+     "meshes": 1,
+     "note": "20 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+    }
+   ],
+   "extraDraws": null,
+   "extraVram": null,
+   "triangles": 64264,
+   "drawCalls": 89,
+   "animChannels": 216,
+   "textureBytes": 372595,
+   "vramBytes": 45547509,
+   "limits": [
+    {
+     "key": "triangles",
+     "label": "同畫面三角面數",
+     "unit": "tris",
+     "warn": 250000,
+     "limit": 400000,
+     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
+     "overridden": false
+    },
+    {
+     "key": "drawCalls",
+     "label": "同畫面 mesh / draw call 數",
+     "unit": "meshes",
+     "warn": 168,
+     "limit": 240,
+     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "animChannels",
+     "label": "同畫面每幀動畫通道數",
+     "unit": "channels",
+     "warn": 476,
+     "limit": 680,
+     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "vramBytes",
+     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
+     "unit": "bytes",
+     "warn": 33554432,
+     "limit": 50331648,
+     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
+     "overridden": false
+    }
+   ],
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "animChannels": "ok",
+    "vramBytes": "warn"
+   },
+   "variants": [
+    {
+     "id": "median",
+     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
+     "triangles": 35284,
+     "drawCalls": 125,
+     "animChannels": 516,
+     "textureBytes": 148147,
+     "vramBytes": 34013181,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "ok",
+      "animChannels": "warn",
       "vramBytes": "warn"
      }
     },
@@ -1282,7 +1410,7 @@
      "count": 2
     },
     {
-     "id": "assets/models/props/guardian_skeleton.glb",
+     "id": "assets/models/imported/cloud.glb",
      "count": 12
     }
    ],
@@ -1314,11 +1442,11 @@
    ],
    "extraDraws": null,
    "extraVram": null,
-   "triangles": 118416,
-   "drawCalls": 201,
-   "animChannels": 1476,
-   "textureBytes": 159084,
-   "vramBytes": 72897866,
+   "triangles": 94200,
+   "drawCalls": 141,
+   "animChannels": 216,
+   "textureBytes": 435672,
+   "vramBytes": 67917129,
    "limits": [
     {
      "key": "triangles",
@@ -1359,8 +1487,8 @@
    ],
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
-    "animChannels": "over",
+    "drawCalls": "ok",
+    "animChannels": "ok",
     "vramBytes": "over"
    },
    "variants": []
@@ -1541,7 +1669,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "6 位英雄使用：最終泛用人型決戰兵器 - 初號機、學姊 - 小派、變態正義 - 瘋狂假面、地獄歌神 - 憤怒的胖虎、曹操孟德 - 阿瞞大人、被剝削的勞工階級 - 牧太郎"
+     "detail": "7 位英雄使用：最終泛用人型決戰兵器 - 初號機、學姊 - 小派、變態正義 - 瘋狂假面、地獄歌神 - 憤怒的胖虎、曹操孟德 - 阿瞞大人、曹操孟德 - 阿瞞大人、被剝削的勞工階級 - 牧太郎"
     },
     {
      "kind": "COMBAT",
@@ -1560,11 +1688,11 @@
    "note": ""
   },
   {
-   "id": "champ.blocky.undead",
+   "id": "champ.mob.zombie",
    "path": "assets/models/champions/blocky-undead.glb",
    "group": "champions",
    "shipping": true,
-   "role": "unused",
+   "role": "champion",
    "triangles": 168,
    "vertices": 336,
    "drawCalls": 1,
@@ -1586,6 +1714,117 @@
     }
    ],
    "fileBytes": 52584,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "COMBAT",
+     "label": "英雄",
+     "count": 12,
+     "detail": "1 位英雄使用：聖杯黑泥醬 - 喪標麥可"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/models/champions/voxel-godie-u00n.glb",
+   "path": "assets/models/champions/voxel-godie-u00n.glb",
+   "group": "champions",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 168,
+   "vertices": 336,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 15,
+   "clips": 7,
+   "animChannels": 8,
+   "textureCount": 1,
+   "textureBytes": 16516,
+   "vramBytes": 21845,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 16516
+    }
+   ],
+   "fileBytes": 67796,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/champions/voxel-godie-udre.glb",
+   "path": "assets/models/champions/voxel-godie-udre.glb",
+   "group": "champions",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 168,
+   "vertices": 336,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 15,
+   "clips": 7,
+   "animChannels": 8,
+   "textureCount": 1,
+   "textureBytes": 16516,
+   "vramBytes": 21845,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 16516
+    }
+   ],
+   "fileBytes": 67792,
+   "worstCount": 1,
+   "usedBy": [],
+   "broken": "",
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
+  },
+  {
+   "id": "assets/models/champions/voxel-placeholder.sanji.glb",
+   "path": "assets/models/champions/voxel-placeholder.sanji.glb",
+   "group": "champions",
+   "shipping": true,
+   "role": "unused",
+   "triangles": 168,
+   "vertices": 336,
+   "drawCalls": 1,
+   "materials": 1,
+   "skins": 1,
+   "joints": 15,
+   "clips": 7,
+   "animChannels": 8,
+   "textureCount": 1,
+   "textureBytes": 16516,
+   "vramBytes": 21845,
+   "maxTextureEdge": 64,
+   "textures": [
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 16516
+    }
+   ],
+   "fileBytes": 67800,
    "worstCount": 1,
    "usedBy": [],
    "broken": "",
@@ -3403,10 +3642,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 918,
-   "vertices": 854,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 1250,
+   "vertices": 1122,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 27,
    "clips": 8,
@@ -3429,7 +3668,7 @@
      "diskBytes": 22734
     }
    ],
-   "fileBytes": 233496,
+   "fileBytes": 251648,
    "worstCount": 12,
    "usedBy": [
     {
@@ -8030,11 +8269,11 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "champ.godie-zombiex",
+   "id": "assets/models/props/guardian_skeleton.glb",
    "path": "assets/models/props/guardian_skeleton.glb",
    "group": "props",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 5288,
    "vertices": 4858,
    "drawCalls": 9,
@@ -8056,23 +8295,11 @@
     }
    ],
    "fileBytes": 1036516,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：聖杯黑泥醬 - 喪標麥可"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "over",
-    "maxTextureEdge": "warn",
-    "animChannels": "over"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "assets/models/props/pillar.glb",
@@ -8113,6 +8340,12 @@
      "kind": "COMBAT:arena.colosseum",
      "label": "競技場擺設 · 羅馬大擂台（室外）",
      "count": 36,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.royale",
+     "label": "競技場擺設 · 終局大混戰",
+     "count": 4,
      "detail": ""
     }
    ],
@@ -8158,6 +8391,12 @@
      "kind": "COMBAT:arena.castle",
      "label": "競技場擺設 · 城堡競技場（室內）",
      "count": 16,
+     "detail": ""
+    },
+    {
+     "kind": "COMBAT:arena.royale",
+     "label": "競技場擺設 · 終局大混戰",
+     "count": 4,
      "detail": ""
     },
     {
@@ -8340,6 +8579,2046 @@
     "animChannels": "ok"
    },
    "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00R.glb",
+   "path": "assets/blizzard-local/models/E00R.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 428,
+   "vertices": 488,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 62,
+   "clips": 13,
+   "animChannels": 38,
+   "textureCount": 2,
+   "textureBytes": 221385,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 172261
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 755940,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00r"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00S.glb",
+   "path": "assets/blizzard-local/models/E00S.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 754,
+   "vertices": 966,
+   "drawCalls": 14,
+   "materials": 5,
+   "skins": 1,
+   "joints": 154,
+   "clips": 16,
+   "animChannels": 198,
+   "textureCount": 3,
+   "textureBytes": 172720,
+   "vramBytes": 376831,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 161131
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1778
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9811
+    }
+   ],
+   "fileBytes": 2513016,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00s"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00T.glb",
+   "path": "assets/blizzard-local/models/E00T.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 415,
+   "vertices": 532,
+   "drawCalls": 5,
+   "materials": 4,
+   "skins": 1,
+   "joints": 129,
+   "clips": 6,
+   "animChannels": 98,
+   "textureCount": 1,
+   "textureBytes": 142795,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 142795
+    }
+   ],
+   "fileBytes": 779896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00t"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00U.glb",
+   "path": "assets/blizzard-local/models/E00U.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 427,
+   "vertices": 557,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 52,
+   "clips": 10,
+   "animChannels": 28,
+   "textureCount": 2,
+   "textureBytes": 209490,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 160366
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 719896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00u"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00V.glb",
+   "path": "assets/blizzard-local/models/E00V.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 510,
+   "vertices": 593,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 57,
+   "clips": 14,
+   "animChannels": 41,
+   "textureCount": 2,
+   "textureBytes": 196781,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147657
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 975148,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00v"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E015.glb",
+   "path": "assets/blizzard-local/models/E015.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 570,
+   "vertices": 728,
+   "drawCalls": 8,
+   "materials": 3,
+   "skins": 1,
+   "joints": 88,
+   "clips": 27,
+   "animChannels": 80,
+   "textureCount": 1,
+   "textureBytes": 137488,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 137488
+    }
+   ],
+   "fileBytes": 1617752,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e015"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ecen.glb",
+   "path": "assets/blizzard-local/models/Ecen.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 839,
+   "vertices": 912,
+   "drawCalls": 14,
+   "materials": 4,
+   "skins": 1,
+   "joints": 116,
+   "clips": 12,
+   "animChannels": 142,
+   "textureCount": 2,
+   "textureBytes": 203774,
+   "vramBytes": 371370,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 189905
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 13869
+    }
+   ],
+   "fileBytes": 1892444,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ecen"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Efur.glb",
+   "path": "assets/blizzard-local/models/Efur.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1149,
+   "vertices": 1272,
+   "drawCalls": 14,
+   "materials": 3,
+   "skins": 1,
+   "joints": 152,
+   "clips": 8,
+   "animChannels": 149,
+   "textureCount": 1,
+   "textureBytes": 145984,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 145984
+    }
+   ],
+   "fileBytes": 1213392,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-efur"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ekee.glb",
+   "path": "assets/blizzard-local/models/Ekee.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1235,
+   "vertices": 1307,
+   "drawCalls": 9,
+   "materials": 6,
+   "skins": 1,
+   "joints": 133,
+   "clips": 22,
+   "animChannels": 110,
+   "textureCount": 4,
+   "textureBytes": 388534,
+   "vramBytes": 873812,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 162212
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 150788
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 26410
+    }
+   ],
+   "fileBytes": 2813348,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ekee"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H001.glb",
+   "path": "assets/blizzard-local/models/H001.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 595,
+   "vertices": 745,
+   "drawCalls": 8,
+   "materials": 4,
+   "skins": 1,
+   "joints": 85,
+   "clips": 11,
+   "animChannels": 126,
+   "textureCount": 3,
+   "textureBytes": 100872,
+   "vramBytes": 458751,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 84167
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 8786
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 7919
+    }
+   ],
+   "fileBytes": 1708808,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h001"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H021.glb",
+   "path": "assets/blizzard-local/models/H021.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 282,
+   "vertices": 255,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 40,
+   "clips": 7,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 88736,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 39612
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 287288,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h021"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02K.glb",
+   "path": "assets/blizzard-local/models/H02K.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 607,
+   "vertices": 748,
+   "drawCalls": 7,
+   "materials": 3,
+   "skins": 1,
+   "joints": 83,
+   "clips": 11,
+   "animChannels": 98,
+   "textureCount": 1,
+   "textureBytes": 123825,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 123825
+    }
+   ],
+   "fileBytes": 1103624,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02k"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02N.glb",
+   "path": "assets/blizzard-local/models/H02N.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 454,
+   "vertices": 601,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 44,
+   "clips": 13,
+   "animChannels": 31,
+   "textureCount": 1,
+   "textureBytes": 147390,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147390
+    }
+   ],
+   "fileBytes": 751528,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02n"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02S.glb",
+   "path": "assets/blizzard-local/models/H02S.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 583,
+   "vertices": 694,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 52,
+   "clips": 14,
+   "animChannels": 42,
+   "textureCount": 2,
+   "textureBytes": 161528,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135443
+    },
+    {
+     "w": 64,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26085
+    }
+   ],
+   "fileBytes": 909688,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02s"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02Y.glb",
+   "path": "assets/blizzard-local/models/H02Y.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 544,
+   "vertices": 539,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 56,
+   "clips": 13,
+   "animChannels": 47,
+   "textureCount": 1,
+   "textureBytes": 135214,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135214
+    }
+   ],
+   "fileBytes": 742328,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02y"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02Z.glb",
+   "path": "assets/blizzard-local/models/H02Z.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 583,
+   "vertices": 694,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 52,
+   "clips": 14,
+   "animChannels": 42,
+   "textureCount": 2,
+   "textureBytes": 161528,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135443
+    },
+    {
+     "w": 64,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26085
+    }
+   ],
+   "fileBytes": 909688,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02z"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hapm.glb",
+   "path": "assets/blizzard-local/models/Hapm.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 661,
+   "vertices": 669,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 41,
+   "clips": 9,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 222266,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 173142
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 513492,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hapm"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Harf.glb",
+   "path": "assets/blizzard-local/models/Harf.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 454,
+   "vertices": 601,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 44,
+   "clips": 13,
+   "animChannels": 31,
+   "textureCount": 1,
+   "textureBytes": 147390,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147390
+    }
+   ],
+   "fileBytes": 751528,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-harf"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hblm.glb",
+   "path": "assets/blizzard-local/models/Hblm.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 282,
+   "vertices": 255,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 40,
+   "clips": 7,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 88736,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 39612
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 287288,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hblm"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hpal.glb",
+   "path": "assets/blizzard-local/models/Hpal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1546,
+   "vertices": 1873,
+   "drawCalls": 17,
+   "materials": 8,
+   "skins": 1,
+   "joints": 276,
+   "clips": 24,
+   "animChannels": 161,
+   "textureCount": 5,
+   "textureBytes": 187035,
+   "vramBytes": 442367,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 166095
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 108
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2353
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3922
+    },
+    {
+     "w": 128,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 14557
+    }
+   ],
+   "fileBytes": 2627792,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hpal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/N00B.glb",
+   "path": "assets/blizzard-local/models/N00B.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 465,
+   "vertices": 572,
+   "drawCalls": 10,
+   "materials": 4,
+   "skins": 1,
+   "joints": 67,
+   "clips": 11,
+   "animChannels": 80,
+   "textureCount": 3,
+   "textureBytes": 54085,
+   "vramBytes": 114687,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 43307
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1429
+    }
+   ],
+   "fileBytes": 885684,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-n00b"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/N01L.glb",
+   "path": "assets/blizzard-local/models/N01L.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 489,
+   "vertices": 582,
+   "drawCalls": 7,
+   "materials": 5,
+   "skins": 1,
+   "joints": 66,
+   "clips": 11,
+   "animChannels": 47,
+   "textureCount": 2,
+   "textureBytes": 148068,
+   "vramBytes": 354986,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 146674
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1394
+    }
+   ],
+   "fileBytes": 663616,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-n01l"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Nbst.glb",
+   "path": "assets/blizzard-local/models/Nbst.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 665,
+   "vertices": 798,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 49,
+   "clips": 10,
+   "animChannels": 55,
+   "textureCount": 3,
+   "textureBytes": 162707,
+   "vramBytes": 376831,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 154478
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 6564
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1665
+    }
+   ],
+   "fileBytes": 766120,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-nbst"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Nman.glb",
+   "path": "assets/blizzard-local/models/Nman.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 485,
+   "vertices": 556,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 57,
+   "clips": 11,
+   "animChannels": 83,
+   "textureCount": 2,
+   "textureBytes": 205894,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 42865
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 163029
+    }
+   ],
+   "fileBytes": 1008492,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-nman"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/O02O.glb",
+   "path": "assets/blizzard-local/models/O02O.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 595,
+   "vertices": 721,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 86,
+   "clips": 12,
+   "animChannels": 59,
+   "textureCount": 2,
+   "textureBytes": 214282,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 165158
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 875732,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-o02o"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Obla.glb",
+   "path": "assets/blizzard-local/models/Obla.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 372,
+   "vertices": 481,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 45,
+   "clips": 22,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 202257,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 153133
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 803064,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-obla"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ogld.glb",
+   "path": "assets/blizzard-local/models/Ogld.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 788,
+   "vertices": 726,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 77,
+   "clips": 8,
+   "animChannels": 56,
+   "textureCount": 2,
+   "textureBytes": 189150,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 140026
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 580896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ogld"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Orkn.glb",
+   "path": "assets/blizzard-local/models/Orkn.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 531,
+   "vertices": 649,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 50,
+   "clips": 14,
+   "animChannels": 43,
+   "textureCount": 1,
+   "textureBytes": 165051,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 165051
+    }
+   ],
+   "fileBytes": 965652,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-orkn"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Oshd.glb",
+   "path": "assets/blizzard-local/models/Oshd.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 626,
+   "vertices": 667,
+   "drawCalls": 8,
+   "materials": 6,
+   "skins": 1,
+   "joints": 55,
+   "clips": 10,
+   "animChannels": 38,
+   "textureCount": 4,
+   "textureBytes": 144177,
+   "vramBytes": 377172,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 140425
+    },
+    {
+     "w": 8,
+     "h": 8,
+     "format": "png",
+     "diskBytes": 79
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1770
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 1903
+    }
+   ],
+   "fileBytes": 457960,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-oshd"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Othr.glb",
+   "path": "assets/blizzard-local/models/Othr.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 468,
+   "vertices": 537,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 41,
+   "clips": 10,
+   "animChannels": 22,
+   "textureCount": 2,
+   "textureBytes": 208365,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 159241
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 551760,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-othr"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U00B.glb",
+   "path": "assets/blizzard-local/models/U00B.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 601,
+   "vertices": 691,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 91,
+   "clips": 8,
+   "animChannels": 89,
+   "textureCount": 2,
+   "textureBytes": 294997,
+   "vramBytes": 720896,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 285648
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    }
+   ],
+   "fileBytes": 990532,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u00b"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U00K.glb",
+   "path": "assets/blizzard-local/models/U00K.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 535,
+   "vertices": 626,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 101,
+   "clips": 9,
+   "animChannels": 70,
+   "textureCount": 1,
+   "textureBytes": 99853,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 99853
+    }
+   ],
+   "fileBytes": 687456,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u00k"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U012.glb",
+   "path": "assets/blizzard-local/models/U012.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 806,
+   "vertices": 959,
+   "drawCalls": 12,
+   "materials": 3,
+   "skins": 1,
+   "joints": 177,
+   "clips": 11,
+   "animChannels": 117,
+   "textureCount": 1,
+   "textureBytes": 149945,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 149945
+    }
+   ],
+   "fileBytes": 1287484,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u012"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U01F.glb",
+   "path": "assets/blizzard-local/models/U01F.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 684,
+   "vertices": 751,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 47,
+   "clips": 12,
+   "animChannels": 32,
+   "textureCount": 2,
+   "textureBytes": 204932,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 155808
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 690888,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u01f"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ubal.glb",
+   "path": "assets/blizzard-local/models/Ubal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 472,
+   "vertices": 561,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 73,
+   "clips": 11,
+   "animChannels": 56,
+   "textureCount": 2,
+   "textureBytes": 184622,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135498
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 1043520,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ubal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ucrl.glb",
+   "path": "assets/blizzard-local/models/Ucrl.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 425,
+   "vertices": 534,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 34,
+   "clips": 22,
+   "animChannels": 33,
+   "textureCount": 2,
+   "textureBytes": 199467,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 150343
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 817928,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ucrl"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Udea.glb",
+   "path": "assets/blizzard-local/models/Udea.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 601,
+   "vertices": 691,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 91,
+   "clips": 8,
+   "animChannels": 89,
+   "textureCount": 2,
+   "textureBytes": 293827,
+   "vramBytes": 720896,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 284478
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    }
+   ],
+   "fileBytes": 989360,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-udea"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Umal.glb",
+   "path": "assets/blizzard-local/models/Umal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 465,
+   "vertices": 459,
+   "drawCalls": 5,
+   "materials": 4,
+   "skins": 1,
+   "joints": 68,
+   "clips": 13,
+   "animChannels": 41,
+   "textureCount": 2,
+   "textureBytes": 157656,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 108532
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 881924,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-umal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Usyl.glb",
+   "path": "assets/blizzard-local/models/Usyl.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 588,
+   "vertices": 598,
+   "drawCalls": 3,
+   "materials": 2,
+   "skins": 1,
+   "joints": 29,
+   "clips": 7,
+   "animChannels": 24,
+   "textureCount": 2,
+   "textureBytes": 201995,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 152871
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 433144,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-usyl"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Uwar.glb",
+   "path": "assets/blizzard-local/models/Uwar.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 537,
+   "vertices": 630,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 110,
+   "clips": 11,
+   "animChannels": 70,
+   "textureCount": 1,
+   "textureBytes": 149339,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 149339
+    }
+   ],
+   "fileBytes": 811960,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-uwar"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
   }
  ],
  "recorded": {
@@ -8430,14 +10709,14 @@
   }
  },
  "totals": {
-  "files": 164,
-  "shipping": 164,
-  "triangles": 144827,
-  "shippingTriangles": 144827,
-  "textureBytes": 12095489,
-  "vramBytes": 203133222,
+  "files": 207,
+  "shipping": 167,
+  "triangles": 169779,
+  "shippingTriangles": 145663,
+  "textureBytes": 19159177,
+  "vramBytes": 219572151,
   "zeroGeometry": 11,
   "nearZero": 25,
-  "unused": 81
+  "unused": 84
  }
 }
