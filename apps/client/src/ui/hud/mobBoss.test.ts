@@ -49,6 +49,7 @@ import {
   bossSortedShares,
   bossSummonLine,
   bossTotalLine,
+  bossVisibleInZone,
   formatMultiplier,
   mobBossCollisions,
   mobBossOverlayRect,
@@ -61,19 +62,27 @@ import {
   parseMobBossEvent,
   recordMobBossEvent,
   isMobBossEvent,
+  localDuelZone,
   resetHudStore,
   type HudState,
   type LocalPlayerView,
   type SeatView,
 } from "../../net/RoomStore";
 import { MobBossOverlay } from "./MobBossOverlay";
+import { KillCombo } from "./KillCombo";
 import { HudRoot } from "../HudRoot";
 // The REAL frame-loop drain. GameApp cannot be CONSTRUCTED headlessly, but the
 // module imports fine and `handleDrainedEvent` lives on the prototype precisely
 // so this file can run it — same seam killCombo.test.ts uses, and for the same
 // reason: a grep of GameApp.ts is not a call.
 import { GameApp } from "../../GameApp";
-import { combatSfxKey, bossHorrorKey, bossJackpotKey, setCombatSfxSeat } from "../../audio/combatSfx";
+import {
+  combatSfxKey,
+  bossHorrorKey,
+  bossJackpotKey,
+  localDuelZone as sfxLocalDuelZone,
+  setCombatSfxSeat,
+} from "../../audio/combatSfx";
 import { SFX_BY_SCENE } from "../../audio/sfxManifest";
 import { EVENT_SPATIAL, CENTRED_EVENTS } from "../../audio/combatSfxSpatial";
 import { hudTouch } from "./HudSlot";
@@ -227,6 +236,26 @@ const slainEv = (over: Record<string, unknown> = {}) => ({
 
 const renderOverlay = (): string => renderToStaticMarkup(createElement(MobBossOverlay));
 const renderHud = (): string => renderToStaticMarkup(createElement(HudRoot));
+const renderCombo = (): string => renderToStaticMarkup(createElement(KillCombo));
+
+/**
+ * Render the SHIPPED components the way a window of this size would.
+ *
+ * The HUD's `useViewport` falls back to 1280x800 when there is no `window`, and
+ * this env has none (asserted below) — which is why every mounted-HUD guard in
+ * this file has only ever measured ONE viewport, the roomiest one. A phone is
+ * where the compact sheet and the 連殺 yield actually happen.
+ */
+function atViewport(width: number, height: number, fn: () => void): void {
+  const g = globalThis as unknown as { window?: unknown };
+  expect("window" in g, "a real window exists — this stub is stale").toBe(false);
+  g.window = { innerWidth: width, innerHeight: height, addEventListener() {}, removeEventListener() {} };
+  try {
+    fn();
+  } finally {
+    delete g.window;
+  }
+}
 
 /** Put a beat in the store, stamped `ageMs` in the past. */
 function beat(ev: { type: string; tick: number; data: Record<string, unknown> }, ageMs = 0): void {
@@ -749,5 +778,242 @@ describe("the cues", () => {
     expect(CENTRED_EVENTS[MOB_BOSS_SLAIN_EVENT]).toBeTruthy();
     expect(EVENT_SPATIAL[MOB_BOSS_SLAIN_EVENT]).toBeUndefined();
     expect(CENTRED_EVENTS[MOB_BOSS_SPAWN_EVENT]).toBeUndefined();
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑦ THE OTHER ARENA  (verifier pass — the sound was gated, the PICTURE was not)
+ *
+ * Both king events are fanned out to EVERY client in the match. Exactly one
+ * duel zone ever fought the king. `bossHorrorKey` has always refused to play the
+ * dread drone into the other arena's ears — 「there the wrong SEAT heard it, here
+ * the wrong ARENA would」 — but until this pass the banner and the settlement
+ * sheet had no such gate, so six players in arena B lost their 連殺 counter and a
+ * strip of centre corridor to 12.8 s of SILENT announcement about a monster they
+ * could not see, could not fight and were never paid by.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("only YOUR arena's king reaches your screen", () => {
+  beforeEach(() => inCombat()); // seat 2, zone 0
+
+  it("the PURE gate hides a definite mismatch and NOTHING else", () => {
+    const here = parseMobBossEvent(spawnEv({ zone: 0 }), 2, 0, 1)!;
+    const there = parseMobBossEvent(spawnEv({ zone: 3 }), 2, 0, 1)!;
+    expect(bossVisibleInZone(here, 0)).toBe(true);
+    expect(bossVisibleInZone(there, 0)).toBe(false);
+    // FAILS OPEN on either side being unknown: -1 is 「不知道」, not 「不同區」. A
+    // dead or spectating player has no live entity and therefore no zone, and
+    // silencing the one panel that explains the money over a missing lookup is
+    // strictly worse than showing it. Same ruling `bossHorrorKey` already made.
+    expect(bossVisibleInZone(there, -1)).toBe(true);
+    expect(bossVisibleInZone(parseMobBossEvent(spawnEv({ zone: "x" }), 2, 0, 1)!, 0)).toBe(true);
+    expect(bossVisibleInZone(null, 0)).toBe(false);
+  });
+
+  it("THE MOUNTED HUD: another arena's 降臨 paints nothing here", () => {
+    // ⚠️ THE MUTATION: delete the `bossVisibleInZone` line from the container.
+    // Asserted on the shipped <HudRoot /> output in BOTH directions, so
+    // 「gate everything off」 cannot pass either.
+    beat(spawnEv({ zone: 3 }));
+    expect(renderHud()).not.toContain("data-mob-boss");
+    beat(spawnEv({ zone: 0 }));
+    expect(visibleText(renderHud())).toContain(BOSS_BANNER_TITLE);
+  });
+
+  it("…and the SETTLEMENT inherits the zone its own spawn carried", () => {
+    // `mobBossSlain` cannot carry a zone — by the time MobSystem.settleBoss runs
+    // the king's entity is destroyed, which is why the payload has no x/z either
+    // (combatSfxSpatial's CENTRED_EVENTS note says exactly this). So the store
+    // borrows it from the matching spawn, by entity id. Without the inheritance
+    // the sheet is the HALF THAT STAYS UNGATED and the other arena still gets
+    // 8.2 s of somebody else's money.
+    beat(spawnEv({ id: 77, zone: 3 }));
+    beat(slainEv({ id: 77 }));
+    expect(hudStore.getState().mobBoss!.zone).toBe(3);
+    expect(renderHud()).not.toContain("data-mob-boss");
+    // …and the king that WAS ours still settles on our screen
+    beat(spawnEv({ id: 78, zone: 0 }));
+    beat(slainEv({ id: 78 }));
+    expect(hudStore.getState().mobBoss!.zone).toBe(0);
+    expect(visibleText(renderHud())).toContain(BOSS_SETTLEMENT_TITLE);
+  });
+
+  it("a DIFFERENT king's spawn does not lend its zone to this settlement", () => {
+    // The inheritance is keyed on the entity id, not on 「whatever was in the
+    // slot」 — otherwise arena A's spawn would launder arena B's payout sheet
+    // onto this screen. Unknown ⇒ fail open, as everywhere else.
+    beat(spawnEv({ id: 77, zone: 0 }));
+    beat(slainEv({ id: 999 }));
+    expect(hudStore.getState().mobBoss!.zone).toBe(-1);
+    expect(renderHud()).toContain('data-mob-boss="settlement"');
+  });
+
+  it("THE 連殺 COUNTER DOES NOT YIELD to a king in the other arena", () => {
+    // ⚠️ The half of this defect that costs a player something even though he
+    // never sees the banner: `KillCombo` yielded to ANY live boss beat. On an
+    // 812x375 landscape phone the corridor holds ONE of them, so the yield does
+    // not nudge the counter — it DELETES it. Rendered from the shipped
+    // component, and asserted in both directions so 「never yield」 fails too.
+    inCombat({ localSeatId: 2, killCombo: { count: 5, atMs: comboNowMs(), seq: 1 } });
+    atViewport(812, 375, () => {
+      expect(renderCombo(), "no counter to begin with — the fixture is stale").not.toBe("");
+      recordMobBossEvent(spawnEv({ zone: 3 }), comboNowMs());
+      expect(renderCombo(), "the other arena's king ate this player's 連殺").not.toBe("");
+      // …and OUR king really does take the corridor (so this is not 「never yield」)
+      recordMobBossEvent(spawnEv({ zone: 0 }), comboNowMs());
+      expect(renderCombo()).toBe("");
+    });
+  });
+
+  it("a king that EXPIRED minutes ago stops costing the counter its place", () => {
+    // ⚠️ THE MUTATION: `mobBossOverlayRect(boss, …)` instead of
+    // `mobBossOverlayRect(bossUp ? boss : null, …)`. The banner is long gone
+    // from the screen; its ghost would go on suppressing the counter for the
+    // rest of the match, and nothing noticed.
+    inCombat({ localSeatId: 2, killCombo: { count: 5, atMs: comboNowMs(), seq: 1 } });
+    atViewport(812, 375, () => {
+      beat(spawnEv({ zone: 0 }), BOSS_BANNER_MS + BOSS_EXIT_MS + 5000);
+      expect(renderCombo(), "a long-dead king still owns the corridor").not.toBe("");
+      beat(spawnEv({ zone: 0 }), 0);
+      expect(renderCombo()).toBe(""); // …and a LIVE one still does take it
+    });
+  });
+
+  it("ONE definition of 「我在哪個競技場」 — the cue and the screen read it", () => {
+    // ⚠️ THE MUTATION: make `localDuelZone` return a constant. Nothing used to
+    // notice, because every zone assertion passed the number in BY HAND — the
+    // STORE→GATE wiring was never exercised, so the whole zone rule could have
+    // been dead in the shipped build and every test stayed green.
+    expect(localDuelZone()).toBe(0);
+    expect(sfxLocalDuelZone()).toBe(localDuelZone()); // the audio reads the same one
+    inCombat({ seats: [seatView(2, "你", 3)] });
+    expect(localDuelZone()).toBe(3);
+    expect(combatSfxKey(spawnEv({ zone: 0 }) as never)).toBeNull(); // other arena ⇒ silent
+    expect(combatSfxKey(spawnEv({ zone: 3 }) as never)).toBe("bossHorror");
+    // no seat / no live entity ⇒ 「不知道」, never a confident 0
+    inCombat({ localSeatId: null });
+    expect(localDuelZone()).toBe(-1);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑧ THE PHONE  (verifier pass — the compact layout was MODEL-tested only)
+ *
+ * `bossSettlementLayout` was proven to CHOOSE compact correctly. Nothing ever
+ * RENDERED it. Four separate mutations of the shipped compact markup — dropping
+ * the 「另有 N 名」 line, blanking the one-line rule, feeding the container a null
+ * local seat, and negotiating the table against 9999px instead of the box that
+ * was actually drawn — each left all 4,158 client tests green. On a landscape
+ * phone the compact sheet is the ONLY settlement that exists.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("the phone really gets the compact sheet", () => {
+  const atPhone = (fn: () => void): void => atViewport(812, 375, fn);
+
+  beforeEach(() => inCombat());
+
+  it("the corridor really is too short for the full table here", () => {
+    // The premise, asserted rather than assumed: if a phone ever fits the full
+    // sheet, the test below silently stops testing compact at all.
+    const vp = { width: 812, height: 375 };
+    const view = parseMobBossEvent(slainEv(), 5, 0, 1)!;
+    expect(mobBossOverlayRect(view, vp, { touch: true, legendUp: false })!.h).toBe(BOSS_COMPACT_H);
+    expect(BOSS_COMPACT_H).toBeLessThan(bossFullHeight(3));
+  });
+
+  it("compact, YOUR row, the count of the rest, and the RULE — as painted text", () => {
+    // ⚠️ FOUR SURVIVING MUTATIONS DIE HERE:
+    //   • the container passing `null` instead of `localSeatId` (your row → 阿明's)
+    //   • the container negotiating against 9999px instead of `rect.h` (a full
+    //     6-row table stuffed into a 72px box → `overflow:hidden` eats your row)
+    //   • `{layout.hiddenCount > 0 ? … }` never rendering
+    //   • the compact branch rendering "" instead of `bossRuleNoteShort`
+    //
+    // THE READER IS SEAT 5 — the LOWEST damager, so 「your row」 and 「the top
+    // row」 are different rows and a silent fallback to `sorted[0]` cannot pass.
+    inCombat({ localSeatId: 5, localPlayers: [localPlayer(5)] });
+    beat(slainEv());
+    atPhone(() => {
+      const html = renderOverlay();
+      const text = visibleText(html);
+      expect(html).toContain('data-mob-boss-mode="compact"');
+      expect(text).toContain("小華"); // seat 5 = the reader, damage 1000 = LAST
+      expect(text).toContain("750 金");
+      expect(text).not.toContain("阿明"); // …and everyone else really is dropped
+      expect(text).toContain("另有 2 名參戰者");
+      // the rule survives the shrink — a phone player who did half the damage and
+      // got less than half still has to be told WHY
+      expect(text).toContain("補刀是 ×2 權重");
+      expect(text).toContain("總獎金固定");
+      expect(text).toContain("總獎金 3000 金");
+      // and the box the text lives in is the compact one, not a clipped full one
+      expect(html).toContain(`height:${BOSS_COMPACT_H}px`);
+    });
+  });
+
+  it("the phone's 降臨 banner paints its summon line too", () => {
+    beat(spawnEv());
+    atPhone(() => {
+      const text = visibleText(renderOverlay());
+      expect(text).toContain(BOSS_BANNER_TITLE);
+      expect(text).toContain("你累積擊殺 100 隻殭屍");
+    });
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑨ TWO CLIENTS, ONE SHEET  (verifier pass)
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("the sheet reads the same on every screen", () => {
+  it("equal damage AND equal gold still order deterministically, by seat", () => {
+    // ⚠️ THE MUTATION: drop the `a.seatId - b.seatId` tie-break. `Array.sort` is
+    // stable only with respect to the INPUT order, and the input order is the
+    // sim's ascending ENTITY id — which is not the same list order on two
+    // clients. Two players comparing screens mid-fight would see the same money
+    // in a different order and read it as a desync.
+    const tied = parseMobBossEvent(
+      slainEv({
+        shares: [
+          { id: 105, seatId: 5, damage: 1000, gold: 500, xp: 200, lastHit: false },
+          { id: 101, seatId: 1, damage: 1000, gold: 500, xp: 200, lastHit: false },
+          { id: 102, seatId: 2, damage: 1000, gold: 500, xp: 200, lastHit: false },
+        ],
+      }),
+      2,
+      0,
+      1,
+    )!;
+    expect(bossSortedShares(tied.shares).map((s) => s.seatId)).toEqual([1, 2, 5]);
+    // …and reversing the arrival order cannot change the answer
+    const rev = { ...tied, shares: [...tied.shares].reverse() };
+    expect(bossSortedShares(rev.shares).map((s) => s.seatId)).toEqual([1, 2, 5]);
+  });
+
+  it("chrome that STRADDLES the centre line means null, not paint-over-it", () => {
+    // ⚠️ THE MUTATION: turn `return null` into `continue` in `mobBossRect`'s
+    // side scan. EVERY existing placement test passes `legendUp: false` on a
+    // LANDSCAPE viewport, and under that combination nothing ever crosses the
+    // middle inside the banner's y-band — so the whole straddle branch was
+    // unreachable from the suite and could have been deleted in silence.
+    //
+    // MEASURED, by sweeping w∈[240,1200] × h∈[260,900] × touch × legendUp and
+    // comparing the shipped function against a hand-rolled `continue` variant:
+    // the branch changes the answer on PORTRAIT windows 240-398px wide while
+    // the round-1 legend is up — i.e. a phone held upright, where the minimap
+    // and the equipment bar are wide enough to cross the centre line. 390x868
+    // is an iPhone in portrait, and there the mutant paints the banner straight
+    // over BOTH of them; the shipped code draws nothing, which is the rule.
+    const vp = { width: 390, height: 868 };
+    const opts = { touch: false, legendUp: true, couchPlayers: 1, wantH: 74, minH: 52 };
+    expect(mobBossRect(vp, opts)).toBeNull();
+    expect(mobBossCollisions(vp, opts)).toEqual([]);
+    // …and this is not 「just return null more often」: on a window with a real
+    // centred gap the banner still lands, legend up and all.
+    const wide = { width: 1920, height: 1080 };
+    const r = mobBossRect(wide, opts);
+    expect(r, "the bail-out swallowed a placement that had room").not.toBeNull();
+    expect(hudRectInViewport(r!, wide)).toBe(true);
+    expect(mobBossCollisions(wide, opts)).toEqual([]);
   });
 });

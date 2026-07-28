@@ -81,7 +81,7 @@
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { fullAssetsEnabled } from "../config/fullAssets";
-import { hudStore } from "../net/RoomStore";
+import { hudStore, localDuelZone as storeLocalDuelZone } from "../net/RoomStore";
 import { noteFireRingIgnition } from "./fireRingWindow";
 import { COMBAT_PHASE, gateCombatBed } from "./combatBedGate";
 
@@ -466,9 +466,11 @@ export function coinRewardKey(ev: EventMessage, seatId: number | null): string |
  * DEFINITE mismatch (both zones known and different).
  */
 export function localDuelZone(): number {
-  const s = hudStore.getState();
-  if (s.localSeatId === null) return -1;
-  return s.seats.find((x) => x.seatId === s.localSeatId)?.zone ?? -1;
+  // Re-exported rather than re-implemented: `ui/hud/MobBossOverlay` asks the
+  // SAME question to decide whether to paint the 降臨 banner, and two copies of
+  // this lookup is exactly how the sound ended up gated while the screen was
+  // not. See net/RoomStore.localDuelZone.
+  return storeLocalDuelZone();
 }
 
 /**

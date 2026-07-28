@@ -361,6 +361,26 @@ export interface MobBossView {
   lastHitMultiplier: number;
   /** slain: seat that landed the killing blow, -1 when nobody did */
   killerSeatId: number;
+  /** the king's entity id (`ev.data.id`), -1 unknown — the key that lets a
+   *  `slain` inherit the `zone` its own `spawn` carried. */
+  bossId: number;
+  /**
+   * THE DUEL ZONE THE KING BELONGS TO, -1 when it could not be resolved.
+   *
+   * Both events are FANNED OUT TO EVERY CLIENT IN THE MATCH (game-server
+   * net/eventFanout), but a king is summoned into exactly ONE of the four duel
+   * zones. `combatSfx.bossHorrorKey` already refuses to play the 4.4 s dread
+   * drone in the other arena's ears for precisely this reason; the SCREEN owes
+   * the same courtesy, and owes it harder — the banner and the settlement sheet
+   * eat the centre corridor and the 連殺 counter yields to them, so an
+   * un-gated king costs a player in arena B real HUD for a fight in arena A
+   * that he cannot see, cannot join and will never be paid by.
+   *
+   * `mobBossSlain` does NOT carry a zone (the king's entity is already
+   * destroyed by then), so it inherits the one its matching `mobBossSpawn`
+   * carried — see `recordMobBossEvent`.
+   */
+  zone: number;
 }
 
 const initial: HudState = {
@@ -772,6 +792,9 @@ export function parseMobBossEvent(
       totalXp: 0,
       lastHitMultiplier: 1,
       killerSeatId: -1,
+      bossId: num(ev.data.id, -1),
+      // the ONE payload that knows which arena this is (sim/mobs.summonMobBoss)
+      zone: num(ev.data.zone, -1),
     };
   }
   if (ev.type !== MOB_BOSS_SLAIN_EVENT) return null;
@@ -802,6 +825,10 @@ export function parseMobBossEvent(
     // never to a multiplier the sim did not apply.
     lastHitMultiplier: Math.max(1, num(ev.data.lastHitMultiplier, 1)),
     killerSeatId: num(ev.data.killerSeatId, -1),
+    bossId: num(ev.data.id, -1),
+    // MobSystem.settleBoss emits no `zone` — the king's entity is destroyed by
+    // then. -1 here, and `recordMobBossEvent` inherits the spawn's.
+    zone: num(ev.data.zone, -1),
   };
 }
 
@@ -817,8 +844,38 @@ export function recordMobBossEvent(ev: EventMessage, nowMs: number = comboNowMs(
   const prev = hudStore.getState();
   const view = parseMobBossEvent(ev, prev.localSeatId, nowMs, mobBossSeq + 1);
   if (!view) return;
+  // ZONE INHERITANCE. `mobBossSlain` cannot carry a zone — by the time it is
+  // emitted the king's entity (and with it its position) is gone. The matching
+  // `mobBossSpawn` did carry one and always arrives first, over the same
+  // ordered channel, so the settlement borrows it by entity id. Without this
+  // the payout sheet is the one half of the feature that STAYS un-gated, and
+  // the arena that never fought the king gets its centre corridor taken for
+  // eight seconds to read somebody else's money.
+  if (view.kind === "slain" && view.zone < 0 && prev.mobBoss && prev.mobBoss.bossId === view.bossId) {
+    view.zone = prev.mobBoss.zone;
+  }
   mobBossSeq++;
   hudStore.setState({ mobBoss: view });
+}
+
+/**
+ * WHICH DUEL ZONE THE LOCAL PLAYER IS FIGHTING IN, or -1 when it cannot be
+ * resolved (no seat yet, or the seat has no live entity — i.e. you are dead or
+ * spectating).
+ *
+ * ONE definition, read by BOTH gates: `audio/combatSfx.localDuelZone` (the
+ * 恐怖 drone) and `ui/hud/MobBossOverlay` (the 降臨 banner + 分紅 sheet). They
+ * were two answers to the same question and they disagreed — the sound refused
+ * to haunt the other arena while the screen happily announced a king six
+ * players could not see. A single source of truth is what stops that drifting
+ * apart again.
+ *
+ * -1 IS 「不知道」, NOT 「不同區」. Every caller must fail OPEN on it: a headline
+ * beat must never be lost to a lookup that happened to be empty this frame.
+ */
+export function localDuelZone(s: HudState = hudStore.getState()): number {
+  if (s.localSeatId === null) return -1;
+  return s.seats.find((x) => x.seatId === s.localSeatId)?.zone ?? -1;
 }
 
 /** True when this event is a 殭屍王 beat (cheap pre-filter for the drain). */

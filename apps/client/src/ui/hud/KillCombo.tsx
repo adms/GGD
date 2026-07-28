@@ -32,7 +32,7 @@
  * mid-fight would be worse than the fight being un-legible.
  */
 import React, { useEffect, useState } from "react";
-import { comboNowMs, useHud } from "../../net/RoomStore";
+import { comboNowMs, localDuelZone, useHud } from "../../net/RoomStore";
 import {
   controlLegendVisible,
   readLegendDismissed,
@@ -40,7 +40,7 @@ import {
 import { hudTouch } from "./HudSlot";
 import { HUD_Z, type HudRect } from "./hudLayout";
 import { useActiveHudPanels } from "./useHudPanels";
-import { bossLifetime, mobBossOverlayRect } from "./mobBossModel";
+import { bossLifetime, bossVisibleInZone, mobBossOverlayRect } from "./mobBossModel";
 import {
   KILL_COMBO_POLL_MS,
   killComboDisplay,
@@ -197,7 +197,11 @@ export function KillCombo(): React.JSX.Element | null {
   // one entry point the overlay itself draws from, so the two can never disagree
   // about where the king's box is. Null while no king moment is live, which is
   // almost always, and then this is a no-op.
-  const bossRect = mobBossOverlayRect(bossLifetime(boss, now) ? boss : null, viewport, {
+  // …and only for a king in THIS arena. `bossVisibleInZone` is the same gate
+  // the overlay itself applies, so the counter can never yield to a banner that
+  // is not being painted (the other duel's king reaches this client too).
+  const bossUp = bossLifetime(boss, now) && bossVisibleInZone(boss, localDuelZone());
+  const bossRect = mobBossOverlayRect(bossUp ? boss : null, viewport, {
     touch: hudTouch(),
     legendUp,
     couchPlayers: 1,

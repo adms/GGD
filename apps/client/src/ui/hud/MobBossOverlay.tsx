@@ -27,7 +27,7 @@
  * table that ate a click mid-fight would be worse than the fight being illegible.
  */
 import React, { useEffect, useState } from "react";
-import { comboNowMs, useHud } from "../../net/RoomStore";
+import { comboNowMs, localDuelZone, useHud } from "../../net/RoomStore";
 import { controlLegendVisible, readLegendDismissed } from "../controlLegendModel";
 import { hudTouch } from "./HudSlot";
 import { HUD_Z, type HudRect } from "./hudLayout";
@@ -39,6 +39,7 @@ import {
   BOSS_SETTLEMENT_TITLE,
   bossLifetime,
   bossRuleNote,
+  bossVisibleInZone,
   bossRuleNoteShort,
   bossSettlementLayout,
   bossSummonLine,
@@ -303,6 +304,11 @@ export function MobBossOverlay(): React.JSX.Element | null {
   if (phase !== "combat" || couch) return null;
   const life = bossLifetime(boss, now);
   if (!life || !boss) return null;
+  // …and it has to be YOUR arena's king. Both events reach every client in the
+  // match; only one duel zone ever fought this one. See `bossVisibleInZone` —
+  // the same rule the 恐怖 cue has always applied, finally applied to the
+  // picture as well. Fails OPEN on an unresolved zone.
+  if (!bossVisibleInZone(boss, localDuelZone())) return null;
 
   const legendUp = controlLegendVisible({
     phase,

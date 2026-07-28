@@ -144,6 +144,32 @@ export function bossLifetime(view: MobBossView | null, nowMs: number): BossLifet
   return { phase: out ? "out" : "live", opacity: Math.max(0, Math.min(1, 1 - exited)) };
 }
 
+/**
+ * IS THIS KING MINE TO LOOK AT? — the duel-zone gate.
+ *
+ * Both king events are fanned out to EVERY client in the match (game-server
+ * net/eventFanout), but a king is summoned into exactly ONE of the four duel
+ * zones. `audio/combatSfx.bossHorrorKey` already refuses to play the 4.4 s
+ * dread drone into the other arena's ears — 「there the wrong SEAT heard it,
+ * here the wrong ARENA would」 — and the screen owes the same courtesy for a
+ * strictly larger reason: this overlay eats the centre corridor AND the 連殺
+ * counter yields to it. Un-gated, six players in arena B lose their counter and
+ * a strip of HUD for 4.6 s + 8.2 s, to be told about a monster they cannot see,
+ * cannot fight, and will never be paid by — with no sound, because the sound
+ * was gated and the picture was not.
+ *
+ * FAIL OPEN, exactly like the cue. Only a DEFINITE mismatch hides anything:
+ * both zones known and different. `-1` on either side means 「不知道」 (no seat,
+ * no live entity — you are dead or spectating, or an old payload carried no
+ * zone), and an unresolved lookup must never be what silences the one panel
+ * that explains the money.
+ */
+export function bossVisibleInZone(view: MobBossView | null, localZone: number): boolean {
+  if (!view) return false;
+  if (view.zone < 0 || localZone < 0) return true;
+  return view.zone === localZone;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
  * ② THE WORDS
  * ═══════════════════════════════════════════════════════════════════════════ */
