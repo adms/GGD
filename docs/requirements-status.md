@@ -366,7 +366,7 @@
 | 來源 | 回報 / 發現 | 判定 | 落點 |
 |---|---|---|---|
 | 你 | 全速實作、不管工作流上限 | ✅ 進行中 | 先 `git init`(#65 完成)→ 平行多 wave 才安全（無 VCS 不能用 worktree）。**Wave A 已完成並 commit `dcfbfd5`：#53,#62,#64,#66,#67,#69,#90,#91,#104,#109,#114,#122**（各有測試）。ledger 948/980 done |
-| 你 | 從 Civitai 下載動漫模型本機生圖 | ✅ **打通** | 實機為 M5 Max/MPS，**~5s/張，660 icon≈55 分、$0**。解鎖 **#72/#112**（#112 真因是「沒設定供應商」而非路徑壞，dialect 早修好）。Civitai 下載需**你的 API token**（否則 401）；先用授權寬鬆 HF 動漫模型證明整條路。詳見 `docs/_local-image-gen-setup.md` |
+| 你 | 從 Civitai 下載動漫模型本機生圖 | ✅ **打通** | 實機為 M5 Max/MPS，**~5s/張，660 icon≈55 分、$0**。解鎖 **#72/#112**（#112 真因是「沒設定供應商」而非路徑壞，dialect 早修好）。Civitai 下載需**你的 API token**（否則 401）；先用授權寬鬆 HF 動漫模型證明整條路。管線見 `tools/icon-gen/local/batch.py` 與 `daemon.py` |
 | 你 | 研究 Capcom 快打旋風打擊感是否好好實作 | 📋 **稽核完成** | 證據式逐項對照 → `docs/_hitfeel-audit.md`，**49 findings（P0×1、P1×20、P2×28）**。核心 hitstop **達標**（雙方定格、依重量、決定論）；但缺**統一 ImpactProfile(P0)**、crit/破防加長定格、victim hitstun、client freeze 與 sim 同步、方向性 shake、EX 定格+特寫、命中火花分色(hit/block/counter)、命中音短尾（block 語音竟有殘響=違反收尾精準）。→ **P1 打擊感 wave 進行中** |
 | 我（試玩發現） | 選英雄 3D 模型預覽黑屏 | 📋 建 **#129** | P2 wave 修中 |
 | 我（試玩發現） | 沒鎖英雄→第一回合 0HP 觀戰（新手陷阱） | 📋 建 **#130** | P2 wave：自動隨機、活著出場 |

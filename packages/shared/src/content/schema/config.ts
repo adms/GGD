@@ -587,7 +587,7 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   // by +5 alive a round instead of doubling). Round 10 is EMPTY: 乾淨總決賽.
   //
   // Render cost was checked rather than assumed. The peak is round 9: 50 alive
-  // × 2 zones = 100 mobs, against the 60 that docs/改進延遲.md computed for the
+  // × 2 zones = 100 mobs, against the 60 that the (since-deleted) 改進延遲.md computed — the surviving analysis is docs/_延遲改進計畫.md §一 for the
   // old guardian_skeleton (5,288 tris ⇒ 317,280 skinned tris/frame). On today's
   // blocky-undead at 168 tris those 100 mobs are 16,800 tris — a nineteenth of
   // the load that motivated that document. Server-side AI for 100 mobs is the
