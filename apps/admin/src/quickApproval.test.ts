@@ -216,7 +216,10 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
       id: "h",
       name: "英雄",
       role: "tank",
-      maxHealth: 100,
+      // #265:+300 是**平移**,所以 maxHealth 動、growthHealth 不動。
+      // 那正是這條測試最該守的東西 —— 若哪天有人把 +300 誤加進成長,
+      // 每級都會多拿一次 300,而 maxHealth 那格看起來仍然「對」。
+      maxHealth: 100 + 300,
       growthHealth: 100,
       armor: 0,
       mr: 0,
@@ -228,7 +231,7 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
   it("a doc WITH attributes is resolved through the sim, not read raw", () => {
     cover("adminui-quick-approval");
     // The exact #248 shape: a 150-HP raw card whose real level-1 health is
-    // 150 + strToMaxHealth(23) × 20 = 610, and whose armour is
+    // 150 + strToMaxHealth(23) × 20 = 610,再 +300(#265)= 910, and whose armour is
     // 0 + agiToArmor(0.15) × 20 = 3. Reading the card raw would say 150 / 0.
     const s = parseChampionStats("h", {
       name: "英雄",
@@ -247,7 +250,7 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
       },
     });
     expect(s.attributeDerived).toBe(true);
-    expect(s.maxHealth).toBe(610);
+    expect(s.maxHealth).toBe(610 + 300);
     expect(s.armor).toBeCloseTo(3, 10);
     // 每級 is growth.maxHealth PLUS str_growth × strToMaxHealth — the only
     // reason a champion with `growth.maxHealth: 0` can still gain health.
@@ -268,7 +271,9 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
       attributes: { str: 20, agi: 20 },
     });
     expect(s.attributeDerived).toBe(false);
-    expect(s.maxHealth).toBe(150);
+    // #265:+300 也套在「屬性區塊壞掉、退回原始卡片」這條路上 —— 那個 fallback
+    // 退的是屬性推導,不是全英雄生命平移。
+    expect(s.maxHealth).toBe(150 + 300);
     expect(s.armor).toBe(2);
   });
 
@@ -301,7 +306,7 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
         source: "w3x",
       },
     });
-    expect(s.maxHealth).toBe(610);
+    expect(s.maxHealth).toBe(610 + 300);
     expect(s.armor).toBeUndefined();
     expect(s.mr).toBeUndefined();
   });
@@ -384,15 +389,15 @@ describe("數值體檢 on the SHIPPED champion documents (the #248 regression)",
   it("a healthy shipped hero reads green, with his REAL numbers", () => {
     cover("adminui-quick-approval");
     // 亞瑟王・Saber: raw card 150 HP / 0 armour, real level 1 is
-    // 150 + 23×23 = 679 and 0 + 0.15×16 = 2.4.
+    // 150 + 23×23 = 679,再 +300(#265)= 979;護甲 0 + 0.15×16 = 2.4(不受影響)。
     const saber = parseChampionStats("godie-e002", realDoc("godie-e002"));
-    expect(saber.maxHealth).toBeCloseTo(679, 6);
+    expect(saber.maxHealth).toBeCloseTo(679 + 300, 6);
     expect(saber.armor).toBeCloseTo(2.4, 6);
 
     const audit = auditStats(saber, peerBaseline(realRoster()));
     expect(audit.unknown).toBe(false);
     expect(audit.ok).toBe(true);
-    expect(audit.line).toContain("血量 679");
+    expect(audit.line).toContain("血量 979");
     // and the readout must never show the raw hull the owner would not recognise
     expect(audit.line).not.toContain("血量 150");
   });
@@ -417,7 +422,7 @@ describe("數值體檢 on the SHIPPED champion documents (the #248 regression)",
     // raw produced 「血量 -450 … -300% — 會被秒殺」, a number that appears
     // nowhere in the game.
     const k = parseChampionStats("godie-u011", realDoc("godie-u011"));
-    expect(k.maxHealth).toBeCloseTo(79, 6);
+    expect(k.maxHealth).toBeCloseTo(79 + 300, 6);
     const audit = auditStats(k, peerBaseline(realRoster()));
     expect(audit.line).not.toContain("-450");
     // 79 against a ~560 median is a genuine 會被秒殺 — the finding SHOULD fire,

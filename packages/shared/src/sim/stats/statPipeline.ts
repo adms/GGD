@@ -34,7 +34,10 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     // BASE, not into the modifier loop below, because an attribute is not a
     // stat: see stats/attributes.ts. Passing it here is the ONE wiring that
     // makes a 能力屬性強化 pick move any number at all.
-    const base = championStatBase(def, stat, level, world.combatEnv, champ.attrBonus);
+    // ⚠️ 兩個可選參數的順序在合併時定案:`opts`(#265 的 +300 開關)在前、
+    // `bonus`(#260 買來的三圍)在後。這裡傳 `{}` 不是佔位 —— 英雄**要**吃
+    // +300,關掉它的是小怪那條路(mobs.ts 傳 championHealthBonus:false)。
+    const base = championStatBase(def, stat, level, world.combatEnv, {}, champ.attrBonus);
 
     let flat = 0;
     let pctAdd = 0;
