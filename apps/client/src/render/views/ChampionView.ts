@@ -45,7 +45,12 @@ import { dissolveFrame } from "../deathDissolve";
 import { glbYawOffset } from "./glbFacing";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
-import { applyVoxelLook, releaseVoxelLook, type VoxelLookHandle } from "./voxelSkin";
+import {
+  applyVoxelLook,
+  releaseVoxelLook,
+  voxelLookAppliesToGlb,
+  type VoxelLookHandle,
+} from "./voxelSkin";
 import {
   GROWTH_RING_FADE_MS,
   GROWTH_SCALE_EASE_MS,
@@ -226,6 +231,15 @@ export class ChampionView {
    * material and must be freed without ever touching the shared original.
    */
   private voxelHandle: VoxelLookHandle | null = null;
+  /**
+   * glbPath of the ADOPTED .glb, or null while the procedural figure stands in.
+   *
+   * GH#31 —— 這不等於 `modelKey`。替身英雄的 modelKey 一直是那四個共用替身之一
+   * (那正是 blizzardOverlay 認出他們的方式),但真正載進來的可能是他自己的
+   * Warcraft III 模型。體素調色盤只對「生成的方塊人」成立,所以判斷必須看
+   * 實際載入的 glb,不能看 modelKey。
+   */
+  private adoptedGlbPath: string | null = null;
   /** skeletons of THIS instance (from instantiateModelsToScene), for the look. */
   private glbSkeletons: { bones: { name: string }[] }[] = [];
   /** The render scale actually applied to the adopted .glb — the height-normalized
@@ -519,9 +533,15 @@ export class ChampionView {
    * `view.hasGlb` is true, and `hasGlb` is set at the very end of the adopt
    * path, after this. That order matters — the tint MULTIPLIES `albedoColor`,
    * which this leaves white, so tint × palette composes as documented.
+   *
+   * GH#31 —— 只有「生成的方塊人」才會被上色。`voxelLookAppliesToGlb` 擋掉的是
+   * 暴雪原始模型:它自己帶著 albedoTexture,調色盤蓋上去等於把 Warcraft III
+   * 的貼圖丟掉、再用一組完全對不上的 UV 去採 8 個色塊。#49 的 tint 也會因此
+   * 變成「乘在調色盤上」而不是「乘在原始貼圖上」—— 海克力斯的黑紅就此消失。
    */
   private applyVoxelLookToGlb(): void {
     if (!this.voxelLook || !this.glbRoot || this.voxelHandle) return;
+    if (!voxelLookAppliesToGlb(this.adoptedGlbPath)) return;
     this.voxelHandle = applyVoxelLook(
       this.glbRoot.getChildMeshes(false),
       // THIS INSTANCE's skeletons, captured from `instantiateModelsToScene` —
@@ -1280,6 +1300,10 @@ export class ChampionView {
         this.groundOffsetY = Number.isFinite(min.y) ? -min.y : 0;
         this.glbRoot = glbRoot;
         this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
+        // GH#31: remember WHICH glb landed. Must be written BEFORE
+        // `applyVoxelLookToGlb` below, which reads it to decide whether the
+        // #226 palette may touch this mesh at all.
+        this.adoptedGlbPath = doc.glbPath;
         // #226 per-champion palette/proportions/props. MUST run before the
         // registry's applyModelTint, which it does: the registry gates on
         // `view.hasGlb`, and `hasGlb` reads `glbRoot`, set one line above —

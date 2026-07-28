@@ -25,6 +25,7 @@ import { AssetContainer } from "@babylonjs/core/assetContainer";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { Animation } from "@babylonjs/core/Animations/animation";
 import type { ModelDoc } from "@ggd/shared/content";
+import { BLIZZARD_MODEL_CHAMPIONS } from "@ggd/shared/content/voxelSkin";
 import { ContentDb } from "../content/ContentDb";
 import {
   EntityViewRegistry,
@@ -215,10 +216,21 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
 /**
  * TASK #77 — the map's declared SCALE must survive the stand-in fallback.
  *
- * 40 `godie-*` champions have no shipped model and render on one of the four
- * shared CC0 KayKit meshes. Their WC3 Scaling Value ('usca',
- * tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json) used to be dropped on the
- * floor, so every one of them rendered at the identical normalized 1.8u.
+ * 42 `godie-*` champions point at one of the four shared CC0 KayKit meshes.
+ * Their WC3 Scaling Value ('usca', tools/w3x-import/out/GoDieEX22s-src/
+ * OBJECTS.json) used to be dropped on the floor, so every one of them rendered
+ * at the identical normalized 1.8u.
+ *
+ * GH#31 SPLIT THE ROSTER IN TWO, AND WITH IT THE CORRECT RULE.
+ * 40 of the 42 now adopt their real Warcraft III model from the local overlay
+ * (`BLIZZARD_MODEL_CHAMPIONS`), so 「整個輪廓就是身體」 — the premise that made
+ * 「relativeScale = usca 逐字照抄」 right — no longer holds for them: their own
+ * mesh may be twice a paladin's height before usca is applied, and
+ * ChampionView normalizes THAT away. Their rule is the rawHeight-corrected one
+ * #77 already had to hand-derive for the two VillagerKid champions:
+ *   relativeScale = (rawHeight ÷ HeroPaladin 115.63) × usca.
+ * The remaining 2 (godie-o02n, godie-u011) still render a shared mesh and keep
+ * the usca-verbatim rule.
  *
  * The guard below reads BOTH sides from disk — the source map's objects and the
  * shipped overrides file — so it fails if a champion's map scale is ever
@@ -282,9 +294,30 @@ const NO_BODY_TO_SCALE = new Set(["godie-u011"]);
  */
 const LORE_AGREEMENT_TOLERANCE = 0.1;
 
+/**
+ * GH#31 — the 18 entries #77/#150 authored for a champion that ALSO turned out
+ * to have an extracted WC3 model. Every one of them was tuned against the
+ * shared KayKit mesh, so against the champion's own model they are now too
+ * small (小叮噹 renders 0.81u instead of 1.55u). The owner's instruction for
+ * this pass was 「已經有的不要覆蓋」, so they are carried forward untouched and
+ * listed here — this set is the visible debt, not a silent exemption. Every id
+ * in it must still HAVE an entry; only the formula check is waived.
+ */
+const PRE31_STANDIN_TUNED = new Set([
+  "godie-e00r", "godie-e00s", "godie-e00t", "godie-e00u", "godie-h021",
+  "godie-h02k", "godie-hapm", "godie-hblm", "godie-n00b", "godie-o02o",
+  "godie-obla", "godie-oshd", "godie-othr", "godie-u012", "godie-u01f",
+  "godie-ubal", "godie-ucrl", "godie-umal",
+]);
+
 describe("stand-in fallback preserves the map's declared scale (task #77)", () => {
-  const overrides = (OVERRIDES_FILE as { overrides: Record<string, { relativeScale?: number }> })
-    .overrides;
+  // `usca`/`rawHeight` are the GH#31 derivation inputs, carried in the file
+  // itself so the formula stays checkable without the git-ignored overlay.
+  const overrides = (
+    OVERRIDES_FILE as {
+      overrides: Record<string, { relativeScale?: number; usca?: number; rawHeight?: number }>;
+    }
+  ).overrides;
 
   /** every stand-in champion, straight off the shipped champion docs. */
   const standIns = readdirSync(join(__dirname, "../../../../content/champions"))
@@ -306,6 +339,10 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
     cover("client-standin-override");
     const dropped: string[] = [];
     for (const c of standIns) {
+      // GH#31: a champion that adopts its OWN WC3 model is governed by the
+      // rawHeight-corrected rule, asserted in the next test. Only the two that
+      // still wear a shared KayKit mesh answer to usca-verbatim.
+      if (BLIZZARD_MODEL_CHAMPIONS.includes(c.id)) continue;
       const declared = mapScaleOf(c.id);
       const rendered = relativeScaleOf(overrides[c.id] ?? null);
       if (
@@ -321,6 +358,55 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
       }
     }
     expect(dropped, `map scale discarded for:\n${dropped.join("\n")}`).toEqual([]);
+  });
+
+  /**
+   * GH#31 — THE DEFECT THIS REPLACES. Before this pass, 22 of the 40 WC3-model
+   * champions had NO entry at all, so `relativeScaleOf` handed the renderer 1.0
+   * and every one of them was squashed to the same 1.8u silhouette: 伊利丹惡魔
+   * 形態, 刺蛇, 北極熊 and 聖騎士 all exactly as tall as each other. Two
+   * directions are asserted, because either one alone passes on a broken build:
+   *   • COVERAGE — all 40 carry an entry (a dropped one silently reverts to 1.0);
+   *   • DERIVATION — each #31 entry's number really is the formula applied to
+   *     the map's OWN usca, so neither the multiplier nor the input can drift.
+   */
+  it("GH#31: every WC3-model champion carries the rawHeight-corrected scale", () => {
+    cover("client-standin-override");
+    const file = OVERRIDES_FILE as {
+      heroPaladinRawHeight?: number;
+      overrides: Record<string, { relativeScale?: number; usca?: number; rawHeight?: number }>;
+    };
+    const ref = file.heroPaladinRawHeight;
+    expect(ref, "the reference height the formula divides by").toBeCloseTo(115.63, 2);
+
+    const missing: string[] = [];
+    const wrong: string[] = [];
+    for (const id of BLIZZARD_MODEL_CHAMPIONS) {
+      const ov = overrides[id];
+      if (!ov || typeof ov.relativeScale !== "number") {
+        missing.push(id);
+        continue;
+      }
+      if (PRE31_STANDIN_TUNED.has(id)) continue; // carried forward, see the note
+      // the derivation inputs must be present AND agree with the source map
+      expect(ov.rawHeight, `${id} rawHeight`).toBeGreaterThan(0);
+      expect(ov.usca, `${id} usca vs OBJECTS.json`).toBeCloseTo(mapScaleOf(id), 2);
+      const expected = (ov.rawHeight! / ref!) * ov.usca!;
+      if (Math.abs(ov.relativeScale - expected) > 0.002) {
+        wrong.push(`${id}: shipped ${ov.relativeScale} vs formula ${expected.toFixed(3)}`);
+      }
+    }
+    expect(missing, `no relativeScale → renders at the flat 1.8u: ${missing.join(", ")}`).toEqual([]);
+    expect(wrong, `formula drift:\n${wrong.join("\n")}`).toEqual([]);
+
+    // …and the population is genuinely SPREAD, which is the whole point. If a
+    // future edit collapsed every multiplier back to 1.0 the two checks above
+    // would still pass (1.0 is a legal formula result — HeroPaladin @ usca 1).
+    const rels = BLIZZARD_MODEL_CHAMPIONS.map((id) => relativeScaleOf(overrides[id] ?? null));
+    expect(rels.filter((r) => r !== 1).length, "champions rendering at a non-default size")
+      .toBeGreaterThanOrEqual(38);
+    expect(Math.min(...rels)).toBeLessThan(1);
+    expect(Math.max(...rels)).toBeGreaterThan(3);
   });
 
   it("小叮噹 renders smaller than a default champion, and 黑化張飛 larger", () => {

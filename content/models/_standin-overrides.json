@@ -2,6 +2,8 @@
   "schema": "standin-overrides@2",
   "note": "Task #150 + #77 — per-CHAMPION render-size overrides. As of #150 ChampionView HEIGHT-NORMALIZES every loaded champion glb to a common target height (render/views/ChampionView.ts TARGET_HEIGHT ≈ 1.8u) instead of applying each model doc's raw `scale` as an absolute — so by DEFAULT every champion reads the same on-screen size regardless of its glb's wildly-varying native mesh height. `relativeScale` is the per-champion RELATIVE multiplier on top of that normalization (1.0 = the normalized target height; <1 = deliberately smaller, >1 = bigger). Absent champions default to 1.0 (normal human = 夏娜). Keyed by championId. The optional `glbPath`/`clipMap` still swap in a genuinely different model. Files under content/models beginning with _ are NOT model@1 docs (like _index.json) and are skipped by the content validators/index builder. The composition root (GameApp.modelOverrideFor) loads this map via ContentDb and feeds EntityViewRegistry.modelOverrideFor -> applyModelOverride; `relativeScale` threads to ChampionView.tryUpgradeToGlb. Legacy note: pre-#150 this field was `scale` (an ABSOLUTE render scale); it is now `relativeScale`. See docs/_model-size-audit-150.md.",
   "note77": "TASK #77 — THE MAP'S DECLARED SCALE NOW SURVIVES THE STAND-IN FALLBACK. 40 godie-* champions have no shipped model of their own and render on one of the four shared CC0 KayKit meshes (champ.sela / champ.thorne / champ.skin.barbarian / champ.skin.rogue). Before this pass their w3x Scaling Value ('usca', tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json) was DISCARDED on every one of them, so all 40 rendered at the identical normalized 1.8u — 小叮噹 (a ~1.3m robot cat) exactly as tall as 巴恩大魔王. RULE APPLIED HERE: relativeScale = the map's usca, verbatim. 23 of the 40 declare no usca at all (WC3 default 1.0) and therefore need no entry — an absent entry IS the map's value. 17 declare a non-default usca and are listed below. The rule is validated by the two size exceptions #150 had already hand-tuned from lore alone: 小叮噹 shipped 0.65 vs map 0.60, 初號機 shipped 1.55 vs map 1.60 — both agree to within 8%. Only the map's SCALE can be honoured today; the map's MODEL is a Blizzard MPQ asset that is not in the deployable tree (see blizzardOverlay.ts for the dev/family overlay path, and tasks #81/#116 for the shippable-replacement proposal). NOT capped: the map is the spec (a 2.0 usca is an authored giant, not a bug) — if one frames badly in the arena camera, tune that one number here. NOT applied: godie-u011, whose w3x usca 1.5 scales `collision.mdl`, a geometry-less dummy with no body to scale.",
+  "note31": "GH#31 —— 替身英雄改載暴雪原始模型之後,#77 的『relativeScale = usca 逐字照抄』就不再成立了。#77 那條規則的前提是:這 40 位共用一顆 KayKit 替身網格,而那顆網格被正規化成 1.8u 之後『整個輪廓就是身體』,所以 usca 直接當倍率是對的。現在他們各自載入自己的 Warcraft III 模型,ChampionView 仍然把『整個輪廓』正規化到 1.8u —— 於是一個在 WC3 裡本來就比聖騎士高一截的模型,被硬壓成跟人類一樣高,usca 再乘上去也救不回來。正確算法(記在 godie-h021 的註解裡,#77 已經為那一位手算過):relativeScale = (該模型 rawHeight ÷ HeroPaladin 參考高度 115.63) × usca。數學上這是唯一會讓『身體』落在 WC3 比例上的式子:渲染身高 = 1.8 × rel × bodyGlb/nativeGlb,而 rel 帶進去之後 nativeGlb 會整項消掉,剩下 1.8 × usca × bodyRaw/115.63 —— 也就是說,即使某個模型的包圍盒被翅膀/殘留特效面片撐大,身體仍然落在正確尺寸。rawHeight 取自實際 glb 的量測值 ÷ 匯出器的 scaleFactor(= ChampionView 真正拿去除的那個數,換算回 mdx 單位),而不是 batches 裡回報的 rawHeight —— 兩者在 40 位裡有 38 位一致到 2% 以內,只有 godie-e015(-17%)與 godie-hpal(-12%)不同,那兩位若照回報值會渲染得偏小。本次只補『原本沒有條目』的 22 位;#77/#150 既有的 18 位維持不動(見 openQuestions:他們是對著共用替身網格手調的,對現在的模型已經偏小,需要 owner 拍板)。",
+  "heroPaladinRawHeight": 115.63,
   "target": 1.8,
   "overrides": {
     "godie-n00b": {
@@ -95,6 +97,139 @@
     "godie-u01f": {
       "relativeScale": 2.0,
       "note": "#77 萬夫莫敵 - 黑化張飛 — map units\\orc\\Grunt.mdl @ usca 2.00, the largest scale the map authors anywhere. Deliberately NOT capped: 「萬夫莫敵」 is supposed to tower (≈3.6u, the tallest champion in the game). If it frames badly in the arena camera, tune this one number."
+    },
+
+    "godie-n01l": {
+      "relativeScale": 0.945,
+      "usca": 1.0,
+      "rawHeight": 109.25,
+      "note": "GH#31 學姊 - 小派 — Units\\Creeps\\BansheeRanger。109.25 ÷ 115.63 × 1.00。班西弓箭手比聖騎士略矮一點,所以是 40 位裡唯一低於 1.0 的。"
+    },
+    "godie-h02n": {
+      "relativeScale": 1.0,
+      "usca": 1.0,
+      "rawHeight": 115.65,
+      "note": "GH#31 腦包英雄 - 打我阿笨蛋 — units\\human\\HeroPaladin,usca 1.00。這一位就是公式的『分母本人』:HeroPaladin @ usca 1.0 定義了 1.8u 這個基準。條目寫出來不是為了改變什麼(1.0 = 預設),而是為了讓稽核看得出來『這位算過了』,而不是『被漏掉了』。"
+    },
+    "godie-harf": {
+      "relativeScale": 1.0,
+      "usca": 1.0,
+      "rawHeight": 115.65,
+      "note": "GH#31 豪洨天王 - 鄭先生 — 同樣是 units\\human\\HeroPaladin @ usca 1.00,理由與 godie-h02n 相同。"
+    },
+    "godie-e015": {
+      "relativeScale": 1.042,
+      "usca": 1.0,
+      "rawHeight": 120.49,
+      "note": "GH#31 夜市人生 - 金居福 — units\\human\\HeroMountainKing。⚠ rawHeight 取實測 (glb 2.0399u ÷ scaleFactor 0.01693 = 120.49);batches 回報 100.40,少了 17%,差額來自一片垂到腳下 -0.324u 的網格,而 ChampionView 正規化時是連它一起量的。照回報值會讓山丘之王渲染得偏矮。"
+    },
+    "godie-ogld": {
+      "relativeScale": 1.19,
+      "usca": 1.0,
+      "rawHeight": 137.65,
+      "note": "GH#31 美白大法師 - 黑人牙膏 — units\\orc\\OrcWarlockGuldan。這一位同時帶著 #49 的 0.1961 近黑 tint(整個梗就是那個乘法),所以尺寸與顏色兩條路徑要同時成立。"
+    },
+    "godie-e00v": {
+      "relativeScale": 1.223,
+      "usca": 1.0,
+      "rawHeight": 141.43,
+      "note": "GH#31 百畝森林的霸主 - 維尼 — units\\creeps\\PolarBear。一頭熊比人高一截是對的(#263 也是拿他當 tint 還原的參考案例)。"
+    },
+    "godie-u00k": {
+      "relativeScale": 1.252,
+      "usca": 1.0,
+      "rawHeight": 144.8,
+      "note": "GH#31 邪惡意念集合體 - 死之王 — units\\demon\\EredarWarlock。"
+    },
+    "godie-uwar": {
+      "relativeScale": 1.252,
+      "usca": 1.0,
+      "rawHeight": 144.8,
+      "note": "GH#31 食神 - 撒尿牛丸 — units\\demon\\Kiljaeden。"
+    },
+    "godie-h001": {
+      "relativeScale": 1.263,
+      "usca": 1.0,
+      "rawHeight": 146.05,
+      "note": "GH#31 地獄來襲者 - 斑剎 — 血精靈法師(user-reskin Hero_BloodElf)。"
+    },
+    "godie-nman": {
+      "relativeScale": 1.28,
+      "usca": 1.0,
+      "rawHeight": 147.99,
+      "note": "GH#31 地獄歌神 - 憤怒的胖虎 — Units\\Creeps\\EarthPandarenBrewmaster @ usca 1.00(地圖唯一明寫 1.0 的一位)。"
+    },
+    "godie-u00b": {
+      "relativeScale": 1.339,
+      "usca": 1.0,
+      "rawHeight": 154.83,
+      "note": "GH#31 最M的魔法Jizz - 清蒸 飛鼠先生 — 死亡騎士模型(HeroDeathKnight 語音組)。"
+    },
+    "godie-udea": {
+      "relativeScale": 1.339,
+      "usca": 1.0,
+      "rawHeight": 154.83,
+      "note": "GH#31 至尊學長 - 飛鼠先生 — units\\undead\\EvilArthas\\UndeadArthas,與 godie-u00b 同一具模型、同一個高度。"
+    },
+    "godie-ekee": {
+      "relativeScale": 1.38,
+      "usca": 1.0,
+      "rawHeight": 159.62,
+      "note": "GH#31 會叫的野獸 - 傳說中的大刀 — units\\nightelf\\DruidoftheClaw。"
+    },
+    "godie-nbst": {
+      "relativeScale": 1.425,
+      "usca": 1.0,
+      "rawHeight": 164.72,
+      "note": "GH#31 變態正義 - 瘋狂假面 — 馴獸師模型(user-reskin RibbonBlur1)。實測 164.72 對 batches 的 163.15,差 1%,取實測。"
+    },
+    "godie-efur": {
+      "relativeScale": 1.513,
+      "usca": 1.0,
+      "rawHeight": 174.9,
+      "note": "GH#31 揍敵客大家長 - 揍敵客桀諾 — 瑪法里奧(Furion 語音組)。這一位在 #212 的開放名單上,尺寸錯了玩家馬上看得到。"
+    },
+    "godie-usyl": {
+      "relativeScale": 1.673,
+      "usca": 1.0,
+      "rawHeight": 193.4,
+      "note": "GH#31 殺戮之牙 - 異形 — Units\\Critters\\Hydralisk。刺蛇的身形本來就比人高一大截。"
+    },
+    "godie-h02y": {
+      "relativeScale": 1.718,
+      "usca": 1.0,
+      "rawHeight": 198.6,
+      "note": "GH#31 幕末復仇狂者 - 志志雄真實 — units\\demon\\ChaosHellscream。"
+    },
+    "godie-orkn": {
+      "relativeScale": 1.922,
+      "usca": 1.0,
+      "rawHeight": 222.22,
+      "note": "GH#31 電車癡漢 - 臭作 — units\\orc\\HeroShadowHunter。"
+    },
+    "godie-ecen": {
+      "relativeScale": 1.989,
+      "usca": 1.0,
+      "rawHeight": 230.04,
+      "note": "GH#31 姜窩肯 - 約翰走路 — 叢林守護者(HeroKeeperoftheGrove 語音組)。⚠ 渲染輪廓約 3.58u:守護者的鹿身 + 鹿角本來就把包圍盒撐得很高,身體會落在正確比例(見 note31 的推導),但整體會是場上數一數二大的。若鏡頭框不住,調這一個數字。"
+    },
+    "godie-hpal": {
+      "relativeScale": 3.182,
+      "usca": 1.0,
+      "rawHeight": 367.95,
+      "note": "GH#31 不死之身-無 - 藤井八雲 — units\\nightelf\\EvilIllidan\\IllidanEvil(伊利丹惡魔形態)。⚠ 全 40 位裡第二大:輪廓約 5.73u,因為惡魔形態的翅膀往上撐滿了包圍盒(身體本體只占 57%,實際渲染約 3.25u)。rawHeight 取實測 367.95;batches 回報 325.54,少 12%。這是地圖真的指定的模型,依 #77 的既定政策『地圖就是規格,不設上限』照抄 —— 但這一位最可能需要 owner 拍板。"
+    },
+    "godie-h02s": {
+      "relativeScale": 6.795,
+      "usca": 1.0,
+      "rawHeight": 785.73,
+      "note": "GH#31 死亡騎士 — units\\human\\ArthaswithSword。⚠ 這個 6.795 看起來荒謬,但它是把身體救回來的唯一辦法:H02S.glb 裡有一片 18 頂點的殘留特效面片飄在 y 17.97..21.83,把包圍盒撐成 21.83u,而身體只到 3.74u。ChampionView 是拿『整個包圍盒』除到 1.8u 的,所以在 rel=1 之下亞瑟只有 0.31u 高 —— 一隻螞蟻。帶上 6.795 之後身體回到 2.10u(= 1.8 × bodyRaw 134.6 ÷ 115.63,正確的 WC3 比例),代價是那片面片飛到 y≈10u。真正的修法是把那片面片從 glb 裡剔掉(#17/#73 的範圍),在那之前這是兩害相權。"
+    },
+    "godie-h02z": {
+      "relativeScale": 6.795,
+      "usca": 1.0,
+      "rawHeight": 785.73,
+      "note": "GH#31 不良少年 — 與 godie-h02s 同一具 ArthaswithSword.glb、同一片殘留面片、同一個理由。"
     }
   }
 }
