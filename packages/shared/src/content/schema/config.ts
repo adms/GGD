@@ -497,14 +497,12 @@ export const zMobWavesConfig = z
              * MOB_CHAMPION_ID — so every legacy doc keeps its exact behaviour
              * and nothing about the shipped schedule changes.
              *
-             * ⚠️ AUTHORED BUT NOT YET CONSUMED. `mobRulesFromConfig` (sim/mobs.ts)
-             * still resolves the mob's champion from `cfg.mob.championId` alone;
-             * it has no per-round branch, and adding one is a `sim/` change that
-             * was deliberately kept out of the admin-page task that introduced
-             * this field. Until that lands, a value here is DURABLY STORED and
-             * VISIBLE IN THE CONSOLE but has NO in-match effect. The admin page
-             * (apps/admin/src/ui/MobWavesPage.tsx) says so on the column itself
-             * rather than letting the operator assume otherwise.
+             * CONSUMED SINCE GH#191. `mobRulesFromConfig` resolves the round's
+             * champion through `mobChampionForRound`, which reads THIS field
+             * first — travelling the same `round` argument the per-round caps
+             * already use, so no new channel into the sim was needed. Because
+             * the mob's MODEL is now resolved FROM that champion (GH#192), a
+             * value here changes both the face and the mesh that spawns.
              */
             championId: z.string().min(1).optional(),
           })
@@ -528,8 +526,38 @@ export const zMobWavesConfig = z
         attackCdSec: z.number().positive(),
         /** collision/body radius (drives the edge inset = boundaryRadius - radius) */
         radius: z.number().positive(),
-        /** the mob's model doc id (resolved client-side); absent = MOB_MODEL_KEY */
+        /**
+         * OPTIONAL MODEL OVERRIDE (GH#192). Absent — the normal case now — means
+         * 「用英雄的模型」: the mesh is resolved from `championId`'s champion doc
+         * (`mobChampionModelKey` in sim/mobs.ts), so 「選什麼英雄就會讀取什麼 3d
+         * modal」 without an operator having to keep two fields in agreement.
+         * Authored = that doc id wins, for an arena that deliberately wants a
+         * mesh no champion wears.
+         */
         modelKey: z.string().min(1).optional(),
+        /**
+         * 體型倍率 (GH#192) — the mob's on-screen size as a MULTIPLE of what its
+         * model doc already declares. 1 = exactly the champion's own size.
+         *
+         * A multiplier and not an absolute height, because it has to compose
+         * with #150's height-normalization: the champion's mesh is already
+         * normalized to TARGET_HEIGHT × doc.scale, and this scales THAT. It is
+         * pure presentation — the mob's collision `radius` above is the sim's
+         * body and is deliberately NOT driven from here (a 10× visual with a 10×
+         * hitbox would also need the nav grid and the zone inset to agree).
+         */
+        sizeMult: z.number().positive().optional(),
+        /**
+         * 染黑強度 (GH#192, owner: 「只會會是染黑色的模型避免跟玩家混在一起」).
+         * 0 = the champion's own colours, 1 = a solid black silhouette. Applied
+         * to EVERY mob kind (一般 / 特殊 / 王) through the #49/#254 tint pipeline,
+         * so one knob decides how far a zombie reads as 「不是玩家」.
+         *
+         * 0.65 is the shipped default: dark enough that a 喪標麥可 zombie cannot
+         * be mistaken for the 喪標麥可 a player picked, light enough that the
+         * silhouette still says WHICH champion it is wearing.
+         */
+        tintStrength: z.number().min(0).max(1).optional(),
         /**
          * #217 — the CHAMPION DOC the mob wears the FACE of. Since #244 this is
          * PRESENTATION + a LEGACY FALLBACK only: when the four `baseHp`/
@@ -607,8 +635,35 @@ export const zMobWavesConfig = z
          * once-only king would leave rounds 7-10 with nothing to chase.
          */
         repeatable: z.boolean(),
-        /** the king's hit points (flat — it has no level curve of its own) */
+        /**
+         * The king's hit points as a FLAT number. Used only when `hpMult` below
+         * is absent — an arena authored before GH#192 keeps its exact king.
+         */
         maxHp: z.number().positive(),
+        /**
+         * ×N THE NORMAL MOB'S HP FOR THAT ROUND (GH#192, owner: 「HP是100倍」).
+         *
+         * Wins over the flat `maxHp` when present, and it is the shipped setting,
+         * because a flat king stops being a wall the moment the zombie curve is
+         * retuned: at round 3 the mob has 60 hp, so ×100 is 6,000 — the same king
+         * the flat number authored — and by round 9 (180 hp) it is 18,000 instead
+         * of the same 6,000 a champion 16 levels stronger would delete.
+         */
+        hpMult: z.number().positive().optional(),
+        /**
+         * 由誰擔任 (GH#192). The champion doc the KING wears the face and the
+         * MODEL of. Absent = whatever the normal mob of that round is wearing,
+         * so an operator who only changes 「這回合由誰擔任」 gets a matching king
+         * for free.
+         */
+        championId: z.string().min(1).optional(),
+        /**
+         * 體型倍率 (GH#192, owner: 「modal 大小是10倍」). Same units and same
+         * composition rule as `mob.sizeMult`; 10 is the shipped default, and it
+         * is a KNOB rather than a constant precisely because 10 is enormous
+         * (see the openQuestions on GH#192).
+         */
+        sizeMult: z.number().positive().optional(),
         /** melee packet amount */
         attackDamage: z.number().min(0),
         /** walk speed in GGD units/second */
@@ -661,12 +716,22 @@ export const zMobWavesConfig = z
         damageMult: z.number().min(0),
         /** walk-speed multiplier */
         moveSpeedMult: z.number().min(0),
-        /** body-radius multiplier — the 「看得出來」 half of the feature */
+        /** body-radius multiplier — the SIM's body (melee reach scales with it) */
         radiusMult: z.number().positive(),
+        /**
+         * 體型倍率 (GH#192) — the RENDERED size, aligned in meaning with the
+         * king's. Distinct from `radiusMult` (the collision body) on purpose:
+         * before GH#192 the visible size came from the `champ.mob.zombie-special`
+         * doc's `scale` and the hitbox from `radiusMult`, two numbers in two
+         * files that nothing kept in agreement.
+         */
+        sizeMult: z.number().positive().optional(),
         /** gold AND xp multiplier on the kill reward */
         rewardMult: z.number().min(0),
         /** model doc id (resolved client-side); absent = the normal mob's */
         modelKey: z.string().min(1).optional(),
+        /** 由誰擔任 (GH#192); absent = the normal mob's champion for that round */
+        championId: z.string().min(1).optional(),
       })
       .strict()
       .optional(),
@@ -710,6 +775,19 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     attackCdSec: 1.0,
     radius: 0.6,
     championId: "godie-zombiex",
+    // NO `modelKey` (GH#192): blank is what makes 「選什麼英雄就會讀取什麼 3d
+    // modal」 the LIVE path. Authoring one here would ship the feature inert —
+    // the override would win on every arena and the champion branch would never
+    // run in a real match.
+    // 0.68 PRESERVES AN OWNER PLAYTEST RULING, it is not a fresh guess. #217
+    // shipped `modelKey: "champ.mob.zombie"` — the same blocky-undead mesh at
+    // doc scale 0.68 — because on 2026-07-26 the owner played the hero-sized
+    // version and said 「肉鴿殭屍…縮小到適合尺寸…不然現在根本玩不了」. Resolving the
+    // mesh from the champion (GH#192) would have handed that back at 1.0, so the
+    // ruling moves onto this knob instead of being lost with the doc: a zombie
+    // still renders at 0.68 × TARGET_HEIGHT = 1.224u against a 1.8u hero.
+    sizeMult: 0.68,
+    tintStrength: 0.65,
     baseLevel: 3,
     levelPerRound: 1,
     // #244 — the mob's OWN curve (owner 2026-07-26): 100 + 100*(level-1), so the
@@ -752,7 +830,14 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // 1.8 against the zombie's 0.6 — the king is THREE TIMES as wide, which is
     // the silhouette cue that says 「這不是雜魚」 before any model loads.
     radius: 1.8,
-    modelKey: "champ.mob.zombie-king",
+    // NO `modelKey` (GH#192) — the king wears the round's champion, like every
+    // other zombie. `hpMult`/`sizeMult` are what make it a king.
+    // owner GH#192: 「屬性跟 modal 大小是10倍、HP是100倍,參數可在後台設定」.
+    // ×100 of the round-3 mob (60 hp) is 6,000 — byte-identical to the flat
+    // `maxHp` above, so the shipped king at the round it first appears is
+    // UNCHANGED and only the later rounds scale.
+    hpMult: 100,
+    sizeMult: 10,
     bountyGold: 3000,
     bountyXp: 1200,
     lastHitMultiplier: 2,
@@ -767,8 +852,10 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     damageMult: 1.5,
     moveSpeedMult: 1.25,
     radiusMult: 1.8,
+    // GH#192 — the RENDERED size now says the same thing the hitbox does. No
+    // `modelKey`: like the king, it wears the round's champion.
+    sizeMult: 1.8,
     rewardMult: 3,
-    modelKey: "champ.mob.zombie-special",
   },
 };
 

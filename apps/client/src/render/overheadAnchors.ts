@@ -17,6 +17,8 @@ export const KIND_REVIVE_CIRCLE = 3;
 export const KIND_GUARDIAN = 4;
 /** A dropped 100-gold coin (task #191) — loot, not a unit. */
 export const KIND_GOLD_COIN = 5;
+/** A roguelite mob (task #215). Carries GH#192's 體型倍率 in the `mana` slot. */
+export const KIND_MOB = 6;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)

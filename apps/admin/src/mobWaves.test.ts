@@ -60,6 +60,7 @@ import {
   roundRows,
   scheduleChanged,
   setField,
+  setRoundChampion,
   setScheduleCell,
   shippedForm,
   sortChampions,
@@ -95,6 +96,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "mob.radius",
   "mob.modelKey",
   "mob.championId",
+  "mob.sizeMult",
+  "mob.tintStrength",
   "mob.baseLevel",
   "mob.levelPerRound",
   "mob.baseHp",
@@ -115,6 +118,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.moveSpeed",
   "boss.radius",
   "boss.modelKey",
+  "boss.championId",
+  "boss.sizeMult",
+  "boss.hpMult",
   "boss.bountyGold",
   "boss.bountyXp",
   "boss.lastHitMultiplier",
@@ -126,6 +132,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "special.radiusMult",
   "special.rewardMult",
   "special.modelKey",
+  "special.championId",
+  "special.sizeMult",
 ];
 
 // ---------------------------------------------------------------------------
@@ -313,6 +321,8 @@ describe("每一個欄位 are reachable and labelled", () => {
       "mob.radius": "0.75",
       "mob.modelKey": "champ.mob.other",
       "mob.championId": "godie-hblm",
+      "mob.sizeMult": "1.4",
+      "mob.tintStrength": "0.4",
       "mob.baseLevel": "5",
       "mob.levelPerRound": "2",
       "mob.baseHp": "33",
@@ -331,6 +341,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       "boss.attackRange": "3.1",
       "boss.moveSpeed": "2.9",
       "boss.radius": "2.1",
+      "boss.championId": "godie-efur",
+      "boss.sizeMult": "7.5",
+      "boss.hpMult": "55",
       "boss.modelKey": "champ.mob.king-double",
       "boss.bountyGold": "4200",
       "boss.bountyXp": "1600",
@@ -341,6 +354,8 @@ describe("每一個欄位 are reachable and labelled", () => {
       "special.moveSpeedMult": "1.4",
       "special.radiusMult": "2.2",
       "special.rewardMult": "4",
+      "special.championId": "godie-hblm",
+      "special.sizeMult": "2.4",
       "special.modelKey": "champ.mob.special-double",
     };
     let form = formFromConfig(SHIPPED_MOB_WAVES);
@@ -470,6 +485,47 @@ describe("the per-round table", () => {
     const form = addScheduleRow(formFromConfig(SHIPPED_MOB_WAVES), 4);
     expect(form.schedule.map((r) => Number(r.round))).toEqual([4, 6, 7, 8, 9, 10]);
     expect(addScheduleRow(form, 4).schedule.length).toBe(form.schedule.length);
+  });
+
+  it("setRoundChampion CREATES the row for a round that has none (GH#191 UX)", () => {
+    cover("admin-mob-waves");
+    // THE DEFECT: 由誰擔任 was only editable on rounds with an existing caps row,
+    // and the shipped schedule starts at round 6 — so rounds 3-5, where the
+    // zombies actually appear, were uneditable. The old code path had no way to
+    // express this at all, so an implementation that still requires a row gives
+    // a DIFFERENT answer here (`undefined`).
+    const base = formFromConfig(SHIPPED_MOB_WAVES);
+    expect(base.schedule.some((r) => r.round === "3")).toBe(false);
+    const form = setRoundChampion(base, 3, "godie-efur");
+    const row = form.schedule.find((r) => r.round === "3");
+    expect(row?.championId).toBe("godie-efur");
+    // …and creating it must not change that round's caps — the operator asked
+    // to change the FACE, not to hand round 3 a different wave size.
+    const before = capsForRound(SHIPPED_MOB_WAVES, 3);
+    const after = capsForRound(configFromForm(form), 3);
+    expect(after).toEqual(before);
+    // it reaches the saved payload, and the schema accepts it
+    const cfg = configFromForm(form);
+    expect(cfg.schedule?.find((r) => r.round === 3)?.championId).toBe("godie-efur");
+    expect(zMobWavesConfig.safeParse(cfg).success).toBe(true);
+    // the table stays sorted (the row was appended, not spliced blindly)
+    expect(form.schedule.map((r) => Number(r.round))).toEqual([3, 6, 7, 8, 9, 10]);
+  });
+
+  it("setRoundChampion edits an EXISTING row in place, and clearing a row-less round is a no-op", () => {
+    cover("admin-mob-waves");
+    const base = formFromConfig(SHIPPED_MOB_WAVES);
+    // round 6 HAS a row: edit in place, do not add a second one for round 6
+    const edited = setRoundChampion(base, 6, "godie-hblm");
+    expect(edited.schedule.length).toBe(base.schedule.length);
+    expect(edited.schedule.find((r) => r.round === "6")?.championId).toBe("godie-hblm");
+    // Selecting the empty option on a round with no row must NOT manufacture
+    // one — opening a dropdown and closing it would otherwise dirty the form.
+    expect(setRoundChampion(base, 3, "")).toBe(base);
+    // …but clearing an EXISTING row's champion is a real edit and is kept.
+    expect(setRoundChampion(edited, 6, "").schedule.find((r) => r.round === "6")?.championId).toBe(
+      "",
+    );
   });
 
   it("removing every row drops the `schedule` key entirely (back to the legacy shape)", () => {

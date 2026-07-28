@@ -50,6 +50,8 @@ const RULES: MobRules = {
   moveSpeed: 3,
   hpRegenPerSec: 0,
   modelKey: MOB_MODEL_KEY,
+  sizeMult: 1,
+  tintStrength: 0.65,
   attackDamage: 12,
   attackRangeSq: 1.8 * 1.8,
   attackCdTicks: 3,

@@ -27,7 +27,14 @@ import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
 import { MatchState, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import { DEFAULT_MOB_WAVES_CONFIG } from "@ggd/shared/content/schema/config";
-import { mobRulesFromConfig, summonMobBoss, spawnMob, mobModelKeyFor } from "@ggd/shared/sim/mobs";
+import {
+  mobRulesFromConfig,
+  summonMobBoss,
+  spawnMob,
+  mobModelKeyFor,
+  mobSizeMultFor,
+  parseMobVisualJson,
+} from "@ggd/shared/sim/mobs";
 import { beginCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
 import { isFannedOutEvent, FANNED_OUT_EVENT_TYPES, SERVER_ONLY_EVENT_TYPES } from "./eventFanout";
 
@@ -89,17 +96,67 @@ describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
       return es!.key;
     };
     const keys = [key(normal), key(special), key(king)];
-    // THE ASSERTION THAT DISTINGUISHES THE TWO IMPLEMENTATIONS: the pre-#262
-    // encoder resolved `world.mobRules.modelKey` for every mob, so all three of
-    // these would be the same string and this set would have size 1.
-    expect(new Set(keys).size).toBe(3);
-    // and each one is the key the sim's own resolver names, so the wire and the
-    // sim cannot drift apart.
+    // Each key is the one the sim's own resolver names, so the wire and the sim
+    // cannot drift apart. On the SHIPPED block all three are now the CHAMPION's
+    // mesh (GH#192 「選什麼英雄就會讀取什麼 3d modal」) — which is exactly why the
+    // #262 assertion 「three DIFFERENT keys」 had to move to the size channel
+    // below: on a correct build these three strings are equal.
     expect(keys).toEqual([
       mobModelKeyFor(rules, "normal"),
       mobModelKeyFor(rules, "special"),
       mobModelKeyFor(rules, "boss"),
     ]);
+
+    // ── GH#192: THE SIZE REACHES THE CLIENT (failure shape ②) ───────────────
+    // 體型倍率 rides the mob's unused `mana` slot. THE ASSERTION THAT
+    // DISTINGUISHES THE TWO IMPLEMENTATIONS: an encoder that never wrote it
+    // leaves all three at 0 and this set has size 1, so a king that is 10× in
+    // the rules and 1× on screen fails here rather than in a playtest.
+    const size = (id: number): number => decoded.entities.get(String(id))!.mana;
+    const sizes = [size(normal), size(special), size(king)];
+    expect(new Set(sizes).size).toBe(3);
+    // toBeCloseTo, not toEqual: the slot is a `float32` on the wire and
+    // 0.68 × 1.8 does not survive the narrowing exactly. 6 decimals is far
+    // tighter than any wrong-by-a-factor bug and far looser than float32 noise.
+    const want = [
+      mobSizeMultFor(rules, "normal"),
+      mobSizeMultFor(rules, "special"),
+      mobSizeMultFor(rules, "boss"),
+    ];
+    for (let i = 0; i < 3; i++) expect(sizes[i]!).toBeCloseTo(want[i]!, 6);
+    expect(sizes[2]! / sizes[0]!).toBeCloseTo(10, 6); // owner: 「modal 大小是10倍」
+    // …and `maxMana` MUST stay 0, or the HUD divides by it and paints a mana bar
+    // out of the size number (`manaPct = maxMana > 0 ? mana / maxMana : 0`).
+    for (const id of [normal, special, king]) {
+      expect(decoded.entities.get(String(id))!.maxMana).toBe(0);
+    }
+
+    // ── 染黑 (GH#192): the match-wide tint table REACHES the client ─────────
+    //
+    // MUTATION SURVIVOR FIX. Asserting only `parseMobVisualJson(...) === 0.65`
+    // proved nothing: `parseMobVisualJson("")` degrades to the shipped 0.65 by
+    // design, so an encoder that NEVER WROTE THE FIELD passed. That is failure
+    // shape ④ exactly. Two assertions that do separate the implementations:
+    //   1. the field is a non-empty JSON payload — 「有送」;
+    //   2. re-armed with a NON-DEFAULT strength, the wire carries THAT number,
+    //      which an unwritten field cannot produce.
+    expect(decoded.mobVisualJson, "mobVisualJson never left the server").not.toBe("");
+    expect(parseMobVisualJson(decoded.mobVisualJson).tintStrength).toBe(rules.tintStrength);
+    expect(rules.tintStrength).toBe(0.65);
+
+    const dim = mobRulesFromConfig(
+      { ...DEFAULT_MOB_WAVES_CONFIG, mob: { ...DEFAULT_MOB_WAVES_CONFIG.mob, tintStrength: 0.2 } },
+      DT,
+      3,
+    );
+    w.mobRules = dim;
+    const state2 = new MatchState();
+    const enc2 = new Encoder(state2);
+    projectSnapshot(ctl, state2, new Map());
+    const dec2 = new MatchState();
+    new Decoder(dec2).decode(enc2.encodeAll());
+    expect(parseMobVisualJson(dec2.mobVisualJson).tintStrength).toBe(0.2);
+    w.mobRules = rules;
 
     // The king's HP also rides along, so a neutral health bar can render 6,000
     // rather than a zombie's 200 — the other half of 「看得出來這是王」.

@@ -241,6 +241,8 @@ describe("a SETTLED zone stands its mobs down (#216 + #215)", () => {
     moveSpeed: 3,
     hpRegenPerSec: 1,
     modelKey: "champ.godie-zombiex",
+    sizeMult: 1,
+    tintStrength: 0.65,
     attackDamage: 12,
     attackRangeSq: 1.8 * 1.8,
     attackCdTicks: 3,

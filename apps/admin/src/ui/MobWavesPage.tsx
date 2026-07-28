@@ -21,11 +21,16 @@
  * (it must exist in the production bundle) and session-gated (its write is a
  * platform admin call).
  *
- * WHAT IS NOT WIRED, said out loud. The per-round 由誰擔任 column is a NEW
- * schema field; `mobRulesFromConfig` in `packages/shared/src/sim/` still reads
- * only `mob.championId` and has no per-round branch. The column stores and
- * displays, and the page says so in the header of that very column — a knob that
- * silently does nothing is exactly the failure this project keeps having.
+ * 由誰擔任 IS WIRED NOW (GH#191/#192). `mobRulesFromConfig` resolves the round's
+ * champion through `mobChampionForRound`, and since GH#192 the mob's 3D MODEL is
+ * resolved from that champion too — so this column changes what walks onto the
+ * field, not just what the console displays. Two consequences for this page:
+ *   • the old ⚠️「只存不吃」 note is gone (it was true; it is now false, and a
+ *     stale warning is worse than none);
+ *   • the picker is enabled on EVERY ACTIVE ROUND. It used to require a schedule
+ *     row, and the shipped schedule starts at round 6 — so rounds 3-5, the ones
+ *     where zombies first appear, rendered a grey uneditable label that read as
+ *     「鎖死」. The first edit creates the row (`setRoundChampion`).
  *
  * All parse/validate/derive logic is pure (../mobWaves, unit-tested); this file
  * is presentation + wiring.
@@ -61,6 +66,7 @@ import {
   saveErrorText,
   scheduleChanged,
   setField,
+  setRoundChampion,
   setScheduleCell,
   shippedForm,
   sortChampions,
@@ -185,7 +191,7 @@ export function MobWavesPage(): React.JSX.Element {
         {APPLY_NOTE}
       </Note>
 
-      <Note tone="warn" icon="⚠️" title="逐回合的「由誰擔任」目前只存不吃">
+      <Note tone="ok" icon="🧟" title="「由誰擔任」現在真的會生效">
         {SIM_GAP_NOTE}
       </Note>
 
@@ -218,7 +224,7 @@ export function MobWavesPage(): React.JSX.Element {
                 <Th>回合</Th>
                 <Th>每波數量</Th>
                 <Th>場上上限</Th>
-                <Th>由誰擔任（尚未接上對戰端）</Th>
+                <Th>由誰擔任（臉＋3D 模型）</Th>
                 <Th>殭屍等級</Th>
                 <Th>每隻血量</Th>
                 <Th>狀態</Th>
@@ -235,6 +241,8 @@ export function MobWavesPage(): React.JSX.Element {
                   disabled={busy}
                   errors={errors.schedule[row.scheduleIndex]}
                   onCell={(cell, v) => patch(setScheduleCell(form, row.scheduleIndex, cell, v))}
+                  onRoundChampion={(v) => patch(setRoundChampion(form, row.round, v))}
+                  matchChampionId={draft.mob.championId ?? MOB_CHAMPION_FALLBACK}
                   onAdd={() => patch(addScheduleRow(form, row.round))}
                   onRemove={() => patch(removeScheduleRow(form, row.scheduleIndex))}
                 />
@@ -340,6 +348,10 @@ function RoundTr(props: {
   disabled: boolean;
   errors?: { round?: string; mobsPerWaveCap?: string; maxAlivePerZone?: string };
   onCell: (cell: "round" | "mobsPerWaveCap" | "maxAlivePerZone" | "championId", v: string) => void;
+  /** GH#191 — set this round's 由誰擔任, creating its schedule row when absent */
+  onRoundChampion: (v: string) => void;
+  /** the whole-match champion, so the 「沿用整場」 option can NAME it */
+  matchChampionId: string;
   onAdd: () => void;
   onRemove: () => void;
 }): React.JSX.Element {
@@ -392,18 +404,22 @@ function RoundTr(props: {
           <div style={{ fontSize: 10.5, color: WARN }}>{props.errors.maxAlivePerZone}</div>
         )}
       </Td>
+      {/* GH#191 — editable on EVERY active round, not only on rounds that
+          happen to already carry a caps row. Rounds 3-5 have no row in the
+          shipped schedule, so this column used to render as a dead grey label
+          on exactly the rounds the zombies start; the first edit now creates
+          the row itself (`setRoundChampion`). Inactive rounds stay 「—」: there
+          are no zombies there to be anybody. */}
       <Td dim={!row.active}>
-        {editable && cell ? (
+        {row.active ? (
           <ChampionPicker
-            value={cell.championId}
+            value={cell?.championId ?? ""}
             options={props.champions}
             disabled={props.disabled}
             dataField={`schedule.${row.round}.championId`}
-            emptyLabel="（沿用整場設定）"
-            onChange={(v) => props.onCell("championId", v)}
+            emptyLabel={`（沿用整場：${championLabel(props.matchChampionId, props.champions)}）`}
+            onChange={(v) => props.onRoundChampion(v)}
           />
-        ) : row.active ? (
-          <span style={{ color: TEXT_DIM }}>{championLabel(row.championId, props.champions)}</span>
         ) : (
           "—"
         )}

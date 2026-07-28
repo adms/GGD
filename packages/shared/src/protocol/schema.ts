@@ -536,6 +536,24 @@ export class MatchState extends Schema {
    */
   declare statCapsJson: string;
   /**
+   * 殭屍外觀表 (`mobWaves` 的視覺部分, GH#192) as JSON — today exactly
+   * `{"tintStrength":0.65}`, decoded by `parseMobVisualJson`.
+   *
+   * ON THE WIRE for the same reason `combatEnvJson` is, and not for a different
+   * one: 染黑強度 is an ADMIN knob (data/ overlay, changed between matches
+   * without a redeploy), the client is the only thing that can apply it, and it
+   * is not derivable from any doc the client already holds. A client that read
+   * its own content mount instead would paint last-deploy's colour over this
+   * match's zombies the moment the operator changed it — the exact
+   * 「後台改了但玩家那場沒變」 shape this repo keeps hitting.
+   *
+   * The mob's SIZE is deliberately NOT here: it is per-entity (一般 / 特殊 / 王
+   * differ) and rides `EntityState.mana`; see ENTITY_KIND below.
+   *
+   * "" / malformed = the shipped default, never "no tint".
+   */
+  declare mobVisualJson: string;
+  /**
    * True once the MATCH outcome is decided (one team left standing) — set at the
    * end of the final combat, so it flips during the last `resolution` phase, a
    * few seconds BEFORE phase becomes matchEnd. The server FREEZES all input from
@@ -583,6 +601,7 @@ export class MatchState extends Schema {
     this.combatEnvJson = "";
     this.baseBonusJson = "";
     this.statCapsJson = "";
+    this.mobVisualJson = "";
     this.outcomeDecided = false;
     // `declare` + constructor assignment, never a field initializer: a class
     // field would run AFTER Schema's own constructor and clobber the encoder's
@@ -622,6 +641,9 @@ defineTypes(MatchState, {
   // `baseBonusJson` 旁邊(語意上它們是一對)會把 `duels` 之後每一格的索引往後推,
   // 讓還沒重新整理的客戶端整份解碼錯位。append-only 不是建議,是編碼格式。
   statCapsJson: "string",
+  // APPEND-ONLY (GH#192): 殭屍外觀表. 又一次宣告在**最後一格** —— 理由同上,
+  // Colyseus 用宣告順序當欄位索引,插在中間會讓所有舊客戶端整份解碼錯位。
+  mobVisualJson: "string",
 });
 
 /**
@@ -685,6 +707,22 @@ export const ENTITY_KIND = {
    * teammate). seatId = -1 (neutral, no player seat); key = MOB_MODEL_KEY; hp/
    * maxHp/alive ride along so a neutral health bar renders. Interpolated like
    * the guardian/flower, NEVER client-predicted.
+   *
+   * SLOT REUSE (GH#192), same convention as the revive circle and the coin:
+   *
+   *   mana    = 體型倍率 — the RENDERED size multiplier for this mob's kind
+   *             (一般 1 / 特殊 1.8 / 王 10 on the shipped arena), applied on top
+   *             of the model doc's own scale. `maxMana` stays 0, which is what
+   *             makes this slot free: `manaPct` is computed as
+   *             `maxMana > 0 ? mana / maxMana : 0`, so nothing draws a mana bar
+   *             from it and no other reader looks at `mana` alone.
+   *
+   * WHY A PER-ENTITY CHANNEL AT ALL, when GH#262 got the size across through
+   * `key`: since GH#192 the mesh is resolved FROM THE CHAMPION, so all three
+   * kinds normally share ONE model key — the key can no longer imply a size,
+   * and a king that reused the zombie's key rendered as a zombie. `shield` was
+   * not used instead because `shieldPct = shield / maxHp` IS read for a mob and
+   * would paint a phantom shield sliver on its health bar.
    */
   MOB: 6,
 } as const;

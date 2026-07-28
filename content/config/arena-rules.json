@@ -173,14 +173,15 @@
       "attackRange": 1.8,
       "attackCdSec": 1.0,
       "radius": 0.6,
-      "modelKey": "champ.mob.zombie",
       "championId": "godie-zombiex",
       "baseLevel": 3,
       "levelPerRound": 1,
       "baseHp": 20,
       "hpPerLevel": 20,
       "baseRegen": 0,
-      "regenPerLevel": 0
+      "regenPerLevel": 0,
+      "sizeMult": 0.68,
+      "tintStrength": 0.65
     },
     "reward": {
       "gold": 20,
@@ -197,10 +198,11 @@
       "attackRange": 2.6,
       "attackCdSec": 1.4,
       "radius": 1.8,
-      "modelKey": "champ.mob.zombie-king",
       "bountyGold": 3000,
       "bountyXp": 1200,
-      "lastHitMultiplier": 2
+      "lastHitMultiplier": 2,
+      "hpMult": 100,
+      "sizeMult": 10
     },
     "special": {
       "chancePercent": 5,
@@ -209,7 +211,7 @@
       "moveSpeedMult": 1.25,
       "radiusMult": 1.8,
       "rewardMult": 3,
-      "modelKey": "champ.mob.zombie-special"
+      "sizeMult": 1.8
     }
   }
 }

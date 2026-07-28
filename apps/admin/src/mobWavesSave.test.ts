@@ -166,6 +166,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "mob.radius": "0.7",
   "mob.modelKey": "champ.mob.test-double",
   "mob.championId": "godie-hblm",
+  "mob.sizeMult": "1.4",
+  "mob.tintStrength": "0.4",
   "mob.baseLevel": "4",
   "mob.levelPerRound": "2",
   "mob.baseHp": "31",
@@ -184,6 +186,9 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.attackRange": "3.1",
   "boss.moveSpeed": "2.9",
   "boss.radius": "2.1",
+  "boss.championId": "godie-efur",
+  "boss.sizeMult": "7.5",
+  "boss.hpMult": "55",
   "boss.modelKey": "champ.mob.king-double",
   "boss.bountyGold": "4200",
   "boss.bountyXp": "1600",
@@ -194,6 +199,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "special.moveSpeedMult": "1.4",
   "special.radiusMult": "2.2",
   "special.rewardMult": "4",
+  "special.championId": "godie-hblm",
+  "special.sizeMult": "2.4",
   "special.modelKey": "champ.mob.special-double",
 };
 

@@ -86,6 +86,12 @@ import {
 import { ARCHETYPE_BY_MODEL_KEY, voxelLookFor } from "./render/views/voxelLook";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championTintForId } from "./render/views/championTint";
+import { entityTintFor } from "./render/views/mobTint";
+import {
+  MOB_VISUAL_DEFAULT,
+  parseMobVisualJson,
+  type MobVisualTable,
+} from "@ggd/shared/sim/mobs";
 import { voxelSkinForId } from "./render/views/voxelSkinFor";
 import {
   hasOverheadBar,
@@ -94,6 +100,7 @@ import {
   KIND_CHAMPION,
   KIND_FLOWER,
   KIND_GUARDIAN,
+  KIND_MOB,
   KIND_REVIVE_CIRCLE,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
@@ -428,6 +435,15 @@ export class GameApp {
    */
   private combatEnvJson = "";
   private combatEnv: CombatEnvMultipliers = DEFAULT_COMBAT_ENV;
+  /**
+   * 殭屍外觀 (GH#192, MatchState.mobVisualJson), parsed once per change — the
+   * same shape and the same reason as `combatEnvJson` above. Seeded with the
+   * SHIPPED table, not with 「no tint」: a mob that appears before the first
+   * patch lands must already be dark, or the very first wave of a match renders
+   * as a crowd of un-tinted champions.
+   */
+  private mobVisualJson = "";
+  private mobVisual: MobVisualTable = MOB_VISUAL_DEFAULT;
   private readonly teamBySeat = new Map<number, number>();
   /** per-player last-observed alive state (death-spectator camera transitions) */
   private readonly aliveByPlayer = new Map<number, boolean>();
@@ -501,7 +517,16 @@ export class GameApp {
       // w3x vertex tint (task #49). The seat table lives in the HUD store, and
       // render/** may not read it (client-08), so the entity → champion step
       // happens here — the same `championIdForSeat` the model resolve uses.
-      championTintFor: (e) => championTintForId(this.championIdForSeat(e.seatId)),
+      // GH#192 殭屍染黑 rides the SAME seam, one branch earlier. It has to: a
+      // mob has `seatId === -1`, so `championIdForSeat` returns null and
+      // `championTintForId` answers `undefined` — 「not resolvable yet」 — which
+      // the registry retries forever and never paints. That is precisely why a
+      // mob wearing a champion's mesh would otherwise render in the champion's
+      // own colours, indistinguishable from a player who picked them.
+      championTintFor: (e) =>
+        entityTintFor(e, this.mobVisual.tintStrength, () =>
+          championTintForId(this.championIdForSeat(e.seatId)),
+        ),
       // per-champion model-SIZE override (task #77/#150). SAME entity→championId
       // seam as modelDocFor/championTintFor above — render/** is walled off from
       // the seat table (client-08), so the composition root resolves championId and
@@ -1554,6 +1579,14 @@ export class GameApp {
     // table), so the composition root supplies it, exactly like the #49 tint and
     // #231 voxel-skin seams next to it.
     const localId = hudStore.getState().localEntityId;
+    // GH#192 — re-parse the 殭屍外觀 table when (and only when) it changes.
+    // HERE and not in `ensurePredictionEntity`, where the combat-env table is
+    // refreshed: that method early-returns for a spectating/dead player with no
+    // local entity, and a spectator still has to see the zombies painted right.
+    if (state.mobVisualJson !== this.mobVisualJson) {
+      this.mobVisualJson = state.mobVisualJson;
+      this.mobVisual = parseMobVisualJson(state.mobVisualJson);
+    }
     let i = 0;
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
@@ -1585,6 +1618,12 @@ export class GameApp {
       // revive circles (kind 3) reuse the float slots for their own state —
       // see protocol ENTITY_KIND for the mapping. Decoded once here so the
       // render layer never has to know about the packing.
+      // GH#192 — a MOB's 體型倍率 rides the free `mana` slot (protocol
+      // ENTITY_KIND MOB). Decoded here, next to the revive circle's packing, so
+      // render/** never has to know about the slot reuse. Cleared for every
+      // other kind: a pooled slot reused by a champion must not carry a
+      // 10× scale over from the king that had this array index last frame.
+      e.mobScale = es.kind === KIND_MOB ? es.mana : undefined;
       if (es.kind === KIND_REVIVE_CIRCLE) {
         const rv = e.revive ?? (e.revive = {
           progress: 0,

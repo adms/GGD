@@ -139,8 +139,33 @@ describe("the page renders, and every knob is really on screen", () => {
     // 「改了會不會被部署蓋掉」 — answered on the page, not only in a report
     expect(HTML).toContain("git pull");
     expect(HTML).toContain("耐久覆蓋層");
-    // and the honest admission about the per-round champion column
-    expect(HTML).toContain("對戰端還沒有讀它");
+    // GH#191 — the page used to carry an honest 「對戰端還沒有讀它」 admission.
+    // It is now WIRED, so the page must say the OPPOSITE, and must not still be
+    // carrying the old warning: a stale 「這個沒用」 is how an operator stops
+    // touching a knob that works.
+    expect(HTML).not.toContain("對戰端還沒有讀它");
+    expect(HTML).toContain("那個英雄的臉與 3D 模型");
+    // 染黑 is an operator-visible consequence of 「模型從英雄來」, so the page
+    // says so where the champion picker is, not only in a commit message.
+    expect(HTML).toContain("染黑");
+  });
+
+  it("由誰擔任 is editable on EVERY active round, not only on rounds with a caps row (GH#191)", () => {
+    cover("admin-mob-waves");
+    // THE UX DEFECT: the shipped schedule starts at round 6, so rounds 3-5 —
+    // the ones where zombies first appear — rendered a grey uneditable label.
+    // A `data-field` for those rounds exists ONLY if the picker is rendered.
+    for (const round of [3, 4, 5]) {
+      expect(
+        HTML,
+        `round ${round} has no 由誰擔任 control — it reads as 鎖死`,
+      ).toContain(`data-field="schedule.${round}.championId"`);
+    }
+    // …and rounds BEFORE fromRound stay uneditable: there are no zombies there
+    // to be anybody, so a picker would be a knob with no meaning.
+    for (const round of [1, 2]) {
+      expect(HTML).not.toContain(`data-field="schedule.${round}.championId"`);
+    }
   });
 
   it("EVERY field has an input carrying its own data-field", () => {

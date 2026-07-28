@@ -334,24 +334,32 @@ describe("#217 (a) the model key is a live knob", () => {
     expect(mobRulesFromConfig(cfg, DT, 3).modelKey).toBe("champ.sela");
   });
 
-  it("the shipped arena-rules doc points the mob at its OWN smaller zombie body", () => {
+  it("the shipped arena-rules doc still renders the mob SMALLER than a hero (owner ruling, now on sizeMult)", () => {
     cover("mob-217-arena-rules-model");
     const raw = ARENA_RULES;
-    // Was `champ.godie-zombiex` — the hero's own mesh — until the owner played it
-    // (2026-07-26): 「肉鴿殭屍…縮小到適合尺寸…不然現在根本玩不了」.
+    // THE OWNER RULING THIS PROTECTS, unchanged since 2026-07-26:
+    // 「肉鴿殭屍…縮小到適合尺寸…不然現在根本玩不了」. Measured, not guessed —
+    // every generated voxel body's glb is 1.800 u tall and #150 normalises every
+    // champion to 1.800 u too, so a trash mob was standing exactly as tall as a
+    // hero, which is what "too big" actually meant.
     //
-    // Measured, not guessed: every generated voxel body's glb is 1.800 u tall and
-    // the hero normalisation lands every champion at 1.800 u too, so a trash mob
-    // was standing exactly as tall as a hero — which is what "too big" actually
-    // meant. `champ.mob.zombie` is the same blocky-undead body at scale 0.68
-    // (1.224 u, ~68% of a hero), so the wave READS as a wave.
-    //
-    // It is a SEPARATE doc on purpose: `mob.modelKey` is an independent knob
-    // (the test above proves it reaches the rules), so shrinking the mob leaves
-    // the HERO 喪標麥可 — the one #236 is filling out to five slots — untouched.
-    expect(raw.mobWaves.mob.modelKey).toBe("champ.mob.zombie");
-    // …and it must NOT be the hero's own doc, or the two sizes are welded again.
-    expect(raw.mobWaves.mob.modelKey).not.toBe(MOB_MODEL_KEY);
+    // ⚠️ THE MECHANISM CHANGED IN GH#192, the ruling did not. #217 expressed it
+    // as `modelKey: "champ.mob.zombie"` — a second doc holding `scale: 0.68`.
+    // GH#192 resolves the mesh FROM THE CHAMPION (owner: 「選什麼英雄就會讀取什麼
+    // 3d modal」), which would have silently handed the ruling back at 1.0×, so
+    // the 0.68 now lives on `mob.sizeMult` where an operator can also SEE it.
+    // The assertion is therefore on the SIZE, not on which doc id is named:
+    // a rewrite that keeps the size passes, and one that quietly restores a
+    // hero-sized zombie fails no matter how it spells the model.
+    expect(raw.mobWaves.mob.sizeMult).toBe(0.68);
+    expect(raw.mobWaves.mob.sizeMult).toBeLessThan(1);
+    // The override must be ABSENT, or the champion branch never runs in a real
+    // match and 「選什麼英雄就會讀取什麼 3d modal」 ships inert (failure shape ②).
+    expect(raw.mobWaves.mob.modelKey).toBeUndefined();
+    // …and with it absent the mesh really does come off the champion card.
+    expect(mobRulesFromConfig(raw.mobWaves, DT, 3).modelKey).toBe(MOB_MODEL_KEY);
+    // 染黑 (GH#192): shipped ON, or the zombies wear the player's own colours.
+    expect(raw.mobWaves.mob.tintStrength).toBe(0.65);
     expect(raw.mobWaves.mob.championId).toBe(MOB_CHAMPION_ID);
     expect(raw.mobWaves.mob.baseLevel).toBe(3);
     expect(raw.mobWaves.mob.levelPerRound).toBe(1);
