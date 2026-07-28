@@ -119,6 +119,20 @@ export const EVENT_SPATIAL: Readonly<Record<string, EventSpatialSpec>> = {
   // this is a neutral: no actor, no victim, relation demotes to "third". It is
   // a lootable world ping, not a damage-class beat, hence `texture`.
   coinDropped: { cls: "texture", entityFallback: ["id"], actorField: null, victimField: null },
+
+  // --- 殭屍王降臨 (#262 / GH #190) -----------------------------------------
+  // `mobBossSpawn` carries x/z — the rim point the king walks in from — and `id`
+  // is the king's own (already spawned) entity, so the 4.4 s horror drone comes
+  // from the direction the thing is actually standing in. That direction IS the
+  // information: the whole point of a 3-5 second warning is that you get to
+  // decide which way to run before it reaches you.
+  //
+  // `focus`, not `texture`: this is the loudest, rarest, most consequential
+  // arrival in the mode, and it must never be the cue the crowding limiter sheds
+  // in a busy fight. A MONSTER team unit has no team relation to anybody, so the
+  // relation resolves to "third" like the flowers and the guardian — correct: it
+  // is nobody's ally.
+  mobBossSpawn: { cls: "focus", entityFallback: ["id"], actorField: null, victimField: null },
 };
 
 /**
@@ -146,6 +160,14 @@ export const CENTRED_EVENTS: Readonly<Record<string, string>> = {
   // combatSfxKey maps this to NULL — `ui/castFeedback` owns the 拒絕 cue, and
   // there is nothing in the world to place anyway (payload is {seatId, reason}).
   coinDropRejected: "voiced as silence — ui/castFeedback owns the refusal cue",
+  // 殭屍王分紅 (#262 / GH #190): the 中獎 fanfare, gated by `bossJackpotKey` to
+  // the clients that are actually ON the payout sheet. Exactly the same shape as
+  // guardianSlain / coinPickedUp and centred for exactly the same reason — and
+  // here it is not even a choice: the king's entity is DESTROYED on the tick
+  // this fires and the payload carries no x/z, so there is no position to place
+  // it at. 「你分到了 850 金」 is a HUD beat that belongs in the middle of your
+  // head, beside the settlement panel it plays under.
+  mobBossSlain: "paid-gated 中獎 fanfare — a HUD beat; the king's entity is already destroyed",
 };
 
 // ---------------------------------------------------------------------------

@@ -277,6 +277,42 @@ export interface KillComboPlacementOpts {
   legendUp: boolean;
   /** local players on this machine; >1 = split-screen (see the mount gate) */
   couchPlayers?: number;
+  /**
+   * The 殭屍王 overlay's resolved rect while it is up (task #262 / GH #190), or
+   * null/absent when it is not.
+   *
+   * SAME MECHANISM, SAME REASON, AS `legendUp` ABOVE — and the same precedence
+   * ruling, decided the other way round. The king's 降臨 banner and 分紅結算
+   * panel are TOP-anchored in this very corridor (ui/hud/mobBossModel), and on a
+   * landscape phone the corridor is ~81px tall, so the two genuinely cannot both
+   * fit. THE COUNTER YIELDS: a 連殺 number is juice that re-fires every few
+   * seconds, while a king is a once-per-100-kills event whose panel is the only
+   * place the 「補刀是權重不是事後翻倍」 payout is ever explained. It costs
+   * almost nothing — 4.6 s per summon and 8.2 s per kill, a handful of seconds
+   * in a whole match.
+   *
+   * A RECT rather than a boolean, because the yield has to be geometric: on a
+   * 1920×1080 screen the corridor holds both comfortably and the counter must
+   * NOT vanish, which a boolean could not express.
+   */
+  bossRect?: HudRect | null;
+}
+
+/**
+ * The rects of the round-1 ControlLegend for the placement scans — exported so
+ * the 殭屍王 overlay resolves the SAME obstacles this counter does instead of
+ * restating them. One rect per binding set, never their union: see
+ * `legendObstacles` below for why bridging them would produce a phantom block.
+ */
+export function legendObstacleRects(
+  viewport: HudViewport,
+  opts: { touch: boolean; legendUp: boolean; couchPlayers?: number },
+): HudRect[] {
+  return legendObstacles(viewport, {
+    touch: opts.touch,
+    legendUp: opts.legendUp,
+    couchPlayers: opts.couchPlayers,
+  });
 }
 
 /**
@@ -338,6 +374,8 @@ export function killComboObstacles(
   legendObstacles(viewport, opts).forEach((rect, i) =>
     out.push({ id: `control-legend-${i}`, rect }),
   );
+  // the 殭屍王 overlay while it is up (#262 / GH #190) — see `bossRect`
+  if (opts.bossRect) out.push({ id: "mob-boss", rect: opts.bossRect });
   return out;
 }
 
@@ -365,6 +403,14 @@ export function killComboRect(
     if (legend.x < mid && legend.x + legend.w > mid) {
       top = Math.max(top, legend.y + legend.h + HUD_GAP);
     }
+  }
+  // …and the 殭屍王 overlay, which is TOP-anchored in this same corridor and
+  // outranks the counter (see `bossRect`). Identical geometry test, so a boss
+  // box that somehow did not straddle the centre line cannot push the counter
+  // down for no reason.
+  if (opts.bossRect) {
+    const b = opts.bossRect;
+    if (b.x < mid && b.x + b.w > mid) top = Math.max(top, b.y + b.h + HUD_GAP);
   }
 
   const corridor = bottom - top;
@@ -432,5 +478,6 @@ export function killComboCollisions(
   legendObstacles(viewport, opts).forEach((r, i) => {
     if (hudRectsOverlap(rect, r)) hits.push(`control-legend-${i}`);
   });
+  if (opts.bossRect && hudRectsOverlap(rect, opts.bossRect)) hits.push("mob-boss");
   return hits.sort();
 }

@@ -40,6 +40,22 @@
  */
 import type { EntityId } from "../ids";
 
+/**
+ * The wire names of the king's two beats, for the CONSUMERS (`eventFanout`, the
+ * client's RoomStore projection and the HUD's 降臨 banner / 分紅結算 panel).
+ *
+ * ⚠️ The EMIT SITES (sim/mobs.summonMobBoss, sim/systems/MobSystem.payBossBounty)
+ * still write the literal, and must: `eventFanout.test.ts` rejects any
+ * `world.emit(<identifier>, …)` outright, because a computed event name is
+ * invisible to the scrape that proves every sim event is classified. Same
+ * contract, and same reason, as `KILL_COMBO_EVENT` in sim/combat/killCombo.ts.
+ * The client's `ui/hud/mobBoss.test.ts` pins these two against the game-server's
+ * `FANNED_OUT_EVENT_TYPES`, so a rename on one side goes red rather than
+ * silently producing a HUD that listens for an event nobody sends.
+ */
+export const MOB_BOSS_SPAWN_EVENT = "mobBossSpawn";
+export const MOB_BOSS_SLAIN_EVENT = "mobBossSlain";
+
 /** One champion's contribution to the king: `[entity, damage dealt]`. */
 export type BossDamageEntry = readonly [EntityId, number];
 

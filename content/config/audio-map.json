@@ -1244,6 +1244,22 @@
       "gain": 1.44,
       "cooldownMs": 2000,
       "maxConcurrent": 1
+    },
+    "bossHorror": {
+      "files": [
+        "assets/audio/sfx/fx/boss-horror.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 4000,
+      "maxConcurrent": 1
+    },
+    "bossJackpot": {
+      "files": [
+        "assets/audio/sfx/fx/boss-jackpot.mp3"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 4000,
+      "maxConcurrent": 1
     }
   }
 }

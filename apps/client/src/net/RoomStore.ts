@@ -10,6 +10,7 @@ import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { KILL_COMBO_EVENT } from "@ggd/shared/sim/combat/killCombo";
+import { MOB_BOSS_SLAIN_EVENT, MOB_BOSS_SPAWN_EVENT } from "@ggd/shared/sim/mobBoss";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
@@ -295,6 +296,21 @@ export interface HudState {
    * while your own floor is still empty.
    */
   mobsAlive: number;
+  /**
+   * 殭屍王 (task #262 / GH #190) — the LAST king moment this client saw, or null.
+   *
+   * ONE SLOT FOR BOTH HALVES (降臨 banner and 分紅結算), because they are two
+   * beats of the same event and only one of them can be the current one: the
+   * king has to be summoned before it can be killed, and the settlement is the
+   * thing you want on screen the instant it lands. A `slain` therefore
+   * OVERWRITES a `spawn` — see `recordMobBossEvent`.
+   *
+   * Discrete and event-driven, exactly like `killCombo` / `settlement` above:
+   * `mobBossSpawn` / `mobBossSlain` cross the wire once per king (eventFanout),
+   * and NOTHING about the split is on `MatchState` — the damage ledger is
+   * sim-only, so this event is the only way the numbers can ever reach a screen.
+   */
+  mobBoss: MobBossView | null;
 }
 
 /**
@@ -307,6 +323,64 @@ export interface KillComboView {
   count: number;
   atMs: number;
   seq: number;
+}
+
+/** One participant's line on the king's payout sheet (sim/mobBoss.BossBountyShare). */
+export interface MobBossShareView {
+  /** seat of the paid champion; -1 when the sim could not resolve one */
+  seatId: number;
+  /** damage this champion did to the king (the SHARE BASIS, pre-weight) */
+  damage: number;
+  gold: number;
+  xp: number;
+  /** true = this champion landed the killing blow (the 翻倍 WEIGHT, not a bonus) */
+  lastHit: boolean;
+}
+
+/**
+ * A 殭屍王 beat, projected off the wire. Same clock discipline as
+ * {@link KillComboView}: `atMs` is `comboNowMs()` (monotone), `seq` bumps per
+ * recorded event so a second king restarts the entry animation.
+ */
+export interface MobBossView {
+  kind: "spawn" | "slain";
+  atMs: number;
+  seq: number;
+  /** spawn: the summoner's seat (-1 unknown); slain: unused */
+  summonerSeatId: number;
+  /** spawn: TRUE when the local seat is the one whose 100 kills summoned it */
+  mine: boolean;
+  /** spawn: the summoner's cumulative zombie tally that crossed the threshold */
+  kills: number;
+  /** slain: the whole split, ascending by entity id as the sim emitted it */
+  shares: MobBossShareView[];
+  /** slain: pool actually paid (sum of shares), so the panel never invents a total */
+  totalGold: number;
+  totalXp: number;
+  /** slain: the last hitter's damage WEIGHT (sim `boss.lastHitMultiplier`) */
+  lastHitMultiplier: number;
+  /** slain: seat that landed the killing blow, -1 when nobody did */
+  killerSeatId: number;
+  /** the king's entity id (`ev.data.id`), -1 unknown — the key that lets a
+   *  `slain` inherit the `zone` its own `spawn` carried. */
+  bossId: number;
+  /**
+   * THE DUEL ZONE THE KING BELONGS TO, -1 when it could not be resolved.
+   *
+   * Both events are FANNED OUT TO EVERY CLIENT IN THE MATCH (game-server
+   * net/eventFanout), but a king is summoned into exactly ONE of the four duel
+   * zones. `combatSfx.bossHorrorKey` already refuses to play the 4.4 s dread
+   * drone in the other arena's ears for precisely this reason; the SCREEN owes
+   * the same courtesy, and owes it harder — the banner and the settlement sheet
+   * eat the centre corridor and the 連殺 counter yields to them, so an
+   * un-gated king costs a player in arena B real HUD for a fight in arena A
+   * that he cannot see, cannot join and will never be paid by.
+   *
+   * `mobBossSlain` does NOT carry a zone (the king's entity is already
+   * destroyed by then), so it inherits the one its matching `mobBossSpawn`
+   * carried — see `recordMobBossEvent`.
+   */
+  zone: number;
 }
 
 const initial: HudState = {
@@ -339,15 +413,41 @@ const initial: HudState = {
   shopEvent: null,
   killCombo: null,
   mobsAlive: 0,
+  mobBoss: null,
 };
 
 let shopEventSeq = 0;
 
 export const hudStore = createStore<HudState>(() => ({ ...initial }));
 
+/**
+ * The store as `useStore` sees it, with ONE field overridden: the SERVER
+ * snapshot is the LIVE state, not the module-load state.
+ *
+ * WHY — and this is the same trap `ui/leaveFlow.useLeaveConfirm` and
+ * `ui/platform/store.useApp` each hand-rolled a hook to escape. zustand's
+ * `useStore` passes `api.getInitialState` to `useSyncExternalStore` as the
+ * server snapshot, and `react-dom/server`'s `renderToStaticMarkup` is the ONLY
+ * way this repo's `node`-env client tests render React. Under the default, a
+ * test that puts the HUD into combat and then renders `<HudRoot />` gets the
+ * store AS IT LOOKED AT MODULE LOAD — the 「Connecting to match…」 box — so every
+ * 「the mounted HUD really paints it」 guard silently asserts against a blank
+ * page. That is this repo's failure ③ (deletable from the render tree, still
+ * green) built into the plumbing.
+ *
+ * Overriding the field rather than hand-rolling the hook keeps `net/*` free of
+ * a direct React import, which `architecture.test.ts` (client-08) enforces —
+ * zustand's `useStore` is the one React seam this layer is allowed.
+ *
+ * There is no correctness cost: `HudState` has no server/client split, the
+ * browser path already reads `getState`, and a real SSR pass of the in-match
+ * HUD does not exist.
+ */
+const hudApi = { ...hudStore, getInitialState: hudStore.getState };
+
 /** React hook (typed selector over the vanilla store). */
 export function useHud<T>(selector: (s: HudState) => T): T {
-  return useStore(hudStore, selector);
+  return useStore(hudApi, selector);
 }
 
 // ---------------------------------------------------------------------------
@@ -642,6 +742,145 @@ export function recordKillComboEvent(ev: EventMessage, nowMs: number = comboNowM
   hudStore.setState({
     killCombo: { count, atMs: nowMs, seq: (prev.killCombo?.seq ?? 0) + 1 },
   });
+}
+
+/* ── 殭屍王 (task #262 / GH #190) ───────────────────────────────────────────
+ * owner, 2026-07-28: 「打死殭屍王的話,結算參與傷害的英雄,照傷害比例發獎金,
+ * 補最後一刀的人獎金翻倍」 + 「要播放恐怖音效3~5秒，打贏要播放中獎慶祝音效5~7秒」.
+ *
+ * v0.9.11 put `mobBossSpawn` / `mobBossSlain` on the wire and NOTHING consumed
+ * them — the whole mechanic reached the player as a gold counter jumping by
+ * ~3,000 with no explanation. These two projections are the wire→screen half.
+ *
+ * NOTHING IS RECOMPUTED HERE. The split arrives whole (`shares[]` with each
+ * champion's damage / gold / xp / lastHit) because the damage ledger is
+ * sim-only; a client that re-derived any of it would be a second opinion about
+ * money, which is the one number that must never have two.
+ */
+
+/**
+ * PURE: the boss beat this event describes, or null when it is not one / is
+ * malformed. Split out of the recorder for the same reason
+ * {@link localKillComboCount} is — 「這顆事件到底帶了什麼」 is then a direct
+ * assertion instead of an inference through the store.
+ *
+ * NOT SEAT-GATED, unlike the combo. A king is a WORLD event: everyone in the
+ * duel fought it and everyone on the payout sheet is entitled to see the sheet.
+ * `mine` records whether the LOCAL seat is the one whose 100 kills summoned it,
+ * so the banner can say 「你的」 without the panel having to hide from anyone.
+ */
+export function parseMobBossEvent(
+  ev: EventMessage,
+  localSeatId: number | null,
+  nowMs: number,
+  seq: number,
+): MobBossView | null {
+  const num = (v: unknown, fallback: number): number =>
+    typeof v === "number" && Number.isFinite(v) ? v : fallback;
+  if (ev.type === MOB_BOSS_SPAWN_EVENT) {
+    const summonerSeatId = num(ev.data.summonerSeatId, -1);
+    return {
+      kind: "spawn",
+      atMs: nowMs,
+      seq,
+      summonerSeatId,
+      // seat -1 is 「沒有座位」, never 「等於我的 null seat」
+      mine: localSeatId !== null && summonerSeatId >= 0 && summonerSeatId === localSeatId,
+      kills: Math.max(0, Math.trunc(num(ev.data.kills, 0))),
+      shares: [],
+      totalGold: 0,
+      totalXp: 0,
+      lastHitMultiplier: 1,
+      killerSeatId: -1,
+      bossId: num(ev.data.id, -1),
+      // the ONE payload that knows which arena this is (sim/mobs.summonMobBoss)
+      zone: num(ev.data.zone, -1),
+    };
+  }
+  if (ev.type !== MOB_BOSS_SLAIN_EVENT) return null;
+  const raw = Array.isArray(ev.data.shares) ? (ev.data.shares as unknown[]) : [];
+  const shares: MobBossShareView[] = [];
+  for (const r of raw) {
+    if (typeof r !== "object" || r === null) continue;
+    const s = r as Record<string, unknown>;
+    shares.push({
+      seatId: num(s.seatId, -1),
+      damage: Math.max(0, num(s.damage, 0)),
+      gold: Math.max(0, Math.trunc(num(s.gold, 0))),
+      xp: Math.max(0, Math.trunc(num(s.xp, 0))),
+      lastHit: s.lastHit === true,
+    });
+  }
+  return {
+    kind: "slain",
+    atMs: nowMs,
+    seq,
+    summonerSeatId: -1,
+    mine: false,
+    kills: 0,
+    shares,
+    totalGold: Math.max(0, Math.trunc(num(ev.data.totalGold, 0))),
+    totalXp: Math.max(0, Math.trunc(num(ev.data.totalXp, 0))),
+    // 1 is the identity weight: a malformed payload must degrade to 「沒有翻倍」,
+    // never to a multiplier the sim did not apply.
+    lastHitMultiplier: Math.max(1, num(ev.data.lastHitMultiplier, 1)),
+    killerSeatId: num(ev.data.killerSeatId, -1),
+    bossId: num(ev.data.id, -1),
+    // MobSystem.settleBoss emits no `zone` — the king's entity is destroyed by
+    // then. -1 here, and `recordMobBossEvent` inherits the spawn's.
+    zone: num(ev.data.zone, -1),
+  };
+}
+
+let mobBossSeq = 0;
+
+/**
+ * Record one drained `mobBossSpawn` / `mobBossSlain` (called from GameApp's
+ * event drain). A `slain` overwrites a still-showing `spawn` on purpose: the
+ * settlement is strictly newer news than the arrival, and two king panels
+ * stacked on each other is the failure the single slot exists to prevent.
+ */
+export function recordMobBossEvent(ev: EventMessage, nowMs: number = comboNowMs()): void {
+  const prev = hudStore.getState();
+  const view = parseMobBossEvent(ev, prev.localSeatId, nowMs, mobBossSeq + 1);
+  if (!view) return;
+  // ZONE INHERITANCE. `mobBossSlain` cannot carry a zone — by the time it is
+  // emitted the king's entity (and with it its position) is gone. The matching
+  // `mobBossSpawn` did carry one and always arrives first, over the same
+  // ordered channel, so the settlement borrows it by entity id. Without this
+  // the payout sheet is the one half of the feature that STAYS un-gated, and
+  // the arena that never fought the king gets its centre corridor taken for
+  // eight seconds to read somebody else's money.
+  if (view.kind === "slain" && view.zone < 0 && prev.mobBoss && prev.mobBoss.bossId === view.bossId) {
+    view.zone = prev.mobBoss.zone;
+  }
+  mobBossSeq++;
+  hudStore.setState({ mobBoss: view });
+}
+
+/**
+ * WHICH DUEL ZONE THE LOCAL PLAYER IS FIGHTING IN, or -1 when it cannot be
+ * resolved (no seat yet, or the seat has no live entity — i.e. you are dead or
+ * spectating).
+ *
+ * ONE definition, read by BOTH gates: `audio/combatSfx.localDuelZone` (the
+ * 恐怖 drone) and `ui/hud/MobBossOverlay` (the 降臨 banner + 分紅 sheet). They
+ * were two answers to the same question and they disagreed — the sound refused
+ * to haunt the other arena while the screen happily announced a king six
+ * players could not see. A single source of truth is what stops that drifting
+ * apart again.
+ *
+ * -1 IS 「不知道」, NOT 「不同區」. Every caller must fail OPEN on it: a headline
+ * beat must never be lost to a lookup that happened to be empty this frame.
+ */
+export function localDuelZone(s: HudState = hudStore.getState()): number {
+  if (s.localSeatId === null) return -1;
+  return s.seats.find((x) => x.seatId === s.localSeatId)?.zone ?? -1;
+}
+
+/** True when this event is a 殭屍王 beat (cheap pre-filter for the drain). */
+export function isMobBossEvent(type: string): boolean {
+  return type === MOB_BOSS_SPAWN_EVENT || type === MOB_BOSS_SLAIN_EVENT;
 }
 
 /**

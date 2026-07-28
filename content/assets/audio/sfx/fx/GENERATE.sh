@@ -474,3 +474,80 @@ synth_mp3 crowd-cheer-big \
 [voxenv][claps]amix=inputs=2:duration=first:normalize=0[dry];\
 [dry]aecho=0.9:0.4:71|139|211:0.32|0.20|0.12,lowpass=f=7200:p=2,highpass=f=110:p=2[out]" \
   -map "[out]" -t 2.80
+
+# ===========================================================================
+# 殭屍王 (task #262 / GH #190) — THE TWO CUES THE OWNER ASKED FOR BY LENGTH.
+#
+#   owner, 2026-07-28: 「要播放恐怖音效3~5秒，打贏要播放中獎慶祝音效5~7秒」.
+#
+# The LENGTH is part of the requirement, not a detail: a 0.4 s sting is not a
+# 3-5 second horror cue, and it is exactly the kind of thing that ships "done"
+# and is wrong. So the durations are pinned by the `-t` below AND re-measured
+# off the shipped mp3 by apps/client/src/audio/bossSfxDuration.test.ts — the
+# guard reads the FILE, not this comment.
+#
+# WHY PROCEDURAL AND NOT 効果音ラボ. Two sources were allowed; this is the
+# second (「我所有 AI 生成都是本地端」 — nothing downloaded, nothing third-party,
+# lavfi sources only). That also means NEITHER clip is an entry in
+# ../lab/MANIFEST.json or content/assets/CREDITS.md: the standing 効果音ラボ
+# authorisation's one condition (every downloaded clip listed on the credits
+# page) simply does not apply to own work. Same footing as crowd-cheer above.
+#
+# THE TWO MUST BE UNMISTAKABLE FOR EACH OTHER — one says 「跑」, the other says
+# 「你發財了」 — so they are built to sit at opposite ends of the spectrum, and
+# that is MEASURED, never judged by ear (background agents must not make sound
+# on this machine, task #62):
+#   boss-horror  centroid ~360 Hz, ~79% of energy under 500 Hz, one slow swell
+#                peaking at ~3.0 s, silent by 4.4 s.
+#   boss-jackpot centroid ~5.2 kHz, ~1% under 500 Hz, TWO peaks (the 0 s
+#                fanfare and the ~3.3 s jackpot chord), silent by 6.0 s.
+
+# --- bossHorror (降臨): 4.40 s of dread ------------------------------------
+# Five layers, slowest first, because dread is an ARRIVAL and not a hit:
+#   1. sub drone 36 / 37.7 Hz — two close sines BEAT at 1.7 Hz, which is the
+#      un-nerving part; a single sub sine reads as a hum.
+#   2. a tritone (110 / 155.6 Hz = A2 / D#3) under a slow Gaussian swell. The
+#      tritone is the interval; take it out and this is a heroic entrance.
+#   3. a rising sweep 150 Hz upward — "something is coming up out of the floor".
+#   4. a low brown-noise GROWL, tremolo'd at 23 Hz (a throat, not a hiss).
+#   5. an impact at 3.05 s with a downward 55 Hz body — the king LANDS.
+# Long echo taps (97/181/307 ms) put it in a big empty room.
+synth_mp3 boss-horror \
+  -f lavfi -i "aevalsrc='(0.95*(1-exp(-1.2*t))*(sin(2*PI*36*t)+0.85*sin(2*PI*37.7*t)))*min(1,(4.40-t)/0.6)':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='exp(-pow((t-3.05)/1.55,2))*(0.55*sin(2*PI*110*t)+0.50*sin(2*PI*155.6*t)+0.20*sin(2*PI*233.1*t))':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='0.34*min(1,t/1.0)*exp(-pow((t-3.10)/1.9,2))*sin(2*PI*(150*t+62*t*t))':d=4.40:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=4.40:a=1:seed=71" \
+  -f lavfi -i "aevalsrc='(0.55+0.45*(0.6*sin(2*PI*23*t)+0.4*sin(2*PI*7.3*t)))*min(1,t/0.8)*min(1,(4.40-t)/1.0)':d=4.40:s=44100" \
+  -f lavfi -i "aevalsrc='1.15*exp(-7.0*max(0,t-3.05))*gt(t,3.05)*sin(2*PI*(55*t-3.2*t*t))':d=4.40:s=44100" \
+  -filter_complex "\
+[3:a]lowpass=f=420:p=2,highpass=f=55:p=2[growlraw];\
+[growlraw][4:a]amultiply,volume=1.5[growl];\
+[0:a][1:a][2:a][growl][5:a]amix=inputs=5:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.45:97|181|307:0.34|0.22|0.14,lowpass=f=5200:p=2,highpass=f=28:p=2,\
+afade=t=in:st=0:d=0.05:curve=qsin,afade=t=out:st=4.05:d=0.35:curve=exp[out]" \
+  -map "[out]" -t 4.40
+
+# --- bossJackpot (擊殺分紅): 6.00 s of 中獎 ---------------------------------
+# A slot machine paying out, not a victory fanfare: the money has to be AUDIBLE.
+#   1. a 7-note F-major-pentatonic bell arpeggio (F4→F6) over the first second,
+#      each note struck with an inharmonic 2.4f partial so it reads as a BELL.
+#   2. a COIN CASCADE: 2.2-9 kHz noise gated by four incommensurate spike trains
+#      (13.9 / 17.3 / 23.7 / 31.1 Hz, high exponents) = discrete coins, not hiss.
+#      Its envelope SWELLS back up around 3.1 s so the payout builds instead of
+#      sagging into a hole in the middle.
+#   3. the JACKPOT chord at 3.20 s (F5-A5-C6-F6-C7) with a 1 s ring-down —
+#      the second peak, and the reason this is 6 s rather than 2.
+#   4. a low kick at 0 s and 3.20 s so the two beats have weight.
+synth_mp3 boss-jackpot \
+  -f lavfi -i "aevalsrc='0.54*(gt(t,0.00)*exp(-4.2*(t-0.00))*(sin(2*PI*349.23*t)+0.40*sin(2*PI*698.46*t)+0.24*sin(2*PI*838.15*t))+gt(t,0.16)*exp(-4.2*(t-0.16))*(sin(2*PI*440.00*t)+0.40*sin(2*PI*880.00*t)+0.24*sin(2*PI*1056.00*t))+gt(t,0.32)*exp(-4.2*(t-0.32))*(sin(2*PI*523.25*t)+0.40*sin(2*PI*1046.50*t)+0.24*sin(2*PI*1255.80*t))+gt(t,0.48)*exp(-4.2*(t-0.48))*(sin(2*PI*698.46*t)+0.40*sin(2*PI*1396.91*t)+0.24*sin(2*PI*1676.30*t))+gt(t,0.64)*exp(-4.2*(t-0.64))*(sin(2*PI*880.00*t)+0.40*sin(2*PI*1760.00*t)+0.24*sin(2*PI*2112.00*t))+gt(t,0.80)*exp(-4.2*(t-0.80))*(sin(2*PI*1046.50*t)+0.40*sin(2*PI*2093.00*t)+0.24*sin(2*PI*2511.60*t))+gt(t,0.96)*exp(-3.4*(t-0.96))*(sin(2*PI*1396.91*t)+0.40*sin(2*PI*2793.83*t)+0.24*sin(2*PI*3352.60*t)))':d=6.00:s=44100" \
+  -f lavfi -i "aevalsrc='0.64*gt(t,3.20)*exp(-1.00*(t-3.20))*(sin(2*PI*698.46*t)+0.70*sin(2*PI*880.00*t)+0.60*sin(2*PI*1046.50*t)+0.34*sin(2*PI*1396.91*t)+0.20*sin(2*PI*2093.00*t))':d=6.00:s=44100" \
+  -f lavfi -i "aevalsrc='0.85*exp(-6.0*t)*sin(2*PI*(92*t-42*t*t))+0.85*gt(t,3.20)*exp(-4.6*(t-3.20))*sin(2*PI*72*(t-3.20))':d=6.00:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=6.00:a=1:seed=81" \
+  -f lavfi -i "aevalsrc='(0.50*pow(abs(sin(2*PI*17.3*t)),18)+0.42*pow(abs(sin(2*PI*23.7*t+0.7)),22)+0.38*pow(abs(sin(2*PI*31.1*t+1.9)),26)+0.30*pow(abs(sin(2*PI*13.9*t+2.7)),20))*min(1,t/0.10)*exp(-0.42*max(0,t-0.50))*(1+1.7*exp(-pow((t-3.10)/0.80,2)))':d=6.00:s=44100" \
+  -filter_complex "\
+[3:a]highpass=f=2200:p=2,lowpass=f=9000:p=2[coinraw];\
+[coinraw][4:a]amultiply,volume=0.95[coins];\
+[0:a][1:a][2:a][coins]amix=inputs=4:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.32:83|151|229:0.28|0.18|0.11,highpass=f=60:p=2,lowpass=f=13000:p=2,\
+afade=t=in:st=0:d=0.004:curve=qsin,afade=t=out:st=5.40:d=0.60:curve=exp[out]" \
+  -map "[out]" -t 6.00

@@ -40,7 +40,9 @@ import {
   recordSettlement,
   recordShopEvent,
   recordKillComboEvent,
+  recordMobBossEvent,
   isShopEvent,
+  isMobBossEvent,
   resetSettlement,
   hudStore,
   setGamepadIndices,
@@ -1514,6 +1516,14 @@ export class GameApp {
     // middle of your screen has to be your chain, not a teammate's), so a
     // spectator's or an enemy's sweep is dropped here rather than rendered.
     recordKillComboEvent(ev, nowMs);
+    // 殭屍王 (task #262 / GH #190). v0.9.11 fanned `mobBossSpawn`/`mobBossSlain`
+    // out to every client and NOTHING read them, so 100 zombie kills produced a
+    // monster with no announcement and a ~3,000 gold jump with no explanation.
+    // This is the one line that carries both beats to the HUD. NOT seat-gated
+    // (unlike the combo above): a king is a WORLD event and the payout sheet
+    // belongs to everyone on it — `parseMobBossEvent` records who summoned it
+    // and who was paid, and the overlay decides the wording from that.
+    if (isMobBossEvent(ev.type)) recordMobBossEvent(ev, nowMs);
     // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
     // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
     // SAME record path so a knocked-out player's leave-flow already holds their
