@@ -85,14 +85,48 @@ describe("面向:瞄準優先 (sim-aim-priority)", () => {
     cover("sim-aim-priority");
     const { w, id, seat } = mk();
     armFacingLock(w, id, EAST, FACING_INSTANT_CAST_TICKS);
-    const north = { x: ZONE.center.x, z: ZONE.center.z + 5 };
+    // ⚠️ 走「南」、瞄「北」 —— 三個候選方向(瞄準/鎖/移動)必須**兩兩不同**,
+    // 否則這條測試分不出誰贏。原本這裡走北瞄北,兩種實作答案一樣。
+    const south = { x: ZONE.center.x, z: ZONE.center.z - 5 };
     // tick A:邊走邊瞄北 → 北贏
-    w.step(new Map([[seat, frame(NORTH, north)]]));
+    w.step(new Map([[seat, frame(NORTH, south)]]));
     expect(w.transform.get(id)!.facing.z).toBeCloseTo(1, 6);
-    // tick B:放開類比(不送 aim),鎖還沒過期 → 回到東
-    w.step(new Map([[seat, frame(null, north)]]));
+    // tick B:放開類比(不送 aim),鎖還沒過期 → 回到東(鎖),不是南(移動)
+    w.step(new Map([[seat, frame(null, south)]]));
     const f = w.transform.get(id)!.facing;
     expect(f.x, "放開類比後鎖沒有拿回控制權").toBeCloseTo(1, 6);
+  });
+
+  it("⭐ 一邊走一邊瞄:瞄準必須贏過移動方向(這才是 owner 在做的事)", () => {
+    cover("sim-aim-priority");
+    // ⚠️ 這一條是整個功能的核心情境,而它是**後來才補的**:第一版實作把
+    // 「玩家在瞄」寫成「面向鎖讓位」,於是它掉進 `else 轉向移動方向`,
+    // 瞄準優先只在站著不動時成立 —— 一邊走一邊瞄反而被移動方向拉走。
+    //
+    // 三個候選方向兩兩不同才有鑑別力:瞄北 / 走東 / 鎖南。
+    const { w, id, seat } = mk();
+    const SOUTH = { x: 0, z: -1 };
+    armFacingLock(w, id, SOUTH, FACING_INSTANT_CAST_TICKS);
+    const east = { x: ZONE.center.x + 5, z: ZONE.center.z };
+
+    w.step(new Map([[seat, frame(NORTH, east)]]));
+    const f = w.transform.get(id)!.facing;
+    expect(f.z, "走位中瞄準沒有贏 —— 面向被移動方向或面向鎖拉走了").toBeCloseTo(1, 6);
+    expect(f.x).toBeCloseTo(0, 6);
+    // 而且腳真的有走(面向與走位解耦,不是靠站著不動才對)
+    expect(w.transform.get(id)!.pos.x).toBeGreaterThan(ZONE.center.x);
+  });
+
+  it("沒有瞄準時,走位中出手仍然朝著 commit 的方向(#264 沒被拆掉)", () => {
+    cover("sim-aim-priority");
+    // 上一條的對照組:同樣走東、鎖南,只是不送 aim。
+    const { w, id, seat } = mk();
+    const SOUTH = { x: 0, z: -1 };
+    armFacingLock(w, id, SOUTH, FACING_INSTANT_CAST_TICKS);
+    const east = { x: ZONE.center.x + 5, z: ZONE.center.z };
+    w.step(new Map([[seat, frame(null, east)]]));
+    const f = w.transform.get(id)!.facing;
+    expect(f.z, "沒有瞄準時面向鎖應該贏過移動方向").toBeCloseTo(-1, 6);
   });
 
   it("長度 0 的瞄準不算瞄準 —— 不會永久壓住出手轉向", () => {

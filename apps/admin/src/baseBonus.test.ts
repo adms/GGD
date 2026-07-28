@@ -108,6 +108,21 @@ describe("基礎加成 後台頁 (adminui-base-bonus)", () => {
     expect(shipped.effective).toBe(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth));
   });
 
+  it("⭐ 出貨的頁面必須把「沒讀到文件」傳成 null,不是 {}", () => {
+    cover("adminui-base-bonus");
+    // ⚠️ 失敗形狀 ⑤:第一條測試證明 `bonusRows` 分得出 null 與 {},但**頁面**
+    // 原本寫 `setBonusState(full ? extractBonus(full) : {})` —— 把分別丟掉了。
+    // 後果是一台還沒有這份文件的主機顯示「全部 0」,伺服器仍給 300,而操作者
+    // 存下任何一列就會真的把 300 拿掉。函式對、頁面錯,而測試只看函式。
+    const src = readFileSync(join(REPO, "apps/admin/src/ui/BaseBonusPage.tsx"), "utf8");
+    expect(src, "頁面把「沒讀到文件」壓成空表了").not.toMatch(
+      /setBonusState\(\s*full\s*\?\s*extractBonus\(full\)\s*:\s*\{\}\s*\)/,
+    );
+    expect(src).toMatch(/setBonusState\(\s*full\s*\?\s*extractBonus\(full\)\s*:\s*null\s*\)/);
+    // 而且 state 的型別必須容得下 null,否則上面那行寫不出來
+    expect(src).toContain("Record<string, number> | null");
+  });
+
   it("摘要說得出實際生效的內容", () => {
     cover("adminui-base-bonus");
     expect(bonusSummary(bonusRows({}))).toContain("沒有任何");

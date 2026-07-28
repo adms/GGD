@@ -57,6 +57,7 @@ import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
+import { useDisplayBaseBonus } from "../displayBaseBonus";
 import {
   STAT_META,
   attributeRows,
@@ -617,6 +618,12 @@ interface GoodsProps {
 function GoodsTab(props: GoodsProps): React.JSX.Element {
   const { catalogue, seat, emptied, canBuy, density, onDensity, focused, onFocus, singleScroll, touch } = props;
 
+  // 基礎加成 (v0.9.9):血量/魔力那兩列是伺服器權威值,其餘每一列都是 scratch
+  // world 算的。少了它,操作者在後台給「攻擊力 +50」之後,商店會少報 50 而血量
+  // 那列照樣正確 —— 一個只在部分欄位發生、因此更難發現的謊。
+  const baseBonus = useDisplayBaseBonus();
+  const baseBonusSig = JSON.stringify(baseBonus);
+
   // A stable signature of everything the pipeline reads, so the (world-building)
   // stat computes only re-run when the champion or the env actually changes.
   const sig = useMemo(
@@ -637,12 +644,14 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
         // the exact silence #260's predecessor was opened for.
         seat.attrBonus,
         props.combatEnvJson,
+        // 後台改了基礎加成,面板必須跟著重算 —— 少了它,memo 會凍在舊值。
+        baseBonusSig,
       ]),
-    [seat, props.combatEnvJson],
+    [seat, props.combatEnvJson, baseBonusSig],
   );
 
   const env = useMemo(() => parseCombatEnvJson(props.combatEnvJson), [props.combatEnvJson]);
-  const ctx = useMemo(() => statContextFromSeat(seat, env), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ctx = useMemo(() => statContextFromSeat(seat, env, baseBonus), [sig, baseBonus]); // eslint-disable-line react-hooks/exhaustive-deps
   const panelBlock = useMemo(() => computeStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
   // the same champion with an EMPTY build — the subtrahend behind every (+xxx)
   const baseBlock = useMemo(() => computeBaseStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps

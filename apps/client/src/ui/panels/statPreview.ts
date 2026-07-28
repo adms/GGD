@@ -58,6 +58,7 @@ import {
   DEFAULT_COMBAT_ENV,
   type CombatEnvMultipliers,
 } from "@ggd/shared/sim/combatEnv";
+import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import {
   asSeatId,
   asTeamId,
@@ -89,6 +90,16 @@ export interface ChampionStatContext {
   attrBonus?: readonly number[];
   /** live combat-env table; defaults to neutral if absent. */
   env?: CombatEnvMultipliers;
+  /**
+   * live 基礎加成 table (`MatchState.baseBonusJson` → useDisplayBaseBonus).
+   * Absent = the SHIPPED default, not an empty table.
+   *
+   * ⚠️ 只有 maxHealth/maxMana 兩列在面板上是伺服器權威值(`authMaxHp`/
+   * `authMaxMana`),其餘每一列都是這個 scratch world 算出來的。少了這個欄位,
+   * 操作者在後台給「攻擊力 +50」之後,商店會少報 50 而血量那一列照樣正確 ——
+   * 一個只在部分欄位發生、因此更難發現的謊。
+   */
+  baseBonus?: BaseBonusTable;
 }
 
 const ZERO_ITEMS: readonly string[] = ["", "", "", "", "", ""];
@@ -105,6 +116,7 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
 
   const world = new SimWorld(SKELETON_ARENA, 1);
   world.combatEnv = ctx.env ?? DEFAULT_COMBAT_ENV;
+  world.baseBonus = ctx.baseBonus ?? DEFAULT_BASE_BONUS;
   const c = SKELETON_ARENA.zones[0]!.center;
   const id = spawnChampion(world, {
     championId: ctx.championId as ChampionId,
@@ -329,6 +341,7 @@ export function statContextFromSeat(
     attrBonus?: readonly number[];
   },
   env?: CombatEnvMultipliers,
+  baseBonus?: BaseBonusTable,
 ): ChampionStatContext {
   return {
     championId: seat.championId,
@@ -341,5 +354,6 @@ export function statContextFromSeat(
     statCapstonePct: seat.statCapstonePct,
     attrBonus: seat.attrBonus,
     env,
+    baseBonus,
   };
 }

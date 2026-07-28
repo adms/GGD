@@ -96,14 +96,20 @@ export function movementSystem(world: SimWorld): void {
     // ⚠️ 永遠呼叫 facingLockDir,即使結果要丟掉 —— 它同時負責回收過期項目。
     // 用一個 `if` 把它跳過的話,`world.facingLock` 會在一場比賽裡單調長大。
     const lockDir = facingLockDir(world, id);
-    // 瞄準優先 (owner 2026-07-28:「面向是瞄準優先」)。玩家這一 tick 有明確的
-    // 瞄準輸入時,出手 commit 的方向讓位。
+    // 面向的擁有權,由高到低 (owner 2026-07-28:「面向是瞄準優先」):
     //
-    // 這改的是**誰贏**,不是把 #264 拆掉:沒有瞄準輸入時(鍵鼠、觸控、bot、以及
-    // 手放開右類比的那一刻起)鎖照舊生效,「揮劍會轉向目標」仍然成立。改掉的是
-    // 「出手就是承諾」那 200–300ms —— 那段時間玩家推右類比會推不動,而 owner
-    // 要的是推得動。
-    const aimLock = world.aimTick.get(id) === world.tick ? null : lockDir;
+    //   1. `aimedThisTick` —— 玩家這一 tick 真的在瞄。`orderSystem`(slot 4)
+    //      已經把方向寫進 `t.facing` 了,所以這裡要做的是**完全不要碰它**。
+    //   2. `lockDir` —— 出手 commit 的方向 (#264)。沒有瞄準輸入時照舊生效,
+    //      「揮劍會轉向目標」仍然成立。
+    //   3. 預設 —— 移動方向 / 攻擊目標方向。
+    //
+    // ⚠️ 為什麼是三段而不是兩段。第一版寫成 `aimLock = aimed ? null : lockDir`
+    // 再 `if (aimLock) … else 轉向移動方向`,於是「玩家在瞄」會掉進 else,
+    // **被移動方向蓋掉** —— 瞄準優先只在站著不動時成立,一邊走一邊瞄反而更糟。
+    // 我自己的測試沒抓到,因為那條測試的瞄準方向和移動方向是同一個方向,
+    // 兩種實作給出一樣的答案(失敗形狀 ④:斷言方向與缺陷無關)。
+    const aimedThisTick = world.aimTick.get(id) === world.tick;
 
     // Status: root/stun stop movement; slows scale speed; stun also freezes
     // turning (rooted units may still rotate in place, LoL-style).
@@ -202,8 +208,13 @@ export function movementSystem(world: SimWorld): void {
         // 面向鎖優先 (task #264)：出手的那幾 tick，身體朝著瞄準方向，腳照走 ——
         // 走位與朝向解耦本來就是這個系統的設計（見檔頭 Design note），這裡只是把
         // 「誰決定朝向」從「永遠是移動方向」改成「出手時是瞄準方向」。
-        if (aimLock) t.facing = { x: aimLock.x, z: aimLock.z };
-        else t.facing = turnToward(t.facing, dir);
+        // 1) 玩家正在瞄 → orderSystem 已經寫好了,一個字都不要動
+        // 2) 出手鎖 → 朝著 commit 的方向,腳照走
+        // 3) 其餘 → 朝著移動方向
+        if (!aimedThisTick) {
+          if (lockDir) t.facing = { x: lockDir.x, z: lockDir.z };
+          else t.facing = turnToward(t.facing, dir);
+        }
         const before = { x: t.pos.x, z: t.pos.z };
         const body = { pos: t.pos, radius: t.radius };
         moveWithCollision(body, scale(dir, stepLen), zone);
@@ -223,7 +234,9 @@ export function movementSystem(world: SimWorld): void {
       // 面向鎖優先 (task #264)：技能瞄的點不一定是 `attackTarget`（對著 A 平砍、
       // 把 AoE 丟去 B 是常態），整段吟唱都被這裡慢慢轉回 A 就是 owner 說的
       // 「面向方向是錯誤的」。出手期間瞄準方向說了算。
-      if (aimLock) t.facing = { x: aimLock.x, z: aimLock.z };
+      if (aimedThisTick) {
+        // 玩家正在瞄:orderSystem 寫的就是答案,連攻擊目標都不得把它轉回去。
+      } else if (lockDir) t.facing = { x: lockDir.x, z: lockDir.z };
       else if (!stunned && nav.attackTarget !== null) {
         const tgt = world.transform.get(nav.attackTarget);
         if (tgt && tgt.zone === t.zone) {

@@ -45,7 +45,14 @@ export function BaseBonusPage(): JSX.Element {
           const shipped = await getShippedDoc(BONUS_COLLECTION, BONUS_DOC_ID);
           if (shipped.present && shipped.doc) full = shipped.doc;
         }
-        setBonusState(full ? extractBonus(full) : {});
+        // ⚠️ `null` ≠ `{}`,而這正是這一頁最貴的一個分別:
+        //   null —— 一份文件都沒讀到 → 每一格顯示**出貨預設**(生命 300)
+        //   {}   —— 讀到一份真的空的文件 → 每一格是 **0**
+        // 壓成 `{}` 的話,一台還沒有這份文件的主機會把面板顯示成「全部 0」,
+        // 而伺服器仍然在給 300;操作者存下任何一列,就會把那 300 真的拿掉 ——
+        // 一次他從來沒打算做的破壞性編輯。`bonusRows` 早就分得出這兩者,
+        // 是這個呼叫端把分別丟掉的(失敗形狀 ⑤:受測的是函式,不是出貨的頁面)。
+        setBonusState(full ? extractBonus(full) : null);
       } catch (err) {
         setApiErr(errText(err));
       }

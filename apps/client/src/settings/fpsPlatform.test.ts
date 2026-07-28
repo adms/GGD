@@ -110,6 +110,23 @@ describe("fps 上限依平台 (client-fps-platform)", () => {
     }
   });
 
+  it("⭐ setPreset 也要帶平台 —— 手機點一下畫質預設不得把 fps 推回 60", () => {
+    cover("client-fps-platform");
+    // ⚠️ 這是一個「修了兩個姊妹呼叫點中的一個」的漏。`resetToRecommended` 從
+    // 一開始就傳了 touch,`setPreset` 沒有 —— 而 setPreset 才是玩家會按的那個。
+    // 上一條測的是 `applyPreset` 這個純函式,這一條測的是**出貨的 store**。
+    const store = new SettingsStore(mem(), true);
+    expect(store.graphics().fpsCap).toBe(30);
+    for (const preset of ["low", "medium", "high"] as const) {
+      store.setPreset(preset);
+      expect(store.graphics().fpsCap, `手機點「${preset}」之後 fps 被推回去了`).toBe(30);
+    }
+    // 桌機不受影響
+    const desk = new SettingsStore(mem(), false);
+    desk.setPreset("high");
+    expect(desk.graphics().fpsCap).toBe(60);
+  });
+
   it("每一條 render loop 都走 frameCap,沒有人自己抄一份數字", () => {
     cover("client-fps-platform");
     // 失敗形狀 ⑤ 的防線:v0.9.8 之前 StorePreview 忘了抄,於是它是唯一一條真的

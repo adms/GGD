@@ -125,11 +125,20 @@ export class SettingsStore {
     });
   }
 
-  /** Apply a quality preset (writes concrete values for fixed presets). */
+  /**
+   * Apply a quality preset (writes concrete values for fixed presets).
+   *
+   * ⚠️ `this.touch` MUST be passed. `applyPreset` overwrites `fpsCap`, and its
+   * default is the DESKTOP one — so a phone player tapping 「高畫質」 silently
+   * undid the v0.9.9 platform default and went back to 60 fps, while the
+   * settings page kept showing the preset they picked. `resetToRecommended`
+   * below had the argument from the start; this one did not, which is exactly
+   * the shape of a fix applied to one of two sibling call sites.
+   */
   setPreset(preset: QualityPreset): void {
     this.commit({
       ...this.settings,
-      graphics: clampGraphics(applyPreset(this.settings.graphics, preset)),
+      graphics: clampGraphics(applyPreset(this.settings.graphics, preset, this.touch)),
     });
   }
 
