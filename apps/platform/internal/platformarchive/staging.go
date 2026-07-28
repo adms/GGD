@@ -236,6 +236,11 @@ func DiscardStage(dataDir, id string) error {
 	if !validStageID(id) {
 		return ErrNoStage
 	}
+	// #nosec G703 -- `id` 在上面兩行就被 validStageID 擋過：長度必須剛好 64、
+	// 每個字元必須落在 [0-9a-f]。`/`、`\`、`.`、`..`、NUL 全部進不來，所以
+	// filepath.Join 的結果一定落在 stagingDir 底下。gosec 的 taint 分析追不進
+	// validStageID（它回傳 bool 而不是 sanitized 字串），OpenStage 用同一個
+	// 守衛、同一個 Join，只因為 sink 不是 os.Remove 就沒被標。
 	err := os.Remove(filepath.Join(stagingDir(dataDir), id+".zip"))
 	if err != nil && os.IsNotExist(err) {
 		return ErrNoStage

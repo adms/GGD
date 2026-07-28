@@ -18,12 +18,25 @@ const REPO = join(ROOT, "..", "..");
 
 /** Find a python able to import mpyq+Pillow. A node running under Rosetta
  * launches universal python binaries as x86_64, which can't load arm64
- * wheels — so `arch -arm64 python3` is probed too. */
+ * wheels — so `arch -arm64 python3` is probed too.
+ *
+ * ⚠️ THE `arch` CANDIDATES ARE macOS-ONLY, and that guard is load-bearing.
+ * `arch` also exists on Linux (coreutils, and a busybox applet on alpine) where
+ * it PRINTS THE MACHINE ARCH AND IGNORES ITS ARGUMENTS, exiting 0 — so the probe
+ * below "succeeded" on every Linux box, `pyOk` was true even with no usable
+ * python at all, and `describe.runIf` ran a suite that then failed all 18
+ * assertions on missing PASS lines. The real cause (ModuleNotFoundError: mpyq)
+ * never appeared anywhere in the report. Skipping cleanly is the whole point of
+ * the probe, so it must not be able to answer yes without running python.
+ * Same shape in tools/icon-gen/test/icon-gen.test.ts. */
 function findPython(): string[] | null {
+  const rosetta: string[][] =
+    process.platform === "darwin"
+      ? [["arch", "-arm64", "python3"], ["arch", "-x86_64", "python3"]]
+      : [];
   const candidates: string[][] = [
     ["python3"],
-    ["arch", "-arm64", "python3"],
-    ["arch", "-x86_64", "python3"],
+    ...rosetta,
     ["/opt/homebrew/bin/python3"],
     ["/usr/bin/python3"],
   ];

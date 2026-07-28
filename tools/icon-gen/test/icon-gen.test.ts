@@ -32,9 +32,19 @@ const REPO = join(ROOT, "..", "..");
 const PLAN = join(ROOT, "src", "plan.py");
 const GEN = join(ROOT, "src", "generate.py");
 
-/** A python3 that can import the planner's deps (Pillow is optional here). */
+/**
+ * A python3 that can import the planner's deps (Pillow is optional here).
+ *
+ * ⚠️ `arch -arm64 python3` is the macOS/Rosetta path and is probed ONLY there.
+ * On Linux `arch` is a real coreutils/busybox command that prints the machine
+ * arch and IGNORES its arguments, exiting 0 — so this probe reported success on
+ * any Linux box without python and every later `run()` returned "x86_64",
+ * failing the money-gate assertions on output that was never python's. See the
+ * same guard in tools/w3x-import/test/w3x-import.test.ts.
+ */
 function findPython(): string[] | null {
-  for (const c of [["python3"], ["arch", "-arm64", "python3"], ["/usr/bin/python3"]]) {
+  const rosetta = process.platform === "darwin" ? [["arch", "-arm64", "python3"]] : [];
+  for (const c of [["python3"], ...rosetta, ["/usr/bin/python3"]]) {
     try {
       execFileSync(c[0]!, [...c.slice(1), "-c", "import json,glob,hashlib"], { stdio: "pipe" });
       return c;
