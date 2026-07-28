@@ -196,6 +196,23 @@ const COMBAT_SFX: readonly string[] = [
   // is meant to react to. A cold fetch on the first big cast of the round would
   // land the warning after the window it warns about, so warm it with combat.
   "castCircle",
+  // 殭屍王 (#262 / GH #190). BOTH are warmed with the combat scene, and that
+  // scene-scoped warm is the whole point (#63: stop pulling every clip at boot).
+  // They are the two clips in the set that MOST need it and LEAST belong in the
+  // boot bundle, for opposite halves of the same reason:
+  //   • they are the two LONGEST one-shots here (4.40 s / 6.00 s ≈ 168 KB), so
+  //     warming them at boot would re-inflate exactly the cost #63 removed for a
+  //     player who never reaches round 3;
+  //   • and they are the two that can least afford a COLD fetch. bossHorror is
+  //     the arrival warning for a 12k-HP monster — a cue that lands two seconds
+  //     late has already stopped being a warning (#93's 烤雞煙火 shipped that
+  //     bug: the sound was grabbed at the moment it was needed and missed its
+  //     own event). bossJackpot rides the settlement panel, which is on screen
+  //     for 8.2 s from the kill tick; a late start would desync the two.
+  // Warming them on the combat scene edge — minutes of shopping and fighting
+  // before any king can exist — costs nothing and removes both risks.
+  "bossHorror",
+  "bossJackpot",
   // fired on the intermission→combat edge, so warm it as combat begins
   "roundStart",
 ];

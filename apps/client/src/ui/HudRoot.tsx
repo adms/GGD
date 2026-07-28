@@ -24,6 +24,7 @@ import { SpectateNotice } from "./hud/SpectateNotice";
 import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
+import { MobBossOverlay } from "./hud/MobBossOverlay";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -223,6 +224,14 @@ export function HudRoot(): React.JSX.Element {
               the kill tally was not even on the wire. Owns its own gate
               (combat + something to say) and its own derived placement. */}
           <ZombieWaveBar />
+          {/* 殭屍王 (task #262 / GH #190). v0.9.11 put mobBossSpawn /
+              mobBossSlain on the wire with NO client consumer at all, so 100
+              zombie kills produced an unexplained ~3,000 gold jump. This is the
+              降臨 banner + the 分紅結算 sheet that says WHY each player got what
+              they got — including that 補刀 is a damage WEIGHT, not a post-hoc
+              doubling. Owns its own combat gate and placement
+              (hud/mobBossModel), and returns null when there is no room. */}
+          <MobBossOverlay />
           <ExUnlockToast />
         </>
       )}

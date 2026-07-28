@@ -274,6 +274,32 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
     note: "Seat-gated: only the client whose champion actually banked the coin.",
   },
   { key: "coinDrop", kind: "combat", site: COMBAT_SFX_SITE, events: ["coinDropped"], payload: { coinDropped: ["seatId", "x", "z"] } },
+  // 殭屍王 (#262 / GH #190). The owner asked for these two by LENGTH — a 3-5 s
+  // horror cue on the summon and a 5-7 s 中獎 fanfare on the payout — and both
+  // are new PROCEDURAL clips (content/assets/audio/sfx/fx/boss-*.mp3), not
+  // 効果音ラボ downloads, so they are own work and carry no attribution row.
+  //
+  // The `payload` fields below are what makes these rows worth anything: both
+  // cues are GATED, and a gate reading a field the sim stopped emitting fails
+  // CLOSED — the cue simply never plays, with no error anywhere. `zone` is what
+  // keeps the horror drone out of the other arena's ears, and `shares` is what
+  // limits the jackpot to champions who were actually paid.
+  {
+    key: "bossHorror",
+    kind: "combat",
+    site: COMBAT_SFX_SITE,
+    events: ["mobBossSpawn"],
+    payload: { mobBossSpawn: ["zone"] },
+    note: "Zone-gated: only the duel the king was summoned into (combatSfx.bossHorrorKey).",
+  },
+  {
+    key: "bossJackpot",
+    kind: "combat",
+    site: COMBAT_SFX_SITE,
+    events: ["mobBossSlain"],
+    payload: { mobBossSlain: ["shares"] },
+    note: "Paid-gated: only clients whose seat appears in shares[] with gold/xp (combatSfx.bossJackpotKey).",
+  },
 
   // ── client-side emit sites ───────────────────────────────────────────────
   { key: "footstep", kind: "client", site: "apps/client/src/GameApp.ts" },

@@ -40,6 +40,7 @@ import {
 import { hudTouch } from "./HudSlot";
 import { HUD_Z, type HudRect } from "./hudLayout";
 import { useActiveHudPanels } from "./useHudPanels";
+import { bossLifetime, mobBossOverlayRect } from "./mobBossModel";
 import {
   KILL_COMBO_POLL_MS,
   killComboDisplay,
@@ -168,6 +169,7 @@ export function KillCombo(): React.JSX.Element | null {
   const round = useHud((s) => s.round);
   const couch = useHud((s) => s.localPlayers.length > 1);
   const combo = useHud((s) => s.killCombo);
+  const boss = useHud((s) => s.mobBoss);
   const panels = useActiveHudPanels();
   const viewport = useViewport();
 
@@ -190,7 +192,17 @@ export function KillCombo(): React.JSX.Element | null {
     dismissed: readLegendDismissed(),
     panelCovering: panels.length > 0,
   });
-  const rect = killComboRect(viewport, { touch: hudTouch(), legendUp, couchPlayers: 1 });
+  // The 殭屍王 overlay (#262 / GH #190) is TOP-anchored in this same corridor
+  // and OUTRANKS the counter — resolved through `mobBossOverlayRect`, the same
+  // one entry point the overlay itself draws from, so the two can never disagree
+  // about where the king's box is. Null while no king moment is live, which is
+  // almost always, and then this is a no-op.
+  const bossRect = mobBossOverlayRect(bossLifetime(boss, now) ? boss : null, viewport, {
+    touch: hudTouch(),
+    legendUp,
+    couchPlayers: 1,
+  });
+  const rect = killComboRect(viewport, { touch: hudTouch(), legendUp, couchPlayers: 1, bossRect });
   // null = this viewport genuinely has no free room. Showing nothing is the
   // correct answer; painting over the player's own bars is not.
   if (!rect) return null;

@@ -451,6 +451,67 @@ export function coinRewardKey(ev: EventMessage, seatId: number | null): string |
 }
 
 /**
+ * WHICH DUEL ZONE AM I IN — for the 殭屍王 cues, and only for them.
+ *
+ * `mobBossSpawn` is broadcast to EVERY client in the match, but a king is
+ * summoned into ONE duel zone. Playing a 4.4 s horror drone in the ears of the
+ * six players in the other arena — who cannot see it, cannot fight it and will
+ * never be paid by it — is the same defect `guardianRewardKey` fixed for the
+ * bounty chime, one axis over: there the wrong SEAT heard it, here the wrong
+ * ARENA would.
+ *
+ * `SeatView.zone` is the duel zone of the seat's champion entity and is -1 when
+ * the seat has no live entity. UNRESOLVABLE MEANS PLAY: a headline cue must
+ * never be silenced by a missing lookup, so the gate only ever rejects a
+ * DEFINITE mismatch (both zones known and different).
+ */
+export function localDuelZone(): number {
+  const s = hudStore.getState();
+  if (s.localSeatId === null) return -1;
+  return s.seats.find((x) => x.seatId === s.localSeatId)?.zone ?? -1;
+}
+
+/**
+ * 殭屍王降臨的恐怖音效 (owner: 「要播放恐怖音效3~5秒」), or null.
+ *
+ * Zone-gated per {@link localDuelZone}, NOT seat-gated: the king belongs to the
+ * whole duel, not to the player whose 100 kills summoned it — the other five
+ * champions in that arena are about to be hit by it and deserve the warning.
+ * Total on a malformed payload.
+ */
+export function bossHorrorKey(ev: EventMessage, zone: number): string | null {
+  const evZone = ev.data.zone;
+  if (typeof evZone === "number" && zone >= 0 && evZone !== zone) return null;
+  return "bossHorror";
+}
+
+/**
+ * 殭屍王分紅的中獎慶祝音效 (owner: 「打贏要播放中獎慶祝音效5~7秒」), or null.
+ *
+ * Gated on BEING PAID rather than on the zone, and that is the stricter, more
+ * honest test: `shares[]` is exactly the list of champions the sim handed gold
+ * to, so 「你中獎了」 plays for people who actually won something. A player in
+ * the same arena who never touched the king hears nothing, which is correct —
+ * a jackpot fanfare for a prize you did not get is worse than silence.
+ * Total on a malformed payload; a zero-gold sheet (the king drowned in the fire
+ * ring and paid nobody) stays silent.
+ */
+export function bossJackpotKey(ev: EventMessage, seatId: number | null): string | null {
+  if (seatId === null || seatId < 0) return null;
+  const shares = ev.data.shares;
+  if (!Array.isArray(shares)) return null;
+  for (const raw of shares as unknown[]) {
+    if (typeof raw !== "object" || raw === null) continue;
+    const s = raw as Record<string, unknown>;
+    if (s.seatId !== seatId) continue;
+    const gold = typeof s.gold === "number" ? s.gold : 0;
+    const xp = typeof s.xp === "number" ? s.xp : 0;
+    if (gold > 0 || xp > 0) return "bossJackpot";
+  }
+  return null;
+}
+
+/**
  * The SFX-map key an event should play, or null for silence. Reads the enriched
  * `damage` payload names from the contract (dmgType/blocked/crit/killingBlow),
  * falling back to the sim's raw `type` field if `dmgType` is absent.
@@ -570,6 +631,14 @@ function combatSfxKeyUngated(ev: EventMessage, seatId: number | null, phase: str
     case "guardianSlain":
       // 最後一擊的金幣獎勵 — the only seat-gated cue here (see guardianRewardKey)
       return guardianRewardKey(ev, seatId);
+    case "mobBossSpawn":
+      // 殭屍王降臨 (#262 / GH #190) — the owner's 3-5 s horror cue, zone-gated
+      // so the other arena is not haunted by a monster it cannot see.
+      return bossHorrorKey(ev, localDuelZone());
+    case "mobBossSlain":
+      // …and the 5-7 s 中獎 fanfare, gated on the local seat actually appearing
+      // on the payout sheet with something on it (bossJackpotKey).
+      return bossJackpotKey(ev, seatId);
     case "coinDropped":
       // 陣亡投幣 (#191): a coin hits the arena floor. Unconditional — it is a
       // WORLD event everyone in the duel should hear, wherever it landed.
