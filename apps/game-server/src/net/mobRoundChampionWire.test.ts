@@ -46,7 +46,10 @@ import {
 } from "@ggd/shared/sim/mobs";
 import { beginCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
 import { Champions } from "@ggd/shared/sim/content/registry";
-import type { ChampionDef } from "@ggd/shared/sim/content/types";
+// `@ggd/shared/sim/content/types` does not exist — the module is `defs`. A
+// type-only import is erased before vitest runs, so the broken specifier ran
+// green in every suite and only `tsc --noEmit` saw it (verifier fix).
+import type { ChampionDef } from "@ggd/shared/sim/content/defs";
 import type { ChampionId } from "@ggd/shared/ids";
 
 const FAST = { champSelectTicks: 5, intermissionTicks: 30, combatMaxTicks: 1200, resolutionTicks: 5 };

@@ -58,6 +58,7 @@ import {
 } from "./EntityViewRegistry";
 import { TARGET_HEIGHT } from "./views/ChampionView";
 import { entityTintFor, mobTintFor } from "./views/mobTint";
+import { championTintForId } from "./views/championTint";
 import { applyModelTint, tintedMeshes } from "./views/modelTint";
 import type { AssetManager } from "./AssetManager";
 
@@ -288,5 +289,51 @@ describe("殭屍染黑 (GH#192) — 「避免跟玩家混在一起」", () => {
     // 染黑 0 on a mob resolves to `null` = 「resolved, untinted」, never undefined
     // — otherwise the registry retries that mob every single frame forever.
     expect(entityTintFor({ kind: ENTITY_KIND.MOB }, 0, champion)).toBeNull();
+  });
+
+  /**
+   * ── 稽核補的 (verifier) ─────────────────────────────────────────────────
+   * 上面兩條測的是 `mobTintFor` / `entityTintFor` 這兩個**零件**。把
+   * `EntityViewRegistry.sync` 裡那一行改成
+   *
+   *     if (e.kind !== ENTITY_KIND.MOB) this.applyTint(e, view, tier);
+   *
+   * ——也就是把染黑整條從**殭屍的渲染樹**上拔掉——之後 client 346 檔 / 4117 條
+   * 全綠(失敗形狀 ③:從渲染樹刪掉還是綠的)。所以這一條不看回傳值,它讓真的
+   * registry 跑一次,再去讀那隻殭屍身上**真的材質**的顏色。
+   */
+  it("END TO END: the REGISTRY really paints a mob's materials dark — and not a champion's", () => {
+    cover("mob-special-visible");
+    const key = mobModelKeyFor(SHIPPED_RULES, "normal");
+    const registry = new EntityViewRegistry(scene, {} as unknown as AssetManager, {
+      // GameApp 的組合,原封不動:mob 分支在前,英雄解析放在 thunk 後面。
+      championTintFor: (e) =>
+        entityTintFor(e, SHIPPED_RULES.tintStrength, () => championTintForId(null)),
+    });
+    registry.sync({
+      entities: [
+        mob(960, key, mobSizeMultFor(SHIPPED_RULES, "normal")),
+        // 同一個 sync 裡的一位英雄 —— seatId 有值、kind 0。`championTintForId(null)`
+        // 回 undefined(「還解析不出來」),所以它必須**一筆都沒被塗到**。
+        { ...mob(961, key, 1), kind: 0, seatId: 3 },
+      ],
+      poseFor: passthrough,
+      nowMs: 0,
+      dtMs: 16,
+      loadModels: false, // 程序生成的體素身體就夠了:.glb 不是這條斷言的主題
+    });
+
+    const mobPainted = tintedMeshes(registry.getChampionView(960)!.root);
+    expect(mobPainted.length, "殭屍身上一片材質都沒被染黑").toBeGreaterThan(0);
+    // 0.65 → 0.35 的乘法。StandardMaterial 是 gamma 管線,乘數原封落下。
+    for (const m of mobPainted) {
+      const c = (m.material as StandardMaterial).diffuseColor;
+      expect(c.r).toBeLessThan(0.5);
+      expect(c.g).toBeLessThan(0.5);
+      expect(c.b).toBeLessThan(0.5);
+    }
+    // …而英雄一筆都沒動:兩個答案不同,所以「全部都塗」也過不了。
+    expect(tintedMeshes(registry.getChampionView(961)!.root)).toHaveLength(0);
+    registry.dispose();
   });
 });
