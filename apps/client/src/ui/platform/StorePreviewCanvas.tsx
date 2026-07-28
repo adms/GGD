@@ -19,6 +19,7 @@
  * no @babylonjs (nor the content registry the resolve walks) leaks into ui/.
  */
 import { useEffect, useRef, useState } from "react";
+import { blizzardOverlayModels } from "../../render/views/blizzardOverlay";
 import { StorePreview } from "../../render/StorePreview";
 import type { ModelDoc } from "@ggd/shared/content";
 import { TEXT_DIM } from "../theme";
@@ -26,11 +27,55 @@ import { TEXT_DIM } from "../theme";
 /** What the 3D stage is currently doing, for callers that need a fallback. */
 export type PreviewStatus = "idle" | "loading" | "ready" | "failed";
 
-async function fetchModelDoc(modelKey: string): Promise<ModelDoc | null> {
+/**
+ * THE MODEL THIS PREVIEW SHOWS — and the ONE place three scenes get it wrong.
+ *
+ * owner, 2026-07-28:「別忘了 英雄殿 選擇英雄 戰鬥 結算 四個場景都要替換喔」.
+ *
+ * WHY THIS FUNCTION IS THE WHOLE FIX. GH#31 (v0.9.6) opened the door for the 40
+ * stand-in champions whose real Warcraft III model was already extracted — but
+ * it opened it in `EntityViewRegistry` → `ChampionView.tryUpgradeToGlb`, which
+ * is the ARENA path. Settlement rides that same path (it is only a camera over
+ * the live arena, see render/settlementCamera.ts), so 戰鬥 and 結算 were both
+ * covered by that change.
+ *
+ * The other two were not. 選擇英雄 (panels/champselect/ProfileBlock) and 英靈殿
+ * (platform/ValhallaPanel) — plus 商店 (platform/StoreScreen) — all render
+ * through THIS component, and it fetched the shipped model doc and handed it
+ * straight to Babylon. A champion on a shared stand-in therefore kept showing
+ * the borrowed body in three of the four places the player looks at it.
+ *
+ * ⚠️ THIS IS FAILURE SHAPE ⑤ AT THE SCENE LEVEL: the subject under test was the
+ * arena, and the arena was genuinely fixed. Every guard was green and three
+ * screens were still wrong. `championId` was already threaded in for the #263
+ * tint, so the resolver had everything it needed — nobody had asked it.
+ *
+ * DEGRADATION IS UNCHANGED: `resolve` returns the shipped doc when the overlay
+ * is disabled, absent, or has no entry for this champion, and `null` only while
+ * the manifest probe is still in flight — which this component already renders
+ * as 「loading」 rather than as a failure.
+ */
+async function fetchModelDoc(
+  modelKey: string,
+  championId: string | null | undefined,
+): Promise<ModelDoc | null> {
   try {
     const res = await fetch(`/content/models/${encodeURIComponent(modelKey)}.json`);
     if (!res.ok) return null;
-    return (await res.json()) as ModelDoc;
+    const shipped = (await res.json()) as ModelDoc;
+    // ⚠️ AWAIT THE PROBE FIRST, do not just call `resolve`.
+    //
+    // `resolve` returns null while the manifest is still in flight — a signal
+    // the ARENA reads as 「not yet, ask me next frame」 because it retries every
+    // frame. This component does NOT retry: it treats a null doc as `failed`
+    // and stops. And the lobby never runs GameApp, which is the only place that
+    // primes the probe — so without this await, the FIRST preview a player ever
+    // opens would report failure and stay black.
+    //
+    // `load()` is a cached single-flight, so awaiting it here costs one fetch
+    // for the whole session and is a no-op once the arena has already primed it.
+    await blizzardOverlayModels.load();
+    return blizzardOverlayModels.resolve(shipped, championId);
   } catch {
     return null;
   }
@@ -93,7 +138,7 @@ export function StorePreviewCanvas(props: {
     let cancelled = false;
     statusRef.current?.("loading");
     const championId = props.championId ?? null;
-    void fetchModelDoc(props.modelKey).then(async (doc) => {
+    void fetchModelDoc(props.modelKey, championId).then(async (doc) => {
       if (cancelled) return;
       const preview = previewRef.current;
       if (!doc || !preview) {

@@ -235,6 +235,11 @@ function ValhallaStage({
       {modelKey !== null && (
         <StorePreviewCanvas
           modelKey={modelKey}
+          // GH#31 —— 沒有 championId,overlay 認不出這位英雄,會原封不動退回共用
+          // 替身。英靈殿是 owner 點名的四個場景之一(「別忘了 英雄殿 選擇英雄
+          // 戰鬥 結算 四個場景都要替換喔」),而它是三個 StorePreviewCanvas 消費端
+          // 裡唯一漏傳的 —— 商店與選擇英雄早就為了 #263 的 tint 傳了。
+          championId={championId}
           paused={paused}
           hideEmptyHint
           minHeight={height}
