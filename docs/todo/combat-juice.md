@@ -248,14 +248,28 @@ identically.
   new-action starts; **cooldowns keep ticking** so cadence/DPS (balance) is
   unchanged. Only the two involved entities freeze (no desync); folded into the
   digest for replay-determinism.
-- **Knockback / knockdown** (`sim/combat/damage.ts` + `MovementSystem`): a landed
-  hit (impact ≥ 70) sets `nav.override {kind:"knockback"}` away from the source,
-  integrated by `moveWithCollision` (slides along/stops at walls, clamps to the
-  boundary — never clips). Distance = `clamp((impact/100)*1.6*typeMult, 0, 4)`,
-  typeMult physical 1.0 / magic 0.6 / true 0.85, ×0.35 if blocked. A heavy
-  UNBLOCKED physical/true hit (impact ≥ 170) roots the victim prone for 14 ticks
-  then getup. Chip hits (impact < 70: most autos/DoTs) get hitstop but no shove —
-  MOBA spacing preserved.
+- **Knockback / knockdown** (`sim/combatFeel.ts` + `sim/combat/damage.ts` +
+  `MovementSystem`): a landed hit sets `nav.override {kind:"knockback"}` away from
+  the source, integrated by `moveWithCollision` (slides along/stops at walls,
+  clamps to the boundary — never clips).
+  ⚠️ 這一段在 GH#193 之後**整個換掉了**,舊法(`impact ≥ 70`、
+  `clamp((impact/100)*1.6*typeMult, 0, 4)`、physical/magic/true 係數、blocked
+  ×0.35)已經**退休**,一個都不剩。現行法則(全部後台可調,`config.combat-feel@1`):
+
+      pct  = 這一擊的傷害 / 受傷單位的**最大生命**
+      pct < minPct(0.05)          → 完全不推
+      raw  = maxBodies(10) × min(pct,1) × bodyUnit(1.0)
+      raw  = max(raw, 作者的 hitFeel.knockbackMag)   ← 覆寫是**下限**,不是取代
+      out  = max(0, raw − 攻守雙方目前距離)
+
+  A heavy UNBLOCKED physical/true hit (impact ≥ 170) still roots the victim prone
+  for 14 ticks then getup — knockdown 的門檻**沒有**跟著改成百分比制。
+  ⚠️ 覆寫是「下限」而不是「取代」是量出來的,不是品味:出貨的 115 位英雄裡
+  **114 位**的普攻帶著 `hitFeel.knockbackMag`(90 位是 **0**、24 位 ≤ 0.45),
+  而近戰接觸距離是 1.3 —— 覆寫若「取代」法則,`max(0, 0.45 − 1.3) = 0`,
+  於是 #193 這條新法則對**每一位英雄的普攻都完全無效**,連一擊打掉 100% 生命
+  的爆擊都推不動一格。守衛在 `sim/knockbackRoster.test.ts`(出貨內容,不是骨架
+  dummy)。
 - **Whiff** (`sim/systems/BasicAttackSystem.ts`): a committed melee swing whose
   target escaped/died emits `whiff` + a small forward over-commit lunge. Early
   target-loss stays a silent cancel, so cadence is unchanged.
@@ -276,10 +290,16 @@ identically.
 | cj-s10 | Hitstop scales with damage, caps at 6 ticks; chip damage never freezes | cj-hitstop-scale | unit | done |
 | cj-s11 | Hitstop is replay-deterministic: two seeded fights produce an identical digest | cj-hitstop-determinism | determinism | done |
 | cj-s12 | Knockback shoves the victim away from the source (direction) | cj-knockback-dir | unit | done |
-| cj-s13 | Knockback magnitude scales by damage + dmgType | cj-knockback-mag | unit | done |
-| cj-s14 | Chip damage applies no knockback (autos/DoTs don't shove) | cj-knockback-chip | unit | done |
-| cj-s15 | A blocked hit knocks back much less than the same unblocked hit | cj-knockback-blocked | unit | done |
+| cj-s13 | Knockback distance = % of the victim's MAX hp, minus the current gap (GH#193) | cj-knockback-mag | unit | done |
+| cj-s14 | A hit below `minPct` of max hp never shoves, however close | cj-knockback-chip | unit | done |
 | cj-s16 | Knockback respects the zone boundary — a big shove never clips outside | cj-knockback-noclip | unit | done |
+| cj-kb1 | THE DISTANCE SUBTRACTION: same hit, same victim — melee shoves, ranged does not | cj-knockback-range | unit | done |
+| cj-kb2 | The denominator is MAX hp, not current hp — a nearly-dead victim is not launched | cj-knockback-maxhp | unit | done |
+| cj-kb3 | 殭屍王 (6000 hp) shrugs off the blow that shoves a 600 hp champion | cj-knockback-boss | unit | done |
+| cj-kb4 | The three knockback numbers are operator-tunable (raising `minPct` switches a shove off) | cj-knockback-config | unit | done |
+| cj-kb5 | `maxBodies` is the ceiling: a 100%-hp one-shot pushes 10 bodies, not 100 | cj-knockback-cap | unit | done |
+| cj-kb6 | 出貨內容普查:**每一位**已註冊英雄的普攻,一發打掉 100% 生命時真的推得動(114/115 位帶著 `hitFeel.knockbackMag`,覆寫必須是下限不是取代) | kb-roster-basic | regression | done |
+| cj-kb7 | 儀器:沒有作者覆寫的同一發傷害推得動 —— 證明 kb-roster-basic 紅的時候是覆寫的錯,不是法則或儀器的錯 | kb-roster-instrument | unit | done |
 | cj-s17 | A heavy unblocked hit emits `knockdown` | cj-knockdown | unit | done |
 | cj-s18 | Knockdown counts down to getup in exactly N ticks | cj-knockdown-getup | unit | done |
 | cj-s19 | A knocked-down victim is rooted while prone, then moves again on getup | cj-knockdown-root | unit | done |

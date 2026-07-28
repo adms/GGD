@@ -58,10 +58,13 @@ import {
   mobsAliveInZone,
 } from "../mobs";
 import { bossSummonsAt, splitBossBounty, type BossDamageEntry } from "../mobBoss";
+import { standstillBlocks } from "../combatFeel";
 
 export function mobSystem(world: SimWorld): void {
   const rules = world.mobRules;
   if (rules === null || world.mobTicks < 0 || !world.combatActive) return;
+  /** 打就站定 —— 和英雄同一張後台表(見步驟 4 的說明)。 */
+  const ss = world.combatFeel.standstill;
 
   // 1) CLOCK — the dedicated combat-elapsed mob counter, advanced first.
   world.mobTicks++;
@@ -135,8 +138,24 @@ export function mobSystem(world: SimWorld): void {
       mhp.hp = Math.min(mhp.maxHp, mhp.hp + rules.hpRegenPerSec * world.dt);
     }
 
-    // 4) MELEE — in range + cooldown ready → queue one packet; else age the cd.
-    if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= prof.attackRangeSq) {
+    // 4) MELEE — in range + cooldown ready + STANDING STILL → queue one packet;
+    //    else age the cd.
+    //
+    // 打就站定 (owner 2026-07-28:「並且殭屍王也會預設套用」). 小怪**沒有**
+    // AbilitiesComp,所以 basicAttackSystem 整個迴圈都看不到它們 —— 它們走的是
+    // 這條簡化路徑,直接把傷害推進 damageQueue。若只在 BasicAttackSystem 那側加
+    // 規則,合併後的結果會是「殭屍能邊走邊打、玩家不能」,一個沒有人想要的不對稱。
+    // 判斷本身和英雄共用同一支 `standstillBlocks`(sim/combatFeel.ts),所以兩條
+    // 路徑不可能各自漂移。
+    //
+    // 冷卻在這裡不會被白燒:被擋下時走的是 `else if (cd > 0) cd--` 那條,而一個
+    // 準備好出手的小怪 cd 正好是 0,所以它只是「這一 tick 沒打」,停下來的下一
+    // tick 就打得出來 —— 和英雄那側「閘擋在冷卻 commit 之前」是同一個語意。
+    const ssBlocked =
+      ss.applyToMobs &&
+      target !== -1 &&
+      standstillBlocks(ss, mt2.vel, mt2.pos, world.transform.get(target)?.pos ?? mt2.pos);
+    if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= prof.attackRangeSq && !ssBlocked) {
       world.damageQueue.push({
         source: mobId,
         target,

@@ -1041,6 +1041,49 @@ export const zConfigStatCapsDoc = z
   .strict();
 
 /**
+ * config.combat-feel@1 — 戰鬥手感 (`config/combat-feel.json`, GH#193):
+ * 擊退法則的三個參數 + 打就站定的開關與門檻。語意與出貨預設見 sim/combatFeel.ts。
+ *
+ * ⚠️ 為什麼又是一份自己的文件(現在 config 底下已經有四份「調參」文件):
+ *   · combat-env  每格是**倍率**(1.0 = 不變)
+ *   · base-bonus  每格是**加數**(0 = 沒有贈禮)
+ *   · stat-caps   每格是一對**天花板**
+ *   · combat-feel 每格是一條**規則的參數**(比例門檻 / 身位數 / 布林開關)
+ * 混在一起的話,操作者沒有任何線索分辨他填的 0.05 是「打五折」「+0.05 點」
+ * 「上限 0.05」還是「5% 的門檻」。
+ *
+ * **缺文件 = 出貨預設**(擊退 0.05/10/1.0、站定全開),不是空表。
+ */
+export const zConfigCombatFeelDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.combat-feel@1"),
+    knockback: z
+      .object({
+        /** 傷害 / 受傷單位最大生命 低於此比例 → 完全不擊退 */
+        minPct: z.number().min(0).max(1),
+        /** 一擊打掉 100% 生命時的擊退身位數 */
+        maxBodies: z.number().min(0).max(100),
+        /** 一個身位 = 多少 GGD 單位 */
+        bodyUnit: z.number().min(0).max(100),
+      })
+      .strict()
+      .optional(),
+    standstill: z
+      .object({
+        /** 總開關;false = 維持舊行為(邊走邊打) */
+        enabled: z.boolean(),
+        /** 「有在動」與「正在靠近」共用的速度門檻 (units/sec) */
+        walkEps: z.number().min(0).max(100),
+        /** 小怪(含殭屍王)是否同樣受約束 */
+        applyToMobs: z.boolean(),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
+
+/**
  * config.ambient-vfx@1 — AMBIENT vfx bindings (`config/ambient-vfx.json`):
  * per-model attachments that live while the entity lives (WC3 hero glows,
  * smolder trails, ribbon wings). Each binding names a `vfx` doc id from the
@@ -1579,6 +1622,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigVoxelBodiesDoc,
   zConfigBaseBonusDoc,
   zConfigStatCapsDoc,
+  zConfigCombatFeelDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -1612,4 +1656,5 @@ export type ConfigVoxelBarcodesDoc = z.infer<typeof zConfigVoxelBarcodesDoc>;
 export type ConfigBaseBonusDoc = z.infer<typeof zConfigBaseBonusDoc>;
 export type StatCapDoc = z.infer<typeof zStatCap>;
 export type ConfigStatCapsDoc = z.infer<typeof zConfigStatCapsDoc>;
+export type ConfigCombatFeelDoc = z.infer<typeof zConfigCombatFeelDoc>;
 export type AnyConfigDoc = z.infer<typeof zConfigDoc>;

@@ -248,13 +248,16 @@ describe("per-ability / per-champion hitFeel override (end to end)", () => {
     const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
 
     // amount 50 → default would be tier "light", hitstop 2, spark "hit",
-    // shakeMag 0.35, and NO shove (< KB_MIN_IMPACT=70). The ability's hitFeel
-    // replaces the gameplay + cosmetic fields with the authored values — note it
-    // even ARMS a shove on this otherwise-light hit.
+    // shakeMag 0.35, and NO shove (50/600 = 8.3% 的 raw 0.83 減不掉 3 的距離)。
+    // The ability's hitFeel replaces the gameplay + cosmetic fields with the
+    // authored values — note it even ARMS a shove on this otherwise-light hit.
     const p = pushAndStep(world, a, b, 50, `ability:${HF_ABILITY_ID}`);
     expect(p.hitstopTicks).toBe(9); // OVERRIDE.hitstopTicks
     expect(p.hitstunTicks).toBe(15); // OVERRIDE.hitstunTicks (>= hitstop)
-    expect(p.knockbackMag).toBe(5); // OVERRIDE.knockbackMag (armed despite < KB_MIN_IMPACT)
+    // GH#193 — 覆寫值是「距離 0 時要推多遠」的 RAW 值,一樣要減掉攻守距離:
+    // 5 (authored) − 3 (兩人現在差 3 個單位) = 2。覆寫若跳過這條減法,#193 對
+    // 普攻完全無效(114/115 位英雄的普攻都帶著覆寫值),見 sim/combatFeel.afterGap。
+    expect(p.knockbackMag).toBe(5 - 3);
     expect(p.shakeMag).toBe(1.7);
     expect(p.shakeStyle).toBe("omni");
     expect(p.sparkKind).toBe("ice");

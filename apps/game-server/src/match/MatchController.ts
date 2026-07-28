@@ -16,6 +16,11 @@ import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/c
 import { baseBonusFromDoc, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import {
+  COMBAT_FEEL_DOC_ID,
+  combatFeelFromDoc,
+  type CombatFeelRules,
+} from "@ggd/shared/sim/combatFeel";
+import {
   SKELETON_ARENA,
   ROYALE_ARENA,
   pickRoundArena,
@@ -525,6 +530,17 @@ export class MatchController {
      * `Configs`。預設值只服務單元測試與骨架開機。
      */
     statCaps: StatCapTable = statCapsFromDoc(Configs.tryGet("stat-caps")),
+    /**
+     * 戰鬥手感 (`config.combat-feel@1`, GH#193) —— 擊退法則 + 打就站定開關。
+     * 和 `baseBonus` / `statCaps` 同一條路(見上面 #278 的說明):由呼叫端在建立
+     * 比賽時解析並凍結。預設值只服務單元測試與骨架開機。
+     *
+     * ⚠️ 已知且刻意,和 `statCaps` 完全一樣的限制:MatchRoom 沒有覆寫這個參數,
+     * 所以它走的是這裡的預設值 —— `Configs` 是 **boot 時**載入的,後台改了要重啟
+     * shard 才會生效。#278 只替 `baseBonus` 做了 TTL 快取;這一份還沒有,不要
+     * 以為它和隔壁一樣是即時的。
+     */
+    combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
   ) {
     this.matchSeed = seed;
     registerSkeletonContent();
@@ -540,6 +556,9 @@ export class MatchController {
     // 之後要重啟 shard 才生效,而頁面上寫著「從下一場開始生效」。一個修好了、
     // 隔壁又原樣長回來,是最容易在合併時發生的事。
     this.world.statCaps = statCaps;
+    // 戰鬥手感 (`config.combat-feel@1`, GH#193) —— 擊退法則 + 打就站定開關。
+    // 同樣在 tick 0 之前定格,比賽中途不會變。
+    this.world.combatFeel = combatFeel;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

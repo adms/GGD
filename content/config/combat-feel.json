@@ -1,0 +1,14 @@
+{
+  "id": "combat-feel",
+  "schema": "config.combat-feel@1",
+  "knockback": {
+    "minPct": 0.05,
+    "maxBodies": 10,
+    "bodyUnit": 1.0
+  },
+  "standstill": {
+    "enabled": true,
+    "walkEps": 0.5,
+    "applyToMobs": true
+  }
+}

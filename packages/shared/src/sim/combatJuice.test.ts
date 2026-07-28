@@ -270,15 +270,24 @@ describe("hitstop", () => {
 });
 
 // ----------------------------------------------------------------- KNOCKBACK --
-describe("knockback", () => {
-  it("shoves the victim away from the source, magnitude by damage (after the hitstop hold)", () => {
+// GH#193 — 擊退是 pct-of-maxHp 驅動並且**減掉攻守雙方目前距離**的。這一組守衛
+// 打在**出貨路徑**上(damageQueue → combatResolveSystem → nav.override →
+// movementSystem 真的把人挪走),不是打在 `knockbackDistance` 那支純函式上 ——
+// 純函式的單元測試在 combatFeel.test.ts,兩層都要有,因為「算對了但沒送到
+// nav.override」和「算錯了」在畫面上長得一模一樣。
+describe("knockback (pct-of-maxHp, GH#193)", () => {
+  /** 貼身:1.2 GGD units,約等於近戰射程中位數 1.6 的內側。 */
+  const MELEE_GAP = 1.2;
+
+  it("shoves the victim away from the source, distance from the % of max HP taken", () => {
     cover("cj-knockback-dir");
     cover("cj-knockback-mag");
     const world = makeWorld();
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
-    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y }); // +x of a, same z
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y }); // +x of a, same z
 
-    pushHit(world, a, b, 100, "physical"); // impact 100 → 1.6u push, straight +x
+    // 200 / 600 = 33.3% → raw 3.333 身位, 減掉 1.2 的距離 → 2.133 GGD units
+    pushHit(world, a, b, 200, "physical");
     world.step(empty());
 
     // frozen first (hitstop), only THEN does the slide begin
@@ -287,58 +296,130 @@ describe("knockback", () => {
     expect(world.transform.get(b)!.pos.x).toBe(heldX); // still in the hitstop hold
 
     for (let k = 0; k < 20; k++) world.step(empty());
-    const disp = world.transform.get(b)!.pos.x - (ZC.x + 3);
+    const disp = world.transform.get(b)!.pos.x - (ZC.x + MELEE_GAP);
     expect(disp).toBeGreaterThan(0); // pushed AWAY from the source (+x)
-    expect(disp).toBeGreaterThan(1.3);
-    expect(disp).toBeLessThan(1.9);
+    expect(disp).toBeCloseTo(10 * (200 / 600) - MELEE_GAP, 2);
     expect(world.transform.get(b)!.pos.z).toBeCloseTo(Y, 3); // straight back, no drift
   });
 
-  it("chip damage applies no knockback (autos/DoTs don't shove)", () => {
+  it("a hit below minPct of the victim's MAX hp never shoves, however close", () => {
     cover("cj-knockback-chip");
     const world = makeWorld();
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
-    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
 
-    pushHit(world, a, b, 50, "physical"); // impact 50 (<70) → no push
+    // 20 / 600 = 3.3% < minPct 5% → 完全不推(而 20 也還在 hitstop 門檻之上)
+    pushHit(world, a, b, 20, "physical");
     for (let k = 0; k < 12; k++) world.step(empty());
     expect(world.nav.get(b)!.override).toBeNull();
-    expect(world.transform.get(b)!.pos.x).toBeCloseTo(ZC.x + 3, 6);
+    expect(world.transform.get(b)!.pos.x).toBeCloseTo(ZC.x + MELEE_GAP, 6);
   });
 
-  it("a blocked hit knocks back much less than the same unblocked hit", () => {
-    cover("cj-knockback-blocked");
+  it("THE DISTANCE SUBTRACTION: same hit, same victim — melee shoves, ranged does not", () => {
+    cover("cj-knockback-range");
+    const world = makeWorld();
+    // 兩位受害者一模一樣(600 血),差別**只有**攻擊者離他多遠。
+    const melee = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const nearVictim = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
+    const ranged = spawnDummy(world, 2, 0, { x: ZC.x, z: Y + 4 });
+    const farVictim = spawnDummy(world, 3, 1, { x: ZC.x + 8.2, z: Y + 4 }); // 遠程射程中位數
+
+    // 200 / 600 = 33.3% → raw 3.33 身位。近戰 3.33 − 1.2 > 0;遠程 3.33 − 8.2 < 0。
+    pushHit(world, melee, nearVictim, 200, "physical");
+    pushHit(world, ranged, farVictim, 200, "physical");
+    for (let k = 0; k < 20; k++) world.step(empty());
+
+    expect(world.transform.get(nearVictim)!.pos.x).toBeGreaterThan(ZC.x + MELEE_GAP + 1);
+    // 遠程打出的**同一發**完全推不動人 —— 這就是「遠程不能靠推人永久風箏」。
+    expect(world.transform.get(farVictim)!.pos.x).toBeCloseTo(ZC.x + 8.2, 6);
+  });
+
+  it("the denominator is MAX hp, not current hp — a nearly-dead victim is not launched", () => {
+    cover("cj-knockback-maxhp");
     const world = makeWorld();
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
-    const open = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
-    const guarded = spawnDummy(world, 2, 1, { x: ZC.x + 3, z: Y + 6 }, {
-      shields: [{ amount: 500, expiresAtTick: world.tick + 100, sourceId: "t" }],
-    });
-    const openStart = { ...world.transform.get(open)!.pos };
-    const guardedStart = { ...world.transform.get(guarded)!.pos };
+    const healthy = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
+    // 第二位攻擊者只是為了讓「被推的方向」也是 +x —— 否則兩條位移不能直接比。
+    const a2 = spawnDummy(world, 2, 0, { x: ZC.x, z: Y + 8 });
+    const dying = spawnDummy(world, 3, 1, { x: ZC.x + MELEE_GAP, z: Y + 8 });
+    // 250/600 殘血。若分母改成**當前**生命,200 傷害就是 80% → 8 身位;
+    // 用最大生命則兩人都是 33.3% → 3.33 身位。兩者差 5 個身位,量得出來。
+    world.health.get(dying)!.hp = 250;
 
-    pushHit(world, a, open, 100, "physical");
-    pushHit(world, a, guarded, 100, "physical");
-    world.step(empty());
-    const guardedDmg = world.events.find((e) => e.type === "damage" && e.data.target === guarded)!.data;
-    expect(guardedDmg.blocked).toBe(true);
-
+    pushHit(world, a, healthy, 200, "physical");
+    pushHit(world, a2, dying, 200, "physical");
     for (let k = 0; k < 20; k++) world.step(empty());
-    const openMag = V.dist(world.transform.get(open)!.pos, openStart);
-    const guardedMag = V.dist(world.transform.get(guarded)!.pos, guardedStart);
-    expect(guardedMag).toBeGreaterThan(0);
-    expect(guardedMag).toBeLessThan(openMag * 0.6); // ~0.35x per the block multiplier
+
+    const healthyDisp = world.transform.get(healthy)!.pos.x - (ZC.x + MELEE_GAP);
+    const dyingDisp = world.transform.get(dying)!.pos.x - (ZC.x + MELEE_GAP);
+    expect(healthyDisp).toBeGreaterThan(1);
+    expect(dyingDisp).toBeCloseTo(healthyDisp, 4); // 殘血不會被推更遠
+  });
+
+  it("殭屍王 (6000 hp) shrugs off the same blow that shoves a 600 hp champion", () => {
+    cover("cj-knockback-boss");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const squishy = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
+    const king = spawnDummy(world, 2, 1, { x: ZC.x + MELEE_GAP, z: Y + 8 }, { hp: 6000 });
+
+    // 200 傷害:對 600 血是 33%(推),對 6000 血是 3.3% < 5%(完全不推)。
+    pushHit(world, a, squishy, 200, "physical");
+    pushHit(world, a, king, 200, "physical");
+    for (let k = 0; k < 20; k++) world.step(empty());
+
+    expect(world.transform.get(squishy)!.pos.x).toBeGreaterThan(ZC.x + MELEE_GAP + 1);
+    expect(world.transform.get(king)!.pos.x).toBeCloseTo(ZC.x + MELEE_GAP, 6);
+    expect(world.nav.get(king)!.override).toBeNull();
+  });
+
+  it("the three numbers are operator-tunable: raising minPct switches the same shove off", () => {
+    cover("cj-knockback-config");
+    const world = makeWorld();
+    // 33.3% 的一擊,但操作者把門檻拉到 50% → 這一下不再擊退。
+    world.combatFeel = {
+      knockback: { minPct: 0.5, maxBodies: 10, bodyUnit: 1.0 },
+      standstill: world.combatFeel.standstill,
+    };
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
+
+    pushHit(world, a, b, 200, "physical");
+    for (let k = 0; k < 20; k++) world.step(empty());
+    expect(world.nav.get(b)!.override).toBeNull();
+    expect(world.transform.get(b)!.pos.x).toBeCloseTo(ZC.x + MELEE_GAP, 6);
+  });
+
+  it("maxBodies is the ceiling: a 100%-hp one-shot at point blank pushes 10 bodies, not more", () => {
+    cover("cj-knockback-cap");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + MELEE_GAP, z: Y });
+
+    // 6000 傷害打在 600 血身上 = 1000%。pct 先夾到 1 → raw 10 身位,再減掉當下的
+    // 距離。**沒有夾**的話這裡會是 100 − 1.2 ≈ 98.8,也就是把人扔出整座競技場。
+    // 目標這一擊就死了、不會滑完全程,所以量的是 sim 這一 tick 真的算出並寫進
+    // nav.override 的距離,而不是最終位置。
+    pushHit(world, a, b, 6000, "physical");
+    world.step(empty());
+    const p = firstEvent(world, "hitImpact")!.profile as Record<string, unknown>;
+    expect(p.knockbackMag as number).toBeGreaterThan(8); // 10 − 大約 1.2 的距離
+    expect(p.knockbackMag as number).toBeLessThanOrEqual(10);
+    const ov = world.nav.get(b)!.override!;
+    expect(ov.kind).toBe("knockback"); // profile 上那個數字就是 sim 套用的那個
+    expect(ov.kind === "knockback" ? ov.remaining : -1).toBeCloseTo(p.knockbackMag as number, 6);
   });
 
   it("respects the zone boundary — a big shove never clips outside the arena", () => {
     cover("cj-knockback-noclip");
     const world = makeWorld();
     // b sits near the boundary; a is inward, so b is shoved OUTWARD toward the wall
-    const a = spawnDummy(world, 0, 0, { x: ZC.x + 10, z: 0 });
+    const a = spawnDummy(world, 0, 0, { x: ZC.x + 21, z: 0 });
     const b = spawnDummy(world, 1, 1, { x: ZC.x + 22, z: 0 }); // dist 22 of 24
     const startDist = V.dist(world.transform.get(b)!.pos, ZC);
 
-    pushHit(world, a, b, 400, "true"); // capped 4u shove, would reach dist 26
+    // 400 / 600 = 66.7% → raw 6.67 − 1 = 5.67u shove, would reach dist ~27.7
+    pushHit(world, a, b, 400, "true");
     for (let k = 0; k < 30; k++) world.step(empty());
 
     const endDist = V.dist(world.transform.get(b)!.pos, ZC);
@@ -407,10 +488,11 @@ describe("unified ImpactProfile (one hit-weight on hitImpact)", () => {
     cover("cj-profile-knockback");
     const world = makeWorld();
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
-    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y }); // +x of a
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 1.2, z: Y }); // +x of a, 貼身
     world.nav.get(b)!.moveTarget = { x: ZC.x + 18, z: Y };
 
-    pushHit(world, a, b, 100, "physical"); // impact 100 → medium, +x shove
+    // impact 100 → medium tier;100/600 = 16.7% ≥ 5% 且 raw 1.67 > 1.2 的距離 → +x shove
+    pushHit(world, a, b, 100, "physical");
     world.step(empty());
 
     const p = firstEvent(world, "hitImpact")!.profile as Record<string, unknown>;
