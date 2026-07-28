@@ -31,6 +31,17 @@ node_modules
 **/.vite
 **/.turbo
 **/coverage
+# …but `coverage` is also the name of a Go SOURCE PACKAGE in the test runner,
+# and `**/coverage` swallowed it. The failure had nothing to do with docker in
+# its output — the build died on
+#   internal/api/api.go:29:2: no required module provides package
+#   github.com/ggd/testrunner/internal/coverage
+# i.e. it read as a broken go.mod, so the ignore file was the last place anyone
+# would look. Net effect: docker/testrunner.Dockerfile could not be built AT
+# ALL, which is precisely the image that makes "run the suites the same way
+# everywhere" possible. Re-included by exception rather than by narrowing the
+# rule above, so generated `coverage/` output dirs stay excluded everywhere else.
+!tools/testrunner/internal/coverage
 **/*.tsbuildinfo
 
 # --- Warcraft III source archives (860 MB, importer input only) ---------------
