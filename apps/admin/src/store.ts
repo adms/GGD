@@ -101,6 +101,15 @@ export type Page =
    */
   | "voxelForge"
   /**
+   * 體素條碼 (特徵生成 batch one, docs/_體素特徵生成規格.md) — the 11-slot colour
+   * barcode editor. EAGER and session-gated for the same reason as its two
+   * neighbours: its save is a `putOverlayDoc` into the platform's admin-only
+   * durable overlay (config/voxel-barcodes). It produces NO pixels — the preview
+   * is a stack of CSS divs and the atlas is painted locally by voxel:build — so
+   * it drags no graphics dependency into the production bundle.
+   */
+  | "voxelBarcode"
+  /**
    * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
    * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
    * import in ui/App.tsx, so a production admin build never emits it (nor its
@@ -251,6 +260,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // writer 內容覆蓋層 uses — so without a session every 寫入覆蓋層 would 401 and
   // read as a broken page rather than a missing sign-in.
   "voxelForge",
+  // 體素條碼: same `putOverlayDoc` writer, so the same rule. An EAGER page left
+  // out of this set is worse than a gated one — it renders a fully interactive
+  // editor to a signed-out operator, who fills in eleven colours and then
+  // discovers on 儲存 that there was never a session to write with.
+  "voxelBarcode",
   "ai",
   "combatEnv",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
