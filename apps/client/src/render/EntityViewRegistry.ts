@@ -104,6 +104,14 @@ export interface EntityViewState {
    */
   isLocal?: boolean;
   /**
+   * MOBS (kind 6) only — the 體型倍率 the server armed for this mob's KIND
+   * (GH#192), decoded by the caller out of the reused `mana` slot (see protocol
+   * ENTITY_KIND). Absent for every other kind and for any world that never
+   * armed the mechanic; `mobModelSizeOverride` then falls back to the model
+   * doc's own scale, which is exactly GH#262's behaviour.
+   */
+  mobScale?: number;
+  /**
    * Revive circles (kind 3) only — decoded by the caller from the reused
    * EntityState float slots (see protocol ENTITY_KIND). Absent for every other
    * kind, so the shape stays a strict superset of the old one.
@@ -233,14 +241,38 @@ export function relativeScaleOf(override: ModelDocOverride | null | undefined): 
  * i.e. 「這隻是普通殭屍的 N 倍大」. Champions are untouched (`kind !== MOB`
  * returns null here), which is what keeps #150's normalization intact for the
  * roster it was written for.
+ *
+ * ── GH#192: THE DOC'S SCALE IS NO LONGER SUFFICIENT ────────────────────────
+ *
+ * A mob now wears the model OF A CHAMPION, so 一般 / 特殊 / 王 normally resolve
+ * to the SAME model doc and the doc's `scale` says the same thing about all
+ * three. The per-kind 體型倍率 therefore rides the wire (`EntityState.mana`,
+ * decoded into `e.mobScale`) and MULTIPLIES the doc's scale here:
+ *
+ *     relativeScale = docScale × sizeMult
+ *
+ * Two factors and not one, deliberately: `docScale` is 「this mesh's natural
+ * size」 (a doc authored for a small creature stays small) and `sizeMult` is
+ * 「this KIND is N× a normal one of me」 (an admin knob). Collapsing them would
+ * make the king's 10× mean something different for every champion the operator
+ * picks.
+ *
+ * `mobScale` absent (a pre-GH#192 server, or a world that never armed the
+ * mechanic) falls back to the doc's scale alone = GH#262's exact behaviour.
  */
 export function mobModelSizeOverride(
-  e: Pick<EntityViewState, "kind">,
+  e: Pick<EntityViewState, "kind" | "mobScale">,
   doc: ModelDoc | null | undefined,
 ): ModelDocOverride | null {
   if (e.kind !== ENTITY_KIND.MOB) return null;
-  const s = doc?.scale;
-  return typeof s === "number" && Number.isFinite(s) && s > 0 ? { relativeScale: s } : null;
+  const raw = doc?.scale;
+  const docScale = typeof raw === "number" && Number.isFinite(raw) && raw > 0 ? raw : 1;
+  const m = e.mobScale;
+  const sizeMult = typeof m === "number" && Number.isFinite(m) && m > 0 ? m : 1;
+  const relativeScale = docScale * sizeMult;
+  // Both degenerate ⇒ 1×, which is what `relativeScaleOf` already defaults to;
+  // returning null there keeps the "no override" branch byte-identical.
+  return relativeScale === 1 ? null : { relativeScale };
 }
 
 /** Apply a per-champion override to a resolved model doc (task #77). */

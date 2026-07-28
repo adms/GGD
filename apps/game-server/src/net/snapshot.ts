@@ -10,7 +10,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
-import { mobModelKeyFor } from "@ggd/shared/sim/mobs";
+import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
 import type { ChampionId } from "@ggd/shared/ids";
@@ -46,6 +46,13 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   // pure law fireRingSystem burned against this tick.
   state.fireRingTicks = world.fireRingTicks;
   state.fireRingRadius = currentFireRingRadius(world);
+  // 殭屍染黑 (GH#192). Published from the ARMED RULES rather than from the doc,
+  // and every tick rather than once at onCreate, for the same reason `mapId` is
+  // above: the rules are re-armed at each combat entry, so a value captured at
+  // room creation would go stale the moment anything per-round moved. Colyseus
+  // skips a primitive assignment whose value is unchanged, so the constant case
+  // costs zero bytes after the first patch.
+  state.mobVisualJson = mobVisualJson(world.mobRules);
 
   // ---- teams ----
   while (state.teams.length < ctl.lives.size) state.teams.push(new TeamState());
@@ -336,13 +343,16 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // model doc, and `key` is the only channel that differentiates them on
         // the wire (EntityState has no radius/scale field), so a king that
         // resolved to the zombie's key would be a zombie with more hp on screen.
+        // GH#192: since the mesh is resolved FROM THE CHAMPION, all three kinds
+        // normally share ONE key — so the key can no longer carry the size and
+        // the 體型倍率 rides the free `mana` slot (see protocol ENTITY_KIND MOB).
         es.key = mobModelKeyFor(world.mobRules, mob.kind);
+        es.mana = mobSizeMultFor(world.mobRules, mob.kind);
+        es.maxMana = 0; // MUST stay 0 — it is what keeps `mana` off the mana bar
         const hp = world.health.get(id);
         if (hp) {
           es.hp = hp.hp;
           es.maxHp = hp.maxHp;
-          es.mana = 0;
-          es.maxMana = 0;
           es.alive = hp.alive;
           es.shield = 0;
         }

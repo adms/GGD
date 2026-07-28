@@ -40,7 +40,10 @@ import {
   MONSTER_TEAM,
   MOB_MODEL_KEY,
   mobProfile,
-  mobModelKeyFor,
+  mobSizeMultFor,
+  mobVisualJson,
+  parseMobVisualJson,
+  DEFAULT_MOB_TINT_STRENGTH,
   mobRulesFromConfig,
   summonMobBoss,
   spawnMob,
@@ -73,6 +76,8 @@ const RULES: MobRules = {
   moveSpeed: 3,
   hpRegenPerSec: 0,
   modelKey: MOB_MODEL_KEY,
+  sizeMult: 1,
+  tintStrength: 0.65,
   attackDamage: 5,
   attackRangeSq: 1.8 * 1.8,
   attackCdTicks: 30,
@@ -86,6 +91,7 @@ const RULES: MobRules = {
     repeatable: true,
     maxHp: 500,
     attackDamage: 12,
+    sizeMult: 10,
     moveSpeed: 2.4,
     attackRangeSq: 2.6 * 2.6,
     attackCdTicks: 42,
@@ -527,6 +533,7 @@ describe("特殊殭屍 — the roll, and whether anyone can SEE it", () => {
       damageMult: 1.5,
       moveSpeedMult: 1.25,
       radiusMult: 1.8,
+      sizeMult: 1.8,
       rewardMult: 3,
       modelKey: "champ.mob.zombie-special",
     },
@@ -585,26 +592,94 @@ describe("特殊殭屍 — the roll, and whether anyone can SEE it", () => {
     expect(p.attackRangeSq).toBeCloseTo(RULES.attackRangeSq * 1.8 * 1.8, 9);
   });
 
-  it("IT IS VISIBLE: the three kinds resolve to three DIFFERENT model docs", () => {
+  it("IT IS VISIBLE: the three kinds resolve to three DIFFERENT rendered sizes", () => {
     cover("mob-special-visible");
-    // 「它要看得出來」. The wire has no radius/scale field — `key` is the only
-    // channel — so three kinds sharing one key would be three identical zombies
-    // on screen no matter what the sim thinks.
+    // 「它要看得出來」.
+    //
+    // ⚠️ THIS ASSERTION MOVED CHANNEL IN GH#192, and the move is the point.
+    // #262 asserted three distinct MODEL KEYS, because the key was then the only
+    // thing that differed. Since GH#192 the mesh is resolved FROM THE CHAMPION,
+    // so all three kinds normally share ONE key — and a key-distinctness test
+    // would now fail on a perfectly correct build while a build that rendered
+    // three identical zombies could pass by naming three docs that happen to
+    // point at one mesh (which is exactly what #262's docs did: all three were
+    // `blocky-undead.glb`). The SIZE is the behaviour; assert the size.
     const rules = specialRules(0.5);
-    const keys = [
-      mobModelKeyFor(rules, "normal"),
-      mobModelKeyFor(rules, "special"),
-      mobModelKeyFor(rules, "boss"),
+    const sizes = [
+      mobSizeMultFor(rules, "normal"),
+      mobSizeMultFor(rules, "special"),
+      mobSizeMultFor(rules, "boss"),
     ];
-    expect(new Set(keys).size).toBe(3);
+    expect(new Set(sizes).size).toBe(3);
+    expect(sizes[2]!).toBeGreaterThan(sizes[1]!);
+    expect(sizes[1]!).toBeGreaterThan(sizes[0]!);
     // …and the SHIPPED doc is authored the same way, not just this fixture.
     const shipped = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT);
-    const shippedKeys = [
-      mobModelKeyFor(shipped, "normal"),
-      mobModelKeyFor(shipped, "special"),
-      mobModelKeyFor(shipped, "boss"),
+    const shippedSizes = [
+      mobSizeMultFor(shipped, "normal"),
+      mobSizeMultFor(shipped, "special"),
+      mobSizeMultFor(shipped, "boss"),
     ];
-    expect(new Set(shippedKeys).size).toBe(3);
+    expect(new Set(shippedSizes).size).toBe(3);
+    // The king is TEN TIMES the zombie (owner GH#192 「modal 大小是10倍」) —
+    // 「大一點」 is not 「看得出來是王」, so the ratio is pinned, not just ordered.
+    expect(shippedSizes[2]! / shippedSizes[0]!).toBeCloseTo(10, 9);
+    // A mob whose rules were never armed reads as 1× rather than 0× / NaN×.
+    expect(mobSizeMultFor(null, "boss")).toBe(1);
+  });
+
+  it("殭屍王 HP is ×100 of THAT ROUND's zombie, not a flat number (owner GH#192)", () => {
+    cover("mob-boss-hpmult");
+    // MUTATION SURVIVOR FIX. The first version of this only checked round 3,
+    // where ×100 of a 60 hp zombie is 6,000 — byte-identical to the flat `maxHp`
+    // the doc also carries. Ignoring `hpMult` entirely therefore passed. Round 9
+    // is where the two implementations SEPARATE: the zombie is 180 hp there, so
+    // ×100 is 18,000 while the flat number is still 6,000.
+    const r3 = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 3);
+    const r9 = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 9);
+    const mult = DEFAULT_MOB_WAVES_CONFIG.boss!.hpMult!;
+    expect(mult).toBe(100);
+    expect(r3.boss!.maxHp).toBe(r3.maxHp * mult);
+    expect(r9.boss!.maxHp).toBe(r9.maxHp * mult);
+    // …and the two rounds really do give different kings, so this is a CURVE.
+    expect(r9.boss!.maxHp).toBeGreaterThan(r3.boss!.maxHp);
+    // the flat `maxHp` is what a NO-hpMult arena still gets — the legacy path
+    // must not have been deleted along the way
+    const flat = mobRulesFromConfig(
+      {
+        ...DEFAULT_MOB_WAVES_CONFIG,
+        boss: { ...DEFAULT_MOB_WAVES_CONFIG.boss!, hpMult: undefined },
+      },
+      DT,
+      9,
+    );
+    expect(flat.boss!.maxHp).toBe(DEFAULT_MOB_WAVES_CONFIG.boss!.maxHp);
+    expect(flat.boss!.maxHp).not.toBe(r9.boss!.maxHp);
+  });
+
+  it("殭屍外觀 survives the JSON round trip, and EVERY failure degrades to the SHIPPED tint", () => {
+    cover("mob-special-visible");
+    // The round trip the wire really does.
+    const shipped = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT);
+    expect(parseMobVisualJson(mobVisualJson(shipped)).tintStrength).toBe(shipped.tintStrength);
+    expect(shipped.tintStrength).toBe(DEFAULT_MOB_TINT_STRENGTH);
+
+    // THE DISCRIMINATING PART. Every degraded input must land on the SHIPPED
+    // table, never on 0 — 0 means 「no tint」, i.e. the zombies silently render
+    // in the champion's own colours and 「跟玩家混在一起」 (failure shape ③: the
+    // feature deleted, quietly, with everything still green).
+    for (const bad of ["", null, undefined, "not json", "[]", "null", "3", '{"tintStrength":"x"}',
+      '{"tintStrength":null}', '{"tintStrength":2}', '{"tintStrength":-1}', "{}"]) {
+      expect(parseMobVisualJson(bad).tintStrength, `${String(bad)} degraded wrong`).toBe(
+        DEFAULT_MOB_TINT_STRENGTH,
+      );
+    }
+    // …but a LEGITIMATE 0 (the operator really did turn 染黑 off) is honoured.
+    expect(parseMobVisualJson('{"tintStrength":0}').tintStrength).toBe(0);
+    expect(parseMobVisualJson('{"tintStrength":1}').tintStrength).toBe(1);
+    // A world that never armed the mechanic still publishes the shipped default
+    // rather than an un-tinted table.
+    expect(parseMobVisualJson(mobVisualJson(null)).tintStrength).toBe(DEFAULT_MOB_TINT_STRENGTH);
   });
 
   it("pays `rewardMult`× on death — the reason to hunt it", () => {
@@ -904,6 +979,7 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
         damageMult: 1.5,
         moveSpeedMult: 1.25,
         radiusMult: 1.8,
+        sizeMult: 1.8,
         rewardMult: 3,
         modelKey: "champ.mob.zombie-special",
       },

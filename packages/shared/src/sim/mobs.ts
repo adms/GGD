@@ -124,6 +124,19 @@ export interface MobRules {
   hpRegenPerSec: number;
   /** model doc id sent as EntityState.key (presentation only, never digested) */
   modelKey: string;
+  /**
+   * 體型倍率 (GH#192) — the RENDERED size as a multiple of what the resolved
+   * model doc already declares. Presentation only: the sim's body is `radius`,
+   * and nothing here reaches collision, navigation or the zone inset. Travels
+   * per mob on the wire (see `snapshot.ts`), because the three kinds can now
+   * share one model key and the key can no longer imply a size.
+   */
+  sizeMult: number;
+  /**
+   * 染黑強度 (GH#192) 0..1, applied to EVERY kind. Presentation only and never
+   * digested, for the same reason `modelKey` is not.
+   */
+  tintStrength: number;
   /** melee packet amount */
   attackDamage: number;
   /** mob walk speed in u/s (#215). Owned by the mob card, NOT the shared fallback. */
@@ -185,6 +198,8 @@ export interface MobBossRules {
   radius: number;
   /** model doc id sent as EntityState.key (presentation only, never digested) */
   modelKey: string;
+  /** 體型倍率 (GH#192) — see `MobRules.sizeMult`; owner default 10 */
+  sizeMult: number;
   /** THE WHOLE PRIZE POOL in gold, split by damage share (see sim/mobBoss.ts) */
   bountyGold: number;
   /** the same, in XP */
@@ -201,6 +216,8 @@ export interface MobSpecialRules {
   damageMult: number;
   moveSpeedMult: number;
   radiusMult: number;
+  /** 體型倍率 (GH#192) — the RENDERED size; `radiusMult` is the sim body */
+  sizeMult: number;
   /** gold AND xp multiplier on the kill reward */
   rewardMult: number;
   modelKey: string;
@@ -221,6 +238,14 @@ export interface MobProfile {
   attackCdTicks: number;
   radius: number;
   modelKey: string;
+  /**
+   * 體型倍率 (GH#192) — the RENDERED size multiplier for this kind. Resolved
+   * here, in the one place every consumer already reads, for exactly the reason
+   * the rest of this struct exists: before GH#192 the size came from the model
+   * DOC each kind happened to name, so a king that reused the zombie's key was
+   * a zombie-sized king and no assertion on `modelKey` could see it.
+   */
+  sizeMult: number;
   /** multiplier applied to `rewardGold` / `rewardXp` on this mob's death */
   rewardMult: number;
 }
@@ -236,6 +261,10 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
       attackCdTicks: b.attackCdTicks,
       radius: b.radius,
       modelKey: b.modelKey,
+      // ×THE NORMAL MOB, for the same reason the special's is — 10 means
+      // 「王是一般殭屍的 10 倍高」, which is what the owner said, and it stays
+      // true if the normal mob is ever resized.
+      sizeMult: rules.sizeMult * b.sizeMult,
       // A king pays its BOUNTY POOL, never the per-zombie reward — MobSystem
       // takes the boss branch and never reaches the flat reward at all. 0 here
       // so a future caller that forgets that gets nothing rather than a silent
@@ -251,6 +280,7 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
     attackCdTicks: rules.attackCdTicks,
     radius: rules.radius,
     modelKey: rules.modelKey,
+    sizeMult: rules.sizeMult,
     rewardMult: 1,
   };
   if (kind !== "special" || rules.special === null) return base;
@@ -266,8 +296,25 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
     attackCdTicks: base.attackCdTicks,
     radius: base.radius * s.radiusMult,
     modelKey: s.modelKey,
+    // ×THE NORMAL MOB, exactly like `hpMult` / `damageMult` / `moveSpeedMult`
+    // one line up — every `*Mult` in the 特殊殭屍 block means the same thing, so
+    // 1.8 here reads as 「是一般殭屍的 1.8 倍高」 and not as an absolute size the
+    // operator has to re-derive whenever the normal mob's own size changes.
+    sizeMult: rules.sizeMult * s.sizeMult,
     rewardMult: s.rewardMult,
   };
+}
+
+/**
+ * The RENDERED size multiplier for a mob of `kind` — the value the snapshot
+ * puts on the wire. `rules === null` (a world that never armed the mechanic)
+ * reads as 1, i.e. exactly the model doc's own size, so a pre-GH#192 client and
+ * every disarmed test world are unchanged.
+ */
+export function mobSizeMultFor(rules: MobRules | null, kind: MobKind): number {
+  if (rules === null) return 1;
+  const s = mobProfile(rules, kind).sizeMult;
+  return Number.isFinite(s) && s > 0 ? s : 1;
 }
 
 /**
@@ -308,8 +355,17 @@ export interface MobWavesConfigLike {
   waveIntervalSec: number;
   mobsPerWaveCap: number;
   maxAlivePerZone: number;
-  /** per-round cap overrides (owner 2026-07-27); absent ⇒ authored caps everywhere */
-  schedule?: readonly { round: number; mobsPerWaveCap: number; maxAlivePerZone: number }[];
+  /**
+   * per-round overrides (owner 2026-07-27); absent ⇒ authored caps everywhere.
+   * `championId` (GH#191) is 「這一回合由誰擔任」 and, since GH#192, decides the
+   * MODEL as well as the face.
+   */
+  schedule?: readonly {
+    round: number;
+    mobsPerWaveCap: number;
+    maxAlivePerZone: number;
+    championId?: string;
+  }[];
   mob: {
     maxHp: number;
     attackDamage: number;
@@ -319,6 +375,10 @@ export interface MobWavesConfigLike {
     radius: number;
     modelKey?: string;
     championId?: string;
+    /** GH#192 體型倍率 (default 1) */
+    sizeMult?: number;
+    /** GH#192 染黑強度 0..1 (default DEFAULT_MOB_TINT_STRENGTH) */
+    tintStrength?: number;
     baseLevel?: number;
     levelPerRound?: number;
     /** #244 — the mob's OWN hp curve: round(baseHp + hpPerLevel*(level-1)) */
@@ -345,6 +405,12 @@ export interface MobWavesConfigLike {
     attackCdSec: number;
     radius: number;
     modelKey?: string;
+    /** GH#192 — ×N the normal mob's hp for that round; wins over `maxHp` */
+    hpMult?: number;
+    /** GH#192 — the king's own face/model; absent = the round's mob champion */
+    championId?: string;
+    /** GH#192 體型倍率 (default DEFAULT_BOSS_SIZE_MULT) */
+    sizeMult?: number;
     bountyGold: number;
     bountyXp: number;
     lastHitMultiplier: number;
@@ -358,6 +424,10 @@ export interface MobWavesConfigLike {
     radiusMult: number;
     rewardMult: number;
     modelKey?: string;
+    /** GH#192 體型倍率 (default = `radiusMult`, so old docs keep one number) */
+    sizeMult?: number;
+    /** GH#192 — the special's own face/model; absent = the round's mob champion */
+    championId?: string;
   };
 }
 
@@ -400,6 +470,55 @@ export function mobCapsForRound(
     mobsPerWaveCap: Math.max(0, row.mobsPerWaveCap),
     maxAlivePerZone: Math.max(0, row.maxAlivePerZone),
   };
+}
+
+/** 染黑 default — see `zMobWavesConfig.mob.tintStrength` for why 0.65. */
+export const DEFAULT_MOB_TINT_STRENGTH = 0.65;
+/** owner GH#192 「modal 大小是10倍」 — a DEFAULT, overridable per arena/後台. */
+export const DEFAULT_BOSS_SIZE_MULT = 10;
+/** owner GH#192 「HP是100倍」 — likewise a default, not a constant. */
+export const DEFAULT_BOSS_HP_MULT = 100;
+
+/**
+ * WHO WEARS THE ZOMBIE'S FACE IN `round` (GH#191).
+ *
+ * 「甚至設定每回合殭屍指定哪個英雄來擔任」. Precedence, highest first:
+ *   1. that round's schedule row's `championId`;
+ *   2. the whole-match `mob.championId`;
+ *   3. MOB_CHAMPION_ID.
+ *
+ * `round <= 0` is the 「no round tracking」 sentinel (unit tests, the client's
+ * prediction shadow) and reads as the whole-match setting — the exact same
+ * convention `mobCapsForRound` / `mobLevelForRound` use, so the three cannot
+ * disagree about what a round-less world means.
+ *
+ * The schedule is searched by EXACT round the same way the caps are (`find` on
+ * `Math.round(round)`), so a row can override the face without touching the caps
+ * and vice versa.
+ */
+export function mobChampionForRound(cfg: MobWavesConfigLike, round: number): string {
+  const whole = cfg.mob.championId ?? MOB_CHAMPION_ID;
+  if (!cfg.schedule || round <= 0) return whole;
+  const row = cfg.schedule.find((r) => r.round === Math.round(round));
+  return row?.championId ?? whole;
+}
+
+/**
+ * The MODEL a mob wearing `championId` renders as (GH#192, owner: 「選什麼英雄
+ * 就會讀取什麼 3d modal」).
+ *
+ * Before this, `mobWaves.mob.championId` (the face) and `mobWaves.mob.modelKey`
+ * (the mesh) were two independent fields an operator had to keep in agreement by
+ * hand — pick a new champion in the console and the zombies kept the old mesh,
+ * silently. Now the champion doc's own `modelKey` IS the answer and the config
+ * field is only an override.
+ *
+ * Falls back to MOB_MODEL_KEY when the champion is not registered (skeleton
+ * content, a doc id with a typo, a host with no content loaded) rather than
+ * emitting an empty key that would render nothing at all.
+ */
+export function mobChampionModelKey(championId: string): string {
+  return Champions.tryGet(championId as ChampionId)?.modelKey ?? MOB_MODEL_KEY;
 }
 
 export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number {
@@ -460,7 +579,11 @@ export function mobRulesFromConfig(
 ): MobRules {
   const ticks = (sec: number): number => Math.max(1, Math.round(sec / dt));
   const level = mobLevelForRound(cfg, round);
-  const def = Champions.tryGet((cfg.mob.championId ?? MOB_CHAMPION_ID) as ChampionId);
+  // GH#191 — the round's champion, not the whole-match one. This is the ONE
+  // line the per-round 由誰擔任 column was missing: `round` was already an
+  // argument (the caps use it), so consuming the field needed no new channel.
+  const championId = mobChampionForRound(cfg, round);
+  const def = Champions.tryGet(championId as ChampionId);
   const perLevel = level - 1;
   // TIER 1 (#244): the mob card owns the curve. `baseHp` is the presence flag —
   // an authored curve wins outright, and the champion doc is never consulted.
@@ -484,6 +607,9 @@ export function mobRulesFromConfig(
         ? 0
         : Math.max(0, championStatBase(def, Stat.HealthRegen, level, env));
   const caps = mobCapsForRound(cfg, round);
+  // GH#192 — the mesh follows the champion; `modelKey` is only an override.
+  const modelKey = cfg.mob.modelKey ?? mobChampionModelKey(championId);
+  const tintStrength = Math.max(0, Math.min(1, cfg.mob.tintStrength ?? DEFAULT_MOB_TINT_STRENGTH));
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),
@@ -496,7 +622,9 @@ export function mobRulesFromConfig(
     level,
     maxHp,
     hpRegenPerSec,
-    modelKey: cfg.mob.modelKey ?? MOB_MODEL_KEY,
+    modelKey,
+    sizeMult: cfg.mob.sizeMult ?? 1,
+    tintStrength,
     attackDamage: cfg.mob.attackDamage,
     moveSpeed: cfg.mob.moveSpeed ?? MOB_FALLBACK_MOVE_SPEED,
     attackRangeSq: cfg.mob.attackRange * cfg.mob.attackRange,
@@ -517,13 +645,27 @@ export function mobRulesFromConfig(
             enabled: cfg.boss.enabled,
             killThreshold: cfg.boss.killThreshold,
             repeatable: cfg.boss.repeatable,
-            maxHp: cfg.boss.maxHp,
+            // GH#192 「HP是100倍」. ×the ROUND'S mob hp, resolved here at arm
+            // time next to the level — so the king scales with the curve instead
+            // of being a flat number that a zombie retune quietly outgrows. The
+            // flat `maxHp` stays the answer for an arena that authored no mult.
+            maxHp:
+              cfg.boss.hpMult === undefined
+                ? cfg.boss.maxHp
+                : Math.max(1, Math.round(maxHp * cfg.boss.hpMult)),
             attackDamage: cfg.boss.attackDamage,
             moveSpeed: cfg.boss.moveSpeed,
             attackRangeSq: cfg.boss.attackRange * cfg.boss.attackRange,
             attackCdTicks: ticks(cfg.boss.attackCdSec),
             radius: cfg.boss.radius,
-            modelKey: cfg.boss.modelKey ?? cfg.mob.modelKey ?? MOB_MODEL_KEY,
+            // GH#192 — same precedence as the normal mob: explicit override,
+            // else the CHAMPION's mesh (its own, when the block names one).
+            modelKey:
+              cfg.boss.modelKey ??
+              (cfg.boss.championId === undefined
+                ? modelKey
+                : mobChampionModelKey(cfg.boss.championId)),
+            sizeMult: cfg.boss.sizeMult ?? DEFAULT_BOSS_SIZE_MULT,
             bountyGold: cfg.boss.bountyGold,
             bountyXp: cfg.boss.bountyXp,
             lastHitMultiplier: cfg.boss.lastHitMultiplier,
@@ -540,10 +682,57 @@ export function mobRulesFromConfig(
             damageMult: cfg.special.damageMult,
             moveSpeedMult: cfg.special.moveSpeedMult,
             radiusMult: cfg.special.radiusMult,
+            // GH#192 — defaults to `radiusMult` so an arena authored before the
+            // split keeps ONE number meaning one thing (body and silhouette
+            // agreed by construction) instead of silently rendering at 1×.
+            sizeMult: cfg.special.sizeMult ?? cfg.special.radiusMult,
             rewardMult: cfg.special.rewardMult,
-            modelKey: cfg.special.modelKey ?? cfg.mob.modelKey ?? MOB_MODEL_KEY,
+            modelKey:
+              cfg.special.modelKey ??
+              (cfg.special.championId === undefined
+                ? modelKey
+                : mobChampionModelKey(cfg.special.championId)),
           },
   };
+}
+
+/**
+ * The MATCH-WIDE mob appearance the client needs and cannot derive (GH#192).
+ * Only 染黑強度 lives here; the per-kind SIZE is per-entity (see snapshot.ts).
+ */
+export interface MobVisualTable {
+  /** 0 = the champion's own colours, 1 = a solid black silhouette */
+  tintStrength: number;
+}
+
+/** The shipped fallback — 「no tint」 is NOT what a missing/blank field means. */
+export const MOB_VISUAL_DEFAULT: MobVisualTable = { tintStrength: DEFAULT_MOB_TINT_STRENGTH };
+
+/** Serialize the armed rules' visual half for `MatchState.mobVisualJson`. */
+export function mobVisualJson(rules: MobRules | null): string {
+  const t = rules === null ? DEFAULT_MOB_TINT_STRENGTH : rules.tintStrength;
+  return JSON.stringify({ tintStrength: t } satisfies MobVisualTable);
+}
+
+/**
+ * Decode `MatchState.mobVisualJson`. Every failure mode — "", not JSON, not an
+ * object, a non-finite or out-of-range number — degrades to the SHIPPED table,
+ * never to a zeroed one: a client that fails to parse must show the zombies the
+ * way the game means them to look, not un-tinted and indistinguishable from the
+ * players (failure shape ③ — the feature deleted, quietly, and still green).
+ */
+export function parseMobVisualJson(json: string | null | undefined): MobVisualTable {
+  if (!json) return MOB_VISUAL_DEFAULT;
+  let raw: unknown;
+  try {
+    raw = JSON.parse(json);
+  } catch {
+    return MOB_VISUAL_DEFAULT;
+  }
+  if (typeof raw !== "object" || raw === null) return MOB_VISUAL_DEFAULT;
+  const t = (raw as { tintStrength?: unknown }).tintStrength;
+  if (typeof t !== "number" || !Number.isFinite(t) || t < 0 || t > 1) return MOB_VISUAL_DEFAULT;
+  return { tintStrength: t };
 }
 
 /** Alive mobs currently in `zone` (dead mobs are destroyed same-tick). */

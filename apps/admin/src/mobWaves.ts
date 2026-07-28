@@ -71,8 +71,11 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     attackRange: 1.8,
     attackCdSec: 1.0,
     radius: 0.6,
-    modelKey: "champ.mob.zombie",
     championId: "godie-zombiex",
+    // GH#192 — no `modelKey`: the mesh follows the champion. 0.68 keeps the
+    // owner's 2026-07-26 「縮小到適合尺寸」 ruling now that the small doc is gone.
+    sizeMult: 0.68,
+    tintStrength: 0.65,
     baseLevel: 3,
     levelPerRound: 1,
     baseHp: 20,
@@ -93,12 +96,19 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     attackRange: 2.6,
     attackCdSec: 1.4,
     radius: 1.8,
-    modelKey: "champ.mob.zombie-king",
+    // ⚠️ MERGE SEAM (v0.9.12) — see the same note in
+    // packages/shared/src/content/schema/config.ts. Two lanes each landed ONE
+    // owner instruction and BOTH must survive: #187's 30,000 bounty AND #192's
+    // ×100 hp / ×10 size (with `modelKey` GONE, because the king now wears the
+    // round's champion and a hard-coded model doc would silently override it).
+    //
     // owner 2026-07-28 (#187) 3,000 → 30,000. MUST stay equal to
     // `DEFAULT_MOB_WAVES_CONFIG.boss.bountyGold` in
     // packages/shared/src/content/schema/config.ts (mobWaves.test.ts pins it):
     // this mirror is what the console renders BEFORE the GET resolves, so a
     // drift here shows the operator a default the server never uses.
+    hpMult: 100,
+    sizeMult: 10,
     bountyGold: 30000,
     bountyXp: 1200,
     lastHitMultiplier: 2,
@@ -109,8 +119,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     damageMult: 1.5,
     moveSpeedMult: 1.25,
     radiusMult: 1.8,
+    sizeMult: 1.8,
     rewardMult: 3,
-    modelKey: "champ.mob.zombie-special",
   },
 };
 
@@ -137,6 +147,8 @@ export type MobWavesFieldKey =
   | "mob.radius"
   | "mob.modelKey"
   | "mob.championId"
+  | "mob.sizeMult"
+  | "mob.tintStrength"
   | "mob.baseLevel"
   | "mob.levelPerRound"
   | "mob.baseHp"
@@ -157,6 +169,9 @@ export type MobWavesFieldKey =
   | "boss.moveSpeed"
   | "boss.radius"
   | "boss.modelKey"
+  | "boss.championId"
+  | "boss.sizeMult"
+  | "boss.hpMult"
   | "boss.bountyGold"
   | "boss.bountyXp"
   | "boss.lastHitMultiplier"
@@ -167,7 +182,9 @@ export type MobWavesFieldKey =
   | "special.moveSpeedMult"
   | "special.radiusMult"
   | "special.rewardMult"
-  | "special.modelKey";
+  | "special.modelKey"
+  | "special.championId"
+  | "special.sizeMult";
 
 /** How a box is typed + validated. `champion`/`model` are text with a picker. */
 export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool";
@@ -207,6 +224,8 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "maxAlivePerZone",
   "mob.championId",
   "mob.modelKey",
+  "mob.sizeMult",
+  "mob.tintStrength",
   "mob.baseLevel",
   "mob.levelPerRound",
   "mob.baseHp",
@@ -225,7 +244,10 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.enabled",
   "boss.killThreshold",
   "boss.repeatable",
+  "boss.championId",
   "boss.modelKey",
+  "boss.sizeMult",
+  "boss.hpMult",
   "boss.maxHp",
   "boss.attackDamage",
   "boss.attackCdSec",
@@ -236,7 +258,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.bountyXp",
   "boss.lastHitMultiplier",
   "special.chancePercent",
+  "special.championId",
   "special.modelKey",
+  "special.sizeMult",
   "special.hpMult",
   "special.damageMult",
   "special.moveSpeedMult",
@@ -298,12 +322,29 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     emptyMeans: `留空 = ${MOB_CHAMPION_FALLBACK}`,
   },
   "mob.modelKey": {
-    zh: "殭屍模型",
-    note: "實際跑在場上的 3D 模型文件 id（前端解析）。留空 = 用系統預設",
+    zh: "殭屍模型（覆蓋用，通常留空）",
+    note: "留空 = 直接讀上面那位英雄的 3D 模型。只有想讓殭屍長成「沒有任何英雄長的樣子」時才填",
     unit: "",
     kind: "model",
     optional: true,
     emptyMeans: `留空 = ${MOB_MODEL_FALLBACK}`,
+  },
+  "mob.sizeMult": {
+    zh: "殭屍體型倍率",
+    note: "1 = 跟那位英雄本人一樣大。只影響看起來多大，碰撞體積是下面的「身體半徑」",
+    unit: "倍",
+    kind: "num",
+    optional: true,
+    emptyMeans: "留空 = 1 倍（跟英雄本人一樣大）",
+  },
+  "mob.tintStrength": {
+    zh: "殭屍染黑強度",
+    note: "0 = 保留英雄原本的顏色（會跟玩家混在一起）、1 = 全黑剪影（看不出是誰）。一般 / 特殊 / 王都吃這一個值",
+    unit: "（0～1）",
+    kind: "num",
+    min: 0,
+    optional: true,
+    emptyMeans: "留空 = 0.65（出貨值）",
   },
   "mob.baseLevel": {
     zh: "起始等級",
@@ -453,17 +494,41 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: false,
     boolLabels: { on: "每滿 N 隻都召喚", off: "整場只召喚一次" },
   },
+  "boss.championId": {
+    zh: "殭屍王由誰擔任（英雄文件）",
+    note: "王頂著哪個英雄的臉與模型。留空 = 跟該回合的一般殭屍同一位",
+    unit: "",
+    kind: "champion",
+    optional: true,
+    emptyMeans: "留空 = 跟一般殭屍同一位英雄",
+  },
   "boss.modelKey": {
-    zh: "殭屍王模型",
-    note: "王要看得出來是王：這份模型文件的體型比一般殭屍大得多。留空 = 跟一般殭屍同一個模型",
+    zh: "殭屍王模型（覆蓋用，通常留空）",
+    note: "留空 = 讀上面那位英雄的模型；王「看起來是王」現在由下面的體型倍率決定，不再靠另外做一份模型",
     unit: "",
     kind: "model",
     optional: true,
-    emptyMeans: "留空 = 用一般殭屍的模型（玩家會分不出來）",
+    emptyMeans: "留空 = 用該英雄自己的模型",
+  },
+  "boss.sizeMult": {
+    zh: "殭屍王體型倍率",
+    note: "王在畫面上是一般殭屍的幾倍高。⚠️ 10 倍 ≈ 18 單位高，比競技場相機看得到的範圍還高，玩家會被王擋住整個視野",
+    unit: "倍",
+    kind: "num",
+    optional: true,
+    emptyMeans: "留空 = 10 倍（出貨值）",
+  },
+  "boss.hpMult": {
+    zh: "殭屍王血量倍率",
+    note: "以「那一回合一般殭屍的血量」為基準乘上去。有填就用這個，下面的固定血量會被忽略",
+    unit: "倍",
+    kind: "num",
+    optional: true,
+    emptyMeans: "留空 = 改用下面的固定血量",
   },
   "boss.maxHp": {
-    zh: "殭屍王血量",
-    note: "固定值，不隨回合成長（王是任務獎勵，不是波次的一部分）",
+    zh: "殭屍王固定血量（只在沒填血量倍率時生效）",
+    note: "固定值，不隨回合成長。上面的「血量倍率」有填的話，這個數字完全不會被用到",
     unit: "點",
     kind: "num",
     optional: false,
@@ -539,6 +604,22 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 0,
     optional: false,
   },
+  "special.championId": {
+    zh: "特殊殭屍由誰擔任（英雄文件）",
+    note: "留空 = 跟該回合的一般殭屍同一位英雄",
+    unit: "",
+    kind: "champion",
+    optional: true,
+    emptyMeans: "留空 = 跟一般殭屍同一位英雄",
+  },
+  "special.sizeMult": {
+    zh: "特殊殭屍體型倍率",
+    note: "畫面上的大小。與下面的「身體半徑倍率」分開：那個是碰撞體積，這個是看起來多大",
+    unit: "倍",
+    kind: "num",
+    optional: true,
+    emptyMeans: "留空 = 跟身體半徑倍率同值",
+  },
   "special.modelKey": {
     zh: "特殊殭屍模型",
     note: "要跟一般殭屍長得不一樣，玩家才知道自己遇到了什麼。留空 = 跟一般殭屍同一個模型",
@@ -602,9 +683,10 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     keys: ["fromRound", "firstWaveSec", "waveIntervalSec", "mobsPerWaveCap", "maxAlivePerZone"],
   },
   {
-    title: "殭屍身分 · 臉與模型",
-    blurb: "誰來當殭屍。逐回合表可以再逐場覆蓋這裡的英雄。",
-    keys: ["mob.championId", "mob.modelKey"],
+    title: "殭屍身分 · 臉、模型、體型、染黑",
+    blurb:
+      "選了英雄就直接用那個英雄的 3D 模型（模型欄留空即可）。殭屍一律染黑，避免跟玩家的英雄混在一起。逐回合表可以再逐場覆蓋這裡的英雄。",
+    keys: ["mob.championId", "mob.modelKey", "mob.sizeMult", "mob.tintStrength"],
   },
   {
     title: "等級與血量曲線 · 隨回合變強",
@@ -637,7 +719,10 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.enabled",
       "boss.killThreshold",
       "boss.repeatable",
+      "boss.championId",
       "boss.modelKey",
+      "boss.sizeMult",
+      "boss.hpMult",
       "boss.maxHp",
       "boss.attackDamage",
       "boss.attackCdSec",
@@ -654,7 +739,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     blurb: "每生一隻就擲一次機率。機率填 0 就完全關掉，連亂數都不抽。",
     keys: [
       "special.chancePercent",
+      "special.championId",
       "special.modelKey",
+      "special.sizeMult",
       "special.hpMult",
       "special.damageMult",
       "special.moveSpeedMult",
@@ -726,6 +813,10 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.mob.modelKey ?? "";
     case "mob.championId":
       return cfg.mob.championId ?? "";
+    case "mob.sizeMult":
+      return formatNum(cfg.mob.sizeMult);
+    case "mob.tintStrength":
+      return formatNum(cfg.mob.tintStrength);
     case "mob.baseLevel":
       return formatNum(cfg.mob.baseLevel);
     case "mob.levelPerRound":
@@ -769,6 +860,12 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.radius);
     case "boss.modelKey":
       return cfg.boss?.modelKey ?? "";
+    case "boss.championId":
+      return cfg.boss?.championId ?? "";
+    case "boss.sizeMult":
+      return formatNum(cfg.boss?.sizeMult);
+    case "boss.hpMult":
+      return formatNum(cfg.boss?.hpMult);
     case "boss.bountyGold":
       return formatNum(cfg.boss?.bountyGold);
     case "boss.bountyXp":
@@ -789,6 +886,10 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.special?.rewardMult);
     case "special.modelKey":
       return cfg.special?.modelKey ?? "";
+    case "special.championId":
+      return cfg.special?.championId ?? "";
+    case "special.sizeMult":
+      return formatNum(cfg.special?.sizeMult);
   }
 }
 
@@ -847,6 +948,38 @@ export function addScheduleRow(form: MobWavesForm, round: number): MobWavesForm 
   };
   const schedule = [...form.schedule, row].sort((a, b) => Number(a.round) - Number(b.round));
   return { ...form, schedule };
+}
+
+/**
+ * Set 「這一回合由誰擔任」 for `round`, CREATING the row when it has none
+ * (GH#191).
+ *
+ * THE UX DEFECT THIS CLOSES. The column was only editable on rounds that
+ * already had a schedule row — and the shipped schedule starts at round 6, so
+ * rounds 3-5 rendered a plain grey label. Nothing said why; it read as 「這一格
+ * 被鎖死了」. Since the caps and the champion are independent overrides, an
+ * operator who only wants to change the face should never have to know that a
+ * caps row exists at all.
+ *
+ * The auto-created row inherits the caps CURRENTLY in force for that round
+ * (`addScheduleRow`'s own rule), so creating it changes nothing but the face.
+ * And clearing the picker back to empty leaves a row whose caps equal the
+ * baseline — harmless, and still visible in the table as 「這回合單獨設定」, which
+ * is honest: there IS now a row.
+ */
+export function setRoundChampion(
+  form: MobWavesForm,
+  round: number,
+  championId: string,
+): MobWavesForm {
+  const existing = form.schedule.findIndex((r) => Number(r.round) === round);
+  if (existing >= 0) return setScheduleCell(form, existing, "championId", championId);
+  // Nothing to store and no row to store it in — do not manufacture one for a
+  // no-op, or opening the dropdown and closing it would dirty the form.
+  if (championId.trim() === "") return form;
+  const withRow = addScheduleRow(form, round);
+  const idx = withRow.schedule.findIndex((r) => Number(r.round) === round);
+  return idx < 0 ? withRow : setScheduleCell(withRow, idx, "championId", championId);
 }
 
 export function removeScheduleRow(form: MobWavesForm, index: number): MobWavesForm {
@@ -1003,6 +1136,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   putNum("moveSpeed", "mob.moveSpeed");
   putText("modelKey", "mob.modelKey");
   putText("championId", "mob.championId");
+  putNum("sizeMult", "mob.sizeMult");
+  putNum("tintStrength", "mob.tintStrength");
   putNum("baseLevel", "mob.baseLevel");
   putNum("levelPerRound", "mob.levelPerRound");
   putNum("baseHp", "mob.baseHp");
@@ -1065,6 +1200,12 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     };
     const bm = optText("boss.modelKey");
     if (bm !== undefined) boss.modelKey = bm;
+    const bc = optText("boss.championId");
+    if (bc !== undefined) boss.championId = bc;
+    const bs = optNum("boss.sizeMult");
+    if (bs !== undefined) boss.sizeMult = bs;
+    const bh = optNum("boss.hpMult");
+    if (bh !== undefined) boss.hpMult = bh;
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {
@@ -1079,6 +1220,10 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     };
     const sm = optText("special.modelKey");
     if (sm !== undefined) special.modelKey = sm;
+    const sc = optText("special.championId");
+    if (sc !== undefined) special.championId = sc;
+    const ssz = optNum("special.sizeMult");
+    if (ssz !== undefined) special.sizeMult = ssz;
     out.special = special;
   }
   return out;
@@ -1265,8 +1410,17 @@ export const APPLY_NOTE = "儲存後寫入平台的耐久覆蓋層；對戰伺�
 export const PERSISTENCE_NOTE =
   "這一頁寫進 data/ 的耐久覆蓋層，不是 repo 裡的 content/。git pull、重建 image、重啟容器都不會蓋掉它。";
 
+/**
+ * GH#191/#192 — the page's own statement of what 由誰擔任 now DOES.
+ *
+ * This constant used to say the opposite (「只會被儲存下來，對戰端還沒有讀它」).
+ * It is kept, with the meaning inverted, rather than deleted: the note is what
+ * an operator reads before trusting the column, and a page that simply stopped
+ * mentioning the column would leave anyone who read the old warning still
+ * believing it does nothing.
+ */
 export const SIM_GAP_NOTE =
-  "「由誰擔任」逐回合欄位目前只會被儲存下來，對戰端還沒有讀它（sim 端要另外接）。整場的預設英雄（上面的「殭屍由誰擔任」）是有效的。";
+  "選了哪個英雄，場上的殭屍就會用那個英雄的臉與 3D 模型（逐回合欄位優先於整場設定）。殭屍一律套上染黑，避免跟玩家的英雄混在一起——染黑強度在下面的「殭屍身分」區塊可調。";
 
 export function loadErrorText(err: unknown): string {
   const msg = err instanceof Error ? err.message : String(err);
