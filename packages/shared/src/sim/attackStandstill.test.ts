@@ -294,6 +294,16 @@ describe("打就站定 —— 小怪與殭屍王 (MobSystem)", () => {
     moveSpeed: 5,
     hpRegenPerSec: 0,
     modelKey: MOB_MODEL_KEY,
+    // ⚠️ 跨組接縫 (v0.9.12):這兩個欄位是**殭屍身分組**加進 `MobRules` 的
+    // (GH#192 選英雄→套模型 + 染黑),而這份 fixture 是**戰鬥手感組**寫的 ——
+    // 兩組平行開發,互相不知道對方動了同一個型別。合併時 tsc 抓到
+    // TS2739「missing sizeMult, tintStrength」。
+    //
+    // 兩個都是**純呈現**(不進 digest、不碰碰撞/導航),所以這裡填的值對
+    // 「打就站定」的斷言零影響 —— 填 1 / 0 就是「原尺寸、不染色」,
+    // 讓這一組測試量的仍然只有「有沒有在走」。
+    sizeMult: 1,
+    tintStrength: 0,
     attackDamage: 20,
     attackRangeSq: 1.8 * 1.8,
     attackCdTicks: 3,
