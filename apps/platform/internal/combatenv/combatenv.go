@@ -96,6 +96,11 @@ var Keys = []string{
 	// packages/shared and to the content tree but not here, so the console could
 	// not see or edit it — see the drift guard in keysync_test.go.
 	"abilityRange",
+	// itemCooldown scales an ITEM passive's internal cooldown only (#189).
+	// Ships at 1.0 — before #189 nothing scaled item ICDs at all, so 1.0 is the
+	// value that changes no existing behaviour. It is a ×factor, not a
+	// coefficient, so it keeps the [MinFactor, MaxFactor] band.
+	"itemCooldown",
 	// The eight 三圍 coefficients (task #248). Not ×factors — see AttrDefaults.
 	"strToMaxHealth",
 	"strToHealthRegen",

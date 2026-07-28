@@ -62,6 +62,12 @@ const STAT_CLAIMS: { label: string; stat: Stat; op: ModOp; percent: boolean }[] 
   { label: "攻擊速度", stat: Stat.AttackSpeed, op: ModOp.PercentAdd, percent: true },
   { label: "魔力回復速度", stat: Stat.ManaRegen, op: ModOp.PercentAdd, percent: true },
   { label: "吸血", stat: Stat.Lifesteal, op: ModOp.Flat, percent: true },
+  // 上限解鎖 (#189 / GH#286). `capRaise`'s value is the CEILING the modifier
+  // lifts the stat to (10.0), not a bonus — so the label has to say 上限 and the
+  // number is read as an absolute, not a delta. It must be declared AFTER
+  // 攻擊速度 only for readability; the regexes are whole-line anchored, so
+  // 「攻擊速度上限+10」 cannot be misread as 「攻擊速度+10」 whatever the order.
+  { label: "攻擊速度上限", stat: Stat.AttackSpeed, op: ModOp.CapRaise, percent: false },
 ];
 
 /**

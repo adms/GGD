@@ -140,8 +140,18 @@ describe("weapon-draft loot tables (arena-07)", () => {
     for (const e of table.entries) {
       expect(Items.tryGet(e.itemId), `item ${e.itemId} must exist`).toBeDefined();
       expect(e.weight).toBeGreaterThan(0);
-      // every entry is a map-imported item — NOT a self-created skeleton item
-      expect(e.itemId.startsWith("godie-"), `${e.itemId} must be a map item`).toBe(true);
+      // The defect this guards is a SKELETON item (ember-rod & friends, the
+      // fixtures sim/content/skeleton.ts registers) leaking into the shipped
+      // pool. "starts with godie-" was a proxy for that, and #189 broke the
+      // proxy by authoring the first GGD-ORIGINAL legendary — 無盡連刃 is not a
+      // w3x import and never will be. So the rule is stated directly: a pool
+      // entry is a map import OR one of the deliberately authored originals,
+      // and this list is the place a reviewer sees each one.
+      const GGD_AUTHORED = new Set(["endless-edge"]); // #189 無盡連刃（近戰限定）
+      expect(
+        e.itemId.startsWith("godie-") || GGD_AUTHORED.has(e.itemId),
+        `${e.itemId} is neither a map item nor a listed GGD-authored legendary`,
+      ).toBe(true);
       // task #70: three entries used to be statless items whose whole payload
       // was an unported active — a "legendary" drop that did literally nothing.
       expect(doesSomething(e.itemId), `${e.itemId} would grant NOTHING`).toBe(true);

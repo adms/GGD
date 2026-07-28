@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_e37c10c18b06",
+  "contentVersion": "cv_7f54573107dd",
   "collections": {
     "champions": {
       "hash": "72fc6c14fa39",
@@ -12,13 +12,13 @@
       "path": "abilities/_index.json"
     },
     "items": {
-      "hash": "dba04b3cf804",
-      "count": 214,
+      "hash": "bfe8766ec4c3",
+      "count": 215,
       "path": "items/_index.json"
     },
     "augments": {
-      "hash": "a540fdb3f023",
-      "count": 30,
+      "hash": "d22834c05d11",
+      "count": 31,
       "path": "augments/_index.json"
     },
     "projectiles": {
@@ -32,7 +32,7 @@
       "path": "status-effects/_index.json"
     },
     "loot-tables": {
-      "hash": "37c86f1917c1",
+      "hash": "c091a3fcb93e",
       "count": 3,
       "path": "loot-tables/_index.json"
     },
@@ -42,7 +42,7 @@
       "path": "arenas/_index.json"
     },
     "config": {
-      "hash": "031350cc07a6",
+      "hash": "6de1477ddc6a",
       "count": 15,
       "path": "config/_index.json"
     },

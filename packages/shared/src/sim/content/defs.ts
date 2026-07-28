@@ -254,6 +254,22 @@ export interface ItemDef {
    * combines — GGD has no craft step — this is provenance, not mechanics.
    */
   recipe?: ItemRecipe;
+  /**
+   * WHO this item may be OFFERED to (#189, owner 2026-07-28: 傳說武器三選一
+   * 「只出現在近戰英雄」). Absent = everybody, which is every pre-#189 doc.
+   *
+   * The legendary pool had NO attack-type dimension at all before this: both
+   * roll sites (`economy/legendaryOrb.legendaryPool` for the 傳說寶玉 and
+   * `economy/draft.offerItems` for the round weapon card) filtered on ownership
+   * + operator whitelist + craftRole and nothing else, so a melee-only weapon
+   * authored without this field lands on a ranged champion's card and its
+   * on-hit design reads as a lie.
+   *
+   * It gates the OFFER, not the inventory: an item already held keeps working
+   * (nothing in the sim re-checks it), because a mid-match champion swap must
+   * not silently delete somebody's weapon.
+   */
+  requiresAttackType?: "melee" | "ranged";
 }
 
 export type ItemCraftRole =

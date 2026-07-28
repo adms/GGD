@@ -81,9 +81,10 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
     // no augment id begins with "ex-" any more — EX is not an augment draft
     expect(Augments.ids().filter((id) => id.startsWith("ex-"))).toEqual([]);
     // #149 pool, prismatic widened 7 -> 16 for the team-health model (a 10-13
-    // round match draws 7-9 prismatic cards without replacement). silver 6 /
-    // gold 8 / prismatic 16.
-    expect(Augments.ids().length).toBe(30);
+    // round match draws 7-9 prismatic cards without replacement), then 16 -> 17
+    // when #188 added 破限超頻 (`limit-breaker`). silver 6 / gold 8 /
+    // prismatic 17.
+    expect(Augments.ids().length).toBe(31);
     expect(result.warnings).toEqual([]); // content tree stays closed
   });
 

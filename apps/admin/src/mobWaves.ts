@@ -94,7 +94,12 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     attackCdSec: 1.4,
     radius: 1.8,
     modelKey: "champ.mob.zombie-king",
-    bountyGold: 3000,
+    // owner 2026-07-28 (#187) 3,000 → 30,000. MUST stay equal to
+    // `DEFAULT_MOB_WAVES_CONFIG.boss.bountyGold` in
+    // packages/shared/src/content/schema/config.ts (mobWaves.test.ts pins it):
+    // this mirror is what the console renders BEFORE the GET resolves, so a
+    // drift here shows the operator a default the server never uses.
+    bountyGold: 30000,
     bountyXp: 1200,
     lastHitMultiplier: 2,
   },

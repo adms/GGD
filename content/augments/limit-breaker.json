@@ -1,0 +1,25 @@
+{
+  "id": "limit-breaker",
+  "schema": "augment@1",
+  "name": "破限超頻",
+  "description": "攻擊速度 ×2，並將攻擊速度上限由 4.0 解鎖至 10.0。",
+  "tier": "prismatic",
+  "weight": 22,
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctMult",
+      "value": 1.0
+    },
+    {
+      "stat": "as",
+      "op": "capRaise",
+      "value": 10.0
+    }
+  ],
+  "tags": [
+    "attack-speed",
+    "offense",
+    "cap-unlock"
+  ]
+}

@@ -677,6 +677,45 @@ describe("#262 is inert unless armed", () => {
     expect(r.special!.chance).toBeLessThan(1);
   });
 
+  it("GH#187 一個人單殺殭屍王,錢包實際多 30,000 —— 走出貨設定,不是 fixture", () => {
+    cover("mob-boss-bounty");
+    // owner 2026-07-28:「殭屍王 總獎金也要後台能設定 預設是 30,000」.
+    //
+    // 為什麼不是 `expect(DEFAULT_MOB_WAVES_CONFIG.boss.bountyGold).toBe(30000)`:
+    // 那是失敗形狀⑦(掃屬性而非行為)。這個數字要經過
+    //   出貨文件 → mobRulesFromConfig → summonMobBoss → 傷害管線 → splitBossBounty
+    //   → champ.gold + `mobBossSlain` 事件
+    // 才會變成玩家真的拿到的金幣;中間任何一段把它換成別的常數(例如把
+    // `rules.boss.bountyGold` 讀成 `rules.rewardGold`)屬性斷言都看不到。
+    //
+    // 30,000 與其它任何常數都差得夠遠:雜魚獎勵 20、XP 賞金 1,200、舊值 3,000,
+    // 沒有一個能碰巧湊出這個數字。
+    const w = newWorld();
+    const shipped = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT);
+    beginCombatMobs(w, shipped, [0]);
+    const hero = champAt(w, 0, 0, 0, 0);
+    const king = summonMobBoss(w, 0, shipped, hero, shipped.boss!.killThreshold)!;
+
+    const goldBefore = w.champion.get(hero)!.gold;
+    w.damageQueue.push({
+      source: hero,
+      target: king,
+      amount: shipped.boss!.maxHp * 10,
+      type: "true",
+      crit: false,
+      origin: "ability",
+    });
+    w.step(new Map());
+
+    expect(w.champion.get(hero)!.gold - goldBefore).toBe(30000);
+    // 失敗形狀②:算對了但沒送出去。`mobBossSlain` 是唯一會離開伺服器的通道。
+    const ev = w.events.find((e) => e.type === "mobBossSlain")!;
+    expect(ev).toBeDefined();
+    const shares = ev.data["shares"] as { id: number; gold: number }[];
+    expect(shares).toHaveLength(1);
+    expect(shares[0]).toMatchObject({ id: hero, gold: 30000 });
+  });
+
   it("mobSystem is still a strict no-op on a world nobody armed", () => {
     cover("mob-boss-off");
     const w = new SimWorld(SKELETON_ARENA, 7);

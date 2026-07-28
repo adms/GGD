@@ -50,6 +50,11 @@ export const zItemDef = z
       })
       .strict()
       .optional(),
+    /**
+     * 三選一/寶玉只會把這件武器發給這種攻擊型態的英雄 (#189). 省略 = 所有人,
+     * 也就是 #189 之前的每一份文件。See `ItemDef.requiresAttackType`.
+     */
+    requiresAttackType: z.enum(["melee", "ranged"]).optional(),
   })
   .strict();
 

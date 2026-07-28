@@ -1,12 +1,18 @@
 {
   "collection": "items",
-  "hash": "dba04b3cf804",
+  "hash": "bfe8766ec4c3",
   "entries": [
     {
       "id": "ember-rod",
       "path": "items/ember-rod.json",
       "hash": "35997ee76d35",
       "size": 290
+    },
+    {
+      "id": "endless-edge",
+      "path": "items/endless-edge.json",
+      "hash": "c64277582dc1",
+      "size": 1004
     },
     {
       "id": "godie-i000",

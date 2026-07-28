@@ -431,6 +431,12 @@ var (
 		"godie-i06e", // 月牙魔杖
 		"godie-i06g", // 殺豬刀
 		"godie-i06s", // 龍騎士之劍
+		// #189 無盡連刃 — the first legendary GGD authored rather than imported,
+		// and the first with `requiresAttackType: "melee"`. The attack-type gate
+		// lives in the SIM (economy/offerEligibility.ts), not here: the whitelist
+		// says WHAT EXISTS, the sim says WHO MAY BE OFFERED IT. Leaving it out of
+		// this list would make the item exist and never once be rollable.
+		"endless-edge", // 無盡連刃（近戰限定）
 	}
 
 	// DRAFT items — EXACTLY the quest set, and nothing else (owner rule 2, task

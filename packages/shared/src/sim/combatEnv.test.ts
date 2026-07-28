@@ -114,6 +114,9 @@ describe("combat-env stat multipliers (env-01)", () => {
     expect(nonStat.sort()).toEqual(
       [
         "cooldown",
+        // #189 — item passive ICD seconds (effects/hooks.ts). A formula-site
+        // key like `cooldown`, not a stat multiplier.
+        "itemCooldown",
         "damageDealt",
         "healing",
         "shield",

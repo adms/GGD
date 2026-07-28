@@ -61,8 +61,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     // of 1941 offers measured under-filled). See draft.test.ts. The original
     // skeleton 3 remain within the pool. EX is still a per-hero ability
     // (champion.exAbility + slot "EX"), NOT an augment. See ex-skills.test.ts.
+    // #188 added the 17th prismatic (`limit-breaker`, 攻速 ×2 + 上限解鎖 10.0),
+    // so the closed pool is 31: silver 6 / gold 8 / prismatic 17.
     expect(Augments.ids()).toEqual(expect.arrayContaining(["bloodlust", "chill-touch", "aegis-surge"]));
-    expect(Augments.ids().length).toBe(30);
+    expect(Augments.ids().length).toBe(31);
     expect(Projectiles.ids().length).toBeGreaterThanOrEqual(2);
     expect(LootTables.get("round-reward").entries).toHaveLength(4);
 

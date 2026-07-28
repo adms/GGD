@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "031350cc07a6",
+  "hash": "6de1477ddc6a",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "cdfa31149b52",
-      "size": 4501
+      "hash": "6077b972be66",
+      "size": 4502
     },
     {
       "id": "audio-map",
@@ -35,8 +35,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "e040bebc796b",
-      "size": 722
+      "hash": "206968e34cf6",
+      "size": 747
     },
     {
       "id": "config.match",
