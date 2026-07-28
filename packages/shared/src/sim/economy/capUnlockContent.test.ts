@@ -27,8 +27,10 @@
  *   4.0 = CapRaise 被忽略;2.5 = ×2 沒生效;10.0 = 夾在硬上限而不是實際值。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { DEFAULT_STAT_CAPS, statCapsFromDoc } from "../statCaps";
 import { cover } from "../../../testkit/cover";
 import { ContentLoader } from "../../content/loader";
 import { FsContentSource } from "../../content/node/FsContentSource";
@@ -312,6 +314,55 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
     expect(asOf(world, id)).toBeCloseTo(START_AS, 6);
   });
 
+  /**
+   * ★ 出貨路徑 —— 上面每一條都用 `fireHooks(...)` **直接**點火。
+   *
+   * 那證明了 hook 本身的語意,但沒有證明**英雄真的揮一刀時這個 hook 會被點燃**
+   * (失敗形狀⑤)。這件事被實測過:把 `systems/BasicAttackSystem.ts` 結尾那一行
+   * `fireHooks(world, id, "onBasicAttack", targetId)` 拿掉,這個 describe 的
+   * 每一條都還是綠的 —— 無盡連刃在真實戰鬥裡一層都不會疊,而 #189 的守衛不會說。
+   *
+   * 所以這一條完全不碰 `fireHooks`:一名近戰英雄、一個木樁、`world.step`,
+   * 疊出來的層數必須等於他真的結算出去的刀數。
+   */
+  it("★ 真的揮刀(world.step,不呼叫 fireHooks)也會疊層 —— 出貨的普攻管線接得上", () => {
+    cover("legendary-onhit-stacks");
+    const world = new SimWorld(SKELETON_ARENA, 7);
+    const c = SKELETON_ARENA.zones[0]!.center;
+    const attacker = heroAt(world, meleeChampion, 0);
+    expect(grantItemFree(world, attacker, ITEM_ID)).toBeGreaterThanOrEqual(0);
+    recomputeStats(world, attacker);
+    const dummy = spawnChampion(world, {
+      championId: meleeChampion,
+      seatId: asSeatId(1),
+      teamId: asTeamId(1),
+      pos: { x: c.x + 1.0, z: c.z },
+      zone: 0,
+    });
+
+    // 2 秒的窗口 —— 短於一層 3 秒的持續時間,所以「疊了幾層」與「揮了幾刀」
+    // 在這段時間裡必須完全相等,沒有任何一層有機會過期。
+    const dummyPos = { ...world.transform.get(dummy)!.pos };
+    let swings = 0;
+    for (let i = 0; i < 60; i++) {
+      const hp = world.health.get(dummy)!;
+      hp.hp = hp.maxHp; // 木樁不死、不被推開:兩者都會提早結束測量
+      world.transform.get(dummy)!.pos = { ...dummyPos };
+      world.nav.get(attacker)!.attackTarget = dummy;
+      world.step(new Map());
+      for (const e of world.events) {
+        if (e.type === "basicAttack" && e.data["source"] === attacker) swings++;
+      }
+    }
+
+    expect(swings, "木樁在射程內卻一刀都沒揮出去 —— 這個測量根本沒開始").toBeGreaterThan(0);
+    recomputeStats(world, attacker);
+    expect(
+      stacksFrom(world, attacker),
+      "真的揮了刀卻沒有疊層 —— 出貨的普攻管線沒有點燃 onBasicAttack",
+    ).toBe(swings);
+  });
+
   it("每一次新的命中都把整組的到期時間往後推(所以連打不會掉層)", () => {
     cover("legendary-onhit-stacks");
     const world = new SimWorld(SKELETON_ARENA, 1);
@@ -321,5 +372,49 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
       for (let k = 0; k < 60; k++) world.step(new Map()); // 每 2 秒一刀 < 3 秒
     }
     expect(stacksFrom(world, id), "連續命中卻掉了層 —— 到期沒有被刷新").toBe(10);
+  });
+});
+
+/**
+ * ---------------------------------------------------------------------------
+ * 出貨的**上限表文件** —— #188/#189 的「解鎖到 10.0」最後靠的是它
+ * ---------------------------------------------------------------------------
+ * 上面每一條都跑在 `new SimWorld(...)` 的預設 `world.statCaps` 上,也就是
+ * `DEFAULT_STAT_CAPS`(程式端)。但伺服器實際載入的是
+ * `content/config/stat-caps.json`(MatchRoom → `statCapsFromDoc`),而且那份
+ * 文件會隨 `MatchState.statCapsJson` 一起送到客戶端面板。
+ *
+ * 這件事被實測過:把出貨文件的 `unlocked` 從 10.0 改成 5.5,整包 @ggd/shared
+ * 1450 條全綠 —— 沒有任何測試在看那份文件。玩家吃到的天花板由它決定,守衛卻只
+ * 釘住了程式端的那一份。#187 在殭屍王賞金上刻意把三份釘在一起,這裡是同一課。
+ */
+describe("GH#188/#189 的天花板來自出貨文件,不只是程式預設", () => {
+  const shippedCapsDoc = (): unknown =>
+    JSON.parse(readFileSync(join(CONTENT_DIR, "config/stat-caps.json"), "utf8"));
+
+  it("★ content/config/stat-caps.json 就是 4.0 / 10.0,而且解析結果等於 sim 預設", () => {
+    cover("statcaps-content-augment");
+    const doc = shippedCapsDoc() as {
+      schema: string;
+      caps: Record<string, { base: number; unlocked: number }>;
+    };
+    expect(doc.schema).toBe("config.stat-caps@1");
+    // owner 2026-07-28:「一般上限是 4.0…可以解鎖最多到 10.0」。
+    expect(doc.caps["as"]).toEqual({ base: BASE_CAP, unlocked: UNLOCKED_CAP });
+    // 文件與程式預設不一致 = 後台顯示的預設、和沒有文件時實際生效的,是兩個
+    // 不同的數字,而且沒有任何地方會說。
+    expect(statCapsFromDoc(doc)).toEqual(DEFAULT_STAT_CAPS);
+  });
+
+  it("★ 用出貨文件的那張表跑同一條路徑,破限超頻仍然給 5.0", () => {
+    cover("statcaps-content-augment");
+    // 上面的 5.0 是在 `DEFAULT_STAT_CAPS` 下量到的。這一條把 `world.statCaps`
+    // 換成**從出貨文件解析出來的表**,再走一次 `applyAugmentPick` —— 證明玩家
+    // 真的坐在哪張表上,結果都一樣。
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    world.statCaps = statCapsFromDoc(shippedCapsDoc());
+    const id = heroAt(world, meleeChampion);
+    pickAugment(world, id, AUGMENT_ID);
+    expect(asOf(world, id), "出貨的上限表沒有把 4.0 打開").toBeCloseTo(START_AS * 2, 6);
   });
 });

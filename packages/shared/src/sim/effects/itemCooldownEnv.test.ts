@@ -18,6 +18,9 @@
  * 會離開伺服器的通道;不是 `hookLastFired` 這種內部欄位(失敗形狀⑦)。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
@@ -28,7 +31,12 @@ import { fireHooks } from "./hooks";
 import { normalizeCombatEnv, DEFAULT_COMBAT_ENV } from "../combatEnv";
 import { ModOp, type ModifierSourceKind } from "../stats/modifiers";
 import { Stat } from "../stats/statTypes";
-import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
+import { ContentLoader } from "../../content/loader";
+import { FsContentSource } from "../../content/node/FsContentSource";
+import { registerAll } from "../../content/registries";
+import { Champions, Items } from "../content/registry";
+import { grantItemFree } from "../economy/shop";
+import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 
 beforeAll(() => registerSkeletonContent());
 
@@ -117,5 +125,120 @@ describe("combatEnv.itemCooldown (#189)", () => {
     expect(procsIn("item", 1, 4)).toBe(3);
     // 反向:道具倍率 4.0 時道具自己確實變慢了(證明上一行不是因為倍率整個沒被讀)。
     expect(procsIn("item", 4, 1)).toBe(1);
+  });
+});
+
+/**
+ * ---------------------------------------------------------------------------
+ * 出貨路徑 —— 上面每一條的 `kind` 都是**測試自己手寫**的
+ * ---------------------------------------------------------------------------
+ * `procsIn` 用 `attachSource({ kind })` 直接掛一份 hook。那證明了 `fireHooks`
+ * 會照 `src.kind` 分流,但**沒有證明真正的道具走到那一行時 kind 真的是
+ * `"item"`** —— 失敗形狀⑤「受測的不是出貨的那個東西」。
+ *
+ * 這件事被實測過:把 `economy/shop.ts` 三個 `attachSource` 的
+ * `kind: "item"` 全部改成 `kind: "passive"`(也就是玩家買到、撿到、undo 回來的
+ * 每一件道具都不再是 `"item"`),整包 @ggd/shared 1450 條**全綠**。
+ * `ModifierSource.kind === "item"` 在整個 sim 裡只有 `effects/hooks.ts` 一處在
+ * 讀,所以那個突變唯一的後果就是:標著「道具冷卻時間」的旋鈕對真正的道具完全
+ * 失效,而後台照樣顯示、照樣存得下去。沒有任何測試會講這件事。
+ *
+ * 所以下面這條走**真的內容文件 + 真的授予入口**:
+ *   content/items/godie-i06n.json（老衲的棒子，onBasicAttack ICD 5 秒）
+ *   → `economy/shop.grantItemFree`（三選一 / 寶玉 / 任務獎勵共用的那個入口）
+ * 它是出貨內容裡**唯一**帶 `internalCooldown` 的道具,也就是這顆旋鈕今天唯一
+ * 的真實作用對象。
+ */
+describe("combatEnv.itemCooldown —— 出貨的道具走出貨的授予入口 (#189)", () => {
+  /** 唯一一件帶 internalCooldown 的出貨道具:老衲的棒子,onBasicAttack、5 秒。 */
+  const ICD_ITEM = "godie-i06n" as ItemId;
+  const ITEM_ICD_SEC = 5;
+
+  let contentReady = false;
+  beforeAll(async () => {
+    for (const r of [Champions, Items]) r.clear();
+    const dir = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
+    const result = await new ContentLoader(new FsContentSource(dir)).load();
+    registerAll(result.store);
+    contentReady = true;
+  });
+
+  /**
+   * 一名英雄拿著出貨的那根棒子(走 `grantItemFree`),對一個木樁每 tick 打一次,
+   * 回傳窗口內棒子**真的發動**了幾次。
+   *
+   * 量的是木樁身上那個暈眩的到期 tick 被往後推了幾次 —— 也就是「敵人又被打暈
+   * 了一次」這件玩家看得到的事,不是 `hookLastFired` 那個內部欄位(失敗形狀⑦)。
+   */
+  function shippedProcsIn(itemCooldown: number, windowTicks: number): number {
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    world.combatEnv = normalizeCombatEnv({ itemCooldown });
+    const ids = Champions.ids().slice().sort();
+    const championId = ids[0]!;
+    const attacker = spawnChampion(world, {
+      championId,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: SKELETON_ARENA.zones[0]!.center.x, z: SKELETON_ARENA.zones[0]!.center.z },
+      zone: 0,
+    });
+    const dummy = spawnChampion(world, {
+      championId,
+      seatId: asSeatId(1),
+      teamId: asTeamId(1),
+      pos: { x: SKELETON_ARENA.zones[0]!.center.x + 1, z: SKELETON_ARENA.zones[0]!.center.z },
+      zone: 0,
+    });
+    // ⚠️ 出貨入口,不是 attachSource:`kind` 由 shop.ts 決定,這正是要測的東西。
+    expect(grantItemFree(world, attacker, ICD_ITEM)).toBeGreaterThanOrEqual(0);
+
+    let procs = 0;
+    let lastExpiry = -1;
+    for (let i = 0; i < windowTicks; i++) {
+      fireHooks(world, attacker, "onBasicAttack", dummy);
+      const stun = world.status.get(dummy)?.effects.find((s) => s.stun === true);
+      if (stun && stun.expiresAtTick > lastExpiry) {
+        procs++;
+        lastExpiry = stun.expiresAtTick;
+      }
+      world.step(new Map());
+    }
+    return procs;
+  }
+
+  it("★ 出貨道具的 ICD 真的被 itemCooldown 縮放(3 次 → 2 次)", () => {
+    cover("combat-env-item-cooldown");
+    expect(contentReady).toBe(true);
+    const def = Items.get(ICD_ITEM);
+    // 設定就位:這件出貨文件真的帶著一個 5 秒的 onBasicAttack 內部冷卻。
+    // 少了這一條,哪天有人把 internalCooldown 從文件上拿掉,下面兩個數字會一起
+    // 變成「每 tick 都發動」,而測試仍然可以被調成綠的。
+    expect(def.passive?.[0]?.internalCooldown).toBe(ITEM_ICD_SEC);
+    expect(def.passive?.[0]?.on).toBe("onBasicAttack");
+
+    // 5 秒 ICD @30Hz = 150 tick。301 tick 的窗口 → tick 0 / 150 / 300,三次。
+    expect(shippedProcsIn(1, 301), "1x 下出貨道具的節奏就已經不對").toBe(3);
+    // 2.0 → 10 秒 ICD → tick 0 / 300,兩次。
+    // 一個「道具沒有以 kind:item 掛上去」的實作在這裡會拿到 3 —— 跟 1x 一樣。
+    expect(
+      shippedProcsIn(2, 301),
+      "出貨道具沒有被道具冷卻倍率動到 —— 它掛上去的 kind 不是 'item'",
+    ).toBe(2);
+  });
+
+  it("★ 出貨的 combat-env 文件把 itemCooldown 鎖在 1.0", () => {
+    cover("combat-env-item-cooldown");
+    // owner 2026-07-28:道具冷卻預設 1x。`DEFAULT_COMBAT_ENV.itemCooldown` 是
+    // **程式端**的預設;伺服器實際載入的是 content/config/combat-env.json。
+    // 兩份不一致時後台顯示的預設和玩家吃到的節奏會是兩個數字,而且沒有任何地方
+    // 會說 —— 這正是 #187 在殭屍王賞金上刻意釘死三份的同一個理由。
+    const doc = JSON.parse(
+      readFileSync(
+        join(dirname(fileURLToPath(import.meta.url)), "../../../../../content/config/combat-env.json"),
+        "utf8",
+      ),
+    ) as { multipliers: Record<string, number> };
+    expect(doc.multipliers.itemCooldown).toBe(1.0);
+    expect(doc.multipliers.itemCooldown).toBe(DEFAULT_COMBAT_ENV.itemCooldown);
   });
 });
