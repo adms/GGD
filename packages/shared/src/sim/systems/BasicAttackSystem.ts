@@ -21,9 +21,10 @@ import type { StatsComp } from "../stats/statsComp";
 import type { ChampionDef } from "../content/defs";
 import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
-import { distSq, normalize, sub, lenSq } from "../math/vec2";
+import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade } from "../combat/evasion";
+import { armFacingLock, FACING_FOLLOW_THROUGH_TICKS } from "../facingLock";
 
 /** Fallback wind-up (seconds) when a champion doc omits attackDamagePoint. */
 const DEFAULT_DAMAGE_POINT_MELEE = 0.25;
@@ -201,6 +202,11 @@ export function basicAttackSystem(world: SimWorld): void {
         if (w.ticksLeft <= 1) whiff(world, id, t, attackType);
         continue;
       }
+      // 揮劍轉向 (task #264)：整段前搖每 tick 重新瞄準。目標會走位，所以不能只在
+      // 出劍那一刻鎖一次方向 —— 那會讓長前搖的重武器對著目標的舊位置揮。
+      // 這裡是 step slot 6，在 movementSystem (slot 5) 之後，所以這一 tick 寫下的
+      // facing 不會再被移動方向蓋掉；鎖是為了保護「下一 tick」的 slot 5。
+      aimAtTarget(world, id, t, tgtT.pos, w.ticksLeft + FACING_FOLLOW_THROUGH_TICKS);
       w.ticksLeft--;
       if (w.ticksLeft <= 0) {
         ab.windup = null;
@@ -233,6 +239,10 @@ export function basicAttackSystem(world: SimWorld): void {
       cdef?.attackDamagePoint ??
       (attackType === "ranged" ? DEFAULT_DAMAGE_POINT_RANGED : DEFAULT_DAMAGE_POINT_MELEE);
     const dpTicks = Math.max(0, Math.round(dpSec / world.dt));
+    // 出劍的第一 tick 就轉向目標 (task #264)，別等前搖跑完 —— 前搖本來就是
+    // 「舉劍」，玩家要在這裡看到身體轉過去。放在 dpTicks 分岔**之前**，所以
+    // 沒有前搖的即時普攻（dpSec = 0）也一樣會 commit 面向，不會漏掉一整條分支。
+    aimAtTarget(world, id, t, tgtT.pos, dpTicks + FACING_FOLLOW_THROUGH_TICKS);
     if (dpTicks <= 0) {
       resolveAttack(world, id, nav.attackTarget, attackType, sc, cdef);
     } else {
@@ -279,6 +289,11 @@ function resolveAttack(
 
   const weaponClass = weaponClassOf(cdef, attackType);
   const dir = normalize(sub(tgtT.pos, t.pos));
+
+  // 面向 (task #264) 在這裡**不需要**再寫一次：呼叫這個函式的兩條路徑都已經在
+  // 同一 tick 稍早用同一組 `tgtT.pos` commit 過瞄準方向（起手那一行，或前搖分支
+  // 每 tick 的重新瞄準），所以 `dir` 與 `t.facing` 必然一致。多寫一行會是一條
+  // 沒有任何測試殺得掉的死程式碼。
 
   if (attackType === "ranged" && (dir.x !== 0 || dir.z !== 0)) {
     // launch an auto projectile; on-hit pipeline resolves on impact
@@ -352,6 +367,20 @@ function resolveAttack(
     origin: "basic",
   });
   fireHooks(world, id, "onBasicAttack", targetId);
+}
+
+/**
+ * 把出手者的面向 commit 到目標身上 (task #264)。退化情形（兩人完全重疊）交給
+ * `armFacingLock` 自行忽略 —— 硬轉到一個 0 向量只會讓身體瞬間亂指。
+ */
+function aimAtTarget(
+  world: SimWorld,
+  id: EntityId,
+  t: { pos: Vec2 },
+  targetPos: Vec2,
+  ticks: number,
+): void {
+  armFacingLock(world, id, normalize(sub(targetPos, t.pos)), ticks);
 }
 
 /**

@@ -26,6 +26,7 @@ import { sub, len, scale, normalize, addScaled, dot, cross, perp, lenSq } from "
 import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } from "../collision/resolve";
 import { steerAroundObstacles } from "../collision/avoid";
 import { Stat } from "../stats/statTypes";
+import { facingLockDir } from "../facingLock";
 
 /** Fallback move speed (units/sec) for entities without a stats component. */
 const BASE_MOVE_SPEED = 6;
@@ -86,6 +87,13 @@ export function movementSystem(world: SimWorld): void {
       t.vel = { x: 0, z: 0 };
       continue;
     }
+
+    // 面向鎖 (task #264)：這個單位剛剛「出手」(施法/揮劍) 所 commit 的瞄準方向。
+    // 有鎖的期間，下面兩個原本無條件寫 facing 的地方都必須讓位 —— 這正是本系統
+    // 過去把施法轉身吃掉的地方（搖桿每幀都合成 move 訂單，所以走位中施法的轉身
+    // 存活 0 tick）。讀在這裡而不是用到的那兩行旁邊，是為了讓過期項目對每一個
+    // 可導航單位都被回收一次（facingLockDir 讀到過期就刪）。
+    const aimLock = facingLockDir(world, id);
 
     // Status: root/stun stop movement; slows scale speed; stun also freezes
     // turning (rooted units may still rotate in place, LoL-style).
@@ -180,8 +188,12 @@ export function movementSystem(world: SimWorld): void {
           d,
           zone.obstacles,
         );
-        // body turns toward the move direction; motion is the ordered direction
-        t.facing = turnToward(t.facing, dir);
+        // body turns toward the move direction; motion is the ordered direction.
+        // 面向鎖優先 (task #264)：出手的那幾 tick，身體朝著瞄準方向，腳照走 ——
+        // 走位與朝向解耦本來就是這個系統的設計（見檔頭 Design note），這裡只是把
+        // 「誰決定朝向」從「永遠是移動方向」改成「出手時是瞄準方向」。
+        if (aimLock) t.facing = { x: aimLock.x, z: aimLock.z };
+        else t.facing = turnToward(t.facing, dir);
         const before = { x: t.pos.x, z: t.pos.z };
         const body = { pos: t.pos, radius: t.radius };
         moveWithCollision(body, scale(dir, stepLen), zone);
@@ -197,7 +209,12 @@ export function movementSystem(world: SimWorld): void {
       t.accel = 0;
       // standing still (e.g. attacking in range): keep turning toward the
       // attack target so autos/aim read correctly; stun freezes rotation too.
-      if (!stunned && nav.attackTarget !== null) {
+      //
+      // 面向鎖優先 (task #264)：技能瞄的點不一定是 `attackTarget`（對著 A 平砍、
+      // 把 AoE 丟去 B 是常態），整段吟唱都被這裡慢慢轉回 A 就是 owner 說的
+      // 「面向方向是錯誤的」。出手期間瞄準方向說了算。
+      if (aimLock) t.facing = { x: aimLock.x, z: aimLock.z };
+      else if (!stunned && nav.attackTarget !== null) {
         const tgt = world.transform.get(nav.attackTarget);
         if (tgt && tgt.zone === t.zone) {
           const toTgt = sub(tgt.pos, t.pos);

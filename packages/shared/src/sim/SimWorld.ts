@@ -253,6 +253,20 @@ export class SimWorld {
   readonly hitstun = new Map<EntityId, number>();
 
   /**
+   * 面向鎖 (task #264) — entity → 一次「出手」commit 的瞄準方向 + 絕對到期 tick。
+   * ABSENT = 沒有出手，面向照舊由移動方向決定。
+   *
+   * 為什麼要有這張表：`Transform.facing` 原本沒有擁有權模型，MovementSystem 每
+   * tick 都無條件把它轉向移動方向，於是 castAbility 在同一 tick 稍早寫進去的施法
+   * 面向存活 0 tick，而普攻根本沒有任何一行寫過面向。詳見 `sim/facingLock.ts`。
+   *
+   * 用絕對 tick 到期（而不是每 tick 遞減）是刻意的：不需要新的 decay system，也
+   * 就沒有「arm 與 decay 誰先跑」的順序陷阱。過期項目在 `facingLockDir` 讀到時
+   * 順手刪除。
+   */
+  readonly facingLock = new Map<EntityId, import("./facingLock").FacingLock>();
+
+  /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
    * floor }. ABSENT = grounded.
    *
@@ -480,6 +494,8 @@ export class SimWorld {
     this.hitstop.delete(id);
     this.knockdown.delete(id);
     this.hitstun.delete(id);
+    // task #264: 回收的 entityId 不得繼承上一個單位的瞄準方向。
+    this.facingLock.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
