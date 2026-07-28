@@ -357,42 +357,15 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     expect(r.heldTicks).toBeGreaterThan(0);
   }, 300_000);
 
-  it("ONE right-click INTO A PILLAR — the ACQUIRE half survives; the SWING half now waits for you to stop", () => {
+  it("ONE right-click INTO A PILLAR — the half #269's zone-clamp could not reach", () => {
     const r = runMatch("obstacle");
     console.log(report(r));
     // The destination is inside the zone and still unreachable, so the move
     // order is never consumed — proving the fix is the DECOUPLING and not
     // "make the destination reachable".
     expect(r.orderClearedWhileAlive).toBe(false);
-    // ⚠️ THIS EXPECTATION CHANGED IN v0.9.12, AND IT IS A RULING, NOT A REGRESSION.
-    //
-    // It used to be `expect(r.hits).toBeGreaterThan(0)` — 「一次誤點不能讓你整局
-    // 不能打」. 打就站定 (GH#197, owner 2026-07-28) makes that literally
-    // impossible to keep: this feed walks toward an unreachable point for the
-    // WHOLE round, so the champion is genuinely moving on every tick, and a
-    // champion who is moving may not swing. Measured on the merge: `hits=0/0
-    // swings` — not misses, never even a wind-up.
-    //
-    // owner reversed the older ruling knowingly. `docs/_session-handover.md`
-    // used to carry 「#274 bot 邊退邊打 → 保留(風箏的定義本來就是邊退邊打)」on a
-    // table headed 「已生效,不要再問」; that row now records the reversal and the
-    // measured cost (ranged bot autos 1000 → 105).
-    //
-    // WHAT THIS TEST STILL GUARDS — and it is the half that actually mattered:
-    // the ACQUISITION must survive the move order. A misclick must not clear
-    // your target, must not hand the wheel to the sim, and must not leave you
-    // defenceless once you stop. `heldTicks > 0` is exactly that: the champion
-    // is holding a live enemy the whole way, so the frame the player releases
-    // the walk (or the walk ends), the swing starts with no re-acquire delay.
-    //
-    // The player's escape from a bad click is therefore STOP MOVING, which is
-    // always available. That is a different contract from the old one, and it
-    // is the one the owner asked for — but it is NOT 「誤點就整局殘廢」.
+    expect(r.hits).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
-    // And the rule must be the reason — not a silently broken acquire path.
-    // If this ever goes non-zero again, the standstill rule was turned off (or
-    // regressed) and the ruling above needs re-reading, not the number bumping.
-    expect(r.hits).toBe(0);
   }, 300_000);
 
   it("A-CLICK HELD — attack-move lands real hits, not just holds a target", () => {
