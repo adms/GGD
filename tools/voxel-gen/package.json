@@ -8,6 +8,7 @@
     "voxel:check": "tsx gen.ts --check",
     "voxel:build": "tsx build.ts",
     "voxel:build:check": "tsx build.ts --check",
+    "voxel:extract": "tsx extract.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },
