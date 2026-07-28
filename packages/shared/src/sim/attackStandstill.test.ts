@@ -102,6 +102,31 @@ function kiteAway(world: SimWorld, me: EntityId): Map<SeatId, IntentFrame> {
   return moveOrder({ x: p.x - 6, z: p.z });
 }
 
+/**
+ * 繞圈 / 走 A —— 幾乎垂直於木樁方向、只帶一點點內縮的走位。
+ *
+ * ⚠️ 為什麼不是「純垂直」(dir = 純 ±z)。tick 是離散的:純切線位移在幾何上一定
+ * 會把距離拉開一點點(弦比半徑長),量出來的靠近速度是 **−0.95**,也就是被歸類
+ * 成「後退」。那樣寫出來的測試會綠 —— 但它綠的理由和這條規則無關(失敗形狀 ④),
+ * 我第一版就是這樣寫的,放寬成 `< 0` 的突變照樣活著。
+ *
+ * 真正能把 `closingSpeed < walkEps`(出貨)和 `closingSpeed < 0`(放寬)分開的,
+ * 是「**確實在靠近、但靠得比走路門檻慢**」這個形狀 —— 也就是玩家一邊繞一邊
+ * 慢慢貼上去。實測(移速 2.0、方向 (0.2, 1)):
+ *
+ *     |vel| = 2.0 > walkEps 0.5   → 有在動
+ *     靠近速度 = +0.284           → 正的(所以 `< 0` 不擋),但 < 0.5(所以出貨會擋)
+ *
+ * 上下折返只是為了留在場地裡,對兩個判斷都沒有影響。
+ */
+const STRAFE_SPEED = 2.0;
+function strafe(world: SimWorld, me: EntityId, tick: number): Map<SeatId, IntentFrame> {
+  const p = world.transform.get(me)!.pos;
+  const zDir = tick % 30 < 15 ? 1 : -1;
+  // +x 是木樁的方向,所以 +0.2 的 x 分量就是「一邊繞一邊往內貼」。
+  return moveOrder({ x: p.x + 0.2 * 6, z: p.z + zDir * 6 });
+}
+
 describe("打就站定 —— 英雄 (BasicAttackSystem)", () => {
   it("後退中的人一刀都揮不出來,而同一個人站定就打得出來(儀器活著)", () => {
     cover("ss-kite-vs-stand");
@@ -116,6 +141,35 @@ describe("打就站定 —— 英雄 (BasicAttackSystem)", () => {
 
     expect(movingHits).toBe(0); // 風箏關閉
     expect(stillHits).toBeGreaterThan(0); // …而且不是因為戰鬥根本沒發生
+  });
+
+  it("繞圈慢慢貼上去也打不出來 —— 規則是「靠得比走路慢就算走位」,不是「只擋後退」", () => {
+    cover("ss-strafe-blocked");
+    // ⚠️ 這一條補的是一個**存活的突變**:把 `standstillBlocks` 最後那行從
+    // `closingSpeed < rules.walkEps` 放寬成 `closingSpeed < 0`(只擋真的在拉開
+    // 距離),整個 @ggd/shared 套件 1462 條測試**一條都不會紅**。也就是說,
+    // 「靠近得夠快才算在接近」這個門檻在這條測試出現以前完全沒有守衛,而
+    // owner 抱怨的是**邊移動邊攻擊**,不是「邊後退邊攻擊」—— 繞著人轉一邊
+    // 蹭傷害正是他要擋掉的那個東西。
+    //
+    // 形狀見 `strafe` 上面的說明:有在動、確實在靠近,但靠近速度只有 0.28,
+    // 遠低於 0.5 的走路門檻。
+    const moving = makeWorld();
+    const m = duel(moving);
+    moving.stats.get(m.me)!.final[Stat.MoveSpeed] = STRAFE_SPEED;
+    let tick = 0;
+    const movingHits = run(moving, m.me, m.foe, 150, () => {
+      moving.stats.get(m.me)!.final[Stat.MoveSpeed] = STRAFE_SPEED;
+      return strafe(moving, m.me, tick++);
+    });
+
+    const still = makeWorld();
+    const s = duel(still);
+    still.stats.get(s.me)!.final[Stat.MoveSpeed] = STRAFE_SPEED;
+    const stillHits = run(still, s.me, s.foe, 150);
+
+    expect(movingHits).toBe(0); // 繞圈蹭傷害關閉
+    expect(stillHits).toBeGreaterThan(0); // 儀器活著:同一個人、同一個移速,站定就打得出來
   });
 
   it("後台開關關掉時,同一個後退中的人照樣打得出來(這條規則真的是可關的)", () => {

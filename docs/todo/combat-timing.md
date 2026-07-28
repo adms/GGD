@@ -42,6 +42,7 @@ on-hit pipeline resolving on impact). Champion attack data lives in
 | ct-16 | 被擠在柱子上磨蹭時照樣出手 —— 碰撞抖動不是「在走」 | ss-obstacle-jitter | regression | done |
 | ct-17 | 殭屍/殭屍王同樣受約束,而站定的同一隻照樣打(儀器活著) | ss-mob-bound | unit | done |
 | ct-18 | 小怪與英雄讀同一張後台表:`applyToMobs` 關掉,走動中的殭屍又能打 | ss-mob-switch | unit | done |
+| ct-19 | 繞圈慢慢貼上去(有在動、確實在靠近但比走路門檻慢)一樣打不出來 —— 規則不是「只擋後退」 | ss-strafe-blocked | regression | done |
 
 ## 戰鬥手感設定表 (`config.combat-feel@1`) 的純函式層
 
@@ -59,3 +60,17 @@ on-hit pipeline resolving on impact). Champion attack data lives in
 | cf-10 | 負值被夾住(負擊退 = 吸人,不能從打錯的設定冒出來) | cf-clamp | exception | done |
 | cf-11 | 站定開關是布林,非布林退回預設 | cf-standstill-doc | exception | done |
 | cf-12 | 整份文件讀得進來 | cf-doc-read | unit | done |
+
+## 設定表真的走進比賽了嗎(接線層,不是純函式層)
+
+⚠️ 上面那一組 cf-01..cf-12 全部是**純函式**的守衛,而純函式測試自己指派
+`world.combatFeel`,所以它們證明的是「sim 讀得到這張表」,不是「比賽真的把
+操作者那張表交給了 sim」。把 `MatchController` 裡的 `this.world.combatFeel = …`
+整行刪掉,shared(1462)與 game-server(558)**一條都不會紅** —— 後台怎麼調都
+不進比賽,而測試全綠。這一組補的就是那一段。
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| cf-13 | 建構子拿到的那張表就是 `ctl.world.combatFeel`(另一張表得到另一個值) | cf-wiring-lands | regression | done |
+| cf-14 | 換一張表就換一個 **sim 行為**(推得動 vs 完全不推),不是只有欄位對得上 | cf-wiring-behaviour | regression | done |
+| cf-15 | 兩個出貨呼叫端都不傳參數 → 走建構子預設,而預設是**出貨表**不是空表 | cf-wiring-default | exception | done |

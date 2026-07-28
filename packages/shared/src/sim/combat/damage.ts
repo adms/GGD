@@ -304,10 +304,30 @@ function applyImpact(
     // 整條法則(和它的三個後台參數)在 combatFeel.ts。
     const victimMaxHp = world.health.get(target)?.maxHp ?? 0;
     let raw = knockbackRaw(world.combatFeel.knockback, impact, victimMaxHp);
-    // explicit override wins (an author can shove on an otherwise-light hit, or
-    // suppress a shove with 0), clamped to the override cap.
+    // 作者的 `hitFeel.knockbackMag` 是這一擊在**距離 0 時**的擊退**下限**,
+    // 不是取代 GH#193 那條法則的天花板。
+    //
+    // ⚠️ 這一行寫成 `raw = 覆寫`(取代)的話,#193 對**每一位英雄的普攻都完全
+    // 無效** —— 這是量出來的,不是推論:
+    //
+    //   · 出貨的 115 位英雄裡 **114 位**的 champion doc 帶著 `hitFeel`,而
+    //     `lookupHitFeel(origin === "basic")` 讀的就是它 → 幾乎每一次普攻都
+    //     走覆寫那條分支。
+    //   · 那 114 個值是 90 個 **0**、19 個 0.25、4 個 0.45、1 個 0.3。
+    //   · 近戰的接觸距離下限是 `r + r + 0.1 = 1.3`(spawnChampion 的半徑 0.6)。
+    //   · 所以取代語意下的結果永遠是 `max(0, ≤0.45 − ≥1.3) = 0` —— 連一發打掉
+    //     受傷單位 **100%** 最大生命的爆擊都推不動一格,而 owner 的規格說那
+    //     應該推 10 個身位。
+    //
+    // 取下限之後,`knockbackMag: 0` 回到它在 #133 裡本來的意思(「這一刀沒有
+    // 額外的推力」),而不是「這一刀可以否決整場比賽的全域規則」。碎屑傷害
+    // 仍然不推(pct < minPct → raw 0,覆寫 0 也是 0),所以 #45 的近戰普攻率
+    // 沒有回退 —— `autoAttackCensus` 的棘輪在這個改動下仍然是綠的。
+    //
+    // 守衛:`sim/knockbackRoster.test.ts`(**出貨內容**,不是骨架 dummy ——
+    // 骨架 dummy 沒有 hitFeel,永遠走不到這條分支)。
     if (hf?.knockbackMag !== undefined) {
-      raw = Math.min(KB_OVERRIDE_MAX, Math.max(0, hf.knockbackMag));
+      raw = Math.max(raw, Math.min(KB_OVERRIDE_MAX, Math.max(0, hf.knockbackMag)));
     }
     // ⚠️ 減距離套用在**覆寫之後**,也就是作者寫的 `hitFeel.knockbackMag` 一樣要
     // 減。這不是順手為之:出貨內容裡 114/115 位英雄的**普攻**都帶著一個
