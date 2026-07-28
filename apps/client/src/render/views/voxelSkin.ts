@@ -52,6 +52,40 @@ import type { VoxelLook, VoxelProps } from "./voxelLook";
 export const VOXEL_TEX_EDGE = 16;
 
 /**
+ * glbPath prefix of the four GENERATED blocky bodies (`blocky-mage/knight/
+ * barbarian/rogue.glb`) — the ONLY meshes this module's palette + bone writes
+ * are authored against.
+ */
+export const VOXEL_BODY_GLB_PREFIX = "assets/models/champions/";
+
+/**
+ * GH#31 —— 一個體素調色盤絕對不可以蓋在暴雪原始模型上。
+ *
+ * WHY THIS GATE EXISTS. `applyVoxelLook` REPLACES each material's
+ * `albedoTexture` with a 16×16 palette whose texel columns are addressed by the
+ * generated boxman's UVs. That is correct — and only correct — for the four
+ * generated bodies. #31 flipped 40 stand-in champions onto their real Warcraft
+ * III models (`assets/blizzard-local/models/*.glb`), which carry a REAL
+ * `albedoTexture` ("mat0 (Base Color)") and a white `albedoColor`. Painting the
+ * palette over one of those throws the WC3 skin away and samples 8 flat colours
+ * through UVs that mean nothing on that mesh — 海克力斯 stops being 黑紅 and
+ * every one of the 40 renders as smeared blocks of the wrong colour.
+ *
+ * The champion still resolves a look, because `GameApp.modelOverrideFor` keys
+ * it off the champion's `modelKey` (still one of the four shared stand-ins —
+ * that is exactly how the overlay recognises them) while the ADOPTED doc is the
+ * overlay's. modelKey and adopted glb disagree for precisely these 40, so the
+ * decision has to be made on the glb we actually loaded, not on the modelKey.
+ *
+ * The bone half is inert on a WC3 rig either way (measured: Hapm/H02N/N00B
+ * expose `Bone_Head`/`Bone_Chest`/…, zero hits against the boxman joint names),
+ * so this gate loses nothing — it only stops the palette.
+ */
+export function voxelLookAppliesToGlb(glbPath: string | null | undefined): boolean {
+  return typeof glbPath === "string" && glbPath.startsWith(VOXEL_BODY_GLB_PREFIX);
+}
+
+/**
  * Prop group → the joints that carry it. Mirrors `PROP_JOINTS` in
  * `tools/voxel-gen/boxman.ts`; each prop has its OWN joint precisely so that
  * zeroing it cannot delete a body part.
