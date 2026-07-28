@@ -17,6 +17,11 @@ import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { armRecovery } from "./abilityRecovery";
+import {
+  armFacingLock,
+  FACING_FOLLOW_THROUGH_TICKS,
+  FACING_INSTANT_CAST_TICKS,
+} from "../facingLock";
 
 /**
  * Enemies of `caster` currently standing inside a ground-AoE circle.
@@ -189,6 +194,12 @@ export function castAbility(
       // combat-env `abilityRange` (task #136) shrinks both the reach and the AoE.
       const off = clampLen(sub(target.point, t.pos), resolveAbilityRange(world, def.range));
       point = add(t.pos, off);
+      // task #264: 地面指定技能過去**從來沒有**算出 `direction`，所以下面那行
+      // `if (direction) t.facing = direction` 對它整組是死的 —— 94 支 ground 技能
+      // (含喪標麥可 Q/E/R 三支) 施法時身體完全不轉，可以背對著地面 AoE 放。
+      // 方向就是「自己 → 落點」，落點與自己重合時退化為 0 向量，由 armFacingLock
+      // 自行忽略（原地放的 AoE 沒有有意義的朝向）。
+      direction = normalize(sub(point, t.pos));
       // ground AoE: hit enemies in radius at the point. With a cast time this
       // set is RE-QUERIED when the wind-up elapses (CastResolveSystem).
       targets = enemiesInCircle(world, caster, point, resolveAbilityRadius(world, def.radius ?? 1));
@@ -210,7 +221,23 @@ export function castAbility(
   // twice as long). One seam covers Q/W/E/R and the EX slot alike.
   const cdSecs = (def.cooldown[inst.rank - 1] ?? 0) * (1 - cdr) * world.combatEnv.cooldown;
   inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
-  if (direction) t.facing = direction;
+
+  // ---- 面向：commit 瞄準方向 (task #264) ----
+  // 過去這裡只是 `t.facing = direction`，而 MovementSystem 在同一 tick 稍後
+  // (step slot 5 vs 這裡的 slot 3) 會無條件把 facing 轉回移動方向 —— 搖桿/觸控
+  // 每一幀都合成一筆 move 訂單，所以走位中施法的轉身存活 0 tick。改用面向鎖：
+  // 一樣立刻寫 facing，但同時宣告「接下來這幾 tick 移動方向不得覆蓋」。
+  // 鎖的長度 = 吟唱時間，瞬發技至少 FACING_INSTANT_CAST_TICKS（沒有吟唱可以撐住
+  // 面向，只給收招餘韻的話玩家看不到轉身），再加上收招餘韻。
+  const castTicksForAim = Math.round((def.castTimeSec ?? 0) / world.dt);
+  if (direction) {
+    armFacingLock(
+      world,
+      caster,
+      direction,
+      Math.max(castTicksForAim, FACING_INSTANT_CAST_TICKS) + FACING_FOLLOW_THROUGH_TICKS,
+    );
+  }
 
   recordAbilityCast(world, caster); // scoreboard: one successful cast (Q/W/E/R/EX/天生技)
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
