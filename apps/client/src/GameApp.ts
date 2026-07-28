@@ -96,6 +96,8 @@ import {
   KIND_REVIVE_CIRCLE,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
+import { shouldRenderFrame } from "./render/frameCap";
+import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 import { VfxSystem } from "./vfx/VfxSystem";
 import { AmbientVfx } from "./vfx/AmbientVfx";
 import { WhirlwindFx } from "./vfx/WhirlwindFx";
@@ -155,9 +157,8 @@ import { roundWinnerTeamChampions } from "./ui/panels/settlementModel";
 const SLOT_INDEX: Record<AbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
 /** authoritative error beyond which we treat the correction as a teleport */
 const TELEPORT_EPS = 6;
-/** fps-cap slack (ms): run when within ~a rAF of the target interval so a
- *  60Hz vsync doesn't drop a 30/60 cap to half rate on jitter. */
-const CAP_SLACK_MS = 3;
+// fps 上限規則搬到 render/frameCap（#23/#266）：這裡以前是四份抄寫中的一份，
+// 而漏抄的那一份（StorePreview）就這樣一路以面板頻率在跑。
 /** draw distances at/above this are treated as "no cull" (skip the check). */
 const DRAW_DISTANCE_MAX = 300;
 
@@ -205,6 +206,12 @@ export class GameApp {
   private readonly viewports: ViewportManager;
   private readonly views: EntityViewRegistry;
   private readonly vfx: VfxSystem;
+  /**
+   * 回合邊界的特效清場 (task #16 / #259). 判斷邏輯故意住在
+   * render/roundVfxLifecycle —— GameApp 無法在測試裡被建構，寫在這裡的東西
+   * 只能靠掃字串「證明」，而那分不出程式碼與註解。
+   */
+  private readonly roundVfx: RoundVfxLifecycle;
   /** ambient per-bone particle/ribbon attachments (lives-with-entity vfx) */
   private readonly ambient: AmbientVfx;
   /**
@@ -537,6 +544,9 @@ export class GameApp {
       vfxDocFor: (id) => this.contentDb.vfxFor(id),
       ribbonDocFor: (id) => this.contentDb.ribbonFor(id),
     });
+    // 回合邊界 → 特效清場 (#16 / #259)。餵它 phase，它在進/出 combat 的那一幀
+    // 呼叫 vfx.resetForRound()。見 render/roundVfxLifecycle 的模組註解。
+    this.roundVfx = new RoundVfxLifecycle(this.vfx);
     this.whirlwind = new WhirlwindFx(this.renderer.scene);
 
     // Combat post-fx (red vignette) on the LOCAL player's camera. Heavy
@@ -1042,13 +1052,18 @@ export class GameApp {
     // fps cap: skip the whole frame body until the target interval elapses.
     // The rAF keeps ticking at display rate; we render on a throttled cadence.
     // (prediction/interp stay time-based off dtMs, so skipping is lossless.)
-    const cap = this.renderParams.fpsCap;
-    if (cap > 0 && nowMs - this.lastFrameMs < 1000 / cap - CAP_SLACK_MS) return;
+    // 規則本身在 render/frameCap —— 四條 render loop 共用同一份，不再各抄一份。
+    if (!shouldRenderFrame(nowMs, this.lastFrameMs, this.renderParams.fpsCap)) return;
 
     const dtMs = Math.min(Math.max(nowMs - this.lastFrameMs, 1), 100);
     this.lastFrameMs = nowMs;
 
     const state = this.conn.room?.state ?? null;
+
+    // 0) ROUND BOUNDARY CLEANUP (task #16 / #259). 刻意排在 drain **之前**：
+    // 邊界那一幀的事件屬於「新的那一側」—— 進 combat 的第一幀帶的是開場特效，
+    // 出 combat 的那一幀帶的是收尾事件。先清再 drain，兩邊都不會被自己清掉。
+    this.roundVfx.sync(state?.phase ?? "");
 
     // Keep the imperative displayFinal singleton current with the live wire
     // combat-env EVERY frame (idempotent — no-ops when the JSON is unchanged),

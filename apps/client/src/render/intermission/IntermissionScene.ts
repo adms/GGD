@@ -72,6 +72,7 @@ import {
   type PerformOption,
 } from "./idlePerform";
 import { groundShiftY } from "./stance";
+import { MENU_FPS_CAP, minFrameMs } from "../frameCap";
 import { writeCameraDrift } from "../menu/procedural/math";
 import { enterCameraPose } from "../menu/procedural/transition";
 import { makeSoftDotTexture } from "../menu/procedural/sprites";
@@ -110,8 +111,11 @@ import {
   type ShelfGoodInput,
 } from "./shelfDisplay";
 
-/** soft cap so a 120 Hz panel doesn't render a static market at 120 fps */
-const MIN_FRAME_MS = 1000 / 62;
+/**
+ * soft cap so a 120 Hz panel doesn't render a static market at 120 fps.
+ * 共用 `render/frameCap` 的同一條規則 —— 見 LoginScene 的同名常數。
+ */
+const MIN_FRAME_MS = minFrameMs(MENU_FPS_CAP);
 /** clamp per-frame dt so a hidden-then-shown tab doesn't fast-forward the scene */
 const MAX_DT = 0.1;
 
