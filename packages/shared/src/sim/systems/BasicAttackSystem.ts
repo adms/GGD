@@ -10,8 +10,9 @@
  *        - RANGED → launch an auto projectile at the champion's missileSpeed;
  *          damage + on-hit hooks + lifesteal resolve ON IMPACT (ProjectileSystem).
  *
- * Interrupt (before the damage point): stun, death, target loss, or the target
- * leaving range (moving out cancels, LoL-style). Crit is rolled at the damage
+ * Interrupt (before the damage point): stun, death, target loss, the target
+ * leaving range (moving out cancels, LoL-style), or THE ATTACKER ITSELF MOVING
+ * (WC3「打就站定」 — see the WALK_EPS gate in the loop). Crit is rolled at the damage
  * point via the seeded RNG (deterministic). On-hit item passives (onBasicAttack)
  * and lifesteal always fire when the hit LANDS, never at the swing start.
  */
@@ -21,7 +22,7 @@ import type { StatsComp } from "../stats/statsComp";
 import type { ChampionDef } from "../content/defs";
 import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
-import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
+import { distSq, dot, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade } from "../combat/evasion";
 import { armFacingLock, FACING_FOLLOW_THROUGH_TICKS } from "../facingLock";
@@ -47,6 +48,61 @@ const AUTO_RANGE_BUFFER = 4;
 /** Whiffed-melee over-commit lunge (combat-juice): a small forward stumble. */
 const WHIFF_LUNGE_DIST = 0.8;
 const WHIFF_LUNGE_SPEED = 10;
+
+/**
+ * 「移動就不能出手」的移動判定門檻 (GGD units/sec)。
+ *
+ * 讀的是 `Transform.vel`，也就是 movementSystem (slot 5) 在**這一 tick 實際走出去
+ * 的位移 / dt** —— 不是 `nav.moveTarget` 那種「想走」。差別是刻意的，而且是這條
+ * 規則能不能用的關鍵：
+ *
+ *   - 撞牆／貼著場地邊界推不動的人，位移是 0，所以他**還是能打**。若改讀意圖，
+ *     一次點到場外或點進柱子的滑鼠失誤就會讓那個人整局不能攻擊（#274 的
+ *     `clickOutside` / `obstacle` 兩個 feed 就是這個形狀）。
+ *   - 被 separation 推開不算移動：`separatePair` 直接改 `pos`，從不寫 `vel`。
+ *
+ * 0.5 而不是 ~0：最慢的英雄 ms 2.6，加速度斜坡第一 tick 就有 2.6/3 = 0.87 u/s，
+ * 所以「真的在走」一定過得了這個門檻；而貼著柱子磨出來的殘餘切向滑動遠低於它。
+ * 被重度減速到 0.5 u/s 以下的人算站著（他也真的幾乎沒在動）。
+ *
+ * 同一個常數也當作「靠近目標」的門檻 —— 見 {@link closingOnTarget}。
+ */
+const WALK_EPS = 0.5;
+const WALK_EPS_SQ = WALK_EPS * WALK_EPS;
+
+/**
+ * 這一 tick 的位移是不是「正在拉近與目標的距離」？
+ *
+ * 「移動就不能出手」唯一的例外，而這個例外是**量出來的、不是設計品味**。第一版沒有
+ * 它，`sim/autoAttackCensus.test.ts` 立刻點名 14 位**近戰**英雄在射程內十秒打不出
+ * 任何一下 —— 一個要幫近戰的改動，先把近戰打死了。追蹤 godie-o02p（初音，前搖 15
+ * tick）的每一 tick 拿到的形狀是：
+ *
+ *     t8   木樁反擊命中 → 自己吃到 knockback + hitstop/hitstun，前搖暫停
+ *     t13  擊退滑行結束，人已經被推到 d=1.65 —— 射程是 1.60，出去了
+ *     t14  自己走回去 (d=1.58，已經回到射程內)
+ *     t15  ← 第一版在這裡取消了這一刀
+ *
+ * 也就是說「被打飛之後走回去」被算成了玩家在跑。GGD 的每一次命中都帶擊退（WC3 沒有
+ * 這回事），所以照抄 WC3 的字面規則會產生 WC3 從來不存在的死結：近戰前搖 0.4~0.5 s
+ * 的那批人每一輪都被推出去、走回來、被取消，冷卻卻照扣。
+ *
+ * 判準用**徑向靠近速度**而不是 `dot > 0`：純側移（繞著目標轉圈）的靠近速度約 0，
+ * 浮點雜訊會讓它在正負之間跳，規則就變成擲骰子。要求靠近速度 >= WALK_EPS 才算，
+ * 於是三種移動被清楚地分開：
+ *
+ *     朝目標衝     靠近速度 ≈ 全速  → 可以出手（近戰接近戰、被擊退後歸位）
+ *     繞圈／側移   靠近速度 ≈ 0     → 不能出手（風箏的走位是這一種）
+ *     後退         靠近速度 < 0     → 不能出手（風箏的本體）
+ *
+ * 目標退化地站在自己身上（距離 0）時 `normalize` 給 0 向量、靠近速度 0 → 算沒在
+ * 靠近；那種情況下身體重疊會被 separation 推開，而 separation 不寫 `vel`，所以他
+ * 讀到的速度是 0，走的是「站著」那條路，不受這裡影響。
+ */
+function closingOnTarget(t: { pos: Vec2; vel: Vec2 }, targetPos: Vec2): boolean {
+  const to = normalize(sub(targetPos, t.pos));
+  return dot(t.vel, to) >= WALK_EPS;
+}
 
 /**
  * Effective attack range against a specific target (never below body contact).
@@ -187,6 +243,40 @@ export function basicAttackSystem(world: SimWorld): void {
     // defender a free counter-swing mid-shove. See combat/damage.ts.
     if ((world.hitstun.get(id) ?? 0) > 0) continue;
 
+    // ---- 移動中不得出手：「打就站定」 (owner 2026-07-28) ----
+    //
+    // 這條規則之前**完全不存在**。前搖只在「目標死了 / 目標跑出射程」時才取消，
+    // 於是「能不能邊走邊打」實際上是被射程夾出來的，而不是被規則決定的 —— 而近戰
+    // 與遠程的射程差了五倍：
+    //
+    //     近戰 82 位：射程 1.2~1.6，前搖中位數 0.5 s（15 tick）
+    //     遠程 33 位：射程 6~12  ，前搖中位數 0.3 s（ 9 tick）
+    //     兩邊移速中位數 5.9 / 5.7，幾乎一樣
+    //
+    // 前搖 0.5 s 內，一個以 5.9 移動的目標會跑掉 2.95 單位 —— 遠遠超過近戰 1.6 的
+    // 射程，卻被遠程 8.2 的射程整碗吸收。結論就是 owner 回報的那句話：遠程可以一邊
+    // 走一邊輸出，近戰不行，而且這不是誰的數值調壞了，是規則從來沒寫。
+    //
+    // 補法照 WC3（這批英雄本來就是 WC3 英雄單位改的）：單位要攻擊就得停下來，前搖
+    // 中收到移動就作廢這一刀。傷害點之後沒有任何鎖，所以「傷害結算完立刻走」仍然
+    // 免費 —— WC3 的 hit-and-run 微操在這裡是自然浮現的，不是額外做的。
+    //
+    // 唯一的例外是「正在朝目標靠近」—— 見 {@link closingOnTarget}，那是量出來的，
+    // 不是設計品味。所以這裡只算出「有沒有在動」，真正的判斷要等拿到目標位置之後
+    // 才做（前搖那段用 `w.target`，起手那段用 `nav.attackTarget`）。
+    //
+    // 四件刻意的事：
+    //   1. 兩段都要擋。有前搖就取消；沒前搖就連開都不准開 —— 冷卻是在起手那一刻
+    //      整段付掉的，若只取消不阻擋，一個一直在走的人會每輪燒掉一次冷卻卻永遠
+    //      打不出東西。
+    //   2. 取消**不退冷卻**。跟現有的「目標跑出射程」取消同一個待遇：想拉開距離就
+    //      要付一次攻擊循環，這正是這條規則的全部價值。
+    //   3. **不**觸發 whiff（揮空前衝）。whiff 是「打到空氣」的過度投入；自己走開
+    //      是玩家的決定，安靜取消，LoL / WC3 都是這樣。
+    //   4. 被擊退／自己衝刺同樣算移動。擊退是把人往**遠離攻擊者**的方向推，所以
+    //      靠近速度是負的，一定會取消 —— 這正是想要的：被打飛就別想把那一刀揮完。
+    const walking = lenSq(t.vel) > WALK_EPS_SQ;
+
     const champ = world.champion.get(id);
     const cdef = champ ? Champions.tryGet(champ.championId as ChampionId) : undefined;
     const attackType = cdef?.attackType ?? "melee";
@@ -210,6 +300,11 @@ export function basicAttackSystem(world: SimWorld): void {
         // (target left well before the damage point) stays a silent cancel,
         // LoL-style, so cadence is unchanged.
         if (w.ticksLeft <= 1) whiff(world, id, t, attackType);
+        continue;
+      }
+      // 打就站定：走動就作廢這一刀（朝目標靠近除外）。安靜取消，不 whiff。
+      if (walking && !closingOnTarget(t, tgtT.pos)) {
+        ab.windup = null;
         continue;
       }
       // 揮劍轉向 (task #264)：整段前搖每 tick 重新瞄準。目標會走位，所以不能只在
@@ -239,6 +334,9 @@ export function basicAttackSystem(world: SimWorld): void {
     }
     const reach = reachTo(sc, t.radius, tgtT.radius);
     if (distSq(t.pos, tgtT.pos) > reach * reach) continue; // still chasing
+    // 打就站定：走動中不開新的一刀（朝目標靠近除外）。擋在冷卻 commit **之前**，
+    // 所以走位不會白白燒掉一次攻擊間隔 —— 停下來的那一 tick 就能立刻出手。
+    if (walking && !closingOnTarget(t, tgtT.pos)) continue;
 
     // commit the whole-interval cooldown now; the wind-up is part of it.
     const baseAttackTime = cdef?.baseAttackTime ?? 1.0;
