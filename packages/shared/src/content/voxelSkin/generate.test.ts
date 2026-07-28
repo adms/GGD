@@ -8,7 +8,7 @@
  * collides with an existing look turns this file red instead of shipping a twin.
  */
 import { describe, it, expect } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
@@ -35,7 +35,13 @@ import {
   OUTFIT_LUM_MAX,
   EYE_CONTRAST_MIN,
 } from "./palette";
-import { MAX_MOTIF_BOXES, STAND_IN_MODEL_KEYS, type VoxelSkinRecipe } from "./types";
+import {
+  BLIZZARD_MODEL_CHAMPIONS,
+  MAX_MOTIF_BOXES,
+  STAND_IN_MODEL_KEYS,
+  defaultPrefersVoxelBody,
+  type VoxelSkinRecipe,
+} from "./types";
 import { SKIN_RULES } from "./rules";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
@@ -129,11 +135,42 @@ describe("voxel skin — coverage over the real roster", () => {
    * whose map model is a Blizzard built-in) added one more `champ.skin.rogue`
    * wearer — rogue 6 → 7.
    */
-  it("every champion on a shared stand-in mesh is moved onto the voxel body", () => {
+  it("共用替身英雄:有暴雪模型的走 glb,沒有的才留在體素身體上", () => {
     cover("voxel-skin-standin");
+    // ⚠️ 這條測試的方向在 GH#31 反轉了,而反轉本身就是那個 bug 的形狀。
+    //
+    // 它原本斷言「44 位全部 preferVoxelBody === true」,而那是自洽的:#231 的
+    // 前提是這 44 位「沒有自己的美術」。前提在 #10 就已經不成立 —— 其中 40 位的
+    // 真實 Warcraft III 模型早就抽進 overlay 了,`blizzardOverlay.ts` 也確實會在
+    // 解析時把它換進來。只是 `ChampionView.tryUpgradeToGlb` 在這個旗標上提早
+    // return,於是那個 glb 在下一行被丟掉。
+    //
+    // 兩層各自都對、各自都有測試、沒有任何東西會紅 —— 玩家看到的是 44 位共用
+    // 四張臉。owner 2026-07-28:「請你都先用暴雪的 3d model」。
     const standIns = DOCS.filter((d) => STAND_IN_MODEL_KEYS.includes(d.modelKey ?? ""));
     expect(standIns.length).toBe(44);
-    for (const d of standIns) expect(ROSTER.recipes.get(d.id)!.preferVoxelBody).toBe(true);
+
+    const withBlizzard = standIns.filter((d) => BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
+    const without = standIns.filter((d) => !BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
+    expect(withBlizzard.length, "40 位的 WC3 模型已在 overlay 裡").toBe(40);
+    expect(
+      without.map((d) => d.id).sort(),
+      "只有這四位沒有自己的模型:o02n / u011 沒抽到,sela / thorne 不是地圖英雄",
+    ).toEqual(["godie-o02n", "godie-u011", "sela", "thorne"]);
+
+    for (const d of withBlizzard) {
+      expect(
+        ROSTER.recipes.get(d.id)!.preferVoxelBody,
+        `${d.id} 有自己的 WC3 模型,不該被鎖在體素`,
+      ).toBe(false);
+    }
+    for (const d of without) {
+      expect(
+        ROSTER.recipes.get(d.id)!.preferVoxelBody,
+        `${d.id} 沒有任何自己的模型 —— 退回共用替身會讓 #231 整個任務失效`,
+      ).toBe(true);
+    }
+
     // ...and a champion with its OWN imported mesh keeps it
     const own = DOCS.filter((d) => (d.modelKey ?? "").startsWith("imported."));
     expect(own.length).toBeGreaterThan(0);
@@ -358,5 +395,88 @@ describe("voxel skin — the committed roster snapshot", () => {
       if (want !== got) drift.push(`${r.championId}: ${want} -> ${got}`);
     }
     expect(drift).toEqual([]);
+  });
+});
+
+// ===========================================================================
+// GH#31 —— 預設身體規則:有暴雪模型的走暴雪,沒有的才是體素
+// ===========================================================================
+//
+// owner 2026-07-28:「請你都先用暴雪的 3d model，要替換成體素是我從後台設定套用
+// 才生效」。
+//
+// ⚠️ 這一組守的不是「旗標算得對」,而是「**旗標存在的理由沒有被推翻**」。
+// 舊規則 `preferVoxelBody = isStandIn` 是自洽的、有測試的、也有一段言之成理的
+// 註解 —— 它唯一的問題是 `ChampionView.tryUpgradeToGlb` 在這個旗標上提早 return,
+// 於是 overlay 已經解析出來的 40 個真實 WC3 模型,在下一行被丟掉。
+// 沒有任何測試會紅,因為每一層各自都對。
+describe("GH#31 預設身體:暴雪模型優先,體素是後台選項", () => {
+  it("BLIZZARD_MODEL_CHAMPIONS 必須與真實 MANIFEST 逐 id 相符", () => {
+    // ⚠️ 這條是整組的地基。那 40 個 id 是抄進 repo 的(manifest 住在
+    // data/blizzard-overlay/,不進部署樹),所以它會腐爛 —— 除非有人比對。
+    // 抽出新模型卻沒更新清單 → 那位英雄繼續穿體素,而且沒人會知道。
+    const manifestPath = join(
+      dirname(fileURLToPath(import.meta.url)),
+      "../../../../../data/blizzard-overlay/MANIFEST.json",
+    );
+    if (!existsSync(manifestPath)) {
+      // overlay 是 git-ignored 的本機資產。CI 沒有它時跳過比對,但**不能**讓
+      // 這變成「永遠跳過」—— 下面那條 length 斷言在任何環境都會跑。
+      expect(BLIZZARD_MODEL_CHAMPIONS.length).toBe(40);
+      return;
+    }
+    const m = JSON.parse(readFileSync(manifestPath, "utf8")) as {
+      units: Record<string, { champId?: string }>;
+    };
+    const fromManifest = [
+      ...new Set(Object.values(m.units).map((u) => u.champId).filter(Boolean) as string[]),
+    ].sort();
+    expect([...BLIZZARD_MODEL_CHAMPIONS].sort()).toEqual(fromManifest);
+  });
+
+  it("40 位有暴雪模型的替身英雄,預設 NOT 體素", () => {
+    // 突變:把 defaultPrefersVoxelBody 改回 `STAND_IN_MODEL_KEYS.includes(...)`
+    // → 這 40 條全紅。
+    for (const id of BLIZZARD_MODEL_CHAMPIONS) {
+      for (const key of STAND_IN_MODEL_KEYS) {
+        expect(
+          defaultPrefersVoxelBody(key, id),
+          `${id} 有抽出來的 WC3 模型,預設不該被鎖在體素`,
+        ).toBe(false);
+      }
+    }
+  });
+
+  it("沒有暴雪模型的替身英雄,預設仍是體素", () => {
+    // 這四位是唯一還該穿體素的:o02n / u011 沒有抽出模型,sela / thorne 是 CC0
+    // 角色本身、不是地圖英雄。少了這條,他們會退回四張共用臉 —— 也就是 #231
+    // 整個任務存在的理由被撤銷,而其他每條測試都還是綠的。
+    for (const id of ["godie-o02n", "godie-u011", "sela", "thorne"]) {
+      expect(defaultPrefersVoxelBody("champ.sela", id), `${id} 沒有自己的模型`).toBe(true);
+    }
+  });
+
+  it("不是替身的英雄,永遠不會被預設成體素", () => {
+    expect(defaultPrefersVoxelBody("imported.heroichigo", "godie-h01n")).toBe(false);
+    expect(defaultPrefersVoxelBody(undefined, "godie-h01n")).toBe(false);
+  });
+
+  it("後台 override 雙向都能蓋過預設", () => {
+    // 「要替換成體素是我從後台設定套用才生效」—— 所以 true 要能開;
+    // 而 false 也要能關,否則 operator 只能單向操作,那不是開關是閘刀。
+    const base = generateVoxelSkin({ id: "godie-hapm", name: "x", modelKey: "champ.thorne" });
+    expect(base.preferVoxelBody, "hapm 有暴雪模型").toBe(false);
+
+    const forcedVoxel = generateVoxelSkin(
+      { id: "godie-hapm", name: "x", modelKey: "champ.thorne" },
+      { override: { preferVoxelBody: true } },
+    );
+    expect(forcedVoxel.preferVoxelBody).toBe(true);
+
+    const forcedGlb = generateVoxelSkin(
+      { id: "godie-o02n", name: "x", modelKey: "champ.skin.rogue" },
+      { override: { preferVoxelBody: false } },
+    );
+    expect(forcedGlb.preferVoxelBody, "operator 也要能把體素關掉").toBe(false);
   });
 });

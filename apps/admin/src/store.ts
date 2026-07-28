@@ -109,6 +109,7 @@ export type Page =
    * it drags no graphics dependency into the production bundle.
    */
   | "voxelBarcode"
+  | "voxelBody"
   /**
    * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
    * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
@@ -265,6 +266,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // editor to a signed-out operator, who fills in eleven colours and then
   // discovers on 儲存 that there was never a session to write with.
   "voxelBarcode",
+  "voxelBody",
   "ai",
   "combatEnv",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited

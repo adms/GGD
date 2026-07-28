@@ -432,8 +432,7 @@ export const VOXEL_SKINS_SCHEMA = "voxel-skins@1";
 
 /**
  * The four generic stand-in meshes (#77/#226). A champion pointing at one of
- * these has no art of its own — it is exactly the population this task exists
- * to finish — so its recipe sets `preferVoxelBody`.
+ * these has no MODEL of its own — 44 heroes sharing 4 faces.
  */
 export const STAND_IN_MODEL_KEYS: readonly string[] = Object.freeze([
   "champ.sela",
@@ -441,6 +440,59 @@ export const STAND_IN_MODEL_KEYS: readonly string[] = Object.freeze([
   "champ.skin.barbarian",
   "champ.skin.rogue",
 ]);
+
+/**
+ * THE 40 STAND-IN CHAMPIONS WHOSE REAL WARCRAFT III MODEL WAS ALREADY
+ * EXTRACTED — the champId column of `data/blizzard-overlay/MANIFEST.json`
+ * (task #10), which `render/views/blizzardOverlay.ts` substitutes for the
+ * shared stand-in doc at resolve time.
+ *
+ * WHY THIS LIST IS COMMITTED HERE, IN SHARED, AND NOT READ FROM THE MANIFEST.
+ * The manifest lives in `data/blizzard-overlay/`, OUTSIDE the deployable tree,
+ * and is fetched at runtime only when `fullAssetsEnabled()`. `generateVoxelSkin`
+ * is a pure deterministic function used by the sim-adjacent content layer, the
+ * admin sheet and the Node tests — none of which can await a fetch. So the
+ * *identity* of the 40 (40 champion ids, no Blizzard bytes, nothing
+ * copyrightable) is committed; the *pixels* stay out of the repo exactly as
+ * before. `blizzardModelChampionsMatchManifest` in the test file asserts this
+ * list against the real manifest, so it cannot silently rot.
+ *
+ * ⚠️ THIS IS THE LIST THAT MAKES `preferVoxelBody` CORRECT. owner, 2026-07-28:
+ * 「請你都先用暴雪的 3d model，要替換成體素是我從後台設定套用才生效」. Before
+ * this, `preferVoxelBody` was `isStandIn` alone — so all 44 were FORCED to
+ * voxel and `ChampionView.tryUpgradeToGlb` returned early, which meant the 40
+ * extracted WC3 models were resolved by the overlay and then thrown away one
+ * line later. The art was never missing; the door was shut in front of it.
+ */
+export const BLIZZARD_MODEL_CHAMPIONS: readonly string[] = Object.freeze([
+  "godie-e00r", "godie-e00s", "godie-e00t", "godie-e00u", "godie-e00v",
+  "godie-e015", "godie-ecen", "godie-efur", "godie-ekee", "godie-h001",
+  "godie-h021", "godie-h02k", "godie-h02n", "godie-h02s", "godie-h02y",
+  "godie-h02z", "godie-hapm", "godie-harf", "godie-hblm", "godie-hpal",
+  "godie-n00b", "godie-n01l", "godie-nbst", "godie-nman", "godie-o02o",
+  "godie-obla", "godie-ogld", "godie-orkn", "godie-oshd", "godie-othr",
+  "godie-u00b", "godie-u00k", "godie-u012", "godie-u01f", "godie-ubal",
+  "godie-ucrl", "godie-udea", "godie-umal", "godie-usyl", "godie-uwar",
+]);
+
+/**
+ * THE DEFAULT BODY RULE — `preferVoxelBody` before any admin override.
+ *
+ * A champion wears the procedural voxel figure ONLY when it has no model of its
+ * own at all: it points at a shared stand-in AND no real WC3 model was
+ * extracted for it. That is 4 champions today (godie-o02n, godie-u011, and the
+ * two CC0 characters `sela` / `thorne`, which are not map heroes and therefore
+ * have no WC3 unit behind them), not 44.
+ *
+ * Everything else is the OPERATOR'S call, expressed as an L1 override
+ * (`preferVoxelBody: true`) in the `voxel-skins` config doc — 「要替換成體素是
+ * 我從後台設定套用才生效」. The override wins in BOTH directions, so the
+ * operator can also force a Blizzard-modelled champion back onto voxel.
+ */
+export function defaultPrefersVoxelBody(modelKey: string | undefined, championId: string): boolean {
+  if (!STAND_IN_MODEL_KEYS.includes(modelKey ?? "")) return false;
+  return !BLIZZARD_MODEL_CHAMPIONS.includes(championId);
+}
 
 // ===========================================================================
 // THE BARCODE — 特徵生成 (docs/_體素特徵生成規格.md)

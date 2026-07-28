@@ -20,6 +20,7 @@ import {
   similarPairs,
   sortRows,
 } from "./voxelSkinSheet";
+import { BLIZZARD_MODEL_CHAMPIONS } from "@ggd/shared/content/voxelSkin";
 import { composeThumb, THUMB_H, THUMB_W } from "../ui/voxelSkinThumb";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
@@ -60,7 +61,14 @@ describe("buildSheet over the real roster", () => {
     expect(sheet.stats.standInChampions).toBe(44);
     expect(sheet.stats.overriddenChampions).toBe(Object.keys(overrides).length);
     for (const row of sheet.rows) {
-      if (row.sharedStandIn) expect(row.recipe.preferVoxelBody).toBe(true);
+      // GH#31 —— 共用替身 ≠ 一定穿體素。40 位的暴雪模型早就抽出來了,
+      // 舊的 `toBe(true)` 正是把那扇門關上的那一行。
+      if (row.sharedStandIn) {
+        expect(
+          row.recipe.preferVoxelBody,
+          `${row.championId}: 有暴雪模型就走模型,沒有的才留體素`,
+        ).toBe(!BLIZZARD_MODEL_CHAMPIONS.includes(row.championId));
+      }
       if (row.overridden) expect(Object.keys(overrides)).toContain(row.championId);
     }
   });

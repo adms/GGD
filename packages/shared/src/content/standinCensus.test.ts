@@ -38,6 +38,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
 import {
+  BLIZZARD_MODEL_CHAMPIONS,
   STAND_IN_MODEL_KEYS,
   generateAllVoxelSkins,
   voxelSkinInputOf,
@@ -204,10 +205,17 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     const borrowers = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
     for (const id of borrowers) {
       const r = recipes.get(id);
+      // EVERY borrower still gets a generated skin — that part is unchanged, and
+      // it is what makes them distinguishable even before any mesh loads.
       expect(r, `${id} has no generated skin`).toBeDefined();
-      expect(r!.preferVoxelBody, `${id} borrows a mesh but is not flagged for the voxel body`).toBe(
-        true,
-      );
+      // GH#31 —— but WEARING the voxel body is no longer automatic. 40 of these
+      // borrowers have their real Warcraft III model sitting in the overlay
+      // (task #10); the old blanket `toBe(true)` here was the assertion that
+      // kept the door shut in front of it. owner:「請你都先用暴雪的 3d model」.
+      expect(
+        r!.preferVoxelBody,
+        `${id}: 有暴雪模型就不該鎖體素,沒有的才該`,
+      ).toBe(!BLIZZARD_MODEL_CHAMPIONS.includes(id));
     }
     // …and every borrower's look is distinct from every other borrower's
     const sigs = borrowers.map((id) => JSON.stringify(recipes.get(id)!.palette));

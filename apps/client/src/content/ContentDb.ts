@@ -15,6 +15,7 @@ import type {
   ArenaDoc,
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
+  ConfigVoxelBodiesDoc,
   AmbientVfxBinding,
 } from "@ggd/shared/content";
 import { Arenas, Configs, Models, RibbonDefs, VfxDefs } from "@ggd/shared/content";
@@ -127,6 +128,8 @@ export class ContentDb {
   private arenaDoc: ArenaDoc | null = null;
   private standInOverrides = new Map<string, StandInOverride>();
   private voxelSkinOverrides = new Map<string, VoxelSkinOverride>();
+  /** GH#31 — championId -> operator's body choice. Empty = nobody toggled anything. */
+  private voxelBodies = new Map<string, boolean>();
   private loaded = false;
 
   /**
@@ -204,6 +207,23 @@ export class ContentDb {
     // overrides into the vfx layer. A missing doc leaves the shipped default
     // (blood @ 0.85) — the player's own setting still wins over both.
     applyGoreDoc(this.configDoc<ConfigGoreDoc>("gore", "config.gore@1"));
+
+    // GH#31 —— the operator's per-champion BODY choice (voxel vs its own 3D
+    // model). Read from the `config` collection, not from a sidecar, precisely
+    // so that the console's writes land in the durable overlay and survive a
+    // redeploy; see `config.voxel-bodies@1` for why a sidecar could not work.
+    //
+    // An absent doc leaves the map empty, which means 「沒有人動過」 — every
+    // champion falls through to the sidecar and then to the default rule. That
+    // is the shipped state, and it must never read as 「全部關掉體素」.
+    this.voxelBodies = new Map();
+    const bodiesDoc = this.configDoc<ConfigVoxelBodiesDoc>(
+      "voxel-bodies",
+      "config.voxel-bodies@1",
+    );
+    for (const [championId, on] of Object.entries(bodiesDoc?.bodies ?? {})) {
+      if (typeof on === "boolean") this.voxelBodies.set(championId, on);
+    }
     this.loaded = true;
   }
 
@@ -308,7 +328,33 @@ export class ContentDb {
    * override, and the sidecar resolves in the same step as the model docs.
    */
   voxelSkinOverrideFor(championId: string): VoxelSkinOverride | null {
-    return this.voxelSkinOverrides.get(championId) ?? null;
+    const sidecar = this.voxelSkinOverrides.get(championId) ?? null;
+    // GH#31 —— THE OPERATOR'S BODY CHOICE OUTRANKS THE SIDECAR.
+    //
+    // owner 2026-07-28:「要替換成體素是我從後台設定套用才生效」. The console
+    // writes `config/voxel-bodies` through the durable overlay, which is the one
+    // writable surface that survives a `docker compose build`; the sidecar is
+    // baked into the image and would be restored (silently) on every deploy.
+    //
+    // Layered rather than replaced: an operator toggling the BODY must not wipe
+    // the hand-authored palette/face/hair the same champion may carry.
+    const body = this.voxelBodyFor(championId);
+    if (body === null) return sidecar;
+    return { ...(sidecar ?? {}), preferVoxelBody: body };
+  }
+
+  /**
+   * The operator's explicit body choice for `championId`, or null when they
+   * have not touched this champion (the shipped state for everybody).
+   *
+   * `null` is NOT "use voxel" and NOT "use the model" — it is "no opinion", so
+   * the layer below decides. Collapsing that third state into a boolean is how
+   * an empty config doc would read as 「全部關掉體素」 and quietly override the
+   * hand-authored sidecar for the four champions that genuinely have no model.
+   */
+  voxelBodyFor(championId: string): boolean | null {
+    const v = this.voxelBodies.get(championId);
+    return typeof v === "boolean" ? v : null;
   }
 
   vfxFor(vfxKey: string): VfxDoc | null {

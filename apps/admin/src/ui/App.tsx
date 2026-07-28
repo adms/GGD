@@ -46,6 +46,10 @@ import { VoxelFoundryPage } from "./VoxelFoundryPage";
 // coloured divs and imports no graphics code at all.
 // voxelBarcodeBundle.test.ts fails if this line moves under a DEV gate.
 import { VoxelBarcodePage } from "./VoxelBarcodePage";
+// 體素身體 (GH#31) — EAGER, same family as 體素條碼 / 體素鑄造廠 and for the same
+// reason: a lazy chunk that never loads is indistinguishable from a page that
+// does not exist, and this one is the switch the owner was told to use.
+import { VoxelBodyPage } from "./VoxelBodyPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -124,6 +128,7 @@ const NAV: NavItem[] = [
   // 鑄造廠 bakes figures and the 對照表 reviews them. The label is written HERE,
   // in the eager shell, which is what makes it survive `vite build`.
   { page: "voxelBarcode", label: "體素條碼", emoji: "🎨", section: SEC_ASSETS },
+  { page: "voxelBody", label: "體素身體", emoji: "🧍", section: SEC_ASSETS },
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
@@ -567,6 +572,7 @@ function Console(): React.JSX.Element {
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voxelForge" && <VoxelFoundryPage />}
             {page === "voxelBarcode" && <VoxelBarcodePage />}
+            {page === "voxelBody" && <VoxelBodyPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

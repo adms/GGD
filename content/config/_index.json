@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7175e93f72b3",
+  "hash": "7fccc6434ad6",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -73,6 +73,12 @@
       "path": "config/voxel-barcodes.json",
       "hash": "494b633baa8a",
       "size": 1241
+    },
+    {
+      "id": "voxel-bodies",
+      "path": "config/voxel-bodies.json",
+      "hash": "2c4008f4c7ac",
+      "size": 598
     }
   ]
 }

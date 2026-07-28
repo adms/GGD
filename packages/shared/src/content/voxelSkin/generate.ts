@@ -54,7 +54,7 @@ import {
   MOUTH_STYLES,
   SHOULDER_MOTIFS,
   SKIN_TONES,
-  STAND_IN_MODEL_KEYS,
+  defaultPrefersVoxelBody,
   TOP_STYLES,
   type BackMotif,
   type Emblem,
@@ -214,10 +214,19 @@ export function generateVoxelSkin(
     hair: { style: hairStyle, tone: hairTone[0] },
     outfit: { top, legs, emblem },
     motifs: { head: motifHead, shoulder: motifShoulder, back: motifBack },
-    // THIS is the field that retires "18 champions with one face": a champion
-    // on one of the four shared stand-in meshes has no art of its own, so it
-    // wears the voxel body + this skin instead of the borrowed glb.
-    preferVoxelBody: STAND_IN_MODEL_KEYS.includes(input.modelKey ?? ""),
+    // THE DEFAULT BODY — see `defaultPrefersVoxelBody` for the full rule.
+    //
+    // ⚠️ THIS USED TO BE `STAND_IN_MODEL_KEYS.includes(modelKey)` ALONE, and
+    // that was wrong in a way nothing could see. It forced all 44 stand-in
+    // champions onto the voxel figure, and `ChampionView.tryUpgradeToGlb`
+    // returns early on this flag — so for the 40 whose real Warcraft III model
+    // had ALREADY been extracted into the overlay (task #10), the resolver
+    // handed over the correct glb and the very next line threw it away.
+    //
+    // owner, 2026-07-28:「請你都先用暴雪的 3d model，要替換成體素是我從後台設定
+    // 套用才生效」— so the default is now "your own model if one exists", and
+    // voxel is an OPERATOR CHOICE expressed as an L1 override.
+    preferVoxelBody: defaultPrefersVoxelBody(input.modelKey, id),
   };
 
   return opts.override ? applyOverride(recipe, opts.override) : recipe;
