@@ -35,7 +35,6 @@ import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
 import { sharedBaseBonusCache } from "../config/baseBonus";
 import { normalizeBaseBonus, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
-import { statCapsFromDoc } from "@ggd/shared/sim/statCaps";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
 import { PLATFORM_URL } from "../config/platformUrl";
 import { sanitizeInputMessage } from "../net/validateInput";
@@ -425,10 +424,14 @@ export class MatchRoom extends Room<MatchState> {
       arenaPool,
       ownership,
       baseBonus,
-      // 屬性上限 (#286) —— 和 baseBonus 一樣在這裡解析並凍結。走 Configs 是
-      // 因為 stat-caps 還沒有自己的 TTL cache;#278 的教訓已經套在 baseBonus 上,
-      // 這一份留在 boot-time 是**已知且刻意**的,記在 docs 的驗收表裡。
-      statCapsFromDoc(Configs.tryGet("stat-caps")),
+      // 屬性上限 (#286) 不在這裡傳 —— MatchController 的建構子預設已經是
+      // `statCapsFromDoc(Configs.tryGet("stat-caps"))`,而那個模組有 Configs。
+      // 在這裡重寫一次只會讓 MatchRoom 多一個它已經不需要的 Configs 相依
+      // (#278 把 baseBonus 改成快取之後就把那個 import 拿掉了)。
+      //
+      // ⚠️ 已知且刻意:stat-caps 還沒有自己的 TTL 快取,所以它仍是 boot-time 的
+      // —— 後台改了要重啟 shard。#278 對 baseBonus 修掉的正是這件事,這一份還沒
+      // 修,已記進驗收表,不要以為它和隔壁一樣是即時的。
     );
     for (const h of humanSeats) {
       this.seatByAccount.set(h.accountId, asSeatId(h.seatId));

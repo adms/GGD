@@ -40,7 +40,7 @@ describe("基礎加成 區間 — sim 層 (basebonus-bounds-sim)", () => {
     const t = normalizeBaseBonus({ maxHealth: -9999 });
     expect(baseBonusFor(t, Stat.MaxHealth)).toBe(0);
     // 而且真的走一次 finalizeStat:2000 點血的英雄還是 2000,不是 -7999
-    expect(finalizeStat(2000, Stat.MaxHealth, DEFAULT_COMBAT_ENV, t)).toBe(2000);
+    expect(finalizeStat(2000, Stat.MaxHealth, { env: DEFAULT_COMBAT_ENV, baseBonus: t })).toBe(2000);
   });
 
   it("超過上限的值被夾到上限,不是照收", () => {
