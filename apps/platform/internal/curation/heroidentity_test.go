@@ -52,7 +52,21 @@ import (
 // → 22, "22-002 …" → 22 (EX). RE2 has no lookahead, so the trailing class does
 // the "no fourth digit" job; some imported names have NO space after the
 // prefix ("61-01惡魔球"), so a separator must not be required.
-var heroNumberRe = regexp.MustCompile(`^(\d{2})-(\d{2,3})([^0-9]|$)`)
+//
+// ⚠️ THIS IS A PORT, AND IT HAD DRIFTED. The governing rule lives in
+// packages/shared/src/content/championIdentity.ts (`HERO_NUMBER_RE`), which was
+// widened to `\d{2,3}` when the roster began minting 3-digit hero numbers —
+// owner directive: the next id auto-fills the max, so 喪標麥可 is #100. The Go
+// side stayed at `\d{2}` and therefore REJECTED every ability of hero 100+,
+// which is how GH#29 (put 喪標麥可 on the open roster) failed R2 with
+// 「name "100-01 肝泥抹德" lacks the task #11 xx-0N prefix」 — a correct hero
+// being told its correct name was malformed.
+//
+// The "-" delimiter is what keeps this unambiguous: "100-00" (hero 100, passive)
+// cannot be read as "10-000", because the first group must be followed by "-"
+// and index 2 of "10-000" already is one. Asserted by
+// TestHeroNumberRePortParity.
+var heroNumberRe = regexp.MustCompile(`^(\d{2,3})-(\d{2,3})([^0-9]|$)`)
 
 // heroNumberOfName returns the hero 編號 encoded in an ability name, or "".
 func heroNumberOfName(name string) string {
@@ -410,4 +424,51 @@ func TestStarterRosterHasNoAlternateForms(t *testing.T) {
 		assert.Falsef(t, altEnabled, "%s is a 變身 form and must not be on the roster", alt)
 		assert.Truef(t, baseEnabled, "%s (the base of %s) must be on the roster instead", base, alt)
 	}
+}
+
+// TestHeroNumberRePortParity — 這條守衛保護的不是 regex,是「兩個 port 不會再
+// 各自演化」。
+//
+// GH#29 之所以會踩到,不是因為有人寫錯 regex,而是因為 TS 那份被正確地加寬成
+// 3 位數(commit 註解明寫「喪標麥可 = 100」)、Go 這份沒有,而**沒有任何東西會
+// 因此變紅**。identityRule 的檔頭寫著 "ONE regex per port",那是一個承諾,不是
+// 一個機制。這條測試把它變成機制:它直接讀 TypeScript 原始碼裡的
+// `HERO_NUMBER_RE`,把兩邊的字面量比對。
+//
+// ⚠️ 刻意讀「原始碼」而不是「行為」:行為比對只能覆蓋我想得到的樣本,而漂移
+// 永遠發生在我沒想到的那一格。字面量比對抓的是「有人只改了一邊」。
+func TestHeroNumberRePortParity(t *testing.T) {
+	testkit.Cover(t, "hero-number-port-parity")
+
+	// packages/shared/src/content/championIdentity.ts 是治理來源。
+	src, err := os.ReadFile(filepath.Join("..", "..", "..", "..",
+		"packages", "shared", "src", "content", "championIdentity.ts"))
+	require.NoError(t, err, "the governing TS rule must be readable — it is the source of truth")
+
+	// export const HERO_NUMBER_RE = /^(\d{2,3})-(\d{2,3})(?!\d)/;
+	tsRe := regexp.MustCompile(`HERO_NUMBER_RE\s*=\s*/\^\(\\d\{(\d)(?:,(\d))?\}\)-\(\\d\{(\d)(?:,(\d))?\}\)`)
+	m := tsRe.FindSubmatch(src)
+	require.NotNil(t, m,
+		"could not parse HERO_NUMBER_RE out of championIdentity.ts — if its SHAPE changed, this port must be re-derived by hand, not silently skipped")
+
+	// 兩邊的量詞必須一致。TS 用 (?!\d) 做「不可有下一位數字」,Go(RE2 無 lookahead)
+	// 用 ([^0-9]|$),兩者等價 —— 差異僅止於此,量詞不得有差。
+	wantGroup1 := string(m[1])
+	if len(m[2]) > 0 {
+		wantGroup1 += "," + string(m[2])
+	}
+	wantGroup2 := string(m[3])
+	if len(m[4]) > 0 {
+		wantGroup2 += "," + string(m[4])
+	}
+	assert.Equal(t, `^(\d{`+wantGroup1+`})-(\d{`+wantGroup2+`})([^0-9]|$)`, heroNumberRe.String(),
+		"heroNumberRe has drifted from the TS HERO_NUMBER_RE — widen BOTH ports or neither")
+
+	// 而且它真的要接受三位數英雄(GH#29 的實際案例)。
+	assert.Equal(t, "100", heroNumberOfName("100-01 肝泥抹德"), "hero 100 must parse")
+	assert.Equal(t, "100", heroNumberOfName("100-002 此世全部之咖哩・バタンキュー"), "hero 100's EX must parse")
+	assert.Equal(t, "22", heroNumberOfName("22-01 鬼隱之擊"), "2-digit heroes must keep parsing")
+	assert.Equal(t, "61", heroNumberOfName("61-01惡魔球"), "no-space imported names must keep parsing")
+	// 四位數仍然無效 —— 加寬不是取消上限。
+	assert.Equal(t, "", heroNumberOfName("1000-01 不存在"), "a 4-digit hero number is still malformed")
 }

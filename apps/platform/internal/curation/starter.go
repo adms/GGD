@@ -37,14 +37,15 @@ import "sort"
 // TestStarterSetMatchesContentTree against the real content tree — the bundle
 // cannot silently rot when content is re-imported):
 //
-// CHAMPIONS (50) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
-// user's 50 hand-picked names out — 48 at task #138, +2 at task #212
-// (揍敵客桀諾 godie-efur #13、賈修貝爾 godie-hblm #05). This is NOT the old 13-tile demo showcase:
+// CHAMPIONS (51) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
+// user's hand-picked names out — 48 at task #138, +2 at task #212, +1 at GH#29
+// (揍敵客桀諾 godie-efur #13、賈修貝爾 godie-hblm #05)、喪標麥可 godie-zombiex #100
+// (GH#29). This is NOT the old 13-tile demo showcase:
 // it is the whole selectable roster a fresh install offers in champ-select, so
 // the gates are about ROSTER INTEGRITY (a real, complete, distinct champion),
 // NOT about a pretty demo grid.
 //
-// ONE CANONICAL ID PER NAME. ~20 of the 50 wanted names matched several content
+// ONE CANONICAL ID PER NAME. ~20 of the wanted names matched several content
 // docs (re-skins, blank-story twins, a 測試 stand-in). Each name resolves to ONE
 // canonical id, chosen by: reject anything whose name carries 測試/範例/範本 or
 // whose story is a blank placeholder; then prefer the entry with a real 稱號, a
@@ -68,7 +69,7 @@ import "sort"
 //	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 50 carry
 //	   50 DISTINCT hero 編號, so no pair can collide. This is why the #212 pair
 //	   opens 賈修貝爾 (godie-hblm) but NOT its 編號 05 twin 阿強一號 (godie-h021).
-//	R5 the roster is EXACTLY these 50 canonical ids — pinned id-for-id by
+//	R5 the roster is EXACTLY these 51 canonical ids — pinned id-for-id by
 //	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
 //	   drop or swap a champion.
 //	R6 NO ALTERNATE (變身) FORM. Every id here is a BASE unit — the hero a player
@@ -84,7 +85,7 @@ import "sort"
 //	   dropped id keeps being seeded into new accounts by
 //	   Catalog.FreeChampions(). Asserted in both directions, id by id, by
 //	   TestStarterRosterMatchesChampionPrices — which also pins the economy's
-//	   SHAPE (12 free / 38 priced @ 300). R7 is R6's own regression: the #249
+//	   SHAPE (12 free / 39 priced @ 300). R7 is R6's own regression: the #249
 //	   swap moved ten ids and left all ten prices behind, and every gate was
 //	   green. Move an id here and you must move its price with it.
 //
@@ -274,56 +275,57 @@ var (
 	// quoted id per line — apps/game-server/.../whitelist.test.ts parses this
 	// exact block as the single source of truth for the seeded roster.
 	starterChampions = []string{
-		"godie-e001", // 龍宮禮奈 - 蟬在叫人壞掉  #22
-		"godie-e002", // Saber - 亞瑟王  #20  — 選 e002（e00l 劇情空白）
-		"godie-e008", // 夏娜 - 火霧戰士  #21
-		"godie-e00k", // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
-		"godie-e00r", // 初號機 - 最終泛用人型決戰兵器  #59
-		"godie-e00w", // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
-		"godie-edem", // 宇智波佐助 - 寫輪眼復仇者  #45
-		"godie-efur", // 揍敵客桀諾 - 揍敵客大家長  #13  — 任務 #212 追加
-		"godie-emfr", // 涅吉。史普林。菲爾德 - 魔法老師  #15  — 選 #15 emfr（#82 h022 為另一獨立英雄）
-		"godie-emns", // 夜神月 - 奇樂  #44
-		"godie-etyr", // 木乃香 - 治癒系公主  #14
-		"godie-ewar", // 天地志狼 - 龍之子  #12  — 本體；e007 是 12-03 破凰之心 的變身態
-		"godie-h00l", // 林克 - 時空勇者  #60
-		"godie-h01n", // 黑崎一護 - 開外掛的死神  #79  — 選 h01n（h01o 劇情空白）
-		"godie-h01u", // 呂布奉先 - 亂世癿王者  #80
-		"godie-h02k", // 熊貓 - 國寶級的畜生  #89
-		"godie-h02v", // 草泥馬 - 看似憂鬱的神獸  #92  — 本體；h02u 是 92-01 臥草泥馬 的變身態（w3x 移動速度 0）
-		"godie-hapm", // Berserker - 海克力斯  #52
-		"godie-hart", // 克勞德 - 最終幻想  #01
-		"godie-hblm", // 賈修貝爾 - 慈悲的王者  #05  — 任務 #212 追加（雙胞胎 godie-h021 阿強一號 同為 #05，故不得一併開放）
-		"godie-hgam", // 妙蛙種子 - 種子神奇寶貝  #90  — 本體；h02r 妙蛙花 是 90-002 超進化! 的變身態（usca 1.2 → 3.0）
-		"godie-hjai", // 莉娜因巴斯 - 黑魔導士  #04  — 本體；h020 是 04-002 惡夢魔王的碎片 的變身態
-		"godie-hpal", // 藤井八雲 - 不死之身-無  #35
-		"godie-hpb1", // 蒼月潮 - 獸矛傳承使  #07
-		"godie-huth", // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）
-		"godie-hvsh", // Rider - 梅杜莎  #48
-		"godie-hvwd", // 桔梗 - 除魔巫女  #02
-		"godie-n003", // 依文潔琳 - 黑暗福音  #42  — 選 n003（剔 n01g）
-		"godie-n00b", // 哆拉A夢 - 小叮噹  #57
-		"godie-nbbc", // 勇者小呆 - 傳說的龍騎士  #08  — 本體；n01c 是 08-002 龍魔人 的變身態
-		"godie-nplh", // 麻倉葉 - 通靈人  #16
-		"godie-nsjs", // 南野秀一 - 妖狐藏馬  #18  — 本體；n00p 是 18-03 妖狐變化 的變身態
-		"godie-o00k", // 皮卡娘 - 傲嬌電氣老鼠  #86
-		"godie-o00l", // 傑洛士 - 獸神官  #53
-		"godie-o02p", // 初音 - 夢幻之星  #99
-		"godie-ofar", // 皮卡丘 - 神奇寶貝兒  #58  — 選 ofar（o02l 劇情空白）
-		"godie-ogld", // 黑人牙膏 - 美白大法師  #72
-		"godie-ogrh", // 悟空 - 賽亞人  #09  — 本體；o00x 超級賽亞人 是 09-03 的變身態（否則 R 變身成他已經是的樣子）
-		"godie-orkn", // 臭作 - 電車癡漢  #30
-		"godie-osam", // 殺生丸 - 犬妖  #34
-		"godie-u00h", // 鬼畜狂刀KYO - 鬼畜紅王  #39
-		"godie-u00j", // 賽菲洛斯 - 神性的流失  #74
-		"godie-u00k", // 死之王 - 邪惡意念集合體  #71
-		"godie-u00n", // 蒙其.D.魯夫 - 草帽小子  #76  — 選 u00n（剔 u00o）
-		"godie-u00v", // 基廉列克 - 黑手黨老大  #78
-		"godie-ubal", // 巴恩大魔王 - 魔界霸主  #37
-		"godie-udea", // 飛鼠先生 - 至尊學長  #65
-		"godie-udre", // 索隆 - 三刀流劍士  #11  — 本體；u01u 是 11-002 武裝色霸氣 的變身態（測試英雄 u01q 仍排除）
-		"godie-umal", // 拳四郎 - 北斗神拳掌門人  #25  — 本體；u00l 北斗之鼠 是 25-04 ChangeDNA 的變身態
-		"godie-uvng", // 飛影 - 邪眼師  #38  — 本體；u010 是 38-00 邪眼全開 的變身態
+		"godie-e001",    // 龍宮禮奈 - 蟬在叫人壞掉  #22
+		"godie-e002",    // Saber - 亞瑟王  #20  — 選 e002（e00l 劇情空白）
+		"godie-e008",    // 夏娜 - 火霧戰士  #21
+		"godie-e00k",    // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
+		"godie-e00r",    // 初號機 - 最終泛用人型決戰兵器  #59
+		"godie-e00w",    // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
+		"godie-edem",    // 宇智波佐助 - 寫輪眼復仇者  #45
+		"godie-efur",    // 揍敵客桀諾 - 揍敵客大家長  #13  — 任務 #212 追加
+		"godie-emfr",    // 涅吉。史普林。菲爾德 - 魔法老師  #15  — 選 #15 emfr（#82 h022 為另一獨立英雄）
+		"godie-emns",    // 夜神月 - 奇樂  #44
+		"godie-etyr",    // 木乃香 - 治癒系公主  #14
+		"godie-ewar",    // 天地志狼 - 龍之子  #12  — 本體；e007 是 12-03 破凰之心 的變身態
+		"godie-h00l",    // 林克 - 時空勇者  #60
+		"godie-h01n",    // 黑崎一護 - 開外掛的死神  #79  — 選 h01n（h01o 劇情空白）
+		"godie-h01u",    // 呂布奉先 - 亂世癿王者  #80
+		"godie-h02k",    // 熊貓 - 國寶級的畜生  #89
+		"godie-h02v",    // 草泥馬 - 看似憂鬱的神獸  #92  — 本體；h02u 是 92-01 臥草泥馬 的變身態（w3x 移動速度 0）
+		"godie-hapm",    // Berserker - 海克力斯  #52
+		"godie-hart",    // 克勞德 - 最終幻想  #01
+		"godie-hblm",    // 賈修貝爾 - 慈悲的王者  #05  — 任務 #212 追加（雙胞胎 godie-h021 阿強一號 同為 #05，故不得一併開放）
+		"godie-hgam",    // 妙蛙種子 - 種子神奇寶貝  #90  — 本體；h02r 妙蛙花 是 90-002 超進化! 的變身態（usca 1.2 → 3.0）
+		"godie-hjai",    // 莉娜因巴斯 - 黑魔導士  #04  — 本體；h020 是 04-002 惡夢魔王的碎片 的變身態
+		"godie-hpal",    // 藤井八雲 - 不死之身-無  #35
+		"godie-hpb1",    // 蒼月潮 - 獸矛傳承使  #07
+		"godie-huth",    // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）
+		"godie-hvsh",    // Rider - 梅杜莎  #48
+		"godie-hvwd",    // 桔梗 - 除魔巫女  #02
+		"godie-n003",    // 依文潔琳 - 黑暗福音  #42  — 選 n003（剔 n01g）
+		"godie-n00b",    // 哆拉A夢 - 小叮噹  #57
+		"godie-nbbc",    // 勇者小呆 - 傳說的龍騎士  #08  — 本體；n01c 是 08-002 龍魔人 的變身態
+		"godie-nplh",    // 麻倉葉 - 通靈人  #16
+		"godie-nsjs",    // 南野秀一 - 妖狐藏馬  #18  — 本體；n00p 是 18-03 妖狐變化 的變身態
+		"godie-o00k",    // 皮卡娘 - 傲嬌電氣老鼠  #86
+		"godie-o00l",    // 傑洛士 - 獸神官  #53
+		"godie-o02p",    // 初音 - 夢幻之星  #99
+		"godie-ofar",    // 皮卡丘 - 神奇寶貝兒  #58  — 選 ofar（o02l 劇情空白）
+		"godie-ogld",    // 黑人牙膏 - 美白大法師  #72
+		"godie-ogrh",    // 悟空 - 賽亞人  #09  — 本體；o00x 超級賽亞人 是 09-03 的變身態（否則 R 變身成他已經是的樣子）
+		"godie-orkn",    // 臭作 - 電車癡漢  #30
+		"godie-osam",    // 殺生丸 - 犬妖  #34
+		"godie-u00h",    // 鬼畜狂刀KYO - 鬼畜紅王  #39
+		"godie-u00j",    // 賽菲洛斯 - 神性的流失  #74
+		"godie-u00k",    // 死之王 - 邪惡意念集合體  #71
+		"godie-u00n",    // 蒙其.D.魯夫 - 草帽小子  #76  — 選 u00n（剔 u00o）
+		"godie-u00v",    // 基廉列克 - 黑手黨老大  #78
+		"godie-ubal",    // 巴恩大魔王 - 魔界霸主  #37
+		"godie-udea",    // 飛鼠先生 - 至尊學長  #65
+		"godie-udre",    // 索隆 - 三刀流劍士  #11  — 本體；u01u 是 11-002 武裝色霸氣 的變身態（測試英雄 u01q 仍排除）
+		"godie-umal",    // 拳四郎 - 北斗神拳掌門人  #25  — 本體；u00l 北斗之鼠 是 25-04 ChangeDNA 的變身態
+		"godie-uvng",    // 飛影 - 邪眼師  #38  — 本體；u010 是 38-00 邪眼全開 的變身態
+		"godie-zombiex", // 喪標麥可 - 聖杯黑泥醬  #100  — owner 2026-07-28:「喪標麥可 應該在預設英雄開放名單上」
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,

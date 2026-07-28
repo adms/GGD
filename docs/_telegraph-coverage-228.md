@@ -8,23 +8,23 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 266 | shape derived from the ability's own authored data |
+| ✅ OK | 271 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 1 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 32 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 33 | permanent WC3 passive, never cast, nothing to warn about |
 
-**267 / 267 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**272 / 272 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
+| `self` | 96 | self marker at the caster's feet |
 | `targeted` | 96 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `self` | 95 | self marker at the caster's feet |
-| `ground` | 46 | circle — the real `enemiesInCircle` disc; you can walk out |
-| `—` | 32 | not cast |
+| `ground` | 49 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `—` | 33 | not cast |
 | `skillshot` | 22 | line — the projectile's corridor; step sideways |
-| `dash` | 8 | line — the sweep of the dash body |
+| `dash` | 9 | line — the sweep of the dash body |
 
 ## Per-ability matrix
 
@@ -329,3 +329,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 邪眼師 - 飛影 `godie-uvng` | E | 38-03 邪王炎殺黑龍波 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
 | 邪眼師 - 飛影 `godie-uvng` | R | 38-04 黑龍波吸收 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 邪眼師 - 飛影 `godie-uvng` | EX | 38-002 究極暴走黑龍波 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | PASSIVE | 100-00 黑泥吞噬 | `—` | — | 🟣 PASSIVE | never cast |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | Q | 100-01 肝泥抹德 | `ground` | circle r=1.80u | ✅ OK | radius 3 × abilityRange 0.6 |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | W | 100-02 黑天覆七重咖哩・硬啦 | `dash` | line 6.00×1.20u | ✅ OK | dash maxDistance 6 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | E | 100-03 咕咕嘎嘎 | `ground` | circle r=2.10u | ✅ OK | radius 3.5 × abilityRange 0.6 |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | R | 100-04 百式・哈基米 | `ground` | circle r=2.40u | ✅ OK | radius 4 × abilityRange 0.6 |
+| 聖杯黑泥醬 - 喪標麥可 `godie-zombiex` | EX | 100-002 此世全部之咖哩・バタンキュー | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |

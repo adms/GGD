@@ -175,6 +175,17 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-u01u": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
   // 11 索隆 本體 — same 編號, same five ability docs as its 變身 form above (#249)
   "godie-udre": { q: ["fire", "slash"], w: ["physical", "slash"], e: ["void", "slash"], r: ["physical", "slash"], ex: ["void", "pulse"] },
+  // 100 喪標麥可 — 聖杯的黑泥。GH#29 把他放上開放名單,所以這五列不再是可選的。
+  // ⚠️ 綁 void/blood 而不是 holy:文件寫的是「黑泥」,不是聖杯的金光。內容檔原本
+  // 把 W 與 R 指到 fx.prim.holy.*,那是「聖杯」二字被字面採信的結果 —— 玩家看到
+  // 的會是金色聖光,而描述說的是從體內爆開的黑泥。這裡以描述為準。
+  "godie-zombiex": {
+    q: ["void", "nova"],        // 噴出一灘黑泥 — 範圍魔傷 + 減速
+    w: ["void", "dash"],        // 衝撞;黑泥硬化成殼 —— 同一種黑泥,不是聖光
+    e: ["void", "shockwave"],   // 地面攤開黑泥沼 — 踩到定身
+    r: ["void", "nova"],        // 黑泥從體內爆發 — 大範圍(R 自動吃大尺寸)
+    ex: ["blood", "pulse"],     // 詐死起身、黑泥狂化 — 攻擊力暴漲
+  },
   // 巴恩大魔王 Vearn — dark lord / black core
   "godie-ubal": { q: ["void", "beam"], w: ["void", "shockwave"], e: ["void", "explosion"], r: ["void", "pulse"], ex: ["void", "explosion"] },
   // 飛鼠先生 — arcane senior / ice shatter / judgment

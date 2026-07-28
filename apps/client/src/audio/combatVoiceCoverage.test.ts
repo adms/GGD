@@ -11,7 +11,7 @@
  *
  * This test closes it at the level that matters — the REAL shipped manifest,
  * read through the REAL reader (`packClips`), for the REAL tracked roster — and
- * it NAMES the silent champions when it fails, because "expected 50 to be 50"
+ * it NAMES the silent champions when it fails, because "expected 51 to be 51"
  * would send the next person hunting.
  *
  * It does not care HOW a champion resolves. The build-time share baked by
@@ -72,9 +72,9 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
 }
 
 describe("every first-open-roster champion has a combat voice", () => {
-  it("resolves a non-empty pack for all 50, and names the mute ones if not", () => {
+  it("resolves a non-empty pack for all 51, and names the mute ones if not", () => {
     cover("transform-forms-voice-coverage");
-    expect(ROSTER).toHaveLength(50);
+    expect(ROSTER).toHaveLength(51);
     expect(PACK, "the shipped voice-pack manifest must parse").not.toBeNull();
 
     const silent: string[] = [];
@@ -92,7 +92,7 @@ describe("every first-open-roster champion has a combat voice", () => {
     ).toEqual([]);
   });
 
-  it("gives all 50 every load-bearing combat category, not just the click", () => {
+  it("gives all 51 every load-bearing combat category, not just the click", () => {
     const gaps: string[] = [];
     for (const id of ROSTER) {
       const missing = COMBAT_CATEGORIES.filter((c) => packClips(PACK, id, c).length === 0);

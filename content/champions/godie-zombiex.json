@@ -96,7 +96,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "vfxKey": "fx.prim.blood.nova",
+      "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true
     },
     "W": {
@@ -143,7 +143,7 @@
           "duration": 4.0
         }
       ],
-      "vfxKey": "fx.prim.holy.dash",
+      "vfxKey": "fx.prim.void.dash",
       "castTimeSec": 0.3
     },
     "E": {
@@ -193,7 +193,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.prim.earth.shockwave",
+      "vfxKey": "fx.prim.void.shockwave",
       "targetsEnemies": true
     },
     "R": {
@@ -240,7 +240,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.prim.holy.nova-lg",
+      "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.7
     }

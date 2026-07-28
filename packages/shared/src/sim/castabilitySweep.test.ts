@@ -7,7 +7,7 @@
  * Q / W / E / R / EX — and swinging the basic attack — actually DO something in
  * the real SimWorld, or is the button a dead no-op?
  *
- * WHAT IT DOES. For each of the 50 whitelisted champions it spins up a fresh
+ * WHAT IT DOES. For each of the 51 whitelisted champions it spins up a fresh
  * deterministic SimWorld with a dummy enemy (and a dummy ally, for the
  * heal/shield/buff spells that only accept friendlies) placed adjacent, then for
  * each slot:
@@ -26,14 +26,14 @@
  * is reported as PASSIVE and we verify its ModifierSource actually attaches.
  *
  * WHERE THE ROSTER COMES FROM. From TRACKED source: `starterChampions` in
- * apps/platform/internal/curation/starter.go, the hand-picked 50 a fresh
+ * apps/platform/internal/curation/starter.go, the hand-picked 51 a fresh
  * install seeds into the whitelist (see testkit/starterRoster.ts). It used to
  * read `data/curation/whitelist.json` — live operator state, `.gitignore`d —
  * which existed only on the owner's machine, so in every fresh clone, worktree
  * and CI run this suite died of ENOENT inside `beforeAll` and reported "1
  * skipped": it had never once verified a castability assertion off that
  * machine. The operator whitelist is still honoured where it exists, but only
- * ADDITIVELY: champions it enables beyond the tracked 50 are swept too and
+ * ADDITIVELY: champions it enables beyond the tracked 51 are swept too and
  * flagged in the report, and they are excluded from the pinned counts so the
  * gates below mean the same thing everywhere.
  *
@@ -44,7 +44,7 @@
  * WHAT GOES RED. This is a MEASUREMENT harness and it fixes nothing, but a
  * diagnostic that can never fail is the same dead weight as one that never
  * runs, so three gates hold over the tracked roster:
- *   1. the sweep runs end-to-end — all 50 champions, 6 cells each;
+ *   1. the sweep runs end-to-end — all 51 champions, 6 cells each;
  *   2. EVERY champion spawns (a champion that cannot enter a SimWorld is not a
  *      content no-op, it is broken content or a broken loader);
  *   3. a RATCHET on working cells (✅ PASS + 🟣 verified PASSIVE) — the floor is
@@ -88,10 +88,10 @@ const CONTENT_DIR = join(ROOT, "content");
 const WHITELIST = join(ROOT, "data/curation/whitelist.json");
 const REPORT = join(ROOT, "docs/_castability-128.md");
 
-/** The tracked roster is pinned at 50 by Go's TestFirstOpenRoster. */
-const ROSTER_SIZE = 50;
+/** The tracked roster is pinned at 51 by Go's TestFirstOpenRoster (GH#29 added 喪標麥可). */
+const ROSTER_SIZE = 51;
 /**
- * RATCHET FLOOR — working cells (✅ PASS + 🟣 verified PASSIVE) over the 50
+ * RATCHET FLOOR — working cells (✅ PASS + 🟣 verified PASSIVE) over the 51
  * tracked champions × 6 slots = 300.
  *
  * HISTORY (the floor only ever goes UP):

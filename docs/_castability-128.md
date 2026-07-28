@@ -3,9 +3,9 @@
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
 > 這是**診斷**：把 61 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／特效），不修任何技能。
 
-> **名單來源**：apps/platform/internal/curation/starter.go（50）＋ data/curation/whitelist.json 額外啟用（11）。
-> 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），所以任何 clone／worktree／CI 都掃同一份 50 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。
-> 本機額外加掃（僅營運白名單開放、不在首發名單）：`godie-e007`、`godie-h020`、`godie-h02r`、`godie-h02u`、`godie-n00p`、`godie-n01c`、`godie-o00x`、`godie-u00l`、`godie-u010`、`godie-u01u`、`godie-zombiex`。
+> **名單來源**：apps/platform/internal/curation/starter.go（51）＋ data/curation/whitelist.json 額外啟用（10）。
+> 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），所以任何 clone／worktree／CI 都掃同一份 51 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。
+> 本機額外加掃（僅營運白名單開放、不在首發名單）：`godie-e007`、`godie-h020`、`godie-h02r`、`godie-h02u`、`godie-n00p`、`godie-n01c`、`godie-o00x`、`godie-u00l`、`godie-u010`、`godie-u01u`。
 
 ## 判定圖例
 
@@ -98,6 +98,7 @@
 | 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 邪眼師 - 飛影 | `godie-uvng` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 龍之子 - 天地志狼 | `godie-e007` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 黑魔導士 - 莉娜因巴斯 | `godie-h020` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -108,7 +109,6 @@
 | 北斗之鼠 - 拳四郎 | `godie-u00l` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 邪眼師 - 飛影 | `godie-u010` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 三刀流劍士 - 索隆 | `godie-u01u` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ## FAIL 清單（英雄 + 槽 + 原因，交給技能保真／VFX 負責人）
 
@@ -135,4 +135,4 @@
 - 每次施放後步進 **26 tick**（涵蓋 0.8s=24 tick 以內的施法前搖）讓有前搖的技能結算；普攻給 **40 tick** 讓第一次揮擊落地。
 - ⚠️ **已知量測盲點**：全樹最長前搖是 `godie-u00n.r`／`godie-u00o.r` 的 **0.9s = 27 tick**，比本觀測窗多 1 tick，所以下方唯一那格 ❌ 很可能是「觀測太早收手」而非技能真的沒效果。改 WINDOW 會改變量測定義，歸 #128／#198 處理，本次不動。
 - **完整跑遍全 61 英雄 × 6 槽 = 366 格，無抽樣**。
-- **會變紅的三道閘**（都只看版控名單那 50 人，營運額外開放的英雄不影響）：(1) 掃描必須跑完 50×6；(2) 50 位英雄全部要能生成；(3) 可用格數（✅+🟣）不得低於 **300**（棘輪下限）。個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。
+- **會變紅的三道閘**（都只看版控名單那 51 人，營運額外開放的英雄不影響）：(1) 掃描必須跑完 51×6；(2) 51 位英雄全部要能生成；(3) 可用格數（✅+🟣）不得低於 **300**（棘輪下限）。個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。
