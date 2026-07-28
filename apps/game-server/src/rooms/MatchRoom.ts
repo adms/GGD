@@ -422,6 +422,9 @@ export class MatchRoom extends Room<MatchState> {
     // from disagreeing with the health bar. Never re-read the doc here: two
     // readers is how the two numbers drift apart.
     this.state.baseBonusJson = JSON.stringify(this.ctl.world.baseBonus);
+    // 屬性上限 (GH#286) —— 同上,同一份物件。面板要顯示「攻速天花板」時必須用
+    // 這一份,否則後台調過的一般上限只有伺服器知道。
+    this.state.statCapsJson = JSON.stringify(this.ctl.world.statCaps);
     // CONTENT VERSION. The schema field has existed (and been replicated) since
     // the protocol was written, and until task #175 nothing ever assigned it —
     // the wire value was the empty string on every room, while the one process

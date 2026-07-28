@@ -34,6 +34,7 @@ import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skill
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../../passiveSlot";
 import { displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
 import { useDisplayBaseBonus } from "../../displayBaseBonus";
+import { useDisplayStatCaps } from "../../displayStatCaps";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
 import { championSheetRows } from "../../championSheet";
 import {
@@ -162,10 +163,12 @@ function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element
   const def = Champions.get(championId);
   const env = useDisplayEnv();
   const baseBonus = useDisplayBaseBonus();
+  // 屬性上限 (GH#286):後台調得動一般上限,所以面板不能寫死 STAT_CLAMPS。
+  const caps = useDisplayStatCaps();
   // 三圍 (#248): rows come from the SIM's championStatBase/Growth, never from
   // def.baseStats directly — those hold the raw w3x numbers without the
   // attribute term. See ui/championSheet.ts.
-  const rows = championSheetRows(def, env, baseBonus);
+  const rows = championSheetRows(def, env, baseBonus, caps);
   const a = def.attributes;
   return (
     <div>

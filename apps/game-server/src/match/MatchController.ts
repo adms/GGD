@@ -14,6 +14,7 @@ import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, typ
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { baseBonusFromDoc } from "@ggd/shared/sim/baseBonus";
+import { statCapsFromDoc } from "@ggd/shared/sim/statCaps";
 import {
   SKELETON_ARENA,
   ROYALE_ARENA,
@@ -517,6 +518,10 @@ export class MatchController {
     // edit to the shard at boot, and a replay is only valid against the
     // contentVersion it was recorded on, which pins this doc with everything else.
     this.world.baseBonus = baseBonusFromDoc(Configs.tryGet("base-bonus"));
+    // 屬性上限 (`config.stat-caps@1`, GH#286) — 一般上限 / 解鎖上限。同一條路,
+    // 同一個理由:操作者的耐久覆蓋層在開機時把它帶到 shard,而錄影只在它自己的
+    // contentVersion 底下有效,所以這份文件和其他內容一起被釘住。
+    this.world.statCaps = statCapsFromDoc(Configs.tryGet("stat-caps"));
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the

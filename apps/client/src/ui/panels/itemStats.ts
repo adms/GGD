@@ -76,6 +76,12 @@ const STAT_ORDER: Readonly<Record<string, number>> = Object.fromEntries(
  * Sum modifiers that share a (stat, op) and return them in the fixed panel
  * order. Stable and total: an unknown stat sorts to the end rather than
  * throwing, so a future stat never crashes the shop.
+ *
+ * ⚠️ `capRaise` IS THE ONE EXCEPTION, and it takes MAX (GH#286). Its value is a
+ * ceiling to lift the stat TO, not an amount to grant, and `sim/statPipeline.ts`
+ * folds multiple raises with `max`. Summing here would print 「上限 12」 on a
+ * card whose two `capRaise 5 / 7` sources give the player 7 — two numbers that
+ * both look reasonable, with nothing broken to notice (#125).
  */
 export function mergeItemModifiers(mods: readonly StatModifier[] | undefined): MergedMod[] {
   if (!mods || mods.length === 0) return [];
@@ -83,7 +89,7 @@ export function mergeItemModifiers(mods: readonly StatModifier[] | undefined): M
   for (const m of mods) {
     const key = `${m.stat}|${m.op}`;
     const cur = acc.get(key);
-    if (cur) cur.value += m.value;
+    if (cur) cur.value = m.op === ModOp.CapRaise ? Math.max(cur.value, m.value) : cur.value + m.value;
     else acc.set(key, { stat: m.stat as Stat, op: m.op, value: m.value });
   }
   return [...acc.values()].sort(
@@ -118,10 +124,21 @@ export function authoredMagnitude(stat: Stat, op: ModOp, value: number): string 
   return trimZeros(mag.toFixed(1));
 }
 
-/** A labelled authored bonus chip: "攻擊力 +28.8", "吸血 +36%". */
+/**
+ * A labelled authored bonus chip: "攻擊力 +28.8", "吸血 +36%".
+ *
+ * ⚠️ `capRaise` is NOT a bonus and must never wear a `+` (GH#286). It grants
+ * ZERO of the stat — it only moves that stat's ceiling — so 「攻擊速度 +10」 is
+ * a number the buyer can never reconcile with his own sheet (his attack speed
+ * may still read 0.7). The chip says what the modifier actually does.
+ */
 export function formatAuthoredBonus(m: MergedMod): string {
+  const label = statMeta(m.stat)?.label ?? m.stat;
+  if (m.op === ModOp.CapRaise) {
+    return `${label} 上限解鎖 ${authoredMagnitude(m.stat, m.op, m.value)}`;
+  }
   const sign = m.value < 0 ? "−" : "+";
-  return `${statMeta(m.stat)?.label ?? m.stat} ${sign}${authoredMagnitude(m.stat, m.op, m.value)}`;
+  return `${label} ${sign}${authoredMagnitude(m.stat, m.op, m.value)}`;
 }
 
 // ---------------------------------------------------------------------------

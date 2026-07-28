@@ -102,6 +102,8 @@ export class ReplayRoom extends Room<MatchState> {
     // from disagreeing with the health bar. Never re-read the doc here: two
     // readers is how the two numbers drift apart.
     this.state.baseBonusJson = JSON.stringify(this.player.ctl.world.baseBonus);
+    // 屬性上限 (GH#286) —— 同上,同一份物件。
+    this.state.statCapsJson = JSON.stringify(this.player.ctl.world.statCaps);
     projectSnapshot(this.player.ctl, this.state, this.noDrivers);
 
     this.onMessage(REPLAY_MSG.CONTROL, (client, msg: ReplayControlAction) => {

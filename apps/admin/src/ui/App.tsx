@@ -51,6 +51,7 @@ import { VoxelBarcodePage } from "./VoxelBarcodePage";
 // does not exist, and this one is the switch the owner was told to use.
 import { VoxelBodyPage } from "./VoxelBodyPage";
 import { BaseBonusPage } from "./BaseBonusPage";
+import { StatCapsPage } from "./StatCapsPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -137,6 +138,9 @@ const NAV: NavItem[] = [
   // question, and the adjacency is the warning: that page holds MULTIPLIERS,
   // this one holds FLAT GRANTS that deliberately escape them.
   { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_SYS },
+  // 屬性上限 — 這三頁是同一個問題的三個面:戰鬥系統 = 倍率,基礎加成 = 加數,
+  // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
+  { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_SYS },
   // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
   // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
   // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
@@ -579,6 +583,7 @@ function Console(): React.JSX.Element {
             {page === "voxelBarcode" && <VoxelBarcodePage />}
             {page === "voxelBody" && <VoxelBodyPage />}
             {page === "baseBonus" && <BaseBonusPage />}
+            {page === "statCaps" && <StatCapsPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

@@ -70,6 +70,12 @@ export type Page =
    */
   | "baseBonus"
   /**
+   * 屬性上限 (`config/stat-caps.json`, GH#286): 每條屬性的一般上限 / 解鎖上限。
+   * 又是自己一頁,因為 combatEnv 是倍率、baseBonus 是加數、這裡是天花板 ——
+   * 三種語意共用一張表格的話,操作者沒有線索分辨他填的 4.0 是哪一種。
+   */
+  | "statCaps"
+  /**
    * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
    * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
    * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
@@ -276,6 +282,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "ai",
   "combatEnv",
   "baseBonus",
+  // 屬性上限: 同樣是 `putOverlayDoc` 寫入,沒有 session 會 401。
+  "statCaps",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.

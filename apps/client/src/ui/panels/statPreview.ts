@@ -59,6 +59,7 @@ import {
   type CombatEnvMultipliers,
 } from "@ggd/shared/sim/combatEnv";
 import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import { DEFAULT_STAT_CAPS, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import {
   asSeatId,
   asTeamId,
@@ -100,6 +101,15 @@ export interface ChampionStatContext {
    * 一個只在部分欄位發生、因此更難發現的謊。
    */
   baseBonus?: BaseBonusTable;
+  /**
+   * live 屬性上限表 (`MatchState.statCapsJson` → useDisplayStatCaps, GH#286).
+   * 缺 = **出貨預設**,不是空表。
+   *
+   * ⚠️ 這是預覽會說謊的第三種方式,而且最安靜:一件 +150% 攻速的裝備在解鎖了
+   * 上限的英雄身上真的會超過 4.0,少了這張表的 scratch world 會把它夾在 4.0,
+   * 於是商店顯示的增益比玩家真正買到的少 —— 一個「看起來完全合理」的數字。
+   */
+  statCaps?: StatCapTable;
 }
 
 const ZERO_ITEMS: readonly string[] = ["", "", "", "", "", ""];
@@ -117,6 +127,7 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
   const world = new SimWorld(SKELETON_ARENA, 1);
   world.combatEnv = ctx.env ?? DEFAULT_COMBAT_ENV;
   world.baseBonus = ctx.baseBonus ?? DEFAULT_BASE_BONUS;
+  world.statCaps = ctx.statCaps ?? DEFAULT_STAT_CAPS;
   const c = SKELETON_ARENA.zones[0]!.center;
   const id = spawnChampion(world, {
     championId: ctx.championId as ChampionId,
@@ -228,6 +239,9 @@ export function computeBaseStatBlock(ctx: ChampionStatContext): StatBlock | null
     statCapstonePct: 0,
     attrBonus: undefined,
     env: ctx.env,
+    // 天花板要跟著走,否則「空 build」和「現在的 build」用不同的上限夾,兩者相減
+    // 出來的 (+xxx) 會是一個沒有任何實作對應的數字。
+    statCaps: ctx.statCaps,
   });
 }
 
@@ -342,6 +356,7 @@ export function statContextFromSeat(
   },
   env?: CombatEnvMultipliers,
   baseBonus?: BaseBonusTable,
+  statCaps?: StatCapTable,
 ): ChampionStatContext {
   return {
     championId: seat.championId,
@@ -355,5 +370,6 @@ export function statContextFromSeat(
     attrBonus: seat.attrBonus,
     env,
     baseBonus,
+    statCaps,
   };
 }

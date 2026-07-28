@@ -88,9 +88,9 @@ describe("基礎加成 後台頁 (adminui-base-bonus)", () => {
     const table = baseBonusFromDoc(bonusDocFor({ maxHealth: 300 }));
     const env = normalizeCombatEnv({ maxHealth: 3.0 });
     const card = 500;
-    expect(finalizeStat(card, Stat.MaxHealth, env, table)).toBe(card * 3 + 300);
+    expect(finalizeStat(card, Stat.MaxHealth, { env, baseBonus: table })).toBe(card * 3 + 300);
     // 明確不是 v0.9.8 的讀法(加在 base 裡 → 被乘成 +900)
-    expect(finalizeStat(card, Stat.MaxHealth, env, table)).not.toBe((card + 300) * 3);
+    expect(finalizeStat(card, Stat.MaxHealth, { env, baseBonus: table })).not.toBe((card + 300) * 3);
   });
 
   it("出貨內容檔、程式預設、後台面板三者是同一個數字", () => {

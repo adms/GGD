@@ -198,6 +198,22 @@ export const ITEM_PERCENT_LIMIT = 3;
  * the content-api, or game-server startup.
  */
 export const zItemStatModifier = zStatModifier.superRefine((m, ctx) => {
+  // `capRaise` IS NOT A MAGNITUDE (GH#286). Its `value` is the ceiling the
+  // modifier lifts the stat TO, not the amount it grants — so measuring it
+  // against `ITEM_MODIFIER_LIMITS` compares two different units. The table's
+  // `as` band is 4.0 *because* 4.0 is the ordinary attack-speed cap, which made
+  // this guard reject exactly the item the feature exists for: owner asked for
+  // 「搭配特殊條件如技能、**道具**...等效果,可以解鎖最多到 10.0」, and a
+  // `capRaise as 10` item failed content validation with "outside the sane
+  // range ±4" on every load path (CI, content-api, shard boot).
+  //
+  // Skipping the band costs nothing the band was buying: a mis-parsed
+  // `capRaise 99999` cannot inflate anything, because `sim/statCaps.ts`
+  // `effectiveCap` hard-clamps every raise to the table's `unlocked` value
+  // (attack speed 10.0). The BAND is not the backstop here — the cap table is,
+  // and it is the same one the panel reads. Proven by
+  // `sim/statCapsReach.test.ts` (道具真的解得開).
+  if (m.op === ModOp.CapRaise) return;
   const percent = m.op === ModOp.PercentAdd || m.op === ModOp.PercentMult;
   const limit = percent ? ITEM_PERCENT_LIMIT : ITEM_MODIFIER_LIMITS[m.stat];
   if (Math.abs(m.value) > limit) {

@@ -1,0 +1,10 @@
+{
+  "id": "stat-caps",
+  "schema": "config.stat-caps@1",
+  "caps": {
+    "as": {
+      "base": 4.0,
+      "unlocked": 10.0
+    }
+  }
+}

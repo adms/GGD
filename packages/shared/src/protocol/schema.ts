@@ -528,6 +528,14 @@ export class MatchState extends Schema {
    */
   declare baseBonusJson: string;
   /**
+   * 屬性上限表 (`config.stat-caps@1`, GH#286) as JSON — 每條屬性的一般上限 /
+   * 解鎖上限 (sim/statCaps.ts)。上線的理由和 `baseBonusJson` 一字不差:面板要顯示
+   * 「這位英雄的攻速天花板」時,那個數字既不在英雄卡裡、也不是常數 —— 後台改得動。
+   * 少了這條線,操作者把一般上限調成 5.0 之後,伺服器夾在 5.0 而商店/選角面板繼續
+   * 印 4.0(失敗形狀 ②)。空字串 = 出貨預設表,**不是空表**。
+   */
+  declare statCapsJson: string;
+  /**
    * True once the MATCH outcome is decided (one team left standing) — set at the
    * end of the final combat, so it flips during the last `resolution` phase, a
    * few seconds BEFORE phase becomes matchEnd. The server FREEZES all input from
@@ -574,6 +582,7 @@ export class MatchState extends Schema {
     this.contentVersion = "";
     this.combatEnvJson = "";
     this.baseBonusJson = "";
+    this.statCapsJson = "";
     this.outcomeDecided = false;
     // `declare` + constructor assignment, never a field initializer: a class
     // field would run AFTER Schema's own constructor and clobber the encoder's
@@ -609,6 +618,10 @@ defineTypes(MatchState, {
   // next to `combatEnvJson`, where it belongs by meaning, would shift every
   // later field's index and desync any client that is still running.
   baseBonusJson: "string",
+  // APPEND-ONLY (v0.9.11): 屬性上限表 (GH#286). 同樣宣告在**最後一格** —— 放在
+  // `baseBonusJson` 旁邊(語意上它們是一對)會把 `duels` 之後每一格的索引往後推,
+  // 讓還沒重新整理的客戶端整份解碼錯位。append-only 不是建議,是編碼格式。
+  statCapsJson: "string",
 });
 
 /**

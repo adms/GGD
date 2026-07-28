@@ -744,6 +744,36 @@ export const zConfigBaseBonusDoc = z
   .strict();
 
 /**
+ * config.stat-caps@1 — 屬性上限 (`config/stat-caps.json`, GH#286): 每條屬性的
+ * **一般上限** 與 **解鎖上限**。owner 2026-07-28:「一般上限是 4.0,搭配特殊條件
+ * 如技能、道具...等效果,可以解鎖最多到 10.0。這兩個參數也可以放到後台設定」.
+ *
+ * ⚠️ 又是一份自己的文件,理由和 `config.base-bonus@1` 一樣但更強:這裡每個 key
+ * 的值是一個**上限對**,而 combat-env 是倍率、base-bonus 是加數。三種語意共用一張
+ * 表格的話,操作者沒有任何線索分辨他填的 4.0 是「四倍」「+4 點」還是「天花板」。
+ *
+ * 語意見 sim/statCaps.ts。**缺文件 = 出貨預設**(攻速 4.0 / 10.0),缺鍵 =
+ * 那條屬性退回 `STAT_CLAMPS` 的上界而且不可解鎖。
+ */
+export const zStatCap = z
+  .object({
+    /** 沒有解鎖來源時的上限 */
+    base: z.number().finite(),
+    /** `ModOp.CapRaise` 最多能抬到的硬上限(小於 base 會被讀成 base) */
+    unlocked: z.number().finite(),
+  })
+  .strict();
+
+export const zConfigStatCapsDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.stat-caps@1"),
+    /** stat key ("as" / "ms" / "cdr" …) -> { base, unlocked } */
+    caps: z.record(z.string().min(1), zStatCap),
+  })
+  .strict();
+
+/**
  * config.ambient-vfx@1 — AMBIENT vfx bindings (`config/ambient-vfx.json`):
  * per-model attachments that live while the entity lives (WC3 hero glows,
  * smolder trails, ribbon wings). Each binding names a `vfx` doc id from the
@@ -1281,6 +1311,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigVoxelBarcodesDoc,
   zConfigVoxelBodiesDoc,
   zConfigBaseBonusDoc,
+  zConfigStatCapsDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -1312,4 +1343,6 @@ export type VictoryTauntChampionEntry = z.infer<typeof zVictoryTauntChampionEntr
 export type ConfigVictoryTauntsDoc = z.infer<typeof zConfigVictoryTauntsDoc>;
 export type ConfigVoxelBarcodesDoc = z.infer<typeof zConfigVoxelBarcodesDoc>;
 export type ConfigBaseBonusDoc = z.infer<typeof zConfigBaseBonusDoc>;
+export type StatCapDoc = z.infer<typeof zStatCap>;
+export type ConfigStatCapsDoc = z.infer<typeof zConfigStatCapsDoc>;
 export type AnyConfigDoc = z.infer<typeof zConfigDoc>;
