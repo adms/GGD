@@ -149,6 +149,22 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // reconnect-safe: the dead player's 「丟金幣 n/10」 button must read the
         // same number after a socket blink as before it.
         ss.coinsLeft = Math.min(world.coinBudget.get(seat.entityId) ?? 0, 255);
+        // YOUR OWN ACTIVE STATUS EFFECTS (owner: 「我也看不出來自己暈眩還是
+        // 發生什麼事情」). Two index-aligned arrays; polarity and display name
+        // stay on the content doc, which the client already has.
+        //
+        // ⚠️ ALREADY-EXPIRED ENTRIES ARE DROPPED HERE, not left for the client
+        // to filter. StatusSystem clears them on its own tick, but a status that
+        // expires between the sim step and this projection would otherwise ride
+        // the wire for one snapshot and flash a 0-second icon at the player.
+        const sc = world.status.get(seat.entityId);
+        const live = (sc?.effects ?? []).filter((e) => e.expiresAtTick > world.tick);
+        setArray(ss.statusIds, live.map((e) => String(e.statusId)));
+        // RELATIVE ticks, matching every other timer on the wire.
+        setArray(
+          ss.statusRemainTicks,
+          live.map((e) => Math.min(65535, Math.max(0, e.expiresAtTick - world.tick))),
+        );
       }
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;

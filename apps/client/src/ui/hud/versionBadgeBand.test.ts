@@ -656,6 +656,20 @@ const BAND_LEDGER: readonly LedgerRow[] = [
       "is asserted numerically in announcements.test.ts, so this row is not the only proof.",
   },
   {
+    file: "hud/SelfStatusBar.tsx",
+    value: "`calc(env(safe-area-inset-bottom",
+    count: 1,
+    why:
+      "自身狀態列 (owner 2026-07-27 「看不出來自己暈眩」). The offset is " +
+      "`HUD_STAMP_BAND + 122` — DERIVED from the band, not a magic number, so it " +
+      "tracks the band if that ever grows. It cannot collide by arithmetic: the " +
+      "bar's lowest pixel sits 122px above the band's top edge, and it stacks " +
+      "UPWARD (flex-column, bottom-anchored), so more rows move it further away, " +
+      "never closer. The scanner cannot fold a template literal, which is why it " +
+      "lands here rather than being evaluated — the value it could not read is " +
+      "the derivation itself.",
+  },
+  {
     file: "mobile.css",
     value: "env(safe-area-inset-bottom",
     count: 1,

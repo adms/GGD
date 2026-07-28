@@ -22,6 +22,7 @@ import { PhaseTimer } from "./components/PhaseTimer";
 import { TeamLivesBar } from "./components/TeamLivesBar";
 import { SpectateNotice } from "./hud/SpectateNotice";
 import { KillCombo } from "./hud/KillCombo";
+import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -215,6 +216,7 @@ export function HudRoot(): React.JSX.Element {
               own combat gate and its own placement (hud/killComboModel), and
               returns null when the corridor has no room. */}
           <KillCombo />
+          <SelfStatusBar />
           <ExUnlockToast />
         </>
       )}

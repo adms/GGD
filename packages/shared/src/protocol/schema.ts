@@ -113,6 +113,38 @@ export class SeatState extends Schema {
    */
   declare statRollCounts: ArraySchema<number>;
   /**
+   * YOUR OWN ACTIVE STATUS EFFECTS — the doc ids, and when each expires.
+   *
+   * owner, 2026-07-27: 「我也看不出來自己暈眩還是發生什麼事情，應該要有提示
+   * 自己的負面/正面 buff」. Until this existed the wire carried ONLY
+   * `EntityState.flags`, a bitmask with four negative bits, ZERO positive-buff
+   * bits, no effect identity and no remaining time — so the HUD could not have
+   * drawn a status bar even if someone had written one. It was not a missing
+   * panel; the data was never sent.
+   *
+   * TWO PARALLEL ARRAYS, index-aligned, exactly like `statRollCounts` above:
+   * Colyseus encodes primitive arrays far more cheaply than a nested Schema,
+   * and a status is only two facts.
+   *
+   * ⚠️ POLARITY AND DISPLAY NAME ARE NOT ON THE WIRE ON PURPOSE. Both live on
+   * the `status-effect@1` content doc (`polarity: "buff" | "debuff"`, `name`,
+   * `description`), which the client already loads. Sending them too would put
+   * the same truth in two places and let them drift; the client looks the id up.
+   *
+   * PER-SEAT, not per-entity: this is 「自己身上的」 by construction, so an
+   * enemy's cooldowns never leak into a client that should not see them.
+   */
+  declare statusIds: ArraySchema<string>;
+  /**
+   * TICKS REMAINING on each entry in `statusIds`, index-aligned.
+   *
+   * RELATIVE, not an absolute expiry tick — the client has no `serverTick` and
+   * every other timer on the wire (ability cooldowns, EX, 天生技) is already
+   * sent this way. An absolute tick would be a number the receiver cannot
+   * interpret, which is a decorative field.
+   */
+  declare statusRemainTicks: ArraySchema<number>;
+  /**
    * How many buy/sell steps of THIS shopping session can still be undone (task
    * #121) — the depth of the champion's undo stack. The client shows the
    * 「↩ 復原上一步」 button exactly when this is > 0, so its visibility is exact
@@ -174,6 +206,8 @@ export class SeatState extends Schema {
     this.statStacks = 0;
     this.statCapstonePct = 0;
     this.statRollCounts = new ArraySchema<number>();
+    this.statusIds = new ArraySchema<string>();
+    this.statusRemainTicks = new ArraySchema<number>();
     this.undoDepth = 0;
     this.roundKills = 0;
     this.roundDeaths = 0;
@@ -212,6 +246,8 @@ defineTypes(SeatState, {
   roundDeaths: "uint8",
   // APPEND-ONLY: Colyseus encodes fields by declaration index — never reorder.
   coinsLeft: "uint8",
+  statusIds: ["string"],
+  statusRemainTicks: ["uint16"],
 });
 
 /**

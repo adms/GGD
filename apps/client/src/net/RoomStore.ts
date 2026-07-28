@@ -112,6 +112,14 @@ export interface SeatView {
    */
   statRollCounts?: number[];
   /**
+   * YOUR OWN active status effects — doc ids, and TICKS REMAINING on each.
+   * Index-aligned. OPTIONAL for the same reason `statRollCounts` is: a hand-built
+   * fixture that omits them is asserting 「沒有任何狀態」, which is exactly what
+   * an absent array means on the wire.
+   */
+  statusIds?: string[];
+  statusRemainTicks?: number[];
+  /**
    * How many buy/sell steps of THIS shopping session can still be reversed
    * (task #121) — the server's own `champ.undoStack.length`.
    *
@@ -403,6 +411,8 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
       statRollCounts: [...(ss.statRollCounts ?? [])],
+      statusIds: [...(ss.statusIds ?? [])],
+      statusRemainTicks: [...(ss.statusRemainTicks ?? [])],
       undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,
