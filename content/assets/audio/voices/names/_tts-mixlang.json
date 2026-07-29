@@ -340,6 +340,26 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "vo-title-godie-e010",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "白木老樹精",
+    "out": "godie-e010.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-e010",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "白木卡迪那",
+    "out": "godie-e010.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "vo-title-godie-e012",
     "lang": "zh-TW",
     "voice": "Tingting",
@@ -595,6 +615,26 @@
     "voice": "Kyoko",
     "text": "林克",
     "out": "godie-h00l.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-title-godie-h00w",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "豪洨天王",
+    "out": "godie-h00w.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-h00w",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "鄭先生",
+    "out": "godie-h00w.name.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
@@ -1160,6 +1200,26 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "vo-title-godie-n01b",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "地獄歌神",
+    "out": "godie-n01b.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-n01b",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "憤怒的胖虎",
+    "out": "godie-n01b.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "vo-title-godie-n01c",
     "lang": "zh-TW",
     "voice": "Tingting",
@@ -1575,6 +1635,26 @@
     "voice": "Kyoko",
     "text": "令狐沖",
     "out": "godie-o02w.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-title-godie-o030",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "電車癡漢",
+    "out": "godie-o030.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-o030",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "臭作",
+    "out": "godie-o030.name.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5

@@ -200,6 +200,16 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
     ["06", "godie-ucrl", "godie-u034"], // 職業獵人 - 傑 富力士  (thorne stand-in ⇄ herobiggon)
     ["18", "godie-nsjs", "godie-n00p"], // 妖狐藏馬 - 南野秀一   (fox2 ⇄ fox)
     ["87", "godie-o02n", "godie-o02o"], // 曹操孟德 - 阿瞞大人   (#249 imported the base O02N)
+    // The four 變身 ALTERNATE bodies #249 imported when the transform mechanic
+    // landed. They fold by the SAME rule as everything above — byte-identical
+    // authored name AND the same stand-in mesh — which is also exactly why they
+    // are not in the first playable batch: two halves that share a modelKey are
+    // indistinguishable on screen, so the swap needs the FORM bits (and, later,
+    // its own art) before a player can see it happen.
+    ["70", "godie-e00s", "godie-e010"], // 白木老樹精 - 白木卡迪那 (A0O6 70-00 紮根)
+    ["26", "godie-harf", "godie-h00w"], // 豪洨天王 - 鄭先生      (A0EW 26-04 洨者聖臨)
+    ["40", "godie-nman", "godie-n01b"], // 地獄歌神 - 憤怒的胖虎   (A0ND 40-03 萬解)
+    ["30", "godie-orkn", "godie-o030"], // 電車癡漢 - 臭作        (A0YT 30-002 變態紳士)
   ] as const;
 
   /**
@@ -245,28 +255,46 @@ describe("stand-in meshes never imply sameness (champion-identity-standin-mesh)"
   const STAND_INS = ["champ.sela", "champ.thorne", "champ.skin.barbarian", "champ.skin.rogue"];
 
   /**
-   * The ONE pair of stand-in wearers that IS one character: 曹操孟德's two unit
-   * definitions, both on `champ.skin.rogue` because his w3x model is a Blizzard
-   * built-in. They fold on their IDENTICAL AUTHORED NAME plus the w3x form link
+   * The stand-in wearers that ARE one character: base⇄變身 unit pairs whose w3x
+   * model is a Blizzard built-in, so BOTH halves fall through to the same CC0
+   * stand-in. They fold on their IDENTICAL AUTHORED NAME plus the w3x form link
    * — never on the shared mesh, which is what this suite exists to forbid.
+   *
+   * A LIST OF GROUPS, not one flat set (it was a flat set while 曹操 was the only
+   * case). `champ.sela` now carries TWO independent pairs, and a flat set would
+   * count all four of its members as one group and expect three foldings where
+   * only two happen — the arithmetic below has to be per-pair.
    */
-  const SAME_CHARACTER_ON_ONE_MESH = new Set(["godie-o02n", "godie-o02o"]);
+  const SAME_CHARACTER_GROUPS: readonly ReadonlySet<string>[] = [
+    new Set(["godie-o02n", "godie-o02o"]), // 曹操孟德       — champ.skin.rogue
+    new Set(["godie-e00s", "godie-e010"]), // 白木卡迪那 #249 — champ.sela
+    new Set(["godie-orkn", "godie-o030"]), // 臭作      #249 — champ.sela
+    new Set(["godie-harf", "godie-h00w"]), // 鄭先生    #249 — champ.skin.barbarian
+    new Set(["godie-nman", "godie-n01b"]), // 憤怒的胖虎 #249 — champ.skin.rogue
+  ];
+
+  /** The group `id` belongs to, or undefined when it is nobody's twin. */
+  const groupOf = (id: string): ReadonlySet<string> | undefined =>
+    SAME_CHARACTER_GROUPS.find((g) => g.has(id));
 
   it("treats every champion sharing a CC0 stand-in as its own character", () => {
     cover("champion-identity-standin-mesh");
     for (const mesh of STAND_INS) {
       const wearers = ROSTER.filter((c) => c.modelKey === mesh);
       expect(wearers.length, `${mesh} wearers`).toBeGreaterThan(1);
-      const exempt = wearers.filter((c) => SAME_CHARACTER_ON_ONE_MESH.has(c.id));
       const keys = new Set(wearers.map((c) => KEYS.get(c.id)));
       // Every wearer keeps its own identity — no two are ever folded together,
-      // except the one documented same-character pair above.
-      const folded = exempt.length > 1 ? exempt.length - 1 : 0;
+      // except the documented same-character groups above. Each group present on
+      // THIS mesh with n>1 members collapses to 1, i.e. loses n-1 keys.
+      const folded = SAME_CHARACTER_GROUPS.reduce((n, g) => {
+        const here = wearers.filter((c) => g.has(c.id)).length;
+        return n + (here > 1 ? here - 1 : 0);
+      }, 0);
       expect(keys.size, `${mesh} wearers stay distinct`).toBe(wearers.length - folded);
       for (const a of wearers) {
         for (const b of wearers) {
           if (a.id === b.id) continue;
-          if (SAME_CHARACTER_ON_ONE_MESH.has(a.id) && SAME_CHARACTER_ON_ONE_MESH.has(b.id)) {
+          if (groupOf(a.id) !== undefined && groupOf(a.id) === groupOf(b.id)) {
             // proven by NAME, so removing the mesh evidence changes nothing
             expect(a.name, "the exemption is a name match, not a mesh match").toBe(b.name);
             continue;

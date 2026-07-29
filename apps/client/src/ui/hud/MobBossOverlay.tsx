@@ -239,6 +239,15 @@ export function MobBossSettlementView({
           <span style={{ flex: "0 0 auto", color: "#ff9b7a" }}>傷害 {r.damage}</span>
           <span style={{ flex: "0 0 auto", color: "#ffd76a" }}>{r.gold} 金</span>
           <span style={{ flex: "0 0 auto", color: "#9fd7ff" }}>{r.xp} XP</span>
+          {/* 等級 (GH#206). Rendered only when a level was really GRANTED: most
+              configs set `bountyLevels: 0` and `grantLevels` stops at LEVEL_CAP,
+              so an always-on 「+0 等」 would be permanent noise on a row that is
+              already tight. A non-zero grant is the news. */}
+          {r.levels > 0 ? (
+            <span data-mob-boss="levels" style={{ flex: "0 0 auto", color: "#b8ff9f" }}>
+              +{r.levels} 等
+            </span>
+          ) : null}
         </div>
       ))}
       {layout.hiddenCount > 0 ? (
@@ -256,9 +265,13 @@ export function MobBossSettlementView({
           color: "#b9ae95",
         }}
       >
+        {/* ⚠️ BOTH ARGUMENTS COME OFF THE EVENT. `lastHitMode` decides which of
+            the two rules is true for THIS king (GH#206), and the panel shipped
+            for one release printing the `"weight"` sentence — 「總獎金固定」 —
+            under a `"bonus"` total that had just overshot the pool. */}
         {compact
-          ? bossRuleNoteShort(view.lastHitMultiplier)
-          : bossRuleNote(view.lastHitMultiplier)}
+          ? bossRuleNoteShort(view.lastHitMultiplier, view.lastHitMode)
+          : bossRuleNote(view.lastHitMultiplier, view.lastHitMode)}
       </span>
       <BossKeyframes />
     </div>

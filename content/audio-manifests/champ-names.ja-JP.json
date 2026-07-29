@@ -170,6 +170,16 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "name-godie-e010",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "シラキノロウジュセイ・シラキカディナ。",
+    "out": "../assets/audio/voices/names/godie-e010.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "name-godie-e012",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -318,6 +328,26 @@
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5
+  },
+  {
+    "id": "name-godie-h00w",
+    "lang": "zh-TW ‖ ja-JP",
+    "out": "../assets/audio/voices/names/godie-h00w.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5,
+    "segments": [
+      {
+        "lang": "zh-TW",
+        "voice": "Tingting",
+        "text": "豪洨天王，"
+      },
+      {
+        "lang": "ja-JP",
+        "voice": "Kyoko",
+        "text": "テイセンセイ。"
+      }
+    ]
   },
   {
     "id": "name-godie-h01n",
@@ -700,6 +730,26 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "name-godie-n01b",
+    "lang": "zh-TW ‖ ja-JP",
+    "out": "../assets/audio/voices/names/godie-n01b.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5,
+    "segments": [
+      {
+        "lang": "zh-TW",
+        "voice": "Tingting",
+        "text": "地獄歌神，"
+      },
+      {
+        "lang": "ja-JP",
+        "voice": "Kyoko",
+        "text": "ジャイアン。"
+      }
+    ]
+  },
+  {
     "id": "name-godie-n01c",
     "lang": "ja-JP",
     "voice": "Kyoko",
@@ -935,6 +985,16 @@
     "voice": "Kyoko",
     "text": "ショウゴウコウコ・レイコチュウ。",
     "out": "../assets/audio/voices/names/godie-o02w.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "name-godie-o030",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "デンシャチカン・シュウサク。",
+    "out": "../assets/audio/voices/names/godie-o030.mp3",
     "rate": 185,
     "targetLufs": -16,
     "truePeakDb": -1.5

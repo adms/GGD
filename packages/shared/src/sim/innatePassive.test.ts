@@ -203,8 +203,32 @@ describe("天生技 / innate slot — the ACTIVE innates stay honestly inert", (
     expect(activeInnates.length).toBeGreaterThan(50);
     const faked: string[] = [];
     for (const def of activeInnates) {
-      // schema already forbids it, but the sim must not depend on that
-      expect(def.passive).toBeUndefined();
+      // An active innate must grant NO permanent SELF buff — `syncAbilityPassives`
+      // skips it entirely, so a `modifiers`/`hooks` block on one is silently dead
+      // content and reads as a balance change nobody gets.
+      //
+      // `auras` is the ONE exception, and it is not a loophole: an aura reaches
+      // OTHER units and is projected by sim/auraCarrier.ts from a dummy carrier
+      // entity, which is the only way a SECOND FORM's aura can exist at all (the
+      // form swap never re-points `passiveSlot` — see auraCarrier.ts). Today that
+      // is `godie-e010.passive` 70-00 芬多精. The `faked` sweep below is the real
+      // guard and is UNCHANGED: an active innate still may not put its own
+      // ability-passive source on the CHAMPION.
+      //
+      // ⚠️ The comment this replaced claimed "schema already forbids it". It does
+      // not — `refineInnate` (content/schema/ability.ts) only requires a non-empty
+      // `effects` on an active innate. Verified 2026-07-29.
+      if (def.passive !== undefined) {
+        for (const rank of def.passive.ranks) {
+          expect(rank.modifiers ?? [], `${def.id}: active innate self-modifiers are dead`).toEqual(
+            [],
+          );
+          expect(rank.hooks ?? [], `${def.id}: active innate hooks are dead`).toEqual([]);
+          expect(rank.auras?.length ?? 0, `${def.id}: an auras-only carrier block`).toBeGreaterThan(
+            0,
+          );
+        }
+      }
       expect(def.effects.length).toBeGreaterThan(0);
       expect(isPassiveOnly(def)).toBe(false);
       const cid = def.id.replace(/\.passive$/, "") as ChampionId;

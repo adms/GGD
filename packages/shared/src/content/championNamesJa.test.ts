@@ -141,11 +141,16 @@ describe("champion call-out VO pack", () => {
     const withTitle = [...champs.entries()].filter(
       ([id, name]) => name.includes(TITLE_SEP) && !skipped.has(id),
     );
-    // 111 of 115 champions are authored "稱號 - 全名"; one of those is the
-    // skipped test hero, leaving 110 that must speak both halves. (Was 109 —
-    // task #249 imported godie-o02n, 曹操孟德's BASE unit O02N, which carries the
-    // same authored name as its already-shipped 天下號令 form.)
-    expect(withTitle.length, "champions authored with a 稱號").toBe(110);
+    // 115 of 119 champions are authored "稱號 - 全名"; one of those is the
+    // skipped test hero, leaving 114 that must speak both halves. (Was 109, then
+    // 110 when task #249 imported godie-o02n, 曹操孟德's BASE unit O02N. Now 114:
+    // the same task imported the four 變身 ALTERNATE bodies — godie-e010 /
+    // godie-h00w / godie-n01b / godie-o030 — because the transform primitive
+    // resolves the swapped body through `Champions.get()`, which throws on an
+    // unregistered id. Each carries its BASE half's authored name verbatim, so
+    // each is cast identically to it in tools/tts-gen/src/build-champ-names.mjs:
+    // same character, changed shape, same call-out.)
+    expect(withTitle.length, "champions authored with a 稱號").toBe(114);
 
     for (const [id, zhName] of withTitle) {
       const e = doc.champions[id]!;

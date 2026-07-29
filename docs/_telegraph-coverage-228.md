@@ -19,8 +19,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 96 | self marker at the caster's feet |
-| `targeted` | 96 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `self` | 99 | self marker at the caster's feet |
+| `targeted` | 93 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `ground` | 49 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `—` | 33 | not cast |
 | `skillshot` | 22 | line — the projectile's corridor; step sideways |
@@ -219,7 +219,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | PASSIVE | 18-00 薔薇荊棘之刃 | `—` | — | 🟣 PASSIVE | never cast |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | Q | 18-01 風華圓舞陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | W | 18-02 寄生種子 | `skillshot` | line 7.20×0.60u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.6, hitRadius 0.5 ×2 × abilityRange 0.6 |
-| 妖狐藏馬 - 南野秀一 `godie-nsjs` | E | 18-03 妖狐變化 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | E | 18-03 妖狐變化 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | R | 18-04 億年樹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 妖狐藏馬 - 南野秀一 `godie-nsjs` | EX | 18-002 魔界吸血植物 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | PASSIVE | 86-00 裝可愛 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -244,7 +244,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | Q | 58-01 十萬伏特 | `ground` | circle r=3.85u | ✅ OK | radius 6.42 × abilityRange 0.6 |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | W | 58-02 鋼鐵尾巴 | `—` | — | 🟣 PASSIVE | never cast |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | E | 58-03 就決定是你了!小智 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | R | 58-04 瘋狂皮卡丘 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 神奇寶貝兒 - 皮卡丘 `godie-ofar` | R | 58-04 瘋狂皮卡丘 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 神奇寶貝兒 - 皮卡丘 `godie-ofar` | EX | 58-002 打雷絕招 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 美白大法師 - 黑人牙膏 `godie-ogld` | Q | 72-01洗刷刷 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 美白大法師 - 黑人牙膏 `godie-ogld` | W | 72-02 黑人牙菌斑 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -321,7 +321,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 北斗神拳掌門人 - 拳四郎 `godie-umal` | Q | 25-01 北斗懺悔拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 北斗神拳掌門人 - 拳四郎 `godie-umal` | W | 25-02 北斗神拳秘訣轉龍呼吸法 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 北斗神拳掌門人 - 拳四郎 `godie-umal` | E | 25-03 北斗百裂拳 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
-| 北斗神拳掌門人 - 拳四郎 `godie-umal` | R | 25-04 ChangeDNA | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | R | 25-04 ChangeDNA | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 北斗神拳掌門人 - 拳四郎 `godie-umal` | EX | 25-002 喔拉喔拉喔拉喔拉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 邪眼師 - 飛影 `godie-uvng` | PASSIVE | 38-00 邪眼全開 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 邪眼師 - 飛影 `godie-uvng` | Q | 38-01 邪王炎殺劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

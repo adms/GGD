@@ -4,7 +4,8 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState, formFlagsForIndex } from "@ggd/shared/protocol/schema";
+import { championFormIndex } from "@ggd/shared/sim/systems/ChampionFormSystem";
 import { visualStackCount } from "@ggd/shared/sim/stats/visualStacks";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
@@ -224,6 +225,17 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   // ---- entities ----
   const seen = new Set<string>();
   for (const [id, t] of world.transform) {
+    // AURA CARRIERS (虛擬蝗蟲群, sim/auraCarrier.ts) NEVER REACH THE WIRE.
+    //
+    // A carrier is a dummy emitter that has to live in `world.transform` for
+    // `auraSystem` to read its position — but it has no ChampionComp, so the
+    // champion default at the bottom of this loop would publish it as
+    // `kind: 0` with `key: ""`, and EntityViewRegistry builds a ChampionView
+    // for kind 0 unconditionally: a modelless voxel stand-in painted on the
+    // floor, following the rooted hero around. Skipped BEFORE `seen.add`, so a
+    // carrier that somehow reached `state.entities` is also swept out by the
+    // despawn pass at the bottom rather than being kept alive by this loop.
+    if (world.auraCarrier.has(id)) continue;
     const key = String(id);
     seen.add(key);
     let es = state.entities.get(key);
@@ -411,6 +423,22 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       const air = world.airborne.get(id);
       es.h = air ? air.y : 0;
       if (air) flags |= ENTITY_FLAG.AIRBORNE;
+      // #249 變身 FORM INDEX — THE ONLY CHANNEL THAT CARRIES IT.
+      //
+      // `es.key` above is `Champions.get(champ.championId).modelKey`, and it
+      // CANNOT stand in for this: both halves of a transform pair frequently
+      // resolve to the SAME model doc (godie-orkn/o030 and godie-harf/h00w are
+      // byte-identical `champ.sela` / `champ.skin.barbarian`), so a client that
+      // watched `key` for a change would see nothing at all on those heroes.
+      // These two bits are what `formIndexFromFlags` decodes on the other side
+      // (apps/client/src/render/EntityViewRegistry.ts), and they cost zero extra
+      // bytes: `flags` is a uint16 already in every champion patch, and the base
+      // body writes 0, which Colyseus's delta encoder never puts on the wire.
+      //
+      // Placed on the CHAMPION branch only — the flower / revive-circle / coin /
+      // guardian / mob branches above all `continue` before reaching here, and
+      // none of them has a `world.champion` entry to transform.
+      flags |= formFlagsForIndex(championFormIndex(world, id));
       es.flags = flags;
     }
   }

@@ -327,7 +327,7 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 			applyFailed(opts, res, err)
 			return res, err
 		}
-		if err := writeEntry(a, t, pw.Rule, e); err != nil {
+		if err := writeEntry(a, t, pw.Rule, e, res); err != nil {
 			res.warn("寫入 %s 失敗：%v", e.Name, err)
 			applyFailed(opts, res, err)
 			return res, fmt.Errorf("platformarchive: 寫到一半失敗（%s）—— 備份在 %s：%w",
@@ -451,13 +451,19 @@ func backupPathOf(res *ApplyResult) string {
 // jsonstore.Put (0640 files / 0750 dirs, and _index.json rebuilt from what was
 // actually written) or renameio.WithStaticPermissions(0640). The archive's own
 // mode is NEVER applied.
-func writeEntry(a *Archive, t *Target, rule *Rule, e Entry) error {
+//
+// res is written to only by the content-overlay branch, which reports what it
+// quarantined; every other kind moves bytes and says nothing.
+func writeEntry(a *Archive, t *Target, rule *Rule, e Entry, res *ApplyResult) error {
 	data, err := a.ReadEntry(e)
 	if err != nil {
 		return err
 	}
 	switch rule.Kind {
 	case KindDoc:
+		if isLiveContentOverlay(e) {
+			return writeContentOverlay(t, e, data, res)
+		}
 		return t.Store.Put(e.Collection, e.ID, json.RawMessage(data))
 	case KindJSONL:
 		p, err := jsonlPath(t.Store, e.Collection, e.ID)

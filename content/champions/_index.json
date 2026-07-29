@@ -1,6 +1,6 @@
 {
   "collection": "champions",
-  "hash": "72fc6c14fa39",
+  "hash": "7d0648680677",
   "entries": [
     {
       "id": "godie-e001",
@@ -65,8 +65,8 @@
     {
       "id": "godie-e00s",
       "path": "champions/godie-e00s.json",
-      "hash": "7f406771480b",
-      "size": 6063
+      "hash": "ef7a051c16dd",
+      "size": 6098
     },
     {
       "id": "godie-e00t",
@@ -103,6 +103,12 @@
       "path": "champions/godie-e00z.json",
       "hash": "0a0ec45aa9cf",
       "size": 5910
+    },
+    {
+      "id": "godie-e010",
+      "path": "champions/godie-e010.json",
+      "hash": "26605684337c",
+      "size": 5476
     },
     {
       "id": "godie-e012",
@@ -181,6 +187,12 @@
       "path": "champions/godie-h00l.json",
       "hash": "349fc82a8a05",
       "size": 6511
+    },
+    {
+      "id": "godie-h00w",
+      "path": "champions/godie-h00w.json",
+      "hash": "ec5102561a96",
+      "size": 5814
     },
     {
       "id": "godie-h01n",
@@ -275,8 +287,8 @@
     {
       "id": "godie-harf",
       "path": "champions/godie-harf.json",
-      "hash": "b584248188f3",
-      "size": 5785
+      "hash": "0b3ab447684d",
+      "size": 5820
     },
     {
       "id": "godie-hart",
@@ -357,6 +369,12 @@
       "size": 6566
     },
     {
+      "id": "godie-n01b",
+      "path": "champions/godie-n01b.json",
+      "hash": "9cb22c573e55",
+      "size": 6524
+    },
+    {
       "id": "godie-n01c",
       "path": "champions/godie-n01c.json",
       "hash": "a31b745cff27",
@@ -395,8 +413,8 @@
     {
       "id": "godie-nman",
       "path": "champions/godie-nman.json",
-      "hash": "c6663dc1d579",
-      "size": 6428
+      "hash": "fa56e34475b1",
+      "size": 6463
     },
     {
       "id": "godie-nplh",
@@ -407,8 +425,8 @@
     {
       "id": "godie-nsjs",
       "path": "champions/godie-nsjs.json",
-      "hash": "fd7c9bfc23f9",
-      "size": 6556
+      "hash": "5098a610f37f",
+      "size": 6271
     },
     {
       "id": "godie-ntin",
@@ -483,6 +501,12 @@
       "size": 6460
     },
     {
+      "id": "godie-o030",
+      "path": "champions/godie-o030.json",
+      "hash": "325258bdcfb8",
+      "size": 6539
+    },
+    {
       "id": "godie-obla",
       "path": "champions/godie-obla.json",
       "hash": "0c7a8729fcd0",
@@ -491,8 +515,8 @@
     {
       "id": "godie-ofar",
       "path": "champions/godie-ofar.json",
-      "hash": "bd0b4368450a",
-      "size": 8642
+      "hash": "8731fb641aa5",
+      "size": 8376
     },
     {
       "id": "godie-ogld",
@@ -515,8 +539,8 @@
     {
       "id": "godie-orkn",
       "path": "champions/godie-orkn.json",
-      "hash": "cf22a3c0f7bc",
-      "size": 6452
+      "hash": "2d676d248ef4",
+      "size": 6488
     },
     {
       "id": "godie-osam",
@@ -653,8 +677,8 @@
     {
       "id": "godie-umal",
       "path": "champions/godie-umal.json",
-      "hash": "983a4f0e5da1",
-      "size": 6806
+      "hash": "afb4471618db",
+      "size": 6537
     },
     {
       "id": "godie-usyl",
@@ -677,8 +701,8 @@
     {
       "id": "godie-zombiex",
       "path": "champions/godie-zombiex.json",
-      "hash": "96a75a2c37b6",
-      "size": 6551
+      "hash": "b00bf7d9304e",
+      "size": 6611
     },
     {
       "id": "sela",

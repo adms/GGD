@@ -117,16 +117,26 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   //                  The 殭屍王降臨 banner + its entry cue. `summonerSeatId` is
   //                  what gates 「YOUR quest fired」 on the local seat, exactly
   //                  like `guardianSlain` / `coinPickedUp` do.
-  //   mobBossSlain — the SETTLEMENT: `{ id, killer, killerSeatId, totalGold,
-  //                  totalXp, lastHitMultiplier, shares[] }`, where each share
-  //                  is `{ id, seatId, damage, gold, xp, lastHit }`. The whole
-  //                  split travels because the client has no way to recompute
-  //                  it (the damage ledger is sim-only) and because 「照傷害比例
-  //                  發獎金,最後一刀翻倍」 is a rule players must be able to SEE
-  //                  being applied.
+  //   mobBossSlain — the SETTLEMENT: `{ id, kind, zone, killer, killerSeatId,
+  //                  totalGold, totalXp, totalLevels, lastHitMultiplier,
+  //                  lastHitMode, shares[] }`, where each share is
+  //                  `{ id, seatId, damage, gold, xp, levels, lastHit }`. The
+  //                  whole split travels because the client has no way to
+  //                  recompute it (the damage ledger is sim-only) and because
+  //                  「照傷害比例發獎金,最後一刀翻倍」 is a rule players must be
+  //                  able to SEE being applied.
   //
-  // CADENCE: one of each per king. A king is summoned at 100 personal zombie
-  // kills, so this is orders of magnitude rarer than `mobSlain`.
+  // ⚠️ `mobBossSlain` IS NOT KING-ONLY SINCE #288. A 特殊殭屍 with a 分紅獎池
+  // settles through the SAME name, distinguished by `kind` (`"boss"` vs
+  // `"special"`) — see the reasoning in `sim/systems/MobSystem.payMobBounty`.
+  // Its spawn still arrives as an ordinary `mobSpawn`, so a consumer that
+  // pairs the two by entity id must tolerate a settlement with no matching
+  // `mobBossSpawn` (that is what the `zone` field on the payload is for).
+  //
+  // CADENCE: one `mobBossSpawn` per king (summoned at 100 personal zombie
+  // kills). `mobBossSlain` additionally fires once per 特殊殭屍 killed — still
+  // orders of magnitude rarer than `mobSlain`, because a special now carries
+  // 12,000+ hp rather than a zombie's 60.
   "mobBossSpawn",
   "mobBossSlain",
   // FLOATING COMBAT TEXT (task #92): 補血 / 補魔 — the half `damage` does not

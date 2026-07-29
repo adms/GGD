@@ -212,6 +212,7 @@
       "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255); custom entry E00S 「白木老樹精」 sets no tint mods. Model buildings\\nightelf\\AncientProtector\\AncientProtector.mdl."
     },
     "E010": {
+      "championId": "godie-e010",
       "name": "白木老樹精",
       "tint": [
         1.0,
@@ -219,7 +220,7 @@
         1.0
       ],
       "source": "slk-inherited",
-      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255). Custom entry E010 「白木老樹精」, a second copy with no champion doc."
+      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255). Custom entry E010 「白木老樹精」. TASK #249: it is the 變身 ALTERNATE form of 白木卡迪那 (TRANSFORM_FORMS pair 70, ability A0O6 70-00 紮根, counterpart godie-e00s which carries the SAME 255/200/255). The champion doc did not exist when this row was written — 'a second copy with no champion doc' — and had to be imported once the transform primitive landed, because Champions.get() throws on an unregistered id and the snapshot resolves the transformed body through it every tick. Now mapped; same inheritance chain as U00L below."
     },
     "Ubal": {
       "championId": "godie-ubal",
@@ -244,6 +245,7 @@
       "evidence": "INHERITED from base Ubal (255/200/200); custom entry U00J 「神性的流失」, model HeroSephiroth.mdl."
     },
     "N01B": {
+      "championId": "godie-n01b",
       "name": "地獄歌神",
       "tint": [
         1.0,
@@ -251,7 +253,7 @@
         0.3922
       ],
       "source": "w3u-static",
-      "evidence": "war3map.w3u custom entry N01B (base Nman, same model): uclg=100 uclb=100. Second copy of 地獄歌神 with no champion doc; same red tint as Nman."
+      "evidence": "war3map.w3u custom entry N01B (base Nman, same model): uclg=100 uclb=100. TASK #249: it is the 變身 ALTERNATE form of 憤怒的胖虎 (TRANSFORM_FORMS pair 40, ability A0ND 40-03 萬解-貓王胖虎, counterpart godie-nman which carries the same red). The champion doc did not exist when this row was written — 'second copy of 地獄歌神 with no champion doc' — and had to be imported once the transform primitive landed. Now mapped."
     },
     "Utic": {
       "name": "嗜血劍",

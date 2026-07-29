@@ -10,7 +10,11 @@ import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { KILL_COMBO_EVENT } from "@ggd/shared/sim/combat/killCombo";
-import { MOB_BOSS_SLAIN_EVENT, MOB_BOSS_SPAWN_EVENT } from "@ggd/shared/sim/mobBoss";
+import {
+  MOB_BOSS_SLAIN_EVENT,
+  MOB_BOSS_SPAWN_EVENT,
+  type LastHitMode,
+} from "@ggd/shared/sim/mobBoss";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
@@ -325,15 +329,45 @@ export interface KillComboView {
   seq: number;
 }
 
+/**
+ * How 「補最後一刀的人獎金翻倍」 was paid out for this king.
+ *
+ * ALIASED FROM THE SIM'S OWN UNION rather than re-typed as a string literal
+ * pair: the mode decides which sentence the settlement panel prints, so a third
+ * mode added in `sim/mobBoss.ts` must break this file's `switch`-shaped code at
+ * typecheck instead of silently falling through to the 「總獎金固定」 wording.
+ */
+export type MobBossLastHitMode = LastHitMode;
+
 /** One participant's line on the king's payout sheet (sim/mobBoss.BossBountyShare). */
 export interface MobBossShareView {
   /** seat of the paid champion; -1 when the sim could not resolve one */
   seatId: number;
-  /** damage this champion did to the king (the SHARE BASIS, pre-weight) */
+  /**
+   * damage this champion did to the king — the SHARE BASIS, before either mode's
+   * 補刀 handling. ⚠️ IT DOES NOT RANK THE SHEET: in `"bonus"` mode the biggest
+   * damager is not necessarily the biggest earner (see `bossSortedShares`).
+   */
   damage: number;
   gold: number;
   xp: number;
-  /** true = this champion landed the killing blow (the 翻倍 WEIGHT, not a bonus) */
+  /**
+   * 等級提升 actually GRANTED to this champion (GH#206). `MobSystem.payBossBounty`
+   * sends what `grantLevels` handed out, not what the split requested — the two
+   * diverge at `LEVEL_CAP`, and a sheet that printed the request would promise a
+   * level 99 champion a level it never got.
+   */
+  levels: number;
+  /**
+   * true = this champion landed the killing blow.
+   *
+   * ⚠️ WHAT THAT PAYS DEPENDS ON {@link MobBossView.lastHitMode} — this used to
+   * say 「the 翻倍 WEIGHT, not a bonus」 and since GH#206 that is only true in
+   * `"weight"` mode. In the shipped `"bonus"` mode the last hitter is paid their
+   * proportional share AND ONE EXTRA COPY OF IT, so the sheet's rows can sum to
+   * more than the configured pool. Nothing here re-derives either way; both the
+   * per-row numbers and the totals arrive already paid.
+   */
   lastHit: boolean;
 }
 
@@ -354,11 +388,35 @@ export interface MobBossView {
   kills: number;
   /** slain: the whole split, ascending by entity id as the sim emitted it */
   shares: MobBossShareView[];
-  /** slain: pool actually paid (sum of shares), so the panel never invents a total */
+  /**
+   * slain: what was ACTUALLY PAID (the sum of the shares), never the configured
+   * pool — so the panel cannot invent a total.
+   *
+   * ⚠️ SINCE GH#206 THIS CAN EXCEED THE CONFIGURED POOL. In the shipped
+   * `"bonus"` mode the last hitter is paid an extra copy of their own share, so
+   * the sum lands in `[pool, pool × lastHitMultiplier]` — a champion who did all
+   * the damage and landed the blow takes 200%. Any consumer that substitutes the
+   * admin's `bountyGold` for this is lying to the player.
+   */
   totalGold: number;
   totalXp: number;
-  /** slain: the last hitter's damage WEIGHT (sim `boss.lastHitMultiplier`) */
+  /** slain: 等級提升 actually granted across every share (post-`LEVEL_CAP`) */
+  totalLevels: number;
+  /** slain: `boss.lastHitMultiplier` — what the 補刀 is worth, in either mode */
   lastHitMultiplier: number;
+  /**
+   * slain: HOW the 補刀 was paid (sim `boss.lastHitMode`, admin-switchable).
+   *
+   *   · `"bonus"`  (shipped default) — split by raw damage, then hand the last
+   *     hitter one EXTRA copy of their own share. THE TOTAL IS NOT CONSERVED.
+   *   · `"weight"` — the last hitter's damage counts ×mult in the denominator,
+   *     so `sum(payout) === pool` exactly.
+   *
+   * The panel's rule sentence is chosen by this (`bossRuleNote`): the two modes
+   * need opposite sentences and printing the wrong one is a false statement
+   * about the player's money.
+   */
+  lastHitMode: MobBossLastHitMode;
   /** slain: seat that landed the killing blow, -1 when nobody did */
   killerSeatId: number;
   /** the king's entity id (`ev.data.id`), -1 unknown — the key that lets a
@@ -790,7 +848,11 @@ export function parseMobBossEvent(
       shares: [],
       totalGold: 0,
       totalXp: 0,
+      totalLevels: 0,
       lastHitMultiplier: 1,
+      // a 降臨 pays nobody, so no mode has been applied yet; the shipped default
+      // is the honest placeholder (the banner never prints a rule sentence).
+      lastHitMode: "bonus",
       killerSeatId: -1,
       bossId: num(ev.data.id, -1),
       // the ONE payload that knows which arena this is (sim/mobs.summonMobBoss)
@@ -808,6 +870,7 @@ export function parseMobBossEvent(
       damage: Math.max(0, num(s.damage, 0)),
       gold: Math.max(0, Math.trunc(num(s.gold, 0))),
       xp: Math.max(0, Math.trunc(num(s.xp, 0))),
+      levels: Math.max(0, Math.trunc(num(s.levels, 0))),
       lastHit: s.lastHit === true,
     });
   }
@@ -819,11 +882,21 @@ export function parseMobBossEvent(
     mine: false,
     kills: 0,
     shares,
+    // TAKEN OFF THE WIRE, NEVER RE-DERIVED FROM `shares`. These are the sums the
+    // sim actually paid (MobSystem.payBossBounty), and in `"bonus"` mode they
+    // deliberately EXCEED the configured pool.
     totalGold: Math.max(0, Math.trunc(num(ev.data.totalGold, 0))),
     totalXp: Math.max(0, Math.trunc(num(ev.data.totalXp, 0))),
+    totalLevels: Math.max(0, Math.trunc(num(ev.data.totalLevels, 0))),
     // 1 is the identity weight: a malformed payload must degrade to 「沒有翻倍」,
     // never to a multiplier the sim did not apply.
     lastHitMultiplier: Math.max(1, num(ev.data.lastHitMultiplier, 1)),
+    // ⚠️ AN UNKNOWN MODE DEGRADES TO `"bonus"`, THE SHIPPED DEFAULT — and that
+    // direction is the safe one on purpose. Only `"weight"` licenses the panel to
+    // promise 「總獎金固定」, so an absent/garbled field must never buy that
+    // sentence: the worst case here is a true-but-vaguer note, not a false claim
+    // about the player's money.
+    lastHitMode: ev.data.lastHitMode === "weight" ? "weight" : "bonus",
     killerSeatId: num(ev.data.killerSeatId, -1),
     bossId: num(ev.data.id, -1),
     // MobSystem.settleBoss emits no `zone` — the king's entity is destroyed by

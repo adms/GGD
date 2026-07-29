@@ -264,7 +264,23 @@ function snapshot(world: SimWorld): {
   return { shields, statuses, buffs, projectiles: world.projectile.size };
 }
 
-/** Events that constitute "a real effect happened" (excludes abilityCast/castBegin). */
+/**
+ * Events that constitute "a real effect happened" (excludes abilityCast/castBegin).
+ *
+ * THIS LIST IS THE MEASURING INSTRUMENT, and a kind missing from it is a FALSE
+ * ❌, not a content bug. `championForm` (task #249 變身) is the case that proved
+ * it: the moment 妖狐變化 / ChangeDNA / 瘋狂皮卡丘 were bound to the real body
+ * swap, all three measured "cast accepted but produced no measurable effect" —
+ * the swap rewrites `ChampionComp.championId` + `StatsComp.championId` and
+ * emits `championForm`, and NONE of `snapshot()`'s four counters can see that
+ * (no shield, no status, no buff source, no projectile, and the body does not
+ * move). So a working transform read as a broken slot.
+ *
+ * The bar for adding a kind here is the same one the original six meet: the
+ * event fires ONLY from an effect actually resolving, never from regen, upkeep
+ * or movement. `championForm` is emitted from exactly one place —
+ * `ChampionFormSystem.setBody` — so it cannot be spoofed by anything else.
+ */
 const EFFECT_EVENTS = new Set([
   "damage",
   "heal",
@@ -272,6 +288,7 @@ const EFFECT_EVENTS = new Set([
   "projectileSpawn",
   "vfxSpawn",
   "knockdown",
+  "championForm",
 ]);
 
 function abilityForSlot(world: SimWorld, id: EntityId, slot: AbilitySlot): AbilityDef | null {
@@ -417,6 +434,11 @@ function testSlot(championId: string, slot: AbilitySlot): Cell {
     else if (after.statuses > before.statuses) channel = "status";
     else if (after.buffs > before.buffs) channel = "buff";
     else if (moved) channel = "dash";
+    // 變身 (#249) sits ABOVE `vfx` for the same reason `dash` does: it is a
+    // gameplay channel (the body's whole stat sheet is replaced), and the
+    // report's "if everything passes on vfx the measurement is too loose" note
+    // would misread it as decoration.
+    else if (fired("championForm")) channel = "championForm";
     else if (fired("vfxSpawn")) channel = "vfx";
 
     const anyEvent = events.some((t) => EFFECT_EVENTS.has(t));

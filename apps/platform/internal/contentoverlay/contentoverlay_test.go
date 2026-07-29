@@ -85,7 +85,7 @@ func TestPutDoc(t *testing.T) {
 	assert.Equal(t, want, got)
 
 	// re-editing the SAME key advances the generation but not the doc count
-	hd2, err := svc.PutDoc(ctx, "champions", "godie-e001", json.RawMessage(`{"id":"godie-e001","name":"再改一次"}`), "admin-1")
+	hd2, err := svc.PutDoc(ctx, "champions", "godie-e001", json.RawMessage(`{"id":"godie-e001","schema":"champion@1","name":"再改一次"}`), "admin-1")
 	require.NoError(t, err)
 	assert.Equal(t, 2, hd2.Generation)
 	assert.Equal(t, 1, hd2.DocCount)
@@ -99,7 +99,7 @@ func TestDeleteThenPutClearsTombstone(t *testing.T) {
 	svc, _, _ := newSvc(t)
 	ctx := context.Background()
 
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	hd, err := svc.DeleteDoc(ctx, "items", "sword-01", "admin-1")
@@ -115,7 +115,7 @@ func TestDeleteThenPutClearsTombstone(t *testing.T) {
 
 	// writing the doc again clears the tombstone (the sync engine relies on a key
 	// never being in both maps at once)
-	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","restored":true}`), "admin-1")
+	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1","restored":true}`), "admin-1")
 	require.NoError(t, err)
 	o, err = svc.Get(ctx)
 	require.NoError(t, err)
@@ -134,7 +134,7 @@ func TestDurableAcrossReload(t *testing.T) {
 	ctx := context.Background()
 
 	svc1 := contentoverlay.New(store, nil) // nil rdb: no bus, still durable
-	_, err = svc1.PutDoc(ctx, "abilities", "godie-e001.ex", json.RawMessage(`{"id":"godie-e001.ex"}`), "admin-1")
+	_, err = svc1.PutDoc(ctx, "abilities", "godie-e001.ex", json.RawMessage(`{"id":"godie-e001.ex","schema":"ability@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	// a fresh service over the SAME directory sees the write
@@ -156,7 +156,7 @@ func TestFingerprintStableForSameContent(t *testing.T) {
 	svcB, _, _ := newSvc(t)
 	ctx := context.Background()
 
-	doc := json.RawMessage(`{"id":"x","v":1}`)
+	doc := json.RawMessage(`{"id":"x","schema":"config.demo@1","v":1}`)
 	// host A writes it twice (generation 2); host B writes it once (generation 1)
 	_, err := svcA.PutDoc(ctx, "config", "x", doc, "a")
 	require.NoError(t, err)
@@ -206,7 +206,7 @@ func TestAnnouncesOnWrite(t *testing.T) {
 	_, err := ps.Receive(ctx)
 	require.NoError(t, err)
 
-	_, err = svc.PutDoc(ctx, "champions", "godie-e001", json.RawMessage(`{"id":"godie-e001"}`), "admin-1")
+	_, err = svc.PutDoc(ctx, "champions", "godie-e001", json.RawMessage(`{"id":"godie-e001","schema":"champion@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	msg, err := ps.ReceiveMessage(ctx)
@@ -225,7 +225,7 @@ func TestPublicEndpointsDoNotLeakUpdatedBy(t *testing.T) {
 	svc, _, _ := newSvc(t)
 	const adminID = "01ADMINSECRETULID000000000"
 	_, err := svc.PutDoc(context.Background(), "champions", "godie-e001",
-		json.RawMessage(`{"id":"godie-e001","name":"X"}`), adminID)
+		json.RawMessage(`{"id":"godie-e001","schema":"champion@1","name":"X"}`), adminID)
 	require.NoError(t, err)
 
 	// A real middleware, not nil. Passing nil used to be tolerated and silently

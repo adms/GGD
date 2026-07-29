@@ -162,11 +162,19 @@ export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
   ["godie-u00n", "godie-u00o"], // 魯夫
   ["godie-o01z", "godie-o02v"], // 高町奈葉
   ["godie-h020", "godie-hjai"], // 莉娜因巴斯
-  ["godie-e00j", "godie-e015", "godie-harf"], // 皇者 + 金居福/鄭先生 borrowed it
+  // 皇者 + 金居福/鄭先生 borrowed it, and 鄭先生's 26-04 洨者聖臨 form (h00w,
+  // imported by task #249) inherits the same borrowed bitmap.
+  ["godie-e00j", "godie-e015", "godie-h00w", "godie-harf"],
   ["godie-h02y", "godie-o02p"], // 初音 ⇢ 志志雄 borrowed the icon
   ["godie-e00w", "godie-e00x"], // 櫻綻剎那
   ["godie-e00k", "godie-e00z"], // 安云
   ["godie-h021", "godie-hblm"], // 賈修貝爾 ⇢ 阿強一號 borrowed the icon
+  // ── task #249 變身: the other three ALTERNATE bodies. Each was imported with
+  // its BASE half's portrait bytes verbatim (they are the same character), so
+  // the marquee would otherwise draw the identical tile twice.
+  ["godie-e00s", "godie-e010"], // 白木卡迪那 / 70-00 紮根
+  ["godie-n01b", "godie-nman"], // 憤怒的胖虎 / 40-03 萬解
+  ["godie-o030", "godie-orkn"], // 臭作 / 30-002 變態紳士
 ];
 
 /**

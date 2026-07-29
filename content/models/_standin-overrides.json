@@ -96,7 +96,29 @@
     },
     "godie-u01f": {
       "relativeScale": 2.0,
-      "note": "#77 萬夫莫敵 - 黑化張飛 — map units\\orc\\Grunt.mdl @ usca 2.00, the largest scale the map authors anywhere. Deliberately NOT capped: 「萬夫莫敵」 is supposed to tower (≈3.6u, the tallest champion in the game). If it frames badly in the arena camera, tune this one number."
+      "note": "#77 萬夫莫敵 - 黑化張飛 — map units\\orc\\Grunt.mdl @ usca 2.00, the largest scale the map authors on any PICKABLE hero (godie-o030 below is 3.00, but it is a 變身 form nobody can select). Deliberately NOT capped: 「萬夫莫敵」 is supposed to tower (≈3.6u, the tallest champion in the game). If it frames badly in the arena camera, tune this one number."
+    },
+    "godie-o030": {
+      "relativeScale": 3.0,
+      "usca": 3.0,
+      "note": "#249 電車癡漢 - 臭作 (變身型態 O030) — map usca 3.00, carried VERBATIM. This is the map's largest authored scale anywhere, and it is the entire point of the transform: the BASE unit ORKN is usca 1.00 on the SAME model, so 30-002 變態紳士 is a 3× body swap and nothing else. Deliberately NOT capped — same call as godie-u01f, and the #248 rule that a verified w3u value beats a sanity cap. NOTE FOR THE 變身 BATCH: godie-orkn/godie-o030 share a modelKey (champ.sela), so this number is the ONLY thing that would make the swap visible on screen; it is why the pair is not shipped as a playable transform yet (the client rebuilds the ChampionView on the FORM bits, but the shared mesh means size is the sole tell). If it frames badly in the arena camera, tune this one number.",
+      "note249overlay": "⚠️ OWNER DECISION PENDING — the 3.00 no longer delivers a 3× swap. Since the overlay resolver started resolving 變身 forms by w3u MODEL PATH, godie-o030 loads the very same Orkn.glb (units\\orc\\HeroShadowHunter) as godie-orkn instead of the shared voxel stand-in it was hand-tuned against. Both halves are now height-normalized off the SAME mesh, so relativeScale is directly comparable — and godie-orkn carries the GH#31-corrected 1.922 (222.22 ÷ 115.63 × 1.00) while this entry carries the #77-era verbatim 3.00. Rendered: 1.8 × 1.922 = 3.46u base vs 1.8 × 3.00 = 5.40u alternate — a 1.56× swap, not the map's 3×. The GH#31 formula would give 222.22 ÷ 115.63 × 3.00 = 5.766 here (≈10.4u on screen, taller than anything in the game and almost certainly outside the arena-camera framing). 3.00 is LEFT AS IS on note31's stated policy — 「#77/#150 既有的 18 位維持不動…需要 owner 拍板」 — because picking between 「faithful 3× 」 and 「camera-safe」 is the owner's call, not a silent edit."
+    },
+    "godie-h00w": {
+      "relativeScale": 1.0,
+      "usca": 1.0,
+      "rawHeight": 115.65,
+      "note": "#249 豪洨天王 - 鄭先生 (變身型態 H00W) — the w3u gives H00W the SAME units\\human\\HeroPaladin\\HeroPaladin.mdl as the base HARF and NEITHER form declares a usca, so both are 1.00 and both render at the identical height. Written out (rather than left absent, which also means 1.0) for the same reason godie-h02n and godie-harf are: an audit must be able to see 「this one was computed」 rather than 「this one was missed」 — and after the overlay resolver started following the model path, an absent entry beside a non-1.0 base is exactly how a 變身 form silently ends up the wrong size (see godie-n01b)."
+    },
+    "godie-n01b": {
+      "relativeScale": 1.0,
+      "usca": 1.0,
+      "note": "#249 地獄歌神 - 憤怒的胖虎 (變身型態 N01B) — map usca 1.00, carried verbatim, which is the #77 rule for a champion still WEARING A SHARED MESH. ⚠️ THIS NUMBER IS COUPLED AND MUST CHANGE TO 1.28 THE DAY THE VOXEL GATE OPENS. The w3u gives N01B the same Units\\Creeps\\EarthPandarenBrewmaster model as the base NMAN, and blizzardOverlay now RESOLVES that model for it — but `defaultPrefersVoxelBody` (packages/shared/src/content/voxelSkin/types.ts) still answers TRUE for godie-n01b, because its allow-list BLIZZARD_MODEL_CHAMPIONS is pinned id-for-id to the manifest's champId column and the manifest names only the base NMAN. So ChampionView.tryUpgradeToGlb still returns early and the champion still renders the shared voxel body, for which usca-verbatim 1.00 is correct. Once godie-n01b is added to that allow-list it adopts Nman.glb, the GH#31 formula takes over, and this must become 147.99 ÷ 115.63 × 1.00 = 1.28 — the same value godie-nman carries — or 萬解-貓王胖虎 renders 22% SHORTER than the body it transforms out of. blizzardOverlayFormScale.test.ts pins the gate state so this cannot be forgotten: open the gate and that test goes red."
+    },
+    "godie-e010": {
+      "relativeScale": 1.0,
+      "usca": 1.0,
+      "note": "#249 白木老樹精 - 白木卡迪那 (變身型態 E010, 70-00 紮根) — same buildings\\nightelf\\AncientProtector model as the base E00S, but the map SHRINKS the rooted form: E00S usca 1.10 → E010 usca 1.00. Carried verbatim, matching how godie-e00s carries its own 1.10 verbatim (a #77-era entry note31 deliberately froze), so the pair keeps the map's exact 1.10 : 1.00 ratio — the alternate is smaller than the base, which is the whole visual point of 紮根. No rawHeight: applying the GH#31 correction to only one half of a frozen pair would invert that ratio, so both halves stay on the #77 rule until note31's 18 frozen entries are re-decided together."
     },
 
     "godie-n01l": {

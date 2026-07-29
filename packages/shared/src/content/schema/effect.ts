@@ -199,11 +199,36 @@ export const zAuraDef = z
      */
     radius: z.number().positive().max(40),
     affects: z.enum(["enemy", "ally", "all"]),
-    /** default: true for ally/all, false for enemy (WC3 auras buff the caster) */
+    /**
+     * Default: true for ally/all, false for enemy — MEASURED off the retail
+     * MPQs (war3 + War3x + War3Patch merged, `Units\AbilityData.slk`), so
+     * "WC3 auras buff the caster" is the right default for FRIENDLY auras.
+     *
+     * ⚠️ An earlier version of this comment said 「25 of the 32 stock aura rows
+     * list `self`; the exceptions are exactly Aoar and Aabr」. The second half
+     * was false as written: `Aap1`–`Aap4` and `Aasl` also lack `self` — but
+     * they are ENEMY auras (`ground,enemy,…`) where `self` is meaningless.
+     * Among FRIENDLY auras the exceptions really are the two below. The 25/32
+     * count is dropped rather than restated: it was never re-measured.
+     *
+     * The exceptions are what this field is for. `Aoar` "Aura - Regeneration
+     * (Ward)" and `Aabr` "(Statue)" omit `self` (`…,friend,neutral`) while
+     * `AIgx`, the same aura on a hero's item, keeps it. 70-00 芬多精 (`A0GM`)
+     * inherits `Aoar` and does not override `targets_allowed`, so it heals
+     * 白木卡迪那's allies and NOT 白木 — `abilities/godie-e010.passive.json`
+     * writes `false` for exactly that.
+     */
     includeSelf: z.boolean().optional(),
     modifiers: z.array(zStatModifier).optional(),
     hooks: z.array(zHookDef).optional(),
-    /** WC3 aura-buff tail: seconds it lingers after leaving. Default 0. */
+    /**
+     * WC3 aura-buff tail: seconds it lingers after leaving. Default 0.
+     *
+     * There is NO number to port. `Dur`/`HeroDur` is 0 on all 32 stock aura
+     * rows and on both imported auras (`A0GM`, `A0ID`) — WC3's tail is engine
+     * behaviour, not ability data — so an authored value here is a design
+     * choice (or the anti-flicker knob), never a fidelity restoration.
+     */
     lingerSec: z.number().min(0).max(10).optional(),
   })
   .strict()

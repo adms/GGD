@@ -157,12 +157,15 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 3.0 (owner: 4=>3)", () => {
+  it("出貨的 combat-env 表把生命倍率鎖在 4.0 (owner 2026-07-29: 3=>4，推翻 #265 的 4=>3)", () => {
     cover("balance-265-env-multiplier");
+    // 這個數字 owner 已經來回改過兩次:#265 從 4 降到 3,2026-07-29 又升回 4。
+    // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
+    // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可。
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(3.0);
+    expect(doc.multipliers.maxHealth).toBe(4.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
   });

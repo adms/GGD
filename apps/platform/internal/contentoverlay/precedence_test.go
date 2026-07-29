@@ -102,10 +102,10 @@ func TestStaleWhenShippedMovesUnderneath(t *testing.T) {
 	writeShippedIndex(t, contentDir, "abilities", []shippedEntry{
 		{ID: "godie-e001.q", Path: "abilities/godie-e001.q.json", Hash: "aaaaaaaaaaaa", Size: 100},
 	})
-	writeShippedDoc(t, contentDir, "abilities/godie-e001.q.json", `{"id":"godie-e001.q","damage":100}`)
+	writeShippedDoc(t, contentDir, "abilities/godie-e001.q.json", `{"id":"godie-e001.q","schema":"ability@1","damage":100}`)
 
 	_, err := svc.PutDoc(ctx, "abilities", "godie-e001.q",
-		json.RawMessage(`{"id":"godie-e001.q","damage":250}`), "admin-1")
+		json.RawMessage(`{"id":"godie-e001.q","schema":"ability@1","damage":250}`), "admin-1")
 	require.NoError(t, err)
 
 	// before the pull: the base matches the shipped tree → clean, unflagged
@@ -156,9 +156,9 @@ func TestPrecedenceStateTable(t *testing.T) {
 	writeShippedIndex(t, contentDir, "champions", []shippedEntry{
 		{ID: "shipped-hero", Path: "champions/shipped-hero.json", Hash: "hhhhhhhhhhhh", Size: 10},
 	})
-	_, err := svc.PutDoc(ctx, "champions", "shipped-hero", json.RawMessage(`{"a":1}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "champions", "shipped-hero", json.RawMessage(`{"id":"shipped-hero","schema":"champion@1","a":1}`), "admin-1")
 	require.NoError(t, err)
-	_, err = svc.PutDoc(ctx, "champions", "brand-new", json.RawMessage(`{"a":2}`), "admin-1")
+	_, err = svc.PutDoc(ctx, "champions", "brand-new", json.RawMessage(`{"id":"brand-new","schema":"champion@1","a":2}`), "admin-1")
 	require.NoError(t, err)
 	_, err = svc.DeleteDoc(ctx, "champions", "shipped-hero-2", "admin-1")
 	require.NoError(t, err)
@@ -241,7 +241,7 @@ func TestNoContentTreeYieldsUnknownNotClean(t *testing.T) {
 	svc := contentoverlay.New(store, nil) // no WithContentDir
 	ctx := context.Background()
 
-	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	st, err := svc.Status(ctx)
@@ -266,7 +266,7 @@ func TestCorruptOverlayDegradesToShippedTree(t *testing.T) {
 	ctx := context.Background()
 
 	// a real overlay first, so there is something to lose
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	overlayPath := filepath.Join(dataDir, "content-overlay", "overlay.json")
@@ -310,7 +310,7 @@ func TestCorruptOverlayDegradesToShippedTree(t *testing.T) {
 
 	// 4. and the host RECOVERS: a new write replaces the broken file and clears
 	//    the degraded flag, with no manual repair step.
-	hd, err = svc.PutDoc(ctx, "items", "sword-02", json.RawMessage(`{"id":"sword-02"}`), "admin-1")
+	hd, err = svc.PutDoc(ctx, "items", "sword-02", json.RawMessage(`{"id":"sword-02","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 	assert.False(t, hd.Degraded)
 	hd, err = svc.Head(ctx)
@@ -327,7 +327,7 @@ func TestTruncatedOverlayDegrades(t *testing.T) {
 	svc, dataDir, _ := newSvcWithContent(t)
 	ctx := context.Background()
 
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 	overlayPath := filepath.Join(dataDir, "content-overlay", "overlay.json")
 	full, err := os.ReadFile(overlayPath)
@@ -360,7 +360,7 @@ func TestEveryMutationLeavesAnAuditLine(t *testing.T) {
 		{ID: "sword-01", Path: "items/sword-01.json", Hash: "ssssssssssss", Size: 10},
 	})
 
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-7")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-7")
 	require.NoError(t, err)
 	_, err = svc.DeleteDoc(ctx, "items", "sword-99", "admin-7")
 	require.NoError(t, err)
@@ -399,7 +399,7 @@ func TestUnauditableMutationIsRefused(t *testing.T) {
 	// "cannot write the audit trail" condition.
 	require.NoError(t, os.WriteFile(filepath.Join(dataDir, admin.ColAudit), []byte("x"), 0o600))
 
-	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err = svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.Error(t, err, "an unauditable content change must fail, not proceed quietly")
 	assert.Contains(t, err.Error(), "unaudited")
 
@@ -424,7 +424,7 @@ func TestRevertFallsBackToShippedWithoutTombstoning(t *testing.T) {
 		{ID: "sword-01", Path: "items/sword-01.json", Hash: "ssssssssssss", Size: 10},
 	})
 
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","dmg":9}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1","dmg":9}`), "admin-1")
 	require.NoError(t, err)
 
 	hd, err := svc.RevertDoc(ctx, "items", "sword-01", "admin-1")
@@ -460,7 +460,7 @@ func TestDurableFileLivesUnderDataDir(t *testing.T) {
 	svc, dataDir, _ := newSvcWithContent(t)
 	ctx := context.Background()
 
-	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01"}`), "admin-1")
+	_, err := svc.PutDoc(ctx, "items", "sword-01", json.RawMessage(`{"id":"sword-01","schema":"item@1"}`), "admin-1")
 	require.NoError(t, err)
 
 	want := filepath.Join(dataDir, "content-overlay", "overlay.json")

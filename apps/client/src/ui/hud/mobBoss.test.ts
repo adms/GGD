@@ -45,6 +45,7 @@ import {
   bossFullHeight,
   bossLifetime,
   bossRuleNote,
+  bossRuleNoteShort,
   bossSettlementLayout,
   bossSortedShares,
   bossSummonLine,
@@ -214,7 +215,19 @@ const spawnEv = (over: Record<string, unknown> = {}) => ({
   },
 });
 
-/** 3 damagers, seat 2 = you (biggest), seat 5 = the last hitter (2x weight). */
+/**
+ * 3 damagers, seat 2 = you (biggest damage), seat 5 = the last hitter.
+ *
+ * THESE NUMBERS ARE A REAL `"bonus"` PAYOUT, not a hand-waved table — checked
+ * against `splitBossBounty` so the sheet under test is one the sim can actually
+ * emit. Damage 2000 : 4000 : 1000 = 2:4:1 of a CONFIGURED pool of 2,625 gold /
+ * 1,050 xp gives 750 / 1500 / 375, and then GH#206's bonus hands the last hitter
+ * a second copy of their own 375 → 750. So the pool was 2,625 and 3,000 WAS PAID.
+ *
+ * ⚠️ WHICH IS WHY seat 5 IS PAID THE SAME AS seat 1 ON HALF THE DAMAGE. That
+ * inversion is the point of the fixture, and it is what the sheet's ordering and
+ * its rule sentence both have to survive.
+ */
 const slainEv = (over: Record<string, unknown> = {}) => ({
   type: MOB_BOSS_SLAIN_EVENT,
   tick: 1800,
@@ -224,11 +237,13 @@ const slainEv = (over: Record<string, unknown> = {}) => ({
     killerSeatId: 5,
     totalGold: 3000,
     totalXp: 1200,
+    totalLevels: 0,
     lastHitMultiplier: 2,
+    lastHitMode: "bonus",
     shares: [
-      { id: 101, seatId: 1, damage: 2000, gold: 750, xp: 300, lastHit: false },
-      { id: 102, seatId: 2, damage: 4000, gold: 1500, xp: 600, lastHit: false },
-      { id: 105, seatId: 5, damage: 1000, gold: 750, xp: 300, lastHit: true },
+      { id: 101, seatId: 1, damage: 2000, gold: 750, xp: 300, levels: 0, lastHit: false },
+      { id: 102, seatId: 2, damage: 4000, gold: 1500, xp: 600, levels: 0, lastHit: false },
+      { id: 105, seatId: 5, damage: 1000, gold: 750, xp: 300, levels: 0, lastHit: true },
     ],
     ...over,
   },
@@ -319,6 +334,23 @@ describe("the wire → the store", () => {
     // the client NEVER recomputes money: the printed total equals the sum of the
     // shares the sim sent, not a re-derivation.
     expect(v.shares.reduce((a, s) => a + s.gold, 0)).toBe(v.totalGold);
+    // GH#206's three additions, each of which the projection silently dropped
+    // until v0.9.12 — a field absent from the view can never reach a pixel.
+    expect(v.lastHitMode).toBe("bonus");
+    const lv = parseMobBossEvent(
+      slainEv({
+        totalLevels: 5,
+        shares: [
+          { id: 101, seatId: 1, damage: 2000, gold: 750, xp: 300, levels: 1, lastHit: false },
+          { id: 105, seatId: 5, damage: 1000, gold: 750, xp: 300, levels: 4, lastHit: true },
+        ],
+      }),
+      2,
+      1000,
+      1,
+    )!;
+    expect(lv.totalLevels).toBe(5);
+    expect(lv.shares.map((s) => s.levels)).toEqual([1, 4]);
   });
 
   it("a malformed payload degrades to 「沒有翻倍」, never to an invented multiplier", () => {
@@ -326,6 +358,21 @@ describe("the wire → the store", () => {
     expect(parseMobBossEvent(slainEv({ lastHitMultiplier: 0.5 }), 2, 1, 1)!.lastHitMultiplier).toBe(1);
     expect(parseMobBossEvent(slainEv({ shares: "nope" }), 2, 1, 1)!.shares).toEqual([]);
     expect(parseMobBossEvent({ type: "mobSlain", tick: 1, data: {} }, 2, 1, 1)).toBeNull();
+    // 等級 degrades to 0, never to NaN painted as 「+NaN 等」
+    expect(parseMobBossEvent(slainEv({ totalLevels: "五" }), 2, 1, 1)!.totalLevels).toBe(0);
+  });
+
+  it("AN UNKNOWN lastHitMode DEGRADES TO 「bonus」 — never to the 「總額固定」 promise", () => {
+    // ⚠️ ASSERTED IN THE DIRECTION THAT COSTS SOMETHING. Only `"weight"` licenses
+    // the panel to say 「總獎金固定」, so an absent or garbled field must land on
+    // `"bonus"`: the worst case is then a vaguer TRUE sentence instead of a false
+    // claim about the player's money. A `?? "weight"` default would pass a test
+    // that only checked 「it parsed to something」.
+    expect(parseMobBossEvent(slainEv({ lastHitMode: undefined }), 2, 1, 1)!.lastHitMode).toBe("bonus");
+    expect(parseMobBossEvent(slainEv({ lastHitMode: "WEIGHT" }), 2, 1, 1)!.lastHitMode).toBe("bonus");
+    expect(parseMobBossEvent(slainEv({ lastHitMode: 7 }), 2, 1, 1)!.lastHitMode).toBe("bonus");
+    // …and the real thing still comes through, or the mode would be dead config
+    expect(parseMobBossEvent(slainEv({ lastHitMode: "weight" }), 2, 1, 1)!.lastHitMode).toBe("weight");
   });
 
   it("a SLAIN overwrites a still-showing SPAWN — never two king panels", () => {
@@ -535,7 +582,9 @@ describe("the payout sheet", () => {
   const view = () => parseMobBossEvent(slainEv(), 2, 0, 1)!;
   const nameOf = (id: number) => ({ 1: "阿明", 2: "你", 5: "小華" })[id] ?? `座位 ${id}`;
 
-  it("reads biggest-contribution first, deterministically", () => {
+  it("reads biggest-PAYOUT first, deterministically", () => {
+    // 1500 / 750 / 750 → seat 2 leads; the two 750s tie and fall back to damage
+    // (2000 > 1000), so seat 1 precedes seat 5.
     expect(bossSortedShares(view().shares).map((s) => s.seatId)).toEqual([2, 1, 5]);
   });
 
@@ -577,23 +626,43 @@ describe("the payout sheet", () => {
     expect(mobBossOverlayRect(empty, { width: 1280, height: 720 }, { touch: false, legendUp: false })).toBeNull();
   });
 
-  it("THE RULE SENTENCE states BOTH the mechanism and its consequence", () => {
-    // ⚠️ THE WHOLE POINT OF THE PANEL. 補刀 is a damage WEIGHT, not a post-hoc
-    // doubling — and without the consequence (「總獎金固定」) the mechanism reads
-    // as an excuse for paying somebody less. Both halves are asserted, so
-    // deleting either one goes red.
-    const note = bossRuleNote(2);
-    expect(note).toContain("×2 權重");
-    expect(note).toContain("不是事後");
-    expect(note).toContain("總獎金固定");
-    // the multiplier is the MATCH's, not a hard-coded 2
-    expect(bossRuleNote(3)).toContain("×3 權重");
+  it("THE RULE SENTENCE states BOTH the mechanism and its consequence — PER MODE", () => {
+    // ⚠️ THE WHOLE POINT OF THE PANEL, and the thing GH#206 turned into a lie.
+    // Each mode needs its own mechanism AND its own consequence:
+    //   weight → the doubling is in the denominator, so the total is FIXED
+    //   bonus  → an extra copy is paid on top, so the total OVERSHOOTS the pool
+    // Both halves of both sentences are asserted, so deleting any one goes red.
+    const w = bossRuleNote(2, "weight");
+    expect(w).toContain("×2 權重");
+    expect(w).toContain("不是事後");
+    expect(w).toContain("總獎金固定");
+
+    const b = bossRuleNote(2, "bonus");
+    expect(b).toContain("再多領一份自己的份額");
+    expect(b).toContain("超出原本的獎金池");
+    expect(b).toContain("實際發出去的金額");
+    // …and it must NOT keep reciting the conserving rule (the shipped defect)
+    expect(b).not.toContain("固定");
+
+    // the multiplier is the MATCH's, not a hard-coded 2, in either mode
+    expect(bossRuleNote(3, "weight")).toContain("×3 權重");
+    expect(bossRuleNote(3, "bonus")).toContain("×3");
     expect(formatMultiplier(2)).toBe("2");
     expect(formatMultiplier(1.5)).toBe("1.5");
+
+    // the one-liner obeys the same split
+    expect(bossRuleNoteShort(2, "weight")).toContain("總獎金固定");
+    expect(bossRuleNoteShort(2, "bonus")).not.toContain("固定");
+    expect(bossRuleNoteShort(2, "bonus")).toContain("超出獎金池");
   });
 
-  it("the total line prints the pool that was ACTUALLY paid", () => {
+  it("the total line prints what was ACTUALLY paid, and omits 等級 when nobody rose", () => {
     expect(bossTotalLine(view())).toBe("總獎金 3000 金 · 1200 經驗");
+    // ⚠️ BOTH DIRECTIONS. `totalLevels: 0` is the common config and must add
+    // nothing (a permanent 「· 0 等」 is noise); a real grant must always show.
+    expect(bossTotalLine(view())).not.toContain("等");
+    const lv = parseMobBossEvent(slainEv({ totalLevels: 5 }), 2, 0, 1)!;
+    expect(bossTotalLine(lv)).toBe("總獎金 3000 金 · 1200 經驗 · 5 等");
   });
 
   it("the banner line names YOU or the summoner, never both", () => {
@@ -645,9 +714,12 @@ describe("the mounted HUD really paints it", () => {
     expect(text).toContain(BOSS_LAST_HIT_TAG);
     // ⚠️ AND THE SENTENCE, as PAINTED text. Reading it off the raw markup would
     // let an aria-label answer for a pixel (this repo has shipped that bug);
-    // `visibleText` deletes every tag WITH its attributes.
-    expect(text).toContain("×2 權重");
-    expect(text).toContain("總獎金固定");
+    // `visibleText` deletes every tag WITH its attributes. The fixture is a
+    // `"bonus"` king, so the BONUS sentence is the one that must appear — and
+    // 「總獎金固定」 must not, because it is false about these very numbers.
+    expect(text).toContain("再多領一份自己的份額");
+    expect(text).toContain("超出原本的獎金池");
+    expect(text).not.toContain("總獎金固定");
   });
 
   it("…and paints NOTHING when no king moment is live", () => {
@@ -942,9 +1014,10 @@ describe("the phone really gets the compact sheet", () => {
       expect(text).not.toContain("阿明"); // …and everyone else really is dropped
       expect(text).toContain("另有 2 名參戰者");
       // the rule survives the shrink — a phone player who did half the damage and
-      // got less than half still has to be told WHY
-      expect(text).toContain("補刀是 ×2 權重");
-      expect(text).toContain("總獎金固定");
+      // got less than half still has to be told WHY, and told the TRUE version
+      expect(text).toContain("補刀者多領一份自己的份額（×2）");
+      expect(text).toContain("超出獎金池");
+      expect(text).not.toContain("固定");
       expect(text).toContain("總獎金 3000 金");
       // and the box the text lives in is the compact one, not a clipped full one
       expect(html).toContain(`height:${BOSS_COMPACT_H}px`);
@@ -1015,5 +1088,169 @@ describe("the sheet reads the same on every screen", () => {
     expect(r, "the bail-out swallowed a placement that had room").not.toBeNull();
     expect(hudRectInViewport(r!, wide)).toBe(true);
     expect(mobBossCollisions(wide, opts)).toEqual([]);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑩ GH#206 — 分紅面板不能再說「總額固定」
+ *
+ * WHAT WENT WRONG. GH#206 changed `boss.lastHitMode` to `"bonus"` by default:
+ * the last hitter is now paid their proportional share AND ONE EXTRA COPY OF
+ * IT, so the money handed out EXCEEDS the configured pool (200% when one
+ * champion did all the damage and landed the blow). `sim/mobBoss.ts` and
+ * `MobSystem.payBossBounty` shipped that on main. THE CLIENT DID NOT MOVE. The
+ * settlement panel kept printing 「所以總獎金固定，不會因為誰補到最後一刀而變
+ * 多」 — directly underneath a total that had just exceeded the pool — and kept
+ * ranking the payout sheet by DAMAGE, which since GH#206 is not the same order
+ * as by MONEY. Neither is a stale comment; both are false statements about the
+ * player's money, printed on the player's screen.
+ *
+ * WHY THESE GUARDS READ THE RENDERED STRING. The trap here is the one
+ * `mobTint.test.ts` records in its own header: assert against the thing the
+ * function was HANDED and the assertion passes whether or not the change
+ * reached what is actually drawn. The sim-side arithmetic already has its own
+ * suite (`sim/mobBossBonus.test.ts`); nothing below re-tests it. Every
+ * assertion here comes off `renderToStaticMarkup` output run through
+ * `visibleText`, i.e. the characters a browser would paint — so 「the model
+ * computed 60,000」 cannot stand in for 「the panel said 60,000」.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * The visible text of each settlement ROW, in painted order.
+ *
+ * Splitting on the row marker means each slice holds exactly one row's markup
+ * (the next marker starts the next slice), so `rows[0]` really is the top line
+ * of the sheet — an ordering claim that `visibleText(whole panel)` could only
+ * answer by substring arithmetic.
+ */
+function settlementRows(html: string): string[] {
+  return html
+    .split('data-mob-boss="row"')
+    .slice(1)
+    .map((seg) => visibleText(seg));
+}
+
+describe("the payout panel tells the truth about GH#206 「bonus」 mode", () => {
+  beforeEach(() => inCombat());
+
+  /**
+   * 200%: seat 2 (you) did ALL 12,000 damage AND landed the blow, so a
+   * CONFIGURED POOL OF 30,000 PAID OUT 60,000 — the owner's own worked example
+   * (「極端情形第一刀就是最後一刀全傷害 = 200% 金錢跟等級獎勵」).
+   */
+  const jackpotEv = () =>
+    slainEv({
+      killerSeatId: 2,
+      killer: 102,
+      totalGold: 60000,
+      totalXp: 24000,
+      totalLevels: 6,
+      lastHitMode: "bonus",
+      shares: [
+        { id: 102, seatId: 2, damage: 12000, gold: 60000, xp: 24000, levels: 6, lastHit: true },
+      ],
+    });
+
+  it("實發 60,000 / 設定池 30,000 → 面板印出 60,000", () => {
+    // ⚠️ THE MUTATIONS THIS KILLS, both of which reproduce the configured pool
+    // on screen while every sim test stays green:
+    //   • `bossTotalLine` dividing by `lastHitMultiplier` ("de-doubling" the
+    //     total so it 「matches the pool」) → 30000
+    //   • the panel summing anything other than the paid total → not 60000
+    // The pool 30,000 never crosses the wire, so the assertion that it is ABSENT
+    // is the observable form of 「the panel is not quoting the config」.
+    beat(jackpotEv());
+    const text = visibleText(renderHud());
+    expect(text).toContain("總獎金 60000 金");
+    expect(text).toContain("24000 經驗");
+    expect(text).not.toContain("30000");
+    // …and the row agrees with the header, or the sheet contradicts itself
+    expect(settlementRows(renderOverlay())[0]).toContain("60000 金");
+  });
+
+  it("bonus 模式的文案不含「總額固定」這類保證，weight 模式仍然要有", () => {
+    // ⚠️ FAILURE SHAPE ④ IN BOTH DIRECTIONS. Asserting only 「the bonus sentence
+    // appears」 would stay green if BOTH sentences were printed; asserting only
+    // 「the weight sentence is gone」 would stay green if the note were blanked.
+    // So: the false promise must be absent from a bonus sheet, the true one must
+    // be present on a weight sheet, and each sheet must still explain itself.
+    beat(jackpotEv());
+    const bonus = visibleText(renderOverlay());
+    expect(bonus).not.toContain("固定");
+    expect(bonus).toContain("再多領一份自己的份額");
+    expect(bonus).toContain("超出原本的獎金池");
+
+    resetHudStore();
+    inCombat();
+    beat(slainEv({ lastHitMode: "weight" }));
+    const weight = visibleText(renderOverlay());
+    expect(weight).toContain("總獎金固定");
+    expect(weight).toContain("×2 權重");
+    expect(weight).not.toContain("超出");
+  });
+
+  it("排序：傷害最低但拿最多的人排在第一列", () => {
+    // A REAL bonus split: pool 10,000 over damage 4000 / 3500 / 2500 pays
+    // 4000 / 3500 / 2500, then the last hitter's own 2,500 is paid again → 5,000.
+    // So seat 5 has the LOWEST damage and the HIGHEST payout, and 12,500 was
+    // handed out of a 10,000 pool.
+    //
+    // ⚠️ THE MUTATION: put `b.damage - a.damage` back in front of the gold
+    // comparator. The old order for this sheet is [1, 2, 5] — the biggest EARNER
+    // last, on a panel whose only job is to say who got paid what. Asserting the
+    // PAINTED first row (not `bossSortedShares`) is what makes the claim about
+    // the sheet rather than about the comparator.
+    const inverted = slainEv({
+      killerSeatId: 5,
+      totalGold: 12500,
+      totalXp: 5000,
+      shares: [
+        { id: 101, seatId: 1, damage: 4000, gold: 4000, xp: 1600, levels: 0, lastHit: false },
+        { id: 102, seatId: 2, damage: 3500, gold: 3500, xp: 1400, levels: 0, lastHit: false },
+        { id: 105, seatId: 5, damage: 2500, gold: 5000, xp: 2000, levels: 0, lastHit: true },
+      ],
+    });
+    expect(bossSortedShares(parseMobBossEvent(inverted, 2, 0, 1)!.shares).map((s) => s.seatId)).toEqual(
+      [5, 1, 2],
+    );
+
+    beat(inverted);
+    const rows = settlementRows(renderOverlay());
+    expect(rows).toHaveLength(3);
+    expect(rows[0]).toContain("小華"); // seat 5 — least damage, most gold
+    expect(rows[0]).toContain("5000 金");
+    expect(rows[0]).toContain(BOSS_LAST_HIT_TAG);
+    expect(rows[0]).not.toContain("阿明"); // the top DAMAGER is not the top row
+    expect(rows[1]).toContain("阿明");
+    expect(rows[2]).toContain("你");
+  });
+
+  it("等級欄：發出去的等級要印出來，沒發就一個「等」字都不准出現", () => {
+    // ⚠️ BOTH DIRECTIONS, because 「render nothing」 passes any one-sided version
+    // of this test. `totalLevels` / `shares[].levels` reach the client only since
+    // v0.9.12; before that GH#206's 等級 reward was invisible to the player it
+    // was granted to.
+    beat(
+      slainEv({
+        totalLevels: 5,
+        shares: [
+          { id: 101, seatId: 1, damage: 2000, gold: 750, xp: 300, levels: 1, lastHit: false },
+          { id: 105, seatId: 5, damage: 1000, gold: 1500, xp: 600, levels: 4, lastHit: true },
+        ],
+      }),
+    );
+    const paid = renderOverlay();
+    expect(visibleText(paid)).toContain("總獎金 3000 金 · 1200 經驗 · 5 等");
+    const rows = settlementRows(paid);
+    expect(rows[0]).toContain("+4 等"); // seat 5 leads on gold and carries 4 levels
+    expect(rows[1]).toContain("+1 等");
+
+    // …and the common config — no 等級 bounty at all — paints no 等 anywhere,
+    // header or row. (The rule sentence deliberately avoids the character; see
+    // BOSS_RULE_NOTE_BONUS.)
+    resetHudStore();
+    inCombat();
+    beat(slainEv());
+    expect(visibleText(renderOverlay())).not.toContain("等");
   });
 });

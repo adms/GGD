@@ -14,7 +14,7 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
 import { TICK_MS } from "@ggd/shared/constants";
-import { ChampionView } from "./views/ChampionView";
+import { ChampionView, type FormAttachmentSpec } from "./views/ChampionView";
 import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView";
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
@@ -172,6 +172,19 @@ export interface ViewContentHooks {
    * identity, the same neutrality `championTintFor` is held to.
    */
   voxelSkinFor?(e: EntityViewState): VoxelSkinRecipe | null | undefined;
+  /**
+   * 變身球體掛件 (#249 GH#288) — 例:超級賽亞人悟空頭上那顆 `Goku3head`。
+   *
+   * 為什麼不能從 `e.key` 推:`godie-ogrh` 與 `godie-o00x` **共用**
+   * `imported.goku`,所以 modelKey 對這一對根本不會變(和 FORM bits 存在的
+   * 理由完全一樣)。而 alternate 的 championId 只有合成根算得出來
+   * (seat 表 + FORM bits),於是又是同一條 client-08 的注入縫。
+   *
+   * `null` = 這個 body 沒有掛件。**基本型永遠是 null**,因為
+   * `resolveFormVisual` 的第一道關卡是 `isAlternateForm` —— 「基本型悟空不可以
+   * 長出超三的頭」在資料層就成立,不是靠這裡記得判斷。
+   */
+  formAttachmentFor?(e: EntityViewState): FormAttachmentSpec | null | undefined;
 }
 
 /**
@@ -748,6 +761,17 @@ export class EntityViewRegistry {
         // own colours while the mesh is still in flight.
         view.setVoxelLook(override?.voxel);
         view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
+      }
+      // #249 GH#288 變身球體掛件 —— OUTSIDE the `!upgradeAttempted` gate above,
+      // and that is load-bearing: the attach point lives in the body glb's own
+      // frame, so it can only be hung AFTER the async adopt resolves, which is
+      // strictly LATER than the frame that started it. Inside that gate the
+      // call would happen exactly once, always too early, and 悟空 would
+      // transform into an identically-headed 悟空 with every test still green
+      // (失敗形態 ②). `setFormAttachment` is idempotent and only latches once
+      // it has really started a load, so asking every frame is free.
+      if (args.loadModels !== false) {
+        view.setFormAttachment(this.assets, this.content.formAttachmentFor?.(e) ?? null);
       }
       // #244 — the growth tier, read from two bits of the authoritative flags
       // word. Ordered AFTER the tint on purpose: `applyTint` owns the composed

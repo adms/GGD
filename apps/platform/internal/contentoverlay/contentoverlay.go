@@ -25,12 +25,24 @@
 // separate, later piece of work — #189 is only the durable store it needs to
 // exist first.
 //
-// ── WHAT THIS PACKAGE DOES NOT DO ────────────────────────────────────────────
-// It does not validate content against the Zod schemas — those live in
-// TypeScript and cannot run here. The admin console validates before it writes
-// (the shared schemas it already bundles), and the game loader validates again
-// on ingest and fail-safes a bad doc. This store keeps opaque, structurally
-// sane JSON and is not the schema authority. It also never touches content/.
+// ── WHAT THIS PACKAGE DOES AND DOES NOT VALIDATE (#283) ──────────────────────
+// It is NOT the schema authority: the Zod schemas live in TypeScript and cannot
+// run here. But "not the authority" used to be written as "checks nothing", and
+// that was a hole — the admin console's Zod gate runs in the BROWSER, while the
+// thing anyone can reach is this HTTP endpoint.
+//
+// So every write now goes through validate.go, which enforces a deliberate
+// SUBSET of what the loader enforces (known collection · JSON object · bounded
+// depth · doc.id == the key · a `schema` tag · finite numbers · and per-field
+// TYPE conformance against the shipped doc, which needs no transcription
+// because content/ is itself Zod-validated at build time). The contract and the
+// two knowing exceptions are spelled out at the top of validate.go.
+//
+// Downstream is NOT a second safety net, whatever the old comment here said:
+// packages/shared/src/content/loader.ts throws one error for the whole load, so
+// both consumers drop THE ENTIRE OVERLAY on a single bad doc rather than
+// fail-safing that doc. That is precisely why the check has to happen here, at
+// write time. This store still never touches content/.
 package contentoverlay
 
 import (
@@ -450,9 +462,9 @@ func (s *Service) Head(ctx context.Context) (Head, error) {
 }
 
 // PutDoc upserts one content doc into the overlay and advances the generation.
-// The doc is stored as the exact (compacted) bytes the caller sent — this store
-// is not the schema authority (see the package header). Clears any tombstone on
-// the same key: writing a doc un-deletes it.
+// The doc is stored as the exact (compacted) bytes the caller sent, AFTER the
+// write gate in validate.go has accepted it (#283). Clears any tombstone on the
+// same key: writing a doc un-deletes it.
 func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.RawMessage, by string) (Head, error) {
 	if err := validateKey(collection, id); err != nil {
 		return Head{}, err
@@ -463,6 +475,9 @@ func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.Ra
 	}
 	if len(compact) > MaxDocBytes {
 		return Head{}, httpx.BadRequest("content doc too large")
+	}
+	if err := s.validateDoc(collection, id, compact); err != nil {
+		return Head{}, err
 	}
 
 	s.mu.Lock()
@@ -479,6 +494,25 @@ func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.Ra
 	delete(o.Deleted, k)
 	o.Bases[k] = s.captureBase(collection, id, by)
 	return s.commit(ctx, o, by, "put", k)
+}
+
+// validateDoc runs the write gate (validate.go) for one upsert, handing it the
+// repo's own version of this doc when the shipped tree can be read.
+//
+// An unreadable/absent shipped doc yields nil bytes, which DOWNGRADES the gate
+// to the envelope rules rather than rejecting: a host with no CONTENT_DIR, or an
+// operator adding a doc the repo has never had, must still be able to save. The
+// same "unanswerable ≠ absent" rule captureBase follows.
+func (s *Service) validateDoc(collection, id string, compact json.RawMessage) error {
+	var shipped []byte
+	raw, err := s.shipped.Doc(collection, id)
+	if err == nil {
+		shipped = raw
+	} else if !errors.Is(err, ErrNoContentTree) && !os.IsNotExist(err) {
+		slog.Debug("contentoverlay: no shipped doc to compare this edit against",
+			"collection", collection, "id", id, "err", err)
+	}
+	return ValidateDoc(collection, id, compact, shipped)
 }
 
 // captureBase records what the SHIPPED tree said about this key at edit time —

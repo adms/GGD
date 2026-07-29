@@ -1,0 +1,25 @@
+{
+  "id": "form-visuals",
+  "schema": "config.form-visuals@1",
+  "note": "變身「看得出來」的三個旋鈕。key 一律是變身態(Emeu)的 championId —— 基本型填在這裡也不會生效(resolveFormVisual 會擋)。tint 是乘法(和 #49 同一條管線),scaleMult 疊在 #150 身高正規化之上,attachModelKey 是執行期掛的第二個 glb(不可以烘進本體,悟空兩態共用 imported.goku)。",
+  "enabled": true,
+  "tintStrength": 1,
+  "scaleStrength": 1,
+  "attachmentsEnabled": true,
+  "forms": {
+    "godie-o00x": {
+      "note": "掛件=w3x A0MJ 球體(悟空超3)=Goku3head.mdx,掛點 origin 也是 w3x 自己記的;金色 tint 與 1.08 倍身高是美術決定 —— w3u 的 Ogrh/O00X 兩半 tint 皆 [1,1,1]、usca 皆未設(=1.0),A09E 觸發也沒有 SetUnitVertexColor",
+      "tint": [1.45, 1.3, 0.55],
+      "scaleMult": 1.08,
+      "attachModelKey": "imported.goku3head",
+      "attachBone": "origin",
+      "attachScale": 0.3221,
+      "attachOffsetY": 0
+    },
+    "godie-e00l": {
+      "note": "w3x 完全沒有視覺差:E002/E00L 同 HeroSaber.mdl、同 tint [1,1,1]、同 usca 1.10,E00L 多的 A05M/A0M3 都沒有 art,A0DZ 觸發也不改顏色。青白光暈與 1.04 倍身高皆為美術決定",
+      "tint": [0.72, 0.92, 1.35],
+      "scaleMult": 1.04
+    }
+  }
+}

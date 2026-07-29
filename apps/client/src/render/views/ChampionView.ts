@@ -183,6 +183,22 @@ export interface ChampionViewOptions {
 export const TARGET_HEIGHT = 1.8;
 
 /**
+ * #249 GH#288 — 變身球體掛件,解析成渲染層看得懂的樣子。
+ *
+ * 和 `@ggd/shared/content` 的 `FormAttachment` 差在 `glbPath`:那邊記的是
+ * models/ 的文件 id(`imported.goku3head`),要先過 ContentDb 才變成路徑。
+ * 這個轉換發生在合成根(GameApp),因為 render/** 不查內容註冊表。
+ */
+export interface FormAttachmentSpec {
+  /** content 相對路徑,例如 `assets/models/imported/goku3head.glb` */
+  readonly glbPath: string;
+  /** `"origin"` = 模型原點(w3x 對這兩顆球體記的值);其他值當骨頭名。 */
+  readonly bone: string;
+  readonly scale: number;
+  readonly offsetY: number;
+}
+
+/**
  * A glb whose measured native height is below this (world units at scale 1) is
  * treated as unmeasurable — a degenerate / geometry-less rig — and falls back to
  * the model doc's declared `scale` rather than producing an absurd normalization
@@ -219,6 +235,22 @@ export class ChampionView {
 
   private clipAnimator: ClipAnimator | null = null;
   private glbRoot: TransformNode | null = null;
+  /**
+   * #249 GH#288 —— 變身球體掛件(悟空的超三頭)。
+   *
+   * ⚠️ 為什麼是執行期掛,不是烘進 glb:`godie-ogrh` 與 `godie-o00x` 共用
+   * `imported.goku`,而 `Gokuhead.mdx` 已經在 #267 被烘進去了。再烘一顆
+   * `Goku3head.mdx` 進同一個檔 ⇒ **基本型悟空也會長出超三的頭**。
+   *
+   * 生命週期綁在這個 view 上,而不是綁在某個 map:變身時
+   * `EntityViewRegistry` 會整個丟掉 view 重建(見那邊的 IDENTITY 註解),
+   * 所以「變回本體 = 掛件消失」是靠 `dispose()`,不需要任何解除邏輯。
+   */
+  private formAttachRoot: TransformNode | null = null;
+  /** 掛件複製出來的 AnimationGroup —— 它們不是節點,`root.dispose()` 碰不到。 */
+  private formAttachGroups: { dispose(): void }[] = [];
+  /** 一次性閂:掛件的非同步載入只發起一次(和 `upgradeStarted` 同樣的道理)。 */
+  private formAttachStarted = false;
   /** procedural-fallback materials this view repaints from the champion's seed. */
   private skinMat!: StandardMaterial;
   private accentMat!: StandardMaterial;
@@ -1478,6 +1510,80 @@ export class ChampionView {
   }
 
   /**
+   * 掛上變身態的球體掛件(#249 GH#288)。冪等,而且**只有 alternate 那一半**
+   * 會被呼叫到 —— 決定權在 `resolveFormVisual`,不在這裡。
+   *
+   * 執行順序上它必須排在 `.glb` 落地之後:掛點是本體 glb 的原生座標系,本體還沒
+   * 到就沒有東西可以掛。所以 `spec` 為 null 或 `glbRoot` 還沒有時**不點閂**,
+   * registry 下一幀會再問一次 —— 這和 `tryUpgradeToGlb` 對 `doc === null`
+   * 的處理是同一個模式(「還不行」≠「不要」)。
+   *
+   * @param spec null = 這一態沒有掛件(或後台把掛件關掉了) → 什麼都不做。
+   */
+  setFormAttachment(assets: AssetManager, spec: FormAttachmentSpec | null): void {
+    if (this.disposed || this.formAttachStarted) return;
+    if (!spec || !this.glbRoot) return; // 「還不行」——不點閂,下一幀再來
+    this.formAttachStarted = true;
+    const bodyRoot = this.glbRoot;
+    void assets
+      .load(spec.glbPath)
+      .then((container) => {
+        if (!container || this.disposed || this.formAttachRoot) return;
+        const inst = container.instantiateModelsToScene(
+          (n) => `${this.entityId}-form-${n}`,
+          false,
+          { doNotInstantiate: true },
+        );
+        const host = this.formAttachHost(spec.bone) ?? bodyRoot;
+        const attachRoot = new TransformNode(
+          `champ-${this.entityId}-formpart`,
+          this.root.getScene(),
+        );
+        attachRoot.parent = host;
+        for (const node of inst.rootNodes) node.parent = attachRoot;
+        const meshes = attachRoot.getChildMeshes(false);
+        if (meshes.length === 0) {
+          // 幾何是空的(WC3 dummy)—— 丟掉,別在場景裡留一個看不見的節點。
+          // 和 `tryUpgradeToGlb` 的 EMPTY-GLB 分支同一個判斷。
+          inst.dispose();
+          attachRoot.dispose(false, false);
+          return;
+        }
+        for (const mesh of meshes) {
+          mesh.isPickable = false;
+          // 掛件跟本體一起閃(#3 受擊白光),否則變身態被打的時候頭是不會反應的。
+          this.flashMeshes.push(mesh);
+        }
+        attachRoot.scaling.setAll(spec.scale > 0 ? spec.scale : 1);
+        attachRoot.position.y = spec.offsetY;
+        this.formAttachRoot = attachRoot;
+        this.formAttachGroups = inst.animationGroups as unknown as { dispose(): void }[];
+        // 本體已經死透了才載完 —— 跟著隱藏,不要憑空冒出一顆頭。
+        if (this.vanishedFlag) attachRoot.setEnabled(false);
+      })
+      .catch((err) => {
+        console.warn(`[ChampionView] form attachment failed (${spec.glbPath}):`, err);
+      });
+  }
+
+  /**
+   * 掛點解析:`"origin"`(w3x 對 A0MI/A0MJ 記的值)→ 模型原點(回傳 null,
+   * 呼叫端用 `glbRoot`);其他值當骨頭名稱找對應的 TransformNode。
+   *
+   * 找不到就回 null 而不是丟例外 —— 一個打錯的骨頭名字應該讓頭掛在原點,
+   * 不應該讓整場比賽的渲染迴圈爆掉。
+   */
+  private formAttachHost(bone: string): TransformNode | null {
+    if (!bone || bone === "origin" || !this.glbRoot) return null;
+    const want = bone.toLowerCase();
+    for (const node of this.glbRoot.getDescendants(false)) {
+      const n = node as TransformNode;
+      if (typeof n.name === "string" && n.name.toLowerCase().endsWith(want)) return n;
+    }
+    return null;
+  }
+
+  /**
    * MATERIAL OWNERSHIP — why this does NOT pass `disposeMaterialAndTextures`.
    * `tryUpgradeToGlb` instantiates with `cloneMaterials: false`, so every .glb
    * child mesh points straight at the AssetContainer's material — the object
@@ -1496,6 +1602,13 @@ export class ChampionView {
     // FIRST, while their targets are still alive.
     this.clipAnimator?.dispose();
     this.clipAnimator = null;
+    // #249 GH#288: the form part's cloned AnimationGroups are not nodes either
+    // (same reason as the ClipAnimator above). Freed here; the NODES go with
+    // `root.dispose()` below because the part is parented under it — which is
+    // exactly why 「變回本體 = 掛件消失」 needs no detach path at all.
+    for (const g of this.formAttachGroups) g.dispose();
+    this.formAttachGroups = [];
+    this.formAttachRoot = null;
     const scene = this.root.getScene();
     this.root.dispose(false, false);
     // The generated atlas is CACHE-OWNED and refcounted per championId (six

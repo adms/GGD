@@ -55,9 +55,11 @@ import {
   spawnMob,
   summonMobBoss,
   mobProfile,
+  mobBountyRules,
   mobsAliveInZone,
 } from "../mobs";
-import { bossSummonsAt, splitBossBounty, type BossDamageEntry } from "../mobBoss";
+import type { MobKind } from "../components";
+import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountyShare } from "../mobBoss";
 import { standstillBlocks } from "../combatFeel";
 
 export function mobSystem(world: SimWorld): void {
@@ -188,7 +190,7 @@ export function mobSystem(world: SimWorld): void {
     // that would be a 100-kill loop that ends one kill early forever).
     // Returned to the flat path for nothing — the branch is total.
     if (dead.kind === "boss") {
-      payBossBounty(world, id, killer, rules);
+      payMobBounty(world, id, "boss", killer, rules);
       // A boss kill is still A KILL: `onKill` passives and the 連殺 combo fire
       // exactly as they do for a zombie (#244's ruling), before the entity goes.
       if (killer !== null && world.champion.has(killer)) {
@@ -199,12 +201,34 @@ export function mobSystem(world: SimWorld): void {
       continue;
     }
 
+    // ── 特殊殭屍分紅 (#288) ───────────────────────────────────────────────
+    // BEFORE the killer gate and OUTSIDE it, exactly like the king's: a 特殊殭屍
+    // that drowned in the fire ring still owes every champion who chipped it.
+    // `null` back means 「這種怪不走獎池」 (every 一般殭屍, and a special in an
+    // arena that authored none), which is what keeps the pre-#288 flat reward
+    // below reachable and byte-identical. An EMPTY ARRAY is a different answer —
+    // 「走獎池,但沒有人可以領」 — and must NOT fall back to the flat reward, or a
+    // fire-ring kill would pay the pool AND the minion reward.
+    const shares = payMobBounty(world, id, dead.kind, killer, rules);
+
     if (killer !== null && world.champion.has(killer)) {
       // #262: a 特殊殭屍 pays `rewardMult`× — the reason to hunt it. Rounded so
       // gold stays integral (the wallet and every display treat it as whole).
-      const mult = mobProfile(rules, dead.kind).rewardMult;
-      grantGold(world, killer, Math.round(rules.rewardGold * mult));
-      grantXp(world, killer, Math.round(rules.rewardXp * mult));
+      //
+      // #288 — SKIPPED ENTIRELY once the special has a 分紅獎池: the pool IS the
+      // reward, and paying both would hand the last hitter their share plus a
+      // second, unexplained 60 gold. `gold` still ends up on the `mobSlain`
+      // event either way, because the floating 「+N 金」 over the corpse has to be
+      // the money that actually entered THIS killer's wallet.
+      let gold: number;
+      if (shares === null) {
+        const mult = mobProfile(rules, dead.kind).rewardMult;
+        gold = Math.round(rules.rewardGold * mult);
+        grantGold(world, killer, gold);
+        grantXp(world, killer, Math.round(rules.rewardXp * mult));
+      } else {
+        gold = shares.find((s) => s.id === killer)?.gold ?? 0;
+      }
       const n = (world.mobKills.get(killer) ?? 0) + 1;
       world.mobKills.set(killer, n);
       if (rules.killsPerLevel > 0 && n % rules.killsPerLevel === 0) {
@@ -235,7 +259,7 @@ export function mobSystem(world: SimWorld): void {
         id,
         killer,
         killerSeatId: world.team.get(killer)?.seatId ?? -1,
-        gold: Math.round(rules.rewardGold * mult),
+        gold,
         kills: n,
         kind: dead.kind,
       });
@@ -263,43 +287,62 @@ export function mobSystem(world: SimWorld): void {
 }
 
 /**
- * Pay out the king's prize pool (task #262) and announce the split.
+ * Pay out a mob's prize pool and announce the split — the 殭屍王 (task #262) and,
+ * since #288, the 特殊殭屍 (owner 2026-07-29: 「特殊殭屍也照傷害比例分,金錢
+ * +5,000 · 等級提升 +5」).
+ *
+ * ONE function for both kinds ON PURPOSE. The king's payout was five separate
+ * decisions — read the ledger, drop damagers who are no longer champions, split,
+ * report the GRANTED levels rather than the requested ones, and put the whole
+ * sheet on the wire — and every one of them is a decision the special needs too.
+ * A second copy would have re-derived four of them slightly differently, which
+ * is precisely how one settlement panel ends up telling the truth and the other
+ * one does not. `kind` picks the pool via `mobBountyRules`; nothing else forks.
  *
  * The arithmetic — proportional shares, the last hitter's 翻倍 weight, and the
- * rounding remainder — lives in `sim/mobBoss.ts` as a pure function. This
- * wrapper does only the three things that need the world: read the ledger,
- * filter it to entities that are still CHAMPIONS (a damager who has since
- * disconnected/despawned cannot be paid), and grant.
+ * rounding remainder — lives in `sim/mobBoss.ts` as a pure function.
  *
  * ORDER IS FIXED: `splitBossBounty` sorts by ascending entity id, and the grants
  * below walk that sorted array, so two hosts replaying the same match hand out
  * byte-identical amounts in a byte-identical order.
+ *
+ * RETURNS `null` when this kind pays NO pool (every 一般殭屍, a special with no
+ * `bounty` block) so the caller can fall back to the flat per-kill reward, and a
+ * possibly-EMPTY array when it does. Those two are different answers and the
+ * caller must not conflate them.
  */
-function payBossBounty(
+function payMobBounty(
   world: SimWorld,
-  bossId: EntityId,
+  mobId: EntityId,
+  kind: MobKind,
   killer: EntityId | null,
   rules: MobRules,
-): void {
-  const boss = rules.boss;
-  const ledger = world.bossDamage.get(bossId);
+): BossBountyShare[] | null {
+  const bounty = mobBountyRules(rules, kind);
+  if (bounty === null) return null;
+  const lastHitter = killer !== null && world.champion.has(killer) ? killer : null;
+  // 「照傷害比例分」 vs 「全額給補刀的人」 (#288's `special.splitByDamage`) is
+  // expressed by WHAT GOES INTO THE TABLE, not by a second payout routine: an
+  // empty damager list is exactly `splitBossBounty`'s 「沒有人造成可測量的傷害」
+  // branch, which hands the entire pool to the last hitter and — deliberately —
+  // applies no 翻倍 on top. Same rounding, same event, same determinism, and the
+  // switch cannot drift away from the split path it is the alternative to.
   const damagers: BossDamageEntry[] = [];
-  if (ledger) {
-    for (const [id, dmg] of ledger) {
-      if (world.champion.has(id)) damagers.push([id, dmg]);
+  if (bounty.splitByDamage) {
+    const ledger = world.bossDamage.get(mobId);
+    if (ledger) {
+      for (const [id, dmg] of ledger) {
+        if (world.champion.has(id)) damagers.push([id, dmg]);
+      }
     }
   }
-  const lastHitter = killer !== null && world.champion.has(killer) ? killer : null;
-  const shares =
-    boss === null
-      ? []
-      : splitBossBounty(
-          damagers,
-          { gold: boss.bountyGold, xp: boss.bountyXp, levels: boss.bountyLevels },
-          lastHitter,
-          boss.lastHitMultiplier,
-          boss.lastHitMode,
-        );
+  const shares = splitBossBounty(
+    damagers,
+    { gold: bounty.gold, xp: bounty.xp, levels: bounty.levels },
+    lastHitter,
+    bounty.lastHitMultiplier,
+    bounty.lastHitMode,
+  );
   // 等級提升 (GH#206). `grantLevels` RETURNS what it managed to hand out — the
   // request and the grant diverge at `LEVEL_CAP`, and it is the GRANT that the
   // settlement panel must show. Accumulated here rather than re-derived from
@@ -321,8 +364,43 @@ function payBossBounty(
   // client can show the settlement instead of guessing from a gold counter that
   // jumped. `killerSeatId` is what a local-seat cue gates on, exactly like
   // `guardianSlain` / `coinPickedUp`.
+  //
+  // ── #288: WHY THE 特殊殭屍 REUSES `mobBossSlain` RATHER THAN GETTING ITS OWN
+  //    EVENT NAME ─────────────────────────────────────────────────────────────
+  // Both were on the table (the task asked for one, with the reason written
+  // down). Reuse wins on three counts:
+  //
+  //  1. IT ACTUALLY REACHES THE PLAYER TODAY. `mobBossSlain` is already in
+  //     `FANNED_OUT_EVENT_TYPES`, already projected by the client's
+  //     `parseMobBossEvent`, and already drives the 分紅結算 panel + the 中獎
+  //     cue. A NEW name would cross the wire and land on zero consumers — the
+  //     split computed, transmitted, and shown to nobody. That is failure shape
+  //     ① 畫面外 wearing ②'s clothes, and it is not fixable from this lane
+  //     (apps/client/** is out of scope here).
+  //  2. THE PAYLOAD IS THE SAME CLAIM. 「這些人各打了多少,各領多少金/經驗/等級,
+  //     誰補的刀」 — identical fields, identical meaning, produced by the identical
+  //     `splitBossBounty`. Two names for one sentence is how two settlement
+  //     panels start disagreeing about money.
+  //  3. `kind` KEEPS THEM DISTINGUISHABLE. The client can print 特殊殭屍 instead
+  //     of 殭屍王 (and gate its own cue) off one string, with no wire-schema
+  //     change; an unknown key is ignored by `parseMobBossEvent`, so today's
+  //     client keeps working unchanged.
+  //
+  // The cost, stated plainly: until the client reads `kind`, a special's
+  // settlement renders with the king's wording and takes the king's single
+  // panel slot. A 特殊殭屍 now carries 12,000+ hp, so this fires a handful of
+  // times a round, not per zombie — the panel is not being spammed.
   world.emit("mobBossSlain", {
-    id: bossId,
+    id: mobId,
+    // #288 — 「哪一種怪」. `"boss"` for the king, `"special"` for a 特殊殭屍.
+    kind,
+    // #288 — THE ZONE, WHICH THIS EVENT COULD ALWAYS HAVE CARRIED. The client's
+    // projection comments assume the entity is gone by now and falls back to
+    // inheriting the zone from the matching `mobBossSpawn`; it is NOT gone (the
+    // caller destroys it after this returns), and a 特殊殭屍 has no
+    // `mobBossSpawn` to inherit from, so without this line every special's
+    // payout sheet arrives with zone -1 and shows up in the OTHER arena too.
+    zone: world.mob.get(mobId)?.zone ?? -1,
     killer: lastHitter,
     killerSeatId: lastHitter === null ? -1 : (world.team.get(lastHitter)?.seatId ?? -1),
     // ⚠️ THESE ARE SUMS OF WHAT WAS PAID, NOT THE CONFIGURED POOL — and since
@@ -332,8 +410,8 @@ function payBossBounty(
     totalGold: shares.reduce((a, s) => a + s.gold, 0),
     totalXp: shares.reduce((a, s) => a + s.xp, 0),
     totalLevels: paidLevels,
-    lastHitMultiplier: boss?.lastHitMultiplier ?? 1,
-    lastHitMode: boss?.lastHitMode ?? "bonus",
+    lastHitMultiplier: bounty.lastHitMultiplier,
+    lastHitMode: bounty.lastHitMode,
     shares: shares.map((s) => ({
       id: s.id,
       seatId: world.team.get(s.id)?.seatId ?? -1,
@@ -345,6 +423,7 @@ function payBossBounty(
       lastHit: s.lastHit,
     })),
   });
+  return shares;
 }
 
 /**
@@ -381,8 +460,8 @@ export function beginCombatMobs(
 export function endCombatMobs(world: SimWorld): void {
   for (const id of [...world.mob.keys()]) world.destroy(id);
   world.mob.clear();
-  // #262: a king despawned at round end pays NOBODY (same silent-despawn rule
-  // every mob follows here), so its damage ledger is dead weight. Cleared
+  // #262 (+#288's 特殊殭屍): a ledgered mob despawned at round end pays NOBODY
+  // (same silent-despawn rule every mob follows), so its ledger is dead weight. Cleared
   // wholesale rather than relying on `destroy` alone, so a ledger keyed by an id
   // that never reached `world.mob` cannot survive the round either.
   world.bossDamage.clear();

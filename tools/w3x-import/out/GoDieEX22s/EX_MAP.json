@@ -2,8 +2,8 @@
   "unlockTech": "R00R",
   "unlockLevel": 30,
   "totalR00RAbilities": 100,
-  "championsWithEx": 103,
-  "championsWithoutEx": 10,
+  "championsWithEx": 106,
+  "championsWithoutEx": 11,
   "heroes": {
     "godie-e001": {
       "heroRawcode": "e001",
@@ -286,6 +286,16 @@
         "A10P"
       ]
     },
+    "godie-h00w": {
+      "heroRawcode": "h00w",
+      "heroNameZh": "鄭先生",
+      "exAbility": "A106",
+      "nameZh": "26-002 鄉民的正義",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp",
+      "allR00R": [
+        "A106"
+      ]
+    },
     "godie-h01n": {
       "heroRawcode": "h01n",
       "heroNameZh": "黑崎一護",
@@ -559,6 +569,16 @@
         "A0SE"
       ]
     },
+    "godie-n01b": {
+      "heroRawcode": "n01b",
+      "heroNameZh": "憤怒的胖虎",
+      "exAbility": "A10C",
+      "nameZh": "40-002 環繞音響",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+      "allR00R": [
+        "A10C"
+      ]
+    },
     "godie-n01c": {
       "heroRawcode": "n01c",
       "heroNameZh": "勇者小呆",
@@ -738,6 +758,16 @@
       "aart": "ReplaceableTextures\\CommandButtons\\BTNScrollOfProtection.blp",
       "allR00R": [
         "A0XY"
+      ]
+    },
+    "godie-o030": {
+      "heroRawcode": "o030",
+      "heroNameZh": "臭作",
+      "exAbility": "A0YT",
+      "nameZh": "30-002 變態紳士",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+      "allR00R": [
+        "A0YT"
       ]
     },
     "godie-obla": {
@@ -1042,6 +1072,7 @@
   },
   "withoutEx": [
     "godie-e00u",
+    "godie-e010",
     "godie-e012",
     "godie-h021",
     "godie-h02n",

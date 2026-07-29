@@ -96,6 +96,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "mob.radius",
   "mob.modelKey",
   "mob.championId",
+  // 由誰擔任:指定 / 隨機 (#289)
+  "mob.championSource",
   "mob.sizeMult",
   "mob.tintStrength",
   "mob.baseLevel",
@@ -119,6 +121,7 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.radius",
   "boss.modelKey",
   "boss.championId",
+  "boss.championSource",
   "boss.sizeMult",
   "boss.hpMult",
   "boss.bountyGold",
@@ -127,6 +130,14 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.lastHitMultiplier",
   "boss.lastHitMode",
   "boss.countOverkill",
+  // 從英雄推導 (GH#206) — 生命與能力屬性 = 該設定英雄的 N 倍, +M, 移速 ×K, 等級 99
+  "boss.heroHpMult",
+  "boss.heroDamageMult",
+  "boss.hpFlatBonus",
+  "boss.moveSpeedMult",
+  "boss.heroLevel",
+  // 等級來源:跟場上最高 / 指定 / 沿用回合 (#290)
+  "boss.heroLevelSource",
   // 特殊殭屍 (#262)
   "special.chancePercent",
   "special.hpMult",
@@ -136,7 +147,23 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "special.rewardMult",
   "special.modelKey",
   "special.championId",
+  "special.championSource",
   "special.sizeMult",
+  // 從英雄推導 (GH#206) — no `moveSpeedMult`: the special already has one, and
+  // it already means 「×一般殭屍」, which is the only anchor that reads correctly.
+  "special.heroHpMult",
+  "special.heroDamageMult",
+  "special.hpFlatBonus",
+  "special.heroLevel",
+  "special.heroLevelSource",
+  // 分紅獎池 (#288) — owner 2026-07-29 「特殊殭屍也照傷害比例分」
+  "special.bountyGold",
+  "special.bountyXp",
+  "special.bountyLevels",
+  "special.lastHitMultiplier",
+  "special.lastHitMode",
+  "special.splitByDamage",
+  "special.countOverkill",
 ];
 
 // ---------------------------------------------------------------------------
@@ -324,6 +351,10 @@ describe("每一個欄位 are reachable and labelled", () => {
       "mob.radius": "0.75",
       "mob.modelKey": "champ.mob.other",
       "mob.championId": "godie-hblm",
+      // #289 — every sentinel differs from the shipped value (mob=fixed,
+      // boss=random, special=random), so a `configFromForm` line that was
+      // never written shows up as the SHIPPED value rather than as a match.
+      "mob.championSource": "random",
       "mob.sizeMult": "1.4",
       "mob.tintStrength": "0.4",
       "mob.baseLevel": "5",
@@ -345,8 +376,19 @@ describe("每一個欄位 are reachable and labelled", () => {
       "boss.moveSpeed": "2.9",
       "boss.radius": "2.1",
       "boss.championId": "godie-efur",
+      "boss.championSource": "fixed",
       "boss.sizeMult": "7.5",
       "boss.hpMult": "55",
+      // GH#206 — the hero-derived block. Distinct from everything else here so
+      // an omitted `configFromForm` line shows up as this exact number missing.
+      "boss.heroHpMult": "17",
+      "boss.heroDamageMult": "6",
+      "boss.hpFlatBonus": "88000",
+      "boss.moveSpeedMult": "0.35",
+      "boss.heroLevel": "77",
+      // #290 — not the shipped "fixed", so a `configFromForm` line that never
+      // wrote this key shows up as a diff instead of matching by luck.
+      "boss.heroLevelSource": "round",
       "boss.modelKey": "champ.mob.king-double",
       "boss.bountyGold": "4200",
       "boss.bountyXp": "1600",
@@ -361,8 +403,26 @@ describe("每一個欄位 are reachable and labelled", () => {
       "special.radiusMult": "2.2",
       "special.rewardMult": "4",
       "special.championId": "godie-hblm",
+      "special.championSource": "inherit",
       "special.sizeMult": "2.4",
+      "special.heroHpMult": "6.5",
+      "special.heroDamageMult": "3",
+      "special.hpFlatBonus": "9000",
+      "special.heroLevel": "42",
+      // #290 — not the shipped "matchHighest", same reason as the king's.
+      "special.heroLevelSource": "fixed",
       "special.modelKey": "champ.mob.special-double",
+      // #288 — every sentinel differs from the shipped block (5000/200/5/1/
+      // bonus/on/off), so a `configFromForm` line that was never written shows
+      // up as this exact number missing rather than as a value that happens to
+      // match the default.
+      "special.bountyGold": "7300",
+      "special.bountyXp": "310",
+      "special.bountyLevels": "8",
+      "special.lastHitMultiplier": "2.5",
+      "special.lastHitMode": "weight",
+      "special.splitByDamage": "0",
+      "special.countOverkill": "1",
     };
     let form = formFromConfig(SHIPPED_MOB_WAVES);
     for (const [k, v] of Object.entries(edits)) form = setField(form, k as MobWavesFieldKey, v);
@@ -414,6 +474,35 @@ describe("validation mirrors the schema instead of guessing", () => {
     expect("hpPerLevel" in cfg.mob).toBe(false);
     // and the schema is happy with the omission
     expect(zMobWavesConfig.safeParse(cfg).success).toBe(true);
+  });
+
+  it("#289 清空「由誰擔任:指定/隨機」⇒ 那個 key 消失,不是被寫回出貨的 random", () => {
+    cover("admin-mob-waves");
+    // 這三格出貨值是 fixed / random / random,所以「留空 = 沿用出貨值」的實作
+    // 會把 `random` 寫回去,操作員永遠清不掉,而且 `changedFields` 會報一個
+    // 沒人做過的 diff。`optEnum`(不是 `enumOf`)才是對的那一個。
+    let form = formFromConfig(SHIPPED_MOB_WAVES);
+    for (const k of ["mob.championSource", "boss.championSource", "special.championSource"] as const) {
+      form = setField(form, k, "");
+    }
+    const cfg = configFromForm(form);
+    expect("championSource" in cfg.mob).toBe(false);
+    expect("championSource" in cfg.boss!).toBe(false);
+    expect("championSource" in cfg.special!).toBe(false);
+    expect(zMobWavesConfig.safeParse(cfg).success).toBe(true);
+  });
+
+  it("#289 三個來源格只收 fixed / random / inherit —— wave / mob / 亂打都被擋在頁面上", () => {
+    cover("admin-mob-waves");
+    for (const k of ["mob.championSource", "boss.championSource", "special.championSource"] as const) {
+      for (const ok of ["fixed", "random", "inherit"]) expect(validateField(k, ok)).toBe("");
+      // 這一版刻意不提供 per-wave / per-mob(數值是 arm time 從一位英雄推導的)。
+      for (const bad of ["wave", "mob", "__random__", "Random"]) {
+        expect(validateField(k, bad), `${k}=${bad} 被放行`).not.toBe("");
+      }
+      // 留空合法 —— 這三格是 optional。
+      expect(validateField(k, "")).toBe("");
+    }
   });
 
   it("catches a duplicated round in the schedule", () => {

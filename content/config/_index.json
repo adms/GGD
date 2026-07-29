@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "6bac1e66e2d4",
+  "hash": "78a6663d4822",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "02e49075b93d",
-      "size": 4579
+      "hash": "6068bab0da5c",
+      "size": 5153
     },
     {
       "id": "audio-map",
@@ -29,13 +29,13 @@
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "4fd72d905a39",
-      "size": 12275
+      "hash": "4f9ccff9d6c8",
+      "size": 12722
     },
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "206968e34cf6",
+      "hash": "8499dbfcb221",
       "size": 747
     },
     {
@@ -49,6 +49,12 @@
       "path": "config/config.match.json",
       "hash": "54db7b8568a9",
       "size": 898
+    },
+    {
+      "id": "form-visuals",
+      "path": "config/form-visuals.json",
+      "hash": "93452b5fa521",
+      "size": 1315
     },
     {
       "id": "gore",
@@ -77,8 +83,8 @@
     {
       "id": "unit-tints",
       "path": "config/unit-tints.json",
-      "hash": "93a6d6142c5b",
-      "size": 25900
+      "hash": "28fe3997a438",
+      "size": 26737
     },
     {
       "id": "victory-taunts",

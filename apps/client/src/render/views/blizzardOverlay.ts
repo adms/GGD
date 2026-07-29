@@ -37,6 +37,10 @@
  *     doc, i.e. today's stand-in;
  *   • champion HAS a dedicated shipped model → that model, always. The overlay
  *     never overrides authored content.
+ *
+ * 變身 FORMS RESOLVE BY W3U MODEL PATH, NOT BY THEIR OWN RAWCODE (task #249)
+ * -------------------------------------------------------------------------
+ * See `SHARED_MODEL_FORM_PAIRS` below.
  */
 import type { ModelDoc } from "@ggd/shared/content";
 import { BLIZZARD_LOCAL_GLB_PREFIX } from "./glbFacing";
@@ -101,6 +105,163 @@ export interface BlizzardOverlayUnit {
 
 /** champId → unit. Empty map = manifest present but useless (still "settled"). */
 export type BlizzardOverlayIndex = ReadonlyMap<string, BlizzardOverlayUnit>;
+
+/** One 變身 pair the source map gives ONE model, with the evidence attached. */
+export interface SharedModelFormPair {
+  /** Champion id of the NORMAL form (`Eme1`). */
+  readonly baseId: string;
+  /** Champion id of the ALTERNATE form (`Emeu`). */
+  readonly alternateId: string;
+  /**
+   * The `umdl` BOTH halves resolve to, exactly as `war3map.w3u` writes it.
+   * `null` = neither half overrides `umdl`, so both inherit whatever model
+   * `w3uBaseUnit` carries in the stock SLK (ORKN/O030's case).
+   */
+  readonly w3uModel: string | null;
+  /** Tail of the w3u `baseChain` — the stock unit both forms inherit from. */
+  readonly w3uBaseUnit: string;
+}
+
+/**
+ * THE 變身 RESOLUTION FIX (task #249).
+ *
+ * THE BUG. `unitFor`/`resolve` looked a champion up in the manifest by its OWN
+ * id and gave up on a miss. The extractor keyed the manifest on the units it
+ * pulled from the MPQs — the 40 PICKABLE heroes — so every 變身 body missed and
+ * fell through to the shared voxel stand-in, and the earlier diagnosis ("those
+ * four have no Blizzard model") was simply that miss misread. Resolving the
+ * w3u base-unit chain shows the opposite: the map gives H00W the SAME
+ * `units\human\HeroPaladin\HeroPaladin.mdl` as HARF, N01B the same
+ * EarthPandarenBrewmaster as NMAN, E010 the same AncientProtector as E00S, and
+ * O030 no `umdl` at all — it inherits ORKN's. The owner states the rule the
+ * data confirms: 「基本上變身前後都是同一模型,但是附帶不同球體效果及 3D model
+ * 顏色、大小、能力屬性變化而已」.
+ *
+ * THE FIX IS A RESOLUTION STRATEGY, NOT A FILE COPY. Nothing is written under
+ * `data/blizzard-overlay/` (git-ignored runtime state, and copying would double
+ * 84MB); the alternate simply resolves to the very same `glb` STRING its
+ * counterpart resolves to. `overlaySharesCounterpartGlb` in the test asserts
+ * exactly that identity, which is what makes the copy impossible to smuggle in.
+ *
+ * WHY AN EXPLICIT PAIR TABLE AND NOT "just follow `counterpartFormId`".
+ * 6 of the map's 26 transform pairs give the two halves DIFFERENT models —
+ * UCRL(HighElfPeasant)→U034(HeroBigGon), UMAL(VillagerMan1)→U00L(HeroPikachu),
+ * U012→U011(collision.mdl, a geometry-less dummy), OFAR→O02L, OGRH→O00X,
+ * NSJS→N00P. A blanket counterpart fallback would dress 傑·富力士's second form
+ * in a High Elf Peasant. So the table lists ONLY the 20 pairs whose w3u model
+ * path is identical, and it fails CLOSED: a pair that is not here never
+ * inherits, it degrades to the stand-in.
+ *
+ * WHY IT IS A CONST AND NOT A 後台 KNOB (CLAUDE.md 第一守則 wants a reason).
+ * These are not tunables — they are facts recovered from a frozen source map,
+ * the same category as `CHAMPION_FORM_PAIRS` itself, which also ships as a
+ * const. There is no operator decision to make: 「H00W's model path equals
+ * HARF's」 is true or false, and only a re-import of `src_gogodieEX227s.w3x`
+ * could change it. `blizzardOverlay.shared-model-pairs.test.ts` therefore
+ * re-derives this whole table from the tracked fixture
+ * `tools/w3x-import/out/GoDieEX22s-src/UNIT_TINTS.json` and fails on any drift,
+ * rather than trusting the list a human typed.
+ *
+ * Coverage comments record which half the manifest actually carries TODAY
+ * (B = base, A = alternate); the other 16 pairs are inert until an extraction
+ * covers one of their halves, which is the point of listing them.
+ */
+export const SHARED_MODEL_FORM_PAIRS: readonly SharedModelFormPair[] = [
+  // 04: coverage --
+  { baseId: "godie-hjai", alternateId: "godie-h020", w3uModel: "LinaInvers.mdl", w3uBaseUnit: "Hjai" },
+  // 08: coverage --
+  { baseId: "godie-nbbc", alternateId: "godie-n01c", w3uModel: "SD2.mdl", w3uBaseUnit: "Nbbc" },
+  // 11: coverage --
+  {
+    baseId: "godie-udre",
+    alternateId: "godie-u01u",
+    w3uModel: "HeroMusashiMiyamoto.mdl",
+    w3uBaseUnit: "Udre",
+  },
+  // 12: coverage --
+  {
+    baseId: "godie-ewar",
+    alternateId: "godie-e007",
+    w3uModel: "HeroLingTong.mdl",
+    w3uBaseUnit: "Ewar",
+  },
+  // 19: coverage --
+  {
+    baseId: "godie-e00k",
+    alternateId: "godie-e00z",
+    w3uModel: "HeroKunoichi.mdl",
+    w3uBaseUnit: "Ewrd",
+  },
+  // 20: coverage --
+  { baseId: "godie-e002", alternateId: "godie-e00l", w3uModel: "HeroSaber.mdl", w3uBaseUnit: "Ewrd" },
+  // 22: coverage --
+  {
+    baseId: "godie-e001",
+    alternateId: "godie-e00n",
+    w3uModel: "RenaRyugu2.mdl",
+    w3uBaseUnit: "Ewrd",
+  },
+  // 26 豪洨天王 - 鄭先生: coverage B- — the pair this task was filed for
+  {
+    baseId: "godie-harf",
+    alternateId: "godie-h00w",
+    w3uModel: "units\\human\\HeroPaladin\\HeroPaladin.mdl",
+    w3uBaseUnit: "Harf",
+  },
+  // 30 電車癡漢 - 臭作: coverage B- — neither half overrides `umdl`
+  { baseId: "godie-orkn", alternateId: "godie-o030", w3uModel: null, w3uBaseUnit: "Orkn" },
+  // 38: coverage --
+  { baseId: "godie-uvng", alternateId: "godie-u010", w3uModel: "HeroHehi.mdl", w3uBaseUnit: "Uvng" },
+  // 40 地獄歌神 - 憤怒的胖虎: coverage B-
+  {
+    baseId: "godie-nman",
+    alternateId: "godie-n01b",
+    w3uModel: "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+    w3uBaseUnit: "Nman",
+  },
+  // 42: coverage --
+  { baseId: "godie-n003", alternateId: "godie-n01g", w3uModel: "Long.mdl", w3uBaseUnit: "Nbrn" },
+  // 70 白木老樹精 - 白木卡迪那: coverage B-
+  {
+    baseId: "godie-e00s",
+    alternateId: "godie-e010",
+    w3uModel: "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
+    w3uBaseUnit: "Ecen",
+  },
+  // 76: coverage --
+  { baseId: "godie-u00n", alternateId: "godie-u00o", w3uModel: "Luffe.mdl", w3uBaseUnit: "Udre" },
+  // 77: coverage --
+  { baseId: "godie-e00w", alternateId: "godie-e00x", w3uModel: "mfls.mdl", w3uBaseUnit: "Ewar" },
+  // 79: coverage --
+  { baseId: "godie-h01n", alternateId: "godie-h01o", w3uModel: "HeroIchigo.mdl", w3uBaseUnit: "Hmkg" },
+  // 81: coverage --
+  { baseId: "godie-o01z", alternateId: "godie-o02v", w3uModel: "niya.mdl", w3uBaseUnit: "Oshd" },
+  // 87 曹操孟德 - 阿瞞大人: coverage -A — the ONE pair that inherits UPWARDS
+  // (the manifest carries O02O, the alternate; the pickable base O02N is the
+  // one that was falling through). Proof the fallback must be symmetric.
+  {
+    baseId: "godie-o02n",
+    alternateId: "godie-o02o",
+    w3uModel: "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+    w3uBaseUnit: "Ofar",
+  },
+  // 90: coverage --
+  { baseId: "godie-hgam", alternateId: "godie-h02r", w3uModel: "Bulbasaur.mdl", w3uBaseUnit: "Hgam" },
+  // 92: coverage --
+  { baseId: "godie-h02v", alternateId: "godie-h02u", w3uModel: "horse.mdl", w3uBaseUnit: "Hpal" },
+];
+
+/**
+ * champId → the counterpart whose overlay glb it may inherit. BOTH directions,
+ * because the map covers the base in three of the four live pairs and the
+ * ALTERNATE in the fourth (godie-o02o → godie-o02n).
+ */
+export const SHARED_MODEL_COUNTERPART: ReadonlyMap<string, string> = new Map(
+  SHARED_MODEL_FORM_PAIRS.flatMap((p) => [
+    [p.baseId, p.alternateId] as const,
+    [p.alternateId, p.baseId] as const,
+  ]),
+);
 
 function asClipMap(v: unknown): ModelDoc["clipMap"] | null {
   if (!v || typeof v !== "object") return null;
@@ -238,10 +399,21 @@ export class BlizzardOverlayModels {
     return this.promise;
   }
 
-  /** The overlay unit bound to a champion (null until loaded / not covered). */
+  /**
+   * The overlay unit bound to a champion (null until loaded / not covered).
+   *
+   * A champion the manifest does not name directly may still inherit its
+   * 變身 counterpart's unit — but ONLY through `SHARED_MODEL_COUNTERPART`, i.e.
+   * only when `war3map.w3u` gives both halves the same model path. Every other
+   * miss stays a miss and degrades to the shipped stand-in.
+   */
   unitFor(champId: string | null | undefined): BlizzardOverlayUnit | null {
     if (!champId || !this.enabled) return null;
-    return this.idx?.get(champId) ?? null;
+    const direct = this.idx?.get(champId);
+    if (direct) return direct;
+    const twin = SHARED_MODEL_COUNTERPART.get(champId);
+    if (twin === undefined) return null;
+    return this.idx?.get(twin) ?? null;
   }
 
   /**
@@ -258,7 +430,7 @@ export class BlizzardOverlayModels {
       void this.load(); // lazy kick-off: a caller can never forget to prime it
       return null; // hold the stand-in upgrade until the probe settles
     }
-    const unit = this.idx.get(champId);
+    const unit = this.unitFor(champId);
     return unit ? overlayModelDoc(unit) : shipped;
   }
 

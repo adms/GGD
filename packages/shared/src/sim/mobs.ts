@@ -83,6 +83,198 @@ export const MOB_CHAMPION_ID = "godie-zombiex";
  */
 export const MOB_MODEL_KEY = "champ.godie-zombiex";
 
+// ===========================================================================
+// 由誰擔任 —— 指定 / 隨機 (#289, owner 2026-07-29)
+// ===========================================================================
+//
+// 「殭屍 / 特殊殭屍 / 殭屍王 除了指定英雄,也要有隨機選項。特殊殭屍與殭屍王預設
+//  是隨機」 + owner's follow-up ruling: 隨機 draws 「從策展白名單抽」 — the same
+// curated roster a player can actually be handed in champ-select.
+//
+// ── WHY THIS IS A PARALLEL ENUM AND NOT A `championId: "__random__"` SENTINEL
+// A magic string would sail through `z.string().min(1)`, reach
+// `mobChampionModelKey("__random__")`, find no such champion and fall back to
+// MOB_MODEL_KEY — a zombie that renders as the default mesh with the default
+// stats while the console says 「隨機」. That is failure shape ② (算了沒送到)
+// wearing a green test suite. `championSource` is a THIRD field with three legal
+// values, so an unimplemented one is a schema rejection, not a silent default.
+//
+// ── WHY THE DRAW ITSELF IS NOT IN THIS FILE ────────────────────────────────
+// `sim/**` may not call `Math.random`, and it must not touch `world.rng` either:
+// #215 deliberately spends ZERO rng on mobs so the shared stream (crit / evasion
+// / 傳說寶玉) lands exactly where a mobless build leaves it. A draw made HERE
+// would have to come from one of those two. So the sim takes a HOST CALLBACK
+// ({@link MobChampionPicker}) instead: the roster (whitelist ∩ model-backed) and
+// the seed both live on the host, the sim only consumes the answer, and an
+// ABSENT callback degrades to 「沿用今天的行為」 rather than throwing.
+
+/**
+ * WHERE ONE ZOMBIE KIND'S FACE COMES FROM.
+ *
+ *   • `"inherit"` (and ABSENT — every pre-#289 doc) — exactly today's chain:
+ *     the kind's own `championId` if it has one, else the normal mob's, else
+ *     {@link MOB_CHAMPION_ID}. Nothing is drawn.
+ *   • `"fixed"` — the same thing said out loud. Identical behaviour to
+ *     `"inherit"`; it exists so the console can show 「指定」 as a real choice
+ *     opposite 「隨機」 instead of an empty box.
+ *   • `"random"` — draw from the host's curated pool ONCE PER ROUND.
+ *
+ * ⚠️ THERE IS DELIBERATELY NO `"wave"` AND NO `"mob"`. The numbers a hero-derived
+ * zombie fights with (`heroDerivedStats` → hp / attack damage) are baked from ONE
+ * champion at ARM TIME and stored per-KIND on {@link MobRules}; every mob of that
+ * kind in the round shares them. A per-wave or per-entity face would therefore
+ * produce 「臉是皮卡丘、數值是殭屍」 — the picture and the fight disagreeing, which
+ * is failure shape ⑤ (被測的不是出貨的) built into the design. Making those legal
+ * means moving the derived stats onto MobComp first, which is a different task.
+ */
+export type MobChampionSource = "inherit" | "fixed" | "random";
+
+/** Which zombie kind a draw is for. Doubles as the hash salt (see the order). */
+export type MobChampionSlot = "mob" | "boss" | "special";
+
+/**
+ * The slots, in the order that fixes their hash salt. ⚠️ APPEND ONLY: the index
+ * is folded into {@link pickMobChampion}, so re-ordering this list silently
+ * re-rolls every existing seed's answer.
+ */
+export const MOB_CHAMPION_SLOTS: readonly MobChampionSlot[] = ["mob", "boss", "special"];
+
+// ===========================================================================
+// 英雄卡讀在幾級 —— 三種模式 (#290, owner 2026-07-29)
+// ===========================================================================
+//
+// 「特殊殭屍也可以設 heroLevel,但預設是跟當時場上英雄最高等級相同(一樣是個
+//  選項)」。
+//
+// ── 為什麼這是一個 enum 而不是「heroLevel: 0 代表跟著英雄」 ─────────────────
+// `heroLevel` 的 schema 是 `int().min(1).max(99)`,要塞一個 sentinel 就得把下界
+// 打開到 0,而 0 在其他每一格 heroLevel 都是「填錯了」。三個具名值讓「沒實作的
+// 模式」是一個 zod 422,不是一個安靜的預設值(和 {@link MobChampionSource} 同一
+// 條理由)。
+//
+// ── 為什麼 `"matchHighest"` 一定要在 SPAWN TIME 解析 ───────────────────────
+// 另外兩個模式都是常數,在 arm time(`mobRulesFromConfig`)烘進 {@link MobRules}
+// 就結束了。「當時場上英雄最高等級」不是常數:英雄在同一個回合裡會升級(打殭屍
+// 每 N 隻 +1 級、王的 `bountyLevels`),所以「當時」只有在**生成那一刻**才成立。
+// arm time 版本會讓同一回合的第二隻特殊殭屍跟第一隻一模一樣 —— 一個加了模式但
+// 沒有生效的功能,而且沒有任何現有斷言看得見。
+export type MobHeroLevelSource = "round" | "fixed" | "matchHighest";
+
+/**
+ * 三個模式,依 console 顯示的順序。⚠️ 必須與 schema 的 `zMobHeroLevelSource`
+ * 相等 —— 後台的 `validateField` 只放行這個清單裡的值。
+ */
+export const MOB_HERO_LEVEL_SOURCES: readonly MobHeroLevelSource[] = [
+  "round",
+  "fixed",
+  "matchHighest",
+];
+
+/**
+ * 生成那一刻要重算英雄推導數值所需要的一切 (#290)。
+ *
+ * ⚠️ 只有 `heroLevelSource: "matchHighest"` 的 kind 才會拿到這個物件,其他每一
+ * 種情況都是 `null`。`"round"` / `"fixed"` / 沒填 的答案在 arm time 就已經是最終
+ * 值,再算一次只會得到同一個數字,所以 {@link mobSpawnProfile} 直接短路回
+ * {@link mobProfile} —— pre-#290 的世界一個乘法都沒有多做。
+ */
+export interface MobHeroDeriveRule {
+  /** 解析成哪個英雄的卡(已經走完 指定/沿用/隨機 的鏈) */
+  championId: string;
+  /** ×`championStatBase(MaxHealth)`;absent ⇒ 血量不推導 */
+  heroHpMult?: number;
+  /** ×`championStatBase(AttackDamage)`;absent ⇒ 攻擊力不推導 */
+  heroDamageMult?: number;
+  /** 乘完之後才加的固定血量 */
+  hpFlatBonus?: number;
+  /**
+   * arm time 烘好的等級 —— 該小怪所在 zone「一個英雄都沒有」時的 FALLBACK。
+   *
+   * ⚠️ 「全隊倒地」不再是這條路 (owner 2026-07-29 裁決 (a),見
+   * {@link matchHighestChampionLevel})。屍體照樣算等級,所以真正會走到這裡的只剩
+   * 三種:回合開場前 zone 還沒有人被放進來、那個 zone 這回合根本沒有排到對戰、
+   * 以及一個沒有英雄的測試/預測世界。這三種要的都是「就照這回合算」,不是 1、
+   * 不是 99、也不是 NaN。
+   */
+  armedLevel: number;
+  /**
+   * arm time 用的那張 combat-env 表。
+   *
+   * ⚠️ 存下來而不是在 spawn time 讀 `world.combatEnv`,理由和 MatchController 那
+   * 句 `undefined, // NOT this.combatEnv` 註解是同一個:出貨的 arm 呼叫刻意用**出貨
+   * 係數**,spawn time 改讀 live 表會讓 `"matchHighest"` 和 `"round"`/`"fixed"`
+   * 算在兩張不同的表上 —— 一個偽裝成管線改動的平衡改動。
+   */
+  env: CombatEnvMultipliers;
+}
+
+/**
+ * The host's draw. `(slot, round) => championId`, or `undefined` when the host
+ * cannot answer (no content loaded, an empty roster, a caller that simply does
+ * not implement it — the client's prediction shadow, every unit test).
+ *
+ * ⚠️ `undefined` MUST degrade to `"inherit"`, never throw and never produce an
+ * empty id: an un-picked zombie has to be a PLAYABLE zombie.
+ */
+export type MobChampionPicker = (slot: MobChampionSlot, round: number) => string | undefined;
+
+/**
+ * 32-bit integer avalanche (splitmix-style finalizer) — the same one
+ * `sim/world/ArenaDef.ts` uses for the per-round map rotation, restated here
+ * rather than imported so this module keeps its "no cross-module coupling for
+ * three lines of integer math" shape. Pure `Math.imul` / xor / shift: no float,
+ * no trig, no `**`, no wall-clock (see `sim/purity.test.ts`).
+ */
+function hash32(x: number): number {
+  let h = x >>> 0;
+  h = Math.imul(h ^ (h >>> 16), 0x21f0aaad) >>> 0;
+  h = Math.imul(h ^ (h >>> 15), 0x735a2d97) >>> 0;
+  h = (h ^ (h >>> 15)) >>> 0;
+  return h >>> 0;
+}
+
+/**
+ * THE DRAW: which champion `slot` wears in `round`, as a pure function of
+ * `(pool, matchSeed, round, slot)`. Returns `null` only for an empty pool, which
+ * the caller must degrade on (see {@link MobChampionPicker}).
+ *
+ * ── WHY NOT `mixInt` (which is RIGHT THERE, 900 lines down) ─────────────────
+ * `mixInt` masks every argument with `& 0xffff`. It is correct for what it does
+ * — (zone, waveIndex, mobIndex) are all small — but a `matchSeed` is a full
+ * 32-bit number, so feeding it through would throw away the top 16 bits and make
+ * seeds 0x0001_0007 and 0x0002_0007 draw the same zombie for the whole match.
+ *
+ * ── WHY THE POOL IS SORTED HERE ────────────────────────────────────────────
+ * The host's pool comes out of a `Map`'s key order (the champion registry's
+ * insertion order = content load order). Sorting a COPY makes the answer depend
+ * on the SET of enabled champions and not on the order they happened to load in,
+ * so two hosts with the same whitelist agree even if their content walks landed
+ * in a different sequence — and a replay re-derives the same face. Arm-time only
+ * (~61 strings, once per round), never per tick.
+ *
+ * ── WHY NOT `world.rng` ────────────────────────────────────────────────────
+ * Same reason `mobSpawnPos` hashes instead of drawing: #215 spends zero rng on
+ * mobs, so the shared stream stays byte-identical to a mobless build. A hash of
+ * the seed is just as reproducible and perturbs nothing.
+ */
+export function pickMobChampion(
+  pool: readonly string[],
+  matchSeed: number,
+  round: number,
+  slot: MobChampionSlot,
+): string | null {
+  if (pool.length === 0) return null;
+  const sorted = [...pool].sort();
+  if (sorted.length === 1) return sorted[0]!;
+  // index+1 so slot 0 ("mob") still perturbs the stream rather than multiplying
+  // by zero, which would collapse it onto the (seed, round) hash alone.
+  const slotSalt = MOB_CHAMPION_SLOTS.indexOf(slot) + 1;
+  let h = hash32(matchSeed >>> 0);
+  h = hash32((h ^ Math.imul(Math.round(round) | 0, 0x9e3779b1)) >>> 0);
+  h = hash32((h ^ Math.imul(slotSalt, 0x85ebca6b)) >>> 0);
+  return sorted[h % sorted.length]!;
+}
+
 /**
  * The sentinel MONSTER team. A single id OUTSIDE the player range (teams are
  * 0..3, so this is well clear) that no champion is ever on — which is the whole
@@ -226,6 +418,61 @@ export interface MobBossRules {
    * behaviour (raw post-mitigation `output`, overkill included).
    */
   countOverkill: boolean;
+  /**
+   * #290 —「跟當時場上英雄最高等級相同」的重算輸入。`null` = 這個 kind 不需要
+   * spawn-time 重算(沒推導、或 `heroLevelSource` 不是 `"matchHighest"`),此時
+   * `maxHp`/`attackDamage` 上面那兩格就是最終值。See {@link MobHeroDeriveRule}.
+   *
+   * ⚠️ OPTIONAL, and ABSENT MEANS `null`. A `MobRules` built by hand (test
+   * fixtures, a future caller that does not go through `mobRulesFromConfig`)
+   * must degrade to 「不重算」 rather than fail to compile into an older shape —
+   * the same 「缺席 = 今天的行為」 rule every other #206/#288/#289 field follows.
+   * `mobRulesFromConfig` ALWAYS writes it explicitly (pinned by a test).
+   */
+  heroDerive?: MobHeroDeriveRule | null;
+}
+
+/**
+ * 特殊殭屍的分紅獎池 (#288, owner 2026-07-29: 「特殊殭屍也照傷害比例分,金錢
+ * +5,000 · 等級提升 +5」).
+ *
+ * SHAPED LIKE THE KING'S SIX FIELDS ON PURPOSE — `bountyGold` / `bountyXp` /
+ * `bountyLevels` / `lastHitMultiplier` / `lastHitMode` / `countOverkill` all
+ * mean exactly what they mean on {@link MobBossRules}, and the SAME pure
+ * `splitBossBounty` divides both. A second, differently-named vocabulary for
+ * the same rule is how two payout paths drift apart.
+ *
+ * ⚠️ AUTHORING THIS BLOCK REPLACES `rewardMult` FOR THE SPECIAL. A 特殊殭屍 with
+ * a pool no longer pays `rewardGold × rewardMult` to the last hitter; the pool
+ * IS the reward. `rewardMult` stays live for any arena that authors no pool
+ * (and is still the only thing that pays a special before #288), which is why
+ * the block is nullable rather than a set of zero-defaulted fields.
+ */
+export interface MobSpecialBounty {
+  /** the pool in gold, split by damage share */
+  gold: number;
+  /** the same, in XP */
+  xp: number;
+  /** 等級提升 — WHOLE levels, split by damage exactly like gold (skips the curve) */
+  levels: number;
+  /** the last hitter's damage counts this many times over (1 = 沒有翻倍) */
+  lastHitMultiplier: number;
+  /** how 「最後一刀翻倍」 is paid — see `LastHitMode` in sim/mobBoss.ts */
+  lastHitMode: LastHitMode;
+  /**
+   * true (shipped) = 照傷害比例分給每個打過它的人.
+   * false = the pre-#288 behaviour: the whole pool goes to whoever landed the
+   * killing blow. Implemented by handing `splitBossBounty` an EMPTY damager
+   * table, so 「全額給補刀的人」 is the same arithmetic, not a second one.
+   */
+  splitByDamage: boolean;
+  /**
+   * 溢傷算不算進分紅權重. Its own field rather than a read of
+   * `boss.countOverkill`, because the two blocks are independently authorable —
+   * an arena that disables the king entirely (`boss` absent) must not silently
+   * change how a special's damage is weighed.
+   */
+  countOverkill: boolean;
 }
 
 /** 特殊殭屍 rules — multipliers against the normal mob of the same round. */
@@ -241,6 +488,127 @@ export interface MobSpecialRules {
   /** gold AND xp multiplier on the kill reward */
   rewardMult: number;
   modelKey: string;
+
+  /* ── 從英雄推導的絕對值 (GH#206, owner 2026-07-29) ─────────────────────────
+   *
+   * `null` = NOT DERIVED, and every pre-#206 arena is exactly that — the
+   * multiplier fields above stay the answer and `mobProfile` computes the same
+   * expression it always did, byte for byte.
+   *
+   * WHY THESE ARE ABSOLUTE AND THE OTHERS ARE MULTIPLIERS. The owner's rule is
+   * 「生命與能力屬性 = 該設定英雄的 5 倍」 — anchored on a HERO SHEET, not on the
+   * round's zombie, so it cannot be expressed as a `hpMult`. Dividing the
+   * derived number by the zombie's hp to fake one would leak the zombie curve
+   * back into a value the owner said was independent of it, and would round
+   * differently besides. The KING needs no twin fields: `MobBossRules.maxHp` /
+   * `.attackDamage` / `.moveSpeed` are ALREADY absolute, so its derivation just
+   * writes those.
+   *
+   * Both are resolved ONCE, in `mobRulesFromConfig` at arm time — the champion
+   * registry is never touched from a per-tick path. See the note there.
+   *
+   * ⚠️ #290 ADDED ONE EXCEPTION, AND ONLY ONE: `heroLevelSource:
+   * "matchHighest"` re-runs the derivation at SPAWN time (a few times a wave),
+   * through {@link mobSpawnProfile}. These two fields still hold the arm-time
+   * answer — nothing per-tick learned a new trick.
+   */
+  /** absolute maxHp from the hero sheet; `null` ⇒ use `hpMult` */
+  maxHp: number | null;
+  /** absolute melee damage from the hero sheet; `null` ⇒ use `damageMult` */
+  attackDamage: number | null;
+
+  /**
+   * 分紅獎池 (#288). `null` = this arena authored none ⇒ the special pays the
+   * pre-#288 way (`rewardGold × rewardMult` straight to the last hitter), keeps
+   * NO damage ledger, and is byte-identical to before.
+   */
+  bounty: MobSpecialBounty | null;
+  /**
+   * #290 —「跟當時場上英雄最高等級相同」的重算輸入,和王的那一格同義。`null` /
+   * absent = 不需要 spawn-time 重算。See {@link MobBossRules.heroDerive}.
+   */
+  heroDerive?: MobHeroDeriveRule | null;
+}
+
+/**
+ * The payout rule for ONE mob kind, normalised so `payMobBounty` has exactly one
+ * shape to read. `null` = this kind pays no pool (every 一般殭屍, a king in an
+ * arena with no `boss` block, a special with no `bounty` block).
+ *
+ * ⚠️ 一般殭屍 IS AND MUST STAY `null`. See the ledger note in
+ * `stats/matchStats.recordDamage` — this is the function that keeps the
+ * per-mob damage ledger off the 100-zombie round-9 firehose.
+ */
+export interface MobBountyRules {
+  readonly gold: number;
+  readonly xp: number;
+  readonly levels: number;
+  readonly lastHitMultiplier: number;
+  readonly lastHitMode: LastHitMode;
+  readonly splitByDamage: boolean;
+  readonly countOverkill: boolean;
+}
+
+/**
+ * The pool a mob of `kind` pays out, or `null` when it pays none.
+ *
+ * ONE function so the ledger (`stats/matchStats`) and the payout
+ * (`systems/MobSystem`) can never disagree about which kinds are in the scheme
+ * — a ledger kept for a kind that never pays is wasted memory, and a payout for
+ * a kind with no ledger silently hands the whole pool to the last hitter.
+ */
+export function mobBountyRules(rules: MobRules | null, kind: MobKind): MobBountyRules | null {
+  if (rules === null) return null;
+  if (kind === "boss") {
+    const b = rules.boss;
+    if (b === null) return null;
+    return {
+      gold: b.bountyGold,
+      xp: b.bountyXp,
+      levels: b.bountyLevels,
+      lastHitMultiplier: b.lastHitMultiplier,
+      lastHitMode: b.lastHitMode,
+      // 殭屍王 ALWAYS splits. #262 is 「照傷害比例發獎金」 and the owner ruled on
+      // it directly, so there is no knob to turn it off — unlike the special,
+      // whose switch exists only to preserve its pre-#288 「直接給 killer」.
+      splitByDamage: true,
+      countOverkill: b.countOverkill,
+    };
+  }
+  if (kind === "special") {
+    const s = rules.special?.bounty ?? null;
+    if (s === null) return null;
+    return {
+      gold: s.gold,
+      xp: s.xp,
+      levels: s.levels,
+      lastHitMultiplier: s.lastHitMultiplier,
+      lastHitMode: s.lastHitMode,
+      splitByDamage: s.splitByDamage,
+      countOverkill: s.countOverkill,
+    };
+  }
+  return null;
+}
+
+/**
+ * Does a mob of `kind` keep a per-entity DAMAGE LEDGER, and does its overkill
+ * count? `null` = no ledger at all.
+ *
+ * ⚠️ ALLOCATION-FREE BY CONSTRUCTION — it returns a STORED sub-object, never a
+ * fresh literal, because `recordDamage` calls it on every damage packet in the
+ * match. `mobBountyRules` (which does allocate) is for the once-per-death payout
+ * path only. Both answer `null` for the same kinds, which is what keeps the two
+ * halves in agreement.
+ */
+export function mobLedgerRule(
+  rules: MobRules | null,
+  kind: MobKind,
+): { readonly countOverkill: boolean } | null {
+  if (rules === null) return null;
+  if (kind === "boss") return rules.boss;
+  if (kind === "special") return rules.special?.bounty ?? null;
+  return null;
 }
 
 /**
@@ -306,8 +674,17 @@ export function mobProfile(rules: MobRules, kind: MobKind): MobProfile {
   if (kind !== "special" || rules.special === null) return base;
   const s = rules.special;
   return {
-    maxHp: Math.max(1, Math.round(base.maxHp * s.hpMult)),
-    attackDamage: base.attackDamage * s.damageMult,
+    // GH#206 — a `null` override is the pre-#206 path VERBATIM (same rounding,
+    // same operands), so an arena that authored no `heroHpMult` produces the
+    // identical number and the digest cannot move. The DERIVATION that fills
+    // these in lives in `mobRulesFromConfig`; this is a field read, not a
+    // champion lookup, so the per-tick callers (MovementSystem's walk speed,
+    // MobSystem's melee) stay as cheap as they were.
+    maxHp: s.maxHp ?? Math.max(1, Math.round(base.maxHp * s.hpMult)),
+    attackDamage: s.attackDamage ?? base.attackDamage * s.damageMult,
+    // ⚠️ MOVE SPEED IS NEVER HERO-DERIVED — see `heroDerivedStats`. It stays
+    // anchored on the NORMAL zombie, which is what `moveSpeedMult` already
+    // meant, so 「特殊殭屍 ×0.5」 is 0.5 of a zombie no matter whose face it wears.
     moveSpeed: base.moveSpeed * s.moveSpeedMult,
     // radius scales, so reach scales with it — a body twice as wide that still
     // has to walk into melee range measured from its centre would stand INSIDE
@@ -395,6 +772,8 @@ export interface MobWavesConfigLike {
     radius: number;
     modelKey?: string;
     championId?: string;
+    /** #289 — 指定 / 隨機. ABSENT = `"inherit"`; see {@link MobChampionSource} */
+    championSource?: MobChampionSource;
     /** GH#192 體型倍率 (default 1) */
     sizeMult?: number;
     /** GH#192 染黑強度 0..1 (default DEFAULT_MOB_TINT_STRENGTH) */
@@ -429,6 +808,8 @@ export interface MobWavesConfigLike {
     hpMult?: number;
     /** GH#192 — the king's own face/model; absent = the round's mob champion */
     championId?: string;
+    /** #289 — 指定 / 隨機. SHIPS `"random"`; see {@link MobChampionSource} */
+    championSource?: MobChampionSource;
     /** GH#192 體型倍率 (default DEFAULT_BOSS_SIZE_MULT) */
     sizeMult?: number;
     bountyGold: number;
@@ -440,6 +821,19 @@ export interface MobWavesConfigLike {
     lastHitMode?: LastHitMode;
     /** GH#206 — absent = the owner's ruling 「不算」 */
     countOverkill?: boolean;
+    /* ── 從英雄推導 (GH#206, owner 2026-07-29) — see `heroDerivedStats` ────── */
+    /** ×`championStatBase(MaxHealth)`; ABSENT ⇒ the `hpMult`/`maxHp` path */
+    heroHpMult?: number;
+    /** ×`championStatBase(AttackDamage)`; ABSENT ⇒ the flat `attackDamage` */
+    heroDamageMult?: number;
+    /** flat hp added AFTER the multiply (owner 2026-07-28: 加成不參與倍率) */
+    hpFlatBonus?: number;
+    /** ×the NORMAL zombie's walk speed; ABSENT ⇒ the flat `moveSpeed` */
+    moveSpeedMult?: number;
+    /** the hero LEVEL the sheet is read at; ABSENT ⇒ the round's mob level */
+    heroLevel?: number;
+    /** #290 — 怎麼決定上面那格;ABSENT ⇒ 今天的行為 (`heroLevel ?? 該回合等級`) */
+    heroLevelSource?: MobHeroLevelSource;
   };
   /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
   special?: {
@@ -454,6 +848,31 @@ export interface MobWavesConfigLike {
     sizeMult?: number;
     /** GH#192 — the special's own face/model; absent = the round's mob champion */
     championId?: string;
+    /** #289 — 指定 / 隨機. SHIPS `"random"`; see {@link MobChampionSource} */
+    championSource?: MobChampionSource;
+    /* ── 從英雄推導 (GH#206) — same three as the king. NO `moveSpeedMult`: the
+     * special already has a required one, and it already means 「×一般殭屍」. */
+    heroHpMult?: number;
+    heroDamageMult?: number;
+    hpFlatBonus?: number;
+    /** ABSENT ⇒ the round's mob level, so the special grows with the round */
+    heroLevel?: number;
+    /** #290 — 怎麼決定上面那格. SHIPS `"matchHighest"`; see {@link MobHeroLevelSource} */
+    heroLevelSource?: MobHeroLevelSource;
+    /* ── 分紅獎池 (#288, owner 2026-07-29) — see {@link MobSpecialBounty} ─────
+     * ALL THREE ABSENT ⇒ no pool, no damage ledger, and the pre-#288
+     * `rewardMult`-to-the-last-hitter payout, unchanged. */
+    bountyGold?: number;
+    bountyXp?: number;
+    bountyLevels?: number;
+    /** ABSENT ⇒ 1 (照傷害比例分,沒有翻倍) */
+    lastHitMultiplier?: number;
+    /** ABSENT ⇒ `"bonus"`, matching the king's shipped mode */
+    lastHitMode?: LastHitMode;
+    /** ABSENT ⇒ true (owner: 特殊殭屍也照傷害比例分) */
+    splitByDamage?: boolean;
+    /** ABSENT ⇒ false, matching the owner's 「溢傷不算」 ruling for the king */
+    countOverkill?: boolean;
   };
 }
 
@@ -500,10 +919,26 @@ export function mobCapsForRound(
 
 /** 染黑 default — see `zMobWavesConfig.mob.tintStrength` for why 0.65. */
 export const DEFAULT_MOB_TINT_STRENGTH = 0.65;
-/** owner GH#192 「modal 大小是10倍」 — a DEFAULT, overridable per arena/後台. */
+/**
+ * The king's 體型倍率 when the arena authors none — a DEFAULT, overridable per
+ * arena/後台. 10 was owner GH#192 「modal 大小是10倍」; the SHIPPED doc now says 30
+ * (owner 2026-07-29 「體型 30 倍」) and this is only the un-authored fallback, so
+ * it deliberately stays at the older, safer number rather than tracking it.
+ */
 export const DEFAULT_BOSS_SIZE_MULT = 10;
-/** owner GH#192 「HP是100倍」 — likewise a default, not a constant. */
-export const DEFAULT_BOSS_HP_MULT = 100;
+
+/*
+ * ⚠️ THERE IS NO `DEFAULT_BOSS_HP_MULT`, AND THAT IS ON PURPOSE (GH#206).
+ *
+ * One existed — `= 100`, exported, and referenced by exactly nothing in the
+ * repo including this file. It read like a knob (the size default one line up
+ * IS one) so the next person to lower the king's hp would have edited it and
+ * changed nothing. It cannot become live either: for `hpMult` the meaning of
+ * ABSENT is 「use the flat `maxHp`」, not 「use 100」, so defaulting it would
+ * silently multiply every legacy arena's king by its round's zombie.
+ * The shipped 100 lives in `DEFAULT_MOB_WAVES_CONFIG.boss.hpMult`, which is the
+ * doc the sim actually loads.
+ */
 
 /**
  * WHO WEARS THE ZOMBIE'S FACE IN `round` (GH#191).
@@ -522,11 +957,56 @@ export const DEFAULT_BOSS_HP_MULT = 100;
  * `Math.round(round)`), so a row can override the face without touching the caps
  * and vice versa.
  */
-export function mobChampionForRound(cfg: MobWavesConfigLike, round: number): string {
-  const whole = cfg.mob.championId ?? MOB_CHAMPION_ID;
-  if (!cfg.schedule || round <= 0) return whole;
-  const row = cfg.schedule.find((r) => r.round === Math.round(round));
-  return row?.championId ?? whole;
+export function mobChampionForRound(
+  cfg: MobWavesConfigLike,
+  round: number,
+  pick?: MobChampionPicker,
+): string {
+  // 1. THE PER-ROUND COLUMN WINS OUTRIGHT, including over `"random"` (#289).
+  //    「第 5 回合由皮卡丘擔任」 is an instruction about ONE round; 隨機 is a
+  //    whole-match default. The more specific statement wins, which is the same
+  //    precedence the row already had over `mob.championId` — 隨機 slots into the
+  //    chain where the whole-match field is, not above the row.
+  const row = cfg.schedule && round > 0 ? cfg.schedule.find((r) => r.round === Math.round(round)) : undefined;
+  if (row?.championId !== undefined) return row.championId;
+  // 2. 隨機 (#289) — the HOST draws; an absent/failed draw falls through to 3.
+  if (cfg.mob.championSource === "random") {
+    const drawn = pick?.("mob", round);
+    if (drawn !== undefined && drawn !== "") return drawn;
+  }
+  // 3. the whole-match setting, then the built-in fallback.
+  return cfg.mob.championId ?? MOB_CHAMPION_ID;
+}
+
+/**
+ * 由誰擔任 for the KING / the SPECIAL — the two blocks that inherit from the
+ * normal mob when they say nothing (#289 adds the 隨機 branch on top).
+ *
+ * `own` is 「這一種殭屍自己指名了一個英雄」 and drives the MESH fallback: a kind
+ * that named nobody keeps inheriting the mob's RESOLVED `modelKey` (so an arena
+ * that overrode `mob.modelKey` still dresses its king in that mesh), while a kind
+ * that drew or named its own champion resolves the mesh FROM that champion. That
+ * is byte-for-byte the pre-#289 rule (`championId === undefined ? modelKey :
+ * mobChampionModelKey(championId)`) with 隨機 counted as 「自己指名」.
+ *
+ * An absent block, an absent/blank draw, or `"inherit"`/`"fixed"` with no
+ * `championId` all land on the inherited champion — never on a throw and never
+ * on an empty id.
+ */
+function mobKindChampion(
+  block: { championId?: string; championSource?: MobChampionSource } | undefined,
+  inherited: string,
+  slot: MobChampionSlot,
+  round: number,
+  pick?: MobChampionPicker,
+): { championId: string; own: boolean } {
+  if (block === undefined) return { championId: inherited, own: false };
+  if (block.championSource === "random") {
+    const drawn = pick?.(slot, round);
+    if (drawn !== undefined && drawn !== "") return { championId: drawn, own: true };
+  }
+  if (block.championId === undefined) return { championId: inherited, own: false };
+  return { championId: block.championId, own: true };
 }
 
 /**
@@ -551,6 +1031,213 @@ export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number
   const base = cfg.mob.baseLevel ?? DEFAULT_MOB_BASE_LEVEL;
   const per = cfg.mob.levelPerRound ?? DEFAULT_MOB_LEVEL_PER_ROUND;
   return base + per * Math.max(0, Math.round(round) - cfg.fromRound);
+}
+
+/** The absolute stats a king / special zombie inherits from its hero sheet. */
+export interface HeroDerivedMobStats {
+  /** `null` = not derived; the caller keeps its pre-#206 number */
+  maxHp: number | null;
+  /** `null` = not derived; the caller keeps its pre-#206 number */
+  attackDamage: number | null;
+}
+
+/** Nothing derived — the shared 「走舊路徑」 answer. */
+const NO_HERO_DERIVED: HeroDerivedMobStats = { maxHp: null, attackDamage: null };
+
+/**
+ * 從英雄推導的數值 (GH#206, owner 2026-07-29): 「生命與能力屬性 = 該設定英雄的 N 倍,
+ * 基礎生命額外 +M」.
+ *
+ * ── WHERE THIS IS ALLOWED TO RUN ───────────────────────────────────────────
+ * ARM TIME ONLY. It touches the champion REGISTRY (`Champions.tryGet`) and the
+ * 三圍 model (`championStatBase`), neither of which belongs anywhere near a
+ * per-tick path: `mobProfile` is called by MovementSystem on every mob on every
+ * tick. So the answer is computed ONCE in `mobRulesFromConfig` and stored as a
+ * plain number, exactly like the seconds→ticks conversions beside it.
+ *
+ * ── THE ORDER OF OPERATIONS IS THE OWNER'S, NOT A CHOICE ───────────────────
+ *   round(heroStat × mult) + flatBonus        ← the ADD is OUTSIDE the multiply
+ * This mirrors 基礎加成 (sim/baseBonus.ts) verbatim, where the owner ruled on
+ * 2026-07-28 「初始HP/MP/AP/AD/... 增加數值也要放到後台設定 並且不參與倍率計算」.
+ * Folding the +100,000 inside the ×20 would hand the king 2,000,000 hp — the
+ * exact v0.9.8 bug that ruling exists to prevent, one mechanic over.
+ *
+ * ── WHAT IS DELIBERATELY *NOT* HERE: MOVE SPEED ────────────────────────────
+ * 移速 is anchored on the NORMAL ZOMBIE, never on the hero. The king and the
+ * special both default to 「隨機/指定英雄」 as their face, and hero `ms` on this
+ * roster runs from 2.6 (喪標麥可) to 6.1 — so a hero-anchored 「特殊殭屍 ×0.5」
+ * would be 1.3 for one draw and 3.05 for another, i.e. FASTER than the 3.0
+ * zombie it is supposed to be a slowed-down version of. 「移動速度 −50%」 has to
+ * mean 「比一般殭屍慢一半」 or it means nothing the player can read.
+ *
+ * ── DEGRADED INPUT ─────────────────────────────────────────────────────────
+ * An unregistered champion (skeleton content, a typo'd doc id, a host with no
+ * content loaded) returns {@link NO_HERO_DERIVED} and the caller falls back to
+ * its pre-#206 numbers. That is the SAME degradation `mobChampionModelKey`
+ * already picks for the mesh: a king with the old hp is playable, a king with
+ * `NaN` hp is a crash, and a king with 0 hp dies on spawn.
+ */
+export function heroDerivedStats(
+  championId: string,
+  block: {
+    heroHpMult?: number;
+    heroDamageMult?: number;
+    hpFlatBonus?: number;
+  },
+  heroLevel: number,
+  env: CombatEnvMultipliers,
+): HeroDerivedMobStats {
+  // NOT AUTHORED ⇒ don't even look the champion up. `heroHpMult` absent is the
+  // pre-#206 contract (`hpMult` × the round's zombie, or the flat `maxHp`), and
+  // a whole shelf of arena tests is written against it.
+  if (block.heroHpMult === undefined && block.heroDamageMult === undefined) return NO_HERO_DERIVED;
+  const def = Champions.tryGet(championId as ChampionId);
+  if (def === undefined) return NO_HERO_DERIVED;
+  const level = Math.max(1, Math.round(heroLevel));
+  const flat = Math.max(0, block.hpFlatBonus ?? 0);
+  return {
+    maxHp:
+      block.heroHpMult === undefined
+        ? null
+        : Math.max(1, Math.round(championStatBase(def, Stat.MaxHealth, level, env) * block.heroHpMult) + flat),
+    // NOT rounded, unlike hp: melee damage is a float everywhere else in this
+    // file (the zombie's own is 1.2) and the sim's damage pipeline takes floats,
+    // so rounding here would be a silent balance edit rather than a tidy-up.
+    attackDamage:
+      block.heroDamageMult === undefined
+        ? null
+        : Math.max(0, championStatBase(def, Stat.AttackDamage, level, env) * block.heroDamageMult),
+  };
+}
+
+/**
+ * 英雄卡要讀在幾級 —— arm time 的答案 (#290).
+ *
+ * ⚠️ ABSENT `heroLevelSource` MUST reproduce today's chain EXACTLY. Before #290
+ * the only rule was `heroLevel ?? 該回合等級`, and that is what an arena authored
+ * before this field means — the king (99) and every pre-#206 doc alike. A
+ * "tidier" default of `"round"` here would silently un-pin the king from 滿級 99
+ * and cut its hp by more than half.
+ *
+ * `"matchHighest"` has NO arm-time answer (the whole point is that it is not a
+ * constant), so it returns the `"round"` value as the FALLBACK that
+ * {@link MobHeroDeriveRule.armedLevel} records — see the note there.
+ */
+export function mobArmedHeroLevel(
+  block: { heroLevel?: number; heroLevelSource?: MobHeroLevelSource },
+  roundLevel: number,
+): number {
+  switch (block.heroLevelSource) {
+    case "round":
+      return roundLevel;
+    case "fixed":
+      // 選了「指定」卻沒填數字 ⇒ 退回該回合等級,而不是 1。空欄位是「還沒填」,
+      // 不是「一級」。
+      return block.heroLevel ?? roundLevel;
+    case "matchHighest":
+      return roundLevel;
+    default:
+      return block.heroLevel ?? roundLevel;
+  }
+}
+
+/**
+ * `zone` 裡最高的英雄等級,`null` = 那個 zone 一個英雄都沒有 (#290).
+ *
+ * ── OWNER 的裁決,逐字 (2026-07-29) ─────────────────────────────────────────
+ * 「①「場上英雄」是哪些?=> (a) 該小怪所在 zone 的全英雄(死活都計算在內)」
+ *
+ * 登記在 `docs/_requirements-audit-gaps.md`(commit c05d8d26,搜「死活都算」)。
+ * 同一段還登記了尚未實作的另外三種來源 —— `matchLowest` / `matchAverage` /
+ * `mobKills` —— 它們三個都是 spawn time 解析,而且都要「該 zone 的全英雄,死活都
+ * 算」這一組人。要加的時候改這裡的迭代,不要另外寫一份。
+ *
+ * 兩個字都是承重的:
+ *
+ * **(a-1) 「該小怪所在 zone 的」** —— 不是全世界。一場 3v3v3v3 同時有好幾個
+ * duel zone 在打,zone 1 那組打到 L60 不該讓 zone 0 的殭屍變成 L60 的怪物。所以
+ * 這裡讀 `world.transform.zone`,而呼叫端 ({@link mobSpawnProfile}) 一定要把小怪
+ * 自己要生在哪一區傳進來 —— 這也是 zone 是**必填參數**而不是 optional 的理由:
+ * 忘記傳會是型別錯誤,不會安靜地退化成「全世界最高」。
+ *
+ * **(a-2) 「死活都計算在內」** —— 屍體照算。這是 owner 推翻過的那一版:先前的
+ * 實作要求 `alive === true`,結果是全隊倒地的那幾秒特殊殭屍會縮回該回合的小怪等
+ * 級(round 3 ⇒ 6,764 hp),然後有人被復活又彈回兩萬多 —— 同一波殭屍在玩家眼裡
+ * 忽胖忽瘦,而且「隊友倒下 ⇒ 怪物變弱」正好是難度曲線反過來走。屍體的等級就是
+ * 那個玩家這一場的實力,拿它當難度基準是穩定的。
+ *
+ * ⚠️ 輪空(bye)的隊伍在 `startCombat` 裡被 park 成 `alive:false` 而 `zone` 留在
+ * 上一回合的值,所以「死活都算」也把他們算進來。這是**知道而接受**的:同一場的英
+ * 雄等級本來就在同一個量級(每回合 grantLevels 齊發),不是離群值。
+ *
+ * ⚠️ 決定性:`world.champion` 是 Map,插入順序在不同 host 上不保證一致,所以這裡
+ * 走**排序過的 EntityId**。平手時取哪一個不影響答案(只取 level 這個數字),但
+ * 迭代順序仍然固定 —— 一條不必靠「這次剛好沒差」撐著的規則。
+ */
+export function matchHighestChampionLevel(world: SimWorld, zone: number): number | null {
+  let best: number | null = null;
+  for (const id of [...world.champion.keys()].sort((a, b) => a - b)) {
+    // (a-1) zone 過濾。沒有 transform 的英雄(不該發生,但 snapshot 重建過的世界
+    // 出過)算作「不在任何 zone」,而不是算進每一個 zone。
+    if (world.transform.get(id)?.zone !== zone) continue;
+    // (a-2) 刻意沒有 `alive` 檢查 —— 見上面 owner 的裁決。
+    const lv = world.champion.get(id)?.level;
+    if (lv === undefined || !Number.isFinite(lv)) continue;
+    if (best === null || lv > best) best = lv;
+  }
+  return best;
+}
+
+/**
+ * The stats one mob of `kind` spawns with, `"matchHighest"` resolved AT THIS
+ * MOMENT (#290, owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」).
+ *
+ * ── WHY THIS IS A SECOND FUNCTION AND NOT A BRANCH INSIDE `mobProfile` ──────
+ * `mobProfile` is called by MovementSystem for EVERY mob on EVERY tick, and by
+ * MobSystem's melee on top of that. This one is called a handful of times per
+ * wave. Putting the champion-registry lookup + `championStatBase` behind the
+ * per-tick door would pay 100-mobs × 30Hz for an answer that only changes when
+ * something spawns.
+ *
+ * ── AND WHY IT IS SPAWN TIME AND NOT ARM TIME ──────────────────────────────
+ * 「當時」. Heroes level up DURING a round (every Nth zombie kill, and the king's
+ * `bountyLevels`), so an arm-time answer would make the 20th special of a round
+ * identical to the 1st — a mode that reads as implemented and is not.
+ *
+ * Everything else — `"round"`, `"fixed"`, an absent field, a pre-#206 arena, a
+ * plain zombie — takes the `heroDerive === null` short-circuit and returns
+ * exactly what `mobProfile` returns, same object shape, same numbers.
+ *
+ * ── 為什麼 `zone` 是必填的第二個參數 ────────────────────────────────────────
+ * owner 2026-07-29 裁決 (a) 說的是「**該小怪所在 zone 的**全英雄」。這隻小怪要生
+ * 在哪一區,只有呼叫端知道 (`spawnMob` / `summonMobBoss` 的 `zone` 引數),所以它
+ * 一路傳到 {@link matchHighestChampionLevel}。做成必填而不是 `zone?: number`,是
+ * 因為 optional 的漏傳會安靜地變成「全世界最高」—— 正好是這條裁決要禁止的行為。
+ */
+export function mobSpawnProfile(
+  world: SimWorld,
+  zone: number,
+  rules: MobRules,
+  kind: MobKind,
+): MobProfile {
+  const prof = mobProfile(rules, kind);
+  const derive =
+    kind === "boss"
+      ? (rules.boss?.heroDerive ?? null)
+      : kind === "special"
+        ? (rules.special?.heroDerive ?? null)
+        : null;
+  if (derive === null) return prof;
+  // 這個 zone 一個英雄都沒有(死的也沒有)⇒ `armedLevel`,也就是該回合小怪的等級
+  // (owner-suggested fallback)。不是 NaN、不是 0、不會 throw。
+  const level = matchHighestChampionLevel(world, zone) ?? derive.armedLevel;
+  const live = heroDerivedStats(derive.championId, derive, level, derive.env);
+  if (live.maxHp === null && live.attackDamage === null) return prof;
+  return {
+    ...prof,
+    maxHp: live.maxHp ?? prof.maxHp,
+    attackDamage: live.attackDamage ?? prof.attackDamage,
+  };
 }
 
 /**
@@ -602,13 +1289,25 @@ export function mobRulesFromConfig(
   dt: number,
   round: number = cfg.fromRound,
   env: CombatEnvMultipliers = COMBAT_ENV_DEFAULTS,
+  /**
+   * #289 隨機英雄 — the HOST's draw (see {@link MobChampionPicker}). Optional on
+   * purpose: OMITTING IT IS A SUPPORTED MODE, not a bug. The client's prediction
+   * shadow, the replay player's pure-function re-arm, and every unit test call
+   * this with four arguments or fewer, and they all degrade to 「沿用今天的行為」
+   * (`championSource: "random"` reads as `"inherit"`) rather than throwing or
+   * emitting an empty champion id. The ONE production caller that passes it is
+   * `MatchController.enterCombat`.
+   */
+  pickChampion?: MobChampionPicker,
 ): MobRules {
   const ticks = (sec: number): number => Math.max(1, Math.round(sec / dt));
   const level = mobLevelForRound(cfg, round);
   // GH#191 — the round's champion, not the whole-match one. This is the ONE
   // line the per-round 由誰擔任 column was missing: `round` was already an
   // argument (the caps use it), so consuming the field needed no new channel.
-  const championId = mobChampionForRound(cfg, round);
+  // #289 — and the same one line now also carries 隨機, because the draw is a
+  // pure function of (seed, round, slot) that the host hands in.
+  const championId = mobChampionForRound(cfg, round, pickChampion);
   const def = Champions.tryGet(championId as ChampionId);
   const perLevel = level - 1;
   // TIER 1 (#244): the mob card owns the curve. `baseHp` is the presence flag —
@@ -633,9 +1332,82 @@ export function mobRulesFromConfig(
         ? 0
         : Math.max(0, championStatBase(def, Stat.HealthRegen, level, env));
   const caps = mobCapsForRound(cfg, round);
+  // GH#206 — hoisted out of the return literal because the KING's 移速 is now
+  // expressible as a multiple of it (see `heroDerivedStats` for why the anchor
+  // is this number and not a hero's `ms`).
+  const mobMoveSpeed = cfg.mob.moveSpeed ?? MOB_FALLBACK_MOVE_SPEED;
   // GH#192 — the mesh follows the champion; `modelKey` is only an override.
   const modelKey = cfg.mob.modelKey ?? mobChampionModelKey(championId);
   const tintStrength = Math.max(0, Math.min(1, cfg.mob.tintStrength ?? DEFAULT_MOB_TINT_STRENGTH));
+  // GH#206 — 從英雄推導, resolved HERE and nowhere else. Both blocks inherit the
+  // round's champion when they name none, the same precedence the mesh uses one
+  // line up, so an operator who only sets 「這回合由誰擔任」 gets a king built from
+  // that hero's sheet for free.
+  //
+  // The LEVEL differs on purpose: the king is pinned (owner 2026-07-29 「殭屍王的
+  // 等級是滿級99」) while the special inherits the round's mob level and therefore
+  // grows through the match. Absent `heroLevel` = the round's level for both.
+  //
+  // #290 — 「幾級」 is now a THREE-WAY MODE (`heroLevelSource`), and one of the
+  // three (`"matchHighest"`) has no arm-time answer at all. What is baked here
+  // is `mobArmedHeroLevel` — today's chain for every legacy doc, the `"round"`
+  // value for `"matchHighest"` — and `"matchHighest"` additionally gets a
+  // {@link MobHeroDeriveRule} so `mobSpawnProfile` can redo the arithmetic at
+  // the live level when a mob is actually created.
+  //
+  // #289 — the KING's and the SPECIAL's face is resolved ONCE, here, into a
+  // single `{championId, own}` that BOTH the hero derivation below and the mesh
+  // in the return literal read. That single resolution is the whole guard
+  // against failure shape ⑤: a 隨機 draw that only reached `mobChampionModelKey`
+  // would ship 「臉是抽到的英雄、數值還是原本那隻」 — a re-skin pretending to be a
+  // feature — and no existing test would notice, because every hp assertion in
+  // the repo is written against the inherited champion.
+  const bossFace = mobKindChampion(cfg.boss, championId, "boss", round, pickChampion);
+  const specialFace = mobKindChampion(cfg.special, championId, "special", round, pickChampion);
+  const bossArmedLevel = cfg.boss === undefined ? level : mobArmedHeroLevel(cfg.boss, level);
+  const specialArmedLevel =
+    cfg.special === undefined ? level : mobArmedHeroLevel(cfg.special, level);
+  const bossHero =
+    cfg.boss === undefined
+      ? NO_HERO_DERIVED
+      : heroDerivedStats(bossFace.championId, cfg.boss, bossArmedLevel, env);
+  const specialHero =
+    cfg.special === undefined
+      ? NO_HERO_DERIVED
+      : heroDerivedStats(specialFace.championId, cfg.special, specialArmedLevel, env);
+  // #290 — the spawn-time re-derivation input, and ONLY for `"matchHighest"`.
+  //
+  // ⚠️ GATED ON `hero.maxHp !== null || hero.attackDamage !== null`, i.e. on the
+  // derivation having actually produced something. A block that authors
+  // `heroLevelSource: "matchHighest"` but no `heroHpMult`/`heroDamageMult`
+  // derives nothing at all (see `heroDerivedStats`), and handing `spawnMob` a
+  // rule that recomputes two `null`s every spawn would be pure cost with no
+  // observable effect — plus it would make `heroDerive !== null` stop meaning
+  // 「這隻真的會在生成時重算」.
+  type HeroDeriveBlock = {
+    heroHpMult?: number;
+    heroDamageMult?: number;
+    hpFlatBonus?: number;
+    heroLevelSource?: MobHeroLevelSource;
+  };
+  const deriveFor = (
+    block: HeroDeriveBlock | undefined,
+    face: { championId: string },
+    hero: HeroDerivedMobStats,
+    armedLevel: number,
+  ): MobHeroDeriveRule | null =>
+    block === undefined ||
+    block.heroLevelSource !== "matchHighest" ||
+    (hero.maxHp === null && hero.attackDamage === null)
+      ? null
+      : {
+          championId: face.championId,
+          heroHpMult: block.heroHpMult,
+          heroDamageMult: block.heroDamageMult,
+          hpFlatBonus: block.hpFlatBonus,
+          armedLevel,
+          env,
+        };
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),
@@ -652,7 +1424,7 @@ export function mobRulesFromConfig(
     sizeMult: cfg.mob.sizeMult ?? 1,
     tintStrength,
     attackDamage: cfg.mob.attackDamage,
-    moveSpeed: cfg.mob.moveSpeed ?? MOB_FALLBACK_MOVE_SPEED,
+    moveSpeed: mobMoveSpeed,
     attackRangeSq: cfg.mob.attackRange * cfg.mob.attackRange,
     attackCdTicks: ticks(cfg.mob.attackCdSec),
     radius: cfg.mob.radius,
@@ -671,26 +1443,43 @@ export function mobRulesFromConfig(
             enabled: cfg.boss.enabled,
             killThreshold: cfg.boss.killThreshold,
             repeatable: cfg.boss.repeatable,
-            // GH#192 「HP是100倍」. ×the ROUND'S mob hp, resolved here at arm
-            // time next to the level — so the king scales with the curve instead
-            // of being a flat number that a zombie retune quietly outgrows. The
-            // flat `maxHp` stays the answer for an arena that authored no mult.
+            // GH#206 ── THREE TIERS, highest first. The king's own fields are
+            // already ABSOLUTE, so the hero derivation simply writes them and
+            // `MobBossRules` needs no new shape:
+            //   1. `heroHpMult` — ×該英雄 at `heroLevel` (owner 2026-07-29);
+            //   2. `hpMult`     — ×the ROUND'S zombie (GH#192 「HP是100倍」), so
+            //      the king scales with the curve instead of being a flat number
+            //      a zombie retune quietly outgrows;
+            //   3. the flat `maxHp`, for an arena that authored neither.
+            // Tier 2 and 3 are UNTOUCHED by this change: an arena with no
+            // `heroHpMult` produces the same number it did before #206, which is
+            // what a shelf of existing arena tests is written against.
             maxHp:
-              cfg.boss.hpMult === undefined
+              bossHero.maxHp ??
+              (cfg.boss.hpMult === undefined
                 ? cfg.boss.maxHp
-                : Math.max(1, Math.round(maxHp * cfg.boss.hpMult)),
-            attackDamage: cfg.boss.attackDamage,
-            moveSpeed: cfg.boss.moveSpeed,
+                : Math.max(1, Math.round(maxHp * cfg.boss.hpMult))),
+            // A SEPARATE knob from the hp one, on purpose (owner-approved 折衷):
+            // a huge hp pool makes the king a wall, a huge attack makes it a
+            // one-shot, so 20× hp does NOT imply 20× damage.
+            attackDamage: bossHero.attackDamage ?? cfg.boss.attackDamage,
+            // ×THE NORMAL ZOMBIE (0.2 = 「移動速度 −80%」), never ×a hero — see
+            // `heroDerivedStats`. Absent ⇒ the flat authored speed.
+            moveSpeed:
+              cfg.boss.moveSpeedMult === undefined
+                ? cfg.boss.moveSpeed
+                : Math.max(0, mobMoveSpeed * cfg.boss.moveSpeedMult),
             attackRangeSq: cfg.boss.attackRange * cfg.boss.attackRange,
             attackCdTicks: ticks(cfg.boss.attackCdSec),
             radius: cfg.boss.radius,
             // GH#192 — same precedence as the normal mob: explicit override,
             // else the CHAMPION's mesh (its own, when the block names one).
+            // #289 — `bossFace.own` replaces the old
+            // `cfg.boss.championId === undefined` test, so a 隨機 draw dresses
+            // the king in the champion it DREW instead of inheriting the mob's
+            // mesh. Identical answer whenever no draw happened.
             modelKey:
-              cfg.boss.modelKey ??
-              (cfg.boss.championId === undefined
-                ? modelKey
-                : mobChampionModelKey(cfg.boss.championId)),
+              cfg.boss.modelKey ?? (bossFace.own ? mobChampionModelKey(bossFace.championId) : modelKey),
             sizeMult: cfg.boss.sizeMult ?? DEFAULT_BOSS_SIZE_MULT,
             bountyGold: cfg.boss.bountyGold,
             bountyXp: cfg.boss.bountyXp,
@@ -700,6 +1489,7 @@ export function mobRulesFromConfig(
             // the fallback for any arena authored before the field existed.
             lastHitMode: cfg.boss.lastHitMode ?? "bonus",
             countOverkill: cfg.boss.countOverkill ?? false,
+            heroDerive: deriveFor(cfg.boss, bossFace, bossHero, bossArmedLevel),
           },
     special:
       cfg.special === undefined
@@ -713,16 +1503,44 @@ export function mobRulesFromConfig(
             damageMult: cfg.special.damageMult,
             moveSpeedMult: cfg.special.moveSpeedMult,
             radiusMult: cfg.special.radiusMult,
+            // GH#206 — `null` when the arena authored no `heroHpMult`, and then
+            // `mobProfile` runs the pre-#206 multiplier expression unchanged.
+            maxHp: specialHero.maxHp,
+            attackDamage: specialHero.attackDamage,
             // GH#192 — defaults to `radiusMult` so an arena authored before the
             // split keeps ONE number meaning one thing (body and silhouette
             // agreed by construction) instead of silently rendering at 1×.
             sizeMult: cfg.special.sizeMult ?? cfg.special.radiusMult,
             rewardMult: cfg.special.rewardMult,
+            // #288 — 分紅獎池. PRESENCE IS THE SWITCH: an arena that authored none
+            // of the three pool numbers gets `null` and keeps the pre-#288
+            // 「rewardMult 直接給補刀的人」 path byte-for-byte, including keeping no
+            // damage ledger. Authoring ANY one of them opts the whole block in
+            // (the other two default to 0), which is the same 「一個欄位就啟用」
+            // rule `heroHpMult` uses one block up.
+            bounty:
+              cfg.special.bountyGold === undefined &&
+              cfg.special.bountyXp === undefined &&
+              cfg.special.bountyLevels === undefined
+                ? null
+                : {
+                    gold: cfg.special.bountyGold ?? 0,
+                    xp: cfg.special.bountyXp ?? 0,
+                    levels: cfg.special.bountyLevels ?? 0,
+                    // 1 = 沒有翻倍. The owner asked only for 「照傷害比例分」 on the
+                    // special (the 翻倍 ruling was about the KING), so the shipped
+                    // answer is a pure proportion and the knob is there for a
+                    // playtest that wants otherwise.
+                    lastHitMultiplier: cfg.special.lastHitMultiplier ?? 1,
+                    lastHitMode: cfg.special.lastHitMode ?? "bonus",
+                    splitByDamage: cfg.special.splitByDamage ?? true,
+                    countOverkill: cfg.special.countOverkill ?? false,
+                  },
+            // #289 — see the king's note one block up.
             modelKey:
               cfg.special.modelKey ??
-              (cfg.special.championId === undefined
-                ? modelKey
-                : mobChampionModelKey(cfg.special.championId)),
+              (specialFace.own ? mobChampionModelKey(specialFace.championId) : modelKey),
+            heroDerive: deriveFor(cfg.special, specialFace, specialHero, specialArmedLevel),
           },
   };
 }
@@ -846,7 +1664,11 @@ export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: numb
   // kind-dependent, so a special zombie spawned at the normal inset would clip
   // through the boundary on its first tick.
   const kind = rollMobKind(world, rules);
-  const profile = mobProfile(rules, kind);
+  // #290 — `mobSpawnProfile`, not `mobProfile`: 「跟當時場上英雄最高等級相同」 is
+  // resolved HERE, at the one moment 「當時」 means something. Identical to
+  // `mobProfile` for every other mode (short-circuits on `heroDerive === null`).
+  // `zone` travels with it — owner 2026-07-29 「該小怪所在 zone 的全英雄」.
+  const profile = mobSpawnProfile(world, zone, rules, kind);
   const pos = mobSpawnPos(world, zone, k, i, profile.radius);
   const id = spawnMobBody(world, zone, kind, profile, pos);
   world.emit("mobSpawn", { id, zone, x: pos.x, z: pos.z, maxHp: profile.maxHp, kind });
@@ -877,7 +1699,10 @@ export function summonMobBoss(
   kills: number,
 ): EntityId | null {
   if (rules.boss === null || !rules.boss.enabled) return null;
-  const profile = mobProfile(rules, "boss");
+  // #290 — same seam as `spawnMob`'s; a king summoned mid-round is a spawn too.
+  // The king walks into the SUMMONER's zone, so that is the zone whose heroes
+  // 「跟場上最高」 would read (inert while the shipped king is `"fixed"` at 99).
+  const profile = mobSpawnProfile(world, zone, rules, "boss");
   const pos = mobSpawnPos(world, zone, BOSS_SPAWN_WAVE, kills, profile.radius);
   const id = spawnMobBody(world, zone, "boss", profile, pos);
   world.emit("mobBossSpawn", {

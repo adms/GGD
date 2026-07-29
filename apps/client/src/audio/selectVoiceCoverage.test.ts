@@ -65,7 +65,11 @@ describe("select-voice coverage on the PUBLIC tier", () => {
   it("answers for every champion, with files that exist", () => {
     cover("voice-select-coverage");
     // 115 since task #249 imported godie-o02n (曹操孟德's BASE unit O02N).
-    expect(CHAMP_IDS).toHaveLength(115);
+    // 119 once the same task imported the four 變身 ALTERNATE bodies
+    // (godie-e010 / h00w / n01b / o030) — `Champions.get()` throws on an
+    // unregistered id and the transform re-points the body at one, so they had
+    // to become real champion docs, and champion-voices.json covers EVERY doc.
+    expect(CHAMP_IDS).toHaveLength(119);
 
     const silent: string[] = [];
     const missing: string[] = [];
@@ -97,7 +101,18 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // real cloned voice. 51 packs cover 66 champions across the 26 pairs; the
     // 15 are the shares that are not ALSO map-quip champions (rung 1 still
     // wins) and that appear in this 115-key config.
-    expect(byTier).toEqual({ authored: 16, generated: 57, name: 40, quote: 2 });
+    //
+    // #249's four ALTERNATE bodies add +1 authored and +3 name, MEASURED off a
+    // real run rather than predicted, and each split is explainable:
+    //   · godie-o030 → authored. Its entry mirrors godie-orkn's, which carries
+    //     a real map quip (assets/audio/sfx/bads.mp3), so rung 1 wins.
+    //   · godie-e010 / h00w / n01b → name. Their base halves (e00s / harf /
+    //     nman) have no generated pack either, so the FORM-COUNTERPART share
+    //     rung has nothing to hand down and they fall to the JP call-out clip
+    //     tools/tts-gen minted for them. When those three bases get a
+    //     CosyVoice3 pack, all six climb to `generated` together and this line
+    //     moves again — that is the counterpart rule working, not a break.
+    expect(byTier).toEqual({ authored: 17, generated: 57, name: 43, quote: 2 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {

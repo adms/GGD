@@ -85,11 +85,16 @@ const CENSUS = censusByModel();
  * "which champions currently fall through to a stand-in, and which stand-in".
  */
 const EXPECTED: Readonly<Record<string, readonly string[]>> = {
-  // 18 — blocky-mage.glb
+  // 20 — blocky-mage.glb. #249 added two 變身 ALTERNATE bodies here, each
+  // wearing its base half's rig on purpose: godie-e010 (70 紮根, mirrors
+  // godie-e00s) and godie-o030 (30 變態紳士, mirrors godie-orkn). A transform
+  // that changed rig would read as a different character, not the same one
+  // changed — see ALTERNATE_FORM_IDS in standinRoster.test.ts.
   "champ.sela": [
     "godie-e00s",
     "godie-e00t",
     "godie-e00u",
+    "godie-e010",
     "godie-ecen",
     "godie-efur",
     "godie-ekee",
@@ -97,6 +102,7 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "godie-h021",
     "godie-hblm",
     "godie-n00b",
+    "godie-o030",
     "godie-ogld",
     "godie-orkn",
     "godie-oshd",
@@ -119,11 +125,13 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "godie-udea",
     "thorne",
   ],
-  // 9 — blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form
+  // 10 — blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form
   // swap moved him onto a shared mesh, a downgrade the owner already knows
   // about, and #231's per-champion skin is what makes it survivable.
+  // godie-h00w (26 洨者狀態) is godie-harf's 變身 body and mirrors his rig.
   "champ.skin.barbarian": [
     "godie-e00v",
+    "godie-h00w",
     "godie-h02k",
     "godie-h02y",
     "godie-harf",
@@ -133,9 +141,12 @@ const EXPECTED: Readonly<Record<string, readonly string[]>> = {
     "godie-ubal",
     "godie-umal",
   ],
-  // 6 — blocky-rogue.glb
+  // 8 — blocky-rogue.glb. godie-n01b (40 萬解) is godie-nman's 變身 body: it is
+  // `attackType: "ranged"` yet wears the rogue rig, because an alternate form
+  // follows its BASE half rather than the draft "ranged ⇒ champ.sela" heuristic.
   "champ.skin.rogue": [
     "godie-e00r",
+    "godie-n01b",
     "godie-n01l",
     "godie-nbst",
     "godie-nman",
@@ -163,12 +174,16 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     }
   });
 
-  it("44 champions in total have no model of their own", () => {
+  it("48 champions in total have no model of their own", () => {
     cover("model-standin-census");
+    // 44 → 48 at task #249: the four 變身 ALTERNATE bodies (godie-e010 /
+    // godie-h00w / godie-n01b / godie-o030) were imported, and each borrows the
+    // same stand-in as the base hero it is the transformed half of. The number
+    // is a census, not a budget — it moves whenever the roster does.
     const borrowers = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
-    expect(borrowers.length).toBe(44);
+    expect(borrowers.length).toBe(48);
     // and nobody is double counted
-    expect(new Set(borrowers).size).toBe(44);
+    expect(new Set(borrowers).size).toBe(48);
   });
 
   it("every stand-in model doc really points at a generated blocky mesh", () => {

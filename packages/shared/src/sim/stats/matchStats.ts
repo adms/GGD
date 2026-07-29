@@ -17,6 +17,7 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
+import { mobLedgerRule } from "../mobs";
 
 /**
  * Per-player match scoreboard. All counters are monotonic within a match (they
@@ -139,9 +140,20 @@ export function recordDamage(
   const srcChamp = world.champion.has(source);
   const tgtChamp = world.champion.has(target);
 
-  // 殭屍王傷害帳本 (task #262). BEFORE the early return below, because the king
-  // is a NEUTRAL and that return is exactly what drops every packet aimed at
-  // one.
+  // 殭屍王 + 特殊殭屍傷害帳本 (task #262, widened by #288). BEFORE the early
+  // return below, because both are NEUTRALS and that return is exactly what
+  // drops every packet aimed at one.
+  //
+  // ⚠️ 一般殭屍 IS DELIBERATELY EXCLUDED, AND THAT EXCLUSION IS LOAD-BEARING —
+  // it is not an oversight to "fix" later. `mobLedgerRule` answers `null` for
+  // `kind === "normal"`, so an ordinary zombie allocates NOTHING. Round 9
+  // schedules 50 alive per zone × 2 zones = 100 zombies; giving each of them a
+  // `Map` would mean 100 ledgers, and `SimWorld.destroy` sweeps EVERY ledger
+  // looking for the dying entity as a damager — so 100 deaths a tick against
+  // 100 ledgers is 10,000 map probes per tick, i.e. O(n²) in the mob count, for
+  // a 20-gold minion that pays its whole reward to one last hitter anyway. The
+  // ledger exists only for mobs whose reward is SPLIT (`mobBountyRules !== null`
+  // for exactly the same kinds), which is the king and the 特殊殭屍.
   //
   // 溢傷不算 — owner ruled 2026-07-29 (GH#206). `output` is post-mitigation but
   // NOT capped at the king's remaining hp (`mitigate()` clamps only a
@@ -161,9 +173,15 @@ export function recordDamage(
   // 後台可調): `countOverkill: true` restores the pre-#206 behaviour without a
   // code change. Default false = the owner's ruling.
   //
-  // Gated on the mob's KIND, not on the ledger's existence, so an ordinary
-  // zombie never allocates a map and a world with no king is untouched.
-  if (srcChamp && world.mob.get(target)?.kind === "boss") {
+  // Gated on the mob's KIND (through the armed rules), not on the ledger's
+  // existence, so an ordinary zombie never allocates a map and a world with no
+  // king / no 特殊殭屍分紅 is untouched.
+  // `srcChamp` FIRST so a mob-on-champion packet (the overwhelming majority in
+  // a mob round) never even reaches the `world.mob` probe — the same
+  // short-circuit the pre-#288 one-liner had.
+  const victimKind = srcChamp ? world.mob.get(target)?.kind : undefined;
+  const ledgerRule = victimKind === undefined ? null : mobLedgerRule(world.mobRules, victimKind);
+  if (ledgerRule !== null) {
     // ⚠️ `hpLoss` IS NOT CAPPED EITHER — its own parameter doc says 「HP actually
     // removed」 and that is not true: `damage.ts` does a bare `hp.hp -= dmg`, so
     // hp goes NEGATIVE and `hpLoss` is the full post-shield force. Both numbers
@@ -177,8 +195,12 @@ export function recordDamage(
     // decision about a different number that nobody has asked for.
     const hpNow = world.health.get(target)?.hp ?? 0;
     const hpBefore = Math.max(0, hpNow + hpLoss);
-    const credited =
-      world.mobRules?.boss?.countOverkill === true ? output : Math.min(hpLoss, hpBefore);
+    // #288 — the knob is read off the SLAIN KIND's own block (`boss.countOverkill`
+    // for a king, `special.countOverkill` for a 特殊殭屍), never off a single
+    // global. `mobLedgerRule` already resolved which one; reading
+    // `world.mobRules.boss` here instead would silently apply the king's setting
+    // to a special, and would apply NOTHING at all in an arena with no king.
+    const credited = ledgerRule.countOverkill ? output : Math.min(hpLoss, hpBefore);
     if (credited > 0) {
       let ledger = world.bossDamage.get(target);
       if (!ledger) {

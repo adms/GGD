@@ -51,6 +51,7 @@ import { VoxelBarcodePage } from "./VoxelBarcodePage";
 // does not exist, and this one is the switch the owner was told to use.
 import { VoxelBodyPage } from "./VoxelBodyPage";
 import { BaseBonusPage } from "./BaseBonusPage";
+import { FormVisualsPage } from "./FormVisualsPage";
 import { StatCapsPage } from "./StatCapsPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
@@ -141,6 +142,10 @@ const NAV: NavItem[] = [
   // 屬性上限 — 這三頁是同一個問題的三個面:戰鬥系統 = 倍率,基礎加成 = 加數,
   // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
   { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_SYS },
+  // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
+  // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。放在數值三頁之後,
+  // 因為它調的是同一批英雄的**外觀**而不是數值。
+  { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
   // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
   // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
   // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
@@ -583,6 +588,7 @@ function Console(): React.JSX.Element {
             {page === "voxelBarcode" && <VoxelBarcodePage />}
             {page === "voxelBody" && <VoxelBodyPage />}
             {page === "baseBonus" && <BaseBonusPage />}
+            {page === "formVisuals" && <FormVisualsPage />}
             {page === "statCaps" && <StatCapsPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (

@@ -16,9 +16,11 @@ import type {
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
   ConfigVoxelBodiesDoc,
+  ConfigFormVisualsDoc,
+  FormVisual,
   AmbientVfxBinding,
 } from "@ggd/shared/content";
-import { Arenas, Configs, Models, RibbonDefs, VfxDefs } from "@ggd/shared/content";
+import { Arenas, Configs, Models, RibbonDefs, VfxDefs, resolveFormVisual } from "@ggd/shared/content";
 import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
 import { applyGoreDoc } from "../vfx/goreConfig";
 import { ensureContentLoaded } from "./bootContent";
@@ -130,6 +132,12 @@ export class ContentDb {
   private voxelSkinOverrides = new Map<string, VoxelSkinOverride>();
   /** GH#31 — championId -> operator's body choice. Empty = nobody toggled anything. */
   private voxelBodies = new Map<string, boolean>();
+  /**
+   * #249 GH#288 — 變身外觀表. `null` means 「文件沒讀到」, which
+   * `resolveFormVisual` deliberately reads as 「用出貨預設」 rather than
+   * 「全部關掉」 — the same three-state rule `voxelBodyFor` documents.
+   */
+  private formVisuals: ConfigFormVisualsDoc | null = null;
   private loaded = false;
 
   /**
@@ -224,6 +232,13 @@ export class ContentDb {
     for (const [championId, on] of Object.entries(bodiesDoc?.bodies ?? {})) {
       if (typeof on === "boolean") this.voxelBodies.set(championId, on);
     }
+    // #249 GH#288 —— 變身「看得出來」的三個旋鈕。走 config collection(不是
+    // sidecar),理由和 voxel-bodies 一模一樣:只有 durable overlay 撐得過
+    // `docker compose build`,而 overlay 的 key 不能以 `_` 開頭。
+    this.formVisuals = this.configDoc<ConfigFormVisualsDoc>(
+      "form-visuals",
+      "config.form-visuals@1",
+    );
     this.loaded = true;
   }
 
@@ -355,6 +370,24 @@ export class ContentDb {
   voxelBodyFor(championId: string): boolean | null {
     const v = this.voxelBodies.get(championId);
     return typeof v === "boolean" ? v : null;
+  }
+
+  /**
+   * #249 GH#288 —— 這個 championId 在**變身態**時的外觀(顏色/大小/球體掛件),
+   * 或 null。
+   *
+   * ⚠️ 傳進來的必須是**變身態的 id**(`Emeu` 那一半)。`resolveFormVisual` 的
+   * 第一道關卡是 `isAlternateForm`,所以傳基本型進來一定拿到 null ——
+   * 「基本型悟空不可以長出超三的頭」在這一層就是一條 early return,不是
+   * 一個要記得繞過的分支。
+   */
+  formVisualFor(alternateChampionId: string | null | undefined): FormVisual | null {
+    return resolveFormVisual(this.formVisuals, alternateChampionId);
+  }
+
+  /** The raw 變身外觀 doc the console wrote (null = shipped defaults apply). */
+  get formVisualsDoc(): ConfigFormVisualsDoc | null {
+    return this.formVisuals;
   }
 
   vfxFor(vfxKey: string): VfxDoc | null {

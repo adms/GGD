@@ -186,12 +186,21 @@ describe("海克力斯 Berserker 黑紅 (tint-berserker)", () => {
 // ---------------------------------------------------------------- roster
 
 /**
- * The 21 champion-mapped units from the extract, exact values pinned.
+ * The 23 champion-mapped units from the extract, exact values pinned.
  *
  * 20 landed with #49; `godie-u00l` is the #263 catch-up — it inherits its
  * colour from the ORIGINAL-table entry `Umal` (a w3u→w3u step #49's resolver
  * did not have), so it shipped untinted while its 變身 counterpart
  * `godie-umal` carried 0.7843 and transforming visibly washed the grey off.
+ *
+ * 21 → 23 at task #249, the SAME 變身 catch-up one step further: importing the
+ * four alternate bodies brought two more units that UNIT_TINTS.json already had
+ * a non-neutral colour for, inherited down `baseChain` exactly like `U00L`:
+ *   E010 ← Ecen  [1, 0.7843, 1]      (godie-e010, mirrors godie-e00s)
+ *   N01B ← Nman  [1, 0.3922, 0.3922] (godie-n01b, mirrors godie-nman)
+ * The other two alternates are `neutral: true` in the extract (H00W and O030
+ * both resolve to 255/255/255), so they correctly ship NO tint field — the
+ * "untinted stays absent, never [1,1,1]" rule below is what keeps them out.
  */
 const EXPECTED: ReadonlyArray<readonly [string, readonly [number, number, number]]> = [
   ["godie-hapm", [0.3137, 0.3137, 0.3137]],
@@ -208,11 +217,13 @@ const EXPECTED: ReadonlyArray<readonly [string, readonly [number, number, number
   ["godie-u00l", [0.7843, 0.7843, 0.7843]], // #263 — inherited from Umal
   ["godie-u00b", [0.9412, 0.5882, 0.5882]],
   ["godie-nman", [1, 0.3922, 0.3922]],
+  ["godie-n01b", [1, 0.3922, 0.3922]], // #249 — inherited from Nman
   ["godie-othr", [1, 1, 0]],
   ["godie-e00v", [1, 0.7843, 0]],
   ["godie-ucrl", [0.3922, 1, 0.3922]],
   ["godie-ecen", [1, 0.7843, 1]],
   ["godie-e00s", [1, 0.7843, 1]],
+  ["godie-e010", [1, 0.7843, 1]], // #249 — inherited from Ecen, same as e00s
   ["godie-ubal", [1, 0.7843, 0.7843]],
   ["godie-u00j", [1, 0.7843, 0.7843]],
 ];

@@ -42,6 +42,7 @@ import { movementSystem } from "./systems/MovementSystem";
 import { leapSystem } from "./systems/LeapSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { auraSystem } from "./aura/aura";
+import { auraCarrierSystem } from "./auraCarrier";
 import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
 import { recoveryDecaySystem } from "./systems/RecoverySystem";
@@ -152,9 +153,11 @@ export class SimWorld {
    * broken assist credit and bot threat targeting to store a number it cannot
    * hold.
    *
-   * Written by `recordDamage` for BOSS mobs only, so an ordinary zombie costs
-   * nothing and a world with no king never allocates. Cleared per boss on death
-   * (via `destroy`) and wholesale by `endCombatMobs`.
+   * Written by `recordDamage` for the mob kinds whose reward is SPLIT — the
+   * 殭屍王 and, since #288, the 特殊殭屍 with an authored 分紅獎池. An ordinary
+   * zombie costs nothing (see the O(n²) note in `recordDamage`) and a world with
+   * neither armed never allocates. Cleared per mob on death (via `destroy`) and
+   * wholesale by `endCombatMobs`.
    *
    * OUT OF `digest()`, on the `recentDamagers` / `bountyPaid` precedent: its
    * only observable effect is the gold/xp it grants, and `matchStats.goldEarned`
@@ -347,6 +350,25 @@ export class SimWorld {
     EntityId,
     import("./systems/ChampionFormSystem").ChampionFormComp
   >();
+
+  /**
+   * AURA CARRIERS (虛擬蝗蟲群, owner 2026-07-29) — carrier entity → the champion
+   * it shadows. EMPTY unless somebody is standing in a SECOND FORM whose own
+   * innate doc declares an `auras` block; see sim/auraCarrier.ts for why a
+   * dummy unit is the only way a form-scoped aura can exist at all.
+   *
+   * A carrier carries transform + stats + THIS MARKER and nothing else — no
+   * ChampionComp, no Health, no Navigation — plus a TeamComp on the host's team
+   * with the neutral `-1` seat (the aura's 「友軍」 filter resolves through it).
+   * That is the flower / guardian / coin blueprint: every champion iteration,
+   * every seat iteration and every alive-count is blind to it by construction.
+   *
+   * It is ALSO kept out of `rebuildGrid` below, which is what makes it
+   * structurally untargetable — every ability, projectile, auto-acquire and mob
+   * AI query walks that grid — and out of `projectSnapshot`, which is what
+   * keeps it off the wire and off the screen.
+   */
+  readonly auraCarrier = new Map<EntityId, import("./auraCarrier").AuraCarrierComp>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -573,6 +595,11 @@ export class SimWorld {
   }
 
   destroy(id: EntityId): void {
+    // #288 — CAPTURED BEFORE `this.champion.delete(id)` fifteen lines down. The
+    // `bossDamage` sweep at the bottom needs to know whether this entity could
+    // ever have appeared as a DAMAGER, and by the time it runs the component is
+    // already gone (which would make the check silently always-false).
+    const wasChampion = this.champion.has(id);
     this.transform.delete(id);
     this.health.delete(id);
     this.team.delete(id);
@@ -593,12 +620,21 @@ export class SimWorld {
     // the same defensive contract every other per-entity store follows).
     this.mob.delete(id);
     this.mobKills.delete(id);
-    // #262: the king's damage ledger dies with the king. Two entries to clear —
-    // this id AS a boss (the outer key) and this id as a DAMAGER of some other
-    // boss (an inner key), because a recycled entityId that inherited a stale
-    // contribution would be paid for damage it never did.
+    // #262: the mob's damage ledger dies with the mob. Two entries to clear —
+    // this id AS a ledgered mob (the outer key) and this id as a DAMAGER of some
+    // other one (an inner key), because a recycled entityId that inherited a
+    // stale contribution would be paid for damage it never did.
     this.bossDamage.delete(id);
-    for (const ledger of this.bossDamage.values()) ledger.delete(id);
+    // #288 — THE INNER SWEEP IS CHAMPION-ONLY, and that gate is a real fix, not
+    // a micro-optimisation. `recordDamage` writes an inner key ONLY when
+    // `world.champion.has(source)`, so a mob, a projectile or a flower can never
+    // be one; without this test every mob death walked EVERY live ledger. Once
+    // #288 gave 特殊殭屍 their own ledgers that is the one cost in this file that
+    // grows with the ledger count — round 9 can hold dozens of them while ~100
+    // mob corpses are destroyed per tick, and the sweep is exactly the O(n²)
+    // term. Champions die a handful of times a round, so the remaining work is
+    // bounded by the thing it is actually proportional to.
+    if (wasChampion) for (const ledger of this.bossDamage.values()) ledger.delete(id);
     this.hitstop.delete(id);
     this.knockdown.delete(id);
     this.hitstun.delete(id);
@@ -608,6 +644,12 @@ export class SimWorld {
     // task #249: nor a stale 變身 form — a recycled id that inherited one would
     // be dragged back to a PREVIOUS unit's base champion on the next tick.
     this.championForm.delete(id);
+    // …nor a stale AURA CARRIER marker. Two directions matter here: destroying
+    // the CARRIER must drop its own entry (this line), and destroying a HOST
+    // must not leave a carrier following a corpse — the latter is handled by
+    // `auraCarrierSystem`'s reconcile, which sees the host's transform vanish
+    // and tears the carrier down on the next tick (sim/auraCarrier.ts).
+    this.auraCarrier.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
@@ -637,6 +679,13 @@ export class SimWorld {
       // broad-phase means structurally untargetable (every ability/projectile
       // query walks this grid) and non-colliding, exactly like a circle.
       if (this.coin.has(id)) continue;
+      // Aura carriers are a POSITION, not a body: keeping them out of the
+      // broad-phase is what makes them structurally untargetable (every
+      // ability / projectile / auto-acquire / mob-AI query walks this grid) and
+      // non-colliding, exactly like a revive circle. It costs the aura nothing:
+      // `auraSystem` queries the grid for an emitter's NEIGHBOURS and reads the
+      // emitter's own position straight off `world.transform`.
+      if (this.auraCarrier.has(id)) continue;
       this.grid.insertCircle(id, t.pos, t.radius);
     }
   }
@@ -676,6 +725,19 @@ export class SimWorld {
     //                             commandSystem (3), and step 11's late
     //                             recompute is exactly the seam every other
     //                             same-tick `attachSource` already relies on.
+    auraCarrierSystem(this); //  0a′. 虛擬蝗蟲群: create / destroy / re-seat the
+    //                             dummy aura carriers a SECOND FORM needs
+    //                             (sim/auraCarrier.ts).
+    //
+    //                             AFTER championFormSystem (0a) so it sees the
+    //                             final form state of this tick — a body that
+    //                             just reverted on death or expiry must not get
+    //                             a carrier for one tick — and BEFORE
+    //                             auraSystem (0b) so the carrier is already
+    //                             sitting on its host when membership is
+    //                             computed. Both neighbours are load-bearing:
+    //                             flip either and the aura is one tick stale
+    //                             against the very state that owns it.
     auraSystem(this); //          0b. reconcile aura membership against the grid
     //                             just rebuilt above, BEFORE the recompute below
     //                             folds it in — so an aura entered this tick

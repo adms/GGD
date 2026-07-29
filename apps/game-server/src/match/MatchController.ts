@@ -64,7 +64,7 @@ import {
 } from "@ggd/shared/sim/systems/GuardianSystem";
 import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
-import { mobRulesFromConfig } from "@ggd/shared/sim/mobs";
+import { mobRulesFromConfig, pickMobChampion, type MobChampionPicker } from "@ggd/shared/sim/mobs";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
@@ -641,6 +641,38 @@ export class MatchController {
   }
 
   /**
+   * 殭屍的 隨機英雄 抽籤 (#289) — the host half of the feature, handed to
+   * `mobRulesFromConfig` at combat entry.
+   *
+   * ── WHY THE DRAW LIVES HERE AND NOT IN THE SIM ─────────────────────────────
+   * Two things the sim must not have: the ROSTER (the whitelist is a host
+   * concept — `sim/**` has no idea what a curated champion is) and a SOURCE OF
+   * RANDOMNESS. `sim/purity.test.ts` bans `Math.random` outright, and `world.rng`
+   * is off-limits by a stronger rule: #215 deliberately spends ZERO rng on mobs
+   * so the shared stream (crit / evasion / 傳說寶玉) is bit-identical to a
+   * mobless build. Drawing from it here would shift every later roll in the
+   * match — the mechanic would be paid for by every OTHER random system.
+   *
+   * So the draw is a pure hash of `(matchSeed, round, slot)` over the SAME pool
+   * `autoPickAndSpawn` uses — `randomChampionPool()`, i.e. 有模型 ∩ 白名單, with
+   * its own empty-pool fallback + warning. Same seed and round ⇒ same zombie, so
+   * a replay re-derives it; `world.rng.state` never moves.
+   *
+   * The pool is resolved LAZILY (first call only) so an arena that authors no
+   * `championSource: "random"` never touches the champion/model registries at
+   * all — arming a mobless or all-指定 round is byte-identical to pre-#289.
+   */
+  private mobChampionPicker(): MobChampionPicker {
+    let pool: ChampionId[] | null = null;
+    return (slot, round) => {
+      pool ??= this.randomChampionPool();
+      // `null` (an empty pool — impossible in practice, `randomChampionPool`
+      // falls back to the full roster) degrades to 「沿用」 in the sim.
+      return pickMobChampion(pool, this.matchSeed, round, slot) ?? undefined;
+    };
+  }
+
+  /**
    * A championId that is safe to lock in and spawn: enabled by the whitelist AND
    * a real, loaded champion. Empty (the no-pick seat), stale, or otherwise
    * unknown ids all fail here — including a bogus id that the dev `bypass`
@@ -1175,7 +1207,23 @@ export class MatchController {
       // own recorded ArenaRules + its own replayed round, so it round-trips exactly.
       beginCombatMobs(
         this.world,
-        mobRulesFromConfig(this.rules.mobWaves, this.world.dt, this.phase.round),
+        // #289 — the fifth argument is the 隨機英雄 draw. THE ONLY PRODUCTION
+        // CALL SITE that passes one: everything else (the client's prediction
+        // shadow, the replay player's pure re-arm, every unit test) calls with
+        // four arguments or fewer and gets 「沿用今天的行為」.
+        mobRulesFromConfig(
+          this.rules.mobWaves,
+          this.world.dt,
+          this.phase.round,
+          // ⚠️ `undefined`, NOT `this.combatEnv`. This call has ALWAYS used the
+          // shipped coefficients (the parameter default) and swapping in the
+          // live table here would silently re-scale every hero-derived king /
+          // special on any host with a tuned 戰鬥系統 — a balance edit disguised
+          // as a plumbing change. Stated explicitly because the slot is now
+          // visible in the call rather than omitted.
+          undefined,
+          this.mobChampionPicker(),
+        ),
         this.activeZones(),
       );
     } else {

@@ -56,9 +56,13 @@ describe("buildSheet over the real roster", () => {
   // so it left the shared-stand-in population. Same number the shared-side
   // `voxelSkin/generate.test.ts` asserts — the two must agree.
   it("flags the shared-stand-in population and the hand-authored overrides", () => {
-    // 44 since task #249 imported godie-o02n (曹操孟德 BASE unit O02N), one more
-    // champ.skin.rogue wearer.
-    expect(sheet.stats.standInChampions).toBe(44);
+    // 48 since task #249 imported four more transform-form units that had no
+    // champion doc: godie-o02n (曹操孟德 BASE O02N), godie-e010 (白木老樹精 紮根態,
+    // a champ.sela wearer), godie-n01b (地獄歌神 變身態) and one more. Each one is
+    // a REAL second form the map declares — `Champions.get()` throws on an
+    // unregistered id and the snapshot resolves the transformed body through it
+    // every tick, so importing them was mandatory, not cosmetic.
+    expect(sheet.stats.standInChampions).toBe(48);
     expect(sheet.stats.overriddenChampions).toBe(Object.keys(overrides).length);
     for (const row of sheet.rows) {
       // GH#31 —— 共用替身 ≠ 一定穿體素。40 位的暴雪模型早就抽出來了,
@@ -73,11 +77,14 @@ describe("buildSheet over the real roster", () => {
     }
   });
 
-  it("the champions sharing champ.sela get 18 different looks", () => {
+  it("the champions sharing champ.sela get 20 different looks", () => {
+    // 18 → 20: #249 imported two more champ.sela wearers (the 白木老樹精 紮根態
+    // pair). The point of the assertion is unchanged — every sharer must still
+    // get a DISTINCT signature, which is what the Set size checks.
     const group = sheet.rows.filter((r) => r.modelKey === "champ.sela");
-    expect(group.length).toBe(18);
-    expect(new Set(group.map((r) => r.signature)).size).toBe(18);
-    for (const r of group) expect(r.modelKeyShareCount).toBe(18);
+    expect(group.length).toBe(20);
+    expect(new Set(group.map((r) => r.signature)).size).toBe(20);
+    for (const r of group) expect(r.modelKeyShareCount).toBe(20);
   });
 
   it("is order-independent — the sheet does not depend on directory order", () => {
@@ -111,7 +118,7 @@ describe("filters, sorts and the review loop", () => {
     const all = applyFilter(sheet.rows, EMPTY_FILTER);
     expect(all.length).toBe(sheet.rows.length);
     const standIn = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyStandIn: true });
-    expect(standIn.length).toBe(44);
+    expect(standIn.length).toBe(48);
     const tinted = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyTinted: true });
     expect(tinted.length).toBeGreaterThan(0);
     expect(tinted.every((r) => r.tint)).toBe(true);

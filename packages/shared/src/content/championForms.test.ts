@@ -125,15 +125,24 @@ describe("w3x transform pairs (transform-forms-w3x-pin)", () => {
     }
   });
 
-  it("keeps the three no-duration entries honest (toggles + a death-state morph)", () => {
+  it("keeps the two no-duration entries honest (both real toggles)", () => {
     cover("transform-forms-no-duration");
     const noDuration = CHAMPION_FORM_PAIRS.filter(
       (p) => Object.keys(p.durationSec).length === 0,
     ).map((p) => p.abilityRawcode);
     // An EMPTY duration map is a recovered fact, never missing data:
-    //   A0DZ 20-01 風王結界 and A0O6 70-00 紮根 are TOGGLES (no `ahdu` at all),
-    //   Aphx 61-00 百連我殺 is a death-state morph (`adur` 0.01s, instant).
-    expect(noDuration.sort()).toEqual(["A0DZ", "A0O6", "Aphx"]);
+    //   A0DZ 20-01 風王結界 and A0O6 70-00 紮根 are TOGGLES — no `ahdu` at all.
+    //
+    // ⚠️ Aphx 61-00 百連我殺 (鳳凰蛋) USED TO BE PINNED HERE, and that was this
+    // suite pinning a bug rather than a fact. The comment claimed 「a death-state
+    // morph, `adur` 0.01s, instant」 — but `adur` is the UNIT duration and `ahdu`
+    // is the HERO duration, and only `ahdu` governs a hero morph. Aphx's `ahdu`
+    // is 10s. It looked absent purely because the extractor did not resolve the
+    // value through the MPQ, so the fixture, `championForms.ts`, its comment and
+    // THIS ASSERTION were all wrong in agreement — the exact four-layer shape
+    // CLAUDE.md rule 3 warns about. Adding a rawcode back to this list is only
+    // ever correct if `TRANSFORM_FORMS.json` really has no `ahdu` for it.
+    expect(noDuration.sort()).toEqual(["A0DZ", "A0O6"]);
     // …and every other pair really does carry a level-1 duration.
     for (const p of CHAMPION_FORM_PAIRS) {
       if (noDuration.includes(p.abilityRawcode)) continue;

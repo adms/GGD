@@ -154,12 +154,27 @@ export interface AuraDef {
    * Whether the emitter is inside its own aura. Default: TRUE for `"ally"` and
    * `"all"`, FALSE for `"enemy"`.
    *
-   * The default is the WC3 behaviour rather than a uniform `false`: Command /
-   * Endurance / Devotion Aura all buff the hero carrying them, so a uniform
-   * `false` would make every ported ally aura wrong-by-default and the mistake
-   * would be invisible in the doc. Set it explicitly to `false` for the rarer
-   * 「隊友但不含自己」 shape. On an `"enemy"` aura it is meaningless (you are
-   * not your own enemy) and is ignored.
+   * The default is the WC3 behaviour rather than a uniform `false`, and it is
+   * MEASURED off the retail MPQs (war3 + War3x + War3Patch merged), not
+   * assumed: the stock FRIENDLY aura rows in `Units\AbilityData.slk` carry
+   * `self` in `targs1` (`air,ground,friend,self,vuln,invu` —
+   * Command / Endurance / Devotion / Brilliance / Trueshot / Thorns / Unholy /
+   * Vampiric, plus every `ItemAura*`). A uniform `false` would make every
+   * ported ally aura wrong-by-default and the mistake would be invisible.
+   *
+   * The exceptions are what `includeSelf: false` exists for. Blizzard omits
+   * `self` on exactly the emplacement regen auras — `Aoar` "Aura -
+   * Regeneration (Ward)" and `Aabr` "(Statue)" are `…,friend,neutral` with no
+   * `self`, while `AIgx`, the same aura carried by a HERO as an item, adds
+   * `self` back. So 70-00 芬多精 (`A0GM`, base `Aoar`, `targets_allowed` not
+   * overridden by the map) heals 白木卡迪那's ALLIES and not 白木 itself, and
+   * `content/abilities/godie-e010.passive.json` says so with `includeSelf:
+   * false`.
+   *
+   * On an `"enemy"` aura the default flips to `false`, but the field is NOT
+   * ignored: an explicit `true` still includes the emitter, which is the map's
+   * own `enemies,self` shape (e.g. `ACba` 87-00 威嚇). Do not "simplify" the
+   * `??` into an ally-only branch.
    */
   includeSelf?: boolean;
   /** stat modifiers granted to every unit inside (the 靈壓 −25 % `as` block) */
@@ -246,6 +261,16 @@ export function auraSystem(world: SimWorld): void {
     // among aura emitters — counts as alive rather than being silently dropped.)
     const hp = world.health.get(emitter);
     if (hp && !hp.alive) continue;
+    // WHO 「self」 IS for the {@link AuraDef.includeSelf} test. Normally the
+    // emitter. But a 虛擬蝗蟲群 (sim/auraCarrier.ts) is a STAND-IN standing on
+    // its host's exact coordinates, and `rebuildGrid` keeps carriers out of the
+    // broad phase — so `target === emitter` is unreachable for one and the host
+    // would fall through to the `ally` branch instead. That would make
+    // `includeSelf: false` silently do nothing on every carried aura, which is
+    // exactly the shape 70-00 芬多精 needs (w3a `A0GM` inherits `Aoar`'s
+    // `targs1 = ground,air,organic,vuln,invu,friend,neutral` — NO `self`, unlike
+    // all 25 hero/creep/item auras Blizzard ships).
+    const selfId = world.auraCarrier.get(emitter)?.host ?? emitter;
 
     for (const src of sc.sources) {
       if (!src.auras?.length) continue;
@@ -279,7 +304,7 @@ export function auraSystem(world: SimWorld): void {
           // circles have no StatsComp, so they are skipped here rather than
           // being handed a source that nothing would ever read.
           if (!world.stats.has(target)) continue;
-          if (target === emitter) {
+          if (target === selfId) {
             const self = def.includeSelf ?? def.affects !== "enemy";
             if (!self) continue;
           } else if (!affectsTarget(world, emitter, target, def.affects)) continue;

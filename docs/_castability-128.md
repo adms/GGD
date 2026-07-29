@@ -34,12 +34,13 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 237 |
+| damage | 234 |
 | buff | 79 |
 | projectile | 18 |
 | heal | 9 |
 | dash | 9 |
 | status | 4 |
+| championForm | 3 |
 | shield | 2 |
 
 - 僅靠 `vfx`（純特效、無 gameplay 頻道）過關：**0** 格。

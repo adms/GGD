@@ -4,7 +4,7 @@
   "icon": "assets/icons/abilities/godie-nsjs.e.webp",
   "description": "[變身]\n60秒冷卻時間\n\n幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
     60.0,
@@ -18,30 +18,16 @@
     400.0,
     500.0
   ],
-  "range": 11.0,
+  "range": 0,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      }
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": 8
     }
   ],
   "vfxKey": "fx.prim.arcane.pulse-sm",
   "sfxKey": "wc3.altarofelderswhat1",
-  "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.3
 }

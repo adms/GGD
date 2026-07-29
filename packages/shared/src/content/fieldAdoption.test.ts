@@ -243,6 +243,26 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "apps/client/src/render/vfx/w3xEmitter.ts:520 SYNTHESIZES the VfxDoc and sets spriteSheet from the w3x emitter's rows/cols at load; particleFactory.ts:244 consumes it. Live in matches, absent from content/.",
   },
 
+  // --- 變身 (#249). The `championForm` VARIANT itself is adopted — 3 of the 26
+  // w3x pairs ship the effect today (godie-nsjs.e 妖狐變化, godie-umal.r
+  // ChangeDNA, godie-ofar.r 瘋狂皮卡丘), which is what proves the path runs end
+  // to end. These are its two OTHER direction values, and both are waiting on
+  // content that is deliberately not in the first batch:
+  "enum:abilities.effects[]#championForm.to=base": {
+    status: "landing",
+    since: "2026-07-29",
+    why: "`to: \"base\"` is a MANUAL cancel — 'drop the form now, before it expires'. No w3x ability asks for one: all 26 metamorphoses either time out on `ahdu` or are toggles, and the automatic reverts (expiry, death, combat end) go through `revertToBaseForm` in ChampionFormSystem, not through an authored effect. It is exercised by championFormContent.test.ts on all 26 pairs, so the direction works; what is missing is a DESIGN decision that some hero should be able to cancel early. Resolve by authoring it on that hero, or reclassify to \"runtime-authored\" once the owner rules that no hero ever will.",
+  },
+  // "enum:abilities.effects[]#championForm.to=toggle" exemption DELETED
+  // 2026-07-29, exactly as its own text instructed. It held the three w3x
+  // toggles back because both halves of each pair share one modelKey, so the
+  // swap is invisible — but the owner ruled 「紮根 + 取代芬多精變形」 for
+  // 白木卡迪那 #70, and `godie-e00s.passive` (70-00 紮根, A0O6) now ships
+  // `to: "toggle"` on the 天生技 slot. The direction is adopted; what a player
+  // sees change is the STAT SHEET (armor 2 → 10, the w3a's own
+  // 「初使裝甲增加為10點」) and the snapshot's FORM bit, not the mesh.
+  // Guarded end-to-end by sim/championFormToggle.test.ts.
+
   // --- landing: the schema arrived on this branch, the content arrives with
   // the bake it describes.
   "field:models.voxel": {
@@ -318,6 +338,52 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "field:champions.abilities.*.template": {
     status: "debt",
     why: "the champion-embedded mirror of abilities.template; adopted at the same moment the first Q/W/E/R skill is re-authored onto a template (the mirror writeback writes both copies).",
+  },
+
+  // ── 靈氣 (auras) — the container crossed MIN_REACH on 2026-07-29 -----------
+  // `passive.ranks[].auras` had reach 2 (66-04 靈壓震撼: abilities/godie-e00t.r
+  // plus its champion-embedded mirror) and was therefore below the sampling
+  // floor, so THE CASCADE RULE hid its optional children. 70-00 芬多精
+  // (abilities/godie-e010.passive, the 紮根 form's aura, projected by
+  // sim/auraCarrier.ts) is the third, and adopting the container is exactly
+  // what makes these four visible — one finding at a time, outermost first.
+  //
+  // All four were triaged against the SOURCE (`Units\AbilityData.slk` out of
+  // the retail MPQs + the map's own w3a) rather than against the schema
+  // comments, and they did NOT come out the same way. The evidence, once:
+  //
+  //   · stock FRIENDLY aura rows in AbilityData.slk list `self` in
+  //     `targs1`; the ones that do not are the emplacement regen auras `Aoar`
+  //     (Ward) and `Aabr` (Statue) — while `AIgx`, the same aura carried by a
+  //     hero as an item, puts `self` back.
+  //   · `Dur1` / `HeroDur1` is 0 on ALL 32, and on both imported auras.
+  //   · the map derives 86 abilities from those 32 rows; 2 are ported.
+  //   · 0 of the 86 target friend AND enemy.
+  //
+  // `field:abilities.passive.ranks[].auras[].includeSelf` was exempt here as
+  // "default-live — both shipped auras want the default". The source says
+  // otherwise: 70-00 芬多精 is `A0GM`, base `Aoar`, `targets_allowed` NOT
+  // overridden, so it carries no `self` and does not heal 白木卡迪那 itself.
+  // The honest resolution was option 1 (AUTHOR THE CONTENT), so
+  // `abilities/godie-e010.passive.json` now ships `includeSelf: false` and the
+  // entry is deleted. It also took a code fix to become real: `includeSelf` is
+  // tested as `target === self` and a 虛擬蝗蟲群 is kept out of the broad phase,
+  // so the host used to arrive through the `ally` branch and the field could
+  // not move a number — aura.ts now resolves 「self」 through
+  // `world.auraCarrier`. Guarded end-to-end by sim/auraIncludeSelf.test.ts.
+  "field:abilities.passive.ranks[].auras[].lingerSec": {
+    status: "default-live",
+    why: "MEASURED: there is no number to port. `Dur1`/`HeroDur1` is 0 on all 32 stock aura rows in `Units\\AbilityData.slk` and on both imported auras (`A0GM` 芬多精, `A0ID` 靈壓震撼 — the map writes no duration either), so WC3's aura-buff tail is ENGINE behaviour, not ability data. aura.ts DECISION 6 therefore defaults to 0 (drop on the tick you leave) and `lingerSec` is an override for two deliberate uses: a designed tail, or the anti-flicker knob for a unit oscillating across the boundary. Authoring a value would be inventing content. If we ever want WC3's tail it is UNIFORM across every aura and belongs in a 後台-tunable default, not in per-aura docs — flagged to the owner, not silently absorbed here.",
+  },
+  "field:abilities.passive.ranks[].auras[].hooks": {
+    status: "landing",
+    since: "2026-07-29",
+    why: "NOT 'nobody needs it' — the source map has named heroes waiting. 86 map abilities derive from a stock aura row and only 2 are ported; among the unported are three Thorns auras (`ACah` CP-00 棘刺之光, `AEah` 25-04 北斗神拳究極奧義-無想轉生 7/14/21 %, `A0XK`) and three Plague auras (`Aap1`/`Aap2`/`Aap3` 汗臭味 / 疫病雲). Thorns reflects damage to whoever hit you and Plague is a periodic tick — neither is expressible as a `StatModifier`, so `hooks` is exactly the payload they need (the Vampiric family is NOT: `Stat.Lifesteal` covers it). Resolve by porting 無想轉生 onto an `onDamageTaken` aura hook; the 30-day expiry is the reminder, since 'the aura schema landed, the aura content did not' is the S8 this census exists to catch.",
+  },
+  "enum:abilities.passive.ranks[].auras[].affects=all": {
+    status: "landing",
+    since: "2026-07-29",
+    why: "Filed as landing for a DECISION, not a migration — the previous reason for keeping it was false. It said `all` exists to reach TEAMLESS units (flowers, guardians, revive circles); but `world.stats.set` is called in exactly two places (spawnChampion.ts, auraCarrier.ts), mobs get a TeamComp and no StatsComp, and aura.ts skips any target without one — so no teamless unit can receive an aura under ANY value of `affects`. What `all` really means is 「敵我不分」, and 0 of the 86 aura-derived map abilities target friend and enemy together (the closest, `ACba` 87-00 威嚇, is `enemies,self`, which is `affects: \"enemy\"` + `includeSelf: true`). So within 30 days either author the first friend-and-foe aura, or DELETE the member together with `AuraAffects` and the `affects === \"all\"` early-return in `affectsTarget` — code reads it today, which is why it was not deleted on the spot.",
   },
 };
 

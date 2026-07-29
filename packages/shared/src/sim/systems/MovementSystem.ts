@@ -267,6 +267,13 @@ export function movementSystem(world: SimWorld): void {
     // dropped coins (task #191) are loot on the floor: never push, never pushed
     // — and, being out of the grid, never visible to the inner loop either
     if (world.coin.has(id)) continue;
+    // AURA CARRIERS (虛擬蝗蟲群) are a position, not a body. Being out of the
+    // grid already hides them from the INNER loop, but the outer loop walks
+    // `world.transform` directly — and a carrier is created MID-COMBAT, so mobs
+    // spawned after it have HIGHER ids and would sail past the `otherId <= id`
+    // gate and get shoved by an invisible thing. Guarded on both sides, exactly
+    // like the coin/circle pair above.
+    if (world.auraCarrier.has(id)) continue;
     // AIRBORNE (task #247): a leaping body is out of the planar physics world —
     // it must neither shove someone standing underneath it nor be shoved off
     // its arc. Same shape as the coin/revive-circle exemptions above, and
@@ -313,6 +320,11 @@ export function movementSystem(world: SimWorld): void {
     // A coin was already pushed out of obstacles + clamped at spawn (coinDropPos);
     // re-clamping it every tick would only re-derive the same point.
     if (world.coin.has(id)) continue;
+    // An aura carrier's position is not its own: `auraCarrierSystem` copies it
+    // from the host at the top of the NEXT tick, so pushing it out of a pillar
+    // here would be undone before anything read it — and until then it would be
+    // an aura centred somewhere its champion is not.
+    if (world.auraCarrier.has(id)) continue;
     // Neutral guardians (task #89) are authoritative fixed terrain: never shove
     // them out of an obstacle or clamp them — GuardianSystem places one at the
     // zone CENTRE, which legitimately coincides with the centre pillar, and a

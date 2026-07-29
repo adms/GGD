@@ -610,6 +610,38 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
+    "godie-e010": {
+      "zhName": "白木老樹精 - 白木卡迪那",
+      "zhTitle": "白木老樹精",
+      "zhFullName": "白木卡迪那",
+      "spokenTitle": "シラキノロウジュセイ",
+      "spokenName": "シラキカディナ",
+      "jaTitle": "シラキノロウジュセイ",
+      "jaName": "シラキカディナ",
+      "reading": "Shiraki no Roujusei Shiraki Kadina",
+      "confidence": "low",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/godie-e010.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "白木老樹精",
+          "clip": "assets/audio/voices/names/godie-e010.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "白木卡迪那",
+          "clip": "assets/audio/voices/names/godie-e010.name.mp3"
+        }
+      ],
+      "spokenLine": "シラキノロウジュセイ・シラキカディナ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
     "godie-e012": {
       "zhName": "殺人劍客 - 佐佐木小次郎",
       "zhTitle": "殺人劍客",
@@ -1049,6 +1081,50 @@
       "spokenLine": "ジクウノユウシャ・リンク。",
       "lang": "ja-JP",
       "voice": "Kyoko"
+    },
+    "godie-h00w": {
+      "zhName": "豪洨天王 - 鄭先生",
+      "zhTitle": "豪洨天王",
+      "zhFullName": "鄭先生",
+      "spokenTitle": "豪洨天王",
+      "spokenName": "テイセンセイ",
+      "jaTitle": null,
+      "jaName": "テイセンセイ",
+      "reading": "Tei Sensei",
+      "confidence": "medium",
+      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
+      "clip": "assets/audio/voices/names/godie-h00w.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "豪洨天王",
+          "clip": "assets/audio/voices/names/godie-h00w.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "鄭先生",
+          "clip": "assets/audio/voices/names/godie-h00w.name.mp3"
+        }
+      ],
+      "spokenLine": "豪洨天王， ‖ テイセンセイ。",
+      "lang": "zh-TW ‖ ja-JP",
+      "voice": "Tingting ‖ Kyoko",
+      "segments": [
+        {
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "豪洨天王，"
+        },
+        {
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "テイセンセイ。"
+        }
+      ]
     },
     "godie-h01n": {
       "zhName": "開外掛的死神 - 黑崎一護",
@@ -2072,6 +2148,50 @@
       "lang": "ja-JP",
       "voice": "Kyoko"
     },
+    "godie-n01b": {
+      "zhName": "地獄歌神 - 憤怒的胖虎",
+      "zhTitle": "地獄歌神",
+      "zhFullName": "憤怒的胖虎",
+      "spokenTitle": "地獄歌神",
+      "spokenName": "ジャイアン",
+      "jaTitle": null,
+      "jaName": "ジャイアン",
+      "reading": "Gian",
+      "confidence": "high",
+      "evidence": "RULE 2 — the 稱號 is untranslatable Taiwanese (PTT slang, campus hierarchy, local TV, class satire). Tingting reads it in Mandarin, then hands to Kyoko for the Japanese name. A Japanese rendering would lose the sneer.",
+      "clip": "assets/audio/voices/names/godie-n01b.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "地獄歌神",
+          "clip": "assets/audio/voices/names/godie-n01b.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "憤怒的胖虎",
+          "clip": "assets/audio/voices/names/godie-n01b.name.mp3"
+        }
+      ],
+      "spokenLine": "地獄歌神， ‖ ジャイアン。",
+      "lang": "zh-TW ‖ ja-JP",
+      "voice": "Tingting ‖ Kyoko",
+      "segments": [
+        {
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "地獄歌神，"
+        },
+        {
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "ジャイアン。"
+        }
+      ]
+    },
     "godie-n01c": {
       "zhName": "傳說的龍騎士 - 勇者小呆",
       "zhTitle": "傳說的龍騎士",
@@ -2777,6 +2897,38 @@
         }
       ],
       "spokenLine": "ショウゴウコウコ・レイコチュウ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
+    "godie-o030": {
+      "zhName": "電車癡漢 - 臭作",
+      "zhTitle": "電車癡漢",
+      "zhFullName": "臭作",
+      "spokenTitle": "デンシャチカン",
+      "spokenName": "シュウサク",
+      "jaTitle": "デンシャチカン",
+      "jaName": "シュウサク",
+      "reading": "Densha Chikan Shuusaku",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/godie-o030.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "電車癡漢",
+          "clip": "assets/audio/voices/names/godie-o030.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "臭作",
+          "clip": "assets/audio/voices/names/godie-o030.name.mp3"
+        }
+      ],
+      "spokenLine": "デンシャチカン・シュウサク。",
       "lang": "ja-JP",
       "voice": "Kyoko"
     },

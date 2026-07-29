@@ -5,7 +5,7 @@
   "chain": "w3u entry -> w3u base (custom OR original) -> stock UnitUI.slk -> 255",
   "units": 588,
   "tinted": 236,
-  "taggedChampions": 21
+  "taggedChampions": 23
  },
  "units": {
   "E001": {
@@ -488,7 +488,8 @@
    "baseChain": [
     "E010",
     "Ecen"
-   ]
+   ],
+   "championId": "godie-e010"
   },
   "E012": {
    "name": "TRIGSTR_3411",
@@ -931,7 +932,8 @@
    "baseChain": [
     "H00W",
     "Harf"
-   ]
+   ],
+   "championId": "godie-h00w"
   },
   "H01N": {
    "name": "TRIGSTR_4807",
@@ -1827,7 +1829,8 @@
    "baseChain": [
     "N01B",
     "Nman"
-   ]
+   ],
+   "championId": "godie-n01b"
   },
   "N01C": {
    "name": "TRIGSTR_9207",
@@ -2438,7 +2441,8 @@
    "baseChain": [
     "O030",
     "Orkn"
-   ]
+   ],
+   "championId": "godie-o030"
   },
   "Obla": {
    "name": "TRIGSTR_1202",

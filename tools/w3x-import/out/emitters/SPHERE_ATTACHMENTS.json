@@ -1,0 +1,1535 @@
+{
+ "schema": "sphere-attachment-census@1",
+ "generatedBy": "tools/w3x-import/sphere_attachment_census.py",
+ "sources": {
+  "objects": "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json",
+  "invocationParams": "tools/w3x-import/out/invocation-params/INVOCATION_PARAMS.json",
+  "emitters": "tools/w3x-import/out/emitters/EMITTERS.json",
+  "rawMdxDir": "tools/w3x-import/out/GoDieEX22s/raw",
+  "championDocs": "content/champions",
+  "overlayStore": "data/blizzard-overlay (gitignored)"
+ },
+ "scope": "one row per (hero, ability) where base==Asph AND the ability is on the hero's PERMANENT `abilities` list AND INVOCATION_PARAMS resolves both an `atat` art model and >=1 targetAttachN. `count` = number of attach points the ability declares (WC3 hangs one copy at each).",
+ "counts": {
+  "sphereAbilitiesDirectBaseAsph": 76,
+  "sphereAbilitiesTransitiveRootAsph": 76,
+  "heroAbilityPairs": 22,
+  "attachmentInstances": 22,
+  "distinctChampions": 18,
+  "distinctW3xBodies": 17,
+  "distinctAttachModels": 18,
+  "rowsShippedLoaderSees": 20,
+  "rowsShippedLoaderMisses": 2,
+  "byDecision": {
+   "OUT-OF-SCOPE": 13,
+   "NO-OP": 2,
+   "DO-NOT-BAKE": 2,
+   "BAKEABLE-NOW": 2,
+   "DEFER-TO-TRANSFORM": 1,
+   "ALREADY-SHIPPED": 1,
+   "BLOCKED-OVERLAY": 1
+  },
+  "byCategory": {
+   "blizzard-vfx": 13,
+   "disabled-by-author": 2,
+   "never-bake-aura": 2,
+   "real-part": 4,
+   "alt-form": 1
+  },
+  "byBodySource": {
+   "content": 15,
+   "standin": 2,
+   "overlay": 5
+  }
+ },
+ "scopeAudit": {
+  "sphereAbilitiesTotal": 76,
+  "onHeroPermanentLists": 19,
+  "onHeroLearnableLists": 0,
+  "onNonHeroUnitLists": 16,
+  "referencedByNothing": 43,
+  "inScopeWithArtAndAttach": 19,
+  "inScopeRejected": 0,
+  "note": "onHeroPermanentLists counts DISTINCT abilities; `rows` counts (hero, ability) PAIRS, which is larger because A0FR is worn by three different heroes and A0FQ by two."
+ },
+ "disputedNumberReconciliation": {
+  "14": {
+   "rule": "rows with a NON-ZERO attachment whose body glb is committed in content/ (bodySource == 'content' and count > 0)",
+   "value": 14
+  },
+  "17": {
+   "rule": "distinct w3x BODY mdx files carrying at least one sphere (also equals distinct champions once the atac==0 no-ops are dropped, and distinct attach models once they are dropped)",
+   "value": 17
+  },
+  "18": {
+   "rule": "distinct CHAMPIONS carrying a sphere (also equals the number of distinct attach MODELS)",
+   "value": 18
+  },
+  "20": {
+   "rule": "rows models.py::load_sphere_attachments returns — i.e. this census minus the two heroes it drops for `model: null` (also, coincidentally, rows with count > 0)",
+   "value": 20
+  },
+  "22": {
+   "rule": "THIS CENSUS: (hero, ability) pairs with base==Asph on a permanent ability list, with art and an attach point",
+   "value": 22
+  }
+ },
+ "shippedLoaderDelta": {
+  "loader": "tools/w3x-import/w3xlib/models.py::load_sphere_attachments",
+  "missedPairs": [
+   [
+    "U00B",
+    "A094"
+   ],
+   [
+    "U00B",
+    "A0FQ"
+   ]
+  ],
+  "unexpectedPairs": [],
+  "rootCause": "models.py:338-340 skips every hero whose OBJECTS.json `model` is not a *.mdl string. 19 of 127 heroes have model:null (inherit the base unit's stock Blizzard body) and are dropped before their spheres are read."
+ },
+ "auraListDisagreement": [],
+ "rows": [
+  {
+   "champId": "godie-e00n",
+   "championName": "蟬在叫人壞掉 - 龍宮禮奈",
+   "heroId": "E00N",
+   "heroProperName": "龍宮禮奈",
+   "abilityId": "A0FR",
+   "abilityName": null,
+   "authorLabel": "(黑化2)",
+   "bodyModelKey": "imported.renaryugu2",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/renaryugu2.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/renaryugu2.glb",
+   "w3xBodyModel": "RenaRyugu2.mdl",
+   "attachModel": "Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": null,
+   "countSource": "fallback: number of declared ataN (atac absent -> engine default, not read)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-e00q",
+   "championName": "英靈-亞瑟王 - 黑化Saber",
+   "heroId": "E00Q",
+   "heroProperName": "黑化Saber",
+   "abilityId": "A0FQ",
+   "abilityName": null,
+   "authorLabel": "(黑化)",
+   "bodyModelKey": "imported.herosaber",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/herosaber.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/herosaber.glb",
+   "w3xBodyModel": "HeroSaber.mdl",
+   "attachModel": "Abilities\\Spells\\Human\\Banish\\BanishTarget.mdl",
+   "attachPoint": "weapon",
+   "attachPointsAll": [
+    "weapon"
+   ],
+   "count": 0,
+   "atac": 0,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "disabled-by-author",
+   "decision": "NO-OP",
+   "why": "war3map.w3a sets `atac` (Art - Target Attachment Count) to 0 on A0FQ. The sphere names BanishTarget.mdl and attach point 'weapon' and then hangs it ZERO times — nothing is worn in the original map either. Any census that counted this as a visible attachment counted a no-op."
+  },
+  {
+   "champId": "godie-e00x",
+   "championName": "神鳴流劍士 - 櫻綻剎那",
+   "heroId": "E00X",
+   "heroProperName": "櫻綻剎那",
+   "abilityId": "A0FI",
+   "abilityName": "球體(翅膀)",
+   "authorLabel": "球體(翅膀)",
+   "bodyModelKey": "imported.mfls",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/mfls.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/mfls.glb",
+   "w3xBodyModel": "mfls.mdl",
+   "attachModel": "AWING.MDX",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/AWING.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/awing.glb",
+   "isBlizzardStockPath": false,
+   "tris": 8,
+   "verts": 12,
+   "vertsPerTri": 1.5,
+   "measured": {
+    "tris": 8,
+    "verts": 12,
+    "geosets": 1,
+    "opaqueTris": 0,
+    "additiveOnlyTris": 8,
+    "isAdditiveOnly": true,
+    "extent": [
+     64.39,
+     285.05,
+     182.83
+    ],
+    "geosetLayers": [
+     {
+      "tris": 8,
+      "filterModes": [
+       3
+      ]
+     }
+    ],
+    "textures": [
+     "AWING.blp"
+    ]
+   },
+   "assetClass": "mesh-only",
+   "textures": [
+    "AWING.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "never-bake-aura",
+   "decision": "DO-NOT-BAKE",
+   "why": "MEASURED always-on glow: 8 of 8 triangles are drawn with additive-only materials (filter modes [3]) and ZERO are opaque or alpha-tested, over textures ['AWING.blp']. Model-space extent [64.39, 285.05, 182.83]. This is the always-on effect class tasks #17/#59/#73 spent three passes REMOVING from champion glbs — baking it back is a regression."
+  },
+  {
+   "champId": "godie-e00x",
+   "championName": "神鳴流劍士 - 櫻綻剎那",
+   "heroId": "E00X",
+   "heroProperName": "櫻綻剎那",
+   "abilityId": "A0HP",
+   "abilityName": null,
+   "authorLabel": "(朗基努斯)",
+   "bodyModelKey": "imported.mfls",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/mfls.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/mfls.glb",
+   "w3xBodyModel": "mfls.mdl",
+   "attachModel": "Abilities\\Weapons\\FaerieDragonMissile\\FaerieDragonMissile.mdl",
+   "attachPoint": "weapon",
+   "attachPointsAll": [
+    "weapon"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-h02r",
+   "championName": "種子神奇寶貝 - 妙蛙花",
+   "heroId": "H02R",
+   "heroProperName": "妙蛙花",
+   "abilityId": "A0VH",
+   "abilityName": null,
+   "authorLabel": "(妙蛙花)",
+   "bodyModelKey": "imported.bulbasaur",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/bulbasaur.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/bulbasaur.glb",
+   "w3xBodyModel": "Bulbasaur.mdl",
+   "attachModel": "Doodads\\Outland\\Plants\\Outland_Plant\\Outland_Plant4.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-n00p",
+   "championName": "妖狐藏馬 - 南野秀一",
+   "heroId": "N00P",
+   "heroProperName": "南野秀一",
+   "abilityId": "A0II",
+   "abilityName": null,
+   "authorLabel": "(妖狐)",
+   "bodyModelKey": "imported.fox",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/fox.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/fox.glb",
+   "w3xBodyModel": "fox.mdl",
+   "attachModel": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "attachPoint": "left,hand",
+   "attachPointsAll": [
+    "left,hand",
+    "right,hand"
+   ],
+   "count": 2,
+   "atac": null,
+   "countSource": "fallback: number of declared ataN (atac absent -> engine default, not read)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-n01b",
+   "championName": "地獄歌神 - 憤怒的胖虎",
+   "heroId": "N01B",
+   "heroProperName": "憤怒的胖虎",
+   "abilityId": "A0NR",
+   "abilityName": null,
+   "authorLabel": "(胖虎2)",
+   "bodyModelKey": "champ.skin.rogue",
+   "bodySource": "standin",
+   "bodySourceWhy": "shared blocky stand-in assets/models/champions/blocky-rogue.glb, no overlay entry for N01B",
+   "bodyGlbPath": "assets/models/champions/blocky-rogue.glb",
+   "w3xBodyModel": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+   "attachModel": "Abilities\\Spells\\Orc\\LiquidFire\\Liquidfire.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-n01b",
+   "championName": "地獄歌神 - 憤怒的胖虎",
+   "heroId": "N01B",
+   "heroProperName": "憤怒的胖虎",
+   "abilityId": "A0NT",
+   "abilityName": null,
+   "authorLabel": "(胖虎3)",
+   "bodyModelKey": "champ.skin.rogue",
+   "bodySource": "standin",
+   "bodySourceWhy": "shared blocky stand-in assets/models/champions/blocky-rogue.glb, no overlay entry for N01B",
+   "bodyGlbPath": "assets/models/champions/blocky-rogue.glb",
+   "w3xBodyModel": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+   "attachModel": "Doodads\\Outland\\Plants\\Outland_Plant\\Outland_Plant4.mdl",
+   "attachPoint": "head",
+   "attachPointsAll": [
+    "head"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-n01c",
+   "championName": "傳說的龍騎士 - 勇者小呆",
+   "heroId": "N01C",
+   "heroProperName": "勇者小呆",
+   "abilityId": "A0T0",
+   "abilityName": "球體(龍魔人)",
+   "authorLabel": "球體(龍魔人)",
+   "bodyModelKey": "imported.sd2",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/sd2.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/sd2.glb",
+   "w3xBodyModel": "SD2.mdl",
+   "attachModel": "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl",
+   "attachPoint": "weapon",
+   "attachPointsAll": [
+    "weapon"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-ntin",
+   "championName": "時空管理局執務官 - 菲特·泰斯塔羅沙",
+   "heroId": "Ntin",
+   "heroProperName": "菲特·泰斯塔羅沙",
+   "abilityId": "A0O9",
+   "abilityName": null,
+   "authorLabel": "(菲特刀)",
+   "bodyModelKey": "imported.herofate",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/herofate.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/herofate.glb",
+   "w3xBodyModel": "herofate.mdl",
+   "attachModel": "HeroFateZemberForm.mdx",
+   "attachPoint": "right,hand",
+   "attachPointsAll": [
+    "right,hand"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/HeroFateZemberForm.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/herofatezemberform.glb",
+   "isBlizzardStockPath": false,
+   "tris": 443,
+   "verts": 292,
+   "vertsPerTri": 0.659,
+   "measured": {
+    "tris": 443,
+    "verts": 292,
+    "geosets": 3,
+    "opaqueTris": 385,
+    "additiveOnlyTris": 58,
+    "isAdditiveOnly": false,
+    "extent": [
+     183.76,
+     5.58,
+     30.15
+    ],
+    "geosetLayers": [
+     {
+      "tris": 58,
+      "filterModes": [
+       3
+      ]
+     },
+     {
+      "tris": 332,
+      "filterModes": [
+       0
+      ]
+     },
+     {
+      "tris": 53,
+      "filterModes": [
+       0
+      ]
+     }
+    ],
+    "textures": [
+     "Zember.blp",
+     "textures\\yellow_glow.blp"
+    ]
+   },
+   "assetClass": "mesh-only",
+   "textures": [
+    "Zember.blp",
+    "yellow_glow.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "real-part",
+   "decision": "BAKEABLE-NOW",
+   "why": "map-custom part: 385 opaque/alpha-tested triangles (+58 additive trim) over ['Zember.blp', 'textures\\\\yellow_glow.blp'], extent [183.76, 5.58, 30.15]. mdx present at tools/w3x-import/out/GoDieEX22s/raw/HeroFateZemberForm.mdx, body glb committed at assets/models/imported/herofate.glb."
+  },
+  {
+   "champId": "godie-o00x",
+   "championName": "超級賽亞人 - 悟空",
+   "heroId": "O00X",
+   "heroProperName": "悟空",
+   "abilityId": "A0MJ",
+   "abilityName": "球體(悟空超3)",
+   "authorLabel": "球體(悟空超3)",
+   "bodyModelKey": "imported.goku",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/goku.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/goku.glb",
+   "w3xBodyModel": "Goku.mdl",
+   "attachModel": "Goku3head.mdx",
+   "attachPoint": "origin",
+   "attachPointsAll": [
+    "origin"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/Goku3head.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/goku3head.glb",
+   "isBlizzardStockPath": false,
+   "tris": 1272,
+   "verts": 1146,
+   "vertsPerTri": 0.901,
+   "measured": {
+    "tris": 1272,
+    "verts": 1146,
+    "geosets": 1,
+    "opaqueTris": 1272,
+    "additiveOnlyTris": 0,
+    "isAdditiveOnly": false,
+    "extent": [
+     79.53,
+     56.58,
+     102.11
+    ],
+    "geosetLayers": [
+     {
+      "tris": 1272,
+      "filterModes": [
+       1
+      ]
+     }
+    ],
+    "textures": [
+     "face.blp",
+     "",
+     "face.blp",
+     "body256.blp",
+     "ssjface2.blp"
+    ]
+   },
+   "assetClass": "mesh-only",
+   "textures": [
+    "face.blp",
+    "",
+    "face.blp",
+    "body256.blp",
+    "ssjface2.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "alt-form",
+   "decision": "DEFER-TO-TRANSFORM",
+   "why": "second sphere on the same body+attach point as A0MI (Gokuhead.mdx). Baking both gives this champion two overlapping parts — this is an alternate FORM and belongs to #119/#249."
+  },
+  {
+   "champId": "godie-o02o",
+   "championName": "曹操孟德 - 阿瞞大人",
+   "heroId": "O02O",
+   "heroProperName": "阿瞞大人",
+   "abilityId": "A0DR",
+   "abilityName": "球體(曹操)",
+   "authorLabel": "球體(曹操)",
+   "bodyModelKey": "champ.skin.rogue",
+   "bodySource": "overlay",
+   "bodySourceWhy": "stand-in assets/models/champions/blocky-rogue.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/O02O.glb (gitignored, .gitignore:34 `/data/**`)",
+   "bodyGlbPath": "assets/models/champions/blocky-rogue.glb",
+   "w3xBodyModel": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+   "attachModel": "Abilities\\Spells\\NightElf\\Immolation\\ImmolationTarget.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-o02w",
+   "championName": "笑傲江湖 - 令狐沖",
+   "heroId": "O02W",
+   "heroProperName": "令狐沖",
+   "abilityId": "A0XT",
+   "abilityName": null,
+   "authorLabel": "(令狐沖劍)",
+   "bodyModelKey": "imported.hzyn",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/hzyn.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/hzyn.glb",
+   "w3xBodyModel": "hzyn.mdl",
+   "attachModel": "1hswd_01.mdx",
+   "attachPoint": "right,hand",
+   "attachPointsAll": [
+    "right,hand"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/1hswd_01.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/1hswd-01.glb",
+   "isBlizzardStockPath": false,
+   "tris": 328,
+   "verts": 264,
+   "vertsPerTri": 0.805,
+   "measured": {
+    "tris": 328,
+    "verts": 264,
+    "geosets": 2,
+    "opaqueTris": 312,
+    "additiveOnlyTris": 16,
+    "isAdditiveOnly": false,
+    "extent": [
+     81.95,
+     13.65,
+     19.58
+    ],
+    "geosetLayers": [
+     {
+      "tris": 312,
+      "filterModes": [
+       0,
+       2,
+       3
+      ]
+     },
+     {
+      "tris": 16,
+      "filterModes": [
+       3
+      ]
+     }
+    ],
+    "textures": [
+     "Textures\\Green_Glow3.blp",
+     "Units\\Undead\\SkeletonMage\\smoke_1.blp",
+     "1Hswd_01.blp"
+    ]
+   },
+   "assetClass": "mesh-and-emitter-hybrid",
+   "textures": [
+    "Green_Glow3.blp",
+    "smoke_1.blp",
+    "1Hswd_01.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 3,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 1,
+    "chunkRIBB": 0
+   },
+   "category": "real-part",
+   "decision": "BAKEABLE-NOW",
+   "why": "map-custom part: 312 opaque/alpha-tested triangles (+16 additive trim) over ['Textures\\\\Green_Glow3.blp', 'Units\\\\Undead\\\\SkeletonMage\\\\smoke_1.blp', '1Hswd_01.blp'], extent [81.95, 13.65, 19.58]. mdx present at tools/w3x-import/out/GoDieEX22s/raw/1hswd_01.mdx, body glb committed at assets/models/imported/hzyn.glb."
+  },
+  {
+   "champId": "godie-ogrh",
+   "championName": "賽亞人 - 悟空",
+   "heroId": "Ogrh",
+   "heroProperName": "悟空",
+   "abilityId": "A0MI",
+   "abilityName": "球體(悟空正常)",
+   "authorLabel": "球體(悟空正常)",
+   "bodyModelKey": "imported.goku",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/goku.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/goku.glb",
+   "w3xBodyModel": "goku.mdl",
+   "attachModel": "Gokuhead.mdx",
+   "attachPoint": "origin",
+   "attachPointsAll": [
+    "origin"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/Gokuhead.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/gokuhead.glb",
+   "isBlizzardStockPath": false,
+   "tris": 332,
+   "verts": 268,
+   "vertsPerTri": 0.807,
+   "measured": {
+    "tris": 332,
+    "verts": 268,
+    "geosets": 1,
+    "opaqueTris": 332,
+    "additiveOnlyTris": 0,
+    "isAdditiveOnly": false,
+    "extent": [
+     36.39,
+     54.85,
+     42.25
+    ],
+    "geosetLayers": [
+     {
+      "tris": 332,
+      "filterModes": [
+       1
+      ]
+     }
+    ],
+    "textures": [
+     "face.blp",
+     "",
+     "face.blp",
+     "ssjface2.blp",
+     "body256.blp"
+    ]
+   },
+   "assetClass": "mesh-only",
+   "textures": [
+    "face.blp",
+    "",
+    "face.blp",
+    "ssjface2.blp",
+    "body256.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "real-part",
+   "decision": "ALREADY-SHIPPED",
+   "why": "baked by tools/w3x-import/merge_sphere_attachments.py (#267) and guarded by packages/shared/src/content/modelHeadGeometry.test.ts:302 (268v/332tri primitive riding `Head`)."
+  },
+  {
+   "champId": "godie-u00b",
+   "championName": "最M的魔法Jizz - 清蒸 飛鼠先生",
+   "heroId": "U00B",
+   "heroProperName": "清蒸 飛鼠先生",
+   "abilityId": "A0FQ",
+   "abilityName": null,
+   "authorLabel": "(黑化)",
+   "bodyModelKey": "champ.skin.barbarian",
+   "bodySource": "overlay",
+   "bodySourceWhy": "stand-in assets/models/champions/blocky-barbarian.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/U00B.glb (gitignored, .gitignore:34 `/data/**`)",
+   "bodyGlbPath": "assets/models/champions/blocky-barbarian.glb",
+   "w3xBodyModel": null,
+   "attachModel": "Abilities\\Spells\\Human\\Banish\\BanishTarget.mdl",
+   "attachPoint": "weapon",
+   "attachPointsAll": [
+    "weapon"
+   ],
+   "count": 0,
+   "atac": 0,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "disabled-by-author",
+   "decision": "NO-OP",
+   "why": "war3map.w3a sets `atac` (Art - Target Attachment Count) to 0 on A0FQ. The sphere names BanishTarget.mdl and attach point 'weapon' and then hangs it ZERO times — nothing is worn in the original map either. Any census that counted this as a visible attachment counted a no-op."
+  },
+  {
+   "champId": "godie-u00b",
+   "championName": "最M的魔法Jizz - 清蒸 飛鼠先生",
+   "heroId": "U00B",
+   "heroProperName": "清蒸 飛鼠先生",
+   "abilityId": "A094",
+   "abilityName": null,
+   "authorLabel": "(真飛鼠)",
+   "bodyModelKey": "champ.skin.barbarian",
+   "bodySource": "overlay",
+   "bodySourceWhy": "stand-in assets/models/champions/blocky-barbarian.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/U00B.glb (gitignored, .gitignore:34 `/data/**`)",
+   "bodyGlbPath": "assets/models/champions/blocky-barbarian.glb",
+   "w3xBodyModel": null,
+   "attachModel": "Magical_Sword.mdx",
+   "attachPoint": "left,hand",
+   "attachPointsAll": [
+    "left,hand"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/Magical_Sword.mdx",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/magical-sword.glb",
+   "isBlizzardStockPath": false,
+   "tris": 571,
+   "verts": 362,
+   "vertsPerTri": 0.634,
+   "measured": {
+    "tris": 571,
+    "verts": 362,
+    "geosets": 1,
+    "opaqueTris": 571,
+    "additiveOnlyTris": 0,
+    "isAdditiveOnly": false,
+    "extent": [
+     16.2,
+     145.97,
+     42.16
+    ],
+    "geosetLayers": [
+     {
+      "tris": 571,
+      "filterModes": [
+       1
+      ]
+     }
+    ],
+    "textures": [
+     "Textures\\FrostMorne.blp",
+     "ui\\Glues\\SinglePlayer\\Undead3D_Exp\\Sword.blp",
+     "Textures\\Yellow_Star_Dim.blp"
+    ]
+   },
+   "assetClass": "mesh-and-emitter-hybrid",
+   "textures": [
+    "FrostMorne.blp",
+    "Sword.blp",
+    "Yellow_Star_Dim.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 1,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 1,
+    "chunkRIBB": 0
+   },
+   "category": "real-part",
+   "decision": "BLOCKED-OVERLAY",
+   "why": "map-custom part (571 tri) and the mdx IS in raw/, but the body the game loads is overlay: stand-in assets/models/champions/blocky-barbarian.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/U00B.glb (gitignored, .gitignore:34 `/data/**`). There is no committed body glb to bake into."
+  },
+  {
+   "champId": "godie-u00k",
+   "championName": "邪惡意念集合體 - 死之王",
+   "heroId": "U00K",
+   "heroProperName": "死之王",
+   "abilityId": "A016",
+   "abilityName": null,
+   "authorLabel": "(死之王)",
+   "bodyModelKey": "champ.sela",
+   "bodySource": "overlay",
+   "bodySourceWhy": "stand-in assets/models/champions/blocky-mage.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/U00K.glb (gitignored, .gitignore:34 `/data/**`)",
+   "bodyGlbPath": "assets/models/champions/blocky-mage.glb",
+   "w3xBodyModel": "units\\demon\\EredarWarlock\\EredarWarlock.mdl",
+   "attachModel": "Abilities\\Spells\\Items\\OrbDarkness\\OrbDarkness.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-u00l",
+   "championName": "北斗之鼠 - 拳四郎",
+   "heroId": "U00L",
+   "heroProperName": "拳四郎",
+   "abilityId": "A0HX",
+   "abilityName": null,
+   "authorLabel": "(北斗之鼠)",
+   "bodyModelKey": "imported.heropikachu",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/heropikachu.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/heropikachu.glb",
+   "w3xBodyModel": "HeroPikachu.mdl",
+   "attachModel": "Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-u010",
+   "championName": "邪眼師 - 飛影",
+   "heroId": "U010",
+   "heroProperName": "飛影",
+   "abilityId": "A0OI",
+   "abilityName": "球體(飛影BODY)",
+   "authorLabel": "球體(飛影BODY)",
+   "bodyModelKey": "imported.herohehi",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/herohehi.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/herohehi.glb",
+   "w3xBodyModel": "HeroHehi.mdl",
+   "attachModel": "units\\orc\\SentryWard\\SentryWard.mdl",
+   "attachPoint": "foot",
+   "attachPointsAll": [
+    "foot",
+    "origin"
+   ],
+   "count": 2,
+   "atac": 2,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-u010",
+   "championName": "邪眼師 - 飛影",
+   "heroId": "U010",
+   "heroProperName": "飛影",
+   "abilityId": "A0FR",
+   "abilityName": null,
+   "authorLabel": "(黑化2)",
+   "bodyModelKey": "imported.herohehi",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/herohehi.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/herohehi.glb",
+   "w3xBodyModel": "HeroHehi.mdl",
+   "attachModel": "Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": null,
+   "countSource": "fallback: number of declared ataN (atac absent -> engine default, not read)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-u01f",
+   "championName": "萬夫莫敵 - 黑化張飛",
+   "heroId": "U01F",
+   "heroProperName": "黑化張飛",
+   "abilityId": "A0FR",
+   "abilityName": null,
+   "authorLabel": "(黑化2)",
+   "bodyModelKey": "champ.sela",
+   "bodySource": "overlay",
+   "bodySourceWhy": "stand-in assets/models/champions/blocky-mage.glb; blizzardOverlay.ts substitutes data/blizzard-overlay/models/U01F.glb (gitignored, .gitignore:34 `/data/**`)",
+   "bodyGlbPath": "assets/models/champions/blocky-mage.glb",
+   "w3xBodyModel": "units\\orc\\Grunt\\Grunt.mdl",
+   "attachModel": "Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl",
+   "attachPoint": "chest",
+   "attachPointsAll": [
+    "chest"
+   ],
+   "count": 1,
+   "atac": null,
+   "countSource": "fallback: number of declared ataN (atac absent -> engine default, not read)",
+   "mdxInRepo": false,
+   "mdxRepoPath": null,
+   "attachGlbInRepo": false,
+   "attachGlbPath": null,
+   "isBlizzardStockPath": true,
+   "tris": null,
+   "verts": null,
+   "vertsPerTri": null,
+   "measured": null,
+   "assetClass": null,
+   "textures": [],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "blizzard-vfx",
+   "decision": "OUT-OF-SCOPE",
+   "why": "stock Blizzard art path — ambient/effect art owned by the VFX channel (#9 / #183 / #230), not a missing body part. Its mdx is not in raw/ so it could not bake here anyway."
+  },
+  {
+   "champId": "godie-u01u",
+   "championName": "三刀流劍士 - 索隆",
+   "heroId": "U01U",
+   "heroProperName": "索隆",
+   "abilityId": "A10O",
+   "abilityName": "球體(武裝霸王)",
+   "authorLabel": "球體(武裝霸王)",
+   "bodyModelKey": "imported.heromusashimiyamoto",
+   "bodySource": "content",
+   "bodySourceWhy": "assets/models/imported/heromusashimiyamoto.glb exists in-repo",
+   "bodyGlbPath": "assets/models/imported/heromusashimiyamoto.glb",
+   "w3xBodyModel": "HeroMusashiMiyamoto.mdl",
+   "attachModel": "war3mapImported\\poweraura.MDX",
+   "attachPoint": "origin",
+   "attachPointsAll": [
+    "origin"
+   ],
+   "count": 1,
+   "atac": 1,
+   "countSource": "w3a atac (author-set)",
+   "mdxInRepo": true,
+   "mdxRepoPath": "tools/w3x-import/out/GoDieEX22s/raw/war3mapImported__poweraura.MDX",
+   "attachGlbInRepo": true,
+   "attachGlbPath": "content/assets/models/imported/war3mapimported-poweraura.glb",
+   "isBlizzardStockPath": false,
+   "tris": 1088,
+   "verts": 3264,
+   "vertsPerTri": 3.0,
+   "measured": {
+    "tris": 1088,
+    "verts": 3264,
+    "geosets": 1,
+    "opaqueTris": 0,
+    "additiveOnlyTris": 1088,
+    "isAdditiveOnly": true,
+    "extent": [
+     279.87,
+     296.32,
+     269.46
+    ],
+    "geosetLayers": [
+     {
+      "tris": 1088,
+      "filterModes": [
+       4
+      ]
+     }
+    ],
+    "textures": [
+     "yellowaura.blp"
+    ]
+   },
+   "assetClass": "mesh-only",
+   "textures": [
+    "yellowaura.blp"
+   ],
+   "emitters": {
+    "particleEmitter2": 0,
+    "ribbon": 0,
+    "particleEmitterV1": 0,
+    "chunkPRE2": 0,
+    "chunkRIBB": 0
+   },
+   "category": "never-bake-aura",
+   "decision": "DO-NOT-BAKE",
+   "why": "MEASURED always-on glow: 1088 of 1088 triangles are drawn with additive-only materials (filter modes [4]) and ZERO are opaque or alpha-tested, over textures ['yellowaura.blp']. Model-space extent [279.87, 296.32, 269.46]. This is the always-on effect class tasks #17/#59/#73 spent three passes REMOVING from champion glbs — baking it back is a regression."
+  }
+ ],
+ "rejected": [],
+ "spheresOnNonHeroUnits": [
+  {
+   "unitId": "h002",
+   "unitName": "幻影",
+   "unitModel": "HeroCloudStrife.mdl",
+   "abilityId": "A09O",
+   "attachModel": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "attachPoints": [
+    "left,hand",
+    "right,hand"
+   ]
+  },
+  {
+   "unitId": "h002",
+   "unitName": "幻影",
+   "unitModel": "HeroCloudStrife.mdl",
+   "abilityId": "A09P",
+   "attachModel": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+   "attachPoints": [
+    "chest",
+    "foot"
+   ]
+  },
+  {
+   "unitId": "h00I",
+   "unitName": "幻影",
+   "unitModel": "SD2.mdl",
+   "abilityId": "A09O",
+   "attachModel": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "attachPoints": [
+    "left,hand",
+    "right,hand"
+   ]
+  },
+  {
+   "unitId": "h00I",
+   "unitName": "幻影",
+   "unitModel": "SD2.mdl",
+   "abilityId": "A09P",
+   "attachModel": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+   "attachPoints": [
+    "chest",
+    "foot"
+   ]
+  },
+  {
+   "unitId": "h00T",
+   "unitName": "Rider幻影",
+   "unitModel": "HeroRider.mdl",
+   "abilityId": "A09O",
+   "attachModel": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "attachPoints": [
+    "left,hand",
+    "right,hand"
+   ]
+  },
+  {
+   "unitId": "h00T",
+   "unitName": "Rider幻影",
+   "unitModel": "HeroRider.mdl",
+   "abilityId": "A09P",
+   "attachModel": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+   "attachPoints": [
+    "chest",
+    "foot"
+   ]
+  },
+  {
+   "unitId": "h017",
+   "unitName": "安云殘影",
+   "unitModel": "HeroKunoichi.mdl",
+   "abilityId": "A0AB",
+   "attachModel": "Abilities\\Spells\\Other\\Doom\\DoomTarget.mdl",
+   "attachPoints": [
+    "weapon"
+   ]
+  },
+  {
+   "unitId": "h019",
+   "unitName": "金鋼狼",
+   "unitModel": "Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl",
+   "abilityId": "A0I5",
+   "attachModel": "Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl",
+   "attachPoints": [
+    "weapon"
+   ]
+  },
+  {
+   "unitId": "h01I",
+   "unitName": "涼宮",
+   "unitModel": "units\\human\\Sorceress\\Sorceress_V1.mdl",
+   "abilityId": "A0K4",
+   "attachModel": "Abilities\\Weapons\\ZigguratMissile\\ZigguratMissile.mdl",
+   "attachPoints": [
+    "hand",
+    "foot",
+    "chest"
+   ]
+  },
+  {
+   "unitId": "h01V",
+   "unitName": "81-03天神烈破",
+   "unitModel": "Abilities\\Spells\\Human\\ReviveHuman\\ReviveHuman.mdl",
+   "abilityId": "A0NU",
+   "attachModel": "Abilities\\Spells\\Other\\Tornado\\TornadoElemental.mdl",
+   "attachPoints": [
+    "left,hand",
+    "right,hand",
+    "chest",
+    "origin"
+   ]
+  },
+  {
+   "unitId": "h02G",
+   "unitName": "Saber殘影",
+   "unitModel": "HeroSaber.mdl",
+   "abilityId": "A0J7",
+   "attachModel": "Abilities\\Weapons\\ZigguratMissile\\ZigguratMissile.mdl",
+   "attachPoints": [
+    "hand,right",
+    "left,hand"
+   ]
+  },
+  {
+   "unitId": "n010",
+   "unitName": "億年樹",
+   "unitModel": "collision.mdl",
+   "abilityId": "A0HU",
+   "attachModel": "JapaneseCherry.mdx",
+   "attachPoints": [
+    "origin"
+   ]
+  },
+  {
+   "unitId": "n019",
+   "unitName": "億年樹",
+   "unitModel": "collision.mdl",
+   "abilityId": "A0HU",
+   "attachModel": "JapaneseCherry.mdx",
+   "attachPoints": [
+    "origin"
+   ]
+  },
+  {
+   "unitId": "n01A",
+   "unitName": "億年樹",
+   "unitModel": "collision.mdl",
+   "abilityId": "A0HU",
+   "attachModel": "JapaneseCherry.mdx",
+   "attachPoints": [
+    "origin"
+   ]
+  },
+  {
+   "unitId": "njgb",
+   "unitName": "魔崇神",
+   "unitModel": "units\\critters\\Felboar\\Felboar.mdl",
+   "abilityId": "A0FR",
+   "attachModel": "Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl",
+   "attachPoints": [
+    "chest"
+   ]
+  },
+  {
+   "unitId": "o00Y",
+   "unitName": "白木束縛",
+   "unitModel": "Abilities\\Spells\\Orc\\EtherealForm\\SpiritWalkerChange.mdl",
+   "abilityId": "A09O",
+   "attachModel": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl",
+   "attachPoints": [
+    "left,hand",
+    "right,hand"
+   ]
+  },
+  {
+   "unitId": "o00Y",
+   "unitName": "白木束縛",
+   "unitModel": "Abilities\\Spells\\Orc\\EtherealForm\\SpiritWalkerChange.mdl",
+   "abilityId": "A09P",
+   "attachModel": "Abilities\\Weapons\\PhoenixMissile\\Phoenix_Missile.mdl",
+   "attachPoints": [
+    "chest",
+    "foot"
+   ]
+  },
+  {
+   "unitId": "o010",
+   "unitName": "黑龍波龍形",
+   "unitModel": "units\\critters\\DuneWorm\\DuneWorm.mdl",
+   "abilityId": "A0P3",
+   "attachModel": "HeroCloudKFKSword.mdx",
+   "attachPoints": [
+    "chest"
+   ]
+  },
+  {
+   "unitId": "o018",
+   "unitName": "索龍分身",
+   "unitModel": "HeroMusashiMiyamoto.mdl",
+   "abilityId": "A0J6",
+   "attachModel": "Abilities\\Weapons\\AvengerMissile\\AvengerMissile.mdl",
+   "attachPoints": [
+    "hand,right",
+    "left,hand"
+   ]
+  },
+  {
+   "unitId": "o01C",
+   "unitName": "殺生丸幻影",
+   "unitModel": "Sesshomaru.mdl",
+   "abilityId": "A05U",
+   "attachModel": "Abilities\\Spells\\Undead\\Unsummon\\UnsummonTarget.mdl",
+   "attachPoints": [
+    "weapon"
+   ]
+  },
+  {
+   "unitId": "o020",
+   "unitName": "豪火龍之術",
+   "unitModel": "Darkraor.mdl",
+   "abilityId": "A0J5",
+   "attachModel": "Environment\\NightElfBuildingFire\\ElfLargeBuildingFire1.mdl",
+   "attachPoints": [
+    "hand,right",
+    "left,hand",
+    "chest",
+    "head"
+   ]
+  },
+  {
+   "unitId": "o02X",
+   "unitName": "96-04x 獨孤九劍殘影",
+   "unitModel": "hzyn.mdl",
+   "abilityId": "A0XZ",
+   "attachModel": "Abilities\\Spells\\Orc\\LightningShield\\LightningShieldTarget.mdl",
+   "attachPoints": [
+    "weapon"
+   ]
+  },
+  {
+   "unitId": "o02X",
+   "unitName": "96-04x 獨孤九劍殘影",
+   "unitModel": "hzyn.mdl",
+   "abilityId": "A0XT",
+   "attachModel": "1hswd_01.mdx",
+   "attachPoints": [
+    "right,hand"
+   ]
+  },
+  {
+   "unitId": "u00I",
+   "unitName": null,
+   "unitModel": "units\\orc\\SpiritWyvern\\SpiritWyvern.mdl",
+   "abilityId": "A0IA",
+   "attachModel": "Abilities\\Weapons\\FaerieDragonMissile\\FaerieDragonMissile.mdl",
+   "attachPoints": [
+    "head"
+   ]
+  },
+  {
+   "unitId": "u01P",
+   "unitName": "死亡老二映像",
+   "unitModel": "buildings\\naga\\TidalGuardian\\TidalGuardian.mdl",
+   "abilityId": "A0FR",
+   "attachModel": "Environment\\LargeBuildingFire\\LargeBuildingFire1.mdl",
+   "attachPoints": [
+    "chest"
+   ]
+  }
+ ]
+}

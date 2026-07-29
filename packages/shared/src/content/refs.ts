@@ -129,6 +129,27 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
   // config docs are mostly parameter tables; only the w3x tint ledger names
   // other documents, and its champion ids must resolve (task #49).
   config: (doc: AnyConfigDoc): RefEdge[] => {
+    // #249 GH#288 — 變身外觀表 names BOTH a champion and a model doc per entry.
+    // Both are HARD: a typo'd `attachModelKey` would mean 悟空 transforms into
+    // an identical body with no head change and nothing anywhere would say so.
+    if (doc.schema === "config.form-visuals@1") {
+      const out: RefEdge[] = [];
+      for (const [championId, entry] of Object.entries(doc.forms)) {
+        out.push({
+          field: `forms.${championId}`,
+          targetCollection: "champions",
+          targetId: championId,
+        });
+        if (entry.attachModelKey !== undefined) {
+          out.push({
+            field: `forms.${championId}.attachModelKey`,
+            targetCollection: "models",
+            targetId: entry.attachModelKey,
+          });
+        }
+      }
+      return out;
+    }
     if (doc.schema !== "config.unit-tints@1") return [];
     const out: RefEdge[] = [];
     for (const [rawcode, entry] of Object.entries(doc.units)) {

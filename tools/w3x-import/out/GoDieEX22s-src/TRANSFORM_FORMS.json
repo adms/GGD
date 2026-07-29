@@ -4,6 +4,16 @@
   "generatedBy": "tools/w3x-import/extract_transform_forms.py",
   "mechanism": "WC3 Metamorphosis family: ability field Eme1 = normal-form unit rawcode, Emeu = alternate-form unit rawcode. Read at LEVEL 1 only — cloned abilities keep the donor's rawcodes on levels 2-4.",
   "directionProof": "every normal unit's `unsf` sub-name is the bare 編號 「(NN)」 and every alternate's names the form 「(NN變身名)」 — 26/26.",
+  "inheritance": {
+    "stockTable": "tools/w3x-import/out/stock/STOCK_ABILITIES.json",
+    "fields": {
+      "ahdu": "HeroDur",
+      "adur": "Dur",
+      "amcs": "Cost"
+    },
+    "rule": "a w3a entry is a DIFF against `abilityBase`: a (field, level) the map writes ALWAYS wins, and stock fills only a cell the map never wrote, bounded by the ability's real level count (`alev`, else the base row's `levels`) so no level is invented.",
+    "notInherited": "`acdn` (cooldown) has the same gap — A0DZ writes none and stock ANrg says Cool1..4 = 1 — but changing a cooldown is a balance decision, not a transcription fix, so it is reported not applied."
+  },
   "count": 26,
   "pairs": [
     {
@@ -49,7 +59,33 @@
         "3": 360.0,
         "4": 480.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "06",
@@ -91,7 +127,30 @@
         "2": 300.0,
         "3": 400.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "08",
@@ -136,7 +195,33 @@
         "3": 300.0,
         "4": 390.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "09",
@@ -181,7 +266,33 @@
         "3": 320.0,
         "4": 400.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "11",
@@ -226,7 +337,33 @@
         "3": 300.0,
         "4": 390.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "12",
@@ -266,11 +403,38 @@
         "4": 45.0
       },
       "manaCostByLevel": {
+        "1": 150.0,
         "2": 225.0,
         "3": 300.0,
         "4": 375.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "stock",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "18",
@@ -315,7 +479,33 @@
         "3": 400.0,
         "4": 500.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "19",
@@ -360,7 +550,33 @@
         "3": 300.0,
         "4": 390.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "20",
@@ -390,7 +606,18 @@
       "durationSecByLevel": {},
       "cooldownSecByLevel": {},
       "manaCostByLevel": {},
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {},
+        "cooldownSecByLevel": {},
+        "manaCostByLevel": {},
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "ANrg",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "22",
@@ -434,7 +661,32 @@
         "2": 140.0,
         "3": 210.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "25",
@@ -478,7 +730,32 @@
         "2": 160.0,
         "3": 240.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "26",
@@ -520,7 +797,30 @@
         "2": 210.0,
         "3": 280.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "30",
@@ -565,7 +865,33 @@
         "3": 300.0,
         "4": 390.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "38",
@@ -599,7 +925,22 @@
         "1": 60.0
       },
       "manaCostByLevel": {},
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map"
+        },
+        "manaCostByLevel": {},
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "40",
@@ -644,7 +985,33 @@
         "3": 270.0,
         "4": 360.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "42",
@@ -689,7 +1056,33 @@
         "3": 300.0,
         "4": 390.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "58",
@@ -734,7 +1127,33 @@
         "3": 270.0,
         "4": 360.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "61",
@@ -761,13 +1180,32 @@
         "moveSpeed": 0,
         "inW3u": true
       },
-      "durationSecByLevel": {},
+      "durationSecByLevel": {
+        "1": 10.0
+      },
       "cooldownSecByLevel": {},
       "manaCostByLevel": {
         "1": 500.0
       },
       "unitDurationSecByLevel": {
         "1": 0.01
+      },
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "stock"
+        },
+        "cooldownSecByLevel": {},
+        "manaCostByLevel": {
+          "1": "map"
+        },
+        "unitDurationSecByLevel": {
+          "1": "map"
+        }
+      },
+      "stockBase": {
+        "alias": "Aphx",
+        "inStockTable": true,
+        "levelCount": 1
       }
     },
     {
@@ -800,7 +1238,20 @@
         "1": 15.0
       },
       "manaCostByLevel": {},
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {},
+        "cooldownSecByLevel": {
+          "1": "map"
+        },
+        "manaCostByLevel": {},
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "ANrg",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "76",
@@ -836,6 +1287,23 @@
       "manaCostByLevel": {},
       "unitDurationSecByLevel": {
         "1": 0.1
+      },
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map"
+        },
+        "manaCostByLevel": {},
+        "unitDurationSecByLevel": {
+          "1": "map"
+        }
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 1
       }
     },
     {
@@ -881,7 +1349,33 @@
         "3": 270.0,
         "4": 360.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "79",
@@ -926,7 +1420,33 @@
         "3": 300.0,
         "4": 10.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 3
+      }
     },
     {
       "heroNumber": "81",
@@ -971,7 +1491,33 @@
         "3": 360.0,
         "4": 480.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "87",
@@ -1016,7 +1562,33 @@
         "3": 270.0,
         "4": 360.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEIl",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     },
     {
       "heroNumber": "90",
@@ -1055,7 +1627,27 @@
         "1": 350.0,
         "4": 10.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 1
+      }
     },
     {
       "heroNumber": "92",
@@ -1100,7 +1692,33 @@
         "3": 160.0,
         "4": 160.0
       },
-      "unitDurationSecByLevel": {}
+      "unitDurationSecByLevel": {},
+      "provenance": {
+        "durationSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "cooldownSecByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "manaCostByLevel": {
+          "1": "map",
+          "2": "map",
+          "3": "map",
+          "4": "map"
+        },
+        "unitDurationSecByLevel": {}
+      },
+      "stockBase": {
+        "alias": "AEme",
+        "inStockTable": true,
+        "levelCount": 4
+      }
     }
   ]
 }

@@ -438,6 +438,53 @@ export const DEFAULT_GOLD_DROP_CONFIG: GoldDropConfig = {
  * test and the client's prediction shadow world see. Seconds in the doc, ticks
  * in the sim (converted once by `mobRulesFromConfig`).
  */
+/**
+ * 由誰擔任的來源 (#289, owner 2026-07-29 「除了指定英雄,也要有隨機選項。特殊殭屍
+ * 與殭屍王預設是隨機」; follow-up ruling: 隨機 = 「從策展白名單抽」).
+ *
+ * ⚠️ A PARALLEL ENUM, NOT `championId: "__random__"`. A sentinel string passes
+ * `z.string().min(1)` unchanged, and the sim would then look it up, find nothing
+ * and silently fall back to the default model + the default stats — a zombie
+ * that says 「隨機」 in the console and is a plain 喪標麥可 in the match. Three
+ * legal values means an unsupported one is a 422 an operator can see.
+ *
+ * ⚠️ THREE VALUES ONLY — no `"wave"`, no `"mob"`. A hero-derived zombie's hp and
+ * attack damage are baked from ONE champion at arm time and stored per-KIND on
+ * `MobRules`, so a per-wave/per-entity face would render a champion whose
+ * numbers belong to somebody else. See `MobChampionSource` in sim/mobs.ts for
+ * the full reasoning and what it would take to lift the restriction.
+ *
+ * THE ENUMERATION IS THE BOUND. There is no min/max to state for a string knob:
+ * anything outside these three is rejected by zod here and by
+ * `validateField`'s `enum` branch in the console, so both ends agree.
+ */
+export const zMobChampionSource = z.enum(["inherit", "fixed", "random"]);
+
+/**
+ * 英雄卡讀在幾級的來源 (#290, owner 2026-07-29 「特殊殭屍也可以設 heroLevel,但
+ * 預設是跟當時場上英雄最高等級相同(一樣是個選項)」).
+ *
+ *   · `"round"`        — 沿用該回合一般殭屍的等級(會隨回合成長)。
+ *   · `"fixed"`        — 用同一個 block 的 `heroLevel` 那個數字(王 = 99)。
+ *   · `"matchHighest"` — **該小怪所在 zone 的全部英雄裡最高的等級,死活都算**,
+ *     在**生成那一刻**解析。⚠️ 不要順手加回存活過濾:owner 2026-07-29 明文裁決
+ *     「死活都計算在內」,理由是這樣就消掉「全隊倒地→殭屍反而變弱」那個倒過來的
+ *     難度曲線。fallback 到 `armedLevel` 現在只有一條路走得到:那個 zone 真的
+ *     一個英雄都沒有。
+ *
+ * ⚠️ ABSENT ≠ `"round"`. 缺席代表 pre-#290 那條鏈 `heroLevel ?? 該回合等級`,所以
+ * 一份沒有這個欄位的舊 arena 逐位元不變 —— 特別是 `heroLevel: 99` 的王不會被一個
+ * 「比較整齊」的預設值悄悄降到第 3 級(血量直接砍掉一半以上)。
+ *
+ * ⚠️ 為什麼不是 `heroLevel: 0` 這種 sentinel:`heroLevel` 是 `int().min(1).max(99)`,
+ * 塞 sentinel 就得把下界開到 0,而 0 在其他每一格都只代表「填錯了」。三個具名值讓
+ * 沒實作的模式是一個 422,不是一個安靜的預設值。
+ *
+ * THE ENUMERATION IS THE BOUND —— 和 `zMobChampionSource` 同一條規矩:字串旋鈕沒有
+ * min/max 可講,清單本身就是界線,後台的 `validateField` 讀同一份清單。
+ */
+export const zMobHeroLevelSource = z.enum(["round", "fixed", "matchHighest"]);
+
 export const zMobWavesConfig = z
   .object({
     /** 1-based round from which waves begin (matches ultUnlockRound:3 precedent) */
@@ -566,6 +613,17 @@ export const zMobWavesConfig = z
          * `MOB_CHAMPION_ID` (godie-zombiex).
          */
         championId: z.string().min(1).optional(),
+        /**
+         * #289 — 指定 or 隨機 for the NORMAL zombie. Ships `"fixed"`: the owner
+         * asked for 隨機 to be the DEFAULT on the king and the special only, and
+         * the rank-and-file zombie stays 喪標麥可.
+         *
+         * ⚠️ THE PER-ROUND `schedule[].championId` COLUMN STILL WINS. 「第 5 回合
+         * 由皮卡丘擔任」 is a statement about one round; 隨機 is a whole-match
+         * default, so the draw slots in where `mob.championId` is and not above
+         * the row (see `mobChampionForRound`).
+         */
+        championSource: zMobChampionSource.optional(),
         /** #217 — mob level in round `fromRound` (owner: 第3場 = lv3) */
         baseLevel: z.number().int().min(1).optional(),
         /** #217 — levels gained per round past `fromRound` (owner: 每場 +1) */
@@ -658,6 +716,15 @@ export const zMobWavesConfig = z
          */
         championId: z.string().min(1).optional(),
         /**
+         * #289 — 指定 or 隨機 for the KING. SHIPS `"random"` (owner 2026-07-29
+         * 「特殊殭屍與殭屍王預設是隨機」), drawn from the curated whitelist once
+         * per round. The draw feeds `heroHpMult`/`heroDamageMult` as well as the
+         * mesh, so a randomised king is a DIFFERENT FIGHT each round and not a
+         * re-skin. Absent / `"inherit"` = the pre-#289 chain (`championId`, else
+         * the round's mob champion).
+         */
+        championSource: zMobChampionSource.optional(),
+        /**
          * 體型倍率 (GH#192, owner: 「modal 大小是10倍」). Same units and same
          * composition rule as `mob.sizeMult`; 10 is the shipped default, and it
          * is a KNOB rather than a constant precisely because 10 is enormous
@@ -726,6 +793,55 @@ export const zMobWavesConfig = z
          * `lastHitMode: "bonus"` inflates the whole payout, not just one share.
          */
         countOverkill: z.boolean().optional(),
+
+        /* ── 從英雄推導的數值 (owner 2026-07-29, GH#206) ──────────────────
+         *
+         * 「生命與能力屬性倍數為**該設定英雄的** N 倍」。ABSENT ⇒ the pre-#206
+         * path (`hpMult` × the round's zombie, flat `maxHp`/`attackDamage`)
+         * stays byte-identical, which a lot of arena tests depend on.
+         *
+         * ⚠️ OWNER SAID ONE NUMBER; THIS IS TWO, AND THAT IS THE 折衷 THEY
+         * APPROVED. The spec's single 「生命與能力屬性倍數 20×」 lands the king
+         * at AD 4,400 against a round-3 player's ~2,000 hp — one swing kills
+         * twice over. HP and damage fail differently: a huge HP pool just makes
+         * the king a wall (fun), a huge AD makes it a one-shot (not). Splitting
+         * them is the only way to keep 「20 倍的王」 without the one-shot.
+         */
+        /** ×`championStatBase(MaxHealth)` of `championId` at `heroLevel` */
+        heroHpMult: z.number().positive().max(1000).optional(),
+        /**
+         * ×`championStatBase(AttackDamage)`. Deliberately SMALLER than
+         * `heroHpMult` — see the note above. Shipped 4 (king) / 2 (special)
+         * against 20 / 5 for hp.
+         */
+        heroDamageMult: z.number().positive().max(1000).optional(),
+        /**
+         * 基礎生命額外 — a FLAT add AFTER the multiply, mirroring the
+         * `baseBonus` semantics owner ruled on 2026-07-28 (加成不參與倍率).
+         */
+        hpFlatBonus: z.number().min(0).max(10_000_000).optional(),
+        /** ×the NORMAL zombie's walk speed. 0.2 = 「移動速度 -80%」 */
+        moveSpeedMult: z.number().min(0).max(10).optional(),
+        /**
+         * 殭屍王的等級 (owner 2026-07-29:「殭屍王的等級是滿級99」).
+         *
+         * ⚠️ THIS IS NOT COSMETIC. At the round-3 level the hero-derived HP is
+         * 553 and the flat +100,000 is 90% of the total, so WHICH CHAMPION THE
+         * KING WEARS BARELY MATTERS. At 99 it is 8,847 → the hero contributes
+         * 64%. The 隨機選英雄 feature only means something because of this.
+         */
+        heroLevel: z.number().int().min(1).max(99).optional(),
+        /**
+         * #290 — 上面那格「幾級」怎麼決定. SHIPS `"fixed"`, i.e. 「就用 99」 said
+         * out loud: the owner pinned the king at 滿級 99 and that ruling has not
+         * changed. `"matchHighest"` is available on the king too (every knob on
+         * this page is 後台可調) and would make the king track the lobby's best
+         * hero instead — a very different, much softer, boss.
+         *
+         * ABSENT ⇒ the pre-#290 chain `heroLevel ?? 該回合等級`, so a doc without
+         * this field is byte-identical. See {@link zMobHeroLevelSource}.
+         */
+        heroLevelSource: zMobHeroLevelSource.optional(),
       })
       .strict()
       .optional(),
@@ -752,6 +868,25 @@ export const zMobWavesConfig = z
         moveSpeedMult: z.number().min(0),
         /** body-radius multiplier — the SIM's body (melee reach scales with it) */
         radiusMult: z.number().positive(),
+        /** GH#206 — same three as the boss; see the notes on `boss.heroHpMult` */
+        heroHpMult: z.number().positive().max(1000).optional(),
+        heroDamageMult: z.number().positive().max(1000).optional(),
+        hpFlatBonus: z.number().min(0).max(10_000_000).optional(),
+        /**
+         * 特殊殭屍的等級。只有在 `heroLevelSource: "fixed"` 時才會被讀到。
+         * ABSENT + 沒有 `heroLevelSource` = 沿用該回合一般殭屍的等級。
+         */
+        heroLevel: z.number().int().min(1).max(99).optional(),
+        /**
+         * #290 — 特殊殭屍的「幾級」來源. SHIPS `"matchHighest"` (owner
+         * 2026-07-29 「預設是跟當時場上英雄最高等級相同」).
+         *
+         * ⚠️ 這一格是全 `mobWaves` 唯一一個在**生成那一刻**才解析的欄位。其他每一
+         * 格都在 `mobRulesFromConfig`(arm time)烘成常數;「當時場上最高等級」不是
+         * 常數,英雄在同一回合裡會升級,所以它必須在 `spawnMob` 那裡算。填 `"round"`
+         * 就退回 #290 之前那條會隨回合成長的曲線。
+         */
+        heroLevelSource: zMobHeroLevelSource.optional(),
         /**
          * 體型倍率 (GH#192) — the RENDERED size, aligned in meaning with the
          * king's. Distinct from `radiusMult` (the collision body) on purpose:
@@ -760,12 +895,70 @@ export const zMobWavesConfig = z
          * files that nothing kept in agreement.
          */
         sizeMult: z.number().positive().optional(),
-        /** gold AND xp multiplier on the kill reward */
+        /**
+         * gold AND xp multiplier on the kill reward, paid to the LAST HITTER.
+         *
+         * ⚠️ INERT once a 分紅獎池 is authored below (#288): the pool replaces
+         * this reward rather than stacking with it, so a special with
+         * `bountyGold` pays 5,000-split and NOT an extra `rewardGold × 3` to
+         * whoever landed the blow. Still the only thing that pays a special in
+         * an arena that authors no pool.
+         */
         rewardMult: z.number().min(0),
         /** model doc id (resolved client-side); absent = the normal mob's */
         modelKey: z.string().min(1).optional(),
         /** 由誰擔任 (GH#192); absent = the normal mob's champion for that round */
         championId: z.string().min(1).optional(),
+        /**
+         * #289 — 指定 or 隨機 for the 特殊殭屍. SHIPS `"random"` (owner
+         * 2026-07-29 「特殊殭屍與殭屍王預設是隨機」). Same wiring as the king's:
+         * the drawn champion is what `heroHpMult`/`heroDamageMult` read, so its
+         * ~12,000 hp really is THAT hero's sheet ×5 and not the zombie's.
+         */
+        championSource: zMobChampionSource.optional(),
+
+        /* ── 分紅獎池 (#288, owner 2026-07-29) ────────────────────────────────
+         *
+         * 「特殊殭屍也照傷害比例分,獎勵是金錢 +5,000 · 等級提升 +5」. Same six
+         * knobs as the king's, meaning the same six things and divided by the
+         * same `splitBossBounty` — plus `splitByDamage`, which the king does not
+         * need (see below).
+         *
+         * ALL THREE POOL NUMBERS ABSENT ⇒ NO POOL AT ALL: the special keeps NO
+         * damage ledger and pays the pre-#288 `rewardMult` to the last hitter,
+         * byte for byte. Authoring any one of them opts the block in.
+         */
+        /** the pool in gold, split by damage share (owner: 5,000) */
+        bountyGold: z.number().int().min(0).max(10_000_000).optional(),
+        /** the same, in XP */
+        bountyXp: z.number().int().min(0).max(10_000_000).optional(),
+        /**
+         * 等級提升 — WHOLE levels, split by damage exactly like gold (owner: 5).
+         * ⚠️ A REQUEST, not a guarantee: `LEVEL_CAP` is 99 and the settlement
+         * panel shows what `grantLevels` actually handed out.
+         */
+        bountyLevels: z.number().int().min(0).max(99).optional(),
+        /**
+         * 最後一刀倍率. ABSENT ⇒ **1**, i.e. a pure proportion with no 翻倍 —
+         * the owner's 翻倍 ruling was about the KING, and the instruction here
+         * was only 「照傷害比例分」. Deliberately different from the king's
+         * shipped 2.
+         */
+        lastHitMultiplier: z.number().min(1).max(10).optional(),
+        /** ABSENT ⇒ `"bonus"`, matching the king. Inert while the倍率 is 1. */
+        lastHitMode: z.enum(["bonus", "weight"]).optional(),
+        /**
+         * ABSENT ⇒ **true** (the owner's instruction). `false` restores the
+         * pre-#288 behaviour: the WHOLE pool goes to whoever landed the killing
+         * blow, nobody else gets a share.
+         */
+        splitByDamage: z.boolean().optional(),
+        /**
+         * 溢傷算不算 — ABSENT ⇒ false, the same ruling the king ships with
+         * (owner 2026-07-29 「不算」). Its OWN field rather than a read of
+         * `boss.countOverkill`, so an arena with no king still controls this.
+         */
+        countOverkill: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -809,6 +1002,10 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     attackCdSec: 1.0,
     radius: 0.6,
     championId: "godie-zombiex",
+    // #289 — the RANK-AND-FILE zombie stays 喪標麥可 by name. 隨機 is available
+    // on this row too (the owner asked for it on all three kinds) but is NOT the
+    // default here: 「特殊殭屍與殭屍王預設是隨機」 named exactly two of the three.
+    championSource: "fixed" as const,
     // NO `modelKey` (GH#192): blank is what makes 「選什麼英雄就會讀取什麼 3d
     // modal」 the LIVE path. Authoring one here would ship the feature inert —
     // the override would win on every arena and the champion branch would never
@@ -892,7 +1089,55 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // `maxHp` above, so the shipped king at the round it FIRST appears is
     // unchanged and only the later rounds scale.
     hpMult: 100,
+    // #289 owner 2026-07-29 「特殊殭屍與殭屍王預設是隨機」 + 「從策展白名單抽」.
+    //
+    // ⚠️ NO `championId` BESIDE IT, ON PURPOSE. `championSource` decides WHICH
+    // branch runs; `championId` is only the 「指定」 branch's argument. Authoring
+    // both would look like a contradiction on the console (「隨機」 next to a
+    // named hero) even though the code has a clear precedence — and the moment
+    // an operator flips this box back to 指定 they should be choosing the hero
+    // deliberately, not inheriting one somebody left behind.
+    //
+    // THE KING'S NUMBERS FOLLOW THE DRAW: `heroHpMult: 20` reads the DRAWN
+    // champion's MaxHealth, so round 4's king is a genuinely different wall from
+    // round 3's — which is the point of the feature and the thing
+    // mobs.randomChampion.test.ts pins.
+    championSource: "random" as const,
+    // 體型倍率. GH#206 shipped 30; the owner walked it back to **10** on
+    // 2026-07-29 after a playtest — 30 × the zombie's 0.68 × the 1.8u normalised
+    // body is 36.72u tall in a duel zone whose RADIUS is 24u, i.e. the king was
+    // taller than the arena is wide and it ate the whole camera. 10 keeps it at
+    // 12.24u: still a landmark, still legible, no longer a wall of texture.
+    //
+    // ⚠️ THIS MIRROR IS NOT THE SOURCE. `content/config/arena-rules.json` is,
+    // and `mobs.heroDerived.test.ts` + `apps/admin/src/mobWaves.test.ts` both
+    // pin the three copies against each other — editing one alone is a red suite,
+    // which is exactly what stopped this value drifting for a whole version.
     sizeMult: 10,
+    // ── 從英雄推導 (GH#206, owner 2026-07-29) ───────────────────────────────
+    // 「生命與能力屬性 = 該設定英雄的 20 倍, 基礎生命額外 +100,000, 移速 −80%,
+    //   等級是滿級 99」. Against the shipped 喪標麥可 sheet that resolves to:
+    //     hp  = round(8,847.2 × 20) + 100,000 = 276,944
+    //     ad  = 408.4 × 4                     = 1,633.6
+    //     ms  = 3 × 0.2                       = 0.6   (×the ZOMBIE, not the hero)
+    // `hpMult`/`maxHp`/`attackDamage`/`moveSpeed` above are now UNREACHABLE for
+    // this doc — deliberately kept, because they are the fallback the moment an
+    // operator clears `heroHpMult` in the console, and because a champion that
+    // fails to resolve degrades onto them rather than onto zero.
+    heroHpMult: 20,
+    // ⚠️ 2, NOT 20 — the owner-approved 折衷, walked down from GH#206's 4 on
+    // 2026-07-29. HP and damage fail differently: a huge pool makes the king a
+    // wall (fun), a huge attack makes it a one-shot (not). At 99 the 喪標麥可
+    // sheet gives 408.4 ad, so ×2 = 816.8 instead of 1,633.6. See the schema
+    // note on `boss.heroDamageMult`.
+    heroDamageMult: 2,
+    hpFlatBonus: 100000,
+    moveSpeedMult: 0.2,
+    heroLevel: 99,
+    // #290 — 「就用上面那個 99」 said out loud. The owner's 滿級 99 ruling is
+    // unchanged; naming the mode is what makes 「跟場上最高」 a visible ALTERNATIVE
+    // in the console rather than an invisible one.
+    heroLevelSource: "fixed" as const,
     bountyGold: 30000,
     // XP stays at 1,200. GH#206 added 等級提升 as its OWN currency rather than
     // inflating this — the owner asked for 「等級提升+50」, and levels and XP are
@@ -915,12 +1160,67 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     chancePercent: 5,
     hpMult: 2,
     damageMult: 1.5,
-    moveSpeedMult: 1.25,
+    // owner 2026-07-29 (GH#206) 「移動速度 −50%」 — WAS 1.25, i.e. the special
+    // used to be FASTER than a zombie. This one field is the whole reason 移速
+    // is anchored on the normal zombie instead of on the hero: the special picks
+    // its face from the round's champion, hero `ms` on this roster spans 2.6..6.1,
+    // and a hero-anchored ×0.5 would land anywhere from 1.3 to 3.05 — sometimes
+    // faster than the 3.0 zombie it is supposed to be a slowed version of.
+    moveSpeedMult: 0.5,
     radiusMult: 1.8,
     // GH#192 — the RENDERED size now says the same thing the hitbox does. No
     // `modelKey`: like the king, it wears the round's champion.
-    sizeMult: 1.8,
+    // GH#206 shipped 3; owner walked it to **2** on 2026-07-29 (same playtest
+    // that took the king from 30 to 10). 2 × 0.68 × 1.8u ≈ 2.45u — still reads
+    // as 「那一隻不一樣」 next to a 1.22u zombie without blocking the fight behind it.
+    sizeMult: 2,
     rewardMult: 3,
+    // #289 — 隨機, same ruling and same no-`championId` rule as the king's.
+    // Drawn on its OWN slot salt, so the special and the king are (usually) two
+    // different heroes in the same round rather than twins.
+    championSource: "random" as const,
+    // ── 從英雄推導 (GH#206, 等級來源改寫於 #290) ─────────────────────────────
+    // 「生命與能力屬性 = 該設定英雄的 5 倍, 基礎生命額外 +4,000」.
+    heroHpMult: 5,
+    heroDamageMult: 2,
+    // owner 2026-07-29: 10,000 → **4,000**. At round 3 the +10,000 was 78% of a
+    // special's 12,764 hp — the hero it wears barely mattered and every special
+    // in the match was the same fat wall. 4,000 puts the HERO back in charge of
+    // the number, which is the whole point of 隨機英雄 + 「跟場上最高等級」.
+    hpFlatBonus: 4000,
+    // #290 — owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」. THE ONE FIELD
+    // IN THIS DOC THAT IS NOT A CONSTANT: resolved in `spawnMob`, not at arm
+    // time, because heroes level up inside a round. `"round"` restores the
+    // pre-#290 curve (round 3 → the round-3 sheet, round 9 → the round-9 one).
+    heroLevelSource: "matchHighest" as const,
+    // ── 分紅獎池 (#288, owner 2026-07-29) ──────────────────────────────────
+    // 「特殊殭屍也照傷害比例分,獎勵是金錢 +5,000 · 等級提升 +5」. Both numbers
+    // are the owner's, verbatim.
+    //
+    // ⚠️ THIS REPLACES `rewardMult: 3` FOR THE SPECIAL — it does not stack. The
+    // special used to pay 60 gold / 120 xp to the last hitter; it now pays a
+    // 5,000-gold + 5-level pool divided among everyone who hurt it. That is a
+    // ~83× reward increase, and it is deliberate: since GH#206 a 特殊殭屍 has
+    // 12,764 hp at round 3 (a hero-derived mini-boss, not a fat zombie), so
+    // killing one is a fight rather than a stray cleave.
+    bountyGold: 5000,
+    // NOT OWNER-SPECIFIED — he named gold and levels only. 200 is the king's
+    // 1,200 scaled by the same 1/6 the gold pool is (5,000 vs 30,000), so the
+    // special reads as 「王的六分之一」 on every currency instead of having one
+    // number invented for it. A live 後台 knob like everything else here.
+    bountyXp: 200,
+    bountyLevels: 5,
+    // 1 = NO 翻倍, unlike the king's 2. The owner's 「補最後一刀翻倍」 ruling was
+    // about the 殭屍王; the instruction for the special is only 「照傷害比例分」,
+    // so the shipped answer is a pure proportion.
+    lastHitMultiplier: 1,
+    // Inert while the multiplier is 1 (both modes agree there — see
+    // mobBossBonus.test.ts). Authored anyway so raising the multiplier in the
+    // console does not silently pick a mode the operator never saw.
+    lastHitMode: "bonus" as const,
+    splitByDamage: true,
+    // owner 2026-07-29 「溢傷算不算?=> 不算」 — the same ruling as the king's.
+    countOverkill: false,
   },
 };
 
@@ -1647,6 +1947,114 @@ export const zConfigVoxelBodiesDoc = z
   })
   .strict();
 
+/**
+ * config.form-visuals@1 — 變身「看得出來」的三個旋鈕 (`config/form-visuals.json`,
+ * task #249 / GH#288).
+ *
+ * ---------------------------------------------------------------------------
+ * 為什麼這是一份 **設定**,而不是從 w3x 抄過來的事實
+ * ---------------------------------------------------------------------------
+ * owner:「基本上變身前後都是同一模型,但是附帶不同球體效果及 3D model 顏色、
+ * 大小、能力屬性變化而已」。對 26 對裡的多數這是對的,但對本次上架的兩對,
+ * **w3u 的顏色與大小欄位是空的**,查證如下(不要再查一次,直接看這裡):
+ *
+ *   · 09 悟空  `Ogrh` uclr/uclg/uclb 未設 → tint [1,1,1];`usca` 未設 → 1.0
+ *              `O00X` 同上,tint [1,1,1]、`usca` 未設 → 1.0
+ *              → **顏色與大小完全相同**。真正的差別是球體掛件:
+ *                `Ogrh` 掛 `A0MI` 球體(悟空正常) = `Gokuhead.mdx`,
+ *                `O00X` 掛 `A0MJ` 球體(悟空超3)  = `Goku3head.mdx`。
+ *   · 20 Saber `E002` / `E00L` 兩半都是 tint [1,1,1]、`usca` 1.10 —— 一模一樣,
+ *              而且 `O00X` 有的那種球體它一個也沒有(`E00L` 多的是 `A05M`
+ *              法術書與 `A0M3` 攻擊修飾,兩個都沒有 art)。
+ *   · `war3map.j` 全域搜 `SetUnitVertexColorBJ`,A09E(超級賽亞人)與 A0DZ
+ *     (風王結界)兩條觸發**都沒有**改顏色(A09E 只放地震/踏地/雷擊特效)。
+ *
+ * 也就是說:照抄 w3x,這兩對變身在畫面上 **完全看不出來**。所以顏色與大小是
+ * 這裡授權操作者做的**美術決定**,出貨預設是刻意挑的,不是量到的 —— 而球體
+ * 掛件那一項是真的 w3x 事實。`championFormVisuals.test.ts` 把這段話的每一句
+ * 都釘在匯入器的 fixture 上,所以它不會慢慢變成謊話。
+ *
+ * ---------------------------------------------------------------------------
+ * 為什麼掛件是「執行期掛」而不是烘進 glb
+ * ---------------------------------------------------------------------------
+ * `godie-ogrh` 與 `godie-o00x` **共用 `imported.goku` 這一個 modelKey**,而
+ * `Gokuhead` 已經在 #267 被烘進 `goku.glb` 了。把 `Goku3head` 也烘進去 ⇒
+ * **基本型悟空也會長出超三的頭**。所以變身態的頭是執行期掛在 ChampionView 上
+ * 的第二個 glb,base 那一半的設定表裡根本沒有這個欄位可以填。
+ *
+ * ---------------------------------------------------------------------------
+ * 三個全域旋鈕的語意(每一個都能把功能整個關掉)
+ * ---------------------------------------------------------------------------
+ *   · `enabled`            總開關。false = 變身完全不改外觀(回到 v0.9.12 行為)。
+ *   · `tintStrength`       0..1,對「顏色偏離白色的量」的濃度。0 = 不上色,
+ *                          1 = 完全照 `forms[].tint`。**不是**直接乘上去 ——
+ *                          直接乘會讓 0 變成全黑,那是關不掉的意思相反。
+ *   · `scaleStrength`      0..2,對「大小偏離 1.0 的量」的濃度。0 = 不縮放。
+ *   · `attachmentsEnabled` 球體掛件的獨立開關(掛件要多載一個 glb,所以低階
+ *                          機器可以只留顏色與大小)。
+ */
+export const zFormVisualEntry = z
+  .object({
+    /** 這一格是怎麼來的 —— w3x 事實 or 美術決定,寫給下一個人看 */
+    note: z.string().optional(),
+    /**
+     * 乘在 albedo/diffuse 上的 [r,g,b](和 #49 的 `tint` 同一條管線,同一個語意:
+     * 乘法,不是覆蓋)。`[1,1,1]` 與省略同義。上界 4 而不是 1:WC3 的
+     * `SetUnitVertexColor` 只能變暗,但這裡是美術決定,要能打亮一個金色超賽。
+     */
+    tint: z.tuple([z.number().min(0).max(4), z.number().min(0).max(4), z.number().min(0).max(4)]).optional(),
+    /**
+     * 疊在 #150 身高正規化 **之上** 的倍率(1 = 和本體一樣高)。
+     * 上界 3 對齊 `_standin-overrides.json` 已經在用的最大值(O030 的 3.0);
+     * 下界 0.2 以下就小到看不見了,那不叫變身。
+     */
+    scaleMult: z.number().min(0.2).max(3).optional(),
+    /** 掛件的 models/ 文件 id(例:`imported.goku3head`)。省略 = 沒有掛件。 */
+    attachModelKey: z.string().min(1).optional(),
+    /**
+     * 掛點。`"origin"`(預設,也是 w3x 對 A0MI/A0MJ 記的值)= 模型原點;
+     * 其他值當骨頭名稱,找不到就退回模型原點(絕不丟例外)。
+     */
+    attachBone: z.string().min(1).optional(),
+    /**
+     * 掛件在**掛點的 local frame**(= 本體 glb 的原生座標系)裡的縮放。
+     *
+     * 為什麼預設是 0.3221 而不是 1:兩份 glb 是用**不同的轉檔倍率**烘出來的。
+     * `goku.glb` 走英雄身高規則(整隻 1.70u),`goku3head.glb` 走 1/36 道具倍率
+     * (2.836u,比本體還高)。0.3221 = 0.008946 / 0.027778,就是把後者換算回前者
+     * 的座標系。換算完 SSJ3 的頭髮落在 Y 0.73..1.65,而本體頭骨在 1.476、
+     * 頭頂在 1.698 —— 自己站到正確位置,所以 `attachOffsetY` 是 0。
+     */
+    attachScale: z.number().min(0.01).max(10).optional(),
+    /** 掛件沿 Y 的微調,單位是掛點 local frame。0 = 用 mdx 自己烘的高度。 */
+    attachOffsetY: z.number().min(-5).max(5).optional(),
+  })
+  .strict();
+
+export const zConfigFormVisualsDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.form-visuals@1"),
+    note: z.string().optional(),
+    /** 總開關。false = 變身不改外觀。 */
+    enabled: z.boolean(),
+    /** 0..1 顏色濃度(0 = 不上色,1 = 照 `forms[].tint`)。 */
+    tintStrength: z.number().min(0).max(1),
+    /** 0..2 大小濃度(0 = 不縮放,1 = 照 `forms[].scaleMult`)。 */
+    scaleStrength: z.number().min(0).max(2),
+    /** 球體掛件的獨立開關。 */
+    attachmentsEnabled: z.boolean(),
+    /**
+     * **變身態 championId** -> 這一態長什麼樣。
+     *
+     * ⚠️ key 一律是 `Emeu` 那一半。`resolveFormVisual` 會再驗一次
+     * `isAlternateForm(id)`,所以就算有人把 `godie-ogrh` 填進來,基本型也拿不到
+     * 任何外觀 —— 這正是「基本型悟空不可以長出超三的頭」的資料層防線。
+     */
+    forms: z.record(zId, zFormVisualEntry),
+  })
+  .strict();
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigMatchDoc,
@@ -1665,6 +2073,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigBaseBonusDoc,
   zConfigStatCapsDoc,
   zConfigCombatFeelDoc,
+  zConfigFormVisualsDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -1699,4 +2108,43 @@ export type ConfigBaseBonusDoc = z.infer<typeof zConfigBaseBonusDoc>;
 export type StatCapDoc = z.infer<typeof zStatCap>;
 export type ConfigStatCapsDoc = z.infer<typeof zConfigStatCapsDoc>;
 export type ConfigCombatFeelDoc = z.infer<typeof zConfigCombatFeelDoc>;
+export type FormVisualEntry = z.infer<typeof zFormVisualEntry>;
+export type ConfigFormVisualsDoc = z.infer<typeof zConfigFormVisualsDoc>;
 export type AnyConfigDoc = z.infer<typeof zConfigDoc>;
+
+/**
+ * 出貨預設 —— 文件不存在時 `resolveFormVisual` 讀的就是這一份。
+ *
+ * ⚠️ 這裡的每一個數字都要和 `content/config/form-visuals.json` 一字不差,
+ * `championFormVisuals.test.ts` 的 drift 斷言在守(缺一個欄位就紅)。
+ * 兩者存在的理由不同:JSON 是**出貨值**(操作者會改),這份是**程式的保險絲**
+ * (內容掛掉時遊戲還是要能跑,而且要跑成一樣的樣子)。
+ */
+export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
+  id: "form-visuals",
+  schema: "config.form-visuals@1",
+  enabled: true,
+  tintStrength: 1,
+  scaleStrength: 1,
+  attachmentsEnabled: true,
+  forms: {
+    // 09 悟空 → 超級賽亞人。掛件是 w3x 事實(A0MJ 球體(悟空超3) = Goku3head.mdx);
+    // 金色與 +8% 身高是美術決定(w3u 兩半的 tint/usca 完全相同)。
+    "godie-o00x": {
+      note: "掛件=w3x A0MJ 球體(悟空超3),掛點 origin 也是 w3x 記的;金色 tint 與 1.08 倍身高是美術決定,w3u 兩半同色同大小",
+      tint: [1.45, 1.3, 0.55],
+      scaleMult: 1.08,
+      attachModelKey: "imported.goku3head",
+      attachBone: "origin",
+      attachScale: 0.3221,
+      attachOffsetY: 0,
+    },
+    // 20 Saber → 風王結界。w3x 沒有任何視覺差(同模型、同色、同 usca 1.10,
+    // 且 A0DZ 觸發不改 vertex color),所以整格都是美術決定。
+    "godie-e00l": {
+      note: "w3x 無任何視覺差(同模型/同色/同 usca);風王結界的青白光暈與 1.04 倍身高皆為美術決定",
+      tint: [0.72, 0.92, 1.35],
+      scaleMult: 1.04,
+    },
+  },
+};

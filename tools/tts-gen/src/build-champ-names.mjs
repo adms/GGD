@@ -172,6 +172,7 @@ const CASTING = {
   "godie-osam": ["ja", "イヌヨウカイ", "Inu Youkai", "セッショウマル", "Sesshoumaru"],
   "godie-oshd": ["ja", "キンニクマン", "Kinnikuman", "キオウタツ", "Kiou Tatsu"],
   "godie-orkn": ["ja", "デンシャチカン", "Densha Chikan", "シュウサク", "Shuusaku"],
+  "godie-o030": ["ja", "デンシャチカン", "Densha Chikan", "シュウサク", "Shuusaku"], // 30 變態紳士 = orkn 變身
   "godie-naka": ["ja", "サルトビサスケ", "Sarutobi Sasuke", "フウマコジロウ", "Fuuma Kojirou"],
   "godie-e002": ["ja", "アーサーオウ", "Arthur-ou", "セイバー", "Saber"],
   "godie-e00l": ["ja", "アーサーオウ", "Arthur-ou", "セイバー", "Saber"],
@@ -184,6 +185,7 @@ const CASTING = {
   "godie-e00z": ["ja", "センゴクアサシン", "Sengoku Assassin", "アズミ", "Azumi"],
   "godie-e00j": ["ja", "コウジャ", "Kouja", "ホアン", "Hoan"],
   "godie-e00s": ["ja", "シラキノロウジュセイ", "Shiraki no Roujusei", "シラキカディナ", "Shiraki Kadina"],
+  "godie-e010": ["ja", "シラキノロウジュセイ", "Shiraki no Roujusei", "シラキカディナ", "Shiraki Kadina"], // 70 紮根 = e00s 變身
   "godie-ekee": ["ja", "ホエルケモノ", "Hoeru Kemono", "デンセツノダイトウ", "Densetsu no Daitou"],
   "godie-h001": ["ja", "ジゴクノシュウライシャ", "Jigoku no Shuuraisha", "バンシャー", "Banshee"],
   "godie-hpal": ["ja", "フジミノム", "Fujimi no Mu", "フジイヤクモ", "Fujii Yakumo"],
@@ -219,6 +221,7 @@ const CASTING = {
   "godie-u00b": ["zh+ja", "最M的魔法Jizz", null, "セイジョウムササビセンセイ", "Seijou Musasabi Sensei"],
   "godie-h02n": ["zh+ja", "腦包英雄", null, "ダーウォアーベンダン", "Daa Wo Aa Bendan"],
   "godie-harf": ["zh+ja", "豪洨天王", null, "テイセンセイ", "Tei Sensei"],
+  "godie-h00w": ["zh+ja", "豪洨天王", null, "テイセンセイ", "Tei Sensei"], // 26 洨者狀態 = harf 變身
   "godie-e015": ["zh+ja", "夜市人生", null, "キンキョフク", "Kin Kyofuku"],
   "godie-h02u": ["zh+ja", "看似憂鬱的神獸", null, "ツァオニーマー", "Tsao Nii Maa"],
   "godie-h02v": ["zh+ja", "看似憂鬱的神獸", null, "ツァオニーマー", "Tsao Nii Maa"],
@@ -227,6 +230,7 @@ const CASTING = {
   "godie-obla": ["zh+ja", "被剝削的勞工階級", null, "マキタロウ", "Maki Tarou"],
   "godie-h021": ["zh+ja", "破銅爛鐵", null, "コウテツジーグ", "Koutetsu Jeeg"],
   "godie-nman": ["zh+ja", "地獄歌神", null, "ジャイアン", "Gian"],
+  "godie-n01b": ["zh+ja", "地獄歌神", null, "ジャイアン", "Gian"], // 40 萬解 = nman 變身
   "godie-ogld": ["zh+ja", "美白大法師", null, "ヘイレンヤーガオ", "Hei Ren Yaa Gao"],
   "godie-o02l": ["zh+ja", "神騎寶貝", null, "ピカチュウ", "Pikachu"],
   "godie-ofar": ["zh+ja", "神奇寶貝兒", null, "ピカチュウ", "Pikachu"],
@@ -257,9 +261,10 @@ const CASTING = {
  */
 const CONFIDENCE = {
   "godie-e015": "medium", "godie-h021": "medium", "godie-h02u": "medium",
-  "godie-h02v": "medium", "godie-harf": "medium", "godie-o00k": "medium",
+  "godie-h02v": "medium", "godie-harf": "medium", "godie-h00w": "medium",
+  "godie-o00k": "medium",
   "godie-obla": "medium", "godie-u00k": "medium", "godie-udea": "medium",
-  "godie-e00j": "low", "godie-e00s": "low", "godie-ekee": "low",
+  "godie-e00j": "low", "godie-e00s": "low", "godie-e010": "low", "godie-ekee": "low",
   "godie-h001": "low", "godie-h02n": "low", "godie-n01l": "low",
   "godie-ogld": "low", "godie-oshd": "low", "godie-u00b": "low",
   "godie-u00v": "low", "godie-uwar": "low",

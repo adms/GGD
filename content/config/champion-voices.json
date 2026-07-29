@@ -14,11 +14,6 @@
       "source": "none",
       "soundset": "Naisha"
     },
-    "godie-zombiex": {
-      "select": [],
-      "source": "none",
-      "soundset": "Abomination"
-    },
     "godie-e007": {
       "select": [],
       "source": "none",
@@ -96,6 +91,11 @@
       "source": "none",
       "soundset": null
     },
+    "godie-e010": {
+      "select": [],
+      "source": "none",
+      "soundset": "MountainGiant"
+    },
     "godie-e012": {
       "select": [],
       "source": "none",
@@ -163,6 +163,11 @@
       "select": [],
       "source": "none",
       "soundset": "HeroPaladin"
+    },
+    "godie-h00w": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroBladeMaster"
     },
     "godie-h01n": {
       "select": [],
@@ -318,6 +323,11 @@
       "source": "none",
       "soundset": "DruidOfTheTalon"
     },
+    "godie-n01b": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
     "godie-n01c": {
       "select": [],
       "source": "none",
@@ -428,6 +438,13 @@
       "select": [],
       "source": "none",
       "soundset": "Necromancer"
+    },
+    "godie-o030": {
+      "select": [
+        "assets/audio/sfx/bads.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": null
     },
     "godie-obla": {
       "select": [],
@@ -600,6 +617,11 @@
       "select": [],
       "source": "none",
       "soundset": null
+    },
+    "godie-zombiex": {
+      "select": [],
+      "source": "none",
+      "soundset": "Abomination"
     },
     "sela": {
       "select": [],

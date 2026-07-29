@@ -29,7 +29,7 @@ import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/id
 import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
-import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
+import { ENTITY_FLAG, formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 
 import type { RoomConnection } from "./net/RoomConnection";
@@ -82,12 +82,19 @@ import { AssetManager } from "./render/AssetManager";
 import {
   EntityViewRegistry,
   mobModelSizeOverride,
+  relativeScaleOf,
   type EntityViewState,
   type ModelDocOverride,
 } from "./render/EntityViewRegistry";
 import { ARCHETYPE_BY_MODEL_KEY, voxelLookFor } from "./render/views/voxelLook";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championTintForId } from "./render/views/championTint";
+import {
+  composeFormTint,
+  formAttachmentSpecFor,
+  formScaleMultiplier,
+} from "./render/views/formVisual";
+import { counterpartFormId, type FormVisual } from "@ggd/shared/content";
 import { entityTintFor } from "./render/views/mobTint";
 import {
   MOB_VISUAL_DEFAULT,
@@ -525,9 +532,15 @@ export class GameApp {
       // the registry retries forever and never paints. That is precisely why a
       // mob wearing a champion's mesh would otherwise render in the champion's
       // own colours, indistinguishable from a player who picked them.
+      // #249 GH#288 —— 變身色疊在英雄自己的 w3x tint 上(相乘,見
+      // render/views/formVisual.ts)。`composeFormTint` 會把 `undefined`
+      // (「seat 表還沒好」)原樣傳回去,所以重試語意沒有被吃掉。
       championTintFor: (e) =>
         entityTintFor(e, this.mobVisual.tintStrength, () =>
-          championTintForId(this.championIdForSeat(e.seatId)),
+          composeFormTint(
+            championTintForId(this.championIdForSeat(e.seatId)),
+            this.formVisualFor(e),
+          ),
         ),
       // per-champion model-SIZE override (task #77/#150). SAME entity→championId
       // seam as modelDocFor/championTintFor above — render/** is walled off from
@@ -544,6 +557,13 @@ export class GameApp {
         const championId = this.championIdForSeat(e.seatId);
         return voxelSkinForId(championId, this.contentDb.voxelSkinOverrideFor(championId ?? ""));
       },
+      // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。第五次用同一條
+      // entity → championId 縫,理由同上;唯一多做的一步是把 FORM bits 折進去,
+      // 因為這一對的 modelKey 前後不變。
+      formAttachmentFor: (e) =>
+        formAttachmentSpecFor(this.formVisualFor(e), (modelKey) =>
+          this.contentDb.modelFor(modelKey)?.glbPath ?? null,
+        ),
     });
     this.vfx = new VfxSystem(this.renderer.scene, {
       entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),
@@ -890,7 +910,16 @@ export class GameApp {
     if (mob) return mob;
     const championId = this.championIdForSeat(e.seatId);
     if (!championId) return null;
-    const base = this.contentDb.modelOverrideFor(championId);
+    const shipped = this.contentDb.modelOverrideFor(championId);
+    // #249 GH#288 —— 變身的大小差,疊在 #77/#150 的 relativeScale 上(相乘,不是
+    // 取代):一個本來就有大小例外的英雄(小叮噹 0.65)變身時應該是
+    // 0.65 × 變身倍率,而不是被變身倍率整個蓋掉。倍率 1 時 `formScaleMultiplier`
+    // 回 1,整條分支等同不存在。
+    const formScale = formScaleMultiplier(this.formVisualFor(e));
+    const base: ModelDocOverride | null =
+      formScale === 1
+        ? shipped
+        : { ...(shipped ?? {}), relativeScale: relativeScaleOf(shipped) * formScale };
     // #226: 44 champions share four generated blocky meshes, so the per-champion
     // LOOK (palette / proportions / props) is seeded from the championId here —
     // the one place that can resolve entity → champion. Only the four stand-in
@@ -899,6 +928,30 @@ export class GameApp {
     const archetype = ARCHETYPE_BY_MODEL_KEY[e.key];
     if (!archetype) return base;
     return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
+  }
+
+  /**
+   * 這個 entity **現在**的 championId —— 變身態時是 `Emeu` 那一半,不是玩家選的
+   * 那一隻。
+   *
+   * 為什麼不能只讀 seat 表:seat 記的是**選角當下**鎖定的英雄,變身不會改它
+   * (變身是 in-place 換 body,同一個 seat 同一個 entity)。而 `e.key` 也不行 ——
+   * 悟空兩態共用 `imported.goku`。唯一的權威來源是 FORM bits,它就是為了這件事
+   * 才存在的(見 apps/game-server/src/net/snapshot.ts 的 #249 註解)。
+   *
+   * 回傳 null 表示「還算不出來」(沒有 seat、還沒選角、或這一半沒有對手),
+   * 呼叫端一律當成「沒有變身外觀」。
+   */
+  private currentChampionIdFor(e: EntityViewState): string | null {
+    const seated = this.championIdForSeat(e.seatId);
+    if (!seated) return null;
+    if (formIndexFromFlags(e.flags ?? 0) === 0) return seated;
+    return counterpartFormId(seated);
+  }
+
+  /** 這個 body 的變身外觀(顏色/大小/掛件),或 null。基本型一律 null。 */
+  private formVisualFor(e: EntityViewState): FormVisual | null {
+    return this.contentDb.formVisualFor(this.currentChampionIdFor(e));
   }
 
   start(): void {

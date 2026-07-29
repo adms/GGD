@@ -555,6 +555,17 @@ describe("特殊殭屍 — the roll, and whether anyone can SEE it", () => {
       sizeMult: 1.8,
       rewardMult: 3,
       modelKey: "champ.mob.zombie-special",
+      // GH#206 — NOT hero-derived, on purpose: every case in this describe was
+      // written against the MULTIPLIER path (×2 hp, ×1.5 damage) and pinning
+      // these to `null` keeps them testing that path instead of being silently
+      // re-baselined onto the new one. The hero path has its own suite in
+      // `mobs.heroDerived.test.ts`.
+      maxHp: null,
+      attackDamage: null,
+      // #288 — NO 分紅獎池, on purpose: this describe is about the ROLL and the
+      // ×3 `rewardMult` payout, which is exactly the path an authored pool
+      // replaces. `null` keeps these cases testing the pre-#288 behaviour.
+      bounty: null,
     },
   });
 
@@ -640,9 +651,18 @@ describe("特殊殭屍 — the roll, and whether anyone can SEE it", () => {
       mobSizeMultFor(shipped, "boss"),
     ];
     expect(new Set(shippedSizes).size).toBe(3);
-    // The king is TEN TIMES the zombie (owner GH#192 「modal 大小是10倍」) —
-    // 「大一點」 is not 「看得出來是王」, so the ratio is pinned, not just ordered.
+    // The king is TEN TIMES the zombie — 「大一點」 is not 「看得出來是王」, so the
+    // ratio is pinned, not just ordered.
+    //
+    // ⚠️ THE HISTORY, because this literal has moved twice: GH#192 「modal 大小是
+    // 10倍」 → GH#206 「體型 30 倍」 → owner 2026-07-29 back to **10** after a
+    // playtest (30 × 0.68 × 1.8u = 36.72u tall in a zone whose radius is 24u —
+    // the king ate the camera). Pinned to the literal on purpose: reading it
+    // back out of `DEFAULT_MOB_WAVES_CONFIG` would turn this into a tautology
+    // that passes for any number the doc happens to hold (failure shape ⑦).
     expect(shippedSizes[2]! / shippedSizes[0]!).toBeCloseTo(10, 9);
+    // …and the special is 2× (owner, same message), between the two.
+    expect(shippedSizes[1]! / shippedSizes[0]!).toBeCloseTo(2, 9);
     // A mob whose rules were never armed reads as 1× rather than 0× / NaN×.
     expect(mobSizeMultFor(null, "boss")).toBe(1);
   });
@@ -1029,6 +1049,12 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
         sizeMult: 1.8,
         rewardMult: 3,
         modelKey: "champ.mob.zombie-special",
+        // GH#206 — the multiplier path, see the note in `specialRules` above.
+        maxHp: null,
+        attackDamage: null,
+        // #288 — no pool; a NORMAL zombie never had one anyway (this case is
+        // about the special block being armed but never rolling).
+        bounty: null,
       },
     };
     const w = newWorld();

@@ -40,9 +40,27 @@ const FLOOR = { champions: 85, abilities: 13, items: 15 } as const;
  * same (mis-assigned 皮卡丘) portrait bytes as its alternate form, which the
  * marquee's SHARED_PORTRAIT_GROUPS records.
  *
- * The four that remain really are un-imported alternate bodies with no docs.
+ * THE LAST FOUR LEFT FOR THE SAME REASON, ONE STEP LATER IN #249 — 變身.
+ * `godie-e010` (70 紮根) / `godie-h00w` (26 洨者狀態) / `godie-n01b` (40 萬解) /
+ * `godie-o030` (30 變態紳士) are the ALTERNATE halves of four `Eme1`/`Emeu`
+ * pairs. They were listed here while they were "un-imported alternate bodies
+ * with no docs" — that premise is what expired: all four now ship a real
+ * `content/champions/*.json` imported from `war3map.w3u`, because
+ * `Registry.get()` THROWS on an unregistered id and the snapshot resolves the
+ * transformed body through it every tick, so a transform into a doc-less body
+ * takes the room down rather than merely failing to render.
+ *
+ * An imported champion owns its icons, so the list is now EMPTY — and with it
+ * empty the loop below runs zero times, which is worth being explicit about
+ * rather than leaving as a silently dead assertion. The GENERAL form of the same
+ * rule is the line directly above it and is still live for all 1 400-odd icons:
+ * every file on disk must be REFERENCED by some doc, so art belonging to a
+ * champion that no longer exists fails there whether or not anyone remembered to
+ * add its id here. This list is the belt to that brace — it names ids whose art
+ * must not come back even if some doc still points at it — so it is kept, empty,
+ * ready for the next prune.
  */
-const PRUNED_IDS = ["godie-e010", "godie-h00w", "godie-n01b", "godie-o030"];
+const PRUNED_IDS: readonly string[] = [];
 
 const ICON_RE = /^assets\/icons\/(champions|abilities|items)\/[a-z0-9.-]+\.(png|webp)$/;
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);

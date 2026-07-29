@@ -57,6 +57,56 @@ describe("殭屍王 events reach a socket", () => {
   });
 });
 
+describe("特殊殭屍分紅 reaches a socket (#288)", () => {
+  it("★ a 特殊殭屍 kill emits a FANNED-OUT settlement carrying kind:\"special\"", () => {
+    cover("mob-special-wire");
+    // WHY THIS LIVES HERE AND NOT IN packages/shared: the shared package cannot
+    // import the fanout allowlist, so its own suite can prove the payout is
+    // CORRECT but never that it LEAVES THE SERVER. This is the other half.
+    const ctl = new MatchController(
+      "special-wire",
+      3,
+      Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true })),
+      FAST,
+    );
+    while (ctl.phase.phase !== "combat") ctl.tick();
+    ctl.tick();
+
+    const w = ctl.world;
+    const base = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 3);
+    // chance 1 = every spawn is special; maxHp 400 keeps the kill to one packet.
+    const rules = { ...base, special: { ...base.special!, chance: 1, maxHp: 400 } };
+    const zone = 0;
+    beginCombatMobs(w, rules, [zone]);
+    const hero = [...w.champion.keys()].find((id) => w.transform.get(id)?.zone === zone)!;
+    const special = spawnMob(w, zone, rules, 1, 0);
+    expect(w.mob.get(special)!.kind).toBe("special");
+
+    w.damageQueue.push({
+      source: hero,
+      target: special,
+      amount: 400,
+      type: "true",
+      crit: false,
+      origin: "ability",
+    });
+    w.step(new Map());
+
+    const ev = w.events.find((e) => e.type === "mobBossSlain");
+    expect(ev, "特殊殭屍死了卻沒有發出結算事件").toBeDefined();
+    // Through the REAL predicate the room calls — a name in neither list, or in
+    // the server-only list, means the 分紅 sheet never reaches a player.
+    expect(isFannedOutEvent(ev!), "特殊殭屍的分紅結算過不了 fanout 這一關").toBe(true);
+    // `kind` is what lets the client say 特殊殭屍 instead of 殭屍王 without a
+    // second event name (see the note in MobSystem.payMobBounty).
+    expect(ev!.data.kind).toBe("special");
+    expect(ev!.data.zone).toBe(zone);
+    const shares = ev!.data.shares as { gold: number }[];
+    expect(shares).toHaveLength(1);
+    expect(shares[0]!.gold).toBe(DEFAULT_MOB_WAVES_CONFIG.special!.bountyGold);
+  });
+});
+
 describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
   it("the snapshot sends a DIFFERENT model key per mob kind", () => {
     cover("mob-boss-wire");
@@ -124,7 +174,13 @@ describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
       mobSizeMultFor(rules, "boss"),
     ];
     for (let i = 0; i < 3; i++) expect(sizes[i]!).toBeCloseTo(want[i]!, 6);
-    expect(sizes[2]! / sizes[0]!).toBeCloseTo(10, 6); // owner: 「modal 大小是10倍」
+    // owner GH#192 「modal 大小是10倍」 → GH#206 「體型 30 倍」 → back to **10** on
+    // 2026-07-29 after a playtest (30 × 0.68 × 1.8u = 36.72u tall in a zone
+    // whose radius is 24u — the king filled the camera). Precision 5, not 6: the
+    // ratio is computed from two `float32` round-trips and the residual is
+    // larger than a 1e-6 tolerance, while still being orders of magnitude
+    // tighter than any wrong-by-a-factor bug this line exists to catch.
+    expect(sizes[2]! / sizes[0]!).toBeCloseTo(10, 5);
     // …and `maxMana` MUST stay 0, or the HUD divides by it and paints a mana bar
     // out of the size number (`manaPct = maxMana > 0 ? mana / maxMana : 0`).
     for (const id of [normal, special, king]) {

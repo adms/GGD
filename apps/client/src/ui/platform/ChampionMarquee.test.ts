@@ -189,19 +189,42 @@ describe("marqueeRoster.buildMarqueeTiles", () => {
       ["godie-emfr", "godie-h022"], // 涅吉 / 白色之翼
       ["godie-h02y", "godie-o02p"], // 志志雄 / 初音
       ["godie-h021", "godie-hblm"], // 阿強一號 / 賈修貝爾
-      ["godie-e00j", "godie-e015", "godie-harf"], // 皇者 + 金居福 / 鄭先生
+      // 皇者 + 金居福 / 鄭先生 — and since #249, 鄭先生's own 26-04 洨者聖臨
+      // body (h00w), which inherited the borrowed bitmap along with everything
+      // else. See PARTLY_TRANSFORM below: this group is now a MIXED one.
+      ["godie-e00j", "godie-e015", "godie-h00w", "godie-harf"],
       ["godie-o02l", "godie-o02n", "godie-o02o", "godie-ofar"], // 皮卡丘 ×2 + 曹操 ×2
     ];
     const declared = new Set(SHARED_PORTRAIT_GROUPS.map((g) => [...g].sort().join(",")));
     for (const g of NON_TRANSFORM_GROUPS) {
       expect(declared.has([...g].sort().join(",")), `icon group ${g.join("/")} survives`).toBe(true);
     }
-    // …and none of the six is a form pair, which is exactly why the two tables
-    // cannot be merged. (The 皮卡丘/曹操 group mixes both: o02l and o02o ARE
-    // alternate forms, ofar and o02n are not — one more reason to keep the
-    // concerns apart.)
-    for (const g of NON_TRANSFORM_GROUPS.slice(0, 5)) {
+    // …and the ones below contain NO form pair at all, which is exactly why the
+    // two tables cannot be merged: derive this table from the form link and
+    // every id here loses its dedup.
+    //
+    // TWO of the six are MIXED — they contain both a borrowed-icon pair AND a
+    // real form pair — which is the strongest argument of all for keeping the
+    // concerns apart, since neither table alone can express them:
+    //   · 皮卡丘/曹操 — o02l and o02o ARE alternate forms, ofar and o02n are not;
+    //   · 皇者/金居福/鄭先生 — h00w IS harf's alternate form, e00j and e015 are
+    //     unrelated champions that merely inherited the same PNG (#249).
+    const PARTLY_TRANSFORM = new Set(["godie-e00j,godie-e015,godie-h00w,godie-harf"]);
+    let purelyBorrowed = 0;
+    for (const g of NON_TRANSFORM_GROUPS) {
+      const key = [...g].sort().join(",");
+      if (PARTLY_TRANSFORM.has(key) || key.includes("godie-o02l")) continue;
+      purelyBorrowed++;
       for (const id of g) expect(isAlternateForm(id), `${id} is not a transform form`).toBe(false);
+    }
+    // the filter above must not have swallowed the whole list (⑥掃字串 guard)
+    expect(purelyBorrowed, "purely-borrowed groups actually checked").toBe(4);
+    // and each MIXED group really does hold at least one of each kind
+    for (const g of NON_TRANSFORM_GROUPS) {
+      const key = [...g].sort().join(",");
+      if (!PARTLY_TRANSFORM.has(key) && !key.includes("godie-o02l")) continue;
+      expect(g.some((id) => isAlternateForm(id)), `${key} holds a form`).toBe(true);
+      expect(g.some((id) => !isAlternateForm(id)), `${key} holds a non-form`).toBe(true);
     }
   });
 

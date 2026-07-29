@@ -134,6 +134,23 @@ describe("voxel skin — coverage over the real roster", () => {
    * BACK TO 44 at task #249: importing `godie-o02n` (曹操孟德's BASE unit O02N,
    * whose map model is a Blizzard built-in) added one more `champ.skin.rogue`
    * wearer — rogue 6 → 7.
+   *
+   * 44 → 48 later in #249, when the transform mechanic landed and the four
+   * 變身 ALTERNATE bodies had to be imported for real (`Champions.get()` throws
+   * on an unregistered id and the snapshot resolves the transformed body through
+   * it every tick). Each wears its BASE half's stand-in — sela +2 (godie-e010,
+   * godie-o030), barbarian +1 (godie-h00w), rogue +1 (godie-n01b) — so 20 / 10 /
+   * 10 / 8 = 48.
+   *
+   * ⚠️ THEY LAND IN `without`, NOT `withBlizzard`, and that is a real (recorded,
+   * not hidden) art gap rather than a mistake here: `BLIZZARD_MODEL_CHAMPIONS`
+   * is asserted id-for-id against `data/blizzard-overlay/MANIFEST.json` below,
+   * and the manifest has no entry for any of the four — the #10 extraction never
+   * pulled their models. Their four BASE halves ARE on the manifest, so today a
+   * transform on those pairs swaps a real WC3 model for a voxel stand-in. The
+   * honest fix is an extraction pass, not an edit to this list; the four pairs
+   * are also the ones whose halves share a modelKey, i.e. exactly the ones not
+   * shipped as playable transforms yet.
    */
   it("共用替身英雄:有暴雪模型的走 glb,沒有的才留在體素身體上", () => {
     cover("voxel-skin-standin");
@@ -148,15 +165,25 @@ describe("voxel skin — coverage over the real roster", () => {
     // 兩層各自都對、各自都有測試、沒有任何東西會紅 —— 玩家看到的是 44 位共用
     // 四張臉。owner 2026-07-28:「請你都先用暴雪的 3d model」。
     const standIns = DOCS.filter((d) => STAND_IN_MODEL_KEYS.includes(d.modelKey ?? ""));
-    expect(standIns.length).toBe(44);
+    expect(standIns.length).toBe(48);
 
     const withBlizzard = standIns.filter((d) => BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
     const without = standIns.filter((d) => !BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
     expect(withBlizzard.length, "40 位的 WC3 模型已在 overlay 裡").toBe(40);
     expect(
       without.map((d) => d.id).sort(),
-      "只有這四位沒有自己的模型:o02n / u011 沒抽到,sela / thorne 不是地圖英雄",
-    ).toEqual(["godie-o02n", "godie-u011", "sela", "thorne"]);
+      "沒有自己模型的:o02n / u011 沒抽到,sela / thorne 不是地圖英雄," +
+        "e010 / h00w / n01b / o030 是 #249 進來的變身型態(overlay 沒抽到它們)",
+    ).toEqual([
+      "godie-e010",
+      "godie-h00w",
+      "godie-n01b",
+      "godie-o02n",
+      "godie-o030",
+      "godie-u011",
+      "sela",
+      "thorne",
+    ]);
 
     for (const d of withBlizzard) {
       expect(

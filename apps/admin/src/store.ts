@@ -76,6 +76,13 @@ export type Page =
    */
   | "statCaps"
   /**
+   * 變身外觀 (`config/form-visuals.json`, #249 GH#288): 變身態的顏色 / 大小 /
+   * 球體掛件。自己一頁,因為 26 對變身裡有 21 對**前後同一個模型** —— 這三樣
+   * 是唯一能讓玩家看出變身的東西,而其中顏色與大小在 w3x 裡是空的,只能由
+   * 操作者決定。寫入同樣走 `putOverlayDoc`,所以下面要 session-gate。
+   */
+  | "formVisuals"
+  /**
    * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
    * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
    * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
@@ -284,6 +291,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "baseBonus",
   // 屬性上限: 同樣是 `putOverlayDoc` 寫入,沒有 session 會 401。
   "statCaps",
+  // 變身外觀: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
+  "formVisuals",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.

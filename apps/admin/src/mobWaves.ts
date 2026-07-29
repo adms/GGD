@@ -46,6 +46,27 @@ export const ARENA_RULES_ID = "arena-rules";
  */
 export const MOB_CHAMPION_FALLBACK = "godie-zombiex";
 export const MOB_MODEL_FALLBACK = "champ.godie-zombiex";
+/**
+ * #289 由誰擔任的三個來源, in the order the picker shows them: 指定 first (the
+ * thing an operator reaches for), 隨機 second, 沿用 last (it behaves exactly like
+ * 指定 and only exists so a legacy doc's absent field has a name).
+ *
+ * MUST stay equal to `zMobChampionSource`'s members — `validateField` rejects
+ * anything outside this list, so a value the schema gained and this list did not
+ * would be un-savable from the console.
+ */
+export const CHAMPION_SOURCES = ["fixed", "random", "inherit"] as const;
+/**
+ * #290 英雄卡讀在幾級的三個來源, in the order the picker shows them: 跟場上最高
+ * first (it is the 特殊殭屍's shipped answer and the thing the owner asked for),
+ * 指定 second, 沿用回合 last.
+ *
+ * MUST stay equal to `zMobHeroLevelSource` / `MOB_HERO_LEVEL_SOURCES` — the
+ * console's `validateField` rejects anything outside this list, so a value the
+ * schema gained and this list did not would be un-savable from the page.
+ */
+export const HERO_LEVEL_SOURCES = ["matchHighest", "fixed", "round"] as const;
+
 /** `DEFAULT_MOB_BASE_LEVEL` / `DEFAULT_MOB_LEVEL_PER_ROUND` in sim/mobs.ts. */
 export const MOB_BASE_LEVEL_FALLBACK = 3;
 export const MOB_LEVEL_PER_ROUND_FALLBACK = 1;
@@ -72,6 +93,9 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     attackCdSec: 1.0,
     radius: 0.6,
     championId: "godie-zombiex",
+    // #289 — 指定 for the rank-and-file zombie (owner defaulted 隨機 on the king
+    // and the special only). MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.mob`.
+    championSource: "fixed",
     // GH#192 — no `modelKey`: the mesh follows the champion. 0.68 keeps the
     // owner's 2026-07-26 「縮小到適合尺寸」 ruling now that the small doc is gone.
     sizeMult: 0.68,
@@ -108,7 +132,26 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // this mirror is what the console renders BEFORE the GET resolves, so a
     // drift here shows the operator a default the server never uses.
     hpMult: 100,
+    // 體型倍率: GH#192 10 → GH#206 30 → owner 2026-07-29 back to **10** after a
+    // playtest (30× was taller than the arena is wide and blocked the camera).
+    // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.boss` — mobWaves.test.ts
+    // pins the whole block, and this mirror is what the console renders before
+    // the GET resolves.
     sizeMult: 10,
+    // #289 owner 2026-07-29 「特殊殭屍與殭屍王預設是隨機」 + 「從策展白名單抽」.
+    // No `championId` beside it: 隨機 and 指定 are two branches, and showing a
+    // named hero next to 「隨機」 reads as a contradiction on the page.
+    championSource: "random",
+    heroHpMult: 20,
+    // owner 2026-07-29: 4 → 2 (a huge hp pool is a wall, a huge attack is a
+    // one-shot — the same 折衷 the schema note spells out).
+    heroDamageMult: 2,
+    hpFlatBonus: 100000,
+    moveSpeedMult: 0.2,
+    heroLevel: 99,
+    // #290 — 「就用上面那個 99」 said out loud, so 「跟場上最高」 shows up as a real
+    // alternative on the page instead of being invisible.
+    heroLevelSource: "fixed",
     bountyGold: 30000,
     bountyXp: 1200,
     bountyLevels: 50,
@@ -120,10 +163,35 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     chancePercent: 5,
     hpMult: 2,
     damageMult: 1.5,
-    moveSpeedMult: 1.25,
+    // GH#206 owner 2026-07-29 「移動速度 −50%」 — was 1.25 (FASTER than a zombie).
+    moveSpeedMult: 0.5,
     radiusMult: 1.8,
-    sizeMult: 1.8,
+    // GH#206 shipped 3; owner 2026-07-29 walked it to 2 (same playtest as the
+    // king's 30 → 10).
+    sizeMult: 2,
     rewardMult: 3,
+    // #289 — 隨機, same ruling as the king's.
+    championSource: "random",
+    heroHpMult: 5,
+    heroDamageMult: 2,
+    // #290 owner 2026-07-29: 10,000 → 4,000. The flat used to be 78% of a
+    // round-3 special's hp, which made 隨機英雄 cosmetic.
+    hpFlatBonus: 4000,
+    // #290 owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」.
+    heroLevelSource: "matchHighest",
+    // #288 owner 2026-07-29 「特殊殭屍也照傷害比例分,金錢 +5,000 · 等級提升 +5」.
+    // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.special` — mobWaves.test.ts
+    // pins the whole block, and this mirror is what the console renders before
+    // the GET resolves. ⚠️ Authoring the pool makes `rewardMult` above INERT
+    // for the special; it is kept because clearing the pool is how an operator
+    // asks for the old flat reward back.
+    bountyGold: 5000,
+    bountyXp: 200,
+    bountyLevels: 5,
+    lastHitMultiplier: 1,
+    lastHitMode: "bonus",
+    splitByDamage: true,
+    countOverkill: false,
   },
 };
 
@@ -150,6 +218,8 @@ export type MobWavesFieldKey =
   | "mob.radius"
   | "mob.modelKey"
   | "mob.championId"
+  // 由誰擔任:指定 / 隨機 (#289)
+  | "mob.championSource"
   | "mob.sizeMult"
   | "mob.tintStrength"
   | "mob.baseLevel"
@@ -173,6 +243,7 @@ export type MobWavesFieldKey =
   | "boss.radius"
   | "boss.modelKey"
   | "boss.championId"
+  | "boss.championSource"
   | "boss.sizeMult"
   | "boss.hpMult"
   | "boss.bountyGold"
@@ -181,6 +252,14 @@ export type MobWavesFieldKey =
   | "boss.lastHitMultiplier"
   | "boss.lastHitMode"
   | "boss.countOverkill"
+  // 從英雄推導 (GH#206)
+  | "boss.heroHpMult"
+  | "boss.heroDamageMult"
+  | "boss.hpFlatBonus"
+  | "boss.moveSpeedMult"
+  | "boss.heroLevel"
+  // 等級來源:跟場上最高 / 指定 / 沿用回合 (#290)
+  | "boss.heroLevelSource"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -190,7 +269,21 @@ export type MobWavesFieldKey =
   | "special.rewardMult"
   | "special.modelKey"
   | "special.championId"
-  | "special.sizeMult";
+  | "special.championSource"
+  | "special.sizeMult"
+  | "special.heroHpMult"
+  | "special.heroDamageMult"
+  | "special.hpFlatBonus"
+  | "special.heroLevel"
+  | "special.heroLevelSource"
+  // 特殊殭屍分紅獎池 (#288)
+  | "special.bountyGold"
+  | "special.bountyXp"
+  | "special.bountyLevels"
+  | "special.lastHitMultiplier"
+  | "special.lastHitMode"
+  | "special.splitByDamage"
+  | "special.countOverkill";
 
 /** How a box is typed + validated. `champion`/`model` are text with a picker. */
 export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool" | "enum";
@@ -242,6 +335,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "waveIntervalSec",
   "mobsPerWaveCap",
   "maxAlivePerZone",
+  "mob.championSource",
   "mob.championId",
   "mob.modelKey",
   "mob.sizeMult",
@@ -264,9 +358,20 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.enabled",
   "boss.killThreshold",
   "boss.repeatable",
+  "boss.championSource",
   "boss.championId",
   "boss.modelKey",
   "boss.sizeMult",
+  // 從英雄推導 (GH#206) — read BEFORE the legacy numbers they override, so the
+  // page reads in precedence order and an operator can see which box wins.
+  // #290 — the SOURCE sits above the number it selects, for the same reason:
+  // 「幾級」 is meaningless until you know which of the three answers is live.
+  "boss.heroLevelSource",
+  "boss.heroLevel",
+  "boss.heroHpMult",
+  "boss.hpFlatBonus",
+  "boss.heroDamageMult",
+  "boss.moveSpeedMult",
   "boss.hpMult",
   "boss.maxHp",
   "boss.attackDamage",
@@ -281,14 +386,29 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.lastHitMode",
   "boss.countOverkill",
   "special.chancePercent",
+  "special.championSource",
   "special.championId",
   "special.modelKey",
   "special.sizeMult",
+  "special.heroLevelSource",
+  "special.heroLevel",
+  "special.heroHpMult",
+  "special.hpFlatBonus",
+  "special.heroDamageMult",
   "special.hpMult",
   "special.damageMult",
   "special.moveSpeedMult",
   "special.radiusMult",
   "special.rewardMult",
+  // 分紅獎池 (#288) — LAST in the special's run, mirroring where the king's
+  // bounty sits in its own: 「牠是什麼」 first, 「殺了牠給什麼」 after.
+  "special.bountyGold",
+  "special.bountyXp",
+  "special.bountyLevels",
+  "special.splitByDamage",
+  "special.lastHitMultiplier",
+  "special.lastHitMode",
+  "special.countOverkill",
 ] as const;
 
 /**
@@ -335,6 +455,20 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     kind: "int",
     min: 1,
     optional: false,
+  },
+  "mob.championSource": {
+    zh: "殭屍由誰擔任：指定還是隨機",
+    note: "指定 = 用下面那格填的英雄；隨機 = 每回合從策展白名單（線上開放的英雄）抽一位。逐回合表如果那一場指定了英雄，那一場以逐回合表為準",
+    unit: "",
+    kind: "enum",
+    values: ["fixed", "random", "inherit"],
+    valueLabels: {
+      fixed: "指定（用下面那位）",
+      random: "隨機（每回合抽一位）",
+      inherit: "沿用（同「指定」）",
+    },
+    optional: true,
+    emptyMeans: "留空 = 指定（用下面那位英雄）",
   },
   "mob.championId": {
     zh: "殭屍由誰擔任（英雄文件）",
@@ -517,6 +651,20 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: false,
     boolLabels: { on: "每滿 N 隻都召喚", off: "整場只召喚一次" },
   },
+  "boss.championSource": {
+    zh: "殭屍王由誰擔任：指定還是隨機",
+    note: "出貨是隨機：每回合從策展白名單抽一位，抽到誰就用誰的卡面去乘下面的「血量＝英雄的幾倍」，所以每回合的王是不同的仗，不只是換張臉",
+    unit: "",
+    kind: "enum",
+    values: ["fixed", "random", "inherit"],
+    valueLabels: {
+      fixed: "指定（用下面那位）",
+      random: "隨機（每回合抽一位）",
+      inherit: "沿用（跟該回合的一般殭屍同一位）",
+    },
+    optional: true,
+    emptyMeans: "留空 = 沿用該回合的一般殭屍那位",
+  },
   "boss.championId": {
     zh: "殭屍王由誰擔任（英雄文件）",
     note: "王頂著哪個英雄的臉與模型。留空 = 跟該回合的一般殭屍同一位",
@@ -535,29 +683,92 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   },
   "boss.sizeMult": {
     zh: "殭屍王體型倍率",
-    note: "王在畫面上是一般殭屍的幾倍高。⚠️ 10 倍 ≈ 18 單位高，比競技場相機看得到的範圍還高，玩家會被王擋住整個視野",
+    note: "王在畫面上是一般殭屍的幾倍高。⚠️ 出貨值 30 倍 ≈ 54 單位高，遠高於競技場相機看得到的範圍；覺得被擋住視野就是調這一格",
     unit: "倍",
     kind: "num",
     optional: true,
-    emptyMeans: "留空 = 10 倍（出貨值）",
+    emptyMeans: "留空 = 10 倍（沒填時的保守值，不是出貨值）",
+  },
+  // ── 從英雄推導 (GH#206, owner 2026-07-29) ────────────────────────────────
+  "boss.heroLevelSource": {
+    zh: "殭屍王的等級怎麼決定",
+    note: "出貨是「指定」：王固定用下面那格的 99。選「跟場上最高」的話，王會在被召喚的那一刻改讀「王所在那個 zone 的全部英雄，死活都算」裡最高的等級 —— 會是一隻軟很多的王",
+    unit: "",
+    kind: "enum",
+    values: ["matchHighest", "fixed", "round"],
+    valueLabels: {
+      matchHighest: "跟場上最高（生成當下算）",
+      fixed: "指定（用下面那個數字）",
+      round: "沿用該回合殭屍等級",
+    },
+    optional: true,
+    emptyMeans: "留空 = 有填下面那格就用它，沒填就沿用回合等級（舊行為）",
+  },
+  "boss.heroLevel": {
+    zh: "殭屍王當作幾級的英雄來算",
+    note: "只在上面選「指定」時才會被讀到。只影響兩個「英雄倍率」讀英雄卡的等級，不是王的實際等級。出貨值 99（滿級）—— 填 3 的話王的血會少一半以上",
+    unit: "級",
+    kind: "int",
+    min: 1,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 跟那一回合的一般殭屍同級（會隨回合成長）",
+  },
+  "boss.heroHpMult": {
+    zh: "殭屍王血量＝英雄的幾倍",
+    note: "以「上面那位英雄在上面那個等級的生命上限」為基準。有填就用這個，下面的血量倍率與固定血量都會被忽略",
+    unit: "倍",
+    kind: "num",
+    max: 1000,
+    optional: true,
+    emptyMeans: "留空 = 改用下面的「血量倍率 ×一般殭屍」",
+  },
+  "boss.hpFlatBonus": {
+    zh: "殭屍王基礎生命額外加值",
+    note: "在乘完倍率「之後」才加上去，不參與倍率（跟後台的基礎加成同一條規則）。只在有填上面的英雄血量倍率時生效",
+    unit: "點",
+    kind: "num",
+    min: 0,
+    max: 10_000_000,
+    optional: true,
+    emptyMeans: "留空 = 不額外加",
+  },
+  "boss.heroDamageMult": {
+    zh: "殭屍王攻擊力＝英雄的幾倍",
+    note: "⚠️ 刻意比血量倍率小很多。血厚只是變成一堵牆（好玩），攻高是直接把玩家秒掉（不好玩）。有填就蓋掉下面的固定攻擊力",
+    unit: "倍",
+    kind: "num",
+    max: 1000,
+    optional: true,
+    emptyMeans: "留空 = 改用下面的固定攻擊力",
+  },
+  "boss.moveSpeedMult": {
+    zh: "殭屍王移速＝一般殭屍的幾倍",
+    note: "基準刻意是「一般殭屍」而不是英雄：王的臉是隨回合的英雄，而英雄移速從 2.6 到 6.1，用英雄當基準會讓同一個倍率有時候比一般殭屍還快。0.2 = 慢 80%",
+    unit: "倍",
+    kind: "num",
+    min: 0,
+    max: 10,
+    optional: true,
+    emptyMeans: "留空 = 改用下面的固定移動速度",
   },
   "boss.hpMult": {
-    zh: "殭屍王血量倍率",
-    note: "以「那一回合一般殭屍的血量」為基準乘上去。有填就用這個，下面的固定血量會被忽略",
+    zh: "殭屍王血量倍率（×一般殭屍）",
+    note: "以「那一回合一般殭屍的血量」為基準乘上去。⚠️ 上面的「血量＝英雄的幾倍」有填的話，這一格完全不會被用到",
     unit: "倍",
     kind: "num",
     optional: true,
     emptyMeans: "留空 = 改用下面的固定血量",
   },
   "boss.maxHp": {
-    zh: "殭屍王固定血量（只在沒填血量倍率時生效）",
-    note: "固定值，不隨回合成長。上面的「血量倍率」有填的話，這個數字完全不會被用到",
+    zh: "殭屍王固定血量（只在兩個血量倍率都沒填時生效）",
+    note: "固定值，不隨回合成長。上面任何一個血量倍率有填，這個數字完全不會被用到",
     unit: "點",
     kind: "num",
     optional: false,
   },
   "boss.attackDamage": {
-    zh: "殭屍王攻擊力",
+    zh: "殭屍王固定攻擊力（只在沒填英雄攻擊倍率時生效）",
     note: "每次普攻打掉玩家多少血（走完一般減傷）",
     unit: "點",
     kind: "num",
@@ -579,7 +790,7 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: false,
   },
   "boss.moveSpeed": {
-    zh: "殭屍王移動速度",
+    zh: "殭屍王固定移動速度（只在沒填移速倍率時生效）",
     note: "走多快（英雄一般約 6，一般殭屍 3）",
     unit: "單位/秒",
     kind: "num",
@@ -658,6 +869,20 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 0,
     optional: false,
   },
+  "special.championSource": {
+    zh: "特殊殭屍由誰擔任：指定還是隨機",
+    note: "出貨是隨機。和殭屍王一樣，抽到的英雄同時決定臉、模型與「血量／攻擊力＝英雄的幾倍」的那個「英雄」",
+    unit: "",
+    kind: "enum",
+    values: ["fixed", "random", "inherit"],
+    valueLabels: {
+      fixed: "指定（用下面那位）",
+      random: "隨機（每回合抽一位）",
+      inherit: "沿用（跟該回合的一般殭屍同一位）",
+    },
+    optional: true,
+    emptyMeans: "留空 = 沿用該回合的一般殭屍那位",
+  },
   "special.championId": {
     zh: "特殊殭屍由誰擔任（英雄文件）",
     note: "留空 = 跟該回合的一般殭屍同一位英雄",
@@ -682,24 +907,77 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: true,
     emptyMeans: "留空 = 用一般殭屍的模型（玩家會分不出來）",
   },
+  // ── 從英雄推導 (GH#206) — same four ideas as the king's, one less knob ────
+  "special.heroLevelSource": {
+    zh: "特殊殭屍的等級怎麼決定",
+    note: "出貨是「跟場上最高」：每生一隻就當場去看「牠所在那個 zone 的全部英雄，死活都算」裡最高幾級，所以玩家越強牠越強、同一回合裡也會越生越強。屍體照算 —— 隊友倒下不會讓殭屍跟著變弱。只有那個 zone 真的一個英雄都沒有時才退回該回合的殭屍等級",
+    unit: "",
+    kind: "enum",
+    values: ["matchHighest", "fixed", "round"],
+    valueLabels: {
+      matchHighest: "跟場上最高（生成當下算）",
+      fixed: "指定（用下面那個數字）",
+      round: "沿用該回合殭屍等級",
+    },
+    optional: true,
+    emptyMeans: "留空 = 有填下面那格就用它，沒填就沿用回合等級（舊行為）",
+  },
+  "special.heroLevel": {
+    zh: "特殊殭屍當作幾級的英雄來算",
+    note: "只在上面選「指定」時才會被讀到 —— 出貨選的是「跟場上最高」，所以這格填了也不會生效。只影響兩個「英雄倍率」讀英雄卡的等級",
+    unit: "級",
+    kind: "int",
+    min: 1,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 跟那一回合的一般殭屍同級（會隨回合成長）",
+  },
+  "special.heroHpMult": {
+    zh: "特殊殭屍血量＝英雄的幾倍",
+    note: "以「上面那位英雄在該等級的生命上限」為基準。有填就蓋掉下面的「血量倍率 ×一般殭屍」",
+    unit: "倍",
+    kind: "num",
+    max: 1000,
+    optional: true,
+    emptyMeans: "留空 = 改用下面的血量倍率",
+  },
+  "special.hpFlatBonus": {
+    zh: "特殊殭屍基礎生命額外加值",
+    note: "乘完倍率「之後」才加，不參與倍率。只在有填上面的英雄血量倍率時生效",
+    unit: "點",
+    kind: "num",
+    min: 0,
+    max: 10_000_000,
+    optional: true,
+    emptyMeans: "留空 = 不額外加",
+  },
+  "special.heroDamageMult": {
+    zh: "特殊殭屍攻擊力＝英雄的幾倍",
+    note: "刻意比血量倍率小，理由跟殭屍王那一欄一樣。有填就蓋掉下面的攻擊力倍率",
+    unit: "倍",
+    kind: "num",
+    max: 1000,
+    optional: true,
+    emptyMeans: "留空 = 改用下面的攻擊力倍率",
+  },
   "special.hpMult": {
-    zh: "血量倍率",
-    note: "相對同一回合的一般殭屍。2 = 兩倍血",
+    zh: "血量倍率（×一般殭屍）",
+    note: "相對同一回合的一般殭屍。2 = 兩倍血。⚠️ 上面的「血量＝英雄的幾倍」有填的話這格不會被用到",
     unit: "倍",
     kind: "num",
     optional: false,
   },
   "special.damageMult": {
-    zh: "攻擊力倍率",
-    note: "相對一般殭屍的攻擊力",
+    zh: "攻擊力倍率（×一般殭屍）",
+    note: "相對一般殭屍的攻擊力。⚠️ 上面的「攻擊力＝英雄的幾倍」有填的話這格不會被用到",
     unit: "倍",
     kind: "num",
     min: 0,
     optional: false,
   },
   "special.moveSpeedMult": {
-    zh: "移動速度倍率",
-    note: "相對一般殭屍的移速。>1 = 追得比較兇",
+    zh: "移動速度倍率（×一般殭屍）",
+    note: "相對一般殭屍的移速，這一格「沒有」英雄版本 —— 基準必須是殭屍：特殊殭屍的臉是隨回合的英雄，英雄移速 2.6~6.1，用英雄當基準會讓 0.5 有時候比一般殭屍還快。0.5 = 慢一半",
     unit: "倍",
     kind: "num",
     min: 0,
@@ -714,11 +992,81 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   },
   "special.rewardMult": {
     zh: "獎勵倍率",
-    note: "打死牠給的金錢與經驗都乘這個數（升級進度算一隻，不變）",
+    note: "打死牠給的金錢與經驗都乘這個數（升級進度算一隻，不變）。⚠️ 下面的「分紅獎金」有填的話這格完全不會被用到 —— 獎池就是獎勵，兩者不疊加",
     unit: "倍",
     kind: "num",
     min: 0,
     optional: false,
+  },
+
+  // ── 特殊殭屍分紅獎池 (#288) ──────────────────────────────────────────────
+  "special.bountyGold": {
+    zh: "特殊殭屍分紅獎金",
+    note: "照傷害比例分給所有打過牠的人（不是只給補刀的）。留空＝不分紅，回到上面那個「獎勵倍率」的老規則",
+    unit: "金",
+    kind: "int",
+    min: 0,
+    max: 10_000_000,
+    optional: true,
+    emptyMeans: "留空 = 不分紅，改用「獎勵倍率」直接給補刀的人",
+  },
+  "special.bountyXp": {
+    zh: "特殊殭屍分紅經驗",
+    note: "同上，也是總量，用同一套傷害比例分下去",
+    unit: "XP",
+    kind: "int",
+    min: 0,
+    max: 10_000_000,
+    optional: true,
+    emptyMeans: "留空 = 不給經驗（金錢那格有填就仍然會分紅）",
+  },
+  "special.bountyLevels": {
+    zh: "特殊殭屍等級提升",
+    note: "直接送等級（不是經驗值），照同一套傷害比例分。⚠️ 等級上限 99，所以實際跳的級數可能比這裡少 —— 結算面板顯示的是**實際跳的**",
+    unit: "級",
+    kind: "int",
+    min: 0,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 不送等級",
+  },
+  "special.splitByDamage": {
+    zh: "特殊殭屍要不要照傷害分",
+    note: "開（預設）＝參戰的每個人照自己打的傷害比例領。關＝整包獎金全給補刀的那一個人，其他人一毛都沒有",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "照傷害比例分給所有人", off: "全額給補刀的人" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「照傷害比例分」",
+  },
+  "special.lastHitMultiplier": {
+    zh: "特殊殭屍最後一刀倍率",
+    note: "1（預設）＝沒有翻倍，純照傷害比例。這裡和殭屍王的 2 不一樣是刻意的：owner 對特殊殭屍只說了「照傷害比例分」",
+    unit: "倍",
+    kind: "num",
+    min: 1,
+    max: 10,
+    optional: true,
+    emptyMeans: "沿用出貨預設 1（不翻倍）",
+  },
+  "special.lastHitMode": {
+    zh: "特殊殭屍最後一刀怎麼算",
+    note: "和殭屍王同一套語意。倍率是 1 的時候兩種模式結果一模一樣，把倍率調上去才有差",
+    unit: "",
+    kind: "enum",
+    values: ["bonus", "weight"],
+    valueLabels: { bonus: "額外加碼（可超過總額）", weight: "權重（總額固定）" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「額外加碼」",
+  },
+  "special.countOverkill": {
+    zh: "特殊殭屍溢傷算不算",
+    note: "關（預設）＝只算牠真的掉的血，所以對剩 100 血的牠丟 4000 傷害只算 100。這格和殭屍王那格是分開的，關掉殭屍王也不影響這裡",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "算（溢傷全額計入）", off: "不算（只算真的掉的血）" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「不算」",
   },
 };
 
@@ -740,7 +1088,13 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     title: "殭屍身分 · 臉、模型、體型、染黑",
     blurb:
       "選了英雄就直接用那個英雄的 3D 模型（模型欄留空即可）。殭屍一律染黑，避免跟玩家的英雄混在一起。逐回合表可以再逐場覆蓋這裡的英雄。",
-    keys: ["mob.championId", "mob.modelKey", "mob.sizeMult", "mob.tintStrength"],
+    keys: [
+      "mob.championSource",
+      "mob.championId",
+      "mob.modelKey",
+      "mob.sizeMult",
+      "mob.tintStrength",
+    ],
   },
   {
     title: "等級與血量曲線 · 隨回合變強",
@@ -768,14 +1122,21 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
   {
     title: "殭屍王 · 單一英雄累積擊殺後召喚",
     blurb:
-      "門檻算的是「一個人自己」的累計擊殺，而且跨回合不歸零；王會出現在那個人的戰場。獎金是總額，照參戰傷害比例分，補刀的人權重加倍。",
+      "門檻算的是「一個人自己」的累計擊殺，而且跨回合不歸零；王會出現在那個人的戰場。獎金是總額，照參戰傷害比例分，補刀的人權重加倍。血量／攻擊力／移速各有三層：填了「＝英雄的幾倍」就以上面那位英雄的卡面為準，其次才是「×一般殭屍」，最後才是固定值。",
     keys: [
       "boss.enabled",
       "boss.killThreshold",
       "boss.repeatable",
+      "boss.championSource",
       "boss.championId",
       "boss.modelKey",
       "boss.sizeMult",
+      "boss.heroLevelSource",
+      "boss.heroLevel",
+      "boss.heroHpMult",
+      "boss.hpFlatBonus",
+      "boss.heroDamageMult",
+      "boss.moveSpeedMult",
       "boss.hpMult",
       "boss.maxHp",
       "boss.attackDamage",
@@ -793,17 +1154,38 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
   },
   {
     title: "特殊殭屍 · 殭屍群裡的那一隻",
-    blurb: "每生一隻就擲一次機率。機率填 0 就完全關掉，連亂數都不抽。",
+    blurb:
+      "每生一隻就擲一次機率。機率填 0 就完全關掉，連亂數都不抽。血量與攻擊力跟殭屍王一樣是兩層：「＝英雄的幾倍」優先，沒填才用「×一般殭屍」。移速只有一層，而且基準永遠是一般殭屍。",
     keys: [
       "special.chancePercent",
+      "special.championSource",
       "special.championId",
       "special.modelKey",
       "special.sizeMult",
+      "special.heroLevelSource",
+      "special.heroLevel",
+      "special.heroHpMult",
+      "special.hpFlatBonus",
+      "special.heroDamageMult",
       "special.hpMult",
       "special.damageMult",
       "special.moveSpeedMult",
       "special.radiusMult",
       "special.rewardMult",
+    ],
+  },
+  {
+    title: "特殊殭屍分紅 · 打死牠獎金怎麼分",
+    blurb:
+      "牠現在是一隻一萬多血的小王，所以獎勵也照殭屍王那套走：獎金／經驗／等級是**總量**，照參戰傷害比例分給每一個打過牠的人。三個獎池全部留空 = 完全不分紅，回到「獎勵倍率直接給補刀的人」。",
+    keys: [
+      "special.bountyGold",
+      "special.bountyXp",
+      "special.bountyLevels",
+      "special.splitByDamage",
+      "special.lastHitMultiplier",
+      "special.lastHitMode",
+      "special.countOverkill",
     ],
   },
 ];
@@ -870,6 +1252,8 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.mob.modelKey ?? "";
     case "mob.championId":
       return cfg.mob.championId ?? "";
+    case "mob.championSource":
+      return cfg.mob.championSource ?? "";
     case "mob.sizeMult":
       return formatNum(cfg.mob.sizeMult);
     case "mob.tintStrength":
@@ -917,12 +1301,31 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.radius);
     case "boss.modelKey":
       return cfg.boss?.modelKey ?? "";
+    case "boss.championSource":
+      return cfg.boss?.championSource ?? "";
     case "boss.championId":
       return cfg.boss?.championId ?? "";
     case "boss.sizeMult":
       return formatNum(cfg.boss?.sizeMult);
     case "boss.hpMult":
       return formatNum(cfg.boss?.hpMult);
+    // GH#206 — `formatNum(undefined)` is "", which is what an un-authored
+    // OPTIONAL box has to show: a 0 here would read as 「×0 生命」, and
+    // `configFromForm` would then write that 0 back into the doc.
+    case "boss.heroHpMult":
+      return formatNum(cfg.boss?.heroHpMult);
+    case "boss.heroDamageMult":
+      return formatNum(cfg.boss?.heroDamageMult);
+    case "boss.hpFlatBonus":
+      return formatNum(cfg.boss?.hpFlatBonus);
+    case "boss.moveSpeedMult":
+      return formatNum(cfg.boss?.moveSpeedMult);
+    case "boss.heroLevel":
+      return formatNum(cfg.boss?.heroLevel);
+    // #290 — "" for an absent field, exactly like `championSource`: ABSENT is a
+    // real state (「沿用今天的行為」) and must round-trip as an empty picker.
+    case "boss.heroLevelSource":
+      return cfg.boss?.heroLevelSource ?? "";
     case "boss.bountyGold":
       return formatNum(cfg.boss?.bountyGold);
     case "boss.bountyXp":
@@ -952,10 +1355,40 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.special?.rewardMult);
     case "special.modelKey":
       return cfg.special?.modelKey ?? "";
+    case "special.championSource":
+      return cfg.special?.championSource ?? "";
     case "special.championId":
       return cfg.special?.championId ?? "";
     case "special.sizeMult":
       return formatNum(cfg.special?.sizeMult);
+    case "special.heroHpMult":
+      return formatNum(cfg.special?.heroHpMult);
+    case "special.heroDamageMult":
+      return formatNum(cfg.special?.heroDamageMult);
+    case "special.hpFlatBonus":
+      return formatNum(cfg.special?.hpFlatBonus);
+    case "special.heroLevel":
+      return formatNum(cfg.special?.heroLevel);
+    case "special.heroLevelSource":
+      return cfg.special?.heroLevelSource ?? "";
+    // #288 分紅獎池 — `formatNum(undefined)` is "", which is the honest reading
+    // of an un-authored OPTIONAL pool: a 0 here would say 「獎金 0」, and
+    // `configFromForm` would then write that 0 back and permanently disable the
+    // `rewardMult` fallback it is supposed to preserve.
+    case "special.bountyGold":
+      return formatNum(cfg.special?.bountyGold);
+    case "special.bountyXp":
+      return formatNum(cfg.special?.bountyXp);
+    case "special.bountyLevels":
+      return formatNum(cfg.special?.bountyLevels);
+    case "special.lastHitMultiplier":
+      return formatNum(cfg.special?.lastHitMultiplier);
+    case "special.lastHitMode":
+      return cfg.special?.lastHitMode ?? "";
+    case "special.splitByDamage":
+      return cfg.special?.splitByDamage === undefined ? "" : cfg.special.splitByDamage ? "1" : "0";
+    case "special.countOverkill":
+      return cfg.special?.countOverkill === undefined ? "" : cfg.special.countOverkill ? "1" : "0";
   }
 }
 
@@ -1192,6 +1625,16 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     return t === "1" ? true : t === "0" ? false : fallback;
   };
   /**
+   * #288 — the OPTIONAL-boolean twin of `bool`. A blank box means 「沒填」 and
+   * must round-trip as an ABSENT key, not as the shipped value: these fields are
+   * `.optional()` in the schema and their absence is a meaningful state the
+   * operator can return to.
+   */
+  const optBool = (key: MobWavesFieldKey): boolean | undefined => {
+    const t = form.fields[key].trim();
+    return t === "1" ? true : t === "0" ? false : undefined;
+  };
+  /**
    * `enum` fields. An empty box means 「沒填」 and falls back to the shipped
    * value — NOT to `undefined`. Dropping the key would silently re-open the
    * schema's own default, which for `lastHitMode` is the opposite of what the
@@ -1200,6 +1643,17 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   const enumOf = <T extends string>(key: MobWavesFieldKey, allowed: readonly T[], fallback: T): T => {
     const t = form.fields[key].trim();
     return (allowed as readonly string[]).includes(t) ? (t as T) : fallback;
+  };
+  /**
+   * #289 — the OPTIONAL-enum twin of `enumOf`, same reasoning as `optBool`.
+   * `championSource` is `.optional()` and ABSENT is a real, reachable state
+   * (「沒指定來源」 = 沿用今天的行為). Falling back to the SHIPPED value here would
+   * make clearing 殭屍王由誰擔任 impossible — the box would silently re-write
+   * `"random"` every save — and `changedFields` would report a diff nobody made.
+   */
+  const optEnum = <T extends string>(key: MobWavesFieldKey, allowed: readonly T[]): T | undefined => {
+    const t = form.fields[key].trim();
+    return (allowed as readonly string[]).includes(t) ? (t as T) : undefined;
   };
 
   const mob: MobWavesConfig["mob"] = {
@@ -1220,6 +1674,10 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   putNum("moveSpeed", "mob.moveSpeed");
   putText("modelKey", "mob.modelKey");
   putText("championId", "mob.championId");
+  // #289 — 指定 / 隨機. OMITTED when blank (see `optEnum`): absent reads as
+  // 「沿用」 in the sim, which is exactly what a cleared box should mean.
+  const mobSrc = optEnum("mob.championSource", CHAMPION_SOURCES);
+  if (mobSrc !== undefined) mob.championSource = mobSrc;
   putNum("sizeMult", "mob.sizeMult");
   putNum("tintStrength", "mob.tintStrength");
   putNum("baseLevel", "mob.baseLevel");
@@ -1289,10 +1747,29 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (bm !== undefined) boss.modelKey = bm;
     const bc = optText("boss.championId");
     if (bc !== undefined) boss.championId = bc;
+    const bsrc = optEnum("boss.championSource", CHAMPION_SOURCES);
+    if (bsrc !== undefined) boss.championSource = bsrc;
     const bs = optNum("boss.sizeMult");
     if (bs !== undefined) boss.sizeMult = bs;
     const bh = optNum("boss.hpMult");
     if (bh !== undefined) boss.hpMult = bh;
+    // GH#206 — OMITTED when blank, never written as 0. Clearing 「血量＝英雄的
+    // 幾倍」 is how an operator asks for the pre-#206 king back; writing a 0
+    // instead would ship a king with 1 hp (the sim clamps) and no message.
+    const bhh = optNum("boss.heroHpMult");
+    if (bhh !== undefined) boss.heroHpMult = bhh;
+    const bhd = optNum("boss.heroDamageMult");
+    if (bhd !== undefined) boss.heroDamageMult = bhd;
+    const bhf = optNum("boss.hpFlatBonus");
+    if (bhf !== undefined) boss.hpFlatBonus = bhf;
+    const bms = optNum("boss.moveSpeedMult");
+    if (bms !== undefined) boss.moveSpeedMult = bms;
+    const bhl = optNum("boss.heroLevel");
+    if (bhl !== undefined) boss.heroLevel = bhl;
+    // #290 — OMITTED when blank (`optEnum`, not `enumOf`): clearing the picker
+    // has to mean 「回到舊行為」, not 「悄悄寫回 fixed」.
+    const bhls = optEnum("boss.heroLevelSource", HERO_LEVEL_SOURCES);
+    if (bhls !== undefined) boss.heroLevelSource = bhls;
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {
@@ -1309,8 +1786,45 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (sm !== undefined) special.modelKey = sm;
     const sc = optText("special.championId");
     if (sc !== undefined) special.championId = sc;
+    const ssrc = optEnum("special.championSource", CHAMPION_SOURCES);
+    if (ssrc !== undefined) special.championSource = ssrc;
     const ssz = optNum("special.sizeMult");
     if (ssz !== undefined) special.sizeMult = ssz;
+    // GH#206 — same omit-when-blank rule as the king's.
+    const shh = optNum("special.heroHpMult");
+    if (shh !== undefined) special.heroHpMult = shh;
+    const shd = optNum("special.heroDamageMult");
+    if (shd !== undefined) special.heroDamageMult = shd;
+    const shf = optNum("special.hpFlatBonus");
+    if (shf !== undefined) special.hpFlatBonus = shf;
+    const shl = optNum("special.heroLevel");
+    if (shl !== undefined) special.heroLevel = shl;
+    const shls = optEnum("special.heroLevelSource", HERO_LEVEL_SOURCES);
+    if (shls !== undefined) special.heroLevelSource = shls;
+    // #288 分紅獎池 — OMITTED when blank, never written as 0/false. Clearing all
+    // three pool boxes is how an operator asks for the pre-#288 特殊殭屍 back
+    // (`rewardMult` straight to the last hitter, and no damage ledger at all);
+    // writing zeros instead would ship a special that pays NOTHING and says
+    // nothing about it.
+    const sbg = optNum("special.bountyGold");
+    if (sbg !== undefined) special.bountyGold = sbg;
+    const sbx = optNum("special.bountyXp");
+    if (sbx !== undefined) special.bountyXp = sbx;
+    const sbl = optNum("special.bountyLevels");
+    if (sbl !== undefined) special.bountyLevels = sbl;
+    const slm = optNum("special.lastHitMultiplier");
+    if (slm !== undefined) special.lastHitMultiplier = slm;
+    const smode = form.fields["special.lastHitMode"].trim();
+    if (smode === "bonus" || smode === "weight") special.lastHitMode = smode;
+    // ⚠️ `optBool`, NOT the `bool(key, fallback)` helper the king's block uses.
+    // These two are `.optional()` in the schema, so a blank box must round-trip
+    // as ABSENT; substituting the shipped value would silently write
+    // `splitByDamage: true` into a doc whose operator never touched the box, and
+    // `changedFields` would then report a diff that is not one.
+    const sSplit = optBool("special.splitByDamage");
+    if (sSplit !== undefined) special.splitByDamage = sSplit;
+    const sOver = optBool("special.countOverkill");
+    if (sOver !== undefined) special.countOverkill = sOver;
     out.special = special;
   }
   return out;

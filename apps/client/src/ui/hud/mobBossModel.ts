@@ -21,21 +21,32 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * ① THE ONE THING THE PANEL MUST EXPLAIN, OR IT LOOKS LIKE A BUG
  *
- * 「補最後一刀的人獎金翻倍」 is implemented as a WEIGHT, not as a post-hoc
- * doubling (packages/shared/src/sim/mobBoss.ts, rule 2): the last hitter's
- * damage counts `lastHitMultiplier`× when the shares are computed, so
- * `sum(payout) === pool` EXACTLY, always.
+ * 「補最後一刀的人獎金翻倍」 HAS TWO IMPLEMENTATIONS AND THE PANEL MUST SAY WHICH
+ * ONE IT IS LOOKING AT (packages/shared/src/sim/mobBoss.ts, rule 2 —
+ * `boss.lastHitMode`, admin-switchable):
  *
- * The alternative — pay everyone their proportional share and then double the
- * last hitter's — makes the total paid out depend on WHO landed the kill: a
- * 200-damage player stealing the kill off a 10,000-damage player would mint
- * gold out of nothing. That is why it is a weight.
+ *   · `"weight"` — the last hitter's DAMAGE counts `lastHitMultiplier`× in the
+ *     denominator, so the doubling is baked into the proportions and
+ *     `sum(payout) === pool` exactly, always.
+ *   · `"bonus"`  — THE SHIPPED DEFAULT since GH#206. Split by raw damage, then
+ *     hand the last hitter one EXTRA copy of their own share. The total is
+ *     deliberately NOT conserved: it lands in `[pool, pool × mult]`, hitting the
+ *     ceiling when one champion did all the damage AND landed the blow (the
+ *     owner's own worked example: 「全傷害 + 補刀 = 200%」).
  *
- * But from inside the game the weight looks WRONG unless it is said out loud.
- * A player who did exactly half the damage and did not last-hit sees less than
- * half the pool and reads it as a rounding bug. So {@link BOSS_RULE_NOTE} is
- * not flavour text — it is the panel's reason to exist, and `mobBoss.test.ts`
- * asserts it reaches the rendered DOM as VISIBLE text (not an aria-label).
+ * ⚠️ UNTIL v0.9.12 THIS MODULE ONLY KNEW THE FIRST ONE. `BOSS_RULE_NOTE` was a
+ * single constant ending 「所以總獎金固定，不會因為誰補到最後一刀而變多」 — a
+ * sentence that is FALSE in the mode the game actually ships, printed directly
+ * under a total that had just exceeded the configured pool. The sim moved and
+ * the panel kept reciting the old rule: not a stale comment — a false statement
+ * about money, on the player's screen. Hence {@link bossRuleNote} TAKES THE MODE
+ * and both sentences exist.
+ *
+ * Either way the note is not flavour text — it is the panel's reason to exist.
+ * A player who did half the damage and did not last-hit sees less than half and
+ * reads it as a rounding bug unless the rule is said out loud, and
+ * `mobBoss.test.ts` asserts the RIGHT sentence for the mode reaches the rendered
+ * DOM as VISIBLE text (not an aria-label).
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ② WHERE IT PAINTS (#107 safe-area contract) — DERIVED, NEVER CHOSEN
@@ -82,7 +93,7 @@ import {
   TOP_CENTRE_BAND_END,
 } from "../controlLegendModel";
 import { legendObstacleRects } from "./killComboModel";
-import type { MobBossShareView, MobBossView } from "../../net/RoomStore";
+import type { MobBossLastHitMode, MobBossShareView, MobBossView } from "../../net/RoomStore";
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * ① LIFETIME
@@ -179,25 +190,50 @@ export const BOSS_SETTLEMENT_TITLE = "殭屍王 分紅結算";
 export const BOSS_LAST_HIT_TAG = "補刀";
 
 /**
- * THE SENTENCE THIS WHOLE PANEL EXISTS FOR (see the module doc, ①).
+ * THE SENTENCE THIS WHOLE PANEL EXISTS FOR (see the module doc, ①), in the
+ * SHIPPED `"bonus"` mode.
  *
- * It states the mechanism (weight, not post-hoc doubling) AND the consequence
- * (the pool is fixed, so nobody can mint gold by stealing the kill), because
- * without the consequence the mechanism reads as an excuse for paying less.
+ * It states the mechanism (an extra copy of the last hitter's own share, paid
+ * on top) AND the consequence — that the total therefore OVERSHOOTS the
+ * configured prize, and the number above it is what was really handed out.
+ * Without the consequence, a reader who knows the pool is 30,000 and sees
+ * 60,000 assumes the panel is broken.
  */
-export const BOSS_RULE_NOTE =
+export const BOSS_RULE_NOTE_BONUS =
+  // ⚠️ 「合計」 and not 「等於」 on purpose: `mobBoss.test.ts` proves that a sheet
+  // where nobody gained a level paints NO 「等」 anywhere, and 「等於」 would put the
+  // character back on screen and make that guard unfalsifiable.
+  "獎金照傷害比例分。補刀者除了自己那份，再多領一份自己的份額（合計 ×%MULT%）——" +
+  "所以實發總額會超出原本的獎金池，上面顯示的是實際發出去的金額。";
+
+/**
+ * The same sentence for the conserving `"weight"` mode — kept whole, because
+ * the mode is admin-switchable and the moment somebody flips it back this is
+ * the only true description of the payout again.
+ */
+export const BOSS_RULE_NOTE_WEIGHT =
   "獎金照傷害比例分。補刀者的傷害以 ×%MULT% 權重計入分母，不是事後把他那份乘 %MULT%——" +
   "所以總獎金固定，不會因為誰補到最後一刀而變多。";
 
-/** {@link BOSS_RULE_NOTE} with the match's real multiplier substituted in. */
-export function bossRuleNote(lastHitMultiplier: number): string {
+/**
+ * The rule sentence for THIS match's mode, with its real multiplier in it.
+ *
+ * ⚠️ `mode` IS REQUIRED, deliberately. A default would let a caller that forgot
+ * to thread `view.lastHitMode` through keep compiling while printing the wrong
+ * rule — which is exactly how the panel came to be lying in the first place.
+ */
+export function bossRuleNote(lastHitMultiplier: number, mode: MobBossLastHitMode): string {
   const m = formatMultiplier(lastHitMultiplier);
-  return BOSS_RULE_NOTE.split("%MULT%").join(m);
+  const base = mode === "weight" ? BOSS_RULE_NOTE_WEIGHT : BOSS_RULE_NOTE_BONUS;
+  return base.split("%MULT%").join(m);
 }
 
-/** The same rule in ONE line, for the compact layout. */
-export function bossRuleNoteShort(lastHitMultiplier: number): string {
-  return `補刀是 ×${formatMultiplier(lastHitMultiplier)} 權重，總獎金固定不變`;
+/** The same rule in ONE line, for the compact layout. Same mode contract. */
+export function bossRuleNoteShort(lastHitMultiplier: number, mode: MobBossLastHitMode): string {
+  const m = formatMultiplier(lastHitMultiplier);
+  return mode === "weight"
+    ? `補刀是 ×${m} 權重，總獎金固定不變`
+    : `補刀者多領一份自己的份額（×${m}），實發總額超出獎金池`;
 }
 
 /** `2` not `2.0`; `1.5` stays `1.5`. Whole numbers must not read as decimals. */
@@ -213,9 +249,25 @@ export function bossSummonLine(view: MobBossView, summonerName: string): string 
   return `${who}累積擊殺 ${kills} 隻殭屍，召喚了牠`;
 }
 
-/** 「總獎金 3000 金 · 1200 經驗」 — the pool that was ACTUALLY paid. */
+/**
+ * 「總獎金 3000 金 · 1200 經驗 · 2 等」 — WHAT WAS ACTUALLY PAID.
+ *
+ * ⚠️ EVERY NUMBER HERE COMES OFF THE EVENT, NEVER OFF THE CONFIG. In the shipped
+ * `"bonus"` mode the sum of the shares exceeds the admin's 獎金池 (up to ×mult),
+ * so a panel that printed `boss.bountyGold` would show 30,000 under a table of
+ * rows adding to 60,000. This is the line that had to stop being a config echo.
+ *
+ * 等級 IS OMITTED WHEN NOBODY GAINED ONE — and only then. `bountyLevels` is 0 in
+ * plenty of configs and `grantLevels` stops at `LEVEL_CAP`, so 「· 0 等」 would be
+ * a permanent piece of noise on most matches; a non-zero grant is news and is
+ * always shown.
+ */
 export function bossTotalLine(view: MobBossView): string {
-  return `總獎金 ${Math.max(0, Math.trunc(view.totalGold))} 金 · ${Math.max(0, Math.trunc(view.totalXp))} 經驗`;
+  const gold = Math.max(0, Math.trunc(view.totalGold));
+  const xp = Math.max(0, Math.trunc(view.totalXp));
+  const levels = Math.max(0, Math.trunc(view.totalLevels));
+  const head = `總獎金 ${gold} 金 · ${xp} 經驗`;
+  return levels > 0 ? `${head} · ${levels} 等` : head;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -228,6 +280,8 @@ export interface BossSettlementRow {
   damage: number;
   gold: number;
   xp: number;
+  /** 等級提升 actually granted to this champion (0 = none; the row omits it) */
+  levels: number;
   lastHit: boolean;
   /** true = this is the local player's own line (the panel highlights it) */
   you: boolean;
@@ -262,12 +316,22 @@ export function bossFullHeight(n: number): number {
 export const BOSS_COMPACT_H = BOSS_HEADER_COMPACT_H + BOSS_ROW_H + BOSS_NOTE_COMPACT_H;
 
 /**
- * Order the payout sheet the way a player reads it: biggest contribution first,
- * ties broken by seat so two clients never disagree. (The sim emits ascending
- * ENTITY id — deterministic, but meaningless to a human.)
+ * Order the payout sheet the way a player reads it: BIGGEST PAYOUT FIRST, ties
+ * broken by damage and then by seat so two clients never disagree. (The sim
+ * emits ascending ENTITY id — deterministic, but meaningless to a human.)
+ *
+ * ⚠️ IT SORTS BY GOLD, NOT BY DAMAGE, AND THAT IS THE WHOLE POINT. It used to
+ * lead with `b.damage - a.damage`, on the assumption that 「傷害最高」 and
+ * 「拿最多」 are the same row — true only in `"weight"` mode, where the payout is
+ * a monotone function of the weighted damage. In the shipped `"bonus"` mode the
+ * last hitter is paid an extra copy of their own share, so a 1,000-damage 補刀
+ * can out-earn a 4,000-damage teammate and the old comparator put the biggest
+ * EARNER halfway down a sheet whose one job is to explain who got paid what.
+ * Damage survives as the tie-break — it is the share basis, so it is the right
+ * answer whenever two people took home the same money.
  */
 export function bossSortedShares(shares: readonly MobBossShareView[]): MobBossShareView[] {
-  return [...shares].sort((a, b) => b.damage - a.damage || b.gold - a.gold || a.seatId - b.seatId);
+  return [...shares].sort((a, b) => b.gold - a.gold || b.damage - a.damage || a.seatId - b.seatId);
 }
 
 /**
@@ -280,8 +344,9 @@ export function bossSortedShares(shares: readonly MobBossShareView[]): MobBossSh
  *
  * COMPACT NEVER DROPS *YOUR* ROW. If the local seat is on the sheet it is the
  * one kept; only when it is not (you were in the other arena, or you did no
- * damage) does the top contributor stand in. Hiding the reader's own payout to
- * fit the box would be the exact defect this panel exists to fix.
+ * damage) does the BIGGEST EARNER stand in — `bossSortedShares[0]`, which since
+ * GH#206 is not necessarily the biggest damager. Hiding the reader's own payout
+ * to fit the box would be the exact defect this panel exists to fix.
  */
 export function bossSettlementLayout(
   view: MobBossView,
@@ -297,6 +362,7 @@ export function bossSettlementLayout(
     damage: Math.round(s.damage),
     gold: s.gold,
     xp: s.xp,
+    levels: Math.max(0, Math.trunc(s.levels)),
     lastHit: s.lastHit,
     you: localSeatId !== null && s.seatId >= 0 && s.seatId === localSeatId,
   });
@@ -318,7 +384,7 @@ export function bossSettlementLayout(
  * ④ PLACEMENT
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/** Preferred width. Wide enough for a name + damage + gold + xp + 補刀 row. */
+/** Preferred width. Wide enough for a name + damage + gold + xp + 等 + 補刀 row. */
 export const BOSS_PREF_W = 420;
 /** Below this the row cannot be read at all → `null`, i.e. nothing is drawn. */
 export const BOSS_MIN_W = 220;

@@ -166,6 +166,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "mob.radius": "0.7",
   "mob.modelKey": "champ.mob.test-double",
   "mob.championId": "godie-hblm",
+  // #289 — differs from the shipped "fixed" so an unwritten line is visible
+  "mob.championSource": "random",
   "mob.sizeMult": "1.4",
   "mob.tintStrength": "0.4",
   "mob.baseLevel": "4",
@@ -187,8 +189,17 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.moveSpeed": "2.9",
   "boss.radius": "2.1",
   "boss.championId": "godie-efur",
+  "boss.championSource": "fixed",
   "boss.sizeMult": "7.5",
   "boss.hpMult": "55",
+  // GH#206 從英雄推導 — distinct sentinels, same reason as every line above.
+  "boss.heroHpMult": "13",
+  "boss.heroDamageMult": "7",
+  "boss.hpFlatBonus": "76000",
+  "boss.moveSpeedMult": "0.45",
+  "boss.heroLevel": "66",
+  // #290 — distinct from the shipped "fixed".
+  "boss.heroLevelSource": "round",
   "boss.modelKey": "champ.mob.king-double",
   "boss.bountyGold": "4200",
   "boss.bountyXp": "1600",
@@ -203,8 +214,23 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "special.radiusMult": "2.2",
   "special.rewardMult": "4",
   "special.championId": "godie-hblm",
+  "special.championSource": "inherit",
   "special.sizeMult": "2.4",
+  "special.heroHpMult": "4.5",
+  "special.heroDamageMult": "2.5",
+  "special.hpFlatBonus": "8500",
+  "special.heroLevel": "38",
+  // #290 — distinct from the shipped "matchHighest".
+  "special.heroLevelSource": "fixed",
   "special.modelKey": "champ.mob.special-double",
+  // #288 分紅獎池 — distinct sentinels, same reason as every line above.
+  "special.bountyGold": "6100",
+  "special.bountyXp": "260",
+  "special.bountyLevels": "9",
+  "special.lastHitMultiplier": "1.5",
+  "special.lastHitMode": "weight",
+  "special.splitByDamage": "0",
+  "special.countOverkill": "1",
 };
 
 const SAVE = "儲存 Save";

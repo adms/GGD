@@ -94,6 +94,17 @@ export {
   type ChampionFormPair,
   type PerLevelSeconds,
 } from "./championForms";
+// #249 GH#288 —— 變身「看得出來」:tint / scale / 球體掛件,全部後台可調。
+export {
+  resolveFormVisual,
+  authoredFormVisual,
+  NEUTRAL_FORM_VISUAL,
+  FORM_TINT_NEUTRAL,
+  FORM_ATTACH_DEFAULT_BONE,
+  FORM_VISUAL_BOUNDS,
+  type FormVisual,
+  type FormAttachment,
+} from "./championFormVisuals";
 // 「變身前/後共用就好」 (owner 2026-07-26): a base and its alternate are ONE
 // character, so one generated voice pack serves both halves of a w3x form pair.
 export {

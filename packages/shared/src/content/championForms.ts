@@ -336,8 +336,15 @@ export const CHAMPION_FORM_PAIRS: readonly ChampionFormPair[] = [
     alternateUnitRawcode: "U011",
     abilityRawcode: "Aphx",
     abilityName: "61-00百連我殺 效果",
-    // DEATH-STATE MORPH — `adur` is 0.01s (an instant swap), no hero duration.
-    durationSec: {},
+    // 鳳凰蛋. The old comment here read 「`adur` is 0.01s (an instant swap), no
+    // hero duration」 and was FALSE — it conflated the two duration fields.
+    // `adur` (unit duration) really is 0.01s, but `ahdu` (HERO duration) is 10s,
+    // and `ahdu` is the one that governs a hero morph. It read as absent only
+    // because `extract_transform_forms.py` did not resolve the value through the
+    // MPQ, so the fixture shipped `durationSecByLevel: {}` and this table copied
+    // the hole — comment, extractor, fixture and table all self-consistently
+    // wrong (CLAUDE.md rule 3). The extractor now reads it; 10s is the map's.
+    durationSec: { 1: 10 },
     cooldownSec: {},
     baseInContent: true,
     alternateInContent: true,
