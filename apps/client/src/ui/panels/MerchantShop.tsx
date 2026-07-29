@@ -67,7 +67,7 @@ import {
   formatStatDelta,
   isVisibleDelta,
 } from "./statDisplay";
-import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
+import { attrBonusFromArray, statPathView } from "@ggd/shared/sim/economy/statPath";
 import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
@@ -79,7 +79,6 @@ import {
   statContextFromSeat,
   type ItemPreview,
 } from "./statPreview";
-import { STAT_TICK_TARGET } from "@ggd/shared/sim/economy/itemTiers";
 import {
   CLOSE_SFX,
   OPEN_SFX,
@@ -706,7 +705,6 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
           authMaxMana={props.localMaxMana}
           level={seat.level}
           statStacks={seat.statStacks}
-          statTarget={STAT_TICK_TARGET}
           capstonePct={seat.statCapstonePct}
           championId={seat.championId}
           attrBonus={seat.attrBonus}
@@ -794,9 +792,21 @@ export function StatPanel(props: {
   authMaxMana: number;
   /** hero level — the header number the owner asked for. */
   level: number;
-  /** 屬性強化 purchase COUNT and target (「次數」), and whether the path is live. */
+  /**
+   * 屬性強化 progress, EXACTLY as the wire carries it (`SeatView.statStacks` /
+   * `SeatView.statCapstonePct`). The panel does NOT take a target, a
+   * "remaining" or a "live" flag: it hands these two raw numbers to the shared
+   * {@link statPathView} and renders what comes back (#211).
+   *
+   * ⚠️ WHY THE RAW PAIR AND NOT A PRE-CHEWED VIEW. `statPathSnapshotOf`
+   * (sim/stats/matchLedger) says in its own doc that it hands the champion's
+   * two fields to 「商店面板呼叫的同一支 statPathView」 — and until #211 that
+   * sentence was false: the shop divided `statStacks` by an imported
+   * `STAT_TICK_TARGET` and re-derived 「still live」 as `capstonePct > 0` by
+   * hand. Two hand-rolled rules beside one shared function is precisely how the
+   * shop comes to show 3/20 while a report shows 11/20 and both sound certain.
+   */
   statStacks: number;
-  statTarget: number;
   capstonePct: number;
   /** the hero, so the 三圍 rows can read its own 力/敏/智 at this level (#260). */
   championId: string;
@@ -804,6 +814,10 @@ export function StatPanel(props: {
   attrBonus?: readonly number[];
 }): React.JSX.Element {
   const { block, base, preview, exact } = props;
+  // #211 N/20 — ONE derivation, shared with the sim. Every number and every
+  // branch below (target, remaining, at-risk, still-live) is READ off this
+  // object; nothing about the stat path is decided in this file.
+  const path = statPathView(props.statStacks, props.capstonePct);
   // 三圍 (#260) — 「力敏智三屬性也要顯示在 SHOP 的玩家角色屬性表」. Read through
   // the SHARED `championAttribute` (statDisplay.attributeRows), so this row and
   // the sim's own base-stat maths are one number with one definition.
@@ -925,20 +939,26 @@ export function StatPanel(props: {
         {/* 次數 — how many 屬性強化 have been bought, out of the 20 that earn
             傳說·萬象強化. It lived only in the round report before; a player
             deciding whether to spend the next 375g is reading THIS panel. */}
-        {props.capstonePct > 0 ? (
+        {!path.live ? (
           <span style={{ fontSize: 10, color: "#f2a13c", fontVariantNumeric: "tabular-nums" }}>
-            屬性強化 傳說已達成 +{props.capstonePct}%
+            屬性強化 傳說已達成 +{path.capstonePct}%
           </span>
         ) : (
           <span
             style={{ fontSize: 10, color: TEXT_DIM, fontVariantNumeric: "tabular-nums" }}
+            // `atRisk` had NO consumer anywhere in the client before #211 —
+            // statPathView computes 「買一件道具現在會毀掉幾層」 and the shop,
+            // the one screen where that click happens, was re-deriving the
+            // warning from `statStacks > 0` instead. Reading the field is what
+            // makes the reset rule 「歸零」 a fact the panel owns rather than a
+            // sentence it repeats.
             title={
-              props.statStacks > 0
-                ? `已購買 ${props.statStacks} 次 —— 買任何一般道具都會把它歸零`
-                : "累積 20 次可獲得 傳說·萬象強化"
+              path.atRisk > 0
+                ? `已購買 ${path.atRisk} 次 —— 買任何一般道具都會把它歸零，還差 ${path.remaining} 次`
+                : `累積 ${path.target} 次可獲得 傳說·萬象強化`
             }
           >
-            屬性強化 {props.statStacks} / {props.statTarget} 次
+            屬性強化 {path.stacks} / {path.target} 次
           </span>
         )}
         {!exact && (

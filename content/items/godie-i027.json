@@ -30,13 +30,17 @@
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.25,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 185
-          }
+            "flat": 275
+          },
+          "radius": 6.0,
+          "maxTargets": 8,
+          "includeOrigin": true
         }
       ]
     }

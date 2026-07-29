@@ -44,7 +44,9 @@ import { roomRegistry } from "./roomRegistry";
 import { verifyCreateToken } from "./createGate";
 import { MatchRecorder } from "../replay/Recorder";
 import { buildHeader } from "../replay/headerCodec";
+import { buildStamp } from "../replay/fingerprint";
 import { activeContentVersion } from "../replay/Player";
+import { MatchStatsRecorder } from "../analytics/Recorder";
 
 export interface MatchRoomOptions {
   matchId?: string;
@@ -233,6 +235,8 @@ export class MatchRoom extends Room<MatchState> {
    * opened; a broken recording never breaks a game.
    */
   private recorder: MatchRecorder | null = null;
+  /** #207 對戰統計的寫檔端;null = 這一場不記(功能關掉 / 開檔失敗)。 */
+  private statsRecorder: MatchStatsRecorder | null = null;
 
   override async onAuth(client: Client, options: Record<string, unknown>): Promise<boolean> {
     // Defense-in-depth: when a shared secret is configured, joins must carry a
@@ -489,6 +493,27 @@ export class MatchRoom extends Room<MatchState> {
     );
     this.ctl.recorder = this.recorder;
 
+    // #207 對戰事件記錄。和回放**分開的一份檔**,理由寫在 analytics/format.ts
+    // 檔頭:回放記的是輸入(它刻意不記結果),而這個專案量到的現況是 95 個回放
+    // 檔裡只有 7 筆 championId、全部是小怪 —— 所有平衡決策都是憑感覺。
+    // 同樣在 tick loop 開始前開好,所以第 1 回合的結算就寫得到。
+    this.statsRecorder = await MatchStatsRecorder.open(matchId, {
+      matchId,
+      startedAt: new Date().toISOString(),
+      seed,
+      contentVersion: activeContentVersion(),
+      buildStamp: buildStamp(),
+      arenaId: arena.id,
+      seats: [...this.ctl.seats.values()].map((s) => ({
+        seatId: s.seatId,
+        teamId: s.teamId,
+        accountId: s.accountId,
+        displayName: s.displayName,
+        isBot: specs.find((sp) => sp.seatId === s.seatId)?.isBot ?? true,
+      })),
+    });
+    this.ctl.statsSink = this.statsRecorder;
+
     this.onMessage(MSG.INPUT, (client, raw: unknown) => {
       // Per-session rate limit (DoS: message-flood). A sustained flood is
       // dropped and, past the strike threshold, the session is disconnected.
@@ -725,6 +750,12 @@ export class MatchRoom extends Room<MatchState> {
     this.recorder = null;
     this.ctl.recorder = null;
     void rec?.abandon();
+    // #207:同樣的道理 —— 一場打到第 6 回合斷線的比賽,那 6 個回合已經寫在
+    // 磁碟上而且完整可讀。沒有 final 行就是「這場沒打完」的判斷依據。
+    const stats = this.statsRecorder;
+    this.statsRecorder = null;
+    this.ctl.statsSink = null;
+    void stats?.abandon();
   }
 
   private async finishMatch(): Promise<void> {
@@ -743,6 +774,21 @@ export class MatchRoom extends Room<MatchState> {
         await rec.finish(this.ctl);
       } catch (err) {
         console.error(`[replay] failed to seal the recording for ${this.ctl.matchId}`, err);
+      }
+    }
+
+    // #207 統計檔也在這裡封口 —— 在 `settleToPlatform()` 之前。平台回呼會走
+    // 網路,它慢下來(或完全打不通,這在 dev 是常態)不該讓一份已經完整的統計
+    // 停在半空中等著。`ctl.settlement` 是上面 `maybeFinish` 建好的,所以團隊
+    // 積分這時候已經在帳本裡了。
+    const stats = this.statsRecorder;
+    this.statsRecorder = null;
+    this.ctl.statsSink = null;
+    if (stats) {
+      try {
+        await stats.finish(this.ctl);
+      } catch (err) {
+        console.error(`[match-stats] failed to seal the record for ${this.ctl.matchId}`, err);
       }
     }
 

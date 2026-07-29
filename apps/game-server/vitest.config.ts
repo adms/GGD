@@ -10,5 +10,8 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.ts"],
+    // #207 —— 測試預設不往 `data/match-stats/` 寫檔。理由寫在檔案裡:
+    // `data/replays/` 已經被測試產物淹過一次(95 個檔,只有 7 筆 championId)。
+    setupFiles: ["src/analytics/testSetup.ts"],
   },
 });

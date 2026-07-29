@@ -15,6 +15,7 @@ import type {
   ArenaDoc,
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
+  ConfigVfxFamiliesDoc,
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
   FormVisual,
@@ -23,6 +24,9 @@ import type {
 import { Arenas, Configs, Models, RibbonDefs, VfxDefs, resolveFormVisual } from "@ggd/shared/content";
 import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
 import { applyGoreDoc } from "../vfx/goreConfig";
+// GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
+// render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
+import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
 
@@ -45,6 +49,14 @@ interface IndexFile {
  */
 export interface StandInOverride {
   relativeScale?: number;
+  /**
+   * Task #77 — the multiplier for the champion's STAND-IN body. Declared here
+   * only so the type describes the file honestly; the loader below stores each
+   * entry object exactly as authored, so `usca` / `mapModel` (provenance the
+   * guards read straight off the JSON) ride through whether or not they are
+   * named in this interface.
+   */
+  standinRelativeScale?: number;
   scale?: number;
   glbPath?: string;
   clipMap?: ModelDoc["clipMap"];
@@ -215,6 +227,13 @@ export class ContentDb {
     // overrides into the vfx layer. A missing doc leaves the shipped default
     // (blood @ 0.85) — the player's own setting still wins over both.
     applyGoreDoc(this.configDoc<ConfigGoreDoc>("gore", "config.gore@1"));
+    // GH#230 L2 —— 21 個 w3x 特效家族原型 + 258 支技能的 per-invocation 參數。
+    // 沒有這一行,`content/config/vfx-families.json` 就是一份沒人讀的檔案:
+    // 後台改了大小/顏色/開關,場上完全不會變(第②號故障:算出來但從沒送到)。
+    // 傳 null(檔案不存在或 schema 不合)= 用 code 內的出貨預設,不是「關掉」。
+    setFamilyTuning(
+      this.configDoc<ConfigVfxFamiliesDoc>("vfx-families", "config.vfx-families@1"),
+    );
 
     // GH#31 —— the operator's per-champion BODY choice (voxel vs its own 3D
     // model). Read from the `config` collection, not from a sidecar, precisely

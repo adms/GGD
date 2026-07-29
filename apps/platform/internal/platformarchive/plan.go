@@ -194,6 +194,12 @@ func BuildPlan(a *Archive, t *Target, opts PlanOptions) (*Plan, error) {
 	// commit. It warns and never blocks — see overlaygate.go for why.
 	p.warnAboutArchivedOverlay(a)
 
+	// Same treatment for the #207 覆盤帳本: the dry run names the records the
+	// write gate will quarantine or trim, so "the review screen is missing
+	// three matches" is a sentence the operator read BEFORE the import rather
+	// than a discovery weeks later. Warns, never blocks — see statsgate.go.
+	p.warnAboutArchivedStats(a)
+
 	// Replay writability is probed HERE, not halfway through the copy: the
 	// directory belongs to the game-server and compose bind-mounts it
 	// separately, and a silent EACCES on that path has bitten this repo before.

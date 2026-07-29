@@ -33,6 +33,17 @@ import { Configs, Models } from "@ggd/shared/content";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import { grade, perMatchRanks, rankScore, survivalBonus, type RankEntry } from "@ggd/shared/sim/stats/rating";
+import {
+  MatchLedger,
+  createRoundPlayerRecord,
+  diffMatchStats,
+  gradeRoundRecord,
+  statPathSnapshotOf,
+  type CastHandle,
+  type LineupSide,
+  type OfferKind,
+  type RoundPlayerRecord,
+} from "@ggd/shared/sim/stats/matchLedger";
 import type {
   MatchSettlement,
   RoundStatDelta,
@@ -165,6 +176,26 @@ export interface MatchRecorderSink {
   onIntent(tick: number, seatId: SeatId, frame: IntentFrame): void;
   onDriverSwap(tick: number, seatId: SeatId, kind: "human" | "ai"): void;
   onTickEnd(ctl: MatchController): void;
+}
+
+/**
+ * 對戰統計的**寫出去**那一端 (#207)。
+ *
+ * ⚠️ 這個介面存在的唯一理由,就是 #207 最容易犯的那一種故障:**算出來了但從
+ * 沒送達**。`ctl.ledger` 是記憶體裡的累積器,它一直都會是對的 —— 一場打完裡面
+ * 躺著完整的選角/技能/三選一/名次,而如果沒有人把它寫出去,那些資料在
+ * `onDispose` 的那一毫秒全部消失,而**沒有任何測試會發現**,因為每一條讀
+ * `ctl.ledger` 的斷言都還是綠的。
+ *
+ * 所以斷言必須讀**檔案**(analytics.test.ts 全部從 `loadMatchStats()` 讀回
+ * 來),而這個介面把「寫」隔成一個可以被拔掉的東西 —— 拔掉它,那些測試才會紅。
+ *
+ * 和 {@link MatchRecorderSink} 同一個形狀:欄位可為 null,沒接的時候每一個
+ * 呼叫點都是一個 `?.`,tick path 與這個功能不存在時位元相同。
+ */
+export interface MatchStatsSink {
+  /** 一個回合結算完(`concludeCombat` 之後、`settleRound` 之前的那一份 delta)。 */
+  onRoundSettled(ctl: MatchController, round: number, roundTicks: number): void;
 }
 
 /**
@@ -428,6 +459,49 @@ export class MatchController {
    */
   recorder: MatchRecorderSink | null = null;
 
+  /**
+   * 這一場的**分析帳本** (#207) —— 選角 / 陣容 / 每一次技能施放 / 道具 / 三選一
+   * (含沒選的那兩張) / 每回合成績 / 團隊積分。barrier lane 定義,三個消費端
+   * (#207 後台覆盤、#211 商店 N/20、#212 回合勝利畫面)共用同一份型別。
+   *
+   * 它**不在 SimWorld 裡**,這是刻意的:它記的是 host 才知道的事(champ-select
+   * 什麼時候開的、玩家有沒有按隨機、三選一的哪兩張沒被選),塞進 world state 會
+   * 讓 `digest()` 開始依賴 host 的節奏,而 client 的預測影子沒有這些事件 —— 那
+   * 是一條保證 desync 的路。代價是決定性由這裡負責:下面每一支
+   * `ledger.*` 都傳**絕對 tick**(事件自己帶的 `ev.tick`,不是 `Date.now`)。
+   *
+   * 一直存在、一直累積,即使 {@link statsSink} 是 null(單元測試)。累積是免費
+   * 的(幾個陣列 push),而「只有正式伺服器才記」會讓測試永遠測不到記的內容。
+   */
+  readonly ledger: MatchLedger;
+
+  /**
+   * 把 {@link ledger} 寫到磁碟的那一端,null = 這一場不寫(單元測試、回放播放)。
+   * 見 {@link MatchStatsSink} —— 它被抽成一個介面就是為了「拔掉它會紅」。
+   */
+  statsSink: MatchStatsSink | null = null;
+
+  /** 上一次回合結算時的累積計分板,用來對 `diffMatchStats` 相減出這一回合。 */
+  private readonly lastLedgerStats = new Map<SeatId, PlayerMatchStats>();
+  /** 上一次回合結算時的累積小怪擊殺數(`world.mobKills` 不在 matchStats 裡)。 */
+  private readonly lastLedgerMobKills = new Map<SeatId, number>();
+  /** 這一回合每個座位打死的王 / 特殊怪(`mobBossSlain`),每回合開打時歸零。 */
+  private readonly roundBossKills = new Map<SeatId, number>();
+  /** 一個座位手動鎖定英雄的絕對 tick;沒有 = 從未鎖定(系統代選)。 */
+  private readonly pickLockTick = new Map<SeatId, number>();
+  /**
+   * 每個 (座位, 技能) **最近一次**施放的 handle。後到的傷害/治療掛回那一次。
+   *
+   * ⚠️ 已知且刻意的近似:同一個座位在自己的 DoT 還在跳的時候再放一次同一支
+   * 技能,後面那些 tick 會記到**第二次**施放身上。要精確歸屬得讓 sim 的
+   * damage packet 帶 castId,而 `packages/shared` 不在這一批的可動範圍。影響
+   * 面是「單次施放的效益」這一欄,聚合值(`aggregateAbilityUse`)不受影響 ——
+   * 總量仍然是對的,只是分配到哪一次施放可能偏。
+   */
+  private readonly castByAbility = new Map<string, CastHandle>();
+  /** 這一回合戰鬥開始的絕對 tick —— `RoundGradeContext.roundTicks` 的減數。 */
+  private combatStartTick = 0;
+
   private specs = new Map<SeatId, SeatSpec>();
   private duelWinners = new Map<number, TeamId>(); // zone -> winner this round
 
@@ -543,6 +617,9 @@ export class MatchController {
     combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
   ) {
     this.matchSeed = seed;
+    // #207 的分析帳本。matchId 是它唯一的建構參數,而且它從第 0 tick 就存在 ——
+    // champ-select 的 `selectOpenTick` 是 tick 0,晚一點建立就記不到那件事。
+    this.ledger = new MatchLedger(matchId);
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
@@ -615,6 +692,10 @@ export class MatchController {
     // "always at least the free roster" floor is never turned into a dead seat.
     if (!this.ownership.owns(seat.accountId, championId)) return { ok: false, reason: "not-owned" };
     seat.championId = championId;
+    // #207 選角紀錄的 `lockTick`。記在**成功**的那一支上,所以被拒的選取
+    // (非白名單 / 未擁有 / 錯的階段)不會留下一個假的鎖定時間。改選會覆蓋 ——
+    // 「決定花了多久」問的是最後那一次決定,不是第一次動念。
+    this.pickLockTick.set(seatId, this.world.tick);
     return { ok: true };
   }
 
@@ -704,7 +785,10 @@ export class MatchController {
       // This is what keeps a player who let the champ-select clock run out from
       // spawning into a confusing dead/spectator state (0 HP, ☠觀戰中) in round 1
       // — they drop in ALIVE as a real character instead (#130).
-      if (!this.isEnabledSpawnablePick(seat.championId, seat.accountId)) {
+      // #207:「這隻英雄是**怎麼**到手的」。在重擲之前先看一眼 —— 重擲之後
+      // `seat.championId` 就是系統選的那一隻,分不出玩家有沒有選過。
+      const lockedManually = this.isEnabledSpawnablePick(seat.championId, seat.accountId);
+      if (!lockedManually) {
         // The random draw is over the whitelisted pool INTERSECTED with this
         // account's owned set, so a random/timed-out pick can never land on a
         // locked champion (task #201). If ownership would empty the pool (a
@@ -726,6 +810,32 @@ export class MatchController {
         teamId: seat.teamId,
         pos: spawn,
         zone,
+      });
+      // #207 選角紀錄。寫在這裡而不是 `selectChampion`,因為這裡才是**每一個
+      // 座位的英雄定案**的唯一一點:沒選的、選了但被白名單/擁有權擋掉的、
+      // 選了而且過關的,三種都從這一行走過去。寫在 selectChampion 只會記到
+      // 第三種,而「有多少人根本沒選」正是這份資料要回答的問題之一。
+      //
+      // ⚠️ `source` 今天只可能是 "manual" / "auto"。barrier lane 的 schema 有
+      // 第三種 "random"(玩家自己按隨機鈕),但 `SelectChampionMessage` 上只有
+      // 一個 `championId` —— 客戶端的隨機鈕自己抽完之後送的是一樣的訊息,伺服
+      // 器**分不出來**。要分得出來得在 protocol 上加一個旗標,那在
+      // `packages/shared`,不在這一批的可動範圍。記在這裡免得有人日後看到
+      // `randomPicks: 0` 以為是沒人按。
+      this.ledger.recordPick({
+        seatId,
+        teamId: seat.teamId,
+        // champ-select 的出生區。**不是**每回合的對戰區 —— 那個每回合會變,
+        // 記在 `RoundPlayerRecord.zone`。
+        zone,
+        championId: seat.championId,
+        source: lockedManually ? "manual" : "auto",
+        // champ-select 從第 0 tick 就開著(PhaseMachine 的起始階段),所以開啟
+        // 時間是 0 而不是某個要另外記的東西。
+        selectOpenTick: 0,
+        // 從未鎖定 → -1(**不是 0**:第 0 tick 鎖定是真的會發生的事,而 0 在
+        // 平均值裡會被讀成「秒選」,和「完全沒選」意思相反)。
+        lockTick: lockedManually ? (this.pickLockTick.get(seatId) ?? -1) : -1,
       });
       // Starting gold. 600, not 500 (task #82 found the drift): every design
       // document — the shop pacing, starter.go's `startingGold`, the 7600g
@@ -994,7 +1104,26 @@ export class MatchController {
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
+    // #207:一張走到這裡還沒被解決的卡,是「發了但沒有人拿」。今天 #207 的過期
+    // 安全網會在中場結束時把每一張都自動選掉,所以這個迴圈**正常情況下是空
+    // 的** —— 它在的理由是:哪天安全網被繞過(skipPhase 作弊、fault failsafe
+    // 強制推進階段),那三張卡的存在會被記下來而不是憑空消失。picked=null 的
+    // 紀錄讓 `offered = picked + autoPicked + declined` 這條等式仍然成立。
+    for (const offer of this.offers.values()) {
+      this.ledger.recordOffer({
+        seatId: offer.seatId,
+        round: this.phase.round,
+        tick: this.world.tick,
+        kind: MatchController.offerKindOf(offer),
+        offered: [...offer.choices],
+        picked: null,
+        auto: false,
+      });
+    }
     this.offers.clear();
+    // 這一回合的戰鬥從這一 tick 開始 —— `RoundGradeContext.roundTicks` 的減數。
+    this.combatStartTick = this.world.tick;
+    this.roundBossKills.clear();
     this.duelWinners.clear();
     // …and the sim's mirror of it (#216): every zone is UNDECIDED again, so the
     // fire ring burns and the mob waves arrive in all of them from tick 0.
@@ -1666,6 +1795,11 @@ export class MatchController {
     // — the two halves of one payload disagreeing. roundHistory.test.ts pins
     // this by summing an elimination payload's rounds against its own totals.
     this.recordRoundHistory();
+    // #207:同一個瞬間、同一個理由(見上)。`recordRoundHistory` 之後才跑,是
+    // 因為兩者都讀 world.matchStats 的**同一個**累積值,而 settleRound 之後就
+    // 不是「戰鬥剛結束」了。兩份 delta 各自維護自己的減數(`lastRoundCumulative`
+    // vs `lastLedgerStats`),所以誰先誰後不影響對方的數字。
+    this.recordLedgerRound();
     this.settleRound();
     this.world.combatActive = false;
     // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the
@@ -1818,6 +1952,12 @@ export class MatchController {
       p.score = rankScore(entries[i]!, lobby);
       p.survivalBonus = survivalBonus(entries[i]!);
     });
+    // #212 團隊累積積分 → 帳本。餵的是**同一批** RankEntry,所以隊伍分是成員
+    // 結算分的和,而不是另一條路推出來的第二個數字(回合畫面和結算畫面對不上
+    // 的時候,玩家會相信比較大的那一個)。
+    this.ledger.setTeamScores(
+      players.map((p, i) => ({ ...entries[i]!, seatId: p.seatId, teamId: p.teamId })),
+    );
     let winnerTeam = -1;
     for (const [teamId, place] of this.placements) if (place === 1) winnerTeam = teamId;
     // DEEP-COPIED per round, not handed out by reference: the elimination path
@@ -1866,9 +2006,43 @@ export class MatchController {
     return h % n;
   }
 
-  /** Apply an offer pick (augment or free item) and consume the offer. */
-  private applyPick(offerId: string, offer: StoredOffer, choiceIdx: number): void {
+  /**
+   * 一個 StoredOffer 的三選一種類,barrier lane 的 {@link OfferKind} 說法。
+   *
+   * `reservesSlot` 是 傳說寶玉 卡的標記(#82:它從擲出那一刻就佔住一個道具
+   * 格),而它在 host 裡是以 `kind: "item"` 存的 —— 和第 2/5 回合免費武器卡
+   * 同一個形狀。分析上這兩者**完全不是同一件事**(一個是花 2400g 抽的,一個是
+   * 白送的),混成一格會讓「傳說寶玉值不值得買」永遠算不出來。
+   */
+  private static offerKindOf(offer: StoredOffer): OfferKind {
+    if (offer.reservesSlot) return "legendary";
+    return offer.kind;
+  }
+
+  /**
+   * Apply an offer pick (augment or free item) and consume the offer.
+   *
+   * `auto` = 這一次不是玩家的意思(AI 座位的自動選、或 #207 的過期安全網)。
+   * 它必須傳進來而不是在這裡推導:同一支 `applyPick` 兩個呼叫點,一個是玩家
+   * 的 `pickOffer` 事件、一個是 `advancePhase` 的安全網,而「選取率」把這兩種
+   * 混在一起就是一半的樣本是隨機數 —— 隨機數的選取率沒有任何意義。
+   */
+  private applyPick(offerId: string, offer: StoredOffer, choiceIdx: number, auto: boolean): void {
     const choice = offer.choices[choiceIdx] ?? offer.choices[0]!;
+    // #207:記在 apply 的入口,**在任何一條 return 之前**。下面 attr 那一支
+    // (`applyAttrPick`)是有可能失敗的,但卡片已經被消耗掉了(這個方法無條件
+    // `offers.delete`),所以那仍然是「這張被選走了」。
+    this.ledger.recordOffer({
+      seatId: offer.seatId,
+      round: this.phase.round,
+      tick: this.world.tick,
+      kind: MatchController.offerKindOf(offer),
+      offered: [...offer.choices],
+      picked: choice,
+      auto,
+      // `declined` 由 recordOffer 自己從 offered − picked 推導 —— 呼叫端不算,
+      // 不然「沒選的那兩張」會有兩個版本。
+    });
     if (offer.kind === "item") {
       // A 傳說寶玉 card holds an inventory slot from the moment it is rolled
       // (task #82). Release it FIRST so the grant below can use the very slot
@@ -2141,6 +2315,280 @@ export class MatchController {
     return this.phase.phase;
   }
 
+  // ---------- #207 對戰事件記錄 ----------
+
+  /**
+   * 這個 entityId 屬於哪個**真的座位**;不是座位(小怪、召喚物、守衛、花)回
+   * null。
+   *
+   * 讀 `world.team.get(id).seatId` 而不是掃 `this.seats` —— 那是 sim 自己寫的
+   * 那一份(`spawnChampion` 設,小怪是 `seatId: -1`),而且它是 O(1)。再對
+   * `this.seats` 驗一次,因為變身/換英雄的作弊路徑會換掉 entityId。
+   */
+  private seatOfEntity(id: EntityId): SeatId | null {
+    const seatId = this.world.team.get(id)?.seatId;
+    if (seatId === undefined || (seatId as number) < 0) return null;
+    const seat = this.seats.get(seatId);
+    return seat && seat.entityId === id ? seatId : null;
+  }
+
+  /** `ability:<id>` 這種 origin 帶的技能 id;不是技能傷害回 null。 */
+  private static abilityOfOrigin(origin: unknown): string | null {
+    if (typeof origin !== "string") return null;
+    const ix = origin.indexOf("ability:");
+    return ix < 0 ? null : origin.slice(ix + "ability:".length);
+  }
+
+  private castKey(seatId: SeatId, abilityId: string): string {
+    return `${seatId as number}:${abilityId}`;
+  }
+
+  /**
+   * 一個 sim 事件 → 帳本。**唯讀觀察者**:它不改任何 world / 控制器狀態,除了
+   * 自己的幾張表,所以 digest 不動、回放不變。
+   *
+   * ⚠️ 這裡只認**已經存在**的事件。沒有為統計新增任何 emit —— `packages/shared`
+   * 不在這一批的可動範圍,而且新增 emit 會動到 client 的事件扇出。代價寫在下面
+   * 各分支的註解裡,不要事後當成「本來就這樣」。
+   */
+  private ledgerObserve(type: string, tick: number, data: Record<string, unknown>): void {
+    switch (type) {
+      case "abilityCast": {
+        const seatId = this.seatOfEntity(data.caster as EntityId);
+        if (seatId === null) return;
+        const abilityId = String(data.abilityId ?? "");
+        if (!abilityId) return;
+        const handle = this.ledger.beginCast({
+          seatId,
+          round: this.phase.round,
+          tick,
+          abilityId,
+          slot: String(data.slot ?? ""),
+        });
+        // 後到的傷害/治療掛回**最近一次**同座位同技能的施放,見
+        // {@link castByAbility} 的已知近似說明。
+        this.castByAbility.set(this.castKey(seatId, abilityId), handle);
+        return;
+      }
+      case "damage": {
+        const seatId = this.seatOfEntity(data.source as EntityId);
+        if (seatId === null) return;
+        const target = data.target as EntityId;
+        const targetIsHero = this.seatOfEntity(target) !== null;
+        const targetIsMob = this.world.mob.has(target);
+        // 守衛塔 / 花 / 復活圈既不是英雄也不是小怪 —— 兩欄都不加,而不是隨便
+        // 塞進小怪那一欄。「對小怪的傷害」被守衛塔灌水的話,殭屍波的平衡數字
+        // 就沒有意義了。
+        if (!targetIsHero && !targetIsMob) return;
+        const abilityId = MatchController.abilityOfOrigin(data.origin);
+        if (abilityId === null) return; // 普攻不開 cast 列,見下面 basicAttack 的說明
+        const handle = this.castByAbility.get(this.castKey(seatId, abilityId));
+        if (handle === undefined) return;
+        const amount = Number(data.amount ?? 0);
+        this.ledger.creditCast(handle, {
+          heroHits: targetIsHero ? 1 : 0,
+          mobHits: targetIsMob ? 1 : 0,
+          damageToHeroes: targetIsHero ? amount : 0,
+          damageToMobs: targetIsMob ? amount : 0,
+          // `killingBlow` 是 damage packet 自己標的「這一發把血打到 0」——
+          // 從 `death` 事件反推的話拿不到是哪一支技能收的尾。
+          heroKills: targetIsHero && data.killingBlow === true ? 1 : 0,
+        });
+        return;
+      }
+      case "heal": {
+        const seatId = this.seatOfEntity(data.source as EntityId);
+        if (seatId === null) return;
+        const abilityId = MatchController.abilityOfOrigin(data.origin);
+        if (abilityId === null) return;
+        const handle = this.castByAbility.get(this.castKey(seatId, abilityId));
+        if (handle === undefined) return;
+        this.ledger.creditCast(handle, { healingDone: Number(data.amount ?? 0) });
+        return;
+      }
+      case "itemBought":
+      case "itemSold": {
+        const seatId = this.seatOfEntity(data.id as EntityId);
+        if (seatId === null) return;
+        // 金額讀 `champ.undoStack` 最上面那一筆 —— 那是 shop.ts **實際套用**的
+        // goldDelta(買 = −cost,賣 = 已 floor 的 40% 退款)。重新從
+        // `Items.get(itemId).cost` 推導會在 floor 的地方和真正扣的錢差一塊,
+        // 而 #121 的 undo 正是為了「永遠是同一個數字」才把它存起來的。
+        const champ = this.world.champion.get(data.id as EntityId);
+        const txn = champ?.undoStack[champ.undoStack.length - 1];
+        this.ledger.recordItemTxn({
+          seatId,
+          round: this.phase.round,
+          tick,
+          kind: type === "itemBought" ? "buy" : "sell",
+          itemId: String(data.itemId ?? ""),
+          // 只有最上面那一筆真的是**這一次**交易時才採用它的金額。commitShop
+          // Session 會在戰鬥開始清空 undoStack,所以「有事件但沒有 txn」是可能
+          // 的(理論上不該發生,但 0 比一個別人的金額誠實)。
+          goldDelta: txn !== undefined && txn.itemId === data.itemId ? txn.goldDelta : 0,
+        });
+        return;
+      }
+      case "shopUndone": {
+        const seatId = this.seatOfEntity(data.id as EntityId);
+        if (seatId === null) return;
+        // 撤銷一筆購買 (#121)。schema 的 kind 只有 buy/sell/grant,所以撤銷記
+        // 成**反向的那一種**:撤銷買 = 道具離開背包、錢回來 = 一筆 sell;撤銷
+        // 賣 = 道具回來、錢付出去 = 一筆 buy。這是刻意的取捨,說在這裡免得日後
+        // 有人看到「賣出次數」偏高以為是玩家愛賣東西 —— 讀的人要扣掉撤銷。
+        // 好處是金流仍然守恆:把所有 goldDelta 加起來就是這一場道具花掉的淨額。
+        this.ledger.recordItemTxn({
+          seatId,
+          round: this.phase.round,
+          tick,
+          kind: data.kind === "buy" ? "sell" : "buy",
+          itemId: String(data.itemId ?? ""),
+          goldDelta: 0, // 精確金額在 sim 內部被 pop 掉了;淨額由原始那筆 + 這筆抵銷
+        });
+        return;
+      }
+      case "itemPicked":
+      case "gachaItem": {
+        // 三選一發的 / 抽卡發的 —— 沒花錢,goldDelta 0。
+        const entity = (data.entity ?? data.id) as EntityId;
+        const seatId = this.seatOfEntity(entity);
+        if (seatId === null) return;
+        this.ledger.recordItemTxn({
+          seatId,
+          round: this.phase.round,
+          tick,
+          kind: "grant",
+          itemId: String(data.itemId ?? ""),
+          goldDelta: 0,
+        });
+        return;
+      }
+      case "mobBossSlain": {
+        // 殭屍王 / 特殊殭屍的最後一擊。`RoundPerformance.bossKills` 的來源 ——
+        // `world.mobKills` 只數一般小怪,不分王。
+        const seatId = data.killerSeatId as number;
+        if (typeof seatId !== "number" || seatId < 0 || !this.seats.has(asSeatId(seatId))) return;
+        const key = asSeatId(seatId);
+        this.roundBossKills.set(key, (this.roundBossKills.get(key) ?? 0) + 1);
+        return;
+      }
+      default:
+        // 普攻(`basicAttack` / `basicAttackHit`)刻意**不開 cast 列**:一場
+        // 12 人 10 回合會多出幾萬列,而它問的問題(命中率/輸出)`PlayerMatchStats`
+        // 的 `basicAttackHits` 已經答了。cast 列是給「這一支技能值不值得放」用的。
+        return;
+    }
+  }
+
+  /**
+   * 一個回合結算完 → 帳本的陣容 + 每個座位的成績,然後**寫出去**。
+   *
+   * 從 `concludeCombat` 呼叫,在 `recordRoundHistory` 之後、`settleRound`
+   * 之前 —— 和 #173 選的是同一個瞬間,理由也一樣:settleRound 會扣團隊生命、
+   * 可能觸發淘汰結算,那之後再讀就不是「戰鬥剛結束的那一刻」了。
+   */
+  private recordLedgerRound(): void {
+    const round = this.phase.round;
+    const roundTicks = Math.max(0, this.world.tick - this.combatStartTick);
+
+    // ── 陣容(成對才有意義)────────────────────────────────────────────
+    // ⚠️ 決賽(royale)沒有陣容紀錄。`ZoneLineupRecord` 的形狀是**兩方**,而
+    // 決賽是四隊同場混戰 —— 硬拆成兩兩對戰會捏造出六場從來沒發生過的對局。
+    // 少一筆真話,好過多六筆假話。決賽每個人的成績仍然在 players 裡。
+    for (const pairing of this.pairings) {
+      const winner = this.duelWinners.get(pairing.zone);
+      const sideOf = (teamId: TeamId): LineupSide => ({
+        teamId,
+        championIds: [...this.seats.values()]
+          .filter((s) => s.teamId === teamId && s.entityId !== null)
+          .map((s) => s.championId),
+        won: winner === teamId,
+      });
+      this.ledger.recordLineup(round, pairing.zone, sideOf(pairing.sideA), sideOf(pairing.sideB));
+    }
+
+    // ── 每個座位這一回合的成績 ─────────────────────────────────────────
+    const zoneOfTeam = new Map<TeamId, number>();
+    for (const p of this.pairings) {
+      zoneOfTeam.set(p.sideA, p.zone);
+      zoneOfTeam.set(p.sideB, p.zone);
+    }
+    if (this.royale) for (const t of this.royale.teams) zoneOfTeam.set(t, this.royale.zone);
+
+    const records: RoundPlayerRecord[] = [];
+    for (const [seatId, seat] of this.seats) {
+      if (seat.entityId === null) continue;
+      const cum = this.world.matchStats.get(seat.entityId) ?? createMatchStats();
+      // 每一欄都是 DELTA。`diffMatchStats` 用 `createMatchStats()` 的 key 全集
+      // 迭代,所以 `PlayerMatchStats` 新增欄位的那一刻它自動涵蓋 —— 手寫這個
+      // 減法漏掉一欄不會有任何測試發現(#173 的教訓)。
+      const prev = this.lastLedgerStats.get(seatId) ?? createMatchStats();
+      const d = diffMatchStats(prev, cum);
+      const hp = this.world.health.get(seat.entityId);
+      const ratio = hp && hp.alive && hp.maxHp > 0 ? hp.hp / hp.maxHp : 0;
+      const mobKillsCum = this.world.mobKills.get(seat.entityId) ?? 0;
+      const path = statPathSnapshotOf(this.world, seat.entityId);
+      records.push(
+        createRoundPlayerRecord({
+          round,
+          seatId,
+          teamId: seat.teamId,
+          zone: zoneOfTeam.get(seat.teamId) ?? -1,
+          championId: seat.championId,
+          // 輪空:這一隊這一回合根本沒被排進任何 zone。所有計數都會是 0,而
+          // 那和「被瞬間團滅」位元相同 —— 消費端必須靠這個旗標分開(#173)。
+          bye: this.roundOutcome.get(seat.teamId) === ROUND_OUTCOME.NONE,
+          kills: d.kills,
+          deaths: d.deaths,
+          assists: d.assists,
+          killParticipation: d.killParticipation,
+          damageDealt: d.damageDealt,
+          damageTaken: d.damageTaken,
+          damageBlocked: d.damageBlocked,
+          healingDone: d.healingDone,
+          ccAppliedTicks: d.ccAppliedTicks,
+          abilityCasts: d.abilityCasts,
+          abilityHits: d.abilityHits,
+          abilityWhiffs: d.abilityWhiffs,
+          mobKills: Math.max(0, mobKillsCum - (this.lastLedgerMobKills.get(seatId) ?? 0)),
+          bossKills: this.roundBossKills.get(seatId) ?? 0,
+          survivedTicks: d.timeAliveTicks,
+          goldEarned: d.goldEarned,
+          xp: d.xp,
+          hpRatio: ratio < 0 ? 0 : ratio > 1 ? 1 : ratio,
+          alive: hp?.alive === true && ratio > 0,
+          // #211 的 N/20 —— 帳本不另外數,直接轉交商店面板呼叫的同一支。
+          statStacks: path.stacks,
+          statTarget: path.target,
+          statCapstonePct: path.capstonePct,
+          placement: 0, // 下面排完才填
+        }),
+      );
+      this.lastLedgerStats.set(seatId, { ...cum });
+      this.lastLedgerMobKills.set(seatId, mobKillsCum);
+    }
+
+    // ── 這一回合的名次 ─────────────────────────────────────────────────
+    // 用 `gradeRoundRecord` 的 score 排 —— 也就是 #232 商店面板要顯示的**同一個
+    // 分數**。另外發明一套排序的話,商店會說你這回合 S,而覆盤報表說你墊底。
+    // 輪空的不排(placement 0);同分照 seatId 升冪,完全決定性。
+    const scored = records
+      .filter((r) => !r.bye)
+      .map((r) => ({ r, score: gradeRoundRecord(r, { roundTicks })?.score ?? 0 }))
+      .sort((a, b) => (b.score !== a.score ? b.score - a.score : a.r.seatId - b.r.seatId));
+    scored.forEach((row, i) => {
+      row.r.placement = i + 1;
+    });
+
+    for (const r of records) this.ledger.recordRound(r);
+    this.roundBossKills.clear();
+
+    // ⚠️ 這一行就是「寫出去」。拿掉它,帳本仍然完整、每一條讀 `ctl.ledger` 的
+    // 斷言仍然全綠,而磁碟上什麼都沒有 —— 那正是 #207 要防的第②種故障。
+    // `analytics.test.ts` 的每一條斷言都從檔案讀回來,所以拿掉它們會紅。
+    this.statsSink?.onRoundSettled(this, round, roundTicks);
+  }
+
   /**
    * Steps 3–4 of a tick: gather seat intents, advance the deterministic sim one
    * fixed step, drain the sim events the controller must act on, and sustain any
@@ -2184,6 +2632,11 @@ export class MatchController {
 
     // 4) drain sim events the controller must act on
     for (const ev of this.world.events) {
+      // #207 的分析帳本先看一眼每一個事件。放在既有分派的**前面**而不是包進
+      // 某一個分支裡:它感興趣的事件(abilityCast / damage / heal / itemBought…)
+      // 和控制器自己要處理的那幾種幾乎不重疊,寫成兩層 if 只會讓「這個事件
+      // 有沒有被記到」變成要讀完整個 200 行才答得出來的問題。
+      this.ledgerObserve(ev.type, ev.tick, ev.data);
       if (ev.type === "pickOffer") {
         // clients pick by "offerId#choiceIdx"; a plain offerId -> first choice
         const raw = ev.data.offerId as string;
@@ -2192,7 +2645,8 @@ export class MatchController {
         const choiceIdx = hash >= 0 ? Number(raw.slice(hash + 1)) : 0;
         const offer = this.offers.get(offerId);
         if (offer && offer.seatId === (ev.data.seatId as SeatId)) {
-          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0);
+          // auto = false —— 這是玩家(或 AI 的 brain)真的按下去的那一張。
+          this.applyPick(offerId, offer, Number.isInteger(choiceIdx) ? choiceIdx : 0, false);
         }
       } else if (ev.type === "legendaryOrbRolled") {
         // 傳說寶玉 (task #82): the SIM rolled the 3-choose-1 (so it rides
@@ -2269,7 +2723,10 @@ export class MatchController {
           const seat = this.seats.get(offer.seatId);
           const age = this.world.tick - offer.createdTick;
           if ((seat?.driverKind === "ai" && age > 10) || expired) {
-            this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer));
+            // auto = true —— 系統代選(AI 座位的延遲自動選,或 #207 的過期
+            // 安全網)。`aggregateOfferChoices` 把它算進 `autoPicked` 而不是
+            // `picked`,所以取捨率不會被代選稀釋。
+            this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
           }
         }
         if (expired || (this.allSeatsReady && this.offers.size === 0)) {

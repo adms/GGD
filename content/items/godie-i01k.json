@@ -26,5 +26,23 @@
       "value": 2.1
     }
   ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "target": "self",
+      "internalCooldown": 15,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 450
+          },
+          "radius": 4.5,
+          "maxTargets": 6
+        }
+      ]
+    }
+  ],
   "craftRole": "quest"
 }

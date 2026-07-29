@@ -75,7 +75,6 @@ function renderPanel(attrBonus?: number[]): string {
       authMaxMana: 0,
       level: LEVEL,
       statStacks: 3,
-      statTarget: 20,
       capstonePct: 0,
       championId: CHAMP,
       attrBonus,

@@ -13,14 +13,18 @@
  */
 import { afterEach, describe, expect, it } from "vitest";
 import {
+  applyModelLodPolicy,
+  getModelLodPolicy,
   getModelLodTier,
   lodTierForPreset,
   loadModelLodManifest,
   resolveLodPath,
   setModelLodManifest,
   setModelLodTier,
+  subscribeModelLodPolicy,
   type LodManifest,
 } from "./modelLod";
+import { DEFAULT_MODEL_LOD } from "@ggd/shared/content";
 import { PRESET_PARAMS } from "../settings/presets";
 import { QualityController } from "./QualityController";
 import { DEFAULT_SETTINGS, type Settings } from "../settings";
@@ -48,6 +52,7 @@ const MANIFEST: LodManifest = {
 afterEach(() => {
   setModelLodManifest(null);
   setModelLodTier("high");
+  applyModelLodPolicy(null); // restore DEFAULT_MODEL_LOD between cases
 });
 
 describe("resolveLodPath", () => {
@@ -108,6 +113,104 @@ describe("lodTierForPreset", () => {
     // If this ever flips, AdaptiveManager re-rungs mid-match and every rung
     // change becomes a .glb download on the device least able to afford it.
     expect(lodTierForPreset("auto")).toBe("high");
+  });
+
+  it("reads the OPERATOR'S table, not a switch statement", () => {
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: true,
+      presetTiers: { low: "mid", medium: "high", high: "small", auto: "small" },
+    });
+    // deliberately absurd on purpose: no plausible hard-coded switch produces
+    // this, so a green here cannot be a switch that happens to agree.
+    expect(lodTierForPreset("low")).toBe("mid");
+    expect(lodTierForPreset("medium")).toBe("high");
+    expect(lodTierForPreset("high")).toBe("small");
+    expect(lodTierForPreset("auto")).toBe("small");
+  });
+
+  it("`enabled: false` pins every preset to the authored file", () => {
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: false,
+      presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+    });
+    for (const p of ["low", "medium", "high", "auto"] as const) {
+      expect(lodTierForPreset(p)).toBe("high");
+    }
+  });
+
+  it("a malformed / absent doc restores the SHIPPED table, never a half-applied one", () => {
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: true,
+      presetTiers: { low: "mid", medium: "high", high: "small", auto: "small" },
+    });
+    // every rejected shape must land back on DEFAULT_MODEL_LOD — a doc missing
+    // one preset must NOT leave the other three on the operator's values
+    for (const bad of [
+      null,
+      undefined,
+      {},
+      { schema: "config.gore@1", enabled: true, presetTiers: DEFAULT_MODEL_LOD.presetTiers },
+      { schema: "config.model-lod@1", enabled: true, presetTiers: { low: "small" } },
+      { schema: "config.model-lod@1", enabled: true, presetTiers: { ...DEFAULT_MODEL_LOD.presetTiers, medium: "tiny" } },
+      { schema: "config.model-lod@1", presetTiers: DEFAULT_MODEL_LOD.presetTiers },
+    ]) {
+      applyModelLodPolicy(bad);
+      expect(getModelLodPolicy()).toEqual(DEFAULT_MODEL_LOD);
+      expect(lodTierForPreset("low")).toBe("small");
+      expect(lodTierForPreset("medium")).toBe("mid");
+    }
+  });
+
+  it("the shipped default is the pre-#115-config behaviour, exactly", () => {
+    expect(DEFAULT_MODEL_LOD.enabled).toBe(true);
+    expect(DEFAULT_MODEL_LOD.presetTiers).toEqual({
+      low: "small",
+      medium: "mid",
+      high: "high",
+      auto: "high",
+    });
+  });
+});
+
+describe("subscribeModelLodPolicy", () => {
+  it("fires on adoption — otherwise a late doc is parsed, correct and dead", () => {
+    const seen: string[] = [];
+    const off = subscribeModelLodPolicy(() => seen.push(lodTierForPreset("low")));
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: true,
+      presetTiers: { low: "mid", medium: "mid", high: "high", auto: "high" },
+    });
+    expect(seen).toEqual(["mid"]);
+
+    off();
+    applyModelLodPolicy(null);
+    expect(seen).toEqual(["mid"]); // unsubscribed
+  });
+});
+
+describe("loadModelLodManifest adopts the policy", () => {
+  it("applies the table BEFORE the fetch, so a missing _lod.json still honours it", async () => {
+    const ok = await loadModelLodManifest(
+      "/content",
+      undefined,
+      (async () => ({ ok: false })) as never,
+      () => ({
+        id: "model-lod",
+        schema: "config.model-lod@1",
+        enabled: false,
+        presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+      }),
+    );
+    expect(ok).toBe(false); // manifest genuinely failed…
+    expect(lodTierForPreset("low")).toBe("high"); // …and the table still landed
   });
 });
 

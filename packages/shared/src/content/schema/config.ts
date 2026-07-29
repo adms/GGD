@@ -20,6 +20,12 @@ import { baseBonusBounds } from "../../sim/baseBonus";
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
 import { BARCODE_SLOTS } from "../voxelSkin/types";
+// 每回合 S~D 評價的係數 (#212/#232)。整份 schema 定在自己的檔案裡(欄位多、
+// 上下界全部從 sim 的 ROUND_GRADE_BOUNDS 生),這裡只把它掛進 collection union。
+import { zConfigRoundGradeDoc } from "./roundGrade";
+// config.vfx-families@1 lives in ./vfx next to the vfx@1 docs it tunes (the
+// w3x art family layer); only its union membership belongs here.
+import { zConfigVfxFamiliesDoc } from "./vfx";
 
 /**
  * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
@@ -56,6 +62,55 @@ export const zFireRingConfig = z
     burnPctPerSecEnd: z.number().min(0).max(1).default(0.2),
     /** safety cap on the per-second burn rate (fraction of maxHealth); absent = uncapped */
     maxPctPerSec: z.number().min(0).max(1).optional(),
+    /**
+     * 殭屍王在場 → 回合延長 (#L1). owner 2026-07-30:
+     *
+     *   「殭屍王出現**回合結束時間延長 3 分鐘**(**火圈時間也延後**),
+     *     除非全死不然不會提前結束,避免打到一半結果回合結束」
+     *
+     * TWO knobs, not one, even though the owner said one number. They move two
+     * DIFFERENT deadlines and an operator will eventually want them apart: the
+     * ring's ignition is 「還有多久開始收圈」 (pacing/tension) and the backstop is
+     * 「這回合最長多久」 (match length). Shipping them fused would mean the first
+     * time somebody wants a longer king fight WITHOUT a longer round, the answer
+     * is a code change. Both ship at the owner's 180.
+     *
+     * WHY INSIDE `fireRing` AND NOT BESIDE IT. The match host resolves exactly
+     * this block (`resolveFireRing()`) and hands it to the sim's
+     * `fireRingRulesFromConfig`. A sibling block would need new plumbing through
+     * the host before it did anything — and a knob that needs plumbing before it
+     * works is a knob the operator can turn with no effect (failure mode ②).
+     *
+     * 0 on either = that half is OFF.
+     *
+     * ⚠️ AN ABSENT BLOCK DEFAULTS **ON**, at 180/180 — the one place in this
+     * schema where 「缺席 = 今天的行為」 is deliberately NOT the rule. The reason
+     * is `scripts/exportContentToJson.ts`: it regenerates `config.match.json`
+     * from a literal that predates this block, so a default of 「off」 would let
+     * a routine content re-export silently delete a mechanic the owner asked
+     * for, and nothing downstream would notice (it would just be a shorter
+     * round). Defaulting on makes that failure mode impossible. The SIM's own
+     * mirror (`FireRingConfigLike.boss` in sim/fireRing.ts) still treats absent
+     * as 0, so a hand-built fixture or the client's prediction shadow is
+     * byte-identical to pre-#L1 — the two asymmetries protect opposite ends.
+     *
+     * Because of that default, deleting the block from the JSON does NOT turn
+     * the feature off; `bossRoundExtension.test.ts` therefore pins the RAW file
+     * as well as the parsed doc.
+     *
+     * ⚠️ BOUNDED ON BOTH SIDES (CLAUDE.md 「欄位要有上界,不是只有下界」). 3600 s
+     * is an hour of extension per summon; the king is `repeatable`, so an
+     * unbounded field plus a farmer is an unbounded round.
+     */
+    boss: z
+      .object({
+        /** seconds added to `combatMaxSec`'s deadline each time a king spawns */
+        extendCombatSec: z.number().min(0).max(3600).default(180),
+        /** seconds the ring's ignition is pushed back each time a king spawns */
+        delayFireRingSec: z.number().min(0).max(3600).default(180),
+      })
+      .strict()
+      .default({}),
   })
   .strict();
 
@@ -69,6 +124,7 @@ export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   burnPctPerSecStart: 0.04,
   burnPctPerSecEnd: 0.2,
   maxPctPerSec: 1,
+  boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
 
 export const zConfigMatchDoc = z
@@ -119,7 +175,36 @@ export const zConfigMatchDoc = z
         message:
           "match.fireRing.startSec + shrinkSec must be <= match.combatMaxSec (the ring must finish closing before the hard combat backstop)",
         path: ["fireRing", "startSec"],
-      }),
+      })
+      /**
+       * #L1 — THE SAME INVARIANT, ONE 殭屍王 LATER.
+       *
+       * `extendRoundForBoss` adds `delayFireRingSec` to the ignition and
+       * `extendCombatSec` to the backstop. If the delay is the larger of the
+       * two, the ring is pushed PAST the (extended) backstop and the round ends
+       * with the ring still open — the stalemate-breaker silently stops
+       * existing for exactly the rounds a king showed up in, which is the worst
+       * possible time for it to stop existing.
+       *
+       * Checked once here, at author time, instead of clamped at runtime: a
+       * clamp would let the operator save 300/180 and then quietly play 200/180.
+       * Shipped 60+20 vs 100 leaves 20 s of slack, so the shipped 180/180 passes
+       * with room to spare.
+       */
+      .refine(
+        (m) =>
+          !m.fireRing ||
+          m.fireRing.startSec +
+            m.fireRing.boss.delayFireRingSec +
+            m.fireRing.shrinkSec -
+            m.fireRing.boss.extendCombatSec <=
+            m.combatMaxSec,
+        {
+          message:
+            "match.fireRing.boss: after a 殭屍王 extension the ring must STILL finish closing before the backstop — require startSec + delayFireRingSec + shrinkSec <= combatMaxSec + extendCombatSec",
+          path: ["fireRing", "boss", "delayFireRingSec"],
+        },
+      ),
     economy: z
       .object({
         startingGold: z.number().int().min(0),
@@ -1422,6 +1507,23 @@ export const zConfigCombatFeelDoc = z
       })
       .strict()
       .optional(),
+    /**
+     * 面向鎖的窗口長度 (#264 / #275 / #280)。語意與出貨預設見
+     * `sim/combatFeel.ts` 的 `FacingRules`。
+     *
+     * ⚠️ 這裡**沒有** `aimHoldTicks`,那是刻意的 —— 見 `sim/aimHold.ts` 檔頭:
+     * 客戶端預測沒有任何 config 通道,把瞄準沿用窗口做成可調會讓預測與權威用
+     * 不同的窗口,自己的角色面向會和伺服器長期不同意。
+     */
+    facing: z
+      .object({
+        /** 出手後的收招餘韻 tick 數 (30 tick = 1 秒) */
+        followThroughTicks: z.number().int().min(0).max(300),
+        /** 瞬發技的最低鎖定 tick 數 */
+        instantCastTicks: z.number().int().min(0).max(300),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -2055,6 +2157,49 @@ export const zConfigFormVisualsDoc = z
   })
   .strict();
 
+/**
+ * config.model-lod@1 —— 「哪一個畫質等級去抓哪一階模型檔」的對照表
+ * (`config/model-lod.json`, task #115)。
+ *
+ * 為什麼是內容而不是程式裡的 switch:這張表是**平衡/體感決策**,不是事實。
+ * 目前量到的變體覆蓋率是 83/167(49.7%),`-small` 平均省掉一半以上的面數與
+ * 位元組;但「中畫質到底該吃 mid 還是 small」要看真機發燙與畫面能接受到哪裡,
+ * owner 會想改。寫死的話改一格 = 一次 client rebuild + 重新部署;放在
+ * `content/` 就是存檔即生效(content/ 是 live bind-mount)。
+ *
+ *   · `enabled`     總開關。false = 一律載原檔,等於 #115 之前的行為。
+ *                   線上如果發現某一階的檔壞了,這一格是止血閥。
+ *   · `presetTiers` 四個 preset 各自對到 high/mid/small。
+ *
+ * ⚠️ `auto` 預設留在 `high` 是**刻意**的,不是漏填:自適應階梯每幾秒就會換一
+ * 級,而換模型階 = 丟掉 AssetContainer 再發一次網路請求。讓它跟著階梯跑,就會
+ * 在最撐不住的那台機器上、打到一半、反覆下載模型。改這一格之前先讀
+ * `apps/client/src/render/modelLod.ts` 的檔頭。
+ *
+ * 缺的階自動退回:要 small 但只生了 mid → 給 mid;兩個都沒有 → 給原檔。所以
+ * 這張表**不可能**因為某個模型沒有變體而 404(`resolveLodPath` 在守)。
+ */
+export const zModelLodTier = z.enum(["high", "mid", "small"]);
+
+export const zConfigModelLodDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.model-lod@1"),
+    note: z.string().optional(),
+    /** 總開關。false = 每個 preset 都載原檔。 */
+    enabled: z.boolean(),
+    /** 畫質 preset -> 要抓的模型階。四個都必填,不允許靜默漏掉一個。 */
+    presetTiers: z
+      .object({
+        low: zModelLodTier,
+        medium: zModelLodTier,
+        high: zModelLodTier,
+        auto: zModelLodTier,
+      })
+      .strict(),
+  })
+  .strict();
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigMatchDoc,
@@ -2062,6 +2207,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigArenaRulesDoc,
   zConfigCombatEnvDoc,
   zConfigAmbientVfxDoc,
+  zConfigVfxFamiliesDoc,
   zConfigAudioMapDoc,
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,
@@ -2074,6 +2220,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigStatCapsDoc,
   zConfigCombatFeelDoc,
   zConfigFormVisualsDoc,
+  zConfigModelLodDoc,
+  zConfigRoundGradeDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -2110,7 +2258,28 @@ export type ConfigStatCapsDoc = z.infer<typeof zConfigStatCapsDoc>;
 export type ConfigCombatFeelDoc = z.infer<typeof zConfigCombatFeelDoc>;
 export type FormVisualEntry = z.infer<typeof zFormVisualEntry>;
 export type ConfigFormVisualsDoc = z.infer<typeof zConfigFormVisualsDoc>;
+export type ModelLodTierName = z.infer<typeof zModelLodTier>;
+export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
+// config.round-grade@1 的型別/Zod/出貨文件全部在 ./roundGrade,這裡只再匯出一次
+// 給 `export * from "./config"` 的既有消費端(admin / codex 都是這樣拿的)。
+export * from "./roundGrade";
 export type AnyConfigDoc = z.infer<typeof zConfigDoc>;
+
+/**
+ * 出貨預設 —— `content/config/model-lod.json` 不存在(舊部署 / 內容掛掉)時,
+ * `applyModelLodPolicy` 回退到的就是這一份,而它必須等於 #115 落地當下的行為:
+ * low→small、medium→mid、high/auto→high。
+ *
+ * ⚠️ 每一格都要和 `content/config/model-lod.json` 一字不差 ——
+ * `packages/shared/src/content/modelLodConfig.test.ts` 的 drift 斷言在守。
+ * 兩份存在的理由不同:JSON 是**出貨值**(操作者會改),這份是**程式的保險絲**。
+ */
+export const DEFAULT_MODEL_LOD: ConfigModelLodDoc = {
+  id: "model-lod",
+  schema: "config.model-lod@1",
+  enabled: true,
+  presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+};
 
 /**
  * 出貨預設 —— 文件不存在時 `resolveFormVisual` 讀的就是這一份。

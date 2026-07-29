@@ -108,6 +108,24 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `${e.damageType} damage`, perRank });
         break;
       }
+      // 擴散 (task #210). The radius / falloff / cap all belong in the summary:
+      // the numbers a designer needs to sanity-check are "how big" and "how many",
+      // and `perRank` alone (the centre-of-circle amount) would read as a plain
+      // single-target nuke — the same blank-preview trap the note below records,
+      // one level subtler because it renders SOMETHING.
+      case "damageArea": {
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const taper = e.falloff !== undefined && e.falloff < 1 ? `, ×${e.falloff} at rim` : "";
+        const cap = e.maxTargets !== undefined ? `, max ${e.maxTargets}` : "";
+        const origin = e.includeOrigin === true ? ", incl. epicentre" : "";
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `${e.damageType} area damage r=${e.radius}u${taper}${cap}${origin}`,
+          perRank,
+        });
+        break;
+      }
       case "heal": {
         const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
         out.push({ depth, kind: e.kind, summary: "heal", perRank });

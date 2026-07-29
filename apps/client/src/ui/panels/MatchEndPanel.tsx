@@ -59,6 +59,8 @@ import {
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { ProgressChartPanel } from "./ProgressChartPanel";
 import { buildProgressSeries, progressAdvice } from "./progressChart";
+import { TeamPointsRows } from "./RoundVictoryPanel";
+import { teamLedger, teamStandings } from "./teamLedger";
 
 /**
  * REMOVED — the settlement no longer auto-advances (owner, 2026-07-27:
@@ -601,7 +603,20 @@ export function MatchEndPanel(): React.JSX.Element {
           </div>
         )}
 
-        <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>本場排名</div>
+        {/* 團隊累積積分 (task #212). 讀的是 `teamStandings()` —— 回合勝利畫面
+            讀的**同一支**,而且連格式化都共用同一個 component。owner 的要求是
+            「團隊累積積分」在兩個畫面是同一個數字;做法只能是兩邊呼叫同一支
+            函式,各自算一次遲早會在某一回合分岔而玩家分不出哪個是真的。
+            這份帳的範圍與代價(重連會失去先前回合)見 panels/teamLedger §3,
+            所以「累積 N 回合」也印在旁邊。 */}
+        <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>團隊累積積分</div>
+        <TeamPointsRows
+          standings={teamStandings()}
+          localTeamId={local?.teamId ?? null}
+          roundsSeen={teamLedger.roundsSeen()}
+        />
+
+        <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6, marginTop: 12 }}>本場排名</div>
         <RankingTable
           players={players}
           localSeatId={localSeatId}

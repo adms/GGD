@@ -12,6 +12,12 @@
  *   1) CLOCK   — `world.mobTicks++` first (a DEDICATED counter, like
  *                fireRingTicks — NOT combatTicks, which only advances while
  *                flowers are armed). combat-second S = mobTicks/TICK_HZ.
+ *   1b) 火圈  — the shrinking ring's %-HP true burn, applied to MOBS (owner
+ *                2026-07-30 「所有場上玩家、bot、各種殭屍都會…燒死，所以還是
+ *                有個保底結果」). `fireRingSystem` burns the champions at step
+ *                8b of the same tick; this is the other half, and it is what
+ *                makes 「the round always ends」 true even when a zombie is the
+ *                last thing standing. See sim/fireRing.ts `fireRingBurnMobs`.
  *   2) SCHEDULE— fire a wave when the cadence lands; wave k spawns min(k,cap)
  *                mobs per active zone, one at a time, never past maxAlivePerZone.
  *   3) AI      — each mob (ascending id) aims at the nearest enemy champion,
@@ -49,6 +55,7 @@ import { distSq } from "../math/vec2";
 import { grantGold, grantXp, grantLevels } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
 import { creditKillCombo } from "../combat/killCombo";
+import { fireRingBurnMobs } from "../fireRing";
 import {
   type MobRules,
   MONSTER_TEAM,
@@ -71,6 +78,20 @@ export function mobSystem(world: SimWorld): void {
   // 1) CLOCK — the dedicated combat-elapsed mob counter, advanced first.
   world.mobTicks++;
   const mt = world.mobTicks;
+
+  // 1b) 火圈燒殭屍 (owner 2026-07-30) — 「所有場上玩家、bot、各種殭屍都會百分比
+  //     真實傷害燒死，所以還是有個保底結果」. This is THE guarantee that a round
+  //     ends: without it one zombie parked in a corner can hold the field open
+  //     forever. `fireRingSystem` (step 8b) already advanced `fireRingTicks`
+  //     this tick and burned the champions, so this applies the identical rate
+  //     against the identical radius — see sim/fireRing.ts.
+  //
+  //     RUN BEFORE THE AI/MELEE LOOP so a mob the ring has already reduced to
+  //     0 hp does not get a free extra swing on the tick it dies; the kill
+  //     itself resolves through the ordinary path (next tick's deathSystem →
+  //     step 5's payout scan, which already handles a fire-ring death as a
+  //     no-killer death and still pays a king / 特殊殭屍's 分紅獎池).
+  fireRingBurnMobs(world);
 
   // 2) WAVE SCHEDULE — fire on the cadence; spawn min(k,cap) per active zone.
   if (mt >= rules.firstWaveTicks && (mt - rules.firstWaveTicks) % rules.waveIntervalTicks === 0) {

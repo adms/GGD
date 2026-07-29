@@ -13,6 +13,25 @@
       "value": 200
     }
   ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 160
+          },
+          "radius": 5.0,
+          "falloff": 0.35,
+          "maxTargets": 6,
+          "includeOrigin": true
+        }
+      ]
+    }
+  ],
   "tags": [
     "wc3-import"
   ],

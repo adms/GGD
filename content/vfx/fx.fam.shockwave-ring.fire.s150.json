@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.shockwave-ring.fire.s150",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.45
+  },
+  "mode": "burst",
+  "burstCount": 36,
+  "lifetimeSec": {
+    "min": 0.2,
+    "max": 0.52
+  },
+  "size": {
+    "start": 0.39,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.91,
+      0.847,
+      1
+    ],
+    "end": [
+      0.18,
+      0.09,
+      0.027,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.39
+    ],
+    [
+      0.14,
+      0.93
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.91,
+        0.847,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.5,
+        0.15,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.25,
+        0.075,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.09,
+        0.027,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": -3,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/dirt_02.png"
+}

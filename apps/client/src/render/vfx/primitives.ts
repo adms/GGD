@@ -50,7 +50,9 @@ export type PrimitiveKind =
   | "swarm"
   | "summon"
   | "slash"
-  | "pulse";
+  | "pulse"
+  | "column"
+  | "fall";
 
 /**
  * Parameters every primitive accepts. Only `id` + `color` are required; the
@@ -380,6 +382,58 @@ export function pulse(p: PrimitiveParams): VfxDoc {
   });
 }
 
+/**
+ * COLUMN — a VERTICAL pillar standing on the ground and climbing. The two
+ * empty silhouette cells the w3x census (L1) exposed, filled once each:
+ * `FlameStrikeTarget` (火柱), `TomeOfRetrainingCaster` (光柱),
+ * `ResurrectTarget`/`ResurrectCaster` (復活光), `LevelupCaster` (升級光) and
+ * `DarkPortalTarget` (傳送門) are all the SAME shape — a tight column of
+ * particles rising off the floor — and none of the 11 existing primitives is
+ * one. BEAM is a horizontal directed lance; TORNADO is a wide swirling cone
+ * that reads as wind, not as a shaft of light. 97 census reference points sit
+ * on this shape, which is why it is new rather than a re-parameterised BEAM.
+ */
+export function column(p: PrimitiveParams): VfxDoc {
+  return build("column", p, {
+    // narrow footprint on the floor; the RISE is what reads, not the spread
+    emitter: { shape: "cone", radius: 0.22, angleDeg: 8 },
+    count: 38,
+    lifetime: { min: 0.34, max: 0.78 },
+    speed: { min: 6, max: 11 },
+    size: 0.6,
+    gravityY: 7.5, // straight up, hard — a shaft, not a puff
+    blend: "additive",
+    texture: "light_02.png",
+    stretched: true,
+    tailLength: 2.8,
+    peakT: 0.12,
+  });
+}
+
+/**
+ * FALL — motes arriving from ABOVE and hitting the ground. `MonsoonBoltTarget`
+ * (雷擊, 42 refs) and `StarfallTarget` (星墜, 9 refs) both play downward, and
+ * every existing primitive either blooms outward from a point or climbs. The
+ * downward read comes from a hard negative gravity plus a HIGH spawn: the
+ * family prototype spawns this one at `heightY` ~3 (see `w3xArtFamilies`), so
+ * the particles are born overhead and land.
+ */
+export function fall(p: PrimitiveParams): VfxDoc {
+  return build("fall", p, {
+    emitter: { shape: "sphere", radius: 0.34 },
+    count: 30,
+    lifetime: { min: 0.22, max: 0.5 },
+    speed: { min: 2, max: 5 },
+    size: 0.66,
+    gravityY: -26, // the strike comes DOWN, and fast
+    blend: "additive",
+    texture: "trace_01.png",
+    stretched: true,
+    tailLength: 3.2,
+    peakT: 0.08,
+  });
+}
+
 /** Every primitive, keyed by kind — the dispatch table the binding generator
  *  and tests iterate over. */
 export const PRIMITIVES: Record<PrimitiveKind, (p: PrimitiveParams) => VfxDoc> = {
@@ -394,6 +448,8 @@ export const PRIMITIVES: Record<PrimitiveKind, (p: PrimitiveParams) => VfxDoc> =
   summon,
   slash,
   pulse,
+  column,
+  fall,
 };
 
 export const PRIMITIVE_KINDS = Object.keys(PRIMITIVES) as PrimitiveKind[];

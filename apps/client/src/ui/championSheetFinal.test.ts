@@ -71,10 +71,20 @@ describe("championSheet 的 戰鬥實際 欄 (client-sheet-final)", () => {
   it("拿不到 wire 表時退回內容/出貨預設,不是 0", () => {
     cover("client-sheet-final");
     // 大廳沒有 MatchState,`baseBonusJson` 是空字串。退回空表的話,選角畫面會比
-    // 玩家實際拿到的少 300,而伺服器照樣給 —— 兩個數字不一樣,而且沒有人會說。
-    expect(baseBonusFor(resolveBaseBonus(""), Stat.MaxHealth)).toBe(300);
-    expect(baseBonusFor(resolveBaseBonus(null), Stat.MaxHealth)).toBe(300);
-    expect(baseBonusFor(resolveBaseBonus("{not json"), Stat.MaxHealth)).toBe(300);
+    // 玩家實際拿到的少一整份初始生命,而伺服器照樣給 —— 兩個數字不一樣,
+    // 而且沒有人會說。
+    //
+    // ⚠️ 這個期望值**讀 `DEFAULT_BASE_BONUS`,不再重打一次數字**。原本它硬寫
+    // 300,於是 owner 在 2026-07-30 把初始生命調成 650(commit 96a4ac4e
+    // 「目前玩家太容易死了」)之後這條就紅了 —— 而紅的原因不是行為壞掉,是測試
+    // 自己抄了一份會過期的常數。被守的性質是「缺 wire 時退回**出貨預設**而不是
+    // 0」,那是一個關係,不是一個數字;寫成關係之後,下一次 owner 再改這個值
+    // (他已經改過三次)這條會跟著動而不是假紅。
+    const shipped = baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth);
+    expect(shipped, "出貨預設的初始生命不該是 0 —— 否則這條測試守不到任何東西").toBeGreaterThan(0);
+    expect(baseBonusFor(resolveBaseBonus(""), Stat.MaxHealth)).toBe(shipped);
+    expect(baseBonusFor(resolveBaseBonus(null), Stat.MaxHealth)).toBe(shipped);
+    expect(baseBonusFor(resolveBaseBonus("{not json"), Stat.MaxHealth)).toBe(shipped);
     // 但 wire 真的帶了一份表(哪怕是空的),那就是這一場的權威值
     expect(baseBonusFor(resolveBaseBonus("{}"), Stat.MaxHealth)).toBe(0);
     expect(baseBonusFor(resolveBaseBonus('{"maxHealth":777}'), Stat.MaxHealth)).toBe(777);

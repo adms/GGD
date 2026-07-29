@@ -20,6 +20,12 @@
  * `AudioSystem.preloadSceneSfx`). The scene key is the AudioScene the mixer
  * already switches beds on, so no new "scene" concept is invented.
  *
+ * WHEN each of those sets is warmed is a SEPARATE, live-tunable decision — see
+ * `./sfxPreloadPolicy` and `content/audio-manifests/sfx-preload.json`. With the
+ * shipped `lookahead: 1` a scene warms its own set AND its successors' one hop
+ * out, so {@link COMBAT_SFX} is fetched on the INTERMISSION edge (the shop
+ * window) rather than on the combat edge, where it would race `roundStart`.
+ *
  * This is a PRELOAD manifest, never a gate: `AudioSystem.playSfx` still resolves
  * any event through the full audio map and lazy-fetches on demand, so a cue that
  * fires before its scene has finished preloading (or one this manifest simply

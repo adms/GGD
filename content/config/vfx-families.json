@@ -1,0 +1,1546 @@
+{
+  "id": "vfx-families",
+  "schema": "config.vfx-families@1",
+  "enabled": true,
+  "scaleGain": 0.35,
+  "scaleMin": 0.5,
+  "scaleMax": 3,
+  "families": {
+    "shockwaveRing": {
+      "enabled": true,
+      "primitive": "shockwave",
+      "element": "earth",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1,
+      "heightY": 0.15
+    },
+    "blink": {
+      "enabled": true,
+      "primitive": "dash",
+      "element": "arcane",
+      "scale": 0.9,
+      "alpha": 0.9,
+      "timeScale": 0.7,
+      "heightY": 1
+    },
+    "burst": {
+      "enabled": true,
+      "primitive": "explosion",
+      "element": "fire",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1,
+      "heightY": 0.9
+    },
+    "dissipate": {
+      "enabled": true,
+      "primitive": "swarm",
+      "element": "void",
+      "scale": 0.85,
+      "alpha": 0.75,
+      "timeScale": 1.35,
+      "heightY": 0.9
+    },
+    "missile": {
+      "enabled": true,
+      "primitive": "bolt",
+      "element": "fire",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1,
+      "heightY": 1
+    },
+    "boltStrike": {
+      "enabled": true,
+      "primitive": "fall",
+      "element": "lightning",
+      "scale": 1.15,
+      "alpha": 1,
+      "timeScale": 0.8,
+      "heightY": 3.2
+    },
+    "tornado": {
+      "enabled": true,
+      "primitive": "tornado",
+      "element": "wind",
+      "scale": 1,
+      "alpha": 0.9,
+      "timeScale": 1.2,
+      "heightY": 0.4
+    },
+    "groundDust": {
+      "enabled": true,
+      "primitive": "shockwave",
+      "element": "earth",
+      "scale": 0.8,
+      "alpha": 0.7,
+      "timeScale": 1.15,
+      "heightY": 0.1
+    },
+    "flamePillar": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "fire",
+      "scale": 1.1,
+      "alpha": 1,
+      "timeScale": 1.2,
+      "heightY": 0.1
+    },
+    "mirrorImage": {
+      "enabled": true,
+      "primitive": "pulse",
+      "element": "arcane",
+      "scale": 1,
+      "alpha": 0.8,
+      "timeScale": 1.1,
+      "heightY": 1
+    },
+    "resurrect": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "holy",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1.4,
+      "heightY": 0.1
+    },
+    "mark": {
+      "enabled": true,
+      "primitive": "nova",
+      "element": "blood",
+      "scale": 0.85,
+      "alpha": 0.9,
+      "timeScale": 1.2,
+      "heightY": 1
+    },
+    "lightColumn": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "arcane",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 1.2,
+      "heightY": 0.1
+    },
+    "portal": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "void",
+      "scale": 1.2,
+      "alpha": 0.85,
+      "timeScale": 1.6,
+      "heightY": 0.1
+    },
+    "breath": {
+      "enabled": true,
+      "primitive": "beam",
+      "element": "blood",
+      "scale": 1.1,
+      "alpha": 1,
+      "timeScale": 1.25,
+      "heightY": 1.2
+    },
+    "levelUp": {
+      "enabled": true,
+      "primitive": "column",
+      "element": "holy",
+      "scale": 0.9,
+      "alpha": 1,
+      "timeScale": 1.1,
+      "heightY": 0.1
+    },
+    "uncategorised": {
+      "enabled": true,
+      "primitive": "explosion",
+      "element": "fire",
+      "scale": 1.15,
+      "alpha": 1,
+      "timeScale": 1.1,
+      "heightY": 0.9
+    },
+    "cloud": {
+      "enabled": true,
+      "primitive": "swarm",
+      "element": "wind",
+      "scale": 1.2,
+      "alpha": 0.55,
+      "timeScale": 1.6,
+      "heightY": 1.2
+    },
+    "blood": {
+      "enabled": true,
+      "primitive": "explosion",
+      "element": "blood",
+      "scale": 0.7,
+      "alpha": 0.95,
+      "timeScale": 0.9,
+      "heightY": 1
+    },
+    "shine": {
+      "enabled": true,
+      "primitive": "nova",
+      "element": "holy",
+      "scale": 1,
+      "alpha": 1,
+      "timeScale": 0.85,
+      "heightY": 1.1
+    },
+    "starfall": {
+      "enabled": true,
+      "primitive": "fall",
+      "element": "arcane",
+      "scale": 0.95,
+      "alpha": 1,
+      "timeScale": 1.1,
+      "heightY": 3.5
+    }
+  },
+  "abilities": {
+    "godie-e001.passive": {
+      "family": "shockwaveRing"
+    },
+    "godie-e001.r": {
+      "family": "burst",
+      "tint": [
+        100,
+        100,
+        100
+      ]
+    },
+    "godie-e002.e": {
+      "family": "burst"
+    },
+    "godie-e007.ex": {
+      "family": "dissipate",
+      "w3xScale": 1.5,
+      "tint": [
+        10,
+        10,
+        10
+      ]
+    },
+    "godie-e007.q": {
+      "family": "levelUp"
+    },
+    "godie-e007.r": {
+      "family": "shine",
+      "anchor": "hand,left"
+    },
+    "godie-e008.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-e008.r": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-e00j.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00j.ex": {
+      "family": "resurrect",
+      "w3xScale": 0.9,
+      "anchor": "origin"
+    },
+    "godie-e00j.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-e00k.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00k.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-e00k.passive": {
+      "family": "blink",
+      "anchor": "chest"
+    },
+    "godie-e00k.w": {
+      "family": "cloud"
+    },
+    "godie-e00l.e": {
+      "family": "burst"
+    },
+    "godie-e00n.passive": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00n.r": {
+      "family": "burst",
+      "tint": [
+        100,
+        100,
+        100
+      ]
+    },
+    "godie-e00q.e": {
+      "family": "burst"
+    },
+    "godie-e00r.q": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00r.r": {
+      "family": "groundDust"
+    },
+    "godie-e00s.q": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ]
+    },
+    "godie-e00w.e": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-e00w.q": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00x.e": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-e00x.q": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00z.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-e00z.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-e00z.passive": {
+      "family": "blink",
+      "anchor": "chest"
+    },
+    "godie-e00z.w": {
+      "family": "cloud"
+    },
+    "godie-e012.passive": {
+      "family": "levelUp"
+    },
+    "godie-e012.r": {
+      "family": "tornado"
+    },
+    "godie-e012.w": {
+      "family": "blink"
+    },
+    "godie-e015.e": {
+      "family": "missile",
+      "w3xScale": 4,
+      "anchor": "weapon"
+    },
+    "godie-e015.q": {
+      "family": "burst",
+      "w3xScale": 1.1
+    },
+    "godie-e015.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "origin"
+    },
+    "godie-edem.e": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "weapon"
+    },
+    "godie-edem.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-edem.q": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ],
+      "anchor": "chest"
+    },
+    "godie-edem.w": {
+      "family": "boltStrike",
+      "w3xScale": 10
+    },
+    "godie-ekee.e": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-ekee.ex": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-ekee.passive": {
+      "family": "boltStrike"
+    },
+    "godie-ekee.r": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-emfr.e": {
+      "family": "boltStrike",
+      "anchor": "chest"
+    },
+    "godie-emfr.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-emns.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-etyr.e": {
+      "family": "lightColumn"
+    },
+    "godie-etyr.q": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150,
+      "anchor": "chest"
+    },
+    "godie-etyr.r": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-etyr.w": {
+      "family": "lightColumn"
+    },
+    "godie-ewar.ex": {
+      "family": "dissipate",
+      "w3xScale": 1.5,
+      "tint": [
+        10,
+        10,
+        10
+      ]
+    },
+    "godie-ewar.q": {
+      "family": "levelUp"
+    },
+    "godie-ewar.r": {
+      "family": "shine",
+      "anchor": "hand,left"
+    },
+    "godie-ewrd.e": {
+      "family": "blink"
+    },
+    "godie-ewrd.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-ewrd.w": {
+      "family": "cloud",
+      "anchor": "chest"
+    },
+    "godie-h001.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-h01n.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-h01n.q": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-h01n.r": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-h01n.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h01o.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-h01o.q": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-h01o.r": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-h01o.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h01u.e": {
+      "family": "burst",
+      "anchor": "origin"
+    },
+    "godie-h01u.r": {
+      "family": "dissipate",
+      "anchor": "chest"
+    },
+    "godie-h020.e": {
+      "family": "dissipate",
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h020.q": {
+      "family": "dissipate",
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h020.r": {
+      "family": "cloud"
+    },
+    "godie-h020.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h021.e": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-h021.passive": {
+      "family": "shockwaveRing"
+    },
+    "godie-h022.e": {
+      "family": "boltStrike"
+    },
+    "godie-h022.q": {
+      "family": "shockwaveRing"
+    },
+    "godie-h022.r": {
+      "family": "uncategorised",
+      "w3xScale": 1
+    },
+    "godie-h022.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "origin"
+    },
+    "godie-h02k.ex": {
+      "family": "lightColumn"
+    },
+    "godie-h02r.r": {
+      "family": "shine",
+      "anchor": "chest"
+    },
+    "godie-h02r.w": {
+      "family": "groundDust"
+    },
+    "godie-h02s.e": {
+      "family": "burst"
+    },
+    "godie-h02s.ex": {
+      "family": "groundDust"
+    },
+    "godie-h02u.r": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h02v.r": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-h02y.r": {
+      "family": "tornado"
+    },
+    "godie-h02z.e": {
+      "family": "burst"
+    },
+    "godie-h02z.ex": {
+      "family": "groundDust"
+    },
+    "godie-hapm.ex": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-harf.ex": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-harf.q": {
+      "family": "missile",
+      "w3xScale": 4,
+      "anchor": "weapon"
+    },
+    "godie-hart.e": {
+      "family": "tornado",
+      "w3xScale": 2,
+      "tint": [
+        150,
+        150,
+        255
+      ],
+      "flyHeight": -500
+    },
+    "godie-hart.q": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-hart.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-hblm.e": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-hblm.passive": {
+      "family": "shockwaveRing"
+    },
+    "godie-hgam.r": {
+      "family": "shine",
+      "anchor": "chest"
+    },
+    "godie-hgam.w": {
+      "family": "groundDust"
+    },
+    "godie-hjai.e": {
+      "family": "dissipate",
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-hjai.q": {
+      "family": "dissipate",
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-hjai.r": {
+      "family": "cloud"
+    },
+    "godie-hjai.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-hlgr.r": {
+      "family": "burst"
+    },
+    "godie-hpal.r": {
+      "family": "burst",
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-hpb1.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-hpb1.w": {
+      "family": "burst",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-huth.e": {
+      "family": "mirrorImage"
+    },
+    "godie-hvsh.passive": {
+      "family": "lightColumn",
+      "w3xScale": 4,
+      "tint": [
+        255,
+        0,
+        255
+      ]
+    },
+    "godie-hvsh.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-hvwd.ex": {
+      "family": "lightColumn"
+    },
+    "godie-n003.e": {
+      "family": "lightColumn"
+    },
+    "godie-n003.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-n00b.e": {
+      "family": "blink"
+    },
+    "godie-n00b.r": {
+      "family": "tornado"
+    },
+    "godie-n00b.w": {
+      "family": "blink"
+    },
+    "godie-n00p.w": {
+      "family": "breath",
+      "anchor": "chest"
+    },
+    "godie-n01c.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-n01c.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-n01c.q": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-n01c.r": {
+      "family": "mirrorImage"
+    },
+    "godie-n01c.w": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-n01g.e": {
+      "family": "lightColumn"
+    },
+    "godie-n01g.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-n01l.ex": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "origin"
+    },
+    "godie-naka.e": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-naka.ex": {
+      "family": "mirrorImage"
+    },
+    "godie-naka.r": {
+      "family": "breath",
+      "anchor": "chest"
+    },
+    "godie-nbbc.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-nbbc.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-nbbc.q": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-nbbc.r": {
+      "family": "mirrorImage"
+    },
+    "godie-nbbc.w": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-nbst.e": {
+      "family": "lightColumn",
+      "w3xScale": 5,
+      "flyHeight": 150
+    },
+    "godie-nbst.ex": {
+      "family": "dissipate",
+      "anchor": "chest"
+    },
+    "godie-nbst.q": {
+      "family": "shockwaveRing"
+    },
+    "godie-nplh.e": {
+      "family": "portal",
+      "w3xScale": 2,
+      "flyHeight": 50
+    },
+    "godie-nplh.ex": {
+      "family": "mirrorImage"
+    },
+    "godie-nplh.q": {
+      "family": "portal",
+      "w3xScale": 2,
+      "flyHeight": 50
+    },
+    "godie-nplh.r": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-nplh.w": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-nsjs.w": {
+      "family": "breath",
+      "anchor": "chest"
+    },
+    "godie-ntin.e": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-ntin.r": {
+      "family": "dissipate",
+      "w3xScale": 1.5,
+      "tint": [
+        10,
+        10,
+        10
+      ],
+      "anchor": "weapon"
+    },
+    "godie-o00k.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-o00k.q": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-o00k.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-o00k.w": {
+      "family": "blink"
+    },
+    "godie-o00l.q": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ],
+      "anchor": "chest"
+    },
+    "godie-o00l.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-o00l.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-o00x.e": {
+      "family": "shockwaveRing",
+      "anchor": "origin"
+    },
+    "godie-o00x.q": {
+      "family": "burst",
+      "tint": [
+        100,
+        100,
+        100
+      ],
+      "anchor": "right,hand"
+    },
+    "godie-o00x.r": {
+      "family": "burst"
+    },
+    "godie-o00x.w": {
+      "family": "blink"
+    },
+    "godie-o01z.e": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-o01z.q": {
+      "family": "burst"
+    },
+    "godie-o01z.r": {
+      "family": "missile",
+      "w3xScale": 4,
+      "anchor": "chest"
+    },
+    "godie-o01z.w": {
+      "family": "burst"
+    },
+    "godie-o02l.ex": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-o02l.passive": {
+      "family": "blink"
+    },
+    "godie-o02l.q": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-o02l.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-o02o.e": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-o02o.r": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-o02p.e": {
+      "family": "resurrect",
+      "w3xScale": 0.9
+    },
+    "godie-o02s.q": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ],
+      "anchor": "chest"
+    },
+    "godie-o02s.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-o02s.w": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-o02v.e": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-o02v.q": {
+      "family": "burst"
+    },
+    "godie-o02v.r": {
+      "family": "missile",
+      "w3xScale": 4,
+      "anchor": "chest"
+    },
+    "godie-o02v.w": {
+      "family": "burst"
+    },
+    "godie-o02w.e": {
+      "family": "lightColumn"
+    },
+    "godie-o02w.ex": {
+      "family": "burst"
+    },
+    "godie-o02w.r": {
+      "family": "cloud"
+    },
+    "godie-obla.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-obla.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-ofar.ex": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-ofar.passive": {
+      "family": "blink"
+    },
+    "godie-ofar.q": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "body"
+    },
+    "godie-ofar.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-ogld.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-ogrh.e": {
+      "family": "shockwaveRing",
+      "anchor": "origin"
+    },
+    "godie-ogrh.q": {
+      "family": "burst",
+      "tint": [
+        100,
+        100,
+        100
+      ],
+      "anchor": "right,hand"
+    },
+    "godie-ogrh.r": {
+      "family": "burst"
+    },
+    "godie-ogrh.w": {
+      "family": "blink"
+    },
+    "godie-opgh.e": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150,
+      "anchor": "weapon"
+    },
+    "godie-opgh.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-opgh.q": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-opgh.r": {
+      "family": "portal",
+      "w3xScale": 2,
+      "flyHeight": 50
+    },
+    "godie-orkn.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-orkn.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-osam.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-osam.passive": {
+      "family": "dissipate"
+    },
+    "godie-osam.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-oshd.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-othr.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-othr.w": {
+      "family": "breath",
+      "anchor": "chest"
+    },
+    "godie-u00b.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00b.passive": {
+      "family": "portal",
+      "w3xScale": 2,
+      "flyHeight": 50
+    },
+    "godie-u00b.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00h.passive": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-u00h.r": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00j.e": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-u00j.ex": {
+      "family": "burst",
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "anchor": "chest"
+    },
+    "godie-u00j.q": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-u00j.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-u00k.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ],
+      "anchor": "chest"
+    },
+    "godie-u00l.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00l.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00l.q": {
+      "family": "burst",
+      "w3xScale": 1.1
+    },
+    "godie-u00l.r": {
+      "family": "boltStrike",
+      "w3xScale": 10
+    },
+    "godie-u00n.e": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ],
+      "anchor": "chest"
+    },
+    "godie-u00n.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00n.passive": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-u00n.q": {
+      "family": "mirrorImage"
+    },
+    "godie-u00n.r": {
+      "family": "mirrorImage"
+    },
+    "godie-u00n.w": {
+      "family": "shockwaveRing",
+      "anchor": "hand"
+    },
+    "godie-u00o.e": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ],
+      "anchor": "chest"
+    },
+    "godie-u00o.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-u00o.passive": {
+      "family": "flamePillar",
+      "w3xScale": 1.1,
+      "tint": [
+        255,
+        0,
+        0
+      ]
+    },
+    "godie-u00o.q": {
+      "family": "mirrorImage"
+    },
+    "godie-u00o.r": {
+      "family": "mirrorImage"
+    },
+    "godie-u00o.w": {
+      "family": "shockwaveRing",
+      "anchor": "hand"
+    },
+    "godie-u00v.e": {
+      "family": "tornado",
+      "w3xScale": 3,
+      "tint": [
+        200,
+        100,
+        100
+      ],
+      "flyHeight": -900
+    },
+    "godie-u00v.r": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-u00v.w": {
+      "family": "shockwaveRing"
+    },
+    "godie-u010.e": {
+      "family": "shockwaveRing",
+      "anchor": "weapon"
+    },
+    "godie-u010.r": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-u011.passive": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-u012.passive": {
+      "family": "resurrect",
+      "w3xScale": 3,
+      "tint": [
+        255,
+        0,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-u01u.e": {
+      "family": "mirrorImage"
+    },
+    "godie-u01u.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-u01u.r": {
+      "family": "mirrorImage"
+    },
+    "godie-u01u.w": {
+      "family": "shockwaveRing"
+    },
+    "godie-u034.passive": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ]
+    },
+    "godie-u034.r": {
+      "family": "uncategorised",
+      "w3xScale": 1,
+      "anchor": "chest"
+    },
+    "godie-ubal.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-ubal.w": {
+      "family": "shockwaveRing"
+    },
+    "godie-ucrl.passive": {
+      "family": "burst",
+      "tint": [
+        255,
+        170,
+        170
+      ]
+    },
+    "godie-ucrl.r": {
+      "family": "uncategorised",
+      "w3xScale": 1,
+      "anchor": "chest"
+    },
+    "godie-udea.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-udea.q": {
+      "family": "blink"
+    },
+    "godie-udea.r": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-udea.w": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-udre.e": {
+      "family": "mirrorImage"
+    },
+    "godie-udre.ex": {
+      "family": "mark",
+      "tint": [
+        255,
+        100,
+        0
+      ],
+      "flyHeight": 150
+    },
+    "godie-udre.r": {
+      "family": "mirrorImage"
+    },
+    "godie-udre.w": {
+      "family": "shockwaveRing"
+    },
+    "godie-umal.e": {
+      "family": "shockwaveRing"
+    },
+    "godie-umal.ex": {
+      "family": "shockwaveRing"
+    },
+    "godie-umal.q": {
+      "family": "burst",
+      "w3xScale": 1.1
+    },
+    "godie-umal.r": {
+      "family": "boltStrike",
+      "w3xScale": 10
+    },
+    "godie-usyl.passive": {
+      "family": "shockwaveRing",
+      "tint": [
+        0,
+        255,
+        255
+      ]
+    },
+    "godie-uvng.e": {
+      "family": "shockwaveRing",
+      "anchor": "weapon"
+    },
+    "godie-uvng.r": {
+      "family": "shockwaveRing",
+      "anchor": "chest"
+    },
+    "godie-uwar.e": {
+      "family": "burst"
+    },
+    "godie-uwar.r": {
+      "family": "burst"
+    }
+  }
+}

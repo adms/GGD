@@ -20,7 +20,7 @@ import {
   fixedPresetResolution,
   type FrameStats,
 } from "./AdaptiveQuality";
-import { lodTierForPreset, type ModelLodTier } from "./modelLod";
+import { lodTierForPreset, subscribeModelLodPolicy, type ModelLodTier } from "./modelLod";
 
 export interface RenderParams {
   resolutionScale: number;
@@ -30,6 +30,13 @@ export interface RenderParams {
   antialias: boolean;
   fpsCap: FpsCap;
   interpolationDelayMs: number;
+  /**
+   * intent 送出率 (task #282). 它跟 `fpsCap` **刻意分開**:一個是「畫幾張」,
+   * 一個是「操作送出去幾次」,#282 的缺陷正是這兩件事被同一個 `if` 綁在一起。
+   * 走這條 seam 是為了跟 `interpolationDelayMs` 一樣拿到 live 更新 ——
+   * 玩家改設定不用重開一場。
+   */
+  intentHz: number;
   damageNumberCap: number;
   /** how much of the fight gets a floating number (task #92). */
   combatTextScope: CombatTextScope;
@@ -59,6 +66,7 @@ export class QualityController {
   private params: RenderParams;
   private readonly listeners = new Set<(p: RenderParams) => void>();
   private off: (() => void) | null = null;
+  private offPolicy: (() => void) | null = null;
 
   constructor(private readonly store = settingsStore) {
     this.adaptive.setTargetFps(targetFor(this.store.graphics().fpsCap));
@@ -72,11 +80,19 @@ export class QualityController {
       this.adaptive.setTargetFps(targetFor(s.graphics.fpsCap));
       this.recompute();
     });
+    // #115 — the preset→model-tier table is CONTENT (`config/model-lod.json`),
+    // and content lands a few hundred ms after this controller first computes
+    // its params. Without this subscription the operator's table would be
+    // parsed, correct, and dead: `modelLod` would keep the boot-time value for
+    // the whole session and no subscriber would ever be told otherwise.
+    this.offPolicy = subscribeModelLodPolicy(() => this.recompute());
   }
 
   dispose(): void {
     this.off?.();
     this.off = null;
+    this.offPolicy?.();
+    this.offPolicy = null;
     this.listeners.clear();
   }
 
@@ -137,6 +153,9 @@ export class QualityController {
       antialias: g.antialias,
       fpsCap: g.fpsCap,
       interpolationDelayMs: s.network.interpolationDelayMs,
+      // NEVER from the adaptive ladder: dropping frames under load is a quality
+      // trade, dropping the player's inputs is not one they agreed to.
+      intentHz: s.network.intentHz,
       damageNumberCap: g.damageNumberCap,
       // scope is a READABILITY choice, never an adaptive one: the ladder may
       // shrink the density cap under load, but it must not silently stop

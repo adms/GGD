@@ -46,6 +46,11 @@ import type { MobKind } from "./components";
 import type { LastHitMode } from "./mobBoss";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
+// #L1 — 殭屍王在場 → 回合延長. The round clock rides the ring's rules (it is the
+// only per-combat clock the sim has); this module owns the one moment a king
+// enters the world, so it is the module that trips it. No cycle: fireRing.ts
+// imports only SimWorld/ids/vec2.
+import { extendRoundForBoss, fireRingIgnitionTick } from "./fireRing";
 import { Champions } from "./content/registry";
 import { Stat } from "./stats/statTypes";
 import { championStatBase } from "./stats/attributes";
@@ -1584,14 +1589,93 @@ export function parseMobVisualJson(json: string | null | undefined): MobVisualTa
   return { tintStrength: t };
 }
 
-/** Alive mobs currently in `zone` (dead mobs are destroyed same-tick). */
+/**
+ * IS `id` A MOB THAT IS **CURRENTLY ALIVE** — as opposed to a CORPSE that has
+ * not been swept yet? (L3, owner 2026-07-30: 「如果場上還有沒消滅的各種殭屍,
+ * 就算場上只剩同一隊伍也不會結束,除非玩家全滅」.)
+ *
+ * ⚠️ THE CORPSE CASE IS THE WHOLE REASON THIS PREDICATE EXISTS, and it is the
+ * one that is easy to get wrong. `world.mob` is NOT emptied at the instant a
+ * zombie dies:
+ *
+ *   · WITHIN A TICK — `deathSystem` (slot 9) flips `health.alive = false`, and
+ *     `mobSystem` (slot 9d′) is what actually `world.destroy`s the body, at the
+ *     END of its own pass. Anything reading between those two slots — a hook, a
+ *     future system, a mid-tick host probe — sees `world.mob` still holding the
+ *     corpse.
+ *   · ACROSS TICKS — `mobSystem` bails on its very first line when
+ *     `world.combatActive === false` (and when `mobRules === null` /
+ *     `mobTicks < 0`), so a zombie that died on the tick combat was frozen
+ *     stays in `world.mob` with `alive === false` until `endCombatMobs` runs.
+ *
+ * A round-end rule that counted `world.mob.size` — or that only checked
+ * membership — would therefore see a battlefield full of "zombies" that are
+ * lying on the floor with 0 hp, and would refuse to ever end the round. Both
+ * `alive` AND `hp > 0` are checked because they are set by DIFFERENT writers
+ * (`deathSystem` sets both; damage resolution lowers `hp` earlier in the tick),
+ * so between slot 8 and slot 9 a zombie is at 0 hp with `alive` still true.
+ *
+ * `world.mob.has(id)` is part of the answer, not an assertion: the caller may
+ * hand in ANY entity id, and a champion — who is very much alive — must answer
+ * `false` here.
+ */
+export function isMobAlive(world: SimWorld, id: EntityId): boolean {
+  if (!world.mob.has(id)) return false;
+  const hp = world.health.get(id);
+  return hp !== undefined && hp.alive && hp.hp > 0;
+}
+
+/**
+ * Alive mobs currently in `zone` — 一般殭屍 + 特殊殭屍 + 殭屍王 together, since
+ * every one of them is 「沒消滅的殭屍」 as far as the round-end rule is concerned.
+ *
+ * Shares ONE liveness predicate with {@link anyMobsAlive} on purpose: the wave
+ * cap and the round-end gate must never be able to disagree about what a live
+ * zombie is (two copies is exactly how a cap that says 「滿了」 ends up next to a
+ * gate that says 「清空了」).
+ */
 export function mobsAliveInZone(world: SimWorld, zone: number): number {
   let n = 0;
   for (const [id, m] of world.mob) {
     if (m.zone !== zone) continue;
-    if (world.health.get(id)?.alive) n++;
+    if (isMobAlive(world, id)) n++;
   }
   return n;
+}
+
+/**
+ * 場上還有沒有「沒消滅的殭屍」? — the L3 round-end query, for the host.
+ *
+ * The owner's rule (2026-07-30) has three ways a round may end, and this answers
+ * the middle one:
+ *   · 玩家全滅            → end, mobs or no mobs;
+ *   · 只剩一隊存活 **且** `!anyMobsAlive(world, zone)` → end;
+ *   · 時間到              → end.
+ *
+ * WHY A BOOLEAN AND NOT `mobsAliveInZone(...) > 0`: this is called every combat
+ * tick, per pairing, and round 9 holds up to 50 zombies per zone. The count
+ * function has to walk the whole store; this one stops at the first survivor.
+ * Identical answer by construction — same predicate, same iteration — so the
+ * two can never drift apart.
+ *
+ * DETERMINISTIC. Pure read: no `world.rng` draw, no wall clock, no mutation. The
+ * result is a fold that is blind to iteration order (`||` over the store), so
+ * `world.mob`'s insertion order — which differs between a live match and a
+ * replay only if the spawns differed, in which case the answer SHOULD differ —
+ * cannot flip it. That is why this one does NOT need the sorted-iteration dance
+ * the ordering-sensitive passes in this file use.
+ *
+ * ⚠️ THE DECISION ITSELF IS NOT HERE. 「宣佈回合勝利」 lives in
+ * `apps/game-server/src/match/MatchController.ts` (`checkCombatEnd` for a duel,
+ * `checkRoyaleEnd` for the finale), which is a different lane; this module only
+ * supplies the fact. See the task write-up for the exact wiring.
+ */
+export function anyMobsAlive(world: SimWorld, zone: number): boolean {
+  for (const [id, m] of world.mob) {
+    if (m.zone !== zone) continue;
+    if (isMobAlive(world, id)) return true;
+  }
+  return false;
 }
 
 /**
@@ -1690,6 +1774,15 @@ export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: numb
  * rim like everything else, deterministically, without touching `world.rng`.
  * `kills` is in the key so two kings summoned in one zone in one match do not
  * stack on the same rim point.
+ *
+ * #L1 — SUMMONING A KING ALSO PUSHES THE ROUND'S TWO DEADLINES OUT (owner
+ * 2026-07-30 「殭屍王出現回合結束時間延長 3 分鐘(火圈時間也延後)…避免打到一半
+ * 結果回合結束」). It happens HERE, not at the MobSystem call site, because this
+ * is the one function through which a king actually enters the world — the
+ * shipped path, the replay path and any future caller all pass through it, so
+ * no caller can spawn a king that does not extend the round (failure mode ⑤:
+ * 被測的不是出貨的那個). The arithmetic lives in `sim/fireRing.ts`, next to the
+ * clock it moves.
  */
 export function summonMobBoss(
   world: SimWorld,
@@ -1705,6 +1798,11 @@ export function summonMobBoss(
   const profile = mobSpawnProfile(world, zone, rules, "boss");
   const pos = mobSpawnPos(world, zone, BOSS_SPAWN_WAVE, kills, profile.radius);
   const id = spawnMobBody(world, zone, "boss", profile, pos);
+  // #L1 — 「回合結束時間延長 3 分鐘(火圈時間也延後)」. AFTER the body exists, so a
+  // summon that could not happen cannot move the clock, and BEFORE the event, so
+  // the announcement carries the extension that is already in force rather than
+  // one a later line still has to apply.
+  const extendedTicks = extendRoundForBoss(world);
   world.emit("mobBossSpawn", {
     id,
     zone,
@@ -1714,6 +1812,13 @@ export function summonMobBoss(
     summoner,
     summonerSeatId: world.team.get(summoner)?.seatId ?? -1,
     kills,
+    // #L1 — the REAL number, read back out of `extendRoundForBoss`, not the
+    // authored `extendCombatSec`: a disarmed ring or a 0 knob extends nothing,
+    // and a broadcast that said 「延長 180 秒」 anyway would be a lie the player
+    // can time with a stopwatch. 0 = 「這場沒有延長」.
+    extendedTicks,
+    /** the ignition tick now IN FORCE — post-delay, for the HUD's ring cue */
+    fireRingStartTick: fireRingIgnitionTick(world),
   });
   return id;
 }

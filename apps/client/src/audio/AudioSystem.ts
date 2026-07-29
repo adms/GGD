@@ -42,6 +42,14 @@ import { audioSettings, type AudioSettingsStore } from "./audioSettings";
 import { BgmRotationStore, ACTIVE_BGM_VARIANTS, type BgmVariantMap } from "./bgmVariants";
 import { loopResumeOffsetSec } from "./scene";
 import { SFX_CORE, SFX_LOOPABLE, isLoopableSfx, sfxEventsForScene } from "./sfxManifest";
+import {
+  DEFAULT_SFX_PRELOAD_POLICY,
+  SFX_PRELOAD_POLICY_PATH,
+  clampSfxPreloadPolicy,
+  scenesToWarm,
+  sfxPreloadPolicyFromDoc,
+  type SfxPreloadPolicy,
+} from "./sfxPreloadPolicy";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
 import { withContentVersion } from "../content/assetVersion";
 
@@ -352,6 +360,14 @@ export class AudioSystem {
   private detachGestures: (() => void) | null = null;
   private unsubSettings: (() => void) | null = null;
   private bootPromise: Promise<boolean> | null = null;
+  /**
+   * SFX preload policy (task #63) — whether to warm ahead at all and how many
+   * scenes deep. Starts on the shipped defaults so the very first warm is
+   * correct even if the live doc is slow, missing or malformed, and is replaced
+   * once `loadPreloadPolicy` resolves.
+   */
+  private preloadPolicy: SfxPreloadPolicy = DEFAULT_SFX_PRELOAD_POLICY;
+  private preloadPolicyPromise: Promise<SfxPreloadPolicy> | null = null;
 
   constructor(opts: AudioSystemOptions = {}) {
     this.baseUrl = opts.baseUrl ?? AUDIO_CONTENT_BASE;
@@ -390,6 +406,10 @@ export class AudioSystem {
     if (this.disposed) return Promise.resolve(false);
     this.attachUnlockGestures(target);
     if (!this.bootPromise) {
+      // The preload POLICY is fetched alongside the map (a ~1 KB JSON) rather
+      // than awaited with it: the shipped defaults are already correct, so the
+      // first warm never has to wait on it, and a 404 simply keeps them.
+      void this.loadPreloadPolicy();
       this.bootPromise = this.loadMap();
     }
     return this.bootPromise;
@@ -441,21 +461,79 @@ export class AudioSystem {
   /**
    * Warm ONLY the always-on UI core (click/hover/type — the cues every screen
    * shares). Called on the unlock gesture; the rest of the SFX load per scene.
+   * Honours the `enabled` switch: preloading OFF means nothing is fetched up
+   * front at all, not "everything except the core".
    */
   prefetchCoreSfx(): void {
+    if (!this.preloadPolicy.enabled) return;
     this.warmSfxEvents(SFX_CORE);
   }
 
   /**
-   * Warm the SFX a scene actually uses, on scene entry (task #63). Deduped by
-   * the buffer cache, so re-entering a scene re-fetches nothing. A NO-OP until
-   * the AudioContext exists (pre-unlock): the unlock gesture warms whatever
-   * scene is current, and every later scene change warms itself here. Never a
-   * gate — anything this manifest omits still lazy-loads through `playSfx`.
+   * Warm the SFX a scene uses AND — `lookahead` hops deep — the SFX of the
+   * scenes that can follow it (task #63). Deduped by the buffer cache, so
+   * re-entering a scene, or a lookahead that already warmed the set, re-fetches
+   * nothing.
+   *
+   * The lookahead is the half that makes the manifest actually audible in time:
+   * warming combat's 56 files / 2.7 MB AT the combat edge starts the fetch on
+   * the same beat as `roundStart`, so the first swing of the round can still
+   * hit a cold buffer. With the shipped `lookahead: 1` that bucket is warmed on
+   * the INTERMISSION edge instead — the shop window — while the login screen
+   * still reaches nothing heavier than `lobby` (combat is three hops away).
+   *
+   * `scenesToWarm` returns the CURRENT scene first, and the fetches are issued
+   * in that order, so on a slow link the scene the player is in is never queued
+   * behind one they might enter next.
+   *
+   * A NO-OP until the AudioContext exists (pre-unlock): the unlock gesture warms
+   * whatever scene is current, and every later scene change warms itself here.
+   * Never a gate — anything the manifest omits still lazy-loads via `playSfx`.
    */
   preloadSceneSfx(scene: AudioScene | null): void {
     if (!scene) return;
-    this.warmSfxEvents(sfxEventsForScene(scene));
+    for (const s of scenesToWarm(scene, this.preloadPolicy)) {
+      this.warmSfxEvents(sfxEventsForScene(s));
+    }
+  }
+
+  /** The live SFX preload policy (diagnostics / tests / settings UI). */
+  get sfxPreloadPolicy(): SfxPreloadPolicy {
+    return this.preloadPolicy;
+  }
+
+  /**
+   * Install a preload policy directly (settings UI / editor live-reload /
+   * tests). Clamped, so an out-of-range `lookahead` can never turn the login
+   * screen back into the whole-catalogue fetch this task removed.
+   */
+  setPreloadPolicy(policy: unknown): SfxPreloadPolicy {
+    this.preloadPolicy = clampSfxPreloadPolicy(policy);
+    return this.preloadPolicy;
+  }
+
+  /**
+   * Fetch the live-editable policy doc (`content/audio-manifests/sfx-preload.json`).
+   * Single-flight and never throws: a missing / malformed / 404 doc keeps the
+   * shipped defaults, because a broken preload policy must degrade to "loads
+   * like before", never to silence.
+   */
+  loadPreloadPolicy(path: string = SFX_PRELOAD_POLICY_PATH): Promise<SfxPreloadPolicy> {
+    if (!this.preloadPolicyPromise) {
+      this.preloadPolicyPromise = (async () => {
+        try {
+          const res = await this.fetchFn(this.urlFor(path));
+          if (!res.ok) return this.preloadPolicy;
+          const parsed = sfxPreloadPolicyFromDoc(await res.json());
+          if (parsed) this.preloadPolicy = parsed;
+          return this.preloadPolicy;
+        } catch (err) {
+          this.warn(`sfx preload policy ${path} failed to load; using defaults`, err);
+          return this.preloadPolicy;
+        }
+      })();
+    }
+    return this.preloadPolicyPromise;
   }
 
   /**

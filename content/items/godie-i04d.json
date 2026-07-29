@@ -30,12 +30,17 @@
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.1,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "slow30",
-          "duration": 0.6,
-          "moveSpeedMult": 0.7
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "flat": 300
+          },
+          "radius": 5.0,
+          "maxTargets": 6,
+          "includeOrigin": true
         }
       ]
     }
@@ -45,6 +50,7 @@
   ],
   "icon": "assets/icons/items/godie-i04d.png",
   "craftRole": "final",
+  "requiresAttackType": "melee",
   "recipe": {
     "components": [
       "godie-i04b"

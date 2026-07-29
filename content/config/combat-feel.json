@@ -10,5 +10,9 @@
     "enabled": true,
     "walkEps": 0.5,
     "applyToMobs": true
+  },
+  "facing": {
+    "followThroughTicks": 3,
+    "instantCastTicks": 6
   }
 }

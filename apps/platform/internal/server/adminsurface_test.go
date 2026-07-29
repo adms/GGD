@@ -45,7 +45,7 @@ import (
 // walks the tree rather than reading this list.
 var adminGatedPackages = []string{
 	"ai", "approvelink", "combatenv", "contentoverlay",
-	"curation", "invite", "opsenv", "platformarchive",
+	"curation", "invite", "matchstats", "opsenv", "platformarchive",
 }
 
 func internalDir(t *testing.T) string {

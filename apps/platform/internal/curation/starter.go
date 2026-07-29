@@ -437,6 +437,14 @@ var (
 		// says WHAT EXISTS, the sim says WHO MAY BE OFFERED IT. Leaving it out of
 		// this list would make the item exist and never once be rollable.
 		"endless-edge", // 無盡連刃（近戰限定）
+		// #210 傳說池擴充 —— owner 「目前太少，很容易被抽完」. 15 -> 20.
+		// 只收 craftRole != "final"/"quest" 的道具: final 依 owner 規則一留在
+		// 商店貨架 (task #70), quest 是三選一那一面 —— 一件道具只能有一個入口。
+		"godie-i061", // 死之王的神盾（焚身·每秒範圍傷害）
+		"godie-i063", // 防狼電擊棒（電擊·最多 4 人）
+		"godie-i06o", // 血染八月
+		"godie-i060", // 死之王的意志
+		"godie-i06a", // 妖物碎殺牙
 	}
 
 	// DRAFT items — EXACTLY the quest set, and nothing else (owner rule 2, task

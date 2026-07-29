@@ -21,13 +21,17 @@
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.3,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "flat": 30
-          }
+            "flat": 100
+          },
+          "radius": 3.0,
+          "maxTargets": 4,
+          "includeOrigin": true
         }
       ]
     }

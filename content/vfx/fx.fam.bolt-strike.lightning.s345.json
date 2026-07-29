@@ -1,0 +1,93 @@
+{
+  "id": "fx.fam.bolt-strike.lightning.s345",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 1.173
+  },
+  "mode": "burst",
+  "burstCount": 30,
+  "lifetimeSec": {
+    "min": 0.176,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.956,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.946,
+      0.9676,
+      1,
+      1
+    ],
+    "end": [
+      0.126,
+      0.1476,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.956
+    ],
+    [
+      0.08,
+      2.277
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.946,
+        0.9676,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.7,
+        0.82,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.35,
+        0.41,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.126,
+        0.1476,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": -26,
+  "speed": {
+    "min": 2,
+    "max": 5
+  },
+  "texture": "assets/textures/particles/trace_01.png",
+  "stretched": true,
+  "tailLength": 3.2
+}

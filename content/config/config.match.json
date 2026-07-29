@@ -18,7 +18,11 @@
       "minRadius": 0.5,
       "burnPctPerSecStart": 0.04,
       "burnPctPerSecEnd": 0.2,
-      "maxPctPerSec": 1
+      "maxPctPerSec": 1,
+      "boss": {
+        "extendCombatSec": 180,
+        "delayFireRingSec": 180
+      }
     },
     "resolutionSec": 6
   },

@@ -226,6 +226,39 @@ var knownOrphans = map[string]string{
 	"PUT /api/v1/admin/slack-notify": "#209 — Slack webhook config write (enable + webhook). No admin-console panel " +
 		"yet; env drives it meanwhile. Wire a toggle in apps/admin/src like ai.ts and delete this line.",
 
+	// ---- #207 per-match analysis ledger (覆盤) -----------------------------
+	// THREE ENTRIES, TWO DIFFERENT DEBTS. Written by the lane that shipped the
+	// platform half (internal/matchstats); both halves it is waiting on belong
+	// to other lanes in this batch, so neither could be wired here.
+	//
+	// (a) The INGEST route is service-to-service, like the settlement callback
+	//     right above it — a browser caller would be the bug, since a client
+	//     that could post its own ledger could write its own 覆盤 numbers. It
+	//     is in THIS list rather than nonFrontendCallers for one reason: that
+	//     list demands a caller file the test can grep, and apps/game-server
+	//     has no sender yet. This is the same story as the two heartbeat lines
+	//     above, and it takes the same fix: when the game-server ships the
+	//     POST, MOVE this line into nonFrontendCallers naming that file.
+	//     Anti-rot #2 only watches the front-ends, so it cannot retire a
+	//     service-to-service entry for you.
+	//
+	// (b) The two ADMIN READS are ordinary missing-UI debt: the 後台覆盤 screen
+	//     that lists matches and opens one ledger. Wire it in apps/admin/src
+	//     (one typed wrapper per route in api.ts, same house style as
+	//     ContentOverlayPage) → delete both lines.
+	"POST /api/v1/internal/match-stats": "#207 — the game-server's per-match ANALYSIS LEDGER submission " +
+		"(HMAC service-to-service, never public: a client that could post this could write its own review " +
+		"numbers). The platform half is complete and version-stamps every record; nothing in " +
+		"apps/game-server sends it yet. When the sender ships, move this line to nonFrontendCallers " +
+		"naming that file — see the block comment above.",
+	"GET /api/v1/admin/match-stats/": "#207 — the 後台覆盤 index (one row per match, with the four " +
+		"version stamps the operator sorts by when comparing builds). Records are being persisted and " +
+		"they travel in the #243 migration archive, but no admin-console page lists them yet; wire it in " +
+		"apps/admin/src like ContentOverlayPage and delete this line.",
+	"GET /api/v1/admin/match-stats/{matchId}": "#207 — one match's full ledger (picks / casts / item " +
+		"transactions / declined 三選一). Same missing front half as the index route above; the data is on " +
+		"disk and unreachable from any screen until the console page exists.",
+
 	// ---- superseded / aspirational ----------------------------------------
 	"GET /api/v1/wallet/owns": "superseded, probably deletable: the client reads ownedChampions off the " +
 		"GET /wallet payload, so this per-champion probe has no caller. Either wire it or drop it — " +

@@ -31,6 +31,11 @@
  *                 ALL 113 champions on the PUBLIC tier, plus the drop-in
  *                 manifest contract for the generated per-champion voice pack
  *   sfxManifest   which SFX each scene warms (task #63: per-scene SFX preload)
+ *   sfxPreloadPolicy WHEN those sets are warmed: the scene-successor graph and
+ *                 the live-tunable enabled/lookahead knobs
+ *                 (`content/audio-manifests/sfx-preload.json`), so the 2.7 MB
+ *                 combat bucket is fetched during the shop rather than on the
+ *                 combat edge, and the login screen still fetches none of it
  *   victoryTaunt  round/match victory taunt VO — the line is DETERMINISTIC in
  *                 replicated state so every client hears the same joke (#93)
  *   spatial       PURE 3D sound-field geometry: world position + listener frame
@@ -61,6 +66,7 @@ export * from "./championVoice";
 export * from "./selectVoiceLadder";
 export * from "./contextualVoice";
 export * from "./sfxManifest";
+export * from "./sfxPreloadPolicy";
 export * from "./spatial";
 export * from "./combatSfxSpatial";
 export * from "./SpatialSfxQueue";

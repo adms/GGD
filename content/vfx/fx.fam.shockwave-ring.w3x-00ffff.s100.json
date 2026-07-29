@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.shockwave-ring.w3x-00ffff.s100",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.3
+  },
+  "mode": "burst",
+  "burstCount": 36,
+  "lifetimeSec": {
+    "min": 0.2,
+    "max": 0.52
+  },
+  "size": {
+    "start": 0.26,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.82,
+      1,
+      1,
+      1
+    ],
+    "end": [
+      0,
+      0.18,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.26
+    ],
+    [
+      0.14,
+      0.62
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.82,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0,
+        0.5,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0,
+        0.18,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "alpha",
+  "gravityY": -3,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/dirt_02.png"
+}

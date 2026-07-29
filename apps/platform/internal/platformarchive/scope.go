@@ -17,6 +17,7 @@ import (
 	"github.com/ggd/platform/internal/friend"
 	"github.com/ggd/platform/internal/gamelink"
 	"github.com/ggd/platform/internal/invite"
+	"github.com/ggd/platform/internal/matchstats"
 	"github.com/ggd/platform/internal/opsenv"
 	"github.com/ggd/platform/internal/room"
 	"github.com/ggd/platform/internal/wallet"
@@ -303,6 +304,38 @@ func Rules() []Rule {
 			for _, y := range childDirs(root, "matches") {
 				for _, m := range childDirs(root, "matches/"+y) {
 					out = append(out, "matches/"+y+"/"+m)
+				}
+			}
+			return out, nil
+		},
+	})
+
+	// match-stats/<YYYY>/<MM> — the #207 per-match ANALYSIS LEDGER, partitioned
+	// exactly like `matches` (matchstats.Collection mirrors
+	// gamelink.MatchCollection on purpose).
+	//
+	// IT RIDES IN THE `matches` GROUP RATHER THAN A NEW ONE. A new group would
+	// have to be named, sized and rendered in the console's export checklist,
+	// and apps/admin is owned by another lane in this batch — a group nobody
+	// can tick is a group that never travels. It also belongs there on the
+	// merits: it is the same data class (one row per match), it is opt-in with
+	// the settlement records it joins against, and an operator who takes
+	// 對戰紀錄 without the ledgers would land on a host whose 後台覆盤 screen is
+	// empty for every match it can list.
+	rules = append(rules, Rule{
+		Name: matchstats.CollectionPrefix + "/<YYYY>/<MM>", Group: GroupMatches,
+		Kind: KindDoc, Policy: PolicyAdditive,
+		ZH: "對戰覆盤帳本",
+		Match: func(col string) bool {
+			p := strings.Split(col, "/")
+			return len(p) == 3 && p[0] == matchstats.CollectionPrefix &&
+				segmentRe.MatchString(p[1]) && segmentRe.MatchString(p[2])
+		},
+		Enum: func(root string) ([]string, error) {
+			out := []string{}
+			for _, y := range childDirs(root, matchstats.CollectionPrefix) {
+				for _, m := range childDirs(root, matchstats.CollectionPrefix+"/"+y) {
+					out = append(out, matchstats.CollectionPrefix+"/"+y+"/"+m)
 				}
 			}
 			return out, nil

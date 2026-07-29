@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.ground-dust.nature.s80",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.24
+  },
+  "mode": "burst",
+  "burstCount": 36,
+  "lifetimeSec": {
+    "min": 0.23,
+    "max": 0.598
+  },
+  "size": {
+    "start": 0.208,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.91,
+      0.982,
+      0.892,
+      0.7
+    ],
+    "end": [
+      0.09,
+      0.162,
+      0.072,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.208
+    ],
+    [
+      0.14,
+      0.496
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.91,
+        0.982,
+        0.892,
+        0.7
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.5,
+        0.9,
+        0.4,
+        0.7
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.25,
+        0.45,
+        0.2,
+        0.294
+      ]
+    ],
+    [
+      1,
+      [
+        0.09,
+        0.162,
+        0.072,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": -3,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/dirt_02.png"
+}

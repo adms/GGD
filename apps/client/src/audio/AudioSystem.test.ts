@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { AudioSystem, shouldSilenceAudio, type BedEndedEvent } from "./AudioSystem";
 import { AudioSettingsStore } from "./audioSettings";
+import { DEFAULT_SFX_PRELOAD_POLICY } from "./sfxPreloadPolicy";
 import type { AudioMap } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -182,7 +183,7 @@ const flush = async (): Promise<void> => {
 /**
  * task #63: a map whose SFX keys line up with the scene manifest, so a scene
  * change warms a known subset. `uiClick` is core; `champSelectConfirm` belongs
- * to champSelect; `hit`/`death` belong to combat.
+ * to champSelect; `panelOpen` to intermission; `hit`/`death` to combat.
  */
 const SCENE_MAP: AudioMap = {
   bgm: {
@@ -192,6 +193,8 @@ const SCENE_MAP: AudioMap = {
   sfx: {
     uiClick: { files: ["assets/audio/sfx/ui-click.mp3"] }, // always-on core
     champSelectConfirm: { files: ["assets/audio/sfx/pick.mp3"] }, // champSelect scene
+    panelOpen: { files: ["assets/audio/sfx/shop-open.mp3"] }, // intermission scene
+    dragonRoar: { files: ["assets/audio/sfx/roar.mp3"] }, // menu scene
     hit: { files: ["assets/audio/sfx/fx/thud.mp3"] }, // combat scene
     death: { files: ["assets/audio/sfx/die.mp3"], cooldownMs: 0, maxConcurrent: 4 }, // combat tally
   },
@@ -793,6 +796,154 @@ describe("AudioSystem scene-scoped SFX preloading (audio-sfx-scene-preload)", ()
     sys.unlock();
     await flush();
     expect(rec.requested("thud.mp3")).toBe(true);
+    sys.dispose();
+  });
+});
+
+// task #63, second half: WHEN the scene sets are warmed. Warming combat's 2.7 MB
+// ON the combat edge means `roundStart` and the first swing race their own
+// fetch; the lookahead moves that bucket one scene earlier (the shop window)
+// while keeping the login screen empty. Every assertion below reads the ACTUAL
+// requests the system issued — never the manifest or the policy object, which
+// would pass just as happily if nothing was ever fetched.
+describe("AudioSystem preload lookahead (audio-sfx-preload-lookahead)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  /** a fetch that also serves an `audio.sfx-preload@1` policy doc */
+  function withPolicyDoc(
+    rec: { fetchFn: (url: string) => Promise<Response> },
+    doc: unknown,
+  ): (url: string) => Promise<Response> {
+    return (url: string) => {
+      if (url.includes("sfx-preload.json")) {
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(doc) } as Response);
+      }
+      return rec.fetchFn(url);
+    };
+  }
+
+  it("the combat set is already requested while the player is still in the shop", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    rec.reset();
+
+    sys.playBgm("intermission");
+    await flush();
+    // the scene the player is IN is warm…
+    expect(rec.requested("shop-open.mp3")).toBe(true);
+    // …and so is the one they are about to enter, BEFORE they enter it
+    expect(rec.requested("thud.mp3")).toBe(true);
+    expect(sys.scene).toBe("intermission"); // still shopping — not a late warm
+    sys.dispose();
+  });
+
+  it("the login screen still requests NO combat clip (combat is 3 hops away)", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("menu");
+    await flush();
+    expect(rec.requested("roar.mp3")).toBe(true); // menu's own cue
+    expect(rec.requested("thud.mp3")).toBe(false); // combat: not from here
+    expect(rec.requested("shop-open.mp3")).toBe(false); // intermission: not from here
+    sys.dispose();
+  });
+
+  it("lookahead 0 warms the current scene only — combat waits for its own edge", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.setPreloadPolicy({ enabled: true, lookahead: 0 });
+    sys.unlock();
+    await flush();
+    rec.reset();
+
+    sys.playBgm("intermission");
+    await flush();
+    expect(rec.requested("shop-open.mp3")).toBe(true);
+    expect(rec.requested("thud.mp3")).toBe(false); // no lookahead
+    sys.playBgm("combat");
+    await flush();
+    expect(rec.requested("thud.mp3")).toBe(true); // still warms itself on entry
+    sys.dispose();
+  });
+
+  it("disabled requests NOTHING up front — core included — and cues still play", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.setPreloadPolicy({ enabled: false, lookahead: 2 });
+    sys.unlock();
+    sys.playBgm("intermission");
+    sys.playBgm("combat");
+    await flush();
+    expect(rec.requested("ui-click.mp3")).toBe(false); // not even the UI core
+    expect(rec.requested("shop-open.mp3")).toBe(false);
+    expect(rec.requested("thud.mp3")).toBe(false);
+    // …and it is a PRELOAD switch, not a mute: the cue still lazy-loads
+    expect(sys.playSfx("hit")).toBe(true);
+    await flush();
+    expect(rec.requested("thud.mp3")).toBe(true);
+    sys.dispose();
+  });
+
+  it("the SHIPPED policy doc drives the real fetches (not just the object)", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({
+      fetchFn: withPolicyDoc(rec, { schema: "audio.sfx-preload@1", enabled: true, lookahead: 0 }),
+    });
+    await sys.loadMap();
+    await sys.loadPreloadPolicy();
+    expect(sys.sfxPreloadPolicy.lookahead).toBe(0);
+    sys.unlock();
+    await flush();
+    rec.reset();
+    sys.playBgm("intermission");
+    await flush();
+    expect(rec.requested("shop-open.mp3")).toBe(true);
+    expect(rec.requested("thud.mp3")).toBe(false); // the doc's 0 really applied
+    sys.dispose();
+  });
+
+  it("a missing / malformed policy doc keeps the shipped defaults", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const bad = build({ fetchFn: withPolicyDoc(rec, { schema: "nope", lookahead: 9 }) });
+    await bad.sys.loadPreloadPolicy();
+    expect(bad.sys.sfxPreloadPolicy).toEqual(DEFAULT_SFX_PRELOAD_POLICY);
+    bad.sys.dispose();
+
+    // 404 (no doc deployed at all)
+    const missing = build({ fetchFn: rec.fetchFn });
+    await missing.sys.loadPreloadPolicy();
+    expect(missing.sys.sfxPreloadPolicy).toEqual(DEFAULT_SFX_PRELOAD_POLICY);
+    missing.sys.dispose();
+  });
+
+  it("test-mode silence (#62) preloads NOTHING, at any lookahead", async () => {
+    cover("audio-sfx-preload-lookahead");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys, ctxRef } = build({ fetchFn: rec.fetchFn, silent: true });
+    await sys.loadMap();
+    sys.setPreloadPolicy({ enabled: true, lookahead: 4 });
+    sys.unlock();
+    sys.playBgm("intermission");
+    sys.playBgm("combat");
+    await flush();
+    expect(ctxRef()).toBeNull(); // no graph…
+    expect(rec.requested("ui-click.mp3")).toBe(false); // …so not a byte fetched
+    expect(rec.requested("shop-open.mp3")).toBe(false);
+    expect(rec.requested("thud.mp3")).toBe(false);
     sys.dispose();
   });
 });

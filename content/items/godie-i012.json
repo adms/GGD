@@ -23,11 +23,14 @@
       "on": "onBasicAttack",
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
             "flat": 44
-          }
+          },
+          "radius": 3.0,
+          "maxTargets": 4,
+          "includeOrigin": true
         }
       ]
     }
@@ -35,5 +38,6 @@
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "component"
+  "craftRole": "component",
+  "requiresAttackType": "ranged"
 }

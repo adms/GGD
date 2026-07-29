@@ -1,0 +1,94 @@
+{
+  "id": "fx.fam.blink.ki.s65",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.143,
+    "angleDeg": 22
+  },
+  "mode": "burst",
+  "burstCount": 22,
+  "lifetimeSec": {
+    "min": 0.07,
+    "max": 0.196
+  },
+  "size": {
+    "start": 0.137,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9748,
+      0.8956,
+      0.9
+    ],
+    "end": [
+      0.18,
+      0.1548,
+      0.0756,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.137
+    ],
+    [
+      0.08,
+      0.325
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9748,
+        0.8956,
+        0.9
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.86,
+        0.42,
+        0.9
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.43,
+        0.21,
+        0.378
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1548,
+        0.0756,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "texture": "assets/textures/particles/trace_05.png",
+  "stretched": true,
+  "tailLength": 3
+}

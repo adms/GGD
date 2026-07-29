@@ -33,7 +33,14 @@ import {
   cachedAssetBytes,
   clearAssetByteCache,
 } from "./AssetManager";
-import { setModelLodManifest, setModelLodTier, type LodManifest } from "./modelLod";
+import {
+  applyModelLodPolicy,
+  setModelLodManifest,
+  setModelLodTier,
+  type LodManifest,
+} from "./modelLod";
+import { QualityController } from "./QualityController";
+import { SettingsStore } from "../settings/SettingsStore";
 
 /** the same tree the client fetches /content/ from */
 const CONTENT_DIR = join(__dirname, "../../../../content");
@@ -305,6 +312,150 @@ describe("AssetManager × model LOD tier", () => {
     const untiered = "assets/models/imported/holo.glb";
     expect(await new AssetManager(scene).load(untiered)).not.toBeNull();
     expect(requests.map((r) => r.url)).toEqual([`/content/${untiered}`]);
+
+    scene.dispose();
+    engine.dispose();
+  });
+});
+
+/**
+ * MODEL LOD × THE OPERATOR'S TABLE — the whole #115 chain, end to end.
+ *
+ * The block above proves a tier reaches the network. It does NOT prove the
+ * thing 第一守則 asks for: that `content/config/model-lod.json` is what decides
+ * the tier. Those are different claims, and the second one can fail on its own
+ * in two ways this file has to be able to see:
+ *
+ *   ② the doc parses and is never wired to anything;
+ *   ⑦ a test asserts `lodTierForPreset(...) === "mid"` — a PROPERTY of a pure
+ *     function — while the bytes on the wire stay full-fat.
+ *
+ * So these rebuild the shipped boot exactly as `main.tsx` does it (a real
+ * SettingsStore → a real QualityController → `setModelLodTier` on its params),
+ * then assert THE URL THAT WAS FETCHED. Nothing here reads a resolver's return
+ * value, and nothing hand-writes a tier.
+ */
+describe("AssetManager × the model-LOD policy doc", () => {
+  let controller: QualityController | null = null;
+  let unsub: (() => void) | null = null;
+
+  /** The shipped boot sequence from main.tsx, on an isolated settings store. */
+  function bootLikeMain(preset: "low" | "medium" | "high" | "auto"): void {
+    const store = new SettingsStore(null, false);
+    store.setPreset(preset);
+    controller = new QualityController(store);
+    controller.init();
+    setModelLodTier(controller.getParams().modelLod);
+    unsub = controller.subscribe((p) => setModelLodTier(p.modelLod));
+  }
+
+  beforeEach(() => {
+    installFetchStub();
+    clearAssetByteCache();
+    setModelLodManifest(
+      JSON.parse(
+        readFileSync(join(CONTENT_DIR, "assets/models/_lod.json"), "utf-8"),
+      ) as LodManifest,
+    );
+  });
+  afterEach(() => {
+    unsub?.();
+    unsub = null;
+    controller?.dispose();
+    controller = null;
+    if (realFetch) globalThis.fetch = realFetch;
+    clearAssetByteCache();
+    setModelLodManifest(null);
+    setModelLodTier("high");
+    applyModelLodPolicy(null); // back to DEFAULT_MODEL_LOD
+  });
+
+  it("ships the repo's own model-lod.json, and it puts the low preset on -small", async () => {
+    cover("asset-manager-lod-shipped-policy");
+    // the REAL doc off disk — not a fixture, so retiring the file fails here
+    applyModelLodPolicy(
+      JSON.parse(readFileSync(join(CONTENT_DIR, "config/model-lod.json"), "utf-8")),
+    );
+    bootLikeMain("low");
+
+    const { engine, scene } = makeScene();
+    await new AssetManager(scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([
+      "/content/assets/models/shop/merchant-small.glb",
+    ]);
+
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("an operator remapping low→mid changes the FILE ON THE WIRE, mid-session", async () => {
+    cover("asset-manager-lod-policy-drives-url");
+    bootLikeMain("low");
+    // shipped default first: low is -small
+    const a = makeScene();
+    await new AssetManager(a.scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([
+      "/content/assets/models/shop/merchant-small.glb",
+    ]);
+
+    // …the operator edits content/config/model-lod.json and it reaches the boot
+    // AFTER QualityController already published its params — the exact ordering
+    // that makes an un-notified controller pin the old tier for the session.
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: true,
+      presetTiers: { low: "mid", medium: "mid", high: "high", auto: "high" },
+    });
+
+    const b = makeScene();
+    await new AssetManager(b.scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([
+      "/content/assets/models/shop/merchant-small.glb",
+      "/content/assets/models/shop/merchant-mid.glb",
+    ]);
+
+    a.scene.dispose();
+    a.engine.dispose();
+    b.scene.dispose();
+    b.engine.dispose();
+  });
+
+  it("`enabled: false` is a real kill switch — the AUTHORED file goes on the wire", async () => {
+    cover("asset-manager-lod-kill-switch");
+    bootLikeMain("low");
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: false,
+      presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+    });
+
+    const { engine, scene } = makeScene();
+    const container = await new AssetManager(scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([`/content/${MERCHANT}`]);
+    expect(container).not.toBeNull(); // and it still loads
+
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("a policy naming a tier that was never generated for a model falls back, never 404s", async () => {
+    cover("asset-manager-lod-policy-fallback");
+    // holo.glb is under the generator's floor and has NO row in _lod.json
+    applyModelLodPolicy({
+      id: "model-lod",
+      schema: "config.model-lod@1",
+      enabled: true,
+      presetTiers: { low: "small", medium: "small", high: "small", auto: "small" },
+    });
+    bootLikeMain("high"); // even the HIGH preset now asks for -small
+
+    const { engine, scene } = makeScene();
+    const untiered = "assets/models/imported/holo.glb";
+    const container = await new AssetManager(scene).load(untiered);
+    expect(requests.map((r) => r.url)).toEqual([`/content/${untiered}`]);
+    expect(container).not.toBeNull(); // the fallback LOADED — not a swallowed 404
 
     scene.dispose();
     engine.dispose();

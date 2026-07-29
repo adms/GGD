@@ -1,0 +1,94 @@
+{
+  "id": "fx.fam.tornado.w3x-9696ff.s135",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.378,
+    "angleDeg": 34
+  },
+  "mode": "burst",
+  "burstCount": 44,
+  "lifetimeSec": {
+    "min": 0.36,
+    "max": 0.864
+  },
+  "size": {
+    "start": 0.312,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9259,
+      0.9259,
+      1,
+      0.9
+    ],
+    "end": [
+      0.1059,
+      0.1059,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.312
+    ],
+    [
+      0.1,
+      0.743
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9259,
+        0.9259,
+        1,
+        0.9
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.5882,
+        0.5882,
+        1,
+        0.9
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.2941,
+        0.2941,
+        0.5,
+        0.378
+      ]
+    ],
+    [
+      1,
+      [
+        0.1059,
+        0.1059,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 4.2,
+  "speed": {
+    "min": 3,
+    "max": 7
+  },
+  "texture": "assets/textures/particles/smoke_03.png",
+  "stretched": true,
+  "tailLength": 2
+}

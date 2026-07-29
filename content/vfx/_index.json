@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "6d80ed88bd48",
+  "hash": "47b61a6de18e",
   "entries": [
     {
       "id": "fx.barkskin",
@@ -37,6 +37,474 @@
       "path": "vfx/fx.ember-bolt-cast.json",
       "hash": "b4456922de96",
       "size": 664
+    },
+    {
+      "id": "fx.fam.blink.arcane.s65",
+      "path": "vfx/fx.fam.blink.arcane.s65.json",
+      "hash": "9963e29cabfa",
+      "size": 1140
+    },
+    {
+      "id": "fx.fam.blink.arcane.s90",
+      "path": "vfx/fx.fam.blink.arcane.s90.json",
+      "hash": "9ed6e67e5d09",
+      "size": 1139
+    },
+    {
+      "id": "fx.fam.blink.ki.s65",
+      "path": "vfx/fx.fam.blink.ki.s65.json",
+      "hash": "2d3417bbd804",
+      "size": 1139
+    },
+    {
+      "id": "fx.fam.blink.lightning.s90",
+      "path": "vfx/fx.fam.blink.lightning.s90.json",
+      "hash": "c93a5df7a833",
+      "size": 1140
+    },
+    {
+      "id": "fx.fam.bolt-strike.lightning.s115",
+      "path": "vfx/fx.fam.bolt-strike.lightning.s115.json",
+      "hash": "fe72d1b0a9d6",
+      "size": 1125
+    },
+    {
+      "id": "fx.fam.bolt-strike.lightning.s345",
+      "path": "vfx/fx.fam.bolt-strike.lightning.s345.json",
+      "hash": "d286cf9b8aed",
+      "size": 1125
+    },
+    {
+      "id": "fx.fam.bolt-strike.physical.s345",
+      "path": "vfx/fx.fam.bolt-strike.physical.s345.json",
+      "hash": "f7fb6da4bfff",
+      "size": 1129
+    },
+    {
+      "id": "fx.fam.breath.blood.s110",
+      "path": "vfx/fx.fam.breath.blood.s110.json",
+      "hash": "89bf4f351372",
+      "size": 1144
+    },
+    {
+      "id": "fx.fam.breath.nature.s110",
+      "path": "vfx/fx.fam.breath.nature.s110.json",
+      "hash": "60e46efe038c",
+      "size": 1135
+    },
+    {
+      "id": "fx.fam.burst.fire.s100",
+      "path": "vfx/fx.fam.burst.fire.s100.json",
+      "hash": "eaee70b827cd",
+      "size": 1064
+    },
+    {
+      "id": "fx.fam.burst.fire.s105",
+      "path": "vfx/fx.fam.burst.fire.s105.json",
+      "hash": "795b6fac7c73",
+      "size": 1066
+    },
+    {
+      "id": "fx.fam.burst.holy.s100",
+      "path": "vfx/fx.fam.burst.holy.s100.json",
+      "hash": "422a475e08db",
+      "size": 1076
+    },
+    {
+      "id": "fx.fam.burst.ki.s150",
+      "path": "vfx/fx.fam.burst.ki.s150.json",
+      "hash": "b158212478df",
+      "size": 1076
+    },
+    {
+      "id": "fx.fam.burst.physical.s100",
+      "path": "vfx/fx.fam.burst.physical.s100.json",
+      "hash": "0725831f5f1a",
+      "size": 1080
+    },
+    {
+      "id": "fx.fam.burst.physical.s105",
+      "path": "vfx/fx.fam.burst.physical.s105.json",
+      "hash": "d7cefac1d434",
+      "size": 1082
+    },
+    {
+      "id": "fx.fam.burst.w3x-646464.s100",
+      "path": "vfx/fx.fam.burst.w3x-646464.s100.json",
+      "hash": "628a50cbb26e",
+      "size": 1112
+    },
+    {
+      "id": "fx.fam.burst.w3x-646464.s150",
+      "path": "vfx/fx.fam.burst.w3x-646464.s150.json",
+      "hash": "2e2c55f6ecec",
+      "size": 1114
+    },
+    {
+      "id": "fx.fam.burst.w3x-ff0000.s150",
+      "path": "vfx/fx.fam.burst.w3x-ff0000.s150.json",
+      "hash": "87d47f59adcd",
+      "size": 1044
+    },
+    {
+      "id": "fx.fam.burst.w3x-ff0000.s170",
+      "path": "vfx/fx.fam.burst.w3x-ff0000.s170.json",
+      "hash": "48cf096b17a6",
+      "size": 1044
+    },
+    {
+      "id": "fx.fam.burst.w3x-ffaaaa.s100",
+      "path": "vfx/fx.fam.burst.w3x-ffaaaa.s100.json",
+      "hash": "96b35e2ab958",
+      "size": 1074
+    },
+    {
+      "id": "fx.fam.cloud.physical.s120",
+      "path": "vfx/fx.fam.cloud.physical.s120.json",
+      "hash": "e92143c1574b",
+      "size": 1090
+    },
+    {
+      "id": "fx.fam.cloud.void.s180",
+      "path": "vfx/fx.fam.cloud.void.s180.json",
+      "hash": "99c55bdd75e8",
+      "size": 1098
+    },
+    {
+      "id": "fx.fam.cloud.wind.s120",
+      "path": "vfx/fx.fam.cloud.wind.s120.json",
+      "hash": "f7308ff16733",
+      "size": 1104
+    },
+    {
+      "id": "fx.fam.dissipate.physical.s125",
+      "path": "vfx/fx.fam.dissipate.physical.s125.json",
+      "hash": "e03c8c2e6715",
+      "size": 1093
+    },
+    {
+      "id": "fx.fam.dissipate.void.s85",
+      "path": "vfx/fx.fam.dissipate.void.s85.json",
+      "hash": "0c42f3e5180f",
+      "size": 1102
+    },
+    {
+      "id": "fx.fam.dissipate.w3x-0a0a0a.s100",
+      "path": "vfx/fx.fam.dissipate.w3x-0a0a0a.s100.json",
+      "hash": "5f815179ec85",
+      "size": 1124
+    },
+    {
+      "id": "fx.fam.dissipate.w3x-ff0000.s85",
+      "path": "vfx/fx.fam.dissipate.w3x-ff0000.s85.json",
+      "hash": "1a1f0ea65f90",
+      "size": 1056
+    },
+    {
+      "id": "fx.fam.flame-pillar.w3x-ff0000.s115",
+      "path": "vfx/fx.fam.flame-pillar.w3x-ff0000.s115.json",
+      "hash": "c536de0a01b0",
+      "size": 1109
+    },
+    {
+      "id": "fx.fam.ground-dust.earth.s80",
+      "path": "vfx/fx.fam.ground-dust.earth.s80.json",
+      "hash": "4200eb33fdb9",
+      "size": 1104
+    },
+    {
+      "id": "fx.fam.ground-dust.ki.s120",
+      "path": "vfx/fx.fam.ground-dust.ki.s120.json",
+      "hash": "8b3e42af3299",
+      "size": 1087
+    },
+    {
+      "id": "fx.fam.ground-dust.nature.s80",
+      "path": "vfx/fx.fam.ground-dust.nature.s80.json",
+      "hash": "c065c05dc2fa",
+      "size": 1088
+    },
+    {
+      "id": "fx.fam.kaboom.fire.s115",
+      "path": "vfx/fx.fam.kaboom.fire.s115.json",
+      "hash": "d7becc5ab42e",
+      "size": 1069
+    },
+    {
+      "id": "fx.fam.level-up.holy.s90",
+      "path": "vfx/fx.fam.level-up.holy.s90.json",
+      "hash": "c0dc1ba727c5",
+      "size": 1140
+    },
+    {
+      "id": "fx.fam.level-up.ki.s65",
+      "path": "vfx/fx.fam.level-up.ki.s65.json",
+      "hash": "da8e9e8e3412",
+      "size": 1138
+    },
+    {
+      "id": "fx.fam.light-column.arcane.s100",
+      "path": "vfx/fx.fam.light-column.arcane.s100.json",
+      "hash": "4858bdf76376",
+      "size": 1142
+    },
+    {
+      "id": "fx.fam.light-column.arcane.s240",
+      "path": "vfx/fx.fam.light-column.arcane.s240.json",
+      "hash": "b0d75d091467",
+      "size": 1144
+    },
+    {
+      "id": "fx.fam.light-column.fire.s150",
+      "path": "vfx/fx.fam.light-column.fire.s150.json",
+      "hash": "516b9839166c",
+      "size": 1131
+    },
+    {
+      "id": "fx.fam.light-column.holy.s100",
+      "path": "vfx/fx.fam.light-column.holy.s100.json",
+      "hash": "e17582673c32",
+      "size": 1143
+    },
+    {
+      "id": "fx.fam.light-column.holy.s150",
+      "path": "vfx/fx.fam.light-column.holy.s150.json",
+      "hash": "862a951e4cae",
+      "size": 1143
+    },
+    {
+      "id": "fx.fam.light-column.ice.s100",
+      "path": "vfx/fx.fam.light-column.ice.s100.json",
+      "hash": "1a691f2b4530",
+      "size": 1139
+    },
+    {
+      "id": "fx.fam.light-column.w3x-ff00ff.s205",
+      "path": "vfx/fx.fam.light-column.w3x-ff00ff.s205.json",
+      "hash": "c36c52b632b9",
+      "size": 1113
+    },
+    {
+      "id": "fx.fam.mark.w3x-ff6400.s125",
+      "path": "vfx/fx.fam.mark.w3x-ff6400.s125.json",
+      "hash": "8fc55b37cd75",
+      "size": 1071
+    },
+    {
+      "id": "fx.fam.mark.w3x-ff6400.s85",
+      "path": "vfx/fx.fam.mark.w3x-ff6400.s85.json",
+      "hash": "85383d2c8555",
+      "size": 1068
+    },
+    {
+      "id": "fx.fam.mirror-image.arcane.s100",
+      "path": "vfx/fx.fam.mirror-image.arcane.s100.json",
+      "hash": "2ee22c23758a",
+      "size": 1083
+    },
+    {
+      "id": "fx.fam.mirror-image.holy.s150",
+      "path": "vfx/fx.fam.mirror-image.holy.s150.json",
+      "hash": "76fa60a8e74a",
+      "size": 1087
+    },
+    {
+      "id": "fx.fam.mirror-image.physical.s100",
+      "path": "vfx/fx.fam.mirror-image.physical.s100.json",
+      "hash": "6a7183a6f52d",
+      "size": 1088
+    },
+    {
+      "id": "fx.fam.mirror-image.physical.s150",
+      "path": "vfx/fx.fam.mirror-image.physical.s150.json",
+      "hash": "105c6c631111",
+      "size": 1091
+    },
+    {
+      "id": "fx.fam.mirror-image.void.s100",
+      "path": "vfx/fx.fam.mirror-image.void.s100.json",
+      "hash": "951def942b02",
+      "size": 1096
+    },
+    {
+      "id": "fx.fam.missile.fire.s205",
+      "path": "vfx/fx.fam.missile.fire.s205.json",
+      "hash": "2aabaa051e3a",
+      "size": 1123
+    },
+    {
+      "id": "fx.fam.portal.holy.s160",
+      "path": "vfx/fx.fam.portal.holy.s160.json",
+      "hash": "52baa7416630",
+      "size": 1149
+    },
+    {
+      "id": "fx.fam.portal.void.s160",
+      "path": "vfx/fx.fam.portal.void.s160.json",
+      "hash": "ed7859edd4c9",
+      "size": 1161
+    },
+    {
+      "id": "fx.fam.resurrect.fire.s95",
+      "path": "vfx/fx.fam.resurrect.fire.s95.json",
+      "hash": "ea0d04bca33a",
+      "size": 1129
+    },
+    {
+      "id": "fx.fam.resurrect.holy.s95",
+      "path": "vfx/fx.fam.resurrect.holy.s95.json",
+      "hash": "66fce8b9fc3c",
+      "size": 1141
+    },
+    {
+      "id": "fx.fam.resurrect.lightning.s95",
+      "path": "vfx/fx.fam.resurrect.lightning.s95.json",
+      "hash": "7218537e8d5d",
+      "size": 1141
+    },
+    {
+      "id": "fx.fam.resurrect.sound.s95",
+      "path": "vfx/fx.fam.resurrect.sound.s95.json",
+      "hash": "c2935fc939f5",
+      "size": 1152
+    },
+    {
+      "id": "fx.fam.resurrect.w3x-ff0000.s170",
+      "path": "vfx/fx.fam.resurrect.w3x-ff0000.s170.json",
+      "hash": "d8f038613988",
+      "size": 1108
+    },
+    {
+      "id": "fx.fam.shine.ki.s150",
+      "path": "vfx/fx.fam.shine.ki.s150.json",
+      "hash": "833094387fea",
+      "size": 1074
+    },
+    {
+      "id": "fx.fam.shine.nature.s150",
+      "path": "vfx/fx.fam.shine.nature.s150.json",
+      "hash": "010c56c9d2f8",
+      "size": 1076
+    },
+    {
+      "id": "fx.fam.shockwave-ring.arcane.s100",
+      "path": "vfx/fx.fam.shockwave-ring.arcane.s100.json",
+      "hash": "6183f6796c96",
+      "size": 1078
+    },
+    {
+      "id": "fx.fam.shockwave-ring.arcane.s150",
+      "path": "vfx/fx.fam.shockwave-ring.arcane.s150.json",
+      "hash": "004e0bd5004c",
+      "size": 1079
+    },
+    {
+      "id": "fx.fam.shockwave-ring.earth.s100",
+      "path": "vfx/fx.fam.shockwave-ring.earth.s100.json",
+      "hash": "0df3cc4dc37a",
+      "size": 1095
+    },
+    {
+      "id": "fx.fam.shockwave-ring.fire.s100",
+      "path": "vfx/fx.fam.shockwave-ring.fire.s100.json",
+      "hash": "df6aaebb21ab",
+      "size": 1067
+    },
+    {
+      "id": "fx.fam.shockwave-ring.fire.s150",
+      "path": "vfx/fx.fam.shockwave-ring.fire.s150.json",
+      "hash": "44a0e28bac4b",
+      "size": 1068
+    },
+    {
+      "id": "fx.fam.shockwave-ring.holy.s150",
+      "path": "vfx/fx.fam.shockwave-ring.holy.s150.json",
+      "hash": "8fbdff4c028a",
+      "size": 1080
+    },
+    {
+      "id": "fx.fam.shockwave-ring.ki.s100",
+      "path": "vfx/fx.fam.shockwave-ring.ki.s100.json",
+      "hash": "12cc63b7e5f3",
+      "size": 1077
+    },
+    {
+      "id": "fx.fam.shockwave-ring.lightning.s100",
+      "path": "vfx/fx.fam.shockwave-ring.lightning.s100.json",
+      "hash": "cd65a7c2ad42",
+      "size": 1079
+    },
+    {
+      "id": "fx.fam.shockwave-ring.lightning.s150",
+      "path": "vfx/fx.fam.shockwave-ring.lightning.s150.json",
+      "hash": "145daf70e906",
+      "size": 1080
+    },
+    {
+      "id": "fx.fam.shockwave-ring.physical.s100",
+      "path": "vfx/fx.fam.shockwave-ring.physical.s100.json",
+      "hash": "9f40dfe20064",
+      "size": 1083
+    },
+    {
+      "id": "fx.fam.shockwave-ring.physical.s150",
+      "path": "vfx/fx.fam.shockwave-ring.physical.s150.json",
+      "hash": "9905850bd19a",
+      "size": 1084
+    },
+    {
+      "id": "fx.fam.shockwave-ring.void.s100",
+      "path": "vfx/fx.fam.shockwave-ring.void.s100.json",
+      "hash": "49c8c6d2da16",
+      "size": 1091
+    },
+    {
+      "id": "fx.fam.shockwave-ring.void.s150",
+      "path": "vfx/fx.fam.shockwave-ring.void.s150.json",
+      "hash": "90e385fe2f19",
+      "size": 1092
+    },
+    {
+      "id": "fx.fam.shockwave-ring.void.s70",
+      "path": "vfx/fx.fam.shockwave-ring.void.s70.json",
+      "hash": "c86a4253dec2",
+      "size": 1094
+    },
+    {
+      "id": "fx.fam.shockwave-ring.w3x-00ffff.s100",
+      "path": "vfx/fx.fam.shockwave-ring.w3x-00ffff.s100.json",
+      "hash": "3b61155f0a36",
+      "size": 1044
+    },
+    {
+      "id": "fx.fam.shockwave-ring.w3x-00ffff.s150",
+      "path": "vfx/fx.fam.shockwave-ring.w3x-00ffff.s150.json",
+      "hash": "a80f648685d0",
+      "size": 1045
+    },
+    {
+      "id": "fx.fam.tornado.w3x-9696ff.s135",
+      "path": "vfx/fx.fam.tornado.w3x-9696ff.s135.json",
+      "hash": "17f33d2bdce0",
+      "size": 1158
+    },
+    {
+      "id": "fx.fam.tornado.w3x-c86464.s170",
+      "path": "vfx/fx.fam.tornado.w3x-c86464.s170.json",
+      "hash": "451d9561558f",
+      "size": 1180
+    },
+    {
+      "id": "fx.fam.tornado.wind.s100",
+      "path": "vfx/fx.fam.tornado.wind.s100.json",
+      "hash": "0759e7f33951",
+      "size": 1160
+    },
+    {
+      "id": "fx.fam.tornado.wind.s150",
+      "path": "vfx/fx.fam.tornado.wind.s150.json",
+      "hash": "69b91a6154cc",
+      "size": 1161
     },
     {
       "id": "fx.firestorm",

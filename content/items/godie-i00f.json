@@ -21,13 +21,17 @@
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.4,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "flat": 90
-          }
+            "flat": 225
+          },
+          "radius": 4.0,
+          "maxTargets": 5,
+          "includeOrigin": true
         }
       ]
     }
@@ -36,6 +40,7 @@
     "wc3-import"
   ],
   "craftRole": "final",
+  "requiresAttackType": "melee",
   "recipe": {
     "components": [
       "godie-i02x"

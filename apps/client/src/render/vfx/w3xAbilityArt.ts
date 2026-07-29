@@ -54,7 +54,9 @@
  * This module is PURE DATA + lookups. It imports nothing from `@babylonjs/*`,
  * so it stays importable from Node tests and the doc generator.
  */
+import type { ConfigVfxFamiliesDoc } from "@ggd/shared/content";
 import { abilityVfxKeys } from "./bindings";
+import { resolveFamilyArt } from "./familyTuning";
 
 /** One ability's promoted w3x effect. */
 export interface W3xAbilityArt {
@@ -392,9 +394,79 @@ export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
   },
 };
 
+/**
+ * THE SECOND SOURCE — evidence-bound FAMILY PROTOTYPES (`w3xFamilyArt.ts`).
+ *
+ * `W3X_ABILITY_ART` above can only promote an ability whose art SHIPPED as
+ * emitter docs, which is 34 of 668. The other proven abilities point at
+ * Blizzard stock models this repo does not have, so they get the family
+ * PROTOTYPE the owner asked for — the same shape, rescaled/recoloured with the
+ * map's own per-call-site numbers — instead of a shape guessed from their name.
+ *
+ * It is folded in HERE, inside `w3xArtFor`, and that is the whole integration:
+ * `VfxSystem.playCastVfx` already routes anything `w3xArtFor` claims through
+ * the rig (rung 1) → pooled docs (rung 2) → the `fx.prim.*` fallback (rung 3) →
+ * a spark (rung 4). A family row needs none of those rungs changed. If this
+ * function stopped answering, 258 casts would silently drop back to their name
+ * classification — which is why `familyArtIntegration.test.ts` asserts against
+ * `w3xArtFor` itself rather than against the table.
+ *
+ * The family row carries NO `extra`: a prototype is one emitter by
+ * construction, unlike a real WC3 effect which is a set.
+ */
+let familyRowCache: Map<string, W3xAbilityArt> | null = null;
+
+function familyRow(abilityId: string): W3xAbilityArt | undefined {
+  familyRowCache ??= new Map();
+  const hit = familyRowCache.get(abilityId);
+  if (hit) return hit;
+  const resolved = resolveFamilyArt(abilityId, activeFamilyTuning);
+  if (!resolved) return undefined;
+  const row: W3xAbilityArt = {
+    family: resolved.family,
+    w3aId: resolved.evidence?.w3aId ?? "",
+    provenance: familyProvenance(resolved.evidence?.provenance),
+    via: resolved.evidence ? `family:${resolved.evidence.via}` : "family:console",
+    primary: resolved.vfxKey,
+    extra: [],
+  };
+  familyRowCache.set(abilityId, row);
+  return row;
+}
+
+/**
+ * `W3xAbilityArt.provenance` predates this layer and names only the three
+ * AUTHOR-SET channels. The family layer also carries `jass-spawn` and
+ * `stock-inherited`, which have no slot in that union, so they are narrowed to
+ * their nearest sibling here — `jass-spawn` → `jass-literal` (both ARE JASS
+ * call sites), `stock-inherited` → `jass-literal` only because the union offers
+ * nothing weaker.
+ *
+ * ⚠️ That narrowing LOSES information, so nothing may report provenance off
+ * this field. The unnarrowed truth is `W3X_FAMILY_ART[id].provenance` and that
+ * is what `w3xFamilyArt.test.ts` and any report must read. This function exists
+ * solely so the old struct still type-checks.
+ */
+function familyProvenance(p: string | undefined): W3xAbilityArt["provenance"] {
+  return p === "w3a-override" ? "w3a-override" : p === "w3h-override" ? "w3h-override" : "jass-literal";
+}
+
+/** The console's live tuning doc, installed by the composition root. */
+let activeFamilyTuning: ConfigVfxFamiliesDoc | null = null;
+
+/**
+ * Install (or clear) the `config.vfx-families@1` overrides. Clears the memo, so
+ * an admin save takes effect on the next cast without a reload.
+ */
+export function setFamilyTuning(doc: ConfigVfxFamiliesDoc | null): void {
+  activeFamilyTuning = doc;
+  familyRowCache = null;
+}
+
 /** The promoted effect for an ability, or undefined when it keeps its primitive. */
 export function w3xArtFor(abilityId: string | undefined): W3xAbilityArt | undefined {
-  return abilityId ? W3X_ABILITY_ART[abilityId] : undefined;
+  if (!abilityId) return undefined;
+  return W3X_ABILITY_ART[abilityId] ?? familyRow(abilityId);
 }
 
 /**
@@ -427,7 +499,11 @@ let primitiveKeys: Record<string, string> | null = null;
  * visible cue; `VfxSystem` degrades them to a hit spark rather than to silence.
  */
 export function primitiveFallbackFor(abilityId: string | undefined): string | undefined {
-  if (!abilityId || !W3X_ABILITY_ART[abilityId]) return undefined;
+  // A FAMILY row needs this rung at least as much as a promoted row: its
+  // `fx.fam.*` doc is generated content, so a stale `contentVersion` or a
+  // missed `pnpm content:build` leaves it unresolvable — and 258 silent casts
+  // is a far bigger hole than 34. Same `bindings` classification, same rung 3.
+  if (!abilityId || !w3xArtFor(abilityId)) return undefined;
   primitiveKeys ??= abilityVfxKeys();
   return primitiveKeys[abilityId];
 }

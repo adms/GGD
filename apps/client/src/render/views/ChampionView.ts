@@ -43,6 +43,7 @@ import {
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { dissolveFrame } from "../deathDissolve";
 import { glbYawOffset } from "./glbFacing";
+import { isStandinBodyGlb } from "@ggd/shared/content/standinScale";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
 import {
@@ -277,6 +278,21 @@ export class ChampionView {
   /** The render scale actually applied to the adopted .glb — the height-normalized
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
+  /**
+   * TASK #77 —— 「回退到替身時該多大」,寫在 `bodyRoot` 上。
+   *
+   * `declaredScaleValue` 只在真的採用了一具 .glb 之後才存在。程序生成的體素
+   * 身體是**另一條路**,而且是三條回退路徑的共同終點:overlay 沒開 / manifest
+   * 沒有這一位 / `preferVoxelBody`(後台可切)。在此之前這條路上**完全沒有人
+   * 讀 relativeScale** —— `tryUpgradeToGlb` 在 preferVoxelBody 那一行就 return
+   * 了,`applyGrowthScale` 只寫 `bodyRoot.scaling.setAll(growthFactor)`。於是
+   * 30-002 變態紳士(地圖 usca 3.00)的整個 3× 變身梗在體素身體上是 1.0,
+   * 而且所有測試全綠(失敗形態 ②:算出來了但從沒送到畫面上)。
+   *
+   * 值來自 `standinRelativeScaleOf`,不是 `relativeScale` —— 替身正規化之後
+   * 「整個輪廓就是身體」,所以要的是地圖的 usca,不是 WC3 模型的身高比。
+   */
+  private standinScaleValue = 1;
   /**
    * TASK #247 airborne state.
    *
@@ -660,7 +676,12 @@ export class ChampionView {
     if (Math.abs(f - this.growthFactor) < 1e-4 && this.growthFactorWritten) return;
     this.growthFactor = f;
     this.growthFactorWritten = true;
-    this.bodyRoot.scaling.setAll(f);
+    // #77: the procedural figure carries the champion's STAND-IN size, exactly
+    // as the adopted glb below carries `declaredScaleValue`. Scaling from
+    // `bodyRoot`'s origin keeps the feet on y=0 (every box is placed at a
+    // positive voxel-px offset from it), which is why no re-ground is needed
+    // here while `glbRoot` does need one.
+    this.bodyRoot.scaling.setAll(this.standinScaleValue * f);
     this.blobShadow.scaling.setAll(f);
     if (this.glbRoot) {
       if (this.declaredScaleValue === null) {
@@ -1383,8 +1404,34 @@ export class ChampionView {
    * bigger (giants/mecha). It comes from content/models/_standin-overrides.json
    * via EntityViewRegistry.modelOverrideFor and is the ONLY size-exception knob —
    * the doc's raw `scale` no longer sets the on-screen size.
+   *
+   * `standinRelativeScale` (task #77) is the SAME knob for the other body: the
+   * generated box-man the champion falls back to when its own model is not
+   * there. It is a separate number because `relativeScale` stopped being valid
+   * for that body at GH#31 — see `packages/shared/src/content/standinScale.ts`
+   * for the derivation and why 6.795 on a stand-in is a 12.2u champion.
+   * Defaults to `relativeScale`, i.e. the pre-#77 behaviour, so a caller that
+   * has only one number keeps exactly what it had.
    */
-  tryUpgradeToGlb(assets: AssetManager, doc: ModelDoc | null, relativeScale = 1): void {
+  tryUpgradeToGlb(
+    assets: AssetManager,
+    doc: ModelDoc | null,
+    relativeScale = 1,
+    standinRelativeScale = relativeScale,
+  ): void {
+    // #77 — recorded on EVERY call, including the ones that return early below.
+    // The registry calls this each frame until `upgradeAttempted` latches, and
+    // the FIRST calls arrive with `doc === null` (ContentDb has not settled);
+    // deferring the write to the adopt branch would leave the procedural figure
+    // un-sized for exactly the champions that never adopt anything.
+    const standin = standinRelativeScale > 0 ? standinRelativeScale : 1;
+    if (standin !== this.standinScaleValue) {
+      this.standinScaleValue = standin;
+      // write it now: `applyGrowthScale` early-returns while the growth factor
+      // has not moved, so waiting for the next tier change would never happen.
+      this.growthFactorWritten = false;
+      this.applyGrowthScale(this.growthSinceMs + GROWTH_SCALE_EASE_MS);
+    }
     // TASK #231 — a champion whose recipe says `preferVoxelBody` has NO art of
     // its own: its modelKey points at one of the four shared stand-in meshes,
     // which is precisely the "44 heroes wearing 4 faces" problem. Adopting that
@@ -1447,7 +1494,13 @@ export class ChampionView {
         glbRoot.computeWorldMatrix(true);
         const native = glbRoot.getHierarchyBoundingVectors(true);
         const nativeH = native.max.y - native.min.y;
-        const rel = relativeScale > 0 ? relativeScale : 1;
+        // #77 —— 「這具網格是誰」決定用哪個倍率,而不是「這個英雄是誰」。
+        // 替身英雄的 modelKey 永遠是那四個共用替身之一,但實際載進來的可能是
+        // 他自己的 Warcraft III 模型(GH#31),也可能是 overlay 缺席時退回來的
+        // 方塊人。兩者正規化到同一個 1.8u,可是「1.8u 之後要再乘多少」完全
+        // 不同 —— 方塊人的輪廓就是身體(乘 usca),WC3 模型不是(乘身高比 ×
+        // usca)。判斷讀的是真的送進 assets.load() 的那條路徑。
+        const rel = isStandinBodyGlb(doc.glbPath) ? standin : relativeScale > 0 ? relativeScale : 1;
         const baseScale =
           Number.isFinite(nativeH) && nativeH > MIN_NATIVE_HEIGHT
             ? TARGET_HEIGHT / nativeH

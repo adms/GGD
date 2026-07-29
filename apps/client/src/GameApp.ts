@@ -52,8 +52,10 @@ import { recordCastEvent } from "./ui/castAnnounce";
 import type { IntentSender } from "./net/IntentSender";
 import { InterpolationBuffer } from "./net/InterpolationBuffer";
 import { TimeSync } from "./net/TimeSync";
+import { VisibleZones, ingestZonedTransforms } from "./net/zoneVisibility";
 import { LocalPrediction } from "./predict/LocalPrediction";
 import { InputCapture } from "./input/InputCapture";
+import { IntentClock } from "./input/IntentClock";
 import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/GamepadInput";
 import { PadCameraControl } from "./input/padCamera";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
@@ -366,6 +368,18 @@ export class GameApp {
   private fpsEma = 0;
   private renderParams: RenderParams = qualityController.getParams();
   private offParams: (() => void) | null = null;
+  /**
+   * intent 的節拍器 (task #282). **與 rAF 是兩個時鐘** —— rAF 只是餵它時刻,
+   * 拍點是從時間算出來的,所以 30 fps 的手機每秒仍然剛好 `intentHz` 拍。
+   * 速率走 `renderParams.intentHz`(玩家設定,不是寫死),live 生效。
+   */
+  private readonly intentClock = new IntentClock(
+    {
+      sample: () => this.sampleInput(),
+      beat: (beatMs) => this.transmitIntents(beatMs),
+    },
+    this.renderParams.intentHz,
+  );
   /** reused per-frame entity snapshot pool (zero hot-path allocation). */
   private readonly entityPool: EntityViewState[] = [];
   private readonly entityScratch: EntityViewState[] = [];
@@ -407,6 +421,16 @@ export class GameApp {
    * spectating ends.
    */
   private readonly spectateZoneByPlayer = new Map<number, number>();
+  /**
+   * L3 —— 這個客戶端**要渲染**的 duel zone 集合 (net/zoneVisibility.ts)。
+   * 每個本地玩家貢獻兩個來源：自己英雄所在的 zone，加上 #269 觀戰按鈕把鏡頭
+   * 送去的那個 zone。重算在 `refreshVisibleZones`，消費在四個地方 ——
+   * `onStatePatch`(插值緩衝)、`collectEntities`(view 同步/腳步/光環)、
+   * 那一圈 statusFx/語音、以及 `updateFrameBus`(血條錨點 + 復活圈)。
+   */
+  private readonly visibleZones = new VisibleZones();
+  /** reused: ids fed into the interpolation buffer this snapshot (prune input). */
+  private readonly interpSeen = new Set<number>();
   /** reused scratch: DuelView[] rebuilt from state.duels each frame (no alloc). */
   private readonly duelScratch: DuelView[] = [];
   /** reused frame envelopes for the fire ring (task #195) — zero allocation. */
@@ -510,6 +534,9 @@ export class GameApp {
       this.lighting.setShadowsEnabled(p.shadows);
       setDamageNumberCap(p.damageNumberCap);
       setCombatTextScope(p.combatTextScope);
+      // #282: 玩家在設定裡改送出率,這一場就生效 —— 不用重開一場(同
+      // interpolationDelayMs 的待遇)。setHz 自己會夾範圍並重新對拍。
+      this.intentClock.setHz(p.intentHz);
     });
     this.arenaHandles = buildArena(this.renderer.scene, SKELETON_ARENA);
     // publish the zone circles for the minimap (replaced once the real map loads)
@@ -958,6 +985,11 @@ export class GameApp {
     this.input.attach();
     this.touch?.attach(this.canvas);
     this.lastFrameMs = performance.now();
+    // #282 —— **兩個時鐘**。rAF 是主要來源;IntentClock 的 watchdog 計時器是
+    // 第二個,只有在 rAF 停擺(切到背景手勢、發熱降到個位數 fps、Babylon 卡在
+    // 一次大載入)時才接手。rAF 健康時 watchdog 是純 no-op,見 IntentClock.wake。
+    this.intentClock.reset();
+    this.intentClock.start();
     this.raf = requestAnimationFrame(this.frame);
   }
 
@@ -973,6 +1005,7 @@ export class GameApp {
     this.disposed = true;
     cancelAnimationFrame(this.raf);
     this.raf = 0;
+    this.intentClock.stop(); // 第二個時鐘也要停,否則離場後還在 poll 手把
     this.offParams?.();
     this.offParams = null;
     this.offQuality?.();
@@ -1104,22 +1137,20 @@ export class GameApp {
     this.teamBySeat.clear();
     state.seats.forEach((ss) => this.teamBySeat.set(ss.seatId, ss.teamId));
 
-    const seen = new Set<number>();
-    state.entities.forEach((es) => {
-      seen.add(es.id);
-      // #247: fly height interpolates on the same seam as x/z.
-      this.interp.push(es.id, {
-        tick: state.tick,
-        x: es.x,
-        z: es.z,
-        fx: es.fx,
-        fz: es.fz,
-        h: es.h,
-      });
-    });
-    this.interp.prune(seen);
-
+    // ORDER MATTERS (L3). `syncHudFromState` is what refreshes
+    // `hudStore.localEntityId`, and `refreshVisibleZones` resolves player 0's own
+    // duel zone THROUGH that id — so the HUD sync has to run first or the zone
+    // set is one snapshot stale across a round boundary (new round = new entity
+    // ids). Nothing between here and there reads the HUD store, and the
+    // interpolation ingest below never did, so hoisting it changes nothing else.
     syncHudFromState(state, this.conn.accountId);
+
+    // L3 —— 這一份快照裡「我要渲染的」duel zone。必須在 ingest 之前重算：
+    // 它就是下面那一行剔除的依據。
+    this.refreshVisibleZones(state);
+    // 別區的實體連插值緩衝都不進(連同它們的 ring buffer 一起被 prune 掉)。
+    // 剔除那一行在 net/zoneVisibility.ts 的 `ingestZonedTransforms` 裡。
+    ingestZonedTransforms(state.entities, this.visibleZones, state.tick, this.interp, this.interpSeen);
 
     // authoritative sample for the local champion → reconciliation input
     const hud = hudStore.getState();
@@ -1166,24 +1197,47 @@ export class GameApp {
    *
    *   · pad/touch polling is how an analog stick becomes an `Order`/`aim` at all
    *     (mouse/keyboard are event-driven and never needed a frame),
-   *   · `sessions.update` is what lets each IntentSender's own 30 Hz throttle
-   *     actually fire.
+   *   · `intentClock.tick` is what lets each IntentSender actually fire.
    *
    * Capping these at the render rate is what pinned a 30 fps phone to ~15.6
    * intents/second: the sender was ready to send and was simply never asked.
+   *
+   * ⚠️ 第二段 (#282 L2):`this.intentClock.tick(nowMs)` **不是**
+   * `this.sessions.update(nowMs)` 的別名。rAF 只是餵時鐘一個牆上時刻;真正
+   * 決定「這一刻要不要送」的是 `input/IntentClock` 的絕對拍點,而拍點的節奏
+   * 與這一幀什麼時候到、一秒到幾次都無關。把這一行換回 `sessions.update(nowMs)`
+   * 送出率就會掉回量到的 19.6–23.2/s(見 `input/IntentClock.test.ts`)。
    */
   private pumpInput(nowMs: number): void {
+    this.sampleInput();
+    this.intentClock.tick(nowMs);
+  }
+
+  /**
+   * 取樣類比輸入 —— 把搖桿的當下位置變成 pending 的 order/aim。純取樣,不送出。
+   * rAF 每一幀跑一次(畫面越順,搖桿讀得越新);rAF 停擺時由 IntentClock 的
+   * watchdog 代跑,否則那一拍送出去的會是上一拍的舊方向。
+   */
+  private sampleInput(): void {
     // Clear last frame's pad free-pan latch BEFORE polling: the pad map only
     // re-emits `pan` while the right stick is deflected, so a released stick must
     // leave these null (camera holds) rather than drifting on a stale vector.
     this.padCameraPan.length = 0;
     this.gamepads.poll(); // pads → per-player orders/aim/commands + camera
     if (this.touch) this.touch.poll(); // joystick → move orders + aim state onto touchFrame
+  }
+
+  /**
+   * 一拍 —— 把 coalesce 好的 intent 送出去。`beatMs` 是**拍點時刻**,不是
+   * `performance.now()`:IntentSender 的節流拿它來比,拍子才不會被幀的抖動打散
+   * (整個 #282 就是這件事)。
+   */
+  private transmitIntents(beatMs: number): void {
     // freeze mirrors the server: stop flushing intents so a held move order can't
     // steer the frozen hero (the server ignores them anyway — this keeps the
     // still hero in the front-view shot instead of drifting under prediction).
     if (this.conn.room?.state?.outcomeDecided !== true) {
-      this.sessions.update(nowMs); // flush EVERY local player's sender
+      this.sessions.update(beatMs); // flush EVERY local player's sender
     }
   }
 
@@ -1347,6 +1401,13 @@ export class GameApp {
       // champion's flags at its RENDERED position; the aura layer pulses on
       // `vfx.update` below and self-prunes on despawn (`statusFx.forget`).
       state.entities.forEach((es) => {
+        // L3 ZONE CULL —— 別區的英雄沒有 view，`posOf` 會落到 schema 座標，
+        // 於是狀態光環會被畫在一個看不到的地方，而 CC 語音會照樣搶語音檔位。
+        // 刻意排在 kind/alive 那一行**之前**：`GameApp.batch1Wiring.test.ts` 的
+        // #39 守衛盯的是「kind/alive 檢查緊接著 posOf」這一組相鄰關係，插在
+        // 中間會把那條守衛一起打壞 —— 守衛被自己的新功能撞紅，是要改功能的
+        // 擺放位置，不是改守衛。
+        if (!this.visibleZones.has(es.zone)) return;
         if (es.kind !== KIND_CHAMPION || !es.alive) return;
         const p = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
         this.vfx.statusFx.set(es.id, es.flags, p.x, p.z, nowMs);
@@ -1652,6 +1713,10 @@ export class GameApp {
     }
     let i = 0;
     state.entities.forEach((es) => {
+      // L3 ZONE CULL —— 別區的實體不建 view、不做插值取樣、不掛環境特效、
+      // 不產生遠端腳步聲。`visibleZones` 由 `refreshVisibleZones` 在每一份
+      // 快照重算，並且跟著 #269 的觀戰目標走(不是寫死本地 zone)。
+      if (!this.visibleZones.has(es.zone)) return;
       let e = this.entityPool[i];
       if (!e) {
         e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0, h: 0, airborne: false, isLocal: false };
@@ -2680,6 +2745,30 @@ export class GameApp {
     return es ? es.zone : null;
   }
 
+  /**
+   * L3 —— 重算「這個客戶端要渲染哪幾個 duel zone」。
+   *
+   * 每個本地玩家(分割畫面也算)貢獻**兩個**來源：
+   *   1. `ownZoneOf` —— 他英雄站的那一區。讀的是實體自己的 zone，所以死掉之後
+   *      也還是對的(屍體保留 zone)，這正是 #208 判斷「哪一場是我的」的方式。
+   *   2. `spectateZoneByPlayer` —— #269 的「前往觀戰」按鈕把鏡頭送去的那一區。
+   *
+   * 兩者**並存**而不是後者取代前者，理由寫在 net/zoneVisibility.ts 的檔頭：
+   * 小地圖的 zone 推導、復活圈橫幅、結算正面特寫都還需要自己那一區。
+   *
+   * 兩個來源都算不出來(還沒選角、純觀眾、快照還沒到)時 `end()` 會封成
+   * 「全部可見」= 今天的行為，剔除只在確定知道要看哪裡時才發生。
+   */
+  private refreshVisibleZones(state: MatchState): void {
+    const zones = this.visibleZones;
+    zones.begin();
+    for (let p = 0; p < this.viewports.count; p++) {
+      zones.add(this.ownZoneOf(p, state));
+      zones.add(this.spectateZoneByPlayer.get(p));
+    }
+    zones.end();
+  }
+
   /** Centre of duel `zone` from the ACTIVE arena (frameBus), else the skeleton. */
   private zoneCenter(zone: number): Vec2 | null {
     const zc = frameBus.arenaZones?.[zone];
@@ -2855,6 +2944,10 @@ export class GameApp {
       // overhead bars. A guardian is NEUTRAL (task #89): no name, teamId -1, and
       // an explicit neutral bar colour (anchorColorFor) — never a team tint.
       if (!hasOverheadBar(es.kind)) return;
+      // L3 ZONE CULL —— 別區的血條沒有任何消費者：`WorldAnchorLayer` 只畫
+      // 螢幕內的錨點，而 #67 的小地圖本來就只畫一個 zone。省掉的是每個實體
+      // 每幀一次的 `project()` 3D→2D 投影 + 一個 DOM 節點的更新。
+      if (!this.visibleZones.has(es.zone)) return;
       const isNeutral = es.kind === KIND_FLOWER || es.kind === KIND_GUARDIAN;
       seen.add(es.id);
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
@@ -2903,6 +2996,9 @@ export class GameApp {
     circles.length = 0;
     state.entities.forEach((es) => {
       if (es.kind !== KIND_REVIVE_CIRCLE) return;
+      // L3 ZONE CULL —— 兩個消費者(小地圖 #67、ReviveBanner)都只看得到本區的
+      // 圈圈；自己那一區永遠在可見集合裡，所以自己的復活圈不受影響。
+      if (!this.visibleZones.has(es.zone)) return;
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
       circles.push({
         entityId: es.id,

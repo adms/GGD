@@ -27,8 +27,13 @@ afterAll(() => {
 const COLD = [0.4, 0.75, 1] as const;
 
 describe("primitive library: schema-valid, renderable, parameterised (ability-vfx-primitives)", () => {
-  it("exposes the named WC3 archetypes plus bolt/dash/summon/slash/pulse", () => {
+  it("exposes the named WC3 archetypes plus bolt/dash/summon/slash/pulse/column/fall", () => {
     cover("ability-vfx-primitives");
+    // `column` + `fall` (GH#230 L2) are the two silhouettes the w3x reference
+    // census proved were MISSING: 97 references sit on a vertical pillar
+    // (FlameStrike / Resurrect / TomeOfRetraining / Levelup / DarkPortal) and 51
+    // on something arriving from above (MonsoonBolt / Starfall). Neither reads
+    // as any of the 11 above — BEAM is horizontal, TORNADO is a wind cone.
     expect(new Set(PRIMITIVE_KINDS)).toEqual(
       new Set([
         "nova",
@@ -42,8 +47,22 @@ describe("primitive library: schema-valid, renderable, parameterised (ability-vf
         "summon",
         "slash",
         "pulse",
+        "column",
+        "fall",
       ]),
     );
+  });
+
+  it("column climbs and fall descends — the two new silhouettes are opposites", () => {
+    cover("ability-vfx-primitives");
+    const col = PRIMITIVES.column({ id: "fx.test.column", color: COLD });
+    const dn = PRIMITIVES.fall({ id: "fx.test.fall", color: COLD });
+    expect(col.gravityY!).toBeGreaterThan(0);
+    expect(dn.gravityY!).toBeLessThan(0);
+    // and neither collapses into an existing shape: both are stretched, and the
+    // column is a narrow cone while fall spawns in a volume overhead
+    expect(col.emitter.shape).toBe("cone");
+    expect(dn.emitter.shape).toBe("sphere");
   });
 
   it("bolt and dash are directed, stretched, travelling shapes (task #123 archetype cells)", () => {

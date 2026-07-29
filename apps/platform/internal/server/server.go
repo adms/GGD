@@ -33,6 +33,7 @@ import (
 	"github.com/ggd/platform/internal/httpx"
 	"github.com/ggd/platform/internal/invite"
 	"github.com/ggd/platform/internal/lobby"
+	"github.com/ggd/platform/internal/matchstats"
 	"github.com/ggd/platform/internal/opsenv"
 	"github.com/ggd/platform/internal/platformarchive"
 	"github.com/ggd/platform/internal/presence"
@@ -64,9 +65,11 @@ type Server struct {
 	AI        *ai.Service
 	Approve   *approvelink.Service
 	// Archive is #243's whole-platform ZIP export/import.
-	Archive  *platformarchive.Service
-	Hub      *lobby.Hub
-	Sessions *lobby.Sessions
+	Archive *platformarchive.Service
+	// MatchStats is #207's per-match analysis ledger store.
+	MatchStats *matchstats.Service
+	Hub        *lobby.Hub
+	Sessions   *lobby.Sessions
 
 	// registerRateLimit is the max /auth/register calls allowed per minute
 	// server-wide (0 = disabled). This is an app-layer backstop to the edge's
@@ -326,6 +329,15 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// Redis uniqueness indexes with SET — deliberately NOT boot.Rebuild, which
 	// uses SetNX and therefore cannot repair a username index the migration
 	// just re-pointed. See internal/platformarchive/reindex.go.
+	// #207 per-match analysis ledger. It takes CONTENT_DIR and the build stamp
+	// because it VERSION-STAMPS every record it accepts — the whole point of
+	// keeping this data is comparing one build against the next, and neither
+	// stamp can be reconstructed after the fact. See internal/matchstats.
+	matchStatsSvc := matchstats.New(store, matchstats.Options{
+		PlatformVersion: os.Getenv("GGD_PLATFORM_VERSION"),
+		ContentDir:      cfg.ContentDir,
+	})
+
 	archiveSvc := platformarchive.New(platformarchive.Deps{
 		Store:           store,
 		DataDir:         store.Root(),
@@ -375,7 +387,8 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
-		AI: aiSvc, Approve: approveSvc, Archive: archiveSvc, Hub: hub, Sessions: sessions,
+		AI: aiSvc, Approve: approveSvc, Archive: archiveSvc, MatchStats: matchStatsSvc,
+		Hub: hub, Sessions: sessions,
 		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),
 		requireApproval:    requireApproval,
 		pendingApprovalTTL: cfg.PendingApprovalTTL,
@@ -408,6 +421,21 @@ const maxArchiveUploadBytes int64 = 512 << 20 // 512 MiB
 // JSON bodies, live right next to it).
 const archiveStagePath = platformarchive.StagePath
 
+// maxMatchStatsBytes is the cap for the OTHER route that legitimately carries a
+// body over 1 MiB: #207's per-match analysis ledger.
+//
+// A real ledger is 12 seats × ~8 rounds of casts, item transactions and offers
+// — hundreds of KB, and comfortably over 1 MiB for a long match. Under the
+// global cap the platform would 413 exactly the matches with the most to
+// analyse, and MaxBytesReader's error surfaces as a generic decode failure, so
+// the loss would be invisible on both sides.
+//
+// The ceiling is matchstats.MaxRecordBytes (itself derived from the archive's
+// per-document limit) plus one 64 KiB envelope's worth of slack for the JSON
+// wrapper around the ledger, so the HTTP layer never rejects a body the storage
+// layer would have accepted.
+const maxMatchStatsBytes int64 = matchstats.MaxRecordBytes + (64 << 10)
+
 // hstsHeader sets HTTP Strict-Transport-Security on every response. TLS
 // terminates upstream of this binary, but the header travels with the app so
 // the guarantee holds if the edge ever becomes the TLS hop.
@@ -424,8 +452,12 @@ func capRequestBody(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Body != nil {
 			limit := maxRequestBodyBytes
-			if r.URL.Path == archiveStagePath {
+			// EXACT matches only, never prefixes — see archiveStagePath.
+			switch r.URL.Path {
+			case archiveStagePath:
 				limit = maxArchiveUploadBytes
+			case matchstats.IngestPath:
+				limit = maxMatchStatsBytes
 			}
 			r.Body = http.MaxBytesReader(w, r.Body, limit)
 		}
@@ -502,6 +534,12 @@ func (s *Server) buildRouter(templates *room.Templates) {
 
 		// Internal (HMAC-guarded, not exposed via the public edge).
 		s.Gamelink.MountInternal(api)
+		// #207 the game-server's per-match analysis ledger. Same HMAC channel
+		// as the settlement callback — same sender, same trust — but a separate
+		// route and a separate failure domain: a malformed ledger must never be
+		// able to block a payout.
+		matchstats.NewHandlers(s.MatchStats, s.Admin.AdminOnly,
+			s.Cfg.GameSharedSecret, s.Cfg.HMACSkew).MountInternal(api)
 
 		// Authenticated REST.
 		api.Group(func(pr chi.Router) {
@@ -543,6 +581,12 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// (export, commit) additionally re-confirm the caller's OWN
 			// password through auth.ReauthPassword. See internal/platformarchive.
 			platformarchive.NewHandlers(s.Archive, s.Admin.AdminOnly).Mount(pr)
+			// #207 /admin/match-stats — the per-match review index and one
+			// full ledger. AdminOnly inside: a ledger names every seat's
+			// champion, purchases and declined offers for identifiable
+			// accounts, which is player behaviour, not content.
+			matchstats.NewHandlers(s.MatchStats, s.Admin.AdminOnly,
+				s.Cfg.GameSharedSecret, s.Cfg.HMACSkew).Mount(pr)
 		})
 
 		// #126 private-deploy: admin account-approval gate. Registered as its own

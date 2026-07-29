@@ -24,7 +24,7 @@ import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade } from "../combat/evasion";
-import { armFacingLock, FACING_FOLLOW_THROUGH_TICKS } from "../facingLock";
+import { armFacingLock, facingTicks } from "../facingLock";
 import { standstillBlocks } from "../combatFeel";
 
 /**
@@ -256,7 +256,7 @@ export function basicAttackSystem(world: SimWorld): void {
       // 出劍那一刻鎖一次方向 —— 那會讓長前搖的重武器對著目標的舊位置揮。
       // 這裡是 step slot 6，在 movementSystem (slot 5) 之後，所以這一 tick 寫下的
       // facing 不會再被移動方向蓋掉；鎖是為了保護「下一 tick」的 slot 5。
-      aimAtTarget(world, id, t, tgtT.pos, w.ticksLeft + FACING_FOLLOW_THROUGH_TICKS);
+      aimAtTarget(world, id, t, tgtT.pos, w.ticksLeft + facingTicks(world).followThroughTicks);
       w.ticksLeft--;
       if (w.ticksLeft <= 0) {
         ab.windup = null;
@@ -318,7 +318,7 @@ export function basicAttackSystem(world: SimWorld): void {
     // 出劍的第一 tick 就轉向目標 (task #264)，別等前搖跑完 —— 前搖本來就是
     // 「舉劍」，玩家要在這裡看到身體轉過去。放在 dpTicks 分岔**之前**，所以
     // 沒有前搖的即時普攻（dpSec = 0）也一樣會 commit 面向，不會漏掉一整條分支。
-    aimAtTarget(world, id, t, tgtT.pos, dpTicks + FACING_FOLLOW_THROUGH_TICKS);
+    aimAtTarget(world, id, t, tgtT.pos, dpTicks + facingTicks(world).followThroughTicks);
     if (dpTicks <= 0) {
       resolveAttack(world, id, nav.attackTarget, attackType, sc, cdef);
     } else {

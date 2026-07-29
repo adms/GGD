@@ -206,3 +206,179 @@ export const zVfxCollectionDoc = z
   });
 
 export type AnyVfxDoc = z.infer<typeof zVfxCollectionDoc>;
+
+// ---------------------------------------------------------------------------
+// config.vfx-families@1 — the 21 w3x art families, live-tunable
+// ---------------------------------------------------------------------------
+
+/**
+ * `content/config/vfx-families.json` — the console's knobs for the w3x art
+ * family layer (`apps/client/src/render/vfx/w3xArtFamilies.ts`).
+ *
+ * WHY IT IS CONFIG AND NOT CONSTANTS (第一守則). 33 Blizzard stock models
+ * collapse into 21 parameterised prototypes, and every one of them is a
+ * judgement call the owner has the right to overturn without a rebuild: how big
+ * a WC3 `usca` of 5.0 should read on a much closer camera, whether 消散 should
+ * be violet or grey, whether the whole evidence layer should be switched off
+ * and every ability fall back to the name-classified `fx.prim.*` baseline.
+ * Every one of those is a field here.
+ *
+ * SHAPE, and what each part overrides:
+ *   · top level      — master switch + the WC3→doc scale compression
+ *   · `families`     — per-family prototype defaults (shape/colour/size/α/time/height)
+ *   · `abilities`    — per-CALL-SITE overrides, keyed by GGD ability doc id.
+ *                      This is where 「同一顆 WarStompCaster，這一支放大、那一支
+ *                      轉紅」 lives, and it is what the map's own numbers are
+ *                      loaded into by `w3xFamilyArt.ts`.
+ *
+ * EVERY numeric field is bounded on BOTH sides. `validateField` in the console
+ * only checked `min` until 2026-07-29, so an un-capped field lets 50 be typed
+ * as 500, pass the form, and be silently clamped (or rejected) downstream —
+ * the #277/#279 shape. A tint is 0..255 per channel because that is the unit
+ * `war3map.w3u` stores (`uclr/uclg/uclb`); the renderer divides by 255.
+ *
+ * ABSENT ≠ ZERO. An omitted per-ability field means "the map did not state
+ * one, use the family default" — never "0". The console must write `undefined`
+ * (drop the key), not a zero, when the operator clears a box.
+ */
+const zW3xFamilyId = z.enum([
+  "shockwaveRing",
+  "blink",
+  "burst",
+  "dissipate",
+  "missile",
+  "boltStrike",
+  "tornado",
+  "groundDust",
+  "flamePillar",
+  "mirrorImage",
+  "resurrect",
+  "mark",
+  "lightColumn",
+  "portal",
+  "breath",
+  "levelUp",
+  "cloud",
+  "shine",
+  "blood",
+  "starfall",
+  "uncategorised",
+]);
+export type W3xFamilyId = z.infer<typeof zW3xFamilyId>;
+
+/** The 13 silhouettes `render/vfx/primitives.ts` ships. */
+const zVfxPrimitiveKind = z.enum([
+  "nova",
+  "explosion",
+  "shockwave",
+  "tornado",
+  "beam",
+  "bolt",
+  "dash",
+  "swarm",
+  "summon",
+  "slash",
+  "pulse",
+  "column",
+  "fall",
+]);
+
+/** The 13 colours `render/vfx/elements.ts` ships. */
+const zVfxElement = z.enum([
+  "fire",
+  "ice",
+  "lightning",
+  "wind",
+  "earth",
+  "holy",
+  "void",
+  "physical",
+  "nature",
+  "arcane",
+  "blood",
+  "ki",
+  "sound",
+]);
+
+/** WC3 vertex colour, 0..255 per channel (`uclr`/`uclg`/`uclb` units). */
+export const zW3xTint255 = z.tuple([
+  z.number().int().min(0).max(255),
+  z.number().int().min(0).max(255),
+  z.number().int().min(0).max(255),
+]);
+
+export const zVfxFamilyTuning = z
+  .object({
+    /** false = this family stops overriding; its abilities keep `fx.prim.*` */
+    enabled: z.boolean(),
+    /** the silhouette this family renders as */
+    primitive: zVfxPrimitiveKind,
+    /** the colour used when the ability has neither an element nor a w3x tint */
+    element: zVfxElement,
+    /** family base size multiplier (1 = the primitive's own size) */
+    scale: z.number().min(0.1).max(6),
+    /** family base opacity */
+    alpha: z.number().min(0.05).max(1),
+    /** >1 = longer/slower, <1 = snappier */
+    timeScale: z.number().min(0.2).max(4),
+    /** world-y the effect plays at (0.1 = on the floor, 3.5 = overhead) */
+    heightY: z.number().min(0).max(8),
+  })
+  .strict();
+export type VfxFamilyTuning = z.infer<typeof zVfxFamilyTuning>;
+
+export const zVfxAbilityFamilyBinding = z
+  .object({
+    /** which prototype this ability plays (omit = keep the shipped binding) */
+    family: zW3xFamilyId.optional(),
+    /** false = this ONE ability falls back to its `fx.prim.*` classification */
+    enabled: z.boolean().optional(),
+    /** the map's own `usca`/`SetUnitScalePercent` for this call site */
+    w3xScale: z.number().min(0.05).max(20).optional(),
+    /** the map's own vertex tint for this call site, 0..255 */
+    tint: zW3xTint255.optional(),
+    /** the map's own `SetUnitFlyHeight`, WC3 units (128 units = 1 world unit) */
+    flyHeight: z.number().min(-2000).max(2000).optional(),
+    /** direct opacity override, after the family default */
+    alpha: z.number().min(0.05).max(1).optional(),
+    /** direct lifetime stretch override, after the family default */
+    timeScale: z.number().min(0.2).max(4).optional(),
+    /** WC3 attachment string, verbatim ("chest", "origin", "right,hand") */
+    anchor: z.string().min(1).max(32).optional(),
+  })
+  .strict();
+export type VfxAbilityFamilyBinding = z.infer<typeof zVfxAbilityFamilyBinding>;
+
+export const zConfigVfxFamiliesDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.vfx-families@1"),
+    /** master switch: false = the whole evidence layer is off, `fx.prim.*` only */
+    enabled: z.boolean(),
+    /**
+     * How hard a WC3 scale is compressed into doc space: `1 + (usca - 1) * gain`,
+     * then clamped to [scaleMin, scaleMax]. gain 0 = ignore the map's scales
+     * entirely; gain 1 = take them literally (a 10.0 call fills the screen).
+     */
+    scaleGain: z.number().min(0).max(1),
+    scaleMin: z.number().min(0.1).max(4),
+    scaleMax: z.number().min(0.2).max(8),
+    families: z.record(zW3xFamilyId, zVfxFamilyTuning),
+    abilities: z.record(z.string().min(1), zVfxAbilityFamilyBinding),
+  })
+  .strict();
+export type ConfigVfxFamiliesDoc = z.infer<typeof zConfigVfxFamiliesDoc>;
+
+/**
+ * `scaleMin > scaleMax` is the one cross-field mistake the per-field bounds
+ * cannot catch. It is NOT a schema error on purpose: `zConfigDoc` is a
+ * `discriminatedUnion`, which only accepts plain `ZodObject` members, so a
+ * `superRefine` here would break the whole config collection's parse. The
+ * renderer therefore treats the pair as an unordered interval
+ * (`resolveScaleMapping` in `render/vfx/familyTuning.ts` sorts them), which
+ * degrades to "the operator typed them backwards" instead of "no VFX config
+ * loads at all". `familyTuning.test.ts` pins that behaviour.
+ */
+export function vfxFamiliesScaleOrdered(doc: ConfigVfxFamiliesDoc): boolean {
+  return doc.scaleMax >= doc.scaleMin;
+}

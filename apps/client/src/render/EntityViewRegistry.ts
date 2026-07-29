@@ -14,6 +14,7 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
 import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
 import { TICK_MS } from "@ggd/shared/constants";
+import { standinRelativeScaleOf } from "@ggd/shared/content/standinScale";
 import { ChampionView, type FormAttachmentSpec } from "./views/ChampionView";
 import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView";
 import { FlowerView } from "./views/FlowerView";
@@ -204,6 +205,16 @@ export interface ViewContentHooks {
 export interface ModelDocOverride {
   scale?: number;
   relativeScale?: number;
+  /**
+   * Task #77 — the size multiplier for the champion's STAND-IN body (the
+   * generated box-man it falls back to when its own model is not there).
+   * A separate number because `relativeScale` stopped describing that body at
+   * GH#31; see `packages/shared/src/content/standinScale.ts` for why copying
+   * one into the other renders 死亡騎士 at 12.2u. Rides straight through from
+   * `_standin-overrides.json` (ContentDb stores the entry object as authored),
+   * so no adapter step can drop it.
+   */
+  standinRelativeScale?: number;
   glbPath?: string;
   clipMap?: ModelDoc["clipMap"];
   /**
@@ -760,7 +771,17 @@ export class EntityViewRegistry {
         // kicked off, so the procedural fallback is already in the champion's
         // own colours while the mesh is still in flight.
         view.setVoxelLook(override?.voxel);
-        view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
+        // #77: TWO numbers, because there are two bodies. `relativeScale` sizes
+        // the champion's own model; `standinRelativeScaleOf` sizes the generated
+        // box-man it falls back to. The view picks per body — it is the only
+        // layer that knows which one actually rendered (the glb may still be in
+        // flight, or `preferVoxelBody` may decline it outright).
+        view.tryUpgradeToGlb(
+          this.assets,
+          doc,
+          relativeScaleOf(override),
+          standinRelativeScaleOf(override),
+        );
       }
       // #249 GH#288 變身球體掛件 —— OUTSIDE the `!upgradeAttempted` gate above,
       // and that is load-bearing: the attach point lives in the body glb's own

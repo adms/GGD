@@ -8,6 +8,12 @@ import { z } from "zod";
 import type { EffectDef } from "../../sim/effects/effect";
 import type { ProjectileId, StatusId } from "../../ids";
 import { zCastableSlot, zRef, zScaling, zStatModifier } from "./common";
+import {
+  SPREAD_MAX_FALLOFF,
+  SPREAD_MAX_RADIUS,
+  SPREAD_MAX_TARGETS,
+  SPREAD_MIN_FALLOFF,
+} from "../../sim/effects/spreadLimits";
 
 export const zDamageType = z.enum(["physical", "magic", "true"]);
 
@@ -41,6 +47,32 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
         })
         .strict()
         .optional(),
+    })
+    .strict(),
+  /**
+   * damageArea (#210 近戰擴散) — mirrors the `damageArea` member of `EffectDef`.
+   *
+   * 三個旋鈕都有**上界**, 不是只有下界: CLAUDE.md 明說「欄位要有上界」, 而這裡
+   * 的失敗形態很具體 —— w3x 的長度單位大約是 GGD 的 54.5 倍, 所以任何一個從
+   * 原始資料直接貼過來的 `Area` 欄位 (200/300/450) 都會變成一個蓋滿整個決鬥區
+   * 的圓。上界把那種貼上變成「檔案進不來」而不是「上線後某件武器一發清場」。
+   * 數字與理由見 sim/effects/spreadLimits.ts —— 那裡是唯一的一份, 這裡只是
+   * 把它接到 Zod 上, 兩邊不可能漂移。
+   */
+  z
+    .object({
+      kind: z.literal("damageArea"),
+      damageType: zDamageType,
+      amount: zScaling,
+      /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
+      radius: z.number().positive().max(SPREAD_MAX_RADIUS),
+      /** 邊緣倍率: 1 = 不衰減 (預設), 0 = 邊緣歸零 */
+      falloff: z.number().min(SPREAD_MIN_FALLOFF).max(SPREAD_MAX_FALLOFF).optional(),
+      /** 一次最多濺到幾個人 (不含震央) */
+      maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),
+      canCrit: z.boolean().optional(),
+      /** 震央本人要不要再吃一次 (預設 false — 他已經吃過觸發這一擊了) */
+      includeOrigin: z.boolean().optional(),
     })
     .strict(),
   z.object({ kind: z.literal("heal"), amount: zScaling }).strict(),

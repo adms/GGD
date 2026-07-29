@@ -72,28 +72,77 @@ describe("#282 一幀的兩半真的接在 GameApp 上 (frame-drive-wiring)", ()
     expect(work).toMatch(/render:\s*\(nowMs: number\)\s*=>\s*this\.renderFrame\(nowMs\)/);
   });
 
-  it("取樣 + intent flush 在 pumpInput 裡(每幀跑),不在 renderFrame 裡(被上限擋)", () => {
+  it("取樣 + intent flush 都掛在 pumpInput 那一側,不在 renderFrame 裡(被上限擋)", () => {
     cover("frame-drive-intent");
     const pump = bodyAfter("private pumpInput(nowMs: number): void");
+    const sample = bodyAfter("private sampleInput(): void");
+    const transmit = bodyAfter("private transmitIntents(beatMs: number): void");
     const render = bodyAfter("private renderFrame(nowMs: number): void");
 
-    // 這三件事是「一幀的輸入解析度」,和畫面無關 —— 必須在 gate 之前
-    for (const call of ["this.gamepads.poll(", "this.touch.poll(", "this.sessions.update("]) {
-      expect(pump, `${call} 不在 pumpInput 裡 —— 它又被 fps 上限擋住了`).toContain(call);
+    // pumpInput 的兩件事:取樣 + 敲時鐘。兩者都在 gate 之前。
+    expect(pump).toContain("this.sampleInput(");
+    expect(pump).toContain("this.intentClock.tick(nowMs)");
+    // 取樣本體
+    for (const call of ["this.gamepads.poll(", "this.touch.poll("]) {
+      expect(sample, `${call} 不在 sampleInput 裡`).toContain(call);
+    }
+    // flush 本體
+    expect(transmit).toContain("this.sessions.update(");
+
+    // ⛔ 這四件事一件都不可以回到 renderFrame —— 那就是 #282 的缺陷原狀
+    for (const call of [
+      "this.gamepads.poll(",
+      "this.touch.poll(",
+      "this.sessions.update(",
+      "this.intentClock.tick(",
+    ]) {
       expect(
         render,
         `${call} 回到了 renderFrame —— 手機 30fps 的 intent 送出率會再掉一半 (#282)`,
       ).not.toContain(call);
     }
     // 手把自由視角的 latch 也要在**取樣之前**清掉,否則搖桿放開後鏡頭會漂
-    expect(pump).toMatch(/this\.padCameraPan\.length = 0;[\s\S]{0,200}this\.gamepads\.poll\(/);
+    expect(sample).toMatch(/this\.padCameraPan\.length = 0;[\s\S]{0,200}this\.gamepads\.poll\(/);
+  });
+
+  /**
+   * #282 第二段的**接線**守衛:flush 必須走 IntentClock 的拍點,不可以退回
+   * 「每一幀直接 sessions.update(nowMs)」。這兩件事在 GameApp 裡長得幾乎一樣,
+   * 而差別就是手機 19.6/s 與 30/s。
+   */
+  it("flush 走的是 IntentClock 的拍點,不是 rAF 的 nowMs", () => {
+    cover("intent-clock-rate");
+    const pump = bodyAfter("private pumpInput(nowMs: number): void");
+    const transmit = bodyAfter("private transmitIntents(beatMs: number): void");
+
+    // pumpInput 不可以自己送 —— 它只准敲時鐘
+    expect(
+      pump.includes("this.sessions.update("),
+      "pumpInput 又直接呼叫 sessions.update 了 —— 送出率退回綁 rAF (#282)",
+    ).toBe(false);
+    // 而送出的那一刻用的是**拍點**參數,不是 nowMs
+    expect(transmit).toMatch(/this\.sessions\.update\(beatMs\)/);
+    expect(
+      /this\.sessions\.update\(nowMs\)/.test(SRC),
+      "sessions.update 又拿到牆上時刻了 —— 節流會再被幀的抖動打散 (#282)",
+    ).toBe(false);
+
+    // 時鐘的兩個 sink 真的接到那兩個方法上(不是接反、不是接到 lambda 空殼)
+    expect(SRC).toMatch(/sample:\s*\(\)\s*=>\s*this\.sampleInput\(\)/);
+    expect(SRC).toMatch(/beat:\s*\(beatMs\)\s*=>\s*this\.transmitIntents\(beatMs\)/);
+    // 速率是**設定值**,不是寫死的字面量(第一守則)
+    expect(SRC).toMatch(/new IntentClock\([\s\S]{0,240}this\.renderParams\.intentHz/);
+    expect(SRC).toMatch(/this\.intentClock\.setHz\(p\.intentHz\)/);
+    // 與 rAF 無關的第二個時鐘來源真的被裝上,而且離場時被拆掉
+    expect(SRC).toMatch(/this\.intentClock\.start\(\)/);
+    expect(SRC).toMatch(/this\.intentClock\.stop\(\)/);
   });
 
   it("結算凍結仍然停止送出 —— 修正沒有把 #100 的凍結一起拆掉", () => {
     cover("frame-drive-intent");
-    const pump = bodyAfter("private pumpInput(nowMs: number): void");
-    expect(pump).toMatch(
-      /outcomeDecided !== true\s*\)\s*\{[\s\S]{0,200}this\.sessions\.update\(nowMs\)/,
+    const transmit = bodyAfter("private transmitIntents(beatMs: number): void");
+    expect(transmit).toMatch(
+      /outcomeDecided !== true\s*\)\s*\{[\s\S]{0,200}this\.sessions\.update\(beatMs\)/,
     );
   });
 });

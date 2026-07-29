@@ -284,6 +284,8 @@ export class VictoryTauntPlayer {
   /** monotonic id — a newer taunt supersedes a pending older one */
   private seq = 0;
   private pending: unknown = null;
+  /** clip files already prefetched (see warmClip) — one warm per file, ever */
+  private readonly warmed = new Set<string>();
 
   constructor(opts: VictoryTauntOptions = {}) {
     this.audio = opts.audio ?? audioSystem;
@@ -376,9 +378,36 @@ export class VictoryTauntPlayer {
         /* a broken subtitle sink must never break the audio path */
       }
     };
-    if (delayMs > 0) this.pending = this.schedule(fire, delayMs);
-    else fire();
+    if (delayMs > 0) {
+      // Warm the CLIP across the delay window (task #63). `speak()` sets
+      // `el.src` at the instant the line must be heard, so without this the
+      // 758-clip / 7.7 MB taunt pack is grabbed cold ON the beat — the same
+      // shape as #93's firework, which fetched its own cue at the moment it
+      // was needed and missed the event it decorated. Scheduling the line
+      // 2,200 ms ahead (ROUND_TAUNT_DELAY_MS) buys a whole round-trip, but only
+      // if something asks for the bytes; this does, without touching the shared
+      // element, so it can never cut a still-playing taunt short.
+      this.warmClip(line.file);
+      this.pending = this.schedule(fire, delayMs);
+    } else fire();
     return line;
+  }
+
+  /**
+   * Prefetch one taunt clip into the HTTP cache. Deliberately a plain fetch and
+   * NOT an `<audio>` element: the player reuses a single element, so a second
+   * `src` assignment would interrupt whatever is playing. Silent in test mode
+   * (#62) for consistency with every other path here, single-flight per file,
+   * and errors are swallowed — a failed warm just restores the old behaviour.
+   */
+  private warmClip(file: string | undefined): void {
+    if (!file || this.silent || this.warmed.has(file)) return;
+    this.warmed.add(file);
+    try {
+      void Promise.resolve(this.fetchFn(this.url(file))).catch(() => undefined);
+    } catch {
+      /* no fetch in this environment — playback still works, just cold */
+    }
   }
 
   /**
@@ -443,6 +472,7 @@ export class VictoryTauntPlayer {
   reset(): void {
     this.cancel();
     this.configPromise = null;
+    this.warmed.clear();
   }
 }
 

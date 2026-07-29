@@ -36,9 +36,24 @@
  * AssetContainer and issues a NETWORK FETCH, and a ladder oscillating around a
  * threshold would issue them repeatedly, mid-fight, on the exact device that is
  * already struggling. So the tier is derived from the fixed preset only, and
- * "auto" deliberately stays at the top tier. The place that genuinely benefits
- * is first boot: `autoDetectPreset` puts a weak/touch device on "low" before
- * anything is fetched, so it never downloads the full-fat corpus at all.
+ * the SHIPPED table keeps "auto" at the top tier. The place that genuinely
+ * benefits is first boot: `autoDetectPreset` puts a touch device on "medium"
+ * (→ `-mid`) — or on "low" (→ `-small`) when it reports ≤3 cores or <3 GB —
+ * before anything is fetched, so a phone never downloads the full-fat corpus.
+ *
+ * ⚠️ Measured 2026-07-30, correcting what this header used to claim: touch
+ * alone does NOT mean "low". A mid-range phone lands on "medium", so the tier
+ * a typical phone actually gets is `-mid`, not `-small`.
+ *
+ * ---------------------------------------------------------------------------
+ * THE PRESET→TIER TABLE IS CONTENT, NOT A SWITCH
+ * ---------------------------------------------------------------------------
+ * Which tier each preset deserves is a 體感 call on real hardware, and owner
+ * revises those. `config/model-lod.json` (`config.model-lod@1`) holds the
+ * table; `lodTierForPreset` reads it; `DEFAULT_MODEL_LOD` is the fuse for when
+ * the doc is absent. `enabled: false` pins everything to "high" — the kill
+ * switch for "a tier file shipped broken" that needs no client rebuild, since
+ * `content/` is a live bind-mount and the client is baked into its image.
  *
  * ---------------------------------------------------------------------------
  * A MODEL BELOW THE LOD FLOOR LEGITIMATELY SHIPS ONE TIER
@@ -63,6 +78,7 @@
  * champion's mesh under a playing animation is a visible pop, and the next
  * round rebuilds the scene anyway.
  */
+import { Configs, DEFAULT_MODEL_LOD, type ConfigModelLodDoc } from "@ggd/shared/content";
 import type { QualityPreset } from "../settings";
 
 /** Model detail tier. "high" = the authored file, i.e. no LOD swap. */
@@ -92,6 +108,54 @@ export interface LodManifest {
 
 let manifest: LodManifest | null = null;
 let tier: ModelLodTier = "high";
+let policy: ConfigModelLodDoc = DEFAULT_MODEL_LOD;
+
+/**
+ * Fired when the preset→tier POLICY changes (not when the tier does).
+ *
+ * It exists because of an ordering fact: `QualityController` derives
+ * `RenderParams.modelLod` through `lodTierForPreset` at boot, i.e. BEFORE the
+ * content bundle (and therefore `config/model-lod.json`) has landed. Without a
+ * notification the operator's table would be read a few hundred ms too late and
+ * the already-published tier would stand for the whole session — the doc would
+ * be there, parsed, correct, and have no effect. That is failure mode ②.
+ */
+const policyListeners = new Set<() => void>();
+
+/** Subscribe to policy adoption; returns the unsubscribe. */
+export function subscribeModelLodPolicy(fn: () => void): () => void {
+  policyListeners.add(fn);
+  return () => policyListeners.delete(fn);
+}
+
+/** The preset→tier table currently in force (the shipped default until a doc lands). */
+export function getModelLodPolicy(): ConfigModelLodDoc {
+  return policy;
+}
+
+/**
+ * Adopt `config.model-lod@1`. Anything that is not that doc (absent, wrong
+ * schema, a half-written override) restores `DEFAULT_MODEL_LOD` — the table is
+ * a policy, so "unreadable" must mean "the shipped policy", never "no LOD" and
+ * never a half-applied mix of the two.
+ */
+export function applyModelLodPolicy(doc: unknown): void {
+  const d = doc as ConfigModelLodDoc | null | undefined;
+  const isTier = (v: unknown): v is ModelLodTier =>
+    v === "high" || v === "mid" || v === "small";
+  const ok =
+    !!d &&
+    typeof d === "object" &&
+    d.schema === "config.model-lod@1" &&
+    typeof d.enabled === "boolean" &&
+    !!d.presetTiers &&
+    isTier(d.presetTiers.low) &&
+    isTier(d.presetTiers.medium) &&
+    isTier(d.presetTiers.high) &&
+    isTier(d.presetTiers.auto);
+  policy = ok ? d : DEFAULT_MODEL_LOD;
+  for (const fn of policyListeners) fn();
+}
 
 /** Publish the generated-tier index. Null/malformed clears it (→ no swapping). */
 export function setModelLodManifest(next: LodManifest | null | undefined): void {
@@ -111,18 +175,20 @@ export function getModelLodTier(): ModelLodTier {
 }
 
 /**
- * Preset → tier. "auto" holds at "high" on purpose (see the header): the
- * adaptive ladder must never trigger a mid-match asset fetch.
+ * Preset → tier, READ OUT OF THE OPERATOR'S TABLE (`config/model-lod.json`),
+ * not out of a switch. Which tier a preset deserves is a device/體感 judgement
+ * owner will revise — hard-coding it means a client rebuild + redeploy per
+ * revision, while `content/` is a live bind-mount where saving the file IS the
+ * deploy. `enabled: false` pins every preset to "high", i.e. the pre-#115
+ * behaviour, and is the one-field kill switch if a tier file ships broken.
+ *
+ * The SHIPPED table keeps "auto" at "high" on purpose (see the header): the
+ * adaptive ladder must never trigger a mid-match asset fetch. An operator can
+ * override that — deliberately, in a file, with the reason written next to it.
  */
 export function lodTierForPreset(preset: QualityPreset): ModelLodTier {
-  switch (preset) {
-    case "low":
-      return "small";
-    case "medium":
-      return "mid";
-    default:
-      return "high";
-  }
+  if (!policy.enabled) return "high";
+  return policy.presetTiers[preset] ?? "high";
 }
 
 /**
@@ -150,12 +216,25 @@ export function resolveLodPath(
  * on any failure — a deploy without the tier files must still boot and play.
  * `stamp` is `withContentVersion`, injected so this module stays free of the
  * content layer in tests.
+ *
+ * It ALSO adopts the operator's preset→tier table, and does so FIRST, before
+ * the fetch can fail. Both halves of #115 become true at the same instant, and
+ * they become true at the one moment in the boot where both inputs exist: the
+ * caller (`main.tsx`) runs this inside `ensureContentLoaded().then(…)`, so the
+ * `Configs` registry is populated by then. Reading the doc here rather than
+ * adding a second call site is deliberate — a policy that has to be wired up in
+ * two places is a policy that will one day be wired up in one.
+ *
+ * `readPolicy` is injected purely so tests can drive the table without standing
+ * up a content registry.
  */
 export async function loadModelLodManifest(
   baseUrl: string,
   stamp: (url: string) => string = (u) => u,
   fetchFn: typeof fetch | undefined = typeof fetch === "function" ? fetch : undefined,
+  readPolicy: () => unknown = () => Configs.tryGet("model-lod"),
 ): Promise<boolean> {
+  applyModelLodPolicy(readPolicy());
   if (!fetchFn) return false;
   try {
     const res = await fetchFn(stamp(`${baseUrl}/assets/models/_lod.json`));

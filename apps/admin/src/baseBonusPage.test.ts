@@ -178,12 +178,12 @@ describe("基礎加成頁 —— clamp 會吃掉數字這件事有講出來 (bas
 });
 
 describe("基礎加成頁 —— 「清除」的語意 (basebonus-page-zero)", () => {
-  it("按一下不會直接寫入 —— 先問「歸零後是 0,不是出貨預設 300」", async () => {
+  it("按一下不會直接寫入 —— 先問「歸零後是 0,不是出貨預設 650」", async () => {
     cover("basebonus-page-zero");
     const h = await open();
     press(h, `zero-${Stat.MaxHealth}`);
     expect(bus.puts, "第一下就寫進去了,沒有確認").toHaveLength(0);
-    expect(h.text()).toMatch(/歸零後這一列是 0,不是出貨預設 300/);
+    expect(h.text()).toMatch(/歸零後這一列是 0,不是出貨預設 650/);
     // 按鈕的字說的是它真正做的事,不是「清除」
     expect(h.text()).not.toContain("清除");
   });
@@ -220,17 +220,17 @@ describe("基礎加成頁 —— 「回到預設」接的是平台的 revert (ba
     press(h, "revert-confirm");
     await h.flush();
     expect(bus.reverts).toEqual([{ collection: BONUS_COLLECTION, id: BONUS_DOC_ID }]);
-    // 關鍵鑑別:還原**不是** PUT 一份 bonus:{} —— 那會讓生命加成變 0 而不是 300
+    // 關鍵鑑別:還原**不是** PUT 一份 bonus:{} —— 那會讓生命加成變 0 而不是 650
     expect(bus.puts, "還原被實作成寫入一份空文件").toHaveLength(0);
   });
 
-  it("還原之後畫面回到出貨預設 300,不是 0", async () => {
+  it("還原之後畫面回到出貨預設 650,不是 0", async () => {
     cover("basebonus-page-revert");
     const h = await open();
     press(h, "revert");
     press(h, "revert-confirm");
     await h.flush();
     // 覆蓋層沒了 → 重新載入時讀不到任何文件 → 每一格顯示出貨預設
-    expect(h.field(`bonus-${Stat.MaxHealth}`).props["value"]).toBe("300");
+    expect(h.field(`bonus-${Stat.MaxHealth}`).props["value"]).toBe("650");
   });
 });

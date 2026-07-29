@@ -83,6 +83,15 @@ export type Page =
    */
   | "formVisuals"
   /**
+   * 鑄技工坊 · 特效綁定 (`config/vfx-bindings`, tasks #205 / #230 / #272) —— 每支
+   * 技能綁哪一個**家族原型** + 六段 per-invocation 參數 (scale / tint / alpha /
+   * timeScale / 高度 / 錨點骨)。自己一頁，因為它問的是「這一招該長什麼樣」而不是
+   * 任何一種數值：595 支技能現在畫的是依技能中文名猜出來的替身，這一頁是把它們
+   * 換成原作真的畫過的東西的唯一入口。寫入同樣走 `putOverlayDoc`，所以下面要
+   * session-gate。
+   */
+  | "vfxForge"
+  /**
    * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
    * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
    * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
@@ -293,6 +302,10 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "statCaps",
   // 變身外觀: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "formVisuals",
+  // 鑄技工坊: 同上。它讀 /content(不需要 session)但寫 `putOverlayDoc`(需要),
+  // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
+  // 發現從頭到尾就沒有可以寫入的 session。
+  "vfxForge",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.

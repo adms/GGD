@@ -84,6 +84,10 @@ export const COMBAT_ENV_BASE: Partial<Record<CombatEnvKey, number>> = {
  * global burn; re-run the sweep rather than reading the old table across.
  */
 export const PRODUCTION_FIRE_RING: FireRingConfig = {
+  // #218 殭屍王延長：0/0 = 這個模擬器不模擬王。⚠️ 出貨值是 180/180，
+  // 但 TTK 掃描要的是「沒有王的那條基線」，把 180 抄進來會讓每一格 TTK
+  // 都多算三分鐘的火圈延後 —— 抄出貨值在這裡剛好是錯的。
+  boss: { extendCombatSec: 0, delayFireRingSec: 0 },
   startSec: 60,
   shrinkSec: 20,
   minRadius: 0.5,

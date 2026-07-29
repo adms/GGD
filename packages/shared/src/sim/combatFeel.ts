@@ -76,9 +76,47 @@ export interface StandstillRules {
   applyToMobs: boolean;
 }
 
+/**
+ * 面向鎖的窗口長度 (task #264 / #275 / #280),全部後台可調。
+ *
+ * ⚠️ 這三個數字以前是 `facingLock.ts` 的三個 `export const`。owner 已經在
+ * 面向這個題目上改過主意兩次(#264「出手即承諾」→ #275「瞄準優先」),而每一次
+ * 想調的都是**窗口有多長** —— 那正是「會不會想改」的答案是「會」的欄位。
+ *
+ * ⚠️ 這一組只被**權威端**讀到。`armFacingLock` 的呼叫者是 `BasicAttackSystem`
+ * 與 `abilities/abilitySystem`,兩者都只在伺服器的 `world.step()` 裡跑;客戶端的
+ * `LocalPrediction` 只重播 `orderSystem` + `movementSystem`,從不自己上鎖(它讀
+ * 的是快照同步過來的結果)。所以這三格改了不會讓預測和權威分家。
+ * 對照:`aimHoldTicks` 就**不能**放進來,理由見 `aimHold.ts` 的檔頭。
+ */
+export interface FacingRules {
+  /**
+   * 出手後的「收招」餘韻 tick 數。傷害點結束時若同時放掉鎖,身體會在命中的同一幀
+   * 被移動方向拉走,看起來就像根本沒轉過。
+   */
+  followThroughTicks: number;
+  /**
+   * 瞬發技 (castTimeSec = 0) 的最低鎖定長度。瞬發技沒有吟唱可以撐住面向,
+   * 只給 follow-through 的話走位中的玩家幾乎看不到轉身。
+   */
+  instantCastTicks: number;
+}
+
 export interface CombatFeelRules {
   knockback: KnockbackRules;
   standstill: StandstillRules;
+  /**
+   * ⚠️ 選用,而且**必須**保持選用。`combatFeelFromDoc` 與 `DEFAULT_COMBAT_FEEL`
+   * 一定會填它,所以出貨路徑上它永遠存在;選用是為了那些手寫半張表的既有測試
+   * (`world.combatFeel = { knockback, standstill }`)—— 把它改成必填會讓那些檔案
+   * 編不過,而它們散在別的工作流擁有的目錄裡。
+   *
+   * 讀的時候一律走 `facingLock.ts` 的 `facingTicks(world)`,它對缺格回退到
+   * `DEFAULT_FACING`。**不要**直接讀 `world.combatFeel.facing!` —— undefined
+   * 一路傳下去會變成 `world.tick + NaN`,而 `NaN` 讓每個到期比較都是 false,
+   * 面向鎖會永遠不過期,而且完全無聲。
+   */
+  facing?: FacingRules;
 }
 
 /** owner 在 GH#193 直接給的數字。`bodyUnit` 是本任務替他假設的 1.0。 */
@@ -95,6 +133,15 @@ export const DEFAULT_STANDSTILL: StandstillRules = Object.freeze({
 });
 
 /**
+ * 出貨預設 = #264 訂下、#275 沿用的那兩個數字(3 tick = 100ms 蓋過 client 那段
+ * 70ms 的 yaw 平滑;6 tick = 200ms,和 `TURN_FACTOR` 轉完 90° 同一個量級)。
+ */
+export const DEFAULT_FACING: FacingRules = Object.freeze({
+  followThroughTicks: 3,
+  instantCastTicks: 6,
+});
+
+/**
  * 出貨預設。
  *
  * ⚠️ 缺文件 / 壞文件 → **回這個**,不是空表。回空表的話 `minPct` 是 0(每一下
@@ -104,6 +151,7 @@ export const DEFAULT_STANDSTILL: StandstillRules = Object.freeze({
 export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   knockback: DEFAULT_KNOCKBACK,
   standstill: DEFAULT_STANDSTILL,
+  facing: DEFAULT_FACING,
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台)共用這一個常數。 */
@@ -150,13 +198,43 @@ export function normalizeStandstillRules(raw: unknown): StandstillRules {
  * 讀一份 `config.combat-feel@1` 文件(sim 與後台共用的那個 `Configs` registry)。
  * 沒有文件 / schema 不對 → 出貨預設(見 DEFAULT_COMBAT_FEEL 上面的警告)。
  */
+/**
+ * Tick 數專用:先夾到 [min,max] 再取整。**非整數的 tick 是靜默的災難** ——
+ * `world.tick + 2.5` 之後 `world.tick >= lock.untilTick` 會在半個 tick 的位置
+ * 為真,鎖的長度就變成「有時 2 有時 3」,而 sim 必須逐 tick 決定性重播。
+ */
+function ticks(v: unknown, fallback: number, min: number, max: number): number {
+  if (typeof v !== "number" || !Number.isFinite(v)) return fallback;
+  const clamped = v < min ? min : v > max ? max : v;
+  return Math.round(clamped);
+}
+
+/**
+ * 上界是刻意的(第一守則:「欄位要有上界,不是只有下界」)。300 tick = 10 秒 ——
+ * 遠超過任何一次出手,但擋得住「6 打成 600」那種手滑:600 tick 的鎖等於整整
+ * 20 秒不能用右類比轉身,而且是**靜默**的,沒有任何錯誤訊息。
+ */
+export function normalizeFacingRules(raw: unknown): FacingRules {
+  const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  return Object.freeze({
+    followThroughTicks: ticks(r.followThroughTicks, DEFAULT_FACING.followThroughTicks, 0, 300),
+    instantCastTicks: ticks(r.instantCastTicks, DEFAULT_FACING.instantCastTicks, 0, 300),
+  });
+}
+
 export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
   if (!doc || typeof doc !== "object") return DEFAULT_COMBAT_FEEL;
-  const d = doc as { schema?: unknown; knockback?: unknown; standstill?: unknown };
+  const d = doc as {
+    schema?: unknown;
+    knockback?: unknown;
+    standstill?: unknown;
+    facing?: unknown;
+  };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
     knockback: normalizeKnockbackRules(d.knockback),
     standstill: normalizeStandstillRules(d.standstill),
+    facing: normalizeFacingRules(d.facing),
   });
 }
 

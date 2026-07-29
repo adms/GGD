@@ -298,6 +298,65 @@ describe("victoryTaunt playback gates", () => {
     expect(h.el.play).toHaveBeenCalledTimes(1);
   });
 
+  // task #63: the CLIP must be requested across the delay window, not on the
+  // beat. `speak()` assigns `el.src` at the instant the line has to be heard, so
+  // before this the 758-clip / 7.7 MB taunt pack was grabbed cold exactly when
+  // it had to sound. The assertion reads the REQUESTED URLS, not a flag.
+  it("prefetches the clip when the beat is scheduled, not when it fires", async () => {
+    cover("client-taunt-clip-warm");
+    const el = makeElement();
+    const seen: string[] = [];
+    const queued: (() => void)[] = [];
+    const player = new VictoryTauntPlayer({
+      audio: { isUnlocked: true, volumes: () => UNMUTED },
+      silent: false,
+      createAudio: () => el,
+      fetchFn: (url: string) => {
+        seen.push(url);
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(DOC) } as unknown as Response);
+      },
+      schedule: (fn) => (queued.push(fn), queued.length),
+      cancelSchedule: () => {},
+      warn: () => {},
+    });
+
+    const line = await player.playRound("godie-e001", 2, { delayMs: 2200 });
+    expect(line?.file).toBeTruthy();
+    // the clip is already on the wire while the 名言 is still on screen…
+    expect(seen.some((u) => u.endsWith(line!.file!))).toBe(true);
+    expect(el.play).not.toHaveBeenCalled(); // …and nothing has sounded yet
+    const before = seen.length;
+
+    queued[queued.length - 1]!();
+    expect(el.play).toHaveBeenCalledTimes(1);
+    expect(el.src).toContain(line!.file!);
+
+    // a second taunt for the same clip must not re-request it
+    await player.playRound("godie-e001", 2, { delayMs: 2200 });
+    expect(seen.filter((u) => u.endsWith(line!.file!))).toHaveLength(1);
+    expect(seen.length).toBeGreaterThanOrEqual(before);
+  });
+
+  it("TEST-MODE SILENCE also suppresses the clip prefetch (task #62)", async () => {
+    cover("client-taunt-clip-warm");
+    const seen: string[] = [];
+    const player = new VictoryTauntPlayer({
+      audio: { isUnlocked: true, volumes: () => UNMUTED },
+      silent: true,
+      createAudio: () => makeElement(),
+      fetchFn: (url: string) => {
+        seen.push(url);
+        return Promise.resolve({ ok: true, json: () => Promise.resolve(DOC) } as unknown as Response);
+      },
+      schedule: () => 1,
+      cancelSchedule: () => {},
+      warn: () => {},
+    });
+    const line = await player.playRound("godie-e001", 2, { delayMs: 2200 });
+    expect(line?.file).toBeTruthy();
+    expect(seen.filter((u) => u.includes("voice-taunt"))).toEqual([]); // only the script
+  });
+
   it("a 404 taunt script is silence and no subtitle, never a throw", async () => {
     cover("client-taunt-404");
     const el = makeElement();

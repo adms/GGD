@@ -53,6 +53,7 @@ import { VoxelBodyPage } from "./VoxelBodyPage";
 import { BaseBonusPage } from "./BaseBonusPage";
 import { FormVisualsPage } from "./FormVisualsPage";
 import { StatCapsPage } from "./StatCapsPage";
+import { VfxForgePage } from "./VfxForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -146,6 +147,10 @@ const NAV: NavItem[] = [
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。放在數值三頁之後,
   // 因為它調的是同一批英雄的**外觀**而不是數值。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
+  // 鑄技工坊 (#205 / #230 / #272) —— 每支技能綁哪一個特效家族原型 + per-invocation
+  // 參數。緊接在 變身外觀 後面,因為兩頁都是「看不看得出來」而不是「強不強」,
+  // 而且兩頁都同樣是「w3x 有事實但沒人把它接上去」的那一類。
+  { page: "vfxForge", label: "鑄技工坊", emoji: "🔮", section: SEC_SYS },
   // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
   // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
   // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
@@ -589,6 +594,7 @@ function Console(): React.JSX.Element {
             {page === "voxelBody" && <VoxelBodyPage />}
             {page === "baseBonus" && <BaseBonusPage />}
             {page === "formVisuals" && <FormVisualsPage />}
+            {page === "vfxForge" && <VfxForgePage />}
             {page === "statCaps" && <StatCapsPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (

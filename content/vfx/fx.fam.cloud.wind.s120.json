@@ -1,0 +1,91 @@
+{
+  "id": "fx.fam.cloud.wind.s120",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.864
+  },
+  "mode": "burst",
+  "burstCount": 52,
+  "lifetimeSec": {
+    "min": 0.544,
+    "max": 1.312
+  },
+  "size": {
+    "start": 0.151,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9532,
+      0.9928,
+      0.9676,
+      0.55
+    ],
+    "end": [
+      0.1332,
+      0.1728,
+      0.1476,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.151
+    ],
+    [
+      0.2,
+      0.36
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9532,
+        0.9928,
+        0.9676,
+        0.55
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.74,
+        0.96,
+        0.82,
+        0.55
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.37,
+        0.48,
+        0.41,
+        0.231
+      ]
+    ],
+    [
+      1,
+      [
+        0.1332,
+        0.1728,
+        0.1476,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0.4,
+  "speed": {
+    "min": 2,
+    "max": 6
+  },
+  "texture": "assets/textures/particles/star_04.png"
+}

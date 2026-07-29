@@ -35,6 +35,7 @@ import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { Vec2 } from "./math/vec2";
 import { lenSq } from "./math/vec2";
+import { DEFAULT_FACING, type FacingRules } from "./combatFeel";
 
 /** 一次出手所 commit 的瞄準方向 + 絕對到期 tick。 */
 export interface FacingLock {
@@ -48,6 +49,11 @@ export interface FacingLock {
  * 出手後的「收招」餘韻 tick 數。揮劍在傷害點那一刻就結束了，但如果鎖也同時放掉，
  * 身體會在命中的同一幀就被移動方向拉走 —— 看起來就像根本沒轉過。3 tick (100ms)
  * 剛好蓋過 client 那段 70ms 的 yaw 平滑，出手才讀得出來。
+ *
+ * ⚠️ 這兩個 `const` 現在只是**出貨預設的鏡子**(`DEFAULT_FACING`),不是真值來源。
+ * 出貨路徑一律走 `facingTicks(world)` 讀 `world.combatFeel.facing`,否則後台調了
+ * 窗口長度、玩家那一場卻沒變(第②種故障:算出來但沒送到)。它們留著是因為測試
+ * 與舊呼叫端還在讀,而且 `DEFAULT_FACING` 必須和它們相等 —— 有守衛釘住。
  */
 export const FACING_FOLLOW_THROUGH_TICKS = 3;
 
@@ -57,6 +63,20 @@ export const FACING_FOLLOW_THROUGH_TICKS = 3;
  * MovementSystem 的 TURN_FACTOR 轉完 90° 所需的時間同一個量級。
  */
 export const FACING_INSTANT_CAST_TICKS = 6;
+
+/**
+ * 這一場實際生效的面向鎖窗口長度(後台可調,`config.combat-feel@1` 的 `facing`)。
+ *
+ * 為什麼是一支函式而不是直接讀欄位:`world.combatFeel` 在 `MatchController`
+ * 建構時才被換成文件的值,而 `SimWorld` 的預設是 `DEFAULT_COMBAT_FEEL`。舊測試
+ * 造出來的 world 可能整個 `facing` 都沒有(手寫 `world.combatFeel = {...}` 只填
+ * 兩格的寫法在 repo 裡真的存在),所以這裡對缺格回退到出貨預設,而不是給 undefined
+ * 讓它一路變成 `NaN` tick —— `world.tick + NaN` 之後每一個到期比較都是 false,
+ * 鎖會**永遠不過期**,而且完全無聲。
+ */
+export function facingTicks(world: SimWorld): FacingRules {
+  return world.combatFeel?.facing ?? DEFAULT_FACING;
+}
 
 /**
  * Commit 一個瞄準方向：立刻寫進 `t.facing`（出手要的是**即時**回饋，client 端的

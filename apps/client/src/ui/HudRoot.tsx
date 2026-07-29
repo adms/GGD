@@ -33,6 +33,7 @@ import { MerchantShop } from "./panels/MerchantShop";
 import { PrepClock } from "./panels/PrepClock";
 import { ReadyButton } from "./panels/ReadyButton";
 import { MatchEndPanel } from "./panels/MatchEndPanel";
+import { RoundVictoryPanel } from "./panels/RoundVictoryPanel";
 import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
@@ -258,23 +259,31 @@ export function HudRoot(): React.JSX.Element {
         </>
       )}
       {phase === "resolution" && (
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: 120,
-            transform: "translateX(-50%)",
-            padding: "10px 30px",
-            background: PANEL_BG,
-            border: PANEL_BORDER,
-            borderRadius: 10,
-            color: TEXT_MAIN,
-            fontSize: 17,
-            fontWeight: "bold",
-          }}
-        >
-          Round over
-        </div>
+        <>
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: 120,
+              transform: "translateX(-50%)",
+              padding: "10px 30px",
+              background: PANEL_BG,
+              border: PANEL_BORDER,
+              borderRadius: 10,
+              color: TEXT_MAIN,
+              fontSize: 17,
+              fontWeight: "bold",
+            }}
+          >
+            Round over
+          </div>
+          {/* 回合勝利畫面的文字半邊 (task #212). 3D 模型列是
+              render/RoundWinnerStage(#143)在畫的,這一片是 owner 那句話裡
+              模型以外的兩件事:評價+建議(走 sim 的 gradeRound,#232 的商店卡
+              也是同一支)、以及跨回合的團隊累積積分。貼右側,中央整條留給模型
+              —— 一張蓋住模型的卡片就是「做了但玩家看不到」。 */}
+          <RoundVictoryPanel />
+        </>
       )}
       {phase === "matchEnd" && <MatchEndPanel />}
     </>

@@ -1,0 +1,94 @@
+{
+  "id": "fx.fam.breath.blood.s110",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.132,
+    "angleDeg": 9
+  },
+  "mode": "burst",
+  "burstCount": 32,
+  "lifetimeSec": {
+    "min": 0.175,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.231,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9604,
+      0.838,
+      0.838,
+      1
+    ],
+    "end": [
+      0.1404,
+      0.018,
+      0.018,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.231
+    ],
+    [
+      0.1,
+      0.55
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9604,
+        0.838,
+        0.838,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.78,
+        0.1,
+        0.1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.39,
+        0.05,
+        0.05,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1404,
+        0.018,
+        0.018,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 12,
+    "max": 20
+  },
+  "texture": "assets/textures/particles/trace_03.png",
+  "stretched": true,
+  "tailLength": 3.5
+}

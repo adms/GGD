@@ -37,11 +37,39 @@ import type { Vec2 } from "./math/vec2";
 /**
  * 沒有新訊息時,最多沿用幾個 tick 的舊瞄準方向。
  *
- * 3 tick @30Hz = 100ms。上界要蓋得住 30Hz 送出 / 30Hz 模擬的相位漂移(最壞情況
- * 是連續兩 tick 沒訊息),下界要小到「玩家真的放手且完全停止輸入」時不會把面向
- * 卡住太久 —— 100ms 之後面向鎖 / 移動方向就拿回控制權。
+ * ⚠️ 這個數字是 8,不是 3 —— 3 是錯的,而且是**量出來**錯的(2026-07-30)。
+ *
+ * 第一版寫 3 tick,理由是「最壞情況是連續兩 tick 沒訊息」。那個假設只在
+ * **桌機 30Hz 送出 / 30Hz 模擬**時成立。實測(用出貨的 AimHold → IntentFrame →
+ * `world.step()`,面向鎖朝南 600 tick、玩家瞄北、腳往東走):
+ *
+ *     訊息只在 tick 1/5/9 抵達(= 每 4 tick 一筆)
+ *     tick 1,2,3  facing = (0, +1)   北 —— 沿用中
+ *     tick 4      facing = (0, −1)   南 —— 沿用到期,掉回面向鎖  ← 硬跳 180°
+ *     tick 5,6,7  facing = (0, +1)   北
+ *     tick 8      facing = (0, −1)   南                        ← 又跳一次
+ *
+ * 也就是 #280 的抽搐**在 3 tick 這個值下依然存在**,只是從「每隔一 tick」變成
+ * 「每隔三 tick」。而 4 tick 一筆正是手機的常態:#282 量到手機 30fps 把送出率
+ * 打到 15.6–21.8 訊息/秒,對 30Hz 的 sim 就是平均每 1.4–1.9 tick 一筆,再加上
+ * frame pacing 的抖動,連續 3–4 個 tick 沒訊息是常態而不是例外。
+ *
+ * 8 tick @30Hz = 267ms,蓋得住上面整個範圍還有餘裕。
+ *
+ * 上界由什麼決定:這個窗口**只**在「完全沒有訊息」時才會走到(見 `drain` 分支 3)。
+ * 玩家真的放開類比會送出一筆不帶 aim 的訊息,那是分支 2,**立刻**交還,和這個
+ * 數字無關。所以這裡真正在防的是「連線斷了/切到背景」,267ms 之後交還完全夠快。
+ *
+ * ⚠️ 為什麼這個值**不是**後台可調的(第一守則的例外,有理由):
+ * `AimHold` 坐在輸入邊界,伺服器那份在 `game-server/seat/InputMailbox`,客戶端
+ * 那份在 `client/predict/LocalPrediction`。而**客戶端沒有任何 config 通道** ——
+ * `combat-feel` 只在 `MatchController` 讀進 `world.combatFeel`,從來沒有送給
+ * client(2026-07-30 查證:`apps/client` 底下 0 個 combatFeel 參照)。把它做成
+ * 後台欄位的話,操作者一改,伺服器用新窗口、預測用舊窗口,自己的角色面向會和
+ * 權威長期不同意,每一次 reconcile 都在打架 —— 那比寫死更糟。
+ * 要讓它可調,先做「client 收得到 config」這件事;在那之前共用同一個常數才是對的。
  */
-export const AIM_HOLD_TICKS = 3;
+export const AIM_HOLD_TICKS = 8;
 
 /** 退化向量(長度 0)不算瞄準 —— 類比回中時某些驅動會送 {0,0}。 */
 function isRealAim(v: Vec2 | undefined): v is Vec2 {

@@ -7,6 +7,7 @@
  */
 import { INTERP_DELAY_MS, SNAPSHOT_MS } from "@ggd/shared/constants";
 import { defaultFpsCap } from "../render/frameCap";
+import { INTENT_HZ_DEFAULT, clampIntentHz } from "../input/IntentClock";
 
 /** Top-level graphics selector. "auto" hands quality to the adaptive manager. */
 export type QualityPreset = "low" | "medium" | "high" | "auto";
@@ -75,6 +76,15 @@ export interface NetworkSettings {
   showPing: boolean;
   /** widen interp delay slightly when snapshot arrival variance is high. */
   adaptiveJitterBuffer: boolean;
+  /**
+   * 每秒把操作送出去幾次 (task #282)。**這是「你的操作有多少會被伺服器看到」**,
+   * 不是畫質選項:sim 每秒跑 30 tick,一個 tick 只吃一筆 intent,所以 30 = 每
+   * 一 tick 都有你的輸入,15 = 每兩 tick 才有一次(手機以前就是掉在這附近)。
+   *
+   * 調低是**真的省電**(少取樣、少送封包),代價是操作解析度。範圍與理由都在
+   * `input/IntentClock.ts`:INTENT_HZ_MIN..INTENT_HZ_MAX。
+   */
+  intentHz: number;
 }
 
 export interface Settings {
@@ -143,6 +153,8 @@ export const DEFAULT_NETWORK: NetworkSettings = {
   showPerfOverlay: false,
   showPing: true,
   adaptiveJitterBuffer: false,
+  // 派生,不是字面量 —— 預設就是「每一個 sim tick 都有你的輸入」。
+  intentHz: INTENT_HZ_DEFAULT,
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -197,6 +209,9 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
     showPerfOverlay: Boolean(n.showPerfOverlay),
     showPing: Boolean(n.showPing),
     adaptiveJitterBuffer: Boolean(n.adaptiveJitterBuffer),
+    // 有**上界**,不是只有下界(CLAUDE.md #277 的教訓):30 打成 300 會讓手機
+    // 每秒送 300 個保證被伺服器丟掉的封包。clampIntentHz 兩邊都夾。
+    intentHz: clampIntentHz(n.intentHz),
   };
 }
 

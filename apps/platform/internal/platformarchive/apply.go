@@ -464,6 +464,9 @@ func writeEntry(a *Archive, t *Target, rule *Rule, e Entry, res *ApplyResult) er
 		if isLiveContentOverlay(e) {
 			return writeContentOverlay(t, e, data, res)
 		}
+		if isMatchStatsEntry(e) {
+			return writeMatchStats(t, e, data, res)
+		}
 		return t.Store.Put(e.Collection, e.ID, json.RawMessage(data))
 	case KindJSONL:
 		p, err := jsonlPath(t.Store, e.Collection, e.ID)

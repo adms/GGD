@@ -19,8 +19,7 @@ import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { armRecovery } from "./abilityRecovery";
 import {
   armFacingLock,
-  FACING_FOLLOW_THROUGH_TICKS,
-  FACING_INSTANT_CAST_TICKS,
+  facingTicks,
 } from "../facingLock";
 
 /**
@@ -227,15 +226,16 @@ export function castAbility(
   // (step slot 5 vs 這裡的 slot 3) 會無條件把 facing 轉回移動方向 —— 搖桿/觸控
   // 每一幀都合成一筆 move 訂單，所以走位中施法的轉身存活 0 tick。改用面向鎖：
   // 一樣立刻寫 facing，但同時宣告「接下來這幾 tick 移動方向不得覆蓋」。
-  // 鎖的長度 = 吟唱時間，瞬發技至少 FACING_INSTANT_CAST_TICKS（沒有吟唱可以撐住
+  // 鎖的長度 = 吟唱時間，瞬發技至少 facing.instantCastTicks（沒有吟唱可以撐住
   // 面向，只給收招餘韻的話玩家看不到轉身），再加上收招餘韻。
   const castTicksForAim = Math.round((def.castTimeSec ?? 0) / world.dt);
+  const fTicks = facingTicks(world); // 後台可調 (config.combat-feel@1 → facing)
   if (direction) {
     armFacingLock(
       world,
       caster,
       direction,
-      Math.max(castTicksForAim, FACING_INSTANT_CAST_TICKS) + FACING_FOLLOW_THROUGH_TICKS,
+      Math.max(castTicksForAim, fTicks.instantCastTicks) + fTicks.followThroughTicks,
     );
   }
 

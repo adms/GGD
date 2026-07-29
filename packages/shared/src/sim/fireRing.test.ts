@@ -340,6 +340,12 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
       burnPctPerSecStart: 0.04,
       burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
+      // #L1 — 殭屍王在場 → 回合延長 3 分鐘,火圈同步延後 3 分鐘 (owner
+      // 2026-07-30). Pinned INSIDE this object rather than in its own `it`
+      // because the whole point of `toEqual` here is that the shipped ring block
+      // is exactly these keys and nothing else: a knob added to the schema but
+      // never authored into the doc would slip past a narrower assertion.
+      boss: { extendCombatSec: 180, delayFireRingSec: 180 },
     });
     // 20 s of backstop left after the ring has fully closed
     expect(parsed.match.fireRing!.startSec + parsed.match.fireRing!.shrinkSec).toBeLessThanOrEqual(

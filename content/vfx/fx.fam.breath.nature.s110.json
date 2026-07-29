@@ -1,0 +1,94 @@
+{
+  "id": "fx.fam.breath.nature.s110",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.132,
+    "angleDeg": 9
+  },
+  "mode": "burst",
+  "burstCount": 32,
+  "lifetimeSec": {
+    "min": 0.175,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.231,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.91,
+      0.982,
+      0.892,
+      1
+    ],
+    "end": [
+      0.09,
+      0.162,
+      0.072,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.231
+    ],
+    [
+      0.1,
+      0.55
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.91,
+        0.982,
+        0.892,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.5,
+        0.9,
+        0.4,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.25,
+        0.45,
+        0.2,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.09,
+        0.162,
+        0.072,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 12,
+    "max": 20
+  },
+  "texture": "assets/textures/particles/trace_03.png",
+  "stretched": true,
+  "tailLength": 3.5
+}

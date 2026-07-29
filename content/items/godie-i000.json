@@ -18,8 +18,31 @@
       "value": 237
     }
   ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "radius": 3.5,
+          "maxTargets": 4,
+          "canCrit": true
+        }
+      ]
+    }
+  ],
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "requiresAttackType": "melee"
 }
