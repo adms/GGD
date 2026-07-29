@@ -17,13 +17,32 @@
  *    replaying the same match if a packet ordering ever differs. Sorting makes
  *    the payout a function of the DAMAGE TABLE and nothing else.
  *
- * 2. 翻倍 IS A WEIGHT, NOT A BONUS. The last hitter's damage counts
- *    `lastHitMultiplier` times over when the shares are computed. The obvious
- *    alternative — compute everyone's share, then double the last hitter's —
- *    makes the total paid out DEPEND ON WHO LANDED THE KILL, so the king mints
- *    gold when a low-damage player steals it. Here `sum(payout) === pool`
- *    exactly, always, and the last hitter still gets strictly more per point of
- *    damage than anybody else, which is what 「獎金翻倍」 is asking for.
+ * 2. 翻倍 HAS TWO MODES, AND THE OWNER PICKED THE ONE THIS FILE USED TO ARGUE
+ *    AGAINST. Until 2026-07-29 this header asserted, as a rule, that doubling
+ *    must be a WEIGHT and never a bonus — because computing everyone's share
+ *    and then doubling the last hitter's makes the total paid out DEPEND ON WHO
+ *    LANDED THE KILL, so the king mints gold when a low-damage player steals it.
+ *
+ *    That reasoning is still correct. The owner read it and chose the other
+ *    thing anyway, with a worked example: 「除了最後一刀的人可以雙倍領取(超過
+ *    總額沒關係,極端情形第一刀就是最後一刀全傷害 = 200% 金錢跟等級獎勵)」.
+ *    A last hitter who did ALL the damage takes 200% of the pool. So the total
+ *    is deliberately NOT conserved, and the minting the old rule guarded against
+ *    is now the feature.
+ *
+ *    Both survive, because the owner also said 「如果遇到有爭議的決策,請以後台
+ *    編輯器可調整為解法」:
+ *      · `"bonus"`  (SHIPPED DEFAULT) — split by raw damage, then pay the last
+ *                   hitter one EXTRA copy of their own share. Total lands in
+ *                   [pool, pool × mult]; it hits the ceiling exactly when one
+ *                   champion did all the damage AND landed the blow.
+ *      · `"weight"` — the old rule. `sum(payout) === pool` exactly, always.
+ *
+ *    ⚠️ THE CONSEQUENCE THAT IS EASY TO MISS, and the reason four other files
+ *    changed with this one: in `"bonus"` mode 「總獎金 30,000」 is no longer a
+ *    true sentence. Anything that displays the CONFIGURED pool as the amount
+ *    paid is now lying. Every such string must read the ACTUAL total off the
+ *    shares — see `bossTotalLine` / `bossRuleNote`, which take the mode.
  *
  * 3. THE REMAINDER IS NAMED, NOT DROPPED. `floor` on each share loses up to
  *    (n-1) gold. Rather than let it evaporate (players see a total that is not
@@ -59,6 +78,16 @@ export const MOB_BOSS_SLAIN_EVENT = "mobBossSlain";
 /** One champion's contribution to the king: `[entity, damage dealt]`. */
 export type BossDamageEntry = readonly [EntityId, number];
 
+/**
+ * How 「最後一刀翻倍」 is paid. See rule 2 in the header for why both exist.
+ *
+ * `"bonus"` is the shipped default (owner 2026-07-29). `"weight"` is the
+ * conserving alternative, kept because the argument for it is still sound and
+ * the owner asked for contentious calls to be admin-switchable rather than
+ * settled in code.
+ */
+export type LastHitMode = "bonus" | "weight";
+
 /** What one champion is paid when the king dies. */
 export interface BossBountyShare {
   readonly id: EntityId;
@@ -68,12 +97,26 @@ export interface BossBountyShare {
   readonly lastHit: boolean;
   readonly gold: number;
   readonly xp: number;
+  /**
+   * 等級提升 (owner 2026-07-29). REQUESTED levels, not necessarily granted:
+   * `LEVEL_CAP` is 99 and `grantLevels` stops silently at it, so the caller
+   * must report what it actually handed out. See `payMobBounty`.
+   */
+  readonly levels: number;
 }
 
-/** The pool to divide. Both are whole numbers and both are paid out in full. */
+/**
+ * The pool to divide.
+ *
+ * ⚠️ NAMES A CEILING, NOT A TOTAL, in the shipped `"bonus"` mode — the payout
+ * lands in `[pool, pool × lastHitMultiplier]`. Only `"weight"` still pays out
+ * exactly this much. See rule 2 in the header.
+ */
 export interface BossBountyPool {
   readonly gold: number;
   readonly xp: number;
+  /** 等級提升 — whole levels, split by damage exactly like gold and xp. */
+  readonly levels: number;
 }
 
 /**
@@ -98,9 +141,11 @@ export function splitBossBounty(
   pool: BossBountyPool,
   lastHitter: EntityId | null,
   lastHitMultiplier: number,
+  mode: LastHitMode = "bonus",
 ): BossBountyShare[] {
   const gold = Math.max(0, Math.floor(pool.gold));
   const xp = Math.max(0, Math.floor(pool.xp));
+  const levels = Math.max(0, Math.floor(pool.levels));
   const mult = Math.max(1, lastHitMultiplier);
 
   // 1) Positive contributions only, plus the last hitter even at zero damage.
@@ -117,16 +162,25 @@ export function splitBossBounty(
   const ids = [...table.keys()].sort((a, b) => a - b);
   if (ids.length === 0) return [];
 
-  // 2) Weights: 翻倍 for the last hitter — rule 2.
+  // 2) Weights. THE ONE LINE THAT SEPARATES THE TWO MODES: `"weight"` counts the
+  //    last hitter's damage `mult` times over here (so the doubling is already
+  //    baked into the proportions and the total stays === pool); `"bonus"` uses
+  //    raw damage and pays the extra copy in step 4 instead.
   let totalWeight = 0;
   const weights = ids.map((id) => {
-    const w = (table.get(id) ?? 0) * (id === lastHitter ? mult : 1);
+    const w = (table.get(id) ?? 0) * (mode === "weight" && id === lastHitter ? mult : 1);
     totalWeight += w;
     return w;
   });
 
   // Nobody did any damage at all (only the zero-damage last hitter is here).
   // One recipient, the whole pool — never a division by zero.
+  //
+  // ⚠️ NO BONUS ON THIS BRANCH, in either mode. There is no 「自己的份額」 to pay
+  // a second copy of — this is a consolation payout of the full pool to someone
+  // who contributed nothing measurable. Doubling it would mean 「零傷害搶人頭
+  // = 200%」, which is the pure minting the old rule-2 warned about and is NOT
+  // what the owner's worked example asks for (theirs is 全傷害 + 補刀 → 200%).
   if (totalWeight <= 0) {
     return ids.map((id, i) => ({
       id,
@@ -134,21 +188,35 @@ export function splitBossBounty(
       lastHit: id === lastHitter,
       gold: i === 0 ? gold : 0,
       xp: i === 0 ? xp : 0,
+      levels: i === 0 ? levels : 0,
     }));
   }
 
   // 3) Floor every share, then hand the whole remainder to ONE named recipient
-  //    — rule 3.
-  const goldShares = weights.map((w) => Math.floor((gold * w) / totalWeight));
-  const xpShares = weights.map((w) => Math.floor((xp * w) / totalWeight));
-  const remainderIdx = Math.max(
-    0,
-    lastHitter === null ? 0 : ids.indexOf(lastHitter),
-  );
-  goldShares[remainderIdx] =
-    (goldShares[remainderIdx] ?? 0) + (gold - goldShares.reduce((a, b) => a + b, 0));
-  xpShares[remainderIdx] =
-    (xpShares[remainderIdx] ?? 0) + (xp - xpShares.reduce((a, b) => a + b, 0));
+  //    — rule 3. After this step the sum is EXACTLY the pool, in both modes.
+  const split = (total: number): number[] => {
+    const out = weights.map((w) => Math.floor((total * w) / totalWeight));
+    const remainderIdx = Math.max(0, lastHitter === null ? 0 : ids.indexOf(lastHitter));
+    out[remainderIdx] = (out[remainderIdx] ?? 0) + (total - out.reduce((a, b) => a + b, 0));
+    return out;
+  };
+  const goldShares = split(gold);
+  const xpShares = split(xp);
+  const levelShares = split(levels);
+
+  // 4) 「最後一刀的人可以雙倍領取」 — `"bonus"` only. The extra copy is of the
+  //    last hitter's OWN share, computed AFTER the remainder landed, so a lone
+  //    damager who also lands the blow holds the whole pool and then receives it
+  //    again: exactly the 200% the owner named. `floor` keeps every payout an
+  //    integer; `mult - 1` is 1.0 at the shipped ×2 and scales linearly above it.
+  if (mode === "bonus" && lastHitter !== null) {
+    const i = ids.indexOf(lastHitter);
+    if (i >= 0) {
+      goldShares[i] = (goldShares[i] ?? 0) + Math.floor((goldShares[i] ?? 0) * (mult - 1));
+      xpShares[i] = (xpShares[i] ?? 0) + Math.floor((xpShares[i] ?? 0) * (mult - 1));
+      levelShares[i] = (levelShares[i] ?? 0) + Math.floor((levelShares[i] ?? 0) * (mult - 1));
+    }
+  }
 
   return ids.map((id, i) => ({
     id,
@@ -156,6 +224,7 @@ export function splitBossBounty(
     lastHit: id === lastHitter,
     gold: goldShares[i] ?? 0,
     xp: xpShares[i] ?? 0,
+    levels: levelShares[i] ?? 0,
   }));
 }
 

@@ -202,7 +202,9 @@
       "bountyXp": 1200,
       "lastHitMultiplier": 2,
       "hpMult": 100,
-      "sizeMult": 10
+      "sizeMult": 10,
+      "bountyLevels": 50,
+      "lastHitMode": "bonus"
     },
     "special": {
       "chancePercent": 5,

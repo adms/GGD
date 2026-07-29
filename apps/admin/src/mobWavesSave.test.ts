@@ -193,6 +193,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.bountyGold": "4200",
   "boss.bountyXp": "1600",
   "boss.lastHitMultiplier": "3",
+  "boss.bountyLevels": "50",
+  "boss.lastHitMode": "bonus",
   "special.chancePercent": "12",
   "special.hpMult": "2.5",
   "special.damageMult": "1.75",

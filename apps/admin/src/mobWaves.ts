@@ -111,7 +111,9 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     sizeMult: 10,
     bountyGold: 30000,
     bountyXp: 1200,
+    bountyLevels: 50,
     lastHitMultiplier: 2,
+    lastHitMode: "bonus",
   },
   special: {
     chancePercent: 5,
@@ -174,7 +176,9 @@ export type MobWavesFieldKey =
   | "boss.hpMult"
   | "boss.bountyGold"
   | "boss.bountyXp"
+  | "boss.bountyLevels"
   | "boss.lastHitMultiplier"
+  | "boss.lastHitMode"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -187,7 +191,7 @@ export type MobWavesFieldKey =
   | "special.sizeMult";
 
 /** How a box is typed + validated. `champion`/`model` are text with a picker. */
-export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool";
+export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool" | "enum";
 
 export interface MobWavesFieldSpec {
   /** 中文名稱 — the row's first column */
@@ -199,6 +203,16 @@ export interface MobWavesFieldSpec {
   kind: FieldKind;
   /** inclusive lower bound, mirroring the zod schema */
   min?: number;
+  /**
+   * Inclusive UPPER bound, mirroring the zod schema.
+   *
+   * ⚠️ ADDED BY GH#206 BECAUSE THERE WAS NO UPPER BOUND ANYWHERE ON THIS PAGE.
+   * `validateField` only ever checked `min`, so a typo in 殭屍王等級提升 (say
+   * 500 instead of 50) sailed past the console and was then rejected — or
+   * silently clamped — much further downstream. A bound the operator can see is
+   * worth more than one that only exists in a zod file they never open.
+   */
+  max?: number;
   /** true when the schema marks it `.optional()` — an EMPTY box is legal */
   optional: boolean;
   /** what an empty box means, in words (only for `optional` fields) */
@@ -210,6 +224,10 @@ export interface MobWavesFieldSpec {
    * reaches the screen.
    */
   boolLabels?: { on: string; off: string };
+  /** `enum` fields only: the legal values, in the order the picker shows them */
+  values?: readonly string[];
+  /** `enum` fields only: the Chinese label for each value (same reason as `boolLabels`) */
+  valueLabels?: Readonly<Record<string, string>>;
 }
 
 /**
@@ -256,7 +274,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.radius",
   "boss.bountyGold",
   "boss.bountyXp",
+  "boss.bountyLevels",
   "boss.lastHitMultiplier",
+  "boss.lastHitMode",
   "special.chancePercent",
   "special.championId",
   "special.modelKey",
@@ -571,11 +591,13 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: false,
   },
   "boss.bountyGold": {
-    zh: "殭屍王獎金總額",
-    note: "這是「全部人加起來」的總金額，不是每人。照傷害比例分，最後一刀的人權重加倍",
+    zh: "殭屍王獎金池",
+    // ⚠️ 舊文案寫「總金額」，在預設的「額外加碼」模式下那是謊話 —— 實發會超過。
+    note: "照傷害比例分給參戰的人。⚠️ 在「額外加碼」模式下實發會**超過**這個數字（最多 ×下面的倍率）",
     unit: "金",
     kind: "int",
     min: 0,
+    max: 10_000_000,
     optional: false,
   },
   "boss.bountyXp": {
@@ -586,13 +608,33 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 0,
     optional: false,
   },
+  "boss.bountyLevels": {
+    zh: "殭屍王等級提升",
+    note: "直接送等級（不是經驗值），照同一套傷害比例分。⚠️ 等級上限 99，召喚王的人通常已經過 50 級，所以實際跳的級數會比這裡少 —— 結算面板顯示的是**實際跳的**",
+    unit: "級",
+    kind: "int",
+    min: 0,
+    max: 99,
+    optional: false,
+  },
   "boss.lastHitMultiplier": {
-    zh: "最後一刀權重倍率",
-    note: "2 = 補刀的人「每點傷害」算兩倍。因為是權重，總額仍然剛好等於上面的總金額",
+    zh: "最後一刀倍率",
+    note: "2 = 翻倍。乘的是什麼由下面那個模式決定",
     unit: "倍",
     kind: "num",
     min: 1,
+    max: 10,
     optional: false,
+  },
+  "boss.lastHitMode": {
+    zh: "最後一刀怎麼算",
+    unit: "",
+    note: "額外加碼 = 補刀的人「再多領一份自己的份額」，實發總額會超過獎金池（一個人打完全部又補刀就是 200%）。權重 = 補刀的傷害算兩倍參與分配，總額剛好等於獎金池，不會多印錢",
+    kind: "enum",
+    emptyMeans: "沿用出貨預設「額外加碼」",
+    values: ["bonus", "weight"],
+    valueLabels: { bonus: "額外加碼（可超過總額）", weight: "權重（總額固定）" },
+    optional: true,
   },
 
   // ── 特殊殭屍 (#262) ──────────────────────────────────────────────────────
@@ -731,7 +773,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.radius",
       "boss.bountyGold",
       "boss.bountyXp",
+      "boss.bountyLevels",
       "boss.lastHitMultiplier",
+      "boss.lastHitMode",
     ],
   },
   {
@@ -870,8 +914,15 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.bountyGold);
     case "boss.bountyXp":
       return formatNum(cfg.boss?.bountyXp);
+    case "boss.bountyLevels":
+      return formatNum(cfg.boss?.bountyLevels);
     case "boss.lastHitMultiplier":
       return formatNum(cfg.boss?.lastHitMultiplier);
+    case "boss.lastHitMode":
+      // Absent in a doc authored before GH#206 — show the shipped default
+      // rather than an empty box, because an empty box here reads as
+      // 「沒有模式」 and there is no such state.
+      return cfg.boss?.lastHitMode ?? "";
     case "special.chancePercent":
       return formatNum(cfg.special?.chancePercent);
     case "special.hpMult":
@@ -1010,11 +1061,19 @@ export function validateField(key: MobWavesFieldKey, text: string): string {
   // `validateForm` waives it for a block nobody has filled in at all.
   if (t === "") return spec.optional ? "" : "必填";
   if (spec.kind === "bool") return t === "1" || t === "0" ? "" : "只能是開或關";
+  if (spec.kind === "enum") {
+    return (spec.values ?? []).includes(t) ? "" : `只能是 ${(spec.values ?? []).join(" / ")}`;
+  }
   if (spec.kind === "text" || spec.kind === "champion" || spec.kind === "model") return "";
   const n = Number(t);
   if (!Number.isFinite(n)) return "必須是數字";
   if (spec.kind === "int" && !Number.isInteger(n)) return "必須是整數";
   if (spec.min !== undefined && n < spec.min) return `不能小於 ${spec.min}`;
+  // GH#206 — THE UPPER BOUND THAT DID NOT EXIST. Until now `validateField`
+  // only ever checked `min`, so a mistyped 殭屍王等級提升 (500 for 50) passed the
+  // console and was rejected — or silently clamped — somewhere the operator
+  // could not see. Same class of hole as GH#277.
+  if (spec.max !== undefined && n > spec.max) return `不能大於 ${spec.max}`;
   // `.positive()` in the schema — 0 is rejected, and saying so beats a 422.
   if (spec.min === undefined && n <= 0) return "必須大於 0";
   return "";
@@ -1117,6 +1176,16 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     const t = form.fields[key].trim();
     return t === "1" ? true : t === "0" ? false : fallback;
   };
+  /**
+   * `enum` fields. An empty box means 「沒填」 and falls back to the shipped
+   * value — NOT to `undefined`. Dropping the key would silently re-open the
+   * schema's own default, which for `lastHitMode` is the opposite of what the
+   * operator is looking at on screen.
+   */
+  const enumOf = <T extends string>(key: MobWavesFieldKey, allowed: readonly T[], fallback: T): T => {
+    const t = form.fields[key].trim();
+    return (allowed as readonly string[]).includes(t) ? (t as T) : fallback;
+  };
 
   const mob: MobWavesConfig["mob"] = {
     maxHp: num("mob.maxHp", SHIPPED_MOB_WAVES.mob.maxHp),
@@ -1196,6 +1265,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
       radius: num("boss.radius", sb.radius),
       bountyGold: num("boss.bountyGold", sb.bountyGold),
       bountyXp: num("boss.bountyXp", sb.bountyXp),
+      bountyLevels: num("boss.bountyLevels", sb.bountyLevels),
+      lastHitMode: enumOf("boss.lastHitMode", ["bonus", "weight"] as const, sb.lastHitMode ?? "bonus"),
       lastHitMultiplier: num("boss.lastHitMultiplier", sb.lastHitMultiplier),
     };
     const bm = optText("boss.modelKey");

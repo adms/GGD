@@ -295,13 +295,25 @@ function payBossBounty(
       ? []
       : splitBossBounty(
           damagers,
-          { gold: boss.bountyGold, xp: boss.bountyXp },
+          { gold: boss.bountyGold, xp: boss.bountyXp, levels: boss.bountyLevels },
           lastHitter,
           boss.lastHitMultiplier,
+          boss.lastHitMode,
         );
+  // 等級提升 (GH#206). `grantLevels` RETURNS what it managed to hand out — the
+  // request and the grant diverge at `LEVEL_CAP`, and it is the GRANT that the
+  // settlement panel must show. Accumulated here rather than re-derived from
+  // `shares`, because `shares[].levels` is the request.
+  let paidLevels = 0;
+  const grantedPerShare = new Map<EntityId, number>();
   for (const s of shares) {
     if (s.gold > 0) grantGold(world, s.id, s.gold);
     if (s.xp > 0) grantXp(world, s.id, s.xp);
+    if (s.levels > 0) {
+      const got = grantLevels(world, s.id, s.levels);
+      grantedPerShare.set(s.id, got);
+      paidLevels += got;
+    }
   }
   // FAILURE SHAPE ② (「算出來了但從沒送到客戶端」): without this the whole
   // mechanic is server-side arithmetic. The payload carries the WHOLE split —
@@ -313,15 +325,23 @@ function payBossBounty(
     id: bossId,
     killer: lastHitter,
     killerSeatId: lastHitter === null ? -1 : (world.team.get(lastHitter)?.seatId ?? -1),
+    // ⚠️ THESE ARE SUMS OF WHAT WAS PAID, NOT THE CONFIGURED POOL — and since
+    // GH#206's `"bonus"` mode they can EXCEED it (up to ×lastHitMultiplier).
+    // Any consumer that substitutes `boss.bountyGold` here is lying to the
+    // player; `bossTotalLine` reads these.
     totalGold: shares.reduce((a, s) => a + s.gold, 0),
     totalXp: shares.reduce((a, s) => a + s.xp, 0),
+    totalLevels: paidLevels,
     lastHitMultiplier: boss?.lastHitMultiplier ?? 1,
+    lastHitMode: boss?.lastHitMode ?? "bonus",
     shares: shares.map((s) => ({
       id: s.id,
       seatId: world.team.get(s.id)?.seatId ?? -1,
       damage: s.damage,
       gold: s.gold,
       xp: s.xp,
+      // GRANTED, not requested — see `paidLevels` above.
+      levels: grantedPerShare.get(s.id) ?? 0,
       lastHit: s.lastHit,
     })),
   });

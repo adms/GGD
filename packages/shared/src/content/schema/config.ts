@@ -677,21 +677,46 @@ export const zMobWavesConfig = z
         /** model doc id (resolved client-side); absent = the normal mob's */
         modelKey: z.string().min(1).optional(),
         /**
-         * THE WHOLE PRIZE POOL, in gold. Split among every champion that damaged
-         * the king, in proportion to that damage — and the payout is EXACTLY
-         * this number, remainder included (see `splitBossBounty` in
-         * sim/mobBoss.ts). It is not a per-hero amount.
+         * The prize pool in gold, split among every champion that damaged the
+         * king in proportion to that damage. NOT a per-hero amount.
+         *
+         * ⚠️ NOT NECESSARILY THE AMOUNT PAID. Under the shipped
+         * `lastHitMode: "bonus"` (owner 2026-07-29, GH#206) the last hitter
+         * receives an EXTRA copy of their own share, so the total lands in
+         * `[bountyGold, bountyGold × lastHitMultiplier]`. Only `"weight"` pays
+         * exactly this number. See `splitBossBounty` in sim/mobBoss.ts.
          */
         bountyGold: z.number().int().min(0),
         /** the same, in XP */
         bountyXp: z.number().int().min(0),
         /**
-         * 最後一刀翻倍 (owner). The last hitter's damage counts this many times
-         * over when the shares are computed — 2 = 翻倍. Because it is a WEIGHT
-         * and not a post-hoc bonus, the pool total is still exactly
-         * `bountyGold`; the king does not mint gold by being executed.
+         * 等級提升 (owner 2026-07-29: 「殭屍王 獎勵 金錢+30,000 等級提升+50」).
+         * WHOLE LEVELS, split by damage share exactly like `bountyGold` — not
+         * XP, so it skips the curve entirely.
+         *
+         * ⚠️ The REQUEST, not the guarantee: `LEVEL_CAP` is 99 and a champion
+         * who farmed 100 zombies to summon the king is already past L50, so the
+         * grant is routinely smaller. Anything shown to a player must read what
+         * `grantLevels` returned, never this number.
          */
-        lastHitMultiplier: z.number().min(1),
+        bountyLevels: z.number().int().min(0).max(99),
+        /**
+         * 最後一刀翻倍 (owner). 2 = 翻倍. What it multiplies depends on
+         * `lastHitMode`.
+         */
+        lastHitMultiplier: z.number().min(1).max(10),
+        /**
+         * How 「最後一刀翻倍」 is paid — the owner reversed this on 2026-07-29
+         * and asked for both to stay available (GH#206):
+         *   · `"bonus"`  (default) 「超過總額沒關係」 — split by raw damage, then
+         *                pay the last hitter one extra copy of their own share.
+         *                One champion doing all the damage AND landing the blow
+         *                takes 200%, which is the owner's own worked example.
+         *   · `"weight"` — the pre-#206 rule: the doubling is folded into the
+         *                proportions, so the total is exactly `bountyGold` and
+         *                a low-damage kill-stealer cannot mint gold.
+         */
+        lastHitMode: z.enum(["bonus", "weight"]).optional(),
       })
       .strict()
       .optional(),
@@ -860,10 +885,16 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     hpMult: 100,
     sizeMult: 10,
     bountyGold: 30000,
-    // owner only named the GOLD. XP is deliberately left at 1,200 — raising it
-    // to match would hand the killer ~7 extra levels and that was not asked for.
+    // XP stays at 1,200. GH#206 added 等級提升 as its OWN currency rather than
+    // inflating this — the owner asked for 「等級提升+50」, and levels and XP are
+    // different things (one skips the curve, the other rides it).
     bountyXp: 1200,
+    // GH#206 owner 2026-07-29 「殭屍王 獎勵 金錢+30,000 等級提升+50」.
+    bountyLevels: 50,
     lastHitMultiplier: 2,
+    // GH#206 — see the schema note above. `"bonus"` is the owner's ruling and
+    // deliberately lets the payout exceed `bountyGold` (200% at the extreme).
+    lastHitMode: "bonus" as const,
   },
   // 特殊殭屍 (#262). One in twenty, so a wave of 20 carries about one — 「殭屍群
   // 裡面會有一隻特殊殭屍」 read literally. Double size and double hp make it

@@ -43,6 +43,7 @@ import type { ChampionId, EntityId, TeamId } from "../ids";
 import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { MobKind } from "./components";
+import type { LastHitMode } from "./mobBoss";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
 import { Champions } from "./content/registry";
@@ -200,12 +201,25 @@ export interface MobBossRules {
   modelKey: string;
   /** 體型倍率 (GH#192) — see `MobRules.sizeMult`; owner default 10 */
   sizeMult: number;
-  /** THE WHOLE PRIZE POOL in gold, split by damage share (see sim/mobBoss.ts) */
+  /**
+   * The prize pool in gold, split by damage share (see sim/mobBoss.ts).
+   *
+   * ⚠️ NOT the amount paid. Since GH#206 the shipped `lastHitMode: "bonus"`
+   * pays `[pool, pool × lastHitMultiplier]` — this names the FLOOR and the
+   * ceiling is `× lastHitMultiplier`. Only `"weight"` pays exactly this.
+   */
   bountyGold: number;
   /** the same, in XP */
   bountyXp: number;
+  /**
+   * 等級提升 (GH#206, owner 2026-07-29) — WHOLE LEVELS, split by damage share
+   * exactly like gold. Distinct from `bountyXp`: this one skips the curve.
+   */
+  bountyLevels: number;
   /** the last hitter's damage counts this many times over when sharing */
   lastHitMultiplier: number;
+  /** how 「最後一刀翻倍」 is paid — see `LastHitMode` in sim/mobBoss.ts */
+  lastHitMode: LastHitMode;
 }
 
 /** 特殊殭屍 rules — multipliers against the normal mob of the same round. */
@@ -413,7 +427,11 @@ export interface MobWavesConfigLike {
     sizeMult?: number;
     bountyGold: number;
     bountyXp: number;
+    /** GH#206 等級提升 — absent on an arena authored before it; defaults to 0 */
+    bountyLevels?: number;
     lastHitMultiplier: number;
+    /** GH#206 — absent = the shipped `"bonus"` (owner 2026-07-29) */
+    lastHitMode?: LastHitMode;
   };
   /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
   special?: {
@@ -668,7 +686,11 @@ export function mobRulesFromConfig(
             sizeMult: cfg.boss.sizeMult ?? DEFAULT_BOSS_SIZE_MULT,
             bountyGold: cfg.boss.bountyGold,
             bountyXp: cfg.boss.bountyXp,
+            bountyLevels: cfg.boss.bountyLevels ?? 0,
             lastHitMultiplier: cfg.boss.lastHitMultiplier,
+            // GH#206 — `"bonus"` is the owner's 2026-07-29 ruling and therefore
+            // the fallback for any arena authored before the field existed.
+            lastHitMode: cfg.boss.lastHitMode ?? "bonus",
           },
     special:
       cfg.special === undefined

@@ -99,7 +99,17 @@ const RULES: MobRules = {
     modelKey: "champ.mob.zombie-king",
     bountyGold: 1000,
     bountyXp: 500,
+    // 0 so the world-level payout cases below keep measuring gold/xp alone.
+    // The 等級提升 path (GH#206) has its own suite in `mobBossBonus.test.ts`.
+    bountyLevels: 0,
     lastHitMultiplier: 2,
+    // ⚠️ THIS FIXTURE IS DELIBERATELY ON THE NON-DEFAULT MODE. Every case in
+    // this file was written against the conserving rule (`sum === pool`), which
+    // GH#206 demoted from "the rule" to "one of two modes". Pinning the fixture
+    // to `"weight"` keeps those assertions testing the thing they were written
+    // to test, instead of being re-baselined into meaninglessness. The shipped
+    // default `"bonus"` is covered in `mobBossBonus.test.ts`.
+    lastHitMode: "weight",
   },
   special: null,
 };
@@ -285,9 +295,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [B, 200],
         [C, 400],
       ],
-      { gold: 1000, xp: 500 },
+      { gold: 1000, xp: 500, levels: 0 },
       B,
       2,
+      "weight",
     );
     expect(shares.reduce((s, x) => s + x.gold, 0)).toBe(1000);
     expect(shares.reduce((s, x) => s + x.xp, 0)).toBe(500);
@@ -301,9 +312,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [A, 100],
         [B, 200],
       ],
-      { gold: 900, xp: 0 },
+      { gold: 900, xp: 0, levels: 0 },
       null,
       2,
+      "weight",
     );
     const byId = new Map(s.map((x) => [x.id, x]));
     expect(byId.get(A)!.gold).toBe(300);
@@ -322,9 +334,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [A, 100],
         [B, 200],
       ],
-      { gold: 1000, xp: 0 },
+      { gold: 1000, xp: 0, levels: 0 },
       A,
       2,
+      "weight",
     );
     const byId = new Map(s.map((x) => [x.id, x]));
     expect(byId.get(A)!.gold).toBe(500);
@@ -346,9 +359,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [A, 300],
         [B, 100],
       ],
-      { gold: 700, xp: 0 },
+      { gold: 700, xp: 0, levels: 0 },
       A,
       2,
+      "weight",
     );
     const byId = new Map(s.map((x) => [x.id, x]));
     expect(byId.get(A)!.gold).toBe(600);
@@ -362,9 +376,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [A, 100],
         [B, 100],
       ],
-      { gold: 1000, xp: 0 },
+      { gold: 1000, xp: 0, levels: 0 },
       A,
       1,
+      "weight",
     );
     expect(s.map((x) => x.gold)).toEqual([500, 500]);
   });
@@ -380,9 +395,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [B, 291],
         [C, 55],
       ],
-      { gold: 1000, xp: 333 },
+      { gold: 1000, xp: 333, levels: 0 },
       C,
       2,
+      "weight",
     );
     const backward = splitBossBounty(
       [
@@ -390,9 +406,10 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
         [B, 291],
         [A, 137],
       ],
-      { gold: 1000, xp: 333 },
+      { gold: 1000, xp: 333, levels: 0 },
       C,
       2,
+      "weight",
     );
     expect(backward).toEqual(forward);
     expect(forward.map((x) => x.id)).toEqual([A, B, C]); // ascending id
@@ -400,7 +417,7 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
 
   it("a champion who did no damage but landed the blow still gets paid", () => {
     cover("mob-boss-bounty");
-    const s = splitBossBounty([[A, 400]], { gold: 1000, xp: 0 }, B, 2);
+    const s = splitBossBounty([[A, 400]], { gold: 1000, xp: 0, levels: 0 }, B, 2, "weight");
     const byId = new Map(s.map((x) => [x.id, x]));
     expect(byId.has(B)).toBe(true);
     expect(s.reduce((t, x) => t + x.gold, 0)).toBe(1000);
@@ -408,7 +425,7 @@ describe("殭屍王分紅 — 照傷害比例 + 最後一刀翻倍", () => {
 
   it("nobody at all → nobody is paid (and nothing throws)", () => {
     cover("mob-boss-bounty");
-    expect(splitBossBounty([], { gold: 1000, xp: 100 }, null, 2)).toEqual([]);
+    expect(splitBossBounty([], { gold: 1000, xp: 100, levels: 0 }, null, 2, "weight")).toEqual([]);
   });
 });
 
@@ -752,9 +769,18 @@ describe("#262 is inert unless armed", () => {
     expect(r.special!.chance).toBeLessThan(1);
   });
 
-  it("GH#187 一個人單殺殭屍王,錢包實際多 30,000 —— 走出貨設定,不是 fixture", () => {
+  it("GH#206 一個人單殺殭屍王 → 錢包多 60,000(= 30,000 的 200%),走出貨設定", () => {
     cover("mob-boss-bounty");
-    // owner 2026-07-28:「殭屍王 總獎金也要後台能設定 預設是 30,000」.
+    // owner 2026-07-28:「殭屍王 總獎金也要後台能設定 預設是 30,000」
+    // owner 2026-07-29(GH#206),推翻了上面那句的「總」:
+    //   「除了最後一刀的人可以雙倍領取(超過總額沒關係,極端情形第一刀就是最後
+    //     一刀全傷害 = 200% 金錢跟等級獎勵)」
+    //
+    // ⚠️ 這條測試以前斷言 30,000,而且它是對的 —— 對**當時的規則**而言。
+    // 現在出貨的 `lastHitMode` 是 `"bonus"`,而這個情境正好就是 owner 舉的
+    // 那個極端例子(一個人打完全部傷害又補刀),所以正確答案是 60,000。
+    // 這不是「測試壞了去改數字」,這是規格反轉之後這條測試該有的樣子;
+    // 舊語意的守衛沒有消失,它們在同一個檔的 fixture(已釘 `"weight"`)裡。
     //
     // 為什麼不是 `expect(DEFAULT_MOB_WAVES_CONFIG.boss.bountyGold).toBe(30000)`:
     // 那是失敗形狀⑦(掃屬性而非行為)。這個數字要經過
@@ -782,13 +808,24 @@ describe("#262 is inert unless armed", () => {
     });
     w.step(new Map());
 
-    expect(w.champion.get(hero)!.gold - goldBefore).toBe(30000);
+    // 30,000 的 200%。與其它任何常數都差得夠遠:雜魚獎勵 20、XP 賞金 1,200、
+    // 舊值 3,000、獎金池本身 30,000 —— 沒有一個能碰巧湊出 60,000,
+    // 所以「加碼有沒有真的發出去」是可證偽的。
+    expect(w.champion.get(hero)!.gold - goldBefore).toBe(60000);
     // 失敗形狀②:算對了但沒送出去。`mobBossSlain` 是唯一會離開伺服器的通道。
     const ev = w.events.find((e) => e.type === "mobBossSlain")!;
     expect(ev).toBeDefined();
     const shares = ev.data["shares"] as { id: number; gold: number }[];
     expect(shares).toHaveLength(1);
-    expect(shares[0]).toMatchObject({ id: hero, gold: 30000 });
+    expect(shares[0]).toMatchObject({ id: hero, gold: 60000 });
+    // 事件上的 totalGold 必須是**實發**而不是設定值 —— 否則分紅面板會寫
+    // 「總獎金 30,000」而玩家實拿 60,000(失敗形態②的顯示版)。
+    expect(ev.data["totalGold"]).toBe(60000);
+    // 等級也走同一條路:出貨 50 級 → 200% = 100 級的**請求**,
+    // 但實發受 LEVEL_CAP 99 夾住,所以事件報的必須 ≤ 請求且 > 0。
+    const paidLevels = ev.data["totalLevels"] as number;
+    expect(paidLevels).toBeGreaterThan(0);
+    expect(paidLevels).toBeLessThanOrEqual(100);
   });
 
   it("mobSystem is still a strict no-op on a world nobody armed", () => {
@@ -849,9 +886,10 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
         [B, 100],
         [C, 200],
       ],
-      { gold: 1001, xp: 1001 },
+      { gold: 1001, xp: 1001, levels: 0 },
       B,
       2,
+      "weight",
     );
     const byId = new Map(shares.map((s) => [s.id, s]));
     expect(shares.reduce((t, s) => t + s.gold, 0)).toBe(1001); // nothing evaporates
@@ -869,9 +907,10 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
         [B, 100],
         [A, 100],
       ],
-      { gold: 1001, xp: 0 },
+      { gold: 1001, xp: 0, levels: 0 },
       null,
       2,
+      "weight",
     );
     const byId2 = new Map(orphaned.map((s) => [s.id, s]));
     expect(byId2.get(A)!.gold).toBe(251); // 250 + the odd coin, lowest id

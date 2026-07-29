@@ -72,16 +72,29 @@ export function grantXp(world: SimWorld, id: EntityId, amount: number): void {
 }
 
 /**
- * Grant exactly `count` champion levels (arena round grants). Deterministic:
+ * Grant up to `count` champion levels (arena round grants). Deterministic:
  * tops the XP bar off level by level via grantXp, so unspentPoints/stat growth
  * flow through the one levelling path. Capped at LEVEL_CAP.
+ *
+ * RETURNS HOW MANY LEVELS ACTUALLY LANDED, and callers that show a number to a
+ * player MUST use it rather than `count`. The loop stops at `LEVEL_CAP` (99)
+ * SILENTLY, and 「等級提升 +50」 (owner 2026-07-29, GH#206) is handed to people
+ * who are already deep into the cap's range: a champion who has farmed 100
+ * zombies to summon the king is past L50 before the payout is computed, so a
+ * requested +100 (50 pool + 50 last-hit bonus) can land as ~40. Reporting the
+ * request instead of the grant is failure shape ② — the settlement panel says
+ * 「+100 等級」 and the level bar moves 40 — and no test that only checks
+ * `champ.level > before` can see it.
  */
-export function grantLevels(world: SimWorld, id: EntityId, count: number): void {
+export function grantLevels(world: SimWorld, id: EntityId, count: number): number {
   const champ = world.champion.get(id);
-  if (!champ) return;
+  if (!champ) return 0;
+  let granted = 0;
   for (let i = 0; i < count && champ.level < LEVEL_CAP; i++) {
     grantXp(world, id, xpToNext(champ.level) - champ.xp);
+    granted++;
   }
+  return granted;
 }
 
 export function grantGold(world: SimWorld, id: EntityId, amount: number): void {
