@@ -133,7 +133,6 @@ const RATE_FLOOR = 0.5;
  * 另一個題目,不在 #193 範圍,所以他留在這張清單上等人裁決。
  */
 const KNOWN_BELOW_RATE = new Map<string, string>([
-  ["godie-u011", "死亡老二 - 克勞薩先生 (3/7 = 0.43;被木樁技能的 knockdown+stun 打斷)"],
 ]);
 
 /** Swings whose damage point fits in the window at this champion's cadence. */

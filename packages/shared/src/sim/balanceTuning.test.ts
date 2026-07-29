@@ -118,7 +118,7 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
   it("出貨預設就是 300 生命,而且只有生命 —— 其餘 15 項都是 0", () => {
     cover("balance-265-default-table");
     // 寫死 300:引用常數的話,把常數改成 0 的變異會讓期望值跟著溜走。
-    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth)).toBe(300);
+    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth)).toBe(650);
     for (const stat of ALL_STATS) {
       if (stat === Stat.MaxHealth) continue;
       expect(baseBonusFor(DEFAULT_BASE_BONUS, stat), `${stat} 不該有加成`).toBe(0);
@@ -157,15 +157,17 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 4.0 (owner 2026-07-29: 3=>4，推翻 #265 的 4=>3)", () => {
+  it("出貨的 combat-env 表把生命倍率鎖在 6.0 (owner 2026-07-30: 4=>6,「玩家太容易死」)", () => {
     cover("balance-265-env-multiplier");
-    // 這個數字 owner 已經來回改過兩次:#265 從 4 降到 3,2026-07-29 又升回 4。
+    // 這個數字 owner 已經來回改過三次:#265 從 4 降到 3、2026-07-29 升回 4、
+    // 2026-07-30 再升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
+    // 與初始生命 300→650)。
     // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
     // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可。
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(4.0);
+    expect(doc.multipliers.maxHealth).toBe(6.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
   });
@@ -176,7 +178,7 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
       readFileSync(join(__dirname, "../../../../content/config/base-bonus.json"), "utf8"),
     ) as { schema: string; bonus: Record<string, number> };
     expect(doc.schema).toBe("config.base-bonus@1");
-    expect(doc.bonus.maxHealth).toBe(300);
+    expect(doc.bonus.maxHealth).toBe(650);
     // 內容檔與程式預設必須一致 —— 否則後台顯示的、和沒設定過時實際生效的,
     // 會是兩個不同的數字,而且沒有任何地方會說。
     expect(normalizeBaseBonus(doc.bonus)).toEqual(DEFAULT_BASE_BONUS);
@@ -188,7 +190,7 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     // 「缺文件 = 0」看起來是安全的保守選擇,實際上是把 owner 設定過的東西
     // 在內容載入失敗的那一台機器上靜默拿掉,而面板還是照樣顯示 300。
     for (const junk of [undefined, null, {}, "nope", { schema: "config.combat-env@1" }]) {
-      expect(baseBonusFor(baseBonusFromDoc(junk), Stat.MaxHealth), String(junk)).toBe(300);
+      expect(baseBonusFor(baseBonusFromDoc(junk), Stat.MaxHealth), String(junk)).toBe(650);
     }
     // 但一份 SCHEMA 正確、內容真的是空的文件,是操作者的明確意思:全部歸零。
     expect(

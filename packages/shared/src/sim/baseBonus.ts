@@ -38,7 +38,10 @@ export type BaseBonusTable = Readonly<Partial<Record<Stat, number>>>;
  * stat gets no gift」, and the admin table shows it as such.
  */
 export const DEFAULT_BASE_BONUS: BaseBonusTable = Object.freeze({
-  [Stat.MaxHealth]: 300,
+  // owner 2026-07-30「目前玩家太容易死了」→ 300 → 650。
+  // 這個數字 owner 已經動過三次(#265 立 300、2026-07-30 提到 650),它是後台可調的
+  // 動態設定 —— 這裡只是「沒設定過時生效的預設」,不是唯一合法值。
+  [Stat.MaxHealth]: 650,
 });
 
 /** Read one stat's grant, tolerating a partial / absent / junk table. */
