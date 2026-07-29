@@ -220,6 +220,12 @@ export interface MobBossRules {
   lastHitMultiplier: number;
   /** how 「最後一刀翻倍」 is paid — see `LastHitMode` in sim/mobBoss.ts */
   lastHitMode: LastHitMode;
+  /**
+   * 溢傷算不算進分紅權重. owner 2026-07-29 ruled 不算 (GH#206), so this ships
+   * `false` and the ledger records `hpLoss`. `true` restores the pre-#206
+   * behaviour (raw post-mitigation `output`, overkill included).
+   */
+  countOverkill: boolean;
 }
 
 /** 特殊殭屍 rules — multipliers against the normal mob of the same round. */
@@ -432,6 +438,8 @@ export interface MobWavesConfigLike {
     lastHitMultiplier: number;
     /** GH#206 — absent = the shipped `"bonus"` (owner 2026-07-29) */
     lastHitMode?: LastHitMode;
+    /** GH#206 — absent = the owner's ruling 「不算」 */
+    countOverkill?: boolean;
   };
   /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
   special?: {
@@ -691,6 +699,7 @@ export function mobRulesFromConfig(
             // GH#206 — `"bonus"` is the owner's 2026-07-29 ruling and therefore
             // the fallback for any arena authored before the field existed.
             lastHitMode: cfg.boss.lastHitMode ?? "bonus",
+            countOverkill: cfg.boss.countOverkill ?? false,
           },
     special:
       cfg.special === undefined

@@ -110,6 +110,8 @@ const RULES: MobRules = {
     // to test, instead of being re-baselined into meaninglessness. The shipped
     // default `"bonus"` is covered in `mobBossBonus.test.ts`.
     lastHitMode: "weight",
+    // GH#206 owner:「溢傷算不算 => 不算」。出貨預設,fixture 照抄。
+    countOverkill: false,
   },
   special: null,
 };
@@ -966,21 +968,25 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
     expect(shares.reduce((t, s) => t + s.xp, 0)).toBe(RULES.boss!.bountyXp);
   });
 
-  it("MUTANT N5': the ledger credits OVERKILL in full — pinned because the docblock claimed it did not", () => {
+  it("溢傷不算 (owner 2026-07-29) — 帳本記王真的掉的血,不是這一發的原始威力", () => {
     cover("mob-boss-bounty");
-    // `recordDamage` is handed `impact` (post-mitigation, pre-shield), and
-    // NOTHING on this path caps it at the king's remaining hp: `mitigate()`
-    // clamps only a STRUCTURE's per-packet cap, and `hpLoss` is the same
-    // uncapped number (a mob has no StatsComp and no shields, so `output`,
-    // `hpLoss` and the raw packet amount all coincide — swapping between them
-    // is an EQUIVALENT change, which is why no assertion could tell them apart).
-    // What is NOT equivalent is capping at remaining hp, and the delivered
-    // comment claimed exactly that (「killing blow's overkill cannot inflate one
-    // player's share」). It does inflate it.
+    // ── 這條測試的歷史,因為它說明了守衛該長什麼樣 ──────────────────────
     //
-    // THIS TEST DOES NOT ENDORSE THE RULE — it pins it. Which of the two is
-    // wanted is an owner call (see the note in stats/matchStats.ts); until then
-    // the number a player is paid cannot change without this going red.
+    // 它原本叫「MUTANT N5′: the ledger credits OVERKILL in full — pinned
+    // because the docblock claimed it did not」。當時 `recordDamage` 拿到的
+    // `output` 與 `hpLoss` **兩個都沒有**在王的剩餘血量封頂(`damage.ts` 是裸的
+    // `hp.hp -= dmg`,血量會變負),而檔頭的註解卻宣稱「overkill cannot inflate
+    // one player's share」。那條測試沒有背書那個行為,它是**把未裁決的行為釘住**,
+    // 好讓它不能無聲漂移 —— 並在註解裡寫明「哪一種才對是 owner 的決定」。
+    //
+    // owner 2026-07-29 裁決:「溢傷算不算 => **不算**」。所以現在翻面。
+    // 這正是那條 pin 存在的目的:裁決一到,紅燈就出現在該出現的地方。
+    //
+    // ⚠️ 在 GH#206 的 `bonus` 模式下這件事比以前嚴重得多:weight 模式總額守恆,
+    // 溢傷只是**重新分配**誰拿多少;bonus 的加碼是「份額 × (mult-1)」,
+    // 所以溢傷會把**整包獎金**吹大,不只是把別人的份搶過來。
+    //
+    // 想要舊行為的話後台有 `mobWaves.boss.countOverkill`,不必改程式。
     const w = newWorld(4);
     beginCombatMobs(w, RULES, [0]);
     const h = [champAt(w, 0, 0, -3, 0), champAt(w, 1, 1, 3, 0)];
@@ -995,12 +1001,14 @@ describe("殭屍王 / 特殊殭屍 — guards the delivered suite was blind to",
     const byId = new Map(
       (ev.data["shares"] as { id: number; gold: number; damage: number }[]).map((s) => [s.id, s]),
     );
-    // credited 4000, not the 400 hp it removed
-    expect(byId.get(h[1]! as number)!.damage).toBe(4000);
-    // weights 100 / 8000 → 8100. 1000 gold → 12 / 987, remainder 1 → 988.
-    // (an hp-loss ledger would read 100 / 800 → 111 / 889 instead)
-    expect(byId.get(h[0]! as number)!.gold).toBe(12);
-    expect(byId.get(h[1]! as number)!.gold).toBe(988);
+    // 記的是王真的掉的 400,不是這一發的 4000。這兩個數字差一個數量級,
+    // 所以「有沒有封頂」是可證偽的,不是換個等價寫法。
+    expect(byId.get(h[1]! as number)!.damage).toBe(400);
+    // RULES 這份 fixture 釘在 weight 模式,所以權重是 100 / (400×2=800) → 900,
+    // 1000 金 → 111 / 888,餘數 1 給補刀者 → 889。
+    // (舊的溢傷全額帳本會讀成 100 / 8000 → 12 / 988)
+    expect(byId.get(h[0]! as number)!.gold).toBe(111);
+    expect(byId.get(h[1]! as number)!.gold).toBe(889);
   });
 
   it("MUTANT N6: an ORDINARY zombie pays the base reward even when 特殊殭屍 is armed", () => {

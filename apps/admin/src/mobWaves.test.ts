@@ -126,6 +126,7 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.bountyLevels",
   "boss.lastHitMultiplier",
   "boss.lastHitMode",
+  "boss.countOverkill",
   // 特殊殭屍 (#262)
   "special.chancePercent",
   "special.hpMult",
@@ -352,6 +353,7 @@ describe("每一個欄位 are reachable and labelled", () => {
       "boss.lastHitMultiplier": "3",
   "boss.bountyLevels": "50",
   "boss.lastHitMode": "bonus",
+  "boss.countOverkill": "0",
       "special.chancePercent": "12",
       "special.hpMult": "2.5",
       "special.damageMult": "1.75",

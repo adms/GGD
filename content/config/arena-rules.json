@@ -204,7 +204,8 @@
       "hpMult": 100,
       "sizeMult": 10,
       "bountyLevels": 50,
-      "lastHitMode": "bonus"
+      "lastHitMode": "bonus",
+      "countOverkill": false
     },
     "special": {
       "chancePercent": 5,

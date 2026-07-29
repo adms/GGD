@@ -114,6 +114,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     bountyLevels: 50,
     lastHitMultiplier: 2,
     lastHitMode: "bonus",
+    countOverkill: false,
   },
   special: {
     chancePercent: 5,
@@ -179,6 +180,7 @@ export type MobWavesFieldKey =
   | "boss.bountyLevels"
   | "boss.lastHitMultiplier"
   | "boss.lastHitMode"
+  | "boss.countOverkill"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -277,6 +279,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.bountyLevels",
   "boss.lastHitMultiplier",
   "boss.lastHitMode",
+  "boss.countOverkill",
   "special.chancePercent",
   "special.championId",
   "special.modelKey",
@@ -636,6 +639,15 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     valueLabels: { bonus: "額外加碼（可超過總額）", weight: "權重（總額固定）" },
     optional: true,
   },
+  "boss.countOverkill": {
+    zh: "溢傷算不算",
+    note: "關（預設）＝只算王真的掉的血，所以對剩 100 血的王丟 4000 傷害只算 100。開＝算全額，一發大招就能吃掉整包獎金",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "算（溢傷全額計入）", off: "不算（只算真的掉的血）" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「不算」",
+  },
 
   // ── 特殊殭屍 (#262) ──────────────────────────────────────────────────────
   "special.chancePercent": {
@@ -776,6 +788,7 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.bountyLevels",
       "boss.lastHitMultiplier",
       "boss.lastHitMode",
+      "boss.countOverkill",
     ],
   },
   {
@@ -918,6 +931,8 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.bountyLevels);
     case "boss.lastHitMultiplier":
       return formatNum(cfg.boss?.lastHitMultiplier);
+    case "boss.countOverkill":
+      return cfg.boss?.countOverkill === undefined ? "" : cfg.boss.countOverkill ? "1" : "0";
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -1267,6 +1282,7 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
       bountyXp: num("boss.bountyXp", sb.bountyXp),
       bountyLevels: num("boss.bountyLevels", sb.bountyLevels),
       lastHitMode: enumOf("boss.lastHitMode", ["bonus", "weight"] as const, sb.lastHitMode ?? "bonus"),
+      countOverkill: bool("boss.countOverkill", sb.countOverkill ?? false),
       lastHitMultiplier: num("boss.lastHitMultiplier", sb.lastHitMultiplier),
     };
     const bm = optText("boss.modelKey");

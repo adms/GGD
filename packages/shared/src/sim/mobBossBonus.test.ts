@@ -165,3 +165,97 @@ describe("bonus 模式:比例與決定性沒有被加碼破壞", () => {
     expect(sumLevels(s)).toBeGreaterThanOrEqual(7);
   });
 });
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 溢傷不算 (owner 2026-07-29, GH#206)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * 這一段測的不是 `splitBossBounty` 的算術,而是**帳本記什麼**。差別在
+ * `stats/matchStats.ts`:記 `output`(減傷後的原始數字,不封頂)還是記 `hpLoss`
+ * (王真的掉的血)。owner 裁決「不算」⇒ 記 `hpLoss`。
+ *
+ * ⚠️ 為什麼在 bonus 模式下這件事變嚴重:weight 模式總額守恆,溢傷只是**重新分配**
+ * 誰拿多少;bonus 模式的加碼是「份額 × (mult-1)」,所以溢傷把**整包**吹大,
+ * 不只是把別人的份搶過來。
+ */
+import { SimWorld } from "./SimWorld";
+import { SKELETON_ARENA } from "./world/ArenaDef";
+import { registerSkeletonContent } from "./content/skeleton";
+import { spawnChampion } from "./spawnChampion";
+import { asSeatId, asTeamId, type ChampionId } from "../ids";
+import { mobRulesFromConfig, summonMobBoss, type MobRules } from "./mobs";
+import { beginCombatMobs } from "./systems/MobSystem";
+import { DEFAULT_MOB_WAVES_CONFIG } from "../content/schema/config";
+import { beforeAll as _beforeAll } from "vitest";
+
+_beforeAll(() => registerSkeletonContent());
+
+function kingWorld(rules: MobRules): { w: SimWorld; hero: number; king: number } {
+  const w = new SimWorld(SKELETON_ARENA, 1);
+  w.combatActive = true;
+  beginCombatMobs(w, rules, [0]);
+  const hero = spawnChampion(w, {
+    championId: "thorne" as ChampionId,
+    seatId: asSeatId(0),
+    teamId: asTeamId(0),
+    pos: { x: 0, z: 0 },
+    zone: 0,
+  });
+  const king = summonMobBoss(w, 0, rules, hero, rules.boss!.killThreshold)!;
+  return { w, hero, king: king as unknown as number };
+}
+
+describe("溢傷不算 —— 帳本記的是王真的掉的血", () => {
+  it("★ 一發遠超王剩餘血量的大招,帳本只記到王的血量為止", () => {
+    cover("mob-boss-overkill");
+    const rules = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, 1 / 30);
+    const { w, hero, king } = kingWorld(rules);
+    const maxHp = rules.boss!.maxHp;
+
+    // 100 倍的溢傷。記 `output` 會是 maxHp*100;記 `hpLoss` 只會是 maxHp。
+    w.damageQueue.push({
+      source: hero as never,
+      target: king as never,
+      amount: maxHp * 100,
+      type: "true",
+      crit: false,
+      origin: "ability",
+    });
+    // 讀死亡前的帳本:step 會付款並 destroy,所以先偷一 tick 的中間狀態不可行 ——
+    // 改為斷言**付款結果**,那是玩家真正拿到的東西(避免失敗形態⑦:量帳本這個屬性)。
+    w.step(new Map());
+
+    const ev = w.events.find((e) => e.type === "mobBossSlain")!;
+    const shares = ev.data["shares"] as { damage: number }[];
+    expect(shares).toHaveLength(1);
+    // 記 output 的話這裡會是 maxHp*100(= 6,000,000);記 hpLoss 是 maxHp。
+    expect(shares[0]!.damage).toBeLessThanOrEqual(maxHp);
+    expect(shares[0]!.damage).toBeGreaterThan(0);
+  });
+
+  it("countOverkill 打開就恢復舊行為 —— 旋鈕是活的,不是裝飾", () => {
+    cover("mob-boss-overkill");
+    const cfg = {
+      ...DEFAULT_MOB_WAVES_CONFIG,
+      boss: { ...DEFAULT_MOB_WAVES_CONFIG.boss!, countOverkill: true },
+    };
+    const rules = mobRulesFromConfig(cfg, 1 / 30);
+    const { w, hero, king } = kingWorld(rules);
+    const maxHp = rules.boss!.maxHp;
+
+    w.damageQueue.push({
+      source: hero as never,
+      target: king as never,
+      amount: maxHp * 100,
+      type: "true",
+      crit: false,
+      origin: "ability",
+    });
+    w.step(new Map());
+
+    const ev = w.events.find((e) => e.type === "mobBossSlain")!;
+    const shares = ev.data["shares"] as { damage: number }[];
+    // 開著的時候溢傷全額計入 → 遠遠超過王的血量
+    expect(shares[0]!.damage).toBeGreaterThan(maxHp);
+  });
+});

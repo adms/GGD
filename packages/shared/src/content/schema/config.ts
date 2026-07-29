@@ -717,6 +717,15 @@ export const zMobWavesConfig = z
          *                a low-damage kill-stealer cannot mint gold.
          */
         lastHitMode: z.enum(["bonus", "weight"]).optional(),
+        /**
+         * 溢傷算不算 — owner 2026-07-29 ruled **不算** (GH#206).
+         *
+         * `false` (shipped): the ledger records the hp the king ACTUALLY lost,
+         * so a 4,000-damage ult on a king with 100 hp left weighs 100. `true`:
+         * the raw post-mitigation number, overkill and all — which under
+         * `lastHitMode: "bonus"` inflates the whole payout, not just one share.
+         */
+        countOverkill: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -895,6 +904,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // GH#206 — see the schema note above. `"bonus"` is the owner's ruling and
     // deliberately lets the payout exceed `bountyGold` (200% at the extreme).
     lastHitMode: "bonus" as const,
+    // owner 2026-07-29:「溢傷算不算?=> 不算」
+    countOverkill: false,
   },
   // 特殊殭屍 (#262). One in twenty, so a wave of 20 carries about one — 「殭屍群
   // 裡面會有一隻特殊殭屍」 read literally. Double size and double hp make it

@@ -141,27 +141,52 @@ export function recordDamage(
 
   // 殭屍王傷害帳本 (task #262). BEFORE the early return below, because the king
   // is a NEUTRAL and that return is exactly what drops every packet aimed at
-  // one. `output` (post-mitigation, pre-shield) is used rather than the hp
-  // actually lost so the ledger measures the same thing `damageDealt` does.
+  // one.
   //
-  // ⚠️ CONSEQUENCE, PINNED BY TEST, NOT YET RULED ON BY THE OWNER: `output` is
+  // 溢傷不算 — owner ruled 2026-07-29 (GH#206). `output` is post-mitigation but
   // NOT capped at the king's remaining hp (`mitigate()` clamps only a
-  // STRUCTURE's per-packet cap), so a finisher's OVERKILL counts in full. A
-  // 4,000-damage ult on a king with 100 hp left weighs 4,000 — before the ×2
-  // last-hit multiplier — and takes almost the whole pool. Whether that is
-  // 「補最後一刀的人獎金翻倍」 working as intended or a burst-steal to be capped
-  // at `hpLoss` is a DESIGN call; the current behaviour is guarded in
-  // mobs.boss.test.ts so it cannot drift silently either way.
+  // STRUCTURE's per-packet cap), so recording it counted OVERKILL in full: a
+  // 4,000-damage ult on a king with 100 hp left weighed 4,000 — before the
+  // last-hit multiplier — and took almost the whole pool for one button. That
+  // matters far more under GH#206's `"bonus"` mode, where the total is no
+  // longer conserved, so overkill inflates the WHOLE payout rather than just
+  // redistributing it. `hpLoss` is what the king actually lost, so the last
+  // packet weighs only the sliver of health that was really there.
+  //
+  // ⚠️ `hpLoss` also excludes what a SHIELD absorbed. That is the same answer
+  // for the same reason (a shielded point of damage did not kill the king), and
+  // kings carry no shields today, so nothing observable turns on it.
+  //
+  // Kept switchable per the project's first rule (see CLAUDE.md — 所有功能都做成
+  // 後台可調): `countOverkill: true` restores the pre-#206 behaviour without a
+  // code change. Default false = the owner's ruling.
   //
   // Gated on the mob's KIND, not on the ledger's existence, so an ordinary
   // zombie never allocates a map and a world with no king is untouched.
-  if (srcChamp && world.mob.get(target)?.kind === "boss" && output > 0) {
-    let ledger = world.bossDamage.get(target);
-    if (!ledger) {
-      ledger = new Map<EntityId, number>();
-      world.bossDamage.set(target, ledger);
+  if (srcChamp && world.mob.get(target)?.kind === "boss") {
+    // ⚠️ `hpLoss` IS NOT CAPPED EITHER — its own parameter doc says 「HP actually
+    // removed」 and that is not true: `damage.ts` does a bare `hp.hp -= dmg`, so
+    // hp goes NEGATIVE and `hpLoss` is the full post-shield force. Both numbers
+    // this function receives include overkill.
+    //
+    // The cap has to be rebuilt here because `recordDamage` runs AFTER the
+    // subtraction: `hp.hp + hpLoss` is what the king had a moment ago, and
+    // clamping at 0 handles a body that was already dead. Deliberately NOT done
+    // by changing `hpLoss` at the call site — that value also feeds
+    // `damageTaken` on the scoreboard, and re-capping it there is a separate
+    // decision about a different number that nobody has asked for.
+    const hpNow = world.health.get(target)?.hp ?? 0;
+    const hpBefore = Math.max(0, hpNow + hpLoss);
+    const credited =
+      world.mobRules?.boss?.countOverkill === true ? output : Math.min(hpLoss, hpBefore);
+    if (credited > 0) {
+      let ledger = world.bossDamage.get(target);
+      if (!ledger) {
+        ledger = new Map<EntityId, number>();
+        world.bossDamage.set(target, ledger);
+      }
+      ledger.set(source, (ledger.get(source) ?? 0) + credited);
     }
-    ledger.set(source, (ledger.get(source) ?? 0) + output);
   }
 
   if (!tgtChamp) return; // damage to flowers / neutrals never scores
