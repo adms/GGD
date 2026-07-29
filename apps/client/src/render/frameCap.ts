@@ -123,7 +123,27 @@ export function driveFrame(
   work.pump(nowMs);
   if (!shouldRenderFrame(nowMs, lastRenderMs, capFps)) return lastRenderMs;
   work.render(nowMs);
-  return nowMs;
+
+  // ⏱ 進位,不是歸零 —— owner 2026-07-30「桌面版 fps 竟然又超過 60」。
+  //
+  // 舊的 `return nowMs` 把每一次繪製當成新的起點,於是節流變成「整張整張丟」,
+  // 而整數比例只在少數刷新率上剛好命中 60:
+  //     60/120/240 Hz → 60.0 ✅   144 Hz → **72.0** ⛔   360 Hz → **72.0** ⛔
+  //     75 Hz → 37.5 ⛔   90 Hz → 45.0 ⛔   165 Hz → 55.0 ⛔
+  // 144 Hz 上 144/2 = 72、144/3 = 48,**丟整張永遠命不中 60**,兩個方向都會錯。
+  //
+  // 改成把上一格推進「一個預算」而不是推到 `nowMs`,餘數就留給下一次 ——
+  // 144 Hz 會自己走出 2-2-3 的節奏,平均正好落在 60。這是固定步長累加器,
+  // 不需要多存任何狀態,仍然只有一個數字。
+  // ⚠️ 進位用的是**真正的間隔** `1000/cap`,不是 gate 用的 `minFrameMs`(已扣掉 slack)。
+  // 我第一版寫成用 `minFrameMs` 進位,於是節奏變成 1000/13.67 = **73 fps**,
+  // 每一種刷新率都錯。slack 只是「允許早到多少」的容差,不是步長。
+  if (capFps <= 0) return nowMs;
+  const step = 1000 / capFps;
+  const advanced = lastRenderMs + step;
+  // 落後太多就重新對時:分頁切到背景、裝置睡眠回來時,`nowMs` 會跳掉好幾秒,
+  // 這時追進度只會連噴幾十張沒有意義的畫面。一個步長是「抖動」與「斷線」的界線。
+  return nowMs - advanced > step ? nowMs : advanced;
 }
 
 /**
