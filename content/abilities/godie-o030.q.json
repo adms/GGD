@@ -1,0 +1,36 @@
+{
+  "id": "godie-o030.q",
+  "name": "30-01 綁架",
+  "icon": "assets/icons/abilities/godie-o030.q.webp",
+  "description": "[輔助]\n15秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍300。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    30.0,
+    50.0,
+    70.0,
+    90.0,
+    110.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.prim.void.pulse-sm",
+  "sfxKey": "wc3.headhunteryes4",
+  "schema": "ability@1",
+  "castTimeSec": 0.3
+}

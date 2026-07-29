@@ -1,8 +1,8 @@
 {
-  "id": "godie-orkn",
+  "id": "godie-o030",
   "schema": "champion@1",
   "name": "電車癡漢 - 臭作",
-  "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+  "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n|CFFFF0000推薦玩家 : |CFFFE890D牽制殺人\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
   "role": "marksman",
   "attackType": "ranged",
   "modelKey": "champ.sela",
@@ -15,20 +15,20 @@
     "ap": 0,
     "armor": 0,
     "mr": 28,
-    "as": 0.5,
+    "as": 0.588235,
     "ms": 5.7,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 9.2
+    "range": 12.0
   },
   "growth": {
-    "maxHealth": 38,
+    "maxHealth": 34,
     "healthRegen": 0.09,
     "maxMana": 21,
     "manaRegen": 0.07,
-    "ad": 1.9,
+    "ad": 1.7,
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
@@ -37,7 +37,7 @@
     "str": 15,
     "agi": 22,
     "int": 18,
-    "strGrowth": 1.9,
+    "strGrowth": 1.7,
     "agiGrowth": 2.75,
     "intGrowth": 1.75,
     "primary": "AGI",
@@ -50,9 +50,9 @@
   },
   "abilities": {
     "Q": {
-      "id": "godie-orkn.q",
+      "id": "godie-o030.q",
       "name": "30-01 綁架",
-      "icon": "assets/icons/abilities/godie-orkn.q.webp",
+      "icon": "assets/icons/abilities/godie-o030.q.webp",
       "description": "[輔助]\n15秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍300。",
       "slot": "Q",
       "castType": "self",
@@ -85,9 +85,9 @@
       "castTimeSec": 0.3
     },
     "W": {
-      "id": "godie-orkn.w",
+      "id": "godie-o030.w",
       "name": "30-02 酒精灌腸",
-      "icon": "assets/icons/abilities/godie-orkn.w.webp",
+      "icon": "assets/icons/abilities/godie-o030.w.webp",
       "description": "[輔助]\n30秒冷卻時間\n\n把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到火焰類攻擊時，它們會著火並不斷受到灼傷。可持續8秒。",
       "slot": "W",
       "castType": "targeted",
@@ -130,9 +130,9 @@
       "castTimeSec": 0.4
     },
     "E": {
-      "id": "godie-orkn.e",
+      "id": "godie-o030.e",
       "name": "30-03 痴漢火焰",
-      "icon": "assets/icons/abilities/godie-orkn.e.webp",
+      "icon": "assets/icons/abilities/godie-o030.e.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n讓一個敵方單位身陷痴漢火焰之中，造成每秒16點的持續性的傷害，並使其無法施展法術、並降低攻擊力50%，持續7秒。",
       "slot": "E",
       "castType": "targeted",
@@ -175,9 +175,9 @@
       "castTimeSec": 0.3
     },
     "R": {
-      "id": "godie-orkn.r",
+      "id": "godie-o030.r",
       "name": "30-04 電車之狼衝擊",
-      "icon": "assets/icons/abilities/godie-orkn.r.webp",
+      "icon": "assets/icons/abilities/godie-o030.r.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊550點傷害。",
       "slot": "R",
       "castType": "skillshot",
@@ -238,12 +238,12 @@
     "voxel-standin",
     "magic"
   ],
-  "exAbility": "godie-orkn.ex",
-  "passiveAbility": "godie-orkn.passive",
-  "icon": "assets/icons/champions/godie-orkn.png",
+  "exAbility": "godie-o030.ex",
+  "passiveAbility": "godie-o030.passive",
+  "icon": "assets/icons/champions/godie-o030.png",
   "transform": {
-    "role": "base",
-    "counterpartId": "godie-o030",
+    "role": "alternate",
+    "counterpartId": "godie-orkn",
     "normalUnitRawcode": "ORKN",
     "alternateUnitRawcode": "O030",
     "triggerAbility": {

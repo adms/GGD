@@ -1,0 +1,38 @@
+{
+  "id": "godie-h00w.q",
+  "name": "26-01 腳底按摩",
+  "icon": "assets/icons/abilities/godie-h00w.q.webp",
+  "description": "[輔助]\n60秒冷卻時間\n\n使用穴道按摩發揮一個人最大的潛力，讓這個部隊攻擊速度提昇50%，移動速度30%，但必須承受額外10%傷害，持續12秒。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    50.0,
+    100.0,
+    150.0,
+    200.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 8.0
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "schema": "ability@1",
+  "castTimeSec": 0.3
+}

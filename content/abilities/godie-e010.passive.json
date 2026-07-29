@@ -1,0 +1,33 @@
+{
+  "id": "godie-e010.passive",
+  "schema": "ability@1",
+  "name": "70-00 芬多精",
+  "icon": "assets/icons/abilities/godie-e010.passive.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n白木卡迪那長年累積的生命精華使得周圍250的友軍都能加速生命的回復5%。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "70-00 芬多精",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "healthRegen",
+            "op": "pctAdd",
+            "value": 0.05
+          }
+        ]
+      }
+    ]
+  }
+}

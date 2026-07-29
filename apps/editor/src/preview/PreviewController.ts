@@ -183,6 +183,18 @@ function effectLines(
           summary: `vfx ${e.vfxId} at ${e.at ?? "self"}${e.durationSec !== undefined ? ` for ${e.durationSec}s` : ""}`,
         });
         break;
+      // 變身 (task #249). The destination body is NOT in the effect — it is the
+      // hero's own `transform.counterpartId` — so the preview names the
+      // DIRECTION and the duration, which is all this effect actually decides.
+      case "championForm":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `champion form → ${e.to}${
+            e.durationSec !== undefined ? ` for ${e.durationSec}s` : " (no expiry)"
+          }`,
+        });
+        break;
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

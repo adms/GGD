@@ -1,10 +1,10 @@
 {
-  "id": "godie-nman",
+  "id": "godie-n01b",
   "schema": "champion@1",
   "name": "地獄歌神 - 憤怒的胖虎",
-  "description": "故事：\n身為孩子王的胖虎卻找不到女伴，如此大的怨念讓胖虎憤怒的成為去死團的戰士。\n(出自:小叮噹)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.45\n智慧 + 1.75\n基礎跑速 310\n\n可學習的技能：\n威脅之拳、爆熱神音、痛哭流涕麥克風、地獄搖滾",
-  "role": "fighter",
-  "attackType": "melee",
+  "description": "故事：\n身為孩子王的胖虎卻找不到女伴，如此大的怨念讓胖虎憤怒的成為去死團的戰士。\n(出自:小叮噹)\n\n|CFFFF0000推薦玩家 : |CFFFE890D團戰破塔\n|CFFFF0000上手度 : |CFFFE890D中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.45\n智慧 + 1.75\n基礎跑速 310\n\n可學習的技能：\n威脅之拳、爆熱神音、痛哭流涕麥克風、地獄搖滾",
+  "role": "marksman",
+  "attackType": "ranged",
   "modelKey": "champ.skin.rogue",
   "baseStats": {
     "maxHealth": 30,
@@ -21,7 +21,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 50,
@@ -50,9 +50,9 @@
   },
   "abilities": {
     "Q": {
-      "id": "godie-nman.q",
+      "id": "godie-n01b.q",
       "name": "40-01 威脅之拳",
-      "icon": "assets/icons/abilities/godie-nman.q.webp",
+      "icon": "assets/icons/abilities/godie-n01b.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n胖虎蠻橫的拳頭在攻擊時有15%機率增加75點破壞力，並有機會將敵人震昏1秒。",
       "slot": "Q",
       "castType": "self",
@@ -87,9 +87,9 @@
       "castTimeSec": 0.3
     },
     "W": {
-      "id": "godie-nman.w",
+      "id": "godie-n01b.w",
       "name": "40-02 必殺！爆熱神音！",
-      "icon": "assets/icons/abilities/godie-nman.w.webp",
+      "icon": "assets/icons/abilities/godie-n01b.w.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n模擬環繞音響的超音波歌聲讓附近敵人受到175傷害。",
       "slot": "W",
       "castType": "ground",
@@ -137,9 +137,9 @@
       "castTimeSec": 0.6
     },
     "E": {
-      "id": "godie-nman.e",
+      "id": "godie-n01b.e",
       "name": "40-03 萬解-貓王胖虎",
-      "icon": "assets/icons/abilities/godie-nman.e.webp",
+      "icon": "assets/icons/abilities/godie-n01b.e.webp",
       "description": "[變身]\n75秒冷卻時間\n\n萬解後的胖虎變成貓王頭，靈壓強得驚人，可以施展麥克風型的斬魄刀來攻擊敵人，攻擊型態為遠距離彈跳，最多12位，持續12秒。",
       "slot": "E",
       "castType": "targeted",
@@ -182,9 +182,9 @@
       "castTimeSec": 0.4
     },
     "R": {
-      "id": "godie-nman.r",
+      "id": "godie-n01b.r",
       "name": "40-04 地獄搖滾",
-      "icon": "assets/icons/abilities/godie-nman.r.webp",
+      "icon": "assets/icons/abilities/godie-n01b.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n充滿藝術細胞的胖虎在全身細胞最興奮的時候，將會不由自主的跳起舞來，使附近敵人受到6次150點連續傷害，最後集氣550+力量*3點傷害。\n\n萬解貓王狀態傷害效果增幅",
       "slot": "R",
       "castType": "targeted",
@@ -240,17 +240,17 @@
     "godie",
     "voxel-standin"
   ],
-  "exAbility": "godie-nman.ex",
-  "passiveAbility": "godie-nman.passive",
-  "icon": "assets/icons/champions/godie-nman.png",
+  "exAbility": "godie-n01b.ex",
+  "passiveAbility": "godie-n01b.passive",
+  "icon": "assets/icons/champions/godie-n01b.png",
   "tint": [
     1.0,
     0.3922,
     0.3922
   ],
   "transform": {
-    "role": "base",
-    "counterpartId": "godie-n01b",
+    "role": "alternate",
+    "counterpartId": "godie-nman",
     "normalUnitRawcode": "NMAN",
     "alternateUnitRawcode": "N01B",
     "triggerAbility": {

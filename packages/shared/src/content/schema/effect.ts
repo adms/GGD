@@ -122,6 +122,24 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       onLand: z.array(z.lazy(() => zEffectDef)).optional(),
     })
     .strict(),
+  /**
+   * championForm (task #249) — mirrors the `championForm` member of
+   * `EffectDef`. There is deliberately NO champion-id field to validate: the
+   * counterpart body is read from the champion doc's own
+   * `transform.counterpartId` (already a hard `zRef<ChampionId>("champions")`
+   * in schema/champion.ts), so the reference is checked exactly once, where the
+   * w3x actually declares it, and an ability doc cannot name a body that its
+   * hero has no link to.
+   */
+  z
+    .object({
+      kind: z.literal("championForm"),
+      /** "alternate"/"base" force a direction; "toggle" is the w3x 風王結界/紮根 form */
+      to: z.enum(["alternate", "base", "toggle"]),
+      /** w3a `ahdu` at the cast rank; ABSENT = never times out (the toggles) */
+      durationSec: z.number().positive().optional(),
+    })
+    .strict(),
   z
     .object({
       kind: z.literal("spawnProjectile"),
