@@ -63,6 +63,7 @@ import {
   type GuardianRules,
 } from "./systems/GuardianSystem";
 import { mobSystem } from "./systems/MobSystem";
+import { championFormSystem } from "./systems/ChampionFormSystem";
 
 export interface SimEvent {
   type: string;
@@ -325,6 +326,28 @@ export class SimWorld {
    */
   readonly airborne = new Map<EntityId, { y: number }>();
 
+  /**
+   * 變身 state (task #249) — entity → which half of its w3x `Eme1`/`Emeu` pair
+   * the body currently is, the base id to go home to, and the ABSOLUTE tick the
+   * form lapses on. ABSENT = the entity is in its BASE body, which is why a
+   * champion that transformed and reverted hashes identically to one that never
+   * transformed (see systems/ChampionFormSystem.ts, and `airborne` above for
+   * the same absence-means-default contract).
+   *
+   * NOT named `transform`: {@link SimWorld.transform} is the POSITION component
+   * and has been since the skeleton. The 變身 mechanic is `championForm`
+   * everywhere — component, system, EffectDef kind — so the two can never be
+   * confused at a call site.
+   *
+   * Written ONLY by ChampionFormSystem (`applyChampionForm` / `revertToBaseForm`),
+   * which is also the only writer of the two `championId` copies the body
+   * resolves through.
+   */
+  readonly championForm = new Map<
+    EntityId,
+    import("./systems/ChampionFormSystem").ChampionFormComp
+  >();
+
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
 
@@ -582,6 +605,9 @@ export class SimWorld {
     // task #264: 回收的 entityId 不得繼承上一個單位的瞄準方向。
     this.facingLock.delete(id);
     this.aimTick.delete(id);
+    // task #249: nor a stale 變身 form — a recycled id that inherited one would
+    // be dragged back to a PREVIOUS unit's base champion on the next tick.
+    this.championForm.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
@@ -625,6 +651,31 @@ export class SimWorld {
     this.rebuildGrid();
 
     // FIXED system order — the client prediction replays this exact order.
+    championFormSystem(this); //  0a. 變身 (task #249): expire timed forms and
+    //                             force the dead / unresolvable back to their
+    //                             base body.
+    //
+    //                             FIRST, and specifically BEFORE
+    //                             statRecomputeSystem (1). A revert rewrites
+    //                             `StatsComp.championId` and sets `dirty`, and
+    //                             the ONLY thing that turns that into real
+    //                             numbers is a recompute. Placed after step 1
+    //                             instead, a form lapsing on tick T would leave
+    //                             the body fighting that whole tick on the OTHER
+    //                             form's sheet — the alternate's move speed at
+    //                             movementSystem (5), its attack speed at
+    //                             basicAttackSystem (6), its AD/AP in every
+    //                             packet drained at combatResolveSystem (8) —
+    //                             and only the LATE recompute at step 11 would
+    //                             clean it up, one tick after the form was
+    //                             already gone. Here, the tick that reverts is
+    //                             the first tick that fights as the base hero.
+    //
+    //                             ENTERING a form is the mirror case and needs
+    //                             no slot of its own: casts land at
+    //                             commandSystem (3), and step 11's late
+    //                             recompute is exactly the seam every other
+    //                             same-tick `attachSource` already relies on.
     auraSystem(this); //          0b. reconcile aura membership against the grid
     //                             just rebuilt above, BEFORE the recompute below
     //                             folds it in — so an aura entered this tick
@@ -747,6 +798,33 @@ export class SimWorld {
       if (air) {
         mix(id);
         mix(air.y);
+      }
+      // task #249 變身: WHICH BODY this entity is currently resolving through is
+      // authoritative world state, and it is otherwise INVISIBLE to this hash.
+      // Nothing above walks `this.champion`, so `championId` — the input to
+      // `recomputeStats`, to the snapshot's model lookup and to every hit-feel
+      // read — could be swapped on one replica and not the other with the digest
+      // none the wiser. Two forms of the same hero can share a maxHealth and
+      // differ in armor/attack speed/range, in which case not one existing field
+      // moves: the desync would surface minutes later as an unexplained damage
+      // divergence. (#198 is the open non-determinism hunt this class of blind
+      // spot feeds.)
+      //
+      // `expiresTick` rides along so a replica that armed a DIFFERENT duration
+      // says so on the transform tick rather than on the revert tick, the same
+      // reason `structure` folds `wakeTick`/`nextVolleyTick`.
+      //
+      // Folded in ONLY when the entity is out of its base body, following the
+      // `attackTarget` / `airborne` precedent above verbatim: absence means base
+      // form, so a pre-#249 world (and any world where nobody transformed, and
+      // any world where everybody transformed BACK) hashes byte-identically.
+      // `id` is re-mixed alongside so "entity 7 is transformed" cannot collide
+      // with a different entity's fold.
+      const cf = this.championForm.get(id);
+      if (cf) {
+        mix(id);
+        mix(cf.index);
+        mix(cf.expiresTick);
       }
     }
     // match scoreboard is authoritative world state — a desync here (a counter

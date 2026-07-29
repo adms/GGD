@@ -1,0 +1,32 @@
+{
+  "id": "godie-o030.ex",
+  "name": "30-002 變態紳士",
+  "icon": "assets/icons/abilities/godie-o030.ex.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n當臭作變態指數達到顛峰之時，攻擊身上有酒精灌腸效果的敵人將額外敵人現存瑪娜*20%的爆擊高潮撕裂傷。\n\n(據說這是因為臭作對於魔法少女有特殊癖好的強化執念？)",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.pulse-lg",
+  "schema": "ability@1",
+  "castTimeSec": 0.4
+}

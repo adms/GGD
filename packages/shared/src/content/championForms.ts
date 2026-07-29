@@ -80,9 +80,21 @@ export interface ChampionFormPair {
   /** `acdn` per level. Empty on the two toggles. */
   readonly cooldownSec: PerLevelSeconds;
   /**
-   * `false` when that half has NO champion doc in `content/champions`. Four
-   * alternate bodies were never imported (H00W / O030 / N01B / E010); their
-   * base still declares the link so the gap is visible instead of invented.
+   * `false` when that half has NO champion doc in `content/champions`.
+   *
+   * Both flags are `true` on all 26 pairs today, and that is LOAD-BEARING, not
+   * bookkeeping: `sim/content/registry.ts` `Registry.get()` THROWS on an
+   * unregistered id, and `apps/game-server/src/net/snapshot.ts` calls it for
+   * every champion entity every tick — so a transform into a body with no doc
+   * would take the whole room down, not merely fail to render.
+   *
+   * Four alternate bodies were the last gap (H00W 26洨者狀態 / O030 30變態紳士 /
+   * N01B 40萬解 / E010 70紮根). They were imported from `war3map.w3u` via
+   * `RESOLVED_HERO_STATS.json`, the same source #248 rebased the roster from,
+   * and `championFormsResolve.test.ts` now reads the real registry to prove
+   * every id on this table resolves. The flags stay in the type because the
+   * table is generated and a future map may again declare a form it does not
+   * ship; `championForms.test.ts` keys the doc-link assertions off them.
    */
   readonly baseInContent: boolean;
   readonly alternateInContent: boolean;
@@ -249,7 +261,7 @@ export const CHAMPION_FORM_PAIRS: readonly ChampionFormPair[] = [
     durationSec: { "1": 7, "2": 10.5, "3": 14 },
     cooldownSec: { "1": 75, "2": 75, "3": 75 },
     baseInContent: true,
-    alternateInContent: false,
+    alternateInContent: true,
   },
   {
     heroNumber: "30",
@@ -262,7 +274,7 @@ export const CHAMPION_FORM_PAIRS: readonly ChampionFormPair[] = [
     durationSec: { "1": 15, "2": 15, "3": 21, "4": 27 },
     cooldownSec: { "1": 60, "2": 60, "3": 60, "4": 60 },
     baseInContent: true,
-    alternateInContent: false,
+    alternateInContent: true,
   },
   {
     heroNumber: "38",
@@ -288,7 +300,7 @@ export const CHAMPION_FORM_PAIRS: readonly ChampionFormPair[] = [
     durationSec: { "1": 12, "2": 18, "3": 24, "4": 30 },
     cooldownSec: { "1": 75, "2": 75, "3": 75, "4": 75 },
     baseInContent: true,
-    alternateInContent: false,
+    alternateInContent: true,
   },
   {
     heroNumber: "42",
@@ -342,7 +354,7 @@ export const CHAMPION_FORM_PAIRS: readonly ChampionFormPair[] = [
     durationSec: {},
     cooldownSec: { "1": 15 },
     baseInContent: true,
-    alternateInContent: false,
+    alternateInContent: true,
   },
   {
     heroNumber: "76",

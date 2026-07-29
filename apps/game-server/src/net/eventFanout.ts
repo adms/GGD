@@ -303,6 +303,18 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // Entity creation. The client learns a champion exists from the entity map in
   // `MatchState`; the event carries the same identity with no extra art data.
   "championSpawn",
+  // 變身 (task #249). The BODY already crosses the wire without this: the
+  // snapshot re-derives `EntityState.key` from `Champions.get(champ.championId)
+  // .modelKey` every tick (net/snapshot.ts), so a form swap re-points the mesh
+  // by itself and this event would only echo the same identity — the
+  // `championSpawn` rationale directly above, one mechanic later.
+  //
+  // What it does NOT deliver is the swap MOMENT (the 變身 flash/sting, the "N
+  // seconds left" read). That is a presentation feature with no consumer yet;
+  // fan this out TOGETHER WITH the thing that draws it — the `recoveryBegin` /
+  // `recoveryEnd` rule right above — rather than opening the wire first.
+  // Cadence is safe either way: it fires once per cast and once per revert.
+  "championForm",
   // EX unlocked. The client's `audio/sfxEdges` already derives this from the
   // 0→1 `exRank` edge on the LOCAL seat's schema — correctly seat-gated, which
   // the broadcast event would not be. Fanning it out would ring the sting a

@@ -1,0 +1,27 @@
+{
+  "id": "godie-n01b.passive",
+  "schema": "ability@1",
+  "name": "40-00 我~是~孩~子~王~",
+  "icon": "assets/icons/abilities/godie-n01b.passive.webp",
+  "description": "[被動]\n0秒冷卻時間\n\n由於胖虎是蠻橫的孩子王，威嚇的影響導致附近敵方部隊減少19%攻擊破壞力。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "40-00 我~是~孩~子~王~",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

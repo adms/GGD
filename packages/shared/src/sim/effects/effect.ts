@@ -147,6 +147,29 @@ export type EffectDef =
       /** effects run on the LANDING tick, centred on the landing point */
       onLand?: EffectDef[];
     }
+  /**
+   * championForm (task #249 變身) — the map's own WC3 **Metamorphosis** pair,
+   * `Eme1` (normal unit) ⇄ `Emeu` (alternate unit), as a sim primitive.
+   *
+   * WHY IT IS A BODY SWAP AND NOT A BUFF. All 26 transforms in
+   * `src_gogodieEX227s.w3x` are a COMPLETE second unit definition in
+   * `war3map.w3u` — its own hp/armor/attack speed/range/model/ability list —
+   * never a modifier stack on the first (see content/championForms.ts). An
+   * `applyBuff` could not express 40萬解's melee→ranged change or 30變態紳士's
+   * ground→flying body at all, so the primitive swaps WHICH CHAMPION DOC the
+   * entity resolves through, in place, keeping the entity id, HP, level, items
+   * and cooldowns (see systems/ChampionFormSystem.ts for the swap contract).
+   *
+   * `to` is a DIRECTION, not an id: the counterpart is read from the champion
+   * doc's own `transform.counterpartId`, so one authored effect works for every
+   * hero and the id can never be typo'd into a body that does not exist.
+   *
+   * `durationSec` is the w3a `ahdu` (HERO duration) of the transform ability.
+   * ABSENT = the form does not time out — 20-01 風王結界 and 70-00 紮根 are
+   * TOGGLES and 61-00 百連我殺 is a death-state morph. Three of 26; an absent
+   * duration is a recovered fact, not missing data.
+   */
+  | { kind: "championForm"; to: "alternate" | "base" | "toggle"; durationSec?: number }
   | { kind: "spawnProjectile"; projectileId: ProjectileId; onHit: EffectDef[] }
   /**
    * spawnVfx — the WC3 "dummy effect unit" idiom (化繁為簡): a Locust/invuln

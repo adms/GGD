@@ -1,0 +1,38 @@
+{
+  "id": "godie-h00w.e",
+  "name": "26-03 熱血",
+  "icon": "assets/icons/abilities/godie-h00w.e.webp",
+  "description": "[靈氣]\n鄭先生雄壯的熱血帶給他額外的13%傷害。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.13
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.prim.blood.pulse-sm",
+  "schema": "ability@1",
+  "castTimeSec": 0.3
+}

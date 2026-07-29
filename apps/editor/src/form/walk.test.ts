@@ -98,6 +98,7 @@ describe("discriminated EffectDef union (editor-02)", () => {
       [
         "applyBuff",
         "applyStatus",
+        "championForm", // task #249 — the w3x Eme1/Emeu body swap
         "damage",
         "dash",
         "heal",

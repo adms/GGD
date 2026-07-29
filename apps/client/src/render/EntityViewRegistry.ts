@@ -22,7 +22,7 @@ import { ReviveCircleView } from "./views/ReviveCircleView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import { mudTintFor, type GrowthTier } from "./views/growthTier";
-import { growthTierFromFlags, ENTITY_KIND } from "@ggd/shared/protocol/schema";
+import { growthTierFromFlags, formIndexFromFlags, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -80,7 +80,8 @@ export interface EntityViewState {
   /**
    * The authoritative `EntityState.flags` word (task #244). Optional so every
    * existing fixture and caller stays valid; absent reads as 0 = no flags.
-   * Only the two GROWTH bits are consumed here — the rest are read by GameApp.
+   * Two bit pairs are consumed here — GROWTH (#244, the mud tier) and FORM
+   * (#249, 變身, which rebuilds the body outright) — the rest are read by GameApp.
    */
   flags?: number;
   /**
@@ -338,6 +339,18 @@ export class EntityViewRegistry {
   private readonly culled = new Map<number, boolean>();
   /** w3x vertex tint state per champion (task #49); see `applyTint`. */
   private readonly tinted = new Map<number, TintState>();
+  /**
+   * 變身 (task #249) — the FORM INDEX the live ChampionView for this entity was
+   * BUILT with. Half of the rebuild identity; the other half (`modelKey`) is
+   * read straight off the view, which has it as a readonly ctor field.
+   *
+   * A map rather than a field on ChampionView because the form is a REGISTRY
+   * concern: the view is a body, and it does not care which of a hero's bodies
+   * it happens to be. Absent = 0 = base form, so every pre-#249 entity and every
+   * fixture with no `flags` compares equal on the first sync and nothing is
+   * rebuilt for free.
+   */
+  private readonly builtForm = new Map<number, number>();
 
   constructor(
     private readonly scene: Scene,
@@ -553,6 +566,35 @@ export class EntityViewRegistry {
     applyModelTint(view.root, composeGrowth(st.tint, tier)); // the .glb meshes just landed
   }
 
+  /**
+   * THE CHAMPION EXIT SEQUENCE — the one place a ChampionView is torn down.
+   *
+   * Extracted (task #249) so the 變身 REBUILD below and the ordinary
+   * "entity left the snapshot" removal cannot drift apart. They must not: the
+   * hazard here is not the dispose, it is the FIVE per-entity maps keyed by the
+   * same id. Miss `culled` and the rebuilt body inherits a stale visibility
+   * compare (`culled.get(id) !== hidden` is false, so `setEnabled` is never
+   * written and an out-of-range champion renders anyway); miss `tinted` and
+   * `applyTint` believes the fresh materials are already painted; miss
+   * `speedEma`/`lastPos` and the new body inherits the old one's motion history.
+   * A single teardown means the next map added to this class is impossible to
+   * half-wire.
+   *
+   * `releaseModelTint` runs BEFORE dispose: `ChampionView.dispose()` only frees
+   * the materials it created itself, so an unreleased tint clone would leak and
+   * leave the cached .glb material swapped out of the meshes that still need it.
+   */
+  private retireChampion(id: number, view: ChampionView): void {
+    if (this.tinted.get(id)?.tint) releaseModelTint(view.root);
+    view.dispose();
+    this.champions.delete(id);
+    this.lastPos.delete(id);
+    this.speedEma.delete(id);
+    this.culled.delete(id);
+    this.tinted.delete(id);
+    this.builtForm.delete(id);
+  }
+
   /** Per-frame diff + imperative transform/animation write. */
   sync(args: SyncArgs): void {
     const seen = new Set<number>();
@@ -655,6 +697,32 @@ export class EntityViewRegistry {
       }
 
       let view = this.champions.get(e.id);
+      // 變身 BODY SWAP (task #249) — THE REBUILD. Everything that decides what a
+      // champion body looks like is a CONSTRUCTION-TIME input to ChampionView:
+      // `modelKey` is a readonly ctor parameter with no setter (it picks the glb
+      // yaw offset and the fallback accent), the voxel skin decides the boxes and
+      // their UVs, and the .glb load is behind a one-way `upgradeStarted` latch
+      // that `tryUpgradeToGlb` is only asked about while `!view.upgradeAttempted`.
+      // So a transformed champion whose identity changed would keep its OLD body
+      // forever: the sim swaps, the snapshot ships it, every test stays green, and
+      // the player watches the wrong model. The only honest fix is to throw the
+      // view away and let the construction branch below run again — on the new
+      // view the latch is false, so the glb reloads, and growthTier / applyTint /
+      // selfMarker are written every frame and catch up on their own.
+      //
+      // IDENTITY = (modelKey, form index). Both halves are load-bearing:
+      //   · `e.key` — the sim's `Champions.get(championId).modelKey`, recomputed
+      //     from `ChampionComp.championId` every tick by the snapshot;
+      //   · the FORM bits — because all four shipped transform pairs share ONE
+      //     modelKey between their halves (see ENTITY_FLAG.FORM_A), so `key`
+      //     alone provably never changes for the content that exists today.
+      // `view.modelKey` is read off the LIVE VIEW rather than off a bookkeeping
+      // map, so the compare is against what was actually constructed.
+      const form = formIndexFromFlags(e.flags ?? 0);
+      if (view && (view.modelKey !== e.key || (this.builtForm.get(e.id) ?? 0) !== form)) {
+        this.retireChampion(e.id, view);
+        view = undefined;
+      }
       if (!view) {
         // The skin is a CONSTRUCTION-TIME input: it decides the boxes, their
         // UVs and the motif geometry, so it cannot be applied after the fact.
@@ -664,6 +732,7 @@ export class EntityViewRegistry {
         const skin = this.content.voxelSkinFor?.(e) ?? null;
         view = new ChampionView(this.scene, e.id, e.key, e.teamId, { skin });
         this.champions.set(e.id, view);
+        this.builtForm.set(e.id, form);
       }
       // idempotent: no-ops once started or while no model doc is available.
       // A per-champion override (task #77) preserves the map's declared model
@@ -750,19 +819,7 @@ export class EntityViewRegistry {
 
     // removals
     for (const [id, view] of this.champions) {
-      if (!seen.has(id)) {
-        // hand the shared source materials back BEFORE the view goes away:
-        // ChampionView.dispose() only frees the materials it created itself, so
-        // an unreleased tint clone would leak and leave the cached .glb
-        // material swapped out of the meshes that still need it.
-        if (this.tinted.get(id)?.tint) releaseModelTint(view.root);
-        view.dispose();
-        this.champions.delete(id);
-        this.lastPos.delete(id);
-        this.speedEma.delete(id);
-        this.culled.delete(id);
-        this.tinted.delete(id);
-      }
+      if (!seen.has(id)) this.retireChampion(id, view);
     }
     for (const [id, view] of this.projectiles) {
       if (!seen.has(id)) {
@@ -810,6 +867,7 @@ export class EntityViewRegistry {
       if (this.tinted.get(id)?.tint) releaseModelTint(v.root);
     }
     this.tinted.clear();
+    this.builtForm.clear();
     for (const v of this.champions.values()) v.dispose();
     for (const v of this.projectiles.values()) v.dispose();
     for (const v of this.pool) v.dispose();

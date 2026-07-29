@@ -786,7 +786,51 @@ export const ENTITY_FLAG = {
    * was re-pointed in the same commit.
    */
   AIRBORNE: 2048,
+  /**
+   * 變身 FORM INDEX, low bit (task #249). Together with {@link ENTITY_FLAG
+   * .FORM_B} these two bits carry a 0..3 form ordinal — 0 = the base `Eme1`
+   * body the player picked, 1 = the alternate `Emeu` body, 2/3 reserved for a
+   * hero the map ever gives three or four bodies. Decode with
+   * {@link formIndexFromFlags}, never by testing the bits by hand.
+   *
+   * WHY A FLAG PAIR AND NOT A NEW `EntityState` FIELD. `defineTypes` is
+   * APPEND-ONLY and irreversible: a new field costs a schema index forever plus
+   * a byte per entity per change, and it cannot be taken back once a client in
+   * the wild has parsed it. `flags` is a uint16 already present in every
+   * champion patch, so this costs ZERO extra bytes on the wire.
+   *
+   * WHY NOT REUSE `EntityState.key`. `key` is `Champions.get(championId)
+   * .modelKey`, and 44 champions share four stand-in model docs — including
+   * BOTH HALVES of all four shipped transform pairs (godie-e00s/e010,
+   * harf/h00w, nman/n01b, orkn/o030 — verified against content/champions/*.json,
+   * every pair identical). So `key` cannot answer "is this body transformed":
+   * for the shipped roster it is byte-identical in both forms. The bits are the
+   * ONLY channel that can.
+   */
+  FORM_A: 4096,
+  /** 變身 FORM INDEX, high bit — see {@link ENTITY_FLAG.FORM_A}. */
+  FORM_B: 8192,
 } as const;
+
+/**
+ * BIT BUDGET FOR `ENTITY_FLAG` — read this before adding a flag.
+ *
+ * `EntityState.flags` is a **uint16** (`defineTypes` above), so there are
+ * EXACTLY 16 bits and they are not extensible. After task #249:
+ *
+ *   used  (14): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
+ *               32 WINDUP · 64 CHANNELLING · 128 CONTESTED · 256 BURNING ·
+ *               512 MUD_SWELL · 1024 MUD_BOSS · 2048 AIRBORNE ·
+ *               4096 FORM_A · 8192 FORM_B
+ *   FREE   (2): 16384, 32768
+ *
+ * This is the THIRD feature to collide here (#244 vs #247 fought over 512, and
+ * #249 took the last comfortable pair), so the count is written down rather
+ * than recounted by eye. When the last two are gone the next feature must WIDEN
+ * the field or claim its own — silently reusing an occupied bit desyncs a live
+ * client with no error anywhere.
+ */
+export const ENTITY_FLAG_FREE_BITS = [16384, 32768] as const;
 
 /**
  * The two visible-stack thresholds behind `ENTITY_FLAG.MUD_SWELL` / `MUD_BOSS`
@@ -804,4 +848,31 @@ export function growthTierFromFlags(flags: number): 0 | 1 | 2 {
   if (flags & ENTITY_FLAG.MUD_BOSS) return 2;
   if (flags & ENTITY_FLAG.MUD_SWELL) return 1;
   return 0;
+}
+
+/**
+ * 0 / 1 / 2 / 3 from an EntityState.flags word — the client's only 變身 read
+ * (task #249). 0 is the base body, 1 the alternate; 2 and 3 are reserved and
+ * unreachable until some hero ships more than two bodies.
+ *
+ * Written as an OR of the two bits (not a `if (B) return 2` ladder like
+ * `growthTierFromFlags`) because the form ordinal is a NUMBER, not a threshold:
+ * FORM_B alone must read 2, not "1 with extra". Unrelated bits are masked out,
+ * so a burning, airborne, tier-2 alternate body still decodes to exactly 1.
+ */
+export function formIndexFromFlags(flags: number): 0 | 1 | 2 | 3 {
+  const lo = (flags & ENTITY_FLAG.FORM_A) !== 0 ? 1 : 0;
+  const hi = (flags & ENTITY_FLAG.FORM_B) !== 0 ? 2 : 0;
+  return (lo + hi) as 0 | 1 | 2 | 3;
+}
+
+/**
+ * The two flag bits that encode `index` — the inverse of
+ * {@link formIndexFromFlags}, for whoever writes the snapshot. Kept next to the
+ * decoder so the two can never drift apart; an out-of-range index clamps to the
+ * base body rather than emitting a bit pattern the decoder cannot name.
+ */
+export function formFlagsForIndex(index: number): number {
+  if (!Number.isInteger(index) || index < 1 || index > 3) return 0;
+  return (index & 1 ? ENTITY_FLAG.FORM_A : 0) | (index & 2 ? ENTITY_FLAG.FORM_B : 0);
 }

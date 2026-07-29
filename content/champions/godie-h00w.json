@@ -1,8 +1,8 @@
 {
-  "id": "godie-harf",
+  "id": "godie-h00w",
   "schema": "champion@1",
   "name": "豪洨天王 - 鄭先生",
-  "description": "故事：\nPTT傳說中的愛洨會最高層幹部之一，喜愛吞噬某樣液體成名。之所以會加入去死團，據說是愛洨會高層討論的命令。\n(出自:台大PTT)\n\n推薦玩家 : PK坦克\n上手度 : 中\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.55\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n腳底按摩、亂入、熱血、洨者聖臨",
+  "description": "故事：\nPTT傳說中的愛洨會最高層幹部之一，喜愛吞噬某樣液體成名。之所以會加入去死團，據說是愛洨會高層討論的命令。\n(出自:台大PTT)\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.55\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n腳底按摩、吃洨火鍋、大棒槌、生命的意義",
   "role": "fighter",
   "attackType": "melee",
   "modelKey": "champ.skin.barbarian",
@@ -13,9 +13,9 @@
     "manaRegen": 0.1,
     "ad": 12,
     "ap": 0,
-    "armor": 2,
+    "armor": 5,
     "mr": 28,
-    "as": 0.5,
+    "as": 0.625,
     "ms": 5.9,
     "critChance": 0,
     "critDamage": 1.75,
@@ -50,9 +50,9 @@
   },
   "abilities": {
     "Q": {
-      "id": "godie-harf.q",
+      "id": "godie-h00w.q",
       "name": "26-01 腳底按摩",
-      "icon": "assets/icons/abilities/godie-harf.q.webp",
+      "icon": "assets/icons/abilities/godie-h00w.q.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n使用穴道按摩發揮一個人最大的潛力，讓這個部隊攻擊速度提昇50%，移動速度30%，但必須承受額外10%傷害，持續12秒。",
       "slot": "Q",
       "castType": "self",
@@ -87,10 +87,10 @@
       "castTimeSec": 0.3
     },
     "W": {
-      "id": "godie-harf.w",
+      "id": "godie-h00w.w",
       "name": "26-02 亂入",
-      "icon": "assets/icons/abilities/godie-harf.w.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率一定會命中且附加額外50點的無言傷害。",
+      "icon": "assets/icons/abilities/godie-h00w.w.webp",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有15%機率一定會命中且附加額外25點的無言傷害並囧在那裡0.5秒。",
       "slot": "W",
       "castType": "targeted",
       "maxRank": 4,
@@ -113,10 +113,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
+              25.0,
               50.0,
-              100.0,
-              150.0,
-              200.0
+              75.0,
+              100.0
             ],
             "ratios": [
               {
@@ -132,9 +132,9 @@
       "castTimeSec": 0.3
     },
     "E": {
-      "id": "godie-harf.e",
+      "id": "godie-h00w.e",
       "name": "26-03 熱血",
-      "icon": "assets/icons/abilities/godie-harf.e.webp",
+      "icon": "assets/icons/abilities/godie-h00w.e.webp",
       "description": "[靈氣]\n鄭先生雄壯的熱血帶給他額外的13%傷害。",
       "slot": "E",
       "castType": "self",
@@ -169,9 +169,9 @@
       "castTimeSec": 0.3
     },
     "R": {
-      "id": "godie-harf.r",
+      "id": "godie-h00w.r",
       "name": "26-04 開天闢地‧洨者聖臨",
-      "icon": "assets/icons/abilities/godie-harf.r.webp",
+      "icon": "assets/icons/abilities/godie-h00w.r.webp",
       "description": "[輔助]\n75秒冷卻時間\n\n舉行禁忌的食子儀式獲得強大的力量，攻擊類型轉為攻城，增加25%的基礎攻擊速度，5點裝甲，維持7秒。",
       "slot": "R",
       "castType": "self",
@@ -224,12 +224,12 @@
     "godie",
     "voxel-standin"
   ],
-  "exAbility": "godie-harf.ex",
-  "passiveAbility": "godie-harf.passive",
-  "icon": "assets/icons/champions/godie-harf.png",
+  "exAbility": "godie-h00w.ex",
+  "passiveAbility": "godie-h00w.passive",
+  "icon": "assets/icons/champions/godie-h00w.png",
   "transform": {
-    "role": "base",
-    "counterpartId": "godie-h00w",
+    "role": "alternate",
+    "counterpartId": "godie-harf",
     "normalUnitRawcode": "HARF",
     "alternateUnitRawcode": "H00W",
     "triggerAbility": {
