@@ -34,13 +34,19 @@ const REPO = join(__dirname, "../../..");
 describe("基礎加成 後台頁 (adminui-base-bonus)", () => {
   it("沒讀到文件 → 每一格顯示出貨預設;讀到空文件 → 每一格是 0", () => {
     cover("adminui-base-bonus");
-    // 這兩個狀態差 300 點血,而且畫面上長得很像。壓成同一個是這一頁最容易犯的錯:
-    // 一份還沒寫過的空 overlay 會讓面板宣稱「生命加成 0」,而伺服器仍然給 300。
+    // 這兩個狀態差一整份出貨預設的血量,而且畫面上長得很像。壓成同一個是這一頁
+    // 最容易犯的錯:一份還沒寫過的空 overlay 會讓面板宣稱「生命加成 0」,
+    // 而伺服器仍然給出貨預設。
+    //
+    // ⚠️ 這個數字跟著 `DEFAULT_BASE_BONUS` 走(owner 2026-07-30: 300 → 650,
+    // 「目前玩家太容易死了」)。**寫死是刻意的** —— 引用常數的話,把常數改成 0
+    // 的變異會讓期望值跟著溜走,這條就不再是守衛。owner 再改數字時,
+    // `packages/shared/src/sim/baseBonus.ts` 與這一行要一起改。
     const unread = bonusRows(null);
     const empty = bonusRows({});
     const hp = (rows: ReturnType<typeof bonusRows>): number =>
       rows.find((r) => r.stat === Stat.MaxHealth)!.effective;
-    expect(hp(unread)).toBe(300);
+    expect(hp(unread)).toBe(650);
     expect(hp(empty)).toBe(0);
   });
 

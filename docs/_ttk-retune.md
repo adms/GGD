@@ -24,7 +24,11 @@ This is the maxHealth that meets BOTH round-length targets on the natural-elimin
 - **Mid-match loadout.** Level 6, Q/W/E learned + R unlocked, ~5000 g spent down real buildPriority, one gold augment (approximates a round 3–4 fight).
 - **Two modes.** *natural* = fire ring OFF (pure elimination TTK — the clean signal; also the floor on round length since the ring only shortens rounds). *production* = fire ring ON, real schedule (startSec 180), Tier-0 stalemates resolve ~180–240 s.
 - **Duration** = ticks from combat-entry to elimination ÷ 30 (TICK_HZ). Natural cap 600 s; production cap 240 s (shipped combatMaxSec). Flowers / revives / guardians OFF (sustain confounders); base health regen stays ON (it is the mechanic under study).
-- **Env:** shipped combat-env.json: damageDealt=0.5, maxHealth=8, cooldown=0.25, abilityRange=0.6.
+- **Env:** shipped combat-env.json: damageDealt=1.0, maxHealth=6.0, cooldown=0.2, abilityRange=0.6.
+  ⚠️ 這一行在 2026-07-30 之前寫的是 `damageDealt=0.5, maxHealth=8, cooldown=0.25` ——
+  **三個值全錯**，而且錯了不知道多久。稽核工作流從 `git show HEAD:content/config/combat-env.json`
+  重量才抓到。⚠️ `maxHealth` owner 已經來回改過三次（#265 4→3、2026-07-29 3→4、
+  2026-07-30 4→6），這份文件裡凡是以它為基準算出來的 TTK 數字都要重算，不要直接引用。
 
 ## Results — natural elimination TTK (fire ring OFF)
 
