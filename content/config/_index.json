@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "78a6663d4822",
+  "hash": "b89a5c1b6709",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,7 +23,7 @@
     {
       "id": "base-bonus",
       "path": "config/base-bonus.json",
-      "hash": "65702863ef0b",
+      "hash": "0ff7082d3602",
       "size": 99
     },
     {
@@ -35,20 +35,20 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "8499dbfcb221",
-      "size": 747
+      "hash": "70c779699f14",
+      "size": 746
     },
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "03304795be9a",
-      "size": 233
+      "hash": "024edcbbf2bc",
+      "size": 307
     },
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "54db7b8568a9",
-      "size": 898
+      "hash": "39ad0eb861ca",
+      "size": 987
     },
     {
       "id": "form-visuals",
@@ -69,6 +69,18 @@
       "size": 1542
     },
     {
+      "id": "model-lod",
+      "path": "config/model-lod.json",
+      "hash": "f62fe1b47808",
+      "size": 459
+    },
+    {
+      "id": "round-grade",
+      "path": "config/round-grade.json",
+      "hash": "fe58dd47b882",
+      "size": 675
+    },
+    {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
       "hash": "e02d5cdc4f55",
@@ -85,6 +97,12 @@
       "path": "config/unit-tints.json",
       "hash": "28fe3997a438",
       "size": 26737
+    },
+    {
+      "id": "vfx-families",
+      "path": "config/vfx-families.json",
+      "hash": "492f12f0fc80",
+      "size": 27708
     },
     {
       "id": "victory-taunts",

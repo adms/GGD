@@ -52,14 +52,36 @@
  * must be >= `startSec + shrinkSec` (schema-enforced), so the ring can always
  * finish closing before the phase force-ends.
  *
+ * 保底 — EVERY UNIT BURNS, NOT JUST CHAMPIONS (owner 2026-07-30):
+ *
+ *   「火圈百分比真實傷害是所有場上玩家、bot、各種殭屍都會百分比真實傷害燒死，
+ *     所以還是有個保底結果」
+ *
+ * #132/#195/#270 built the burn as a CHAMPION-ONLY loop (`FireRingSystem`
+ * iterates `world.champion`), which was fine while a round ended on 「一隊全滅」.
+ * The moment a round also waits on the field being CLEAR, one zombie wedged in a
+ * corner can hold the round open forever, because nothing else in the sim is
+ * guaranteed to reach it. {@link fireRingBurnMobs} closes that: the same radius,
+ * the same rate, the same %-of-own-maxHealth true damage, applied to 一般殭屍 /
+ * 特殊殭屍 / 殭屍王 as well. PERCENT is what makes it a backstop at all — a flat
+ * number is a rounding error against a 276,944 hp king.
+ *
  * Lifecycle (mirrors flowers/revives): combat-phase only. The match host arms
  * it on combat entry (`beginCombatFireRing`) and disarms it on round exit
  * (`endCombatFireRing`). The tick loop additionally gates every burn on
  * `world.combatActive`, so the instant a round SETTLES (task #100) the ring
  * stops — it is a LIVE-combat accelerator, never a post-settle grinder — and,
  * per zone, on `world.settledZones` (task #216), so a duel that finished EARLY
- * stops burning its survivors instead of grinding them down while the other
+ * stops burning its CHAMPIONS instead of grinding them down while the other
  * zone is still fighting (that grind is what the owner saw from the shop).
+ *
+ * ⚠️ THE settledZones SKIP IS CHAMPION-ONLY SINCE 2026-07-30. It was written
+ * when the ring only ever touched champions, so 「a settled zone does not burn」
+ * and 「a settled zone does not burn PLAYERS」 were the same sentence; they are
+ * not any more. {@link fireRingBurnMobs} keeps eating zombies in a settled zone
+ * on purpose — the reason is written at that function, and
+ * {@link isBurnedByFireRing} forks identically so the flag never outruns the
+ * damage.
  *
  * PURITY: no rng, no trig, no transcendentals, no wall-clock. The radius is a
  * pure function of the tick COUNTER (never accumulated `r -= step`, which would
@@ -73,7 +95,16 @@ import { distSq } from "./math/vec2";
 
 /** Fire-ring rules in TICKS (converted from the config doc's seconds). */
 export interface FireRingRules {
-  /** combat-elapsed ticks until the ring ignites (the round-length knob). */
+  /**
+   * The ABSOLUTE combat-elapsed tick the ring ignites on — the round-length
+   * knob, and (since #L1) the ring half of the ROUND CLOCK below.
+   *
+   * ⚠️ NOT a constant any more. `extendRoundForBoss` moves this DEADLINE
+   * outward when the 殭屍王 walks in. It is still an absolute threshold
+   * compared against the up-counter `world.fireRingTicks` — never a countdown
+   * that gets topped up — so 「延後 180 秒」 is one add on one number and the
+   * radius stays a pure function of (rules, tick). See THE ROUND CLOCK below.
+   */
   startTicks: number;
   /** ticks the ring takes to contract from the zone boundary to `minRadius`. */
   shrinkTicks: number;
@@ -85,6 +116,50 @@ export interface FireRingRules {
   burnPctPerSecEnd: number;
   /** hard cap on the per-second rate (fraction of maxHealth). */
   maxPctPerSec: number;
+
+  /* ── THE ROUND CLOCK (#L1) ─────────────────────────────────────────────
+   *
+   * owner 2026-07-30: 「殭屍王出現回合結束時間延長 3 分鐘(火圈時間也延後),
+   * 除非全死不然不會提前結束,避免打到一半結果回合結束」
+   *
+   * WHY THE DEADLINE LIVES HERE AND NOT IN A COUNTDOWN. `PhaseMachine` runs
+   * combat off `ticksLeft--`, a DECREMENTING counter; extending a round that
+   * way means `ticksLeft += 5400`, which is exactly the pattern CLAUDE.md
+   * forbids (「到期一律用絕對 tick,不是遞減計數器」) because two hosts that
+   * decrement a different number of times disagree about when the round ends.
+   * `combatMaxTicks` is the same deadline as an ABSOLUTE combat-elapsed tick,
+   * compared against the very counter (`world.fireRingTicks`) the ring already
+   * uses — so the two halves of 「延長 3 分鐘」 can never drift apart, and
+   * extending is one add on one number rather than a re-based countdown.
+   *
+   * WHY ON THE RING'S RULES. `world.fireRingTicks` IS the combat-elapsed clock
+   * (FireRingSystem increments it, and only while `combatActive`), and the ring
+   * schedule is already armed/disarmed per combat entry by the match host. A
+   * second per-combat clock would have to be armed by the same host at the same
+   * moment and could then be armed at a DIFFERENT moment — which is how two
+   * round timers end up disagreeing. One clock, two thresholds.
+   */
+
+  /**
+   * ABSOLUTE combat-elapsed tick at which the combat phase is over — the hard
+   * backstop `match.combatMaxSec` names, in the sim's own units.
+   *
+   * `Number.POSITIVE_INFINITY` = the caller armed the ring without telling the
+   * sim the backstop (`fireRingRulesFromConfig`'s third argument omitted:
+   * fixtures, the client's prediction shadow, any pre-#L1 caller). Then
+   * {@link isCombatTimeUp} is false forever, i.e. the sim asserts no deadline
+   * at all — byte-identical to the behaviour before #L1, where the deadline
+   * existed only inside the game-server's PhaseMachine.
+   */
+  combatMaxTicks: number;
+  /** ticks ONE 殭屍王 summon adds to `combatMaxTicks` (0 = the knob is off). */
+  bossExtendTicks: number;
+  /** ticks ONE 殭屍王 summon adds to `startTicks` (0 = the knob is off). */
+  bossDelayTicks: number;
+  /** running total actually added to `combatMaxTicks` so far this combat. */
+  bossExtendedTicks: number;
+  /** running total actually added to `startTicks` so far this combat. */
+  bossDelayedTicks: number;
 }
 
 /** Seconds-based fire-ring config (mirror of config.match@1 `match.fireRing`). */
@@ -95,14 +170,45 @@ export interface FireRingConfigLike {
   burnPctPerSecStart?: number;
   burnPctPerSecEnd?: number;
   maxPctPerSec?: number;
+  /**
+   * 殭屍王在場時的回合延長 (#L1) — mirror of `match.fireRing.boss`.
+   *
+   * It rides INSIDE the ring block, not beside it, for one reason: the match
+   * host resolves `match.fireRing` (`resolveFireRing()`) and hands exactly that
+   * object to `fireRingRulesFromConfig`. A sibling block would need a second
+   * channel through the host, and a knob that needs new plumbing before it does
+   * anything is a knob the operator can turn with no effect.
+   *
+   * ABSENT ⇒ both 0 ⇒ a king changes nothing, the pre-#L1 behaviour.
+   */
+  boss?: {
+    /** seconds added to the combat deadline per summon (owner: 180) */
+    extendCombatSec?: number;
+    /** seconds the ring's ignition is pushed back per summon (owner: 180) */
+    delayFireRingSec?: number;
+  };
 }
 
 /**
  * Convert the seconds-based config block into tick-based sim rules. The
  * seconds→ticks conversion happens ONCE, here, at arm time — never per tick, so
  * no per-tick division can round differently on a different host.
+ *
+ * `combatMaxSec` is `config.match@1`'s `match.combatMaxSec`, passed in rather
+ * than mirrored into the ring block: the doc must keep exactly one home for
+ * that number (the schema's own refine already couples them). Omit it and the
+ * sim simply asserts no deadline — see {@link FireRingRules.combatMaxTicks}.
  */
-export function fireRingRulesFromConfig(cfg: FireRingConfigLike, dt: number): FireRingRules {
+export function fireRingRulesFromConfig(
+  cfg: FireRingConfigLike,
+  dt: number,
+  combatMaxSec?: number,
+): FireRingRules {
+  // Seconds→ticks for the two extension knobs. `Math.max(0, …)` and not
+  // `Math.max(1, …)`: 0 seconds must mean 「這個開關關掉」, and a phase-minimum
+  // of one tick would turn 「不要延長」 into 「延長一格」.
+  const extTicks = (sec: number | undefined): number =>
+    sec === undefined || !(sec > 0) ? 0 : Math.round(sec / dt);
   return {
     startTicks: Math.max(0, Math.round(cfg.startSec / dt)),
     shrinkTicks: Math.max(1, Math.round((cfg.shrinkSec ?? 20) / dt)),
@@ -111,7 +217,131 @@ export function fireRingRulesFromConfig(cfg: FireRingConfigLike, dt: number): Fi
     burnPctPerSecEnd: cfg.burnPctPerSecEnd ?? 0.2,
     // absent cap = no cap (a very large finite factor keeps min() deterministic).
     maxPctPerSec: cfg.maxPctPerSec ?? 1e9,
+    combatMaxTicks:
+      combatMaxSec === undefined || !Number.isFinite(combatMaxSec) || combatMaxSec <= 0
+        ? Number.POSITIVE_INFINITY
+        : Math.max(1, Math.round(combatMaxSec / dt)),
+    bossExtendTicks: extTicks(cfg.boss?.extendCombatSec),
+    bossDelayTicks: extTicks(cfg.boss?.delayFireRingSec),
+    bossExtendedTicks: 0,
+    bossDelayedTicks: 0,
   };
+}
+
+/**
+ * THE 殭屍王 ROUND EXTENSION (#L1). Called from `summonMobBoss` — the one place
+ * a king actually enters the world — the instant the king is spawned.
+ *
+ * Moves BOTH deadlines outward by the authored amounts:
+ *   • `combatMaxTicks += bossExtendTicks`  ── 「回合結束時間延長 3 分鐘」
+ *   • `startTicks     += bossDelayTicks`   ── 「火圈時間也延後」
+ *
+ * BOTH, ALWAYS, TOGETHER. Extending only the phase would leave the ring closing
+ * on its original schedule, so the king fight would still end with everyone
+ * burned out of the arena — which is the exact 「打到一半結果回合結束」 the
+ * owner asked to stop. Delaying only the ring would run the round into the hard
+ * backstop instead. They are one instruction and this is the one function.
+ *
+ * IF THE RING HAS ALREADY IGNITED it RE-OPENS: `startTicks` moves past
+ * `world.fireRingTicks`, so `fireRingRadius` is asked for a negative
+ * `ticksSinceStart` and returns the full zone boundary again, FireRingSystem
+ * goes dormant, and `isBurnedByFireRing` reports false — all three off the same
+ * comparison, so no consumer can disagree with another. That is deliberate: the
+ * king is a 100-kill payoff and the owner's rule is that it must be fightable,
+ * not that the fire keeps its place in the queue. The visible cost is a radius
+ * pop and a second `fireRingStart` beat when the delayed ignition comes round;
+ * both are honest 「火圈延後了」 signals.
+ *
+ * Returns the ticks ADDED to the combat deadline this call (0 when the ring is
+ * disarmed or both knobs are 0), so the caller can put the real number on the
+ * wire instead of re-deriving it from config.
+ *
+ * PURITY: two adds on two numbers, no rng, no clock, no iteration order.
+ */
+export function extendRoundForBoss(world: SimWorld): number {
+  const rules = world.fireRingRules;
+  // No armed ring ⇒ no combat-elapsed clock to hang a deadline on. The knob is
+  // authored inside the ring block precisely so this can never be a silent
+  // half-state: no ring, no round clock, no extension.
+  if (!rules || world.fireRingTicks < 0) return 0;
+  const extend = rules.bossExtendTicks;
+  const delay = rules.bossDelayTicks;
+  if (extend <= 0 && delay <= 0) return 0;
+
+  // ⛔ THE HALF-STATE GATE. `combatMaxTicks` is `Infinity` whenever the host
+  // armed the ring WITHOUT a backstop — which is what ships today:
+  // `MatchController` calls `fireRingRulesFromConfig(ring, dt)` with TWO args,
+  // so the deadline that actually force-ends combat is `PhaseMachine.ticksLeft`
+  // (100 s × 30 Hz = 3000 ticks) and nothing here can move it.
+  //
+  // Applying only the delay in that world is STRICTLY WORSE THAN NOT APPLYING
+  // ANYTHING: ignition slides 1800 → 7200 while the round still ends at 3000,
+  // so summoning a 殭屍王 does not extend the round — it SILENTLY CANCELS THE
+  // FIRE RING for the whole round. That also removes the 保底 that
+  // `fireRingBurnMobs` provides, in exactly the rounds a ~276k-HP king is up.
+  // Measured on the shipped 2-arg wiring at the last combat tick (2999):
+  // with a king `radius = 24.0` (full boundary) and `burning = false`;
+  // without one `radius = 0.5`, `burning = true`.
+  //
+  // So: no enforceable deadline ⇒ no delay either. Both halves or neither —
+  // which is what this function's own contract said all along, and what the
+  // previous revision violated. Once the host passes `combatMaxSec` through,
+  // this gate opens on its own and both halves apply. Do NOT "fix" this by
+  // deleting the guard; fix the host wiring (see the 3-arg overload).
+  if (!Number.isFinite(rules.combatMaxTicks)) return 0;
+
+  rules.startTicks += delay;
+  rules.bossDelayedTicks += delay;
+  rules.combatMaxTicks += extend;
+  rules.bossExtendedTicks += extend;
+  return extend;
+}
+
+/**
+ * The ignition tick IN FORCE right now — post-extension, which is the whole
+ * point: a consumer that reads `match.fireRing.startSec` off the config doc is
+ * reading the value the round STARTED with, not the one the ring will actually
+ * fire on. -1 when the ring is disarmed.
+ */
+export function fireRingIgnitionTick(world: SimWorld): number {
+  const rules = world.fireRingRules;
+  return rules && world.fireRingTicks >= 0 ? rules.startTicks : -1;
+}
+
+/**
+ * The combat deadline IN FORCE right now, as an absolute combat-elapsed tick —
+ * post-extension. `Number.POSITIVE_INFINITY` when the ring is disarmed or the
+ * host armed it without a backstop (see {@link FireRingRules.combatMaxTicks}).
+ */
+export function combatDeadlineTick(world: SimWorld): number {
+  const rules = world.fireRingRules;
+  return rules && world.fireRingTicks >= 0 ? rules.combatMaxTicks : Number.POSITIVE_INFINITY;
+}
+
+/**
+ * Has the combat phase run out of time? THE predicate a match host should
+ * force-end combat on, replacing a `ticksLeft--` countdown: it is absolute, it
+ * is the same clock the ring reads, and it already accounts for every 殭屍王
+ * extension applied this round.
+ *
+ * 「除非全死不然不會提前結束」 — the OTHER half of the owner's instruction — is
+ * the host's early-settle path (`concludeCombat` / `settledZones`), which this
+ * predicate deliberately says nothing about: a round can still end the instant
+ * one side is wiped. This only governs the TIMER.
+ */
+export function isCombatTimeUp(world: SimWorld): boolean {
+  return world.fireRingTicks >= combatDeadlineTick(world);
+}
+
+/**
+ * How many ticks the 殭屍王 has pushed this round's deadline out by, total.
+ * The number a HUD should show as 「回合延長 N 秒」 — read off the live rules,
+ * never recomputed from config, so it cannot claim an extension that a disarmed
+ * or knob-off ring never applied.
+ */
+export function bossRoundExtensionTicks(world: SimWorld): number {
+  const rules = world.fireRingRules;
+  return rules && world.fireRingTicks >= 0 ? rules.bossExtendedTicks : 0;
 }
 
 /**
@@ -202,7 +432,13 @@ export function isBurnedByFireRing(world: SimWorld, id: EntityId): boolean {
   if (!t) return false;
   // #216: a zone whose duel is already decided does not burn (FireRingSystem
   // skips it), so the BURNING flag must not claim it does.
-  if (world.settledZones.has(t.zone)) return false;
+  //
+  // …EXCEPT FOR MOBS, which `fireRingBurnMobs` deliberately keeps burning there
+  // (see its 「為什麼小怪不吃 settledZones」 note). This predicate exists to make
+  // the client's flame/wash agree with the damage TICK FOR TICK, so it has to
+  // fork exactly where the damage forks — a shared `settledZones` line here
+  // would paint a settled zone's zombies as un-burnt while they cook.
+  if (world.settledZones.has(t.zone) && !world.mob.has(id)) return false;
   const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
   if (!zoneDef) return false;
   const radius = fireRingRadius(
@@ -211,6 +447,88 @@ export function isBurnedByFireRing(world: SimWorld, id: EntityId): boolean {
     zoneDef.boundaryRadius,
   );
   return !fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center));
+}
+
+/**
+ * 保底 — THE RING EATS THE ZOMBIES TOO (owner 2026-07-30).
+ *
+ * 「火圈百分比真實傷害是所有場上玩家、bot、各種殭屍都會百分比真實傷害燒死，
+ *   所以還是有個保底結果」
+ *
+ * The champion half of this is `FireRingSystem`'s loop over `world.champion`;
+ * this is the SAME burn applied to `world.mob` (一般殭屍 / 特殊殭屍 / 殭屍王).
+ * Split out here rather than folded into that loop because MobSystem is what
+ * owns the mob lifecycle end-to-end — spawn, AI, death payout, despawn — and a
+ * mob that the ring kills has to flow through that payout exactly like one a
+ * champion killed (it already does: `MobSystem`'s death scan explicitly names
+ * 「the fire ring」 as a no-killer source, and `payMobBounty` runs BEFORE the
+ * killer gate so a king/特殊殭屍 that drowns in the ring still pays its 分紅).
+ *
+ * WHY PERCENT IS THE WHOLE POINT. A shipped 殭屍王 carries ~276,944 hp. Any flat
+ * environmental tick is a rounding error against that; `hp.maxHp * ratePerSec *
+ * dt` closes it on exactly the same 20 s clock as a 3,000 hp champion, which is
+ * what makes this a BACKSTOP rather than a nuisance. Nothing here reads
+ * `combatEnv`, armour, MR or shields — same deliberate bypass as the champion
+ * burn (#132/#270), so the mechanic cannot be tuned into impotence by accident.
+ *
+ * ⚠️ 為什麼小怪不吃 `settledZones`。 The #216 skip exists for a PLAYER-facing
+ * complaint: a knocked-out player is already looking at the shop and must not
+ * watch his team-mates' bars drain behind it. A zombie has no shop and no bar to
+ * protect — and a zone that settled while a zombie is still standing is exactly
+ * the 「一隻卡在角落的殭屍讓回合永遠不結束」 hole this whole function exists to
+ * close. So the ring keeps burning mobs everywhere, and `isBurnedByFireRing`
+ * forks on the same condition so the flame the client paints still matches the
+ * damage tick for tick.
+ *
+ * WHY THERE IS NO `burnMobs` ADMIN SWITCH. Everything tunable about this burn —
+ * ignition, shrink length, the 4 %/s → 20 %/s ramp and its cap — is ALREADY the
+ * operator's, in `match.fireRing`, and every one of those knobs applies to mobs
+ * unchanged because the damage is a fraction of the victim's own maxHealth. The
+ * only thing left to make switchable would be 「保底 off」, and a round that can
+ * no longer be guaranteed to end is not a setting anyone wants shipped.
+ *
+ * PURITY / DETERMINISM: reads `world.fireRingTicks` — which `fireRingSystem`
+ * has ALREADY advanced this tick at step 8b — so a mob is judged against the
+ * exact same radius as the champions beside it, never a one-tick-stale one. Ids
+ * are sorted before iteration, so the event order in the digest cannot depend on
+ * Map internals. No rng, no wall-clock, no trig.
+ */
+export function fireRingBurnMobs(world: SimWorld): void {
+  const rules = world.fireRingRules;
+  if (!rules) return;
+  if (world.fireRingTicks < 0) return;
+  if (!world.combatActive) return; // live combat only — mirrors fireRingSystem
+  const ticksSinceStart = world.fireRingTicks - rules.startTicks;
+  if (ticksSinceStart < 0) return; // dormant — the ring has not ignited yet
+  const ratePerSec = fireRingRatePerSec(rules, ticksSinceStart);
+  if (ratePerSec <= 0) return; // degenerate config: no damage, same as champions
+  const dt = world.dt;
+  for (const id of [...world.mob.keys()].sort((a, b) => a - b)) {
+    const hp = world.health.get(id);
+    if (!hp || !hp.alive) continue;
+    const t = world.transform.get(id);
+    if (!t) continue;
+    // per-zone geometry, exactly like the champion loop: a mob in zone 1 is
+    // judged against zone 1's centre, never zone 0's.
+    const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
+    if (!zoneDef) continue;
+    const radius = fireRingRadius(rules, ticksSinceStart, zoneDef.boundaryRadius);
+    // WHOLE BODY inside = safe. A 殭屍王's body is wider than a champion's, so
+    // it stops being safe EARLIER — which is the correct reading of 「沒有生存
+    // 空間」 for something that big, not a special case.
+    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) continue;
+    const dmg = hp.maxHp * ratePerSec * dt;
+    if (dmg <= 0) continue;
+    hp.hp -= dmg; // %-HP TRUE burn: no armour/MR, no shields, no combat-env
+    world.emit("fireRingDamage", {
+      id,
+      amount: dmg,
+      dmgType: "true",
+      origin: "fireRing",
+      x: t.pos.x,
+      z: t.pos.z,
+    });
+  }
 }
 
 /**

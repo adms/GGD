@@ -1,0 +1,12 @@
+{
+  "id": "model-lod",
+  "schema": "config.model-lod@1",
+  "note": "畫質等級 -> 抓哪一階 .glb。83/167 個模型有 -mid/-small(49.7%),沒有變體的自動退回原檔。auto 留在 high 是刻意的:自適應階梯換級=重新下載模型,不可以打到一半反覆抓檔。enabled=false 是止血閥(一律載原檔)。",
+  "enabled": true,
+  "presetTiers": {
+    "low": "small",
+    "medium": "mid",
+    "high": "high",
+    "auto": "high"
+  }
+}
