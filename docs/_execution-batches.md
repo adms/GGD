@@ -7,7 +7,52 @@
 >
 > **重啟 session 的前情提要在 [`_session-handover.md`](_session-handover.md)。**
 >
-> 最後重整：2026-07-28，main `65ffbfb1`，tag **v0.9.11**（部署中）。
+> 最後重整：2026-07-29，main `e37a0b11`，tag **v0.9.12**（部署中）。
+
+---
+
+## 📌 v0.9.12 本機驗收（2026-07-29，main `e37a0b11`，tag `v0.9.12`）
+
+> 部署協定第 3 步。lane:`game-server-mobile`(:2599)+`client-playtest`(:5205)，
+> 畫面左下 build stamp `e37a0b11 2026-07-29`。四組平行 lane 全部併進 main 之後打的。
+>
+> **部署前先確認過不會被 override 蓋掉**（[[ggd-admin-override-shadows-content]]）：
+> 線上 `combat-env` 是 `{"multipliers":{}}`、durable overlay 是 `{"docs":{}}`
+> → 這一版的新數值沒有任何線上覆寫會擋在前面。
+
+### 驗過的（有數字）
+
+| 項 | 怎麼驗的 | 結果 |
+|---|---|---|
+| **攻速上限 4.0 → 10.0 的機制真的在算** | 商店面板攻擊速度顯示 **4.00**，而該英雄 base `as` 是 10 | ✅ 顯示值是**夾過的**，不是直接印 base —— 上限管線有在跑 |
+| **#189 近戰限定傳說武器上架** | 道具清單裡找得到 `無盡連刃`（endless-edge） | ✅ 內容有出貨 |
+| **#192 殭屍換英雄模型** | 第 4 回合「殭屍 ×15 已擊殺 3」，場上是**方塊英雄體**不是舊的骷髏 prop | ✅ 身分系統生效 |
+
+### ⚠️ 一個「我以為壞了、其實是我看錯」的紀錄
+
+playtest 當下我判斷**殭屍沒有被染黑**，準備當成 #192 的缺陷開單。
+查下去發現整條鏈都是通的：bundle 有 `tintStrength: 0.65` → `snapshot.ts:55` 寫進
+`mobVisualJson` → `GameApp.ts:1598` 解碼 → `GameApp.ts:529` 走 `entityTintFor`
+→ registry `applyTint`。**但沒有任何測試證明那個乘法真的塗到材質上。**
+
+`mobTint.ts` 的檔頭寫著「measured, not asserted … See `mobTint.test.ts`」——
+**而那個檔案不存在。** 決策層有守衛（`mobSizeWiring.test.ts` 釘分支、
+`GameApp.mobWiring.test.ts` 釘接線），塗色層零守衛，這是失敗形態②
+（算出來了但沒送到）整條退化都會全綠的形狀。
+
+補了 `views/mobTint.test.ts`（3 條），拿 NullEngine 真的量：**1.0 → 0.35**，
+strength 0 時 `painted === 0`（後台關掉是真的零工作），玩家英雄同一條路徑不被染黑。
+突變驗證：把 `mobTintFor` 改成永遠回 `null` → **3 條紅 2 條**。
+
+> ⚠️ 所以 **「殭屍在畫面上到底夠不夠黑」這一項，這次的驗收仍然是空的** ——
+> 我證明的是「乘法有塗到材質」，不是「玩家一眼分得出來」。
+> 那是感知問題，只有 owner 能判。0.65 在 PBR 上是 `0.35^2.2 ≈ 0.0975`，
+> 若實機仍嫌不夠，後台 `mobWaves.mob.tintStrength` 可直接調。
+
+### 這次沒有重驗的
+
+v0.9.11 那四件事（死亡全黑、PRISMATIC 空盤、敵方魔力負數、fireRing CUE DRIFT）
+**這一版沒有針對它們做任何修改**，所以沒有重驗，也不宣稱它們好了。
 
 ---
 
