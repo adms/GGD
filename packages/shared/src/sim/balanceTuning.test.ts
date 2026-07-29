@@ -157,17 +157,19 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 6.0 (owner 2026-07-30: 4=>6,「玩家太容易死」)", () => {
+  it("出貨的 combat-env 表把生命倍率鎖在 9.0 (owner 2026-07-30 二次:6=>9,依 TTK sweep 建議值)", () => {
     cover("balance-265-env-multiplier");
     // 這個數字 owner 已經來回改過三次:#265 從 4 降到 3、2026-07-29 升回 4、
-    // 2026-07-30 再升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
-    // 與初始生命 300→650)。
+    // 2026-07-30 升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
+    // 與初始生命 300→650),同日再升到 **9** —— TTK sweep 實測 x6 的自然淘汰
+    // 平均只有 161s,離「平均 3 分鐘」的目標還差一截,模擬器的建議值就是 9.0。
+    // ⚠️ 代價:stall(靠火圈收尾的比例)會從 50% 升到約 55%,要在線上實打時盯。
     // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
     // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可。
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(6.0);
+    expect(doc.multipliers.maxHealth).toBe(9.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
   });

@@ -1,14 +1,14 @@
 {
   "id": "combat-env",
   "schema": "config.combat-env@1",
-  "version": 3,
+  "version": 4,
   "multipliers": {
     "cooldown": 0.2,
     "damageDealt": 1.0,
     "defense": 1.0,
     "attackDamage": 1.0,
     "abilityPower": 1.0,
-    "maxHealth": 6.0,
+    "maxHealth": 9.0,
     "healthRegen": 1.0,
     "maxMana": 1.0,
     "manaRegen": 8.0,
@@ -29,6 +29,7 @@
     "agiToAttackSpeed": 0.02,
     "intToMaxMana": 15,
     "intToManaRegen": 0.07,
-    "intToAbilityPower": 1
+    "intToAbilityPower": 1,
+    "intToMagicResist": 0.6
   }
 }
