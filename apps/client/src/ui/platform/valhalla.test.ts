@@ -117,13 +117,34 @@ describe("valhalla roster = what the player can actually play", () => {
     "godie-u01u",
   ];
 
-  it("keeps exactly the whitelisted ids, alternate forms included", () => {
+  /** The BASE form of each of those ten — what the showcase must display instead. */
+  const THEIR_BASES = [
+    "godie-ewar", // 龍之子 - 天地志狼
+    "godie-hjai", // 黑魔導士 - 莉娜因巴斯
+    "godie-hgam", // 種子神奇寶貝 - 妙蛙種子
+    "godie-h02v", // 看似憂鬱的神獸 - 草泥馬
+    "godie-nsjs", // 妖狐藏馬 - 南野秀一
+    "godie-nbbc", // 傳說的龍騎士 - 勇者小呆
+    "godie-ogrh", // 賽亞人 - 悟空
+    "godie-umal", // 北斗神拳掌門人 - 拳四郎
+    "godie-uvng", // 邪眼師 - 飛影
+    "godie-udre", // 三刀流劍士 - 索隆
+  ];
+
+  it("operator 勾到的變身態,換成本體 —— 不刪人,也不展示第二形態", () => {
     cover("valhalla-roster-whitelist");
-    const all = [...ALTERNATE_BUT_ENABLED, "godie-e002", "not-enabled"];
+    // owner 2026-07-30「不要出現讓人解鎖變身後的英雄吧」/ 2026-07-26「換成本體」。
+    // ⚠️ 這條原本斷言「變身態要原封不動保留」,理由寫的是「濾掉會靜悄悄刪掉十位
+    // 英雄」—— 那個理由後來查證是錯的:26 對變身的**本體 doc 一份都不缺**
+    // (2026-07-30 對 content/champions 實測)。所以正解是代換,不是保留,
+    // 也不是刪除:十位英雄一位不少,只是以本體現身。
+    const all = [...ALTERNATE_BUT_ENABLED, ...THEIR_BASES, "godie-e002", "not-enabled"];
     const wl = whitelistFromDoc({ champions: [...ALTERNATE_BUT_ENABLED, "godie-e002"] });
     const out = whitelistedChampionIds(all, wl);
-    expect(out).toEqual([...ALTERNATE_BUT_ENABLED, "godie-e002"]);
-    for (const id of ALTERNATE_BUT_ENABLED) expect(out).toContain(id);
+    expect([...out].sort()).toEqual([...THEIR_BASES, "godie-e002"].sort());
+    // 一位都沒少 —— 這是 #55 黑化Saber 那個方向的守衛
+    expect(out).toHaveLength(THEIR_BASES.length + 1);
+    for (const id of ALTERNATE_BUT_ENABLED) expect(out).not.toContain(id);
   });
 
   it("an unreachable platform (NO_FILTER) shows everything rather than nothing", () => {

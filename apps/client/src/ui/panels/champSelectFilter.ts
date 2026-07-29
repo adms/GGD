@@ -3,6 +3,11 @@
  * (Chinese/CJK names included — plain substring, no locale casing tricks) and
  * uniform-random pick. No React / registry imports so it unit-tests cleanly.
  */
+import {
+  baseFormIdOf,
+  isSplitFormBody,
+  isTransformedBody,
+} from "@ggd/shared/content/championForms";
 import { isShopService, itemHasEffect } from "@ggd/shared/sim/economy/itemTiers";
 import { shelfListable, WEAPON_SHELF_OPEN } from "@ggd/shared/sim/economy/shopShelf";
 
@@ -96,22 +101,103 @@ export function whitelistFromDoc(raw: unknown): Whitelist {
   };
 }
 
+// ---------------------------------------------------------------------------
+// TRANSFORMED BODIES ARE NEVER PICKABLE — owner 2026-07-30:
+//   「不要出現讓人解鎖變身後的英雄吧」
+// (and 2026-07-26 「換成本體，變身態改由技能觸發」, same ruling stated twice).
+//
+// ⚠️ THIS GATE IS DELIBERATELY *OUTSIDE* THE WHITELIST, and that is the whole
+// fix. The whitelist has an `enforced` flag whose false branch returns the list
+// UNCHANGED — offline, dev, and any unreachable-platform boot take that branch
+// (see `NO_FILTER` above). So every "filter it in the whitelist" placement is
+// silently a no-op in exactly the environments we develop and playtest in, and
+// that is how all 119 champion docs reached the grid instead of the shipping
+// roster. Even when enforced, an operator who ticks an alternate id in 後台
+// would put a transformed body back on the grid; a pickability rule must not be
+// something an operator can toggle.
+//
+// The symptom owner reported was 「選人畫面有太多重複名稱英雄令人困惑」: measured,
+// the 119 docs hold 19 duplicate-NAME groups (38 docs) and **all 19 are
+// transform pairs** — base and alternate carry an identical `unam` in the w3x
+// (they differ only in `unsf`, the sub-name the importer does not read). So the
+// duplicate names were never a naming bug: they were the transformed bodies
+// leaking onto a screen they must never be on. Removing them removes all 19.
+//
+// `isTransformedBody` (not `isAlternateForm`) is the right question: it also
+// covers `Nef1` split tiers — asking only the narrower one is what let 巴恩's
+// three bodies stay invisible. See `championForms.ts`.
+// ---------------------------------------------------------------------------
+
 /**
- * Restrict a champion roster to the whitelist. Not enforced → unchanged. The
- * existing search/random then operate on top of this filtered set.
+ * True when `id` may appear on the champion-select grid at all. False for every
+ * second-form body (`Emeu` alternate or `Nef1` split tier).
+ */
+export function isPickableChampionId(id: string): boolean {
+  return !isTransformedBody(id);
+}
+
+/**
+ * ⚠️ SUBSTITUTE, DO NOT DELETE — the difference is the whole safety of this fix.
+ *
+ * The operator's saved whitelist enables TEN alternate-form ids by hand
+ * (godie-o00x 超級賽亞人悟空, godie-u01u 索隆, godie-u00l 北斗之鼠拳四郎 …; see
+ * `ui/platform/valhalla.ts`). A plain `.filter(isPickableChampionId)` would take
+ * those ten heroes off the lobby showcase and the grid — which is the #55
+ * 黑化Saber shape, a hero vanishing in silence.
+ *
+ * So an alternate id RESOLVES TO ITS BASE instead of being dropped, which is
+ * owner's 2026-07-26 ruling verbatim:「換成本體，變身態改由技能觸發」. Measured
+ * on the real content tree: all 26 declared pairs have a base doc on disk, so
+ * the substitution never has to invent an entry — but the `?? entry` fallback
+ * below keeps a hero visible rather than deleting it should that ever change.
+ *
+ * SPLIT-FORM tiers have no base to fall back to (they are ranks of one caster's
+ * `Nef1` split, not halves of a pair), so those are dropped outright.
+ */
+function resolveToPickable(id: string): string | null {
+  if (isSplitFormBody(id)) return null;
+  return baseFormIdOf(id);
+}
+
+/**
+ * Restrict a champion roster to the whitelist. Not enforced → whitelist is not
+ * applied, but transformed bodies resolve to their base REGARDLESS (see above),
+ * and the resulting duplicates collapse. The existing search/random then operate
+ * on top of this set.
  */
 export function applyChampionWhitelist<T extends RosterChampion>(
   champs: readonly T[],
   wl: Whitelist,
 ): T[] {
-  if (!wl.enforced) return [...champs];
-  return champs.filter((c) => wl.champions.has(c.id));
+  const byId = new Map(champs.map((c) => [c.id, c]));
+  // The whitelist is compared in BASE space too: an operator who ticked only the
+  // alternate still gets the hero, as the base. Ticking is about which heroes are
+  // open, never about which body is pickable.
+  const allowed = wl.enforced ? new Set([...wl.champions].map((id) => baseFormIdOf(id))) : null;
+  const out: T[] = [];
+  const seen = new Set<string>();
+  for (const entry of champs) {
+    const id = resolveToPickable(entry.id);
+    if (id === null) continue;
+    if (allowed && !allowed.has(id)) continue;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    // Prefer the real base doc. The `??` branch only fires when an alternate is
+    // in the roster but its base is not — a content-integrity fault, not a
+    // pickability question — and it re-ids the entry rather than dropping it,
+    // because the BASE id is what the server accepts and what spawns. A guard
+    // test asserts this branch never fires on the shipping registry.
+    out.push(byId.get(id) ?? ({ ...entry, id } as T));
+  }
+  return out;
 }
 
 /** Whitelisted subset of champion ids (for the 🎲 random pick). */
 export function whitelistedChampionIds(ids: readonly string[], wl: Whitelist): string[] {
-  if (!wl.enforced) return [...ids];
-  return ids.filter((id) => wl.champions.has(id));
+  return applyChampionWhitelist(
+    ids.map((id) => ({ id, name: "" })),
+    wl,
+  ).map((c) => c.id);
 }
 
 /** Restrict an item catalogue to the whitelist (ShopPanel). */

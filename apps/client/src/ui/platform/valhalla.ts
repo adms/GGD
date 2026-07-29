@@ -14,15 +14,23 @@
  * (`whitelistedChampionIds`, ui/panels/champSelectFilter), reused rather than
  * re-derived.
  *
- * ⚠ DELIBERATELY *NOT* `marqueeRoster.isSelectableChampion`. That predicate
- * drops `isAlternateForm(id)` — and TEN of the operator's 49 enabled champions
- * ARE alternate-form ids (godie-e007 天地志狼, godie-o00x 悟空, godie-u01u 索隆,
- * godie-n00p 藏馬, godie-u010 飛影, godie-u00l 拳四郎, godie-h02r 妙蛙花,
- * godie-h02u 草泥馬, godie-h020 莉娜, godie-n01c 小呆). Champ-select does not
- * apply that filter either, so applying it here would silently delete ten
- * heroes the owner opened by hand — "what the player sees" would stop agreeing
- * with "what the player can play", which is the exact failure this whole task
- * is about.
+ * ⚠ TEN of the operator's 49 enabled champions are ALTERNATE-FORM ids
+ * (godie-e007 天地志狼, godie-o00x 超級賽亞人悟空, godie-u01u 索隆, godie-n00p 藏馬,
+ * godie-u010 飛影, godie-u00l 北斗之鼠拳四郎, godie-h02r 妙蛙花, godie-h02u 草泥馬,
+ * godie-h020 莉娜, godie-n01c 小呆). `whitelistedChampionIds` RESOLVES each one
+ * to its BASE form rather than dropping it, so the showcase keeps all ten heroes
+ * while never parading a second-form body.
+ *
+ * ⚠ CORRECTION (2026-07-30). This comment used to argue the opposite — that the
+ * ten had to be kept AS ALTERNATES because filtering them "would silently delete
+ * ten heroes the owner opened by hand". That premise was measured and is FALSE:
+ * all 26 declared form pairs have a base doc in content/champions, and every one
+ * of these ten bases is in the shipping starter roster. Keeping the alternates
+ * is what produced owner's 「選人畫面有太多重複名稱英雄令人困惑」 — 19 of the 26
+ * pairs carry an IDENTICAL name on both halves (the w3x only distinguishes them
+ * in `unsf`, which the importer does not read). The ruling is 2026-07-30
+ * 「不要出現讓人解鎖變身後的英雄吧」 / 2026-07-26「換成本體，變身態改由技能觸發」:
+ * substitute, never delete — see champSelectFilter's `resolveToPickable`.
  *
  * An UNENFORCED whitelist (platform unreachable / bare `pnpm dev`) means the
  * roster is unknown, not empty: it degrades to the full registry, exactly like
