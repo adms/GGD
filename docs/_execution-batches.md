@@ -54,6 +54,26 @@ strength 0 時 `painted === 0`（後台關掉是真的零工作），玩家英�
 v0.9.11 那四件事（死亡全黑、PRISMATIC 空盤、敵方魔力負數、fireRing CUE DRIFT）
 **這一版沒有針對它們做任何修改**，所以沒有重驗，也不宣稱它們好了。
 
+### 部署後驗證（第 6 步，2026-07-29 02:4x UTC，main `e1d80708`）
+
+| 項 | 結果 |
+|---|---|
+| 送出去的 js bundle 真的含新 stamp | ✅ `/assets/index-BvHQk-7V.js` 內找得到 `e1d80708`（不是只看 git） |
+| 公開 announcements 無 Authorization 應為 200 | ✅ 200 |
+| 策展白名單有生效 | ✅ `curation: 61 champion(s) enabled` |
+| game-server 起來了 | ✅ `listening on :2567 (secret=set)` |
+
+⚠️ **部署踩到一次、下次要避開的坑：** 用 `ssh -A … 'nohup bash deploy.sh &'` 一次做完
+「pull + build」會失敗 —— ssh 一斷線，**轉發的 agent socket 就沒了**，
+背景腳本跑到 `git pull` 時拿不到金鑰，錯誤訊息是誤導人的
+`Please make sure you have the correct access rights and the repository exists.`
+（看起來像權限沒了，其實是 socket 消失）。
+**正確作法：`git pull` 在前景 ssh（agent 還在）做完，build 才丟背景。**
+
+⚠️ **線上 playtest 仍然是空的。** 正式站的「單機打 bot」是關掉的，
+我沒有辦法自己在 ggd.adms.ai 上打一場（也不會去輸 owner 的密碼）。
+第 6 步的「線上實測」這一項要 owner 親自打，回報的內容我再記回本檔。
+
 ---
 
 ## 📌 v0.9.11 本機驗收（2026-07-28，main `65ffbfb1`，tag `v0.9.11`）
