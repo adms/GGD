@@ -1,5 +1,5 @@
 /**
- * Roster VFX bindings (task #79): all 255 abilities of the 51 whitelisted
+ * Roster VFX bindings (task #79): all 265 abilities of the 53 whitelisted
  * champions are bound to a real element/primitive — NOT the generic fire
  * placeholder — and 依文潔琳's ice spells resolve to an ICE primitive (the
  * flagship symptom). Every generated curated doc is schema-valid.
@@ -77,12 +77,13 @@ const roster: string[] = goList(readFileSync(STARTER_GO, "utf8"), "starterChampi
  * operator genuinely opens heroes (48 → 50 when task #212 opened 賈修貝爾
  * `godie-hblm` and 揍敵客桀諾 `godie-efur`), and every id it counts must also
  * carry a `bindings.ts` ROSTER row, so opening a hero without classifying its
- * five casts still fails here.
+ * five casts still fails here. 51 → 53 on 2026-07-30 when the owner opened
+ * 白木卡迪那 `godie-e00s` and 傑富力士 `godie-ucrl`; both owed rows and got them.
  */
-const ROSTER_SIZE = 51;
+const ROSTER_SIZE = 53;
 
-describe("roster bindings cover the 51 whitelisted champions (ability-vfx-bindings)", () => {
-  it("binds every ability of all 51 champions (255 rows, none missing)", () => {
+describe("roster bindings cover the 53 whitelisted champions (ability-vfx-bindings)", () => {
+  it("binds every ability of all 53 champions (265 rows, none missing)", () => {
     cover("ability-vfx-bindings");
     // Guard the parse itself: a silently-empty goList would make every
     // assertion below vacuous, which is the failure mode this file just had.

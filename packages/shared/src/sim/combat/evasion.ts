@@ -83,20 +83,87 @@
  * EXTRA draw on one replica surfaces immediately as a mismatch — which is what
  * the zero guarantee below is really protecting.)
  *
- * THE ZERO GUARANTEE: `p <= 0` returns false BEFORE touching the rng. Evasion is
- * 0 for every champion in the catalogue today, so this mechanism consumes zero
- * random draws and perturbs nothing until content opts in — existing replays,
- * digests and balance are bit-identical.
+ * THE ZERO GUARANTEE: `p <= 0` returns false BEFORE touching the rng, so a unit
+ * with no evasion consumes no random draws and perturbs nothing.
+ *
+ * ⚠️ 2026-07-30 CORRECTION (lane P5). The sentence that used to stand here —
+ * "Evasion is 0 for every champion in the catalogue today" — WAS TRUE WHEN
+ * WRITTEN AND IS NOW FALSE. The content lane it predicted has since landed:
+ * `Stat.Evasion` is authored in 13 content files today — 3 champion docs
+ * (`godie-e00l` / `godie-e002` 亞瑟王-Saber 0.07/0.14/0.21/0.28 by rank,
+ * `godie-u00j` 賽菲洛斯), 8 ability docs (`godie-h02u.passive` 0.18, …) and the
+ * `phantom-step` augment. The zero guarantee itself is unchanged and still
+ * holds per-unit; only the "nobody has any" claim expired. Left in place rather
+ * than deleted because the number of files is the thing a future reader will
+ * want to re-check.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * DECISION 5 — THE TWO COVERAGE QUESTIONS ARE CONTENT FIELDS, NOT CONSTANTS.
+ *
+ * DECISION 1 above says "basic attacks only" and argues it well, but it argued
+ * it as a HARD-CODED branch. Per the project's first rule (決策點要可調), the two
+ * questions it settles are now `ModifierSource.evasionScope` fields:
+ *
+ *   · `abilities`  — may this evasion dodge ABILITY damage?      default false
+ *   · `trueDamage` — may it dodge `type: "true"` packets?        default false
+ *
+ * Both default to false, so DECISION 1's model is still exactly what ships and
+ * every currently authored evasion source behaves bit-identically. The defaults
+ * ARE the argument in DECISION 1; the field is there so the owner can overrule
+ * it per-source without a redeploy.
+ *
+ * WHERE THE ABILITY ROLL HAPPENS, AND WHY IT IS WEAKER. A basic attack rolls at
+ * its landing site BEFORE any on-hit hook (DECISION 3), so a dodged auto is
+ * invisible to the whole proc chain. An ability's only available seam is
+ * `combatResolveSystem` — by then the cast already spent mana, played its VFX
+ * and fired `onAbilityHit`. So a dodged ability reads as "the spell reached you
+ * and fizzled", not "it never targeted you". That asymmetry is inherent to
+ * where the two damage kinds become interceptable; it is documented rather than
+ * papered over, and it is the reason `abilities` defaults OFF.
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { Stat } from "../stats/statTypes";
+import { ModOp } from "../stats/modifiers";
+import { DEFAULT_STAT_CAPS, effectiveCap } from "../statCaps";
 
 /**
- * The defender's effective dodge chance, 0..1. Reads the RESOLVED stat, so it
- * already went through `STAT_CLAMPS[Stat.Evasion]` ([0, 0.8]) in the pipeline;
- * the clamp is repeated here only because a caller may hand us a StatsComp that
- * has not been recomputed since a source attached this tick.
+ * The ceiling BOTH dodge channels answer to, for one unit.
+ *
+ * ⚠️ 2026-07-30. This function exists because the ability channel used to have
+ * NO ceiling and the three places that claimed otherwise were all wrong. Measured
+ * (not reasoned): `evasion { chance: 1, dodgesAbilities: true }` produced
+ * `abilityEvasionOf === 1`, and 2,000 × 50 magic packets in one stepped world
+ * cost the defender **0 hp**. That is total invulnerability, which is P3's
+ * `invulnerable` job — this primitive must not be a second way to mint it.
+ *
+ * Why THIS number and not a fresh constant: `finalizeStat` clamps
+ * `sc.final[Stat.Evasion]` with exactly `effectiveCap(world.statCaps, …)`, so
+ * reusing it is what makes the two channels answer to ONE ceiling instead of two
+ * that can drift apart. It is also already the editor's knob — `Evasion` is in
+ * `CAPPABLE_STATS`, so `config.stat-caps@1` can raise or lower it from the admin
+ * page without a redeploy (第一守則). Shipping default: 0.8, from
+ * `STAT_CLAMPS[Stat.Evasion]`.
+ *
+ * `raised` is the unit's own `ModOp.CapRaise` max for Evasion — the same input
+ * `recomputeStats` folds — so an unlock that legitimately lifts the auto-dodge
+ * ceiling lifts the spell-dodge ceiling by the same amount, and neither channel
+ * can be unlocked behind the other's back.
+ */
+function evasionCeiling(world: SimWorld, raised: number): number {
+  return effectiveCap(world.statCaps ?? DEFAULT_STAT_CAPS, Stat.Evasion, raised);
+}
+
+/**
+ * The defender's effective dodge chance, 0..1. Reads the RESOLVED stat, so the
+ * ceiling has already been applied by `finalizeStat` — MEASURED, not assumed:
+ * `evasion { chance: 1 }` reads back 0.8 here and dodges 81.5% of 4,000 rolls.
+ * (`effects/evasion.test.ts` 「THE CEILING BINDS ON BOTH CHANNELS」 keeps it so.)
+ * The `> 1` fold below is unreachable while `sc.final` is fresh; it is kept only
+ * for a caller holding a StatsComp not recomputed since a source attached.
+ *
+ * ⚠️ This is the channel the [0, 0.8] clamp ALWAYS bound. `abilityEvasionOf`
+ * below is the one that did not, and that is a repaired bug, not a design.
  *
  * A target with no `StatsComp` (guardians/structures, flowers, projectiles)
  * has no evasion by construction — they cannot dodge.
@@ -126,6 +193,81 @@ export function rollEvade(world: SimWorld, source: EntityId, target: EntityId): 
   const p = evasionOf(world, target);
   if (p <= 0) return false; // THE ZERO GUARANTEE: no rng draw, no state change
   if (!world.rng.chance(p)) return false;
+  emitEvade(world, source, target);
+  return true;
+}
+
+/**
+ * 失手率 (WC3 `Acrs` 詛咒) — the ATTACKER's own fumble chance, 0..1.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * WHY THIS IS A SECOND FUNCTION AND NOT A TERM INSIDE `evasionOf`
+ *
+ * The two numbers point in OPPOSITE directions and it is not a stylistic
+ * distinction — folding them would invert a mechanic:
+ *
+ *   evasionOf(defender)   「瞄我的攻擊會落空」 → makes the carrier HARDER to kill
+ *   missChanceOf(attacker)「我打出去的攻擊會落空」→ makes the carrier WORSE at killing
+ *
+ * 貞子's 66-00 恐懼 curses whoever hit her. If that had been written as
+ * "give the attacker evasion" the passive would have handed her aggressor a
+ * defensive buff — a bug that reads as balanced-looking numbers in the doc and
+ * as nonsense in the match. Hence a separate read, a separate roll, and a
+ * separate call site argument (`attacker`, never `target`).
+ *
+ * MAX, NOT SUM, over the active statuses. WC3 miss sources do not stack
+ * (`Acrs`, `AUdr` Drunken Haze, `Absk` — the strongest applies), and summing
+ * would let two 4-second curses reach a permanent 66 % whiff on a chain of
+ * attackers. Also clamped to [0,1] here even though the Zod field already
+ * bounds it: a doc can reach the sim through the admin overlay path, and this
+ * is the last line before an rng draw.
+ *
+ * Statuses whose `expiresAtTick` has already passed are skipped rather than
+ * trusted to `statusExpirySystem` — the two run at different points in the tick
+ * and a one-tick-stale curse must not eat a swing.
+ */
+export function missChanceOf(world: SimWorld, attacker: EntityId): number {
+  const st = world.status.get(attacker);
+  if (!st) return 0;
+  let best = 0;
+  for (const s of st.effects) {
+    if (s.expiresAtTick <= world.tick) continue;
+    const v = s.missChance;
+    if (v !== undefined && v > best) best = v;
+  }
+  if (!(best > 0)) return 0; // also rejects NaN
+  return best > 1 ? 1 : best;
+}
+
+/**
+ * Roll the ATTACKER's fumble for ONE landing basic attack.
+ *
+ * Returns true when the swing WHIFFS — the caller must then queue no damage,
+ * fire no on-hit hook and emit no hit event, exactly like {@link rollEvade}.
+ *
+ * ORDER AT THE CALL SITES: fumble is rolled BEFORE evasion. A cursed attacker
+ * swinging at a dodgy defender should not consume the defender's evasion draw —
+ * the blow never arrived to be dodged. Rolling the other way round would make
+ * the seed stream depend on a status the defender cannot see, and would also
+ * (harmlessly but confusingly) credit an `evade` cue to a swing that fumbled.
+ *
+ * THE ZERO GUARANTEE holds identically: no status ⇒ no draw, no state change,
+ * so every existing replay is bit-identical.
+ */
+export function rollFumble(world: SimWorld, attacker: EntityId, target: EntityId): boolean {
+  const p = missChanceOf(world, attacker);
+  if (p <= 0) return false; // THE ZERO GUARANTEE: no rng draw, no state change
+  if (!world.rng.chance(p)) return false;
+  // Reuses the `evade` cue rather than minting a second one: what the player
+  // needs to see is 「這一下沒有打中」 over the two bodies involved, and the
+  // client already draws exactly that for `evade`. Documented here because the
+  // event's NAME now covers two different causes.
+  emitEvade(world, attacker, target);
+  return true;
+}
+
+/** Shared `evade` presentation cue. Not part of `SimWorld.digest()`. */
+function emitEvade(world: SimWorld, source: EntityId, target: EntityId): void {
   const tt = world.transform.get(target);
   world.emit("evade", {
     source,
@@ -133,5 +275,90 @@ export function rollEvade(world: SimWorld, source: EntityId, target: EntityId): 
     x: tt?.pos.x ?? 0,
     z: tt?.pos.z ?? 0,
   });
+}
+
+/**
+ * The target's ABILITY-dodge chance, 0..1 — the DECISION 5 opt-in channel.
+ *
+ * NOT the aggregated `Stat.Evasion`. A capability that arrives on one buff must
+ * not silently promote every OTHER evasion source the unit happens to carry:
+ * if it read the aggregate, a 5% "dodges spells" buff would hand Saber's 28%
+ * auto-dodge to the spell channel too. So the chance is the **highest `chance`
+ * among the active sources that actually carry `evasionScope.abilities`**.
+ *
+ * Max-not-sum is also the WC3 rule for evasion abilities (they famously do not
+ * stack — only the strongest applies), so two spell-dodge buffs cannot ADD
+ * their way to immunity. `trueDamage` is asked of the SAME winning source set: a
+ * packet of `type: "true"` is dodgeable only while a scoped source opts into it.
+ *
+ * ⚠️ MAX-NOT-SUM IS NOT A CEILING, AND FOR ONE VERSION THIS FUNCTION HAD NONE.
+ * It reads a source's RAW authored `chance`, which never went through
+ * `finalizeStat` — so a single `{ chance: 1, dodgesAbilities: true }` returned
+ * 1.0 and made the target flatly immune to every ability packet (measured: 0 hp
+ * lost out of 2,000 × 50 magic). The `[0, 0.8]` clamp that three comments
+ * claimed "still applies downstream" only ever bound `evasionOf`, because that
+ * one reads `sc.final`. `evasionCeiling` is the repair: BOTH channels now answer
+ * to the same editor-adjustable number (`config.stat-caps@1`, default 0.8), so
+ * total immunity stays P3's `invulnerable` unless the owner deliberately raises
+ * the cap on the admin page.
+ *
+ * Sorted-iteration note: this walks `sc.sources`, an ARRAY (insertion-ordered
+ * and identical on every replica), not a Map — so no ordering normalisation is
+ * needed and `max` is order-independent anyway.
+ */
+export function abilityEvasionOf(world: SimWorld, target: EntityId, isTrue: boolean): number {
+  const sc = world.stats.get(target);
+  if (!sc) return 0;
+  // CHEAP GATE FIRST: a unit with no evasion at all never pays for the scan.
+  // Any scoped source also contributes its `chance` to Stat.Evasion, so a zero
+  // aggregate provably means zero scoped sources.
+  if (!(sc.final[Stat.Evasion] > 0)) return 0;
+  let best = 0;
+  // Same `ModOp.CapRaise` fold `recomputeStats` does — collected in the pass we
+  // already make, so the ceiling below is this unit's real ceiling and not the
+  // table's default. Unscoped sources count here on purpose: a cap unlock is a
+  // property of the UNIT, not of one buff.
+  let maxCapRaise = 0;
+  for (const src of sc.sources) {
+    if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
+    for (const m of src.modifiers ?? []) {
+      if (m.stat !== Stat.Evasion) continue;
+      if (m.op === ModOp.CapRaise && m.value > maxCapRaise) maxCapRaise = m.value;
+    }
+    const scope = src.evasionScope;
+    if (!scope?.abilities) continue;
+    if (isTrue && !scope.trueDamage) continue;
+    const stat = src.modifiers?.find((m) => m.stat === Stat.Evasion && m.op === ModOp.Flat);
+    const v = stat ? stat.value : 0;
+    if (v > best) best = v;
+  }
+  if (!(best > 0)) return 0; // also rejects NaN
+  // THE CEILING. Without this line `chance: 1` is invulnerability — see above.
+  const cap = evasionCeiling(world, maxCapRaise);
+  return best > cap ? cap : best;
+}
+
+/**
+ * Roll the target's evasion for ONE landing ABILITY damage packet.
+ *
+ * Returns true when the packet should be DROPPED entirely (no hp loss, no
+ * shield spend, no impact cosmetics). Strictly opt-in: with no
+ * `evasionScope.abilities` source on the target this returns false having
+ * consumed ZERO rng draws, which is what keeps every existing replay and digest
+ * bit-identical (no content authors the flag today).
+ *
+ * Never call this for `origin === "basic"` — those already rolled at their own
+ * landing site and a second roll would dodge one swing twice.
+ */
+export function rollEvadeAbility(
+  world: SimWorld,
+  source: EntityId,
+  target: EntityId,
+  isTrue: boolean,
+): boolean {
+  const p = abilityEvasionOf(world, target, isTrue);
+  if (p <= 0) return false; // THE ZERO GUARANTEE
+  if (!world.rng.chance(p)) return false;
+  emitEvade(world, source, target);
   return true;
 }

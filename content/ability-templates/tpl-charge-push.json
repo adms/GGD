@@ -2,17 +2,102 @@
   "id": "tpl-charge-push",
   "schema": "template@1",
   "name": "衝鋒推撞",
-  "description": "P2 衝鋒推撞 (需 knockback 詞彙)。",
+  "description": "朝目標點直線衝鋒，抵達後對落點周圍造成範圍傷害，並把該處的敵人推開。預設貼地衝刺（衝鋒弧高 0）；把弧高拉起來就變成 52-02 蹂躪編年史那種掄飛。「推開距離」清空 = 只衝鋒不推撞（52-04 巨神一擊）。傷害與推撞都在抵達點結算，不是在起跳點。",
   "family": "charge-push",
-  "status": "draft",
-  "params": {},
+  "status": "enabled",
+  "params": {
+    "dashDistance": {
+      "type": "number",
+      "default": 600,
+      "min": 100,
+      "max": 3000,
+      "unit": "wc3u"
+    },
+    "dashDurationSec": {
+      "type": "number",
+      "default": 0.4,
+      "min": 0.05,
+      "max": 2,
+      "unit": "s"
+    },
+    "apexHeight": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 600,
+      "unit": "wc3h"
+    },
+    "radius": {
+      "type": "number",
+      "default": 300,
+      "min": 50,
+      "max": 900,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          350
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "physical"
+    },
+    "pushDistance": {
+      "type": "number",
+      "default": 400,
+      "min": 50,
+      "max": 1090,
+      "unit": "wc3u",
+      "optional": true
+    },
+    "pushSpeed": {
+      "type": "number",
+      "default": 1000,
+      "min": 100,
+      "max": 5000,
+      "unit": "wc3u"
+    },
+    "pushFrom": {
+      "type": "enum",
+      "values": [
+        "caster",
+        "facing",
+        "pull"
+      ],
+      "default": "facing"
+    },
+    "pushLaunchHeight": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 600,
+      "unit": "wc3h"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
   "requires": [
-    "dash",
+    "leap",
     "knockback"
   ],
   "gapScore": 5,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "38-01 邪王炎殺劍",
+    "jass": "A0OG"
   }
 }

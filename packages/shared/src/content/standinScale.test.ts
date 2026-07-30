@@ -174,8 +174,11 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       }
     }
     expect(bad).toEqual([]);
-    // GH#31 那一批 —— relativeScale 是從 WC3 模型的 rawHeight 算出來的那 22 位
-    expect(n).toBe(22);
+    // GH#31 那一批 —— relativeScale 是從 WC3 模型的 rawHeight 算出來的那 22 位,
+    // 外加 #223 的 godie-n01b。它變身後穿的是 godie-nman 的 Nman.glb(體素閘
+    // 因為「缺省即繼承」開了),所以 relativeScale 跟著本體變成 rawHeight 推出來的
+    // 1.28,而回退到方塊人時仍然是地圖的 usca 1.00 —— 和 godie-nman 逐欄一致。
+    expect(n).toBe(23);
   });
 
   it("THE RATCHET:relativeScale 明顯偏離地圖時,一定要有 standinRelativeScale", () => {

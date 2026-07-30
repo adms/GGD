@@ -25,12 +25,21 @@
  * small line charts do not justify a dependency. All geometry lives in
  * ./progressChartGeometry (pure, unit-tested).
  *
+ * WHERE IT OPENS (owner, 2026-07-30: 「查看戰績變化折線圖太低,縮小一點顯示在
+ * 右邊比較好」). It used to be the LAST child of the settlement card, under the
+ * 返回大廳 row, inside `maxHeight: 92vh; overflowY: auto` — so opening it
+ * scrolled the grade, the breakdown and the ranking off the top and left the
+ * charts below the fold. It is now its own card, placed by the #107 SURFACE
+ * registry (`progress-chart` in ui/hud/hudSurfaces): docked at the TOP of the
+ * right-hand strip, inside the top-right slot column so it can never land under
+ * the portal-ed audio cluster, and `matchEndCardWidth()` hands the settlement
+ * card back exactly the width this takes.
+ *
  * MOBILE / LEGIBILITY: the charts sit in a
- * `repeat(auto-fit, minmax(MIN_CHART_COL_PX, 1fr))` grid — two per row on the
- * settlement card, one per row on a 390 px phone. Each `<svg>` is `width: 100%`
- * over a fixed viewBox, so it scales instead of clipping, and the panel scrolls
- * inside its own max-height on a 780×360 landscape handheld where the card has
- * only ~330 px to give.
+ * `repeat(auto-fit, minmax(MIN_CHART_COL_PX, 1fr))` grid — one per row inside
+ * this 330 px card, two per row in the wide in-card fallback. Each `<svg>` is
+ * `width: 100%` over a fixed viewBox, so it scales instead of clipping, and the
+ * panel scrolls inside its own max-height.
  *
  * `MIN_CHART_COL_PX` is 280 and NOT smaller for a measured reason. A viewBox
  * scales its TEXT too, so an axis label is `size × columnWidth / viewBoxWidth`
@@ -179,6 +188,24 @@ export interface ProgressChartPanelProps {
   nameForSeat: (seatId: number) => string;
   /** collapse the panel — the settlement screen stays put either way */
   onClose: () => void;
+  /**
+   * The resolved `progress-chart` #107 surface, or `null` when this viewport
+   * has no docked right-hand strip AT ALL — in which case the panel falls back
+   * to a bounded box inside the settlement card's own flow instead of
+   * pretending to a rectangle the guard never proved.
+   *
+   * ⚠️ `null` is NOT the narrow-viewport case. Measured 2026-07-30: every
+   * landscape viewport from 428 px up resolves a real strip, so a landscape
+   * phone gets the docked card painting OVER the settlement, not this fallback.
+   * The fallback is reached below 428 px — portrait (375×812, 390×844, 414×896)
+   * or a hand-narrowed desktop window. Both branches are pinned by
+   * `hud/hudSurfacePaint.test.ts`; the boundary table lives on
+   * `MATCH_END_CARD_MIN_W`.
+   *
+   * Passed in rather than read here so the whole panel still renders under
+   * `react-dom/server` in the node test env.
+   */
+  surface?: React.CSSProperties | null;
 }
 
 /**
@@ -206,18 +233,23 @@ export function ProgressChartPanel(props: ProgressChartPanelProps): React.JSX.El
   return (
     <div
       data-testid="progress-chart-panel"
+      data-hud-surface="progress-chart"
       style={{
-        marginTop: 12,
         padding: 12,
         borderRadius: 10,
         border: PANEL_BORDER,
-        background: "rgba(20,26,40,0.6)",
-        // the settlement card is min(760px,96vw) with maxHeight 92vh; on a
-        // 780×360 handheld that is ~330 px total, so this panel keeps its own
-        // scroll rather than pushing the exit buttons off the card.
-        maxHeight: "min(56vh, 460px)",
+        // OPAQUE, not the old 0.6 wash: on a narrow viewport this card paints
+        // OVER the settlement instead of beside it, and a translucent card with
+        // the ranking table showing through is unreadable.
+        background: "rgba(16,21,33,0.97)",
+        boxShadow: "0 10px 40px rgba(0,0,0,0.55)",
         overflowY: "auto",
         textAlign: "left",
+        boxSizing: "border-box",
+        pointerEvents: "auto",
+        // placement from the #107 surface registry; the fallback is a bounded
+        // box in the settlement layer's own flow (see `surface`).
+        ...(props.surface ?? { marginTop: 12, maxHeight: "min(56vh, 460px)" }),
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>

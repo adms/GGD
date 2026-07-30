@@ -299,11 +299,13 @@ const CLAIM_EXEMPTIONS: Record<string, string> = {
  */
 const KNOWN_GAPS: Record<string, string> = {
   // P1-2 — phone. HudRoot:144 swaps AbilityBar out for TouchControls, and
-  // TouchControls imports abilityActivationCue + AbilityDescriptionOverlay but
-  // not CastNoticeLine, so 冷卻中／魔力不足／距離太遠／尚未學習 are computed and
-  // dropped. FIX: one `<CastNoticeLine />` in ui/TouchControls.tsx (it already
-  // has a TOUCH_BOTTOM layout branch — it was written for this surface).
-  "hud-input-variant/TouchControls": "docs/_false-completions.md P1-2 (open, task #181/#160)",
+  // (P1-2 「TouchControls has no CastNoticeLine」 was CLOSED on 2026-07-30 and its
+  //  row deleted, as this file demands of a fixed gap. The line no longer lives
+  //  inside AbilityBar's fragment — it had to move out when the bar became a
+  //  flex child of the bottom cluster — and HudRoot now mounts it unconditionally
+  //  inside the in-game group, so the touch surface gets the sentence too. That
+  //  is the 「one line」 the deleted row asked for, just in HudRoot rather than in
+  //  TouchControls.)
   // P1-2 — couch/split-screen. HudRoot:142 replaces the whole single-player HUD
   // block with CouchHudGrid, which is display-only. Same one-line fix.
   "hud-input-variant/CouchHudGrid": "docs/_false-completions.md P1-2 (open, task #181/#160)",
@@ -370,7 +372,30 @@ function violations(): { key: string; detail: string }[] {
     for (const side of ["neg", "pos"] as const) {
       const comps = [...fam[side]].filter((c) => hudImports.has(c));
       if (!comps.length) continue;
-      if (comps.some((c) => rendersDeep(c, "CastNoticeLine", hudImports))) continue;
+      // TWO WAYS THIS SIDE CAN HAVE THE LINE, and only one of them existed
+      // before 2026-07-30 — when <CastNoticeLine/> lived inside AbilityBar's
+      // fragment, `rendersDeep` (which walks CHILDREN) was the whole story. The
+      // line had to move out when the ability bar became a flex child of the
+      // bottom cluster (a positioned box nested in a positioned container
+      // re-anchors — see ui/hud/BottomCluster), so HudRoot mounts it itself now:
+      //
+      //   · the component ITSELF is on this side — the strongest form of 「this
+      //     side renders it」, and `rendersDeep` cannot see it because it is a
+      //     sibling rather than a descendant;
+      //   · HudRoot mounts it UNCONDITIONALLY WITH RESPECT TO THIS FAMILY — it
+      //     appears in neither the pos nor the neg set of `fam`, i.e. this
+      //     variant's condition does not gate it, so it paints on both sides.
+      //     (It IS gated by other families — `inGame`/`couch` — and those
+      //     families still judge it on their own terms, which is why the couch
+      //     row in KNOWN_GAPS below is untouched.)
+      if (comps.some((c) => c === "CastNoticeLine" || rendersDeep(c, "CastNoticeLine", hudImports)))
+        continue;
+      if (
+        jsxChildren(HUD_ROOT).has("CastNoticeLine") &&
+        !fam.pos.has("CastNoticeLine") &&
+        !fam.neg.has("CastNoticeLine")
+      )
+        continue;
       for (const c of comps) {
         out.push({
           key: `hud-input-variant/${c}`,

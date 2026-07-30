@@ -62,4 +62,9 @@ USER node
 ENTRYPOINT ["/sbin/tini", "--"]
 # tsx over source — see the header. `node_modules/.bin/tsx` is present because
 # the deploy above was not --prod.
-CMD ["node_modules/.bin/tsx", "src/index.ts"]
+#
+# src/cluster/main.ts, NOT src/index.ts: it reads GGD_GAME_PROCESSES and either
+# runs the shard in-process (the default, 1 — identical to the old entrypoint)
+# or forks that many shard processes so the container can use more than one
+# core. src/index.ts is still the shard and is still directly runnable.
+CMD ["node_modules/.bin/tsx", "src/cluster/main.ts"]

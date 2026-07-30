@@ -88,6 +88,33 @@ A0DZ writes no `acdn` and stock ANrg says `Cool1..4 = 1` — but changing a
 cooldown is a balance decision, not a transcription fix, so it is reported
 rather than applied. See the task #249 write-up.
 
+BODY FIELDS — WHAT THE SECOND UNIT ACTUALLY *IS* (task #214)
+------------------------------------------------------------
+`scale` / `moveSpeed` were the only body facts this file emitted, and that is
+how 悟空 #09 lost three of its four transform mechanics. `O00X` overrides FIVE
+fields on top of `Ogrh`, and four of them had no home anywhere downstream:
+
+    ua1c  attack cooldown  1.90 -> 1.20   (+58 % attacks per second)
+    umvs  movement speed    310 -> 400
+    umvt  movement type    (ground) -> hover      } the SSJ body FLOATS, and
+    umvh  fly height       (absent) -> 30.0       } #168 grounds every model
+    uabi  ability list     A0O1,A0NL,AInv,A0MI
+                        -> A0S7,A0O1,A0NL,AInv,A017,A0MJ
+
+The last line is the one a stat sweep can never see: `A0S7` is a SPELLBOOK
+(`Aspb`, `spb1 = A0SI`) — the WC3 idiom for "grant a passive with no button" —
+so the whole 09-002a 悟空指令靈氣 (+25 % attack damage) hangs off a field nobody
+was reading. `A017` and `A0MJ` are the form's attack art and its head.
+
+RAW, NOT RESOLVED. Every one of these is emitted exactly as this unit's own w3u
+entry writes it, and `null` therefore means **the map is silent on this unit**,
+not "the unit has none" — a w3u entry is a DIFF against `base_id` (`O00X`'s base
+is `Ogrh`, so the fields it leaves alone are the BASE's values). That is the
+same contract `scale: null` has always had here. Resolving the chain is a
+different job with a different failure mode (a wrong base id silently invents
+values), and the consumer that needs it — `championForms.ts` — states which
+fields it treats as inherited.
+
 Output: out/GoDieEX22s-src/TRANSFORM_FORMS.json — the fixture
 packages/shared/src/content/championForms.test.ts pins the shipped table
 against. Re-run after any re-extract; it reads raw/war3map.{w3a,w3u,wts} plus
@@ -121,6 +148,29 @@ ALTERNATE_FIELD = "Emeu"
 INHERITED: dict[str, str] = {"ahdu": "HeroDur", "adur": "Dur", "amcs": "Cost"}
 
 _SUB_NAME_NUMBER = re.compile(r"\(\s*(\d{2,3})")
+
+# BODY fields (task #214). `uabi`/`uhab` are comma-joined rawcode lists; the
+# other three are scalars. See BODY FIELDS in the module docstring for why they
+# are emitted RAW (null = the map is silent on this unit) rather than resolved.
+BODY_FIELDS = {
+    "ua1c": "attackCooldown",
+    "umvt": "moveType",
+    "umvh": "flyHeight",
+    "uabi": "abilityRawcodes",
+    "uhab": "heroAbilityRawcodes",
+}
+
+
+def _csv(value) -> list[str] | None:
+    """`'A0S7,A0O1,AInv'` -> `['A0S7', 'A0O1', 'AInv']`. None stays None.
+
+    An EMPTY list and None are different answers and both are kept: `''` means
+    the map wrote "this unit has no abilities", `None` means it never wrote the
+    field at all and the unit inherits its base's list.
+    """
+    if not isinstance(value, str):
+        return None
+    return [part.strip() for part in value.split(",") if part.strip()]
 
 
 def _entries(path: str, has_levels: bool) -> list:
@@ -222,6 +272,17 @@ def build() -> dict:
             "model": unit.get("umdl") if unit else None,
             "scale": unit.get("usca") if unit else None,
             "moveSpeed": unit.get("umvs") if unit else None,
+            # ---- BODY fields (task #214). See BODY FIELDS in the docstring:
+            # `null` means "this unit's own w3u entry is SILENT", NOT "the unit
+            # has none" — a w3u entry is a DIFF against `base_id`.
+            **{
+                out_key: (
+                    (_csv(unit.get(code)) if code in ("uabi", "uhab") else unit.get(code))
+                    if unit
+                    else None
+                )
+                for code, out_key in BODY_FIELDS.items()
+            },
             "inW3u": unit is not None,
         }
 
@@ -291,6 +352,23 @@ def build() -> dict:
             "every normal unit's `unsf` sub-name is the bare 編號 「(NN)」 and every "
             "alternate's names the form 「(NN變身名)」 — 26/26."
         ),
+        "bodyFields": {
+            "codes": dict(BODY_FIELDS),
+            "rule": (
+                "emitted RAW off each unit's OWN w3u entry. `null` = the map is "
+                "SILENT on that unit (a w3u entry is a DIFF against `base_id`, so "
+                "the unit inherits its base's value) — it is NOT 'the unit has "
+                "none'. `[]` on a list field is different from null: it means the "
+                "map wrote an empty list."
+            ),
+            "why": (
+                "task #214 — 悟空 #09's SSJ body overrides ua1c 1.90->1.20, umvs "
+                "310->400, umvt ->hover, umvh ->30.0 and uabi (which gains A0S7, "
+                "an `Aspb` SPELLBOOK holding A0SI 09-002a 悟空指令靈氣 +25% attack "
+                "damage). Only umvs had a home downstream, so four mechanics were "
+                "invisible to every stat sweep."
+            ),
+        },
         "inheritance": {
             "stockTable": "tools/w3x-import/out/stock/STOCK_ABILITIES.json",
             "fields": dict(INHERITED),

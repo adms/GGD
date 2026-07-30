@@ -89,7 +89,7 @@ const WHITELIST = join(ROOT, "data/curation/whitelist.json");
 const REPORT = join(ROOT, "docs/_castability-128.md");
 
 /** The tracked roster is pinned at 51 by Go's TestFirstOpenRoster (GH#29 added 喪標麥可). */
-const ROSTER_SIZE = 51;
+const ROSTER_SIZE = 53;
 /**
  * RATCHET FLOOR — working cells (✅ PASS + 🟣 verified PASSIVE) over the 51
  * tracked champions × 6 slots = 300.

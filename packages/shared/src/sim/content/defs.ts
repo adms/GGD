@@ -8,6 +8,7 @@ import type { Stat, StatBlock } from "../stats/statTypes";
 import type { ChampionAttributes } from "../stats/attributes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
 import type { AuraDef } from "../aura/aura";
+import type { VisionGrant } from "../stealth";
 import type { EffectDef } from "../effects/effect";
 import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
 
@@ -30,6 +31,40 @@ export interface AbilityPassiveRank {
    * applied to OTHER units by proximity. See sim/aura/aura.ts.
    */
   auras?: AuraDef[];
+  /**
+   * 隱形 / 真視 this rank grants (see sim/stealth.ts). A THIRD kind of payload
+   * next to `modifiers`/`auras`, because neither could carry it: 「看不看得見」
+   * is not a number on a stat table and it is not projected onto other units.
+   *
+   * The three ported docs that need it: `godie-naka.passive` 27-00
+   * 永久性的隱形術 (`Apiv`, fade 4.0 s), `godie-nplh.passive` /
+   * `godie-u01f.passive` 16-00 通靈能力 and `godie-e008.passive` 21-00 灼眼
+   * (true sight).
+   */
+  vision?: VisionGrant;
+  /**
+   * 飛行 (無視碰撞) this rank grants — see sim/flight.ts. A FOURTH payload kind
+   * for the same reason `vision` was a third: 「碰不碰得到」 is not a number on a
+   * stat table and is not projected onto anybody else. 04-00 翔封界
+   * (`godie-h020.passive` / `godie-hjai.passive`) is the only user.
+   */
+  flight?: import("../flight").FlightGrant;
+  /**
+   * 形態閘 (task #249 變身) — which BODY this rank's payload is attached to.
+   * ABSENT = "any" = both, i.e. every passive authored before this field.
+   *
+   * `sim/auraCarrier.ts` states the hole this closes in its own words: there
+   * was no seam that could make a passive exist 「只在變身時」, so 20-01 風王結界
+   * — a toggle whose whole payload is an on-attack orb — had nowhere to live.
+   * The carrier trick could only ever project AURAS; this is the same fact for
+   * the OTHER two payloads (`modifiers` and `hooks`).
+   *
+   * Evaluated in `abilities/abilityPassives.ts rankBlock`; re-evaluated on every
+   * body change because `ChampionFormSystem.setBody` calls `syncAbilityPassives`
+   * — the ONE writer of `ChampionComp.championId`, so no transform path
+   * (cast / expiry / death / revert / combat end) can skip it.
+   */
+  whileForm?: "any" | "base" | "alternate";
 }
 
 /**
@@ -95,6 +130,13 @@ export interface AbilityDef {
   castTimeSec?: number;
   /** Root the caster for the cast duration (default true). */
   rootWhileCasting?: boolean;
+  /**
+   * 被打會不會中斷施法. Absent = `"none"` = the pre-existing rule (death / stun /
+   * knockdown only). `"damage"` additionally breaks the channel the moment the
+   * caster's HP is below what it was at cast-begin — see `zAbilityDef` for the
+   * full statement of what counts as 「被打」 and why it is a field.
+   */
+  interruptOn?: "none" | "damage";
   /**
    * RECOVERY (後搖) — seconds of post-resolve commitment (no cast, no basic
    * attack). Absent = `DEFAULT_RECOVERY_SEC` (0.6 s), not 0. A landed hit on an
@@ -220,6 +262,17 @@ export interface ItemDef {
   unique?: boolean;
   modifiers?: StatModifier[];
   passive?: HookDef[];
+  /**
+   * 光環 this item projects around its holder — mirrors `item@1.auras`.
+   * Forwarded verbatim onto the `kind: "item"` ModifierSource by every attach
+   * site in `economy/shop.ts`, so `sim/aura/aura.ts` drives it exactly as it
+   * drives an ability's aura. Absent on every doc that predates it.
+   *
+   * ⚠️ A hook inside one of these fires with the RECIPIENT as its owner (the
+   * ally standing in the radius), not the item's holder — that is what makes
+   * `hooks[].requires` read as 「周圍的近戰友軍」.
+   */
+  auras?: AuraDef[];
   iconKey?: string;
   /**
    * Icon path relative to content/ ("assets/icons/items/<id>.png", w3x
@@ -270,6 +323,34 @@ export interface ItemDef {
    * not silently delete somebody's weapon.
    */
   requiresAttackType?: "melee" | "ranged";
+  /**
+   * May this item be OFFERED by a draft at all — the quest 3-choose-1, the
+   * round weapon card, and the 傳說寶玉 roll. Absent = `true`, i.e. every doc
+   * that predates the field.
+   *
+   * WHY IT IS A FIELD AND NOT A DELETION. Two imported quest items ship with
+   * the w3x COST implemented and the PAYOFF missing — 天堂之劍 (godie-i01n) has
+   * its 生命-500 but not the 「魂藏」 on-death revive that justified it, and
+   * 仙后座 (godie-i01s) has neither its blink nor its 25% evasion. A purely
+   * negative card in a 3-choose-1 is not a choice, it is a punishment for
+   * drafting. Deleting them would make putting them back a code change; a
+   * boolean makes it a toggle (CLAUDE.md 第一守則 —— 決策點要變成欄位).
+   *
+   * IT GATES THE OFFER, NOT THE INVENTORY, exactly like `requiresAttackType`:
+   * an item already in a slot keeps working, and the whitelist still says the
+   * item EXISTS. Enforced in `economy/offerEligibility.itemOfferableTo`, which
+   * both roll sites consult BEFORE the roll.
+   */
+  draftEligible?: boolean;
+  /**
+   * Editor/audit-facing note. NEVER rendered to a player — `description` is the
+   * player-facing text and this is not a second copy of it. Kept on the doc
+   * rather than in a code comment so that "what this item is still missing"
+   * travels in the same file, the same diff and the same admin form as the
+   * numbers it is about (CLAUDE.md 第三守則 —— a comment in another file rots
+   * unseen by whoever edits the data).
+   */
+  authoringNote?: string;
 }
 
 export type ItemCraftRole =

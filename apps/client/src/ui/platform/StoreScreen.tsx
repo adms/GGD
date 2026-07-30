@@ -42,7 +42,8 @@
  */
 import { useMemo, useState } from "react";
 import { useApp } from "./store";
-import { deriveStoreRows, type SkinRow } from "./catalog";
+import { deriveStoreRows, storeRowsForWhitelist, type SkinRow } from "./catalog";
+import { useWhitelist } from "../panels/whitelist";
 import { championDisplayFor } from "./championDisplay";
 import { balanceOf, shortfallHint, CRYSTAL_EARN_HINT, CURRENCY_LABEL } from "./currency";
 import { useContentReady } from "./ContentGate";
@@ -138,9 +139,16 @@ export function StoreScreen(): React.JSX.Element {
   // This dependency is what makes the names appear instead of the ids.
   const contentReady = useContentReady();
 
+  // The catalog prices EVERY champion in the content tree (the per-hero price
+  // map is gone — see catalog.ts `storeRowsForWhitelist`), so the store must
+  // cull to what the operator actually enabled or it sells unpickable heroes.
+  const { whitelist } = useWhitelist();
   const rows = useMemo(
-    () => (catalog ? deriveStoreRows(catalog, skinDocs, championDisplayFor) : []),
-    [catalog, skinDocs, contentReady],
+    () =>
+      catalog
+        ? storeRowsForWhitelist(deriveStoreRows(catalog, skinDocs, championDisplayFor), whitelist)
+        : [],
+    [catalog, skinDocs, contentReady, whitelist],
   );
   const allSkins = useMemo(() => rows.flatMap((r) => r.skins), [rows]);
   const shown = selected ?? allSkins[0] ?? null;

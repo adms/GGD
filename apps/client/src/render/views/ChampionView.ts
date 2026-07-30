@@ -208,6 +208,61 @@ export interface FormAttachmentSpec {
  */
 const MIN_NATIVE_HEIGHT = 0.05;
 
+/**
+ * One skeleton `instantiateModelsToScene` cloned for THIS view.
+ *
+ * Structural rather than `import { Skeleton }`: `applyVoxelLook` already reads
+ * these through the same duck type (`voxelSkin.SkeletonLike`), and the only
+ * other thing this file does with them is free them (#223). Importing the real
+ * class would pull Babylon's Bones module in for two property names.
+ */
+interface InstanceSkeleton {
+  bones: { name: string }[];
+  dispose?(): void;
+}
+
+/**
+ * How opaque this mesh actually DRAWS right now — `material.alpha × visibility`.
+ *
+ * ---------------------------------------------------------------------------
+ * GH#226 / GH#227 —— 為什麼閃光必須先問這個
+ * ---------------------------------------------------------------------------
+ * `renderOverlay` 不是走材質的 shader，它走 Babylon 的 `OutlineRenderer`：
+ *
+ *     effect.setColor4("color", mesh.overlayColor, mesh.overlayAlpha);
+ *
+ * —— 顏色和不透明度**完全來自 mesh 上的兩個欄位**，材質的 `alpha` 與 mesh 的
+ * `visibility` 一個都不看（只有 `alphaMode: MASK` 的 alpha *test* 會被帶進去）。
+ * 所以一個「材質 alpha = 0、畫面上根本看不到」的網格，只要被推進 `flashMeshes`，
+ * 一挨打就會變成一片**實心的純色多邊形**。
+ *
+ * 這正是 owner 看到的兩個 bug，同一個根因：
+ *   • GH#226 藤井八雲 (`godie-hpal` → `Hpal.glb` / IllidanEvil)：那顆 glb 帶著
+ *     10 個 `baseColorFactor:[0,0,0,0]` 的 WC3 TeamGlow 佔位面，其中兩個是**貼在
+ *     腳底的水平方片** —— 2.109×2.109 @ y=0.066 與 1.991×1.991 @ y=0.108。
+ *     正規化到 1.8u 之後大約是 2 公尺見方，於是每一次挨魔法傷害就在腳底閃一張
+ *     「巨型矩形紅色」。
+ *   • GH#227 臭作 (`godie-orkn` → `Orkn.glb` / HeroShadowHunter)：同樣的東西只有
+ *     一片，`TeamGlow3` 0.105×0.564×1.759 @ y=0.406 —— 位置就在**武器**上，
+ *     於是物理攻擊的白色閃光把它畫成「武器上的白色遮罩」。
+ *
+ * 普查（`tools`-free，直接讀 glTF：見 championFlashInvisibleMesh.test.ts 的
+ * 檔頭）：287 個 glb 裡有 76 個帶著這種面，共 166 片，其中 18 個是英雄身體。
+ * 所以這不是兩隻英雄的個案，是整個 mdx→glb 轉檔管線的系統性殘留。
+ *
+ * ⚠️ 這裡**不刪那些面**：幾何在 `content/`（別條 lane 的領域），而且刪錯就少一塊
+ * 身體。渲染層能負責的是「不要在畫不出東西的網格上蓋一層閃光」，而那個判斷讀的
+ * 必須是 mesh 現在**真的掛著**的材質 —— `applyModelTint` 會 clone 材質再指回
+ * `mesh.material`（見 modelTint.ts 的 MATERIAL OWNERSHIP 段），所以只能在閃光的
+ * 那一刻現查，不能在 push 進 `flashMeshes` 的時候先算好。
+ */
+function drawnOpacityOf(mesh: AbstractMesh): number {
+  const mat = mesh.material as { alpha?: number } | null;
+  const matAlpha = typeof mat?.alpha === "number" ? mat.alpha : 1;
+  const vis = typeof mesh.visibility === "number" ? mesh.visibility : 1;
+  return Math.max(0, Math.min(1, matAlpha)) * Math.max(0, Math.min(1, vis));
+}
+
 export class ChampionView {
   readonly root: TransformNode;
   readonly anim = new AnimationStateMachine();
@@ -250,6 +305,11 @@ export class ChampionView {
   private formAttachRoot: TransformNode | null = null;
   /** 掛件複製出來的 AnimationGroup —— 它們不是節點,`root.dispose()` 碰不到。 */
   private formAttachGroups: { dispose(): void }[] = [];
+  /**
+   * 掛件複製出來的 Skeleton —— 和 AnimationGroup 同一個道理,**不是節點**。
+   * 見 `glbSkeletons` 的註解:`root.dispose()` 一個都不會碰到。
+   */
+  private formAttachSkeletons: InstanceSkeleton[] = [];
   /** 一次性閂:掛件的非同步載入只發起一次(和 `upgradeStarted` 同樣的道理)。 */
   private formAttachStarted = false;
   /** procedural-fallback materials this view repaints from the champion's seed. */
@@ -273,8 +333,27 @@ export class ChampionView {
    * 實際載入的 glb,不能看 modelKey。
    */
   private adoptedGlbPath: string | null = null;
-  /** skeletons of THIS instance (from instantiateModelsToScene), for the look. */
-  private glbSkeletons: { bones: { name: string }[] }[] = [];
+  /**
+   * Skeletons of THIS instance (from `instantiateModelsToScene`) — read by the
+   * #226 look, and OWNED by this view.
+   *
+   * ⚠️ #223 —— A CLONED SKELETON IS NOT A NODE. `instantiateModelsToScene`
+   * registers one clone per instantiation in `scene.skeletons`, and
+   * `root.dispose()` walks NODES only, so it never touches them — exactly the
+   * hazard `ClipAnimator.dispose` documents for AnimationGroups. Before #223
+   * nothing freed them, and a Babylon `Skeleton` is not a bookkeeping struct:
+   * it owns a bone-matrix texture on the GPU (`_transformMatrixTexture`) that
+   * dies with it and only with it.
+   *
+   * WHY #249 TURNED A SLOW LEAK INTO A FAST ONE. Before the 變身 rebuild a
+   * ChampionView was built ONCE per entity id, so one orphan skeleton per
+   * despawn. Since #249 the registry THROWS THE WHOLE VIEW AWAY on every form
+   * change (see EntityViewRegistry's 變身 BODY SWAP comment), so 拳四郎
+   * toggling in and out of 北斗之鼠 mints a fresh orphan every 8 seconds.
+   * Measured on a real swap loop: `scene.skeletons` 1 → 2 → 8 across 8 body
+   * builds, and `registry.dispose()` left every one of them behind.
+   */
+  private glbSkeletons: InstanceSkeleton[] = [];
   /** The render scale actually applied to the adopted .glb — the height-normalized
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
@@ -343,6 +422,23 @@ export class ChampionView {
   private dissolveDirty = false;
   /** true once the body is fully gone; cleared on the revive/respawn edge. */
   private vanishedFlag = false;
+
+  // ---- 隱形 (owner 2026-07-30 「選小的就好」) ----
+  /**
+   * Opacity this body should draw at because of 隱形, 0..1. **1 = not hidden**,
+   * which is every body in every match with no stealth hero.
+   *
+   * WHY A SEPARATE FIELD AND NOT A DIRECT `visibility` WRITE: the #220 corpse
+   * dissolve is ALSO a `visibility` writer, and it early-outs during the
+   * lie-down phase without writing at all. Two independent writers to one
+   * channel is exactly how a body ends up permanently at whichever value ran
+   * last. So stealth records its wish here and {@link applyStealth} — which runs
+   * only for LIVING bodies, after the dissolve has had its say — is the single
+   * place that touches the meshes.
+   */
+  private stealthAlpha = 1;
+  /** the value actually written to the meshes (idempotence + reset bookkeeping). */
+  private stealthApplied = 1;
   /** smoothed facing state (unit vectors); yaw eases cur→target every frame */
   private curFacing: Facing2 = { x: 0, z: 1 };
   private targetFacing: Facing2 = { x: 0, z: 1 };
@@ -766,7 +862,7 @@ export class ChampionView {
    *   • the caret floats at TARGET_HEIGHT + margin, i.e. above the normalised
    *     champion height (#150), so it clears the head of every champion rather
    *     than a specific one's.
-   * Both are asserted numerically in EntityViewRegistry.selfMarker.test.ts.
+   * Both are asserted numerically in render/selfMarker.test.ts.
    * ═══════════════════════════════════════════════════════════════════════ */
 
   /** Ground ring radius. Wider than teamRing's 1.25 diameter so it reads as a halo. */
@@ -1095,6 +1191,48 @@ export class ChampionView {
     return this.vanishedFlag;
   }
 
+  /**
+   * 隱形: how opaque this body should draw, 0..1 (1 = not hidden).
+   *
+   * Pushed in every sync by the registry from `stealthVisualFor`, never latched:
+   * the flag arrives on the snapshot and can flip on any tick (the hero attacks
+   * → 破隱 → 4 s later he fades again), and a latched value would strand a body
+   * invisible after the round ended.
+   */
+  setStealthAlpha(alpha: number): void {
+    this.stealthAlpha = alpha < 0 ? 0 : alpha > 1 ? 1 : alpha;
+  }
+
+  /** The opacity 隱形 has actually written to the meshes (guards read this). */
+  get stealthOpacity(): number {
+    return this.stealthApplied;
+  }
+
+  /**
+   * Write {@link stealthAlpha} onto the real meshes.
+   *
+   * Called ONLY for a living body, and only after `updateDissolve` returned
+   * false — so it can own `visibility` outright for that frame without racing
+   * the corpse fade. A dead body is never hidden anyway (`sim/stealth.isHidden`
+   * returns false for a corpse), and `resetDissolve` restores `visibility = 1`
+   * on the revive edge, after which the next frame re-applies this.
+   *
+   * Idempotent: the common case (alpha 1, already 1) touches nothing.
+   */
+  private applyStealth(dead: boolean): void {
+    // A CORPSE IS NEVER HIDDEN. The sim agrees (`stealth.isHidden` returns false
+    // for a dead body), but the renderer must not DEPEND on that: measured, a
+    // body that faded to 0 and then died stayed at 0 through the whole 3-second
+    // lie-down, because `updateDissolve` early-outs during "lying" WITHOUT
+    // writing `visibility` — so the revive circle sat over a body nobody could
+    // see. Forcing 1 here hands the channel back to the dissolve, which is its
+    // rightful owner from the death tick on.
+    const want = dead ? 1 : this.stealthAlpha;
+    if (this.stealthApplied === want) return;
+    for (const m of this.flashMeshes) m.visibility = want;
+    this.stealthApplied = want;
+  }
+
   /** Milliseconds since the arming `death` event, or null if this body never died. */
   deathElapsedMs(nowMs: number): number | null {
     return this.deathAtMs === null ? null : nowMs - this.deathAtMs;
@@ -1177,6 +1315,10 @@ export class ChampionView {
     if (this.dissolveDirty) {
       for (const m of this.flashMeshes) m.visibility = 1;
       this.dissolveDirty = false;
+      // …which just clobbered whatever 隱形 had written. Invalidate the
+      // idempotence guard so the next frame re-applies it instead of believing
+      // the meshes still carry `stealthApplied`.
+      this.stealthApplied = -1;
     }
     if (this.vanishedFlag) {
       this.setBodyVisible(true, 0);
@@ -1198,6 +1340,11 @@ export class ChampionView {
     this.updateSelfMarker(state, nowMs);
     // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
     // left to animate, so the rest of the frame is skipped entirely.
+    // 隱形 (owner 2026-07-30). BEFORE `updateDissolve`, and passed `dead`, so
+    // the two writers of `mesh.visibility` have an unambiguous priority: while
+    // the body lives stealth owns the channel; from the death tick the dissolve
+    // does, and this call has already handed it back at full opacity.
+    this.applyStealth(state === "death");
     if (this.updateDissolve(state, nowMs)) return;
     this.applyAirborne(); // #247 fly height + temporary scale (see below)
     const frozen = nowMs < this.hitstopUntilMs; // hitstop window
@@ -1214,8 +1361,15 @@ export class ChampionView {
       }
       // keep the team ring readable but dim it for the dead
       const dead = state === "death";
-      this.teamRing.setEnabled(!dead);
-      this.blobShadow.setEnabled(!dead);
+      // 隱形: the team ring and the ground shadow are POSITION TELLS — a floating
+      // team-coloured ring under an otherwise-invisible body defeats the whole
+      // mechanic. Folded into the EXISTING owner of these two nodes rather than
+      // written a second time in `applyStealth`, so each node keeps exactly one
+      // writer (the alternative loses: this line runs later in the frame and
+      // would silently undo it).
+      const shown = !dead && this.stealthAlpha > 0;
+      this.teamRing.setEnabled(shown);
+      this.blobShadow.setEnabled(shown);
       this.applyFlash(nowMs);
       return;
     }
@@ -1260,8 +1414,9 @@ export class ChampionView {
     // fall backward + sink slightly
     this.bodyRoot.rotation.x = -this.deathT * (Math.PI / 2);
     this.bodyRoot.position.y = -this.deathT * 0.35;
-    this.teamRing.setEnabled(this.deathT < 0.5);
-    this.blobShadow.setEnabled(this.deathT < 0.5);
+    const ringShown = this.deathT < 0.5 && this.stealthAlpha > 0;
+    this.teamRing.setEnabled(ringShown);
+    this.blobShadow.setEnabled(ringShown);
 
     const k = 1 - Math.pow(0.5, dtMs / 40); // limb smoothing
     this.armL.rotation.x += (armL - this.armL.rotation.x) * k;
@@ -1352,10 +1507,15 @@ export class ChampionView {
     const on = nowMs < this.flashUntilMs;
     if (!on && !this.flashActive) return;
     for (const m of this.flashMeshes) {
-      m.renderOverlay = on;
-      if (on) {
+      // GH#226/#227 —— 閃光的不透明度必須乘上「這塊網格現在真的畫得出多少」。
+      // 見 `drawnOpacityOf`:overlay pass 不看材質 alpha,所以一片 alpha=0 的
+      // WC3 TeamGlow 佔位面會被畫成實心色塊(八雲腳底的紅方塊、臭作武器上的
+      // 白遮罩)。乘完等於 0 的就整個不開 overlay。
+      const a = on ? this.flashAlpha * drawnOpacityOf(m) : 0;
+      m.renderOverlay = a > 0;
+      if (a > 0) {
         m.overlayColor.copyFromFloats(this.flashRgb[0], this.flashRgb[1], this.flashRgb[2]);
-        m.overlayAlpha = this.flashAlpha;
+        m.overlayAlpha = a;
       }
     }
     this.flashActive = on;
@@ -1525,7 +1685,7 @@ export class ChampionView {
         // and nothing may change it afterwards (that is what keeps #150).
         this.groundOffsetY = Number.isFinite(min.y) ? -min.y : 0;
         this.glbRoot = glbRoot;
-        this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
+        this.glbSkeletons = inst.skeletons as unknown as InstanceSkeleton[];
         // GH#31: remember WHICH glb landed. Must be written BEFORE
         // `applyVoxelLookToGlb` below, which reads it to decide whether the
         // #226 palette may touch this mesh at all.
@@ -1611,6 +1771,9 @@ export class ChampionView {
         attachRoot.position.y = spec.offsetY;
         this.formAttachRoot = attachRoot;
         this.formAttachGroups = inst.animationGroups as unknown as { dispose(): void }[];
+        // #223 —— 掛件也會複製一具 Skeleton 進 `scene.skeletons`(悟空的超三頭
+        // 是有骨架的),和上面的 AnimationGroup 一樣不會被 `root.dispose()` 收掉。
+        this.formAttachSkeletons = inst.skeletons as unknown as InstanceSkeleton[];
         // 本體已經死透了才載完 —— 跟著隱藏,不要憑空冒出一顆頭。
         if (this.vanishedFlag) attachRoot.setEnabled(false);
       })
@@ -1661,6 +1824,17 @@ export class ChampionView {
     // exactly why 「變回本體 = 掛件消失」 needs no detach path at all.
     for (const g of this.formAttachGroups) g.dispose();
     this.formAttachGroups = [];
+    // #223 —— SKELETONS ARE NOT NODES EITHER, and this is the half #249 made
+    // expensive: the registry rebuilds the whole view on every 變身, so every
+    // transform used to strand one more cloned Skeleton (plus its bone-matrix
+    // GPU texture) in `scene.skeletons`. Freed HERE, before `root.dispose()`
+    // below, for the same reason the ClipAnimator is: while their targets are
+    // still alive. `dispose` is optional on the duck type only so the tests'
+    // stub skeletons stay cheap — every real Babylon Skeleton has one.
+    for (const s of this.glbSkeletons) s.dispose?.();
+    this.glbSkeletons = [];
+    for (const s of this.formAttachSkeletons) s.dispose?.();
+    this.formAttachSkeletons = [];
     this.formAttachRoot = null;
     const scene = this.root.getScene();
     this.root.dispose(false, false);
@@ -1683,6 +1857,5 @@ export class ChampionView {
     // textures — which belong to the AssetManager's container cache — survive.
     releaseVoxelLook(this.voxelHandle);
     this.voxelHandle = null;
-    this.glbSkeletons = [];
   }
 }

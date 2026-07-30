@@ -76,7 +76,7 @@ champion 文件在、六支技能在、`_index` 有註冊、EX 對照有、日�
 | 13 | 同步 Go 釘死名單 | `starter_content_test.go` 的 `firstOpenRoster` 字面值 + `require.Len(..., N)` | `TestFirstOpenRoster` 變紅（它就是為了讓這個改動必須是刻意的） |
 | 14 | 營運白名單（advisory，**但少不得**） | `data/curation/whitelist.json`：`champions` 加 id **且** `abilities` 加 `<id>.ex` | gitignore 的機器狀態。`ApplyStarterSet` 在白名單非空時**不會**再跑，所以只改 starter.go **不會**讓擁有者的機器或 ggd.adms.ai 開放這隻英雄 — 要走後台「內容白名單」手動加開，或 #179 的營運狀態遷移包 |
 | 15 | 棘輪可施放掃描 | `packages/shared/src/sim/castabilitySweep.test.ts`：`ROSTER_SIZE` 加、`WORKING_CELL_FLOOR` 依**實測值**上調 | 下限只能往上，永遠不能為了讓 run 變綠而往下調。跑完看 `docs/_castability-128.md` 的實際數字再填，不要用猜的 |
-| 16 | 商店目錄 | `content/config/store.json` `championPrices` | 不在目錄裡的英雄會被 `lockStateOf` 當成 free（**還是選得到**），但 `ToggleFavourite` 和 `UnlockChampion` 兩支 API 都會 404 → **永遠沒辦法設成「喜愛」**。300 = 標準解鎖價（`wallet.CrystalUnlockCost`），0 = 免費首發（首讀 wallet 時自動送） |
+| 16 | ~~商店目錄~~ **這一步 2026-07-30 起不存在了** | — | owner:「所有英雄藍水晶都是統一價，新上架預設也是一樣價格」。`content/config/store.json` 的 53 筆 `championPrices` map 已被 `championUnlockCost`（統一價）+ `freeChampionIds`（免費名單）取代，商店目錄改由 `content/champions/_index.json` 決定。**只要英雄的 content doc 存在，他就自動是統一價**，不用也不能再補一列 —— 這一步正是為了消滅「漏補一列 = 免費送出去」（godie-e00s / godie-ucrl 就是這樣中的）。真的要讓某隻免費，才去後台「商店經濟」把它加進免費名單 |
 
 ### 驗收指令
 
@@ -113,7 +113,7 @@ pnpm --filter @ggd/client     test                         # telegraphCoverage
 | 13 | Go 釘死名單 | ❌ | ❌ |
 | 14 | 營運白名單 | ❌ 不在（該檔只有 48 首發 + `godie-zombiex`） | ❌ 不在 |
 | 15 | 可施放掃描 | ❌ 從未被掃過（掃描名單來自 starter.go） | ❌ 從未被掃過 |
-| 16 | 商店目錄 | ❌ 不在 `championPrices`（48 筆 = 首發名單）→ 無法設「喜愛」 | ❌ 不在 |
+| 16 | 商店目錄（**該稽核當下的狀態**；此步驟已於 2026-07-30 隨統一價廢除） | ❌ 不在 `championPrices`（48 筆 = 首發名單）→ 無法設「喜愛」 | ❌ 不在 |
 
 **結論：兩隻英雄的狀態完全一樣 —— 1–11 全過、12–16 全掛。**
 `#212` 把它們記成「一隻做完、一隻待辦」，是因為只有內容層被檢查過。

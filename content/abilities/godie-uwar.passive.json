@@ -3,13 +3,13 @@
   "schema": "ability@1",
   "name": "43-00 觀音大士的守護",
   "icon": "assets/icons/abilities/godie-uwar.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n由於受到觀音大士的庇祐，降低所有來自於穿刺型態的傷害至60%，攻擊時25%傷害會波及至附近的單位。",
+  "description": "[被動]\n10秒冷卻時間\n\n觀音大士很忙，只能每 10 秒抽空幫你貼一張符。符會過期，而且祂不補發第二張。\n\n• 每 10 秒獲得一個護盾，護盾量 = 自身【最大生命】的 10%\n• 吸收任何進入傷害結算的傷害：物理／魔法／真實傷害都吃\n• ⚠️ 但【縮圈的火擋不住】—— 火圈是直接扣血的，連護盾這一關都不經過。\n  站在圈外，符救不了你，觀音大士也救不了你\n• 護盾持續 10 秒，冷卻也是 10 秒 —— 所以身上永遠只會有一個，不可疊加\n• 被打破就是被打破，要等下一個 10 秒",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    0.0
+    10.0
   ],
   "manaCost": [
     0.0
@@ -20,7 +20,28 @@
     "name": "43-00 觀音大士的守護",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onInterval",
+            "target": "self",
+            "internalCooldown": 10,
+            "effects": [
+              {
+                "kind": "shield",
+                "duration": 10,
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "maxHealth",
+                      "coeff": 0.1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

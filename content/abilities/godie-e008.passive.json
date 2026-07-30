@@ -20,7 +20,9 @@
     "name": "21-00 灼眼",
     "ranks": [
       {
-        "modifiers": []
+        "vision": {
+          "trueSightRadius": 9.17
+        }
       }
     ]
   }

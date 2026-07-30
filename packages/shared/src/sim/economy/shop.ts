@@ -148,6 +148,10 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
     kind: "item",
     modifiers: def.modifiers,
     hooks: def.passive,
+    // 光環 (#tier-5 積分獎勵). Forwarded on EVERY attach site — buy, undo-sell
+    // and free grant — because an item that projects an aura when bought but
+    // not when drafted is a bug that only shows up on the 三選一 path.
+    auras: def.auras,
   });
   resetStatPath(world, id, itemId);
   // Record the exact reversal for the undo button. goldDelta is NEGATIVE (gold
@@ -220,6 +224,7 @@ export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
       kind: "item",
       modifiers: def.modifiers,
       hooks: def.passive,
+      auras: def.auras, // see the buy path — same three fields, same reason
     });
     champ.gold -= txn.goldDelta; // goldDelta > 0 → take the exact refund back
   }
@@ -264,6 +269,10 @@ export function grantItemFree(world: SimWorld, id: EntityId, itemId: ItemId): nu
     kind: "item",
     modifiers: def.modifiers,
     hooks: def.passive,
+    // 光環 (#tier-5 積分獎勵). Forwarded on EVERY attach site — buy, undo-sell
+    // and free grant — because an item that projects an aura when bought but
+    // not when drafted is a bug that only shows up on the 三選一 path.
+    auras: def.auras,
   });
   return slot;
 }

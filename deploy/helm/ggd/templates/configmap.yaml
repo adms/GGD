@@ -22,3 +22,16 @@ data:
   # explicitly so the fallback never has to guess, and so `helm get values` shows
   # the answer instead of it being implied by code.
   GGD_PLATFORM_URL: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}
+  # B2 — WebSocket payload compression. Every one of these is a decision point,
+  # so every one is here rather than compiled in: `helm get values` shows the
+  # answer, and changing it is an edit + restart, not a rebuild. The game server
+  # prints its resolved posture on one boot line (`ws compression: ...`).
+  # The platform (Go) ignores these; the ConfigMap is shared by both.
+  GGD_WS_COMPRESSION: {{ .Values.game.compression.enabled | ternary "1" "0" | quote }}
+  GGD_WS_COMPRESSION_THRESHOLD: {{ .Values.game.compression.thresholdBytes | quote }}
+  GGD_WS_COMPRESSION_LEVEL: {{ .Values.game.compression.level | quote }}
+  GGD_WS_COMPRESSION_MEMLEVEL: {{ .Values.game.compression.memLevel | quote }}
+  GGD_WS_COMPRESSION_WINDOW_BITS: {{ .Values.game.compression.windowBits | quote }}
+  GGD_WS_COMPRESSION_SERVER_NO_CONTEXT: {{ .Values.game.compression.serverNoContextTakeover | ternary "1" "0" | quote }}
+  GGD_WS_COMPRESSION_CLIENT_NO_CONTEXT: {{ .Values.game.compression.clientNoContextTakeover | ternary "1" "0" | quote }}
+  GGD_WS_COMPRESSION_CONCURRENCY: {{ .Values.game.compression.concurrency | quote }}

@@ -1,0 +1,61 @@
+{
+  "id": "tpl-teleport",
+  "schema": "template@1",
+  "name": "瞬移貼身",
+  "description": "把身體直接搬到別的地方。飛行途中不吃地形也不吃碰撞，抵達點才結算傷害。三種終點：貼上目標單位（08-02 萊丁快速劍、17-03 空破圓斬）／指向的地面點（82-02 虛空瞬動，距離上限就是技能自己的射程，不是這裡的欄位）／把一位隊友拉到自己腳邊（84-002 我只想確定你在這裡）。⚠️ 「抵達耗時」的下限是 0.067 秒（模擬器弧線最短 2 tick），不是原作的同幀瞬移；拉長它就變成看得見的殘影衝刺。",
+  "family": "teleport",
+  "status": "enabled",
+  "params": {
+    "destination": {
+      "type": "enum",
+      "values": [
+        "targetUnit",
+        "castPoint",
+        "rallyToCaster"
+      ],
+      "default": "targetUnit"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0.5,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    },
+    "travelSec": {
+      "type": "number",
+      "default": 0.067,
+      "min": 0.067,
+      "max": 1,
+      "unit": "s"
+    },
+    "arriveRadius": {
+      "type": "number",
+      "default": 150,
+      "min": 50,
+      "max": 900,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "optional": true
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    }
+  },
+  "requires": [
+    "leap"
+  ],
+  "gapScore": 7,
+  "exemplar": {
+    "skill": "17-03 空破圓斬",
+    "jass": "A07M"
+  }
+}

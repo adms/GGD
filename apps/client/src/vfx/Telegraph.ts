@@ -106,6 +106,115 @@ export function telegraphPoolStats(scene: Scene): { rings: number; fills: number
 }
 
 /**
+ * ROUND-BOUNDARY RECLAIM (task #262) —— 把這個 scene 的預告圈 free-list 修剪到
+ * `maxRings` 個網格，並把 fill / shockwave 的池子一起帶下來。
+ *
+ * 為什麼 #259 沒有清到這裡。#259 清的是**有主的**東西：`TelegraphLayer.live`
+ * 裡的每一個 Live、VfxSystem 自己的 pool、rig 的 free-list。而 ring 網格在
+ * `release()` 之後就不屬於任何 Telegraph 了 —— 它在 `sharedByScene` 這張
+ * per-scene 的 WeakMap 裡，key 是**半徑字串**，一個 key 上限 8 個。沒有人清它，
+ * `TelegraphLayer.dispose()` 也不清（它只走 `live`）。arena 的 Scene 活過整場
+ * 比賽，所以那些網格（每一個帶一份自己的 StandardMaterial）從第一次施法起
+ * 就留在 `scene.meshes` 裡，每一張 frame 都被走訪。
+ *
+ * 實測（`__probe`，60 個不同半徑 × 6 回合）：`dispose()` 之後 scene 上仍有
+ * 72 mesh / 73 material / 13 texture / 12 particleSystem。
+ *
+ * ⚠️ 修剪的是 **free-list**，不是場上正在演的網格 —— 那些不在 list 裡（它們
+ * 在某個 Telegraph 手上，`release()` 才會回來）。所以在戰鬥中呼叫也不會讓
+ * 任何一個預告圈消失；只是下一次要用的時候重建。
+ *
+ * @param maxRings 這個 scene 允許留下的 ring 網格總數（跨所有半徑）。
+ * @returns 這一次真的被 dispose 掉的網格數（測試/診斷用）。
+ */
+export function trimTelegraphPools(scene: Scene, maxRings: number): number {
+  const s = sharedByScene.get(scene);
+  if (!s) return 0;
+  const cap = Math.max(0, Math.floor(maxRings));
+  let freed = 0;
+  // Map 迭代順序 = 插入順序：先丟掉最早出現的半徑，它們最可能是上一張地圖/
+  // 上一組英雄的。先算總數，再從頭砍到 cap。
+  let live = 0;
+  for (const list of s.rings.values()) live += list.length;
+  for (const [key, list] of s.rings) {
+    while (live > cap && list.length > 0) {
+      list.pop()!.dispose(false, true);
+      live--;
+      freed++;
+    }
+    if (list.length === 0) s.rings.delete(key);
+    if (live <= cap) break;
+  }
+  // fill / shockwave 是 UNIT 網格（每次用的時候縮放），所以它們的池子本來就
+  // 只有一條、上限 MESH_POOL_CAP。cap 0 的時候一起帶走，否則留著 —— 留 8 個
+  // 單位網格的代價遠小於每一次施法重建。
+  if (cap === 0) {
+    for (const m of s.fills.splice(0)) {
+      disposeButKeepSharedTextures(m);
+      freed++;
+    }
+    for (const m of s.shocks.splice(0)) {
+      disposeButKeepSharedTextures(m);
+      freed++;
+    }
+  }
+  return freed;
+}
+
+/**
+ * ⛔ 這個函式存在的唯一理由：`AbstractMesh.dispose(doNotRecurse, disposeMaterialAndTextures)`
+ * 的**第二個參數**會一路傳到 `material.dispose(false, true)`，把材質引用到的每一張
+ * 貼圖也 dispose 掉 —— 而 fill / shock 的材質指的是
+ * `sharedFor()` **每個 scene 只建一次的共用 `circleTex`**（見下面 `makeFill`）。
+ *
+ * 也就是說，原本的 `m.dispose(false, true)` 會在**第一個**回合邊界就殺掉那張共用貼圖，
+ * 而 `trimTelegraphPools` 不會刪 `sharedByScene` 的條目，所以 `s.circleTex` 仍指著一張
+ * 死掉的 Texture。第二回合建出來的新材質又指回同一張，`isBlocking` 預設 true →
+ * `isReadyOrNotBlocking()` 恆為 false → `StandardMaterial.isReadyForSubMesh` 直接
+ * `return false` → **那個 submesh 一張 frame 都不會被畫**。
+ *
+ * 症狀：#228「技能預告特效要看得見才來得及閃」的核心元件——隨吟唱填滿的魔法陣圓盤——
+ * 從第 2 回合起在**出貨預設**（`purgeSharedPoolsOnRoundEnd: true`）下靜悄悄消失。
+ * 外圈 ring 沒有貼圖，所以外圈還在，肉眼上像「預告變弱」而不是「預告不見」。
+ *
+ * ⚠️ 這是「修洩漏反而製造第①種故障（算出來但畫不出來）」的實例。守衛見
+ * `telegraphSharedTextureSurvives.test.ts`：它讀的是 `isReadyOrNotBlocking()`（行為），
+ * 不是 `scene.meshes.length`（屬性）—— 舊的那 33 條測試全綠而回歸就活在裡面，
+ * 正是因為它們量的是後者。
+ */
+function disposeButKeepSharedTextures(m: Mesh): void {
+  const mat = m.material;
+  // 網格自己走掉，但**不要**碰材質（第二個參數 = false）。
+  m.dispose(false, false);
+  // 材質是每個網格自己的，該回收；`forceDisposeTextures = false` 讓共用貼圖活下來。
+  mat?.dispose(true, false);
+}
+
+/**
+ * SCENE TEARDOWN (task #262). Give back everything `sharedFor` ever built for
+ * this scene — including the magic-circle Texture and the kick BurstPool, which
+ * `trimTelegraphPools` deliberately leaves alone.
+ *
+ * ⚠️ 那句「deliberately leaves alone」在 2026-07-30 之前是**假的**：`trimTelegraphPools`
+ * 用 `m.dispose(false, true)` 就把共用貼圖殺掉了，而這段註解讓後續的推理全部建立在
+ * 一句謊話上（第三守則：註解會說謊，去驗證）。現在它是真的，靠的是
+ * `disposeButKeepSharedTextures` 那個函式 —— 不要把它改回單一個 dispose 呼叫。
+ *
+ * `scene.dispose()` would eventually free these too, but the arena Scene is NOT
+ * torn down between matches on every path, and a leak that only the GC can see
+ * is exactly the shape #262 is about. Idempotent: the WeakMap entry is dropped,
+ * so the next `sharedFor` rebuilds from scratch.
+ */
+export function disposeTelegraphShared(scene: Scene): void {
+  const s = sharedByScene.get(scene);
+  if (!s) return;
+  trimTelegraphPools(scene, 0);
+  s.kicks.dispose();
+  s.circleTex.dispose();
+  sharedByScene.delete(scene);
+}
+
+/**
  * The pre-#228 look, kept as the DEFAULT so every caller that has no relation
  * to express (guardianMark: a neutral tower is hostile to everyone equally)
  * renders exactly as it did. Callers that DO know the relation pass

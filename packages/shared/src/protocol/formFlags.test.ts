@@ -120,6 +120,8 @@ describe("ENTITY_FLAG bit budget — uint16, and the third collision must not be
     // separately and a renumber would desync a client mid-match with no error.
     expect(ENTITY_FLAG.FORM_A).toBe(4096);
     expect(ENTITY_FLAG.FORM_B).toBe(8192);
-    expect(ENTITY_FLAG_FREE_BITS).toEqual([16384, 32768]);
+    // 隱形原語 took 16384 (ENTITY_FLAG.INVISIBLE). ONE bit is left; the next
+    // feature must widen the field or claim its own channel.
+    expect(ENTITY_FLAG_FREE_BITS).toEqual([32768]);
   });
 });

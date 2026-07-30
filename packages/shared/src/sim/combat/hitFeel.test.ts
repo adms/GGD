@@ -445,6 +445,7 @@ describe("counter hit fires on a committed victim (#133)", () => {
       ticksLeft: 5,
       targets: [a],
       rooted: true,
+      hpAtStart: world.health.get(b)!.hp,
     };
     const p = pushAndStep(world, a, b, 50, "basic");
     expect(p.isCounter).toBe(true);
@@ -464,6 +465,7 @@ describe("counter hit fires on a committed victim (#133)", () => {
       ticksLeft: 5,
       targets: [a],
       rooted: true,
+      hpAtStart: world.health.get(b)!.hp,
     };
     world.health.get(b)!.shields.push({
       amount: 1000,

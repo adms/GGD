@@ -24,9 +24,11 @@ import type { SimWorld } from "../SimWorld";
 import type { Vec2 } from "../math/vec2";
 import { sub, len, scale, normalize, addScaled, dot, cross, perp, lenSq } from "../math/vec2";
 import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } from "../collision/resolve";
+import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
+import { movementHold } from "../movementHold";
 import { mobProfile } from "../mobs";
 
 /** Fallback move speed (units/sec) for entities without a stats component. */
@@ -114,33 +116,13 @@ export function movementSystem(world: SimWorld): void {
 
     // Status: root/stun stop movement; slows scale speed; stun also freezes
     // turning (rooted units may still rotate in place, LoL-style).
-    let speedMult = 1;
-    let rooted = false;
-    let stunned = false;
-    const st = world.status.get(id);
-    if (st) {
-      for (const e of st.effects) {
-        if (e.expiresAtTick <= world.tick) continue;
-        if (e.root || e.stun) rooted = true;
-        if (e.stun) stunned = true;
-        if (e.moveSpeedMult !== undefined) speedMult *= e.moveSpeedMult;
-      }
-    }
-    // Casting an ability with cast time roots the caster (channel lock).
-    const abComp = world.abilities.get(id);
-    if (abComp?.cast?.rooted) rooted = true;
-    // Post-resolve RECOVERY roots ONLY when the ability opted in
-    // (`recoveryRoots: true`). The default deliberately leaves footwork free —
-    // startup already hard-roots, and stacking a second root on every ability
-    // press reads as a frozen game. See abilities/abilityRecovery.ts DECISION 2.
-    if (abComp?.recovery && abComp.recovery.roots && abComp.recovery.ticksLeft > 0) rooted = true;
-    // Knockdown (prone): rooted like a hard CC. The knockback override is
-    // evaluated below BEFORE normal steering, so the victim still slides out,
-    // then lies grounded until the getup. Turning is frozen too (stunned).
-    if ((world.knockdown.get(id) ?? 0) > 0) {
-      rooted = true;
-      stunned = true;
-    }
+    //
+    // ⚠️ GH#216 —— 這一段**搬到 `sim/movementHold.ts`** 了,不是為了好看。
+    // 接敵規則(`systems/OrderSystem.ts` 的 `updateWalkStall`)必須問一模一樣的
+    // 問題:「這個單位走不動,是被硬控按住的,還是撞到幾何?」。抄一份過去的話
+    // 兩份會漂走,而漂走的那天不會有任何測試紅 —— 只有被定身的玩家會發現解控
+    // 之後角色往反方向跑。所以兩邊讀的是同一個函式。
+    const { speedMult, rooted, stunned } = movementHold(world, id);
 
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
 
@@ -226,7 +208,26 @@ export function movementSystem(world: SimWorld): void {
         }
         const before = { x: t.pos.x, z: t.pos.z };
         const body = { pos: t.pos, radius: t.radius };
-        moveWithCollision(body, scale(dir, stepLen), zone);
+        // 飛行 (04-00 翔封界): `moveWithCollision` is the ONE call that stops a
+        // body at a wall, so a flyer steps straight through instead. The
+        // boundary is NOT skipped here — the post-separation sweep below still
+        // clamps her to the arena disc — so this cannot walk anybody off the map.
+        if (flightIgnoresObstacles(world, id)) {
+          body.pos = { x: body.pos.x + dir.x * stepLen, z: body.pos.z + dir.z * stepLen };
+          // ⚠️ THE BOUNDARY IS CLAMPED **HERE**, NOT ONLY IN THE POST PASS.
+          // `t.vel` two lines below is derived from this step's real
+          // displacement, and this file's own rule is that velocity must be
+          // what the body ACTUALLY did (「a blocked unit must not report 5.8 u/s
+          // while standing still, or the animation layer — and any future
+          // stuck-detection — is lied to」). Clamping only later left a flyer
+          // pressed against the arena edge reporting full speed forever, which
+          // made `walkStall` never fire and silently removed 自動接敵 (#221)
+          // from the only champion who can fly. Measured: 莉娜因巴斯 scored 0
+          // auto-attacks in `autoAttackWhileMovingCensus`'s stalled-walk row.
+          if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
+        } else {
+          moveWithCollision(body, scale(dir, stepLen), zone);
+        }
         t.pos = body.pos;
         // Velocity is the ACTUAL post-collision displacement, never the intent:
         // a blocked unit must not report 5.8 u/s while standing still, or the
@@ -279,6 +280,11 @@ export function movementSystem(world: SimWorld): void {
     // its arc. Same shape as the coin/revive-circle exemptions above, and
     // guarded on BOTH loops so the pair is skipped from either side.
     if (isAirborneNav(world, id)) continue;
+    // 飛行 (04-00 翔封界, sim/flight.ts): a flyer neither shoves nor is shoved.
+    // Guarded on BOTH loops, exactly like the airborne pair above — the outer
+    // loop walks `world.transform` directly, so a one-sided guard would still
+    // let a HIGHER-id body push the flyer.
+    if (flightIgnoresUnits(world, id)) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) continue;
     const near = world.grid.queryCircle(t.pos, t.radius + 2);
@@ -286,6 +292,7 @@ export function movementSystem(world: SimWorld): void {
       if (otherId <= id) continue; // each pair once, ordered
       if (world.projectile.has(otherId)) continue;
       if (isAirborneNav(world, otherId)) continue;
+      if (flightIgnoresUnits(world, otherId)) continue;
       const o = world.transform.get(otherId);
       if (!o || o.zone !== t.zone) continue;
       const oHp = world.health.get(otherId);
@@ -341,8 +348,15 @@ export function movementSystem(world: SimWorld): void {
     if (isAirborneNav(world, id)) continue;
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
     const body = { pos: t.pos, radius: t.radius };
-    for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
-    clampToBoundary(body, zone);
+    // 飛行: the two halves of this sweep are asked SEPARATELY, because they are
+    // separate decisions (sim/flight.ts). A flyer skips the pillar push-out —
+    // that is what 「無視碰撞」 buys — but is STILL clamped to the arena disc
+    // unless a grant explicitly opts out, which is the answer to 「會不會飛出
+    // 場外」. Leaving the arena breaks every zone-scoped mechanic there is.
+    if (!flightIgnoresObstacles(world, id)) {
+      for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
+    }
+    if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
     t.pos = body.pos;
   }
 }
@@ -355,7 +369,16 @@ function isAirborneNav(world: SimWorld, id: import("../../ids").EntityId): boole
   return world.nav.get(id)?.override?.kind === "leap";
 }
 
-/** Helper for abilities: begin a dash override on an entity. */
+/**
+ * Helper for abilities: begin a dash override on an entity.
+ *
+ * ⚠️ `authored: true` — every caller of this is an ability (`effects/dash.ts`,
+ * i.e. `castType: "dash"`), so a dash is an AUTHORED displacement and gets the
+ * same protection an authored 擊退 does: incoming damage does not silently
+ * cancel it mid-flight while `combatFeel.knockback.authoredWins` is on. The
+ * whiff over-commit lunge in BasicAttackSystem deliberately does NOT come
+ * through here — it is cosmetic, and it should yield to a real hit.
+ */
 export function startDash(
   world: SimWorld,
   id: import("../../ids").EntityId,
@@ -367,7 +390,7 @@ export function startDash(
   if (!nav) return;
   const d = normalize(dir);
   if (d.x === 0 && d.z === 0) return;
-  nav.override = { kind: "dash", dir: d, speed, remaining: distance };
+  nav.override = { kind: "dash", dir: d, speed, remaining: distance, authored: true };
 }
 
 /** Predictive helper used by aiming: where will a target be after `secs`? */

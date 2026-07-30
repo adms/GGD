@@ -15,17 +15,40 @@
  * `available:false`, and the champ-select simply hides the meta chrome and
  * behaves exactly as before (offline / bare `pnpm dev` never breaks pick flow).
  *
- * The crystal price for one unlock is a flat server constant (`CrystalUnlockCost`
- * in internal/wallet/meta.go), NOT the champion's M-COIN catalog price — the
- * catalog price only tells us whether a champion is *priced* (locked behind
- * currency) versus a free starter. Mirror the flat cost here so the button label
- * matches what the server actually deducts.
+ * THE PRICE COMES FROM THE SERVER (2026-07-30). One flat 藍水晶 cost applies to
+ * every champion that is not on the store doc's free list — owner:「所有英雄藍水
+ * 晶都是統一價，新上架預設也是一樣價格」 — and that number SHIPS in
+ * content/config/store.json (`championUnlockCost`), is overridden live by
+ * 後台 → 商店經濟, and reaches us on every wallet payload as `crystalUnlockCost`.
+ *
+ * ⚠️ THE SERVER HALF WAS BROKEN UNTIL #241, AND THIS COMMENT DID NOT KNOW.
+ * "editable from the admin console" was true of the console and false of the
+ * platform: the console wrote into the durable content overlay while the wallet
+ * charged a value it had read out of content/ once, at boot. Everything on THIS
+ * side already worked — the field rode the payload, the fallback was already a
+ * fallback — which is exactly why nothing here went red. If the number on the
+ * 解鎖 button ever stops tracking the console again, the failure is on the
+ * platform (apps/platform/internal/wallet/economy.go), not in this file.
+ *
+ * `CRYSTAL_UNLOCK_COST` below is now only the FALLBACK for a payload that never
+ * arrived. It used to be the price, which is why changing the price needed a
+ * client rebuild; a stale copy here now costs one wrong label on an offline
+ * client instead of a wrong charge.
+ *
+ * The catalog price map still tells us whether a champion is *priced* (locked
+ * behind currency) versus a free starter — that is a different question from
+ * how much one unlock costs.
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../platform/api";
 import { CRYSTAL_EARN_HINT } from "../../platform/currency";
 
-/** Flat crystal cost of one champion unlock — mirrors `CrystalUnlockCost`. */
+/**
+ * FALLBACK crystal cost of one champion unlock, used only until (or unless) a
+ * wallet payload arrives carrying the live `crystalUnlockCost`. Kept equal to
+ * the shipped content value by TestStarterRosterMatchesChampionPrices (Go), so
+ * an offline client still prints a number the server would honour.
+ */
 export const CRYSTAL_UNLOCK_COST = 300;
 
 /**
@@ -43,6 +66,12 @@ export { CRYSTAL_EARN_HINT };
 /** The slice of GET /wallet the champ-select meta chrome consumes. */
 export interface MetaWallet {
   crystal: number;
+  /**
+   * The live flat unlock price the SERVER will deduct. Absent/invalid payloads
+   * degrade to CRYSTAL_UNLOCK_COST rather than to 0 — a 0 here would render
+   * 「🔓 解鎖 (0 水晶)」 and make `canAfford` true for a broke account.
+   */
+  crystalUnlockCost: number;
   ownedChampions: string[];
   favourites: string[];
 }
@@ -64,13 +93,22 @@ export function normalizeWallet(raw: Partial<MetaWallet> | null | undefined): Me
   const crystalRaw = raw?.crystal;
   const crystal =
     typeof crystalRaw === "number" && Number.isFinite(crystalRaw) ? Math.max(0, Math.floor(crystalRaw)) : 0;
+  const costRaw = raw?.crystalUnlockCost;
+  // A missing / non-finite / negative cost falls back to the compiled-in
+  // constant. NOT to 0: an old platform that does not send the field must not
+  // advertise free unlocks. 0 IS accepted when the server really sends it —
+  // the owner may legitimately set the flat price to 0.
+  const crystalUnlockCost =
+    typeof costRaw === "number" && Number.isFinite(costRaw) && costRaw >= 0
+      ? Math.floor(costRaw)
+      : CRYSTAL_UNLOCK_COST;
   const owned = Array.isArray(raw?.ownedChampions)
     ? raw.ownedChampions.filter((x): x is string => typeof x === "string")
     : [];
   const favourites = Array.isArray(raw?.favourites)
     ? raw.favourites.filter((x): x is string => typeof x === "string")
     : [];
-  return { crystal, ownedChampions: owned, favourites };
+  return { crystal, crystalUnlockCost, ownedChampions: owned, favourites };
 }
 
 interface RawCatalogChampion {
@@ -191,6 +229,8 @@ export function sortFavouritesFirst<T extends { id: string }>(
 /** The resolved meta state the hook exposes to the view. */
 export interface MetaData {
   crystal: number;
+  /** live flat unlock cost from the platform (CRYSTAL_UNLOCK_COST until it lands) */
+  unlockCost: number;
   owned: ReadonlySet<string>;
   favourites: ReadonlySet<string>;
   prices: PriceMap;
@@ -198,6 +238,7 @@ export interface MetaData {
 
 const EMPTY_DATA: MetaData = {
   crystal: 0,
+  unlockCost: CRYSTAL_UNLOCK_COST,
   owned: new Set<string>(),
   favourites: new Set<string>(),
   prices: new Map<string, number>(),
@@ -212,6 +253,9 @@ const EMPTY_DATA: MetaData = {
 export function applyWallet(prev: MetaData, wallet: MetaWallet): MetaData {
   return {
     crystal: wallet.crystal,
+    // Re-read from the mutation response, not carried over from `prev`: an
+    // operator price change must reach the button without a reload.
+    unlockCost: wallet.crystalUnlockCost,
     owned: new Set(wallet.ownedChampions),
     favourites: new Set(wallet.favourites),
     prices: prev.prices,
@@ -273,6 +317,7 @@ export async function loadWalletMeta(deps: WalletMetaDeps = defaultDeps): Promis
       available: true,
       data: {
         crystal: wallet.crystal,
+        unlockCost: wallet.crystalUnlockCost,
         owned: new Set(wallet.ownedChampions),
         favourites: new Set(wallet.favourites),
         prices,
@@ -296,6 +341,12 @@ export interface WalletMetaHook {
   available: boolean;
   loading: boolean;
   crystal: number;
+  /**
+   * What ONE unlock costs right now, as the platform reports it. Every label
+   * and affordability check must read this, never CRYSTAL_UNLOCK_COST — the
+   * constant is the offline fallback baked into this value already.
+   */
+  unlockCost: number;
   owned: ReadonlySet<string>;
   favourites: ReadonlySet<string>;
   prices: PriceMap;
@@ -381,14 +432,14 @@ export function useWalletMeta(
       // the earn hint so the tap is answered instead of silently doing nothing
       // (task #213). Affordability lives here, the single source of truth the
       // 「解鎖」 button's disabled/dim styling also reads through `canAfford`.
-      if (!canAfford(data.crystal)) {
+      if (!canAfford(data.crystal, data.unlockCost)) {
         setError(null);
         setHint(CRYSTAL_EARN_HINT);
         return;
       }
       run(championId, () => mutators.unlock(championId));
     },
-    [run, mutators, data.crystal],
+    [run, mutators, data.crystal, data.unlockCost],
   );
 
   const toggleFavourite = useCallback(
@@ -406,6 +457,7 @@ export function useWalletMeta(
     available,
     loading,
     crystal: data.crystal,
+    unlockCost: data.unlockCost,
     owned: data.owned,
     favourites: data.favourites,
     prices: data.prices,

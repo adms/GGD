@@ -1,38 +1,94 @@
 {
   "id": "godie-efur.passive",
   "schema": "ability@1",
-  "name": "13-00 殺氣",
+  "name": "13-00 念。攻防轉換",
   "icon": "assets/icons/abilities/godie-efur.passive.webp",
-  "description": "[輔助]\n45秒冷卻時間\n\n增加自身攻擊速度200%，但是每秒損失30點生命值，持續9秒。",
+  "description": "[天生・被動]\n冷卻 0 秒　耗魔 0 點\n\n阿福的念不是拿來打人的，是拿來排班的。**每一次普通攻擊**身上就會多亮一格，順序永遠是\n① 法術強度 +10% → ② 攻擊力 +10% → ③ 護甲 +10% → ④ 魔法抗性 +10% → 回到 ①。\n\n每一格**各自**持續 **1.0 秒**，而且**四格可以同時亮著** —— 前提是你的攻速撐得住 1 秒內連打四下。撐不住的話，這招看起來就只是他在做廣播體操。\n\n⚠️ 「輪到誰」不是擲骰子：系統只問「哪一格現在沒亮」，沒亮的先補；四格都亮著就補**最快要熄掉**的那一格。所以順序永遠是對的，不會出現連兩下都加法術強度的偷懶行為。",
   "slot": "PASSIVE",
-  "innateKind": "active",
+  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    45.0
+    0.0
   ],
   "manaCost": [
-    60.0
+    0.0
   ],
   "range": 0,
-  "effects": [
+  "effects": [],
+  "passive": {
+    "name": "念。攻防轉換",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "cycleBuff",
+                "cycleKey": "efur-nen",
+                "applyTo": "self",
+                "steps": [
+                  {
+                    "modifiers": [
+                      {
+                        "stat": "ap",
+                        "op": "pctAdd",
+                        "value": 0.1
+                      }
+                    ],
+                    "duration": 1.0
+                  },
+                  {
+                    "modifiers": [
+                      {
+                        "stat": "ad",
+                        "op": "pctAdd",
+                        "value": 0.1
+                      }
+                    ],
+                    "duration": 1.0
+                  },
+                  {
+                    "modifiers": [
+                      {
+                        "stat": "armor",
+                        "op": "pctAdd",
+                        "value": 0.1
+                      }
+                    ],
+                    "duration": 1.0
+                  },
+                  {
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": 0.1
+                      }
+                    ],
+                    "duration": 1.0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "vfxKey": "fx.prim.ki.pulse-lg",
+  "vfxLayers": [
     {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "pctAdd",
-          "value": 2.0
-        },
-        {
-          "stat": "healthRegen",
-          "op": "flat",
-          "value": -30.0
-        }
-      ],
-      "duration": 9.0
+      "vfxKey": "fx.prim.ki.pulse-lg",
+      "w3xScale": 0.7,
+      "alpha": 0.75
+    },
+    {
+      "vfxKey": "fx.fam.shine.ki.s150",
+      "delayMs": 90,
+      "w3xScale": 0.6,
+      "alpha": 0.6
     }
-  ],
-  "vfxKey": "fx.prim.blood.pulse-lg",
-  "castTimeSec": 0.3
+  ]
 }

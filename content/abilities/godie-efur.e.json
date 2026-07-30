@@ -1,33 +1,81 @@
 {
   "id": "godie-efur.e",
-  "name": "13-03 快步",
+  "schema": "ability@1",
+  "name": "13-03 龍頭戲畫。佈壁",
   "icon": "assets/icons/abilities/godie-efur.e.webp",
-  "description": "[輔助]\n45秒冷卻時間\n\n使出揍敵客家族的殺手絕技，能快步到指定單位身邊，可持續3秒。",
+  "description": "[地面指定]\n冷卻 18／16／14 秒　耗魔 80／100／120 點　衝刺上限 7.2 單位（6 個身位）　前搖 0.3 秒\n\n阿福整個人變成一堵會走路的牆，往你點的方向鏟過去，身後拖一條龍形衝擊波。\n\n· 衝刺：**0.28 秒**走完，最遠 **7.2 單位**，貼地（弧高 0），途中不吃碰撞\n· 直線傷害：從**你出發時的位置**沿面向拉一條 **長 7.2 × 寬 2.4 單位**的走廊（寬度正好兩個身位），裡面**最多 6 個**敵人各吃 **60／95／130 點物理 + 0.6 × 攻擊力**\n· 擊退：抵達點**半徑 3.0 單位**內的敵人，沿**你的面向**再被推 **4.5 單位 −（你和他的距離）**。因為你剛撞到他臉上，那個距離基本上是 0，所以推的就是 4.5。\n\n⚠️ 走廊是從**起點**量的，不是從終點。想撞誰，就要讓他站在你和落點之間 —— 這招懲罰的是站在路中間的人；站在終點的人只會被推走。",
   "slot": "E",
-  "castType": "dash",
-  "maxRank": 4,
+  "castType": "ground",
+  "maxRank": 3,
   "cooldown": [
-    45.0,
-    40.0,
-    35.0,
-    30.0
+    18.0,
+    16.0,
+    14.0
   ],
   "manaCost": [
     80.0,
-    120.0,
-    160.0,
-    200.0
+    100.0,
+    120.0
   ],
-  "range": 0.0,
+  "range": 7.2,
+  "radius": 3.0,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "dash",
+      "kind": "damageLine",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          60.0,
+          95.0,
+          130.0
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.6
+          }
+        ]
+      },
+      "length": 7.2,
+      "width": 2.4,
+      "aim": "facing",
+      "fromCaster": true,
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
       "mode": "toPoint",
-      "speed": 30.0,
-      "maxDistance": 11.0
+      "apexHeight": 0.0,
+      "durationSec": 0.28,
+      "throwDistance": 7.2,
+      "landRadius": 3.0,
+      "onLand": [
+        {
+          "kind": "knockback",
+          "distance": 4.5,
+          "speed": 15.0,
+          "from": "facing"
+        }
+      ]
     }
   ],
-  "vfxKey": "fx.prim.arcane.dash",
-  "schema": "ability@1",
+  "vfxKey": "fx.prim.physical.shockwave-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "delayMs": 70,
+      "w3xScale": 1.2
+    },
+    {
+      "vfxKey": "fx.fam.ground-dust.ki.s120",
+      "delayMs": 260,
+      "attachTo": "point",
+      "w3xScale": 1.1,
+      "alpha": 0.7
+    }
+  ],
   "castTimeSec": 0.3
 }

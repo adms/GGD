@@ -389,7 +389,39 @@ const SLOTS = [
     // `managed: false`. 64 = the measured 61 plus headroom for font-metric
     // variance across platforms (heights are reservations, i.e. upper bounds).
     height: 64,
-    width: 120,
+    // 120 → 170 (owner 2026-07-30: 「英雄 icon 要顯示在右下角等級金錢區域」).
+    // The portrait is a 36 px tile INSIDE this box, so only the width moves:
+    // 36 (tile) + 8 (gap) + 106.1 (the measured text column) + 20 (padding) =
+    // 170.1 → 170.
+    //
+    // ⚠️ 170 IS A CEILING SOMEONE ELSE SET. 190 was tried first (matching the
+    // equipment row above it) and it broke two panels that nobody would think
+    // to re-run: the #219 inward surfaces resolve against the rects really
+    // painted in a corner, so a wider box shrank the free interval and the
+    // intermission 評價 card stopped painting at 667×375 while the scoreboard
+    // drawer lost its room at 667×375 touch (roundReportLayout.test.ts and
+    // hudSurfaces.test.ts, both measured red at 176-190 and green at 170).
+    //
+    // ⚠️ THE HEIGHT DELIBERATELY DID NOT MOVE. On the #151 breakpoint (780×360)
+    // this corner's stack already runs 10 → 348 of 360 available px; a portrait
+    // stacked ABOVE the numbers instead of beside them would need ~+56, and the
+    // equipment bar at the top of the stack would land at y −44 — painted off
+    // the screen, i.e. failure shape ① with no guard able to see it, because the
+    // corner's own band check only compares neighbours and never the viewport.
+    // `hudBottomCluster.test.ts` asserts the whole bottom-right column fits at
+    // 780×360, which is the assertion that would have caught it.
+    width: 170,
+    // TOUCH STACKS INSTEAD OF WIDENING, and that is a measured constraint, not
+    // a preference. On coarse pointers this is the ONLY slot left in the
+    // bottom-right corner (the minimap re-homes top-left, the equipment bar
+    // top-right), so height is free — while WIDTH is not: `hudCornerColumnWidth`
+    // feeds the #219 inward surfaces, and taking the corner from 120 to 190 px
+    // squeezed the scoreboard drawer off a 667×375 phone entirely
+    // (hudSurfaces.test.ts + roundReportLayout.test.ts both went red, measured).
+    // So GoldLevel renders a column on touch: 44 portrait + 8 + the same text
+    // block = 116 tall inside the same 120 px.
+    touchWidth: 120,
+    touchHeight: 116,
     /**
      * ACCEPTS BEING PAINTED OVER — and making the slot managed is what forced
      * this to be said out loud. When the shop docks left, the ☰ RELOCATES into

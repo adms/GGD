@@ -68,8 +68,10 @@ function build(combatFeel: CombatFeelRules): MatchController {
 
 /** 一張「擊退整個關掉」的操作者表:門檻拉到 1.0 = 只有一擊必殺才推。 */
 const NO_KNOCKBACK: CombatFeelRules = Object.freeze({
-  knockback: { minPct: 1, maxBodies: 10, bodyUnit: 1.0 },
-  standstill: DEFAULT_COMBAT_FEEL.standstill,
+  ...DEFAULT_COMBAT_FEEL,
+  // 只動門檻這一格,其餘沿用出貨表 —— 這樣 KnockbackRules 之後再長欄位
+  // (authoredWins / longerDamageWins 就是這樣加進來的)不會再讓這個 fixture 編不過。
+  knockback: { ...DEFAULT_COMBAT_FEEL.knockback, minPct: 1, maxBodies: 10, bodyUnit: 1.0 },
 });
 
 describe("combat-feel 真的從 MatchController 走進 sim (cf-wiring)", () => {

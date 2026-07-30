@@ -53,6 +53,17 @@ import { VoxelBodyPage } from "./VoxelBodyPage";
 import { BaseBonusPage } from "./BaseBonusPage";
 import { FormVisualsPage } from "./FormVisualsPage";
 import { StatCapsPage } from "./StatCapsPage";
+// 戰鬥手感 / 對戰設定 — EAGER, same family as 屬性上限 / 基礎加成 and for the same
+// reason: both save through `putOverlayDoc`, the platform's admin-only durable
+// data/ overlay, so they are safe in production BY AUTHORISATION and must exist
+// in the production bundle. 戰鬥手感 in particular carries the one switch the
+// owner has not ruled on yet (卡住就自動接敵) — a page that only exists on
+// localhost cannot be the place he rules on it.
+import { CombatFeelPage } from "./CombatFeelPage";
+import { MatchConfigPage } from "./MatchConfigPage";
+import { StoreEconomyPage } from "./StoreEconomyPage";
+import { ConfigDocPage } from "./ConfigDocPage";
+import { specForPage } from "../configForms";
 import { VfxForgePage } from "./VfxForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
@@ -143,10 +154,36 @@ const NAV: NavItem[] = [
   // 屬性上限 — 這三頁是同一個問題的三個面:戰鬥系統 = 倍率,基礎加成 = 加數,
   // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
   { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_SYS },
+  // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條
+  // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
+  // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。
+  { page: "combatFeel", label: "戰鬥手感", emoji: "🥊", section: SEC_SYS },
+  // 對戰設定 — 一場對戰的**時鐘**(階段秒數、起始隊伍生命、火圈),和上面四頁的
+  // 「英雄在場上多強」是不同的軸。⚠️ 這份文件有 19 格沒有消費端,頁面上是唯讀的。
+  { page: "matchConfig", label: "對戰設定", emoji: "⏱️", section: SEC_SYS },
+  // 商店經濟 — 英雄解鎖統一價 + 免費名單 (owner 2026-07-30). 接在數值三頁後面,
+  // 因為它是同一個「後台可調」家族的成員但問的是另一個問題:前三頁決定英雄在場上
+  // 多強,這一頁決定玩家要打幾場才拿得到他。
+  { page: "storeEconomy", label: "商店經濟", emoji: "💎", section: SEC_SYS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
   // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。放在數值三頁之後,
   // 因為它調的是同一批英雄的**外觀**而不是數值。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
+  // E2 —— 四份原本完全沒有後台入口的 config。共用 ui/ConfigDocPage 一個元件，
+  // 欄位從 Zod schema 長出來、中文說明逐格手寫在 ../configForms。標籤寫在這裡
+  // （eager shell）而不是隨元件走，理由和 體素鑄造廠 那一行一樣：這樣它才活得過
+  // `vite build`。
+  // 畫質分級 / 特效回收 挨在一起，因為它們是同一個問題的兩半：一個決定「載進來
+  // 多重」，一個決定「打完之後留多少在記憶體裡」。owner 的原話是「一場就很燙」。
+  { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_SYS },
+  { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
+  // 濺血程度 —— 調性決定，不是效能決定。放在它們後面而不是中間。
+  { page: "gore", label: "濺血程度", emoji: "🩸", section: SEC_SYS },
+  // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
+  // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
+  // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。
+  { page: "shieldRules", label: "護盾規則", emoji: "🛡️", section: SEC_SYS },
+  { page: "stealthRules", label: "隱形規則", emoji: "👻", section: SEC_SYS },
   // 鑄技工坊 (#205 / #230 / #272) —— 每支技能綁哪一個特效家族原型 + per-invocation
   // 參數。緊接在 變身外觀 後面,因為兩頁都是「看不看得出來」而不是「強不強」,
   // 而且兩頁都同樣是「w3x 有事實但沒人把它接上去」的那一類。
@@ -352,6 +389,10 @@ function Console(): React.JSX.Element {
   const narrow = useIsNarrow();
   const pendingCount = useApp((s) => s.pendingCount);
   const refreshPendingCount = useApp((s) => s.refreshPendingCount);
+  // E2 —— 畫質分級 / 特效回收 / 濺血程度 / 護盾規則。四個路由、一個元件、四份
+  // 標籤表。不是這幾個路由時回 null，所以 render 那邊不需要再列一次每一個 key
+  // （加第五頁時 render 那一行一個字都不用改）。
+  const configDocSpec = specForPage(page);
 
   /**
    * Poll the 帳號審核 queue for the nav badge (task #126).
@@ -596,6 +637,15 @@ function Console(): React.JSX.Element {
             {page === "formVisuals" && <FormVisualsPage />}
             {page === "vfxForge" && <VfxForgePage />}
             {page === "statCaps" && <StatCapsPage />}
+            {page === "combatFeel" && <CombatFeelPage />}
+            {page === "matchConfig" && <MatchConfigPage />}
+            {page === "storeEconomy" && <StoreEconomyPage />}
+            {/*
+              E2 —— 四份原本沒有後台入口的 config，共用同一個 schema 驅動的元件。
+              路由 key 和 `configForms.ts` 裡 spec 的 `page` 一字不差；對不上的話
+              `specForPage` 回 null，下面這一行就什麼都不畫（而不是畫一個空表單）。
+            */}
+            {configDocSpec !== null && <ConfigDocPage spec={configDocSpec} />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

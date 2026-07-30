@@ -472,3 +472,159 @@ func TestHeroNumberRePortParity(t *testing.T) {
 	// 四位數仍然無效 —— 加寬不是取消上限。
 	assert.Equal(t, "", heroNumberOfName("1000-01 不存在"), "a 4-digit hero number is still malformed")
 }
+
+// ------------------------------------- the transform BUTTON, not just the table --
+
+// transformDoc is the `transform` block champion@1 carries (schema/champion.ts).
+// Only the fields this guard reads are declared.
+type transformDoc struct {
+	Transform *struct {
+		Role           string `json:"role"`
+		CounterpartID  string `json:"counterpartId"`
+		TriggerAbility *struct {
+			Rawcode string `json:"rawcode"`
+			Name    string `json:"name"`
+		} `json:"triggerAbility"`
+	} `json:"transform"`
+	ModelKey string `json:"modelKey"`
+}
+
+// abilityEffectsDoc is an ability@1 read for its EFFECT LIST only.
+type abilityEffectsDoc struct {
+	Name    string `json:"name"`
+	Effects []struct {
+		Kind string `json:"kind"`
+	} `json:"effects"`
+}
+
+// championEmbeddedDoc is the SHIPPED SECOND COPY — a champion doc's denormalised
+// `abilities.Q/W/E/R`. Read on purpose: the standalone doc is what the sim
+// registers, but the embedded copy is what every raw-doc consumer renders (the
+// codex, 內容管理, and apps/editor's PreviewController, which passes
+// `overrideAbilities: true` and shows the embedded copy WHOLE). A transform
+// wired in only one of the two is half-shipped.
+type championEmbeddedDoc struct {
+	Abilities map[string]abilityEffectsDoc `json:"abilities"`
+}
+
+func readJSONFile[T any](t *testing.T, path string) T {
+	t.Helper()
+	var out T
+	raw, err := os.ReadFile(path) // #nosec G304 -- fixed repo-relative content path
+	require.NoErrorf(t, err, "read %s", path)
+	require.NoErrorf(t, json.Unmarshal(raw, &out), "parse %s", path)
+	return out
+}
+
+func hasChampionFormEffect(d abilityEffectsDoc) bool {
+	for _, e := range d.Effects {
+		if e.Kind == "championForm" {
+			return true
+		}
+	}
+	return false
+}
+
+// whitelist-visible-transform-fires: A TRANSFORM THAT CHANGES THE MODEL MUST BE
+// WIRED TO A `championForm` EFFECT.
+//
+// THE BUG THIS EXISTS FOR (L1, 2026-07-30). 06-04 傑桑變化 (`A0Y1`) is one of only
+// FIVE of the map's 26 pairs whose alternate body wears a DIFFERENT mesh —
+// godie-ucrl `champ.thorne` → godie-u034 `imported.herobiggon`. Everything that
+// DESCRIBES the morph was already correct and self-consistent: the w3x extractor
+// emitted the pair, championForms.ts carried it with its 7/14/21s durations, both
+// champion docs carried a `transform` block naming each other, the ability was
+// named 傑桑變化 and its description said 「強制讓身體成長為數十年後的面貌」.
+// The one thing missing was the only thing that does anything: the ability's own
+// `effects` array held the importer's placeholder (`applyBuff maxHealth +300 for
+// 3s`) and NO `championForm`, so pressing R granted a 3-second health buff and
+// the player never changed shape. CLAUDE.md failure mode ② — 算出來了但從沒送到.
+//
+// Not one gate could see it. TestStarterRosterHasNoAlternateForms asks only that
+// the roster holds the BASE; championForms.test.ts re-reads the extractor
+// fixture, which is upstream of content entirely; the castability sweep counts a
+// measurable effect and the placeholder buff IS one. The table said the morph
+// existed; nothing asked the BUTTON.
+//
+// SCOPE: model-changing pairs on the roster only, and deliberately so. Whether
+// the ~20 same-mesh pairs should also morph is task #119's open design question
+// (a same-mesh morph is a stat/kit swap with no silhouette change, which the
+// owner has not ruled on). Where the mesh DIFFERS there is no question left: the
+// morph is the visible payoff, and a placeholder buff in its place is a defect.
+// The set is computed from content, never listed, so a re-import that gives some
+// other pair a distinct mesh is covered the day it lands.
+func TestStarterVisibleTransformsActuallyMorph(t *testing.T) {
+	testkit.Cover(t, "whitelist-visible-transform-fires")
+
+	root := contentRoot()
+	if _, err := os.Stat(filepath.Join(root, "champions")); err != nil {
+		t.Skipf("content tree not present at %s — skipping transform wiring check", root)
+	}
+	slots := []string{"passive", "q", "w", "e", "r", "ex"}
+
+	checked := 0
+	for _, id := range curation.StarterSet().Champions {
+		base := readJSONFile[transformDoc](t, filepath.Join(root, "champions", id+".json"))
+		if base.Transform == nil || base.Transform.Role != "base" ||
+			base.Transform.CounterpartID == "" || base.Transform.TriggerAbility == nil {
+			continue
+		}
+		altPath := filepath.Join(root, "champions", base.Transform.CounterpartID+".json")
+		if _, err := os.Stat(altPath); err != nil {
+			continue // the importer never shipped the alternate body
+		}
+		alt := readJSONFile[transformDoc](t, altPath)
+		if alt.ModelKey == base.ModelKey {
+			continue // same mesh — see SCOPE above
+		}
+
+		want := base.Transform.TriggerAbility.Name
+		embedded := readJSONFile[championEmbeddedDoc](t, filepath.Join(root, "champions", id+".json"))
+
+		foundSlot := ""
+		for _, slot := range slots {
+			p := filepath.Join(root, "abilities", id+"."+slot+".json")
+			if _, err := os.Stat(p); err != nil {
+				continue
+			}
+			if readJSONFile[abilityEffectsDoc](t, p).Name == want {
+				foundSlot = slot
+				break
+			}
+		}
+		require.NotEmptyf(t, foundSlot,
+			"%s (%s) morphs into %s, which wears a DIFFERENT mesh (%s → %s), but no standalone "+
+				"ability doc of %s is named %q — the transform has no button at all",
+			id, base.ModelKey, base.Transform.CounterpartID, base.ModelKey, alt.ModelKey, id, want)
+
+		standalone := readJSONFile[abilityEffectsDoc](t,
+			filepath.Join(root, "abilities", id+"."+foundSlot+".json"))
+		assert.Truef(t, hasChampionFormEffect(standalone),
+			"content/abilities/%s.%s.json (%s, rawcode %s) carries NO `championForm` effect, so pressing it "+
+				"CANNOT change the body — and this pair is one where the change is VISIBLE (%s → %s). "+
+				"Add {\"kind\":\"championForm\",\"to\":\"alternate\",\"durationSec\":<rank-1 ahdu>} "+
+				"(or \"toggle\" for a w3x toggle). This is exactly how 06-04 傑桑變化 shipped inert.",
+			id, foundSlot, want, base.Transform.TriggerAbility.Rawcode, base.ModelKey, alt.ModelKey)
+
+		if mirror, ok := embedded.Abilities[strings.ToUpper(foundSlot)]; ok {
+			assert.Truef(t, hasChampionFormEffect(mirror),
+				"content/champions/%s.json abilities.%s (the SHIPPED SECOND COPY) has no `championForm` "+
+					"while the standalone doc does — the codex, 內容管理 and the editor preview all render "+
+					"this copy, so they would show a transform ability that does something else",
+				id, strings.ToUpper(foundSlot))
+		}
+		checked++
+	}
+
+	// The set must not be able to empty itself: a rename of `modelKey`, of the
+	// `transform` block, or of the trigger name would make every loop body above
+	// `continue` and leave a green suite asserting nothing (CLAUDE.md failure
+	// mode ③). Four model-changing pairs are on the roster today —— #06 傑富力士,
+	// #18 南野秀一, #25 拳四郎, #58 皮卡丘. #61 百連我殺 is a fifth pair in the map
+	// but its base godie-u012 is not on the roster.
+	require.GreaterOrEqualf(t, checked, 4,
+		"only %d model-changing transform pair(s) were reachable from the roster — expected at least 4. "+
+			"Either a champion was dropped, or the `transform`/`modelKey`/triggerAbility shape this guard "+
+			"reads has changed and it is now checking nothing",
+		checked)
+}

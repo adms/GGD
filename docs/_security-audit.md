@@ -205,25 +205,57 @@ Attack-class order within each severity: **injection → DoS/DDoS → auth/sessi
 - **Recommended test:** In a temp content root, create a symlink to a file outside the root, request it, assert 404/`next()` (not the external bytes). Add an encoded-traversal (`%2e%2e/`) case asserting refusal.
 - **Recommended fix:** After `resolve()`, call `realpathSync` (or `fs.promises.realpath`) and re-check `startsWith(rootDir+sep)` before `statSync`/`createReadStream`; on any realpath error fall through to `next()`. Apply to both the content and blizzard-overlay roots.
 
-### F-18 · auth/session/secrets · platform · DEFERRED
-**User/email enumeration via distinct registration conflict responses (no app-layer per-IP register limit).**
+### F-18 · auth/session/secrets · platform · PARTIALLY MITIGATED, RESIDUAL ACCEPTED (revised 2026-07-30)
+**Account enumeration via `/auth/register`. Register is NOT enumeration-safe; the #174 invite gate is what protects a networked deploy.**
 
 - **Vector:** user-enumeration.
-- **Location:** `apps/platform/internal/auth/service.go:120-135` ("username is already taken" vs "email is already registered").
-- **Current mitigation:** Optional `GGD_REGISTER_RATE_LIMIT` global cap + edge per-IP throttle. Login itself is enumeration-safe (dummy-hash constant-shape response, `service.go:60`).
-- **Gap:** Register returns two distinguishable 409s, letting an attacker enumerate registered usernames and emails. The username `SETNX` short-circuits before argon2, so a taken username replies measurably faster (a timing oracle). No per-IP app throttle → enumeration scales.
-- **Recommended test:** Assert register returns one generic conflict code/message for both collisions; timing-parity test that taken-username and free-username calls are within a small delta.
-- **Recommended fix:** Collapse both into one opaque error (e.g. "username or email is unavailable"); perform the argon2 hash before the uniqueness reply to equalize timing; add a per-IP register limiter alongside the global cap.
+- **Location:** `apps/platform/internal/auth/service.go` — `Register`, `ErrRegistrationConflict`.
+- **⚠️ Correction to the previous revision of this entry.** It described the finding as "two distinguishable 409s" and implied that merging them plus timing parity would close it. **Both halves shipped, and the oracle stayed fully open** — verified by running the attack against the built router, not by reading the diff. The reason is that an attacker never needs the 409 to name a field: they pair the value under test with a counterpart they know is fresh and read the **status code**.
 
-### F-19 · auth/session/secrets · platform · DEFERRED
-**Access-token issuer/audience are stamped but never verified.**
+  ```
+  POST /auth/register {username:"victim",  email:"<fresh>"}    409  -> victim IS registered
+  POST /auth/register {username:"<fresh>", email:"<fresh>"}    201  -> that name is free
+  POST /auth/register {username:"<fresh>", email:"victim@…"}   409  -> that address IS registered
+  POST /auth/register {username:"<fresh>", email:"<fresh>@…"}  201  -> that address is free
+  ```
+
+  Merging the two 409s removes only information the attacker already had (they chose which field was fresh); equalising 409-vs-201 latency hides nothing that a status code already announces. Information gain of both fixes against this attacker ≈ 0. **They are still worth keeping** — they stop a conflict reporting *which* of two submitted values was taken, and they keep the cached and durable code paths from drifting into two different answers — they just are not what closes enumeration.
+
+- **Why there is no clean fix here.** The standard answer is "always 201, send a confirmation email, the colliding party simply gets no mail". **This platform has no mail channel at all** (`grep -riE 'smtp|sendgrid|mailgun|net/smtp|sendmail'` over `apps/platform` → 0 hits; no mail dependency in `go.mod`). On a synchronous endpoint with no out-of-band channel, a caller who submits an identity either gets an account or does not, and that is the answer.
+
+- **What actually mitigates it — the invite gate (#174).** `Register` evaluates the invite gate **before** the username/email reservation, so an un-invited caller is refused having revealed nothing. `config.resolveRequireInvite` defaults the gate **ON** for every non-loopback bind, so `ggd.adms.ai` is gated. Measured on a gated deploy: all four probes above return **byte-identical `403 invite_required`** (or `invite_invalid` with a guessed code). Attack surface for a stranger: **none**.
+
+- **Residual (accepted, measured):** a caller **holding a live invite code** still reads 201-vs-409 freely, and the probing is **unbounded** — a conflicting registration rolls the burn back, so the code stays 未使用. Measured: 6 consecutive 409 probes, code still `active`, still spends normally afterwards. In practice that attacker is someone the owner personally invited to a ~6-account family deploy, i.e. someone who already knows the membership list, which is why this is accepted rather than fixed.
+  - **Knob:** `GGD_BURN_INVITE_ON_CONFLICT` (`config.BurnInviteOnConflict` → `auth.Service.SetBurnInviteOnConflict`), **default OFF**. On, a conflicting registration **spends** the code, bounding the oracle at one answer per code the operator handed out. The price is that an honest family member who picks a taken name has to be sent a new code. Owner decision, not a security default.
+- **Rate limiting, unchanged:** `GGD_REGISTER_RATE_LIMIT` is a **global** (not per-IP) cap and defaults to **0 = off**; per-IP register throttling is nginx's job (`auth`/`server` may not read a caller address — `internal/server/devsurface_test.go`).
+- **Login is a separate question, is fine, and was TWO-THIRDS UNGUARDED until 2026-07-30.** Unknown user pays the same argon2 against `dummyHash` and returns the identical `invalid credentials` body — and, on a gated deploy, so do a *pending*, *denied* and *banned* account. All of that is true of the shipped code; only the first *body* claim had a test. `TestLoginConstantShape` compares response bytes and says so in its own doc comment ("Wall-clock timing is not asserted").
+  - **Timing half — measured:** delete `argon2id.ComparePasswordAndHash(password, s.dummyHash)` from the `account.ErrNotFound` branch of `Service.Login` — removing the equalisation outright — and the entire `./internal/auth/...` suite stayed GREEN. With the line gone, an unknown username answered in **400 µs** against **4.79 ms** for a real account: one whole argon2 of readable difference. Closed by `TestLoginUnknownUserPaysTheHash`.
+  - **Ordering half — measured 2026-07-30, and this one is the bigger of the two:** `Service.Login` compares the password BEFORE it consults `a.Banned` / `a.IsApproved()`. Hoist those two blocks above the hash — the natural "fail fast, don't pay argon2 for an account that can't log in anyway" refactor — and `go test ./internal/auth/... ./internal/server/... ./internal/admin/...` **stayed entirely GREEN** (three packages, ~0 red). Under that mutation an anonymous caller with *no password and no invite code* reads the membership list directly:
+
+    ```
+    wrong password, nosuchperson   -> HTTP 401 unauthorized
+    wrong password, pendinguser    -> HTTP 403 account_pending
+    wrong password, denieduser     -> HTTP 403 account_denied
+    wrong password, banneduser     -> HTTP 403 account_banned
+    wrong password, approveduser   -> HTTP 401 unauthorized
+    ```
+
+    That is worse than register's oracle, because the #174 invite gate does not cover `/auth/login` at all, and it hits **every** account on the family deploy (`GGD_REQUIRE_APPROVAL=1`, so everyone is `pending` until the owner taps approve). The existing pending/denied/banned login tests could not see it: they all log in with the CORRECT password, which returns the same 403 either way (failure form ④). Closed by the new `TestLoginRefusesTheSameWayWhateverTheAccountStatusIs`. Shipped behaviour was always correct; the *guard* was missing.
+- **Guards (all mutation-verified 2026-07-30 — each mutation applied by hand and confirmed RED):**
+  - `auth/register_oracle_residual_test.go` — `TestInviteGateIsTheEnumerationBoundary` (four probes byte-identical on a gated deploy; red when the Redeem block is moved below the SETNX pair — measured under that mutation the census leaks **409 for a registered identity vs 403 for a free one, to a caller with NO invite code**), `TestOneLiveInviteCodeBuysUnboundedEnumeration` (witness for the residual), `TestBurnInviteOnConflictPricesEachProbe` (red when the knob is ignored), `TestRegisterOracleIsOpenWithoutTheInviteGate` (witness that fails if this entry ever goes stale in the other direction).
+  - `auth/register_enumeration_test.go` — the byte/timing/round-trip guards, plus `TestReleaseReservationsKeepsOtherAccountsReservations`. Round-trip counts measured level at **3 / 3 / 3** (username / email / both taken); the timing guard measures one argon2 at ~3.3 ms against a ~0.12 ms no-hash floor.
+  - `auth/login_enumeration_test.go` — `TestLoginUnknownUserPaysTheHash`, the timing half `TestLoginConstantShape` explicitly does not assert. Carries its own resolution probe, so it fails as *inconclusive* rather than passing when the harness cannot see one argon2. Plus `TestLoginRefusesTheSameWayWhateverTheAccountStatusIs` — the wrong-password census across *unknown / pending / denied / banned / approved* must be byte-identical 401, red under the hoist-the-status-check mutation above; it carries the four correct-password answers as positive controls so it cannot be satisfied by a Login that has simply stopped enforcing the gates.
+- **Still open if the owner wants it closed:** per-IP register throttling at the edge, and a decision on `GGD_BURN_INVITE_ON_CONFLICT`.
+
+### F-19 · auth/session/secrets · platform · FIXED (GH#180, verified 2026-07-30)
+**~~Access-token issuer/audience are stamped but never verified.~~ Both are now minted AND required.**
 
 - **Vector:** jwt-claim-validation.
-- **Location:** `apps/platform/internal/auth/jwt.go:19-44` (`MintAccess` sets Issuer; `VerifyAccess` checks alg+exp+subject only).
-- **Current mitigation:** HS256 pinned via `jwt.WithValidMethods` (alg=none and RS→HS confusion rejected), `jwt.WithExpirationRequired`, `Subject != ""` enforced. The JWT secret is currently single-purpose and distinct from the game HMAC secret.
-- **Gap:** `MintAccess` stamps Issuer `ggd-platform` but `VerifyAccess` never asserts `iss`, and no `aud` is minted/checked. Not reachable today (single-purpose secret), but the moment that secret is reused for a second token type (download/WS/one-time), the absent `aud` check is what would let the two be swapped.
-- **Recommended test:** A token signed with the same secret but a foreign `iss`/`aud` is rejected by `VerifyAccess`; retain the alg=none / non-HS256 rejection test.
-- **Recommended fix:** Mint an Audience (e.g. `ggd-access`) and add `jwt.WithIssuer("ggd-platform")` + `jwt.WithAudience("ggd-access")` to the parser options.
+- **Location:** `apps/platform/internal/auth/jwt.go` — `TokenIssuer`, `AccessAudience`, `MintAccess`, `VerifyAccess`.
+- **⚠️ This entry described the fix as pending long after it shipped.** The gap below was real when written; it was closed by #180 and this entry was not updated, which is the same class of stale claim as the F-18 correction above — an audit that under-reports its own coverage teaches the next reader to distrust the entries that *are* current.
+- **Original gap (now closed):** `MintAccess` stamped Issuer `ggd-platform` but `VerifyAccess` never asserted `iss`, and no `aud` was minted or checked. That became reachable the moment the JWT secret stopped being single-purpose: #209's one-tap approve links (`internal/approvelink`) are HMAC'd with the **same** `JWT_SIGNING_SECRET`, so "valid MAC under the platform secret" no longer implied "this is a session".
+- **What shipped:** `MintAccess` stamps `aud: ggd:access:v1` (namespaced like approvelink's `ggd:approve:v1`) and `iss: ggd-platform`; `VerifyAccess` adds `jwt.WithIssuer(TokenIssuer)` + `jwt.WithAudience(AccessAudience)` alongside the pre-existing `WithValidMethods` (HS256 pinned, alg=none rejected) and `WithExpirationRequired`. Both options treat a **missing** claim as failure, so pre-`aud` tokens are refused rather than grandfathered; the opaque Redis refresh token is untouched, so clients self-heal via the normal 401 → `/auth/refresh` path.
+- **Guards (mutation-verified 2026-07-30, mutations applied by hand):** `auth/token_purpose_test.go`. Replacing `jwt.WithAudience(AccessAudience)` with a no-op parser option turns **3** subtests of `TestForeignPurposeTokensAreRefused` red (`audience of another purpose`, `no audience at all`, `empty audience list`); dropping `jwt.WithIssuer(TokenIssuer)` turns **2** red (`issuer of another platform`, `no issuer at all`); removing the `Audience:` field from `MintAccess` turns `TestAccessTokenIsStampedWithPurpose` red. `TestApproveLinkAndAccessTokenAreNotInterchangeable` pins the cross-use both ways.
 
 ### F-20 · auth/session/secrets · infra · DEFERRED
 **Committed dev-insecure JWT/game/redis secrets in `values-local.yaml` (no guardrail against public use).**
@@ -308,8 +340,8 @@ applied in this docs pass.
 | F-11 | `apps/platform/internal/auth/service.go:120-152` | Per-IP register limiter (shared with F-02-argon2); cap total pending accounts; TTL/reaper for never-approved reservations. |
 | F-02-argon2 | `apps/platform/internal/auth/service.go:137`, `server.go:228` | Per-IP register limiter mirroring Login; weighted semaphore (~`NumCPU/2`) bounding concurrent argon2; keep the global cap as defense-in-depth only. |
 | F-12 | `apps/platform/internal/auth/middleware.go:44-50`; `nginx.conf:46` | Scope `?token=` to the WS handshake handler; `auth.Middleware` reads the `Authorization` header only; nginx `log_format`/`map` masks `token=`. |
-| F-18 | `apps/platform/internal/auth/service.go:120-135` | One opaque conflict for username+email; argon2 before the uniqueness reply (timing parity); per-IP register limiter. |
-| F-19 | `apps/platform/internal/auth/jwt.go:19-44` | Mint an `aud` (`ggd-access`); add `jwt.WithIssuer("ggd-platform")` + `jwt.WithAudience("ggd-access")` to `VerifyAccess`. |
+| F-18 | `apps/platform/internal/auth/service.go` (`Register`, `ErrRegistrationConflict`, `Login`) | ~~One opaque conflict + timing parity~~ — **both shipped and the oracle stayed open** (a fresh counterpart field makes 201-vs-409 the answer; see the revised F-18). What mitigates it is the #174 invite gate running before the reservation. `Login`'s hash-before-status ordering is the other half and is now guarded. Remaining: per-IP register limiter at the edge; owner decision on `GGD_BURN_INVITE_ON_CONFLICT`. |
+| F-19 | `apps/platform/internal/auth/jwt.go` | ~~Mint an `aud`; add `jwt.WithIssuer` + `jwt.WithAudience` to `VerifyAccess`.~~ **SHIPPED (GH#180)** — `aud` is `ggd:access:v1`, both options are on the parser, guards mutation-verified. Nothing to reconcile; see F-19. |
 | F-21 (platform half) | `apps/platform/internal/auth/handlers.go:39-40,54,73` | Deliver the refresh token as an httpOnly + Secure + SameSite=Strict cookie instead of the JSON body. |
 
 ### Reconcile — infra / deploy
@@ -355,8 +387,9 @@ reconcile wave lands. 32 tests: 8 added-now, 24 deferred.
 | SSRF | platform | F-08 | provider URL to `127.0.0.1`/`169.254.169.254` → refused, no key leak | deferred |
 | auth (token-in-url) | platform | F-12 | `?token=` honored for WS handshake only; nginx log masks `token=` | deferred |
 | auth (header-spoof) | platform | F-13 | `ClientIP` ignores `X-Real-Ip` unless peer ∈ trusted-proxy CIDR | deferred |
-| auth (enumeration) | platform | F-18 | one generic register conflict + timing parity | deferred |
-| auth (jwt-claims) | platform | F-19 | foreign `iss`/`aud` token rejected by `VerifyAccess` | deferred |
+| auth (enumeration) — register | platform | F-18 | un-invited caller: four probes byte-identical `403` on a gated deploy. Code holder: oracle still open (accepted residual, knob `GGD_BURN_INVITE_ON_CONFLICT`) | partial |
+| auth (enumeration) — login | platform | F-18 | wrong-password census across unknown / pending / denied / banned / approved is byte-identical `401`; guarded by `TestLoginRefusesTheSameWayWhateverTheAccountStatusIs` (was unguarded until 2026-07-30) | yes |
+| auth (jwt-claims) | platform | F-19 | foreign `iss`/`aud` token rejected by `VerifyAccess` | **done** — `auth/token_purpose_test.go` |
 | XSS (dom) | client | F-06 | `makeChampionNode` writes name as `textContent`, no element parsed | deferred |
 | CSP | infra | F-15 | edge `/` CSP has restrictive `default-src`/`script-src`; inline `<script>` blocked | deferred |
 | attack-surface | client | F-16 | `dist/*.html` == only `index.html`; `/model-budget.html` → 404 (prod) | deferred |

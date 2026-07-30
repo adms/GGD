@@ -17,9 +17,58 @@
  * 未上色的狀態,而且看起來像「解析完成:沒有顏色」。
  */
 import type { FormVisual } from "@ggd/shared/content";
+import { counterpartFormId } from "@ggd/shared/content";
 import type { ModelTint } from "./modelTint";
 import { isIdentityTint } from "./modelTint";
 import type { FormAttachmentSpec } from "./ChampionView";
+
+/**
+ * 「這個座位**現在**穿的是哪一隻」—— 基本型是選角鎖定的那一隻,變身態是它的
+ * `Emeu` 對半。
+ *
+ * ---------------------------------------------------------------------------
+ * #223 —— 為什麼這是一個被共用的函式,而不是各自寫一次
+ * ---------------------------------------------------------------------------
+ * `seat.championId` 在選角那一刻凍住,**變身不會改它**(同一個 seat、同一個
+ * entity,只換 body)。所以任何拿 seat 直接去查「這具身體該長什麼樣」的解析器,
+ * 對變身態一律答錯。那樣的縫有四條:`championTintFor`、`voxelSkinFor`、
+ * `modelOverrideFor`、`modelDocFor`,前三條收 `EntityViewState`(拿得到 FORM
+ * bits),第四條只收 `(modelKey, seatId, formIndex)` —— 因為花朵 / 守衛 /
+ * 選角預覽都沒有 entity。四條都經由這一個函式做形態跳轉,實作住在
+ * `championBody.ts`(GameApp 只餵資料),那裡有真的守衛。
+ *
+ * ⚠️ 這句「四條都經由這一個函式」**在 2026-07-30 之前是假的**:`championTintFor`
+ * 當時在 GameApp 直接寫 `championTintForId(championIdForSeat(e.seatId))`,
+ * 一次形態跳轉都沒做,而這段註解已經先宣稱它做了。現在四條是真的四條,
+ * 而且各有一條會紅的守衛(`formAwareModelResolve.test.ts` 第 2 組)。
+ *
+ * ⚠️ 事實更正(2026-07-30 重量,原本這裡寫反了):
+ * 本檔曾寫「#06 傑·富力士 的 `godie-u034` 與 #61 克勞薩 的 `godie-u011` 都指向
+ * `champ.thorne`,所以 overlay 會把本體的 WC3 模型裝回變身態身上」。**出貨內容
+ * 正好相反**:`godie-ucrl`(本體)= `champ.thorne`、`godie-u034`(變身)=
+ * `imported.herobiggon`;`godie-u012`(本體)= `champ.thorne`、`godie-u011`
+ * (變身)= `champ.skin.barbarian`。穿 `champ.thorne` 的是**本體**。而
+ * `imported.herobiggon` 不是替身,`resolve()` 第一行就 return,#06 那個「缺陷」
+ * 在物理上不可能發生。26 對逐對重量的結果、以及形態感知**必須**同時帶兩條
+ * 「缺省即繼承」保底(否則 5 對會從 WC3 模型掉成方塊人)的理由,
+ * 寫在 `championBody.ts` 的檔頭與 `formAwareModelResolve.test.ts`。
+ *
+ * 這個函式故意留在 render/views 底下(純函式、沒有 Babylon、沒有 HUD store),
+ * 測試才能直接跑出貨的那一份,而不是在測試裡重寫兩行(第⑤號故障形態)。
+ *
+ * @param seatedChampionId 座位鎖定的英雄;null/"" = 還沒選角。
+ * @param formIndex `formIndexFromFlags` 解出來的 0..3。0 = 本體。
+ * @returns 沒有對半可換時回 `seatedChampionId` 本身 —— 「這一隻沒有變身態」
+ *          不是錯誤,是 113 位裡 87 位的常態。
+ */
+export function formAwareChampionId(
+  seatedChampionId: string | null | undefined,
+  formIndex: number,
+): string | null {
+  if (!seatedChampionId) return null;
+  if (formIndex === 0) return seatedChampionId;
+  return counterpartFormId(seatedChampionId) ?? seatedChampionId;
+}
 
 /**
  * 英雄自己的 tint × 變身態的 tint。

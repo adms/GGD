@@ -129,6 +129,19 @@ type Config struct {
 	// flood #174 exists to stop. Defence in depth: burn a code, THEN be seen.
 	RequireApproval bool
 
+	// BurnInviteOnConflict keeps an invite code SPENT when the registration that
+	// burned it then hit a username/email conflict (GGD_BURN_INVITE_ON_CONFLICT,
+	// default OFF = hand the code back, which is what every deploy did before
+	// this existed).
+	//
+	// It is the #179 residual knob. The invite gate closes registration
+	// enumeration for a caller with NO code; a caller holding a live one can
+	// still ask "is <name> registered?" without limit, because each conflicting
+	// probe returns their code. Turning this on makes each probe cost a code.
+	// The price is that an honest family member who picks a name already taken
+	// has to be sent a new one. Only consulted when RequireInvite is on.
+	BurnInviteOnConflict bool
+
 	// MaxPending bounds how many accounts may sit PENDING under the #126 approval
 	// gate at once (GGD_MAX_PENDING, default DefaultMaxPending). The gate turns
 	// every non-owner registration into a durable account file plus PERMANENT
@@ -395,6 +408,20 @@ func resolveRequireInvite(env, addr string) bool {
 		return false
 	}
 	return !loopbackOnlyAddr(addr)
+}
+
+// getenvTruthy reads an opt-IN boolean env var. Absence, emptiness and any
+// unrecognised value all mean false, so a typo turns a hardening switch OFF
+// rather than silently ON — the safe direction for a flag whose "on" state
+// costs a family member their invite code. It accepts the same vocabulary as
+// resolveRequireInvite / cmd/platform's envTruthy, so an operator only has to
+// learn one spelling of "yes" across the whole platform.
+func getenvTruthy(key string) bool {
+	switch strings.ToLower(strings.TrimSpace(os.Getenv(key))) {
+	case "1", "true", "yes", "on":
+		return true
+	}
+	return false
 }
 
 // resolveRequireApproval decides whether the #126 approval gate is ON, from
@@ -686,6 +713,7 @@ func Load() (Config, error) {
 		FullAssets:              ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
 		RequireInvite:           resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
 		RequireApproval:         resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
+		BurnInviteOnConflict:    getenvTruthy("GGD_BURN_INVITE_ON_CONFLICT"),
 		MaxPending:              getenvInt("GGD_MAX_PENDING", DefaultMaxPending),
 		PendingApprovalTTL:      resolvePendingTTL(os.Getenv("GGD_PENDING_TTL")),
 		NewAccountCrystals:      getenvInt("GGD_NEW_ACCOUNT_CRYSTALS", 1000),

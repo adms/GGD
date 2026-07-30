@@ -3,11 +3,26 @@
   "schema": "item@1",
   "name": "戰旗",
   "icon": "assets/icons/items/godie-i02h.webp",
-  "description": "積分獎勵\n施展需求魔力：300點\n技能冷卻時間：30秒\n效能\n點選施展提振士氣的怒吼-使附近的友軍攻擊力提昇100%，持續4秒\n使附近的友軍攻擊力增強35%\n\n解說\nThis is Sparta!!",
+  "description": "積分獎勵\n效能\n光環：周圍 9.17 範圍內的友軍攻擊力 +35%（含自己）\n\n解說\nThis is Sparta!!",
   "cost": 0,
   "tier": 5,
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "auras": [
+    {
+      "key": "warbanner-ad",
+      "radius": 9.17,
+      "affects": "ally",
+      "includeSelf": true,
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ]
+    }
+  ]
 }

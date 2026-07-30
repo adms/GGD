@@ -75,9 +75,19 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(VfxDefs.ids().length).toBeGreaterThanOrEqual(2);
     // `moon-combo` is #247's 者、皆、陣 combo window (war3map.j:34438) — the
     // first BUFF-polarity status doc the tree has ever carried.
+    // 2026-07-31 skill batch added three more, and the list is EXACT on purpose
+    // (an `arrayContaining` here would let a status doc go missing unnoticed):
+    //   berserk    59-00 初號機暴走 —— 方向盤被拔掉的 10 秒 (sim/berserk.ts)
+    //   curse      失手率 (WC3 `Acrs`) —— 攻擊方 fumble, NOT defender evasion
+    //   fang-stun  13-02/13-002 揍敵客牙突的暈眩
+    //   nen-banked 13-002 EX 燒掉的法力存款(spendMana.bankAs → damage.bankedBonus)
     expect(StatusEffects.ids().sort()).toEqual([
+      "berserk",
       "burnstun",
+      "curse",
+      "fang-stun",
       "moon-combo",
+      "nen-banked",
       "root",
       "slow25",
       "slow30",

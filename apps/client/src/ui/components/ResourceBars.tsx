@@ -1,4 +1,16 @@
-/** ResourceBars — local champion HP / mana (+shield) above the ability bar. */
+/**
+ * ResourceBars — local champion HP / mana (+shield), the TOP ROW of the
+ * bottom-centre cluster.
+ *
+ * ⚠️ IT NO LONGER PINS ITSELF. It used to be `position:absolute; bottom:128`
+ * while the ability bar 14 px below it pinned `bottom:14` — two unrelated
+ * numbers in two files whose DIFFERENCE (a measured 27 px on 2026-07-30) was
+ * the 「明顯的空隙」 the owner reported, and which nothing could hold at any
+ * other viewport or tile size. The distance is now ONE field
+ * (`barsToAbilitiesGapPx`) applied by ONE container — see ui/hud/BottomCluster
+ * and ui/hud/hudBottomCluster. This component is a plain flex child: it may
+ * have opinions about colour, not about position.
+ */
 import { useHud } from "../../net/RoomStore";
 import { PANEL_BG, PANEL_BORDER } from "../theme";
 
@@ -63,11 +75,9 @@ export function ResourceBars(): React.JSX.Element | null {
   if (maxHp <= 0) return null;
   return (
     <div
+      data-hud-cluster-row="resources"
       style={{
-        position: "absolute",
-        left: "50%",
-        bottom: 128,
-        transform: "translateX(-50%)",
+        position: "relative",
         width: 260,
         padding: "6px 8px",
         background: PANEL_BG,

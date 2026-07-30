@@ -33,7 +33,8 @@
           }
         ]
       },
-      "duration": 6.0
+      "duration": 6.0,
+      "absorbs": "magic"
     }
   ],
   "vfxKey": "fx.prim.arcane.nova-lg",

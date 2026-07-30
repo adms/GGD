@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "47b61a6de18e",
+  "hash": "ad8bc53881b1",
   "entries": [
     {
       "id": "fx.barkskin",
@@ -25,6 +25,12 @@
       "path": "vfx/fx.cinder-ward.json",
       "hash": "0be321e3dce6",
       "size": 692
+    },
+    {
+      "id": "fx.dragon-awaken",
+      "path": "vfx/fx.dragon-awaken.json",
+      "hash": "e227fae8a828",
+      "size": 750
     },
     {
       "id": "fx.ember-bolt",

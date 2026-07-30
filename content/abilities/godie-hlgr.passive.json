@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "03-00 相轉移裝甲",
   "icon": "assets/icons/abilities/godie-hlgr.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n遭受物理攻擊時有40%機率降低所有施加在煌身上的傷害75點，最低攻擊力不能低於12點。",
+  "description": "[被動]\n0秒冷卻時間\n\n科技世界的產物拒絕承認魔法存在。法師對著他放大絕，他的儀表板顯示「未偵測到輸入」。\n\n• 魔法傷害免疫 100%：任何 magic 類型的傷害一律歸零，畫面上會跳【免疫】\n• 物理傷害照吃、真實傷害（縮圈的火）照吃 —— 這件裝甲只認魔法\n• 硬控不免：暈眩、纏繞、減速照樣吃滿\n• 實作上是每 3 秒自動續期一次、每次覆蓋 3.2 秒，重疊 0.2 秒所以中間沒有破口\n• 沒有次數限制，戰鬥中整場都在\n• ⚠️ 但【開打前不生效】—— 儀表板要通電才會拒絕魔法。\n  選角、商店、回合開始前的那幾秒，你就是一般人",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -20,7 +20,24 @@
     "name": "03-00 相轉移裝甲",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onInterval",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "invulnerable",
+                "applyTo": "self",
+                "durationSec": 3.2,
+                "blocksDamage": "magic",
+                "blocksTrueDamage": false,
+                "blocksControl": false
+              }
+            ],
+            "internalCooldown": 3
+          }
+        ]
       }
     ]
   }

@@ -117,7 +117,22 @@ const ABILITY_GROUPS: readonly FieldGroup[] = [
       { path: "slot", label: "槽位", kind: "text", hint: "Q / W / E / R / EX / PASSIVE" },
       { path: "castType", label: "施放方式", kind: "text", hint: "targeted / skillshot / self / ground …" },
       { path: "icon", label: "圖示", kind: "text", hint: "content 相對路徑，需以 assets/ 開頭" },
-      { path: "vfxKey", label: "特效 key", kind: "text" },
+      {
+        path: "vfxKey",
+        label: "特效 key",
+        kind: "text",
+        hint: "主要特效（vfx/ 的 id）。有寫 vfxLayers 時，施法畫的是那一張表",
+      },
+      {
+        path: "vfxLayers",
+        label: "多層特效模板",
+        kind: "json",
+        hint:
+          "陣列，最多 6 層（上限本身在 鑄技工坊 可調）。每一層： " +
+          '{"vfxKey":"…","delayMs":220,"attachTo":"caster|point",' +
+          '"w3xScale":1.8,"alpha":0.85,"timeScale":2.4,"tint":[90,170,255]}。' +
+          "留空 = 沿用上面那個單一 vfxKey。格子清空要整個拿掉 key，不要填 0",
+      },
     ],
   },
   {

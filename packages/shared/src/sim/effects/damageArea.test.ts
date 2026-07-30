@@ -283,12 +283,22 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
       .flatMap((h) => h.effects)
       .filter((e): e is Extract<EffectDef, { kind: "damageArea" }> => e.kind === "damageArea");
 
-  it("the pool is 25 wide — a silent shrink back to 15 is a regression", () => {
+  it("the pool is 24 wide — a silent shrink back to 15 is a regression", () => {
     cover("co-spread-content");
     // #210: owner 「目前太少，很容易被抽完」. 15 -> 20. Pinned rather than
     // floored because the failure being guarded is a re-curation that quietly
     // drops entries, which a `>= 6` floor would sleep through.
-    expect(pool.length).toBe(20);
+    //
+    // 20 -> 24 (職業限定閘 lane, owner 2026-07-30): the four class legendaries
+    // 裂地巨斧 / 賢者的護身符 / 衝鋒重脛甲 / 穿甲弩 were added here BECAUSE this
+    // table is the only shipping path a tier-5 has — `craftRole: final` (the
+    // shop shelf) holds nothing above tier 2, so a legendary that is not in
+    // this table is content the player can never reach.
+    //
+    // ⚠️ The title used to read 「25 wide」 while the assertion said 20. That
+    // was a stale comment, not a second rule — corrected here rather than
+    // carried forward (CLAUDE.md 第三守則: 註解會說謊).
+    expect(pool.length).toBe(24);
   });
 
   it("近戰擴散 is a NON-EMPTY category — the thing owner asked for", () => {

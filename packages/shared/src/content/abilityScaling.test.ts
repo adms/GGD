@@ -142,7 +142,18 @@ describe("imported ability stat scaling", () => {
     for (const c of champs) {
       for (const e of amountEffects(c)) {
         for (const r of e.amount.ratios ?? []) {
-          const want = e.kind === "damage" && e.dtype === "physical" ? Stat.AttackDamage : Stat.AbilityPower;
+          // ⚠️ THE RULE IS `damageType`, NOT `kind`. This line used to read
+          // `e.kind === "damage" && …`, which quietly excluded every damage
+          // effect that is not literally kind `damage` — `damageLine` (task
+          // #210 近戰擴散 / 揍敵客 13-03 佈壁) and `damageArea`. A physical
+          // damageLine scaling off `ad` — the model's own rule, stated in this
+          // file's header — was therefore reported as a violation, and the
+          // "fix" the failure invites is to rewrite correct content to `ap`.
+          // Census over the shipped tree (2026-07-31): damage/magic→ap ×169,
+          // damage/physical→ad ×102, damageLine/physical→ad ×1, heal+shield
+          // (no damageType)→ap ×15. ZERO physical effects scale off anything
+          // but ad, so keying off `dtype` alone is both simpler and exact.
+          const want = e.dtype === "physical" ? Stat.AttackDamage : Stat.AbilityPower;
           expect(`${c.id}.${e.slot}:${r.stat}`).toBe(`${c.id}.${e.slot}:${want}`);
           expect(r.coeff).toBeGreaterThan(0);
           expect(r.coeff).toBeLessThanOrEqual(RATIO_MAX);

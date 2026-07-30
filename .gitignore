@@ -53,6 +53,11 @@ playwright-report/
 .env
 .env.*
 !.env.example
+
+# the off-machine backup's filled-in config (GH#123). docker/backup.env.example
+# IS committed; a real one is not — it names a destination host/bucket, and the
+# whole point of the file is that it is per-machine.
+backup.env
 deploy/**/secrets*.yaml
 
 # whole-tree snapshots background tasks drop in-repo (see vitest.config.ts)

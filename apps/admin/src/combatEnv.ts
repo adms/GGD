@@ -165,6 +165,10 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   intToMaxMana: { zh: "智慧 → 魔力", note: "每 1 點智慧增加的魔力上限（地圖 IntManaBonus=15，與暴雪相同）" },
   intToManaRegen: { zh: "智慧 → 回魔", note: "每 1 點智慧增加的每秒回魔（地圖 IntRegenBonus=0.07；暴雪 0.05）" },
   intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP（owner 設計值 1；魔獸三代沒有法強這根軸）" },
+  // #221 owner 2026-07-30。與 intToAbilityPower 一樣是 GGD 自己發明的軸,
+  // 魔獸三代沒有魔抗這個概念 —— 所以這一格沒有「原作值」可以對照,只有 owner 的設計值。
+  // ⚠️ 它同時是 AP 傷害的減傷來源:調高它會讓所有法系英雄一起變弱,不只是「多一點抗性」。
+  intToMagicResist: { zh: "智慧 → 魔抗", note: "每 1 點智慧增加的魔法抗性,直接減免受到的 AP 傷害（owner 設計值 0.6；魔獸三代沒有這根軸）" },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -199,6 +203,7 @@ export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
       "intToMaxMana",
       "intToManaRegen",
       "intToAbilityPower",
+      "intToMagicResist",
     ],
   },
 ];

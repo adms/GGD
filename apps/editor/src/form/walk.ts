@@ -84,14 +84,21 @@ function walk(raw: ZodTypeAny, path: string, label: string, depth: number, maxDe
     case "ZodNumber": {
       const checks = (def.checks ?? []) as { kind: string; value?: number; inclusive?: boolean }[];
       const int = checks.some((c) => c.kind === "int");
-      const min = checks.find((c) => c.kind === "min")?.value;
-      const max = checks.find((c) => c.kind === "max")?.value;
+      const minCheck = checks.find((c) => c.kind === "min");
+      const maxCheck = checks.find((c) => c.kind === "max");
+      const min = minCheck?.value;
+      const max = maxCheck?.value;
+      // `inclusive` is the difference between `.min(0)` and `.positive()`.
+      // Dropping it is what let `defaultForVariant` seed a `radius` of 0 into a
+      // `.positive()` field — see UINumber.exclusiveMin.
       return {
         kind: "number",
         ...base,
         int,
         ...(min !== undefined ? { min } : {}),
         ...(max !== undefined ? { max } : {}),
+        ...(min !== undefined && minCheck?.inclusive === false ? { exclusiveMin: true } : {}),
+        ...(max !== undefined && maxCheck?.inclusive === false ? { exclusiveMax: true } : {}),
       };
     }
     case "ZodBoolean":
@@ -155,7 +162,7 @@ export function defaultValueFor(node: UINode): unknown {
     case "text":
       return "";
     case "number":
-      return node.min !== undefined && node.min > 0 ? node.min : 0;
+      return defaultNumber(node);
     case "boolean":
       return false;
     case "enum":
@@ -213,4 +220,48 @@ function lastKey(path: string): string | null {
   const seg = path.split(".").pop() ?? "";
   if (!seg || seg.endsWith("[]") || seg === "*") return null;
   return seg;
+}
+
+/**
+ * The value a fresh number widget starts on — and it must SATISFY the field's
+ * own bounds, not merely sit near them.
+ *
+ * The rule this replaces was `min > 0 ? min : 0`, which is wrong for every
+ * `.positive()` field in the shared schemas: zod records `.positive()` as
+ * `min = 0, inclusive = false`, so `min > 0` is false and the seed was 0 —
+ * the ONE value the field forbids. Switching an effect card to `damageArea`
+ * therefore produced `{kind:"damageArea", damageType:"physical", amount:{},
+ * radius:0}`, which `zEffectDef` rejects with "Number must be greater than 0".
+ * The card looked fully filled in; only the SAVE failed, with a 422. The same
+ * hole seeded `dash.speed`, `dash.maxDistance` and `leap.durationSec`.
+ *
+ * Preference order, so the change stays a fix and not a re-design:
+ *   1. 0 whenever 0 is legal — what the old rule produced for `.min(0)`,
+ *      `.min(-5)` and unbounded fields, and the least surprising blank slate;
+ *   2. otherwise the closest legal value to 0 that the bounds allow, stepping
+ *      one off an exclusive bound and clamping into the opposite one.
+ */
+function defaultNumber(node: {
+  int: boolean;
+  min?: number;
+  max?: number;
+  exclusiveMin?: boolean;
+  exclusiveMax?: boolean;
+}): number {
+  const { min, max, exclusiveMin, exclusiveMax } = node;
+  const satisfiesMin = (v: number) => min === undefined || (exclusiveMin ? v > min : v >= min);
+  const satisfiesMax = (v: number) => max === undefined || (exclusiveMax ? v < max : v <= max);
+  if (satisfiesMin(0) && satisfiesMax(0)) return 0;
+
+  if (!satisfiesMin(0) && min !== undefined) {
+    // 0 is below the floor: sit ON an inclusive floor, one step above an
+    // exclusive one, then pull back inside the ceiling if that overshot.
+    const lo = exclusiveMin ? min + 1 : min;
+    if (satisfiesMax(lo)) return lo;
+    if (max !== undefined) return exclusiveMax ? (min + max) / 2 : max;
+    return lo;
+  }
+  // 0 is above the ceiling (a strictly-negative field): mirror the above.
+  if (max !== undefined) return exclusiveMax ? max - 1 : max;
+  return 0;
 }

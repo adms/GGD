@@ -48,11 +48,21 @@ export function championAttackType(world: SimWorld, id: EntityId): "melee" | "ra
 
 /**
  * May `itemId` be OFFERED to `id`? Absent `requiresAttackType` (every pre-#189
- * doc) = yes, for everybody.
+ * doc) and absent `draftEligible` (every pre-2026-07-30 doc) = yes, for
+ * everybody.
+ *
+ * TWO GATES, DELIBERATELY DIFFERENT SHAPES. `requiresAttackType` is about the
+ * CARRIER (「這個英雄配不配得上這把武器」) and so consults the world;
+ * `draftEligible` is about the ITEM ALONE (「這件東西還能不能發出去」) and does
+ * not — a card that grants nothing but a penalty is a bad card on every body.
+ * Order matters only for readability; both must pass.
  */
 export function itemOfferableTo(world: SimWorld, id: EntityId, itemId: ItemId): boolean {
   const def = Items.tryGet(itemId);
   if (!def) return false;
+  // 抽卡池開關 (owner 2026-07-30). Explicit `false` only — `undefined` is the
+  // shipped default for 200+ docs and must keep meaning "offerable".
+  if (def.draftEligible === false) return false;
   const need = def.requiresAttackType;
   if (need === undefined) return true;
   const have = championAttackType(world, id);

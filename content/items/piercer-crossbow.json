@@ -1,0 +1,49 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "piercer-crossbow",
+  "name": "穿甲弩",
+  "description": "傳說\n效能\n攻擊力+38\n攻擊速度+45%\n普攻額外造成攻擊力 35% 的真實傷害（無視護甲）\n\n解說\n弩箭不管對面穿了幾層鐵；它只認得距離。",
+  "tags": [
+    "legendary",
+    "true-damage",
+    "marksman"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 38
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.45
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "requires": {
+        "attackType": "ranged",
+        "onMismatch": "block"
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.35
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

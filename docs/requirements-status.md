@@ -479,8 +479,8 @@
 | F-15 | Prod CSP 只有 `frame-ancestors 'none'`，無 `script-src`/`default-src`（`nginx.conf:142,180`）→ 對 XSS 零緩解 | medium | infra | web/CSP | ⏸ DEFERRED |
 | F-16 | 內部 debug/audition HTML 打包進 prod client 並公開放送（`public/*.html`→`dist/`，`nginx.conf:156`）→ ~20 innerHTML sink 擴大 XSS 面 | medium | client | web | ⏸ DEFERRED |
 | F-17 | Dev content middleware 只做語彙前綴不解 symlink（`vite.config.ts:45-61`）→ 植入 symlink 逃逸 root | low | vite | injection | ⏸ DEFERRED |
-| F-18 | 註冊衝突回應可區分 username vs email（`service.go:120-135`）+ SETNX 早退 timing oracle → 用戶/信箱枚舉 | low | platform | auth | ⏸ DEFERRED |
-| F-19 | Access token `iss` 蓋章但 `VerifyAccess` 從不驗，且無 `aud`（`jwt.go:19-44`）→ 秘鑰複用時 token 混淆 | low | platform | auth | ⏸ DEFERRED |
+| F-18 | 註冊枚舉 oracle：合併 409 + 對齊時序**兩個都做了，oracle 仍全開**（攻擊者自己配一個全新的對手欄位，光看 201/409 就有答案）。真正擋住陌生人的是 #174 邀請閘跑在 SETNX 之前；持有效邀請碼者仍可無限探測（旋鈕 `GGD_BURN_INVITE_ON_CONFLICT`）。`Login` 的 hash-before-status 排序是同一類 oracle 的另一半，2026-07-30 前**完全沒有守衛** | low | platform | auth | ⚠️ 部分緩解·殘留已接受（見 `docs/_security-audit.md` F-18） |
+| F-19 | Access token `iss` 蓋章但 `VerifyAccess` 從不驗，且無 `aud`（`jwt.go:19-44`）→ 秘鑰複用時 token 混淆 | low | platform | auth | ✅ 已修（#180，`aud`+`iss` 雙驗，2026-07-30 突變驗證） |
 | F-20 | `values-local.yaml` 提交 dev-insecure JWT/game/redis 秘鑰（`:36-38`），無防公開部署套用的護欄；#126 只檢非空非弱 | low | infra | auth/secrets | ⏸ DEFERRED |
 | F-21 | JWT access+refresh 存 localStorage（`session.ts:29-47`）→ 任何 XSS 升級為完整帳號接管的放大器 | low | client | web | ⏸ DEFERRED |
 | F-22 | Vite dev/LAN content handler 無 `nosniff` 且未映射副檔名當 octet-stream（`vite.config.ts:44-61`）→ LAN peer MIME-sniff | low | vite | web | ⏸ DEFERRED |

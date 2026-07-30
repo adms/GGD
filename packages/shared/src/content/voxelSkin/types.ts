@@ -22,6 +22,7 @@
  * this project's part list, and 2.3× of the sheet is left free precisely so
  * #226 can change that part list without a layout rewrite.
  */
+import { counterpartFormId } from "../championForms";
 
 /** Atlas dimensions. Power of two, 1 texel per voxel-pixel. */
 export const ATLAS_W = 64;
@@ -479,10 +480,32 @@ export const BLIZZARD_MODEL_CHAMPIONS: readonly string[] = Object.freeze([
  * THE DEFAULT BODY RULE — `preferVoxelBody` before any admin override.
  *
  * A champion wears the procedural voxel figure ONLY when it has no model of its
- * own at all: it points at a shared stand-in AND no real WC3 model was
- * extracted for it. That is 4 champions today (godie-o02n, godie-u011, and the
- * two CC0 characters `sela` / `thorne`, which are not map heroes and therefore
- * have no WC3 unit behind them), not 44.
+ * own at all: it points at a shared stand-in AND no real WC3 model is REACHABLE
+ * for it. That is 2 champions today (the CC0 characters `sela` / `thorne`,
+ * which are not map heroes and therefore have no WC3 unit behind them), not 44.
+ *
+ * ⚠️ 缺省即繼承 — A 變身 HALF INHERITS ITS COUNTERPART'S ANSWER (#223).
+ * ---------------------------------------------------------------------------
+ * `BLIZZARD_MODEL_CHAMPIONS` is the champId column of the extraction, and the
+ * extractor pulled the 40 PICKABLE units — so for a transform pair it names, at
+ * most, ONE of the two halves. Asking it about the other half alone therefore
+ * answers "no model" for a body the renderer can absolutely dress:
+ * `blizzardOverlay.unitFor` resolves a counterpart's unit through
+ * `SHARED_MODEL_COUNTERPART`, and `resolve(…, inheritFrom)` resolves the rest.
+ * Without this clause the door is shut in front of art that is already there —
+ * the exact failure the paragraph above records, one layer along.
+ *
+ * MEASURED, 2026-07-30, all 113 shipped champions (the census lives in
+ * `apps/client/src/render/views/formAwareModelResolve.test.ts`): the clause
+ * moves exactly 6 bodies off the voxel figure and onto their real WC3 mesh —
+ *   godie-h00w→Harf.glb, godie-o030→Orkn.glb, godie-n01b→Nman.glb,
+ *   godie-e010→E00S.glb, godie-u011→U012.glb, godie-o02n→O02O.glb
+ * — and touches nobody else. FIVE of those six are the 變身 bodies that #223's
+ * form-aware `voxelSkinFor` newly asks about; without this they would silently
+ * DOWNGRADE from a Warcraft III model to a box-man the moment a hero
+ * transformed, which is an art regression shipped in the name of a fix. The
+ * sixth (godie-o02n 曹操孟德) is a PICKABLE hero that has been wearing the
+ * box-man all along while the overlay already resolved O02O.glb for it.
  *
  * Everything else is the OPERATOR'S call, expressed as an L1 override
  * (`preferVoxelBody: true`) in the `voxel-skins` config doc — 「要替換成體素是
@@ -491,7 +514,9 @@ export const BLIZZARD_MODEL_CHAMPIONS: readonly string[] = Object.freeze([
  */
 export function defaultPrefersVoxelBody(modelKey: string | undefined, championId: string): boolean {
   if (!STAND_IN_MODEL_KEYS.includes(modelKey ?? "")) return false;
-  return !BLIZZARD_MODEL_CHAMPIONS.includes(championId);
+  if (BLIZZARD_MODEL_CHAMPIONS.includes(championId)) return false;
+  const twin = counterpartFormId(championId);
+  return !(twin !== null && BLIZZARD_MODEL_CHAMPIONS.includes(twin));
 }
 
 // ===========================================================================

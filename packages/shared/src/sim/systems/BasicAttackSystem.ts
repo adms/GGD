@@ -23,9 +23,10 @@ import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
-import { rollEvade } from "../combat/evasion";
+import { rollEvade, rollFumble } from "../combat/evasion";
 import { armFacingLock, facingTicks } from "../facingLock";
 import { standstillBlocks } from "../combatFeel";
+import { breakStealth } from "../stealth";
 
 /**
  * Fallback wind-up (seconds) when a champion doc omits attackDamagePoint.
@@ -283,6 +284,15 @@ export function basicAttackSystem(world: SimWorld): void {
     // 所以走位不會白白燒掉一次攻擊間隔 —— 停下來的那一 tick 就能立刻出手。
     if (standstillBlocks(ss, t.vel, t.pos, tgtT.pos)) continue;
 
+    // 破隱 (sim/stealth.ts). THE SWING-COMMIT LINE IS THE SEAM, not `ab.windup`
+    // and not `resolveAttack`. `windup` is skipped entirely when `dpTicks <= 0`
+    // (instant autos), so sampling it would let a 0-frame attacker stay
+    // invisible forever; `resolveAttack` fires only on a HIT, so a whiffed swing
+    // would also stay hidden. Everything past this line has already committed
+    // the attack cooldown, i.e. the hero has unambiguously attacked.
+    // A no-op for the ~117 champions carrying no stealth grant.
+    breakStealth(world, id, "attack");
+
     // commit the whole-interval cooldown now; the wind-up is part of it.
     const baseAttackTime = cdef?.baseAttackTime ?? 1.0;
     const attacksPerSec = Math.max(0.01, sc.final[Stat.AttackSpeed]);
@@ -432,6 +442,10 @@ function resolveAttack(
   // blow reached a body and was slipped; the whiff-lunge is specifically the
   // over-commit of hitting empty air.
   // No-op — and zero rng draws — while evasion is 0 (every champion today).
+  // 失手 (66-00 恐懼 的詛咒) — the ATTACKER's own fumble, rolled BEFORE the
+  // defender's dodge because a swing that never arrived cannot be dodged (and
+  // must not consume the defender's rng draw). Zero draws when uncursed.
+  if (rollFumble(world, id, targetId)) return;
   if (rollEvade(world, id, targetId)) return;
 
   world.damageQueue.push({

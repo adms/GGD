@@ -42,7 +42,7 @@ import {
   FLOWER_BURST_VFX,
   FLOWER_SPAWN_VFX,
   MAX_FRONT_LOAD_BURST,
-  ONE_SHOT_MAX_LIFE_SEC,
+  DEFAULT_ONE_SHOT_MAX_LIFE_SEC,
   TAIL_SPREAD,
 } from "./VfxSystem";
 
@@ -94,7 +94,7 @@ describe("one-shot lifetime clamp (vfx-impact-first)", () => {
     cover("vfx-impact-first");
     for (const max of [1, 2, 6]) {
       const clamped = clampOneShotLife({ min: max * 0.5, max });
-      expect(clamped.max).toBe(ONE_SHOT_MAX_LIFE_SEC);
+      expect(clamped.max).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
       expect(clamped.min).toBeLessThanOrEqual(clamped.max);
       expect(clamped.min).toBeGreaterThan(0);
     }
@@ -109,9 +109,9 @@ describe("continuous → front-loaded burst + tail (vfx-impact-first)", () => {
     expect(shaped.mode).toBe("burst");
     expect(shaped.burstCount).toBe(40);
     expect(shaped.rate).toBeUndefined(); // the stream rate can't come back
-    expect(shaped.lifetimeSec.max).toBe(ONE_SHOT_MAX_LIFE_SEC);
+    expect(shaped.lifetimeSec.max).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
     // the ember tail IS the spread: most particles die well before the last
-    expect(shaped.lifetimeSec.min).toBeCloseTo(ONE_SHOT_MAX_LIFE_SEC * TAIL_SPREAD, 6);
+    expect(shaped.lifetimeSec.min).toBeCloseTo(DEFAULT_ONE_SHOT_MAX_LIFE_SEC * TAIL_SPREAD, 6);
   });
 
   it("keeps the burst inside the readable band", () => {
@@ -139,7 +139,7 @@ describe("continuous → front-loaded burst + tail (vfx-impact-first)", () => {
     });
     const shaped = frontLoadDoc(longTail);
     expect(shaped.burstCount).toBe(24);
-    expect(shaped.lifetimeSec.max).toBe(ONE_SHOT_MAX_LIFE_SEC);
+    expect(shaped.lifetimeSec.max).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
   });
 });
 
@@ -151,7 +151,7 @@ describe("play() fires the front-loaded burst (vfx-impact-first)", () => {
     expect(ps).not.toBeNull();
     expect(ps.manualEmitCount).toBe(40); // ALL of it, this frame
     expect(ps.emitRate).toBe(0); // a burst system NEVER rate-emits
-    expect(ps.maxLifeTime).toBe(ONE_SHOT_MAX_LIFE_SEC); // no lingering fog
+    expect(ps.maxLifeTime).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC); // no lingering fog
     expect(ps.minLifeTime).toBeLessThan(ps.maxLifeTime); // spread = the tail
     vfx.dispose();
   });
@@ -408,7 +408,7 @@ describe("flower lifecycle docs are impact-first + GREEN (vfx-impact-first)", ()
     expect(doc.rate).toBeUndefined();
 
     // short, with the spread that carries the tail — never clamped at play time
-    expect(doc.lifetimeSec.max).toBeLessThanOrEqual(ONE_SHOT_MAX_LIFE_SEC);
+    expect(doc.lifetimeSec.max).toBeLessThanOrEqual(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
     expect(doc.lifetimeSec.min).toBeLessThanOrEqual(doc.lifetimeSec.max * 0.4);
     expect(frontLoadDoc(doc)).toBe(doc);
 

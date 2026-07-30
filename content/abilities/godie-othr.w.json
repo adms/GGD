@@ -66,7 +66,21 @@
       "moveSpeedMult": 0.7
     }
   ],
-  "vfxKey": "fx.prim.physical.slash",
+  "vfxKey": "fx.w3x.orb.bloodbreathstream.p00",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p00",
+      "attachTo": "point"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p01",
+      "attachTo": "point"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.bloodbreathstream.p02",
+      "attachTo": "point"
+    }
+  ],
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.5

@@ -16,6 +16,7 @@ import {
   DEFAULT_KNOCKBACK,
   DEFAULT_STANDSTILL,
   combatFeelFromDoc,
+  damageShoveWins,
   knockbackDistance,
   normalizeKnockbackRules,
   normalizeStandstillRules,
@@ -76,7 +77,8 @@ describe("knockbackDistance — owner 的擊退算式 (GH#193)", () => {
 
   it("三個參數都真的是參數,不是寫死的常數", () => {
     cover("kb-params");
-    const soft = { minPct: 0, maxBodies: 2, bodyUnit: 0.5 };
+    // 兩個仲裁決策點跟著出貨表走 —— 這條測的是三個**數字**參數，不是仲裁。
+    const soft = { ...R, minPct: 0, maxBodies: 2, bodyUnit: 0.5 };
     // 1% 的一擊在出貨表下是 0,在 soft 表下是 2 × 0.01 × 0.5 = 0.01
     expect(knockbackDistance(R, 6, 600, 0)).toBe(0);
     expect(knockbackDistance(soft, 6, 600, 0)).toBeCloseTo(0.01, 9);
@@ -132,7 +134,55 @@ describe("combat-feel 設定表的正規化", () => {
       knockback: { minPct: 0.1, maxBodies: 6, bodyUnit: 1.5 },
       standstill: { enabled: false, walkEps: 0.8, applyToMobs: false },
     });
-    expect(rules.knockback).toEqual({ minPct: 0.1, maxBodies: 6, bodyUnit: 1.5 });
+    // 文件只寫了三格數字 → 兩個仲裁決策點回到出貨預設（缺格 = 預設，不是 undefined，
+    // 因為 `undefined` 一路傳進 `damageShoveWins` 會讓每一次比較都是 false，
+    // 「技能授權的擊退」會靜默地又變回被傷害蓋掉的那個世界）。
+    expect(rules.knockback).toEqual({
+      minPct: 0.1,
+      maxBodies: 6,
+      bodyUnit: 1.5,
+      authoredWins: DEFAULT_KNOCKBACK.authoredWins,
+      longerDamageWins: DEFAULT_KNOCKBACK.longerDamageWins,
+    });
     expect(rules.standstill).toEqual({ enabled: false, walkEps: 0.8, applyToMobs: false });
+  });
+});
+
+/**
+ * 仲裁規則本身（純函式那一半）。⚠️ 這一組**不是**這條缺陷的守衛 —— 真正的守衛是
+ * `sim/knockbackVsDamage.test.ts`，它跑真的 `world.step()` 讀真的位移軌跡。
+ * 這裡只釘住真值表，讓「哪一格對應哪一種行為」在後台頁上不會說謊。
+ */
+describe("damageShoveWins：兩個寫入者撞在一起時的真值表", () => {
+  const authored = (remaining: number) => ({ authored: true, remaining });
+  const ambient = (remaining: number) => ({ authored: false, remaining });
+
+  it("cf-arb-empty — 身上沒有位移 → 傷害擊退照寫（沒有這條就整個擊退消失）", () => {
+    cover("cf-arb-empty");
+    expect(damageShoveWins(DEFAULT_KNOCKBACK, null, 1)).toBe(true);
+  });
+
+  it("cf-arb-ambient — 上一發傷害擊退不保護自己：連續挨打就是一直被推", () => {
+    cover("cf-arb-ambient");
+    expect(damageShoveWins(DEFAULT_KNOCKBACK, ambient(99), 0.1)).toBe(true);
+  });
+
+  it("cf-arb-authored — 出貨預設下，技能授權的位移擋得住更大的傷害擊退", () => {
+    cover("cf-arb-authored");
+    expect(damageShoveWins(DEFAULT_KNOCKBACK, authored(1), 999)).toBe(false);
+  });
+
+  it("cf-arb-off — `authoredWins: false` 回到缺陷修好前的行為（傷害無條件蓋）", () => {
+    cover("cf-arb-off");
+    const rules = { ...DEFAULT_KNOCKBACK, authoredWins: false };
+    expect(damageShoveWins(rules, authored(999), 0.1)).toBe(true);
+  });
+
+  it("cf-arb-longer — `longerDamageWins` 是**嚴格**大於，平手時技能仍然贏", () => {
+    cover("cf-arb-longer");
+    const rules = { ...DEFAULT_KNOCKBACK, longerDamageWins: true };
+    expect(damageShoveWins(rules, authored(5), 5.5)).toBe(true);
+    expect(damageShoveWins(rules, authored(5), 5)).toBe(false);
+    expect(damageShoveWins(rules, authored(5), 4.5)).toBe(false);
   });
 });

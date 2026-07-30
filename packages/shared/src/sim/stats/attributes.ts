@@ -23,6 +23,7 @@
  *     maxMana     = base + intToMaxMana        · INT      (15)
  *     manaRegen   = base + intToManaRegen      · INT      (0.07)
  *     ap          = base + intToAbilityPower   · INT      (1)
+ *     mr          = base + intToMagicResist    · INT      (0.6)   ← GH#221
  *
  * ---------------------------------------------------------------------------
  * THREE ADDITIVE LAYERS, IN THIS ORDER
@@ -42,11 +43,16 @@
  * two sources do not represent the same thing: `attributes.*Growth` carries the
  * w3x-faithful part of the curve, `growth` stays the per-hero designer knob laid
  * on top, so a hero's progression is not locked to his three attributes.
- * `growth.mr` is the one row where the attribute term is zero rather than the
- * one row that survived a cull: Warcraft III has no magic-resistance attribute,
- * so 魔抗 is growth-only by nature.
  *
- * SEVEN of those eight coefficients are IMPORTED, not chosen. The source map
+ * ⚠️ `growth.mr` USED TO BE the one row with no attribute term, and this file
+ * said so at length: 「Warcraft III has no magic-resistance attribute, so 魔抗 is
+ * growth-only by nature」. That sentence is still TRUE ABOUT WARCRAFT and no
+ * longer true about GGD — owner 2026-07-30 (GH#221):「新增 智慧→每 1 點智慧增加
+ * 的魔抗 0.6」. 魔抗 is now derived exactly like 法強: an owner-designed axis with
+ * no upstream source, riding the same `ATTR_STAT_SOURCE` table as the seven
+ * imported ones. `growth.mr` keeps its designer-knob role unchanged.
+ *
+ * SEVEN of those NINE coefficients are IMPORTED, not chosen. The source map
  * ships its own gameplay-constants table — `war3mapMisc.txt`, extracted to
  * `tools/w3x-import/out/GoDieEX22s-src/raw/war3mapMisc.txt` — and it OVERRIDES
  * four of Blizzard's: StrHitPointBonus 25→23, StrRegenBonus 0.05→0.04,
@@ -56,8 +62,9 @@
  * `ATTRIBUTE_ENV_DEFAULTS` in ../combatEnv.ts; it is the single provenance
  * record and attributeCoefficients.test.ts re-reads both files to enforce it.
  *
- * Only `intToAbilityPower` is the owner's own design: Warcraft III has no 法強
- * attribute, so 智慧→AP ×1 has no upstream source and is his to re-tune.
+ * Only `intToAbilityPower` and `intToMagicResist` are the owner's own design:
+ * Warcraft III has neither a 法強 nor a 魔抗 attribute, so 智慧→AP ×1 and
+ * 智慧→魔抗 ×0.6 have no upstream source and are his to re-tune.
  * (`strToAttackDamage` used to be labelled design too — it is not; the map and
  * Blizzard both write StrAttackBonus=1.0 verbatim.)
  *
@@ -165,7 +172,7 @@ export interface AttrStatSource {
   /** the combat-env coefficient key that scales it (operator-tunable) */
   readonly key: CombatEnvKey;
   /**
-   * "add"       — `base + coef · attr`  (seven of the eight)
+   * "add"       — `base + coef · attr`  (eight of the nine)
    * "scaleBase" — `base × (1 + coef · attr)`  (attack speed only; see above)
    */
   readonly mode: "add" | "scaleBase";
@@ -174,8 +181,13 @@ export interface AttrStatSource {
 /**
  * Stat → attribute derivation. EXHAUSTIVE: a stat absent from this table has no
  * attribute source at all and keeps its authored `baseStats`/`growth` numbers.
- * `mr` is deliberately absent — Warcraft III has no magic-resistance attribute,
- * so 魔抗 is a growth-only stat. That is a property of WC3, not an omission.
+ *
+ * `mr` JOINED THIS TABLE ON 2026-07-30 (GH#221) and its arrival is the whole
+ * point of that task: `combat/damage.ts mitigate()` has always subtracted
+ * `Stat.MagicResist` from every non-physical packet, but 魔抗 had no attribute
+ * source, so a caster's own 智慧 bought him nothing defensively. It is the
+ * second owner-designed axis here (with `ap`), not an imported one — see
+ * ATTRIBUTE_ENV_DEFAULTS in ../combatEnv.ts.
  */
 export const ATTR_STAT_SOURCE: Partial<Record<Stat, AttrStatSource>> = {
   [Stat.MaxHealth]: { attr: "str", key: "strToMaxHealth", mode: "add" },
@@ -186,6 +198,7 @@ export const ATTR_STAT_SOURCE: Partial<Record<Stat, AttrStatSource>> = {
   [Stat.MaxMana]: { attr: "int", key: "intToMaxMana", mode: "add" },
   [Stat.ManaRegen]: { attr: "int", key: "intToManaRegen", mode: "add" },
   [Stat.AbilityPower]: { attr: "int", key: "intToAbilityPower", mode: "add" },
+  [Stat.MagicResist]: { attr: "int", key: "intToMagicResist", mode: "add" },
 };
 
 /** The minimum a caller has to hold to be answered — not the full ChampionDef. */

@@ -39,6 +39,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { SHIPPED_HUD_CLUSTER, hudClusterRects } from "./hudBottomCluster";
 import {
   VERSION_BADGE_BAND_PX,
   VERSION_BADGE_BAND_W_PX,
@@ -158,19 +159,27 @@ describe("the build-stamp band is reserved and empty (version-badge-band)", () =
     cover("version-badge-band");
     // The ability bar is not a slot (it is centred, not cornered), so the rect
     // machinery above cannot see it — and it is the single control closest to
-    // the badge on desktop. Its own `bottom:` offset is the contract.
-    const bar = read("../components/AbilityBar.tsx");
-    const barMatch = /position:\s*"absolute",\s*left:\s*"50%",\s*bottom:\s*(\d+)/.exec(bar);
-    expect(
-      barMatch,
-      "could not find the bottom-centred ability-bar container in AbilityBar.tsx — " +
-        "if it was restructured, re-point this guard rather than deleting it",
-    ).not.toBeNull();
-    const barBottom = Number(barMatch![1]);
+    // the badge on desktop. RE-POINTED (not deleted) 2026-07-30: the bar no
+    // longer pins itself at all. It and the HP/MP plate are flex rows of ONE
+    // container whose offset is a field, so the contract moved from a regex over
+    // AbilityBar.tsx to the field itself — which is strictly better, because the
+    // number is now read rather than parsed out of a string.
+    const barBottom = SHIPPED_HUD_CLUSTER.clusterBottomPx;
     expect(
       barBottom,
       "the desktop ability bar must sit clear of the build-stamp band",
     ).toBeGreaterThanOrEqual(HUD_STAMP_BAND);
+    // …and the cluster's own resolver agrees, on the viewport this was measured on
+    const clusterBottomEdge =
+      800 - hudClusterRects({ width: 1280, height: 800 }, false, {
+        resources: true,
+        abilities: true,
+      }).cluster.y -
+      hudClusterRects({ width: 1280, height: 800 }, false, {
+        resources: true,
+        abilities: true,
+      }).cluster.h;
+    expect(clusterBottomEdge).toBeGreaterThanOrEqual(HUD_STAMP_BAND);
 
     // Touch: the attack button is the lowest thing on a phone. Its bottom edge
     // is ATTACK_CENTER − ATTACK_SIZE/2 above the viewport bottom.
@@ -602,9 +611,29 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
   {
     file: "components/CastNotice.tsx",
-    value: "touch ? TOUCH_BOTTOM : DESKTOP_BOTTOM",
+    value: "hudCastNoticeBottom(touch",
     count: 1,
-    why: "DESKTOP_BOTTOM = 104 / TOUCH_BOTTOM = 190, both far above the band (the notice sits over the ability bar)",
+    why:
+      "the refusal line rides above the bottom cluster, so its offset is DERIVED " +
+      "from it: `hudCastNoticeBottom(touch, rows)` = clusterBottom + the rows + " +
+      "castNoticeGapPx (162 desktop / 190 touch with the shipped fields). It cannot " +
+      "reach the band by arithmetic — every term is >= 0 and clusterBottomPx alone " +
+      "already clears HUD_STAMP_BAND, which the first test in this file asserts " +
+      "numerically. It used to be a bare `DESKTOP_BOTTOM = 104`, and that constant " +
+      "is now INSIDE the HP/MP plate; hudBottomCluster.test.ts pins the clearance.",
+  },
+  {
+    file: "hud/BottomCluster.tsx",
+    value: "touch ? tuning.clusterTouchBottomPx : tuning.clusterBottomPx",
+    count: 1,
+    why:
+      "THE bottom-centre column (HP/MP plate + ability row, owner 2026-07-30 " +
+      "「緊鄰但不重疊」). Its offset is a bounded FIELD, not a literal, which is why " +
+      "the scanner cannot fold it — and the bound is what makes it safe: " +
+      "`clusterBottomPx` ships at 14 with a floor of 0, so the guard cannot rely on " +
+      "the default alone. The numeric clearance against HUD_STAMP_BAND is asserted " +
+      "in this file's 「bottom-centre CONTROLS clear the band」 test, from the field " +
+      "rather than from a regex.",
   },
   {
     file: "panels/ChampSelectPanel.tsx",

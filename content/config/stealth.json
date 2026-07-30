@@ -1,0 +1,16 @@
+{
+  "id": "stealth",
+  "schema": "config.stealth@1",
+  "note": "隱形規則（owner 2026-07-30「選小的就好」= 只做畫面 + 索敵）。每一格的語意、以及「為什麼出貨值是這一個」寫在 packages/shared/src/sim/stealth.ts。四個「擋不擋」與三個「破不破」全部是 WC3 原作行為，所以這份文件出現本身不改變任何一場比賽。⚠️ 這**不是**防作弊：隱形單位的座標照樣送到每一個客戶端，改過的客戶端還是看得到位置——owner 知道並接受這個取捨（家用局）。⚠️ 後台『隱形規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "blocksAutoAcquire": true,
+  "blocksMobAggro": true,
+  "blocksManualTarget": true,
+  "blocksAbilityAoe": false,
+  "breaksOnBasicAttack": true,
+  "breaksOnCast": true,
+  "breaksOnDamaged": false,
+  "fadeDelayMult": 1,
+  "allyAlpha": 0.35,
+  "enemyAlpha": 0,
+  "hideEnemyHealthBar": true
+}

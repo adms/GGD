@@ -62,19 +62,28 @@ const stockMisc = (
 
 /**
  * Which WC3 gameplay-constants FIELD each shipped coefficient derives from.
- * `null` = there is no upstream field, so the value is the owner's design and
- * this file asserts the ABSENCE of a source rather than a number.
+ *
+ * `{ ownerDesign }` = there is no upstream field, so the value is the owner's
+ * design and this file asserts the ABSENCE of a source rather than a number.
+ * The name it carries is the field WC3 WOULD have used if the axis existed —
+ * it has to be per-key, because the two owner-designed rows are different axes
+ * and a single hardcoded name would silently stop checking one of them.
  */
-const FIELD_OF: Record<AttributeEnvKey, string | null> = {
-  strToMaxHealth: "StrHitPointBonus",
-  strToHealthRegen: "StrRegenBonus",
-  strToAttackDamage: "StrAttackBonus",
-  agiToArmor: "AgiDefenseBonus",
-  agiToAttackSpeed: "AgiAttackSpeedBonus",
-  intToMaxMana: "IntManaBonus",
-  intToManaRegen: "IntRegenBonus",
+type Provenance = { field: string } | { ownerDesign: string };
+
+const FIELD_OF: Record<AttributeEnvKey, Provenance> = {
+  strToMaxHealth: { field: "StrHitPointBonus" },
+  strToHealthRegen: { field: "StrRegenBonus" },
+  strToAttackDamage: { field: "StrAttackBonus" },
+  agiToArmor: { field: "AgiDefenseBonus" },
+  agiToAttackSpeed: { field: "AgiAttackSpeedBonus" },
+  intToMaxMana: { field: "IntManaBonus" },
+  intToManaRegen: { field: "IntRegenBonus" },
   // Warcraft III has no 法強 attribute axis at all — the owner's own decision.
-  intToAbilityPower: null,
+  intToAbilityPower: { ownerDesign: "IntAbilityPowerBonus" },
+  // …and no 魔抗 ATTRIBUTE axis either (WC3's magic resistance is a per-unit
+  // armour-type table, not a stat derived from 智慧). GH#221, owner 2026-07-30.
+  intToMagicResist: { ownerDesign: "IntMagicResistBonus" },
 };
 
 /** Map value if the map overrides the field, else Blizzard's, else undefined. */
@@ -97,16 +106,17 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
 
     const report: string[] = [];
     for (const key of Object.keys(FIELD_OF) as AttributeEnvKey[]) {
-      const field = FIELD_OF[key];
-      if (field === null) {
+      const prov = FIELD_OF[key];
+      if ("ownerDesign" in prov) {
         // Owner's design: assert NO upstream source has appeared. If a future
         // MiscGame/war3mapMisc gains such a field, this fails and someone has
         // to decide consciously whether to import it.
-        expect(mapMisc["IntAbilityPowerBonus"], `${key} gained a map source`).toBeUndefined();
-        expect(stockMisc["IntAbilityPowerBonus"], `${key} gained a stock source`).toBeUndefined();
+        expect(mapMisc[prov.ownerDesign], `${key} gained a map source`).toBeUndefined();
+        expect(stockMisc[prov.ownerDesign], `${key} gained a stock source`).toBeUndefined();
         report.push(`${key} = ${ATTRIBUTE_ENV_DEFAULTS[key]}  (owner's design, no WC3 source)`);
         continue;
       }
+      const { field } = prov;
       const src = sourceValue(field);
       expect(src, `no source found for ${key} (${field})`).toBeDefined();
       expect(ATTRIBUTE_ENV_DEFAULTS[key], `${key} must equal ${field} from the ${src?.from}`).toBe(
@@ -114,7 +124,8 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
       );
       report.push(`${key} = ${ATTRIBUTE_ENV_DEFAULTS[key]}  (${src?.from}:${field})`);
     }
-    expect(report).toHaveLength(8);
+    // NINE since GH#221 (智慧→魔抗 0.6); #248 shipped eight.
+    expect(report).toHaveLength(9);
   });
 
   it("attr-248-coef-map-overrides: the four fields the map really does override", () => {

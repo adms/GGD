@@ -80,10 +80,20 @@ const EXEMPT_PASSIVE_ONLY = [
   "godie-e002.q",
   "godie-e00l.q",
   "godie-e00q.q",
-  // 66-04 靈壓震撼 (A0IC immolation + A0ID slow aura): converted to a passive
-  // slow-aura by the JASS effect-audit batch 2026-07-25 — the bogus skillshot
-  // stun it replaced was never in the WC3 source.
-  "godie-e00t.r",
+  // ⚠️ `godie-e00t.r` (66-04 靈壓震撼) WAS HERE and is deliberately GONE
+  // (2026-07-30). This list's own docstring below says a NEW passive-only
+  // Q/W/E/R/EX means someone disarmed an ability; the reverse move needs the
+  // same paper trail. The 2026-07-25 batch read A0IC's slow aura A0ID and
+  // authored it as a PERMANENT passive — but A0IC's base is `AEim`
+  // (Immolation), i.e. a TOGGLE with a 10 s cooldown and 50/70/90 mana, and
+  // war3map.j gates the aura behind it explicitly:
+  // `SetPlayerAbilityAvailableBJ(false,'A0ID',…)` on spawn (j:48787), `true`
+  // only on the `immolation` order (j:48915-48919), `false` again the moment
+  // buff B025 drops (j:48941-48942). So the shipped shape had BOTH halves
+  // wrong at once: the R button answered "passive" and did nothing, while the
+  // −65 % enemy attack-speed aura ran permanently for free. It is now a real
+  // self-centred cast (`castType: "ground"`, `range: 0`) — see
+  // abilities/godie-e00t.r.json and sim/abilities/inertActives.test.ts.
   "godie-e00q.r",
   "godie-edem.r",
   "godie-emns.w",

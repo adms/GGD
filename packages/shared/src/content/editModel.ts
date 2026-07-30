@@ -113,7 +113,18 @@ export type FieldKind =
   | "integer"
   | "boolean"
   | "stringList"
-  | "numberList";
+  | "numberList"
+  /**
+   * A whole JSON value in one box — for a field whose shape is a nested array
+   * or object that no flat input can express (`ability.vfxLayers`, #205).
+   *
+   * ⚠️ It is NOT "the raw-JSON escape hatch with a label". The escape hatch
+   * edits the DOCUMENT; this edits ONE field, so a typo cannot damage the rest
+   * of the doc — and, like every other kind, an empty box means REMOVE THE KEY
+   * (`undefined`), which is how the Zod schemas spell absence. Writing `[]`
+   * instead would be a different fact: 「這支技能明確要求零層」.
+   */
+  | "json";
 
 export interface ParseOk {
   readonly ok: true;
@@ -141,6 +152,10 @@ export function formatField(kind: FieldKind, value: unknown): string {
     case "number":
     case "integer":
       return typeof value === "number" ? String(value) : String(value);
+    case "json":
+      // PRETTY, not compact: a 3-layer `vfxLayers` on one line is unreadable
+      // and unreviewable, which is how a wrong key gets typed and shipped.
+      return JSON.stringify(value, null, 2);
     default:
       return typeof value === "string" ? value : JSON.stringify(value);
   }
@@ -156,6 +171,13 @@ export function parseField(kind: FieldKind, raw: string): ParseResult {
     case "text":
     case "multiline":
       return { ok: true, value: trimmed };
+    case "json": {
+      try {
+        return { ok: true, value: JSON.parse(trimmed) as unknown };
+      } catch (e) {
+        return { ok: false, error: `JSON 解析失敗：${(e as Error).message}` };
+      }
+    }
     case "boolean": {
       const v = trimmed.toLowerCase();
       if (v === "true" || v === "1" || v === "yes") return { ok: true, value: true };

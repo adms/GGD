@@ -1,0 +1,55 @@
+{
+  "id": "tpl-proxy-fanout",
+  "schema": "template@1",
+  "name": "範圍逐一施法",
+  "description": "對範圍內的每一個目標各結算一次單體法術。原作是用一隻拋棄式 dummy 逐一 IssueTargetOrder —— 那是 WC3 沒有多目標指令的實作繞道,不是設計,所以 GGD 這邊不召喚任何東西。傷害之外可以再掛一個狀態(纏繞/暈眩/緩速),那才是這台機器跟純震波不一樣的地方。⚠️ 十五支成員裡有兩支是對友方放的(53-03 破法對咒、99-03 初音戰意),本版做不到 —— 見說明文件。",
+  "family": "proxy-fanout",
+  "status": "enabled",
+  "params": {
+    "radius": {
+      "type": "number",
+      "default": 600,
+      "min": 100,
+      "max": 3600,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [280],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "statusId": {
+      "type": "enum",
+      "values": ["root", "burnstun", "slow30"],
+      "default": "root",
+      "optional": true
+    },
+    "statusDurationSec": {
+      "type": "number",
+      "default": 4,
+      "min": 0.5,
+      "max": 12,
+      "unit": "s"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": ["applyStatus"],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "45-02 千鳥流",
+    "jass": "A0JX (war3map.j:41741-41762)"
+  }
+}

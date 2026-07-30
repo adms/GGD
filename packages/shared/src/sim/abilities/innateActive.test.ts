@@ -456,6 +456,7 @@ describe("innate active — one validation ladder, no sixth-slot exemption", () 
       ticksLeft: 5,
       targets: [],
       rooted: true,
+      hpAtStart: world.health.get(id)!.hp,
     };
     expect(castAbility(world, id, "PASSIVE", { type: "self" })).toBe("cooldown");
   });

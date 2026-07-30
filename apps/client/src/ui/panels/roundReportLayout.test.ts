@@ -26,6 +26,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { hudClusterRects } from "../hud/hudBottomCluster";
 import {
   HUD_CORNERS,
   HUD_EDGE,
@@ -42,7 +43,6 @@ import { PILL_FULL, PREP_CLOCK_BOTTOM, READY_BLOCK_BOTTOM, READY_BLOCK_HEIGHT } 
 import {
   MIN_RENDER_H,
   MIN_RENDER_W,
-  RESOURCE_BARS,
   ROUND_REPORT_DOCK_FREE_PHASE,
   ROUND_REPORT_DOCK_SLOT,
   ROUND_REPORT_MAX_W,
@@ -96,14 +96,15 @@ function clockRect(vp: HudViewport): HudRect {
   };
 }
 
-/** The local champion's HP/MP bars: centred, `bottom: 128`, `width: 260`. */
-function barsRect(vp: HudViewport): HudRect {
-  return {
-    x: (vp.width - RESOURCE_BARS.width) / 2,
-    y: vp.height - RESOURCE_BARS.bottom - RESOURCE_BARS.height,
-    w: RESOURCE_BARS.width,
-    h: RESOURCE_BARS.height,
-  };
+/**
+ * The local champion's HP/MP plate — RESOLVED, not re-stated. It used to be a
+ * hand-copy of `bottom: 128 / width: 260`; the plate now has no `bottom` of its
+ * own (it is a flex row of ui/hud/BottomCluster), so this asks the same resolver
+ * the shipped HUD lays out with. That is what stops the guard proving the card
+ * clears a rectangle nothing paints.
+ */
+function barsRect(vp: HudViewport, touch = false): HudRect {
+  return hudClusterRects(vp, touch, { resources: true, abilities: !touch }).resources!;
 }
 
 function inViewport(r: HudRect, vp: HudViewport): boolean {

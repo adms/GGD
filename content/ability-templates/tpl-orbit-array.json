@@ -1,15 +1,63 @@
 {
   "id": "tpl-orbit-array",
   "schema": "template@1",
-  "name": "布陣環繞",
-  "description": "P3 布陣環繞物件。",
+  "name": "環形放射陣",
+  "description": "以一個圓心向外(或向內)放出 N 道等角攻擊。角度間隔是導出的 360/道數,不是欄位 —— 八支成員裡七支的 道數×間隔 剛好是 360。一次齊發 = 一發範圍傷害;填了逐道間隔 = 一片會連續打的傷害場(站著不走會被切很多刀)。原地放還是指定點放,由技能自己的 range 欄位決定(range 0 = 原地),不是模板參數。",
   "family": "orbit-array",
-  "status": "draft",
-  "params": {},
-  "requires": [],
-  "gapScore": 3,
+  "status": "enabled",
+  "params": {
+    "rayCount": {
+      "type": "number",
+      "default": 12,
+      "min": 3,
+      "max": 40,
+      "unit": "count"
+    },
+    "reach": {
+      "type": "number",
+      "default": 256,
+      "min": 50,
+      "max": 1300,
+      "unit": "wc3u"
+    },
+    "aim": {
+      "type": "enum",
+      "values": ["inward", "outward"],
+      "default": "inward",
+      "inert": "本版把整圈折算成一個圓盤:向內收與向外放的命中集合完全相同(兩者都是半徑=reach 的圓),所以這個選擇目前不改變任何結果。P2 有了逐道投射體之後才會生效 —— 現在填它是為了把原作的實測值留在檔案裡"
+    },
+    "rayIntervalSec": {
+      "type": "number",
+      "default": 0.3,
+      "min": 0.034,
+      "max": 1,
+      "unit": "s",
+      "optional": true
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [325],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": ["periodicDamage"],
+  "gapScore": 6,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "57-04 竹蜻蜓",
+    "jass": "A0JN (war3map.j:45749-45764)"
   }
 }

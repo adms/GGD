@@ -66,16 +66,19 @@ describe("config.store@1 (mcoin-13)", () => {
     // was ever purchasable with crystals, and this green test was the reason
     // nobody noticed: it asserted the broken state was the expected state.
     //
-    // Assert the invariants that make the meta loop possible instead, so the
-    // next placeholder roster fails here rather than shipping:
-    //   • every id is a real champion (the demo ids were not),
-    //   • at least one champion is free, so a new account can play at all,
-    //   • at least one is priced > 0, so crystals have somewhere to go.
-    const prices = Object.entries(store.championPrices);
-    expect(prices.length).toBeGreaterThan(2);
-    expect(prices.every(([id]) => id.startsWith("godie-"))).toBe(true);
-    expect(prices.some(([, p]) => p === 0)).toBe(true);
-    expect(prices.some(([, p]) => p > 0)).toBe(true);
+    // `championPrices` itself is gone as of 2026-07-30 — the owner replaced the
+    // 53-line map with ONE flat price plus a free list
+    // (「所有英雄藍水晶都是統一價，新上架預設也是一樣價格」), because a missing
+    // map line meant GIVING A CHAMPION AWAY. The invariants that make the meta
+    // loop possible are unchanged in spirit:
+    //   • the flat price is > 0, so crystals have somewhere to go at all;
+    //   • at least one champion is free, so a new account can play immediately;
+    //   • every free id is a real champion id (the demo ids were not).
+    expect(store.championUnlockCost).toBeGreaterThan(0);
+    expect(Number.isInteger(store.championUnlockCost)).toBe(true);
+    expect(store.freeChampionIds.length).toBeGreaterThan(0);
+    expect(store.freeChampionIds.every((id) => id.startsWith("godie-"))).toBe(true);
+    expect(new Set(store.freeChampionIds).size).toBe(store.freeChampionIds.length);
     // Again shape, not frozen values. This pinned 200/120/80/50 — a table that
     // minted M COIN on every placement of every match, which contradicts #118's
     // own premise (「M幣改由後台發放的造型幣（非購買）」, echoed by GrantMCoin's
@@ -100,16 +103,28 @@ describe("config.store@1 (mcoin-13)", () => {
     const badStore = validateDoc("config", {
       id: "store",
       schema: "config.store@1",
-      championPrices: { sela: -5 },
+      championUnlockCost: -5,
+      freeChampionIds: ["sela"],
       mcoinRewards: { placement1: 200, placement2: 120, placement3: 80 },
       surprise: true,
     });
     expect(badStore.ok).toBe(false);
     if (!badStore.ok) {
       const paths = badStore.issues.map((i) => i.path);
-      expect(paths).toContain("championPrices.sela");
+      expect(paths).toContain("championUnlockCost");
       expect(paths.some((p) => p.startsWith("mcoinRewards"))).toBe(true);
     }
+
+    // The UPPER bound matters as much as the lower one: a fat-fingered extra
+    // couple of zeros must be refused at the schema, not clamped downstream.
+    const tooExpensive = validateDoc("config", {
+      id: "store",
+      schema: "config.store@1",
+      championUnlockCost: 100_000_000,
+      freeChampionIds: [],
+      mcoinRewards: { placement1: 1, placement2: 0, placement3: 0, placement4: 0 },
+    });
+    expect(tooExpensive.ok).toBe(false);
 
     // invalid skin doc: negative price, non-integer, unknown key
     const badSkin = validateDoc("skins", {

@@ -9,5 +9,7 @@
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "draftEligible": false,
+  "authoringNote": "【完全沒有 payload】modifiers=0 passive=0 auras=0 —— 抽到這張卡的玩家什麼都沒拿到。原作 I01S 的 base 是 spsh(class: Campaign, charges 1),掛三支能力:A0DV◄AEbl「Warden - Blink」(最大 500 / 最小 50 / 冷卻 20 / 耗魔 75 / 持續 0.1)、A09X◄AIev「Evasion」閃避機率 0.25、A0JQ◄Asph「Sphere」(純視覺球體)。GGD 一支都沒有:主動瞬移 item@1 還存不下(卡在 #56 的主動效果 schema),0.25 迴避倒是**現在就存得下**(Stat.Evasion 有,sim/combat/evasion.ts 有,ITEM_MODIFIER_LIMITS 也給了 0..1 的帶),但補不補是內容決策,留給 owner。在補上之前 draftEligible=false,把它從任務三選一移出去 —— 一張空卡等於把三選一變成二選一。【描述與來源打架】文案寫「技能冷卻時間:0秒」,w3a 的 AEbl 寫 Cool 20;兩者不可能同時對,需要 owner 裁決(可能是刻意的隱藏機制,也可能是文案沒跟上)。"
 }

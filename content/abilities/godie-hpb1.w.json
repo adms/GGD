@@ -23,6 +23,14 @@
   "range": 14.0,
   "effects": [
     {
+      "kind": "invulnerable",
+      "durationSec": 0.1,
+      "applyTo": "self",
+      "blocksDamage": "all",
+      "blocksTrueDamage": false,
+      "blocksControl": true
+    },
+    {
       "kind": "damage",
       "damageType": "physical",
       "amount": {

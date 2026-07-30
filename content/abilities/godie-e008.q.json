@@ -43,6 +43,16 @@
     }
   ],
   "vfxKey": "fx.prim.fire.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p00"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+      "attachTo": "point",
+      "delayMs": 90
+    }
+  ],
   "sfxKey": "wc3.flaretarget3",
   "targetsEnemies": true,
   "schema": "ability@1",

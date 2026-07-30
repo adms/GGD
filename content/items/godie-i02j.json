@@ -3,11 +3,47 @@
   "schema": "item@1",
   "name": "復仇之袍",
   "icon": "assets/icons/items/godie-i02j.webp",
-  "description": "積分獎勵\n效能\n周圍的部隊獲得反彈70%傷害的能力\n被攻擊有機率對敵人施展詛咒\n\n解說\n宅宅身上的系服，上面長年累積了大量的怨念而轉變成強大的物品。",
+  "description": "積分獎勵\n效能\n光環：周圍 9.17 範圍內的友軍（含自己）被攻擊時，反擊 40 點 + 護甲×2 的魔法傷害給攻擊者（每 0.5 秒最多一次）\n裝甲+12\n\n解說\n宅宅身上的系服，上面長年累積了大量的怨念而轉變成強大的物品。",
   "cost": 0,
   "tier": 5,
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 12
+    }
+  ],
+  "auras": [
+    {
+      "key": "vengeance-thorns",
+      "radius": 9.17,
+      "affects": "ally",
+      "includeSelf": true,
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 40,
+                "ratios": [
+                  {
+                    "stat": "armor",
+                    "coeff": 2
+                  }
+                ]
+              }
+            }
+          ],
+          "internalCooldown": 0.5
+        }
+      ]
+    }
+  ]
 }

@@ -46,6 +46,7 @@ import {
   type VoxelSkinOverride,
   type VoxelSkinOverridesFile,
 } from "./voxelSkin";
+import { counterpartFormId } from "./championForms";
 import { DOC_ARCHETYPE } from "../voxel/archetypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -227,10 +228,18 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
       // borrowers have their real Warcraft III model sitting in the overlay
       // (task #10); the old blanket `toBe(true)` here was the assertion that
       // kept the door shut in front of it. owner:「請你都先用暴雪的 3d model」.
+      // ⚠️ 2026-07-30 (#223) —— 判準從 `!BLIZZARD_MODEL_CHAMPIONS.includes(id)`
+      // 換成「自己或變身對半任一有模型」。那個常數是**抽取器拉的 40 個可選
+      // 單位**,26 對變身裡的 `Emeu` 那一半天生不在裡面,而
+      // `defaultPrefersVoxelBody` 的缺省即繼承讓它們穿得到對半的模型。照舊寫法
+      // 這一行會替 6 位英雄要求「鎖在方塊人」,也就是把缺陷釘住。
       expect(
         r!.preferVoxelBody,
-        `${id}: 有暴雪模型就不該鎖體素,沒有的才該`,
-      ).toBe(!BLIZZARD_MODEL_CHAMPIONS.includes(id));
+        `${id}: 自己或變身對半有暴雪模型就不該鎖體素,兩邊都沒有的才該`,
+      ).toBe(
+        !BLIZZARD_MODEL_CHAMPIONS.includes(id) &&
+          !BLIZZARD_MODEL_CHAMPIONS.includes(counterpartFormId(id) ?? ""),
+      );
     }
     // …and every borrower's look is distinct from every other borrower's
     const sigs = borrowers.map((id) => JSON.stringify(recipes.get(id)!.palette));

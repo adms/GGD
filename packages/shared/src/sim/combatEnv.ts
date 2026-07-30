@@ -44,9 +44,9 @@
  *                   re-query, and the ability projectile hit radius in
  *                   ProjectileSystem, all via resolveAbilityRange/Radius)
  *
- * THE EIGHT 三圍 COEFFICIENTS (task #248) join the same table rather than
- * inventing a second config surface, so the admin 戰鬥系統 page tunes them with
- * everything else and a match snapshots them exactly like the rest:
+ * THE NINE 三圍 COEFFICIENTS (task #248, ninth added by GH#221) join the same
+ * table rather than inventing a second config surface, so the admin 戰鬥系統 page
+ * tunes them with everything else and a match snapshots them exactly like the rest:
  *
  *   strToMaxHealth      力量 → 生命上限        (23)
  *   strToHealthRegen    力量 → 每秒回血        (0.04)
@@ -56,9 +56,12 @@
  *   intToMaxMana        智慧 → 魔力上限        (15)
  *   intToManaRegen      智慧 → 每秒回魔        (0.07)
  *   intToAbilityPower   智慧 → 法術強度        (1)
+ *   intToMagicResist    智慧 → 魔法抗性        (0.6, owner 2026-07-30 GH#221)
  *
- * Seven of the eight are IMPORTED, not chosen — see ATTRIBUTE_ENV_DEFAULTS below
- * for the file and field each one comes from.
+ * Seven of the nine are IMPORTED, not chosen — see ATTRIBUTE_ENV_DEFAULTS below
+ * for the file and field each one comes from. The two that are not
+ * (`intToAbilityPower`, `intToMagicResist`) are the owner's own design and have
+ * no WC3 source at all: Warcraft III has neither a 法強 nor a 魔抗 attribute axis.
  *
  * They differ from the other eighteen in three ways, all deliberate:
  *   1. THEY ARE COEFFICIENTS, NOT FACTORS. Their neutral value is not 1.0 — it
@@ -74,7 +77,7 @@
  * the host BEFORE tick 0 and never read from globals/config/fetch inside the
  * sim — two worlds with the same seed and the same table stay bit-identical.
  * DEFAULT_COMBAT_ENV leaves every pre-#248 formula byte-identical to the
- * pre-multiplier sim (all eighteen legacy factors are 1.0), and gives the eight
+ * pre-multiplier sim (all eighteen legacy factors are 1.0), and gives the nine
  * coefficients their shipped values so a champion card with attributes resolves
  * correctly even on a host that never loaded a config.
  */
@@ -111,12 +114,32 @@ export const COMBAT_ENV_KEYS = [
   "intToMaxMana",
   "intToManaRegen",
   "intToAbilityPower",
+  // GH#221 — 智慧 → 魔抗 0.6 (owner 2026-07-30「目前玩家太容易死了」那一批).
+  //
+  // Appended at the end as a CONVENTION (it keeps diffs readable and matches
+  // how `itemCooldown` landed), NOT because anything enforces the position.
+  //
+  // ⚠️ CORRECTED 2026-07-30 (稽核 / CLAUDE.md 第三守則). This comment previously
+  // claimed 「keysync_test.go compares them positionally, so a key inserted in
+  // the middle would fail the Go drift guard」. **THAT IS FALSE, and it is the
+  // second time the same false claim has been written here** (the first was
+  // retracted in the v0.9.15 round — see docs/_execution-batches.md).
+  // `apps/platform/internal/combatenv/keysync_test.go:53` uses
+  // `assert.ElementsMatch`, which is ORDER-INDEPENDENT, and no consumer of
+  // COMBAT_ENV_KEYS reads it positionally (every one iterates it to build a
+  // key→value map). The real drift guard is MEMBERSHIP: a key that exists here
+  // and not in `combatenv.Keys` gets dropped by the platform's rebuild-the-map
+  // sanitizers, so the operator can never see or change it. Check membership in
+  // the Go mirror, `content/config/combat-env.json` and `apps/admin`; do not
+  // rely on ordering being protected, because it is not.
+  "intToMagicResist",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
 
 /**
- * The eight 三圍 coefficients (task #248) and their SHIPPED values.
+ * The nine 三圍 coefficients (task #248 shipped eight; GH#221 added the ninth)
+ * and their SHIPPED values.
  *
  * PROVENANCE, PER COEFFICIENT — the file and the FIELD each number came from.
  * (#248 originally credited these to `Units\UnitBalance.slk`. That was invented:
@@ -140,10 +163,12 @@ export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
  *   intToMaxMana       war3mapMisc [Misc] IntManaBonus       15        15
  *   intToManaRegen     war3mapMisc [Misc] IntRegenBonus      0.05      0.07
  *   intToAbilityPower  (no WC3 concept at all)               —         1
+ *   intToMagicResist   (no WC3 concept at all)               —         0.6
  *
- * SEVEN ARE IMPORTED, ONE IS THE OWNER'S. `intToAbilityPower` is the only row
- * with no upstream source: Warcraft III has no 法強 attribute axis, so 智慧→AP
- * ×1 is a GGD design decision the owner made and it is his to re-tune.
+ * SEVEN ARE IMPORTED, TWO ARE THE OWNER'S. `intToAbilityPower` and
+ * `intToMagicResist` are the rows with no upstream source: Warcraft III has
+ * neither a 法強 nor a 魔抗 attribute axis, so 智慧→AP ×1 and 智慧→魔抗 ×0.6 are
+ * GGD design decisions the owner made and they are his to re-tune.
  * `strToAttackDamage` was ALSO labelled "this game's design" before — it is not;
  * `StrAttackBonus=1.0` is written verbatim in both the map and Blizzard's table.
  * The value the owner chose and the imported value happen to agree at 1.
@@ -180,6 +205,19 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   intToManaRegen: 0.07,
   /** OWNER'S DESIGN — no WC3 source exists; Warcraft III has no 法強 attribute */
   intToAbilityPower: 1,
+  /**
+   * OWNER'S DESIGN (2026-07-30, GH#221「新增 智慧→每 1 點智慧增加的魔抗 0.6」).
+   * No WC3 source exists: Warcraft III has no magic-resistance ATTRIBUTE at all
+   * (its 魔抗 is a per-unit armour-type table, not a derived stat), so this axis
+   * is invented for GGD exactly like `intToAbilityPower` and is the owner's to
+   * re-tune from 後台.
+   *
+   * It lands on `Stat.MagicResist`, which `combat/damage.ts mitigate()` already
+   * reads for every non-physical, non-true packet through the SAME
+   * `100/(100+resist)` curve as armour — so this coefficient is what finally
+   * makes 智慧 a defensive attribute, not a new mitigation mechanic.
+   */
+  intToMagicResist: 0.6,
 } as const;
 
 /** The 三圍 coefficient keys — the subset of the table that is not a factor. */
@@ -187,7 +225,7 @@ export type AttributeEnvKey = keyof typeof ATTRIBUTE_ENV_DEFAULTS;
 
 const ATTRIBUTE_KEY_SET: ReadonlySet<string> = new Set(Object.keys(ATTRIBUTE_ENV_DEFAULTS));
 
-/** True when `k` is one of the eight attribute coefficients, not a ×factor. */
+/** True when `k` is one of the nine attribute coefficients, not a ×factor. */
 export function isAttributeEnvKey(k: string): k is AttributeEnvKey {
   return ATTRIBUTE_KEY_SET.has(k);
 }
@@ -224,7 +262,7 @@ export const COMBAT_ENV_DEFAULTS: CombatEnvMultipliers = Object.freeze(buildDefa
 /** @deprecated name kept for the pre-#248 call sites; see COMBAT_ENV_DEFAULTS. */
 export const DEFAULT_COMBAT_ENV: CombatEnvMultipliers = COMBAT_ENV_DEFAULTS;
 
-/** The shipped default for one key (1.0 for a factor, the coefficient for the eight). */
+/** The shipped default for one key (1.0 for a factor, the coefficient for the nine). */
 export function defaultForKey(k: CombatEnvKey): number {
   return isAttributeEnvKey(k) ? ATTRIBUTE_ENV_DEFAULTS[k] : 1;
 }

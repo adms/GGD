@@ -96,6 +96,25 @@ services:
       # and made every match fail to record with a silent EACCES). Point it at the
       # writable bind mount below so replays actually land and survive restarts.
       GGD_REPLAY_DIR: /data/replays
+      # GH#170 — 錄影失敗現在是「看得到」的。以前這個 mount 只要權限不對,
+      # 每一場都會靜靜錄不到:`MatchRecorder.open()` 照樣回傳一個看起來正常的
+      # recorder(createWriteStream 是非同步開 fd,EACCES 在 open() 回傳之後才
+      # 到),一整場只印一行 console.error,而 /healthz 從頭到尾說 ok: true。
+      #
+      # 驗證方式(在這台機器上):
+      #   curl -s localhost:2567/healthz | jq '{ok, replay}'
+      # `replay.writable` 是開機時真的建檔再刪掉的結果,不是問權限位元;
+      # `opened` 一直加而 `bytesWritten` 卡在 0 就是 GH#170 的簽名。
+      # 完整 runbook(含 chown 修法):docs/replay-observability.md
+      #
+      # 下面三個是決策點,都可調,留預設值即可 —— 列出來是為了讓它們被看見:
+      #   GGD_REPLAY_UNHEALTHY_AFTER: "3"    連續幾場錄不到才算不健康(1–1000)
+      #   GGD_REPLAY_REQUIRED: "1"           這台 shard 錄影算不算必要
+      #   GGD_REPLAY_HEALTHZ_STATUS: "200"   壞掉時 /healthz 回的狀態碼
+      # ⚠️ HEALTHZ_STATUS 預設 200 是刻意的:Recorder.ts 的契約是「壞掉的錄影
+      # 絕對不可以弄壞一場遊戲」。若有人把 liveness probe 接到這個碼上,一個寫
+      # 不進去的 mount 就會開始殺掉上面有家人在打的 shard。body 永遠說實話,
+      # 狀態碼只給「監控」探針(不是 liveness)opt-in 成 503。
       # WHERE THE BROWSER IS TOLD TO CONNECT. This is the one line whose absence
       # broke every remote match: index.ts defaults PUBLIC_ENDPOINT to
       # `ws://localhost:${PORT}`, that string is what the platform pushes to the
@@ -120,6 +139,33 @@ services:
       # explicit on both variables.
       APP_ENV: production
       NODE_ENV: production
+      # ---- B2: WebSocket payload compression -----------------------------
+      # permessage-deflate is ON by default in code; these lines exist so the
+      # decision points are VISIBLE on the file the family deploy is read from.
+      # Verified locally that the edge passes the extension through unchanged:
+      # a client behind nginx's `location /ws/` (same directives as
+      # nginx/nginx.conf) negotiates `permessage-deflate` end to end and gets
+      # the identical compressed frame the direct connection gets.
+      #
+      #   GGD_WS_COMPRESSION: "1"                   主開關
+      #   GGD_WS_COMPRESSION_THRESHOLD: "256"       小於這個大小就不壓（bytes）
+      #                                             實測交叉點是 96 B（比它小的
+      #                                             訊息壓完真的會變大）；256 是
+      #                                             拿 96% 的位元組收益、只做 57%
+      #                                             的 deflate 呼叫
+      #   GGD_WS_COMPRESSION_LEVEL: "6"             zlib 0–9
+      #   GGD_WS_COMPRESSION_MEMLEVEL: "8"          zlib 1–9
+      #   GGD_WS_COMPRESSION_WINDOW_BITS: "15"      9–15，越小每條連線越省記憶體
+      #   GGD_WS_COMPRESSION_SERVER_NO_CONTEXT: "1" ⚠️ 關掉門檻就完全失效
+      #   GGD_WS_COMPRESSION_CLIENT_NO_CONTEXT: "1" 要求瀏覽器每則重置自己的 context
+      #   GGD_WS_COMPRESSION_CONCURRENCY: "10"      同時丟給 libuv 執行緒池的 zlib 工作數
+      #
+      # ⚠️ SERVER_NO_CONTEXT 不是效能微調，是門檻能不能生效的前提：ws 只有在
+      # `server_no_context_takeover` 談成時才會看 threshold（見
+      # apps/game-server/src/net/wsCompression.ts 檔頭引的 ws 原始碼）。設成 0
+      # 之後每一則訊息都會被壓，threshold 這欄就只是裝飾 —— 開機那行會印 INERT。
+      #
+      # 一次改一個，改完看開機那行 `[game-server] ws compression: ...` 確認。
     ports:
       - "127.0.0.1:2567:2567"
     volumes:

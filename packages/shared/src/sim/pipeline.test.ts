@@ -338,9 +338,17 @@ describe("abilities", () => {
     // #248 is why that last term is finally non-zero: every champion now has
     // real AP (`intToAbilityPower × INT`, sela INT 26 → AP 26), where before the
     // whole roster sat at AP 0 and every authored `ap` coefficient multiplied by
-    // nothing. 80 + 0.7×26 = 98.2 magic, mitigated by thorne's MR 32:
-    // 98.2 × 100/132 ≈ 74.4.
-    expect(abilityDamage).toBeCloseTo((80 + 0.7 * 26) * (100 / 132), 1);
+    // nothing. 80 + 0.7×26 = 98.2 magic, then thorne's 魔抗 through the shipped
+    // `100/(100+mr)` curve.
+    //
+    // ⚠️ The divisor is READ, not written: it was hardcoded 132 (thorne's card
+    // mr 32) until GH#221 gave 魔抗 an attribute source, at which point his real
+    // mr became 32 + 0.6×INT 14 = 40.4 and this expectation was off by 4.45
+    // damage while still LOOKING derived. Any future retune of `intToMagicResist`
+    // or of thorne's card now flows through instead of going stale.
+    const thorneMr = world.stats.get(thorne)!.final[Stat.MagicResist];
+    expect(thorneMr).toBeCloseTo(32 + ATTRIBUTE_ENV_DEFAULTS.intToMagicResist * 14, 6);
+    expect(abilityDamage).toBeCloseTo((80 + 0.7 * 26) * (100 / (100 + thorneMr)), 1);
     expect(kindlingDamage).toBeGreaterThan(0); // passive fired
     expect(world.health.get(thorne)!.hp).toBeLessThan(hpBefore);
   });

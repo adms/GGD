@@ -17,6 +17,7 @@ import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { armRecovery } from "./abilityRecovery";
+import { breakStealth, canSee } from "../stealth";
 import {
   armFacingLock,
   facingTicks,
@@ -63,7 +64,17 @@ export function enemiesInCircle(
   });
   return hits.filter((h) => {
     const ht = world.team.get(h);
-    return !ht || !selfTeam || ht.teamId !== selfTeam.teamId;
+    if (ht && selfTeam && ht.teamId === selfTeam.teamId) return false;
+    // 隱形擋不擋技能 AoE —— a DECISION POINT, and the shipped answer is NO
+    // (`blocksAbilityAoe: false`, sim/stealth.ts): in WC3 a Blizzard/Flame
+    // Strike does burn an invisible unit standing in it, because invisibility
+    // is un-TARGETABILITY, not immunity. So with the shipping config this
+    // predicate is a constant `true` and this whole AoE path is byte-identical
+    // to before. Flipping the field on turns 永久隱形 into a real "walk through
+    // the fight untouched" mechanic, which is a design the owner may want and
+    // must not have to redeploy for.
+    if (world.stealthRules.blocksAbilityAoe && !canSee(world, caster, h)) return false;
+    return true;
   });
 }
 
@@ -248,6 +259,13 @@ export function castAbility(
   // plays INSTEAD of the element/generic voice. Rides `abilityCast` and not
   // `castBegin` on purpose — castBegin only fires when castTimeSec > 0, so an
   // instant cast (e.g. godie-o00k.passive 裝可愛) would never sound there.
+  // 破隱 (sim/stealth.ts). Placed at the SINGLE point where a cast is
+  // committed — past every rejection (`not-learned`/`cooldown`/`no-mana`/
+  // `out-of-range`/`recovery`), and BEFORE the ct>0 / ct==0 fork, so a channelled
+  // cast and an instant cast reveal on the same tick. Putting it in either
+  // branch would have made half the roster's casts silent.
+  breakStealth(world, caster, "cast");
+
   world.emit("abilityCast", {
     caster,
     slot,
@@ -270,6 +288,9 @@ export function castAbility(
       point,
       direction,
       rooted: def.rootWhileCasting !== false,
+      // Baseline for `interruptOn: "damage"` (CastResolveSystem). Written
+      // unconditionally — see `CastState.hpAtStart`.
+      hpAtStart: hp.hp,
     };
     // stop any in-progress auto — the cast animation-locks the caster
     ab.windup = null;

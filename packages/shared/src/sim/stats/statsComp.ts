@@ -38,6 +38,19 @@ export interface CastState {
   direction?: Vec2;
   /** caster is rooted (cannot move) for the cast duration */
   rooted: boolean;
+  /**
+   * The caster's HP on the tick this cast BEGAN — the baseline
+   * `AbilityDef.interruptOn: "damage"` compares against (CastResolveSystem).
+   *
+   * Snapshotted here rather than read from a per-entity 「last damaged tick」
+   * store because that store does not exist and inventing one would put a new
+   * Map on `SimWorld` (and in its digest) for a question only a channelled cast
+   * ever asks. Written for EVERY cast, not just the interruptible ones, so the
+   * baseline can never be missing on the branch that reads it — a conditional
+   * write is how a field becomes 「有時候是 undefined」 and the interrupt
+   * silently stops working for whoever set the flag second.
+   */
+  hpAtStart: number;
 }
 
 /**

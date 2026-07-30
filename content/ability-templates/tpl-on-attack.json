@@ -2,7 +2,7 @@
   "id": "tpl-on-attack",
   "schema": "template@1",
   "name": "攻擊觸發",
-  "description": "普攻/造成傷害時觸發的被動加成（HP% 執行門檻為紅色降級槽）。",
+  "description": "普攻／造成傷害時觸發的被動。觸發條件用下拉選單組出來：主體(自己/目標) → 屬性或 HP/MP → 絕對值或百分比 → 比較 → 數值，機率也是一種條件，並可用「全部成立/任一成立/非」疊成組合技。範本值就是獸矛本人：非英雄目標血量低於 35%，或 1% 機率對英雄生效。",
   "family": "on-attack",
   "status": "enabled",
   "params": {
@@ -14,18 +14,58 @@
       ],
       "default": "onBasicAttack"
     },
+    "condition": {
+      "type": "condition",
+      "optional": true,
+      "default": {
+        "any": [
+          {
+            "all": [
+              {
+                "not": {
+                  "kind": "kind",
+                  "subject": "target",
+                  "is": "champion"
+                }
+              },
+              {
+                "kind": "stat",
+                "subject": "target",
+                "stat": "hp",
+                "mode": "percent",
+                "op": "<",
+                "value": 0.35
+              }
+            ]
+          },
+          {
+            "all": [
+              {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
+              {
+                "kind": "chance",
+                "p": 0.01
+              }
+            ]
+          }
+        ]
+      }
+    },
     "chance": {
       "type": "number",
-      "default": 1,
       "min": 0,
       "max": 1,
-      "unit": "ratio"
+      "unit": "ratio",
+      "optional": true
     },
     "bonusDamage": {
       "type": "scaling",
       "default": {
         "perRank": [
-          9999
+          100
         ],
         "ratios": []
       }
@@ -49,11 +89,12 @@
     }
   },
   "requires": [
-    "hooks"
+    "hooks",
+    "conditions"
   ],
-  "gapScore": 7,
+  "gapScore": 9,
   "exemplar": {
-    "skill": "獸矛 Beast Spear",
-    "jass": "EVENT_PLAYER_UNIT_ATTACKED"
+    "skill": "獸矛 Beast Spear — 蒼月潮 07-002 獸矛持有者",
+    "jass": "EVENT_PLAYER_UNIT_ATTACKED：非英雄部隊血量低於 35% 直接死亡，另有 1% 機率對英雄生效"
   }
 }

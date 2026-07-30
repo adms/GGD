@@ -12,8 +12,11 @@ module turns the raw object-data + string table of the UNPROTECTED map
   SANITY.md         before/after enrichment comparison vs content/
 
 Object-data string fields hold TRIGSTR_#### references that only resolve
-against the FULL 11,337-string table (src_text.parse_wts_full); the stock
-w3xlib/wts.py regex recovers just 330.  Reuses w3xlib/objdata.py + w3xlib/mpq.py
+against the FULL 11,337-string table (src_text.parse_wts_full).  w3xlib/wts.py
+used to recover just 330 of them, which is why this module was written against
+a private parser; task #208 fixed the library, `parse_wts_full` is now a thin
+adapter over `w3xlib.wts.parse_wts_blocks`, and both return the same 11,337.
+Reuses w3xlib/objdata.py + w3xlib/mpq.py
 READ-ONLY; STRINGS.json is produced by src_text.py.
 """
 

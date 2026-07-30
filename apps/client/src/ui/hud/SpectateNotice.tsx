@@ -25,17 +25,32 @@
  * frameBus is written every render frame and never goes through React. Reading
  * it on a timer keeps this component out of the sim→UI projection entirely.
  *
- * PLACEMENT (#107). It is CENTRED chrome, so it owns no corner slot — the same
- * category as PhaseTimer / the ability cluster, which `controlLegendModel`
- * already declares as the two unslotted clusters. It hangs off
- * `TOP_CENTRE_BAND_END`, i.e. below the phase clock and the 觀戰中 hint, rather
- * than at the `top: 12` v0.9.1 gave it — that number sat INSIDE PhaseTimer's
- * own 10..62 band, which was survivable for a click-through label and is not
- * survivable now that the banner carries a button the player has to hit.
+ * PLACEMENT (#107 → #219). It is CENTRED chrome, so it owns no corner slot —
+ * the same category as PhaseTimer / the ability cluster, which
+ * `controlLegendModel` already declares as the two unslotted clusters. v0.9.1
+ * pinned it at `top: 12`, INSIDE PhaseTimer's own 10..62 band; v0.9.12 moved it
+ * to `TOP_CENTRE_BAND_END + HUD_GAP` — and that was still a hard-coded number
+ * that could not see the two other boxes sharing the same phase:
+ *
+ *   owner, 2026-07-30: 「你的競技場已分出勝負 擋住結算評價」
+ *
+ * It sat on HudRoot's 「Round over」 pill (`top: 120`, centred — the SAME rows)
+ * and, on a ≤1250px window, on the 評價 card's left edge. So the banner no
+ * longer pins anything: it claims the `spectate-notice` row of the top-centre
+ * STACK in `ui/hud/hudSurfaces`, and the resolver hands back a rect that has
+ * already been cleared of every other painted box for this phase and viewport.
+ *
+ * `null` is a real answer (a 812×375 phone during `resolution` genuinely has no
+ * room beside the 評價 card), and a narrow rect switches the plate to its
+ * COMPACT tier rather than clipping a sentence — the same ladder the ping chip
+ * uses inside the build-stamp gutter.
  */
 import React, { useEffect, useState } from "react";
 import { frameBus } from "../../frameBus";
-import { HUD_GAP, HUD_Z } from "./hudLayout";
+import { HUD_GAP } from "./hudLayout";
+import type { HudRect } from "./hudLayout";
+import { hudSurfaceStyle } from "./hudSurfaces";
+import { useHudSurface } from "./useHudSurface";
 import { TOP_CENTRE_BAND_END } from "../controlLegendModel";
 import { hudActions } from "../actions";
 import { SfxButton } from "../SfxButton";
@@ -55,8 +70,25 @@ export const SPECTATE_OFFER_TEXT = "你的競技場已分出勝負";
 export const SPECTATE_GO_LABEL = "前往觀戰";
 export const SPECTATE_BACK_LABEL = "返回自己的競技場";
 
-/** Distance from the top edge. Derived, so it tracks the top-centre cluster. */
+/**
+ * The FIRST row of the top-centre stack — where the banner lands during combat,
+ * when 「Round over」 is not up. Kept exported because it is what the #269 guard
+ * asserts the banner clears (`> TOP_CENTRE_BAND_END`); the resolver in
+ * `hudSurfaces` produces exactly this y for the combat scene.
+ */
 export const SPECTATE_NOTICE_TOP = TOP_CENTRE_BAND_END + HUD_GAP;
+
+/**
+ * Below this the plate drops the 「第 N 競技場」 chip and shortens its sentence
+ * so the BUTTON always survives — a banner whose action is clipped off is worse
+ * than no banner. 320 is the full form measured at its own font stack: dot 9 +
+ * gap 10 + 「你的競技場已分出勝負」 145 + gap 10 + zone chip 74 + gap 10 + button
+ * 80 + 2×14 padding ≈ 366, so anything under ~320 is already losing the chip.
+ */
+export const SPECTATE_COMPACT_W = 320;
+
+/** The short sentence used when the plate cannot hold the full one. */
+export const SPECTATE_OFFER_TEXT_SHORT = "已分出勝負";
 
 export type SpectateMode = "hidden" | "offer" | "watching";
 
@@ -136,30 +168,41 @@ export function spectateNoticeClick(view: SpectateNoticeView, actions: SpectateA
   else if (view.mode === "offer") actions.spectateGoTo(view.zone);
 }
 
-export function SpectateNoticeView_({ view }: { view: SpectateNoticeView }): React.JSX.Element | null {
-  if (view.mode === "hidden") return null;
+export function SpectateNoticeView_({
+  view,
+  rect,
+}: {
+  view: SpectateNoticeView;
+  /** the resolved `spectate-notice` surface; `null` = no room, paint nothing */
+  rect: HudRect | null;
+}): React.JSX.Element | null {
+  if (view.mode === "hidden" || !rect) return null;
   const watching = view.mode === "watching";
+  const compact = rect.w < SPECTATE_COMPACT_W;
+  const text = compact && !watching ? SPECTATE_OFFER_TEXT_SHORT : view.text;
   return (
     <div
+      data-hud-surface="spectate-notice"
       data-spectate-notice={view.mode}
+      data-spectate-tier={compact ? "compact" : "full"}
       style={{
-        position: "fixed",
-        top: `calc(env(safe-area-inset-top, 0px) + ${SPECTATE_NOTICE_TOP}px)`,
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: HUD_Z.expanded,
+        // Placement comes from the #107 surface registry — never from a number
+        // typed here. #hud-root already owns the safe-area inset on coarse
+        // pointers (see hudLayout's header), so these are plain px.
+        ...hudSurfaceStyle("spectate-notice", rect),
+        boxSizing: "border-box",
+        justifyContent: "center",
         // the PLATE is click-through; only the button below opts back in, so a
         // misclick on the banner during a fight can never eat an order.
         pointerEvents: "none",
         display: "flex",
         alignItems: "center",
         gap: 10,
-        padding: "8px 14px",
+        padding: compact ? "8px 10px" : "8px 14px",
         borderRadius: 999,
         border: "1px solid rgba(242,161,60,0.55)",
         background: "linear-gradient(180deg, rgba(28,22,12,0.92), rgba(18,14,8,0.92))",
         boxShadow: "0 6px 28px rgba(0,0,0,0.6)",
-        maxWidth: "min(92vw, 680px)",
         textAlign: "center",
       }}
       role="status"
@@ -177,19 +220,29 @@ export function SpectateNoticeView_({ view }: { view: SpectateNoticeView }): Rea
           animation: "ggd-spectate-pulse 1.6s ease-in-out infinite",
         }}
       />
-      <span style={{ fontSize: 14, fontWeight: 700, color: "#f6e3c0", letterSpacing: "0.5px" }}>
-        {view.text}
-      </span>
       <span
         style={{
-          fontSize: 12,
-          color: "#d9b26a",
-          fontVariantNumeric: "tabular-nums",
+          fontSize: 14,
+          fontWeight: 700,
+          color: "#f6e3c0",
+          letterSpacing: "0.5px",
           whiteSpace: "nowrap",
         }}
       >
-        {view.zoneLabel}
+        {text}
       </span>
+      {!compact && (
+        <span
+          style={{
+            fontSize: 12,
+            color: "#d9b26a",
+            fontVariantNumeric: "tabular-nums",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {view.zoneLabel}
+        </span>
+      )}
       <SfxButton
         type="button"
         data-spectate-action={watching ? "return" : "go"}
@@ -225,6 +278,10 @@ export function SpectateNoticeView_({ view }: { view: SpectateNoticeView }): Rea
 export function SpectateNotice(): React.JSX.Element | null {
   const [zone, setZone] = useState<number | null>(frameBus.spectateZone);
   const [offer, setOffer] = useState<number | null>(frameBus.spectateOffer);
+  // `null` outside the banner's declared phases (`combat` / `resolution`) — a
+  // 前往觀戰 button on the settlement screen is an offer to leave a match that
+  // is already over.
+  const rect = useHudSurface("spectate-notice");
   useEffect(() => {
     const iv = setInterval(() => {
       setZone(frameBus.spectateZone);
@@ -232,5 +289,5 @@ export function SpectateNotice(): React.JSX.Element | null {
     }, SPECTATE_POLL_MS);
     return () => clearInterval(iv);
   }, []);
-  return <SpectateNoticeView_ view={spectateNotice(zone, offer)} />;
+  return <SpectateNoticeView_ view={spectateNotice(zone, offer)} rect={rect} />;
 }

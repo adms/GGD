@@ -16,9 +16,9 @@
     },
     "stepCount": {
       "type": "number",
-      "default": 70,
+      "default": 20,
       "min": 3,
-      "max": 70,
+      "max": 140,
       "unit": "count",
       "inert": "逐步推進未支援：每跳幾何折算為單發投射，推進節奏不表現"
     },

@@ -57,7 +57,11 @@ import {
   type VfxFamilyTuning,
   type W3xFamilyId,
 } from "@ggd/shared/content/schema/vfx";
+import { DEFAULT_MAX_ABILITY_VFX_LAYERS } from "@ggd/shared/content/schema/abilityVfx";
 import { parseIndex, type IndexEntry } from "./content";
+
+/** 重新匯出,讓頁面只從這一個模組拿鑄技工坊要的東西(和其他常數同一條路)。 */
+export { DEFAULT_MAX_ABILITY_VFX_LAYERS };
 
 // ---------------------------------------------------------------------------
 // 文件座標
@@ -246,6 +250,13 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   scaleGain: { min: 0, max: 1 },
   scaleMin: { min: 0.1, max: 4 },
   scaleMax: { min: 0.2, max: 8 },
+  // #205 多層特效模板的層數上限。上界 6 = `ABILITY_VFX_LAYER_HARD_CAP`,
+  // 下界 1 = 「至少還有主特效那一層」。整數。
+  maxAbilityVfxLayers: { min: 1, max: 6, int: true },
+  // owner 2026-07-30 (a) —— 一次性粒子壽命上限(秒)。上下界的推導寫在
+  // `MIN_/MAX_ONE_SHOT_MAX_LIFE_SEC` 的註解裡(3 秒 = 12 人混戰會吃掉九成畫面
+  // 粒子預算的那條線;0.1 秒 = 手機 30fps 的 3 張畫面)。
+  oneShotMaxLifeSec: { min: 0.1, max: 3 },
 };
 
 export const FAMILY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
@@ -265,7 +276,13 @@ export const ABILITY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   tintB: { min: 0, max: 255, int: true },
 };
 
-export const GLOBAL_FIELDS = ["scaleGain", "scaleMin", "scaleMax"] as const;
+export const GLOBAL_FIELDS = [
+  "scaleGain",
+  "scaleMin",
+  "scaleMax",
+  "maxAbilityVfxLayers",
+  "oneShotMaxLifeSec",
+] as const;
 export type GlobalField = (typeof GLOBAL_FIELDS)[number];
 
 export const FAMILY_FIELDS = [
@@ -297,6 +314,8 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   scaleGain: "縮放採用度",
   scaleMin: "縮放下限",
   scaleMax: "縮放上限",
+  maxAbilityVfxLayers: "單技能特效層數上限",
+  oneShotMaxLifeSec: "餘燼壽命上限（秒）",
   enabled: "啟用",
   primitive: "形狀",
   element: "元素",
@@ -319,25 +338,69 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "原圖那些 1.0～10.0 的倍率要照抄多少。0 = 完全不管原圖，每一招一樣大；1 = 照單全收，一個 10.0 會塞滿整個畫面",
   scaleMin: "壓縮後的最小值，避免小到看不見",
   scaleMax: "壓縮後的最大值，這是「再怎麼放大也不會擋住畫面」的那條線",
+  maxAbilityVfxLayers:
+    "一支技能的 vfxLayers 最多播幾層。多出來的層直接不播（從後面砍，主特效永遠留著）。" +
+    "調小 = 手機端省畫面預算；6 是硬上限，因為一層至少吃一個發射器，" +
+    "12 個人同時放到滿就會逼近整個畫面的發射器預算",
+  oneShotMaxLifeSec:
+    "施法／命中／死亡這類一次性特效的粒子最久活多久。這是「爆完之後那一圈餘燼還能留多久」那一格：" +
+    "匯入的原圖文件壽命有 1～6 秒，照播會讓每一次施法在畫面上留一團化不開的霧，所以播放端一律夾到這個上限。" +
+    "0.6 = 出貨值（乾淨俐落的打擊感）；拉到 1.5～2 才看得到明顯的餘燼尾巴。" +
+    "⚠️ 上限 3 秒不是隨便訂的：12 個人各疊 5 層、每層 80 顆、平均兩秒放一招，" +
+    "3 秒壽命就會吃掉整個畫面 8,000 顆粒子預算的九成 —— 那就是畫面變成霧的那條線。" +
+    "另外這一格只會往下夾，不會把短的特效拉長：原本 0.3 秒的爆炸不會因為調大而變長",
   enabled: "關掉之後這一層不再覆寫，技能回到依名字猜出來的 fx.prim.* 分類",
   primitive: "決定形狀（剪影）。同一個家族換形狀就是整批技能一起換長相",
   element: "決定顏色。技能自己沒有原圖 tint 時用這個",
   scale: "這個家族的基準大小，1 = 原型本來的大小。每一招的原圖倍率再疊在這之上",
-  heightY: "特效播在離地多高（世界單位）。0.1 = 貼地的環，1 = 胸口，3.5 = 頭頂上方",
+  heightY:
+    "特效播在離地多高（世界單位）。0.1 = 貼地的環，1 = 胸口，3.5 = 頭頂上方。" +
+    "⚠️ 這一格目前算得出來但沒有送到播放端 —— 施法特效固定播在 y=1.0，所以改它不會動",
   family: "這一招要播哪一個家族原型。留白 = 沿用出貨的綁定",
   w3xScale:
     "原圖給這個呼叫點的 usca / SetUnitScalePercent。留白 = 原圖沒說，用家族基準；填了才會走上面的壓縮曲線",
   tintR: "原圖給這個呼叫點的頂點顏色，0–255（和 w3u 的 uclr 同一個座標系）。三格留白 = 用元素的顏色",
   tintG: "0–255，留白 = 用元素的顏色",
   tintB: "0–255，留白 = 用元素的顏色",
-  flyHeight: "原圖的 SetUnitFlyHeight，WC3 單位（128 單位 = 1 世界單位）。留白 = 用家族高度",
+  flyHeight:
+    "原圖的 SetUnitFlyHeight，WC3 單位（128 單位 = 1 世界單位）。留白 = 用家族高度。" +
+    "⚠️ 同「家族基準高度」：目前沒有送到播放端。要調某一招的高度，請用下面的多層特效堆疊（那條路的 flyHeight 是活的）",
   // ⚠️ alpha / timeScale 兩個名字在「家族」和「單支技能」兩張表都出現。這裡**只能
   // 有一份**（重複的 key 會被 JS 靜默吃掉最後一個，tsc 才抓得到），所以文案要同時
   // 說得通兩邊：家族那格是基準，技能那格是覆寫。
   alpha: "不透明度。家族那一張是基準，單支技能那一格覆寫它；留白 = 用家族基準。壓低 = 幻影感",
   timeScale: "壽命倍率。>1 = 慢而長，<1 = 快而脆。家族那一張是基準，單支技能那一格覆寫它；留白 = 用家族基準",
-  anchor: "WC3 的掛點字串，原封不動（\"chest\" / \"origin\" / \"right,hand\"）。留白 = 不掛骨頭",
+  anchor:
+    "WC3 的掛點字串，原封不動（\"chest\" / \"origin\" / \"right,hand\"）。留白 = 不掛骨頭。" +
+    "⚠️ 施法特效走的是共用粒子池那條路，那條路不做骨骼掛載，所以這一格目前不生效",
 };
+
+/**
+ * 這三格**目前算得出來但沒有送到播放端**（第②號故障），文案已經照實寫。
+ *
+ * ⚠️ 這不是「留著當裝飾」——是 owner 還沒裁決要「接上去」還是「拿掉欄位」：
+ *
+ *   · `heightY` / `flyHeight` —— 接上去等於一次改動 258 支家族技能在畫面上的
+ *     高度（家族預設 0.15～3.5 都有，現在全部固定播在 y=1.0）。那是一個要用眼睛
+ *     驗收的視覺變更，不該由一條看不到畫面的 lane 自己決定。
+ *   · `anchor` —— pooled cast path 結構上沒有 bone parenting（和多層堆疊刻意不
+ *     開 `anchor` 是同一個理由）。要它生效得先讓 `play()` 會解掛點。
+ *
+ * 同一批裡的 `alpha` / `timeScale` 已經在 2026-07-30 接上去了（`familyRow()` 現在
+ * 會把它們搬到 `W3xAbilityArt`，`VfxSystem.playCastVfx` 用
+ * `applyVfxOverrides` 套上去），守衛在
+ * `apps/client/src/vfx/VfxSystem.familyKnobs.test.ts`——那條測試讀的是 Babylon
+ * 真的拿到的顏色梯度與壽命，不是「函式回傳了 0.35」。
+ *
+ * 要調某一招的**高度**，現在有活的路：下面那張多層特效堆疊的 `flyHeight`
+ * （`abilityLayers.layerHeightY` 真的會拿它當 `VfxSystem.play` 的 y）。
+ */
+export const DEAD_FAMILY_KNOBS: readonly string[] = ["heightY", "flyHeight", "anchor"];
+
+export const DEAD_KNOB_NOTE =
+  "⚠️ 家族／技能綁定裡的「家族基準高度」「原圖飛行高度」「錨點」三格目前不生效" +
+  "（算得出來但沒有送到播放端）。要調單一招的高度或掛點，請用下面每一支技能自己的" +
+  "「多層特效堆疊」——那條路的參數是實測過會到畫面的。";
 
 // ---------------------------------------------------------------------------
 // 讀 / 寫文件
@@ -374,6 +437,13 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     scaleGain: doc.scaleGain,
     scaleMin: doc.scaleMin,
     scaleMax: doc.scaleMax,
+    // ⚠️ #205 —— 這一行漏掉的話,後台按存檔就會把層數上限**從文件裡刪掉**,
+    // 而畫面上那一格看起來還好好地填著值。`vfxForge.test.ts` 有一條 round-trip
+    // 守衛盯著這件事(每一個 GLOBAL_FIELD 都要走完一圈回得來)。
+    maxAbilityVfxLayers: doc.maxAbilityVfxLayers,
+    // ⚠️ 同上 —— 少寫這一行,操作者按存檔就會把餘燼壽命上限從文件裡刪掉,
+    // 而畫面上那一格還好好地填著 2.0。round-trip 守衛盯著每一個 GLOBAL_FIELD。
+    oneShotMaxLifeSec: doc.oneShotMaxLifeSec,
     families: families as ConfigVfxFamiliesDoc["families"],
     abilities,
   };
@@ -452,10 +522,25 @@ function checkNumber(bound: ForgeBound, text: string, optional: boolean): string
   return "";
 }
 
+/**
+ * 全域欄位裡**可以留白**的那些。
+ *
+ * ⚠️ 這不是裝飾:`maxAbilityVfxLayers` 在 schema 上是 optional(舊的 durable
+ * overlay 沒有這一格),所以後台不可以在讀進來的時候幫它填一個預設值 ——
+ * 那樣一來「只是打開頁面看一眼」就會讓整份文件變成 dirty,儲存鈕亮起來,
+ * 操作者一按就把一個他從來沒選過的值寫進線上。`vfxForgeSave.test.ts` 的
+ * 「打開一列只是看 —— 沒有真的改動時儲存鈕是關的」就是釘這件事的,而我第一版
+ * 真的把它弄紅了。留白 = 不寫這個 key = 用出貨預設。
+ */
+export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
+  "maxAbilityVfxLayers",
+  "oneShotMaxLifeSec",
+]);
+
 export function validateGlobalField(field: GlobalField, text: string): string {
   const b = GLOBAL_BOUNDS[field];
   if (!b) return "";
-  return checkNumber(b, text, false);
+  return checkNumber(b, text, OPTIONAL_GLOBAL_FIELDS.has(field));
 }
 
 export function validateFamilyField(field: FamilyField, text: string): string {
@@ -727,6 +812,13 @@ export interface AbilityFacts {
   readonly id: string;
   readonly name: string;
   readonly vfxKey: string | null;
+  /**
+   * #205 —— 這一列的**整份出貨技能文件**。目錄本來就把 696 份文件都抓下來了
+   * (為了讀 `name` 和 `vfxKey`),丟掉其餘欄位再讓多層堆疊編輯器重抓一次是白花
+   * 一趟往返。多層編輯器要送出的是**整份**文件(overlay 是整份替換,不是欄位
+   * 合併),所以它需要這個。
+   */
+  readonly doc?: unknown;
 }
 
 export interface ForgeRow {
@@ -744,6 +836,8 @@ export interface ForgeRow {
   readonly binding: VfxAbilityFamilyBinding | null;
   /** 這一列最後會播的家族(綁定 > 普查建議 > 無) */
   readonly effectiveFamily: W3xFamilyId | null;
+  /** #205 —— 出貨的整份技能文件,多層堆疊編輯器要它當底 */
+  readonly shippedDoc: unknown;
 }
 
 const SLOT_ORDER = ["passive", "q", "w", "e", "r", "ex"] as const;
@@ -783,6 +877,7 @@ export function forgeRows(
       suggested,
       binding,
       effectiveFamily: binding?.family ?? suggested?.family ?? null,
+      shippedDoc: a.doc ?? null,
     };
   });
   rows.sort((x, y) => {
@@ -878,7 +973,7 @@ function abilityFactsFrom(id: string, raw: unknown): AbilityFacts {
   const d = raw as Record<string, unknown>;
   const name = typeof d["name"] === "string" && d["name"] !== "" ? d["name"] : id;
   const key = d["vfxKey"];
-  return { id, name, vfxKey: typeof key === "string" && key !== "" ? key : null };
+  return { id, name, vfxKey: typeof key === "string" && key !== "" ? key : null, doc: raw };
 }
 
 async function getJson(fetchFn: typeof fetch, url: string): Promise<unknown> {

@@ -17,6 +17,11 @@
   "range": 0,
   "effects": [
     {
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": 20.0
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {

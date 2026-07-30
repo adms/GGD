@@ -1,46 +1,79 @@
 {
   "id": "godie-efur.w",
-  "name": "13-02 變化念力",
+  "schema": "ability@1",
+  "name": "13-02 龍頭戲畫。牙突",
   "icon": "assets/icons/abilities/godie-efur.w.webp",
-  "description": "[輔助]\n32秒冷卻時間\n\n利用強大的念能力將指定單位轉化為軟弱無力的小動物，持續1秒。",
+  "description": "[指向敵方單位]\n冷卻 16／14／12 秒　耗魔 70／90／110 點　射程 4.8 單位（4 個身位）　前搖 0.3 秒\n\n一記由下往上的牙突。招式名稱聽起來很帥，實際上是拿念力做的開瓶器。\n\n· 傷害：**40／70／100 點物理**，外加 **0.5 × 你的攻擊力**\n· 追加：**目標最大生命的 6%／9%／12%**。算的是**最大**生命不是當前生命 —— 所以他滿血還是殘血，這一刀一樣痛（對追殘血的你來說這是壞消息）\n· 暈眩 **1.0 秒**（這一格三階都一樣長）\n· 擊退：**6.0 單位 −（你們兩個之間的距離）**。站越遠推越少，這是全遊戲共用的擊退規則（擊退是近戰的工具，不給遠程拿來放風箏）；貼臉放幾乎就是滿額 6.0。落地後再**躺 6 tick（0.2 秒）**爬不起來。\n\n⚠️ 冷卻越練越短、耗魔越練越貴。",
   "slot": "W",
   "castType": "targeted",
-  "maxRank": 4,
+  "maxRank": 3,
   "cooldown": [
-    32.0,
-    30.0,
-    28.0,
-    26.0
+    16.0,
+    14.0,
+    12.0
   ],
   "manaCost": [
-    150.0,
-    200.0,
-    250.0,
-    300.0
+    70.0,
+    90.0,
+    110.0
   ],
-  "range": 11.0,
+  "range": 4.8,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
-          0.0,
-          99.0,
-          99.0,
-          99.0
+          40.0,
+          70.0,
+          100.0
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 0.6
+            "stat": "ad",
+            "coeff": 0.5
           }
         ]
+      },
+      "hpPct": {
+        "basis": "max",
+        "perRank": [
+          0.06,
+          0.09,
+          0.12
+        ]
       }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "fang-stun",
+      "duration": 1.0,
+      "stun": true
+    },
+    {
+      "kind": "knockback",
+      "distance": 6.0,
+      "speed": 16.0,
+      "from": "caster",
+      "getupTicks": 6
     }
   ],
-  "vfxKey": "fx.prim.ki.pulse-sm",
-  "targetsEnemies": true,
-  "schema": "ability@1",
+  "vfxKey": "fx.prim.ki.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.ki.slash",
+      "delayMs": 80,
+      "attachTo": "point",
+      "w3xScale": 1.3
+    },
+    {
+      "vfxKey": "fx.fam.shockwave-ring.ki.s100",
+      "delayMs": 160,
+      "attachTo": "point",
+      "w3xScale": 0.9,
+      "alpha": 0.8
+    }
+  ],
   "castTimeSec": 0.3
 }

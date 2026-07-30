@@ -11,6 +11,7 @@ export const MSG = {
   CHEAT: "cheat", // dev-only offline testing aid (server hard-gates on dev mode)
   // server -> client (events; state rides the schema)
   EVENT: "event", // sim events fanout {type, tick, data}
+  EVENT_BATCH: "evbatch", // N events from ONE tick, in order (see EventBatchMessage)
   REJECT: "reject", // {seq?, reason}
   PHASE: "phase", // {phase, round}
 } as const;
@@ -57,6 +58,54 @@ export interface EventMessage {
   type: string;
   tick: number;
   data: Record<string, unknown>;
+}
+
+/**
+ * MANY `EventMessage`s from ONE tick, in one Colyseus message.
+ *
+ * WHY. Every `broadcast(MSG.EVENT, …)` is one `ws.send()` PER CLIENT — colyseus
+ * only queues messages while a client is still JOINING (`WebSocketClient.
+ * enqueueRaw`, @colyseus/ws-transport 0.16.5), so a joined room does no
+ * coalescing of its own. MEASURED on a real 12-socket room replaying a real
+ * 900-tick sim: 8.7 fanned-out events/tick at the shipped mob cap is 98 WebSocket
+ * frames per tick (2,947/s), and 353/tick (10,615/s) at 600 zombies/zone. Each
+ * of those frames pays a colyseus envelope, a WS frame header, a socket write —
+ * and, above `wsCompression`'s 256 B threshold, its own deflate job.
+ *
+ * SHAPE. `evs` is a positional pair per event so the field names are not repeated
+ * N times, and the ARRAY ORDER IS THE DELIVERY ORDER — see `unpackEventBatch`.
+ * `tick` is carried once because every event in a batch is from the same tick;
+ * that is what makes batching latency-free, and it is why there is no
+ * cross-tick mode (owner: 「不要跨 tick 合批」 — 順暢 over 省頻寬).
+ */
+export interface EventBatchMessage {
+  /** the single tick every event in this batch was emitted on */
+  tick: number;
+  /** [type, data] pairs, IN EMISSION ORDER */
+  evs: [string, Record<string, unknown>][];
+}
+
+/**
+ * Batch → the exact `EventMessage` sequence the unbatched wire would have sent.
+ *
+ * THE ORDER IS THE CONTRACT. Sim events are causally linked (`castBegin` before
+ * `castRejected`, `attackWindup` before `basicAttackHit`, `damage` before
+ * `death`), and the client's drain applies them in arrival order. Any reshuffle
+ * here — sorting, grouping by type, reversing — is a behaviour change even
+ * though every event still arrives. `eventBatch.test.ts` mutates exactly that.
+ *
+ * Defensive on shape, not on content: a malformed pair is skipped rather than
+ * throwing, because one bad entry must not take the whole tick's combat visuals
+ * down with it.
+ */
+export function unpackEventBatch(msg: EventBatchMessage): EventMessage[] {
+  const out: EventMessage[] = [];
+  if (!Array.isArray(msg?.evs)) return out;
+  for (const pair of msg.evs) {
+    if (!Array.isArray(pair) || typeof pair[0] !== "string") continue;
+    out.push({ type: pair[0], tick: msg.tick, data: (pair[1] ?? {}) as Record<string, unknown> });
+  }
+  return out;
 }
 
 /**

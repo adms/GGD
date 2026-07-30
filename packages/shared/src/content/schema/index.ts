@@ -68,6 +68,7 @@ export const zDocEnvelope = z
   .passthrough();
 
 export * from "./common";
+export * from "./condition";
 export * from "./effect";
 export * from "./ability";
 export * from "./champion";

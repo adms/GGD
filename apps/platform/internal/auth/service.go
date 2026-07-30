@@ -88,6 +88,28 @@ type Service struct {
 	// composition root via SetDeviceVerificationURI. See device.go.
 	deviceVerificationURI string
 
+	// burnInviteOnConflict decides what happens to an invite code that was
+	// burned by a registration which then hit a username/email conflict (GH#179,
+	// the residual half). false — the zero value, and every deploy's behaviour
+	// before this field existed — hands the code back, so a family member who
+	// picks a taken name keeps their invite. true keeps it burned.
+	//
+	// IT IS THE ONLY LEVER ON THE ENUMERATION ORACLE THAT IS STILL OPEN. The
+	// #174 gate refuses an un-invited caller identically whatever they submitted,
+	// so a stranger learns nothing (measured — see the register_enumeration
+	// tests). A caller HOLDING A LIVE CODE is a different story: every
+	// conflicting probe returns the code, so one code buys UNBOUNDED "is X
+	// registered?" queries (measured: 6 consecutive 409s, code still 未使用).
+	// Turning this on prices each probe at one code, which bounds the oracle at
+	// the number of codes the operator handed out.
+	//
+	// It is a KNOB rather than a decision because the two sides trade against
+	// each other and only the owner can weigh them: off = an honest typo never
+	// costs an invite; on = an invited family member cannot silently enumerate
+	// the membership list. Set at the composition root from
+	// GGD_BURN_INVITE_ON_CONFLICT via SetBurnInviteOnConflict.
+	burnInviteOnConflict bool
+
 	// maxPending bounds how many accounts may sit PENDING under the #126 approval
 	// gate at once (sec-154-11). 0 = no cap (the dev/CI default, and what every
 	// existing test sees). Register consults it before creating a pending account
@@ -100,6 +122,12 @@ type Service struct {
 // SetMaxPending installs the #126 pending-registration cap (composition root
 // only). n <= 0 disables it, restoring the uncapped behaviour.
 func (s *Service) SetMaxPending(n int) { s.maxPending = n }
+
+// SetBurnInviteOnConflict chooses whether a registration that burned an invite
+// code and then hit a username/email conflict keeps the code burned (true) or
+// hands it back (false, the default and the pre-existing behaviour). See the
+// burnInviteOnConflict field for the trade-off it settles. Composition root only.
+func (s *Service) SetBurnInviteOnConflict(v bool) { s.burnInviteOnConflict = v }
 
 // PendingNotifier is told when a registration lands PENDING under the #126
 // approval gate, so an out-of-band channel (Slack, #209) can alert the owner and
@@ -271,6 +299,100 @@ type RegisterOptions struct {
 // deliberately outlives the caller's request (see the WithoutCancel note below).
 const registerSideworkTimeout = 5 * time.Second
 
+// ErrRegistrationConflict is the SINGLE answer /auth/register gives when the
+// username or the email address is already in use (GH#179).
+//
+// WHAT IT DOES CLOSE, EXACTLY. It used to be two answers — "username is already
+// taken" and "email is already registered" — behind the same 409. Collapsing
+// them means a conflict no longer reveals WHICH of the two values a caller
+// submitted was the one already in use. That matters for the case where the
+// caller submitted two values they care about at once, and for a shoulder-
+// surfed or logged response body.
+//
+// WHAT IT DOES **NOT** CLOSE, AND THE COMMENT HERE USED TO CLAIM IT DID. This
+// does NOT stop /auth/register answering "does this person have an account
+// here?". A caller who wants that answer pairs the value under test with a
+// counterpart they KNOW is fresh, and reads the status code:
+//
+//	POST {username:"victim",  email:"throwaway1@x"}  -> 409  victim IS taken
+//	POST {username:"nobody",  email:"throwaway2@x"}  -> 201  nobody is free
+//	POST {username:"fresh1",  email:"victim@x.com"}  -> 409  that email IS taken
+//	POST {username:"fresh2",  email:"nobody@x.com"}  -> 201  that email is free
+//
+// Merging the two 409s removes only information the caller already had (they
+// chose which field was fresh), so the information gain against this attacker
+// is ~0. The same is true of the timing parity below: 201 and 409 are already
+// separated by the status code, so equalising their latency does not hide the
+// answer either. Both improvements are real and are kept — they just are not
+// the thing the header used to claim.
+//
+// WHAT ACTUALLY CLOSES IT on a real deploy is the #174 invite gate, which runs
+// BEFORE any of this and refuses an un-invited caller identically whatever they
+// submitted. The residual channel, the one that is still open, is a caller
+// holding a LIVE invite code — see registerOracleResidual in
+// register_enumeration_test.go for the measured behaviour and the knob that
+// bounds it (burnInviteOnConflict).
+//
+// The message must stay field-agnostic regardless: a friendlier "did you mean
+// to log in?" that names the email would make the 409 self-describing again,
+// which is strictly worse than what we have.
+var ErrRegistrationConflict = httpx.Conflict("that username or email address is not available")
+
+// reservationNoopKey names a key that NOTHING in the platform ever writes: it
+// pads the rollback DELETE below so the command always names exactly two keys.
+// The "idx:reservation-noop:" prefix cannot collide with a real index key —
+// redisx.KeyIdxUsername / KeyIdxEmail produce "idx:username:" / "idx:email:" —
+// so deleting it is guaranteed to be a no-op on real data.
+func reservationNoopKey(id, slot string) string {
+	return "idx:reservation-noop:" + slot + ":" + id
+}
+
+// releaseReservations hands back the uniqueness reservations THIS registration
+// actually took, in a shape that does not depend on which ones it got.
+//
+// One DELETE, always naming two keys: the reservations we own, and for each one
+// we do NOT own, a key that cannot exist. So "the username collided", "the email
+// collided" and "both collided" all cost the same round trips — the point of
+// GH#179's timing half, applied to the cheap half of the work as well as the
+// expensive one.
+//
+// It must never delete a key it does not own — but NOT for the reason this
+// comment used to give. It claimed that deleting a colliding account's index
+// entry "would let the next registration take that account's username". THAT IS
+// FALSE, and it is false because of a second layer this comment ignored:
+// account.Repo.Create re-verifies uniqueness against the DURABLE store
+// (refFree, account.go) before it writes anything, under a per-index-key mutex.
+// MEASURED with the padding removed and both keys deleted unconditionally: the
+// thief's follow-up registration comes back 409, not 201, on both the username
+// and the email — see TestReleaseReservationsKeepsOtherAccountsReservations,
+// which asserts the non-theft as well as the padding.
+//
+// What the padding actually buys, stated honestly:
+//
+//  1. ROUND-TRIP PARITY (above) — the reason it exists at all.
+//  2. DEFENCE IN DEPTH. Deleting a live reservation does not hand the value
+//     away, but it does drop uniqueness for that value from two independent
+//     enforcers to one (the durable refFree) until the next boot rebuilds the
+//     index (data/boot/boot.go SETNXs it back). A stranger who can post
+//     colliding registrations should not be able to strip the fast layer for
+//     every member of the deploy at will.
+//  3. COST. Once the reservation is gone, every later attempt on that value
+//     runs the full argon2 AND a durable store read before being refused,
+//     instead of losing the SETNX.
+//
+// None of those three are visible in a response body, which is exactly why the
+// guard for this function reads the Redis keyspace directly.
+func (s *Service) releaseReservations(ctx context.Context, id, username, email string, ownUser, ownMail bool) {
+	keys := []string{reservationNoopKey(id, "u"), reservationNoopKey(id, "e")}
+	if ownUser {
+		keys[0] = redisx.KeyIdxUsername(username)
+	}
+	if ownMail {
+		keys[1] = redisx.KeyIdxEmail(email)
+	}
+	s.rdb.R.Del(ctx, keys...)
+}
+
 // Register creates an account, enforcing uniqueness atomically via Redis
 // SETNX before the JSON write.
 //
@@ -333,12 +455,22 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	//     store, so an unreadable store means "assume an admin exists" ⇒ a code
 	//     is REQUIRED. (Opposite direction to the ownership grant, same meaning.)
 	//
-	// IT RUNS BEFORE THE USERNAME/EMAIL RESERVATION, deliberately. If the
-	// uniqueness reservation ran first, an un-invited stranger could read the
-	// 409-"already taken" vs 403-"invite required" split as an ORACLE telling
-	// them which family usernames and emails exist. Gating first means a caller
-	// without a valid code is refused having reserved — and revealed — nothing,
-	// and it also keeps the ~100 ms argon2 hash below the gate.
+	// IT RUNS BEFORE THE USERNAME/EMAIL RESERVATION, AND THAT ORDERING IS THE
+	// ONLY THING ON A GATED DEPLOY THAT ACTUALLY CLOSES THE #179 ENUMERATION
+	// ORACLE. Merging the two 409s into one does NOT close it — an attacker pairs
+	// the value under test with a counterpart they know is fresh and reads
+	// 201-vs-409 (see ErrRegistrationConflict). What defeats that is refusing an
+	// un-invited caller here, identically, before anything is looked up: measured,
+	// all four probes come back byte-identical invite_required. Move this block
+	// below the SETNX pair and the oracle is live again for any stranger.
+	//
+	// It also keeps the ~100 ms argon2 hash below the gate, where a caller with
+	// no code can never trigger it.
+	//
+	// RESIDUAL, stated plainly: this protects against callers WITHOUT a code. A
+	// caller holding a live code still reads 201-vs-409 freely, because the
+	// deferred Release below hands the code back on every conflict. See
+	// burnInviteOnConflict for the knob that prices that.
 	//
 	// ATOMICITY (the create_integrity scar): BURN FIRST, CREATE SECOND, release
 	// on every failure. Creating first and burning after would mean a crash in
@@ -348,7 +480,9 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	// code with no account), which is recoverable by minting another. The
 	// deferred Release below also gives the code back when a later step (a
 	// name/email collision, a store error) stops the account from landing, so a
-	// family member who picks a taken name does not lose their invite.
+	// family member who picks a taken name does not lose their invite — unless
+	// burnInviteOnConflict is on, which trades that courtesy for a bound on the
+	// #179 residual oracle (see the field).
 	inviteBurned := false
 	created := false
 	if s.invites != nil && !owner {
@@ -359,7 +493,7 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		inviteBurned = true
 	}
 	defer func() {
-		if !inviteBurned || created {
+		if !inviteBurned || created || s.burnInviteOnConflict {
 			return
 		}
 		if err := s.invites.Release(ctx, opt.InviteCode, id); err != nil {
@@ -397,28 +531,61 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		}
 	}
 
-	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
-	if err != nil {
-		return account.Account{}, TokenPair{}, err
-	}
-	if !okUser {
-		return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
-	}
-	okMail, err := s.rdb.SetNX(ctx, redisx.KeyIdxEmail(email), id, 0)
-	if err != nil {
-		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
-		return account.Account{}, TokenPair{}, err
-	}
-	if !okMail {
-		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
-		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
-	}
-
+	// ----------------------------------------------- THE HASH RUNS FIRST --
+	//
+	// GH#179, the TIMING half. argon2id used to run AFTER the uniqueness
+	// reservation, which made the cost of a registration a function of the
+	// ANSWER: a name that already existed short-circuited to a 409 in a
+	// millisecond, while a free one paid ~100 ms of hashing. That is a
+	// side channel that survives any amount of care about the response BODY —
+	// a stopwatch reads it just as well as an error message.
+	//
+	// Hashing here, before anything is looked up, makes the expensive work
+	// unconditional: every registration that gets this far pays exactly one
+	// argon2id, whether it ends in 201 or 409. It is the REAL hash with the
+	// service's real params rather than dummy work against a fixed hash, so the
+	// two cannot drift apart the day DefaultParams is raised (the classic way a
+	// constant-time defence rots).
+	//
+	// It stays BELOW the invite gate and the pending cap, so a stranger with no
+	// code still cannot make this deploy burn CPU — those two refuse before any
+	// hashing happens, exactly as before.
 	hash, err := HashPassword(password, s.params)
 	if err != nil {
-		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
 		return account.Account{}, TokenPair{}, err
 	}
+
+	// ------------------------------------------------ UNIQUENESS RESERVATION --
+	//
+	// BOTH reservations are always attempted, even when the first one already
+	// lost. Short-circuiting made "the username is taken" one Redis round trip
+	// and "the email is taken" three, which reports WHICH FIELD collided in a
+	// different unit — the same thing the merged 409 above refuses to say, said
+	// in round trips instead of words. (It does NOT hide that a collision
+	// happened at all; nothing synchronous here can — see
+	// ErrRegistrationConflict.) Taking both and rolling back through releaseReservations
+	// (one DELETE, always two keys) keeps the number and shape of the round
+	// trips independent of WHICH value collided.
+	//
+	// The cost is a reservation held for microseconds on a value this
+	// registration will not keep, so a concurrent registration of that exact
+	// value can lose a race it would otherwise have won and be told to retry.
+	// The old code had the same window on the mirror case (username reserved,
+	// then released after an email collision); this makes it symmetric.
+	okUser, errUser := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
+	okMail, errMail := s.rdb.SetNX(ctx, redisx.KeyIdxEmail(email), id, 0)
+	if errUser != nil || errMail != nil {
+		s.releaseReservations(ctx, id, username, email, okUser, okMail)
+		if errUser != nil {
+			return account.Account{}, TokenPair{}, errUser
+		}
+		return account.Account{}, TokenPair{}, errMail
+	}
+	if !okUser || !okMail {
+		s.releaseReservations(ctx, id, username, email, okUser, okMail)
+		return account.Account{}, TokenPair{}, ErrRegistrationConflict
+	}
+
 	now := time.Now()
 	// Private-deploy gate: a gated deploy stamps new accounts pending (an admin
 	// must approve before they can play); otherwise they are approved on sight.
@@ -441,11 +608,14 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		// admin exist" rather than "was a claim ever taken", a failed create
 		// costs this deploy nothing: the retry can still become the owner.
 		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
-		if errors.Is(err, account.ErrUsernameTaken) {
-			return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
-		}
-		if errors.Is(err, account.ErrEmailTaken) {
-			return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
+		// The DURABLE store's own uniqueness verdict (reachable when the Redis
+		// index has been wiped) collapses onto the SAME generic answer as the
+		// reservation above, so which ENFORCER refused is not readable either —
+		// otherwise a FLUSHALL would make the cache state itself an oracle, on
+		// top of the one register already has. (It does not "close" enumeration;
+		// nothing on this path does. See ErrRegistrationConflict.)
+		if errors.Is(err, account.ErrUsernameTaken) || errors.Is(err, account.ErrEmailTaken) {
+			return account.Account{}, TokenPair{}, ErrRegistrationConflict
 		}
 		return account.Account{}, TokenPair{}, err
 	}
@@ -628,8 +798,11 @@ func ErrNotApproved(status string) *httpx.E {
 	return httpx.Err(http.StatusForbidden, "account_pending", "your account is awaiting admin approval")
 }
 
-// ErrInvalidCredentials is the single failure surface of Login — identical for
-// unknown user and wrong password (no user enumeration).
+// ErrInvalidCredentials is the single failure surface of Login for anyone who
+// has not proved the password — identical for an unknown user, a wrong password
+// against a real account, and a wrong password against a pending, denied or
+// banned one. The last three are the ones that are easy to lose: they hold only
+// because Login compares the hash BEFORE it looks at status (see there).
 var ErrInvalidCredentials = httpx.Unauthorized("invalid credentials")
 
 // ErrBanned is the 403 returned when a banned account authenticates with
@@ -678,6 +851,22 @@ func (s *Service) Login(ctx context.Context, usernameOrEmail, password, ip strin
 		}
 		return account.Account{}, TokenPair{}, err
 	}
+	// THE PASSWORD IS CHECKED FIRST, AND THAT ORDER IS A SECURITY PROPERTY, not
+	// a stylistic accident. Everything below this line answers with a status that
+	// NAMES the account (account_pending / account_denied / account_banned), so
+	// reaching any of it without proving the password would turn /auth/login into
+	// exactly the enumeration oracle GH#179 is about — and a worse one than
+	// register's, because the #174 invite gate does not cover login. It matters
+	// most on the shipped posture: docker/compose.family.yaml sets
+	// GGD_REQUIRE_APPROVAL=1, so every account is `pending` from registration
+	// until the owner taps approve.
+	//
+	// Do NOT "fail fast" by hoisting these two blocks above the hash to skip
+	// ~100 ms of argon2 on an account that cannot log in anyway. Measured
+	// 2026-07-30: that refactor leaks 403 account_pending for a registered name
+	// against 401 invalid credentials for a free one, to any anonymous caller.
+	// Guarded by TestLoginRefusesTheSameWayWhateverTheAccountStatusIs
+	// (login_enumeration_test.go), which is red under exactly that move.
 	match, err := argon2id.ComparePasswordAndHash(password, a.PasswordHash)
 	if err != nil || !match {
 		return account.Account{}, TokenPair{}, ErrInvalidCredentials

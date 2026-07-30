@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "08-00 龍紋記憶",
   "icon": "assets/icons/abilities/godie-nbbc.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n繼承龍紋章後，歷代累積在龍騎士身上的作戰經驗，使得龍騎士能降低穿刺攻擊的破壞力。\n（地圖在 w3a 的 original 表就地把 Aegr 的 DataA1 改成 0.60；A05V 以 Aegr 為 base 且未自行覆寫該欄，因此繼承的是地圖改過的 0.60，而非暴雪原生值。孿生的 godie-n01c 說明所寫的 60% 與地圖一致。）",
+  "description": "[被動]\n0秒冷卻時間\n\n小呆平常呆，被打暈的時候龍紋章反而會替他清醒——這大概就是傳說的定義。\n\n**每次被暈眩（stun）掛上身的瞬間**，龍之力覺醒 **3 秒**：\n· **力量 / 敏捷 / 智慧全部 ×2**（＝各加上當下實際數值的 **100%**，包含等級成長與本場買到的點數）\n· 身上竄出金色龍焰（特效 `fx.dragon-awaken`），同樣燒 **3 秒**\n· 3 秒一到自動全部收回，一點都不留下\n\n⚠️ 只有**暈眩**叫得醒他：**纏繞、減速、擊退都不算**。\n⚠️ 被連續暈眩**只會把那 3 秒刷新**，不會變 ×4 ×8——龍紋章沒那麼慷慨。\n\n（原作是「穿刺傷害降為 60%」的減傷被動，owner 2026-07-30 換成這個覺醒；舊的 60% 已經不存在，別再期待它。）",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -20,7 +20,42 @@
     "name": "08-00 龍紋記憶",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onStunned",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "grantAttribute",
+                "attr": "str",
+                "mode": "pctOfCurrent",
+                "amount": 1,
+                "durationSec": 3.0
+              },
+              {
+                "kind": "grantAttribute",
+                "attr": "agi",
+                "mode": "pctOfCurrent",
+                "amount": 1,
+                "durationSec": 3.0
+              },
+              {
+                "kind": "grantAttribute",
+                "attr": "int",
+                "mode": "pctOfCurrent",
+                "amount": 1,
+                "durationSec": 3.0
+              },
+              {
+                "kind": "spawnVfx",
+                "vfxId": "fx.dragon-awaken",
+                "at": "self",
+                "durationSec": 3.0
+              }
+            ]
+          }
+        ]
       }
     ]
   }

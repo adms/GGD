@@ -101,7 +101,7 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
     // the page's key list IS the sim's — no drift possible.
     // 19 ×factors (#189 added `itemCooldown`) + the 8 三圍 coefficients #248
     // added to the same table.
-    expect(COMBAT_ENV_KEYS).toHaveLength(27);
+    expect(COMBAT_ENV_KEYS).toHaveLength(28); // #221 加入 intToMagicResist
     for (const k of COMBAT_ENV_KEYS) {
       expect(COMBAT_ENV_LABELS[k].zh, `label for ${k}`).toBeTruthy();
       expect(COMBAT_ENV_LABELS[k].note, `note for ${k}`).toBeTruthy();

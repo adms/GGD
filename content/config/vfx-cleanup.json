@@ -1,0 +1,8 @@
+{
+  "id": "vfx-cleanup",
+  "schema": "config.vfx-cleanup@1",
+  "note": "回合邊界要把特效層的共用池子回收到什麼程度 (#262)。Telegraph 的預告圈網格是「每個 Scene 共用、以半徑為 key」的 free-list,#259 沒有清到它:實測 60 個不同半徑打完,連 dispose() 之後 scene 上都還留著 72 mesh / 73 material。enabled=false 是止血閥(完全回到 #259 的行為)。purgeSharedPoolsOnRoundEnd=true 時 maxPooledRings 不生效。",
+  "enabled": true,
+  "purgeSharedPoolsOnRoundEnd": true,
+  "maxPooledRings": 24
+}

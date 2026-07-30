@@ -186,6 +186,12 @@ importers:
       '@colyseus/core':
         specifier: ^0.16.0
         version: 0.16.24(@colyseus/schema@3.0.76)(@pm2/io@6.1.0)
+      '@colyseus/redis-driver':
+        specifier: ^0.16.1
+        version: 0.16.1(@colyseus/schema@3.0.76)(@pm2/io@6.1.0)
+      '@colyseus/redis-presence':
+        specifier: ^0.16.4
+        version: 0.16.4(@colyseus/schema@3.0.76)(@pm2/io@6.1.0)
       '@colyseus/schema':
         specifier: ^3.0.0
         version: 3.0.76
@@ -344,6 +350,21 @@ importers:
         version: 2.1.9(@types/node@22.20.1)
 
   tools/tts-gen: {}
+
+  tools/uptime-probe:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.9.0
+        version: 22.20.1
+      tsx:
+        specifier: ^4.19.2
+        version: 4.23.1
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.20.1)
 
   tools/voxel-gen:
     dependencies:

@@ -8,8 +8,10 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
-import { deriveStoreRows, buildSkinOverrides } from "./catalog";
+import { deriveStoreRows, buildSkinOverrides, storeRowsForWhitelist } from "./catalog";
 import { championDisplayFrom } from "./championDisplay";
+import { CHAMPION_CURRENCY } from "./currency";
+import { NO_FILTER, whitelistFromDoc } from "../panels/champSelectFilter";
 import type { Catalog, SkinDoc, Wallet } from "./types";
 
 const CATALOG: Catalog = {
@@ -63,7 +65,7 @@ describe("catalog owned/equipped derivation (webui-09)", () => {
     expect(thorne.skins[0]!.description).toBe("warpaint");
   });
 
-  it("skins for champions absent from championPrices still get a row", () => {
+  it("skins for champions absent from the champion catalog still get a row", () => {
     cover("webui-catalog-derive");
     const rows = deriveStoreRows(
       {
@@ -179,7 +181,10 @@ describe("#227 StoreScreen markup never re-reaches for the id or the wrong glyph
   it("keeps the rows memo subscribed to content readiness (not a [] snapshot)", () => {
     cover("webui-catalog-derive");
     expect(SRC).toMatch(/useContentReady\(\)/);
-    expect(SRC).toMatch(/\[catalog,\s*skinDocs,\s*contentReady\]/);
+    // `whitelist` joined the dep list on 2026-07-30 (the store now culls to the
+    // operator roster — see storeRowsForWhitelist). `contentReady` is still the
+    // one this test exists for: drop it and the names silently become ids.
+    expect(SRC).toMatch(/\[catalog,\s*skinDocs,\s*contentReady(,\s*whitelist)?\]/);
   });
 
   it("prices every row through the row's own currency, not a hardcoded M幣 glyph", () => {
@@ -236,5 +241,40 @@ describe("equipped-skin modelKey overrides (webui-10)", () => {
     ).toBe(0);
     // empty equip map → empty overrides
     expect(buildSkinOverrides({ ownedSkins: [], equippedSkins: {} }, CATALOG.skins, lookup).size).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The lobby store must not sell a champion nobody can pick (2026-07-30).
+//
+// `/store/catalog` used to be exactly the 53 hand-priced ids. The flat-price
+// redesign deleted that map, so the platform prices every champion in the
+// content tree — 119 docs, including 變身 alternates and 測試 stand-ins. The
+// store's cull is now the operator whitelist, the same one champ-select uses.
+describe("the lobby store lists only whitelisted champions", () => {
+  const rows = [
+    { id: "sela", price: 0, owned: true, currency: CHAMPION_CURRENCY, ...championDisplayFrom("sela"), skins: [] },
+    { id: "thorne", price: 300, owned: false, currency: CHAMPION_CURRENCY, ...championDisplayFrom("thorne"), skins: [] },
+    { id: "godie-alt", price: 300, owned: false, currency: CHAMPION_CURRENCY, ...championDisplayFrom("godie-alt"), skins: [] },
+  ];
+
+  it("drops a priced champion the operator never enabled", () => {
+    // MUTATION: return `[...rows]` from storeRowsForWhitelist and this fails —
+    // godie-alt comes back and the store offers 300 水晶 for a hero
+    // champ-select will not render.
+    const out = storeRowsForWhitelist(rows, whitelistFromDoc({ champions: ["sela", "thorne"] }));
+    expect(out.map((r) => r.id)).toEqual(["sela", "thorne"]);
+  });
+
+  it("passes everything through when the platform reports no whitelist (offline / dev)", () => {
+    expect(storeRowsForWhitelist(rows, NO_FILTER).map((r) => r.id)).toEqual([
+      "sela",
+      "thorne",
+      "godie-alt",
+    ]);
+  });
+
+  it("an enforced-but-empty whitelist yields an empty store, not the whole tree", () => {
+    expect(storeRowsForWhitelist(rows, whitelistFromDoc({ champions: [] }))).toEqual([]);
   });
 });

@@ -107,8 +107,12 @@ DEGENERATE_AT = {
 # ITEM_MODIFIER_LIMITS band was raised from 5 to 50 *for this item*). Listing it
 # here is what stops the next re-run from reverting it again.
 RESCALE_EXEMPT = {
-    "godie-i01n": "verified 50x crit — the authored value IS the item (see "
-                  "ITEM_MODIFIER_LIMITS.CritDamage in schema/common.ts)",
+    "godie-i01n": "天堂之劍's crit multiplier is OWNER-SET, not budget-derived — "
+                  "the w3x says 3%/50x (+48.25) and the owner overruled it to "
+                  "6%/10x (+8.25) on 2026-07-30 「不然太誇張了」. Either way the "
+                  "AEP model prices it far over budget and would crush it, "
+                  "reverting a human decision (it did once already). See "
+                  "ITEM_MODIFIER_LIMITS.CritDamage in schema/common.ts.",
 }
 
 

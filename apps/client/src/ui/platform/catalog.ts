@@ -6,6 +6,7 @@
  */
 import type { ChampionDisplay } from "./championDisplay";
 import { championDisplayFrom } from "./championDisplay";
+import { applyChampionWhitelist, type Whitelist } from "../panels/champSelectFilter";
 import { CHAMPION_CURRENCY, SKIN_CURRENCY, type StoreCurrency } from "./currency";
 import type { Catalog, CatalogSkin, SkinDoc, Wallet } from "./types";
 
@@ -80,9 +81,10 @@ export function deriveStoreRows(
     };
     let champ = byChampion.get(sk.championId);
     if (!champ) {
-      // skin for a champion missing from championPrices — still sellable, and
-      // still named from content (the store.json omission must not cost the
-      // player the champion's name).
+      // skin for a champion the catalog does not carry (its doc is not in the
+      // content tree, or the whitelist cull removed the champion row) — still
+      // sellable, and still named from content, because the missing champion
+      // row must not cost the player the champion's name.
       champ = {
         id: sk.championId,
         price: 0,
@@ -98,6 +100,31 @@ export function deriveStoreRows(
   }
   for (const r of rows) r.skins.sort((a, b) => a.id.localeCompare(b.id));
   return rows;
+}
+
+/**
+ * Keep only the champions this deploy actually OFFERS.
+ *
+ * WHY THE STORE NEEDS THIS NOW (2026-07-30). `/store/catalog` used to enumerate
+ * exactly the 53 ids that content/config/store.json priced by hand. That map is
+ * gone — the owner asked for one flat price and no per-hero line — so the
+ * platform now prices every champion in the content tree, and the tree carries
+ * 119 docs: 變身 alternates, 測試 stand-ins, heroes nobody has whitelisted. Left
+ * alone the lobby store would list all of them and happily sell a player a
+ * champion champ-select will never show.
+ *
+ * The operator whitelist is the right filter and the client already holds it
+ * (the same `applyChampionWhitelist` champ-select gates picks with), so the
+ * store reuses it rather than inventing a second definition of "on the roster".
+ * `enforced:false` (offline / bare `pnpm dev`) passes everything through, which
+ * is the same degradation every other whitelist consumer takes.
+ *
+ * This is UX legibility only. The server still refuses to sell nothing and
+ * still 404s an unknown champion; what it cannot do from inside internal/wallet
+ * is see the whitelist (curation → admin → wallet is an import cycle).
+ */
+export function storeRowsForWhitelist(rows: readonly ChampionRow[], wl: Whitelist): ChampionRow[] {
+  return applyChampionWhitelist(rows, wl);
 }
 
 /**

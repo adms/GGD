@@ -68,6 +68,7 @@ import {
 import type { MobKind } from "../components";
 import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountyShare } from "../mobBoss";
 import { standstillBlocks } from "../combatFeel";
+import { isMobTargetable } from "../targeting";
 
 export function mobSystem(world: SimWorld): void {
   const rules = world.mobRules;
@@ -132,7 +133,16 @@ export function mobSystem(world: SimWorld): void {
     let bestD2 = Infinity;
     for (const [cid, cteam] of world.team) {
       if (cteam.teamId === MONSTER_TEAM) continue; // never target another mob
-      if (!world.champion.has(cid)) continue; // champions only
+      // 英雄 + 召喚物。`isMobTargetable` (sim/targeting.ts) is THE predicate —
+      // the bare `world.champion.has(cid)` that used to stand here is exactly
+      // how 召喚物 ended up unhittable by the whole PvE side: a summon carries
+      // neither ChampionComp nor MobComp on purpose, so a store test could
+      // never see it. Whether a given summon draws zombie aggro is a per-ability
+      // decision point (sim/summonRules.ts), not a constant.
+      // `mobId` is passed as the SEEKER (隱形): a hidden hero drops out of the
+      // zombie aggro scan while `blocksMobAggro` is on, and a mob that somehow
+      // acquires true sight would see through it from its own position.
+      if (!isMobTargetable(world, cid, mobId)) continue;
       const chp = world.health.get(cid);
       const ct = world.transform.get(cid);
       if (!chp?.alive || !ct || ct.zone !== mob.zone) continue;

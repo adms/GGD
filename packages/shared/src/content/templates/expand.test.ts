@@ -56,12 +56,13 @@ describe("GGD_PER_WC3 length constant (11/600)", () => {
 describe("SIM_CAPABILITIES + missingCaps", () => {
   it("marks the P1 families' caps available and P2/P3 unavailable", () => {
     expect(missingCaps(["projectile", "hooks", "applyBuff", "auras"])).toEqual([]);
-    // task #247 flipped `leap` to available (real LeapSystem + wire channel),
-    // so it is no longer part of the missing set.
-    expect(missingCaps(["leap", "knockback", "summon"])).toEqual([
-      "knockback",
-      "summon",
-    ]);
+    // task #247 flipped `leap`; the 鑄技工坊 default-audit pass then flipped
+    // `knockback`, `summon` and `periodicDamage` — each only after RUNNING its
+    // handler (see simCapabilityDrift.test.ts, which is the guard that makes a
+    // stale row here go red instead of aging quietly).
+    expect(missingCaps(["leap", "knockback", "summon", "periodicDamage"])).toEqual([]);
+    // `combo` is the one still genuinely absent: no EffectDef kind, no handler.
+    expect(missingCaps(["combo"])).toEqual(["combo"]);
     // Indexed through the Record, so this also asserts the key EXISTS —
     // `SIM_CAPABILITIES.dash!.available` would have hidden a renamed key.
     expect(SIM_CAPABILITIES.dash?.available).toBe(true);
@@ -106,10 +107,16 @@ describe("golden per family (template + exemplar params → EffectDef shape)", (
     expect(ex.radius).toBeUndefined();
   });
 
-  it("ground-nova → self nova with converted radius", () => {
+  // castType is "ground", NOT "self": `castAbility`'s "self" branch sets
+  // `targets = [caster]` and never reads `radius`, so the old expansion aimed
+  // the nova at its own caster. See the note on the family in expand.ts, and
+  // orbitProxy.test.ts's `nova-hits-the-ring` for the behavioural guard — this
+  // line alone is a property assertion and would pass either way if the damage
+  // never reached a body.
+  it("ground-nova → ground nova with converted radius", () => {
     const t = loadTemplate("tpl-ground-nova");
     const ex = expand(t, { radius: 530, damage: { perRank: [150] }, damageType: "magic" });
-    expect(ex.castType).toBe("self");
+    expect(ex.castType).toBe("ground");
     expect(ex.radius).toBe(toLen(530));
   });
 

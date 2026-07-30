@@ -4,6 +4,17 @@
   "generatedBy": "tools/w3x-import/extract_transform_forms.py",
   "mechanism": "WC3 Metamorphosis family: ability field Eme1 = normal-form unit rawcode, Emeu = alternate-form unit rawcode. Read at LEVEL 1 only — cloned abilities keep the donor's rawcodes on levels 2-4.",
   "directionProof": "every normal unit's `unsf` sub-name is the bare 編號 「(NN)」 and every alternate's names the form 「(NN變身名)」 — 26/26.",
+  "bodyFields": {
+    "codes": {
+      "ua1c": "attackCooldown",
+      "umvt": "moveType",
+      "umvh": "flyHeight",
+      "uabi": "abilityRawcodes",
+      "uhab": "heroAbilityRawcodes"
+    },
+    "rule": "emitted RAW off each unit's OWN w3u entry. `null` = the map is SILENT on that unit (a w3u entry is a DIFF against `base_id`, so the unit inherits its base's value) — it is NOT 'the unit has none'. `[]` on a list field is different from null: it means the map wrote an empty list.",
+    "why": "task #214 — 悟空 #09's SSJ body overrides ua1c 1.90->1.20, umvs 310->400, umvt ->hover, umvh ->30.0 and uabi (which gains A0S7, an `Aspb` SPELLBOOK holding A0SI 09-002a 悟空指令靈氣 +25% attack damage). Only umvs had a home downstream, so four mechanics were invisible to every stat sweep."
+  },
   "inheritance": {
     "stockTable": "tools/w3x-import/out/stock/STOCK_ABILITIES.json",
     "fields": {
@@ -29,6 +40,21 @@
         "model": "LinaInvers.mdl",
         "scale": null,
         "moveSpeed": 290,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0UH",
+          "A0OE"
+        ],
+        "heroAbilityRawcodes": [
+          "A0AY",
+          "A021",
+          "A04R",
+          "A07F",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -39,6 +65,22 @@
         "model": "LinaInvers.mdl",
         "scale": null,
         "moveSpeed": 290,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0UH",
+          "A0OE",
+          "A023"
+        ],
+        "heroAbilityRawcodes": [
+          "A0AY",
+          "A021",
+          "A04R",
+          "A07F",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -100,6 +142,21 @@
         "model": "units\\critters\\HighElfPeasant\\HighElfPeasant.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 315,
+        "attackCooldown": null,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A08Y",
+          "A025"
+        ],
+        "heroAbilityRawcodes": [
+          "A08X",
+          "A08W",
+          "A020",
+          "A0Y1",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -110,6 +167,22 @@
         "model": "HeroBigGon.mdl",
         "scale": 1.2999999523162842,
         "moveSpeed": 360,
+        "attackCooldown": 1.5,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A08Y",
+          "A025",
+          "A017"
+        ],
+        "heroAbilityRawcodes": [
+          "A08X",
+          "A08W",
+          "A020",
+          "A0Y1",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -165,6 +238,21 @@
         "model": "SD2.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 305,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A05V",
+          "A0T1"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CF",
+          "A05T",
+          "A05J",
+          "A0EZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -175,6 +263,25 @@
         "model": "SD2.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 305,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A05V",
+          "A0T1",
+          "A0T0",
+          "A0MB",
+          "A05X",
+          "A0C5"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CF",
+          "A05T",
+          "A05J",
+          "A0EZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -236,6 +343,22 @@
         "model": "goku.mdl",
         "scale": null,
         "moveSpeed": 310,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A0O1",
+          "A0NL",
+          "AInv",
+          "A0MI"
+        ],
+        "heroAbilityRawcodes": [
+          "A082",
+          "A03Y",
+          "A09E",
+          "A03S",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -246,6 +369,24 @@
         "model": "Goku.mdl",
         "scale": null,
         "moveSpeed": 400,
+        "attackCooldown": 1.2000000476837158,
+        "moveType": "hover",
+        "flyHeight": 30.0,
+        "abilityRawcodes": [
+          "A0S7",
+          "A0O1",
+          "A0NL",
+          "AInv",
+          "A017",
+          "A0MJ"
+        ],
+        "heroAbilityRawcodes": [
+          "A082",
+          "A03Y",
+          "A09E",
+          "A03S",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -307,6 +448,21 @@
         "model": "HeroMusashiMiyamoto.mdl",
         "scale": null,
         "moveSpeed": 315,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0OU",
+          "A10N"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CC",
+          "A06N",
+          "A06P",
+          "Aamk",
+          "A0MQ"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -317,6 +473,24 @@
         "model": "HeroMusashiMiyamoto.mdl",
         "scale": null,
         "moveSpeed": 315,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A10N",
+          "A0OU",
+          "A0C5",
+          "A05X",
+          "A10O"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CC",
+          "A06N",
+          "A06P",
+          "Aamk",
+          "A0MQ"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -378,6 +552,21 @@
         "model": "HeroLingTong.mdl",
         "scale": null,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A04Z",
+          "A0SQ"
+        ],
+        "heroAbilityRawcodes": [
+          "A04Y",
+          "A02K",
+          "A02W",
+          "A04X",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -388,6 +577,21 @@
         "model": "HeroLingTong.mdl",
         "scale": null,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A04Z",
+          "A0SQ"
+        ],
+        "heroAbilityRawcodes": [
+          "A04Y",
+          "A02K",
+          "A02W",
+          "A04X",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -449,6 +653,21 @@
         "model": "fox2.mdl",
         "scale": 1.0499999523162842,
         "moveSpeed": 300,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A002",
+          "A0SE"
+        ],
+        "heroAbilityRawcodes": [
+          "A0IO",
+          "A0RV",
+          "A0IH",
+          "A0P7",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -459,6 +678,22 @@
         "model": "fox.mdl",
         "scale": 1.149999976158142,
         "moveSpeed": 300,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A00N",
+          "A0SE",
+          "A0II"
+        ],
+        "heroAbilityRawcodes": [
+          "A0IO",
+          "A0RV",
+          "A0IH",
+          "A0P7",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -520,6 +755,21 @@
         "model": "HeroKunoichi.mdl",
         "scale": null,
         "moveSpeed": 310,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0RG",
+          "A0SZ"
+        ],
+        "heroAbilityRawcodes": [
+          "A00F",
+          "A0H5",
+          "A0H9",
+          "A02Y",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -530,6 +780,21 @@
         "model": "HeroKunoichi.mdl",
         "scale": null,
         "moveSpeed": 522,
+        "attackCooldown": 1.7999999523162842,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0RH",
+          "A0SZ"
+        ],
+        "heroAbilityRawcodes": [
+          "A00F",
+          "A0H5",
+          "A0H9",
+          "A02Y",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -591,6 +856,21 @@
         "model": "HeroSaber.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 300,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0CQ",
+          "A0SP"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CM",
+          "A0DZ",
+          "A0D5",
+          "A0CT",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -601,6 +881,23 @@
         "model": "HeroSaber.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 300,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A05M",
+          "A0CQ",
+          "A0M3",
+          "A0SP"
+        ],
+        "heroAbilityRawcodes": [
+          "A0CM",
+          "A0DZ",
+          "A0D5",
+          "A0CT",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {},
@@ -632,6 +929,21 @@
         "model": "RenaRyugu2.mdl",
         "scale": null,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0CL",
+          "A0SU"
+        ],
+        "heroAbilityRawcodes": [
+          "A007",
+          "AOcr",
+          "AEsh",
+          "A02Q",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -642,6 +954,23 @@
         "model": "RenaRyugu2.mdl",
         "scale": null,
         "moveSpeed": 400,
+        "attackCooldown": 1.5,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A0FR",
+          "A0SB",
+          "AInv",
+          "A0CL",
+          "A0SV"
+        ],
+        "heroAbilityRawcodes": [
+          "A007",
+          "AOcr",
+          "AEsh",
+          "A02Q",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -701,6 +1030,21 @@
         "model": "units\\critters\\VillagerMan1\\VillagerMan1.mdl",
         "scale": 1.649999976158142,
         "moveSpeed": 305,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A07H",
+          "A10Y"
+        ],
+        "heroAbilityRawcodes": [
+          "A0AF",
+          "A01J",
+          "A0HV",
+          "A0HW",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -711,6 +1055,23 @@
         "model": "HeroPikachu.mdl",
         "scale": 2.0,
         "moveSpeed": 305,
+        "attackCooldown": 1.5,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A07H",
+          "A0HX",
+          "A0FO",
+          "A10Y"
+        ],
+        "heroAbilityRawcodes": [
+          "A0AF",
+          "A01J",
+          "A0HV",
+          "A0HW",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -770,6 +1131,21 @@
         "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
         "scale": null,
         "moveSpeed": 305,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A106",
+          "A0F8"
+        ],
+        "heroAbilityRawcodes": [
+          "A00L",
+          "A0BS",
+          "A0F9",
+          "A0EW",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -780,6 +1156,21 @@
         "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
         "scale": null,
         "moveSpeed": 305,
+        "attackCooldown": 1.600000023841858,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A106",
+          "A0F8"
+        ],
+        "heroAbilityRawcodes": [
+          "A00L",
+          "A0ER",
+          "A0F9",
+          "A0EW",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -835,6 +1226,21 @@
         "model": null,
         "scale": null,
         "moveSpeed": 295,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A029",
+          "A0YY"
+        ],
+        "heroAbilityRawcodes": [
+          "A09L",
+          "ANdh",
+          "ANso",
+          "A01P",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -845,6 +1251,24 @@
         "model": null,
         "scale": 3.0,
         "moveSpeed": 295,
+        "attackCooldown": 1.7000000476837158,
+        "moveType": "fly",
+        "flyHeight": 300.0,
+        "abilityRawcodes": [
+          "AInv",
+          "A029",
+          "A0YT",
+          "A02I",
+          "A08K",
+          "A0HN"
+        ],
+        "heroAbilityRawcodes": [
+          "A09L",
+          "ANdh",
+          "ANso",
+          "A01P",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -906,6 +1330,21 @@
         "model": "HeroHehi.mdl",
         "scale": 0.8500000238418579,
         "moveSpeed": 310,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0OH",
+          "A0SO"
+        ],
+        "heroAbilityRawcodes": [
+          "A0OG",
+          "A09H",
+          "A09I",
+          "A09K",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -916,6 +1355,24 @@
         "model": "HeroHehi.mdl",
         "scale": 0.8500000238418579,
         "moveSpeed": 360,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0OH",
+          "A0IW",
+          "A0OI",
+          "A0FR",
+          "A0SO"
+        ],
+        "heroAbilityRawcodes": [
+          "A0OG",
+          "A09H",
+          "A09I",
+          "A09K",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -955,6 +1412,21 @@
         "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
         "scale": 1.0,
         "moveSpeed": 310,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A10C",
+          "AInv",
+          "A07G"
+        ],
+        "heroAbilityRawcodes": [
+          "A070",
+          "A07I",
+          "A0ND",
+          "A0LZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -965,6 +1437,23 @@
         "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
         "scale": 1.0,
         "moveSpeed": 310,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A10C",
+          "AInv",
+          "A07G",
+          "A0NR",
+          "A0NT"
+        ],
+        "heroAbilityRawcodes": [
+          "A070",
+          "A07I",
+          "A0ND",
+          "A0LZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1026,6 +1515,21 @@
         "model": "Long.mdl",
         "scale": 0.699999988079071,
         "moveSpeed": 295,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A059",
+          "A06K"
+        ],
+        "heroAbilityRawcodes": [
+          "A05B",
+          "AUdr",
+          "A05C",
+          "A05D",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1036,6 +1540,21 @@
         "model": "Long.mdl",
         "scale": 0.699999988079071,
         "moveSpeed": 160,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A059",
+          "A06K"
+        ],
+        "heroAbilityRawcodes": [
+          "A05B",
+          "AUdr",
+          "A05C",
+          "A05D",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1097,6 +1616,22 @@
         "model": "HeroPikachu.mdl",
         "scale": 0.8999999761581421,
         "moveSpeed": null,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0R6",
+          "Alit",
+          "A0SL"
+        ],
+        "heroAbilityRawcodes": [
+          "A0BZ",
+          "A04U",
+          "A0C3",
+          "A040",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1107,6 +1642,23 @@
         "model": "picacugy.mdl",
         "scale": 1.7999999523162842,
         "moveSpeed": null,
+        "attackCooldown": 1.5,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0R6",
+          "A0AG",
+          "A0FO",
+          "A0SL"
+        ],
+        "heroAbilityRawcodes": [
+          "A0BZ",
+          "A04U",
+          "A0C3",
+          "A040",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1168,6 +1720,22 @@
         "model": null,
         "scale": 1.2000000476837158,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0OA",
+          "A0OM",
+          "Aphx"
+        ],
+        "heroAbilityRawcodes": [
+          "Aamk",
+          "A0OP",
+          "A0OQ",
+          "A0OS",
+          "A0OR"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1178,6 +1746,22 @@
         "model": "collision.mdl",
         "scale": 1.5,
         "moveSpeed": 0,
+        "attackCooldown": null,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0OA",
+          "A0OM",
+          "Aphx"
+        ],
+        "heroAbilityRawcodes": [
+          "Aamk",
+          "A0OP",
+          "A0OQ",
+          "A0OS",
+          "A0OR"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1221,6 +1805,23 @@
         "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 275,
+        "attackCooldown": null,
+        "moveType": "foot",
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A0ZQ",
+          "A0ZM",
+          "A0G1",
+          "AInv",
+          "A0GM"
+        ],
+        "heroAbilityRawcodes": [
+          "A0UJ",
+          "A0GQ",
+          "A0GR",
+          "A0GN",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1231,6 +1832,21 @@
         "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
         "scale": 1.0,
         "moveSpeed": 0,
+        "attackCooldown": null,
+        "moveType": "foot",
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0GM",
+          "A0O6"
+        ],
+        "heroAbilityRawcodes": [
+          "A0GP",
+          "A0GQ",
+          "A0GR",
+          "A0GN",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {},
@@ -1266,6 +1882,21 @@
         "model": "Luffe.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 315,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0ZK",
+          "A0IR"
+        ],
+        "heroAbilityRawcodes": [
+          "A0IS",
+          "A0IP",
+          "A0IV",
+          "A0RZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1276,6 +1907,23 @@
         "model": "Luffe.mdl",
         "scale": 1.100000023841858,
         "moveSpeed": 415,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0ZK",
+          "A0IR",
+          "A0IW",
+          "A0IX"
+        ],
+        "heroAbilityRawcodes": [
+          "A0IS",
+          "A0IP",
+          "A0IV",
+          "A0RZ",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1319,6 +1967,21 @@
         "model": "mfls.mdl",
         "scale": null,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A10G",
+          "AInv",
+          "A0JD"
+        ],
+        "heroAbilityRawcodes": [
+          "A0TV",
+          "A0TX",
+          "A0JG",
+          "A0UB",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1329,6 +1992,25 @@
         "model": "mfls.mdl",
         "scale": null,
         "moveSpeed": 522,
+        "attackCooldown": 1.7000000476837158,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A10G",
+          "AInv",
+          "A0JD",
+          "A0FI",
+          "A0HP",
+          "A0JI",
+          "A0I0"
+        ],
+        "heroAbilityRawcodes": [
+          "A0TV",
+          "A0TX",
+          "A0JG",
+          "A0UB",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1390,6 +2072,22 @@
         "model": "HeroIchigo.mdl",
         "scale": 0.699999988079071,
         "moveSpeed": 295,
+        "attackCooldown": 1.899999976158142,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0LH",
+          "A0W5",
+          "A0LS"
+        ],
+        "heroAbilityRawcodes": [
+          "A0RX",
+          "A0LK",
+          "A0LL",
+          "A0LN",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1400,6 +2098,22 @@
         "model": "HeroIchigo.mdl",
         "scale": 0.699999988079071,
         "moveSpeed": 400,
+        "attackCooldown": 1.2000000476837158,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0UV",
+          "A0W5",
+          "A0LS"
+        ],
+        "heroAbilityRawcodes": [
+          "A0RX",
+          "A0LK",
+          "A0LL",
+          "A0LN",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1461,6 +2175,21 @@
         "model": "niya.mdl",
         "scale": null,
         "moveSpeed": 295,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0NQ",
+          "A0XP"
+        ],
+        "heroAbilityRawcodes": [
+          "A0XG",
+          "A0LB",
+          "A0XN",
+          "A0XO",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1471,6 +2200,21 @@
         "model": "niya.mdl",
         "scale": null,
         "moveSpeed": 305,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0NQ",
+          "A0XP"
+        ],
+        "heroAbilityRawcodes": [
+          "A0XG",
+          "A0LB",
+          "A0XN",
+          "A0XO",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1532,6 +2276,20 @@
         "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
         "scale": 1.2999999523162842,
         "moveSpeed": 330,
+        "attackCooldown": 2.0,
+        "moveType": "amph",
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "ANht"
+        ],
+        "heroAbilityRawcodes": [
+          "A0DE",
+          "A0DD",
+          "A0DB",
+          "A0C2",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1542,6 +2300,24 @@
         "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
         "scale": 1.2999999523162842,
         "moveSpeed": 330,
+        "attackCooldown": 2.0,
+        "moveType": "amph",
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A05P",
+          "A0DI",
+          "A0DC",
+          "ANht",
+          "A0DR"
+        ],
+        "heroAbilityRawcodes": [
+          "A0DE",
+          "A0DD",
+          "A0DB",
+          "A0C2",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1603,6 +2379,21 @@
         "model": "Bulbasaur.mdl",
         "scale": 1.2000000476837158,
         "moveSpeed": 300,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0KV",
+          "A0VG"
+        ],
+        "heroAbilityRawcodes": [
+          "AOww",
+          "A0NB",
+          "A0Y4",
+          "A0R4",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1613,6 +2404,22 @@
         "model": "Bulbasaur.mdl",
         "scale": 3.0,
         "moveSpeed": 240,
+        "attackCooldown": 1.2000000476837158,
+        "moveType": "amph",
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "AInv",
+          "A0KV",
+          "A0VG",
+          "A0VH"
+        ],
+        "heroAbilityRawcodes": [
+          "AOww",
+          "A0NB",
+          "A0Y4",
+          "A0R4",
+          "Aamk"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {
@@ -1662,6 +2469,21 @@
         "model": "horse.mdl",
         "scale": null,
         "moveSpeed": 310,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A0W6",
+          "A0Z9",
+          "AInv"
+        ],
+        "heroAbilityRawcodes": [
+          "Aamk",
+          "A0W9",
+          "A0WB",
+          "A0WA",
+          "A06Y"
+        ],
         "inW3u": true
       },
       "alternateUnit": {
@@ -1672,6 +2494,22 @@
         "model": "horse.mdl",
         "scale": null,
         "moveSpeed": 0,
+        "attackCooldown": 2.0,
+        "moveType": null,
+        "flyHeight": null,
+        "abilityRawcodes": [
+          "A0W6",
+          "A0Z9",
+          "A0W8",
+          "AInv"
+        ],
+        "heroAbilityRawcodes": [
+          "Aamk",
+          "A0W9",
+          "A0WB",
+          "A0WA",
+          "A06Y"
+        ],
         "inW3u": true
       },
       "durationSecByLevel": {

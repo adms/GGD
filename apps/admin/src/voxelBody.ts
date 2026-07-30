@@ -27,6 +27,19 @@ import {
   STAND_IN_MODEL_KEYS,
   defaultPrefersVoxelBody,
 } from "@ggd/shared/content/voxelSkin";
+import { counterpartFormId } from "@ggd/shared/content/championForms";
+
+/**
+ * 這位英雄拿不拿得到真的 WC3 模型 —— 自己在 manifest 裡,**或者**它的變身對半
+ * 在(#223 的「缺省即繼承」)。渲染端 `defaultPrefersVoxelBody` 就是這樣判的,
+ * 所以後台的紅字必須用同一句話,否則畫面與後台會各說各話。
+ */
+function reachesBlizzardModel(championId: string): boolean {
+  return (
+    BLIZZARD_MODEL_CHAMPIONS.includes(championId) ||
+    BLIZZARD_MODEL_CHAMPIONS.includes(counterpartFormId(championId) ?? "")
+  );
+}
 
 /** The `config` collection doc the console writes through the durable overlay. */
 export const BODY_COLLECTION = "config";
@@ -48,7 +61,17 @@ export interface BodyRow {
   name: string;
   /** the shared stand-in mesh this champion points at, if any */
   modelKey: string;
-  /** true when a real Warcraft III model was extracted for this champion */
+  /**
+   * true when a real Warcraft III model is REACHABLE for this champion.
+   *
+   * ⚠️ 2026-07-30 (#223) —— 這個欄位本來寫的是
+   * `BLIZZARD_MODEL_CHAMPIONS.includes(c.id)`,也就是「**自己**在 manifest 裡」。
+   * 那不等於「有模型可穿」:抽取器只拉了 40 個**可選**單位,26 對變身的 `Emeu`
+   * 那一半天生不在名單上,而 `defaultPrefersVoxelBody` 的「缺省即繼承」讓它們
+   * 穿得到對半的模型。照舊寫法,後台會對 6 位穿得到模型的英雄
+   * (godie-e010 / h00w / n01b / o02n / o030 / u011)掛上「無可用模型」的紅字,
+   * 而遊戲裡他們正穿著 Nman.glb / U012.glb —— 一個 operator 看得見的假訊息。
+   */
   hasBlizzardModel: boolean;
   /** what the rule says with nobody interfering */
   defaultVoxel: boolean;
@@ -114,7 +137,7 @@ export function bodyRows(
         championId: c.id,
         name: c.name ?? c.id,
         modelKey: c.modelKey ?? "",
-        hasBlizzardModel: BLIZZARD_MODEL_CHAMPIONS.includes(c.id),
+        hasBlizzardModel: reachesBlizzardModel(c.id),
         defaultVoxel: defaultPrefersVoxelBody(c.modelKey, c.id),
         operator: typeof operator[c.id] === "boolean" ? operator[c.id]! : null,
         effective: r.effective,

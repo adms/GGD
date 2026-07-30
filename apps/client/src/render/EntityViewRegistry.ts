@@ -20,10 +20,12 @@ import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
+import { NightFlagView } from "./views/NightFlagView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import { mudTintFor, type GrowthTier } from "./views/growthTier";
-import { growthTierFromFlags, formIndexFromFlags, ENTITY_KIND } from "@ggd/shared/protocol/schema";
+import { growthTierFromFlags, formIndexFromFlags, ENTITY_FLAG, ENTITY_KIND } from "@ggd/shared/protocol/schema";
+import { stealthVisualFor } from "./stealthVisual";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -106,6 +108,20 @@ export interface EntityViewState {
    */
   isLocal?: boolean;
   /**
+   * Champions only (隱形原語): is this body on the VIEWING seat's team — which
+   * includes the viewer's own champion?
+   *
+   * Optional, so every existing fixture and caller stays valid; absent reads as
+   * "not friendly", i.e. an enemy, which is the conservative answer (a hidden
+   * body defaults to fully hidden rather than accidentally shown). Supplied by
+   * GameApp for exactly the reason `isLocal` is: the entity → local-team hop
+   * needs the HUD store that render/** is walled off from (client-08).
+   *
+   * It is NOT `isLocal`: an invisible TEAMMATE must be visible to you too, and
+   * `isLocal` is true for exactly one of the twelve bodies.
+   */
+  friendly?: boolean;
+  /**
    * MOBS (kind 6) only — the 體型倍率 the server armed for this mob's KIND
    * (GH#192), decoded by the caller out of the reused `mana` slot (see protocol
    * ENTITY_KIND). Absent for every other kind and for any world that never
@@ -126,12 +142,44 @@ export interface EntityViewState {
     channelling: boolean;
     contested: boolean;
   };
+  /**
+   * 暗夜旗 (kind 7, 71-00 暗夜契約) only — decoded by the caller out of the same
+   * reused float slots (see protocol ENTITY_KIND.NIGHT_FLAG). Absent for every
+   * other kind, so the shape stays a strict superset of the old one.
+   *
+   * `radius` is AUTHORITATIVE and already post-`abilityRange`: the ring is drawn
+   * at exactly this number so a player's read of "where does 黑夜靈氣 reach"
+   * cannot disagree with the radius the sim tests.
+   */
+  nightFlag?: {
+    radius: number;
+    /** owning team, for a future tint; presentation only, never a filter */
+    teamId: number;
+  };
 }
 
 /** Optional content lookups (return null until docs are fetched). */
 export interface ViewContentHooks {
-  /** seatId lets the caller substitute per-seat skins (equipped cosmetics) */
-  modelDocFor?(modelKey: string, seatId?: number): ModelDoc | null;
+  /**
+   * seatId lets the caller substitute per-seat skins (equipped cosmetics).
+   *
+   * `formIndex` (#223) is the 變身 ordinal the champion branch already decoded
+   * from the FORM bits, and it is passed because the seat table ALONE gives the
+   * wrong answer for a transformed body: `seat.championId` is frozen at
+   * champ-select and never moves, so a resolver keyed on it asks about the
+   * BASE hero while the ALTERNATE is the thing on screen. Absent/0 = base form,
+   * which is what every non-champion caller (flower, guardian, the champ-select
+   * and round-winner previews) means.
+   *
+   * ⚠️ A TWO-PARAMETER ARROW SILENTLY DROPS IT. TypeScript lets `(key, seatId)
+   * => …` satisfy this signature, and that is exactly how the first #223 fix
+   * shipped dead: the composition root wrapped its resolver in a 2-arity arrow,
+   * `formIndex` fell back to its default 0, and every test stayed green. The
+   * shipped implementation is therefore NOT written as a wrapper — it comes
+   * whole out of `views/championBody.championBodyHooks`, which is unit-testable
+   * (`views/formAwareModelResolve.test.ts`) precisely because GameApp is not.
+   */
+  modelDocFor?(modelKey: string, seatId?: number, formIndex?: number): ModelDoc | null;
   projectileVfxFor?(projectileKey: string): VfxDoc | null;
   /** 3D body shape of the flying missile (projectile@1 `meshShape`). */
   projectileMeshShapeFor?(projectileKey: string): ProjectileMeshShape | null;
@@ -354,6 +402,9 @@ export class EntityViewRegistry {
   private readonly guardianPool: GuardianView[] = [];
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
+  /** 暗夜旗 (71-00 暗夜契約) — pooled exactly like the revive circles. */
+  private readonly nightFlags = new Map<number, NightFlagView>();
+  private readonly nightFlagPool: NightFlagView[] = [];
   private readonly coins = new Map<number, CoinView>();
   private readonly coinPool: CoinView[] = [];
   private readonly lastPos = new Map<number, { x: number; z: number }>();
@@ -607,9 +658,24 @@ export class EntityViewRegistry {
    * `releaseModelTint` runs BEFORE dispose: `ChampionView.dispose()` only frees
    * the materials it created itself, so an unreleased tint clone would leak and
    * leave the cached .glb material swapped out of the meshes that still need it.
+   *
+   * ⚠️ #262 —— 這裡以前寫的是 `if (this.tinted.get(id)?.tint) release…`，而那個
+   * 條件是**錯的**：clone 材質不是只有「有 w3x 顏色的英雄」才會產生。
+   * `applyTint` 走的是 `composeGrowth(tint, tier)`，只要成長階級 > 0（#244
+   * 黑泥吞噬，殭屍每一場都在餵），`tint === null` 的英雄一樣會被 clone 一輪
+   * 材質 —— 而 113 位裡有 93 位就是 `tint === null`。於是那一群的 clone 從來
+   * 沒有被歸還過。entity id 每次重生都是新的，所以每一次死亡/重生都留下一組。
+   *
+   * 量到的（`EntityViewRegistry.tintLeak.test.ts`，10 具身體 × 6 回合）：
+   * `scene.materials` 30 → 60 → 90 → 120 → 150 → 180，完美線性，而且
+   * `registry.dispose()` 之後仍然是 180。這就是「越打越鈍」的單調成長。
+   *
+   * 現在**無條件**呼叫。`releaseModelTint` 只認材質上的 `ggdTint` 標記，沒有
+   * 標記的它一個都不碰，所以對真的沒上色的身體是 no-op；而把條件寫在這裡等於
+   * 每加一個新的 tint 來源就要記得回來改一次 —— #244 就是這樣漏掉的。
    */
   private retireChampion(id: number, view: ChampionView): void {
-    if (this.tinted.get(id)?.tint) releaseModelTint(view.root);
+    releaseModelTint(view.root);
     view.dispose();
     this.champions.delete(id);
     this.lastPos.delete(id);
@@ -699,6 +765,24 @@ export class EntityViewRegistry {
         continue;
       }
 
+      if (e.kind === ENTITY_KIND.NIGHT_FLAG) {
+        // 暗夜旗 (71-00 暗夜契約) — pooled, fully procedural. The ring's SIZE is
+        // the aura radius and comes off the wire (`nightFlag.radius`, packed by
+        // the server into `EntityState.shield` AFTER the #136 range factor), so
+        // the circle a player reads is exactly the circle the sim tests.
+        let view = this.nightFlags.get(e.id);
+        if (!view) {
+          view = this.nightFlagPool.pop() ?? new NightFlagView(this.scene);
+          view.activate(e.nightFlag?.radius ?? 0);
+          this.nightFlags.set(e.id, view);
+        }
+        const pose = args.poseFor(e);
+        view.setPose(pose.x, pose.z);
+        view.update(args.nowMs);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
+
       if (e.kind === 3) {
         // revive circle — pooled, fully procedural (no model doc). Progress /
         // lifetime / contest all come off the wire; the view only paints them.
@@ -765,7 +849,9 @@ export class EntityViewRegistry {
       // of ChampionView's height-normalization, before the glb is adopted.
       if (args.loadModels !== false && !view.upgradeAttempted) {
         const override = this.content.modelOverrideFor?.(e);
-        const baseDoc = this.content.modelDocFor?.(e.key, e.seatId) ?? null;
+        // #223 —— `form` (decoded above) rides along so the resolver can ask
+        // about the body that is ACTUALLY on screen. See `modelDocFor`'s doc.
+        const baseDoc = this.content.modelDocFor?.(e.key, e.seatId, form) ?? null;
         const doc = applyModelOverride(baseDoc, override);
         // #226: the per-champion blocky look is adopted BEFORE the glb load is
         // kicked off, so the procedural fallback is already in the champion's
@@ -809,6 +895,16 @@ export class EntityViewRegistry {
       // champion that becomes local mid-match — the entity id is re-issued on
       // every respawn — picks the marker up on the next frame.
       view.setSelfMarker(e.isLocal === true);
+      // 隱形 (owner 2026-07-30 「選小的就好」) —— the render half. Read off the
+      // SAME authoritative flags word #244/#249 use, so the body the client
+      // fades out is exactly the body the server's targeting refuses to
+      // acquire. `friendly` decides WHICH of the two opacities applies: your
+      // own team keeps a translucent silhouette, the enemy gets `enemyAlpha`
+      // (0 = gone). Written every sync, never latched — 破隱 is a per-tick fact.
+      view.setStealthAlpha(
+        stealthVisualFor((e.flags ?? 0) & ENTITY_FLAG.INVISIBLE ? true : false, e.friendly === true)
+          .alpha,
+      );
       const pose = args.poseFor(e);
       // #247: the interpolated height rides the same pose seam as x/z. The
       // AIRBORNE flag comes off the entity (not off `h > 0`) so takeoff and
@@ -905,12 +1001,25 @@ export class EntityViewRegistry {
         this.coinPool.push(view);
       }
     }
+    // 暗夜旗: the sim destroys every flag at combat exit (endCombatNightPact),
+    // so the entity simply stops being published and this sweep retires the
+    // ring. Without the sweep a black circle would sit on the arena floor
+    // through the shop and into the next round.
+    for (const [id, view] of this.nightFlags) {
+      if (!seen.has(id)) {
+        view.deactivate();
+        this.nightFlags.delete(id);
+        this.lastPos.delete(id);
+        this.nightFlagPool.push(view);
+      }
+    }
   }
 
   dispose(): void {
-    for (const [id, v] of this.champions) {
-      if (this.tinted.get(id)?.tint) releaseModelTint(v.root);
-    }
+    // #262: unconditional, same reason as `retireChampion` — a growth-tier
+    // clone exists on bodies whose `tinted` entry has `tint: null`, and the old
+    // `?.tint` guard walked straight past every one of them.
+    for (const v of this.champions.values()) releaseModelTint(v.root);
     this.tinted.clear();
     this.builtForm.clear();
     for (const v of this.champions.values()) v.dispose();
@@ -924,6 +1033,8 @@ export class EntityViewRegistry {
     for (const v of this.revivePool) v.dispose();
     for (const v of this.coins.values()) v.dispose();
     for (const v of this.coinPool) v.dispose();
+    for (const v of this.nightFlags.values()) v.dispose();
+    for (const v of this.nightFlagPool) v.dispose();
     this.champions.clear();
     this.projectiles.clear();
     this.pool.length = 0;
@@ -935,5 +1046,7 @@ export class EntityViewRegistry {
     this.revivePool.length = 0;
     this.coins.clear();
     this.coinPool.length = 0;
+    this.nightFlags.clear();
+    this.nightFlagPool.length = 0;
   }
 }

@@ -30,8 +30,16 @@ import { zRef } from "./common";
  */
 export const zParamUnit = z.enum(["wc3u", "wc3h", "s", "count", "ratio"]);
 
-/** The kind of value a slot carries; the expander switches on it. */
-export const zParamType = z.enum(["number", "enum", "scaling", "statModifiers"]);
+/**
+ * The kind of value a slot carries; the expander switches on it.
+ *
+ * `condition` (owner 2026-07-30 「on-attack by condition … 編輯器也要配合」) is a
+ * whole 觸發條件 tree — see sim/content/condition.ts. It is a param TYPE rather
+ * than a family-specific field so that any behaviour family that grows a gate
+ * (proc families first, but 受擊反應 / 週期力場 next) declares it the same way
+ * and gets the same dropdown editor for free.
+ */
+export const zParamType = z.enum(["number", "enum", "scaling", "statModifiers", "condition"]);
 
 /**
  * One parameter slot. `type` selects how the expander reads it and how the

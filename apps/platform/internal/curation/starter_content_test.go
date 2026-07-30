@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -169,7 +171,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 51 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 53 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -545,7 +547,7 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 	check("content/loot-tables/quest-rewards.json", tableIDs)
 }
 
-// firstOpenRoster is the user's 51 hand-picked champions — the FIRST OPEN
+// firstOpenRoster is the user's 53 hand-picked champions — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the
 // test/placeholder and duplicate-reskin candidates (see starter.go and 附錄A of
 // docs/hero-popularity-ranking.md). Pinned here id-for-id so a re-import or a
@@ -564,9 +566,16 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 //	#18 n00p→nsjs  #25 u00l→umal  #38 u010→uvng  #90 h02r→hgam  #92 h02u→h02v
 //
 // Owner ruling 2026-07-26:「換成本體，變身態改由技能觸發」.
+//
+// L1 (owner 2026-07-30) added the 52nd and 53rd:「加入釋出變身釋出可選白名單:
+// 70 白木老樹精 · 白木卡迪那 紮根態、6 職業獵人 · 傑 富力士 傑桑變化」—— both land
+// as the BASE body (R6), because the 變身態 the owner names IS what the base's own
+// trigger ability reaches: godie-e00s #70 toggles into godie-e010 via 70-00 紮根,
+// godie-ucrl #06 morphs into godie-u034 for 7s via 06-04 傑桑變化.
 var firstOpenRoster = []string{
 	"godie-e001", "godie-e002", "godie-e008", "godie-e00k", "godie-e00r",
-	"godie-e00w", "godie-edem", "godie-efur", "godie-emfr", "godie-emns",
+	"godie-e00s", "godie-e00w", "godie-edem", "godie-efur", "godie-emfr",
+	"godie-emns",
 	"godie-etyr", "godie-ewar", "godie-h00l", "godie-h01n", "godie-h01u",
 	"godie-h02k", "godie-h02v", "godie-hapm", "godie-hart", "godie-hblm",
 	"godie-hgam", "godie-hjai", "godie-hpal", "godie-hpb1", "godie-huth",
@@ -574,18 +583,19 @@ var firstOpenRoster = []string{
 	"godie-nplh", "godie-nsjs", "godie-o00k", "godie-o00l", "godie-o02p",
 	"godie-ofar", "godie-ogld", "godie-ogrh", "godie-orkn", "godie-osam",
 	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00n", "godie-u00v",
-	"godie-ubal", "godie-udea", "godie-udre", "godie-umal", "godie-uvng",
+	"godie-ubal", "godie-ucrl", "godie-udea", "godie-udre", "godie-umal",
+	"godie-uvng",
 	"godie-zombiex",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 50 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 53 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
 	testkit.Cover(t, "whitelist-first-open-roster")
 
-	require.Len(t, firstOpenRoster, 51, "the first open roster is 51 champions")
+	require.Len(t, firstOpenRoster, 53, "the first open roster is 53 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -596,13 +606,18 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 51 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 53 canonical first-open-roster ids")
 }
 
-// storePricesDoc is the championPrices half of content/config/store.json —
-// the same field wallet.LoadCatalog reads into Catalog.ChampionPrices.
-type storePricesDoc struct {
-	ChampionPrices map[string]int `json:"championPrices"`
+// storeDoc is the FLAT-PRICE half of content/config/store.json — the same two
+// fields wallet.LoadCatalog reads into Catalog.UnlockCost / the free set.
+//
+// It replaced a `championPrices map[string]int` on 2026-07-30 (owner:「所有英雄
+// 藍水晶都是統一價，新上架預設也是一樣價格」). Read the test below for what that
+// changed about the risk being guarded.
+type storeDoc struct {
+	ChampionUnlockCost int      `json:"championUnlockCost"`
+	FreeChampionIds    []string `json:"freeChampionIds"`
 }
 
 // FREE / PRICED is the ECONOMY SHAPE the owner has deliberately decided not to
@@ -610,30 +625,51 @@ type storePricesDoc struct {
 // move ids; it may not quietly move these two numbers.
 const (
 	starterFreeChampions   = 12
-	starterPricedChampions = 39
+	starterPricedChampions = 41
 )
 
-// whitelist-store-prices: content/config/store.json's championPrices map and
-// the first open roster are the SAME SET, in both directions.
+// clientWalletMetaPath is the champ-select module that carries the client's
+// FALLBACK unlock cost. Read as text (not imported — it is TypeScript) so the
+// three-sided price agreement can be asserted from one place.
+const clientWalletMetaPath = "apps/client/src/ui/panels/champselect/walletMeta.ts"
+
+var clientUnlockCostRe = regexp.MustCompile(`CRYSTAL_UNLOCK_COST\s*=\s*(\d+)`)
+
+// whitelist-store-prices: the FLAT champion price is the one every roster
+// champion actually pays, the free list names only real roster champions, and
+// the number is the same on all three sides.
 //
-// WHY THIS EXISTS (task #249 regression). Nothing pinned the relationship, so
-// when R6 swapped ten roster slots from the 變身 alternate to the base unit,
-// store.json was left untouched and BOTH directions drifted at once:
+// WHAT THIS USED TO GUARD, AND WHY THE RISK MOVED. Until 2026-07-30 store.json
+// carried a 53-entry `championPrices` map that had to be kept equal to the
+// first open roster by hand, and this test asserted that equality in both
+// directions. It was written after the #249 regression, where swapping ten
+// roster slots left ten prices behind: an id with NO price entry read as FREE
+// on both sides (client lockStateOf: `price === undefined` → "free"; server
+// wallet.OwnsChampion: `!priced` → true), and an orphaned 0-price id kept being
+// seeded into every new account by Catalog.FreeChampions().
 //
-//   - a roster id with NO price entry is FREE on both sides — the client's
-//     lockStateOf returns "free" for `price === undefined`, and the server's
-//     wallet.OwnsChampion returns true for `!priced`. The ten swapped-in bases
-//     silently bypassed the 300-crystal unlock and the crystal SINK fell from
-//     38 priced champions to 31.
-//   - a PRICED id that is no longer on the roster is worse: Catalog.
-//     FreeChampions() seeds a new account's OwnedChampions from `price == 0`,
-//     so every registration was still granted godie-h020 / godie-o00x /
-//     godie-u01u — three ids nobody can pick. The lobby store also renders one
-//     dead row per orphan.
+// The map is gone, so "a roster id with no price line" is no longer expressible
+// — LoadCatalog derives every price from the flat cost. That does NOT make this
+// test unnecessary, it makes it guard a different set of mistakes:
 //
-// Every gate stayed green through all of that, which is why this one names the
-// specific ids on BOTH sides rather than reporting a count: whoever moves a
-// roster id next is told exactly which store.json lines to move with it.
+//	P1 the DEFAULT DIRECTION. A roster champion that is not free-listed must
+//	   cost the flat cost, never 0. This is the whole point of the redesign:
+//	   the failure mode it replaced ("forgot a line → the champion is a gift")
+//	   is only fixed for as long as the unlisted case resolves to PAID.
+//	P2 the free list has no TYPOS. Every id on `freeChampionIds` must be a real
+//	   roster champion. A typo is silent in both directions — the mistyped id
+//	   prices nothing, and the champion it was meant to name quietly costs 300.
+//	P3 the shape (12 free / 41 priced) is unchanged, same owner decision as
+//	   before.
+//	P4 all three sides agree on the number: the content doc, the Go fallback
+//	   constant (wallet.CrystalUnlockCost) and the client fallback constant
+//	   (CRYSTAL_UNLOCK_COST). The two constants are fallbacks now, not the
+//	   price, but a stale fallback prints a number the server will not charge
+//	   to exactly the players whose client cannot reach the wallet API.
+//
+// "a new champion needs no store edit at all" is the fourth property and it is
+// asserted where it can be exercised end-to-end, against a synthetic content
+// tree: TestNewChampionIsPricedWithoutAnyStoreEdit in internal/wallet.
 func TestStarterRosterMatchesChampionPrices(t *testing.T) {
 	testkit.Cover(t, "whitelist-store-prices")
 	root := contentRoot()
@@ -642,65 +678,57 @@ func TestStarterRosterMatchesChampionPrices(t *testing.T) {
 		t.Skipf("content tree not present at %s — skipping roster/price reconciliation", storePath)
 	}
 
-	prices := readJSON[storePricesDoc](t, storePath).ChampionPrices
-	require.NotEmpty(t, prices, "%s carries no championPrices", storePath)
+	doc := readJSON[storeDoc](t, storePath)
+	require.Positivef(t, doc.ChampionUnlockCost,
+		"%s carries no championUnlockCost — with a flat price of 0 EVERY champion is a giveaway "+
+			"and the 水晶 loop has nothing to spend on", storePath)
 
 	roster := curation.StarterSet().Champions
 	inRoster := make(map[string]struct{}, len(roster))
 	for _, id := range roster {
 		inRoster[id] = struct{}{}
 	}
-
-	var unpriced []string // on the roster, absent from store.json → FREE by accident
-	for _, id := range roster {
-		if _, ok := prices[id]; !ok {
-			unpriced = append(unpriced, id)
-		}
+	freeIDs := make(map[string]struct{}, len(doc.FreeChampionIds))
+	for _, id := range doc.FreeChampionIds {
+		freeIDs[id] = struct{}{}
 	}
-	var orphaned []string // in store.json, off the roster → seeded but unpickable
-	for id := range prices {
+
+	// P2 — a typo on the free list is invisible without this.
+	var ghosts []string
+	for _, id := range doc.FreeChampionIds {
 		if _, ok := inRoster[id]; !ok {
-			orphaned = append(orphaned, fmt.Sprintf("%s (price %d)", id, prices[id]))
+			ghosts = append(ghosts, id)
 		}
 	}
-	sort.Strings(unpriced)
-	sort.Strings(orphaned)
+	sort.Strings(ghosts)
+	assert.Emptyf(t, ghosts,
+		"%d id(s) on freeChampionIds in %s are NOT on the first open roster: %v. Nothing rejects a "+
+			"mistyped id — it simply frees nobody, while the champion it was meant to name silently "+
+			"costs %d crystals. Fix the spelling, or add the champion to starterChampions on purpose.",
+		len(ghosts), storePath, ghosts, doc.ChampionUnlockCost)
 
-	assert.Emptyf(t, unpriced,
-		"%d first-open-roster champion(s) have NO championPrices entry in %s, which makes them FREE "+
-			"on both the client (lockStateOf: price===undefined → \"free\") and the server "+
-			"(wallet.OwnsChampion: !priced → true). Add a price for each — %v",
-		len(unpriced), storePath, unpriced)
-
-	assert.Emptyf(t, orphaned,
-		"%d championPrices entr(ies) in %s name a champion that is NOT on the first open roster. "+
-			"A 0-price orphan is seeded into every NEW ACCOUNT by Catalog.FreeChampions() and a priced "+
-			"one renders a dead lobby-store row — in both cases for an id nobody can pick. Remove each "+
-			"(or add it to starterChampions on purpose) — %v",
-		len(orphaned), storePath, orphaned)
-
-	// The SHAPE, not just the membership. Every price is either free or exactly
-	// the flat crystal unlock cost the client mirrors in walletMeta.ts
-	// (CRYSTAL_UNLOCK_COST) — a third value would show the player one number in
-	// champ-select and charge another (Catalog.PriceDrift warns about this at
-	// boot; here it is a hard gate on the shipped content).
+	// P1 + P3 — price every roster champion through the SHIPPED rule.
 	free, priced := 0, 0
-	var offPrice []string
+	var wrong []string
 	for _, id := range roster {
-		switch p := prices[id]; {
-		case p == 0:
+		got := wallet.PriceOf(doc.ChampionUnlockCost, freeIDs, id)
+		_, isFree := freeIDs[id]
+		switch {
+		case isFree && got == 0:
 			free++
-		case p == wallet.CrystalUnlockCost:
+		case !isFree && got == doc.ChampionUnlockCost:
 			priced++
 		default:
-			offPrice = append(offPrice, fmt.Sprintf("%s = %d", id, p))
+			wrong = append(wrong, fmt.Sprintf("%s = %d (free-listed: %v)", id, got, isFree))
 		}
 	}
-	sort.Strings(offPrice)
-	assert.Emptyf(t, offPrice,
-		"every roster champion must cost 0 (free starter) or exactly %d crystals "+
-			"(wallet.CrystalUnlockCost, mirrored by the client's CRYSTAL_UNLOCK_COST); these disagree — %v",
-		wallet.CrystalUnlockCost, offPrice)
+	sort.Strings(wrong)
+	assert.Emptyf(t, wrong,
+		"wallet.PriceOf disagrees with the store doc for %d roster champion(s): %v. A roster champion "+
+			"is either on freeChampionIds and costs 0, or is not and costs exactly championUnlockCost "+
+			"(%d) — there is no third answer, and 0 for a non-free champion is the give-it-away bug "+
+			"the flat price exists to make unrepresentable.",
+		len(wrong), wrong, doc.ChampionUnlockCost)
 
 	assert.Equalf(t, starterFreeChampions, free,
 		"the roster ships %d FREE champions, expected %d. The crystal economy's shape is a deliberate "+
@@ -712,6 +740,27 @@ func TestStarterRosterMatchesChampionPrices(t *testing.T) {
 		"the roster ships %d PRICED champions, expected %d — that is the crystal SINK. See the note on "+
 			"starterFreeChampions before changing this pin.",
 		priced, starterPricedChampions)
+
+	// P4 — the doc, the Go fallback and the client fallback are one number.
+	assert.Equalf(t, doc.ChampionUnlockCost, wallet.CrystalUnlockCost,
+		"content/config/store.json charges %d crystals but wallet.CrystalUnlockCost is %d. That "+
+			"constant is the FALLBACK a content-less boot uses and the figure the whole balance model "+
+			"in meta.go is written against; a stale copy makes that reasoning fiction.",
+		doc.ChampionUnlockCost, wallet.CrystalUnlockCost)
+
+	clientPath := filepath.Join(root, "..", filepath.FromSlash(clientWalletMetaPath))
+	src, err := os.ReadFile(clientPath) // #nosec G304 -- fixed repo-relative test path
+	require.NoErrorf(t, err, "cannot read %s — the client's fallback price cannot be checked", clientPath)
+	m := clientUnlockCostRe.FindSubmatch(src)
+	require.Lenf(t, m, 2, "no CRYSTAL_UNLOCK_COST literal in %s", clientPath)
+	clientCost, err := strconv.Atoi(string(m[1]))
+	require.NoError(t, err)
+	assert.Equalf(t, doc.ChampionUnlockCost, clientCost,
+		"the client's CRYSTAL_UNLOCK_COST fallback is %d but the store doc charges %d. The live client "+
+			"reads `crystalUnlockCost` off GET /wallet, so this only bites a client that cannot reach "+
+			"the platform — which is exactly when it prints 「🔓 解鎖 (%d 水晶)」 and the server "+
+			"deducts %d.",
+		clientCost, doc.ChampionUnlockCost, clientCost, doc.ChampionUnlockCost)
 }
 
 // whitelist-starter-shape: the bundle's three lists are internally consistent

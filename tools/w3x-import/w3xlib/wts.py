@@ -1,16 +1,109 @@
-"""war3map.wts string table + TRIGSTR resolution."""
+"""war3map.wts string table + TRIGSTR resolution.
+
+WHY THIS IS A LINE PARSER AND NOT A REGEX
+-----------------------------------------
+It used to be one regex::
+
+    STRING\\s+(\\d+)\\s*(?:--[^\\r\\n]*)?\\s*\\{\\r?\\n(.*?)\\r?\\n\\}
+
+whose only concession to a header comment was the old-style ``--`` form. The
+UNPROTECTED source map writes ``//`` provenance comments
+(``// 能力: A0VJ (52-01 狂戰士之怒), ...``) on nearly every entry, so that regex
+matched **330 of the map's 11,337 strings** — and the miss was SILENT. `resolve`
+simply left every unresolved reference as the literal text ``TRIGSTR_1234``, so
+`w3xlib/stats.py` (and every importer stage built on it) shipped rawcode-shaped
+placeholders where hero names, ability names and tooltips belong, with nothing
+anywhere reporting a failure.
+
+`src_text.py` had already worked around this with a private copy of the correct
+parser, which is why the newer extractors are unaffected; the fix moves that
+algorithm down here so the LIBRARY is right and `src_text.parse_wts_full` is a
+thin adapter over it, instead of two parsers drifting apart.
+
+The block grammar the World Editor emits::
+
+    STRING <int id>
+    // optional provenance comment(s)     (0 or more, each starting with //)
+    {
+    <body line 1>
+    <body line 2 ...>                     (may be empty; colour codes kept)
+    }
+
+A line whose ``strip()`` is ``}`` terminates the body — the canonical emitter
+never puts a bare ``}`` line inside one.
+
+⚠️ Line endings are NORMALISED: bodies come back with ``\\n``, never ``\\r\\n``.
+Measured against `out/GoDieEX22s-src/raw/war3map.wts`: of the 330 ids the old
+regex did find, 0 are LOST and 23 change text — all 23 by exactly that
+substitution, nothing else. So the fix is additive plus that normalisation.
+
+Guarded by `test/unit_swap_census_checks.py` (`w3x-wts-*`), which pins the
+11,337 exactly and names the old 330 beside it, because a ">300" pin would have
+passed on the broken parser. `test/fixture_checks.py` separately exercises this
+on a synthetic CRLF fixture (`w3x-trigstr-resolve`).
+"""
 
 from __future__ import annotations
 
 import re
 
-_BLOCK_RE = re.compile(r"STRING\s+(\d+)\s*(?:--[^\r\n]*)?\s*\{\r?\n(.*?)\r?\n\}", re.S)
+_STRING_RE = re.compile(r"^STRING\s+(\d+)\b")
 _TRIGSTR_RE = re.compile(r"TRIGSTR_(\d+)")
 
 
-def parse_wts(data: bytes) -> dict[int, str]:
+def parse_wts_blocks(data: bytes) -> tuple[dict[int, str], dict[int, str]]:
+    """Parse a war3map.wts blob into ``(strings, comments)``.
+
+    ``strings``  : ``{id -> raw body text}`` — WC3 colour codes preserved,
+                   internal newlines kept as ``\\n``, no trailing newline.
+    ``comments`` : ``{id -> the // provenance comment without the slashes}``,
+                   ``""`` when the entry carries none. Handy for auditing which
+                   object each id belongs to.
+    """
     text = data.decode("utf-8-sig", errors="replace")
-    return {int(num): body for num, body in _BLOCK_RE.findall(text)}
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    lines = text.split("\n")
+
+    strings: dict[int, str] = {}
+    comments: dict[int, str] = {}
+
+    i = 0
+    n = len(lines)
+    while i < n:
+        m = _STRING_RE.match(lines[i])
+        if not m:
+            i += 1
+            continue
+        sid = int(m.group(1))
+        i += 1
+        comment_parts: list[str] = []
+        # consume optional comment / blank lines up to the opening brace
+        while i < n and lines[i].strip() != "{":
+            stripped = lines[i].strip()
+            if stripped.startswith("//"):
+                comment_parts.append(stripped[2:].strip())
+            elif _STRING_RE.match(lines[i]):
+                # malformed block with no body — bail without eating the header
+                break
+            i += 1
+        if i >= n or lines[i].strip() != "{":
+            strings.setdefault(sid, "")
+            comments.setdefault(sid, " ".join(comment_parts))
+            continue
+        i += 1  # skip '{'
+        body: list[str] = []
+        while i < n and lines[i].strip() != "}":
+            body.append(lines[i])
+            i += 1
+        i += 1  # skip '}'
+        strings[sid] = "\n".join(body)
+        comments[sid] = " ".join(comment_parts)
+    return strings, comments
+
+
+def parse_wts(data: bytes) -> dict[int, str]:
+    """The string table alone. See `parse_wts_blocks` for the whole story."""
+    return parse_wts_blocks(data)[0]
 
 
 def resolve(value, table: dict[int, str]):

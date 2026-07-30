@@ -12,7 +12,7 @@
  */
 import { SfxButton } from "../../SfxButton";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../../theme";
-import { CRYSTAL_EARN_HINT, CRYSTAL_UNLOCK_COST, canAfford, lockStateOf, type WalletMetaHook } from "./walletMeta";
+import { CRYSTAL_EARN_HINT, canAfford, lockStateOf, type WalletMetaHook } from "./walletMeta";
 
 /** The 水晶 balance chip for the roster header. */
 export function CrystalBadge({ crystal }: { crystal: number }): React.JSX.Element {
@@ -57,7 +57,10 @@ export function ChampMetaOverlay({
   const lock = lockStateOf(championId, meta.prices, meta.owned);
   const favourited = meta.favourites.has(championId);
   const busy = meta.busyId === championId;
-  const affordable = canAfford(meta.crystal);
+  // Against the LIVE cost, not the compiled-in fallback: the styling, the
+  // tooltip and the hook's own pre-flight check in `unlock` must all agree, or
+  // the button dims for a price the server is not charging.
+  const affordable = canAfford(meta.crystal, meta.unlockCost);
 
   return (
     <>
@@ -102,13 +105,13 @@ export function ChampMetaOverlay({
           onClick={() => meta.unlock(championId)}
           aria-label={
             affordable
-              ? `解鎖英雄，需要 ${CRYSTAL_UNLOCK_COST} 水晶`
+              ? `解鎖英雄，需要 ${meta.unlockCost} 水晶`
               : `水晶不足，無法解鎖。${CRYSTAL_EARN_HINT}`
           }
           title={
             affordable
-              ? `解鎖此英雄需要 ${CRYSTAL_UNLOCK_COST} 水晶`
-              : `水晶不足 — 解鎖需要 ${CRYSTAL_UNLOCK_COST} 水晶。${CRYSTAL_EARN_HINT}`
+              ? `解鎖此英雄需要 ${meta.unlockCost} 水晶`
+              : `水晶不足 — 解鎖需要 ${meta.unlockCost} 水晶。${CRYSTAL_EARN_HINT}`
           }
           style={{
             width: "100%",
@@ -125,7 +128,7 @@ export function ChampMetaOverlay({
             opacity: busy ? 0.7 : 1,
           }}
         >
-          {busy ? "解鎖中…" : `🔓 解鎖 (${CRYSTAL_UNLOCK_COST} 水晶)`}
+          {busy ? "解鎖中…" : `🔓 解鎖 (${meta.unlockCost} 水晶)`}
         </SfxButton>
       )}
     </>

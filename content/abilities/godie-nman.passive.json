@@ -15,12 +15,27 @@
     0.0
   ],
   "range": 0,
+  "radius": 6.42,
+  "targetsEnemies": true,
   "effects": [],
   "passive": {
     "name": "40-00 我~是~孩~子~王~",
     "ranks": [
       {
-        "modifiers": []
+        "auras": [
+          {
+            "key": "gakidaisho",
+            "radius": 6.42,
+            "affects": "enemy",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctAdd",
+                "value": -0.19
+              }
+            ]
+          }
+        ]
       }
     ]
   }

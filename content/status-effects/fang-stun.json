@@ -1,0 +1,10 @@
+{
+  "id": "fang-stun",
+  "schema": "status-effect@1",
+  "name": "牙突・僵直",
+  "description": "被念力頂上天，暫時失去對自己身體的所有發言權。",
+  "polarity": "debuff",
+  "tags": [
+    "stun"
+  ]
+}

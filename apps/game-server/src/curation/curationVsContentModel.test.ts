@@ -504,19 +504,21 @@ describe("curation data vs the content model — the STARTER SET (audited in CI)
 // ---------------------------------------------------------------------------
 // THE ECONOMY half of the same bundle.
 //
-// `starterChampions` says who is PICKABLE; content/config/store.json's
-// `championPrices` says who must be PAID FOR. They are one set described twice,
-// and until task #249 nothing said so — so when ten roster slots were swapped
-// from the 變身 alternate to the base unit, store.json kept the old ten and
-// every gate stayed green while:
+// `starterChampions` says who is PICKABLE; content/config/store.json says what
+// they cost. Until 2026-07-30 the doc said it with a 53-entry `championPrices`
+// map that had to mirror the roster by hand, and the #249 swap proved how that
+// fails: ten roster slots moved, the map did not, and an id with no entry read
+// as FREE on BOTH sides (client `lockStateOf`: `price === undefined` → "free";
+// server `wallet.OwnsChampion`: `!priced` → true). Ten champions quietly
+// stopped costing crystals and nothing went red.
 //
-//   • the ten swapped-IN bases had no price entry at all, which BOTH sides read
-//     as free (client `lockStateOf`: `price === undefined` → "free";
-//     server `wallet.OwnsChampion`: `!priced` → true), so they skipped the
-//     300-crystal unlock and the crystal sink shrank from 38 champions to 31;
-//   • the ten swapped-OUT alternates kept their prices, so `FreeChampions()`
-//     went on seeding godie-h020 / godie-o00x / godie-u01u into every NEW
-//     account and the lobby store rendered a row per orphan — all unpickable.
+// The owner replaced the map with ONE flat price plus a short free list
+// (「所有英雄藍水晶都是統一價，新上架預設也是一樣價格」), which makes "forgot a
+// line" unrepresentable — an unlisted champion costs the flat price. What is
+// still worth guarding here, on the TS side, is the direction the client reads:
+// every roster champion resolves to 0 (free-listed) or exactly the flat cost,
+// the free list names only real roster champions, and the number matches the
+// client's own fallback constant.
 //
 // Mirrored here as well as in Go (TestStarterRosterMatchesChampionPrices)
 // because the two halves are read by two different stacks: Go serves
@@ -524,44 +526,65 @@ describe("curation data vs the content model — the STARTER SET (audited in CI)
 // state. A guard on one side only leaves the other free to drift.
 // ---------------------------------------------------------------------------
 const STORE_JSON = join(CONTENT_DIR, "config/store.json");
-/** Mirrors `wallet.CrystalUnlockCost` (Go) and `CRYSTAL_UNLOCK_COST` (client). */
+/**
+ * Mirrors the FALLBACK constants `wallet.CrystalUnlockCost` (Go) and
+ * `CRYSTAL_UNLOCK_COST` (client). Neither is the price any more — the doc is —
+ * but a fallback that disagrees with the doc prints the wrong number on an
+ * offline champ-select, so all three are pinned equal.
+ */
 const CRYSTAL_UNLOCK_COST = 300;
 
+interface StoreDoc {
+  championUnlockCost: number;
+  freeChampionIds: string[];
+}
+
+/** The shipped pricing rule, mirrored from Go's wallet.PriceOf. */
+function priceOf(doc: StoreDoc, id: string): number {
+  return doc.freeChampionIds.includes(id) ? 0 : doc.championUnlockCost;
+}
+
 describe("the crystal economy vs the first open roster", () => {
-  it("championPrices and starterChampions are the SAME SET, in both directions", () => {
+  it("every roster champion resolves to 0 or the flat cost — never to a silent free", () => {
     const roster = starterDoc().champions;
-    const prices = (JSON.parse(readFileSync(STORE_JSON, "utf-8")) as { championPrices: Record<string, number> })
-      .championPrices;
-    const priced = new Set(Object.keys(prices));
+    const doc = JSON.parse(readFileSync(STORE_JSON, "utf-8")) as StoreDoc;
+    expect(doc.championUnlockCost, "store.json carries no championUnlockCost").toBeGreaterThan(0);
+
     const rostered = new Set(roster);
-
-    const unpriced = roster.filter((id) => !priced.has(id)).sort();
+    const ghosts = doc.freeChampionIds.filter((id) => !rostered.has(id)).sort();
     expect(
-      unpriced,
-      `${unpriced.length} first-open-roster champion(s) have NO championPrices entry in ` +
-        `content/config/store.json, so both the client (lockStateOf → "free") and the server ` +
-        `(OwnsChampion → true) hand them out for nothing: ${unpriced.join(", ")}. Add a price for ` +
-        `each, or drop them from starterChampions.`,
+      ghosts,
+      `${ghosts.length} id(s) on freeChampionIds name a champion that is NOT on the first open ` +
+        `roster: ${ghosts.join(", ")}. A mistyped id frees nobody and the champion it meant to ` +
+        `name silently costs ${doc.championUnlockCost} — nothing else in the stack notices.`,
     ).toEqual([]);
 
-    const orphaned = [...priced].filter((id) => !rostered.has(id)).sort();
+    const wrong = roster
+      .filter((id) => {
+        const p = priceOf(doc, id);
+        return doc.freeChampionIds.includes(id) ? p !== 0 : p !== doc.championUnlockCost;
+      })
+      .sort();
     expect(
-      orphaned,
-      `${orphaned.length} championPrices entr(ies) in content/config/store.json name a champion ` +
-        `that is not on the first open roster: ${orphaned.map((id) => `${id}=${prices[id]}`).join(", ")}. ` +
-        `A 0-price orphan is seeded into every new account by Catalog.FreeChampions() and a priced ` +
-        `one draws a dead lobby-store row — for an id no player can select. Remove each, or add it ` +
-        `to starterChampions in apps/platform/internal/curation/starter.go on purpose.`,
+      wrong,
+      `these roster champions price to neither 0 nor ${doc.championUnlockCost}: ${wrong.join(", ")}`,
     ).toEqual([]);
 
-    // One flat unlock cost. A third value would print one number on the
-    // champ-select unlock button and charge another.
-    const offPrice = roster.filter((id) => prices[id] !== 0 && prices[id] !== CRYSTAL_UNLOCK_COST).sort();
+    // The economy SHAPE the owner pinned (2026-07-26:「藍水晶本來就是獎勵」).
+    const free = roster.filter((id) => priceOf(doc, id) === 0);
+    expect(free.length, "the roster ships 12 free champions — a deliberate owner decision").toBe(12);
+    expect(roster.length - free.length, "…and 41 priced ones, which is the crystal sink").toBe(41);
+  });
+
+  it("the doc's price and the client's fallback constant are the same number", () => {
+    const doc = JSON.parse(readFileSync(STORE_JSON, "utf-8")) as StoreDoc;
     expect(
-      offPrice,
-      `every roster champion must cost 0 or exactly ${CRYSTAL_UNLOCK_COST} crystals; these do not: ` +
-        offPrice.map((id) => `${id}=${prices[id]}`).join(", "),
-    ).toEqual([]);
+      doc.championUnlockCost,
+      `store.json charges ${doc.championUnlockCost} but the client's CRYSTAL_UNLOCK_COST fallback ` +
+        `is ${CRYSTAL_UNLOCK_COST}. The live client reads crystalUnlockCost off GET /wallet, so ` +
+        `this only bites a client that cannot reach the platform — which is exactly when it prints ` +
+        `the wrong number on the 解鎖 button.`,
+    ).toBe(CRYSTAL_UNLOCK_COST);
   });
 });
 

@@ -19,6 +19,11 @@ export const KIND_GUARDIAN = 4;
 export const KIND_GOLD_COIN = 5;
 /** A roguelite mob (task #215). Carries GH#192's 體型倍率 in the `mana` slot. */
 export const KIND_MOB = 6;
+/**
+ * A 暗夜旗 (71-00 暗夜契約). Ground furniture like a revive circle: no health,
+ * no bar — its `shield` slot carries the aura radius the black ring is drawn at.
+ */
+export const KIND_NIGHT_FLAG = 7;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)

@@ -9,13 +9,27 @@ import { z } from "zod";
 import {
   zAbilityDoc,
   zChampionDoc,
+  zEffectDef,
   zModelDoc,
   zVfxDoc,
   zRef,
 } from "@ggd/shared/content";
+import {
+  SPREAD_MAX_FALLOFF,
+  SPREAD_MAX_RADIUS,
+  SPREAD_MAX_TARGETS,
+  SPREAD_MIN_FALLOFF,
+} from "@ggd/shared/sim/effects/spreadLimits";
 import { cover } from "@ggd/shared/testkit/cover";
 import { walkZod, defaultValueFor, defaultForVariant } from "./walk";
-import type { UIArray, UIDiscriminatedUnion, UINode, UIObject, UIText } from "./uiSchema";
+import type {
+  UIArray,
+  UIDiscriminatedUnion,
+  UINode,
+  UINumber,
+  UIObject,
+  UIText,
+} from "./uiSchema";
 
 function fieldsOf(node: UINode): Map<string, UINode> {
   expect(node.kind).toBe("object");
@@ -99,14 +113,42 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "applyBuff",
         "applyStatus",
         "championForm", // task #249 — the w3x Eme1/Emeu body swap
+        // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
+        // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡
+        // 在編輯器裡是新的，而「編輯器不能落後 sim」這條保證有四天是假的。
+        // 補 tag 從來就不是修好它：`PreviewController.effectLines` 也必須
+        // 認得每一個 kind，否則它的 `default` 分支會直接把預覽炸掉
+        // （`spendMana` 就是這樣被抓到的，見那個 case）。
+        "cycleBuff", // 13-00 念。攻防轉換 —— 每 N 秒輪到下一格
         "damage",
+        // `damageArea` joined in #210 (近戰擴散) and this list was not updated,
+        // which is what the tripwire is FOR. Landing the tag was not the fix:
+        // the audit it forced found that switching a card to `damageArea` seeded
+        // `radius: 0` into a `.positive()` field, so every such card 422'd on
+        // save. See the dedicated case below.
+        "damageArea", // task #210
+        "damageLine", // 13-03 龍頭戲畫。佈壁 —— 一條走廊，不是一個圓
         "dash",
+        // ── GH#289 RESERVED KINDS ─────────────────────────────────────────
+        // Five slots landed AHEAD of their implementations so that six
+        // parallel primitive lanes never edit the shared union concurrently.
+        // The schema knows them (so the card renders and docs validate); the
+        // sim handler THROWS a named error until its lane lands, and
+        // PreviewController prints 「⚠ NOT IMPLEMENTED」 — a designer can see
+        // the card but can never mistake it for a working spell.
+        "dot", // lane P1 — 持續傷害
+        "evasion", // lane P5 — 閃避
+        "grantAttribute", // 08-00 龍紋記憶 —— 暫時把三圍推上去
         "heal",
+        "invulnerable", // lane P3 — 無敵
+        "knockback", // lane P4 — 擊退
         "leap", // task #247
         "restore",
         "shield",
         "spawnProjectile",
         "spawnVfx",
+        "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
+        "summon", // lane P2 — 召喚物
       ].sort(),
     );
 
@@ -173,6 +215,111 @@ describe("discriminated EffectDef union (editor-02)", () => {
     expect(seeded.mode).toBe("toPoint");
     expect(seeded).toHaveProperty("apexHeight");
     expect(seeded).toHaveProperty("durationSec");
+    // …and PRESENT is not the same as VALID. `toHaveProperty` alone was failure
+    // ④ (斷言方向跟缺陷無關): it passed for two months while the seed was
+    // `durationSec: 0`, which `.positive()` rejects — so every freshly switched
+    // leap card 422'd on save and this test said nothing. Parse the seed against
+    // the SHIPPING schema, which is the thing the save actually runs.
+    expect(zEffectDef.safeParse(seeded)).toMatchObject({ success: true });
+  });
+
+  /**
+   * TASK #210 (近戰擴散) follow-up — the same audit the `leap` case above
+   * demands, applied to the kind that made this suite red.
+   *
+   * `damageArea` reaching the tag list only proves the walker SAW it. Two
+   * things a designer actually needs, neither implied by the tag:
+   *   • the three 擴散 knobs arrive as bounded number widgets, carrying the
+   *     REAL caps out of sim/effects/spreadLimits.ts — those caps are
+   *     mis-parse guards (w3x lengths are ~54.5× GGD units, so a pasted
+   *     `Area: 450` becomes a field-covering circle), and a widget with no
+   *     `max` lets exactly that paste through the form;
+   *   • switching a card to `damageArea` produces a document the shipping
+   *     schema ACCEPTS. It did not: the seed was `radius: 0` against
+   *     `.positive()`, i.e. a card that looks complete and 422s on save.
+   */
+  it("the damageArea variant is a REAL editable card whose seed SAVES", () => {
+    const ability = walkZod(zAbilityDoc, "", "Ability");
+    const union = (fieldsOf(ability).get("effects") as UIArray).item as UIDiscriminatedUnion;
+    const area = union.variants.find((v) => v.tag === "damageArea")!;
+    const f = new Map(area.fields.map((x) => [x.path.split(".").pop()!, x]));
+
+    expect(f.get("damageType")).toMatchObject({ kind: "enum", options: ["physical", "magic", "true"] });
+    expect(f.get("amount")!.kind).toBe("object");
+    // Bounds asserted against the shared constants, never against literals:
+    // the claim is "the walker carried the schema's own cap onto the widget",
+    // and a hard-coded 12 here would keep passing after the cap moved.
+    expect(f.get("radius")).toMatchObject({
+      kind: "number",
+      optional: false,
+      min: SPREAD_MIN_FALLOFF, // 0 — but EXCLUSIVE, see below
+      exclusiveMin: true,
+      max: SPREAD_MAX_RADIUS,
+    });
+    expect(f.get("falloff")).toMatchObject({
+      kind: "number",
+      optional: true,
+      min: SPREAD_MIN_FALLOFF,
+      max: SPREAD_MAX_FALLOFF,
+    });
+    expect(f.get("falloff")).not.toHaveProperty("exclusiveMin");
+    expect(f.get("maxTargets")).toMatchObject({
+      kind: "number",
+      int: true,
+      optional: true,
+      min: 1,
+      max: SPREAD_MAX_TARGETS,
+    });
+    expect(f.get("canCrit")).toMatchObject({ kind: "boolean", optional: true });
+    expect(f.get("includeOrigin")).toMatchObject({ kind: "boolean", optional: true });
+
+    // The card switch hands the server something it accepts. `damageArea` has
+    // no ref fields, so a clean parse is reachable without a human picking
+    // anything — which is why the assertion can be this strict here.
+    const seeded = defaultForVariant(union, "damageArea") as Record<string, unknown>;
+    expect(seeded.kind).toBe("damageArea");
+    expect(zEffectDef.safeParse(seeded)).toMatchObject({ success: true });
+    // and the specific value that used to be wrong, named out loud
+    expect(seeded.radius).toBeGreaterThan(0);
+  });
+
+  /**
+   * The general form of the two cases above, so the NEXT effect kind with a
+   * `.positive()` knob cannot reintroduce the hole while both hand-written
+   * cases stay green.
+   *
+   * Deliberately an invariant over the seeded VALUE, not over the node's
+   * metadata (failure ⑦: "every node has a min" is a property, "the value the
+   * form starts on is inside that min" is the behaviour).
+   */
+  it("every seeded number lands INSIDE its own declared bounds", () => {
+    const ability = walkZod(zAbilityDoc, "", "Ability");
+    const union = (fieldsOf(ability).get("effects") as UIArray).item as UIDiscriminatedUnion;
+    let checked = 0;
+    for (const v of union.variants) {
+      const seeded = defaultForVariant(union, v.tag) as Record<string, unknown>;
+      for (const field of v.fields) {
+        if (field.kind !== "number" || field.optional) continue;
+        const n = field as UINumber;
+        const key = n.path.split(".").pop()!;
+        const got = seeded[key];
+        expect(typeof got, `${v.tag}.${key} was not seeded`).toBe("number");
+        const value = got as number;
+        if (n.min !== undefined) {
+          if (n.exclusiveMin) expect(value, `${v.tag}.${key} > ${n.min}`).toBeGreaterThan(n.min);
+          else expect(value, `${v.tag}.${key} >= ${n.min}`).toBeGreaterThanOrEqual(n.min);
+        }
+        if (n.max !== undefined) {
+          if (n.exclusiveMax) expect(value, `${v.tag}.${key} < ${n.max}`).toBeLessThan(n.max);
+          else expect(value, `${v.tag}.${key} <= ${n.max}`).toBeLessThanOrEqual(n.max);
+        }
+        if (n.int) expect(Number.isInteger(value), `${v.tag}.${key} is an int`).toBe(true);
+        checked++;
+      }
+    }
+    // The loop must actually have looked at something — a variant walk that
+    // silently produced zero number fields would otherwise pass vacuously.
+    expect(checked).toBeGreaterThanOrEqual(5);
   });
 
   it("provides sane defaults for new items and variant switches", () => {

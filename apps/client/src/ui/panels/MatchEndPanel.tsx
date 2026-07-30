@@ -22,6 +22,15 @@ import type { ChampionId } from "@ggd/shared/ids";
 import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
 import { useHud } from "../../net/RoomStore";
 import { HUD_Z } from "../hud/hudLayout";
+import {
+  MATCH_END_PAD,
+  matchEndCardCap,
+  matchEndCardWidth,
+  matchEndReserveRight,
+  progressChartSurfaceStyle,
+} from "../hud/hudSurfaces";
+import { useHudViewport } from "../hud/useHudSurface";
+import { hudTouch } from "../hud/HudSlot";
 import { useApp } from "../platform/store";
 import { championIconUrl } from "../icons";
 import { GlyphTile } from "../components/GlyphTile";
@@ -338,7 +347,27 @@ function cardStyle(width: number | string): React.CSSProperties {
   };
 }
 
-export function MatchEndPanel(): React.JSX.Element {
+/**
+ * `defaultChartOpen` is the UNCONTROLLED-COMPONENT seam for the 戰績變化 card.
+ * The chart is behind a button press and this package's vitest runs
+ * `environment: "node"` — no DOM, nothing to click — so without it the SHIPPED
+ * panel could never be rendered with the chart up, and the only thing a guard
+ * could reach would be `ProgressChartPanel` with a hand-passed `surface` prop.
+ * That is failure shape ⑤: the measured bypass was changing `surface={chartStyle}`
+ * to `surface={null}` on the mount below, which sends the chart back into the
+ * card's `marginTop: 12` flow (the owner's 「太低」 bug) with the whole suite green.
+ * HudRoot mounts `<MatchEndPanel />` and gets `false`;
+ * `hud/hudSurfacePaint.test.ts` mounts it with `true`.
+ *
+ * ⚠️ AND THE SEAM ALONE IS NOT ENOUGH — a guard that renders this component
+ * directly proves the chart's PLACEMENT and never asks whether HudRoot mounts
+ * the settlement at all (mutation M11, measured green over the whole client
+ * suite). The `data-hud-mount="match-end"` attribute on the wash below is what
+ * that guard looks for; see the comment at its declaration.
+ */
+export function MatchEndPanel({
+  defaultChartOpen = false,
+}: { defaultChartOpen?: boolean }): React.JSX.Element {
   const settlement = useHud((s) => s.settlement);
   const localSeatId = useHud((s) => s.localSeatId);
   const seats = useHud((s) => s.seats);
@@ -479,10 +508,32 @@ export function MatchEndPanel(): React.JSX.Element {
     audioSystem.playSfx("settlementReveal");
   }, [cardShown, settlement]);
 
-  // 「查看戰績變化」 — the in-place per-round panel (owner, 2026-07-27). Closed
-  // by default: the grade, the breakdown and the auto-scrolling ranking are what
+  // 「查看戰績變化」 — the per-round panel (owner, 2026-07-27). Closed by
+  // default: the grade, the breakdown and the auto-scrolling ranking are what
   // this screen opens with, and the chart is what a player asks for afterwards.
-  const [showProgress, setShowProgress] = useState(false);
+  const [showProgress, setShowProgress] = useState(defaultChartOpen);
+
+  // WHERE the chart opens (owner, 2026-07-30: 「查看戰績變化折線圖太低,縮小一點
+  // 顯示在右邊比較好」). It used to be the LAST child of this card, under the
+  // 返回大廳 row and inside `maxHeight: 92vh; overflowY: auto` — i.e. below the
+  // fold. It is now the `progress-chart` #107 surface: a narrower card docked at
+  // the TOP of the right-hand strip, inside the top-right slot column so it can
+  // never land under the portal-ed audio cluster.
+  //
+  // THREE MODES, and the table on `MATCH_END_CARD_MIN_W` is where they are
+  // documented with their measured boundaries: side-by-side (the card shrinks),
+  // overlay (the chart paints over a full-width card), and no docked strip at
+  // all (the panel falls back into the card's own flow). ⚠️ `chartStyle` comes
+  // from `progressChartSurfaceStyle`, NOT from `useHudSurface`: the latter
+  // resolves against the LIVE scene while `matchEndCardWidth` resolves against
+  // `matchEndScene()`, and a reserved strip computed from one scene while the
+  // card is placed from another is a covered settlement waiting to happen.
+  const viewport = useHudViewport();
+  const touch = hudTouch();
+  const chartStyle = progressChartSurfaceStyle(viewport, touch);
+  const chartOpen = showProgress && chartStyle !== null;
+  const cardWidth = matchEndCardWidth(viewport, touch, chartOpen) ?? matchEndCardCap(viewport);
+  const reserveRight = matchEndReserveRight(viewport, touch, chartOpen);
 
   // The chart's inputs, derived once per settlement rather than per render: the
   // MVP ranking re-scores all 12 players in every round, so recomputing it on a
@@ -524,6 +575,16 @@ export function MatchEndPanel(): React.JSX.Element {
 
   return (
     <div
+      // THE MOUNT FINGERPRINT. The 戰績變化 surface is behind a button press and
+      // this package's vitest env is `node`, so a guard can prove its PLACEMENT
+      // only by rendering this component directly through `defaultChartOpen` —
+      // which leaves 「is it mounted in HudRoot at all?」 unasked. Measured
+      // 2026-07-30 (mutation M11): replacing HudRoot's
+      // `{phase === "matchEnd" && <MatchEndPanel />}` with `{false && …}` deleted
+      // the whole settlement screen and left 378 files / 4517 client tests green
+      // (failure shape ③). `hud/hudSurfacePaint.test.ts` now renders HudRoot at
+      // `matchEnd` and looks for this attribute.
+      data-hud-mount="match-end"
       style={{
         position: "absolute",
         inset: 0,
@@ -545,7 +606,10 @@ export function MatchEndPanel(): React.JSX.Element {
         WebkitBackdropFilter: cardHeld ? victory.backdropFilterHeld : victory.backdropFilter,
         transition: `background ${MATCH_WASH_SETTLE_MS}ms ease-out, backdrop-filter ${MATCH_WASH_SETTLE_MS}ms ease-out`,
         pointerEvents: cardHeld ? "none" : "auto",
-        padding: 16,
+        padding: MATCH_END_PAD,
+        // the strip the 戰績變化 card takes, so the centred settlement card
+        // shifts left instead of being covered by it (#219, owner ③)
+        paddingRight: reserveRight,
         boxSizing: "border-box",
       }}
     >
@@ -575,7 +639,9 @@ export function MatchEndPanel(): React.JSX.Element {
           // card stays MOUNTED (refs alive) so nothing below has to re-arm.
           opacity: cardHeld ? 0 : 1,
           transition: "opacity 420ms ease-out",
-          width: "min(760px, 96vw)",
+          // was `min(760px, 96vw)`; the cap is unchanged, but it now GIVES BACK
+          // the strip the 戰績變化 card takes (hud/hudSurfaces).
+          width: cardWidth,
           maxHeight: "92vh",
           overflowY: "auto",
           background: PANEL_BG,
@@ -642,16 +708,21 @@ export function MatchEndPanel(): React.JSX.Element {
           </Btn>
           <Btn onClick={() => void returnToLobby()}>返回大廳</Btn>
         </div>
-
-        {showProgress ? (
-          <ProgressChartPanel
-            series={progressSeries}
-            advice={progressTips}
-            nameForSeat={nameForSeat}
-            onClose={() => setShowProgress(false)}
-          />
-        ) : null}
       </div>
+
+      {/* 戰績變化 — a SIBLING of the card, not its last child. Absolutely
+          positioned by the #107 surface registry when there is a strip for it
+          (so it never re-flows the settlement and never sits below the fold),
+          and a plain flex sibling on a viewport with no room for a docked card. */}
+      {showProgress ? (
+        <ProgressChartPanel
+          series={progressSeries}
+          advice={progressTips}
+          nameForSeat={nameForSeat}
+          onClose={() => setShowProgress(false)}
+          surface={chartStyle}
+        />
+      ) : null}
     </div>
   );
 }

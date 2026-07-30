@@ -25,7 +25,7 @@ import { AssetContainer } from "@babylonjs/core/assetContainer";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { Animation } from "@babylonjs/core/Animations/animation";
 import type { ModelDoc } from "@ggd/shared/content";
-import { BLIZZARD_MODEL_CHAMPIONS } from "@ggd/shared/content/voxelSkin";
+import { BLIZZARD_MODEL_CHAMPIONS, defaultPrefersVoxelBody } from "@ggd/shared/content/voxelSkin";
 import { ContentDb } from "../content/ContentDb";
 import {
   EntityViewRegistry,
@@ -229,8 +229,28 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
  * ChampionView normalizes THAT away. Their rule is the rawHeight-corrected one
  * #77 already had to hand-derive for the two VillagerKid champions:
  *   relativeScale = (rawHeight ÷ HeroPaladin 115.63) × usca.
- * The remaining 2 (godie-o02n, godie-u011) still render a shared mesh and keep
- * the usca-verbatim rule.
+ *
+ * ⚠️ 2026-07-30 (#223) — THE usca-VERBATIM HALF IS NOW EMPTY, AND THE
+ * MEMBERSHIP TEST HAD DRIFTED. This comment used to end 「The remaining 2
+ * (godie-o02n, godie-u011) still render a shared mesh and keep the usca-verbatim
+ * rule」, and the loop below decided membership with
+ * `BLIZZARD_MODEL_CHAMPIONS.includes(id)`. That constant is a PROXY for 「adopts
+ * its own WC3 model」, and #223's 缺省即繼承 clause in `defaultPrefersVoxelBody`
+ * broke the proxy: a 變身 half now inherits its counterpart's model even though
+ * it is not itself in the list. Measured on the shipped content, SIX ids sat on
+ * the wrong side of that stale proxy — godie-e010 / h00w / n01b / o02n / o030 /
+ * u011 — and one of them (godie-n01b) was actively held at the wrong number by
+ * it: this test demanded usca-verbatim 1.00 for a champion that had already
+ * started rendering Nman.glb, i.e. it was PINNING A BUG (a 22% height drop the
+ * instant 地獄歌神 transformed).
+ *
+ * So the loop now asks the SHIPPED predicate, `defaultPrefersVoxelBody`, and the
+ * usca-verbatim group is empty — every `godie-*` stand-in champion reaches a
+ * real WC3 model today. An empty loop passes vacuously, which is failure mode
+ * ③, so `USCA_VERBATIM_IS_EMPTY_BECAUSE` below asserts the emptiness ON PURPOSE
+ * and names where those six ARE governed instead (they share one mesh with their
+ * counterpart, so their rule is 「match the counterpart」 — the 26-pair size
+ * census in render/views/formAwareModelResolve.test.ts).
  *
  * The guard below reads BOTH sides from disk — the source map's objects and the
  * shipped overrides file — so it fails if a champion's map scale is ever
@@ -335,14 +355,57 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
     expect(standIns.length).toBeGreaterThanOrEqual(40);
   });
 
+  /**
+   * 這六位是 2026-07-30 之前被那個過時的 proxy 分到 usca-verbatim 那一邊的。
+   * 現在它們六個都穿得到真的 WC3 模型(經由對半繼承),所以規則變成
+   * 「跟對半一樣大」—— 由 `render/views/formAwareModelResolve.test.ts` 的
+   * 26 對尺寸普查守。列在這裡是為了讓「這一組空了」是一句**有內容**的話。
+   */
+  const NOW_MODEL_BODIED_VIA_COUNTERPART = [
+    "godie-e010",
+    "godie-h00w",
+    "godie-n01b",
+    "godie-o02n",
+    "godie-o030",
+    "godie-u011",
+  ];
+
+  it("usca-verbatim 這一組已經空了 —— 而且是空得有理由,不是迴圈壞掉", () => {
+    cover("client-standin-override");
+    // 前提:名單本身不是空的(否則下面兩條都變成廢話)
+    expect(standIns.length).toBeGreaterThanOrEqual(40);
+    const stillVoxel = standIns.filter((c) => defaultPrefersVoxelBody(c.modelKey, c.id));
+    expect(
+      stillVoxel.map((c) => c.id),
+      "又有 godie-* 掉回程序生成的體素身體了 —— 若是刻意的,把它的 usca-verbatim 規則一起寫回來",
+    ).toEqual([]);
+    // 而那六位「靠對半才穿到模型」的,一個都不能從名單上消失
+    for (const id of NOW_MODEL_BODIED_VIA_COUNTERPART) {
+      const c = standIns.find((x) => x.id === id);
+      expect(c, `${id} 不再是 stand-in champion 了?`).toBeTruthy();
+      expect(
+        defaultPrefersVoxelBody(c!.modelKey, id),
+        `${id}: #223 的保底 (b) 沒了 —— 這具身體會掉回方塊人`,
+      ).toBe(false);
+      expect(BLIZZARD_MODEL_CHAMPIONS.includes(id), `${id} 是靠對半繼承的,不在 manifest 裡`).toBe(
+        false,
+      );
+    }
+  });
+
   it("every stand-in champion's map scale reaches the renderer", () => {
     cover("client-standin-override");
     const dropped: string[] = [];
     for (const c of standIns) {
-      // GH#31: a champion that adopts its OWN WC3 model is governed by the
-      // rawHeight-corrected rule, asserted in the next test. Only the two that
-      // still wear a shared KayKit mesh answer to usca-verbatim.
-      if (BLIZZARD_MODEL_CHAMPIONS.includes(c.id)) continue;
+      // GH#31 + #223: a champion that reaches ANY real WC3 model — its own, or
+      // its 變身 counterpart's — is governed by the rawHeight-corrected rule
+      // (next test) or by the counterpart-match rule (the 26-pair size census in
+      // render/views/formAwareModelResolve.test.ts). Only a champion still
+      // wearing the procedural voxel figure answers to usca-verbatim, and today
+      // that is nobody — see the test directly above, which pins that on purpose.
+      // ⚠️ Do NOT put `BLIZZARD_MODEL_CHAMPIONS.includes(c.id)` back here: that
+      // proxy is what held godie-n01b at the wrong number.
+      if (!defaultPrefersVoxelBody(c.modelKey, c.id)) continue;
       const declared = mapScaleOf(c.id);
       const rendered = relativeScaleOf(overrides[c.id] ?? null);
       if (

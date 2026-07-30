@@ -17,6 +17,11 @@
  *      viewport, for both pointer types.
  */
 import { describe, it, expect } from "vitest";
+import {
+  RESOURCE_ROW_W,
+  SHIPPED_HUD_CLUSTER,
+  hudClusterRects,
+} from "./hud/hudBottomCluster";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { BTN, GAMEPAD_LONG_PRESS_MS, GamepadInput } from "../input/GamepadInput";
@@ -254,11 +259,23 @@ describe("source scan: the legend and InputCapture cannot drift (two-way)", () =
     expect(readSrc("ui/HudRoot.tsx")).toContain("top: 64"); // SpectatorHint
     expect(TOP_CENTRE_BAND_END).toBeGreaterThan(64 + 26);
 
-    expect(readSrc("ui/components/AbilityBar.tsx")).toContain("bottom: 14");
-    const bars = readSrc("ui/components/ResourceBars.tsx");
-    expect(bars).toContain("bottom: 128");
-    expect(bars).toContain("width: 260");
-    expect(ABILITY_CLUSTER_H).toBeGreaterThan(128 + 46);
+    // RE-POINTED (not deleted) 2026-07-30. The bar and the HP/MP plate no
+    // longer pin themselves — they are flex rows of ONE container whose offset
+    // and gap are bounded fields (ui/hud/hudBottomCluster), which is what made
+    // 「緊鄰但不重疊」 expressible at all. So the legend's reservation is checked
+    // against the RESOLVED column instead of against two strings in two files:
+    // strictly stronger, because a restructure that moved the bar would change
+    // these numbers rather than merely fail to match a regex.
+    const cluster = hudClusterRects({ width: 1280, height: 800 }, false, {
+      resources: true,
+      abilities: true,
+    });
+    // 34 + 88 (ability row) + 6 (gap) = 128 — the plate's historical bottom edge
+    expect(
+      SHIPPED_HUD_CLUSTER.clusterBottomPx + cluster.abilities!.h + cluster.gapPx,
+    ).toBe(128);
+    expect(RESOURCE_ROW_W).toBe(278); // 260 content + 8px padding + 1px border, each side
+    expect(ABILITY_CLUSTER_H).toBeGreaterThan(cluster.cluster.h + SHIPPED_HUD_CLUSTER.clusterBottomPx);
     // six 52px tiles + five 6px gaps, with headroom for the rank-up controls
     expect(ABILITY_CLUSTER_W).toBeGreaterThan(6 * 52 + 5 * 6);
   });

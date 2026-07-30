@@ -228,7 +228,7 @@ describe("#248 attr-03 — the roster and the coefficient table are complete", (
     expect(authored).toEqual(["godie-zombiex", "sela", "thorne"]);
   });
 
-  it("the eight coefficients live in the combat-env table with their shipped values", () => {
+  it("the nine coefficients live in the combat-env table with their shipped values", () => {
     cover("attr-248-roster-complete");
     // #28 built the multiplier table and #136 added abilityRange to it; #248
     // follows that precedent instead of inventing a second config surface, so
@@ -256,10 +256,17 @@ describe("#248 attr-03 — the roster and the coefficient table are complete", (
     for (const [stat, src] of Object.entries(ATTR_STAT_SOURCE)) {
       expect(`${stat}:${isAttributeEnvKey(src!.key)}`).toBe(`${stat}:true`);
     }
-    // mr has NO attribute source — WC3 has no magic-resistance attribute, so
-    // 魔抗 is growth-only by nature. This is a property of the source game, not
-    // an omission, and it is asserted so it reads as deliberate.
-    expect(ATTR_STAT_SOURCE[Stat.MagicResist]).toBeUndefined();
+    // mr HAS an attribute source since GH#221 (owner 2026-07-30:「新增 智慧→
+    // 每 1 點智慧增加的魔抗 0.6」). Until then this line asserted the OPPOSITE —
+    // 「WC3 has no magic-resistance attribute, so 魔抗 is growth-only by nature」 —
+    // which was a true statement about Warcraft and is now a false one about GGD.
+    // The owner-designed axis is deliberate, so pin it the same way: which
+    // attribute feeds it, through which coefficient key, additively.
+    expect(ATTR_STAT_SOURCE[Stat.MagicResist]).toEqual({
+      attr: "int",
+      key: "intToMagicResist",
+      mode: "add",
+    });
   });
 });
 

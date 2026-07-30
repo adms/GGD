@@ -45,7 +45,23 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.fire.explosion",
+  "vfxKey": "fx.w3x.particle.enchant.p00",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p00"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p00",
+      "attachTo": "point"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.enchant.p01"
+    },
+    {
+      "vfxKey": "fx.w3x.orb.minitypeflame.p01",
+      "attachTo": "point"
+    }
+  ],
   "schema": "ability@1",
   "castTimeSec": 0.7
 }

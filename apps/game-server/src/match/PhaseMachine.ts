@@ -45,7 +45,15 @@ export class PhaseMachine {
   round = 0;
   ticksLeft: number;
 
-  constructor(private readonly cfg: PhaseConfig = DEFAULT_PHASE_CONFIG) {
+  /**
+   * PUBLIC since #L2 (殭屍王延長回合). The MatchController needs the AUTHORED
+   * `combatMaxTicks` to hand the sim the same backstop the phase runs on
+   * (`fireRingRulesFromConfig`'s third argument) — one number, two consumers.
+   * Re-deriving it from `ticksLeft` would read the REMAINING time, which is a
+   * different quantity the moment combat has started, and mirroring it into a
+   * second field on the controller is how two clocks end up disagreeing.
+   */
+  constructor(readonly cfg: PhaseConfig = DEFAULT_PHASE_CONFIG) {
     this.ticksLeft = cfg.champSelectTicks;
   }
 

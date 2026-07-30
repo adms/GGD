@@ -1,0 +1,52 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "cleaver-of-the-warden",
+  "name": "裂地巨斧",
+  "description": "傳說\n效能\n攻擊力+45\n生命+260\n普攻對周圍 3.5 範圍內最多 4 個敵人造成攻擊力 55% 的擴散傷害\n\n解說\n斧刃過重，只有貼身揮砍的人拿得動；遠遠丟出去只會砸到自己的腳。",
+  "tags": [
+    "legendary",
+    "cleave",
+    "melee"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 45
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 260
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "requires": {
+        "attackType": "melee",
+        "onMismatch": "block"
+      },
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.55
+              }
+            ]
+          },
+          "radius": 3.5,
+          "maxTargets": 4,
+          "canCrit": true
+        }
+      ]
+    }
+  ]
+}

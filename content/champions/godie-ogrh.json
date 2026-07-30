@@ -134,9 +134,9 @@
       "id": "godie-ogrh.e",
       "name": "09-03 超級賽亞人",
       "icon": "assets/icons/abilities/godie-ogrh.e.webp",
-      "description": "[變身]\n60秒冷卻時間\n\n帶著憤怒的情緒，將氣發揮到極致，變身成為超級賽亞人，攻擊和移動速度將會大幅提升，持續8秒。",
+      "description": "[變身]\n60秒冷卻時間\n\n帶著憤怒的情緒，將氣發揮到極致，變身成為超級賽亞人，攻擊和移動速度將會大幅提升，持續8秒。\n\n變身期間換成【超級賽亞人 - 悟空】的身體：攻擊速度 ×1.58（w3x 攻擊間隔 1.90→1.20 秒）、移動速度 ×1.28（w3x 310→400），並獲得只在變身時存在的隱藏被動【09-002a 悟空指令靈氣】攻擊力 +25%。變回本體時三者同時消失。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -150,30 +150,29 @@
         320.0,
         400.0
       ],
-      "range": 11.0,
+      "range": 0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 8
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.25
+            }
+          ],
+          "duration": 8,
+          "stackKey": "goku-ssj3-command-aura",
+          "maxStacks": 1
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-ogrh.r",

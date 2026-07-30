@@ -10,6 +10,9 @@ import type { StructureComp } from "../systems/GuardianSystem";
 import { Stat } from "../stats/statTypes";
 import { fireHooks } from "../effects/hooks";
 import { recordDamage } from "../stats/matchStats";
+import { refusesDamage } from "../effects/invulnerable";
+import { rollEvadeAbility } from "./evasion";
+import { cancelLeap } from "../movement/leap";
 import { healTarget } from "./restore";
 import { normalize, sub, lenSq, dist } from "../math/vec2";
 import { knockbackRaw, afterGap } from "../combatFeel";
@@ -425,11 +428,39 @@ function applyImpact(
 
   if (kbMag <= 0 || !nav || !tt || !st) return; // too light to shove (or no body)
 
-  // KNOCKBACK — a forced impulse away from the source. Integrated by
-  // MovementSystem via moveWithCollision, so it slides along / stops at walls
-  // and clamps inside the zone boundary (never clips through). Needs a nav
-  // component (neutrals/flowers have none -> no knockback, by construction).
-  nav.override = { kind: "knockback", dir: kbDir, speed: KB_SPEED, remaining: kbMag };
+  // ---- SHOVE ARBITRATION (GH#193 lane P4) --------------------------------
+  // ⚠️ RECONSTRUCTED 2026-07-30 — same incident as the shield/evasion blocks;
+  // behaviour is pinned by `sim/knockbackVsDamage.test.ts`.
+  //
+  // `combatResolveSystem` runs at step 8, LONG after an ability wrote its own
+  // `nav.override` at step 2b/3. An unconditional assignment here therefore
+  // lets a skill's own DAMAGE overwrite the skill's own AUTHORED shove in the
+  // same tick — and every shipped knockback ability also deals damage, so the
+  // primitive was dead on the shipping path, not merely flaky.
+  //
+  // The two questions this settles are 後台 FIELDS, not constants — they live
+  // on `combatFeel.knockback` (`authoredWins` ships true, `longerDamageWins`
+  // ships false; see combatFeel.ts for owner's reasoning on each).
+  //   · authoredWins     — does an ability-authored shove survive its own damage?
+  //   · longerDamageWins — …unless the damage-driven shove is actually longer?
+  const kbRules = world.combatFeel.knockback;
+  const authored =
+    nav.override?.kind === "knockback" && nav.override.authored === true ? nav.override : undefined;
+  const authoredKeeps =
+    authored !== undefined &&
+    kbRules.authoredWins &&
+    !(kbRules.longerDamageWins && kbMag > authored.remaining);
+  if (authoredKeeps) {
+    // leave the authored trajectory alone — but the knockdown/cosmetics below
+    // still apply, so the hit is still felt.
+  } else {
+    // A body mid-arc OWNS its `world.airborne` entry. Replacing the override
+    // without cancelling the leap orphans that entry: it is hashed into the
+    // digest forever and the client keeps drawing the body in mid-air
+    // (失敗形態 ①). Drop it out of the air through the shipped path first.
+    if (nav.override?.kind === "leap") cancelLeap(world, target);
+    nav.override = { kind: "knockback", dir: kbDir, speed: KB_SPEED, remaining: kbMag };
+  }
 
   // KNOCKDOWN — heavy UNBLOCKED physical/true blow floors the victim (brief
   // root + getup). Blocked or magic hits shove but don't knock down.
@@ -443,6 +474,50 @@ function applyImpact(
 function activeShieldTotal(shields: import("../components").Health["shields"], tick: number): number {
   let sum = 0;
   for (const sh of shields) if (sh.expiresAtTick > tick && sh.amount > 0) sum += sh.amount;
+  return sum;
+}
+
+/**
+ * The pools that may pay for THIS packet, in the order they are spent.
+ *
+ * ⚠️ RECONSTRUCTED 2026-07-30 against `sim/effects/shieldAbsorb.test.ts` after
+ * the uncommitted `damage.ts` was destroyed by a bad `git checkout --` (see
+ * /private/tmp/invuln-lane/RECOVERY-damage.ts.md). Behaviour is pinned by that
+ * suite, not by memory of the original text.
+ *
+ * ELIGIBILITY (the filter): a pool with no `absorbs`, or `absorbs: "all"`, eats
+ * anything; a typed pool eats only its own `DamageType`. `"true"` is its own
+ * type, so an AP-only barrier does NOT stop the fire ring (#270).
+ *
+ * ORDER: `world.shieldRules.absorbOrder`, the 後台 field (shieldRules.ts).
+ * Every branch preserves INSERTION order inside its group, so the result is a
+ * stable partition — deterministic by construction, with no comparator.
+ */
+function eligibleShields(
+  shields: import("../components").Health["shields"],
+  tick: number,
+  type: DamageType,
+  order: import("../shieldRules").ShieldAbsorbOrder,
+): import("../components").Health["shields"] {
+  const live = shields.filter((s) => s.expiresAtTick > tick && s.amount > 0);
+  const eligible = live.filter((s) => s.absorbs === undefined || s.absorbs === "all" || s.absorbs === type);
+  if (order === "insertionOrder") return eligible;
+  const narrow = eligible.filter((s) => s.absorbs !== undefined && s.absorbs !== "all");
+  const broad = eligible.filter((s) => s.absorbs === undefined || s.absorbs === "all");
+  return order === "specificFirst" ? [...narrow, ...broad] : [...broad, ...narrow];
+}
+
+/** Sum of the pools that could pay for this packet (the guard-break basis). */
+function eligibleShieldTotal(
+  shields: import("../components").Health["shields"],
+  tick: number,
+  type: DamageType,
+): number {
+  let sum = 0;
+  for (const s of shields) {
+    if (s.expiresAtTick <= tick || s.amount <= 0) continue;
+    if (s.absorbs === undefined || s.absorbs === "all" || s.absorbs === type) sum += s.amount;
+  }
   return sum;
 }
 
@@ -518,6 +593,50 @@ export function combatResolveSystem(world: SimWorld): void {
       const hp = world.health.get(pkt.target);
       if (!hp || !hp.alive) continue;
 
+      // ---- 無敵 / 免疫 (GH#289 lane P3) --------------------------------------
+      // BEFORE the combat-env multiplier, so `damageBlocked` on the scoreboard
+      // is the packet as it was AUTHORED, not the post-multiplier number.
+      //
+      // `continue`, NOT `pkt.amount = 0`: a refused packet must not walk the
+      // shield pool and must not emit `damage`, or the client plays a hit that
+      // never happened (floating number, impact vfx, guard-break reaction).
+      //
+      // Two things still have to happen even though the packet is dropped:
+      //   · the scoreboard scores it as BLOCKED, so the post-match screen can
+      //     show what the immunity was worth (失敗形態 ②);
+      //   · an `immune` event goes out, or the player sees literally nothing.
+      if (refusesDamage(world, pkt.target, pkt.type)) {
+        recordDamage(world, pkt.source, pkt.target, 0, 0, pkt.amount, pkt.origin);
+        world.emit("immune", {
+          target: pkt.target,
+          source: pkt.source,
+          amount: pkt.amount,
+          dmgType: pkt.type,
+          origin: pkt.origin,
+        });
+        continue;
+      }
+
+      // ---- 閃避 · ABILITY channel (GH#289 lane P5) --------------------------
+      // ⚠️ RECONSTRUCTED 2026-07-30 — same incident as the shield block above.
+      //
+      // BASIC attacks roll at their landing site in BasicAttackSystem (so a
+      // dodged auto is invisible to the whole on-hit proc chain); this queue is
+      // the only seam an ABILITY packet can be intercepted at. `combat/
+      // evasion.ts`'s header documents exactly that asymmetry.
+      //
+      // AFTER the immunity check on purpose: an invulnerable target must not
+      // spend an rng draw, or the two mechanics would perturb each other's
+      // replay. `continue` drops the packet WHOLE — a dodged ability spends no
+      // shield. `rollEvadeAbility` keeps its own ZERO GUARANTEE (p <= 0 returns
+      // before touching the rng), so this line is inert until content opts in.
+      if (
+        pkt.origin !== "basic" &&
+        rollEvadeAbility(world, pkt.source, pkt.target, pkt.type === "true")
+      ) {
+        continue;
+      }
+
       // Global combat-env damage factor: applied ONCE per packet, pre-
       // mitigation. Every damage source (basics, abilities, item/augment
       // procs, DoTs) drains through this queue, so this one line is the whole
@@ -532,16 +651,18 @@ export function combatResolveSystem(world: SimWorld): void {
 
       // shields absorb first (oldest first, deterministic). Track how much was
       // absorbed + whether the shield pool went from >0 to 0 (a guard break).
-      const shieldBefore = activeShieldTotal(hp.shields, world.tick);
-      for (const sh of hp.shields) {
-        if (sh.expiresAtTick <= world.tick || sh.amount <= 0) continue;
+      // `shieldBefore` / the guard-break basis is the ELIGIBLE total, not the
+      // whole pool: an anti-magic barrier still standing must not suppress the
+      // 破碎 beat when the pool that actually paid for a PHYSICAL hit empties.
+      const shieldBefore = eligibleShieldTotal(hp.shields, world.tick, pkt.type);
+      for (const sh of eligibleShields(hp.shields, world.tick, pkt.type, world.shieldRules.absorbOrder)) {
         const absorbed = Math.min(sh.amount, dmg);
         sh.amount -= absorbed;
         dmg -= absorbed;
         if (dmg <= 0) break;
       }
       hp.shields = hp.shields.filter((s) => s.amount > 0 && s.expiresAtTick > world.tick);
-      const shieldAbsorbed = shieldBefore - activeShieldTotal(hp.shields, world.tick);
+      const shieldAbsorbed = shieldBefore - eligibleShieldTotal(hp.shields, world.tick, pkt.type);
 
       const hpBefore = hp.hp;
       if (dmg > 0) hp.hp -= dmg;
@@ -582,8 +703,13 @@ export function combatResolveSystem(world: SimWorld): void {
       //   system). dmgType duplicates `type` under the contract's field name;
       //   `type`/`origin` are kept for existing consumers (DeathSystem, tests).
       const blocked = shieldAbsorbed > 1e-9 || hasDamageReductionBuff(world, pkt.target);
+      // ELIGIBLE total on both sides of the comparison: an anti-magic barrier
+      // that this physical hit could never spend must not suppress the 破碎
+      // beat when the pool that DID pay for it empties.
       const guardBreak =
-        shieldBefore > 1e-9 && shieldAbsorbed > 1e-9 && activeShieldTotal(hp.shields, world.tick) <= 1e-9;
+        shieldBefore > 1e-9 &&
+        shieldAbsorbed > 1e-9 &&
+        eligibleShieldTotal(hp.shields, world.tick, pkt.type) <= 1e-9;
       const killingBlow = hpBefore > 0 && hp.hp <= 0; // only the packet that crosses 0
       const tt = world.transform.get(pkt.target);
 
@@ -625,6 +751,12 @@ export function addShield(
   amount: number,
   durationSecs: number,
   sourceId: string,
+  /**
+   * 護盾類型過濾 (GH#289 lane P6). ABSENT and the explicit `"all"` are the SAME
+   * pool — both eat every damage type, which is the pre-filter behaviour — so
+   * the two spellings are normalised here rather than at every read site.
+   */
+  absorbs?: import("../components").ShieldAbsorb,
 ): void {
   const hp = world.health.get(target);
   if (!hp) return;
@@ -632,5 +764,6 @@ export function addShield(
     amount,
     expiresAtTick: world.tick + Math.round(durationSecs / world.dt),
     sourceId,
+    ...(absorbs !== undefined && absorbs !== "all" ? { absorbs } : {}),
   });
 }

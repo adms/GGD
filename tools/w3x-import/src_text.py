@@ -1,23 +1,15 @@
-"""src_text.py — full war3map.wts parser for the UNPROTECTED source map.
+"""src_text.py — war3map.wts access for the UNPROTECTED source map.
 
-The stock w3xlib/wts.py regex only recognises WTS blocks whose header has no
-comment line (or an old-style ``--`` comment).  The source map's WTS uses
-``//`` provenance comments (``// 能力: A0VJ (52-01 狂戰士之怒), ...``) on almost
-every entry, so that regex recovers only 330 of the 11,337 strings.  This module
-parses the block format line-by-line and recovers all of them, preserving CJK
-text and WC3 inline colour codes (``|cAARRGGBB ... |r``) verbatim.
+⚠️ THE PARSER NO LONGER LIVES HERE. `parse_wts_full` is now a thin adapter over
+`w3xlib.wts.parse_wts_blocks`, which holds the one line-based implementation.
 
-Block grammar (one per string id):
-
-    STRING <int id>
-    // optional provenance comment(s)          (0 or more, start with //)
-    {
-    <body line 1>
-    <body line 2 ...>                          (may be empty; keeps colour codes)
-    }
-
-The closing ``}`` is on its own line — the canonical World Editor emitter never
-puts a bare ``}`` line inside a body, so a line whose strip() == '}' terminates.
+It used to be a private copy, written because the library's regex recognised
+only WTS blocks whose header had no comment (or an old-style ``--`` one) and so
+recovered 330 of this map's 11,337 strings. Keeping a corrected copy up here
+fixed the extractors that imported it and left every consumer of the library —
+`w3xlib/stats.py`, and the whole `import_w3x.py` pipeline under it — reading the
+broken table and emitting literal ``TRIGSTR_1234`` where names belong. Two
+parsers for one file format is the bug; the library is now the only one.
 
 Run as a script to emit  out/GoDieEX22s-src/STRINGS.json  = { "<id>": "<text>" }.
 """
@@ -36,53 +28,14 @@ _COLOR_OPEN = re.compile(r"\|c[0-9a-fA-F]{8}")
 
 
 def parse_wts_full(data: bytes) -> tuple[dict[int, str], dict[int, str]]:
-    """Parse a war3map.wts blob.
+    """`(strings, comments)` — see `w3xlib.wts.parse_wts_blocks`, which does it.
 
-    Returns (strings, comments):
-      strings  : { id -> raw body text (colour codes preserved, internal
-                   newlines kept, no trailing newline) }
-      comments : { id -> the // provenance comment (without leading //), or "" }
+    Kept as a name because ~4 extractors import it; it must stay byte-identical
+    to the library call, so it delegates rather than reimplements.
     """
-    text = data.decode("utf-8-sig", errors="replace")
-    text = text.replace("\r\n", "\n").replace("\r", "\n")
-    lines = text.split("\n")
+    from w3xlib.wts import parse_wts_blocks
 
-    strings: dict[int, str] = {}
-    comments: dict[int, str] = {}
-
-    i = 0
-    n = len(lines)
-    while i < n:
-        m = _STRING_RE.match(lines[i])
-        if not m:
-            i += 1
-            continue
-        sid = int(m.group(1))
-        i += 1
-        comment_parts: list[str] = []
-        # consume optional comment lines / blank lines until the opening brace
-        while i < n and lines[i].strip() != "{":
-            stripped = lines[i].strip()
-            if stripped.startswith("//"):
-                comment_parts.append(stripped[2:].strip())
-            elif _STRING_RE.match(lines[i]):
-                # malformed block with no body — bail without consuming header
-                break
-            i += 1
-        if i >= n or lines[i].strip() != "{":
-            # no opening brace found; record empty and continue
-            strings.setdefault(sid, "")
-            comments.setdefault(sid, " ".join(comment_parts))
-            continue
-        i += 1  # skip '{'
-        body: list[str] = []
-        while i < n and lines[i].strip() != "}":
-            body.append(lines[i])
-            i += 1
-        i += 1  # skip '}'
-        strings[sid] = "\n".join(body)
-        comments[sid] = " ".join(comment_parts)
-    return strings, comments
+    return parse_wts_blocks(data)
 
 
 # ---- TRIGSTR resolution -----------------------------------------------------

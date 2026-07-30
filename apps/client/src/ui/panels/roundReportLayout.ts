@@ -73,6 +73,7 @@ import {
   type HudSlotId,
   type HudViewport,
 } from "../hud/hudLayout";
+import { hudClusterRects } from "../hud/hudBottomCluster";
 
 /**
  * The slot whose reserved band the card borrows during the intermission. Named
@@ -178,27 +179,42 @@ const MIN_USABLE_H = 60;
 
 /**
  * The local champion's HP/MP bars (`ui/components/ResourceBars.tsx`) — centred,
- * `bottom: 128`, `width: 260`. NOT a `hudLayout` slot (it is centre chrome, like
- * the ability bar and Ready), so the corner machinery cannot see it; mirrored
- * here and source-scanned by `roundReportLayout.test.ts` so the mirror cannot
- * rot. It matters because the INSET dock lives in the same lower-centre strip:
- * caught live at 844×390 with the card sitting over the player's own HP bar.
+ * NOT a `hudLayout` slot (it is centre chrome, like the ability bar and Ready),
+ * so the corner machinery cannot see it. It matters because the INSET dock
+ * lives in the same lower-centre strip: caught live at 844×390 with the card
+ * sitting over the player's own HP bar.
+ *
+ * ⚠️ RE-POINTED 2026-07-30. This used to be a hand-copied
+ * `{ bottom: 128, width: 260, height: 44 }` mirror, kept honest by a source
+ * scan of ResourceBars.tsx. The plate no longer pins itself at all — it and the
+ * ability bar are flex rows of ONE container (ui/hud/hudBottomCluster), and the
+ * moment that landed the mirror said 128 while the plate painted at 108. A
+ * copied number cannot survive its source being deleted; a call can. The
+ * obstacle is now the WHOLE cluster, which is also strictly more correct: the
+ * ability row was never in this list, so a wider report could always have
+ * landed on it.
  */
-export const RESOURCE_BARS = { bottom: 128, width: 260, height: 44 } as const;
+function resourceBarsRect(vp: HudViewport, touch: boolean): HudRect {
+  // The PLATE, deliberately — not the whole cluster. Widening this obstacle to
+  // include the ability row was tried and is a bigger change than it looks: the
+  // row has ALWAYS been painted in this strip and has NEVER been in this list,
+  // so at 667×375 the card and the bar already share pixels today. Making the
+  // cluster the obstacle turns that pre-existing overlap into 「the card cannot
+  // paint at all」, which is a worse answer than the status quo and belongs to
+  // #107's centre-chrome lane, not to this one. Reported, not silently changed.
+  return hudClusterRects(vp, touch, { resources: true, abilities: !touch }).resources!;
+}
 
-function resourceBarsRect(vp: HudViewport): HudRect {
-  return {
-    x: (vp.width - RESOURCE_BARS.width) / 2,
-    y: vp.height - RESOURCE_BARS.bottom - RESOURCE_BARS.height,
-    w: RESOURCE_BARS.width,
-    h: RESOURCE_BARS.height,
-  };
+/** Where the lower-centre strip the inset dock lives in begins (viewport px). */
+function insetStripTop(vp: HudViewport, touch: boolean): number {
+  const plate = hudClusterRects(vp, touch, { resources: true, abilities: !touch }).resources;
+  return (plate ? plate.y + plate.h : vp.height) + HUD_GAP;
 }
 
 function paintedRightChrome(vp: HudViewport, touch: boolean): HudRect[] {
   const out = PAINTED_RIGHT_SLOTS.map((id) => hudSlotRect(id, vp, touch));
   out.push(hudDisplacedRect("menu", vp, touch)); // re-homed by the left dock
-  out.push(resourceBarsRect(vp)); // centre-bottom, in the inset dock's strip
+  out.push(resourceBarsRect(vp, touch)); // centre-bottom, in the inset dock's strip
   return out;
 }
 
@@ -267,13 +283,14 @@ export function roundReportPlacement(vp: HudViewport, touch: boolean): RoundRepo
 
   // ── inset dock: right of the shop card, in the strip BELOW the centre stack ──
   const left = Math.round(shopCardWidthPx(vp.width)) + HUD_GAP * 2;
-  // The centre column stacks upward from the bottom edge: HP/MP bars at
-  // `bottom: 128`, Ready up at 190, the prep clock at 262. The bars are the
-  // LOWEST of the three, so the only free horizontal strip is under THEM —
-  // docking under Ready (the obvious choice, and the first thing tried) lands
-  // straight on the player's own health bar, which is how a 844×390 playtest
-  // screenshot caught it.
-  const top = vp.height - RESOURCE_BARS.bottom + HUD_GAP;
+  // The centre column stacks upward from the bottom edge: the HP/MP plate,
+  // Ready up at 190, the prep clock at 262. The plate is the LOWEST of the
+  // three, so the only free horizontal strip is under IT — docking under Ready
+  // (the obvious choice, and the first thing tried) lands straight on the
+  // player's own health bar, which is how a 844×390 playtest screenshot caught
+  // it. `insetStripTop` asks the cluster where the plate really ends instead of
+  // repeating its offset here.
+  const top = insetStripTop(vp, touch);
   const maxHeight = Math.max(0, vp.height - top - (HUD_STAMP_BAND + HUD_GAP));
   // Never reach past the right edge. NO minimum is applied here on purpose: on
   // a 375 px-wide portrait viewport the strip beside the shop card is 180 px,

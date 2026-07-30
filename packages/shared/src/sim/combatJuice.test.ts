@@ -378,7 +378,9 @@ describe("knockback (pct-of-maxHp, GH#193)", () => {
     const world = makeWorld();
     // 33.3% 的一擊,但操作者把門檻拉到 50% → 這一下不再擊退。
     world.combatFeel = {
-      knockback: { minPct: 0.5, maxBodies: 10, bodyUnit: 1.0 },
+      // 只改門檻；仲裁那兩格（authoredWins / longerDamageWins）跟著出貨表，
+      // 因為這一條測的是「門檻真的是參數」，不是「誰贏」。
+      knockback: { ...world.combatFeel.knockback, minPct: 0.5 },
       standstill: world.combatFeel.standstill,
     };
     const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
@@ -652,6 +654,7 @@ describe("hitstun (victim-only action-lock, frame advantage)", () => {
       ticksLeft: 5,
       targets: [],
       rooted: true,
+      hpAtStart: world.health.get(v)!.hp,
     };
     world.hitstun.set(v, 2);
 

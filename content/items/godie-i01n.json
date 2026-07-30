@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "天堂之劍",
   "icon": "assets/icons/items/godie-i01n.webp",
-  "description": "任務\n效能\n魂藏\n生命-500\n3%機率造成50倍傷害\n\n解說\n天堂之劍可以讓持有者起死回生3次，相傳是由大同萌會的鐵拳無敵孫中山所守護著。在一次例行性的革命失敗後不知道消失到哪裡去了。",
+  "description": "任務\n效能\n魂藏\n生命-500\n6%機率造成10倍傷害\n\n解說\n天堂之劍可以讓持有者起死回生3次，相傳是由大同萌會的鐵拳無敵孫中山所守護著。在一次例行性的革命失敗後不知道消失到哪裡去了。",
   "cost": 0,
   "tier": 2,
   "tags": [
@@ -18,13 +18,15 @@
     {
       "stat": "critChance",
       "op": "flat",
-      "value": 0.03
+      "value": 0.06
     },
     {
       "stat": "critDamage",
       "op": "flat",
-      "value": 48.25
+      "value": 8.25
     }
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "draftEligible": false,
+  "authoringNote": "【缺招牌機制:魂藏】原作 I01N 的 base 是 azhr 復活聖典(class: Charged),掛三支能力 —— AIrc「ItemReincarnation」死亡時原地復活(死後延遲 7 秒 / 回復生命 5000 / 三次充能 = 描述裡的「起死回生3次」,「魂藏」就是這張地圖給這個機制取的名字)、AIlz 生命 -500、AIcs 暴擊。GGD 目前只實作了後兩支:代價(-500 生命)在,回報(復活)不在,所以它是一件純負面道具。sim 沒有「自己死亡時原地復活 xN」這個原語 —— #84 的復活是「隊友走進復活圈引導 5 秒」,觸發者、條件、次數全部不同,不能拿來頂替;要補是獨立一件事。在補上之前 draftEligible=false,否則任務三選一會發出一張抽到就扣血的卡。owner 想先放回池子的話,把 draftEligible 改成 true(或在後台把開關撥回來)即可,不需要改程式。【暴擊數值】owner 2026-07-30 裁決:原作 3% / 50 倍太誇張,改成 6% / 10 倍 —— 英雄基礎暴擊倍率 1.75(sim/content/skeleton.ts)+ critDamage 8.25 = 10.0。w3x 原值(致命一擊機率 3、傷害乘數 50,即 critDamage +48.25)保留在 docs/content/reconciliation/items.md,那份是來源紀錄不是出貨值。"
 }

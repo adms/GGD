@@ -217,6 +217,14 @@
       "range": 0.0,
       "effects": [
         {
+          "kind": "invulnerable",
+          "durationSec": 0.84,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
           "kind": "leap",
           "applyTo": "self",
           "mode": "inPlace",

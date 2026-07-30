@@ -148,6 +148,15 @@
         }
       ],
       "vfxKey": "fx.prim.void.bolt",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.fam.mark.w3x-ff6400.s85"
+        },
+        {
+          "vfxKey": "fx.fam.burst.fire.s100",
+          "delayMs": 350
+        }
+      ],
       "sfxKey": "wc3.flaretarget3",
       "castTimeSec": 0.5
     },

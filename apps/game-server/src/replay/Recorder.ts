@@ -39,7 +39,28 @@ import {
   type ReplayHeader,
   type ReplayLine,
 } from "./format";
-import { compressRecording, openRecordingStream, pruneReplays, safeRecordingId } from "./store";
+import { compressRecording, openRecordingStream, pruneReplays, safeRecordingId, summarise } from "./store";
+import { forgetSidecarRows, upsertSidecarRow } from "./sidecar";
+import {
+  formatReplayFailureLog,
+  replayHealth,
+  type ReplayFailurePhase,
+} from "./replayHealth";
+
+/**
+ * The ONE place a recording failure is reported (GH#170). Before this, every
+ * failure site here was a bare `console.error` — measured: with an unwritable
+ * `GGD_REPLAY_DIR` a whole family session produced exactly one log line per
+ * match and left `/healthz` saying `ok: true`. Routing every site through the
+ * counter means the failure is countable, greppable (`grep ggd.replay`) and
+ * visible on `/healthz` even when nobody is reading the log — and the throttle
+ * lives inside `noteFailure`, so a persistent problem cannot flood the log the
+ * way #272 found the unthrottled shed warn doing.
+ */
+function reportFailure(phase: ReplayFailurePhase, id: string, err: unknown): void {
+  const shouldLog = replayHealth.noteFailure(phase, id, err);
+  if (shouldLog) console.error(formatReplayFailureLog(phase, id, err, replayHealth.snapshot()), err);
+}
 
 /** How often the buffered lines are handed to the write stream. */
 const FLUSH_MS = 500;
@@ -81,6 +102,13 @@ export class MatchRecorder implements MatchRecorderSink {
   private lastHostDigest = 0;
   private lastPhase = "";
   private lastRound = -1;
+  /**
+   * The header this recording opened with. Kept so `finish()` can fold a list
+   * row into the index WITHOUT reading the recording back — see the upsert call
+   * below. It is the same object already written as line 0, not a second copy of
+   * the facts.
+   */
+  private header: ReplayHeader | null = null;
 
   private constructor(matchId: string) {
     this.id = safeRecordingId(matchId);
@@ -99,7 +127,7 @@ export class MatchRecorder implements MatchRecorderSink {
     // prune protection). Reserve the id synchronously so two concurrent opens
     // cannot both pass this guard before either awaits.
     if (liveRecordings.has(rec.id)) {
-      console.error(`[replay] a recording for "${rec.id}" is already being written; refusing a second writer (the match is unaffected)`);
+      reportFailure("collision", rec.id, new Error("a recording for this id is already being written; refusing a second writer"));
       return null;
     }
     liveRecordings.add(rec.id);
@@ -107,14 +135,22 @@ export class MatchRecorder implements MatchRecorderSink {
       rec.stream = await openRecordingStream(rec.id);
     } catch (err) {
       liveRecordings.delete(rec.id);
-      console.error(`[replay] could not open a recording for ${matchId}; this match will not be recorded`, err);
+      reportFailure("open", rec.id, err);
       return null;
     }
+    // THE MEASURED GH#170 PATH. `openRecordingStream` resolves happily against
+    // an unwritable directory — `mkdir(recursive)` is a no-op when the dir
+    // exists, and `createWriteStream` opens the fd ASYNCHRONOUSLY, so EACCES
+    // arrives here, on the next turn of the event loop, long after `open()`
+    // has returned a perfectly healthy-looking recorder. Nothing else in the
+    // process ever learns. That is the whole bug.
     rec.stream.on("error", (err) => {
       if (rec.disabled) return;
       rec.disabled = true;
-      console.error(`[replay] write failed for ${matchId}; recording stopped (the match is unaffected)`, err);
+      reportFailure("write", rec.id, err);
     });
+    replayHealth.noteOpened();
+    rec.header = header;
     rec.push({ t: "header", ...header });
     rec.timer = setInterval(() => rec.flush(), FLUSH_MS);
     // Never hold the process open for a recorder.
@@ -205,18 +241,52 @@ export class MatchRecorder implements MatchRecorderSink {
     this.flushDigestChunk();
     this.push({ t: "footer", ...footer });
     await this.close();
-    if (this.disabled) return;
+    // A recorder that disabled itself mid-match produced NO tape. Saying so
+    // here is what makes 「三場連續錄不到」 a countable fact rather than three
+    // unrelated log lines: `write`/`backlog` already counted the event, this
+    // path just refuses to let the match be counted as recorded.
+    if (this.disabled) {
+      liveRecordings.delete(this.id);
+      return;
+    }
+    let name = `${this.id}.jsonl.gz`;
     try {
       await compressRecording(this.id);
     } catch (err) {
-      console.error(`[replay] could not compress ${this.id}; leaving the plain .jsonl in place`, err);
+      // The plain .jsonl is still on disk and still playable, so this is NOT a
+      // lost recording — `compress` deliberately does not advance the
+      // consecutive-failure counter (see replayHealth.noteFailure).
+      name = `${this.id}.jsonl`;
+      reportFailure("compress", this.id, err);
     }
+    // 「寫入時更新」: fold this recording's list row into the index from the
+    // header and footer already in hand. No readFile, no gunzipSync, no
+    // JSON.parse — the alternative is the admin's NEXT list call paying to
+    // re-derive a summary this object could simply hand over. Best-effort: a
+    // failure costs that one list call a parse, which is what would have
+    // happened without an index at all.
+    if (this.header) {
+      await upsertSidecarRow(
+        this.id,
+        name,
+        summarise(this.id, 0, [
+          { t: "header", ...this.header },
+          { t: "footer", ...footer },
+        ]),
+      );
+    }
+    // The tape exists (compressed, or plain when the gzip failed). This is the
+    // only call that clears the consecutive-failure counter.
+    replayHealth.noteRecorded();
     liveRecordings.delete(this.id);
     try {
       const deleted = await pruneReplays([...liveRecordings]);
-      if (deleted.length > 0) console.log(`[replay] retention pruned ${deleted.length} old recording(s)`);
+      if (deleted.length > 0) {
+        await forgetSidecarRows(deleted);
+        console.log(`[replay] retention pruned ${deleted.length} old recording(s)`);
+      }
     } catch (err) {
-      console.error("[replay] retention prune failed", err);
+      reportFailure("prune", this.id, err);
     }
   }
 
@@ -259,7 +329,11 @@ export class MatchRecorder implements MatchRecorderSink {
     if (this.buffer.length >= MAX_BUFFERED_LINES) {
       this.disabled = true;
       this.buffer.length = 0;
-      console.error(`[replay] ${this.id}: write backlog exceeded ${MAX_BUFFERED_LINES} lines; recording stopped`);
+      reportFailure(
+        "backlog",
+        this.id,
+        new Error(`buffered line count exceeded ${MAX_BUFFERED_LINES}; recording stopped`),
+      );
       return;
     }
     this.buffer.push(encodeLine(line));
@@ -275,20 +349,38 @@ export class MatchRecorder implements MatchRecorderSink {
     // single over-highWaterMark write, which is normal; the standing backlog is
     // the real signal.)
     if (this.stream.writableLength > MAX_STREAM_BACKLOG_BYTES) {
+      const backlog = this.stream.writableLength;
       this.disabled = true;
       this.buffer.length = 0;
-      console.error(
-        `[replay] ${this.id}: write backlog ${this.stream.writableLength} bytes exceeded ceiling; recording stopped (the match is unaffected)`,
+      reportFailure(
+        "backlog",
+        this.id,
+        new Error(
+          `stream backlog ${backlog} bytes exceeded ${MAX_STREAM_BACKLOG_BYTES}; recording stopped (the match is unaffected)`,
+        ),
       );
       return;
     }
     const chunk = this.buffer.join("");
     this.buffer.length = 0;
     this.stream.write(chunk);
+    // Counted AFTER the guards, so `bytesWritten` means "handed to the device",
+    // not "wanted to write". On the GH#170 path this stays at 0 forever while
+    // `opened` climbs — which is the signature an operator can read at a glance.
+    replayHealth.noteBytes(chunk.length);
   }
 }
 
 /** Ids of recordings currently being written (retention must skip them). */
 export function liveRecordingIds(): string[] {
   return [...liveRecordings];
+}
+
+/**
+ * The seal path throws in MatchRoom, not here, so MatchRoom needs a way into
+ * the same counter. Exported rather than exposing `reportFailure` wholesale:
+ * `seal` is the only phase a caller outside this file can legitimately raise.
+ */
+export function reportRecorderSealFailure(id: string, err: unknown): void {
+  reportFailure("seal", id, err);
 }

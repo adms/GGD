@@ -14,8 +14,8 @@
     "manaRegen": 0.1,
     "ad": 15,
     "ap": 0,
-    "armor": 0,
-    "mr": 28,
+    "armor": 7,
+    "mr": 50,
     "as": 0.5,
     "ms": 5.9,
     "critChance": 0,
@@ -35,9 +35,9 @@
     "as": 0.02
   },
   "attributes": {
-    "str": 17,
-    "agi": 25,
-    "int": 13,
+    "str": 32,
+    "agi": 40,
+    "int": 28,
     "strGrowth": 1.7,
     "agiGrowth": 2.7,
     "intGrowth": 1.8,
@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -59,27 +59,27 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        50,
+        80,
+        110,
+        140
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "heal",
           "amount": {
             "perRank": [
-              50.0,
-              85.0,
-              120.0,
-              155.0
+              50,
+              85,
+              120,
+              155
             ],
             "ratios": [
               {
@@ -103,16 +103,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        50,
+        80,
+        110,
+        140
       ],
       "range": 6.42,
       "effects": [
@@ -121,10 +121,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              450.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
@@ -148,16 +148,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        200.0,
-        250.0,
-        300.0
+        150,
+        200,
+        250,
+        300
       ],
       "range": 13.75,
       "effects": [
@@ -170,10 +170,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  450.0,
-                  600.0,
-                  750.0,
-                  900.0
+                  450,
+                  600,
+                  750,
+                  900
                 ]
               }
             }
@@ -193,25 +193,25 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        250.0,
-        315.0,
-        380.0
+        250,
+        315,
+        380
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              450.0,
-              650.0,
-              850.0
+              450,
+              650,
+              850
             ],
             "ratios": [
               {
@@ -254,16 +254,16 @@
       "rawcode": "A0T1",
       "name": "08-002 龍魔人",
       "durationSec": {
-        "1": 20.0,
-        "2": 15.0,
-        "3": 21.0,
-        "4": 27.0
+        "1": 20,
+        "2": 15,
+        "3": 21,
+        "4": 27
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
       }
     }
   }

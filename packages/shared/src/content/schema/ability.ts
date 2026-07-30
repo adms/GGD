@@ -4,6 +4,7 @@ import type { AbilityId } from "../../ids";
 import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zTintRgb } from "./common";
 import { zAbilityPassive, zEffectDef } from "./effect";
 import { zAbilityTemplateRef } from "./template";
+import { zAbilityVfxLayers } from "./abilityVfx";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -115,6 +116,14 @@ export const zAbilityDef = z
     passive: zAbilityPassive.optional(),
     vfxKey: zRef("vfx", { soft: true }).optional(),
     /**
+     * 多層特效模板 (#205 / #230). Present = this array IS the ability's cast
+     * VFX stack, played top to bottom with per-layer parameter overrides and
+     * per-layer delays. Absent = the single `vfxKey` above, unchanged — see
+     * `./abilityVfx.ts` for the authoring contract, the paste-able JSON
+     * example, and why a layer may NOT carry `anchor`.
+     */
+    vfxLayers: zAbilityVfxLayers.optional(),
+    /**
      * WC3-derived per-ability cast sound cue — an audio-map SFX key (e.g.
      * "wc3.nocute"), recovered from the source map's gg_snd bindings
      * (tools/w3x-import SFX_BINDINGS.json). The sim stamps it on the
@@ -127,6 +136,25 @@ export const zAbilityDef = z
     castTimeSec: z.number().min(0).optional(),
     /** root the caster for the cast duration (default true) */
     rootWhileCasting: z.boolean().optional(),
+    /**
+     * 被打會不會中斷施法 — a DECISION POINT, therefore a field (CLAUDE.md
+     * 第一守則), not a branch somebody picked inside CastResolveSystem.
+     *
+     * ABSENT = `"none"` = today's rule EXACTLY, so all 650-odd shipped abilities
+     * are untouched: a cast already dies to death / stun / knockdown and nothing
+     * else. `"damage"` adds 「而且掉血就斷」, which is what 揍敵客阿福 R 龍星群
+     * 「ct 需要 2 秒，被攻擊會中斷施法」 asks for and what nothing in the sim could
+     * express before — a 2-second channel that cannot be punished is a different
+     * ability from the one the owner described.
+     *
+     * WHAT COUNTS AS 「被打」 IS STATED, NOT GUESSED: the caster's HP is lower
+     * than it was on the tick the cast began. A shield that eats the whole hit
+     * therefore does NOT interrupt (you were not hurt), and the arena fire-ring
+     * burn DOES (you were). Both readings are consequences of one rule rather
+     * than special cases, and the knob to switch the whole thing off is this
+     * field.
+     */
+    interruptOn: z.enum(["none", "damage"]).optional(),
     /**
      * RECOVERY (後搖) — seconds of commitment AFTER the ability resolves, during
      * which the caster may not cast or basic-attack. Absent = the sim's

@@ -33,12 +33,28 @@ import {
   spectateNotice,
   spectateNoticeClick,
 } from "./SpectateNotice";
+import { hudSurfaceRect } from "./hudSurfaces";
 import { TOP_CENTRE_BAND_END } from "../controlLegendModel";
 
 const hudRoot = (): string => readFileSync(join(__dirname, "..", "HudRoot.tsx"), "utf8");
 
+/**
+ * The banner is placed by the #107 SURFACE registry (task #219), so the render
+ * is driven by the rect the shipped resolver really produces for a desktop
+ * combat scene — not by a rectangle this test invented. If the registry ever
+ * stops giving the banner a row, every assertion below goes red.
+ */
+const RECT = hudSurfaceRect(
+  "spectate-notice",
+  { width: 1280, height: 720 },
+  false,
+  { phase: "combat", panels: [] },
+);
+
 const markup = (zone: number | null, offer: number | null): string =>
-  renderToStaticMarkup(createElement(SpectateNoticeView_, { view: spectateNotice(zone, offer) }));
+  renderToStaticMarkup(
+    createElement(SpectateNoticeView_, { view: spectateNotice(zone, offer), rect: RECT }),
+  );
 
 describe("the gate", () => {
   it("silent while your own duel is still being fought", () => {
@@ -134,12 +150,29 @@ describe("it really paints", () => {
     expect(button).toMatch(/pointer-events:\s*auto/);
   });
 
-  it("hangs off the top-centre band instead of sitting on the phase clock", () => {
+  /**
+   * ⚠️ THIS TEST USED TO BE FAILURE SHAPE ④ (「斷言方向跟缺陷無關」). It asserted
+   * `markup(null, 1)` contains `${SPECTATE_NOTICE_TOP}px` — i.e. 106px — while
+   * RECT is resolved from a COMBAT scene, where the registry's own answer is
+   * also 106. So it passed identically for the shipped build and for the broken
+   * one that hard-pins `top: SPECTATE_NOTICE_TOP` and ignores the rect.
+   *
+   * What it can honestly say is the narrower thing below; the placement proof
+   * lives in `hudSurfacePaint.test.ts`, which renders the RESOLUTION scene
+   * (y 158 ≠ 106) and compares the markup against the resolver.
+   */
+  it("the first row of the centred stack really clears the phase clock", () => {
     // v0.9.1 pinned it at `top: 12`, INSIDE PhaseTimer's own 10..62 band. That
     // was survivable for a click-through label and is not survivable now that
     // the banner carries a button the player has to hit.
     expect(SPECTATE_NOTICE_TOP).toBeGreaterThan(TOP_CENTRE_BAND_END);
-    expect(markup(null, 1)).toContain(`${SPECTATE_NOTICE_TOP}px`);
+    // and the constant is not decorative: it is what the resolver really hands
+    // the banner on the combat scene RECT was built from.
+    expect(RECT?.y).toBe(SPECTATE_NOTICE_TOP);
+    // the banner paints AT the rect it was given, whatever that rect is —
+    // asserted against the rect, never against a literal.
+    expect(markup(null, 1)).toContain(`top:${RECT!.y}px`);
+    expect(markup(null, 1)).toContain(`left:${RECT!.x}px`);
   });
 });
 

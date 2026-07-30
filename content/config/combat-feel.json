@@ -14,5 +14,13 @@
   "facing": {
     "followThroughTicks": 3,
     "instantCastTicks": 6
+  },
+  "autoEngage": {
+    "enabled": true,
+    "stallTicks": 30,
+    "stallSpeed": 0.5,
+    "seekRadius": 48,
+    "respectLiveSteering": true,
+    "ccPausesStall": true
   }
 }

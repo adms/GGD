@@ -2,10 +2,10 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_1c68c834dac0`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**214**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-22T15:49:20.043229Z`）
+> 產生自 contentVersion **`cv_bd21db92bbdf`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**219**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
-`content/items/*.json` 共 **214** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **28** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **14** 件傳說。其餘（107 組件、8 代幣、36 無角色、6 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
+`content/items/*.json` 共 **219** 份，依 `content/items/<id>.json` 的 **`craftRole`** 標記分類（來源：source-map triggers，見 `tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 **28** 件最終合成武器（`craftRole:final` 且有效果）＋ **2** 項服務；三選一 draft 抽 **13** 件任務道具，傳說寶玉抽 **24** 件傳說。其餘（107 組件、8 代幣、31 無角色、6 無 payload 的 final）是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
@@ -29,31 +29,31 @@
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i00f` | 霸王槍 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damage |
-| `godie-i00i` | 炎龍巨弩 | 最終合成 final | 1200g | T2 | — | — | 護甲 +4.5 · 攻速 +30% · 攻擊力 +37.6 | — |
+| `godie-i00f` | 霸王槍 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damageArea |
+| `godie-i00i` | 炎龍巨弩 | 最終合成 final | 1200g | T2 | — | ✅ | 護甲 +4.5 · 攻速 +30% · 攻擊力 +37.6 | — |
 | `godie-i00j` | 奇門盾甲 | 最終合成 final | 1200g | T2 | — | ✅ | 生命 +186 · 回血 +3.9 | — |
-| `godie-i016` | 晨曦之光 | 最終合成 final | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i018` | 朗基努斯之槍 | 最終合成 final | 1200g | T2 | — | — | 護甲 +3.8 · 攻速 +25.3% · 攻擊力 +12.6 · 生命 +278 | — |
-| `godie-i01j` | 靈魂魔石 | 最終合成 final | 1200g | T2 | — | — | 生命 +217 · 魔力 +136 | — |
-| `godie-i01o` | 死神裝束 | 最終合成 final | 1200g | T2 | — | — | 攻速 +33.3% · 生命 +55 · 攻擊力 +2.8 · 魔力 +33 · 移速 +0.33 | — |
-| `godie-i01v` | 螺旋劍 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +45.6 · 生命 +54 · 魔力 +32 | — |
-| `godie-i027` | 光魔杖 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +93.2 · 魔力 +279 · 攻擊力 +23.3 | onBasicAttack→damage |
-| `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +32.2 · 生命 +202 | onBasicAttack→damage |
-| `godie-i02r` | 奇蹟之墜 | 最終合成 final | 1200g | T2 | — | — | 法強 +28.9 · 魔力 +87 · 生命 +174 | — |
-| `godie-i031` | 天生牙 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +8.2 · 生命 +181 | — |
-| `godie-i039` | 幻之匕首 | 最終合成 final | 1200g | T2 | — | — | 護甲 +5.2 · 攻速 +56.9% | — |
-| `godie-i03b` | 真．雅典娜的驚嘆號 | 最終合成 final | 1200g | T2 | — | — | 法強 +81.6 · 魔力 +245 · 回魔 +81.6% | — |
-| `godie-i03d` | 光明虎徹 | 最終合成 final | 300g | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i03f` | 甘豆腐之袍 | 最終合成 final | 300g | T1 | — | — | 回魔 +22.3% · 生命 +59 · 護甲 +1.2 | — |
-| `godie-i040` | 破甲槍 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +26 | onBasicAttack→applyBuff |
-| `godie-i041` | 火閃電 | 最終合成 final | 300g | T1 | — | — | 移速 +0.83 | — |
+| `godie-i016` | 晨曦之光 | 最終合成 final | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
+| `godie-i018` | 朗基努斯之槍 | 最終合成 final | 1200g | T2 | — | ✅ | 護甲 +3.8 · 攻速 +25.3% · 攻擊力 +12.6 · 生命 +278 | — |
+| `godie-i01j` | 靈魂魔石 | 最終合成 final | 1200g | T2 | — | ✅ | 生命 +217 · 魔力 +136 | — |
+| `godie-i01o` | 死神裝束 | 最終合成 final | 1200g | T2 | — | ✅ | 攻速 +33.3% · 生命 +55 · 攻擊力 +2.8 · 魔力 +33 · 移速 +0.33 | — |
+| `godie-i01v` | 螺旋劍 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +45.6 · 生命 +54 · 魔力 +32 | — |
+| `godie-i027` | 光魔杖 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +93.2 · 魔力 +279 · 攻擊力 +23.3 | onBasicAttack→damageArea |
+| `godie-i02e` | 狂暴軒轅劍 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +32.2 · 生命 +202 | onBasicAttack→damage |
+| `godie-i02r` | 奇蹟之墜 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +28.9 · 魔力 +87 · 生命 +174 | — |
+| `godie-i031` | 天生牙 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +8.2 · 生命 +181 | — |
+| `godie-i039` | 幻之匕首 | 最終合成 final | 1200g | T2 | — | ✅ | 護甲 +5.2 · 攻速 +56.9% | — |
+| `godie-i03b` | 真．雅典娜的驚嘆號 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +81.6 · 魔力 +245 · 回魔 +81.6% | — |
+| `godie-i03d` | 光明虎徹 | 最終合成 final | 300g | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
+| `godie-i03f` | 甘豆腐之袍 | 最終合成 final | 300g | T1 | — | ✅ | 回魔 +22.3% · 生命 +59 · 護甲 +1.2 | — |
+| `godie-i040` | 破甲槍 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +26 | onBasicAttack→applyBuff |
+| `godie-i041` | 火閃電 | 最終合成 final | 300g | T1 | — | ✅ | 移速 +0.83 | — |
 | `godie-i045` | 寂靜刃 - 詠月 | 最終合成 final | 1200g | T2 | — | ✅ | 魔力 +450 · 回魔 +300% | — |
-| `godie-i049` | 賢者之石 | 最終合成 final | 1200g | T2 | — | — | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
-| `godie-i04d` | 冰晶虎魄 - 改 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +5.5 · 生命 +122 · 法強 +27.7 · 魔力 +83 | onBasicAttack→applyStatus |
-| `godie-i04i` | 厄夜鐮刀 | 最終合成 final | 1200g | T2 | — | — | 回魔 +300% | — |
-| `godie-i05h` | 失心匕首 | 最終合成 final | 1200g | T2 | — | — | 攻擊力 +14.1 · 攻速 +28.2% | — |
-| `godie-i05o` | 刺針 | 最終合成 final | 300g | T1 | — | — | 攻擊力 +5.2 · 生命 +11 · 魔力 +7 | — |
-| `godie-i067` | 惡夢魔王碎片 | 最終合成 final | 1200g | T2 | — | — | 回魔 +229.8% · 魔力 +689 | — |
+| `godie-i049` | 賢者之石 | 最終合成 final | 1200g | T2 | — | ✅ | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
+| `godie-i04d` | 冰晶虎魄 - 改 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +5.5 · 生命 +122 · 法強 +27.7 · 魔力 +83 | onBasicAttack→damageArea |
+| `godie-i04i` | 厄夜鐮刀 | 最終合成 final | 1200g | T2 | — | ✅ | 回魔 +300% | — |
+| `godie-i05h` | 失心匕首 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +14.1 · 攻速 +28.2% | — |
+| `godie-i05o` | 刺針 | 最終合成 final | 300g | T1 | — | ✅ | 攻擊力 +5.2 · 生命 +11 · 魔力 +7 | — |
+| `godie-i067` | 惡夢魔王碎片 | 最終合成 final | 1200g | T2 | — | ✅ | 回魔 +229.8% · 魔力 +689 | — |
 | `godie-i06d` | 斬龍刀 | 最終合成 final | 1200g | T2 | — | ✅ | 護甲 +3.6 · 攻速 +23.9% · 暴擊率 +0.18 · 暴擊傷害 +0.45 · 攻擊力 +32.9 | — |
 | `godie-i06f` | 月神槍 | 最終合成 final | 1200g | T2 | — | ✅ | 法強 +99 · 魔力 +297 · 護甲 +13.2 · 回血 +8.29 | — |
 | `godie-i06i` | 炎神弩 | 最終合成 final | 1200g | T2 | — | ✅ | 攻擊力 +35.1 · 護甲 +5.3 · 攻速 +35.1% | — |
@@ -64,8 +64,8 @@
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `legendary-orb` | 傳說寶玉 | 商店服務 service | 2400g | T3 | — | — | — | — |
-| `stat-attunement` | 能力屬性強化 | 商店服務 service | 375g | T1 | — | — | — | — |
+| `legendary-orb` | 傳說寶玉 | 商店服務 service | 2400g | T3 | — | ✅ | — | — |
+| `stat-attunement` | 能力屬性強化 | 商店服務 service | 375g | T1 | — | ✅ | — | — |
 
 ## 3. 三選一 draft — quest（三選一 augment/武器卡）（13）
 
@@ -73,40 +73,50 @@
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i004` | 魔戒 | 任務獎勵 quest | — | T1 | — | — | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
-| `godie-i00z` | 四魂之玉 | 任務獎勵 quest | — | T2 | — | — | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
-| `godie-i01k` | 火焰泰坦腰帶 | 任務獎勵 quest | — | T2 | — | — | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | — |
-| `godie-i01n` | 天堂之劍 | 任務獎勵 quest | — | T2 | — | — | 生命 -500 · 暴擊率 +0.03 · 暴擊傷害 +48.25 | — |
-| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | — | — | — | — |
-| `godie-i02h` | 戰旗 | 任務獎勵 quest | — | T5 | — | — | — | — |
-| `godie-i02j` | 復仇之袍 | 任務獎勵 quest | — | T5 | — | — | — | — |
-| `godie-i02k` | 惡魔吉他 | 任務獎勵 quest | — | T5 | — | — | — | — |
-| `godie-i034` | 大地泰坦角盔 | 任務獎勵 quest | — | T2 | — | — | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | — |
-| `godie-i035` | 海潮泰坦護盾 | 任務獎勵 quest | — | T2 | — | — | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | — |
-| `godie-i05y` | 蜂蜜罐 | 任務獎勵 quest | — | T2 | — | — | 回魔 +200.1% · 回血 +12.06 | — |
-| `godie-i06j` | 獸人船長十字鎬 | 任務獎勵 quest | — | T2 | — | — | 攻擊力 +26 | — |
-| `godie-i06n` | 老衲的棒子 | 任務獎勵 quest | — | T2 | — | — | 攻擊力 +26 | onBasicAttack→applyStatus |
+| `godie-i004` | 魔戒 | 任務獎勵 quest | — | T1 | — | ✅ | 生命 +39 · 攻擊力 +1.9 · 魔力 +23 | — |
+| `godie-i00z` | 四魂之玉 | 任務獎勵 quest | — | T2 | — | ✅ | 生命 +154 · 攻擊力 +7.7 · 魔力 +93 | — |
+| `godie-i01k` | 火焰泰坦腰帶 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | onBasicAttack→damageArea |
+| `godie-i01n` | 天堂之劍 | 任務獎勵 quest | — | T2 | — | ✅ | 生命 -500 · 暴擊率 +0.06 · 暴擊傷害 +8.25 | — |
+| `godie-i01s` | 仙后座 | 任務獎勵 quest | — | T1 | — | ✅ | — | — |
+| `godie-i02h` | 戰旗 | 任務獎勵 quest | — | T5 | — | ✅ | — | — |
+| `godie-i02j` | 復仇之袍 | 任務獎勵 quest | — | T5 | — | ✅ | 護甲 +12 | — |
+| `godie-i02k` | 惡魔吉他 | 任務獎勵 quest | — | T5 | — | ✅ | — | — |
+| `godie-i034` | 大地泰坦角盔 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | — |
+| `godie-i035` | 海潮泰坦護盾 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +8 · 生命 +175 · 護甲 +2.1 | — |
+| `godie-i05y` | 蜂蜜罐 | 任務獎勵 quest | — | T2 | — | ✅ | 回魔 +200.1% · 回血 +12.06 | — |
+| `godie-i06j` | 獸人船長十字鎬 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +26 | — |
+| `godie-i06n` | 老衲的棒子 | 任務獎勵 quest | — | T2 | — | ✅ | 攻擊力 +26 | onBasicAttack→applyStatus |
 
-## 4. 傳說池 legendary pool（14）
+## 4. 傳說池 legendary pool（24）
 
 `content/loot-tables/legendary-weapons.json`，等權重抽取。買不到，只能從武器三選一或 2400g 傳說寶玉取得。
 
 | id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |
 |---|---|---|---|---|---|---|---|---|
-| `godie-i000` | 丈八蛇矛 | 無角色 none | — | T3 | ✅ | — | 攻擊力 +28.7 · 生命 +237 | — |
+| `bulwark-charge-greaves` | 衝鋒重脛甲 | 無角色 none | — | T5 | ✅ | — | 生命 +420 · 護甲 +18 | onAbilityCast→dash |
+| `cleaver-of-the-warden` | 裂地巨斧 | 無角色 none | — | T5 | ✅ | — | 攻擊力 +45 · 生命 +260 | onBasicAttack→damageArea |
+| `endless-edge` | 無盡連刃 | 無角色 none | — | T5 | ✅ | — | 攻速 +10 | onBasicAttack→applyBuff |
+| `godie-i000` | 丈八蛇矛 | 無角色 none | — | T3 | ✅ | ✅ | 攻擊力 +28.7 · 生命 +237 | onBasicAttack→damageArea |
 | `godie-i007` | 妖刀村正 | 無角色 none | — | T3 | ✅ | ✅ | 吸血 +0.36 · 攻擊力 +43.2 | — |
-| `godie-i00l` | 落魂的嗜血劍 | 無角色 none | — | T3 | ✅ | — | 吸血 +0.23 · 攻擊力 +46.3 | — |
-| `godie-i00u` | 名刀-天狼 | 組件 component | — | T3 | ✅ | — | 攻速 +123.2% | — |
-| `godie-i012` | 熾天使之弓 | 組件 component | — | T3 | ✅ | — | 護甲 +16.3 · 攻速 +108.5% | onBasicAttack→damage |
-| `godie-i013` | 八取武士刀 | 組件 component | — | T3 | ✅ | — | 攻擊力 +32.2 · 生命 +202 | onBasicAttack→damage |
-| `godie-i014` | 天叢雲劍 | 組件 component | — | T3 | ✅ | — | 攻擊力 +38.8 · 生命 +111 · 魔力 +67 | — |
-| `godie-i01d` | 死之王的長槍 | 無角色 none | — | T3 | ✅ | — | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
-| `godie-i01g` | 貫雷槍 | 組件 component | — | T3 | ✅ | — | 護甲 +3.8 · 攻速 +25.3% · 攻擊力 +12.6 · 生命 +278 | — |
-| `godie-i02x` | 斬岩刃 | 組件 component | — | T3 | ✅ | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damage |
-| `godie-i04v` | 正義之杖 | 無角色 none | — | T3 | ✅ | — | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
-| `godie-i06e` | 月牙魔杖 | 無角色 none | — | T3 | ✅ | — | 魔抗 +200 | — |
-| `godie-i06g` | 殺豬刀 | 無角色 none | — | T3 | ✅ | — | 護甲 +4.5 · 攻速 +30% · 攻擊力 +37.6 | — |
+| `godie-i00l` | 落魂的嗜血劍 | 無角色 none | — | T3 | ✅ | ✅ | 吸血 +0.23 · 攻擊力 +46.3 | — |
+| `godie-i00u` | 名刀-天狼 | 組件 component | — | T3 | ✅ | ✅ | 攻速 +123.2% | — |
+| `godie-i012` | 熾天使之弓 | 組件 component | — | T3 | ✅ | ✅ | 護甲 +16.3 · 攻速 +108.5% | onBasicAttack→damageArea |
+| `godie-i013` | 八取武士刀 | 組件 component | — | T3 | ✅ | ✅ | 攻擊力 +32.2 · 生命 +202 | onBasicAttack→damage |
+| `godie-i014` | 天叢雲劍 | 組件 component | — | T3 | ✅ | ✅ | 攻擊力 +38.8 · 生命 +111 · 魔力 +67 | — |
+| `godie-i01d` | 死之王的長槍 | 無角色 none | — | T3 | ✅ | ✅ | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
+| `godie-i01g` | 貫雷槍 | 組件 component | — | T3 | ✅ | ✅ | 護甲 +3.8 · 攻速 +25.3% · 攻擊力 +12.6 · 生命 +278 | — |
+| `godie-i02x` | 斬岩刃 | 組件 component | — | T3 | ✅ | ✅ | 攻擊力 +30.2 · 生命 +222 | onBasicAttack→damageArea |
+| `godie-i04v` | 正義之杖 | 無角色 none | — | T3 | ✅ | ✅ | 生命 +308 · 攻擊力 +15.4 · 魔力 +185 | — |
+| `godie-i060` | 死之王的意志 | 無角色 none | — | T2 | ✅ | ✅ | 生命 +144 · 回血 +5.98 | — |
+| `godie-i061` | 死之王的神盾 | 無角色 none | — | T1 | ✅ | — | 護甲 +17 | onBasicAttack→damageArea |
+| `godie-i063` | 防狼電擊棒 | 無角色 none | — | T1 | ✅ | — | 魔力 +185 · 回魔 +16.8% | onBasicAttack→damageArea |
+| `godie-i06a` | 妖物碎殺牙 | 無角色 none | — | T2 | ✅ | — | 吸血 +0.16 · 攻擊力 +22.2 | — |
+| `godie-i06e` | 月牙魔杖 | 無角色 none | — | T3 | ✅ | ✅ | 魔抗 +200 | onBasicAttack→damageArea |
+| `godie-i06g` | 殺豬刀 | 無角色 none | — | T3 | ✅ | ✅ | 護甲 +4.5 · 攻速 +30% · 攻擊力 +37.6 | — |
+| `godie-i06o` | 血染八月 | 無角色 none | — | T2 | ✅ | — | 攻擊力 +26 | onBasicAttack→damage |
 | `godie-i06s` | 龍騎士之劍 | 組件 component | — | T3 | ✅ | ✅ | 護甲 +3.4 · 攻速 +23% · 攻擊力 +34.5 · 暴擊率 +0.17 · 暴擊傷害 +0.29 | — |
+| `piercer-crossbow` | 穿甲弩 | 無角色 none | — | T5 | ✅ | — | 攻擊力 +38 · 攻速 +45% | onBasicAttack→damage |
+| `sage-ward-amulet` | 賢者的護身符 | 無角色 none | — | T5 | ✅ | — | 法強 +35 · 魔力 +220 | onDamageTaken→shield |
 
 ## 5. final 但無 payload（暫不上架）（6）
 
@@ -250,7 +260,7 @@
 | `godie-i05a` | 兌換泰坦之魂 | 代幣 token | — | T1 | — | — | — | — |
 | `godie-i05e` | 兌換斯巴達圓盾 | 代幣 token | — | T1 | — | — | — | — |
 
-## 8. 其餘 none（36）
+## 8. 其餘 none（31）
 
 沒有 craftRole 角色的殘件，留著做 w3x 對照與未來策展。
 
@@ -281,13 +291,8 @@
 | `godie-i05n` | 智慧護腕 | 無角色 none | 300g | T1 | — | — | 護甲 +1.6 · 法強 +19.2 · 魔力 +57 | — |
 | `godie-i05q` | 友情呼喚號角 | 無角色 none | 1200g | T2 | — | — | 攻速 +61.6% | — |
 | `godie-i05z` | 出動正義射手兵團 | 無角色 none | 1200g | T2 | — | — | — | — |
-| `godie-i060` | 死之王的意志 | 無角色 none | 1200g | T2 | — | ✅ | 生命 +144 · 回血 +5.98 | — |
-| `godie-i061` | 死之王的神盾 | 無角色 none | 300g | T1 | — | — | 護甲 +17 | — |
 | `godie-i062` | 飛鼠跳刀 | 無角色 none | 1550g | T3 | — | — | — | — |
-| `godie-i063` | 防狼電擊棒 | 無角色 none | 300g | T1 | — | — | 魔力 +185 · 回魔 +16.8% | — |
-| `godie-i06a` | 妖物碎殺牙 | 無角色 none | 1200g | T2 | — | — | 吸血 +0.16 · 攻擊力 +22.2 | — |
 | `godie-i06l` | 生肉 | 無角色 none | 150g | T1 | — | — | — | — |
-| `godie-i06o` | 血染八月 | 無角色 none | 1200g | T2 | — | — | 攻擊力 +26 | onBasicAttack→damage |
 | `godie-i06q` | 鍊金術之盾 | 無角色 none | 300g | T1 | — | — | 護甲 +17 | — |
 | `ironhide-vest` | 鐵皮護甲背心 | 無角色 none | 1200g | T2 | — | — | 護甲 +36.7 · 生命 +122 | — |
 | `serrated-edge` | 鋸齒之刃 | 無角色 none | 1200g | T2 | — | ✅ | 攻擊力 +26 | onBasicAttack→damage |

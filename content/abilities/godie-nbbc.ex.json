@@ -2,28 +2,33 @@
   "id": "godie-nbbc.ex",
   "name": "08-002 龍魔人",
   "icon": "assets/icons/abilities/godie-nbbc.ex.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\n變身成為神魔龍融合的最強生物-龍魔人，使得小呆強化全能力15點，防禦增加15點，魔法抗性增加為50%，持續20秒。",
+  "description": "[變身] 冷卻 60 秒 · 花費 390 法力 · 持續 20 秒\n\n小呆跟一頭龍簽了 20 秒的共乘合約。副駕駛會噴火，而且從來不出油錢。\n\n變身期間：\n· 力量 17 → 32、敏捷 25 → 40、智慧 13 → 28（全能力各 +15。這是真的三圍，所以生命、攻擊力、攻速、法力、法強、魔抗全部跟著一起漲）\n· 防禦 ×2 —— 基礎 7 → 14。這是**乘**不是加，而且乘的是**當下**的防禦：買了 +30 護甲的小呆變身後那 30 也一起變成 60（總 74），而不是被打回龍的基礎值\n· 魔法抗性基礎值 28% → 50%\n\n20 秒一到龍就下班，小呆變回小呆。中途倒地也會立刻變回去（龍不陪你躺著）。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    60
   ],
   "manaCost": [
-    390.0
+    390
   ],
   "range": 0,
   "effects": [
     {
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": 20
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
+          "stat": "armor",
+          "op": "pctMult",
+          "value": 1.0
         }
       ],
-      "duration": 6.0
+      "duration": 20
     }
   ],
   "vfxKey": "fx.prim.arcane.pulse-lg",

@@ -201,6 +201,34 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   // `fx.root-snare` doc, so this row is the fallback classification), 快步 is
   // the blink, 龍星群 the descending dragon-arrow ultimate.
   "godie-efur": { q: ["wind", "tornado"], w: ["ki", "pulse", "sm"], e: ["arcane", "dash"], r: ["void", "pulse"], ex: ["arcane", "pulse"] },
+  // ---- owner 2026-07-30: starter.go opened two more, so they owe rows here ----
+  // Same discipline as the #212 block above: each cell REPRODUCES the vfxKey the
+  // ability doc already ships, so the fallback table and the content tree agree
+  // instead of drifting. Both halves of each 變身 pair are listed, because a pair
+  // shares one kit and #119's morph puts a player in the alternate body.
+  //
+  // 70 白木老樹精 白木卡迪那 (base `godie-e00s` / 紮根態 `godie-e010`) — 伸卡球 is a
+  // thrown bolt, 大怒石 the stone-throw self-buff, 木束縛之術 the root, 千年練成 the
+  // summoned-treant nova. Content ships arcane.bolt / earth.pulse-sm /
+  // nature.pulse-sm / arcane.nova-lg / blood.pulse-lg.
+  "godie-e00s": { q: ["arcane", "bolt"], w: ["earth", "pulse", "sm"], e: ["nature", "pulse", "sm"], r: ["arcane", "nova"], ex: ["blood", "pulse"] },
+  "godie-e010": { q: ["arcane", "bolt"], w: ["earth", "pulse", "sm"], e: ["nature", "pulse", "sm"], r: ["arcane", "nova"], ex: ["blood", "pulse"] },
+  // 06 職業獵人 傑富力士 (base `godie-ucrl` / 傑桑態 `godie-u034`) — 山形修煉 放/變/強
+  // is the 念 (ki) three-stance kit, 殺意 the EX.
+  //
+  // ⚠️ R 傑桑變化 is `fire`, NOT ki, and that is deliberate. This ability has a
+  // `W3X_FAMILY_ART` evidence row (the imported `boomnl` model, family
+  // `uncategorised` / slug `kaboom`) with NO map tint, so `familyTuning`
+  // colours it by `classifiedElement(abilityId)` — i.e. by THIS cell — and only
+  // falls back to the family default when the cell is absent. Writing `ki` here
+  // makes it ask for `fx.fam.kaboom.ki.s115`, and the only baked doc in
+  // `content/vfx` is `fx.fam.kaboom.fire.s115.json`: the cast would resolve to a
+  // document that does not exist. (familyArtCoverage.test.ts +
+  // familyTuningDegrade.test.ts catch exactly that, and did.) `fire` names the
+  // art the player actually sees. Re-colour it only together with a generator
+  // run that bakes the matching fx.fam doc.
+  "godie-ucrl": { q: ["ki", "pulse", "sm"], w: ["ki", "pulse", "sm"], e: ["earth", "pulse", "sm"], r: ["fire", "explosion"], ex: ["blood", "pulse"] },
+  "godie-u034": { q: ["ki", "pulse", "sm"], w: ["ki", "pulse", "sm"], e: ["earth", "pulse", "sm"], r: ["fire", "explosion"], ex: ["blood", "pulse"] },
 };
 
 const SLOTS: Slot[] = ["q", "w", "e", "r", "ex"];

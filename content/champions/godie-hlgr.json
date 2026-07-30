@@ -190,7 +190,15 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.lightning.beam",
+      "vfxKey": "fx.w3x.particle.flash.p00",
+      "vfxLayers": [
+        {
+          "vfxKey": "fx.w3x.particle.flash.p00"
+        },
+        {
+          "vfxKey": "fx.w3x.particle.flash.p01"
+        }
+      ],
       "castTimeSec": 0.6
     },
     "R": {

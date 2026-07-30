@@ -20,8 +20,8 @@
  * ability-bar tooltip shows, so the held panel can never disagree with the tile.
  */
 import { useSyncExternalStore } from "react";
-import { Champions } from "@ggd/shared/sim/content/registry";
-import type { ChampionId } from "@ggd/shared/ids";
+import { Abilities, Champions, championPassive } from "@ggd/shared/sim/content/registry";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import type { CastableSlot, ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { exSlotView, type ExSlotSeat } from "./exSlot";
 import { innateCastNote, innateKindLabel, passiveSlotView, PASSIVE_SLOT_LABEL } from "./passiveSlot";
@@ -32,6 +32,7 @@ import {
   stripAbilityNumber,
 } from "./components/abilityText";
 import type { TooltipMeta } from "./components/Tooltip";
+import { abilityConditionLabels } from "@ggd/shared/sim/content/condition";
 
 // ---------------------------------------------------------------------------
 // held-slot store (plain mutable + subscribe — never React state)
@@ -123,6 +124,21 @@ export interface HeldAbilityInfo {
   body?: string;
   /** cast-type / cooldown / mana (+ EX hotkey) chips, same rows as the bar tooltip */
   meta: TooltipMeta[];
+  /**
+   * 觸發條件 sentences for this skill's proc hooks — 「觸發條件：目標不是英雄 且
+   * 目標生命 < 35%」 — DERIVED by `abilityConditionLabels` from the very same
+   * `condition` objects `effects/hooks.ts` gates on, never typed into a doc's
+   * prose. Empty for every skill that has no gated hook, which is almost all of
+   * them, so the panel simply renders nothing extra.
+   *
+   * WHY IT IS ITS OWN FIELD RATHER THAN APPENDED TO `body`. The body is the
+   * IMPORTED WC3 prose (role markup, cooldown literals that `rescaleAbilityProse`
+   * rewrites against the live combat-env). Splicing a derived sentence into it
+   * would put a string the rescaler does not understand inside the string the
+   * rescaler rewrites, and would make the 「原作說明」 caption a lie about the
+   * paragraph it sits under.
+   */
+  conditions: string[];
 }
 
 /**
@@ -158,6 +174,9 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
       name: innate.displayName,
       fullName: innate.name,
       meta,
+      // The 天生技 is where gated procs actually live today (獸矛-shaped cards are
+      // all innates), so this branch is the one that matters most.
+      conditions: abilityConditionLabels(championPassive(seat.championId as ChampionId) ?? {}),
     };
     if (innate.description !== undefined) info.body = innate.description;
     return info;
@@ -178,6 +197,11 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
       name: stripAbilityNumber(ex.name),
       fullName: ex.name,
       meta,
+      // The EX view is a presentation projection; the gate lives on the DEF, so
+      // this re-resolves it rather than widening `ExSlotView` for one caller.
+      conditions: abilityConditionLabels(
+        Abilities.tryGet(seat.exAbilityId as AbilityId) ?? {},
+      ),
     };
     if (ex.description !== undefined) info.body = ex.description;
     return info;
@@ -201,6 +225,7 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
       cooldownSec: cdMeta,
       manaCost: manaMeta,
     }),
+    conditions: abilityConditionLabels(ability),
   };
   const body = docDescription(ability);
   if (body !== undefined) info.body = body;

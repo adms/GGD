@@ -38,7 +38,18 @@
       }
     }
   ],
-  "vfxKey": "fx.prim.void.nova",
+  "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p00"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p05"
+    },
+    {
+      "vfxKey": "fx.w3x.particle.heronarutos4effect.p01"
+    }
+  ],
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png",

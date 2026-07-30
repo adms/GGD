@@ -98,7 +98,7 @@ func TestAttributeDefaultsMatchTheSharedSimTable(t *testing.T) {
 		require.NoError(t, convErr)
 		shared[string(p[1])] = v
 	}
-	require.Len(t, shared, 8, "expected the eight 三圍 coefficients, parsed %d from %s", len(shared), path)
+	require.Len(t, shared, 9, "expected the nine 三圍/派生 coefficients, parsed %d from %s", len(shared), path)
 
 	assert.Equal(t, shared, combatenv.AttrDefaults,
 		"combatenv.AttrDefaults has drifted from ATTRIBUTE_ENV_DEFAULTS in %s", path)

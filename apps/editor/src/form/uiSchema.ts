@@ -23,6 +23,19 @@ export interface UINumber extends UIBase {
   int: boolean;
   min?: number;
   max?: number;
+  /**
+   * The bound is EXCLUSIVE — zod's `.positive()` / `.gt()` / `.lt()`.
+   *
+   * Carried separately because `.positive()` records itself as
+   * `{kind:"min", value:0, inclusive:false}`, and a walker that keeps only
+   * `value` turns "must be > 0" into "may be 0". `defaultValueFor` then seeds
+   * the widget with 0, the form looks filled in, and the SAVE is what fails —
+   * the shipping schema rejects it with a 422. That is exactly how
+   * `damageArea.radius`, `dash.speed/maxDistance` and `leap.durationSec`
+   * behaved before task-#210's variant was audited; see walk.test.ts.
+   */
+  exclusiveMin?: boolean;
+  exclusiveMax?: boolean;
 }
 
 export interface UIBoolean extends UIBase {

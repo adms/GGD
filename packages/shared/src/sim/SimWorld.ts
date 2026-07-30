@@ -28,6 +28,8 @@ import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
+import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
+import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
 import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
@@ -43,12 +45,18 @@ import { leapSystem } from "./systems/LeapSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { auraSystem } from "./aura/aura";
 import { auraCarrierSystem } from "./auraCarrier";
+import { nightPactSystem } from "./nightPact";
 import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
 import { recoveryDecaySystem } from "./systems/RecoverySystem";
 import { basicAttackSystem } from "./systems/BasicAttackSystem";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { combatResolveSystem } from "./combat/damage";
+import { flightSystem } from "./flight";
+import { attrGrantExpirySystem } from "./effects/grantAttribute";
+import { ccHookSystem } from "./systems/CcHookSystem";
+import { dotTickSystem } from "./effects/dotTick";
+import { intervalHookSystem } from "./systems/IntervalHookSystem";
 import { deathSystem } from "./systems/DeathSystem";
 import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
@@ -64,6 +72,7 @@ import {
   type GuardianRules,
 } from "./systems/GuardianSystem";
 import { mobSystem } from "./systems/MobSystem";
+import { summonSystem } from "./summons";
 import { championFormSystem } from "./systems/ChampionFormSystem";
 
 export interface SimEvent {
@@ -310,6 +319,51 @@ export class SimWorld {
   readonly aimTick = new Map<EntityId, number>();
 
   /**
+   * 卡住就接敵 (GH#216) —— entity → **連續**幾個 tick 手上有走不動的移動指令。
+   * ABSENT / 0 = 這個走位正在前進(或根本沒有走位)。
+   *
+   * 計數器而不是「起始 tick」是刻意的,而且**不違反**「到期一律用絕對 tick」那條
+   * 規則:那條規則防的是「每 tick 遞減、誰先跑就差一格」的到期陷阱。這裡是相反
+   * 的方向 —— 它是一個**每 tick 由當下速度重新判定**的連續計數,寫在 orderSystem
+   * (slot 4)一個地方、讀在同一個 pass 裡,沒有第二個 writer,也就沒有順序陷阱。
+   * 存起始 tick 反而會錯:走位卡住→走得動→又卡住,起始 tick 沒有「重新起算」的
+   * 語意,而連續性正是這個訊號的全部意義。
+   */
+  readonly walkStall = new Map<EntityId, number>();
+
+  /**
+   * 卡住就接敵的**鎖** (GH#216) —— 裡面的 entity 正在自動接敵,追擊因此可以覆寫
+   * 一個走不動的移動指令。
+   *
+   * 為什麼要鎖:追擊一接手,身體就動了 → 不再算「卡住」→ 追擊立刻放手 → 又撞回
+   * 牆上。沒有鎖的話每 `stallTicks` 個 tick 只能前進一個 tick,量到的位移是
+   * 3% 的正常速度。
+   *
+   * ⚠️⚠️ 2026-07-30 更正:這裡原本寫著「鎖住之後,只有『目標沒了』或『玩家下了
+   * 別的指令』會解鎖」。對照出貨程式碼那句話是**三重錯的**,而且它是這個
+   * 檔案獨立的第二份 —— `combatFeel.ts` 那份改掉的時候漏了它。出貨的解鎖路徑
+   * 一共有五條,全部在 `systems/OrderSystem.ts`(下面用**條件式**指路,不用行號
+   * —— 這份清單第一版寫的是 `:165-168` / `:405` / `:505` / `:342` / `:368`,
+   * 五個**全部**已經飄掉十幾行,而行號飄掉的那天沒有任何東西會紅):
+   *
+   *   1. `orderSystem` 的 `ae.respectLiveSteering && order.kind === "move"`
+   *      —— **主要**路徑,而且是被漏掉的那條:一條**新到的 `move`**(和原本
+   *      那條**同一種**指令,不是「別的指令」)當場歸零 `walkStall` 並解鎖。
+   *      搖桿每一拍都送一條,所以推著搖桿的人永遠不會被接管。
+   *   2. `autoAcquirePass` 的 `order?.kind !== "move"` —— 這才是「玩家下了
+   *      別的指令」(A-click / 點名目標 / S / H),或走位結束回到 idle。
+   *   3. `autoAcquirePass` 的 `if (!best)` —— 「目標沒了」。解鎖的同時把玩家
+   *      原本的 `nav.moveTarget` 還原回去(追擊可能把它設成 null)。
+   *   4. `autoAcquirePass` 的 `!hp?.alive` —— 死了 / 沒有身體。
+   *   5. `autoAcquirePass` 的 `world.settledZones.has(t.zone)` —— 這個 zone 的
+   *      回合已經結算。
+   *
+   * 只做 has/add/delete,從不迭代 —— Set 的迭代順序是插入順序,那會把主機的
+   * spawn 順序帶進 sim。
+   */
+  readonly autoEngaging = new Set<EntityId>();
+
+  /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
    * floor }. ABSENT = grounded.
    *
@@ -369,6 +423,21 @@ export class SimWorld {
    * keeps it off the wire and off the screen.
    */
   readonly auraCarrier = new Map<EntityId, import("./auraCarrier").AuraCarrierComp>();
+
+  /**
+   * 暗夜旗 (71-00 暗夜契約, owner 2026-07-30) — the banners a champion death
+   * raises while a 暗夜契約 carrier fights in that zone, each radiating 黑夜靈氣.
+   *
+   * Transform + this marker ONLY: no TeamComp (one would corrupt
+   * `teamAliveInZone` and duel resolution) and no Health (one would make a
+   * banner attackable and inject hp into `digest()`), exactly like a dropped
+   * coin. It IS kept out of `rebuildGrid` below — that single line is what makes
+   * it structurally untargetable for every ability, projectile, auto-acquire and
+   * mob-AI query — but UNLIKE an aura carrier it IS published to the wire, as
+   * `ENTITY_KIND.NIGHT_FLAG`, because the owner asked for a black circle sized
+   * to the aura so players can see where the effect reaches. See sim/nightPact.ts.
+   */
+  readonly nightFlag = new Map<EntityId, import("./nightPact").NightFlagComp>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -496,6 +565,16 @@ export class SimWorld {
   combatFeel: CombatFeelRules = DEFAULT_COMBAT_FEEL;
 
   /**
+   * 護盾規則 (see shieldRules.ts) —— 目前只有「多個護盾池誰先被吃掉」一格
+   * (`config.shield@1`, GH#289 lane P6)。和 `combatEnv` / `baseBonus` /
+   * `statCaps` / `combatFeel` 同一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨值**(`specificFirst` = 這條規則變成欄位之前的行為),
+   * 不是空物件 —— 空的順序會讓 `absorbOrder` 一個池子都不回傳,於是所有護盾
+   * 靜默失效。
+   */
+  shieldRules: ShieldRules = DEFAULT_SHIELD_RULES;
+
+  /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat
    * (FlowerSystem idles). Set to 0 by beginCombatFlowers on combat entry and
    * incremented by FlowerSystem each tick, so the counter is part of the
@@ -538,6 +617,16 @@ export class SimWorld {
   coinRules: CoinRules | null = null;
 
   /**
+   * 暗夜契約 rules (71-00). null (default) = the mechanic is OFF — unit tests,
+   * the client's prediction shadow world and every match whose rules doc has no
+   * `nightPact` block — and `nightPactSystem` returns on it before doing
+   * anything at all, so a pre-feature world is byte-identical down to the
+   * digest AND draws nothing from `world.rng`. The match host arms these via
+   * `beginCombatNightPact` / `endCombatNightPact` (see nightPact.ts).
+   */
+  nightPactRules: import("./nightPact").NightPactRules | null = null;
+
+  /**
    * Mob-wave rules (ticks), task #215. null (default) = the mechanic is OFF —
    * unit tests, the client's prediction shadow world, any match whose rules doc
    * has no `mobWaves` block, or any round before `mobWaves.fromRound` — and
@@ -575,6 +664,120 @@ export class SimWorld {
    * identically and determinism holds.
    */
   arena: ArenaDef;
+
+  /* ═══════════════════════════════════════════════════════════════════════
+   * RESERVED COMPONENT STORES (GH#289) — landed ALL AT ONCE, up front, so the
+   * six primitive lanes never have to edit this class body concurrently.
+   *
+   * WHY ONLY THREE for five reserved effect kinds. The other two already have
+   * a home and adding a store for them would have been the real mistake:
+   *   • `knockback` writes the EXISTING `nav.override` — `DashOverride.kind`
+   *     is literally `"dash" | "knockback"` (components.ts) and
+   *     `combatResolveSystem` already drives that branch for hit-feel.
+   *   • `evasion` rides the EXISTING `Stat.Evasion` on `stats` (statTypes.ts,
+   *     a 0..1 stat with a 0.8 cap), i.e. a timed ModifierSource like any buff.
+   *
+   * All three below are EMPTY until their lane lands, and each folds into
+   * `digest()` only WHEN PRESENT — so today's world hashes byte-identically to
+   * a pre-#289 one, exactly like `airborne` / `championForm` before them.
+   * `destroy()` clears all three: a recycled entityId must never inherit the
+   * previous life's burn, summon link or immunity.
+   * ═══════════════════════════════════════════════════════════════════════ */
+
+  /**
+   * 持續傷害 (lane P1) — entity → its live DoT instances. The ONE reserved kind
+   * that genuinely needs new storage: a DoT is the only one whose state
+   * (payload + cadence + deadline) no existing component can express. Shape and
+   * ownership live in sim/effects/dot.ts so P1 changes one file, not this one.
+   *
+   * ⚠️ ITERATION ORDER. Whoever writes the tick system must sort the instance
+   * list on a TOTAL order before paying out (`origin`, then `sourceId`) — a
+   * DoT that kills feeds the kill-credit path, so insertion order deciding who
+   * lands the last hit is a desync, not a cosmetic detail.
+   */
+  readonly dot = new Map<EntityId, import("./effects/dot").DotInstance[]>();
+
+  /**
+   * 召喚物 (lane P2) — SUMMONED entity → its owner and despawn deadline. Keyed
+   * by the summon, not the summoner, following the `auraCarrier` precedent:
+   * the marker belongs on the body that has to be cleaned up.
+   *
+   * ⚠️ A summon is NOT a `mob`: the #215 wave scheduler counts `mob` entries
+   * against its own cap and pays 20 gold per kill from that ledger. Putting
+   * summons there would quietly rewrite the roguelike economy.
+   */
+  readonly summon = new Map<EntityId, import("./effects/summon").SummonComp>();
+
+  /**
+   * 無敵 / 免疫 (lane P3, LANDED) — entity → the ABSOLUTE tick EACH IMMUNITY
+   * AXIS lapses. A dedicated map on the `hitstop` / `knockdown` / `hitstun`
+   * precedent, because `combatResolveSystem` asks this question of every queued
+   * packet and an array scan per packet is the wrong shape. ABSENT = vulnerable.
+   *
+   * The value grew from a bare expiry tick to a four-axis record when P3 landed:
+   * 無敵(all damage)、魔法免疫(magic only) and 免控(CC only) are THREE
+   * different mechanics in the shipped content, and two of them can overlap on
+   * one body with different deadlines. Shape + rationale live in
+   * sim/effects/invulnerable.ts, so P3 owns one file, not this one.
+   */
+  readonly invulnerable = new Map<EntityId, import("./effects/invulnerable").ImmunityGrant>();
+
+  /**
+   * 隱形 (see stealth.ts) — entity → its fade clock. Present ONLY for bodies
+   * carrying a `ModifierSource.vision.stealthFadeDelaySec` grant, which today is
+   * exactly one champion (小次郎, 27-00 永久性的隱形術), so this map is empty in
+   * every other match and the whole feature costs nothing there.
+   *
+   * Derived state: rebuilt from the attached sources by `stealthSystem` every
+   * tick, so it cannot drift from the stat pipeline. `hiddenFromTick` is the
+   * only mutable part and it is an ABSOLUTE tick.
+   */
+  readonly stealth = new Map<EntityId, import("./stealth").StealthState>();
+
+  /**
+   * 真視 (see stealth.ts) — entity → the radius inside which it perceives
+   * hidden enemies. Same derivation as `stealth` above. Two champions carry it
+   * today (夏娜 21-00 灼眼, 陰陽師/通靈者 16-00 通靈能力).
+   */
+  readonly trueSight = new Map<EntityId, import("./stealth").TrueSightState>();
+
+  /**
+   * 飛行 (無視碰撞) — entity → its RESOLVED flight grant this tick, written
+   * ONLY by `flightSystem` (sim/flight.ts) and read only by MovementSystem's
+   * three collision exemptions and by the snapshot's `h` channel.
+   *
+   * Derived state, exactly like `stealth`/`trueSight`: reconciled from the
+   * attached `ModifierSource.flight` payloads every tick, so losing the source
+   * (dispel, 變身, round end, death) removes the flight on the next tick with
+   * no teardown path to forget. Empty in every match with no 莉娜因巴斯, so it
+   * costs nothing and perturbs nothing.
+   */
+  readonly flight = new Map<EntityId, import("./flight").FlightGrant>();
+
+  /**
+   * 被暈眩 events waiting to become `onStunned` hooks, drained by
+   * `systems/CcHookSystem.ts` (slot 8a).
+   *
+   * ⚠️ IT IS A DEDICATED QUEUE AND NOT `world.events`, AND THAT IS A REPAIR,
+   * NOT A PREFERENCE. `step()` CLEARS `events` on its first line, so anything
+   * emitted between two ticks — an effect run by the host, a scripted setup, a
+   * future system that lands a stun outside the tick body — is gone before any
+   * consumer sees it. `events` is a PRESENTATION log with exactly that
+   * lifetime; using it as a control channel would have made 08-00 龍紋記憶 fire
+   * "usually", which is the worst possible failure mode for a guard to have to
+   * describe. Appended in effect order, drained in order, cleared on drain.
+   */
+  readonly pendingStunHooks: { victim: EntityId; source: EntityId }[] = [];
+
+  /**
+   * 隱形規則 (`config.stealth@1`, see stealth.ts) —— 隱形擋不擋自動索敵／手動
+   * 點選／技能 AoE，破隱條件，以及兩個渲染不透明度。和 `combatEnv` / `baseBonus`
+   * / `statCaps` / `combatFeel` / `shieldRules` 同一條規矩:開賽前指派一次,
+   * 之後不再動,sim 從不讀 config/globals,所以決定性自動成立。
+   * 預設是**出貨表**(= WC3 原作行為),不是空物件 —— 空表會讓「擋不擋」全部讀成
+   * false,也就是隱形只剩畫面、完全不影響索敵,而畫面上看起來一切正常。
+   */
+  stealthRules: StealthRules = DEFAULT_STEALTH_RULES;
 
   constructor(arena: ArenaDef, seed: number) {
     this.arena = arena;
@@ -641,6 +844,10 @@ export class SimWorld {
     // task #264: 回收的 entityId 不得繼承上一個單位的瞄準方向。
     this.facingLock.delete(id);
     this.aimTick.delete(id);
+    // GH#216: 回收的 entityId 不得繼承上一個單位「卡住多久了 / 正在接敵」的狀態,
+    // 否則新單位一生出來就會被判定成卡了一秒、直接把走位權交給追擊。
+    this.walkStall.delete(id);
+    this.autoEngaging.delete(id);
     // task #249: nor a stale 變身 form — a recycled id that inherited one would
     // be dragged back to a PREVIOUS unit's base champion on the next tick.
     this.championForm.delete(id);
@@ -650,6 +857,9 @@ export class SimWorld {
     // `auraCarrierSystem`'s reconcile, which sees the host's transform vanish
     // and tears the carrier down on the next tick (sim/auraCarrier.ts).
     this.auraCarrier.delete(id);
+    // …nor a stale 暗夜旗 marker. A recycled entityId that inherited one would
+    // keep radiating 黑夜靈氣 from a body that is now a champion or a projectile.
+    this.nightFlag.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
@@ -657,6 +867,23 @@ export class SimWorld {
     // same defensive contract every other per-entity store here follows.
     this.killCombo.delete(id);
     this.bountyPaid.delete(id);
+    // GH#289 reserved stores. Registered here BEFORE their lanes land, on the
+    // same defensive contract every store above follows: a recycled entityId
+    // must never inherit the previous life's burn, summon link or immunity —
+    // and "the map is always empty today" is exactly the assumption that stops
+    // being true the moment P1/P2/P3 merge, at which point nobody would think
+    // to come back and add three deletes here.
+    this.dot.delete(id);
+    this.summon.delete(id);
+    this.invulnerable.delete(id);
+    // 隱形/真視: same defensive contract. A recycled entityId that inherited a
+    // stealth clock would spawn ALREADY INVISIBLE (the deadline is in the past),
+    // and one that inherited a true-sight radius would see through everyone.
+    // `stealthSystem` would repair both on the next tick, but "repaired one tick
+    // later" is a tick in which targeting read the wrong answer.
+    this.stealth.delete(id);
+    this.trueSight.delete(id);
+    this.flight.delete(id);
   }
 
   emit(type: string, data: Record<string, unknown>): void {
@@ -686,6 +913,11 @@ export class SimWorld {
       // `auraSystem` queries the grid for an emitter's NEIGHBOURS and reads the
       // emitter's own position straight off `world.transform`.
       if (this.auraCarrier.has(id)) continue;
+      // 暗夜旗 are BANNERS, not bodies: out of the broad-phase means nothing can
+      // target, hit or collide with one, exactly like a revive circle. The night
+      // aura costs nothing for it — nightPactSystem reads flag positions straight
+      // off `world.transform` and never queries the grid.
+      if (this.nightFlag.has(id)) continue;
       this.grid.insertCircle(id, t.pos, t.radius);
     }
   }
@@ -745,6 +977,28 @@ export class SimWorld {
     //                             no second recompute is needed (aura/aura.ts).
     statRecomputeSystem(this); // 1. recompute dirty stats
     buffExpirySystem(this); //    1b. expire timed buff sources
+    attrGrantExpirySystem(this); // 1b′. reverse TIMED 三圍 grants whose absolute
+    //                             tick arrived (08-00 龍紋記憶's 3-second ×2).
+    //                             Beside buffExpiry deliberately: same job, the
+    //                             neighbouring accumulator, one idea of "now".
+    flightSystem(this); //        1d. 飛行 (sim/flight.ts): re-derive who ignores
+    //                             collision, from the grants attached above and
+    //                             BEFORE movementSystem (5), its only consumer.
+    stealthSystem(this); //       1c. 隱形/真視 (sim/stealth.ts): re-derive the
+    //                             grant maps from the sources that exist RIGHT
+    //                             NOW and advance the fade clocks.
+    //
+    //                             SLOT IS LOAD-BEARING IN BOTH DIRECTIONS.
+    //                             AFTER 1/1b so a grant that arrived (or a buff
+    //                             that expired) this tick is already reflected —
+    //                             otherwise the first tick of a true-sight buff
+    //                             sees nothing. BEFORE 3/4 (command/order),
+    //                             MobSystem's aggro scan and BasicAttackSystem,
+    //                             i.e. before EVERY consumer of
+    //                             `targeting.canSee`, so all of them read one
+    //                             answer computed once this tick instead of
+    //                             three answers computed at three different
+    //                             points of the frame.
     statusExpirySystem(this); // 2. expire statuses (slows/roots/stuns)
     recoveryDecaySystem(this); // 2a. age the post-resolve RECOVERY commitment.
     //                             BEFORE castResolve so nothing armed this tick
@@ -765,8 +1019,36 @@ export class SimWorld {
     //                             (movement/attack), BEFORE this tick's hits set
     //                             fresh values -> a hit on tick T freezes exactly
     //                             T+1..T+N (see SimWorld.hitstop docs).
+    dotTickSystem(this); //  7c. 持續傷害 (GH#289 lane P1): queue every DoT payout
+    //                             that is DUE on this absolute tick, and retire
+    //                             the lapsed / settled-zone ones.
+    //
+    //                             IMMEDIATELY BEFORE combatResolveSystem, so a
+    //                             payout due this tick is mitigated by armor/MR,
+    //                             absorbed by shields, scored by recordDamage and
+    //                             — when it kills — resolved by deathSystem (9) on
+    //                             the SAME tick it came due. Queued after the
+    //                             drain it would land one tick late, every tick,
+    //                             for the whole burn. See effects/dotTick.ts.
+    intervalHookSystem(this); // 7d. 週期觸發 (`onInterval` hooks): 43-00 觀音大士
+    //                             每 10 秒的護盾、03-00 相轉移裝甲的常駐魔免、
+    //                             52-00 十二道試煉每秒的生命流失。
+    //
+    //                             AFTER dotTick and IMMEDIATELY BEFORE the drain,
+    //                             for the same reason dotTick sits there: a shield
+    //                             raised here still catches THIS tick's damage, a
+    //                             drain queued here is mitigated/scored/resolved on
+    //                             THIS tick, and an immunity refreshed here is
+    //                             already written when `refusesDamage` is asked.
+    //                             Gated on `combatActive`, so every pre-existing
+    //                             replay hashes byte-identically (see that file).
     combatResolveSystem(this); // 8. drain damage queue (mitigation/shields/hooks
     //                             + combat-juice: hitstop/knockback/knockdown)
+    ccHookSystem(this); //   8a. 被暈眩時 → `onStunned` hooks (08-00 龍紋記憶).
+    //                             AFTER the queue drain so a stun applied by an
+    //                             on-damage hook is seen THIS tick, BEFORE
+    //                             deathSystem so a champion killed on the same
+    //                             tick he was stunned does not "awaken" dead.
     fireRingSystem(this); //  8b. round-pacing fire ring: escalating %-HP true burn
     //                             (no-op unless armed + combatActive); runs BEFORE
     //                             deathSystem so its kills resolve THIS tick (#132)
@@ -774,6 +1056,15 @@ export class SimWorld {
     flowerSystem(this); //   9b. flower burst on death + spawn cadence (no-op unless armed)
     reviveSystem(this); //   9c. revive circles: drop on death, channel, revive/expire
     //                             (no-op unless armed; consumes this tick's deaths)
+    nightPactSystem(this); // 9c′. 71-00 暗夜契約: raise a 暗夜旗 on this tick's
+    //                             champion deaths, reconcile 黑夜靈氣 membership,
+    //                             and roll the 附近敵方施法 mana burn (STRICT no-op
+    //                             unless armed). Same slot rationale as the
+    //                             reviveSystem above it: the flag is raised by a
+    //                             DEATH, so it has to read this tick's `death`
+    //                             events. The aura it attaches is folded in by
+    //                             the NEXT tick's statRecomputeSystem — the same
+    //                             one-tick latency aura.ts DECISION 4 documents.
     guardianSystem(this); // 9d. neutral guardian: threat/wake, AoE volley, last-hit
     //                             payout (no-op unless armed). Runs AFTER deathSystem
     //                             (sees this tick's `death`) and reviveSystem (killer's
@@ -784,6 +1075,18 @@ export class SimWorld {
     //                             rationale as the guardian: reads THIS tick's
     //                             `death` events before paying, and queues melee /
     //                             sets nav.attackTarget for next-tick resolve/chase.
+    summonSystem(this); //   9d″. 召喚物 (GH#289 lane P2): despawn on the absolute
+    //                             deadline / on the body's death / on the owner's
+    //                             death, then aim each survivor at its nearest
+    //                             enemy. STRICT no-op while `world.summon` is
+    //                             empty, so every pre-feature world is unchanged.
+    //
+    //                             Same slot rationale as the mob one line up: it
+    //                             reads THIS tick's settled alive-state (its own,
+    //                             and its owner's — including a revive that landed
+    //                             this tick) before despawning anything, and the
+    //                             target it sets is consumed by NEXT tick's
+    //                             orderSystem chase + basicAttackSystem swing.
     coinSystem(this); //     9e. 陣亡投幣 pickup: a living champion walks onto a
     //                             dropped coin and banks it (no-op unless armed).
     //                             AFTER deathSystem/reviveSystem/guardianSystem so
@@ -887,6 +1190,69 @@ export class SimWorld {
         mix(id);
         mix(cf.index);
         mix(cf.expiresTick);
+      }
+      // GH#289 reserved stores. Folded in NOW, before their lanes land, so that
+      // P1/P2/P3 need not reopen this method — the merge conflict the whole
+      // split exists to prevent. All three are authoritative world state by
+      // construction: a burn that ticked on one replica and not the other, a
+      // summon that despawned early, an immunity window off by a tick all
+      // change who dies, and none of them moves a field already hashed above.
+      //
+      // PRESENT-ONLY, following the `attackTarget` / `airborne` / `championForm`
+      // precedent verbatim: the maps are empty today, so a post-#289 world
+      // hashes byte-identically to a pre-#289 one and the #191 disarmed-golden
+      // canary is untouched. `id` is re-mixed per fold so two entities' folds
+      // cannot collide.
+      const dots = this.dot.get(id);
+      if (dots !== undefined && dots.length > 0) {
+        mix(id);
+        // TOTAL ORDER before hashing: instance order is the tick system's
+        // business, but the DIGEST must not depend on it, or two replicas that
+        // agree on every burn disagree on the hash.
+        for (const d of [...dots].sort((a, b) =>
+          a.nextTick !== b.nextTick
+            ? a.nextTick - b.nextTick
+            : a.origin < b.origin
+              ? -1
+              : a.origin > b.origin
+                ? 1
+                : a.sourceId - b.sourceId,
+        )) {
+          mix(d.sourceId);
+          mix(d.amountPerTick);
+          mix(d.nextTick);
+          mix(d.expiresAtTick);
+        }
+      }
+      const sm = this.summon.get(id);
+      if (sm) {
+        mix(id);
+        mix(sm.ownerId);
+        // A permanent summon stores +Infinity, which `Math.round(n * 4096)`
+        // turns into NaN and the bit ops then into 0 — deterministic, but it
+        // would collide with tick 0. Hash the PERMANENCE as its own -1 marker.
+        mix(sm.expiresAtTick === Number.POSITIVE_INFINITY ? -1 : sm.expiresAtTick);
+      }
+      // 無敵/免疫 (lane P3): authoritative — it decides who dies — so it must be
+      // hashed. Folded PER AXIS, and only while the axis is still LIVE: an
+      // expired grant is inert (every read is `until > tick`) and nothing sweeps
+      // the map, so hashing the raw numbers would make "an immunity that lapsed
+      // twelve seconds ago" a visible difference between two replicas that agree
+      // on every observable. A body with nothing live folds nothing at all, so a
+      // pre-P3 world still hashes identically.
+      const inv = this.invulnerable.get(id);
+      if (inv !== undefined) {
+        const p = inv.physicalUntil > this.tick ? inv.physicalUntil : 0;
+        const m = inv.magicUntil > this.tick ? inv.magicUntil : 0;
+        const tr = inv.trueUntil > this.tick ? inv.trueUntil : 0;
+        const c = inv.controlUntil > this.tick ? inv.controlUntil : 0;
+        if (p > 0 || m > 0 || tr > 0 || c > 0) {
+          mix(id);
+          mix(p);
+          mix(m);
+          mix(tr);
+          mix(c);
+        }
       }
     }
     // match scoreboard is authoritative world state — a desync here (a counter

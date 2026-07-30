@@ -21,7 +21,7 @@
  * console reaches it through the platform's admin-authenticated proxy.
  */
 import { createReadStream, createWriteStream, type WriteStream } from "node:fs";
-import { mkdir, readdir, rm, stat } from "node:fs/promises";
+import { mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createGzip, gunzipSync } from "node:zlib";
@@ -237,6 +237,37 @@ export async function pruneReplays(skipIds: readonly string[] = []): Promise<str
     }
   }
   return deleted;
+}
+
+/**
+ * Can this process actually create a file here? (GH#170)
+ *
+ * WHY A REAL WRITE AND NOT `access(dir, W_OK)`. `access` asks the kernel about
+ * the permission BITS; it answers "yes" on a read-only mount, on a filesystem
+ * that is full, and on the container/host uid mismatch that motivated this
+ * whole ticket is the only case it does catch. The measured GH#170 failure is
+ * EACCES on file CREATE inside a directory whose bits look fine to a different
+ * uid — so the only check worth trusting is the one that performs the actual
+ * syscall the recorder performs. It creates a uniquely-named probe file and
+ * unlinks it, so it can never be mistaken for a recording (the `.probe`
+ * extension is also outside the `.jsonl`/`.jsonl.gz` filter every reader uses).
+ *
+ * Returns the error rather than throwing: the caller's job is to COUNT this,
+ * and a boot probe that can throw is a boot probe that can crash a shard over
+ * a best-effort feature.
+ */
+export async function probeReplayDirWritable(): Promise<{ ok: true } | { ok: false; err: unknown }> {
+  const dir = replayDir();
+  const path = join(dir, `.write-probe-${process.pid}-${Date.now()}.probe`);
+  try {
+    await mkdir(dir, { recursive: true });
+    await writeFile(path, "ggd-replay-write-probe\n", { flag: "w" });
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, err };
+  } finally {
+    await rm(path, { force: true }).catch(() => {});
+  }
 }
 
 /** Open the live append stream for a recording (creates the directory). */

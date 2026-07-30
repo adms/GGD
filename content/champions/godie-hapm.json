@@ -120,6 +120,14 @@
       "range": 5.5,
       "effects": [
         {
+          "kind": "invulnerable",
+          "durationSec": 1.05,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
           "kind": "leap",
           "applyTo": "target",
           "mode": "toPoint",

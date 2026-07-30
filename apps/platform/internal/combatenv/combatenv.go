@@ -110,6 +110,14 @@ var Keys = []string{
 	"intToMaxMana",
 	"intToManaRegen",
 	"intToAbilityPower",
+	// #221 owner 2026-07-30. 第二個 owner 自己發明的軸(與 intToAbilityPower 同類),
+	// 魔獸三代沒有魔抗這根屬性 —— 所以它沒有可以對照的原作值。
+	//
+	// ⚠️ 這一格漏掉不是「少一個欄位」而已:sanitizeFrom / sanitize / baseDoc /
+	// DefaultDoc 全部是 `for _, k := range Keys` **重建整張 map**,所以不在這裡的 key
+	// 會被平台從它服務的每一張表**丟掉** —— 後台看不到、改不了,對操作者等同寫死。
+	// 這正是 keysync_test.go 檔頭記的 #136 abilityRange 事故。
+	"intToMagicResist",
 }
 
 // AttrDefaults is the SHIPPED value of each 三圍 coefficient (task #248),
@@ -138,6 +146,7 @@ var AttrDefaults = map[string]float64{
 	"intToMaxMana":      15,   // war3mapMisc.txt IntManaBonus      (Blizzard 15)
 	"intToManaRegen":    0.07, // war3mapMisc.txt IntRegenBonus     (Blizzard 0.05)
 	"intToAbilityPower": 1,    // OWNER'S DESIGN — no WC3 source exists
+	"intToMagicResist":  0.6,  // OWNER'S DESIGN — no WC3 source exists (#221)
 }
 
 // IsAttrCoef reports whether k is one of the eight 三圍 coefficients.

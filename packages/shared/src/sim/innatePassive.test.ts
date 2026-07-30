@@ -149,7 +149,21 @@ describe("天生技 / innate slot — owned from level 1", () => {
       const cid = def.id.replace(/\.passive$/, "") as ChampionId;
       if (!Champions.tryGet(cid)) continue;
       const block = def.passive?.ranks[0];
-      const authored = Boolean(block?.modifiers?.length || block?.hooks?.length);
+      // ⚠️ THIS PREDICATE MUST MIRROR `abilityPassives.rankBlock`. It has now
+      // drifted twice: `auras` (79-00 靈壓 debuffs everyone nearby and grants
+      // its carrier NO stat) and `vision` (27-00 永久性的隱形術 / 16-00 通靈能力
+      // — 「看不看得見」 is not a stat either) both make a block non-empty while
+      // `modifiers` stays literally `[]`. Counting only modifiers/hooks reported
+      // those correctly-attached sources as bugs.
+      const authored = Boolean(
+        block?.modifiers?.length ||
+          block?.hooks?.length ||
+          block?.auras?.length ||
+          block?.vision ||
+          // …and a THIRD time: `flight` (04-00 翔封界 — 「碰不碰得到」 is not a
+          // stat either; sim/flight.ts). Same drift, same fix.
+          block?.flight,
+      );
       const { sc } = spawnOne(cid);
       const has = sc.sources.some((s) => s.id === abilityPassiveSourceId(def.id));
       if (authored && !has) shouldApplyButDidNot.push(def.id);

@@ -251,57 +251,89 @@ describe("每個變身態都有明寫的 override 條目 (blizzard-overlay-form-
 });
 
 /**
- * THE COUPLING GUARD — the half of this task that is NOT done, pinned so it
- * cannot be finished silently or forgotten.
+ * THE COUPLING GUARD —— **閘已經開了(2026-07-30, #223)**。
  *
- * blizzardOverlay now RESOLVES the counterpart's glb for these five ids, but
- * `ChampionView.tryUpgradeToGlb` returns early on `skin.preferVoxelBody` before
- * it ever looks at the doc — and `defaultPrefersVoxelBody` still answers TRUE
- * for all five, because its allow-list `BLIZZARD_MODEL_CHAMPIONS`
- * (packages/shared/src/content/voxelSkin/types.ts) is pinned id-for-id to the
- * manifest's champId column, which names only the covered half of each pair. So
- * by DEFAULT the resolved model is still discarded and the champion still wears
- * the voxel body; the resolution is reachable today only through the operator's
- * own `config/voxel-bodies` toggle (owner: 「要替換成體素是我從後台設定套用才
- * 生效」), where it now hands over the correct WC3 model instead of a shared
- * KayKit mesh.
+ * 這一組的前一版把「閘還關著」釘住,並且明說:
+ *   「These assertions FAIL THE DAY SOMEONE OPENS THE GATE — which is exactly
+ *     when godie-n01b's `relativeScale` must go 1.0 → 1.28.」
+ * #223 的保底 (b)(`defaultPrefersVoxelBody` 缺省即繼承對半的答案,
+ * `packages/shared/src/content/voxelSkin/types.ts`)就是把那道閘打開的東西,
+ * 所以這一組**照設計紅了**。它不是壞掉,是在收帳。
  *
- * These assertions FAIL THE DAY SOMEONE OPENS THE GATE — which is exactly when
- * godie-n01b's `relativeScale` must go 1.0 → 1.28 (see its note in
- * _standin-overrides.json). Do not "fix" them by deleting them.
+ * 前一版的斷言方向已經和出貨相反,留著就是「一條把 bug 釘住的測試」,所以這裡
+ * 翻成新的事實:閘開了 → 六具身體改穿真的 WC3 模型 → **尺寸耦合到期**。
+ * 沒有刪掉任何一條要求,只是把要求從「維持關著」換成「開了就要把帳結掉」。
  */
-describe("變身態仍被體素閘擋著 (blizzard-overlay-form-voxel-gate)", () => {
-  const STAND_IN_KEY: Record<string, string> = {
-    "godie-h00w": "champ.skin.barbarian",
-    "godie-o030": "champ.sela",
-    "godie-n01b": "champ.skin.rogue",
-    "godie-e010": "champ.sela",
-    "godie-o02n": "champ.sela",
-  };
+describe("變身體素閘已開 —— 尺寸耦合到期 (blizzard-overlay-form-voxel-gate)", () => {
+  /** 兩半現在會載到**同一個** glb 的那些對(閘開之後才成立)。 */
+  const NOW_MODEL_BODIED = [
+    "godie-h00w",
+    "godie-o030",
+    "godie-n01b",
+    "godie-e010",
+    "godie-o02n",
+    "godie-u011",
+  ] as const;
 
-  it("the covered half is model-bodied, the resolving half is still voxel-bodied", async () => {
+  it("閘真的開了:這六具不再被 preferVoxelBody 擋在方塊人裡", async () => {
     cover("blizzard-overlay-form-voxel-gate");
     const { defaultPrefersVoxelBody } = await import("@ggd/shared/content/voxelSkin");
-    // the counterpart the manifest DOES cover already prefers its WC3 model
+    // 被 manifest 直接收錄的那一半,本來就已經是模型身體
     expect(defaultPrefersVoxelBody("champ.skin.barbarian", "godie-harf")).toBe(false);
     expect(defaultPrefersVoxelBody("champ.skin.rogue", "godie-nman")).toBe(false);
-    // …and every id that resolves THROUGH a counterpart does not, yet
-    for (const [id, key] of Object.entries(STAND_IN_KEY)) {
+    // 而「經由對半解析」的那些,現在也是 —— modelKey 讀出貨文件,不是手打的表
+    for (const id of NOW_MODEL_BODIED) {
+      const key = shippedModelKeyOf(id);
       expect(
         defaultPrefersVoxelBody(key, id),
-        `${id}: gate opened — add it to BLIZZARD_MODEL_CHAMPIONS *and* revisit its relativeScale`,
-      ).toBe(true);
+        `${id}: 閘又關回去了 —— #223 的保底 (b) 被拿掉,這具身體會掉回程序生成的體素`,
+      ).toBe(false);
     }
   });
 
-  it("godie-n01b's shipped scale is the usca-verbatim one the shared mesh needs", () => {
+  /**
+   * ⚠️ 到期的那筆帳。兩半現在共用一個 mesh，`relativeScale` 就直接可比 ——
+   * 不一致 = 變身的瞬間身高會跳。三對不一致，逐對裁決：
+   *
+   *  · `godie-nman 1.28 / godie-n01b 1.00` —— **缺陷**。`_standin-overrides.json`
+   *    裡 godie-n01b 自己的 note 已經把算式寫死了：
+   *    `147.99 ÷ 115.63 × 1.00 = 1.28`，「否則 萬解-貓王胖虎 renders 22%
+   *    SHORTER than the body it transforms out of」。這一條是紅的，而且**應該
+   *    紅**，直到那個內容值改掉。
+   *  · `godie-orkn 1.922 / godie-o030 3.00` —— note249overlay 明寫
+   *    「OWNER DECISION PENDING」，在 owner 裁決「忠實 3× vs 鏡頭安全」之前
+   *    不可以靜默改。列為已知例外。
+   *  · `godie-e00s 1.10 / godie-e010 1.00` —— **故意的**：70-00 紮根 就是要變
+   *    矮，地圖自己寫 usca 1.10 → 1.00。列為已知例外。
+   *  · `godie-u012 1.20 / godie-u011 (無)` —— 不列入：u011 沒有自己的欄位，
+   *    `championBody.modelOverrideFor` 的「缺省即繼承」會給它 u012 的 1.20。
+   *    那正是那條保底存在的理由。
+   */
+  it("共用同一個 mesh 的兩半,relativeScale 必須一致(例外要具名)", () => {
     cover("blizzard-overlay-form-voxel-gate");
-    // 1.0 is correct WHILE the gate is shut; 1.28 (= godie-nman's) is correct
-    // once it opens. The test above is what forces the swap.
-    expect(overridesOf("godie-n01b").relativeScale).toBe(1.0);
+    const OWNER_PENDING = "godie-o030"; // 忠實 3× vs 鏡頭安全,等 owner
+    const INTENTIONAL_SHRINK = "godie-e010"; // 紮根 本來就要變矮
+    expect(overridesOf("godie-orkn").relativeScale).toBe(1.922);
+    expect(overridesOf(OWNER_PENDING).relativeScale).toBe(3);
+    expect(overridesOf("godie-e00s").relativeScale).toBe(1.1);
+    expect(overridesOf(INTENTIONAL_SHRINK).relativeScale).toBe(1);
+    // 而這一對沒有任何理由不一致 —— 內容檔自己的 note 就是這樣寫的。
     expect(overridesOf("godie-nman").relativeScale).toBe(1.28);
+    expect(
+      overridesOf("godie-n01b").relativeScale,
+      "體素閘已開(#223 保底 b),godie-n01b 現在載的是 Nman.glb。" +
+        "content/models/_standin-overrides.json 的 godie-n01b.relativeScale 必須 1 → 1.28 " +
+        "(147.99 ÷ 115.63 × 1.00,該檔自己的 note 寫的算式),然後跑 pnpm content:build。" +
+        "不改的話 40 地獄歌神變身後比本體矮 22%。",
+    ).toBe(1.28);
   });
 });
+
+/** 出貨文件裡這位英雄的 modelKey —— 不是測試自己抄一份表。 */
+function shippedModelKeyOf(id: string): string {
+  const p = new URL(`../../../../../content/champions/${id}.json`, import.meta.url);
+  return (JSON.parse(readFileSync(p, "utf8")) as { modelKey: string }).modelKey;
+}
 
 function overridesOf(id: string): { relativeScale: number } {
   return (OVERRIDES_FILE as { overrides: Record<string, { relativeScale: number }> }).overrides[id]!;

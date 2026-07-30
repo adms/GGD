@@ -26,6 +26,11 @@
  */
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { ModOp, type StatModifier } from "@ggd/shared/sim/stats/modifiers";
+import {
+  itemRequirementLabels,
+  type ClassRequirement,
+} from "@ggd/shared/sim/content/requirement";
+import { hookConditionLabels, type EffectCondition } from "@ggd/shared/sim/content/condition";
 import { STAT_META, statMeta } from "./statDisplay";
 
 // ---------------------------------------------------------------------------
@@ -242,7 +247,19 @@ export interface RowItem {
   readonly id: string;
   readonly name: string;
   readonly modifiers?: readonly StatModifier[];
-  readonly passive?: readonly unknown[];
+  /**
+   * Item passives. Two INDEPENDENT gates ride here and both are read structurally
+   * (never by re-typing their prose): `requires` = 職業限定閘 「誰能用」,
+   * `condition` = 觸發條件 「什麼時候發動」.
+   */
+  readonly passive?: readonly {
+    requires?: ClassRequirement;
+    condition?: EffectCondition;
+  }[];
+  /** 光環 payloads — their hooks carry both gates too. */
+  readonly auras?: readonly {
+    hooks?: readonly { requires?: ClassRequirement; condition?: EffectCondition }[];
+  }[];
   readonly description?: string;
 }
 
@@ -264,6 +281,20 @@ export interface ItemRow {
    * as `effectLine`, so the two can never disagree about what a claim is.
    */
   claims: string[];
+  /**
+   * 職業限定閘的條件文字 (owner 2026-07-30 的四類傳說武器), DERIVED from the
+   * same `requires` objects `effects/hooks.ts` gates on — never typed into a
+   * description by hand, so the sentence cannot drift away from the rule.
+   *
+   * WHY IT IS ALSO FOLDED INTO `effect` BELOW. This array exists so a surface
+   * can render a BADGE, but the badge is opt-in per surface and `buildItemRow`
+   * feeds four of them (shop shelf, 三選一 card, equipment tooltip, 戰場情報).
+   * A player who is shown a legendary he cannot use, with no stated reason, is
+   * worse off than one who never saw it — so the condition also rides the `✦`
+   * line every one of those surfaces ALREADY prints. Adding a surface later
+   * cannot silently drop it.
+   */
+  requirements: string[];
   /** merged modifiers, for callers that want the raw numbers (tests / panel). */
   merged: MergedMod[];
 }
@@ -289,13 +320,31 @@ export function buildItemRow(item: RowItem, anchorStat: Stat | null): ItemRow {
     secondary.push(formatAuthoredBonus(m));
   }
 
+  // 職業限定閘 FIRST in the ✦ line: 「這件我用不用得到」 is the question a
+  // player must answer BEFORE reading what it does.
+  //
+  // 觸發條件 comes SECOND, and it is a different question — 「我用得到，那它什麼
+  // 時候會發動」 — derived by `hookConditionLabels` from the very same
+  // `condition` objects `effects/hooks.ts` gates on (see sim/content/
+  // condition.ts). Ordering them 誰能用 → 何時發動 → 做什麼 is the order the
+  // player actually needs them in, and none of the three is typed by hand.
+  const requirements = itemRequirementLabels(item);
+  const conditions = hookConditionLabels(item);
+  const mechanics = effectLine(parsed.efficacy);
+  const gates = [...requirements, ...conditions];
+  const effect =
+    gates.length > 0
+      ? [...gates, ...(mechanics === null ? [] : [mechanics])].join(" · ")
+      : mechanics;
+
   return {
     rarity: parsed.rarity,
     anchorText,
     secondary,
-    effect: effectLine(parsed.efficacy),
+    effect,
     lore: parsed.lore,
     claims: parsed.efficacy.filter(isStatClaimLine),
+    requirements,
     merged,
   };
 }

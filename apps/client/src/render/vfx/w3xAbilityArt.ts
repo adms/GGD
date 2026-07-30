@@ -51,12 +51,21 @@
  * is preferred over the older `godie-*` pass — same emitters, more precisely
  * recovered parameters. Families it does not cover keep `godie-*`.
  *
- * This module is PURE DATA + lookups. It imports nothing from `@babylonjs/*`,
- * so it stays importable from Node tests and the doc generator.
+ * This module is DATA + lookups. It imports nothing from `@babylonjs/*`, so it
+ * stays importable from Node tests and the doc generator. It is not, however,
+ * side-effect free any more: `setFamilyTuning` MINTS the console's tuned family
+ * docs into `VfxDefs` (see THE TUNING SEAM below) — that write is the whole
+ * reason a family knob does anything at all.
  */
-import type { ConfigVfxFamiliesDoc } from "@ggd/shared/content";
+import { VfxDefs, type ConfigVfxFamiliesDoc } from "@ggd/shared/content";
 import { abilityVfxKeys } from "./bindings";
-import { resolveFamilyArt } from "./familyTuning";
+import {
+  bakedFamilyKeys,
+  nearestBakedFamilyKey,
+  requiredFamilyDocs,
+  resolveFamilyArt,
+  type ResolvedFamilyArt,
+} from "./familyTuning";
 
 /** One ability's promoted w3x effect. */
 export interface W3xAbilityArt {
@@ -72,6 +81,23 @@ export interface W3xAbilityArt {
   readonly primary: string;
   /** the family's remaining emitters, fired alongside the primary */
   readonly extra: readonly string[];
+  /**
+   * #205 —— the console's PER-ABILITY art overrides for this cast, if any.
+   *
+   * ⚠️ This interface is the ONLY channel between the family layer and the
+   * renderer, and until now it had no slot for these: `familyRow()` built a
+   * `W3xAbilityArt` out of a `ResolvedFamilyArt` and every field the interface
+   * did not declare **evaporated on that line**. That is why
+   * `config.vfx-families@1.abilities.<id>.alpha` / `.timeScale` were dead knobs
+   * — validated by the console, stored in the overlay, read by nobody.
+   *
+   * Absent on every `W3X_ABILITY_ART` row (the 34 hard-table promotions) and on
+   * any family row the operator has not touched, and an absent value plays the
+   * doc UNCHANGED (`applyVfxOverrides` returns the same object), so shipped
+   * content is bit-identical to before.
+   */
+  readonly alpha?: number;
+  readonly timeScale?: number;
 }
 
 export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
@@ -427,8 +453,12 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
     w3aId: resolved.evidence?.w3aId ?? "",
     provenance: familyProvenance(resolved.evidence?.provenance),
     via: resolved.evidence ? `family:${resolved.evidence.via}` : "family:console",
-    primary: resolved.vfxKey,
+    primary: playableFamilyKey(resolved),
     extra: [],
+    // #205 —— 這兩行以前不存在,所以 `resolveFamilyArt` 算好的 per-ability
+    // α / 時間倍率在這一行蒸發。ABSENT ≠ 1:沒設就不寫,下游走 identity。
+    ...(resolved.alpha !== undefined ? { alpha: resolved.alpha } : {}),
+    ...(resolved.timeScale !== undefined ? { timeScale: resolved.timeScale } : {}),
   };
   familyRowCache.set(abilityId, row);
   return row;
@@ -451,16 +481,126 @@ function familyProvenance(p: string | undefined): W3xAbilityArt["provenance"] {
   return p === "w3a-override" ? "w3a-override" : p === "w3h-override" ? "w3h-override" : "jass-literal";
 }
 
+// ---------------------------------------------------------------------------
+// THE TUNING SEAM — why a family knob used to DELETE the effect
+// ---------------------------------------------------------------------------
+/**
+ * ⚠️ REPRODUCED, then fixed (GH#230 L2).
+ *
+ * `fx.fam.*` docs are pre-baked FILES whose id encodes (family, colour,
+ * quantised scale). The runtime resolves a KEY and hands it to
+ * `ContentDb.vfxFor`. So every console knob that MOVES the key —
+ * `families.*.scale`, `families.*.element`, per-ability `tint` / `w3xScale` —
+ * used to compute a key with no file behind it:
+ *
+ *     vfxFor(key) = null → `playCastVfx`'s doc set is empty → rung 1 refuses
+ *     (`docs.length === 0`) → rung 3 → the generic `fx.prim.*` stand-in.
+ *
+ * MEASURED: nudging `families.shockwaveRing.scale` 1 → 1.3 makes ALL 91
+ * shockwave-ring keys miss the 78 baked files. The operator asks for a slightly
+ * bigger ring and the family art of 91 abilities disappears.
+ *
+ * TWO LAYERS FIX IT, in this order:
+ *
+ *  A. MINT (`mintTunedFamilyDocs`, below). The tuned doc is BUILT — by the same
+ *     `buildFamilyDocTuned` the generator uses — and registered into `VfxDefs`,
+ *     which is exactly the map `ContentDb.vfxFor` reads. The knob then really
+ *     applies at runtime instead of depending on someone re-running the
+ *     generator, and that includes the knobs which do NOT move the key at all
+ *     (`alpha` / `timeScale` / `primitive`), which were previously inert.
+ *
+ *  B. SNAP (`playableFamilyKey`, below). When the registry cannot answer — the
+ *     degraded `ContentDb.loadByFetch` path, or any caller that reads art before
+ *     content boot — fall back to the nearest BAKED doc of the SAME FAMILY and
+ *     say so in the console. The effect is then "not tuned yet", never "gone".
+ *
+ * ⛔ What must NEVER be done here is to hide or clamp the knob. The owner asked
+ * for 「用編輯器的方式彈性調整複用」; a knob that silently refuses to move is the
+ * same betrayal as one that deletes the art.
+ */
+
 /** The console's live tuning doc, installed by the composition root. */
 let activeFamilyTuning: ConfigVfxFamiliesDoc | null = null;
 
+/** keys we have already complained about, so a cast does not spam the console */
+const snapWarned = new Set<string>();
+
+/**
+ * Does the live registry actually carry the family docs?
+ *
+ * This is the discriminator between the two content paths, and it has to be a
+ * PROBE rather than a flag: `ContentDb.load()` either registered the whole
+ * content tree into `VfxDefs` (`fromRegistries`) or fell back to
+ * `loadByFetch`, which fills a private map `VfxDefs` never sees. Minting into a
+ * registry nothing reads would look like a fix and change nothing on screen
+ * (failure ②), so when the probe says no we do not mint — we snap instead, and
+ * a snapped key is a BAKED key, which is the one thing that path can serve.
+ */
+function registryCarriesFamilyDocs(): boolean {
+  for (const k of bakedFamilyKeys()) return VfxDefs.tryGet(k) !== undefined;
+  return false;
+}
+
+/**
+ * Build + register every doc the current tuning asks for. Returns how many were
+ * actually written (0 when nothing moved), which the guards read.
+ *
+ * A doc identical to the one already registered is skipped so the shipped
+ * config — which `generateFamilyContent.ts` derives from the very same
+ * constants — costs nothing and cannot shadow the bytes on disk with a
+ * different object.
+ */
+export function mintTunedFamilyDocs(doc: ConfigVfxFamiliesDoc | null): number {
+  // No console doc = shipped defaults = the files on disk are already right.
+  if (!doc) return 0;
+  if (!registryCarriesFamilyDocs()) return 0;
+  let minted = 0;
+  for (const [id, built] of requiredFamilyDocs(doc)) {
+    const current = VfxDefs.tryGet(id);
+    if (current && JSON.stringify(current) === JSON.stringify(built)) continue;
+    VfxDefs.register(built);
+    minted += 1;
+  }
+  return minted;
+}
+
+/**
+ * The key this row may actually PLAY — the tuned one when something can serve
+ * it, else the nearest baked doc of the same family.
+ *
+ * Returning the tuned key when neither can be verified is deliberate: with an
+ * empty registry there is no information, and `VfxSystem`'s rung 3 still has
+ * the ability's `fx.prim.*` under it.
+ */
+function playableFamilyKey(r: ResolvedFamilyArt): string {
+  const tuned = r.vfxKey;
+  const live = registryCarriesFamilyDocs();
+  if (live && VfxDefs.tryGet(tuned)) return tuned;
+  const baked = nearestBakedFamilyKey(r.family, r.colour, r.docScale);
+  if (!baked || baked === tuned) return tuned;
+  if (live && !VfxDefs.tryGet(baked)) return tuned;
+  if (!snapWarned.has(tuned)) {
+    snapWarned.add(tuned);
+    console.warn(
+      `[vfx-families] 「${tuned}」沒有對應的預烘特效文件，這次先退回同家族的「${baked}」——` +
+        `特效不會消失，但這組調整要重新產生 doc 才會真的變大/變色：` +
+        `pnpm exec tsx apps/client/src/render/vfx/generateFamilyContent.ts && pnpm content:build`,
+    );
+  }
+  return baked;
+}
+
 /**
  * Install (or clear) the `config.vfx-families@1` overrides. Clears the memo, so
- * an admin save takes effect on the next cast without a reload.
+ * an admin save takes effect on the next cast without a reload — and mints the
+ * docs that save now needs (layer A above; without it the save would delete the
+ * art of every ability whose key moved).
  */
 export function setFamilyTuning(doc: ConfigVfxFamiliesDoc | null): void {
   activeFamilyTuning = doc;
   familyRowCache = null;
+  snapWarned.clear();
+  mintTunedFamilyDocs(doc);
 }
 
 /** The promoted effect for an ability, or undefined when it keeps its primitive. */

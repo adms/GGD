@@ -1,7 +1,13 @@
 {
   "collection": "status-effects",
-  "hash": "e115818e13bd",
+  "hash": "3a0b8b307802",
   "entries": [
+    {
+      "id": "berserk",
+      "path": "status-effects/berserk.json",
+      "hash": "846650ef4e2f",
+      "size": 345
+    },
     {
       "id": "burnstun",
       "path": "status-effects/burnstun.json",
@@ -9,10 +15,28 @@
       "size": 178
     },
     {
+      "id": "curse",
+      "path": "status-effects/curse.json",
+      "hash": "b926042f82a9",
+      "size": 259
+    },
+    {
+      "id": "fang-stun",
+      "path": "status-effects/fang-stun.json",
+      "hash": "9526d76bd601",
+      "size": 226
+    },
+    {
       "id": "moon-combo",
       "path": "status-effects/moon-combo.json",
       "hash": "6e6ba7e26ae1",
       "size": 335
+    },
+    {
+      "id": "nen-banked",
+      "path": "status-effects/nen-banked.json",
+      "hash": "bf3fd573bd7b",
+      "size": 263
     },
     {
       "id": "root",

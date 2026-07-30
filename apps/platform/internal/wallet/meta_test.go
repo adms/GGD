@@ -13,10 +13,41 @@ import (
 	"github.com/ggd/platform/pkg/testkit"
 )
 
-// vexCrystalPrice mirrors the testutil content fixture's championPrices.vex.
-// It is duplicated as a literal because the test file's own wallet() helper
-// shadows the wallet package name, so the package cannot be imported here.
+// vexCrystalPrice mirrors the testutil content fixture's FLAT
+// `championUnlockCost` — vex is the one fixture champion not on
+// `freeChampionIds`, so it is what the flat price actually charges. It is
+// duplicated as a literal because the test file's own wallet() helper shadows
+// the wallet package name, so the package cannot be imported here.
 const vexCrystalPrice = 900
+
+// The price the CLIENT is told must be the price the SERVER charges.
+//
+// Before 2026-07-30 the champ-select 「🔓 解鎖 (N 水晶)」 button rendered a
+// compiled-in client constant, so the only way to change the unlock price was a
+// client rebuild — and a price edit that did not ship a matching rebuild showed
+// one number and deducted another. The wallet projection now carries the live
+// flat cost, and the client reads it from there.
+//
+// MUTATION: delete `w.CrystalUnlockCost = s.cat.UnlockCost` from overlayMeta
+// (wallet/meta.go) and this fails — the field goes to 0, i.e. the button would
+// offer every champion for free.
+func TestWalletCarriesTheLiveUnlockCost(t *testing.T) {
+	ts := testutil.New(t)
+	u := ts.Register("alice")
+
+	body := wallet(ts, u.Access).Body
+	require.EqualValues(t, vexCrystalPrice, body["crystalUnlockCost"],
+		"GET /wallet must report the flat championUnlockCost from the content tree (%d in the "+
+			"fixture); without it the champ-select button falls back to a hard-coded 300",
+		vexCrystalPrice)
+
+	// The same number rides on a MUTATION response, so the button cannot go
+	// stale right after an unlock.
+	grantCrystals(t, ts, u.ID, vexCrystalPrice)
+	r := ts.Do(http.MethodPost, "/api/v1/wallet/champions/unlock", u.Access, map[string]string{"champion": "vex"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.EqualValues(t, vexCrystalPrice, r.Body["crystalUnlockCost"])
+}
 
 // grantCrystals seeds a crystal balance the only way production can — through
 // the settlement-side absolute setter. There is deliberately no HTTP earn

@@ -9,8 +9,9 @@
  * it is a test that never ran.
  *
  * The seed of that whitelist, however, IS tracked: `starterChampions` in
- * apps/platform/internal/curation/starter.go is the hand-picked 50-champion
- * bundle a fresh install applies (`ApplyStarterSet`), pinned id-for-id by
+ * apps/platform/internal/curation/starter.go is the hand-picked champion
+ * bundle a fresh install applies (`ApplyStarterSet`) — 53 ids as of owner
+ * 2026-07-30; `starterRoster.test.ts` owns the pinned count — id-for-id by
  * Go's TestFirstOpenRoster and cross-checked against the content tree by
  * TestStarterSetMatchesContentTree. Parsing it gives every environment the same
  * real roster, with no fixture to drift out of date.
@@ -54,7 +55,9 @@ export function goStringSlice(src: string, name: string): string[] {
 }
 
 /**
- * The 50 canonical champion ids of the first open roster, in declaration order.
+ * The canonical champion ids of the first open roster, in declaration order
+ * (53 today — the count itself is pinned by `starterRoster.test.ts`, not here,
+ * so this doc comment cannot go stale the next time the owner opens a hero).
  * `repoRoot` is the monorepo root (the directory holding `apps/`).
  */
 export function readStarterRoster(repoRoot: string): string[] {

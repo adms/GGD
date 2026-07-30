@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "18-00 薔薇荊棘之刃",
   "icon": "assets/icons/abilities/godie-nsjs.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n薔薇荊棘之刃可以讓葉片像刀刃一般劃過多個敵人，最多可同時攻擊3個敵人，每彈跳一次傷害就下降25%。\n\n注意:本技能與帶有法球效應的裝備衝突",
+  "description": "[被動]\n0秒冷卻時間\n\n藏馬把玫瑰甩成鞭子，然後完全沒注意到目標後面還排著隊。\n\n**每一次普通攻擊**，都會沿著「藏馬 → 被打的那個人」的方向再抽出一條**長 3.6 單位（約 3 個身位）、寬 1.2 單位（約 1 個身位）**的直線，線上的敵人各吃 **50% 攻擊力的物理傷害**，一次最多掃到 **5 個**（由近到遠排隊）。\n\n· 被你普攻打中的那個人**不會**再吃一次——他已經領過普攻本身了\n· 只掃敵人，隊友站在線上完全沒事\n· 是**直線**不是圓圈：**站在藏馬背後或側面是安全的**，站在他面前排隊不是\n· 這一條鞭子**不會爆擊**（普攻本身照樣會；決策點寫在文件的 `canCrit: false`，後台可改）\n\n（原作是「最多同時 3 個、每彈跳 -25%」的彈射法球，owner 2026-07-30 換成這條直線；上面每一個數字都是這份文件裡真的有的值，不是文案。）",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -20,7 +20,33 @@
     "name": "18-00 薔薇荊棘之刃",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "physical",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                },
+                "length": 3.6,
+                "width": 1.2,
+                "aim": "target",
+                "maxTargets": 5,
+                "canCrit": false,
+                "fromCaster": true,
+                "includeOrigin": false
+              }
+            ]
+          }
+        ]
       }
     ]
   }

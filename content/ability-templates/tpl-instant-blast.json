@@ -34,7 +34,7 @@
     },
     "castTimeSec": {
       "type": "number",
-      "default": 1,
+      "default": 0,
       "min": 0,
       "max": 5,
       "unit": "s"

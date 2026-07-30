@@ -1,36 +1,87 @@
 {
   "id": "godie-efur.r",
-  "name": "13-04 暗殺奧義・牙突",
+  "schema": "ability@1",
+  "name": "13-04 龍星群",
   "icon": "assets/icons/abilities/godie-efur.r.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n提升暗殺奧義的功力，在攻擊時有7%的機會，攻擊力增加3倍。",
+  "description": "[地面指定・可被打斷]\n冷卻 80／70／60 秒　耗魔 150／200／250 點　落點最遠 12.0 單位　**吟唱 0.6 秒**\n\n抬頭，先砸一發，再叫下 **10 顆**流星。\n\n· 範圍：以落點為圓心 **半徑 24.0 單位** —— 那是一整個決鬥區的半徑，講白了就是全場（後台「技能範圍」倍率還會再乘上去，HUD 顯示的是乘完的值）\n· 開場那一發：**180／260／340 點魔法傷害 + 0.5 × 法術強度**，吟唱結束當下結算\n· 之後的流星：每 **0.2 秒**一顆、共 **10 顆**、攤在 **2.0 秒**裡，每顆 **30／45／60 點魔法 + 0.35 × 法術強度**\n  → 流星全中是 **300／450／600 點 + 3.5 × 法術強度**，連開場那發總共 **480／710／940 點 + 4.0 × 法術強度**\n· 你死了流星**立刻停**，不會替你收屍\n\n⚠️ **吟唱期間掉一滴血就整段中斷** —— 法力和冷卻已經先扣走了，不退。\n被護盾整個擋掉的那一下**不算**（你沒有真的痛到），縮圈的火**算**（那真的在燒你）。\n\n⚠️ owner 開的規格是「ct 需要 2 秒」，但吟唱時間在 GGD 是**全域公式**導出的\n（`castTimeFormula.ts`，上限 CAST_CAP = 0.9 秒，還要再受「不得超過自身冷卻 1/8」的\n雕像不變式壓制），所以這裡出貨的是公式算出來的 **0.6 秒**。要真的 2 秒，得由 owner\n決定給那條公式開一個「長吟唱」例外類別 —— 不是這一支英雄自己能改的。\n",
   "slot": "R",
-  "castType": "self",
+  "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0
-  ],
-  "manaCost": [
-    60.0,
-    60.0,
+    80.0,
+    70.0,
     60.0
   ],
-  "range": 0,
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0
+  ],
+  "range": 12.0,
+  "radius": 24.0,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "critChance",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "duration": 6.0
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          180.0,
+          260.0,
+          340.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "perRank": [
+          30.0,
+          45.0,
+          60.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.35
+          }
+        ]
+      },
+      "intervalSec": 0.2,
+      "durationSec": 2.0,
+      "stacking": "refresh",
+      "onCasterDeath": "stop"
     }
   ],
-  "vfxKey": "fx.prim.void.pulse-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "vfxKey": "fx.fam.light-column.fire.s150",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.fam.light-column.fire.s150",
+      "attachTo": "point",
+      "w3xScale": 1.8
+    },
+    {
+      "vfxKey": "fx.fam.bolt-strike.physical.s345",
+      "delayMs": 1900,
+      "attachTo": "point",
+      "w3xScale": 1.5
+    },
+    {
+      "vfxKey": "fx.fam.kaboom.fire.s115",
+      "delayMs": 2100,
+      "attachTo": "point",
+      "w3xScale": 1.6,
+      "timeScale": 1.5
+    }
+  ],
+  "castTimeSec": 0.6,
+  "interruptOn": "damage",
+  "recoverySec": 0.8
 }

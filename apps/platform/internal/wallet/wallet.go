@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"sort"
+	"sync"
 
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/data/jsonstore"
@@ -29,12 +30,18 @@ const (
 // own "walletmeta" collection (NOT on the account struct, which a parallel wave
 // owns); Get overlays them onto every response.
 type Wallet struct {
-	MCoin          int               `json:"mcoin"`
-	Crystal        int               `json:"crystal"`
-	OwnedChampions []string          `json:"ownedChampions"`
-	OwnedSkins     []string          `json:"ownedSkins"`
-	EquippedSkins  map[string]string `json:"equippedSkins"`
-	Favourites     []string          `json:"favourites"`
+	MCoin   int `json:"mcoin"`
+	Crystal int `json:"crystal"`
+	// CrystalUnlockCost is the FLAT 藍水晶 price of one champion unlock, as
+	// configured in content/config/store.json. It rides on every wallet
+	// response so the champ-select 「🔓 解鎖 (N 水晶)」 button can print the
+	// number the server will actually deduct instead of a compiled-in copy —
+	// the copy was the reason the price could only be changed by a rebuild.
+	CrystalUnlockCost int               `json:"crystalUnlockCost"`
+	OwnedChampions    []string          `json:"ownedChampions"`
+	OwnedSkins        []string          `json:"ownedSkins"`
+	EquippedSkins     map[string]string `json:"equippedSkins"`
+	Favourites        []string          `json:"favourites"`
 }
 
 // Service owns wallet state: the account JSON is the truth, Redis mirrors a
@@ -55,6 +62,10 @@ type Service struct {
 	newAccountCrystals int
 
 	metaLocks *keyedmutex.M
+
+	// overlayWarn keeps a broken content-overlay file from logging once per
+	// wallet request (see Service.warnOnce in economy.go).
+	overlayWarn sync.Once
 }
 
 // New builds the wallet service around the loaded content catalog. store is
@@ -75,15 +86,26 @@ func New(accounts *account.Repo, rdb *redisx.Client, store *jsonstore.Store, cat
 	}
 }
 
-// Catalog exposes the loaded content catalog (settlement rewards, tests).
+// Catalog exposes the SHIPPED content catalog — the boot-time base, with no
+// 商店經濟 override applied. Callers that need a PRICE must use EffectiveCatalog
+// (or go through the methods on this service, which all do); this accessor is
+// for the roster, the skins and the settlement reward table, none of which the
+// override touches.
 func (s *Service) Catalog() Catalog { return s.cat }
+
+// EffectiveCatalog is the catalog in force right now: shipped, re-priced under
+// the operator's live 商店經濟 override. Every price a player is shown or
+// charged comes from here.
+func (s *Service) EffectiveCatalog() Catalog { return s.effective() }
 
 // seed fills absent wallet fields in place: a nil OwnedChampions marks an
 // account written before the wallet existed and gets the free starter roster.
 // Idempotent — seeded fields are never re-seeded.
 func (s *Service) seed(a *account.Account) {
 	if a.OwnedChampions == nil {
-		a.OwnedChampions = s.cat.FreeChampions()
+		// effective(), not s.cat: adding a champion to the 商店經濟 free list must
+		// put it in the next new account's starter roster without a redeploy.
+		a.OwnedChampions = s.effective().FreeChampions()
 	}
 	if a.OwnedSkins == nil {
 		a.OwnedSkins = []string{}
@@ -124,7 +146,7 @@ func (s *Service) cache(ctx context.Context, accountID string, w Wallet) {
 
 // Get returns the wallet, serving the Redis mirror when warm and falling back
 // to (and re-warming from) the account JSON truth. First read seeds starter
-// champions (all championPrices == 0 entries) and persists the seed.
+// champions (the store doc's freeChampionIds) and persists the seed.
 func (s *Service) Get(ctx context.Context, accountID string) (Wallet, error) {
 	var w Wallet
 	if data, err := s.rdb.R.Get(ctx, redisx.KeyWallet(accountID)).Bytes(); err == nil && json.Unmarshal(data, &w) == nil {
@@ -260,8 +282,15 @@ func (s *Service) Equip(ctx context.Context, accountID, championID string, skinI
 
 // OwnsChampion reports whether the account may play the champion: free (or
 // unpriced) champions are always playable; priced ones must be owned.
+//
+// ⚠️ OWNERSHIP IS NOT A FUNCTION OF PRICE. The account's OwnedChampions list on
+// the account JSON is the answer for every priced champion, so raising (or
+// lowering) the flat cost in 後台 → 商店經濟 cannot take a champion away from
+// someone who already unlocked it, and cannot hand one to someone who did not.
+// The price only decides WHICH BRANCH is taken. Pinned by
+// TestUnlockedPlayersSurviveAPriceChange in economy_api_test.go.
 func (s *Service) OwnsChampion(ctx context.Context, accountID, championID string) (bool, error) {
-	price, priced := s.cat.ChampionPrice(championID)
+	price, priced := s.effective().ChampionPrice(championID)
 	if !priced || price == 0 {
 		return true, nil
 	}
@@ -299,15 +328,18 @@ type CatalogSkin struct {
 	Equipped   bool   `json:"equipped"`
 }
 
-// CatalogFor renders the store catalog with the caller's ownership flags.
+// CatalogFor renders the store catalog with the caller's ownership flags. Prices
+// come from the effective catalog, so the lobby store's rows move the moment an
+// operator saves 商店經濟 — same read the champ-select 解鎖 button gets.
 func (s *Service) CatalogFor(ctx context.Context, accountID string) ([]CatalogChampion, []CatalogSkin, error) {
 	w, err := s.Get(ctx, accountID)
 	if err != nil {
 		return nil, nil, err
 	}
+	cat := s.effective()
 	champs := []CatalogChampion{}
-	for _, id := range s.cat.ChampionIDs() {
-		price := s.cat.ChampionPrices[id]
+	for _, id := range cat.ChampionIDs() {
+		price := cat.ChampionPrices[id]
 		champs = append(champs, CatalogChampion{
 			ID: id, Price: price,
 			Owned: price == 0 || contains(w.OwnedChampions, id),

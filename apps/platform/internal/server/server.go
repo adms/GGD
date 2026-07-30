@@ -370,8 +370,16 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// deploy, so it must never be a quiet decision. See config.resolveRequireInvite.
 	if opts.RequireInvite || cfg.RequireInvite {
 		authSvc.SetInviteGate(inviteSvc)
+		// GH#179 residual: with the gate on, an un-invited caller cannot
+		// enumerate accounts, but a caller holding a LIVE code can — every
+		// conflicting probe hands their code back. This prices each probe at one
+		// code. Off by default (an honest typo keeps the invite); logged either
+		// way, because it changes what a family member experiences.
+		authSvc.SetBurnInviteOnConflict(cfg.BurnInviteOnConflict)
 		slog.Info("auth: registration REQUIRES an invite code — mint them in the admin console (邀請碼)",
-			"addr", cfg.Addr, "override", "GGD_REQUIRE_INVITE")
+			"addr", cfg.Addr, "override", "GGD_REQUIRE_INVITE",
+			"burnInviteOnConflict", cfg.BurnInviteOnConflict,
+			"burnNote", "on = a registration that hits a taken name SPENDS the code (bounds GH#179 enumeration); off = the code is handed back")
 	} else {
 		slog.Warn("auth: registration is OPEN — anyone who can reach this platform can create an account",
 			"addr", cfg.Addr,

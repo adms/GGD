@@ -89,6 +89,24 @@ export interface ResolvedFamilyArt {
   readonly docScale: number;
   /** world-y to play at */
   readonly heightY: number;
+  /**
+   * #205 —— the console's PER-ABILITY opacity override, or undefined.
+   *
+   * The FAMILY-level `alpha`/`timeScale` are already baked into the minted
+   * `fx.fam.*` doc by `buildFamilyDocTuned`. The per-ability ones were not read
+   * at all until now, so `config.vfx-families@1.abilities.<id>.alpha` was a
+   * knob the console offered, validated, stored — and nobody downstream ever
+   * looked at (故障 ②), while both the console hint and the schema comment
+   * promised 「單支技能那一格覆寫它」. Surfaced here and applied at play time by
+   * `VfxSystem.playCastVfx` through the SAME `applyArtParams` the layer stack
+   * uses, so there is one multiplication, not two.
+   *
+   * Absent = the operator said nothing → the doc is played untouched (object
+   * identity, so the pool key and the memoised front-load are unchanged).
+   */
+  readonly alpha?: number;
+  /** #205 —— the console's per-ability lifetime multiplier, same story as `alpha`. */
+  readonly timeScale?: number;
   /** WC3 attachment string, or undefined */
   readonly anchor?: string;
   /** the evidence row this came from (absent when the console invented it) */
@@ -181,6 +199,11 @@ export function resolveFamilyArt(
     colour,
     docScale: scale,
     heightY: Math.round(heightY * 1000) / 1000,
+    // #205 —— per-ability α / 時間倍率. ONLY the console's override: the family
+    // baseline is already inside the minted doc, so reading the family value
+    // here too would apply it twice.
+    ...(override?.alpha !== undefined ? { alpha: override.alpha } : {}),
+    ...(override?.timeScale !== undefined ? { timeScale: override.timeScale } : {}),
     ...(override?.anchor ?? evidence?.anchor ? { anchor: override?.anchor ?? evidence?.anchor } : {}),
     ...(evidence ? { evidence } : {}),
   };
@@ -229,6 +252,106 @@ export function buildFamilyDocTuned(
   // temporarily composing rather than by duplicating `buildFamilyDoc`'s body:
   // two copies of the doc assembly is exactly how preview stops matching ship.
   return buildFamilyDocWith(resolvePrototype(family, doc), colour, scale, familyVfxKey(family, colour, scale));
+}
+
+// ---------------------------------------------------------------------------
+// THE BAKED SET — which `fx.fam.*` docs actually exist as FILES
+// ---------------------------------------------------------------------------
+
+/**
+ * ⚠️ THE TRAP THIS SECTION EXISTS FOR (measured, GH#230 L2).
+ *
+ * `fx.fam.*` docs are STATIC content files, generated once by
+ * `generateFamilyContent.ts` and keyed by (family, colour, quantised scale).
+ * The runtime does NOT rebuild them per cast — it resolves a KEY and hands it
+ * to `ContentDb.vfxFor`. So any console knob that moves the KEY
+ * (`families.*.scale`, `families.*.element`, per-ability `tint` / `w3xScale`)
+ * used to compute a key with no file behind it:
+ *
+ *     vfxFor(key) → null → playCastVfx's doc set is empty → rung 1 refuses
+ *     → rung 3 → the generic `fx.prim.*` stand-in.
+ *
+ * i.e. an operator who nudged the shockwave ring up one notch watched the
+ * FAMILY ART OF 91 ABILITIES VANISH. Measured: `families.shockwaveRing.scale`
+ * 1 → 1.3 makes all 91 resolved keys miss the 78 baked files.
+ *
+ * `w3xAbilityArt.ts` fixes that in two layers — it MINTS the tuned docs into
+ * the live registry (so the knob really applies), and when the registry cannot
+ * answer it snaps to the nearest BAKED doc through the functions below, so the
+ * effect degrades to "not tuned yet" instead of to "gone".
+ *
+ * WHY THIS IS ALLOWED TO BE COMPUTED RATHER THAN READ FROM DISK: the baked set
+ * is BY CONSTRUCTION `resolveAllFamilyArt(null)` — the generator writes exactly
+ * those files and sweeps every orphan. `familyArtCoverage.test.ts` ("the shipped
+ * fx.fam.* doc set is exactly what the resolver asks for") pins that equality
+ * against `readdirSync(content/vfx)`, and `familyTuningDegrade.test.ts` pins
+ * `bakedFamilyKeys()` itself against the same directory listing.
+ */
+interface BakedVariant {
+  readonly key: string;
+  /** `colourSlug` of the baked doc — the middle segment of the key */
+  readonly colour: string;
+  /** the quantised doc-space scale the file was baked at */
+  readonly scale: number;
+}
+
+let bakedIndex: { keys: Set<string>; byFamily: Map<W3xArtFamily, BakedVariant[]> } | null = null;
+
+function bakedCatalogue(): { keys: Set<string>; byFamily: Map<W3xArtFamily, BakedVariant[]> } {
+  if (bakedIndex) return bakedIndex;
+  const keys = new Set<string>();
+  const byFamily = new Map<W3xArtFamily, BakedVariant[]>();
+  // `null` tuning ON PURPOSE: the files on disk were generated with no console
+  // doc, so the untuned resolve is the only thing that describes them.
+  for (const r of resolveAllFamilyArt(null)) {
+    if (keys.has(r.vfxKey)) continue;
+    keys.add(r.vfxKey);
+    const list = byFamily.get(r.family) ?? [];
+    list.push({ key: r.vfxKey, colour: colourSlug(r.colour), scale: r.docScale });
+    byFamily.set(r.family, list);
+  }
+  for (const list of byFamily.values()) list.sort((a, b) => a.key.localeCompare(b.key));
+  bakedIndex = { keys, byFamily };
+  return bakedIndex;
+}
+
+/** Every `fx.fam.*` key that has a FILE behind it (= the shipped 78). */
+export function bakedFamilyKeys(): ReadonlySet<string> {
+  return bakedCatalogue().keys;
+}
+
+/**
+ * The baked doc closest to a (possibly untuned-and-unbaked) request, or
+ * undefined when the family has nothing baked at all (`blood` / `starfall`
+ * carry no abilities, so they have no files).
+ *
+ * ORDER, and why: exact key first; then the SAME COLOUR at the nearest scale —
+ * a recoloured ring reads as the wrong ability, a slightly-wrong-sized one only
+ * reads as un-tuned; then any colour of the family at the nearest scale, which
+ * is still that family's silhouette. Ties break on the key so the choice is
+ * deterministic (this feeds a cached row; a coin-flip would make two clients
+ * disagree).
+ */
+export function nearestBakedFamilyKey(
+  family: W3xArtFamily,
+  colour: FamilyColour,
+  scale: number,
+): string | undefined {
+  const cat = bakedCatalogue();
+  const exact = familyVfxKey(family, colour, scale);
+  if (cat.keys.has(exact)) return exact;
+  const variants = cat.byFamily.get(family);
+  if (!variants || variants.length === 0) return undefined;
+  const slug = colourSlug(colour);
+  const sameColour = variants.filter((v) => v.colour === slug);
+  const pool = sameColour.length > 0 ? sameColour : variants;
+  let best = pool[0]!;
+  for (const v of pool) {
+    const d = Math.abs(v.scale - scale);
+    const bd = Math.abs(best.scale - scale);
+    if (d < bd || (d === bd && v.key < best.key)) best = v;
+  }
+  return best.key;
 }
 
 /** Family → how many abilities resolve onto it (the report number). */

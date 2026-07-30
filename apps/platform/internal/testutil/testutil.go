@@ -51,6 +51,13 @@ type TS struct {
 // store catalog: two free starter champions (sela, thorne), one priced
 // champion (vex, 900), two 750-M-COIN skins and the placement reward table —
 // mirroring the real content/config/store.json + content/skins docs.
+//
+// The champions/_index.json is what makes sela/thorne/vex CHAMPIONS at all
+// (2026-07-30). Under the flat-price model the store doc no longer enumerates
+// champions — it carries one price and a free list — so the roster comes from
+// the champions collection index, exactly as it does in the real tree. Without
+// this file the fixture catalog would have zero champions and every wallet
+// test would 404.
 func WriteContentFixture(t *testing.T) string {
 	t.Helper()
 	dir := t.TempDir()
@@ -58,8 +65,18 @@ func WriteContentFixture(t *testing.T) string {
 		"config/store.json": `{
   "id": "store",
   "schema": "config.store@1",
-  "championPrices": { "sela": 0, "thorne": 0, "vex": 900 },
+  "championUnlockCost": 900,
+  "freeChampionIds": ["sela", "thorne"],
   "mcoinRewards": { "placement1": 200, "placement2": 120, "placement3": 80, "placement4": 50 }
+}`,
+		"champions/_index.json": `{
+  "collection": "champions",
+  "hash": "000000000000",
+  "entries": [
+    { "id": "sela", "path": "champions/sela.json", "hash": "0", "size": 0 },
+    { "id": "thorne", "path": "champions/thorne.json", "hash": "0", "size": 0 },
+    { "id": "vex", "path": "champions/vex.json", "hash": "0", "size": 0 }
+  ]
 }`,
 		"skins/skin.thorne.barbarian.json": `{
   "id": "skin.thorne.barbarian",

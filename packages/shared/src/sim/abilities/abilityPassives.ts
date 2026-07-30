@@ -92,21 +92,62 @@ export function innateSupersedesLegacyPassive(champ: {
   return innate !== undefined && isPassiveInnate(innate) && innate.passive !== undefined;
 }
 
-function rankBlock(def: AbilityDef, rank: number): ModifierSource | null {
+function rankBlock(
+  world: SimWorld,
+  id: EntityId,
+  def: AbilityDef,
+  rank: number,
+): ModifierSource | null {
   const p = def.passive;
   if (!p || rank <= 0 || p.ranks.length === 0) return null;
   const block = p.ranks[Math.min(rank, p.ranks.length) - 1]!;
+  // 形態閘 (task #249). Absent / "any" = attached in both bodies, which is every
+  // passive authored before the field existed.
+  //
+  // Read STRAIGHT off `world.championForm` rather than through
+  // `ChampionFormSystem.championFormIndex`: that module imports THIS one (its
+  // `setBody` calls `syncAbilityPassives`, which is what makes this gate live),
+  // and importing back would close a genuine runtime cycle. The expression is
+  // the same one-liner that helper is, and `championForm.test.ts` pins the
+  // contract that absence means the base body.
+  const want = block.whileForm ?? "any";
+  if (want !== "any") {
+    const inAlternate = (world.championForm.get(id)?.index ?? 0) === 1;
+    if ((want === "alternate") !== inAlternate) return null;
+  }
   // An AURA-ONLY passive is a real passive: `79-00 靈壓` grants its carrier no
   // stat at all, it only debuffs everyone standing near them. Without `auras`
   // in this emptiness test the source would never be attached and the aura
   // would never be emitted (auraSystem reads the ATTACHED sources).
-  if (!block.modifiers?.length && !block.hooks?.length && !block.auras?.length) return null;
+  //
+  // 隱形 / 真視 is the SECOND payload that grants nothing on the stat table
+  // (`vision`, sim/stealth.ts). It has to be in this emptiness test for the
+  // same reason `auras` had to be: 27-00 永久性的隱形術 and 16-00 通靈能力 have
+  // an EMPTY `modifiers` array by design — there is no stat for 「看不看得見」 —
+  // so without this clause the source would never attach, `stealthSystem` would
+  // never find a grant, and the whole feature would be dead content with every
+  // test still green (failure form ②).
+  if (
+    !block.modifiers?.length &&
+    !block.hooks?.length &&
+    !block.auras?.length &&
+    !block.vision &&
+    // 飛行 is the THIRD payload with an empty `modifiers` array by design
+    // (04-00 翔封界 grants no stat at all — see sim/flight.ts). Same clause,
+    // same reason as `auras` and `vision`: without it the source never attaches,
+    // `flightSystem` never finds a grant, and the whole feature is dead content
+    // with every test still green (failure form ②).
+    !block.flight
+  )
+    return null;
   return {
     id: abilityPassiveSourceId(def.id),
     kind: "passive",
     ...(block.modifiers ? { modifiers: block.modifiers } : {}),
     ...(block.hooks ? { hooks: block.hooks } : {}),
     ...(block.auras ? { auras: block.auras } : {}),
+    ...(block.vision ? { vision: block.vision } : {}),
+    ...(block.flight ? { flight: block.flight } : {}),
   };
 }
 
@@ -140,7 +181,7 @@ export function syncAbilityPassives(world: SimWorld, id: EntityId): void {
     // authors a `passive` block on one, but assert it here too so a future
     // mis-authored doc cannot silently turn a 40 s nuke into a free aura.
     if (isActiveInnate(def)) continue;
-    const want = rankBlock(def, inst.rank);
+    const want = rankBlock(world, id, def, inst.rank);
     const sourceId = abilityPassiveSourceId(def.id);
     // Always detach first: a rank-up must REPLACE the previous rank's block,
     // never stack with it.

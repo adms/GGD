@@ -1,0 +1,68 @@
+{
+  "id": "tpl-proxy-cast",
+  "schema": "template@1",
+  "name": "代理錨點施法",
+  "description": "把一發「傷害 + 控場」的範圍效果放在一個**不一定是施法者所在**的錨點上。原作 23 支成員全部是同一套 WC3 手法:造一隻隱形 dummy → 給它一個技能 → 叫它施放 → 幾秒後清掉。那隻 dummy 在 GGD 沒有對應物(GGD 不要求「技能必須掛在某個單位身上」),所以這台機器不召喚任何東西 —— 它保留的是原作真正在做的兩件事:**錨點與施法者脫鉤**,以及**打完還附帶一個負面狀態**。\n\n「錨點」是這個家族最大的分歧(11 支在施法點 / 7 支在施法者腳下 / 3 支在目標身上),所以它是一個下拉選單,不是三個模板。清空「附帶狀態」= 純傷害,23 支裡有 20 支是這樣。\n\n跟 tpl-proxy-fanout(範圍逐一施法)的差別:那台是「範圍內每個人各結算一次單體法術」,這台是「一發範圍效果,但落點可以不在我腳下」。\n\n⚠️ 做不到的兩件事已標在欄位上:多錨點陣型(37-03 災難之牆 9 道牆一直線、94-02 橘山斬空破 4 向 X 形)是 inert;沉默(66-02 驚駭 / 48-00 石化之眼 / EX 龍眼 / 84-03 蜜汁)在 sim 裡沒有這根軸,只能退成暈眩或減速。",
+  "family": "proxy-cast",
+  "status": "enabled",
+  "params": {
+    "anchor": {
+      "type": "enum",
+      "values": ["self", "point", "target"],
+      "default": "point"
+    },
+    "radius": {
+      "type": "number",
+      "default": 375,
+      "min": 50,
+      "max": 1500,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [150],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": ["magic", "physical", "true"],
+      "default": "magic"
+    },
+    "statusId": {
+      "type": "enum",
+      "values": ["burnstun", "root", "slow25", "slow30", "slow40"],
+      "default": "burnstun",
+      "optional": true
+    },
+    "statusDurationSec": {
+      "type": "number",
+      "default": 2,
+      "min": 0.1,
+      "max": 15,
+      "unit": "s"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    },
+    "proxyCount": {
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 20,
+      "unit": "count",
+      "inert": "本版沒有「同一發 payload 同時落在多個錨點」的詞彙。原作有兩支這樣做:37-03 災難之牆在面向+90° 上排 9 隻牆單位(間距 100u, offset +400..-400, j:44568-44574)、94-02 橘山斬空破往 45/135/225/315 四個角各推一道震盪波(j:53912-53941)。填了會被忽略 —— 效果只在單一錨點結算一次。留著是為了把原作的實測值留在檔案裡"
+    }
+  },
+  "requires": ["applyStatus"],
+  "gapScore": 6,
+  "exemplar": {
+    "skill": "71-01 死亡隕落",
+    "jass": "A03L → dummy A095 (war3map.j:48137-48189)"
+  }
+}

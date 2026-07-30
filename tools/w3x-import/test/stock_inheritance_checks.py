@@ -211,6 +211,59 @@ def main() -> int:
         "the checked-in fixture does not carry Aphx duration 10",
     )
 
+    # --------------------------------------------------------------- 7b ----
+    # BODY FIELDS (task #214). `unit_view` gained ua1c / umvt / umvh / uabi /
+    # uhab because 悟空 #09's second body overrides four mechanics that had no
+    # home downstream. Two things can silently break: the codes stop being read
+    # (every value goes null and NOTHING else notices), or `null` starts meaning
+    # "the unit has none" instead of "the map is silent on this unit".
+    #
+    # MUTATION 1: delete a code from BODY_FIELDS -> the o00x asserts FAIL
+    #             (verified: "checked-in-fixture-is-current" + the body asserts).
+    # MUTATION 2: default the scalar getter (`unit.get(code)` -> `... or 0`) so a
+    #             field the map never wrote reads as a declared 0 ->
+    #             "silence-stays-null-not-empty" FAILS. (Verified. Note `_csv`
+    #             is NOT the thing that guard covers: all 52 halves write a
+    #             `uabi`, so its None branch is unreachable on this map and a
+    #             test for it here would be asserting nothing.)
+    goku = pairs["A09E"]
+    alt, base_unit = goku["alternateUnit"], goku["normalUnit"]
+    check(
+        "goku-body-fields-read",
+        abs((alt["attackCooldown"] or 0) - 1.2) < 1e-3
+        and base_unit["attackCooldown"] is not None
+        and abs(base_unit["attackCooldown"] - 1.9) < 1e-3
+        and alt["moveType"] == "hover"
+        and alt["flyHeight"] == 30.0,
+        f"O00X body = {alt['attackCooldown']} / {alt['moveType']} / {alt['flyHeight']}",
+    )
+    check(
+        "goku-hidden-spellbook-in-uabi",
+        alt["abilityRawcodes"] == ["A0S7", "A0O1", "A0NL", "AInv", "A017", "A0MJ"]
+        and base_unit["abilityRawcodes"] == ["A0O1", "A0NL", "AInv", "A0MI"],
+        f"uabi alt={alt['abilityRawcodes']} base={base_unit['abilityRawcodes']}",
+    )
+    # SILENCE IS NOT EMPTY. `Ogrh` writes no `umvt`/`umvh` at all; emitting `""`
+    # or `[]` there would read as "declared, and it is nothing".
+    check(
+        "silence-stays-null-not-empty",
+        base_unit["moveType"] is None and base_unit["flyHeight"] is None,
+        f"OGRH moveType={base_unit['moveType']!r} flyHeight={base_unit['flyHeight']!r}",
+    )
+    # Guard the guard: if the fields were emitted but ALWAYS null, the three
+    # checks above would still pass on the o00x row alone only because it is the
+    # one row that writes them. Pin the census so "nobody hovers" cannot creep in.
+    hovering = sorted(
+        p["alternateUnit"]["championId"]
+        for p in doc["pairs"]
+        if p["alternateUnit"]["flyHeight"] is not None
+    )
+    check(
+        "flyheight-census",
+        hovering == ["godie-o00x", "godie-o030"],
+        f"forms declaring umvh: {hovering} (expected the two the map writes)",
+    )
+
     # ---------------------------------------------------------------- 8 ----
     # The generator refuses to run without the MPQs: non-zero exit, loud
     # message, and NO file written. A silently-empty stock table would make

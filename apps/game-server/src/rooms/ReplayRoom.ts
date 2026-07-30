@@ -34,6 +34,7 @@ import { TICK_MS } from "@ggd/shared/constants";
 import type { HumanDriver } from "../seat/HumanDriver";
 import { projectSnapshot } from "../net/snapshot";
 import { isFannedOutEvent } from "../net/eventFanout";
+import { EventBatcher, resolveEventBatch } from "../net/eventBatch";
 import { ReplayPlayer, type ReplayRefusal } from "../replay/Player";
 import { verifyReplayTicket } from "../replay/access";
 
@@ -66,6 +67,18 @@ export class ReplayRoom extends Room<MatchState> {
   private settlementSent = false;
   /** A replay has no live humans; projectSnapshot wants the map regardless. */
   private readonly noDrivers = new Map<number, HumanDriver>();
+  /**
+   * Same per-tick batching as the live room (net/eventBatch). The whitelist is
+   * shared so the two rooms forward the identical SET of events; the batcher is
+   * shared so they also forward them on the identical CHANNEL — a replay whose
+   * events arrived one-per-message while the live match batched would be a
+   * second wire nobody exercises. The replay has no single-recipient events, so
+   * there is no private-flush case here.
+   */
+  private readonly batcher = new EventBatcher(resolveEventBatch(), {
+    one: (payload) => this.broadcast(MSG.EVENT, payload),
+    batch: (payload) => this.broadcast(MSG.EVENT_BATCH, payload),
+  });
 
   override async onAuth(_client: Client, options: Record<string, unknown>): Promise<boolean> {
     if (!SHARED_SECRET) return true; // dev/LAN: the whole box is the operator's
@@ -226,9 +239,12 @@ export class ReplayRoom extends Room<MatchState> {
   private fanOutEvents(p: ReplayPlayer): void {
     for (const ev of p.ctl.world.events) {
       if (isFannedOutEvent(ev)) {
-        this.broadcast(MSG.EVENT, { type: ev.type, tick: ev.tick, data: ev.data });
+        this.batcher.push({ type: ev.type, tick: ev.tick, data: ev.data });
       }
     }
+    // Flush inside the per-step loop, not after it: at 8x playback this method
+    // runs once per replayed TICK, and a batch must never span two of them.
+    this.batcher.flush();
   }
 
   /** Broadcast the victory-settlement screen once, at clean end of playback. */

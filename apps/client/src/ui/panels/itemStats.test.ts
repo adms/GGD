@@ -153,3 +153,65 @@ describe("buildItemRow", () => {
     expect(row.effect).toBe("15%機率造成2倍傷害");
   });
 });
+
+/**
+ * 職業限定閘的可見性 (owner 2026-07-30 的四類傳說武器).
+ *
+ * 這一組守的是**閘看得見**這件事,不是閘本身 —— 閘的行為守衛在
+ * packages/shared/src/sim/content/requirement.test.ts(跑真的 SimWorld.step)。
+ * 這裡守的是那個缺陷的另一半:玩家在商店看到一件他吃不到的傳說武器,卻不知道
+ * 為什麼,比沒有這件武器更糟。
+ *
+ * 突變紀錄(實跑):
+ *   · itemStats.ts 把 `requirements` 改成永遠回 `[]` → 2 條紅。
+ *   · 把 `effect` 的合併拿掉(只保留 mechanics)→ 1 條紅。
+ *   (第三條「沒有閘的道具」在兩種突變下都是綠的 —— 那是刻意的:它守的是
+ *    blast radius 為零,不是閘本身,所以它**應該**對閘的壞法無感。)
+ */
+describe("itemStats — 職業限定閘要看得見", () => {
+  const MELEE_CLEAVE = {
+    id: "cleaver",
+    name: "裂地巨斧",
+    modifiers: [{ stat: Stat.AttackDamage, op: ModOp.Flat, value: 45 }],
+    passive: [{ requires: { attackType: "melee" as const, onMismatch: "block" as const } }],
+    description: "傳說\n效能\n普攻造成擴散傷害",
+  };
+
+  it("★ 帶閘的道具:條件文字出現在 ✦ 效果行的最前面", () => {
+    cover("shop-item-stats");
+    const row = buildItemRow(MELEE_CLEAVE, Stat.AttackDamage);
+    expect(row.requirements).toEqual(["限近戰英雄（其他英雄無效）"]);
+    // 「這件我用不用得到」必須排在「它做什麼」前面。
+    expect(row.effect).toBe("限近戰英雄（其他英雄無效） · 普攻造成擴散傷害");
+  });
+
+  it("★ 光環裡的閘也算(周圍的【近戰】友軍)", () => {
+    cover("shop-item-stats");
+    const row = buildItemRow(
+      {
+        id: "guitar",
+        name: "惡魔吉他",
+        auras: [{ hooks: [{ requires: { attackType: "melee" as const } }] }],
+        description: "效能\n光環：周圍的近戰友軍吸血",
+      },
+      null,
+    );
+    // 閘掛在光環投影出去的 hook 上,商店卡片一樣要講。
+    expect(row.requirements).toEqual(["限近戰英雄（其他英雄無效）"]);
+  });
+
+  it("★ 沒有閘的道具:效果行一個字都沒多出來(blast radius = 0)", () => {
+    cover("shop-item-stats");
+    const row = buildItemRow(
+      {
+        id: "plain",
+        name: "普通的劍",
+        modifiers: [{ stat: Stat.AttackDamage, op: ModOp.Flat, value: 10 }],
+        description: "效能\n沒有任何條件",
+      },
+      Stat.AttackDamage,
+    );
+    expect(row.requirements).toEqual([]);
+    expect(row.effect).toBe("沒有任何條件");
+  });
+});

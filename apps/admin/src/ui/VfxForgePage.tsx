@@ -25,6 +25,7 @@ import {
   ABILITY_FIELDS,
   ABSENT_NOTE,
   APPLY_NOTE,
+  DEAD_KNOB_NOTE,
   ELEMENT_IDS,
   ELEMENT_LABEL_ZH,
   FAMILY_BOUNDS,
@@ -71,6 +72,12 @@ import {
   type GlobalField,
 } from "../vfxForge";
 import type { ConfigVfxFamiliesDoc, W3xFamilyId } from "@ggd/shared/content/schema/vfx";
+// #205 —— 「選特效 + 疊多層 + 每層參數」那一半。它寫的是**技能文件**
+// (`abilities/<id>`),不是這一頁的 `config/vfx-families`,所以它自己有一顆
+// 儲存鈕；把它放進同一列，是因為操作者判斷「要不要疊層」的依據（現在畫的是什麼、
+// 原作畫的是什麼）就在同一列上。
+import { AbilityLayersEditor } from "./AbilityLayersEditor";
+import { layerCapOf } from "../vfxLayers";
 
 const EMPTY_CATALOG: ForgeCatalog = { abilities: [], vfxIds: new Set<string>(), census: new Map() };
 
@@ -164,6 +171,12 @@ export function VfxForgePage(): React.JSX.Element {
           scaleGain: String(parsed.scaleGain),
           scaleMin: String(parsed.scaleMin),
           scaleMax: String(parsed.scaleMax),
+          // #205 —— optional 欄位:文件沒有這一格就**留白**,不要幫它填預設。
+          // 填了會讓「只是打開頁面」變成 dirty(見 OPTIONAL_GLOBAL_FIELDS)。
+          maxAbilityVfxLayers:
+            parsed.maxAbilityVfxLayers === undefined ? "" : String(parsed.maxAbilityVfxLayers),
+          oneShotMaxLifeSec:
+            parsed.oneShotMaxLifeSec === undefined ? "" : String(parsed.oneShotMaxLifeSec),
         });
       }
     } catch (err) {
@@ -244,8 +257,26 @@ export function VfxForgePage(): React.JSX.Element {
   /** 要 PUT 的整張表。**整張**，不是只有被改的那一列。 */
   const pending = useMemo((): ConfigVfxFamiliesDoc | null => {
     if (!doc || !globals) return null;
+    // #205 —— 留白 = 把 key 整個拿掉(ABSENT ≠ ZERO)。兩件事都要做:
+    //   · `Number("")` 是 0,而「0 層」= 這一招什麼都不畫,和「沒說,用預設」
+    //     是完全不同的兩件事;
+    //   · 光是不寫還不夠 —— `...doc` 會把舊值原封不動帶回來,操作者把框清空
+    //     卻發現值還在,就是 GH#279 那個「清除語意誤導」。所以先把 key 從
+    //     基底拿掉,再按需要加回去。
+    const maxLayersText = (globals["maxAbilityVfxLayers"] ?? "").trim();
+    // owner 2026-07-30 (a) —— 餘燼壽命上限。和上面完全同一條規則:留白 = 拿掉
+    // key(`Number("")` 是 0,而壽命 0 = 一次性特效整個看不見),而且要先從基底
+    // 剔除,否則 `...doc` 會把舊值帶回來、操作者清空了卻發現值還在(GH#279)。
+    const oneShotText = (globals["oneShotMaxLifeSec"] ?? "").trim();
+    const {
+      maxAbilityVfxLayers: _dropped,
+      oneShotMaxLifeSec: _droppedLife,
+      ...docBase
+    } = doc;
     let next: ConfigVfxFamiliesDoc = {
-      ...doc,
+      ...docBase,
+      ...(maxLayersText === "" ? {} : { maxAbilityVfxLayers: Number(maxLayersText) }),
+      ...(oneShotText === "" ? {} : { oneShotMaxLifeSec: Number(oneShotText) }),
       enabled,
       scaleGain: Number(globals["scaleGain"]),
       scaleMin: Number(globals["scaleMin"]),
@@ -322,7 +353,11 @@ export function VfxForgePage(): React.JSX.Element {
       </p>
       <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 4px" }}>{PROVENANCE_NOTE}</p>
       <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "0 0 4px" }}>{ABSENT_NOTE}</p>
-      <p style={{ color: WARN, fontSize: 12, lineHeight: 1.7, margin: "0 0 12px" }}>{APPLY_NOTE}</p>
+      <p style={{ color: WARN, fontSize: 12, lineHeight: 1.7, margin: "0 0 4px" }}>{APPLY_NOTE}</p>
+      {/* #205 —— 「看起來可調、其實到不了畫面」的那三格，寫在頁面上而不是只寫在註解裡。 */}
+      <p style={{ color: DANGER, fontSize: 12, lineHeight: 1.7, margin: "0 0 12px" }} data-testid="forge-dead-knobs">
+        {DEAD_KNOB_NOTE}
+      </p>
 
       <div
         style={{ border: PANEL_BORDER, borderRadius: 10, padding: 10, marginBottom: 12, fontSize: 12, color: TEXT_MAIN }}
@@ -548,6 +583,9 @@ export function VfxForgePage(): React.JSX.Element {
               <RowView
                 key={r.abilityId}
                 row={r}
+                // 層數上限走**同一支** clampMaxAbilityVfxLayers,和客戶端裝上限
+                // 用的是同一份邏輯 —— 畫面上寫的「還能加幾層」不可能和場上不同
+                layerCap={layerCapOf(doc)}
                 draft={abDrafts[r.abilityId] ?? null}
                 editing={editing === r.abilityId}
                 onOpen={() => setEditing((cur) => (cur === r.abilityId ? null : r.abilityId))}
@@ -566,6 +604,7 @@ export function VfxForgePage(): React.JSX.Element {
 
 function RowView(props: {
   row: ForgeRow;
+  layerCap: number;
   draft: AbilityDraft | null;
   editing: boolean;
   onOpen: () => void;
@@ -699,6 +738,12 @@ function RowView(props: {
                 移除這一列的綁定
               </Btn>
             </div>
+            {/* #205 —— 選特效 + 疊多層 + 每層參數。獨立的 doc、獨立的儲存鈕。 */}
+            <AbilityLayersEditor
+              abilityId={row.abilityId}
+              shippedDoc={row.shippedDoc}
+              cap={props.layerCap}
+            />
           </div>
         )}
       </td>

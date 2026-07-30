@@ -725,6 +725,28 @@ export const ENTITY_KIND = {
    * would paint a phantom shield sliver on its health bar.
    */
   MOB: 6,
+  /**
+   * A 暗夜旗 (71-00 暗夜契約, key "prop.night-flag"). GROUND FURNITURE like the
+   * revive circle: no team, no health, structurally untargetable (kept out of
+   * `rebuildGrid`). It is on the wire for ONE reason — the owner asked for a
+   * black circle whose size IS the aura radius, so players can see where the
+   * effect reaches instead of only that "something is happening".
+   *
+   * SLOT REUSE, the same convention as REVIVE_CIRCLE and GOLD_COIN:
+   *
+   *   seatId = -1 (neutral furniture; ownership is presentation-only and the
+   *            team tint rides `mana` below rather than a seat lookup)
+   *   shield = the POST-`abilityRange` aura radius in world units. The client
+   *            draws the ring at exactly this number, so the circle can never
+   *            disagree with the radius the sim actually tests — which is the
+   *            whole point of drawing it. `t.radius` is 0 on a banner (it is
+   *            not a body), so this slot is the only honest channel for it.
+   *   mana   = the owning teamId, for the tint. `maxMana` stays 0, which is
+   *            what keeps the slot free: `manaPct` is `maxMana > 0 ? … : 0`,
+   *            so nothing draws a mana bar from it.
+   *   hp/maxHp = 0 → `hasOverheadBar` false → no health bar.
+   */
+  NIGHT_FLAG: 7,
 } as const;
 
 export const ENTITY_FLAG = {
@@ -810,27 +832,45 @@ export const ENTITY_FLAG = {
   FORM_A: 4096,
   /** 變身 FORM INDEX, high bit — see {@link ENTITY_FLAG.FORM_A}. */
   FORM_B: 8192,
+  /**
+   * 隱形中 (task 隱形原語, owner 2026-07-30 「選小的就好」): this body is HIDDEN
+   * as of this tick — the sim will not let an enemy auto-acquire, click or
+   * aggro onto it (`sim/stealth.ts`), and the client must fade the model and
+   * suppress the health bar for anyone who is not an ally.
+   *
+   * ⚠️ THIS IS A PRESENTATION + TARGETING BIT, NOT A PRIVACY ONE. The entity's
+   * x/z stay in the snapshot for every seat, so a modified client can still see
+   * where an invisible hero is. That is the owner's explicit, informed trade —
+   * the alternative is per-team snapshot filtering, an O(1)→O(seats) netcode
+   * change. Nobody may describe this flag as anti-cheat.
+   *
+   * WHY A FLAG BIT AND NOT AN `EntityState` FIELD: `defineTypes` is APPEND-ONLY
+   * and irreversible, and `flags` is a uint16 already present in every champion
+   * patch — so this costs ZERO extra bytes. It takes 16384, the first of the two
+   * bits the #249 budget note left; ONE (32768) remains after this.
+   */
+  INVISIBLE: 16384,
 } as const;
 
 /**
  * BIT BUDGET FOR `ENTITY_FLAG` — read this before adding a flag.
  *
  * `EntityState.flags` is a **uint16** (`defineTypes` above), so there are
- * EXACTLY 16 bits and they are not extensible. After task #249:
+ * EXACTLY 16 bits and they are not extensible. After 隱形原語:
  *
- *   used  (14): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
+ *   used  (15): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
  *               32 WINDUP · 64 CHANNELLING · 128 CONTESTED · 256 BURNING ·
  *               512 MUD_SWELL · 1024 MUD_BOSS · 2048 AIRBORNE ·
- *               4096 FORM_A · 8192 FORM_B
- *   FREE   (2): 16384, 32768
+ *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE
+ *   FREE   (1): 32768
  *
- * This is the THIRD feature to collide here (#244 vs #247 fought over 512, and
- * #249 took the last comfortable pair), so the count is written down rather
- * than recounted by eye. When the last two are gone the next feature must WIDEN
- * the field or claim its own — silently reusing an occupied bit desyncs a live
- * client with no error anywhere.
+ * This is the FOURTH feature to collide here (#244 vs #247 fought over 512,
+ * #249 took the comfortable pair, 隱形原語 took 16384), so the count is written
+ * down rather than recounted by eye. **ONE BIT IS LEFT.** When it is gone the
+ * next feature must WIDEN the field or claim its own channel — silently reusing
+ * an occupied bit desyncs a live client with no error anywhere.
  */
-export const ENTITY_FLAG_FREE_BITS = [16384, 32768] as const;
+export const ENTITY_FLAG_FREE_BITS = [32768] as const;
 
 /**
  * The two visible-stack thresholds behind `ENTITY_FLAG.MUD_SWELL` / `MUD_BOSS`

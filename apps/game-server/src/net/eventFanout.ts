@@ -91,6 +91,28 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // impactTick + the post-multiplier AoE radius); `guardianSlain` names who got
   // the last-hit bounty. Same one-list contract as every other combat visual, so
   // the ReplayRoom forwards the identical set.
+  // ⭐ 2026-07-31 —— 這三個是 owner 那批技能規格新增的，補進來的原因寫在這裡，
+  // 因為它們差一點就重演這張清單自己在檔頭列的 `evade`/`explosion`/`buffApply`：
+  // 做完、測過、出貨，然後在遊戲裡不存在。
+  //
+  // `damageLine` —— 18-00 薔薇荊棘之刃（妖狐藏馬）每一次普攻的直線範圍。
+  // ⚠️ 寫這個 effect 的人自己在 `sim/effects/damageLine.ts:106` 留了一句
+  //   「② the player has to SEE the lash, not just take damage from it… so the
+  //    client can draw the actual line that was tested」——
+  // 而那個事件當時過不了線。沒有它，玩家看到的只有莫名其妙掉血，
+  // replay 也一樣。這正是第②種故障（算出來但從沒送到客戶端）。
+  // 帶的是線的兩端與寬度，客戶端據此畫那條鞭子。
+  "damageLine",
+  // `attrGrant` / `attrGrantEnd` —— 07-00 獸化心靈（每殺 8 個 +1 敏，120 上限）
+  // 這類「屬性被永久/暫時改寫」的成對事件。要過線是因為玩家必須知道
+  // **為什麼自己突然變快了** —— 沒有它，三圍在面板上跳動而沒有任何理由，
+  // 而那個機制的整個樂趣就是看著它累積。成對送出，客戶端才畫得出起訖。
+  "attrGrant",
+  "attrGrantEnd",
+  // `stunApplied` —— 08-00 龍紋記憶（被暈眩時覺醒）與 W 的暈眩都靠它。
+  // 暈眩是**玩家必須立刻看懂**的狀態：不知道自己被定住，就會以為是延遲或當機。
+  // 它是 transition-only（不是每 tick），所以線路成本是被控次數不是 tick 數。
+  "stunApplied",
   "guardianSpawn",
   "guardianWake",
   "guardianSleep",
@@ -168,6 +190,21 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // per resolved buff effect, fired only when the target set was non-empty, so
   // an ability that buffed nobody stays silent. Rate is bounded by casts.
   "buffApply",
+  // 71-00 暗夜契約 (sim/nightPact.ts): a 暗夜旗 was raised on a fallen hero.
+  //
+  // CONSUMER: the client's world VFX layer — the black ring itself is rendered
+  // from the ENTITY (ENTITY_KIND.NIGHT_FLAG, which carries the authoritative
+  // radius in `shield`), so this event exists for the ONE-SHOT beat that an
+  // entity patch cannot express: the raise burst + its cue at {x, z}. Rate is
+  // bounded by champion deaths (≤12 per round, and by `maxFlagsPerZone`), so it
+  // is nowhere near a per-tick flood.
+  "nightFlagSpawn",
+  // 71-00's second half: an enemy cast beside 死之王 was drained (「魔力全失」).
+  // CONSUMER: floating combat text (the blue MP number, task #92) + the drain
+  // sting on the victim. Without it the caster's bar simply empties with no
+  // explanation, which is exactly the silence P7 exists to delete. Rate is
+  // bounded by enemy casts × a 12 % roll.
+  "nightPactBurn",
   // revive circles (task #84): spawn/end drive world VFX + the HUD banner.
   "reviveCircleSpawn",
   "reviveCircleEnd",
@@ -245,6 +282,62 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // NO DOUBLE-FIRE: nothing else derives a combo. `audio/sfxEdges.ts` diffs
   // kills/deaths off the schema for its own cues and has no notion of a chain.
   "killCombo",
+  // 召喚物 (GH#289 lane P2). Both cross for the same reason `mobSpawn` does:
+  // the body itself rides the snapshot (it is an ordinary entity), but the
+  // MOMENTS do not, and without them a summon fades in with no conjure VFX/SFX
+  // and vanishes with no dissipate — the WC3 originals all have both
+  // (96-04 獨孤九劍's 9 sword spirits, 91-002 亡靈大軍's ghouls).
+  //
+  //   summonSpawn   — `{ id, owner, championId, zone, x, z, maxHp, teamId,
+  //                   expiresAtTick }`. `expiresAtTick` is -1 for a PERMANENT
+  //                   summon (Infinity does not survive JSON), which is also
+  //                   the client's 「draw no lifetime ring」 signal.
+  //   summonDespawn — `{ id, owner, reason, x, z }` where reason is
+  //                   `expired | death | ownerDead | capEvicted`. The reason
+  //                   travels because the four look different: an expiry fades,
+  //                   a death is a corpse beat, and an eviction (37-02 黑核晶
+  //                   「超過殺最舊」) must read as the summoner's own doing.
+  //
+  // CADENCE: bounded by CASTS, not ticks — one pair per body, and `maxAlive`
+  // (default 8) bounds how many bodies one caster can have at a time.
+  "summonSpawn",
+  "summonDespawn",
+  // 無敵 / 免疫 (GH#289 lane P3). Both cross for the reason this file exists:
+  // the immunity itself is NOT on `MatchState` (no snapshot field, no
+  // ENTITY_FLAG bit — see the note in sim/effects/invulnerable.ts), so these two
+  // events are the ONLY evidence a client can have that a hit was refused.
+  // Without them 41-002 絕對屏障 reads exactly like a dropped packet: the enemy
+  // swings, nothing happens, no number, no sound.
+  //
+  //   immunityGranted — `{ target, origin, untilTick, blocksPhysical,
+  //                     blocksMagic, blocksTrue, blocksControl }`. One per body
+  //                     per cast, so bounded by CASTS. The four booleans travel
+  //                     because 無敵 / 魔法免疫 / 免控 must look different — a
+  //                     golden shell and a blue ward are not the same promise.
+  //   immune          — `{ x, z, source, target, amount, type, dmgType, origin }`.
+  //                     The per-REFUSAL beat: the 免疫 float + the ping. Bounded
+  //                     by incoming attack rate exactly like `evade`, which it
+  //                     is modelled on (same payload shape, same x/z-on-the
+  //                     -victim reason), and it can only fire at all while a
+  //                     grant is live.
+  //   immuneControl   — `{ target, source, statusId, origin }`. The CC half, and
+  //                     it needs its own name precisely because 免控 and 免傷 are
+  //                     separate axes: 07-01 臨、兵、鬥 refuses stuns while its
+  //                     owner keeps bleeding, so a player who saw only `immune`
+  //                     would conclude the ward had done nothing. Bounded by
+  //                     enemy CC casts.
+  //
+  // ⚠️ THE CLIENT HANDLER IS NOT WIRED YET, and that is stated rather than left
+  // to be discovered. `evade` needed four call sites — `net/RoomConnection.ts`,
+  // `frameBus.ts`, `GameApp.ts`, `ui/combatText.ts` — and all four sit in the
+  // client-render lane that is running concurrently with P3. Listing the names
+  // HERE first is deliberately the safe order: an unclassified emit is a red
+  // test, and a whitelisted event with no handler is inert, whereas a handler
+  // with no whitelist entry is the silent S2 failure this whole file was
+  // written to stop.
+  "immunityGranted",
+  "immune",
+  "immuneControl",
 ]);
 
 /**
@@ -331,9 +424,173 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // second time, for every champion in the match. (Same reason `death` and
   // `levelUp` cross the wire for VFX but stay unmapped in `combatSfx`.)
   "exUnlock",
+  // 召喚失敗:找不到那個英雄文件 (GH#289 lane P2). This is a CONTENT AUTHORING
+  // fault, not a game event — the ability names a champion doc that is not in
+  // the registry (`championId` is a SOFT ref so an ability may ship before its
+  // body does). It exists so the failure is LOUD server-side instead of the
+  // handler quietly placing nothing (failure shape ②); the player has nothing
+  // to see, because the correct behaviour on a broken document is that nothing
+  // happens. Fan it out only if a debug overlay is ever built to show it.
+  "summonFailed",
 ]);
 
 /** True when this sim event should be broadcast to clients on MSG.EVENT. */
 export function isFannedOutEvent(ev: SimEvent): boolean {
   return FANNED_OUT_EVENT_TYPES.has(ev.type);
 }
+
+// ───────────────────────────── PRIVATE (single-recipient) DELIVERY ──────────
+/**
+ * WHICH FANNED-OUT EVENTS ARE ADDRESSED TO EXACTLY ONE PLAYER.
+ *
+ * Everything above rides `room.broadcast`, which hands the SAME bytes to all 12
+ * sockets. For most of the list that is right — a `damage` number, a `death`, a
+ * `mobBossSpawn` are things the whole duel is supposed to see. But a handful of
+ * them are ANSWERS TO A BUTTON PRESS: 「冷卻中，還有 3 秒」, 「金幣不足」,
+ * 「背包已滿」. The client has always known this and has always thrown them
+ * away — `ui/castFeedback.castRejectionFromEvent` and
+ * `net/RoomStore.recordShopEvent` both bail unless the payload's actor is the
+ * LOCAL entity, and `ui/castAnnounce`'s own comment says it outright:
+ *
+ *   「whose cast failed is a private matter」
+ *
+ * So 11 of every 12 copies were decoded, inspected and dropped. This map is the
+ * server finally agreeing with the client: send the one copy that is read.
+ *
+ * ── WHY THIS IS NOT A PROTOCOL CHANGE (each point checked, not assumed) ──────
+ *   1. THE BYTES ARE IDENTICAL. `Room.broadcastMessageType` builds
+ *      `getMessageBytes.raw(Protocol.ROOM_DATA, type, message)` and pushes it to
+ *      every client; `WebSocketClient.send` calls the SAME `getMessageBytes.raw(
+ *      Protocol.ROOM_DATA, type, message)` for one. (Verified in the vendored
+ *      @colyseus/core 0.16.24 + @colyseus/ws-transport 0.16.5 builds.) The only
+ *      difference is how many sockets the buffer is handed to.
+ *   2. IT IS A MESSAGE, NOT STATE. MSG.EVENT is a room message channel, so
+ *      nothing here goes anywhere near `defineTypes` in
+ *      packages/shared/src/protocol/schema.ts — which is APPEND-ONLY and cannot
+ *      be walked back.
+ *   3. THE CLIENT NEEDS NO CHANGE. Its filters stay exactly as they are; they
+ *      simply stop rejecting eleven copies that never arrive.
+ *
+ * ── SPECTATORS (the decision this raised) ───────────────────────────────────
+ * A MatchRoom has NO seatless clients: `onJoin` refuses anyone who cannot be
+ * given a seat, so every socket in the room owns exactly one champion.
+ * 「Spectating」 in this game (#269/#85) is a CAMERA state — your duel ended and
+ * you pressed 前往觀戰 — and your seat, entity and account are unchanged while
+ * you watch. Addressing by entity/seat therefore keeps delivering a spectating
+ * player their OWN answers, and the events they are not addressed by are exactly
+ * the ones their client already discards. So there is no spectator rule to
+ * invent here; the rule is 「it goes to the seat it is about」.
+ *
+ * THE REPLAY ROOM IS DELIBERATELY NOT CHANGED. A ReplayRoom viewer has no seat
+ * at all (`projectSnapshot(..., noDrivers)`), so `RoomStore` leaves its
+ * `localEntityId` null and every one of these events is already dropped
+ * client-side there. Routing by a seat that does not exist could only turn
+ * "dropped by the client" into "never sent", which is the same picture with less
+ * room to build a replay-side HUD later. ReplayRoom keeps calling
+ * `isFannedOutEvent` and broadcasting, which is also what
+ * `eventFanout.test.ts`'s "both rooms use the one shared allowlist" guard reads.
+ *
+ * ── HOW A RECIPIENT IS NAMED ────────────────────────────────────────────────
+ * The sim names the acting player inconsistently (this is not new — `RoomStore`
+ * already reads `ev.data.id ?? ev.data.entity` for the same reason), so each
+ * entry lists the fields to try, in order:
+ *   • `entityFields` — an ENTITY id, matched against `Seat.entityId`;
+ *   • `seatFields`   — a SEAT id, looked up directly.
+ * Entity first where both exist, because the entity is what the client's own
+ * filter compares against, so the two sides agree on who "the actor" is.
+ */
+export interface PrivateEventRule {
+  /** payload fields carrying the recipient's ENTITY id, in priority order */
+  readonly entityFields: readonly string[];
+  /** payload fields carrying the recipient's SEAT id, in priority order */
+  readonly seatFields: readonly string[];
+}
+
+export const PRIVATE_EVENT_RULES: ReadonlyMap<string, PrivateEventRule> = new Map<string, PrivateEventRule>([
+  // CAST FEEDBACK (playtest P7). `{ entity, slot, reason }` from BOTH emit sites
+  // (systems/CommandSystem + systems/ChampionFormSystem). Consumer:
+  // ui/castFeedback.castRejectionFromEvent, which drops it unless
+  // `entity/caster/id === localEntityId`. Nothing else on the client reads it —
+  // combatSfx has no case and no PASSTHROUGH entry, so it makes no sound for
+  // anyone, including the player it is about (the press path already beeped).
+  ["castRejected", { entityFields: ["entity", "caster", "id"], seatFields: [] }],
+  // SHOP FEEDBACK (task #38/#60/#121). The rejections carry `{ entity, seatId,
+  // … }`, the confirmations `{ id, … }` — that asymmetry is the sim's, and
+  // net/RoomStore.recordShopEvent already reads `ev.data.id ?? ev.data.entity`
+  // for exactly this reason. Its ONLY consumer is that function, which returns
+  // early unless the actor is the local entity.
+  ["buyRejected", { entityFields: ["entity", "id"], seatFields: ["seatId"] }],
+  ["sellRejected", { entityFields: ["entity", "id"], seatFields: ["seatId"] }],
+  ["undoRejected", { entityFields: ["entity", "id"], seatFields: ["seatId"] }],
+  ["itemBought", { entityFields: ["id", "entity"], seatFields: [] }],
+  ["itemSold", { entityFields: ["id", "entity"], seatFields: [] }],
+  ["shopUndone", { entityFields: ["id", "entity"], seatFields: [] }],
+  // 陣亡投幣的拒絕 (task #191). `{ seatId, reason }` — the ONLY one of the eight
+  // with no entity in it at all, because `no-champion` is one of the reasons it
+  // can carry. Seat-addressed for that reason.
+  //
+  // ⚠️ STATED, NOT HIDDEN: this event currently has NO client consumer —
+  // `audio/combatSfx` returns null for it on purpose and no HUD reads it, so
+  // today it is inert on all 12 sockets. It is listed here because it is
+  // unambiguously addressed to one seat, and because when someone does wire the
+  // 拒絕 line the routing should already be right rather than being a second
+  // change nobody remembers to make.
+  ["coinDropRejected", { entityFields: [], seatFields: ["seatId"] }],
+]);
+
+/** Where a private event is addressed: one entity, or one seat. */
+export type PrivateEventAddress =
+  | { readonly kind: "entity"; readonly id: number }
+  | { readonly kind: "seat"; readonly id: number };
+
+/**
+ * The single recipient this event names, or null when it has none.
+ *
+ * NULL MEANS BROADCAST, and that direction is deliberate: a private type whose
+ * payload does not actually name anybody (a renamed field, a new emit site that
+ * forgot the id) falls back to exactly today's behaviour instead of vanishing.
+ * Failing the other way would reintroduce the silent-omission class this whole
+ * file exists to prevent — the client would go quiet with no error anywhere.
+ * `privateEvents.test.ts` pins the fallback both ways: every rule must resolve
+ * on the payload the sim really emits, and a payload with the id stripped out
+ * must still reach everybody.
+ */
+export function privateEventAddress(ev: SimEvent): PrivateEventAddress | null {
+  const rule = PRIVATE_EVENT_RULES.get(ev.type);
+  if (!rule) return null;
+  const data = ev.data as Record<string, unknown> | undefined;
+  if (!data) return null;
+  for (const field of rule.entityFields) {
+    const v = data[field];
+    if (typeof v === "number" && Number.isFinite(v) && v > 0) return { kind: "entity", id: v };
+  }
+  for (const field of rule.seatFields) {
+    const v = data[field];
+    if (typeof v === "number" && Number.isFinite(v) && v >= 0) return { kind: "seat", id: v };
+  }
+  return null;
+}
+
+/** True when this event type is meant for one player rather than the room. */
+export function isPrivateEvent(ev: SimEvent): boolean {
+  return PRIVATE_EVENT_RULES.has(ev.type);
+}
+
+/**
+ * THE KILL SWITCH for private delivery — a DECISION POINT, so it is a knob and
+ * not a hard-coded `true` (owner 2026-07-30:「尤其是決策點」).
+ *
+ * Default ON, because that is the behaviour the owner approved and because the
+ * broadcast it replaces was never read by the other eleven clients. Setting
+ * `GGD_PRIVATE_EVENT_FANOUT=0` puts every one of these events back on
+ * `room.broadcast` with no other change, which is what makes it a real rollback:
+ * if a client-side filter is ever found reading somebody else's rejection, the
+ * fix is an env var on the shard, not a rebuild of the game-server image (client
+ * and server are baked at build time — only `content/` is live).
+ *
+ * It is NOT a `content/config` field on purpose: this decides how a socket is
+ * written to, not how the game plays, so it belongs with `GGD_MAX_ROOMS` /
+ * `GGD_MATCH_STATS` rather than in the 戰鬥系統 tables. Promoting it into the
+ * admin console is left as a follow-up (see the lane report).
+ */
+export const PRIVATE_EVENT_FANOUT = process.env.GGD_PRIVATE_EVENT_FANOUT !== "0";

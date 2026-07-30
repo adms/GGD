@@ -101,6 +101,35 @@ export function AbilityDescriptionOverlay(): React.JSX.Element | null {
         </div>
       )}
 
+      {/*
+        觸發條件 — 「這一下什麼時候才算數」, ABOVE the imported prose on purpose.
+        It is derived (`abilityConditionLabels` → `describeCondition`) from the
+        very same `condition` objects the sim gates on, so it can never drift
+        from the rule the way a hand-written sentence inside the WC3 paragraph
+        would. Rendered as its own block rather than spliced into `body`, which
+        is the block `rescaleAbilityProse` rewrites and the 原作說明 caption
+        vouches for.
+      */}
+      {info.conditions.length > 0 && (
+        <div style={{ marginTop: 8, display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {info.conditions.map((c) => (
+            <span
+              key={c}
+              style={{
+                fontSize: 12,
+                lineHeight: 1.4,
+                padding: "2px 8px",
+                borderRadius: 4,
+                border: "1px solid rgba(150, 190, 255, 0.45)",
+                color: "#9fc4ff",
+              }}
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+      )}
+
       {/* description body — cooldown literals rescaled to the live combat-env
           final (說明數值最終化); role-markup colours normalised (task #114) */}
       {info.body && (

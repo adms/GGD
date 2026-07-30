@@ -28,6 +28,27 @@ game:
   port: 2567
   replicas: 1             # WS sticky: single replica + sessionAffinity ClientIP
   resources: {}
+  # ---- WebSocket payload compression (B2) --------------------------------
+  # RFC 7692 permessage-deflate on the Colyseus transport. Read ONCE at boot
+  # (ws fixes the extension parameters when the WebSocketServer is built and
+  # negotiates them per connection at the HTTP upgrade), so a change here needs
+  # a pod restart — but not a rebuild. Full rationale, and the measured numbers
+  # behind these defaults, live in apps/game-server/src/net/wsCompression.ts.
+  #
+  # ⚠️ `serverNoContextTakeover` is NOT a tuning knob: ws only consults
+  # `threshold` when it is true. Turn it off and every message gets compressed
+  # regardless of `threshold` — the boot line says INERT when that happens.
+  compression:
+    enabled: true
+    thresholdBytes: 256   # below this a message is sent as-is (measured; the
+                          # break-even on real frames is 96 B, 256 keeps 96% of
+                          # the byte win for 57% of the deflate calls)
+    level: 6              # zlib 0..9
+    memLevel: 8           # zlib 1..9
+    windowBits: 15        # 9..15; smaller = less memory per connection
+    serverNoContextTakeover: true
+    clientNoContextTakeover: true
+    concurrency: 10       # max simultaneous zlib jobs on the libuv thread pool
 
 redis:
   image: redis:7-alpine

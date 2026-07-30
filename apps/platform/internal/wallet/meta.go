@@ -72,9 +72,12 @@ import (
 // enough from this reference that the grants below stop meaning what they say.
 //
 // Target feel: about ONE champion unlocked per evening — earned, not a grind,
-// not a giveaway. CrystalUnlockCost is 300 and is MIRRORED BY THE CLIENT
-// button label (apps/client/.../champselect/walletMeta.ts CRYSTAL_UNLOCK_COST),
-// so the tuning lever is the GRANT, not the cost:
+// not a giveaway. The unlock price SHIPS at 300 in content/config/store.json
+// (`championUnlockCost`) and the operator can move it live from 後台 → 商店經濟
+// (task #241); the numbers below are derived against the shipped 300, so an
+// operator who changes it has changed this table's conclusions too. The client
+// reads the live value off GET /wallet (`crystalUnlockCost`) rather than
+// compiling in a copy. The tuning lever is still the GRANT, not the cost:
 //
 //	place 1  240  -> 1.25 matches per unlock (~0.4h of play)
 //	place 2   90  -> 3.3  matches per unlock (~1.2h of play)
@@ -117,15 +120,34 @@ import (
 // Last place still earns: 「水晶（打場免費賺）」 is free THROUGH PLAY, not free
 // through winning. The 4:1 first:last spread (吃雞 doubling included) makes
 // placement matter without stalling the family member who keeps losing. Across
-// the 38 priced champions in content/config/store.json the full roster is a
-// long-term goal (~99 matches at the average), which is why that same file
-// leaves 12 champions at price 0 as a generous starter roster.
+// the 41 priced champions of the first open roster the full set is a long-term
+// goal (~107 matches at the average), which is why content/config/store.json
+// keeps 12 champions on `freeChampionIds` as a generous starter roster.
 const (
-	// CrystalUnlockCost is the DEFAULT crystal price to unlock one champion.
-	// The authoritative per-champion price is content/config/store.json
-	// (championPrices); this constant is the value the client mirrors in its
-	// 「解鎖 (N 水晶)」 label, and server.go warns at boot if any priced
-	// champion disagrees with it.
+	// CrystalUnlockCost is a FALLBACK, NOT THE PRICE (2026-07-30). The live
+	// number is `championUnlockCost`: shipped in content/config/store.json,
+	// loaded into Catalog.UnlockCost at boot, and OVERRIDDEN PER REQUEST by
+	// whatever 後台 → 商店經濟 has saved into the durable content overlay
+	// (economy.go). Service.UnlockCost() is the only honest answer; a save is
+	// live on the very next request, with no restart and no page reload.
+	//
+	// ⚠️ AN EARLIER VERSION OF THIS COMMENT SAID「takes effect on the next
+	// content load」 (task #241). There was no such load: LoadCatalog ran once
+	// at boot and nothing rewrote content/ — the console's save went to a file
+	// the wallet never read. That sentence is the reason nobody noticed for a
+	// day, so it is written down rather than quietly deleted.
+	//
+	// This constant is what the code falls back to when no store doc can be
+	// read at all (EmptyCatalog — a platform booted without CONTENT_DIR). It is
+	// also the number the balance model above is written against, so it must
+	// keep tracking the SHIPPED value in content/config/store.json: it is not a
+	// second opinion, it is a stale copy that has to be kept honest, and
+	// TestCrystalUnlockCostMatchesShippedStoreDoc fails if it drifts.
+	//
+	// Anything that needs the real price must ask the SERVICE (UnlockCost() /
+	// EffectiveCatalog()). Reaching for this constant — or for the boot-time
+	// Catalog — in a pricing decision reintroduces exactly the hard-coding this
+	// task removed.
 	CrystalUnlockCost = 300
 
 	// CrystalPlace1..4 are the per-match crystal grants by final team
@@ -255,11 +277,34 @@ func (s *Service) mutateMeta(ctx context.Context, accountID string, fn func(*met
 
 // overlayMeta populates the crystal + favourites fields of a wallet projection
 // from the meta record, dropping favourites the catalog no longer knows.
+//
+// It also stamps the CURRENT flat unlock cost. That belongs here, after the
+// Redis mirror has been read, precisely because the mirror can hold a wallet
+// serialised under the OLD price: an operator who edits 商店經濟 must not have
+// the change hidden behind a warm cache entry, and re-stamping is free.
+//
+// THE STAMP IS THE WHOLE GUARD (task #241). This one line is what carries an
+// operator's price edit to the player: `crystalUnlockCost` rides every GET
+// /wallet payload and the champ-select 「🔓 解鎖 (N 水晶)」 button prints it
+// (apps/client/src/ui/panels/champselect/walletMeta.ts). Reading s.cat here —
+// which is what it did until #241 — pins it to whatever content/config/store.json
+// said at BOOT, so the console could save 111, answer「✓ 已寫入」, redisplay 111
+// on reload (it reads the overlay), and still charge everybody 900 forever.
+// If you change this back to s.cat, TestOperatorPriceEditReachesGetWallet in
+// economy_api_test.go goes red and says so.
 func (s *Service) overlayMeta(ctx context.Context, accountID string, w *Wallet) {
 	m := s.loadMeta(ctx, accountID)
 	w.Crystal = m.Crystal
+	w.CrystalUnlockCost = s.UnlockCost()
 	w.Favourites = s.liveFavourites(m.Favourites)
 }
+
+// UnlockCost is the flat 藍水晶 price of one champion unlock in force right now:
+// content/config/store.json → championUnlockCost, with the operator's live
+// 商店經濟 override laid over it (economy.go). Exported so a caller that needs
+// the number outside a wallet projection asks the service instead of reaching
+// for the CrystalUnlockCost fallback constant or for the boot-time catalog.
+func (s *Service) UnlockCost() int { return s.effective().UnlockCost }
 
 // liveFavourites filters a stored favourite list down to champions the CURRENT
 // catalog still carries.
@@ -422,13 +467,19 @@ func (s *Service) AddCrystal(ctx context.Context, accountID string, delta int) (
 	return m.Crystal, nil
 }
 
-// UnlockChampion spends the champion's crystal price (content/config/store.json
-// championPrices — CrystalUnlockCost is only the default the client mirrors) to
+// UnlockChampion spends the champion's crystal price — the FLAT
+// `championUnlockCost` in force right now (shipped content/config/store.json
+// with the operator's 商店經濟 override on top), or 0 when the champion is on
+// that doc's `freeChampionIds` — to
 // add a priced champion to the account's owned roster. Unknown champions are
 // 404; free champions and already-owned champions are 409; underfunded is 402
 // (nothing deducted). On a lost race for ownership the crystals are refunded.
+//
+// The price is resolved ONCE, here, and the same number is what gets deducted —
+// so a save landing mid-request can change what the next unlock costs but never
+// what this one charges versus what it checked affordability against.
 func (s *Service) UnlockChampion(ctx context.Context, accountID, championID string) (Wallet, error) {
-	price, priced := s.cat.ChampionPrice(championID)
+	price, priced := s.effective().ChampionPrice(championID)
 	if !priced {
 		return Wallet{}, httpx.NotFound("unknown champion: " + championID)
 	}

@@ -22,7 +22,25 @@
     "name": "79-00 靈壓",
     "ranks": [
       {
-        "modifiers": []
+        "auras": [
+          {
+            "key": "reiatsu",
+            "radius": 11.0,
+            "affects": "enemy",
+            "modifiers": [
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": -0.5
+              },
+              {
+                "stat": "ms",
+                "op": "pctAdd",
+                "value": -0.1
+              }
+            ]
+          }
+        ]
       }
     ]
   }

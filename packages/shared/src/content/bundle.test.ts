@@ -11,7 +11,7 @@
  *  5. a 404 / corrupt / wrong-shape bundle falls back to per-doc fetching
  *     instead of bricking the client.
  */
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -39,6 +39,42 @@ import { COLLECTION_NAMES, type CollectionName } from "./schema/index";
 import type { ContentSource, IndexEntry, Manifest } from "./types";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
+
+/**
+ * ⏱ THE FILE'S OWN TIME BUDGET — declared, because the implicit one was wrong.
+ *
+ * This file was on the known-flaky list ("bundle.test.ts 的 fallback 那幾條 ——
+ * 5 秒逾時，併行跑全套時會紅，單獨跑 15/15 綠"). It is NOT flaky in the sense of
+ * a race: the tests are pure functions of the content tree and nothing here
+ * touches a port, a shared temp dir or a global. What was wrong is the BUDGET.
+ *
+ * Measured (2026-07-30, 18-core M-series, this file alone):
+ *   • one complete per-doc load of the real tree = 1,905 fs reads
+ *     (1 manifest + 13 collection indexes + 1,891 docs);
+ *   • four tests here perform ONE such load, and two perform TWO — the 404
+ *     fallback measures itself against a control run in the same process, on
+ *     purpose ("adding content moves both sides");
+ *   • solo the heaviest test costs 180–453 ms, so vitest's implicit 5,000 ms
+ *     default looked like a 10× margin and nobody declared anything.
+ *
+ * It is not 10×. Re-measured under 2× CPU oversubscription (36 spinners on 18
+ * cores — a mild imitation of a whole-tree run, which is far worse):
+ *   fallback/"same store as the bundle would have"  180 ms → 1,439 ms  (8.0×)
+ *   fallback/"falls back to per-doc when the bundle 404s"  453 → 656 ms
+ *   emission/"emits a bundle holding every doc"           441 → 734 ms
+ *   whole-file test time                              3.64 s → 7.51 s
+ * A full run oversubscribes much harder than 2× (there is a runaway vitest at
+ * 100% CPU on this box right now, from another lane), and 8× on the heaviest
+ * test already eats most of 5 s.
+ *
+ * So the 5 s was never a considered budget, it was a default nobody looked at,
+ * and every red it produced was a lie about the code. Declaring the real one is
+ * the fix. It is NOT `test.retry`: nothing here is re-run and nothing that
+ * genuinely fails is hidden — a wrong bundle still fails on the first attempt,
+ * as the mutation log for this change shows. If a test in this file ever needs
+ * 30 s of honest work, that is a real regression and it will still go red.
+ */
+vi.setConfig({ testTimeout: 30_000, hookTimeout: 30_000 });
 
 /**
  * The bundle these tests consume, BUILT BY THE TESTS — never read from

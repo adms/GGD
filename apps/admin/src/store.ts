@@ -76,12 +76,62 @@ export type Page =
    */
   | "statCaps"
   /**
+   * 戰鬥手感 (`config/combat-feel.json`, GH#193/#216): 擊退 / 打就站定 / 面向鎖 /
+   * 卡住就自動接敵。第四頁，因為它調的既不是倍率、加數，也不是天花板 —— 每一格
+   * 是**一條規則的參數**（比例門檻 / tick 數 / 布林開關）。在它之前這份文件是
+   * 完全沒有後台入口的四張決策表，而 `autoEngage.enabled` 正是 owner 還沒裁決
+   * 的那個決策（「玩家撞牆時要不要讓系統接手」）。寫入走 `putOverlayDoc`。
+   */
+  | "combatFeel"
+  /**
+   * 對戰設定 (`config/config.match.json`): 回合時鐘（選角／中場／戰鬥／結算秒數、
+   * 起始隊伍生命）與火圈。⚠️ 這份文件的 32 個數字欄位裡只有 13 個真的有消費端 ——
+   * 其餘（起始金錢、經驗、背包格數、隊伍數、模擬頻率…）在頁面上是**唯讀**的，
+   * 因為真正在用的數字是編譯期常數。寫入走 `putOverlayDoc`。
+   */
+  | "matchConfig"
+  /**
+   * 商店經濟 (`config/store.json`, owner 2026-07-30): 英雄解鎖的**統一價** +
+   * **免費名單**。自己一頁,因為在它之前 `config/store.json` 是唯一一份
+   * **完全沒有後台入口**的 config —— 改價得編 content、rebuild、重啟容器,而
+   * Go 與 client 還各自寫死一份 300。它也不屬於上面那三頁的任何一種語意:
+   * 那三頁調的是英雄在場上的數值,這一頁調的是玩家要花多少水晶才拿得到英雄。
+   */
+  | "storeEconomy"
+  /**
    * 變身外觀 (`config/form-visuals.json`, #249 GH#288): 變身態的顏色 / 大小 /
    * 球體掛件。自己一頁,因為 26 對變身裡有 21 對**前後同一個模型** —— 這三樣
    * 是唯一能讓玩家看出變身的東西,而其中顏色與大小在 w3x 裡是空的,只能由
    * 操作者決定。寫入同樣走 `putOverlayDoc`,所以下面要 session-gate。
    */
   | "formVisuals"
+  /**
+   * ── schema 長出來的四頁 (E2) ──────────────────────────────────────────────
+   * `content/config/` 下有十一份文件**完全沒有後台入口**。這四份是其中有真正
+   * 消費端、而且是 owner 會想改的決策點的那幾份；它們共用 `ui/ConfigDocPage`
+   * 一個元件，欄位結構從 Zod schema 走出來，中文名稱與「它影響什麼」逐格手寫在
+   * `configForms.ts`（少寫一格測試就紅）。
+   *
+   * 為什麼是四個路由而不是一個「設定」頁掛下拉選單：它們問的是四個不相干的
+   * 問題（模型下載哪一階 / 回合之間回收多少記憶體 / 打中噴多少血 / 兩道盾誰先
+   * 被吃掉），塞在一起操作者就得先猜自己要找的東西被歸到哪一類。
+   *
+   * 四頁都走 `putOverlayDoc`，所以下面都要 session-gate。
+   */
+  /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
+  | "modelLod"
+  /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
+  | "vfxCleanup"
+  /** 濺血程度 (`config/gore.json`): 打中噴多少血 —— 家裡有人在看時的那個開關。 */
+  | "gore"
+  /**
+   * 護盾規則 (`config/shield.json`): 一個人身上同時有兩道盾時,一發傷害先花掉
+   * 哪一道。自己一頁而不是併進 戰鬥手感,因為手感那一頁的欄位是
+   * `deriveFields(zConfigCombatFeelDoc)` 推導出來的而那支推導器只認得
+   * number / boolean —— 這一格是 enum。
+   */
+  | "shieldRules"
+  | "stealthRules"
   /**
    * 鑄技工坊 · 特效綁定 (`config/vfx-bindings`, tasks #205 / #230 / #272) —— 每支
    * 技能綁哪一個**家族原型** + 六段 per-invocation 參數 (scale / tint / alpha /
@@ -300,8 +350,24 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "baseBonus",
   // 屬性上限: 同樣是 `putOverlayDoc` 寫入,沒有 session 會 401。
   "statCaps",
+  // 戰鬥手感 / 對戰設定: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次
+  // 儲存都 401,而畫面看起來只是「壞掉」而不是「沒登入」。
+  "combatFeel",
+  "matchConfig",
+  // 商店經濟: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
+  "storeEconomy",
   // 變身外觀: 同上 —— eager page + `putOverlayDoc`,沒有 session 每一次儲存都 401。
   "formVisuals",
+  // 畫質分級 / 特效回收 / 濺血程度 (E2): 同一個 `ConfigDocPage` 元件、同一條
+  // `putOverlayDoc` 寫入路徑,所以同一條規則。少了這三行,登出的操作者會看到三頁
+  // 完全可以編輯的表單,改完才在儲存時發現從頭到尾就沒有可以寫入的 session。
+  "modelLod",
+  "vfxCleanup",
+  "gore",
+  // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以
+  // 同一條規則。
+  "shieldRules",
+  "stealthRules",
   // 鑄技工坊: 同上。它讀 /content(不需要 session)但寫 `putOverlayDoc`(需要),
   // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
   // 發現從頭到尾就沒有可以寫入的 session。

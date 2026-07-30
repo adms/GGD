@@ -16,7 +16,7 @@ import {
   type LastHitMode,
 } from "@ggd/shared/sim/mobBoss";
 import type { MatchState } from "@ggd/shared/protocol/schema";
-import { ENTITY_KIND } from "@ggd/shared/protocol/schema";
+import { ENTITY_KIND, formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 
 export interface OfferView {
@@ -79,6 +79,23 @@ export interface SeatView {
   alive: boolean;
   /** duel zone of this seat's entity (-1 = no entity); duel enemies share the local seat's zone */
   zone: number;
+  /**
+   * WHICH BODY this seat is wearing right now — 0 = 本體, 1..3 = 變身態,
+   * decoded off the entity's FORM bits with `formIndexFromFlags` (never by
+   * testing bits by hand; see protocol/schema).
+   *
+   * ⚠️ It exists because `championId` FREEZES at champ-select: 變身 swaps the
+   * body on the SAME seat and the SAME entity, so every consumer that reads the
+   * seat alone answers 「本體」 for a transformed hero. render/** already had
+   * this problem and solved it four times over (championBody / formVisual);
+   * the HUD had no way to ask at all, which is why the bottom-right portrait
+   * needs it (ui/hud/hudBottomCluster.heroPortraitChampionId).
+   *
+   * 0 while the seat has no live entity, same convention as the vitals above.
+   * OPTIONAL for the same reason `attrBonus` is: a hand-built fixture that
+   * omits it is asserting 「本體」, which is exactly what an absent value means.
+   */
+  formIndex?: number;
   ready: boolean;
   unspentPoints: number;
   items: string[];
@@ -573,6 +590,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
     let shield = 0;
     let alive = false;
     let zone = -1;
+    let formIndex = 0;
     if (ss.entityId > 0) {
       const es = state.entities.get(String(ss.entityId));
       if (es) {
@@ -583,6 +601,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
         shield = Math.round(es.shield);
         alive = es.alive;
         zone = es.zone;
+        formIndex = formIndexFromFlags(es.flags ?? 0);
       }
     }
     seats.push({
@@ -603,6 +622,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       shield,
       alive,
       zone,
+      formIndex,
       ready: ss.ready,
       unspentPoints: ss.unspentPoints,
       items: [...ss.items],

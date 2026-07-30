@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "66-00 恐懼",
   "icon": "assets/icons/abilities/godie-e00t.passive.webp",
-  "description": "[靈氣]\n0秒冷卻時間\n\n很多人都怕鬼，因為貞子是鬼，只要接近他的人都會被嚇到而全身發顫手腳不穩。\n\n攻擊貞子的單位會因手腳發抖使攻擊時有機率失手，此狀態持續4秒。（失手機率沿用基礎「詛咒」的預設值，原始地圖未覆寫該欄位。）",
+  "description": "[被動]\n0秒冷卻時間\n\n貞子從電視爬出來這件事，被打的人比她本人更難接受。\n\n**任何單位對貞子造成傷害的那一瞬間**，貞子立刻回敬他一發「詛咒」，持續 **4 秒**。中咒期間，他的**普通攻擊有 33% 機率完全揮空**（technically 是他自己手抖，跟貞子閃不閃沒關係；技能不受影響，照樣打得到）。\n\n沒有次數上限、沒有內部冷卻——你打幾下就抖幾次，只是每次都把那 4 秒重新算起。\n\n（4 秒＝原始地圖 A0IF 的 duration 與 hero_duration；33% ＝暴雪 Acrs「詛咒」的 DataA1，地圖沒有覆寫它。中立守衛塔打她不會中咒——它沒有手可以抖。）",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -20,7 +20,39 @@
     "name": "66-00 恐懼",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "condition": {
+              "any": [
+                {
+                  "kind": "kind",
+                  "subject": "target",
+                  "is": "champion"
+                },
+                {
+                  "kind": "kind",
+                  "subject": "target",
+                  "is": "mob"
+                },
+                {
+                  "kind": "kind",
+                  "subject": "target",
+                  "is": "summon"
+                }
+              ]
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "curse",
+                "duration": 4.0,
+                "missChance": 0.33
+              }
+            ]
+          }
+        ]
       }
     ]
   }

@@ -93,9 +93,9 @@
     "burstRadius": 6
   },
   "reviveCircles": {
-    "channelSec": 5.0,
-    "radius": 2.0,
-    "decayMult": 2.0,
+    "channelSec": 5,
+    "radius": 2,
+    "decayMult": 2,
     "revivesPerTeamPerRound": 1,
     "reviveHpPctMax": 0.5,
     "reviveManaPctMax": 0.5,
@@ -110,18 +110,18 @@
     "magicResist": 17.65,
     "radius": 2.5,
     "maxHitPctMaxHp": 0.15,
-    "volleyPeriodSec": 4.0,
+    "volleyPeriodSec": 4,
     "volleyWindupSec": 0.8,
     "volleyMarks": 3,
-    "volleyRadius": 3.0,
+    "volleyRadius": 3,
     "volleyDamageBase": 108,
     "volleyDamageGrowthPerRound": 0.14,
     "volleyRampPct": 0.15,
-    "volleyRampMax": 2.0,
-    "dormancySec": 6.0,
+    "volleyRampMax": 2,
+    "dormancySec": 6,
     "rewardGold": 150,
-    "restoreHpPct": 1.0,
-    "restoreManaPct": 1.0,
+    "restoreHpPct": 1,
+    "restoreManaPct": 1,
     "buffDurationSec": 25,
     "heirPulsePct": 0.25,
     "heirPulseRadius": 2.5
@@ -171,7 +171,7 @@
       "attackDamage": 1.2,
       "moveSpeed": 3,
       "attackRange": 1.8,
-      "attackCdSec": 1.0,
+      "attackCdSec": 1,
       "radius": 0.6,
       "championId": "godie-zombiex",
       "championSource": "fixed",
@@ -235,6 +235,23 @@
       "lastHitMode": "bonus",
       "splitByDamage": true,
       "countOverkill": false
+    }
+  },
+  "nightPact": {
+    "abilityIds": [
+      "godie-u00k.passive"
+    ],
+    "auraRadius": 6.42,
+    "beneficiary": "owner",
+    "stacking": "max",
+    "maxFlagsPerZone": 12,
+    "msPercent": 1,
+    "healthRegenFlat": 30,
+    "manaBurn": {
+      "enabled": true,
+      "radius": 6.42,
+      "chance": 0.12,
+      "damage": 0
     }
   }
 }

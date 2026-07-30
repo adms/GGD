@@ -2,10 +2,11 @@
   "id": "godie-o00x",
   "schema": "champion@1",
   "name": "超級賽亞人 - 悟空",
-  "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 310\n\n可學習的技能：\n界王拳、瞬間移動、龜派氣功、元氣玉",
+  "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n※ 這是【賽亞人 - 悟空】的變身態（w3x O00X「(09超三)」），不能直接選，只能靠 09-03 超級賽亞人 進入。\n\n變身態的身體（w3x war3map.w3u 自己寫的四項）：\n‧ 攻擊間隔 1.90 → 1.20 秒（ua1c）＝ 攻擊速度 ×1.58\n‧ 移動速度 310 → 400（umvs）\n‧ 浮空 30（umvt=hover / umvh=30）—— 這是設定，不是 #168 那個要壓回地面的 bug\n‧ 普攻換成【超賽攻擊】（A017）：命中時多一圈衝擊波與金色氣爆\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 400",
   "role": "fighter",
   "attackType": "melee",
   "modelKey": "imported.goku",
+  "attackDamagePoint": 0.5,
   "baseStats": {
     "maxHealth": 150,
     "healthRegen": 0.3,
@@ -44,8 +45,18 @@
     "source": "w3x"
   },
   "hitFeel": {
-    "hitstopTicks": 1,
-    "shakeMag": 0.18,
+    "hitstopTicks": 2,
+    "hitstunTicks": 3,
+    "shakeMag": 0.45,
+    "shakeStyle": "omni",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.86,
+      0.3
+    ],
+    "flashMs": 150,
+    "camKick": 0.5,
     "knockbackMag": 0.0
   },
   "abilities": {

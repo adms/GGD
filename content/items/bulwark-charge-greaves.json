@@ -1,0 +1,46 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "bulwark-charge-greaves",
+  "name": "衝鋒重脛甲",
+  "description": "傳說\n效能\n生命+420\n裝甲+18\n施放技能時向前衝刺 4.5 距離（冷卻 8 秒）\n\n解說\n穿得動這副脛甲的人，通常也不打算後退。",
+  "tags": [
+    "legendary",
+    "mobility",
+    "tank"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 420
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 18
+    }
+  ],
+  "passive": [
+    {
+      "on": "onAbilityCast",
+      "target": "self",
+      "requires": {
+        "attackType": "melee",
+        "primaryStat": "STR",
+        "onMismatch": "block"
+      },
+      "internalCooldown": 8,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "forward",
+          "speed": 18,
+          "maxDistance": 4.5
+        }
+      ]
+    }
+  ]
+}

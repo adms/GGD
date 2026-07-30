@@ -111,6 +111,14 @@ describe("the field spec", () => {
         // most items still carry Blizzard stock art and therefore have no
         // `icon` key at all — task #81's debt, not a spec error
         "items:icon",
+        // #205 多層特效模板: the schema + editor field landed ahead of the
+        // content. Zero adoption today is CORRECT (the 646 single-`vfxKey`
+        // abilities must keep working untouched), and it is not silent — the
+        // same zero is declared as a self-expiring `landing` exemption in
+        // packages/shared/src/content/fieldAdoption.test.ts, which fails and
+        // names it if no ability ships a layer within 30 days. Delete this
+        // line together with that entry when the first one lands.
+        "abilities:vfxLayers",
       ]);
       expect(unresolved.filter((p) => !knownRare.has(`${c}:${p}`)), c).toEqual([]);
     }

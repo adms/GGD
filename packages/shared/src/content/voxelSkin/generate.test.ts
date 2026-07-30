@@ -42,6 +42,7 @@ import {
   defaultPrefersVoxelBody,
   type VoxelSkinRecipe,
 } from "./types";
+import { counterpartFormId } from "../championForms";
 import { SKIN_RULES } from "./rules";
 
 const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../../content");
@@ -172,7 +173,7 @@ describe("voxel skin — coverage over the real roster", () => {
     expect(withBlizzard.length, "40 位的 WC3 模型已在 overlay 裡").toBe(40);
     expect(
       without.map((d) => d.id).sort(),
-      "沒有自己模型的:o02n / u011 沒抽到,sela / thorne 不是地圖英雄," +
+      "manifest 沒有直接收錄的:o02n / u011 沒抽到,sela / thorne 不是地圖英雄," +
         "e010 / h00w / n01b / o030 是 #249 進來的變身型態(overlay 沒抽到它們)",
     ).toEqual([
       "godie-e010",
@@ -185,18 +186,32 @@ describe("voxel skin — coverage over the real roster", () => {
       "thorne",
     ]);
 
-    for (const d of withBlizzard) {
+    /**
+     * ⚠️ 2026-07-30 (#223) —— 「拿不拿得到 WC3 模型」不等於「自己在 manifest 裡」。
+     * 這一段本來寫的是 `withBlizzard → false / without → true`,也就是把
+     * `BLIZZARD_MODEL_CHAMPIONS` 當成判準抄了一份。#223 之後多了一條
+     * 「缺省即繼承」:變身態可以**經由對半**拿到模型(抽取器只拉了 40 個可選
+     * 單位,所以 26 對裡的 `Emeu` 那一半天生不在名單上)。舊寫法於是把
+     * e010 / h00w / n01b / o030 / u011 / o02n 判在錯的一邊。
+     * 判準改成陳述**意圖**:自己或對半任一有模型 ⇒ 不該鎖體素。
+     */
+    const reachesAModel = (id: string): boolean =>
+      BLIZZARD_MODEL_CHAMPIONS.includes(id) ||
+      BLIZZARD_MODEL_CHAMPIONS.includes(counterpartFormId(id) ?? "");
+    for (const d of standIns) {
       expect(
         ROSTER.recipes.get(d.id)!.preferVoxelBody,
-        `${d.id} 有自己的 WC3 模型,不該被鎖在體素`,
-      ).toBe(false);
+        reachesAModel(d.id)
+          ? `${d.id} 拿得到 WC3 模型(自己或變身對半),不該被鎖在體素`
+          : `${d.id} 沒有任何模型可穿 —— 退回共用替身會讓 #231 整個任務失效`,
+      ).toBe(!reachesAModel(d.id));
     }
-    for (const d of without) {
-      expect(
-        ROSTER.recipes.get(d.id)!.preferVoxelBody,
-        `${d.id} 沒有任何自己的模型 —— 退回共用替身會讓 #231 整個任務失效`,
-      ).toBe(true);
-    }
+    // 而且兩邊都不可以是空的,否則上面那個迴圈退化成單邊斷言
+    expect(standIns.filter((d) => reachesAModel(d.id)).length).toBe(46);
+    expect(standIns.filter((d) => !reachesAModel(d.id)).map((d) => d.id)).toEqual([
+      "sela",
+      "thorne",
+    ]);
 
     // ...and a champion with its OWN imported mesh keeps it
     const own = DOCS.filter((d) => (d.modelKey ?? "").startsWith("imported."));
@@ -406,6 +421,20 @@ describe("voxel skin — the committed roster snapshot", () => {
    * than as heroes silently changing face between builds.
    *
    * Regenerate deliberately with `pnpm --filter @ggd/shared voxel-skins:snapshot`.
+   *
+   * ── 2026-07-30 的一次刻意重生成，記在這裡因為它是這個快照存在的理由 ──
+   * `godie-hlgr` 與 `godie-hvwd` 的四組顏色變了，**而部件完全相同**。
+   * 那個組合（同部件、換顏色）就是診斷：顏色走 `frac(id, salt, …)`，只吃 id 與
+   * salt；部件走規則表。部件沒動 ⇒ 規則沒變 ⇒ **只可能是 salt 變了**。
+   *
+   * salt 來自碰撞棘輪。同一天 `types.ts` 的 `preferVoxelBody` 加了「變身的另一半
+   * 繼承對方的答案」那條（#223），**6 位英雄從方塊人換回自己真正的 WC3 網格**
+   * （godie-h00w→Harf、o030→Orkn、n01b→Nman、e010→E00S、u011→U012、o02n→O02O）。
+   * 體素名冊縮小 ⇒ 棘輪重新分配 salt ⇒ 排在後面的兩位換了配色。
+   *
+   * 也就是說：**這次漂移是一個好改動的正確後果，不是缺陷。** 重生成後仍是
+   * 119 位 / 119 種不同外觀（零碰撞），owner 要的那個性質沒有被破壞。
+   * ⚠️ 下次看到漂移時先做同一個判斷：**部件也變了嗎？** 變了才是規則或階梯出事。
    */
   it("matches every champion's committed look signature", () => {
     cover("voxel-skin-snapshot");
@@ -474,12 +503,25 @@ describe("GH#31 預設身體:暴雪模型優先,體素是後台選項", () => {
     }
   });
 
-  it("沒有暴雪模型的替身英雄,預設仍是體素", () => {
-    // 這四位是唯一還該穿體素的:o02n / u011 沒有抽出模型,sela / thorne 是 CC0
-    // 角色本身、不是地圖英雄。少了這條,他們會退回四張共用臉 —— 也就是 #231
-    // 整個任務存在的理由被撤銷,而其他每條測試都還是綠的。
-    for (const id of ["godie-o02n", "godie-u011", "sela", "thorne"]) {
-      expect(defaultPrefersVoxelBody("champ.sela", id), `${id} 沒有自己的模型`).toBe(true);
+  it("完全沒有模型可穿的替身英雄,預設仍是體素", () => {
+    // ⚠️ 2026-07-30 (#223):這裡本來列的是 o02n / u011 / sela / thorne。
+    // 前兩位**已經不該在這張名單上** —— 它們各自的變身對半(o02o / u012)在
+    // manifest 裡,「缺省即繼承」讓它們穿得到真的 WC3 模型。留著舊名單就是
+    // 一條把「英雄穿方塊人」釘死的測試。
+    // 只剩 sela / thorne:CC0 角色本身,不是地圖英雄,沒有任何 WC3 單位在背後。
+    // 少了這條,他們會退回共用臉 —— #231 整個任務存在的理由被撤銷,而其他每條
+    // 測試都還是綠的。
+    for (const id of ["sela", "thorne"]) {
+      expect(counterpartFormId(id), `${id} 不該有變身對半`).toBeNull();
+      expect(defaultPrefersVoxelBody("champ.sela", id), `${id} 沒有任何模型可穿`).toBe(true);
+    }
+    // 反向:那兩位是**經由對半**才拿到模型的,所以他們證明繼承那一條真的通了
+    for (const id of ["godie-o02n", "godie-u011"]) {
+      expect(BLIZZARD_MODEL_CHAMPIONS.includes(id), `${id} 自己不在 manifest 裡`).toBe(false);
+      expect(
+        defaultPrefersVoxelBody("champ.sela", id),
+        `${id}: 缺省即繼承沒生效 —— 這位英雄會被鎖在方塊人身體裡`,
+      ).toBe(false);
     }
   });
 

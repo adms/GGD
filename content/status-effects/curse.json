@@ -1,0 +1,11 @@
+{
+  "id": "curse",
+  "schema": "status-effect@1",
+  "name": "恐懼 (詛咒)",
+  "description": "手腳發抖，普通攻擊有機率完全打空。攻擊貞子的人自己領的伴手禮。",
+  "polarity": "debuff",
+  "tags": [
+    "curse",
+    "miss"
+  ]
+}

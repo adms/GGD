@@ -23,7 +23,8 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { verify } from "../auth/hmac";
 import { mintReplayTicket, REPLAY_TICKET_TTL_SECS } from "./access";
 import { checkCompatibility, currentIdentity } from "./Player";
-import { listReplays, loadReplay, safeRecordingId, summarise } from "./store";
+import { loadReplay, safeRecordingId, summarise } from "./store";
+import { listReplaysIndexed } from "./sidecar";
 
 function json(res: ServerResponse, status: number, body: unknown): void {
   res.writeHead(status, { "content-type": "application/json" });
@@ -49,7 +50,14 @@ export async function handleInternalReplays(
   const rest = url.pathname.replace(/^\/_internal\/replays\/?/, "");
 
   if (rest === "" && req.method === "GET") {
-    json(res, 200, { replays: await listReplays(), identity: currentIdentity() });
+    // The INDEXED list, not `listReplays()`. The full scan gunzips and parses
+    // every recording SYNCHRONOUSLY, and this handler shares its event loop with
+    // every live match on the shard (index.ts mounts the Colyseus transport on
+    // this same http server). Measured 2026-07-30 at the 200-file retention
+    // ceiling: full scan 2.53-2.81 s with 19-21 separate blocks over one tick
+    // budget; indexed 3-4 ms with none. See sidecar.ts.
+    const { replays } = await listReplaysIndexed();
+    json(res, 200, { replays, identity: currentIdentity() });
     return;
   }
 

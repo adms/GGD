@@ -354,14 +354,18 @@ def main() -> int:
     unit_func = stock["unitFunc"]
     unit_ui = stock["unitUI"]
 
-    # STRING TABLE. `w3xlib.wts.parse_wts` recovers only 330 of the map's 11,337
-    # entries: its block regex tolerates a `--` comment between `STRING n` and
-    # `{`, but this map writes `// 能力: ANso (30-03 痴漢火焰)`, so almost every
-    # block fails to match and every ability name comes back as the literal
-    # "TRIGSTR_2663". `out/GoDieEX22s-src/STRINGS.json` (from src_extract.py) has
-    # the full table, so that is the primary and the wts is only the fallback.
-    # Left as a finding rather than patched here: parse_wts is shared with the
-    # other importers and changing it mid-flight would move their outputs too.
+    # STRING TABLE. `w3xlib.wts.parse_wts` USED to recover only 330 of the map's
+    # 11,337 entries — its block regex tolerated a `--` comment between
+    # `STRING n` and `{`, but this map writes `// 能力: ANso (30-03 痴漢火焰)`, so
+    # almost every block failed to match and every ability name came back as the
+    # literal "TRIGSTR_2663". That was left as a finding here rather than patched,
+    # because parse_wts is shared with the other importers; task #208 patched it
+    # at the library instead, and it now returns all 11,337.
+    #
+    # `out/GoDieEX22s-src/STRINGS.json` stays the PRIMARY anyway: it is a
+    # checked-in artefact, so this script keeps working when raw/war3map.wts is
+    # not present. The wts is still only the fallback — it is simply no longer
+    # a crippled one.
     strings = {int(k): v for k, v in json.load(
         open(os.path.join(HERE, "out", "GoDieEX22s-src", "STRINGS.json"), encoding="utf-8")
     ).items()}

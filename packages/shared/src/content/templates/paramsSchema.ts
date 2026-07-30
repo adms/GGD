@@ -16,6 +16,7 @@
  */
 import { z } from "zod";
 import { zScaling, zStatModifier } from "../schema/common";
+import { zEffectCondition } from "../schema/condition";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
 /** The Zod shape for ONE slot, before the `.optional()` wrapper. */
@@ -42,6 +43,14 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       return zScaling;
     case "statModifiers":
       return z.array(zStatModifier);
+    case "condition":
+      // The SAME schema `zHookDef.condition` uses, so a gate the Forge accepts
+      // is a gate the ability doc accepts — there is no second validation of a
+      // condition anywhere. Note the Forge does NOT render this through
+      // `walkZod`: a recursive union has no generic widget, so ForgeStudio
+      // routes `condition` slots to the dedicated dropdown editor (owner:
+      //「編輯器接受 JASS 的形式，但不是 script 編輯而是 UI 選項」).
+      return zEffectCondition;
   }
 }
 

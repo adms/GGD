@@ -11,8 +11,10 @@ import type { MatchState } from "@ggd/shared/protocol/schema";
 import { recordReject } from "./RoomStore";
 import {
   MSG,
+  unpackEventBatch,
   type Cheat,
   type CheatMessage,
+  type EventBatchMessage,
   type EventMessage,
   type InputMessage,
   type SelectChampionMessage,
@@ -284,15 +286,33 @@ export class RoomConnection {
     return room;
   }
 
+  /**
+   * ONE arrived sim event → the frame loop's queue. Both wire shapes funnel
+   * through here ON PURPOSE: `MSG.EVENT` (one event per message) and
+   * `MSG.EVENT_BATCH` (a whole tick in one message) must be indistinguishable
+   * downstream, and the only way to guarantee that is for them to run the same
+   * code rather than two copies of it that drift.
+   */
+  private acceptEvent(ev: EventMessage): void {
+    this.queuedEvents.push(ev);
+    if (this.queuedEvents.length > 512) this.queuedEvents.splice(0, this.queuedEvents.length - 512);
+    // 迴避 also lands in its own buffer (see EvadeSighting above): the frame
+    // loop's fanout can't carry it, because nothing downstream of the loop
+    // has a consumer for an event that produces no damage packet.
+    if (ev.type === "evade") recordEvade(ev.data);
+  }
+
   private bind(room: Room<MatchState>): void {
     this.room = room;
-    room.onMessage(MSG.EVENT, (ev: EventMessage) => {
-      this.queuedEvents.push(ev);
-      if (this.queuedEvents.length > 512) this.queuedEvents.splice(0, this.queuedEvents.length - 512);
-      // 迴避 also lands in its own buffer (see EvadeSighting above): the frame
-      // loop's fanout can't carry it, because nothing downstream of the loop
-      // has a consumer for an event that produces no damage packet.
-      if (ev.type === "evade") recordEvade(ev.data);
+    room.onMessage(MSG.EVENT, (ev: EventMessage) => this.acceptEvent(ev));
+    // A whole tick's room-wide events in one message (net/eventBatch on the
+    // server). Unpacked IN ORDER into the same queue, so the frame loop cannot
+    // tell which wire shape delivered them. ⚠️ Losing this handler does not
+    // error — colyseus.js silently drops messages with no registered type — it
+    // makes combat MUTE (HP bars drain, no numbers, no animations), the S2
+    // failure eventFanout.ts's header lists nine times over.
+    room.onMessage(MSG.EVENT_BATCH, (b: EventBatchMessage) => {
+      for (const ev of unpackEventBatch(b)) this.acceptEvent(ev);
     });
     room.onMessage(MSG.REJECT, (msg: { reason?: string } | undefined) => {
       // surface the reason (e.g. a non-whitelisted champion pick) to the HUD

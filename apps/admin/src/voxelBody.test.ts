@@ -18,11 +18,22 @@ import {
   setBody,
 } from "./voxelBody";
 
+/**
+ * ⚠️ 2026-07-30 (#223) —— 「沒有模型」的樣本換人了。
+ * 這張表本來拿 `godie-o02n` 與 `godie-u011` 當「沒有暴雪模型」的兩位。#223 之後
+ * `defaultPrefersVoxelBody` 多了一條「缺省即繼承」:變身態可以經由對半拿到模型
+ * (抽取器只拉了 40 個**可選**單位,所以 `Emeu` 那一半天生不在 manifest 裡)。
+ * 那兩位各自的對半 `godie-o02o` / `godie-u012` 都在 manifest 上,所以他們現在
+ * **穿得到真的 WC3 模型**,留在舊名單上等於把「英雄穿方塊人」當成正確答案。
+ * 真正一具模型都沒有的只剩 CC0 角色本人 sela / thorne —— 他們背後沒有任何
+ * WC3 單位,也沒有變身對半。
+ */
 const CHAMPS = [
   { id: "godie-hapm", name: "Berserker", modelKey: "champ.thorne" }, // 有暴雪模型
   { id: "godie-e00s", name: "白木卡迪那", modelKey: "champ.sela" }, // 有暴雪模型
-  { id: "godie-o02n", name: "曹操孟德", modelKey: "champ.skin.rogue" }, // 沒有
-  { id: "godie-u011", name: "克勞薩先生", modelKey: "champ.skin.barbarian" }, // 沒有
+  { id: "godie-u011", name: "克勞薩先生", modelKey: "champ.skin.barbarian" }, // 經由對半 u012
+  { id: "sela", name: "Sela", modelKey: "champ.sela" }, // 沒有:CC0 角色本人
+  { id: "thorne", name: "Thorne", modelKey: "champ.thorne" }, // 沒有:CC0 角色本人
   { id: "godie-h01n", name: "黑崎一護", modelKey: "imported.heroichigo" }, // 不是替身
 ];
 
@@ -32,13 +43,16 @@ describe("體素身體開關 — 預設", () => {
     expect(rows.map((r) => r.championId)).toEqual([
       "godie-e00s",
       "godie-hapm",
-      "godie-o02n",
       "godie-u011",
+      "sela",
+      "thorne",
     ]);
     expect(rows.find((r) => r.championId === "godie-hapm")!.effective).toBe(false);
     expect(rows.find((r) => r.championId === "godie-e00s")!.effective).toBe(false);
-    expect(rows.find((r) => r.championId === "godie-o02n")!.effective).toBe(true);
-    expect(rows.find((r) => r.championId === "godie-u011")!.effective).toBe(true);
+    // #223 —— 自己不在 manifest 裡,但變身對半 godie-u012 在,所以他走模型
+    expect(rows.find((r) => r.championId === "godie-u011")!.effective).toBe(false);
+    expect(rows.find((r) => r.championId === "sela")!.effective).toBe(true);
+    expect(rows.find((r) => r.championId === "thorne")!.effective).toBe(true);
   });
 
   it("不是共用替身的英雄根本不進表 —— 他們沒有可切換的東西", () => {
@@ -55,6 +69,13 @@ describe("體素身體開關 — 預設", () => {
     expect(s.touched, "沒有人動過").toBe(0);
     expect(s.voxel, "仍有兩位在體素上").toBe(2);
     expect(s.noModelAvailable).toBe(2);
+    // 而且那兩位是 sela / thorne,不是任何一位地圖英雄 —— 一個地圖英雄掉進
+    // 這一格,就是 #223 的缺省即繼承壞掉了。
+    expect(
+      bodyRows(CHAMPS, {})
+        .filter((r) => r.effective)
+        .map((r) => r.championId),
+    ).toEqual(["sela", "thorne"]);
   });
 });
 
@@ -66,7 +87,7 @@ describe("體素身體開關 — operator 覆寫", () => {
 
   it("也可以反向:把預設體素的強制切成模型", () => {
     // 單向開關是閘刀不是設定。operator 要能反悔。
-    const r = resolveBody("godie-o02n", "champ.skin.rogue", { "godie-o02n": false });
+    const r = resolveBody("thorne", "champ.thorne", { thorne: false });
     expect(r).toEqual({ effective: false, origin: "overlay" });
   });
 
@@ -93,12 +114,14 @@ describe("體素身體開關 — 文件操作", () => {
     // 對一個沒有模型的英雄:
     //   forgetBody → 回到規則 → 體素(對的)
     //   setBody(false) → 強制用模型 → 但他沒有模型 → 共用替身臉(錯的)
-    const withFalse = setBody(emptyBodiesDoc(), "godie-o02n", false);
-    expect(resolveBody("godie-o02n", "champ.skin.rogue", withFalse.bodies).effective).toBe(false);
+    // #223:樣本換成 thorne —— godie-o02n 現在經由對半 o02o 拿得到模型,
+    // 用他當「沒有模型」的例子已經不成立。
+    const withFalse = setBody(emptyBodiesDoc(), "thorne", false);
+    expect(resolveBody("thorne", "champ.thorne", withFalse.bodies).effective).toBe(false);
 
-    const forgotten = forgetBody(withFalse, "godie-o02n");
+    const forgotten = forgetBody(withFalse, "thorne");
     expect(forgotten.bodies).toEqual({});
-    expect(resolveBody("godie-o02n", "champ.skin.rogue", forgotten.bodies).effective).toBe(true);
+    expect(resolveBody("thorne", "champ.thorne", forgotten.bodies).effective).toBe(true);
   });
 
   it("extractBodies 擋掉 schema 不符與垃圾值", () => {

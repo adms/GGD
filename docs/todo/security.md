@@ -12,8 +12,15 @@ infra). The four `regression` rows are CI guards over already-verified defenses
 (F-23..F-26 — no code defect, keep them from regressing).
 
 Test IDs are `sec-154-*` and map to the SECURITY TEST MATRIX in the audit doc.
-Nothing is marked `done`: no fix has landed a covering `cover()` in this
-docs-only pass, so the runtime gate would (correctly) reject a premature `done`.
+
+⚠️ This paragraph used to read «Nothing is marked `done` … the runtime gate
+would (correctly) reject a premature `done`». Both halves are false as of
+2026-07-30. `sec-154-19` is now `done` and `sec-154-18` is `partial`, so the
+first half is stale — and **there is no runtime gate**: nothing in the repo
+parses this table, and `grep -r sec-154 --include='*.ts'` returns nothing, so no
+`cover()` registry backs these statuses. **The Status column is hand-maintained
+prose, not a checked claim** — verify a `done` against the named test before
+trusting it (for `sec-154-19` that is `apps/platform/internal/auth/token_purpose_test.go`).
 
 ## Fix now — game-server wave (`safeNow=true`)
 
@@ -41,8 +48,8 @@ docs-only pass, so the runtime gate would (correctly) reject a premature `done`.
 | sec-154-15 | Replace the `frame-ancestors 'none'`-only CSP with a real `default-src`/`script-src`/`object-src`/`base-uri` policy tuned for Babylon; coordinate with the client bundle (nonce/inline-style). (infra + client / #127) — CSP F-15. | sec-154-csp-script-src | security | deferred |
 | sec-154-16 | Exclude audition/debug HTML from the prod build so `dist/` ships only `index.html`; belt-and-suspenders nginx 404 on the model-budget.html / audition.html debug pages. (client + infra / #127) — attack-surface F-16. | sec-154-dist-html-exclude | security | deferred |
 | sec-154-17 | `realpathSync` + re-check containment after `resolve()` in the vite `staticHandler` (content + blizzard-overlay roots); on error `next()`. (vite / #127) — symlink traversal F-17. | sec-154-content-realpath | injection | deferred |
-| sec-154-18 | One opaque register conflict for username+email; argon2 before the uniqueness reply (timing parity); per-IP register limiter. (platform) — enumeration F-18. | sec-154-register-generic-conflict | security | deferred |
-| sec-154-19 | Mint an `aud` (`ggd-access`) and add `jwt.WithIssuer`/`jwt.WithAudience` to `VerifyAccess`. (platform) — jwt-claim-validation F-19. | sec-154-jwt-aud-iss | security | deferred |
+| sec-154-18 | ~~One opaque register conflict + timing parity~~ **DONE and insufficient** — both shipped, the enumeration oracle stayed open (pair the value under test with a fresh counterpart, read 201-vs-409). What mitigates it is the #174 invite gate running before the reservation; residual = a caller holding a live code, knob `GGD_BURN_INVITE_ON_CONFLICT`. Remaining work: per-IP register limiter at the edge. **`/auth/login` is the same finding's other half**: it is enumeration-safe only because the argon2 comparison runs BEFORE the ban/approval checks, and that ordering had NO guard until 2026-07-30 — hoisting the status checks left `./internal/{auth,server,admin}` fully green while leaking `403 account_pending` vs `401` to an anonymous caller. Now pinned by `TestLoginRefusesTheSameWayWhateverTheAccountStatusIs`. See the revised F-18. (platform) — enumeration F-18. | sec-154-register-generic-conflict | security | partial |
+| sec-154-19 | ~~Mint an `aud` and add `jwt.WithIssuer`/`jwt.WithAudience` to `VerifyAccess`.~~ **DONE (GH#180)** — `aud` = `ggd:access:v1`, `iss` = `ggd-platform`, both required at verification; guards in `auth/token_purpose_test.go` mutation-verified 2026-07-30. (platform) — jwt-claim-validation F-19. | sec-154-jwt-aud-iss | security | done |
 | sec-154-20 | Generate ephemeral local secrets via `make up` (or a boot-time denylist rejecting the known `dev-insecure-*` values in any non-dev env). (infra) — hardcoded secret F-20. | sec-154-weak-secret-denylist | security | deferred |
 | sec-154-21 | Move the refresh token to an httpOnly + Secure + SameSite=Strict cookie (access token in memory only); if bearer-in-JSON is kept, the strict `script-src` CSP is a hard prerequisite. (client + platform / #152 + #118) — token storage F-21. | sec-154-refresh-httponly | security | deferred |
 | sec-154-22 | Add `X-Content-Type-Options: nosniff` in the vite `staticHandler`; consider 404-ing extensions outside CONTENT_MIME. (vite / #127) — MIME-sniffing F-22. | sec-154-content-nosniff | security | deferred |

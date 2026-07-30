@@ -137,6 +137,17 @@ describe("weapon-draft loot tables (arena-07)", () => {
     // non-final entries task #108 owns.
     const table = LootTables.get("legendary-weapons");
     expect(table.entries.length).toBeGreaterThanOrEqual(6);
+    // GGD 自撰的傳說（不是從 w3x 匯入的，所以沒有 `godie-` 前綴）。
+    // ⚠️ 這是**允許清單**不是描述：新增一件自撰傳說而忘了列在這裡，這條就紅，
+    //    而那正是它的工作 —— 它擋的是「悄悄多了一件沒人審過的傳說」。
+    // 2026-07-31 owner 點名的四類定位落地，池子 20 → 24：
+    const GGD_AUTHORED = new Set([
+      "endless-edge", // #189 無盡連刃（近戰限定）
+      "cleaver-of-the-warden", // 近戰專用擴散
+      "sage-ward-amulet", // 法師保命
+      "bulwark-charge-greaves", // 坦克衝刺
+      "piercer-crossbow", // 射手百分比傷害
+    ]);
     for (const e of table.entries) {
       expect(Items.tryGet(e.itemId), `item ${e.itemId} must exist`).toBeDefined();
       expect(e.weight).toBeGreaterThan(0);
@@ -147,7 +158,10 @@ describe("weapon-draft loot tables (arena-07)", () => {
       // w3x import and never will be. So the rule is stated directly: a pool
       // entry is a map import OR one of the deliberately authored originals,
       // and this list is the place a reviewer sees each one.
-      const GGD_AUTHORED = new Set(["endless-edge"]); // #189 無盡連刃（近戰限定）
+      // ⚠️ 這五件也必須在**平台白名單**裡（apps/platform/internal/curation/
+      //    starter.go）。理由不是整潔：`MatchController.ts:1036` 是**先抽再過濾**，
+      //    所以漏一件不會是「那件不出現」，而是三選一**抽到一張空卡**。
+      //    2026-07-31 實測 24/24 全在，`legendaryReachability.test.ts` 是那一半的守衛。
       expect(
         e.itemId.startsWith("godie-") || GGD_AUTHORED.has(e.itemId),
         `${e.itemId} is neither a map item nor a listed GGD-authored legendary`,

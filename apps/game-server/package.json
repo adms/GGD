@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "APP_ENV=development tsx watch src/index.ts",
-    "start": "tsx src/index.ts",
+    "start": "tsx src/cluster/main.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },
   "dependencies": {
     "@colyseus/core": "^0.16.0",
+    "@colyseus/redis-driver": "^0.16.1",
+    "@colyseus/redis-presence": "^0.16.4",
     "@colyseus/schema": "^3.0.0",
     "@colyseus/ws-transport": "^0.16.0",
     "@ggd/shared": "workspace:*",

@@ -103,7 +103,7 @@
       "id": "godie-ofar.w",
       "name": "58-02 鋼鐵尾巴",
       "icon": "assets/icons/abilities/godie-ofar.w.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。",
+      "description": "[被動]\n0秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並將敵人震昏 0.067 秒（原作 0.01 秒，取模擬能真正交付的最短窗口）。",
       "slot": "W",
       "castType": "self",
       "maxRank": 5,
@@ -139,6 +139,12 @@
                     "amount": {
                       "flat": 75.0
                     }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burnstun",
+                    "duration": 0.067,
+                    "stun": true
                   }
                 ]
               }
@@ -156,6 +162,12 @@
                     "amount": {
                       "flat": 150.0
                     }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burnstun",
+                    "duration": 0.067,
+                    "stun": true
                   }
                 ]
               }
@@ -173,6 +185,12 @@
                     "amount": {
                       "flat": 225.0
                     }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burnstun",
+                    "duration": 0.067,
+                    "stun": true
                   }
                 ]
               }
@@ -190,6 +208,12 @@
                     "amount": {
                       "flat": 300.0
                     }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burnstun",
+                    "duration": 0.067,
+                    "stun": true
                   }
                 ]
               }
@@ -207,6 +231,12 @@
                     "amount": {
                       "flat": 300.0
                     }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burnstun",
+                    "duration": 0.067,
+                    "stun": true
                   }
                 ]
               }

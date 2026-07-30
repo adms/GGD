@@ -2,14 +2,14 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_1c68c834dac0`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
-> 資料列：**113**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-22T15:49:20.043229Z`）
+> 產生自 contentVersion **`cv_bd21db92bbdf`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 資料列：**119**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-24T11:14:58.268286Z`）
 
-`content/champions/*.json` 共 **113** 名英雄，其中 **48** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行。
+`content/champions/*.json` 共 **119** 名英雄，其中 **49** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行。
 
 > 本檔的數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率（`content/config/combat-env.json`）。遊戲內顯示的一律是乘算後的最終值，所以畫面上的冷卻／傷害／生命與這裡不會相同 —— 那是預期行為，不是資料錯誤。
 >
-> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。108 名有天生技；5 名沒有 `passiveAbility` —— `godie-h02n`（原始地圖裡完全沒有技能）、`godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`godie-u01q`（原始地圖裡完全沒有技能）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
+> **每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 `NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 `<id>.passive`（`exAbility` 的同款寫法）。114 名有天生技；5 名沒有 `passiveAbility` —— `godie-h02n`（原始地圖裡完全沒有技能）、`godie-ogld`（有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`）、`godie-u01q`（原始地圖裡完全沒有技能）、`sela`（非 w3x 原創英雄，沒有 `NN` 編號）、`thorne`（非 w3x 原創英雄，沒有 `NN` 編號） —— **那是還原出來的事實，不是待辦**。
 >
 > `稱號` / `全名` 是從 `name` 欄位拆出來的（慣例 `稱號 - 全名`），champion doc 上**沒有**獨立的稱號欄位；不符慣例的會顯示 `—`。
 >
@@ -17,7 +17,7 @@
 
 ---
 
-## 1. 開放名單 OPEN roster（48）
+## 1. 開放名單 OPEN roster（49）
 
 | id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |
 |---|---|---|---|---|---|---|---|
@@ -69,8 +69,9 @@
 | `godie-u01u` | 索隆 | 三刀流劍士 | fighter | 近戰 | ✅ | 夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入… | `godie-u01u.passive` `godie-u01u.q` `godie-u01u.w` `godie-u01u.e` `godie-u01u.r` `godie-u01u.ex` |
 | `godie-ubal` | 巴恩大魔王 | 魔界霸主 | fighter | 近戰 | ✅ | 巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有… | `godie-ubal.passive` `godie-ubal.q` `godie-ubal.w` `godie-ubal.e` `godie-ubal.r` `godie-ubal.ex` |
 | `godie-udea` | 飛鼠先生 | 至尊學長 | fighter | 近戰 | ✅ | 神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。 | `godie-udea.passive` `godie-udea.q` `godie-udea.w` `godie-udea.e` `godie-udea.r` `godie-udea.ex` |
+| `godie-zombiex` | 喪標麥可 | 聖杯黑泥醬 | tank | 近戰 | ✅ | 黑化聖杯溢出的惡意黑泥受肉凝聚，本來在美國重生，但不小心被印度工程師當成咖喱帶回家鄉，成了… | `godie-zombiex.passive` `godie-zombiex.q` `godie-zombiex.w` `godie-zombiex.e` `godie-zombiex.r` `godie-zombiex.ex` |
 
-## 2. 未開放 not in the open roster（65）
+## 2. 未開放 not in the open roster（70）
 
 文件存在、資料完整，但白名單沒放行，所以選角畫面看不到、bot 也不會抽到。
 
@@ -86,6 +87,7 @@
 | `godie-e00v` | 維尼 | 百畝森林的霸主 | fighter | 近戰 | — | 小熊維尼是百畝森林裡最受歡迎的動物，約有22吋高，純真可愛，雖然有點笨拙，但心地善良。最愛… | `godie-e00v.passive` `godie-e00v.q` `godie-e00v.w` `godie-e00v.e` `godie-e00v.r` `godie-e00v.ex` |
 | `godie-e00x` | 櫻綻剎那 | 神鳴流劍士 | fighter | 近戰 | — | 武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由… | `godie-e00x.passive` `godie-e00x.q` `godie-e00x.w` `godie-e00x.e` `godie-e00x.r` `godie-e00x.ex` |
 | `godie-e00z` | 安云 | 戰國刺客Azumi | fighter | 近戰 | — | — | `godie-e00z.passive` `godie-e00z.q` `godie-e00z.w` `godie-e00z.e` `godie-e00z.r` `godie-e00z.ex` |
+| `godie-e010` | 白木卡迪那 | 白木老樹精 | marksman | 遠程 | — | — | `godie-e010.passive` `godie-e010.q` `godie-e010.w` `godie-e010.e` `godie-e010.r` |
 | `godie-e012` | 佐佐木小次郎 | 殺人劍客 | fighter | 近戰 | — | 。 | `godie-e012.passive` `godie-e012.q` `godie-e012.w` `godie-e012.e` `godie-e012.r` |
 | `godie-e015` | 金居福 | 夜市人生 | fighter | 近戰 | — | 方恰恰的老公，他是在元配過世之後，才娶了方恰恰的。從事營造業，個性喜好吹噓，但其實很小氣，… | `godie-e015.passive` `godie-e015.q` `godie-e015.w` `godie-e015.e` `godie-e015.r` `godie-e015.ex` |
 | `godie-ecen` | 約翰走路 | 姜窩肯 | marksman | 遠程 | — | 酒不醉人人自醉，當初發跡是由一家小雜貨店開始。當時年紀才十五歲的約翰華克（John Wal… | `godie-ecen.passive` `godie-ecen.q` `godie-ecen.w` `godie-ecen.e` `godie-ecen.r` `godie-ecen.ex` |
@@ -94,6 +96,7 @@
 | `godie-ewar` | 天地志狼 | 龍之子 | fighter | 近戰 | — | 本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙… | `godie-ewar.passive` `godie-ewar.q` `godie-ewar.w` `godie-ewar.e` `godie-ewar.r` `godie-ewar.ex` |
 | `godie-ewrd` | 棗 真夜 | 天上天下 | fighter | 近戰 | — | 立誓要以"武術"征服全校， 身為統道學園劍道部社長棗真夜，有必要以廣告招收新社員，於是參加… | `godie-ewrd.passive` `godie-ewrd.q` `godie-ewrd.w` `godie-ewrd.e` `godie-ewrd.r` `godie-ewrd.ex` |
 | `godie-h001` | 斑剎 | 地獄來襲者 | fighter | 近戰 | — | 來自天堂的召喚師，擁有召喚強力怪獸的能力，同樣是充滿怨念的角色。 | `godie-h001.passive` `godie-h001.q` `godie-h001.w` `godie-h001.e` `godie-h001.r` `godie-h001.ex` |
+| `godie-h00w` | 鄭先生 | 豪洨天王 | fighter | 近戰 | — | PTT傳說中的愛洨會最高層幹部之一，喜愛吞噬某樣液體成名。之所以會加入去死團，據說是愛洨會… | `godie-h00w.passive` `godie-h00w.q` `godie-h00w.w` `godie-h00w.e` `godie-h00w.r` `godie-h00w.ex` |
 | `godie-h01o` | 黑崎一護 | 外掛開很大的死神 | fighter | 近戰 | — | — | `godie-h01o.passive` `godie-h01o.q` `godie-h01o.w` `godie-h01o.e` `godie-h01o.r` `godie-h01o.ex` |
 | `godie-h021` | 阿強一號 | 破銅爛鐵 | marksman | 遠程 | — | 。 | `godie-h021.passive` `godie-h021.q` `godie-h021.w` `godie-h021.e` `godie-h021.r` |
 | `godie-h022` | 涅吉。史普林。菲爾德 | 白色之翼 | fighter | 近戰 | — | 在魔法世界裡經父親以前的夥伴拉坎的協助，學會了依文潔琳百年前用的禁忌之術──「黑暗魔法」，… | `godie-h022.passive` `godie-h022.q` `godie-h022.w` `godie-h022.e` `godie-h022.r` `godie-h022.ex` |
@@ -107,6 +110,7 @@
 | `godie-hgam` | 妙蛙種子 | 種子神奇寶貝 | fighter | 近戰 | — | 一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。 | `godie-hgam.passive` `godie-hgam.q` `godie-hgam.w` `godie-hgam.e` `godie-hgam.r` `godie-hgam.ex` |
 | `godie-hjai` | 莉娜因巴斯 | 黑魔導士 | marksman | 遠程 | — | 自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號"盜賊殺手… | `godie-hjai.passive` `godie-hjai.q` `godie-hjai.w` `godie-hjai.e` `godie-hjai.r` `godie-hjai.ex` |
 | `godie-hlgr` | 煌 | 鋼彈 | fighter | 近戰 | — | 煌 大和是操縱鋼彈的駕駛員，為了執行宇宙和平的使命，於是開著拼裝的工程用鋼彈加入愛與和平。 | `godie-hlgr.passive` `godie-hlgr.q` `godie-hlgr.w` `godie-hlgr.e` `godie-hlgr.r` `godie-hlgr.ex` |
+| `godie-n01b` | 憤怒的胖虎 | 地獄歌神 | marksman | 遠程 | — | 身為孩子王的胖虎卻找不到女伴，如此大的怨念讓胖虎憤怒的成為去死團的戰士。 | `godie-n01b.passive` `godie-n01b.q` `godie-n01b.w` `godie-n01b.e` `godie-n01b.r` `godie-n01b.ex` |
 | `godie-n01g` | 依文潔琳 | 黑暗福音 | marksman | 遠程 | — | 吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為… | `godie-n01g.passive` `godie-n01g.q` `godie-n01g.w` `godie-n01g.e` `godie-n01g.r` `godie-n01g.ex` |
 | `godie-n01l` | 小派 | 學姊 | fighter | 近戰 | — | (出自:現實的人生) | `godie-n01l.passive` `godie-n01l.q` `godie-n01l.w` `godie-n01l.e` `godie-n01l.r` `godie-n01l.ex` |
 | `godie-naka` | 風魔小次郎 | 猿飛佐助 | fighter | 近戰 | — | 神秘的忍者，藏在敵人的影子之中難以發現，暗殺的達人，不攻擊的時候甚至可以永久隱形。 | `godie-naka.passive` `godie-naka.q` `godie-naka.w` `godie-naka.e` `godie-naka.r` `godie-naka.ex` |
@@ -117,10 +121,12 @@
 | `godie-ntin` | 菲特·泰斯塔羅沙 | 時空管理局執務官 | fighter | 近戰 | — | 任職於時空管理局，擔任的職位是執務官。階級相當於一等尉。 轉任至機動六課後擔任的職位為搜查… | `godie-ntin.passive` `godie-ntin.q` `godie-ntin.w` `godie-ntin.e` `godie-ntin.r` `godie-ntin.ex` |
 | `godie-o01z` | 高町奈葉 | 魔砲少女 | marksman | 遠程 | — | 傳說中的「白色惡魔」，在每一次的任務中，她總是能以「以砲交友」的方法把敵人降服成為碰友。其… | `godie-o01z.passive` `godie-o01z.q` `godie-o01z.w` `godie-o01z.e` `godie-o01z.r` `godie-o01z.ex` |
 | `godie-o02l` | 皮卡丘 | 神騎寶貝 | fighter | 近戰 | — | — | `godie-o02l.passive` `godie-o02l.q` `godie-o02l.w` `godie-o02l.e` `godie-o02l.r` `godie-o02l.ex` |
+| `godie-o02n` | 阿瞞大人 | 曹操孟德 | fighter | 近戰 | — | 。 | `godie-o02n.passive` `godie-o02n.q` `godie-o02n.w` `godie-o02n.e` `godie-o02n.r` |
 | `godie-o02o` | 阿瞞大人 | 曹操孟德 | fighter | 近戰 | — | 。 | `godie-o02o.passive` `godie-o02o.q` `godie-o02o.w` `godie-o02o.e` `godie-o02o.r` |
 | `godie-o02s` | 涼宮八ㄦ匕 | 憂鬱少女 | marksman | 遠程 | — | 隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕後扮演調查和… | `godie-o02s.passive` `godie-o02s.q` `godie-o02s.w` `godie-o02s.e` `godie-o02s.r` |
 | `godie-o02v` | 高町奈葉 | 白色惡魔 | marksman | 遠程 | — | 傳說中的「白色惡魔」，在每一次的任務中，她總是能以「以砲交友」的方法把敵人降服成為碰友。其… | `godie-o02v.passive` `godie-o02v.q` `godie-o02v.w` `godie-o02v.e` `godie-o02v.r` `godie-o02v.ex` |
 | `godie-o02w` | 令狐沖 | 笑傲江湖 | fighter | 近戰 | — | 華山劍派之首席大弟子，為人大而化之不拘小節，且不喜世俗教條之束縛，因緣際會之下習得了武林奇… | `godie-o02w.passive` `godie-o02w.q` `godie-o02w.w` `godie-o02w.e` `godie-o02w.r` `godie-o02w.ex` |
+| `godie-o030` | 臭作 | 電車癡漢 | marksman | 遠程 | — | 傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶...… | `godie-o030.passive` `godie-o030.q` `godie-o030.w` `godie-o030.e` `godie-o030.r` `godie-o030.ex` |
 | `godie-obla` | 牧太郎 | 被剝削的勞工階級 | fighter | 近戰 | — | 在牧場打工，領著低薪的低賤勞工，原名已經不詳，只知道大家叫他牧太郎。擅長砍樹﹑養雞﹑照顧動… | `godie-obla.passive` `godie-obla.q` `godie-obla.w` `godie-obla.e` `godie-obla.r` `godie-obla.ex` |
 | `godie-ogrh` | 悟空 | 賽亞人 | fighter | 近戰 | — | 七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。 | `godie-ogrh.passive` `godie-ogrh.q` `godie-ogrh.w` `godie-ogrh.e` `godie-ogrh.r` `godie-ogrh.ex` |
 | `godie-opgh` | 趙子龍 | 常勝將軍 | fighter | 近戰 | — | 傳說中七進七出救大嫂，被劉備發現後怒摔阿斗。據漢水，縱橫於千軍萬馬之中，視數十萬大軍如草芥… | `godie-opgh.passive` `godie-opgh.q` `godie-opgh.w` `godie-opgh.e` `godie-opgh.r` `godie-opgh.ex` |

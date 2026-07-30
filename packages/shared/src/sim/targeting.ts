@@ -28,7 +28,7 @@
  * ---------------------------------------------------------------------------
  * THE COMPARATOR (total order — every tie falls through to the next key)
  * ---------------------------------------------------------------------------
- *   1. kind    — enemy CHAMPION (0) before MOB (1)
+ *   1. kind    — enemy CHAMPION (0) before SUMMON (1) before MOB (2)
  *   2. threat  — is it hitting me right now? (0 = yes, 1 = no)
  *   3. hp      — lowest current HP first
  *   4. d2      — nearest first (squared distance; never a sqrt)
@@ -40,6 +40,8 @@
  * pile from round 3 auto-attacks nothing at all, which reads as the feature
  * being broken; making them peers would let a 1-HP zombie out-rank the enemy
  * hero on key 3. Champion-before-mob is the only ordering that satisfies both.
+ * 召喚物 sit BETWEEN the two and can be moved to either end per ability — the
+ * tiers, the reasoning and the defaults are in sim/summonRules.ts.
  *
  * Keys 2-4 are the directive verbatim: 威脅 → 低血 → 最近.
  *
@@ -61,6 +63,14 @@ import type { StatsComp } from "./stats/statsComp";
 import { distSq } from "./math/vec2";
 import { queryOverlap } from "./collision/queries";
 import { reachTo } from "./systems/BasicAttackSystem";
+import { canSee } from "./stealth";
+import {
+  TARGET_CLASS,
+  summonAutoTargetable,
+  summonManualTargetable,
+  summonMobTargetable,
+  summonTargetClass,
+} from "./summonRules";
 
 /**
  * How recently an enemy must have damaged me to count as "attacking me"
@@ -105,7 +115,7 @@ const NOMINAL_TARGET_RADIUS = 0.6;
 /** A resolved candidate: the winner plus the sort keys that won it. */
 export interface AcquiredTarget {
   id: EntityId;
-  /** 0 = enemy champion, 1 = mob */
+  /** {@link TARGET_CLASS}: 0 = enemy champion, 1 = summon, 2 = mob */
   kind: number;
   /** 0 = damaged me within THREAT_WINDOW_TICKS, 1 = has not */
   threat: number;
@@ -128,24 +138,140 @@ export function acquireRadius(sc: StatsComp | undefined, selfRadius: number): nu
 }
 
 /**
+ * WHICH TIER of combat body `cand` is, or `null` when nothing may auto-attack
+ * it. THE one answer to 「這東西打不打得到」 — every automatic target picker in
+ * the sim goes through this function, so a new body kind is wired in ONE place
+ * instead of being remembered at each call site.
+ *
+ * That single-seam property is the whole point, and it is not theoretical: the
+ * previous shape was the literal predicate
+ *   `if (!world.champion.has(c) && !world.mob.has(c)) return false;`
+ * duplicated in spirit by MobSystem's `if (!world.champion.has(cid)) continue;`
+ * — and when 召喚物 landed as a THIRD kind of body (deliberately neither store),
+ * both allow-lists silently excluded it. Nothing in the game could acquire a
+ * summon; it hit people and nothing hit back.
+ *
+ * WHY NOT A 「可被索敵」 COMPONENT ON EVERY BODY. It was the other candidate and
+ * it is the wrong trade here. Four of the transform-carrying non-bodies —
+ * revive circles, dropped coins, aura carriers, projectiles — are already kept
+ * OUT OF THE BROAD-PHASE GRID entirely (`SimWorld.rebuildGrid`), which is a
+ * STRUCTURAL guarantee: every targeting query walks that grid, so they cannot be
+ * targeted even by code that forgets about them. Re-expressing those four as
+ * trait-carriers would replace a guarantee with a filter somebody can forget.
+ * Flowers and guardian structures are excluded a second way (no TeamComp), which
+ * the team test below still enforces. So: ONE predicate that every picker calls,
+ * over the three stores that really are combat bodies — not a component every
+ * body must remember to carry.
+ */
+export function targetClassOf(world: SimWorld, cand: EntityId): number | null {
+  if (world.champion.has(cand)) return TARGET_CLASS.champion;
+  const sm = world.summon.get(cand);
+  if (sm !== undefined) {
+    // 召喚物該不該被自動索敵 is a DECISION POINT, not a constant: 分身/複製鏡
+    // exist to soak attacks, 災難之牆's wall units are scenery. See
+    // sim/summonRules.ts. `false` here means 「自動索敵看不見」 ONLY — the body
+    // is still in the grid, so ability AoE and skillshots still hit it. It is
+    // not invulnerability, and it must not be read as such.
+    if (!summonAutoTargetable(sm)) return null;
+    return summonTargetClass(sm);
+  }
+  if (world.mob.has(cand)) return TARGET_CLASS.mob;
+  return null;
+}
+
+/**
  * Is `cand` a hostile unit `self` may auto-attack?
  *
- * Deliberately narrow: enemy CHAMPIONS and roguelite MOBS only. Everything else
- * that carries a transform is excluded by construction —
+ * Deliberately narrow: enemy CHAMPIONS, 召喚物 and roguelite MOBS. Everything
+ * else that carries a transform is excluded by construction —
  *   - projectiles / revive circles / coins: dropped by `queryOverlap` itself;
  *   - healing FLOWERS: allied harvestables (auto-attacking one would be a bug);
  *   - neutral GUARDIANS: `world.structure`, no TeamComp;
  * the last two also carry no TeamComp, so they could never pass the team test.
+ *
+ * THE TEAM TEST IS WHAT KEEPS YOUR OWN PETS SAFE. A summon spawned with
+ * `team: "owner"` carries its summoner's `teamId`, so this returns false for the
+ * owner and for every ally — 己方永遠不會自動打自己的召喚物 — while a
+ * `team: "neutral"` summon lands on the MONSTER sentinel and is hostile to
+ * everyone including its own caster, which is the WC3 「敵對召喚」 form.
  */
 export function isAutoTargetable(world: SimWorld, self: EntityId, cand: EntityId): boolean {
   if (cand === self) return false;
-  if (!world.champion.has(cand) && !world.mob.has(cand)) return false;
+  // 隱形 (sim/stealth.ts). Wired HERE — the one predicate every automatic
+  // picker already goes through — rather than at each picker, for the exact
+  // reason this file's header gives for `targetClassOf`: three copies of "what
+  // may be targeted" is how 召喚物 became untargetable by half the game.
+  //
+  // `canSee` answers "not hidden / mine / ally / I have true sight in range",
+  // and the WHETHER is a field: `blocksAutoAcquire` defaults true (WC3), and
+  // with it false a hidden body is auto-acquired exactly as before, so the flag
+  // becomes render-only. That is a legitimate config, not a broken one.
+  if (world.stealthRules.blocksAutoAcquire && !canSee(world, self, cand)) return false;
+  if (targetClassOf(world, cand) === null) return false;
   const myTeam = world.team.get(self);
   const theirTeam = world.team.get(cand);
   if (!myTeam || !theirTeam) return false;
   if (myTeam.teamId === theirTeam.teamId) return false;
   const hp = world.health.get(cand);
   return !!hp?.alive;
+}
+
+/**
+ * May a #215 MOB pick `cand` as its aggro target?
+ *
+ * A SEPARATE question from {@link isAutoTargetable} and therefore a separate
+ * field: zombies swarming a hero's ghouls instead of the hero is a real
+ * tactical outcome (it is what summoning is FOR), and the owner may want it off
+ * for a given ability without also making the body invisible to enemy heroes.
+ * The team test stays where it already is, in MobSystem — mobs are hostile to
+ * everything that is not on the MONSTER sentinel, which correctly also spares a
+ * `team: "neutral"` summon.
+ */
+export function isMobTargetable(world: SimWorld, cand: EntityId, seeker?: EntityId): boolean {
+  // 隱形. `seeker` is OPTIONAL and defaults to "nobody in particular" (-1), so
+  // an existing caller that does not pass it still gets the right answer for
+  // everything except true sight — a mob cannot have true sight today, and if
+  // one ever does, its aggro scan is the one call site that must pass its own
+  // id. Kept optional rather than required so this stays a strictly additive
+  // change to a predicate three other lanes are editing this week.
+  if (world.stealthRules.blocksMobAggro && !canSee(world, seeker ?? (-1 as EntityId), cand))
+    return false;
+  if (world.champion.has(cand)) return true;
+  const sm = world.summon.get(cand);
+  if (sm !== undefined) return summonMobTargetable(sm);
+  return false;
+}
+
+/**
+ * May a SEAT hand-pick `cand` with an explicit attack order?
+ *
+ * ⚠️ SCOPE. This is NOT a general legality check on `order.attackTarget` — the
+ * sim has never had one (a seat may name a teammate, and `BasicAttackSystem`
+ * runs no team test either), and inventing one here would silently change five
+ * unrelated paths in a change about summons. It answers exactly one question:
+ * 「這個召喚物允不允許被玩家點名」. Everything that is not a summon is left to
+ * whatever the sim already did.
+ */
+export function isManuallyTargetable(
+  world: SimWorld,
+  cand: EntityId,
+  clicker?: EntityId,
+): boolean {
+  // 隱形: 「擋不擋手動點選」 is its own field (`blocksManualTarget`, default
+  // true = WC3: you cannot right-click what you cannot see). `clicker` is the
+  // seat's own champion — it MUST be passed, because the ally/self exemptions
+  // are the whole reason a stealthed player can still be clicked by his own
+  // team. Without it the answer degrades to "nobody can click a hidden body",
+  // which is wrong for allies, so the OrderSystem call site passes it.
+  if (
+    clicker !== undefined &&
+    world.stealthRules.blocksManualTarget &&
+    !canSee(world, clicker, cand)
+  )
+    return false;
+  const sm = world.summon.get(cand);
+  if (sm === undefined) return true;
+  return summonManualTargetable(sm);
 }
 
 /** True when `attacker` damaged `victim` inside the threat window. */
@@ -168,9 +294,15 @@ export function rankOf(
   if (!selfT || !candT || candT.zone !== selfT.zone) return null;
   const hp = world.health.get(cand);
   if (!hp) return null;
+  // `isAutoTargetable` already proved this is non-null; re-reading it (rather
+  // than re-deriving the tier from `world.champion.has`) is what keeps a
+  // summon's authored `targetPriority` from being silently overwritten with the
+  // 「not a champion, so it must be a mob」 fallback the old line encoded.
+  const kind = targetClassOf(world, cand);
+  if (kind === null) return null;
   return {
     id: cand,
-    kind: world.champion.has(cand) ? 0 : 1,
+    kind,
     threat: isThreat(world, self, cand) ? 0 : 1,
     hp: hp.hp,
     d2: distSq(selfT.pos, candT.pos),

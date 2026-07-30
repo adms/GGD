@@ -1,0 +1,22 @@
+{
+  "schema": "invisible-prim-policy@1",
+  "_doc": "Task #233 / B3 — what the mdx->glb pipeline does with primitives whose resolved glTF material is fully transparent (baseColorFactor[3] == 0). Editable WITHOUT touching code; invisible_prim_census.py reads this file. See docs/invisible-primitive-audit.md for the measurement this default is based on.",
+
+  "cull": "off",
+  "_cull": "off = ship them as today (alpha-0 geometry, still costs draw calls); safe = remove ONLY primitives proven invisible in every WC3 sequence; all = remove every transparent primitive (DESTRUCTIVE — the 2026-07-30 audit found 54% of them are geometry WC3 animates VISIBLE, so 'all' deletes real content).",
+
+  "reasons": {
+    "teamGlow": true,
+    "additiveGlowNoAlpha": true
+  },
+  "_reasons": "Which converter drop-reason to consider for culling. teamGlow = replaceableId-2 billboards (gltf.py 'TeamGlow*' branch); additiveGlowNoAlpha = filter-mode>=3 glow whose texture carries no alpha channel (gltf.py 'additive glow w/o alpha -> dropped' branch).",
+
+  "skipGeosetsWithVisibilityAnimation": true,
+  "_skipGeosetsWithVisibilityAnimation": "THE SAFETY GUARD. When true, a primitive is never culled if its source MDX geoset has a GEOA/KGAO alpha track that rises above visibleAlphaThreshold in any sequence — those are timed effects the converter blanked by mistake (#59), not dead placeholder faces. Turning this off makes 'safe' behave like 'all'.",
+
+  "visibleAlphaThreshold": 0.01,
+  "_visibleAlphaThreshold": "KGAO alpha above this counts as 'WC3 showed it'.",
+
+  "cullWithoutMdxProof": false,
+  "_cullWithoutMdxProof": "When false, a primitive whose source MDX cannot be located (or whose geoset cannot be identified) is KEPT. Absence of evidence is not proof of invisibility."
+}

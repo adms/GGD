@@ -24,9 +24,13 @@ import { planTicks } from "../match/tickLoop";
 import { tickHealth, formatShedLog } from "../match/tickHealth";
 import { resolveArenaRules } from "../match/arenaRules";
 import { resolveArena, resolveArenaPool } from "../match/arenaSelect";
-import { isFannedOutEvent } from "../net/eventFanout";
+import { isFannedOutEvent, privateEventAddress, PRIVATE_EVENT_FANOUT } from "../net/eventFanout";
+import type { PrivateEventAddress } from "../net/eventFanout";
+import { EventBatcher, resolveEventBatch } from "../net/eventBatch";
 import { cheatsEnabled } from "../match/cheatGate";
 import { HumanDriver } from "../seat/HumanDriver";
+import type { Seat } from "../seat/Seat";
+import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 import { AIDriver } from "../ai/Tier0Brain";
 import { projectSnapshot } from "../net/snapshot";
 import { sign, verifyTicket } from "../auth/hmac";
@@ -42,7 +46,7 @@ import { MessageRateLimiter } from "../net/messageRateLimiter";
 import { sanitizeDisplayName } from "../net/sanitizeText";
 import { roomRegistry } from "./roomRegistry";
 import { verifyCreateToken } from "./createGate";
-import { MatchRecorder } from "../replay/Recorder";
+import { MatchRecorder, reportRecorderSealFailure } from "../replay/Recorder";
 import { buildHeader } from "../replay/headerCodec";
 import { buildStamp } from "../replay/fingerprint";
 import { activeContentVersion } from "../replay/Player";
@@ -228,6 +232,25 @@ export class MatchRoom extends Room<MatchState> {
   private readonly rateLimiter = new MessageRateLimiter();
   /** true once this room holds a process-wide concurrent-room slot. */
   private acquiredRoomSlot = false;
+  /**
+   * Per-room copy of the private-delivery decision (net/eventFanout). A field
+   * rather than a direct read of the module const so the behaviour guard can
+   * flip it on a live room and prove the rollback path still broadcasts — a
+   * `process.env` read at import time cannot be exercised from a test at all.
+   */
+  private privateFanout = PRIVATE_EVENT_FANOUT;
+  /**
+   * PER-TICK EVENT BATCHING (net/eventBatch). Room-wide sim events accumulate
+   * here through the fanout loop and leave as ONE `MSG.EVENT_BATCH` at the end
+   * of the tick — measured 98 → 12 WebSocket frames per tick at the shipped mob
+   * cap, 354 → 12 at 600 zombies/zone. Settings are resolved PER ROOM (not read
+   * once at import) so a guard can build a room with batching off and prove the
+   * rollback path still produces the old one-message-per-event wire.
+   */
+  private readonly batcher = new EventBatcher(resolveEventBatch(), {
+    one: (payload) => this.broadcast(MSG.EVENT, payload),
+    batch: (payload) => this.broadcast(MSG.EVENT_BATCH, payload),
+  });
   /**
    * MATCH RECORDER (task #175) — every match is recorded by default, because the
    * replay IS the playtest feedback channel and a match nobody thought to record
@@ -617,9 +640,14 @@ export class MatchRoom extends Room<MatchState> {
       // damage numbers, no attack/cast animations, no hit sparks).
       for (const ev of this.ctl.world.events) {
         if (isFannedOutEvent(ev)) {
-          this.broadcast(MSG.EVENT, { type: ev.type, tick: ev.tick, data: ev.data });
+          this.deliverSimEvent(ev);
         }
       }
+      // END OF THE TICK THAT FILLED IT. Batching only ever coalesces events the
+      // same 33.3 ms slice was going to send anyway (net/eventBatch header) —
+      // owner: 「不要跨 tick 合批」. This line is what makes that true; drop it
+      // and a tick's events would leak into the NEXT tick's batch.
+      this.batcher.flush();
       // #193: a team just went out while the match keeps running → hand its
       // players their evaluation snapshot now, so a leave from the spectator
       // seat can pass through the settlement screen instead of dropping straight
@@ -638,6 +666,69 @@ export class MatchRoom extends Room<MatchState> {
       }
     }
     if (stepped) projectSnapshot(this.ctl, this.state, this.humanDrivers);
+  }
+
+  /**
+   * ONE fanned-out sim event → the sockets that are supposed to read it.
+   *
+   * Most events are room-wide and go out on `broadcast`, exactly as before. The
+   * handful listed in `PRIVATE_EVENT_RULES` are ANSWERS TO A BUTTON PRESS
+   * (「冷卻中」/「金幣不足」/「背包已滿」) — the client has always discarded
+   * everybody else's copy, so those go to the one client they name.
+   *
+   * THREE OUTCOMES, and the difference between the last two is the whole point:
+   *   • not private, or private with NO recipient in its payload → broadcast.
+   *     A renamed field must degrade to today's behaviour, never to silence:
+   *     an event that quietly stops arriving is the S2 failure this wire has
+   *     already suffered nine times (see net/eventFanout.ts's header).
+   *   • private, and the id names a seat we know → that client only. A seat with
+   *     no live session (a BOT, or a human inside the reconnect window) means
+   *     the answer has nobody to reach, so nothing is sent at all. MEASURED, so
+   *     nobody oversells it: an all-bot 6,000-tick match emits 31–70 private
+   *     events (0.6–1.1% of everything fanned out) — this is a correctness fix,
+   *     not a throughput one.
+   *   • private, but the id matches NO seat (a summon, a mob, a stale id) →
+   *     broadcast. Unrecognised is not the same as unaddressed, so it falls back
+   *     rather than guessing.
+   *
+   * Room-wide events go through `this.batcher`, which coalesces them into one
+   * `MSG.EVENT_BATCH` per tick (net/eventBatch — measured: 98 → 12 frames/tick
+   * at the shipped mob cap). A single-recipient send FLUSHES the pending batch
+   * first, so the addressed player still observes the same relative order it
+   * would have seen one-message-per-event: `castBegin` (room-wide) really does
+   * arrive before its own `castRejected`.
+   */
+  private deliverSimEvent(ev: SimEvent): void {
+    const payload = { type: ev.type, tick: ev.tick, data: ev.data };
+    const addr = this.privateFanout ? privateEventAddress(ev) : null;
+    if (addr === null) {
+      this.batcher.push(payload);
+      return;
+    }
+    // ORDER BEFORE FRAMES, on BOTH remaining branches: everything queued so far
+    // was emitted BEFORE this event, so it has to leave first. Doing it here
+    // (rather than inside each branch) also keeps the fail-open case a true
+    // fallback — an unrecognised recipient is broadcast IMMEDIATELY, exactly as
+    // it was before batching existed, instead of waiting for the tick's flush.
+    // Private-typed events are 0.6–1.1% of the stream, so the split costs
+    // nothing measurable.
+    this.batcher.flush();
+    const seat = this.seatForAddress(addr);
+    if (seat === undefined) {
+      this.broadcast(MSG.EVENT, payload); // unrecognised recipient → fail open
+      return;
+    }
+    if (seat.sessionId === null) return; // bot / disconnected: nobody to tell
+    this.clients.getById(seat.sessionId)?.send(MSG.EVENT, payload);
+  }
+
+  /** The seat a private event names, or undefined when no seat owns that id. */
+  private seatForAddress(addr: PrivateEventAddress): Seat | undefined {
+    if (addr.kind === "seat") return this.ctl.seats.get(asSeatId(addr.id));
+    for (const seat of this.ctl.seats.values()) {
+      if (seat.entityId === addr.id) return seat;
+    }
+    return undefined;
   }
 
   /**
@@ -773,7 +864,11 @@ export class MatchRoom extends Room<MatchState> {
       try {
         await rec.finish(this.ctl);
       } catch (err) {
-        console.error(`[replay] failed to seal the recording for ${this.ctl.matchId}`, err);
+        // GH#170: counted, not just logged. A seal that throws means the match
+        // produced no playable tape, and this was the one failure site outside
+        // Recorder.ts — so it was also the one that would have stayed invisible
+        // on /healthz after everything else was wired up.
+        reportRecorderSealFailure(rec.id, err);
       }
     }
 

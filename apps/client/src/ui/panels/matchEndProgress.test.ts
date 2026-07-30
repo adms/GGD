@@ -17,18 +17,23 @@
  * and is deliberately untouched; the lobby path needs it. What is wrong is
  * calling it from here.
  *
- * WHY THIS IS A SOURCE SCAN AND NOT A RENDER TEST
- * ───────────────────────────────────────────────
- * MatchEndPanel pulls the whole HUD + app store graph, the Babylon-backed
- * portrait tile and the audio subsystem; mounting it in the node env would test
- * the harness, exactly as roundReportMount.test.ts reasoned for MerchantShop.
- * The CHART's own rendering is proven for real, against real markup, in
- * progressChartRender.test.ts — this file owns only the SEAM.
+ * WHY THIS IS A SOURCE SCAN
+ * ─────────────────────────
+ * ⚠️ CORRECTED 2026-07-30. This header used to justify itself with 「MatchEndPanel
+ * pulls the whole HUD + app store graph, the Babylon-backed portrait tile and
+ * the audio subsystem; mounting it in the node env would test the harness」.
+ * That is now demonstrably false: `hud/hudSurfacePaint.test.ts` mounts the real
+ * `<MatchEndPanel />` through `react-dom/server` with nothing but a `hudStore`
+ * patch, and reads the 戰績變化 card's painted coordinates back off the markup.
+ * The claim mattered, because while it stood, the ONE thing tying the chart to
+ * the settlement screen was the substring scan below — and a scan is satisfied
+ * by `surface={null}`, which re-creates the owner's 「太低」 bug verbatim.
  *
- * That seam is the #265 failure shape: 「可以從渲染樹整個刪掉而測試全綠」. Delete
- * the `<ProgressChartPanel …/>` line and every other test in this repo still
- * passes, because nothing else asserts the component is reachable from a screen
- * a player can get to.
+ * The scan is KEPT, narrowed to what a render cannot see: that the mount is not
+ * commented out, not gated behind `{false}`, that it is fed the real series /
+ * advice rather than literals, and that the button is still local state instead
+ * of `viewRankChange()` (a NAVIGATION — the actual #265 defect). Where the chart
+ * ENDS UP is now proven by rendering, not by grep.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";

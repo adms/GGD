@@ -34,6 +34,7 @@ import type { AbilitiesComp } from "./stats/statsComp";
 import type { IntentFrame } from "./intents";
 import { MONSTER_TEAM } from "./mobs";
 import { acquireTarget, MELEE_ACQUIRE_FLOOR, THREAT_WINDOW_TICKS } from "./targeting";
+import { TARGET_CLASS } from "./summonRules";
 import * as V from "./math/vec2";
 
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -326,7 +327,7 @@ describe("#221 mobs (#215) are the FALLBACK, never the preference", () => {
     settle(world);
     const got = acquireTarget(world, me, MELEE_ACQUIRE_FLOOR)!;
     expect(got.id).toBe(champ);
-    expect(got.kind).toBe(0);
+    expect(got.kind).toBe(TARGET_CLASS.champion);
   });
 
   it("a mob IS picked when no enemy champion is in radius", () => {
@@ -337,7 +338,12 @@ describe("#221 mobs (#215) are the FALLBACK, never the preference", () => {
     settle(world);
     const got = acquireTarget(world, me, MELEE_ACQUIRE_FLOOR)!;
     expect(got.id).toBe(mob);
-    expect(got.kind).toBe(1);
+    // Named, not a literal: key 1 gained a middle tier for 召喚物 (champion 0 <
+    // summon 1 < mob 2), so a hard-coded `1` here would silently start
+    // asserting 「a mob ranks like a summon」. The ORDER is what this file is
+    // about and it is pinned by the sibling test above, which reads a champion
+    // beating a mob through the comparator itself.
+    expect(got.kind).toBe(TARGET_CLASS.mob);
   });
 
   it("MobSystem still owns mob aggro — the pass never re-points a mob", () => {

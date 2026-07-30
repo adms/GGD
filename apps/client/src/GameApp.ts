@@ -29,7 +29,8 @@ import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/id
 import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
-import { ENTITY_FLAG, formIndexFromFlags } from "@ggd/shared/protocol/schema";
+import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
+import { stealthVisualFor } from "./render/stealthVisual";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 
 import type { RoomConnection } from "./net/RoomConnection";
@@ -83,27 +84,17 @@ import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
 import {
   EntityViewRegistry,
-  mobModelSizeOverride,
-  relativeScaleOf,
   type EntityViewState,
-  type ModelDocOverride,
 } from "./render/EntityViewRegistry";
-import { ARCHETYPE_BY_MODEL_KEY, voxelLookFor } from "./render/views/voxelLook";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
-import { championTintForId } from "./render/views/championTint";
-import {
-  composeFormTint,
-  formAttachmentSpecFor,
-  formScaleMultiplier,
-} from "./render/views/formVisual";
-import { counterpartFormId, type FormVisual } from "@ggd/shared/content";
+import { championBodyHooks, type ChampionBodyHooks } from "./render/views/championBody";
+import { formAttachmentSpecFor } from "./render/views/formVisual";
 import { entityTintFor } from "./render/views/mobTint";
 import {
   MOB_VISUAL_DEFAULT,
   parseMobVisualJson,
   type MobVisualTable,
 } from "@ggd/shared/sim/mobs";
-import { voxelSkinForId } from "./render/views/voxelSkinFor";
 import {
   hasOverheadBar,
   anchorColorFor,
@@ -113,6 +104,7 @@ import {
   KIND_GUARDIAN,
   KIND_MOB,
   KIND_REVIVE_CIRCLE,
+  KIND_NIGHT_FLAG,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
 import { driveFrame, type FrameWork } from "./render/frameCap";
@@ -224,6 +216,12 @@ export class GameApp {
   private readonly renderer: Renderer;
   private readonly viewports: ViewportManager;
   private readonly views: EntityViewRegistry;
+  /**
+   * #223 —— 「這個 entity 現在穿的是哪一具身體」以及由它決定的三條渲染縫。
+   * 住在 `render/views/championBody.ts`，因為 GameApp 建構不出來 ⇒ 寫在這裡的
+   * 決策沒有守衛。見那個檔案的檔頭。
+   */
+  private readonly championBody: ChampionBodyHooks;
   private readonly vfx: VfxSystem;
   /**
    * 回合邊界的特效清場 (task #16 / #259). 判斷邏輯故意住在
@@ -543,8 +541,33 @@ export class GameApp {
     frameBus.arenaZones = SKELETON_ARENA.zones.map((z) => ({ x: z.center.x, z: z.center.z, r: z.boundaryRadius }));
     this.viewports = new ViewportManager(this.renderer.scene, SKELETON_ARENA.zones[0]!.center, playerCount);
     this.assets = new AssetManager(this.renderer.scene);
+    // #223 —— 三條形態感知的縫（`modelDocFor` / `voxelSkinFor` /
+    // `modelOverrideFor`）住在 `render/views/championBody.ts`，不住在這裡。
+    // GameApp 在測試裡建構不出來（`new Engine(canvas)` 要真的 WebGL），所以寫
+    // 在這個檔案裡的決策**沒有守衛**：上一輪就是這樣讓
+    // `modelDocFor: (key, seatId) => …` 這個兩參數的箭頭函式把 registry 傳來的
+    // 第三個引數 `formIndex` 靜靜吃掉 —— 修法整條是死的，4504 條測試零紅。
+    // 現在這裡只剩資料來源；決策與其守衛在 championBody.ts /
+    // formAwareModelResolve.test.ts。
+    this.championBody = championBodyHooks({
+      championIdForSeat: (seatId) => this.championIdForSeat(seatId),
+      resolveModelKey: (key, seatId) => this.resolveModelKey(key, seatId),
+      overlay: blizzardOverlayModels,
+      content: {
+        modelFor: (modelKey) => this.contentDb.modelFor(modelKey),
+        standinOverrideFor: (championId) => this.contentDb.modelOverrideFor(championId),
+        voxelSkinOverrideFor: (championId) => this.contentDb.voxelSkinOverrideFor(championId),
+        formVisualFor: (championId) => this.contentDb.formVisualFor(championId),
+      },
+    });
     this.views = new EntityViewRegistry(this.renderer.scene, this.assets, {
-      modelDocFor: (key, seatId) => this.modelDocFor(key, seatId),
+      // THE THREE FORM-AWARE HOOKS, taken WHOLE from the factory — never
+      // re-wrapped in an arrow here. A wrapper is exactly how the arity bug
+      // above got in, and it would also put a decision back in the one file no
+      // test can construct.
+      modelDocFor: this.championBody.modelDocFor,
+      modelOverrideFor: this.championBody.modelOverrideFor,
+      voxelSkinFor: this.championBody.voxelSkinFor,
       projectileVfxFor: (key) => {
         const def = Projectiles.tryGet(key as ProjectileId);
         return def?.vfxKey ? this.contentDb.vfxFor(def.vfxKey) : null;
@@ -562,33 +585,20 @@ export class GameApp {
       // #249 GH#288 —— 變身色疊在英雄自己的 w3x tint 上(相乘,見
       // render/views/formVisual.ts)。`composeFormTint` 會把 `undefined`
       // (「seat 表還沒好」)原樣傳回去,所以重試語意沒有被吃掉。
+      //
+      // #223 2026-07-30 —— 「問哪一隻」這個決定搬進 `championBody` 了。這裡
+      // 以前寫的是 `championTintForId(this.championIdForSeat(e.seatId))`,
+      // 也就是**第四條形態盲的縫**,而本檔與 formVisual.ts 的註解當時都已經
+      // 宣稱它是形態感知的。實測 26 對只有 #06 傑·富力士 兩半顏色不同,所以
+      // 它變身之後那具 herobiggon.glb 被漆成本體的綠色。
+      // 剩在這裡的只有 mob 那一支 —— 它要讀 `this.mobVisual`(後台可調的即時
+      // 設定),不是決策。
       championTintFor: (e) =>
-        entityTintFor(e, this.mobVisual.tintStrength, () =>
-          composeFormTint(
-            championTintForId(this.championIdForSeat(e.seatId)),
-            this.formVisualFor(e),
-          ),
-        ),
-      // per-champion model-SIZE override (task #77/#150). SAME entity→championId
-      // seam as modelDocFor/championTintFor above — render/** is walled off from
-      // the seat table (client-08), so the composition root resolves championId and
-      // reads content/models/_standin-overrides.json here; the registry applies its
-      // `relativeScale` ON TOP of ChampionView's height-normalization (default 1.0 →
-      // the normalized target for the ~105 champions with no override).
-      modelOverrideFor: (e) => this.modelOverrideFor(e),
-      // GENERATED VOXEL SKIN (task #231). Third use of the same entity →
-      // championId seam, for the same client-08 reason. The recipe is computed
-      // (pure, from the ChampionDef the registry already holds), not fetched;
-      // only the optional hand-authored override comes off the content mount.
-      voxelSkinFor: (e) => {
-        const championId = this.championIdForSeat(e.seatId);
-        return voxelSkinForId(championId, this.contentDb.voxelSkinOverrideFor(championId ?? ""));
-      },
-      // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。第五次用同一條
-      // entity → championId 縫,理由同上;唯一多做的一步是把 FORM bits 折進去,
-      // 因為這一對的 modelKey 前後不變。
+        entityTintFor(e, this.mobVisual.tintStrength, () => this.championBody.championTintFor(e)),
+      // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。同一條 entity → championId
+      // 縫,經由 championBody 的 `formVisualFor`(它自己就是形態感知的)。
       formAttachmentFor: (e) =>
-        formAttachmentSpecFor(this.formVisualFor(e), (modelKey) =>
+        formAttachmentSpecFor(this.championBody.formVisualFor(e), (modelKey) =>
           this.contentDb.modelFor(modelKey)?.glbPath ?? null,
         ),
     });
@@ -870,18 +880,17 @@ export class GameApp {
   }
 
   /**
-   * Model doc for an entity view: authored content first, then — on DEV
-   * machines only — the LOCAL-ONLY Blizzard overlay for champions that ship
-   * with a generic KayKit stand-in (see render/views/blizzardOverlay.ts and
-   * content/assets/blizzard-local/README.md). An equipped skin is an explicit
-   * cosmetic choice and is never overridden. null = nothing to upgrade to yet;
-   * the ChampionView keeps its procedural figure and asks again next frame.
+   * Model doc for an entity view — a THIN FORWARD to
+   * `render/views/championBody.ts` for the call sites that have no entity (the
+   * mob size probe, the champ-select preview, the round-winner podium).
+   *
+   * The resolution itself (authored content → equipped skin → the LOCAL-ONLY
+   * Blizzard overlay, asked about the body that is ACTUALLY on screen) lives in
+   * that module and NOT here, because nothing can construct a GameApp in a test
+   * — see the #223 note at the `championBodyHooks(...)` call in the ctor.
    */
-  private modelDocFor(key: string, seatId?: number): ModelDoc | null {
-    const resolved = this.resolveModelKey(key, seatId);
-    const doc = this.contentDb.modelFor(resolved);
-    if (resolved !== key) return doc; // equipped skin wins outright
-    return blizzardOverlayModels.resolve(doc, this.championIdForSeat(seatId));
+  private modelDocFor(key: string, seatId?: number, formIndex = 0): ModelDoc | null {
+    return this.championBody.modelDocFor(key, seatId, formIndex);
   }
 
   /** ChampionId seated at `seatId` ("" / null until champ-select confirms). */
@@ -909,76 +918,6 @@ export class GameApp {
     if (!overrides || overrides.size === 0 || seatId === undefined) return key;
     if (seatId !== hudStore.getState().localSeatId) return key;
     return overrides.get(key) ?? key;
-  }
-
-  /**
-   * Per-champion model-SIZE override (task #77/#150) for a champion entity — the
-   * composition-root seam mdl-64/mdl-150d left to wire. render/**
-   * (EntityViewRegistry/ChampionView) is walled off from the seat table
-   * (client-08), so — exactly like modelDocFor / championTintFor — the entity →
-   * championId step happens here and the override is injected. The map lives in
-   * content/models/_standin-overrides.json (schema@2, keyed by championId) and is
-   * loaded by ContentDb; the registry applies the override's `relativeScale` ON TOP
-   * of ChampionView's height-normalization (never replacing it, PRESERVING #150's
-   * normalization + #77's grounding). Returns null for the common case (no
-   * override) so the render layer's relativeScaleOf defaults to 1.0 — an unlisted
-   * champion keeps the normalized target size (~1.8u), while the 8 curated
-   * exceptions (小叮噹 0.65 → ~1.17u … 初號機 1.55 → ~2.79u) reach the renderer.
-   */
-  private modelOverrideFor(e: EntityViewState): ModelDocOverride | null {
-    // #262 — A MOB HAS NO SEAT, so the championId hop below returns null and the
-    // #150 normalization would render 一般殭屍 / 特殊殭屍 / 殭屍王 at the same
-    // 1.8u (all three docs share one .glb; only their `scale` differs, and #150
-    // stopped reading `scale`). For a mob the doc's `scale` IS the size ratio,
-    // so it is turned into the relative multiplier here — the same seam, one
-    // branch earlier. `mobModelSizeOverride` returns null for every non-mob, so
-    // champions keep the normalized size exactly as #150 left it.
-    const mob = mobModelSizeOverride(e, this.modelDocFor(e.key));
-    if (mob) return mob;
-    const championId = this.championIdForSeat(e.seatId);
-    if (!championId) return null;
-    const shipped = this.contentDb.modelOverrideFor(championId);
-    // #249 GH#288 —— 變身的大小差,疊在 #77/#150 的 relativeScale 上(相乘,不是
-    // 取代):一個本來就有大小例外的英雄(小叮噹 0.65)變身時應該是
-    // 0.65 × 變身倍率,而不是被變身倍率整個蓋掉。倍率 1 時 `formScaleMultiplier`
-    // 回 1,整條分支等同不存在。
-    const formScale = formScaleMultiplier(this.formVisualFor(e));
-    const base: ModelDocOverride | null =
-      formScale === 1
-        ? shipped
-        : { ...(shipped ?? {}), relativeScale: relativeScaleOf(shipped) * formScale };
-    // #226: 44 champions share four generated blocky meshes, so the per-champion
-    // LOOK (palette / proportions / props) is seeded from the championId here —
-    // the one place that can resolve entity → champion. Only the four stand-in
-    // model keys get one; an imported champion wears its own art and must not
-    // be repainted. Deterministic, so every client renders the same figure.
-    const archetype = ARCHETYPE_BY_MODEL_KEY[e.key];
-    if (!archetype) return base;
-    return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
-  }
-
-  /**
-   * 這個 entity **現在**的 championId —— 變身態時是 `Emeu` 那一半,不是玩家選的
-   * 那一隻。
-   *
-   * 為什麼不能只讀 seat 表:seat 記的是**選角當下**鎖定的英雄,變身不會改它
-   * (變身是 in-place 換 body,同一個 seat 同一個 entity)。而 `e.key` 也不行 ——
-   * 悟空兩態共用 `imported.goku`。唯一的權威來源是 FORM bits,它就是為了這件事
-   * 才存在的(見 apps/game-server/src/net/snapshot.ts 的 #249 註解)。
-   *
-   * 回傳 null 表示「還算不出來」(沒有 seat、還沒選角、或這一半沒有對手),
-   * 呼叫端一律當成「沒有變身外觀」。
-   */
-  private currentChampionIdFor(e: EntityViewState): string | null {
-    const seated = this.championIdForSeat(e.seatId);
-    if (!seated) return null;
-    if (formIndexFromFlags(e.flags ?? 0) === 0) return seated;
-    return counterpartFormId(seated);
-  }
-
-  /** 這個 body 的變身外觀(顏色/大小/掛件),或 null。基本型一律 null。 */
-  private formVisualFor(e: EntityViewState): FormVisual | null {
-    return this.contentDb.formVisualFor(this.currentChampionIdFor(e));
   }
 
   start(): void {
@@ -1703,6 +1642,15 @@ export class GameApp {
     // table), so the composition root supplies it, exactly like the #49 tint and
     // #231 voxel-skin seams next to it.
     const localId = hudStore.getState().localEntityId;
+    // 隱形原語 —— the VIEWER's team, read once per frame from the same store and
+    // for the same client-08 reason as `localId` above. It is the SEAT's team,
+    // not the entity's: a dead or spectating player still has a seat and must
+    // keep seeing his own team's hidden bodies (`localEntityId` is null then, so
+    // an entity-derived team would silently turn every teammate into an enemy
+    // the moment you died). null = no seat at all → everyone reads as an enemy,
+    // which is the conservative answer for a pure observer.
+    const localSeat = hudStore.getState().localSeatId;
+    const localTeam = localSeat === null ? null : (this.teamBySeat.get(localSeat) ?? null);
     // GH#192 — re-parse the 殭屍外觀 table when (and only when) it changes.
     // HERE and not in `ensurePredictionEntity`, where the combat-env table is
     // refreshed: that method early-returns for a spectating/dead player with no
@@ -1736,6 +1684,13 @@ export class GameApp {
       // dropped coin has no owner to BE, and a stale true on a pooled slot that
       // got reused by another kind would put a caret over a flying bolt.
       e.isLocal = es.kind === 0 && localId !== null && es.id === localId;
+      // 隱形原語 —— 「這具身體跟我同隊嗎」. Resolved HERE for the same reason
+      // `isLocal` is: the entity → local-team hop needs the HUD store that
+      // render/** is walled off from (client-08). Champions only; a projectile
+      // or a coin has no team to share, and a stale `true` on a pooled slot
+      // reused by another kind would leave an enemy's hidden body半透明可見.
+      e.friendly =
+        es.kind === 0 && localTeam !== null && (this.teamBySeat.get(es.seatId) ?? -1) === localTeam;
       // #244 — the authoritative flags word, forwarded verbatim. The registry
       // reads only the two GROWTH bits from it; everything else in this file
       // keeps reading `es.flags` directly, so nothing else changed.
@@ -1770,6 +1725,19 @@ export class GameApp {
         if (es.seatId >= 0) this.reviveOwnerSeats.add(es.seatId);
       } else if (e.revive) {
         e.revive = undefined; // pooled slot reused by a different kind
+      }
+      // 暗夜旗 (kind 7, 71-00 暗夜契約) reuses `shield` for the POST-abilityRange
+      // aura radius and `mana` for the owning team — protocol ENTITY_KIND
+      // .NIGHT_FLAG. Decoded here beside the revive circle's packing for the
+      // same reason: render/** must never have to know about slot reuse. And
+      // cleared for every other kind, because a pooled scratch slot reused by a
+      // champion next frame must not carry a stale ring radius.
+      if (es.kind === KIND_NIGHT_FLAG) {
+        const nf = e.nightFlag ?? (e.nightFlag = { radius: 0, teamId: -1 });
+        nf.radius = es.shield;
+        nf.teamId = es.mana;
+      } else if (e.nightFlag) {
+        e.nightFlag = undefined;
       }
       scratch.push(e);
       i++;
@@ -2937,6 +2905,13 @@ export class GameApp {
       champBySeat.set(s.seatId, s.championId);
     }
 
+    // 隱形原語 —— the viewer's team, resolved once for this frame's anchor sweep
+    // exactly as the entity pool does it (same store, same client-08 reason).
+    const localTeam =
+      hud.localSeatId === null ? null : (this.teamBySeat.get(hud.localSeatId) ?? null);
+    const isFriendlyEntity = (seatId: number): boolean =>
+      localTeam !== null && (this.teamBySeat.get(seatId) ?? -1) === localTeam;
+
     const seen = this.fbSeen;
     seen.clear();
     state.entities.forEach((es) => {
@@ -2944,6 +2919,20 @@ export class GameApp {
       // overhead bars. A guardian is NEUTRAL (task #89): no name, teamId -1, and
       // an explicit neutral bar colour (anchorColorFor) — never a team tint.
       if (!hasOverheadBar(es.kind)) return;
+      // 隱形原語 —— NO BAR FOR A HIDDEN ENEMY. This is a SECOND decision, not a
+      // consequence of the model fade: `enemyAlpha` is a field, so an operator
+      // who picks a 「半透明鬼影」 look (0.15) would otherwise still get a crisp
+      // health bar floating over the ghost — a perfect position readout, i.e.
+      // exactly the thing being hidden. `stealthVisualFor` owns both answers so
+      // they cannot drift; `friendly` is the seat's team (see the entity pool).
+      // Returning BEFORE `seen.add` is what deletes an already-pooled anchor:
+      // the sweep at the bottom of this method drops every id it did not see,
+      // so a bar that was on screen when the hero faded really goes away.
+      if (
+        es.kind === KIND_CHAMPION &&
+        !stealthVisualFor((es.flags & ENTITY_FLAG.INVISIBLE) !== 0, isFriendlyEntity(es.seatId)).healthBar
+      )
+        return;
       // L3 ZONE CULL —— 別區的血條沒有任何消費者：`WorldAnchorLayer` 只畫
       // 螢幕內的錨點，而 #67 的小地圖本來就只畫一個 zone。省掉的是每個實體
       // 每幀一次的 `project()` 3D→2D 投影 + 一個 DOM 節點的更新。
@@ -2987,6 +2976,33 @@ export class GameApp {
       const cp = es.alive ? this.casts.progressFor(es.id, nowMs) : null;
       anchor.cast = cp ? { fraction: cp.fraction, kind: cp.kind } : null;
     });
+
+    // ---- 殭屍王 minimap marker (task #262) ---------------------------------
+    // The king is a KIND_MOB, so the `hasOverheadBar` cull above skipped it with
+    // the other 50 zombies — correct for the rank and file, wrong for the one
+    // entity the 戰場任務 is about. It gets its own bus slot (frameBus.mobBoss);
+    // ui/hud/minimapBossMarker turns it into the map ping the source map's
+    // war3map.j:11824 `PingMinimapLocForForce` did.
+    //
+    // WHICH entity is the king comes from `mobBossSpawn` (hud.mobBoss.bossId) —
+    // the wire has no boss bit, and `ENTITY_FLAG` has two free values left that
+    // are worth more elsewhere. Rebuilt from scratch every frame, so a king that
+    // died (no live entity with that id) clears itself with no death handler.
+    const bossId = hud.mobBoss && hud.mobBoss.kind === "spawn" ? hud.mobBoss.bossId : -1;
+    frameBus.mobBoss = null;
+    if (bossId >= 0) {
+      const king = state.entities.get(String(bossId));
+      if (king && king.alive) {
+        const kp = this.views.posOf(king.id) ?? { x: king.x, z: king.z };
+        frameBus.mobBoss = {
+          entityId: king.id,
+          zone: king.zone,
+          worldX: kp.x,
+          worldZ: kp.z,
+          hpPct: king.maxHp > 0 ? king.hp / king.maxHp : 0,
+        };
+      }
+    }
 
     // ---- revive circles (task #84) -----------------------------------------
     // Their own frameBus list, NOT champion anchors: they carry no HP bar and

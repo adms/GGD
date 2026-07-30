@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "b89a5c1b6709",
+  "hash": "b5fd1bd4bcf2",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "6068bab0da5c",
-      "size": 5153
+      "hash": "75a05af1f33a",
+      "size": 5467
     },
     {
       "id": "audio-map",
@@ -35,14 +35,14 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "70c779699f14",
-      "size": 746
+      "hash": "619ff8e770f8",
+      "size": 775
     },
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "024edcbbf2bc",
-      "size": 307
+      "hash": "ed59de72c9ab",
+      "size": 477
     },
     {
       "id": "config.match",
@@ -81,16 +81,28 @@
       "size": 675
     },
     {
+      "id": "shield",
+      "path": "config/shield.json",
+      "hash": "e8bc79807503",
+      "size": 648
+    },
+    {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
       "hash": "e02d5cdc4f55",
       "size": 135
     },
     {
+      "id": "stealth",
+      "path": "config/stealth.json",
+      "hash": "2fd33aee2bf7",
+      "size": 1019
+    },
+    {
       "id": "store",
       "path": "config/store.json",
-      "hash": "e03a34cedd54",
-      "size": 1336
+      "hash": "f3479e15b182",
+      "size": 430
     },
     {
       "id": "unit-tints",
@@ -99,10 +111,16 @@
       "size": 26737
     },
     {
+      "id": "vfx-cleanup",
+      "path": "config/vfx-cleanup.json",
+      "hash": "7913d37cf643",
+      "size": 560
+    },
+    {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "492f12f0fc80",
-      "size": 27708
+      "hash": "ad15c2b66ef2",
+      "size": 27764
     },
     {
       "id": "victory-taunts",

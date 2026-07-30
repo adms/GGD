@@ -27,6 +27,16 @@
     }
   ],
   "vfxKey": "fx.prim.void.explosion-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.fam.burst.w3x-ff0000.s150"
+    },
+    {
+      "vfxKey": "fx.fam.flame-pillar.w3x-ff0000.s115",
+      "delayMs": 200,
+      "w3xScale": 1.435
+    }
+  ],
   "schema": "ability@1",
   "castTimeSec": 0.4
 }

@@ -57,6 +57,26 @@ export interface KnockbackRules {
   maxBodies: number;
   /** 一個身位換算成多少 GGD 單位。 */
   bodyUnit: number;
+  /**
+   * 決策點：**技能授權的位移**（擊退/擊飛/衝刺）遇上**傷害驅動的擊退**時,誰贏。
+   *
+   * true（出貨）= 技能贏。身上還有一段技能授權的位移沒走完時,這一 tick 的傷害
+   *              擊退不接管那具身體（硬直/擊倒照樣套用,讓出去的只有位移）。
+   * false        = 修這條缺陷之前的行為:傷害**無條件**蓋掉。留著是給 owner 一條
+   *              回頭路,不是一個平起平坐的選項 —— 見 `damageShoveWins` 的檔頭,
+   *              那個行為讓每一支「又打又推」的技能的擊退在出貨路徑上全滅。
+   */
+  authoredWins: boolean;
+  /**
+   * 決策點（只在 `authoredWins` 開著時有意義）：傷害驅動的擊退**推得比較遠**時,
+   * 要不要讓它接管。
+   *
+   * false（出貨）= 不接管,技能授權的距離與**方向**一路走完。
+   * true         = 「取距離較大的那個」。⚠️ 這一側會讓**拉近**（`from: "pull"`）
+   *               系的技能變得不可靠:勾中目標的那一下傷害如果算出更長的距離,
+   *               身體會被往**反方向**推出去,鉤索當場失效。想開之前先想清楚。
+   */
+  longerDamageWins: boolean;
 }
 
 /** 打就站定規則(全部後台可調)。 */
@@ -102,9 +122,157 @@ export interface FacingRules {
   instantCastTicks: number;
 }
 
+/**
+ * 卡住就接敵 AUTO-ENGAGE (GH#216 / #274 的後半),全部後台可調。
+ *
+ * ---------------------------------------------------------------------------
+ * 這條規則要修的是什麼(全部是量出來的,不是設計品味)
+ * ---------------------------------------------------------------------------
+ * #274 把「取得目標」與「追擊」拆開:移動指令期間**照樣索敵**,但**追擊停手**,
+ * 這樣玩家的走位權不會被搶。它的註解說「你會邊走邊砍你路過的東西」。
+ *
+ * 那句話對 33 位遠程成立,對 82 位近戰**在構造上不可能成立**:
+ *
+ *     索敵半徑 = max(自身射程, MELEE_ACQUIRE_FLOOR = 6)
+ *     近戰射程 ≈ 1.6   →  索敵 6、出手 1.6,中間那 4.4 只有追擊能走完
+ *     遠程射程 ≈ 8.2   →  索敵 = 射程,取得目標的同時就已經在射程內
+ *
+ * 也就是說近戰取得了目標卻永遠打不到。實測(出貨 Saber `godie-e002`,
+ * 2,326 tick 的真實對局,手把左類比一直推):
+ *
+ *     索敵半徑內 67 tick · 射程內 **0** tick · 起手 **0** 次 · 命中 **0**
+ *
+ * 而且更糟的一半:一個**到不了**的移動終點永遠不會被消耗掉(只有 ARRIVE_EPS
+ * 會清 `nav.order`),所以上面那個狀態是**永久**的。實測同一場:
+ *
+ *     右鍵點進柱子 → 位置 (-50.1, 5.9)、|v| = 0.00 連續 2,240 tick(75 秒)
+ *     最近的敵人 16.25 單位遠,索敵半徑 6 → 整場 0 次索敵、0 次出手
+ *
+ * ---------------------------------------------------------------------------
+ * 為什麼門檻是「卡住」而不是「有沒有移動指令」
+ * ---------------------------------------------------------------------------
+ * 走位權要留給玩家,這一點 #274 是對的。所以這條規則**只在走位本身走不動時**
+ * 才接手:連續 `stallTicks` 個 tick 速度低於 `stallSpeed`,而移動終點還沒到 ——
+ * 那代表玩家指的地方到不了(牆、柱子、場外),他的走位並沒有被搶走,因為那個
+ * 走位本來就在原地空轉。走得動的走位一個 tick 都不會被碰。
+ *
+ * `seekRadius` 對齊 bot 的 `AI_ENGAGE_RANGE = 48`(game-server/ai/Tier0Brain.ts):
+ * bot 一直都是掃整個 24 半徑的競技場去找架打,玩家卻只有 6 —— 卡住的玩家因此
+ * 是全場唯一一個看得到敵人卻不會動的單位。48 蓋得住競技場內任兩點。
+ *
+ * ⚠️ 這個接管是**有主人的**:`world.autoEngaging` 一旦上鎖,追擊就可以覆寫移動
+ * 通道。沒有鎖的話會震盪 —— 追擊讓身體動起來 → 不再算卡住 → 追擊停手 → 又撞回
+ * 牆上,每 `stallTicks` 個 tick 只前進一格。
+ *
+ * ---------------------------------------------------------------------------
+ * ⚠️⚠️ 2026-07-30 更正:上面那個鎖第一版**永遠不放手**,這是量出來的
+ * ---------------------------------------------------------------------------
+ * 這一段原本寫著「要嘛目標沒了、要嘛玩家下了別的指令才會解鎖」,並且把它當成
+ * 安全。那句話在紙上成立、在真實對局裡是假的,因為兩個出口對**握著搖桿的玩家**
+ * 同時都不成立:搖桿每一拍都送一條 `kind:"move"`(所以「別的指令」永遠不會來),
+ * 而競技場裡永遠有活著的敵人(所以「目標沒了」也永遠不會來)。
+ *
+ * 出貨 Saber `godie-e002`、seed 7919、真實 `MatchController` 對局,逐 tick 量到:
+ *
+ *     t=1..296   左類比一直推 +x,全速 5.80 走過去
+ *     t=297..316 撞上 zone 0 的東邊界(x ≈ −16.66),沿著邊界滑
+ *                |v| 從 0.427 一路掉到 0.394 —— **全部低於 stallSpeed 0.5**
+ *                `walkStall` 1 → 30
+ *     t=317      判定卡住 → 索敵半徑 6→48 → 索到 18.47 單位外的敵人 → **上鎖**
+ *                `moveTarget` 從 (−12.66,−1.59) 被改寫成 (−35.25, 0.10)
+ *                —— 也就是玩家推右邊,角色往**左邊**跑
+ *     t=318..    `walkStall` 立刻回到 0(身體以 5.80 在跑),但鎖**再也沒放開**
+ *
+ *     整場 2,355 個「玩家手上有走位指令」的 tick,**2,039 個被搶走**(86.6%)。
+ *
+ * 也就是說:讓鎖上鎖的那個證據(走不動)在下一個 tick 就消失了,而接管沒有跟著
+ * 結束。這正是 owner 說的「搶走玩家的走位,而且不放手」。
+ *
+ * 修法是 `respectLiveSteering`(見下)。**不要**把它換成「不卡住就自動放手」——
+ * 那會回到上面那個震盪,量到的淨位移是正常速度的 3%。
+ */
+export interface AutoEngageRules {
+  /** 總開關。false = 完全回到 #274 的行為(移動指令期間絕不接手)。 */
+  enabled: boolean;
+  /** 連續幾個 tick 走不動,才算這個走位卡住了。30 tick = 1 秒。 */
+  stallTicks: number;
+  /**
+   * 「走不動」的速度門檻 (GGD units/sec)。讀的是 `Transform.vel`(實際位移/dt),
+   * 和「打就站定」的 `walkEps` 同一個量。
+   */
+  stallSpeed: number;
+  /** 卡住之後的索敵半徑(單位)。bot 用的是 48。 */
+  seekRadius: number;
+  /**
+   * 玩家**正在下指令**的那一 tick,走位權無條件屬於他 (2026-07-30)。
+   *
+   * true(出貨)= 每一條新到的 `kind:"move"` 都把 `walkStall` 歸零並**當場解鎖**。
+   * false      = 舊行為:只看身體動不動,上鎖之後剩下四條出口(全部在
+   *              `systems/OrderSystem.ts` 的 `autoAcquirePass`)—— 換別種指令
+   *              (`order?.kind !== "move"`)、目標沒了(`if (!best)`)、
+   *              死亡(`!hp?.alive`)、zone 已結算(`settledZones.has`)。
+   *              對握著搖桿的人前兩條都不會來,所以上面量到的 86.6% 被搶走
+   *              就是這一格 false 的樣子。
+   *              (⚠️ 用條件式指路不用行號:這一段第一版寫的是 `:405` / `:505`
+   *              / `:342` / `:368`,四個全部已經飄掉十幾行。)
+   *              (⚠️ 不要只寫「目標沒了 / 換別種指令」—— 那句話漏了死亡與
+   *              回合結算兩條,`SimWorld.ts` 那份就是這樣漏了兩個月。)
+   *
+   * 為什麼「有沒有新指令進來」是對的判準,而不是「身體有沒有在動」:
+   *
+   *   · 類比搖桿 / 虛擬搖桿(`GamepadInput.mapGamepadFrame`、`TouchInput
+   *     .touchMoveOrder`)**只在推著的時候**才產生 move,而且每一拍都用當下的
+   *     `selfPos` 重算 —— 有新指令 ⇔ 玩家此刻正在轉方向盤。
+   *   · 滑鼠右鍵(`InputCapture.mapRightClick`)一次點擊只送**一條**。點進柱子
+   *     之後就再也沒有新指令 —— 那才是「玩家已經放手、而且他指的地方到不了」,
+   *     也就是這條規則真正要救的人。
+   *
+   * 所以它救的是被卡住的滑鼠玩家,而**絕不碰**正在推搖桿的人:後者本來就有
+   * 方向盤,替他轉向是幫倒忙。走不動的時候他自己會改推別的方向。
+   *
+   * ⚠️ 這一格是給 owner 反悔用的(第一守則:兩種模式都做,後台可切)。把它關掉
+   * 會讓搖桿玩家再次被接管 —— 那是上面量到的那個行為,不是新的 bug。
+   */
+  respectLiveSteering: boolean;
+  /**
+   * **硬控期間不累積「卡住」** (2026-07-30)。true = 出貨。
+   *
+   * 這一格修的是「1 秒的窗口把 hitstop/擊退全部濾掉」那句話漏掉的一半 ——
+   * 它只算了擊退,沒算硬控。掃出貨內容量到(`autoEngageStalledWalk.test.ts` 的
+   * `ae-cc-census` 每次跑都會重量一次):
+   *
+   *     content/abilities/*.json 帶 applyStatus root:true / stun:true  86 支
+   *       其中持續 ≥ 1.0 秒                                            47 支
+   *       最長 4.0 秒 = 120 tick(godie-hvsh.passive / godie-hvwd.passive)
+   *
+   * `effectRunner` 的 `expiresAtTick = tick + round(duration/dt)`,
+   * `MovementSystem` 對 `root || stun` 直接把速度歸零。所以在這一格之前,一個
+   * 被定身 1 秒以上的玩家會在第 30 tick 被判定成「走位卡住」,走位權被追擊搶走。
+   * 被控已經夠慘,解控之後角色還往反方向跑 —— 比原本的 bug 更糟。
+   *
+   * 判準讀的是 `sim/movementHold.ts` 的 `bodyHeldByRules`,和 `MovementSystem`
+   * **同一個函式**(root / stun / 施法鎖 / recovery 鎖 / 擊倒 / hitstop)。
+   * 抄一份過去的話兩份會漂走,而漂走的那天不會有任何測試紅。
+   *
+   * ⚠️ 是「凍結計數」不是「歸零計數」:一個已經卡在柱子上 20 tick 的玩家吃到
+   * 硬控,解控之後應該從 20 繼續數,不是重新等一秒。硬控只是**不算證據**,不是
+   * 把之前的證據抹掉。
+   *
+   * false = 2026-07-30 之前的行為(硬控照樣累積成「卡住」)。留著只是給 owner
+   * 反悔用的,不是一個平起平坐的選項。
+   */
+  ccPausesStall: boolean;
+}
+
 export interface CombatFeelRules {
   knockback: KnockbackRules;
   standstill: StandstillRules;
+  /**
+   * ⚠️ 選用的理由和 `facing` 完全一樣(見下)。讀的時候一律走
+   * `systems/OrderSystem.ts` 的 `autoEngageRules(world)`,它對缺格回退到
+   * `DEFAULT_AUTO_ENGAGE`。
+   */
+  autoEngage?: AutoEngageRules;
   /**
    * ⚠️ 選用,而且**必須**保持選用。`combatFeelFromDoc` 與 `DEFAULT_COMBAT_FEEL`
    * 一定會填它,所以出貨路徑上它永遠存在;選用是為了那些手寫半張表的既有測試
@@ -119,11 +287,17 @@ export interface CombatFeelRules {
   facing?: FacingRules;
 }
 
-/** owner 在 GH#193 直接給的數字。`bodyUnit` 是本任務替他假設的 1.0。 */
+/**
+ * owner 在 GH#193 直接給的數字。`bodyUnit` 是本任務替他假設的 1.0。
+ *
+ * `authoredWins: true` / `longerDamageWins: false` 的理由見 `damageShoveWins`。
+ */
 export const DEFAULT_KNOCKBACK: KnockbackRules = Object.freeze({
   minPct: 0.05,
   maxBodies: 10,
   bodyUnit: 1.0,
+  authoredWins: true,
+  longerDamageWins: false,
 });
 
 export const DEFAULT_STANDSTILL: StandstillRules = Object.freeze({
@@ -144,6 +318,49 @@ export const DEFAULT_FACING: FacingRules = Object.freeze({
 /**
  * 出貨預設。
  *
+ * `stallTicks: 30` = 1 秒。**不要調小到接近 hitstop/擊倒的長度** —— 那些會讓
+ * 速度短暫歸零,而 1 秒的窗口濾得掉**單發**的它們(`combat/damage.ts` 的
+ * `KNOCKDOWN_TICKS = 14`;內容裡授權的 `hitstopTicks` 最大是 5,量的是
+ * `content/abilities/*.json`)。上界 600 tick(20 秒)是刻意的:再長就等於這條
+ * 規則不存在,而且是靜默的。
+ *
+ * ⚠️⚠️ 2026-07-30 更正:上面那句話原本寫的是「1 秒的窗口把它們**全部**濾掉」,
+ * 而那個「全部」是**假的**,兩個方向都假:
+ *
+ *   · 它漏了**硬控**。掃出貨內容量到 86 支帶 `root`/`stun` 的 `applyStatus`,
+ *     其中 47 支持續 ≥ 1 秒,最長 4 秒(= 120 tick,是這個窗口的四倍)。
+ *     ⚠️ 最長的那一支是 **stun**(`godie-hvsh.passive` 石化之眼),不是 root ——
+ *     只處理 root 的實作會漏掉最嚴重的那一種。
+ *   · 連 hitstop 它也只擋得住**單發**。每一發新傷害都重新上值,被兩三個單位
+ *     輪流打的人 hitstop 是接續的,連起來超過 30 tick 一點都不難
+ *     (`autoEngageStalledWalk.test.ts` 的 `ae-cc-hitstop-is-not-a-stall`
+ *     就是用 40 tick 的連段量的)。
+ *
+ * 兩者都靠 `ccPausesStall`(見下)處理,**不是**靠把 `stallTicks` 調大 ——
+ * 調大 120 會讓真的卡住的玩家等四秒。
+ *
+ * `stallSpeed: 0.5` 沿用「打就站定」的 `walkEps` —— 同一個問題(這一 tick 到底
+ * 有沒有在走)只該有一個門檻的量級,兩個數字各自漂移是下一個 bug 的形狀。
+ *
+ * `seekRadius: 48` = bot 的 `AI_ENGAGE_RANGE`。競技場半徑 24,所以 48 蓋得住
+ * 場內任兩點;查詢本身仍然是 zone-scoped(`queryOverlap` 認 zone),不會跨場。
+ */
+export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
+  enabled: true,
+  stallTicks: 30,
+  stallSpeed: 0.5,
+  seekRadius: 48,
+  // 出貨 true。false 那一側是量到「86.6% 的走位 tick 被搶走」的那個行為,
+  // 留著只是為了讓 owner 可以在後台回頭,不是一個平起平坐的選項。
+  respectLiveSteering: true,
+  // 出貨 true。false = 被定身 1 秒以上的玩家照樣被判定成「走位卡住」,走位權被
+  // 追擊搶走 —— 出貨內容有 47 支這種硬控,最長 4 秒。同樣只是給 owner 回頭用的。
+  ccPausesStall: true,
+});
+
+/**
+ * 出貨預設。
+ *
  * ⚠️ 缺文件 / 壞文件 → **回這個**,不是空表。回空表的話 `minPct` 是 0(每一下
  * 都推)或 `maxBodies` 是 0(永遠不推),兩種都是靜默的規則消失:沒有任何錯誤
  * 訊息,遊戲照跑,手感全毀。這是 `statCaps.ts` 學到的同一課。
@@ -152,6 +369,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   knockback: DEFAULT_KNOCKBACK,
   standstill: DEFAULT_STANDSTILL,
   facing: DEFAULT_FACING,
+  autoEngage: DEFAULT_AUTO_ENGAGE,
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台)共用這一個常數。 */
@@ -181,6 +399,12 @@ export function normalizeKnockbackRules(raw: unknown): KnockbackRules {
     minPct: num(r.minPct, DEFAULT_KNOCKBACK.minPct, 0, 1),
     maxBodies: num(r.maxBodies, DEFAULT_KNOCKBACK.maxBodies, 0, 100),
     bodyUnit: num(r.bodyUnit, DEFAULT_KNOCKBACK.bodyUnit, 0, 100),
+    authoredWins:
+      typeof r.authoredWins === "boolean" ? r.authoredWins : DEFAULT_KNOCKBACK.authoredWins,
+    longerDamageWins:
+      typeof r.longerDamageWins === "boolean"
+        ? r.longerDamageWins
+        : DEFAULT_KNOCKBACK.longerDamageWins,
   });
 }
 
@@ -222,6 +446,29 @@ export function normalizeFacingRules(raw: unknown): FacingRules {
   });
 }
 
+/**
+ * 上界都是刻意的(第一守則:「欄位要有上界,不是只有下界」)。
+ * `seekRadius` 夾到 200:競技場半徑 24,200 已經遠超過任何合理值,但擋得住
+ * 「48 打成 4800」那種手滑 —— 太大的半徑會讓 `queryOverlap` 每 tick 掃全場。
+ */
+export function normalizeAutoEngageRules(raw: unknown): AutoEngageRules {
+  const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  return Object.freeze({
+    enabled: typeof r.enabled === "boolean" ? r.enabled : DEFAULT_AUTO_ENGAGE.enabled,
+    stallTicks: ticks(r.stallTicks, DEFAULT_AUTO_ENGAGE.stallTicks, 1, 600),
+    stallSpeed: num(r.stallSpeed, DEFAULT_AUTO_ENGAGE.stallSpeed, 0, 100),
+    seekRadius: num(r.seekRadius, DEFAULT_AUTO_ENGAGE.seekRadius, 0, 200),
+    respectLiveSteering:
+      typeof r.respectLiveSteering === "boolean"
+        ? r.respectLiveSteering
+        : DEFAULT_AUTO_ENGAGE.respectLiveSteering,
+    ccPausesStall:
+      typeof r.ccPausesStall === "boolean"
+        ? r.ccPausesStall
+        : DEFAULT_AUTO_ENGAGE.ccPausesStall,
+  });
+}
+
 export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
   if (!doc || typeof doc !== "object") return DEFAULT_COMBAT_FEEL;
   const d = doc as {
@@ -229,12 +476,14 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     knockback?: unknown;
     standstill?: unknown;
     facing?: unknown;
+    autoEngage?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
     knockback: normalizeKnockbackRules(d.knockback),
     standstill: normalizeStandstillRules(d.standstill),
     facing: normalizeFacingRules(d.facing),
+    autoEngage: normalizeAutoEngageRules(d.autoEngage),
   });
 }
 
@@ -287,6 +536,72 @@ export function knockbackDistance(
   gap: number,
 ): number {
   return afterGap(knockbackRaw(rules, damage, maxHp), gap);
+}
+
+/** 目前佔著 `nav.override` 的那一段位移,壓成仲裁需要的兩個事實。 */
+export interface ActiveShove {
+  /** 技能授權的嗎(擊退/擊飛/衝刺 effect),還是傷害驅動的環境擊退 */
+  authored: boolean;
+  /** 還剩多少距離要走 (GGD units);擊飛用「現在到落點」的平面距離 */
+  remaining: number;
+}
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ *  誰贏:傷害驅動的擊退 vs 已經在身上的那一段位移
+ * ═══════════════════════════════════════════════════════════════════════════
+ * `combat/damage.ts` 在 `step()` 的第 8 格排乾傷害佇列,而 effect 是在第 2b/3 格
+ * 跑的。所以「這一擊要不要接管那具身體」是一個**每 tick 都會遇到的決策**,
+ * 不是罕見的競態。
+ *
+ * ── 為什麼預設是「技能贏」(`authoredWins: true`, `longerDamageWins: false`)
+ *
+ * ① **不這樣做的話這根原語在出貨路徑上是全滅的,這是量出來的。** 出貨內容裡
+ *    描述已經承諾要擊退/擊飛的 11 支技能(見 content/fieldAdoption.test.ts 的
+ *    knockback 豁免條目所列的完整清單:95-01、47-03、77-01、05-04、57-01、
+ *    32-01、76-02、39-02、06-00、06-002、78-04)**每一支都造成傷害**。無條件
+ *    賦值之下,它們授權的距離會被自己的傷害在同一 tick 蓋成傷害驅動的那個值。
+ *    實測(`sim/knockbackVsDamage.test.ts` 的場景):授權 12 單位 → 量到 1.50。
+ *
+ * ② **方向也是設計,不只是距離。** `from: "pull"` 的鉤索系技能把目標**拉向**
+ *    施法者,而傷害驅動的擊退永遠是**推開**。任何「取距離較大的那個」或
+ *    「兩者相加」的合併規則都會在傷害夠大時把拉近翻成推開 —— 那不是被調弱,
+ *    是那支技能當場失效。所以 `longerDamageWins` 的預設是 false,而且它的
+ *    欄位說明必須講出這個代價。
+ *
+ * ③ **這和 GH#193 不衝突,因為 #193 已經在技能那一側了。** `effects/knockback.ts`
+ *    的 `impactPower` 會把授權的擊退送進**同一支** `knockbackRaw` / `afterGap`,
+ *    吃的是操作者當下的 `minPct` / `maxBodies` / `bodyUnit`。所以「技能贏」贏掉的
+ *    是**重複計算**,不是那條法則。
+ *
+ * ④ **和全遊戲共用的那個語意同向。** 作者寫的 `hitFeel.knockbackMag` 早就是
+ *    「下限」而不是「取代」(見 afterGap 的檔頭)。作者的數字一路被當成**至少
+ *    要這麼多**,而不是被環境規則洗掉 —— 這裡只是把同一個立場延伸到
+ *    「兩個寫入者撞在一起」這個情形。
+ *
+ * ── 被否決的候選,以及為什麼
+ *
+ *   · 「兩者相加」—— 沒有任何上界。`KB_MAX_DISTANCE` 只夾單一來源,相加之後
+ *     可以把人推出整個競技場,而且是靜默的。
+ *   · 「依 kind 排優先序」—— `kind` 只有 dash/knockback/leap 三個值,分不出
+ *     「技能寫的 knockback」和「傷害寫的 knockback」,而那正是要分的那一刀。
+ *
+ * 純比較,沒有 rng / 三角函數 / `**`(sim/purity.test.ts)。
+ *
+ * @param active   目前佔著 `nav.override` 的位移;`null` = 那具身體是空的
+ * @param incoming 這一擊算出來的擊退距離(已經減過距離)
+ * @returns 傷害擊退可以寫入 `nav.override` 嗎
+ */
+export function damageShoveWins(
+  rules: KnockbackRules,
+  active: ActiveShove | null,
+  incoming: number,
+): boolean {
+  // 沒有東西擋路,或擋路的本來就是上一發傷害擊退 → 新的一發覆蓋舊的一發,
+  // 這是修這條缺陷之前就有的行為,而且它沒有問題(連續挨打就是一直被推)。
+  if (active === null || !active.authored) return true;
+  if (!rules.authoredWins) return true;
+  return rules.longerDamageWins && incoming > active.remaining;
 }
 
 // --------------------------------------------------------------- 打就站定 --

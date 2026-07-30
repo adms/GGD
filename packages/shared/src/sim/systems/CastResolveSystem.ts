@@ -23,8 +23,25 @@ export function castResolveSystem(world: SimWorld): void {
     const st = world.status.get(id);
     const stunned = st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick) ?? false;
 
+    // 被打中斷 (`AbilityDef.interruptOn: "damage"`, 後台/編輯器可調).
+    //
+    // ABSENT on every shipped ability but 揍敵客阿福 R 龍星群, so this line is a
+    // strict no-op for the rest of the roster: `interruptOn` undefined → the
+    // whole term is false and only the three pre-existing causes below apply.
+    //
+    // 「被打」 IS DEFINED AS 「HP 比開始吟唱時低」, and the two consequences are
+    // deliberate rather than overlooked: a hit fully eaten by a shield does NOT
+    // break the channel (nothing hurt you), and the fire-ring burn DOES (it is
+    // damage, and standing in the fire while channelling a 2-second ultimate
+    // should cost you). Compared against the cast's OWN snapshot, so regen
+    // ticking the bar back up mid-channel cannot un-interrupt anything and a
+    // second cast starts from a fresh baseline.
+    const def = Abilities.get(cast.abilityId);
+    const damaged =
+      def.interruptOn === "damage" && hp !== undefined && hp.hp < cast.hpAtStart;
+
     // interrupt: death, stun, or a knockdown cancels the cast (mana stays spent)
-    if (!hp?.alive || stunned || (world.knockdown.get(id) ?? 0) > 0) {
+    if (!hp?.alive || stunned || damaged || (world.knockdown.get(id) ?? 0) > 0) {
       ab.cast = null;
       world.emit("castInterrupt", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
       continue;
@@ -44,7 +61,6 @@ export function castResolveSystem(world: SimWorld): void {
 
     // wind-up elapsed — resolve.
     ab.cast = null;
-    const def = Abilities.get(cast.abilityId);
     // GROUND AoE: re-query the circle NOW instead of trusting the membership
     // snapshotted at cast-begin. With a cast time the snapshot hit whoever
     // stood there when the key was pressed even if they walked out, and missed

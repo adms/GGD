@@ -62,14 +62,12 @@ import { hudActions } from "../actions";
 import { setHeldAbility } from "../abilityHold";
 import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
-import { AbilityDescriptionOverlay } from "../AbilityDescriptionOverlay";
 import { exSlotView } from "../exSlot";
 import { cooldownView } from "../cooldownView";
 import { CooldownChrome } from "./CooldownChrome";
 import { displayFinal, useDisplayEnv } from "../displayFinal";
 import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
 import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
-import { CastNoticeLine } from "./CastNotice";
 import {
   innateCastNote,
   innateKindLabel,
@@ -260,18 +258,16 @@ export function AbilityBar(): React.JSX.Element | null {
   if (!def) return null;
 
   return (
-    <>
-    {/* held-button description panel across the top of the screen (task #152) */}
-    <AbilityDescriptionOverlay />
-    {/* why a press was refused, right above the bar that refused it (P7) */}
-    <CastNoticeLine />
     <div
       ref={rootRef}
+      data-hud-cluster-row="abilities"
       style={{
-        position: "absolute",
-        left: "50%",
-        bottom: 14,
-        transform: "translateX(-50%)",
+        // A FLEX CHILD of ui/hud/BottomCluster, not a self-pinned box. It used
+        // to be `position:absolute; left:50%; bottom:14; translateX(-50%)`,
+        // with ResourceBars pinned 128 px up in a different file — see
+        // ui/hud/hudBottomCluster for why that pair could not express
+        // 「緊鄰但不重疊」 and what replaced it.
+        position: "relative",
         display: "flex",
         gap: 6,
         padding: "8px 10px",
@@ -622,6 +618,5 @@ export function AbilityBar(): React.JSX.Element | null {
         );
       })()}
     </div>
-    </>
   );
 }

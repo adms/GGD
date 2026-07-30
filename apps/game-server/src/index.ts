@@ -8,7 +8,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Server, matchMaker } from "colyseus";
-import { WebSocketTransport } from "@colyseus/ws-transport";
+import { WebSocketTransport, WebSocketClient } from "@colyseus/ws-transport";
 import { ContentLoader, OverlayContentSource, registerAll, Configs } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
@@ -17,6 +17,14 @@ import { MatchRoom } from "./rooms/MatchRoom";
 import { verify, mintTicket } from "./auth/hmac";
 import { mintCreateToken } from "./rooms/createGate";
 import { sanitizeDisplayName } from "./net/sanitizeText";
+import {
+  installOutboundCopyGuard,
+  perMessageDeflateOption,
+  resolveWsCompression,
+  wsCompressionBootLine,
+} from "./net/wsCompression";
+import { clusterBootLine, resolveClusterConfig } from "./config/cluster";
+import { buildMatchmakerBackend } from "./cluster/matchmakerBackend";
 import { secretConfigError } from "./config/secretGuard";
 import { deployTierBootLine } from "./config/deployTier";
 import { probePlatformAtBoot, PLATFORM_URL } from "./config/platformUrl";
@@ -29,9 +37,20 @@ import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
 import { setActiveContentVersion } from "./replay/Player";
 import { liveRecordingIds } from "./replay/Recorder";
-import { pruneReplays, replayDir } from "./replay/store";
+import { probeReplayDirWritable, pruneReplays, replayDir } from "./replay/store";
+import { replayHealth } from "./replay/replayHealth";
+import { buildHealthzPayload, healthzStatus } from "./healthz";
 
-const PORT = Number(process.env.GAME_PORT ?? 2567);
+// MULTI-PROCESS (A). Resolved here rather than read from env piecemeal so the
+// port this shard BINDS and the address it ADVERTISES can never disagree — see
+// config/cluster.ts. On the default GGD_GAME_PROCESSES=1 this is exactly the
+// old `Number(process.env.GAME_PORT ?? 2567)` with LocalPresence/LocalDriver.
+const { config: CLUSTER, errors: CLUSTER_ERRORS } = resolveClusterConfig(process.env);
+if (CLUSTER_ERRORS.length > 0) {
+  console.error(`[cluster] FATAL: refusing to start.\n  - ${CLUSTER_ERRORS.join("\n  - ")}`);
+  process.exit(1);
+}
+const PORT = CLUSTER.port;
 /** content tree root — defaults to the monorepo's content/ next to apps/ */
 const CONTENT_DIR =
   process.env.CONTENT_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "../../../content");
@@ -185,41 +204,13 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
 
 const httpServer = createServer((req, res) => {
   if (req.url === "/healthz") {
-    res.writeHead(200, { "content-type": "application/json" });
-    // `rooms` is the ONLY place the live admission state is observable. It
-    // matters when an operator lowers maxRooms below the running count: the
-    // shard is not broken, it is DRAINING — {active: 63, capacity: 50,
-    // draining: true} means no new match starts until 13 finish. Without this
-    // the refusals look like an outage.
-    // `platform` (task #48) is the SECOND thing that was invisible. Curation,
-    // combat-env and server-ops all fail SAFE when the platform is unreachable,
-    // so a misconfigured shard looks perfectly healthy while serving allow-all
-    // and untuned multipliers. This block names the resolved platform URL, how
-    // it was chosen, and every fail-safe currently in force — so "why did my
-    // admin tuning do nothing" is one curl away instead of a log archaeology
-    // expedition. `degraded: false` is a real statement, not an absence.
-    // `platform.content` is the THIRD thing that was invisible, and the one the
-    // owner actually asks about: "I changed it in the console — did it land on
-    // the shard?" Per document it reports the version the platform last
-    // announced on the Redis bus, the version this process actually re-fetched,
-    // and when. `stale: false` means the answer is yes; `stale: true` names the
-    // reason it is no. Without it, the only way to check was to start a match
-    // and squint at the numbers.
-    // `sim` (task #272) is the FOURTH, and it is the one this endpoint exists
-    // for in the first place: whether the authoritative loop is keeping up.
-    // #46 replaced a freeze with a silent slow-down, and the shed's only output
-    // was one console.warn — so a shard shedding ticks every minute reported
-    // `ok: true` with nothing to contradict it. `shedEvents`/`shedTicks` name
-    // the catastrophic case and `p50/p95/p99` name the one sheds cannot see
-    // (every tick slightly over budget, never reaching the clamp).
-    res.end(
-      JSON.stringify({
-        ok: true,
-        rooms: roomRegistry.stats(),
-        sim: tickHealth.snapshot(),
-        platform: platformStatusWithContent(),
-      }),
-    );
+    // The payload and the status policy live in ./healthz so they are testable
+    // — index.ts binds a port at import time, which made every field on this
+    // endpoint unreachable from a test. See that file for what each block is
+    // for and why `replay` (GH#170) had to be added.
+    const payload = buildHealthzPayload();
+    res.writeHead(healthzStatus(payload), { "content-type": "application/json" });
+    res.end(JSON.stringify(payload));
     return;
   }
   if (req.url === "/_internal/matches" && req.method === "POST") {
@@ -266,11 +257,33 @@ const httpServer = createServer((req, res) => {
   res.end();
 });
 
+// B2: permessage-deflate + the owner's size threshold. Every knob (including
+// the one that makes the threshold work at all) lives in ./net/wsCompression;
+// nothing about compression is decided here. maxPayload is passed through to
+// the extension by ws, so it also bounds the DECOMPRESSED size of an inbound
+// frame — a compressed-bomb cannot expand past 64 KiB either.
+const wsCompression = resolveWsCompression();
+console.log(wsCompressionBootLine(wsCompression));
+// Compression makes ws.send() asynchronous, which makes @colyseus/schema's
+// reused encode buffer unsafe to hand out by reference. See the long comment on
+// installOutboundCopyGuard — without this, patches arrive spliced.
+if (wsCompression.enabled) installOutboundCopyGuard(WebSocketClient);
+console.log(clusterBootLine(CLUSTER));
 const gameServer = new Server({
   // Cap the WS frame size (DoS): a client cannot force megabytes of JSON to be
   // deserialized per message. 64 KiB comfortably fits a legit INPUT batch while
   // bounding the work behind the input validator + mailbox caps.
-  transport: new WebSocketTransport({ server: httpServer, maxPayload: 64 * 1024 }),
+  transport: new WebSocketTransport({
+    server: httpServer,
+    maxPayload: 64 * 1024,
+    perMessageDeflate: perMessageDeflateOption(wsCompression),
+  }),
+  // THE CLUSTER IS THESE THREE FIELDS. `presence` is how this process discovers
+  // the others (room placement and cross-process seat reservation are both
+  // presence IPC), `driver` is the shared room listing, and `publicAddress` is
+  // what tells the browser which of them owns its room. Empty object on a
+  // single-process shard — Colyseus's local defaults, unchanged.
+  ...buildMatchmakerBackend(CLUSTER),
 });
 
 gameServer.define("match", MatchRoom);
@@ -375,10 +388,34 @@ loadContent()
     // restarted mid-season still converges on the ceiling instead of only ever
     // pruning while matches happen to be finishing. Fire-and-forget: nothing
     // waits on it and a failure only logs.
-    void pruneReplays(liveRecordingIds())
-      .then((deleted) => {
+    // GH#170 — SAY IT AT BOOT, and prove it with a real write.
+    //
+    // Counters only move when a match is played, and the owner deploys in the
+    // evening and plays afterwards; a counter-only design would tell him his
+    // session is unrecordable at the START of that session, at the earliest.
+    // This creates and unlinks a probe file, so the answer is in the boot log
+    // AND on /healthz before anyone connects. `access(W_OK)` was rejected on
+    // purpose: it asks about permission BITS and answers "yes" on a read-only
+    // mount and on a full disk. Only the syscall the recorder itself performs
+    // is evidence. Fire-and-forget — a best-effort feature must never delay or
+    // block accepting matches.
+    void probeReplayDirWritable()
+      .then(async (probe) => {
+        replayHealth.noteProbe(probe.ok, probe.ok ? undefined : probe.err);
+        if (!probe.ok) {
+          console.error(
+            `[ggd.replay] phase=probe dir=${replayDir()} writable=false — ` +
+              "NO MATCH ON THIS SHARD WILL BE RECORDED. Check the mount's owner/uid " +
+              "(the container runs as `node`, uid 1000) and free space; see " +
+              "docs/replay-observability.md",
+            probe.err,
+          );
+          // Still prune: an unwritable directory can still be readable, and a
+          // failed probe is not a reason to also stop enforcing retention.
+        }
+        const deleted = await pruneReplays(liveRecordingIds());
         console.log(
-          `[replay] recordings in ${replayDir()}` +
+          `[replay] recordings in ${replayDir()} (writable=${probe.ok})` +
             (deleted.length > 0 ? `; retention pruned ${deleted.length} at boot` : ""),
         );
       })

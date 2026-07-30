@@ -18,6 +18,10 @@ import { HttpContentSource, Arenas, Configs, Models, VfxDefs } from "@ggd/shared
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { ContentDb, contentAssetUrl } from "./ContentDb";
 import { ensureContentLoaded, __resetContentBoot } from "./bootContent";
+import { maxAbilityVfxLayers, setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
+import { DEFAULT_MAX_ABILITY_VFX_LAYERS } from "@ggd/shared/content/schema/abilityVfx";
+import { oneShotMaxLifeSec, setOneShotMaxLifeSec } from "../vfx/oneShotLife";
+import { DEFAULT_ONE_SHOT_MAX_LIFE_SEC } from "@ggd/shared/content/schema/vfx";
 
 const HASH = "aaaaaaaaaaaa";
 const idx = (collection: string, entries: { id: string; path: string }[]) => ({
@@ -171,6 +175,88 @@ describe("ContentDb per-match load", () => {
     await p;
     expect(db.modelFor("mock.model")).toBeTruthy(); // …and the override answers now
     expect(db.modelOverrideFor("godie2000")).toBeTruthy();
+  });
+});
+
+/**
+ * #205 —— 後台的層數上限有沒有真的被裝上去。
+ *
+ * ⛔ 這條**不是**掃原始碼字串(第⑥號故障)。它跑真的 `ContentDb.load()`,然後
+ * 問 `render/vfx/abilityLayers` 這個模組現在生效的上限是多少 —— 也就是施法時
+ * `VfxSystem` 會問的那一個。ContentDb 少掉 `setMaxAbilityVfxLayers(...)` 那一
+ * 行,後台把上限調成 2 之後場上照樣播五層,而這條會紅。
+ */
+describe("#205 層數上限:後台的值真的被裝進讀取端", () => {
+  const familiesDoc = (max: number | undefined): Record<string, unknown> => ({
+    id: "vfx-families",
+    schema: "config.vfx-families@1",
+    enabled: true,
+    scaleGain: 0.35,
+    scaleMin: 0.5,
+    scaleMax: 3,
+    ...(max === undefined ? {} : { maxAbilityVfxLayers: max }),
+    families: {},
+    abilities: {},
+  });
+
+  afterEach(() => setMaxAbilityVfxLayers(undefined));
+
+  it("config 裡的 maxAbilityVfxLayers 在 load() 之後就是生效值", async () => {
+    Configs.register(familiesDoc(2) as never);
+    const db = new ContentDb();
+    await db.load("arena.mock");
+    expect(maxAbilityVfxLayers()).toBe(2);
+  });
+
+  it("config 沒寫這一格 → 回到出貨預設，不是 0 層", async () => {
+    setMaxAbilityVfxLayers(2); // 先髒化，證明 load() 真的覆寫了它
+    Configs.register(familiesDoc(undefined) as never);
+    const db = new ContentDb();
+    await db.load("arena.mock");
+    expect(maxAbilityVfxLayers()).toBe(DEFAULT_MAX_ABILITY_VFX_LAYERS);
+  });
+});
+
+/**
+ * owner 2026-07-30 (a) —— 餘燼壽命上限有沒有真的被裝上去。
+ *
+ * 和上面那一組同一個理由、同一種形狀:跑真的 `ContentDb.load()`,再問
+ * `vfx/oneShotLife` 這個模組現在生效的值 —— 也就是 `VfxSystem` 在夾粒子壽命時
+ * 會問的那一個。`ContentDb` 少掉 `setOneShotMaxLifeSec(...)` 那一行,後台把
+ * 0.6 調成 2.0 之後 schema 收下了、頁面顯示 2.0、而場上的粒子仍然 0.6 秒
+ * 就沒了(第②號故障),而這條會紅。
+ *
+ * 粒子壽命**真的變成 2.0** 那一半在 `apps/client/src/vfx/oneShotLife.test.ts`
+ * (真 NullEngine + 真 VfxSystem + 讀真的 `ParticleSystem.maxLifeTime`)。
+ */
+describe("餘燼壽命上限:後台的值真的被裝進讀取端", () => {
+  const familiesDoc = (life: number | undefined): Record<string, unknown> => ({
+    id: "vfx-families",
+    schema: "config.vfx-families@1",
+    enabled: true,
+    scaleGain: 0.35,
+    scaleMin: 0.5,
+    scaleMax: 3,
+    ...(life === undefined ? {} : { oneShotMaxLifeSec: life }),
+    families: {},
+    abilities: {},
+  });
+
+  afterEach(() => setOneShotMaxLifeSec(undefined));
+
+  it("config 裡的 oneShotMaxLifeSec 在 load() 之後就是生效值", async () => {
+    Configs.register(familiesDoc(2) as never);
+    const db = new ContentDb();
+    await db.load("arena.mock");
+    expect(oneShotMaxLifeSec()).toBe(2);
+  });
+
+  it("config 沒寫這一格 → 回到出貨的 0.6，不是 0（0 = 一次性特效整個看不見）", async () => {
+    setOneShotMaxLifeSec(2); // 先髒化，證明 load() 真的覆寫了它
+    Configs.register(familiesDoc(undefined) as never);
+    const db = new ContentDb();
+    await db.load("arena.mock");
+    expect(oneShotMaxLifeSec()).toBe(DEFAULT_ONE_SHOT_MAX_LIFE_SEC);
   });
 });
 

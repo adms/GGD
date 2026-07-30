@@ -1,0 +1,3322 @@
+{
+  "schema": "w3x-unit-swap-census@1",
+  "source": "src_gogodieEX227s.w3x — war3map.{w3a,w3u,wts,j} + out/stock/STOCK_*.json",
+  "generatedBy": "tools/w3x-import/extract_unit_swap_census.py",
+  "method": "classify each w3a entry by the SHAPE of its Blizzard base row: A/metamorph = DataA1 and UnitID1 both name units (two-way caster morph); B/one-way = UnitID1 only (a summon — the caster keeps its body); C/split = DataA1 names 2+ units (Primal Split — the caster is replaced). A and C swap the caster; B does not.",
+  "counts": {
+    "stockSwapShapedBases": 115,
+    "metamorphEntries": 26,
+    "splitEntries": 2,
+    "splitEntriesLive": 1,
+    "summonEntries": 68,
+    "jassReplaceUnitSites": 3
+  },
+  "metamorphEntries": [
+    {
+      "abilityRawcode": "A02Q",
+      "abilityBase": "AEIl",
+      "abilityName": "22-04 雛見澤症候群L5",
+      "normalUnit": {
+        "rawcode": "E001",
+        "championId": "godie-e001",
+        "inW3u": true,
+        "subName": "(22)",
+        "unitName": "蟬在叫人壞掉",
+        "properName": "龍宮禮奈",
+        "model": "RenaRyugu2.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0CL",
+          "A0SU"
+        ],
+        "heroAbilities": [
+          "A007",
+          "AOcr",
+          "AEsh",
+          "A02Q",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      },
+      "alternateUnit": {
+        "rawcode": "E00N",
+        "championId": "godie-e00n",
+        "inW3u": true,
+        "subName": "(22L5)",
+        "unitName": "蟬在叫人壞掉",
+        "properName": "龍宮禮奈",
+        "model": "RenaRyugu2.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 400,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 55,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 1.5,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A0FR",
+          "A0SB",
+          "AInv",
+          "A0CL",
+          "A0SV"
+        ],
+        "heroAbilities": [
+          "A007",
+          "AOcr",
+          "AEsh",
+          "A02Q",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      }
+    },
+    {
+      "abilityRawcode": "A02W",
+      "abilityBase": "AEIl",
+      "abilityName": "12-03 破凰之心-徒手空破山",
+      "normalUnit": {
+        "rawcode": "Ewar",
+        "championId": "godie-ewar",
+        "inW3u": true,
+        "subName": "(12)",
+        "unitName": "龍之子",
+        "properName": "天地志狼",
+        "model": "HeroLingTong.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A04Z",
+          "A0SQ"
+        ],
+        "heroAbilities": [
+          "A04Y",
+          "A02K",
+          "A02W",
+          "A04X",
+          "Aamk"
+        ],
+        "baseId": "Ewar"
+      },
+      "alternateUnit": {
+        "rawcode": "E007",
+        "championId": "godie-e007",
+        "inW3u": true,
+        "subName": "(12破凰狀態)",
+        "unitName": "龍之子",
+        "properName": "天地志狼",
+        "model": "HeroLingTong.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A04Z",
+          "A0SQ"
+        ],
+        "heroAbilities": [
+          "A04Y",
+          "A02K",
+          "A02W",
+          "A04X",
+          "Aamk"
+        ],
+        "baseId": "Ewar"
+      }
+    },
+    {
+      "abilityRawcode": "A040",
+      "abilityBase": "AEIl",
+      "abilityName": "58-04 瘋狂皮卡丘",
+      "normalUnit": {
+        "rawcode": "Ofar",
+        "championId": "godie-ofar",
+        "inW3u": true,
+        "subName": "(58)",
+        "unitName": "神奇寶貝兒",
+        "properName": "皮卡丘",
+        "model": "HeroPikachu.mdl",
+        "scale": 0.8999999761581421,
+        "selectionScale": null,
+        "moveSpeed": null,
+        "level": null,
+        "maxHealth": null,
+        "healthRegen": null,
+        "maxMana": null,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0R6",
+          "Alit",
+          "A0SL"
+        ],
+        "heroAbilities": [
+          "A0BZ",
+          "A04U",
+          "A0C3",
+          "A040",
+          "Aamk"
+        ],
+        "baseId": "Ofar"
+      },
+      "alternateUnit": {
+        "rawcode": "O02L",
+        "championId": "godie-o02l",
+        "inW3u": true,
+        "subName": "(58變身)",
+        "unitName": "神騎寶貝",
+        "properName": "皮卡丘",
+        "model": "picacugy.mdl",
+        "scale": 1.7999999523162842,
+        "selectionScale": null,
+        "moveSpeed": null,
+        "level": null,
+        "maxHealth": null,
+        "healthRegen": null,
+        "maxMana": null,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.5,
+        "attackRange": 120,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0R6",
+          "A0AG",
+          "A0FO",
+          "A0SL"
+        ],
+        "heroAbilities": [
+          "A0BZ",
+          "A04U",
+          "A0C3",
+          "A040",
+          "Aamk"
+        ],
+        "baseId": "Ofar"
+      }
+    },
+    {
+      "abilityRawcode": "A06K",
+      "abilityBase": "AEIl",
+      "abilityName": "42-002 魔力印章",
+      "normalUnit": {
+        "rawcode": "N003",
+        "championId": "godie-n003",
+        "inW3u": true,
+        "subName": "(42)",
+        "unitName": "黑暗福音",
+        "properName": "依文潔琳",
+        "model": "Long.mdl",
+        "scale": 0.699999988079071,
+        "selectionScale": null,
+        "moveSpeed": 295,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 2.5,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 5,
+        "attackCooldown": 2.0,
+        "attackRange": 400,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A059",
+          "A06K"
+        ],
+        "heroAbilities": [
+          "A05B",
+          "AUdr",
+          "A05C",
+          "A05D",
+          "Aamk"
+        ],
+        "baseId": "Nbrn"
+      },
+      "alternateUnit": {
+        "rawcode": "N01G",
+        "championId": "godie-n01g",
+        "inW3u": true,
+        "subName": "(42魔力印章)",
+        "unitName": "黑暗福音",
+        "properName": "依文潔琳",
+        "model": "Long.mdl",
+        "scale": 0.699999988079071,
+        "selectionScale": null,
+        "moveSpeed": 160,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 2.5,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 5,
+        "attackCooldown": 2.0,
+        "attackRange": 400,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A059",
+          "A06K"
+        ],
+        "heroAbilities": [
+          "A05B",
+          "AUdr",
+          "A05C",
+          "A05D",
+          "Aamk"
+        ],
+        "baseId": "Nbrn"
+      }
+    },
+    {
+      "abilityRawcode": "A09E",
+      "abilityBase": "AEIl",
+      "abilityName": "09-03 超級賽亞人",
+      "normalUnit": {
+        "rawcode": "Ogrh",
+        "championId": "godie-ogrh",
+        "inW3u": true,
+        "subName": "(09)",
+        "unitName": "賽亞人",
+        "properName": "悟空",
+        "model": "goku.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.30000001192092896,
+        "maxMana": 100,
+        "manaRegen": 0.15000000596046448,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A0O1",
+          "A0NL",
+          "AInv",
+          "A0MI"
+        ],
+        "heroAbilities": [
+          "A082",
+          "A03Y",
+          "A09E",
+          "A03S",
+          "Aamk"
+        ],
+        "baseId": "Ogrh"
+      },
+      "alternateUnit": {
+        "rawcode": "O00X",
+        "championId": "godie-o00x",
+        "inW3u": true,
+        "subName": "(09超三)",
+        "unitName": "超級賽亞人",
+        "properName": "悟空",
+        "model": "Goku.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 400,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.2000000476837158,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A0S7",
+          "A0O1",
+          "A0NL",
+          "AInv",
+          "A017",
+          "A0MJ"
+        ],
+        "heroAbilities": [
+          "A082",
+          "A03Y",
+          "A09E",
+          "A03S",
+          "Aamk"
+        ],
+        "baseId": "Ogrh"
+      }
+    },
+    {
+      "abilityRawcode": "A0DB",
+      "abilityBase": "AEIl",
+      "abilityName": "87-03 天下號令",
+      "normalUnit": {
+        "rawcode": "O02N",
+        "championId": "godie-o02n",
+        "inW3u": true,
+        "subName": "(87)",
+        "unitName": "曹操孟德",
+        "properName": "阿瞞大人",
+        "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+        "scale": 1.2999999523162842,
+        "selectionScale": null,
+        "moveSpeed": 330,
+        "level": null,
+        "maxHealth": null,
+        "healthRegen": 75.0,
+        "maxMana": null,
+        "manaRegen": null,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": null,
+        "attackSides": null,
+        "attackCooldown": 2.0,
+        "attackRange": 120,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "ANht"
+        ],
+        "heroAbilities": [
+          "A0DE",
+          "A0DD",
+          "A0DB",
+          "A0C2",
+          "Aamk"
+        ],
+        "baseId": "Ofar"
+      },
+      "alternateUnit": {
+        "rawcode": "O02O",
+        "championId": "godie-o02o",
+        "inW3u": true,
+        "subName": "(87變身)",
+        "unitName": "曹操孟德",
+        "properName": "阿瞞大人",
+        "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+        "scale": 1.2999999523162842,
+        "selectionScale": null,
+        "moveSpeed": 330,
+        "level": null,
+        "maxHealth": null,
+        "healthRegen": 75.0,
+        "maxMana": null,
+        "manaRegen": null,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": null,
+        "attackSides": null,
+        "attackCooldown": 2.0,
+        "attackRange": 120,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A05P",
+          "A0DI",
+          "A0DC",
+          "ANht",
+          "A0DR"
+        ],
+        "heroAbilities": [
+          "A0DE",
+          "A0DD",
+          "A0DB",
+          "A0C2",
+          "Aamk"
+        ],
+        "baseId": "Ofar"
+      }
+    },
+    {
+      "abilityRawcode": "A0DZ",
+      "abilityBase": "ANrg",
+      "abilityName": "20-01 風王結界",
+      "normalUnit": {
+        "rawcode": "E002",
+        "championId": "godie-e002",
+        "inW3u": true,
+        "subName": "(20)",
+        "unitName": "亞瑟王",
+        "properName": "Saber",
+        "model": "HeroSaber.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0CQ",
+          "A0SP"
+        ],
+        "heroAbilities": [
+          "A0CM",
+          "A0DZ",
+          "A0D5",
+          "A0CT",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      },
+      "alternateUnit": {
+        "rawcode": "E00L",
+        "championId": "godie-e00l",
+        "inW3u": true,
+        "subName": "(20風王結界)",
+        "unitName": "亞瑟王",
+        "properName": "Saber",
+        "model": "HeroSaber.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A05M",
+          "A0CQ",
+          "A0M3",
+          "A0SP"
+        ],
+        "heroAbilities": [
+          "A0CM",
+          "A0DZ",
+          "A0D5",
+          "A0CT",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      }
+    },
+    {
+      "abilityRawcode": "A0EW",
+      "abilityBase": "AEIl",
+      "abilityName": "26-04 開天闢地‧洨者聖臨",
+      "normalUnit": {
+        "rawcode": "Harf",
+        "championId": "godie-harf",
+        "inW3u": true,
+        "subName": "(26)",
+        "unitName": "豪洨天王",
+        "properName": "鄭先生",
+        "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": null,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 0,
+        "attackDice": 6,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": "hero",
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A106",
+          "A0F8"
+        ],
+        "heroAbilities": [
+          "A00L",
+          "A0BS",
+          "A0F9",
+          "A0EW",
+          "Aamk"
+        ],
+        "baseId": "Harf"
+      },
+      "alternateUnit": {
+        "rawcode": "H00W",
+        "championId": "godie-h00w",
+        "inW3u": true,
+        "subName": "(26洨者狀態)",
+        "unitName": "豪洨天王",
+        "properName": "鄭先生",
+        "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": null,
+        "manaRegen": 0.10000000149011612,
+        "armor": 5,
+        "armorType": null,
+        "attackDamageBase": 0,
+        "attackDice": 6,
+        "attackSides": 3,
+        "attackCooldown": 1.600000023841858,
+        "attackRange": null,
+        "attackType": "siege",
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A106",
+          "A0F8"
+        ],
+        "heroAbilities": [
+          "A00L",
+          "A0ER",
+          "A0F9",
+          "A0EW",
+          "Aamk"
+        ],
+        "baseId": "Harf"
+      }
+    },
+    {
+      "abilityRawcode": "A0HW",
+      "abilityBase": "AEIl",
+      "abilityName": "25-04 ChangeDNA",
+      "normalUnit": {
+        "rawcode": "Umal",
+        "championId": "godie-umal",
+        "inW3u": true,
+        "subName": "(25)",
+        "unitName": "北斗神拳掌門人",
+        "properName": "拳四郎",
+        "model": "units\\critters\\VillagerMan1\\VillagerMan1.mdl",
+        "scale": 1.649999976158142,
+        "selectionScale": null,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 7,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": [
+          200,
+          200,
+          200
+        ],
+        "abilities": [
+          "AInv",
+          "A07H",
+          "A10Y"
+        ],
+        "heroAbilities": [
+          "A0AF",
+          "A01J",
+          "A0HV",
+          "A0HW",
+          "Aamk"
+        ],
+        "baseId": "Umal"
+      },
+      "alternateUnit": {
+        "rawcode": "U00L",
+        "championId": "godie-u00l",
+        "inW3u": true,
+        "subName": "(25變身)",
+        "unitName": "北斗之鼠",
+        "properName": "拳四郎",
+        "model": "HeroPikachu.mdl",
+        "scale": 2.0,
+        "selectionScale": null,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 7,
+        "attackSides": 3,
+        "attackCooldown": 1.5,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A07H",
+          "A0HX",
+          "A0FO",
+          "A10Y"
+        ],
+        "heroAbilities": [
+          "A0AF",
+          "A01J",
+          "A0HV",
+          "A0HW",
+          "Aamk"
+        ],
+        "baseId": "Umal"
+      }
+    },
+    {
+      "abilityRawcode": "A0IH",
+      "abilityBase": "AEIl",
+      "abilityName": "18-03 妖狐變化",
+      "normalUnit": {
+        "rawcode": "Nsjs",
+        "championId": "godie-nsjs",
+        "inW3u": true,
+        "subName": "(18)",
+        "unitName": "妖狐藏馬",
+        "properName": "南野秀一",
+        "model": "fox2.mdl",
+        "scale": 1.0499999523162842,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": 225,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A002",
+          "A0SE"
+        ],
+        "heroAbilities": [
+          "A0IO",
+          "A0RV",
+          "A0IH",
+          "A0P7",
+          "Aamk"
+        ],
+        "baseId": "Nsjs"
+      },
+      "alternateUnit": {
+        "rawcode": "N00P",
+        "championId": "godie-n00p",
+        "inW3u": true,
+        "subName": "(18 妖狐化)",
+        "unitName": "妖狐藏馬",
+        "properName": "南野秀一",
+        "model": "fox.mdl",
+        "scale": 1.149999976158142,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 4,
+        "armorType": null,
+        "attackDamageBase": 64,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": 225,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A00N",
+          "A0SE",
+          "A0II"
+        ],
+        "heroAbilities": [
+          "A0IO",
+          "A0RV",
+          "A0IH",
+          "A0P7",
+          "Aamk"
+        ],
+        "baseId": "Nsjs"
+      }
+    },
+    {
+      "abilityRawcode": "A0IR",
+      "abilityBase": "AEme",
+      "abilityName": "76-00 二檔",
+      "normalUnit": {
+        "rawcode": "U00N",
+        "championId": "godie-u00n",
+        "inW3u": true,
+        "subName": "(76)",
+        "unitName": "草帽小子",
+        "properName": "蒙其.D.魯夫",
+        "model": "Luffe.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": null,
+        "moveSpeed": 315,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0ZK",
+          "A0IR"
+        ],
+        "heroAbilities": [
+          "A0IS",
+          "A0IP",
+          "A0IV",
+          "A0RZ",
+          "Aamk"
+        ],
+        "baseId": "Udre"
+      },
+      "alternateUnit": {
+        "rawcode": "U00O",
+        "championId": "godie-u00o",
+        "inW3u": true,
+        "subName": "(76 二檔)",
+        "unitName": "草帽小子",
+        "properName": "蒙其.D.魯夫",
+        "model": "Luffe.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": null,
+        "moveSpeed": 415,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0ZK",
+          "A0IR",
+          "A0IW",
+          "A0IX"
+        ],
+        "heroAbilities": [
+          "A0IS",
+          "A0IP",
+          "A0IV",
+          "A0RZ",
+          "Aamk"
+        ],
+        "baseId": "Udre"
+      }
+    },
+    {
+      "abilityRawcode": "A0JG",
+      "abilityBase": "AEIl",
+      "abilityName": "77-03 GLADIARIA ALAT",
+      "normalUnit": {
+        "rawcode": "E00W",
+        "championId": "godie-e00w",
+        "inW3u": true,
+        "subName": "(77)",
+        "unitName": "神鳴流劍士",
+        "properName": "櫻綻剎那",
+        "model": "mfls.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A10G",
+          "AInv",
+          "A0JD"
+        ],
+        "heroAbilities": [
+          "A0TV",
+          "A0TX",
+          "A0JG",
+          "A0UB",
+          "Aamk"
+        ],
+        "baseId": "Ewar"
+      },
+      "alternateUnit": {
+        "rawcode": "E00X",
+        "championId": "godie-e00x",
+        "inW3u": true,
+        "subName": "(77 變身)",
+        "unitName": "神鳴流劍士",
+        "properName": "櫻綻剎那",
+        "model": "mfls.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 522,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.7000000476837158,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A10G",
+          "AInv",
+          "A0JD",
+          "A0FI",
+          "A0HP",
+          "A0JI",
+          "A0I0"
+        ],
+        "heroAbilities": [
+          "A0TV",
+          "A0TX",
+          "A0JG",
+          "A0UB",
+          "Aamk"
+        ],
+        "baseId": "Ewar"
+      }
+    },
+    {
+      "abilityRawcode": "A0LN",
+      "abilityBase": "AEme",
+      "abilityName": "79-04 卍解",
+      "normalUnit": {
+        "rawcode": "H01N",
+        "championId": "godie-h01n",
+        "inW3u": true,
+        "subName": "(79)",
+        "unitName": "開外掛的死神",
+        "properName": "黑崎一護",
+        "model": "HeroIchigo.mdl",
+        "scale": 0.699999988079071,
+        "selectionScale": 1.7999999523162842,
+        "moveSpeed": 295,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 300,
+        "manaRegen": 0.20000000298023224,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0LH",
+          "A0W5",
+          "A0LS"
+        ],
+        "heroAbilities": [
+          "A0RX",
+          "A0LK",
+          "A0LL",
+          "A0LN",
+          "Aamk"
+        ],
+        "baseId": "Hmkg"
+      },
+      "alternateUnit": {
+        "rawcode": "H01O",
+        "championId": "godie-h01o",
+        "inW3u": true,
+        "subName": "(79卍解)",
+        "unitName": "外掛開很大的死神",
+        "properName": "黑崎一護",
+        "model": "HeroIchigo.mdl",
+        "scale": 0.699999988079071,
+        "selectionScale": 1.7999999523162842,
+        "moveSpeed": 400,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 300,
+        "manaRegen": 0.20000000298023224,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.2000000476837158,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0UV",
+          "A0W5",
+          "A0LS"
+        ],
+        "heroAbilities": [
+          "A0RX",
+          "A0LK",
+          "A0LL",
+          "A0LN",
+          "Aamk"
+        ],
+        "baseId": "Hmkg"
+      }
+    },
+    {
+      "abilityRawcode": "A0ND",
+      "abilityBase": "AEIl",
+      "abilityName": "40-03 萬解-貓王胖虎",
+      "normalUnit": {
+        "rawcode": "Nman",
+        "championId": "godie-nman",
+        "inW3u": true,
+        "subName": "(40)",
+        "unitName": "地獄歌神",
+        "properName": "憤怒的胖虎",
+        "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+        "scale": 1.0,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 30,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 0,
+        "attackDice": 7,
+        "attackSides": 4,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": 100,
+        "attackType": "hero",
+        "tint": null,
+        "abilities": [
+          "A10C",
+          "AInv",
+          "A07G"
+        ],
+        "heroAbilities": [
+          "A070",
+          "A07I",
+          "A0ND",
+          "A0LZ",
+          "Aamk"
+        ],
+        "baseId": "Nman"
+      },
+      "alternateUnit": {
+        "rawcode": "N01B",
+        "championId": "godie-n01b",
+        "inW3u": true,
+        "subName": "(40萬解)",
+        "unitName": "地獄歌神",
+        "properName": "憤怒的胖虎",
+        "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+        "scale": 1.0,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 30,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 0,
+        "attackDice": 7,
+        "attackSides": 4,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": 450,
+        "attackType": "hero",
+        "tint": null,
+        "abilities": [
+          "A10C",
+          "AInv",
+          "A07G",
+          "A0NR",
+          "A0NT"
+        ],
+        "heroAbilities": [
+          "A070",
+          "A07I",
+          "A0ND",
+          "A0LZ",
+          "Aamk"
+        ],
+        "baseId": "Nman"
+      }
+    },
+    {
+      "abilityRawcode": "A0O6",
+      "abilityBase": "ANrg",
+      "abilityName": "70-00 紮根",
+      "normalUnit": {
+        "rawcode": "E00S",
+        "championId": "godie-e00s",
+        "inW3u": true,
+        "subName": "(70)",
+        "unitName": "白木老樹精",
+        "properName": "白木卡迪那",
+        "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": null,
+        "moveSpeed": 275,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 2,
+        "armorType": "hero",
+        "attackDamageBase": 0,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": null,
+        "attackRange": 600,
+        "attackType": "hero",
+        "tint": null,
+        "abilities": [
+          "A0ZQ",
+          "A0ZM",
+          "A0G1",
+          "AInv",
+          "A0GM"
+        ],
+        "heroAbilities": [
+          "A0UJ",
+          "A0GQ",
+          "A0GR",
+          "A0GN",
+          "Aamk"
+        ],
+        "baseId": "Ecen"
+      },
+      "alternateUnit": {
+        "rawcode": "E010",
+        "championId": "godie-e010",
+        "inW3u": true,
+        "subName": "(70紮根)",
+        "unitName": "白木老樹精",
+        "properName": "白木卡迪那",
+        "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
+        "scale": 1.0,
+        "selectionScale": null,
+        "moveSpeed": 0,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 10,
+        "armorType": "hero",
+        "attackDamageBase": 0,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": null,
+        "attackRange": 650,
+        "attackType": "pierce",
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0GM",
+          "A0O6"
+        ],
+        "heroAbilities": [
+          "A0GP",
+          "A0GQ",
+          "A0GR",
+          "A0GN",
+          "Aamk"
+        ],
+        "baseId": "Ecen"
+      }
+    },
+    {
+      "abilityRawcode": "A0OE",
+      "abilityBase": "AEIl",
+      "abilityName": "04-002 惡夢魔王的碎片",
+      "normalUnit": {
+        "rawcode": "Hjai",
+        "championId": "godie-hjai",
+        "inW3u": true,
+        "subName": "(04)",
+        "unitName": "黑魔導士",
+        "properName": "莉娜因巴斯",
+        "model": "LinaInvers.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 290,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0UH",
+          "A0OE"
+        ],
+        "heroAbilities": [
+          "A0AY",
+          "A021",
+          "A04R",
+          "A07F",
+          "Aamk"
+        ],
+        "baseId": "Hjai"
+      },
+      "alternateUnit": {
+        "rawcode": "H020",
+        "championId": "godie-h020",
+        "inW3u": true,
+        "subName": "(04惡夢)",
+        "unitName": "黑魔導士",
+        "properName": "莉娜因巴斯",
+        "model": "LinaInvers.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 290,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 5000,
+        "manaRegen": 1000.0,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0UH",
+          "A0OE",
+          "A023"
+        ],
+        "heroAbilities": [
+          "A0AY",
+          "A021",
+          "A04R",
+          "A07F",
+          "Aamk"
+        ],
+        "baseId": "Hjai"
+      }
+    },
+    {
+      "abilityRawcode": "A0OH",
+      "abilityBase": "AEme",
+      "abilityName": "38-00 邪眼全開",
+      "normalUnit": {
+        "rawcode": "Uvng",
+        "championId": "godie-uvng",
+        "inW3u": true,
+        "subName": "(38)",
+        "unitName": "邪眼師",
+        "properName": "飛影",
+        "model": "HeroHehi.mdl",
+        "scale": 0.8500000238418579,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0OH",
+          "A0SO"
+        ],
+        "heroAbilities": [
+          "A0OG",
+          "A09H",
+          "A09I",
+          "A09K",
+          "Aamk"
+        ],
+        "baseId": "Uvng"
+      },
+      "alternateUnit": {
+        "rawcode": "U010",
+        "championId": "godie-u010",
+        "inW3u": true,
+        "subName": "(38邪眼)",
+        "unitName": "邪眼師",
+        "properName": "飛影",
+        "model": "HeroHehi.mdl",
+        "scale": 0.8500000238418579,
+        "selectionScale": null,
+        "moveSpeed": 360,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0OH",
+          "A0IW",
+          "A0OI",
+          "A0FR",
+          "A0SO"
+        ],
+        "heroAbilities": [
+          "A0OG",
+          "A09H",
+          "A09I",
+          "A09K",
+          "Aamk"
+        ],
+        "baseId": "Uvng"
+      }
+    },
+    {
+      "abilityRawcode": "A0SZ",
+      "abilityBase": "AEIl",
+      "abilityName": "19-002 紫色披風",
+      "normalUnit": {
+        "rawcode": "E00K",
+        "championId": "godie-e00k",
+        "inW3u": true,
+        "subName": "(19)",
+        "unitName": "戰國刺客Azumi",
+        "properName": "安云",
+        "model": "HeroKunoichi.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0RG",
+          "A0SZ"
+        ],
+        "heroAbilities": [
+          "A00F",
+          "A0H5",
+          "A0H9",
+          "A02Y",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      },
+      "alternateUnit": {
+        "rawcode": "E00Z",
+        "championId": "godie-e00z",
+        "inW3u": true,
+        "subName": "(19紫色披風)",
+        "unitName": "戰國刺客Azumi",
+        "properName": "安云",
+        "model": "HeroKunoichi.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 522,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.7999999523162842,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0RH",
+          "A0SZ"
+        ],
+        "heroAbilities": [
+          "A00F",
+          "A0H5",
+          "A0H9",
+          "A02Y",
+          "Aamk"
+        ],
+        "baseId": "Ewrd"
+      }
+    },
+    {
+      "abilityRawcode": "A0T1",
+      "abilityBase": "AEIl",
+      "abilityName": "08-002 龍魔人",
+      "normalUnit": {
+        "rawcode": "Nbbc",
+        "championId": "godie-nbbc",
+        "inW3u": true,
+        "subName": "(08)",
+        "unitName": "傳說的龍騎士",
+        "properName": "勇者小呆",
+        "model": "SD2.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": 1.5,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A05V",
+          "A0T1"
+        ],
+        "heroAbilities": [
+          "A0CF",
+          "A05T",
+          "A05J",
+          "A0EZ",
+          "Aamk"
+        ],
+        "baseId": "Nbbc"
+      },
+      "alternateUnit": {
+        "rawcode": "N01C",
+        "championId": "godie-n01c",
+        "inW3u": true,
+        "subName": "(08龍魔人)",
+        "unitName": "傳說的龍騎士",
+        "properName": "勇者小呆",
+        "model": "SD2.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": 1.5,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": 4,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A05V",
+          "A0T1",
+          "A0T0",
+          "A0MB",
+          "A05X",
+          "A0C5"
+        ],
+        "heroAbilities": [
+          "A0CF",
+          "A05T",
+          "A05J",
+          "A0EZ",
+          "Aamk"
+        ],
+        "baseId": "Nbbc"
+      }
+    },
+    {
+      "abilityRawcode": "A0VG",
+      "abilityBase": "AEme",
+      "abilityName": "90-002 超進化! 妙蛙花",
+      "normalUnit": {
+        "rawcode": "Hgam",
+        "championId": "godie-hgam",
+        "inW3u": true,
+        "subName": "(90)",
+        "unitName": "種子神奇寶貝",
+        "properName": "妙蛙種子",
+        "model": "Bulbasaur.mdl",
+        "scale": 1.2000000476837158,
+        "selectionScale": 1.2999999523162842,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 6,
+        "attackSides": null,
+        "attackCooldown": 2.0,
+        "attackRange": 100,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0KV",
+          "A0VG"
+        ],
+        "heroAbilities": [
+          "AOww",
+          "A0NB",
+          "A0Y4",
+          "A0R4",
+          "Aamk"
+        ],
+        "baseId": "Hgam"
+      },
+      "alternateUnit": {
+        "rawcode": "H02R",
+        "championId": "godie-h02r",
+        "inW3u": true,
+        "subName": "(90 妙蛙花)",
+        "unitName": "種子神奇寶貝",
+        "properName": "妙蛙花",
+        "model": "Bulbasaur.mdl",
+        "scale": 3.0,
+        "selectionScale": 5.0,
+        "moveSpeed": 240,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 50,
+        "attackDice": 6,
+        "attackSides": null,
+        "attackCooldown": 1.2000000476837158,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0KV",
+          "A0VG",
+          "A0VH"
+        ],
+        "heroAbilities": [
+          "AOww",
+          "A0NB",
+          "A0Y4",
+          "A0R4",
+          "Aamk"
+        ],
+        "baseId": "Hgam"
+      }
+    },
+    {
+      "abilityRawcode": "A0W9",
+      "abilityBase": "AEme",
+      "abilityName": "92-01 臥草泥馬",
+      "normalUnit": {
+        "rawcode": "H02V",
+        "championId": "godie-h02v",
+        "inW3u": true,
+        "subName": "(92)",
+        "unitName": "看似憂鬱的神獸",
+        "properName": "草泥馬",
+        "model": "horse.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 310,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": null,
+        "attackSides": null,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A0W6",
+          "A0Z9",
+          "AInv"
+        ],
+        "heroAbilities": [
+          "Aamk",
+          "A0W9",
+          "A0WB",
+          "A0WA",
+          "A06Y"
+        ],
+        "baseId": "Hpal"
+      },
+      "alternateUnit": {
+        "rawcode": "H02U",
+        "championId": "godie-h02u",
+        "inW3u": true,
+        "subName": "(92 臥草)",
+        "unitName": "看似憂鬱的神獸",
+        "properName": "草泥馬",
+        "model": "horse.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 0,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": null,
+        "attackSides": null,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "A0W6",
+          "A0Z9",
+          "A0W8",
+          "AInv"
+        ],
+        "heroAbilities": [
+          "Aamk",
+          "A0W9",
+          "A0WB",
+          "A0WA",
+          "A06Y"
+        ],
+        "baseId": "Hpal"
+      }
+    },
+    {
+      "abilityRawcode": "A0XP",
+      "abilityBase": "AEIl",
+      "abilityName": "81-002 Exellion Mode",
+      "normalUnit": {
+        "rawcode": "O01Z",
+        "championId": "godie-o01z",
+        "inW3u": true,
+        "subName": "(81)",
+        "unitName": "魔砲少女",
+        "properName": "高町奈葉",
+        "model": "niya.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 295,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 1.0,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0NQ",
+          "A0XP"
+        ],
+        "heroAbilities": [
+          "A0XG",
+          "A0LB",
+          "A0XN",
+          "A0XO",
+          "Aamk"
+        ],
+        "baseId": "Oshd"
+      },
+      "alternateUnit": {
+        "rawcode": "O02V",
+        "championId": "godie-o02v",
+        "inW3u": true,
+        "subName": "(81EX mode)",
+        "unitName": "白色惡魔",
+        "properName": "高町奈葉",
+        "model": "niya.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 1000,
+        "manaRegen": 1.0,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 450,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0NQ",
+          "A0XP"
+        ],
+        "heroAbilities": [
+          "A0XG",
+          "A0LB",
+          "A0XN",
+          "A0XO",
+          "Aamk"
+        ],
+        "baseId": "Oshd"
+      }
+    },
+    {
+      "abilityRawcode": "A0Y1",
+      "abilityBase": "AEme",
+      "abilityName": "06-04 傑桑變化",
+      "normalUnit": {
+        "rawcode": "Ucrl",
+        "championId": "godie-ucrl",
+        "inW3u": true,
+        "subName": "(06)",
+        "unitName": "職業獵人",
+        "properName": "傑 富力士",
+        "model": "units\\critters\\HighElfPeasant\\HighElfPeasant.mdl",
+        "scale": 1.100000023841858,
+        "selectionScale": 1.25,
+        "moveSpeed": 315,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 2,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": null,
+        "attackRange": 100,
+        "attackType": null,
+        "tint": [
+          100,
+          null,
+          100
+        ],
+        "abilities": [
+          "AInv",
+          "A08Y",
+          "A025"
+        ],
+        "heroAbilities": [
+          "A08X",
+          "A08W",
+          "A020",
+          "A0Y1",
+          "Aamk"
+        ],
+        "baseId": "Ucrl"
+      },
+      "alternateUnit": {
+        "rawcode": "U034",
+        "championId": "godie-u034",
+        "inW3u": true,
+        "subName": "(06 傑桑)",
+        "unitName": "職業獵人",
+        "properName": "傑 富力士",
+        "model": "HeroBigGon.mdl",
+        "scale": 1.2999999523162842,
+        "selectionScale": null,
+        "moveSpeed": 360,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 2,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.5,
+        "attackRange": 100,
+        "attackType": null,
+        "tint": [
+          100,
+          100,
+          100
+        ],
+        "abilities": [
+          "AInv",
+          "A08Y",
+          "A025",
+          "A017"
+        ],
+        "heroAbilities": [
+          "A08X",
+          "A08W",
+          "A020",
+          "A0Y1",
+          "Aamk"
+        ],
+        "baseId": "Ucrl"
+      }
+    },
+    {
+      "abilityRawcode": "A0YT",
+      "abilityBase": "AEIl",
+      "abilityName": "30-002 變態紳士",
+      "normalUnit": {
+        "rawcode": "Orkn",
+        "championId": "godie-orkn",
+        "inW3u": true,
+        "subName": "(30)",
+        "unitName": "電車癡漢",
+        "properName": "臭作",
+        "model": null,
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 295,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": 500,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A029",
+          "A0YY"
+        ],
+        "heroAbilities": [
+          "A09L",
+          "ANdh",
+          "ANso",
+          "A01P",
+          "Aamk"
+        ],
+        "baseId": "Orkn"
+      },
+      "alternateUnit": {
+        "rawcode": "O030",
+        "championId": "godie-o030",
+        "inW3u": true,
+        "subName": "(30變態紳士)",
+        "unitName": "電車癡漢",
+        "properName": "臭作",
+        "model": null,
+        "scale": 3.0,
+        "selectionScale": null,
+        "moveSpeed": 295,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.7000000476837158,
+        "attackRange": 1600,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A029",
+          "A0YT",
+          "A02I",
+          "A08K",
+          "A0HN"
+        ],
+        "heroAbilities": [
+          "A09L",
+          "ANdh",
+          "ANso",
+          "A01P",
+          "Aamk"
+        ],
+        "baseId": "Orkn"
+      }
+    },
+    {
+      "abilityRawcode": "A10N",
+      "abilityBase": "AEIl",
+      "abilityName": "11-002 武裝色霸氣",
+      "normalUnit": {
+        "rawcode": "Udre",
+        "championId": "godie-udre",
+        "inW3u": true,
+        "subName": "(11)",
+        "unitName": "三刀流劍士",
+        "properName": "索隆",
+        "model": "HeroMusashiMiyamoto.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 315,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0OU",
+          "A10N"
+        ],
+        "heroAbilities": [
+          "A0CC",
+          "A06N",
+          "A06P",
+          "Aamk",
+          "A0MQ"
+        ],
+        "baseId": "Udre"
+      },
+      "alternateUnit": {
+        "rawcode": "U01U",
+        "championId": "godie-u01u",
+        "inW3u": true,
+        "subName": "(11武裝霸王)",
+        "unitName": "三刀流劍士",
+        "properName": "索隆",
+        "model": "HeroMusashiMiyamoto.mdl",
+        "scale": null,
+        "selectionScale": null,
+        "moveSpeed": 315,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": null,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A10N",
+          "A0OU",
+          "A0C5",
+          "A05X",
+          "A10O"
+        ],
+        "heroAbilities": [
+          "A0CC",
+          "A06N",
+          "A06P",
+          "Aamk",
+          "A0MQ"
+        ],
+        "baseId": "Udre"
+      }
+    },
+    {
+      "abilityRawcode": "Aphx",
+      "abilityBase": "Aphx",
+      "abilityName": "61-00百連我殺 效果",
+      "normalUnit": {
+        "rawcode": "U012",
+        "championId": "godie-u012",
+        "inW3u": true,
+        "subName": "(61)",
+        "unitName": "重金屬樂團的怪物",
+        "properName": "克勞薩II世",
+        "model": null,
+        "scale": 1.2000000476837158,
+        "selectionScale": null,
+        "moveSpeed": 300,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": 0.25,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 2.0,
+        "attackRange": null,
+        "attackType": null,
+        "tint": [
+          150,
+          150,
+          150
+        ],
+        "abilities": [
+          "AInv",
+          "A0OA",
+          "A0OM",
+          "Aphx"
+        ],
+        "heroAbilities": [
+          "Aamk",
+          "A0OP",
+          "A0OQ",
+          "A0OS",
+          "A0OR"
+        ],
+        "baseId": "Udre"
+      },
+      "alternateUnit": {
+        "rawcode": "U011",
+        "championId": "godie-u011",
+        "inW3u": true,
+        "subName": "(61 鳳凰蛋)",
+        "unitName": "死亡老二",
+        "properName": "克勞薩先生",
+        "model": "collision.mdl",
+        "scale": 1.5,
+        "selectionScale": null,
+        "moveSpeed": 0,
+        "level": null,
+        "maxHealth": -450,
+        "healthRegen": 0.0,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": -10,
+        "armorType": null,
+        "attackDamageBase": null,
+        "attackDice": null,
+        "attackSides": null,
+        "attackCooldown": null,
+        "attackRange": null,
+        "attackType": null,
+        "tint": [
+          150,
+          150,
+          150
+        ],
+        "abilities": [
+          "AInv",
+          "A0OA",
+          "A0OM",
+          "Aphx"
+        ],
+        "heroAbilities": [
+          "Aamk",
+          "A0OP",
+          "A0OQ",
+          "A0OS",
+          "A0OR"
+        ],
+        "baseId": "Udre"
+      }
+    }
+  ],
+  "splitEntries": [
+    {
+      "abilityRawcode": "A01Z",
+      "abilityBase": "ANef",
+      "abilityName": "37-04 魔界之王",
+      "heroNumber": "37",
+      "levelCount": 3,
+      "durationSecByLevel": {
+        "1": 35.0,
+        "2": 35.0,
+        "3": 35.0
+      },
+      "cooldownSecByLevel": {
+        "1": 90.0,
+        "3": 90.0,
+        "2": 90.0
+      },
+      "manaCostByLevel": {
+        "2": 300.0,
+        "3": 450.0
+      },
+      "casterUnits": [
+        {
+          "unitRawcode": "Ubal",
+          "slot": "uhab",
+          "subName": "(37)",
+          "properName": "巴恩大魔王",
+          "unitName": "魔界霸主"
+        }
+      ],
+      "live": true,
+      "referencedInJass": true,
+      "formsByLevel": [
+        {
+          "level": 1,
+          "unitsPerCast": 1,
+          "units": [
+            {
+              "rawcode": "u001",
+              "championId": "godie-u001",
+              "inW3u": true,
+              "subName": "(LV1)",
+              "unitName": "巴恩大魔王",
+              "properName": null,
+              "model": "units\\undead\\Tichondrius\\Tichondrius.mdl",
+              "scale": 1.850000023841858,
+              "selectionScale": 1.7999999523162842,
+              "moveSpeed": 350,
+              "level": 9,
+              "maxHealth": 1600,
+              "healthRegen": 4.0,
+              "maxMana": 500,
+              "manaRegen": 2.0,
+              "armor": 5,
+              "armorType": "fort",
+              "attackDamageBase": 100,
+              "attackDice": 5,
+              "attackSides": 5,
+              "attackCooldown": 2.5,
+              "attackRange": 150,
+              "attackType": "chaos",
+              "tint": null,
+              "abilities": [
+                "A0F6",
+                "A01O",
+                "A0OT"
+              ],
+              "heroAbilities": [],
+              "baseId": "ubsp"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "unitsPerCast": 1,
+          "units": [
+            {
+              "rawcode": "u00D",
+              "championId": "godie-u00d",
+              "inW3u": true,
+              "subName": "(LV2)",
+              "unitName": "巴恩大魔王",
+              "properName": null,
+              "model": "units\\undead\\Tichondrius\\Tichondrius.mdl",
+              "scale": 1.850000023841858,
+              "selectionScale": 1.7999999523162842,
+              "moveSpeed": 390,
+              "level": 14,
+              "maxHealth": 2600,
+              "healthRegen": 6.0,
+              "maxMana": 750,
+              "manaRegen": 4.0,
+              "armor": 10,
+              "armorType": "fort",
+              "attackDamageBase": 140,
+              "attackDice": 5,
+              "attackSides": 5,
+              "attackCooldown": 2.5,
+              "attackRange": 150,
+              "attackType": "chaos",
+              "tint": null,
+              "abilities": [
+                "A0F6",
+                "A01O",
+                "A0OT",
+                "A01X"
+              ],
+              "heroAbilities": [],
+              "baseId": "ubsp"
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "unitsPerCast": 1,
+          "units": [
+            {
+              "rawcode": "u00E",
+              "championId": "godie-u00e",
+              "inW3u": true,
+              "subName": "(LV3)",
+              "unitName": "巴恩大魔王",
+              "properName": null,
+              "model": "units\\undead\\Tichondrius\\Tichondrius.mdl",
+              "scale": 1.850000023841858,
+              "selectionScale": 1.7999999523162842,
+              "moveSpeed": 430,
+              "level": 19,
+              "maxHealth": 3600,
+              "healthRegen": 8.0,
+              "maxMana": 1150,
+              "manaRegen": 6.0,
+              "armor": 15,
+              "armorType": "fort",
+              "attackDamageBase": 180,
+              "attackDice": 5,
+              "attackSides": 5,
+              "attackCooldown": 2.5,
+              "attackRange": 150,
+              "attackType": "chaos",
+              "tint": null,
+              "abilities": [
+                "A0F6",
+                "A01O",
+                "A0OT",
+                "A01X",
+                "A01W"
+              ],
+              "heroAbilities": [],
+              "baseId": "ubsp"
+            }
+          ]
+        }
+      ],
+      "formAbilityDetail": {
+        "A0F6": {
+          "rawcode": "A0F6",
+          "base": "AIsx",
+          "name": "攻擊速度限制",
+          "tooltip": null
+        },
+        "A01O": {
+          "rawcode": "A01O",
+          "base": "ACct",
+          "name": "37-04-00 災難終結",
+          "tooltip": "[被動]\n0秒冷卻時間\n\n完全體的巴恩大魔王可以使攻擊時有35%機率造成普通攻擊4倍的破壞力。"
+        },
+        "A0OT": {
+          "rawcode": "A0OT",
+          "base": "Absk",
+          "name": "37-04-01 魔力操控",
+          "tooltip": "[輔助]\n15秒冷卻時間\n\n讓巴恩得以充分運用年輕的肉體，攻擊速度提升200%，移動速度提升25%，持續3秒。"
+        },
+        "A01X": {
+          "rawcode": "A01X",
+          "base": "ACsh",
+          "name": "37-04-02 凱薩之鷹",
+          "tooltip": "[主動攻擊]\n17秒冷卻時間\n\n召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，給予一直線傷害1250點。"
+        },
+        "A01W": {
+          "rawcode": "A01W",
+          "base": "ANss",
+          "name": "37-04-03 天地魔鬥",
+          "tooltip": "[主動攻擊]\n15秒冷卻時間\n\n天地魔鬥是巴恩大魔王的終極狀態，可以擊退魔法和物理攻擊，並且瞬間反擊，是攻守合一的奧義。"
+        }
+      }
+    },
+    {
+      "abilityRawcode": "A0SJ",
+      "abilityBase": "ANef",
+      "abilityName": "28-002 無限分裂",
+      "heroNumber": null,
+      "levelCount": null,
+      "durationSecByLevel": {
+        "1": 25.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0
+      },
+      "manaCostByLevel": {},
+      "casterUnits": [],
+      "live": false,
+      "referencedInJass": false,
+      "formsByLevel": [
+        {
+          "level": 1,
+          "unitsPerCast": 5,
+          "units": [
+            {
+              "rawcode": "o02Q",
+              "championId": "godie-o02q",
+              "inW3u": true,
+              "subName": "分裂28",
+              "unitName": "普烏",
+              "properName": null,
+              "model": "HeroBuu.mdl",
+              "scale": 1.0,
+              "selectionScale": null,
+              "moveSpeed": 420,
+              "level": 1,
+              "maxHealth": 4250,
+              "healthRegen": 3.0,
+              "maxMana": null,
+              "manaRegen": null,
+              "armor": 8,
+              "armorType": "hero",
+              "attackDamageBase": 185,
+              "attackDice": null,
+              "attackSides": null,
+              "attackCooldown": 0.75,
+              "attackRange": 150,
+              "attackType": "hero",
+              "tint": null,
+              "abilities": [
+                "A0AT"
+              ],
+              "heroAbilities": [],
+              "baseId": "osw3"
+            }
+          ]
+        }
+      ],
+      "formAbilityDetail": {
+        "A0AT": {
+          "rawcode": "A0AT",
+          "base": "ANde",
+          "name": "00-爆破",
+          "tooltip": "對物質界的建築物只能造成50%的傷害。"
+        }
+      }
+    }
+  ],
+  "jassReplaceUnitSites": [
+    {
+      "line": 42500,
+      "function": "Trig_Voice_Actions",
+      "targetRawcode": "O02P",
+      "subject": "udg_PlayerHeroUnit[GetConvertedPlayerId(GetTriggerPlayer())]",
+      "target": {
+        "rawcode": "O02P",
+        "championId": "godie-o02p",
+        "inW3u": true,
+        "subName": "(99)",
+        "unitName": "夢幻之星",
+        "properName": "初音",
+        "model": "HeroMiku.mdl",
+        "scale": 1.0,
+        "selectionScale": null,
+        "moveSpeed": 315,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": null,
+        "armorType": null,
+        "attackDamageBase": 0,
+        "attackDice": 5,
+        "attackSides": 3,
+        "attackCooldown": 1.899999976158142,
+        "attackRange": 150,
+        "attackType": "hero",
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A119",
+          "A11F"
+        ],
+        "heroAbilities": [
+          "A116",
+          "A118",
+          "A11B",
+          "A11C",
+          "Aamk"
+        ],
+        "baseId": "Opgh"
+      }
+    },
+    {
+      "line": 52459,
+      "function": "Trig_Saber_in_panda_Actions",
+      "targetRawcode": "H02K",
+      "subject": "GetTriggerUnit()",
+      "target": {
+        "rawcode": "H02K",
+        "championId": "godie-h02k",
+        "inW3u": true,
+        "subName": "(89)",
+        "unitName": "國寶級的畜生",
+        "properName": "熊貓",
+        "model": "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmaster.mdl",
+        "scale": 2.0,
+        "selectionScale": 4.0,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 2,
+        "armorType": null,
+        "attackDamageBase": -30,
+        "attackDice": 3,
+        "attackSides": 50,
+        "attackCooldown": 2.0,
+        "attackRange": 200,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0TM",
+          "A0TU"
+        ],
+        "heroAbilities": [
+          "A0TL",
+          "A0TK",
+          "A0TN",
+          "A0TO",
+          "Aamk"
+        ],
+        "baseId": "Hblm"
+      }
+    },
+    {
+      "line": 52537,
+      "function": "Trig_Saber_in_panda_Copy_Actions",
+      "targetRawcode": "H02K",
+      "subject": "udg_PlayerHeroUnit[GetConvertedPlayerId(GetTriggerPlayer())]",
+      "target": {
+        "rawcode": "H02K",
+        "championId": "godie-h02k",
+        "inW3u": true,
+        "subName": "(89)",
+        "unitName": "國寶級的畜生",
+        "properName": "熊貓",
+        "model": "Units\\Creeps\\PandarenBrewmaster\\PandarenBrewmaster.mdl",
+        "scale": 2.0,
+        "selectionScale": 4.0,
+        "moveSpeed": 305,
+        "level": null,
+        "maxHealth": 150,
+        "healthRegen": null,
+        "maxMana": 100,
+        "manaRegen": 0.10000000149011612,
+        "armor": 2,
+        "armorType": null,
+        "attackDamageBase": -30,
+        "attackDice": 3,
+        "attackSides": 50,
+        "attackCooldown": 2.0,
+        "attackRange": 200,
+        "attackType": null,
+        "tint": null,
+        "abilities": [
+          "AInv",
+          "A0TM",
+          "A0TU"
+        ],
+        "heroAbilities": [
+          "A0TL",
+          "A0TK",
+          "A0TN",
+          "A0TO",
+          "Aamk"
+        ],
+        "baseId": "Hblm"
+      }
+    }
+  ],
+  "stockFamilies": {
+    "ACbk": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Black Arrow (melee, creep)",
+      "stockAlternate": "ndr1"
+    },
+    "ACfr": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Force of Nature (creep)",
+      "stockAlternate": "efon"
+    },
+    "AChw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Healing Ward (creep)",
+      "stockAlternate": "ohwd"
+    },
+    "ACpa": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Parasite(eredar)",
+      "stockAlternate": "nvdl"
+    },
+    "ACrd": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Raise Dead (Creep)",
+      "stockAlternate": "uske"
+    },
+    "ACs7": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Feral Spirit (Akama)",
+      "stockAlternate": "osw1"
+    },
+    "ACs8": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Feral Spirit (Spirit Beast)",
+      "stockAlternate": "nsw1"
+    },
+    "ACs9": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Feral Spirit (creep - pig)",
+      "stockAlternate": "nspp"
+    },
+    "ACsf": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Feral Spirit (creep)",
+      "stockAlternate": "osw1"
+    },
+    "ACtn": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Serpent Ward (tentacle, Forgotten one)",
+      "stockAlternate": "nfgt"
+    },
+    "ACwe": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Summon Sea Elemental",
+      "stockAlternate": "nsel"
+    },
+    "AEIl": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Illidan - Metamorphosis",
+      "stockAlternate": "Eilm"
+    },
+    "AEfn": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Keeper - Force of Nature",
+      "stockAlternate": "efon"
+    },
+    "AEme": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Demon Hunter - Metamorphosis",
+      "stockAlternate": "Edmm"
+    },
+    "AEst": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Priestess - Scout",
+      "stockAlternate": "nowl"
+    },
+    "AEsv": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Warden - Spirit of Vengeance",
+      "stockAlternate": "espv"
+    },
+    "AEvi": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Evil Illidan - Metamorphosis",
+      "stockAlternate": "Eevm"
+    },
+    "AHpx": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Blood Mage - Phoenix",
+      "stockAlternate": "hphx"
+    },
+    "AHwe": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Arch Mage - Water Elemental",
+      "stockAlternate": "hwat"
+    },
+    "AIbb": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Blacksmith",
+      "stockAlternate": "hbla"
+    },
+    "AIbf": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Farm",
+      "stockAlternate": "hhou"
+    },
+    "AIbg": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Great Hall",
+      "stockAlternate": "htow"
+    },
+    "AIbh": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Altar",
+      "stockAlternate": "halt"
+    },
+    "AIbl": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Castle",
+      "stockAlternate": "hcas"
+    },
+    "AIbr": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Lumber Mill",
+      "stockAlternate": "hlum"
+    },
+    "AIbs": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Barracks",
+      "stockAlternate": "hbar"
+    },
+    "AIbt": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Build Tiny Scout Tower",
+      "stockAlternate": "hwtw"
+    },
+    "AIhw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Healing Ward",
+      "stockAlternate": "ohwd"
+    },
+    "AIin": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "ItemInferno",
+      "stockAlternate": "ninf"
+    },
+    "AImo": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "ItemMonsterLure",
+      "stockAlternate": "nlur"
+    },
+    "AIpm": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "ItemPlaceMine",
+      "stockAlternate": "nglm"
+    },
+    "AIrd": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Raise Dead (Item)",
+      "stockAlternate": "uske"
+    },
+    "AIsh": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Summon Headhunter (item)",
+      "stockAlternate": "otbk"
+    },
+    "AIsw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Sentry Ward",
+      "stockAlternate": "oeye"
+    },
+    "AIwm": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Watery Minion (item)",
+      "stockAlternate": "nmrr"
+    },
+    "ANba": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Dark Ranger - Black Arrow",
+      "stockAlternate": "ndr1"
+    },
+    "ANbs": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Orb of Darkness (Black Arrow)",
+      "stockAlternate": "ndr1"
+    },
+    "ANcr": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Alchemist - Chemical Rage",
+      "stockAlternate": "Nalm"
+    },
+    "ANdc": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Malganis - Dark Conversion",
+      "stockAlternate": "nzom"
+    },
+    "ANdo": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Pit Lord - Doom",
+      "stockAlternate": "nba2"
+    },
+    "ANdp": {
+      "shape": "C/split",
+      "swapsCaster": true,
+      "comments": "Dark Portal",
+      "stockAlternate": null
+    },
+    "ANef": {
+      "shape": "C/split",
+      "swapsCaster": true,
+      "comments": "Brewmaster - Storm, Earth and Fire",
+      "stockAlternate": null
+    },
+    "ANfy": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Factory",
+      "stockAlternate": "ncgb"
+    },
+    "ANg1": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Tinkerer - Robo-Goblin (Level 1)",
+      "stockAlternate": "Nrob"
+    },
+    "ANg2": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Tinkerer - Robo-Goblin (Level 2)",
+      "stockAlternate": "Nrob"
+    },
+    "ANg3": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Tinkerer - Robo-Goblin (Level 3)",
+      "stockAlternate": "Nrob"
+    },
+    "ANin": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Inferno",
+      "stockAlternate": "ninf"
+    },
+    "ANlm": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Firelord - Summon Lava Spawn",
+      "stockAlternate": "nlv1"
+    },
+    "ANpa": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Parasite",
+      "stockAlternate": "ncfs"
+    },
+    "ANrg": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Tinkerer - Robo-Goblin (Level 0)",
+      "stockAlternate": "Nrob"
+    },
+    "ANs1": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tinkerer - Summon Factory (Level 1)",
+      "stockAlternate": "nfac"
+    },
+    "ANs2": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tinkerer - Summon Factory (Level 2)",
+      "stockAlternate": "nfac"
+    },
+    "ANs3": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tinkerer - Summon Factory (Level 3)",
+      "stockAlternate": "nfac"
+    },
+    "ANsg": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Beast Master - Summon Bear",
+      "stockAlternate": "ngz1"
+    },
+    "ANsl": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Malganis - Soul Preservation",
+      "stockAlternate": "nzom"
+    },
+    "ANsq": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Beast Master - Summon Quilbeast",
+      "stockAlternate": "nqb1"
+    },
+    "ANsw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Beast Master - Summon Hawk",
+      "stockAlternate": "nwe1"
+    },
+    "ANsy": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tinkerer - Summon Factory (Level 0)",
+      "stockAlternate": "nfac"
+    },
+    "ANto": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Sea Witch - Tornado",
+      "stockAlternate": "ntor"
+    },
+    "ANwm": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Watery Minion",
+      "stockAlternate": "ncfs"
+    },
+    "AOls": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Rokhan - Voodoo Spirits",
+      "stockAlternate": "uloc"
+    },
+    "AOsf": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Farseer - Spirit Wolf",
+      "stockAlternate": "osw1"
+    },
+    "AOsw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Shadow Hunter - Serpent Ward",
+      "stockAlternate": "osp1"
+    },
+    "APwt": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Rune of the Watcher",
+      "stockAlternate": "nwad"
+    },
+    "AUin": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Dreadlord - Inferno",
+      "stockAlternate": "ninf"
+    },
+    "AUls": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Crypt Lord - Locust Swarm",
+      "stockAlternate": "uloc"
+    },
+    "Aap1": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Aura - Plague (Abomination)",
+      "stockAlternate": "uplg"
+    },
+    "Aap3": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Aura - Plague (Creep)",
+      "stockAlternate": "uplg"
+    },
+    "Aave": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Avenger Form",
+      "stockAlternate": "ubsp"
+    },
+    "Abrf": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Bearform",
+      "stockAlternate": "edcm"
+    },
+    "Abtl": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Battlestations",
+      "stockAlternate": "opeo"
+    },
+    "Abu2": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Burrow(scarab lvl 2)",
+      "stockAlternate": "ucsB"
+    },
+    "Abu3": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Burrow(scarab lvl 3)",
+      "stockAlternate": "ucsC"
+    },
+    "Abu5": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Burrow(Barbed Arachnathid)",
+      "stockAlternate": "nbnb"
+    },
+    "Abur": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Burrow",
+      "stockAlternate": "ucrm"
+    },
+    "Acef": {
+      "shape": "C/split",
+      "swapsCaster": true,
+      "comments": "Chen - Storm, Earth and Fire",
+      "stockAlternate": null
+    },
+    "Achl": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos Cargo Load",
+      "stockAlternate": "ncpn"
+    },
+    "Aco2": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Couple Instant (Archer)",
+      "stockAlternate": "ehpr"
+    },
+    "Aco3": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Couple Instant (Hippogryph)",
+      "stockAlternate": "ehpr"
+    },
+    "Acoa": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Couple (Archer)",
+      "stockAlternate": "ehpr"
+    },
+    "Acoh": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Couple (Hippogryph)",
+      "stockAlternate": "ehpr"
+    },
+    "Acpf": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Corporeal Form",
+      "stockAlternate": "ospw"
+    },
+    "Aent": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Entangle",
+      "stockAlternate": "egol"
+    },
+    "Aetf": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Ethereal Form",
+      "stockAlternate": "ospm"
+    },
+    "Aexh": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Exhume",
+      "stockAlternate": "ugho"
+    },
+    "Aeye": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Sentry Ward",
+      "stockAlternate": "oeye"
+    },
+    "Agyd": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Graveyard",
+      "stockAlternate": "ugho"
+    },
+    "Ahwd": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Healing Ward",
+      "stockAlternate": "ohwd"
+    },
+    "Amrf": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Raven Form (Medivh)",
+      "stockAlternate": "nmdm"
+    },
+    "Aphx": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Phoenix",
+      "stockAlternate": "hpxe"
+    },
+    "Apts": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Plague Toss",
+      "stockAlternate": "uplg"
+    },
+    "Arai": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Raise Dead",
+      "stockAlternate": "uske"
+    },
+    "Arav": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Raven Form (Druid)",
+      "stockAlternate": "edtm"
+    },
+    "Arsg": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Rexxar - Summon Bear",
+      "stockAlternate": "ngzc"
+    },
+    "Arsq": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Rexxar - Summon Quilbeast",
+      "stockAlternate": "nqb1"
+    },
+    "Arsw": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Rokhan - Serpent Ward",
+      "stockAlternate": "osp1"
+    },
+    "Asb1": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Submerge (Myrmidon)",
+      "stockAlternate": "nmys"
+    },
+    "Asb2": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Submerge (Royal Guard)",
+      "stockAlternate": "nnrs"
+    },
+    "Asb3": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Submerge (Snap Dragon)",
+      "stockAlternate": "nsbs"
+    },
+    "Aslp": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Summon Lobstrok Prawns",
+      "stockAlternate": "nlps"
+    },
+    "Asta": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Stasis Trap",
+      "stockAlternate": "otot"
+    },
+    "Astn": {
+      "shape": "A/metamorph",
+      "swapsCaster": true,
+      "comments": "Stone Form",
+      "stockAlternate": "ugrm"
+    },
+    "SNdc": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Dark Conversion (Fast)",
+      "stockAlternate": "nzom"
+    },
+    "SNin": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tichondrius - Inferno",
+      "stockAlternate": "ninf"
+    },
+    "Sbsk": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Berserker Upgrade",
+      "stockAlternate": "otbk"
+    },
+    "Sbtl": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Battlestations (Chaos)",
+      "stockAlternate": "ncpn"
+    },
+    "Sca1": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Grunt)",
+      "stockAlternate": "nchg"
+    },
+    "Sca2": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Raider)",
+      "stockAlternate": "nchr"
+    },
+    "Sca3": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Shaman)",
+      "stockAlternate": "nchw"
+    },
+    "Sca4": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Kodo)",
+      "stockAlternate": "nckb"
+    },
+    "Sca5": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Peon)",
+      "stockAlternate": "ncpn"
+    },
+    "Sca6": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Chaos (Grom)",
+      "stockAlternate": "Opgh"
+    },
+    "Slo2": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Load (Entangled Gold Mine)",
+      "stockAlternate": "ewsp"
+    },
+    "Sloa": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Load (Burrow)",
+      "stockAlternate": "opeo"
+    },
+    "Srtt": {
+      "shape": "B/one-way",
+      "swapsCaster": false,
+      "comments": "Tank Upgrade",
+      "stockAlternate": "hrtt"
+    }
+  }
+}

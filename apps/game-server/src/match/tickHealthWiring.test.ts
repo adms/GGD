@@ -102,21 +102,33 @@ describe("the sim-health counter is actually fed by the room loop (tick-health-w
     );
   });
 
-  it("/healthz publishes the snapshot beside rooms — the operator-facing channel", () => {
+  it("/healthz publishes the snapshot beside rooms — the operator-facing channel", async () => {
     cover("tick-health-healthz");
-    expect(INDEX).toMatch(
-      /import\s*\{[^}]*\btickHealth\b[^}]*\}\s*from\s*["']\.\/match\/tickHealth["']/,
-    );
-    // the key AND the call: `sim: {}` would be a lie that still parses
-    expect(
-      INDEX,
-      "/healthz must render `sim: tickHealth.snapshot()` — it is the only place tick health is " +
-        "readable without shelling into the container and grepping logs",
-    ).toMatch(/sim:\s*tickHealth\.snapshot\(\)/);
-    // and it is inside the /healthz body, next to the other three blocks
-    expect(INDEX).toMatch(
-      /rooms:\s*roomRegistry\.stats\(\),\s*sim:\s*tickHealth\.snapshot\(\),\s*platform:/,
-    );
+    // UPGRADED FROM A SOURCE SCAN (GH#170). This used to regex index.ts for
+    // `sim: tickHealth.snapshot()`. That was the best available instrument
+    // while the body lived inside a closure in a file that boots a game server
+    // on import — but it is CLAUDE.md ⑥ (掃字串代替行為): it would go red on a
+    // pure refactor and green on a body that renders `sim` from a stale copy.
+    //
+    // GH#170 had to extract the payload into ./healthz to make the new `replay`
+    // block testable at all, so the real object is now reachable. Reading it is
+    // strictly stronger: it proves the FIELD IS PRESENT AND FED BY THE LIVE
+    // SINGLETON, which is the thing #272 actually cares about.
+    const { buildHealthzPayload } = await import("../healthz");
+    const { tickHealth } = await import("./tickHealth");
+
+    const before = buildHealthzPayload();
+    expect(before.sim, "/healthz must carry a `sim` block").toBeDefined();
+    // `sim: {}` would be a lie that still parses — these are the fields #272
+    // exists for: the catastrophic case (sheds) and the one sheds cannot see.
+    for (const key of ["ticks", "window", "p50Ms", "p95Ms", "p99Ms", "maxMs", "shedEvents", "shedTicks"]) {
+      expect(Object.hasOwn(before.sim, key), `missing sim.${key}`).toBe(true);
+    }
+    // …and it is the LIVE process singleton, not a snapshot taken once at
+    // module load: feeding the counter must move what /healthz reports.
+    const baseline = before.sim.shedEvents;
+    tickHealth.noteShed("healthz-wiring-probe", 3, Date.now(), 33.3);
+    expect(buildHealthzPayload().sim.shedEvents).toBe(baseline + 1);
   });
 
   it("the clamp's BEHAVIOUR is untouched — #272 is observation only", () => {

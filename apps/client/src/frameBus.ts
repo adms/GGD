@@ -192,9 +192,41 @@ export interface ReviveCircleMarker {
   contested: boolean;
 }
 
+/**
+ * The live 殭屍王 (task #262), published every frame while one is on the field.
+ *
+ * WHY IT NEEDS ITS OWN CHANNEL. Mobs are `KIND_MOB` and `hasOverheadBar()`
+ * excludes them, so no zombie — king included — ever becomes a `ChampionAnchor`.
+ * That is correct for the RANK AND FILE: at the round-9 peak there are 50 alive
+ * per zone, and 50 pips would turn the minimap into noise. But it also meant the
+ * one entity the whole 戰場任務 is about was invisible on the map, while the map
+ * this is ported from pinged its own minimap for 3 seconds on the king's spawn
+ * (war3map.j:11824 `PingMinimapLocForForce`). One king is not fifty zombies, so
+ * it gets one slot — not a relaxation of the mob cull.
+ *
+ * WHICH ENTITY IS THE KING comes from the `mobBossSpawn` event (RoomStore's
+ * `mobBoss.bossId`), because the wire carries no boss BIT — `ENTITY_FLAG` has
+ * two free values left and spending one on something an event already answers
+ * would be the expensive way round.
+ */
+export interface MobBossMarker {
+  entityId: number;
+  /** duel zone — task #67 scopes the minimap to the local player's zone */
+  zone: number;
+  worldX: number;
+  worldZ: number;
+  /** 0..1, so the marker can read as "nearly dead" at a glance */
+  hpPct: number;
+}
+
 export interface FrameBus {
   /** per-champion world anchors (healthbars/names), written by the game loop */
   champions: Map<number, ChampionAnchor>;
+  /**
+   * The 殭屍王 while one is alive (task #262), else null. See
+   * {@link MobBossMarker} for why the king is not just another anchor.
+   */
+  mobBoss: MobBossMarker | null;
   /**
    * Floating combat-text pool (task #92) — FIXED LENGTH, never resized.
    * Iterate it and skip `!active`; do not push, splice or filter.
@@ -265,6 +297,7 @@ const combatTextPool: CombatTextEntry[] = Array.from({ length: MAX_COMBAT_TEXT }
 
 export const frameBus: FrameBus = {
   champions: new Map(),
+  mobBoss: null,
   combatText: combatTextPool,
   reviveCircles: [],
   project: null,
@@ -532,6 +565,10 @@ export function clearCombatText(): void {
  */
 export function clearWorldAnchors(): void {
   frameBus.champions.clear();
+  // The king is per-frame combat state like every anchor: a teardown that left
+  // it set would paint a skull on the intermission map at the last position it
+  // held, for as long as nobody started another round.
+  frameBus.mobBoss = null;
   frameBus.reviveCircles.length = 0;
   frameBus.localCast = null;
   clearCombatText();

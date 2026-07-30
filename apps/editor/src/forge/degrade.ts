@@ -30,10 +30,14 @@ const PLANS: Readonly<Record<string, string>> = {
   // point: a stale confession in the ledger is how a future reader concludes the
   // feature does not exist. The generic fallback at the bottom of degradeNotes
   // covers any regression.
-  knockback: "敵方強制位移未支援 — 範圍傷害照常結算，擊退/拉扯不會發生",
-  summon: "召喚單位未支援 — 召喚物不會出現，僅保留施法端的數值效果",
+  //
+  // Three MORE went the same way in the 鑄技工坊 default-audit pass: `knockback`
+  // (lane P4 — a real `kind: "knockback"` with `from` push/facing/pull), `summon`
+  // (lane P2 — real bodies that fight and expire) and `periodicDamage` (lane P1
+  // `dot`). All three had a confession here and a `false` in SIM_CAPABILITIES
+  // while their handlers, registry rows and behavioural tests were already
+  // shipping. Only `combo` is still genuinely absent.
   combo: "鎖定連段未支援 — 一次施放只跑一輪效果，分段時序不表現",
-  periodicDamage: "週期傷害未支援 — 傷害會一次結算，DoT 的每跳節奏不表現",
 };
 
 /** Absent capabilities this template declares, with their degradation plans. */
@@ -49,4 +53,21 @@ export function degradeNotes(requires: readonly string[]): DegradeNote[] {
 export function satisfiedCaps(requires: readonly string[]): string[] {
   const missing = new Set(missingCaps(requires));
   return requires.filter((r) => !missing.has(r));
+}
+
+/**
+ * The 「部分可用」 line for a capability that IS available but refuses a named
+ * sub-case (today: `summon.killCredit: "owner"`). Returned alongside the green
+ * ✓ rather than instead of it — the template runs, one authoring choice does
+ * not, and a designer should meet that in the form rather than in a throw.
+ *
+ * Empty for a capability that is whole, so the caller can render nothing.
+ */
+export function capCaveats(requires: readonly string[]): { capability: string; caveat: string }[] {
+  const out: { capability: string; caveat: string }[] = [];
+  for (const r of satisfiedCaps(requires)) {
+    const caveat = SIM_CAPABILITIES[r]?.caveat;
+    if (caveat !== undefined && caveat.length > 0) out.push({ capability: r, caveat });
+  }
+  return out;
 }

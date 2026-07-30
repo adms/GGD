@@ -35,6 +35,7 @@ const prices = (): Map<string, number> =>
 function data(over: Partial<MetaData> = {}): MetaData {
   return {
     crystal: 0,
+    unlockCost: CRYSTAL_UNLOCK_COST,
     owned: new Set<string>(),
     favourites: new Set<string>(),
     prices: prices(),
@@ -82,6 +83,7 @@ describe("champ-select meta: lock state + unlock (meta-client-unlock)", () => {
     // the server returns the updated wallet: thorne now owned, crystals deducted
     const walletAfter: MetaWallet = {
       crystal: 20,
+      crystalUnlockCost: CRYSTAL_UNLOCK_COST,
       ownedChampions: ["sela", "thorne"],
       favourites: [],
     };
@@ -101,7 +103,12 @@ describe("champ-select meta: lock state + unlock (meta-client-unlock)", () => {
 
   it("a favourite result round-trips through applyWallet", () => {
     cover("meta-client-unlock");
-    const after = applyWallet(data(), { crystal: 0, ownedChampions: [], favourites: ["vex"] });
+    const after = applyWallet(data(), {
+      crystal: 0,
+      crystalUnlockCost: CRYSTAL_UNLOCK_COST,
+      ownedChampions: [],
+      favourites: ["vex"],
+    });
     expect([...after.favourites]).toEqual(["vex"]);
   });
 });
@@ -109,7 +116,12 @@ describe("champ-select meta: lock state + unlock (meta-client-unlock)", () => {
 describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
   const okDeps: WalletMetaDeps = {
     hasSession: () => true,
-    fetchWallet: async () => ({ crystal: 120, ownedChampions: ["sela"], favourites: ["sela"] }),
+    fetchWallet: async () => ({
+      crystal: 120,
+      crystalUnlockCost: 250,
+      ownedChampions: ["sela"],
+      favourites: ["sela"],
+    }),
     fetchPrices: async () => prices(),
   };
 
@@ -122,6 +134,7 @@ describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
       expect(res.data.owned.has("sela")).toBe(true);
       expect(res.data.favourites.has("sela")).toBe(true);
       expect(res.data.prices.get("thorne")).toBe(4500);
+      expect(res.data.unlockCost).toBe(250);
     }
   });
 
@@ -132,7 +145,7 @@ describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
       hasSession: () => false,
       fetchWallet: async () => {
         called = true;
-        return { crystal: 0, ownedChampions: [], favourites: [] };
+        return { crystal: 0, crystalUnlockCost: CRYSTAL_UNLOCK_COST, ownedChampions: [], favourites: [] };
       },
       fetchPrices: async () => new Map(),
     });
@@ -154,12 +167,59 @@ describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
 
   it("normalizeWallet coerces missing / malformed fields to safe defaults", () => {
     cover("meta-client-degrade");
-    expect(normalizeWallet(null)).toEqual({ crystal: 0, ownedChampions: [], favourites: [] });
+    expect(normalizeWallet(null)).toEqual({
+      crystal: 0,
+      crystalUnlockCost: CRYSTAL_UNLOCK_COST,
+      ownedChampions: [],
+      favourites: [],
+    });
     expect(normalizeWallet({ crystal: -5, ownedChampions: ["a"] })).toEqual({
       crystal: 0,
+      crystalUnlockCost: CRYSTAL_UNLOCK_COST,
       ownedChampions: ["a"],
       favourites: [],
     });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The unlock price is the SERVER's, not ours (2026-07-30). The owner asked for
+// one flat 藍水晶 price for every champion, configurable in the admin console —
+// which only means anything if the client stops printing its own copy of it.
+//
+// The direction that matters is the FALLBACK direction: a payload that omits
+// the field must resolve to CRYSTAL_UNLOCK_COST, never 0. A 0 would render
+// 「🔓 解鎖 (0 水晶)」 and make `canAfford` true for an empty wallet, i.e. the
+// button would promise a free unlock and the server would answer 402.
+describe("champ-select meta: the unlock price comes from the platform", () => {
+  it("takes crystalUnlockCost off the payload, overriding the compiled-in fallback", () => {
+    const w = normalizeWallet({ crystal: 0, crystalUnlockCost: 175, ownedChampions: [], favourites: [] });
+    expect(w.crystalUnlockCost).toBe(175);
+    expect(applyWallet(data(), w).unlockCost).toBe(175);
+    // and affordability follows the live number, not the constant
+    expect(canAfford(175, w.crystalUnlockCost)).toBe(true);
+    expect(canAfford(174, w.crystalUnlockCost)).toBe(false);
+  });
+
+  it("a payload with NO cost (old platform) falls back to the constant, not to free", () => {
+    expect(normalizeWallet({ crystal: 999 }).crystalUnlockCost).toBe(CRYSTAL_UNLOCK_COST);
+    expect(normalizeWallet({ crystal: 0, crystalUnlockCost: -1 }).crystalUnlockCost).toBe(CRYSTAL_UNLOCK_COST);
+    expect(normalizeWallet({ crystal: 0, crystalUnlockCost: Number.NaN }).crystalUnlockCost).toBe(
+      CRYSTAL_UNLOCK_COST,
+    );
+    // ...but a server that genuinely says 0 is honoured — the owner may set it.
+    expect(normalizeWallet({ crystal: 0, crystalUnlockCost: 0 }).crystalUnlockCost).toBe(0);
+  });
+
+  it("applyWallet re-reads the cost so an operator price change lands without a reload", () => {
+    const before = data({ unlockCost: 300 });
+    const after = applyWallet(before, {
+      crystal: 10,
+      crystalUnlockCost: 500,
+      ownedChampions: [],
+      favourites: [],
+    });
+    expect(after.unlockCost).toBe(500);
   });
 });
 

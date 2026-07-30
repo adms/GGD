@@ -5,14 +5,18 @@
  */
 import type { ArraySchema } from "@colyseus/schema";
 import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState, formFlagsForIndex } from "@ggd/shared/protocol/schema";
+import { flightHoverHeight } from "@ggd/shared/sim/flight";
 import { championFormIndex } from "@ggd/shared/sim/systems/ChampionFormSystem";
 import { visualStackCount } from "@ggd/shared/sim/stats/visualStacks";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
+import { NIGHT_FLAG_MODEL_KEY } from "@ggd/shared/sim/nightPact";
+import { resolveAuraRadius } from "@ggd/shared/sim/aura/aura";
 import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
+import { isHidden } from "@ggd/shared/sim/stealth";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { MatchController } from "../match/MatchController";
@@ -340,6 +344,26 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.flags = 0;
         continue;
       }
+      const flag = world.nightFlag.get(id);
+      if (flag) {
+        // 暗夜旗 (71-00 暗夜契約). Ground furniture: no team component, no
+        // health, untargetable. `shield` carries the POST-`abilityRange` aura
+        // radius so the black ring the client draws IS the radius the sim
+        // tests — a ring computed client-side from the config would drift the
+        // moment an operator changed `auraRadius` or the range multiplier.
+        const rules = world.nightPactRules;
+        es.kind = ENTITY_KIND.NIGHT_FLAG;
+        es.seatId = -1;
+        es.key = NIGHT_FLAG_MODEL_KEY;
+        es.hp = 0;
+        es.maxHp = 0;
+        es.mana = flag.teamId; // tint only; maxMana stays 0 so no bar is drawn
+        es.maxMana = 0;
+        es.shield = rules ? resolveAuraRadius(world, rules.auraRadius) : 0;
+        es.alive = true;
+        es.flags = 0;
+        continue;
+      }
       const mob = world.mob.get(id);
       if (mob) {
         // ROGUELITE MOB (task #215 喪標麥可). A MONSTER-team neutral that MOVES.
@@ -375,7 +399,24 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       const champ = world.champion.get(id);
       es.kind = 0;
       es.seatId = team ? team.seatId : -1;
-      es.key = champ ? Champions.get(champ.championId as ChampionId).modelKey : "";
+      // WHICH MESH. A 召喚物 (GH#289 lane P2) deliberately carries NO
+      // ChampionComp — `deathSystem` pays kill gold + the once-per-victim
+      // bounty for anything `world.champion.has()`, so a champion-bodied summon
+      // would be a gold printer — and it is not a mob either, so it falls all
+      // the way through to this default. Without the second lookup `champ` is
+      // undefined here and the key ships as `""`, i.e. the modelless voxel
+      // stand-in painted on the floor that the aura-carrier note above
+      // describes: the summon would be computed, sent, and INVISIBLE as itself
+      // (failure shape ②). Its body IS a champion doc, and `StatsComp
+      // .championId` is where that doc id lives — the very same field
+      // `recomputeStats` reads for its numbers, so the mesh and the sheet can
+      // never disagree about which hero it is.
+      const sheetId =
+        champ?.championId ?? (world.summon.has(id) ? world.stats.get(id)?.championId : undefined);
+      // `tryGet`, not `get`: the summon's id is a SOFT content ref, so a body
+      // authored before its champion doc ships must render as the stand-in
+      // rather than throw inside the snapshot encoder.
+      es.key = sheetId ? (Champions.tryGet(sheetId as ChampionId)?.modelKey ?? "") : "";
       const hp = world.health.get(id);
       if (hp) {
         es.hp = hp.hp;
@@ -421,8 +462,27 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       // no leaps costs exactly zero extra bytes. (The companion `sc` model-scale
       // channel was removed as dead — see the note in protocol/schema.ts.)
       const air = world.airborne.get(id);
-      es.h = air ? air.y : 0;
+      // 飛行 (04-00 翔封界, sim/flight.ts) rides the SAME `h` channel — one
+      // number, one meaning ("how far off the ground this body is drawn"), so
+      // the renderer needs no new case and no schema field is appended (and
+      // `defineTypes` is APPEND-ONLY, i.e. un-appendable in reverse).
+      //
+      // ⚠️ AND DELIBERATELY WITHOUT `ENTITY_FLAG.AIRBORNE`. That bit means
+      // 「suppress locomotion, the body is on a ballistic arc」 (#247). A flyer
+      // WALKS — she just walks through people — so setting it would freeze her
+      // run cycle into a T-pose glide. A leap always wins the height when both
+      // are somehow true, because a leap is the transient state.
+      es.h = air ? air.y : flightHoverHeight(world, id);
       if (air) flags |= ENTITY_FLAG.AIRBORNE;
+      // 隱形 (隱形原語 lane D). The SAME predicate the sim's targeting reads
+      // (`sim/stealth.isHidden`) — composed from it rather than re-derived, so
+      // the model the client fades out and the body the enemy cannot acquire
+      // can never disagree. Absent (every match with no stealth hero) leaves the
+      // bit at 0, which the delta encoder never puts on the wire.
+      //
+      // ⚠️ x/z ARE STILL SENT. This bit does NOT hide the position; see the
+      // ENTITY_FLAG.INVISIBLE doc for the owner's ruling on that trade.
+      if (isHidden(world, id)) flags |= ENTITY_FLAG.INVISIBLE;
       // #249 變身 FORM INDEX — THE ONLY CHANNEL THAT CARRIES IT.
       //
       // `es.key` above is `Champions.get(champ.championId).modelKey`, and it

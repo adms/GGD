@@ -1,32 +1,120 @@
 {
   "id": "godie-efur.ex",
-  "name": "13-002 龍星群",
+  "schema": "ability@1",
+  "name": "13-002 絕。暗殺奧義",
   "icon": "assets/icons/abilities/godie-efur.ex.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n殺氣全開，快步化作自天而降的龍矢，抵達瞬間對周圍敵人造成0.01秒暈眩與額外75點傷害。",
+  "description": "[自身・EX]\n冷卻 45 秒　**施法門檻 50 點法力**　前搖 0.4 秒\n\n阿福把身上所有的念一次燒光。**發動後法力直接歸零** —— 你有 51 點就燒 51 點，有 510 點就燒 510 點。這一招不找零。\n\n持續 **5.0 秒**：\n· **法術強度 / 攻擊力 / 護甲 / 魔法抗性 全部 +40%**。加上天生技當下輪到的那 +10%，輪到誰誰就是 **+50%** —— 這就是「念。攻防轉換提升至 50%」的來源，只是順手把另外三格也墊高了 40%（燒掉的法力總得花在什麼地方）\n· **這 5 秒內的第一次「暗步」命中**，自動免費補一發牙突（**不再耗魔、不吃 W 的冷卻**）：\n  **120 點物理 + 0.8 × 攻擊力 + 目標最大生命的 12%**、暈眩 **1.2 秒**、擊退 **7.0 單位 −（你們的距離）**、落地再躺 **8 tick（約 0.27 秒）**\n  ⚠️ 只送**一次**：內部冷卻 5.0 秒 = 整個視窗，第二次瞬移不會再有。\n\n⚠️ **燒越多，這一刀就越痛。** owner 2026-07-31 裁決：追加傷害 = **發動當下現存法力的 20%**，在燒光的那一瞬間就結算完畢並記下來，之後才由那發免費牙突一起送出去。\n  · 你有 51 點就記 10 點；有 962 點（10 級無法力裝的滿魔）就記 **192 點**。\n  · **記的是實際扣掉的量**，不是你「應該」有多少 —— 半管魔就是半份傷害，沒有安慰獎。\n  · 上限 **400 點**（＝法力池 2,000）。這是保險絲不是設計目標：法力池會隨等級與裝備長大，沒有天花板的線性項到後期就是一擊必殺。\n  · 這 5 秒內沒有打中任何人，那團念就散了，錢也拿不回來。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    45.0
   ],
   "manaCost": [
-    120.0
+    50.0
   ],
   "range": 0,
   "effects": [
     {
+      "kind": "spendMana",
+      "amount": {
+        "flat": 0.0
+      },
+      "pctMaxMana": 1.0,
+      "applyTo": "self",
+      "bankAs": {
+        "statusId": "nen-banked",
+        "durationSec": 5.0
+      }
+    },
+    {
       "kind": "applyBuff",
+      "duration": 5.0,
       "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 0.4
+        },
         {
           "stat": "ad",
           "op": "pctAdd",
-          "value": 0.35
+          "value": 0.4
+        },
+        {
+          "stat": "armor",
+          "op": "pctAdd",
+          "value": 0.4
+        },
+        {
+          "stat": "mr",
+          "op": "pctAdd",
+          "value": 0.4
         }
       ],
-      "duration": 6.0
+      "hooks": [
+        {
+          "on": "onAbilityHit",
+          "abilitySlot": "Q",
+          "internalCooldown": 5.0,
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  120.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.8
+                  }
+                ]
+              },
+              "hpPct": {
+                "basis": "max",
+                "perRank": [
+                  0.12
+                ]
+              },
+              "bankedBonus": {
+                "statusId": "nen-banked",
+                "coeff": 0.2,
+                "max": 400
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "fang-stun",
+              "duration": 1.2,
+              "stun": true
+            },
+            {
+              "kind": "knockback",
+              "distance": 7.0,
+              "speed": 18.0,
+              "from": "caster",
+              "getupTicks": 8
+            }
+          ]
+        }
+      ]
     }
   ],
-  "vfxKey": "fx.prim.arcane.pulse-lg",
-  "schema": "ability@1",
+  "vfxKey": "fx.prim.void.pulse-lg",
+  "vfxLayers": [
+    {
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "delayMs": 120,
+      "w3xScale": 1.4,
+      "alpha": 0.85
+    },
+    {
+      "vfxKey": "fx.fam.burst.ki.s150",
+      "delayMs": 300,
+      "w3xScale": 1.1
+    }
+  ],
   "castTimeSec": 0.4
 }

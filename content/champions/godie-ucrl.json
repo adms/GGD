@@ -231,15 +231,9 @@
       "range": 0,
       "effects": [
         {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "maxHealth",
-              "op": "flat",
-              "value": 300
-            }
-          ],
-          "duration": 3.0
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 7.0
         }
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",

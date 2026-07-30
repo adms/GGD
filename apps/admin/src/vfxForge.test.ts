@@ -54,6 +54,7 @@ import {
   FIELD_LABEL,
   GLOBAL_BOUNDS,
   GLOBAL_FIELDS,
+  OPTIONAL_GLOBAL_FIELDS,
   PRIMITIVE_KINDS,
   VFX_FAMILIES_DOC_ID,
   VFX_FAMILIES_SCHEMA,
@@ -207,7 +208,20 @@ describe("鑄技工坊 · 上下界 (adminui-vfx-forge-bounds)", () => {
 
   it("全域欄位是必填（留白不會被當成 0）；per-ability 欄位留白才是合法的", () => {
     cover("adminui-vfx-forge-bounds");
-    for (const f of GLOBAL_FIELDS) expect(validateGlobalField(f, "")).toBe("必填");
+    // ⚠️ #205 —— `OPTIONAL_GLOBAL_FIELDS` 是 schema 上 optional 的那些
+    // （`maxAbilityVfxLayers`）。它們必須**可以留白**，否則舊的 durable overlay
+    // 一打開就是 dirty，操作者只是看一眼就會把一個他沒選過的值存上線。
+    // 這條測試兩邊都驗：必填的仍然必填，可留白的必須真的收得下空字串 ——
+    // 所以把一個欄位塞進豁免集合並不會讓這條測試變寬鬆。
+    for (const f of GLOBAL_FIELDS) {
+      if (OPTIONAL_GLOBAL_FIELDS.has(f)) {
+        expect(validateGlobalField(f, ""), `${f} 是 optional，留白必須合法`).toBe("");
+        // …但填了值仍然要照上下界檢查，不是「optional = 什麼都收」
+        expect(validateGlobalField(f, "999"), `${f} 填了值卻不檢查上界`).not.toBe("");
+        continue;
+      }
+      expect(validateGlobalField(f, "")).toBe("必填");
+    }
     for (const f of ABILITY_FIELDS) expect(validateAbilityField(f, "  ")).toBe("");
     expect(validateAbilityField("family", "notAFamily")).toContain("不是一個已知的家族");
     expect(validateAbilityField("anchor", "x".repeat(33))).toContain("32");
@@ -290,6 +304,42 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
     expect(reread).not.toBeNull();
     expect(reread!.abilities["godie-e002.e"]).toEqual(SENTINEL);
     expect(reread!.schema).toBe(VFX_FAMILIES_SCHEMA);
+  });
+
+  /**
+   * ⚠️ #205 —— `familiesDocFor` 是**手寫的欄位清單**,不是 spread。少寫一行,
+   * 後台按存檔就會把那個全域欄位從文件裡刪掉,而畫面上那一格看起來還好好地
+   * 填著值(第②號故障:算了但沒送到)。
+   *
+   * 突變驗證:把 `familiesDocFor` 裡的 `maxAbilityVfxLayers: doc.…` 那一行刪掉
+   * → 這條紅(`reread.maxAbilityVfxLayers` 變 undefined)。
+   */
+  it("每一個 GLOBAL_FIELD 都撐得過 familiesDocFor —— 存檔不會靜靜刪掉欄位", () => {
+    cover("adminui-vfx-forge-roundtrip");
+    // 每一格都給一個和出貨預設不同的哨兵值
+    const SENT: Record<string, number> = {
+      scaleGain: 0.77,
+      scaleMin: 0.6,
+      scaleMax: 4.5,
+      maxAbilityVfxLayers: 3,
+      oneShotMaxLifeSec: 2,
+    };
+    const base = BASE_DOC();
+    const withSentinels = { ...base } as Record<string, unknown>;
+    for (const f of GLOBAL_FIELDS) withSentinels[f] = SENT[f];
+    const wire = JSON.parse(
+      JSON.stringify(familiesDocFor(withSentinels as never)),
+    ) as unknown;
+    const reread = extractFamiliesDoc(wire);
+    expect(reread, "加了哨兵值之後整份文件過不了 shared 的 Zod").not.toBeNull();
+    for (const f of GLOBAL_FIELDS) {
+      expect(
+        (reread as unknown as Record<string, unknown>)[f],
+        `${f} 在 familiesDocFor → JSON → 讀回來的路上掉了`,
+      ).toBe(SENT[f]);
+    }
+    // 而且每一格都有哨兵值可用（新增 GLOBAL_FIELD 但忘了補哨兵 = 這裡紅）
+    for (const f of GLOBAL_FIELDS) expect(SENT[f], `${f} 沒有哨兵值`).toBeDefined();
   });
 
   it("每一個選填欄位單獨搬也不掉 —— 一格一格拆開驗", () => {
@@ -628,7 +678,13 @@ describe("鑄技工坊 · 讀出貨資料 (adminui-vfx-forge-load)", () => {
     expect(asked.some((u) => u.includes(CENSUS_PATH))).toBe(true);
     expect(cat.vfxIds.has("fx.prim.fire.nova")).toBe(true);
     expect(cat.abilities).toHaveLength(2);
-    expect(cat.abilities[0]).toEqual({ id: "a.q", name: "第一招", vfxKey: "fx.prim.fire.nova" });
+    // #205 —— 整份技能文件也留著（多層堆疊編輯器要它當底，不然存檔會把其他欄位弄丟）
+    expect(cat.abilities[0]).toEqual({
+      id: "a.q",
+      name: "第一招",
+      vfxKey: "fx.prim.fire.nova",
+      doc: { id: "a.q", name: "第一招", vfxKey: "fx.prim.fire.nova" },
+    });
     // 讀不到的那一支留 id-only，不是消失
     expect(cat.abilities[1]).toEqual({ id: "a.w", name: "a.w", vfxKey: null });
   });

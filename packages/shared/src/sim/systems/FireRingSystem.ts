@@ -39,8 +39,10 @@
  * hence nobody burns on the ignition tick itself).
  */
 import type { SimWorld } from "../SimWorld";
+import type { EntityId } from "../../ids";
 import { distSq } from "../math/vec2";
 import { fireRingIsSafe, fireRingRadius, fireRingRatePerSec } from "../fireRing";
+import { summonBurnsInFireRing } from "../summonRules";
 
 export function fireRingSystem(world: SimWorld): void {
   const rules = world.fireRingRules;
@@ -70,25 +72,29 @@ export function fireRingSystem(world: SimWorld): void {
   if (ratePerSec <= 0) return; // degenerate config: telegraph only, no damage
 
   const dt = world.dt;
-  // champion store iterates in ascending-id insertion order — deterministic.
-  for (const [id, champ] of world.champion) {
-    void champ;
+
+  /**
+   * One body's burn. Extracted so the champion pass and the 召喚物 pass below
+   * cannot drift on the geometry, the rate or the event shape — three places
+   * that must agree exactly or the client's flame outruns the damage.
+   */
+  const burn = (id: EntityId): void => {
     const hp = world.health.get(id);
-    if (!hp || !hp.alive) continue;
+    if (!hp || !hp.alive) return;
     const t = world.transform.get(id);
-    if (!t) continue;
+    if (!t) return;
     // #216: this zone's duel is already decided — the round is OVER here, so the
     // ring must not keep eating its survivors while another zone fights on.
-    if (world.settledZones.has(t.zone)) continue;
+    if (world.settledZones.has(t.zone)) return;
     // per-zone geometry: each duel's ring closes on ITS OWN centre.
     const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
-    if (!zoneDef) continue;
+    if (!zoneDef) return;
     const radius = fireRingRadius(rules, ticksSinceStart, zoneDef.boundaryRadius);
     // WHOLE BODY inside = safe. At the closed radius `radius - t.radius < 0`,
     // so this is false for every champion at every position.
-    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) continue;
+    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) return;
     const dmg = hp.maxHp * ratePerSec * dt;
-    if (dmg <= 0) continue;
+    if (dmg <= 0) return;
     hp.hp -= dmg; // pure %-HP true burn: ignores armor/MR, shields and combat-env
     world.emit("fireRingDamage", {
       id,
@@ -98,5 +104,26 @@ export function fireRingSystem(world: SimWorld): void {
       x: t.pos.x,
       z: t.pos.z,
     });
+  };
+
+  // champion store iterates in ascending-id insertion order — deterministic.
+  for (const id of world.champion.keys()) burn(id);
+
+  // 保底 also covers 召喚物 (owner 2026-07-30 「所有場上玩家、bot、各種殭屍」).
+  // A summon's body is a hero doc with a hero's HP, so a permanent one standing
+  // outside the closed ring would be the only thing on the field the round
+  // cannot remove. Per-ability switchable — 37-03 災難之牆's wall units are
+  // scenery, not combatants — see sim/summonRules.ts.
+  //
+  // STRICT no-op while nothing has summoned (`world.summon` empty), and the ids
+  // are SORTED: `world.summon` is a Map whose iteration order is insertion
+  // order, and this loop emits events that land in `world.events` — an unsorted
+  // walk would make the event order depend on spawn history rather than on id.
+  if (world.summon.size > 0) {
+    for (const id of [...world.summon.keys()].sort((a, b) => a - b)) {
+      const sm = world.summon.get(id);
+      if (sm === undefined || !summonBurnsInFireRing(sm)) continue;
+      burn(id);
+    }
   }
 }

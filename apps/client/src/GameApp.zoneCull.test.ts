@@ -120,8 +120,19 @@ describe("L3 · 四個消費點都真的剔除了", () => {
 
   it("血條錨點與復活圈：updateFrameBus 兩個迴圈都剔除別區", () => {
     const body = bodyAfter("private updateFrameBus(state: MatchState, nowMs: number): void");
-    // 錨點迴圈：接在 hasOverheadBar 之後
-    expect(body).toMatch(/if \(!hasOverheadBar\(es\.kind\)\) return;\s*if \(!this\.visibleZones\.has\(es\.zone\)\) return;/);
+    // 錨點迴圈：在 hasOverheadBar 之後、在**做任何工作之前**。
+    // ⚠️ 2026-07-31 從「緊鄰」放寬成「之後 + 在 seen.add 之前」,而且這是修正
+    //    不是放水:原本的 `\s*` 要求兩行**字面相鄰**,而 #85 的匿蹤血條判斷
+    //    合法地插進了中間 —— 守衛因此紅在一個跟剔除完全無關的理由上
+    //    (CLAUDE.md 失敗形態④:斷言方向跟缺陷無關)。
+    //    真正要守的性質是**順序**:剔除必須早於 `seen.add(es.id)`,
+    //    否則別區的實體會進到 seen 集合、拿到血條錨點。
+    const anchorGate = body.indexOf("if (!hasOverheadBar(es.kind)) return;");
+    const anchorCull = body.indexOf(CULL, anchorGate);
+    const anchorWork = body.indexOf("seen.add(es.id)", anchorGate);
+    expect(anchorGate, "hasOverheadBar 這一關不見了").toBeGreaterThanOrEqual(0);
+    expect(anchorCull, "血條錨點迴圈完全沒有剔除別區").toBeGreaterThan(anchorGate);
+    expect(anchorCull, "剔除排在 seen.add 之後 —— 別區實體照樣拿到血條錨點").toBeLessThan(anchorWork);
     // 復活圈迴圈：接在 kind 判斷之後
     expect(body).toMatch(/if \(es\.kind !== KIND_REVIVE_CIRCLE\) return;\s*if \(!this\.visibleZones\.has\(es\.zone\)\) return;/);
     // 兩處都在 = 至少兩次

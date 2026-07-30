@@ -1,7 +1,19 @@
 {
   "collection": "items",
-  "hash": "4942cb5f918b",
+  "hash": "750d09054324",
   "entries": [
+    {
+      "id": "bulwark-charge-greaves",
+      "path": "items/bulwark-charge-greaves.json",
+      "hash": "6fd2ac1c475f",
+      "size": 945
+    },
+    {
+      "id": "cleaver-of-the-warden",
+      "path": "items/cleaver-of-the-warden.json",
+      "hash": "913d03dbf9b6",
+      "size": 1123
+    },
     {
       "id": "ember-rod",
       "path": "items/ember-rod.json",
@@ -371,8 +383,8 @@
     {
       "id": "godie-i01n",
       "path": "items/godie-i01n.json",
-      "hash": "4b69da96e3f6",
-      "size": 744
+      "hash": "b3df799c36df",
+      "size": 2007
     },
     {
       "id": "godie-i01o",
@@ -401,8 +413,8 @@
     {
       "id": "godie-i01s",
       "path": "items/godie-i01s.json",
-      "hash": "b1391edf0d4e",
-      "size": 551
+      "hash": "8076d5ec07af",
+      "size": 1545
     },
     {
       "id": "godie-i01t",
@@ -551,8 +563,8 @@
     {
       "id": "godie-i02h",
       "path": "items/godie-i02h.json",
-      "hash": "b1165f9e7d76",
-      "size": 449
+      "hash": "21c7c7e880bc",
+      "size": 594
     },
     {
       "id": "godie-i02i",
@@ -563,14 +575,14 @@
     {
       "id": "godie-i02j",
       "path": "items/godie-i02j.json",
-      "hash": "d7aa7c1e5dfb",
-      "size": 436
+      "hash": "ac64db903ca6",
+      "size": 1213
     },
     {
       "id": "godie-i02k",
       "path": "items/godie-i02k.json",
-      "hash": "078c452161cd",
-      "size": 555
+      "hash": "8642a4bdd26c",
+      "size": 1512
     },
     {
       "id": "godie-i02l",
@@ -1273,6 +1285,18 @@
       "path": "items/legendary-orb.json",
       "hash": "f14ddf663e3e",
       "size": 536
+    },
+    {
+      "id": "piercer-crossbow",
+      "path": "items/piercer-crossbow.json",
+      "hash": "f4ef0f6934a5",
+      "size": 986
+    },
+    {
+      "id": "sage-ward-amulet",
+      "path": "items/sage-ward-amulet.json",
+      "hash": "d2e881dddb6f",
+      "size": 1160
     },
     {
       "id": "serrated-edge",

@@ -246,13 +246,33 @@ export const zConfigMatchDoc = z
   })
   .strict();
 
-/** M COIN store config: champion unlock prices + match placement rewards. */
+/**
+ * Store config: the FLAT 藍水晶 champion unlock price + match placement rewards.
+ *
+ * Owner, 2026-07-30:「所有英雄藍水晶都是統一價，新上架預設也是一樣價格」. This
+ * replaced a 53-entry `championPrices` map whose only real content was "300, 41
+ * times, and 0 twelve times" — a maintenance liability that made FORGETTING a
+ * line mean GIVING THE CHAMPION AWAY (an absent price reads as free on both the
+ * client and the server). Under the flat model an unlisted champion costs
+ * `championUnlockCost`, so onboarding a hero needs no store edit at all.
+ */
 export const zConfigStoreDoc = z
   .object({
     id: zId,
     schema: z.literal("config.store@1"),
-    /** championId -> M COIN unlock price (0 = free/starter, auto-owned) */
-    championPrices: z.record(zId, z.number().int().min(0)),
+    /**
+     * The 藍水晶 price of ONE champion unlock — the same number for every
+     * champion that is not on `freeChampionIds`. Upper bound is a typo guard,
+     * not a balance opinion: 1,000,000 is already ~4,300 first-place matches.
+     */
+    championUnlockCost: z.number().int().min(0).max(1_000_000),
+    /**
+     * The champions that cost NOTHING — the free starter roster every new
+     * account is seeded with. Emptying it is legal (the owner may want a fully
+     * uniform store); see the note in apps/platform/internal/wallet/catalog.go
+     * for what a new account then faces.
+     */
+    freeChampionIds: z.array(zId),
     /** M COIN granted per final team placement (1 = winner) */
     mcoinRewards: z
       .object({
@@ -499,6 +519,106 @@ export const zGoldDropConfig = z
   .strict();
 
 export type GoldDropConfig = z.infer<typeof zGoldDropConfig>;
+
+/**
+ * 71-00 暗夜契約 (owner 2026-07-30 re-design) — while a 暗夜契約 carrier fights
+ * in a zone, EVERY champion death there (friend or foe) raises a 暗夜旗 that
+ * radiates 黑夜靈氣; every flag is cleared at round end. Optional + additive: an
+ * absent block means the mechanic is simply OFF (the same legacy-compat
+ * convention as `flowers` / `reviveCircles` / `guardianTower` / `goldDrop`),
+ * which is what every unit test and the client's prediction shadow world see.
+ *
+ * ⚠️ EVERY FIELD HERE IS A DECISION THE OWNER WILL WANT TO FLIP, and each has an
+ * UPPER bound as well as a lower one — `validateField` only checked `min` until
+ * 2026-07-29, which is how 50 typed as 500 used to sail through the admin form
+ * and get silently clamped downstream (#277).
+ */
+export const zNightPactConfig = z
+  .object({
+    /**
+     * WHICH 天生技 docs count as 暗夜契約. A LIST, not the single literal
+     * `"godie-u00k.passive"`, for the reason `championPrices` taught us: one
+     * hard-coded id means a re-id or a second hero with the same mechanic
+     * silently disables the whole feature with no error anywhere.
+     */
+    abilityIds: z.array(z.string().min(1)).min(1).max(16),
+    /**
+     * BASE 黑夜靈氣 radius in sim units, BEFORE the combat-env `abilityRange`
+     * factor (#136).
+     *
+     * ⚠️ THIS NUMBER IS NOT PORTED — it is a design choice, and it says so here
+     * because a reader would otherwise assume fidelity. `A0HH` has an EMPTY
+     * `area` column (`OBJECTS.json` → `"area": {}`), so the source map supplies
+     * nothing. The shipped default is the ORDER OF MAGNITUDE the rest of this
+     * content tree uses for a hero aura: 芬多精 `A0GM` is 4.58 (250 WC3 units),
+     * 靈壓 `A0ID` is 9.17 (500), and 6.42 (350) is the modal `radius` among the
+     * innate 天生技 docs in `content/abilities`. The 40 ceiling is the same
+     * mis-parse guard `zAuraDef.radius` carries: the zone's `boundaryRadius` is
+     * 24, so anything past 40 is a raw un-converted WC3 number.
+     */
+    auraRadius: z.number().positive().max(40),
+    /**
+     * WHO 黑夜靈氣 reaches. `owner` = only the unit carrying 暗夜契約 (死之王
+     * himself); `team` = its whole team.
+     *
+     * ⚠️ THE OWNER DID NOT RULE ON THIS. The shipped default is the CONSERVATIVE
+     * reading of 「帶來暗夜效果」 — the ubertip's 夜間 clauses are all about 死之王
+     * — and it is a dropdown precisely so the answer costs one save.
+     */
+    beneficiary: z.enum(["owner", "team"]),
+    /**
+     * HOW SEVERAL FLAGS COMBINE. `max` = any number of overlapping flags is one
+     * dose; `add` = they sum. A 12-champion massacre can leave a lot of banners
+     * on one battlefield, so this is the difference between a flavour buff and
+     * +600 % move speed — a real gameplay decision, hence a field.
+     */
+    stacking: z.enum(["max", "add"]),
+    /** hard cap on simultaneously standing flags PER ZONE (0 would disable it) */
+    maxFlagsPerZone: z.number().int().min(1).max(64),
+    /** 移動速度提升 100% → 1.0 (a PercentAdd). The ubertip's own number. */
+    msPercent: z.number().min(0).max(10),
+    /** 生命回復速度提升 30 點 → a flat healthRegen. The ubertip's own number. */
+    healthRegenFlat: z.number().min(0).max(500),
+    /**
+     * 「在死之王附近想施展技能的敵方單位有 12% 的機率魔力全失,並且受到傷害」.
+     * NOT about the flag — it keys off proximity to a LIVING carrier.
+     */
+    manaBurn: z
+      .object({
+        enabled: z.boolean(),
+        /** enemy casts within this distance of a living carrier are at risk */
+        radius: z.number().positive().max(40),
+        /** the ubertip's 12 % */
+        chance: z.number().min(0).max(1),
+        /**
+         * TRUE damage on a successful proc.
+         *
+         * ⚠️ SHIPS AT 0 BECAUSE THE NUMBER DOES NOT EXIST. `A0HH`'s only two
+         * data fields are `Def1`/`Def5` = 1.0, the NEUTERED damage-reduction
+         * columns of its base `Aegr` (Elune's Grace, stock `AIdd`, `DataA1
+         * 0.65`) — ×1.0 is "no reduction", not a damage value — and the rawcode
+         * appears ZERO times in `war3map.j`. 0 is the honest encoding of
+         * "unknown"; a made-up number would launder a guess into balance.
+         */
+        damage: z.number().min(0).max(10000),
+      })
+      .strict(),
+  })
+  .strict();
+
+export type NightPactConfig = z.infer<typeof zNightPactConfig>;
+
+/** Contract defaults for the nightPact block (dev cheats / fallbacks). */
+export const DEFAULT_NIGHT_PACT_CONFIG: NightPactConfig = {
+  abilityIds: ["godie-u00k.passive"],
+  auraRadius: 6.42,
+  beneficiary: "owner",
+  stacking: "max",
+  maxFlagsPerZone: 12,
+  msPercent: 1.0,
+  healthRegenFlat: 30,
+  manaBurn: { enabled: true, radius: 6.42, chance: 0.12, damage: 0 },
+};
 
 /** Contract defaults for the goldDrop block (dev cheats / fallbacks). */
 export const DEFAULT_GOLD_DROP_CONFIG: GoldDropConfig = {
@@ -1355,6 +1475,8 @@ export const zConfigArenaRulesDoc = z
     goldDrop: zGoldDropConfig.optional(),
     /** roguelite mob-wave rules (task #215); omit = no mobs (legacy behavior) */
     mobWaves: zMobWavesConfig.optional(),
+    /** 71-00 暗夜契約 rules; omit = no 暗夜旗, no 黑夜靈氣, no mana burn */
+    nightPact: zNightPactConfig.optional(),
   })
   .strict();
 
@@ -1368,11 +1490,18 @@ export const zConfigArenaRulesDoc = z
  * The key set is generated from the sim's COMBAT_ENV_KEYS, so the schema can
  * never drift from the engine.
  *
- * The eight #248 三圍 coefficients (`strToMaxHealth` …) ride the same table but
- * are COEFFICIENTS, not ×factors: their neutral value is the shipped WC3 number
- * (25 hp per strength point), not 1.0, and their legal band is 0..100 — which is
- * why `zEnvFactor` has always allowed 100 and why an omitted coefficient falls
- * back to `defaultForKey`, never to 1.0.
+ * The NINE 三圍 coefficients (`strToMaxHealth` … — eight from #248, plus
+ * `intToMagicResist` from GH#221) ride the same table but are COEFFICIENTS, not
+ * ×factors: their neutral value is the shipped WC3-or-owner number (23 hp per
+ * strength point, 0.6 魔抗 per intelligence point), not 1.0, and their legal band
+ * is 0..100 — which is why `zEnvFactor` has always allowed 100 and why an omitted
+ * coefficient falls back to `defaultForKey`, never to 1.0.
+ *
+ * ⚠️ NOTHING IS ADDED HERE WHEN A KEY IS ADDED. The Zod object is BUILT from
+ * `COMBAT_ENV_KEYS`, so `.strict()` starts accepting the new key the moment the
+ * sim declares it. That is the design — but it also means this file cannot be
+ * the place a reviewer checks to see whether the key landed; the sim's
+ * COMBAT_ENV_KEYS is.
  */
 const zEnvFactor = z.number().min(0).max(100);
 
@@ -1493,6 +1622,20 @@ export const zConfigCombatFeelDoc = z
         maxBodies: z.number().min(0).max(100),
         /** 一個身位 = 多少 GGD 單位 */
         bodyUnit: z.number().min(0).max(100),
+        /**
+         * 決策點:技能授權的位移(擊退/擊飛/衝刺)遇上傷害驅動的擊退時誰贏。
+         * ABSENT = 出貨預設 true(技能贏)。false = 傷害無條件蓋掉 —— 那是這條
+         * 缺陷被修之前的行為,而它讓每一支「又打又推」的技能的擊退全滅。
+         * 完整理由見 `sim/combatFeel.ts` 的 `damageShoveWins`。
+         */
+        authoredWins: z.boolean().optional(),
+        /**
+         * 決策點(只在 `authoredWins` 開著時有意義):傷害驅動的擊退推得更遠時
+         * 要不要接管。ABSENT = 出貨預設 false。
+         * ⚠️ true 那一側會讓拉近系(`from: "pull"`)的技能在傷害夠大時把目標
+         * 往反方向推出去。
+         */
+        longerDamageWins: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -1521,6 +1664,48 @@ export const zConfigCombatFeelDoc = z
         followThroughTicks: z.number().int().min(0).max(300),
         /** 瞬發技的最低鎖定 tick 數 */
         instantCastTicks: z.number().int().min(0).max(300),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 卡住就接敵 (GH#216)。語意與出貨預設見 `sim/combatFeel.ts` 的
+     * `AutoEngageRules` —— 那裡有量到的數字(近戰索敵 6 / 射程 1.6 的四倍落差、
+     * 右鍵點進柱子之後 |v| = 0.00 連續 2,240 tick)。
+     *
+     * ⚠️ `seekRadius` 只在**走位卡住時**生效,不是平常的索敵半徑。把它當成
+     * 「自動攻擊範圍」調大並不會讓走得動的玩家自動衝過去 —— 那條路徑一格都
+     * 沒有被動到(見 `systems/OrderSystem.ts` 的 `autoEngageActive`)。
+     */
+    autoEngage: z
+      .object({
+        /** 總開關;false = 移動指令期間絕不接手(#274 的行為) */
+        enabled: z.boolean(),
+        /** 連續幾個 tick 走不動才算卡住 (30 tick = 1 秒) */
+        stallTicks: z.number().int().min(1).max(600),
+        /** 「走不動」的速度門檻 (units/sec),和 standstill.walkEps 同一個量 */
+        stallSpeed: z.number().min(0).max(100),
+        /** 卡住之後的索敵半徑(單位);bot 的 AI_ENGAGE_RANGE 是 48 */
+        seekRadius: z.number().min(0).max(200),
+        /**
+         * true(出貨)= 玩家每送出一條新的移動指令,走位權當場還給他。
+         * 搖桿/虛擬搖桿每一拍都送一條,所以推著搖桿的人永遠不會被接管;
+         * 滑鼠右鍵一次只送一條,點進柱子之後才會觸發接敵。
+         * 關掉會回到「上鎖之後不放手」的行為(實測 86.6% 的走位 tick 被搶走)。
+         */
+        respectLiveSteering: z.boolean(),
+        /**
+         * true(出貨)= 硬控(定身/昏迷/擊倒/施法鎖/hitstop)的 tick **不算**
+         * 走位卡住,計數凍結在原地。
+         *
+         * 掃出貨內容量到:86 支帶 root/stun 的 `applyStatus`,其中 47 支持續
+         * ≥ 1 秒,最長 4 秒 = 120 tick —— 是 `stallTicks` 的四倍。關掉這一格,
+         * 一個被定身 1 秒以上的玩家會被判定成「走位卡住」,走位權被追擊搶走,
+         * 解控之後角色往反方向跑。
+         *
+         * ⚠️ 不要用「把 stallTicks 調大到 120」代替它:那會讓真的卡在柱子上的
+         * 玩家等四秒才被救。
+         */
+        ccPausesStall: z.boolean(),
       })
       .strict()
       .optional(),
@@ -2200,6 +2385,145 @@ export const zConfigModelLodDoc = z
   })
   .strict();
 
+/**
+ * config.vfx-cleanup@1 —— 回合邊界要把特效層的池子回收到什麼程度
+ * (`config/vfx-cleanup.json`, task #262)。
+ *
+ * owner 的症狀是「越打越鈍」「一場就很燙」+ 親眼看到殘留特效。#259 已經把
+ * **live** 的一次性效果與 VfxSystem/rig 自己的池子在回合邊界還回去了；量出來
+ * 還在漏的是 `Telegraph` 的**每個 Scene 共用**的網格 free-list：它以
+ * 「半徑字串」為 key，一個 key 最多 8 個 ring mesh(各自一份 StandardMaterial)，
+ * 而那張 Map 沒有人清 —— `TelegraphLayer.dispose()` 也不清。實測 60 個不同
+ * 半徑打完，`dispose()` 之後 scene 上仍留著 72 mesh / 73 material /
+ * 13 texture / 12 particleSystem。
+ *
+ * 為什麼是內容而不是常數:「回合之間要不要把暖好的池子丟掉」是**體感取捨**,
+ * 不是事實。丟掉 = 穩態記憶體最低,代價是下一回合第一次施法要重新配置;留著
+ * = 第一次施法不卡,代價是那些網格整場都在。哪一邊比較好要看 owner 在真機上
+ * 打起來的感覺,而寫死的話改一格 = 一次 client rebuild + 重新部署。
+ *
+ *   · `enabled`                    總開關。false = 完全回到 #259 的行為
+ *                                  (只清 live 效果,共用池子不動)。止血閥。
+ *   · `purgeSharedPoolsOnRoundEnd` 回合結束是否強制清空共用池子。
+ *   · `maxPooledRings`             不強制清空時,整個 scene 允許留幾個預告圈
+ *                                  網格。超出的部分在回合邊界被丟掉。0 = 一個
+ *                                  都不留(等於強制清空 ring 那一層)。
+ *
+ * ⚠️ 「角色退場時歸還 tint clone 材質」**刻意不做成開關**:那是正確性修復
+ * (未著色英雄 + 成長階級 > 0 的 clone 從來沒被歸還,實測每回合 +30 個
+ * material 線性成長),不是 owner 會想推翻的判斷。給它一個開關等於把
+ * 「要不要漏記憶體」放上後台。
+ */
+export const zConfigVfxCleanupDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.vfx-cleanup@1"),
+    note: z.string().optional(),
+    /** 總開關。false = 回合邊界不碰共用池子(#259 的行為)。 */
+    enabled: z.boolean(),
+    /** 回合結束是否強制清空共用池子(ring / fill / shockwave free-list)。 */
+    purgeSharedPoolsOnRoundEnd: z.boolean(),
+    /**
+     * 不強制清空時,整個 scene 允許留下的預告圈網格上限。每一個網格帶一份
+     * StandardMaterial,所以這個數字直接就是「回合之間常駐的 mesh/material 數」。
+     * 上下界都有:0 = 一個都不留;512 是實測 60 個半徑 × 每個 key 上限 8 的
+     * 量級,再高就沒有意義而只會讓打錯的數字靜默通過(#277 的形狀)。
+     */
+    maxPooledRings: z.number().int().min(0).max(512),
+  })
+  .strict();
+
+/**
+ * config.shield@1 — 護盾規則 (GH#289 lane P6)。
+ *
+ * 目前只有一格:**同一個單位身上有多個護盾池時,誰先被吃掉**。語意、三個值的
+ * 差別、以及「為什麼這是欄位不是寫死的 if」全部寫在 `sim/shieldRules.ts`。
+ *
+ * ⚠️ 為什麼是自己一份文件,而不是塞進 `config.combat-feel@1`:
+ *   · 語意上 combat-feel 是**手感**(擊退距離、打就站定、面向鎖窗口),護盾誰
+ *     先吃是**傷害結算規則**,兩者一起調的機會是零;
+ *   · 技術上 combat-feel 那一頁的後台欄位是 `deriveFields(zConfigCombatFeelDoc)`
+ *     推導出來的,而那支推導器只認得 number / boolean —— enum 會被歸進
+ *     `unsupported`,而 `apps/admin/src/combatFeel.test.ts` 斷言
+ *     `unsupported` 必須是空陣列。把一個 enum 塞進去 = 隔壁工作流的頁面紅掉,
+ *     而那個紅燈的意思是「有人要決定這一格的 UI 長怎樣」,不是「schema 錯了」。
+ *
+ * **缺文件 = 出貨預設**(`specificFirst` = 這條規則變成欄位之前的行為),不是空表。
+ */
+export const zConfigShieldDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.shield@1"),
+    note: z.string().optional(),
+    /**
+     * 多個護盾池同時吃得下這一發時的消耗順序。
+     *
+     *   specificFirst   先花只吸這一型的池子(出貨值 = 舊行為)
+     *   generalFirst    先花全類型的池子 —— 讓「先打掉泛用盾、逼出抗魔盾」
+     *                   變成一個可以操作的節奏
+     *   insertionOrder  不看類型專一性,純粹舊的先花 —— 護盾會過期,先花快到期
+     *                   的那個才不會浪費
+     *
+     * 三個值都有行為守衛(sim/effects/shieldAbsorb.test.ts:同一組池子 + 同一發
+     * 傷害 → 三種順序留下三組不同的剩餘量)。
+     */
+    absorbOrder: z.enum(["specificFirst", "generalFirst", "insertionOrder"]),
+  })
+  .strict();
+
+/**
+ * config.stealth@1 — 隱形規則 (隱形原語 lane D).
+ *
+ * 每一格的語意、以及「為什麼出貨值是這一個」寫在 `packages/shared/src/sim/
+ * stealth.ts`。四個「擋不擋」與三個「破不破」全部是 WC3 原作行為,所以這份文件
+ * 出現本身不改變任何一場比賽 —— 它只是把已經寫在程式裡的那些決定變成可以改的。
+ *
+ * ⚠️ **缺文件 = `DEFAULT_STEALTH_RULES`(出貨值)**,不是空表。空表在 TypeScript
+ * 底下會讓四個 `blocks*` 全部讀成 `undefined`(falsy),也就是隱形只剩畫面、
+ * 完全不影響索敵 —— 而畫面上看起來一切正常。
+ *
+ * 為什麼是自己一份文件而不是塞進 `config.combat-feel@1`:combat-feel 是**手感**
+ * (擊退距離、打就站定、面向鎖),隱形是**可見性規則**,兩者一起調的機會是零;
+ * 而且 combat-feel 那一頁的欄位是從 Zod 推導的,同一個理由(見 shield 那段)。
+ */
+export const zConfigStealthDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.stealth@1"),
+    note: z.string().optional(),
+    /** 隱形是否讓敵人的**自動索敵**看不到你(WC3: 是) */
+    blocksAutoAcquire: z.boolean(),
+    /** 隱形是否讓**殭屍/小怪的 aggro** 看不到你(WC3: 是) */
+    blocksMobAggro: z.boolean(),
+    /** 隱形是否讓敵方玩家**點不到你**(WC3: 是) */
+    blocksManualTarget: z.boolean(),
+    /**
+     * 隱形是否讓**技能 AoE 打不到你**。
+     * WC3 出貨值是 **false** —— 暴風雪照樣燒得到隱形單位。true 會把永久隱形
+     * 變成「穿過整場戰鬥毫髮無傷」,那是另一種設計而不是原作。
+     */
+    blocksAbilityAoe: z.boolean(),
+    /** 普攻是否破隱(WC3: 是) */
+    breaksOnBasicAttack: z.boolean(),
+    /** 施法是否破隱(WC3: 是) */
+    breaksOnCast: z.boolean(),
+    /** **被打**是否破隱(WC3: 否) */
+    breaksOnDamaged: z.boolean(),
+    /**
+     * 全域淡出延遲倍率。1 = 照技能文件寫的秒數(27-00 永久性的隱形術 = 4.0 s,
+     * 直接來自 w3x `Dur` 欄)。上界 10 是誤植守衛(#277 的形狀):打成 40 等於
+     * 那位英雄整場再也不會隱形,而畫面上看起來就是「功能壞了」。
+     */
+    fadeDelayMult: z.number().min(0).max(10),
+    /** 己方看到的隱形隊友不透明度。**不要設 0** —— 你會看不到自己的角色。 */
+    allyAlpha: z.number().min(0).max(1),
+    /** 敵方(沒有真視)看到的不透明度。0 = 完全消失;>0 = 半透明鬼影。 */
+    enemyAlpha: z.number().min(0).max(1),
+    /** 隱形時對敵方隱藏血條(WC3: 是 —— 看不到單位自然看不到血條) */
+    hideEnemyHealthBar: z.boolean(),
+  })
+  .strict();
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigMatchDoc,
@@ -2221,7 +2545,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigCombatFeelDoc,
   zConfigFormVisualsDoc,
   zConfigModelLodDoc,
+  zConfigVfxCleanupDoc,
   zConfigRoundGradeDoc,
+  zConfigShieldDoc,
+  zConfigStealthDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -2245,6 +2572,7 @@ export type UnitTintState = z.infer<typeof zUnitTintState>;
 export type ConfigUnitTintsDoc = z.infer<typeof zConfigUnitTintsDoc>;
 export type GoreStyle = z.infer<typeof zGoreStyle>;
 export type ConfigGoreDoc = z.infer<typeof zConfigGoreDoc>;
+export type ConfigStealthDoc = z.infer<typeof zConfigStealthDoc>;
 export type ConfigIconPlanDoc = z.infer<typeof zConfigIconPlanDoc>;
 export type VictoryTauntLang = z.infer<typeof zVictoryTauntLang>;
 export type VictoryTauntLine = z.infer<typeof zVictoryTauntLine>;
@@ -2260,6 +2588,8 @@ export type FormVisualEntry = z.infer<typeof zFormVisualEntry>;
 export type ConfigFormVisualsDoc = z.infer<typeof zConfigFormVisualsDoc>;
 export type ModelLodTierName = z.infer<typeof zModelLodTier>;
 export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
+export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
+export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
 // config.round-grade@1 的型別/Zod/出貨文件全部在 ./roundGrade,這裡只再匯出一次
 // 給 `export * from "./config"` 的既有消費端(admin / codex 都是這樣拿的)。
 export * from "./roundGrade";
@@ -2279,6 +2609,26 @@ export const DEFAULT_MODEL_LOD: ConfigModelLodDoc = {
   schema: "config.model-lod@1",
   enabled: true,
   presetTiers: { low: "small", medium: "mid", high: "high", auto: "high" },
+};
+
+/**
+ * 出貨預設 —— `content/config/vfx-cleanup.json` 不存在(舊部署 / 內容掛掉)時,
+ * `applyVfxCleanupPolicy` 回退到的就是這一份。
+ *
+ * ⚠️ 每一格都要和 `content/config/vfx-cleanup.json` 一字不差 ——
+ * `packages/shared/src/content/vfxCleanupConfig.test.ts` 的 drift 斷言在守。
+ * 兩份存在的理由不同:JSON 是**出貨值**(操作者會改),這份是**程式的保險絲**。
+ *
+ * 預設選 `purgeSharedPoolsOnRoundEnd: true` 的理由是 owner 的原話 ——
+ * 「洩漏的粒子/mesh 回收 很重要」「一場就很燙」:在「省記憶體」和
+ * 「下一回合第一次施法少一次配置」之間,他已經表態要前者。
+ */
+export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
+  id: "vfx-cleanup",
+  schema: "config.vfx-cleanup@1",
+  enabled: true,
+  purgeSharedPoolsOnRoundEnd: true,
+  maxPooledRings: 24,
 };
 
 /**

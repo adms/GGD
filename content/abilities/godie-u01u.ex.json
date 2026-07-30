@@ -2,7 +2,7 @@
   "id": "godie-u01u.ex",
   "name": "11-002 武裝色霸氣",
   "icon": "assets/icons/abilities/godie-u01u.ex.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\n能夠提昇個人的防禦力，作用猶如看不見的盔甲；更可演化為攻擊力，進而與惡魔果實能力者抗衡。\n\n提升三千世界及阿修羅的傷害，期間防禦增加15點，魔法抗性增加為50%，持續15秒。",
+  "description": "[變身] 冷卻 60 秒 · 花費 390 法力 · 持續 15 秒\n\n索隆把三把刀都塗成黑的，然後說這叫「霸氣」。本質上就是把刀變硬——硬到砍鐵不會缺角，硬到你會開始懷疑這刀原本是什麼做的。\n\n變身期間：\n· 攻擊力 ×1.5 —— 乘一點五倍，裝備上的攻擊力也一起乘\n· 防禦基礎值 0 → 15\n· 魔法抗性基礎值 28% → 50%\n\n15 秒一到自動退色。中途倒地也會立刻退色（黑色是租來的）。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
@@ -15,15 +15,20 @@
   "range": 0,
   "effects": [
     {
+      "kind": "championForm",
+      "to": "alternate",
+      "durationSec": 15
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {
           "stat": "ad",
           "op": "pctAdd",
-          "value": 0.35
+          "value": 0.5
         }
       ],
-      "duration": 6.0
+      "duration": 15
     }
   ],
   "vfxKey": "fx.prim.void.pulse-lg",

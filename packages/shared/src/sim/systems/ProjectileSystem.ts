@@ -10,7 +10,7 @@ import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityHit, recordAbilityWhiff } from "../stats/matchStats";
 import { resolveAbilityRadius } from "../abilities/abilitySystem";
-import { rollEvade } from "../combat/evasion";
+import { rollEvade, rollFumble } from "../combat/evasion";
 
 export function projectileSystem(world: SimWorld): void {
   const toDestroy: EntityId[] = [];
@@ -76,7 +76,10 @@ export function projectileSystem(world: SimWorld): void {
         // Written as a guarded block rather than an early `continue` so the
         // projectile's own lifecycle below (pierce / range / boundary) stays
         // EXACTLY the code path a landed shot takes.
-        if (!rollEvade(world, owner, bestId)) {
+        // 失手 (詛咒) then 迴避 — same order and same reasoning as the melee
+        // site: the archer's own fumble is asked first, and a fumbled shot
+        // never reaches the defender's dodge roll.
+        if (!rollFumble(world, owner, bestId) && !rollEvade(world, owner, bestId)) {
           world.damageQueue.push({
             source: owner,
             target: bestId,

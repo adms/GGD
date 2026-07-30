@@ -241,6 +241,58 @@ export type AnyVfxDoc = z.infer<typeof zVfxCollectionDoc>;
  * one, use the family default" — never "0". The console must write `undefined`
  * (drop the key), not a zero, when the operator clears a box.
  */
+// ---------------------------------------------------------------------------
+// 一次性特效的粒子壽命上限 —— 出貨預設 + 上下界
+// ---------------------------------------------------------------------------
+
+/**
+ * 出貨的一次性(one-shot)粒子壽命天花板,秒。**後台可調**
+ * (`config.vfx-families@1.oneShotMaxLifeSec`)。
+ *
+ * 這條夾子存在的理由沒有變:匯入的 228 份 WC3 文件壽命跑 1–6 秒,直接照播會讓
+ * 每一次施法在畫面上留一團化不開的霧。0.6 是出貨值,所以「不設這一格」= 升級
+ * 前一位元不差。
+ *
+ * 它變成欄位的理由是 owner 要的時間軸:「先蓄力光柱 → 再爆炸 → 再留一圈餘燼」。
+ * 餘燼那一層需要活得比 0.6 秒久,而在這之前**沒有任何後台旋鈕碰得到它** ——
+ * 層寫 `timeScale: 4` 拿到的仍然是 0.6 秒(往下變短完全生效,往上飽和)。
+ */
+export const DEFAULT_ONE_SHOT_MAX_LIFE_SEC = 0.6;
+
+/**
+ * 下界。手機出貨是 30 fps(#274),0.1 秒 = **3 張畫面** —— 再低於這條線,一次
+ * 命中在手機上就等於沒有畫過,而操作者只會看到「特效不見了」。
+ */
+export const MIN_ONE_SHOT_MAX_LIFE_SEC = 0.1;
+
+/**
+ * 上界 = 3 秒,也就是「畫面開始變成霧」的那條線。**這是算出來的,不是挑的**,
+ * 而且它上面每一個輸入都是這個 repo 裡真的存在的常數:
+ *
+ *   一次施法最多的粒子 = `DEFAULT_MAX_ABILITY_VFX_LAYERS`(5 層)
+ *                        × `MAX_FRONT_LOAD_BURST`(80 顆/層) = 400 顆
+ *   同時在打的施法     = 12 位英雄 ÷ 每 2 秒放一招 = 6 次/秒 ← **這一項是估計值**
+ *   同時活著的粒子     = 400 × 6 × L
+ *   `SCREEN_PARTICLE_BUDGET` = 8,000 → L ≤ 8000 / 2400 = 3.33 秒
+ *
+ * 取 3.0(留一成餘裕)。也就是說:把這一格開到頂,一場 12 人的混戰會把整個畫面
+ * 的粒子預算吃掉約九成 —— 那正是「霧」的定義,而不是一個抽象的安全值。
+ * 「每 2 秒一招」是估計的節奏,其餘三個數字都是常數;
+ * `apps/client/src/vfx/oneShotLife.test.ts` 拿真的常數把這個推導釘住,誰動了
+ * 畫面預算而沒有回來重算,那條會紅。
+ */
+export const MAX_ONE_SHOT_MAX_LIFE_SEC = 3;
+
+/**
+ * 後台的值 → 真正生效的天花板。`undefined`(沒設過)= 出貨預設,**不是 0**。
+ * 界外的值夾回範圍內:一份手改壞的 durable overlay 不可以讓粒子壽命變成 0
+ * (= 什麼都看不見)或 60 秒(= 整場都是霧)。
+ */
+export function clampOneShotMaxLifeSec(v: number | undefined): number {
+  if (v === undefined || !Number.isFinite(v)) return DEFAULT_ONE_SHOT_MAX_LIFE_SEC;
+  return Math.min(MAX_ONE_SHOT_MAX_LIFE_SEC, Math.max(MIN_ONE_SHOT_MAX_LIFE_SEC, v));
+}
+
 const zW3xFamilyId = z.enum([
   "shockwaveRing",
   "blink",
@@ -363,6 +415,31 @@ export const zConfigVfxFamiliesDoc = z
     scaleGain: z.number().min(0).max(1),
     scaleMin: z.number().min(0.1).max(4),
     scaleMax: z.number().min(0.2).max(8),
+    /**
+     * 一支技能的 `vfxLayers` 最多播幾層 (#205 / #230)。
+     *
+     * OPTIONAL 是刻意的,不是漏掉的:這個 doc 已經有存過的 durable overlay,
+     * 把欄位設成必填會讓那些舊 overlay 整份 `safeParse` 失敗 →
+     * `extractFamiliesDoc` 回 null → **整個家族層一起消失**。省略 =
+     * `DEFAULT_MAX_ABILITY_VFX_LAYERS`(見 `./abilityVfx.ts`,那裡也寫了它是
+     * 怎麼從畫面 system 預算推出來的)。
+     *
+     * 上界 6 = `ABILITY_VFX_LAYER_HARD_CAP`;寫在這裡是因為 Zod 的 max 要一個
+     * 字面值,`abilityLayers.test.ts` 對兩者做等式斷言,漂開就紅。
+     */
+    maxAbilityVfxLayers: z.number().int().min(1).max(6).optional(),
+    /**
+     * 一次性特效的粒子壽命上限,秒 —— 「餘燼還能留多久」那一格。
+     *
+     * OPTIONAL 的理由和上面那一格一模一樣(已經存過的 durable overlay 沒有這個
+     * key,設成必填會讓那些 overlay 整份 `safeParse` 失敗 → 整個家族層消失)。
+     * 省略 = `DEFAULT_ONE_SHOT_MAX_LIFE_SEC`(0.6),也就是升級前的行為。
+     *
+     * 上下界 0.1 / 3 是 `MIN_/MAX_ONE_SHOT_MAX_LIFE_SEC`;Zod 的 min/max 要字面
+     * 值,所以這裡是抄的,而 `vfxForge.test.ts` 對兩者做 safeParse 四點驗證、
+     * `oneShotLife.test.ts` 對常數做等式斷言,漂開就紅。
+     */
+    oneShotMaxLifeSec: z.number().min(0.1).max(3).optional(),
     families: z.record(zW3xFamilyId, zVfxFamilyTuning),
     abilities: z.record(z.string().min(1), zVfxAbilityFamilyBinding),
   })
@@ -377,7 +454,18 @@ export type ConfigVfxFamiliesDoc = z.infer<typeof zConfigVfxFamiliesDoc>;
  * renderer therefore treats the pair as an unordered interval
  * (`resolveScaleMapping` in `render/vfx/familyTuning.ts` sorts them), which
  * degrades to "the operator typed them backwards" instead of "no VFX config
- * loads at all". `familyTuning.test.ts` pins that behaviour.
+ * loads at all".
+ *
+ * ⚠️ CORRECTED 2026-07-30 (稽核 / CLAUDE.md 第三守則). This comment used to end
+ * with 「`familyTuning.test.ts` pins that behaviour」. **THERE IS NO SUCH FILE.**
+ * The nearest neighbour, `apps/client/src/render/vfx/familyTuningDegrade.test.ts`,
+ * never mentions `scaleMin`/`scaleMax` and never imports `resolveScaleMapping`.
+ * As of this line the swap-tolerance is UNGUARDED, and this helper itself has
+ * ZERO callers — deleting both would turn nothing red (失敗形態 ③). Do not read
+ * the paragraph above as a verified contract; it is a description of intent.
+ * Anyone wiring the admin form to this helper owes it a real behaviour test
+ * (feed scaleMin > scaleMax through `resolveScaleMapping`, assert min/max come
+ * back sorted).
  */
 export function vfxFamiliesScaleOrdered(doc: ConfigVfxFamiliesDoc): boolean {
   return doc.scaleMax >= doc.scaleMin;

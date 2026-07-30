@@ -59,6 +59,7 @@ import {
 } from "./minimapMath";
 import { TerrainCache, terrainKey } from "./minimapTerrain";
 import { portraitCache } from "./minimapIcons";
+import { bossMarkerSpecFor, drawBossMarker } from "./minimapBossMarker";
 
 /**
  * Redraw interval (20 Hz). DELIBERATELY NOT tied to the snapshot rate: this is
@@ -306,8 +307,16 @@ function localZoneIndex(zones: ArenaZoneCircle[] | null): number | null {
   return zoneIndexAt({ x: me.worldX, z: me.worldZ }, zones);
 }
 
-/** One throttled frame: terrain blit → danger rim → camera box → markers. */
-function drawFrame(
+/**
+ * One throttled frame: terrain blit → danger rim → markers → camera box.
+ *
+ * EXPORTED FOR THE GUARD, not for reuse — nothing but `Minimap` below and
+ * `minimapBossMarker.test.ts` may call it. It is exported because a marker can
+ * be perfectly correct and simply never invoked from here (失敗形態③: 「可以從
+ * 渲染樹刪掉但測試還是全綠」), and the only honest way to prove a draw call is
+ * really in the shipped frame is to run the shipped frame.
+ */
+export function drawFrame(
   ctx: CanvasRenderingContext2D,
   terrain: TerrainCache,
   sizePx: number,
@@ -388,6 +397,18 @@ function drawFrame(
     const spec = markerSpecFor(a, localEntityId, { scale });
     if (spec) drawChampion(ctx, p.x, p.y, a, spec);
   }
+
+  // --- 2b) 殭屍王 (task #262) ----------------------------------------------
+  // AFTER the champions, so the king is never hidden behind a teammate's
+  // portrait: it is the objective the whole 戰場任務 is about, and a marker you
+  // have to hunt for on the map defeats the point of having one. The zone cull
+  // is inside `bossMarkerSpecFor` (a king in another 3v3 is not drawn), the same
+  // task #67 rule the champion loop applies above.
+  drawBossMarker(
+    ctx,
+    bossMarkerSpecFor(frameBus.mobBoss, localZone ?? -1, nowMs, scale),
+    (wx, wz) => worldToMap(wx, wz, bounds, sizePx, yaw),
+  );
 
   // --- 3) camera viewport box, LAST ----------------------------------------
   // LoL paints it under the champion icons, but LoL's box is many times an

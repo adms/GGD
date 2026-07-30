@@ -1,0 +1,10 @@
+{
+  "id": "nen-banked",
+  "schema": "status-effect@1",
+  "name": "燒盡的念",
+  "description": "剛剛被燒掉的那一團念還沒散。它記得自己有多大，而下一發牙突會替它討回來。",
+  "polarity": "buff",
+  "tags": [
+    "banked"
+  ]
+}

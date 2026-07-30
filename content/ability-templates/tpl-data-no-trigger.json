@@ -1,15 +1,15 @@
 {
   "id": "tpl-data-no-trigger",
   "schema": "template@1",
-  "name": "物件資料技能無觸發",
-  "description": "物件資料技能無觸發。",
+  "name": "無觸發（路由桶，不是機器）",
+  "description": "⚠️ 這一格不是一台做得出來的機器，是普查的分流終點：永遠不會有參數，也永遠不會 enabled。25 張行為卡落在這裡，逐張讀過 war3map.j 之後分成四種，四種的去處都不在鑄技工坊。① 觸發清單真的是空的（11 支；HERO_TRIGGERS.json 該英雄 triggerCount=0，效果整個在物件編輯器那一側，該走 w3u 匯入而不是模板）。② 只剩全域宣告、從沒編譯進去的廢案（A0YV 七進七出、A0IK 咲夜時符、A0IL 靜止飛刀、gg_trg_DragonMan、gg_trg_Chicken_*；本體留在 CUSTOM_TEXT.json）。③ 觸發裡只有裝飾（58-03 就決定是你了!小智 j:40241 只 PlaySoundBJ；84-01 冷笑話 j:51367 只擲八選一漂浮字），該走 vfxLayers 與音效綁定。④ 純記帳（37-02 黑核晶只管同時存在上限、80-01 天下無雙只累加擊殺數）。引擎支援度標 0 是刻意的：綠燈會讓這張永遠按不下去的卡看起來按得下去。",
   "family": "data-no-trigger",
   "status": "draft",
   "params": {},
   "requires": [],
-  "gapScore": 7,
+  "gapScore": 0,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "58-03 就決定是你了!小智（整段觸發只有一行 PlaySoundBJ）",
+    "jass": "A0C3"
   }
 }

@@ -35,7 +35,8 @@ func TestStarterChampionsSeeded(t *testing.T) {
 	ts := testutil.New(t)
 	u := ts.Register("alice")
 
-	// First wallet read seeds every championPrices==0 entry; vex (900) is not
+	// First wallet read seeds every freeChampionIds entry; vex (not free-listed,
+	// so it pays the fixture's flat 900) is not
 	// free and must NOT be seeded.
 	r := wallet(ts, u.Access)
 	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))

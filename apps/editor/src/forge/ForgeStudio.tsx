@@ -37,6 +37,8 @@ import { createSimPreviewController } from "../preview/PreviewController";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
 import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
+import { ConditionEditor } from "./ConditionEditor";
+import type { EffectCondition } from "@ggd/shared/sim/content/condition";
 
 const controller = createSimPreviewController();
 const fmt = (n: number): string => (Number.isInteger(n) ? String(n) : n.toFixed(2));
@@ -49,7 +51,29 @@ export function ForgeStudio({ template, onBack }: { template: TemplateDoc; onBac
   const [signedOff, setSignedOff] = useState(false);
 
   const paramsSchema = useMemo(() => paramsSchemaFor(template), [template]);
-  const ui = useMemo(() => walkZod(paramsSchema, "", "參數"), [paramsSchema]);
+  /**
+   * ⭐ `condition` slots are LIFTED OUT of the generated form and rendered by
+   * `ConditionEditor` instead (owner 2026-07-30:「編輯器也要配合」/「不是 script
+   * 編輯而是 UI 選項」).
+   *
+   * WHY THE FILTER IS HERE AND NOT IN `walk.ts`. `zEffectCondition` is a
+   * RECURSIVE UNION and `walk.ts` has no ZodUnion branch, so left alone it
+   * degrades to `kind:"unknown"` — the JSON textarea, i.e. exactly the script
+   * editor that was ruled out. Teaching the generic walker to draw a condition
+   * would mean teaching it four coupled dropdowns whose legal values depend on
+   * each other (percent only on hp/mp), which is not a generic widget; it is
+   * this one. Validation is UNAFFECTED: `paramsSchema` still contains the slot,
+   * so `paramErrors` still reports a bad condition on the same path.
+   */
+  const conditionSlots = useMemo(
+    () => Object.keys(template.params).filter((n) => template.params[n]?.type === "condition"),
+    [template],
+  );
+  const ui = useMemo(() => {
+    const node = walkZod(paramsSchema, "", "參數");
+    if (node.kind !== "object" || conditionSlots.length === 0) return node;
+    return { ...node, fields: node.fields.filter((f) => !conditionSlots.includes(f.path)) };
+  }, [paramsSchema, conditionSlots]);
   const notes = degradeNotes(template.requires);
   const satisfied = satisfiedCaps(template.requires);
   const badge = badgeFor(template.gapScore);
@@ -215,6 +239,22 @@ export function ForgeStudio({ template, onBack }: { template: TemplateDoc; onBac
               setParams((p) => setIn(p, path, value) as Record<string, unknown>)
             }
           />
+          {conditionSlots.map((name) => (
+            <ConditionEditor
+              key={name}
+              label={`${name} · 觸發條件`}
+              value={params[name] as EffectCondition | undefined}
+              onChange={(next) =>
+                setParams((p) => {
+                  // Clearing must DELETE the key, not store `undefined`: the
+                  // slot is optional, and `expand()`'s `has()` treats a supplied
+                  // value — any supplied value — as present.
+                  const { [name]: _drop, ...rest } = p;
+                  return next === undefined ? rest : { ...p, [name]: next };
+                })
+              }
+            />
+          ))}
           <UnitHints template={template} params={params} />
           <InertSlots template={template} />
         </section>

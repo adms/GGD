@@ -55,6 +55,9 @@ import { INTERMISSION_Z } from "./intermissionLayout";
 import { shopClockChip } from "./prepCountdown";
 import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
+import { BattlefieldIntelPanel } from "./BattlefieldIntelPanel";
+import { useBattlefieldIntelRows } from "./useBattlefieldIntel";
+import type { BattlefieldIntelConfig } from "./battlefieldIntel";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { useDisplayBaseBonus } from "../displayBaseBonus";
@@ -179,7 +182,7 @@ export function shopDockAnchor(open: boolean): ShopDock {
   };
 }
 
-type Tab = "goods" | "skills";
+type Tab = "goods" | "skills" | "intel";
 type Density = "detail" | "compact";
 const DENSITY_KEY = "ggd.shop.density";
 
@@ -203,6 +206,12 @@ export function shopGoodsSingleScroll(opts: { touch: boolean; viewportHeight: nu
   return opts.touch || opts.viewportHeight < 560;
 }
 
+/** One entry in the shop's tab strip. */
+export interface ShopTab {
+  readonly key: Tab;
+  readonly label: string;
+}
+
 /**
  * Shop tabs (#122). The LEAD tab is the hero's 屬性 (attribute) panel: it is
  * default-selected, so opening the shop answers "what am I right now" before
@@ -210,13 +219,31 @@ export function shopGoodsSingleScroll(opts: { touch: boolean; viewportHeight: nu
  * 商品→屬性 — the tab KEY stays "goods" because the attribute panel has always
  * led that view (the catalogue simply sits below it), so none of the `goods`
  * content wiring has to change.
+ *
+ * These are the BASE tabs. GH#220 appends a third (戰況) when the operator has
+ * the battlefield-intel panel enabled, which is why this is no longer a fixed
+ * 2-tuple — call {@link shopTabs} for the strip that is actually rendered.
  */
-export const SHOP_TABS: readonly [{ key: Tab; label: string }, { key: Tab; label: string }] = [
+export const SHOP_TABS: readonly ShopTab[] = [
   { key: "goods", label: "屬性" },
   { key: "skills", label: "技能" },
 ];
+
+/** GH#220 全場戰況 — appended, never inserted: 屬性 must stay the lead tab. */
+export const INTEL_TAB: ShopTab = { key: "intel", label: "戰況" };
+
+/**
+ * The tab strip for a given config. 戰況 is APPENDED so the #122 contract (屬性
+ * leads and is default-selected) survives GH#220 unchanged, and it disappears
+ * entirely when an operator turns the panel off — a dead tab that opens onto an
+ * empty card is worse than no tab.
+ */
+export function shopTabs(config: BattlefieldIntelConfig): readonly ShopTab[] {
+  return config.enabled ? [...SHOP_TABS, INTEL_TAB] : SHOP_TABS;
+}
+
 /** The tab the shop opens on — the lead (屬性) tab. */
-export const DEFAULT_SHOP_TAB: Tab = SHOP_TABS[0].key;
+export const DEFAULT_SHOP_TAB: Tab = SHOP_TABS[0]!.key;
 
 export function MerchantShop(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
@@ -240,6 +267,16 @@ export function MerchantShop(): React.JSX.Element | null {
   const prevPhase = useRef<string | null>(null);
   const lastToastSeq = useRef(0);
 
+  /**
+   * GH#220 全場戰況. Read at the TOP LEVEL (not inside the tab body) because the
+   * tab STRIP itself depends on `config.enabled` — a hook that only ran while the
+   * intel tab was selected would make the tab that reveals the panel conditional
+   * on already being on it. The heavy half (one scratch `SimWorld` per seat) is
+   * gated on the tab actually being open, so the other two tabs pay nothing.
+   */
+  const intel = useBattlefieldIntelRows(tab === "intel");
+  const tabs = shopTabs(intel.config);
+
   const eliminated = useHud((st) => {
     if (st.localSeatId === null) return false;
     const t = st.seats.find((v) => v.seatId === st.localSeatId)?.teamId;
@@ -261,6 +298,13 @@ export function MerchantShop(): React.JSX.Element | null {
   useEffect(() => {
     if (!gate.mounted && open) setOpen(false);
   }, [gate.mounted, open]);
+
+  // GH#220: an operator can turn the 戰況 panel off mid-match. Without this the
+  // player sitting on that tab would be left staring at an empty card with no
+  // tab to click back to — the tab strip no longer contains the tab they are on.
+  useEffect(() => {
+    if (tab === "intel" && !intel.config.enabled) setTab(DEFAULT_SHOP_TAB);
+  }, [tab, intel.config.enabled]);
 
   useEffect(() => {
     if (!shopEvent || shopEvent.seq === lastToastSeq.current) return;
@@ -479,7 +523,7 @@ export function MerchantShop(): React.JSX.Element | null {
       <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "10px 0 8px" }}>
         <ShopHeroPortrait championId={seat.championId} name={champName} />
         <div style={{ display: "flex", gap: 6 }}>
-          {SHOP_TABS.map(({ key, label }) => (
+          {tabs.map(({ key, label }) => (
             <SfxButton
               key={key}
               kind="subdued"
@@ -518,8 +562,15 @@ export function MerchantShop(): React.JSX.Element | null {
             singleScroll={singleScroll}
             touch={touch}
           />
-        ) : (
+        ) : tab === "skills" ? (
           <SkillsTab seat={seat} />
+        ) : (
+          /* GH#220 全場戰況 —— 所有人（含敵方）的 等級/生命/攻速/AP/AD/裝備。 */
+          <BattlefieldIntelPanel
+            rows={intel.rows}
+            config={intel.config}
+            sealedRound={intel.sealedRound}
+          />
         )}
       </div>
 
@@ -1256,6 +1307,29 @@ function CatalogueRow(props: {
                 }}
               >
                 {row.rarity}
+              </span>
+            )}
+            {/* 職業限定閘 (owner 2026-07-30). A legendary the player cannot use
+                MUST say so on the card — an unexplained dead item teaches the
+                wrong lesson about the weapon. Amber, next to the rarity word, so
+                it reads before the price. Text is DERIVED from the same
+                `requires` the sim gates on (itemStats → itemRequirementLabels),
+                never authored per doc. */}
+            {row.requirements.length > 0 && (
+              <span
+                style={{
+                  fontSize: 9,
+                  color: "#e8b24a",
+                  border: "1px solid #e8b24a66",
+                  background: "rgba(232,178,74,0.12)",
+                  borderRadius: 4,
+                  padding: "0 3px",
+                  flexShrink: 0,
+                  whiteSpace: "nowrap",
+                }}
+                title={row.requirements.join(" · ")}
+              >
+                職業限定
               </span>
             )}
           </div>

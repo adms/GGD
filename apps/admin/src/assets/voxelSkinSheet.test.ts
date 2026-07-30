@@ -6,6 +6,7 @@
  * the generator to, and check that the honest-failure paths really are honest.
  */
 import { describe, it, expect } from "vitest";
+import { counterpartFormId } from "@ggd/shared/content/championForms";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -67,11 +68,18 @@ describe("buildSheet over the real roster", () => {
     for (const row of sheet.rows) {
       // GH#31 —— 共用替身 ≠ 一定穿體素。40 位的暴雪模型早就抽出來了,
       // 舊的 `toBe(true)` 正是把那扇門關上的那一行。
+      // ⚠️ 2026-07-30 (#223) —— 判準再修一次。`BLIZZARD_MODEL_CHAMPIONS` 是抽取器
+      // 拉的 40 個**可選**單位,26 對變身的 `Emeu` 那一半天生不在裡面;
+      // `defaultPrefersVoxelBody` 的「缺省即繼承」讓它們穿得到對半的模型。
+      // 只問「自己在不在名單上」會替 6 位穿得到模型的英雄要求體素身體。
       if (row.sharedStandIn) {
+        const reaches =
+          BLIZZARD_MODEL_CHAMPIONS.includes(row.championId) ||
+          BLIZZARD_MODEL_CHAMPIONS.includes(counterpartFormId(row.championId) ?? "");
         expect(
           row.recipe.preferVoxelBody,
-          `${row.championId}: 有暴雪模型就走模型,沒有的才留體素`,
-        ).toBe(!BLIZZARD_MODEL_CHAMPIONS.includes(row.championId));
+          `${row.championId}: 自己或變身對半有暴雪模型就走模型,兩邊都沒有的才留體素`,
+        ).toBe(!reaches);
       }
       if (row.overridden) expect(Object.keys(overrides)).toContain(row.championId);
     }

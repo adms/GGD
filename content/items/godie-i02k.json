@@ -3,11 +3,55 @@
   "schema": "item@1",
   "name": "惡魔吉他",
   "icon": "assets/icons/items/godie-i02k.webp",
-  "description": "積分獎勵\n效能\n周圍的近戰友軍獲得吸血30%的能力\n周圍的友軍每秒回魔+2\n\n解說\n這把吉他原屬於死亡系重金屬之神 - 卡爾斯馬達所有，是重金屬帝王的象徵，傳說有惡魔附身其中，必須不斷吸食活人生血，吉他本體的紅色，正是被鮮血所染紅的。",
+  "description": "積分獎勵\n效能\n光環：周圍 9.17 範圍內的友軍每秒回魔 +2\n光環：周圍 9.17 範圍內的【近戰】友軍普攻時，回復自身攻擊力 30% 的生命\n\n解說\n這把吉他原屬於死亡系重金屬之神 - 卡爾斯馬達所有，是重金屬帝王的象徵，傳說有惡魔附身其中，必須不斷吸食活人生血，吉他本體的紅色，正是被鮮血所染紅的。",
   "cost": 0,
   "tier": 5,
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "auras": [
+    {
+      "key": "guitar-mana",
+      "radius": 9.17,
+      "affects": "ally",
+      "includeSelf": true,
+      "modifiers": [
+        {
+          "stat": "manaRegen",
+          "op": "flat",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "key": "guitar-melee-drain",
+      "radius": 9.17,
+      "affects": "ally",
+      "includeSelf": true,
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "target": "self",
+          "requires": {
+            "attackType": "melee",
+            "onMismatch": "block"
+          },
+          "effects": [
+            {
+              "kind": "heal",
+              "amount": {
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.3
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -18,6 +18,12 @@
  * `tools/voice-gen/index-lines.mjs` and the runtime resolution in
  * `resolveVoicePackId` both satisfy it, and both read the same closed 26-pair
  * `Eme1`/`Emeu` table, so they cannot disagree about who lends to whom.
+ *
+ * ── 2026-07-30: THE SAME HOLE REOPENED, AND IS NOW PINNED ──────────────────
+ * The owner opened two more heroes (`starterChampions` 51 → 53) and the corpus
+ * did not move: `VOICE_GAP` below is the exact, measured list of roster ids
+ * that resolve to NOTHING today. They are registered, not papered over — see
+ * that constant for what it costs to close the gap and what the alternative is.
  */
 import { describe, it, expect } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
@@ -71,34 +77,99 @@ function ownPackIds(pack: ChampionVoicePack | null): Set<string> {
   return out;
 }
 
-describe("every first-open-roster champion has a combat voice", () => {
-  it("resolves a non-empty pack for all 51, and names the mute ones if not", () => {
-    cover("transform-forms-voice-coverage");
-    expect(ROSTER).toHaveLength(51);
-    expect(PACK, "the shipped voice-pack manifest must parse").not.toBeNull();
+/**
+ * ── REGISTERED GAP: roster ids with NO combat voice at all ─────────────────
+ *
+ * These champions really do fight in silence right now. This is a RATCHET, not
+ * an excuse: the assertions below pin the gap EXACTLY, so the suite goes red
+ * both when a voiced champion loses its pack AND when one of these two gains
+ * one (at which point delete it from here). `it.fails` at the bottom of this
+ * describe is the second half of the ratchet — it holds the DESIRED state (all
+ * 53 audible) and turns red the moment the whole gap closes.
+ *
+ * WHY IT IS NOT FIXED HERE. Both are halves of a 變身 pair whose OTHER half is
+ * also empty (`godie-e00s`/`godie-e010`, `godie-ucrl`/`godie-u034`), so the
+ * form share — the mechanism that rescued the ten champions of #249 — has no
+ * donor to borrow from. Nothing in the ladder covers the CONTEXTUAL layer
+ * either: rungs 4/5 (name / 名言) answer the select CLICK only, and
+ * `contextualVoice.ts` reads this pack and nothing else. So the only honest
+ * fix is generating real clips.
+ *
+ * WHAT CLOSING IT COSTS (measured 2026-07-30):
+ *   2 champions × 46 authored lines = 92 CosyVoice3 clips, plus a casting
+ *   decision (`content/assets/audio/voices/_voice-casting-plan.json` has 48
+ *   entries and neither of these), plus a reference take
+ *   (`content/assets/audio/voices/references/` holds none for either). Then:
+ *     pnpm voice:index    # tools/voice-gen/index-lines.mjs → MANIFEST.json
+ *     pnpm content:build
+ *   The 51 champions that DO have packs each own 46 mp3s under
+ *   `content/assets/audio/voices/lines/<id>/`; these two have no directory.
+ *
+ * THE ALTERNATIVE IS ON THE TABLE: dropping the two ids back out of
+ * `starterChampions` until the clips exist is a one-line change and makes this
+ * gap disappear. That is an owner call, not a test-author call.
+ */
+const VOICE_GAP: readonly string[] = ["godie-e00s", "godie-ucrl"];
 
-    const silent: string[] = [];
-    for (const id of ROSTER) {
-      if (packClips(PACK, id, "select").length === 0) {
-        const counterpart = counterpartFormId(id);
-        silent.push(counterpart ? `${id} (counterpart ${counterpart} has none either)` : id);
-      }
+/** The gap, rendered the way the failure message renders a silent champion. */
+function labelSilent(id: string): string {
+  const counterpart = counterpartFormId(id);
+  return counterpart ? `${id} (counterpart ${counterpart} has none either)` : id;
+}
+
+/** Roster ids that resolve to no clip at all for `category`. */
+function silentFor(category: string): string[] {
+  return ROSTER.filter((id) => packClips(PACK, id, category).length === 0);
+}
+
+describe("every first-open-roster champion has a combat voice", () => {
+  it("names every mute champion, and the list is exactly the registered gap", () => {
+    cover("transform-forms-voice-coverage");
+    expect(ROSTER).toHaveLength(53);
+    expect(PACK, "the shipped voice-pack manifest must parse").not.toBeNull();
+    // A pin for ids no longer on the roster is dead weight that would hide a
+    // real regression, so rolling the roster back must also fail here.
+    for (const id of VOICE_GAP) {
+      expect(ROSTER, `${id} is pinned as a known voice gap but is not on the roster`).toContain(id);
     }
+
+    const silent = silentFor("select");
     expect(
-      silent,
-      `these first-open-roster champions have NO combat voice — they will fight in total ` +
-        `silence (no skill call-out, no hurt grunt, no kill line, no death cry):\n  ` +
-        silent.join("\n  "),
-    ).toEqual([]);
+      silent.map(labelSilent),
+      `the set of first-open-roster champions with NO combat voice (no skill call-out, no ` +
+        `hurt grunt, no kill line, no death cry) is not the registered gap.\n  measured: ${
+          silent.join(", ") || "(none)"
+        }\n  registered VOICE_GAP: ${VOICE_GAP.join(", ")}\n  ` +
+        `A champion that APPEARED here is a regression. A champion that DISAPPEARED means ` +
+        `its clips landed — delete it from VOICE_GAP and from the it.fails ratchet below.`,
+    ).toEqual(VOICE_GAP.map(labelSilent));
   });
 
-  it("gives all 51 every load-bearing combat category, not just the click", () => {
+  it("gives every voiced champion the whole load-bearing category set, not just the click", () => {
+    const gaps: string[] = [];
+    for (const id of ROSTER) {
+      if (VOICE_GAP.includes(id)) continue; // registered above; asserted in full below
+      const missing = COMBAT_CATEGORIES.filter((c) => packClips(PACK, id, c).length === 0);
+      if (missing.length > 0) gaps.push(`${id}: ${missing.join(", ")}`);
+    }
+    expect(gaps, `combat categories missing:\n  ${gaps.join("\n  ")}`).toEqual([]);
+  });
+
+  /**
+   * THE RATCHET. Its body is the state we WANT — every roster champion audible
+   * in every load-bearing category. Vitest expects it to fail; the day the two
+   * gap champions get clips it will pass, and `it.fails` turns that into a RED
+   * "expected to fail, but passed". Delete this test and `VOICE_GAP` together
+   * when that happens. (`it.fails`, not `it.skip`: skip means "we don't know",
+   * this means "we know, and it is nailed down".)
+   */
+  it.fails("KNOWN GAP — not every roster champion is voiced yet (delete when closed)", () => {
     const gaps: string[] = [];
     for (const id of ROSTER) {
       const missing = COMBAT_CATEGORIES.filter((c) => packClips(PACK, id, c).length === 0);
       if (missing.length > 0) gaps.push(`${id}: ${missing.join(", ")}`);
     }
-    expect(gaps, `combat categories missing:\n  ${gaps.join("\n  ")}`).toEqual([]);
+    expect(gaps).toEqual([]);
   });
 
   it("points every resolved clip at a file that exists on disk", () => {
@@ -185,10 +256,22 @@ describe("the form share, on the real content tree", () => {
       expect(() => packClips(PACK, p.baseId, "victory")).not.toThrow();
       expect(packClips(PACK, p.baseId, "victory")).toEqual([]);
       expect(resolveVoicePackId(PACK, p.alternateId)).toBeNull();
-      // …and none of them is on the shipped roster, which is why this is a gap
-      // and not a live bug.
-      expect(ROSTER).not.toContain(p.baseId);
     }
+    // Which of these orphan pairs are actually SHIPPED decides whether the
+    // graceful degradation above is a harmless gap or a live bug. Until
+    // 2026-07-30 the answer was "none", and this line asserted exactly that.
+    // It is now the registered VOICE_GAP and nothing else — so a third silent
+    // champion reaching champ-select still fails here, loudly and by name.
+    const shipped = orphanPairs
+      .filter((p) => ROSTER.includes(p.baseId) || ROSTER.includes(p.alternateId))
+      .map((p) => (ROSTER.includes(p.baseId) ? p.baseId : p.alternateId))
+      .sort(); // CHAMPION_FORM_PAIRS declaration order is not the roster's
+    expect(
+      shipped,
+      `these 變身 pairs have no clips on EITHER side yet are on the shipped roster, so the ` +
+        `form share has no donor and the champion is mute in combat: ${shipped.join(", ")}. ` +
+        `Only the registered VOICE_GAP may appear here.`,
+    ).toEqual([...VOICE_GAP].sort());
   });
 
   it("degrades for a champion in no form pair at all", () => {

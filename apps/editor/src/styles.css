@@ -211,6 +211,53 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-loading { padding: 20px; color: #808a9f; }
 .forge-unit { margin-right: 10px; font-family: ui-monospace, monospace; color: #8fb0d8; }
 
+/* 觸發條件編輯器 (owner 2026-07-30 「編輯器也要配合」) — dropdowns, not a script box.
+   The clause row wraps rather than scrolls: five controls plus a number field do
+   not fit one column at 320px, and a horizontally-scrolling condition is one a
+   designer stops reading. */
+.cond-editor {
+  margin: 4px 0 14px; padding: 10px 12px;
+  border: 1px solid #3a465e; border-radius: 6px; background: #12161f;
+}
+.cond-editor legend { padding: 0 6px; font-size: 11px; color: #9db6ee; }
+.cond-editor.cond-editor-readonly { border-style: dashed; }
+.cond-join { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 11px; color: #808a9f; }
+.cond-clause {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin-bottom: 6px; padding: 6px; border-radius: 5px; background: #171d29;
+}
+.cond-clause select, .cond-clause input[type="number"] { font-size: 12px; padding: 3px 5px; }
+.cond-clause input[type="number"] { width: 84px; }
+.cond-not { display: flex; align-items: center; gap: 3px; font-size: 11px; color: #e8bc6a; }
+.cond-fixed { font-size: 12px; color: #808a9f; }
+.cond-remove { padding: 2px 7px; font-size: 11px; }
+.cond-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+/* SECOND LEVEL. A lone group gets NO chrome at all — that is what keeps the
+   common one-level card looking exactly like the flat form it replaced. The box,
+   the 「第 N 組」 caption and the outer 群組之間 row only appear once there really
+   are two groups (獸矛: 非英雄處決 或 對英雄 1%), so the extra structure on
+   screen always corresponds to extra structure in the gate. */
+.cond-group-boxed {
+  margin: 0 0 8px; padding: 8px 10px 4px;
+  border: 1px solid #34405a; border-left: 3px solid #4a6fa5; border-radius: 5px;
+  background: #141a25;
+}
+.cond-group-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.cond-group-title { font-size: 11px; letter-spacing: 0.06em; color: #9db6ee; }
+.cond-join-outer {
+  padding: 6px 8px; border-radius: 5px; background: #1b2333; color: #9db6ee;
+}
+/* The derived sentence is the whole point of the widget, so it reads as a
+   result and not as a caption — see ConditionEditor.tsx's header. */
+.cond-sentence {
+  margin: 10px 0 0; padding: 7px 9px; border-radius: 5px;
+  background: #1b2333; font-size: 12px; line-height: 1.6; color: #c8d2e6;
+}
+.cond-sentence b { color: #9db6ee; }
+
 .forge-expansion { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 10px; font-size: 12px; }
 .forge-expansion dt { color: #6f7891; font-size: 10px; }
 .forge-expansion dd { margin: 2px 0 0; font-family: ui-monospace, monospace; color: #d3dcec; }

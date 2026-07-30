@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "07-00 獸化心靈",
   "icon": "assets/icons/abilities/godie-hpb1.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n讓獸矛的持有者每殺死8個部隊增加1點靈敏。",
+  "description": "[被動]\n0秒冷卻時間\n\n獸矛不挑食：小兵、殭屍、英雄，數量到了就給糖。\n\n蒼月潮**每擊殺 8 個單位，敏捷永久 +1**（第 8、16、24… 個，中間 7 個只負責累積）。\n\n⚠️ 原作藏了一個 tooltip 從來沒寫、玩家只能靠撞牆發現的上限：**敏捷達到 120 之後就完全不再增加**，繼續砍也不會多一點。（war3map.j:14163 的 `GetHeroStatBJ(AGI) < 120`，這裡照實寫出來，因為誠實比較好玩。）\n\n計數的是**這位英雄自己**的擊殺，回合之間不歸零；敏捷加成走的是三圍，所以它同時餵護甲與攻速，屬性面板上看得到。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -20,7 +20,24 @@
     "name": "07-00 獸化心靈",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onKill",
+            "victim": "any",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "grantAttribute",
+                "attr": "agi",
+                "amount": 1,
+                "everyNth": 8,
+                "maxAttribute": 120,
+                "mode": "flat"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

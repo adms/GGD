@@ -154,6 +154,11 @@
       "range": 11.0,
       "effects": [
         {
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 6.0
+        },
+        {
           "kind": "damage",
           "damageType": "physical",
           "amount": {

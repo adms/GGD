@@ -255,8 +255,10 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
     // 每級 is growth.maxHealth PLUS str_growth × strToMaxHealth — the only
     // reason a champion with `growth.maxHealth: 0` can still gain health.
     expect(s.growthHealth).toBeCloseTo(40 + 2 * 23, 10);
-    // a stat with no attribute source is untouched
-    expect(s.mr).toBe(28);
+    // #221 之後 mr **有**屬性來源了:智慧 → 魔抗 0.6。int 10 × 0.6 = 6,28 + 6 = 34。
+    // ⚠️ 這一行原本的註解寫「a stat with no attribute source is untouched」,
+    // 那句話在 intToMagicResist 上線的當下就變成謊話 —— 語意改了,舊文案就是謊話。
+    expect(s.mr).toBe(34);
     expect(s.ms).toBe(5.9);
   });
 

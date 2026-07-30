@@ -10,10 +10,14 @@ import { TouchControls } from "./TouchControls";
 import { hudTouch } from "./hud/HudSlot";
 import { hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
 import { useHudSlotHidden } from "./hud/useHudPanels";
+import { RoundOverPill } from "./hud/RoundOverPill";
 import { EquipmentBar } from "./hud/EquipmentBar";
 import { ControlLegend } from "./ControlLegend";
 import { CouchHudGrid } from "./components/CouchHudGrid";
 import { AbilityBar } from "./components/AbilityBar";
+import { AbilityDescriptionOverlay } from "./AbilityDescriptionOverlay";
+import { CastNoticeLine } from "./components/CastNotice";
+import { BottomCluster } from "./hud/BottomCluster";
 import { ExUnlockToast } from "./components/ExUnlockToast";
 import { ResourceBars } from "./components/ResourceBars";
 import { EnemyTeamPanel } from "./components/EnemyTeamPanel";
@@ -30,6 +34,7 @@ import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
 import { AugmentDraftPanel } from "./panels/AugmentDraftPanel";
 import { MerchantShop } from "./panels/MerchantShop";
+import { BattlefieldIntelRecorder } from "./panels/useBattlefieldIntel";
 import { PrepClock } from "./panels/PrepClock";
 import { ReadyButton } from "./panels/ReadyButton";
 import { MatchEndPanel } from "./panels/MatchEndPanel";
@@ -182,6 +187,10 @@ export function HudRoot(): React.JSX.Element {
       <WorldAnchorLayer />
       {/* task #139 — round-end (moment 3) champion-quote VO trigger (headless) */}
       <RoundEndVoice />
+      {/* GH#220 全場戰況 —— 無畫面的記錄器。掛在這裡而不是掛在商店裡：活著的玩家
+          在 combat 期間 MerchantShop 整個 return null（shopGate），掛在商店裡就變成
+          「只有陣亡的人會記錄敵方封存」。 */}
+      <BattlefieldIntelRecorder />
       <PhaseTimer />
       {/* 「等待並觀戰別的競技場晉級戰鬥中」 — the camera jumps to another zone the
           moment your own duel is decided (#208), and until now it did so in
@@ -204,8 +213,28 @@ export function HudRoot(): React.JSX.Element {
       <ControlLegend />
       {inGame && !couch && (
         <>
-          {!touchControls && <AbilityBar />}
-          <ResourceBars />
+          {/* 「HP&MP 條應該是跟技能格子緊鄰但不重疊」 (owner 2026-07-30). ONE box
+              owns the pair now — the plate and the bar are flex rows with a
+              `gap`, so their distance is a field with bounds instead of the
+              difference between two hard-pinned `bottom:`s in two files. See
+              hud/hudBottomCluster for the measured 27 px this replaces and for
+              why the column also has to dodge the bottom corners.
+
+              The two ABILITY OVERLAYS are siblings, never children: both are
+              positioned boxes (one `fixed`, one `absolute`) and the cluster is
+              a positioned ancestor, so nesting them would re-anchor them to it.
+              They own their own gates and render null when idle. */}
+          {/* BOTH pointer modes. They used to live inside AbilityBar's fragment,
+              which HudRoot mounts only when the desktop bar is up — so on a
+              phone a refused Q/W/E/R press was computed, phrased, and thrown
+              away (surfaceParity's shape-S9 guard names this exactly). Each
+              owns its own gate and renders null when idle. */}
+          <AbilityDescriptionOverlay />
+          <CastNoticeLine />
+          <BottomCluster
+            resources={<ResourceBars />}
+            abilities={!touchControls && <AbilityBar />}
+          />
           {/* top-left panel: the current duel's 3 enemies (HP/MP + level). Claims
               the "enemy-team" slot (ui/hud/hudLayout); self-gates to combat. */}
           <EnemyTeamPanel />
@@ -260,23 +289,7 @@ export function HudRoot(): React.JSX.Element {
       )}
       {phase === "resolution" && (
         <>
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: 120,
-              transform: "translateX(-50%)",
-              padding: "10px 30px",
-              background: PANEL_BG,
-              border: PANEL_BORDER,
-              borderRadius: 10,
-              color: TEXT_MAIN,
-              fontSize: 17,
-              fontWeight: "bold",
-            }}
-          >
-            Round over
-          </div>
+          <RoundOverPill />
           {/* 回合勝利畫面的文字半邊 (task #212). 3D 模型列是
               render/RoundWinnerStage(#143)在畫的,這一片是 owner 那句話裡
               模型以外的兩件事:評價+建議(走 sim 的 gradeRound,#232 的商店卡

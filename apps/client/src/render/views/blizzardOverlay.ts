@@ -157,7 +157,7 @@ export interface SharedModelFormPair {
  * the same category as `CHAMPION_FORM_PAIRS` itself, which also ships as a
  * const. There is no operator decision to make: 「H00W's model path equals
  * HARF's」 is true or false, and only a re-import of `src_gogodieEX227s.w3x`
- * could change it. `blizzardOverlay.shared-model-pairs.test.ts` therefore
+ * could change it. `blizzardOverlayForms.test.ts` therefore
  * re-derives this whole table from the tracked fixture
  * `tools/w3x-import/out/GoDieEX22s-src/UNIT_TINTS.json` and fails on any drift,
  * rather than trusting the list a human typed.
@@ -421,16 +421,44 @@ export class BlizzardOverlayModels {
    * authored content resolved to (null while ContentDb is still loading).
    * Returning null means "nothing to upgrade to yet" — the caller keeps its
    * procedural fallback and asks again next frame.
+   *
+   * `inheritFrom` (#223) — 缺省即繼承, THE 變身 SAFETY NET.
+   * -----------------------------------------------------
+   * When `champId` is the ALTERNATE body of a transform, it is very likely to
+   * miss: the extractor keyed the manifest on the 40 PICKABLE units, so every
+   * `Emeu` half is absent unless `SHARED_MODEL_COUNTERPART` covers it. Without
+   * a fallback that miss is a VISIBLE DOWNGRADE — measured on the shipped
+   * content, exactly one pair reaches this branch with a different answer,
+   * `godie-u012 → godie-u011` (克勞薩), and it would drop from `U012.glb`
+   * (the real HeroDreadLord mesh) to `blocky-barbarian.glb`, a generic
+   * box-man, in the name of a "fix".
+   *
+   * The map cannot help here: w3u gives those two halves DIFFERENT model paths
+   * (U011 is `collision.mdl`, a geometry-less dummy — WC3 itself draws
+   * nothing), so `SHARED_MODEL_FORM_PAIRS` must NOT grow a row for them; that
+   * table is recovered fact, re-derived from the fixture by
+   * `blizzardOverlayForms.test.ts`. This parameter is the
+   * separate, render-side rule instead: a body with no unit of its own keeps
+   * the one the player was looking at a second ago. It is the SAME 缺省即繼承
+   * rule `championBody.modelOverrideFor` applies to `_standin-overrides.json`.
+   *
+   * Per-champion escape hatch (no code change): `_standin-overrides.json`
+   * accepts a `glbPath` keyed by championId, so an alternate that should look
+   * like something else is authored in content, not special-cased here.
    */
-  resolve(shipped: ModelDoc | null, champId: string | null | undefined): ModelDoc | null {
+  resolve(
+    shipped: ModelDoc | null,
+    champId: string | null | undefined,
+    inheritFrom?: string | null,
+  ): ModelDoc | null {
     // Authored content always wins; nothing to probe for.
     if (!this.enabled || hasDedicatedShippedModel(shipped)) return shipped;
-    if (!champId) return shipped;
+    if (!champId && !inheritFrom) return shipped;
     if (this.idx === null) {
       void this.load(); // lazy kick-off: a caller can never forget to prime it
       return null; // hold the stand-in upgrade until the probe settles
     }
-    const unit = this.unitFor(champId);
+    const unit = this.unitFor(champId) ?? this.unitFor(inheritFrom);
     return unit ? overlayModelDoc(unit) : shipped;
   }
 

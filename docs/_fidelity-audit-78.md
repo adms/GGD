@@ -282,6 +282,14 @@ role data is too coarse to auto-apply safely. Left as-is and listed below rather
      wall-burst is the *alternative* branch (comparable magnitude), not double-counted.
 4. **`破法對咒` barrier** absorbs **magic** damage only in WC3; the GGD `shield` primitive is
    damage-type-agnostic (absorbs all) — a small modeling widening, surfaced not fixed.
+   > **FIXED 2026-07-30 (GH#289 lane P6).** `shield` now carries an `absorbs` damage-type
+   > filter (absent = `"all"` = the old behaviour, so nothing else moved), and both mirrors of
+   > 破法對咒 — `godie-o00l.e` / `godie-o02s.r` plus their champion-embedded copies — are
+   > authored `absorbs: "magic"`. Evidence agreed on both sides: `A07T`'s JASS orders
+   > `antimagicshell` granting `A0DS`◄`Aam2` (war3map.j:39928-39939) and the shipped GGD
+   > description already read 「承受住…650點的**法術傷害**」. Guarded by
+   > `packages/shared/src/sim/effects/shieldAbsorb.test.ts`, which drives the shipped docs
+   > through a real `SimWorld.step()`.
 
 ## B.6 Reproducibility
 Session scratchpad: `resolve2.py` (name→rawcode + cd/mana disambiguation), `tips.py` (per-level

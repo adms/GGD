@@ -100,7 +100,15 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
   it("skillshot → the PROJECTILE's corridor: BOTH maxRange and hitRadius × abilityRange", () => {
     cover("telegraph-shape-derivation");
     // PIN: the projectile's travel is abilityRange-scaled …
-    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/effectRunner.ts"), "utf8")))
+    // ⚠️ MOVED 2026-07-31. GH#289 split the one big `effectRunner.ts` switch
+    // into a module per effect kind, and this PIN kept reading the old file —
+    // which still EXISTS (it is now the four-line dispatcher), so the read did
+    // not throw; it just silently stopped containing the line. A source-string
+    // PIN cannot tell "the rule changed" from "the code moved", which is
+    // exactly CLAUDE.md 失敗形態⑥ and is why the assertions that MATTER in this
+    // file are the geometry ones below. These two PINs stay only as a
+    // cheap "the sim still does what the telegraph assumes" tripwire.
+    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/spawnProjectile.ts"), "utf8")))
       .toContain("remainingRange: resolveAbilityRange(world, def.maxRange)");
     // … and so is its HIT RADIUS. An earlier revision of this test asserted the
     // opposite ("hit radius really is not"), which made every skillshot
@@ -152,7 +160,7 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
 
   it("dash → a corridor of the RAW maxDistance (the sim applies no abilityRange)", () => {
     cover("telegraph-shape-derivation");
-    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/effectRunner.ts"), "utf8")))
+    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/dash.ts"), "utf8")))
       .toContain("startDash(world, ctx.caster, dir, e.speed, e.maxDistance)");
     const g = deriveTelegraphGeometry(
       ability({ castType: "dash", effects: [{ kind: "dash", maxDistance: 5 }] }),

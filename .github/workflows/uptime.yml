@@ -1,0 +1,136 @@
+# GH#124 — the external uptime probe.
+#
+# WHY GITHUB ACTIONS AND NOT THE VM
+# ---------------------------------
+# A probe that runs ON the machine it watches is not a probe: when the VM dies,
+# the cron dies with it and the silence is indistinguishable from health. The
+# monitor has to live in a different failure domain than the thing monitored.
+#
+# The three candidates, and why this one:
+#
+#   * GitHub Actions  ← chosen. Already the deploy source of truth, off-box, no
+#                       new machine, and secrets are first-class. Costs Actions
+#                       minutes (this repo is PRIVATE — see the budget below)
+#                       and its cron is best-effort, so treat detection latency
+#                       as "within ~15–30 min", never as an SLA.
+#   * owner's Mac     — rejected: it sleeps, it travels, and a laptop lid is not
+#                       an uptime guarantee.
+#   * a second VM     — rejected: it costs money and then IT needs monitoring.
+#
+# ⚠️ THREE THINGS THAT WILL BITE, WRITTEN DOWN SO THEY DO NOT SURPRISE ANYONE
+#
+#   1. ACTIONS-MINUTE BUDGET. Private repos are billed, and GitHub rounds EVERY
+#      job up to a whole minute. So the schedule is a cost decision:
+#
+#         every  5 min → 8,640 runs/mo → ≥8,640 min   (Free tier is 2,000)
+#         every 10 min → 4,320 runs/mo → ≥4,320 min
+#         every 15 min → 2,880 runs/mo → ≥2,880 min
+#         every 30 min → 1,440 runs/mo → ≥1,440 min
+#         hourly       →   720 runs/mo →   ≥720 min
+#
+#      The two crons below spend the density where it is worth something: every
+#      15 minutes across the family's evening play window (24 runs), hourly the
+#      other 18 hours (18 runs) = 42 runs/day ≈ 1,260 billed minutes in a
+#      30-day month, which leaves room under the Free 2,000 for `ci.yml`.
+#      probe.config.json carries the same crons AND the same 42, and
+#      `scheduleDrift.test.ts` recomputes it — so tightening the cron cannot
+#      silently multiply the bill.
+#
+#   2. GITHUB DISABLES SCHEDULED WORKFLOWS AFTER 60 DAYS OF REPOSITORY
+#      INACTIVITY, and tells you by email once. On a repo that is committed to
+#      weekly this never fires; if the project goes quiet over a holiday, the
+#      monitor is the first thing to go quiet with it. Re-enable it from the
+#      Actions tab.
+#
+#   3. IT SHARES A FAILURE DOMAIN WITH GITHUB. If Actions is down, so is the
+#      monitor, and nothing says so. That is the residual risk of the cheapest
+#      option and it is accepted deliberately, not overlooked.
+#
+# SECRETS
+#   GGD_UPTIME_WEBHOOK_URL   preferred; a Slack incoming webhook just for alerts
+#   GGD_SLACK_WEBHOOK_URL    fallback; reuses the #209 registration channel
+#   Either one is enough. With NEITHER set the probe still runs and still fails
+#   the job, it just cannot page anyone — and it says so in the log.
+#   The probe never prints the webhook: see tools/uptime-probe/src/notify.ts and
+#   its guard suite. GitHub's own secret masking is the second layer, not the
+#   first.
+#
+# Setup runbook: tools/uptime-probe/README.md
+
+name: uptime
+
+on:
+  schedule:
+    # Times are UTC. Taipei is UTC+8.
+    # 18:00–23:59 Taipei — the family play window: every 15 minutes.
+    - cron: "*/15 10-15 * * *"
+    # Every other hour of the day: hourly is enough to notice by morning.
+    - cron: "0 16-23,0-9 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Probe but never POST to Slack"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Never let a slow run overlap the next tick, and never cancel a run that may
+# be mid-alert.
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Sparse: this job needs the probe and nothing else. The repo carries
+      # content/ and assets; checking all of it out every 15 minutes would be
+      # the single largest line in the minute budget above.
+      # Cone mode gives us tools/uptime-probe plus the repo's top-level files —
+      # which is what tsx needs, because tools/uptime-probe/tsconfig.json
+      # extends the root tsconfig.base.json.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: tools/uptime-probe
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Alert de-duplication across runs. A cache MISS is harmless and safe:
+      # with no memory the probe treats everything as newly-down and alerts,
+      # which is the loud direction. See probe.ts `decide`.
+      - name: Restore alert state
+        id: state
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ runner.temp }}/uptime-state.json
+          key: uptime-state-${{ github.run_id }}
+          restore-keys: uptime-state-
+
+      - name: Probe
+        env:
+          # Passed as env, never as a command-line argument: argv is visible in
+          # the process table and in `set -x` output.
+          GGD_UPTIME_WEBHOOK_URL: ${{ secrets.GGD_UPTIME_WEBHOOK_URL }}
+          GGD_SLACK_WEBHOOK_URL: ${{ secrets.GGD_SLACK_WEBHOOK_URL }}
+        run: |
+          npx --yes tsx@4.19.2 tools/uptime-probe/src/cli.ts \
+            --state "${RUNNER_TEMP}/uptime-state.json" \
+            --origin "GitHub Actions" \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # `always()`: the state must be written on the failing runs too, or the
+      # repeat-suppression window can never start and a long outage becomes a
+      # notification every 15 minutes.
+      - name: Save alert state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ runner.temp }}/uptime-state.json
+          key: uptime-state-${{ github.run_id }}

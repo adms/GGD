@@ -1009,10 +1009,10 @@ function FieldRow(props: {
     <div style={{ display: "grid", gridTemplateColumns: "132px 1fr", gap: 10, alignItems: "start" }}>
       <label style={{ fontSize: 12, color: TEXT_DIM, paddingTop: 7 }}>{spec.label}</label>
       <div>
-        {spec.kind === "multiline" ? (
+        {spec.kind === "multiline" || spec.kind === "json" ? (
           <textarea
             value={shown}
-            rows={5}
+            rows={spec.kind === "json" ? 10 : 5}
             readOnly={spec.readOnly === true}
             disabled={props.disabled}
             onChange={(e) => props.onChange(e.target.value)}

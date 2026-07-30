@@ -79,7 +79,7 @@ function seats(champ: ChampionId): SeatSpec[] {
   }));
 }
 
-type Feed = "idle" | "stick" | "clickOutside" | "obstacle" | "aclick";
+type Feed = "idle" | "stick" | "clickOutside" | "obstacle" | "aclick" | "clickReachable";
 
 interface Result {
   feed: Feed;
@@ -193,6 +193,28 @@ function runMatch(feed: Feed, seed = SEED): Result {
       }
       if (!best) throw new Error("no circular obstacle in the human's zone");
       onceTarget = best;
+    } else if (feed === "clickReachable") {
+      // The CONTROL for the pillar case: one right-click on a spot the body CAN
+      // stand on. Walk 14 u from spawn toward the zone centre, then step the
+      // distance back until the point clears every circular obstacle — so the
+      // destination is reachable BY CONSTRUCTION and the walk must complete.
+      const zone = ctl.world.arena.zones[t.zone] ?? ctl.world.arena.zones[0]!;
+      const dx = zone.center.x - t.pos.x;
+      const dz = zone.center.z - t.pos.z;
+      const len = Math.hypot(dx, dz) || 1;
+      for (let d = 14; d >= 4; d--) {
+        const p = { x: t.pos.x + (dx / len) * d, z: t.pos.z + (dz / len) * d };
+        const clear = zone.obstacles.every(
+          (o) =>
+            o.kind !== "circle" ||
+            Math.hypot(o.center.x - p.x, o.center.z - p.z) > o.radius + t.radius + 1.5,
+        );
+        if (clear) {
+          onceTarget = p;
+          break;
+        }
+      }
+      if (!onceTarget) throw new Error("no clear destination in the human's zone");
     }
   }
 
@@ -216,12 +238,19 @@ function runMatch(feed: Feed, seed = SEED): Result {
     // ---- the client's order stream for this tick ----
     if (me !== null) {
       const t = ctl.world.transform.get(me);
-      if ((feed === "clickOutside" || feed === "obstacle") && !firedOnce && onceTarget) {
+      if (
+        (feed === "clickOutside" || feed === "obstacle" || feed === "clickReachable") &&
+        !firedOnce &&
+        onceTarget
+      ) {
         firedOnce = true;
         human.mailbox.push({ order: { kind: "move", point: onceTarget } } as never);
       } else if (feed === "stick" && t) {
-        // GamepadInput.ts:193-198 / TouchInput.ts:95-99 — every frame the stick
-        // is deflected, a brand-new move order MOVE_LEAD units ahead.
+        // `GamepadInput.mapGamepadFrame` / `TouchInput.touchMoveOrder` — every
+        // frame the stick is deflected, a brand-new move order MOVE_LEAD units
+        // ahead. (Cited by SYMBOL, not by line: the previous
+        // `GamepadInput.ts:193-198` had already drifted onto an unrelated
+        // camera-intent interface.)
         human.mailbox.push({
           order: { kind: "move", point: { x: t.pos.x + MOVE_LEAD, z: t.pos.z } },
         } as never);
@@ -319,16 +348,39 @@ function report(r: Result): string {
 }
 
 
-// ⛔⛔ 2026-07-30 —— 這個檔在 HEAD 上是「8 skipped」，今天第一次真的跑起來，
-// 立刻抓到 owner 當天回報的那個 bug：**Saber(`godie-e002`) 在移動指令期間完全不攻擊**
-// （`hits=0/0 swings (connect 0%)`，而靜止的 [idle] 是 3/3、A-click 的 [aclick] 是 53/53）。
+// ⛔⛔ 2026-07-30 —— 棘輪狀態（前一版的說明已經過期，這一段是重寫的）
 //
-// 下面四條改用 `it.fails` —— 這是**棘輪不是掩蓋**：
-//   · 現在：行為是壞的 → `it.fails` 通過 → main 綠，bug 被登記在案而不是被 skip 掉
-//   · 修好之後：測試會**變紅**並告訴你把 `.fails` 拿掉 —— 沒有人能默默地讓它回到 skip
+// 這個檔曾經是「8 skipped」，然後被改成四條 `it.fails` 把 bug 釘在案上。
+// GH#216「卡住就接敵」落地之後，**四條裡有兩條真的修好了，另外兩條沒有**，
+// 而且沒修好的那兩條**不該**用這個方式修。逐條說明，因為理由不一樣：
 //
-// ⚠️ 不要把它們改回 `it.skip`。skip 是「不知道」，`it.fails` 是「知道且釘住」。
-// 追蹤在 GH#216（Saber 走路/攻擊面向普查）。修的時候四條要一起翻回 `it`。
+// ✅ 翻回 `it` 了（一次點擊、到不了的終點 —— 這才是這條規則要救的人）：
+//    · ONE right-click OUTSIDE the zone   hits 0 → 20/30 swings，held 0 → 2117/2489
+//    · ONE right-click INTO A PILLAR      hits 0 → 23/35 swings，held 0 → 2313/2409
+//
+// ⛔ 仍然是 `it.fails`，而且**是刻意的**（兩條都是 `stick` 情境）：
+//    `stick` 每一 tick 都送一條新的 move（真的搖桿就是這樣），所以玩家**正在**
+//    轉方向盤。2026-07-30 量到：讓接敵去救他的代價是整場 2,039/2,355（86.6%）
+//    的走位 tick 被改寫，`moveTarget` 被指到玩家**背後** 18 單位外 —— 推右邊、
+//    角色往左跑，持續 68 秒。那是 owner 回報的「搶走走位還不放手」本身。
+//
+//    而且 `hits > 0` 這個期望對這個 feed 是**和 `combatFeel.standstill` 直接矛盾**的：
+//    harness 讓玩家一路 +x 撞到 zone 0 的東牆（x ≈ −16.66），全速跑過敵人身邊。
+//    「打就站定」規定走動中不得起手（朝目標靠近除外），所以全速掠過 = 不出手。
+//    唯一能讓它 `hits > 0` 的辦法，就是讓 sim 接管走位把角色停在敵人旁邊 ——
+//    也就是同一個 describe 裡 `hijackedTicks === 0` 那條**明文禁止**的事。
+//    兩條期望不可能同時成立，而該讓步的是 `hits > 0`，不是走位權。
+//
+//    ⚠️ 所以：**不要**為了把這兩條翻成 `it` 而放寬 `hijackedTicks`。要動它們，
+//    先跟 owner 確認「握著搖桿撞牆時，要不要讓系統接手轉向」——那是設計裁決，
+//    不是測試維護。後台已經有開關：`combat-feel.autoEngage.respectLiveSteering`。
+//
+// ❌ IDLE 這一條紅在 HEAD 上就紅了，**和 GH#216 無關**（把三個 sim 檔 checkout
+//    回 HEAD 重跑，一樣 `hits=0/0`）。實測原因：idle 座位站在出生點 (−56,−4)，
+//    整場 2,410 tick 裡最近的敵方英雄**從來沒有靠近到 14.95 單位以內**，而 Saber
+//    的索敵半徑是 `MELEE_ACQUIRE_FLOOR = 6`。也就是說玩家的索敵是對的，是**沒有
+//    東西可以打**。這條測的其實是「bot 會不會去打站著不動的人」，不是自動攻擊。
+//    留紅在這裡，不要用放寬期望的方式蓋掉（e34339b7 就是那樣被 revert 的）。
 describe("#274 auto-acquire survives a live move order (real match, real human seat)", () => {
   it("IDLE — the control: a seat that never touches anything still fights", () => {
     const r = runMatch("idle");
@@ -361,14 +413,17 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     for (let i = 1; i < xs.length; i++) expect(xs[i]!).toBeGreaterThan(xs[i - 1]!);
   }, 300_000);
 
-  it.fails("ONE right-click OUTSIDE the zone — one misclick must not disarm the match", () => {
+  // GH#216 修好 → 翻回 `it`。一次點到場外，身體被夾在邊界上永遠到不了，
+  // 而玩家已經放手（之後沒有任何新指令）——接敵接手，整場從 0 命中變成 20。
+  it("ONE right-click OUTSIDE the zone — one misclick must not disarm the match", () => {
     const r = runMatch("clickOutside");
     console.log(report(r));
     expect(r.hits).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
   }, 300_000);
 
-  it.fails("ONE right-click INTO A PILLAR — the half #269's zone-clamp could not reach", () => {
+  // GH#216 修好 → 翻回 `it`。
+  it("ONE right-click INTO A PILLAR — the half #269's zone-clamp could not reach", () => {
     const r = runMatch("obstacle");
     console.log(report(r));
     // The destination is inside the zone and still unreachable, so the move
@@ -377,6 +432,38 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     expect(r.orderClearedWhileAlive).toBe(false);
     expect(r.hits).toBeGreaterThan(0);
     expect(r.heldTicks).toBeGreaterThan(0);
+  }, 300_000);
+
+  /**
+   * GH#216 的**反向**守衛（2026-07-30 新增）——「走得動的走位，一個 tick 都不會
+   * 被搶走」。
+   *
+   * 為什麼需要它，而不是靠上面那條 `STICK HELD — …keeps the wheel`：
+   * 搖桿那條走的是 `respectLiveSteering` 那條保護（每 tick 都有新指令）。這一條
+   * 刻意**只點一次**，所以那層保護完全不參與 —— 唯一擋在中間的是
+   * `updateWalkStall` 裡讀 `Transform.vel` 的那個門檻。兩條各守一半，缺一半就有
+   * 一整條路徑沒有人看著。
+   *
+   * 斷言讀的是**玩家看得到的結果**，不是旗標：
+   *   1. 走位指令在活著的時候被消耗掉了 = 他真的**走到**了自己點的地方。
+   *      接敵一旦在半路接手，身體就會被拉去打人、永遠走不到，這一格就是 false。
+   *   2. 目的地整段沒有被改寫過一次（`hijackedTicks === 0`）。
+   *   3. 而且真的量到東西（`authorityTicks` > 30），不是「因為沒在量所以是 0」。
+   *
+   * 突變：把 `updateWalkStall` 的 `if (lenSq(t.vel) >= …) { set(id,0); return; }`
+   * 拿掉（= 走得動也照樣累計卡住），這三格會同時倒。
+   */
+  it("ONE right-click ON A REACHABLE SPOT — a walk that is walking keeps the wheel", () => {
+    const r = runMatch("clickReachable");
+    console.log(report(r));
+    expect(r.authorityTicks, "no measurable ticks — the harness is not driving").toBeGreaterThan(
+      30,
+    );
+    expect(r.hijackedTicks, "the chase re-pointed a walk that was walking fine").toBe(0);
+    expect(
+      r.orderClearedWhileAlive,
+      "the champion never reached the spot the player clicked",
+    ).toBe(true);
   }, 300_000);
 
   it("A-CLICK HELD — attack-move lands real hits, not just holds a target", () => {

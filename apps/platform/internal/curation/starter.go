@@ -4,7 +4,7 @@ import "sort"
 
 // The STARTER SET — the named, reviewable "make a fresh install playable"
 // bundle (task #47). Its champion half is the FIRST OPEN ROSTER (對戰可選名單):
-// the 50 champions the user hand-picked to be selectable in champ-select on a
+// the 53 champions the user hand-picked to be selectable in champ-select on a
 // fresh install.
 //
 // WHY IT EXISTS. The whitelist ships EMPTY on purpose (task #4): the imported
@@ -37,10 +37,13 @@ import "sort"
 // TestStarterSetMatchesContentTree against the real content tree — the bundle
 // cannot silently rot when content is re-imported):
 //
-// CHAMPIONS (51) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
+// CHAMPIONS (53) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
 // user's hand-picked names out — 48 at task #138, +2 at task #212, +1 at GH#29
 // (揍敵客桀諾 godie-efur #13、賈修貝爾 godie-hblm #05)、喪標麥可 godie-zombiex #100
-// (GH#29). This is NOT the old 13-tile demo showcase:
+// (GH#29), +2 at L1 (owner 2026-07-30「加入釋出變身釋出可選白名單:70 白木老樹精 ·
+// 白木卡迪那 紮根態、6 職業獵人 · 傑 富力士 傑桑變化」— godie-e00s #70 與
+// godie-ucrl #06, BOTH as the BASE body per R6; the 變身態 is what their own
+// trigger ability reaches). This is NOT the old 13-tile demo showcase:
 // it is the whole selectable roster a fresh install offers in champ-select, so
 // the gates are about ROSTER INTEGRITY (a real, complete, distinct champion),
 // NOT about a pretty demo grid.
@@ -69,7 +72,7 @@ import "sort"
 //	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 50 carry
 //	   50 DISTINCT hero 編號, so no pair can collide. This is why the #212 pair
 //	   opens 賈修貝爾 (godie-hblm) but NOT its 編號 05 twin 阿強一號 (godie-h021).
-//	R5 the roster is EXACTLY these 51 canonical ids — pinned id-for-id by
+//	R5 the roster is EXACTLY these 53 canonical ids — pinned id-for-id by
 //	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
 //	   drop or swap a champion.
 //	R6 NO ALTERNATE (變身) FORM. Every id here is a BASE unit — the hero a player
@@ -77,17 +80,22 @@ import "sort"
 //	   by the closed w3x table in packages/shared/src/content/championForms.ts
 //	   (26 pairs, from the WC3 Metamorphosis fields Eme1/Emeu), asserted by
 //	   TestStarterRosterHasNoAlternateForms.
-//	R7 THE PRICE LIST MOVES WITH THE ROSTER. content/config/store.json's
-//	   `championPrices` must name EXACTLY these ids — it is this same set
-//	   described a second time, in content. An absent price means FREE on both
-//	   sides (client lockStateOf: `price === undefined` → "free"; server
-//	   wallet.OwnsChampion: `!priced` → true), and a price left behind for a
-//	   dropped id keeps being seeded into new accounts by
-//	   Catalog.FreeChampions(). Asserted in both directions, id by id, by
-//	   TestStarterRosterMatchesChampionPrices — which also pins the economy's
-//	   SHAPE (12 free / 39 priced @ 300). R7 is R6's own regression: the #249
-//	   swap moved ten ids and left all ten prices behind, and every gate was
-//	   green. Move an id here and you must move its price with it.
+//	R7 THE PRICE LIST NO LONGER HAS TO MOVE WITH THE ROSTER — the rule was
+//	   DELETED on 2026-07-30, and that is the point. It used to read「
+//	   content/config/store.json's `championPrices` must name EXACTLY these
+//	   ids」, because an absent price meant FREE on both sides (client
+//	   lockStateOf: `price === undefined` → "free"; server
+//	   wallet.OwnsChampion: `!priced` → true) and a price left behind for a
+//	   dropped id kept being seeded into new accounts by
+//	   Catalog.FreeChampions(). R7 was R6's own regression: the #249 swap moved
+//	   ten ids, left all ten prices behind, and every gate was green.
+//	   The owner then removed the map entirely (「所有英雄藍水晶都是統一價，新
+//	   上架預設也是一樣價格」): store.json now carries one `championUnlockCost`
+//	   plus a short `freeChampionIds` list, and a champion with no mention
+//	   anywhere costs the flat price. So ADDING AN ID HERE NEEDS NO STORE EDIT.
+//	   What survives is the economy's SHAPE (12 free / 41 priced @ 300) and the
+//	   rule that every free-listed id is really on this roster, both still
+//	   asserted by TestStarterRosterMatchesChampionPrices.
 //
 // R6 IS A BUG FIX, NOT A TIDY-UP (task #249). Ten of these fifty slots used to
 // be the ALTERNATE body, offered to players as if it were the hero, because the
@@ -257,14 +265,14 @@ import "sort"
 //	orb. The aboveCeiling ledger in the test is therefore EMPTY, and the gate
 //	now asserts it stays empty.
 //
-// ABILITIES (250) — 50 champions x {q,w,e,r,ex}:
+// ABILITIES (265) — 53 champions x {q,w,e,r,ex}:
 //
 //	Only `.ex` is enforced today (a champion's Q/W/E/R are embedded in the
 //	champion doc and ungated), but listing all five makes the bundle
 //	self-describing and future-proofs it if gating widens. It also means there
 //	is no such thing as a HALF-ENABLED champion in this set.
 var (
-	// The FIRST OPEN ROSTER — 50 canonical champion ids, one per user-picked
+	// The FIRST OPEN ROSTER — 53 canonical champion ids, one per user-picked
 	// name (對戰可選名單). Sorted; ApplyStarterSet unions this into the whitelist,
 	// which the client champ-select and the game-server both read. Inline
 	// annotations record the display name, hero 編號, and — for the ~20 names
@@ -280,6 +288,7 @@ var (
 		"godie-e008",    // 夏娜 - 火霧戰士  #21
 		"godie-e00k",    // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
 		"godie-e00r",    // 初號機 - 最終泛用人型決戰兵器  #59
+		"godie-e00s",    // 白木老樹精 - 白木卡迪那  #70  — owner 2026-07-30「加入釋出變身釋出可選白名單」；本體，e010 紮根態由 70-00 紮根 toggle 觸發
 		"godie-e00w",    // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
 		"godie-edem",    // 宇智波佐助 - 寫輪眼復仇者  #45
 		"godie-efur",    // 揍敵客桀諾 - 揍敵客大家長  #13  — 任務 #212 追加
@@ -321,6 +330,7 @@ var (
 		"godie-u00n",    // 蒙其.D.魯夫 - 草帽小子  #76  — 選 u00n（剔 u00o）
 		"godie-u00v",    // 基廉列克 - 黑手黨老大  #78
 		"godie-ubal",    // 巴恩大魔王 - 魔界霸主  #37
+		"godie-ucrl",    // 職業獵人 - 傑 富力士  #06  — owner 2026-07-30；本體，u034 傑桑態由 06-04 傑桑變化 觸發（26 對裡真的換模型的 5 對之一）
 		"godie-udea",    // 飛鼠先生 - 至尊學長  #65
 		"godie-udre",    // 索隆 - 三刀流劍士  #11  — 本體；u01u 是 11-002 武裝色霸氣 的變身態（測試英雄 u01q 仍排除）
 		"godie-umal",    // 拳四郎 - 北斗神拳掌門人  #25  — 本體；u00l 北斗之鼠 是 25-04 ChangeDNA 的變身態
@@ -445,6 +455,17 @@ var (
 		"godie-i06o", // 血染八月
 		"godie-i060", // 死之王的意志
 		"godie-i06a", // 妖物碎殺牙
+		// #149 職業限定閘的四件示範傳說。⚠️ 這四件曾經只被加進
+		// `content/loot-tables/legendary-weapons.json` 而漏了這裡 —— 後果不是
+		// 「抽不到」而已，是**回合武器三選一會壞掉**：`MatchController.ts:1036`
+		// 先 `offerItems()` 再 `whitelist.filterItems()`，所以 24 個條目裡有 4 個
+		// 是死的時候，約 44% 的武器卡只剩 1–2 個選項，甚至一個都不剩。
+		// 上面 `endless-edge` 的註解早就寫了規則：白名單說「什麼存在」，
+		// sim 說「誰可以拿到」。閘在 sim，不在這裡。
+		"cleaver-of-the-warden",  // 裂地巨斧（近戰·擴散）
+		"sage-ward-amulet",       // 賢者的護身符（智力·保命，不符改為減量而非封鎖）
+		"bulwark-charge-greaves", // 衝鋒重脛甲（近戰＋力量·雙軸衝刺）
+		"piercer-crossbow",       // 穿甲弩（遠程·真傷）
 	}
 
 	// DRAFT items — EXACTLY the quest set, and nothing else (owner rule 2, task
@@ -483,7 +504,7 @@ var (
 	// would empty the round-5 card, which is exactly task #47's silent failure.
 	starterItems = concat(starterShopItems, starterServiceItems, starterLegendaryItems, starterDraftItems)
 
-	// 65 abilities — the FULL kit of every starter champion ("<championId>.<slot>").
+	// 265 abilities — the FULL kit of every starter champion ("<championId>.<slot>").
 	// Only `.ex` is gated today; the other four are listed so the bundle is
 	// self-describing and no champion can ever be half-enabled.
 	starterAbilities = buildStarterAbilities(starterChampions)

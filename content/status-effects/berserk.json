@@ -1,0 +1,11 @@
+{
+  "id": "berserk",
+  "schema": "status-effect@1",
+  "name": "暴走",
+  "description": "不可控制並自動尋敵：玩家的移動與攻擊指令全部失效，身體自己找最近的敵人打。不是硬控 —— 走得動、打得到，只是不聽你的。",
+  "polarity": "buff",
+  "tags": [
+    "berserk",
+    "uncontrollable"
+  ]
+}

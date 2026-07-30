@@ -37,6 +37,31 @@
     }
   ],
   "vfxKey": "fx.prim.nature.slash",
+  "vfxLayers": [
+    {
+      "vfxKey": "godie-earthtornado2-p0",
+      "attachTo": "point"
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p13",
+      "attachTo": "point",
+      "delayMs": 120
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p1",
+      "attachTo": "point",
+      "delayMs": 260
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p9",
+      "attachTo": "point",
+      "delayMs": 420
+    },
+    {
+      "vfxKey": "godie-earthtornado2-p2",
+      "delayMs": 700
+    }
+  ],
   "targetsEnemies": true,
   "radius": 4.12,
   "schema": "ability@1",

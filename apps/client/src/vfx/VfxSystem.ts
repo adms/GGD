@@ -26,8 +26,12 @@
  *     can never rate-emit afterwards (Babylon latches manualEmitCount; see
  *     particleFactory), so the short-lived majority carries the hit and the
  *     long-lived minority reads as the tail.
- *   · lifetime clamp: no one-shot particle outlives ONE_SHOT_MAX_LIFE_SEC, so
- *     imported 1–6s lifetimes stop hanging around as fog.
+ *   · lifetime clamp: no one-shot particle outlives `oneShotMaxLifeSec()`, so
+ *     imported 1–6s lifetimes stop hanging around as fog. That ceiling is a
+ *     BACKSTAGE FIELD (`config.vfx-families@1.oneShotMaxLifeSec`, shipped 0.6) —
+ *     owner's 「先蓄力光柱 → 再爆炸 → 再留一圈餘燼」 needs the ember layer to
+ *     outlive the pop, and before it was a field nothing on the console could
+ *     reach it (a layer's `timeScale: 4` saturated at 0.6 s).
  *   · layering hooks: deaths, heal pickups and EX casts fire the pooled
  *     ImpactComposer (white-hot core flash + gravity/drag spark streaks +
  *     low-alpha smoke body + expanding ground shockwave) through HitSpark on
@@ -61,7 +65,13 @@ import {
   SHADOW_FLOWER_RADIUS,
   type ShadowInput,
 } from "../render/shadows";
-import { Telegraph, telegraphPaletteFor } from "./Telegraph";
+import {
+  Telegraph,
+  telegraphPaletteFor,
+  trimTelegraphPools,
+  disposeTelegraphShared,
+} from "./Telegraph";
+import { vfxCleanupPolicy, ringCapForRoundBoundary } from "./vfxCleanupPolicy";
 import { TelegraphLayer } from "./TelegraphLayer";
 import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphShape";
 import type { TelegraphRelation } from "./telegraphChannel";
@@ -70,6 +80,17 @@ import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
 import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
 import { extraVfxDocIds, primitiveFallbackFor, w3xArtFor } from "../render/vfx/w3xAbilityArt";
+import { familyCastHeightY } from "../render/vfx/familyCastHeight";
+import {
+  applyLayerOverrides,
+  applyVfxOverrides,
+  castLayersFor,
+  layerHeightY,
+  layerPosition,
+  maxAbilityVfxLayers,
+  type ResolvedVfxLayer,
+} from "../render/vfx/abilityLayers";
+import { isLegacySingleVfx, type AbilityVfxSource } from "@ggd/shared/content/schema/abilityVfx";
 import { W3xCastFx } from "./W3xCastFx";
 import { BloodFx } from "./BloodFx";
 import { CombatFeedbackFx } from "./CombatFeedbackFx";
@@ -80,6 +101,7 @@ import { CastPillarFx } from "./CastPillarFx";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
+import { DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } from "./oneShotLife";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -121,11 +143,19 @@ export interface VfxContext {
 // ---------------------------------------------------------------------------
 
 /**
- * Hard lifetime ceiling for ONE-SHOT particles (seconds). Impact particles
- * read best at 0.15–0.5s; imported docs run 1–6s, which is what made casts
- * hang around as fog. Everything is gone within this long of the impact frame.
+ * Lifetime ceiling for ONE-SHOT particles (seconds) — **後台可調**,
+ * `config.vfx-families@1.oneShotMaxLifeSec`,出貨 0.6(見 `./oneShotLife`).
+ *
+ * Impact particles read best at 0.15–0.5s; imported docs run 1–6s, which is
+ * what made casts hang around as fog. Everything is gone within this long of
+ * the impact frame.
+ *
+ * ⚠️ 讀的是 `oneShotMaxLifeSec()`,**不是**一個模組常數 —— 常數版本的代價是
+ * owner 想把餘燼從 0.6 拉到 2 秒就得 rebuild + 重啟容器。
+ * `DEFAULT_ONE_SHOT_MAX_LIFE_SEC` 只是「沒人動過後台時的值」,不要拿它當
+ * 生效值來用。
  */
-export const ONE_SHOT_MAX_LIFE_SEC = 0.6;
+export { DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec };
 
 /** Ceiling on a front-loaded burst (AAA impact band is ~24–80 particles). */
 export const MAX_FRONT_LOAD_BURST = 80;
@@ -350,13 +380,37 @@ export function tintOfDoc(doc: VfxDoc): Rgb {
 /**
  * Clamp a one-shot's particle lifetime to the impact band. Returns the SAME
  * object when it already fits (identity = "nothing to retune").
+ *
+ * `maxLifeSec` 預設讀**現在生效的後台值**。呼叫端幾乎都不該傳它 —— 參數存在
+ * 是為了讓 `VfxSystem` 在同一幀內把「這一份 shaped doc 是照哪個天花板算的」
+ * 綁進池 key,而不是讓每個呼叫端各自去猜一個數字。
  */
-export function clampOneShotLife(life: { min: number; max: number }): {
+export function clampOneShotLife(
+  life: { min: number; max: number },
+  maxLifeSec = oneShotMaxLifeSec(),
+): {
   min: number;
   max: number;
 } {
-  if (life.max <= ONE_SHOT_MAX_LIFE_SEC) return life;
-  return { min: Math.min(life.min, ONE_SHOT_MAX_LIFE_SEC * 0.5), max: ONE_SHOT_MAX_LIFE_SEC };
+  if (life.max <= maxLifeSec) return life;
+  return { min: Math.min(life.min, maxLifeSec * 0.5), max: maxLifeSec };
+}
+
+/**
+ * 被夾過的 doc 在粒子池裡的 id。
+ *
+ * ⚠️ 這不是裝飾。`VfxSystem.pool` 是**用 doc.id 當 key**、而且池裡那個
+ * `ParticleSystem` 的 `minLifeTime`/`maxLifeTime` 是**建立當下**烘進去的。天花板
+ * 從 0.6 改成 2.0 之後若沿用同一個 id,`play()` 會撈到那個照 0.6 建好的 system,
+ * 於是後台顯示 2.0、schema 收下 2.0、`frontLoadDoc` 也算出 2.0,**而畫面上的粒子
+ * 仍然 0.6 秒就消失** —— 第②號故障(算了但沒送到)加第⑤號(被測的不是出貨的
+ * 那個)。和 `applyLayerOverrides` 給覆寫過的層換 id 是同一條規則。
+ *
+ * 天花板等於出貨預設時 id 一個字都不改,所以沒人動後台的畫面、池 key、
+ * `ParticleSystem.name` 全部和升級前一位元不差。
+ */
+function lifeShapedId(id: string, maxLifeSec: number): string {
+  return maxLifeSec === DEFAULT_ONE_SHOT_MAX_LIFE_SEC ? id : `${id}#life=${maxLifeSec}`;
 }
 
 /**
@@ -366,10 +420,13 @@ export function clampOneShotLife(life: { min: number; max: number }): {
  * a wide lifetime spread standing in for the tail; a `burst` doc keeps its
  * authored counts and lifetime shape, and is only clamped when it runs long.
  */
-export function frontLoadDoc(doc: VfxDoc): VfxDoc {
-  const lifetimeSec = clampOneShotLife(doc.lifetimeSec);
+export function frontLoadDoc(doc: VfxDoc, maxLifeSec = oneShotMaxLifeSec()): VfxDoc {
+  const lifetimeSec = clampOneShotLife(doc.lifetimeSec, maxLifeSec);
+  // 真的被夾到了才換 id：沒被夾的 doc 在任何天花板下都是同一份東西，換 id 只會
+  // 憑空多開一格池（和 `applyVfxOverrides` 的 identity 快速路徑同一個判斷）。
+  const id = lifetimeSec === doc.lifetimeSec ? doc.id : lifeShapedId(doc.id, maxLifeSec);
   if (doc.mode === "burst") {
-    return lifetimeSec === doc.lifetimeSec ? doc : { ...doc, lifetimeSec };
+    return lifetimeSec === doc.lifetimeSec ? doc : { ...doc, id, lifetimeSec };
   }
   const avgLife = (doc.lifetimeSec.min + doc.lifetimeSec.max) / 2;
   // tailShare 0: a burst system can't rate-emit a tail, so ALL of the authored
@@ -380,6 +437,7 @@ export function frontLoadDoc(doc: VfxDoc): VfxDoc {
   const { rate: _streamRate, ...rest } = doc;
   return {
     ...rest,
+    id,
     mode: "burst",
     burstCount: Math.min(MAX_FRONT_LOAD_BURST, burstCount),
     lifetimeSec: {
@@ -394,6 +452,24 @@ interface PooledSystem {
   lastUsedMs: number;
 }
 
+/** 一層排程中的特效 —— `delayMs` 到了才播(見 `VfxSystem.pendingLayers`)。 */
+interface PendingLayer {
+  doc: VfxDoc;
+  x: number;
+  z: number;
+  y: number;
+  boost: number;
+  /** 絕對時間(ms),不是遞減計數器 */
+  atMs: number;
+}
+
+/**
+ * 同時最多幾層在等待播出。12 位英雄 × 一支 `ABILITY_VFX_LAYER_HARD_CAP` 層的
+ * 技能 = 72,再留一倍餘裕給連續施法。滿了丟最舊的,不是拒收新的 —— 拒收新的
+ * 會讓「剛剛那一下」沒有畫面,而那正是這整批要消滅的失敗。
+ */
+const MAX_PENDING_LAYERS = 144;
+
 export class VfxSystem {
   /**
    * Un-owned one-shot rings (guardianMark's pre-land punish warning), which
@@ -403,6 +479,15 @@ export class VfxSystem {
    */
   private telegraphs: Telegraph[] = [];
   private sparks: HitSpark[] = [];
+  /**
+   * 多層特效模板 (#205) 裡 `delayMs > 0` 的層,等著在 `update()` 被放出來。
+   *
+   * ⚠️ 有界:`MAX_PENDING_LAYERS`。一個壞掉的內容(12 個人狂按一支 6 層全帶
+   * delay 的技能)不可以讓這個陣列無限長 —— 滿了就丟掉最舊的那一筆,因為最舊
+   * 的那一筆本來也最接近該播的時間、丟掉的代價最小。回合切換與 dispose 都會
+   * 清空它,否則上一回合排定的餘燼會在商店場景裡爆出來(#216 / #259 的病)。
+   */
+  private pendingLayers: PendingLayer[] = [];
   /** per-doc-id free-list of pooled systems (cap MAX_POOL_PER_DOC) */
   private readonly pool = new Map<string, PooledSystem[]>();
   /** doc id → its impact-first playback shape (derived once per doc) */
@@ -581,12 +666,21 @@ export class VfxSystem {
     return p;
   }
 
-  /** Memoized impact-first shape of a doc (gradients are baked per system). */
+  /**
+   * Memoized impact-first shape of a doc (gradients are baked per system).
+   *
+   * ⚠️ memo key 帶著**當下生效的壽命天花板**。只用 `doc.id` 當 key 的話,後台把
+   * 上限從 0.6 改成 2.0 之後,這個 map 會把 0.6 那一版原封不動遞回去 —— 「後台
+   * 存了、頁面顯示 2.0、場上沒變」正是這條 lane 要消滅的失敗形態。天花板沒被動
+   * 過時 key 就是 `<id>|0.6`,一份 doc 一格,和升級前一樣。
+   */
   private shapeOf(doc: VfxDoc): VfxDoc {
-    let shaped = this.shaped.get(doc.id);
+    const maxLifeSec = oneShotMaxLifeSec();
+    const key = `${doc.id}|${maxLifeSec}`;
+    let shaped = this.shaped.get(key);
     if (!shaped) {
-      shaped = frontLoadDoc(doc);
-      this.shaped.set(doc.id, shaped);
+      shaped = frontLoadDoc(doc, maxLifeSec);
+      this.shaped.set(key, shaped);
     }
     return shaped;
   }
@@ -682,38 +776,109 @@ export class VfxSystem {
     pos: { x: number; z: number },
     nowMs: number,
     boost: number,
+    layers?: readonly ResolvedVfxLayer[] | null,
+    point?: { x: number; z: number } | null,
   ): void {
-    const art = w3xArtFor(abilityId);
-    if (!art) {
-      this.play(doc, pos.x, pos.z, nowMs, 1.0, boost);
+    // ---- RUNG 0: 技能自己寫了 `vfxLayers` (#205) ---------------------------
+    // 一份 doc 寫了層堆疊,那就是作者對「這一招施法時畫什麼」的完整陳述 ——
+    // 所以它蓋過下面那條晉升階梯,而不是被它蓋過。**只有**這種 doc 會走到這裡:
+    // 646 支只有 `vfxKey` 的技能 `layers` 是 null(見 `handleEvent` 的
+    // `isLegacySingleVfx` 分支),一個位元都不經過新程式碼。
+    if (layers && layers.length > 0) {
+      this.playLayeredCast(layers, pos, point ?? null, nowMs, boost);
       return;
     }
+    const art = w3xArtFor(abilityId);
+    // #230 —— 施法高度從**一個有名字的接縫**來,不是四個匿名的 `1.0`。今天它回傳
+    // 出貨值,所以行為一位元不差;`familyCastHeight.ts` 的檔頭記著量到的落差
+    // (258 支家族技能有 229 支的 `heightY` 不是 1.0),以及為什麼接上去是 owner
+    // 的視覺決定。`familyCastOnScreen.test.ts` 斷言「宣稱的高度 == Babylon 拿到的
+    // 高度」,所以接上去的那一天,②號故障(算了但沒送到)不可能再發生一次。
+    const castY = familyCastHeightY(art);
+    if (!art) {
+      this.play(doc, pos.x, pos.z, nowMs, castY, boost);
+      return;
+    }
+    // #205 —— 鑄技工坊那張表的 per-ability α / 時間倍率。**兩個都沒設時
+    // `applyVfxOverrides` 回傳同一個物件**,所以沒被碰過的技能連 pool key 都
+    // 不變(升級前後一位元不差)。設了才會拿到一份改過的 doc + 自己的 pool key。
+    const tune = (d: VfxDoc): VfxDoc =>
+      applyVfxOverrides(d, {
+        ...(art.alpha !== undefined ? { alpha: art.alpha } : {}),
+        ...(art.timeScale !== undefined ? { timeScale: art.timeScale } : {}),
+      });
     const set: VfxDoc[] = [];
     // `doc` IS the primary for every promoted row (the ability's `vfxKey` is
     // the family's dominant emitter, by construction). Reuse it rather than
     // resolving the same id twice — `ctx.vfxDoc` is a live content lookup, and
     // a double read would double-count in anything observing it.
     const primary = doc?.id === art.primary ? doc : this.doc(art.primary);
-    if (primary) set.push(primary);
+    if (primary) set.push(tune(primary));
     for (const id of extraVfxDocIds(abilityId)) {
       const d = this.doc(id);
-      if (d) set.push(d);
+      if (d) set.push(tune(d));
     }
     // 1
-    if (this.w3xCast.play(art.family, set, pos.x, 1.0, pos.z, nowMs)) return;
+    if (this.w3xCast.play(art.family, set, pos.x, castY, pos.z, nowMs)) return;
     // 2
     if (set.length > 0) {
-      for (const d of set) this.play(d, pos.x, pos.z, nowMs, 1.0, boost);
+      for (const d of set) this.play(d, pos.x, pos.z, nowMs, castY, boost);
       return;
     }
     // 3
     const primitive = this.doc(primitiveFallbackFor(abilityId));
     if (primitive) {
-      this.play(primitive, pos.x, pos.z, nowMs, 1.0, boost);
+      this.play(tune(primitive), pos.x, pos.z, nowMs, castY, boost);
       return;
     }
     // 4
     this.sparks.push(new HitSpark(this.scene, pos.x, pos.z, nowMs));
+  }
+
+  /**
+   * 播一支技能的多層特效堆疊 (#205)。
+   *
+   * 每一層各自:解出自己的文件 → 套自己的參數覆寫(`applyLayerOverrides`,
+   * 覆寫過的文件會拿到自己的 pool key,否則兩層會共用同一個
+   * `ParticleSystem`、第二層的參數整個被吃掉)→ 算自己的位置與高度 →
+   * `delayMs` 是 0 就當場播,大於 0 就排進 `pendingLayers`。
+   *
+   * 解不出文件的層被跳過而不是讓整支技能沉默:一層指到不存在的 vfx id 是
+   * 內容錯誤,不該連累其他層。整堆都解不出來時退到 hit spark,和階梯第 4 級
+   * 同一個理由 —— 施法畫不出任何東西是這批要消滅的失敗。
+   */
+  private playLayeredCast(
+    layers: readonly ResolvedVfxLayer[],
+    pos: { x: number; z: number },
+    point: { x: number; z: number } | null,
+    nowMs: number,
+    boost: number,
+  ): void {
+    let drawn = 0;
+    for (const layer of layers) {
+      const base = this.doc(layer.vfxKey);
+      if (!base) continue;
+      const doc = applyLayerOverrides(base, layer);
+      const p = layerPosition(layer, pos, point);
+      const y = layerHeightY(layer);
+      drawn += 1;
+      if (layer.delayMs > 0) {
+        if (this.pendingLayers.length >= MAX_PENDING_LAYERS) this.pendingLayers.shift();
+        this.pendingLayers.push({ doc, x: p.x, z: p.z, y, boost, atMs: nowMs + layer.delayMs });
+        continue;
+      }
+      this.play(doc, p.x, p.z, nowMs, y, boost);
+    }
+    if (drawn === 0) this.sparks.push(new HitSpark(this.scene, pos.x, pos.z, nowMs));
+  }
+
+  /** 放出所有到期的延遲層。絕對時間比較,不是遞減計數器。 */
+  private drainPendingLayers(nowMs: number): void {
+    if (this.pendingLayers.length === 0) return;
+    const due = this.pendingLayers.filter((p) => p.atMs <= nowMs);
+    if (due.length === 0) return;
+    this.pendingLayers = this.pendingLayers.filter((p) => p.atMs > nowMs);
+    for (const p of due) this.play(p.doc, p.x, p.z, nowMs, p.y, p.boost);
   }
 
   /**
@@ -900,7 +1065,14 @@ export class VfxSystem {
         // tinted from the ability's own color so its identity is preserved.
         const isEx = def?.slot === "EX";
         if (isEx) this.layeredPop(pos.x, pos.z, nowMs, "ex", doc ? tintOfDoc(doc) : EX_DEFAULT_TINT);
-        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1);
+        // #205 多層特效模板。`isLegacySingleVfx` 為真 = 這份 doc 只有舊的單值
+        // `vfxKey`,`layers` 保持 null,`playCastVfx` 走的是升級前一字未改的那
+        // 條路 —— 646 支現有技能的向後相容是靠這個分支,不是靠新程式碼「碰巧
+        // 算出一樣的結果」。
+        const layers = isLegacySingleVfx(def as AbilityVfxSource | undefined)
+          ? null
+          : castLayersFor(def as AbilityVfxSource | undefined, maxAbilityVfxLayers());
+        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1, layers, point);
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it
@@ -1382,6 +1554,9 @@ export class VfxSystem {
     this.syncGroundEntities(nowMs);
     this.castDecals.update(nowMs);
     this.pillars.update(nowMs);
+    // #205 多層特效模板:到期的延遲層。放在最後,所以一層在它被排定的那一幀
+    // 之後才會播 —— delay 0 的層走的是 playLayeredCast 的立即分支,不經過這裡。
+    this.drainPendingLayers(nowMs);
   }
 
   /**
@@ -1425,11 +1600,22 @@ export class VfxSystem {
     this.castDecals.clear(); // 地面焦痕 —— 下一回合可能是完全不同的地圖
     this.status.clear(); // 暈/定身/緩速光環
     this.shadows.sync([]); // 腳下影子：這一刻場上沒有任何身體
+    // #205：上一回合排定的延遲層。不清掉的話「大招 3 秒後的餘燼」會在商店
+    // 場景裡爆出來 —— 和 #216 / #259 抓到的殘留是同一種病。
+    this.pendingLayers = [];
 
     // 2) 只會長不會縮的池子：整個還回去
     for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
     this.pool.clear();
     this.w3xCast.resetForRound();
+    // 2b) #262 —— #259 漏掉的那一層：`Telegraph` 的預告圈網格 free-list 不屬於
+    //     任何一個 Telegraph 實例，它掛在 `sharedByScene`（per-scene WeakMap）
+    //     上、以**半徑字串**為 key，一個 key 上限 8 個網格、每個網格自帶一份
+    //     StandardMaterial。上面第 1 步的 `telegraphLayer.clear()` 只是把場上
+    //     的圈 release 回這個 free-list —— 也就是說 #259 之後，網格照樣一個都
+    //     沒有離開 scene。實測 60 個不同半徑打完，連 dispose() 之後 scene 上
+    //     都還留著 72 mesh / 73 material。上限是後台可調的（第一守則）。
+    trimTelegraphPools(this.scene, ringCapForRoundBoundary(vfxCleanupPolicy()));
 
     // 3) 上一回合的 per-entity 記憶。entity id 不會跨回合重用，留著只是
     //    永遠不會被讀到的垃圾（殭屍每回合最多 30 隻，都是新 id）。
@@ -1440,6 +1626,7 @@ export class VfxSystem {
   }
 
   dispose(): void {
+    this.pendingLayers = []; // #205：離場時排隊中的延遲層
     for (const t of this.telegraphs) t.dispose();
     this.telegraphLayer.dispose();
     for (const s of this.sparks) s.dispose();
@@ -1454,6 +1641,11 @@ export class VfxSystem {
     // walks every system it EVER built, pooled or live, so nothing can survive
     // this call by being in a state we forgot about (task #131's lesson).
     this.w3xCast.dispose();
+    // #262: the per-scene telegraph free-lists + the magic-circle Texture + the
+    // kick BurstPool. `TelegraphLayer.dispose()` above only walks its own `live`
+    // map — everything already released into the shared pool survived it, and
+    // survived `VfxSystem.dispose()` too until this line existed.
+    disposeTelegraphShared(this.scene);
     this.lastUpdateMs = null;
     this.telegraphs = [];
     this.sparks = [];

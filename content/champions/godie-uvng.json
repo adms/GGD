@@ -75,6 +75,14 @@
       "range": 11.92,
       "effects": [
         {
+          "kind": "invulnerable",
+          "durationSec": 0.24,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": true
+        },
+        {
           "kind": "damage",
           "damageType": "magic",
           "amount": {

@@ -1,0 +1,114 @@
+{
+  "$comment": [
+    "GH#124 — the external uptime probe's tunables. EDIT THIS FILE, not the code.",
+    "It is committed rather than stored in the admin console on purpose: a probe",
+    "that fetched its own config from ggd.adms.ai would go blind exactly when",
+    "ggd.adms.ai went down. See src/config.ts for the full argument.",
+    "The only secret (the Slack webhook) is NOT here — it comes from the env.",
+    "schedule.cronUtc must match .github/workflows/uptime.yml verbatim and",
+    "estimatedRunsPerDay must be what those crons really produce;",
+    "src/scheduleDrift.test.ts fails if either drifts. That guard is about MONEY:",
+    "this repo is private, Actions rounds every job up to a whole minute, so",
+    "*/15 -> */5 is a 3x bill, not a 3x refresh."
+  ],
+  "version": 1,
+  "schedule": {
+    "cronUtc": ["*/15 10-15 * * *", "0 16-23,0-9 * * *"],
+    "estimatedRunsPerDay": 42,
+    "note": "18:00–23:59 Taipei (10:00–15:59 UTC) every 15 min = 24 runs; the other 18 hours hourly = 18 runs. 42/day ≈ 1,260 billed minutes in a 30-day month, against the 2,000 the private-repo Free tier gives — leaving room for ci.yml."
+  },
+  "attempts": 3,
+  "attemptDelayMs": 20000,
+  "timeoutMs": 10000,
+  "repeatAlertAfterMinutes": 60,
+  "notify": {
+    "webhookEnv": "GGD_UPTIME_WEBHOOK_URL",
+    "webhookEnvFallback": "GGD_SLACK_WEBHOOK_URL",
+    "mention": "",
+    "username": "GGD 探測",
+    "notifyOnRecovery": true
+  },
+  "targets": [
+    {
+      "id": "edge",
+      "label": "邊緣 nginx",
+      "url": "https://ggd.adms.ai/healthz",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 200,
+      "expectBodyContains": "ok",
+      "note": "nginx.conf:559 answers this itself with a literal 200. It proves ONLY that the edge container is alive — it never touches platform or game. Kept because it is the fastest way to tell 'the box is gone' from 'a service behind it is gone'."
+    },
+    {
+      "id": "client",
+      "label": "遊戲前端",
+      "url": "https://ggd.adms.ai/",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 200,
+      "expectBodyContains": "id=\"hud-root\"",
+      "note": "The SPA shell. The substring is from apps/client/index.html:65 and survives the Vite build. A 200 with the wrong body means the edge is serving a fallback instead of the app."
+    },
+    {
+      "id": "platform",
+      "label": "平台 API",
+      "url": "https://ggd.adms.ai/api/v1/healthz",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 200,
+      "expectJson": [
+        { "path": "status", "op": "eq", "value": "ok", "because": "platform /healthz 只回這一個常數" }
+      ],
+      "note": "⚠️ server.go:511 returns a CONSTANT {\"status\":\"ok\"}. Green here proves the Go process accepts connections and the chi router resolves — nothing about redis, the jsonstore or the content overlay. That is why `platform-store` below exists, and why the openQuestions ask for real dependency checks in this handler."
+    },
+    {
+      "id": "platform-store",
+      "label": "平台資料層（白名單讀取）",
+      "url": "https://ggd.adms.ai/api/v1/curation/whitelist",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 200,
+      "expectJson": [
+        { "path": "version", "op": "gte", "value": 1, "because": "白名單文件必須讀得出來" },
+        { "path": "champions.0", "op": "exists", "because": "白名單空的話沒有人選得到英雄——每個端點都 200，遊戲卻不能玩" }
+      ],
+      "note": "The compensation for the constant /healthz above. This is a PUBLIC read (curation/handlers.go:49) that goes all the way through the service into the durable store, so it fails when the data layer fails. The champions.0 assertion is the one that catches the silent version: everything answers 200 and nobody can pick a champion."
+    },
+    {
+      "id": "content-manifest",
+      "label": "內容清單",
+      "url": "https://ggd.adms.ai/content/manifest.json",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 200,
+      "expectJson": [
+        { "path": "contentVersion", "op": "exists", "because": "拿到 HTML 的 SPA fallback 也會是 200" }
+      ],
+      "note": "docs/_false-completions.md S17: a missing content file returns HTTP 200 text/html from the SPA fallback, and the client silently degrades to 1,441 per-doc GETs. Status-code-only probing cannot see that; parsing the JSON can."
+    },
+    {
+      "id": "admin-guard",
+      "label": "後台仍然要求登入",
+      "url": "https://ggd.adms.ai/api/v1/admin/accounts",
+      "enabled": true,
+      "severity": "page",
+      "expectStatus": 401,
+      "note": "Not a liveness check — a REGRESSION check, lifted from tools/lan-probe.sh:105. 401 is correct and expected. A 200 here means the platform grew address-based trust and the admin API is open to the internet, which is worth waking someone for."
+    },
+    {
+      "id": "game-sim",
+      "label": "遊戲 shard tick 健康度",
+      "url": "https://ggd.adms.ai/game-healthz",
+      "enabled": false,
+      "severity": "warn",
+      "expectStatus": 200,
+      "expectJson": [
+        { "path": "ok", "op": "eq", "value": true },
+        { "path": "platform.degraded", "op": "eq", "value": false, "because": "shard 連不到平台時會 fail-safe 成 allow-all" },
+        { "path": "sim.shedEvents", "op": "lte", "value": 0, "because": "#46：卡頓變成無聲丟 tick" },
+        { "path": "sim.p99Ms", "op": "lte", "value": 45, "because": "30Hz 的預算是 33ms" }
+      ],
+      "note": "DISABLED, AND THE URL IS A PLACEHOLDER — this route does not exist yet. apps/game-server/src/index.ts:187 serves a RICH /healthz (rooms / sim.p50-p95-p99 / shedEvents / platform.degraded + content staleness), but nginx.conf only proxies /colyseus/ and /ws/ to game:2567, so nothing outside the cluster can read it. Enabling this needs an edge route — see the openQuestions on this ticket. Left here, disabled, with the real assertions already written, so turning it on is one boolean."
+    }
+  ]
+}

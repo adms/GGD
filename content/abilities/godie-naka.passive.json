@@ -20,7 +20,9 @@
     "name": "27-00 永久性的隱形術",
     "ranks": [
       {
-        "modifiers": []
+        "vision": {
+          "stealthFadeDelaySec": 4.0
+        }
       }
     ]
   }

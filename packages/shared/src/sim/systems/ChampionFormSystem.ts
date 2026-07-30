@@ -66,6 +66,7 @@ import type { ChampionId, EntityId } from "../../ids";
 import type { CastableSlot } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import { Champions } from "../content/registry";
+import { syncAbilityPassives } from "../abilities/abilityPassives";
 
 /**
  * `expiresTick` sentinel for a form that never times out on its own — the two
@@ -189,6 +190,22 @@ function setBody(
   sc.dirty = true;
   if (nextIndex === 0) world.championForm.delete(id);
   else world.championForm.set(id, { index: 1, baseId, expiresTick });
+  // 形態閘 (AbilityPassiveRank.whileForm) — a passive authored 「只在變身時」 has
+  // to be ATTACHED and DETACHED by something, and this is the only honest
+  // place: `setBody` is the sole writer of the body (see the module header), so
+  // routing the re-sync through it means the cast, the timed expiry, the death
+  // revert, `revertToBaseForm` and `endCombatChampionForms` all inherit it
+  // without a single one of them knowing the gate exists.
+  //
+  // ORDER IS LOAD-BEARING: it runs AFTER `world.championForm` is written,
+  // because `rankBlock` reads that map to decide. Called before the emit so an
+  // event listener that reads `world.stats` sees the finished body.
+  //
+  // `syncAbilityPassives` is IDEMPOTENT and detaches-then-attaches only the
+  // ability-passive sources, so a champion with no `whileForm` anywhere lands
+  // on exactly the sources it already had — 26 transform pairs, no behaviour
+  // change until a doc opts in.
+  syncAbilityPassives(world, id);
   world.emit("championForm", {
     id,
     championId: nextId,

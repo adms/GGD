@@ -39,7 +39,7 @@
  * and nothing per-mob knows what a round is, so there is no wall-clock or
  * client-state path in — exactly the shape `guardianHp(rules, round)` uses.
  */
-import type { ChampionId, EntityId, TeamId } from "../ids";
+import type { ChampionId, EntityId, SeatId, TeamId } from "../ids";
 import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { MobKind } from "./components";
@@ -1684,7 +1684,7 @@ export function anyMobsAlive(world: SimWorld, zone: number): boolean {
  * a lookup table is exactly how that ban is meant to be satisfied (same pattern
  * as the coin ring). The values are cos/sin at 0°,30°,…,330° to 7 digits.
  */
-const DIR_TABLE: readonly Vec2[] = [
+export const DIR_TABLE: readonly Vec2[] = [
   { x: 1, z: 0 },
   { x: 0.8660254, z: 0.5 },
   { x: 0.5, z: 0.8660254 },
@@ -1830,6 +1830,58 @@ export function summonMobBoss(
  */
 export const BOSS_SPAWN_WAVE = 9001;
 
+/**
+ * The four components EVERY walking neutral body needs: Transform + Health +
+ * Navigation + TeamComp. NOTHING kind-specific — no MobComp, no SummonComp.
+ *
+ * ── WHY THIS IS ITS OWN FUNCTION (GH#289 lane P2 召喚物) ────────────────────
+ * `summon` needs the identical four writes: a body at a legal point, on a team,
+ * with an empty nav so `orderSystem`'s chase resolution and `movementSystem`'s
+ * integrator pick it up. The instruction for that lane was 「把 spawnMob 參數
+ * 化，不要重寫一份」, and THIS is the parameter that was missing — the old
+ * private `spawnMobBody` hard-coded {@link MONSTER_TEAM} and always wrote a
+ * MobComp, which is exactly what a summon must NOT have (see SimWorld.summon:
+ * the #215 wave scheduler counts `mob` entries against its own alive cap and
+ * pays 20 gold per kill out of that ledger).
+ *
+ * So the SHAPE is shared and the MARKER is the caller's. A second copy of these
+ * four writes would drift on the next Transform/Health field — `accel`,
+ * `shields` and `attackTargetAuto` were all added after #215 and every hand-
+ * rolled spawn in the repo had to be found and fixed each time.
+ */
+export function spawnUnitBody(
+  world: SimWorld,
+  spec: {
+    zone: number;
+    pos: Vec2;
+    radius: number;
+    maxHp: number;
+    maxMana?: number;
+    teamId: TeamId;
+    seatId: SeatId;
+  },
+): EntityId {
+  const id = world.spawn();
+  world.transform.set(id, {
+    pos: { x: spec.pos.x, z: spec.pos.z },
+    vel: { x: 0, z: 0 },
+    facing: { x: 1, z: 0 },
+    radius: spec.radius,
+    zone: spec.zone,
+  });
+  world.health.set(id, {
+    hp: spec.maxHp,
+    maxHp: spec.maxHp,
+    mana: 0,
+    maxMana: spec.maxMana ?? 0,
+    alive: true,
+    shields: [],
+  });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
+  world.team.set(id, { teamId: spec.teamId, seatId: spec.seatId });
+  return id;
+}
+
 /** The component set every mob carries, kind-independent. */
 function spawnMobBody(
   world: SimWorld,
@@ -1838,26 +1890,16 @@ function spawnMobBody(
   profile: MobProfile,
   pos: Vec2,
 ): EntityId {
-  const id = world.spawn();
-  world.transform.set(id, {
-    pos: { x: pos.x, z: pos.z },
-    vel: { x: 0, z: 0 },
-    facing: { x: 1, z: 0 },
-    radius: profile.radius,
-    zone,
-  });
-  world.health.set(id, {
-    hp: profile.maxHp,
-    maxHp: profile.maxHp,
-    mana: 0,
-    maxMana: 0,
-    alive: true,
-    shields: [],
-  });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   // seatId -1: a mob belongs to no player seat — the same "no seat" sentinel the
   // snapshot emits for every neutral entity. Only `teamId` is load-bearing.
-  world.team.set(id, { teamId: MONSTER_TEAM, seatId: asSeatId(-1) });
+  const id = spawnUnitBody(world, {
+    zone,
+    pos,
+    radius: profile.radius,
+    maxHp: profile.maxHp,
+    teamId: MONSTER_TEAM,
+    seatId: asSeatId(-1),
+  });
   world.mob.set(id, {
     zone,
     team: MONSTER_TEAM,

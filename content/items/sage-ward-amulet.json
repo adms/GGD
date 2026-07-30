@@ -1,0 +1,53 @@
+{
+  "schema": "item@1",
+  "cost": 0,
+  "tier": 5,
+  "craftRole": "none",
+  "id": "sage-ward-amulet",
+  "name": "賢者的護身符",
+  "description": "傳說\n效能\n法術強度+35\n魔力+220\n受到傷害時獲得 180 + 法術強度×1.2 的護盾，持續 4 秒（冷卻 12 秒）\n其他英雄僅有 40% 效果\n\n解說\n護符認得出誰真的在唸咒，誰只是把它掛在脖子上。",
+  "tags": [
+    "legendary",
+    "survivability",
+    "mage"
+  ],
+  "modifiers": [
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 35
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 220
+    }
+  ],
+  "passive": [
+    {
+      "on": "onDamageTaken",
+      "target": "self",
+      "requires": {
+        "primaryStat": "INT",
+        "onMismatch": "reduced",
+        "mismatchScale": 0.4
+      },
+      "internalCooldown": 12,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 180,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.2
+              }
+            ]
+          },
+          "duration": 4
+        }
+      ]
+    }
+  ]
+}

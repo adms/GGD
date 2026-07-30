@@ -21,6 +21,16 @@ import {
   type CombatFeelRules,
 } from "@ggd/shared/sim/combatFeel";
 import {
+  SHIELD_DOC_ID,
+  shieldRulesFromDoc,
+  type ShieldRules,
+} from "@ggd/shared/sim/shieldRules";
+import {
+  STEALTH_DOC_ID,
+  stealthRulesFromDoc,
+  type StealthRules,
+} from "@ggd/shared/sim/stealth";
+import {
   SKELETON_ARENA,
   ROYALE_ARENA,
   pickRoundArena,
@@ -65,8 +75,11 @@ import {
 } from "@ggd/shared/sim/revive";
 import {
   beginCombatFireRing,
+  bossRoundExtensionTicks,
+  combatDeadlineTick,
   endCombatFireRing,
   fireRingRulesFromConfig,
+  isCombatTimeUp,
 } from "@ggd/shared/sim/fireRing";
 import {
   beginCombatGuardians,
@@ -74,8 +87,18 @@ import {
   guardianRulesFromConfig,
 } from "@ggd/shared/sim/systems/GuardianSystem";
 import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
+import {
+  beginCombatNightPact,
+  endCombatNightPact,
+  nightPactRulesFromConfig,
+} from "@ggd/shared/sim/nightPact";
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
-import { mobRulesFromConfig, pickMobChampion, type MobChampionPicker } from "@ggd/shared/sim/mobs";
+import {
+  anyMobsAlive,
+  mobRulesFromConfig,
+  pickMobChampion,
+  type MobChampionPicker,
+} from "@ggd/shared/sim/mobs";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
@@ -506,6 +529,35 @@ export class MatchController {
   private duelWinners = new Map<number, TeamId>(); // zone -> winner this round
 
   /**
+   * #L2 — zone → the team that OUTLIVED the others there while the round was
+   * being held open by 「場上還有殭屍」.
+   *
+   * WHY IT HAS TO EXIST. Owner's two extra rules interact: 「場上還有任何殭屍
+   * 時,只剩一隊也不結束」 delays the win, and 「玩家全滅 → 立即結束」 fires on
+   * total wipe. Without a memory, a team that wiped the enemy at 70 s and then
+   * burned to death in the fire ring at 95 s (with a 殭屍王 still standing)
+   * would reach the both-sides-dead branch and have the round it WON decided by
+   * `rng.chance(0.5)`. That is not a tie-break, it is a coin flip on a settled
+   * fight. This map remembers who was standing when the hold started, so the
+   * total-wipe branch pays the team that actually earned it and only falls back
+   * to the coin for a genuine simultaneous wipe.
+   *
+   * HOST state, not sim state: it never reaches a system, only `checkCombatEnd`
+   * reads it, and it is written from the same deterministic pass. Cleared in
+   * `enterCombat` alongside `duelWinners`.
+   */
+  private pendingDuelWinners = new Map<number, TeamId>();
+
+  /**
+   * #L2 — how much of the sim's 殭屍王 extension this round's PHASE COUNTDOWN has
+   * already been credited with. `bossRoundExtensionTicks(world)` is a running
+   * total (two kings = 10800), so the difference is what still has to be handed
+   * to `PhaseMachine.ticksLeft`; without the memo the same 5400 would be added
+   * on every one of the 5400 remaining ticks. Reset per combat entry.
+   */
+  private appliedBossExtensionTicks = 0;
+
+  /**
    * The match seed, captured for the DETERMINISTIC per-round arena pick (task
    * #145). Deliberately NOT `world.rng.state` — that advances every tick, so it
    * is not a stable function of (seed, round); the raw seed is. Arena selection
@@ -615,6 +667,20 @@ export class MatchController {
      * 以為它和隔壁一樣是即時的。
      */
     combatFeel: CombatFeelRules = combatFeelFromDoc(Configs.tryGet(COMBAT_FEEL_DOC_ID)),
+    /**
+     * 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 多個護盾池誰先被吃掉。
+     * 和 `combatFeel` 完全同一條路(含同一個已知限制:`Configs` 是 boot 時載入
+     * 的,後台改了要重啟 shard;#278 的 TTL 快取還沒延伸到這一份)。
+     * 出貨值 `specificFirst` = 這條規則變成欄位之前的行為。
+     */
+    shieldRules: ShieldRules = shieldRulesFromDoc(Configs.tryGet(SHIELD_DOC_ID)),
+    /**
+     * 隱形規則 (`config.stealth@1`, 隱形原語 lane D) —— 隱形擋不擋自動索敵/
+     * 手動點選/技能 AoE、破隱條件、兩個渲染不透明度。和 `shieldRules` 完全同
+     * 一條路(含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟
+     * shard)。出貨值 = WC3 原作行為,所以這一格出現本身不改變任何一場比賽。
+     */
+    stealthRules: StealthRules = stealthRulesFromDoc(Configs.tryGet(STEALTH_DOC_ID)),
   ) {
     this.matchSeed = seed;
     // #207 的分析帳本。matchId 是它唯一的建構參數,而且它從第 0 tick 就存在 ——
@@ -636,6 +702,10 @@ export class MatchController {
     // 戰鬥手感 (`config.combat-feel@1`, GH#193) —— 擊退法則 + 打就站定開關。
     // 同樣在 tick 0 之前定格,比賽中途不會變。
     this.world.combatFeel = combatFeel;
+    // 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 同樣在 tick 0 之前定格。
+    this.world.shieldRules = shieldRules;
+    // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
+    this.world.stealthRules = stealthRules;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the
@@ -1125,6 +1195,8 @@ export class MatchController {
     this.combatStartTick = this.world.tick;
     this.roundBossKills.clear();
     this.duelWinners.clear();
+    this.pendingDuelWinners.clear(); // #L2 — last round's held-open state must not decide this one
+    this.appliedBossExtensionTicks = 0; // …and last round's king does not lengthen this round
     // …and the sim's mirror of it (#216): every zone is UNDECIDED again, so the
     // fire ring burns and the mob waves arrive in all of them from tick 0.
     this.world.settledZones.clear();
@@ -1165,9 +1237,12 @@ export class MatchController {
       // Gated on a configured ring on purpose: with `fireRing === null` (unit
       // tests, skeleton boot) there is nothing to wait for, so the finale keeps
       // the caller's own combat length and those matches stay fast.
-      if (this.fireRing) {
-        this.phase.ticksLeft = Math.max(this.phase.ticksLeft, Math.round(ROYALE_COMBAT_SEC * TICK_HZ));
-      }
+      //
+      // #L2: the number itself now comes from {@link combatMaxTicksForRound},
+      // the SAME function that feeds the sim's `combatMaxTicks`. Two copies of
+      // 「決賽有多長」 is precisely how the phase clock and the sim deadline would
+      // end up 5,700 ticks apart on round 10 and nowhere else.
+      this.phase.ticksLeft = this.combatMaxTicksForRound(this.phase.round);
     } else {
       this.royale = null;
       const { pairings, bye } = pairTeams(this.participatingTeams(), this.phase.round);
@@ -1276,9 +1351,25 @@ export class MatchController {
     // bigger arena above already widened the first circle. Had it not, the very
     // first contraction would have started 18 units inside the field and wiped
     // every team at once.
+    //
+    // #L2 — THE THIRD ARGUMENT IS THE WHOLE TASK. Until now this call passed two
+    // arguments, so `FireRingRules.combatMaxTicks` came out `Infinity`: the sim
+    // had NO enforceable round deadline, `isCombatTimeUp` was false forever, and
+    // `extendRoundForBoss` refused to move anything (its half-state gate). Handing
+    // it the SAME backstop the phase machine runs on — `combatMaxTicksForRound`,
+    // converted back to seconds because that is the unit the sim's config
+    // converter takes — is what makes 「殭屍王出現回合結束時間延長 3 分鐘(火圈時間
+    // 也延後)」 real rather than a knob wired to nothing.
     const ring = this.fireRingForRound(this.phase.round);
     if (ring) {
-      beginCombatFireRing(this.world, fireRingRulesFromConfig(ring, this.world.dt));
+      beginCombatFireRing(
+        this.world,
+        fireRingRulesFromConfig(
+          ring,
+          this.world.dt,
+          this.combatMaxTicksForRound(this.phase.round) / TICK_HZ,
+        ),
+      );
     } else {
       endCombatFireRing(this.world);
     }
@@ -1309,6 +1400,19 @@ export class MatchController {
       beginCombatCoins(this.world, coinRulesFromConfig(this.rules.goldDrop), fighters);
     } else {
       endCombatCoins(this.world);
+    }
+
+    // arm 71-00 暗夜契約 (死之王 godie-u00k). Same legacy-compat shape as the four
+    // systems above: absent config = OFF. This call is the ONLY thing that was
+    // missing — the sim, the guards, the Zod block and `snapshot.ts:353`'s flag
+    // radius were all already built, so `world.nightPactRules` stayed null and
+    // `nightPactSystem` returned at its first line every tick. The whole 天生技
+    // did nothing in a real match while `nightPact.test.ts` stayed green,
+    // because that test calls `beginCombatNightPact` itself (failure shape ②).
+    if (this.rules.nightPact) {
+      beginCombatNightPact(this.world, nightPactRulesFromConfig(this.rules.nightPact));
+    } else {
+      endCombatNightPact(this.world);
     }
 
     // arm the ROGUELITE MOB WAVES (task #215): from `mobWaves.fromRound` onward,
@@ -1387,6 +1491,35 @@ export class MatchController {
     if (!this.fireRing) return null;
     if (!isRoyaleRound(round)) return this.fireRing;
     return { ...this.fireRing, startSec: ROYALE_FIRE_RING_START_SEC };
+  }
+
+  /**
+   * THE ONE definition of 「這一回合的戰鬥最長多久」, in ticks (#L2).
+   *
+   * TWO CONSUMERS, ONE NUMBER, and that is the point:
+   *   · `enterCombat` writes it onto `PhaseMachine.ticksLeft` (the countdown the
+   *     snapshot ships as `phaseTicksLeft`);
+   *   · the same value / TICK_HZ is `fireRingRulesFromConfig`'s third argument,
+   *     i.e. the sim's `combatMaxTicks` — the deadline `extendRoundForBoss`
+   *     moves and `isCombatTimeUp` compares against.
+   *
+   * Before #L2 only the first existed and the second was `Infinity`, which is
+   * why a 殭屍王 could not extend anything. Deriving both from here means the
+   * finale's 210 s substitution can never apply to one clock and not the other.
+   *
+   * `this.phase.cfg.combatMaxTicks` is the AUTHORED backstop (`combatMaxSec` in
+   * `config.match@1`, resolved by `phaseConfigFromSeconds`) — read from the
+   * phase machine rather than re-resolved from content, so an operator edit
+   * lands on both clocks or neither.
+   */
+  private combatMaxTicksForRound(round: number): number {
+    const authored = this.phase.cfg.combatMaxTicks;
+    // The finale needs long enough for the 180 s ring to actually arrive; see
+    // ROYALE_COMBAT_SEC. Gated on a configured ring exactly as the old inline
+    // `if (this.fireRing)` was: a ringless match (unit tests, skeleton boot) has
+    // nothing to wait for and keeps the caller's own combat length.
+    if (!this.fireRing || !isRoyaleRound(round)) return authored;
+    return Math.max(authored, Math.round(ROYALE_COMBAT_SEC * TICK_HZ));
   }
 
   /**
@@ -1480,6 +1613,18 @@ export class MatchController {
    * equal-HP timer expiry) draw from `world.rng`, never Math.random/Date.now.
    * Bye correctness (#173) is structural: a bye team is in no pairing, so it is
    * never counted here and never blocks the conclusion.
+   *
+   * ── #L2: THE THREE WAYS A ROUND ENDS (owner 2026-07-30) ──────────────────
+   *
+   *   1. 玩家全滅            → immediately, mobs or no mobs;
+   *   2. 只剩一隊存活 **且** 場上沒有殭屍 → immediately (this is #208, now
+   *      qualified: with zombies still standing the duel is remembered but the
+   *      round stays LIVE — 「場上還有任何殭屍時,只剩一隊也不結束」);
+   *   3. 時間到              → force-settled on team-HP fraction, and `timerExpired`
+   *      overrides the mob hold so rule 2 can never outlast the clock.
+   *
+   * The TIMER itself is no longer `PhaseMachine.ticksLeft`; see
+   * {@link combatTimeUp} for why it is the sim's absolute deadline instead.
    */
   private checkCombatEnd(timerExpired: boolean): boolean {
     // ⚠️ THE FINALE MUST BE CHECKED FIRST. The duel path below concludes when
@@ -1492,11 +1637,30 @@ export class MatchController {
       const aAlive = this.teamAliveCount(pairing.sideA, pairing.zone);
       const bAlive = this.teamAliveCount(pairing.sideB, pairing.zone);
       if (aAlive === 0 && bAlive === 0) {
-        this.recordDuelWinner(pairing.zone, this.world.rng.chance(0.5) ? pairing.sideA : pairing.sideB);
-      } else if (bAlive === 0) {
-        this.recordDuelWinner(pairing.zone, pairing.sideA);
-      } else if (aAlive === 0) {
-        this.recordDuelWinner(pairing.zone, pairing.sideB);
+        // 玩家全滅 → 立即結束,不管殭屍在不在 (owner 2026-07-30). The mob hold
+        // below deliberately does NOT reach this branch: with no champion left
+        // there is nobody for the zombies to keep the round open FOR, and the
+        // 保底 that ends such a round would then be the phase timer alone.
+        //
+        // The winner is the team the hold was already crediting, if there was
+        // one — see {@link pendingDuelWinners}. Only a genuine simultaneous
+        // wipe (nothing pending) falls through to the coin, exactly as before.
+        const pending = this.pendingDuelWinners.get(pairing.zone);
+        this.recordDuelWinner(
+          pairing.zone,
+          pending ?? (this.world.rng.chance(0.5) ? pairing.sideA : pairing.sideB),
+        );
+      } else if (bAlive === 0 || aAlive === 0) {
+        const survivor = bAlive === 0 ? pairing.sideA : pairing.sideB;
+        // 場上還有任何殭屍時,只剩一隊也不結束 (owner 2026-07-30). The duel is
+        // WON — remembered, so a later total wipe pays the right team — but the
+        // ROUND stays open while a 一般殭屍 / 特殊殭屍 / 殭屍王 is still standing
+        // in this zone. `timerExpired` always wins: the phase backstop (and the
+        // fire ring's %-HP burn on mobs, which is what actually clears a corner
+        // -camping zombie) are what stop this from being an unbounded hold.
+        this.pendingDuelWinners.set(pairing.zone, survivor);
+        if (!timerExpired && anyMobsAlive(this.world, pairing.zone)) continue;
+        this.recordDuelWinner(pairing.zone, survivor);
       } else if (timerExpired) {
         const aPct = this.teamHpPct(pairing.sideA, pairing.zone);
         const bPct = this.teamHpPct(pairing.sideB, pairing.zone);
@@ -1537,7 +1701,9 @@ export class MatchController {
    *
    * Three ways it ends, all deterministic:
    *  · ONE team left standing → that team, immediately (the same 「只剩一隊存活
-   *    時立即宣佈」 beat as #208, now at match scale rather than duel scale);
+   *    時立即宣佈」 beat as #208, now at match scale rather than duel scale) —
+   *    EXCEPT while zombies are still standing in the zone, which holds the
+   *    crown back exactly as the duel path holds a duel (#L2);
    *  · EVERYBODY down in the same instant (a mutual wipe, or the closed fire ring
    *    burning out the last survivors together) → an rng coin among the entrants,
    *    exactly how the existing double-KO tie-break behaves;
@@ -1551,10 +1717,27 @@ export class MatchController {
   private checkRoyaleEnd(bout: RoyaleBout, timerExpired: boolean): boolean {
     if (this.royaleWinner !== null) return true;
     const standing = bout.teams.filter((t) => this.teamAliveCount(t, bout.zone) > 0);
-    if (standing.length === 1) return this.recordRoyaleWinner(bout, standing[0]!);
+    if (standing.length === 1) {
+      // #L2, same two owner rules as the duel path (see checkCombatEnd): the
+      // last team standing has WON, but 「場上還有任何殭屍時…不會提前結束」
+      // applies to the finale too — mob waves arm on the royale zone exactly
+      // like a duel zone (`activeZones()`), so a 殭屍王 alive here would
+      // otherwise be cut off mid-fight by the crown being awarded.
+      this.pendingDuelWinners.set(bout.zone, standing[0]!);
+      if (timerExpired || !anyMobsAlive(this.world, bout.zone)) {
+        return this.recordRoyaleWinner(bout, standing[0]!);
+      }
+      return false;
+    }
     if (standing.length === 0) {
-      // total wipe: nobody outlived anybody, so the crown is a coin among entrants
-      return this.recordRoyaleWinner(bout, bout.teams[this.world.rng.int(bout.teams.length)]!);
+      // 玩家全滅 → 立即結束. The crown goes to whoever was last standing while
+      // the round was held open for the zombies; only a genuine simultaneous
+      // wipe (nothing pending) is a coin among the entrants, as it always was.
+      const pending = this.pendingDuelWinners.get(bout.zone);
+      return this.recordRoyaleWinner(
+        bout,
+        pending ?? bout.teams[this.world.rng.int(bout.teams.length)]!,
+      );
     }
     if (!timerExpired) return false;
     let best = standing[0]!;
@@ -1786,6 +1969,7 @@ export class MatchController {
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
+    endCombatNightPact(this.world); // …and every 暗夜旗 + 黑夜靈氣 clears (71-00)
     endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
     // PER-ROUND SNAPSHOT — must run BEFORE settleRound(). settleRound is where
     // a team can be ELIMINATED, and an elimination there immediately builds a
@@ -2736,7 +2920,7 @@ export class MatchController {
         break;
       }
       case "combat":
-        if (this.checkCombatEnd(expired)) {
+        if (this.checkCombatEnd(this.combatTimeUp(expired))) {
           this.concludeCombat(); // despawn flowers + settle + maybe latch freeze
           this.phase.advance(); // -> resolution
         }
@@ -2752,6 +2936,59 @@ export class MatchController {
       case "matchEnd":
         break;
     }
+  }
+
+  /**
+   * IS THE COMBAT PHASE OUT OF TIME? — the #L2 replacement for reading
+   * `PhaseMachine.ticksLeft` directly.
+   *
+   * WHY THE COUNTDOWN CANNOT BE THE ANSWER ANY MORE. `ticksLeft` is a
+   * DECREMENTING counter seeded once at combat entry; a 殭屍王 walking in has to
+   * push the end of the round out by 180 s, and the only way to do that to a
+   * countdown is `ticksLeft += 5400` — the pattern CLAUDE.md forbids. The sim
+   * instead carries the deadline as an ABSOLUTE combat-elapsed tick
+   * (`FireRingRules.combatMaxTicks`, moved by `extendRoundForBoss` at the exact
+   * instant `summonMobBoss` runs) and compares it against the very counter the
+   * ring already runs on. This reads THAT, so the extension needs no second
+   * plumbing and the ring's ignition and the round's end can never drift apart.
+   *
+   * THE SIDE EFFECT IS LOAD-BEARING, not bookkeeping. `phaseTicksLeft` on the
+   * wire (net/snapshot.ts) is the player's round countdown. Leave it alone and a
+   * boss-extended round shows 0:00 for three minutes while combat visibly
+   * continues — 「算出來了但從沒送到客戶端」. So the countdown is handed the same
+   * ticks the sim deadline gained, once each.
+   *
+   * ⚠️ WHY THE COUNTDOWN IS ADJUSTED BY A DELTA AND NOT OVERWRITTEN WITH
+   * `deadline - world.fireRingTicks`. That mirror is tidier and it silently
+   * re-opens task #46. `fireRingTicks` only advances inside `stepSim`, which
+   * `tick()` deliberately CONTAINS: a sustained sim fault stops the counter
+   * while the match keeps ticking, so an overwritten countdown would pin itself
+   * to a constant — the frozen clock #46 exists to prevent — and
+   * `isCombatTimeUp` would never fire, wedging the round forever. Adjusting the
+   * counter instead leaves `tickTimer()`'s unconditional decrement in charge of
+   * the fall-through, which is exactly the property `tickResilience.test.ts`
+   * pins. `phaseExpired ||` keeps that failsafe load-bearing: under a HEALTHY
+   * sim the two clocks are equal by construction (both start at
+   * `combatMaxTicksForRound`, both move one per tick, both take the same
+   * extensions), so the `||` never fires early; under a stalled one the host
+   * clock still ends the round.
+   *
+   * FALLBACK. `combatDeadlineTick` is `Infinity` when no ring is armed (unit
+   * tests, skeleton boot, an operator with no `match.fireRing` block) — then
+   * there is no sim clock to read and the phase countdown remains the only
+   * answer, byte-identical to the pre-#L2 behaviour.
+   */
+  private combatTimeUp(phaseExpired: boolean): boolean {
+    if (!Number.isFinite(combatDeadlineTick(this.world))) return phaseExpired;
+    // Hand the phase countdown the SAME ticks the sim deadline just gained, once
+    // each. `bossRoundExtensionTicks` is a running TOTAL, so the delta is what a
+    // second king adds and a re-read adds nothing.
+    const extended = bossRoundExtensionTicks(this.world);
+    if (extended > this.appliedBossExtensionTicks) {
+      this.phase.ticksLeft += extended - this.appliedBossExtensionTicks;
+      this.appliedBossExtensionTicks = extended;
+    }
+    return phaseExpired || isCombatTimeUp(this.world);
   }
 
   /**

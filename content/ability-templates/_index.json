@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "bbf9306296bd",
+  "hash": "437d6c22682b",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -29,14 +29,14 @@
     {
       "id": "tpl-charge-push",
       "path": "ability-templates/tpl-charge-push.json",
-      "hash": "21deb88f4f2b",
-      "size": 341
+      "hash": "b3d4f9f32289",
+      "size": 2159
     },
     {
       "id": "tpl-data-no-trigger",
       "path": "ability-templates/tpl-data-no-trigger.json",
-      "hash": "3877c010e451",
-      "size": 322
+      "hash": "0f9a9da1e682",
+      "size": 1343
     },
     {
       "id": "tpl-death-mechanic",
@@ -71,13 +71,13 @@
     {
       "id": "tpl-instant-blast",
       "path": "ability-templates/tpl-instant-blast.json",
-      "hash": "abf6b069a67d",
+      "hash": "bffefccc4f30",
       "size": 923
     },
     {
       "id": "tpl-leap-strike",
       "path": "ability-templates/tpl-leap-strike.json",
-      "hash": "be2ff04d951a",
+      "hash": "1039fa9c4421",
       "size": 1629
     },
     {
@@ -89,20 +89,20 @@
     {
       "id": "tpl-line-sweep",
       "path": "ability-templates/tpl-line-sweep.json",
-      "hash": "7434ff6722be",
+      "hash": "e5fd0f397eb0",
       "size": 1580
     },
     {
       "id": "tpl-lock-combo",
       "path": "ability-templates/tpl-lock-combo.json",
-      "hash": "750cc6f1c2b0",
-      "size": 319
+      "hash": "1bd1ded1e8a7",
+      "size": 2152
     },
     {
       "id": "tpl-on-attack",
       "path": "ability-templates/tpl-on-attack.json",
-      "hash": "12d625765a99",
-      "size": 1127
+      "hash": "16f23c69538e",
+      "size": 2421
     },
     {
       "id": "tpl-on-hit-react",
@@ -113,14 +113,26 @@
     {
       "id": "tpl-orbit-array",
       "path": "ability-templates/tpl-orbit-array.json",
-      "hash": "d567c35ae7ba",
-      "size": 293
+      "hash": "d8bb64cbb831",
+      "size": 1887
     },
     {
       "id": "tpl-periodic-field",
       "path": "ability-templates/tpl-periodic-field.json",
       "hash": "b37fc5902f9a",
       "size": 329
+    },
+    {
+      "id": "tpl-proxy-cast",
+      "path": "ability-templates/tpl-proxy-cast.json",
+      "hash": "07ae0cc55382",
+      "size": 2981
+    },
+    {
+      "id": "tpl-proxy-fanout",
+      "path": "ability-templates/tpl-proxy-fanout.json",
+      "hash": "9b422ed6ab1e",
+      "size": 1564
     },
     {
       "id": "tpl-pull-throw",
@@ -133,6 +145,12 @@
       "path": "ability-templates/tpl-pure-cosmetic.json",
       "hash": "d79926d1ef57",
       "size": 318
+    },
+    {
+      "id": "tpl-random-barrage",
+      "path": "ability-templates/tpl-random-barrage.json",
+      "hash": "eea37478940a",
+      "size": 2857
     },
     {
       "id": "tpl-range-gamble",
@@ -149,8 +167,8 @@
     {
       "id": "tpl-single-strike",
       "path": "ability-templates/tpl-single-strike.json",
-      "hash": "c7ec7516b7f4",
-      "size": 802
+      "hash": "70456ccbca2e",
+      "size": 801
     },
     {
       "id": "tpl-strip-transform",
@@ -171,10 +189,16 @@
       "size": 289
     },
     {
+      "id": "tpl-teleport",
+      "path": "ability-templates/tpl-teleport.json",
+      "hash": "241e1d02cbea",
+      "size": 1605
+    },
+    {
       "id": "tpl-traveling-wave",
       "path": "ability-templates/tpl-traveling-wave.json",
-      "hash": "cb03d0490932",
-      "size": 1527
+      "hash": "8dd4179681df",
+      "size": 1528
     }
   ]
 }

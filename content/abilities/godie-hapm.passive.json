@@ -3,13 +3,13 @@
   "schema": "ability@1",
   "name": "52-00 十二道試煉",
   "icon": "assets/icons/abilities/godie-hapm.passive.webp",
-  "description": "[被動]\n240秒冷卻時間\n\n海格力士克服了十二道試煉，獲得眾神給予不死之身的獎賞，可以使肉身有第二生命。",
+  "description": "[被動]\n0秒冷卻時間\n\n眾神給了海克力斯十二條命，但沒有附電池。肉身大得離譜，然後每一秒都在漏。\n\n• 最大生命 ×12（是倍率不是加值，買血裝也一起 ×12）\n• 每 1 秒流失【最大】生命的 0.12%（不是當前生命 —— 用當前的話會變成永遠死不了的漸近線）\n• 只在生命【高於】最大生命的 1% 時才流失：試煉會折磨你，但不負責殺你\n• 換算：每秒 0.12%，撐滿 3 分鐘的一回合【毛額】流失 21.6%\n• 但你的生命回復會抵掉一部分 —— 實測【淨】流失約 19.0%（回復 1.41/秒）。\n  帳面 21.6 跟你血條上看到的不一樣，是因為海克力斯一邊漏一邊自己補",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    240.0
+    0.0
   ],
   "manaCost": [
     0.0
@@ -20,7 +20,42 @@
     "name": "52-00 十二道試煉",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [
+          {
+            "stat": "maxHealth",
+            "op": "pctMult",
+            "value": 11
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onInterval",
+            "target": "self",
+            "internalCooldown": 1,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": ">",
+              "value": 0.01
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "true",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "maxHealth",
+                      "coeff": 0.0012
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ]
   }

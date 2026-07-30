@@ -5,6 +5,8 @@
   "scaleGain": 0.35,
   "scaleMin": 0.5,
   "scaleMax": 3,
+  "maxAbilityVfxLayers": 5,
+  "oneShotMaxLifeSec": 0.6,
   "families": {
     "shockwaveRing": {
       "enabled": true,

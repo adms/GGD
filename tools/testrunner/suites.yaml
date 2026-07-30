@@ -115,6 +115,15 @@ suites:
     enabled: true
     comment: "cwd is the REPO ROOT, not tools/icon-gen: that tool deliberately has no package.json (see the import comment in its test), so there is no `pnpm test` to call there — vitest is invoked from the root by path. Shells python3 like w3x-import, but only for stdlib imports, so describe.runIf(pyOk) effectively always runs."
 
+  - id: offsite-backup-unit
+    name: "tools/deploy — off-machine backup: ships, verifies, and restores (vitest→sh, GH#123)"
+    category: unit
+    cwd: .
+    cmd: ["pnpm", "exec", "vitest", "run", "tools/deploy/test/ggd-backup.test.ts"]
+    parallelSafe: true
+    enabled: true
+    comment: "Repo root cwd for the same reason as icon-gen-unit: tools/deploy has no package.json. Fakes only the process boundary into the container (a stand-in docker/gcloud); every assertion reads the DESTINATION or a non-zero exit, never a log line. The last block skips itself without `go` — with go it runs the real platformarchive exporter over a synthetic DATA_DIR in /private/tmp, ships it, restores it and re-reads the 藍水晶 balance, so the restore path is guarded on every run instead of at the next drill. Touches no real data/."
+
   - id: status-page-ledger-gate
     name: "tools/status — status page task count == task ledger (anti-drift, python unittest)"
     category: unit

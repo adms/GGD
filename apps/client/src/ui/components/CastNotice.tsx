@@ -25,10 +25,27 @@ import {
   type CastNotice,
 } from "../castFeedback";
 import { hudTouch } from "../hud/HudSlot";
+import { hudCastNoticeBottom } from "../hud/hudBottomCluster";
 
-/** Sits above the desktop bar; higher on touch, where the arc is taller. */
-const DESKTOP_BOTTOM = 104;
-const TOUCH_BOTTOM = 190;
+/**
+ * ⚠️ IT USED TO PIN `const DESKTOP_BOTTOM = 104`. That number was chosen when
+ * the ability bar's upstairs neighbour was empty screen. The HP/MP plate now
+ * sits directly on top of the bar (14 + 88 + 6 = 108), so 104 lands INSIDE the
+ * plate — the notice would have been printed over the player's own health bar,
+ * which is the exact 「做了但看不到」 shape this HUD keeps re-learning. The pin is
+ * derived from the cluster instead, so it can never be left behind again when
+ * the gap or the bottom offset is retuned.
+ *
+ * On coarse pointers there IS no ability row (TouchControls owns the corner),
+ * so the cluster resolver is told so and returns the plate-only height.
+ */
+/**
+ * The touch build keeps its shipped position to the pixel: the cluster resolver
+ * answers 182 there (128 bottom + 46 plate + 8 gap) and the bar has always sat
+ * at 190, so this is the 8 px that were already in `TOUCH_BOTTOM` and are not
+ * the cluster's to explain — the touch arc, not the plate, is what it clears.
+ */
+const TOUCH_EXTRA = 8;
 
 const DENY_BG = "rgba(46, 18, 22, 0.92)";
 const DENY_BORDER = "1px solid rgba(232, 96, 96, 0.65)";
@@ -58,7 +75,9 @@ export function CastNoticeLine(): React.JSX.Element | null {
       style={{
         position: "absolute",
         left: "50%",
-        bottom: touch ? TOUCH_BOTTOM : DESKTOP_BOTTOM,
+        bottom:
+          hudCastNoticeBottom(touch, { resources: true, abilities: !touch }) +
+          (touch ? TOUCH_EXTRA : 0),
         transform: "translateX(-50%)",
         maxWidth: "min(90vw, 460px)",
         padding: "5px 14px",

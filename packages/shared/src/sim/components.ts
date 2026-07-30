@@ -6,7 +6,8 @@
 import type { EntityId, SeatId, TeamId, ChampionId, ItemId, AugmentId, ProjectileId, StatusId } from "../ids";
 import type { Vec2 } from "./math/vec2";
 import type { CastableSlot, Order } from "./intents";
-import type { AttrBonus } from "./stats/attributes";
+import type { AttrBonus, AttrKey } from "./stats/attributes";
+import type { DamageType } from "./effects/effect";
 
 /** Planar transform: position (x,z), unit facing, collision radius. NO y. */
 export interface Transform {
@@ -25,13 +26,29 @@ export interface Transform {
   accel?: number;
 }
 
+/**
+ * WHICH damage an absorb pool eats (owner 2026-07-30:「護盾的確有分**吸收所有
+ * 傷害**跟**吸收 AP 傷害 only**」).
+ *
+ * ABSENT on a stored pool means `"all"`, which is byte-for-byte the behaviour
+ * every shield had before the filter existed — so no shipped shield changed
+ * meaning when this landed. See `combat/damage.ts` for the absorb ORDER rule and
+ * `effects/shield.ts` for the authoring field.
+ */
+export type ShieldAbsorb = "all" | DamageType;
+
 export interface Health {
   hp: number;
   maxHp: number;
   mana: number;
   maxMana: number;
   alive: boolean;
-  shields: { amount: number; expiresAtTick: number; sourceId: string }[];
+  /**
+   * Absorb pools, oldest first. `absorbs` (optional, absent = `"all"`) is the
+   * damage-type filter: a `"magic"` pool is invisible to a physical packet — it
+   * neither absorbs nor is consumed by it.
+   */
+  shields: { amount: number; expiresAtTick: number; sourceId: string; absorbs?: ShieldAbsorb }[];
 }
 
 export interface TeamComp {
@@ -45,6 +62,26 @@ export interface DashOverride {
   dir: Vec2;
   speed: number;
   remaining: number;
+  /**
+   * PROVENANCE — was this displacement **authored by an ability**, or is it the
+   * ambient shove every landed hit produces? ABSENT = false = damage-driven,
+   * which is exactly what every pre-existing writer meant.
+   *
+   * ⚠️ This is not decoration: it is the tiebreak input for the ONE ordering
+   * problem this slot has. `SimWorld.step()` runs effects at slot 2b/3 and only
+   * drains the damage queue at slot 8, so an ability that BOTH shoves and hurts
+   * used to have its own shove overwritten by its own damage, in the same tick,
+   * unconditionally (`combat/damage.ts`). Every shipped ability that wants a
+   * 擊退 also deals damage, so the primitive was dead on the shipping path.
+   * Who wins is now `combatFeel.damageShoveWins`, and this flag is how the
+   * arbiter can tell the two writers apart. See `combat/damage.ts`'s
+   * SHOVE ARBITRATION section and `sim/knockbackVsDamage.test.ts`.
+   *
+   * A `LeapOverride` needs no such flag: only `movement/leap.ts#startLeap`
+   * writes one and every caller of it is an ability, so a leap is authored by
+   * construction.
+   */
+  authored?: boolean;
 }
 
 /**
@@ -219,6 +256,40 @@ export interface ChampionComp {
    * and is never touched by `world.rng`, so it perturbs no random stream.
    */
   undoStack: ShopTxn[];
+  /**
+   * 「每 N 次才給一次」 progress for `effects/grantAttribute.ts`, keyed
+   * `<origin>|<attr>` and stored MODULO the effect's own `everyNth`.
+   *
+   * OPTIONAL AND LAZILY CREATED on purpose: every existing `ChampionComp`
+   * construction site (spawnChampion, the form-swap rebuild, every test
+   * fixture) stays valid untouched, and a champion who carries no counting
+   * passive — 118 of the 119 — allocates nothing.
+   *
+   * Keyed by ORIGIN, not just by attribute: two different abilities that both
+   * count toward an AGI grant must not share one tally, or the second one to
+   * land would silently steal the first's progress.
+   *
+   * SIM state, so it replays with the seed and survives a reconnect. It is NOT
+   * on the wire and does not need to be — the PAYOUT lands in `attrBonus`,
+   * which is already projected to the client (`SeatState.attrBonus`).
+   */
+  attrGrantProgress?: Record<string, number>;
+  /**
+   * TIMED 三圍 grants still standing (08-00 龍紋記憶's 3-second ×2), each with
+   * the ABSOLUTE tick it comes back off at.
+   *
+   * The bonus itself is already inside {@link attrBonus} — this array only
+   * records how to UNDO it. That split is deliberate: every consumer of a
+   * champion's attributes (championStatBase, the shop preview, the champ-select
+   * table, `SeatState.attrBonus`) reads `attrBonus` and nothing else, so a
+   * temporary attribute is correct on all of them for free, and there is exactly
+   * ONE thing that has to remember to reverse it
+   * (`effects/grantAttribute.ts::attrGrantExpirySystem`).
+   *
+   * Optional + lazily created, like `attrGrantProgress`: no construction site
+   * changes and 118 champions allocate nothing.
+   */
+  attrGrantTimed?: { attr: AttrKey; amount: number; expiresAtTick: number; origin: string }[];
 }
 
 /**
@@ -252,6 +323,60 @@ export interface StatusEffect {
   /** hard CC flags */
   root?: boolean;
   stun?: boolean;
+  /**
+   * 失手率 (WC3 `Acrs` 詛咒 / Curse) — 0..1 chance that a BASIC ATTACK made BY
+   * the carrier of this status simply misses.
+   *
+   * ⚠️ THE DIRECTION IS THE WHOLE POINT, AND IT IS THE OPPOSITE OF
+   * `Stat.Evasion`. Evasion is the DEFENDER's dodge ("attacks aimed at me
+   * miss"); this is the ATTACKER's fumble ("attacks I make miss, at anybody").
+   * Modelling 詛咒 as evasion-on-the-attacker would have been silently wrong:
+   * it would make the cursed unit HARDER TO KILL instead of worse at killing.
+   *
+   * It lives on the STATUS and not on `Stat` on purpose. A curse is a timed,
+   * dispellable marker exactly like 減速/纏繞 — those are statuses too — and the
+   * stat table is the place for things the panel shows permanently. Keeping it
+   * here also means `statusExpirySystem` already owns its teardown, so there is
+   * no way to leak a permanent 33 % whiff onto a champion.
+   *
+   * Read by `combat/evasion.ts::missChanceOf` (MAX over active statuses, never
+   * a sum — WC3 miss sources do not stack).
+   */
+  missChance?: number;
+  /**
+   * 暴走 (59-00 初號機) —— 「不可控制並自動尋敵」。
+   *
+   * ⚠️ **不是**第三個硬控旗標。`root` / `stun` 拿走的是身體(走不動、打不了),
+   * 這一個拿走的是**方向盤**:身體照走、照追、照打,只是聽的不再是玩家。所以它
+   * 不能寫成 `root: true`(那樣暴走的初號機會站在原地被打死,而 owner 要的是
+   * 「多一個不受控的攻擊單位」),也不能寫成一條屬性(屬性是常駐的、面板上的,
+   * 這個是十秒的、有到期的)。
+   *
+   * 住在 status 上還有一個現成的好處:`statusExpirySystem` 已經擁有它的清除,
+   * 所以「永久失去方向盤」在結構上不可能發生 —— 這正是 `missChance` 選同一個
+   * 位置的理由。唯一的讀者是 `sim/berserk.ts`。
+   */
+  berserk?: boolean;
+  /**
+   * 這個標記**帶的一個數字** —— 目前唯一的作者是 `spendMana.bankAs`,唯一的
+   * 讀者是 `damage.bankedBonus`(effectCommon.ts::bankedAddend)。
+   *
+   * 存在的理由是一個時間差:owner 2026-07-31 要 13-002 絕。暗殺奧義的追加傷害
+   * 等於「**現存 MP 的 20%**」,而那一招做的第一件事就是把法力燒到 0。等到
+   * 送傷害的那一發免費牙突真的打中人(hook `onAbilityHit`,可能是幾秒之後),
+   * `hp.mana` 已經是 0,任何在那一刻讀法力的公式都只會算出 0 —— 也就是
+   * 失敗形態②:算得出來、但玩家永遠拿不到。
+   *
+   * ⚠️ 它是一個**數字**不是一個 Scaling,因為它記錄的是「當時真的發生了什麼」
+   * (實際扣掉的法力),不是一條可以事後重算的公式。事後重算就是上面那個 bug。
+   *
+   * ⚠️ 住在 status 上而不是一個新元件,理由跟 `missChance` / `berserk` 一樣:
+   * `statusExpirySystem` 已經擁有它的清除,所以「一筆永遠不過期的存款」在結構上
+   * 不可能發生 —— 燒了魔卻沒放技能,五秒後那筆錢就消失。
+   *
+   * PURITY: 一個 float,寫入時已經是決定性的(clamp 過的實扣量)。
+   */
+  magnitude?: number;
 }
 
 export interface StatusComp {

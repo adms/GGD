@@ -122,9 +122,32 @@ export const zPartialStatBlock = z.record(zStat, z.number()) as unknown as z.Zod
   Partial<Record<Stat, number>>
 >;
 
+/**
+ * ⚠️ `from` 只對 `ModOp.PercentOf` 有意義,而 superRefine 把兩個方向都關死:
+ * `percentOf` 缺 `from` 會被拒(否則 `statPipeline` 會靜默丟掉這一條 —— 一個
+ * 「防禦力 +50% 攻擊力」的天生技變成完全沒有效果,而文件看起來一切正常),
+ * 非 `percentOf` 帶 `from` 也會被拒(那是把一條 op 打錯的證據,留著只會讓下一次
+ * 稽核讀成「設定過了」)。同一條規則 `sim/stats/modifiers.ts` 有它的執行期版本。
+ */
 export const zStatModifier = z
-  .object({ stat: zStat, op: zModOp, value: z.number() })
-  .strict();
+  .object({ stat: zStat, op: zModOp, value: z.number(), from: zStat.optional() })
+  .strict()
+  .superRefine((m, ctx) => {
+    if (m.op === ModOp.PercentOf && m.from === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["from"],
+        message: 'op "percentOf" needs `from` — which stat the percentage is taken OF',
+      });
+    }
+    if (m.op !== ModOp.PercentOf && m.from !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["from"],
+        message: '`from` is only meaningful on op "percentOf"',
+      });
+    }
+  });
 
 /**
  * Per-stat sanity band for ONE item modifier, as an absolute magnitude.
@@ -166,19 +189,34 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // now treats reaching this value as a failed run (tools/economy/
   // rescale_items.py DEGENERATE_AT), not as an under-budget item.
   [Stat.CritChance]: 1,
-  // Raised from 5 knowingly (see the "one-line change" note above). A
-  // modifier here is a DELTA on the 1.75 champion base, and 天堂之劍
-  // (godie-i01n) is a verified 50x crit -> +48.25: its 「3%機率造成50倍傷害」
-  // tooltip, its DataB1, and the stock AIcs default all agree, so it is a real
-  // item, not a mis-parse. The trade is explicit — this band no longer catches
-  // a bogus critDamage below 48. It is the loosest guard in the table.
+  // Raised from 5 knowingly (see the "one-line change" note above). A modifier
+  // here is a DELTA on the 1.75 champion base.
   //
-  // The AEP rescale prices that item at 226 AEP against a 26-AEP budget and so
-  // crushes it back to ~5.5x on every run — it did exactly that once, silently
-  // reverting this decision. What keeps the value alive is the RESCALE_EXEMPT
-  // entry in tools/economy/rescale_items.py; if this band ever looks unused,
-  // check there before lowering it.
-  [Stat.CritDamage]: 50, // strongest in catalogue: 48.25 (天堂之劍)
+  // ⚠️ CORRECTED 2026-07-30. This paragraph used to justify the band with 天堂之劍
+  // (godie-i01n) being 「a verified 50x crit -> +48.25」 and called it "the
+  // strongest in catalogue". BOTH HALVES ARE NOW FALSE ON THE SHIPPED TREE.
+  // The w3a reading was right — 致命一擊機率 3, 傷害乘數 50 — but the owner
+  // OVERRULED it on 2026-07-30:「天堂之劍 critChance 0.03 + critDamage 48.25 =>
+  // 調整 6% 10 倍暴擊，不然太誇張了」. content/items/godie-i01n.json now carries
+  // critChance 0.06 / critDamage 8.25 (1.75 + 8.25 = 10.0x), and the SHIPPED
+  // maximum across all 219 item docs is that 8.25 — the next three crit items
+  // are 斬龍刀 0.448, 龍騎士之劍 0.287, 武聖手鐲 0.286.
+  //
+  // THE BAND IS DELIBERATELY LEFT AT 50 ANYWAY, and that is a decision, not
+  // inertia: this is a MIS-PARSE guard, not a balance statement, and the w3x
+  // still genuinely contains 48.25. A re-import must be able to LOAD the source
+  // value so the owner can look at it and rescale it again; a band tightened to
+  // ~9 would make the importer reject real data and the rescale would look like
+  // a parser bug. The cost of leaving it is unchanged and still explicit: this
+  // band no longer catches a bogus critDamage below 48, and it is the loosest
+  // guard in the table.
+  //
+  // The AEP rescale prices the ORIGINAL item at 226 AEP against a 26-AEP budget
+  // and crushes it on every run — it did exactly that once, silently reverting
+  // an owner decision. What keeps whatever value is authored alive is the
+  // RESCALE_EXEMPT entry in tools/economy/rescale_items.py; if this band ever
+  // looks unused, check there before lowering it.
+  [Stat.CritDamage]: 50, // shipped max is 8.25 (天堂之劍, owner-rescaled); band sized for the w3x source value 48.25
   [Stat.CooldownReduction]: 0.45, // STAT_CLAMPS upper bound
   [Stat.Lifesteal]: 1, // a rate, not a count — 0..1
   [Stat.AttackRange]: 5,
