@@ -97,6 +97,56 @@ damageLine / damageArea / cycleBuff / grantAttribute / spendMana / leap / champi
 `packages/shared/src/content/schema/{ability,config,template}.ts` · `templates/expand.ts` ·
 `packages/shared/src/sim/{combatFeel.ts,systems/OrderSystem.ts}` · `content/config/combat-feel.json`
 
+### ⚠️⚠️ 工作流已跑完 —— **W1 被 3 個複驗者中的 2 個推翻，不要直接收**
+
+判定：`W1-templates` **survives=false（refutedBy 2/3）**。
+⚠️ **W2/W3/W4 的判定在被截斷的輸出裡，我沒拿到 —— 不要假設它們過了。**
+（完整結果：`/private/tmp/claude-503/…/tasks/w6rqnoa4m.output`，
+ 逐 agent：`…/subagents/workflows/wf_49c4e2f0-490/journal.jsonl`）
+
+#### 🔴 W1 的三個實證缺陷（複驗者各自動手驗過，不是意見）
+
+1. **編輯器可以存出「讓 content 載入整包失敗」的文件。**
+   `stack.test.ts` 的 describe 寫「survives the registry's own pipeline」，但**全檔沒有 import
+   `registries.ts`** —— 它手工重組了一條出貨程式碼裡不存在的管線（失敗形態⑤）。
+   複驗者寫探針餵**真的** `registerAll()`：
+   · `{ref,params}` → OK（舊形狀）
+   · `[c1,c2]` → **THREW**
+   · `{cards,onConflict}` → **THREW**（`template "undefined" not found`）
+   而 `registerAll` 擲錯 ＝ **那個 process 的全部內容註冊失敗**，不是「那支技能不能用」。
+   `FORGE_OWNED_MEMBERS` 已含 `template`，所以**鑄技工坊現在就存得出這種 binding**。
+   ⚠️ 這正是今天線上「0 隻英雄」的同一種形狀（內容載入整包掛掉）。
+   → owner 已經開了 follow-up **`task_25446bc5`**（把 `registries.ts` 的
+     `expandIfTemplated` 接上多卡 binding），**那是解這一條的正確位置**。
+
+2. **UI 守衛有洞（失敗形態③，而且就在那個檔存在的理由上）。**
+   複驗者把 `CardPanel` 的 `<FormRenderer/>` 包成 `{index === 0 ? … : null}`
+   —— 第 2 張以後的卡只剩表頭，**一個參數都填不了** ——
+   `npx vitest run --root apps/editor` 仍然 **EXIT=0、92/92 全綠**，
+   連那條就叫「每張卡都有自己的參數面板（不是共用一份）」的測試也是綠的。
+   原因：整份檔沒有任何一條斷言讀「卡 ≥1 的槽位」。
+   → 補法（複驗者已寫出來）：斷言畫面上存在第 2 張卡專屬槽的輸入控制項，
+     並用 `{index === 0 ? <FormRenderer/> : null}` 做突變驗證。
+
+3. **第一守則沒過。** `TEMPLATE_STACK_MAX_CARDS=8` 與 `DEFAULT_TEMPLATE_CONFLICT="reject"`
+   是**寫死常數**，`content/config`、`schema/config.ts` 的 `DEFAULT_*`、`apps/admin` 三處都沒有
+   —— 要改只能重 build（＝ `CAPSTONE_ROUND_GATE=6` 那個形態），而註解還長篇辯護為何選 8。
+
+#### 🟡 W1 自陳的疑點（值得下次先處理）
+`mergePassive` 的 **rank 對齊規則是寫在程式裡的決策，不是欄位**，而且**沒有測試覆蓋**：
+卡 A 有 1 個 rank、卡 B 有 6 個時，實作產出 6 個 rank（rank 2–6 只帶 B）；
+另一種同樣合理的讀法是「1-rank 的卡每一等都生效」。今天 19 個 family 的 expander 都只吐 1 個 rank，
+所以這條路沒有任何出貨資料在跑，守衛也只驗到 rank 0。
+
+#### 🟢 W1 確實成立的部分（複驗者證實）
+三形狀正規化（含**舊 `{ref,params}` 原封不動可載入**）· 對 16 支 enabled 模板逐支 deep-equal ·
+上下界存在 · `ConflictPanel` 真的接上（刪掉 `ForgeStudio.tsx:392` → 2 條紅）·
+11 個突變逐一驗過。**expand 那一層本身是紮實的，破在「跟出貨管線的接縫」與「UI 讀取側的守衛」。**
+
+#### ⚠️ 另一個通用教訓（複驗者發現，值得記進 CLAUDE.md）
+**熱快取下的 `EXIT=0` 不是證據。** 複驗者第一次單跑 `stack.test.ts` 得到 EXIT=1／2 條紅，
+紅的正好是 W1 突變紀錄裡那兩條 —— 是 **vite 快取還留著突變體**。清乾淨重跑才是 EXIT=0。
+
 ### 重新開始時怎麼接
 1. `git status --porcelain` 看那 32 個檔還在不在（**沒 commit 過**）
 2. 想繼續同一輪：
