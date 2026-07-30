@@ -14,8 +14,35 @@
 | main | **v0.9.16 已合併、已推、已標籤** |
 | 全套測試 | **3 條已知紅**（`settlement` 贏家淘汰廣播 —— HEAD 就有；`autoAcquire` ×2 —— 前一條 lane 刻意留紅）。其餘 5,400+ 條綠 |
 | 型別 | 綠（`pnpm typecheck` EXIT=0）— ⚠️ 一定要看**離開碼**，`\| tail` 會偷走 `$?` |
-| 線上 ggd.adms.ai | **v0.9.16 已部署**（deploy 記錄見 `_execution-batches.md` 的「現況」段） |
+| 線上 ggd.adms.ai | ⛔ **仍是 v0.9.15（`cba64c28`）—— deploy 卡住，需要 owner 本人** |
 | 進行中的工作流 | **零**。所有 agent / workflow 都已收工，沒有背景任務在跑 |
+
+---
+
+## 1b. ⛔ deploy 卡在哪裡（**下次第一件事就是解這個**）
+
+**症狀**：在 `can@34.81.104.163` 上 `git pull` 一律回
+「Please make sure you have the correct access rights and the repository exists.」
+`HEAD` 停在 `cba64c28` = v0.9.15。
+
+**根因（已查清，不是猜的）**：
+1. 遠端 `~/.ssh/` **只有 `authorized_keys`，沒有任何私鑰** —— 那台機器自己無法對 GitHub 認證。
+2. 本機 `ssh-add -l` 回 **「The agent has no identities.」** —— 所以 `ssh -A` 轉發過去的是一個**空的** agent。
+
+⚠️ 這就是 CLAUDE.md 警告的那個誤導訊息：它看起來像權限/repo 問題，實際上是**沒有金鑰可用**。
+⚠️ 而且它跟「pull 要在前景做」是**兩回事** —— 這次 pull 就是在前景做的，一樣失敗。
+
+**owner 需要做的（二選一，我不能代做，因為那是你的憑證）**：
+- 在本機把 GitHub 金鑰載入 agent：`ssh-add ~/.ssh/<你的 github key>`，然後叫我重跑 deploy；或
+- 在那台主機上放一把 **deploy key** 並登記到 GitHub repo，之後就不需要 agent 轉發。
+
+**確認金鑰可用之後的 deploy 步驟**（映像是在主機上 build 的，五個容器：
+edge / platform / game / redis / caddy）：
+```
+ssh -A can@34.81.104.163
+cd GGD && git pull --ff-only origin main   # 前景做完
+# 再把 build/restart 丟背景
+```
 
 ---
 

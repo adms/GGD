@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| 線上 | `cba64c28` = **v0.9.15**（deploy 前的最後已知狀態） |
+| 線上 | `cba64c28` = **v0.9.15** —— ⛔ **v0.9.16 沒能部署**：主機無私鑰、本機 agent 無 identity，`git pull` 認證不了。詳見 `_session-handover-0731.md` §1b |
 | main | **v0.9.16 已合併** —— `pnpm typecheck` EXIT=0；`pnpm test` 有 **3 條已知紅**（下表逐條交代） |
 
 ### 🎮 v0.9.16 localhost 實打（2026-07-31，協定第 3 步）
