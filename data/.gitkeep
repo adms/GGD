@@ -1,10 +1,2 @@
 # Durable platform truth store (JSON-per-object). Contents are gitignored;
-# this file keeps the directory in version control.
-#
-# BACKUP IS NOT `cp -r ./data` (that is what this line used to say, and it was
-# wrong in two ways: on the deployed host the runtime files belong to the
-# container's uid, so a plain host-side copy gets Permission denied; and a copy
-# that stays on the same disk is not a backup at all — GH#123).
-#
-#   scheduled, off-machine   tools/deploy/ggd-backup.sh   (docs/runbooks/offsite-backup.md)
-#   one-off, by hand         make family-archive-export   (#243, docs/runbooks/platform-migration.md)
+# this file keeps the directory in version control. Backup = `cp -r ./data`.
