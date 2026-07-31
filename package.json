@@ -30,7 +30,9 @@
     "docs:readme:check": "python3 tools/reference/gen_readme_lists.py --check",
     "docs:status": "python3 tools/status/gen_status.py",
     "docs:status:check": "python3 tools/status/gen_status.py --check",
-    "docs:status:test": "python3 tools/status/test_gen_status.py"
+    "docs:status:test": "python3 tools/status/test_gen_status.py",
+    "items:csv:export": "python3 tools/item-csv/item_csv.py export -o items.csv",
+    "items:csv:import": "python3 tools/item-csv/item_csv.py import -i items.csv"
   },
   "devDependencies": {
     "tsx": "^4.19.2",
