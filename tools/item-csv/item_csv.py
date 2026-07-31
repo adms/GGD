@@ -20,32 +20,45 @@ schema），所以匯出多了一欄純文字的「修改需求」，讓他用�
 判斷，`import` 的 apply_row() 從不讀那一欄——接一個關鍵字 parser 上去只會
 做出一個很脆的假自動化。
 
-但「219 列都塞進 Claude 的 context 讓它自己找哪幾列有填」本身也是浪費：
-Claude 只需要「有變化的那幾列」加上「判斷需要的最小資料」，不需要另外
-211 件道具的 tier/cost/tags/icon/recipe。所以解析規則寫在這裡，不是留給
-Claude 自己每次重新掃一遍：
+但「219 列都塞進 Claude 的 context 讓它自己找哪幾列有填」本身也是浪費。
+owner 定的規則很明確，寫死在這裡，不是留給 Claude 每次重新掃一遍：
 
-    `requests` 子命令讀 CSV，只印出「有變化」的列，分兩類——
-      1. 只改了 name/description、`修改需求` 是空的 → 這是機械式編輯，
-         `import` 會直接套用，`requests` 只列 id，不需要 Claude 判斷。
-      2. `修改需求` 有內容 → 印出 id、（若改了）新 name、需求原文，
-         加上判斷需要的現有 modifiers/passive/auras/description ——
-         就這些，不印 tier/cost/craftRole/tags/icon/recipe/authoringNote。
-    沒變化的列完全不出現在輸出裡。
+    `requests` 子命令只掃 `修改需求` 這一欄。有內容的列才印，印判斷需要的
+    最小資料（id、需求原文、現有 modifiers/passive/auras/description）。
+    name/description/tier/cost/requiresAttackType/in_legendary_pool 這些
+    欄位不管有沒有變，`import` 都會機械式套用，套用不需要「懂」，所以不算
+    是 `requests` 要篩的東西——沒有 `修改需求` 的列完全不出現在輸出裡，
+    連「這列其實只改了 tier」這種 FYI 都不印，owner 自己知道自己填了什麼。
 
 流程是「owner 填欄位 → 跑 `requests` 拿到精簡摘要 → Claude 讀摘要、理解白話
 需求、對照 schema 自己動手編輯 JSON（尊重 statPipeline 的 pctAdd/pctMult
 語意等既有慣例）→ 重新 export 一份乾淨的 CSV 讓 owner 核對」。
+
+─────────────────────────────────────────────────────────────────────────────
+「in_legendary_pool」欄 —— 唯一一個寫到另一個檔案的欄
+─────────────────────────────────────────────────────────────────────────────
+這一欄不是 `content/items/*.json` 的欄位，是「這件道具在不在
+`content/loot-tables/legendary-weapons.json` 的 entries 裡」。YES → 該在
+（不在就加一筆 weight:1）；空白 → 不該在（在的話就移除）。所有其他欄位都是
+per-item 的疊加寫入，這欄是唯一橫跨全表比對、只寫一次的例外，所以放在
+do_import() 的主迴圈外單獨處理。
+
+⚠️ 加進池子不等於玩家抽得到——round-5 3-choose-1 之外還有一道
+`apps/platform/internal/curation/starter.go` 的 `starterLegendaryItems`
+白名單gate（Go 程式碼，這支工具不會、也不該自動改）。import 只負責提醒：
+新加進池子但不在那份白名單裡的道具會被列出來，需要手動去 starter.go 補一行。
 """
 import argparse
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 ITEMS_DIR = REPO / "content" / "items"
 LEGENDARY_POOL = REPO / "content" / "loot-tables" / "legendary-weapons.json"
+STARTER_GO = REPO / "apps" / "platform" / "internal" / "curation" / "starter.go"
 
 # 與 packages/shared/src/content/schema/item.ts 對齊。新增 stat/op 時這裡要跟著加，
 # 否則匯入會擋下一個其實合法的值。
@@ -55,15 +68,16 @@ STATS = {
 }
 OPS = {"flat", "pctAdd", "pctMult", "capRaise"}
 
-# `_` 開頭 = 從 JSON 算出來的唯讀參考欄。
-# 「修改需求」方向相反：是給人／Claude 寫入的自由文字，這支程式一樣不會處理它
-# （見檔頭「這隻程式故意不讀它」）。兩種都不會出現在 apply_row() 裡。
+# 「修改需求」是給人／Claude 寫入的自由文字，apply_row() 從不讀它
+# （見檔頭「219 列都塞進 Claude 的 context...」）。
+# 「in_legendary_pool」也不在 apply_row() 裡——它寫的是另一個檔案，
+# 在 do_import() 主迴圈外單獨處理（見檔頭「in_legendary_pool 欄」）。
 COLUMNS = [
     "id", "name", "修改需求", "tier", "cost", "craftRole", "tags",
     "requiresAttackType", "unique", "draftEligible", "icon",
     "description", "modifiers",
     "passive_json", "auras_json", "recipe_json", "authoringNote",
-    "_in_legendary_pool",
+    "in_legendary_pool",
 ]
 
 JSON_COLUMNS = {"passive_json": "passive", "auras_json": "auras", "recipe_json": "recipe"}
@@ -78,6 +92,26 @@ def item_files():
 def legendary_ids():
     pool = json.loads(LEGENDARY_POOL.read_text(encoding="utf-8"))
     return {e["itemId"] for e in pool["entries"]}
+
+
+def starter_legendary_ids():
+    """從 starter.go 讀 starterLegendaryItems 白名單，純讀取，只用來提醒。"""
+    text = STARTER_GO.read_text(encoding="utf-8")
+    m = re.search(r"starterLegendaryItems\s*=\s*\[\]string\{(.*?)\n\t\}", text, re.S)
+    if not m:
+        return None  # 找不到這個區塊代表 starter.go 改了形狀，工具該更新，不要假裝沒事
+    return set(re.findall(r'"([\w-]+)"', m.group(1)))
+
+
+def parse_pool_flag(raw, where):
+    raw = raw.strip()
+    if raw in ("", "-"):
+        return False
+    if raw.upper() in ("YES", "TRUE", "1"):
+        return True
+    if raw.upper() in ("NO", "FALSE", "0"):
+        return False
+    raise ValueError(f"{where}: in_legendary_pool 只能是 YES 或空白，收到 {raw!r}")
 
 
 def fmt_modifiers(mods):
@@ -133,7 +167,7 @@ def do_export(out_path):
             "auras_json": json.dumps(it["auras"], ensure_ascii=False) if it.get("auras") else "",
             "recipe_json": json.dumps(it["recipe"], ensure_ascii=False) if it.get("recipe") else "",
             "authoringNote": it.get("authoringNote", ""),
-            "_in_legendary_pool": "YES" if it["id"] in legendary else "",
+            "in_legendary_pool": "YES" if it["id"] in legendary else "",
         })
     # utf-8-sig：Excel 沒有 BOM 會把中文顯示成亂碼。
     with out_path.open("w", newline="", encoding="utf-8-sig") as f:
@@ -210,8 +244,12 @@ def do_import(in_path, dry_run):
     if missing:
         sys.exit(f"CSV 少了這些欄：{', '.join(missing)}。請用 export 產生的檔案為基礎編輯。")
 
-    # 先全部解析完再寫，任何一列爆掉就整批不動。
+    current_pool = legendary_ids()
+
+    # 先全部解析完再寫，任何一列爆掉就整批不動——包含 in_legendary_pool 的解析。
     planned = []
+    pool_adds = []
+    pool_removes = []
     errors = []
     for n, row in enumerate(rows, start=2):
         item_id = row["id"].strip()
@@ -226,11 +264,16 @@ def do_import(in_path, dry_run):
         it = json.loads(path.read_text(encoding="utf-8"))
         try:
             changed = apply_row(it, row, where)
+            pool_flag = parse_pool_flag(row["in_legendary_pool"], where)
         except ValueError as e:
             errors.append(str(e))
             continue
         if changed:
             planned.append((path, it, item_id, changed))
+        if pool_flag and item_id not in current_pool:
+            pool_adds.append(item_id)
+        elif not pool_flag and item_id in current_pool:
+            pool_removes.append(item_id)
 
     if errors:
         print("⛔ 有問題，整批都沒有寫入：\n")
@@ -238,7 +281,7 @@ def do_import(in_path, dry_run):
             print("  " + e)
         sys.exit(1)
 
-    if not planned:
+    if not planned and not pool_adds and not pool_removes:
         print("沒有任何差異，沒有檔案被改動。")
         return
 
@@ -247,8 +290,26 @@ def do_import(in_path, dry_run):
         if not dry_run:
             path.write_text(json.dumps(it, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    if pool_adds or pool_removes:
+        print(f"\n傳說池（legendary-weapons.json）：+{len(pool_adds)} -{len(pool_removes)}")
+        starter_ids = starter_legendary_ids()
+        for iid in pool_adds:
+            note = ""
+            if starter_ids is not None and iid not in starter_ids:
+                note = "  ⚠️ 不在 starter.go 的 starterLegendaryItems 白名單裡，加了也抽不到，要手動去補一行"
+            print(f"  + {iid}{note}")
+        for iid in pool_removes:
+            print(f"  - {iid}")
+        if not dry_run:
+            pool = json.loads(LEGENDARY_POOL.read_text(encoding="utf-8"))
+            entries = [e for e in pool["entries"] if e["itemId"] not in pool_removes]
+            entries.extend({"itemId": iid, "weight": 1} for iid in pool_adds)
+            pool["entries"] = entries
+            LEGENDARY_POOL.write_text(json.dumps(pool, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    n_files = len(planned) + (1 if (pool_adds or pool_removes) else 0)
     verb = "會改動" if dry_run else "已改動"
-    print(f"\n{verb} {len(planned)} 個檔案。")
+    print(f"\n{verb} {n_files} 個檔案。")
     if dry_run:
         print("這是 --dry-run，沒有寫入。拿掉旗標才會真的寫。")
     else:
@@ -256,11 +317,13 @@ def do_import(in_path, dry_run):
 
 
 def do_requests(in_path):
-    """只印出「有變化」的列，而且只印判斷那一列所需的最小資料。
+    """只掃「修改需求」有內容的列，只印判斷那一列所需的最小資料。
 
-    給 Claude 讀的入口 —— 不要用 export 出來的整份 CSV 餵給 Claude，
-    219 列裡通常只有幾列有變化，其他列的 tier/cost/tags/... 對這次判斷
-    是浪費 token 的雜訊。
+    唯一的篩選規則：`修改需求` 欄是不是空的。name/description/tier/cost/
+    requiresAttackType/in_legendary_pool 不管有沒有變，`import` 都會機械式
+    套用——套用不需要判斷，所以那些變化不在這裡出現，owner 自己知道自己
+    填了什麼，不需要 Claude 再覆誦一遍。給 Claude 讀的入口，不是給 owner
+    核對用的（核對請重新 export 看新的 CSV）。
     """
     with in_path.open(newline="", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
@@ -269,56 +332,21 @@ def do_requests(in_path):
     if missing:
         sys.exit(f"CSV 少了這些欄：{', '.join(missing)}。請用 export 產生的檔案為基礎編輯。")
 
-    needs_judgement = []  # (row, current) — 修改需求 有內容
-    mechanical = []       # item_id — 只改 name/description，import 會直接套用
-    bad_ids = []
+    hits = [row for row in rows if row.get("修改需求", "").strip()]
+    print(f"{len(rows)} 件道具，{len(hits)} 件有修改需求。\n")
+    if not hits:
+        return
 
-    for row in rows:
+    for row in hits:
         item_id = row["id"].strip()
         path = ITEMS_DIR / f"{item_id}.json"
         if not path.exists():
-            bad_ids.append(item_id or "(空 id)")
+            print(f"⚠️ {item_id or '(空 id)'}: 找不到對應檔案，略過\n")
             continue
         current = json.loads(path.read_text(encoding="utf-8"))
 
-        req = row.get("修改需求", "").strip()
-        name_changed = row["name"].strip() != current.get("name", "")
-        desc_changed = row["description"] != current.get("description", "")
-
-        if req:
-            needs_judgement.append((row, current, name_changed, desc_changed))
-        elif name_changed or desc_changed:
-            mechanical.append(item_id)
-
-    total = len(rows)
-    unchanged = total - len(needs_judgement) - len(mechanical) - len(bad_ids)
-    print(
-        f"{total} 件道具：{len(needs_judgement)} 件需要判斷、"
-        f"{len(mechanical)} 件純機械編輯（import 會直接套用）、"
-        f"{unchanged} 件沒變化。"
-    )
-    if bad_ids:
-        print(f"⚠️ {len(bad_ids)} 個 id 對不到檔案，已跳過：{', '.join(bad_ids)}")
-    print()
-
-    if mechanical:
-        print("只改 name/description（不需要判斷，直接 `import` 即可）：")
-        print("  " + "、".join(mechanical))
-        print()
-
-    if not needs_judgement:
-        print("沒有任何一列的「修改需求」有內容。")
-        return
-
-    for row, current, name_changed, desc_changed in needs_judgement:
-        item_id = row["id"].strip()
         print(f"── {item_id}（{current.get('name', '')}）──")
-        if name_changed:
-            print(f"name：{current.get('name', '')} → {row['name'].strip()}")
         print(f"修改需求：{row['修改需求'].strip()}")
-        if desc_changed:
-            print("description 也被手動改了，CSV 裡的新文字會照樣套用：")
-            print(row["description"])
         mods = current.get("modifiers", [])
         if mods:
             print("現有 modifiers：" + fmt_modifiers(mods))
