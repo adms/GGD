@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """道具 ↔ CSV 雙向轉換。
 
-    python3 tools/item-csv/item_csv.py export -o items.csv
-    python3 tools/item-csv/item_csv.py import  -i items.csv [--dry-run]
+    python3 tools/item-csv/item_csv.py export   -o items.csv
+    python3 tools/item-csv/item_csv.py import   -i items.csv [--dry-run]
+    python3 tools/item-csv/item_csv.py requests -i items.csv
 
 匯入是「疊加」不是「重寫」：先讀原本的 JSON，只把 CSV 有的欄位蓋上去，
 所以任何這個工具不認得的欄位都會原封不動留著，鍵的順序也不會被打亂
@@ -11,19 +12,30 @@
 ⚠️ 任何一列有問題就整批不寫。半套寫入會讓 content 樹處於沒人知道的中間狀態。
 
 ─────────────────────────────────────────────────────────────────────────────
-「修改需求」欄 —— 這隻程式故意不讀它
+「修改需求」欄 —— import 故意不讀它，讀它的是 `requests`
 ─────────────────────────────────────────────────────────────────────────────
 owner 不想直接改 modifiers/passive_json 那些結構化欄位（那等於要求他先懂
 schema），所以匯出多了一欄純文字的「修改需求」，讓他用白話寫想要什麼效果，
-例如「攻擊力提高到 50」「被動改成暈眩 1 秒」。
+例如「攻擊力提高到 50」「被動改成暈眩 1 秒」。白話請求本來就需要人工/Claude
+判斷，`import` 的 apply_row() 從不讀那一欄——接一個關鍵字 parser 上去只會
+做出一個很脆的假自動化。
 
-這隻 CLI **完全不解析那一欄** —— import 時會照 COLUMNS 驗證它存在，但
-apply_row() 從不讀它，所以裡面寫什麼都不會被這支程式當成指令執行。
-它是寫給 Claude 看的，不是寫給這支 parser 看的：流程是「owner 填欄位 →
-Claude 讀 CSV、理解白話需求、對照 schema 自己動手編輯 JSON（尊重
-statPipeline 的 pctAdd/pctMult 語意等既有慣例）→ 重新 export 一份乾淨的
-CSV 讓 owner 核對」。不要試圖把這一欄接成自動化 —— 白話請求本來就需要
-人工/Claude 判斷，接一個關鍵字 parser 上去只會做出一個很脆的假自動化。
+但「219 列都塞進 Claude 的 context 讓它自己找哪幾列有填」本身也是浪費：
+Claude 只需要「有變化的那幾列」加上「判斷需要的最小資料」，不需要另外
+211 件道具的 tier/cost/tags/icon/recipe。所以解析規則寫在這裡，不是留給
+Claude 自己每次重新掃一遍：
+
+    `requests` 子命令讀 CSV，只印出「有變化」的列，分兩類——
+      1. 只改了 name/description、`修改需求` 是空的 → 這是機械式編輯，
+         `import` 會直接套用，`requests` 只列 id，不需要 Claude 判斷。
+      2. `修改需求` 有內容 → 印出 id、（若改了）新 name、需求原文，
+         加上判斷需要的現有 modifiers/passive/auras/description ——
+         就這些，不印 tier/cost/craftRole/tags/icon/recipe/authoringNote。
+    沒變化的列完全不出現在輸出裡。
+
+流程是「owner 填欄位 → 跑 `requests` 拿到精簡摘要 → Claude 讀摘要、理解白話
+需求、對照 schema 自己動手編輯 JSON（尊重 statPipeline 的 pctAdd/pctMult
+語意等既有慣例）→ 重新 export 一份乾淨的 CSV 讓 owner 核對」。
 """
 import argparse
 import csv
@@ -243,6 +255,82 @@ def do_import(in_path, dry_run):
         print("⚠️ 接著要跑 `pnpm content:build`，否則 bundle.test.ts 會紅。")
 
 
+def do_requests(in_path):
+    """只印出「有變化」的列，而且只印判斷那一列所需的最小資料。
+
+    給 Claude 讀的入口 —— 不要用 export 出來的整份 CSV 餵給 Claude，
+    219 列裡通常只有幾列有變化，其他列的 tier/cost/tags/... 對這次判斷
+    是浪費 token 的雜訊。
+    """
+    with in_path.open(newline="", encoding="utf-8-sig") as f:
+        rows = list(csv.DictReader(f))
+
+    missing = [c for c in COLUMNS if c not in (rows[0].keys() if rows else [])]
+    if missing:
+        sys.exit(f"CSV 少了這些欄：{', '.join(missing)}。請用 export 產生的檔案為基礎編輯。")
+
+    needs_judgement = []  # (row, current) — 修改需求 有內容
+    mechanical = []       # item_id — 只改 name/description，import 會直接套用
+    bad_ids = []
+
+    for row in rows:
+        item_id = row["id"].strip()
+        path = ITEMS_DIR / f"{item_id}.json"
+        if not path.exists():
+            bad_ids.append(item_id or "(空 id)")
+            continue
+        current = json.loads(path.read_text(encoding="utf-8"))
+
+        req = row.get("修改需求", "").strip()
+        name_changed = row["name"].strip() != current.get("name", "")
+        desc_changed = row["description"] != current.get("description", "")
+
+        if req:
+            needs_judgement.append((row, current, name_changed, desc_changed))
+        elif name_changed or desc_changed:
+            mechanical.append(item_id)
+
+    total = len(rows)
+    unchanged = total - len(needs_judgement) - len(mechanical) - len(bad_ids)
+    print(
+        f"{total} 件道具：{len(needs_judgement)} 件需要判斷、"
+        f"{len(mechanical)} 件純機械編輯（import 會直接套用）、"
+        f"{unchanged} 件沒變化。"
+    )
+    if bad_ids:
+        print(f"⚠️ {len(bad_ids)} 個 id 對不到檔案，已跳過：{', '.join(bad_ids)}")
+    print()
+
+    if mechanical:
+        print("只改 name/description（不需要判斷，直接 `import` 即可）：")
+        print("  " + "、".join(mechanical))
+        print()
+
+    if not needs_judgement:
+        print("沒有任何一列的「修改需求」有內容。")
+        return
+
+    for row, current, name_changed, desc_changed in needs_judgement:
+        item_id = row["id"].strip()
+        print(f"── {item_id}（{current.get('name', '')}）──")
+        if name_changed:
+            print(f"name：{current.get('name', '')} → {row['name'].strip()}")
+        print(f"修改需求：{row['修改需求'].strip()}")
+        if desc_changed:
+            print("description 也被手動改了，CSV 裡的新文字會照樣套用：")
+            print(row["description"])
+        mods = current.get("modifiers", [])
+        if mods:
+            print("現有 modifiers：" + fmt_modifiers(mods))
+        if current.get("passive"):
+            print("現有 passive：" + json.dumps(current["passive"], ensure_ascii=False))
+        if current.get("auras"):
+            print("現有 auras：" + json.dumps(current["auras"], ensure_ascii=False))
+        print("現有 description：")
+        print(current.get("description", "(無)"))
+        print()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -251,12 +339,16 @@ def main():
     i = sub.add_parser("import", help="CSV → content/items/*.json")
     i.add_argument("-i", "--in", dest="inp", type=Path, required=True)
     i.add_argument("--dry-run", action="store_true", help="只印出會改什麼，不寫檔")
+    r = sub.add_parser("requests", help="CSV → 只印出有變化的列（給 Claude 讀，省 token）")
+    r.add_argument("-i", "--in", dest="inp", type=Path, required=True)
     args = ap.parse_args()
 
     if args.cmd == "export":
         do_export(args.out)
-    else:
+    elif args.cmd == "import":
         do_import(args.inp, args.dry_run)
+    else:
+        do_requests(args.inp)
 
 
 if __name__ == "__main__":
