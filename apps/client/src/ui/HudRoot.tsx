@@ -30,6 +30,7 @@ import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
+import { BossIntroOverlay } from "./hud/BossIntroOverlay";
 import { BossHealthBar } from "./hud/BossHealthBar";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
@@ -45,6 +46,7 @@ import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { hudActions } from "./actions";
+import { HudBoundaryGroup, type HudBoundaryLabels } from "./HudBoundaryGroup";
 
 /** The 陣亡投幣 cap, mirrored from `config.arena-rules@1 goldDrop.coinsPerRound`. */
 const COINS_PER_ROUND = 10;
@@ -140,8 +142,64 @@ function GamepadIndicator(): React.JSX.Element | null {
   );
 }
 
+/**
+ * 每一個 HUD 成員壞掉時，要在玩家眼前顯示的**位置名**。
+ *
+ * ⚠️ 為什麼是一張手寫的表而不是 `type.name`：我 grep 過出貨的 bundle
+ * （`apps/client/dist/assets/index-*.js`），`MerchantShop` / `PhaseTimer` /
+ * `ZombieWaveBar` / `BossHealthBar` 出現次數**都是 0** —— esbuild 預設壓縮把
+ * top-level 函式名改掉了。用 `type.name` 的話正式站上會顯示「介面 a 顯示不出來」，
+ * 那等於沒說（又一次靜默降級）。
+ *
+ * ⚠️ 表放在這裡而不是集中到 `HudBoundaryGroup`：這些元件在這個檔案裡**本來就
+ * 已經 import 過了**。集中就要再維護一份 35 行的 import 清單，而那份清單自己會
+ * drift。`hudBoundaryCoverage.test.ts` 掃這個檔的 JSX 標籤 ↔ 這張表，漏一個就紅。
+ *
+ * 寫的是**玩家看得懂的位置**（「商店」），不是元件名（「MerchantShop」）——
+ * 這行字是給正在打的人看的，不是給我看的。
+ */
+const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
+  [WorldAnchorLayer, "血條與傷害數字"],
+  [RoundEndVoice, "回合結束語音"],
+  [BattlefieldIntelRecorder, "戰況記錄"],
+  [PhaseTimer, "階段倒數"],
+  [SpectateNotice, "觀戰提示"],
+  [NoChampionNotice, "未選英雄提示"],
+  [TeamLivesBar, "隊伍生命數"],
+  [ReviveBanner, "復活提示"],
+  [Scoreboard, "計分板"],
+  [GamepadIndicator, "手把指示"],
+  [ControlLegend, "操作說明"],
+  [AbilityDescriptionOverlay, "技能說明"],
+  [CastNoticeLine, "施法提示"],
+  [BottomCluster, "血條與技能列"],
+  [EnemyTeamPanel, "敵隊面板"],
+  [GoldLevel, "金錢與等級"],
+  [EquipmentBar, "裝備欄"],
+  [SpectatorHint, "陣亡觀戰提示"],
+  [KillCombo, "連殺提示"],
+  [SelfStatusBar, "自身狀態"],
+  [ZombieWaveBar, "殭屍來襲提示"],
+  [MobBossOverlay, "殭屍王"],
+  [BossIntroOverlay, "殭屍王出場演出"],
+  [BossHealthBar, "殭屍王血條"],
+  [ExUnlockToast, "EX 解鎖提示"],
+  [TouchControls, "觸控操作"],
+  [CouchHudGrid, "分割畫面介面"],
+  [ChampSelectPanel, "選角畫面"],
+  [IntermissionStage, "中場畫面"],
+  [MerchantShop, "商店"],
+  [AugmentDraftPanel, "三選一"],
+  [PrepClock, "商店倒數"],
+  [ReadyButton, "準備按鈕"],
+  [RoundOverPill, "回合結束提示"],
+  [RoundVictoryPanel, "回合勝利畫面"],
+  [MatchEndPanel, "結算畫面"],
+]);
+
 export function HudRoot(): React.JSX.Element {
   const phase = useHud((s) => s.phase);
+  const round = useHud((s) => s.round);
   const connected = useHud((s) => s.connected);
   // couch play: >1 local player = split-screen per-viewport mini-HUDs
   const couch = useHud((s) => s.localPlayers.length > 1);
@@ -185,7 +243,23 @@ export function HudRoot(): React.JSX.Element {
   const touchControls = showTouchControls({ touch, inGame, couch });
 
   return (
-    <>
+    // ⚠️ 每一個成員各自一層 boundary（`HudBoundaryGroup` 會遞迴穿透下面那些
+    // Fragment 群組）。在此之前唯一的 boundary 包的是整個 <MatchOverlay />，
+    // 獵兇工作流實測讓 `PhaseTimer` 丟例外之後 `#hud-root` 子節點 13 → 1 ——
+    // 玩家看到的仍然是「所有介面一起消失」。現在只會少掉炸掉的那一塊。
+    //
+    // resetKey 帶 phase+round：相位切換或進下一回合就重試一次壞掉的那些
+    // （上限 HUD_BOUNDARY_RETRY_CAP 次，之後改叫玩家重新整理）。
+    //
+    // ⚠️ 2026-08-02：這個包裝**曾經只存在於上面這段註解裡** —— import 有、
+    // HUD_LABELS 表有、註解言之鑿鑿，而 JSX 開的是一個裸 `<>`。結果是 37 個成員
+    // 一個都沒被包，`PhaseTimer` 炸掉照樣帶走整個 HUD，也就是 owner 回報四次的
+    // 那個症狀原封不動。`hudBoundaryCoverage.test.ts` 與 `hudBoundaryGroup.test.ts`
+    // 當時正紅著，而回報寫「4939 passed / 0 failed」。
+    // CLAUDE.md 第三守則的教科書案例：**註解說有，程式碼沒有。**
+    // ⚠️ `pnpm typecheck` 對這種漂移完全隱形（import 了沒用到，`noUnusedLocals`
+    // 沒開，EXIT=0）—— 不可以拿 typecheck 當「接線接上了」的證據。
+    <HudBoundaryGroup labels={HUD_LABELS} resetKey={`${phase}:${round}`} retryScope="round">
       <WorldAnchorLayer />
       {/* task #139 — round-end (moment 3) champion-quote VO trigger (headless) */}
       <RoundEndVoice />
@@ -270,6 +344,13 @@ export function HudRoot(): React.JSX.Element {
               doubling. Owns its own combat gate and placement
               (hud/mobBossModel), and returns null when there is no room. */}
           <MobBossOverlay />
+          {/* 殭屍王出場演出 (owner 2026-08-02「殭屍王出場 會音效+大字講該英雄的
+              名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示淡出
+              消失」)。⚠️ 音效不在這個元件裡 —— `mobBossSpawn` 早就對到
+              audio/combatSfx 的恐怖音效，這裡再播一次會變成兩層疊音。
+              自己的閘（戰鬥階段 / 非同機多人 / 自己那個競技場）與自己的擺放
+              （hud/bossIntroModel，從降臨橫幅下緣起算），放不下就回 null。 */}
+          <BossIntroOverlay />
           {/* #247 —— 殭屍王長血條。掛在 MobBossOverlay **之後**只是 DOM 順序;
               誰蓋誰是 `bossHealthBarSpec` / `mobBossRect` 算出來的矩形決定的,
               兩個都 `position: absolute` + 同一個 z-index(#107)。 */}
@@ -311,6 +392,6 @@ export function HudRoot(): React.JSX.Element {
         </>
       )}
       {phase === "matchEnd" && <MatchEndPanel />}
-    </>
+    </HudBoundaryGroup>
   );
 }

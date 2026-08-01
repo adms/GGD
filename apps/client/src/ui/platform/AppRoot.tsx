@@ -13,6 +13,7 @@ import { AudioDirector } from "../AudioDirector";
 import { GlobalChrome } from "../GlobalChrome";
 import { HudRoot } from "../HudRoot";
 import { HudErrorBoundary } from "../HudErrorBoundary";
+import { HudBoundaryGroup, type HudBoundaryLabels } from "../HudBoundaryGroup";
 import { hudTouch } from "../hud/HudSlot";
 import { hudSlotStyle } from "../hud/hudLayout";
 import { Minimap } from "../hud/Minimap";
@@ -34,6 +35,26 @@ import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
+/**
+ * `MatchOverlay` 十個成員的位置名。理由與寫法同 `HudRoot` 的 `HUD_LABELS`
+ * （出貨 bundle 裡函式名被 esbuild 改掉了，`type.name` 取不到東西）。
+ * ⚠️ `HudRoot` 那一格叫「比賽介面」是刻意的：它自己裡面還有一層更細的
+ * `HudBoundaryGroup`，走到這一層代表 `HudRoot` 本體（不是某個面板）炸了。
+ */
+const OVERLAY_LABELS: HudBoundaryLabels = new Map<unknown, string>([
+  [HudRoot, "比賽介面"],
+  [Minimap, "小地圖"],
+  [RotateOverlay, "轉向提示"],
+  [FpsPill, "FPS 顯示"],
+  [PerfOverlay, "效能疊層"],
+  [SettingsCorner, "設定"],
+  [PauseMenu, "選單"],
+  [LeaveSettlementOverlay, "離場結算"],
+  [CheatConsole, "作弊主控台"],
+  // 裸 <div data-hud-slot="leave"> —— 用槽位字串當 key（見 hudBoundaryLabel）。
+  ["leave", "離開按鈕"],
+]);
+
 function MatchOverlay(): React.JSX.Element {
   const phase = useHud((s) => s.phase);
   // #193: leaving routes through useRequestLeave — for a player whose team is
@@ -48,7 +69,10 @@ function MatchOverlay(): React.JSX.Element {
   const ended = phase === "matchEnd";
 
   return (
-    <>
+    // 每個成員各自一層 boundary（見 ../HudBoundaryGroup）。外層 ScreenBody 還有
+    // 一個包整棵樹的 boundary 當最後一道網 —— 這一層讓「小地圖炸了」不會連
+    // 商店和血條一起帶走。resetKey 用 matchEpoch：換一場就重試壞掉的那些。
+    <HudBoundaryGroup labels={OVERLAY_LABELS} resetKey={matchEpoch} retryScope="match">
       <HudRoot />
       <Minimap />
       <RotateOverlay />
@@ -77,7 +101,7 @@ function MatchOverlay(): React.JSX.Element {
           </Btn>
         </div>
       )}
-    </>
+    </HudBoundaryGroup>
   );
 }
 
@@ -169,7 +193,7 @@ function ScreenBody({ screen }: { screen: string }): React.JSX.Element {
       // （owner 實測：「下一場戰鬥也是 介面沒有再回來了」）。
       // 有了它，React 只卸載這一棵子樹，root 活著，而 `matchEpoch` 一變就重試。
       return contentReady ? (
-        <HudErrorBoundary label="比賽介面" resetKey={matchEpoch}>
+        <HudErrorBoundary label="比賽介面" resetKey={matchEpoch} retryScope="match">
           <MatchOverlay />
         </HudErrorBoundary>
       ) : (

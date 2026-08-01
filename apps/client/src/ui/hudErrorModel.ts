@@ -49,12 +49,55 @@ export function clearHudErrors(): void {
 }
 
 /**
+ * 自動重試的次數上限。
+ *
+ * ⚠️ 為什麼要有上限：這次兇手的形狀是「某個狀態一旦出現就持續成立」
+ * （owner 說「下一場戰鬥也是 介面沒有再回來了」，所以不是一閃即逝的例外）。
+ * 對這種兇手，每次 resetKey 變化都重掛 = 每個相位切換都再炸一次、再灌一次
+ * console、再重掛一次子樹。到頂之後就停手，並且**把話改成「請重新整理」** ——
+ * 玩家需要知道等下去沒有用。
+ */
+export const HUD_BOUNDARY_RETRY_CAP = 3;
+
+/** 已經重試過這麼多次之後，還要不要再自動重試一次。 */
+export function shouldAutoRetry(failCount: number, cap = HUD_BOUNDARY_RETRY_CAP): boolean {
+  return failCount < cap;
+}
+
+/**
  * fallback 上的字。
  *
  * ⚠️ 要說出**哪裡**壞了與**還能不能玩**，不是「發生錯誤」——
  * 那等於沒說。也不要教玩家跑指令（`HudRoot` 的「Connecting to match…」
  * 有過那個前科：對 ggd.adms.ai 的家人叫出 `pnpm` 指令既沒用又嚇人）。
+ *
+ * `exhausted` = 自動重試已經用完（見 {@link HUD_BOUNDARY_RETRY_CAP}）。這時候
+ * 「下一回合會自動重試」就變成一句**謊話**，必須換掉 —— 玩家會照著它等，
+ * 而它永遠不會發生。
  */
-export function hudErrorFallbackText(label: string): string {
-  return `${label} 顯示不出來（其餘介面正常，下一回合會自動重試）`;
+/**
+ * 這一層的 boundary **什麼時候**才會重試。
+ *
+ * ⚠️ 這不是措辭偏好，是一個實測到的謊話。原本所有 fallback 都寫「下一回合會自動
+ * 重試」，而包住整個 `<MatchOverlay />` 的那一顆 resetKey 是 `matchEpoch` ——
+ * 換回合、換相位都不會動它。複驗者實測還原例外之後**等了 25 秒 HUD 沒有回來**，
+ * 而畫面上那行字還在叫玩家等。玩家會照著它等，而它永遠不會發生。
+ *
+ * 所以文案跟著 resetKey 走：`round` = `${phase}:${round}`（HudRoot 的 37 個成員），
+ * `match` = `matchEpoch`（MatchOverlay 那 10 個 + 最外層那一顆）。
+ */
+export type HudRetryScope = "round" | "match";
+
+const RETRY_WHEN: Record<HudRetryScope, string> = {
+  round: "下一回合",
+  match: "換一場",
+};
+
+export function hudErrorFallbackText(
+  label: string,
+  exhausted = false,
+  scope: HudRetryScope = "round",
+): string {
+  if (exhausted) return `${label} 顯示不出來（其餘介面正常，請重新整理頁面）`;
+  return `${label} 顯示不出來（其餘介面正常，${RETRY_WHEN[scope]}會自動重試）`;
 }

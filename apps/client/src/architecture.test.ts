@@ -72,7 +72,15 @@ describe("client architecture gate (client-08)", () => {
     for (const f of files) {
       const r = rel(f);
       if (r === "net/RoomStore.ts") continue;
-      if (/\.setState\s*\(/.test(readSource(f))) violations.push(r);
+      // ⚠️ `this.setState(` 是 **React class component** 的 API，跟這一條要守的
+      // 東西（zustand store 的每幀寫入）完全無關。剝掉它而不是整條放寬：
+      // `store.setState(` / `useX.setState(` 照樣會被抓到。
+      // 2026-08-02 `ui/HudErrorBoundary.tsx` 撞到這裡 —— 它是 React 唯一的
+      // error-catch 機制，只能是 class component，而 fallback 要真的畫出來就
+      // 必須在 componentDidCatch 裡 setState（實測：拿掉那一行，boundary 攔到了
+      // 例外卻從不 commit fallback，畫面上什麼都沒有）。
+      const src = readSource(f).replace(/\bthis\.setState\s*\(/g, "");
+      if (/\.setState\s*\(/.test(src)) violations.push(r);
     }
     expect(violations).toEqual([]);
   });
