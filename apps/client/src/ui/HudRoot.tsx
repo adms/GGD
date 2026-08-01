@@ -25,6 +25,7 @@ import { GoldLevel } from "./components/GoldLevel";
 import { PhaseTimer } from "./components/PhaseTimer";
 import { TeamLivesBar } from "./components/TeamLivesBar";
 import { SpectateNotice } from "./hud/SpectateNotice";
+import { NoChampionNotice } from "./hud/NoChampionNotice";
 import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
@@ -197,6 +198,12 @@ export function HudRoot(): React.JSX.Element {
           moment your own duel is decided (#208), and until now it did so in
           total silence. */}
       <SpectateNotice />
+      {/* 沒有英雄的那一場，說出來 (2026-08-02)。`hasChampion === false` 會讓
+          shopGate 回 mounted:false、useHudPanels 整批面板不啟用、也不會有任何
+          戰鬥數字 —— 在這之前玩家看到的是介面憑空消失，沒有一個字解釋。
+          shopGate 其實早就算出了「尚未選擇英雄」然後在同一個 return 裡丟掉它
+          （失敗形態 ②）。這個告示是純加法，一個既有的閘都沒有動。 */}
+      <NoChampionNotice />
       <TeamLivesBar />
       {/* revive circles (task #84): mounted for LIVING and DEAD players alike —
           the spectating owner is the person who most needs to see it. */}
