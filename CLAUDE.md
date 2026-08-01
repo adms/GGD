@@ -139,7 +139,16 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   Map 迭代要先排序。
 - **Colyseus `defineTypes` 是 APPEND-ONLY** —— 新欄位只能加在最後，**加錯回不去**。
   優先用 `ENTITY_FLAG` 的空位 bit（值編碼，可以改回來）。目前剩 16384 / 32768 兩格。
-- 每一次 `content/` 編輯都要跑 `pnpm content:build`，否則 `bundle.test.ts` 紅。
+- 每一次 `content/` 編輯都要跑 `pnpm content:build`，**而且要把產物一起 commit**：
+  `bundle.json` / `manifest.json` / 各集合的 `_index.json`。
+  ⚠️ **「否則 `bundle.test.ts` 紅」這句話曾經寫在這裡，而它是假的**（第三守則）——
+  `bundle.test.ts` 每一條都在 `cpSync` 出來的 temp 樹上重建再驗，它的檔頭甚至把
+  解耦當成優點寫著「makes the suite independent of whether anyone has run
+  `pnpm content:build`」。它驗的是「打包器正確」，不是「出貨的那一份最新」（失敗
+  形態 ⑤：被測的不是出貨的那個）。所以 2026-08-01 一份過期的 `bundle.json` 帶著
+  全綠的 759 條測試被 push 上線，**客戶端整個選人畫面空掉**。
+  真正的守衛是 `packages/shared/src/content/shippedBundleIsCurrent.test.ts`
+  —— 它比對 repo 裡被 commit 的那一份。它紅了不要改它，跑 build 然後 `git add content/`。
   **它現在會先跑一次嚴格 Zod 驗證再寫入**（2026-08-01 補上）—— 超過上下界的欄位在這裡
   就會被擋，訊息指名那個檔與那個欄位。
   ⚠️ **在此之前它什麼都不驗**，只重建索引，對 schema 拒絕的內容照樣 EXIT 0。上界確實
@@ -169,10 +178,46 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 3. **在 localhost 真的打一場**，把發現記進 `docs/_execution-batches.md`
 4. 重整那份文件，確認沒有讓這次更新變得不智的問題
 5. `git push` + GitHub release note（同一天只 bump 第三段）
-6. deploy 到 ggd.adms.ai → **在線上真的再打一場** → 記回 `docs/_execution-batches.md`
+6. deploy 到 ggd.adms.ai → **開啟 console 做下面的煙霧測試** → **在線上真的再打一場**
+   → 記回 `docs/_execution-batches.md`
 
 ⛔ **測試一律在 localhost 或暫存目錄，永遠不要在正式站上測。**
 
-⚠️ `ssh -A … 'nohup bash deploy.sh &'` 一次做完 pull+build **會失敗** ——
-ssh 一斷線轉發的 agent socket 就沒了，而 `git pull` 報的是誤導人的
-「correct access rights / repository exists」。**pull 在前景做完，build 才丟背景。**
+### 🔥 第 6 步的煙霧測試（30 秒，2026-08-01 事故之後補的，不准跳過）
+
+deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就是讀這一行**：
+
+```
+[client] content loaded: 119 champions (cv_xxxxxxxxxxxx) via bundle    ← 要看到這個
+[client] content load failed (…); falling back to skeleton (2 champions)  ← 看到這個就是壞了
+```
+
+⚠️ **「網站打得開」不等於 deploy 成功。** 2026-08-01 那次登入頁、大廳、版本徽章
+全部正常，`/content/bundle.json` 回 200、119 隻英雄、白名單 63 隻全部存在 ——
+**唯一的破綻只有 console 那一行**，而後果是選人畫面整個空的、沒有人能進場。
+
+原因是 `main.tsx` 的 fail-open：內容驗證失敗時它註冊 sela/thorne 骨架讓遊戲仍能開機
+（刻意的，不讓首次繪製被內容擋住），代價是**內容全毀看起來跟正常一模一樣**。
+所以那一行 log 是唯一的訊號，煙霧測試就是去讀它。
+
+順手一起看：
+- `GET /api/v1/curation/whitelist` → `champions` 不是 0（0 = 白名單被洗掉了）
+- 版本徽章要顯示 `v0.9.xx`，不是 `v0.9.15-20-g4af1b5c1`（那代表 host 沒抓 tag）
+
+### ⚠️ host 端的四個地雷（都真的踩過）
+
+1. `ssh -A … 'nohup bash deploy.sh &'` 一次做完 pull+build **會失敗** ——
+   ssh 一斷線轉發的 agent socket 就沒了，而 `git pull` 報的是誤導人的
+   「correct access rights / repository exists」。**pull 在前景做完，build 才丟背景。**
+2. **host 上沒有 `make`。** `make family-up` 一定失敗（非互動 ssh 的 PATH 也找不到），
+   直接跑 Makefile 裡的 `docker compose` 指令。
+3. **`git pull` 不會抓 tag** → 版本徽章會顯示 `v0.9.15-20-gxxxxxxx` 而不是新版號。
+   要 `git fetch --tags origin main`。
+4. ⛔ **不要跑 `family-up` 裡的 seed 步驟**（`run --rm platform -seed -starter`）——
+   那會寫玩家資料。第一次建站以外一律不跑。
+
+### 💡 只改 `content/` 的話不用 rebuild
+
+`content/` 在 host 上是 live bind-mount，**client 每次載入都重抓 `bundle.json`**。
+所以純內容修正的部署只要：`git fetch --tags && git merge --ff-only origin/main`，
+再 `docker restart ggd-game-1`（伺服器開機才讀索引）。省掉整套映像重建。
