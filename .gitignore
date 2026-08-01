@@ -96,3 +96,6 @@ content/assets/audio/voices/lines/**/*.method
 # 道具 CSV 編輯用的工作檔（tools/item-csv）—— 真值在 content/items/*.json
 # 含日期/備份變體（items-backup20260731.csv、items20260731-2.csv 這類另存新檔）。
 /items*.csv
+
+# host-deploy.sh 的回滾落腳點：host 執行期狀態，不進版本控管
+.deploy-prev-commit

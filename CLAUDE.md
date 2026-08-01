@@ -204,20 +204,33 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 - `GET /api/v1/curation/whitelist` → `champions` 不是 0（0 = 白名單被洗掉了）
 - 版本徽章要顯示 `v0.9.xx`，不是 `v0.9.15-20-g4af1b5c1`（那代表 host 沒抓 tag）
 
-### ⚠️ host 端的四個地雷（都真的踩過）
+### 🤖 部署指令只有一條 —— 不要憑記憶重打
+
+```bash
+ssh -A can@34.81.104.163 'cd /home/can/GGD && bash scripts/host-deploy.sh'
+```
+
+只改 `content/` 的話加 `--content-only`（`content/` 是 live bind-mount，
+client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要重啟 game shard）。
+想單獨重跑煙霧測試就 `--verify-only`。
+
+**這支腳本會驗證自己的後置條件並在失敗時回非零**：content bundle 的英雄數、
+白名單的英雄數、以及**版本身分不是 `UNSTAMPED-BUILD`**。守衛在
+`packages/shared/src/ops/hostDeployScript.test.ts`。
+
+### ⚠️ 它幫你擋掉的五個地雷（都真的踩過，留著是為了說明「為什麼」）
 
 1. `ssh -A … 'nohup bash deploy.sh &'` 一次做完 pull+build **會失敗** ——
    ssh 一斷線轉發的 agent socket 就沒了，而 `git pull` 報的是誤導人的
    「correct access rights / repository exists」。**pull 在前景做完，build 才丟背景。**
-2. **host 上沒有 `make`。** `make family-up` 一定失敗（非互動 ssh 的 PATH 也找不到），
-   直接跑 Makefile 裡的 `docker compose` 指令。
+2. **host 上沒有 `make`。** `make family-up` 一定失敗（非互動 ssh 的 PATH 也找不到）。
 3. **`git pull` 不會抓 tag** → 版本徽章會顯示 `v0.9.15-20-gxxxxxxx` 而不是新版號。
-   要 `git fetch --tags origin main`。
-4. ⛔ **不要跑 `family-up` 裡的 seed 步驟**（`run --rm platform -seed -starter`）——
+4. **裸的 `docker compose build` 會掉版本戳。** `GGD_BUILD_STAMP` 是 Makefile
+   算好再插進 compose 的 build arg；host 上沒有 make，所以直接跑 compose 會讓它是空的，
+   徽章寫 `UNSTAMPED-BUILD` —— 而那是「這是哪一版」的唯一答案（task #66）。
+5. ⛔ **不要跑 `family-up` 裡的 seed 步驟**（`run --rm platform -seed -starter`）——
    那會寫玩家資料。第一次建站以外一律不跑。
 
-### 💡 只改 `content/` 的話不用 rebuild
-
-`content/` 在 host 上是 live bind-mount，**client 每次載入都重抓 `bundle.json`**。
-所以純內容修正的部署只要：`git fetch --tags && git merge --ff-only origin/main`，
-再 `docker restart ggd-game-1`（伺服器開機才讀索引）。省掉整套映像重建。
+⚠️ **2026-08-02 的教訓：把地雷寫成清單是不夠的。** 那天同一次部署踩中了 3 與 4，
+而這份清單是同一個人幾小時前寫的。散文治不了「憑記憶重新推導一個五步序列」，
+**只有把它變成一支會自己驗證的程式才可以** —— 這也是為什麼上面那條指令是唯一入口。
