@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "3a0b8b307802",
+  "hash": "7aca22f70862",
   "entries": [
     {
       "id": "berserk",
@@ -27,6 +27,18 @@
       "size": 226
     },
     {
+      "id": "ingredient",
+      "path": "status-effects/ingredient.json",
+      "hash": "d024bd68f6f6",
+      "size": 224
+    },
+    {
+      "id": "light-wand-banked",
+      "path": "status-effects/light-wand-banked.json",
+      "hash": "9451fdf4cfbe",
+      "size": 279
+    },
+    {
       "id": "moon-combo",
       "path": "status-effects/moon-combo.json",
       "hash": "6e6ba7e26ae1",
@@ -37,6 +49,18 @@
       "path": "status-effects/nen-banked.json",
       "hash": "bf3fd573bd7b",
       "size": 263
+    },
+    {
+      "id": "omnislash-lock",
+      "path": "status-effects/omnislash-lock.json",
+      "hash": "08f5686a6c60",
+      "size": 501
+    },
+    {
+      "id": "omnislash-perform",
+      "path": "status-effects/omnislash-perform.json",
+      "hash": "871c9a9656fd",
+      "size": 603
     },
     {
       "id": "root",
