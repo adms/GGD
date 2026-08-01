@@ -12,6 +12,7 @@ import { LobbyScreen } from "./LobbyScreen";
 import { AudioDirector } from "../AudioDirector";
 import { GlobalChrome } from "../GlobalChrome";
 import { HudRoot } from "../HudRoot";
+import { HudErrorBoundary } from "../HudErrorBoundary";
 import { hudTouch } from "../hud/HudSlot";
 import { hudSlotStyle } from "../hud/hudLayout";
 import { Minimap } from "../hud/Minimap";
@@ -150,6 +151,9 @@ export function AppRoot(): React.JSX.Element {
 }
 
 function ScreenBody({ screen }: { screen: string }): React.JSX.Element {
+  // boundary 的重置鍵：換一場就重新掛載比賽介面再試一次。
+  // ⚠️ 沒有它，一次例外會讓介面在**這個分頁剩下的時間**都是壞的。
+  const matchEpoch = useApp((s) => s.matchEpoch);
   // Entering a match is the ONE transition that truly needs the full content
   // set. Content streams in the background from first paint, so by the time a
   // user logs in and clicks play it is almost always ready; if not, hold a
@@ -158,7 +162,19 @@ function ScreenBody({ screen }: { screen: string }): React.JSX.Element {
   const contentReady = useContentReady();
   switch (screen) {
     case "match":
-      return contentReady ? <MatchOverlay /> : <MatchContentGate />;
+      // ⚠️ 這個 boundary 是 2026-08-02 那個「介面永久消失」缺陷的止血點，
+      // 不是裝飾。React 18 在 render 期間吃到未捕捉例外會**卸載整個 root**，
+      // 而 `main.tsx` 的 `root.render` 只在開機呼叫一次 —— 所以在此之前，
+      // 比賽中任何一個 HUD 元件丟例外，玩家的介面就**這個分頁剩下的時間都是死的**
+      // （owner 實測：「下一場戰鬥也是 介面沒有再回來了」）。
+      // 有了它，React 只卸載這一棵子樹，root 活著，而 `matchEpoch` 一變就重試。
+      return contentReady ? (
+        <HudErrorBoundary label="比賽介面" resetKey={matchEpoch}>
+          <MatchOverlay />
+        </HudErrorBoundary>
+      ) : (
+        <MatchContentGate />
+      );
     case "boot":
     case "auth":
     case "lobby":
