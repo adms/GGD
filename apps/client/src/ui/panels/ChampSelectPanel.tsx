@@ -50,6 +50,7 @@ import {
   whitelistedChampionIds,
   type RosterChampion,
 } from "./champSelectFilter";
+import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { useWhitelist } from "./whitelist";
 import { ChampionProfile } from "./champselect/ProfileBlock";
 import { RulesBriefing } from "./champselect/RulesBriefing";
@@ -132,7 +133,13 @@ export function ChampSelectPanel(): React.JSX.Element {
   // 「藍水晶解鎖角色不見了」 regression. `selectableIds` is null when meta is
   // unavailable (offline): ownership is unknown, so everything is selectable and
   // the SERVER's MatchController.selectChampion stays the authoritative reject.
-  const whitelisted = useMemo(() => applyChampionWhitelist(roster, whitelist), [roster, whitelist]);
+  // 下架清單（owner 2026-08-02「預設不應該再有」）。刻意在**白名單之外**：
+  // 平台連不上時 whitelist 退成 NO_FILTER 全開,而下架是內容事實,那時也必須擋住。
+  const retired = useMemo(() => retiredChampionIds(), [roster]);
+  const whitelisted = useMemo(
+    () => applyChampionWhitelist(roster, whitelist, retired),
+    [roster, whitelist, retired],
+  );
   const { available, selectableIds } = useMemo(() => {
     if (!meta.available) return { available: whitelisted, selectableIds: null as ReadonlySet<string> | null };
     const { display, selectableIds } = rosterDisplayAndSelectable(whitelisted, meta.prices, meta.owned);
@@ -211,7 +218,7 @@ export function ChampSelectPanel(): React.JSX.Element {
     // unlocked (task #201). Ownership is only known when meta is available; the
     // server rejects an unowned pick regardless, so an offline fallback to
     // whitelist-only is still safe.
-    let pool = whitelistedChampionIds(Champions.ids(), whitelist);
+    let pool = whitelistedChampionIds(Champions.ids(), whitelist, retired);
     if (meta.available) pool = selectableIdsByOwnership(pool, meta.prices, meta.owned);
     const id = pickRandomId(pool);
     if (id) hudActions.selectChampion(id);

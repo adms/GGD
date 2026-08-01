@@ -130,11 +130,20 @@ export function whitelistFromDoc(raw: unknown): Whitelist {
 
 /**
  * True when `id` may appear on the champion-select grid at all. False for every
- * second-form body (`Emeu` alternate or `Nef1` split tier).
+ * second-form body (`Emeu` alternate or `Nef1` split tier), and false for a
+ * RETIRED champion (owner 2026-08-02「預設不應該再有」).
+ *
+ * ⚠️ `retired` 是**注入**的，不是在這裡讀 registry —— 這個模組刻意不 import
+ * registry（見檔頭）。算好的 Set 由呼叫端從
+ * `@ggd/shared/content/championRetirement` 拿。預設空集合，所以既有呼叫端
+ * 的行為完全不變。
  */
-export function isPickableChampionId(id: string): boolean {
-  return !isTransformedBody(id);
+export function isPickableChampionId(id: string, retired: ReadonlySet<string> = NO_RETIRED): boolean {
+  return !isTransformedBody(id) && !retired.has(id);
 }
+
+/** 「沒有人下架」。模組級常數而不是每次 `new Set()`，避免在熱路徑配置。 */
+const NO_RETIRED: ReadonlySet<string> = new Set();
 
 /**
  * ⚠️ SUBSTITUTE, DO NOT DELETE — the difference is the whole safety of this fix.
@@ -154,9 +163,14 @@ export function isPickableChampionId(id: string): boolean {
  * SPLIT-FORM tiers have no base to fall back to (they are ranks of one caster's
  * `Nef1` split, not halves of a pair), so those are dropped outright.
  */
-function resolveToPickable(id: string): string | null {
+function resolveToPickable(id: string, retired: ReadonlySet<string>): string | null {
   if (isSplitFormBody(id)) return null;
-  return baseFormIdOf(id);
+  const base = baseFormIdOf(id);
+  // ⚠️ 下架檢查在 baseFormIdOf **之後**：下架的是「這位英雄」，而變身態會被
+  // 解析回本體，所以只檢查傳進來的 id 會漏掉「勾了變身態 → 解析回一個已下架的
+  // 本體」這條路。兩個 id 都查是刻意的冗餘。
+  if (retired.has(id) || retired.has(base)) return null;
+  return base;
 }
 
 /**
@@ -168,6 +182,7 @@ function resolveToPickable(id: string): string | null {
 export function applyChampionWhitelist<T extends RosterChampion>(
   champs: readonly T[],
   wl: Whitelist,
+  retired: ReadonlySet<string> = NO_RETIRED,
 ): T[] {
   const byId = new Map(champs.map((c) => [c.id, c]));
   // The whitelist is compared in BASE space too: an operator who ticked only the
@@ -177,7 +192,7 @@ export function applyChampionWhitelist<T extends RosterChampion>(
   const out: T[] = [];
   const seen = new Set<string>();
   for (const entry of champs) {
-    const id = resolveToPickable(entry.id);
+    const id = resolveToPickable(entry.id, retired);
     if (id === null) continue;
     if (allowed && !allowed.has(id)) continue;
     if (seen.has(id)) continue;
@@ -193,10 +208,15 @@ export function applyChampionWhitelist<T extends RosterChampion>(
 }
 
 /** Whitelisted subset of champion ids (for the 🎲 random pick). */
-export function whitelistedChampionIds(ids: readonly string[], wl: Whitelist): string[] {
+export function whitelistedChampionIds(
+  ids: readonly string[],
+  wl: Whitelist,
+  retired: ReadonlySet<string> = NO_RETIRED,
+): string[] {
   return applyChampionWhitelist(
     ids.map((id) => ({ id, name: "" })),
     wl,
+    retired,
   ).map((c) => c.id);
 }
 

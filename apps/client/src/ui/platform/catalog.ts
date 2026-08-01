@@ -7,6 +7,7 @@
 import type { ChampionDisplay } from "./championDisplay";
 import { championDisplayFrom } from "./championDisplay";
 import { applyChampionWhitelist, type Whitelist } from "../panels/champSelectFilter";
+import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { CHAMPION_CURRENCY, SKIN_CURRENCY, type StoreCurrency } from "./currency";
 import type { Catalog, CatalogSkin, SkinDoc, Wallet } from "./types";
 
@@ -124,7 +125,8 @@ export function deriveStoreRows(
  * is see the whitelist (curation → admin → wallet is an import cycle).
  */
 export function storeRowsForWhitelist(rows: readonly ChampionRow[], wl: Whitelist): ChampionRow[] {
-  return applyChampionWhitelist(rows, wl);
+  // 下架的不上架 —— 讓玩家花水晶解鎖一隻 QWER 全空的英雄是最糟的失敗形態。
+  return applyChampionWhitelist(rows, wl, retiredChampionIds());
 }
 
 /**

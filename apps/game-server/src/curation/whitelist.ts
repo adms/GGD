@@ -19,6 +19,7 @@
  * on the client, not as an unplayable match. Set GGD_WHITELIST_BYPASS=1 to
  * force allow-all for local testing.
  */
+import { isRetiredChampionId } from "@ggd/shared/content/championRetirement";
 import type { ItemId } from "@ggd/shared/ids";
 import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "../config/platformUrl";
 
@@ -68,7 +69,14 @@ export class Whitelist {
     return new Whitelist(null, true);
   }
 
+  /**
+   * ⚠️ 下架檢查在 `bypass` **之前**,那是重點。`bypass` 是 fail-open —— 平台連不上
+   * 時整份白名單消失、119 隻全開。下架不是營運狀態是內容事實(QWER 全空的半成品),
+   * 所以它必須在 fail-open 那條路上也擋得住。同理它也擋在
+   * `filterChampions` / `hasAnyChampion` 的 bypass 之前。
+   */
   allowsChampion(id: string): boolean {
+    if (isRetiredChampionId(id)) return false;
     return this.bypass || this.champions.has(id);
   }
   allowsItem(id: string): boolean {
@@ -80,7 +88,7 @@ export class Whitelist {
 
   /** Keep only whitelisted champion ids (identity when bypassing). */
   filterChampions(ids: readonly string[]): string[] {
-    return this.bypass ? [...ids] : ids.filter((id) => this.champions.has(id));
+    return ids.filter((id) => this.allowsChampion(id));
   }
   /** Keep only whitelisted item ids (identity when bypassing). */
   filterItems(ids: readonly ItemId[]): ItemId[] {
@@ -94,8 +102,7 @@ export class Whitelist {
    * concern surfaced via champ-select).
    */
   hasAnyChampion(candidateIds: readonly string[]): boolean {
-    if (this.bypass) return candidateIds.length > 0;
-    return candidateIds.some((id) => this.champions.has(id));
+    return candidateIds.some((id) => this.allowsChampion(id));
   }
 
   get championCount(): number {

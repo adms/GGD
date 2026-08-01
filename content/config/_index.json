@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "8f76d1d2419b",
+  "hash": "d250c4a77e9d",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -39,6 +39,12 @@
       "size": 1445
     },
     {
+      "id": "boss-intro",
+      "path": "config/boss-intro.json",
+      "hash": "3af93a342d44",
+      "size": 2613
+    },
+    {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
       "hash": "4f9ccff9d6c8",
@@ -47,7 +53,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "619ff8e770f8",
+      "hash": "95953381ff27",
       "size": 775
     },
     {
@@ -59,8 +65,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "01f5a36475f4",
-      "size": 1017
+      "hash": "b09901aae3f1",
+      "size": 1102
     },
     {
       "id": "damage-colors",
@@ -87,6 +93,12 @@
       "size": 1542
     },
     {
+      "id": "item-card",
+      "path": "config/item-card.json",
+      "hash": "aa0245bab4d6",
+      "size": 1757
+    },
+    {
       "id": "model-lod",
       "path": "config/model-lod.json",
       "hash": "f62fe1b47808",
@@ -95,8 +107,14 @@
     {
       "id": "regen",
       "path": "config/regen.json",
-      "hash": "7d25d6d271fe",
-      "size": 1169
+      "hash": "9f060d545e41",
+      "size": 1428
+    },
+    {
+      "id": "roster",
+      "path": "config/roster.json",
+      "hash": "52bb714efd5e",
+      "size": 588
     },
     {
       "id": "round-grade",
@@ -151,6 +169,12 @@
       "path": "config/vfx-families.json",
       "hash": "5fc904749741",
       "size": 27886
+    },
+    {
+      "id": "victory-fx",
+      "path": "config/victory-fx.json",
+      "hash": "23bbb1946e37",
+      "size": 794
     },
     {
       "id": "victory-taunts",

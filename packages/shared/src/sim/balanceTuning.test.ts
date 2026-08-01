@@ -157,19 +157,24 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 9.0 (owner 2026-07-30 二次:6=>9,依 TTK sweep 建議值)", () => {
+  it("出貨的 combat-env 表把生命倍率鎖在 4.0 (owner 2026-08-02:「預設成 4 就好」)", () => {
     cover("balance-265-env-multiplier");
-    // 這個數字 owner 已經來回改過三次:#265 從 4 降到 3、2026-07-29 升回 4、
+    // 這個數字 owner 來回改過五次:#265 從 4 降到 3、2026-07-29 升回 4、
     // 2026-07-30 升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
-    // 與初始生命 300→650),同日再升到 **9** —— TTK sweep 實測 x6 的自然淘汰
-    // 平均只有 161s,離「平均 3 分鐘」的目標還差一截,模擬器的建議值就是 9.0。
-    // ⚠️ 代價:stall(靠火圈收尾的比例)會從 50% 升到約 55%,要在線上實打時盯。
+    // 與初始生命 300→650),同日再依 TTK sweep 升到 9,2026-08-02 直接指定回 **4**。
+    //
+    // ⚠️ 4.0 **與模擬器的建議相反**,那是刻意的,不是漏掉:#153 的 TTK sweep 量到
+    // x6 的自然淘汰平均只有 161s,建議值是 9.0。owner 指定 4 = 回合會明顯變短、
+    // 靠火圈收尾(stall)的比例會上升。這是 owner 的手感裁決,模擬器的建議是輸入不是結論。
+    // 下次有人「照 sweep 把它調回 9」之前,先問 owner —— 這一行不是忘了更新。
+    //
     // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
-    // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可。
+    // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可
+    // (`docs/_execution-batches.md` 第 6 條那一行也要,`docEnvTruth` 守衛會提醒)。
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(9.0);
+    expect(doc.multipliers.maxHealth).toBe(4.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
   });
@@ -406,8 +411,6 @@ describe("#270 競技場燃燒是真實傷害 (balance-270-true-burn)", () => {
           startSec: 0,
           shrinkSec: 20,
           minRadius: 0.5,
-          burnPctPerSecStart: 0.04,
-          burnPctPerSecEnd: 0.2,
           maxPctPerSec: 1,
         },
         DT,
@@ -452,8 +455,6 @@ describe("#270 競技場燃燒是真實傷害 (balance-270-true-burn)", () => {
             startSec: 0,
             shrinkSec: 20,
             minRadius: 0.5,
-            burnPctPerSecStart: 0.04,
-            burnPctPerSecEnd: 0.2,
             maxPctPerSec: 1,
           },
           DT,

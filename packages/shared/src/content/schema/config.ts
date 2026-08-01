@@ -35,6 +35,9 @@ import {
   TAUNT_LEASH_MAX,
   TAUNT_MAX_TARGETS,
 } from "../../sim/taunt";
+// 火圈灼燒曲線的出貨值 —— 定義在 sim/fireRing.ts（sim 缺欄位時退回同一份），
+// schema 只是把它接上 Zod 的 `.default()`。抄第二份就是兩個「沒填的話燒多少」。
+import { DEFAULT_BURN_CURVE } from "../../sim/fireRing";
 
 /**
  * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
@@ -43,10 +46,11 @@ import {
  * #195 turned the ring from a global burn timer into a SHRINKING ring: it
  * ignites `startSec` combat-elapsed seconds in, contracts from the zone
  * boundary to `minRadius` over `shrinkSec`, and burns only the champions
- * OUTSIDE it, at a rate ramping `burnPctPerSecStart` → `burnPctPerSecEnd` with
- * the shrink progress. `stepSec`/`pctPerStep` are gone with the staircase they
- * described — the block is `.strict()`, so an old doc fails loudly instead of
- * silently arming a ring with no shrink.
+ * OUTSIDE it, at a rate read off the `burnCurve` breakpoint table. `stepSec`/
+ * `pctPerStep` are gone with the staircase they described, and (owner
+ * 2026-08-02) `burnPctPerSecStart`/`burnPctPerSecEnd` are gone with the
+ * two-point ramp THEY described — the block is `.strict()`, so an old doc fails
+ * loudly instead of silently arming a ring with the wrong burn.
  *
  * Percentages are fractions of each victim's OWN maxHealth; the burn ignores
  * armor/MR (it is TRUE damage) and the combat-env damage knob. Optional +
@@ -65,12 +69,72 @@ export const zFireRingConfig = z
      * point and make "dist exactly 0" a measure-zero safe spot.
      */
     minRadius: z.number().nonnegative().default(0.5),
-    /** per-second burn (fraction of maxHealth) at ignition, outside the ring */
-    burnPctPerSecStart: z.number().min(0).max(1).default(0.04),
-    /** per-second burn (fraction of maxHealth) once the ring is fully closed */
-    burnPctPerSecEnd: z.number().min(0).max(1).default(0.2),
-    /** safety cap on the per-second burn rate (fraction of maxHealth); absent = uncapped */
-    maxPctPerSec: z.number().min(0).max(1).optional(),
+    /**
+     * 灼燒曲線 (owner 2026-08-02):
+     *
+     *   「火圈應該是**隨秒數越高越燒越痛**的生命百分比的真實傷害
+     *     (極端情形第100秒後燒100%真實傷害=必死)」
+     *
+     * 一張斷點表，x 是**火圈點燃後**經過的秒數，y 是那一刻每秒燒掉的自身最大
+     * 生命比例；中間線性內插，最後一列之後**維持**在那個值。
+     *
+     * ⚠️ 它取代了 `burnPctPerSecStart` / `burnPctPerSecEnd`，而不是和它們並存。
+     * 舊的兩點式 x 軸是**收圈進度**，20 秒就飽和 —— owner 要的「越燒越痛」在那
+     * 個座標系裡根本表達不出來。兩個欄位並存就是兩個地方回答「這一刻燒多少」，
+     * 也就是 `tauntRules.priority` 那份驗屍報告寫的同一種 drift。
+     *
+     * ⚠️ **x 是「點燃後」不是「回合第幾秒」，這一格刻意不是開關。**
+     * `extendRoundForBoss` 把起燃往後推 180 秒，決賽輪則直接換成 180 秒；用
+     * 回合絕對秒數查表的話，王局的圈一點燃就已經走完整張表 —— 實測「圈外站著
+     * 不回來」從 11.60 秒死變成 1.03 秒死，20 秒的收圈張力整個塌掉。一個只有
+     * 一種取值不是壞掉的「決策點」不是決策點。
+     * owner 的「第 100 秒」因此是**出貨 `startSec: 60` 之下**的 `sec: 40`；
+     * 後台頁把兩種時鐘並排顯示，所以改 `startSec` 時看得見錨點跑到哪。
+     *
+     * 上下界（CLAUDE.md「欄位要有上界，不是只有下界」）:
+     *   · `sec` 0～600 —— 一個圈最長能燒多久是 `hardDeadline − hardCap`（出貨
+     *     40 秒，上界情境下也不到 3600），600 = 10 分鐘已經遠在任何人會授權的
+     *     回合長度之外，純粹是誤植守衛。
+     *   · `pctPerSec` 0～2 —— 1.0 = 100 %/秒 = 一秒燒完一條滿血 = owner 說的
+     *     「必死」。上界**刻意留在必死之上**：2.0 = 0.5 秒 = 15 個 tick，紅
+     *     畫面與灼燒音效還來得及被看見/聽見；再往上火圈就不是危險而是一條瞬殺
+     *     線，那是 `minRadius` 幾何的工作，不是燒傷的。
+     *   · 2～8 列 —— 一個點畫不出「越燒越痛」（而且 `compileBurnCurve` 對空表
+     *     會整張退回出貨曲線，等於操作者存了一列、遊戲照舊）；8 列與
+     *     `attackRangeCurve` 同，也讓每 tick 的掃描最多 7 次比較。
+     */
+    burnCurve: z
+      .array(
+        z
+          .object({
+            /** 火圈**點燃後**經過的秒數（不是回合秒數） */
+            sec: z.number().min(0).max(600),
+            /** 這一刻每秒燒掉的自身最大生命比例。1 = 100 %/秒 = 一秒必死 */
+            pctPerSec: z.number().min(0).max(2),
+          })
+          .strict(),
+      )
+      .min(2)
+      .max(8)
+      // 第一列必須是點燃當下,否則「起燃時每秒燒多少」有兩個答案:表上第一列的
+      // 值,和 `fireRingRatePerSec` 在第一列之前那段夾出來的平值。
+      .refine((pts) => pts[0]!.sec === 0, {
+        message: "match.fireRing.burnCurve 的第一列必須是 sec: 0（火圈點燃的那一刻）",
+      })
+      // 嚴格遞增:重複的 sec 會讓內插的分母是 0,順序錯掉的表在畫面上完全正常
+      // 而燒傷是亂的。
+      .refine((pts) => pts.every((p, i) => i === 0 || p.sec > pts[i - 1]!.sec), {
+        message:
+          "match.fireRing.burnCurve 必須依 sec 由小到大排列，而且不可以有重複的秒數",
+      })
+      .default(DEFAULT_BURN_CURVE as { sec: number; pctPerSec: number }[]),
+    /**
+     * 每秒燒傷的安全上限（佔最大生命）。留白 = 不設限（曲線自己說了算）。
+     *
+     * ⚠️ 上界和 `burnCurve[].pctPerSec` 一樣是 2，理由同上 —— 一道比曲線本身
+     * 還低的牆會讓操作者調了曲線卻沒有任何效果，那是最難查的一種「改了沒用」。
+     */
+    maxPctPerSec: z.number().min(0).max(2).optional(),
     /**
      * 回合硬上限 (#248). owner 2026-08-01:
      *
@@ -175,8 +239,7 @@ export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   startSec: 60,
   shrinkSec: 20,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.04,
-  burnPctPerSecEnd: 0.2,
+  burnCurve: DEFAULT_BURN_CURVE as { sec: number; pctPerSec: number }[],
   maxPctPerSec: 1,
   roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
@@ -3328,13 +3391,17 @@ export const zConfigBodyScaleDoc = z
   .strict();
 
 /**
- * config.regen@1 — 百分比回血規則 (GH#253).
+ * config.regen@1 — 百分比回血 **與百分比扣血** 規則 (GH#253).
  *
  * 每一格的語意寫在 `packages/shared/src/sim/regenRules.ts`。
  *
- * ⚠️ 這份文件的出貨值**本身不改變任何一場比賽**:百分比只有在英雄卡填了
- * `healthRegenPctOfMax` 時才啟動,而出貨內容裡只有海克力斯 - Berserker
- * (`godie-hapm`)填了。`floorPerSec: 0` 也和現況一致 —— 現況本來就沒有保底。
+ * ⚠️ 兩族欄位都是「英雄卡有填才啟動」:
+ *   · 回血族(`pctEnabled` / `pctMode` / `floorPerSec` …)看英雄卡的
+ *     `healthRegenPctOfMax` —— **出貨內容目前沒有任何一位填它**,所以這一族
+ *     現在對每一場比賽都是 no-op;
+ *   · 扣血族(`drain*`)看 `healthDrainPctOfMax` —— 出貨只有海克力斯 - Berserker
+ *     (`godie-hapm`,0.01)填了,而 `drainFloorPctOfMax: 0.01` 就是 owner
+ *     2026-08-02 的「直到生命不足 1%」。
  *
  * ⚠️ **缺文件 = `DEFAULT_REGEN_RULES`(出貨值)**,不是空表:一個 undefined 的
  * `pctMode` 會讓 `healthRegenPerSec` 兩條分支都不走 = 全場沒有人回血。
@@ -3365,11 +3432,287 @@ export const zConfigRegenDoc = z
      * 隨機英雄殭屍王也會每秒回 1% 最大生命。
      */
     championsOnly: z.boolean(),
+    /** 百分比**扣血**的總開關(出貨 true)。關 = 英雄卡上的自傷全部當作沒填。 */
+    drainEnabled: z.boolean(),
+    /**
+     * **決策點**:扣血停在「最大生命的」這個比例。出貨 `0.01` = owner 2026-08-02
+     * 的「直到生命不足 1%」。上界 0.5 是誤植守衛 —— 地板高過半條命的話,扣血在
+     * 絕大多數局面裡一點事都不會發生。
+     * ⚠️ 填 0 也扣不死人:扣血不走傷害管線,沒有人會設 `alive`,所以實作把有效
+     * 地板夾在 1 點之上(`regenRules.ts` 的 `MIN_ALIVE_HP`)。
+     */
+    drainFloorPctOfMax: z.number().min(0).max(0.5),
+    /**
+     * **決策點**:打到地板那一刻停手還是夾住 —— 兩者在「同時被敵人打」時完全不同。
+     * `stop`(出貨)= 扣血自己不再往下,但也不把血條往上拉,敵人照樣殺得死他
+     * (自傷不是無敵,這是 owner 的裁決)。`clamp` = 每 tick 夾在地板 = 免疫致死。
+     */
+    drainFloorMode: z.enum(["stop", "clamp"]),
+    /** **決策點**:扣血只給英雄(出貨 true)。關掉之後殭屍王也會自己掉血。 */
+    drainChampionsOnly: z.boolean(),
+  })
+  .strict();
+
+/**
+ * config.victory-fx@1 — 勝利煙火的開關 (#93 / #235).
+ *
+ * owner 2026-08-02 實戰回饋：「天空的火焰似乎沒有被移除，我懷疑是煙火的時間太長」
+ * → 裁決「請你直接取消煙火(變成後台開關)」。**出貨值兩格都是關的。**
+ *
+ * ⚠️ 程式碼一行都沒有刪。「回合結束要不要放煙火」是一個決策點，不是一個 bug
+ * （CLAUDE.md 第一守則）——owner 改主意時是後台打一個勾，不是再改一次程式碼
+ * 加重新部署。GH#251 的 `arenaFire` 是同一個形狀，也是同一個理由。
+ *
+ * ⚠️ **兩格分開，不是一格。** 兩層是刻意不同的效果（`fireworkMath` 的檔頭寫著
+ * 「deliberately NOT the same effect at two sizes」），而且成本與頻率差一個
+ * 量級：回合小煙火一場放 3–5 次、峰值 +28 個 ParticleSystem、持續約 1.3 秒；
+ * 全場結束的烤雞煙火一場放一次、峰值 +8 個 ParticleSystem 加一個自訂 shader 的
+ * mesh、持續約 4.3 秒。用一格把兩者綁死，等於下次 owner 想「只留吃雞」時又要
+ * 改一次程式。
+ *
+ * ⚠️ 這一份**不管畫面變灰／變暗**（`render/victoryPresentation` 的 wash）、
+ * 也不管勝利的嘲弄語音（`config/victory-taunts.json`）。owner 要拿掉的是**煙火**，
+ * 把結算畫面的底色和語音一起關掉會是一個沒有人要求的迴歸。
+ */
+export const zVictoryFireworkTier = z
+  .object({
+    /** 這一層煙火要不要放。false = 一個粒子系統都不會被建立。 */
+    enabled: z.boolean(),
+  })
+  .strict();
+
+export const zConfigVictoryFxDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.victory-fx@1"),
+    note: z.string().optional(),
+    /** 每一回合贏的時候，天空那一輪小煙火（#235，約 1.3 秒）。 */
+    roundVolley: zVictoryFireworkTier,
+    /** 全場結束吃雞時，那隻全螢幕的烤雞煙火（#93，約 4.3 秒）。 */
+    matchChicken: zVictoryFireworkTier,
+  })
+  .strict();
+
+/**
+ * config.item-card@1 — 道具卡片的**排版與配色**（`config/item-card.json`）。
+ *
+ * owner 2026-08-02, verbatim:
+ *   「卡片道具的排版連在一起不好閱讀，關於效果及數值的部分應該要特殊顏色表示」
+ *   「先做傳說武器道具開放的49個的部分就好」
+ *   「別漏掉 [隱形]、[焚身] ...之類」
+ *
+ * ── 為什麼是一份 config 文件，不是元件裡的 if-else ──────────────────────────
+ * owner 手寫的 49 支傳說文案把機制關鍵字寫成 `[標記]`（`[焚身]`、`[緩慢]`…），
+ * 而那些字**不准被改**（`legendary49OwnerText.test.ts` 逐位元組比對）。所以卡片
+ * 只能在**渲染時**解析：把 `[xx]` 認成 chip、把數值認成 token。那就需要一張
+ * 「標記 → 分類」對照表，而這張表**一定會長**：owner 每寫一支新道具就可能發明
+ * 一個新標記。表寫在元件裡 = 每新增一個標記就是一次 rebuild + 重啟容器；表寫在
+ * `content/` = 存檔就生效（第一守則的那個理由，這裡是第 N 次）。
+ *
+ * ── 四個分類是 owner 核准的語意，不是這裡發明的 ─────────────────────────────
+ *   `stat`    屬性加成（純數值，不需要任何事件）
+ *   `active`  主動效果（需觸發：普攻、施法、擊殺、受擊…）
+ *   `passive` 被動效果（常駐，沒有觸發事件）
+ *   `debuff`  負面/控場（作用在敵人身上）
+ *
+ * ⚠️ 分類線最模糊的一條是 active↔passive。這裡採用的判準是「**有沒有一個離散的
+ * 觸發事件**」：`[擴散]`（普攻濺射）算 active，`[流星]`（每秒自動）算 passive。
+ * 這是判斷，不是真理 —— 所以它是一格資料。覺得 On-Hit 該算常駐，改這份 JSON 的
+ * 一列即可，不要回來改程式。
+ *
+ * ── 未知標記不可以讓卡片壞掉 ────────────────────────────────────────────────
+ * `unknownCategory` 是表上查不到的標記落到哪一類。它存在的理由是失敗形態：
+ * owner 明天寫一支新道具用了新標記，卡片必須照常畫出來（chip 有顏色、有分行），
+ * 只是分類是預設的那一類。
+ */
+export const zItemCardCategory = z.enum(["stat", "active", "passive", "debuff"]);
+
+/** 一個分類的畫面樣子：中文標籤 + 它的專用色。 */
+const zItemCardCategoryStyle = z
+  .object({
+    /** chip 旁邊那個分類名（玩家看得到）。 */
+    label: z.string().min(1).max(12),
+    /** 這一類 chip 的文字/邊框色。卡片專用配色，刻意不沿用戰鬥飄字那五個色。 */
+    color: zColorHex,
+  })
+  .strict();
+
+export const zConfigItemCardDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.item-card@1"),
+    note: z.string().optional(),
+    /** 四個分類各自的標籤與顏色。 */
+    categories: z
+      .object({
+        stat: zItemCardCategoryStyle,
+        active: zItemCardCategoryStyle,
+        passive: zItemCardCategoryStyle,
+        debuff: zItemCardCategoryStyle,
+      })
+      .strict(),
+    /** 數值 token（`+87`、`30%`、`0.6秒`…）的顏色 —— owner 要的「數值特殊顏色」。 */
+    numberColor: zColorHex,
+    /** 解說/歷史那一段的顏色（刻意比效果暗，讓效果先被讀到）。 */
+    loreColor: zColorHex,
+    /** 表上查不到的標記落到哪一類 —— 新標記絕不可以讓卡片壞掉。 */
+    unknownCategory: zItemCardCategory,
+    /**
+     * 標記 → 分類。key 是**方括號裡的原字**，一字不差（`On-Hit` 與 `OnHit` 是
+     * 兩列，因為 owner 的原稿兩種都寫過，而原稿不准改）。
+     */
+    markers: z.record(z.string().min(1), zItemCardCategory),
+    /**
+     * 方括號裡其實是**內嵌數值**而不是關鍵字的那些字串，照數值上色、不畫成 chip。
+     *
+     * 這一格不是為了通用性發明的：49 支裡真的有一個 ——
+     * 虛哭神去（godie-i007）的 `[自身已損失的生命百分比數值(0~100)]`。owner 用
+     * 方括號當「這裡填一個值」的佔位符，不是當關鍵字。把它畫成 chip 會出現一個
+     * 20 字寬的分類標籤，那就是排版壞掉。
+     */
+    inlineValueMarkers: z.array(z.string().min(1)),
+    /**
+     * 哪些整行的字是**段落標題**而不是內容（`效能`、`解說`、`歷史`…）。
+     * 比對時會先去掉結尾的全形/半形冒號 —— 狂暴軒轅劍寫的是 `效能：`。
+     */
+    efficacyHeadings: z.array(z.string().min(1)),
+    /** 同上，但這些標題以下的內容是**解說**（暗色、不解析數值）。 */
+    loreHeadings: z.array(z.string().min(1)),
+  })
+  .strict();
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * config.boss-intro@1 —— 殭屍王出場演出 (owner 2026-08-02)
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * owner 2026-08-02：「殭屍王出場 會音效+大字講該英雄的名言，然後跳出該英雄的
+ * 描述及攻略注意要點及弱點等提示，五秒後提示淡出消失」
+ *
+ * ── 「該英雄」是誰：**每次召喚都不一定是同一個人** ─────────────────────────
+ * `mobWaves.boss.championSource` 的出貨值是 `"random"`（owner 2026-07-29
+ * 「特殊殭屍 殭屍王 預設是隨機」），所以王借的是**當回合抽到的那位英雄**的臉、
+ * 數值與模型 —— 不是固定的喪標麥可。抽籤發生在 arm time
+ * （`sim/mobs.mobRulesFromConfig` 的 `mobKindChampion`），結果現在被寫進
+ * `MobBossRules.championId` 並隨 `mobBossSpawn` 過線，所以這一頁的內容是
+ * 「**這一隻**王穿的是誰」查出來的，不是猜的。
+ *
+ * ⚠️ 這就是為什麼**逐英雄的文案不能寫死在程式裡**：可能出場的是 120 位裡的
+ * 任何一位。缺資料是常態而不是例外，所以 `bossIntroContent` 的契約是
+ * 「只吐存在的段落」，不是「缺一段就整個不畫」。
+ *
+ * ── 名言：**今天沒有這份資料，而且我們沒有編造它** ────────────────────────
+ * 每位英雄的名言是 GH#139 / #142，兩張都還是 pending：`champion@1` 沒有
+ * `quote` 欄位，`config/victory-taunts.json` 裡的是**嘲弄台詞**（對輸家講的
+ * 原創挖苦），不是那個角色的名言，拿來當名言用是張冠李戴。
+ * 所以 {@link zBossIntroChampionEntry} 有 `quote` 這一格、出貨值**全部留空**，
+ * 由 owner（或 #139）填。空的時候大字整段不畫 —— 不是畫一個空框，也不是塞一句
+ * 我們自己寫的台詞。
+ *
+ * ── 為什麼逐英雄文案在 config 而不在 champion doc ───────────────────────
+ * 和 `config/victory-taunts.json` 同一個形狀（那份也是 `championId -> 文案`）：
+ * 演出文案是**演出**的資料，不是英雄的定義；放在這裡，一份文件就能看完整場
+ * 演出要講什麼，也不用為了一句提示去動 120 份 champion doc。
+ */
+export const zBossIntroChampionEntry = z
+  .object({
+    /**
+     * 大字名言。**出貨一律空字串**（見上）。空 = 大字那一段整段不畫。
+     * ⚠️ 這一格不是「隨便寫一句氣勢的話」；它是那個角色**原作裡的名言**，
+     * 沒有考據來源就留空。
+     */
+    quote: z.string().max(80).optional(),
+    /** 攻略注意要點 —— 「打這隻的時候要記得做什麼」。 */
+    tips: z.array(z.string().min(1).max(60)).max(6).optional(),
+    /** 弱點 —— 「牠哪裡可以被吃」。 */
+    weaknesses: z.array(z.string().min(1).max(60)).max(6).optional(),
+    /** 這幾行是怎麼推導出來的（給下一個編輯的人看，不上畫面）。 */
+    authoringNote: z.string().max(600).optional(),
+  })
+  .strict();
+
+export const zConfigBossIntroDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.boss-intro@1"),
+    note: z.string().optional(),
+    /**
+     * **決策點**：整段出場演出要不要存在。關掉 = 只剩既有的 4.6 秒降臨橫幅與
+     * 恐怖音效，名言／描述／要點／弱點一格都不畫。止血閥：這一段吃掉螢幕中央
+     * 走廊好幾秒，線上覺得礙眼時要能在不重新部署的情況下關掉。
+     */
+    enabled: z.boolean(),
+    /**
+     * 提示停留幾秒才開始淡出（owner 明說五秒）。
+     * ⚠️ 這一格是欄位不是常數，因為 owner 對時長一向會調（火圈、商店倒數、
+     * 死亡淡出都被改過）。上界 30 是誤植守衛：5 打成 50 會讓提示蓋著整場前半。
+     */
+    introHoldSec: z.number().min(0).max(30),
+    /** 淡出花幾秒。0 = 直接消失（不建議：瞬間消失讀起來像掉幀）。 */
+    fadeSec: z.number().min(0).max(5),
+    /**
+     * **決策點**：描述最多顯示幾個字，超過截斷加省略號。
+     * champion doc 的 `description` 是完整故事（喪標麥可那一份 400 字以上），
+     * 整段搬上戰鬥畫面就是一面牆。0 = 不顯示描述那一段。
+     */
+    descriptionMaxChars: z.number().int().min(0).max(400),
+    /** 最多列幾條攻略要點（超過的不畫）。0 = 不顯示這一段。 */
+    maxTips: z.number().int().min(0).max(6),
+    /** 最多列幾條弱點（超過的不畫）。0 = 不顯示這一段。 */
+    maxWeaknesses: z.number().int().min(0).max(6),
+    /** championId -> 這一隻王穿上那張臉時要講什麼。沒有的 key = 那位沒有文案。 */
+    champions: z.record(zBossIntroChampionEntry),
+  })
+  .strict();
+
+/**
+ * config.roster@1 — **哪些英雄已經下架**（owner 2026-08-02:「預設不應該再有」）。
+ *
+ * ── 為什麼這是一份文件而不是一張寫死的表 ─────────────────────────────────
+ *
+ * 前例是 `championForms.ts` 的 `CHAMPION_FORM_PAIRS`：那也是一條「這隻不可以被
+ * 選」的規則，而它寫死在 TS 裡。下架**不一樣** —— 它是 owner 的內容裁決，會隨
+ * 內容補完而改變（今天下架是因為技能沒做完，做完就該上架），寫死等於每改一次
+ * 主意就要 rebuild + 重啟容器。`content/` 是 host 上的 live bind-mount，
+ * 這一份存檔就生效。CLAUDE.md 第一守則。
+ *
+ * ── 為什麼不是白名單就好 ─────────────────────────────────────────────────
+ *
+ * ⚠️ 白名單**擋不住這件事**，兩個洞：
+ *   ① 平台連不上時客戶端退到 `NO_FILTER`（champSelectFilter 的 `NO_FILTER`），
+ *      **整份 119 隻全開**。localhost 與任何一次平台故障都走這條，
+ *      而我們的試玩幾乎都在 localhost —— 也就是白名單那一格在我們自己看得到的
+ *      環境裡永遠是 no-op。
+ *   ② 伺服器端 `CurationWhitelist.bypass` 同理。
+ * 而且白名單是**營運狀態**（後台勾選、可被一鍵重設覆蓋），下架是**內容事實**。
+ * 一個手滑的勾選不應該把技能名字全是 `"none"` 的半成品放回選人畫面。
+ * 所以這條規則刻意放在白名單**之外**，兩邊都擋。
+ *
+ * ── 出貨的兩隻 ───────────────────────────────────────────────────────────
+ *
+ * `godie-e00u` 十六夜Sakuya 與 `godie-u01f` 黑化張飛：各 5 支技能裡有 **4 支
+ * `name: "none"`**（QWER 全部），也就是選到就是四格空技能。owner 2026-07-30
+ * 說下架，2026-08-02 再確認一次「預設不應該再有」。
+ */
+export const zConfigRosterDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.roster@1"),
+    note: z.string().optional(),
+    /**
+     * 已下架的英雄 id。這些 id **不會**出現在選人畫面、大廳英靈殿、商店英雄列，
+     * 隨機也抽不到，伺服器直接拒絕，**不管白名單是什麼狀態**。
+     *
+     * ⚠️ 這裡放的是 id 不是名字：名字有 19 組重複（變身對），用名字會誤傷本體。
+     * ⚠️ 空陣列 = 沒有人下架，是合法且有意義的狀態（全部上架）。
+     */
+    retiredChampions: z.array(z.string()),
   })
   .strict();
 
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
+  zConfigRosterDoc,
+  zConfigBossIntroDoc,
   zConfigMatchDoc,
   zConfigStoreDoc,
   zConfigArenaRulesDoc,
@@ -3398,11 +3741,23 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigTauntDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
+  zConfigVictoryFxDoc,
+  zConfigItemCardDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
 export type ConfigBodyScaleDoc = z.infer<typeof zConfigBodyScaleDoc>;
 export type ConfigRegenDoc = z.infer<typeof zConfigRegenDoc>;
+export type VictoryFireworkTier = z.infer<typeof zVictoryFireworkTier>;
+export type ConfigVictoryFxDoc = z.infer<typeof zConfigVictoryFxDoc>;
+/** 道具卡片的四個語意分類（owner 2026-08-02 核准）。 */
+export type ItemCardCategory = z.infer<typeof zItemCardCategory>;
+export type ConfigItemCardDoc = z.infer<typeof zConfigItemCardDoc>;
+/** 解析後的煙火政策 —— 兩層各自的開關。 */
+export interface VictoryFxPolicy {
+  roundVolley: VictoryFireworkTier;
+  matchChicken: VictoryFireworkTier;
+}
 export type ConfigVoxelBodiesDoc = z.infer<typeof zConfigVoxelBodiesDoc>;
 export type ConfigDoc = z.infer<typeof zConfigMatchDoc>;
 export type ConfigMatchDoc = z.infer<typeof zConfigMatchDoc>;
@@ -3447,6 +3802,48 @@ export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
 export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;
 export type ConfigTauntDoc = z.infer<typeof zConfigTauntDoc>;
+export type ConfigRosterDoc = z.infer<typeof zConfigRosterDoc>;
+export type BossIntroChampionEntry = z.infer<typeof zBossIntroChampionEntry>;
+export type ConfigBossIntroDoc = z.infer<typeof zConfigBossIntroDoc>;
+
+/**
+ * 出貨預設 —— `content/config/boss-intro.json` 讀不到（舊部署、內容載入失敗、
+ * 或 overlay 存了一份壞的）時，出場演出退回到的那一份。
+ *
+ * ⚠️ **`champions` 是空的，而那是刻意的。** 這是程式裡的保險絲，不是文案的第二
+ * 份副本：兩份逐英雄文案就是兩份會 drift 的東西，而它們的分歧會以「線上看到的
+ * 弱點跟後台填的不一樣」的形態出現。缺文件 = 只剩既有的降臨橫幅 + 那個英雄的
+ * 描述（描述來自 champion doc，不需要這份文件）。
+ *
+ * 純量那幾格必須和 `content/config/boss-intro.json` 一字不差 ——
+ * `apps/client/src/ui/hud/bossIntroShipped.test.ts` 的 drift 斷言在守。
+ */
+export const DEFAULT_BOSS_INTRO: ConfigBossIntroDoc = {
+  id: "boss-intro",
+  schema: "config.boss-intro@1",
+  enabled: true,
+  introHoldSec: 5,
+  fadeSec: 0.6,
+  descriptionMaxChars: 120,
+  maxTips: 3,
+  maxWeaknesses: 3,
+  champions: {},
+};
+
+/**
+ * 讀一份 `config.boss-intro@1`。文件不在／schema 不對／型別不合 →
+ * {@link DEFAULT_BOSS_INTRO}。
+ *
+ * ⚠️ 一格一格檢查型別，不是 `doc as ConfigBossIntroDoc`。這份文件會被後台
+ * overlay 覆蓋（`data/` 耐久層），而 overlay 的寫入路徑在 GH#283 被查出**沒有**
+ * Zod 驗證 —— 也就是說一個 `introHoldSec: "5"` 真的有辦法躺在正式站上。到了
+ * 這裡再一次把它擋掉，代價是幾行 typeof，換到的是「壞資料不會變成一個永遠不消失
+ * 的全螢幕提示」。
+ */
+export function bossIntroFromDoc(doc: unknown): ConfigBossIntroDoc {
+  const parsed = zConfigBossIntroDoc.safeParse(doc);
+  return parsed.success ? parsed.data : DEFAULT_BOSS_INTRO;
+}
 // config.round-grade@1 的型別/Zod/出貨文件全部在 ./roundGrade,這裡只再匯出一次
 // 給 `export * from "./config"` 的既有消費端(admin / codex 都是這樣拿的)。
 export * from "./roundGrade";
@@ -3527,6 +3924,36 @@ export function resolveArenaFire(doc: ConfigAmbientVfxDoc | null | undefined): A
 export function decorModelBurns(fire: ArenaFire, modelPath: string): boolean {
   if (!fire.enabled) return false;
   return fire.models.some((m) => modelPath.includes(m));
+}
+
+/**
+ * 出貨預設 —— `content/config/victory-fx.json` 讀不到時（舊部署 / 內容掛掉 /
+ * 後台把它清掉）`resolveVictoryFx` 回退到的就是這一份。
+ *
+ * **兩格都是 false**，因為那是 owner 2026-08-02 的原話：「請你直接取消煙火」。
+ * 保險絲必須和出貨值同向 —— 如果回退值是開的，那麼「內容檔載不到」這條路
+ * （也就是 2026-08-01 骨架事故的那條路）就會把 owner 明說要拿掉的東西又點回來，
+ * 而且是在最沒有人看的那條路上。`DEFAULT_ARENA_FIRE` 為了同一個理由也是關的。
+ *
+ * ⚠️ 每一格都要和 `content/config/victory-fx.json` 一字不差 ——
+ * `apps/client/src/vfx/victoryFxPolicy.test.ts` 的 drift 斷言在守。
+ */
+export const DEFAULT_VICTORY_FX: VictoryFxPolicy = {
+  roundVolley: { enabled: false },
+  matchChicken: { enabled: false },
+};
+
+/**
+ * 讀出「這一場的兩層勝利煙火各自要不要放」。文件缺席時回退到
+ * `DEFAULT_VICTORY_FX`（也是關的）。
+ *
+ * 放在 shared 而不是 client 的理由和 `resolveArenaFire` 同源：出貨值（JSON）、
+ * 保險絲（上面那份）與讀取規則必須是**同一段**程式，否則「後台關了但畫面上還在
+ * 放煙火」會是三份各自正確的程式加起來的結果。
+ */
+export function resolveVictoryFx(doc: ConfigVictoryFxDoc | null | undefined): VictoryFxPolicy {
+  if (!doc) return DEFAULT_VICTORY_FX;
+  return { roundVolley: doc.roundVolley, matchChicken: doc.matchChicken };
 }
 
 /**
@@ -3633,4 +4060,89 @@ export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
     incoming: "#5A0000",
     widthMult: 1.9,
   },
+};
+
+/**
+ * 出貨預設 —— `content/config/item-card.json` 不存在(舊部署 / 內容掛掉)時,
+ * `applyItemCardDoc` 回退到的就是這一份。
+ *
+ * ⚠️ 每一格都要和 `content/config/item-card.json` 一字不差 ——
+ * `packages/shared/src/content/itemCardShipped.test.ts` 的 drift 斷言在守。
+ * 兩份存在的理由不同:JSON 是**出貨值**(owner 會改),這份是**程式的保險絲**。
+ *
+ * ── `markers` 這 32 列是掃出來的,不是想出來的 ───────────────────────────────
+ * 來源是 `content/loot-tables/legendary-weapons.json` 那 49 支的 description,
+ * 逐字掃 `[...]`:31 個關鍵字標記 + 1 個內嵌數值(見 `inlineValueMarkers`)。
+ * owner 點名的 `[焚身]` 在(死之王的神盾 godie-i061);他寫的 `[隱形]` **不在** ——
+ * 49 支裡的那一個是 `[隱身]`(至尊魔戒 godie-i004)。`[隱形]` 這三個字在這批裡
+ * 只出現在 `[看穿]` 的說明文字裡(「看穿隱形」),不是一個標記。表上兩個都收:
+ * `隱身` 是實際存在的那一個,`隱形` 是 owner 講的那個名字,先在表上等它出現 ——
+ * 一個查得到的空位比一個 fallback 好,因為 fallback 不會告訴你它猜過。
+ *
+ * ⚠️ `On-Hit` 與 `OnHit` 是**兩列**。雅典娜的驚嘆號(godie-i006)寫的是 `[OnHit]`,
+ * 其餘 16 支寫 `[On-Hit]`。那是 owner 的原稿,原稿不准改(第一守則的 ⛔),所以
+ * 對照表要同時認得兩種寫法 —— 這正是「表是資料」的價值:不必為了程式好寫去動文案。
+ *
+ * ── 顏色是量出來的 ──────────────────────────────────────────────────────────
+ * 對卡片底色 `#12151d` 的對比度:stat 10.25 / active 11.36 / passive 9.40 /
+ * debuff 7.50 / number 15.15 / lore 5.93 —— 全部過 4.5:1。
+ * 四個分類彼此的 CIE76 ΔE 最小 57.7(stat↔passive),數值色離最近的分類色 32.7
+ * (active),都在 ~25 的可混淆線之上。
+ * 而且**刻意不沿用戰鬥飄字那五個色**(owner 2026-08-02 裁定「卡片專用一套新的」):
+ * 離 `config/damage-colors.json` 五個 hue 最近的一格是 stat↔魔力青 ΔE 29.5,
+ * 仍在線上 —— 卡片是靜態閱讀介面,不必扛戰場地面對比,判準是「別讀成傷害屬性」。
+ */
+export const DEFAULT_ITEM_CARD: ConfigItemCardDoc = {
+  id: "item-card",
+  schema: "config.item-card@1",
+  categories: {
+    stat: { label: "屬性加成", color: "#6FD3C4" },
+    active: { label: "主動效果", color: "#FFC24D" },
+    passive: { label: "被動效果", color: "#A9B6FF" },
+    debuff: { label: "負面控場", color: "#FF7BA6" },
+  },
+  numberColor: "#FFE9A3",
+  loreColor: "#8B93A6",
+  unknownCategory: "passive",
+  markers: {
+    // ── 屬性加成:沒有任何觸發事件,就是一串數字 ──
+    神速: "stat", // 攻速上限提升至 10 / 攻擊速度+200%
+    伸長: "stat", // 近戰攻擊距離+4;遠戰+2
+    閃避: "stat", // 閃避 +10%
+    死之王套裝: "stat", // 三件套齊 → 總 AP +100%
+    // ── 主動效果:有一個離散的觸發事件(普攻/施法/擊殺/受擊) ──
+    "On-Hit": "active",
+    OnHit: "active",
+    擴散: "active", // 普攻濺射
+    暴擊: "active", // 普攻機率兩倍傷害
+    暴擊吸血: "active", // 暴擊時 100% 吸血
+    疊層: "active", // 普攻命中 / 擊殺英雄時疊加
+    衝刺: "active", // 施放技能時向前衝刺
+    復活: "active", // 擊殺敵方英雄時復活我方
+    回復: "active", // 擊殺任一敵方單位時回血
+    煉金術: "active", // 受敵人攻擊時機率把敵人變成黃金
+    // ── 被動效果:常駐,沒有觸發事件 ──
+    隱身: "passive", // 永久隱身
+    隱形: "passive", // owner 講的名字;49 支裡目前沒有,先佔位(見檔頭)
+    看穿: "passive", // 常駐真視
+    飛昇: "passive", // 移動轉為無視碰撞的飛行形態
+    無視: "passive", // 普攻無視防禦
+    真實傷害: "passive", // 技能傷害全部轉真實
+    反彈: "passive", // 反彈普通攻擊傷害
+    斬殺: "passive", // 低血直接斬殺
+    格擋: "passive", // 機率抵擋
+    迴避: "passive", // 機率迴避物理傷害
+    流星: "passive", // 每秒自動範圍傷害
+    // ── 負面/控場:作用在敵人身上 ──
+    緩慢: "debuff",
+    暈眩: "debuff",
+    重創: "debuff", // 降低敵方吸血回復量
+    嘲弄: "debuff", // 強制敵人優先攻擊自己
+    焚身: "debuff", // 周圍敵人每秒燃燒
+    腐蝕: "debuff", // 周圍敵方防禦 -30
+    變形: "debuff", // 把敵人變成食材,無法動作
+  },
+  inlineValueMarkers: ["自身已損失的生命百分比數值(0~100)"],
+  efficacyHeadings: ["效能"],
+  loreHeadings: ["解說", "歷史"],
 };

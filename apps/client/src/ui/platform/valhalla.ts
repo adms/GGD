@@ -55,6 +55,7 @@
  * makes the "no duplicate inside one pass" rule provable.
  */
 import { Champions } from "@ggd/shared/sim/content/registry";
+import { retiredChampionIds } from "@ggd/shared/content/championRetirement";
 import { whitelistedChampionIds, type Whitelist } from "../panels/champSelectFilter";
 
 /** How long one champion holds the stage (owner: 「每過1分鐘就會輪播隨機下一個」). */
@@ -70,7 +71,10 @@ export const VALHALLA_TICK_MS = 500;
  * login-marquee bug coming back).
  */
 export function valhallaRoster(wl: Whitelist): string[] {
-  return whitelistedChampionIds(Champions.ids(), wl);
+  // 下架的英雄連展示櫃都不上 —— 它是內容事實,不是營運狀態,所以跟 registry 一樣
+  // 在 CALL TIME 讀（`retiredChampionIds` 讀 Configs registry;內容還沒載完時是空集合,
+  // 而那時 `Champions.ids()` 也是空的,兩者同步）。
+  return whitelistedChampionIds(Champions.ids(), wl, retiredChampionIds());
 }
 
 // ---------------------------------------------------------------------------
