@@ -1,0 +1,17 @@
+{
+  "id": "damage-colors",
+  "schema": "config.damage-colors@1",
+  "note": "傷害數字與受擊閃光的四向配色 (owner 2026-08-01:「真實傷害目前在畫面上看不出來 => 顯示白色傷害數字(紅物理; 紫魔法; 白真實; 綠治療)」)。text 是飄字的填色,flash 是被打中時模型身上那一下疊色 —— 兩組值不一樣是刻意的:飄字畫在黑框上,白色最清楚;身體閃光走 ALPHA_COMBINE 疊加,白色在淺色模型上等於什麼都沒發生(實測 ΔRGB 0.03~0.09),所以真實傷害的閃光是青白色。每一個 hex 都對四個真實地面與四個隊伍色量過,理由寫在 packages/shared/src/content/schema/config.ts 的 DEFAULT_DAMAGE_COLORS。",
+  "textAxis": "damageType",
+  "text": {
+    "physical": "#FF5900",
+    "magic": "#B872FF",
+    "true": "#FFFFFF",
+    "heal": "#00FF00"
+  },
+  "flash": {
+    "physical": "#FF2626",
+    "magic": "#FF59E6",
+    "true": "#33FFFF"
+  }
+}

@@ -365,10 +365,14 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
     expect(legibleFlashColor(AUTHORED_FIRE)).toEqual(AUTHORED_FIRE);
     expect(legibleFlashColor(flashColorFor("magic"))).toEqual(flashColorFor("magic"));
 
-    // a greyscale authored colour has no hue to saturate → the measured red,
+    // a greyscale authored colour has no hue to saturate → the PHYSICAL flash,
     // because a white flash is a measured NO-OP on a pale model.
-    expect(legibleFlashColor([1, 1, 1])).toEqual([1, 0.15, 0.15]);
-    expect(legibleFlashColor([0.4, 0.4, 0.4])).toEqual([1, 0.15, 0.15]);
+    // ⚠️ Asserted against the palette, not against a re-typed `[1, .15, .15]`:
+    // the three defaults are operator-editable since owner's 2026-08-01 ruling,
+    // and a literal here would pin the fallback to a colour the game no longer
+    // uses the moment 傷害數字配色 is saved.
+    expect(legibleFlashColor([1, 1, 1])).toEqual(flashColorFor("physical"));
+    expect(legibleFlashColor([0.4, 0.4, 0.4])).toEqual(flashColorFor("physical"));
   });
 
   it("every SHIPPED authored flash colour clears the legibility floor after the guard", () => {
@@ -429,17 +433,24 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
 });
 
 describe("hit flash colour (juice-flash)", () => {
-  it("RED on every damage type, with a distinguishable magic variant", () => {
+  /**
+   * REWRITTEN by owner's 2026-08-01 ruling. The old title was 「RED on every
+   * damage type」 and it asserted `flashColorFor("true")[0] === 1` — i.e. it
+   * PINNED the defect: 真實 and 物理 flashed the identical red, which is half of
+   * 「真實傷害目前在畫面上看不出來」. Three schools, three hues now.
+   */
+  it("三個學派三種顏色 — physical / magic / true are pairwise distinct", () => {
     cover("juice-flash");
-    for (const type of ["physical", "true", undefined]) {
-      const c = flashColorFor(type);
-      expect(c[0]).toBe(1); // full red channel
-      expect(c[1]).toBeLessThan(0.4); // green pulled down
-      expect(c[2]).toBeLessThan(0.4); // blue pulled down
-    }
+    const phys = flashColorFor("physical");
     const magic = flashColorFor("magic");
-    expect(magic[0]).toBe(1);
-    expect(magic).not.toEqual(flashColorFor("physical")); // type still reads
+    const trueDmg = flashColorFor("true");
+    expect(magic).not.toEqual(phys);
+    expect(trueDmg).not.toEqual(phys); // ← the whole point of the ruling
+    expect(trueDmg).not.toEqual(magic);
+    // an unknown / absent school falls back to PHYSICAL, and must not invent a
+    // fourth colour (the spark, the blood and the SFX all fall back the same way)
+    expect(flashColorFor(undefined)).toEqual(phys);
+    expect(flashColorFor("bogus")).toEqual(phys);
     // long enough to survive a frame hitch, short enough not to smear
     expect(FLASH_MS).toBeGreaterThanOrEqual(100);
     expect(FLASH_MS).toBeLessThanOrEqual(200);

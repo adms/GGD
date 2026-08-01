@@ -10,8 +10,10 @@
  * `juice-damage-number` (combat-juice cj-c06) is re-covered here: this module
  * SUPERSEDES ui/damageNumberStyle, and the row's claims were rewritten to match.
  */
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
+import { DEFAULT_DAMAGE_COLORS } from "@ggd/shared/content";
+import { applyDamageColorsDoc } from "../render/damagePalette";
 import { TEAM_CSS } from "./theme";
 import { HUD_SLOTS, hudSlotRect } from "./hud/hudLayout";
 import {
@@ -34,6 +36,7 @@ import {
   combatTextScale,
   combatTextShadow,
   combatTextStyle,
+  combatTextStyleKey,
   scopeAllows,
   type CombatTextCategory,
   type CombatTextEvent,
@@ -86,6 +89,13 @@ const contrast = (a: string, b: string): number => {
   const [hi, lo] = [relLum(a), relLum(b)].sort((x, y) => y - x) as [number, number];
   return (hi + 0.05) / (lo + 0.05);
 };
+
+// The palette is module state in `render/damagePalette` (ContentDb pushes the
+// operator's doc into it at boot). Any test that flips `textAxis` has to put it
+// back, or every later test in this file silently measures the other mode.
+afterEach(() => {
+  applyDamageColorsDoc(null); // null = 出貨預設, never "no palette"
+});
 
 // ---------------------------------------------------------------------------
 describe("combat text: the four requested categories (ct-c01)", () => {
@@ -183,16 +193,100 @@ describe("combat text palette (ct-c02)", () => {
     }
   });
 
-  it("the four requested categories are mutually unmistakable", () => {
+  it("魔法傷害 overlay: only the SOFT halo moves on taken/allyTaken, only the fill moves on dealt/other/guard, and both stay violet-family and team-safe", () => {
     cover("combat-text-palette");
-    const four: CombatTextCategory[] = ["taken", "dealt", "heal", "mana"];
+    // ⚠️ This is the `textAxis: "relation"` path — the PRE-2026-08-01 behaviour,
+    // now selectable from 後台 → 傷害數字配色 rather than compiled in. It has to
+    // stay guarded: an alternative nobody tests is an alternative that is broken
+    // the first time the operator picks it.
+    applyDamageColorsDoc({ ...DEFAULT_DAMAGE_COLORS, textAxis: "relation" });
+    const RED_BASED: CombatTextCategory[] = ["taken", "allyTaken"];
+    const PALE_BASED: CombatTextCategory[] = ["dealt", "other", "guard"];
+    for (const c of RED_BASED) {
+      const plain = combatTextStyle(c);
+      const magic = combatTextStyle(c, { crit: false, killingBlow: false, dmgType: "magic" });
+      // the fill is the thing #FF5900 was searched 833 candidates to protect —
+      // magic damage may NOT touch it, on pain of drifting back toward team red.
+      expect(magic.color, `${c}: fill must stay exactly the base hue`).toBe(plain.color);
+      expect(magic.haloRgb, `${c}: the halo is the only legal overlay channel`).toBeDefined();
+      expect(magic.haloRgb).not.toBe(plain.haloRgb);
+      const [r, g, b] = magic.haloRgb!.split(",").map(Number);
+      const haloHex = `#${[r, g, b].map((v) => v!.toString(16).padStart(2, "0")).join("")}`;
+      for (const team of TEAM_CSS) expect(deltaE(haloHex, team)).toBeGreaterThan(25);
+    }
+    for (const c of PALE_BASED) {
+      const plain = combatTextStyle(c);
+      const magic = combatTextStyle(c, { crit: false, killingBlow: false, dmgType: "magic" });
+      expect(magic.color, `${c}: the pale fill IS the legal overlay channel`).not.toBe(plain.color);
+      expect(magic.haloRgb, `${c}: halo must stay untouched here`).toBe(plain.haloRgb);
+      for (const team of TEAM_CSS) expect(deltaE(magic.color, team)).toBeGreaterThan(25);
+    }
+  });
+
+  it("魔法傷害 changes a pooled node's cache key on damage categories, not on heal/mana", () => {
+    cover("combat-text-palette");
+    const mods = { crit: false, killingBlow: false };
+    expect(combatTextStyleKey("taken", { ...mods, dmgType: "magic" })).not.toBe(
+      combatTextStyleKey("taken", { ...mods, dmgType: "physical" }),
+    );
+    expect(combatTextStyleKey("dealt", { ...mods, dmgType: "magic" })).not.toBe(
+      combatTextStyleKey("dealt", { ...mods, dmgType: "physical" }),
+    );
+    // dmgType is meaningless off a damage event — it must not fragment the
+    // heal/mana pool into cache misses that never happen in practice.
+    expect(combatTextStyleKey("heal", { ...mods, dmgType: "magic" })).toBe(
+      combatTextStyleKey("heal", { ...mods, dmgType: "physical" }),
+    );
+  });
+
+  it("魔法傷害 overlay never reaches a non-damage category (heal/mana/dodge)", () => {
+    cover("combat-text-palette");
+    for (const c of ["heal", "mana", "dodge", "allyHeal", "allyMana", "allyDodge"] as CombatTextCategory[]) {
+      const plain = combatTextStyle(c);
+      const magic = combatTextStyle(c, { crit: false, killingBlow: false, dmgType: "magic" });
+      expect(magic.color).toBe(plain.color);
+      expect(magic.haloRgb).toBe(plain.haloRgb);
+    }
+  });
+
+  /**
+   * REWRITTEN by owner's 2026-08-01 ruling. It used to read
+   * `["taken", "dealt", "heal", "mana"]` — the WHO axis — and it cannot: under
+   * the shipped `textAxis: "damageType"` a physical 受到傷害 and a physical
+   * 造成傷害 share a fill BY DESIGN. The four things that must now be mutually
+   * unmistakable are owner's four: 紅物理 / 紫魔法 / 白真實 / 綠治療. The
+   * separation the old assertion protected (taken vs dealt) has not been
+   * dropped — it moved to the non-colour channels asserted right below.
+   */
+  it("owner's four are mutually unmistakable: 紅物理 / 紫魔法 / 白真實 / 綠治療", () => {
+    cover("combat-text-palette");
+    const mods = { crit: false, killingBlow: false } as const;
+    const four = [
+      combatTextStyle("dealt", { ...mods, dmgType: "physical" }).color,
+      combatTextStyle("dealt", { ...mods, dmgType: "magic" }).color,
+      combatTextStyle("dealt", { ...mods, dmgType: "true" }).color,
+      combatTextStyle("heal").color,
+    ];
     for (let i = 0; i < four.length; i++) {
       for (let j = i + 1; j < four.length; j++) {
-        const a = combatTextStyle(four[i]!).color;
-        const b = combatTextStyle(four[j]!).color;
-        expect(deltaE(a, b)).toBeGreaterThan(40);
+        expect(deltaE(four[i]!, four[j]!), `${four[i]} vs ${four[j]}`).toBeGreaterThan(40);
       }
     }
+  });
+
+  it("受到傷害 vs 造成傷害 still separate WITHOUT colour (what the type axis costs)", () => {
+    cover("combat-text-palette");
+    const mods = { crit: false, killingBlow: false, dmgType: "physical" } as const;
+    const taken = combatTextStyle("taken", mods);
+    const dealt = combatTextStyle("dealt", mods);
+    // the honest part: on the shipped axis they DO share a hue
+    expect(taken.color).toBe(dealt.color);
+    // …so every other channel has to carry the split, and does
+    expect(taken.fontSize).toBeGreaterThan(dealt.fontSize);
+    expect(taken.fontWeight).toBeGreaterThan(dealt.fontWeight);
+    expect(taken.anchorY).not.toBe(dealt.anchorY);
+    expect(Math.sign(taken.driftPx)).toBe(-Math.sign(dealt.driftPx));
+    expect(taken.rank).toBeLessThan(dealt.rank);
   });
 
   it("heal and mana separate WITHOUT colour (the pair tritanopia collapses)", () => {

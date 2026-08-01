@@ -4,6 +4,11 @@
   "ultUnlockRound": 3,
   "exUnlockRound": 7,
   "offerCount": 3,
+  "itemDraft": {
+    "shortPoolMode": "short",
+    "fallbackTable": "",
+    "maxDraws": 64
+  },
   "rounds": {
     "1": {
       "grantLevels": 2,
@@ -17,7 +22,7 @@
     "2": {
       "grantLevels": 3,
       "grantGold": 450,
-      "weaponLootTable": "quest-rewards",
+      "weaponLootTable": "legendary-weapons",
       "augmentTier": "silver"
     },
     "3": {
@@ -34,7 +39,7 @@
       "grantLevels": 6,
       "grantGold": 525,
       "augmentTier": "gold",
-      "weaponLootTable": "quest-rewards"
+      "weaponLootTable": "legendary-weapons"
     },
     "6": {
       "grantLevels": 7,
@@ -182,7 +187,9 @@
       "baseRegen": 0,
       "regenPerLevel": 0,
       "sizeMult": 0.68,
-      "tintStrength": 0.65
+      "tintStrength": 0.65,
+      "groundRingDiameter": 1.25,
+      "groundRingSizeFollow": 1
     },
     "reward": {
       "gold": 20,
@@ -213,7 +220,13 @@
       "heroLevelSource": "fixed",
       "bountyLevels": 50,
       "lastHitMode": "bonus",
-      "countOverkill": false
+      "countOverkill": false,
+      "noClip": true,
+      "noClipUnits": true,
+      "noClipObstacles": true,
+      "noClipStayInside": true,
+      "maxPerRound": 1,
+      "maxPerRoundScope": "zone"
     },
     "special": {
       "chancePercent": 5,

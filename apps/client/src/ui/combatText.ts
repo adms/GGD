@@ -11,30 +11,61 @@
  * category split, the motion curve and the admission policy in node.
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * THE AXIS IS *WHO*, NOT *WHAT*
+ * THE AXIS IS A FIELD (`config/damage-colors.json` → `textAxis`)
  *
- * roBrowser's `Renderer/Effects/Damage.js` keys colour on the relationship to
- * the local player, not on the damage school: SP restore, HEAL, ENEMY (damage
- * on you) and "everything else" are four fixed tints. That is the axis this
- * module uses, and it is the axis the request names — the four categories are
- * *damage dealt / damage taken / HP restored / MP restored*, which are
- * relationships, not damage types.
+ * owner 2026-08-01, verbatim:
+ *   「真實傷害目前在畫面上看不出來 => 顯示白色傷害數字(紅物理; 紫魔法; 白真實;
+ *     綠治療)」
  *
- * The previous implementation keyed colour on `dmgType` (physical / magic /
- * true). That channel is already spent: `vfx/vfxPresets.IMPACT_TINTS` tints the
- * spark burst by exactly that field on exactly that frame. Spending the number's
- * hue on it a second time is what made the four requested categories
- * indistinguishable. Damage type is expressed by the spark; the number expresses
- * who it happened to.
+ * So a DAMAGE number's hue is the DAMAGE SCHOOL, and that is the shipped
+ * default (`textAxis: "damageType"`). Everything else on this page — size,
+ * weight, italic, anchor height, drift direction, halo, life, admission rank —
+ * still carries WHO, so 受到傷害 is still the biggest, heaviest, highest-ranked
+ * thing on screen and still drifts opposite to 造成傷害. Only the *fill* moved
+ * axes. `heal` is green on both axes; the axis governs damage categories only.
+ *
+ * THE OTHER AXIS IS STILL EXPRESSIBLE, and this paragraph is why it has to be.
+ * This block previously argued at length that hue must mean WHO and never WHAT,
+ * on the grounds that roBrowser's `Renderer/Effects/Damage.js` keys colour on
+ * the relationship to the local player and that `vfx/vfxPresets.IMPACT_TINTS`
+ * already spends a channel on the school. Both facts are still true and the
+ * trade-off is still real — under `damageType` a physical 受到傷害 and a
+ * physical 造成傷害 share a hue and separate on size/anchor/drift instead. That
+ * is a judgement call, not a defect, and CLAUDE.md 第一守則 says a comment
+ * defending A-over-B is proof it should be a field. `textAxis: "relation"`
+ * restores the pre-ruling behaviour (category hue + the narrow violet magic
+ * accent) in one dropdown, with no rebuild.
+ *
+ * WHAT WAS ACTUALLY BROKEN, and why 真實傷害 was the trigger: `dmgType` is a
+ * three-value union, and this file branched on `=== "magic"`. So 物理 and 真實
+ * produced byte-identical CSS. Three of the five feedback channels already told
+ * all three apart (spark tints, stylized blood, `hit`/`hitMagic`/`hitTrue` SFX);
+ * the two that did not are the two loudest, which is why the defect reads as
+ * 「看不出來」 rather than 「沒反應」.
  *
  * TEAM COLOURS NEVER APPEAR HERE. Team identity already owns the bar, the name
  * and the minimap; spending the number's hue on it too is how a palette stops
  * meaning anything. Every hue was MEASURED against `TEAM_CSS`
- * (`["#4d7bf3","#e5483f","#47cc6a","#f2c637"]`), CIE76 ΔE to the nearest entry:
+ * (`["#4d7bf3","#e5483f","#47cc6a","#f2c637"]`), CIE76 ΔE to the nearest entry.
  *
- *     taken  #FF0000 → 33.9      dealt  #E8E8E8 → 71.1
+ * ⚠️ RE-MEASURED 2026-08-01, and the `taken` row was WRONG: it read
+ * 「taken #FF0000 → 33.9」, but `BASE.taken.color` has been **#FF5900** since the
+ * #164 ground-contrast pass (see its own comment, 60 lines down, which cites
+ * ΔE 31.0 — the two blocks contradicted each other). #FF0000 is not a shipped
+ * fill on either axis. The table below is what the code actually holds:
+ *
+ *     taken  #FF5900 → 31.0      dealt  #E8E8E8 → 71.1
  *     heal   #00FF00 → 55.5      guard  #B9C2CC → 68.0
  *     mana   #38D8FF → 66.5
+ *
+ * …and under the shipped `damageType` axis a damage number's fill comes from
+ * `config/damage-colors.json` instead, so those THREE are on screen too and the
+ * 「every hue was measured」 claim only becomes true once they are listed:
+ *
+ *     物理 #FF5900 → 31.0   魔法 #B872FF → 31.7   真實 #FFFFFF → 73.6
+ *
+ * (物理 is the same hex as `BASE.taken`, deliberately — the ruling moved the
+ * axis, not the red.) All five clear the ~25 confusability line.
  *
  * all clear of the ~25 confusability line. Retired by that same measurement:
  * the old `KILL_COLOR #ff5a2e` (ΔE 18.4 from team red — effectively team-red).
@@ -45,9 +76,19 @@
  *
  *   · `taken` was going to be a slightly lightened red (#FF1B1B) on the theory
  *     that pure red sits too close to team red. It is the other way round:
- *     #FF1B1B measures ΔE **26.9**, pure #FF0000 measures **33.9**. RO's own
- *     `ENEMY → (1,0,0)` is both the more faithful AND the better separated
- *     choice, so it is what ships. Likewise `heal` is RO's `(0,1,0)` exactly.
+ *     #FF1B1B measures ΔE **26.9**, pure #FF0000 measures **33.9**. So RO's own
+ *     `ENEMY → (1,0,0)` won on BOTH faithfulness and team separation…
+ *
+ *     ⚠️ …and then LOST anyway, on a constraint this paragraph never mentioned.
+ *     This bullet used to end 「so it is what ships」, which stopped being true
+ *     the moment #164 measured the fills against the four real arena grounds:
+ *     #FF0000 reads 2.47:1 on 暗土, i.e. red-on-dark-dirt is a smudge. The
+ *     shipped red is **#FF5900** (ΔE 31.0, worst ground 3.14:1) and the search
+ *     that produced it is documented on `BASE.taken.color` itself. Recorded
+ *     here so the next reader does not "restore" pure red on this bullet's
+ *     authority: team separation was never the binding constraint.
+ *
+ *     `heal` really is RO's `(0,1,0)` exactly, and that one still ships.
  *   · the ALLY band originally had its own desaturated tints (#FF5555 /
  *     #5FE06E). Those measure ΔE **8.6** from team red and **9.7** from team
  *     green — they ARE the team colours. The band now reuses the primary hue of
@@ -69,20 +110,57 @@
  * floating number is anchored over the target's body, so the backgrounds it is
  * *guaranteed* to be born on are not the floor:
  *
- *   · the victim hit-flash — `render/combatFeedback.flashColorFor()` returns
- *     [1, .15, .15] at alpha .6 for 130 ms on EVERY damage type, started by the
- *     same event that spawns the number. `taken` on that flash: **1.04:1**.
+ *   · the victim hit-flash — started by the same event that spawns the number.
+ *
+ *     ⚠️ CORRECTED 2026-08-01. This bullet used to say the flash 「returns
+ *     [1, .15, .15] at alpha .6 for 130 ms on EVERY damage type」. Owner's
+ *     colour ruling made all three halves of that false, and it is worth being
+ *     exact about which, because the CONCLUSION survives and the numbers do not:
+ *       – NOT every damage type. `render/combatFeedback.flashColorFor()` is now
+ *         `damageFlashRgb(normalizeDamageSchool(dmgType))` — three answers, from
+ *         `content/config/damage-colors.json`: 物理 `#FF2626` (still the old
+ *         [1,.15,.15]), 魔法 `#FF59E6`, 真實 `#33FFFF`. Operator-editable, so
+ *         no hex here may be treated as fixed.
+ *       – NOT one alpha/duration. Both come from `TIER_FX[profile.tier]`:
+ *         .5/110 ms light · .6/130 ms medium · .72/160 ms heavy · .85/185 ms
+ *         crit, and an ability may override the ms via `hitFeel.flashMs`.
+ *         「alpha .6 for 130 ms」 was only ever the MEDIUM row.
+ *       – The 1.04:1 was measured with `taken` at pure #FF0000, which is not
+ *         what ships either (see the ΔE table above).
+ *
+ *     Re-measured against the three shipped flash colours (WCAG, flash treated
+ *     as the background — same formula as `combatTextContrast.test.ts`):
+ *
+ *         fill                    on 物理 #FF2626   魔法 #FF59E6   真實 #33FFFF
+ *         物理/taken #FF5900           1.20           1.17           2.53
+ *         魔法       #B872FF           1.24           1.14           2.45
+ *         真實       #FFFFFF           3.78           2.68           1.24
+ *         the BLACK RING                5.56           7.82          16.89
+ *
+ *     The point stands and is now stronger, not weaker: EVERY fill collapses on
+ *     at least one flash (each row has a cell near 1.2), while the ring never
+ *     drops below 5.56. Worse, the shipped `damageType` axis puts a 物理 number
+ *     ON a 物理 flash and a 魔法 number on a 魔法 flash — the two worst cells in
+ *     the table are exactly the pairings the ruling made the common case. The
+ *     ring and the halo are what is carrying these, not the hue.
  *   · the impact VFX — `vfxPresets.IMPACT_TINTS` flash quads are ADDITIVE and
  *     0.9–1.8u wide. `dealt` on a blown-out white field: **1.23:1**.
  *   · the rebuilt #80 ground is a mid-grey (lit luminance ≈ #575757–#8d8d8d),
- *     not the dark UI tone a palette gets designed against. #FF0000 has relative
- *     luminance 0.2126 and sits *inside* that band: **1.20–1.81:1**.
+ *     not the dark UI tone a palette gets designed against, and the warm hues
+ *     sit *inside* that band. Re-measured 2026-08-01 (this bullet used to quote
+ *     #FF0000's 1.20–1.81:1, and #FF0000 is not a shipped fill):
+ *     物理/`taken` #FF5900 → **1.06–2.30**, 魔法 #B872FF → **1.09–2.37**.
+ *     真實 #FFFFFF is the one exception at 3.32–7.23 — it clears this ground,
+ *     and then collapses to 1.24 on its own cyan-white hit-flash instead.
  *
  * No hue survives all three — which is the whole point. The treatment does:
- * against the BLACK RING the same five hues measure 5.25 / 15.30 / 12.43 /
- * 17.14 / 11.65, and each gradient's top stop measures 2.56–7.23 against the
- * grounds and 2.97 against the red flash where its core measured 1.04. The ring
- * and the gradient are carrying the legibility, exactly as claimed:
+ * against the BLACK RING the five authored hues measure **6.68** (taken #FF5900
+ * — this read 5.25 until 2026-08-01, which was #FF0000's number again) / 15.30
+ * (heal) / 12.43 (mana) / 17.14 (dealt) / 11.65 (guard), and the two hues the
+ * ruling added clear it too: 魔法 #B872FF **6.89**, 真實 #FFFFFF **21.00**.
+ * `taken`'s gradient top stop (#FFD9D9) measures **2.91** against the 物理 flash
+ * where the fill itself measured 1.20. The ring and the gradient are carrying
+ * the legibility, exactly as claimed:
  *
  *   1. A HARD 8-DIRECTION BLACK RING (`OUTLINE_DIRS`), not the old
  *      `text-shadow: 0 1px 3px #000`, which is a *blur* — it smears at small
@@ -160,6 +238,11 @@
  * A number that hides the HP readout you need in order to decide whether to keep
  * hitting is worse than no number.
  */
+import {
+  damageTextAxis,
+  damageTextColor,
+  normalizeDamageSchool,
+} from "../render/damagePalette";
 import type { CombatTextScope } from "../settings/types";
 import {
   HUD_SLOTS,
@@ -326,6 +409,21 @@ export interface CombatTextStyle {
   outlinePx: number;
   /** soft dark halo radius, px — the local dark pocket over a red hit-flash */
   haloPx: number;
+  /**
+   * Halo glow colour as an "R,G,B" triple, default "0,0,0" (pure black) when
+   * absent. The hard ring stays `#000` unconditionally — see MAGIC_TINT's doc
+   * block for why only the SOFT halo is a legal place to put a colour cast.
+   *
+   * ⚠️ **`BASE` may not set this** — the type below is `Omit<…, "haloRgb">` so
+   * that an attempt is a COMPILE error, not a silent no-op. It is the 魔法
+   * overlay's channel and nothing else's: a category with a permanent coloured
+   * halo would leave `MAGIC_TINT` no way to say 「this hit was magic」 on the one
+   * channel reserved for it. Until 2026-08-01 `fillFor` carried three
+   * `BASE[category].haloRgb !== undefined ? … : {}` spreads for a value no
+   * entry has ever set — three guards that were permanently false and read like
+   * the table might supply one.
+   */
+  haloRgb?: string;
   /** "+" on the restore categories, "" elsewhere */
   prefix: string;
   /** world-space Y the number is projected from (metres) */
@@ -400,7 +498,7 @@ export interface CombatTextStyle {
  * not miss": your own health, then your own resources, then your output, then
  * everything happening to other people.
  */
-const BASE: Record<CombatTextCategory, CombatTextStyle> = {
+const BASE: Record<CombatTextCategory, Omit<CombatTextStyle, "haloRgb">> = {
   // 受到傷害 — the number that decides whether you live. Biggest, heaviest,
   // thickest ring, and the strongest halo because it is born ON the red
   // hit-flash that the same event starts.
@@ -680,9 +778,178 @@ export const KILL_SIZE_MULT = 1.45;
 export const KILL_POP = 1.5;
 export const KILL_LIFE_BONUS_MS = 250;
 
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 四向配色 (owner 2026-08-01) — `textAxis: "damageType"`, the shipped default
+ *
+ * 「紅物理; 紫魔法; 白真實; 綠治療」. The four hexes live in
+ * `content/config/damage-colors.json` (see `render/damagePalette` for why they
+ * are a config doc and not four literals here). This block is about WHICH
+ * CATEGORIES the school hue reaches, which is a code invariant, not a knob.
+ *
+ * ONLY CATEGORIES THAT DRAW A NUMBER. `DAMAGE_CATEGORIES` has five members but
+ * one of them, `guard`, draws the WORD 「GUARD」 — a hit that was absorbed whole
+ * has no magnitude, and owner's ruling is about 傷害數字. `guard` therefore
+ * stays in the grey 「nothing landed」 family with `whiff`, which is the pair
+ * this palette already separates on word/size/body rather than hue (they sit
+ * ΔE 10.6 apart on purpose — see THE 迴避 ASYMMETRY above). The same reasoning
+ * keeps `dodge`/`allyDodge` (lavender 「閃避」) out: it is not a damage number.
+ *
+ * ⚠️ `mana` IS ALSO OUT, BUT FOR A REASON OWNER HAS NOT RULED ON — see
+ * {@link HEAL_CATEGORIES}. Do not read this paragraph as settling it.
+ *
+ * WHAT SURVIVES THE MOVE. Under `damageType`, `taken` and `dealt` share a hue
+ * for a given school. They stay apart on size (30 vs 24 px), weight (900 vs
+ * 800), anchor height, OPPOSITE drift, halo radius and admission rank — the
+ * same non-colour channels this file already relies on to separate heal from
+ * mana under tritanopia. That is a real cost and it is why `textAxis` exists.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 魔法傷害 OVERLAY (owner 2026-07-31) — `textAxis: "relation"` ONLY
+ *
+ * ⚠️ Everything below this line is the PRE-RULING path. It is unreachable while
+ * `textAxis` is `damageType`, and it is kept — not deleted — because it IS the
+ * alternative the field selects. Deleting it would turn a two-way switch back
+ * into a one-way door.
+ *
+ * The request was 「魔法傷害(AP) 跳出來的數字應該是紫色系」. The module doc above
+ * spends its first third explaining why hue is spent on WHO (dealt/taken/heal/
+ * mana), never on WHAT (physical/magic/true) — that channel already belongs to
+ * `vfx/vfxPresets.IMPACT_TINTS`. Reopening a `dmgType` axis on TEXT COLOUR would
+ * make the four requested categories collide again, which is the exact defect
+ * this file was rewritten to fix. So this is deliberately NARROW: `dmgType` only
+ * ever nudges an EXISTING category's presentation toward violet, on damage
+ * events, at a magnitude small enough that the category's own hue still reads
+ * first. It never becomes a fifth hue family with its own word or anchor band.
+ *
+ * WHY `dealt`/`other`/`guard` GET A FILL TINT AND `taken`/`allyTaken` DO NOT.
+ * The straightforward move — blend every damage colour toward one violet
+ * accent — was tried and MEASURED OUT. `taken`'s #FF5900 sits at ΔE 31.0 from
+ * team red specifically because it was searched for from 833 candidates that
+ * clear that distance (see the module doc); every blend toward violet at a
+ * "just a tint" ratio (t ≤ 0.45, RGB-lerp or HSL hue-path alike) drags it back
+ * to ΔE 7–24 from team red — BELOW the 25 floor this file enforces everywhere
+ * else. Continuing the blend far enough to clear 25 again (t ≥ 0.55) no longer
+ * reads as orange-with-a-violet-cast; it reads as hot pink, which is a colour
+ * swap wearing an "overlay" label. Full hue-wheel scan (fixed s=1.0, l=0.5, the
+ * base's own saturation) confirms this isn't a bad target choice: the ONLY safe
+ * violet-family zone from a 21° (orange) starting hue is 295–330°, and the
+ * short arc there passes directly through team red's own hue (3.2°).
+ *
+ * `dealt` (#E8E8E8) and `other`/`guard` (light greys) have no such trap — they
+ * blend to a clean pale violet at t=0.28 and land ΔE 41–55 from every team
+ * colour, comfortably clear.
+ *
+ * So `taken`/`allyTaken` get the overlay on a channel that never touches hue at
+ * all: the SOFT HALO (`haloPx`, the dark glow that already exists to give the
+ * number "its own dark pocket" against the red hit-flash — see 清晰 above). The
+ * hard 8-direction RING stays pure `#000` unconditionally; it is the contrast
+ * floor task #164 exists to protect, and nothing about this feature may touch
+ * it. The halo tints to a DARK violet whose own luminance (0.022, vs pure
+ * black's 0.0) still functions as a darkening glow — it is not competing with
+ * the fill for legibility, only adding a colour cast around it.
+ *
+ * The result: every magic-damage number keeps its category's fill EXACTLY as
+ * shipped (`dealt`/`other`/`guard` aside, whose fill itself lightens toward
+ * violet), which is the literal reading of 「疊加色調，不動主色」 the owner chose
+ * over a full colour swap.
+ */
+const MAGIC_ACCENT = "#9D4EDD";
+/**
+ * Damage-carrying categories — the only ones a `dmgType` can touch.
+ *
+ * EXPORTED so `damageColorsWiring.test.ts` can derive {@link NUMBERED_DAMAGE_CATEGORIES}
+ * from THIS set instead of re-typing its members. Before 2026-08-01 that test
+ * hand-wrote its own copy of the five, which meant a sixth damage category had to
+ * be added in THREE places and forgetting the test's copy drifted it silently —
+ * the exact hole the docblock below claimed was closed.
+ */
+export const DAMAGE_CATEGORIES: ReadonlySet<CombatTextCategory> = new Set([
+  "taken",
+  "dealt",
+  "allyTaken",
+  "other",
+  "guard",
+]);
+
+/**
+ * The damage categories that draw a NUMBER — i.e. `DAMAGE_CATEGORIES` minus the
+ * ones that draw a WORD instead. These, and only these, take the damage-school
+ * hue under `textAxis: "damageType"`.
+ *
+ * Written out rather than derived from {@link WORD} because `WORD` is declared
+ * further down and a top-level derivation would be a TDZ crash at import. The
+ * derivation is asserted instead — `damageColorsWiring.test.ts` recomputes
+ * `DAMAGE_CATEGORIES \ keys(WORD)` and compares, so adding a sixth damage
+ * category (or giving `guard` a number) cannot silently drift this set.
+ */
+export const NUMBERED_DAMAGE_CATEGORIES: ReadonlySet<CombatTextCategory> = new Set([
+  "taken",
+  "dealt",
+  "allyTaken",
+  "other",
+]);
+
+/**
+ * 補血 categories. 綠治療 is owner's fourth colour and applies on BOTH axes —
+ * the axis decides what a DAMAGE number's hue means; healing is green either
+ * way.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️⚠️ OPEN — AWAITING OWNER. `mana` (補魔) is absent from this set, so 補魔
+ * keeps its CYAN #38D8FF rather than owner's 綠. **That is this pass's reading,
+ * not a ruling.**
+ *
+ * WHAT OWNER ACTUALLY SAID (2026-08-01, verbatim): 「真實傷害目前在畫面上看不出來
+ * => 顯示白色傷害數字(紅物理; 紫魔法; 白真實; 綠治療)」. Four colours, and 補魔 is
+ * not one of them. The ruling is silent on it — it does not say 補魔 is green and
+ * it does not say 補魔 is exempt.
+ *
+ * THE READING SHIPPED HERE: 綠 was named for 治療, and 補魔 is a different
+ * resource, so it stays out. The supporting argument is that heal and mana are
+ * the one pair tritanopia collapses, and today they separate on colour PLUS
+ * italic PLUS weight PLUS anchor height PLUS opposite drift; making them both
+ * green would spend the colour channel and leave only the other four.
+ *
+ * THE OTHER READING, which is just as literal: 「綠治療」 means 「green = the
+ * numbers that give you something back」, and a player who has just been told
+ * 「green is good for you」 will not care that one of them is MP.
+ *
+ * ⚠️ Whoever asks owner: this is ONE dropdown, not a rewrite — add `"mana"` and
+ * `"allyMana"` to this set and `fillFor`'s first branch covers them. Per
+ * CLAUDE.md 第一守則 the better question is 「should this be a field?」 — i.e.
+ * a `manaTextColor: "cyan" | "heal"` cell in `config/damage-colors.json`, so
+ * the answer costs a save rather than a rebuild. NOT BUILT in this pass: it is
+ * a truth-cleanup pass, and adding a config field is a schema change.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+const HEAL_CATEGORIES: ReadonlySet<CombatTextCategory> = new Set(["heal", "allyHeal"]);
+/**
+ * Per-category magic overlay. `color` REPLACES the fill (pale bases only —
+ * measured ΔE > 40 from every team colour at this exact blend, see doc above).
+ * `haloRgb` REPLACES the halo's `0,0,0` (red bases only — the fill is
+ * deliberately untouched). Never both on the same category.
+ */
+const MAGIC_TINT: Partial<Record<CombatTextCategory, { color?: string; haloRgb?: string }>> = {
+  // #FF5900 blended 28% toward MAGIC_ACCENT: #D3BDE5, ΔE 54.7 from nearest
+  // team colour, ΔE 26.9 from `dodge` (#C9A7FF) — both comfortably clear.
+  dealt: { color: "#D3BDE5" },
+  // #E6E6E6 at the same 28% blend: #D2BBE3, ΔE 54.5 / 26.6.
+  other: { color: "#D2BBE3" },
+  // #B9C2CC at the same 28% blend: #B1A2D1, ΔE 46.3 / 23.2.
+  guard: { color: "#B1A2D1" },
+  // fill untouched; halo goes from black to a dark violet (luminance 0.022,
+  // still reads as a darkening glow — see doc above for why the fill cannot).
+  taken: { haloRgb: "61,10,102" },
+  allyTaken: { haloRgb: "61,10,102" },
+};
+void MAGIC_ACCENT; // documents where MAGIC_TINT's blended values came from
+
 export interface CombatTextMods {
   crit: boolean;
   killingBlow: boolean;
+  /** damage school (packages/shared `pkt.type`); undefined for non-damage kinds */
+  dmgType?: "physical" | "magic" | "true";
 }
 
 /**
@@ -717,6 +984,7 @@ export function combatTextStyle(
   }
 
   const fontSize = Math.round(base.fontSize * sizeMult);
+  const { color, haloRgb } = fillFor(category, mods);
   return {
     ...base,
     fontSize,
@@ -726,7 +994,71 @@ export function combatTextStyle(
     // the ring has to grow with the glyph or a 44 px crit reads as unoutlined
     outlinePx: fontSize >= 24 ? 2 : 1.5,
     haloPx: base.haloPx,
+    color,
+    haloRgb,
   };
+}
+
+/**
+ * The FILL half of a style, split out because it is the one part that reads the
+ * operator's palette and therefore the one part `combatTextStyleKey` has to
+ * agree with exactly. Two functions deciding the fill is how a pooled node ends
+ * up wearing last hit's colour (失敗形態 ②) — so the key derives its
+ * discriminator from {@link fillDiscriminator} below, which is written next to
+ * this and asserted against it.
+ */
+function fillFor(
+  category: CombatTextCategory,
+  mods: CombatTextMods,
+): { color: string; haloRgb?: string } {
+  // ⚠️ THE HALO IS `MAGIC_TINT`'S CHANNEL AND NOBODY ELSE'S. Every `return`
+  // below except the overlay one omits `haloRgb` entirely, which is what makes
+  // `combatTextShadow`'s `haloRgb = "0,0,0"` default the black pocket. Until
+  // 2026-08-01 three of these returns spread `BASE[category].haloRgb` behind an
+  // `!== undefined` guard; `BASE` has never set it (and now CANNOT — its type
+  // is `Omit<CombatTextStyle, "haloRgb">`), so all three were dead branches
+  // that made the table look like a possible source of a coloured halo.
+  //
+  // 綠治療 — both axes. The palette owns the green; the table's #00FF00 is only
+  // the fallback for a client whose content mount never loaded.
+  if (HEAL_CATEGORIES.has(category)) {
+    return { color: damageTextColor("heal") };
+  }
+  if (damageTextAxis() === "damageType") {
+    // 紅物理 / 紫魔法 / 白真實 — number-drawing damage categories only, and the
+    // halo stays pure black (the school is already in the fill; casting the
+    // halo too would be saying it twice).
+    if (NUMBERED_DAMAGE_CATEGORIES.has(category)) {
+      return { color: damageTextColor(normalizeDamageSchool(mods.dmgType)) };
+    }
+    return { color: BASE[category].color };
+  }
+  // `textAxis: "relation"` — the pre-ruling behaviour: category hue, plus the
+  // narrow 魔法 overlay that touches ONE of {fill, halo} per category, never
+  // both, and never a category outside DAMAGE_CATEGORIES.
+  const overlay =
+    mods.dmgType === "magic" && DAMAGE_CATEGORIES.has(category) ? MAGIC_TINT[category] : undefined;
+  return {
+    color: overlay?.color ?? BASE[category].color,
+    ...(overlay?.haloRgb !== undefined ? { haloRgb: overlay.haloRgb } : {}),
+  };
+}
+
+/**
+ * The part of the cache key that tracks the FILL. Everything `fillFor` can
+ * branch on has to appear here or a pooled DOM node keeps a stale colour: under
+ * `damageType` that is the SCHOOL ITSELF (three values), not the old
+ * 「is it magic」 boolean, which is precisely why 物理 and 真實 shared a node.
+ */
+function fillDiscriminator(category: CombatTextCategory, mods: CombatTextMods): string {
+  const axis = damageTextAxis();
+  if (HEAL_CATEGORIES.has(category)) return "h";
+  if (axis === "damageType") {
+    return NUMBERED_DAMAGE_CATEGORIES.has(category)
+      ? `t:${normalizeDamageSchool(mods.dmgType)}`
+      : "";
+  }
+  return mods.dmgType === "magic" && DAMAGE_CATEGORIES.has(category) ? "m" : "";
 }
 
 /** Admission priority for a would-be entry (lower = more important). */
@@ -978,14 +1310,18 @@ export const COMBAT_TEXT_FONT =
 
 const round1 = (n: number): string => (Math.round(n * 10) / 10).toString();
 
-/** The black ring + soft halo, as a `text-shadow` value. */
-export function combatTextShadow(outlinePx: number, haloPx: number): string {
+/**
+ * The black ring + soft halo, as a `text-shadow` value. `haloRgb` colours ONLY
+ * the soft halo (default pure black); the 8-direction RING is always `#000` —
+ * see MAGIC_TINT's doc block for why the ring may never be recoloured.
+ */
+export function combatTextShadow(outlinePx: number, haloPx: number, haloRgb = "0,0,0"): string {
   const parts = OUTLINE_DIRS.map(
     ([dx, dy]) => `${round1(dx * outlinePx)}px ${round1(dy * outlinePx)}px 0 #000`,
   );
   if (haloPx > 0) {
-    parts.push(`0 0 ${round1(haloPx)}px rgba(0,0,0,0.95)`);
-    parts.push(`0 0 ${round1(haloPx * 1.8)}px rgba(0,0,0,0.7)`);
+    parts.push(`0 0 ${round1(haloPx)}px rgba(${haloRgb},0.95)`);
+    parts.push(`0 0 ${round1(haloPx * 1.8)}px rgba(${haloRgb},0.7)`);
   }
   return parts.join(",");
 }
@@ -1047,13 +1383,23 @@ export function combatTextCss(style: CombatTextStyle, gradient: boolean): string
     `font-size:${style.fontSize}px;font-weight:${style.fontWeight};` +
     `font-style:${style.italic ? "italic" : "normal"};letter-spacing:0.02em;` +
     fill +
-    `text-shadow:${combatTextShadow(style.outlinePx, style.haloPx)};`
+    `text-shadow:${combatTextShadow(style.outlinePx, style.haloPx, style.haloRgb)};`
   );
 }
 
-/** Cache key for a computed style — pooled nodes only restyle when this changes. */
+/**
+ * Cache key for a computed style — pooled nodes only restyle when this changes.
+ *
+ * The AXIS is in the key even though it only changes when the content doc
+ * loads: a node that was styled before `applyDamageColorsDoc` ran must not keep
+ * the pre-load fill for the rest of its life. The school half comes from
+ * {@link fillDiscriminator}, i.e. from the same code path that picks the fill —
+ * a second hand-written copy of that branch is exactly how 物理 and 真實 came to
+ * share a cache slot.
+ */
 export function combatTextStyleKey(category: CombatTextCategory, mods: CombatTextMods): string {
-  return `${category}|${mods.crit ? "c" : ""}${mods.killingBlow ? "k" : ""}`;
+  const emphasis = `${mods.crit ? "c" : ""}${mods.killingBlow ? "k" : ""}`;
+  return `${category}|${emphasis}|${damageTextAxis()}|${fillDiscriminator(category, mods)}`;
 }
 
 // ---------------------------------------------------------------------------

@@ -26,6 +26,16 @@ three ways, two of them structural:
 
 ## The load-bearing measurement: the outline carries legibility, the hue carries meaning
 
+> ⚠️ **這一節記錄的是 2026-08-01 之前的配色，數字仍然是真的量測值，但它描述的世界已經
+> 不存在了。** owner 當天裁定「紅物理 / 紫魔法 / 白真實 / 綠治療」，配色軸從**誰**
+> （受到傷害 / 造成傷害）改成**傷害類型**，而受擊閃光也不再對每種傷害都回傳紅色。
+>
+> 下面表格裡的 `受到傷害 #FF0000`、以及「`flashColorFor()` 對 **every** damage type
+> 回傳 `[1,.15,.15]`」那一段，**現在都是假的**。留著是因為那些對比度是量出來的、
+> 推導過程仍有參考價值 —— 但**現行值請讀 `content/config/damage-colors.json`**
+> （text 四色 + flash 三色，出貨值與量測理由都在該檔的 `note` 與
+> `packages/shared/src/content/schema/config.ts` 的 `DEFAULT_DAMAGE_COLORS`）。
+
 A floating number is anchored over a body, so the backgrounds it is *guaranteed* to be
 born on are not the floor. Measured against the real ones:
 

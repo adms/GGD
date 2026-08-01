@@ -26,6 +26,7 @@
  * impact ≥ the sim's floor) still freezes both bodies. This module never feeds
  * the sim, so trig/float here can't desync anything.
  */
+import { damageFlashRgb, normalizeDamageSchool } from "./damagePalette";
 import type { Quality } from "./RenderConfig";
 
 // ---------------------------------------------------------------------------
@@ -35,31 +36,39 @@ import type { Quality } from "./RenderConfig";
 export type DmgType = "physical" | "magic" | "true";
 
 /**
- * VICTIM FLASH colour for a landed hit. RED on every damage type; magic gets a
- * magenta variant so the type still reads.
+ * VICTIM FLASH colour for a landed hit — THREE-WAY as of owner's 2026-08-01
+ * ruling (「紅物理; 紫魔法; 白真實」). It used to be `magic ? magenta : red`,
+ * which made 真實傷害 pixel-identical to 物理傷害 on the struck body.
  *
- * Why not white (the previous physical/true colour): the overlay draws with
- * ALPHA_COMBINE, i.e. a straight lerp `out = base·(1−a) + flash·a`, so a white
- * flash can only push all three channels UP. Measured against the real w3x
- * tints in content/config/unit-tints.json, that is a no-op on every pale model —
+ * The values live in `content/config/damage-colors.json` → `render/damagePalette`,
+ * NOT here: this palette has been overruled twice in two days and a hex literal
+ * in this file costs a rebuild per word (第一守則).
+ *
+ * WHY 真實 IS A CYAN-WHITE AND NOT WHITE. The overlay draws with ALPHA_COMBINE,
+ * i.e. a straight lerp `out = base·(1−a) + flash·a`, so a white flash can only
+ * push all three channels UP. Measured against the real w3x tints in
+ * content/config/unit-tints.json, that is a no-op on every pale model —
  * ΔLuminance 0.03 for an untinted light rig, 0.04 for 白木老樹精, 0.09 for
- * 神性的流失 — while red moves two channels DOWN and stays legible everywhere
- * (ΔRGB 0.44–0.68 across the same set, including pure-black 老二 and the pale
- * models white fails on entirely).
+ * 神性的流失 — i.e. literal white would have re-created the very complaint
+ * (「看不出來」) on the very damage type it was meant to fix. `#33FFFF`
+ * ([0.2, 1, 1]) is the palest colour that still clears the floor on all seven
+ * measured tints. `render/damagePalette.test.ts` re-measures all three against
+ * those tints; the suite below only asserts they stay pairwise distinct.
  */
 export function flashColorFor(dmgType: string | undefined): [number, number, number] {
-  return dmgType === "magic" ? [1, 0.35, 0.9] : [1, 0.15, 0.15];
+  return damageFlashRgb(normalizeDamageSchool(dmgType));
 }
 
 // ───────────────────────── THE VICTIM-FLASH LAYERING (read this first) ───────
 // The victim flash carries TWO things, and they are layered, not competing:
 //
 //   LAYER 1 — DAMAGE TYPE (the system read, `flashColorFor` above).
-//     Physical/true = red, magic = magenta. This is combat legibility: it is
-//     how you know at a glance what is chewing through you. It is the DEFAULT
-//     and it covers every basic attack and every un-authored ability — i.e.
-//     the overwhelming majority of hits in a match. NOTHING may take it away:
-//     no champion doc authors a flash (all 112 that carry `hitFeel` author only
+//     Physical = red, magic = magenta, true = cyan-white — one hue per school,
+//     none of them shared. This is combat legibility: it is how you know at a
+//     glance what is chewing through you. It is the DEFAULT and it covers every
+//     basic attack and every un-authored ability — i.e. the overwhelming
+//     majority of hits in a match. NOTHING may take it away: no champion doc
+//     authors a flash (all 112 that carry `hitFeel` author only
 //     hitstop/shake/knockback), so a basic attack ALWAYS reads its damage type.
 //
 //   LAYER 2 — ABILITY ELEMENT (`hitFeel.flashColor`, 31 authored ability docs).
@@ -92,8 +101,9 @@ export function flashColorFor(dmgType: string | undefined): [number, number, num
  * palette above was retuned for — a low-spread colour has nothing to move:
  *
  *   flash              spread   max Δ vs a 0.9 base @ a=0.6
- *   [1, .15, .15] red    0.85    0.45     ← the measured, accepted default
- *   [1, .35, .90] magic  0.65    0.33     ← the PALEST accepted default
+ *   [1, .15, .15] red    0.85    0.45     ← physical default (#FF2626)
+ *   [.20,1,  1  ] cyan   0.80    0.42     ← true default (#33FFFF, 2026-08-01)
+ *   [1, .35, .90] magic  0.65    0.33     ← the PALEST accepted default (#FF59E6)
  *   [1, .92, .60] gold   0.40    0.18     ← authored (godie-e007.r, +5 more)
  *   [.85,.92,1.0] azure  0.15    0.06     ← authored (godie-u00j.q, godie-hart.r)
  *   [1, 1,   1  ] white  0.00    0.06     ← the case the docstring above rejects
@@ -101,6 +111,12 @@ export function flashColorFor(dmgType: string | undefined): [number, number, num
  * 0.65 is the magenta's spread — i.e. "no authored colour may be less chromatic
  * than the palest colour the measurement pass was willing to accept". Eight of
  * the 31 authored docs sit under it and would otherwise flash invisibly.
+ *
+ * ⚠️ The three defaults are now OPERATOR-EDITABLE (`config/damage-colors.json`),
+ * so this floor is what stops an authored colour going invisible, NOT what stops
+ * a default doing it. `damagePalette.test.ts` re-measures the three defaults
+ * against the real w3x tints, which is the assertion that actually protects
+ * them; nothing clamps the doc at runtime.
  */
 export const FLASH_MIN_SPREAD = 0.65;
 
@@ -126,9 +142,11 @@ export function legibleFlashColor(rgb: readonly [number, number, number]): [numb
   // Already chromatic enough (fire orange, deep violet…) → author's value, verbatim.
   if (spread >= FLASH_MIN_SPREAD) return [r, g, b];
   // A pure greyscale authored colour (spread 0) has NO hue to preserve — there
-  // is no direction to saturate in, so fall back to the measured red rather
-  // than emitting a flash that cannot be seen.
-  if (spread <= 1e-6) return [1, 0.15, 0.15];
+  // is no direction to saturate in, so fall back to the PHYSICAL flash rather
+  // than emitting a flash that cannot be seen. Read from the palette, not
+  // re-typed here: two copies of the same red is two things that can drift, and
+  // the drift would show up as one ability flashing a colour nothing else uses.
+  if (spread <= 1e-6) return damageFlashRgb("physical");
   const s = FLASH_MIN_SPREAD / spread;
   return [clamp01(max - (max - r) * s), clamp01(max - (max - g) * s), clamp01(max - (max - b) * s)];
 }
@@ -309,7 +327,7 @@ function isSparkKind(v: unknown): v is SparkKind {
 interface TierFx {
   /** 0..1 hit-weight — shake amp, damage-number emphasis, sfx variant all scale from this. */
   weight: number;
-  /** victim red/magenta flash duration (ms) and overlay strength (0..1). */
+  /** victim flash duration (ms) and overlay strength (0..1); the HUE is the school's. */
   flashMs: number;
   flashAlpha: number;
   /** attacker white "I connected" pop — shorter + lighter than the victim flash. */
@@ -377,7 +395,8 @@ export interface ImpactFeedbackPlan {
   freezeMs: number;
   /**
    * Victim flash: the ability's AUTHORED element hue when `hitFeel.flashColor`
-   * named one, else the measured damage-type red/magenta. Alpha is always the
+   * named one, else the damage-school palette (red / magenta / cyan-white,
+   * `config/damage-colors.json`). Alpha is always the
    * tier's. See `resolveVictimFlash`.
    */
   victimFlash: FlashSpec;

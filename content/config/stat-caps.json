@@ -5,6 +5,10 @@
     "as": {
       "base": 4.0,
       "unlocked": 10.0
+    },
+    "ap": {
+      "base": 100000,
+      "unlocked": 100000
     }
   }
 }
