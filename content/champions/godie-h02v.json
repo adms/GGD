@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 2
   },
   "growth": {
     "maxHealth": 30,
@@ -44,6 +44,7 @@
     "primary": "AGI",
     "source": "w3x"
   },
+  "bodyScale": 0.85,
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,

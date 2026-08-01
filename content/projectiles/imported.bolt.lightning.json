@@ -1,0 +1,8 @@
+{
+  "id": "imported.bolt.lightning",
+  "schema": "projectile@1",
+  "speed": 22,
+  "maxRange": 12,
+  "hitRadius": 0.5,
+  "vfxKey": "fx.prim.lightning.bolt"
+}

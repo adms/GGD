@@ -44,6 +44,7 @@
     "primary": "STR",
     "source": "w3x"
   },
+  "bodyScale": 1.1,
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
@@ -76,7 +77,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
+          "projectileId": "imported.wave.arcane",
           "onHit": [
             {
               "kind": "damage",

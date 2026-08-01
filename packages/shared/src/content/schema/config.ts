@@ -16,6 +16,8 @@ import { COMBAT_ENV_KEYS, type CombatEnvKey } from "../../sim/combatEnv";
 // Zod,所以「頁面 / schema / sim」三層守的是同一組數字。
 import { ALL_STATS, Stat } from "../../sim/stats/statTypes";
 import { baseBonusBounds } from "../../sim/baseBonus";
+// 屬性上限的 per-stat 區間 —— 同一條規矩:數字定義在 sim,schema 只是搬上 Zod。
+import { STAT_CAP_CEILING, statCapBounds } from "../../sim/statCaps";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -26,6 +28,13 @@ import { zConfigRoundGradeDoc } from "./roundGrade";
 // config.vfx-families@1 lives in ./vfx next to the vfx@1 docs it tunes (the
 // w3x art family layer); only its union membership belongs here.
 import { zConfigVfxFamiliesDoc } from "./vfx";
+// 嘲弄規則的上界 —— 定義在 sim/taunt.ts(sim 也夾同一個數字),schema 只是把它
+// 接上 Zod,所以兩層守的不可能是兩個數字。
+import {
+  TAUNT_DURATION_MULT_MAX,
+  TAUNT_LEASH_MAX,
+  TAUNT_MAX_TARGETS,
+} from "../../sim/taunt";
 
 /**
  * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
@@ -62,6 +71,51 @@ export const zFireRingConfig = z
     burnPctPerSecEnd: z.number().min(0).max(1).default(0.2),
     /** safety cap on the per-second burn rate (fraction of maxHealth); absent = uncapped */
     maxPctPerSec: z.number().min(0).max(1).optional(),
+    /**
+     * 回合硬上限 (#248). owner 2026-08-01:
+     *
+     *   「時間延長太久了，**不管什麼條件**，每回合最長上限就是 5 分鐘出現火圈
+     *     準備收場，不會無限增加時間」
+     *
+     * The combat-elapsed second at which the ring's closing sequence STARTS no
+     * matter what. It is a CEILING ON `startSec`, not a second timer: at this
+     * many combat-elapsed seconds the ring ignites and contracts over the
+     * ordinary `shrinkSec`, so 「出現火圈準備收場」 is the same sequence the
+     * player already knows, just no longer deferrable.
+     *
+     * WHAT IT ACTUALLY STOPS. `boss.delayFireRingSec` / `boss.extendCombatSec`
+     * are applied ONCE PER 殭屍王 SUMMON, and `arena-rules.json` ships the king
+     * as `repeatable: true` at `killThreshold: 100` — so a champion farming
+     * zombies re-summons at 100, 200, 300 … and EACH summon adds another 180 s
+     * to both deadlines, per champion. That is the unbounded round the owner
+     * measured; the two `.max(3600)` bounds on the boss knobs bound ONE summon,
+     * never the total. This bounds the total.
+     *
+     * ⚠️ WHY THERE IS NO 「停用硬上限」 SWITCH. 不管什麼條件 is the requirement; a
+     * boolean that turns it off is the defect wearing a checkbox. The operator's
+     * escape hatch is the NUMBER — raise it to 1800 for a marathon round — which
+     * cannot silently restore an unbounded round the way an off switch would.
+     *
+     * BOUNDED BOTH ENDS (CLAUDE.md 「欄位要有上界，不是只有下界」):
+     *   · min 20 — a round shorter than one closing animation (`shrinkSec`
+     *     ships at 20 s) would ignite the ring and force-end combat before it
+     *     ever reached `minRadius`, i.e. the 收場 the player is promised would
+     *     never be drawn. The cross-field refine below additionally requires
+     *     `roundHardCapSec >= startSec + shrinkSec` against the ACTUAL authored
+     *     shrink, so this static floor is only the last line.
+     *   · max 1800 — 30 minutes. The mis-parse this catches is the stray digit
+     *     on the shipped 300 (「5 分鐘」 typed as 3000 = 50 minutes, or as
+     *     「500」 minutes), which is precisely the shape #277 named. 1800 is
+     *     still longer than any round anyone would deliberately author, so the
+     *     ceiling costs the operator nothing real.
+     *
+     * ABSENT ⇒ NO CAP in the SIM's own mirror (`FireRingConfigLike` in
+     * sim/fireRing.ts treats it as `Infinity`), so a hand-built fixture or the
+     * client's prediction shadow behaves byte-identically to pre-#248. The
+     * schema's `.default(300)` means every doc that goes through the loader HAS
+     * one — same two-sided asymmetry the `boss` block above documents.
+     */
+    roundHardCapSec: z.number().min(20).max(1800).default(300),
     /**
      * 殭屍王在場 → 回合延長 (#L1). owner 2026-07-30:
      *
@@ -124,6 +178,7 @@ export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   burnPctPerSecStart: 0.04,
   burnPctPerSecEnd: 0.2,
   maxPctPerSec: 1,
+  roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
 
@@ -203,6 +258,34 @@ export const zConfigMatchDoc = z
           message:
             "match.fireRing.boss: after a 殭屍王 extension the ring must STILL finish closing before the backstop — require startSec + delayFireRingSec + shrinkSec <= combatMaxSec + extendCombatSec",
           path: ["fireRing", "boss", "delayFireRingSec"],
+        },
+      )
+      /**
+       * #248 — THE HARD CAP MUST NOT TRUNCATE THE UN-EXTENDED ROUND.
+       *
+       * `roundHardCapSec` is a CEILING on the ignition tick. If it were authored
+       * BELOW `startSec` the ring would ignite early on every ordinary round and
+       * `startSec` — documented one field up as 「回合長度的單一真相」 — would
+       * silently stop being true. Requiring the cap to leave room for the whole
+       * un-extended ring (`startSec + shrinkSec`) states the stronger, more
+       * useful fact: the cap can only ever shorten a round that something
+       * EXTENDED, never the baseline one, and there is always at least one full
+       * closing animation inside it.
+       *
+       * Shipped: 60 + 20 = 80 <= 300, so the cap is inert until a 殭屍王 shows up.
+       *
+       * Checked at author time rather than clamped at runtime, for the same
+       * reason the refine above is: a clamp would let the operator save 30 and
+       * then quietly play 80.
+       */
+      .refine(
+        (m) =>
+          !m.fireRing ||
+          m.fireRing.startSec + m.fireRing.shrinkSec <= m.fireRing.roundHardCapSec,
+        {
+          message:
+            "match.fireRing.roundHardCapSec must leave room for the WHOLE un-extended ring — require startSec + shrinkSec <= roundHardCapSec (回合硬上限只能砍掉被延長的回合，不能砍掉正常回合)",
+          path: ["fireRing", "roundHardCapSec"],
         },
       ),
     economy: z
@@ -521,6 +604,52 @@ export const zGoldDropConfig = z
 export type GoldDropConfig = z.infer<typeof zGoldDropConfig>;
 
 /**
+ * 傳說武器三選一的補抽規則 (GH#249) — what a weapon card does when its ELIGIBLE
+ * POOL is genuinely smaller than `offerCount`.
+ *
+ * owner 2026-08-01:「傳說武器有時候只有跳出一個而不是三選一」. The reported bug
+ * was NOT this block: `MatchController` rolled three and then dropped the ones
+ * the operator whitelist did not enable, so a 49-entry pool with a stale
+ * whitelist produced 1-card and 2-card draws at random. That is fixed by ORDER
+ * (`sim/economy/draft.eligibleItemPool` now filters before the roll) and is not
+ * switchable — a card silently losing entries is never a preference.
+ *
+ * What IS a preference is the leftover case: every gate has run and there really
+ * are fewer than `offerCount` legal weapons left. Three answers, and the shipped
+ * one is the conservative `short`; see `DEFAULT_ITEM_DRAFT_POLICY` in
+ * `sim/economy/draft.ts` for why the other two each hand the player something
+ * the content never promised.
+ *
+ * Optional: an absent block means the shipped policy, so every pre-GH#249 doc
+ * (and `DEFAULT_ARENA_RULES`) keeps behaving exactly as it did.
+ */
+export const zItemDraftConfig = z
+  .object({
+    /**
+     * 候選不足時怎麼辦。`short` = 就發幾張（出貨值，最保守）;
+     * `fallback` = 從 `fallbackTable` 借; `duplicate` = 重複已抽到的補滿。
+     */
+    shortPoolMode: z.enum(["short", "fallback", "duplicate"]),
+    /**
+     * `fallback` 模式要借哪一張 loot table。空字串 = 沒有備援（於是等同 short）。
+     * 64 chars is well past every shipped table id (`legendary-weapons` = 17);
+     * the ceiling exists so a pasted paragraph cannot become a table id.
+     */
+    fallbackTable: z.string().max(64),
+    /**
+     * 一張卡最多抽幾次。Every draw removes an entry from its working pool, so
+     * termination never depends on this — it bounds a mis-typed `offerCount`
+     * and any future with-replacement mode. Floor 1 (a card must be allowed at
+     * least one draw); ceiling 512, which catches 64 mis-typed as 640 while
+     * still sitting an order of magnitude above the 49-entry shipped pool.
+     */
+    maxDraws: z.number().int().min(1).max(512),
+  })
+  .strict();
+
+export type ItemDraftConfig = z.infer<typeof zItemDraftConfig>;
+
+/**
  * 71-00 暗夜契約 (owner 2026-07-30 re-design) — while a 暗夜契約 carrier fights
  * in a zone, EVERY champion death there (friend or foe) raises a 暗夜旗 that
  * radiates 黑夜靈氣; every flag is cleared at round end. Optional + additive: an
@@ -690,6 +819,36 @@ export const zMobChampionSource = z.enum(["inherit", "fixed", "random"]);
  */
 export const zMobHeroLevelSource = z.enum(["round", "fixed", "matchHighest"]);
 
+/**
+ * 殭屍上限的上界 (owner 2026-07-30 裁定「上限值 500」).
+ *
+ * ⚠️ 這是**上界**,不是預設值。出貨值仍然是 `maxAlivePerZone: 15`(逐回合表最高
+ * 爬到 50);500 是「後台這一格最多讓操作者填到多少」。
+ *
+ * ── 為什麼上界非有不可 ───────────────────────────────────────────────────────
+ * 這兩個欄位在 GH#206 補上界的那一輪被漏掉了:整個 `mobWaves` 區塊只有這兩格
+ * 是 `min(1)` 而沒有 `max`,所以 50 打成 5000 會**完全合法**地存下去,一路寫進
+ * 耐久覆蓋層。沒有人會在後台看到任何一個字,缺陷要到那一場比賽的伺服器開始
+ * 掉幀才會被發現。
+ *
+ * ── 為什麼是 500,而不是「隨便一個很大的數」 ─────────────────────────────────
+ * 一場比賽是**單執行緒**的:主機 24 核對「一場裡有幾隻殭屍」完全沒有幫助,加核
+ * 只增加同時開幾場。`maxAlivePerZone` 是**每個 zone**、一場四個 zone,所以 500
+ * 是場上 2,000 個實體的意思 —— 已經遠在單場 tick 預算之外。上界的作用是把
+ * 「一個手滑的 0」擋在存檔之前,不是描述效能甜蜜點(甜蜜點是出貨的 15~50)。
+ *
+ * ── 為什麼是常數而不是欄位 ─────────────────────────────────────────────────
+ * 和 `BASE_BONUS_MAX` 同一條規矩(sim/baseBonus.ts):**被守的那一格才是欄位**,
+ * 上界本身是守衛。把守衛也做成可調的,等於沒有守衛。
+ */
+export const MOB_ALIVE_CAP_MAX = 500;
+
+/**
+ * 每波數量上限的上界。和 `MOB_ALIVE_CAP_MAX` 同一個數字、同一個理由 —— 一波生
+ * 出來的量最終還是被場上上限收住,所以兩格用同一條天花板,操作者不用記兩個數。
+ */
+export const MOB_PER_WAVE_CAP_MAX = 500;
+
 export const zMobWavesConfig = z
   .object({
     /** 1-based round from which waves begin (matches ultUnlockRound:3 precedent) */
@@ -699,9 +858,9 @@ export const zMobWavesConfig = z
     /** combat-seconds between waves (wave k lands at second 2k-1 when =2) */
     waveIntervalSec: z.number().positive(),
     /** hard cap on mobs spawned per wave: count = min(k, mobsPerWaveCap) */
-    mobsPerWaveCap: z.number().int().min(1),
+    mobsPerWaveCap: z.number().int().min(1).max(MOB_PER_WAVE_CAP_MAX),
     /** hard cap on mobs ALIVE per battlefield/duel zone at once */
-    maxAlivePerZone: z.number().int().min(1),
+    maxAlivePerZone: z.number().int().min(1).max(MOB_ALIVE_CAP_MAX),
     /**
      * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
      * caps above, for the escalation into the finale:
@@ -736,9 +895,9 @@ export const zMobWavesConfig = z
             /** 1-based round this row applies to */
             round: z.number().int().min(1),
             /** cap on mobs spawned per wave in that round (0 = none) */
-            mobsPerWaveCap: z.number().int().min(0),
+            mobsPerWaveCap: z.number().int().min(0).max(MOB_PER_WAVE_CAP_MAX),
             /** cap on mobs ALIVE per zone in that round (0 = none) */
-            maxAlivePerZone: z.number().int().min(0),
+            maxAlivePerZone: z.number().int().min(0).max(MOB_ALIVE_CAP_MAX),
             /**
              * PER-ROUND MOB FACE (owner 2026-07-27, 後台殭屍波系統頁).
              *
@@ -810,6 +969,38 @@ export const zMobWavesConfig = z
          * silhouette still says WHICH champion it is wearing.
          */
         tintStrength: z.number().min(0).max(1).optional(),
+        /**
+         * 腳下圈圈的基準直徑 (#247, owner 2026-08-01: 「殭屍王底下圈圈會比較大，
+         * 但不影響無碰撞」) — GGD units, at 體型倍率 1.
+         *
+         * ⚠️ PURELY VISUAL, AND THAT IS THE REQUIREMENT, NOT A SIDE NOTE. The
+         * sim's body is `radius` (this block) / `boss.radius`, and NOTHING reads
+         * this number on the server: it travels in `MatchState.mobVisualJson`
+         * next to `tintStrength` and is consumed only by the renderer's team
+         * ring. So there is no path by which widening the ring could widen what
+         * the king collides with — see `mobGroundRingDiameter` in sim/mobs.ts
+         * and its guard in sim/mobRingIndependence.test.ts.
+         *
+         * Lives on `mob` and not on `boss` for the same reason `tintStrength`
+         * does: it applies to all three kinds, and the wire table is match-wide.
+         *
+         * 1.25 = the champion team ring's diameter, so a 體型倍率-1 zombie wears
+         * exactly the ring a player does. 上界 8: a ring wider than 8u under one
+         * body already covers a sixth of a 48u-wide zone — 24 (the arena's
+         * boundary radius, the neighbouring number an operator might paste)
+         * would carpet the whole floor. 0 = 不畫圈, a real choice.
+         */
+        groundRingDiameter: z.number().min(0).max(8).optional(),
+        /**
+         * 圈圈跟著體型倍率放大的程度. 1 (shipped) = 完全跟著 —— a 10× king wears a
+         * 10× ring, which is owner's 「圈圈會比較大」. 0 = 每一種殭屍的圈圈一樣大.
+         *
+         * A SEPARATE knob from the diameter because they are separate decisions:
+         * 「圈圈本身多大」 and 「王的圈圈要不要跟著王一起變大」. 上界 2 catches the
+         * mis-paste of `boss.sizeMult` (10) into this box, which would put a
+         * 100×-wide ring under the king; 下界 0 is the 「都一樣大」 end.
+         */
+        groundRingSizeFollow: z.number().min(0).max(2).optional(),
         /**
          * #217 — the CHAMPION DOC the mob wears the FACE of. Since #244 this is
          * PRESENTATION + a LEGACY FALLBACK only: when the four `baseHp`/
@@ -1047,6 +1238,79 @@ export const zMobWavesConfig = z
          * this field is byte-identical. See {@link zMobHeroLevelSource}.
          */
         heroLevelSource: zMobHeroLevelSource.optional(),
+
+        /* ── #247 owner 2026-08-01 實戰回饋 ────────────────────────────────
+         *
+         * 「殭屍王 應該要可以無視碰撞穿透地形 不然被卡住永遠走不到」
+         * 「每回合最多只會出現一次殭屍王，不會無限出場」
+         *
+         * BOTH are DECISIONS, so both are fields with the owner's answer as the
+         * default. The no-clip half deliberately borrows 翔封界's vocabulary
+         * (`FlightGrant` in sim/flight.ts) instead of inventing a second one:
+         * the king is granted the SAME state a flying champion carries, so the
+         * three MovementSystem exemptions have exactly one implementation.
+         */
+        /**
+         * 無視碰撞 — master switch. SHIPS **true** (owner's answer).
+         *
+         * ⚠️ WHAT IT DOES NOT DO: it is not invulnerability and not stealth.
+         * `world.grid` (the broad phase every targeting/AoE query reads) is
+         * untouched, so a no-clip king is still hittable — that distinction is
+         * the whole reason sim/flight.ts exists and is quoted there.
+         */
+        noClip: z.boolean().optional(),
+        /**
+         * 穿過其他單位 (其他殭屍、英雄、花、守衛塔). ABSENT = true.
+         *
+         * A SEPARATE decision from `noClipObstacles` for the reason
+         * `FlightGrant` gives: walking through BODIES is a positioning change,
+         * walking through PILLARS is a map-geometry change. In the king's case
+         * this one is the load-bearing half — a round-9 zone holds up to 50
+         * zombies, and the soft-separation pass is what pins a 1.8-radius body
+         * inside its own escort.
+         */
+        noClipUnits: z.boolean().optional(),
+        /** 穿過牆與柱子 (`zone.obstacles`). ABSENT = true. */
+        noClipObstacles: z.boolean().optional(),
+        /**
+         * 仍然被場地邊界夾住. ABSENT = **true**, and the polarity is deliberately
+         * the opposite of the two above — 「無視碰撞」 must not become 「走出競技
+         * 場」. A king outside the boundary breaks every zone-scoped mechanic
+         * (duel resolution, `teamAliveInZone`, the minimap) and the fire ring
+         * would burn it from outside the world.
+         */
+        noClipStayInside: z.boolean().optional(),
+        /**
+         * 每回合最多召喚幾隻殭屍王 (owner 2026-08-01: 「每回合最多只會出現一次」).
+         * SHIPS **1**.
+         *
+         * ⚠️ THIS IS A SECOND, INDEPENDENT GATE — it does NOT replace
+         * `repeatable`. `repeatable` answers 「同一個英雄的第 200 隻要不要再召喚」
+         * over the WHOLE MATCH; this answers 「這一回合已經來過幾隻了」. With
+         * `repeatable: true` and six champions in a zone, the old code could
+         * summon six kings inside one round — that is the 「無限出場」 owner saw.
+         *
+         * Counted per ROUND because `beginCombatMobs` is the round boundary the
+         * host already calls; there is no timer and no decrementing counter
+         * (sim/purity.test.ts).
+         *
+         * 上界 20:「一回合 20 隻王」 already means the cap does nothing, so
+         * anything larger is a mis-paste — specifically the 100 from
+         * `killThreshold`, the box directly above it on the 後台 page.
+         * 下界 1: 0 would be 「永遠不召喚」 said in the wrong field; that is what
+         * `enabled: false` is for, and a silent 0 would look like a broken king.
+         */
+        maxPerRound: z.number().int().min(1).max(20).optional(),
+        /**
+         * 那個上限是算「每個戰場」還是「整場比賽」. SHIPS `"zone"`.
+         *
+         * The ambiguity is real and it is owner's sentence, so it is a field
+         * rather than a guess in a comment. `"zone"` is the default because a
+         * king spawns in the SUMMONER's own duel zone: under `"match"`, one
+         * champion in zone 0 crossing 100 kills would permanently deny every
+         * other zone its king that round, which reads as a bug rather than a cap.
+         */
+        maxPerRoundScope: z.enum(["zone", "match"]).optional(),
       })
       .strict()
       .optional(),
@@ -1224,6 +1488,12 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // still renders at 0.68 × TARGET_HEIGHT = 1.224u against a 1.8u hero.
     sizeMult: 0.68,
     tintStrength: 0.65,
+    // #247 owner 2026-08-01 「殭屍王底下圈圈會比較大」. 1.25 is the champion team
+    // ring's own diameter, and `groundRingSizeFollow: 1` makes the ring track
+    // 體型倍率 — so the shipped king (sizeMult 10) stands on a 12.5u ring while a
+    // 0.68 zombie keeps a 0.85u one. Purely visual: see the schema note.
+    groundRingDiameter: 1.25,
+    groundRingSizeFollow: 1,
     baseLevel: 3,
     levelPerRound: 1,
     // #244 — the mob's OWN curve (owner 2026-07-26): 100 + 100*(level-1), so the
@@ -1356,6 +1626,19 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     lastHitMode: "bonus" as const,
     // owner 2026-07-29:「溢傷算不算?=> 不算」
     countOverkill: false,
+    // #247 owner 2026-08-01 —— 「應該要可以無視碰撞穿透地形 不然被卡住永遠走不到」.
+    // All three permissions ON, the boundary clamp STILL ON. The king is granted
+    // the same `FlightGrant` a flying champion carries (sim/flight.ts), so
+    // 「無視碰撞」 has exactly one implementation in the repo.
+    noClip: true,
+    noClipUnits: true,
+    noClipObstacles: true,
+    noClipStayInside: true,
+    // #247 owner 2026-08-01 —— 「每回合最多只會出現一次殭屍王，不會無限出場」.
+    // Per DUEL ZONE, because a king spawns in the summoner's own zone and a
+    // match-wide 1 would let one champion deny the other three zones their king.
+    maxPerRound: 1,
+    maxPerRoundScope: "zone" as const,
   },
   // 特殊殭屍 (#262). One in twenty, so a wave of 20 carries about one — 「殭屍群
   // 裡面會有一隻特殊殭屍」 read literally. Double size and double hp make it
@@ -1443,6 +1726,12 @@ export const zConfigArenaRulesDoc = z
     exUnlockRound: z.number().int().min(1).optional(),
     /** choices per offer (augment + weapon offers) */
     offerCount: z.number().int().min(1).max(5),
+    /**
+     * 傳說武器卡候選不足時的補抽規則 (GH#249); omit = the shipped `short`
+     * policy. See {@link zItemDraftConfig} — and note that the whitelist
+     * shrink owner reported is fixed by ordering, NOT by this block.
+     */
+    itemDraft: zItemDraftConfig.optional(),
     /** round number (string key) -> grants for that round */
     rounds: z.record(z.string().regex(/^[0-9]+$/), zArenaRoundGrant),
     /** grants applied on every round PAST the highest `rounds` key */
@@ -1575,24 +1864,59 @@ export const zConfigBaseBonusDoc = z
  * 的值是一個**上限對**,而 combat-env 是倍率、base-bonus 是加數。三種語意共用一張
  * 表格的話,操作者沒有任何線索分辨他填的 4.0 是「四倍」「+4 點」還是「天花板」。
  *
- * 語意見 sim/statCaps.ts。**缺文件 = 出貨預設**(攻速 4.0 / 10.0),缺鍵 =
- * 那條屬性退回 `STAT_CLAMPS` 的上界而且不可解鎖。
+ * 語意見 sim/statCaps.ts。**缺文件 = 出貨預設**(攻速 4.0 / 10.0、法強 100000
+ * 開到頂),缺鍵 = 那條屬性退回 `STAT_CLAMPS` 的上界而且不可解鎖。
+ *
+ * ⚠️ 2026-08-01 補上**兩端的界**。這兩個欄位在此之前只有 `z.number().finite()`,
+ * 也就是 CLAUDE.md 2026-07-29 點名的那個缺陷的最純粹版本:上界下界都沒有。
+ * 界分兩層:
+ *   · `zStatCap` 自己 —— 全屬性通用的最寬合法帶 `[0, STAT_CAP_CEILING]`,
+ *     連 `catchall` 收到的未知 key 都套得到,所以「兩端都有界」沒有例外。
+ *   · `.superRefine` —— 認得的 stat key 再收緊到 `statCapBounds(stat)`
+ *     (下界是那條屬性 `STAT_CLAMPS` 的**地板**:比地板還低的天花板不是更嚴格的
+ *     上限,而是地板無條件獲勝、這一格完全失效)。
+ * 這一層擋的是打錯,不是平衡:每一條上界都遠高於出貨內容打得到的值,見
+ * sim/statCaps.ts 的 `STAT_CAP_MAX`。
  */
 export const zStatCap = z
   .object({
     /** 沒有解鎖來源時的上限 */
-    base: z.number().finite(),
+    base: z.number().finite().min(0).max(STAT_CAP_CEILING),
     /** `ModOp.CapRaise` 最多能抬到的硬上限(小於 base 會被讀成 base) */
-    unlocked: z.number().finite(),
+    unlocked: z.number().finite().min(0).max(STAT_CAP_CEILING),
   })
   .strict();
+
+/** 一條屬性自己的那一對,收緊到 `statCapBounds(stat)`。 */
+function zStatCapFor(stat: Stat): typeof zStatCap {
+  const [lo, hi] = statCapBounds(stat);
+  const n = z.number().finite().min(lo).max(hi);
+  return z.object({ base: n, unlocked: n }).strict();
+}
+
+/**
+ * ⚠️ 形狀刻意和 `zBaseBonusTable` 一樣(逐 stat 一格 + `catchall`),**不是**
+ * `.superRefine`:`zConfigDoc` 是 `z.discriminatedUnion`,而 discriminated union
+ * 的成員必須是 ZodObject —— 一個 `.superRefine` 會把這份 schema 變成 ZodEffects,
+ * 整個 config 聯集當場失效。界要下在**值**上,不能下在文件上。
+ */
+export const zStatCapsTable = z
+  .object(
+    Object.fromEntries(ALL_STATS.map((s) => [s, zStatCapFor(s).optional()])) as Record<
+      Stat,
+      z.ZodOptional<typeof zStatCap>
+    >,
+  )
+  // 未知的 key 仍然吃通用帶(兩端都有界)。它進不了遊戲 —— `normalizeStatCaps`
+  // 只讀 `CAPPABLE_STATS` —— 但一份文件不該因為一個 typo 而變成無界。
+  .catchall(zStatCap);
 
 export const zConfigStatCapsDoc = z
   .object({
     id: zId,
     schema: z.literal("config.stat-caps@1"),
-    /** stat key ("as" / "ms" / "cdr" …) -> { base, unlocked } */
-    caps: z.record(z.string().min(1), zStatCap),
+    /** stat key ("as" / "ap" / "ms" / "cdr" …) -> { base, unlocked } */
+    caps: zStatCapsTable,
   })
   .strict();
 
@@ -1672,9 +1996,13 @@ export const zConfigCombatFeelDoc = z
      * `AutoEngageRules` —— 那裡有量到的數字(近戰索敵 6 / 射程 1.6 的四倍落差、
      * 右鍵點進柱子之後 |v| = 0.00 連續 2,240 tick)。
      *
-     * ⚠️ `seekRadius` 只在**走位卡住時**生效,不是平常的索敵半徑。把它當成
-     * 「自動攻擊範圍」調大並不會讓走得動的玩家自動衝過去 —— 那條路徑一格都
-     * 沒有被動到(見 `systems/OrderSystem.ts` 的 `autoEngageActive`)。
+     * ⚠️ `seekRadius` **不是平常的索敵半徑**。把它當成「自動攻擊範圍」調大並不會
+     * 讓**走得動**的玩家自動衝過去 —— 那條路徑一格都沒有被動到(見
+     * `systems/OrderSystem.ts` 的 `autoEngageActive`)。
+     *
+     * ⚠️ 它現在有**兩個**入口(2026-07-31):走位卡住(一直都有),以及站著不動
+     * (`idleSeeks`,出貨關著)。所以「只在走位卡住時生效」這句話只在
+     * `idleSeeks: false` 時才成立 —— 那是出貨值。
      */
     autoEngage: z
       .object({
@@ -1686,6 +2014,23 @@ export const zConfigCombatFeelDoc = z
         stallSpeed: z.number().min(0).max(100),
         /** 卡住之後的索敵半徑(單位);bot 的 AI_ENGAGE_RANGE 是 48 */
         seekRadius: z.number().min(0).max(200),
+        /**
+         * **決策點**(2026-07-31 W4):站著不動的玩家要不要也吃 `seekRadius`。
+         *
+         * 出貨 `false` = 今天的行為。索敵半徑目前是**不對稱**的 ——「走位卡住」
+         * 的人吃 `seekRadius`(48),「完全站著不動」的人只吃近戰地板 6,也就是
+         * 卡住比站著更容易索到敵。實測 `autoAcquireWhileMoving.test.ts` 的
+         * `[idle]` 情境:整場 2,410 tick 沒有任何敵方英雄靠到 14.95 單位以內,
+         * 所以那個座位 0 次索敵、0 次揮擊。
+         *
+         * `true` = 站著不動的人也吃 `seekRadius`,手感等同全員預設 A 移動:
+         * 什麼都不按也會自己走過去打人,代價是玩家放手時方向盤不在他手上。
+         * 這是**平衡決策不是缺陷修正**,所以預設留在今天那一側,由 owner 決定。
+         *
+         * ⚠️ 需要總開關 `enabled` 也開著 —— `enabled: false` 承諾的是「完全回到
+         * #274 的行為」,獨立生效會讓那句話變成謊話。
+         */
+        idleSeeks: z.boolean(),
         /**
          * true(出貨)= 玩家每送出一條新的移動指令,走位權當場還給他。
          * 搖桿/虛擬搖桿每一拍都送一條,所以推著搖桿的人永遠不會被接管;
@@ -1727,12 +2072,54 @@ export const zAmbientVfxBinding = z
   })
   .strict();
 
+/**
+ * 場地環境火焰 —— `dressArena` 掛在競技場布景道具上的常駐火焰粒子。
+ *
+ * owner 2026-08-01 實戰回饋：「場地天空火焰很礙眼 請全部場地都去掉」(GH#251)。
+ * 出貨值因此是 `enabled: false`。**程式碼沒有被刪掉**：這是一個「要不要有環境
+ * 火」的決策點，不是一個 bug，所以它是一格開關而不是一次刪除 —— owner 改主意時
+ * 只要把這一格打開就好，不必再改程式碼＋重新部署一次（CLAUDE.md 第一守則）。
+ *
+ * `models` 是「哪些布景道具會冒火」：值是對 decor `model` 路徑做**子字串**比對，
+ * 也就是 `dressArena` 原本寫死的那個 `d.model.includes("torch")`。清單留空 =
+ * 沒有任何道具冒火（等同關閉），這是刻意的：一個空清單讀起來就是「沒有東西該
+ * 冒火」，不需要第二種語意。
+ */
+export const zArenaFire = z
+  .object({
+    /** 總開關。false = `dressArena` 一個火焰粒子系統都不建立。 */
+    enabled: z.boolean(),
+    /**
+     * 會冒火的 decor 模型（對 `model` 路徑做子字串比對，例如 `"torch"` 命中
+     * `assets/models/props/torch.glb` 與 `torch_mounted.glb`）。
+     * 上限 8 條是為了讓「哪些道具會冒火」還是一件看得懂的事；每一條上限 64 字
+     * 擋掉把整份路徑清單黏成一條字串貼進來的誤填。
+     */
+    models: z.array(z.string().min(1).max(64)).max(8),
+    /**
+     * 整張場地最多幾個火焰粒子系統。出貨的 skeleton / castle / colosseum 各有
+     * 16 個火把，所以 16 是「全部點燃」；上限 64 擋掉把 16 打成 160/1600 這種
+     * 誤填（每一個都是一組獨立的 ParticleSystem + 一張貼圖）。
+     */
+    maxEmitters: z.number().int().min(0).max(64),
+    /** 每個火焰每秒噴幾顆粒子。上限 200 擋掉把 18 打成 180/1800。 */
+    emitRate: z.number().min(0).max(200),
+    /**
+     * 火焰粒子大小的倍率（1 = 原本的 0.3–0.6 世界單位）。上限 4 擋掉把「倍率」
+     * 當成「百分比」填 100 的那種誤填 —— 4 倍已經是一顆比英雄還高的火球。
+     */
+    sizeScale: z.number().min(0.05).max(4),
+  })
+  .strict();
+
 export const zConfigAmbientVfxDoc = z
   .object({
     id: zId,
     schema: z.literal("config.ambient-vfx@1"),
     /** modelKey -> ambient attachments applied while an entity uses the model */
     bindings: z.record(z.string().min(1), z.array(zAmbientVfxBinding)),
+    /** 場地布景道具的常駐火焰（GH#251）。缺席 = 用 `DEFAULT_ARENA_FIRE`。 */
+    arenaFire: zArenaFire.optional(),
   })
   .strict();
 
@@ -1932,6 +2319,88 @@ export const zConfigGoreDoc = z
      * simply never matches, so this table can never break a content build.
      */
     championStyles: z.record(zId, z.enum(["stylized", "off"])),
+  })
+  .strict();
+
+/**
+ * `#rrggbb`, and nothing else. A colour is a value with a **shape**, and the
+ * shape is this field's upper bound in exactly the sense #277 means: without it
+ * an operator can type 「紅」 into the form, the PUT succeeds, and the game
+ * silently keeps the old colour — 「存了但畫面沒變」, the failure form this repo
+ * hates most. Six digits only (no `#rgb`, no `rgba()`): one accepted spelling
+ * means one parser on the client and one thing to assert in a test.
+ */
+const zColorHex = z.string().regex(/^#[0-9A-Fa-f]{6}$/, "顏色必須是 #rrggbb");
+
+/**
+ * config.damage-colors@1 — 傷害數字與受擊閃光的**四向配色**
+ * (`config/damage-colors.json`).
+ *
+ * owner 2026-08-01, verbatim:
+ *   「真實傷害目前在畫面上看不出來 => 顯示白色傷害數字(紅物理; 紫魔法; 白真實;
+ *     綠治療)」
+ *
+ * Before this doc the client branched on `=== "magic"` in TWO places
+ * (`ui/combatText.combatTextStyle` and `render/combatFeedback.flashColorFor`),
+ * so 真實傷害 was pixel-identical to 物理傷害 in both the floating number and
+ * the victim body flash. The only channel that already told them apart was the
+ * impact spark (`vfx/vfxPresets.IMPACT_TINTS`, three-way since task #33) and the
+ * hit SFX (`audio/combatSfx`, `hit` / `hitMagic` / `hitTrue`) — which is why the
+ * defect reads as 「看不出來」 rather than 「完全沒反應」.
+ *
+ * ── WHY THIS IS A CONFIG DOC AND NOT FOUR CONSTANTS IN THE RENDERER ──────────
+ * The owner has now overruled this exact palette TWICE IN TWO DAYS (2026-07-31
+ * 「魔法傷害(AP) 跳出來的數字應該是紫色系」, then this). A hex literal in
+ * `apps/client/**` is baked into the image at BUILD time, so each of those two
+ * words cost a full rebuild + container restart; `content/` is the live
+ * bind-mount, so this doc costs a save. That is CLAUDE.md 第一守則's stated
+ * reason, and the seam already exists — `ContentDb.load` pushes gore / stealth /
+ * vfx-families / model-lod into the render layer the same way.
+ *
+ * ── WHY `text` AND `flash` CARRY DIFFERENT VALUES FOR THE SAME SCHOOL ────────
+ * They are not the same physical channel and 「白」 is only achievable in one of
+ * them. The floating number is DOM text drawn over a hard black ring, so pure
+ * white is its most legible possible fill (21:1 against the ring). The victim
+ * flash is a Babylon overlay drawn with ALPHA_COMBINE
+ * (`out = base·(1−a) + flash·a`), where a white overlay can only push channels
+ * UP — measured against the real w3x tints in `config/unit-tints.json` it moves
+ * a pale model by ΔRGB 0.03–0.09, i.e. it is INVISIBLE on exactly the models the
+ * complaint is about. So the flash's 真實 entry is the palest colour that still
+ * moves a pale model (a cyan-white), and `damagePalette.test.ts` measures it.
+ * Same AXIS in both channels — three schools, three answers — different values,
+ * on purpose, and both are yours to change.
+ */
+export const zDamageTextAxis = z.enum(["damageType", "relation"]);
+
+export const zConfigDamageColorsDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.damage-colors@1"),
+    note: z.string().optional(),
+    /**
+     * What a DAMAGE number's hue means. `damageType` is owner's ruling and the
+     * shipped default; `relation` is the pre-ruling behaviour (hue = 受到/造成,
+     * damage school shown only as a violet accent on magic) kept expressible
+     * because it is a genuine trade-off, not a bug — see the admin page's note.
+     */
+    textAxis: zDamageTextAxis,
+    /** Floating-number fills. `heal` applies on both axes; the rest only on `damageType`. */
+    text: z
+      .object({
+        physical: zColorHex,
+        magic: zColorHex,
+        true: zColorHex,
+        heal: zColorHex,
+      })
+      .strict(),
+    /** Victim body-flash overlay colours (three schools; heal never flashes a body). */
+    flash: z
+      .object({
+        physical: zColorHex,
+        magic: zColorHex,
+        true: zColorHex,
+      })
+      .strict(),
   })
   .strict();
 
@@ -2472,6 +2941,47 @@ export const zConfigShieldDoc = z
   .strict();
 
 /**
+ * config.block@1 — 格擋規則。
+ *
+ * 目前只有一格:**同一個單位身上有多個格擋來源時,它們怎麼疊**。語意、owner 的
+ * 原話、以及「為什麼 `best` 還留著」全部寫在 `sim/blockRules.ts`。
+ *
+ * ⚠️ 和 `config.shield@1` 不同,**這份文件的出貨值會改變平衡**,而且是故意的:
+ * owner 2026-07-31 裁決「這種情形應該是獨立判斷兩次,拿第一次檔掉剩餘繼續算
+ * 下一次」,推翻了原本的「取最好的一個、只抽一次」。晨曦之光 + 殺豬刀從 30%
+ * 變成 51%。舊行為保留成 `best`,後台切得回去。
+ *
+ * 為什麼是自己一份文件而不是塞進 `config.shield@1`:護盾與格擋在 `damage.ts`
+ * 是**兩段相鄰但獨立**的結算(格擋在護盾之前、而且刻意不吃護盾),而 schema 加
+ * 一格等於把 `config.shield@1` 升版 —— 一份已經在線上存過 overlay 的文件升版,
+ * 代價是操作者存過的值全部要遷移。同理也不塞 `config.combat-feel@1`:那一頁的
+ * 欄位是 `deriveFields()` 從 Zod 推導的,而那支推導器只認得 number / boolean,
+ * 塞一個 enum 進去就是把隔壁工作流的頁面弄紅(同 `config.shield@1` 的理由)。
+ *
+ * **缺文件 = 出貨預設**(`independent`),不是空表 —— 一個 undefined 的 stacking
+ * 會讓 `blockCutFor` 兩條分支都不走,也就是格擋整族靜默失效。
+ */
+export const zConfigBlockDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.block@1"),
+    note: z.string().optional(),
+    /**
+     * 多個格擋來源同時吃得到這一發時,它們怎麼疊。
+     *
+     *   independent  每個來源各抽各的,擋中的從**剩餘**傷害裡扣掉自己的
+     *                `fraction`,剩下的交給下一個(出貨值 = owner 的裁決)
+     *   best         只有 `chance × fraction` 最大的那一個參與,整發只抽一次
+     *                (= 這條規則變成欄位之前的行為)
+     *
+     * 兩個值都有行為守衛(`sim/combat/block.test.ts` ⑤:同一組來源 + 同一顆
+     * 種子 → 兩種模式給出兩組不同的擋掉量與不同的 rng draw 數)。
+     */
+    stacking: z.enum(["independent", "best"]),
+  })
+  .strict();
+
+/**
  * config.stealth@1 — 隱形規則 (隱形原語 lane D).
  *
  * 每一格的語意、以及「為什麼出貨值是這一個」寫在 `packages/shared/src/sim/
@@ -2524,6 +3034,168 @@ export const zConfigStealthDoc = z
   })
   .strict();
 
+/**
+ * config.taunt@1 — 嘲弄規則 (鍊金術之盾 godie-i06q 的 [嘲弄]).
+ *
+ * 每一格的語意、以及「為什麼出貨值是這一個」寫在
+ * `packages/shared/src/sim/taunt.ts` 的 {@link TauntRules}。
+ *
+ * ⚠️ **缺文件 = `DEFAULT_TAUNT_RULES`(出貨值)**,不是空表。空表在 TypeScript
+ * 底下會讓 `enabled` 讀成 `undefined`(falsy),也就是嘲弄靜默消失 —— 道具照樣
+ * 買得到、描述照樣寫著「吸引周圍敵人」、內部冷卻照樣在跑,而場上沒有任何人被
+ * 拉走。這是 `stealthRules` / `statCaps` 學過的同一課。
+ *
+ * 為什麼是自己一份文件而不是塞進 `config.combat-feel@1`:combat-feel 是**手感**
+ * (擊退距離、打就站定、面向鎖窗口),嘲弄是**索敵規則**,兩者一起調的機會是零;
+ * 而且 combat-feel 那一頁的欄位是 `deriveFields(zConfigCombatFeelDoc)` 推導的,
+ * 而那支推導器不認得 enum(`conflictMode` 會落進 `unsupported`,而
+ * `apps/admin/src/combatFeel.test.ts` 斷言 `unsupported` 必須是空陣列)——
+ * 塞進去就是把隔壁工作流的頁面弄紅。同 `config.shield@1` 的理由。
+ */
+export const zConfigTauntDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.taunt@1"),
+    note: z.string().optional(),
+    /** 總開關;false = 嘲弄完全不存在(既有紀錄讀不出來,新的也寫不進去) */
+    enabled: z.boolean(),
+    /**
+     * **決策點**:嘲弄要不要蓋掉玩家**自己右鍵點名**的目標。
+     * 出貨 false = 只接管自動索敵與 bot／小怪 aggro,玩家手上的方向盤不動。
+     * true = WC3 原作行為(嘲弄連玩家指令一起蓋掉)。
+     */
+    overridesManualOrder: z.boolean(),
+    /**
+     * **決策點**:上面那格開著時,嘲弄退掉之後要不要把玩家原本點名的目標
+     * **還回去**。出貨 true。
+     *
+     * ⚠️ 它以前不存在,而缺席不是「少一個選項」是一個缺陷:被搶走的手選目標
+     * 會被 `attackTargetAuto = true` 重新填上,也就是一次右鍵點名被**永久**
+     * 轉成自動目標。一個布林值決定兩件事,而卡片上只寫了前一件。
+     */
+    restoreManualOrderOnLapse: z.boolean(),
+    /** **決策點**:小怪(殭屍/殭屍王)吃不吃嘲弄。出貨 true。 */
+    appliesToMobs: z.boolean(),
+    /**
+     * **決策點**:小怪被嘲弄時,嘲弄者是**取代**牠的最近敵人掃描(出貨
+     * `replace`),還是只**偏袒**(`nearestFirst` —— 掃描照跑,嘲弄者只有在沒有
+     * 更近的敵人時才贏)。
+     */
+    mobTauntMode: z.enum(["replace", "nearestFirst"]),
+    /**
+     * **決策點**:嘲弄在索敵比較器裡站哪一格。
+     * `absolute`(出貨,= owner 卡面「優先攻擊自己」)= sort key 0,壓過
+     * 「敵方英雄優先」與「威脅」;`aboveThreatOnly` = 排在「敵方英雄優先」
+     * 之後。差別只在嘲弄者與另一個候選**種類不同**時看得到。
+     */
+    priority: z.enum(["absolute", "aboveThreatOnly"]),
+    /**
+     * **決策點**:一個被嘲弄的身體最多被拖多遠(GGD 單位)。0 = 不限制。
+     * 出貨 24 = 一個決鬥區的半徑;上界 100 是誤植守衛(區域直徑才 48)。
+     */
+    leashUnits: z.number().min(0).max(TAUNT_LEASH_MAX),
+    /**
+     * **決策點**:一發**範圍**嘲弄最多拉幾個人。卡片沒寫 `maxTargets` 時用
+     * 它,卡片寫了也夾不過它。出貨 20 = 這一格出現前寫死的那個數字。
+     */
+    maxTargetsCap: z.number().int().min(1).max(TAUNT_MAX_TARGETS),
+    /**
+     * **決策點**:上面那個上限砍人時**留下哪幾個**。
+     * `nearest`(出貨,由近到遠)/ `lowestHp`(血最低先拉)/ `id`(先生成先拉)。
+     */
+    capOrder: z.enum(["nearest", "lowestHp", "id"]),
+    /**
+     * **決策點**:同一個人被兩個敵人先後嘲弄時誰贏。
+     * newest(出貨)= 最後喊的贏;longest = 剩餘時間長的贏。
+     */
+    conflictMode: z.enum(["newest", "longest"]),
+    /**
+     * 全域持續時間倍率,乘在內容自己寫的秒數上。1 = 照文件寫的。
+     * 上界 10 是誤植守衛(#277 的形狀):0.5 秒打成 40 倍就是 20 秒,
+     * 整整一波交戰所有人都在打同一個人,而畫面上看起來就是「索敵壞掉了」。
+     */
+    durationMult: z.number().min(0).max(TAUNT_DURATION_MULT_MAX),
+  })
+  .strict();
+
+/**
+ * config.body-scale@1 — 身體放大倍數 → 攻擊距離 (GH#252).
+ *
+ * 每一格的語意、以及「為什麼出貨值是這一個」寫在
+ * `packages/shared/src/sim/bodyScale.ts`。
+ *
+ * ⚠️ **這份文件的出貨值會改變平衡**,和 `config.shield@1` 相反:在它出現之前
+ * 射程完全不看體型,所以 `attackRangeCoefficient: 1` 不是「維持原狀」而是
+ * owner 要的新行為。要退回舊行為把它調成 0。
+ *
+ * ⚠️ **缺文件 = `DEFAULT_BODY_SCALE_RULES`(出貨值)**,不是空表 —— 空表在
+ * TypeScript 底下會讓係數讀成 `undefined`,而 `1 + (s−1) × undefined` 是
+ * `NaN`,一路乘進 `Stat.AttackRange` 就是全場沒有人打得到人。
+ */
+export const zConfigBodyScaleDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.body-scale@1"),
+    note: z.string().optional(),
+    /** 總開關。false = 攻擊距離完全不看體型(= 這個功能出現之前的行為)。 */
+    enabled: z.boolean(),
+    /**
+     * **決策點**:體型每多出 1 倍,攻擊距離跟著延長幾倍。
+     * 1 = 完全等比例(出貨值 = owner「會影響」的字面讀法);0 = 不連動。
+     * 上界 3 擋的是「把百分比當倍率填」(100 → 100 倍射程)。
+     */
+    attackRangeCoefficient: z.number().min(0).max(3),
+    /** 餵進公式前的體型下界。比這更小的身體不會讓射程再往下縮。 */
+    minScale: z.number().min(0.01).max(1),
+    /**
+     * 餵進公式前的體型上界 —— 「不會從畫面外開打」的那條線。
+     * 上界 10 剛好是小怪波 `boss.sizeMult` 的出貨值:貼錯格擋在這裡。
+     */
+    maxScale: z.number().min(1).max(10),
+  })
+  .strict();
+
+/**
+ * config.regen@1 — 百分比回血規則 (GH#253).
+ *
+ * 每一格的語意寫在 `packages/shared/src/sim/regenRules.ts`。
+ *
+ * ⚠️ 這份文件的出貨值**本身不改變任何一場比賽**:百分比只有在英雄卡填了
+ * `healthRegenPctOfMax` 時才啟動,而出貨內容裡只有海克力斯 - Berserker
+ * (`godie-hapm`)填了。`floorPerSec: 0` 也和現況一致 —— 現況本來就沒有保底。
+ *
+ * ⚠️ **缺文件 = `DEFAULT_REGEN_RULES`(出貨值)**,不是空表:一個 undefined 的
+ * `pctMode` 會讓 `healthRegenPerSec` 兩條分支都不走 = 全場沒有人回血。
+ */
+export const zConfigRegenDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.regen@1"),
+    note: z.string().optional(),
+    /** 百分比回血的總開關。false = 英雄卡上的百分比全部當作沒填。 */
+    pctEnabled: z.boolean(),
+    /**
+     * **決策點**:百分比是**取代**英雄卡那條固定回血,還是**疊加**在上面。
+     * `replace` = 出貨值 = owner 的「沒有保底」——「疊加」等於給了一條與最大
+     * 生命無關的地板,那正是 owner 要移除的東西。
+     */
+    pctMode: z.enum(["replace", "add"]),
+    /**
+     * **決策點**:保底,每秒至少回這麼多點。**出貨 0 = 沒有保底**(owner 裁決)。
+     * 上界 1000 是誤植守衛:Berserker 一級最大生命約 7.5k,1% 是 75/秒,
+     * 所以 1000 已經是「這條地板自己就能撐住一場」。
+     */
+    floorPerSec: z.number().min(0).max(1000),
+    /** **決策點**:百分比那一項要不要吃 戰鬥系統 的 `healthRegen` 全域倍率。 */
+    applyEnvMultiplier: z.boolean(),
+    /**
+     * **決策點**:百分比只給英雄(出貨 true)。關掉之後,一隻臉是 Berserker 的
+     * 隨機英雄殭屍王也會每秒回 1% 最大生命。
+     */
+    championsOnly: z.boolean(),
+  })
+  .strict();
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigMatchDoc,
@@ -2536,6 +3208,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigChampionVoicesDoc,
   zConfigUnitTintsDoc,
   zConfigGoreDoc,
+  zConfigDamageColorsDoc,
   zConfigIconPlanDoc,
   zConfigVictoryTauntsDoc,
   zConfigVoxelBarcodesDoc,
@@ -2548,10 +3221,16 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigVfxCleanupDoc,
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
+  zConfigBlockDoc,
   zConfigStealthDoc,
+  zConfigTauntDoc,
+  zConfigBodyScaleDoc,
+  zConfigRegenDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
+export type ConfigBodyScaleDoc = z.infer<typeof zConfigBodyScaleDoc>;
+export type ConfigRegenDoc = z.infer<typeof zConfigRegenDoc>;
 export type ConfigVoxelBodiesDoc = z.infer<typeof zConfigVoxelBodiesDoc>;
 export type ConfigDoc = z.infer<typeof zConfigMatchDoc>;
 export type ConfigMatchDoc = z.infer<typeof zConfigMatchDoc>;
@@ -2561,6 +3240,7 @@ export type ConfigArenaRulesDoc = z.infer<typeof zConfigArenaRulesDoc>;
 export type CombatEnvMultipliersDoc = z.infer<typeof zCombatEnvMultipliers>;
 export type ConfigCombatEnvDoc = z.infer<typeof zConfigCombatEnvDoc>;
 export type AmbientVfxBinding = z.infer<typeof zAmbientVfxBinding>;
+export type ArenaFire = z.infer<typeof zArenaFire>;
 export type ConfigAmbientVfxDoc = z.infer<typeof zConfigAmbientVfxDoc>;
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
@@ -2572,6 +3252,8 @@ export type UnitTintState = z.infer<typeof zUnitTintState>;
 export type ConfigUnitTintsDoc = z.infer<typeof zConfigUnitTintsDoc>;
 export type GoreStyle = z.infer<typeof zGoreStyle>;
 export type ConfigGoreDoc = z.infer<typeof zConfigGoreDoc>;
+export type DamageTextAxis = z.infer<typeof zDamageTextAxis>;
+export type ConfigDamageColorsDoc = z.infer<typeof zConfigDamageColorsDoc>;
 export type ConfigStealthDoc = z.infer<typeof zConfigStealthDoc>;
 export type ConfigIconPlanDoc = z.infer<typeof zConfigIconPlanDoc>;
 export type VictoryTauntLang = z.infer<typeof zVictoryTauntLang>;
@@ -2590,6 +3272,8 @@ export type ModelLodTierName = z.infer<typeof zModelLodTier>;
 export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
 export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
+export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;
+export type ConfigTauntDoc = z.infer<typeof zConfigTauntDoc>;
 // config.round-grade@1 的型別/Zod/出貨文件全部在 ./roundGrade,這裡只再匯出一次
 // 給 `export * from "./config"` 的既有消費端(admin / codex 都是這樣拿的)。
 export * from "./roundGrade";
@@ -2632,6 +3316,47 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
 };
 
 /**
+ * 出貨預設 —— `content/config/ambient-vfx.json` 沒有 `arenaFire` 區塊時
+ * （舊部署 / 內容掛掉 / 後台把它清掉）`resolveArenaFire` 回退到的就是這一份。
+ *
+ * `enabled: false` 是 owner 2026-08-01 的原話：「場地天空火焰很礙眼 請全部場地
+ * 都去掉」。**回退值也必須是關的** —— 如果保險絲是開的，那麼「內容檔載不到」
+ * 這條路就會把 owner 明說要拿掉的東西又點回來，而且是在最沒人看的那條路上。
+ *
+ * ⚠️ 每一格都要和 `content/config/ambient-vfx.json` 的 `arenaFire` 一字不差 ——
+ * `apps/client/src/render/arenaFire.test.ts` 的 drift 斷言在守。
+ */
+export const DEFAULT_ARENA_FIRE: ArenaFire = {
+  enabled: false,
+  models: ["torch"],
+  maxEmitters: 16,
+  emitRate: 18,
+  sizeScale: 1,
+};
+
+/**
+ * 讀出「這張場地要不要冒火、冒幾個」。文件缺席 / 沒有 `arenaFire` 區塊時回退到
+ * `DEFAULT_ARENA_FIRE`（也是關的）。
+ *
+ * 放在 shared 而不是 client 的理由：出貨值（JSON）、保險絲（上面那份）與
+ * 讀取規則必須是**同一段**程式，否則「後台關了但場上還在燒」會是三份各自
+ * 正確的程式加起來的結果。
+ */
+export function resolveArenaFire(doc: ConfigAmbientVfxDoc | null | undefined): ArenaFire {
+  return doc?.arenaFire ?? DEFAULT_ARENA_FIRE;
+}
+
+/**
+ * 一個 decor 模型路徑該不該掛火焰。`models` 是子字串比對（`dressArena` 原本
+ * 寫死的 `d.model.includes("torch")` 就是這個語意），總開關關掉時**永遠**是
+ * false —— 這是唯一一個決定「場上有沒有火」的地方，讓它只有一份。
+ */
+export function decorModelBurns(fire: ArenaFire, modelPath: string): boolean {
+  if (!fire.enabled) return false;
+  return fire.models.some((m) => modelPath.includes(m));
+}
+
+/**
  * 出貨預設 —— 文件不存在時 `resolveFormVisual` 讀的就是這一份。
  *
  * ⚠️ 這裡的每一個數字都要和 `content/config/form-visuals.json` 一字不差,
@@ -2665,5 +3390,54 @@ export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
       tint: [0.72, 0.92, 1.35],
       scaleMult: 1.04,
     },
+  },
+};
+
+/**
+ * 出貨預設 —— `content/config/damage-colors.json` 不存在(舊部署 / 內容掛掉)時,
+ * `applyDamageColorsDoc` 回退到的就是這一份。
+ *
+ * ⚠️ 每一格都要和 `content/config/damage-colors.json` 一字不差 ——
+ * `apps/client/src/render/damagePalette.test.ts` 的 drift 斷言在守。
+ * 兩份存在的理由不同:JSON 是**出貨值**(操作者會改),這份是**程式的保險絲**。
+ *
+ * 每一個 hex 都是**量出來的**,不是挑好看的。判準與 `ui/combatText` 檔頭同一套
+ * (那是 #164 「傷害數字看起來是黑色」修好之後留下的規則),四個地面取樣自
+ * `apps/client/src/ui/combatTextContrast.test.ts`:
+ *
+ *   text.physical `#FF5900` — 就是 `taken` 原本那一格。從 833 個同時滿足
+ *     「每個地面 fill-或-ring ≥ 3.0」「fill 對自己的黑框 ≥ 3.0」「離四個隊伍色
+ *     ΔE > 25」的候選裡挑出來最紅的一個(團隊色 ΔE 31.0 / 對黑框 6.68:1 /
+ *     最差地面 3.14:1)。純紅 `#FF0000` 在暗土上只有 2.47:1,所以「紅」不等於
+ *     `#FF0000`。
+ *   text.magic `#B872FF` — 團隊色 ΔE 31.7、對黑框 6.89:1、暗土 fill 3.24:1,
+ *     而且離 `dodge` 的薰衣草 `#C9A7FF` ΔE 34.5(場上另一個紫,必須分得開)。
+ *     ⚠️ 更深的紫 `#9D4EDD` / `#A855F7` / `#8B5CF6` 全部**過不了暗土**
+ *     (2.15 / 2.49 / 2.33),因為黑框在暗土上只有 2.13:1 —— 那個地面是這一格
+ *     真正的限制條件,不是團隊色。
+ *   text.true `#FFFFFF` — 對黑框 21:1,團隊色 ΔE 73.6。白岩地面 fill 只有
+ *     1.19:1,由黑框(17.62:1)扛,這正是「框扛辨識度、色扛語意」的設計。
+ *   text.heal `#00FF00` — RO 的 `(0,1,0)`,原本就在表上,團隊色 ΔE 55.5。
+ *
+ *   flash.* 是**另一條物理**(ALPHA_COMBINE 疊加,不是文字),所以值不同 ——
+ *     見 `zConfigDamageColorsDoc` 的檔頭。`#FF2626` / `#FF59E6` 是原本寫死的
+ *     `[1,.15,.15]` / `[1,.35,.9]` 的 8-bit 表示(差 <0.002,肉眼不可能分辨);
+ *     `#33FFFF` = `[0.2,1,1]` 是新的一格,它在七個真實 w3x tint 上的
+ *     ΔRGB 都 > 0.35(白色只有 0.06)。
+ */
+export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
+  id: "damage-colors",
+  schema: "config.damage-colors@1",
+  textAxis: "damageType",
+  text: {
+    physical: "#FF5900",
+    magic: "#B872FF",
+    true: "#FFFFFF",
+    heal: "#00FF00",
+  },
+  flash: {
+    physical: "#FF2626",
+    magic: "#FF59E6",
+    true: "#33FFFF",
   },
 };

@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 6.0
+    "range": 2
   },
   "growth": {
     "maxHealth": 37,
@@ -117,7 +117,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.bolt",
+          "projectileId": "imported.bolt.nature",
           "onHit": [
             {
               "kind": "damage",

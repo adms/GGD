@@ -1,6 +1,6 @@
 {
   "collection": "projectiles",
-  "hash": "985d0c0e1680",
+  "hash": "3fb7d49dc6da",
   "entries": [
     {
       "id": "basic-attack",
@@ -15,10 +15,88 @@
       "size": 137
     },
     {
+      "id": "imported.bolt.arcane",
+      "path": "projectiles/imported.bolt.arcane.json",
+      "hash": "39cf1bd22f7c",
+      "size": 151
+    },
+    {
+      "id": "imported.bolt.ki",
+      "path": "projectiles/imported.bolt.ki.json",
+      "hash": "806827de5dde",
+      "size": 143
+    },
+    {
+      "id": "imported.bolt.lightning",
+      "path": "projectiles/imported.bolt.lightning.json",
+      "hash": "5e9a552b210f",
+      "size": 157
+    },
+    {
+      "id": "imported.bolt.nature",
+      "path": "projectiles/imported.bolt.nature.json",
+      "hash": "33f9be7d8f8f",
+      "size": 151
+    },
+    {
+      "id": "imported.bolt.void",
+      "path": "projectiles/imported.bolt.void.json",
+      "hash": "894f977b0e09",
+      "size": 147
+    },
+    {
       "id": "imported.wave",
       "path": "projectiles/imported.wave.json",
       "hash": "b1a18bed6414",
       "size": 150
+    },
+    {
+      "id": "imported.wave.arcane",
+      "path": "projectiles/imported.wave.arcane.json",
+      "hash": "e75a268f25c8",
+      "size": 169
+    },
+    {
+      "id": "imported.wave.earth",
+      "path": "projectiles/imported.wave.earth.json",
+      "hash": "e104b6eb8731",
+      "size": 167
+    },
+    {
+      "id": "imported.wave.fire",
+      "path": "projectiles/imported.wave.fire.json",
+      "hash": "07a64e95c28b",
+      "size": 165
+    },
+    {
+      "id": "imported.wave.ice",
+      "path": "projectiles/imported.wave.ice.json",
+      "hash": "fdff0d23b5b1",
+      "size": 163
+    },
+    {
+      "id": "imported.wave.ki",
+      "path": "projectiles/imported.wave.ki.json",
+      "hash": "9634d961080e",
+      "size": 161
+    },
+    {
+      "id": "imported.wave.lightning",
+      "path": "projectiles/imported.wave.lightning.json",
+      "hash": "216be528d378",
+      "size": 175
+    },
+    {
+      "id": "imported.wave.physical",
+      "path": "projectiles/imported.wave.physical.json",
+      "hash": "088d7e10d0ef",
+      "size": 173
+    },
+    {
+      "id": "imported.wave.void",
+      "path": "projectiles/imported.wave.void.json",
+      "hash": "278a59dae799",
+      "size": 165
     },
     {
       "id": "sela.q.bolt",

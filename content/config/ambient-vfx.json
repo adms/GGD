@@ -77,5 +77,14 @@
         "vfx": "godie-sesshomaru-r0"
       }
     ]
+  },
+  "arenaFire": {
+    "enabled": false,
+    "models": [
+      "torch"
+    ],
+    "maxEmitters": 16,
+    "emitRate": 18,
+    "sizeScale": 1
   }
 }

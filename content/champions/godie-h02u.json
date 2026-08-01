@@ -44,6 +44,7 @@
     "primary": "AGI",
     "source": "w3x"
   },
+  "bodyScale": 0.85,
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,

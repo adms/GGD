@@ -43,6 +43,7 @@
     "primary": "STR",
     "source": "w3x"
   },
+  "bodyScale": 2,
   "hitFeel": {
     "hitstopTicks": 3,
     "shakeMag": 0.44,

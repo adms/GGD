@@ -43,10 +43,16 @@
  *    `max`，否則 `configForms.test.ts` 的 `everyNumberHasCeiling` 紅。
  */
 import {
+  zConfigAmbientVfxDoc,
+  zConfigDamageColorsDoc,
   zConfigGoreDoc,
   zConfigModelLodDoc,
+  zConfigBlockDoc,
+  zConfigBodyScaleDoc,
+  zConfigRegenDoc,
   zConfigShieldDoc,
   zConfigStealthDoc,
+  zConfigTauntDoc,
   zConfigVfxCleanupDoc,
 } from "@ggd/shared/content";
 // 重用 `/editor` 的 Zod 走訪器而不是在後台再寫一支。理由和第一守則同源：兩支走訪器
@@ -179,6 +185,19 @@ export interface ConfigFieldLabel {
   min?: number;
   /** enum 選項的中文（key = 選項字面值）。缺一個 → 測試紅。 */
   optionLabels?: Record<string, string>;
+  /**
+   * **文字欄位的「上下界」**（#277 在字串上的形狀）。走訪器把每一個
+   * `z.string()` 都攤成一個純文字輸入框，regex 在走訪過程中被丟掉 —— 所以
+   * 沒有這一格的話，`text.true` 可以填「白色」，PUT 成功，而遊戲繼續畫原本的
+   * 顏色：**「存了但畫面沒變」**，這個 repo 最討厭的那種失敗。
+   *
+   * ⚠️ 這是 Zod 之外的第二份規則，也就是一份會 drift 的規則。
+   * `configForms.test.ts` 的「文字欄位的 pattern 與 schema 判一樣的結果」用整份
+   * 文件的 `spec.zod.safeParse` 交叉驗證，drift 當場紅。
+   */
+  pattern?: RegExp;
+  /** `pattern` 不過時給操作者看的一句中文。有 `pattern` 就必須有它。 */
+  patternError?: string;
 }
 
 /** 一份不編輯但**必須原封不動帶著走**的分支。 */
@@ -364,6 +383,39 @@ const SHIELD_SPEC: ConfigDocSpec = {
 };
 
 
+// ─────────────────────────────────────────────── 格擋規則 (config/block) ──
+
+const BLOCK_SPEC: ConfigDocSpec = {
+  page: "blockRules",
+  collection: "config",
+  docId: "block",
+  schemaTag: "config.block@1",
+  zod: zConfigBlockDoc,
+  title: "格擋規則",
+  intro: [
+    "同一個角色身上同時有兩件以上帶 [格擋] 的傳說武器時，它們怎麼疊。場上真的湊得出來：晨曦之光與殺豬刀都在傳說池裡、都不是唯一裝備，兩件都寫著「30%機率 抵擋致命一擊」。",
+    "owner 2026-07-31 的裁決是「這種情形應該是**獨立判斷兩次**，拿第一次檔掉剩餘繼續算下一次」，所以出貨值是 independent —— 兩件 30% 合起來是 51%（1 − 0.7 × 0.7），不是 30%。",
+    "⚠️ 這一頁**會改變平衡**，和 護盾規則 那一頁不同（那一頁的出貨值刻意等於改成欄位之前的行為）。舊行為保留成 best，切回去就是「只有最強的那一件會擋，整發只抽一次」。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/block.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "packages/shared/src/sim/combat/block.ts 的 blockCutFor()（每一發傷害封包都會呼叫，讀 world.blockRules.stacking）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.blockRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／基礎加成 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格，寫成「下一場生效」會害操作者以為功能壞了。",
+  fields: [
+    {
+      path: "stacking",
+      zh: "多件格擋同時在身上時怎麼疊",
+      note: "independent＝每一件各抽各的骰子，擋中的那一件從**剩下的**傷害裡扣掉自己的比例，再把剩下的交給下一件；兩件 30% 全額格擋 = 51% 擋得下來，而兩件「擋一半」都擋中就剩四分之一。best＝只有期望減傷（機率 × 比例）最高的那一件會參與，整發只抽一次，所以第二件格擋等於白帶。差別只在**同時帶兩件以上**的時候，帶一件的人兩種設定完全一樣。",
+      optionLabels: {
+        independent: "independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）",
+        best: "best 只有最強的那一件會擋（改成欄位之前的行為）",
+      },
+    },
+  ],
+  preserved: [],
+};
+
 // ────────────────────────────────────────────── 隱形規則 (config/stealth) ──
 
 const STEALTH_SPEC: ConfigDocSpec = {
@@ -443,6 +495,338 @@ const STEALTH_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ────────────────────────────────────────────── 嘲弄規則 (config/taunt) ──
+
+const TAUNT_SPEC: ConfigDocSpec = {
+  page: "tauntRules",
+  collection: "config",
+  docId: "taunt",
+  schemaTag: "config.taunt@1",
+  zod: zConfigTauntDoc,
+  title: "嘲弄規則",
+  intro: [
+    "[嘲弄] 是遊戲裡**唯一**會強迫一個單位改打別人的機制 —— 目前只有一件道具用到：鍊金術之盾（每秒把周圍敵人拉過來打自己 0.5 秒）。這一頁決定它拉得動誰、拉多久、以及它能不能從**玩家自己手上**把目標搶走。",
+    "⚠️ 這是坦克類道具唯一的存在理由，也是最容易讓人覺得「操作被搶走」的機制。出貨值全部選保守側：嘲弄只接管**自動索敵**與 bot／殭屍的 aggro，玩家右鍵點名的目標一個 tick 都不會被動到。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/taunt.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/taunt.ts 的 tauntedBy()／applyTaunt()，經由 sim/targeting.ts 的 forcedTargetOf() 被三個索敵消費端讀（OrderSystem 的自動索敵、Tier0Brain 的 bot 迴圈、MobSystem 的殭屍 aggro）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.tauntRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場（和 護盾規則／隱形規則／基礎加成 同一個形態 #278：shard 開機載入內容樹時讀一次就定格）。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "嘲弄總開關",
+      note: "關掉＝嘲弄整條機制不存在：場上已經掛著的也讀不出來，新的也寫不進去，索敵完全回到這條機制落地之前的樣子。這是**止血閥** —— 嘲弄是唯一會替玩家決定打誰的東西，線上手感出問題時要能在不重新部署的情況下整個關掉。關掉之後鍊金術之盾就只剩 [煉金術] 那一半。",
+    },
+    {
+      path: "overridesManualOrder",
+      zh: "嘲弄可以蓋掉玩家自己下的攻擊指令",
+      note: "⚠️ 出貨值是**關**。關＝嘲弄只接管自動索敵與 bot／殭屍的 aggro，玩家右鍵點名的那個目標不會被搶走 —— 他仍然可以選擇無視嘲弄他的人。開＝WC3 原作行為，嘲弄期間玩家的目標被清掉、身體自己去打嘲弄者。開之前先想清楚：同一個題目（系統要不要從玩家手上接管方向盤）在 卡住就接敵 那一頁已經被推翻過一次，實測那次搶走了 86.6% 的走位 tick。",
+    },
+    {
+      path: "restoreManualOrderOnLapse",
+      zh: "嘲弄退掉之後把玩家原本的目標還回去",
+      note: "只有上面那一格打開時才有意義。出貨**開**：嘲弄一失效（過期／嘲弄者死掉／被拖出牽引距離／規則被關掉），被搶走的那個目標會原封不動還給玩家，而且還原成**手選**。⚠️ 關掉之後就是舊行為，而舊行為是一個缺陷不是一種風格：被搶走的手選目標會被自動索敵重新填上，也就是一次右鍵點名**永久**變成自動目標，嘲弄退了也回不來。玩家在嘲弄期間自己下的新指令（走位／S／H／改點別人）一律優先，不會被還原蓋掉。",
+    },
+    {
+      path: "appliesToMobs",
+      zh: "殭屍也會被嘲弄拉走",
+      note: "出貨**開**。文案寫的是「吸引周圍**敵人**」，而第 3 場之後場上大多數敵人就是殭屍 —— 關掉之後坦克盾拉不住整波殭屍，這件道具在 PvE 幾乎沒有用。和 隱形規則 把「英雄索敵」跟「殭屍 aggro」拆成兩格是同一個理由：PvE 與 PvP 的答案不一定相同。這一格是**讀取時**生效，關掉之後場上已經掛著的嘲弄對殭屍立刻失效，不用等它過期。",
+    },
+    {
+      path: "mobTauntMode",
+      zh: "殭屍被嘲弄時，是改打嘲弄者還是只把他排前面",
+      note: "replace（出貨）＝ 嘲弄者直接成為目標，不管牠原本鎖著誰、也不管誰比較近 —— 嘲弄就是一條拉繩，「最近」正是它要推翻的答案。nearestFirst ＝ 原本的最近敵人掃描照跑，嘲弄者只有在**沒有更近的敵人**時才贏（平手算它贏）。換句話說 nearestFirst 只能改變「已經朝你來的那幾隻」，拉不動貼在隊友臉上的那一隻。兩種模式都吃下面的牽引距離。",
+      optionLabels: {
+        replace: "replace 直接改打嘲弄者（出貨值）",
+        nearestFirst: "nearestFirst 只有更近時才生效",
+      },
+    },
+    {
+      path: "priority",
+      zh: "嘲弄在索敵順序裡排第幾",
+      note: "absolute（出貨）＝ 排在**最前面**，壓過「敵方英雄優先」與「正在打我的人優先」兩條；這一側就是鍊金術之盾卡面上那句「吸引周圍敵人**優先攻擊自己**」。aboveThreatOnly ＝ 排在「敵方英雄優先」**後面**，也就是一個由召喚物或小怪發出的嘲弄拉不走一個旁邊就有敵方英雄的人。⚠️ 兩側的差別**只有**在嘲弄者跟另一個候選的種類不同時才看得到（英雄／召喚物／小怪）。目前唯一的嘲弄來源是玩家手上的盾（一個英雄），所以今天把它翻過去不會改變任何一場戰鬥 —— 這一格是替下一件帶嘲弄的內容準備的。兩側都**不會**讓嘲弄輸給「正在打我的人」：那不是比較弱的嘲弄，那是一個會被它想拉開的那個敵人當場取消掉的嘲弄。",
+      optionLabels: {
+        absolute: "absolute 壓過所有條件（出貨值）",
+        aboveThreatOnly: "aboveThreatOnly 敵方英雄仍然優先",
+      },
+    },
+    {
+      path: "leashUnits",
+      zh: "嘲弄最多能把人拖多遠",
+      note: "圓心到圓心的距離（GGD 單位）。超過就當場鬆手，走回來又生效 —— 和到期一樣是**每 tick 重問**的。⚠️ 嘲弄本來就無視受害者自己的索敵半徑（那是刻意的：半徑是「我看多遠」，不是嘲弄的射程），所以在這一格出現之前**沒有任何東西**限制嘲弄者可以把一具身體拖多遠：掛上、跑掉，對方就一路追過整個競技場。出貨 24 ＝ 一個決鬥區的半徑；鍊金術之盾實際能碰到的範圍只有 5.5，所以 24 對現行內容一格都沒動。**0 ＝ 不限制**（舊行為）。上界 100 是誤植守衛 —— 區域直徑才 48。",
+    },
+    {
+      path: "maxTargetsCap",
+      zh: "一發範圍嘲弄最多拉幾個人",
+      note: "道具／技能沒有自己寫「最多幾個」時用這個數字，寫了也**夾不過**它 —— 一句話管到底，不會出現兩個上限互相打架。出貨 20 就是這一格出現之前寫死在程式裡的那個數字（鍊金術之盾自己寫 8，本來就在底下，所以出貨行為沒變）。調低它是壓制坦克盾在殭屍波裡強度最直接的一格。",
+    },
+    {
+      path: "capOrder",
+      zh: "超過上限時留下哪幾個",
+      note: "nearest（出貨）＝ 由近到遠。lowestHp ＝ 血最低的先被拉走，想讓坦克盾去救那些快被打死的隊友時選這個。id ＝ 先生成的先被拉，是唯一一個與位置和血量都無關的順序，需要一個完全穩定的參照時才用。三種都是**全序**（最後一定比到 entityId），所以「五隻殭屍裡拉哪三隻」永遠是同一個答案，不會每場不一樣。",
+      optionLabels: {
+        nearest: "nearest 由近到遠（出貨值）",
+        lowestHp: "lowestHp 血最低的先拉",
+        id: "id 先生成的先拉",
+      },
+    },
+    {
+      path: "conflictMode",
+      zh: "同時被兩個人嘲弄時聽誰的",
+      note: "newest＝最後喊的那個人贏，也就是新的一發嘲弄**一定**會生效（出貨值）。longest＝剩餘時間長的那個贏，短的那一發被吃掉。選 newest 是因為另一側有一個很難查的失敗形態：技能放出去、動畫演完、冷卻照燒，目標卻一動也不動，因為身上還掛著別人比較長的嘲弄。",
+      optionLabels: {
+        newest: "newest 最後喊的贏（出貨值）",
+        longest: "longest 剩餘時間長的贏",
+      },
+    },
+    {
+      path: "durationMult",
+      zh: "嘲弄持續時間倍率",
+      note: "乘在道具／技能自己寫的秒數上（鍊金術之盾 = 0.5 秒）。1＝照文件寫的；2＝一秒；**0＝嘲弄立刻過期，等於關掉**。用來整體調快／調慢這條機制而不必逐件道具改文件。上界 10 是誤植守衛：0.5 秒打成 40 倍就是 20 秒，整整一波交戰所有人都在打同一個人，而畫面上看起來就是「索敵壞掉了」。",
+    },
+  ],
+  preserved: [],
+};
+
+// ─────────────────────────────────── 傷害數字配色 (config/damage-colors) ───
+
+/** `#rrggbb`，和 shared 的 `zColorHex` 同一條規則。 */
+const HEX6 = /^#[0-9A-Fa-f]{6}$/;
+const HEX6_ERROR = "顏色要寫成 #rrggbb 六位十六進位（例如 #FF5900），不能寫顏色名稱";
+
+const DAMAGE_COLORS_SPEC: ConfigDocSpec = {
+  page: "damageColors",
+  collection: "config",
+  docId: "damage-colors",
+  schemaTag: "config.damage-colors@1",
+  zod: zConfigDamageColorsDoc,
+  title: "傷害數字配色",
+  intro: [
+    "owner 2026-08-01：「真實傷害目前在畫面上看不出來 => 顯示白色傷害數字(紅物理; 紫魔法; 白真實; 綠治療)」。這一頁就是那四個顏色。",
+    "在這一頁出現之前，客戶端只判斷「是不是魔法」，所以**真實傷害的數字和物理傷害一模一樣** —— [無視] 這件事在畫面上唯一的證據是「對面死得比較快」。火花、噴血與音效本來就分得出三種，飄字與身體閃光是唯二沒分的兩條，也是最大聲的兩條。",
+    "⚠️ **飄字與閃光的值不一樣是刻意的，不是抄漏。** 飄字是畫在黑框上的文字，純白最清楚（對黑框 21:1）；身體閃光是疊色（結果 = 原色×0.4 + 疊色×0.6），白色只能把三個通道往上推，在淺色模型上實測只移動 ΔRGB 0.03~0.09 —— 也就是說「白色閃光」在最需要它的那些模型上等於沒有閃。所以真實傷害的**閃光**是青白色，那是還看得見的最白的一個。",
+    "⚠️ 每一格的出貨值都對四個真實地面（土色／暗土／石地／白岩）與四個隊伍色量過。要換色的話請記得兩件事：**紫色不要調太深**（黑框在暗土上只有 2.13:1，深紫會連框帶字一起變成一團），**不要用接近隊伍色的顏色**（會被讀成隊伍標示而不是傷害）。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/damage-colors.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/render/damagePalette.ts 的 applyDamageColorsDoc()（由 ContentDb.load 呼叫）→ damageTextColor() 被 ui/combatText.ts 的 combatTextStyle() 讀走畫飄字，damageFlashRgb() 被 render/combatFeedback.ts 的 flashColorFor() 讀走畫身體閃光",
+  effect: "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。",
+  fields: [
+    {
+      path: "textAxis",
+      zh: "傷害數字的顏色代表什麼",
+      note: "damageType（出貨值，owner 的裁決）＝ 顏色就是傷害屬性，物理紅／魔法紫／真實白，不管是誰打誰。relation ＝ 這條裁決之前的做法：顏色代表「誰被打」（受到傷害是橘紅、造成傷害是白），傷害屬性只在魔法時加一層淡紫。⚠️ 兩邊各有代價：damageType 之下「我打人」和「我被打」同一個顏色，只靠字級（30 vs 24）、高度與飄開的方向分辨；relation 之下真實傷害又會變得看不出來，也就是這一頁存在的原因。",
+      optionLabels: {
+        damageType: "damageType 顏色＝傷害屬性（出貨值）",
+        relation: "relation 顏色＝誰被打（舊做法）",
+      },
+    },
+    {
+      path: "text.physical",
+      zh: "物理傷害數字",
+      note: "普攻與所有物理技能跳出來的數字顏色。出貨 #FF5900 是一個橘紅：純紅 #FF0000 在暗土地面上只有 2.47:1，字和黑框都是暗的，整個數字糊成一團 —— 所以「紅」在這裡不等於 #FF0000。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "text.magic",
+      zh: "魔法傷害數字",
+      note: "法術傷害（AP）跳出來的數字顏色。出貨 #B872FF。⚠️ 不要換成更深的紫（#9D4EDD／#8B5CF6 那一類）：黑框在暗土地面上只有 2.13:1，深紫的字本身也過不了 3.0，兩層都暗的結果就是看不見。也要離「閃避」那個薰衣草 #C9A7FF 夠遠，不然場上會有兩個分不出來的紫。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "text.true",
+      zh: "真實傷害數字",
+      note: "無視防禦的傷害（火圈燃燒、[無視] 系的裝備）跳出來的數字顏色 —— 這一格就是這一頁的起因。出貨純白 #FFFFFF：對黑框 21:1，是這個調色盤裡最清楚的一個，而且離四個隊伍色都很遠。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "text.heal",
+      zh: "治療數字",
+      note: "補血跳出來的數字顏色，**上面那個選項切到哪一邊都吃這一格**（屬性軸只管傷害，治療永遠是治療）。出貨 #00FF00 是 RO 原本的綠。補魔不吃這一格：它有自己的青色＋斜體＋反方向飄開，那是為了讓色盲玩家也分得出補血與補魔。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "flash.physical",
+      zh: "物理傷害的身體閃光",
+      note: "被物理攻擊打中時，模型身上那一下疊色。出貨 #FF2626 紅：它在七個真實模型顏色上（全黑的老二到偏白的北斗神拳掌門人）都能把兩個通道**壓下去**，所以每一隻都看得到。技能自己指定了顏色的話（31 支技能文件有寫）會蓋掉這一格，那是刻意的。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "flash.magic",
+      zh: "魔法傷害的身體閃光",
+      note: "被法術打中時模型身上那一下疊色，出貨 #FF59E6 洋紅。⚠️ 它是三個裡面最淡的一個，已經貼著「還看得見」的下限（最大與最小通道差 0.65）；再往白色調就會在淺色模型上消失。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "flash.true",
+      zh: "真實傷害的身體閃光",
+      note: "被真實傷害打中時模型身上那一下疊色，出貨 #33FFFF 青白。⚠️ **這裡不能填純白 #FFFFFF。** 疊色的算法是「結果 = 原色×0.4 + 這個顏色×0.6」，白色只會把通道往上推，在淺色模型上實測只移動 0.03~0.09（紅色是 0.45）—— 填白等於把「真實傷害看不出來」這個問題原封不動搬到身體上。#33FFFF 是還看得見的範圍裡最白最冷的一個。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+  ],
+  preserved: [],
+};
+
+
+// ───────────────────────────────── 場地環境火焰 (config/ambient-vfx.arenaFire) ─
+
+const ARENA_FIRE_SPEC: ConfigDocSpec = {
+  page: "arenaFire",
+  collection: "config",
+  docId: "ambient-vfx",
+  schemaTag: "config.ambient-vfx@1",
+  zod: zConfigAmbientVfxDoc,
+  title: "場地環境火焰",
+  intro: [
+    "owner 2026-08-01 實戰回饋：「場地天空火焰很礙眼 請全部場地都去掉」(GH#251)。這一頁就是那把火的開關，出貨值已經是**關**。",
+    "在這一頁出現之前，這件事寫死在 `dressArena` 的一行 `d.model.includes(\"torch\")` 裡：只要場地文件擺了一支火把，就一定有一團常駐的加色火焰粒子，後台一格都調不到。實際數量是 skeleton（**預設場地**）16 團、castle 16 團、colosseum 16 團、royale 4 團，dota 與 godie 0 團。",
+    "⚠️ 火焰是**加色混合**（additive）的，所以它在暗色地面上永遠是畫面裡最亮的東西之一，而且 16 團全在場地邊緣 —— 那正是 owner 說「礙眼」的位置。要開回來的話建議先把「同時幾團」調小再開，而不是直接 16 團全點。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/ambient-vfx.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/render/ArenaScene.ts 的 dressArena()（由 GameApp.applyArena 呼叫，政策從 ContentDb.arenaFire() 取得）→ 每一個命中的 decor 道具呼叫一次 attachFlame()",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**、而且**下一次換場地**（dressArena 重跑）時生效。已經蓋好的場地不會中途點火或熄火 —— 那是刻意的：dressArena 是一次性的布景 pass，不是每幀跑的東西。",
+  fields: [
+    {
+      path: "arenaFire.enabled",
+      zh: "場地要不要有環境火焰",
+      note: "關（出貨值）＝ 所有場地的火把一團火都不冒，也就是 owner 要的結果；開＝ 命中的布景道具每一支都掛一團常駐的加色火焰。這是唯一決定「場上有沒有火」的一格，下面三格只有在它開著時才有意義。",
+    },
+    {
+      path: "arenaFire.maxEmitters",
+      zh: "一張場地最多幾團火",
+      note: "同時存在的火焰粒子系統上限，超過的火把就單純不冒火（依場地文件的順序先到先得）。每一團都是一組獨立的粒子系統加一張貼圖，所以這個數字直接就是「這張場地為了火焰多付出的繪製成本」。16 ＝ 出貨場地的火把全部點燃；填 4 就是只點四支，畫面上仍然有火但不會沿著整圈邊緣亮一排。",
+    },
+    {
+      path: "arenaFire.emitRate",
+      zh: "每團火每秒噴幾顆粒子",
+      note: "火焰的濃密程度。18（出貨值）是一團看得出在燒的小火；調低會變成稀疏的火星、調高會變成一團實心的亮塊 —— 而 16 團同時調高就是 owner 抱怨的那個畫面。它同時決定同螢幕的粒子總量，手機發燙時這一格比關掉整個功能溫和。",
+    },
+    {
+      path: "arenaFire.sizeScale",
+      zh: "火焰粒子的大小倍率",
+      note: "1（出貨值）＝ 每顆粒子 0.3–0.6 個世界單位，大約是英雄身高的五分之一到三分之一。這一格直接決定火焰在畫面上佔多大 —— 它比上面那格更影響「礙不礙眼」，因為粒子變大是面積成長不是數量成長。2 已經是一團跟英雄一樣高的火。",
+    },
+  ],
+  preserved: [
+    {
+      path: "bindings",
+      why: "逐模型的**環境特效綁定表**（英雄身上的常駐光暈／餘燼尾巴／緞帶翅膀，9 個模型共 17 條）。這一頁不編輯它，但每次儲存都必須原封不動帶著走 —— 掉了的話那 9 位角色身上的常駐特效會全部消失，而畫面上沒有任何錯誤訊息。",
+    },
+    {
+      path: "arenaFire.models",
+      why: "哪些布景道具會冒火（對 decor 的 `model` 路徑做子字串比對，出貨值是 `[\"torch\"]`，命中 torch.glb 與 torch_mounted.glb）。通用表單引擎畫不了字串陣列，所以這一頁不編輯它；掉了的話就算開關打開也一團火都不會出現。要改它請走內容覆蓋層。",
+    },
+  ],
+};
+
+// ───────────────────────────────────────── 體型與射程 (config/body-scale) ──
+
+const BODY_SCALE_SPEC: ConfigDocSpec = {
+  page: "bodyScale",
+  collection: "config",
+  docId: "body-scale",
+  schemaTag: "config.body-scale@1",
+  zod: zConfigBodyScaleDoc,
+  title: "體型與射程",
+  intro: [
+    "owner 2026-08-01 實戰回饋：「身體放大倍數 會影響攻擊距離延長倍數」。放大的角色看起來手長卻打不到，是因為在這一頁出現之前，**伺服器根本不知道任何一位英雄有多大** —— 螢幕上的大小住在一份客戶端專用的檔案裡（content/models/_standin-overrides.json），它不在內容清單裡，遊戲伺服器從來讀不到。",
+    "每位英雄的體型現在寫在英雄卡的 bodyScale（內容管理那邊改），這一頁只管**它怎麼換算成射程**：射程倍率 = 1 + (體型 − 1) × 係數。係數 1 = 完全等比例（出貨值，owner 的字面讀法）；0 = 完全不連動（＝這一頁出現之前的行為）。",
+    "⚠️ 這一頁**只管普攻射程**。技能施放距離與 AoE 半徑走 戰鬥系統 的 abilityRange（出貨 0.6，是刻意壓過的），**刻意不跟著體型連動** —— 再乘一次會讓那個 0.6 對大體型英雄悄悄失效。要不要一起連動是下一個決定。",
+    "⚠️ 這一頁**會改變平衡**：出貨內容有 24 位英雄體型不是 1（0.6 ～ 3.0），所以他們的普攻射程會同步變成 0.6 ～ 3.0 倍。最大的是 godie-o030（3.0 倍）。要退回舊行為把係數調成 0，或關掉總開關。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/body-scale.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "packages/shared/src/sim/bodyScale.ts 的 attackRangeScaleFactor() → sim/baseBonus.ts finalizeStat() 的 rangeScale → Stat.AttackRange（每次 recomputeStats 都會呼叫）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.bodyScaleRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／格擋規則／嘲弄規則 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格，寫成「下一場生效」會害操作者以為功能壞了。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "體型連動射程",
+      note: "關掉＝攻擊距離完全不看體型，和這一頁出現之前一模一樣。係數填 0 也是同一個結果，兩個都留著是因為「暫時關掉」和「調成不連動」在操作上是兩件事：關掉之後再打開，係數還在。",
+    },
+    {
+      path: "attackRangeCoefficient",
+      zh: "體型每多 1 倍，普攻射程延長幾倍",
+      note: "1＝完全等比例（出貨值）：體型 3 倍的英雄射程也 3 倍。0.5＝體型 2 倍只多 50% 射程。0＝不連動。上界 3 擋的是把百分比當倍率填（打 100 進去等於 100 倍射程，那位英雄會從畫面外開打）。",
+    },
+    {
+      path: "minScale",
+      zh: "體型下界（算射程時）",
+      note: "比這更小的身體不會讓射程再往下縮。它保護的是小型角色：出貨最小體型是 0.6，把這一格調到 0.6 以上等於「小隻的不吃這個懲罰」。",
+    },
+    {
+      path: "maxScale",
+      zh: "體型上界（算射程時）",
+      note: "這是「不會從畫面外開打」的那條線。出貨最大體型 3.0，預設 4 留了餘裕。上界 10 剛好是 小怪波 那一頁的 殭屍王體型倍率 出貨值 —— 貼錯格會被擋在這裡。",
+    },
+  ],
+  preserved: [],
+};
+
+// ───────────────────────────────────────────── 回血規則 (config/regen) ──
+
+const REGEN_SPEC: ConfigDocSpec = {
+  page: "regenRules",
+  collection: "config",
+  docId: "regen",
+  schemaTag: "config.regen@1",
+  zod: zConfigRegenDoc,
+  title: "回血規則",
+  intro: [
+    "owner 2026-08-01 實戰回饋：「Berserker HP 回血 1%每秒，沒有保底」。在這一頁出現之前，回血只有一條**固定點數/秒**（英雄卡的 healthRegen ＋ 成長 ＋ 力量），整條路上沒有任何一項讀最大生命 —— 也就是說「每秒回最大生命的 1%」不是被設錯的數字，是一個**不存在的機制**。",
+    "百分比本身寫在英雄卡（healthRegenPctOfMax，0.01 = 每秒 1%），出貨只有 海克力斯 - Berserker 填了。這一頁決定它和固定回血的關係，以及有沒有保底。",
+    "⚠️ 「保底」查過三個可能的位置（基礎加成、屬性最終夾值、屬性上限表）都沒有生命回復的下限，所以現況本來就沒有保底 —— 這一格是把它變成可以**打開**的，不是把既有的關掉。",
+  ],
+  consumer:
+    "packages/shared/src/sim/regenRules.ts 的 healthRegenPerSec()，由 sim/systems/RegenSystem.ts 每 tick 對每一個活著的單位呼叫；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.regenRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／格擋規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "pctEnabled",
+      zh: "百分比回血",
+      note: "關掉＝英雄卡上填的百分比全部當作沒填，所有人只吃固定回血（＝這個機制出現之前）。開著也只影響有填百分比的英雄，其他 112 位一點差別都沒有。",
+    },
+    {
+      path: "pctMode",
+      zh: "百分比和固定回血的關係",
+      note: "replace＝有填百分比的英雄不再計算固定回血，每秒就是「最大生命 × 百分比」。這就是 owner 說的「沒有保底」：add 模式下那條固定值是一條**與最大生命無關的地板**，血量被打到很低的時候它反而是主力，那正是要移除的東西。",
+      optionLabels: {
+        replace: "replace 百分比取代固定回血（出貨值＝owner 的「沒有保底」）",
+        add: "add 百分比疊在固定回血上（＝等於保留一條地板）",
+      },
+    },
+    {
+      path: "floorPerSec",
+      zh: "保底：每秒至少回幾點",
+      note: "0＝沒有保底（出貨值，owner 的裁決）。它獨立於上面那格：沒填百分比的英雄也吃得到這條地板，所以它是「全場最低回血」而不是「百分比的下限」。上界 1000 是誤植守衛 —— Berserker 一級最大生命約 7,500，1% 是 75/秒，1000 已經是這條地板自己就能撐住一整場。",
+    },
+    {
+      path: "applyEnvMultiplier",
+      zh: "百分比要不要吃 戰鬥系統 的回血倍率",
+      note: "開（出貨值）＝ 戰鬥系統 那一格的 healthRegen 仍然是「全遊戲回血快慢」的總閥，百分比也跟著動。關＝百分比變成一個不受全域調節影響的角色設定，只有固定回血那條吃倍率。",
+    },
+    {
+      path: "championsOnly",
+      zh: "百分比只給英雄",
+      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃百分比回血。關掉之後，一隻臉是 Berserker 的隨機英雄殭屍王也會每秒回 1% 最大生命 —— 王的血量是英雄的好幾倍，那等於一堵打不動的牆。",
+    },
+  ],
+  preserved: [],
+};
+
 /**
  * 掛上後台的設定文件。
  *
@@ -454,8 +838,14 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,
   GORE_SPEC,
+  DAMAGE_COLORS_SPEC,
   SHIELD_SPEC,
+  BLOCK_SPEC,
   STEALTH_SPEC,
+  TAUNT_SPEC,
+  ARENA_FIRE_SPEC,
+  BODY_SCALE_SPEC,
+  REGEN_SPEC,
 ];
 
 export function specForPage(page: string): ConfigDocSpec | null {
@@ -563,6 +953,10 @@ export function parseFieldInput(
   }
   if (leaf.kind === "text") {
     if (raw.trim() === "") return { ok: false, error: "不可以是空的" };
+    const { pattern, patternError } = row.label;
+    if (pattern && !pattern.test(raw)) {
+      return { ok: false, error: patternError ?? "格式不對" };
+    }
     return { ok: true, value: raw };
   }
   const trimmed = raw.trim();

@@ -1,0 +1,11 @@
+{
+  "id": "omnislash-perform",
+  "schema": "status-effect@1",
+  "name": "超究武神霸斬・演武",
+  "description": "克勞德把自己交給那七刀：演出期間他自己也動不了、攻擊不了、放不了別的技能 —— 這不是被人控住，是招式本身把他鎖在演出裡。原作 war3map.j 的 `Trig_SuperFF7_Actions` 同時對施法者下 PauseUnitBJ(true) 與 UnitAddAbilityBJ('Avul')，所以這段時間他也是無敵的(無敵由同一支技能的 invulnerable 效果負責，不在這個標記上)。",
+  "polarity": "buff",
+  "tags": [
+    "stun",
+    "channel"
+  ]
+}

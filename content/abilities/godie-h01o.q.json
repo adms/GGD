@@ -22,7 +22,7 @@
   "effects": [
     {
       "kind": "spawnProjectile",
-      "projectileId": "imported.bolt",
+      "projectileId": "imported.bolt.arcane",
       "onHit": [
         {
           "kind": "damage",

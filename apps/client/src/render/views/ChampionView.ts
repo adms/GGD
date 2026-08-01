@@ -628,7 +628,9 @@ export class ChampionView {
     this.ownedMaterials.push(ringMat);
     this.teamRing = MeshBuilder.CreateTorus(
       `champ-${entityId}-teamring`,
-      { diameter: 1.25, thickness: 0.07, tessellation: 40 },
+      // #247: the literal moved to `TEAM_RING_DIAMETER` so `setGroundRingDiameter`
+      // and this call site cannot disagree about what 1× means.
+      { diameter: ChampionView.TEAM_RING_DIAMETER, thickness: 0.07, tessellation: 40 },
       scene,
     );
     this.teamRing.material = ringMat;
@@ -707,6 +709,56 @@ export class ChampionView {
   /** The tier the SIZE is currently written for (test/diagnostics seam). */
   get appliedGrowthTier(): GrowthTier {
     return this.growthApplied;
+  }
+
+  /**
+   * The diameter the team ring is currently drawn at, in GGD units — the number
+   * a test must read to know whether 「圈圈變大了」 really happened. Derived from
+   * the mesh's LIVE scaling, not from a remembered input, so an assertion cannot
+   * pass while the torus stayed the size it was built at (失敗形態 ⑦: asserting
+   * the property instead of the behaviour).
+   */
+  get groundRingDiameter(): number {
+    return ChampionView.TEAM_RING_DIAMETER * this.teamRing.scaling.x;
+  }
+
+  /**
+   * The team ring's live scaling vector (test/diagnostics seam). Exists so a
+   * guard can assert the Y AXIS IS UNTOUCHED — the whole difference between a
+   * wide ground ring and a tall doughnut, which `groundRingDiameter` alone
+   * cannot see.
+   */
+  get teamRingScaling(): { x: number; y: number; z: number } {
+    const s = this.teamRing.scaling;
+    return { x: s.x, y: s.y, z: s.z };
+  }
+
+  /** The diameter `CreateTorus` builds the team ring at — the 1× reference. */
+  static readonly TEAM_RING_DIAMETER = 1.25;
+
+  /**
+   * #247 —— resize the ground ring (owner 2026-08-01 「殭屍王底下圈圈會比較大，
+   * 但不影響無碰撞」). `null` restores the built-in champion diameter.
+   *
+   * SCALED ON X/Z ONLY. The torus lies in the XZ plane, so leaving Y at 1 keeps
+   * the tube's VERTICAL thickness constant — a 10× ring stays a ring lying on
+   * the floor instead of becoming a 10×-tall doughnut standing around the king's
+   * knees. `setAll` here would be the bug this comment exists to prevent.
+   *
+   * ⚠️ NOT `root`, and NOT `blobShadow`. `root` carries the body; scaling it
+   * would resize the king. The shadow is `setGrowthTier`'s (#244) and having two
+   * writers on one node is how a mud-tier swell silently reverts a ring change.
+   * NOTHING here touches a collision radius — the client has none to touch.
+   */
+  setGroundRingDiameter(diameter: number | null): void {
+    if (this.disposed) return;
+    const d = diameter === null || !Number.isFinite(diameter) || diameter <= 0
+      ? ChampionView.TEAM_RING_DIAMETER
+      : diameter;
+    const f = d / ChampionView.TEAM_RING_DIAMETER;
+    if (Math.abs(f - this.teamRing.scaling.x) < 1e-4) return;
+    this.teamRing.scaling.x = f;
+    this.teamRing.scaling.z = f;
   }
 
   /** True once the tier-2 black-mud foot ring exists (test/diagnostics seam). */
@@ -1108,11 +1160,18 @@ export class ChampionView {
   }
 
   /**
-   * HIT FLASH — briefly tint the struck model (white physical/true, red magic)
-   * via a per-mesh render overlay (never mutates shared .glb materials, so one
-   * champion's flash can't bleed onto another sharing the material). Duration +
-   * strength are tier-driven by combatFeedback's plan; both default to the
-   * medium-hit values (FLASH_MS / FLASH_ALPHA) for direct callers.
+   * HIT FLASH — briefly tint the struck model via a per-mesh render overlay
+   * (never mutates shared .glb materials, so one champion's flash can't bleed
+   * onto another sharing the material). Duration + strength are tier-driven by
+   * combatFeedback's plan; both default to the medium-hit values (FLASH_MS /
+   * FLASH_ALPHA) for direct callers.
+   *
+   * ⚠️ This doc used to say 「white physical/true, red magic」. That was false in
+   * BOTH halves and had been since task #60: `flashColorFor` returned RED for
+   * physical/true and MAGENTA for magic — white was the colour that pass
+   * measured OUT (a white ALPHA_COMBINE overlay cannot darken a pale model, so
+   * it is a no-op on exactly the rigs that need it). The colour is now the
+   * damage school's, from `render/damagePalette` — this view NEVER picks one.
    */
   flash(
     rgb: [number, number, number],

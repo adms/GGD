@@ -1,0 +1,10 @@
+{
+  "id": "regen",
+  "schema": "config.regen@1",
+  "note": "百分比回血規則（GH#253，owner 2026-08-01：「Berserker HP 回血 1%每秒，沒有保底」）。百分比本身寫在英雄卡的 healthRegenPctOfMax（0.01 = 每秒 1%），出貨只有 godie-hapm（海克力斯 - Berserker）填了。這一頁決定它和英雄卡那條固定回血的關係，以及有沒有保底。⚠️ replace = 有填百分比的英雄不再計算固定回血 —— 這就是 owner 說的「沒有保底」，因為 add 模式下那條固定值是一條與最大生命無關的地板。⚠️ 保底出貨 0：查過三個可能的位置（base-bonus.json、STAT_CLAMPS、statCaps）都沒有生命回復的下限，所以現況本來就沒有保底，這一格只是把它變成可以打開的。語意寫在 packages/shared/src/sim/regenRules.ts，消費端是 systems/RegenSystem.ts。⚠️ 後台『回血規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "pctEnabled": true,
+  "pctMode": "replace",
+  "floorPerSec": 0,
+  "applyEnvMultiplier": true,
+  "championsOnly": true
+}

@@ -97,6 +97,13 @@
           "statusId": "slow25",
           "duration": 1.0,
           "moveSpeedMult": 0.6
+        },
+        {
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0,
+          "durationSec": 0.2
         }
       ],
       "vfxKey": "fx.prim.physical.slash",
@@ -288,27 +295,55 @@
       "range": 8.25,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              693.0,
-              1043.0,
-              1393.0
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
-              }
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "omnislash-lock",
+          "duration": 3.5,
+          "stun": true
         },
         {
           "kind": "applyStatus",
-          "statusId": "root",
-          "duration": 3.0,
-          "root": true
+          "statusId": "omnislash-perform",
+          "duration": 3.5,
+          "applyTo": "self",
+          "stun": true
+        },
+        {
+          "kind": "invulnerable",
+          "durationSec": 3.5,
+          "applyTo": "self",
+          "blocksDamage": "all",
+          "blocksTrueDamage": false,
+          "blocksControl": false
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "perRank": [
+              99.0,
+              149.0,
+              199.0
+            ]
+          },
+          "intervalSec": 0.5,
+          "durationSec": 3.5,
+          "stacking": "independent"
+        },
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "attrRatios": [
+              {
+                "attr": "str",
+                "basis": "total",
+                "coeff": 1
+              }
+            ]
+          },
+          "intervalSec": 3.5,
+          "durationSec": 3.5,
+          "stacking": "independent"
         }
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",

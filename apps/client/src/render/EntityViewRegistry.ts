@@ -234,6 +234,23 @@ export interface ViewContentHooks {
    * 長出超三的頭」在資料層就成立,不是靠這裡記得判斷。
    */
   formAttachmentFor?(e: EntityViewState): FormAttachmentSpec | null | undefined;
+
+  /**
+   * #247 —— 這具身體腳下的圈圈要畫多大 (GGD units, diameter). `null`/absent =
+   * 「用 ChampionView 自己的預設」, which is every champion.
+   *
+   * A SEAM AND NOT A CALCULATION HERE, for the same client-08 reason
+   * `championTintFor` is one: the answer needs `MatchState.mobVisualJson`, which
+   * lives in the net layer that render/** is walled off from. GameApp supplies
+   * `mobGroundRingDiameter(e.mobScale, this.mobVisual)`.
+   *
+   * ⚠️ THE RING IS NOT A HITBOX AND NOTHING HERE CAN MAKE IT ONE. It is a torus
+   * on the client; the server never reads it and no client-side query does
+   * either. That is the structural half of owner's 「圈圈比較大但不影響無碰撞」 —
+   * see the guard in sim/mobBossRing.test.ts, which fails if a ring number ever
+   * reaches `MobRules.radius` / `boss.radius`.
+   */
+  groundRingDiameterFor?(e: EntityViewState): number | null | undefined;
 }
 
 /**
@@ -887,6 +904,10 @@ export class EntityViewRegistry {
       const tier = growthTierFromFlags(e.flags ?? 0);
       this.applyTint(e, view, tier);
       view.setGrowthTier(tier, args.nowMs);
+      // #247 「殭屍王底下圈圈會比較大」 —— written every sync (the setter
+      // early-returns when the number has not moved), so a king whose
+      // `mobVisualJson` arrives a frame after its entity still gets its ring.
+      view.setGroundRingDiameter(this.content.groundRingDiameterFor?.(e) ?? null);
       // #268 「自己角色更顯眼」 — the halo + caret that say WHICH of the twelve
       // bodies is yours. Driven by a flag on the entity rather than resolved
       // here: `localEntityId` lives in the HUD store that render/** is walled

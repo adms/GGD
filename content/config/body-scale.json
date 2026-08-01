@@ -1,0 +1,9 @@
+{
+  "id": "body-scale",
+  "schema": "config.body-scale@1",
+  "note": "身體放大倍數 → 攻擊距離（GH#252，owner 2026-08-01：「身體放大倍數 會影響攻擊距離延長倍數」）。公式是 射程倍率 = 1 + (體型 − 1) × 係數，體型讀英雄卡的 bodyScale（缺 = 1.0，出貨 24 位不是 1，範圍 0.6～3.0）。⚠️ 這一頁只管普攻射程（Stat.AttackRange）；技能施放距離／AoE 走 戰鬥系統 的 abilityRange（出貨 0.6，task #136 刻意壓過），刻意不連動 —— 再乘一次會讓那個 0.6 對大體型英雄悄悄失效。⚠️ 出貨係數 1 會改變平衡：在這份文件出現之前射程完全不看體型，要退回舊行為把係數調成 0（或關掉總開關）。語意寫在 packages/shared/src/sim/bodyScale.ts。⚠️ 後台『體型與射程』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "enabled": true,
+  "attackRangeCoefficient": 1,
+  "minScale": 0.1,
+  "maxScale": 4
+}

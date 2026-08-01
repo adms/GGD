@@ -155,8 +155,9 @@ export function baseBonusFromDoc(doc: unknown): BaseBonusTable {
 }
 
 /**
- * THE one definition of 「最終值」 for a champion stat: environment multiplier,
- * then the flat base bonus, then the clamp — in that order, for every caller.
+ * THE one definition of 「最終值」 for a champion stat: environment multiplier
+ * (× 身體放大倍數 for `Stat.AttackRange` only, GH#252), then the flat base
+ * bonus, then the clamp — in that order, for every caller.
  *
  * ⚠️ 這個函式存在的唯一理由是**只有一份順序**。sim 的 `recomputeStats` 與所有顯示
  * 面板(選角屬性表、圖鑑、後台數值體檢)本來各自寫 `base × env`,#125 才成立。
@@ -183,6 +184,18 @@ export interface FinalizeStatOptions {
    * 任何解鎖來源)。不是加總:見 modifiers.ts `CapRaise`。
    */
   capRaise?: number;
+  /**
+   * 身體放大倍數換算出來的**攻擊距離倍率**(GH#252,見 sim/bodyScale.ts 的
+   * `attackRangeScaleFactor`)。**只**作用在 {@link Stat.AttackRange};其他
+   * 15 條屬性完全看不到它,所以傳與不傳對它們逐位元相同。
+   *
+   * 位置和 `env` 同一格(相乘,在基礎加成與 clamp **之前**):它描述的是
+   * 「這個身體本來就搆得比較遠」,和 `combatEnv.attackRange` 那個全域旋鈕是
+   * 同一種東西,而基礎加成是系統贈禮 —— 贈禮不該被體型放大。
+   *
+   * 缺 = 1(不連動),所以每一個舊呼叫端逐位元不變。
+   */
+  rangeScale?: number;
 }
 
 export function finalizeStat(
@@ -193,6 +206,10 @@ export function finalizeStat(
   const env = opts.env ?? DEFAULT_COMBAT_ENV;
   const envKey = STAT_ENV_KEY[stat];
   let out = envKey !== undefined ? v * env[envKey] : v;
+  if (stat === Stat.AttackRange) {
+    const rs = opts.rangeScale;
+    if (typeof rs === "number" && Number.isFinite(rs) && rs > 0) out *= rs;
+  }
   // 位置就是語意:在 `*=` **之後** = 不參與倍率(owner 2026-07-28);在 clamp
   // **之前** = 上限仍然管得到它。
   out += baseBonusFor(opts.baseBonus ?? DEFAULT_BASE_BONUS, stat);

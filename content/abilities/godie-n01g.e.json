@@ -22,7 +22,7 @@
   "effects": [
     {
       "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
+      "projectileId": "imported.wave.ice",
       "onHit": [
         {
           "kind": "damage",

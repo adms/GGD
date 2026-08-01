@@ -26,6 +26,11 @@ import { CombatEnvPage } from "./CombatEnvPage";
 // the family actually plays on. mobWaves.test.ts fails if this line ever moves
 // under a DEV gate or the nav label leaves the shell.
 import { MobWavesPage } from "./MobWavesPage";
+// 傳說武器三選一 (GH#249) — EAGER, same reason as 殭屍波系統 above: its save is a
+// platform admin `putOverlayDoc` into the SAME arena-rules doc, so it is safe in
+// production BY AUTHORISATION and must exist in the production bundle. A draft
+// page that only runs on localhost cannot tune the host the family plays on.
+import { ItemDraftPage } from "./ItemDraftPage";
 import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
@@ -179,11 +184,32 @@ const NAV: NavItem[] = [
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
   // 濺血程度 —— 調性決定，不是效能決定。放在它們後面而不是中間。
   { page: "gore", label: "濺血程度", emoji: "🩸", section: SEC_SYS },
+  // 傷害數字配色 (owner 2026-08-01) —— 物理紅／魔法紫／真實白／治療綠。緊接在
+  // 濺血程度 後面，因為兩頁問的是同一類問題：「打中的那一瞬間畫面上出現什麼」。
+  { page: "damageColors", label: "傷害數字配色", emoji: "🎨", section: SEC_SYS },
   // 護盾規則 —— 一個人身上兩道盾時誰先被吃掉。它是**傷害結算規則**（跟 戰鬥系統
   // 的倍率、屬性上限的天花板同一個家族），不是畫質也不是調性，但排在這裡是因為
   // 它和上面三頁共用同一個 schema 驅動的元件；改到它的人會從左欄找「護盾」。
   { page: "shieldRules", label: "護盾規則", emoji: "🛡️", section: SEC_SYS },
+  // 格擋規則 —— 緊接在 護盾規則 後面，因為兩頁問的是同一段結算的相鄰兩步：
+  // 格擋在護盾之前判、而且刻意不吃護盾。owner 2026-07-31 裁決兩件格擋要獨立
+  // 各判一次，那條裁決就住在這一頁。
+  { page: "blockRules", label: "格擋規則", emoji: "🪖", section: SEC_SYS },
   { page: "stealthRules", label: "隱形規則", emoji: "👻", section: SEC_SYS },
+  // 嘲弄規則 —— 唯一一條會**強迫**一個單位改打別人的機制(目前只有鍊金術之盾用到)。
+  // 緊接在 隱形規則 後面,因為兩頁問的是同一類問題:「索敵看得到誰 / 索敵被誰綁架」。
+  { page: "tauntRules", label: "嘲弄規則", emoji: "🎯", section: SEC_SYS },
+  // 體型與射程 (GH#252 · owner 2026-08-01「身體放大倍數 會影響攻擊距離延長倍數」)
+  // —— 緊接在 嘲弄規則 後面,因為這三頁都在改「誰打得到誰」。這一頁只管普攻;
+  // 技能距離在 戰鬥系統 的 abilityRange 那一格。
+  { page: "bodyScale", label: "體型與射程", emoji: "📏", section: SEC_SYS },
+  // 回血規則 (GH#253 · owner 2026-08-01「Berserker HP 回血 1%每秒,沒有保底」)
+  // —— 百分比回血與英雄卡固定回血的關係,以及有沒有保底。
+  { page: "regenRules", label: "回血規則", emoji: "💚", section: SEC_SYS },
+  // 場地環境火焰 (GH#251 · owner 2026-08-01「場地天空火焰很礙眼 請全部場地都去
+  // 掉」) —— 出貨已經關掉，這一頁是「改主意的時候不用再改程式」的那把開關。
+  // 排在 濺血程度 / 傷害數字配色 這些「畫面上出現什麼」的隔壁而不是效能三頁旁邊。
+  { page: "arenaFire", label: "場地環境火焰", emoji: "🔥", section: SEC_SYS },
   // 鑄技工坊 (#205 / #230 / #272) —— 每支技能綁哪一個特效家族原型 + per-invocation
   // 參數。緊接在 變身外觀 後面,因為兩頁都是「看不看得出來」而不是「強不強」,
   // 而且兩頁都同樣是「w3x 有事實但沒人把它接上去」的那一類。
@@ -193,6 +219,9 @@ const NAV: NavItem[] = [
   // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
   // one PvE pressure source those multipliers act on.
   { page: "mobWaves", label: "殭屍波系統", emoji: "🧟", section: SEC_SYS },
+  // 傳說武器三選一 — 候選不足時的補抽規則 (GH#249). Next to 殭屍波系統 because both
+  // edit one BLOCK of the same `config/arena-rules.json` document.
+  { page: "itemDraft", label: "傳說武器三選一", emoji: "🗡️", section: SEC_SYS },
   { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
   // #243 — 一鍵打包 ZIP 匯出／匯入平台資料，無痛移機. Session-gated (see
   // store.ts) and PRESENT IN THE PRODUCTION BUNDLE, because a migration tool
@@ -624,6 +653,7 @@ function Console(): React.JSX.Element {
             )}
             {page === "combatEnv" && <CombatEnvPage />}
             {page === "mobWaves" && <MobWavesPage />}
+            {page === "itemDraft" && <ItemDraftPage />}
             {page === "serverOps" && <ServerOpsPage />}
             {page === "dataMigration" && <DataMigrationPage />}
             {page === "ai" && <AiSettingsPage />}

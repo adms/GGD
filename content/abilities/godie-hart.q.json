@@ -46,6 +46,13 @@
       "statusId": "slow25",
       "duration": 1.0,
       "moveSpeedMult": 0.6
+    },
+    {
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0,
+      "durationSec": 0.2
     }
   ],
   "vfxKey": "fx.prim.physical.slash",

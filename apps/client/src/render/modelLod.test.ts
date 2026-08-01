@@ -102,6 +102,76 @@ describe("resolveLodPath", () => {
   });
 });
 
+/**
+ * A tier is only worth a fetch if it is actually smaller. The SHIPPED manifest
+ * violates this on three rows (see modelLod.shipped.test.ts, which measures the
+ * real files) — these cases pin the RULE, including the shapes the shipped data
+ * cannot currently produce (an exact tie, and small-bigger-but-mid-fine).
+ */
+describe("resolveLodPath refuses a tier that would not save anything", () => {
+  const BAD: LodManifest = {
+    schema: "lod@1",
+    models: {
+      // both tiers bigger — this is imported/collision.glb's real shape
+      "a.glb": {
+        bytes: 1148,
+        mid: { path: "a-mid.glb", bytes: 1164, triangles: 0 },
+        small: { path: "a-small.glb", bytes: 1164, triangles: 0 },
+      },
+      // mid bigger, small genuinely smaller — heroshanawingsmall.glb's real shape
+      "b.glb": {
+        bytes: 28292,
+        mid: { path: "b-mid.glb", bytes: 28384, triangles: 8 },
+        small: { path: "b-small.glb", bytes: 16756, triangles: 8 },
+      },
+      // exact tie: a second fetch + a second cache entry to deliver the same bytes
+      "c.glb": {
+        bytes: 5000,
+        mid: { path: "c-mid.glb", bytes: 5000, triangles: 9 },
+      },
+      // small is bigger but mid is fine → must DEGRADE to mid, not to authored
+      "d.glb": {
+        bytes: 9000,
+        mid: { path: "d-mid.glb", bytes: 4000, triangles: 9 },
+        small: { path: "d-small.glb", bytes: 9500, triangles: 9 },
+      },
+    },
+  };
+
+  it("a bigger tier is ignored at every preset — the authored file is served", () => {
+    expect(resolveLodPath("a.glb", "mid", BAD)).toBe("a.glb");
+    expect(resolveLodPath("a.glb", "small", BAD)).toBe("a.glb");
+  });
+
+  it("an EQUAL-size tier is refused too — a second fetch to save zero bytes", () => {
+    expect(resolveLodPath("c.glb", "mid", BAD)).toBe("c.glb");
+    expect(resolveLodPath("c.glb", "small", BAD)).toBe("c.glb");
+  });
+
+  it("only the offending tier is dropped — the good one still serves", () => {
+    // b: mid is bigger, small is smaller. "mid" must fall back, "small" must work.
+    expect(resolveLodPath("b.glb", "mid", BAD)).toBe("b.glb");
+    expect(resolveLodPath("b.glb", "small", BAD)).toBe("b-small.glb");
+  });
+
+  it("small-too-big degrades to mid, exactly like an ungenerated small would", () => {
+    // the refusal composes with the existing degrade rule instead of
+    // short-circuiting straight back to the authored file, so a partial defect
+    // still costs saving, never correctness.
+    expect(resolveLodPath("d.glb", "small", BAD)).toBe("d-mid.glb");
+  });
+
+  it("no byte accounting = no evidence = today's behaviour, NOT a silent disable", () => {
+    // `bytes` is optional on LodModelEntry. Treating "unknown" as "refuse" would
+    // turn one missing field into a global LOD kill switch, which is a far worse
+    // failure than the one being guarded against.
+    const noBytes: LodManifest = {
+      models: { "e.glb": { mid: { path: "e-mid.glb", bytes: 10, triangles: 1 } } },
+    };
+    expect(resolveLodPath("e.glb", "mid", noBytes)).toBe("e-mid.glb");
+  });
+});
+
 describe("lodTierForPreset", () => {
   it("maps the fixed presets onto tiers", () => {
     expect(lodTierForPreset("low")).toBe("small");

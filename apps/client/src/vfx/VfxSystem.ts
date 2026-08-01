@@ -246,6 +246,24 @@ const COIN_TINT: Rgb = [1, 0.88, 0.55];
 export const REVIVE_SPAWN_VFX = "fx.root-snare";
 export const REVIVE_COMPLETE_VFX = "fx.barkskin";
 
+/**
+ * 鍊金術之盾 (godie-i06q) 的兩個節拍 —— 嘲弄的拉扯與煉金的付款。
+ *
+ * 兩個都**重用既有的 content/vfx 文件**，理由和 `FLOWER_*_VFX` 一樣：一份 vfx 文
+ * 件是編輯器裡改得到的東西，而一組寫死在這裡的粒子參數不是（第一守則）。要換掉
+ * 這兩個節拍長什麼樣子，改的是那份文件，不是這個檔。
+ *
+ *   嘲弄 —— 火色衝擊環。它畫在**嘲弄者**身上而不是被拉走的人身上，因為事件只帶
+ *           得到嘲弄者（見 eventFanout.ts 的 payload 段）：`world.taunt` 是
+ *           sim 側的 Map，被拉走的那幾隻的 id 從來沒有上過線。
+ *   煉金 —— 金色爆發，配 `COIN_TINT` 的層疊 pop，和 `coinPickedUp` 同一套金色語
+ *           言，因為玩家看到的是同一件事：錢進來了。
+ */
+export const TAUNT_VFX = "fx.fam.shockwave-ring.fire.s150";
+export const GOLD_GRANT_VFX = "fx.fam.burst.holy.s100";
+/** 嘲弄 (godie-i06q) — 挑釁的火紅，和敵方施法預告同一個「危險」色語言。 */
+const TAUNT_TINT: Rgb = [1, 0.42, 0.2];
+
 /** Max pooled ParticleSystem instances per doc id (LRU-stolen beyond). */
 export const MAX_POOL_PER_DOC = 4;
 
@@ -1185,6 +1203,10 @@ export class VfxSystem {
             worldX: pos.x,
             worldZ: pos.z,
             nowMs,
+            // 魔法傷害 overlay (owner 2026-07-31) — same `dmgType` hitImpact
+            // already reads off this event for IMPACT_TINTS, just not
+            // previously threaded through to the floating number.
+            dmgType: normalizeDmgType(ev.data.dmgType),
           });
         }
         break;
@@ -1370,6 +1392,54 @@ export class VfxSystem {
         // 撿到金幣 — a bright gold nova, the kill-grade pop, because someone just
         // walked off with a hundred gold and that should be unmissable.
         this.layeredPop(x, z, nowMs, "ex", COIN_TINT);
+        break;
+      }
+      // 鍊金術之盾 (godie-i06q). Both of these are ANCHORED ON A LIVE ENTITY
+      // rather than on x/z, and that is the difference from the coin pair above:
+      // a coin is destroyed in the same tick it pays out, whereas the taunter and
+      // the payee are both still standing when the event arrives.
+      //
+      // 嘲弄 —— 「每秒吸引周圍敵人優先攻擊自己」. This is the ONLY thing a client
+      // can see: the pull lives in `world.taunt` (a sim-side Map, no snapshot
+      // field, no ENTITY_FLAG bit — sim/taunt.ts DECISION 1), so with no ring
+      // here the mechanic is enemies mysteriously changing their minds.
+      // `source` is the TAUNTER; the pulled bodies' ids are not on the payload.
+      case "taunt": {
+        const source = ev.data.source as number | undefined;
+        const pos = source !== undefined ? this.ctx.entityPos(source) : null;
+        if (!isFinitePos(pos)) break;
+        // The ring reads as 「來打我」 and the pop gives it weight. `heavy`, not
+        // `ex`: a taunt is loud, but it is not a kill and must not out-shout one.
+        this.layeredPop(pos.x, pos.z, nowMs, "heavy", TAUNT_TINT);
+        this.play(this.doc(TAUNT_VFX), pos.x, pos.z, nowMs, 0.5);
+        break;
+      }
+      // 煉金術 —— 「將 HP 低於 5% 的敵人變成黃金」. The AMOUNT is not drawn here on
+      // purpose: the purse is replicated (`SeatState.gold`) and the HUD already
+      // paints it, so this supplies only the half that was missing — the WHEN.
+      // Two renderers of one number would be two chances to disagree.
+      //
+      // ⚠️ `target` is the PAYEE, not the transmuted victim (grantGold.ts loops
+      // over payees). The victim's id never crosses the wire, so the burst
+      // cannot be put on the body that turned into gold.
+      case "goldGrant": {
+        const payee = ev.data.target as number | undefined;
+        const amount = ev.data.amount as number | undefined;
+        // Defence against a malformed / renamed payload, NOT against a real
+        // emit. ⚠️ CORRECTED 2026-08-01 (第三守則): this comment used to claim
+        // 「the sim CAN emit a zero payout — transmuting a zombie pays `flat`
+        // alone」. That is FALSE and was self-consistent across three places
+        // (here, the paired test's title, and the report that shipped it).
+        // `sim/effects/grantGold.ts` does `if (amount <= 0) return;` BEFORE its
+        // `for (const p of payees)` emit loop, so a zero payout produces no
+        // event at all — running the real effect on a level-less body yields
+        // `world.events === []`. The guard stays because a client must never
+        // trust a wire payload, but it defends against nothing the sim does today.
+        if (typeof amount !== "number" || !(amount > 0)) break;
+        const pos = payee !== undefined ? this.ctx.entityPos(payee) : null;
+        if (!isFinitePos(pos)) break;
+        this.layeredPop(pos.x, pos.z, nowMs, "heavy", COIN_TINT);
+        this.play(this.doc(GOLD_GRANT_VFX), pos.x, pos.z, nowMs, 1.1);
         break;
       }
       // revive circles (task #84): the events carry the circle's own x/z, so

@@ -192,12 +192,61 @@ export function lodTierForPreset(preset: QualityPreset): ModelLodTier {
 }
 
 /**
+ * A tier is only worth fetching if it is ACTUALLY SMALLER than the file it
+ * replaces. Returns the tier's path when the manifest's own accounting proves a
+ * saving, else null so the caller falls through.
+ *
+ * ⚠️ This is not defensive paranoia, it is a MEASURED defect in the shipped
+ * manifest (2026-07-31, `_lod.json` generatedAt 2026-07-26). Three tier rows are
+ * BIGGER than the file they claim to cheapen:
+ *   · imported/collision.glb          1,148 B → mid 1,164 B, small 1,164 B
+ *   · imported/heroshanawingsmall.glb 28,292 B → mid 28,384 B
+ * Both models are also below `gen_lod.py`'s own LOD floor (`LOD_FLOOR_TRIS` 1500
+ * AND `LOD_FLOOR_BYTES` 64 KB), i.e. they are stale rows from before that floor
+ * existed — exactly the "stale row" hazard this module's header warns about. The
+ * old resolver swapped to them unconditionally, so the LOW and MEDIUM presets
+ * fetched MORE bytes than HIGH and called it the cheap version.
+ *
+ * ⚠️ HONEST SEVERITY, measured — do not let the paragraph above oversell it.
+ * Per `content/assets/model-budget/report.json`: `collision.glb` is role="unused"
+ * (0 triangles), so its row almost certainly never executes. Only
+ * `heroshanawingsmall.glb` is live — role="champion", reached through
+ * `content/skins/skin.godie-e008.heroshanawingsmall.json` — and its cost is
+ * 92 bytes on the medium preset. So the bytes recovered today are negligible.
+ *
+ * The value here is the CLASS, not those 92 bytes: a future `pnpm lod:gen` that
+ * decimates something badly can no longer make the game heavier on the preset
+ * that asked for lighter, and `modelLod.shipped.test.ts` now fails loudly if the
+ * regenerated manifest reintroduces one.
+ *
+ * WHY "STRICTLY SMALLER" AND NOT A PERCENTAGE. Equal bytes is not a saving
+ * either — it costs a second cache entry and a second fetch to deliver the same
+ * geometry. Anything beyond that (「a tier must save at least N%」) is a 體感
+ * judgement that belongs in `config.model-lod@1` next to `presetTiers`; it is not
+ * added here because this lane may not touch the shared schema. See the report.
+ *
+ * WHY MISSING ACCOUNTING TRUSTS THE TIER. `bytes` is optional in `LodModelEntry`.
+ * No number on either side = no evidence, and "no evidence" must mean today's
+ * behaviour, not a silent global disable of LOD. Only a measured NON-saving
+ * declines the swap.
+ */
+function cheaperPath(entry: LodModelEntry, t: LodTierEntry | undefined): string | null {
+  if (!t || typeof t.path !== "string" || t.path.length === 0) return null;
+  if (typeof entry.bytes !== "number" || typeof t.bytes !== "number") return t.path;
+  return t.bytes < entry.bytes ? t.path : null;
+}
+
+/**
  * Content-relative glb path → the path to actually fetch for `at`.
  *
  * Pure and total: an unknown path, a missing manifest or a tier that was never
  * generated for this model all return `path` unchanged. When "small" is asked
  * for and only "mid" exists, "mid" is served — a partial generation run degrades
  * to less saving, never to a 404.
+ *
+ * A tier that would not actually save bytes is treated exactly like a tier that
+ * was never generated (see `cheaperPath`), so "small" still falls through to
+ * "mid" and then to the authored file. Degrading to less saving, never to more.
  */
 export function resolveLodPath(
   path: string,
@@ -207,8 +256,8 @@ export function resolveLodPath(
   if (at === "high" || !from) return path;
   const entry = from.models[path];
   if (!entry) return path;
-  if (at === "small") return entry.small?.path ?? entry.mid?.path ?? path;
-  return entry.mid?.path ?? path;
+  if (at === "small") return cheaperPath(entry, entry.small) ?? cheaperPath(entry, entry.mid) ?? path;
+  return cheaperPath(entry, entry.mid) ?? path;
 }
 
 /**

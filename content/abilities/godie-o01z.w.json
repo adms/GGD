@@ -24,7 +24,7 @@
   "effects": [
     {
       "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
+      "projectileId": "imported.wave.void",
       "onHit": [
         {
           "kind": "damage",

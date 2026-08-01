@@ -43,6 +43,7 @@
     "primary": "AGI",
     "source": "w3x"
   },
+  "bodyScale": 3,
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
@@ -196,7 +197,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
+          "projectileId": "imported.wave.physical",
           "onHit": [
             {
               "kind": "damage",

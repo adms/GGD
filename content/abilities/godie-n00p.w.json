@@ -22,7 +22,7 @@
   "effects": [
     {
       "kind": "spawnProjectile",
-      "projectileId": "imported.bolt",
+      "projectileId": "imported.bolt.nature",
       "onHit": [
         {
           "kind": "damage",

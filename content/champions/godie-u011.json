@@ -123,7 +123,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
+          "projectileId": "imported.wave.arcane",
           "onHit": [
             {
               "kind": "damage",

@@ -74,7 +74,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
+          "projectileId": "imported.wave.earth",
           "onHit": [
             {
               "kind": "damage",

@@ -7,8 +7,8 @@
  *      markers.
  *   2. dressArena(): async, from the authored arena doc — every decor prop
  *      instantiated with rotQuarter/scale, a contact shadow under each of them,
- *      flame particles on torch tips, water shimmer on hex water tiles
- *      (decor is visual-only; sim collision unchanged).
+ *      OPTIONAL flame particles on torch tips (see below), water shimmer on hex
+ *      water tiles (decor is visual-only; sim collision unchanged).
  *      Every placed prop is checked against the fixed camera's sightline
  *      (occluder audit #29): props that could fully hide a hero are Y-squashed
  *      to SIGHTLINE_HEIGHT_CAP, except FADE_MODELS which keep full height and
@@ -17,6 +17,17 @@
  * Everything a build/dress pass creates is parented under one `arenaRoot`
  * TransformNode (+ tracked flame ParticleSystems) so `disposeArena()` can tear
  * the whole map down for a clean rebuild when the match's mapId changes.
+ *
+ * ── 場地環境火焰是一格開關，不是一段程式碼 (GH#251) ─────────────────────────
+ * owner 2026-08-01：「場地天空火焰很礙眼 請全部場地都去掉」。
+ * 在此之前這裡寫死 `d.model.includes("torch")` → 一定掛火：skeleton（**預設
+ * 場地**）16 支、castle 16 支、colosseum 16 支、royale 4 支，dota / godie 0 支，
+ * 而且**後台一格都調不到**、一條測試都沒有。
+ *
+ * 現在它讀 `config/ambient-vfx@1` 的 `arenaFire`（出貨值 `enabled: false`），
+ * 判斷集中在 shared 的 `decorModelBurns()`。**程式碼刻意留著**：「場地要不要有
+ * 環境火」是一個決策點，owner 改主意時應該是後台打勾，不是再改一次程式＋重新
+ * 部署（CLAUDE.md 第一守則）。
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
@@ -30,7 +41,8 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
-import type { ArenaDoc } from "@ggd/shared/content";
+import type { ArenaDoc, ArenaFire } from "@ggd/shared/content";
+import { DEFAULT_ARENA_FIRE, decorModelBurns } from "@ggd/shared/content";
 import type { AssetManager } from "./AssetManager";
 import { CAMERA_PITCH_RAD, DOLLY_MIN } from "./CameraRig";
 import { DecorFader } from "./DecorFade";
@@ -374,8 +386,18 @@ export function standsOnFloor(
   });
 }
 
+/** Base flame particle size (world units) — `arenaFire.sizeScale` scales both. */
+const FLAME_MIN_SIZE = 0.3;
+const FLAME_MAX_SIZE = 0.6;
+
 /** Small additive flame on a torch tip; returns the system so it's tracked. */
-function attachFlame(scene: Scene, x: number, y: number, z: number): ParticleSystem {
+function attachFlame(
+  scene: Scene,
+  x: number,
+  y: number,
+  z: number,
+  fire: ArenaFire,
+): ParticleSystem {
   const ps = new ParticleSystem(`torch-flame-${instCounter++}`, 24, scene);
   ps.particleTexture = new Texture(FLAME_TEXTURE, scene);
   ps.emitter = new Vector3(x, y, z);
@@ -384,11 +406,11 @@ function attachFlame(scene: Scene, x: number, y: number, z: number): ParticleSys
   ps.color1 = new Color4(1, 0.7, 0.25, 1);
   ps.color2 = new Color4(1, 0.45, 0.12, 0.9);
   ps.colorDead = new Color4(0.6, 0.1, 0.02, 0);
-  ps.minSize = 0.3;
-  ps.maxSize = 0.6;
+  ps.minSize = FLAME_MIN_SIZE * fire.sizeScale;
+  ps.maxSize = FLAME_MAX_SIZE * fire.sizeScale;
   ps.minLifeTime = 0.35;
   ps.maxLifeTime = 0.7;
-  ps.emitRate = 18;
+  ps.emitRate = fire.emitRate;
   ps.direction1 = new Vector3(-0.05, 0.8, -0.05);
   ps.direction2 = new Vector3(0.05, 1.2, 0.05);
   ps.minEmitPower = 0.3;
@@ -417,6 +439,12 @@ export async function dressArena(
   arena: ArenaDef,
   doc: ArenaDoc,
   handles: ArenaHandles,
+  /**
+   * 場地環境火焰政策（`config/ambient-vfx@1` 的 `arenaFire`，GH#251）。
+   * 省略 = `DEFAULT_ARENA_FIRE`，也就是**關的** —— 呼叫端忘了接線時的結果是
+   * 「沒有火」而不是「有火」，因為 owner 明說要拿掉。
+   */
+  fire: ArenaFire = DEFAULT_ARENA_FIRE,
 ): Promise<void> {
   // ---- decor props ----
   const uniquePaths = [...new Set(doc.decor.map((d) => d.model))];
@@ -460,9 +488,9 @@ export async function dressArena(
       root.scaling.y *= SIGHTLINE_HEIGHT_CAP / max.y;
       topY = SIGHTLINE_HEIGHT_CAP;
     }
-    if (d.model.includes("torch")) {
+    if (decorModelBurns(fire, d.model) && handles.flames.length < fire.maxEmitters) {
       // ride the POST-squash tip so the flame never floats off a capped torch
-      handles.flames.push(attachFlame(scene, d.x, Math.max(topY * 0.92, 0.5), d.z));
+      handles.flames.push(attachFlame(scene, d.x, Math.max(topY * 0.92, 0.5), d.z, fire));
     } else if (d.model.includes("water")) {
       makeWaterish(root);
     }

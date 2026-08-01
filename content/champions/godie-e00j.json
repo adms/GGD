@@ -173,7 +173,7 @@
       "effects": [
         {
           "kind": "spawnProjectile",
-          "projectileId": "imported.bolt",
+          "projectileId": "imported.bolt.ki",
           "onHit": [
             {
               "kind": "damage",
