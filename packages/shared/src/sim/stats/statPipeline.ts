@@ -15,7 +15,10 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { ALL_STATS, zeroStats, type Stat, type StatBlock } from "./statTypes";
 import { finalizeStat } from "../baseBonus";
-import { championStatBase } from "./attributes";
+import { attackRangeScaleFactor } from "../bodyScale";
+import { addAttrGrants, championStatBase } from "./attributes";
+import { sourceAttrGrants } from "./attrSources";
+import { liveResource } from "./resourceStats";
 import { ModOp, type ModifierSource } from "./modifiers";
 import { Champions } from "../content/registry";
 
@@ -32,7 +35,12 @@ function percentOfTargets(sc: { sources: readonly ModifierSource[] }, tick: numb
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= tick) continue;
     if (!src.modifiers) continue;
     for (const m of src.modifiers) {
-      if (m.op !== ModOp.PercentOf || m.from === undefined) continue;
+      // 兩個來源域:`from` = 另一條屬性(78-00 銅皮鐵骨)、`fromResource` = 當下的
+      // 資源(光魔杖「AP+ (目前MP的 5%)」)。少了第二個判斷,一條資源衍生
+      // modifier 的目的地就不會進第二趟,於是那條加成**永遠是 0** —— 而且
+      // 第一趟的 `switch` 對 `PercentOf` 什麼都不做,所以它會安靜地消失。
+      if (m.op !== ModOp.PercentOf) continue;
+      if (m.from === undefined && m.fromResource === undefined) continue;
       (out ??= new Set<Stat>()).add(m.stat);
     }
   }
@@ -64,6 +72,25 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
   const next = zeroStats();
 
   /**
+   * 三圍 「總」 — the 能力屬性強化 picks on `champ.attrBonus` PLUS every equipped
+   * source's `attributes` grant (四魂之玉「力敏智+30」, 朗基努斯之槍「力量+12
+   * 敏捷+12」). Computed ONCE here rather than inside `computeStat`, which runs
+   * per stat: the fold is identical for all 15 rows, and doing it per row would
+   * walk `sources` fifteen extra times on every dirty recompute.
+   *
+   * It rides the champion's BASE, not the modifier loop below, for the reason
+   * `stats/attributes.ts` gives: an attribute is not a stat. That is also
+   * exactly what makes an item's +30 STR and a 三選一 card's +30 STR the same
+   * number — both land here, both go through `championStatBase`, both pick up
+   * the live `strToMaxHealth` / `agiToAttackSpeed` coefficients. See
+   * `stats/attrSources.ts`.
+   *
+   * A summon has no `ChampionComp` and no inventory, so it keeps
+   * `championStatBase`'s `NO_ATTR_BONUS` default — the pre-#260 arithmetic.
+   */
+  const attrBonus = champ ? addAttrGrants(champ.attrBonus, sourceAttrGrants(sc.sources, world.tick)) : undefined;
+
+  /**
    * 算一條屬性的最終值。`derivedFlat` 是 `ModOp.PercentOf` 在**第二趟**才算得
    * 出來的那一份 flat 加成(第一趟一律 0),它和 `ModOp.Flat` 進同一個位置 ——
    * 「防禦力額外增加攻擊力的 50%」和「防禦力 +11」在管線上是同一種東西,只是
@@ -74,11 +101,11 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
     // BASE, not into the modifier loop below, because an attribute is not a
     // stat: see stats/attributes.ts. Passing it here is the ONE wiring that
     // makes a 能力屬性強化 pick move any number at all.
-    // `champ?.attrBonus` — a SUMMON has none: 三圍 are bought with the player's
-    // own gold in the shop, and a summoned body never went shopping. `undefined`
+    // `attrBonus` — a SUMMON has none: 三圍 are bought with the player's own
+    // gold in the shop, and a summoned body never went shopping. `undefined`
     // takes `championStatBase`'s `NO_ATTR_BONUS` default, i.e. the hero's innate
     // attributes only, which is the pre-#260 arithmetic exactly.
-    const base = championStatBase(def, stat, level, world.combatEnv, champ?.attrBonus);
+    const base = championStatBase(def, stat, level, world.combatEnv, attrBonus);
 
     let flat = derivedFlat;
     let pctAdd = 0;
@@ -133,6 +160,10 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       baseBonus: world.baseBonus,
       caps: world.statCaps,
       capRaise: maxCapRaise,
+      // 身體放大倍數 → 攻擊距離 (GH#252)。`finalizeStat` 只把它套在
+      // `Stat.AttackRange` 上,所以其他 15 條逐位元不變;`def.bodyScale` 缺
+      // (113 位裡的 89 位)時 `attackRangeScaleFactor` 回 1。
+      rangeScale: attackRangeScaleFactor(def.bodyScale, world.bodyScaleRules),
     });
   };
 
@@ -159,8 +190,16 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
         if (!src.modifiers) continue;
         const stacks = src.stacks ?? 1;
         for (const m of src.modifiers) {
-          if (m.op !== ModOp.PercentOf || m.stat !== stat || m.from === undefined) continue;
-          derived += m.value * stacks * next[m.from];
+          if (m.op !== ModOp.PercentOf || m.stat !== stat) continue;
+          // 屬性來源:讀第一趟的**最終**值(過了 env/基礎加成/clamp),也就是
+          // 玩家面板上看到的那個數字。
+          if (m.from !== undefined) derived += m.value * stacks * next[m.from];
+          // 資源來源 (光魔杖「AP+ (目前MP的 5%)」):讀的是**當下**的 hp/mana,
+          // 不是 `next.maxMana` —— 這一條就是 `fromResource` 存在的全部理由。
+          // 重算時機由 `stats/resourceStats.ts` 的 `resourceStatSystem` 負責。
+          else if (m.fromResource !== undefined) {
+            derived += m.value * stacks * liveResource(world, id, m.fromResource);
+          }
         }
       }
       next[stat] = computeStat(stat, derived);

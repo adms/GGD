@@ -94,9 +94,13 @@ describe("config doc + rules resolution (arena-06)", () => {
     // the L50 cap at round 10, so rounds 11+ grant 0 levels and `overflow` is
     // gold-only.
     expect(grantForRound(ARENA, 7)).toMatchObject({ grantLevels: 5, grantGold: 600, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 13)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 14)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 16)).toEqual({ grantLevels: 0, grantGold: 1050, augmentTier: "prismatic" });
+    // owner 2026-08-01: 「第十回合後,每場都是 +4,000金幣」. Rounds 11-13 went
+    // 750 → 4000, and `overflow` went with them (4000 flat, per-round escalation
+    // ZEROED) so 「每場」 stays literal for any round past the authored table
+    // instead of falling off a cliff back to 750 at round 14.
+    expect(grantForRound(ARENA, 13)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 14)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 16)).toMatchObject({ grantLevels: 0, grantGold: 4000, augmentTier: "prismatic" });
 
     // the loaded content registry resolves to the SAME active rules
     expect(resolveArenaRules()).toEqual(ARENA);
@@ -602,21 +606,34 @@ describe("full arena match on the imported roster (arena-10, arena-11)", () => {
  * that repeat rule: flat gold, one augment tier forever, and no landmark of any
  * kind after round 6.
  *
- * The table is now authored out to round 13 — the measured longest match — so
- * `overflow` is a guard rail rather than a design surface. These assertions pin
- * the properties the curve was DERIVED from, not the individual numbers: a
- * number may be retuned, but if a retune breaks one of these it has broken the
- * economy the item ladder (#82), the stat fork and the capstone gate (#104) all
- * sit on.
+ * The table is authored out to round 13, so `overflow` is a guard rail rather
+ * than a design surface. These assertions pin the properties the curve was
+ * DERIVED from, not the individual numbers: a number may be retuned, but if a
+ * retune breaks one of these it has broken the economy the item ladder (#82),
+ * the stat fork and the capstone gate (#104) all sit on.
+ *
+ * ⚠️ 「measured 10-13 rounds」 ABOVE IS STALE, AND SO IS 「round 13 — the measured
+ * longest match」. Those numbers predate the 2026-07-27 ruling that made
+ * `PairedDuels.FINAL_ROUND` the ONLY end condition: `maybeFinish` ends the match
+ * at round 10's resolution, full stop, so a match is exactly 10 rounds and
+ * ROUNDS 11-13 ARE NEVER PLAYED. Re-measured 2026-08-01 by running a full
+ * 12-bot match against shipped content — see the 「③」 block of
+ * `roundGoldOwner.test.ts`, which asserts it rather than describing it, so this
+ * comment cannot rot again without a red test.
+ *
+ * The 11-13 rows are therefore DORMANT DATA (they are what `overflow` and the
+ * table would pay the day the cap moves), which is exactly why the owner's
+ * 2026-08-01 「第十回合後,每場都是 +4,000金幣」 changes nothing a player sees today.
  *
  * MEASURED on 30 seeds x 12 bots through the real MatchController, shipped
- * content (harness removed; re-derive with the numbers in the block comments):
+ * content (harness removed; re-derive with the numbers in the block comments).
+ * ⚠️ The gold figures below are from BEFORE owner's 2026-08-01 edits (round 1
+ * 0 → 750) and are kept only as the historical baseline they were derived at:
  *
- *   rounds        min 10   MED 11   max 13
  *   career gold   MED 10,675   p90 12,325   max 14,325   (a seat alive at the end)
  *   20th stat tick affordable at round: min 7, MED 9, max 10
  *   augment offers 3,495 — 0 empty, 0 under-filled, every tier min width 3
- *   levels        L3 at R1 -> L16 at R11 -> L18 only at R13
+ *   levels        L3 at R1 -> L50 by R10
  */
 describe("the per-round curve (arena-curve)", () => {
   /** grantGold by round, straight off the authored doc. */
@@ -624,9 +641,12 @@ describe("the per-round curve (arena-curve)", () => {
   const levels = (r: number): number => ARENA.rounds.get(r)?.grantLevels ?? 0;
   const LAST = 13;
 
-  it("is authored to round 13, the measured longest match — overflow is a guard rail", () => {
+  it("is authored to round 13 — 3 rounds past the cap, so overflow is a guard rail", () => {
     cover("arena-config-parse");
-    // Every round of a match that can actually happen has an EXPLICIT entry.
+    // ⚠️ TITLE FIXED 2026-08-01: it used to say 「the measured longest match」,
+    // which stopped being true when FINAL_ROUND became the only end condition.
+    // Every round a match can actually reach has an EXPLICIT entry — and the
+    // table goes three rounds FURTHER than that, deliberately.
     for (let r = 1; r <= LAST; r++) {
       expect(ARENA.rounds.get(r), `round ${r} must be authored, not inherited from overflow`).toBeDefined();
     }
@@ -637,9 +657,17 @@ describe("the per-round curve (arena-curve)", () => {
 
   it("gold no longer ramps monotonically — the owner's curve spikes and dips", () => {
     cover("arena-config-parse");
-    // Round 1 grants NO gold: the 600g opening purse is the whole turn-1
-    // decision (two SIMPLE, or bank toward a POWERFUL) and #82 priced it that way.
-    expect(gold(1)).toBe(0);
+    // ROUND 1 PAYS 750 (owner 2026-08-01「開局應該是 750」).
+    //
+    // ⚠️ THE OLD COMMENT HERE WAS 「Round 1 grants NO gold: the 600g opening
+    // purse is the whole turn-1 decision」 — that reading is RETIRED, not merely
+    // re-tuned, so it is rewritten rather than left sitting above a new number
+    // (第三守則). The turn-1 purse is now 600 + 750 = 1,350, which clears
+    // POWERFUL (1,200) before a single round has been fought: the opening
+    // decision is no longer 「two SIMPLE, or save」, it is 「a POWERFUL now」.
+    // That is the owner's call and this line is where a reader finds out.
+    expect(gold(1)).toBe(750);
+    expect(STARTING_GOLD + gold(1)).toBeGreaterThanOrEqual(ITEM_TIER_PRICE.POWERFUL);
     // ROUND 2 IS A DELIBERATE SPIKE ABOVE ROUND 3, the one break in the ramp:
     // it is sized so the first POWERFUL is affordable in the round-2 shop even
     // for a seat that LOST round 1. 600 + roundLose + 450 = exactly 1,200.
@@ -649,10 +677,22 @@ describe("the per-round curve (arena-curve)", () => {
     // spikes on 4 / 8 / 10 and dips back between them, so a player leaves the
     // round-5 shop poorer than they left round 4's. Pinned as SPIKES rather
     // than deleted, so the shape stays a decision instead of drifting.
-    const SPIKES = [4, 8, 10];
+    // ⚠️ ROUND 10 IS NO LONGER A SPIKE-THEN-DIP. owner's 2026-08-01 「第十回合後,
+    // 每場都是 +4,000金幣」 turns everything past round 10 into a PLATEAU that
+    // sits ABOVE round 10's own +3,750 — so the old `gold(r) > gold(r + 1)`
+    // half is now false for r = 10 by design. Split rather than deleted: 4 and 8
+    // are still spikes with dips after them, and 10 is now the step onto the
+    // plateau. A future edit that flattens 4 or 8, or that lets the plateau sag
+    // below 10, still goes red.
+    const SPIKES = [4, 8];
     for (const r of SPIKES) {
       expect(gold(r), `round ${r} is a spike`).toBeGreaterThan(gold(r - 1));
-      if (r < LAST) expect(gold(r), `round ${r} spike dips after`).toBeGreaterThan(gold(r + 1));
+      expect(gold(r), `round ${r} spike dips after`).toBeGreaterThan(gold(r + 1));
+    }
+    expect(gold(10), "round 10 still steps UP off round 9").toBeGreaterThan(gold(9));
+    for (let r = 11; r <= LAST; r++) {
+      expect(gold(r), `round ${r} is on the owner's +4,000 plateau`).toBe(4000);
+      expect(gold(r), `the plateau must not sag below round 10`).toBeGreaterThan(gold(10));
     }
     // Every price in the ladder is a multiple of 25 (the 75g ladder no longer
     // holds: the owner's +1525 / +2750 spikes are not multiples of 75).
@@ -690,8 +730,18 @@ describe("the per-round curve (arena-curve)", () => {
     // ladder may be derived against.
     const ceiling = (n: number): number =>
       STARTING_GOLD + [...Array(n)].reduce((s, _, i) => s + gold(i + 1), 0) + GOLD_REWARDS.roundWin * n;
-    expect(ceiling(11)).toBe(15975); // median match, winning every round
-    expect(ceiling(13)).toBe(18075); // the longest match measured, winning every round
+    // ⚠️ RE-MEASURED after owner's 2026-08-01 gold edits (R1 0→750,
+    // R11-13 750→4000). Both numbers are ARITHMETIC on the authored table, not
+    // observations, so they are recomputed rather than re-run.
+    // ⚠️ AND SEE `roundGoldOwner.test.ts`: rounds 11-13 are NOT REACHABLE —
+    // `PairedDuels.FINAL_ROUND` is 10 and `maybeFinish` ends the match at its
+    // resolution. `ceiling(11)`/`ceiling(13)` are therefore ceilings on a match
+    // length the format does not produce today; the reachable ceiling is
+    // `ceiling(10)`. Kept (rather than dropped to 10) because they are what
+    // `overflow` + the authored 11-13 rows would pay the day the cap moves.
+    expect(ceiling(10)).toBe(15675); // EVERY round of a real match, winning all of them
+    expect(ceiling(11)).toBe(19975);
+    expect(ceiling(13)).toBe(28575);
     expect(
       ceiling(LAST),
       "owner 2026-07-27: both paths ARE affordable now — if this ever goes back " +
@@ -701,9 +751,14 @@ describe("the per-round curve (arena-curve)", () => {
 
   it("the 20th stat tick first becomes affordable in the round-8 shop", () => {
     cover("arena-config-parse");
-    // MEASURED, not assumed: with the owner's 2026-07-27 curve the all-wins
-    // deterministic purse first clears 7,500 in the ROUND-8 shop (round 6 is
-    // 5,575, round 7 is 6,475, round 8 is 9,525 — the +2750 spike does it).
+    // MEASURED, not assumed: with the owner's curve the all-wins deterministic
+    // purse first clears 7,500 in the ROUND-8 shop.
+    // ⚠️ RE-COMPUTED 2026-08-01 (round 1 went 0 → 750, so every purse below is
+    // 750 richer than the numbers this comment used to carry): round 6 is 6,325,
+    // round 7 is 7,225, round 8 is 10,275 — the +2750 spike still does it, and
+    // the round-7 purse still misses by 275g. The gate ROUND did not move, but
+    // its margin did, so the old 5,575 / 6,475 / 9,525 are recorded as retired
+    // rather than silently overwritten (第三守則).
     //
     // ⚠️ CAPSTONE_ROUND_GATE still reads 6, so the gate is now LOOSER than the
     // economy: rounds 6-7 can no longer afford the capstone anyway, which makes

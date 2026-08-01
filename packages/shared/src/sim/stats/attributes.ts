@@ -166,6 +166,80 @@ export function zeroAttrBonus(): AttrBonus {
 
 export const NO_ATTR_BONUS: AttrBonus = { str: 0, agi: 0, int: 0 };
 
+/**
+ * 三圍 a **ModifierSource** grants while it is attached — an item's 「力敏智+30」.
+ *
+ * Partial and readonly on purpose. Partial because 朗基努斯之槍 grants 力/敏 and
+ * says nothing about 智, and an explicit `int: 0` would be a number somebody
+ * later "fixes"; readonly because it is handed straight off the shared
+ * `ItemDef` in the content registry — TWO champions holding the same weapon
+ * read the same object, so a mutating helper here would corrupt the catalogue
+ * for everybody.
+ */
+export type AttrGrant = Readonly<Partial<Record<AttrKey, number>>>;
+
+/**
+ * WHICH 三圍 a reader means (and the source map distinguishes the two ITSELF —
+ * this is not a GGD invention).
+ *
+ * `war3mapMisc`-era Blizzard JASS spells it `GetHeroStatBJ(stat, unit, includeBonuses)`
+ * and the extracted spell dumps under `tools/w3x-import/out/GoDieEX22s/jass-spells/`
+ * use BOTH values on purpose:
+ *
+ *   · `…,true)`  — 「總力量」: base + everything equipped. 87 of the extracted
+ *     call sites are damage formulas (`I2R(GetHeroStatBJ(0,u,true))*9.` and
+ *     friends), i.e. what the weapon's own tooltip means by 總.
+ *   · `…,false)` — base ONLY, no items. This is the form 蒼月潮 07-00 獸化心靈's
+ *     hidden ceiling uses (`GetHeroStatBJ(1,GetKillingUnit(),false)<$8C` — 120),
+ *     and it is the reason an item CANNOT switch off that innate.
+ *
+ * GGD's two accumulators line up with WC3's two exactly, and that is why the
+ * mapping is a definition rather than a guess:
+ *   · `ChampionComp.attrBonus`  ← 三選一 picks and `grantAttribute` — WC3
+ *     `ModifyHeroStat`, which moves the hero's **base** stat. → `"base"`.
+ *   · `ModifierSource.attributes` ← equipment. → only in `"total"`.
+ */
+export type AttrBasis = "base" | "total";
+
+/**
+ * BOUNDS for one authored 三圍 grant on one item (`item@1.attributes.*`).
+ *
+ * Floor 0: every 三圍 line in the owner's 49 legendary weapons is a GRANT
+ * (力敏智+30, 力量+12). A negative one is expressible in WC3 and may well be
+ * wanted for a cursed item later, but it must not arrive by accident: attack
+ * speed is the one MULTIPLICATIVE row (`base × (1 + agiToAttackSpeed·AGI)`), so
+ * a sign error big enough to drive total AGI below −50 silently drops a
+ * champion's attack speed to (and past) zero with nothing on screen to explain
+ * it. Raising the floor is one number and a guard change, knowingly.
+ *
+ * Ceiling {@link ATTR_GRANT_MAX}: the mis-parse this catches is a raw w3x
+ * ability field or a ×100 typo — 「力敏智+30」 typed as 3000 would, at the
+ * SHIPPED coefficients, hand one item +69,000 raw max health before the
+ * `maxHealth` env multiplier. 500 is ~16× the largest authored line, so it
+ * cannot bite a real design, and it is far below any un-normalised number.
+ */
+export const ATTR_GRANT_MIN = 0;
+export const ATTR_GRANT_MAX = 500;
+
+/**
+ * `base` + every attached source's grant, as one {@link AttrBonus}.
+ *
+ * Pure and allocation-free when `grants` is empty — which is every champion in
+ * every match that has not equipped one of the (currently two) items that grant
+ * 三圍, so `recomputeStats` pays nothing for a feature it is not using.
+ */
+export function addAttrGrants(base: AttrBonus, grants: readonly AttrGrant[]): AttrBonus {
+  if (grants.length === 0) return base;
+  const out: AttrBonus = { str: base.str, agi: base.agi, int: base.int };
+  for (const g of grants) {
+    for (const k of ATTR_KEYS) {
+      const v = g[k];
+      if (typeof v === "number" && Number.isFinite(v)) out[k] += v;
+    }
+  }
+  return out;
+}
+
 /** How one stat draws on one attribute. */
 export interface AttrStatSource {
   readonly attr: AttrKey;
@@ -206,6 +280,13 @@ export interface AttributeCarrier {
   readonly baseStats: Partial<StatBlock>;
   readonly growth: Partial<StatBlock>;
   readonly attributes?: ChampionAttributes;
+  /**
+   * 身體放大倍數 (GH#252)。這個檔案的任何一個函式都**不讀它** —— 它宣告在這裡
+   * 只是因為 `ui/championSheet.ts` 拿 `AttributeCarrier` 當「一張英雄卡」的型別,
+   * 而那張卡要把體型餵進 `finalizeStat` 的 `rangeScale`,否則面板印的攻擊距離
+   * 是卡面值而伺服器給的是放大過的(#125)。缺 = 1.0。
+   */
+  readonly bodyScale?: number;
 }
 
 /*

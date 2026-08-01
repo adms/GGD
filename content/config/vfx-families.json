@@ -7,6 +7,10 @@
   "scaleMax": 3,
   "maxAbilityVfxLayers": 5,
   "oneShotMaxLifeSec": 0.6,
+  "castHeightSource": "ground",
+  "projectileArtFromDoc": true,
+  "projectileRadiusGain": 1,
+  "projectileFlyHeightY": 1,
   "families": {
     "shockwaveRing": {
       "enabled": true,

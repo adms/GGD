@@ -173,6 +173,26 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
       case "damage":
         damage += scalingMax(e.amount);
         break;
+      // 持續傷害 IS DAMAGE (GH#250). `dot` landed after this formula was
+      // written (GH#289 lane P1) and was never added here, so an ability that
+      // delivers its payload as a burn read as `damage: 0` and collapsed down
+      // the ladder — the exact failure the module's own docstring warns about
+      // for `leap.onLand`, one primitive later. Counted as the WHOLE burn
+      // (payouts × per-payout), because that is what the victim loses and the
+      // `damage` term is normalised against total max-rank damage.
+      //
+      // PAYOUT COUNT mirrors `sim/effects/dotTick.ts` exactly: the deadline is
+      // INCLUSIVE and `tickOnApply` is off by default, so payouts land at
+      // 1·interval … N·interval with N = floor(duration/interval); the
+      // `tickOnApply` form adds the cast-tick payout on top.
+      case "dot": {
+        const payouts =
+          Math.floor(e.durationSec / e.intervalSec + 1e-9) + (e.tickOnApply === true ? 1 : 0);
+        damage += scalingMax(e.amountPerTick) * Math.max(1, payouts);
+        // A burn is a timed effect like any other, so it feeds CEILING B too.
+        effectDuration = Math.max(effectDuration, e.durationSec);
+        break;
+      }
       case "heal":
         heal += scalingMax(e.amount);
         break;

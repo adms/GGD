@@ -85,6 +85,16 @@ import { summonEffect } from "./summon"; // P2 召喚物 — lifecycle half in .
 // ── reserved slots (GH#289) — schema-known, registry-slotted, LOUDLY unimplemented
 import { evasionEffect } from "./evasion";
 
+// ── 嘲弄 / 煉金術 (鍊金術之盾 godie-i06q) ────────────────────────────────────
+import { tauntEffect } from "./taunt"; // 強制索敵 — model + config in ../taunt.ts
+import { grantGoldEffect } from "./grantGold"; // 「黃金數量為敵方等級」
+
+// ── 復活 (天生牙 godie-i031) ─────────────────────────────────────────────────
+// Delegates the STATE CONTRACT to `sim/revive.ts::reviveChampionAt`, the same
+// function the 復活圈 (#84/#206) completes through — so this is a new way to
+// TRIGGER a revive, never a second definition of what a revived champion is.
+import { reviveEffect } from "./revive";
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -125,6 +135,18 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   summon: summonEffect,
   // ── landed: lane P3 無敵/免疫 (SimWorld.invulnerable; NO system — 到期即失效) ──
   invulnerable: invulnerableEffect,
+
+  // ── 嘲弄 (鍊金術之盾) — forces auto-targeting through the ONE seam
+  //    `targeting.forcedTargetOf`; state + every decision field in sim/taunt.ts.
+  taunt: tauntEffect,
+  // ── 發放金幣, optionally × the victim's level (「黃金數量為敵方等級」).
+  //    ⚠️ Pays at PROC time, not at kill confirmation — see ./grantGold.ts.
+  grantGold: grantGoldEffect,
+
+  // ── 復活 (天生牙 godie-i031) — this handler decides WHO / WHERE / WHETHER;
+  //    the state contract («what a revived champion looks like») is the
+  //    circle's own `sim/revive.ts::reviveChampionAt`. See ./revive.ts.
+  revive: reviveEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)

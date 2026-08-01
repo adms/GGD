@@ -16,24 +16,41 @@ import type {
   ConfigAmbientVfxDoc,
   ConfigGoreDoc,
   ConfigStealthDoc,
+  ConfigDamageColorsDoc,
   ConfigVfxFamiliesDoc,
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
   FormVisual,
   AmbientVfxBinding,
+  ArenaFire,
 } from "@ggd/shared/content";
-import { Arenas, Configs, Models, RibbonDefs, VfxDefs, resolveFormVisual } from "@ggd/shared/content";
+import {
+  Arenas,
+  Configs,
+  Models,
+  RibbonDefs,
+  VfxDefs,
+  resolveArenaFire,
+  resolveFormVisual,
+} from "@ggd/shared/content";
 import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
 import { applyGoreDoc } from "../vfx/goreConfig";
 // 隱形原語 —— 同一條縫、同一個理由:沒有這一行,`content/config/stealth.json` 就是
 // 一份沒人讀的檔案,後台改了兩個不透明度/血條開關,場上完全不會變(第②號故障)。
 // 傳 null(檔案不存在或 schema 不合)= 用 `DEFAULT_STEALTH_RULES`,不是「關掉」。
 import { applyStealthDoc } from "../render/stealthVisual";
+// 傷害數字配色 (owner 2026-08-01) —— 同一條縫、同一個理由:少了這一行,
+// `content/config/damage-colors.json` 就是一份沒人讀的檔案,後台把「真實傷害」
+// 改成別的顏色,場上永遠是出貨的白(第②號故障:算出來但從沒送到)。
+// 傳 null(檔案不存在或 schema 不合)= 用出貨的四色,不是「沒有顏色」。
+import { applyDamageColorsDoc } from "../render/damagePalette";
 // GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
 // render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
 import { setMaxAbilityVfxLayers } from "../render/vfx/abilityLayers";
 import { setOneShotMaxLifeSec } from "../vfx/oneShotLife";
+import { setCastHeightSource } from "../render/vfx/familyCastHeight";
+import { setProjectileTuning } from "../render/views/projectileArt";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
 
@@ -235,6 +252,9 @@ export class ContentDb {
     // (blood @ 0.85) — the player's own setting still wins over both.
     applyGoreDoc(this.configDoc<ConfigGoreDoc>("gore", "config.gore@1"));
     applyStealthDoc(this.configDoc<ConfigStealthDoc>("stealth", "config.stealth@1"));
+    applyDamageColorsDoc(
+      this.configDoc<ConfigDamageColorsDoc>("damage-colors", "config.damage-colors@1"),
+    );
     // GH#230 L2 —— 21 個 w3x 特效家族原型 + 258 支技能的 per-invocation 參數。
     // 沒有這一行,`content/config/vfx-families.json` 就是一份沒人讀的檔案:
     // 後台改了大小/顏色/開關,場上完全不會變(第②號故障:算出來但從沒送到)。
@@ -251,6 +271,25 @@ export class ContentDb {
     // 同樣是第②號故障的位置:少了這一行,後台把 0.6 調成 2.0 之後 schema 收下了、
     // 頁面顯示 2.0、而 `VfxSystem` 仍然照 0.6 夾。傳 undefined = 出貨的 0.6。
     setOneShotMaxLifeSec(vfxFamiliesDoc?.oneShotMaxLifeSec);
+    // #251 owner「衝擊波特效沒有真實套用」—— 施法高度模式。同一個位置、同一種
+    // 第②號故障:少了這一行,後台把模式切回 `flat` 之後場上仍然貼地。
+    setCastHeightSource(vfxFamiliesDoc?.castHeightSource);
+    // #251 owner「投射物特效沒有真實套用」—— 飛行彈道的三格旋鈕。
+    setProjectileTuning(
+      vfxFamiliesDoc
+        ? {
+            ...(vfxFamiliesDoc.projectileArtFromDoc !== undefined
+              ? { artFromDoc: vfxFamiliesDoc.projectileArtFromDoc }
+              : {}),
+            ...(vfxFamiliesDoc.projectileRadiusGain !== undefined
+              ? { radiusGain: vfxFamiliesDoc.projectileRadiusGain }
+              : {}),
+            ...(vfxFamiliesDoc.projectileFlyHeightY !== undefined
+              ? { flyHeightY: vfxFamiliesDoc.projectileFlyHeightY }
+              : {}),
+          }
+        : undefined,
+    );
 
     // GH#31 —— the operator's per-champion BODY choice (voxel vs its own 3D
     // model). Read from the `config` collection, not from a sidecar, precisely
@@ -439,6 +478,15 @@ export class ContentDb {
   /** Ambient attachment bindings for a modelKey ([] when none authored). */
   ambientBindingsFor(modelKey: string): readonly AmbientVfxBinding[] {
     return this.ambientVfx?.bindings[modelKey] ?? NO_BINDINGS;
+  }
+
+  /**
+   * 場地布景道具的常駐火焰政策（GH#251）。文件缺席／沒有這個區塊時回傳
+   * `DEFAULT_ARENA_FIRE`（`enabled: false`）—— 內容載不到的那條路**不可以**
+   * 把 owner 明說要拿掉的火又點回來。`dressArena` 是唯一的消費者。
+   */
+  arenaFire(): ArenaFire {
+    return resolveArenaFire(this.ambientVfx);
   }
 
   get arena(): ArenaDoc | null {

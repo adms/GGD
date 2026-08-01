@@ -68,6 +68,12 @@ export {
 } from "./stats/statPipeline";
 export { visualStackCount } from "./stats/visualStacks";
 export {
+  resourceStatSystem,
+  liveResource,
+  resourceSignature,
+  hasResourceModifier,
+} from "./stats/resourceStats";
+export {
   auraSystem,
   auraSourceId,
   resolveAuraRadius,

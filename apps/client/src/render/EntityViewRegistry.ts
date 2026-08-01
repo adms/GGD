@@ -184,6 +184,15 @@ export interface ViewContentHooks {
   /** 3D body shape of the flying missile (projectile@1 `meshShape`). */
   projectileMeshShapeFor?(projectileKey: string): ProjectileMeshShape | null;
   /**
+   * #251 —— this missile's own `projectile@1.hitRadius`, which drives how big
+   * it renders (`config.vfx-families@1.projectileRadiusGain`).
+   *
+   * Absent ⇒ the reference radius, i.e. every missile the same size — which is
+   * exactly the shipped-before-#251 picture: a 0.9-radius PIERCING wave and a
+   * 0.4-radius basic attack drew the identical comet.
+   */
+  projectileHitRadiusFor?(projectileKey: string): number | null;
+  /**
    * w3x vertex tint + alpha for a champion entity (task #49). The registry
    * CANNOT resolve this itself: the entity → championId step needs the seat
    * table, which lives in the HUD store, and client-08 keeps render/** out of
@@ -715,6 +724,7 @@ export class EntityViewRegistry {
           view.activate(
             this.content.projectileVfxFor?.(e.key) ?? null,
             this.content.projectileMeshShapeFor?.(e.key) ?? "bolt",
+            this.content.projectileHitRadiusFor?.(e.key) ?? undefined,
           );
           this.projectiles.set(e.id, view);
         }

@@ -98,6 +98,22 @@ export interface W3xAbilityArt {
    */
   readonly alpha?: number;
   readonly timeScale?: number;
+  /**
+   * #251 —— 這一招要播在離地多高（世界單位），家族原型的基準高度疊上原圖
+   * `SetUnitFlyHeight` 之後的結果。
+   *
+   * ⚠️ 這一行以前不存在，所以 `resolveFamilyArt()` 算好的 `heightY` 在
+   * `familyRow()` 那一行**蒸發** —— 和上面 α / 時間倍率同一個形狀的第②號故障，
+   * 只是空間那兩格（`heightY` / `anchor`）當時還沒修。實測（2026-08-01，
+   * 91 支 `shockwaveRing` → 105 個 emitter）世界 Y 的直方圖是單獨一格 `{1.0}`，
+   * 而 config 要的是 0.15：**貼地的環全部浮在胸口**。
+   *
+   * `W3X_ABILITY_ART` 那 34 支硬表晉升沒有這一格（它們沒有家族原型，也就沒有
+   * 「應該多高」這個答案），`familyCastHeightY` 對 absent 一律回平面高度。
+   *
+   * `anchor` 仍然是死的 —— 見 `DEAD_FAMILY_KNOBS`。
+   */
+  readonly heightY?: number;
 }
 
 export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
@@ -459,6 +475,10 @@ function familyRow(abilityId: string): W3xAbilityArt | undefined {
     // α / 時間倍率在這一行蒸發。ABSENT ≠ 1:沒設就不寫,下游走 identity。
     ...(resolved.alpha !== undefined ? { alpha: resolved.alpha } : {}),
     ...(resolved.timeScale !== undefined ? { timeScale: resolved.timeScale } : {}),
+    // #251 —— 空間那一格。同一行、同一個第②號故障:少了它,`resolveFamilyArt`
+    // 每一支都算出來的 `heightY` 在這裡蒸發,91 支貼地的衝擊波環全部浮在
+    // y=1.0。**要不要採用**是 `familyCastHeightY` 讀 config 決定的,不是這裡。
+    heightY: resolved.heightY,
   };
   familyRowCache.set(abilityId, row);
   return row;

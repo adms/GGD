@@ -90,6 +90,7 @@ import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championBodyHooks, type ChampionBodyHooks } from "./render/views/championBody";
 import { formAttachmentSpecFor } from "./render/views/formVisual";
 import { entityTintFor } from "./render/views/mobTint";
+import { mobRingDiameterFor } from "./render/views/mobGroundRing";
 import {
   MOB_VISUAL_DEFAULT,
   parseMobVisualJson,
@@ -573,6 +574,9 @@ export class GameApp {
         return def?.vfxKey ? this.contentDb.vfxFor(def.vfxKey) : null;
       },
       projectileMeshShapeFor: (key) => Projectiles.tryGet(key as ProjectileId)?.meshShape ?? null,
+      // #251 —— 打得到多寬要看得見。同一份 `projectile@1` 文件,同一個 registry,
+      // 所以畫面上的體積和 sim 真的用的 `hitRadius` 不可能漂開。
+      projectileHitRadiusFor: (key) => Projectiles.tryGet(key as ProjectileId)?.hitRadius ?? null,
       // w3x vertex tint (task #49). The seat table lives in the HUD store, and
       // render/** may not read it (client-08), so the entity → champion step
       // happens here — the same `championIdForSeat` the model resolve uses.
@@ -595,6 +599,12 @@ export class GameApp {
       // 設定),不是決策。
       championTintFor: (e) =>
         entityTintFor(e, this.mobVisual.tintStrength, () => this.championBody.championTintFor(e)),
+      // #247 「殭屍王底下圈圈會比較大」 —— same seam, same reason as the tint one
+      // directly above: `this.mobVisual` is the LIVE 後台 table off
+      // `MatchState.mobVisualJson`, and render/** cannot reach the net layer.
+      // MOBS ONLY: a champion keeps `ChampionView`'s own ring, which is the
+      // team-identity affordance #231 flags as the highest-risk surface to touch.
+      groundRingDiameterFor: (e) => mobRingDiameterFor(e, this.mobVisual),
       // #249 GH#288 —— 變身球體掛件(悟空的超三頭)。同一條 entity → championId
       // 縫,經由 championBody 的 `formVisualFor`(它自己就是形態感知的)。
       formAttachmentFor: (e) =>
@@ -1049,7 +1059,18 @@ export class GameApp {
         frameBus.arenaId = def.id;
         this.appliedMapId = mapId;
         this.applyingMapId = null;
-        if (doc) void dressArena(this.renderer.scene, this.assets, def, doc, this.arenaHandles);
+        // 第 6 個參數是 GH#251 的場地環境火焰政策。少了它 `dressArena` 會退回
+        // `DEFAULT_ARENA_FIRE`(也是關的),但後台就永遠調不動這一格 ——
+        // 那正是第②號故障:後台存了,場上一輩子讀不到。
+        if (doc)
+          void dressArena(
+            this.renderer.scene,
+            this.assets,
+            def,
+            doc,
+            this.arenaHandles,
+            this.contentDb.arenaFire(),
+          );
       })
       .catch(() => {
         if (this.applyingMapId === mapId) this.applyingMapId = null;
@@ -2388,6 +2409,18 @@ export class GameApp {
     if (!state) return [];
     const units: PickableUnit[] = [];
     state.entities.forEach((es) => {
+      // ZONE CULL — the FIFTH consumption point (the other four are
+      // onStatePatch / collectEntities / renderFrame / updateFrameBus).
+      // Without it this list carries the other duel zone's champions and its
+      // guardian, i.e. units the player cannot see: they have no view, so
+      // `posOf` below misses and the raw snapshot x/z is used instead. That
+      // makes them silently targetable by the GAMEPAD aim assist
+      // (`pickNearestUnit`, GameApp.ts ~815) and by touch auto-acquire. The
+      // 80u zone separation makes it hard to reach today, but "hard to reach"
+      // is a geometry accident, not an invariant — the invariant is that
+      // nothing the player cannot see is a target. Also strictly less work per
+      // pick.
+      if (!this.visibleZones.has(es.zone)) return;
       // Champions AND the neutral objectives (harvest flower, guardian tower)
       // are attackable targets the sim already accepts orders against — a human
       // must be able to click / attack-move / auto-acquire them too, not just
@@ -3000,6 +3033,10 @@ export class GameApp {
           worldX: kp.x,
           worldZ: kp.z,
           hpPct: king.maxHp > 0 ? king.hp / king.maxHp : 0,
+          // #247 長血條 —— the RAW numbers as well as the fraction. See
+          // `MobBossMarker` for why a percentage alone is not enough.
+          hp: king.hp,
+          maxHp: king.maxHp,
         };
       }
     }

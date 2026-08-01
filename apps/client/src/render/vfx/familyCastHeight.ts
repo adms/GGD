@@ -1,79 +1,109 @@
 /**
- * 施法特效播在離地多高 —— **一個有名字的接縫，取代四個匿名的 `1.0`** (#230).
+ * 施法特效播在離地多高 —— **一個有名字的接縫，取代四個匿名的 `1.0`** (#230)，
+ * 現在**真的接上去了** (owner #251「衝擊波特效沒有真實套用」)。
  *
  * ---------------------------------------------------------------------------
- * 為什麼一個常數值得一個檔案
+ * 動手前量到的東西（不是讀註解，是跑真的渲染器）
  * ---------------------------------------------------------------------------
- * `VfxSystem.playCastVfx` 的四條分支（家族 rig / pooled 文件 / `fx.prim.*` 退路 /
- * 單值 `vfxKey`）都把 `1.0` 直接寫在呼叫參數上。沒有人挑過這個數字 —— 它是
- * `VfxSystem.play()` 的預設高度，因為施法路徑從來沒有把「這一招應該多高」送進來。
+ * 2026-08-01，把出貨的 `content/config/vfx-families.json` 餵給真的
+ * `VfxSystem.handleEvent`，對 `W3X_FAMILY_ART` 裡**全部 91 支 `shockwaveRing`**
+ * 各發一次施法事件，從 Babylon 讀回每一個 `ParticleSystem` 的 emitter 世界座標：
  *
- * 而**高度是算得出來的**：`resolveFamilyArt()` 對每一支家族技能都算出一個
- * `heightY`（家族原型的基準高度，再疊上原圖 `SetUnitFlyHeight` 的覆寫），然後
- * `familyRow()` 把 `ResolvedFamilyArt` 塞進 `W3xAbilityArt` 時，那個介面**沒有這個
- * 欄位**，於是值在那一行蒸發 —— 第②號故障，和 2026-07-30 修掉的 alpha /
- * timeScale 是同一個形狀，只是 `heightY` / `anchor` 這兩個**空間**欄位還沒修。
- * 後台 `apps/admin/src/vfxForge.ts` 的 `DEAD_FAMILY_KNOBS` 白紙黑字列著它們。
+ *   · 91 支畫出 105 個 `ParticleSystem`
+ *   · emitter 世界 Y 的直方圖是**單獨一格**：`{ 1.0: 105 }`
+ *   · 而出貨 config 對這個家族寫的是 `heightY: 0.15`
+ *
+ * 也就是：owner 說的「衝擊波特效沒有真實套用」**成立，但不是因為特效不存在**。
+ * 衝擊波環存在、綁上了、每一支都在噴粒子 —— 它被畫在**胸口高度**，而它是一個
+ * 「地面向外擴的環」。整張家族表 258 列裡有 216 列的設定高度不是 1.0。
+ *
+ * 為什麼會這樣：`resolveFamilyArt()` 每一支都算得出 `heightY`，然後
+ * `familyRow()` 把 `ResolvedFamilyArt` 塞進 `W3xAbilityArt` 時，**那個介面沒有
+ * 這個欄位**，值在那一行蒸發 —— 第②號故障。後台
+ * `apps/admin/src/vfxForge.ts` 的 `DEAD_FAMILY_KNOBS` 白紙黑字列著它。
  *
  * ---------------------------------------------------------------------------
- * ⚠️ 這裡**沒有**改變任何畫面 —— 落差有多大是量到的，不是估的
+ * 接法：一個欄位，三個值，不是一個 `if`
  * ---------------------------------------------------------------------------
- * 2026-07-30，把出貨的 `content/config/vfx-families.json` 餵給真的
- * `VfxSystem.handleEvent`、對 `W3X_FAMILY_ART` 的**全部 258 列**各發一次施法事件，
- * 從 Babylon 讀回每一個 `ParticleSystem` 的 emitter 世界座標：
+ * 「要不要接」本身是決策點，所以它是 `config.vfx-families@1.castHeightSource`
+ * 的一格（第一守則）。三個值的語意與**為什麼出貨值是 `ground`** 寫在
+ * `CAST_HEIGHT_SOURCES`（`packages/shared/src/content/schema/vfx.ts`）上面。
+ * 一句話版本：`ground` 只讓**想往下**的家族往下，往上那一半（雷擊 3.2、流星
+ * 3.5）維持平面，因為往下不可能飛出構圖，往上是 owner 還沒看過的視覺變更。
  *
- *   · 258 列全部畫得出來（0 列生不出粒子），共 342 個 `ParticleSystem`
- *   · emitter 世界 Y 的直方圖是**單一一格**：`{ 1.0: 342 }`
- *   · 而 `resolveFamilyArt()` 算出來的 `heightY` 有 **229 列不是 1.0**：
- *
- *       shockwaveRing  91 支  想要 0.15（貼地的環）→ 畫在 1.0（浮空 0.85）
- *       burst          34 支  想要 0.9          → 1.0
- *       flamePillar    15 支  想要 0.1          → 1.0
- *       mark           13 支  想要 2.172        → 1.0
- *       dissipate      10 支  想要 0.9          → 1.0
- *       resurrect      10 支  想要 0.1          → 1.0
- *       lightColumn     8 支  想要 0.1          → 1.0
- *       resurrect       7 支  想要 1.272        → 1.0
- *       cloud           6 支  想要 1.2          → 1.0
- *       boltStrike      6 支  想要 3.2（從天而降）→ 1.0（胸口高度）
- *       …其餘 29 支（groundDust / shine / breath / portal / levelUp / tornado /
- *          uncategorised / mirrorImage / blink / missile）
- *
- *   （分母 258 = `W3X_FAMILY_ART` 的列數；229/258 = 88.8%。全部是量到的值，
- *     沒有一個是估的。原始量測檔：`/private/tmp/vfxfam/probe-all-258.json`。）
- *
- * **接上去 = 一次改動 229 支技能在畫面上的高度。** 那是要用眼睛驗收的視覺變更，
- * 一條看不到畫面的 lane 不該自己決定 —— 所以這個檔案**只是把那個數字命名**，
- * 出貨行為一位元不差。決定要不要接，改的是下面這一個函式，一行。
+ * ⚠️ 一起改掉的第二件事：EX 施法除了技能美術之外還會補一發
+ * `VfxSystem.layeredPop(...,"ex",...)` 的打擊感火花。它以前吃 `HitSpark` 的
+ * 預設 y=1.0，所以家族高度一接上去，兩層就會在畫面上脫開 ——
+ * `familyCastOnScreen.test.ts` 的檔頭早就把這個後果寫下來了。現在
+ * `playCastVfx` 把同一個 `castY` 傳給它。
  *
  * ---------------------------------------------------------------------------
  * 這個接縫買到什麼
  * ---------------------------------------------------------------------------
- * `familyCastOnScreen.test.ts` 斷言的是「**渲染器宣稱的高度 == Babylon 真的拿到的
- * 高度**」。今天兩邊都是 1.0，測試綠；哪天有人把 `familyCastHeightY` 改成讀
- * `art.heightY`，這條測試會逼他證明那個值真的到得了引擎，而不是又在某個介面上
- * 蒸發一次。也就是說：②號故障在這條路上從此是**結構上不可能**的，而不是靠人記得。
+ * `familyCastOnScreen.test.ts` 斷言的是「**渲染器宣稱的高度 == Babylon 真的拿到
+ * 的高度**」。它現在守的是一個真的會動的值：把 `familyCastHeightY` 改成回
+ * `SHIPPED_CAST_HEIGHT_Y` 而 rig 那邊不動，兩邊仍然相等所以綠 —— 所以那條測試
+ * **不是**這次改動的守衛；`castHeightApplied.test.ts` 才是（它量的是「地面家族
+ * 的 emitter 真的比平面低」）。兩條一起才蓋得住②號故障的兩半。
  */
+import {
+  DEFAULT_CAST_HEIGHT_SOURCE,
+  resolveCastHeightSource,
+  type CastHeightSource,
+} from "@ggd/shared/content/schema/vfx";
 import type { W3xAbilityArt } from "./w3xAbilityArt";
 
+export { DEFAULT_CAST_HEIGHT_SOURCE };
+export type { CastHeightSource };
+
 /**
- * 出貨的施法高度（世界單位）。
+ * 平面施法高度（世界單位）—— `"flat"` 模式下每一支技能的高度，也是其他兩個
+ * 模式的**基準線**（`"ground"` 拿它當「往下才算」的門檻）。
  *
  * 1.0 ≈ 一位 1.7 單位高的英雄的胸口。這個值不是美術挑的，是
- * `VfxSystem.play()` 的預設值 —— 見檔頭。動它等於同時平移**每一支**技能的施法
- * 特效（家族的 258 支 + `fx.prim.*` 的那幾百支），所以它有名字。
+ * `VfxSystem.play()` 的預設值 —— 見檔頭。
  */
 export const SHIPPED_CAST_HEIGHT_Y = 1.0;
 
 /**
+ * 出得了畫面的高度範圍。下界不是 0：emitter 剛好在 0 的粒子有一半在地板下
+ * （第①號故障）。上界 8 = 戰鬥鏡頭下英雄頭頂再上去四個身高，
+ * 和 `familyCastOnScreen.test.ts` 的 `CEILING_Y` 是同一條線。
+ *
+ * 夾子存在是因為 `resolveFamilyArt` 會把後台的家族 `heightY`（0–8）加上原圖
+ * `SetUnitFlyHeight`（−2000–2000 WC3 單位）的差值，兩格都在界內時和仍可能出界。
+ */
+export const MIN_CAST_HEIGHT_Y = 0.05;
+export const MAX_CAST_HEIGHT_Y = 8;
+
+let activeSource: CastHeightSource | undefined;
+
+/**
+ * 裝上（或清掉）後台的高度模式。傳 `undefined` = 回到出貨值。
+ * 由 `ContentDb.load()` 呼叫，和 `setFamilyTuning` / `setOneShotMaxLifeSec`
+ * 同一條路、同一份 `config.vfx-families@1`。
+ */
+export function setCastHeightSource(v: string | undefined): void {
+  activeSource = v === undefined ? undefined : resolveCastHeightSource(v);
+}
+
+/** 現在生效的模式（後台的值，沒設過就是出貨值）。 */
+export function castHeightSource(): CastHeightSource {
+  return activeSource ?? DEFAULT_CAST_HEIGHT_SOURCE;
+}
+
+/**
  * 這一次施法要播在哪個世界高度。
  *
- * 今天：永遠是出貨值。`art` 已經傳進來了，所以「改成讀 `art.heightY`」是**這一
- * 個函式裡的一行**，不是一次跨四個檔案的手術 —— 那正是這個接縫的用途。
- *
- * ⚠️ 不要在這裡「順手」接上 `heightY`。接上去是一個**視覺**決定（229 支，最大位移
- * 2.2 世界單位），要 owner 看過畫面才算數；檔頭有全部的量測數字可以直接拿去問。
+ * `art` 沒有 `heightY`（`W3X_ABILITY_ART` 那 34 支硬表晉升、或根本沒晉升的技能）
+ * 一律走平面高度 —— 那些列沒有家族原型，也就沒有「這一招應該多高」這個答案。
  */
-export function familyCastHeightY(_art: W3xAbilityArt | undefined): number {
-  return SHIPPED_CAST_HEIGHT_Y;
+export function familyCastHeightY(art: W3xAbilityArt | undefined): number {
+  const want = art?.heightY;
+  if (want === undefined || !Number.isFinite(want)) return SHIPPED_CAST_HEIGHT_Y;
+  const mode = castHeightSource();
+  if (mode === "flat") return SHIPPED_CAST_HEIGHT_Y;
+  // `ground` = 只採用「比平面低」的那一半（貼地的環/塵土/火柱/光柱）。
+  if (mode === "ground" && want >= SHIPPED_CAST_HEIGHT_Y) return SHIPPED_CAST_HEIGHT_Y;
+  return Math.min(MAX_CAST_HEIGHT_Y, Math.max(MIN_CAST_HEIGHT_Y, want));
 }

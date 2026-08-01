@@ -29,6 +29,7 @@ import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
+import { BossHealthBar } from "./hud/BossHealthBar";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -262,6 +263,10 @@ export function HudRoot(): React.JSX.Element {
               doubling. Owns its own combat gate and placement
               (hud/mobBossModel), and returns null when there is no room. */}
           <MobBossOverlay />
+          {/* #247 —— 殭屍王長血條。掛在 MobBossOverlay **之後**只是 DOM 順序;
+              誰蓋誰是 `bossHealthBarSpec` / `mobBossRect` 算出來的矩形決定的,
+              兩個都 `position: absolute` + 同一個 z-index(#107)。 */}
+          <BossHealthBar />
           <ExUnlockToast />
         </>
       )}

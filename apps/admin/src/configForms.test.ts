@@ -57,15 +57,30 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
     }
   });
 
-  it("schema 裡每一個非純量分支都被列進 preserved（否則儲存會把它弄不見）", () => {
+  it("schema 裡每一個非純量分支都被宣告過：preserved（帶著走）或 curve（畫成表格）", () => {
     cover("adminui-config-forms-labels");
     for (const spec of CONFIG_DOC_SPECS) {
       const { branches } = readSchema(spec.zod);
-      const declared = spec.preserved.map((p) => p.path).sort();
+      // 陣列分支有兩條**明著宣告**的路，沒有第三條「沒人管它」的路：
+      //   · preserved  = 這一頁不編輯，但儲存時原封不動帶著走（gore.championStyles）
+      //   · curve      = 這一頁就是要編輯它（body-scale.attackRangeCurve）
+      // 少宣告 = 儲存時把它弄不見（preserved 那一側）或畫不出來（curve 那一側），
+      // 兩種都是「畫面沒有錯誤但東西沒了」。
+      const declared = [
+        ...spec.preserved.map((p) => p.path),
+        ...(spec.curve ? [spec.curve.path] : []),
+      ].sort();
       expect(
         branches.map((b) => b.path).sort(),
-        `${spec.docId}: 有分支沒有被宣告成 preserved`,
+        `${spec.docId}: 有分支既不在 preserved 也不是 curve`,
       ).toEqual(declared);
+      // curve 宣告的路徑必須真的是一個分支（打錯字的話它會安靜地畫一張空表）
+      if (spec.curve) {
+        expect(
+          branches.some((b) => b.path === spec.curve!.path),
+          `${spec.docId}: curve.path "${spec.curve.path}" 在 schema 裡不是一個分支`,
+        ).toBe(true);
+      }
       // 「為什麼」不可以留白 —— 那一行就是它為什麼值得被帶著走的理由。
       for (const p of spec.preserved) {
         expect(p.why.length, `${spec.docId}.${p.path} 的 why 太短`).toBeGreaterThan(15);

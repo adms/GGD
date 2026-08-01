@@ -3,8 +3,9 @@
  *
  * A template is a PARAMETERISED behaviour prototype recovered from the 29 JASS
  * behaviour families (docs/ability-templates.md). An ability doc references one
- * by id and supplies the filled param slots (`ability@1.template = {ref,params}`);
- * the pure `expand()` (../templates/expand.ts) turns template+params into the
+ * OR MORE by id and supplies the filled param slots (`ability@1.template`, see
+ * `zAbilityTemplateBinding` at the bottom of this file); the pure `expand()` /
+ * `expandStack()` (../templates/expand.ts) turn template+params into the
  * BEHAVIOUR half of an AbilityDef at registry time. The template only owns the
  * behaviour SHAPE — an ability's description/icon/cooldown/manaCost/range stay
  * plain skeleton fields, never template params.
@@ -110,8 +111,16 @@ export const zTemplateDoc = z
   .strict();
 export type TemplateDoc = z.infer<typeof zTemplateDoc>;
 
-/** The reference an ability doc stores to a template (`ability@1.template`). */
-export const zAbilityTemplateRef = z
+// ---------------------------------------------------------------------------
+// 模板複數套用 (owner 2026-07-31「我們討論的技能記得都要能用編輯器編輯模板跟複數
+// 選取」/ 2026-07-30「模板複數可被套用於技能中」)
+// ---------------------------------------------------------------------------
+
+/**
+ * ONE card in an ability's template stack — what used to be the WHOLE of
+ * `ability@1.template`.
+ */
+export const zAbilityTemplateCard = z
   .object({
     ref: zRef("ability-templates"),
     /** filled slot values; each is validated by its slot's semantics at fill time */
@@ -120,4 +129,108 @@ export const zAbilityTemplateRef = z
     version: z.number().int().min(1).optional(),
   })
   .strict();
-export type AbilityTemplateRef = z.infer<typeof zAbilityTemplateRef>;
+export type AbilityTemplateCard = z.infer<typeof zAbilityTemplateCard>;
+
+/**
+ * The pre-stack name, kept as an ALIAS rather than deleted: it is the shape 100 %
+ * of on-disk content still uses, and `expand(t, params)` still takes exactly this
+ * card's `params`. Renaming it out of existence would have been a cosmetic
+ * rewrite that broke every importer for no behavioural gain.
+ */
+export const zAbilityTemplateRef = zAbilityTemplateCard;
+export type AbilityTemplateRef = AbilityTemplateCard;
+
+/**
+ * Stack size bounds. CLAUDE.md 「欄位要有上界，不是只有下界」, and the upper one is
+ * NOT a balance lever — it is a MIS-PASTE guard, the same job `apexHeight`'s 2000
+ * does in templates/expand.ts.
+ *
+ * Why 8 and not 3 or 30. Under `lastWins` every card after the first contributes
+ * only its `effects` (and its hooks) — the scalar half is overwritten — so a
+ * stack is mostly effect concatenation, and each card costs one more `EffectDef`
+ * the sim runs per cast. 8 is comfortably above anything the JASS census asks
+ * for: the biggest single recovered behaviour is 鎖定連段, which needs FOUR
+ * primitives, and every 演出 in docs/ability-templates.md decomposes into ≤ 5.
+ * A `template` array longer than that is a duplicated paste, not a design.
+ *
+ * The floor is 1 rather than 0 on purpose: an EMPTY stack is not「no template」,
+ * it is a doc that claims to be templated and expands to nothing — exactly the
+ * silent no-op the whole Forge is built to make impossible. Omit the field
+ * instead.
+ */
+export const TEMPLATE_STACK_MIN_CARDS = 1;
+export const TEMPLATE_STACK_MAX_CARDS = 8;
+
+/**
+ * ⚖️ THE DECISION POINT, MADE A FIELD (CLAUDE.md 第一守則).
+ *
+ * Two cards in one stack can both emit the same SCALAR key — most obviously
+ * `castType` (單體斬擊 says "targeted", 原地震波 says "ground"), but also
+ * `radius` / `castTimeSec` / `targetsEnemies`. Somebody has to decide what that
+ * means, and「後蓋前」vs「重複即拒」is a preference, not a fact, so it is a knob:
+ *
+ *   · `reject`   — 重複即拒. The stack refuses to expand and NAMES the collision
+ *                  (which key, which two cards, which two values). The operator
+ *                  resolves it by reordering, clearing a param, or dropping a
+ *                  card.
+ *   · `lastWins` — 後蓋前. The later card's value replaces the earlier one, and
+ *                  the shadowed value is still reported in the expansion trace
+ *                  so 「我填的數字去哪了」 has an answer.
+ *
+ * ⚠️ AGREEMENT IS NOT A CONFLICT. Two cards that both emit `targetsEnemies:
+ * true` collide on nothing — the policy only fires when the VALUES DIFFER.
+ * Without that rule `reject` would be useless out of the box, because nearly
+ * every offensive template emits the same `targetsEnemies`.
+ *
+ * ⚠️ LIST-VALUED OUTPUT IS NEVER A CONFLICT. `effects` (and a passive's
+ * `hooks`/`modifiers`/`auras`) CONCATENATE in card order — that is the entire
+ * point of stacking, and treating it as a collision would make composition
+ * impossible.
+ *
+ * DEFAULT = `reject`, and the reasoning is the project's own: a named gap beats
+ * a silent one. `lastWins` quietly deletes a measured JASS value the operator
+ * typed into a live form field (失敗形態 ②/③ — 「做了但玩家拿不到」); `reject`
+ * makes them meet the ambiguity in the editor, where it costs one click, instead
+ * of in a match. Blast radius today is ZERO either way: no shipped ability uses a
+ * template at all, and a 1-card stack can never conflict. Owner keeps the switch.
+ */
+export const zTemplateConflictPolicy = z.enum(["reject", "lastWins"]);
+export type TemplateConflictPolicy = z.infer<typeof zTemplateConflictPolicy>;
+
+/** Shipped default for `onConflict` — see the note on `zTemplateConflictPolicy`. */
+export const DEFAULT_TEMPLATE_CONFLICT: TemplateConflictPolicy = "reject";
+
+/** The explicit stack form: an ordered card list plus its conflict policy. */
+export const zAbilityTemplateStack = z
+  .object({
+    cards: z
+      .array(zAbilityTemplateCard)
+      .min(TEMPLATE_STACK_MIN_CARDS)
+      .max(TEMPLATE_STACK_MAX_CARDS),
+    onConflict: zTemplateConflictPolicy.optional(),
+  })
+  .strict();
+export type AbilityTemplateStack = z.infer<typeof zAbilityTemplateStack>;
+
+/**
+ * What `ability@1.template` accepts. THREE shapes, ONE normaliser
+ * (`normalizeTemplateBinding` in ../templates/expand.ts):
+ *
+ *   1. `{cards: [...], onConflict}`  — the full stack, the only form that can
+ *                                      carry a non-default policy
+ *   2. `[{ref,params}, ...]`         — an ordered array, the ergonomic form when
+ *                                      the default policy is fine
+ *   3. `{ref,params}`                — ONE card, i.e. EVERY doc written before
+ *                                      this change; back-compat is not a
+ *                                      migration, it is a union branch
+ *
+ * The branches are mutually exclusive by shape — array vs object, and both
+ * object branches are `.strict()` with disjoint required keys — so there is no
+ * order-dependent「first branch that happens to parse」ambiguity.
+ */
+export const zAbilityTemplateBinding = z.union([
+  zAbilityTemplateStack,
+  z.array(zAbilityTemplateCard).min(TEMPLATE_STACK_MIN_CARDS).max(TEMPLATE_STACK_MAX_CARDS),
+  zAbilityTemplateCard,
+]);
+export type AbilityTemplateBinding = z.infer<typeof zAbilityTemplateBinding>;

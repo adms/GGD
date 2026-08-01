@@ -77,8 +77,10 @@ import {
 
 // 三選一強化 (augments) are the DRAFT abilities — editable as their OWN tab,
 // distinct from champion 技能, per the owner (task #70 rule 3). 三選一抽獎池
-// (loot-tables) are the ITEM draft POOLS (quest-rewards + legendary-weapons):
-// the owner curates which items the weapon 3-choose-1 offers from here. This is
+// (loot-tables) are the ITEM draft POOLS: the owner curates which items the
+// weapon 3-choose-1 offers from here. ⚠️ As of 2026-08-01 the card rolls
+// `legendary-weapons` only — `quest-rewards` is RETIRED (still editable here,
+// but no round may schedule it; see arena-rules.retiredLootTables). This is
 // the DEFAULT tab set (no `only` prop); each nav route passes its own `only`.
 const ALL_TABS: readonly EditCollection[] = [
   "champions",

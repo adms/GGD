@@ -20,6 +20,7 @@
     "stallTicks": 30,
     "stallSpeed": 0.5,
     "seekRadius": 48,
+    "idleSeeks": false,
     "respectLiveSteering": true,
     "ccPausesStall": true
   }

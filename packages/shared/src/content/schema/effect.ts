@@ -21,7 +21,24 @@ import {
   KB_MAX_LAUNCH_HEIGHT,
   KB_MAX_SPEED,
 } from "../../sim/effects/knockbackLimits";
+import {
+  INCOMING_PCT_MAX,
+  INCOMING_PCT_MIN,
+  REFLECT_MAX_CHAIN_DEPTH,
+  REFLECT_MIN_CHAIN_DEPTH,
+} from "../../sim/effects/reflectLimits";
 import { zEffectCondition } from "./condition";
+import {
+  CHANCE_PER_ATTR_MAX,
+  DAMAGE_REFUND_PCT_MAX,
+  DISTANCE_SCALE_DAMAGE_MAX,
+  DISTANCE_SCALE_RANGE_MAX,
+  DOT_RESOURCE_PCT_POINTS_TOTAL_MAX,
+  DOT_RESOURCE_PCT_RATIO_TOTAL_MAX,
+  RESOURCE_PCT_POINTS_MAX,
+  RESOURCE_PCT_RATIO_MAX,
+} from "../../sim/effects/dynamicTerms";
+import { TAUNT_MAX_DURATION_SEC, TAUNT_MAX_TARGETS } from "../../sim/taunt";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../sim/flight";
 
 export const zDamageType = z.enum(["physical", "magic", "true"]);
@@ -72,6 +89,29 @@ export const BANKED_LIFE_MAX_SEC = 60;
  */
 export const CYCLE_BUFF_MAX_STEPS = 8;
 
+/**
+ * Ceiling on `HookDef.internalCooldown`, in SECONDS.
+ *
+ * The field had `.min(0)` and no upper bound at all until 2026-08-01, which is
+ * exactly the half-bounded shape CLAUDE.md calls out (「欄位要有上界,不是只有
+ * 下界」). What the ceiling catches is one specific, invisible mis-parse:
+ * **milliseconds typed into a seconds field**. owner's 2026-08-01 rulings on
+ * 炎神弩 godie-i06i and 熾天使之弓 godie-i012 are both 「冷卻1 秒」, and `1000`
+ * typed where `1` was meant does not look wrong in a diff — it silently turns a
+ * once-per-second proc into a once-per-match one, on a card that still advertises
+ * the effect. `sim/effects/hooks.ts` would clamp nothing and report nothing; the
+ * item would simply stop doing its job (失敗形態 ②).
+ *
+ * 300 s, matching `zItemBlockGrant.internalCooldown` in schema/item.ts so the two
+ * cooldown fields do not disagree about what counts as a typo. It is a MIS-PARSE
+ * guard, NOT balance policy: a combat round is ~3 min, the longest authored value
+ * in content/ today is 45 s (godie-e00r.passive), and anything genuinely longer
+ * than 300 s is a once-per-match effect that should say so in its own field.
+ * The floor stays `.min(0)` — 0 is legal AND meaningful (= no cooldown, which is
+ * what every hook authored before this field had).
+ */
+export const HOOK_INTERNAL_COOLDOWN_MAX_SEC = 300;
+
 export const zHookEvent = z.enum([
   "onAbilityCast",
   "onAbilityHit",
@@ -89,9 +129,130 @@ export const zHookEvent = z.enum([
   "onInterval",
 ]);
 
+/**
+ * CROSS-FIELD checks that a `z.discriminatedUnion` member cannot carry itself:
+ * `.superRefine` turns an object into `ZodEffects`, and `discriminatedUnion`
+ * only accepts `ZodObject`s. So the refinement rides {@link zEffectDef} — the
+ * lazy wrapper every document actually validates through (`zHookDef.effects`,
+ * `ability@1`, `item@1.passive`, `auras[].hooks`). `zEffectDefUnion` stays a
+ * pure discriminated union so the editor's `walkZod` still sees the variant
+ * list (apps/editor/src/form/walk.ts) and the three template tests that call
+ * `zEffectDefUnion.parse` directly keep working.
+ *
+ * Today it enforces the two `grantAttribute.store` pairings — see the field.
+ */
+/**
+ * 資源百分比項 —— `damage.resourcePct` 與 `dot.resourcePct` **共用同一份 schema**,
+ * mirroring `ResourcePctTerm` in sim/effects/dynamicTerms.ts(那裡有完整推導:
+ * 為什麼它不是 `Scaling` 的一部分、`scale` 的兩種讀法差在哪、兩個上界為什麼
+ * 不同)。一份 schema 而不是兩份,理由跟 sim 端一樣:四支道具要的是同一個讀數,
+ * 抄成兩份保證有一天只修到一邊。
+ *
+ * 每一格 `perRank` 的上界由 `scale` 決定,所以夾在 `superRefine` 裡而不是
+ * `z.number().max(...)` 上 —— 兩種模式的自然量級差 100 倍以上,共用一個上界
+ * 對其中一邊必然太鬆(擋不住打錯的數字)。
+ */
+export const zResourcePctTerm = z
+  .object({
+    /** 讀誰的條:施法者自己,還是這次事件的對象 */
+    subject: z.enum(["self", "target"]),
+    resource: z.enum(["health", "mana"]),
+    /** 現存 / 最大 / 已損失(= 最大 − 現存) */
+    basis: z.enum(["current", "max", "missing"]),
+    /** 省略 = "ratio" = 係數 × 絕對量。"points" = 係數 × 百分比本身(0~100) */
+    scale: z.enum(["ratio", "points"]).optional(),
+    /**
+     * `.min(1)`:同 `hpPct` / `incomingPct` 的反空欄位規則 —— 一個空陣列解算成 0,
+     * 長得像功能、實際上什麼都不做。
+     */
+    perRank: z.array(z.number().min(0)).min(1),
+  })
+  .strict()
+  .superRefine((t, ctx) => {
+    const cap =
+      (t.scale ?? "ratio") === "points" ? RESOURCE_PCT_POINTS_MAX : RESOURCE_PCT_RATIO_MAX;
+    t.perRank.forEach((v, i) => {
+      if (v > cap) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["perRank", i],
+          message:
+            `scale:"${t.scale ?? "ratio"}" 的係數上限是 ${cap}(拿到 ${v})—— ` +
+            "這是打錯數字的守衛:ratio 模式寫 5 而不是 0.05 是「對方整條的 500%」, " +
+            "points 模式寫 100 而不是 1 是 10,000 點。兩種在 diff 裡都跟正確值長得一樣。",
+        });
+      }
+    });
+  });
+
+/**
+ * 一份 `dot` 的 `resourcePct` **整段燒完**的總量檢查。
+ *
+ * ⚠️ 為什麼守衛架在總量而不是單次:一次 `damage` 的百分比是**一下**,而 dot 會
+ * 付 `duration/interval` 次。單次 3% 看起來無害,配一個 20 秒 / 每秒的燒傷就是
+ * 60% 最大生命。完整推導與數字見 dynamicTerms.ts 的
+ * `DOT_RESOURCE_PCT_RATIO_TOTAL_MAX`。
+ *
+ * ⚠️ 它住在 `refineEffectDef`(掛在 `zEffectDef` 的 lazy 上)而不是 `dot` 那個
+ * 物件自己的 `.superRefine`,原因是 zod 的 `discriminatedUnion` 只收
+ * `ZodObject`,收不了 `ZodEffects` —— 這跟 `zHookDef` / `zItemHookDef` 為什麼
+ * 要拆成 base + refine 是同一個限制。
+ */
+function refineDotResourceBudget(
+  e: Extract<EffectDef, { kind: "dot" }>,
+  ctx: z.RefinementCtx,
+): void {
+  const term = e.resourcePct;
+  if (term === undefined) return;
+  const payouts =
+    Math.max(1, Math.floor(e.durationSec / e.intervalSec)) + (e.tickOnApply === true ? 1 : 0);
+  const peak = Math.max(...term.perRank);
+  const points = (term.scale ?? "ratio") === "points";
+  const total = points ? peak * 100 * payouts : peak * payouts;
+  const cap = points ? DOT_RESOURCE_PCT_POINTS_TOTAL_MAX : DOT_RESOURCE_PCT_RATIO_TOTAL_MAX;
+  if (total > cap) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["resourcePct", "perRank"],
+      message:
+        `整段燒完是 ${total}(${peak} × ${payouts} 次付款),上限 ${cap}。` +
+        "dot 的百分比守衛架在總量上,因為單次看起來無害的數字乘上付款次數才是玩家吃到的量。",
+    });
+  }
+}
+
+function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
+  if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
+  if (e.kind !== "grantAttribute") return;
+  if (e.store !== "source") {
+    if (e.maxSourceTotal !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["maxSourceTotal"],
+        message:
+          'maxSourceTotal 只有 store:"source" 讀得到 —— 沒有 store 的話這個上限' +
+          "永遠不會被檢查, 是一個看起來有設、其實無限疊的欄位",
+      });
+    }
+    return;
+  }
+  // 「到期收回」與「記在來源上」是兩套互相看不見的帳: `attrGrantExpirySystem`
+  // 只反轉 `ChampionComp.attrBonus`, 所以一筆 timed 的 source 存款永遠不會被收回。
+  // 要限時, 把這個 hook 掛在一個帶 `expiresAtTick` 的 buff source 上。
+  if (e.durationSec !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["durationSec"],
+      message:
+        'store:"source" 不能配 durationSec —— 到期收回只認得 attrBonus, ' +
+        "記在來源上的存款不會被收回(要限時就把 hook 掛在有期限的 buff 上)",
+    });
+  }
+}
+
 /** Recursive knot: spawnProjectile.onHit is EffectDef[] again. */
 export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(
-  () => zEffectDefUnion,
+  () => zEffectDefUnion.superRefine(refineEffectDef),
 ) as unknown as z.ZodType<EffectDef, z.ZodTypeDef, unknown>;
 
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
@@ -147,6 +308,108 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
           statusId: zRef<StatusId>("status-effects", { soft: true }),
           coeff: z.number().positive().max(BANKED_COEFF_MAX),
           max: z.number().positive().max(BANKED_BONUS_MAX),
+        })
+        .strict()
+        .optional(),
+      /**
+       * [反彈] —— mirrors the `incomingPct` member of `sim/effects/effect.ts`,
+       * 也就是「反彈剛剛打中我的那一發的 N%」。反射之盾 (godie-i03m) 的
+       * 「反彈普通攻擊傷害 200%」在這個欄位之前**寫不出來**:`zScaling` 只讀
+       * CASTER 的屬性表,而 200% 的分母是一發封包。
+       *
+       * BOTH ENDS BOUNDED,兩個上界的理由不同,而且都不是平衡政策:
+       *   `perRank[]`      ≤ `INCOMING_PCT_MAX` (=5) —— **打錯數字的守衛**。
+       *                    「200」打進該寫「2.00」的格子 = 20,000% 反彈,任何人
+       *                    普攻你一下就當場暴斃,而在 diff 裡跟正確值長得一樣。
+       *   `maxChainDepth`  ≤ `REFLECT_MAX_CHAIN_DEPTH` (=2) —— **終止性的一半**。
+       *                    ⚠️ 2026-08-01 更正:它是「鏈從第 0 輪起跳」時的
+       *                    必要條件,**不是**「反彈一定在同一個 tick 落地」的
+       *                    充分條件 —— hook 排出來的封包(每一件 [On-Hit])
+       *                    最早第 1 輪才落地。那一半改由執行期閘門保證,見
+       *                    `whenTooLate` 與 sim/effects/reflectLimits.ts。
+       *
+       * 另外兩個欄位都是**決策點**,所以是欄位而不是寫死的分支:
+       *   `applyGlobalDamageMult` 預設 false —— 反彈**不**再吃一次
+       *                    `combatEnv.damageDealt`。三個讀數已經在倍率之後了,
+       *                    再乘一次反彈比就變成 `pct × k`(2026-08-01 的缺陷)。
+       *                    false 讓 owner 的「反彈 200%」在任何 k 下字面為真。
+       *   `whenTooLate`    預設 "drop" —— 一發塞不進這個 tick 剩餘排空輪數的
+       *                    反彈不排進佇列。"spill" = 舊行為(晚一 tick 落地)。
+       *
+       * `.min(1)` on the array: 同 `hpPct`,一個空欄位會解算成 0,長得像功能、
+       * 實際上什麼都不做。
+       */
+      incomingPct: z
+        .object({
+          /** 拿哪一個讀數當基數。省略 = `"mitigated"`(護甲/魔抗之後、護盾之前) */
+          basis: z.enum(["raw", "mitigated", "hpLost"]).optional(),
+          perRank: z.array(z.number().min(INCOMING_PCT_MIN).max(INCOMING_PCT_MAX)).min(1),
+          /** 反彈可以再被反彈幾層。省略 = 0 = 反彈本身不可被反彈 */
+          maxChainDepth: z
+            .number()
+            .int()
+            .min(REFLECT_MIN_CHAIN_DEPTH)
+            .max(REFLECT_MAX_CHAIN_DEPTH)
+            .optional(),
+          /**
+           * 反彈封包要不要再吃一次全域傷害倍率 `combatEnv.damageDealt`。
+           * 省略 = false = 不吃 = 反彈比剛好等於 `perRank`(文案字面為真)。
+           */
+          applyGlobalDamageMult: z.boolean().optional(),
+          /**
+           * 這個 tick 的排空輪數已經不夠讓反彈落地時怎麼辦。
+           * 省略 = `"drop"`(不發) / `"spill"`(排進佇列,下一個 tick 才落地)。
+           */
+          whenTooLate: z.enum(["drop", "spill"]).optional(),
+        })
+        .strict()
+        .optional(),
+      /**
+       * 資源百分比項 —— 「誰的哪一條血/魔的多少」。虛哭神去 godie-i007
+       * 「自身已損失的生命百分比數值(0~100)」與 瑪那魔杖 godie-i020
+       * 「敵方現存 MP 5% 傷害」都走這一個欄位。形狀、兩種 `scale` 讀法與上界
+       * 見 {@link zResourcePctTerm} 與 sim/effects/dynamicTerms.ts。
+       *
+       * 它與 `hpPct` 不重複:`hpPct` 只讀受害者的生命、只有比例讀法、上界 0.35,
+       * 已經出貨在 揍敵客 W 牙突 上,原封不動。
+       */
+      resourcePct: zResourcePctTerm.optional(),
+      /**
+       * 距離加成項 —— 炎神弩 godie-i06i 「攻擊額外造成 10-1000 傷害,敵我距離
+       * 越遠傷害越高 (0~10)」。線性內插,`near` 在距離 0、`far` 在 `atRange` 之外。
+       *
+       * BOTH ENDS BOUNDED,而三個上界的理由不同:
+       *   `atRange` ≤ `DISTANCE_SCALE_RANGE_MAX`(40) —— 跟 `zAuraDef.radius`
+       *     同一個數字同一個理由:整個場地 `boundaryRadius` 是 24,超過 40 比較
+       *     可能是一個沒換算的 WC3 原始值(500 ≈ 這裡的 9.17)漏進來。
+       *   `near`/`far` ≤ `DISTANCE_SCALE_DAMAGE_MAX`(3000) —— ⚠️ 出貨的炎神弩
+       *     `far` 就是 **1000**(owner 文案寫死的),已經接近一條血。這個上界的
+       *     工作不是壓制它(壓制它等於竄改文案),是擋住多打一個零。
+       *
+       * ⚠️ **方向是資料**:`near > far` 就是「越近越痛」,一樣寫得出來。
+       */
+      distanceScale: z
+        .object({
+          atRange: z.number().positive().max(DISTANCE_SCALE_RANGE_MAX),
+          near: z.number().min(0).max(DISTANCE_SCALE_DAMAGE_MAX),
+          far: z.number().min(0).max(DISTANCE_SCALE_DAMAGE_MAX),
+        })
+        .strict()
+        .optional(),
+      /**
+       * 把這一發**實際打出去的量**折回給施法者 —— 瑪那魔杖 godie-i020
+       * 「回復己方 MP 該傷害量」。付款發生在 `combat/damage.ts` 的排空迴圈
+       * (`DamagePacket.refund`),因為只有那裡知道減免之後真的掉了多少。
+       *
+       * `basis` 省略 = `"hpLost"` = 玩家看到的那個浮動數字,所以「該傷害量」
+       * 在畫面上字面為真。`pct` 上界 `DAMAGE_REFUND_PCT_MAX`(2):出貨值是 1.0
+       * (文案的字面值),上界留一格設計空間,同時擋住把 1 打成 100。
+       */
+      refund: z
+        .object({
+          resource: z.enum(["health", "mana"]),
+          basis: z.enum(["hpLost", "mitigated"]).optional(),
+          pct: z.number().positive().max(DAMAGE_REFUND_PCT_MAX),
         })
         .strict()
         .optional(),
@@ -244,6 +507,74 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       everyNth: z.number().int().min(1).max(1000).optional(),
       /** 該屬性 (含成長與本場加成) 到這個值就不再發。獸化心靈 = 120 */
       maxAttribute: z.number().min(0).max(10000).optional(),
+      /**
+       * `maxAttribute` 量的是**哪一種**三圍 —— 決策點做成欄位 (第一守則),
+       * 而且這個軸是**原始地圖自己就有的**, 不是這裡發明的:
+       * `GetHeroStatBJ(stat, unit, includeBonuses)` 的第三個參數。
+       * 傷害公式一律 `…,true)`(含裝備), 而獸化心靈的隱藏上限寫的是
+       * `GetHeroStatBJ(1,GetKillingUnit(),false)`(**不**含裝備)。
+       *
+       *   · `"base"`(缺省)= 天生 + 成長 + 三選一 + 先前的 grantAttribute。
+       *     這是獸化心靈 JASS 量的東西, 也是**保守**的那一個: 帶一把
+       *     朗基努斯之槍(敏捷+12)不會偷偷把蒼月潮的天生技提早關掉, 而且與
+       *     「道具還不能給三圍」的年代逐位元相同。
+       *   · `"total"` = 含裝備, 給未來那種上限本來就該讀「總敏捷」的卡。
+       */
+      maxAttributeBasis: z.enum(["base", "total"]).optional(),
+      /**
+       * 點數存到哪裡 —— 決策點做成欄位, 而差別就是「賣掉之後還在不在」。
+       *
+       *   · `"champion"`(缺省, 與這個欄位出現之前的每一份文件逐位元相同)=
+       *     `ChampionComp.attrBonus`, WC3 `ModifyHeroStat`。永久, 而且與造成它
+       *     的東西無關 —— 蒼月潮 07-00 獸化心靈是自己打出來的, 那就是他的。
+       *   · `"source"` = 記在**觸發這一次的那個來源**身上
+       *     (`ModifierSource.attrEarned`)。甘豆腐之袍 godie-i03f「每殺死一名英雄
+       *     可以額外獲得 10點智慧，上限 160」—— 道具疊出來的層數屬於道具, 賣掉
+       *     袍子 160 點智慧就跟著走。
+       *
+       * ⚠️ `"source"` 只能掛在 **hook** 上(道具被動 / 靈氣投射的 hook / 增益),
+       * 因為記帳的地方就是那個 source。掛在技能自己的 effects 上沒有來源可記,
+       * 這時候**拒絕發放**(而不是偷偷改記進 `attrBonus` —— 那會是一個名字寫著
+       * 「賣掉就沒」、行為卻是「永久帶著走」的欄位)。
+       */
+      store: z.enum(["champion", "source"]).optional(),
+      /**
+       * `store: "source"` 專用 —— **這一個來源自己一共發過多少**的上限, 逐屬性。
+       * 甘豆腐之袍的「上限 160」= 16 層 × 10 點。
+       *
+       * ⚠️ 它**不是** `maxAttribute`。`maxAttribute` 封的是英雄那條三圍的
+       * **絕對值**(獸化心靈的「敏捷 < 120」, 含等級成長), 所以掛在一件智慧裝上
+       * 會在高等級法師身上直接把第一層就擋掉 —— 一張什麼都不做的卡。這一條只數
+       * 這件裝備自己發出去的量。
+       *
+       * 上界 10000 與 `maxAttribute` 同一個數字, 理由也同一個: 它是 MIS-PARSE
+       * 護欄(160 打成 16000), 不是平衡政策。下界 0 之外還有 `.positive()` 的
+       * 意義: 0 是一件「疊層」卡片寫著、但第一層就被夾成 0 的裝備 —— 正是這一批
+       * 要消滅的「描述承諾了、資料沒有付」。
+       */
+      maxSourceTotal: z.number().positive().max(10000).optional(),
+    })
+    .strict(),
+  /**
+   * revive (天生牙 godie-i031「[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄」)
+   * —— mirrors the `revive` member of `EffectDef`.
+   *
+   * 「我方所有英雄」**不在這裡** —— 那是 hook 的 `target: "allies"` 作用域。這個
+   * effect 只回答「站起來的時候是什麼狀態、要不要花額度、可不可以救敵人」。
+   * 站起來這件事本身共用 `sim/revive.ts::reviveChampionAt`, 也就是復活圈
+   * (#84/#206) 完成時走的同一個函式 —— 不是第二套復活。
+   *
+   * ⚠️ 兩個比例的上界 **1** 是 MIS-PARSE 護欄, 不是平衡意見: 文案想寫「50%」的人
+   * 很容易填 50, 而沒有上界的 50 是「滿血滿魔復活全隊」。下界 0 合法(至少會給
+   * 1 點 HP, 見 `reviveChampionAt`), 因為「只留一口氣的復活」是一個真的設計。
+   */
+  z
+    .object({
+      kind: z.literal("revive"),
+      hpPct: z.number().min(0).max(1).optional(),
+      manaPct: z.number().min(0).max(1).optional(),
+      side: z.enum(["ally", "any"]).optional(),
+      teamCharge: z.enum(["ignore", "requireAndSpend"]).optional(),
     })
     .strict(),
   z.object({ kind: z.literal("heal"), amount: zScaling }).strict(),
@@ -270,7 +601,23 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
     .object({
       kind: z.literal("applyStatus"),
       statusId: zRef<StatusId>("status-effects", { soft: true }),
-      duration: z.number().min(0),
+      /**
+       * 這個狀態掛多久(秒)。**兩端都有界**(CLAUDE.md「欄位要有上界」/ #277) ——
+       * 這一格在 2026-08-01 之前只有 `.min(0)`,也就是完全沒有上界,而 owner 當天
+       * 剛好給了殺豬刀一個 0.3 秒的控場,所以它是最需要護欄的那一格。
+       *
+       * · 下界 0.034 = 30 Hz 的一個 tick。`applyStatus` 算的是
+       *   `world.tick + Math.round(duration / world.dt)`,所以任何小於半 tick 的
+       *   數字會 round 成 **0 tick** —— 狀態掛上去的同一瞬間就過期,玩家永遠拿不到
+       *   (失敗形態 ②)。這不是理論:出貨最短的一格正是 0.034(血染八月
+       *   `godie-i06o` 的 fang-stun),下界因此貼著它而不是憑空挑的。
+       * · 上界 20 秒。出貨最長的是 10 秒(59-00 暴走 `godie-e00r.passive`),所以
+       *   20 給了一倍的空間;它擋的是**小數點打錯一位**:0.3 打成 3 沒有任何界擋
+       *   得住(那是一個合法的設計值),但 0.3 打成 30、3 打成 30、20 打成 200
+       *   都會在 `pnpm content:build` 當場被擋下並指名檔案與欄位。一個 30 秒的
+       *   暈眩在一場三分鐘的回合裡等於「那個人這一場不用玩了」。
+       */
+      duration: z.number().min(0.034).max(20),
       /** "self" puts it on the CASTER (combo windows); default "target" */
       applyTo: z.enum(["self", "target"]).optional(),
       moveSpeedMult: z.number().positive().optional(),
@@ -398,6 +745,14 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       kind: z.literal("spendMana"),
       amount: zScaling,
       pctMaxMana: z.number().min(0).max(1).optional(),
+      /**
+       * 付款人**現存**法力的一個比例,加在 `amount` 與 `pctMaxMana` 之上 ——
+       * 熾天使之弓 godie-i012「每次削去敵方英雄現存 MP 3%」(owner 2026-08-01 裁定
+       * 5%→3%)。ABSENT = 0。
+       * 為什麼是第二個欄位而不是給 `pctMaxMana` 加一個 `basis`:名字寫著 Max
+       * 的欄位不可以有時候是 current(見 sim/effects/effect.ts 的說明)。
+       */
+      pctCurrentMana: z.number().min(0).max(1).optional(),
       applyTo: z.enum(["self", "target"]).optional(),
       /**
        * 存下這一次**實際扣掉的**法力,給稍後的 `damage.bankedBonus` 讀。
@@ -501,6 +856,17 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       damageType: zDamageType,
       /** damage per PAYOUT, not per second */
       amountPerTick: zScaling,
+      /**
+       * 資源百分比項,加在**每一次付款**上 —— 熾天使之弓 godie-i012 的
+       * 「每秒燃燒 3% 最大生命,持續 2 秒」。與 `damage.resourcePct` **同一份**
+       * schema(見 {@link zResourcePctTerm}),per-target 解算並在 apply 當下
+       * 凍進 `DotInstance.amountPerTick`。
+       *
+       * ⚠️ 除了每一格的 `scale` 上界之外,還有一道**整段燒完的總量**檢查
+       * (`refineDotResourceBudget`)—— 一次 `damage` 的百分比是一下,dot 的
+       * 是 `duration/interval` 下,守衛必須架在乘完之後。
+       */
+      resourcePct: zResourcePctTerm.optional(),
       /** seconds between payouts — one sim tick (1/30 s) is the floor */
       intervalSec: z.number().min(1 / 30).max(60),
       /** total seconds; the 60 s ceiling is the longest shipped combat round */
@@ -703,17 +1069,216 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       dodgesTrueDamage: z.boolean().optional(),
     })
     .strict(),
+  /**
+   * taunt — 嘲弄 (鍊金術之盾 godie-i06q). Mirrors the `taunt` member of
+   * `EffectDef`. The mechanic, the state model and every operator-facing
+   * decision field live in `sim/taunt.ts`; this is only the authoring surface.
+   *
+   * BOTH ENDS BOUNDED, and the two ceilings guard DIFFERENT mis-parses:
+   *   · `durationSec` ≤ TAUNT_MAX_DURATION_SEC — 0.5 typed as 50 is a taunt
+   *     that outlives the round, i.e. one shield owning every enemy's targeting
+   *     for the whole fight. The FLOOR is 0.034 s for the reason
+   *     `grantAttribute.durationSec` has one: `Math.round(sec/dt)` at 30 Hz is
+   *     0 ticks below that — a blank that reads exactly like a broken feature.
+   *   · `radius` ≤ SPREAD_MAX_RADIUS — the SAME ceiling every other authored
+   *     circle carries, and for the same reason: a w3x `Area` column pasted
+   *     straight in (200/300/450) is ~54.5× too large and would taunt the whole
+   *     duel zone. Reusing that constant rather than inventing a taunt-specific
+   *     one is deliberate — two ceilings for 「一個圓有多大」 would drift.
+   */
+  z
+    .object({
+      kind: z.literal("taunt"),
+      /** 持續幾秒 (乘上後台的 `tauntRules.durationMult` 之後換算成絕對 tick) */
+      durationSec: z.number().min(0.034).max(TAUNT_MAX_DURATION_SEC),
+      /**
+       * 範圍 (GGD 單位), 圓心是**施法者自己**。省略 = 單體, 掛在這個效果自己
+       * 解析出來的目標上。走 `combatEnv.abilityRange`, 和其它每一個 AoE 一樣。
+       */
+      radius: z.number().positive().max(SPREAD_MAX_RADIUS).optional(),
+      /** 一次最多拉幾個人 (由近到遠)。省略 = TAUNT_MAX_TARGETS */
+      maxTargets: z.number().int().min(1).max(TAUNT_MAX_TARGETS).optional(),
+    })
+    .strict(),
+  /**
+   * grantGold — 發放金幣. Mirrors the `grantGold` member of `EffectDef`.
+   * 「黃金數量為敵方等級」 is `perTargetLevel: 1`.
+   *
+   * BOTH ENDS BOUNDED, and both ceilings are MIS-PARSE guards rather than
+   * balance policy — the whole shipped economy is ~7,600 gold per match
+   * (sim/economy/progression.ts), so:
+   *   · `flat` ≤ 5000 — a single proc paying two thirds of a match's income is
+   *     a typo, not a design.
+   *   · `perTargetLevel` ≤ 100 — at the level cap (99) that is already 9,900,
+   *     i.e. more than the entire economy from one hit. 「等級」 means 1.
+   */
+  z
+    .object({
+      kind: z.literal("grantGold"),
+      /** 固定金額。省略 = 0（純按等級發放是合法的） */
+      flat: z.number().min(0).max(5000).optional(),
+      /** 每一級發多少金。「黃金數量為敵方等級」= 1。沒有目標時這一項是 0 */
+      perTargetLevel: z.number().min(0).max(100).optional(),
+      /**
+       * **決策點**:小怪(殭屍)的「等級」從哪裡來。省略 = `"wave"`(波次等級,
+       * 也就是那隻殭屍的血量/回血曲線本來就用的那個數字)。`"fallback"` =
+       * 小怪沒有等級,值 `fallbackLevel`。
+       *
+       * ⚠️ 出貨是 `"wave"` 而不是舊行為的 0,因為 0 是一個缺陷不是一個設計:
+       * 鍊金術之盾的「黃金數量為敵方等級」對全場每一隻殭屍付 0 金,而卡片上
+       * 寫著另一回事(失敗形態 ②)。
+       */
+      mobLevelSource: z.enum(["wave", "fallback"]).optional(),
+      /**
+       * 完全沒有等級可讀的身體算幾級。省略 = 0。上界 99 = 英雄等級上限
+       * (誤植守衛:填 990 等於一發付 990 金,那是整場經濟的八分之一)。
+       */
+      fallbackLevel: z.number().int().min(0).max(99).optional(),
+      /** 誰收錢：施法者（預設）或每一個解析出來的目標 */
+      to: z.enum(["self", "target"]).optional(),
+    })
+    .strict(),
 ]);
 
-export const zHookDef = z
+/**
+ * 帶著一發傷害封包的事件 —— 也就是 `EffectContext.incoming` 唯一會被填的兩個。
+ * 是 `combatResolveSystem` 那兩行 `fireHooks` 的**唯一**真實來源鏡像。
+ */
+const DAMAGE_BEARING_EVENTS: readonly string[] = ["onDamageTaken", "onDamageDealt"];
+
+/**
+ * 把「只有帶傷害的事件才談得上『那一發』」變成一個**載入時的解析錯誤**,
+ * 而不是一句註解。
+ *
+ * 它擋的是失敗形態 ②(做了但玩家拿不到)的一個非常安靜的變體:把
+ * `damageSource: "basic"` 或 `damage.incomingPct` 掛在 `onKill` / `onBasicAttack`
+ * / `onInterval` 上。schema 收得下、後台存得起來、卡片上看得到,而 sim 永遠
+ * 不會給那些事件一發封包 —— 於是那條 hook **一次都不會觸發**,或者反彈永遠是 0,
+ * 沒有任何錯誤訊息。
+ *
+ * ⚠️ 只看 `effects` 的**第一層**。巢狀 payload(`spawnProjectile.onHit`、
+ * `applyBuff.hooks[]`、`leap.onLand`)不在這裡檢查,因為那些 payload 在**另一個**
+ * 時間點執行,那時 `ctx.incoming` 本來就已經沒有了 —— 那是一個不同的、更難的問
+ * 題,而一個假裝檢查了的淺掃比誠實地只掃一層更糟。sim 那一側的
+ * `damage.incomingPct` 對沒有 `incoming` 的情況是**整條不執行**,所以巢狀誤用的
+ * 後果是「什麼都不做」,不是「付一半」。
+ */
+export function refineHookDamageContext(
+  hook: {
+    on: string;
+    damageSource?: string | undefined;
+    chance?: number | undefined;
+    chanceFrom?: { min: number; max: number } | undefined;
+    effects: readonly { kind: string; incomingPct?: unknown }[];
+  },
+  ctx: z.RefinementCtx,
+): void {
+  // ── 機率的兩個欄位:互斥,而且區間不可以顛倒 ──────────────────────────────
+  // 這一段**在 DAMAGE_BEARING_EVENTS 的 early-return 之前**,因為機率跟事件
+  // 帶不帶封包無關 —— 放在後面的話,`onDamageTaken` 上的一份壞文件會安靜地
+  // 通過(而 [反彈] 那一族全都掛在那兩個事件上)。
+  if (hook.chance !== undefined && hook.chanceFrom !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["chanceFrom"],
+      message:
+        "chance 與 chanceFrom 不能同時出現 —— 「相乘還是取代」這個問題沒有正確答案, " +
+        "而任何一種選法都會在某一張卡上讀起來像 bug。要活的門檻就只留 chanceFrom。",
+    });
+  }
+  if (hook.chanceFrom !== undefined && hook.chanceFrom.min > hook.chanceFrom.max) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["chanceFrom", "min"],
+      message:
+        `min ${hook.chanceFrom.min} > max ${hook.chanceFrom.max} —— 顛倒的區間會讓 clamp ` +
+        "永遠回傳 min,也就是一件「機率性」道具安靜地卡在一個固定值上。",
+    });
+  }
+  if (DAMAGE_BEARING_EVENTS.includes(hook.on)) return;
+  if (hook.damageSource !== undefined && hook.damageSource !== "any") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["damageSource"],
+      message:
+        `「${hook.damageSource}」是對觸發傷害的過濾,只有 ${DAMAGE_BEARING_EVENTS.join(" / ")} ` +
+        `帶得到那一發封包。掛在 ${hook.on} 上這條 hook 一次都不會觸發。`,
+    });
+  }
+  hook.effects.forEach((e, i) => {
+    if (e.kind === "damage" && e.incomingPct !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["effects", i, "incomingPct"],
+        message:
+          `[反彈] incomingPct 反彈的是「觸發這個 hook 的那一發傷害」,只有 ` +
+          `${DAMAGE_BEARING_EVENTS.join(" / ")} 帶得到它。掛在 ${hook.on} 上永遠反彈 0。`,
+      });
+    }
+  });
+}
+
+/**
+ * `.strict()` OBJECT 版本,給 `schema/item.ts` 的 `.extend()` 用。
+ *
+ * 分成兩個名字的原因很實際:`zHookDef` 加了 `superRefine` 之後是 `ZodEffects`,
+ * 而 `ZodEffects` 沒有 `.extend()`。`zAuraDef` / `zItemAuraDef` 已經踩過同一個
+ * 坑(那邊用的是 `.innerType()`)。item.ts 會把同一個 refine 再套一次,兩邊共用
+ * `refineHookDamageContext` 這一個函式,所以規則不可能只在一邊生效。
+ */
+export const zHookDefBase = z
   .object({
     on: zHookEvent,
     /** restrict to one slot; "PASSIVE" is the level-1 天生技 (zCastableSlot). */
     abilitySlot: zCastableSlot.optional(),
     effects: z.array(zEffectDef),
-    internalCooldown: z.number().min(0).optional(),
+    /**
+     * 內部冷卻(**秒**):這條 hook 真的發動過一次之後,要隔多久才能再發動。
+     * 留空 / 0 = 沒有冷卻(每一次事件都算)。抽輸 / 條件不成立**不燒冷卻**
+     * (sim/effects/hooks.ts 的順序註解)。道具來源還會再乘後台 combat-env 的
+     * `itemCooldown`。上界見 {@link HOOK_INTERNAL_COOLDOWN_MAX_SEC}。
+     */
+    internalCooldown: z.number().min(0).max(HOOK_INTERNAL_COOLDOWN_MAX_SEC).optional(),
     /** proc probability 0..1 on the seeded rng (absent = always) */
     chance: z.number().min(0).max(1).optional(),
+    /**
+     * 機率 = 一項三圍 × 係數,夾在 `[min, max]` —— 朗基努斯之槍 godie-i018
+     * 「(總敏捷)% 機率」。mirrors `HookDef.chanceFrom` in sim/stats/modifiers.ts,
+     * where the determinism argument (抽的次數與位置完全沒變,動的只有門檻)
+     * and the 「為什麼 `chance` 不夠」 derivation live.
+     *
+     * `coeff` 上界 `CHANCE_PER_ATTR_MAX` 是**打錯數字的守衛**:寫 1 而不是
+     * 0.01 等於「一點敏捷 = 100%」,而 clamp 會幫它藏起來 —— 一個永遠觸發的
+     * 「機率性」道具在 diff 裡跟正確的長得一樣。
+     *
+     * `min`/`max` 兩端都是欄位:「(總敏捷)%」在後期無界(120 敏 = 120%),
+     * 而要不要真的讓它變成必定觸發是 owner 的決定。`min <= max` 由
+     * {@link refineHookDamageContext} 檢查(一個上下顛倒的區間會讓 clamp 回傳
+     * `min`,也就是一個安靜地永遠不觸發的道具)。
+     *
+     * ⚠️ 2026-08-01 更正:這一段原本寫「在下面的 `refineHookChance` 檢查」,
+     * 而**全樹沒有任何一個叫 `refineHookChance` 的東西**(第三守則)。那個檢查
+     * 從一開始就住在 `refineHookDamageContext` 的最前面 —— 而且是刻意放在
+     * `DAMAGE_BEARING_EVENTS` 的 early-return **之前**,那個順序本身有註解在守。
+     * 名字指錯的註解比沒有註解更貴:它會讓下一個人去找一個不存在的函式,
+     * 然後以為這條規則沒被實作。
+     *
+     * ⚠️ **沒有常數項**:門檻是 `clamp(三圍 × coeff, min, max)`,不是
+     * `flat + 三圍 × coeff`。w3x 那一族 `(5 + 敏捷/15)%` 的技能因此**寫不進來**
+     * (拿 `min` 當常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下與文案差最多
+     * 5 個百分點)。要移植那一族就是加一個 flat 欄位,不是在文件裡寫近似值 ——
+     * 見 `content/fieldAdoption.test.ts` 對這個 key 的豁免。
+     */
+    chanceFrom: z
+      .object({
+        attr: z.enum(["str", "agi", "int"]),
+        basis: z.enum(["base", "total"]).optional(),
+        coeff: z.number().min(0).max(CHANCE_PER_ATTR_MAX),
+        min: z.number().min(0).max(1),
+        max: z.number().min(0).max(1),
+      })
+      .strict()
+      .optional(),
     /**
      * 觸發條件 — the general 「什麼時候才觸發」 gate (owner 2026-07-30). Absent =
      * always, so every hook authored before this field is untouched.
@@ -730,16 +1295,38 @@ export const zHookDef = z
      * near-identical fields with three near-identical editors.
      */
     condition: zEffectCondition.optional(),
-    /** who the effects resolve against: the event's entity (default) or the owner */
-    target: z.enum(["self", "event"]).optional(),
+    /**
+     * 效果打在誰身上:事件的那個實體(預設)、hook 的持有者("self"), 或**全隊**
+     * ("allies")。
+     *
+     * `"allies"` 是 天生牙 godie-i031 的「我方所有英雄」/「我們全部英雄」——
+     * 成員是「同隊、有 ChampionComp 的每一位, 含自己, **含死掉的**, 依實體 id 排序」,
+     * 完整的理由與每一條的取捨寫在 sim/stats/modifiers.ts 的 `HookDef.target`。
+     * 死人也在名單裡是 `revive` 的全部意義, 而對只作用在活人的 kind 是零成本:
+     * `healTarget` / `restoreMana` 對屍體回 0。
+     */
+    target: z.enum(["self", "event", "allies"]).optional(),
     /**
      * #244 — WHAT the event's entity must be for the hook to fire. Absent =
      * "any" (every pre-#244 hook). Lets one `onKill` doc pay differently for a
      * 部隊 kill and a 英雄 kill.
      */
     victim: z.enum(["champion", "mob", "any"]).optional(),
+    /**
+     * [反彈] 觸發這個 hook 的那一發傷害**是不是普通攻擊** —— mirrors
+     * `HookDef.damageSource` in sim/stats/modifiers.ts, where the naming
+     * (`"nonBasic"` 而不是 `"ability"`)與「無封包 = 不通過」的不對稱都有交代。
+     *
+     * owner 給反射之盾寫的是「反彈**普通攻擊**傷害 200%」;在這之前
+     * `onDamageTaken` 分不出普攻、技能與 DoT,那件道具只能被實作成「反彈所有
+     * 傷害」—— 一件強得多的、不同的道具。
+     */
+    damageSource: z.enum(["any", "basic", "nonBasic"]).optional(),
   })
   .strict();
+
+/** `zHookDefBase` + 「只有帶傷害的事件談得上『那一發』」的載入時檢查。 */
+export const zHookDef = zHookDefBase.superRefine(refineHookDamageContext);
 
 /**
  * One AURA (靈氣) projected by a passive — mirrors `AuraDef` in

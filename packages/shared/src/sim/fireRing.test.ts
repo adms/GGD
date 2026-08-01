@@ -340,6 +340,11 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
       burnPctPerSecStart: 0.04,
       burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
+      // #248 — 回合硬上限 5 分鐘 (owner 2026-08-01 「不管什麼條件，每回合最長
+      // 上限就是 5 分鐘出現火圈準備收場，不會無限增加時間」). It is the CEILING
+      // on the ignition tick that bounds the `boss` extension below; behaviour
+      // is guarded in `roundHardCap.test.ts`, this line only pins the number.
+      roundHardCapSec: 300,
       // #L1 — 殭屍王在場 → 回合延長 3 分鐘,火圈同步延後 3 分鐘 (owner
       // 2026-07-30). Pinned INSIDE this object rather than in its own `it`
       // because the whole point of `toEqual` here is that the shipped ring block

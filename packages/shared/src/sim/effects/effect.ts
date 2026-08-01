@@ -6,6 +6,8 @@
 import type { EntityId, ProjectileId, StatusId } from "../../ids";
 import type { Stat } from "../stats/statTypes";
 import type { HookDef, StatModifier } from "../stats/modifiers";
+import type { AttrBasis, AttrKey } from "../stats/attributes";
+import type { DamageRefund, DistanceScaleTerm, ResourcePctTerm } from "./dynamicTerms";
 import type { Vec2 } from "../math/vec2";
 import type { SimWorld } from "../SimWorld";
 import type { Rng } from "../math/rng";
@@ -13,12 +15,131 @@ import type { CastableSlot } from "../intents";
 
 export type DamageType = "physical" | "magic" | "true";
 
+/**
+ * 反彈要拿「剛剛那一下」的哪一個讀數當基數 —— **一個決策點,所以是欄位**
+ * (CLAUDE.md 第一守則),不是我在 handler 裡挑一個然後在註解裡辯護。
+ *
+ *   · `"raw"`       —— 封包本來的量(已經乘過 `combatEnv.damageDealt`,還沒被
+ *                      護甲/魔抗吃掉)。「他打出來的那一拳有多重」。
+ *   · `"mitigated"` —— 過了護甲/魔抗、**還沒**進護盾池(`damage.ts` 裡的
+ *                      `impact`,也就是打擊感/擊退讀的那個數)。**預設**。
+ *   · `"hpLost"`    —— 真的從血條上掉下來的那一格(護盾吃掉的不算)。
+ *                      「我實際上痛了多少」。
+ *
+ * 為什麼預設是 `"mitigated"`,見 `EffectDef.damage.incomingPct` 的說明。
+ */
+export type IncomingBasis = "raw" | "mitigated" | "hpLost";
+
+/**
+ * 觸發這一次 hook 的**那一發傷害** —— 「剛剛打中我的那一下」。
+ *
+ * WHY IT EXISTS. `Scaling` 只讀得到 CASTER 的 `final` 屬性表,所以
+ * 「反彈普通攻擊傷害 200%」在這個型別出現之前**根本沒有辦法被寫出來**:
+ * 200% 的分母是那一發封包,不是持有者身上的任何一個屬性。反射之盾
+ * (`content/items/godie-i03m.json`)因此出貨成一張只有文案的空卡(失敗形態 ②)。
+ *
+ * 三個讀數**同時**帶著,而不是在來源端就先選好一個:選哪一個是內容作者的決定
+ * (`incomingPct.basis`),而 sim 這一側三個都算得出來、成本是零。來源端先選
+ * 等於把決策點烘進程式。
+ *
+ * 只有真的帶著一發封包的事件會填它 —— 目前是 `onDamageTaken` 與
+ * `onDamageDealt`(兩邊都由 `combatResolveSystem` 在同一發封包上發出)。
+ * 其餘每一個 `HookEvent` 都是 `undefined`,而 `zHookDef` 會在**載入時**擋掉
+ * 把 `incomingPct` / `damageSource` 掛到那些事件上的文件,所以「寫得出來但永遠
+ * 不會發生」不是一個能出貨的狀態。
+ */
+export interface TriggerDamage {
+  /**
+   * 封包原本的量,未經護甲/魔抗。
+   *
+   * ⚠️ 這是**全域傷害倍率之後**的讀數 —— 除非那一發封包自己免除了倍率
+   * (`DamagePacket.skipGlobalDamageMult`,目前只有反彈會),那時它就只是封包
+   * 自己的量。這句話很重要:三個讀數全都在倍率之後,所以一發**由它們算出來**
+   * 的反彈封包如果再走一次倍率,倍率就進去了兩次。
+   */
+  readonly raw: number;
+  /** 過了護甲/魔抗、未進護盾池 —— `combat/damage.ts` 的 `impact` */
+  readonly mitigated: number;
+  /** 真的從血條扣掉的量(護盾吸收的不算) */
+  readonly hpLost: number;
+  /** 封包的 provenance,`"basic"` = 普通攻擊。`HookDef.damageSource` 讀它 */
+  readonly origin: string;
+  /**
+   * 這一發封包**已經是第幾代反彈**。原始攻擊是 0,反彈一次是 1……
+   *
+   * ⚠️ 這是終止性的全部:見 `effects/damage.ts` 的 `incomingPct` 段落。
+   */
+  readonly reflectDepth: number;
+  /**
+   * 這一發封包是在排空迴圈的**第幾輪**落地的(0 起算)。
+   *
+   * ⚠️ **不是**「等於 reflectDepth」。`reflectLimits.ts` 以前的推導就是這樣假設
+   * 的,而那個假設只在鏈從第 0 輪起跳時成立:hook 排出來的封包(每一件
+   * [On-Hit] 道具的 `on: onDamageDealt`)最早也要第 1 輪才解算,從它起跳的
+   * 反彈鏈整條往後平移,尾巴就溢到下一個 tick 了。
+   *
+   * 反彈用它算「還剩幾輪」,一發塞不下的反彈按 `incomingPct.whenTooLate` 處置。
+   */
+  readonly resolvePass: number;
+}
+
 /** Rank-aware scaling: flat + per-rank + stat ratios of the caster. */
 export interface Scaling {
   flat?: number;
   perRank?: number[];
   ratios?: { stat: Stat; coeff: number }[];
+  /**
+   * 三圍係數 —— 「等同(總力量)」「5.0 × AGI」這一族,加在 `ratios` 之上。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * 為什麼它不能是 `ratios` 的一筆
+   *
+   * 力/敏/智 **不是** `Stat` 的成員(見 stats/statTypes.ts 與 stats/attributes.ts
+   * 的檔頭:一點力量同時餵 maxHealth、healthRegen 與 ad,一點敏捷加性地餵護甲、
+   * 乘性地餵攻速)。`{stat: …, coeff: 1}` 沒有一個 `stat` 可以填,而硬把三圍
+   * 塞進 `Stat` enum 會讓 `statPipeline` 的每一條規則都要多一個例外。
+   *
+   * 在這個欄位之前,朗基努斯之槍 godie-i018 「造成等同(總力量)之閃電傷害」
+   * **完全寫不出來** —— 只能寫成一個固定數字,而那是一件不同的武器,而且文案
+   * 會說謊(失敗形態 ②)。原作那邊這種寫法是常態:抽出來的 JASS 裡到處是
+   * `GetHeroStatBJ(0,u,true)*9.`。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * `basis` 是欄位,因為**原始碼自己兩種都用**
+   *
+   * Blizzard 的 `GetHeroStatBJ(stat, unit, includeBonuses)` 把答案當參數收,而
+   * 抽出來的法術兩種都出現過(見 stats/attrSources.ts 的「總 vs 基礎」那一段):
+   * 傷害公式用 `true`(總,含裝備),蒼月潮 07-00 的 120 敏上限用 `false`(基礎)。
+   * 省略 = `"total"`,因為 owner 的 效能 文案寫的是「**總**力量」「**總**敏捷」。
+   *
+   * ⚠️ `resolveScaling` 的第四個參數是**必填**的,而且就是為了這個欄位。少傳
+   * 一個呼叫點 = 這一項靜默算成 0 = 文案寫了、玩家拿不到(失敗形態 ②)。做成
+   * 必填之後那種漏接是**編譯錯誤**,不是一條要記得寫的測試。
+   */
+  attrRatios?: { attr: AttrKey; basis?: AttrBasis; coeff: number }[];
 }
+
+/**
+ * 「這個身體的某一項三圍現在是多少」—— `resolveScaling` 讀 `Scaling.attrRatios`
+ * 的唯一管道。
+ *
+ * 做成 FUNCTION 而不是一張預先算好的表,有兩個具體理由:
+ *   · `basis` 是**每一筆**係數自己的欄位(見上),預先算表就要算兩份;
+ *   · `resolveScaling` 至今是一個**純函式**(輸入全在參數上,不碰 world),
+ *     測試可以直接餵數字。傳一個 `(world, id)` 進去會把它變成要架世界才測
+ *     得動的東西,而它是全遊戲被呼叫最多的算式之一。
+ *
+ * sim 這一側的實作是 `effects/effectCommon.ts::casterAttrs`(轉呼叫
+ * `stats/attrSources.ts::liveAttribute`)。
+ */
+export type AttrLookup = (attr: AttrKey, basis: AttrBasis) => number;
+
+/**
+ * 「這個身體沒有三圍」——回 0。給非英雄的身體、編輯器預覽、以及所有只想測
+ * `flat`/`ratios` 的測試用。**不是**一個可以拿來搪塞真正呼叫點的東西:一個
+ * 真的有英雄在場的地方傳它進去,`attrRatios` 就會靜默變成 0。
+ */
+export const NO_ATTR_LOOKUP: AttrLookup = () => 0;
 
 export type EffectDef =
   | {
@@ -79,6 +200,119 @@ export type EffectDef =
        * 12 %) would otherwise delete a full-health champion in one cast.
        */
       hpPct?: { basis: "max" | "current"; perRank: number[] };
+      /**
+       * [反彈] —— 額外傷害 = 「剛剛觸發這個 hook 的那一發」的一個百分比。
+       *
+       * ─────────────────────────────────────────────────────────────────────
+       * 為什麼它是一個獨立欄位而不是 `ratios` 的一筆
+       * ─────────────────────────────────────────────────────────────────────
+       * 跟 `hpPct` 一模一樣的理由,只是換了一個受害者:`resolveScaling` 讀的是
+       * **CASTER 的 `final` 屬性表**。反彈的分母不在任何一張屬性表上 —— 它是
+       * 一發**封包**,是一個事件,不是一個屬性。`{stat: …, coeff: 2}` 沒有任何
+       * 一個 `stat` 可以填。所以它跟 `hpPct` 一樣是 `Scaling` 之外的一項,
+       * 而不是硬把事件塞進 `Stat` enum。
+       *
+       * 在這個欄位存在之前,「反彈普通攻擊傷害 200%」只能被寫成一個固定數字,
+       * 那是一件**不同的道具**,而且文案會說謊(失敗形態 ②)。
+       *
+       * ─────────────────────────────────────────────────────────────────────
+       * `basis` —— 反彈之前還是之後扣護甲?這是決策點,所以是欄位
+       * ─────────────────────────────────────────────────────────────────────
+       * 預設 `"mitigated"`,理由三條,而且**沒有一條是「WC3 就是這樣」**:
+       *
+       *  1. 原作的來源是 stock native。map 的 `A0C6`(反射之盾)base = `ANth`
+       *     **荊棘光環**,`data.1.1 = 1.0`,物件編輯器後綴寫著 (100%);那個欄位
+       *     的名字是 "Factor - Damage **Received**",讀起來是護甲之後。
+       *     ⚠️ 但這條是**讀欄位名推的,不是量到的** —— 這件道具在 `war3map.j`
+       *     裡只出現在 AI 購物清單(`UnitHasItemOfTypeBJ`),機制整段在引擎裡,
+       *     沒有 JASS 可以讀。所以我把它寫成欄位而不是宣稱 WC3 如何。
+       *  2. 玩家眼裡的「傷害」是他血條上掉的那個數。用 `"raw"` 當預設,一個
+       *     100 護甲的坦克吃 50、反彈 200,畫面上的因果關係是斷的。
+       *  3. `"mitigated"` 是三個裡面**最小**的其中一個,而反彈這個機制的天然
+       *     使用者就是高護甲的身體 —— 預設要選出錯時傷害最小的那一個。
+       *
+       * ─────────────────────────────────────────────────────────────────────
+       * `maxChainDepth` —— A 反彈給 B、B 再反彈回 A 的無窮迴圈,靠這個停
+       * ─────────────────────────────────────────────────────────────────────
+       * 預設 **0** = 「反彈出去的那一下,不會再被任何人反彈」。
+       * 這也是原作的行為:荊棘光環反的是**攻擊**,而反傷本身不是一次攻擊。
+       *
+       * 終止性的完整證明在 `effects/damage.ts` 的 handler 上方。上界
+       * `REFLECT_MAX_CHAIN_DEPTH` 是從 `DAMAGE_QUEUE_MAX_PASSES` 算出來的,
+       * 不是挑的 —— 見 `effects/reflectLimits.ts`。
+       *
+       * ─────────────────────────────────────────────────────────────────────
+       * `applyGlobalDamageMult` —— 反彈要不要跟著全域傷害旋鈕走?
+       * ─────────────────────────────────────────────────────────────────────
+       * 預設 **false** = 「反彈就是一面鏡子:我吃到多少,他就吃到那個數的 N%」。
+       *
+       * 這個欄位存在是因為 2026-08-01 抓到的一個**乘兩次**的缺陷:三個讀數
+       * (`TriggerDamage`)是在 `combatEnv.damageDealt` 之後取的,而反彈算出來的
+       * 封包再排進佇列時又會走一次同一行 —— 反彈比變成 `pct × k`。
+       * 出貨 k = 1.0 剛好看不出來(`content/config/combat-env.json`),但後台
+       * 戰鬥系統頁(#28)存在的意義就是動 k:k=0.5 時反射之盾的「200%」實際是
+       * 100%,k=2 時是 400%。實測見 `incomingReflect.test.ts` 的「乘兩次」那一段。
+       *
+       * 為什麼預設是 false:owner 的文案「反彈普通攻擊傷害 200%」必須**字面為
+       * 真**,而且是在任何一個 k 下都為真。true 是另一種一致的讀法(把反彈當成
+       * 一個普通傷害來源,跟其他每一種來源一樣吃一次旋鈕),留給想要的人。
+       *
+       * ⚠️ 免除倍率的是**整發封包**,不是只有反彈那一項。一個同時帶 `flat` /
+       * `hpPct` 的 `incomingPct` 效果,那些項也一起免除 —— 跟「沒有 incoming
+       * 就整條不執行」同一個立場:帶 `incomingPct` 的效果**就是一個反彈**。
+       *
+       * ─────────────────────────────────────────────────────────────────────
+       * `whenTooLate` —— 一發塞不進這個 tick 剩餘排空輪數的反彈,丟掉還是留著?
+       * ─────────────────────────────────────────────────────────────────────
+       * 預設 **"drop"**。`reflectLimits.ts` 自己說「一個晚一 tick 才出現的反彈是
+       * bug report,不是設計」,所以預設選「不要發生」而不是「晚點發生」。
+       * `"spill"` = 照排進佇列、下一個 tick 才落地(這是 2026-08-01 之前的行為)。
+       *
+       * 這個閘門才是「反彈一定在同一個 tick 之內結束」的**實際**保證。
+       * `maxChainDepth ≤ REFLECT_MAX_CHAIN_DEPTH` 那個不等式只在鏈從第 0 輪起跳
+       * 時夠用,而 [On-Hit] 排出來的封包最早是第 1 輪 —— 49 件傳說裡 16 件是
+       * [On-Hit],那是常態。
+       *
+       * `perRank` 跟 `hpPct` 一樣是 rank-1 起算、超過欄位長度就夾在最後一格,
+       * 每一格由 Zod 夾在 0..`INCOMING_PCT_MAX`。
+       */
+      incomingPct?: {
+        basis?: IncomingBasis;
+        perRank: number[];
+        maxChainDepth?: number;
+        applyGlobalDamageMult?: boolean;
+        whenTooLate?: "drop" | "spill";
+      };
+      /**
+       * 資源百分比項 —— 「**誰的**哪一條血/魔的多少」。形狀、上界與兩種讀法
+       * (`scale`) 的完整推導在 {@link ResourcePctTerm}(effects/dynamicTerms.ts)。
+       *
+       * 這一項與 `hpPct` **不重複**:`hpPct` 只讀受害者的生命、只有比例讀法,
+       * 已經出貨在 揍敵客 W 牙突,原封不動。`resourcePct` 是一般化的那一個 ——
+       * 主詞可以是自己(虛哭神去 godie-i007「自身已損失的生命」)、可以是魔條
+       * (瑪那魔杖 godie-i020「敵方現存 MP 5%」)。
+       *
+       * PER TARGET,跟 `hpPct` 一樣(而跟 combo/存款/反彈不一樣):分母是某一個
+       * **身體**的條,一次 AoE 的每個受害者算出來的數字本來就該不同。
+       */
+      resourcePct?: ResourcePctTerm;
+      /**
+       * 距離加成項 —— 炎神弩 godie-i06i「敵我距離越遠傷害越高」。線性內插,
+       * 形狀與上界見 {@link DistanceScaleTerm}(effects/dynamicTerms.ts)。
+       *
+       * ⚠️ 唯一另一個跟距離有關的旋鈕是 `damageArea.falloff`,而它量的是 AoE
+       * **圓心到副目標**的距離、方向還是相反的(越遠越弱)。兩者不能互相替代。
+       */
+      distanceScale?: DistanceScaleTerm;
+      /**
+       * 把**實際打出去的量**折回給施法者 —— 瑪那魔杖 godie-i020「回復己方 MP
+       * 該傷害量」。形狀與為什麼它必須騎在封包上,見 {@link DamageRefund}。
+       *
+       * ⚠️ 這個欄位在這裡只是**宣告**;真正付款的是 `combat/damage.ts` 的排空
+       * 迴圈(`DamagePacket.refund`),因為只有那裡知道全域倍率、護甲/魔抗、
+       * 格擋與護盾之後真的掉了多少。
+       */
+      refund?: DamageRefund;
     }
   /**
    * damageArea (task #210 近戰擴散) — 傷害一個**圓**, 圓心是這次事件的受害者。
@@ -185,6 +419,122 @@ export type EffectDef =
       everyNth?: number;
       /** refuse the payout once the LIVE attribute reaches this. 獸化心靈 = 120 */
       maxAttribute?: number;
+      /**
+       * WHICH 三圍 `maxAttribute` measures — 決策點做成欄位 (CLAUDE.md 第一守則),
+       * and the axis is the SOURCE MAP'S OWN, not one invented here.
+       *
+       * Blizzard's `GetHeroStatBJ(stat, unit, includeBonuses)` takes the answer
+       * as a parameter, and the extracted spells under
+       * `tools/w3x-import/out/GoDieEX22s/jass-spells/` use both values:
+       * damage formulas read `…,true)` (bonuses in), while 蒼月潮 07-00 獸化心靈's
+       * hidden ceiling reads `GetHeroStatBJ(1,GetKillingUnit(),false)<$8C`
+       * (bonuses OUT). GGD's two accumulators line up exactly —
+       * `ChampionComp.attrBonus` ≡ `ModifyHeroStat` (base), an item's
+       * `ModifierSource.attributes` ≡ equipment (bonus).
+       *
+       *   · `"base"` (DEFAULT, and the conservative one) — innate + growth +
+       *     三選一 picks + previous `grantAttribute` payouts. This is what
+       *     獸化心靈's JASS measures, and it keeps a champion's innate passive
+       *     UNAFFECTED by what he is carrying: equipping 朗基努斯之槍 (+12 AGI)
+       *     must not silently retire 蒼月潮's kill-stacking 12 points early.
+       *     It is also byte-identical to the behaviour every shipped doc had
+       *     before items could grant 三圍 at all.
+       *   · `"total"` — items included, for a future card whose ceiling is meant
+       *     to mean 「總敏捷」 in the same sense a weapon's 效能 line does.
+       */
+      maxAttributeBasis?: AttrBasis;
+      /**
+       * WHERE THE POINTS ARE BANKED —— 決策點做成欄位, and the difference is
+       * 「賣掉之後還在不在」.
+       *
+       *   · `"champion"` (DEFAULT, and byte-identical to every doc authored
+       *     before this field) — `ChampionComp.attrBonus`, WC3 `ModifyHeroStat`.
+       *     Permanent, and deliberately INDEPENDENT of whatever caused it:
+       *     蒼月潮 07-00 獸化心靈 earns the 敏捷 with his own hands and it is his.
+       *   · `"source"` — the accumulator on the `ModifierSource` that FIRED this
+       *     hook (`ModifierSource.attrEarned`). 甘豆腐之袍 godie-i03f 「每殺死一名
+       *     英雄可以額外獲得 10點智慧，上限 160」: an ITEM's stacks belong to the
+       *     item, so selling the robe takes the 160 智慧 with it. The whole class
+       *     of 「賣掉還留著」 bug becomes unreachable rather than tested-for,
+       *     because `detachSource` drops the accumulator and there is nowhere
+       *     else the points could be.
+       *
+       * ⚠️ `"source"` REQUIRES a hook origin (`origin === "hook:<sourceId>"`),
+       * which is what every item passive / aura hook has. Run from an ABILITY's
+       * effect list there is no source to bank into and the payout is REFUSED
+       * (never silently redirected into `attrBonus`, which would be the
+       * permanent-and-unsellable semantics wearing the sellable one's name).
+       */
+      store?: "champion" | "source";
+      /**
+       * `store: "source"` ONLY —— the ceiling on how much THIS SOURCE has paid
+       * out in total, per attribute. 甘豆腐之袍's 「上限 160」 = 16 stacks of 10.
+       *
+       * ⚠️ IT IS NOT {@link maxAttribute}, and the difference is why this field
+       * had to exist. `maxAttribute` caps the champion's RESULTING 三圍 (獸化心靈's
+       * 「敏捷 < 120」, innate + level growth included), so on a high-level 智慧
+       * hero it would refuse the very first stack and the robe would be a card
+       * that does nothing. This one counts only what the robe itself has issued.
+       *
+       * A payout that would cross the ceiling is CLAMPED to the remaining
+       * headroom, never refused: 「上限 160」 is a promise about the total, and
+       * refusing would make an item authored 15/160 pay 150 instead of 160.
+       */
+      maxSourceTotal?: number;
+    }
+  /**
+   * `revive` —— 復活. See `effects/revive.ts` for the whole model: it delegates
+   * the state contract to `sim/revive.ts::reviveChampionAt`, the SAME function
+   * the 復活圈 (#84/#206) completes through, so there is exactly one definition
+   * of what a revived champion looks like.
+   *
+   * 天生牙 godie-i031 「[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄」 —— the
+   * 「我方所有英雄」 half is the hook's `target: "allies"` scope, not this effect.
+   */
+  | {
+      kind: "revive";
+      /**
+       * Fraction of maxHp to come back on. ABSENT = the match's own
+       * `reviveCircles.reviveHpPctMax` (shipped 0.5), falling back to
+       * `REVIVE_EFFECT_FALLBACK_HP_PCT` when no circles are armed — 「復活回多少
+       * 血」 is ONE operator concept with ONE home in 戰鬥系統, and an item that
+       * answered it separately would be a second number nobody knows exists.
+       * Bounded 0..1: the floor still yields a living body (`reviveChampionAt`
+       * clamps to ≥1 HP), and the ceiling catches the mis-parse that matters —
+       * 50 typed for 「50%」, which without it is a full-HP team resurrection.
+       */
+      hpPct?: number;
+      /** Fraction of maxMana. Same default chain and same 0..1 bounds as `hpPct`. */
+      manaPct?: number;
+      /**
+       * WHO may be stood up. `"ally"` (DEFAULT, conservative) = same team as the
+       * caster only. `"any"` drops the check, for a hypothetical necromancy card
+       * that raises whoever it names.
+       *
+       * The default is not decoration: `revive` on an `onKill` hook WITHOUT
+       * `target: "allies"` resolves against the corpse you just made, so the
+       * permissive reading is an item that resurrects its own victims — silent,
+       * catastrophic, and exactly the kind of thing a default should refuse.
+       */
+      side?: "ally" | "any";
+      /**
+       * 一回合一次 —— whether this shares the 復活圈's per-team round budget
+       * (`world.reviveCharges`, `config.arena-rules@1 revivesPerTeamPerRound`,
+       * shipped 1).
+       *
+       *   · `"ignore"` (DEFAULT) — owner's card text puts no limit on 天生牙, so
+       *     this is what ships. The item can fire as often as its hook allows.
+       *   · `"requireAndSpend"` — refuses unless the caster's team still holds a
+       *     charge, and spends ONE on success (one charge for the whole team's
+       *     resurrection, not one per body). This is the once-per-round bound,
+       *     and it reuses the only round-scoped counter that already exists —
+       *     `endCombatRevives` resets it, so it needs no new SimWorld field and
+       *     cannot leak across rounds.
+       *
+       * ⚠️ Under `"requireAndSpend"` the item and the 復活圈 EAT THE SAME BUDGET:
+       * a resurrection from 天生牙 means no circle rescue later that round.
+       */
+      teamCharge?: "ignore" | "requireAndSpend";
     }
   | { kind: "heal"; amount: Scaling }
   | {
@@ -380,6 +730,23 @@ export type EffectDef =
        * and the percentage drains); absent = 0, so a flat-only card is unchanged.
        */
       pctMaxMana?: number;
+      /**
+       * ADDITIONAL 0..1 fraction of the payer's **CURRENT** mana — 熾天使之弓
+       * godie-i012 「每次削去敵方英雄**現存** MP 3%」(owner 2026-08-01 把 5% 調成 3%)。
+       * ABSENT = 0,所以每一份
+       * 既有文件完全不變。加在 `amount` 與 `pctMaxMana` 之上。
+       *
+       * ⚠️ 為什麼是**第二個欄位**而不是給 `pctMaxMana` 加一個 `basis`:
+       * `pctMaxMana` 這個名字寫著 **Max**,而且已經出貨在內容裡。加一個
+       * `basis: "current"` 會讓那個名字在一半的取值下變成謊話 —— CLAUDE.md
+       * 第一守則末段點名的正是這種事(「語意改了,舊文案就是謊話」)。兩個
+       * 名字各自誠實、相加,語意也清楚:兩個都是「這次要提多少」。
+       *
+       * ⚠️ 分母永遠是**付款人自己的**條(跟 `pctMaxMana` 一樣),即使
+       * `applyTo: "target"` —— 「削去敵方現存 MP 3%」的 3% 當然是敵方的魔,
+       * 這是這個機制唯一說得通的讀法,也是 spendMana 檔頭已經寫下的規則。
+       */
+      pctCurrentMana?: number;
       /** who pays: the hook/ability owner (default) or each resolved target (mana burn) */
       applyTo?: "self" | "target";
       /**
@@ -504,6 +871,24 @@ export type EffectDef =
       damageType: DamageType;
       /** damage per PAYOUT (not per second) — resolved against the caster at apply */
       amountPerTick: Scaling;
+      /**
+       * 資源百分比項,**每一次付款**都加上它 —— 熾天使之弓 godie-i012 的
+       * 「每秒燃燒 3% 最大生命,持續 2 秒」。形狀與上界見
+       * {@link ResourcePctTerm}(effects/dynamicTerms.ts),與 `damage` 用的
+       * 是同一個型別、同一個解算函式。
+       *
+       * ⚠️ **在 apply 當下就對每個受害者解算完,凍進 `DotInstance.amountPerTick`**,
+       * 跟 `amountPerTick` 這一項的既有語意完全一致(dot.ts:「一次施放的每個
+       * 受害者燒同一個數字,而那個數字在 APPLY 就凍住」)。每次付款重讀會是
+       * 另一個機制(而且會讓一個死掉的施法者的燒傷還在跟著對方的裝備變動)。
+       * 也因此 `effects/dotTick.ts` **一行都不用改**。
+       *
+       * ⚠️ 上界架在**整段燒完的總量**上,不是單次付款 —— 一次 `damage` 的
+       * 0.35 是一下,而 dot 會付 `duration/interval` 次。推導與數字見
+       * `DOT_RESOURCE_PCT_RATIO_TOTAL_MAX`,載入時的檢查在
+       * `content/schema/effect.ts` 的 `dot` superRefine。
+       */
+      resourcePct?: ResourcePctTerm;
       /** seconds between payouts; converted to whole ticks once, at apply */
       intervalSec: number;
       /** total seconds the effect lasts */
@@ -821,6 +1206,81 @@ export type EffectDef =
        * by default so the arena fire-ring burn (#270) stays undodgeable.
        */
       dodgesTrueDamage?: boolean;
+    }
+  /**
+   * taunt — 嘲弄 (鍊金術之盾 godie-i06q「每秒吸引周圍敵人優先攻擊自己」).
+   * Forces the subjects to auto-target the CASTER for a while. The whole model
+   * — where the state lives, why it is not a `StatusEffect`, and every one of
+   * its decision-point fields — is in sim/taunt.ts; the targeting seam it feeds
+   * is `targeting.forcedTargetOf`.
+   */
+  | {
+      kind: "taunt";
+      /**
+       * 持續幾秒。Multiplied by the operator's `tauntRules.durationMult` at
+       * apply time, then rounded to whole ticks (an ABSOLUTE expiry tick).
+       *
+       * BOTH ENDS BOUNDED. The floor is 0.034 s for the same reason
+       * `grantAttribute.durationSec` has one: below that,
+       * `Math.round(sec / dt)` at 30 Hz is 0 ticks — a blank round that looks
+       * exactly like the feature being broken. The ceiling
+       * (`TAUNT_MAX_DURATION_SEC`, sim/taunt.ts) is a MIS-PARSE guard: 0.5 typed as 50
+       * is a taunt that outlives most rounds, i.e. one shield that owns every
+       * enemy's targeting for the whole fight.
+       */
+      durationSec: number;
+      /**
+       * 範圍 (GGD units) around the CASTER. ABSENT = single-target: the taunt
+       * lands on this effect's own resolved targets instead.
+       *
+       * Two modes rather than two kinds because they differ only in WHO, never
+       * in WHAT — and the single-target form is what an ability-targeted WC3
+       * taunt needs, while the item needs the circle. Flows through
+       * `resolveAbilityRadius`, i.e. the same `combatEnv.abilityRange` budget
+       * every other AoE obeys (aura.ts DECISION 3), so it cannot become the one
+       * area in the game that ignores the operator's range knob.
+       */
+      radius?: number;
+      /** 一次最多拉幾個人 (nearest first). Absent = `TAUNT_MAX_TARGETS` (sim/taunt.ts). */
+      maxTargets?: number;
+    }
+  /**
+   * grantGold — 發放金幣. Pays the caster (or each target) gold, optionally
+   * SCALED BY THE TARGET'S LEVEL — which is the only shape that can express
+   * 鍊金術之盾's「黃金數量為敵方等級」. See effects/grantGold.ts for what
+   * "level" resolves to on each body kind (and what it does NOT resolve to).
+   */
+  | {
+      kind: "grantGold";
+      /** 固定金額. Absent = 0 — a pure per-level payout is legal. */
+      flat?: number;
+      /**
+       * 每一級發多少金 —— 「黃金數量為敵方等級」 is exactly `1`.
+       * Multiplied by the RESOLVED TARGET's level, so it is meaningless (and
+       * contributes 0) when the effect has no target.
+       */
+      perTargetLevel?: number;
+      /** 誰收錢: the caster (default) or each resolved target. */
+      to?: "self" | "target";
+      /**
+       * DECISION POINT — 小怪(殭屍)的「等級」從哪裡來。
+       *
+       * "wave" (default, absent) = the ROUND's `mobRules.level`, i.e. the same
+       *   number the mob's own hp and regen curves are computed from.
+       * "fallback" = a mob has no level, so it is worth `fallbackLevel`.
+       *
+       * ⚠️ It defaults to "wave" because the previous behaviour — a hardcoded
+       * 0 — made 鍊金術之盾's 「黃金數量為敵方等級」 pay NOTHING for every
+       * zombie in the game while the card said otherwise (failure shape ②).
+       */
+      mobLevelSource?: "wave" | "fallback";
+      /**
+       * 沒有等級可讀的身體值幾級。Absent = 0, i.e. a per-level payout on a
+       * body with no level concept pays nothing — a number from nowhere is
+       * worse than no payout at all. Also what a mob is worth outside a mob
+       * round (`world.mobRules` is null there).
+       */
+      fallbackLevel?: number;
     };
 
 export interface EffectContext {
@@ -835,6 +1295,13 @@ export interface EffectContext {
   origin: string;
   /** slot of the casting ability (threads through projectiles into hooks) */
   abilitySlot?: CastableSlot;
+  /**
+   * 觸發這一次執行的那一發傷害。**只有** `fireHooks` 在 `onDamageTaken` /
+   * `onDamageDealt` 上會填它 —— 技能施放、投射物命中、DoT tick 都沒有「剛剛那
+   * 一下」可言,所以是 `undefined`,而讀它的效果(`damage.incomingPct`)在那種
+   * 情況下**整條不執行**,不會退化成一個只有 flat 項的半吊子傷害。
+   */
+  incoming?: TriggerDamage;
   rng: Rng;
 }
 
@@ -843,8 +1310,16 @@ export function resolveScaling(
   finalStats: Record<Stat, number>,
   sc: Scaling,
   rank: number,
+  /**
+   * 施法者的三圍讀取器。**必填,而且刻意必填** —— 見 `Scaling.attrRatios`:
+   * 選填的話,任何一個忘了接上的呼叫點都會讓 `attrRatios` 靜默算成 0,也就是
+   * 「文案寫了、玩家拿不到」(失敗形態 ②),而且**測試全綠**。必填讓那種漏接
+   * 變成編譯錯誤。不涉及三圍的呼叫點傳 {@link NO_ATTR_LOOKUP}。
+   */
+  attrs: AttrLookup,
 ): number {
   let v = (sc.flat ?? 0) + (sc.perRank?.[Math.max(0, rank - 1)] ?? 0);
   for (const r of sc.ratios ?? []) v += (finalStats[r.stat] ?? 0) * r.coeff;
+  for (const r of sc.attrRatios ?? []) v += attrs(r.attr, r.basis ?? "total") * r.coeff;
   return v;
 }

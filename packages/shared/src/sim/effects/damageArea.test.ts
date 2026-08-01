@@ -283,22 +283,48 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
       .flatMap((h) => h.effects)
       .filter((e): e is Extract<EffectDef, { kind: "damageArea" }> => e.kind === "damageArea");
 
-  it("the pool is 24 wide — a silent shrink back to 15 is a regression", () => {
+  it("the pool only GROWS — a silent shrink (or a duplicate hiding one) is a regression", () => {
     cover("co-spread-content");
-    // #210: owner 「目前太少，很容易被抽完」. 15 -> 20. Pinned rather than
-    // floored because the failure being guarded is a re-curation that quietly
-    // drops entries, which a `>= 6` floor would sleep through.
+    // #210: owner 「目前太少，很容易被抽完」. 15 -> 20 -> 24 (職業限定閘 lane,
+    // owner 2026-07-30) -> 49 (owner 2026-08-01: 「請你將我剛剛輸入的 49 項傳說
+    // 武器道具都實作完，登錄在隨機三選一」, and rounds 2 AND 5 now both roll this
+    // table). The table is still the only shipping path a tier-3+ legendary has:
+    // `craftRole: final` (the shop shelf) holds nothing above tier 2, so an
+    // entry dropped from here is content the player can never reach again.
     //
-    // 20 -> 24 (職業限定閘 lane, owner 2026-07-30): the four class legendaries
-    // 裂地巨斧 / 賢者的護身符 / 衝鋒重脛甲 / 穿甲弩 were added here BECAUSE this
-    // table is the only shipping path a tier-5 has — `craftRole: final` (the
-    // shop shelf) holds nothing above tier 2, so a legendary that is not in
-    // this table is content the player can never reach.
+    // ⚠️ RE-AIMED 2026-08-01, and the reason is worth keeping. This used to be
+    // an EXACT width (`toBe(24)`), pinned so that a re-curation which quietly
+    // drops entries could not slip past. The 2026-08-01 re-curation proved a
+    // pinned width does not actually buy that: it added 31 entries and REMOVED
+    // 6 (godie-i04v 正義之杖 / godie-i02x 斬岩刃 / godie-i06s 龍騎士之劍 /
+    // godie-i063 防狼電擊棒 / sage-ward-amulet 賢者的護身符 / piercer-crossbow
+    // 穿甲弩), and any width assertion — exact or floored — reads that as one
+    // number changing. So the width is now stated as what it can honestly
+    // enforce: growth is free, a net shrink has to be deliberate.
     //
-    // ⚠️ The title used to read 「25 wide」 while the assertion said 20. That
-    // was a stale comment, not a second rule — corrected here rather than
-    // carried forward (CLAUDE.md 第三守則: 註解會說謊).
-    expect(pool.length).toBe(24);
+    // ⚠️ WHAT A WIDTH STILL CANNOT SEE, stated so nobody reads a guarantee into
+    // it: an equal-sized SWAP (drop one, add one). The exact pin had precisely
+    // the same blind spot — that is why it was not worth an edit per curation,
+    // not because the rule got softer. Catching a swap needs a PER-ID seat, and
+    // the seats that exist today were counted rather than assumed:
+    //   · 18 of the 49 — every `craftRole: final` entry — are pinned by
+    //     「a DELISTED final still has a way to reach the player」 in
+    //     economy/itemTiers.test.ts (a 0g final that is not in this table fails
+    //     there). That rule is silent about the other 31, which carry
+    //     `craftRole` component / quest / unset.
+    //   · 丈八蛇矛 godie-i000 is pinned twice by name below (「近戰擴散 is a
+    //     NON-EMPTY category」 and the 擴散傷害 ratio case, both of which look it
+    //     up THROUGH `pool`).
+    // Everything else is covered only by these two counts and by the ≥8 擴散
+    // floor. Swapping out a payload-carrying non-final entry is therefore still
+    // invisible here — it is a content-review gap, not something this file can
+    // close without freezing a 49-id list the owner re-curates by design.
+    const ids = pool.map((d) => d.id as string);
+    // A duplicated entry would inflate the width while masking a removal — and
+    // it also double-weights that item in every roll, since the table is drawn
+    // by weight and every entry ships weight 1.
+    expect(new Set(ids).size, "the pool lists the same item twice").toBe(ids.length);
+    expect(pool.length, "the legendary pool shrank — an entry left the ONLY door it ships through").toBeGreaterThanOrEqual(49);
   });
 
   it("近戰擴散 is a NON-EMPTY category — the thing owner asked for", () => {
@@ -318,9 +344,16 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
   it("every 擴散 the pool ships is inside the limits and hangs off a real hook", () => {
     cover("co-spread-content");
     const withArea = pool.filter((d) => areaEffects(d).length > 0);
-    // 5 today: 丈八蛇矛 / 熾天使之弓 / 斬岩刃 / 月牙魔杖 / 死之王的神盾
-    //          + 火焰泰坦腰帶 + 防狼電擊棒
-    expect(withArea.length, "the pool ships no 擴散 at all").toBeGreaterThanOrEqual(5);
+    // 8 today (owner 2026-08-01 pool): 丈八蛇矛 / 泰坦九頭蛇 / 炎龍巨弩 /
+    // 雷神之鎚 / 天地崩裂魔杖 / 冰晶虎魄-改 / 死之王的神盾 / 月牙魔杖.
+    //
+    // ⚠️ The floor was 5 under a comment that listed SEVEN ids, three of which
+    // (熾天使之弓 / 斬岩刃 / 防狼電擊棒) no longer carry a 擴散 or are no longer
+    // in the pool — a stale list, corrected rather than carried forward
+    // (CLAUDE.md 第三守則). Raised to the shipped count for the same reason the
+    // width above is floored: 擴散 is the feature this file exists for, so the
+    // set of weapons that ship it must not thin out unnoticed.
+    expect(withArea.length, "the pool ships fewer 擴散 weapons than it did").toBeGreaterThanOrEqual(8);
     for (const d of withArea) {
       for (const e of areaEffects(d)) {
         expect(e.radius, `${d.name} radius`).toBeGreaterThan(0);
@@ -339,15 +372,31 @@ describe("傳說池的近戰擴散武器 (co-spread-content)", () => {
     }
   });
 
-  it("丈八蛇矛's 「擴散傷害60%」 is 60% of AD, not a flat number", () => {
+  it("丈八蛇矛's 「擴散傷害N%」 is a RATIO of AD, not a flat number", () => {
     cover("co-spread-content");
     // The one place the text pins the FORMULA rather than a value. A rescale
     // that turned this into `flat` would keep every other test green.
-    const doc = byId.get("godie-i000")!;
-    expect(doc.description).toContain("擴散傷害60%");
-    const e = areaEffects(doc)[0]!;
-    expect(e.amount.flat ?? 0).toBe(0);
-    expect(e.amount.ratios).toEqual([{ stat: "ad", coeff: 0.6 }]);
+    //
+    // ⚠️ RE-AIMED 2026-08-01: the owner's rewrite moved the number (60% -> 87%,
+    // alongside ad 28.7 -> 87 and maxHealth 237 -> 872), so the percentage is
+    // now READ OUT OF THE CARD TEXT instead of hardcoded here. That is the half
+    // where the meaning lives: the card promises 「a share of your attack
+    // power」, and both the `flat` form and a coefficient that disagrees with
+    // the printed number make it a lie. Re-tuning the weapon needs no edit
+    // here; breaking the promise still goes red.
+    //
+    // Resolved out of `pool` rather than out of `byId` (which holds every item
+    // in the tree, in or out of the table): this describe block is the 出貨的
+    // 那一份 half of the file, so the weapon leaving the table has to be a
+    // failure here too — that is one of the few per-id seats the width
+    // assertion above says it is relying on.
+    const doc = pool.find((d) => d.id === "godie-i000");
+    expect(doc, "丈八蛇矛 不在傳說池裡了 —— 近戰擴散的樣板武器沒有出貨路徑").toBeDefined();
+    const m = /擴散傷害(\d+(?:\.\d+)?)%/.exec(doc!.description ?? "");
+    expect(m, "丈八蛇矛 的卡面不再寫出擴散傷害的百分比").not.toBeNull();
+    const e = areaEffects(doc!)[0]!;
+    expect(e.amount.flat ?? 0, "擴散傷害 shipped as a FLAT number — the card says it is a %").toBe(0);
+    expect(e.amount.ratios).toEqual([{ stat: "ad", coeff: Number(m![1]) / 100 }]);
   });
 
   it("月牙魔杖's 「距離越遠流星傷害越低」 is the only falloff claim, and it is authored", () => {

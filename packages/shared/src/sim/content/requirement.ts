@@ -79,6 +79,8 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { PrimaryAttr } from "../stats/attributes";
 import type { EffectDef, Scaling } from "../effects/effect";
+import type { StatModifier } from "../stats/modifiers";
+import { ModOp } from "../stats/modifiers";
 import { Champions } from "./registry";
 
 /**
@@ -255,7 +257,19 @@ export function scaleEffects(effects: readonly EffectDef[], k: number): EffectDe
   return effects.map((e): EffectDef => {
     switch (e.kind) {
       case "damage":
-        return { ...e, amount: scaleScaling(e.amount, k) };
+        // `incomingPct` 也要跟著縮 —— 它是這個 kind 的傷害輸出的一部分,而不是
+        // 一個結構性欄位。漏掉它,一張寫著「限近戰(其他英雄僅 50% 效果)」的
+        // 反彈卡會給不合格的英雄**全額**反彈,也就是那行閘門文字是假的。
+        // ⚠️ `hpPct` / `bankedBonus` / `comboBonus` 有一模一樣的缺口,而且是先於
+        //    這一行就存在的;沒有一起改是因為那三個不在這條 seam 上,改了會動到
+        //    既有出貨文件的數值。已在交接裡記下。
+        return {
+          ...e,
+          amount: scaleScaling(e.amount, k),
+          ...(e.incomingPct !== undefined
+            ? { incomingPct: { ...e.incomingPct, perRank: e.incomingPct.perRank.map((p) => p * k) } }
+            : {}),
+        };
       case "damageArea":
         return { ...e, amount: scaleScaling(e.amount, k) };
       case "heal":
@@ -270,6 +284,101 @@ export function scaleEffects(effects: readonly EffectDef[], k: number): EffectDe
         return e;
     }
   });
+}
+
+// ---------------------------------------------------------------------------
+// GATING A STATIC MODIFIER — the other half, for `item@1.modifiers`
+// ---------------------------------------------------------------------------
+
+/**
+ * A `StatModifier` that may name a carrier requirement. Structural on purpose so
+ * this file needs no import from `content/defs.ts` (which imports THIS file for
+ * `ClassRequirement`).
+ */
+export interface GatedStatModifier extends StatModifier {
+  requires?: ClassRequirement;
+}
+
+/**
+ * `mods` scaled by `k` for the `onMismatch: "reduced"` path — the STATIC-
+ * modifier twin of {@link scaleEffects}, and it makes the SAME cut for the same
+ * reason.
+ *
+ * SCALED: `flat`, `pctAdd`, `pctMult`, `percentOf`. All four are magnitudes in
+ * the aggregation `final = (base + Σflat)·(1 + ΣpctAdd)·Π(1 + pctMult)`, so
+ * halving the value really is halving the contribution — note `pctMult`'s value
+ * is a DELTA here (`pctMult *= 1 + value`), which is why halving 0.3 → 0.15 is
+ * honest even though `scaleEffects` refuses to halve an `applyBuff`'s modifier
+ * list (that comment is about a convention where the value is the multiplier
+ * itself).
+ *
+ * NOT SCALED, and this is a decision rather than an omission — both pass through
+ * UNCHANGED, exactly as an un-scalable EffectDef kind does:
+ *   · `override` — half of an override is a DIFFERENT override, not a weaker
+ *     one. `override 100` halved would set the stat to 50, which may be a BUFF.
+ *   · `capRaise` — the value is a target CEILING (GH#286), not a grant. Halving
+ *     「把攻速上限抬到 10」 into 「抬到 5」 is not a weaker version of the same
+ *     thing, and `statCaps.effectiveCap` is the real backstop anyway.
+ *
+ * ⚠️ Consequence, stated plainly (same as `scaleEffects`): authoring
+ * `onMismatch: "reduced"` on a modifier whose op is `override`/`capRaise` gives
+ * the mismatching carrier the FULL modifier. `itemGatedModifiers.test.ts`
+ * asserts the four scalable ops really change and that these two really do not.
+ *
+ * Never mutates its input — the array is the shared content doc.
+ */
+export function scaleModifiers(mods: readonly StatModifier[], k: number): StatModifier[] {
+  if (k === 1) return mods as StatModifier[];
+  return mods.map((m): StatModifier => {
+    switch (m.op) {
+      case ModOp.Flat:
+      case ModOp.PercentAdd:
+      case ModOp.PercentMult:
+      case ModOp.PercentOf:
+        return { ...m, value: m.value * k };
+      default:
+        return m;
+    }
+  });
+}
+
+/**
+ * The modifier list `id` actually gets from `mods` — the 職業限定閘 applied to
+ * a STATIC stat block.
+ *
+ * Ungated entries pass through untouched (`requirementScale` returns 1 for an
+ * absent `requires`), a blocked entry is DROPPED, and a "reduced" entry is
+ * scaled by {@link scaleModifiers}. The returned array is a plain
+ * `StatModifier[]` — the gate is spent here and never travels into the stat
+ * pipeline.
+ *
+ * ⚠️ WHY THE `requires` KEY IS STRIPPED. `ModifierSource.modifiers` is read by
+ * `recomputeStats`, by the digest, by the shop's stat preview and by the codex.
+ * Leaving a `requires` key on the resolved list would mean every one of those
+ * readers is looking at an object that LOOKS authoritative but carries a
+ * condition none of them evaluate — 失敗形態 ⑤ (「被測的不是出貨的那個」) with
+ * five readers instead of one.
+ *
+ * Purity: pure reads of world components + the registry. No rng, no clock.
+ */
+export function resolveGatedModifiers(
+  world: SimWorld,
+  id: EntityId,
+  mods: readonly GatedStatModifier[] | undefined,
+): StatModifier[] | undefined {
+  if (mods === undefined) return undefined;
+  const out: StatModifier[] = [];
+  for (const m of mods) {
+    const { requires, ...bare } = m;
+    if (requires === undefined) {
+      out.push(bare);
+      continue;
+    }
+    const k = requirementScale(world, id, requires);
+    if (k === 0) continue;
+    out.push(scaleModifiers([bare], k)[0]!);
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------------------
@@ -313,6 +422,33 @@ export function describeRequirement(req: ClassRequirement | undefined): string |
     return `限${who}英雄（其他英雄僅 ${pct}% 效果）`;
   }
   return `限${who}英雄（其他英雄無效）`;
+}
+
+/**
+ * The SHORT form — 「近戰」 / 「近戰·力量」 / 「遠程 50%」 — for somewhere a full
+ * sentence does not fit: a stat CHIP.
+ *
+ * WHY A SECOND RENDERER AND NOT `describeRequirement`. The long sentence is
+ * written for a gate on the WHOLE clause (「限近戰英雄（其他英雄無效）」), and a
+ * gated STATIC modifier is usually not that: 貫雷槍 carries 近戰+4 AND 遠程+2, so
+ * printing two full sentences under the name would read as a self-contradicting
+ * 「限近戰」+「限遠程」 badge on a weapon everybody can use. On the chip itself
+ * 「攻擊距離 +4（近戰）」 is unambiguous and needs no viewer context, which is what
+ * lets the shop shelf, the 三選一 card, the equipment tooltip and the codex all
+ * stay honest without any of them knowing who is holding the item.
+ *
+ * `null` when the requirement constrains nothing — the chip then prints bare.
+ */
+export function requirementShortLabel(req: ClassRequirement | undefined): string | null {
+  if (req === undefined) return null;
+  const parts: string[] = [];
+  if (req.attackType !== undefined) parts.push(ATTACK_TYPE_LABEL[req.attackType]);
+  if (req.primaryStat !== undefined) parts.push(PRIMARY_LABEL[req.primaryStat]);
+  if (parts.length === 0) return null;
+  const who = parts.join("·");
+  if (req.onMismatch !== "reduced") return who;
+  const pct = Math.round((req.mismatchScale ?? DEFAULT_MISMATCH_SCALE) * 100);
+  return `${who}，其他 ${pct}%`;
 }
 
 /**

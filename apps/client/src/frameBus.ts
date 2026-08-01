@@ -95,6 +95,8 @@ export interface CombatTextEntry {
   amount: number;
   crit: boolean;
   killingBlow: boolean;
+  /** damage school; undefined for non-damage kinds (heal/mana/evade never set this) */
+  dmgType?: "physical" | "magic" | "true";
   /** entity the number belongs to — drives the per-target cap and coalescing */
   targetId: number;
   /** admission priority, lower = kept (see combatText.worstEntryIndex) */
@@ -217,6 +219,17 @@ export interface MobBossMarker {
   worldZ: number;
   /** 0..1, so the marker can read as "nearly dead" at a glance */
   hpPct: number;
+  /**
+   * #247 —— THE RAW NUMBERS, for the 長血條's 「276,944 / 276,944」 readout.
+   *
+   * ⚠️ NOT derivable from `hpPct`. A percentage is a lossy projection: a king
+   * on 0.4% of a 276k pool still has ~1,100 hp, which is several more swings,
+   * and a bar that could only say 「0%」 would tell the player the fight is over
+   * while it is not. They ride along because the snapshot row they come from is
+   * already open right here — no extra wire field, no second lookup.
+   */
+  hp: number;
+  maxHp: number;
 }
 
 export interface FrameBus {
@@ -353,6 +366,8 @@ export interface CombatTextInput {
   worldX: number;
   worldZ: number;
   nowMs: number;
+  /** damage school — only meaningful when kind === "damage" */
+  dmgType?: "physical" | "magic" | "true";
 }
 
 /**
@@ -387,7 +402,7 @@ export function pushCombatText(input: CombatTextInput): void {
   const noLocalPlayer = input.sourceRel === "unknown" && input.targetRel === "unknown";
   if (!noLocalPlayer && !scopeAllows(combatTextScope, category)) return;
 
-  const mods = { crit: input.crit, killingBlow: input.killingBlow };
+  const mods = { crit: input.crit, killingBlow: input.killingBlow, dmgType: input.dmgType };
   const style = combatTextStyle(category, mods);
   const now = input.nowMs;
 
@@ -398,6 +413,13 @@ export function pushCombatText(input: CombatTextInput): void {
     for (const e of combatTextPool) {
       if (!e.active || e.targetId !== input.targetId || e.category !== category) continue;
       if (e.crit || e.killingBlow) continue;
+      // ...and the same damage SCHOOL. Since owner's 2026-08-01 ruling the fill
+      // is the school (紅物理/紫魔法/白真實), so folding a 真實 tick into a live
+      // 物理 number would paint the sum in the first arrival's colour — one
+      // number claiming both hits were physical. Off a damage category both
+      // sides are `undefined` and this compares equal, so heal/mana coalescing
+      // is untouched.
+      if (e.dmgType !== input.dmgType) continue;
       if (now - e.bornMs > COALESCE_MS || now < e.bornMs) continue;
       e.amount += input.amount;
       e.worldX = input.worldX;
@@ -440,6 +462,7 @@ export function pushCombatText(input: CombatTextInput): void {
   entry.amount = input.amount;
   entry.crit = input.crit;
   entry.killingBlow = input.killingBlow;
+  entry.dmgType = input.dmgType;
   entry.targetId = input.targetId;
   entry.rank = style.rank;
   entry.lane = lane;

@@ -138,6 +138,29 @@ describe("L3 · 四個消費點都真的剔除了", () => {
     // 兩處都在 = 至少兩次
     expect(body.split(CULL).length - 1).toBeGreaterThanOrEqual(2);
   });
+
+  /**
+   * 第五個消費點(2026-07-31 補)。前四個是「畫出來的東西」,這一個是
+   * 「打得到的東西」—— 而它原本沒有剔除。
+   *
+   * 為什麼這不只是省算力:`enemyUnitsFor` 的結果餵給
+   *   · `pickEnemyAt` —— 滑鼠點擊選敵
+   *   · TouchController 的 `enemyUnits` —— 手機自動接敵
+   *   · `pickNearestUnit(from, …, maxRange, aimDir)` —— 手把瞄準輔助
+   * 別區的英雄沒有 view,所以 `this.views.posOf(es.id)` 落空、退回快照原始
+   * x/z,於是它們**帶著真座標**進了可選取清單。今天兩個 zone 相距 80u
+   * (SKELETON_ARENA: x=±40, r=24),射程搆不到 —— 但那是幾何巧合,不是不變量。
+   * 不變量是「玩家看不到的東西不可以是目標」。
+   */
+  it("可選取的敵人清單:enemyUnitsFor 也剔除別區", () => {
+    const body = bodyAfter("private enemyUnitsFor(myTeam: number): PickableUnit[]");
+    expect(body, "別區的英雄/守衛又回到可選取清單了 —— 手把瞄準會鎖上看不見的目標").toContain(CULL);
+    // 順序:剔除必須早於 kind 判斷與 `units.push`,否則別區的實體照樣入列
+    const cull = body.indexOf(CULL);
+    const push = body.indexOf("units.push(");
+    expect(cull, "enemyUnitsFor 完全沒有剔除").toBeGreaterThanOrEqual(0);
+    expect(push).toBeGreaterThan(cull);
+  });
 });
 
 describe("L3 · 沒有動到伺服器 / 協定 / 預測", () => {

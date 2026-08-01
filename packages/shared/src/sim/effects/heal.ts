@@ -6,14 +6,15 @@
 import type { EffectKindSpec } from "./effectKind";
 import { resolveScaling } from "./effect";
 import { healTarget } from "../combat/restore";
-import { casterStats } from "./effectCommon";
+import { casterAttrs, casterStats } from "./effectCommon";
 
 export const healEffect: EffectKindSpec<"heal"> = {
   apply(e, ctx) {
     const { world } = ctx;
     const stats = casterStats(ctx);
     // global combat-env healing factor (world.combatEnv, see combatEnv.ts)
-    const amount = resolveScaling(stats, e.amount, ctx.rank) * world.combatEnv.healing;
+    const amount =
+      resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx)) * world.combatEnv.healing;
     for (const target of ctx.targets) {
       // same clamp + same recordHealing(actual restored) as before; the
       // helper additionally emits `heal` so the client can draw 補血 (#92).

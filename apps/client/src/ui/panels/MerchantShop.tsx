@@ -71,6 +71,7 @@ import {
   isVisibleDelta,
 } from "./statDisplay";
 import { attrBonusFromArray, statPathView } from "@ggd/shared/sim/economy/statPath";
+import { inventoryAttrBonus } from "@ggd/shared/sim/economy/itemSource";
 import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
@@ -759,6 +760,7 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
           capstonePct={seat.statCapstonePct}
           championId={seat.championId}
           attrBonus={seat.attrBonus}
+          items={seat.items}
         />
       )}
 
@@ -863,6 +865,8 @@ export function StatPanel(props: {
   championId: string;
   /** SeatView.attrBonus — the 三圍 BOUGHT this match, ATTR_KEYS order (#260). */
   attrBonus?: readonly number[];
+  /** SeatView.items — the 6 inventory slots, so the 三圍 rows can add 裝備's share. */
+  items?: readonly string[];
 }): React.JSX.Element {
   const { block, base, preview, exact } = props;
   // #211 N/20 — ONE derivation, shared with the sim. Every number and every
@@ -876,6 +880,11 @@ export function StatPanel(props: {
     Champions.tryGet(props.championId as ChampionId),
     props.level,
     attrBonusFromArray(props.attrBonus),
+    // 裝備給的 三圍 — derived from the inventory the wire already carries, NOT a
+    // new schema field (see `inventoryAttrBonus`). Without it this panel would
+    // print 天生 ＋ 屬性強化 while the stat rows two lines below already carry
+    // the equipment's contribution: one panel, two numbers, no way to add up.
+    inventoryAttrBonus(props.items),
   );
   const colA = STAT_META.filter((m) => m.column === 0);
   const colB = STAT_META.filter((m) => m.column === 1);
@@ -1042,15 +1051,19 @@ export function StatPanel(props: {
             <span
               key={row.key}
               style={{ display: "flex", alignItems: "baseline", gap: 3, fontSize: 11 }}
-              title={`${row.label} —— 天生 ${formatAttrValue(row.innate)} ＋ 屬性強化 ${formatAttrValue(row.bought)}`}
+              title={
+                `${row.label} —— 天生 ${formatAttrValue(row.innate)}` +
+                ` ＋ 屬性強化 ${formatAttrValue(row.bought)}` +
+                ` ＋ 裝備 ${formatAttrValue(row.gear)}`
+              }
             >
               <span style={{ color: TEXT_DIM, fontSize: 10 }}>{row.label}</span>
               <span style={{ color: TEXT_MAIN, fontVariantNumeric: "tabular-nums" }}>
                 {formatAttrValue(row.total)}
               </span>
-              {row.bought > 0 && (
+              {row.bought + row.gear > 0 && (
                 <span style={{ color: ATTR_ACCENT, fontSize: 10, fontVariantNumeric: "tabular-nums" }}>
-                  (+{formatAttrValue(row.bought)})
+                  (+{formatAttrValue(row.bought + row.gear)})
                 </span>
               )}
             </span>

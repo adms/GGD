@@ -211,16 +211,26 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     note: "燒傷比例的安全上限。留白 = 不設限（上面兩格自己說了算）。",
     live: RING,
   },
+  "match.fireRing.roundHardCapSec": {
+    zh: "回合硬上限（秒）",
+    note:
+      "**回合到這個時間一定開始收場，任何延長條件都無效。** 戰鬥經過這麼多秒之後，火圈一定起燃並開始收縮，不管殭屍王延後了幾次。owner 2026-08-01：「不管什麼條件，每回合最長上限就是 5 分鐘出現火圈準備收場，不會無限增加時間」。" +
+      "⚠️ 它擋的是**累加**：殭屍王每 100 隻殭屍可以再召喚一次（每位英雄各自計數），每一次都 +180 秒 —— 上面兩格的上界只擋單次，擋不住總和。" +
+      "沒有「停用」開關：要打馬拉松就把這個數字調大（上限 1800 = 30 分鐘），這樣至少還是有一個界。",
+    live: RING + " → sim/fireRing.applyRoundHardCap",
+  },
   "match.fireRing.boss.extendCombatSec": {
     zh: "殭屍王出現時，戰鬥硬底線延長（秒）",
     note:
-      "每召喚一次殭屍王，戰鬥硬底線往後推這麼多秒。owner 2026-07-30：「殭屍王出現回合結束時間延長 3 分鐘…避免打到一半結果回合結束」。0 = 關掉這一半。",
+      "每召喚一次殭屍王，戰鬥硬底線往後推這麼多秒。owner 2026-07-30：「殭屍王出現回合結束時間延長 3 分鐘…避免打到一半結果回合結束」。0 = 關掉這一半。" +
+      "⚠️ 它會被**回合硬上限**截斷：超過上限的那幾秒不會發生，而且畫面上的倒數也只會拿到真的加上去的秒數（不是這一格的數字）。",
     live: RING + " → sim/fireRing.extendRoundForBoss",
   },
   "match.fireRing.boss.delayFireRingSec": {
     zh: "殭屍王出現時，火圈起燃延後（秒）",
     note:
-      "每召喚一次殭屍王，火圈的起燃時間往後推這麼多秒。⚠️ 它和上面那一格是**兩個不同的期限**（一個是節奏，一個是回合上限），而且延後不可以大過延長 —— 否則王一出現，火圈就被推到硬底線之後，僵局破不了的那一回合正好是最需要它的那一回合（schema 有一條檢查在守）。",
+      "每召喚一次殭屍王，火圈的起燃時間往後推這麼多秒。⚠️ 它和上面那一格是**兩個不同的期限**（一個是節奏，一個是回合上限），而且延後不可以大過延長 —— 否則王一出現，火圈就被推到硬底線之後，僵局破不了的那一回合正好是最需要它的那一回合（schema 有一條檢查在守）。" +
+      "⚠️ 一樣會被**回合硬上限**截斷：推到上限就停，第三隻王不會再把火圈往後推。",
     live: RING + " → sim/fireRing.extendRoundForBoss",
   },
   "economy.startingGold": {
@@ -359,7 +369,8 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
     key: "fireRing",
     title: "火圈（可調）",
     intro:
-      "回合的收尾機制：起燃時間就是「這一回合打算打多久」，收圈把僵局逼出結果。整個區塊可以停用 —— 停用之後回合會一路打到硬底線。",
+      "回合的收尾機制：起燃時間就是「這一回合打算打多久」，收圈把僵局逼出結果。整個區塊可以停用 —— 停用之後回合會一路打到硬底線。" +
+      "⚠️ 這一組裡有兩個**會延長回合**的格子（殭屍王那兩格）和一個**擋住延長**的格子（回合硬上限）：延長是每召喚一次就加一次，硬上限是總和的天花板。",
     paths: [
       "match.fireRing.startSec",
       "match.fireRing.shrinkSec",
@@ -367,6 +378,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.fireRing.burnPctPerSecStart",
       "match.fireRing.burnPctPerSecEnd",
       "match.fireRing.maxPctPerSec",
+      "match.fireRing.roundHardCapSec",
       "match.fireRing.boss.extendCombatSec",
       "match.fireRing.boss.delayFireRingSec",
     ],

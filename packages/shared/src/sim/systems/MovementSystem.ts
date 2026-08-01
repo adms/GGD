@@ -188,13 +188,20 @@ export function movementSystem(world: SimWorld): void {
         // straight behind an obstacle used to cancel its whole step every tick
         // and freeze on the spot (the zone-centre pillar sits exactly between
         // the two middle spawns). Re-evaluated every tick, stateless.
-        const dir = steerAroundObstacles(
-          t.pos,
-          t.radius,
-          { x: to.x / d, z: to.z / d },
-          d,
-          zone.obstacles,
-        );
+        //
+        // ⭐ A FOURTH EXEMPTION (#247), and it is the one the other three do not
+        // cover. `moveWithCollision` below is what STOPS a body at a wall, and a
+        // flyer already skips it — but avoidance runs BEFORE that and bends the
+        // step around the pillar anyway, so a 「無視碰撞」 body still walked a
+        // detour it had no reason to walk. Measured, not assumed: the 殭屍王's
+        // closest approach to the zone-0 pillar was 3.645 with the grant on,
+        // i.e. exactly the two radii — it never touched the thing it is supposed
+        // to walk through (sim/mobBossNoClip.test.ts pins the number).
+        // Avoidance is also the only obstacle path that can oscillate, which is
+        // the other half of owner's 「被卡住永遠走不到」.
+        const dir = flightIgnoresObstacles(world, id)
+          ? { x: to.x / d, z: to.z / d }
+          : steerAroundObstacles(t.pos, t.radius, { x: to.x / d, z: to.z / d }, d, zone.obstacles);
         // body turns toward the move direction; motion is the ordered direction.
         // 面向鎖優先 (task #264)：出手的那幾 tick，身體朝著瞄準方向，腳照走 ——
         // 走位與朝向解耦本來就是這個系統的設計（見檔頭 Design note），這裡只是把

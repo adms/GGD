@@ -76,6 +76,8 @@ describe("schema encode regression (match-13)", () => {
       // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
       // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是
       // FireRingConfig。值就是出貨預設 (content/config/config.match.json)。
+      // #248 —— 回合硬上限，同樣是 `.default()` 所以在 OUTPUT 型別上必填。
+      roundHardCapSec: 300,
       boss: { extendCombatSec: 180, delayFireRingSec: 180 },
     };
     const ctl = new MatchController(

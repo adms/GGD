@@ -5,6 +5,7 @@
  * entry points, so no content type ever needs bespoke wiring.
  */
 import type { Stat } from "./statTypes";
+import type { AttrBasis, AttrBonus, AttrGrant, AttrKey } from "./attributes";
 import type { EffectDef } from "../effects/effect";
 import type { AbilityId } from "../../ids";
 import type { CastableSlot } from "../intents";
@@ -69,6 +70,23 @@ export interface StatModifier {
    * 見 {@link ModOp.PercentOf}。
    */
   from?: Stat;
+  /**
+   * `ModOp.PercentOf` 專用,而且是 {@link StatModifier.from} 的**替代**(兩者
+   * 互斥,schema 擋):來源不是一條 `Stat`,而是一項**當下的資源** ——
+   * 光魔杖 (godie-i027) 的 「AP+ (目前MP的 5%)」。
+   *
+   * `from: "maxMana"` 給的是**最大**法力的 5%,一個重算時算完就凍住的數字;
+   * `fromResource: "mp"` 給的是**目前**法力的 5%,一個隨著法力條下降而縮水的
+   * 數字。兩者在滿魔時相同,空魔時前者照樣發滿額 AP —— 也就是文案的謊話。
+   *
+   * 「目前 vs 最大」是 owner 會改的那種決策,所以它是 modifier 上的一個鍵,
+   * 不是程式裡的一個分支(CLAUDE.md 第一守則)。
+   *
+   * 機制、重算時機與它為什麼折進 `sc.final` 而不是讀取時算,全部寫在
+   * `stats/resourceStats.ts` 的檔頭。`"hp" | "mp"` 這組字彙沿用
+   * `sim/content/condition.ts` 的 `ResourceStat`,不是新發明的。
+   */
+  fromResource?: import("../content/condition").ResourceStat;
 }
 
 /** Game events hooks can react to. */
@@ -128,8 +146,36 @@ export interface HookDef {
    * them back at the hook's owner, which is the only way to express WC3's very
    * common "on kill, YOU gain X" passives (呂布's 飛將神弓 `A0AU`: +10 attack
    * damage for 15 s per kill) — with the default the buff lands on the corpse.
+   *
+   * ⭐ `"allies"` —— 全隊作用域 (天生牙 godie-i031:「殺死任一個敵方單位，回復
+   * **我們全部英雄** 1%生命」/「殺死任一個敵方英雄單位，將復活**我方所有英雄**」).
+   *
+   * Before it there was NO scope in the whole engine that could name more than
+   * one unit from a hook: `"self"` is one body, `"event"` is one body, and an
+   * `auras` block reaches the units standing in a RADIUS — which is a different
+   * question, and the wrong one for a card that says 「全部」 regardless of where
+   * they are standing. Writing it as a huge aura would have been a lie with a
+   * number attached (the arena's own `boundaryRadius` is 24, so 「全部」 would
+   * have meant 「除非有人跑遠了」).
+   *
+   * MEMBERSHIP, stated exactly because every one of these is a real case:
+   *   · every entity carrying a `ChampionComp` whose `TeamComp.teamId` equals
+   *     the hook owner's — mobs, summons, guardians and flowers are never in it
+   *     (they have no ChampionComp), so 「英雄」 in the prose is the literal
+   *     filter rather than an approximation;
+   *   · INCLUDING the owner (「我方所有英雄」 counts the killer);
+   *   · INCLUDING THE DEAD — that is the whole point for `revive`, and it costs
+   *     the living-only kinds nothing because `healTarget` / `restoreMana`
+   *     already return 0 on a corpse (`combat/restore.ts`);
+   *   · NO zone filter. `MatchController.enterCombat`'s placement loop puts
+   *     EVERY seat of a fighting team into the same duel zone, so a zone filter
+   *     would drop nobody in a real match — and if the invariant ever broke, a
+   *     filter would drop a teammate SILENTLY while the payload (revive at your
+   *     own corpse, heal in place) moves nobody between zones anyway.
+   *   · SORTED by entity id, because `world.champion` is a Map and
+   *     `sim/purity.test.ts` is watching.
    */
-  target?: "self" | "event";
+  target?: "self" | "event" | "allies";
   /**
    * WHAT the event's entity has to BE for this hook to fire (task #244).
    * "champion" = only an entity carrying a ChampionComp; "mob" = only a
@@ -147,6 +193,33 @@ export interface HookDef {
    * `target: "self"` on an entity-less event still fires, as before).
    */
   victim?: "champion" | "mob" | "any";
+  /**
+   * 觸發這個 hook 的那一發傷害**是不是普通攻擊**。Absent = `"any"` = 不過濾,
+   * 也就是這個欄位出現之前的每一份文件。
+   *
+   * 為什麼需要它:owner 給反射之盾寫的效能是「[反彈] 反彈**普通攻擊**傷害
+   * 200%」。在這個欄位之前,`onDamageTaken` 分不出打你的是一次普攻、一發技能、
+   * 還是一跳 DoT —— 那件道具只能被實作成「反彈所有傷害」,也就是**另一件道具**
+   * (而且是強得多的一件)。原作 `A0C6` 的 base 是 `ANth` 荊棘光環,而荊棘反的
+   * 也是攻擊,不是法術。
+   *
+   *   · `"basic"`    —— 只有 `origin === "basic"` 的封包(普通攻擊)
+   *   · `"nonBasic"` —— 其餘全部
+   *   · `"any"`/省略 —— 不過濾
+   *
+   * ⚠️ 為什麼不叫 `"ability"` 而叫 `"nonBasic"`:走那條路的不只有技能,還有
+   * DoT、道具 proc、火圈、守衛塔。取名 `"ability"` 會是一個**名字說謊**的欄位
+   * (CLAUDE.md 第三守則),而 `origin` 字串沒有一個乾淨的「這是技能」子集。
+   *
+   * ⚠️ 事件沒有帶傷害時(`onKill` / `onBasicAttack` / `onInterval` …)這個過濾
+   * **一律不通過**,而不是像 `victim` 那樣退化成「不過濾」。兩者不對稱是刻意的:
+   * `victim` 的主詞(一個實體)在無實體事件上是真的「不知道」;而這個欄位的主詞
+   * 是那一發封包,凡是帶封包的事件都一定帶著它 —— 沒有封包不是「不知道」,
+   * 是「根本沒有傷害」,而「沒有傷害」不可能是一次普通攻擊。
+   * 這條在正常內容上碰不到:`zHookDef` 在載入時就擋掉把它掛到無傷害事件上的
+   * 文件,所以「寫得出來但永遠不會觸發」不是一個能出貨的狀態。
+   */
+  damageSource?: "any" | "basic" | "nonBasic";
   /** internal cooldown in seconds (0/undefined = every trigger) */
   internalCooldown?: number;
   /**
@@ -160,6 +233,44 @@ export interface HookDef {
    * not consume the cooldown).
    */
   chance?: number;
+  /**
+   * 機率 = **一項三圍** × 係數,夾在 `[min, max]` —— 朗基努斯之槍 godie-i018
+   * 「(總敏捷)% 機率性造成等同(總力量)之閃電傷害」。ABSENT = 用上面的
+   * `chance`,也就是這個欄位出現之前的每一份文件。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * 為什麼 `chance` 不夠
+   *
+   * `chance` 是一個**常數**(WC3 的 proc 欄位 `Hbh1`/`Ocr1`/`War1`)。owner 的
+   * 文案要的是一個**活的**門檻:敏捷會隨等級、裝備與 能力屬性強化 一路長。
+   * 寫成常數就是另一件武器,而且文案會說謊(失敗形態 ②)。
+   *
+   * ⚠️ 這**不**違反 `sim/content/condition.ts` 的 DECISION 1(亂數流的位置固定):
+   * 抽的**次數**與**時機**完全沒變 —— 有 `chanceFrom` 就抽一次,跟有 `chance`
+   * 時一樣、在同一行、在 ICD 閘之後、在 `condition` 之前。動的只有**門檻**,
+   * 而門檻是世界狀態的純函式,每個複本算出同一個值。
+   *
+   * ⚠️ `chance` 與 `chanceFrom` **不可以同時出現**(`zHookDefBase` 在載入時擋)。
+   * 兩個都在就會有「是相乘還是取代」這個沒有正確答案的問題,而任何一種選法
+   * 都會在某一張卡上讀起來像 bug。
+   *
+   *   · `coeff` —— 每 1 點三圍值多少機率。「(總敏捷)%」= 0.01。
+   *     上界 `CHANCE_PER_ATTR_MAX`,是**打錯數字的守衛**:寫 1 而不是 0.01
+   *     等於「一點敏捷 = 100%」,也就是永遠觸發,而 clamp 會**幫它藏起來**。
+   *   · `basis` —— 省略 = `"total"`(含裝備),因為文案寫的是「**總**敏捷」。
+   *     `"base"` 是原作 `GetHeroStatBJ(…,false)` 的那一半(見 attrSources.ts)。
+   *   · `min` / `max` —— 夾住。**兩端都是欄位,不是寫死的分支**:
+   *     「(總敏捷)%」在後期是無界的(120 敏 = 120%),而「要不要真的讓它變成
+   *     必定觸發」是 owner 的決定,不是我的。出貨值與實測數字寫在道具的
+   *     `authoringNote` 上。
+   */
+  chanceFrom?: {
+    attr: AttrKey;
+    basis?: AttrBasis;
+    coeff: number;
+    min: number;
+    max: number;
+  };
   /**
    * 觸發條件 — WHEN this hook pays out (owner 2026-07-30:「on-attack by
    * condition 這個一定要實作 … `>= < =` 某個常數或某個數值條件，最常見是我方或
@@ -207,6 +318,56 @@ export interface ModifierSource {
   id: string;
   kind: ModifierSourceKind;
   modifiers?: StatModifier[];
+  /**
+   * 三圍 (力/敏/智) this source grants while attached — 四魂之玉's 「力敏智+30」,
+   * 朗基努斯之槍's 「力量+12 敏捷+12」.
+   *
+   * WHY IT IS NOT A `StatModifier`. 力/敏/智 are not members of {@link Stat}:
+   * one point of STR feeds maxHealth AND healthRegen AND ad, and one point of
+   * AGI feeds armor additively but attack speed MULTIPLICATIVELY on the
+   * champion's own base (`stats/attributes.ts`). Expanding a grant into the
+   * nine equivalent stat modifiers would need the champion's authored base AND
+   * the live combat-env coefficients AT ATTACH TIME, so it would go stale the
+   * moment an operator retunes `strToMaxHealth` in the 戰鬥系統 console — the
+   * same argument that made `AttrBonus` a separate accumulator for the
+   * 能力屬性強化 card (#260). Carrying the ATTRIBUTE keeps `championStatBase`
+   * the single 三圍 → 數值 definition, so an item point and a card point are
+   * indistinguishable by construction rather than by agreement.
+   *
+   * Folded into the champion's BASE by `statPipeline.recomputeStats`, at
+   * exactly the place `ChampionComp.attrBonus` is folded. See
+   * `stats/attrSources.ts` for why it rides the SOURCE (unequip / 變身
+   * correctness) and for the 「總」 vs 「基礎」 split the source map itself uses.
+   * Absent on every source in the catalogue except those two items, so arming
+   * this field moved no other number.
+   */
+  attributes?: AttrGrant;
+  /**
+   * RUNTIME (never authored): 三圍 this source has EARNED during the match —
+   * the DYNAMIC sibling of {@link attributes}, written only by
+   * `effects/grantAttribute.ts` when the effect carries `store: "source"`.
+   * 甘豆腐之袍 godie-i03f 「每殺死一名英雄可以額外獲得 10點智慧，上限 160」.
+   *
+   * WHY IT IS A SECOND FIELD RATHER THAN `+=` INTO `attributes`. `attributes`
+   * is forwarded BY REFERENCE straight off the registered `ItemDef`
+   * (`economy/itemSource.ts`), which is the parsed content document shared by
+   * every champion in every concurrent match on the shard. Mutating it would
+   * hand 甘豆腐之袍's stacks to everybody who ever equips one, forever, and
+   * would persist into the next match because the registry outlives the world.
+   *
+   * WHY IT IS ON THE SOURCE AND NOT ON `ChampionComp.attrBonus`. Same argument
+   * `stats/attrSources.ts` makes for `attributes`, and here it is the whole
+   * requirement rather than a nicety: 「賣掉這件袍子，160 點智慧會留在身上」 is
+   * the exact defect this replaces. `detachSource` drops the accumulator with
+   * the item — the stacks cannot survive an unequip, because there is nowhere
+   * for them to survive. Re-buying starts a fresh source at zero, which is the
+   * honest reading of 「這件裝備疊了幾層」.
+   *
+   * Folded by `stats/attrSources.ts::sourceAttrGrants`, i.e. the same fold and
+   * the same `expiresAtTick` skip as `attributes`, so nothing downstream (stat
+   * pipeline, shop preview, codex) learns a second concept.
+   */
+  attrEarned?: AttrBonus;
   hooks?: HookDef[];
   grantedAbilities?: AbilityId[];
   /** for buffs: expiry tick (undefined = permanent) */
@@ -289,6 +450,81 @@ export interface ModifierSource {
    * moves. ABSENT on every source in the catalogue except 翔封界's two docs.
    */
   flight?: import("../flight").FlightGrant;
+  /**
+   * 傷害型別轉換 —— 無視防禦 / 真實傷害家族 (霸王破甲槍 · 死之王的長槍 ·
+   * 惡夢魔王碎片)。這個來源會把持有者**打出去**的某一類封包重蓋成另一個
+   * `DamageType`。
+   *
+   * 它騎在 source 上的理由跟 `evasionScope` / `vision` / `flight` 一模一樣,
+   * 而且更沒有退路:「我的普攻是真實傷害」是**那件裝備**的性質,聚合成一個
+   * `Stat` 的話,「A 這件會轉、B 這件不會」在加總的那一刻就消失了。
+   *
+   * 讀它的**只有** `combat/damage.ts` 的佇列抽乾迴圈(透過
+   * `combat/damageTypeOverride.ts` 的解析器)。統計管線一個字都不讀,所以它
+   * 不動任何一個屬性數字、不動面板、不動商店預覽。
+   *
+   * ABSENT on every source in the catalogue except the three items above ——
+   * 也就是說掛上這個欄位對其餘所有內容是**嚴格的 no-op**。
+   */
+  damageTypeOverride?: import("../combat/damageTypeOverride").DamageTypeOverride;
+  /**
+   * 格擋 —— 這個來源授予的「擋下傷害」能力 (奇門盾甲 · 黃金聖鬥衣 · 晨曦之光 ·
+   * 殺豬刀)。四支文件是同一組軸的四組值,不是四個機制;完整推導在
+   * `combat/block.ts` 的檔頭。
+   *
+   * 它騎在 source 上的理由跟 `evasionScope` / `vision` / `flight` /
+   * `damageTypeOverride` 完全一樣:「這件擋 AD+AP、那件只擋致死的」是**那個來源**
+   * 的性質。聚合成一個 `Stat` 的話,型別過濾與 `lethalOnly` 在加總的那一刻就沒了,
+   * 而一個 30% 的致死格擋會把 50% 的全型別格擋一起變成致死限定(或反過來)。
+   *
+   * 讀它的**只有** `combat/damage.ts` 的佇列抽乾迴圈(透過 `blockCutFor`)。
+   * 統計管線一個字都不讀,所以它不動任何屬性數字、不動面板、不動商店預覽。
+   *
+   * ABSENT on every source in the catalogue except those four items —— 掛上這個
+   * 欄位對其餘所有內容是**嚴格的 no-op**,而且連一次 rng draw 都不會多抽
+   * (`blockCutFor` 的 ZERO GUARANTEE),所以既有 replay 逐位元不變。
+   */
+  block?: import("../combat/block").BlockGrant;
+  /**
+   * RUNTIME:這個來源的格擋**上一次真的擋中**的絕對 tick
+   * ({@link BlockGrant.internalCooldown} 的記帳)。從不被 authored。
+   *
+   * ⚠️ 為什麼不共用 `hookLastFired`:那是一個依 `hooks[hi]` **位置**索引的陣列,
+   * 而格擋沒有位置 —— 而且同一個 source 完全可以同時帶 `hooks` 和 `block`
+   * (晨曦之光現在就同時帶 `vision` 與 `block`)。借用 index 0 等於讓第一條 hook
+   * 和格擋共用一個時鐘,兩邊互相把對方的內部冷卻洗掉,而且測起來全綠。
+   *
+   * 絕對 tick,不是遞減計數器(CLAUDE.md 硬性約束,`sim/purity.test.ts` 在守)。
+   *
+   * ⚠️ `aura.ts` 在 `hooks` 陣列被換掉時會把 `hookLastFired` 設回 `undefined`
+   * (索引失效),但**這一格不需要那個處理**:它是一個純量,沒有索引可以錯位,
+   * 而「同一個 source、換了一份 grant」繼續沿用同一個時鐘是正確的讀法(冷卻
+   * 屬於那個來源,不屬於那份 grant)。目前也沒有任何 `auras` 內容帶 `block` ——
+   * 真的有了而且語意要改成「換 grant 就重置」時,加的是 aura.ts 那一段的第二個
+   * `if`,不是這裡。
+   */
+  blockLastFired?: number;
+  /**
+   * [暴擊吸血] —— 這個來源授予的暴擊 proc (天堂之劍 godie-i01n
+   * 「6%機率造成10倍暴擊傷害，暴擊時吸血回復100%傷害」)。完整推導在
+   * `combat/critStrike.ts` 的檔頭。
+   *
+   * 它騎在 source 上的理由跟 `evasionScope` / `vision` / `flight` /
+   * `damageTypeOverride` / `block` 完全一樣,而且更沒有退路:那一行**曾經**是
+   * `critChance` + `critDamage` 兩條 modifier,而聚合成屬性的那一刻
+   * 「10 倍只屬於這 6%」與「這一發吸滿」兩件事同時消失 —— 前者變成「所有暴擊
+   * 都 10 倍」,後者根本寫不出來(`Stat.Lifesteal` 無條件而且夾在 0.8)。
+   *
+   * 讀它的只有 `systems/BasicAttackSystem.ts` 的揮擊點(骰)與
+   * `combat/damage.ts` 的吸血段(付款),都是透過 `combat/critStrike.ts` 的
+   * 兩個解析器。統計管線一個字都不讀,所以它不動任何屬性數字、不動面板、
+   * 不動商店預覽。
+   *
+   * ABSENT on every source in the catalogue except 天堂之劍 —— 掛上這個欄位對
+   * 其餘所有內容是**嚴格的 no-op**,而且連一次 rng draw 都不會多抽
+   * (`critStrikeFor` 的 ZERO GUARANTEE),所以既有 replay 逐位元不變。
+   */
+  critStrike?: import("../combat/critStrike").CritStrikeGrant;
 }
 
 /**

@@ -37,6 +37,7 @@ import { useDisplayBaseBonus } from "../../displayBaseBonus";
 import { useDisplayStatCaps } from "../../displayStatCaps";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
 import { championSheetRows } from "../../championSheet";
+import { contentBodyScaleRules } from "../../displayBodyScale";
 import {
   champSelectSkillSeat,
   championDescription,
@@ -168,7 +169,9 @@ function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element
   // 三圍 (#248): rows come from the SIM's championStatBase/Growth, never from
   // def.baseStats directly — those hold the raw w3x numbers without the
   // attribute term. See ui/championSheet.ts.
-  const rows = championSheetRows(def, env, baseBonus, caps);
+  // 體型 → 射程 (GH#252):不傳的話 攻擊距離 那一列會印卡面值,而伺服器給
+  // 的是體型放大過的那一個(#125)。
+  const rows = championSheetRows(def, env, baseBonus, caps, contentBodyScaleRules());
   const a = def.attributes;
   return (
     <div>

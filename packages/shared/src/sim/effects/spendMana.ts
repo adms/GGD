@@ -48,7 +48,7 @@
  */
 import type { EffectKindSpec } from "./effectKind";
 import { resolveScaling } from "./effect";
-import { casterStats } from "./effectCommon";
+import { casterAttrs, casterStats } from "./effectCommon";
 
 export const spendManaEffect: EffectKindSpec<"spendMana"> = {
   apply(e, ctx) {
@@ -63,7 +63,7 @@ export const spendManaEffect: EffectKindSpec<"spendMana"> = {
     // .ratios` is defined as "ratios of the caster" everywhere else in the
     // union (see the `Scaling` doc comment), and a mana burn that scaled off the
     // victim's own AP would be the only effect in the game that inverts it.
-    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank);
+    const flat = resolveScaling(casterStats(ctx), e.amount, ctx.rank, casterAttrs(ctx));
     for (const payer of payers) {
       const hp = world.health.get(payer);
       if (!hp?.alive) continue;
@@ -71,7 +71,14 @@ export const spendManaEffect: EffectKindSpec<"spendMana"> = {
       // point of a percentage cost, and it is the one number that cannot come
       // from the caster.
       const pct = (e.pctMaxMana ?? 0) * hp.maxMana;
-      const want = flat + pct;
+      // 「削去**現存** MP 3%」(熾天使之弓 godie-i012,owner 2026-08-01 從 5% 調下來).
+      // 同一句話的另一半:分母是
+      // PAYER 自己的條,而且是**現在**的量,不是上限。跟 `pctMaxMana` 相加而不是
+      // 二選一 —— 兩個欄位都在回答同一個問題(「這次要提多少」),而它們各自的
+      // 名字都誠實。為什麼不是給 `pctMaxMana` 加一個 basis:見 `EffectDef` 上
+      // `pctCurrentMana` 的說明(名字寫著 Max 的欄位不可以有時候是 current)。
+      const pctCur = (e.pctCurrentMana ?? 0) * hp.mana;
+      const want = flat + pct + pctCur;
       if (!(want > 0)) continue;
       // Clamped BOTH ways: never below 0 (a negative pool desyncs every
       // 「法力 >= N」 condition downstream and renders as a broken bar), and

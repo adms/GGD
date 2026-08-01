@@ -27,6 +27,11 @@ import { ALL_STATS, type Stat } from "@ggd/shared/sim/stats/statTypes";
 import { DEFAULT_BASE_BONUS, finalizeStat, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
+import {
+  DEFAULT_BODY_SCALE_RULES,
+  attackRangeScaleFactor,
+  type BodyScaleRules,
+} from "@ggd/shared/sim/bodyScale";
 
 /** One row of the stat table: the level-1 value and the per-level increment. */
 export interface ChampionSheetRow {
@@ -67,7 +72,18 @@ export function championSheetRows(
    * 「這位英雄裸裝的天花板」。
    */
   caps: StatCapTable = DEFAULT_STAT_CAPS,
+  /**
+   * 身體放大倍數規則 (GH#252)。缺 = **出貨預設**,不是「關掉」—— 關掉會讓面板
+   * 印卡面射程而伺服器給體型放大過的那一個(#125 的形狀)。
+   */
+  bodyScaleRules: BodyScaleRules = DEFAULT_BODY_SCALE_RULES,
 ): ChampionSheetRow[] {
+  // 只有 `Stat.AttackRange` 讀得到它(`finalizeStat` 內部判斷),所以其他 15 條
+  // 逐位元不變。`def.bodyScale` 缺 = 1.0。
+  const rangeScale = attackRangeScaleFactor(
+    (def as { bodyScale?: number }).bodyScale,
+    bodyScaleRules,
+  );
   const base = def.baseStats as Readonly<Record<string, number | undefined>>;
   const growth = def.growth as Readonly<Record<string, number | undefined>>;
   const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
@@ -86,7 +102,10 @@ export function championSheetRows(
         // A hand-edited unknown key has no Stat, so there is nothing to finalize
         // — the doc value IS the number, and inventing a multiplier for it would
         // be worse than showing none.
-        final: stat === undefined || b === undefined ? undefined : finalizeStat(b, stat, { env, baseBonus, caps }),
+        final:
+          stat === undefined || b === undefined
+            ? undefined
+            : finalizeStat(b, stat, { env, baseBonus, caps, rangeScale }),
       };
     }
     const g = championStatGrowth(def, stat, env);
@@ -96,7 +115,7 @@ export function championSheetRows(
       base: b,
       growth: Math.abs(g) < EPS ? undefined : g,
       fromAttribute: true,
-      final: finalizeStat(b, stat, { env, baseBonus, caps }),
+      final: finalizeStat(b, stat, { env, baseBonus, caps, rangeScale }),
     };
   });
 }

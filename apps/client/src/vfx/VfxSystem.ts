@@ -940,6 +940,12 @@ export class VfxSystem {
     nowMs: number,
     intensity: ImpactIntensity,
     tint: Rgb,
+    /**
+     * 接觸面高度（世界單位）。省略 = `HitSpark` 的預設胸口高度,這是死亡 /
+     * 拾取 / 復活那些**發生在角色身上**的合成器該用的值。只有施法那一條要傳,
+     * 因為只有它的另一層(技能美術)會跟著 `castHeightSource` 移動。
+     */
+    y?: number,
   ): void {
     // FIX #131 (root cause): the abilityCast/flowerBurst/reviveComplete paths
     // reach here after only a NULL check on their position — but `entityPos`
@@ -950,7 +956,7 @@ export class VfxSystem {
     // burst at the GPU-clamped screen corner and RE-FIRED it every cast. Guard
     // the single chokepoint so every current and future caller is covered.
     if (!Number.isFinite(x) || !Number.isFinite(z)) return;
-    this.sparks.push(new HitSpark(this.scene, x, z, nowMs, intensity, 260, tint));
+    this.sparks.push(new HitSpark(this.scene, x, z, nowMs, intensity, 260, tint, y));
   }
 
   /** Live quality-tier particle budget (shared by every layer). */
@@ -1082,7 +1088,21 @@ export class VfxSystem {
         // max-intensity pop (core flash + streaks + smoke + ground shockwave),
         // tinted from the ability's own color so its identity is preserved.
         const isEx = def?.slot === "EX";
-        if (isEx) this.layeredPop(pos.x, pos.z, nowMs, "ex", doc ? tintOfDoc(doc) : EX_DEFAULT_TINT);
+        // #251 —— 打擊感那一層要和技能美術**同一個高度**。它以前吃 `HitSpark`
+        // 的預設 y=1.0,而技能美術現在會依 `castHeightSource` 貼回地板,兩層就
+        // 會在畫面上脫開。這個後果不是我發現的:`familyCastOnScreen.test.ts`
+        // 的檔頭在 2026-07-30 就寫下「接 heightY 的那個 PR 要一起處理
+        // layeredPop 的高度」—— 這裡就是那一行。
+        if (isEx) {
+          this.layeredPop(
+            pos.x,
+            pos.z,
+            nowMs,
+            "ex",
+            doc ? tintOfDoc(doc) : EX_DEFAULT_TINT,
+            familyCastHeightY(w3xArtFor(def?.id)),
+          );
+        }
         // #205 多層特效模板。`isLegacySingleVfx` 為真 = 這份 doc 只有舊的單值
         // `vfxKey`,`layers` 保持 null,`playCastVfx` 走的是升級前一字未改的那
         // 條路 —— 646 支現有技能的向後相容是靠這個分支,不是靠新程式碼「碰巧

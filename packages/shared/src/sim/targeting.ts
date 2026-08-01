@@ -28,7 +28,9 @@
  * ---------------------------------------------------------------------------
  * THE COMPARATOR (total order — every tie falls through to the next key)
  * ---------------------------------------------------------------------------
- *   1. kind    — enemy CHAMPION (0) before SUMMON (1) before MOB (2)
+ *   1. kind    — enemy CHAMPION (0) before SUMMON (1) before MOB (2), EXCEPT
+ *                the 殭屍王, whose rank on this axis is a 後台 field and ships
+ *                at −1, i.e. ABOVE enemy champions (#247; see `targetClassOf`)
  *   2. threat  — is it hitting me right now? (0 = yes, 1 = no)
  *   3. hp      — lowest current HP first
  *   4. d2      — nearest first (squared distance; never a sqrt)
@@ -63,7 +65,9 @@ import type { StatsComp } from "./stats/statsComp";
 import { distSq } from "./math/vec2";
 import { queryOverlap } from "./collision/queries";
 import { reachTo } from "./systems/BasicAttackSystem";
+import { mobAggroRank } from "./mobs";
 import { canSee } from "./stealth";
+import { tauntedBy, type TauntPriority } from "./taunt";
 import {
   TARGET_CLASS,
   summonAutoTargetable,
@@ -115,13 +119,96 @@ const NOMINAL_TARGET_RADIUS = 0.6;
 /** A resolved candidate: the winner plus the sort keys that won it. */
 export interface AcquiredTarget {
   id: EntityId;
-  /** {@link TARGET_CLASS}: 0 = enemy champion, 1 = summon, 2 = mob */
+  /**
+   * 嘲弄 (sim/taunt.ts). 0 = THIS candidate is the unit that has taunted me,
+   * 1 = it has not. SORT KEY ZERO — see {@link beats}.
+   */
+  forced: number;
+  /**
+   * {@link TARGET_CLASS}: 0 = enemy champion, 1 = summon, 2 = mob — and NOT
+   * necessarily one of those three. The 殭屍王 takes whatever rank
+   * `mobWaves.boss.aggroRank` names (ships −1, above enemy champions), so this
+   * is a NUMBER on that axis, not an enum. `beats` only ever asks `<`.
+   */
   kind: number;
   /** 0 = damaged me within THREAT_WINDOW_TICKS, 1 = has not */
   threat: number;
   hp: number;
   /** squared centre-to-centre distance from the acquirer */
   d2: number;
+}
+
+/**
+ * 嘲弄 —— THE ONE seam. 「`self` 這一刻被迫打誰」, or null.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY IT IS ONE FUNCTION WITH A `scope`, AND NOT TWO (OR THREE) PREDICATES
+ * ---------------------------------------------------------------------------
+ * This file's header is a post-mortem: 「什麼可以被索敵」 was answered
+ * independently in three places, one of them was not updated when 召喚物
+ * landed, and nothing in the game could target a summon. A taunt is the SAME
+ * question asked by the SAME three call sites (auto-acquire, the bot brain via
+ * `acquireTarget`, and MobSystem's aggro scan), so it gets the same treatment:
+ * one function, and nobody else reads `world.taunt`.
+ *
+ * `scope` exists because the LEGALITY half genuinely differs and already did
+ * before this existed — `isAutoTargetable` (team test + stealth) is not
+ * `isMobTargetable` (no team test; MobSystem owns that, and a different stealth
+ * field gates it). Re-deriving either one here would be the third copy. So:
+ *
+ *   "auto" → `isAutoTargetable`, i.e. exactly what auto-acquire already allows
+ *   "mob"  → `isMobTargetable` + an explicit different-team test, i.e. exactly
+ *            what MobSystem's own scan already allows
+ *
+ * ---------------------------------------------------------------------------
+ * IT IS RE-VALIDATED EVERY TICK, NOT AT APPLY TIME
+ * ---------------------------------------------------------------------------
+ * `applyTaunt` deliberately checks nothing but the clock. Everything that can
+ * make a taunt stop meaning anything — the taunter dies, goes invisible, leaves
+ * the zone, changes team through a 變身 — is asked here, fresh, on the tick it
+ * matters. Validating once at apply time would leave a wrong answer standing
+ * for up to the whole duration, and 「一個 tick 之後才修好」 is exactly the
+ * failure `stealth`'s destroy-cleanup note warns about.
+ *
+ * The zone test is HERE and not inside the two predicates because neither of
+ * them has one (`rankOf` does it separately, MobSystem does it in its scan) —
+ * so a taunt landed just before an arena swap cannot drag a body at a target
+ * in another duel zone.
+ */
+export function forcedTargetOf(
+  world: SimWorld,
+  self: EntityId,
+  scope: "auto" | "mob" = "auto",
+): EntityId | null {
+  const by = tauntedBy(world, self);
+  if (by === null) return null;
+  // 小怪吃不吃嘲弄 —— a FIELD, read at USE time so flipping it off in the
+  // console frees every zombie on the very next tick instead of waiting for the
+  // taunts already in flight to lapse (sim/taunt.ts::TauntRules.appliesToMobs).
+  if (scope === "mob" && !world.tauntRules.appliesToMobs) return null;
+  const selfT = world.transform.get(self);
+  const byT = world.transform.get(by);
+  if (!selfT || !byT || selfT.zone !== byT.zone) return null;
+  // 牽引距離 (sim/taunt.ts::TauntRules.leashUnits) —— 「這條拉繩有多長」。
+  // ⭐ 決策點做成欄位,而且判定在**這裡**是它唯一該在的地方:一發嘲弄無視受害者
+  // 自己的索敵半徑(那是刻意的),所以在這一格之前**沒有任何東西**限制一個嘲弄者
+  // 可以把一具身體拖多遠 —— 掛上、跑掉,受害者就一路追過整個區域。
+  // 和到期同一個形態:讀取時判定,跑遠了當場鬆手,跑回來又生效。0 = 不限制。
+  const leash = world.tauntRules.leashUnits;
+  if (leash > 0 && distSq(selfT.pos, byT.pos) > leash * leash) return null;
+  if (scope === "mob") {
+    // MobSystem's own scan skips the MONSTER team before it ever calls
+    // `isMobTargetable`; re-express that as 「不同隊」 so a mob can never be
+    // taunted onto another mob (and so this stays true if the sentinel moves).
+    const myTeam = world.team.get(self);
+    const theirTeam = world.team.get(by);
+    if (!myTeam || !theirTeam || myTeam.teamId === theirTeam.teamId) return null;
+    if (!isMobTargetable(world, by, self)) return null;
+  } else if (!isAutoTargetable(world, self, by)) {
+    return null;
+  }
+  const hp = world.health.get(by);
+  return hp?.alive ? by : null;
 }
 
 /**
@@ -175,7 +262,24 @@ export function targetClassOf(world: SimWorld, cand: EntityId): number | null {
     if (!summonAutoTargetable(sm)) return null;
     return summonTargetClass(sm);
   }
-  if (world.mob.has(cand)) return TARGET_CLASS.mob;
+  // 小怪。⚠️ 這不再是常數 `TARGET_CLASS.mob` —— **殭屍王的排名是一個後台欄位**
+  // (#247, owner 2026-08-01 「殭屍王出現英雄/bot都會優先打殭屍王 (因為獎勵很高)」)。
+  //
+  // 為什麼是「排名」而不是另外加一個仇恨分數:KEY 1 本來就是一根字典序的排名軸
+  // (`beats` 比的是 `a.kind < b.kind`),所以「王排第幾」在這根軸上是可以直接說
+  // 出來的話。另外發明一套加權分數等於重寫整個比較器,會把 嘲弄/威脅/低血/最近
+  // 四把鑰匙的語意一起改掉 —— 而這次改動不該碰它們。
+  //
+  // 出貨值 −1 = 王排在**敵方英雄之前**;0.5 = 「稍微優先」(敵方英雄仍然優先,
+  // 王贏過召喚物與雜魚);2 = 跟一般殭屍同級 = 關掉。全部見
+  // `zMobWavesConfig.boss.aggroRank`。
+  //
+  // ⚠️ 一格都不要改 `beats` / `beatsForSwap`:它們比的是數字,而 `kind` 現在是
+  // 一個可以是 −1 或 0.5 的數字。KEY 1 在 `beatsForSwap` 的**穩定前綴**裡,
+  // 那正是「王一出現,已經在打別人的人也會轉頭」所依賴的那一行 —— 少了它,
+  // 這個功能只會對剛好閒著的人生效,也就是「有時候有用」。
+  const mob = world.mob.get(cand);
+  if (mob !== undefined) return mobAggroRank(world.mobRules, mob.kind);
   return null;
 }
 
@@ -302,6 +406,11 @@ export function rankOf(
   if (kind === null) return null;
   return {
     id: cand,
+    // 嘲弄. Computed HERE rather than passed in by the caller, on purpose: the
+    // held-target path in OrderSystem calls `rankOf` directly and never goes
+    // through `acquireTarget`, so a parameter would be one more thing a call
+    // site can forget — and forgetting it looks like the taunt「有時候有用」.
+    forced: forcedTargetOf(world, self) === cand ? 0 : 1,
     kind,
     threat: isThreat(world, self, cand) ? 0 : 1,
     hp: hp.hp,
@@ -310,12 +419,25 @@ export function rankOf(
 }
 
 /**
- * STRICTLY better on the full 4-key prefix (id is handled by iteration order:
+ * STRICTLY better on the full 5-key prefix (id is handled by iteration order:
  * candidates arrive ascending and an exact tie keeps the incumbent, so the
  * lowest id wins every remaining tie).
+ *
+ * WHERE 嘲弄 SITS IS A FIELD, NOT A CONSTANT (`tauntRules.priority`):
+ *   · "absolute" (ships)      — sort KEY ZERO, above 「敵方英雄優先」 and 「威脅」.
+ *   · "aboveThreatOnly"       — below 「敵方英雄優先」, above 「威脅」.
+ * The shipped side is the owner's own card text 「吸引周圍敵人**優先攻擊自己**」.
+ * The other side exists because it is a real preference and not a bug: a taunt
+ * coming from a SUMMON or a MOB under "absolute" outranks an enemy champion
+ * standing next to you, which is a much stronger decoy than some operators will
+ * want. Losing to 「威脅」 is NOT offered on either side — a taunt cancelled by
+ * the very enemy it is meant to peel you off is not a weaker taunt, it is a
+ * taunt that silently does nothing.
  */
-function beats(a: AcquiredTarget, b: AcquiredTarget): boolean {
+function beats(a: AcquiredTarget, b: AcquiredTarget, priority: TauntPriority): boolean {
+  if (priority === "absolute" && a.forced !== b.forced) return a.forced < b.forced;
   if (a.kind !== b.kind) return a.kind < b.kind;
+  if (a.forced !== b.forced) return a.forced < b.forced;
   if (a.threat !== b.threat) return a.threat < b.threat;
   if (a.hp !== b.hp) return a.hp < b.hp;
   return a.d2 < b.d2;
@@ -332,8 +454,24 @@ function beats(a: AcquiredTarget, b: AcquiredTarget): boolean {
  * over a mob, or the enemy that just started hitting me. Everything else waits
  * until the held target dies, dies out of zone, or leaves the leash.
  */
-function beatsForSwap(a: AcquiredTarget, b: AcquiredTarget): boolean {
+function beatsForSwap(
+  a: AcquiredTarget,
+  b: AcquiredTarget,
+  priority: TauntPriority,
+): boolean {
+  // 嘲弄 belongs in the STABILITY PREFIX and not only in `beats`, and this is
+  // the line the whole mechanic hangs on. A champion already holding an auto
+  // target takes the `held` branch in OrderSystem every tick and never reaches
+  // the acquire path, so without this key a taunt would only ever work on
+  // somebody who happened to be idle — i.e. it would look like it fires
+  // 「有時候」, which is the worst shape a guard can have to describe.
+  //
+  // It reads the SAME `priority` field as `beats` (and in the same position),
+  // because two answers to 「嘲弄排第幾」 is exactly the drift this file's
+  // header is a post-mortem about.
+  if (priority === "absolute" && a.forced !== b.forced) return a.forced < b.forced;
   if (a.kind !== b.kind) return a.kind < b.kind;
+  if (a.forced !== b.forced) return a.forced < b.forced;
   return a.threat < b.threat;
 }
 
@@ -365,10 +503,45 @@ export function acquireTarget(
   );
   const maxD2 = radius * radius;
   let best: AcquiredTarget | null = null;
+  // 嘲弄: did the taunter turn up as a REAL candidate (inside the radius)?
+  // Tracked rather than re-derived from `best.forced`, and that distinction is
+  // what keeps the two taunt lines in this file INDEPENDENTLY load-bearing:
+  //   · inside the radius  → the comparator (`beats`, key 0) is what makes it win;
+  //   · outside the radius → the rescue below is the only thing that can.
+  // Deriving it from `best` instead would let the rescue silently cover the
+  // in-radius case too, and then `beats`'s forced key could be deleted with
+  // nothing going red — a line no guard can kill is not a feature (第二守則).
+  let sawForced = false;
+  const priority = world.tauntRules.priority;
   for (const cand of ids) {
     const r = rankOf(world, self, cand);
     if (!r || r.d2 > maxD2) continue;
-    if (best === null || beats(r, best)) best = r;
+    if (r.forced === 0) sawForced = true;
+    if (best === null || beats(r, best, priority)) best = r;
+  }
+  // 嘲弄 IGNORES `radius`, and that is deliberate rather than an oversight.
+  // `radius` is 「我自己看多遠」 — for 82 melee champions it is the 6 u floor —
+  // while the taunt's own reach is the AoE the taunter authored on its own
+  // card. Leaving the victim's radius in charge would mean a melee body pulled
+  // from 8 u away simply never acquires the taunter, so the pull would land
+  // (the state is written), read back correctly, and change nothing on screen.
+  // The chase loop then closes the distance exactly as it does for an explicit
+  // order, which is the behaviour a taunt is supposed to have.
+  //
+  // ⚠️ IT IGNORES `radius`, NOT DISTANCE. How far a taunt may drag a body is
+  // `tauntRules.leashUnits`, enforced inside `forcedTargetOf` — so this rescue
+  // cannot reach past the leash, and no second distance rule lives here.
+  //
+  // The winner is decided by the SAME `beats` the loop above uses rather than
+  // an unconditional assignment, because 「嘲弄排第幾」 is now a field: under
+  // "aboveThreatOnly" a rescue that overwrote `best` outright would have
+  // re-imposed "absolute" through the back door for every out-of-radius taunt.
+  if (!sawForced) {
+    const forced = forcedTargetOf(world, self);
+    if (forced !== null) {
+      const r = rankOf(world, self, forced);
+      if (r && (best === null || beats(r, best, priority))) best = r;
+    }
   }
   return best;
 }
@@ -378,8 +551,9 @@ export function acquireTarget(
  * Exported for the OrderSystem pass; see {@link beatsForSwap}.
  */
 export function shouldSwapAutoTarget(
+  world: SimWorld,
   held: AcquiredTarget,
   candidate: AcquiredTarget,
 ): boolean {
-  return beatsForSwap(candidate, held);
+  return beatsForSwap(candidate, held, world.tauntRules.priority);
 }

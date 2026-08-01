@@ -338,6 +338,77 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "immunityGranted",
   "immune",
   "immuneControl",
+  // 嘲弄 (鍊金術之盾 godie-i06q:「[嘲弄] 每秒吸引周圍敵人優先攻擊自己，持續 0.5秒」).
+  //
+  // FANNED OUT because the pull has NO OTHER CHANNEL. It is not on `MatchState`:
+  // `sim/taunt.ts` DECISION 1 deliberately puts the state in a plain `world.taunt`
+  // Map with no snapshot field and no ENTITY_FLAG bit — a `StatusEffect` was
+  // rejected precisely because mobs carry no `StatusComp`, and a taunt that could
+  // not hold a zombie is the whole item. So the only evidence a client could
+  // otherwise have is enemies turning around, which reads exactly like 「the AI
+  // wandered off」. That is the `immunityGranted` argument directly above, one
+  // mechanic later, and the emit site itself says so — see the block headed
+  // 「② THE PLAYER MUST BE ABLE TO SEE IT」 in sim/effects/taunt.ts.
+  // (Cite the HEADING, not a line number: this said `taunt.ts:99` and had
+  //  already rotted to point at `return (a, b) => a.id - b.id;` inside
+  //  `compareBy` — 第三守則, a citation that drifts is a lie that looks checked.)
+  //
+  // CLIENT CONSUMER: `vfx/VfxSystem.handleEvent`'s 嘲弄 case — an aggro ring on
+  // the TAUNTER, anchored through `ctx.entityPos(source)`. Unlike `coinPickedUp`
+  // this event needs no x/z: the taunter is a live body by construction, because
+  // `targeting.forcedTargetOf` re-asks every tick and a dead taunter stops
+  // pulling on that same tick.
+  //
+  // PAYLOAD `{ source, count, durationSec, origin }`. `source` is an ENTITY id,
+  // NOT a seat, so a cue meant only for the local hero must gate on it the way
+  // `rankUp` does. `count` travels because pulling 1 and pulling 8 are different
+  // events to the player who built a tank.
+  //
+  // CADENCE: emitted ONLY when somebody was actually pulled (`pulled > 0`), and
+  // the rhythm is `HookDef.internalCooldown` — 1 s on the shipped card, so ≤1/s
+  // per holder. ⚠️ It is NOT tick-bounded in general: `IntervalHookSystem` 決策 1
+  // states outright that an `onInterval` hook with no `internalCooldown` fires
+  // 30×/s. That is an AUTHORING shape, not a code path — the fix for one would be
+  // the missing cooldown on that hook, not a special case here.
+  //
+  // NO DOUBLE-FIRE: `audio/sfxEdges.ts` diffs only kill/death/levelUp/exUnlock
+  // tallies and has no notion of aggro, and `combatSfx` has no case for this.
+  "taunt",
+  // 發放金幣 (sim/effects/grantGold.ts) — 鍊金術之盾's second half:「[煉金術] …
+  // 將 HP 低於 5% 的敵人變成黃金 (黃金數量為敵方等級)」.
+  //
+  // FANNED OUT, and the reason is NOT 「the client cannot know the number」 — it
+  // can. The payee's purse is replicated (`SeatState.gold`) and drawn every frame
+  // in the HUD's `gold-level` slot. What is missing is WHEN and WHY: this is a
+  // 10 % proc that resolves inside a single sim tick, so without this event a
+  // successful transmute and a failed roll look IDENTICAL on screen — a counter
+  // that ticks up at some point, for some reason. That is not the
+  // `attrUpgradePicked` case below, which is server-only because the player
+  // CLICKED the card and therefore already knows it happened; nobody pressed
+  // anything here.
+  //
+  // CLIENT CONSUMER: `vfx/VfxSystem.handleEvent`'s 煉金 case — a gold burst on the
+  // PAYEE, anchored through `ctx.entityPos(target)`. Deliberately the BEAT only:
+  // the amount stays on the HUD counter that already renders it, so the two
+  // halves cannot drift into disagreeing about a number.
+  //
+  // ⚠️ PAYLOAD `{ target, amount, origin }`, and `target` is the PAYEE — NOT the
+  // transmuted victim. The naming is the emit site's (grantGold.ts loops over
+  // `payees` and calls the loop variable the target), and it is written down here
+  // because a consumer that drew the burst on 「the target」 in the ordinary sense
+  // would put it on the wrong body. The victim's id is not on this event at all.
+  //
+  // ⚠️ THIS IS NOT A GENERAL 「gold changed」 EVENT. Most gold in the game is paid
+  // by calling `economy/progression.grantGold` directly — mob bounties, kill
+  // bounties, the round payout — and none of those emit anything. Only the
+  // AUTHORED `grantGold` EFFECT emits, so a consumer must never read its absence
+  // as 「no gold was earned」.
+  //
+  // CADENCE: bounded by whichever hook the content author attached it to. On the
+  // one shipped card that is `onDamageTaken` × `chance 0.1` × a 「hp < 5 %」
+  // condition, i.e. rarer than a kill. The same `onInterval` caveat as 嘲弄 above
+  // applies, with the same answer.
+  "goldGrant",
 ]);
 
 /**

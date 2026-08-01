@@ -75,6 +75,13 @@ export const HERO_LEVEL_SOURCES = ["matchHighest", "fixed", "round"] as const;
  */
 export const BOSS_CAP_SCOPES = ["zone", "match"] as const;
 
+/**
+ * #247 —— 長血條畫在畫面哪裡 / 什麼時候亮. Restated here for the same reason
+ * `BOSS_CAP_SCOPES` is; `mobWaves.test.ts` pins both against the Zod enums.
+ */
+export const BOSS_BAR_ANCHORS = ["top", "bottom"] as const;
+export const BOSS_BAR_REVEALS = ["summon", "sighted"] as const;
+
 /** `DEFAULT_MOB_BASE_LEVEL` / `DEFAULT_MOB_LEVEL_PER_ROUND` in sim/mobs.ts. */
 export const MOB_BASE_LEVEL_FALLBACK = 3;
 export const MOB_LEVEL_PER_ROUND_FALLBACK = 1;
@@ -197,6 +204,11 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     noClipStayInside: true,
     maxPerRound: 1,
     maxPerRoundScope: "zone",
+    // #247 owner 2026-08-01 「英雄/bot都會優先打殭屍王」+「亮長血條」.
+    aggroRank: -1,
+    healthBar: true,
+    healthBarAnchor: "top",
+    healthBarReveal: "summon",
   },
   special: {
     chancePercent: 5,
@@ -307,6 +319,10 @@ export type MobWavesFieldKey =
   | "boss.noClipStayInside"
   | "boss.maxPerRound"
   | "boss.maxPerRoundScope"
+  | "boss.aggroRank"
+  | "boss.healthBar"
+  | "boss.healthBarAnchor"
+  | "boss.healthBarReveal"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -442,6 +458,12 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.noClipStayInside",
   "boss.maxPerRound",
   "boss.maxPerRoundScope",
+  // #247 第二批 —— 「打誰」與「怎麼被看見」。排在最後,因為它們既不是王的數值也
+  // 不是獎金,而是「牠出現之後場上與畫面怎麼反應」。
+  "boss.aggroRank",
+  "boss.healthBar",
+  "boss.healthBarAnchor",
+  "boss.healthBarReveal",
   "special.chancePercent",
   "special.championSource",
   "special.championId",
@@ -790,6 +812,64 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     },
     optional: true,
     emptyMeans: "留空 = 每個戰場各自算",
+  },
+  // ── #247 第二批 (owner 2026-08-01 實戰回饋) ────────────────────────────────
+  "boss.aggroRank": {
+    zh: "殭屍王的仇恨排序",
+    note:
+      "owner 2026-08-01：「殭屍王出現英雄/bot都會優先打殭屍王 (因為獎勵很高)」。" +
+      "它影響的是**英雄與 bot 自動索敵時先打誰**，玩家與 bot 走的是同一條規則。" +
+      "數字是「王排在哪一階」：0 = 敵方英雄、1 = 召喚物、2 = 一般殭屍。" +
+      "出貨 −1 = 王排在敵方英雄之前（owner 的字面讀法）；" +
+      "填 0.5 = 「稍微優先」——被敵方英雄追殺時不會轉頭去打王，但王仍然贏過雜魚與召喚物；" +
+      "填 2 = 跟一般殭屍同級，等於關掉這個功能。" +
+      "⚠️ 它只在「你本來就索敵得到的東西裡面」排序：近戰的索敵半徑是 6 單位，" +
+      "所以 20 單位外的王不會把 3 單位外的敵方英雄擠掉",
+    unit: "階",
+    kind: "num",
+    min: -1,
+    max: 2,
+    optional: true,
+    emptyMeans: "留空 = 2（跟一般殭屍同級，也就是這個功能出現以前的行為）",
+  },
+  "boss.healthBar": {
+    zh: "殭屍王長血條",
+    note:
+      "owner 2026-08-01：「殭屍王 要像其他遊戲 BOSS 一樣亮長血條」。開 = 王活著的" +
+      "整段時間，畫面上有一條橫跨中央的長血條，寫著真實的目前血量／最大血量" +
+      "（不是百分比：27 萬血的王剩 0.4% 還有一千多，只印百分比會讓玩家以為打完了）。" +
+      "關掉之後只剩小地圖上的紅點",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "亮長血條（出貨）", off: "只有小地圖紅點" },
+    emptyMeans: "留空 = 亮（這一格是畫面不是平衡，留空給出貨值）",
+  },
+  "boss.healthBarAnchor": {
+    zh: "└ 血條畫在畫面哪裡",
+    note:
+      "出貨在上方（相位計時器下面，WoW／FF14 的團隊首領條位置）；改成下方會貼在" +
+      "技能列正上方（魂系遊戲的首領條）。兩邊都會讓「殭屍王降臨」橫幅與連殺計數器" +
+      "自動讓位，不會蓋到任何常駐介面",
+    unit: "",
+    kind: "enum",
+    values: ["top", "bottom"],
+    valueLabels: { top: "畫面上方（出貨）", bottom: "技能列上方" },
+    optional: true,
+    emptyMeans: "留空 = 上方",
+  },
+  "boss.healthBarReveal": {
+    zh: "└ 什麼時候亮出來",
+    note:
+      "出貨是「召喚那一刻」：王一生出來血條就在。改成「進視野」的話要等王走到鏡頭" +
+      "正在看的範圍內才亮 —— 想要「先聽到聲音、看到牠走過來才知道有多厚」的節奏就選這個。" +
+      "⚠️「進視野」是以鏡頭注視點為圓心的近似圓，不是精確的視錐判定",
+    unit: "",
+    kind: "enum",
+    values: ["summon", "sighted"],
+    valueLabels: { summon: "召喚那一刻（出貨）", sighted: "王進入視野才亮" },
+    optional: true,
+    emptyMeans: "留空 = 召喚那一刻",
   },
   "boss.championSource": {
     zh: "殭屍王由誰擔任：指定還是隨機",
@@ -1298,6 +1378,10 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.noClipStayInside",
       "boss.maxPerRound",
       "boss.maxPerRoundScope",
+      "boss.aggroRank",
+      "boss.healthBar",
+      "boss.healthBarAnchor",
+      "boss.healthBarReveal",
     ],
   },
   {
@@ -1503,6 +1587,14 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.maxPerRound);
     case "boss.maxPerRoundScope":
       return cfg.boss?.maxPerRoundScope ?? "";
+    case "boss.aggroRank":
+      return formatNum(cfg.boss?.aggroRank);
+    case "boss.healthBar":
+      return cfg.boss?.healthBar === undefined ? "" : cfg.boss.healthBar ? "1" : "0";
+    case "boss.healthBarAnchor":
+      return cfg.boss?.healthBarAnchor ?? "";
+    case "boss.healthBarReveal":
+      return cfg.boss?.healthBarReveal ?? "";
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -1988,6 +2080,18 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (bmpr !== undefined) boss.maxPerRound = bmpr;
     const bmps = optEnum("boss.maxPerRoundScope", BOSS_CAP_SCOPES);
     if (bmps !== undefined) boss.maxPerRoundScope = bmps;
+    // #247 第二批 —— OMITTED when blank, same rule as every optional above:
+    // clearing a box means 「回到舊行為」, and for `aggroRank` 舊行為 is 「王跟
+    // 一般殭屍同級」 — writing a number back would be a louder statement than
+    // the operator made.
+    const bar = optNum("boss.aggroRank");
+    if (bar !== undefined) boss.aggroRank = bar;
+    const bhb = optBool("boss.healthBar");
+    if (bhb !== undefined) boss.healthBar = bhb;
+    const bhba = optEnum("boss.healthBarAnchor", BOSS_BAR_ANCHORS);
+    if (bhba !== undefined) boss.healthBarAnchor = bhba;
+    const bhbr = optEnum("boss.healthBarReveal", BOSS_BAR_REVEALS);
+    if (bhbr !== undefined) boss.healthBarReveal = bhbr;
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {

@@ -25,6 +25,17 @@ import type { CombatTextCategory } from "./combatText";
  * The model this asserts is the one the ring architecture implies: for every
  * ground, EITHER the fill or the ring must clear 3.0:1 (WCAG AA for large
  * text), and the fill must clear 3.0:1 against its own ring.
+ *
+ * ⚠️ `RING` BELOW IS A MEASUREMENT INPUT, NOT AN ASSERTION — so it can go stale
+ * silently: recolour the emitted ring and every number here keeps being computed
+ * against `#000000` while the game draws something else (失敗形態 ⑤, 被測的不是
+ * 出貨的那個). Since 2026-08-01 the outline carries a SECOND channel
+ * (`config/damage-colors.json` → `outline`, the 「我打人 / 我被打」 band), which
+ * makes that mistake reachable, so the last `it` below pins `RING` to the string
+ * `combatTextCss` really emits. The band itself is measured in
+ * `combatTextOutline.test.ts`; it is deliberately drawn OUTSIDE the black ring
+ * precisely so the numbers below stay true — see `combatTextShadow`'s doc for
+ * the 土色 measurement that forced that shape.
  */
 const GROUNDS: ReadonlyArray<readonly [string, string]> = [
   ["土色", "#6d6250"], // sampled from the owner's screenshot
@@ -82,6 +93,27 @@ describe("floating combat text stays legible (combat-text-legible)", () => {
             `this is the case pure red failed at 2.47:1`,
         ).toBeGreaterThanOrEqual(3.0);
       }
+    }
+  });
+
+  it("`RING` is the colour the CSS really emits — the measurement above is not stale", () => {
+    // Everything in this file is measured against RING. If the emitted ring
+    // stops being that colour, the two tests above keep passing while measuring
+    // a ring that is not on screen. `#000` and `#000000` are the same colour;
+    // the emitter uses the short form.
+    const short = `0 ${RING.replace(/^#(.)\1(.)\2(.)\3$/, "#$1$2$3")}`;
+    for (const cat of CATEGORIES) {
+      const shadow = /text-shadow:([^;]+);/.exec(combatTextCss(combatTextStyle(cat), false))![1]!;
+      const hard = shadow
+        .split(",")
+        .map((s) => s.trim())
+        .filter((s) => / 0 #[0-9a-f]{3,6}$/i.test(s));
+      // the 8-direction hard ring, in RING, is the first thing painted
+      expect(hard.length, `${cat}: no hard ring layers at all`).toBeGreaterThanOrEqual(8);
+      expect(
+        hard.slice(0, 8).every((l) => l.endsWith(short)),
+        `${cat}: the emitted ring is not ${RING} — every ratio in this file is now measuring the wrong colour`,
+      ).toBe(true);
     }
   });
 });

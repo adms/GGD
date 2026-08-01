@@ -71,7 +71,7 @@ import { capsule } from "../collision/shapes";
 import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
 import { distSq, len, normalize, sub, type Vec2 } from "../math/vec2";
-import { casterStats } from "./effectCommon";
+import { casterAttrs, casterStats } from "./effectCommon";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 
 /** Which way the lash goes. `aim: "target"` degrades to facing, never to nothing. */
@@ -146,7 +146,7 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     if (victims.length === 0) return;
 
     const stats = casterStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank);
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
     for (const v of victims) {
       let amount = base;
       let crit = false;

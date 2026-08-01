@@ -296,6 +296,20 @@ export interface KillComboPlacementOpts {
    * NOT vanish, which a boolean could not express.
    */
   bossRect?: HudRect | null;
+  /**
+   * #247 —— 殭屍王長血條 while it is up (`bossHealthBarModel.bossHealthBarSpec`).
+   *
+   * A THIRD rect rather than folding it into `bossRect`, because they can sit at
+   * OPPOSITE ends of this corridor: the bar is anchorable top or bottom
+   * (`mobWaves.boss.healthBarAnchor`), while the banner/panel is always
+   * top-anchored. Merging them would need a union rect, which on a bottom bar
+   * would swallow the whole corridor and delete the counter on every viewport.
+   *
+   * Same precedence and the same reason as `bossRect`: the counter is juice that
+   * re-fires every few seconds, the king's bar is the objective. Absent ⇒
+   * nothing moves, so every existing caller and test is byte-identical.
+   */
+  bossBarRect?: HudRect | null;
 }
 
 /**
@@ -376,6 +390,10 @@ export function killComboObstacles(
   );
   // the 殭屍王 overlay while it is up (#262 / GH #190) — see `bossRect`
   if (opts.bossRect) out.push({ id: "mob-boss", rect: opts.bossRect });
+  // #247 長血條 — listed for the same reason `bossRect` is. By the time the side
+  // scan runs, `killComboRect` has already moved `top`/`bottom` clear of it, so
+  // this entry is a belt-and-braces statement of 「that band is taken」.
+  if (opts.bossBarRect) out.push({ id: "mob-boss-bar", rect: opts.bossBarRect });
   return out;
 }
 
@@ -392,7 +410,9 @@ export function killComboRect(
   opts: KillComboPlacementOpts,
 ): HudRect | null {
   const mid = viewport.width / 2;
-  const bottom = viewport.height - ABILITY_CLUSTER_H - HUD_GAP;
+  // `let`, not `const`: the #247 長血條 can be anchored at the BOTTOM of this
+  // corridor, and then it is `bottom` that yields rather than `top`.
+  let bottom = viewport.height - ABILITY_CLUSTER_H - HUD_GAP;
   let top = TOP_CENTRE_BAND_END + HUD_GAP;
 
   // A legend that is up AND CENTRED (its `strip` shape) owns the top of this
@@ -411,6 +431,18 @@ export function killComboRect(
   if (opts.bossRect) {
     const b = opts.bossRect;
     if (b.x < mid && b.x + b.w > mid) top = Math.max(top, b.y + b.h + HUD_GAP);
+  }
+  // …and the 長血條 (#247), which outranks the counter for the same reason and
+  // can be anchored at EITHER end — so the yield goes both ways. Decided by
+  // WHICH HALF the bar sits in rather than by its `anchor` setting, so this file
+  // needs none of the bar's vocabulary and cannot disagree with the rect that
+  // was actually resolved.
+  if (opts.bossBarRect) {
+    const b = opts.bossBarRect;
+    if (b.x < mid && b.x + b.w > mid) {
+      if (b.y + b.h <= (top + bottom) / 2) top = Math.max(top, b.y + b.h + HUD_GAP);
+      else bottom = Math.min(bottom, b.y - HUD_GAP);
+    }
   }
 
   const corridor = bottom - top;
@@ -479,5 +511,6 @@ export function killComboCollisions(
     if (hudRectsOverlap(rect, r)) hits.push(`control-legend-${i}`);
   });
   if (opts.bossRect && hudRectsOverlap(rect, opts.bossRect)) hits.push("mob-boss");
+  if (opts.bossBarRect && hudRectsOverlap(rect, opts.bossBarRect)) hits.push("mob-boss-bar");
   return hits.sort();
 }

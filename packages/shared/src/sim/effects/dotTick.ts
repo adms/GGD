@@ -111,6 +111,16 @@ export function dotTickSystem(world: SimWorld): void {
             // cast that applied it, and re-rolling per payout would make a burn
             // the highest-variance damage in the game.
             crit: false,
+            // ⚠️ THE AUTHOR'S ORIGIN, VERBATIM — and it is load-bearing, not
+            // bookkeeping. `effects/dot.ts` copied `ctx.origin` onto the
+            // instance and this line copies it onto the packet, which is the
+            // ENTIRE reason a spell's lingering burn counts as 技能傷害
+            // (owner 2026-08-01 「技能留下的延燒…算不算技能傷害? => yes」) and is
+            // therefore converted by 惡夢魔王碎片 `scope: "ability"`. Stamping
+            // anything of your own here (a `"dot:"` prefix, say) silently takes
+            // every burn out of every `scope`-based rule in
+            // `combat/damageTypeOverride.ts`. Guarded by the 「技能留下的延燒」
+            // block in `combat/damageTypeOverride.test.ts`.
             origin: d.origin,
           });
         }

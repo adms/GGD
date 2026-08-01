@@ -461,7 +461,11 @@ describe("GH#216 卡住的走位 —— 接敵與出手", () => {
  * 這一組就是那條路徑的守衛:一條讀值、一條讀夾限、一條讀**行為**。
  */
 describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
-  it("操作者填的五格會原封不動落到規則表 (ae-doc-roundtrip)", () => {
+  it("操作者填的每一格會原封不動落到規則表 (ae-doc-roundtrip)", () => {
+    // ⚠️ 這是一個**逐格**的 round-trip:`toEqual` 對整張表比對,所以任何一格新
+    // 欄位只要 `normalizeAutoEngageRules` 忘了讀,這裡就紅。2026-07-31 加
+    // `idleSeeks` 時它就是這樣紅的 —— 那正是它該做的事,不是維護噪音。
+    // 每一格都刻意填**與出貨相反**的值,避免「忘了讀 → 回退到預設 → 剛好相等」。
     const rules = combatFeelFromDoc({
       id: "combat-feel",
       schema: COMBAT_FEEL_SCHEMA,
@@ -470,6 +474,7 @@ describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
         stallTicks: 7,
         stallSpeed: 0.25,
         seekRadius: 11,
+        idleSeeks: true,
         respectLiveSteering: false,
         ccPausesStall: false,
       },
@@ -479,9 +484,16 @@ describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
       stallTicks: 7,
       stallSpeed: 0.25,
       seekRadius: 11,
+      idleSeeks: true,
       respectLiveSteering: false,
       ccPausesStall: false,
     });
+    // 每一格都和出貨預設不同 —— 否則上面那個 `toEqual` 有一半是被預設值餵飽的。
+    for (const k of Object.keys(DEFAULT_AUTO_ENGAGE) as (keyof typeof DEFAULT_AUTO_ENGAGE)[]) {
+      expect(rules![k], `${k} 和出貨預設相同,這一格的 round-trip 沒有被真的測到`).not.toBe(
+        DEFAULT_AUTO_ENGAGE[k],
+      );
+    }
   });
 
   /**

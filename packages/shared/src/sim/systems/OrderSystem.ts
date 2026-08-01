@@ -15,6 +15,7 @@ import {
   ACQUIRE_LEASH,
   acquireRadius,
   acquireTarget,
+  forcedTargetOf,
   isManuallyTargetable,
   rankOf,
   shouldSwapAutoTarget,
@@ -173,6 +174,11 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
           //     of a committed wind-up (the A-click case that held a target 86%
           //     of the round and still landed 2 hits).
           if (!nav.attackTargetAuto) nav.attackTarget = null;
+          // …連**被嘲弄暫存起來**的那一條也一起取消。同一條規則:一條地面指令
+          // 取代玩家自己的攻擊指令。少了這一行,一個在嘲弄期間改用走位的玩家會
+          // 在嘲弄退掉的那一 tick 被「還原」到他早就放棄的那個目標身上 ——
+          // 而畫面上完全看不出來為什麼英雄突然自己跑去打別人。
+          world.suspendedOrder.delete(id);
           // ---- GH#216: 玩家此刻正在轉方向盤 → 走位權無條件還給他 ----
           // 一條**新到的** move 是「玩家現在正在下指令」唯一誠實的訊號:搖桿與
           // 虛擬搖桿只在推著的時候每一拍送一條(GamepadInput / TouchInput),
@@ -220,6 +226,9 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
           nav.moveTarget = null;
           nav.attackTarget = null;
           nav.attackTargetAuto = false;
+          // S / H 是「停手」。被嘲弄暫存起來的那條攻擊指令也一起取消 —— 否則
+          // 玩家按了 S,嘲弄一退,英雄自己又衝回去打原本那個人。
+          world.suspendedOrder.delete(id);
           break;
       }
       break; // one entity per seat
@@ -379,6 +388,61 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
  * Mobs are NOT processed here — MobSystem owns their aggro (they are also not in
  * `world.champion`).
  */
+/**
+ * 嘲弄 vs 玩家自己點名的目標 —— TWO decisions, TWO fields (sim/taunt.ts).
+ *
+ * ⭐ 決策點 A `tauntRules.overridesManualOrder`（出貨 **false**）
+ *   false = 嘲弄只接管自動索敵與 bot／小怪的 aggro（那三條路都走
+ *   `acquireTarget` / `forcedTargetOf`），玩家右鍵點名的目標一個 tick 都不會
+ *   被動到。owner 在**完全同一個題目**（系統要不要從玩家手上接管方向盤）推翻
+ *   過自己一次 —— `autoEngage` 上鎖之後不放手，實測搶走 86.6% 的走位 tick，
+ *   於是 `respectLiveSteering` 改成 true（sim/combatFeel.ts）。WC3 的嘲弄確實
+ *   會蓋掉玩家指令，所以 true 是**保真**的那一側。
+ *
+ * ⭐ 決策點 B `tauntRules.restoreManualOrderOnLapse`（出貨 **true**）
+ *   嘲弄退掉之後要不要把那個目標**還回去**。
+ *
+ *   ⚠️ B 以前不存在，而它的缺席不是「少一個選項」，是一個缺陷：舊實作把手選
+ *   目標清成 null，然後下面通用那條路用 `attackTargetAuto = true` 重新填上 ——
+ *   一次右鍵點名被**永久**轉成自動目標，嘲弄過期也回不來。一個布林值同時決定
+ *   「接管」和「永不歸還」兩件事，而卡片上只寫了前者。
+ *
+ * 接管的做法是**清掉**手選目標而不是直接指派嘲弄者：清掉之後既有路徑會用
+ * `best`（`acquireTarget` 保證那就是嘲弄者）重新填上，所以這裡沒有第二份
+ * 「該打誰」的邏輯。歸還時寫回 `attackTargetAuto = false`，也就是還原成
+ * **手選**，而不是留一個看起來一樣、但下一 tick 就會被自動索敵換掉的目標。
+ */
+function tauntVsManualOrder(
+  world: SimWorld,
+  id: EntityId,
+  nav: import("../components").Navigation,
+): void {
+  const rules = world.tauntRules;
+  const forced = rules.overridesManualOrder ? forcedTargetOf(world, id) : null;
+
+  if (forced !== null) {
+    if (nav.attackTarget !== null && !nav.attackTargetAuto) {
+      // 記下來再清掉。最後一條手選指令勝出（玩家在被嘲弄期間又點了別人）。
+      world.suspendedOrder.set(id, nav.attackTarget);
+      nav.attackTarget = null;
+      nav.attackTargetAuto = false;
+    }
+    return;
+  }
+
+  // 嘲弄退了（過期／嘲弄者死掉／超出牽引距離／規則被關掉）—— 方向盤還回去。
+  const suspended = world.suspendedOrder.get(id);
+  if (suspended === undefined) return;
+  world.suspendedOrder.delete(id); // 一次性：還過就不再還
+  if (!rules.restoreManualOrderOnLapse) return;
+  // 只在玩家此刻**手上沒有自己的東西**時才還（他被嘲弄期間下的新指令永遠優先），
+  // 而且那個目標要還活著 —— 對著屍體的指令不是「還原」，是一個死掉的指令。
+  if (nav.attackTarget !== null && !nav.attackTargetAuto) return;
+  if (!world.health.get(suspended)?.alive) return;
+  nav.attackTarget = suspended;
+  nav.attackTargetAuto = false;
+}
+
 function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
   if (!world.combatActive) return;
 
@@ -451,6 +515,18 @@ function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
     // cause of anything, and do not build on the claim that it fires.
     if (world.abilities.get(id)?.windup && nav.attackTarget !== null) continue;
 
+    // ---- 嘲弄 vs 玩家自己點名的目標 (sim/taunt.ts) ----
+    // ⚠️ 位置很重要,而且它以前是錯的。這一段本來寫在這個迴圈的**尾巴**,可是
+    // 上面那個 `case "attackTarget": if (nav.attackTarget !== null) continue;`
+    // 會先把人踢出這一輪 —— 也就是說一個**真的右鍵點名**(`nav.order` 是
+    // `attackTarget`)永遠走不到那一段,`overridesManualOrder: true` 對真實玩家
+    // 指令一個 tick 都沒有生效過。既有那條測試看起來是綠的,是因為它自己手寫
+    // `nav.attackTarget` 而**沒有** `nav.order`(失敗形態 ⑤)。搬到 switch 之前
+    // 就是修正:接管與歸還都與玩家手上是哪一種指令無關。
+    // 前搖那一行**仍然**在它上面 —— 前搖中改指向會讓那一刀砍空,那是既有且刻意
+    // 的行為(見 taunt.test.ts 的「等這一刀收完」)。
+    tauntVsManualOrder(world, id, nav);
+
     // ---- explicit-order suppression ----
     let holdPosition = false;
     const order = nav.order;
@@ -518,11 +594,29 @@ function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
     // 唯一一個看得到敵人卻不會動的單位:實測右鍵點進柱子之後,最近的敵人 16.25
     // 單位遠 —— 6 的半徑整場一次都沒索到敵,而同一場的每個 bot 都在打架。
     // 只在卡住時放大,所以走得動的走位完全不受影響(半徑一格都沒變)。
+    //
+    // ---- W4 2026-07-31: 那個放大**只給卡住的人**,站著不動的人拿不到 ----
+    // 上面那段只講了一半。同一個 `ae.seekRadius` 有兩種人拿不到:走得動的人
+    // (刻意的,#274 的走位權),以及**完全站著不動**的人 —— 後者是量出來才發現
+    // 的不對稱:一個手上什麼指令都沒有的玩家吃的是 `nearRadius`(近戰 6),所以
+    // 「卡在柱子上」比「站著不動」更容易索到敵。實測
+    // `apps/game-server/src/match/autoAcquireWhileMoving.test.ts` 的 `[idle]`:
+    // 整場 2,410 tick 沒有任何敵方英雄靠到 14.95 單位以內 → 0 次索敵、0 次揮擊。
+    //
+    // 這是**手感的平衡決策**,不是缺陷,所以它是一個後台欄位而不是一行修正:
+    // `idleSeeks` 出貨 `false` = 上面那個行為一個 tick 都沒變。理由與兩側的
+    // 手感差別見 `sim/combatFeel.ts` 的 `AutoEngageRules.idleSeeks`。
+    //
+    // 讀的是**指令套用之後**的 `nav.order`(「此刻手上沒有任何指令」),不是
+    // 迴圈上面那個先抓下來的 `order` —— 走完的走位在上面那個 switch 裡已經被
+    // 消耗成 null,那種人也是站著不動的人。`hold` 不受影響(它先被三元的第一
+    // 支接走,而且 `nav.order` 非 null)。
     const engaging = autoEngageActive(world, id, ae);
+    const idleSeeking = ae.enabled && ae.idleSeeks && nav.order === null;
     const nearRadius = acquireRadius(sc, t.radius);
     const radius = holdPosition
       ? reachTo(sc, t.radius, 0) * HOLD_FRACTION
-      : engaging && ae.seekRadius > nearRadius
+      : (engaging || idleSeeking) && ae.seekRadius > nearRadius
         ? ae.seekRadius
         : nearRadius;
 
@@ -537,7 +631,7 @@ function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
         // (an enemy champion over a mob, or the enemy that just started hitting
         // me) takes it away — re-ranking on hp/distance every tick would swap
         // mid-approach and cancel the wind-up over and over.
-        if (best && shouldSwapAutoTarget(held, best)) nav.attackTarget = best.id;
+        if (best && shouldSwapAutoTarget(world, held, best)) nav.attackTarget = best.id;
         // ⚠️ GH#216 —— 這裡也要上鎖,而且這是**量出來**才發現的。
         // 只在「索到新目標」那條路徑上鎖是不夠的:近戰的索敵半徑是 6、射程 1.6,
         // 所以一個站在牆邊的近戰在**第一 tick**(還沒卡滿 30 tick)就已經握著

@@ -433,11 +433,11 @@ describe("#247 C — 腳下圈圈只是視覺,和碰撞完全獨立", () => {
     cover("mob-boss-ring");
     // follow > 1 against a sub-1 size drives the bracket negative — a mirrored
     // ring is a rendering bug, not a small ring.
-    expect(mobGroundRingDiameter(0.1, { tintStrength: 0, groundRingDiameter: 2, groundRingSizeFollow: 2 })).toBe(0);
+    expect(mobGroundRingDiameter(0.1, { groundRingDiameter: 2, groundRingSizeFollow: 2 })).toBe(0);
     // the legal-but-absurd corner: max diameter × max follow × a huge 體型倍率
-    expect(
-      mobGroundRingDiameter(50, { tintStrength: 0, groundRingDiameter: 8, groundRingSizeFollow: 2 }),
-    ).toBe(MOB_RING_MAX_DIAMETER);
+    expect(mobGroundRingDiameter(50, { groundRingDiameter: 8, groundRingSizeFollow: 2 })).toBe(
+      MOB_RING_MAX_DIAMETER,
+    );
     // and the ceiling is the duel zone's own radius, said out loud
     expect(MOB_RING_MAX_DIAMETER).toBe(ZONE.boundaryRadius);
   });

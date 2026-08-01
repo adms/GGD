@@ -348,6 +348,13 @@ make whitelist   # 看目前啟用了多少 champions/items/abilities
 
 抽 3 張、加權、不重複、已擁有的不會再出現（`content/config/arena-rules.json`）。
 
+⚠️ **下面這張表已經跟出貨值脫節,不要照著它讀數字。** 唯一的真相是
+`content/config/arena-rules.json`,而 `apps/game-server/src/match/arenaRules.test.ts`
+逐格對著它斷言。已知的偏差(2026-08-01 量的):第 1 回合現在發 **+750**
+(owner「開局應該是 750」)、兩張武器卡都抽 `legendary-weapons`
+(`quest-rewards` 已退場)、第 3–13 回合的金幣與這張表完全不同。
+重寫整張表沒有排進這一批,所以這裡誠實地標成過期而不是假裝它是對的。
+
 | 回合 | 等級 | 金幣 | 強化卡 | 武器卡 |
 | ---: | ---: | ---: | --- | --- |
 | 1 | +2（自動學會 Q/W/E） | — | silver | — |
@@ -570,7 +577,7 @@ client 的一個 hash route，不用登入、不用開對戰，大廳右上「�
 
 README 的開放名冊把每名英雄的六個 slot 直接列成六條「技能名稱＋一行效果」（天生技那條會標 `天生·被動` 或 `天生·主動`）；全 662 技能的逐欄表在 `docs/reference/abilities.md`。
 
-**上架看 `craftRole`，不是看價格（task #70）。** 商店只讓 `craftRole === "final"` **且**真有效果（有 `modifiers` 或 `passive`）的最終合成武器上架（`packages/shared/src/sim/economy/shop.ts:110`、`apps/client/src/ui/panels/champSelectFilter.ts:150`）—— 214 件裡是 **28 件**，加 2 項服務。元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行。有 **6 件 `final` 沒有 payload**（雷神之鎚／黑色魔書…主動效果 schema 還裝不下，#56）留在 final 分類但不上架。**三選一 draft 抽的是 13 件 `quest` 道具**（`content/loot-tables/quest-rewards.json`；仙后座 = `godie-i01s`），傳說寶玉抽 14 件傳說；兩者都買不到、只能抽。價格只有簡易 **300g**、強力 **1200g**。表上的 `tier` 欄（1..5）是 **w3x 匯入的遺留欄位，與 craftRole 無關**。
+**上架看 `craftRole`，不是看價格（task #70）。** 商店只讓 `craftRole === "final"` **且**真有效果（有 `modifiers` 或 `passive`）的最終合成武器上架（`packages/shared/src/sim/economy/shop.ts:110`、`apps/client/src/ui/panels/champSelectFilter.ts:150`）—— 214 件裡是 **28 件**，加 2 項服務。元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行。有 **6 件 `final` 沒有 payload**（雷神之鎚／黑色魔書…主動效果 schema 還裝不下，#56）留在 final 分類但不上架。**三選一 draft 抽的是 `legendary-weapons`**（owner 2026-08-01「隨機三選一發放道具 都改成棱彩武器道具」）；`quest-rewards` 那 13 件 `quest` 道具**已退場**（表與道具都還在，但沒有任何回合排它，見下方 🎴 那一節）。傳說寶玉抽同一張 `legendary-weapons`；兩者都買不到、只能抽。價格只有簡易 **300g**、強力 **1200g**。表上的 `tier` 欄（1..5）是 **w3x 匯入的遺留欄位，與 craftRole 無關**。
 
 **數值是 `content/` 的原始值，未套用 combat-env 倍率。** 遊戲內顯示的一律是乘算後的最終值（`cooldown` ×0.25、`damageDealt` ×0.5、`maxHealth` ×8.0、`abilityRange` ×0.6，見 §5），所以畫面上的冷卻／傷害／生命跟表格**不會相同** —— 那是預期行為，不是 bug。
 
@@ -1131,7 +1138,7 @@ w3x 作者的慣例是 `NN-0X 技能名`，`NN` 是英雄編號；**天生技用
 
 ##### 🎴 三選一 draft — `craftRole:quest`（13）
 
-每回合三選一 draft 從這些抽（`content/loot-tables/quest-rewards.json`；`仙后座` = `godie-i01s`）。**買不到，只能抽到。**
+⚠️ **2026-08-01 起 `quest-rewards` 退場,沒有任何回合抽它。** owner:「第 2、5 回合改發棱彩傳說之後,那 13 支任務小飾品沒有任何回合排它＝拿不到。排回去還是退場? **=> 退場**」。表與這 13 支道具都**還在**（白名單、圖鑑、後台編輯照舊,退場不是刪除）,只是不再是任何一張卡的獎池 —— 兩張武器卡都抽 `legendary-weapons`。狀態寫在 `arena-rules.retiredLootTables`,規則與守衛在 `packages/shared/src/content/retiredLootTables.ts`;把它排回任何回合會讓 `pnpm content:build` 直接失敗。**買不到，現在也抽不到。**
 
 | id | 名稱 | 價格 | 開放 | 屬性 modifiers | 被動 |
 |---|---|---|---|---|---|

@@ -30,7 +30,7 @@
  * ability → castType → derived shape → OK / AMBIGUOUS / MISSING.
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -95,14 +95,24 @@ beforeAll(() => {
   const mults = (combatEnv.multipliers ?? combatEnv) as Record<string, unknown>;
   abilityRange = typeof mults.abilityRange === "number" ? mults.abilityRange : 1;
 
+  // ⚠️ 2026-08-01 (#251) —— 這裡本來是一份**手打的 5 個 id 白名單**
+  // （`imported.bolt` / `imported.wave` / `sela.q.bolt` / `thorne.e.thorn` /
+  // `basic-attack`）。內容側後來把匯入的彈道拆成帶元素後綴的版本
+  // （`imported.wave.physical` / `imported.wave.arcane` / `imported.bolt.ki` …
+  // 出貨 18 份），白名單沒有跟著長 —— 於是 **16 支 skillshot 被這個測試自己的
+  // stub 判成「沒有可畫的預告」**，而它們在遊戲裡走的是真的 registry、畫得出來。
+  // 也就是說這條 gate 對那 16 支既是假紅、也早就沒有守備力了。
+  //
+  // 改成讀**出貨的整個 `projectiles` 目錄**：一份清單，不可能再漂開。
   const projectiles = new Map<string, { maxRange: number; hitRadius: number }>();
-  for (const id of ["imported.bolt", "imported.wave", "sela.q.bolt", "thorne.e.thorn", "basic-attack"]) {
-    try {
-      projectiles.set(id, readJson(join(CONTENT, "projectiles", `${id}.json`)));
-    } catch {
-      /* an id the tree no longer ships: the resolver will report it MISSING */
-    }
+  const projDir = join(CONTENT, "projectiles");
+  for (const f of readdirSync(projDir)) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const doc = readJson<{ id: string; maxRange: number; hitRadius: number }>(join(projDir, f));
+    projectiles.set(doc.id, doc);
   }
+  // 一個都沒讀到 = 下面整張表都會是 MISSING，那是「測試壞了」不是「內容壞了」。
+  expect(projectiles.size, "一份彈道文件都沒讀到 —— 這個 sweep 沒有在測東西").toBeGreaterThan(5);
   env = { abilityRange, projectile: (id) => projectiles.get(id) ?? null };
 
   for (const championId of roster) {

@@ -10,12 +10,29 @@
  */
 import type { EntityId, StatusId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { EffectContext, EffectDef } from "./effect";
+import type { AttrLookup, EffectContext, EffectDef } from "./effect";
 import { resolveScaling } from "./effect";
 import type { Stat } from "../stats/statTypes";
+import { liveAttribute } from "../stats/attrSources";
 
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
+}
+
+/**
+ * THE sim-side {@link AttrLookup} — 「施法者的**總**力量/敏捷/智慧現在是多少」。
+ *
+ * 每一個把 `Scaling` 交給 `resolveScaling` 的效果都必須傳這個(第四個參數是
+ * 必填的,理由寫在 `Scaling.attrRatios` 上)。轉呼叫 `stats/attrSources.ts` 的
+ * `liveAttribute`,也就是條件編輯器的 力量/敏捷/智慧 下拉、`grantAttribute` 的
+ * 上限、以及 效能 文案裡「總敏捷」讀的**同一個**函式 —— 三個地方分歧的話,
+ * 玩家看到的數字與 sim 用的數字就會不一樣。
+ *
+ * 非英雄的身體(部隊、召喚物、測試裸實體)`liveAttribute` 回 `null` → 這裡回 0,
+ * 跟 `championStatBase` 對同一種身體的答案一致。
+ */
+export function casterAttrs(ctx: EffectContext): AttrLookup {
+  return (attr, basis) => liveAttribute(ctx.world, ctx.caster, attr, basis) ?? 0;
 }
 
 /**
@@ -48,7 +65,7 @@ export function comboAddend(
   const combo = e.comboBonus;
   if (combo === undefined) return 0;
   if (!hasStatus(ctx.world, ctx.caster, combo.statusId)) return 0;
-  return resolveScaling(casterStats(ctx), combo.amount, ctx.rank);
+  return resolveScaling(casterStats(ctx), combo.amount, ctx.rank, casterAttrs(ctx));
 }
 
 /**

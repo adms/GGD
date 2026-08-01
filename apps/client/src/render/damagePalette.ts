@@ -62,9 +62,26 @@
  * measured tints. Same axis (three schools → three answers), different values,
  * and both are operator-editable. This is the ONE place the difference is
  * decided; nothing downstream may re-derive a colour from `dmgType`.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * A THIRD GROUP THAT IS NOT A PALETTE: `outline`
+ *
+ * owner 2026-08-01, verbatim: 「加第二個通道，不動色相 => ok」.
+ *
+ * `text` and `flash` both answer 「哪一種傷害」. `outline` answers a DIFFERENT
+ * question — 「這是誰的血」 — and it exists because owner's hue ruling spends the
+ * fill on the school, which collapses 我打人 and 我被打 onto one hue. It is a
+ * second CHANNEL, not a second axis: {@link damageOutlineMode} decides which
+ * categories are 「我被打」 and {@link damageOutlineColor} gives the two colours.
+ *
+ * ⚠️ It does NOT recolour the hard black ring, and it CANNOT — see
+ * `ui/combatText.combatTextShadow`, which measures why (the black ring clears
+ * 土色 ground by 3.51:1 with the fill at 1.90:1 behind it, i.e. that ground is
+ * carried by the ring alone and any coloured ring drops it under 3.0).
  */
 import {
   DEFAULT_DAMAGE_COLORS,
+  type CombatTextOutlineMode,
   type ConfigDamageColorsDoc,
   type DamageTextAxis,
 } from "@ggd/shared/content";
@@ -119,6 +136,21 @@ export function applyDamageColorsDoc(doc: ConfigDamageColorsDoc | null | undefin
       magic: acceptHex(d.flash?.magic, S.flash.magic),
       true: acceptHex(d.flash?.true, S.flash.true),
     },
+    outline: {
+      mode:
+        d.outline?.mode === "off" || d.outline?.mode === "taken" || d.outline?.mode === "incoming"
+          ? d.outline.mode
+          : S.outline.mode,
+      outgoing: acceptHex(d.outline?.outgoing, S.outline.outgoing),
+      incoming: acceptHex(d.outline?.incoming, S.outline.incoming),
+      // Clamped, not rejected: a width is a scalar with two real ends, and the
+      // shipped fallback for "operator typed 40" should be the legal extreme, not
+      // silently 1.9. The bounds are the schema's — see zConfigDamageColorsDoc.
+      widthMult:
+        typeof d.outline?.widthMult === "number" && Number.isFinite(d.outline.widthMult)
+          ? Math.min(3, Math.max(1.1, d.outline.widthMult))
+          : S.outline.widthMult,
+    },
   };
 }
 
@@ -134,6 +166,29 @@ export function damageTextAxis(): DamageTextAxis {
 /** Floating-number fill for one school (or 治療), as a CSS colour. */
 export function damageTextColor(key: DamageTextKey): string {
   return palette.text[key];
+}
+
+/**
+ * Which floating-text categories wear the 「我被打」 outline, or `off` for the
+ * pre-feature behaviour (one outline for everybody).
+ *
+ * ⚠️ THIS IS THE SECOND CHANNEL, NOT A SECOND HUE. owner 2026-08-01, verbatim:
+ * 「加第二個通道，不動色相 => ok」. The fill keeps meaning 傷害屬性 under
+ * `textAxis: "damageType"`; the outline is what says whose health moved. The two
+ * never compete because they are different pixels.
+ */
+export function damageOutlineMode(): CombatTextOutlineMode {
+  return palette.outline.mode;
+}
+
+/** Outline colour for one side of the split, as a CSS colour. */
+export function damageOutlineColor(role: "outgoing" | "incoming"): string {
+  return palette.outline[role];
+}
+
+/** Outline radius ÷ the black ring's radius. */
+export function damageOutlineWidthMult(): number {
+  return palette.outline.widthMult;
 }
 
 /** Victim body-flash overlay colour for one school, as Babylon's 0..1 triple. */

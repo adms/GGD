@@ -27,6 +27,7 @@ import { useDisplayStatCaps } from "../displayStatCaps";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import { CodexIcon } from "./CodexIcon";
 import { championSheetRows } from "../championSheet";
+import { contentBodyScaleRules } from "../displayBodyScale";
 import type { ChampionAttributes } from "@ggd/shared/sim/stats/attributes";
 // The ONLY editor-related runtime import: a createContext(null) + useContext.
 // The editor itself (CodexEditPanel → codexEdit → codexEditModel) arrives as a
@@ -265,10 +266,19 @@ function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
   const base: Readonly<Record<string, number | undefined>> = champ.baseStats;
   const growth: Readonly<Record<string, number | undefined>> = champ.growth;
   const rows = championSheetRows(
-    { baseStats: champ.baseStats, growth: champ.growth, attributes: champ.attributes ?? undefined },
+    {
+      baseStats: champ.baseStats,
+      growth: champ.growth,
+      attributes: champ.attributes ?? undefined,
+      // 體型 → 射程 (GH#252)。漏掉它,圖鑑的 攻擊距離 就是卡面值而不是實戰值。
+      // 從 `doc` 讀而不是加一個 `CodexChampion` 欄位:`doc` 就是原封不動的英雄卡,
+      // 多一個投影欄位就多一處會 drift 的地方。
+      bodyScale: typeof champ.doc["bodyScale"] === "number" ? champ.doc["bodyScale"] : undefined,
+    },
     env,
     baseBonus,
     caps,
+    contentBodyScaleRules(),
   );
   const rowByKey = new Map(rows.map((r) => [r.key, r]));
   const keys = rows.map((r) => r.key);

@@ -293,6 +293,135 @@ export function clampOneShotMaxLifeSec(v: number | undefined): number {
   return Math.min(MAX_ONE_SHOT_MAX_LIFE_SEC, Math.max(MIN_ONE_SHOT_MAX_LIFE_SEC, v));
 }
 
+// ---------------------------------------------------------------------------
+// 施法特效播在離地多高 —— owner #251「衝擊波特效沒有真實套用」
+// ---------------------------------------------------------------------------
+
+/**
+ * 施法高度從哪裡來。**這是一個決策點,所以它是一個欄位**(第一守則)。
+ *
+ * 量到的事實(2026-08-01,跑真的 `VfxSystem.handleEvent` + 從 Babylon 讀回
+ * emitter 世界座標,不是讀註解):91 支 `shockwaveRing` 技能一共畫出 105 個
+ * `ParticleSystem`,emitter Y 的直方圖是**單獨一格 `{1.0: 105}`**,而
+ * `content/config/vfx-families.json` 對這個家族寫的是 `heightY: 0.15`
+ * ——「貼地的環」被畫在胸口高度。整張家族表 258 列裡有 216 列的設定高度不是 1.0。
+ *
+ * 也就是說:後台那一格「家族基準高度」算得出來、存得進去、**從來沒有送到播放端**
+ * (第②號故障)。`apps/admin/src/vfxForge.ts` 的 `DEAD_FAMILY_KNOBS` 白紙黑字
+ * 列著它。
+ *
+ * 三個值,不是兩個,因為「接上去」其實混了兩件事:
+ *   · `"flat"`   — 升級前的行為:每一支技能都播在 `SHIPPED_CAST_HEIGHT_Y`。
+ *                  這是**回退鍵**:接上去之後畫面不對,後台改一格就回得去,
+ *                  不用重出 client 映像。
+ *   · `"ground"` — 出貨值。**只讓想往下的家族往下**(設定高度低於平面高度時
+ *                  才採用),想往上的維持平面。衝擊波環 0.15、地面塵土 0.1、
+ *                  火柱/復活光/光柱 0.1、龍捲 0.4 因此貼回地板,而雷擊(3.2)、
+ *                  流星(3.5)、印記這些**往上**的不動。
+ *                  選它當預設的理由:owner 點名的是衝擊波,而往下這一半
+ *                  **在構圖上不可能出事** —— 特效只會更靠近地板,不會飛出畫面
+ *                  上緣;往上那一半是 owner 還沒看過的視覺變更。
+ *   · `"family"` — 每一個家族都用自己的高度,包含往上的那些。
+ */
+export const CAST_HEIGHT_SOURCES = ["flat", "ground", "family"] as const;
+export type CastHeightSource = (typeof CAST_HEIGHT_SOURCES)[number];
+
+/** 出貨值 —— 見上面 `"ground"` 那一段為什麼是它而不是 `"flat"` / `"family"`。 */
+export const DEFAULT_CAST_HEIGHT_SOURCE: CastHeightSource = "ground";
+
+/** 後台的值 → 真正生效的模式。沒設過 / 不認得 = 出貨值,**不是關掉**。 */
+export function resolveCastHeightSource(v: string | undefined): CastHeightSource {
+  return (CAST_HEIGHT_SOURCES as readonly string[]).includes(v ?? "")
+    ? (v as CastHeightSource)
+    : DEFAULT_CAST_HEIGHT_SOURCE;
+}
+
+// ---------------------------------------------------------------------------
+// 飛行中的投射物 —— owner #251「投射物特效沒有真實套用」
+// ---------------------------------------------------------------------------
+
+/**
+ * 飛行彈道要不要真的套用那份 vfx 文件。
+ *
+ * 量到的事實(2026-08-01,對真的 `ProjectileView` 餵兩份文件再從 Babylon 讀回
+ * `ParticleSystem`):把文件的 `count` 40→200、`size` →9、`lifetime` →3–4 秒、
+ * `speed` →40–60、`blend` →alpha、`gravityY` →99 **全部改掉**之後,
+ * capacity / emitRate / min|maxLifeTime / min|maxEmitPower / blendMode /
+ * gravity / sizeStops **一格都沒有動** —— 那些數字全部是 `ProjectileView` 裡的
+ * 常數。文件唯一到得了畫面的是**顏色與貼圖**。
+ *
+ * 這一格就是那個開關。`false` = 升級前的固定彗星(回退鍵)。
+ */
+export const DEFAULT_PROJECTILE_ART_FROM_DOC = true;
+
+/**
+ * 彈道的體積要跟著它自己的 `hitRadius` 多少。
+ *
+ * 出貨的 18 份 `projectile@1` 文件裡 `hitRadius` 有三檔:平砍 0.4、單發彈 0.5、
+ * **貫穿波 0.9**;而畫面上三種一樣大。這一格把「打得到多寬」變成看得見的東西
+ * (和 #136「顯示值 == 實際值」同一條原則)。
+ *
+ * 0 = 全部一樣大(升級前的畫面);1 = 完全跟著半徑走。
+ * 公式:`1 + (hitRadius / 0.5 - 1) × gain`,再夾到 [0.5, 2.5]。
+ */
+export const DEFAULT_PROJECTILE_RADIUS_GAIN = 1;
+export const MIN_PROJECTILE_RADIUS_GAIN = 0;
+/**
+ * 上界 3。**擋的是「內容側把 `hitRadius` 寫大」被畫面放大三次**:一支
+ * `hitRadius: 2` 的技能在 gain 3 之下會拿到 1+(4−1)×3 = 10 倍,整顆彈道比英雄
+ * 還高。3 是「還看得出是一顆飛行物」的上緣;真的要更誇張請改文件的 `size`,
+ * 那條路有自己的上下界。
+ */
+export const MAX_PROJECTILE_RADIUS_GAIN = 3;
+
+/** gain 1 對應「不放大也不縮小」的那個半徑 —— 出貨 18 份文件裡的眾數。 */
+export const PROJECTILE_REFERENCE_HIT_RADIUS = 0.5;
+/** 算出來的體積倍率夾在這區間:再小看不見,再大擋住畫面。 */
+export const MIN_PROJECTILE_SIZE_MULT = 0.5;
+export const MAX_PROJECTILE_SIZE_MULT = 2.5;
+
+/**
+ * 彈道飛在離地多高(世界單位)。1.0 ≈ 胸口 —— 和施法高度一樣,這個數字以前是
+ * `ProjectileView` 裡一個沒有人挑過的 `FLY_HEIGHT = 1.0`。
+ *
+ * 下界 0.2:再低就埋進地板(第①號故障)。
+ * 上界 4:一位 ~1.7 單位高的英雄頭頂再上去兩個身高 —— 再高就飛出構圖,
+ * 玩家看不到子彈從哪來。
+ */
+export const DEFAULT_PROJECTILE_FLY_HEIGHT_Y = 1;
+export const MIN_PROJECTILE_FLY_HEIGHT_Y = 0.2;
+export const MAX_PROJECTILE_FLY_HEIGHT_Y = 4;
+
+function clampTo(v: number | undefined, lo: number, hi: number, fallback: number): number {
+  if (v === undefined || !Number.isFinite(v)) return fallback;
+  return Math.min(hi, Math.max(lo, v));
+}
+
+/** 後台的值 → 生效值。界外夾回範圍內(一份手改壞的 overlay 不能讓彈道消失)。 */
+export function clampProjectileRadiusGain(v: number | undefined): number {
+  return clampTo(v, MIN_PROJECTILE_RADIUS_GAIN, MAX_PROJECTILE_RADIUS_GAIN, DEFAULT_PROJECTILE_RADIUS_GAIN);
+}
+export function clampProjectileFlyHeightY(v: number | undefined): number {
+  return clampTo(
+    v,
+    MIN_PROJECTILE_FLY_HEIGHT_Y,
+    MAX_PROJECTILE_FLY_HEIGHT_Y,
+    DEFAULT_PROJECTILE_FLY_HEIGHT_Y,
+  );
+}
+
+/**
+ * `hitRadius` → 畫面上的體積倍率。純函式,沒有 Babylon,所以模擬器/後台/測試
+ * 三邊看到的是同一條公式。
+ */
+export function projectileSizeMultiplier(hitRadius: number | undefined, gain: number): number {
+  const r = hitRadius !== undefined && Number.isFinite(hitRadius) && hitRadius > 0
+    ? hitRadius
+    : PROJECTILE_REFERENCE_HIT_RADIUS;
+  const raw = 1 + (r / PROJECTILE_REFERENCE_HIT_RADIUS - 1) * clampProjectileRadiusGain(gain);
+  return Math.min(MAX_PROJECTILE_SIZE_MULT, Math.max(MIN_PROJECTILE_SIZE_MULT, raw));
+}
+
 const zW3xFamilyId = z.enum([
   "shockwaveRing",
   "blink",
@@ -440,6 +569,28 @@ export const zConfigVfxFamiliesDoc = z
      * `oneShotLife.test.ts` 對常數做等式斷言,漂開就紅。
      */
     oneShotMaxLifeSec: z.number().min(0.1).max(3).optional(),
+    /**
+     * 施法特效的高度從哪裡來 —— owner #251「衝擊波特效沒有真實套用」。
+     * 值的語意與「為什麼出貨是 `ground`」寫在 `CAST_HEIGHT_SOURCES` 上面。
+     *
+     * OPTIONAL 的理由和上面兩格一樣:已經存過的 durable overlay 沒有這個 key,
+     * 設成必填會讓那些 overlay 整份 `safeParse` 失敗 → `extractFamiliesDoc`
+     * 回 null → **整個家族層一起消失**。省略 = `DEFAULT_CAST_HEIGHT_SOURCE`。
+     */
+    castHeightSource: z.enum(CAST_HEIGHT_SOURCES).optional(),
+    /**
+     * 飛行中的投射物要不要真的套用它自己那份 vfx 文件(大小/壽命/密度/混色)。
+     * 省略 = `DEFAULT_PROJECTILE_ART_FROM_DOC`(true)。false = 升級前的固定彗星。
+     */
+    projectileArtFromDoc: z.boolean().optional(),
+    /**
+     * 彈道體積跟 `hitRadius` 走多少(0 = 全部一樣大 = 升級前;1 = 完全跟著走)。
+     * 上下界 0/3 是 `MIN_/MAX_PROJECTILE_RADIUS_GAIN`;Zod 的 min/max 要字面值,
+     * 所以這裡是抄的,`vfxForge.test.ts` 對兩者做 safeParse 四點驗證。
+     */
+    projectileRadiusGain: z.number().min(0).max(3).optional(),
+    /** 彈道飛在離地多高。上下界 0.2/4 是 `MIN_/MAX_PROJECTILE_FLY_HEIGHT_Y`。 */
+    projectileFlyHeightY: z.number().min(0.2).max(4).optional(),
     families: z.record(zW3xFamilyId, zVfxFamilyTuning),
     abilities: z.record(z.string().min(1), zVfxAbilityFamilyBinding),
   })

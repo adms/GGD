@@ -1311,6 +1311,72 @@ export const zMobWavesConfig = z
          * other zone its king that round, which reads as a bug rather than a cap.
          */
         maxPerRoundScope: z.enum(["zone", "match"]).optional(),
+
+        /* ── #247 owner 2026-08-01 實戰回饋(第二批)────────────────────────
+         *
+         * 「殭屍王出現英雄/bot都會優先打殭屍王 (因為獎勵很高)」
+         * 「殭屍王 要像其他遊戲 BOSS 一樣亮長血條」
+         *
+         * 前者是**索敵排序**,後者是**畫面**,而兩件都是決策點,所以四個欄位。
+         */
+
+        /**
+         * 殭屍王在自動索敵比較器上的**排名**(sim/targeting.ts 的 KEY 1)。
+         *
+         * ⚠️ 這是一個「數字」而不是「開關」,而且它落在的是一個**既有的軸**:
+         * `TARGET_CLASS` 已經是 敵方英雄 0 → 召喚物 1 → 小怪 2 的字典序排名
+         * (sim/summonRules.ts),`beats()` 比的就是 `a.kind < b.kind`。所以
+         * 「王排第幾」最誠實的表達就是「王在這個軸上占哪個數字」——
+         * 不是另外發明一套加權分數,那會把 嘲弄/威脅/低血/最近 四把鑰匙的語意
+         * 一起改掉,而這次改動不該碰它們。
+         *
+         *   · **< 0**(出貨 −1)—— 王排在**敵方英雄之前**。owner 的字面讀法:
+         *     「英雄/bot都會優先打殭屍王」。
+         *   · 0 —— 跟敵方英雄同級,由 威脅/低血/最近 決勝。
+         *   · 0 < x < 1 —— 敵方英雄之後、召喚物之前。這格就是「**稍微優先**」:
+         *     被敵方英雄追殺時不會轉頭去打王,但王仍然贏過所有雜魚與召喚物。
+         *   · 1 < x < 2 —— 召喚物之後、一般殭屍之前。
+         *   · 2 —— 跟一般殭屍同級 = **等於關掉這個功能**(這正是上界的意義)。
+         *
+         * 下界 −1:任何負值效果都一樣(都在英雄之前),−1 是「剛好高一階」那個
+         * 值,所以 −10 這種打錯的數字在這裡就被擋下來而不是靜默地等於 −1。
+         * 上界 2:比 2 更大代表「排在一般殭屍後面」,而 `TARGET_CLASS` 沒有比
+         * 小怪更低的階,所以 3 跟 2 完全同義 —— 也就是說 >2 一定是打錯。
+         *
+         * ABSENT ⇒ 2,也就是**今天的行為**(王就是一隻小怪)。這一格是平衡,
+         * 所以照「缺席 = 今天的行為」的家規走 —— 跟下面三格刻意不同,理由見那裡。
+         */
+        aggroRank: z.number().min(-1).max(2).optional(),
+        /**
+         * 要不要亮長血條 (owner 2026-08-01)。SHIPS **true**。
+         *
+         * ⚠️ 這一格(以及下面兩格)**故意不照「缺席 = 今天的行為」**,跟
+         * `aggroRank` 相反,理由與 sim/summonRules.ts 的
+         * `DEFAULT_SUMMON_AUTO_TARGETABLE` 同一條:那條家規是為了「不要不小心
+         * 改到行為」,而這裡**行為改變本身就是交付物**。而且它是純畫面 ——
+         * 一張沒被作者填過的舊 arena 文件拿到血條,不會讓任何一場的數值不同。
+         */
+        healthBar: z.boolean().optional(),
+        /**
+         * 長血條畫在畫面上哪裡。SHIPS `"top"`。
+         *
+         *   · `"top"`    —— 相位計時器下方的中央走廊頂端(WoW/FF14 的團隊首領條)
+         *   · `"bottom"` —— 技能列正上方(魂系遊戲的首領條)
+         *
+         * 兩種都是真的慣例,所以它是欄位而不是註解裡的辯護。兩邊都會讓
+         * 降臨橫幅與連殺計數器讓位(#107 安全區契約),見
+         * ui/hud/bossHealthBar.ts。
+         */
+        healthBarAnchor: z.enum(["top", "bottom"]).optional(),
+        /**
+         * 什麼時候亮出來。SHIPS `"summon"`。
+         *
+         *   · `"summon"`  —— 召喚的那一刻就亮(owner 的字面讀法:王一出現就亮)
+         *   · `"sighted"` —— 要等到王真的**進入你正在看的那個戰場**才亮。
+         *     差別是真的:#269 之後鏡頭是玩家自己按鈕切的,所以「我這一區的王」
+         *     跟「我正在看的那一區」是兩個不同的集合。
+         */
+        healthBarReveal: z.enum(["summon", "sighted"]).optional(),
       })
       .strict()
       .optional(),
@@ -1639,6 +1705,15 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // match-wide 1 would let one champion deny the other three zones their king.
     maxPerRound: 1,
     maxPerRoundScope: "zone" as const,
+    // #247 owner 2026-08-01 —— 「殭屍王出現英雄/bot都會優先打殭屍王 (因為獎勵很高)」.
+    // −1 是 owner 的字面讀法:王排在**敵方英雄之前**。想改成「稍微優先」(被敵方
+    // 英雄追殺時不轉頭)就把這格填 0.5 —— 那是後台一個數字,不是一次改程式。
+    aggroRank: -1,
+    // 「殭屍王 要像其他遊戲 BOSS 一樣亮長血條」. 三格都是畫面決策,出貨值就是
+    // owner 那句話的字面讀法:亮、在上方、召喚那一刻就亮。
+    healthBar: true,
+    healthBarAnchor: "top" as const,
+    healthBarReveal: "summon" as const,
   },
   // 特殊殭屍 (#262). One in twenty, so a wave of 20 carries about one — 「殭屍群
   // 裡面會有一隻特殊殭屍」 read literally. Double size and double hp make it
@@ -1732,6 +1807,32 @@ export const zConfigArenaRulesDoc = z
      * shrink owner reported is fixed by ordering, NOT by this block.
      */
     itemDraft: zItemDraftConfig.optional(),
+    /**
+     * 已退場的抽獎池 (owner 2026-08-01「第 2、5 回合改發棱彩傳說之後，那 13 支
+     * 任務小飾品沒有任何回合排它＝拿不到。排回去還是退場? **=> 退場**」).
+     *
+     * ── 為什麼「退場」是一個欄位，而不是刪掉那張表 ─────────────────────────
+     * 刪表是最大破壞的做法：`content/loot-tables/quest-rewards.json` 同時是
+     * `starter.go` 的 DRAFT 白名單面 (`starterDraftItems`)、Go 側
+     * `TestStarterDraftIsQuestSet` 的兩個方向、`arenaItemModel.test.ts` 的
+     * DRAFT∩LEGENDARY 對照，以及後台 三選一抽獎池 分頁的一個可編輯文件。
+     * 刪掉它會讓那 13 支道具從白名單消失（＝從圖鑑與後台一起消失），而 owner
+     * 的裁決只說「不要再發給玩家」，沒有說「這些道具下架」。
+     *
+     * 所以退場的機械意義是**它不可以被任何回合排到**，而那正是這個欄位 +
+     * 下面的 superRefine 在擋的事。表還在、道具還在白名單上、後台照樣編輯得到；
+     * 要復活它是一個**看得見的兩步編輯**（把 id 從這裡拿掉），不是一次靜靜地
+     * 把 `weaponLootTable` 打回去。
+     *
+     * ⚠️ 這是**列表不是布林**，理由和 `nightPact.abilityIds` 同源：寫死單一
+     * 字面值 `"quest-rewards"` 的話，第二張要退場的表就得改程式。
+     *
+     * 上界 16：出貨樹只有 3 張 loot table，16 遠高於任何合理的退場清單，而且
+     * 擋得住「把整份 items 清單貼進來」這種打錯。每一格的長度上界 64 與
+     * `itemDraft.fallbackTable` 同一個數字（出貨最長的 id `legendary-weapons`
+     * 是 17 個字元）。省略 = 沒有任何表退場（＝這個機制以前的行為）。
+     */
+    retiredLootTables: z.array(z.string().min(1).max(64)).max(16).optional(),
     /** round number (string key) -> grants for that round */
     rounds: z.record(z.string().regex(/^[0-9]+$/), zArenaRoundGrant),
     /** grants applied on every round PAST the highest `rounds` key */
@@ -2372,6 +2473,21 @@ const zColorHex = z.string().regex(/^#[0-9A-Fa-f]{6}$/, "顏色必須是 #rrggbb
  */
 export const zDamageTextAxis = z.enum(["damageType", "relation"]);
 
+/**
+ * 哪些飄字算「我被打」,也就是要換外框的那一組 (owner 2026-08-01
+ * 「加第二個通道，不動色相 => ok」)。
+ *
+ * `off` ＝ 這個功能出現之前的行為(全部同一個外框)。
+ * `taken` ＝ 只有真的掉血的那個數字換框。
+ * `incoming` ＝ 所有「朝我來的」都換框:掉血、被盾吃掉(GUARD)、閃掉(閃避)。
+ *
+ * 為什麼這是一個欄位而不是寫死: 「閃避」是不是「我被打」在字面上兩邊都說得通
+ * (它是朝我來的一擊,但我沒被打到)。`ui/combatText` 自己的檔頭說 dodge
+ * 「occupies the same slot in the player's attention」,所以出貨值選 `incoming`;
+ * 覺得太吵就切 `taken`,不必改程式。
+ */
+export const zCombatTextOutlineMode = z.enum(["off", "taken", "incoming"]);
+
 export const zConfigDamageColorsDoc = z
   .object({
     id: zId,
@@ -2399,6 +2515,40 @@ export const zConfigDamageColorsDoc = z
         physical: zColorHex,
         magic: zColorHex,
         true: zColorHex,
+      })
+      .strict(),
+    /**
+     * ── 第二個通道:外框 (owner 2026-08-01 「加第二個通道，不動色相 => ok」) ──
+     *
+     * `textAxis: "damageType"` 的代價是「我打人」與「我被打」同一個色相。這一組
+     * 把那個分別放回去,**不動色相**:填色繼續講傷害屬性,外框講「這個數字是誰
+     * 的血」。兩個通道互不搶。
+     *
+     * ⚠️ 這裡調的是**外圈**,不是那圈黑框。硬黑框是 #164「傷害數字看起來是黑色」
+     * 留下來的辨識度地板,而且它**沒有餘裕可以換色** —— 實測:黑框對土色地面
+     * (#6d6250) 只有 3.51:1,而物理傷害的填色 #FF5900 在同一個地面只有 1.90:1,
+     * 也就是說那個地面完全靠黑框撐。把黑框換成任何一個看得出來是紅色的顏色
+     * (#5A0000 → 2.45:1)就會掉到 3.0 以下,整個數字在土地上糊掉。
+     *
+     * 所以外圈是**多畫一層**,畫在黑框後面、比黑框大 `widthMult` 倍:黑框原封不
+     * 動(地板還在),外圈提供顏色。`outgoing` 的出貨值就是黑色,而**與黑框同色的
+     * 外圈不會被畫出來**(在黑框後面畫一圈黑只是多花畫素),所以「我打人」那一
+     * 組的 CSS 和這個功能出現之前一字不差。
+     */
+    outline: z
+      .object({
+        /** 哪些飄字算「我被打」。`off` = 這個功能出現之前的行為。 */
+        mode: zCombatTextOutlineMode,
+        /** 「我打人」(以及所有第三方飄字)的外圈色。出貨黑 = 看不到外圈。 */
+        outgoing: zColorHex,
+        /** 「我被打」的外圈色。出貨深紅 #5A0000。 */
+        incoming: zColorHex,
+        /**
+         * 外圈半徑 ÷ 黑框半徑。1.9 → 30px 的受傷數字得到一圈約 1.8px 的深紅。
+         * 下界 1.1:等於 1 就完全被黑框蓋住,那是第二個關閉開關。
+         * 上界 3:黑框 2px × 3 = 6px,再大就不是描邊而是一團色塊了。
+         */
+        widthMult: z.number().min(1.1).max(3),
       })
       .strict(),
   })
@@ -3125,12 +3275,17 @@ export const zConfigTauntDoc = z
  * `packages/shared/src/sim/bodyScale.ts`。
  *
  * ⚠️ **這份文件的出貨值會改變平衡**,和 `config.shield@1` 相反:在它出現之前
- * 射程完全不看體型,所以 `attackRangeCoefficient: 1` 不是「維持原狀」而是
- * owner 要的新行為。要退回舊行為把它調成 0。
+ * 射程完全不看體型,所以出貨曲線不是「維持原狀」而是 owner 要的新行為。要退回
+ * 舊行為把 `enabled` 關掉。
  *
  * ⚠️ **缺文件 = `DEFAULT_BODY_SCALE_RULES`(出貨值)**,不是空表 —— 空表在
- * TypeScript 底下會讓係數讀成 `undefined`,而 `1 + (s−1) × undefined` 是
- * `NaN`,一路乘進 `Stat.AttackRange` 就是全場沒有人打得到人。
+ * TypeScript 底下會讓曲線讀成 `undefined`,而 `undefined[0].rangeMult` 一路
+ * 乘進 `Stat.AttackRange` 就是全場沒有人打得到人。
+ *
+ * ⚠️ **兩端夾住,不外推。** 小於第一個斷點取第一列,大於最後一個取最後一列。
+ * 這是一個決定不是省事:外推要猜一條沒有人審過的斜率,而一隻 `sizeMult` 8 的
+ * 殭屍王會照那條斜率一路長到一個 owner 從來沒看過的射程。要涵蓋更大的體型,
+ * **加一列**(那是一個看得見的決定),不要改成外推(那是一個看不見的決定)。
  */
 export const zConfigBodyScaleDoc = z
   .object({
@@ -3140,18 +3295,35 @@ export const zConfigBodyScaleDoc = z
     /** 總開關。false = 攻擊距離完全不看體型(= 這個功能出現之前的行為)。 */
     enabled: z.boolean(),
     /**
-     * **決策點**:體型每多出 1 倍,攻擊距離跟著延長幾倍。
-     * 1 = 完全等比例(出貨值 = owner「會影響」的字面讀法);0 = 不連動。
-     * 上界 3 擋的是「把百分比當倍率填」(100 → 100 倍射程)。
+     * **決策點**:體型 → 普攻射程倍率的斷點表,中間線性內插、兩端夾住。
+     *
+     * owner 2026-08-01:「**通常不會是等比倍率**,例如 2x body, 1.2x 攻擊距離;
+     * 3x body 1.3x攻擊距離」——「遞減」不是一個係數表達得出來的東西(單一係數
+     * 只畫得出一條直線),所以這裡放的是表不是數。
+     *
+     * 上界:8 個斷點是可讀性上限(要捲動的表看不出它是不是遞減的);體型 10 是
+     * 小怪波 `boss.sizeMult` 的出貨值(貼錯格擋在這裡);倍率 3 擋的是「把百分比
+     * 當倍率填」(120 → 120 倍射程,那位英雄會從畫面外開打)。
      */
-    attackRangeCoefficient: z.number().min(0).max(3),
-    /** 餵進公式前的體型下界。比這更小的身體不會讓射程再往下縮。 */
-    minScale: z.number().min(0.01).max(1),
-    /**
-     * 餵進公式前的體型上界 —— 「不會從畫面外開打」的那條線。
-     * 上界 10 剛好是小怪波 `boss.sizeMult` 的出貨值:貼錯格擋在這裡。
-     */
-    maxScale: z.number().min(1).max(10),
+    attackRangeCurve: z
+      .array(
+        z
+          .object({
+            /** 身體放大倍數(英雄卡的 `bodyScale`,1 = 一般體型)。 */
+            bodyScale: z.number().min(0.1).max(10),
+            /** 這個體型對應的普攻射程倍率(1 = 照卡面)。 */
+            rangeMult: z.number().min(0.1).max(3),
+          })
+          .strict(),
+      )
+      .min(2)
+      .max(8)
+      // 嚴格遞增:重複的 `bodyScale` 會讓內插除以 0(→ Infinity 射程),而順序
+      // 錯掉的表在畫面上看起來完全正常,只有內插結果是亂的。
+      .refine(
+        (pts) => pts.every((p, i) => i === 0 || p.bodyScale > pts[i - 1]!.bodyScale),
+        { message: "attackRangeCurve 必須依 bodyScale 由小到大排列,而且不可以有重複的體型" },
+      ),
   })
   .strict();
 
@@ -3253,6 +3425,7 @@ export type ConfigUnitTintsDoc = z.infer<typeof zConfigUnitTintsDoc>;
 export type GoreStyle = z.infer<typeof zGoreStyle>;
 export type ConfigGoreDoc = z.infer<typeof zConfigGoreDoc>;
 export type DamageTextAxis = z.infer<typeof zDamageTextAxis>;
+export type CombatTextOutlineMode = z.infer<typeof zCombatTextOutlineMode>;
 export type ConfigDamageColorsDoc = z.infer<typeof zConfigDamageColorsDoc>;
 export type ConfigStealthDoc = z.infer<typeof zConfigStealthDoc>;
 export type ConfigIconPlanDoc = z.infer<typeof zConfigIconPlanDoc>;
@@ -3424,6 +3597,20 @@ export const DEFAULT_FORM_VISUALS: ConfigFormVisualsDoc = {
  *     `[1,.15,.15]` / `[1,.35,.9]` 的 8-bit 表示(差 <0.002,肉眼不可能分辨);
  *     `#33FFFF` = `[0.2,1,1]` 是新的一格,它在七個真實 w3x tint 上的
  *     ΔRGB 都 > 0.35(白色只有 0.06)。
+ *
+ *   outline.incoming `#5A0000` — 「我被打」的外圈。同樣是量出來的,但**約束條件
+ *     和上面那七格不同**,因為它畫在黑框後面,不必扛地面辨識度(黑框還在原位)。
+ *     它要滿足的是三件事:①離黑色夠遠,否則這個通道等於沒加(ΔE 48.1);
+ *     ②離四個隊伍色夠遠,否則會被讀成隊伍標示而不是「我被打」(最近 ΔE 45.9,
+ *     隊伍紅 #e5483f);③對每一個可能被它包住的填色都 ≥ 4.5:1,否則外圈會和
+ *     數字糊在一起 —— 最差的一格是物理 #FF5900 的 4.66:1,其餘 4.80(魔法)/
+ *     14.64(真實)/8.12(GUARD 灰)/7.29(閃避薰衣草)。它對物理受擊閃光
+ *     #FF2626 也有 3.87:1,所以在數字誕生的那一下閃光上仍然看得見。
+ *   outline.outgoing `#000000` — 就是黑框本身的顏色,所以外圈不會被畫出來,
+ *     「我打人」的 CSS 與這個功能出現之前逐位元相同。
+ *   outline.widthMult `1.9` — 8 個方向的位移是把整個字形往外膨脹,不是點光源,
+ *     所以 8 個方向的近似誤差只有 `r × (1 − cos 22.5°) = 0.076 r`(1.9 × 2px
+ *     時是 0.29px),不會出現扇貝邊。
  */
 export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
   id: "damage-colors",
@@ -3439,5 +3626,11 @@ export const DEFAULT_DAMAGE_COLORS: ConfigDamageColorsDoc = {
     physical: "#FF2626",
     magic: "#FF59E6",
     true: "#33FFFF",
+  },
+  outline: {
+    mode: "incoming",
+    outgoing: "#000000",
+    incoming: "#5A0000",
+    widthMult: 1.9,
   },
 };

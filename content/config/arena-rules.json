@@ -9,9 +9,13 @@
     "fallbackTable": "",
     "maxDraws": 64
   },
+  "retiredLootTables": [
+    "quest-rewards"
+  ],
   "rounds": {
     "1": {
       "grantLevels": 2,
+      "grantGold": 750,
       "autoLearn": [
         "Q",
         "W",
@@ -68,24 +72,24 @@
     },
     "11": {
       "grantLevels": 0,
-      "grantGold": 750,
+      "grantGold": 4000,
       "augmentTier": "prismatic"
     },
     "12": {
       "grantLevels": 0,
-      "grantGold": 750,
+      "grantGold": 4000,
       "augmentTier": "prismatic"
     },
     "13": {
       "grantLevels": 0,
-      "grantGold": 750,
+      "grantGold": 4000,
       "augmentTier": "prismatic"
     }
   },
   "overflow": {
     "grantLevels": 0,
-    "grantGold": 750,
-    "grantGoldPerRound": 150,
+    "grantGold": 4000,
+    "grantGoldPerRound": 0,
     "augmentTier": "prismatic"
   },
   "flowers": {
@@ -226,7 +230,11 @@
       "noClipObstacles": true,
       "noClipStayInside": true,
       "maxPerRound": 1,
-      "maxPerRoundScope": "zone"
+      "maxPerRoundScope": "zone",
+      "aggroRank": -1,
+      "healthBar": true,
+      "healthBarAnchor": "top",
+      "healthBarReveal": "summon"
     },
     "special": {
       "chancePercent": 5,

@@ -168,6 +168,28 @@ export function forgetBonus(bonus: Record<string, number>, stat: Stat): Record<s
   return next;
 }
 
+/**
+ * 出貨預設那句話,**從 `DEFAULT_BASE_BONUS` 算出來**(不是寫死在文案裡)。
+ *
+ * ⚠️ 這個函式存在的唯一理由是一次真的發生過的說謊。頁面抬頭寫死了
+ * 「出貨預設是生命上限 +300」,而 owner 2026-07-30 把出貨值改成 650 之後,
+ * 同一個畫面上:
+ *   · 每一列的「出貨預設」欄印 650(它讀 `DEFAULT_BASE_BONUS`)
+ *   · 抬頭印 +300         ← 謊話
+ *   · 「還原出貨版」的確認句印 +300 ← 謊話,而且是在一個**破壞性**按鈕上
+ * 三個數字兩個錯,而操作者要靠它決定要不要按下那顆沒有 undo 的按鈕。
+ *
+ * 讀出來就不會落後。CLAUDE.md:「語意改了,舊文案就是謊話,必須一起改」——
+ * 最可靠的「一起改」是根本不要有第二份。
+ */
+export function shippedBonusNote(): string {
+  const gifts = ALL_STATS.map((s) => ({ s, v: baseBonusFor(DEFAULT_BASE_BONUS, s) })).filter(
+    (g) => g.v !== 0,
+  );
+  if (gifts.length === 0) return "每一項都是 0（沒有任何贈禮）";
+  return `${gifts.map((g) => `${STAT_LABEL_ZH[g.s]} ${g.v > 0 ? "+" : ""}${g.v}`).join(" · ")}，其餘為 0`;
+}
+
 /** Human summary for the page header. */
 export function bonusSummary(rows: readonly BonusRow[]): string {
   const active = rows.filter((r) => r.effective !== 0);

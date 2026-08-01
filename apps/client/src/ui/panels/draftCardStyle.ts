@@ -20,16 +20,18 @@ import { buildItemRow, formatAuthoredBonus, type RowItem } from "./itemStats";
 export const DRAFT_CONFIRM_SFX = "draftConfirm";
 
 /**
- * A concrete EFFECT description for a WEAPON (item) draft choice, mirroring the
- * shop's inline read of the SAME item (itemStats.buildItemRow): the ✦ mechanical
- * effect line first, then the merged stat bonuses — so a legendary weapon card is
- * never a blind pick. resolveChoice only surfaces an item's cost (`300 g`), which
- * says nothing about what the weapon DOES; this fills that gap from the identical
- * content the shop shelf reads, never a re-derivation.
+ * What a WEAPON (item) draft card says the weapon does.
  *
- * Returns null when the choice is not an item, or the item has no printable
- * effect/stat — the caller then keeps resolveChoice's text (augment/ability
- * descriptions already carry their own, and a bare item keeps its cost).
+ * The AUTHORED `description` wins whenever the doc has one. owner 2026-08-01,
+ * on being shown that 死之王的意志 rendered an empty card: 「卡片應該要顯示全部
+ * 敘述阿」. The 效能/解說 prose is the spec — it is where the mechanics that the
+ * effect vocabulary cannot yet express (斬殺, 格擋, 套裝, 反彈…) are written down,
+ * and a card built only from `modifiers` silently drops every one of them.
+ *
+ * The derived effect+stat read is the FALLBACK, not the primary: it only runs
+ * for docs with no authored prose, where re-deriving from content still beats
+ * resolveChoice's bare `300 g`. Returns null when neither exists, and the caller
+ * keeps resolveChoice's text.
  *
  * The `as unknown as RowItem` mirrors MerchantShop: the runtime item doc carries
  * `description`, which the compile-time ItemDef type omits.
@@ -37,6 +39,8 @@ export const DRAFT_CONFIRM_SFX = "draftConfirm";
 export function weaponEffectDescription(choice: string): string | null {
   const item = Items.tryGet(choice as ItemId);
   if (!item) return null;
+  const authored = (item as unknown as RowItem).description?.trim();
+  if (authored) return authored;
   // no anchor stat on a draft card → every bonus stays a labelled chip
   const row = buildItemRow(item as unknown as RowItem, null);
   const parts: string[] = [];

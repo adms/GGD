@@ -34,12 +34,12 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 239 |
+| damage | 238 |
 | buff | 81 |
 | projectile | 19 |
 | heal | 9 |
 | dash | 9 |
-| status | 6 |
+| status | 7 |
 | championForm | 5 |
 | shield | 2 |
 

@@ -402,6 +402,17 @@ export interface BossPlacementOpts {
   wantH: number;
   /** below this the caller would rather draw nothing */
   minH: number;
+  /**
+   * #247 —— 殭屍王長血條 while it is up (`bossHealthBarModel.bossHealthBarSpec`), or
+   * null. THE BAR OUTRANKS THIS OVERLAY: the bar is PERSISTENT (it lives as long
+   * as the king does) and this banner/panel is a 4.6 s / 8.2 s beat, so the
+   * transient yields — the same precedence, and the same mechanism, this file
+   * already applies to the 連殺 counter one level down (`bossRect`).
+   *
+   * Absent ⇒ nothing moves, so every existing caller and every existing test is
+   * byte-identical.
+   */
+  barRect?: HudRect | null;
 }
 
 /**
@@ -450,7 +461,9 @@ function abilityClusterRect(viewport: HudViewport): HudRect {
  */
 export function mobBossRect(viewport: HudViewport, opts: BossPlacementOpts): HudRect | null {
   const mid = viewport.width / 2;
-  const bottom = viewport.height - ABILITY_CLUSTER_H - HUD_GAP;
+  // `let`, not `const`: the #247 長血條 can be anchored at the BOTTOM of this
+  // corridor, and then it is `bottom` that yields rather than `top`.
+  let bottom = viewport.height - ABILITY_CLUSTER_H - HUD_GAP;
   let top = TOP_CENTRE_BAND_END + HUD_GAP;
 
   // A legend that is up AND CENTRED owns the top of this corridor outright, so
@@ -463,6 +476,20 @@ export function mobBossRect(viewport: HudViewport, opts: BossPlacementOpts): Hud
   })) {
     if (legend.x < mid && legend.x + legend.w > mid) {
       top = Math.max(top, legend.y + legend.h + HUD_GAP);
+    }
+  }
+  // …and the 長血條 (#247), which is anchored in this same corridor and outranks
+  // this overlay. Same geometry test as the legend's (must straddle the centre
+  // line), but it can be anchored at EITHER end, so the yield goes both ways:
+  // a top bar pushes `top` down, a bottom bar pulls `bottom` up. Deciding by
+  // WHICH HALF the bar sits in — rather than by reading its `anchor` — keeps
+  // this file free of the bar's vocabulary and cannot disagree with the rect
+  // that was actually resolved.
+  if (opts.barRect) {
+    const b = opts.barRect;
+    if (b.x < mid && b.x + b.w > mid) {
+      if (b.y + b.h <= (top + bottom) / 2) top = Math.max(top, b.y + b.h + HUD_GAP);
+      else bottom = Math.min(bottom, b.y - HUD_GAP);
     }
   }
 
@@ -534,10 +561,15 @@ export function mobBossCollisions(viewport: HudViewport, opts: BossPlacementOpts
 export function mobBossOverlayRect(
   view: MobBossView | null,
   viewport: HudViewport,
-  opts: { touch: boolean; legendUp: boolean; couchPlayers?: number },
+  opts: { touch: boolean; legendUp: boolean; couchPlayers?: number; barRect?: HudRect | null },
 ): HudRect | null {
   if (!view) return null;
-  const base = { touch: opts.touch, legendUp: opts.legendUp, couchPlayers: opts.couchPlayers };
+  const base = {
+    touch: opts.touch,
+    legendUp: opts.legendUp,
+    couchPlayers: opts.couchPlayers,
+    barRect: opts.barRect,
+  };
   if (view.kind === "spawn") {
     return mobBossRect(viewport, { ...base, wantH: BOSS_BANNER_H, minH: BOSS_BANNER_MIN_H });
   }

@@ -250,6 +250,19 @@ export interface HudState {
    */
   statCapsJson: string;
   /**
+   * 殭屍外觀表 as JSON (`MatchState.mobVisualJson`, GH#192 + #247) —— 染黑強度、
+   * 腳下圈圈,以及 #247 的**殭屍王長血條三格**(要不要亮 / 在畫面哪裡 / 什麼時候
+   * 亮)。"" = 「這一場沒帶」,`parseMobVisualJson` 逐欄位解成出貨值。
+   *
+   * ⚠️ 為什麼是 RAW STRING 而不是解好的表:跟上面三格同一個理由 —— 這個 store
+   * 只做「把 `MatchState` 上的字串搬過來」,解析留給讀的人(`parseMobVisualJson`),
+   * 於是 store 不必知道那張表的形狀,加一格欄位不會動到這個檔。
+   *
+   * ⚠️ 而且 `GameApp` **也**解它一份(給 3D 那一側的染色與圈圈用)。兩份解析、
+   * 同一個字串、同一個純函式,所以不會出現兩種答案。
+   */
+  mobVisualJson: string;
+  /**
    * FIRE RING (#195), replicated straight off `MatchState` — the sim's
    * combat-elapsed ring counter (-1 = disarmed) and the ring's CURRENT world
    * radius. The minimap's danger rim is drawn at this radius rather than at the
@@ -469,6 +482,7 @@ const initial: HudState = {
   combatEnvJson: "",
   baseBonusJson: "",
   statCapsJson: "",
+  mobVisualJson: "",
   fireRingTicks: -1,
   fireRingRadius: 0,
   seats: [],
@@ -564,6 +578,8 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   if (prev.combatEnvJson !== state.combatEnvJson) patch.combatEnvJson = state.combatEnvJson;
   if (prev.baseBonusJson !== state.baseBonusJson) patch.baseBonusJson = state.baseBonusJson;
   if (prev.statCapsJson !== state.statCapsJson) patch.statCapsJson = state.statCapsJson;
+  // #247 —— 殭屍王長血條的三格設定騎在這張表上;HUD 讀它決定要不要畫、畫在哪。
+  if (prev.mobVisualJson !== state.mobVisualJson) patch.mobVisualJson = state.mobVisualJson;
 
   // fire ring (#195): change-guarded like everything else here, but the radius
   // moves 0.039 u per sim tick while shrinking, so in practice it patches on

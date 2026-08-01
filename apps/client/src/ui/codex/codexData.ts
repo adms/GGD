@@ -40,6 +40,11 @@ import type {
   CodexWhitelist,
 } from "@ggd/shared/codex/codexTypes";
 import type { ChampionAttributes } from "@ggd/shared/sim/stats/attributes";
+import {
+  MISMATCH_SCALE_MAX,
+  MISMATCH_SCALE_MIN,
+  type ClassRequirement,
+} from "@ggd/shared/sim/content/requirement";
 
 /** Content mount (dev: vite `serveContent`; prod: nginx). */
 export const CONTENT_BASE = "/content";
@@ -223,13 +228,52 @@ export function championIdOfAbility(abilityId: string): string | null {
   return dot > 0 ? abilityId.slice(0, dot) : null;
 }
 
+/**
+ * The 職業限定閘 off a raw authored modifier row, or `undefined` when the row
+ * carries none / carries one that constrains nothing.
+ *
+ * Validated rather than cast: this reads a JSON document fetched over HTTP (the
+ * codex's whole liveness contract is that it renders the file on disk), so an
+ * unknown `attackType` string must degrade to 「no gate」 and never reach
+ * `requirementShortLabel` as a bogus key that indexes to `undefined` and prints
+ * 「（undefined）」 on the page.
+ */
+function classRequirement(v: unknown): ClassRequirement | undefined {
+  const r = asRecord(v);
+  if (!r) return undefined;
+  const out: { -readonly [K in keyof ClassRequirement]: ClassRequirement[K] } = {};
+  const at = str(r["attackType"]);
+  if (at === "melee" || at === "ranged") out.attackType = at;
+  const ps = str(r["primaryStat"]);
+  if (ps === "STR" || ps === "AGI" || ps === "INT") out.primaryStat = ps;
+  // Nothing to say ⇒ no gate, so the chip prints bare instead of empty parens.
+  if (out.attackType === undefined && out.primaryStat === undefined) return undefined;
+  if (str(r["onMismatch"]) === "reduced") {
+    out.onMismatch = "reduced";
+    const k = optNum(r["mismatchScale"]);
+    // Clamped to the SHARED bounds so the codex can never print a percentage the
+    // sim would refuse to apply (requirement.ts clamps the same way).
+    if (k !== null) out.mismatchScale = Math.min(MISMATCH_SCALE_MAX, Math.max(MISMATCH_SCALE_MIN, k));
+  }
+  return out;
+}
+
 function modifiers(v: unknown): CodexModifier[] {
   if (!Array.isArray(v)) return [];
   const out: CodexModifier[] = [];
   for (const raw of v) {
     const m = asRecord(raw);
     if (!m) continue;
-    out.push({ stat: str(m["stat"]) ?? "?", op: str(m["op"]) ?? "flat", value: num(m["value"]) });
+    // `requires` is CARRIED, not stripped. Dropping it turned 貫雷槍's two gated
+    // rows into two identical-looking bare rows that contradict each other —
+    // see the field's own doc on CodexModifier.
+    const requires = classRequirement(m["requires"]);
+    out.push({
+      stat: str(m["stat"]) ?? "?",
+      op: str(m["op"]) ?? "flat",
+      value: num(m["value"]),
+      ...(requires === undefined ? {} : { requires }),
+    });
   }
   return out;
 }

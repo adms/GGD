@@ -27,6 +27,22 @@
  * on every cast, so per-activation `new Texture` would decode the same image
  * over and over and strand the old ones), and dispose() therefore tears down
  * only what the view itself owns.
+ *
+ * ---------------------------------------------------------------------------
+ * #251 —— 文件現在**真的**套用得上去了
+ * ---------------------------------------------------------------------------
+ * 到 2026-08-01 為止，上面那句「trail's texture/tint comes from the
+ * projectile's vfx doc when one exists (data-driven)」是**這份文件唯一到得了
+ * 畫面的兩件事**。實測（餵一份把 count/size/lifetime/speed/blend/gravity 全部
+ * 改掉的文件進來，再從 Babylon 讀回）capacity / emitRate / lifeTime /
+ * emitPower / blendMode / gravity / sizeStops **一位元都沒動** —— 它們全部是
+ * 這個檔案裡的常數，所以一顆冰彈、一道貫穿波、一發平砍是同一顆彗星換個顏色。
+ *
+ * 現在這些數字從 `views/projectileArt.ts` 來（純函式，它的檔頭有完整量測），
+ * 而**彈體的體積跟著 `projectile@1.hitRadius` 走** —— 貫穿波的 0.9 在畫面上
+ * 就是比平砍的 0.4 大，和 #136「顯示值 == 實際值」同一條原則。
+ * 三格旋鈕在 `config.vfx-families@1`（`projectileArtFromDoc` /
+ * `projectileRadiusGain` / `projectileFlyHeightY`），關掉就回到升級前的彗星。
  */
 import type { Scene } from "@babylonjs/core/scene";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
@@ -39,30 +55,35 @@ import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { VfxDoc } from "@ggd/shared/content";
 import { hotToCoolStops, popShrinkStops, type Rgb } from "../../vfx/vfxPresets";
+import { blendModeFor } from "../../vfx/particleFactory";
+import {
+  MAX_TRAIL_CAPACITY,
+  projectileTuning,
+  resolveProjectileArt,
+  SHIPPED_BODY_GIRTH,
+  SHIPPED_BODY_LENGTH,
+  SHIPPED_HEAD_SIZE,
+  type ProjectileArt,
+  type ProjectileMeshShape,
+} from "./projectileArt";
 
-/** 3D body shape of the flying missile (projectile@1 `meshShape`). */
-export type ProjectileMeshShape = "bolt" | "orb" | "shard";
+export type { ProjectileMeshShape } from "./projectileArt";
 
-const FLY_HEIGHT = 1.0;
 const SPRITE_URL = "/content/assets/textures/particles/flare_01.png";
 const TRAIL_FALLBACK_URL = "/content/assets/textures/particles/flame_02.png";
 
-/** Head sprite size (world units) — the bright comet head reads first. */
-const HEAD_SIZE = 1.15;
-/** Trail budget: fewer-bigger-brighter-shorter than the old 80cap/70rate. */
-const TRAIL_CAPACITY = 48;
-const TRAIL_RATE = 55;
-const TRAIL_LIFE = { min: 0.14, max: 0.3 };
 /** Backward streak speed (world-units/s) + stretched tail ratio. */
 const TRAIL_SPEED = { min: 1.6, max: 2.6 };
 const TRAIL_TAIL_LENGTH = 1.8;
-/** Peak trail-particle size (pop-shrink ramp shrinks it to nothing). */
-const TRAIL_PEAK_SIZE = 0.42;
 const DEFAULT_TINT: Rgb = [1, 0.6, 0.2];
 
-/** 3D body: nose-to-tail length and cross-section (world units). */
-const BODY_LENGTH = 0.95;
-const BODY_GIRTH = 0.26;
+/**
+ * 拖尾 `ParticleSystem` 的容量在 Babylon 裡是**建構時就鎖死**的，所以池化的
+ * view 一律開到上限、再用 `emitRate` 決定實際密度。照 `art.trailCapacity` 開
+ * 會讓一顆 18 顆的冰彈之後永遠再也長不回 96 顆的貫穿波（重建 system 才行，
+ * 那就把池化的意義丟掉了）。
+ */
+const TRAIL_POOL_CAPACITY = MAX_TRAIL_CAPACITY;
 
 /**
  * Per-scene texture cache. Projectile views are POOLED and restyled per cast
@@ -97,15 +118,15 @@ function sharedTexture(scene: Scene, url: string): Texture {
 function buildBody(scene: Scene, id: number, shape: ProjectileMeshShape): Mesh {
   const name = `proj-${id}-body`;
   if (shape === "orb") {
-    return MeshBuilder.CreateSphere(name, { diameter: BODY_GIRTH * 2, segments: 6 }, scene);
+    return MeshBuilder.CreateSphere(name, { diameter: SHIPPED_BODY_GIRTH * 2, segments: 6 }, scene);
   }
   // bolt + shard are the same tapered spike; a shard is flattened into a blade
   const mesh = MeshBuilder.CreateCylinder(
     name,
     {
-      height: BODY_LENGTH,
+      height: SHIPPED_BODY_LENGTH,
       diameterTop: 0,
-      diameterBottom: BODY_GIRTH,
+      diameterBottom: SHIPPED_BODY_GIRTH,
       tessellation: shape === "shard" ? 4 : 6,
     },
     scene,
@@ -128,6 +149,10 @@ export class ProjectileView {
   private readonly id: number;
   private trailTextureUrl = "";
   private trailTintKey = "";
+  /** 這一發生效的規格 —— `setPose` 讀它的 `flyHeightY`。 */
+  private art: ProjectileArt = resolveProjectileArt(null, undefined);
+  /** 目前烘在 system 上的尺寸斜坡峰值(重建 gradient 的判斷依據)。 */
+  private trailPeak = -1;
   // last rendered position — the motion delta aims the backward streak
   private lastX = 0;
   private lastZ = 0;
@@ -137,7 +162,9 @@ export class ProjectileView {
     this.scene = scene;
     const id = ProjectileView.counter++;
     this.id = id;
-    this.mesh = MeshBuilder.CreatePlane(`proj-${id}`, { size: HEAD_SIZE }, scene);
+    // 建構時用出貨基準邊長；每一發的體積倍率走 `mesh.scaling`(見 applyArt)，
+    // 因為池化的 view 會被不同 hitRadius 的彈道輪流用，重建平面等於放棄池化。
+    this.mesh = MeshBuilder.CreatePlane(`proj-${id}`, { size: SHIPPED_HEAD_SIZE }, scene);
     this.mesh.billboardMode = 7; // BILLBOARDMODE_ALL
     this.mat = new StandardMaterial(`proj-${id}-mat`, scene);
     this.mat.disableLighting = true;
@@ -160,13 +187,10 @@ export class ProjectileView {
     this.attachBody();
     this.bodyPivot.setEnabled(false);
 
-    this.trail = new ParticleSystem(`proj-${id}-trail`, TRAIL_CAPACITY, scene);
+    this.trail = new ParticleSystem(`proj-${id}-trail`, TRAIL_POOL_CAPACITY, scene);
     this.trail.emitter = this.mesh;
     this.trail.minEmitBox = new Vector3(-0.05, -0.05, -0.05);
     this.trail.maxEmitBox = new Vector3(0.05, 0.05, 0.05);
-    this.trail.emitRate = TRAIL_RATE;
-    this.trail.minLifeTime = TRAIL_LIFE.min;
-    this.trail.maxLifeTime = TRAIL_LIFE.max;
     this.trail.minEmitPower = TRAIL_SPEED.min;
     this.trail.maxEmitPower = TRAIL_SPEED.max;
     this.trail.direction1 = new Vector3(0, 0, 0);
@@ -174,14 +198,39 @@ export class ProjectileView {
     this.aimNeutral();
     // no updraft: embers sag slightly behind the comet instead of floating up
     this.trail.gravity = new Vector3(0, -1.0, 0);
-    this.trail.blendMode = ParticleSystem.BLENDMODE_ADD;
     // tail quads stretch along their backward velocity = the comet streak
     this.trail.billboardMode = ParticleSystem.BILLBOARDMODE_STRETCHED;
     this.trail.minScaleY = TRAIL_TAIL_LENGTH;
     this.trail.maxScaleY = TRAIL_TAIL_LENGTH;
     this.trail.updateSpeed = 0.016;
-    for (const [t, s] of popShrinkStops(TRAIL_PEAK_SIZE)) this.trail.addSizeGradient(t, s);
+    // emitRate / lifetime / blend / size ramp are per-activation now (#251):
+    // they come from the projectile's OWN vfx doc + hitRadius via `applyArt`,
+    // which the constructor calls once so a never-activated view is still sane.
+    this.applyArt(resolveProjectileArt(null, undefined, projectileTuning()));
     this.setTrailStyle(null);
+  }
+
+  /**
+   * #251 —— 把一發子彈的規格**真的寫進引擎**。
+   *
+   * 這是「文件到得了畫面」的那一行。守衛(`projectileArtApplied.test.ts`)量的
+   * 就是這裡寫下去之後 Babylon 手上那顆 `ParticleSystem` 的值,不是 `art` 物件。
+   */
+  private applyArt(art: ProjectileArt): void {
+    this.art = art;
+    this.mesh.scaling.setAll(art.sizeMult);
+    this.bodyPivot.scaling.setAll(art.sizeMult);
+    this.trail.emitRate = art.trailRate;
+    this.trail.minLifeTime = art.trailLife.min;
+    this.trail.maxLifeTime = art.trailLife.max;
+    this.trail.blendMode = blendModeFor(art.trailBlend);
+    if (art.trailPeakSize !== this.trailPeak) {
+      this.trailPeak = art.trailPeakSize;
+      // 尺寸斜坡是烘進 system 的 —— 峰值變了就要重建,否則池化重用會沿用上一發。
+      const old = this.trail.getSizeGradients();
+      if (old) for (const g of [...old]) this.trail.removeSizeGradient(g.gradient);
+      for (const [t, s] of popShrinkStops(art.trailPeakSize)) this.trail.addSizeGradient(t, s);
+    }
   }
 
   /** Parent + orient the body under the pivot (shared by build and reshape). */
@@ -247,8 +296,19 @@ export class ProjectileView {
     this.trail.direction2.set(0.2, -0.2, 0.2);
   }
 
-  activate(doc: VfxDoc | null = null, shape: ProjectileMeshShape = "bolt"): void {
+  /**
+   * @param hitRadius 這一發 `projectile@1.hitRadius` —— 它決定畫面上的體積
+   *   (`projectileRadiusGain`)。省略 = 用參考半徑,也就是「不放大也不縮小」。
+   */
+  activate(
+    doc: VfxDoc | null = null,
+    shape: ProjectileMeshShape = "bolt",
+    hitRadius?: number,
+  ): void {
     this.setBodyShape(shape);
+    // #251 —— 每一次啟用都重新解一次:池化的 view 會被不同的彈道輪流用,
+    // 沿用上一發的大小/密度就是「貫穿波長得跟平砍一樣」的另一種版本。
+    this.applyArt(resolveProjectileArt(doc, hitRadius, projectileTuning()));
     this.setTrailStyle(doc);
     // pooled reuse: the previous projectile's motion delta AND the streak it
     // aimed are both meaningless — the view teleports to a new cast
@@ -266,8 +326,8 @@ export class ProjectileView {
   }
 
   setPose(x: number, z: number): void {
-    this.mesh.position.set(x, FLY_HEIGHT, z);
-    this.bodyPivot.position.set(x, FLY_HEIGHT, z);
+    this.mesh.position.set(x, this.art.flyHeightY, z);
+    this.bodyPivot.position.set(x, this.art.flyHeightY, z);
     if (this.hasPose) {
       const dx = this.lastX - x; // points BACKWARD along the motion
       const dz = this.lastZ - z;

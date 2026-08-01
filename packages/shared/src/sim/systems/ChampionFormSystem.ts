@@ -67,6 +67,7 @@ import type { CastableSlot } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import { Champions } from "../content/registry";
 import { syncAbilityPassives } from "../abilities/abilityPassives";
+import { syncItemSources } from "../economy/itemSource";
 
 /**
  * `expiresTick` sentinel for a form that never times out on its own — the two
@@ -206,6 +207,15 @@ function setBody(
   // on exactly the sources it already had — 26 transform pairs, no behaviour
   // change until a doc opts in.
   syncAbilityPassives(world, id);
+  // 職業限定閘 on an ITEM's static modifiers (貫雷槍 godie-i01g:「近戰攻擊距離+4；
+  // 遠戰攻擊距離+2」). Same argument as the line above, and the same place, for a
+  // measured reason: THREE of the shipped transform pairs cross the melee/ranged
+  // line — godie-e007↔godie-ewar, godie-n01b↔godie-nman, godie-o02l↔godie-ofar —
+  // so without this a lance bought in the base body keeps the wrong bonus for the
+  // whole transform, while `Champions.get(sc.championId)` and every panel say the
+  // body changed. It re-resolves IN PLACE (see economy/itemSource.ts) so item
+  // internal cooldowns are not refreshed by transforming.
+  syncItemSources(world, id);
   world.emit("championForm", {
     id,
     championId: nextId,

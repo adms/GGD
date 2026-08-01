@@ -170,6 +170,9 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "mob.championSource": "random",
   "mob.sizeMult": "1.4",
   "mob.tintStrength": "0.4",
+  // #247 腳下圈圈 —— distinct from the shipped 1.25 / 1.
+  "mob.groundRingDiameter": "3.5",
+  "mob.groundRingSizeFollow": "0.5",
   "mob.baseLevel": "4",
   "mob.levelPerRound": "2",
   "mob.baseHp": "31",
@@ -207,6 +210,18 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.bountyLevels": "50",
   "boss.lastHitMode": "bonus",
   "boss.countOverkill": "0",
+  // #247 —— distinct from the shipped true/true/true/true/1/"zone".
+  "boss.noClip": "0",
+  "boss.noClipUnits": "0",
+  "boss.noClipObstacles": "0",
+  "boss.noClipStayInside": "0",
+  "boss.maxPerRound": "3",
+  "boss.maxPerRoundScope": "match",
+  // #247 第二批 —— 仇恨排序 + 長血條三格 (owner 2026-08-01)
+  "boss.aggroRank": "0.5",
+  "boss.healthBar": "0",
+  "boss.healthBarAnchor": "bottom",
+  "boss.healthBarReveal": "sighted",
   "special.chancePercent": "12",
   "special.hpMult": "2.5",
   "special.damageMult": "1.75",

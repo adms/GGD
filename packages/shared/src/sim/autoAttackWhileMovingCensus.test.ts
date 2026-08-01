@@ -27,7 +27,8 @@
  *   idle        沒有任何指令,敵人在 0.7×射程 —— 對照組
  *   inReach     有移動指令,敵人在 0.7×射程(射程內)
  *   approach    有移動指令,敵人在射程外、索敵半徑內
- *   far         有移動指令,敵人 16 單位外(索敵半徑 6 之外)—— Saber 實測 16.25
+ *   far         有移動指令,敵人在**這一位自己的索敵半徑之外**(至少 16 單位,
+ *               Saber 實測 16.25;大體型遠程角色會自動往外推,見 `FAR_MARGIN`)
  *
  * ── 兩欄:規則關 vs 規則開 ─────────────────────────────────────────────────
  * 每個情境跑兩次,`autoEngage.enabled` 一次 false(= 修正前的出貨行為)一次
@@ -63,8 +64,41 @@ const Z0 = SKELETON_ARENA.zones[0]!;
 /** 同一個木樁(#128 / autoAttackCensus 用的那個)。 */
 const DUMMY = "godie-hart" as ChampionId;
 const IMMOBILE = 1e-9;
-/** 「遠」= 16 單位。實測 Saber 卡在柱子上時最近的敵人是 16.25。 */
+/**
+ * 「遠」的**地板**。實測 Saber 卡在柱子上時最近的敵人是 16.25,所以這個情境
+ * 原本就是照著那個數字挑的。
+ *
+ * ⚠️ 它是地板不是定值 —— 真正的間距是
+ * `max(FAR_GAP, 這一位自己的索敵半徑 + FAR_MARGIN)`,見下面 `run` 裡的算式。
+ */
 const FAR_GAP = 16;
+/**
+ * 「遠」比索敵半徑再多出來的餘裕。
+ *
+ * ── 為什麼這一格會存在(2026-08-01,GH#252 的漣漪)────────────────────────
+ * 這一格原本是硬寫的 16,而 16 隱含一個從來沒有人寫下來的假設:**沒有任何一位
+ * 英雄的索敵半徑會超過 16**。GH#252 把體型接上射程之後,那個假設當場破掉 ——
+ * `godie-o030`(臭作,體型 3.0、卡面射程 12.0)在「等比倍率」那一版拿到 36.00 的
+ * 射程與索敵半徑,於是「敵人在 16 單位外」對他而言是**索敵半徑之內**,這個情境
+ * 對他來說根本不是「遠」,規則關掉他照樣打得到,而整張矩陣的最後一條斷言紅了。
+ *
+ * owner 更正成斷點曲線之後他變成 15.60 —— 剛好在 16 之下。**那個綠燈是運氣**:
+ * 餘裕只有 0.40。實測(2026-08-01):把 `DEFAULT_ATTACK_RANGE_CURVE` 的 3 倍那一格
+ * 從 1.30 改成 1.35,他的射程變成 16.20,而這張矩陣**又紅一次**(118/119)——
+ * 紅的理由和 GH#216(這張矩陣要守的東西)一點關係都沒有。
+ *
+ * 所以間距改成從**這一位自己的索敵半徑**算出來 —— 那正是這個情境的檔頭一直在
+ * 說的話(「敵人在索敵半徑之外、seekRadius 之內」)。1.0 的餘裕遠大於位置抖動
+ * (兩具身體都被釘住,只有 collision 那一層會推),而且 `radius + 1` 仍然遠小於
+ * `autoEngage.seekRadius`(出貨 48),所以規則開著的那一欄照樣找得到人。
+ * 同樣那個 1.35 的實驗,套上這條算式之後是**綠的**。
+ *
+ * ⚠️ 上面說的是 `DEFAULT_ATTACK_RANGE_CURVE`(程式裡的預設)而不是
+ * `content/config/body-scale.json`,因為這支普查**只注入 `combat-env`**,
+ * `world.bodyScaleRules` 用的是 `SimWorld` 的預設值。今天兩者的數字一樣,所以
+ * 這張表量到的仍然是出貨行為;哪一天出貨文件和預設分家了,這張表會跟著預設走。
+ */
+const FAR_MARGIN = 1;
 
 type Scene = "idle" | "inReach" | "approach" | "far";
 /** 遠距離要留夠時間走過去(16 單位 @ ~5.8 u/s ≈ 83 tick)+ 卡住判定 30 tick。 */
@@ -128,7 +162,8 @@ function run(championId: ChampionId, scene: Scene, engage: boolean): RunResult {
   const radius = acquireRadius(sc, myT.radius);
   const gap =
     scene === "far"
-      ? FAR_GAP
+      ? // 見 FAR_MARGIN:16 是地板,真正的門檻是「這一位自己搆不到」。
+        Math.max(FAR_GAP, radius + FAR_MARGIN)
       : scene === "approach"
         ? Math.max(reach * 1.15, Math.min(radius * 0.95, reach + 3))
         : reach * 0.7;

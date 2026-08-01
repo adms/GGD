@@ -129,25 +129,78 @@ export const zPartialStatBlock = z.record(zStat, z.number()) as unknown as z.Zod
  * 非 `percentOf` 帶 `from` 也會被拒(那是把一條 op 打錯的證據,留著只會讓下一次
  * 稽核讀成「設定過了」)。同一條規則 `sim/stats/modifiers.ts` 有它的執行期版本。
  */
-export const zStatModifier = z
-  .object({ stat: zStat, op: zModOp, value: z.number(), from: zStat.optional() })
-  .strict()
-  .superRefine((m, ctx) => {
-    if (m.op === ModOp.PercentOf && m.from === undefined) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["from"],
-        message: 'op "percentOf" needs `from` — which stat the percentage is taken OF',
-      });
-    }
-    if (m.op !== ModOp.PercentOf && m.from !== undefined) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["from"],
-        message: '`from` is only meaningful on op "percentOf"',
-      });
-    }
-  });
+/**
+ * The bare FIELDS of a stat modifier, before any refinement.
+ *
+ * Exported so a collection that needs to add a field (today: `item@1`, which
+ * hangs a 職業限定閘 on each entry — see `zGatedItemStatModifier`) can
+ * `.extend()` it and then re-apply the SAME refinements below. `.superRefine`
+ * returns a `ZodEffects`, which has no `.extend`, so without this split the only
+ * way to widen the shape is to retype the rules — and two copies of
+ * 「percentOf 一定要有 from」 is exactly the drift CLAUDE.md 第三守則 warns about.
+ */
+export const zStatModifierFields = z
+  .object({
+    stat: zStat,
+    op: zModOp,
+    value: z.number(),
+    from: zStat.optional(),
+    /**
+     * `percentOf` 的**第二種**來源域:當下的資源,不是另一條屬性。
+     * 光魔杖 (godie-i027) 「AP+ (目前MP的 5%)」 = `fromResource: "mp"`。
+     *
+     * 和 `from` **互斥且二選一**(下面的 refine 兩個方向都關死)。字彙沿用
+     * `sim/content/condition.ts` 的 `ResourceStat`,機制寫在
+     * `sim/stats/resourceStats.ts`。
+     */
+    fromResource: z.enum(["hp", "mp"]).optional(),
+  })
+  .strict();
+
+/**
+ * THE `percentOf`↔`from`/`fromResource` rule, as a reusable refinement (see the
+ * header above).
+ *
+ * ⚠️ 三個方向都要關死,而且每一個都擋一種**安靜的**失效:
+ *   · `percentOf` 兩個來源都沒有 → `statPipeline` 的第二趟根本不會把這條屬性
+ *     排進去,加成是 0,而文件看起來一切正常(失敗形態 ②)。
+ *   · 非 `percentOf` 帶著來源 → 那是把 op 打錯的證據,留著會讓下一次稽核
+ *     讀成「設定過了」。
+ *   · **兩個來源同時出現** → 「最大法力的 5%」和「目前法力的 5%」是兩個不同的
+ *     數字,而管線只會採用其中一個(`from` 先判)。同時寫 = 作者以為自己拿到
+ *     兩者之一,實際拿到的是另一個。
+ */
+export const refineStatModifierFrom = (
+  m: { op: ModOp; from?: Stat; fromResource?: "hp" | "mp" },
+  ctx: z.RefinementCtx,
+): void => {
+  const hasSource = m.from !== undefined || m.fromResource !== undefined;
+  if (m.op === ModOp.PercentOf && !hasSource) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["from"],
+      message:
+        'op "percentOf" needs `from` (another stat) or `fromResource` ("hp"/"mp", the LIVE resource)',
+    });
+  }
+  if (m.op !== ModOp.PercentOf && hasSource) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["from"],
+      message: '`from` / `fromResource` are only meaningful on op "percentOf"',
+    });
+  }
+  if (m.from !== undefined && m.fromResource !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["fromResource"],
+      message:
+        '`from` and `fromResource` are mutually exclusive — 最大值 vs 當下值 是兩個不同的數字',
+    });
+  }
+};
+
+export const zStatModifier = zStatModifierFields.superRefine(refineStatModifierFrom);
 
 /**
  * Per-stat sanity band for ONE item modifier, as an absolute magnitude.
@@ -231,11 +284,16 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
 export const ITEM_PERCENT_LIMIT = 3;
 
 /**
- * `zStatModifier` plus the range guard above. Used by item@1 so a mis-parsed
- * stat cannot reach the store through any load path — CI `content:validate`,
- * the content-api, or game-server startup.
+ * The item range guard, as a reusable refinement. Applied by
+ * {@link zItemStatModifier} and by `item@1`'s GATED variant
+ * (`zGatedItemStatModifier` in ./item.ts) so a mis-parsed stat cannot reach the
+ * store through any load path — CI `content:validate`, the content-api, or
+ * game-server startup — whichever of the two shapes the doc uses.
  */
-export const zItemStatModifier = zStatModifier.superRefine((m, ctx) => {
+export const refineItemModifierBand = (
+  m: { stat: Stat; op: ModOp; value: number },
+  ctx: z.RefinementCtx,
+): void => {
   // `capRaise` IS NOT A MAGNITUDE (GH#286). Its `value` is the ceiling the
   // modifier lifts the stat TO, not the amount it grants — so measuring it
   // against `ITEM_MODIFIER_LIMITS` compares two different units. The table's
@@ -264,14 +322,49 @@ export const zItemStatModifier = zStatModifier.superRefine((m, ctx) => {
         `(an active's range/damage/heal read as a stat), not a real item`,
     });
   }
-});
+};
+
+export const zItemStatModifier = zStatModifier.superRefine(refineItemModifierBand);
 
 /** Rank-aware scaling: flat + per-rank + caster stat ratios. */
+/**
+ * 一筆 `attrRatios` 係數的絕對值上界 —— **打錯數字的守衛**,不是平衡政策。
+ *
+ * MEASURED, not guessed: 抽出來的 JASS(`tools/w3x-import/out/GoDieEX22s/
+ * jass-spells/`)裡最大的三圍係數是 `GetHeroStatBJ(0,u,true)*9.`,也就是 9。
+ * 20 給了一倍多的餘裕,同時擋住量級打錯 —— `90` 打進該寫 `9.0` 的格子在 diff
+ * 裡看不出來,而在場上是一發直接抹掉一條血。
+ *
+ * 兩端對稱(允許負數),跟 `ratios` 一樣:一個「敏捷越高傷害越低」的詛咒是
+ * 寫得出來的東西,不該由這一行否決。
+ */
+export const ATTR_RATIO_COEFF_MAX = 20;
+
 export const zScaling = z
   .object({
     flat: z.number().optional(),
     perRank: z.array(z.number()).optional(),
     ratios: z.array(z.object({ stat: zStat, coeff: z.number() }).strict()).optional(),
+    /**
+     * 三圍係數 —— mirrors `Scaling.attrRatios` in sim/effects/effect.ts, where
+     * 「為什麼力/敏/智 不能是 `ratios` 的一筆」與 `basis` 兩種讀法的來源
+     * (Blizzard `GetHeroStatBJ(…, includeBonuses)`)都寫在那裡。
+     *
+     * `.min(1)` on the array: 同 `damage.hpPct` / `incomingPct` 的反空欄位規則
+     * —— 一個空陣列解算成 0,長得像功能、實際上什麼都不做。
+     */
+    attrRatios: z
+      .array(
+        z
+          .object({
+            attr: z.enum(["str", "agi", "int"]),
+            basis: z.enum(["base", "total"]).optional(),
+            coeff: z.number().min(-ATTR_RATIO_COEFF_MAX).max(ATTR_RATIO_COEFF_MAX),
+          })
+          .strict(),
+      )
+      .min(1)
+      .optional(),
   })
   .strict();
 

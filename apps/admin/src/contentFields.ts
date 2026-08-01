@@ -194,9 +194,12 @@ const AUGMENT_GROUPS: readonly FieldGroup[] = [
 ];
 
 /**
- * 抽獎池 — loot-tables/<id>.json. These are the 3-choose-1 ITEM DRAFT pools:
- * `quest-rewards` is the weapon-draft pool (owner rule 2 — the quest set) and
- * `legendary-weapons` is the 傳說寶玉 pool. The owner asked to curate the draft
+ * 抽獎池 — loot-tables/<id>.json. These are the 3-choose-1 ITEM DRAFT pools.
+ * ⚠️ CORRECTED 2026-08-01: `legendary-weapons` is now BOTH the weapon-draft pool
+ * AND the 傳說寶玉 pool, and `quest-rewards` is RETIRED — still editable here,
+ * still whitelisted, but no round may schedule it (owner 「=> 退場」; the state
+ * lives in `arena-rules.retiredLootTables` and is edited on the 傳說武器三選一
+ * page). The owner asked to curate the draft
  * from the backend (task #70); a loot table is `{id, entries:[{itemId,weight}]}`,
  * an ARRAY doc with no scalar fields to label, so `entries` is edited through
  * the raw-JSON escape hatch (uncoveredKeys names it) under the same

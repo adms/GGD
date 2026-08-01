@@ -48,6 +48,7 @@ import {
   type BossLifetime,
   type BossSettlementLayout,
 } from "./mobBossModel";
+import { useBossHealthBarSpec } from "./BossHealthBar";
 import type { MobBossView } from "../../net/RoomStore";
 
 /** Same shape as ControlLegend's / KillCombo's: the HUD has no shared hook. */
@@ -329,7 +330,16 @@ export function MobBossOverlay(): React.JSX.Element | null {
     dismissed: readLegendDismissed(),
     panelCovering: panels.length > 0,
   });
-  const rect = mobBossOverlayRect(boss, viewport, { touch: hudTouch(), legendUp, couchPlayers: 1 });
+  // #247 —— 長血條 owns the top of this corridor while the king is alive, and it
+  // is PERSISTENT while this banner/panel is a 4.6 s / 8.2 s beat, so this one
+  // yields. Same one entry point the bar draws from.
+  const barRect = useBossHealthBarSpec()?.rect ?? null;
+  const rect = mobBossOverlayRect(boss, viewport, {
+    touch: hudTouch(),
+    legendUp,
+    couchPlayers: 1,
+    barRect,
+  });
   // null = this viewport genuinely has no free room. Nothing is the correct
   // answer; painting over the player's own bars is not.
   if (!rect) return null;

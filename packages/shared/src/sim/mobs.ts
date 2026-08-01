@@ -44,6 +44,9 @@ import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { MobKind } from "./components";
 import type { LastHitMode } from "./mobBoss";
+// #247 —— 殭屍王的「無視碰撞」就是 04-00 翔封界的那個狀態,不是第二份實作。
+// TYPE-ONLY, so no module cycle: flight.ts imports nothing from here.
+import type { FlightGrant } from "./flight";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
 // #L1 — 殭屍王在場 → 回合延長. The round clock rides the ring's rules (it is the
@@ -55,6 +58,9 @@ import { Champions } from "./content/registry";
 import { Stat } from "./stats/statTypes";
 import { championStatBase } from "./stats/attributes";
 import { COMBAT_ENV_DEFAULTS, type CombatEnvMultipliers } from "./combatEnv";
+// 索敵排名的那一根軸。VALUE import,而且**沒有**造成模組循環:summonRules.ts
+// 只 import 了一個 type，它不 import 這個檔,也不 import targeting.ts。
+import { TARGET_CLASS } from "./summonRules";
 
 /**
  * What a mob walks at when its card does not say. Deliberately equal to
@@ -335,6 +341,23 @@ export interface MobRules {
    * digested, for the same reason `modelKey` is not.
    */
   tintStrength: number;
+  /**
+   * #247 腳下圈圈的基準直徑 (GGD units, at 體型倍率 1) and 跟著體型放大的程度.
+   *
+   * ⚠️ PRESENTATION ONLY, and unlike `sizeMult` that is not merely a convention:
+   * NO sim system reads either of these. They exist on `MobRules` solely so
+   * `mobVisualJson` can put them on the wire — the collision body stays `radius`
+   * / `boss.radius`, which is what makes owner's 「圈圈比較大但不影響無碰撞」 true
+   * by construction rather than by care. Guarded in sim/mobBossRing.test.ts.
+   *
+   * ⚠️ OPTIONAL, and ABSENT MEANS the shipped default — the same 「缺席 = 今天的
+   * 行為」 rule `MobBossRules.heroDerive` states. A `MobRules` built by hand (the
+   * ten fixtures across sim/**, any future caller that does not go through
+   * `mobRulesFromConfig`) must degrade to the champion-sized ring rather than
+   * fail to compile. `mobRulesFromConfig` ALWAYS writes both explicitly.
+   */
+  groundRingDiameter?: number;
+  groundRingSizeFollow?: number;
   /** melee packet amount */
   attackDamage: number;
   /** mob walk speed in u/s (#215). Owned by the mob card, NOT the shared fallback. */
@@ -435,6 +458,93 @@ export interface MobBossRules {
    * `mobRulesFromConfig` ALWAYS writes it explicitly (pinned by a test).
    */
   heroDerive?: MobHeroDeriveRule | null;
+
+  /* ── #247 (owner 2026-08-01) ──────────────────────────────────────────── */
+  /**
+   * 無視碰撞 —— resolved at arm time into the {@link FlightGrant} the king is
+   * handed at spawn, or `null` for 「照舊會被卡住」.
+   *
+   * A GRANT AND NOT FOUR BOOLEANS, because the consumer is `world.flight` and
+   * the sim already has exactly one vocabulary for 「這個身體穿得過什麼」. Resolving
+   * it here (arm time) rather than in `summonMobBoss` means the spawn path holds
+   * no policy at all — it writes whatever the operator authored.
+   *
+   * ⚠️ OPTIONAL, ABSENT MEANS `null`: a `MobRules` built by hand (fixtures, any
+   * caller that does not go through `mobRulesFromConfig`) degrades to 「沒有無碰撞」
+   * — the same 「缺席 = 今天的行為」 rule every #206/#288/#289/#290 field follows.
+   */
+  noClip?: FlightGrant | null;
+  /**
+   * 每回合最多召喚幾隻王 (owner 2026-08-01: 「每回合最多只會出現一次」).
+   * ABSENT ⇒ {@link BOSS_MAX_PER_ROUND_UNCAPPED}.
+   */
+  maxPerRound?: number;
+  /** 上限算「每個戰場」還是「整場」. ABSENT ⇒ `"zone"`. */
+  maxPerRoundScope?: BossSpawnCapScope;
+
+  /* ── #247 owner 2026-08-01 實戰回饋(第二批)────────────────────────────── */
+  /**
+   * 王在自動索敵比較器 KEY 1 上的排名。ABSENT ⇒ {@link BOSS_AGGRO_RANK_ABSENT}
+   * (= `TARGET_CLASS.mob`,也就是**今天的行為**:王就是一隻小怪)。
+   * 語意與上下界見 `zMobWavesConfig.boss.aggroRank`;讀它的是
+   * {@link mobAggroRank},唯一的呼叫點是 sim/targeting.ts 的 `targetClassOf`。
+   */
+  aggroRank?: number;
+  /**
+   * 長血條的三格。ABSENT ⇒ 出貨值(亮 / 上方 / 召喚那一刻),**不是**「今天的
+   * 行為」—— 理由見 `zMobWavesConfig.boss.healthBar`。
+   *
+   * ⚠️ 它們是**畫面**,所以 sim 這一側一個 tick 都不讀它們。它們存在的唯一理由
+   * 是 {@link mobVisualJson} 要把它們送到客戶端(失敗形態 ②:算出來但沒送到)。
+   */
+  healthBar?: boolean;
+  healthBarAnchor?: BossHealthBarAnchor;
+  healthBarReveal?: BossHealthBarReveal;
+}
+
+/** 長血條畫在畫面哪裡 —— see `zMobWavesConfig.boss.healthBarAnchor`. */
+export type BossHealthBarAnchor = "top" | "bottom";
+/** 長血條什麼時候亮 —— see `zMobWavesConfig.boss.healthBarReveal`. */
+export type BossHealthBarReveal = "summon" | "sighted";
+
+/**
+ * 每回合上限算在哪一個範圍上 —— see `zMobWavesConfig.boss.maxPerRoundScope` for
+ * why `"zone"` is the shipped answer.
+ */
+export type BossSpawnCapScope = "zone" | "match";
+
+/**
+ * 「不設上限」 —— the value an arena authored before #247 behaves as. Large
+ * enough that no real round can reach it (a round is ~3 minutes and a king
+ * needs 100 personal zombie kills), so it means 「就是今天的無限出場」 without a
+ * second `null`-shaped branch through `bossSpawnCapReached`.
+ */
+export const BOSS_MAX_PER_ROUND_UNCAPPED = 1_000_000;
+
+/**
+ * The KEY `world.bossSpawnsThisRound` counts under, for `scope`. `-1` is the
+ * 「整場」 bucket — no duel zone is ever negative, so the two scopes can share one
+ * map without a second store or a tuple key (which would need sorted iteration).
+ */
+export function bossSpawnCapKey(zone: number, scope: BossSpawnCapScope | undefined): number {
+  return scope === "match" ? -1 : zone;
+}
+
+/**
+ * 這個 zone(或這一場)這一回合的王額度用完了嗎?
+ *
+ * PURE, and separate from `summonMobBoss` so the boundary is testable without a
+ * world: at `maxPerRound - 1` already-spawned it is false, at `maxPerRound` it
+ * is true. `boss === null` / 沒開 answers false — those cases are already
+ * rejected one line earlier by the caller and must not read as 「額度滿了」.
+ */
+export function bossSpawnCapReached(
+  boss: { maxPerRound?: number } | null,
+  alreadySpawned: number,
+): boolean {
+  if (boss === null) return false;
+  const cap = boss.maxPerRound ?? BOSS_MAX_PER_ROUND_UNCAPPED;
+  return alreadySpawned >= cap;
 }
 
 /**
@@ -783,6 +893,10 @@ export interface MobWavesConfigLike {
     sizeMult?: number;
     /** GH#192 染黑強度 0..1 (default DEFAULT_MOB_TINT_STRENGTH) */
     tintStrength?: number;
+    /** #247 腳下圈圈基準直徑 (default {@link DEFAULT_MOB_RING_DIAMETER}) */
+    groundRingDiameter?: number;
+    /** #247 圈圈跟著體型放大的程度 (default {@link DEFAULT_MOB_RING_SIZE_FOLLOW}) */
+    groundRingSizeFollow?: number;
     baseLevel?: number;
     levelPerRound?: number;
     /** #244 — the mob's OWN hp curve: round(baseHp + hpPerLevel*(level-1)) */
@@ -839,6 +953,28 @@ export interface MobWavesConfigLike {
     heroLevel?: number;
     /** #290 — 怎麼決定上面那格;ABSENT ⇒ 今天的行為 (`heroLevel ?? 該回合等級`) */
     heroLevelSource?: MobHeroLevelSource;
+    /* ── #247 無視碰撞 + 每回合上限 (owner 2026-08-01) ─────────────────────
+     * ABSENT on all six ⇒ the pre-#247 behaviour, byte-identical: no flight
+     * grant is written and the per-round gate is wide open. Every arena doc
+     * authored before this batch therefore behaves exactly as it did. */
+    /** ABSENT ⇒ false (沒有無碰撞). `content/config/arena-rules.json` ships true. */
+    noClip?: boolean;
+    /** ABSENT ⇒ true, and only read when `noClip` is on */
+    noClipUnits?: boolean;
+    /** ABSENT ⇒ true, and only read when `noClip` is on */
+    noClipObstacles?: boolean;
+    /** ABSENT ⇒ true (仍被場地邊界擋住) — see the schema note on the polarity */
+    noClipStayInside?: boolean;
+    /** ABSENT ⇒ {@link BOSS_MAX_PER_ROUND_UNCAPPED}, i.e. 今天的「無限出場」 */
+    maxPerRound?: number;
+    /** ABSENT ⇒ `"zone"` */
+    maxPerRoundScope?: BossSpawnCapScope;
+    /** #247 仇恨排名. ABSENT ⇒ {@link BOSS_AGGRO_RANK_ABSENT} (= 今天的行為) */
+    aggroRank?: number;
+    /** #247 長血條三格. ABSENT ⇒ 出貨值 (畫面,不是平衡 — 見 schema 的理由) */
+    healthBar?: boolean;
+    healthBarAnchor?: BossHealthBarAnchor;
+    healthBarReveal?: BossHealthBarReveal;
   };
   /** 特殊殭屍 (#262); absent = no special zombies and no rng draw */
   special?: {
@@ -925,12 +1061,103 @@ export function mobCapsForRound(
 /** 染黑 default — see `zMobWavesConfig.mob.tintStrength` for why 0.65. */
 export const DEFAULT_MOB_TINT_STRENGTH = 0.65;
 /**
+ * #247 腳下圈圈 defaults. 1.25 is the champion team ring's own diameter (see
+ * `ChampionView`'s `CreateTorus` call), so an un-authored zombie wears exactly
+ * the ring a player does and the feature is invisible until an operator uses it.
+ */
+export const DEFAULT_MOB_RING_DIAMETER = 1.25;
+/** 1 = 圈圈完全跟著 體型倍率 走, which is owner's 「殭屍王底下圈圈會比較大」. */
+export const DEFAULT_MOB_RING_SIZE_FOLLOW = 1;
+/**
+ * The widest ground ring the renderer will draw, whatever the two knobs say.
+ *
+ * ⚠️ THIS IS A REAL CEILING AND IT IS NOT SILENT — 24u is the duel zone's own
+ * `boundaryRadius`, i.e. a ring that already spans half the arena floor. The
+ * authored bounds (diameter ≤ 8, follow ≤ 2) can multiply out to 8 × (1 + 49×2)
+ * = 792u against a 體型倍率 of 50, which is a ring bigger than the world. The
+ * clamp exists so a legal-but-absurd pair cannot paint the entire arena; it is
+ * reported to the operator rather than applied behind their back (see
+ * `mobGroundRingDiameter`, which is the ONE place it happens).
+ */
+export const MOB_RING_MAX_DIAMETER = 24;
+
+/**
+ * 這一隻殭屍腳下的圈圈要畫多大 —— the ONE resolver, shared by the renderer and by
+ * every test, so 「圈圈」 has a single definition.
+ *
+ * `sizeMult` is the mob's 體型倍率 as it arrives on the wire (`EntityState.mana`
+ * → `EntityViewState.mobScale`). The shape is a LERP, not a bare multiply,
+ * because 「圈圈多大」 and 「圈圈要不要跟著體型變大」 are two decisions and an
+ * operator must be able to answer them separately:
+ *
+ *     diameter = base × (1 + (sizeMult − 1) × follow)
+ *
+ * follow = 1 → 完全跟著 (the shipped king: 1.25 × 10 = 12.5u)
+ * follow = 0 → 每一種殭屍一樣大 (1.25u, whatever the size)
+ *
+ * NEVER NEGATIVE and never past {@link MOB_RING_MAX_DIAMETER}: a follow above 1
+ * with a sub-1 `sizeMult` (the shipped 0.68 zombie) can drive the bracket
+ * negative, and a mirrored ring is a rendering bug, not a small ring.
+ */
+export function mobGroundRingDiameter(
+  sizeMult: number,
+  // ⚠️ `Pick`, not the whole {@link MobVisualTable}: this resolver reads exactly
+  // two of its fields, and saying so is what keeps every caller (and every
+  // fixture) from having to grow a boss-health-bar setting it does not use when
+  // the table gains one. A full table still satisfies it.
+  table: Pick<MobVisualTable, "groundRingDiameter" | "groundRingSizeFollow">,
+): number {
+  const s = Number.isFinite(sizeMult) && sizeMult > 0 ? sizeMult : 1;
+  const d = table.groundRingDiameter * (1 + (s - 1) * table.groundRingSizeFollow);
+  if (!(d > 0)) return 0;
+  return d > MOB_RING_MAX_DIAMETER ? MOB_RING_MAX_DIAMETER : d;
+}
+/**
  * The king's 體型倍率 when the arena authors none — a DEFAULT, overridable per
  * arena/後台. 10 was owner GH#192 「modal 大小是10倍」; the SHIPPED doc now says 30
  * (owner 2026-07-29 「體型 30 倍」) and this is only the un-authored fallback, so
  * it deliberately stays at the older, safer number rather than tracking it.
  */
 export const DEFAULT_BOSS_SIZE_MULT = 10;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * 殭屍王的仇恨排名 (#247, owner 2026-08-01)
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * 一隻**沒有**被作者填過 `boss.aggroRank` 的王排第幾 —— `TARGET_CLASS.mob`,
+ * 也就是**今天的行為**:王跟一般殭屍同級,排在敵方英雄與召喚物之後。
+ *
+ * 這一格照「缺席 = 今天的行為」的家規走,跟長血條那三格相反(那三格缺席就是
+ * 出貨值)。差別是刻意的:排名是**平衡**,一張沒填過的舊 arena 文件不該因為
+ * 這次改動而改變它那一場的打法;長血條是**畫面**,拿到它不會讓任何數字不同。
+ */
+export const BOSS_AGGRO_RANK_ABSENT: number = TARGET_CLASS.mob;
+
+/** 沒填過的長血條三格 = 出貨值(見 `zMobWavesConfig.boss.healthBar` 的理由)。 */
+export const DEFAULT_BOSS_HEALTH_BAR = true;
+export const DEFAULT_BOSS_HEALTH_BAR_ANCHOR: BossHealthBarAnchor = "top";
+export const DEFAULT_BOSS_HEALTH_BAR_REVEAL: BossHealthBarReveal = "summon";
+
+/**
+ * 這一隻殭屍在自動索敵比較器 KEY 1 上排第幾 —— **唯一**的解析點。
+ *
+ * 呼叫它的只有 sim/targeting.ts 的 `targetClassOf`,而那是 #221 之後全遊戲
+ * 唯一一個回答「這東西打不打得到、排第幾」的地方 —— 玩家的自動攻擊
+ * (systems/OrderSystem)與 bot 的腦(game-server ai/Tier0Brain)都走它,所以
+ * 「優先打王」在兩條路上是**同一行程式**,不會漂移。這正是 targeting.ts 檔頭
+ * 那條 FAIRNESS 理由存在的原因。
+ *
+ * 形狀刻意跟旁邊的 {@link mobSizeMultFor} / {@link mobModelKeyFor} 一樣
+ * (`(rules, kind) => 值`),所以 targeting.ts 不必知道 `MobRules` 的內部長相。
+ *
+ * PURE:沒有 world、沒有亂數、沒有時鐘、沒有 Map 走訪。
+ */
+export function mobAggroRank(rules: MobRules | null, kind: MobKind): number {
+  if (kind !== "boss") return TARGET_CLASS.mob;
+  const rank = rules?.boss?.aggroRank;
+  return typeof rank === "number" && Number.isFinite(rank) ? rank : BOSS_AGGRO_RANK_ABSENT;
+}
 
 /*
  * ⚠️ THERE IS NO `DEFAULT_BOSS_HP_MULT`, AND THAT IS ON PURPOSE (GH#206).
@@ -1344,6 +1571,17 @@ export function mobRulesFromConfig(
   // GH#192 — the mesh follows the champion; `modelKey` is only an override.
   const modelKey = cfg.mob.modelKey ?? mobChampionModelKey(championId);
   const tintStrength = Math.max(0, Math.min(1, cfg.mob.tintStrength ?? DEFAULT_MOB_TINT_STRENGTH));
+  // #247 腳下圈圈 —— clamped to the SAME bounds the Zod schema states, so a doc
+  // that bypassed validation (a hand-built config, an overlay written before the
+  // field existed) cannot hand the renderer a negative or arena-sized ring.
+  const groundRingDiameter = Math.max(
+    0,
+    Math.min(8, cfg.mob.groundRingDiameter ?? DEFAULT_MOB_RING_DIAMETER),
+  );
+  const groundRingSizeFollow = Math.max(
+    0,
+    Math.min(2, cfg.mob.groundRingSizeFollow ?? DEFAULT_MOB_RING_SIZE_FOLLOW),
+  );
   // GH#206 — 從英雄推導, resolved HERE and nowhere else. Both blocks inherit the
   // round's champion when they name none, the same precedence the mesh uses one
   // line up, so an operator who only sets 「這回合由誰擔任」 gets a king built from
@@ -1428,6 +1666,8 @@ export function mobRulesFromConfig(
     modelKey,
     sizeMult: cfg.mob.sizeMult ?? 1,
     tintStrength,
+    groundRingDiameter,
+    groundRingSizeFollow,
     attackDamage: cfg.mob.attackDamage,
     moveSpeed: mobMoveSpeed,
     attackRangeSq: cfg.mob.attackRange * cfg.mob.attackRange,
@@ -1495,6 +1735,33 @@ export function mobRulesFromConfig(
             lastHitMode: cfg.boss.lastHitMode ?? "bonus",
             countOverkill: cfg.boss.countOverkill ?? false,
             heroDerive: deriveFor(cfg.boss, bossFace, bossHero, bossArmedLevel),
+            // #247 —— 無視碰撞, resolved ONCE into the grant `summonMobBoss` hands
+            // to `world.flight`. `noClip: false`/absent ⇒ `null` ⇒ no grant is
+            // ever written, so a pre-#247 arena keeps a king that collides.
+            noClip:
+              cfg.boss.noClip === true
+                ? {
+                    // 0: 「無視碰撞但貼著地面走」. A hover height would need
+                    // `EntityState.h`, which the snapshot's mob branch does not
+                    // write — see the report. Left at ground level deliberately
+                    // rather than authored-but-invisible (failure shape ②).
+                    hoverHeight: 0,
+                    ignoreUnits: cfg.boss.noClipUnits ?? true,
+                    ignoreObstacles: cfg.boss.noClipObstacles ?? true,
+                    stayInsideBoundary: cfg.boss.noClipStayInside ?? true,
+                  }
+                : null,
+            maxPerRound: cfg.boss.maxPerRound ?? BOSS_MAX_PER_ROUND_UNCAPPED,
+            maxPerRoundScope: cfg.boss.maxPerRoundScope ?? "zone",
+            // #247 —— 仇恨排名。缺席 ⇒ 今天的行為(跟一般殭屍同級),見
+            // `BOSS_AGGRO_RANK_ABSENT`。這裡寫**絕對值**而不是留 undefined,所以
+            // `mobAggroRank` 對「有 arena 但沒填」與「完全沒有 arena」兩種情形
+            // 給的答案由這一行決定,不是散在讀取端。
+            aggroRank: cfg.boss.aggroRank ?? BOSS_AGGRO_RANK_ABSENT,
+            // 長血條三格 —— 缺席 ⇒ 出貨值(畫面,不是平衡;理由見 schema)。
+            healthBar: cfg.boss.healthBar ?? DEFAULT_BOSS_HEALTH_BAR,
+            healthBarAnchor: cfg.boss.healthBarAnchor ?? DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
+            healthBarReveal: cfg.boss.healthBarReveal ?? DEFAULT_BOSS_HEALTH_BAR_REVEAL,
           },
     special:
       cfg.special === undefined
@@ -1551,21 +1818,63 @@ export function mobRulesFromConfig(
 }
 
 /**
- * The MATCH-WIDE mob appearance the client needs and cannot derive (GH#192).
- * Only 染黑強度 lives here; the per-kind SIZE is per-entity (see snapshot.ts).
+ * The MATCH-WIDE mob appearance the client needs and cannot derive (GH#192,
+ * extended by #247).
+ *
+ * 染黑強度 + 腳下圈圈. The per-kind SIZE is NOT here — it is per-entity and rides
+ * `EntityState.mana` (see snapshot.ts) — and that is exactly why the ring can be
+ * match-wide: the ring is expressed as a FUNCTION of that per-entity size
+ * (`mobGroundRingDiameter`), so two numbers on the match state produce three
+ * different rings without a new wire field or a `defineTypes` append.
  */
 export interface MobVisualTable {
   /** 0 = the champion's own colours, 1 = a solid black silhouette */
   tintStrength: number;
+  /** #247 腳下圈圈的基準直徑 at 體型倍率 1 (GGD units); 0 = 不畫圈 */
+  groundRingDiameter: number;
+  /** #247 圈圈跟著體型倍率放大的程度; 1 = 完全跟著, 0 = 全部一樣大 */
+  groundRingSizeFollow: number;
+  /**
+   * 殭屍王長血條的三格 (#247, owner 2026-08-01 「要像其他遊戲 BOSS 一樣亮長血條」).
+   *
+   * ⚠️ 為什麼它們騎在**這一張表**上,而不是新開一條線:王的身分本來就已經到得了
+   * 客戶端(`mobBossSpawn` 事件帶著王的 entity id,RoomStore 存成
+   * `hud.mobBoss.bossId`),所以缺的從來不是資訊,而是**這三個決策要不要可調**。
+   * 這張表已經是「小怪長什麼樣子」的既有頻道,而且 `parseMobVisualJson` 是
+   * **逐欄位**降級的 —— 一台跑在舊 shard 前面的客戶端拿到的是出貨值,不是一張
+   * 歸零的表。多開一個 `MatchState` 欄位要付一格永久的 append-only 索引。
+   */
+  bossHealthBar: boolean;
+  bossHealthBarAnchor: BossHealthBarAnchor;
+  bossHealthBarReveal: BossHealthBarReveal;
 }
 
 /** The shipped fallback — 「no tint」 is NOT what a missing/blank field means. */
-export const MOB_VISUAL_DEFAULT: MobVisualTable = { tintStrength: DEFAULT_MOB_TINT_STRENGTH };
+export const MOB_VISUAL_DEFAULT: MobVisualTable = {
+  tintStrength: DEFAULT_MOB_TINT_STRENGTH,
+  groundRingDiameter: DEFAULT_MOB_RING_DIAMETER,
+  groundRingSizeFollow: DEFAULT_MOB_RING_SIZE_FOLLOW,
+  bossHealthBar: DEFAULT_BOSS_HEALTH_BAR,
+  bossHealthBarAnchor: DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
+  bossHealthBarReveal: DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+};
 
 /** Serialize the armed rules' visual half for `MatchState.mobVisualJson`. */
 export function mobVisualJson(rules: MobRules | null): string {
-  const t = rules === null ? DEFAULT_MOB_TINT_STRENGTH : rules.tintStrength;
-  return JSON.stringify({ tintStrength: t } satisfies MobVisualTable);
+  const table: MobVisualTable =
+    rules === null
+      ? MOB_VISUAL_DEFAULT
+      : {
+          tintStrength: rules.tintStrength,
+          groundRingDiameter: rules.groundRingDiameter ?? DEFAULT_MOB_RING_DIAMETER,
+          groundRingSizeFollow: rules.groundRingSizeFollow ?? DEFAULT_MOB_RING_SIZE_FOLLOW,
+          // #247 —— 王的三格畫面決策。`rules.boss === null`(這張 arena 根本沒有
+          // 王)照樣寫出貨值:客戶端不會有王可以畫,所以這裡沒有第二種語意。
+          bossHealthBar: rules.boss?.healthBar ?? DEFAULT_BOSS_HEALTH_BAR,
+          bossHealthBarAnchor: rules.boss?.healthBarAnchor ?? DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
+          bossHealthBarReveal: rules.boss?.healthBarReveal ?? DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+        };
+  return JSON.stringify(table);
 }
 
 /**
@@ -1574,6 +1883,12 @@ export function mobVisualJson(rules: MobRules | null): string {
  * never to a zeroed one: a client that fails to parse must show the zombies the
  * way the game means them to look, not un-tinted and indistinguishable from the
  * players (failure shape ③ — the feature deleted, quietly, and still green).
+ *
+ * ⚠️ PER FIELD, NOT ALL-OR-NOTHING (#247). A server that predates the ring
+ * fields sends `{"tintStrength":0.65}` and MUST still get its tint honoured —
+ * rejecting the whole table because one key is missing would silently un-tint
+ * every zombie the moment a client ran ahead of a shard. Each key falls back to
+ * its own shipped default.
  */
 export function parseMobVisualJson(json: string | null | undefined): MobVisualTable {
   if (!json) return MOB_VISUAL_DEFAULT;
@@ -1584,10 +1899,37 @@ export function parseMobVisualJson(json: string | null | undefined): MobVisualTa
     return MOB_VISUAL_DEFAULT;
   }
   if (typeof raw !== "object" || raw === null) return MOB_VISUAL_DEFAULT;
-  const t = (raw as { tintStrength?: unknown }).tintStrength;
-  if (typeof t !== "number" || !Number.isFinite(t) || t < 0 || t > 1) return MOB_VISUAL_DEFAULT;
-  return { tintStrength: t };
+  const o = raw as Record<string, unknown>;
+  const num = (v: unknown, lo: number, hi: number, fallback: number): number =>
+    typeof v === "number" && Number.isFinite(v) && v >= lo && v <= hi ? v : fallback;
+  // 同一條「每一格自己降級」的規則,套在 bool / enum 上:一台跑在舊 shard 前面的
+  // 客戶端收到的是沒有這三個 key 的表,而它必須拿到**出貨值**,不是 false ——
+  // false 會把整個功能靜默刪掉而且全綠(失敗形態 ③)。
+  const bool = (v: unknown, fallback: boolean): boolean =>
+    typeof v === "boolean" ? v : fallback;
+  const oneOf = <T extends string>(v: unknown, allowed: readonly T[], fallback: T): T =>
+    typeof v === "string" && (allowed as readonly string[]).includes(v) ? (v as T) : fallback;
+  return {
+    tintStrength: num(o.tintStrength, 0, 1, DEFAULT_MOB_TINT_STRENGTH),
+    groundRingDiameter: num(o.groundRingDiameter, 0, 8, DEFAULT_MOB_RING_DIAMETER),
+    groundRingSizeFollow: num(o.groundRingSizeFollow, 0, 2, DEFAULT_MOB_RING_SIZE_FOLLOW),
+    bossHealthBar: bool(o.bossHealthBar, DEFAULT_BOSS_HEALTH_BAR),
+    bossHealthBarAnchor: oneOf(
+      o.bossHealthBarAnchor,
+      BOSS_HEALTH_BAR_ANCHORS,
+      DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
+    ),
+    bossHealthBarReveal: oneOf(
+      o.bossHealthBarReveal,
+      BOSS_HEALTH_BAR_REVEALS,
+      DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+    ),
+  };
 }
+
+/** The two legal values of each長血條 enum — one list, read by the parser and 後台. */
+export const BOSS_HEALTH_BAR_ANCHORS: readonly BossHealthBarAnchor[] = ["top", "bottom"];
+export const BOSS_HEALTH_BAR_REVEALS: readonly BossHealthBarReveal[] = ["summon", "sighted"];
 
 /**
  * IS `id` A MOB THAT IS **CURRENTLY ALIVE** — as opposed to a CORPSE that has
@@ -1792,12 +2134,38 @@ export function summonMobBoss(
   kills: number,
 ): EntityId | null {
   if (rules.boss === null || !rules.boss.enabled) return null;
+  // #247 —— 每回合最多幾隻 (owner 2026-08-01 「每回合最多只會出現一次殭屍王，不會
+  // 無限出場」). GATED HERE, before anything is spawned or any clock is moved, for
+  // the same reason the round extension lives in this function: this is the ONE
+  // door a king enters through, so no caller can be the one that skips the cap
+  // (失敗形態 ⑤ — 被測的不是出貨的那個).
+  //
+  // ⚠️ THIS IS NOT `repeatable`. `repeatable` is a MATCH-WIDE question about one
+  // champion's tally (「第 200 隻要不要再來一次」); this is a ROUND-WIDE question
+  // about the zone (「這回合已經來過幾隻了」). Six champions in one zone each
+  // crossing 100 kills is exactly the case `repeatable` cannot see and the case
+  // owner watched happen.
+  const capKey = bossSpawnCapKey(zone, rules.boss.maxPerRoundScope);
+  const already = world.bossSpawnsThisRound.get(capKey) ?? 0;
+  if (bossSpawnCapReached(rules.boss, already)) return null;
   // #290 — same seam as `spawnMob`'s; a king summoned mid-round is a spawn too.
   // The king walks into the SUMMONER's zone, so that is the zone whose heroes
   // 「跟場上最高」 would read (inert while the shipped king is `"fixed"` at 99).
   const profile = mobSpawnProfile(world, zone, rules, "boss");
   const pos = mobSpawnPos(world, zone, BOSS_SPAWN_WAVE, kills, profile.radius);
   const id = spawnMobBody(world, zone, "boss", profile, pos);
+  world.bossSpawnsThisRound.set(capKey, already + 1);
+  // #247 —— 無視碰撞穿透地形. The king is handed the SAME `FlightGrant` a flying
+  // champion carries, so the three MovementSystem exemptions (steering wall-stop,
+  // unit soft-separation, post-separation push-out) have exactly one
+  // implementation between them and cannot disagree about who is airborne.
+  //
+  // WRITTEN DIRECTLY, not through a StatsComp source: a mob deliberately has no
+  // StatsComp (see `MobComp` in sim/components.ts), which is also what makes this
+  // write SAFE — `flightSystem` reconciles only ids present in `world.stats`, so
+  // it can never see this entry and delete it. `world.destroy` clears
+  // `world.flight`, so the grant dies with the king.
+  if (rules.boss.noClip) world.flight.set(id, rules.boss.noClip);
   // #L1 — 「回合結束時間延長 3 分鐘(火圈時間也延後)」. AFTER the body exists, so a
   // summon that could not happen cannot move the clock, and BEFORE the event, so
   // the announcement carries the extension that is already in force rather than
@@ -1816,6 +2184,11 @@ export function summonMobBoss(
     // authored `extendCombatSec`: a disarmed ring or a 0 knob extends nothing,
     // and a broadcast that said 「延長 180 秒」 anyway would be a lie the player
     // can time with a stopwatch. 0 = 「這場沒有延長」.
+    //
+    // ⚠️ #248 gave that sentence a third way to be true: 回合硬上限 clips the
+    // extension to whatever is left under `roundHardCapSec`, so a late king can
+    // legitimately return a PARTIAL number, or 0 once the round is already at
+    // the wall. That is why this reads the return value and not the config.
     extendedTicks,
     /** the ignition tick now IN FORCE — post-delay, for the HUD's ring cue */
     fireRingStartTick: fireRingIgnitionTick(world),

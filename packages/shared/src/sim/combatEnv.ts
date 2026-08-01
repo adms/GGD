@@ -37,7 +37,11 @@
  *   critChance    × Stat.CritChance          (statPipeline, before the [0,1] clamp)
  *   critDamage    × Stat.CritDamage          (statPipeline)
  *   lifesteal     × Stat.Lifesteal           (statPipeline, before the [0,0.8] clamp)
- *   attackRange   × Stat.AttackRange         (statPipeline; BASIC-attack reach only)
+ *   attackRange   × Stat.AttackRange         (statPipeline; BASIC-attack reach only.
+ *                   ⚠️ SINCE GH#252 IT IS NOT THE ONLY FACTOR ON THAT ROW: the
+ *                   champion's 身體放大倍數 multiplies it at the same seam via
+ *                   `finalizeStat`'s `rangeScale` — see sim/bodyScale.ts. This
+ *                   key is still the GLOBAL knob; that one is per-champion.)
  *   abilityRange  × ability CAST RANGE + AoE RADIUS (task #136; abilities ONLY,
  *                   never basics — the read seams are abilitySystem.castAbility
  *                   out-of-range + ground clamp/AoE, CastResolveSystem's AoE

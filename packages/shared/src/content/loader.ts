@@ -14,6 +14,7 @@ import {
   type FieldIssue,
 } from "./errors";
 import { validateReferences } from "./refs";
+import { validateRetiredLootTables } from "./retiredLootTables";
 import { COLLECTIONS, isCollectionName, type CollectionName } from "./schema/index";
 import { ContentStore } from "./store";
 import type { ContentSource, Manifest } from "./types";
@@ -77,6 +78,12 @@ export class ContentLoader {
 
     const refs = validateReferences(store);
     errors.push(...refs.errors);
+
+    // 退場的抽獎池不可以被排回任何發放入口 (owner 2026-08-01). 這是一條**跨欄位**
+    // 規則,所以它不能待在 Zod 裡:`zConfigDoc` 是 discriminated union,而它的成員
+    // 必須是 ZodObject —— 一個 `.superRefine` 會讓整個 config 聯集失效。理由與
+    // 規則本身都寫在 ./retiredLootTables.ts。
+    errors.push(...validateRetiredLootTables(store));
 
     if (errors.length > 0) throw new ContentLoadError(errors);
     return { store, manifest, warnings: refs.warnings };

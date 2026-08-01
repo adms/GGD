@@ -24,6 +24,17 @@
  * thing on screen and still drifts opposite to 造成傷害. Only the *fill* moved
  * axes. `heal` is green on both axes; the axis governs damage categories only.
  *
+ * ⚠️ THE COLLAPSE THE RULING CAUSED IS NOW ANSWERED ON A SECOND CHANNEL, not by
+ * re-opening the hue. owner 2026-08-01, verbatim: 「加第二個通道，不動色相 =>
+ * ok」. Under `damageType` a physical 受到傷害 and a physical 造成傷害 share a
+ * fill, and they now separate on the OUTLINE as well as on size/anchor/drift:
+ * 我打人 keeps the plain black ring, 我被打 gains a dark-red band outside it
+ * (`config/damage-colors.json` → `outline`). Fill and outline are independent
+ * pixels, so neither steals from the other — that is the whole reason a second
+ * channel beat a hue change. See {@link combatTextShadow} for how it is drawn
+ * and, more importantly, for the measurement that says the black ring itself may
+ * NOT be recoloured.
+ *
  * THE OTHER AXIS IS STILL EXPRESSIBLE, and this paragraph is why it has to be.
  * This block previously argued at length that hue must mean WHO and never WHAT,
  * on the grounds that roBrowser's `Renderer/Effects/Damage.js` keys colour on
@@ -239,6 +250,9 @@
  * hitting is worse than no number.
  */
 import {
+  damageOutlineColor,
+  damageOutlineMode,
+  damageOutlineWidthMult,
   damageTextAxis,
   damageTextColor,
   normalizeDamageSchool,
@@ -407,6 +421,16 @@ export interface CombatTextStyle {
   lifeMs: number;
   /** black ring radius, px */
   outlinePx: number;
+  /**
+   * The 「誰的血」 band drawn OUTSIDE the black ring, or absent when there is
+   * none — see {@link combatTextBand}. Absent is the pre-2026-08-01 look, byte
+   * for byte: {@link combatTextShadow} emits nothing extra for it.
+   *
+   * ⚠️ **`BASE` may not set this** (its type is `Omit<…, "band">`), for the same
+   * reason `BASE` may not set `haloRgb`: the band is resolved from the operator
+   * doc per category, so a table entry would be a second, silent source.
+   */
+  band?: CombatTextBand;
   /** soft dark halo radius, px — the local dark pocket over a red hit-flash */
   haloPx: number;
   /**
@@ -498,7 +522,7 @@ export interface CombatTextStyle {
  * not miss": your own health, then your own resources, then your output, then
  * everything happening to other people.
  */
-const BASE: Record<CombatTextCategory, Omit<CombatTextStyle, "haloRgb">> = {
+const BASE: Record<CombatTextCategory, Omit<CombatTextStyle, "haloRgb" | "band">> = {
   // 受到傷害 — the number that decides whether you live. Biggest, heaviest,
   // thickest ring, and the strongest halo because it is born ON the red
   // hit-flash that the same event starts.
@@ -800,9 +824,10 @@ export const KILL_LIFE_BONUS_MS = 250;
  *
  * WHAT SURVIVES THE MOVE. Under `damageType`, `taken` and `dealt` share a hue
  * for a given school. They stay apart on size (30 vs 24 px), weight (900 vs
- * 800), anchor height, OPPOSITE drift, halo radius and admission rank — the
- * same non-colour channels this file already relies on to separate heal from
- * mana under tritanopia. That is a real cost and it is why `textAxis` exists.
+ * 800), anchor height, OPPOSITE drift, halo radius, admission rank — the same
+ * non-colour channels this file already relies on to separate heal from mana
+ * under tritanopia — and, since 2026-08-01, on the OUTLINE BAND
+ * ({@link combatTextBand}), which is the channel owner asked for by name.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 魔法傷害 OVERLAY (owner 2026-07-31) — `textAxis: "relation"` ONLY
@@ -945,6 +970,83 @@ const MAGIC_TINT: Partial<Record<CombatTextCategory, { color?: string; haloRgb?:
 };
 void MAGIC_ACCENT; // documents where MAGIC_TINT's blended values came from
 
+// ---------------------------------------------------------------------------
+// 第二個通道: THE OUTLINE BAND (owner 2026-08-01 「加第二個通道，不動色相 => ok」)
+// ---------------------------------------------------------------------------
+
+/** The extra 8-direction ring drawn OUTSIDE the black one. */
+export interface CombatTextBand {
+  /** `#rrggbb` from `config/damage-colors.json` → `outline` */
+  color: string;
+  /** radius in px, already `outlinePx × widthMult` */
+  px: number;
+}
+
+/** Which side of the split a category is on. */
+export type CombatTextRingRole = "outgoing" | "incoming";
+
+/**
+ * The categories that are 「一擊朝我而來」 — the `incoming` mode's membership.
+ *
+ * `taken` is the uncontested member: my health went down. The other two are the
+ * reason `mode` is a FIELD rather than a constant, because 「我被打」 is genuinely
+ * ambiguous for them:
+ *
+ *   · `guard` — the hit landed and a shield ate it whole. It IS an attack on me;
+ *     it is also 0 damage.
+ *   · `dodge` — an attack aimed at me that never connected. Literally 「我沒被
+ *     打到」, yet THE 迴避 ASYMMETRY block above already argues it 「occupies the
+ *     same slot in the player's attention, because it answers the same question
+ *     ("did my health just move?")」 — and that argument is why it ships inside.
+ *
+ * An operator who disagrees flips one dropdown to `taken`. Nothing else here is
+ * a judgement call: `allyTaken` is somebody ELSE's blood and `heal`/`mana` are
+ * not attacks at all, so neither can be 「我被打」 under any reading.
+ */
+const INCOMING_CATEGORIES: ReadonlySet<CombatTextCategory> = new Set([
+  "taken",
+  "guard",
+  "dodge",
+]);
+
+/** Which outline a category wears right now, under the operator's `mode`. */
+export function combatTextRingRole(category: CombatTextCategory): CombatTextRingRole {
+  switch (damageOutlineMode()) {
+    case "off":
+      return "outgoing"; // one outline for everybody = the pre-feature behaviour
+    case "taken":
+      return category === "taken" ? "incoming" : "outgoing";
+    case "incoming":
+      return INCOMING_CATEGORIES.has(category) ? "incoming" : "outgoing";
+  }
+}
+
+/** The literal the hard ring is emitted with. `#000` and `#000000` are one colour. */
+const RING_CSS = "#000";
+const RING_HEX6 = "#000000";
+
+/**
+ * The band for a category, or `undefined` when there is nothing to draw.
+ *
+ * ⚠️ A BAND THE SAME COLOUR AS THE RING IS NOT EMITTED, and that rule is what
+ * keeps 「我打人」 byte-identical to the pre-feature CSS: `outline.outgoing`
+ * ships as `#000000`, and a black band sitting behind a black ring is pure cost
+ * — more shadow layers to composite, zero pixels changed. It is not a special
+ * case for the default value either: set `outgoing` to a navy and outgoing
+ * numbers really do get a navy band.
+ *
+ * `mode: "off"` therefore lands in the same place from the other direction —
+ * both roles resolve to `outgoing`, so nobody gets a band at all.
+ */
+export function combatTextBand(
+  category: CombatTextCategory,
+  outlinePx: number,
+): CombatTextBand | undefined {
+  const color = damageOutlineColor(combatTextRingRole(category));
+  if (color.toLowerCase() === RING_HEX6) return undefined;
+  return { color, px: outlinePx * damageOutlineWidthMult() };
+}
+
 export interface CombatTextMods {
   crit: boolean;
   killingBlow: boolean;
@@ -985,14 +1087,18 @@ export function combatTextStyle(
 
   const fontSize = Math.round(base.fontSize * sizeMult);
   const { color, haloRgb } = fillFor(category, mods);
+  // the ring has to grow with the glyph or a 44 px crit reads as unoutlined
+  const outlinePx = fontSize >= 24 ? 2 : 1.5;
   return {
     ...base,
     fontSize,
     popScale,
     lifeMs,
     rank,
-    // the ring has to grow with the glyph or a 44 px crit reads as unoutlined
-    outlinePx: fontSize >= 24 ? 2 : 1.5,
+    outlinePx,
+    // …and the band is a MULTIPLE of the ring, so it inherits that scaling and a
+    // crit's 「我被打」 band never ends up thinner than the ring it wraps.
+    band: combatTextBand(category, outlinePx),
     haloPx: base.haloPx,
     color,
     haloRgb,
@@ -1311,14 +1417,63 @@ export const COMBAT_TEXT_FONT =
 const round1 = (n: number): string => (Math.round(n * 10) / 10).toString();
 
 /**
- * The black ring + soft halo, as a `text-shadow` value. `haloRgb` colours ONLY
- * the soft halo (default pure black); the 8-direction RING is always `#000` —
- * see MAGIC_TINT's doc block for why the ring may never be recoloured.
+ * The black ring + the 「誰的血」 band + the soft halo, as a `text-shadow` value.
+ *
+ * THREE LAYERS, AND THE ORDER IS THE DESIGN. `text-shadow` paints its entries
+ * back-to-front-reversed: entry 0 sits nearest the glyph and later entries are
+ * painted BEHIND it. So the black ring goes first, the wider band second (it
+ * shows only in the annulus the ring does not cover), the blurred halo last.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ WHY THE BAND IS A SECOND LAYER AND NOT JUST A COLOUR ON THE RING
+ *
+ * owner asked for 「我打人 → 黑框 / 我被打 → 深紅框」. Recolouring the existing
+ * ring was tried first and MEASURED OUT — it re-opens #164.
+ *
+ * The rule this file has enforced since #164 (`combatTextContrast.test.ts`) is:
+ * on every arena ground, EITHER the fill or the ring must clear 3.0:1. Measured
+ * against 土色 `#6d6250`, the most demanding of the four for this pair:
+ *
+ *     fill 物理 #FF5900 → 1.90:1        the BLACK ring → 3.51:1
+ *
+ * i.e. that ground is carried by the ring ALONE, with 17 % of headroom. Black is
+ * the floor because it is maximally dark; every legible dark red is lighter, so
+ * every legible dark red drops it under 3.0 — `#5A0000` measures **2.45:1**, and
+ * even the darkest red that still clears 3.0 (`#380000`) sits ΔE 30 from black,
+ * i.e. it would have been a channel nobody could see. Recolouring the ring buys
+ * a channel by spending the one the ring exists for.
+ *
+ * A SECOND, WIDER RING costs nothing from that budget: the black ring stays
+ * exactly where it was (so every ground/flash number in the module doc above is
+ * still true), and the colour lives in pixels that used to be background. The
+ * band's own contrast is measured against the things it touches instead — see
+ * `DEFAULT_DAMAGE_COLORS` for `#5A0000`'s three numbers (ΔE 48.1 from black,
+ * ΔE 45.9 from the nearest team colour, ≥ 4.66:1 against every fill it wraps).
+ *
+ * 8 directions is enough at the band's radius for the same reason it is enough
+ * at the ring's: offsetting a FILLED GLYPH in 8 directions approximates a
+ * dilation to within `r × (1 − cos 22.5°) = 0.076 r` — 0.29 px at the shipped
+ * 1.9 × 2 px. (A point light would scallop; a glyph does not.)
+ *
+ * `haloRgb` still colours ONLY the soft halo (default pure black) — that is
+ * MAGIC_TINT's channel, and it is a different radius from the band.
  */
-export function combatTextShadow(outlinePx: number, haloPx: number, haloRgb = "0,0,0"): string {
+export function combatTextShadow(
+  outlinePx: number,
+  haloPx: number,
+  haloRgb = "0,0,0",
+  band?: CombatTextBand,
+): string {
   const parts = OUTLINE_DIRS.map(
-    ([dx, dy]) => `${round1(dx * outlinePx)}px ${round1(dy * outlinePx)}px 0 #000`,
+    ([dx, dy]) => `${round1(dx * outlinePx)}px ${round1(dy * outlinePx)}px 0 ${RING_CSS}`,
   );
+  if (band) {
+    parts.push(
+      ...OUTLINE_DIRS.map(
+        ([dx, dy]) => `${round1(dx * band.px)}px ${round1(dy * band.px)}px 0 ${band.color}`,
+      ),
+    );
+  }
   if (haloPx > 0) {
     parts.push(`0 0 ${round1(haloPx)}px rgba(${haloRgb},0.95)`);
     parts.push(`0 0 ${round1(haloPx * 1.8)}px rgba(${haloRgb},0.7)`);
@@ -1383,8 +1538,35 @@ export function combatTextCss(style: CombatTextStyle, gradient: boolean): string
     `font-size:${style.fontSize}px;font-weight:${style.fontWeight};` +
     `font-style:${style.italic ? "italic" : "normal"};letter-spacing:0.02em;` +
     fill +
-    `text-shadow:${combatTextShadow(style.outlinePx, style.haloPx, style.haloRgb)};`
+    `text-shadow:${combatTextShadow(style.outlinePx, style.haloPx, style.haloRgb, style.band)};`
   );
+}
+
+/**
+ * The part of the cache key that tracks the OUTLINE BAND — the second visual
+ * dimension, added 2026-08-01.
+ *
+ * ⚠️ THE FILE-HEADER ACCIDENT, ONE DIMENSION OVER. The old key appended a bare
+ * `"m"` for magic, so 物理 and 真實 hashed to the same slot and a pooled node
+ * that had drawn a physical number went on to paint a true-damage one in red:
+ * 「完美的四色配色 + 綠色測試 = 畫面上看不出來」. A band that is not in the key
+ * reproduces that exactly — a node last used for 造成傷害 would keep the plain
+ * black ring while drawing a 受到傷害 number.
+ *
+ * It returns the RESOLVED band, not a role letter, and that is deliberate: the
+ * band is `(mode, role colour, widthMult)`, and all three are operator-editable
+ * at doc-load time. A role letter would track only the first of the three, so
+ * changing `outline.incoming` in the console would restyle nothing. Deriving it
+ * from {@link combatTextBand} — the same function the CSS goes through — is the
+ * same discipline {@link fillDiscriminator} follows for the fill.
+ *
+ * `outlinePx` is NOT read here: it is a pure function of `fontSize`, which is a
+ * pure function of `(category, crit, killingBlow)` — already all in the key.
+ * `widthMult` is, because nothing else in the key moves when it changes.
+ */
+function bandDiscriminator(category: CombatTextCategory): string {
+  const band = combatTextBand(category, 1);
+  return band ? `${band.color}@${round1(band.px)}` : "";
 }
 
 /**
@@ -1393,13 +1575,17 @@ export function combatTextCss(style: CombatTextStyle, gradient: boolean): string
  * The AXIS is in the key even though it only changes when the content doc
  * loads: a node that was styled before `applyDamageColorsDoc` ran must not keep
  * the pre-load fill for the rest of its life. The school half comes from
- * {@link fillDiscriminator}, i.e. from the same code path that picks the fill —
- * a second hand-written copy of that branch is exactly how 物理 and 真實 came to
- * share a cache slot.
+ * {@link fillDiscriminator} and the outline half from {@link bandDiscriminator},
+ * i.e. from the same code paths that pick the fill and the band — a second
+ * hand-written copy of either branch is exactly how 物理 and 真實 came to share
+ * a cache slot.
  */
 export function combatTextStyleKey(category: CombatTextCategory, mods: CombatTextMods): string {
   const emphasis = `${mods.crit ? "c" : ""}${mods.killingBlow ? "k" : ""}`;
-  return `${category}|${emphasis}|${damageTextAxis()}|${fillDiscriminator(category, mods)}`;
+  return (
+    `${category}|${emphasis}|${damageTextAxis()}|${fillDiscriminator(category, mods)}` +
+    `|${bandDiscriminator(category)}`
+  );
 }
 
 // ---------------------------------------------------------------------------

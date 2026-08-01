@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "74bfa4faad89",
+  "hash": "8f76d1d2419b",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "e1355a16692a",
-      "size": 5808
+      "hash": "b75c582dc04e",
+      "size": 5999
     },
     {
       "id": "audio-map",
@@ -35,8 +35,8 @@
     {
       "id": "body-scale",
       "path": "config/body-scale.json",
-      "hash": "8d51846af724",
-      "size": 1053
+      "hash": "a205bb9aabbf",
+      "size": 1445
     },
     {
       "id": "champion-voices",
@@ -65,8 +65,8 @@
     {
       "id": "damage-colors",
       "path": "config/damage-colors.json",
-      "hash": "632142e0a99a",
-      "size": 947
+      "hash": "1984e7e4e981",
+      "size": 1471
     },
     {
       "id": "form-visuals",
@@ -149,8 +149,8 @@
     {
       "id": "vfx-families",
       "path": "config/vfx-families.json",
-      "hash": "ad15c2b66ef2",
-      "size": 27764
+      "hash": "5fc904749741",
+      "size": 27886
     },
     {
       "id": "victory-taunts",

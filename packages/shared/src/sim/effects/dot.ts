@@ -45,7 +45,8 @@ import type { EntityId } from "../../ids";
 import type { DamageType } from "./effect";
 import { resolveScaling } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
-import { casterStats } from "./effectCommon";
+import { casterAttrs, casterStats } from "./effectCommon";
+import { resourcePctAmount } from "./dynamicTerms";
 
 /** Re-applying the same burn from the same caster. See `EffectDef.dot.stacking`. */
 export type DotStacking = "refresh" | "independent" | "stack";
@@ -139,7 +140,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // the number is frozen at APPLY. A DoT that re-read the caster's AP on each
     // payout would be a different (and un-authorable) spell — and would keep
     // changing after the caster died.
-    const base = resolveScaling(casterStats(ctx), e.amountPerTick, ctx.rank);
+    const base = resolveScaling(casterStats(ctx), e.amountPerTick, ctx.rank, casterAttrs(ctx));
     // Seconds→ticks ONCE, here. Never per payout: a per-tick division could
     // round differently on a different host, which is a desync in the one place
     // that decides who dies.
@@ -161,6 +162,15 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // can never pay and never expires against anything.
       if (!world.health.has(target)) continue;
 
+      // 資源百分比項 —— PER TARGET(分母是這一個身體的條),而且**在這裡就凍住**,
+      // 折進這個實例的 `amountPerTick`。跟 `base` 完全同一個語意與同一個時機,
+      // 所以 `effects/dotTick.ts` 一行都不用改,而一個施法者死掉之後燒傷也不會
+      // 突然跟著對方的裝備變動。熾天使之弓「每秒 3% 最大生命」走這一條。
+      const perTick =
+        e.resourcePct === undefined
+          ? base
+          : base + resourcePctAmount(world, ctx.caster, target, e.resourcePct, ctx.rank);
+
       const list = world.dot.get(target);
       // `independent` never merges — that is the whole point of the mode.
       // Everything else keys on (origin, caster): two DIFFERENT casters' poisons
@@ -176,8 +186,8 @@ export const dotEffect: EffectKindSpec<"dot"> = {
           sourceId: ctx.caster,
           origin: ctx.origin,
           damageType: e.damageType,
-          amountPerTick: base,
-          baseAmountPerTick: base,
+          amountPerTick: perTick,
+          baseAmountPerTick: perTick,
           stacks: 1,
           nextTick: firstTick,
           intervalTicks,
@@ -197,7 +207,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // back before it ever arrives, so the ability's whole damage budget is
       // silently zero. Only the DEADLINE moves.
       existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
-      existing.baseAmountPerTick = base;
+      existing.baseAmountPerTick = perTick;
       existing.damageType = e.damageType;
       existing.intervalTicks = intervalTicks;
       existing.stacking = stacking;
@@ -205,7 +215,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       existing.onCasterDeath = onCasterDeath;
       const held = existing.stacks ?? 1;
       existing.stacks = stacking === "stack" ? Math.min(maxStacks, held + 1) : 1;
-      existing.amountPerTick = base * existing.stacks;
+      existing.amountPerTick = perTick * existing.stacks;
     }
   },
 };

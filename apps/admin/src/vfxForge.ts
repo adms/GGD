@@ -257,6 +257,12 @@ export const GLOBAL_BOUNDS: Readonly<Record<string, ForgeBound>> = {
   // `MIN_/MAX_ONE_SHOT_MAX_LIFE_SEC` 的註解裡(3 秒 = 12 人混戰會吃掉九成畫面
   // 粒子預算的那條線;0.1 秒 = 手機 30fps 的 3 張畫面)。
   oneShotMaxLifeSec: { min: 0.1, max: 3 },
+  // #251 owner「投射物特效沒有真實套用」—— 彈道體積跟 `hitRadius` 走多少。
+  // 上下界 0/3 是 `MIN_/MAX_PROJECTILE_RADIUS_GAIN`,推導寫在那兩個常數上面
+  // (上界 3 擋的是「內容側把 hitRadius 寫大」被畫面再放大三次)。
+  projectileRadiusGain: { min: 0, max: 3 },
+  // 彈道飛在離地多高。下界 0.2 = 再低就埋進地板;上界 4 = 再高就飛出構圖。
+  projectileFlyHeightY: { min: 0.2, max: 4 },
 };
 
 export const FAMILY_BOUNDS: Readonly<Record<string, ForgeBound>> = {
@@ -282,8 +288,36 @@ export const GLOBAL_FIELDS = [
   "scaleMax",
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  "projectileRadiusGain",
+  "projectileFlyHeightY",
 ] as const;
 export type GlobalField = (typeof GLOBAL_FIELDS)[number];
+
+/**
+ * #251 —— 全域的**選擇題**欄位（下拉，不是數字框）。
+ *
+ * 它們和 `GLOBAL_FIELDS` 分開是因為驗證與 UI 元件都不同（數字有上下界，選擇題
+ * 只有「是不是清單裡的一個」），但**存檔路徑是同一條**：`familiesDocFor` 必須
+ * 一樣把它們帶上，否則操作者按存檔就會把它們從文件裡刪掉、而畫面上那一格還好好
+ * 地顯示著他選的值。`vfxForge.test.ts` 的 round-trip 守衛涵蓋這兩張表。
+ */
+export const GLOBAL_CHOICE_FIELDS = ["castHeightSource", "projectileArtFromDoc"] as const;
+export type GlobalChoiceField = (typeof GLOBAL_CHOICE_FIELDS)[number];
+
+/** 每一格的選項（value 是存進文件的字串，boolean 欄位用 "1"/"0"）。 */
+export const GLOBAL_CHOICE_OPTIONS: Readonly<
+  Record<GlobalChoiceField, readonly { readonly value: string; readonly label: string }[]>
+> = {
+  castHeightSource: [
+    { value: "ground", label: "貼地家族回到地板（出貨）" },
+    { value: "flat", label: "全部固定在胸口 y=1.0（升級前）" },
+    { value: "family", label: "每個家族都用自己的高度（含從天而降的）" },
+  ],
+  projectileArtFromDoc: [
+    { value: "1", label: "開：彈道套用自己的特效文件（出貨）" },
+    { value: "0", label: "關：固定彗星，只換顏色（升級前）" },
+  ],
+};
 
 export const FAMILY_FIELDS = [
   "enabled",
@@ -316,6 +350,10 @@ export const FIELD_LABEL: Readonly<Record<string, string>> = {
   scaleMax: "縮放上限",
   maxAbilityVfxLayers: "單技能特效層數上限",
   oneShotMaxLifeSec: "餘燼壽命上限（秒）",
+  castHeightSource: "施法特效高度",
+  projectileArtFromDoc: "彈道套用特效文件",
+  projectileRadiusGain: "彈道大小跟半徑",
+  projectileFlyHeightY: "彈道飛行高度",
   enabled: "啟用",
   primitive: "形狀",
   element: "元素",
@@ -349,13 +387,36 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
     "⚠️ 上限 3 秒不是隨便訂的：12 個人各疊 5 層、每層 80 顆、平均兩秒放一招，" +
     "3 秒壽命就會吃掉整個畫面 8,000 顆粒子預算的九成 —— 那就是畫面變成霧的那條線。" +
     "另外這一格只會往下夾，不會把短的特效拉長：原本 0.3 秒的爆炸不會因為調大而變長",
+  castHeightSource:
+    "施法特效要不要用家族自己算出來的高度。" +
+    "2026-08-01 實測：91 支「衝擊波環」畫出 105 個發射器，世界高度全部是 1.0（胸口），" +
+    "而那個家族設定的是 0.15（貼地的環）—— 也就是「家族基準高度」那一格以前算得出來但沒送到播放端。" +
+    "貼地家族回到地板 = 只讓想往下的家族往下（環／塵土／火柱／光柱），從天而降的（雷擊 3.2、流星 3.5）維持不動，" +
+    "所以特效只會更靠近地板、不可能飛出畫面上緣；" +
+    "每個家族都用自己的高度 = 連往上那一半也照做（會改到 200 多支技能的構圖，先看過畫面再開）；" +
+    "全部固定在胸口 = 升級前的行為，改壞了用這一格退回去，不用重新出 client",
+  projectileArtFromDoc:
+    "飛在空中的子彈要不要真的套用它自己那份特效文件（大小／壽命／密度／混色）。" +
+    "2026-08-01 實測：把文件的顆數 40→200、大小→9、壽命→3 秒、混色→alpha 全部改掉，" +
+    "引擎手上那顆發射器一格都沒動 —— 文件唯一到得了畫面的只有顏色與貼圖，" +
+    "所以一顆冰彈、一道貫穿波、一發平砍在畫面上是同一顆彗星換個顏色。" +
+    "關掉 = 回到那個固定彗星",
+  projectileRadiusGain:
+    "子彈畫多大要跟它真正的打擊半徑走多少。0 = 全部一樣大（升級前的畫面）；1 = 完全跟著走。" +
+    "出貨的子彈半徑有三檔：平砍 0.4、單發彈 0.5、貫穿波 0.9 —— 調到 1 之後貫穿波在畫面上就真的比平砍大，" +
+    "玩家看得出哪一發會穿人。上限 3 是「還看得出那是一顆飛行物」的那條線",
+  projectileFlyHeightY:
+    "子彈飛在離地多高（世界單位）。1 ≈ 胸口。調低會擦地飛、調高會從頭頂過；" +
+    "低於 0.2 會埋進地板（等於看不見），高於 4 會飛出戰鬥鏡頭的構圖（玩家看不到子彈從哪來）",
   enabled: "關掉之後這一層不再覆寫，技能回到依名字猜出來的 fx.prim.* 分類",
   primitive: "決定形狀（剪影）。同一個家族換形狀就是整批技能一起換長相",
   element: "決定顏色。技能自己沒有原圖 tint 時用這個",
   scale: "這個家族的基準大小，1 = 原型本來的大小。每一招的原圖倍率再疊在這之上",
   heightY:
     "特效播在離地多高（世界單位）。0.1 = 貼地的環，1 = 胸口，3.5 = 頭頂上方。" +
-    "⚠️ 這一格目前算得出來但沒有送到播放端 —— 施法特效固定播在 y=1.0，所以改它不會動",
+    "⚠️ 這一格要不要生效，看上面「施法特效高度」那一個下拉：" +
+    "出貨的「貼地家族回到地板」只採用比 1.0 低的值（往上的仍然固定在 1.0），" +
+    "選「每個家族都用自己的高度」才會連往上那一半也照做，選「全部固定在胸口」則整格不生效",
   family: "這一招要播哪一個家族原型。留白 = 沿用出貨的綁定",
   w3xScale:
     "原圖給這個呼叫點的 usca / SetUnitScalePercent。留白 = 原圖沒說，用家族基準；填了才會走上面的壓縮曲線",
@@ -363,8 +424,9 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
   tintG: "0–255，留白 = 用元素的顏色",
   tintB: "0–255，留白 = 用元素的顏色",
   flyHeight:
-    "原圖的 SetUnitFlyHeight，WC3 單位（128 單位 = 1 世界單位）。留白 = 用家族高度。" +
-    "⚠️ 同「家族基準高度」：目前沒有送到播放端。要調某一招的高度，請用下面的多層特效堆疊（那條路的 flyHeight 是活的）",
+    "原圖的 SetUnitFlyHeight，WC3 單位（128 單位 = 1 世界單位）。留白 = 用家族高度；" +
+    "填了會疊在家族基準高度上（負值代表原圖把替身藏在地形底下，會被夾在地板之上）。" +
+    "⚠️ 和「家族基準高度」共用同一個開關：上面「施法特效高度」選「全部固定在胸口」時整格不生效",
   // ⚠️ alpha / timeScale 兩個名字在「家族」和「單支技能」兩張表都出現。這裡**只能
   // 有一份**（重複的 key 會被 JS 靜默吃掉最後一個，tsc 才抓得到），所以文案要同時
   // 說得通兩邊：家族那格是基準，技能那格是覆寫。
@@ -376,31 +438,30 @@ export const FIELD_HINT: Readonly<Record<string, string>> = {
 };
 
 /**
- * 這三格**目前算得出來但沒有送到播放端**（第②號故障），文案已經照實寫。
+ * 這一格**目前算得出來但沒有送到播放端**（第②號故障），文案已經照實寫。
  *
  * ⚠️ 這不是「留著當裝飾」——是 owner 還沒裁決要「接上去」還是「拿掉欄位」：
- *
- *   · `heightY` / `flyHeight` —— 接上去等於一次改動 258 支家族技能在畫面上的
- *     高度（家族預設 0.15～3.5 都有，現在全部固定播在 y=1.0）。那是一個要用眼睛
- *     驗收的視覺變更，不該由一條看不到畫面的 lane 自己決定。
  *   · `anchor` —— pooled cast path 結構上沒有 bone parenting（和多層堆疊刻意不
  *     開 `anchor` 是同一個理由）。要它生效得先讓 `play()` 會解掛點。
  *
- * 同一批裡的 `alpha` / `timeScale` 已經在 2026-07-30 接上去了（`familyRow()` 現在
- * 會把它們搬到 `W3xAbilityArt`，`VfxSystem.playCastVfx` 用
- * `applyVfxOverrides` 套上去），守衛在
- * `apps/client/src/vfx/VfxSystem.familyKnobs.test.ts`——那條測試讀的是 Babylon
- * 真的拿到的顏色梯度與壽命，不是「函式回傳了 0.35」。
- *
- * 要調某一招的**高度**，現在有活的路：下面那張多層特效堆疊的 `flyHeight`
- * （`abilityLayers.layerHeightY` 真的會拿它當 `VfxSystem.play` 的 y）。
+ * 這張清單縮短過兩次，兩次都是因為那一格**真的接上去了**：
+ *   · 2026-07-30 `alpha` / `timeScale`（`familyRow()` 搬進 `W3xAbilityArt`，
+ *     `playCastVfx` 用 `applyVfxOverrides` 套上去）。守衛
+ *     `apps/client/src/vfx/VfxSystem.familyKnobs.test.ts` 讀的是 Babylon 真的
+ *     拿到的顏色梯度與壽命，不是「函式回傳了 0.35」。
+ *   · 2026-08-01 #251 `heightY` / `flyHeight`（同一行、同一個蒸發點）。要不要
+ *     採用由全域的「施法特效高度」下拉決定，出貨值只讓**貼地**的家族回到地板。
+ *     守衛 `apps/client/src/render/vfx/castHeightApplied.test.ts` 讀的是
+ *     `scene.particleSystems` 上 emitter 的世界 Y。
  */
-export const DEAD_FAMILY_KNOBS: readonly string[] = ["heightY", "flyHeight", "anchor"];
+export const DEAD_FAMILY_KNOBS: readonly string[] = ["anchor"];
 
 export const DEAD_KNOB_NOTE =
-  "⚠️ 家族／技能綁定裡的「家族基準高度」「原圖飛行高度」「錨點」三格目前不生效" +
-  "（算得出來但沒有送到播放端）。要調單一招的高度或掛點，請用下面每一支技能自己的" +
-  "「多層特效堆疊」——那條路的參數是實測過會到畫面的。";
+  "⚠️ 家族／技能綁定裡的「錨點」那一格目前不生效（算得出來但沒有送到播放端）——" +
+  "施法特效走的是共用粒子池，那條路不做骨骼掛載。要把特效掛在某根骨頭上，" +
+  "請用下面每一支技能自己的「多層特效堆疊」。" +
+  "（「家族基準高度」與「原圖飛行高度」已經在 2026-08-01 接上去了，" +
+  "由上面的「施法特效高度」下拉決定採用範圍。）";
 
 // ---------------------------------------------------------------------------
 // 讀 / 寫文件
@@ -444,6 +505,13 @@ export function familiesDocFor(doc: ConfigVfxFamiliesDoc): ConfigVfxFamiliesDoc 
     // ⚠️ 同上 —— 少寫這一行,操作者按存檔就會把餘燼壽命上限從文件裡刪掉,
     // 而畫面上那一格還好好地填著 2.0。round-trip 守衛盯著每一個 GLOBAL_FIELD。
     oneShotMaxLifeSec: doc.oneShotMaxLifeSec,
+    // ⚠️ #251 —— 同樣的四行。少寫任何一行，操作者按存檔就把那一格從文件裡刪掉，
+    // 而畫面上還好好地顯示著他選的值（下一次載入才會發現變回出貨預設）。
+    // round-trip 守衛涵蓋 `GLOBAL_FIELDS` + `GLOBAL_CHOICE_FIELDS` 兩張表。
+    castHeightSource: doc.castHeightSource,
+    projectileArtFromDoc: doc.projectileArtFromDoc,
+    projectileRadiusGain: doc.projectileRadiusGain,
+    projectileFlyHeightY: doc.projectileFlyHeightY,
     families: families as ConfigVfxFamiliesDoc["families"],
     abilities,
   };
@@ -535,12 +603,26 @@ function checkNumber(bound: ForgeBound, text: string, optional: boolean): string
 export const OPTIONAL_GLOBAL_FIELDS: ReadonlySet<string> = new Set([
   "maxAbilityVfxLayers",
   "oneShotMaxLifeSec",
+  // #251 —— 同一條規則：schema 上是 optional，所以留白必須合法，否則舊 overlay
+  // 一打開就是 dirty。留白 = 不寫這個 key = 用出貨預設。
+  "projectileRadiusGain",
+  "projectileFlyHeightY",
 ]);
 
 export function validateGlobalField(field: GlobalField, text: string): string {
   const b = GLOBAL_BOUNDS[field];
   if (!b) return "";
   return checkNumber(b, text, OPTIONAL_GLOBAL_FIELDS.has(field));
+}
+
+/**
+ * #251 —— 選擇題欄位的驗證。留白 = 沒設過 = 用出貨預設（schema 上 optional，
+ * 和數字那些一模一樣的理由）；填了就必須是清單裡的一個。
+ */
+export function validateGlobalChoiceField(field: GlobalChoiceField, text: string): string {
+  const t = text.trim();
+  if (t === "") return "";
+  return GLOBAL_CHOICE_OPTIONS[field].some((o) => o.value === t) ? "" : "不是一個可選的值";
 }
 
 export function validateFamilyField(field: FamilyField, text: string): string {

@@ -19,6 +19,7 @@ import type { StatCap } from "@ggd/shared/sim/statCaps";
 import {
   CAPS_COLLECTION,
   CAPS_DOC_ID,
+  capRowIssue,
   capRows,
   capsDocFor,
   capsSummary,
@@ -81,21 +82,19 @@ export function StatCapsPage(): JSX.Element {
   const editable = (r: CapRow): boolean =>
     Number.isFinite(r.effective.base) && Number.isFinite(r.effective.unlocked);
 
-  const rowValid = (r: CapRow): boolean => {
-    if (!editable(r)) return true;
+  /**
+   * 這一列現在填得對不對。規則本體在 `../statCaps` 的 `capRowIssue` —— 兩端的界
+   * 都在那裡,而且有測試在守。這一層只負責問。
+   */
+  const rowIssue = (r: CapRow): string | null => {
+    if (!editable(r)) return null;
     const d = shownOf(r);
-    const b = Number(d.base);
-    const u = Number(d.unlocked);
-    return (
-      d.base.trim() !== "" &&
-      d.unlocked.trim() !== "" &&
-      Number.isFinite(b) &&
-      Number.isFinite(u) &&
-      u >= b
-    );
+    return capRowIssue(r.stat, d.base, d.unlocked);
   };
+  const rowValid = (r: CapRow): boolean => rowIssue(r) === null;
 
   const allValid = rows.every(rowValid);
+  const firstIssue = rows.map(rowIssue).find((m): m is string => m !== null) ?? null;
   const dirty = Object.keys(draft).length > 0;
 
   /** 每一列,套上操作者現在打進去的字。未編輯的列維持它的生效值。 */
@@ -138,7 +137,10 @@ export function StatCapsPage(): JSX.Element {
       <p style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, margin: "0 0 6px" }}>
         每條屬性的<b style={{ color: TEXT_MAIN }}>一般上限</b>與
         <b style={{ color: GOLD }}>解鎖上限</b>。出貨預設是
-        <b style={{ color: GOLD }}>攻擊速度 4 → 最多解鎖到 10</b>。
+        <b style={{ color: GOLD }}>攻擊速度 4 → 最多解鎖到 10</b>,以及
+        <b style={{ color: GOLD }}>法術強度 100000</b>(owner 2026-08-01
+        「所以要有這個欄位,但先不要夾」—— 這個數字是量到最強 AP 組合的 24 倍,
+        <b style={{ color: TEXT_MAIN }}>今天不會夾到任何人</b>,要開始夾就把它調小)。
       </p>
       <p style={{ color: TEXT_DIM, fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
         ⚠️ 這裡填的是<b style={{ color: ACCENT }}>天花板,不是倍率、也不是加數</b>。
@@ -197,25 +199,38 @@ export function StatCapsPage(): JSX.Element {
               key={r.stat}
               data-testid={`cap-row-${r.stat}`}
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
                 padding: "7px 10px",
-                border: `1px solid ${PANEL_BORDER}`,
+                border: `1px solid ${ok ? PANEL_BORDER : DANGER}`,
                 borderRadius: 4,
                 fontSize: 13,
               }}
             >
-              <span style={{ color: TEXT_MAIN, minWidth: 130 }}>{r.label}</span>
-              <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 90 }}>{r.stat}</code>
-              <span style={{ color: TEXT_DIM, fontSize: 11 }}>一般</span>
-              {box("base")}
-              <span style={{ color: TEXT_DIM, fontSize: 11 }}>解鎖</span>
-              {box("unlocked")}
-              <span style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>
-                出貨預設 {shown(r.shipped.base)} / {shown(r.shipped.unlocked)}
-                {r.floor !== null && ` · 下限 ${r.floor}`}
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ color: TEXT_MAIN, minWidth: 130 }}>{r.label}</span>
+                <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 90 }}>{r.stat}</code>
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>一般</span>
+                {box("base")}
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>解鎖</span>
+                {box("unlocked")}
+                <span style={{ color: TEXT_DIM, fontSize: 11, minWidth: 190 }}>
+                  出貨預設 {shown(r.shipped.base)} / {shown(r.shipped.unlocked)}
+                  {r.floor !== null && ` · 地板 ${r.floor}`}
+                  {canEdit && ` · 可填 ${r.bounds[0]}–${r.bounds[1]}`}
+                </span>
+              </div>
+              {/*
+                ⚠️ 這一行寫的是「夾住它會影響什麼」,不是把欄位名再講一次 ——
+                操作者在這一頁要下的是一個平衡決定,而屬性名字本身不含任何資訊。
+              */}
+              <div
+                data-testid={`cap-effect-${r.stat}`}
+                style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}
+              >
+                {r.effect}
+              </div>
+              {!ok && (
+                <div style={{ color: DANGER, fontSize: 11, marginTop: 4 }}>{rowIssue(r)}</div>
+              )}
             </div>
           );
         })}
@@ -225,8 +240,8 @@ export function StatCapsPage(): JSX.Element {
         <Btn kind="primary" disabled={busy || !dirty || !allValid} onClick={() => void save()}>
           儲存 Save
         </Btn>
-        <span style={{ color: TEXT_DIM, fontSize: 12 }}>
-          {allValid ? "整張表一起寫入" : "解鎖上限不可小於一般上限"}
+        <span style={{ color: allValid ? TEXT_DIM : DANGER, fontSize: 12 }}>
+          {allValid ? "整張表一起寫入" : firstIssue}
         </span>
       </div>
     </Panel>

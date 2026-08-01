@@ -41,6 +41,7 @@ import { hudTouch } from "./HudSlot";
 import { HUD_Z, type HudRect } from "./hudLayout";
 import { useActiveHudPanels } from "./useHudPanels";
 import { bossLifetime, bossVisibleInZone, mobBossOverlayRect } from "./mobBossModel";
+import { useBossHealthBarSpec } from "./BossHealthBar";
 import {
   KILL_COMBO_POLL_MS,
   killComboDisplay,
@@ -201,12 +202,24 @@ export function KillCombo(): React.JSX.Element | null {
   // the overlay itself applies, so the counter can never yield to a banner that
   // is not being painted (the other duel's king reaches this client too).
   const bossUp = bossLifetime(boss, now) && bossVisibleInZone(boss, localDuelZone());
+  // #247 —— 長血條 is PERSISTENT (it lives as long as the king does) and outranks
+  // both of these transients. Resolved through `useBossHealthBarSpec`, the same
+  // one entry point the bar itself draws from; the banner is resolved AFTER it
+  // and therefore already sits clear of it, so the counter yields to both.
+  const barRect = useBossHealthBarSpec()?.rect ?? null;
   const bossRect = mobBossOverlayRect(bossUp ? boss : null, viewport, {
     touch: hudTouch(),
     legendUp,
     couchPlayers: 1,
+    barRect,
   });
-  const rect = killComboRect(viewport, { touch: hudTouch(), legendUp, couchPlayers: 1, bossRect });
+  const rect = killComboRect(viewport, {
+    touch: hudTouch(),
+    legendUp,
+    couchPlayers: 1,
+    bossRect,
+    bossBarRect: barRect,
+  });
   // null = this viewport genuinely has no free room. Showing nothing is the
   // correct answer; painting over the player's own bars is not.
   if (!rect) return null;

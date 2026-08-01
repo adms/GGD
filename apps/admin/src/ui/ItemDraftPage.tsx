@@ -31,6 +31,15 @@ import {
   patchItemDraft,
   readOfferCount,
   validateItemDraftForm,
+  RETIRED_TABLES_LABEL,
+  RETIRED_TABLES_MAX,
+  SHIPPED_RETIRED_LOOT_TABLES,
+  formatRetiredTables,
+  parseRetiredTables,
+  patchRetiredTables,
+  readRetiredTables,
+  retiredTablesSummary,
+  validateRetiredTables,
   type ItemDraftField,
   type ItemDraftForm,
 } from "../itemDraft";
@@ -42,6 +51,8 @@ function errText(err: unknown): string {
 export function ItemDraftPage(): JSX.Element {
   const [baseDoc, setBaseDoc] = useState<Record<string, unknown> | null>(null);
   const [form, setForm] = useState<ItemDraftForm>(formFromConfig(SHIPPED_ITEM_DRAFT));
+  /** 退場清單是 arena-rules 的頂層欄位，不是 `itemDraft` 區塊的一格 —— 見 itemDraft.ts。 */
+  const [retiredText, setRetiredText] = useState(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
   const [offerCount, setOfferCount] = useState(readOfferCount(null));
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -64,6 +75,7 @@ export function ItemDraftPage(): JSX.Element {
         }
         setBaseDoc(full);
         setOfferCount(readOfferCount(full));
+        setRetiredText(formatRetiredTables(readRetiredTables(full)));
         const cfg = extractItemDraft(full);
         if (cfg) setForm(formFromConfig(cfg));
       } catch (err) {
@@ -79,18 +91,22 @@ export function ItemDraftPage(): JSX.Element {
   const changed = preview ? changedFields(preview) : [];
   const table = form.fallbackTable.trim();
   const unknownTable = table !== "" && !KNOWN_LOOT_TABLES.includes(table);
+  const retiredErr = useMemo(
+    () => validateRetiredTables(retiredText, form.fallbackTable),
+    [retiredText, form.fallbackTable],
+  );
+  const retiredIds = parseRetiredTables(retiredText);
 
   const save = async (): Promise<void> => {
-    if (!preview || !baseDoc) return;
+    if (!preview || !baseDoc || retiredErr) return;
     setBusy(true);
     setApiErr(null);
     try {
-      const head = await putOverlayDoc(
-        ARENA_RULES_COLLECTION,
-        ARENA_RULES_DOC_ID,
-        patchItemDraft(baseDoc, preview),
-      );
-      setBaseDoc(patchItemDraft(baseDoc, preview));
+      // 兩個 patch 疊在**同一份基底文件**上，一次 PUT。分兩次寫的話，第二次會
+      // 用第一次之前的基底覆蓋回去 —— 那正是覆蓋層存整份文件的那個陷阱。
+      const next = patchRetiredTables(patchItemDraft(baseDoc, preview), retiredIds);
+      const head = await putOverlayDoc(ARENA_RULES_COLLECTION, ARENA_RULES_DOC_ID, next);
+      setBaseDoc(next);
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
     } catch (err) {
       setFlash(null);
@@ -102,6 +118,7 @@ export function ItemDraftPage(): JSX.Element {
 
   const resetToShipped = (): void => {
     setForm(formFromConfig(SHIPPED_ITEM_DRAFT));
+    setRetiredText(formatRetiredTables(SHIPPED_RETIRED_LOOT_TABLES));
     setFlash(null);
   };
 
@@ -255,8 +272,49 @@ export function ItemDraftPage(): JSX.Element {
         </div>
       ))}
 
+      {/* 退場的獎池 —— arena-rules 的頂層欄位，不是 itemDraft 區塊的一格 */}
+      <div style={{ marginTop: 14 }}>
+        <div style={{ color: ACCENT, fontSize: 12, marginBottom: 6 }}>
+          {ITEM_DRAFT_GROUP_ZH.retire}
+        </div>
+        <div style={rowStyle}>
+          <span style={{ color: TEXT_MAIN, minWidth: 150 }}>{RETIRED_TABLES_LABEL.zh}</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>retiredLootTables</code>
+          <div style={{ flex: 1 }}>
+            <input
+              aria-label={RETIRED_TABLES_LABEL.zh}
+              data-field="retiredLootTables"
+              value={retiredText}
+              placeholder="留空 = 沒有任何獎池退場"
+              onChange={(e) => setRetiredText(e.target.value)}
+              style={{
+                width: 340,
+                padding: "4px 6px",
+                background: "transparent",
+                color: retiredErr ? DANGER : TEXT_MAIN,
+                border: `1px solid ${retiredErr ? DANGER : PANEL_BORDER}`,
+                borderRadius: 3,
+              }}
+            />
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
+              {RETIRED_TABLES_LABEL.note}
+            </div>
+            <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+              逗號分隔 · 最多 {RETIRED_TABLES_MAX} 張 · 出貨值{" "}
+              {SHIPPED_RETIRED_LOOT_TABLES.join("、")}（owner 2026-08-01 裁定「退場」）
+            </div>
+            {retiredErr && <div style={{ color: DANGER, fontSize: 12, marginTop: 4 }}>{retiredErr}</div>}
+            {!retiredErr && (
+              <div style={{ color: GOLD, fontSize: 12, marginTop: 4 }}>
+                {retiredTablesSummary(retiredIds)}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-        <Btn onClick={() => void save()} disabled={busy || !preview || !baseDoc}>
+        <Btn onClick={() => void save()} disabled={busy || !preview || !baseDoc || retiredErr !== null}>
           {busy ? "儲存中…" : "儲存"}
         </Btn>
         <Btn onClick={resetToShipped} disabled={busy}>

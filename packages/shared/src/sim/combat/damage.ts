@@ -5,15 +5,24 @@
  */
 import type { AbilityId, ChampionId, EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { DamageType } from "../effects/effect";
+import type { DamageType, TriggerDamage } from "../effects/effect";
+import { DAMAGE_QUEUE_MAX_PASSES } from "../effects/reflectLimits";
 import type { StructureComp } from "../systems/GuardianSystem";
 import { Stat } from "../stats/statTypes";
 import { fireHooks } from "../effects/hooks";
 import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
 import { rollEvadeAbility } from "./evasion";
+import { blockCutFor } from "./block";
+import { effectiveLifesteal } from "./critStrike";
+import {
+  applyDamageConversion,
+  impactGateTypeOf,
+  resolveDamageConversion,
+} from "./damageTypeOverride";
 import { cancelLeap } from "../movement/leap";
-import { healTarget } from "./restore";
+import { healTarget, restoreMana } from "./restore";
+import type { DamageRefund } from "../effects/dynamicTerms";
 import { normalize, sub, lenSq, dist } from "../math/vec2";
 import { knockbackRaw, afterGap } from "../combatFeel";
 import { Abilities, Champions } from "../content/registry";
@@ -34,8 +43,89 @@ export interface DamagePacket {
   amount: number;
   type: DamageType;
   crit: boolean;
-  /** provenance: "ability:sela.q" | "basic" | "item:..." | "aug:..." */
+  /**
+   * provenance。**出貨的字彙只有五種**(全樹 9 個 `damageQueue.push` 站點都
+   * 列在 `combat/damageTypeOverride.ts` 的 `DamageConversionScope`):
+   * `"basic"` · `` `ability:${id}` `` · `` `hook:${srcId}` `` · `"mob"` ·
+   * `"guardian"` / `"guardian-heir"`。
+   *
+   * ⚠️ 一支技能留下的**延燒每一跳也帶著 `ability:<id>`** —— `effects/dot.ts` 把
+   * `ctx.origin` 寫進 `DotInstance.origin`,`effects/dotTick.ts` 再原封不動寫進
+   * 封包。所以「延燒算不算技能傷害」的答案是**算**(owner 2026-08-01),而且是
+   * 靠這條資料流成立的,不是靠任何一個判斷式。
+   */
   origin: string;
+  /**
+   * [型別轉換] **衝擊反應**(擊倒)那道閘要讀的傷害型別,也就是這一發**被最後
+   * 一次轉換之前**的型別。ABSENT = 沒有人轉換過它(或最後一個轉換者明講
+   * `impactType: "converted"`)= 讀 `type`,也就是這個欄位出現之前的每一發封包
+   * —— 加上它是一個嚴格的 no-op。
+   *
+   * 為什麼需要它:`applyImpact` 的擊倒閘是 `type !== "magic"`,而 惡夢魔王碎片
+   * 在那一行**之前**就把 magic 蓋成 true。少了這個欄位,「把技能傷害轉成真傷」
+   * 會順便送給持有者的每一發法術一個它本來沒有的擊倒。決策點與預設值寫在
+   * `combat/damageTypeOverride.ts` 的 `ConvertedImpactType`。
+   *
+   * ⚠️⚠️ **這個欄位 2026-08-01 以前叫 `impactType`,而那是一個同名陷阱。**
+   * `DamageTypeOverride.impactType`(`content/` 的 schema 欄位、後台看得到的那個)
+   * 的值是 `"original" | "converted"` —— 一個**政策**;這一個的值是
+   * `"physical" | "magic" | "true"` —— 一個**傷害型別**。兩個曾經在
+   * `applyDamageConversion` 的同一行裡並肩出現。改名的是**這一個**(sim 內部、
+   * 一寫一讀、不上 wire、不進 content),不是那一個(出貨資料 + 後台卡片)。
+   * 完整理由寫在 `combat/damageTypeOverride.ts` 的 `ConvertedImpactType` 檔頭。
+   *
+   * 只有 `applyDamageConversion` 寫它,只有 `impactGateTypeOf` 讀它。
+   */
+  impactGateType?: DamageType;
+  /**
+   * [反彈] 這一發封包**已經是第幾代反彈**。ABSENT = 0 = 一發原始傷害,也就是
+   * 這個欄位出現之前的每一發封包 —— 所以加上它是一個嚴格的 no-op。
+   *
+   * 只有 `damage.incomingPct`(反彈)會寫它,寫的值一律是「觸發我的那一發的深度
+   * + 1」。它存在的唯一理由是讓 A→B→A→… 的互相反彈**可證明會停**:
+   * 深度嚴格遞增 + 有上界。完整證明在 `effects/damage.ts` 的 handler 上方。
+   */
+  reflectDepth?: number;
+  /**
+   * 這一發封包**免除** `combatEnv.damageDealt` 全域傷害倍率。
+   *
+   * ABSENT / false = 照乘,也就是這個欄位出現之前的每一發封包 —— 加上它是一個
+   * 嚴格的 no-op。
+   *
+   * 唯一會寫它的是 [反彈](`damage.incomingPct`),而且理由是**避免乘兩次**:
+   * 反彈的分母(`TriggerDamage` 的三個讀數)是在下面那一行**乘完之後**才取的,
+   * 所以反彈封包再走一次同一行,倍率就進去了兩次,反彈比 = `pct × k` 而不是
+   * `pct`。k=1 出貨值看不出來,而後台戰鬥系統頁(#28)存在的意義就是動 k。
+   *
+   * 「要不要乘」是內容的決定,不是這裡的分支:見 `incomingPct.applyGlobalDamageMult`。
+   */
+  skipGlobalDamageMult?: boolean;
+  /**
+   * [暴擊吸血] (天堂之劍 godie-i01n 「暴擊時吸血回復100%傷害」) —— 這一發
+   * **procced 出來的**吸血比例,在揮擊那一刻由
+   * `combat/critStrike.ts::rollCritStrike` 決定。
+   *
+   * ABSENT = 沒有 proc = 走持有者原本的 `Stat.Lifesteal`,也就是這個欄位出現
+   * 之前的每一發封包 —— 所以加上它是一個嚴格的 no-op。
+   *
+   * ⚠️ `undefined` 和 `0` **必須分得開**:`0` 是一個合法的 proc(一個
+   * `lifestealFraction: 0` 的 grant),而把兩者用 `||` 混起來的那一刻,一個沒有
+   * proc 的普攻就會把持有者原本的吸血蓋成 0。結合點只有一個
+   * (`effectiveLifesteal`),理由寫在 `combat/critStrike.ts` ④。
+   */
+  critLifesteal?: number;
+  /**
+   * 「把這一發**實際打出去的量**折回給 `source`」—— 瑪那魔杖 godie-i020
+   * 「回復己方 MP 該傷害量」。ABSENT = 不折,也就是這個欄位出現之前的每一發
+   * 封包,所以加上它是一個嚴格的 no-op。
+   *
+   * ⚠️ 它必須在**封包**上而不是在 `effects/damage.ts` 裡算完,而這正是這個
+   * 機制唯一會出錯的地方:效果端只知道「打算打多少」,而排空迴圈之後才知道
+   * 全域倍率 → 護甲/魔抗 → 格擋 → 護盾 之後真的掉了多少。文案的「該傷害量」
+   * 指的是玩家看到的那個浮動數字,也就是後者(見 `DamageRefund.basis`)。
+   * 在效果端算會是一個永遠比畫面大的數字 —— 面板與實際不一致(#125 的形態)。
+   */
+  refund?: DamageRefund;
 }
 
 // ---------------------------------------------------------------- COMBAT JUICE
@@ -272,6 +362,17 @@ function bumpFreeze(map: Map<EntityId, number>, id: EntityId, ticks: number): vo
  * Apply the on-impact reactions for one landed hit. Emits `hitImpact` (always,
  * for client shake/particle timing), plus knockback / knockdown / guardBreak as
  * the impact + block state warrant.
+ *
+ * ⚠️ **TWO damage types, deliberately.**
+ *   · `type`           —— 這一發**現在**是什麼型別。給演出用:`hitImpact` 的
+ *                         `dmgType`、`deriveCosmetics` 的火花/閃光。玩家看到
+ *                         白色的真傷數字時,火花也該是真傷的火花。
+ *   · `impactGateType` —— 這一發**被轉換之前**是什麼型別。只給擊倒那道閘用。
+ *
+ * 沒有轉換的封包兩者相等(`impactGateTypeOf` 對 ABSENT 回 `type`),所以這個分裂對
+ * 全樹每一發不帶 `damageTypeOverride` 的封包是嚴格的 no-op。分裂本身的理由寫在
+ * `combat/damageTypeOverride.ts` 的 `ConvertedImpactType`:轉換傷害型別不應該
+ * 順便送出一個沒有人設計過的硬控。
  */
 function applyImpact(
   world: SimWorld,
@@ -279,6 +380,7 @@ function applyImpact(
   target: EntityId,
   impact: number,
   type: DamageType,
+  impactGateType: DamageType,
   blocked: boolean,
   guardBreak: boolean,
   crit: boolean,
@@ -464,7 +566,12 @@ function applyImpact(
 
   // KNOCKDOWN — heavy UNBLOCKED physical/true blow floors the victim (brief
   // root + getup). Blocked or magic hits shove but don't knock down.
-  if (!blocked && impact >= KD_MIN_IMPACT && type !== "magic") {
+  //
+  // ⚠️ 讀的是 `impactGateType`(**轉換前**的型別),不是 `type`。一發被 惡夢魔王
+  // 碎片 轉成真傷的法術在畫面上是真傷、在護甲/魔抗上是真傷,但**在這道閘上仍然
+  // 是法術** —— 除非那件道具明講 `impactType: "converted"`(那是**道具文件**上
+  // 的政策欄位,跟這個參數不是同一個東西,見 `damageTypeOverride.ts` 的同名陷阱)。
+  if (!blocked && impact >= KD_MIN_IMPACT && impactGateType !== "magic") {
     bumpFreeze(world.knockdown, target, KNOCKDOWN_TICKS);
     world.emit("knockdown", { target, source, x, z, ticks: KNOCKDOWN_TICKS });
   }
@@ -587,11 +694,30 @@ function mitigate(world: SimWorld, pkt: DamagePacket): number {
 export function combatResolveSystem(world: SimWorld): void {
   // Hooks fired during resolution may queue MORE damage; drain in bounded
   // passes so chains resolve deterministically without infinite loops.
-  for (let pass = 0; pass < 4 && world.damageQueue.length > 0; pass++) {
+  //
+  // ⚠️ 這個預算不再只是一個字面量:`REFLECT_MAX_CHAIN_DEPTH` 的上界是**從它算
+  // 出來的**(見 effects/reflectLimits.ts)。改這個數字要一起看那裡的不等式。
+  //
+  // ⚠️ 而「反彈不會溢到下一個 tick」**不是**靠那個不等式保證的 —— 那個推導假設
+  // 鏈從第 0 輪起跳,而 hook 排出來的封包不是。保證來自下面 `pass` 被寫進
+  // `TriggerDamage.resolvePass`,由 `effects/damage.ts` 的閘門在執行期擋掉一發
+  // 塞不進剩餘輪數的反彈。
+  for (let pass = 0; pass < DAMAGE_QUEUE_MAX_PASSES && world.damageQueue.length > 0; pass++) {
     const batch = world.damageQueue.splice(0, world.damageQueue.length);
     for (const pkt of batch) {
       const hp = world.health.get(pkt.target);
       if (!hp || !hp.alive) continue;
+
+      // ---- 傷害型別轉換 · "beforeGates" 相位 (無視防禦 / 真實傷害家族) -------
+      // 這一相位的來源在**免疫與閃避之前**就把封包蓋掉,所以那兩道閘看到的是
+      // 轉換後的型別 —— 魔法免疫擋不住一發被轉成 true 的法術,預設的迴避也閃
+      // 不掉它。**沒有任何出貨內容用這一相位**(三件武器都用預設的
+      // "afterGates"),所以這一行在今天是嚴格的 no-op;它存在是因為
+      // 「無視防禦」到底該不該連免疫一起無視是 owner 會改的決策,而那個決策
+      // 應該長在編輯器的卡片上,不是長在這個檔的一行程式裡。
+      // 完整推導見 `combat/damageTypeOverride.ts` 的 `DamageConversionPhase`。
+      const preGate = resolveDamageConversion(world, pkt.source, pkt.origin, "beforeGates");
+      if (preGate !== undefined) applyDamageConversion(pkt, preGate);
 
       // ---- 無敵 / 免疫 (GH#289 lane P3) --------------------------------------
       // BEFORE the combat-env multiplier, so `damageBlocked` on the scoreboard
@@ -637,24 +763,89 @@ export function combatResolveSystem(world: SimWorld): void {
         continue;
       }
 
+      // ---- 傷害型別轉換 · "afterGates" 相位 —— 出貨的那一個 -----------------
+      // 霸王破甲槍 / 死之王的長槍 (`scope: "basic"`) 與 惡夢魔王碎片
+      // (`scope: "ability"`) 都落在這裡:免疫與閃避已經用**原本的**型別問完了,
+      // 接下來 `mitigate()`(護甲/魔抗)與護盾池的型別過濾看到的才是新型別。
+      // 那正好就是「無視防禦」這句話字面上要的東西 —— 一點不多。
+      //
+      // ⚠️ 位置很要緊,而且要緊的是**下面那三行**而不是這一行本身:
+      //   · 在 `mitigate()` 之前 → 護甲/魔抗真的被跳過(true 直接 return amount);
+      //   · 在護盾池之前 → 一個 `absorbs: "physical"` 的護盾不再吃這一發;
+      //   · 在 `world.emit("damage")` 與 `applyImpact()` 之前 → 客戶端的浮動
+      //     數字與受擊閃光拿到的是轉換後的型別,不會出現「sim 當成真傷、畫面
+      //     畫成物理」的分裂(失敗形態 ②)。
+      // 把它移到 `mitigate()` 之後,整族道具就會變成完全無效而測試照樣綠 ——
+      // 這正是 `damageTypeOverride.test.ts` 的突變點。
+      //
+      // ⚠️⚠️ 2026-08-01 更正:上面第三點原本還寫著「**擊倒判定**(`type !== "magic"`)
+      // 拿到的也是同一個型別」,而那句話描述的是一個**沒有人選過的行為** ——
+      // 惡夢魔王碎片 把 magic 蓋成 true,於是持有者的每一發法術都多了一個它本來
+      // 沒有的擊倒。擊倒現在讀 `impactGateTypeOf(pkt)`(預設 = 轉換前的型別),
+      // 而「要不要跟著轉換」是 `DamageTypeOverride.impactType` 這個欄位。
+      // 浮動數字/閃光仍然讀轉換後的 `pkt.type` —— 那一半是對的,沒有被動到。
+      const postGate = resolveDamageConversion(world, pkt.source, pkt.origin, "afterGates");
+      if (postGate !== undefined) applyDamageConversion(pkt, postGate);
+
       // Global combat-env damage factor: applied ONCE per packet, pre-
       // mitigation. Every damage source (basics, abilities, item/augment
       // procs, DoTs) drains through this queue, so this one line is the whole
       // "attack damage output" knob. Packets are consumed exactly once (the
       // batch splice above), so mutating amount here is safe.
-      pkt.amount *= world.combatEnv.damageDealt;
+      //
+      // ⚠️ ONCE PER PACKET, and 「一發反彈」和「觸發它的那一發」是**兩發封包**。
+      // 反彈的分母是這一行**之後**的讀數,所以少了 `skipGlobalDamageMult`,
+      // 反彈就會被乘第二次(比例變成 `pct × k`)。整段推導寫在 `DamagePacket`
+      // 那個欄位上,開關是 `incomingPct.applyGlobalDamageMult`。
+      if (pkt.skipGlobalDamageMult !== true) pkt.amount *= world.combatEnv.damageDealt;
 
       // "impact" = post-mitigation, PRE-shield damage: the blow's raw force,
       // used to scale hitstop/knockback even when a shield eats the hp loss.
       const impact = mitigate(world, pkt);
-      let dmg = impact;
 
-      // shields absorb first (oldest first, deterministic). Track how much was
-      // absorbed + whether the shield pool went from >0 to 0 (a guard break).
       // `shieldBefore` / the guard-break basis is the ELIGIBLE total, not the
       // whole pool: an anti-magic barrier still standing must not suppress the
       // 破碎 beat when the pool that actually paid for a PHYSICAL hit empties.
+      //
+      // ⚠️ HOISTED ABOVE THE 格擋 GATE, and that is load-bearing rather than
+      // tidy: 「抵擋致命一擊(超過現存生命的傷害)」 has to know whether this packet
+      // would ACTUALLY kill, and a 500-point barrier means a 300-point hit is
+      // not a killing blow. Reading it here — before a single point is spent —
+      // is what lets `blockCutFor` answer that without a second pass.
       const shieldBefore = eligibleShieldTotal(hp.shields, world.tick, pkt.type);
+
+      // ---- 格擋 (奇門盾甲 · 黃金聖鬥衣 · 晨曦之光 · 殺豬刀) ------------------
+      // AFTER `mitigate()`, BEFORE the shield pool. All three positions matter
+      // and each is observable — full derivation in `combat/block.ts` ③:
+      //   · after mitigate  → 「擋掉一半」 halves what you would REALLY have eaten;
+      //   · before shields  → a block does NOT spend your barrier;
+      //   · `impact` itself is NOT reduced → `applyImpact` still reacts to how
+      //     hard the blow LANDED, exactly as it already does for a hit a shield
+      //     ate whole (檔頭:「a fully-blocked heavy hit still block-freezes」).
+      //
+      // NOT next to `refusesDamage`, and not a `continue`. 無敵 refuses a packet
+      // (「the client plays a hit that never happened」); 格擋 STOPS one that
+      // arrived — which is byte-for-byte the shield-ate-it-all case the client
+      // already draws: `blocked: true` → `combatText` 「guard」 + `hitFeel`'s
+      // `sparkKind: "block"` + GameApp's `playContextualVoice(blocker,"block")`.
+      // So this needs no new event and no `net/eventFanout.ts` entry.
+      //
+      // `blockCutFor` keeps its own ZERO GUARANTEE (no eligible source ⇒ it
+      // returns before touching `world.rng`), so this line is inert — and every
+      // existing replay bit-identical — until an item authors `block`.
+      const blockCut = blockCutFor(
+        world,
+        pkt.target,
+        pkt.type,
+        impact,
+        hp.hp,
+        shieldBefore,
+      );
+      let dmg = impact - blockCut;
+
+      // shields absorb what is LEFT (oldest first, deterministic). Track how
+      // much was absorbed + whether the shield pool went from >0 to 0 (a guard
+      // break).
       for (const sh of eligibleShields(hp.shields, world.tick, pkt.type, world.shieldRules.absorbOrder)) {
         const absorbed = Math.min(sh.amount, dmg);
         sh.amount -= absorbed;
@@ -672,7 +863,17 @@ export function combatResolveSystem(world: SimWorld): void {
         const srcStats = world.stats.get(pkt.source);
         const srcHp = world.health.get(pkt.source);
         if (srcStats && srcHp && srcHp.alive) {
-          const ls = srcStats.final[Stat.Lifesteal];
+          // [暴擊吸血] joins HERE, and this is the ONLY place the two lifesteal
+          // notions are combined — `combat/critStrike.ts::effectiveLifesteal`
+          // owns the replace/add decision (a FIELD, `lifestealMode`). Absent
+          // `pkt.critLifesteal` returns `srcStats.final[Stat.Lifesteal]`
+          // unchanged, which is byte-for-byte the pre-critStrike line.
+          const ls = effectiveLifesteal(
+            world,
+            pkt.source,
+            srcStats.final[Stat.Lifesteal],
+            pkt.critLifesteal,
+          );
           if (ls > 0) {
             // combatEnv.healing scales the RESTORE (a heal), on top of the
             // lifesteal STAT already scaled by combatEnv.lifesteal. Same clamp
@@ -689,11 +890,56 @@ export function combatResolveSystem(world: SimWorld): void {
         }
       }
 
+      // ---- 「回復己方 MP 該傷害量」 (瑪那魔杖 godie-i020) -------------------
+      // 位置緊跟著吸血,而且理由一模一樣:兩者都是「攻擊者從**這一發實際打出去
+      // 的量**得到的回報」,而那個量到這一行才算得出來。
+      //
+      // ⚠️ 讀的是 `dmg` / `impact`,**不是** `pkt.amount` —— `pkt.amount` 是
+      // 「打算打多少」(已過全域倍率,未過護甲/魔抗/格擋/護盾)。文案講的
+      // 「該傷害量」是玩家看到的那個浮動數字,而那個數字就是下面 `emit("damage")`
+      // 帶的 `dmg`,也就是預設 basis `"hpLost"`。
+      //
+      // 三個守衛,每一個都對應一個真的會發生的情況:
+      //   · `dmg <= 0` → 整發被護盾/格擋吃掉。`"hpLost"` 下回 0 是**正確**的
+      //     (什麼都沒打到),而 `restoreMana` 自己還有 `RESTORE_EPSILON`,
+      //     所以連一個 0 的 `manaRestore` 事件都不會發出去。
+      //   · 施法者已經死了 → 不回。跟吸血同一條規則(`srcHp.alive`)。
+      //   · `resource: "health"` 走 `healTarget` 並吃 `combatEnv.healing`,
+      //     跟吸血一致;法力**不**吃那個係數(那是治療旋鈕,不是法力旋鈕 ——
+      //     `effects/restore.ts` 已經立過這條規則)。
+      const refund = pkt.refund;
+      if (refund !== undefined) {
+        const gain =
+          (refund.basis === "mitigated" ? impact : Math.max(0, dmg)) * refund.pct;
+        const srcHp = world.health.get(pkt.source);
+        if (gain > 0 && srcHp?.alive) {
+          if (refund.resource === "mana") {
+            restoreMana(world, {
+              source: pkt.source,
+              target: pkt.source,
+              amount: gain,
+              origin: pkt.origin,
+            });
+          } else {
+            healTarget(world, {
+              source: pkt.source,
+              target: pkt.source,
+              amount: gain * world.combatEnv.healing,
+              origin: pkt.origin,
+              score: true,
+            });
+          }
+        }
+      }
+
       // ---- match scoreboard: attribute this resolved packet ----
       // output = mitigated force pre-shield (credits attacker even if shielded);
-      // hpLoss = HP actually removed; blocked = armor/MR mitigation + shield eaten.
+      // hpLoss = HP actually removed; blocked = armor/MR mitigation + shield
+      // eaten + 格擋. The 格擋 term is what makes the post-match screen able to
+      // say what the 50% block was worth — without it a fully-blocked hit is
+      // scored as 0 output and 0 blocked, i.e. it never happened (失敗形態 ②).
       const mitigatedByResist = Math.max(0, pkt.amount - impact);
-      recordDamage(world, pkt.source, pkt.target, impact, Math.max(0, dmg), mitigatedByResist + shieldAbsorbed, pkt.origin);
+      recordDamage(world, pkt.source, pkt.target, impact, Math.max(0, dmg), mitigatedByResist + shieldAbsorbed + blockCut, pkt.origin);
 
       // ---- rich damage event (the sim<->client seam, per combat-juice) ----
       // blocked := a shield absorbed part of the hit OR a damage-reduction buff
@@ -702,7 +948,13 @@ export function combatResolveSystem(world: SimWorld): void {
       // killingBlow := the hit dropped the target to 0 hp (death lands next
       //   system). dmgType duplicates `type` under the contract's field name;
       //   `type`/`origin` are kept for existing consumers (DeathSystem, tests).
-      const blocked = shieldAbsorbed > 1e-9 || hasDamageReductionBuff(world, pkt.target);
+      // `blockCut > 0` joins the SAME flag rather than minting a second one:
+      // that flag is the client's whole 「擋下了」 channel (guard text, block
+      // spark, softer shake, the defender's block voice line), and 格擋 wants
+      // every one of them. A separate flag would be a second thing four client
+      // sites must learn — three of which would forget (失敗形態 ③).
+      const blocked =
+        shieldAbsorbed > 1e-9 || blockCut > 1e-9 || hasDamageReductionBuff(world, pkt.target);
       // ELIGIBLE total on both sides of the comparison: an anti-magic barrier
       // that this physical hit could never spend must not suppress the 破碎
       // beat when the pool that DID pay for it empties.
@@ -736,10 +988,31 @@ export function combatResolveSystem(world: SimWorld): void {
       noteAbilityConnect(world, pkt.source, pkt.target, pkt.origin);
 
       // on-impact reactions (hitstop/knockback/knockdown/guardBreak/hitImpact)
-      applyImpact(world, pkt.source, pkt.target, impact, pkt.type, blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);
+      applyImpact(world, pkt.source, pkt.target, impact, pkt.type, impactGateTypeOf(pkt), blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);
 
-      fireHooks(world, pkt.source, "onDamageDealt", pkt.target);
-      fireHooks(world, pkt.target, "onDamageTaken", pkt.source);
+      // THE PACKET ITSELF, handed to the hooks it is about ([反彈], #GGD-legendary).
+      //
+      // 三個讀數一起帶,而不是在這裡先挑一個:挑哪一個是**內容的決定**
+      // (`damage.incomingPct.basis`),而這裡三個都已經算好了,成本是零。
+      // 在來源端先選 = 把一個決策點烘進 sim(CLAUDE.md 第一守則)。
+      //   raw       = 本來的量(**已經**過了上面那一行的全域倍率,未過護甲/魔抗)
+      //   mitigated = `impact`,過了護甲/魔抗、還沒進護盾池
+      //   hpLost    = 真的從血條掉下來的那一格
+      // `reflectDepth` 是反彈鏈終止性的載體(effects/damage.ts 有完整證明)。
+      // `resolvePass` 是「還來不來得及」的載體 —— 見下面那一段。
+      const trigger: TriggerDamage = {
+        raw: pkt.amount,
+        mitigated: impact,
+        hpLost: Math.max(0, dmg),
+        origin: pkt.origin,
+        reflectDepth: pkt.reflectDepth ?? 0,
+        // 這一發是在第幾輪落地的。**不是常數 0**:hook 排出來的封包(每一件
+        // [On-Hit] 道具)最早也要第 1 輪才解算,而 `reflectLimits.ts` 以前那個
+        // 「深度 d 在第 d 輪落地」的推導正是漏了這件事。反彈鏈用它算剩幾輪。
+        resolvePass: pass,
+      };
+      fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
+      fireHooks(world, pkt.target, "onDamageTaken", pkt.source, undefined, trigger);
     }
   }
 }

@@ -149,6 +149,11 @@ export function flightHoverHeight(world: SimWorld, id: EntityId): number {
 /**
  * Reconcile `world.flight` against the grants attached to `id`.
  *
+ * ⚠️ THIS IS NOT THE ONLY WRITER OF `world.flight` ANY MORE (#247). The 殭屍王
+ * is handed a grant directly at spawn because a mob carries no StatsComp and so
+ * has no `sources` array to hang one on. `flightSystem` skips mobs for exactly
+ * that reason — see the guard in its loop.
+ *
  * MAX-NOT-SUM on the height, and OR on each permission: two grants make you
  * fly higher and pass through more, never less. `stayInsideBoundary` is the
  * exception and folds with AND-of-defaults — a single grant that opts out is
@@ -200,5 +205,15 @@ export function flightSystem(world: SimWorld): void {
   const ids: EntityId[] = [];
   for (const id of world.stats.keys()) ids.push(id);
   ids.sort((a, b) => a - b);
-  for (const id of ids) syncFlightGrants(world, id);
+  for (const id of ids) {
+    // #247 —— 殭屍王的無視碰撞是 SPAWN 時直接授予的(sim/mobs.summonMobBoss),不是
+    // 從 `StatsComp.sources` 推導的,因為一隻怪刻意沒有 StatsComp。今天 `world.stats`
+    // 裡永遠不會有 mob,所以這一行看起來是多的 —— 它擋的是「將來有人給怪加了
+    // StatsComp」那一天:`syncFlightGrants` 會在那一 tick 找不到任何 `flight` 來源、
+    // 把王的授予刪掉,而王只是「又開始被卡住」,沒有任何東西會紅(失敗形狀 ③)。
+    // 這條分支有自己的行為守衛:sim/mobBossNoClip.test.ts 的
+    // 「a boss that somehow acquires a StatsComp keeps its no-clip」。
+    if (world.mob.has(id)) continue;
+    syncFlightGrants(world, id);
+  }
 }

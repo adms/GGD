@@ -142,6 +142,11 @@ const (
 	pricePowerful = 1200
 )
 
+// Inventory slots a champion has to fill. Mirrors INVENTORY_SLOTS in
+// packages/shared/src/sim/economy/shop.ts. Used as the floor for "is the shelf
+// still a shop": a catalogue no bigger than the slots it fills is a loadout.
+const inventorySlots = 6
+
 // The two SHOP SERVICES and their prices (SV1-SV3). Mirrors
 // LEGENDARY_ORB_PRICE / STAT_TICK_PRICE in economy/itemTiers.ts.
 var servicePrices = map[string]int{
@@ -258,35 +263,84 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	// ---------------------------------------------------------------- items --
-	// The two surfaces of the arena item model (task #70). They partition the
-	// bundle: an item is bought with gold OR drafted for free, never both.
+	// The surfaces of the arena item model (task #70): an item is bought with
+	// gold OR handed out free, never both.
 	shop := curation.StarterShopItems()
 	draft := curation.StarterDraftItems()
 	services := curation.StarterServiceItems()
 	legendary := curation.StarterLegendaryItems()
-	require.GreaterOrEqual(t, len(shop), 20, "the shop surface must be a real catalogue of final weapons")
+	// `>= 20` was July's shelf size and stopped meaning anything when owner
+	// 2026-08-01 moved 18 effective finals onto the 棱彩 surface. The property
+	// worth holding: the shelf must still outnumber the 6 inventory slots a
+	// build has to fill (INVENTORY_SLOTS, packages/shared/src/sim/economy/shop.ts)
+	// — a shelf at or below that is a fixed loadout, not a shop.
+	require.Greater(t, len(shop), inventorySlots,
+		"the shop surface must offer more finals than a build has slots to fill")
 	require.GreaterOrEqual(t, len(draft), 6, "the draft surface must be able to fill a 3-choose-1 twice")
 	require.GreaterOrEqual(t, len(legendary), 6, "the legendary pool must be able to fill a 3-choose-1 twice")
 	require.Len(t, services, 2, "the shop services are exactly 傳說寶玉 + 能力屬性強化")
-	require.Len(t, set.Items, len(shop)+len(services)+len(legendary)+len(draft),
-		"the bundle is exactly SHOP + SERVICES + LEGENDARY + DRAFT — an id on two surfaces would be "+
-			"deduped away here")
 
-	// The four surfaces PARTITION the catalogue. The shop/legendary split is
-	// the one that matters most: 「傳說的武器道具，只能隨機三選一」 means a
-	// legendary must be reachable ONLY through the round-5 card or the orb, so
-	// an id in both lists would be a directly-purchasable legendary.
-	surfaceOf := map[string]string{}
-	for name, list := range map[string][]string{
-		"shop": shop, "services": services, "legendary": legendary, "draft": draft,
-	} {
+	// PAID vs FREE is absolute, and it is the half that matters:
+	// 「傳說的武器道具，只能隨機三選一」 means a legendary must be reachable ONLY
+	// through a round card or the orb, so an id in both lists would be a
+	// directly-purchasable legendary.
+	paidSurfaceOf := map[string]string{}
+	for name, list := range map[string][]string{"shop": shop, "services": services} {
 		for _, id := range list {
-			if prev, dup := surfaceOf[id]; dup {
+			if prev, dup := paidSurfaceOf[id]; dup {
 				t.Errorf("item %q is on BOTH the %s and %s surfaces", id, prev, name)
 			}
-			surfaceOf[id] = name
+			paidSurfaceOf[id] = name
 		}
 	}
+	freeSurfaceOf := map[string]string{}
+	for name, list := range map[string][]string{"legendary": legendary, "draft": draft} {
+		for _, id := range list {
+			if prev, dup := freeSurfaceOf[id]; dup && prev == name {
+				t.Errorf("the %s surface lists %q twice", name, id)
+			}
+			if paid, dup := paidSurfaceOf[id]; dup {
+				t.Errorf("item %q is on the paid %s surface AND the free %s surface — it can be bought",
+					id, paid, name)
+			}
+			freeSurfaceOf[id] = name
+		}
+	}
+
+	// FREE∩FREE is NOT empty any more, and pretending otherwise would be the
+	// lie. owner 2026-08-01 —「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄
+	// 在隨機三選一」— named six craftRole-"quest" items into the 棱彩 pool, and
+	// owner rule 2 「所有任務道具」 (TestStarterDraftIsQuestSet, both directions)
+	// keeps them on the DRAFT surface at the same time. Pinned id-for-id so a
+	// SEVENTH overlap still fails; each one must still be a 0g quest item, i.e.
+	// free through both doors and purchasable through neither.
+	legendarySet := map[string]struct{}{}
+	for _, id := range legendary {
+		legendarySet[id] = struct{}{}
+	}
+	bothFree := []string{}
+	for _, id := range draft {
+		if _, dup := legendarySet[id]; dup {
+			bothFree = append(bothFree, id)
+		}
+	}
+	sort.Strings(bothFree)
+	assert.Equal(t, []string{
+		"godie-i004", // 至尊魔戒
+		"godie-i00z", // 四魂之玉
+		"godie-i01n", // 天堂之劍
+		"godie-i01s", // 仙后座
+		"godie-i06j", // 獸人船長十字鎬
+		"godie-i06n", // 老衲的棒子
+	}, bothFree, "the DRAFT∩LEGENDARY overlap is owner's 2026-08-01 list, exactly")
+
+	// The served bundle is a SET (`StarterSet` runs the concat through `union`),
+	// so the overlap collapses exactly once each. This used to read
+	// `len(shop)+len(services)+len(legendary)+len(draft)` and was the assertion
+	// that caught the duplicates in the first place.
+	require.Len(t, set.Items, len(shop)+len(services)+len(legendary)+len(draft)-len(bothFree),
+		"the served bundle is SHOP + SERVICES + LEGENDARY + DRAFT deduped — an unlisted id on two "+
+			"surfaces would be silently swallowed here")
 
 	// S1–S5 — every SHOP item is a FINAL crafted weapon (owner rule 1, task
 	// #70), carries ONE OF THE TWO PRICES, is effective and is sane. S5 is the
@@ -326,14 +380,18 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 				"above-ceiling band entirely, so this is a regression, not a known exception",
 			id, item.Cost, matchGoldCeiling)
 	}
-	// The shop is now the FINAL weapons only, so it is a smaller, sharper shelf
-	// than the old cost-filtered 70. It still has to give turn 1 a real choice
-	// (at least one SIMPLE final is buyable on the 600g purse) and a real late
-	// game (a body of POWERFUL finals).
+	// The shop is FINAL weapons only, minus whatever the 棱彩 pool claims, so it
+	// is a much smaller, sharper shelf than the old cost-filtered 70. It still
+	// has to give turn 1 a real choice (at least one SIMPLE final is buyable on
+	// the 600g purse) and a real late game: a player filling every slot with
+	// POWERFUL items must have had an ALTERNATIVE at each one. `>= 10` was
+	// July's count and measured nothing once 18 finals moved to the draft.
 	assert.GreaterOrEqualf(t, affordableAtStart, 1,
 		"no shop item is buyable on the %dg starting purse — turn 1 has nothing", startingGold)
 	assert.GreaterOrEqualf(t, simpleCount, 1, "only %d SIMPLE finals", simpleCount)
-	assert.GreaterOrEqualf(t, powerfulCount, 10, "only %d POWERFUL finals", powerfulCount)
+	assert.Greaterf(t, powerfulCount, inventorySlots,
+		"%d POWERFUL finals for %d slots — the late shop is a forced build, not a choice",
+		powerfulCount, inventorySlots)
 
 	// SV1–SV3 — the shop services. No modifiers by design (their payload is
 	// code), so S3 is deliberately not applied; instead the id must be one the
@@ -478,19 +536,42 @@ func TestStarterShopIsFinalWeapons(t *testing.T) {
 		shop[id] = struct{}{}
 	}
 
-	// EXCLUSION: nothing on the shelf may be anything but a final crafted weapon.
+	// The 棱彩 pool CLAIMS a final away from the shelf. owner 2026-08-01 put 18
+	// effective finals into content/loot-tables/legendary-weapons.json and zeroed
+	// their price in the same edit, so rule 1 (「最終合成武器…可直接購買」) and
+	// 「傳說＝三選一專屬」 point the same way for those 18: they are drafted, not
+	// sold. Read from the shipped loot table so moving an item between the two
+	// surfaces needs no edit here — an exclusion LIST would rot on the next move.
+	table := readJSON[lootTable](t, filepath.Join(contentRoot(), "loot-tables", "legendary-weapons.json"))
+	legendary := map[string]struct{}{}
+	for _, e := range table.Entries {
+		legendary[e.ItemID] = struct{}{}
+	}
+	require.NotEmpty(t, legendary, "the 棱彩 pool is empty — the exclusion below would be vacuous")
+
+	// EXCLUSION: nothing on the shelf may be anything but a final crafted weapon,
+	// and nothing on the shelf may be a 棱彩 entry.
 	for id := range shop {
 		d := docs[id]
 		assert.Equalf(t, "final", d.CraftRole,
 			"shop item %q (%s) has craftRole %q — the shop is FINAL crafted weapons only "+
 				"(owner rule 1). A priced component or quest item must never reach the shelf.",
 			id, d.Name, d.CraftRole)
+		_, drafted := legendary[id]
+		assert.Falsef(t, drafted,
+			"shop item %q (%s) is also in content/loot-tables/legendary-weapons.json — "+
+				"「傳說的武器道具，只能隨機三選一」. It carries cost 0 now, so listing it is a dead "+
+				"0g button on the shelf the moment 武器貨架 (#261) reopens.", id, d.Name)
 	}
 	// INCLUSION: every final crafted weapon that CAN be sold (has an expressible
-	// payload) must be on the shelf. A final with no effect is blocked on the
-	// item@1 active schema (#56) and is legitimately absent.
+	// payload) and that the 棱彩 pool has NOT claimed must be on the shelf. A
+	// final with no effect is blocked on the item@1 active schema (#56) and is
+	// legitimately absent.
 	for id, d := range docs {
 		if d.CraftRole != "final" || !d.hasEffect() {
+			continue
+		}
+		if _, drafted := legendary[id]; drafted {
 			continue
 		}
 		_, listed := shop[id]

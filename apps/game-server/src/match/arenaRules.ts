@@ -11,7 +11,7 @@ import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/sim/economy/draft";
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
-import { Configs } from "@ggd/shared/content";
+import { Configs, scheduledRetiredTables } from "@ggd/shared/content";
 import type {
   ConfigArenaRulesDoc,
   FlowerConfig,
@@ -109,8 +109,33 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   rogueliteMobs: true,
 };
 
-/** Convert a parsed config.arena-rules@1 doc into the controller's rule table. */
+/**
+ * Convert a parsed config.arena-rules@1 doc into the controller's rule table.
+ *
+ * ⚠️ 退場的抽獎池在這裡**被剝掉**,不是被照發 (owner 2026-08-01「退場」).
+ * `ContentLoader` 已經會拒絕一份把退場的表排回去的文件,所以走 `content/` 那條路
+ * 的話永遠不會走到這裡。這一段守的是**另一條路**:後台耐久覆蓋層的寫入路徑目前
+ * 完全沒有 Zod 驗證 (#283),所以線上一個 override 有辦法把 `quest-rewards` 排回
+ * 第 4 回合而沒有任何東西擋。剝掉 + `console.warn` 是刻意的組合 —— 靜靜地照發是
+ * owner 剛否決的事,靜靜地不發是失敗形態 ②。
+ */
 export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
+  // ONE implementation of 「哪些欄位排到了退場的表」, shared with the content
+  // loader (packages/shared/src/content/retiredLootTables.ts). Two copies of
+  // this rule would be two rules that drift.
+  const retiredUses = scheduledRetiredTables(doc);
+  const retiredFields = new Set(retiredUses.map((u) => u.field));
+  const retiredRounds = new Set(
+    retiredUses
+      .map((u) => /^rounds\.(\d+)\.weaponLootTable$/.exec(u.field)?.[1])
+      .filter((k): k is string => k !== undefined),
+  );
+  for (const use of retiredUses) {
+    console.warn(
+      `[arena-rules] ${use.field} 排了已退場的抽獎池 "${use.table}" —— 這一份規則不會發它。` +
+        `owner 2026-08-01 裁定它退場;要復活請先把它從 retiredLootTables 移除。`,
+    );
+  }
   const rounds = new Map<number, RoundGrant>();
   for (const [key, grant] of Object.entries(doc.rounds)) {
     if (!grant) continue;
@@ -119,7 +144,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
       grantGold: grant.grantGold,
       autoLearn: grant.autoLearn,
       augmentTier: grant.augmentTier,
-      weaponLootTable: grant.weaponLootTable,
+      weaponLootTable: retiredRounds.has(key) ? undefined : grant.weaponLootTable,
     });
   }
   return {
@@ -127,10 +152,18 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     exUnlockRound: doc.exUnlockRound ?? null,
     offerCount: doc.offerCount,
     // Absent block = the shipped policy, NOT null. See the field's doc comment.
-    itemDraft: doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY,
+    // A RETIRED fallback pool is emptied to "" — the authored 「沒有備援」 value,
+    // which `economy/draft.ts` already handles as "then just deal a short card".
+    itemDraft: retiredFields.has("itemDraft.fallbackTable")
+      ? { ...(doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY), fallbackTable: "" }
+      : (doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY),
     rounds,
     overflow: doc.overflow ?? null,
-    gacha: doc.gacha ?? null,
+    // A retired gacha pool turns the legacy per-round gacha OFF rather than
+    // rolling it: `null` is the authored 「這個機制關著」 state (it is what the
+    // shipped doc means by omitting the block), so nothing downstream has to
+    // learn about retirement.
+    gacha: retiredFields.has("gacha.lootTable") ? null : (doc.gacha ?? null),
     flowers: doc.flowers ?? null,
     reviveCircles: doc.reviveCircles ?? null,
     guardianTower: doc.guardianTower ?? null,

@@ -237,13 +237,21 @@ import "sort"
 //	   legendary are the free round-5 card and the 2400g orb, which buys the
 //	   ROLL and never the item.
 //
-//	LOOT CLOSURE (both tables). MatchController filters a weapon offer to the
-//	whitelist and SKIPS the grant when nothing survives, so an under-seeded
-//	bundle makes the round-2/round-5 cards silently give the player nothing.
-//	Round 2 rolls `quest-rewards` (all 7 enabled here) and round 5 rolls
-//	`legendary-weapons` (all 25 enabled here). The orb takes the same pool but
-//	filters BEFORE rolling and refuses the sale when it is empty, so it can
-//	never reproduce that failure.
+//	LOOT CLOSURE. MatchController filters a weapon offer to the whitelist and
+//	SKIPS the grant when nothing survives, so an under-seeded bundle makes the
+//	round-2/round-5 cards silently give the player nothing.
+//
+//	⚠️ CORRECTED 2026-08-01. This paragraph used to say 「Round 2 rolls
+//	`quest-rewards` (all 7 enabled here)」 — TWO errors: the table holds 13
+//	entries, not 7, and BOTH weapon rounds have rolled `legendary-weapons` since
+//	the owner's 「隨機三選一發放道具 都改成棱彩武器道具」. `quest-rewards` is now
+//	RETIRED outright (owner 2026-08-01 「=> 退場」, recorded in
+//	`arena-rules.retiredLootTables`): the table and its 13 items are still
+//	shipped and still whitelisted below, but nothing may schedule it — see
+//	`packages/shared/src/content/retiredLootTables.ts`.
+//
+//	The orb takes the same legendary pool but filters BEFORE rolling and refuses
+//	the sale when it is empty, so it can never reproduce that failure.
 //
 //	BUILD TOLERANCE, not build closure. Task #47's I7 required every id in
 //	every starter champion's buildPriority to be purchasable. That is no longer
@@ -558,8 +566,16 @@ func StarterShopItems() []string {
 }
 
 // StarterDraftItems returns a fresh copy of the DRAFT surface — the 0g quest
-// rewards offered by the free 3-choose-1 weapon card (gates D1-D4 above).
-// These are exactly the entries of content/loot-tables/quest-rewards.json.
+// rewards. These are exactly the entries of content/loot-tables/quest-rewards.json
+// (gates D1-D4 above), and that mirror is what TestStarterDraftIsQuestSet pins.
+//
+// ⚠️ 「offered by the free 3-choose-1 weapon card」 WAS PART OF THIS COMMENT AND IS
+// NO LONGER TRUE. `quest-rewards` was retired on 2026-08-01 (owner: 「=> 退場」),
+// so NO card offers these 13 today. They stay on the whitelist deliberately —
+// retiring a pool is not de-listing its items, and dropping them here would
+// delete them from the codex and the admin content editor as a side effect.
+// The 6 of them that are also `legendary-weapons` entries ARE still reachable,
+// through that pool.
 func StarterDraftItems() []string {
 	return append([]string(nil), starterDraftItems...)
 }

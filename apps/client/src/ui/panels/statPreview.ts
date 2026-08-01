@@ -52,6 +52,7 @@ import { syncAbilityPassives } from "@ggd/shared/sim/abilities/abilityPassives";
 import { attachSource, recomputeStats } from "@ggd/shared/sim/stats/statPipeline";
 import { Champions, Items, Augments } from "@ggd/shared/sim/content/registry";
 import { capstoneModifiers } from "@ggd/shared/sim/economy/itemTiers";
+import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { attrBonusFromArray } from "@ggd/shared/sim/economy/statPath";
 import { ALL_STATS, Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
 import {
@@ -110,9 +111,40 @@ export interface ChampionStatContext {
    * 於是商店顯示的增益比玩家真正買到的少 —— 一個「看起來完全合理」的數字。
    */
   statCaps?: StatCapTable;
+  /**
+   * 現場的**資源比例** 0..1 —— 這個 scratch world 的英雄要 spawn 在幾成血/魔。
+   * 省略 = `1` = 滿血滿魔,也就是這個欄位出現之前 `spawnChampion` 一直做的事,
+   * 所以每一個既有呼叫端的數字逐位元不變。
+   *
+   * ⚠️ 為什麼它存在,而且為什麼它是**第四種**「預覽會說謊」的方式。
+   * 光魔杖 (godie-i027) 的 「AP+ (目前MP的 5%)」 是全遊戲第一條**會隨資源浮動**
+   * 的 modifier(`ModOp.PercentOf` + `fromResource`,見
+   * `sim/stats/resourceStats.ts`)。一個滿魔的 scratch 英雄會把它算成**上限值**,
+   * 於是半魔的玩家在面板上看到的 AP 是他實際拿到的兩倍 —— 而其他每一列都正確,
+   * 這正是 #106 「a live stat preview that must not lie」 要擋的那種、只在部分
+   * 欄位發生因此更難發現的謊。
+   *
+   * ⚠️ 餵不餵是**呼叫端的決定**,而它有代價:魔量幾乎每 tick 都在動,把原始值
+   * 接進 React 的 memo key 會讓整張面板每一幀重算(`computeStatBlock` spawn 一
+   * 個完整的 SimWorld)。要接的呼叫端應該先**量化**(例如取到小數一位),讓重算
+   * 次數被「魔條動了 10%」而不是「時間過了一幀」決定。
+   */
+  hpPct?: number;
+  manaPct?: number;
 }
 
 const ZERO_ITEMS: readonly string[] = ["", "", "", "", "", ""];
+
+/**
+ * 0..1 夾取。缺值 / 非有限數 → `1`(滿資源),也就是這個欄位出現之前的行為 ——
+ * **不是** 0:一個把 NaN 讀成 0 的預覽會把整條 AP 報成沒有,那是比不夠精準更糟的
+ * 一種謊。真的傳 0 進來(空魔)照樣是 0。
+ */
+function clampPct(v: number | undefined): number {
+  if (v === undefined || !Number.isFinite(v)) return 1;
+  if (v <= 0) return 0;
+  return v > 1 ? 1 : v;
+}
 
 /**
  * Spawn a scratch champion and attach the reconstructed inventory. Uses the
@@ -166,12 +198,13 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
       const def = Items.tryGet(itemId as ItemId);
       if (!def) return;
       champ.items[slot] = itemId as ItemId;
-      attachSource(world, id, {
-        id: `item:${itemId}#${slot}`,
-        kind: "item",
-        modifiers: def.modifiers,
-        hooks: def.passive,
-      });
+      // THROUGH THE SHARED BUILDER, not a hand-written literal (#106 「a live
+      // stat preview that must not lie」). `attachItemSource` is the same call
+      // the three `economy/shop.ts` sites make, so the 職業限定閘 on a gated
+      // modifier — 貫雷槍's 「近戰攻擊距離+4；遠戰攻擊距離+2」 — resolves against
+      // THIS champion here exactly as it does on the server. A literal would
+      // have handed a ranged hero the melee row and shown a +4 he never gets.
+      attachItemSource(world, id, itemId as ItemId, slot, def);
     });
   }
 
@@ -197,6 +230,20 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
   }
 
   recomputeStats(world, id);
+
+  // 資源比例 —— 套在 `recomputeStats` **之後**,而且必須再算一次。
+  //
+  // 順序是載重的,兩邊都是:`spawnChampion` 把 hp/mana 設到 spawn 值,而
+  // `recomputeStats` 自己會在 maxHealth/maxMana 變動時**按比例重寫** hp/mana
+  // (「Preserve hp/mana RATIO when maxima change」)。所以在第一次重算之前寫
+  // 比例會被那段邏輯洗掉;寫在之後、再重算一次,第二趟的 maxima 已經穩定,
+  // 比例就留得住,而 `fromResource` 的第二趟才讀得到正確的當下魔量。
+  const hpc = world.health.get(id);
+  if (hpc && (ctx.hpPct !== undefined || ctx.manaPct !== undefined)) {
+    hpc.hp = hpc.maxHp * clampPct(ctx.hpPct);
+    hpc.mana = hpc.maxMana * clampPct(ctx.manaPct);
+    recomputeStats(world, id);
+  }
   return { world, id };
 }
 
@@ -242,6 +289,10 @@ export function computeBaseStatBlock(ctx: ChampionStatContext): StatBlock | null
     // 天花板要跟著走,否則「空 build」和「現在的 build」用不同的上限夾,兩者相減
     // 出來的 (+xxx) 會是一個沒有任何實作對應的數字。
     statCaps: ctx.statCaps,
+    // 資源比例同理,而且理由更直接:被減數在半魔、減數在滿魔,兩者相減出來的
+    // 「這場我變強了多少」會把一條**根本沒有買到**的 AP 差額算進去。
+    hpPct: ctx.hpPct,
+    manaPct: ctx.manaPct,
   });
 }
 
@@ -275,12 +326,7 @@ export function previewItem(ctx: ChampionStatContext, itemId: string): ItemPrevi
   if (slot < 0) return { buyable: false, reason: "slot-full", before, after: before, deltas: {} };
 
   champ.items[slot] = itemId as ItemId;
-  attachSource(world, id, {
-    id: `item:${itemId}#${slot}`,
-    kind: "item",
-    modifiers: def.modifiers,
-    hooks: def.passive,
-  });
+  attachItemSource(world, id, itemId as ItemId, slot, def); // see buildWorld
   recomputeStats(world, id);
   const after = copyBlock(world.stats.get(id)!.final);
 
@@ -353,12 +399,22 @@ export function statContextFromSeat(
     augments: readonly string[];
     statCapstonePct: number;
     attrBonus?: readonly number[];
+    /**
+     * 現場的血/魔比例 0..1,給會隨資源浮動的 modifier 用(光魔杖
+     * 「AP+ (目前MP的 5%)」)。座位視圖今天**沒有**帶這兩個數字,所以省略 = 1 =
+     * 滿資源 —— 面板顯示的是那條加成的上限值。接的人請先量化,理由見
+     * {@link ChampionStatContext.manaPct}。
+     */
+    hpPct?: number;
+    manaPct?: number;
   },
   env?: CombatEnvMultipliers,
   baseBonus?: BaseBonusTable,
   statCaps?: StatCapTable,
 ): ChampionStatContext {
   return {
+    hpPct: seat.hpPct,
+    manaPct: seat.manaPct,
     championId: seat.championId,
     level: seat.level,
     abilityRanks: seat.abilityRanks,

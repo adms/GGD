@@ -10,7 +10,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
 import { enemiesInCircle } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
-import { casterStats } from "./effectCommon";
+import { casterAttrs, casterStats } from "./effectCommon";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 
 /**
@@ -62,7 +62,7 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     if (victims.length > cap) victims.length = cap;
 
     const stats = casterStats(ctx);
-    const base = resolveScaling(stats, e.amount, ctx.rank);
+    const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
     for (const v of victims) {
       // 線性衰減: t=0 (圓心) 吃滿額, t=1 (半徑) 吃 falloff 倍。
       // `enemiesInCircle` 是 BODY-OVERLAP 查詢 (身體邊緣碰到就算), 所以中心

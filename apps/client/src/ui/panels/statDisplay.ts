@@ -24,6 +24,7 @@ import {
   ATTR_KEYS,
   ATTR_LABEL,
   championAttribute,
+  NO_ATTR_BONUS,
   type AttrBonus,
   type AttrKey,
   type AttributeCarrier,
@@ -177,6 +178,18 @@ export interface AttrRow {
   label: string;
   innate: number;
   bought: number;
+  /**
+   * 裝備給的 三圍 (`ItemDef.attributes` — 四魂之玉「力敏智+30」, 朗基努斯之槍
+   * 「力量+12 敏捷+12」), summed over the inventory by
+   * `sim/economy/itemSource.ts::inventoryAttrBonus`.
+   *
+   * A THIRD component rather than a bigger `bought`, because the two answer
+   * different questions and the tooltip states both: `bought` is 「這場花了
+   * 375g × N 買到的」 and NEVER goes away, `gear` is 「我身上這幾件給的」 and
+   * disappears the moment the weapon is sold. Folding them would make the
+   * 屬性強化 tooltip claim credit for a weapon.
+   */
+  gear: number;
   total: number;
 }
 
@@ -198,6 +211,12 @@ export function attributeRows(
   def: AttributeCarrier | undefined,
   level: number,
   bought: AttrBonus,
+  /**
+   * 裝備給的 三圍 — `inventoryAttrBonus(seat.items)`. Absent = zero, which is
+   * every caller that predates `item@1.attributes` and every champion carrying
+   * none of the two weapons that grant it.
+   */
+  gear: AttrBonus = NO_ATTR_BONUS,
   _env?: CombatEnvMultipliers,
 ): AttrRow[] {
   if (!def) return [];
@@ -208,7 +227,11 @@ export function attributeRows(
       label: ATTR_LABEL[key],
       innate,
       bought: bought[key],
-      total: innate + bought[key],
+      gear: gear[key],
+      // 「總力量」 — the same sum `sim/stats/attrSources.ts liveAttribute(…,
+      // "total")` computes for the sim, so the panel's 力量 and the number a
+      // weapon's 效能 line calls 總力量 are one number.
+      total: innate + bought[key] + gear[key],
     };
   });
 }

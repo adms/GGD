@@ -77,13 +77,37 @@ beforeAll(() => {
 });
 
 describe("weaponEffectDescription (hud-draft-card-style)", () => {
-  it("mirrors the shop's effect line AND stat chips for a weapon choice", () => {
+  it("shows the AUTHORED description verbatim — 效能 AND 解說, not a re-derived chip list", () => {
     cover("hud-draft-card-style");
     const desc = weaponEffectDescription(WEAPON_EFFECT);
     expect(desc).not.toBeNull();
-    // the mechanical proc line the stat chips cannot express
-    expect(desc).toContain("17.1%機率造成2.036倍傷害");
-    // ...and the merged, labelled stat bonuses, so the pick is fully informed
+    // owner 2026-08-01 「卡片應該要顯示全部敘述阿」. The authored prose is the
+    // spec: the 效能 block carries mechanics the modifier vocabulary cannot yet
+    // express (斬殺 / 格擋 / 套裝 / 反彈…), and a card rebuilt from `modifiers`
+    // drops every one of them silently — 死之王的意志 rendered an EMPTY card
+    // because its whole kit lives in prose. Both halves are asserted because
+    // 解說 is the half a "just show the numbers" refactor would drop first.
+    expect(desc).toBe("效能\n17.1%機率造成2.036倍傷害\n\n解說\n月之海的傳說手鐲。");
+  });
+
+  it("falls back to the derived effect + stat chips only when the doc has NO prose", () => {
+    cover("hud-draft-card-style");
+    // Same modifiers as WEAPON_EFFECT, no `description` — the fallback path is
+    // still worth keeping (it beats resolveChoice's bare 「300 g」), but it must
+    // never PRE-EMPT authored prose, which is what the assertion above pins.
+    const id = "weapon-noprose" as ItemId;
+    Items.register(id, {
+      id,
+      name: "無文案手鐲",
+      cost: 300,
+      tier: 1,
+      modifiers: [
+        { stat: "critChance", op: "flat", value: 0.171 },
+        { stat: "critDamage", op: "flat", value: 0.286 },
+      ],
+      tags: [],
+    } as unknown as ItemDef);
+    const desc = weaponEffectDescription(id);
     expect(desc).toContain("爆擊率 +17.1%");
     expect(desc).toContain("爆擊傷害 +28.6%");
   });

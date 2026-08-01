@@ -116,8 +116,8 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { Stat } from "../stats/statTypes";
-import { championAttribute, type AttrKey } from "../stats/attributes";
-import { Champions } from "./registry";
+import type { AttrKey } from "../stats/attributes";
+import { liveAttribute } from "../stats/attrSources";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -391,11 +391,17 @@ export function readConditionStat(
 
   const attr = PLAIN_TO_ATTR[stat];
   if (attr !== undefined) {
-    const champ = world.champion.get(id);
-    if (!champ) return null;
-    const def = Champions.tryGet(champ.championId);
-    if (!def) return null;
-    return championAttribute(def, attr, champ.level, champ.attrBonus);
+    // 「總」 — innate + growth + 能力屬性強化 picks + EQUIPMENT (`liveAttribute`
+    // at basis "total", stats/attrSources.ts). A condition editor row labelled
+    // 力量 has to mean the number the player's panel shows him, and the source
+    // map agrees: its damage/condition formulas read
+    // `GetHeroStatBJ(stat, u, true)` — bonuses INCLUDED. (The one place WC3
+    // passes `false` is 獸化心靈's hidden ceiling, which is why the ceiling in
+    // `effects/grantAttribute.ts` reads basis "base" and this does not.)
+    // Nothing in the shipped catalogue moves: no item granted 三圍 before the
+    // two legendary weapons that landed with this field, so total ≡ base for
+    // every pre-existing condition.
+    return liveAttribute(world, id, attr, "total");
   }
 
   const s = PLAIN_TO_STAT[stat];

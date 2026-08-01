@@ -201,8 +201,51 @@ export interface AutoEngageRules {
    * 和「打就站定」的 `walkEps` 同一個量。
    */
   stallSpeed: number;
-  /** 卡住之後的索敵半徑(單位)。bot 用的是 48。 */
+  /**
+   * 放大後的索敵半徑(單位)。bot 用的是 48。
+   *
+   * ⚠️ 有**兩個**入口:走位卡住(`autoEngageActive`,一直都有),以及站著不動
+   * (`idleSeeks`,2026-07-31 新增、出貨關著)。**走得動**的走位兩條都拿不到。
+   */
   seekRadius: number;
+  /**
+   * **站著不動的人要不要也吃 `seekRadius`** (2026-07-31 W4)。出貨 `false`。
+   *
+   * ── 這一格修的是一個不對稱,而那個不對稱是量出來的 ──────────────────────
+   * `systems/OrderSystem.ts` 的 `autoAcquirePass` 裡,索敵半徑是**條件式**的:
+   *
+   *     卡住的玩家(`autoEngageActive`)  → `seekRadius`(出貨 48,蓋滿競技場)
+   *     站著不動的玩家(手上沒有指令)   → `acquireRadius` = 近戰地板 6
+   *
+   * 也就是說「走位卡在柱子上」比「完全站著不動」**更容易**索到敵人。實測
+   * `apps/game-server/src/match/autoAcquireWhileMoving.test.ts` 的 `[idle]` 情境
+   * (真的 `MatchController`、出貨 Saber `godie-e002`、seed 7919):整場 2,410
+   * tick,座位待在出生點 (−56,−4),最近的敵方英雄**從來沒有靠近到 14.95 單位
+   * 以內**,而他的索敵半徑是 6 → **0 次索敵、0 次揮擊**。那條測試至今是紅的,
+   * 而且它紅的理由不是「自動攻擊壞了」,是「站著的人看不到 6 單位外的任何東西」。
+   *
+   * ── 為什麼預設是 `false` ────────────────────────────────────────────────
+   * 因為這是**手感的平衡決策,不是缺陷修正**,選擇權留給 owner:
+   *
+   *   false(出貨)= 今天的行為。站著不動 = 只打走到你面前 6 單位內的東西。
+   *                 玩家放開手就是真的站著,不會自己跑走 —— 但也代表「什麼都
+   *                 不按」在一場 bot 平均離你 40+ 單位的對局裡等於整場不出手。
+   *   true       = 站著不動的人吃和卡住的人同一個半徑(`seekRadius`),所以他
+   *                 會自己走過去打。手感接近「所有英雄預設都在 A 移動」:新手
+   *                 不按鍵也打得到人,但**方向盤在他沒下指令的時候不在他手上**
+   *                 —— 他一放手,角色就自己走掉了(追擊會改寫 `moveTarget`)。
+   *
+   * ⚠️ 需要總開關 `enabled` 也開著。理由:`enabled: false` 的文案承諾是「完全
+   * 回到 #274 的行為」,如果這一格獨立生效,那句話就變成謊話(CLAUDE.md:語意
+   * 改了舊文案就是謊話)。`respectLiveSteering` / `ccPausesStall` 也是同樣的
+   * 從屬關係。
+   *
+   * ⚠️ 「站著不動」讀的是 `nav.order === null`(**指令套用之後**的那個值),
+   * 不是「速度 0」。被定身的人速度也是 0,但他手上可能還握著一條走位指令 ——
+   * 那是 `ccPausesStall` 管的題目,不是這一格。`hold` 有自己的半徑(縮到
+   * 停手點),`attackMove` 是玩家自己要求接敵,兩者都不走這條路。
+   */
+  idleSeeks: boolean;
   /**
    * 玩家**正在下指令**的那一 tick,走位權無條件屬於他 (2026-07-30)。
    *
@@ -350,6 +393,10 @@ export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
   stallTicks: 30,
   stallSpeed: 0.5,
   seekRadius: 48,
+  // 出貨 **false** = 今天的行為,一個 tick 都沒有變(見 `idleSeeks` 的說明)。
+  // 這一格是 owner 的平衡決策,不是缺陷修正:true 那一側會讓「什麼都不按」的
+  // 玩家自己走過去打人,手感等同全員預設 A 移動。預設留在今天的那一側。
+  idleSeeks: false,
   // 出貨 true。false 那一側是量到「86.6% 的走位 tick 被搶走」的那個行為,
   // 留著只是為了讓 owner 可以在後台回頭,不是一個平起平坐的選項。
   respectLiveSteering: true,
@@ -458,6 +505,7 @@ export function normalizeAutoEngageRules(raw: unknown): AutoEngageRules {
     stallTicks: ticks(r.stallTicks, DEFAULT_AUTO_ENGAGE.stallTicks, 1, 600),
     stallSpeed: num(r.stallSpeed, DEFAULT_AUTO_ENGAGE.stallSpeed, 0, 100),
     seekRadius: num(r.seekRadius, DEFAULT_AUTO_ENGAGE.seekRadius, 0, 200),
+    idleSeeks: typeof r.idleSeeks === "boolean" ? r.idleSeeks : DEFAULT_AUTO_ENGAGE.idleSeeks,
     respectLiveSteering:
       typeof r.respectLiveSteering === "boolean"
         ? r.respectLiveSteering

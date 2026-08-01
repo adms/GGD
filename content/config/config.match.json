@@ -19,6 +19,7 @@
       "burnPctPerSecStart": 0.04,
       "burnPctPerSecEnd": 0.2,
       "maxPctPerSec": 1,
+      "roundHardCapSec": 300,
       "boss": {
         "extendCombatSec": 180,
         "delayFireRingSec": 180

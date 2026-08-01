@@ -260,12 +260,13 @@ export function WorldAnchorLayer(): React.JSX.Element {
           continue;
         }
 
-        const key = combatTextStyleKey(e.category, { crit: e.crit, killingBlow: e.killingBlow });
+        const mods = { crit: e.crit, killingBlow: e.killingBlow, dmgType: e.dmgType };
+        const key = combatTextStyleKey(e.category, mods);
 
         // Restyle only when the slot changed category/modifiers — a pooled node
         // holding the same style across its life writes nothing but transform.
         if (ctStyleKey[i] !== key || !ctStyle[i]) {
-          const st = combatTextStyle(e.category, { crit: e.crit, killingBlow: e.killingBlow });
+          const st = combatTextStyle(e.category, mods);
           node.style.cssText = combatTextCss(st, gradient);
           ctStyleKey[i] = key;
           ctStyle[i] = st;

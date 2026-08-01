@@ -12,6 +12,18 @@ export interface StatsComp {
   dirty: boolean;
   /** ONE list: champion passive + items + augments + buffs */
   sources: ModifierSource[];
+  /**
+   * RUNTIME bookkeeping for 資源衍生屬性 (`stats/resourceStats.ts`): the value
+   * of `resourceSignature` at the last recompute this unit was marked dirty
+   * FOR. `undefined` = this unit has never carried a `fromResource` modifier,
+   * which is every unit in the game except a champion holding 光魔杖.
+   *
+   * It exists so a champion sitting at FULL mana costs zero recomputes: the
+   * signature does not move, so `resourceStatSystem` never sets `dirty`. Not in
+   * `digest()` — it is a cache of a value that is itself derived from `hp.mana`,
+   * which IS digested, so digesting it too would only be able to disagree.
+   */
+  resourceSig?: number;
 }
 
 export interface AbilityInstance {

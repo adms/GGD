@@ -18,14 +18,18 @@ import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Stat, STAT_CLAMPS } from "@ggd/shared/sim/stats/statTypes";
 import {
+  AP_CAP_OPEN,
+  CAPPABLE_STATS,
   DEFAULT_STAT_CAPS,
   capFor,
   effectiveCap,
+  statCapBounds,
   statCapsFromDoc,
 } from "@ggd/shared/sim/statCaps";
 import {
   CAPS_DOC_ID,
   CAPS_SCHEMA,
+  capRowIssue,
   capRows,
   capsDocFor,
   capsSummary,
@@ -113,9 +117,20 @@ describe("屬性上限 後台頁 (adminui-stat-caps)", () => {
     expect(doc.schema).toBe(CAPS_SCHEMA);
     // 內容檔與 DEFAULT_STAT_CAPS 漂開 = 一台載得到內容的機器和一台載不到的機器
     // 玩的是不同的遊戲。
-    expect(capFor(statCapsFromDoc(doc), Stat.AttackSpeed)).toEqual(
-      capFor(DEFAULT_STAT_CAPS, Stat.AttackSpeed),
-    );
+    //
+    // ⚠️ 2026-08-01 從「只比攻速」改成**逐條比**。只比一條的話,ap(或任何之後
+    // 加進來的屬性)可以只落在其中一個檔案裡而這條照樣綠 —— 而那正是這條測試
+    // 唯一想抓的東西。
+    const fromDoc = statCapsFromDoc(doc);
+    for (const stat of CAPPABLE_STATS) {
+      expect(
+        capFor(fromDoc, stat),
+        `${stat}: content/config/stat-caps.json 與 DEFAULT_STAT_CAPS 對不上 —— ` +
+          `載得到內容檔的機器和載不到的機器會夾在不同的地方`,
+      ).toEqual(capFor(DEFAULT_STAT_CAPS, stat));
+    }
+    // 而且真的比到了不只一條(空的 CAPPABLE_STATS 會讓上面的迴圈變成空話)。
+    expect(CAPPABLE_STATS.length).toBeGreaterThan(1);
     // 而且一般上限確實等於 STAT_CLAMPS 的結構預設(兩層說法一致)
     expect(capFor(DEFAULT_STAT_CAPS, Stat.AttackSpeed).base).toBe(
       STAT_CLAMPS[Stat.AttackSpeed]![1],
@@ -152,5 +167,58 @@ describe("屬性上限 這一頁真的打得開 (adminui-stat-caps-render)", () 
     expect(html).toContain('aria-label="攻擊速度 /秒 解鎖上限"');
     // 而且第一次上色就顯示出貨預設,不是空白/0
     expect(html).toContain("攻擊速度 /秒 4 → 解鎖 10");
+  });
+
+  it("法術強度那一列真的畫得出來,而且填得動(不是 ∞ 的唯讀列)", () => {
+    cover("adminui-stat-caps-render");
+    // owner 2026-08-01「加一個 ap 上限就是同一個檔多一列 + **後台一個欄位**」——
+    // 少了這一條,「欄位」可以只存在於 JSON 裡而畫面上沒有,那就等於沒做。
+    const html = renderToString(createElement(StatCapsPage));
+    expect(html, "ap 這一列沒有畫出來").toContain(`data-testid="cap-row-${Stat.AbilityPower}"`);
+    expect(html).toContain('aria-label="法術強度 一般上限"');
+    expect(html).toContain('aria-label="法術強度 解鎖上限"');
+    // 有限數 → `editable()` 為真 → 兩個框都不是 disabled。∞ 那種列會 disabled。
+    expect(html).not.toMatch(/data-field="ap\.base"[^>]*disabled/);
+    // 出貨值就在框裡,操作者一打開就看得到「現在沒有夾」。
+    expect(html).toContain(String(AP_CAP_OPEN));
+  });
+});
+
+describe("屬性上限 每一列都說「夾住它會影響什麼」(adminui-stat-caps-effect)", () => {
+  it("說明文字不是把屬性名字再講一次", () => {
+    cover("adminui-stat-caps-effect");
+    // CLAUDE.md:「說明文字要寫**它影響什麼**,不是複述欄位名」。這一條是那句話
+    // 的機器版:一列的說明如果只是它自己的標籤(或短到不可能在說明任何事),
+    // 它就沒有在幫操作者做決定。
+    for (const r of capRows(null)) {
+      expect(r.effect, `${r.stat} 沒有說明`).toBeTruthy();
+      expect(r.effect, `${r.stat} 的說明就是標籤本身`).not.toBe(r.label);
+      expect(r.effect.length, `${r.stat} 的說明太短,不可能在說「影響什麼」`).toBeGreaterThan(10);
+    }
+    // 而且真的畫上去了 —— 一份只存在於資料裡的說明是看不到的。
+    const html = renderToString(createElement(StatCapsPage));
+    expect(html).toContain(`data-testid="cap-effect-${Stat.AbilityPower}"`);
+    expect(html).toContain("惡夢魔王碎片 + 死之王套裝");
+  });
+
+  it("兩端都有界 —— 太小、太大、空白、非數字、上下顛倒都被擋在存檔之前", () => {
+    cover("adminui-stat-caps-effect");
+    // 2026-08-01 之前這一頁只檢查「unlocked ≥ base」,兩端的界一個都沒有 ——
+    // CLAUDE.md 2026-07-29 點名的那個缺陷(50 打成 500 過表單,下游才被拒或
+    // 被靜默夾掉)。
+    const [apLo, apHi] = statCapBounds(Stat.AbilityPower);
+    expect(capRowIssue(Stat.AbilityPower, String(AP_CAP_OPEN), String(AP_CAP_OPEN))).toBeNull();
+    expect(capRowIssue(Stat.AbilityPower, String(apHi + 1), String(apHi + 1))).toContain("超過上界");
+    expect(capRowIssue(Stat.AbilityPower, String(apLo - 1), String(apLo - 1))).toContain("地板");
+    expect(capRowIssue(Stat.AbilityPower, "", "10")).toContain("空白");
+    expect(capRowIssue(Stat.AbilityPower, "abc", "10")).toContain("不是一個數字");
+    expect(capRowIssue(Stat.AbilityPower, "100", "50")).toContain("解鎖上限不可小於一般上限");
+
+    // 攻速的下界不是 0 —— 比 STAT_CLAMPS 地板還低的天花板會讓地板無條件獲勝,
+    // 那一格從此完全沒有作用而且畫面上看不出來。
+    const [asLo] = statCapBounds(Stat.AttackSpeed);
+    expect(asLo).toBe(STAT_CLAMPS[Stat.AttackSpeed]![0]);
+    expect(capRowIssue(Stat.AttackSpeed, "0.1", "10")).toContain("地板");
+    expect(capRowIssue(Stat.AttackSpeed, "4", "10")).toBeNull();
   });
 });

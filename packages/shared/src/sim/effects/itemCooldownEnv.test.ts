@@ -36,6 +36,8 @@ import { FsContentSource } from "../../content/node/FsContentSource";
 import { registerAll } from "../../content/registries";
 import { Champions, Items } from "../content/registry";
 import { grantItemFree } from "../economy/shop";
+import { itemSourceId } from "../economy/itemSource";
+import { TICK_MS } from "../../constants";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 
 beforeAll(() => registerSkeletonContent());
@@ -143,16 +145,36 @@ describe("combatEnv.itemCooldown (#189)", () => {
  * 讀,所以那個突變唯一的後果就是:標著「道具冷卻時間」的旋鈕對真正的道具完全
  * 失效,而後台照樣顯示、照樣存得下去。沒有任何測試會講這件事。
  *
- * 所以下面這條走**真的內容文件 + 真的授予入口**:
- *   content/items/godie-i06n.json（老衲的棒子，onBasicAttack ICD 5 秒）
- *   → `economy/shop.grantItemFree`（三選一 / 寶玉 / 任務獎勵共用的那個入口）
- * 它是出貨內容裡**唯一**帶 `internalCooldown` 的道具,也就是這顆旋鈕今天唯一
- * 的真實作用對象。
+ * 所以下面這條走**真的內容文件 + 真的授予入口**:出貨的某一件道具 →
+ * `economy/shop.grantItemFree`(三選一 / 寶玉 / 任務獎勵共用的那個入口)。
+ *
+ * ⚠️ **哪一件是算出來的,不是寫死的**(2026-08-01)。
+ * 這一條原本釘死 `godie-i06n`(老衲的棒子)並在註解裡寫「它是出貨內容裡唯一
+ * 帶 internalCooldown 的道具」。owner 2026-08-01 重寫了那份文件的被動(改成
+ * 10% 機率減速、沒有內部冷卻),於是這條守衛紅了 —— 而紅的原因跟它要守的東西
+ * (道具的 kind 是不是 "item")毫無關係,那句「唯一」也在同一天變成謊話
+ * (CLAUDE.md 第三守則)。現在改成**從出貨內容選**:第一件符合量測條件的道具。
+ * 換一件道具、加一件道具,這裡都自己跟上;而下面那兩個 3 / 2 的斷言仍然是
+ * 寫死的**倍率關係**,所以「沒有以 kind:item 掛上去」照樣紅。
+ *
+ * 改完之後重跑的兩個突變(2026-08-01,都 RED):
+ *   ① `economy/itemSource.ts` 的 `kind: "item"` → `"passive"`(上面那段歷史說
+ *      的就是這個突變,當年全綠)→ 這一條紅在
+ *      「沒有被道具冷卻倍率動到 —— 它掛上去的 kind 不是 'item'」;
+ *   ② `effects/hooks.ts` 的 `const factor = src.kind === "item" ? … : 1` → `1`
+ *      (倍率讀了但沒乘上去)→ 這一條、加上上面兩條自己手寫 `kind` 的,一起紅。
  */
 describe("combatEnv.itemCooldown —— 出貨的道具走出貨的授予入口 (#189)", () => {
-  /** 唯一一件帶 internalCooldown 的出貨道具:老衲的棒子,onBasicAttack、5 秒。 */
-  const ICD_ITEM = "godie-i06n" as ItemId;
-  const ITEM_ICD_SEC = 5;
+  /**
+   * 這個量測看得見的 effect kind —— 也就是會發出一則帶 `origin` 的世界事件的
+   * 那些。`origin` 是 `hook:<sourceId>`,而 sourceId 由 `itemSource.ts` 產生,
+   * 所以「這則事件是不是這件道具的這條 hook 發的」是可以精確判定的。
+   *
+   * ⚠️ 不含 `applyStatus`:它只有在 `stun` / 免疫時才發事件,一個純減速的
+   * proc 什麼都不發(老衲的棒子正是這一種)。把它列進來會挑到一件量不到的
+   * 道具,然後拿 0 次去跟 3 比 —— 一個看起來像功能壞掉、實際上是量測壞掉的紅。
+   */
+  const OBSERVABLE_KINDS = new Set(["damage", "damageArea", "damageLine", "heal", "applyBuff"]);
 
   let contentReady = false;
   beforeAll(async () => {
@@ -164,13 +186,47 @@ describe("combatEnv.itemCooldown —— 出貨的道具走出貨的授予入口 
   });
 
   /**
-   * 一名英雄拿著出貨的那根棒子(走 `grantItemFree`),對一個木樁每 tick 打一次,
-   * 回傳窗口內棒子**真的發動**了幾次。
+   * 出貨內容裡**第一件**適合當這顆旋鈕量測對象的道具(id 排序後取第一,所以
+   * 失敗訊息可重現)。條件全部是**量測需求**,不是對內容的要求:
    *
-   * 量的是木樁身上那個暈眩的到期 tick 被往後推了幾次 —— 也就是「敵人又被打暈
-   * 了一次」這件玩家看得到的事,不是 `hookLastFired` 那個內部欄位(失敗形狀⑦)。
+   *   · `passive[0]` 掛在 `onBasicAttack` —— 這條測試就是每 tick 點一次它;
+   *   · 有 `internalCooldown` —— 沒有 ICD 就沒有東西可以被倍率縮放;
+   *   · 沒有 `chance` / `condition` —— 骰子會讓「發動了幾次」不再是 ICD 的函數;
+   *   · 沒有 `requires` —— 職業閘會依英雄擋掉,量到的會是閘不是 ICD;
+   *   · 至少一個 {@link OBSERVABLE_KINDS} 的 effect —— 否則發動了也看不見。
    */
-  function shippedProcsIn(itemCooldown: number, windowTicks: number): number {
+  function pickIcdItem(): { itemId: ItemId; icdSec: number } {
+    for (const id of Items.ids().slice().sort()) {
+      const hook = Items.get(id).passive?.[0];
+      if (!hook || hook.on !== "onBasicAttack") continue;
+      if (!(typeof hook.internalCooldown === "number" && hook.internalCooldown > 0)) continue;
+      if (hook.chance !== undefined || hook.condition !== undefined) continue;
+      if (hook.requires !== undefined) continue;
+      if (!hook.effects.some((e) => OBSERVABLE_KINDS.has(e.kind))) continue;
+      return { itemId: id, icdSec: hook.internalCooldown };
+    }
+    throw new Error(
+      "出貨內容裡沒有任何一件『onBasicAttack + internalCooldown + 看得見的效果』的道具 —— " +
+        "combatEnv.itemCooldown 這顆旋鈕今天對真實內容 0 作用對象。這是 S8(機制上線、內容 0 筆)," +
+        "不是這條測試的問題:去 content/items 補一件,或把這顆旋鈕收掉。",
+    );
+  }
+
+  /**
+   * 一名英雄拿著出貨的那件道具(走 `grantItemFree`),對一個木樁每 tick 打一次,
+   * 回傳窗口內那條 hook **真的發動**了幾次。
+   *
+   * 量的是**世界事件**上的 `origin` —— 也就是「這一下是那件道具打的」這件會
+   * 離開伺服器、玩家在畫面上看得到的事,不是 `hookLastFired` 那個內部欄位
+   * (失敗形狀⑦)。
+   *
+   * ⚠️ 事件在 `step()` **之後**才掃:`SimWorld.step` 的第一行就清空
+   * `world.events`,而 hook 產生的傷害是丟進 `world.damageQueue`、由同一個
+   * `step` 裡的 combatResolveSystem 結算後才發事件的。在 `step` 之前掃會永遠
+   * 是 0。上面 `procsIn` 掃在 `step` 之前是因為它量的是 `applyBuff` 那個
+   * **當場**發出的事件 —— 兩邊的時機不同,不是抄漏了。
+   */
+  function shippedProcsIn(itemId: ItemId, itemCooldown: number, windowTicks: number): number {
     const world = new SimWorld(SKELETON_ARENA, 1);
     world.combatEnv = normalizeCombatEnv({ itemCooldown });
     const ids = Champions.ids().slice().sort();
@@ -189,19 +245,34 @@ describe("combatEnv.itemCooldown —— 出貨的道具走出貨的授予入口 
       pos: { x: SKELETON_ARENA.zones[0]!.center.x + 1, z: SKELETON_ARENA.zones[0]!.center.z },
       zone: 0,
     });
-    // ⚠️ 出貨入口,不是 attachSource:`kind` 由 shop.ts 決定,這正是要測的東西。
-    expect(grantItemFree(world, attacker, ICD_ITEM)).toBeGreaterThanOrEqual(0);
+    // ⚠️ 出貨入口,不是 attachSource:`kind` 由 shop.ts / itemSource.ts 決定,
+    // 這正是要測的東西。回傳的是格子編號,而 sourceId 帶著它。
+    const slot = grantItemFree(world, attacker, itemId);
+    expect(slot).toBeGreaterThanOrEqual(0);
+    const origin = `hook:${itemSourceId(itemId, slot)}`;
+
+    // ⚠️ 一格暖機,而且是量到的不是猜的:在**第一次** `step` 之前,兩個人還沒有
+    // 進到廣域索引裡,所以 `enemiesInCircle` 回空集合 —— hook 照樣觸發、照樣燒
+    // 掉內部冷卻,但一個受害者都沒有,於是「發動了」這件事在畫面上看不到。
+    // 沒有這一格,ICD 的節奏會從 0/N/2N 變成「0 看不見、N、2N」,量到 2 次,
+    // 而那 2 次跟 2x 倍率下的 2 次長得一模一樣 —— 一條會對兩種世界都給同一個
+    // 答案的斷言(失敗形狀④)。
+    world.step(new Map());
 
     let procs = 0;
-    let lastExpiry = -1;
+    let firedLastTick = false;
     for (let i = 0; i < windowTicks; i++) {
+      const hp = world.health.get(dummy)!;
+      hp.hp = hp.maxHp; // 木樁不死 —— 死了就不再是 enemiesInCircle 的目標,量測提早結束
       fireHooks(world, attacker, "onBasicAttack", dummy);
-      const stun = world.status.get(dummy)?.effects.find((s) => s.stun === true);
-      if (stun && stun.expiresAtTick > lastExpiry) {
-        procs++;
-        lastExpiry = stun.expiresAtTick;
-      }
       world.step(new Map());
+      const fired = world.events.some((e) => e.data["origin"] === origin);
+      // 上升緣,不是逐則計數:一次發動可能在同一 tick 發出好幾則帶同一個
+      // `origin` 的事件(多個受害者、擊退、破盾…)。兩次發動之間至少隔
+      // `icdTicks` 格,而呼叫端已經斷言 `icdTicks >= 2`,所以兩次發動不可能被
+      // 併成同一個上升緣。
+      if (fired && !firedLastTick) procs++;
+      firedLastTick = fired;
     }
     return procs;
   }
@@ -209,20 +280,28 @@ describe("combatEnv.itemCooldown —— 出貨的道具走出貨的授予入口 
   it("★ 出貨道具的 ICD 真的被 itemCooldown 縮放(3 次 → 2 次)", () => {
     cover("combat-env-item-cooldown");
     expect(contentReady).toBe(true);
-    const def = Items.get(ICD_ITEM);
-    // 設定就位:這件出貨文件真的帶著一個 5 秒的 onBasicAttack 內部冷卻。
-    // 少了這一條,哪天有人把 internalCooldown 從文件上拿掉,下面兩個數字會一起
-    // 變成「每 tick 都發動」,而測試仍然可以被調成綠的。
-    expect(def.passive?.[0]?.internalCooldown).toBe(ITEM_ICD_SEC);
-    expect(def.passive?.[0]?.on).toBe("onBasicAttack");
-
-    // 5 秒 ICD @30Hz = 150 tick。301 tick 的窗口 → tick 0 / 150 / 300,三次。
-    expect(shippedProcsIn(1, 301), "1x 下出貨道具的節奏就已經不對").toBe(3);
-    // 2.0 → 10 秒 ICD → tick 0 / 300,兩次。
+    // 「這件出貨文件真的帶著一個 onBasicAttack 的內部冷卻」這件事,現在由
+    // {@link pickIcdItem} 保證:條件不滿足就**沒有**候選人,它會帶著 S8 的說明
+    // 丟例外。舊版在這裡寫的是 `toBe(5)` 這種對照常數;把 id 改成算出來的之後
+    // 再對照同一個來源就是一條永遠為真的斷言(第二守則:刪掉功能還會綠的不是
+    // 測試),所以它被換成下面這條**真的會紅**的量測前提。
+    const { itemId, icdSec } = pickIcdItem();
+    // ICD → tick,用的是 `effects/hooks.ts` 同一條 `internalCooldown / world.dt`。
+    // 2·icdTicks+1 的窗口 → tick 0 / N / 2N,三次。
+    const icdTicks = Math.round(icdSec / (TICK_MS / 1000));
+    const windowTicks = 2 * icdTicks + 1;
+    // 1x 與 2x 要量得出差別,ICD 至少要有一格。ICD 0.02 秒(= 半格)在兩種倍率
+    // 下都是「每 tick 都發動」,3 跟 2 都會落空而且看不出是為什麼。
+    expect(
+      icdTicks,
+      `${itemId} 的內部冷卻只有 ${icdSec} 秒 —— 短到 1x 與 2x 量不出差別,這個量測失效了`,
+    ).toBeGreaterThanOrEqual(2);
+    expect(shippedProcsIn(itemId, 1, windowTicks), `1x 下 ${itemId} 的節奏就已經不對`).toBe(3);
+    // 2.0 → ICD 兩倍長 → tick 0 / 2N,兩次。
     // 一個「道具沒有以 kind:item 掛上去」的實作在這裡會拿到 3 —— 跟 1x 一樣。
     expect(
-      shippedProcsIn(2, 301),
-      "出貨道具沒有被道具冷卻倍率動到 —— 它掛上去的 kind 不是 'item'",
+      shippedProcsIn(itemId, 2, windowTicks),
+      `${itemId} 沒有被道具冷卻倍率動到 —— 它掛上去的 kind 不是 'item'`,
     ).toBe(2);
   });
 

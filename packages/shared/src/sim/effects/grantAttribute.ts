@@ -101,8 +101,15 @@
  */
 import type { EntityId } from "../../ids";
 import type { EffectKindSpec } from "./effectKind";
-import { ATTR_KEYS, championAttribute, type AttrKey } from "../stats/attributes";
+import {
+  ATTR_KEYS,
+  championAttribute,
+  zeroAttrBonus,
+  type AttrKey,
+} from "../stats/attributes";
+import { liveAttribute } from "../stats/attrSources";
 import { Champions } from "../content/registry";
+import type { ModifierSource } from "../stats/modifiers";
 
 /** Recompute-triggering write: the attribute term is folded by `recomputeStats`. */
 function markDirty(world: import("../SimWorld").SimWorld, id: EntityId): void {
@@ -161,6 +168,31 @@ function revokeTimed(
   }
 }
 
+/**
+ * THE `ModifierSource` THAT FIRED THIS HOOK, recovered from `ctx.origin`.
+ *
+ * `effects/hooks.ts` sets `origin: \`hook:${src.id}\`` — that string IS the
+ * back-reference, and it is the only one there is: `EffectContext` carries the
+ * caster and the origin label, never the source object. So `store: "source"`
+ * costs no new plumbing through the runner, and any carrier of hooks (item
+ * passive, aura-projected hook, augment, timed buff) works identically.
+ *
+ * Returns undefined for an ability's own effect list (`origin: "ability:…"`), a
+ * bare test origin, or a source that has since been detached mid-tick — every
+ * one of which means 「沒有一個來源可以記帳」, and the caller REFUSES the payout
+ * rather than quietly rerouting it into the permanent accumulator.
+ */
+const HOOK_ORIGIN_PREFIX = "hook:";
+function firingSource(
+  world: import("../SimWorld").SimWorld,
+  holder: EntityId,
+  origin: string,
+): ModifierSource | undefined {
+  if (!origin.startsWith(HOOK_ORIGIN_PREFIX)) return undefined;
+  const sourceId = origin.slice(HOOK_ORIGIN_PREFIX.length);
+  return world.stats.get(holder)?.sources.find((s) => s.id === sourceId);
+}
+
 export const grantAttributeEffect: EffectKindSpec<"grantAttribute"> = {
   apply(e, ctx) {
     const { world } = ctx;
@@ -195,14 +227,13 @@ export const grantAttributeEffect: EffectKindSpec<"grantAttribute"> = {
 
       // ── the ceiling (checked AFTER the tally — see the header) ─────────────
       if (e.maxAttribute !== undefined) {
-        const def = Champions.tryGet(champ.championId);
-        // Reads the LIVE attribute: innate + per-level growth + everything
-        // bought/earned this match. That is what 「敏捷 < 120」 means, and it is
-        // the same function `sim/content/condition.ts` compares against, so the
-        // editor's condition dropdown and this ceiling can never disagree.
-        const live =
-          def === undefined ? champ.attrBonus[attr] : championAttribute(def, attr, champ.level, champ.attrBonus);
-        if (live >= e.maxAttribute) continue;
+        // WHICH 三圍 it measures is a FIELD (`maxAttributeBasis`), defaulting to
+        // `"base"` — see `EffectDef.maxAttributeBasis` for the JASS that decides
+        // it. `"base"` is innate + growth + 三選一 + previous payouts, i.e.
+        // exactly what 獸化心靈's `GetHeroStatBJ(1,…,false)` reads, and it means
+        // a weapon that grants 敏捷 cannot retire this innate early.
+        const live = liveAttribute(world, id, attr, e.maxAttributeBasis ?? "base");
+        if (live !== null && live >= e.maxAttribute) continue;
       }
 
       // REFRESH before measuring: a re-trigger must not read its OWN previous
@@ -211,9 +242,21 @@ export const grantAttributeEffect: EffectKindSpec<"grantAttribute"> = {
       // champion's real attribute every time.
       if (e.durationSec !== undefined) revokeTimed(world, id, champ, ctx.origin, attr);
 
-      // HOW MUCH. `pctOfCurrent` reads the LIVE attribute — the same
-      // `championAttribute` the ceiling above and `sim/content/condition.ts`
-      // read — so 「×2」 means twice what the player's panel is showing.
+      // HOW MUCH. `pctOfCurrent` reads the champion's BASE 三圍 (innate +
+      // growth + everything bought/earned this match) — NOT the equipment
+      // total, and that asymmetry with the ceiling above is deliberate rather
+      // than an oversight:
+      //
+      //   · the ceiling ASKS A QUESTION about the hero and stops there;
+      //   · this WRITES `champ.attrBonus`, which is the base accumulator.
+      //     Doubling the equipment total would deposit a slice of a REMOVABLE
+      //     source into a permanent one, so 龍紋記憶 fired while holding
+      //     四魂之玉 and then selling it would leave the player with more base
+      //     三圍 than twice his base — a laundering path from item to base that
+      //     `attrGrantExpirySystem` cannot undo for a PERMANENT grant.
+      //
+      // It is also the WC3 reading: `ModifyHeroStat` moves the base stat, and
+      // 小呆's own trigger reads the base stat to decide by how much.
       let granted = amount;
       if (e.mode === "pctOfCurrent") {
         const def = Champions.tryGet(champ.championId);
@@ -224,6 +267,40 @@ export const grantAttributeEffect: EffectKindSpec<"grantAttribute"> = {
         granted = live * amount;
       }
       if (!(granted > 0)) continue;
+
+      // ── store: "source" —— 甘豆腐之袍's 「疊層」 ───────────────────────────
+      // Bank into the FIRING SOURCE's own accumulator instead of the champion's
+      // permanent one, so an unequip takes the stacks with it. Everything above
+      // (everyNth, maxAttribute, mode) applies identically; only the destination
+      // and the ceiling differ.
+      if (e.store === "source") {
+        // The accumulator lives on a source carried by the HOLDER, so paying it
+        // out to anyone else would credit the holder for the ally's stack. A
+        // 「疊層」 card is about the wearer; refuse rather than mis-attribute.
+        if (id !== ctx.caster) continue;
+        const src = firingSource(world, id, ctx.origin);
+        if (src === undefined) continue; // no source to bank into — see firingSource
+        const earned = src.attrEarned ?? (src.attrEarned = zeroAttrBonus());
+        let pay = granted;
+        if (e.maxSourceTotal !== undefined) {
+          // CLAMP, never refuse: 「上限 160」 is a promise about the total, so a
+          // 15-point stack authored against a 160 ceiling must land on 160, not
+          // stop at 150. Zero headroom = nothing happens and no event fires.
+          pay = Math.min(pay, e.maxSourceTotal - earned[attr]);
+        }
+        if (!(pay > 0)) continue;
+        earned[attr] += pay;
+        markDirty(world, id);
+        world.emit("attrGrant", {
+          id,
+          attr,
+          amount: pay,
+          // 「總共」 for this SOURCE — what the tooltip means by 「已疊 N 層」.
+          total: earned[attr],
+          origin: ctx.origin,
+        });
+        continue;
+      }
 
       champ.attrBonus[attr] += granted;
       if (e.durationSec !== undefined) {

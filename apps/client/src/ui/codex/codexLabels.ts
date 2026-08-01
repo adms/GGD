@@ -6,6 +6,7 @@
  * appear in this file — those are fetched. See codexLive.test.ts.
  */
 import { castTypeLabel } from "../components/abilityText";
+import { requirementShortLabel } from "@ggd/shared/sim/content/requirement";
 import type { CastType } from "@ggd/shared/sim/content/defs";
 import type { CodexItemBucket, CodexModifier, CodexSlot } from "@ggd/shared/codex/codexTypes";
 
@@ -38,14 +39,28 @@ export function num(n: number): string {
   return Number.isInteger(n) ? String(n) : String(Number(n.toFixed(3)));
 }
 
-/** `{stat:"ad",op:"flat",value:30}` → `攻擊力 +30`; percent ops keep their unit. */
+/**
+ * `{stat:"ad",op:"flat",value:30}` → `攻擊力 +30`; percent ops keep their unit.
+ *
+ * A row carrying a 職業限定閘 is SUFFIXED with who it is for —
+ * 「攻擊距離 +4（近戰）」. Without it, 貫雷槍's authored 「近戰+4；遠戰+2」 renders
+ * as two bare 攻擊距離 rows that flatly contradict each other, and the reader's
+ * only available conclusion is that the page (or the item) is broken.
+ *
+ * `requirementShortLabel` is the SHOP CARD's renderer, imported rather than
+ * re-implemented: the codex and the shelf must not be able to describe the same
+ * gate two different ways, and it derives the sentence from the very object
+ * `resolveGatedModifiers` gates on.
+ */
 export function formatModifier(m: CodexModifier): string {
   const label = statLabel(m.stat);
+  const gate = requirementShortLabel(m.requires);
+  const suffix = gate === null ? "" : `（${gate}）`;
   if (m.op === "pctAdd" || m.op === "pctMul") {
     const pct = num(m.value * 100);
-    return `${label} ${m.op === "pctMul" ? "×" : m.value >= 0 ? "+" : ""}${m.op === "pctMul" ? num(m.value) : `${pct}%`}`;
+    return `${label} ${m.op === "pctMul" ? "×" : m.value >= 0 ? "+" : ""}${m.op === "pctMul" ? num(m.value) : `${pct}%`}${suffix}`;
   }
-  return `${label} ${m.value >= 0 ? "+" : ""}${num(m.value)}`;
+  return `${label} ${m.value >= 0 ? "+" : ""}${num(m.value)}${suffix}`;
 }
 
 /** Per-rank arrays render as `12 / 12 / 12`; a flat array collapses to one value. */

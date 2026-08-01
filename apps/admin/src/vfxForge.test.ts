@@ -54,6 +54,9 @@ import {
   FIELD_LABEL,
   GLOBAL_BOUNDS,
   GLOBAL_FIELDS,
+  GLOBAL_CHOICE_FIELDS,
+  GLOBAL_CHOICE_OPTIONS,
+  validateGlobalChoiceField,
   OPTIONAL_GLOBAL_FIELDS,
   PRIMITIVE_KINDS,
   VFX_FAMILIES_DOC_ID,
@@ -323,6 +326,10 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
       scaleMax: 4.5,
       maxAbilityVfxLayers: 3,
       oneShotMaxLifeSec: 2,
+      // #251 —— 投射物那兩格。這一條在我加欄位時**真的紅了一次**
+      // (「projectileRadiusGain 沒有哨兵值」)，所以它不是裝飾。
+      projectileRadiusGain: 0.4,
+      projectileFlyHeightY: 1.6,
     };
     const base = BASE_DOC();
     const withSentinels = { ...base } as Record<string, unknown>;
@@ -340,6 +347,54 @@ describe("鑄技工坊 · 存得進去讀得回來 (adminui-vfx-forge-roundtrip)
     }
     // 而且每一格都有哨兵值可用（新增 GLOBAL_FIELD 但忘了補哨兵 = 這裡紅）
     for (const f of GLOBAL_FIELDS) expect(SENT[f], `${f} 沒有哨兵值`).toBeDefined();
+  });
+
+  /**
+   * #251 —— 選擇題那兩格走的是**同一條存檔路徑**，所以要有同一條守衛。
+   *
+   * 突變驗證（2026-08-01，真的跑過）：把 `familiesDocFor` 裡的
+   * `castHeightSource: doc.castHeightSource` 那一行刪掉 → 這條紅
+   * （「castHeightSource 在 familiesDocFor → JSON → 讀回來的路上掉了：
+   *   expected undefined to be 'family'」）。刪 `projectileArtFromDoc` 那一行
+   * 同樣紅。兩行都在的時候綠。
+   *
+   * 這正是 owner 會踩到的形態：他在後台把「施法特效高度」切成別的值、按存檔，
+   * 頁面顯示他選的那個，而文件裡那個 key 根本沒被寫出去 —— 下一次載入才發現
+   * 又變回出貨預設。
+   */
+  it("兩格選擇題也撐得過 familiesDocFor —— 存檔不會靜靜刪掉下拉的值", () => {
+    cover("adminui-vfx-forge-roundtrip");
+    const SENT_CHOICE: Record<string, unknown> = {
+      // 兩個都刻意選**不是出貨預設**的那一個，否則「掉了之後補回預設」會蒙混過關
+      castHeightSource: "family",
+      projectileArtFromDoc: false,
+    };
+    const withSentinels = { ...BASE_DOC() } as Record<string, unknown>;
+    for (const f of GLOBAL_CHOICE_FIELDS) withSentinels[f] = SENT_CHOICE[f];
+    const reread = extractFamiliesDoc(
+      JSON.parse(JSON.stringify(familiesDocFor(withSentinels as never))) as unknown,
+    );
+    expect(reread, "加了哨兵值之後整份文件過不了 shared 的 Zod").not.toBeNull();
+    for (const f of GLOBAL_CHOICE_FIELDS) {
+      expect(SENT_CHOICE[f], `${f} 沒有哨兵值`).toBeDefined();
+      expect(
+        (reread as unknown as Record<string, unknown>)[f],
+        `${f} 在 familiesDocFor → JSON → 讀回來的路上掉了`,
+      ).toBe(SENT_CHOICE[f]);
+    }
+    // 每一個選項都要是 schema 收得下的值（下拉列了一個文件存不進去的值 = 白按）
+    for (const f of GLOBAL_CHOICE_FIELDS) {
+      for (const opt of GLOBAL_CHOICE_OPTIONS[f]) {
+        expect(validateGlobalChoiceField(f, opt.value), `${f}=${opt.value}`).toBe("");
+        const raw = f === "projectileArtFromDoc" ? opt.value === "1" : opt.value;
+        expect(
+          zConfigVfxFamiliesDoc.safeParse({ ...BASE_DOC(), [f]: raw }).success,
+          `${f} 的下拉選項 ${opt.value} 被 shared 的 Zod 擋下來`,
+        ).toBe(true);
+      }
+      expect(validateGlobalChoiceField(f, ""), `${f} 留白必須合法`).toBe("");
+      expect(validateGlobalChoiceField(f, "nonsense")).toContain("不是一個可選的值");
+    }
   });
 
   it("每一個選填欄位單獨搬也不掉 —— 一格一格拆開驗", () => {

@@ -36,6 +36,8 @@ import {
   FIELD_HINT,
   FIELD_LABEL,
   GLOBAL_BOUNDS,
+  GLOBAL_CHOICE_FIELDS,
+  GLOBAL_CHOICE_OPTIONS,
   GLOBAL_FIELDS,
   ORIGIN_LABEL,
   PRIMITIVE_KINDS,
@@ -142,6 +144,9 @@ export function VfxForgePage(): React.JSX.Element {
   const [doc, setDoc] = useState<ConfigVfxFamiliesDoc | null>(null);
   const [globals, setGlobals] = useState<Record<string, string> | null>(null);
   const [enabled, setEnabled] = useState(true);
+  // #251 —— 兩格選擇題。空字串 = 文件沒有這個 key（= 用出貨預設）。
+  const [castHeight, setCastHeight] = useState("");
+  const [projArt, setProjArt] = useState("");
   const [famDrafts, setFamDrafts] = useState<Record<string, FamilyDraft>>({});
   const [abDrafts, setAbDrafts] = useState<Record<string, AbilityDraft>>({});
   const [removals, setRemovals] = useState<string[]>([]);
@@ -177,7 +182,16 @@ export function VfxForgePage(): React.JSX.Element {
             parsed.maxAbilityVfxLayers === undefined ? "" : String(parsed.maxAbilityVfxLayers),
           oneShotMaxLifeSec:
             parsed.oneShotMaxLifeSec === undefined ? "" : String(parsed.oneShotMaxLifeSec),
+          // #251 —— 同一條 optional 規則：文件沒有就留白，不要幫它填預設。
+          projectileRadiusGain:
+            parsed.projectileRadiusGain === undefined ? "" : String(parsed.projectileRadiusGain),
+          projectileFlyHeightY:
+            parsed.projectileFlyHeightY === undefined ? "" : String(parsed.projectileFlyHeightY),
         });
+        setCastHeight(parsed.castHeightSource ?? "");
+        setProjArt(
+          parsed.projectileArtFromDoc === undefined ? "" : parsed.projectileArtFromDoc ? "1" : "0",
+        );
       }
     } catch (err) {
       setApiErr(saveErrorText(err));
@@ -268,15 +282,29 @@ export function VfxForgePage(): React.JSX.Element {
     // key(`Number("")` 是 0,而壽命 0 = 一次性特效整個看不見),而且要先從基底
     // 剔除,否則 `...doc` 會把舊值帶回來、操作者清空了卻發現值還在(GH#279)。
     const oneShotText = (globals["oneShotMaxLifeSec"] ?? "").trim();
+    // #251 —— 投射物那兩格數字,同一條規則(留白 = 拿掉 key,不是 0)。
+    // `projectileRadiusGain` 尤其不能變成 0:0 的意思是「全部一樣大」,
+    // 和「沒說,用出貨的 1」是完全不同的兩件事。
+    const radiusText = (globals["projectileRadiusGain"] ?? "").trim();
+    const flyText = (globals["projectileFlyHeightY"] ?? "").trim();
     const {
       maxAbilityVfxLayers: _dropped,
       oneShotMaxLifeSec: _droppedLife,
+      projectileRadiusGain: _droppedGain,
+      projectileFlyHeightY: _droppedFly,
+      castHeightSource: _droppedHeight,
+      projectileArtFromDoc: _droppedArt,
       ...docBase
     } = doc;
     let next: ConfigVfxFamiliesDoc = {
       ...docBase,
       ...(maxLayersText === "" ? {} : { maxAbilityVfxLayers: Number(maxLayersText) }),
       ...(oneShotText === "" ? {} : { oneShotMaxLifeSec: Number(oneShotText) }),
+      ...(radiusText === "" ? {} : { projectileRadiusGain: Number(radiusText) }),
+      ...(flyText === "" ? {} : { projectileFlyHeightY: Number(flyText) }),
+      // 選擇題兩格:留白 = 沒說 = 拿掉 key(下游用出貨預設)。
+      ...(castHeight === "" ? {} : { castHeightSource: castHeight as "flat" | "ground" | "family" }),
+      ...(projArt === "" ? {} : { projectileArtFromDoc: projArt === "1" }),
       enabled,
       scaleGain: Number(globals["scaleGain"]),
       scaleMin: Number(globals["scaleMin"]),
@@ -295,7 +323,7 @@ export function VfxForgePage(): React.JSX.Element {
       next = b ? setAbilityBinding(next, id, b) : clearAbilityBinding(next, id);
     }
     return familiesDocFor(next);
-  }, [doc, globals, enabled, famDrafts, abDrafts, removals]);
+  }, [doc, globals, enabled, castHeight, projArt, famDrafts, abDrafts, removals]);
 
   const dirty = useMemo(
     () => (doc && pending ? JSON.stringify(pending) !== JSON.stringify(familiesDocFor(doc)) : false),
@@ -403,6 +431,23 @@ export function VfxForgePage(): React.JSX.Element {
             onChange={(v) => setEnabled(v === "1")}
           />
         </label>
+        {/* #251 —— 兩格選擇題。留白（「沿用出貨預設」）= 不寫這個 key。 */}
+        {GLOBAL_CHOICE_FIELDS.map((f) => (
+          <label key={f} style={{ fontSize: 11, color: TEXT_DIM }}>
+            <span title={FIELD_HINT[f]}>{FIELD_LABEL[f]}</span>
+            <Select
+              field={f}
+              value={f === "castHeightSource" ? castHeight : projArt}
+              label={FIELD_LABEL[f] ?? f}
+              hint={FIELD_HINT[f] ?? ""}
+              options={[
+                { value: "", label: "（沿用出貨預設）" },
+                ...GLOBAL_CHOICE_OPTIONS[f].map((o) => ({ value: o.value, label: o.label })),
+              ]}
+              onChange={(v) => (f === "castHeightSource" ? setCastHeight(v) : setProjArt(v))}
+            />
+          </label>
+        ))}
         {GLOBAL_FIELDS.map((f) => {
           const b = GLOBAL_BOUNDS[f];
           const err = globals ? validateGlobalField(f, globals[f] ?? "") : "";

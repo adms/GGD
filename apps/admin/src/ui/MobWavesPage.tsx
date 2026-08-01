@@ -42,13 +42,16 @@ import {
   APPLY_NOTE,
   ARENA_RULES_COLLECTION,
   ARENA_RULES_ID,
+  MOB_ALIVE_CAP_MAX,
   MOB_CHAMPION_FALLBACK,
+  MOB_PER_WAVE_CAP_MAX,
   MOB_WAVES_GROUPS,
   MOB_WAVES_LABELS,
   PERSISTENCE_NOTE,
   SHIPPED_MOB_WAVES,
   SIM_GAP_NOTE,
   addScheduleRow,
+  boundsText,
   changedFields,
   championLabel,
   configFromForm,
@@ -222,8 +225,13 @@ export function MobWavesPage(): React.JSX.Element {
             <thead>
               <tr style={{ color: ACCENT, fontSize: 11, textAlign: "left" }}>
                 <Th>回合</Th>
-                <Th>每波數量</Th>
-                <Th>場上上限</Th>
+                {/*
+                  兩欄的上界寫在欄頭 —— 逐回合表是操作者每次調平衡都會動的地方,
+                  而它的兩格走的是 `validateForm` 裡手寫的檢查,不是 `FieldRow`。
+                  界線印在這裡,操作者不必先打錯一次才知道天花板是 500。
+                */}
+                <Th>{`每波數量（0 ~ ${MOB_PER_WAVE_CAP_MAX}）`}</Th>
+                <Th>{`場上上限（0 ~ ${MOB_ALIVE_CAP_MAX}）`}</Th>
                 <Th>由誰擔任（臉＋3D 模型）</Th>
                 <Th>殭屍等級</Th>
                 <Th>每隻血量</Th>
@@ -503,6 +511,20 @@ function FieldRow(props: {
           <span style={{ color: TEXT_DIM, marginLeft: 8 }}>
             出貨版 {shipped === "" ? "未設定" : shipped}
           </span>
+          {/*
+            ⚠️ 區間要**印在畫面上**,不是只活在 `MOB_WAVES_LABELS` 裡。
+            `mobWaves.ts` 的 `max` 註解自己寫著「A bound the operator can see is
+            worth more than one that only exists in a zod file they never open」
+            —— 而在這一行之前,這一頁一個區間都沒有印出來:上界確實被算出來了,
+            也確實會擋,但操作者要先打錯一次、被紅字擋下來,才知道天花板在哪
+            (失敗形態 ②「算出來但從沒送到客戶端」)。隔壁的 基礎加成 頁一直都有
+            「範圍 0 ~ 20000」,這一頁只是漏了。
+          */}
+          {boundsText(spec) && (
+            <span data-field={`range-${props.fieldKey}`} style={{ color: TEXT_DIM, marginLeft: 8 }}>
+              {boundsText(spec)}
+            </span>
+          )}
         </div>
         {props.error && <div style={{ fontSize: 11, color: WARN, marginTop: 2 }}>{props.error}</div>}
       </div>

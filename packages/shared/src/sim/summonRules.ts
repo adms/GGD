@@ -71,6 +71,14 @@ import type { SummonComp } from "./effects/summon";
  * comparator only ever asks `a.kind < b.kind`, never for a literal value, and
  * `world.summon.size === 0` makes the middle tier unreachable.
  */
+/**
+ * ⚠️ #247 —— THESE THREE ARE NOT THE ONLY VALUES ON THIS AXIS ANY MORE. The
+ * 殭屍王 takes whatever rank `mobWaves.boss.aggroRank` names (ships **−1**,
+ * i.e. above enemy champions; 0.5 = 「稍微優先」; 2 = off), resolved by
+ * `sim/mobs.mobAggroRank` and read by `targetClassOf`. The comparator has
+ * always only asked `a.kind < b.kind`, so a rank outside 0..2 needs no other
+ * change — but nobody may read this table as an exhaustive enum.
+ */
 export const TARGET_CLASS = {
   champion: 0,
   summon: 1,

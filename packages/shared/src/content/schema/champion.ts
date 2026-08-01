@@ -149,6 +149,31 @@ export const zChampionDef = z
       })
       .strict()
       .optional(),
+    /**
+     * 身體放大倍數 (GH#252) —— 「這位英雄的身體是一個正常體型英雄的幾倍大」。
+     * 缺 = 1.0(正常體型)。
+     *
+     * 出貨值抄自 `content/models/_standin-overrides.json` 的
+     * `standinRelativeScale ?? relativeScale`(= `content/standinScale.ts` 的
+     * `standinRelativeScaleOf`),兩邊由 `content/championBodyScale.test.ts`
+     * 對帳。抄過來而不是直接讀那份檔案,是因為那份檔案是 **client-only**:
+     * 它不在 `content/manifest.json` 的任何 collection 裡,game-server 從來
+     * 讀不到 —— 這正是「體型影響射程」在 GH#252 之前不可能發生的原因。
+     *
+     * 上下界: 0.1 .. 10。上界 10 是小怪波 `boss.sizeMult` 的出貨值,把
+     * 「體型倍率貼錯格」擋在文件層;出貨最大值是 3.0(godie-o030)。
+     */
+    bodyScale: z.number().min(0.1).max(10).optional(),
+    /**
+     * 每秒回復「最大生命的百分比」(GH#253)。`0.01` = 每秒 1%。缺 = 沒有百分比
+     * 回血,只吃 `baseStats.healthRegen` 那條固定值。
+     *
+     * 上界 0.5 擋的是一個很具體的手誤:owner 要的「1%」在這裡寫成 `0.01`,
+     * 直接填 `1`(以為單位是百分比)會變成**每秒回滿血**,而畫面上看起來只是
+     * 「這個角色打不死」。百分比與固定值的關係、以及有沒有保底,是
+     * `config.regen@1` 的欄位(見 `sim/regenRules.ts`)。
+     */
+    healthRegenPctOfMax: z.number().min(0).max(0.5).optional(),
     /** ranged auto-attack projectile speed (GGD units/sec) */
     missileSpeed: z.number().positive().optional(),
     /** wind-up (seconds) before a basic attack's hit lands */

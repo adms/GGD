@@ -100,6 +100,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "mob.championSource",
   "mob.sizeMult",
   "mob.tintStrength",
+  // #247 腳下圈圈 (owner 2026-08-01)
+  "mob.groundRingDiameter",
+  "mob.groundRingSizeFollow",
   "mob.baseLevel",
   "mob.levelPerRound",
   "mob.baseHp",
@@ -130,6 +133,18 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.lastHitMultiplier",
   "boss.lastHitMode",
   "boss.countOverkill",
+  // #247 無視碰撞 + 每回合上限 (owner 2026-08-01)
+  "boss.noClip",
+  "boss.noClipUnits",
+  "boss.noClipObstacles",
+  "boss.noClipStayInside",
+  "boss.maxPerRound",
+  "boss.maxPerRoundScope",
+  // #247 第二批 —— 仇恨排序 + 長血條 (owner 2026-08-01)
+  "boss.aggroRank",
+  "boss.healthBar",
+  "boss.healthBarAnchor",
+  "boss.healthBarReveal",
   // 從英雄推導 (GH#206) — 生命與能力屬性 = 該設定英雄的 N 倍, +M, 移速 ×K, 等級 99
   "boss.heroHpMult",
   "boss.heroDamageMult",
@@ -357,6 +372,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       "mob.championSource": "random",
       "mob.sizeMult": "1.4",
       "mob.tintStrength": "0.4",
+      // #247 腳下圈圈 —— sentinels distinct from the shipped 1.25 / 1.
+      "mob.groundRingDiameter": "3.5",
+      "mob.groundRingSizeFollow": "0.5",
       "mob.baseLevel": "5",
       "mob.levelPerRound": "2",
       "mob.baseHp": "33",
@@ -396,6 +414,20 @@ describe("每一個欄位 are reachable and labelled", () => {
   "boss.bountyLevels": "50",
   "boss.lastHitMode": "bonus",
   "boss.countOverkill": "0",
+  // #247 無視碰撞 + 每回合上限 —— every sentinel differs from the shipped value
+  // (true/true/true/true/1/"zone"), so a field that never reaches the payload
+  // cannot hide behind its own default.
+  "boss.noClip": "0",
+  "boss.noClipUnits": "0",
+  "boss.noClipObstacles": "0",
+  "boss.noClipStayInside": "0",
+  "boss.maxPerRound": "3",
+  "boss.maxPerRoundScope": "match",
+  // #247 第二批 —— 仇恨排序 + 長血條三格 (owner 2026-08-01)
+  "boss.aggroRank": "0.5",
+  "boss.healthBar": "0",
+  "boss.healthBarAnchor": "bottom",
+  "boss.healthBarReveal": "sighted",
       "special.chancePercent": "12",
       "special.hpMult": "2.5",
       "special.damageMult": "1.75",

@@ -180,6 +180,20 @@ export interface ProjectileComp {
   basic?: boolean;
   basicDamage?: number;
   crit?: boolean;
+  /**
+   * [暴擊吸血] (天堂之劍 godie-i01n) — the lifesteal fraction THIS shot procced,
+   * rolled at the swing in `systems/BasicAttackSystem.ts` and paid at impact by
+   * `combat/damage.ts`. `undefined` = this shot did not proc, which is every
+   * shot in the game until an item authors `critStrike`.
+   *
+   * ⚠️ IT HAS TO RIDE THE MISSILE. The roll happens when the bow is loosed and
+   * the payout happens when the arrow lands, possibly seconds later and after
+   * the wielder has swung again — so 「was THIS shot the proc」 is knowable only
+   * here. Reading the grant again at impact would pay 100 % lifesteal on every
+   * arrow in flight. Same two-push-site trap `combat/damageTypeOverride.ts`
+   * documents, from the other end.
+   */
+  critLifesteal?: number;
 }
 
 /** Marker/state bags filled in by later steps (stats, abilities, …). */

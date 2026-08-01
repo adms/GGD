@@ -18,16 +18,47 @@
  * 屬性會退回 `STAT_CLAMPS` 且 `unlocked === base` —— 那條屬性從此不能被解鎖,
  * 而且畫面上完全看不出來。
  */
-import { STAT_CLAMPS, type Stat } from "@ggd/shared/sim/stats/statTypes";
+import { STAT_CLAMPS, Stat } from "@ggd/shared/sim/stats/statTypes";
 import { STAT_LABEL_ZH } from "@ggd/shared/sim/baseBonus";
 import {
   CAPPABLE_STATS,
   DEFAULT_STAT_CAPS,
   capFor,
   normalizeStatCaps,
+  statCapBounds,
   type StatCap,
   type StatCapTable,
 } from "@ggd/shared/sim/statCaps";
+
+/**
+ * 每一列在說「這個天花板會夾到**什麼**」,不是重複一次欄位名。
+ *
+ * ⚠️ 這一份存在的理由:`STAT_LABEL_ZH` 給的是屬性的名字(「法術強度」),而操作者
+ * 在這一頁要決定的是「把它夾住會影響誰」。只寫名字的欄位在 CLAUDE.md 裡有名字
+ * ——「說明文字要寫**它影響什麼**,不是複述欄位名」。
+ *
+ * EXHAUSTIVE `Record<Stat, string>`:新增一條屬性會在這裡變成型別錯誤,而不是
+ * 悄悄畫出一列沒有說明的輸入框。
+ */
+export const CAP_EFFECT_ZH: Readonly<Record<Stat, string>> = Object.freeze({
+  [Stat.AttackSpeed]: "每秒普攻次數的天花板 —— 夾住之後攻速裝與敏捷再堆也不會更快",
+  [Stat.AbilityPower]:
+    "法傷技能的傷害基數天花板 —— 夾住它就同時砍掉「總 AP +100%」那一類倍增道具疊起來的上限(惡夢魔王碎片 + 死之王套裝 = ×3.0)。出貨開到頂,今天不夾任何人",
+  [Stat.CooldownReduction]: "技能冷卻能被縮短到什麼程度(1.0 = 零冷卻)",
+  [Stat.CritChance]: "暴擊觸發率的天花板(1.0 = 每一刀都暴擊)",
+  [Stat.MoveSpeed]: "跑動速度的天花板 —— 夾住會同時影響追擊、風箏與逃離火圈",
+  [Stat.Lifesteal]: "普攻回血佔傷害的比例天花板 —— 夾住它就是續戰能力的上限",
+  [Stat.Evasion]: "普攻被閃掉的機率天花板(1.0 = 普攻打不到)",
+  [Stat.MaxHealth]: "生命上限的天花板 —— 夾住之後堆血裝與力量都不再變厚",
+  [Stat.MaxMana]: "魔力上限的天花板 —— 夾住之後智慧與魔力裝不再擴池",
+  [Stat.HealthRegen]: "每秒自動回血的天花板",
+  [Stat.ManaRegen]: "每秒自動回魔的天花板 —— 夾住它等於限制連續施法的次數",
+  [Stat.AttackDamage]: "普攻傷害基數的天花板 —— 夾住之後攻擊裝與力量都不再變痛",
+  [Stat.Armor]: "物理減傷曲線吃到的護甲天花板",
+  [Stat.MagicResist]: "魔法減傷曲線吃到的魔抗天花板",
+  [Stat.CritDamage]: "暴擊那一下的倍率天花板(1.75 = +75%)",
+  [Stat.AttackRange]: "普攻能打多遠的天花板(競技場單一決鬥區半徑 24)",
+});
 
 /** The `config` collection doc the console writes through the durable overlay. */
 export const CAPS_COLLECTION = "config";
@@ -65,6 +96,8 @@ export function extractCaps(doc: unknown): Record<string, StatCap> {
 export interface CapRow {
   stat: Stat;
   label: string;
+  /** 這個天花板夾到什麼(見 `CAP_EFFECT_ZH`) */
+  effect: string;
   /** 操作者設過的值,沒碰過就是 null */
   operator: StatCap | null;
   /** 出貨預設(表裡沒有的屬性 = STAT_CLAMPS 上界,base === unlocked) */
@@ -73,6 +106,34 @@ export interface CapRow {
   effective: StatCap;
   /** 這條屬性的硬下限(顯示用,這一頁不編輯它) */
   floor: number | null;
+  /** 這一列兩個輸入框的合法區間 `[min, max]`,**兩端都有** */
+  bounds: readonly [number, number];
+}
+
+/**
+ * 一列填得對不對。回 `null` = 沒問題,否則是要顯示給操作者看的那句話。
+ *
+ * ⚠️ 它是純函式而且住在這裡(不是 `StatCapsPage.tsx`),因為這是**規則**不是畫面:
+ * 規則寫在畫面裡就沒有人測得到,而這一頁在 2026-08-01 之前只檢查
+ * 「unlocked ≥ base」—— 兩端的界一個都沒有,也就是 CLAUDE.md 2026-07-29 點名的
+ * 那個缺陷(50 打成 500 過表單,到下游才被拒或被靜默夾掉)。
+ */
+export function capRowIssue(stat: Stat, base: string, unlocked: string): string | null {
+  const [lo, hi] = statCapBounds(stat);
+  for (const [text, name] of [
+    [base, "一般上限"],
+    [unlocked, "解鎖上限"],
+  ] as const) {
+    if (text.trim() === "") return `${name}不能空白`;
+    const v = Number(text);
+    if (!Number.isFinite(v)) return `${name}不是一個數字`;
+    // 下界不是 0 —— 比 STAT_CLAMPS 的地板還低的天花板會讓**地板無條件獲勝**,
+    // 那一格從此完全沒有作用而且畫面上看不出來。見 sim/statCaps.ts。
+    if (v < lo) return `${name} ${v} 低於這條屬性的地板 ${lo} —— 填下去等於這一格失效`;
+    if (v > hi) return `${name} ${v} 超過上界 ${hi}(打錯一個零的保險絲)`;
+  }
+  if (Number(unlocked) < Number(base)) return "解鎖上限不可小於一般上限";
+  return null;
 }
 
 /**
@@ -100,10 +161,12 @@ export function capRows(caps: Record<string, StatCap> | null): CapRow[] {
     return {
       stat,
       label: STAT_LABEL_ZH[stat],
+      effect: CAP_EFFECT_ZH[stat],
       operator,
       shipped: capFor(DEFAULT_STAT_CAPS, stat),
       effective: capFor(table ?? DEFAULT_STAT_CAPS, stat),
       floor: clamp ? clamp[0] : null,
+      bounds: statCapBounds(stat),
     };
   });
 }

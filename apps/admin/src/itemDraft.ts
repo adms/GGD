@@ -59,12 +59,18 @@ export const ITEM_DRAFT_FIELD_ORDER: readonly ItemDraftField[] = [
   "maxDraws",
 ];
 
-/** 畫面上的分組 —— 兩組,因為第二格只在第一格選 `fallback` 時才有意義。 */
-export type ItemDraftGroup = "policy" | "safety";
+/**
+ * 畫面上的分組 —— 第二格只在第一格選 `fallback` 時才有意義,所以它自成一組;
+ * `retire` 是 owner 2026-08-01 的退場清單,它**不是** `itemDraft` 區塊的一部分
+ * (見下面 SHIPPED_RETIRED_LOOT_TABLES 的說明),但它調的是同一個東西 ——
+ * 「這一場的三選一可以從哪些池子抽」 —— 所以放在同一頁。
+ */
+export type ItemDraftGroup = "policy" | "safety" | "retire";
 
 export const ITEM_DRAFT_GROUP_ZH: Readonly<Record<ItemDraftGroup, string>> = Object.freeze({
   policy: "候選不足時怎麼辦",
   safety: "保險",
+  retire: "退場的獎池",
 });
 
 export interface FieldLabel {
@@ -127,6 +133,108 @@ export const FALLBACK_TABLE_MAXLEN = 64;
  * 所以新增一張表而忘了更新這裡會紅。
  */
 export const KNOWN_LOOT_TABLES: readonly string[] = ["legendary-weapons", "quest-rewards", "round-reward"];
+
+// ─────────────────────────────────────────────────── 已退場的抽獎池 ───────
+//
+// owner 2026-08-01:「第 2、5 回合改發棱彩傳說之後,那 13 支任務小飾品沒有任何
+// 回合排它＝拿不到。排回去還是退場? **=> 退場**」
+//
+// ⚠️ 為什麼這一組**不在** `ItemDraftField` 裡:它是 arena-rules 的**頂層**欄位
+// (`retiredLootTables`),不是 `itemDraft` 區塊的一格。`itemDraftShippedCopy.
+// test.ts` 釘死「後台的欄位清單 === `zItemDraftConfig` 的鍵」,把它混進去會讓那
+// 條守衛從此對不上 —— 而那條守衛正是這一頁存在的理由。所以它是同一頁上的第二
+// 組欄位,有自己的出貨值、自己的界、自己的 drift 測試
+// (`retiredTablesShippedCopy.test.ts`)。
+//
+// ⚠️ 這一格**不是**在刪東西。表還在、13 支道具還在白名單上、圖鑑照樣看得到;
+// 它擋的是「有人把那張表排回某個回合」。規則本體在
+// `packages/shared/src/content/retiredLootTables.ts`,`ContentLoader` 與
+// game-server 的 `rulesFromDoc` 讀的是同一支函式。
+
+/** 出貨值 —— `content/config/arena-rules.json` 的 `retiredLootTables`。 */
+export const SHIPPED_RETIRED_LOOT_TABLES: readonly string[] = Object.freeze(["quest-rewards"]);
+
+/** 鏡射 `zConfigArenaRulesDoc.retiredLootTables` 的 `.max(16)`。 */
+export const RETIRED_TABLES_MAX = 16;
+/** 每一格 id 的長度上界，鏡射同一個 Zod 的 `.max(64)`。 */
+export const RETIRED_TABLE_ID_MAXLEN = 64;
+
+export const RETIRED_TABLES_LABEL: FieldLabel & { group: "retire" } = Object.freeze({
+  zh: "已退場的抽獎池",
+  note:
+    "列在這裡的 loot table **不可以被任何回合、gacha 或備援欄位排到**。" +
+    "它不是刪除 —— 表與道具都還在（圖鑑、白名單、內容編輯都照舊），" +
+    "只是玩家在一場比賽裡再也拿不到。要復活一張表，先把它從這裡移除；" +
+    "沒移除就直接排回去的話，存檔會被拒絕並指名是哪一個回合。",
+  group: "retire",
+});
+
+/** 逗號 / 換行分隔的輸入 → 乾淨的 id 陣列（去空白、去重複、保持輸入順序）。 */
+export function parseRetiredTables(text: string): string[] {
+  const out: string[] = [];
+  for (const raw of text.split(/[,\n]/)) {
+    const id = raw.trim();
+    if (id !== "" && !out.includes(id)) out.push(id);
+  }
+  return out;
+}
+
+/** id 陣列 → 輸入框原文。 */
+export function formatRetiredTables(ids: readonly string[]): string {
+  return ids.join(", ");
+}
+
+/** 從 API 回來的文件裡挖出退場清單；沒有這個欄位 = 沒有任何表退場。 */
+export function readRetiredTables(doc: unknown): string[] {
+  if (!doc || typeof doc !== "object") return [];
+  const d = doc as Record<string, unknown>;
+  if (d.schema !== ARENA_RULES_SCHEMA) return [];
+  const raw = d.retiredLootTables;
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((v): v is string => typeof v === "string");
+}
+
+/**
+ * 退場清單填得對不對。回 null = 沒問題。
+ *
+ * ⚠️ 交叉檢查 `fallbackTable`:把備援池自己列進退場等於「選了借,但借不到」——
+ * 後端會拒絕存檔,而操作者在畫面上完全看不出原因。在這裡先講。
+ */
+export function validateRetiredTables(text: string, fallbackTable: string): string | null {
+  const ids = parseRetiredTables(text);
+  if (ids.length > RETIRED_TABLES_MAX) {
+    return `最多只能列 ${RETIRED_TABLES_MAX} 張表（超過通常代表貼錯東西進來了）`;
+  }
+  for (const id of ids) {
+    if (id.length > RETIRED_TABLE_ID_MAXLEN) {
+      return `獎池 id 不可超過 ${RETIRED_TABLE_ID_MAXLEN} 個字元：${id.slice(0, 20)}…`;
+    }
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(id)) return `獎池 id 只能是小寫英數字與連字號：${id}`;
+  }
+  const fb = fallbackTable.trim();
+  if (fb !== "" && ids.includes(fb)) {
+    return `「${fb}」同時是備援獎池又被列為退場 —— 借不到任何東西，請二選一`;
+  }
+  return null;
+}
+
+/**
+ * 把退場清單接回**整份** arena-rules 文件。空清單寫成 `[]` 而不是刪掉這個鍵,
+ * 因為「沒有任何表退場」是一個**明說**的狀態 —— 缺鍵和空陣列在遊戲裡等價,
+ * 但在下一個讀文件的人眼裡不等價(那正是這個功能要修的那個誤會)。
+ */
+export function patchRetiredTables(
+  doc: Record<string, unknown>,
+  ids: readonly string[],
+): Record<string, unknown> {
+  return { ...doc, retiredLootTables: [...ids] };
+}
+
+/** 給操作者看的一句話：**這一場實際上會發生什麼**。 */
+export function retiredTablesSummary(ids: readonly string[]): string {
+  if (ids.length === 0) return "沒有任何抽獎池退場 —— 每一張表都可以被排進回合";
+  return `${ids.join("、")} 已退場：排進任何回合 / gacha / 備援欄位都會被拒絕存檔`;
+}
 
 // ─────────────────────────────────────────────────────────── 讀 / 寫 ──────
 

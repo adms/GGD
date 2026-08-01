@@ -102,6 +102,20 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
   items: (doc: ItemDoc): RefEdge[] => {
     const out: RefEdge[] = [];
     hookRefs(doc.passive, "passive", out);
+    // 套裝 pieces are HARD refs: a typo'd id is a set that can never complete,
+    // and nothing at runtime would say so — the card just never pays out
+    // (CLAUDE.md 失敗形態 ②). The other two set invariants (every piece repeats
+    // the block; the declaring doc is one of its own pieces) are cross-document
+    // shape rules rather than references — see `sim/economy/itemSets.auditItemSets`.
+    (doc.sets ?? []).forEach((s, i) =>
+      s.pieces.forEach((piece, j) =>
+        out.push({
+          field: `sets.${i}.pieces.${j}`,
+          targetCollection: "items",
+          targetId: piece,
+        }),
+      ),
+    );
     return out;
   },
   augments: (doc: AugmentDoc): RefEdge[] => {
@@ -129,6 +143,41 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
   // config docs are mostly parameter tables; only the w3x tint ledger names
   // other documents, and its champion ids must resolve (task #49).
   config: (doc: AnyConfigDoc): RefEdge[] => {
+    // arena-rules names LOOT TABLES in three places, and until 2026-08-01 none
+    // of them was checked: `MatchController` reads the round card's table with
+    // `LootTables.tryGet`, so a typo'd id produced NO card and NO error — 失敗
+    // 形態 ② with a spelling mistake as the cause. HARD, because every one of
+    // the three is a real payout door: a dangling id means a player silently
+    // gets nothing on a round the table promises a free legendary.
+    if (doc.schema === "config.arena-rules@1") {
+      const out: RefEdge[] = [];
+      for (const key of Object.keys(doc.rounds).sort((a, b) => Number(a) - Number(b))) {
+        const table = doc.rounds[key]?.weaponLootTable;
+        if (table !== undefined) {
+          out.push({
+            field: `rounds.${key}.weaponLootTable`,
+            targetCollection: "loot-tables",
+            targetId: table,
+          });
+        }
+      }
+      if (doc.gacha) {
+        out.push({
+          field: "gacha.lootTable",
+          targetCollection: "loot-tables",
+          targetId: doc.gacha.lootTable,
+        });
+      }
+      // "" is the authored 「沒有備援」 value, not a table id.
+      if (doc.itemDraft && doc.itemDraft.fallbackTable !== "") {
+        out.push({
+          field: "itemDraft.fallbackTable",
+          targetCollection: "loot-tables",
+          targetId: doc.itemDraft.fallbackTable,
+        });
+      }
+      return out;
+    }
     // #249 GH#288 — 變身外觀表 names BOTH a champion and a model doc per entry.
     // Both are HARD: a typo'd `attachModelKey` would mean 悟空 transforms into
     // an identical body with no head change and nothing anywhere would say so.

@@ -27,7 +27,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import { zItemDoc, type ItemDoc } from "./schema/item";
-import { resolveScaling, type Scaling } from "../sim/effects/effect";
+import { NO_ATTR_LOOKUP, resolveScaling, type Scaling } from "../sim/effects/effect";
 import { Stat, zeroStats } from "../sim/stats/statTypes";
 import { championStatBase } from "../sim/stats/attributes";
 import { DEFAULT_COMBAT_ENV } from "../sim/combatEnv";
@@ -204,8 +204,8 @@ describe("imported ability stat scaling", () => {
     let sawLiveRatio = false;
     for (const e of amountEffects(lina)) {
       if (!e.amount.ratios?.some((r) => r.stat === Stat.AbilityPower)) continue;
-      const withRatios = resolveScaling(apAt1, e.amount, 1);
-      const withoutRatios = resolveScaling(apAt1, { ...e.amount, ratios: [] }, 1);
+      const withRatios = resolveScaling(apAt1, e.amount, 1, NO_ATTR_LOOKUP);
+      const withoutRatios = resolveScaling(apAt1, { ...e.amount, ratios: [] }, 1, NO_ATTR_LOOKUP);
       expect(withRatios).toBeGreaterThan(withoutRatios);
       sawLiveRatio = true;
     }
@@ -238,8 +238,8 @@ describe("imported ability stat scaling", () => {
     let after = 0;
     for (const e of amountEffects(lina)) {
       if (e.kind !== "damage") continue;
-      before += resolveScaling(stats, e.amount, 1);
-      after += resolveScaling(withAp, e.amount, 1);
+      before += resolveScaling(stats, e.amount, 1, NO_ATTR_LOOKUP);
+      after += resolveScaling(withAp, e.amount, 1, NO_ATTR_LOOKUP);
     }
     expect(before).toBeGreaterThan(0);
     expect(after).toBeGreaterThan(before); // ap is no longer a dead stat

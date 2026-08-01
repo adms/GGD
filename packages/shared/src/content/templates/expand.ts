@@ -18,7 +18,17 @@ import type { CastType, AbilityPassive, AbilityPassiveRank } from "../../sim/con
 import type { EffectDef, DamageType, Scaling } from "../../sim/effects/effect";
 import type { HookDef, HookEvent, StatModifier } from "../../sim/stats/modifiers";
 import type { ProjectileId, StatusId } from "../../ids";
-import type { TemplateDoc, ParamSlot } from "../schema/template";
+import type {
+  TemplateDoc,
+  ParamSlot,
+  AbilityTemplateCard,
+  TemplateConflictPolicy,
+} from "../schema/template";
+import {
+  DEFAULT_TEMPLATE_CONFLICT,
+  TEMPLATE_STACK_MAX_CARDS,
+  zAbilityTemplateBinding,
+} from "../schema/template";
 import type { EffectCondition } from "../../sim/content/condition";
 import { zEffectCondition } from "../schema/condition";
 
@@ -1176,6 +1186,427 @@ export function expand(t: TemplateDoc, params: Record<string, unknown>): ExpandR
 /** Whether a family has an implemented expand path (enabled in P1). */
 export function isExpandable(family: string): boolean {
   return FAMILIES[family] !== undefined;
+}
+
+// ---------------------------------------------------------------------------
+// 模板複數套用 — the STACK expander (owner 2026-07-31)
+// ---------------------------------------------------------------------------
+
+/**
+ * `ability@1.template` in any of its three accepted shapes → ONE ordered card
+ * list + the policy that governs it. This is the single place the three shapes
+ * collapse, so no consumer ever has to branch on them.
+ *
+ * BACK-COMPAT IS THIS FUNCTION. A doc written before the stack existed carries
+ * `{ref, params}` and comes out of here as a 1-card stack — and a 1-card stack
+ * provably expands byte-identically to the old `expand(t, params)`
+ * (`stack.test.ts`, over every enabled shipped template).
+ */
+export interface NormalizedTemplateBinding {
+  readonly cards: readonly AbilityTemplateCard[];
+  readonly onConflict: TemplateConflictPolicy;
+  /** which of the three shapes the doc actually used — diagnostics only */
+  readonly form: "single" | "array" | "stack";
+}
+
+export function normalizeTemplateBinding(binding: unknown): NormalizedTemplateBinding {
+  const parsed = zAbilityTemplateBinding.safeParse(binding);
+  if (!parsed.success) {
+    throw new ExpandError(
+      `ability.template is not a valid template binding — ${parsed.error.issues[0]?.message ?? "invalid"}`,
+    );
+  }
+  const v = parsed.data;
+  if (Array.isArray(v)) {
+    return { cards: v, onConflict: DEFAULT_TEMPLATE_CONFLICT, form: "array" };
+  }
+  if ("cards" in v) {
+    return { cards: v.cards, onConflict: v.onConflict ?? DEFAULT_TEMPLATE_CONFLICT, form: "stack" };
+  }
+  return { cards: [v], onConflict: DEFAULT_TEMPLATE_CONFLICT, form: "single" };
+}
+
+/**
+ * The inverse of `normalizeTemplateBinding`: an ordered card list + a policy →
+ * the SMALLEST binding shape that expresses it.
+ *
+ * ⚠️ ONE card at the default policy comes back out as the LEGACY `{ref,params}`
+ * object, and that is the point rather than a nicety: re-saving a single-card
+ * skill through the Forge must not rewrite it into a new shape and produce a
+ * spurious diff on every ability the migration touches. `normalize(denormalize
+ * (x)) === x` is checked in stack.test.ts.
+ */
+export function denormalizeTemplateBinding(
+  cards: readonly AbilityTemplateCard[],
+  onConflict: TemplateConflictPolicy = DEFAULT_TEMPLATE_CONFLICT,
+): unknown {
+  if (cards.length === 1 && onConflict === DEFAULT_TEMPLATE_CONFLICT) return cards[0];
+  if (onConflict === DEFAULT_TEMPLATE_CONFLICT) return [...cards];
+  return { cards: [...cards], onConflict };
+}
+
+/**
+ * The SCALAR half of an ExpandResult — the keys where two cards can genuinely
+ * disagree. Every one of them is primitive-valued on `ExpandResult`, which is
+ * why `===` is a sufficient「same value」test and no deep compare is needed here.
+ *
+ * `effects` and `passive` are deliberately NOT in this list: they are the
+ * LIST-valued half and they MERGE (see `mergePassive`). Order matters and is the
+ * card order.
+ */
+const STACK_SCALAR_KEYS = [
+  "castType",
+  "radius",
+  "castTimeSec",
+  "targetsEnemies",
+  "innateKind",
+] as const;
+type StackScalarKey = (typeof STACK_SCALAR_KEYS)[number];
+
+/** Where one value in the merged result came from. */
+export interface StackValueSource {
+  readonly cardIndex: number;
+  readonly templateId: string;
+  readonly value: unknown;
+}
+
+/** Provenance for ONE scalar key of the merged expansion. */
+export interface StackKeyTrace {
+  readonly key: string;
+  /** the card whose value is in the merged result */
+  readonly winner: StackValueSource;
+  /** later cards that emitted the SAME value — agreement, never a collision */
+  readonly agreed: readonly StackValueSource[];
+  /** values that lost a real collision (empty unless `conflicts` names this key) */
+  readonly shadowed: readonly StackValueSource[];
+}
+
+/** Two cards emitted DIFFERENT values for one scalar key. */
+export interface StackConflict {
+  readonly key: string;
+  readonly kept: StackValueSource;
+  readonly dropped: StackValueSource;
+}
+
+/** Provenance for ONE emitted EffectDef. */
+export interface StackEffectTrace {
+  /** index into the merged `result.effects` */
+  readonly index: number;
+  readonly cardIndex: number;
+  readonly templateId: string;
+  readonly kind: string;
+}
+
+/** What one card contributed, for the「第二張卡真的有被吃進去」panel. */
+export interface StackCardTrace {
+  readonly index: number;
+  readonly templateId: string;
+  readonly family: string;
+  /** scalar keys this card emitted, whether or not it kept them */
+  readonly emitted: readonly string[];
+  /** scalar keys this card OWNS in the merged result */
+  readonly owns: readonly string[];
+  /** EffectDefs it contributed to the merged `effects` */
+  readonly effectCount: number;
+  /** passive hooks it contributed */
+  readonly hookCount: number;
+}
+
+/**
+ * The diagnostic record of a stacked expansion. It is what the Forge's 展開來源
+ * panel renders and what proves a second card was actually consumed — an
+ * expansion that silently dropped card 2 would leave `cards[1]` with
+ * `effectCount: 0`, `hookCount: 0` and `owns: []`, which is an assertion a test
+ * can make and a screenshot cannot.
+ */
+export interface ExpandStackTrace {
+  readonly onConflict: TemplateConflictPolicy;
+  readonly cards: readonly StackCardTrace[];
+  /** scalar provenance in STACK_SCALAR_KEYS order — stable, never Map order */
+  readonly keys: readonly StackKeyTrace[];
+  readonly effects: readonly StackEffectTrace[];
+  readonly conflicts: readonly StackConflict[];
+}
+
+export interface ExpandStackResult {
+  readonly result: ExpandResult;
+  readonly trace: ExpandStackTrace;
+}
+
+/** One entry of the stack, already resolved from `ref` to the template doc. */
+export interface TemplateStackCard {
+  readonly template: TemplateDoc;
+  readonly params: Record<string, unknown>;
+}
+
+interface MutableKeyTrace {
+  key: string;
+  winner: StackValueSource;
+  agreed: StackValueSource[];
+  shadowed: StackValueSource[];
+}
+
+/**
+ * The bookkeeping a single card's merge needs. Passed rather than closed over so
+ * `mergePassive` stays a plain function with all its inputs visible.
+ */
+interface MergeCtx {
+  readonly cardIndex: number;
+  readonly templateId: string;
+  readonly onConflict: TemplateConflictPolicy;
+  /** who currently owns each NON-array passive key — exact provenance, not a guess */
+  readonly owners: Map<string, StackValueSource>;
+  readonly conflicts: StackConflict[];
+}
+
+/**
+ * Resolve one scalar collision under the active policy, record it, and return
+ * the surviving value. Shared by the passive merge and (in spirit) the scalar
+ * loop below.
+ */
+function resolveScalar(ctx: MergeCtx, key: string, nextValue: unknown): unknown {
+  const source: StackValueSource = {
+    cardIndex: ctx.cardIndex,
+    templateId: ctx.templateId,
+    value: nextValue,
+  };
+  const held = ctx.owners.get(key);
+  if (held === undefined) {
+    ctx.owners.set(key, source);
+    return nextValue;
+  }
+  if (held.value === nextValue) return held.value;
+  const keepsHeld = ctx.onConflict !== "lastWins";
+  ctx.conflicts.push({
+    key,
+    kept: keepsHeld ? held : source,
+    dropped: keepsHeld ? source : held,
+  });
+  if (!keepsHeld) ctx.owners.set(key, source);
+  return keepsHeld ? held.value : nextValue;
+}
+
+/**
+ * Merge two passives. RANK-WISE, because a rank IS an ability level: card A's
+ * rank 2 and card B's rank 2 describe the same level of the same skill and must
+ * end up in the same `ranks[1]`, not appended after each other.
+ *
+ * Within a rank every ARRAY-valued key (`hooks`, `modifiers`, `auras`, and
+ * anything AbilityPassiveRank grows later) concatenates in card order; a
+ * non-array key that both sides set and disagree on is a real conflict and goes
+ * through the SAME policy and the same `conflicts` list as a scalar collision,
+ * keyed `passive.ranks[i].<key>`. Handling rank keys GENERICALLY rather than
+ * naming hooks/modifiers/auras is deliberate: a list-valued rank field added
+ * later would otherwise be silently dropped here, which is precisely the
+ *「做了但玩家拿不到」shape this module is supposed to be immune to.
+ *
+ * Every non-array key it emits CLAIMS ownership through `ctx.owners`, so when a
+ * third card collides with it the report names the card that really set the
+ * value rather than「whichever card was merged last」.
+ */
+function mergePassive(
+  acc: AbilityPassive | undefined,
+  next: AbilityPassive | undefined,
+  ctx: MergeCtx,
+): AbilityPassive | undefined {
+  if (next === undefined) return acc;
+  if (acc === undefined) {
+    if (next.name !== undefined) resolveScalar(ctx, "passive.name", next.name);
+    for (const [r, rank] of next.ranks.entries()) {
+      for (const [k, v] of Object.entries(rank as Record<string, unknown>)) {
+        if (!Array.isArray(v) && v !== undefined) resolveScalar(ctx, `passive.ranks[${r}].${k}`, v);
+      }
+    }
+    return next;
+  }
+  const name =
+    next.name === undefined
+      ? acc.name
+      : (resolveScalar(ctx, "passive.name", next.name) as string | undefined);
+  const depth = Math.max(acc.ranks.length, next.ranks.length);
+  const ranks: AbilityPassiveRank[] = [];
+  for (let r = 0; r < depth; r++) {
+    const a = (acc.ranks[r] ?? {}) as Record<string, unknown>;
+    const b = (next.ranks[r] ?? {}) as Record<string, unknown>;
+    // Sorted union so the emitted key order is deterministic regardless of how
+    // the two source objects were built (CLAUDE.md: Map/key iteration is sorted).
+    const merged: Record<string, unknown> = {};
+    for (const k of [...new Set([...Object.keys(a), ...Object.keys(b)])].sort()) {
+      const av = a[k];
+      const bv = b[k];
+      if (bv === undefined) merged[k] = av;
+      else if (av === undefined && Array.isArray(bv)) merged[k] = bv;
+      else if (Array.isArray(av) && Array.isArray(bv)) merged[k] = [...av, ...bv];
+      else merged[k] = resolveScalar(ctx, `passive.ranks[${r}].${k}`, bv);
+    }
+    ranks.push(merged as AbilityPassiveRank);
+  }
+  return name === undefined ? { ranks } : { name, ranks };
+}
+
+/** Count the hooks a passive carries, across every rank. */
+function hookCount(p: AbilityPassive | undefined): number {
+  if (p === undefined) return 0;
+  let n = 0;
+  for (const r of p.ranks) n += r.hooks?.length ?? 0;
+  return n;
+}
+
+/**
+ * Expand an ORDERED STACK of template cards into one ExpandResult, plus the
+ * trace that says which card produced which part of it.
+ *
+ * ⚠️ This never throws on a CONFLICT — it records one. The UI needs the merged
+ * result AND the collision list on screen at the same time, and a throw can only
+ * deliver one of them. `expandStackOrThrow` is the loader-side wrapper that
+ * turns a `reject`-policy conflict into a hard failure.
+ *
+ * Under `reject` the FIRST writer keeps the key, so `result` is still a
+ * well-defined object to render; under `lastWins` the LAST writer keeps it, and
+ * the shadowed value stays visible in `keys[].shadowed` so「我填的數字去哪了」
+ * has an answer instead of a shrug.
+ */
+export function expandStack(
+  cards: readonly TemplateStackCard[],
+  onConflict: TemplateConflictPolicy = DEFAULT_TEMPLATE_CONFLICT,
+): ExpandStackResult {
+  if (cards.length === 0) {
+    throw new ExpandError(
+      "template stack is empty — omit `template` entirely rather than storing zero cards",
+    );
+  }
+  if (cards.length > TEMPLATE_STACK_MAX_CARDS) {
+    throw new ExpandError(
+      `template stack has ${cards.length} cards, over the ${TEMPLATE_STACK_MAX_CARDS} ceiling`,
+    );
+  }
+
+  const keyTraces = new Map<string, MutableKeyTrace>();
+  const conflicts: StackConflict[] = [];
+  const passiveOwners = new Map<string, StackValueSource>();
+  const effectTraces: StackEffectTrace[] = [];
+  const cardTraces: StackCardTrace[] = [];
+  const effects: EffectDef[] = [];
+  let passive: AbilityPassive | undefined;
+
+  for (const [index, card] of cards.entries()) {
+    const templateId = card.template.id;
+    const ex = expand(card.template, card.params);
+
+    for (const e of ex.effects) {
+      effectTraces.push({ index: effects.length, cardIndex: index, templateId, kind: e.kind });
+      effects.push(e);
+    }
+
+    const before = hookCount(passive);
+    passive = mergePassive(passive, ex.passive, {
+      cardIndex: index,
+      templateId,
+      onConflict,
+      owners: passiveOwners,
+      conflicts,
+    });
+    const contributedHooks = hookCount(passive) - before;
+
+    const emitted: string[] = [];
+    for (const key of STACK_SCALAR_KEYS) {
+      const value = (ex as unknown as Record<StackScalarKey, unknown>)[key];
+      if (value === undefined) continue;
+      emitted.push(key);
+      const source: StackValueSource = { cardIndex: index, templateId, value };
+      const held = keyTraces.get(key);
+      if (held === undefined) {
+        keyTraces.set(key, { key, winner: source, agreed: [], shadowed: [] });
+        continue;
+      }
+      if (held.winner.value === value) {
+        held.agreed.push(source);
+        continue;
+      }
+      // A REAL collision: two cards, same key, different values.
+      const keepsHeld = onConflict !== "lastWins";
+      conflicts.push({
+        key,
+        kept: keepsHeld ? held.winner : source,
+        dropped: keepsHeld ? source : held.winner,
+      });
+      if (keepsHeld) {
+        held.shadowed.push(source);
+      } else {
+        held.shadowed.push(held.winner);
+        held.winner = source;
+      }
+    }
+
+    cardTraces.push({
+      index,
+      templateId,
+      family: card.template.family,
+      emitted,
+      // filled in below, once every card has had its turn at the keys
+      owns: [],
+      effectCount: ex.effects.length,
+      hookCount: contributedHooks,
+    });
+  }
+
+  // `owns` can only be known after the LAST card, because `lastWins` moves
+  // ownership backwards in time. Recomputed rather than patched incrementally.
+  const owners = new Map<number, string[]>();
+  const keys: StackKeyTrace[] = [];
+  for (const key of STACK_SCALAR_KEYS) {
+    const held = keyTraces.get(key);
+    if (held === undefined) continue;
+    keys.push({ key, winner: held.winner, agreed: held.agreed, shadowed: held.shadowed });
+    const list = owners.get(held.winner.cardIndex) ?? [];
+    list.push(key);
+    owners.set(held.winner.cardIndex, list);
+  }
+
+  const result: Record<string, unknown> = { effects };
+  for (const k of keys) result[k.key] = k.winner.value;
+  if (passive !== undefined) result["passive"] = passive;
+
+  return {
+    result: result as unknown as ExpandResult,
+    trace: {
+      onConflict,
+      cards: cardTraces.map((c) => ({ ...c, owns: owners.get(c.index) ?? [] })),
+      keys,
+      effects: effectTraces,
+      conflicts,
+    },
+  };
+}
+
+/** Human-readable collision report — one line per conflict, used by both sides. */
+export function describeStackConflicts(trace: ExpandStackTrace): string {
+  return trace.conflicts
+    .map(
+      (c) =>
+        `${c.key}: 卡片 ${c.dropped.cardIndex + 1} (${c.dropped.templateId}) 的 ${JSON.stringify(c.dropped.value)} ` +
+        `與卡片 ${c.kept.cardIndex + 1} (${c.kept.templateId}) 的 ${JSON.stringify(c.kept.value)} 衝突`,
+    )
+    .join("\n");
+}
+
+/**
+ * The LOADER-side stack expansion: same merge, but a `reject`-policy collision
+ * is fatal instead of merely reported. Content that reaches the sim has already
+ * been through the editor, so an unresolved collision here is content nobody
+ * looked at — failing loudly is the whole point of the default policy.
+ */
+export function expandStackOrThrow(
+  cards: readonly TemplateStackCard[],
+  onConflict: TemplateConflictPolicy = DEFAULT_TEMPLATE_CONFLICT,
+): ExpandResult {
+  const { result, trace } = expandStack(cards, onConflict);
+  if (onConflict === "reject" && trace.conflicts.length > 0) {
+    throw new ExpandError(
+      `template stack has ${trace.conflicts.length} unresolved conflict(s) under onConflict="reject":\n${describeStackConflicts(trace)}`,
+    );
+  }
+  return result;
 }
 
 // ---------------------------------------------------------------------------

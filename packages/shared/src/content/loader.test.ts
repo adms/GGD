@@ -81,13 +81,32 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     //   curse      失手率 (WC3 `Acrs`) —— 攻擊方 fumble, NOT defender evasion
     //   fang-stun  13-02/13-002 揍敵客牙突的暈眩
     //   nen-banked 13-002 EX 燒掉的法力存款(spendMana.bankAs → damage.bankedBonus)
+    // 2026-08-01 傳說武器批次再加兩個:
+    //   light-wand-banked 光魔杖 godie-i027「消耗自己現存 MP 5%並造成傷害」的存款標記
+    //                     (同樣是 spendMana.bankAs → damage.bankedBonus,第二個客戶)
+    //   ingredient        殺豬刀 godie-i06g「7%機率將敵人變成食材,無法動作」的暈眩標記
+    //                     —— 「食材」目前只是這個 statusId 的名字,模型還是原本那一具
+    //                     (換模型要一格 ENTITY_FLAG,而 BIT BUDGET 只剩一格,見
+    //                      protocol/schema.ts;推導寫在該道具的 authoringNote)
     expect(StatusEffects.ids().sort()).toEqual([
       "berserk",
       "burnstun",
       "curse",
       "fang-stun",
+      "ingredient",
+      "light-wand-banked",
       "moon-combo",
       "nen-banked",
+      //   omnislash-lock    01-04 超究武神霸斬 (GH#250) 打在**目標**身上的硬控:
+      //                     war3map.j `Trig_SuperFF7_Actions` 對目標
+      //                     PauseUnitBJ(true) + 反覆 IssueImmediateOrderBJ("stop")
+      //   omnislash-perform 同一支技能打在**施法者自己**身上的演出鎖(同段的
+      //                     PauseUnitBJ(true, udg_FF7_CloudUnit))。分成兩個 id
+      //                     而不是共用一個,是因為 HUD 讀的是這份文件的 name/
+      //                     polarity —— 一個是被鎖住(debuff),一個是自己在演武
+      //                     (buff),共用會讓其中一邊的字在畫面上是錯的。
+      "omnislash-lock",
+      "omnislash-perform",
       "root",
       "slow25",
       "slow30",

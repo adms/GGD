@@ -87,6 +87,11 @@ export function projectileSystem(world: SimWorld): void {
             type: "physical",
             crit: proj.crit ?? false,
             origin: "basic",
+            // [暴擊吸血] — the RANGED half. Copied off the missile rather than
+            // re-read from the wielder's sources: the roll happened at the
+            // swing, and a re-read here would pay the proc on every arrow in
+            // flight (see ProjectileComp.critLifesteal).
+            critLifesteal: proj.critLifesteal,
           });
           world.emit("basicAttackHit", {
             id,

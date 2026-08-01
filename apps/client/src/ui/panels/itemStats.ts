@@ -28,9 +28,11 @@ import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { ModOp, type StatModifier } from "@ggd/shared/sim/stats/modifiers";
 import {
   itemRequirementLabels,
+  requirementShortLabel,
   type ClassRequirement,
 } from "@ggd/shared/sim/content/requirement";
 import { hookConditionLabels, type EffectCondition } from "@ggd/shared/sim/content/condition";
+import { ATTR_KEYS, ATTR_LABEL } from "@ggd/shared/sim/stats/attributes";
 import { STAT_META, statMeta } from "./statDisplay";
 
 // ---------------------------------------------------------------------------
@@ -71,6 +73,29 @@ export interface MergedMod {
   stat: Stat;
   op: ModOp;
   value: number;
+  /**
+   * 職業限定閘 carried by the entries that were merged into this one. Present
+   * only when the modifier is gated; the chip renders it in parentheses.
+   */
+  requires?: ClassRequirement;
+}
+
+/** A stat modifier as an ITEM may author it — with the optional carrier gate. */
+export interface RowStatModifier extends StatModifier {
+  readonly requires?: ClassRequirement;
+}
+
+/**
+ * Merge key for a requirement. Two entries may only be SUMMED when they are
+ * gated identically — 貫雷槍's `range +4 (melee)` and `range +2 (ranged)` share
+ * `stat|op` and summing them to 「攻擊距離 +6」 would print a number no champion
+ * in the game ever receives (失敗形態 ④: the card reads plausible and is wrong).
+ * Field order is fixed here rather than taken from `JSON.stringify`, whose key
+ * order follows insertion and would split one gate into two chips.
+ */
+function requiresKey(r: ClassRequirement | undefined): string {
+  if (r === undefined) return "";
+  return `${r.attackType ?? ""}/${r.primaryStat ?? ""}/${r.onMismatch ?? ""}/${r.mismatchScale ?? ""}`;
 }
 
 const STAT_ORDER: Readonly<Record<string, number>> = Object.fromEntries(
@@ -88,14 +113,21 @@ const STAT_ORDER: Readonly<Record<string, number>> = Object.fromEntries(
  * card whose two `capRaise 5 / 7` sources give the player 7 — two numbers that
  * both look reasonable, with nothing broken to notice (#125).
  */
-export function mergeItemModifiers(mods: readonly StatModifier[] | undefined): MergedMod[] {
+export function mergeItemModifiers(mods: readonly RowStatModifier[] | undefined): MergedMod[] {
   if (!mods || mods.length === 0) return [];
   const acc = new Map<string, MergedMod>();
   for (const m of mods) {
-    const key = `${m.stat}|${m.op}`;
+    // 職業限定閘 IS PART OF THE KEY — see `requiresKey`.
+    const key = `${m.stat}|${m.op}|${requiresKey(m.requires)}`;
     const cur = acc.get(key);
     if (cur) cur.value = m.op === ModOp.CapRaise ? Math.max(cur.value, m.value) : cur.value + m.value;
-    else acc.set(key, { stat: m.stat as Stat, op: m.op, value: m.value });
+    else
+      acc.set(key, {
+        stat: m.stat as Stat,
+        op: m.op,
+        value: m.value,
+        ...(m.requires !== undefined ? { requires: m.requires } : {}),
+      });
   }
   return [...acc.values()].sort(
     (a, b) => (STAT_ORDER[a.stat] ?? 99) - (STAT_ORDER[b.stat] ?? 99) || a.op.localeCompare(b.op),
@@ -139,11 +171,18 @@ export function authoredMagnitude(stat: Stat, op: ModOp, value: number): string 
  */
 export function formatAuthoredBonus(m: MergedMod): string {
   const label = statMeta(m.stat)?.label ?? m.stat;
+  // 職業限定閘, appended to the CHIP rather than to the card's ✦ line. A gated
+  // modifier is 「這一條給誰」, not 「這件武器給誰」 — 貫雷槍 gives everybody
+  // something — so the answer has to sit on the row it qualifies. Derived from
+  // the same object the sim gates on (never typed into the prose), so changing
+  // the gate changes the chip.
+  const gate = requirementShortLabel(m.requires);
+  const suffix = gate === null ? "" : `（${gate}）`;
   if (m.op === ModOp.CapRaise) {
-    return `${label} 上限解鎖 ${authoredMagnitude(m.stat, m.op, m.value)}`;
+    return `${label} 上限解鎖 ${authoredMagnitude(m.stat, m.op, m.value)}${suffix}`;
   }
   const sign = m.value < 0 ? "−" : "+";
-  return `${label} ${sign}${authoredMagnitude(m.stat, m.op, m.value)}`;
+  return `${label} ${sign}${authoredMagnitude(m.stat, m.op, m.value)}${suffix}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -246,7 +285,7 @@ export function effectLine(efficacy: readonly string[]): string | null {
 export interface RowItem {
   readonly id: string;
   readonly name: string;
-  readonly modifiers?: readonly StatModifier[];
+  readonly modifiers?: readonly RowStatModifier[];
   /**
    * Item passives. Two INDEPENDENT gates ride here and both are read structurally
    * (never by re-typing their prose): `requires` = 職業限定閘 「誰能用」,
@@ -260,7 +299,41 @@ export interface RowItem {
   readonly auras?: readonly {
     hooks?: readonly { requires?: ClassRequirement; condition?: EffectCondition }[];
   }[];
+  /**
+   * 三圍加成 (`ItemDef.attributes`) — 四魂之玉 「力敏智+30」, 朗基努斯之槍
+   * 「力量+12 敏捷+12」.
+   *
+   * ⚠️ WITHOUT THIS THE GRANT IS INVISIBLE, which is failure shape ② with the
+   * layers reversed: the sim pays it, and no surface says so. {@link ATTR}
+   * lists 力量/敏捷/智慧 among the stat-CLAIM keywords, so
+   * `isStatClaimLine` STRIPS 「力量+12」 out of the ✦ effect line on the
+   * assumption that a chip is carrying it. Before this field there was no such
+   * chip and no modifier to build one from — 三圍 are not `Stat` members — so
+   * 朗基努斯之槍's two best lines were deleted from every tooltip in the game.
+   */
+  readonly attributes?: Readonly<Partial<Record<"str" | "agi" | "int", number>>>;
   readonly description?: string;
+}
+
+/**
+ * 「力量 +12」「敏捷 +12」 chips for an item's {@link RowItem.attributes}.
+ *
+ * Reads `ATTR_KEYS` / `ATTR_LABEL` from the shared attribute model rather than
+ * re-typing 力量/敏捷/智慧 here, so the shop's 三圍 rows, the 能力屬性強化 card
+ * and this chip cannot disagree about which is which. A zero or absent entry
+ * produces no chip: 朗基努斯之槍 grants no 智慧 and must not advertise 「智慧 +0」.
+ */
+export function attributeChips(
+  attrs: RowItem["attributes"] | undefined,
+): string[] {
+  if (!attrs) return [];
+  const out: string[] = [];
+  for (const k of ATTR_KEYS) {
+    const v = attrs[k];
+    if (typeof v !== "number" || !Number.isFinite(v) || v === 0) continue;
+    out.push(`${ATTR_LABEL[k]} ${v < 0 ? "−" : "+"}${trimZeros(Math.abs(v).toFixed(1))}`);
+  }
+  return out;
 }
 
 export interface ItemRow {
@@ -310,7 +383,12 @@ export function buildItemRow(item: RowItem, anchorStat: Stat | null): ItemRow {
   const parsed = parseItemDescription(item.description);
 
   let anchorText: string | null = null;
-  const secondary: string[] = [];
+  // 三圍 chips FIRST — a primary attribute outranks a derived stat in what it
+  // tells the buyer (one point of 力量 is health AND regen AND attack damage),
+  // and 力/敏/智 is the order every 三圍 surface iterates in (`ATTR_KEYS`).
+  // They are NEVER the anchor: no shelf anchors on an attribute, and an
+  // attribute has no `Stat` to compare against if one did.
+  const secondary: string[] = attributeChips(item.attributes);
   for (const m of merged) {
     if (anchorStat !== null && m.stat === anchorStat && m.op === ModOp.Flat) {
       // flat contribution to the anchor stat → the anchor column

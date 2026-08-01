@@ -39,7 +39,16 @@ import {
   type BossMarkerCtx,
 } from "./minimapBossMarker";
 
-const KING: MobBossMarker = { entityId: 77, zone: 1, worldX: 4, worldZ: -6, hpPct: 1 };
+const KING: MobBossMarker = {
+  entityId: 77,
+  zone: 1,
+  worldX: 4,
+  worldZ: -6,
+  hpPct: 1,
+  // #247 —— 長血條要真實數字,小地圖的紅點不讀它們,但型別是同一個 marker。
+  hp: 276944,
+  maxHp: 276944,
+};
 
 /** Records every 2D call so a test can assert what was actually painted. */
 function recorder(): BossMarkerCtx & { calls: { op: string; args: number[] }[] } {

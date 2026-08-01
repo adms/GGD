@@ -24,6 +24,7 @@ import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade, rollFumble } from "../combat/evasion";
+import { rollCritStrike } from "../combat/critStrike";
 import { armFacingLock, facingTicks } from "../facingLock";
 import { standstillBlocks } from "../combatFeel";
 import { breakStealth } from "../stealth";
@@ -365,13 +366,32 @@ function resolveAttack(
   // hit lands at projectile IMPACT (ProjectileSystem), and rolling in both
   // places would dodge a ranged auto twice. See combat/evasion.ts DECISION 2.
 
-  let amount = sc.final[Stat.AttackDamage];
+  const baseAmount = sc.final[Stat.AttackDamage];
+  let amount = baseAmount;
   let crit = false;
   const cc = sc.final[Stat.CritChance];
   if (cc > 0 && world.rng.chance(cc)) {
     crit = true;
     amount *= sc.final[Stat.CritDamage] || 1.75;
   }
+
+  // [暴擊吸血] (天堂之劍 godie-i01n) — AFTER the champion's own crit roll, so the
+  // 「取 max,不相乘」 arbitration in `combat/critStrike.ts` ③ can see both
+  // multipliers. It is a source-carried grant rather than two stat modifiers
+  // because 「10 倍只屬於這 6%」 and 「這一發吸滿」 both die the moment they are
+  // aggregated into `Stat.CritDamage` / `Stat.Lifesteal` — full derivation in
+  // that file's header.
+  //
+  // ZERO rng draws while nobody carries the grant (`critStrikeFor` returns
+  // before touching `world.rng`), so every existing replay/digest is
+  // bit-identical. `critLifesteal` rides the packet — and, for the ranged half,
+  // the PROJECTILE — because the roll happens at the swing and the lifesteal is
+  // paid in the damage queue, which by then has no way to know which swing this
+  // was (the two-push-site trap `combat/damageTypeOverride.ts` documents).
+  const cs = rollCritStrike(world, id, baseAmount, amount, crit);
+  crit = cs.crit;
+  amount = cs.amount;
+  const critLifesteal = cs.critLifesteal;
 
   const weaponClass = weaponClassOf(cdef, attackType);
   const dir = normalize(sub(tgtT.pos, t.pos));
@@ -408,6 +428,10 @@ function resolveAttack(
       basic: true,
       basicDamage: amount,
       crit,
+      // [暴擊吸血] 的遠程半邊。這一行就是 `damageTypeOverride.ts` 檔頭記著的那個
+      // 陷阱的解藥:普攻有**兩個**傷害 push 站點,只接近戰的話遠程英雄拿到的是
+      // 一把只有 10 倍傷害、完全不吸血的劍(失敗形態 ②)。
+      critLifesteal,
     });
     // the swing itself happens now; the hit lands at impact.
     // `projectileSpawn` is what the client hangs the MUZZLE FLASH on (see the
@@ -455,6 +479,9 @@ function resolveAttack(
     type: "physical",
     crit,
     origin: "basic",
+    // [暴擊吸血] — `undefined` on every swing that did not proc, which is what
+    // keeps `combat/damage.ts`'s 「持有者原本的吸血」 branch untouched.
+    critLifesteal,
   });
   fireHooks(world, id, "onBasicAttack", targetId);
 }

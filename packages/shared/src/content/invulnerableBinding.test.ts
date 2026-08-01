@@ -182,6 +182,13 @@ const EXPECTED_BOUND: readonly string[] = [
   "godie-ewrd.r", // 17-04 狂龍斬
   "godie-hapm.ex", // 52-002 射殺百頭 — war3map.j:52064 GetTriggerUnit() + :52065 udg_Buncle_Nine_Target
   "godie-hapm.w", // 52-02 蹂躪編年史 — war3map.j:51731 udg_Buncle_trample_Target(⚠️ JASS 掛在 TARGET)
+  // 01-04 超究武神霸斬 (GH#250) — war3map.j `Trig_SuperFF7_Actions`:
+  //   call UnitAddAbilityBJ( 'Avul', udg_FF7_CloudUnit )
+  // 掛在**施法者**身上,與同一段的 PauseUnitBJ(true, udg_FF7_CloudUnit) 一組,
+  // 覆蓋整段七連斬,直到迴圈結束才 UnitRemoveAbilityBJ('Avul', …)。
+  // ⚠️ blocksTrueDamage 仍然是 false —— WC3 的 'Avul' 連火都免,但 owner 的保底
+  // (#270 火圈改真實傷害)高於原作保真,見下面那條測試。
+  "godie-hart.r",
   "godie-hpb1.w", // 07-02 者、皆、陣 — war3map.j:34418 UnitAddAbilityBJ('Avul', GetTriggerUnit())
   "godie-nbst.ex", // 24-002 來~快點吃吧
   "godie-u00j.q", // 74-01 獄門

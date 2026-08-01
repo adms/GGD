@@ -27,9 +27,18 @@ import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
+import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
+import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
+import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
+import {
+  DEFAULT_TAUNT_RULES,
+  forgetSuspendedOrdersOn,
+  forgetTauntsBy,
+  type TauntRules,
+} from "./taunt";
 import { WEAPON_SHELF_OPEN } from "./economy/shopShelf";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
@@ -43,6 +52,7 @@ import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
 import { leapSystem } from "./systems/LeapSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
+import { resourceStatSystem } from "./stats/resourceStats";
 import { auraSystem } from "./aura/aura";
 import { auraCarrierSystem } from "./auraCarrier";
 import { nightPactSystem } from "./nightPact";
@@ -174,6 +184,28 @@ export class SimWorld {
    * different ledger says so on the tick the king dies.
    */
   readonly bossDamage = new Map<EntityId, Map<EntityId, number>>();
+
+  /**
+   * 這一回合每個戰場已經來過幾隻殭屍王 (#247, owner 2026-08-01 「每回合最多只會
+   * 出現一次殭屍王，不會無限出場」).
+   *
+   * KEY is `bossSpawnCapKey(zone, scope)` — the duel zone, or `-1` for the
+   * 「整場」 bucket. Written ONLY by `summonMobBoss` and cleared wholesale by
+   * `endCombatMobs`, which is the round boundary the host already calls. So the
+   * reset is an EVENT, not a deadline: there is no tick arithmetic here and
+   * nothing to drift (sim/purity.test.ts bans the decrementing-counter shape
+   * this would otherwise have taken).
+   *
+   * OUT OF `digest()`, on the `bossDamage` precedent directly above: the only
+   * observable effect of this counter is whether a king entity exists, and the
+   * king's spawn (its transform, its hp, its `mobSpawn`-side effects) is already
+   * digested at its source. A replica that counted differently diverges on the
+   * tick a king does or does not appear.
+   *
+   * NEVER ITERATED — only `get`/`set`/`clear` — so Map insertion order cannot
+   * leak into the sim (the sorted-iteration rule).
+   */
+  readonly bossSpawnsThisRound = new Map<number, number>();
 
   /**
    * Duel zones armed for mob waves this combat (task #215). Host state like
@@ -557,6 +589,24 @@ export class SimWorld {
   statCaps: StatCapTable = DEFAULT_STAT_CAPS;
 
   /**
+   * 身體放大倍數 → 攻擊距離 (see bodyScale.ts, `config.body-scale@1`, GH#252)。
+   * 和 `combatEnv` / `baseBonus` / `statCaps` 同一條規矩:開賽前指派一次,
+   * 之後不再動。預設是**出貨值**(owner 2026-08-01 的斷點表 1→1.0 / 2→1.2 /
+   * 3→1.3,中間內插、兩端夾住),不是「關掉」—— 一份載入失敗的文件不應該悄悄
+   * 拿走 owner 要的行為。
+   * 只作用在 `Stat.AttackRange`(普攻);技能距離走 `combatEnv.abilityRange`,
+   * 那是另一個決定,理由寫在 bodyScale.ts 的檔頭。
+   */
+  bodyScaleRules: BodyScaleRules = DEFAULT_BODY_SCALE_RULES;
+
+  /**
+   * 百分比回血規則 (see regenRules.ts, `config.regen@1`, GH#253)。
+   * 和 `statCaps` 同一條規矩:開賽前指派一次,之後不再動。預設**本身不改變
+   * 任何一場比賽** —— 百分比只有在英雄卡填了 `healthRegenPctOfMax` 時才啟動。
+   */
+  regenRules: RegenRules = DEFAULT_REGEN_RULES;
+
+  /**
    * 戰鬥手感規則 (see combatFeel.ts) —— 擊退法則 (GH#193) + 打就站定開關。
    * 和 `combatEnv` / `baseBonus` / `statCaps` 同一條規矩:開賽前指派一次,
    * 之後不再動,sim 從不讀 config/globals,所以決定性自動成立。
@@ -573,6 +623,15 @@ export class SimWorld {
    * 靜默失效。
    */
   shieldRules: ShieldRules = DEFAULT_SHIELD_RULES;
+
+  /**
+   * 格擋規則 (see blockRules.ts) —— 目前只有「多個格擋來源怎麼疊」一格
+   * (`config.block@1`)。和 `shieldRules` 同一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨值** `independent`(owner 2026-07-31:「獨立判斷兩次,拿第一次
+   * 檔掉剩餘繼續算下一次」),不是空物件 —— 一個 undefined 的 stacking 會讓
+   * `blockCutFor` 兩條分支都不走,於是格擋整族靜默失效。
+   */
+  blockRules: BlockRules = DEFAULT_BLOCK_RULES;
 
   /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat
@@ -742,15 +801,23 @@ export class SimWorld {
   readonly trueSight = new Map<EntityId, import("./stealth").TrueSightState>();
 
   /**
-   * 飛行 (無視碰撞) — entity → its RESOLVED flight grant this tick, written
-   * ONLY by `flightSystem` (sim/flight.ts) and read only by MovementSystem's
-   * three collision exemptions and by the snapshot's `h` channel.
+   * 飛行 (無視碰撞) — entity → its RESOLVED flight grant this tick, read by
+   * MovementSystem's three collision exemptions and by the snapshot's `h`
+   * channel.
    *
-   * Derived state, exactly like `stealth`/`trueSight`: reconciled from the
-   * attached `ModifierSource.flight` payloads every tick, so losing the source
-   * (dispel, 變身, round end, death) removes the flight on the next tick with
-   * no teardown path to forget. Empty in every match with no 莉娜因巴斯, so it
-   * costs nothing and perturbs nothing.
+   * TWO WRITERS, and they own disjoint halves of the key space:
+   *   · `flightSystem` (sim/flight.ts) for anything with a `StatsComp` —
+   *     DERIVED state, exactly like `stealth`/`trueSight`: reconciled from the
+   *     attached `ModifierSource.flight` payloads every tick, so losing the
+   *     source (dispel, 變身, round end, death) removes the flight on the next
+   *     tick with no teardown path to forget.
+   *   · `summonMobBoss` (#247) for the 殭屍王 — a ONE-SHOT grant written at
+   *     spawn, because a mob carries no StatsComp and therefore has no
+   *     `sources` array to derive from. `flightSystem` skips every id with a
+   *     `MobComp`, so the two writers cannot fight over one entry.
+   *
+   * `destroy` clears the key either way. Empty in every match with no
+   * 莉娜因巴斯 and no king, so it costs nothing and perturbs nothing.
    */
   readonly flight = new Map<EntityId, import("./flight").FlightGrant>();
 
@@ -768,6 +835,48 @@ export class SimWorld {
    * describe. Appended in effect order, drained in order, cleared on drain.
    */
   readonly pendingStunHooks: { victim: EntityId; source: EntityId }[] = [];
+
+  /**
+   * 嘲弄 (see taunt.ts) —— 受害者 → 「誰嘲弄我 + 到哪一絕對 tick 為止」。
+   *
+   * 自己一張 Map 而**不是** `StatusEffect` 上的一個旗標，理由是量出來的：
+   * `StatusComp` 只掛在英雄與召喚物身上，**小怪一個都沒有**，而 `applyStatus`
+   * 對沒有 StatusComp 的目標是靜默 `continue`。status 版本的嘲弄會對整波殭屍
+   * 完全無效，而卡片上寫著「吸引周圍敵人」—— 失敗形態 ②。
+   *
+   * 走 `invulnerable` 的形狀：**沒有 system**，到期是讀取時的絕對 tick 比較，
+   * 所以一筆過期紀錄是惰性垃圾而不是活著的效果。沒有嘲弄的比賽這張表是空的，
+   * 整個機制不花任何成本。
+   *
+   * 不進 `digest()`，走 `recentDamagers` / `killCombo` 的前例：它自己不改變任何
+   * 世界狀態，唯一的可觀測效果是「誰打誰」，而那立刻表現在已經被 digest 的
+   * 血量與座標上 —— 一個算錯嘲弄的 replica 在下一 tick 就會在傷害上分家。
+   */
+  readonly taunt = new Map<EntityId, import("./taunt").TauntState>();
+
+  /**
+   * 嘲弄暫時搶走的**玩家手選目標** —— `受害者 → 他原本點名的那個人`。
+   *
+   * 只有 `tauntRules.overridesManualOrder` 開著時才會有東西寫進來，而
+   * `tauntRules.restoreManualOrderOnLapse`（出貨 true）決定嘲弄退掉之後要不要
+   * 把它放回去。
+   *
+   * ⚠️ 它存在是因為舊實作把「接管」與「歸還」偷渡在**同一個布林值**上：手選
+   * 目標被清成 null 之後，OrderSystem 通用那條路會用 `attackTargetAuto = true`
+   * 重新填上，也就是一次右鍵點名被**永久**轉成自動目標，嘲弄退了也回不來。
+   * 記在這裡而不是 `Navigation` 上，是為了讓「沒有人被嘲弄的比賽」這張表完全
+   * 是空的（和 `taunt` 同一個形態），而且不必動一個被三十幾支測試手寫的元件。
+   */
+  readonly suspendedOrder = new Map<EntityId, EntityId>();
+
+  /**
+   * 嘲弄規則 (`config.taunt@1`, see taunt.ts) —— 總開關、要不要蓋掉玩家手選的
+   * 目標、小怪吃不吃、衝突怎麼解、全域持續時間倍率。和 `stealthRules` 完全同
+   * 一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨表**,不是空物件 —— 空表會讓 `enabled` 讀成 undefined(falsy),
+   * 也就是嘲弄靜默消失,而道具照樣買得到、描述照樣寫著。
+   */
+  tauntRules: TauntRules = DEFAULT_TAUNT_RULES;
 
   /**
    * 隱形規則 (`config.stealth@1`, see stealth.ts) —— 隱形擋不擋自動索敵／手動
@@ -884,6 +993,21 @@ export class SimWorld {
     this.stealth.delete(id);
     this.trueSight.delete(id);
     this.flight.delete(id);
+    // 嘲弄: TWO directions, and the second one is the one that bites. Dropping
+    // the victim's own row is the ordinary contract every store above follows.
+    // But `world.taunt` is also indexed BY THE TAUNTER, so a dead taunter whose
+    // entityId is recycled into a new hostile body would silently keep dragging
+    // its old victims onto that new body — and every legality check in
+    // `forcedTargetOf` would PASS (alive, same zone, enemy team). See
+    // sim/taunt.ts::forgetTauntsBy.
+    this.taunt.delete(id);
+    forgetTauntsBy(this, id);
+    // …and the manual order the taunt suspended, in BOTH directions for exactly
+    // the same reason: the map is keyed by the VICTIM and VALUED by the target
+    // he clicked, so a recycled id would "restore" him onto a body he never
+    // picked. See sim/taunt.ts::forgetSuspendedOrdersOn.
+    this.suspendedOrder.delete(id);
+    forgetSuspendedOrdersOn(this, id);
   }
 
   emit(type: string, data: Record<string, unknown>): void {
@@ -1093,6 +1217,24 @@ export class SimWorld {
     //                             this tick's alive-state is final before anyone is
     //                             paid; the throw itself happened back at slot 3.
     regenSystem(this); // 10. hp/mana regen
+    resourceStatSystem(this); // 10a. 資源衍生屬性 (光魔杖「AP+ (目前MP的 5%)」):
+    //                             mark dirty when the LIVE hp/mana a
+    //                             `ModOp.PercentOf` + `fromResource` modifier
+    //                             reads has actually moved.
+    //
+    //                             SLOT IS LOAD-BEARING IN BOTH DIRECTIONS.
+    //                             AFTER regen (10) so this tick's mana tick is
+    //                             already in — and the same scan also picks up
+    //                             the mana this tick's `spendMana` burned back
+    //                             at slot 8, so ONE pass absorbs both writers.
+    //                             BEFORE the late recompute (11) so the new AP
+    //                             is folded in the SAME tick it moved, instead
+    //                             of waiting a frame for slot 1.
+    //
+    //                             Costs one `sources` walk per unit and NOTHING
+    //                             else while no item authors `fromResource` —
+    //                             the same shape stealthSystem/flightSystem
+    //                             already pay (sim/stats/resourceStats.ts ②).
     statRecomputeSystem(this); // 11. late recompute for same-tick attaches
     accumulateTimeAlive(this); // 12. match-stat time-alive (combat-gated)
 

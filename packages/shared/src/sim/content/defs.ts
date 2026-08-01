@@ -5,9 +5,10 @@
  */
 import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
 import type { Stat, StatBlock } from "../stats/statTypes";
-import type { ChampionAttributes } from "../stats/attributes";
+import type { AttrGrant, ChampionAttributes } from "../stats/attributes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
 import type { AuraDef } from "../aura/aura";
+import type { ClassRequirement } from "./requirement";
 import type { VisionGrant } from "../stealth";
 import type { EffectDef } from "../effects/effect";
 import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
@@ -181,6 +182,31 @@ export interface ChampionDef {
    */
   attributes?: ChampionAttributes;
   /**
+   * 身體放大倍數 (GH#252) —— 「這位英雄的身體是一個正常體型英雄的幾倍大」。
+   * 缺 = 1.0(正常體型),113 位裡有 24 位不是 1。
+   *
+   * ⚠️ 它**不是**渲染那條路上的任何一個數字的複本,雖然出貨值是從那裡抄來的。
+   * 螢幕上的大小由 `content/models/_standin-overrides.json` 決定,而那份檔案是
+   * client-only(不在 `content/manifest.json` 裡),sim 從來讀不到 —— 這就是為什麼
+   * 在 GH#252 之前「體型影響射程」在物理上不可能發生。出貨值取那份檔案的
+   * `standinRelativeScale ?? relativeScale`(= `standinScale.ts` 的
+   * `standinRelativeScaleOf`,語意正是「相對於正規化後的一般人有多大」),
+   * 兩邊由 `content/championBodyScale.test.ts` 對帳,所以它不會靜默 drift。
+   *
+   * 唯一的消費端是 `sim/bodyScale.ts attackRangeScaleFactor` → `finalizeStat`
+   * 的 `rangeScale` → `Stat.AttackRange`。技能距離**不**看它(見 bodyScale.ts)。
+   */
+  bodyScale?: number;
+  /**
+   * 每秒回復「最大生命的百分比」(GH#253)。`0.01` = 每秒 1%。
+   * 缺 = 這位英雄沒有百分比回血,只吃 `Stat.HealthRegen` 那條固定值。
+   *
+   * 出貨內容只有 `godie-hapm`(海克力斯 - Berserker)填了它。百分比與固定值
+   * 的關係、以及「有沒有保底」都是 `config.regen@1` 的欄位 ——
+   * 見 `sim/regenRules.ts`,消費端是 `systems/RegenSystem.ts`。
+   */
+  healthRegenPctOfMax?: number;
+  /**
    * Ranged auto-attack projectile speed (GGD units/sec, ~= WC3 missile speed
    * × the import distance factor). Ignored for melee. Default applied by the
    * BasicAttackSystem when absent.
@@ -254,13 +280,84 @@ export interface ChampionDef {
   tags: string[];
 }
 
+/**
+ * A static item modifier that may be gated on WHO is holding the weapon —
+ * mirrors `zGatedItemStatModifier` in content/schema/item.ts, where the choice
+ * of this shape (over a parallel `modifiersByAttackType` map) is argued.
+ *
+ * `requires` absent = every carrier gets it, which is every modifier authored
+ * before this field existed. Resolved ONCE at equip time by
+ * `sim/economy/itemSource.ts`; the `ModifierSource.modifiers` the stat pipeline
+ * folds is always a plain, already-resolved `StatModifier[]`.
+ */
+export interface ItemStatModifier extends StatModifier {
+  requires?: ClassRequirement;
+}
+
+/**
+ * 套裝 — 「同時裝備 A、B、C，則…」. Mirrors `zItemSetBonus` in
+ * content/schema/item.ts; the mechanism and the reason it is authored on the
+ * ITEM rather than in a config doc are in `sim/economy/itemSets.ts`.
+ *
+ * ⚠️ The reward is granted ONCE per set (one `ModifierSource` keyed by `id`),
+ * NOT once per piece held. Reading this array straight onto an item's own
+ * source would give 死之王套裝 +300 % AP instead of +100 %.
+ */
+export interface ItemSetBonus {
+  /** 套裝 id — THE de-duplication key. Every piece repeats the same block. */
+  id: string;
+  /** 套裝名 for a card/tooltip, e.g. 「死之王套裝」. */
+  name?: string;
+  /** every item that counts toward this set (must include the declaring doc). */
+  pieces: ItemId[];
+  /** how many pieces must be held. Absent = ALL of them. */
+  requiredPieces?: number;
+  /** do two copies of one piece count twice? Absent = false (distinct pieces). */
+  countDuplicates?: boolean;
+  /** off switch. Absent = true — authoring the set is enough to arm it. */
+  enabled?: boolean;
+  /** what a COMPLETED set grants the holder. May carry the 職業限定閘. */
+  modifiers: ItemStatModifier[];
+}
+
 export interface ItemDef {
   id: ItemId;
   name: string;
   cost: number;
   tier: number;
   unique?: boolean;
-  modifiers?: StatModifier[];
+  /**
+   * 靜態加成. Entries may carry a `requires` 職業限定閘 — 貫雷槍's 「近戰攻擊
+   * 距離+4；遠戰攻擊距離+2」 is two entries on this one array, not two arrays.
+   * NEVER read this list straight onto a ModifierSource: go through
+   * `sim/economy/itemSource.ts::attachItemSource`, which applies the gate.
+   */
+  modifiers?: ItemStatModifier[];
+  /**
+   * 三圍加成 — 力/敏/智 granted while this item is equipped. Mirrors
+   * `item@1.attributes`. 四魂之玉 「力敏智+30」, 朗基努斯之槍 「力量+12 敏捷+12」.
+   *
+   * A SEPARATE payload from `modifiers`, not an entry in it, because 力/敏/智
+   * are not members of `Stat`: they are the champion attribute model
+   * (`stats/attributes.ts`), and one point fans out into up to three derived
+   * stats under two different arithmetics (armor additively, attack speed
+   * MULTIPLICATIVELY on the champion's own base). Forwarded onto the
+   * `kind: "item"` ModifierSource by `economy/itemSource.ts` and folded into the
+   * champion's BASE by `stats/statPipeline.ts` — the same seam the 能力屬性強化
+   * 三選一 card (#260) uses, so an item's +30 STR and a card's +30 STR are the
+   * same number by construction rather than by agreement.
+   */
+  attributes?: AttrGrant;
+  /**
+   * 套裝 this item belongs to — mirrors `item@1.sets`. Absent on every doc that
+   * predates it, which is all but the three 死之王 pieces.
+   *
+   * ⚠️ NEVER fold these into the item's own `ModifierSource`. The set pays out
+   * ONCE, through a separate `item-set:<id>` source built by
+   * `sim/economy/itemSets.ts` — three pieces each carrying the reward is +300 %,
+   * not +100 %.
+   */
+  sets?: ItemSetBonus[];
   passive?: HookDef[];
   /**
    * 光環 this item projects around its holder — mirrors `item@1.auras`.
@@ -273,6 +370,44 @@ export interface ItemDef {
    * `hooks[].requires` read as 「周圍的近戰友軍」.
    */
   auras?: AuraDef[];
+  /**
+   * 隱形 / 真視 granted while this item is equipped — mirrors `item@1.vision`.
+   * Rides the `kind: "item"` ModifierSource exactly like an ability passive's
+   * does, so `sim/stealth.ts` `syncVisionGrants` needs no new branch: it walks
+   * every source on the StatsComp and reads `src.vision`.
+   */
+  vision?: VisionGrant;
+  /**
+   * 飛行 (無視碰撞) granted while this item is equipped — mirrors
+   * `item@1.flight`. Same wiring as `vision`: `sim/flight.ts`
+   * `syncFlightGrants` already reads `src.flight` off every source.
+   */
+  flight?: import("../flight").FlightGrant;
+  /**
+   * 傷害型別轉換 while equipped — mirrors `item@1.damageTypeOverride`.
+   * 「[無視] 普攻無視敵方防禦真實傷害」/「[真實傷害] 所有裝備者技能傷害都轉為
+   * 真實傷害」。Rides the `kind: "item"` ModifierSource; the whole wiring is one
+   * forward in `economy/itemSource.ts`, and the only reader is the damage queue
+   * (`combat/damageTypeOverride.ts`). Absent on every doc that predates it.
+   */
+  damageTypeOverride?: import("../combat/damageTypeOverride").DamageTypeOverride;
+  /**
+   * 格擋 while equipped — mirrors `item@1.block`.
+   * 「[格擋] 50%格擋 AD 及 AP 傷害 (真實傷害無法阻擋)」/「50%機率抵擋 100% AP傷害」/
+   * 「30%機率 抵擋致命一擊(超過現存生命的傷害)」—— 三句話、一組軸。Rides the
+   * `kind: "item"` ModifierSource; the whole wiring is one forward in
+   * `economy/itemSource.ts`, and the only reader is the damage queue
+   * (`combat/block.ts::blockCutFor`). Absent on every doc that predates it.
+   */
+  block?: import("../combat/block").BlockGrant;
+  /**
+   * [暴擊吸血] —— 天堂之劍 (godie-i01n) 「6%機率造成10倍暴擊傷害，暴擊時吸血
+   * 回復100%傷害」。Rides the `ModifierSource` through `economy/itemSource.ts`;
+   * the readers are the swing point (`systems/BasicAttackSystem.ts`, the roll)
+   * and the damage queue (`combat/damage.ts`, the lifesteal payout), both via
+   * `combat/critStrike.ts`. Absent on every doc that predates it.
+   */
+  critStrike?: import("../combat/critStrike").CritStrikeGrant;
   iconKey?: string;
   /**
    * Icon path relative to content/ ("assets/icons/items/<id>.png", w3x

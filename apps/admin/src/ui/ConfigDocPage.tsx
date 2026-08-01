@@ -32,6 +32,16 @@ import {
   type ConfigDocSpec,
   type ConfigFieldRow,
 } from "../configForms";
+import {
+  addCurveRow,
+  curvePreviewRows,
+  curveRowsFrom,
+  removeCurveRow,
+  setCurveCell,
+  validateCurve,
+  type ConfigCurveSpec,
+  type CurveRowDraft,
+} from "../configCurve";
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -53,6 +63,14 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
   const [shipped, setShipped] = useState<unknown>(null);
   const [source, setSource] = useState<"overlay" | "shipped" | "none">("none");
   const [draft, setDraft] = useState<Record<string, string>>({});
+  /**
+   * 斷點曲線的畫面狀態（`spec.curve` 沒宣告時永遠是 null）。
+   *
+   * ⚠️ 它和 `draft` 分開存，因為 `draft` 是「path → 一個字串」而曲線是一張表。
+   * 硬塞進 `draft` 的話，加一列就得發明一套 `curve.3.x` 路徑語法，而那套語法要在
+   * 存檔時再被拆回來一次 —— 兩次翻譯就是兩個會 drift 的地方。
+   */
+  const [curveRows, setCurveRows] = useState<CurveRowDraft[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -65,6 +83,7 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         const shippedResp = await getShippedDoc(spec.collection, spec.docId);
         const shippedDoc = shippedResp.present ? docIfMatches(spec, shippedResp.doc) : null;
         setShipped(shippedDoc);
+        const live = overlaid ?? shippedDoc;
         if (overlaid) {
           setBase(overlaid);
           setSource("overlay");
@@ -74,6 +93,7 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         } else {
           setSource("none");
         }
+        if (spec.curve) setCurveRows(curveRowsFrom(live, spec.curve));
       } catch (err) {
         setApiErr(errText(err));
       }
@@ -97,8 +117,21 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
     return out;
   }, [rows, draft]);
 
-  const dirty = Object.keys(draft).length > 0;
-  const allValid = Object.keys(errors).length === 0;
+  /** 斷點表的判決（沒有曲線的文件是 null）。 */
+  const curveVerdict = useMemo(
+    () => (spec.curve && curveRows !== null ? validateCurve(curveRows, spec.curve) : null),
+    [spec.curve, curveRows],
+  );
+
+  /** 表被動過了嗎（和基底文件裡那一張比）。 */
+  const curveDirty = useMemo(() => {
+    if (!spec.curve || curveRows === null) return false;
+    return JSON.stringify(curveRows) !== JSON.stringify(curveRowsFrom(base, spec.curve));
+  }, [spec.curve, curveRows, base]);
+
+  const dirty = Object.keys(draft).length > 0 || curveDirty;
+  const allValid =
+    Object.keys(errors).length === 0 && (curveVerdict === null || curveVerdict.points !== null);
   const canSave = dirty && allValid && base !== null && !busy;
 
   const save = async (): Promise<void> => {
@@ -112,6 +145,12 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         const verdict = parseFieldInput(r, raw);
         if (!verdict.ok) throw new Error(`${r.label.zh}：${verdict.error}`);
         edits.set(r.path, verdict.value);
+      }
+      if (spec.curve && curveDirty) {
+        // 判決是 null 就是這張表現在不合法 —— 這裡丟例外而不是「送出還能送的部分」，
+        // 因為半張曲線在 sim 那端會整條退回出貨曲線，而畫面會說「✓ 已寫入」。
+        if (!curveVerdict?.points) throw new Error(`${spec.curve.title}：這張表還沒填對`);
+        edits.set(spec.curve.path, curveVerdict.points);
       }
       // ⚠️ 整份文件 = 基底 ⊕ 編輯。把 `base` 換成 `{}` 或只放編輯過的鍵，
       // 這一頁不認得的分支就會在這一次儲存裡消失。
@@ -252,6 +291,18 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         })}
       </div>
 
+      {spec.curve && (
+        <CurveTable
+          spec={spec.curve}
+          rows={curveRows}
+          setRows={setCurveRows}
+          enabled={
+            (draft["enabled"] ?? inputValue((base as { enabled?: unknown } | null)?.enabled)) !==
+            "false"
+          }
+        />
+      )}
+
       {spec.preserved.length > 0 && (
         <div
           data-field="preserved-note"
@@ -287,5 +338,175 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         </span>
       </div>
     </Panel>
+  );
+}
+
+// ───────────────────────────────────────────────────── 斷點曲線的表格 ──────
+
+/**
+ * 一張可以加/刪列的兩欄斷點表（GH#252 的 `attackRangeCurve`）。
+ *
+ * ⚠️ 這個元件**只負責畫**。「這一列填得對不對」「這張表順序對不對」「存下去會
+ * 變成什麼」全部在 `../configCurve`，理由和 `statCaps.ts` 檔頭那一段一樣：規則
+ * 寫在畫面裡就沒有人測得到，而這張表最容易錯的是順序與重複，不是排版。
+ *
+ * ⚠️ 預覽那一段走的是 sim 出貨的 `attackRangeScaleFactor`（`curvePreviewRows`
+ * 裡呼叫），不是這裡自己內插一次 —— 後台自己算一次就會很有自信地畫出一條和
+ * 伺服器不一樣的曲線，而兩邊都不會報錯。
+ */
+function CurveTable(props: {
+  spec: ConfigCurveSpec;
+  rows: CurveRowDraft[] | null;
+  setRows: (next: CurveRowDraft[]) => void;
+  /** 總開關現在的狀態 —— 關著的時候預覽要誠實地全部顯示 1.00× */
+  enabled: boolean;
+}): JSX.Element {
+  const { spec, rows, setRows, enabled } = props;
+  const verdict = useMemo(() => (rows ? validateCurve(rows, spec) : null), [rows, spec]);
+  const preview = useMemo(
+    () => curvePreviewRows(verdict?.points ?? null, spec, enabled),
+    [verdict, spec, enabled],
+  );
+
+  const cell = (i: number, col: "x" | "y"): JSX.Element => {
+    const err = verdict?.rows[i]?.[col];
+    return (
+      <span style={{ display: "inline-flex", flexDirection: "column", gap: 3 }}>
+        <input
+          aria-label={`第 ${i + 1} 列 ${spec[col].zh}`}
+          data-field={`curve.${i}.${col}`}
+          value={rows![i]![col]}
+          inputMode="decimal"
+          onChange={(e) => setRows(setCurveCell(rows!, i, col, e.target.value))}
+          style={{
+            width: 96,
+            padding: "5px 8px",
+            background: "#10141f",
+            color: err ? DANGER : TEXT_MAIN,
+            border: `1px solid ${err ? DANGER : PANEL_BORDER}`,
+            borderRadius: 4,
+            fontSize: 13,
+            textAlign: "right",
+          }}
+        />
+        {err && <span style={{ color: DANGER, fontSize: 11 }}>{err}</span>}
+      </span>
+    );
+  };
+
+  return (
+    <div
+      data-field="curve-section"
+      style={{
+        marginTop: 14,
+        padding: "12px 14px",
+        border: `1px solid ${PANEL_BORDER}`,
+        borderRadius: 6,
+      }}
+    >
+      <div style={{ color: TEXT_MAIN, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+        {spec.title}
+      </div>
+      {spec.intro.map((p, i) => (
+        <p key={i} style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.75, margin: "0 0 8px" }}>
+          {p}
+        </p>
+      ))}
+      <div style={{ color: TEXT_DIM, fontSize: 11, lineHeight: 1.7, margin: "0 0 10px" }}>
+        <b style={{ color: TEXT_MAIN }}>{spec.x.zh}</b>（{spec.x.min} ～ {spec.x.max}）
+        {spec.x.note}
+        <br />
+        <b style={{ color: TEXT_MAIN }}>{spec.y.zh}</b>（{spec.y.min} ～ {spec.y.max}）
+        {spec.y.note}
+      </div>
+
+      {rows === null || rows.length === 0 ? (
+        <div data-field="curve-empty" style={{ color: DANGER, fontSize: 12, lineHeight: 1.7 }}>
+          ⚠️ 這份文件裡讀不到 <code>{spec.path}</code>。按「＋ 新增一列」把整張表填回來
+          —— 至少 {spec.minRows} 列，否則遊戲會整條退回出貨曲線（＝這次儲存不會有效果）。
+        </div>
+      ) : (
+        <div style={{ display: "grid", gap: 6 }}>
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <span style={{ width: 28 }} />
+            <span style={{ width: 96, color: TEXT_DIM, fontSize: 11, textAlign: "right" }}>
+              {spec.x.zh}
+            </span>
+            <span style={{ width: 96, color: TEXT_DIM, fontSize: 11, textAlign: "right" }}>
+              {spec.y.zh}
+            </span>
+          </div>
+          {rows.map((_, i) => (
+            <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+              <span style={{ width: 28, color: TEXT_DIM, fontSize: 12, paddingTop: 6 }}>
+                {i + 1}.
+              </span>
+              {cell(i, "x")}
+              {cell(i, "y")}
+              <Btn
+                small
+                kind="danger"
+                dataField={`curve.remove.${i}`}
+                disabled={rows.length <= spec.minRows}
+                title={
+                  rows.length <= spec.minRows
+                    ? `已經只剩 ${spec.minRows} 列 —— 再刪就不成一條曲線了`
+                    : "刪掉這一列"
+                }
+                onClick={() => setRows(removeCurveRow(rows, i))}
+              >
+                刪除
+              </Btn>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+        <Btn
+          small
+          dataField="curve.add"
+          disabled={(rows?.length ?? 0) >= spec.maxRows}
+          title={
+            (rows?.length ?? 0) >= spec.maxRows
+              ? `最多 ${spec.maxRows} 列`
+              : "加一列（留白，填上去之後才會被存出去）"
+          }
+          onClick={() => setRows(addCurveRow(rows ?? []))}
+        >
+          ＋ 新增一列
+        </Btn>
+        {verdict?.table && (
+          <span data-field="curve-error" style={{ color: DANGER, fontSize: 12 }}>
+            {verdict.table}
+          </span>
+        )}
+      </div>
+
+      {preview.length > 0 && (
+        <div
+          data-field="curve-preview"
+          style={{
+            marginTop: 12,
+            paddingTop: 10,
+            borderTop: `1px solid ${PANEL_BORDER}`,
+            color: TEXT_DIM,
+            fontSize: 12,
+            lineHeight: 1.8,
+          }}
+        >
+          這張表套下去，場上的人會拿到：
+          {preview.map((p) => (
+            <div key={p.x}>
+              體型 <code style={{ color: TEXT_MAIN }}>{p.x}</code> →{" "}
+              <code style={{ color: p.mult === 1 ? TEXT_DIM : GOLD }}>
+                {p.mult.toFixed(3)}×
+              </code>{" "}
+              射程　<span style={{ opacity: 0.8 }}>{p.who}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

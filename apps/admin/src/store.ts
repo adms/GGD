@@ -84,6 +84,13 @@ export type Page =
    */
   | "combatFeel"
   /**
+   * 傳說武器三選一 (`config/arena-rules.json` 的 `itemDraft`, GH#249): 候選武器
+   * 不足時卡片要發短、借別的獎池、還是重複補滿。與 mobWaves 同一份文件、不同區塊,
+   * 所以是自己一頁 —— 一頁編輯一整份 arena-rules 會讓兩條 lane 互相蓋掉對方。
+   * 寫入走 `putOverlayDoc`,所以它在 SESSION_REQUIRED_PAGES 裡。
+   */
+  | "itemDraft"
+  /**
    * 對戰設定 (`config/config.match.json`): 回合時鐘（選角／中場／戰鬥／結算秒數、
    * 起始隊伍生命）與火圈。⚠️ 這份文件的 32 個數字欄位裡只有 13 個真的有消費端 ——
    * 其餘（起始金錢、經驗、背包格數、隊伍數、模擬頻率…）在頁面上是**唯讀**的，
@@ -125,13 +132,47 @@ export type Page =
   /** 濺血程度 (`config/gore.json`): 打中噴多少血 —— 家裡有人在看時的那個開關。 */
   | "gore"
   /**
+   * 傷害數字配色 (`config/damage-colors.json`, owner 2026-08-01): 物理紅／
+   * 魔法紫／真實白／治療綠。自己一頁,因為在它出現之前客戶端只判斷「是不是
+   * 魔法」—— 真實傷害的數字和物理傷害**逐像素相同**,[無視] 在畫面上唯一的
+   * 證據是「對面死得比較快」。
+   */
+  | "damageColors"
+  /**
    * 護盾規則 (`config/shield.json`): 一個人身上同時有兩道盾時,一發傷害先花掉
    * 哪一道。自己一頁而不是併進 戰鬥手感,因為手感那一頁的欄位是
    * `deriveFields(zConfigCombatFeelDoc)` 推導出來的而那支推導器只認得
    * number / boolean —— 這一格是 enum。
    */
   | "shieldRules"
+  /**
+   * 格擋規則 (`config/block.json`): 一個人身上同時有兩件 [格擋] 傳說武器時,
+   * 它們獨立各抽各的(owner 2026-07-31 的裁決,出貨值)還是只有最強的那一件會
+   * 擋。自己一頁而不是併進 護盾規則,因為那是**兩份文件** —— 併進去等於把
+   * `config.shield@1` 升版,而一份線上已經存過 overlay 的文件升版,代價是操作者
+   * 存過的值要遷移。
+   */
+  | "blockRules"
   | "stealthRules"
+  /**
+   * 嘲弄規則 (`config/taunt.json`): 誰拉得動誰、拉多久、以及嘲弄能不能從**玩家
+   * 自己手上**把目標搶走。自己一頁而不是併進 戰鬥手感,同 護盾規則 的理由
+   * (`conflictMode` 是 enum,而手感那一頁的推導器只認得 number / boolean)。
+   */
+  | "tauntRules"
+  /**
+   * 體型與射程 (`config/body-scale.json`, GH#252): 身體放大倍數怎麼換算成普攻
+   * 射程。自己一頁而不是併進 戰鬥系統,理由是 戰鬥系統 那一張表的每一格都是
+   * 「一個 stat × 一個常數」,而這一頁是一條**公式**(1 + (體型−1) × 係數)加上
+   * 兩個夾值 —— 塞進去會讓那張表多出三格語意不同的東西。
+   */
+  | "bodyScale"
+  /**
+   * 回血規則 (`config/regen.json`, GH#253): 百分比回血與英雄卡固定回血的關係、
+   * 以及有沒有保底。同上,它是規則不是倍率。
+   */
+  | "regenRules"
+  | "arenaFire"
   /**
    * 鑄技工坊 · 特效綁定 (`config/vfx-bindings`, tasks #205 / #230 / #272) —— 每支
    * 技能綁哪一個**家族原型** + 六段 per-invocation 參數 (scale / tint / alpha /
@@ -364,10 +405,22 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "modelLod",
   "vfxCleanup",
   "gore",
+  // 傷害數字配色: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "damageColors",
   // 護盾規則: 第四頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`,所以
   // 同一條規則。
   "shieldRules",
+  // 格擋規則: 第五頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "blockRules",
   "stealthRules",
+  // 嘲弄規則: 第六頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "tauntRules",
+  // 體型與射程 / 回血規則 (GH#252 / GH#253): 同一個 `ConfigDocPage` 元件、同一條
+  // `putOverlayDoc`,所以同一條 session 規則。
+  "bodyScale",
+  "regenRules",
+  // 場地環境火焰 (GH#251): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "arenaFire",
   // 鑄技工坊: 同上。它讀 /content(不需要 session)但寫 `putOverlayDoc`(需要),
   // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
   // 發現從頭到尾就沒有可以寫入的 session。
@@ -376,6 +429,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.
   "mobWaves",
+  // 傳說武器三選一: 同一條 `putOverlayDoc` 寫入路徑(而且寫的是同一份 arena-rules
+  // 文件),所以同一條規則 —— 沒有 session 每一次儲存都會 401。
+  "itemDraft",
   "serverOps",
   "mcoinGrant",
   "invites",
