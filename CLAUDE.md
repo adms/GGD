@@ -140,6 +140,15 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 - **Colyseus `defineTypes` 是 APPEND-ONLY** —— 新欄位只能加在最後，**加錯回不去**。
   優先用 `ENTITY_FLAG` 的空位 bit（值編碼，可以改回來）。目前剩 16384 / 32768 兩格。
 - 每一次 `content/` 編輯都要跑 `pnpm content:build`，否則 `bundle.test.ts` 紅。
+  **它現在會先跑一次嚴格 Zod 驗證再寫入**（2026-08-01 補上）—— 超過上下界的欄位在這裡
+  就會被擋，訊息指名那個檔與那個欄位。
+  ⚠️ **在此之前它什麼都不驗**，只重建索引，對 schema 拒絕的內容照樣 EXIT 0。上界確實
+  寫在 Zod 裡，但只在 `ContentLoader.load()` 才跑，所以違規要等到某條剛好用嚴格載入器的
+  測試才爆，而且**第一行錯誤指的是別的文件**（參照不到那份載入失敗的），害人反向追。
+  同一個下午有兩位作者踩到同一個坑。**只在遠離現場的地方響的警報不是守衛** ——
+  下次再看到「規則寫在 schema 裡」，要問的是「那條規則在編輯發生的當下跑不跑」。
+  守衛：`packages/shared/src/content/buildIndexesValidates.test.ts`（真的執行那支腳本，
+  不是掃原始碼字串）。
 - **`pnpm -s typecheck | grep error` 結構上永遠不會 match**（`-s` 吞掉子專案輸出）。
   一律看離開碼：`pnpm typecheck; echo "EXIT=$?"`。
   ⚠️ 同一個陷阱有**三種變形**，三種都真的騙過人：

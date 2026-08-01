@@ -1,18 +1,18 @@
 {
   "collection": "config",
-  "hash": "b5fd1bd4bcf2",
+  "hash": "74bfa4faad89",
   "entries": [
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
-      "hash": "00af4aa3e6f9",
-      "size": 1371
+      "hash": "b6f38074ebd6",
+      "size": 1514
     },
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "75a05af1f33a",
-      "size": 5467
+      "hash": "e1355a16692a",
+      "size": 5808
     },
     {
       "id": "audio-map",
@@ -25,6 +25,18 @@
       "path": "config/base-bonus.json",
       "hash": "0ff7082d3602",
       "size": 99
+    },
+    {
+      "id": "block",
+      "path": "config/block.json",
+      "hash": "1fa5a299849a",
+      "size": 704
+    },
+    {
+      "id": "body-scale",
+      "path": "config/body-scale.json",
+      "hash": "8d51846af724",
+      "size": 1053
     },
     {
       "id": "champion-voices",
@@ -41,14 +53,20 @@
     {
       "id": "combat-feel",
       "path": "config/combat-feel.json",
-      "hash": "ed59de72c9ab",
-      "size": 477
+      "hash": "f2ba7fd27d61",
+      "size": 501
     },
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "39ad0eb861ca",
-      "size": 987
+      "hash": "01f5a36475f4",
+      "size": 1017
+    },
+    {
+      "id": "damage-colors",
+      "path": "config/damage-colors.json",
+      "hash": "632142e0a99a",
+      "size": 947
     },
     {
       "id": "form-visuals",
@@ -75,6 +93,12 @@
       "size": 459
     },
     {
+      "id": "regen",
+      "path": "config/regen.json",
+      "hash": "7d25d6d271fe",
+      "size": 1169
+    },
+    {
       "id": "round-grade",
       "path": "config/round-grade.json",
       "hash": "fe58dd47b882",
@@ -89,8 +113,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "e02d5cdc4f55",
-      "size": 135
+      "hash": "306d9b14688b",
+      "size": 201
     },
     {
       "id": "stealth",
@@ -103,6 +127,12 @@
       "path": "config/store.json",
       "hash": "f3479e15b182",
       "size": 430
+    },
+    {
+      "id": "taunt",
+      "path": "config/taunt.json",
+      "hash": "501b1b2be7b7",
+      "size": 697
     },
     {
       "id": "unit-tints",

@@ -169,19 +169,118 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // --- 觸發條件 (owner 2026-07-30 「on-attack by condition 這個一定要實作」) ---
   // ONE field on the shared `zHookDef`, so the census sees it twice: once under
   // the ability-passive hook node and once under `items.passive`, which item.ts
-  // split off when it added `requires`. Both are genuinely at zero adoption
-  // TODAY, and both are expected to move as the 鑄技工坊 pass re-authors the proc
-  // families — the 攻擊觸發 template already ships the 獸矛 gate as its slot
-  // default, so the FIRST card expanded from it adopts the ability-side key.
+  // split off when it added `requires`. The ability side is still at zero and
+  // is expected to move as the 鑄技工坊 pass re-authors the proc families — the
+  // 攻擊觸發 template already ships the 獸矛 gate as its slot default, so the
+  // FIRST card expanded from it adopts the ability-side key.
   //
   // ⚠️ It is `landing` and NOT `default-live`: an absent condition really does
   // mean 「無條件觸發」, so a code default is not covering for the zero. If this
   // is still red in 30 days, the honest conclusion is that no content adopted
   // the mechanism and it should be re-triaged, not re-granted.
-  "field:items.passive[].condition": {
+  //
+  // 2026-08-01 —— `field:items.passive[].condition` 的豁免**已刪除**(棘輪生效)。
+  // 它預期的第一批客戶到了,而且正好就是註解寫的那兩種形狀:鍊金術之盾
+  // godie-i06q「HP 低於 5% 的敵人」、死之王的意志 godie-i060 [斬殺]「生命低於 3%」、
+  // 螺旋劍 godie-i01v 與 光魔杖 godie-i027 的「自身法力 ≥ N%」。
+
+  // --- 套裝 item@1.sets (死之王套裝, 2026-08-01) ---------------------------
+  // Three OPTIONAL knobs on a field whose three required halves (`id`/`pieces`/
+  // `modifiers`) are 3/3 adopted, so the mechanism itself is NOT at zero — the
+  // shipped 死之王套裝 pays out and `sim/lichkingSet.test.ts` drives it end to
+  // end. Each of these three exists so a DECISION lives in the 後台 instead of
+  // in a code branch (CLAUDE.md 第一守則), and the shipped set deliberately
+  // takes the default on all three. That is the textbook shape of
+  // "default-live" rather than "landing": zero adoption here means 「沒有人需要
+  // 覆寫」, and if it stayed red on a 30-day clock the only way to clear it
+  // would be to author a set whose terms nobody wants.
+  "field:items.sets[].requiredPieces": {
+    status: "default-live",
+    why: "省略 = pieces 的全部件數(sim/economy/itemSets.requiredPieces),也就是「同時裝備 A、B、C」最嚴格的讀法。死之王套裝要三件全帶,正是預設值,所以出貨文件沒有理由寫它。填比 pieces 少 = 部分套裝加成,是留給下一套的旋鈕。",
+  },
+  "field:items.sets[].countDuplicates": {
+    status: "default-live",
+    why: "省略 = false = 一套講的是不同的件數,同一件帶兩份仍算一件(itemSets.countHeld)。這是保守的那一邊 —— 打開之後才可能靠疊同一件湊滿一套,而沒有任何出貨套裝要那個讀法。",
+  },
+  "field:items.sets[].enabled": {
+    status: "default-live",
+    why: "省略 = 開。這是一個**關掉**用的開關(同 draftEligible 的理由:不刪文件也能停掉一套),所以「零採用」正是它該有的樣子 —— 有人寫它的那天,意思是有一套被暫時停掉了。",
+  },
+
+  // --- 格擋 item@1.block.lethalBasis (2026-08-01) --------------------------
+  // The field's three required halves (`damageTypes`/`chance`/`fraction`) are
+  // 4/4 adopted and `lethalOnly` is 2/4, so the MECHANISM is not at zero —
+  // `sim/combat/block.shipped.test.ts` drives all four shipped docs end to end.
+  // This one knob exists so 「超過現存生命」's denominator is an editor decision
+  // instead of a code branch (CLAUDE.md 第一守則), and both death-save items
+  // deliberately take the default. Textbook "default-live", not "landing":
+  // clearing a 30-day clock would mean authoring an item whose reading nobody
+  // asked for.
+  // --- 資源衍生屬性 (光魔杖 godie-i027「AP+ (目前MP的 5%)」, 2026-08-01) -----
+  //
+  // `fromResource` landed on the SHARED `zStatModifierFields`, so the census
+  // sees it on BOTH the item modifier node and the ability `applyBuff` one.
+  // The item side is ADOPTED (光魔杖 is the whole reason it exists); the ability
+  // side is at zero and that is the honest state — no buff in the tree wants a
+  // stat term that drains with a resource yet.
+  "field:abilities.effects[]#applyBuff.modifiers[].fromResource": {
     status: "landing",
-    since: "2026-07-30",
-    why: "Same field, second census node (item.ts split `items.passive` off `zHookDef` when it added `requires`). The 「X% 機率造成 Y」/「血量低於 Z% 時…」 item family is the intended first adopter; none of the shipped items has been re-authored against it yet.",
+    since: "2026-08-01",
+    why: "同一個欄位落在共用的 zStatModifierFields 上,所以普查會在道具與技能 applyBuff 兩個節點各看到一次。道具那一側**已經採用**(光魔杖 godie-i027 就是它存在的理由);技能這一側是零,而且零是誠實的 —— 樹上還沒有任何一個 buff 想要一條會隨資源縮水的屬性項。分開兩份 schema 只為了讓其中一邊閉嘴,會讓「percentOf 一定要有來源」這條規則變成兩份(見 schema/common.ts 檔頭對這一點的警告)。機制在 sim/stats/resourceStats.ts。",
+  },
+  // `field:items.modifiers[].from` WENT BACK TO ZERO on 2026-08-01, and that is
+  // a CORRECTION rather than a regression: 光魔杖 was its only item-side user,
+  // and its 「目前MP」 line moved from `from: "maxMana"` (最大魔力, frozen at
+  // recompute time) to `fromResource: "mp"` (當下魔力). The stat-to-stat form is
+  // still live on the ABILITY side (78-00 銅皮鐵骨「防禦力額外增加自身攻擊力的
+  // 50%」), so the mechanism is not dead — no ITEM needs it today.
+  "field:items.modifiers[].from": {
+    status: "default-live",
+    why: "「把 A 屬性的 X% 加到 B」在道具上目前沒有客戶。它唯一的道具客戶是 2026-08-01 之前的光魔杖,而那一行文案寫的是「目前MP」,所以它換成了 fromResource: \"mp\" —— 換句話說這一格歸零是**把一個近似值改成正確值**的結果,不是機制死掉。同一個 op 在技能那一側活著(78-00 銅皮鐵骨「防禦力額外增加自身攻擊力的 50%」),而 sim/stats/statPipeline.ts 的第二趟兩種來源域都走。",
+  },
+
+  "field:items.block.lethalBasis": {
+    status: "default-live",
+    why: "省略 = \"hpAndShields\" = 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」。晨曦之光 / 殺豬刀 兩件都用預設,所以零採用正是它該有的樣子。寫 \"hp\" 是文案的字面讀法(只看血條),留著是因為那是 owner 會想切的一題 —— 見 sim/combat/block.ts BlockLethalBasis。",
+  },
+
+  // ── 傷害型別轉換 items@1.damageTypeOverride (2026-08-01) ──────────────────
+  //
+  // 三件出貨:霸王破甲槍 godie-i00f / 死之王的長槍 godie-i01d (scope "basic")、
+  // 惡夢魔王碎片 godie-i067 (scope "ability")。所以**機制本身完全不在零** ——
+  // `becomes=true` 3/3、`scope=basic` 2/3、`scope=ability` 1/3、`impactType` 1/3,
+  // 而 sim/combat/damageTypeOverride.shipped.test.ts 逐件把出貨的 scope 釘死。
+  // 下面四格是同一族的**剩餘選項**,而且**兩種零的理由不一樣**,所以 status 不同:
+  //
+  //   · `applyAt` 有程式預設(`ov.applyAt ?? "afterGates"`)→ default-live
+  //   · `scope` / `becomes` 是**必填**,沒有「不寫就是它」→ 不可以寫 default-live
+  //
+  // ⚠️ 為什麼那三個 enum 成員是 `debt` 而不是別的:六個 status 裡**沒有一個**在講
+  // 「這個列舉是**故意**開得比今天的內容寬」。`landing` 是謊(沒有任何遷移在路上)、
+  // `default-live` 是謊(必填欄位沒有預設)、`superseded` 是謊(寫下去不是 bug)、
+  // `schema-impossible` 是謊(寫下去載得進來)、`runtime-authored` 是謊。剩下 `debt`
+  // 是唯一**不會讓這一列消失**的永久 status,而且這份檔案已經有一模一樣形狀的前例 ——
+  // `enum:abilities.effects[]#shield.absorbs=physical`(同樣是鏡射 DamageType 的
+  // 列舉、同樣 sim 有跑、同樣沒有內容要它、同樣明說「留 debt 不留 landing,免得它
+  // 到期之後變成沉默」)。所以這裡跟它一致。代價要講清楚:banner 會把一個**刻意的
+  // 設計選擇**印成「ACCEPTED FAILURE」,那句話對這三格是重的。真正的修法是替
+  // ExemptionStatus 加一個講「列舉比內容寬,而且是故意的」的成員 —— 但那個成員必須
+  // 照樣印在 banner 上,否則它就是一個更好聽的沉默鍵,也就是這份普查存在要擋的東西。
+  "field:items.damageTypeOverride.applyAt": {
+    status: "default-live",
+    why: "省略 = \"afterGates\",而且那個預設**真的在跑**:sim/combat/damageTypeOverride.ts 的 resolveDamageConversion 逐個來源比對 `(ov.applyAt ?? \"afterGates\") !== phase`,三件出貨武器全部走這一條。它的意思是無敵/免疫與閃避**先用原本的型別**判定,轉換只影響護甲魔抗與護盾型別過濾 —— 也就是 owner 文案「無視防禦」字面上要的東西,一點不多。寫 \"beforeGates\" 是「連魔法免疫也穿透」,那是一個沒有人要求過的隱性升級,所以零採用正是它該有的樣子。兩側都由 sim/combat/damageTypeOverride.test.ts 的「applyAt —— the conservative default leaves 魔法免疫 working」逐條驅動(預設那條與 beforeGates 那條各一),所以這一格不是「schema 有個欄位」。",
+  },
+  "enum:items.damageTypeOverride.scope=all": {
+    status: "debt",
+    why: "sim 認得它(originInScope 的 `scope === \"all\"` 早退,由 damageTypeOverride.test.ts 的 origin 分類表逐列驅動,含 hook: / mob / guardian 三種只有 \"all\" 抓得到的封包),但沒有任何一件出貨道具要它:三件的文案分別講「普攻」與「技能」,而 \"all\" 會額外把道具 proc、小怪與守衛塔封包一起轉成真傷 —— 惡夢魔王碎片 godie-i067 的 authoringNote 就是這樣寫的:「那是另一件道具」。這一格是**列舉比內容寬**,不是壞掉的機制;掛 debt 是因為六個 status 裡只有它能讓這一列永遠留在 banner 上而不說謊(理由見上面那段)。刪掉這一條的日子,是有人真的做出「這位持有者打出去的每一發都是真傷」那件道具的日子;若 owner 裁定永遠不會有,誠實的做法是把成員從 zItemDamageTypeOverride 拿掉,不是改成一個聽起來比較舒服的 status。",
+  },
+  "enum:items.damageTypeOverride.becomes=magic": {
+    status: "debt",
+    why: "`becomes` 被**刻意**做成完整的 DamageType 而不是 `toTrue: boolean` —— 理由寫在 sim/combat/damageTypeOverride.ts 的 DamageTypeOverride.becomes:WC3 有一整族「攻擊屬性轉換」(物理↔魔法)的道具與光環,用同一個機制就寫得出來,而多開一個 boolean 才是把決策烘進程式(第一守則)。所以這一格的零是**那個決定的必然結果**,不是有人忘了填:今天三件出貨全部是 \"true\",而 GGD 還沒有匯入任何一件物理↔魔法轉換道具。sim 這一側是活的(CONVERSION_RANK 的全序由 damageTypeOverride.test.ts 的「two conflicting sources resolve the same way in EITHER attach order」用 becomes:\"magic\" 真的驅動)。掛 debt 而不是 landing:沒有遷移在路上,而 30 天的鬧鐘只會逼出一件為了餵測試而生的道具。",
+  },
+  "enum:items.damageTypeOverride.becomes=physical": {
+    status: "debt",
+    why: "同 becomes=magic 的另一半:「把魔法傷害打成物理」。它比 magic 更遠 —— 出貨內容裡連一句承諾這種轉換的文案都沒有(掃過 219 份 item 文件的 description)。留著的理由是列舉鏡射 DamageType 這個決定本身,而不是有人要求過。⚠️ 它與 magic 的差別值得記一筆:magic 那格在 sim 測試裡被真的驅動過(CONVERSION_RANK 排序),physical 只作為排序表的最低位存在。所以如果 owner 裁定這一族永遠不進 GGD,physical 是第一個該被拿掉的成員,而拿掉它會同時簡化 CONVERSION_RANK。",
   },
 
   "field:items.auras[].lingerSec": {
@@ -224,11 +323,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-07-30",
     why: "Restricts an item hook to one ability slot. No shipped item wants that yet — every item passive today keys off 普攻/受擊/施法 in general, not off Q vs W. New census key from the item-hook split, not a new capability.",
   },
-  "field:items.passive[].victim": {
-    status: "landing",
-    since: "2026-07-30",
-    why: "Pays a hook differently for a 部隊 kill vs a 英雄 kill (#244). Reachable on items since the hook split; the natural first customer is a 「對部隊造成N倍傷害」 legendary (雷神之鎚's own text), which is still an inert 製作書. New census key, not a new capability.",
-  },
+  // `field:items.passive[].victim` LOST ITS EXEMPTION on 2026-08-01: 天生牙
+  // (godie-i031) adopted it, and the field is the whole design of that card —
+  // 「殺死任一個敵方**英雄**單位」 revives, 「殺死任一個敵方**單位**」 heals, and the
+  // two clauses are otherwise identical. 甘豆腐之袍 (godie-i03f) is the second
+  // customer. Deleting the entry is the entire fix, per this file's own message.
 
   // --- 無敵/免疫 (GH#289 lane P3, content bound 2026-07-30) ---------------
   // These four enum members were UNREACHABLE until today: the census only
@@ -664,10 +763,120 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "條件的力量軸。同 int:三圍在 #248 之後才活,而條件讀三圍還沒有任何一張卡。力量門檻的自然客戶是「力量高於 N 時擊退距離加倍」這種近戰卡。",
   },
 
+  // ── 三圍門檻機率 `chanceFrom` (朗基努斯之槍 godie-i018, 2026-08-01) ────────
+  //
+  // 跟下面的 `damageSource` 完全同一個形狀:一個欄位落在共用的 `zHookDefBase`
+  // 上,census 因此在兩個節點各看到它一次。ITEM 那一個節點**已經採用**
+  // (`field:items.passive[].chanceFrom` = 1/51,朗基努斯之槍「(總敏捷)% 機率」),
+  // 這一條是另一個節點。
+  //
+  // ⚠️ 這個 key 的**名字會誤導人**,不要照字面讀。`abilities.effects[]#applyBuff.
+  // hooks[]` 只是 `zHookDef` 這個 schema 實例的最短路徑名(fieldAdoption.ts 的
+  // `nameSchemas`);同一個實例其實掛在 applyBuff.hooks、`abilities.passive.
+  // ranks[].hooks`、`…ranks[].auras[].hooks`、`augments.hooks`、以及 champion
+  // 內嵌鏡像 —— 也就是**除了道具以外的每一個 hook 載體**,合計 reach 54。所以
+  // 「技能那一側」指的是這五個地方全部是零,不是只有臨時 buff。
+  //
+  // ⚠️ 而且它的子欄位**已經是綠的,而且綠的來源是那件道具**:
+  // `enum:…chanceFrom.attr=agi` 與 `…chanceFrom.basis=total` 兩列的 example 都是
+  // `items/godie-i018`。子欄位共用實例、父欄位不共用,所以同一件事在這份報告裡
+  // 一半綠一半紅。記在這裡,免得下一個人以為子欄位綠就代表這一列也該綠。
+  "field:abilities.effects[]#applyBuff.hooks[].chanceFrom": {
+    status: "landing",
+    since: "2026-08-01",
+    why: "共用 zHookDefBase 的第二個 census 節點(道具那一個節點已被 朗基努斯之槍 godie-i018 採用,機制因此不在零:sim/effects/hooks.ts 的 hookProcChance 讀真的三圍,而且抽籤的次數與位置一個位元都沒動)。技能那一側是零,而且**有名字的客戶在等**:96-01 華山劍法 godie-o02w.q「攻擊時有 (5+敏捷/15)% 機率造成額外 10+敏捷*1 點傷害」與 06-04 傑桑變化 godie-u034.r / godie-ucrl.r「攻擊時有 (5+敏捷/10)% 的機率隨機使出猜猜拳,持續 7 秒」—— 後者正好就是這個 key 名字寫的那個形狀(一個限時 buff 授予一條 proc)。⚠️ 但採用它**需要先做一個決定,不是照抄**:今天的 chanceFrom 是 `clamp(三圍 × coeff, min, max)`,沒有常數項,所以 w3x 那個 `(常數 + 敏捷/N)%` 的家族寫不進來 —— 拿 `min` 當那個常數會得到 `max(0.05, agi×coeff)`,在 75 敏以下就跟文案差最多 5 個百分點,而「描述不可以說謊」正是這一批的原則。所以 30 天後要問的是「chanceFrom 要不要加一個 flat 項」,而不是把這一條續期,更不是為了讓這一列變綠而寫一個近似值上去。",
+  },
+
+  // ── [反彈] 2026-08-01:`damageSource` 是 `zHookDef` 上的**一個**欄位,所以
+  //    census 會在每一個掛 hook 的節點各看到它一次。ITEM 那一個節點今天就已經
+  //    被採用了(反射之盾 godie-i03m 的 `damageSource: "basic"` —— 沒有它,
+  //    owner 文案裡的「反彈**普通攻擊**傷害」會變成「反彈所有傷害」),下面這個
+  //    是 applyBuff 臨時 proc 的那一個節點,它是新的、而且還沒有客戶。
+  "field:abilities.effects[]#applyBuff.hooks[].damageSource": {
+    status: "landing",
+    since: "2026-08-01",
+    why: "同一個欄位的第二個 census 節點(item 那個節點已被 godie-i03m 採用)。這裡指的是「一個**暫時**的 buff 授予的 proc」要不要只吃普攻,自然的第一個客戶是 25-04 無想轉生 / CP-00 棘刺之光 這一族的荊棘 —— 它們今天是 `abilities.passive.ranks[].auras[].hooks`(也還在 landing)而不是 applyBuff。30 天後若仍為 0,該重新分流的是「反彈要不要也做成一個限時 buff」,不是把這一條續期。",
+  },
+  // ⚠️ 上面那條是 `field:`(「有沒有人寫這個欄位」),下面兩條是 `enum:`
+  //    (「這個下拉選單的每一個選項有沒有人選」)。兩者**不是**同一個 key,而
+  //    2026-08-01 [反彈] 上線時只登記了前者 —— 於是 census 一天後就把兩個
+  //    enum 成員報成未解釋的 S8。列在一起,免得下次又只補一半。
+  //    enum 的名字取的是最短路徑(fieldAdoption.ts 的 `nameSchemas`),所以這
+  //    一個 key 其實**同時**涵蓋 item 與 ability 兩個節點 —— `=basic` 因此是
+  //    5/5(反射之盾那一族),不在這裡。
+  "enum:abilities.effects[]#applyBuff.hooks[].damageSource=any": {
+    status: "default-live",
+    why: "`effects/hooks.ts` 的過濾是 `if (hook.damageSource !== undefined && hook.damageSource !== \"any\")` —— 缺席與寫 \"any\" 走的是同一個分支,行為位元級相同。寫出來的只會是跟預設相反的那兩個(\"basic\" 已採用)。這一格永遠是 0 才是對的,除非有人為了可讀性把預設值寫滿。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageSource=nonBasic": {
+    status: "landing",
+    since: "2026-08-01",
+    why: "「只吃**非**普攻的那一發」。`\"basic\"` 出貨當天就有客戶(反射之盾 godie-i03m 的「反彈普通攻擊傷害 200%」),反向的還沒有。自然的第一個客戶是 w3x 的**法術**反傷/吸收家族(魔法護盾一類:普攻照打、技能才反彈),GGD 今天把那一族全部做成 `shield` 或 `invulnerable.blocksDamage`,沒有一支走 onDamageTaken 的封包過濾。30 天後仍為 0 的話,要問的是「那一族該不該改用這條路」,不是把這一條續期。",
+  },
+
   // ── 不寫就是它(default-live):寫出來與不寫出來產生一模一樣的行為 ──────
   "enum:abilities.effects[]#applyStatus.applyTo=target": {
     status: "default-live",
     why: "sim/effects/applyStatus.ts:20 `e.applyTo === \"self\" ? [ctx.caster] : ctx.targets` —— 缺席就是 target。唯一被寫出來的是 \"self\"(暴走把 berserk 貼在自己身上、moon-combo 的連段視窗),而那是因為它跟預設相反。target 永遠會是 0,除非有人為了可讀性刻意寫滿。",
+  },
+  // ── dot 的兩個覆寫欄位(2026-08-01 第一次被 census 看見) ─────────────────
+  //    ⚠️ 它們不是新欄位,也不是「掉了最後一個使用者」。這一批把 `dot` 從 2 份
+  //    文件(godie-efur 的 R + 他的 champion 鏡像)推到 4 份(血染八月
+  //    godie-i06o、妖物碎殺牙 godie-i06a),於是 `reach` 跨過了 `MIN_REACH` = 3,
+  //    census 這才開始報它們。**零從來沒有變過,是取樣門檻變了** —— 記在這裡,
+  //    免得下一個人以為是這一批弄壞的。
+  // ── grantAttribute 的三圍上限讀哪一種三圍 (2026-08-01) ────────────────────
+  //
+  // ⚠️ 一個 refuter 把這一格標成「真的沒有使用者:沒有內容文件、也**沒有測試文件**,
+  // 所以改掉它的預設不會有任何東西紅」。前半是對的,後半**當時也是對的,而且是量出來
+  // 的**:把 `e.maxAttributeBasis ?? "base"` 改成 `?? "total"`,全樹提到 maxAttribute
+  // 的三個測試檔(laneB.innates 16/16、itemAttributes 14/14、killTriggerSchema 8/8)
+  // 一條都不紅。
+  //
+  // 那位 refuter 建議的解法是「把它寫進 蒼月潮 07-00 獸化心靈 那份文件」。**那個解法
+  // 是錯的,而且方向相反**:寫 `maxAttributeBasis: "base"` 是把預設值抄進唯一一份會走
+  // `??` 的文件,於是那條 `??` 從此不再被任何出貨內容執行 —— 這一列會變綠,而預設值
+  // 會比現在**更**不可觀測。所以資源 #1(AUTHOR THE CONTENT)在這一格是化妝,不是修理。
+  //
+  // 真正的修理是補守衛:`sim/grantAttributeMaxBasis.test.ts` 讓 蒼月潮 站在
+  // 「基礎敏捷 < 120 ≤ 總敏捷」的窗口裡(戴四魂之玉 力敏智+30),證明預設的 "base"
+  // 讓他繼續賺、而明寫 "total" 會拒發同一次獎勵。兩個突變都真的跑過,記在那個檔頭。
+  "field:abilities.effects[]#grantAttribute.maxAttributeBasis": {
+    status: "default-live",
+    why: "省略 = \"base\"(`sim/effects/grantAttribute.ts`:`liveAttribute(world, id, attr, e.maxAttributeBasis ?? \"base\")`),而這個預設**是出貨行為**:全樹唯一寫 `maxAttribute` 的文件是 蒼月潮 07-00 獸化心靈 godie-hpb1.passive 的 120 敏上限,而它的 JASS 就是 `GetHeroStatBJ(1,GetKillingUnit(),false)` —— 第三個參數 false = 不含裝備 = \"base\"。所以零採用的意思是「沒有人需要覆寫」,而不是機制死掉;寫 \"total\" 是給未來那種上限本來就該讀「總敏捷」的卡,而讓一把武器把英雄的天生技提早關掉不是任何人要求過的行為。⚠️ **不要靠寫預設值進文件來讓這一列變綠** —— 那會讓那條 `??` 不再被任何出貨文件執行,預設值反而更難被守住。守衛在 sim/grantAttributeMaxBasis.test.ts(蒼月潮 基礎敏捷 < 120 ≤ 總敏捷 的窗口,兩個突變都跑過)。",
+  },
+
+  "field:abilities.effects[]#dot.maxStacks": {
+    status: "default-live",
+    why: "`sim/effects/dot.ts` 的 `dotEffect.apply`:`stacking === \"stack\" ? Math.max(1, Math.floor(e.maxStacks ?? DOT_MAX_STACKS)) : 1` —— 這個欄位**只有** `stacking:\"stack\"` 的 DoT 讀得到,而出貨的 DoT 沒有一份是 stack(godie-efur.r 與其 champion 鏡像寫 refresh,兩件武器省略 = refresh,GH#250 的 godie-hart.r 兩段寫 independent)。所以今天寫上去是位元級的 no-op,零是對的。缺席時的上限是 `DOT_MAX_STACKS` = 99,本來就是有限的,不是「沒有上限」。⚠️ 它的前提 `enum:…#dot.stacking=stack` **在 2026-08-01 浮出來了**:GH#250 把 01-04 超究武神霸斬 改寫成兩段 dot,reach 從 2 跨過 MIN_REACH,census 開始報它。這一句以前寫「等第三份 stack 型 DoT 出現才會浮出來」是**錯的** —— 浮出來只需要第三份 DoT,不需要它是 stack 型。那一列現在有自己的豁免,就在下面。",
+  },
+  // ── GH#250 把 reach 推過門檻的兩組(2026-08-01) ────────────────────────────
+  //    ⚠️ 跟上面 dot 那一批一樣:**零從來沒有變過,是取樣門檻變了**。
+  //    01-04 超究武神霸斬 從「一發 damage」改寫成「兩段 dot + 一個 STR 係數」
+  //    (war3map.j `Trig_SuperFF7_Actions` 的七連斬),於是
+  //      · `dot` 的 reach 2 → 4  →  `stacking=stack` 露出來
+  //      · `attrRatios` 的 reach 2 → 3(原本只有 龍神槍 godie-i018 一份 + 它的
+  //        鏡像) →  `attr=agi` / `attr=int` / `basis=base` 露出來
+  //    三條都不是這一批弄壞的,是這一批讓 census 第一次看得見。
+  "enum:abilities.effects[]#dot.stacking=stack": {
+    status: "default-live",
+    why: "缺席 = \"refresh\"(`sim/effects/dot.ts` 的 `stacking = e.stacking ?? \"refresh\"`),而出貨的四份 DoT 只需要兩種語意:同一支技能重複點燃就延長期限(refresh,揍敵客 R 龍星群 + 兩件武器),或每一次施放各自獨立計時(independent,GH#250 的 01-04 超究武神霸斬 —— 七連斬的基礎段與終結段是同一個 origin 的兩條線,必須互不合併)。stack 是第三種語意「疊層數、傷害相乘」,而原作沒有任何一支被移植過來的燒傷是這樣算的 —— 它的存在是給未來的疊毒用的,不是壞掉。⚠️ 不要為了讓這一列變綠而把某一支改成 stack:那會直接改變玩家吃到的總傷害。",
+  },
+  "enum:abilities.effects[]#damage.amount.attrRatios[].basis=base": {
+    status: "default-live",
+    why: "缺席 = \"total\"(`sim/effects/effect.ts` 的 `resolveScaling`:`attrs(r.attr, r.basis ?? \"total\")`),對應 Blizzard 的 `GetHeroStatBJ(…, true)` = 含裝備。兩份寫了 `attrRatios` 的出貨文件(龍神槍 godie-i018 的 on-hit 閃電、GH#250 的 01-04 超究武神霸斬 終結段)在 JASS 裡讀的都是 `true`,所以兩份都明寫 \"total\"。\"base\" 對應 `GetHeroStatBJ(…, false)`,原作**確實用過**(蒼月潮 07-00 獸化心靈 的 120 敏上限),只是那一支走的是 `grantAttribute.maxAttributeBasis` 而不是 `attrRatios`。所以這一格的零是「沒有一支用 attrRatios 的技能需要不含裝備的讀法」,不是機制沒接上。",
+  },
+  "enum:abilities.effects[]#damage.amount.attrRatios[].attr=agi": {
+    status: "debt",
+    why: "**移植覆蓋率的缺口,不是壞掉的程式**。`resolveScaling` 對 agi 與對 str 走同一行,所以寫上去就會生效;零的原因是目前只有兩支技能用 `attrRatios`,而它們的 JASS 都讀 `bj_HEROSTAT_STR`(龍神槍 godie-i018「傷害 = 總力量」、01-04 超究武神霸斬「+STR×等級」)。原作裡確實有讀 AGI 的招式(例如 蒼月潮 07-00 的敏捷門檻),只是還沒有一支被改寫成「傷害隨敏捷成長」。記成 debt 而不是 default-live,是因為零在這裡**不是**因為有一個更好的預設值 —— 它單純代表「還沒移植到」,而那是一件要做的事。",
+  },
+  "enum:abilities.effects[]#damage.amount.attrRatios[].attr=int": {
+    status: "debt",
+    why: "同 `attr=agi`:程式路徑共用、寫上去就生效,零的原因是兩支用 `attrRatios` 的技能在 JASS 裡讀的都是力量。智力在 GGD 走的是 `ratios[{stat:\"ap\"}]`(combat-env `intToAbilityPower` 把智力折進 AP),所以「智力係數」今天有兩種寫法而只有一種被用;哪一種才是對的要看被移植那一支的 JASS 讀的是 `bj_HEROSTAT_INT` 還是法術傷害欄位 —— 在有第一支這樣的技能之前不要替它決定。",
+  },
+  "field:abilities.effects[]#dot.tickOnApply": {
+    status: "default-live",
+    why: "缺席 = false = 「等一個 interval 才第一次結算」(`dot.ts` 的 `firstTick`)。寫 true 是**多加**一次結算,而四份出貨 DoT 的數字都是照『總量 ÷ 次數』寫的:血染八月「88流血傷害,持續3秒」= 29.33×3、妖物碎殺牙「255傷害,持續3秒」= 85×3、揍敵客 R「持續 2 秒、每 0.2 秒」= 10 跳。任何一支打開它,玩家吃到的總量就會比 owner 文案上的數字多一跳。所以這一格空著不只是預設,是**文案正確性的條件**。",
   },
   "field:abilities.effects[]#knockback.applyTo": {
     status: "default-live",
@@ -697,6 +906,16 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "default-live",
     why: "abilityPassives.ts:113 `block.whileForm ?? \"any\"` —— 缺席就是「兩個形態都生效」。被寫出來的只有 \"alternate\"(只有變身後才有的天生技),因為那是跟預設相反的那一個。",
   },
+  // ── 抽卡池開關:曾經有兩位使用者,owner 2026-08-01 親手把它們拿掉 ─────────
+  "field:items.draftEligible": {
+    status: "default-live",
+    why:
+      "缺席 = `true`(`sim/economy/offerEligibility.ts` 的 `itemOfferableTo`:`if (def.draftEligible === false) return false;`),所以 219 份文件全部空著 = 「今天沒有任何一件道具需要被擋在抽卡池外」,不是機制死了。" +
+      "這個 0 是**被作者做出來的**,不是被忘記的:2026-07-30 唯一的兩位使用者是天堂之劍(godie-i01n)與仙后座(godie-i01s),理由是「代價做了、回報沒做」;" +
+      "owner 2026-08-01 重寫了這兩份文件並補上真的 payload(i01n:critChance 0.06 / critDamage 8.25 / maxHealth pctAdd -0.5;i01s:evasion 0.25 / maxMana pctAdd 1.0 / manaRegen 25),同時把它們登錄進棱彩三選一,於是 `draftEligible: false` 被拿掉是**這個決定的一部分**。" +
+      "它是一顆預設「開」的開關(CLAUDE.md 第一守則的決策點),沒有東西需要關的時候就該是 0 —— 跟 `knockback.applyTo` 同一類,不是 landing。" +
+      "⚠️ 這條豁免只說「內容 0 筆是對的」;那條 `=== false` 分支**本身**還會不會動,由 `sim/economy/questDraftGate.test.ts` 的 ① 抽卡閘負責 —— 那一支在同一天因為這次內容改動而紅了(它是拿真文件當夾具),誰修它都要把「機制」跟「今天剛好沒人用」分開,不要把守衛一起刪掉。",
+  },
 
   // ── 真的還沒有人選(landing) ───────────────────────────────────────────
   "enum:abilities.passive.ranks[].whileForm=base": {
@@ -704,21 +923,22 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-07-31",
     why: "「只有本體形態才生效」的天生技。第三個成員裡唯一沒有客戶的一個:出貨的變身天生技都是「變身後才有」(alternate),還沒有一支是「變身後就失去」。w3x 裡這種存在(本體的被動在 Emeu 那半邊沒有被登記),所以這是待補的內容不是多餘的成員。",
   },
-  "enum:abilities.effects[]#damage.hpPct.basis=current": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "百分比生命傷害的分母。owner 2026-07-31 對 13-02 牙突明確裁決過「6/9/12% 的分母是目標的**最大**生命」,所以 \"max\" 是出貨值;\"current\" 是處決風味的另一種讀法,schema/effect.ts 的檔頭把它寫成 DECISION POINT 正是為了讓它是一個下拉選單而不是一個 if。第一個自然的採用者是 w3x 那批「對殘血追加」的招式。",
-  },
+  // 2026-08-01 —— `enum:abilities.effects[]#damage.hpPct.basis=current` 的豁免
+  // **已刪除**(棘輪生效)。豁免的預測是對的:「第一個自然的採用者是 w3x 那批
+  // 『對殘血追加』的招式」,而實際到位的是同一族的三件傳說武器 ——
+  // 名刀-天狼 godie-i00u「敵方英雄現存生命 6%」、幻之匕首 godie-i039
+  // 「敵方 20%生命傷害」、落魂的嗜血劍 godie-i00l「每秒損失 3%現存生命」。
+  // "max" 仍然是 13-02 牙突的出貨值,兩個成員現在都有客戶。
   "enum:abilities.effects[]#knockback.from=pull": {
     status: "landing",
     since: "2026-07-31",
     why: "把人拉過來而不是推開。出貨的四支擊退都是推(caster / facing)。w3x 有明確的客戶:52-00 那一類鉤索與 13-002 之外的抓取投擲(godie-hapm.w 是全遊戲唯一的抓取投擲,它今天走 leap 不走 knockback)。把它改寫成 pull 是一次內容決策,不是機制缺口。",
   },
-  "enum:abilities.effects[]#spendMana.applyTo=target": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "燒對方的魔而不是自己的。sim/effects/spendMana.ts 的檔頭明說這個方向是刻意可表達的(「a mana burn on the victim — a different mechanic that this field can also express, deliberately, but only when asked for」)。出貨的五支 spendMana 全部是自己付錢(風王結界的每擊 30 魔、絕。暗殺奧義的燒光全魔)。w3x 的 mana burn 家族還沒有被移植。",
-  },
+  // 2026-08-01 REMOVED — `spendMana.applyTo=target` 的豁免到期了,而且是這條測試
+  // 自己抓到的。豁免的理由寫著「出貨的五支 spendMana 全部是自己付錢…w3x 的 mana
+  // burn 家族還沒有被移植」,那句話在 熾天使之弓 godie-i012 出貨「每次削去敵方英雄
+  // 現存 MP 3%」的那一刻就變成假的。**豁免到期就是刪掉,不是延期** —— 一條寫著
+  // 「還沒有人用」的豁免留在有人用之後,就是把 S8 普查的訊號改成雜訊。
 
 };
 
