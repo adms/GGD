@@ -57,6 +57,9 @@ const RING: FireRingConfig = {
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是
   // FireRingConfig。值就是出貨預設 (content/config/config.match.json)。
+  // #248 —— 回合硬上限，鏡射出貨的 300 秒（不是隨手挑的：這個 fixture 的用途就是
+  // 「出貨長什麼樣」，挑一個別的數字會讓它變成測一份不存在的設定）。
+  roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
 

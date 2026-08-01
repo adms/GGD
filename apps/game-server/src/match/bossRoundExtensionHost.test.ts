@@ -76,6 +76,9 @@ const SHIPPED_RING: FireRingConfig = {
   burnPctPerSecStart: 0.04,
   burnPctPerSecEnd: 0.2,
   maxPctPerSec: 1,
+  // #248 —— 回合硬上限，鏡射出貨的 300 秒（不是隨手挑的：這個 fixture 的用途就是
+  // 「出貨長什麼樣」，挑一個別的數字會讓它變成測一份不存在的設定）。
+  roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
 

@@ -67,9 +67,35 @@ export const CHAMPION_SOURCES = ["fixed", "random", "inherit"] as const;
  */
 export const HERO_LEVEL_SOURCES = ["matchHighest", "fixed", "round"] as const;
 
+/**
+ * #247 —— 每回合上限算在哪一個範圍上. Restated here rather than imported from
+ * `@ggd/shared/sim/mobs` for the reason the file header gives (that module pulls
+ * zod at module scope and this page is an eager member of the admin bundle);
+ * `mobWaves.test.ts` pins it against the Zod enum so a drift goes red.
+ */
+export const BOSS_CAP_SCOPES = ["zone", "match"] as const;
+
 /** `DEFAULT_MOB_BASE_LEVEL` / `DEFAULT_MOB_LEVEL_PER_ROUND` in sim/mobs.ts. */
 export const MOB_BASE_LEVEL_FALLBACK = 3;
 export const MOB_LEVEL_PER_ROUND_FALLBACK = 1;
+
+/**
+ * 殭屍數量的兩條天花板 (owner 2026-07-30 裁定「上限值 500」).
+ *
+ * ⚠️ RESTATED, NOT IMPORTED —— 和這個檔案裡每一個出貨值同一個理由(見檔頭):
+ * `MOB_ALIVE_CAP_MAX` / `MOB_PER_WAVE_CAP_MAX` 住在
+ * `@ggd/shared/content/schema/config`,那個模組在 module scope 就 import zod,
+ * 而這一頁是**正式後台 bundle 的 eager 成員**。所以值在這裡重寫一次,並由
+ * `mobWaves.test.ts` 直接對照 schema 那兩個常數 —— drift 讓測試紅,而不是讓
+ * 後台悄悄和引擎講不同的話。
+ *
+ * ⚠️ 為什麼這兩格之前**完全沒有上界**:GH#206 那一輪替 `mobWaves` 補 `max` 時
+ * 漏掉了它們兩個。結果是 50 打成 5000 在後台、在 Zod、在耐久覆蓋層全部合法,
+ * 一直到那一場比賽開始掉幀才會有人知道。這是 #277 的同一個 bug 家族:
+ * **只有下界的欄位等於沒有驗證。**
+ */
+export const MOB_ALIVE_CAP_MAX = 500;
+export const MOB_PER_WAVE_CAP_MAX = 500;
 
 /** The shipped `mobWaves` block — the 重設 target and the pre-fetch seed. */
 export const SHIPPED_MOB_WAVES: MobWavesConfig = {
@@ -100,6 +126,11 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // owner's 2026-07-26 「縮小到適合尺寸」 ruling now that the small doc is gone.
     sizeMult: 0.68,
     tintStrength: 0.65,
+    // #247 owner 2026-08-01 「殭屍王底下圈圈會比較大」. MUST stay equal to
+    // `DEFAULT_MOB_WAVES_CONFIG.mob` — mobWaves.test.ts pins the whole block,
+    // and this mirror is what the console renders before the GET resolves.
+    groundRingDiameter: 1.25,
+    groundRingSizeFollow: 1,
     baseLevel: 3,
     levelPerRound: 1,
     baseHp: 20,
@@ -158,6 +189,14 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     lastHitMultiplier: 2,
     lastHitMode: "bonus",
     countOverkill: false,
+    // #247 owner 2026-08-01 「無視碰撞穿透地形」+「每回合最多只會出現一次」.
+    // Mirrors `DEFAULT_MOB_WAVES_CONFIG.boss`; pinned by mobWaves.test.ts.
+    noClip: true,
+    noClipUnits: true,
+    noClipObstacles: true,
+    noClipStayInside: true,
+    maxPerRound: 1,
+    maxPerRoundScope: "zone",
   },
   special: {
     chancePercent: 5,
@@ -222,6 +261,8 @@ export type MobWavesFieldKey =
   | "mob.championSource"
   | "mob.sizeMult"
   | "mob.tintStrength"
+  | "mob.groundRingDiameter"
+  | "mob.groundRingSizeFollow"
   | "mob.baseLevel"
   | "mob.levelPerRound"
   | "mob.baseHp"
@@ -260,6 +301,12 @@ export type MobWavesFieldKey =
   | "boss.heroLevel"
   // 等級來源:跟場上最高 / 指定 / 沿用回合 (#290)
   | "boss.heroLevelSource"
+  | "boss.noClip"
+  | "boss.noClipUnits"
+  | "boss.noClipObstacles"
+  | "boss.noClipStayInside"
+  | "boss.maxPerRound"
+  | "boss.maxPerRoundScope"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -340,6 +387,8 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "mob.modelKey",
   "mob.sizeMult",
   "mob.tintStrength",
+  "mob.groundRingDiameter",
+  "mob.groundRingSizeFollow",
   "mob.baseLevel",
   "mob.levelPerRound",
   "mob.baseHp",
@@ -385,6 +434,14 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.lastHitMultiplier",
   "boss.lastHitMode",
   "boss.countOverkill",
+  // #247 —— 無視碰撞 + 每回合上限。排在獎金之後,因為它們回答的是「王走不走得到
+  // 你、一回合來幾隻」,不是「打死牠拿多少」。
+  "boss.noClip",
+  "boss.noClipUnits",
+  "boss.noClipObstacles",
+  "boss.noClipStayInside",
+  "boss.maxPerRound",
+  "boss.maxPerRoundScope",
   "special.chancePercent",
   "special.championSource",
   "special.championId",
@@ -446,14 +503,16 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     unit: "隻",
     kind: "int",
     min: 1,
+    max: MOB_PER_WAVE_CAP_MAX,
     optional: false,
   },
   maxAlivePerZone: {
     zh: "場上同時上限（基準）",
-    note: "每個戰場同時最多幾隻活著；滿了就不再生。逐回合表沒列到的回合用這個值",
+    note: "每個戰場同時最多幾隻活著；滿了就不再生。逐回合表沒列到的回合用這個值。這是「每個戰場」，一場四個戰場，所以填 500 是場上 2,000 隻",
     unit: "隻",
     kind: "int",
     min: 1,
+    max: MOB_ALIVE_CAP_MAX,
     optional: false,
   },
   "mob.championSource": {
@@ -502,6 +561,27 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 0,
     optional: true,
     emptyMeans: "留空 = 0.65（出貨值）",
+  },
+  // ── #247 腳下圈圈 (owner 2026-08-01「殭屍王底下圈圈會比較大」) ─────────────────
+  "mob.groundRingDiameter": {
+    zh: "殭屍腳下圈圈直徑（體型 1 倍時）",
+    note: "只是畫面上的一個圈，⚠️ 完全不影響王撞得到什麼、走不走得過去（碰撞用的是各自的「身體半徑」那一格）。1.25 就是玩家英雄自己的圈；填 0 就完全不畫",
+    unit: "單位",
+    kind: "num",
+    min: 0,
+    max: 8,
+    optional: true,
+    emptyMeans: "留空 = 1.25（跟玩家一樣大）",
+  },
+  "mob.groundRingSizeFollow": {
+    zh: "└ 圈圈跟著體型放大的程度",
+    note: "1 = 完全跟著（10 倍大的王 → 10 倍大的圈，這是 owner 要的）；0 = 不管多大隻，圈圈都一樣。跟上一格分開，是因為「圈本身多大」和「王的圈要不要跟著變大」是兩個決定",
+    unit: "倍",
+    kind: "num",
+    min: 0,
+    max: 2,
+    optional: true,
+    emptyMeans: "留空 = 1（完全跟著體型）",
   },
   "mob.baseLevel": {
     zh: "起始等級",
@@ -650,6 +730,66 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     kind: "bool",
     optional: false,
     boolLabels: { on: "每滿 N 隻都召喚", off: "整場只召喚一次" },
+  },
+  // ── #247 無視碰撞 + 每回合上限 (owner 2026-08-01 實戰回饋) ──────────────────
+  "boss.noClip": {
+    zh: "殭屍王無視碰撞",
+    note: "開 = 王直接穿過柱子、牆、其他殭屍與英雄走向目標。owner 2026-08-01：「不然被卡住永遠走不到」。⚠️ 這不是無敵：王照樣被瞄準、被打、被火圈燒",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "穿透（出貨）", off: "照舊會被卡住" },
+    emptyMeans: "留空 = 不穿透（跟這個功能出現以前一樣）",
+  },
+  "boss.noClipUnits": {
+    zh: "└ 穿過其他單位",
+    note: "第 9 回合一個戰場最多 50 隻殭屍，王被自己的隨從推得動不了就是這一格關掉的下場。關掉之後王仍然穿得過柱子（那是下一格）",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "穿過殭屍與英雄", off: "會被身體擋住" },
+    emptyMeans: "留空 = 穿過（只在上面那格開著時才有意義）",
+  },
+  "boss.noClipObstacles": {
+    zh: "└ 穿過牆與柱子",
+    note: "場上的柱子、圍牆這類固定障礙。跟上一格分開，是因為「穿過身體」是走位問題、「穿過牆」是地形問題，你可能只想要前者",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "穿過地形", off: "會被牆擋住" },
+    emptyMeans: "留空 = 穿過（只在「無視碰撞」開著時才有意義）",
+  },
+  "boss.noClipStayInside": {
+    zh: "└ 仍然被場地邊界擋住",
+    note: "⚠️ 這一格的預設跟上面兩格相反，而且應該保持開著：王一旦走出競技場圓盤，回合判定、存活統計、小地圖全部開始討論一隻不在場上的單位",
+    unit: "",
+    kind: "bool",
+    optional: true,
+    boolLabels: { on: "留在場內（出貨）", off: "可以走出場外" },
+    emptyMeans: "留空 = 留在場內",
+  },
+  "boss.maxPerRound": {
+    zh: "每回合最多幾隻殭屍王",
+    note: "owner 2026-08-01：「每回合最多只會出現一次殭屍王，不會無限出場」。⚠️ 這跟上面的「可重複召喚」是兩回事：那一格管的是同一個人整場的第 200 隻，這一格管的是這一回合已經來過幾隻。一個戰場裡六個英雄各自打滿 100 隻，只有這一格擋得住",
+    unit: "隻",
+    kind: "int",
+    min: 1,
+    max: 20,
+    optional: true,
+    emptyMeans: "留空 = 不設上限（跟這個功能出現以前一樣）",
+  },
+  "boss.maxPerRoundScope": {
+    zh: "└ 上限算「每個戰場」還是「整場」",
+    note: "出貨是「每個戰場」：王會生在召喚牠那個人的戰場，算成整場的話，1 號戰場先滿 100 隻就等於封掉其他三個戰場這一回合的王",
+    unit: "",
+    kind: "enum",
+    values: ["zone", "match"],
+    valueLabels: {
+      zone: "每個戰場各自算（出貨）",
+      match: "整場一起算",
+    },
+    optional: true,
+    emptyMeans: "留空 = 每個戰場各自算",
   },
   "boss.championSource": {
     zh: "殭屍王由誰擔任：指定還是隨機",
@@ -1094,6 +1234,8 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "mob.modelKey",
       "mob.sizeMult",
       "mob.tintStrength",
+      "mob.groundRingDiameter",
+      "mob.groundRingSizeFollow",
     ],
   },
   {
@@ -1150,6 +1292,12 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.lastHitMultiplier",
       "boss.lastHitMode",
       "boss.countOverkill",
+      "boss.noClip",
+      "boss.noClipUnits",
+      "boss.noClipObstacles",
+      "boss.noClipStayInside",
+      "boss.maxPerRound",
+      "boss.maxPerRoundScope",
     ],
   },
   {
@@ -1256,6 +1404,10 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.mob.championSource ?? "";
     case "mob.sizeMult":
       return formatNum(cfg.mob.sizeMult);
+    case "mob.groundRingDiameter":
+      return formatNum(cfg.mob.groundRingDiameter);
+    case "mob.groundRingSizeFollow":
+      return formatNum(cfg.mob.groundRingSizeFollow);
     case "mob.tintStrength":
       return formatNum(cfg.mob.tintStrength);
     case "mob.baseLevel":
@@ -1336,6 +1488,21 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.lastHitMultiplier);
     case "boss.countOverkill":
       return cfg.boss?.countOverkill === undefined ? "" : cfg.boss.countOverkill ? "1" : "0";
+    // #247 —— "" for an absent boolean, exactly like `countOverkill` above:
+    // ABSENT is a real state (「跟這個功能出現以前一樣」) and must round-trip as an
+    // empty picker, never as a silently-written `false`.
+    case "boss.noClip":
+      return cfg.boss?.noClip === undefined ? "" : cfg.boss.noClip ? "1" : "0";
+    case "boss.noClipUnits":
+      return cfg.boss?.noClipUnits === undefined ? "" : cfg.boss.noClipUnits ? "1" : "0";
+    case "boss.noClipObstacles":
+      return cfg.boss?.noClipObstacles === undefined ? "" : cfg.boss.noClipObstacles ? "1" : "0";
+    case "boss.noClipStayInside":
+      return cfg.boss?.noClipStayInside === undefined ? "" : cfg.boss.noClipStayInside ? "1" : "0";
+    case "boss.maxPerRound":
+      return formatNum(cfg.boss?.maxPerRound);
+    case "boss.maxPerRoundScope":
+      return cfg.boss?.maxPerRoundScope ?? "";
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -1527,6 +1694,27 @@ export function validateField(key: MobWavesFieldKey, text: string): string {
   return "";
 }
 
+/**
+ * 「範圍 a ~ b」 —— the human-readable bound for one field, or "" when the field
+ * has no numeric bound to state (`bool` / `enum` / `text` / `champion` / `model`
+ * carry their legality in the picker itself).
+ *
+ * ⚠️ 這個函式存在的理由是 **`max` 之前從來沒有被印出來過**。GH#206 加了上界、
+ * `validateField` 也真的會擋,但 `MobWavesPage` 只印「目前生效 / 出貨版」——
+ * 操作者要先打錯一次才會知道天花板在哪。一個看得見的界線才算做完
+ * (`MobWavesFieldSpec.max` 的註解自己就是這樣寫的)。
+ *
+ * 只有下界的欄位印「≥ n」而不是假裝有上界;`.positive()` 那種(兩個都沒有)印
+ * 「> 0」,和 `validateField` 最後那條分支說的是同一件事。
+ */
+export function boundsText(spec: MobWavesFieldSpec): string {
+  if (spec.kind !== "int" && spec.kind !== "num") return "";
+  if (spec.min !== undefined && spec.max !== undefined) return `範圍 ${spec.min} ~ ${spec.max}`;
+  if (spec.min !== undefined) return `範圍 ≥ ${spec.min}`;
+  if (spec.max !== undefined) return `範圍 > 0，最多 ${spec.max}`;
+  return "範圍 > 0";
+}
+
 export interface ScheduleRowErrors {
   round?: string;
   mobsPerWaveCap?: string;
@@ -1568,11 +1756,20 @@ export function validateForm(form: MobWavesForm): MobWavesErrors {
     const row: ScheduleRowErrors = {};
     const round = parseNum(r.round);
     if (round === null || !Number.isInteger(round) || round < 1) row.round = "回合必須是 ≥1 的整數";
+    // ⚠️ 逐回合表的兩格是**手寫**的檢查,不走 `validateField` —— 所以 GH#206 補
+    // 上界時它們一併被漏掉,而這裡才是操作者真正會打「第 9 回合 5000 隻」的地方
+    // (基準格通常只設一次,逐回合表每次改平衡都會被動到)。上下界要成對。
     const per = parseNum(r.mobsPerWaveCap);
-    if (per === null || !Number.isInteger(per) || per < 0) row.mobsPerWaveCap = "必須是 ≥0 的整數";
+    if (per === null || !Number.isInteger(per) || per < 0) {
+      row.mobsPerWaveCap = "必須是 ≥0 的整數";
+    } else if (per > MOB_PER_WAVE_CAP_MAX) {
+      row.mobsPerWaveCap = `不能大於 ${MOB_PER_WAVE_CAP_MAX}`;
+    }
     const alive = parseNum(r.maxAlivePerZone);
     if (alive === null || !Number.isInteger(alive) || alive < 0) {
       row.maxAlivePerZone = "必須是 ≥0 的整數";
+    } else if (alive > MOB_ALIVE_CAP_MAX) {
+      row.maxAlivePerZone = `不能大於 ${MOB_ALIVE_CAP_MAX}`;
     }
     return row;
   });
@@ -1680,6 +1877,11 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   if (mobSrc !== undefined) mob.championSource = mobSrc;
   putNum("sizeMult", "mob.sizeMult");
   putNum("tintStrength", "mob.tintStrength");
+  // #247 腳下圈圈 — OMITTED when blank, like every other `putNum` here: a 0
+  // written back would mean 「不要畫圈」, which is a real setting an operator must
+  // have to type on purpose.
+  putNum("groundRingDiameter", "mob.groundRingDiameter");
+  putNum("groundRingSizeFollow", "mob.groundRingSizeFollow");
   putNum("baseLevel", "mob.baseLevel");
   putNum("levelPerRound", "mob.levelPerRound");
   putNum("baseHp", "mob.baseHp");
@@ -1770,6 +1972,22 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     // has to mean 「回到舊行為」, not 「悄悄寫回 fixed」.
     const bhls = optEnum("boss.heroLevelSource", HERO_LEVEL_SOURCES);
     if (bhls !== undefined) boss.heroLevelSource = bhls;
+    // #247 —— OMITTED when blank (`optBool`, not `bool`). Clearing 「無視碰撞」
+    // has to mean 「回到舊行為」, and writing `false` back would be a LOUDER
+    // statement than the operator made — the same rule `heroLevelSource` states
+    // two lines up.
+    const bnc = optBool("boss.noClip");
+    if (bnc !== undefined) boss.noClip = bnc;
+    const bncu = optBool("boss.noClipUnits");
+    if (bncu !== undefined) boss.noClipUnits = bncu;
+    const bnco = optBool("boss.noClipObstacles");
+    if (bnco !== undefined) boss.noClipObstacles = bnco;
+    const bncs = optBool("boss.noClipStayInside");
+    if (bncs !== undefined) boss.noClipStayInside = bncs;
+    const bmpr = optNum("boss.maxPerRound");
+    if (bmpr !== undefined) boss.maxPerRound = bmpr;
+    const bmps = optEnum("boss.maxPerRoundScope", BOSS_CAP_SCOPES);
+    if (bmps !== undefined) boss.maxPerRoundScope = bmps;
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {

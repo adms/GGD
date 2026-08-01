@@ -1,24 +1,43 @@
 /**
- * 傳說武器真的抽得到嗎 —— 行為守衛 (owner 2026-07-30 的四件職業限定傳說)。
+ * 傳說武器真的抽得到嗎 —— 行為守衛 (owner 2026-08-01 的 49 支棱彩武器)。
  *
  * ---------------------------------------------------------------------------
  * 這條守衛是為了「上一輪被駁回」而寫的,不是補文件
  * ---------------------------------------------------------------------------
- * 上一輪把四件新傳說(裂地巨斧 / 賢者的護身符 / 衝鋒重脛甲 / 穿甲弩)加進了
- * `content/loot-tables/legendary-weapons.json`,機制也真的做對了 ——
- * `sim/content/requirement.test.ts` 的 19 條行為守衛全綠。**但玩家永遠拿不到**,
- * 因為它們沒有進白名單 `apps/platform/internal/curation/starter.go` 的
- * `starterLegendaryItems`。這是 CLAUDE.md 七種失敗形態的第 ② 種:算出來了,
- * 但從來沒送到玩家手上。
+ * 上一輪把四件新傳說加進了 `content/loot-tables/legendary-weapons.json`,機制也
+ * 真的做對了 —— `sim/content/requirement.test.ts` 的 19 條行為守衛全綠。
+ * **但玩家永遠拿不到**,因為它們沒有進白名單
+ * `apps/platform/internal/curation/starter.go` 的 `starterLegendaryItems`。
+ * 這是 CLAUDE.md 七種失敗形態的第 ② 種:算出來了,但從來沒送到玩家手上。
  *
- * 而且後果比「抽不到」更糟。`MatchController` 的回合武器卡是**先抽後濾**:
+ * 而且後果比「抽不到」更糟。`MatchController` 的回合武器卡**曾經是先抽後濾**:
  *
  *     const offer = offerItems(this.world, entity, grant.weaponLootTable, 3);
  *     offer.choices = this.whitelist.filterItems(offer.choices);
  *
- * 24 個條目裡有 4 個不在白名單時,那 4 個仍然會被抽進三張卡裡,然後在過濾時
- * 消失 —— 所以玩家看到的不是「三選一少了幾個選項」,而是**卡片本身只剩 1~2 張,
+ * 條目裡有幾個不在白名單時,那幾個仍然會被抽進三張卡裡,然後在過濾時消失 ——
+ * 所以玩家看到的不是「三選一少了幾個選項」,而是**卡片本身只剩 1~2 張,
  * 甚至一張都不剩**(空的那次只留下一行 console.warn)。
+ *
+ * ⚠️ 那正是 owner 2026-08-01 實戰回報的 GH#249,而它**已經修掉了**:白名單改由
+ * `world.itemEligible` 走在 roll 前面(`economy/draft.eligibleItemPool`),
+ * `MatchController` 的 post-filter 刪除。本檔的 `weaponCard()` 因此跟著改成新的
+ * 順序(見那支函式的檔頭),而「卡片會不會被削薄」這件事現在由
+ * `match/legendaryCardWidth.test.ts` 用窄白名單 + 真的 MatchController 守。
+ *
+ * ---------------------------------------------------------------------------
+ * owner 2026-08-01 之後為什麼改成「整張表」而不是四個寫死的 id
+ * ---------------------------------------------------------------------------
+ * 「隨機三選一發放道具 都改成棱彩武器道具」把池子從 24 條擴成 49 條,而且
+ * **回合 2 與回合 5 兩張武器卡現在都滾這張表**。原本寫死的四件裡有兩件
+ * (賢者的護身符 / 穿甲弩)已經被 owner 從表裡拿掉,所以那四個 id 既不是這條
+ * 守衛想守的東西,也擋不住新加的 45 條。
+ *
+ * 守的東西沒變、範圍變大:**表裡的每一條,對它「配得上」的英雄,都要真的從出貨
+ * 的那兩行滾出來**。攻擊型態(`requiresAttackType`)是**功能不是缺陷**,所以它
+ * 兩邊都要斷言 —— 配得上的一定要出現,配不上的一次都不准出現。寫死清單只能
+ * 抓「這四件不見了」,推導版連「第 50 件加進來忘了補白名單」都會抓到,而後者
+ * 才是這一批真正發生的事。
  *
  * ---------------------------------------------------------------------------
  * 為什麼要跑真的 roll,而不是比對兩個清單
@@ -36,18 +55,21 @@
  * ---------------------------------------------------------------------------
  * 突變紀錄(實跑,不是估的)
  * ---------------------------------------------------------------------------
- * M1 把 starter.go 的 `starterLegendaryItems` 裡那四行(cleaver-of-the-warden /
- *    sage-ward-amulet / bulwark-charge-greaves / piercer-crossbow)刪掉
- *    → 本檔 4 紅(可達性 2 條 + 卡片深度 1 條 + 寶玉池 1 條)。
+ * M1 把 starter.go 的 `starterLegendaryItems` 裡任意一行刪掉(實測拿
+ *    `cleaver-of-the-warden` 開刀)→ 本檔 4 紅(白名單 1 + 可達性 2 + 寶玉池 1)。
  *    ⚠️ 這正是上一輪整份被判 REFUTED 的那個漏洞,而在這條守衛存在之前,
- *    刪掉那四行**不會**讓任何行為測試變紅。
- * M2 `MatchController` 那兩行的順序改成「先濾後抽」(理論上的正確修法)
+ *    刪掉那一行**不會**讓任何行為測試變紅。
+ * M2 (2026-08-01 之前) `MatchController` 那兩行的順序改成「先濾後抽」
  *    → 卡片深度那條會由紅轉綠,可達性仍紅。這說明兩組斷言各自獨立:
  *    一組看「東西進不進得了池子」,一組看「卡片會不會變薄」。
+ *    ⚠️ GH#249 之後這個突變**不再存在**(先濾後抽已經是出貨行為),等價的
+ *    突變是把 post-filter 加回來,而抓它的是 `match/legendaryCardWidth.test.ts`
+ *    —— 本檔的白名單是出貨的那份、放行整張表,所以兩種順序在這裡結果相同。
  * M3 `sim/economy/offerEligibility.itemOfferableTo` 直接 `return true`
- *    → 本檔全綠(四件新傳說沒有 `requiresAttackType`,也沒有被
- *    `draftEligible` 關掉)。這條**故意記下來**:本檔不守 offer 閘,
- *    那是 `questDraftGate.test.ts` 與 `requirement.test.ts` 的地盤。
+ *    → 「配不上的一次都不准出現」那半邊轉紅(近戰英雄會抽到 ranged 限定的
+ *    熾天使之弓)。2026-08-01 之前這條寫著「本檔全綠、不守 offer 閘」——
+ *    那是因為當時寫死的四件都沒有 `requiresAttackType`,換成整張表之後
+ *    這個閘就在守備範圍內了(表裡有 5 melee + 1 ranged)。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readFileSync } from "node:fs";
@@ -56,7 +78,7 @@ import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
-import { LootTables } from "@ggd/shared/sim/content/registry";
+import { Champions, Items, LootTables } from "@ggd/shared/sim/content/registry";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
@@ -75,20 +97,51 @@ const STARTER_GO = join(REPO, "apps/platform/internal/curation/starter.go");
 const OFFER_COUNT = 3;
 
 /**
- * owner 2026-07-30 的四件職業限定傳說。寫死在這裡是**故意**的:如果哪天有人
- * 把它們從內容樹或白名單拿掉,這條守衛應該紅,而不是安靜地縮小自己的斷言範圍
- * (從內容樹推導 expected 會讓刪除變成無聲通過)。
+ * 出貨名單裡的一支近戰英雄與一支遠程英雄(#189 的 `requiresAttackType` 會分岔)。
+ * 兩支都必要:只用一種攻擊型態取樣,會把「白名單漏了」跟「攻擊型態擋住」混成
+ * 同一個紅燈。
  */
-const CLASS_GATED_FOUR = [
-  "cleaver-of-the-warden",
-  "sage-ward-amulet",
-  "bulwark-charge-greaves",
-  "piercer-crossbow",
-] as const;
-
-/** 出貨名單裡的一支近戰英雄與一支遠程英雄(#189 的 `requiresAttackType` 會分岔)。 */
 const MELEE_HERO = "godie-e002" as ChampionId; // 亞瑟王 - Saber
 const RANGED_HERO = "godie-e00t" as ChampionId; // 七夜怪談 - 貞子
+
+/** 出貨的棱彩池,原封不動 —— 斷言全部從這裡推導,沒有第二份清單可以漂移。 */
+function poolEntries(): string[] {
+  return LootTables.get(LEGENDARY_POOL_TABLE).entries.map((e) => e.itemId as string);
+}
+
+/**
+ * 一支英雄「配得上」的條目 / 「配不上」的條目。
+ *
+ * `requiresAttackType` 沒填 = 所有人都配得上(200+ 份舊文件的預設)。
+ *
+ * **不呼叫 `economy/offerEligibility.itemOfferableTo`,是故意的**:用出貨的謂詞
+ * 算 expected,會讓 LRT-3 那種突變(謂詞整個 `return true`)把預期與實際一起
+ * 帶偏,測試就永遠綠。所以這裡重寫一份。
+ *
+ * ⚠️ 而且這份**只鏡射攻擊型態那一半**。`itemOfferableTo` 還有第一道閘
+ * `draftEligible === false`,這裡**刻意不抄**。方向是安全的:某條目哪天被關掉
+ * `draftEligible`,它仍會被算進 `fits`、卻永遠滾不出來,於是本檔轉紅 —— 而那
+ * 正是該紅的,「在三選一池子裡但抽不到」本身就是缺陷(owner 2026-08-01 把
+ * 天堂之劍 godie-i01n 與仙后座 godie-i01s 的 `draftEligible: false` 拿掉,就是
+ * 為了讓它們真的抽得到)。2026-08-01 實測:49 條裡沒有任何一條關著。
+ */
+function splitByAttackType(attackType: "melee" | "ranged"): { fits: string[]; forbidden: string[] } {
+  const fits: string[] = [];
+  const forbidden: string[] = [];
+  for (const id of poolEntries()) {
+    const need = Items.get(id as ItemId).requiresAttackType;
+    if (need === undefined || need === attackType) fits.push(id);
+    else forbidden.push(id);
+  }
+  return { fits, forbidden };
+}
+
+/** 英雄的攻擊型態,從出貨的英雄文件讀 —— 不寫死,換英雄不會靜默失準。 */
+function attackTypeOf(championId: ChampionId): "melee" | "ranged" {
+  const t = Champions.get(championId).attackType;
+  expect(t, `${championId} 沒有 attackType,取樣英雄選錯了`).toBeTruthy();
+  return t as "melee" | "ranged";
+}
 
 /** 從 Go 原始碼把一個 `name = []string{ … }` 區塊裡的 id 撈出來(同 arenaItemModel.test.ts)。 */
 function goList(src: string, name: string): string[] {
@@ -137,21 +190,39 @@ function hero(seed: number, championId: ChampionId): { world: SimWorld; id: Enti
 }
 
 /**
- * 出貨的回合武器卡,一張。**逐字**照 `MatchController.grantRoundRewards` 的那兩行:
- * 先 `offerItems` 抽,再 `whitelist.filterItems` 濾。順序就是缺陷本身,所以
- * 不可以在這裡「順手修好」。
+ * 出貨的回合武器卡,一張。**逐字**照 `MatchController.grantRoundRewards` 今天的
+ * 那一段:白名單經由 `world.itemEligible` 走在 roll **前面**,之後沒有任何過濾。
+ *
+ * ⚠️ 2026-08-01 GH#249 改過。這裡本來寫的是
+ *
+ *     const offer = offerItems(world, id, LEGENDARY_POOL_TABLE, OFFER_COUNT);
+ *     return wl.filterItems(offer.choices);          // ← 先抽後濾
+ *
+ * 並附一句「順序就是缺陷本身,所以不可以在這裡順手修好」—— 那句話在當時是對的
+ * （出貨的兩行就長那樣）。owner 打了一場之後那個缺陷被修掉了:白名單搬進
+ * `economy/draft.eligibleItemPool`,`MatchController` 的 post-filter 刪除。
+ * 舊寫法如果留著,本檔就會變成 CLAUDE.md 失敗形態 ⑤：**測的不是出貨的那個**
+ * —— 它會繼續替一段已經不存在的程式碼作證。
+ *
+ * 卡片寬度那一組斷言（下面的 eco-weapon-card-depth）因此改由
+ * `match/legendaryCardWidth.test.ts` 用**窄白名單 + 真的 MatchController** 來守;
+ * 這裡留下的那條是「出貨白名單放行整張表」這個條件下的回歸線。
  */
 function weaponCard(seed: number, championId: ChampionId): ItemId[] {
   const { world, id } = hero(seed, championId);
-  const offer = offerItems(world, id, LEGENDARY_POOL_TABLE, OFFER_COUNT);
-  return wl.filterItems(offer.choices);
+  world.itemEligible = (itemId) => wl.allowsItem(itemId);
+  return offerItems(world, id, LEGENDARY_POOL_TABLE, OFFER_COUNT).choices;
 }
 
-describe("四件新傳說真的抽得到 (eco-legendary-reachable)", () => {
-  it("★ 出貨的白名單放行它們 —— 白名單說「存在」,不是「誰可以拿」", () => {
+describe("棱彩池整張表真的抽得到 (eco-legendary-reachable)", () => {
+  it("★ 出貨的白名單放行整張表 —— 白名單說「存在」,不是「誰可以拿」", () => {
     cover("eco-legendary-reachable");
     // 這一條是最上游的:白名單擋住的話,下面兩條的 roll 全部白做。
-    const blocked = CLASS_GATED_FOUR.filter((id) => !wl.allowsItem(id));
+    // 逐條掃整張表,不是掃某幾個 id —— owner 2026-08-01 一次加了 25 條,
+    // 「新加的忘了補白名單」正是這條在守的東西。
+    const entries = poolEntries();
+    expect(entries.length, "棱彩池空了或表不見了").toBeGreaterThanOrEqual(6);
+    const blocked = entries.filter((id) => !wl.allowsItem(id));
     expect(
       blocked,
       "這幾件在 content/loot-tables/legendary-weapons.json 裡,卻不在 starter.go 的 " +
@@ -159,14 +230,29 @@ describe("四件新傳說真的抽得到 (eco-legendary-reachable)", () => {
     ).toEqual([]);
   });
 
-  it("★ 真的從回合武器三選一抽出來(近戰與遠程英雄都要抽得到)", () => {
-    // 24 個條目、每張卡抽 3 個、不重複抽 —— 200 顆種子下每一件的出現機率極高,
+  it("★ 真的從回合武器三選一抽出來,而且攻擊型態閘兩個方向都成立", () => {
+    // 49 個條目、每張卡抽 3 個、不重複抽 —— 200 顆種子下每一件的出現機率極高,
     // 而且因為 world.rng 是決定性的,這個「極高」不是機率而是**固定結果**。
+    //
+    // 兩個方向都斷言,因為 #189 的攻擊型態閘是**功能**:
+    //   · 配得上的:一次都沒滾出來 = 白名單漏了 / 池子壞了。
+    //   · 配不上的:滾出來過一次 = 閘破了(近戰英雄拿到 ranged 限定武器)。
+    // 只斷言前者的話,把 `itemOfferableTo` 改成 `return true` 仍然全綠。
     for (const championId of [MELEE_HERO, RANGED_HERO]) {
+      const { fits, forbidden } = splitByAttackType(attackTypeOf(championId));
       const seen = new Set<string>();
       for (let seed = 1; seed <= 200; seed++) for (const id of weaponCard(seed, championId)) seen.add(id);
-      const never = CLASS_GATED_FOUR.filter((id) => !seen.has(id));
-      expect(never, `${championId} 的回合武器卡在 200 次三選一裡從來沒出現過這幾件`).toEqual([]);
+      expect(
+        fits.filter((id) => !seen.has(id)),
+        `${championId} 的回合武器卡在 200 次三選一裡從來沒出現過這幾件`,
+      ).toEqual([]);
+      expect(
+        forbidden.filter((id) => seen.has(id)),
+        `${championId} 抽到了攻擊型態不符的武器 —— #189 的 requiresAttackType 閘破了`,
+      ).toEqual([]);
+      // 閘要真的在守著東西:兩支取樣英雄合起來必須至少各碰到一件被擋的,
+      // 否則上面那半條斷言是空跑的(vacuous truth)。
+      expect(forbidden.length, `${championId} 一件被擋的都沒有,取樣英雄選得沒有鑑別力`).toBeGreaterThan(0);
     }
   });
 
@@ -211,17 +297,61 @@ describe("卡片深度 —— 三選一必須真的有三張 (eco-weapon-card-de
 });
 
 describe("傳說寶玉的池子 (eco-orb-pool-reachable)", () => {
-  it("★ 2400g 寶玉的池子裡真的有這四件", () => {
+  /**
+   * `economy/legendaryOrb.orbEligible` 排掉的 craftRole。**這裡是鏡射不是引用**,
+   * 理由同 `splitByAttackType`:引用出貨的謂詞會讓突變兩邊一起動。
+   *
+   * ⚠️ 同樣是**部分鏡射**:`orbEligible` 是「craftRole 不在這個集合」**且**
+   * `itemHasEffect(def)`。第二個條件這裡刻意不抄,方向一樣是安全的 —— 池子裡
+   * 哪天出現一條沒有 modifier 也沒有 passive 的條目,它會留在 `want` 裡卻不會
+   * 出現在真的 pool,於是轉紅,而「發得出去但什麼都不做」本來就該紅。
+   * 2026-08-01 實測:49 條全部都有 modifier 或 passive。
+   */
+  const ORB_EXCLUDED_ROLES = new Set(["component", "token", "service"]);
+
+  it("★ 2400g 寶玉的池子 = 整張表扣掉 orbEligible 明講擋掉的那些", () => {
     cover("eco-orb-pool-reachable");
     // 寶玉走的是**先濾後抽**(legendaryPool 讀 world.itemEligible),所以它不會
     // 發空卡 —— 但白名單漏掉的東西一樣永遠滾不出來。兩條路都要守。
+    //
+    // ⚠️ 兩條路**不等價**,而這是 owner 2026-08-01 之後才出現的事實:
+    // 回合武器卡只過 `itemOfferableTo`(draftEligible + 攻擊型態),寶玉還多過
+    // 一層 `orbEligible`(task #70 的「第二道門」守衛,擋 component/token/
+    // service)。owner 的 49 支裡有 8 支是 craftRole "component",所以那 8 支
+    // **回合卡發得出來、寶玉永遠滾不到**。這條斷言把差集釘死到 id:少一支或
+    // 多一支都紅,不是「有幾件在裡面就算過」。
+    const attackType = attackTypeOf(MELEE_HERO);
+    const { fits } = splitByAttackType(attackType);
+    const want = fits.filter((id) => !ORB_EXCLUDED_ROLES.has(Items.get(id as ItemId).craftRole ?? "")).sort();
+
     const { world, id } = hero(7, MELEE_HERO);
     world.itemEligible = (itemId) => wl.allowsItem(itemId);
-    const pool = new Set(legendaryPool(world, id) as string[]);
+    const pool = (legendaryPool(world, id) as string[]).slice().sort();
     world.itemEligible = null;
     expect(
-      CLASS_GATED_FOUR.filter((x) => !pool.has(x)),
-      "傳說寶玉的池子撈不到這幾件 —— 白名單或 orbEligible(craftRole/有沒有效果) 擋掉了",
-    ).toEqual([]);
+      pool,
+      "傳說寶玉的池子跟棱彩表對不起來 —— 白名單、orbEligible(craftRole/有沒有效果) " +
+        "或攻擊型態閘吃掉了本來該滾得到的條目",
+    ).toEqual(want);
+
+    // 差集本身也釘死,免得哪天 orbEligible 悄悄多擋一類就被上面那條「重新推導」
+    // 一起吸收掉。這 8 支是 owner 放進棱彩池的 recipe component。
+    expect(
+      poolEntries()
+        .filter((x) => !pool.includes(x))
+        .sort(),
+      "寶玉撈不到的條目變了 —— 這是 owner 的內容決定與 orbEligible 的衝突,要重新判",
+    ).toEqual(
+      [
+        "godie-i006", // 雅典娜的驚嘆號
+        "godie-i00u", // 名刀-天狼
+        "godie-i012", // 熾天使之弓（component，且 ranged 限定）
+        "godie-i013", // 緣一零式
+        "godie-i014", // 天叢雲劍
+        "godie-i01g", // 貫雷槍
+        "godie-i01w", // 祕銀鎖子甲
+        "godie-i020", // 瑪那魔杖
+      ].sort(),
+    );
   });
 });

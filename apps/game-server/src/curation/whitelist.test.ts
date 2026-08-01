@@ -25,6 +25,7 @@ import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Champions, Items, LootTables } from "@ggd/shared/sim/content/registry";
+import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
 import { MatchController, type SeatSpec } from "../match/MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "../match/arenaRules";
 import { HumanDriver } from "../seat/HumanDriver";
@@ -399,7 +400,14 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     // The bundle's item half is declared as FOUR surfaces (task #70 drew the
     // first two, task #82 split LEGENDARY out of the shop and added SERVICES),
     // and the whitelist gates their union. LEGENDARY must stay in the union
-    // even though nothing there is purchasable, or the round-5 card starves.
+    // even though nothing there is purchasable, or the round-2/5 cards starve.
+    //
+    // ⚠️ owner 2026-08-01 — THE UNION HAS DUPLICATES NOW. 6 craftRole-"quest"
+    // items are on the DRAFT surface and in the 49-entry 棱彩 pool at once, so
+    // this concat is 76 long and the SET behind it is 70. Go's `StarterSet()`
+    // runs the same concat through `union()`, which sorts and dedupes, so the
+    // served doc carries each id once — every comparison against a filtered
+    // catalogue below must therefore compare SETS, not arrays.
     starterShopItems = goList(src, "starterShopItems");
     starterDraftItems = goList(src, "starterDraftItems");
     starterServiceItems = goList(src, "starterServiceItems");
@@ -419,16 +427,30 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
   it("every starter champion + item resolves in the real content registry", () => {
     cover("wl-starter-playable");
     expect(starterChampions.length).toBeGreaterThanOrEqual(12);
-    // The shop is FINAL crafted weapons only now (owner rule 1, task #70),
-    // a sharper shelf than the old cost-filtered 70.
-    expect(starterShopItems.length).toBeGreaterThanOrEqual(20);
+    // The shop is FINAL crafted weapons only (owner rule 1, task #70) MINUS
+    // whatever the 棱彩 pool claims (owner 2026-08-01), a much sharper shelf
+    // than the old cost-filtered 70. `>= 20` was the July shelf's size; the
+    // property worth holding is that the shelf still outnumbers the 6 slots a
+    // build has to fill, i.e. it is a shop and not a fixed loadout.
+    expect(starterShopItems.length).toBeGreaterThan(INVENTORY_SLOTS);
     expect(starterDraftItems.length).toBeGreaterThanOrEqual(6);
-    expect(starterItems.length).toBe(
-      starterShopItems.length +
-        starterServiceItems.length +
-        starterLegendaryItems.length +
-        starterDraftItems.length,
+    expect(starterLegendaryItems.length).toBeGreaterThanOrEqual(6);
+    // This used to assert `starterItems.length === sum of the four` — true by
+    // construction (it IS the concat) and therefore untestable. Re-aimed at the
+    // thing that is NOT free: how much the union collapses, i.e. exactly which
+    // ids sit on two surfaces. Pinned id-for-id, so a seventh overlap fails.
+    const twice = starterItems.filter((id, i) => starterItems.indexOf(id) !== i).sort();
+    expect(twice, "an id is on two starter surfaces that owner did not put there").toEqual(
+      [
+        "godie-i004", // 至尊魔戒   ┐
+        "godie-i00z", // 四魂之玉   │ quest items owner named into the 49-entry
+        "godie-i01n", // 天堂之劍   │ 棱彩 pool on 2026-08-01, while owner rule 2
+        "godie-i01s", // 仙后座     │ 「所有任務道具」 keeps them on the DRAFT
+        "godie-i06j", // 獸人船長十字鎬 │ surface too.
+        "godie-i06n", // 老衲的棒子 ┘
+      ].sort(),
     );
+    expect(new Set(starterItems).size).toBe(starterItems.length - twice.length);
     for (const id of starterChampions) {
       expect(Champions.tryGet(id as ChampionId), `champion ${id} is not in the registry`).toBeDefined();
     }
@@ -452,9 +474,29 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     expect(excluded, "roster must be larger than the starter set").toBeDefined();
     expect(wl.allowsChampion(excluded!)).toBe(false);
 
-    // Items: same, over the whole catalogue.
+    // Items: same, over the whole catalogue — as a SET on both sides. The
+    // whitelist is a membership test, so its output can only ever be a subset of
+    // the catalogue with no repeats; the seeded side is a concat of four
+    // surfaces that owner 2026-08-01 made overlap on 6 quest ids. Comparing the
+    // raw arrays measured "does the Go source repeat an id", which is pinned
+    // exactly in the resolves-in-the-registry test above and is NOT what this
+    // assertion is for.
+    //
+    // ⚠️ WHAT THIS DOES AND DOES NOT CATCH — measured, not assumed. `wl` is
+    // BUILT from `starterItems`, so "the whitelist offers nothing else" is true
+    // by construction and cannot fail here; appending a real catalogue id to the
+    // seeded union leaves this test green (verified 2026-08-01). What DOES bite
+    // is the other direction: a seeded id that resolves to no content item never
+    // comes back out of `filterItems`, so a typo or a deleted doc in starter.go
+    // fails here. The "and nothing else" half lives where the surfaces are
+    // DERIVED from the content tree instead of read from Go —
+    // `curation/arenaItemModel.test.ts`, where shop == the FINAL set minus the
+    // 棱彩 pool and draft == the quest set, both pinned as equalities.
     const allowedItems = wl.filterItems([...Items.ids()] as ItemId[]);
-    expect([...allowedItems].sort()).toEqual([...starterItems].sort());
+    expect([...allowedItems].sort()).toEqual([...new Set(starterItems)].sort());
+    const notSeeded = [...Items.ids()].find((id) => !starterItems.includes(id));
+    expect(notSeeded, "the catalogue must be larger than the starter set").toBeDefined();
+    expect(wl.allowsItem(notSeeded!)).toBe(false);
 
     // Abilities: every seeded champion's EX is enabled (the only gated slot),
     // so no champion is half-enabled.
@@ -489,7 +531,9 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
   it("BOTH weapon-draft rounds can still roll a card (each table survives the filter)", () => {
     cover("wl-starter-playable");
     const wl = new Whitelist(doc({ items: starterItems }), false);
-    // Round 2 rolls the 0g quest rewards, round 5 the legendary weapons.
+    // Both weapon-draft rounds (2 and 5) roll legendary-weapons as of
+    // 2026-07-31; quest-rewards is checked here too since it's still real,
+    // shipped content a future round could point weaponLootTable at again.
     // MatchController SKIPS the grant when nothing survives the filter, so an
     // under-seeded bundle makes the card silently give the player NOTHING.
     for (const id of ["quest-rewards", "legendary-weapons"]) {
@@ -528,8 +572,13 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     // 「傳說的武器道具，只能隨機三選一」 (task #82). Before this, all 29 of these
     // were ALSO in starterShopItems — 29 of 29 — so every legendary in the game
     // could simply be bought. The rule is now structural: they are their own
-    // surface, whitelisted so the round-5 card and the 傳說寶玉 can offer them,
+    // surface, whitelisted so the round-2/5 cards and the 傳說寶玉 can offer them,
     // and priced at 0 so nothing can sell them.
+    //
+    // owner 2026-08-01 grew the pool 24 → 49 and zeroed the 25 of them that
+    // still carried a shop price. 16 of those 25 stayed in `starterShopItems`
+    // until this batch pulled them — this assertion is what caught it, and it is
+    // deliberately stated over the WHOLE list rather than a sample.
     const table = LootTables.get("legendary-weapons");
     expect([...table.entries.map((e) => e.itemId)].sort()).toEqual([...starterLegendaryItems].sort());
     for (const id of starterLegendaryItems) {

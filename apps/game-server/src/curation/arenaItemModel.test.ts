@@ -16,6 +16,29 @@
  *   DRAFT — the free round-2 3-choose-1. The 0g WC3 quest/score rewards, i.e.
  *           precisely the items the shop CANNOT sell you.
  *
+ * ---------------------------------------------------------------------------
+ * WHAT owner 2026-08-01 CHANGED, AND WHERE THAT LEFT THESE GATES
+ * ---------------------------------------------------------------------------
+ * 「隨機三選一發放道具 都改成棱彩武器道具」 +「請你將我剛剛輸入的 49 項傳說武器
+ * 道具都實作完，登錄在隨機三選一」. content/loot-tables/legendary-weapons.json
+ * went 24 → 49, BOTH weapon-draft rounds (2 and 5) now roll it, and 25 of those
+ * 49 had their shop `cost` zeroed so 「傳說＝三選一專屬」 still holds.
+ *
+ * Two consequences these gates had to be re-aimed at, neither of which weakens
+ * them:
+ *
+ *  1. The shop is no longer «every effective final». 18 of the 49 are craftRole
+ *     "final" with a real payload, so SHOP = FINAL ∧ effective ∧ sane MINUS the
+ *     legendary surface. Same derivation, one more term — and the term is not a
+ *     fudge: those 18 all carry `cost: 0` now, which is what makes them
+ *     unsellable in the first place.
+ *  2. The four surfaces are NO LONGER a partition. 6 quest items (至尊魔戒 /
+ *     四魂之玉 / 天堂之劍 / 仙后座 / 獸人船長十字鎬 / 老衲的棒子) are on the
+ *     DRAFT surface and in the 49-item 棱彩 pool at once. That is owner's own
+ *     list, so the disjointness gate below now separates BUYABLE from FREE
+ *     (still absolute) and pins the free/free overlap to exactly those 6 ids
+ *     rather than pretending it is empty.
+ *
  * The lists live in Go (apps/platform/internal/curation/starter.go) because the
  * platform serves the whitelist; this file re-derives them from the content
  * tree and fails if they have drifted. It also round-trips the WC3 crafting
@@ -32,6 +55,8 @@ import { cover } from "../../../../packages/shared/testkit/cover";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Items, LootTables } from "@ggd/shared/sim/content/registry";
+import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
+import { ITEM_TIER_PRICE } from "@ggd/shared/sim/economy/itemTiers";
 import type { ItemId } from "@ggd/shared/ids";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -109,7 +134,7 @@ beforeAll(async () => {
 // ---------------------------------------------------------------------------
 
 describe("the two surfaces are exactly what the gates say (item-01)", () => {
-  it("SHOP = every FINAL crafted weapon with an effect — no more, no less", () => {
+  it("SHOP = every FINAL crafted weapon with an effect the 棱彩 pool has not claimed", () => {
     cover("arena-item-surfaces");
     // Owner rule 1 (task #70, reopened): 「只有最終合成武器才能上架可直接購買
     // (有製作書的)」. The shop is derived from the craftRole marker (recovered
@@ -117,20 +142,43 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     // derivation is the bug that put components and the quest reward 魔戒 on the
     // shelf. A final with no expressible payload is held off by the S3/effect
     // gate (its power is an active item@1 cannot hold — #56).
+    //
+    // owner 2026-08-01 added the fourth term: MINUS the legendary surface.
+    // Eighteen of the 49 棱彩 entries are effective finals, and the same edit
+    // zeroed their `cost`, so rule 1 and 「傳說＝三選一專屬」 both point the same
+    // way — an effective final that the pool claims is NOT shop stock. This is
+    // derived from the shipped loot table, not from a hand-kept exclusion list,
+    // so moving an item between the two surfaces needs no edit here.
+    const claimedByLegendary = new Set(LootTables.get("legendary-weapons").entries.map((e) => e.itemId as string));
     const want = allItems
       .filter((id) => {
         const f = factsOf(id);
-        return f.name !== id && f.role === "final" && f.effective && f.insane.length === 0;
+        return (
+          f.name !== id &&
+          f.role === "final" &&
+          f.effective &&
+          f.insane.length === 0 &&
+          !claimedByLegendary.has(id)
+        );
       })
       .sort();
     expect(
       [...shop].sort(),
       "starter.go's shop list has drifted from the FINAL-weapon set the content tree justifies",
     ).toEqual(want);
-    expect(shop.length).toBeGreaterThanOrEqual(20);
-    // EXCLUSION: nothing but a final may be on the shelf.
+    // The old floor was a flat `>= 20`, which was the shelf's size in July and
+    // says nothing once 18 finals move to the draft. Re-aimed at what the number
+    // has to PROTECT: a shelf smaller than a champion's inventory is not a shop,
+    // it is a fixed build handed out one slot at a time.
+    expect(
+      shop.length,
+      `only ${shop.length} finals are for sale — fewer than the ${INVENTORY_SLOTS} slots a build has to fill`,
+    ).toBeGreaterThan(INVENTORY_SLOTS);
+    // EXCLUSION: nothing but a final may be on the shelf, and nothing on the
+    // shelf may be a 棱彩 entry.
     for (const id of shop) {
       expect(factsOf(id).role, `shop item ${id} is not a final crafted weapon`).toBe("final");
+      expect(claimedByLegendary.has(id), `${id} is on the shelf AND in the 棱彩 pool`).toBe(false);
     }
   });
 
@@ -152,19 +200,93 @@ describe("the two surfaces are exactly what the gates say (item-01)", () => {
     expect(legendary.length).toBeGreaterThanOrEqual(6);
   });
 
-  it("all four surfaces are disjoint — an item has exactly one way in", () => {
+  it("nothing is BUYABLE and FREE at once; the two FREE surfaces overlap on exactly owner's 6", () => {
     cover("arena-item-surfaces");
-    const seen = new Map<string, string>();
+    // THE LOAD-BEARING HALF, and it has no exceptions. 「傳說的武器道具，只能隨機
+    // 三選一」 (task #82) is only a rule if the gold surfaces and the card
+    // surfaces share nothing: an id on both is a "legendary" you can just buy,
+    // which is the exact regression #82 was opened to fix (29 of 29 legendaries
+    // were purchasable before it).
+    const paid = new Map<string, string>();
+    for (const [surface, list] of [
+      ["shop", shop],
+      ["services", services],
+    ] as const) {
+      for (const id of list) {
+        expect(paid.get(id), `${id} is on both the ${paid.get(id)} and ${surface} surfaces`).toBeUndefined();
+        paid.set(id, surface);
+      }
+    }
+    const free = new Map<string, string>();
+    for (const [surface, list] of [
+      ["legendary", legendary],
+      ["draft", draft],
+    ] as const) {
+      for (const id of list) {
+        expect(
+          paid.get(id),
+          `${id} is on the ${paid.get(id)} surface AND the free ${surface} surface — it can be bought`,
+        ).toBeUndefined();
+        free.set(id, surface);
+      }
+    }
+
+    // THE HALF owner 2026-08-01 BROKE, stated honestly instead of asserted away.
+    // 「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄在隨機三選一」 named 6
+    // craftRole-"quest" items into the 棱彩 pool. They therefore sit on the DRAFT
+    // surface (owner rule 2 is 「所有任務道具」 — every quest item is draftable,
+    // and the Go guard TestStarterDraftIsQuestSet enforces that in both
+    // directions) and in the legendary pool at the same time.
+    //
+    // This is NOT a skip-list: the overlap is pinned id-for-id, so a SEVENTH id
+    // drifting in fails here, and each of the 6 still has to be a 0g quest item
+    // (i.e. free through both doors, never purchasable through either).
+    // 2026-08-01: quest-rewards is not wired to any round, so nothing in a live
+    // match reaches these two ways today — the round card rolls legendary-weapons
+    // for both weapon rounds. See match/arenaRules.test.ts.
+    const bothFree = [...draft].filter((id) => legendary.includes(id)).sort();
+    expect(bothFree, "the DRAFT∩LEGENDARY overlap is owner's 2026-08-01 list, exactly").toEqual(
+      [
+        "godie-i004", // 至尊魔戒
+        "godie-i00z", // 四魂之玉
+        "godie-i01n", // 天堂之劍
+        "godie-i01s", // 仙后座
+        "godie-i06j", // 獸人船長十字鎬
+        "godie-i06n", // 老衲的棒子
+      ].sort(),
+    );
+    for (const id of bothFree) {
+      const f = factsOf(id);
+      expect(f.role, `${id} (${f.name}) is on two FREE surfaces but is not a quest item`).toBe("quest");
+      expect(f.cost, `${id} (${f.name}) is on two FREE surfaces and carries a price`).toBe(0);
+    }
+    // The old single-pass `seen` map also caught a list that repeats an id.
+    // Keeping that: two surfaces are now allowed to share an id, one surface
+    // listing it twice never was.
     for (const [surface, list] of [
       ["shop", shop],
       ["services", services],
       ["legendary", legendary],
       ["draft", draft],
     ] as const) {
-      for (const id of list) {
-        expect(seen.get(id), `${id} is on both the ${seen.get(id)} and ${surface} surfaces`).toBeUndefined();
-        seen.set(id, surface);
-      }
+      expect(new Set(list).size, `the ${surface} surface lists the same id twice`).toBe(list.length);
+    }
+    // PRICE AND SURFACE MUST AGREE, in both directions — and this is the half
+    // that actually has teeth at RUNTIME. `economy/shop.buyItem` refuses on
+    // `def.cost <= 0` ("not-purchasable") before it consults any list, so a 0g
+    // item cannot be bought no matter who routes to it, and a PRICED one can be
+    // bought the moment anything does. The surface lists are routing; the price
+    // is the enforcement of 「傳說的武器道具，只能隨機三選一」. owner's 2026-08-01
+    // delisting IS this edit (25 pool entries 300/1200 → 0), so state it where
+    // it can rot: a legendary that quietly regains a price is buyable again
+    // without any starter.go list changing.
+    for (const id of free.keys()) {
+      const f = factsOf(id);
+      expect(f.cost, `${id} (${f.name}) is only ever handed out free, but carries a price`).toBe(0);
+    }
+    for (const id of paid.keys()) {
+      const f = factsOf(id);
+      expect(f.cost, `${id} (${f.name}) is on a GOLD surface but costs nothing`).toBeGreaterThan(0);
     }
   });
 
@@ -223,7 +345,11 @@ describe("nothing that cannot work is reachable (item-02)", () => {
 
   it("no reachable item has an impossible value (unit / import bug)", () => {
     cover("arena-item-noop-unreachable");
-    for (const id of [...shop, ...draft]) {
+    // `legendary` joined this sweep on 2026-08-01. It used to be the surface a
+    // player reached least (the 2400g orb only); it is now what BOTH weapon
+    // 3-choose-1 rounds hand out, so it is the MOST reachable of the three and
+    // was the only one nothing scanned for a unit/import blowout.
+    for (const id of [...shop, ...draft, ...legendary]) {
       const f = factsOf(id);
       expect(f.insane, `${id} (${f.name}) carries impossible values`).toEqual([]);
     }
@@ -252,8 +378,13 @@ describe("both draft tables can actually pay out (item-03)", () => {
     // every legendary to be in the shop so a drop was never something you
     // could not otherwise obtain. The user's rule for the arena is the
     // opposite — 「傳說的武器道具，只能隨機三選一」 — and it is what makes the
-    // round-5 card and the 2400g 傳說寶玉 worth anything at all. All 29 were
-    // in the shop before task #82; none of them may be now.
+    // round-2/5 cards and the 2400g 傳說寶玉 worth anything at all. All 29 were
+    // in the shop before task #82; none of the 49 may be now.
+    //
+    // owner 2026-08-01 re-broke and re-fixed exactly this: 25 of the new pool
+    // carried a 300/1200 price, all 25 were zeroed with the pool edit, and 16 of
+    // them were still listed in starter.go's `starterShopItems` until this batch
+    // pulled them (see the surface note in that file).
     const inShop = new Set(shop);
     expect([...LootTables.get("legendary-weapons").entries.map((e) => e.itemId)].sort()).toEqual(
       [...legendary].sort(),
@@ -280,13 +411,29 @@ describe("the shop is a shop, not a museum (item-04)", () => {
     // (「武器價格請統一化，只有三種價格」), so band coverage is not just failing,
     // it is the wrong question. What replaces it: the two prices exist, both
     // are reachable, and nothing sits anywhere else.
-    expect([...new Set(costs)].sort((a, b) => a - b)).toEqual([300, 1200]);
+    //
+    // ⚠️ A THIRD value appearing here is never "a new tier" — it is 0, i.e. an
+    // unsellable draft item that leaked onto the shelf. That is exactly how this
+    // assertion caught owner's 2026-08-01 delisting: 16 zeroed 棱彩 finals were
+    // still in `starterShopItems`, and the set came back [0, 300, 1200].
+    expect([...new Set(costs)].sort((a, b) => a - b)).toEqual([
+      ITEM_TIER_PRICE.SIMPLE,
+      ITEM_TIER_PRICE.POWERFUL,
+    ]);
     const openers = costs.filter((c) => c <= START).length;
-    // The shop is FINAL weapons only now (owner rule 1), a sharper shelf than
-    // the old cost-filtered 70. Turn 1 must still offer a real choice (a SIMPLE
-    // final buyable on the 600g purse) and the late game a body of POWERFUL ones.
+    // The shop is FINAL weapons only now (owner rule 1), minus whatever the 棱彩
+    // pool claims — a much sharper shelf than the old cost-filtered 70. Turn 1
+    // must still offer a real choice (a SIMPLE final buyable on the 600g purse),
+    // and the late game must still be a CHOICE rather than a shopping list: a
+    // player filling all six slots with POWERFUL items has to have had an
+    // alternative at every one of them. `>= 10` was the July shelf's size and
+    // says nothing about either property.
     expect(openers, `only ${openers} finals are buyable at turn 1`).toBeGreaterThanOrEqual(1);
-    expect(costs.filter((c) => c === 1200).length).toBeGreaterThanOrEqual(10);
+    const powerful = costs.filter((c) => c === ITEM_TIER_PRICE.POWERFUL).length;
+    expect(
+      powerful,
+      `${powerful} POWERFUL finals for ${INVENTORY_SLOTS} slots — the late shop is a forced build`,
+    ).toBeGreaterThan(INVENTORY_SLOTS);
     expect(Math.max(...costs), "nothing in the shop may be unreachable").toBeLessThanOrEqual(CEILING);
     // The 600g purse buys exactly TWO of the cheap tier and none of the dear
     // one — that asymmetry IS the turn-1 fork.

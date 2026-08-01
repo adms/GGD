@@ -26,10 +26,30 @@ import {
   type ShieldRules,
 } from "@ggd/shared/sim/shieldRules";
 import {
+  BLOCK_DOC_ID,
+  blockRulesFromDoc,
+  type BlockRules,
+} from "@ggd/shared/sim/blockRules";
+import {
   STEALTH_DOC_ID,
   stealthRulesFromDoc,
   type StealthRules,
 } from "@ggd/shared/sim/stealth";
+import {
+  TAUNT_DOC_ID,
+  tauntRulesFromDoc,
+  type TauntRules,
+} from "@ggd/shared/sim/taunt";
+import {
+  BODY_SCALE_DOC_ID,
+  bodyScaleRulesFromDoc,
+  type BodyScaleRules,
+} from "@ggd/shared/sim/bodyScale";
+import {
+  REGEN_DOC_ID,
+  regenRulesFromDoc,
+  type RegenRules,
+} from "@ggd/shared/sim/regenRules";
 import {
   SKELETON_ARENA,
   ROYALE_ARENA,
@@ -675,12 +695,42 @@ export class MatchController {
      */
     shieldRules: ShieldRules = shieldRulesFromDoc(Configs.tryGet(SHIELD_DOC_ID)),
     /**
+     * 格擋規則 (`config.block@1`) —— 多個格擋來源怎麼疊。和 `shieldRules` 完全
+     * 同一條路(含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟
+     * shard)。出貨值 `independent` = owner 2026-07-31 的裁決,**它會改變平衡**
+     * (兩件 30% 致死格擋從 30% 變成 51%),這一點和 `shieldRules` 相反。
+     */
+    blockRules: BlockRules = blockRulesFromDoc(Configs.tryGet(BLOCK_DOC_ID)),
+    /**
      * 隱形規則 (`config.stealth@1`, 隱形原語 lane D) —— 隱形擋不擋自動索敵/
      * 手動點選/技能 AoE、破隱條件、兩個渲染不透明度。和 `shieldRules` 完全同
      * 一條路(含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟
      * shard)。出貨值 = WC3 原作行為,所以這一格出現本身不改變任何一場比賽。
      */
     stealthRules: StealthRules = stealthRulesFromDoc(Configs.tryGet(STEALTH_DOC_ID)),
+    /**
+     * 嘲弄規則 (`config.taunt@1`, see sim/taunt.ts) —— 總開關、要不要蓋掉玩家
+     * 手選的目標、小怪吃不吃、衝突怎麼解、全域持續時間倍率。和 `stealthRules`
+     * 完全同一條路(含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要
+     * 重啟 shard)。出貨值 = 保守側,見 `DEFAULT_TAUNT_RULES`。
+     */
+    tauntRules: TauntRules = tauntRulesFromDoc(Configs.tryGet(TAUNT_DOC_ID)),
+    /**
+     * 身體放大倍數 → 攻擊距離 (`config.body-scale@1`, GH#252) —— 總開關 +
+     * 係數 + 體型上下界。和 `tauntRules` 完全同一條路(含同一個已知限制:
+     * `Configs` 是 boot 時載入的,後台改了要重啟 shard)。
+     *
+     * ⚠️ 出貨值**會改變平衡**,和 `shieldRules` 相反:這一格出現之前射程完全
+     * 不看體型,所以係數 1 不是「維持原狀」而是 owner 要的新行為。
+     */
+    bodyScaleRules: BodyScaleRules = bodyScaleRulesFromDoc(Configs.tryGet(BODY_SCALE_DOC_ID)),
+    /**
+     * 百分比回血 (`config.regen@1`, GH#253) —— 百分比與固定值的關係、保底。
+     * 和 `tauntRules` 完全同一條路(含同一個已知限制:重啟 shard 才生效)。
+     * 出貨值本身不改變任何一場比賽:百分比只有在英雄卡填了
+     * `healthRegenPctOfMax` 時才啟動,而出貨只有 `godie-hapm` 填了。
+     */
+    regenRules: RegenRules = regenRulesFromDoc(Configs.tryGet(REGEN_DOC_ID)),
   ) {
     this.matchSeed = seed;
     // #207 的分析帳本。matchId 是它唯一的建構參數,而且它從第 0 tick 就存在 ——
@@ -704,8 +754,16 @@ export class MatchController {
     this.world.combatFeel = combatFeel;
     // 護盾規則 (`config.shield@1`, GH#289 lane P6) —— 同樣在 tick 0 之前定格。
     this.world.shieldRules = shieldRules;
+    // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
+    this.world.blockRules = blockRules;
     // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
     this.world.stealthRules = stealthRules;
+    // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。
+    this.world.tauntRules = tauntRules;
+    // 身體放大倍數 → 攻擊距離 (`config.body-scale@1`, GH#252) —— tick 0 之前定格。
+    this.world.bodyScaleRules = bodyScaleRules;
+    // 百分比回血 (`config.regen@1`, GH#253) —— tick 0 之前定格。
+    this.world.regenRules = regenRules;
     // Project the operator whitelist into the sim as a pure predicate. The
     // 傳說寶玉 rolls its 3-choose-1 inside the sim (so the roll rides world.rng
     // and replays identically) and must filter the pool BEFORE rolling — the
@@ -1033,13 +1091,31 @@ export class MatchController {
       for (const teamId of spentBonus) this.highStakesDraftBonus.delete(teamId);
     }
 
-    // 3) legendary-weapon offers (3-choose-1, granted FREE on pick). The rolled
-    //    choices are filtered to the whitelist so a non-enabled item is never
-    //    offered; an offer with no whitelisted choices left is dropped.
+    // 3) legendary-weapon offers (3-choose-1, granted FREE on pick).
+    //
+    //    GH#249 —「傳說武器有時候只有跳出一個而不是三選一」. These two lines used
+    //    to be ROLL-THEN-FILTER:
+    //
+    //        const offer = offerItems(world, entity, table, offerCount);
+    //        offer.choices = this.whitelist.filterItems(offer.choices);
+    //
+    //    Every rolled entry the operator had not enabled was DELETED off the
+    //    finished card, so a 49-entry pool behind a stale whitelist handed the
+    //    player 2 cards, or 1, or none — at random, because it depended on what
+    //    the dice picked. The whitelist is now inside the pool the roll draws
+    //    from (`world.itemEligible` → `economy/draft.eligibleItemPool`, the same
+    //    place the 傳說寶玉 has always checked it), so the card is full whenever
+    //    `offerCount` enabled weapons exist. `filterItems` is GONE from this
+    //    path on purpose: a second, later filter is the defect, not a safety net.
     if (grant?.weaponLootTable) {
       for (const [seatId, , entity] of this.activeSeats()) {
-        const offer = offerItems(this.world, entity, grant.weaponLootTable, this.rules.offerCount);
-        offer.choices = this.whitelist.filterItems(offer.choices);
+        const offer = offerItems(
+          this.world,
+          entity,
+          grant.weaponLootTable,
+          this.rules.offerCount,
+          this.rules.itemDraft,
+        );
         if (offer.choices.length > 0) {
           this.offers.set(`${round}:${seatId}:w`, {
             kind: "item",
@@ -1047,16 +1123,25 @@ export class MatchController {
             seatId,
             createdTick: this.world.tick,
           });
+          if (offer.choices.length < this.rules.offerCount) {
+            // Reachable ONLY through genuine pool exhaustion now (see above),
+            // which is a content/curation fact worth saying out loud rather
+            // than a dice outcome. Says the size so the operator can tell
+            // "I enabled two weapons" from "this hero owns everything else".
+            console.warn(
+              `[match ${this.matchId}] round ${round} seat ${seatId}: the ` +
+                `${grant.weaponLootTable} card is ${offer.choices.length} wide, not ` +
+                `${this.rules.offerCount} — only ${offer.choices.length} eligible weapons ` +
+                `remain for this champion (owned / not enabled in 內容白名單 / wrong attack type).`,
+            );
+          }
         } else {
-          // Task #47's silent failure, now AUDIBLE. Rolling first and filtering
-          // after means an under-seeded whitelist turns the free weapon card
-          // into nothing at all, with no trace anywhere. (The 傳說寶玉 avoids
-          // the class of bug entirely — it filters BEFORE the roll and refuses
-          // the purchase rather than charging for an empty card.)
+          // Task #47's silent failure, still AUDIBLE. With the whitelist ahead
+          // of the roll this can only mean the eligible pool was EMPTY.
           console.warn(
             `[match ${this.matchId}] round ${round} seat ${seatId}: the ${grant.weaponLootTable} ` +
-              `card rolled nothing the whitelist allows — this seat gets NO weapon. Enable more ` +
-              `items in the admin console (內容白名單).`,
+              `pool holds nothing this champion may be offered — this seat gets NO weapon. Enable ` +
+              `more items in the admin console (內容白名單).`,
           );
         }
       }
@@ -2983,6 +3068,12 @@ export class MatchController {
     // Hand the phase countdown the SAME ticks the sim deadline just gained, once
     // each. `bossRoundExtensionTicks` is a running TOTAL, so the delta is what a
     // second king adds and a re-read adds nothing.
+    //
+    // ⚠️ #248: that total is what the sim ACTUALLY applied after 回合硬上限
+    // clipped it, not `boss.extendCombatSec` × summons. So once a round reaches
+    // the cap this delta is 0 and the player's countdown stops growing — which
+    // is the whole point: a countdown that kept adding 180 s the sim will not
+    // honour would show 0:00 arriving three minutes late (失敗形態 ②, inverted).
     const extended = bossRoundExtensionTicks(this.world);
     if (extended > this.appliedBossExtensionTicks) {
       this.phase.ticksLeft += extended - this.appliedBossExtensionTicks;

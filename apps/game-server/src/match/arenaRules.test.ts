@@ -79,13 +79,15 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect([...ARENA.rounds.values()].every((g) => g.augmentTier !== undefined)).toBe(true);
     expect(ARENA.rounds.get(3)?.augmentTier).toBe("silver");
     expect(ARENA.rounds.get(5)?.augmentTier).toBe("gold");
-    // task #70 (reopened): EVERY item 3-choose-1 offers ONLY quest items
-    // (「隨機三選一…不要放這些任務道具以外的東西」). Both weapon-draft rounds roll
-    // `quest-rewards`; there is no longer a round that drafts a non-quest item.
-    // legendary-weapons.json survives only as the 2400g 傳說寶玉 gacha pool,
-    // which is not a 3-choose-1 card — see the curve block below.
-    expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 3, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 6, weaponLootTable: "quest-rewards" });
+    // owner 2026-07-31: task #70's "two-surface model" (both weapon-draft
+    // rounds roll `quest-rewards`, legendary-weapons is orb-only) is REVERSED
+    // —「隨機三選一發放道具 都改成棱彩武器道具」. Both weapon-draft rounds now roll
+    // `legendary-weapons` directly, same table the 2400g 傳說寶玉 gacha uses.
+    // quest-rewards.json is untouched content (still a real loot table,
+    // still exercised by questDraftGate.test.ts) — it's just no longer wired
+    // to either round card.
+    expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 3, weaponLootTable: "legendary-weapons" });
+    expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 6, weaponLootTable: "legendary-weapons" });
     expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 3, grantGold: 375 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
     // The table is authored out to round 13. The owner's 2026-07-27 curve reaches
@@ -129,24 +131,25 @@ describe("weapon-draft loot tables (arena-07)", () => {
     return (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined;
   };
 
-  it("legendary-weapons: the 傳說寶玉 orb pool, all effective and unbuyable", () => {
+  it("legendary-weapons: the shared round-card + 傳說寶玉 orb pool, all effective and unbuyable", () => {
     cover("arena-loot-table");
-    // No longer a 3-choose-1 draft pool (task #70 reopened: every draft offers
-    // ONLY quest items). This table now backs the 傳說寶玉 gacha only; the 11
-    // book-finals it used to hold moved to the shop (rule 1), leaving the 14
-    // non-final entries task #108 owns.
+    // Owner 2026-07-31: both round-2/5 weapon cards AND the 傳說寶玉 gacha roll
+    // this same table (see the per-round-curve test below) — reached two ways,
+    // not one. Owner 2026-08-01 then replaced the pool wholesale: 「隨機三選一
+    // 發放道具 都改成棱彩武器道具」, 24 → 49 entries, and the 25 of them that
+    // still carried a 300/1200 shop price were delisted to 0 in the same edit.
     const table = LootTables.get("legendary-weapons");
     expect(table.entries.length).toBeGreaterThanOrEqual(6);
     // GGD 自撰的傳說（不是從 w3x 匯入的，所以沒有 `godie-` 前綴）。
     // ⚠️ 這是**允許清單**不是描述：新增一件自撰傳說而忘了列在這裡，這條就紅，
     //    而那正是它的工作 —— 它擋的是「悄悄多了一件沒人審過的傳說」。
-    // 2026-07-31 owner 點名的四類定位落地，池子 20 → 24：
+    //    所以 owner 2026-08-01 從池子裡拿掉的兩件（sage-ward-amulet 法師保命 /
+    //    piercer-crossbow 射手百分比傷害）**也要從這裡拿掉**：留著等於預先核准
+    //    它們無聲回鍋，而那正好是這條允許清單存在的理由。內容檔本身沒動。
     const GGD_AUTHORED = new Set([
       "endless-edge", // #189 無盡連刃（近戰限定）
-      "cleaver-of-the-warden", // 近戰專用擴散
-      "sage-ward-amulet", // 法師保命
-      "bulwark-charge-greaves", // 坦克衝刺
-      "piercer-crossbow", // 射手百分比傷害
+      "cleaver-of-the-warden", // 泰坦九頭蛇（近戰專用擴散）
+      "bulwark-charge-greaves", // 近擊的巨人鎧（坦克衝刺）
     ]);
     for (const e of table.entries) {
       expect(Items.tryGet(e.itemId), `item ${e.itemId} must exist`).toBeDefined();
@@ -158,10 +161,12 @@ describe("weapon-draft loot tables (arena-07)", () => {
       // w3x import and never will be. So the rule is stated directly: a pool
       // entry is a map import OR one of the deliberately authored originals,
       // and this list is the place a reviewer sees each one.
-      // ⚠️ 這五件也必須在**平台白名單**裡（apps/platform/internal/curation/
-      //    starter.go）。理由不是整潔：`MatchController.ts:1036` 是**先抽再過濾**，
-      //    所以漏一件不會是「那件不出現」，而是三選一**抽到一張空卡**。
-      //    2026-07-31 實測 24/24 全在，`legendaryReachability.test.ts` 是那一半的守衛。
+      // ⚠️ 這幾件也必須在**平台白名單**裡（apps/platform/internal/curation/
+      //    starter.go 的 `starterLegendaryItems`）。理由不是整潔：`MatchController`
+      //    的 `grantRoundRewards` 是**先抽再過濾**，所以漏一件不會是「那件不出現」，
+      //    而是三選一**抽到一張空卡**。整張表逐條的可達性守衛在
+      //    `curation/legendaryReachability.test.ts`（2026-08-01 起是 49/49 推導，
+      //    不再是幾個寫死的 id）。
       expect(
         e.itemId.startsWith("godie-") || GGD_AUTHORED.has(e.itemId),
         `${e.itemId} is neither a map item nor a listed GGD-authored legendary`,
@@ -179,8 +184,13 @@ describe("weapon-draft loot tables (arena-07)", () => {
     expect(Math.max(...costs), "a legendary with a price is directly purchasable").toBe(0);
   });
 
-  it("quest-rewards: the 0g quest set, unbuyable and effective (round 2)", () => {
+  it("quest-rewards: the 0g quest set, unbuyable and effective", () => {
     cover("arena-loot-table");
+    // ⚠️ Not wired to any round card as of 2026-07-31 (both weapon-draft
+    // rounds roll legendary-weapons now) — the table is still real, shipped
+    // content, still exercised directly by questDraftGate.test.ts's
+    // offerItems() calls, and stays a candidate table any future round could
+    // point weaponLootTable at again.
     const table = LootTables.get("quest-rewards");
     // has to fill a 3-choose-1 for every seat, twice over if re-rolled
     expect(table.entries.length).toBeGreaterThanOrEqual(6);
@@ -199,9 +209,35 @@ describe("weapon-draft loot tables (arena-07)", () => {
         `${e.itemId} is a 四魂之玉 shard — shards are dropped, only the assembled jewel is drafted`,
       ).toBe(false);
     }
-    // the two draft tables are disjoint: free-quest-trinket vs free-legendary
-    const legendary = new Set(LootTables.get("legendary-weapons").entries.map((e) => e.itemId));
-    for (const e of table.entries) expect(legendary.has(e.itemId)).toBe(false);
+    // THE TWO FREE TABLES USED TO BE DISJOINT — free-quest-trinket vs
+    // free-legendary — so that which table a round pointed at decided what kind
+    // of thing you got. owner 2026-08-01 named SIX quest items into the 49-entry
+    // 棱彩 pool (「請你將我剛剛輸入的 49 項傳說武器道具都實作完，登錄在隨機三
+    // 選一」), so the two tables now share exactly those six.
+    //
+    // Pinned id-for-id rather than relaxed to "some overlap is fine": a seventh
+    // id drifting in, or one of these six quietly leaving one of the tables,
+    // still fails. The remaining 7 quest items are what keeps this table a
+    // distinct surface at all rather than a subset of the 棱彩 pool.
+    const legendary = new Set(LootTables.get("legendary-weapons").entries.map((e) => e.itemId as string));
+    const shared = table.entries
+      .map((e) => e.itemId as string)
+      .filter((id) => legendary.has(id))
+      .sort();
+    expect(shared, "the quest∩legendary overlap is owner's 2026-08-01 list, exactly").toEqual(
+      [
+        "godie-i004", // 至尊魔戒
+        "godie-i00z", // 四魂之玉
+        "godie-i01n", // 天堂之劍
+        "godie-i01s", // 仙后座
+        "godie-i06j", // 獸人船長十字鎬
+        "godie-i06n", // 老衲的棒子
+      ].sort(),
+    );
+    expect(
+      table.entries.length - shared.length,
+      "every quest item is now also a 棱彩 entry — quest-rewards has stopped being its own surface",
+    ).toBeGreaterThan(0);
   });
 });
 
@@ -323,16 +359,17 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
 });
 
 describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
-  it("round 2: every seat gets a free 3-choose-1 quest-reward offer; AI auto-picks it", () => {
+  it("round 2: every seat gets a free 3-choose-1 legendary-weapon offer; AI auto-picks it", () => {
     cover("arena-weapon-offer");
     cover("arena-weapon-ai-pick");
     const ctl = makeArenaMatch(555);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
 
     // one weapon offer per surviving seat, 3 DISTINCT choices from the ROUND-2
-    // table (task #70: the 0g quest rewards, i.e. items the shop cannot sell).
-    // Round 2 ALSO carries a silver augment now (#157), so filter to the weapon
-    // (item) offers keyed `${round}:${seatId}:w`.
+    // table (owner 2026-07-31: 「隨機三選一發放道具 都改成棱彩武器道具」 — the same
+    // legendary-weapons pool the 2400g 傳說寶玉 gacha rolls from). Round 2 ALSO
+    // carries a silver augment now (#157), so filter to the weapon (item)
+    // offers keyed `${round}:${seatId}:w`.
     const offered = new Map<SeatId, string[]>();
     expect(ctl.offers.size).toBeGreaterThan(0);
     for (const offer of ctl.offers.values()) {
@@ -341,7 +378,7 @@ describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
       const choices = offer.choices as string[];
       expect(choices).toHaveLength(3);
       expect(new Set(choices).size).toBe(3);
-      const table = LootTables.get("quest-rewards").entries.map((e) => e.itemId);
+      const table = LootTables.get("legendary-weapons").entries.map((e) => e.itemId);
       for (const c of choices) expect(table).toContain(c);
       offered.set(offer.seatId, [...choices]);
     }
@@ -773,17 +810,18 @@ describe("the per-round curve (arena-curve)", () => {
     ]);
   });
 
-  it("fires exactly two weapon cards, both quest-only, matching the 6-slot build", () => {
+  it("fires exactly two weapon cards, both legendary, matching the 6-slot build", () => {
     cover("arena-config-parse");
-    // Owner rule (#70): 「隨機三選一…不要放這些任務道具以外的東西」 — a weapon card
-    // may only ever roll the quest set. The legendaries are NOT a card; the only
-    // way to one is the 2400g 傳說寶玉.
+    // Owner rule (2026-07-31, supersedes #70): 「隨機三選一發放道具 都改成棱彩武器道具」
+    // — a weapon card rolls the SAME legendary-weapons pool the 2400g 傳說寶玉
+    // gacha rolls from. The card and the orb are now two different ways to the
+    // same pool, not two different pools.
     const cards = [...Array(LAST)]
       .map((_, i) => [i + 1, ARENA.rounds.get(i + 1)?.weaponLootTable] as const)
       .filter(([, t]) => t !== undefined);
     expect(cards.map(([r]) => r)).toEqual([2, 5]);
     for (const [r, table] of cards) {
-      expect(table, `round ${r} weapon card must roll the quest set`).toBe("quest-rewards");
+      expect(table, `round ${r} weapon card must roll the legendary pool`).toBe("legendary-weapons");
     }
     // TWO cards is a function of the SLOT COUNT, not the round count: they fill
     // 2 of 6 slots free, which is what leaves exactly 4 POWERFUL to buy. A third

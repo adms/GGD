@@ -68,7 +68,7 @@ import {
 import type { MobKind } from "../components";
 import { bossSummonsAt, splitBossBounty, type BossDamageEntry, type BossBountyShare } from "../mobBoss";
 import { standstillBlocks } from "../combatFeel";
-import { isMobTargetable } from "../targeting";
+import { forcedTargetOf, isMobTargetable } from "../targeting";
 
 export function mobSystem(world: SimWorld): void {
   const rules = world.mobRules;
@@ -131,6 +131,28 @@ export function mobSystem(world: SimWorld): void {
     }
     let target: EntityId | -1 = -1;
     let bestD2 = Infinity;
+    // 嘲弄 (sim/taunt.ts) —— 「這一刻我被迫打誰」。ONE seam, `forcedTargetOf`,
+    // shared verbatim with the champion auto-acquire path; this system does NOT
+    // read `world.taunt` itself, for the reason this file's own `isMobTargetable`
+    // comment gives (three private answers to one targeting question is how
+    // 召喚物 became unhittable). `scope: "mob"` picks the PvE legality half —
+    // `isMobTargetable` + the different-team test that the scan below applies —
+    // and it is also where the 小怪吃不吃嘲弄 field is honoured.
+    //
+    // ⭐ 決策點,而且它是一個**欄位**不是這一行:「取代」還是「偏袒」那個
+    // 最近敵人掃描 —— `tauntRules.mobTauntMode`(sim/taunt.ts)。
+    //   · "replace"(出貨)      —— 嘲弄是一條拉繩,「最近」正是它要推翻的答案;
+    //   · "nearestFirst"       —— 掃描照跑,嘲弄者只有在沒有更近的敵人時才贏
+    //                             (平手時它贏,那就是「偏袒」唯一有意義的部分)。
+    // 兩種模式都吃 `tauntRules.leashUnits` —— 那個判定在 `forcedTargetOf` 裡,
+    // 所以這裡不存在第二份「拉繩多長」的知識。
+    const taunter = forcedTargetOf(world, mobId, "mob");
+    const taunterT = taunter !== null ? world.transform.get(taunter) : undefined;
+    const forcedD2 = taunterT ? distSq(mt2.pos, taunterT.pos) : Infinity;
+    if (taunter !== null && taunterT && world.tauntRules.mobTauntMode === "replace") {
+      target = taunter;
+      bestD2 = forcedD2;
+    } else {
     for (const [cid, cteam] of world.team) {
       if (cteam.teamId === MONSTER_TEAM) continue; // never target another mob
       // 英雄 + 召喚物。`isMobTargetable` (sim/targeting.ts) is THE predicate —
@@ -152,6 +174,14 @@ export function mobSystem(world: SimWorld): void {
         bestD2 = d2;
         target = cid;
       }
+    }
+    // "nearestFirst": the taunter competes on distance like anybody else and
+    // takes the tie (`<=`), which is the whole difference from "replace".
+    // Deterministic either way — one comparison against one number.
+    if (taunter !== null && taunterT && forcedD2 <= bestD2) {
+      bestD2 = forcedD2;
+      target = taunter;
+    }
     }
     mob.target = target;
     const nav = world.nav.get(mobId);
@@ -496,6 +526,12 @@ export function endCombatMobs(world: SimWorld): void {
   // wholesale rather than relying on `destroy` alone, so a ledger keyed by an id
   // that never reached `world.mob` cannot survive the round either.
   world.bossDamage.clear();
+  // #247 —— 每回合上限的重置點. THE ROUND BOUNDARY, said out loud: `beginCombatMobs`
+  // calls this first, so arming round N+1 wipes round N's tally through exactly
+  // one line. Deliberately NOT a tick deadline — a king summoned in the last
+  // second of a round must not carry its quota into the next one, and an absolute
+  // -tick expiry would have to know a round length the sim does not have.
+  world.bossSpawnsThisRound.clear();
   world.mobZones.clear();
   world.mobRules = null;
   world.mobTicks = -1;

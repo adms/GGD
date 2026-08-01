@@ -52,6 +52,20 @@
  * must be >= `startSec + shrinkSec` (schema-enforced), so the ring can always
  * finish closing before the phase force-ends.
  *
+ * 回合硬上限 — 不管什麼條件 (#248, owner 2026-08-01):
+ *
+ *   「時間延長太久了，不管什麼條件，每回合最長上限就是 5 分鐘出現火圈準備收場，
+ *     不會無限增加時間」
+ *
+ * `roundHardCapSec` (300 s shipped) is a CEILING on the ignition tick, enforced
+ * by {@link applyRoundHardCap} on the STATE rather than at any call site — see
+ * that function for why that is the only way it can honour 「不管什麼條件」. What
+ * it actually bounds is `extendRoundForBoss`, which the shipped
+ * `arena-rules.json` lets fire again on every 100th zombie PER CHAMPION
+ * (`boss.repeatable: true`), each time adding another 180 s to BOTH deadlines.
+ * The `.max(3600)` bounds on those two knobs bound one summon; nothing bounded
+ * the total until this.
+ *
  * 保底 — EVERY UNIT BURNS, NOT JUST CHAMPIONS (owner 2026-07-30):
  *
  *   「火圈百分比真實傷害是所有場上玩家、bot、各種殭屍都會百分比真實傷害燒死，
@@ -104,6 +118,10 @@ export interface FireRingRules {
    * compared against the up-counter `world.fireRingTicks` — never a countdown
    * that gets topped up — so 「延後 180 秒」 is one add on one number and the
    * radius stays a pure function of (rules, tick). See THE ROUND CLOCK below.
+   *
+   * ⚠️ AND IT IS BOUNDED ABOVE by {@link hardCapTicks} since #248: every write
+   * to it goes through {@link applyRoundHardCap}, so no caller — present or
+   * future — can push the ring past 回合硬上限.
    */
   startTicks: number;
   /** ticks the ring takes to contract from the zone boundary to `minRadius`. */
@@ -156,10 +174,57 @@ export interface FireRingRules {
   bossExtendTicks: number;
   /** ticks ONE 殭屍王 summon adds to `startTicks` (0 = the knob is off). */
   bossDelayTicks: number;
-  /** running total actually added to `combatMaxTicks` so far this combat. */
+  /**
+   * running total actually added to `combatMaxTicks` so far this combat.
+   *
+   * ⚠️ 「ACTUALLY」 IS LOAD-BEARING SINCE #248. This is what the host mirrors
+   * onto `PhaseMachine.ticksLeft` (the countdown on the wire) and what
+   * `mobBossSpawn.extendedTicks` broadcasts. Once the hard cap starts eating
+   * extensions, the AUTHORED `bossExtendTicks` and the APPLIED delta stop being
+   * the same number, and a countdown seeded from the authored one would show
+   * the player three minutes the sim has no intention of giving.
+   */
   bossExtendedTicks: number;
   /** running total actually added to `startTicks` so far this combat. */
   bossDelayedTicks: number;
+
+  /* ── THE HARD CAP (#248) ───────────────────────────────────────────────
+   *
+   * owner 2026-08-01: 「時間延長太久了，不管什麼條件，每回合最長上限就是 5 分鐘
+   * 出現火圈準備收場，不會無限增加時間」
+   *
+   * WHY A CEILING AND NOT A THIRD CLOCK. Everything that lengthens a round today
+   * does it by ADDING to one of the two numbers above (`extendRoundForBoss` is
+   * the only mutator, and `arena-rules.json`'s `boss.repeatable: true` at
+   * `killThreshold: 100` is what makes it unbounded — 100, 200, 300 … zombies,
+   * per champion, +180 s each time). A cap expressed as a CEILING ON THOSE TWO
+   * NUMBERS therefore binds every such path by construction, including ones
+   * written later, because the thing being capped is the state, not the caller.
+   * A separate 「hard stop」 timer would have to be armed by somebody, and could
+   * then be armed at the wrong moment or not at all — the exact failure the
+   * ROUND CLOCK note above rejects a second clock for.
+   *
+   * BOTH ARE ABSOLUTE TICKS, per CLAUDE.md 「到期一律用絕對 tick」.
+   */
+
+  /**
+   * Ceiling on {@link startTicks}: the ring's closing sequence begins here no
+   * matter what deferred it. `Number.POSITIVE_INFINITY` = no cap authored
+   * (`FireRingConfigLike.roundHardCapSec` omitted — fixtures, the client's
+   * prediction shadow, any pre-#248 caller), which is byte-identical to the
+   * behaviour before this field existed.
+   */
+  hardCapTicks: number;
+  /**
+   * Ceiling on {@link combatMaxTicks}. Derived ONCE at arm time as
+   * `hardCapTicks + tail`, where `tail` is the gap the operator authored between
+   * ignition and the backstop (`combatMaxSec - startSec`, floored at
+   * `shrinkTicks`). So the cap moves the whole authored shape forward instead of
+   * inventing a second 「多久之後才真的結束」 number the operator never wrote:
+   * on the shipped 60/20/100 the tail is 40 s, so a capped round ignites at
+   * 5:00, is fully closed at 5:20 and force-settles at 5:40.
+   */
+  hardDeadlineTicks: number;
 }
 
 /** Seconds-based fire-ring config (mirror of config.match@1 `match.fireRing`). */
@@ -187,6 +252,16 @@ export interface FireRingConfigLike {
     /** seconds the ring's ignition is pushed back per summon (owner: 180) */
     delayFireRingSec?: number;
   };
+  /**
+   * 回合硬上限 (#248) — the combat-elapsed second the ring's closing sequence
+   * begins at NO MATTER WHAT. Mirror of `match.fireRing.roundHardCapSec`.
+   *
+   * ABSENT ⇒ NO CAP, deliberately asymmetric with the schema's `.default(300)`,
+   * exactly like `boss` above and for the same reason: a doc that went through
+   * the loader always has one, while a hand-built fixture or the client's
+   * prediction shadow stays byte-identical to pre-#248.
+   */
+  roundHardCapSec?: number;
 }
 
 /**
@@ -209,23 +284,99 @@ export function fireRingRulesFromConfig(
   // of one tick would turn 「不要延長」 into 「延長一格」.
   const extTicks = (sec: number | undefined): number =>
     sec === undefined || !(sec > 0) ? 0 : Math.round(sec / dt);
-  return {
-    startTicks: Math.max(0, Math.round(cfg.startSec / dt)),
-    shrinkTicks: Math.max(1, Math.round((cfg.shrinkSec ?? 20) / dt)),
+  const startTicks = Math.max(0, Math.round(cfg.startSec / dt));
+  const shrinkTicks = Math.max(1, Math.round((cfg.shrinkSec ?? 20) / dt));
+  const combatMaxTicks =
+    combatMaxSec === undefined || !Number.isFinite(combatMaxSec) || combatMaxSec <= 0
+      ? Number.POSITIVE_INFINITY
+      : Math.max(1, Math.round(combatMaxSec / dt));
+  // #248 — the two ceilings, resolved ONCE here so no per-tick arithmetic can
+  // round them differently on a different host (same rule as the two above).
+  const hardCapTicks =
+    cfg.roundHardCapSec === undefined ||
+    !Number.isFinite(cfg.roundHardCapSec) ||
+    cfg.roundHardCapSec <= 0
+      ? Number.POSITIVE_INFINITY
+      : Math.max(1, Math.round(cfg.roundHardCapSec / dt));
+  // The tail the operator authored between ignition and the backstop. Floored at
+  // one full close so a cap can never force-end combat with the ring still
+  // shrinking — the promise is 「出現火圈準備收場」, and a 收場 nobody gets to see
+  // is failure mode ① one layer up.
+  const authoredTail = Number.isFinite(combatMaxTicks)
+    ? Math.max(shrinkTicks, combatMaxTicks - startTicks)
+    : shrinkTicks;
+  const rules: FireRingRules = {
+    startTicks,
+    shrinkTicks,
     minRadius: cfg.minRadius ?? 0.5,
     burnPctPerSecStart: cfg.burnPctPerSecStart ?? 0.04,
     burnPctPerSecEnd: cfg.burnPctPerSecEnd ?? 0.2,
     // absent cap = no cap (a very large finite factor keeps min() deterministic).
     maxPctPerSec: cfg.maxPctPerSec ?? 1e9,
-    combatMaxTicks:
-      combatMaxSec === undefined || !Number.isFinite(combatMaxSec) || combatMaxSec <= 0
-        ? Number.POSITIVE_INFINITY
-        : Math.max(1, Math.round(combatMaxSec / dt)),
+    combatMaxTicks,
     bossExtendTicks: extTicks(cfg.boss?.extendCombatSec),
     bossDelayTicks: extTicks(cfg.boss?.delayFireRingSec),
     bossExtendedTicks: 0,
     bossDelayedTicks: 0,
+    hardCapTicks,
+    hardDeadlineTicks: Number.isFinite(hardCapTicks)
+      ? hardCapTicks + authoredTail
+      : Number.POSITIVE_INFINITY,
   };
+  // Arm-time clamp. A no-op on any doc the schema validated (its refine already
+  // requires `startSec + shrinkSec <= roundHardCapSec`), but `FireRingConfigLike`
+  // is also hand-built by fixtures and by the MatchController's per-round
+  // substitutions — and 「不管什麼條件」 has to include 「the round started that
+  // way」, not only 「something extended it」.
+  applyRoundHardCap(rules);
+  return rules;
+}
+
+/**
+ * 回合硬上限 (#248) — clamp both round deadlines back under the cap. IDEMPOTENT
+ * and total: it reads only `rules`, so calling it after ANY mutation of
+ * `startTicks` / `combatMaxTicks` restores the invariant.
+ *
+ * owner 2026-08-01: 「不管什麼條件，每回合最長上限就是 5 分鐘出現火圈準備收場，
+ * 不會無限增加時間」
+ *
+ * ⚠️ THIS IS THE ONLY PLACE THE CAP IS ENFORCED, ON PURPOSE. `startTicks` is
+ * read directly by four consumers (`fireRingSystem`, `fireRingBurnMobs`,
+ * `currentFireRingRadius`, `isBurnedByFireRing`) plus two accessors. Clamping
+ * the STATE at write time keeps all six correct with no second copy of the rule;
+ * clamping at READ time would need six identical edits and the first one missed
+ * would put the client's flame on a different clock from the damage — the exact
+ * drift the #216 note above spent a paragraph avoiding.
+ *
+ * NO CAP AUTHORED ⇒ IMMEDIATE RETURN, so a fixture / prediction-shadow world is
+ * byte-identical to pre-#248 and every existing recorded digest still replays.
+ *
+ * ⚠️ 「A CAPPED ROUND ALWAYS FINISHES CLOSING」 IS AN INVARIANT OF THE TWO
+ * CEILINGS, NOT A THIRD CLAMP. `hardDeadlineTicks - hardCapTicks` is the
+ * authored tail, which `fireRingRulesFromConfig` floors at `shrinkTicks`. So:
+ *
+ *   · both clamps fire  → gap = authoredTail            >= shrinkTicks ✔
+ *   · only the deadline → gap = hardDeadline - startTicks, and startTicks is
+ *                         already <= hardCapTicks, so gap >= authoredTail   ✔
+ *   · neither fires     → nothing changed; whatever gap the config had is the
+ *                         pre-#248 behaviour, not this feature's business    ✔
+ *
+ * An extra `startTicks = min(startTicks, combatMaxTicks - shrinkTicks)` line
+ * was written here first and then DELETED: against `hardDeadlineTicks` it can
+ * never fire (proof above), and against the AUTHORED deadline it fires only on
+ * a config the schema already rejects (`startSec + shrinkSec > combatMaxSec`) —
+ * where it would silently re-time a deliberately degenerate fixture and pretend
+ * to have fixed an authoring bug. A guard that cannot fire is a comment
+ * pretending to be code (CLAUDE.md 第三守則).
+ *
+ * PURITY: two comparisons and two assignments. No rng, no clock, no iteration.
+ */
+export function applyRoundHardCap(rules: FireRingRules): void {
+  if (!Number.isFinite(rules.hardCapTicks)) return;
+  if (rules.combatMaxTicks > rules.hardDeadlineTicks) {
+    rules.combatMaxTicks = rules.hardDeadlineTicks;
+  }
+  if (rules.startTicks > rules.hardCapTicks) rules.startTicks = rules.hardCapTicks;
 }
 
 /**
@@ -290,11 +441,23 @@ export function extendRoundForBoss(world: SimWorld): number {
   // deleting the guard; fix the host wiring (see the 3-arg overload).
   if (!Number.isFinite(rules.combatMaxTicks)) return 0;
 
+  // #248 — APPLY, THEN CAP, THEN BOOK WHAT SURVIVED. The running totals and the
+  // return value are measured as DELTAS across the clamp, never taken from the
+  // authored knobs, because the host mirrors this number onto the player's
+  // round countdown (`MatchController.combatTimeUp`) and `summonMobBoss` puts it
+  // on the wire as 「回合延長 N 秒」. Booking the authored 180 while the cap gave
+  // 60 would be a countdown the player can catch out with a stopwatch — the
+  // same lie the 「read the REAL number back out」 note in mobs.ts already names.
+  const startBefore = rules.startTicks;
+  const deadlineBefore = rules.combatMaxTicks;
   rules.startTicks += delay;
-  rules.bossDelayedTicks += delay;
   rules.combatMaxTicks += extend;
-  rules.bossExtendedTicks += extend;
-  return extend;
+  applyRoundHardCap(rules);
+  const appliedDelay = rules.startTicks - startBefore;
+  const appliedExtend = rules.combatMaxTicks - deadlineBefore;
+  rules.bossDelayedTicks += appliedDelay;
+  rules.bossExtendedTicks += appliedExtend;
+  return appliedExtend;
 }
 
 /**

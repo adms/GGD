@@ -9,7 +9,8 @@
  */
 import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
-import { AUGMENT_TIER_SCHEDULE } from "@ggd/shared/sim/economy/draft";
+import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/sim/economy/draft";
+import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { Configs } from "@ggd/shared/content";
 import type {
   ConfigArenaRulesDoc,
@@ -36,6 +37,13 @@ export interface ArenaRules {
   exUnlockRound: number | null;
   /** choices per offer (augment + weapon offers) */
   offerCount: number;
+  /**
+   * 傳說武器卡的補抽規則 (GH#249). NEVER null: an absent block resolves to
+   * `DEFAULT_ITEM_DRAFT_POLICY`, because "no policy" is not a state a card can
+   * be rolled in — the mechanic is not optional, only its exhausted-pool
+   * answer is.
+   */
+  itemDraft: ItemDraftPolicy;
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
@@ -78,6 +86,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   ultUnlockRound: null,
   exUnlockRound: null,
   offerCount: 3,
+  itemDraft: DEFAULT_ITEM_DRAFT_POLICY,
   rounds: new Map(
     Object.entries(AUGMENT_TIER_SCHEDULE).map(([round, tier]) => [
       Number(round),
@@ -117,6 +126,8 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     ultUnlockRound: doc.ultUnlockRound ?? null,
     exUnlockRound: doc.exUnlockRound ?? null,
     offerCount: doc.offerCount,
+    // Absent block = the shipped policy, NOT null. See the field's doc comment.
+    itemDraft: doc.itemDraft ?? DEFAULT_ITEM_DRAFT_POLICY,
     rounds,
     overflow: doc.overflow ?? null,
     gacha: doc.gacha ?? null,
