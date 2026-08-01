@@ -3,41 +3,54 @@
   "schema": "item@1",
   "name": "熾天使之弓",
   "icon": "assets/icons/items/godie-i012.webp",
-  "description": "武器\n效能\n火焰擴散傷害44(法球)\n裝甲+16.3\n攻擊速度+108.5%\n\n解說\n擁有神聖力量的短弓，能在攻擊上附上淨化的火焰。",
+  "description": "武器\n效能\n[On-Hit] 每次削去敵方英雄現存 MP 3%，並附帶燃燒效果每秒燃燒3%最大生命，持續2秒 (On-Hit)\n攻擊速度+30%\n\n解說\n擁有神聖力量的短弓，能在攻擊上附上淨化的火焰。",
   "cost": 0,
   "tier": 3,
   "modifiers": [
     {
-      "stat": "armor",
-      "op": "flat",
-      "value": 16.3
-    },
-    {
       "stat": "as",
       "op": "pctAdd",
-      "value": 1.085
-    }
-  ],
-  "passive": [
-    {
-      "on": "onBasicAttack",
-      "effects": [
-        {
-          "kind": "damageArea",
-          "damageType": "magic",
-          "amount": {
-            "flat": 44
-          },
-          "radius": 3.0,
-          "maxTargets": 4,
-          "includeOrigin": true
-        }
-      ]
+      "value": 0.3
     }
   ],
   "tags": [
     "wc3-import"
   ],
   "craftRole": "component",
-  "requiresAttackType": "ranged"
+  "requiresAttackType": "ranged",
+  "authoringNote": "攻擊速度+30% = modifiers as pctAdd 0.3。\n[On-Hit]「每次削去敵方英雄現存 MP 3%,並附帶燃燒效果每秒燃燒3%最大生命,持續2秒」= passive onBasicAttack(victim:\"champion\")底下兩個效果:\n  · 削魔 = spendMana {applyTo:\"target\", pctCurrentMana:0.03}\n  · 燃燒 = dot {resourcePct:{subject:\"target\",resource:\"health\",basis:\"max\",perRank:[0.03]}, intervalSec:1, durationSec:2, damageType:\"magic\"}\n⚠️ **「敵方英雄」是 victim:\"champion\" 這個欄位**,不是寫死的判斷 —— 文案明說英雄,所以出貨值是 champion;要讓它也削殭屍的魔,後台把它改成 \"any\" 就好(那會讓這件武器在殭屍波裡強很多,所以預設選文案講的那個)。\n⚠️ **削魔為什麼是第二個欄位而不是 basis**:`spendMana.pctMaxMana` 名字寫著 Max,已經出貨在內容裡;給它加一個 basis:\"current\" 會讓那個名字在一半的取值下變成謊話(CLAUDE.md 第一守則末段)。兩個欄位各自誠實、相加。\n⚠️ **DoT 的百分比守衛架在總量上**:一次 damage 的 0.35 是一下,dot 會付 duration/interval 次。0.03 × 2 次 = 6%,上限 DOT_RESOURCE_PCT_RATIO_TOTAL_MAX = 50%(sim/effects/dynamicTerms.ts)。直接抄 HP_PCT_DAMAGE_MAX(0.35)會讓一個20 秒燒傷變成 700% 最大生命,所以刻意沒抄。\n⚠️ **owner 要看的數字**:燒傷 = 目標最大生命 6%(兩跳),在 maxHealth 倍率 3 下一條血約 1,350 → 約 81 點,再乘 combat-env damageDealt(0.5)≈ 40。削魔 = 對方現存魔 **3%**,滿魔 1,000 時是 30 點,而且**每秒最多一次**。\n⚠️ **owner 2026-08-01 兩處裁定,一起看**:「3% 就可以了,冷卻1秒」。\n  · 5% → **3%**,而且**文案裡的那個 5% 也一起改成 3%** —— 只改資料會讓卡片承諾一個玩家拿不到的數字(legendaryClaims.test.ts 抓的正是這個)。這次文案改寫登記在 packages/shared/src/content/__fixtures__/legendary49OwnerText.json 的 _sanctionedRewrites。\n  · `internalCooldown: 1`(秒)加在 hook 上。**純內容改動**:節奏閘早就在 sim/effects/hooks.ts(絕對 tick 比較),一行 sim 都沒動。改之前這件武器是「每一次普攻都削」,配 +30% 攻速對法師是硬克制;現在削魔與燒傷**兩個效果一起**受同一個 ICD 管(它們掛在同一條 hook 上),所以 2 秒的燒傷也不會再互相蓋來蓋去。\n⚠️ 燒傷那一句的 3% 是**另一個 3%**(每秒燒最大生命 3%,兩跳),owner 沒有動它 —— 兩個 3% 剛好同值,改的時候要看清楚改的是哪一個(削魔在 spendMana.pctCurrentMana,燒傷在 dot.resourcePct.perRank)。\n⚠️ 冷卻長度是**欄位不是政策**:拿掉 `internalCooldown` 就回到「每一下都削」;道具來源的 ICD 還會再乘後台 combat-env 的 `itemCooldown`。\n燒傷凍在 apply 當下(per target),與 amountPerTick 既有語意一致,所以 effects/dotTick.ts 一行都不用改。",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "victim": "champion",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "spendMana",
+          "amount": {
+            "flat": 0
+          },
+          "pctCurrentMana": 0.03,
+          "applyTo": "target"
+        },
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 0
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "max",
+            "perRank": [
+              0.03
+            ]
+          },
+          "intervalSec": 1,
+          "durationSec": 2
+        }
+      ]
+    }
+  ]
 }

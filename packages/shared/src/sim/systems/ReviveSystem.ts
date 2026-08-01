@@ -54,30 +54,15 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
-import { pushOutOfObstacle, clampToBoundary } from "../collision/resolve";
 import { recordRevive } from "../stats/matchStats";
-import { spawnReviveCircle, reviveCircleOfTeam, teamAliveInZone } from "../revive";
+import {
+  spawnReviveCircle,
+  reviveCircleOfTeam,
+  teamAliveInZone,
+  reviveChampionAt,
+  fireRingInnerRadius,
+} from "../revive";
 import type { ReviveRules } from "../revive";
-import { fireRingRadius } from "../fireRing";
-
-/**
- * The fire ring's INNER safe radius in `zone` right now, for a body of
- * `bodyRadius` — or null when no ring is armed / it has not ignited yet.
- *
- * `<= 0` is the fully-closed ring (#195): there is no survivable space at all,
- * so reviving anyone is a griefing loop — they stand up and burn at 20 %/s with
- * nowhere to go, dropping a fresh circle, forever. Live circles expire and no
- * new one may drop from that moment.
- */
-function fireRingInnerRadius(world: SimWorld, zone: number, bodyRadius: number): number | null {
-  const rules = world.fireRingRules;
-  if (!rules || world.fireRingTicks < 0) return null;
-  if (world.fireRingTicks < rules.startTicks) return null;
-  const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
-  if (!zoneDef) return null;
-  const r = fireRingRadius(rules, world.fireRingTicks - rules.startTicks, zoneDef.boundaryRadius);
-  return r - bodyRadius;
-}
 
 /** Body radius of an entity, defaulting to the champion collision radius. */
 function bodyRadiusOf(world: SimWorld, id: EntityId): number {
@@ -270,63 +255,22 @@ function completeRevive(
   channellerId: EntityId,
 ): void {
   const rc = world.reviveCircle.get(id)!;
-  const ownerHp = world.health.get(rc.ownerId)!;
-  const ownerT = world.transform.get(rc.ownerId)!;
   const chT = world.transform.get(channellerId)!;
 
-  const zoneDef = world.arena.zones[rc.zone] ?? world.arena.zones[0]!;
-  const body = { pos: { x: chT.pos.x, z: chT.pos.z }, radius: ownerT.radius };
-  for (const ob of zoneDef.obstacles) pushOutOfObstacle(body, ob);
-  clampToBoundary(body, zoneDef);
-  // #195: a champion may not come back OUTSIDE the fire ring — that is an
-  // instant burn they never chose. Pull the spawn point toward the zone centre
-  // until the whole body sits inside, with 0.1 u of slack so the very next tick
-  // of shrink does not immediately push them out again.
-  const inner = fireRingInnerRadius(world, rc.zone, ownerT.radius);
-  if (inner !== null && inner > 0) {
-    const maxD = inner - 0.1;
-    const d2 = distSq(body.pos, zoneDef.center);
-    if (maxD > 0 && d2 > maxD * maxD) {
-      const d = Math.sqrt(d2);
-      const s = d > 0 ? maxD / d : 0;
-      body.pos = {
-        x: zoneDef.center.x + (body.pos.x - zoneDef.center.x) * s,
-        z: zoneDef.center.z + (body.pos.z - zoneDef.center.z) * s,
-      };
-    }
-  }
-
-  ownerT.pos = body.pos;
-  ownerT.zone = rc.zone;
-  ownerT.vel = { x: 0, z: 0 };
-  ownerT.accel = 0;
-
-  ownerHp.alive = true;
-  // at least 1 HP: a 0% config must still produce a living champion
-  ownerHp.hp = Math.max(1, ownerHp.maxHp * rules.reviveHpPctMax);
-  ownerHp.mana = ownerHp.maxMana * rules.reviveManaPctMax;
-  ownerHp.shields = [];
-
-  const st = world.status.get(rc.ownerId);
-  if (st) st.effects = []; // no pre-death DoT/CC carries through the grave
-  const nav = world.nav.get(rc.ownerId);
-  if (nav) {
-    nav.order = null;
-    nav.moveTarget = null;
-    nav.attackTarget = null;
-    nav.attackTargetAuto = false;
-    nav.override = null;
-  }
-  world.airborne.delete(rc.ownerId); // #247: a revived body is never mid-arc
-  const ab = world.abilities.get(rc.ownerId);
-  if (ab) {
-    // ability COOLDOWNS are deliberately not reset — they are tick-based and
-    // kept running while dead, so you return with whatever happens to be up.
-    ab.cast = null;
-    ab.windup = null;
-  }
-  world.hitstop.delete(rc.ownerId);
-  world.knockdown.delete(rc.ownerId);
+  // The 「站起來」 half is `revive.ts::reviveChampionAt` — SHARED with the item
+  // path (天生牙 godie-i031) so there is exactly one definition of what a revived
+  // champion's state is. Everything below this call is about the CIRCLE.
+  const pos = reviveChampionAt(world, rc.ownerId, {
+    pos: chT.pos,
+    zone: rc.zone,
+    hpPct: rules.reviveHpPctMax,
+    manaPct: rules.reviveManaPctMax,
+  });
+  // Unreachable through this path: `updateCircle` has already established the
+  // owner exists, is dead, and that the ring has not closed. Guard anyway rather
+  // than spend the charge on a revive that did not happen.
+  if (pos === null) return;
+  const body = { pos };
 
   // the charge is spent HERE, on completion — never on spawn
   const left = world.reviveCharges.get(rc.teamId) ?? 0;

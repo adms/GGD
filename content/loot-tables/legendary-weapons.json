@@ -3,83 +3,7 @@
   "schema": "loot-table@1",
   "entries": [
     {
-      "itemId": "godie-i04v",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i00l",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i000",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i06e",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i06g",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i01d",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i014",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i01g",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i00u",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i02x",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i007",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i012",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i06s",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i013",
-      "weight": 1
-    },
-    {
-      "itemId": "endless-edge",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i061",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i063",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i06o",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i060",
-      "weight": 1
-    },
-    {
-      "itemId": "godie-i06a",
+      "itemId": "bulwark-charge-greaves",
       "weight": 1
     },
     {
@@ -87,15 +11,191 @@
       "weight": 1
     },
     {
-      "itemId": "sage-ward-amulet",
+      "itemId": "endless-edge",
       "weight": 1
     },
     {
-      "itemId": "bulwark-charge-greaves",
+      "itemId": "godie-i000",
       "weight": 1
     },
     {
-      "itemId": "piercer-crossbow",
+      "itemId": "godie-i004",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i006",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i007",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00i",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00j",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00l",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00s",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00u",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i00z",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i012",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i013",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i014",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i016",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i018",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01g",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01i",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01n",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01s",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01v",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i01w",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i020",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i027",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i02d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i02e",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i031",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i039",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i03f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i03h",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i03m",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i04d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i060",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i061",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i067",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06a",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06d",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06e",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06f",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06g",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06i",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06j",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06n",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06o",
+      "weight": 1
+    },
+    {
+      "itemId": "godie-i06q",
       "weight": 1
     }
   ]

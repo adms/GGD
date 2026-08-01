@@ -3,8 +3,8 @@
   "schema": "item@1",
   "name": "炎神弩",
   "icon": "assets/icons/items/godie-i06i.webp",
-  "description": "神器\n效能\n攻擊力+35.1\n裝甲+5.3\n攻擊速度+35.1%\n額外(敏捷+敵我距離)*0.11穿刺傷害\n\n解說\n最近人口爆炸，天界感情部業績暴增，導致全球各部門的愛神邱比特出現腕關節炎等職業病症狀。有鑑於此，科技部研發了一批國產L65K2邱比特專用槍，減輕各部門邱比特手部負擔，唯時效性與準確性不佳，請多注意。",
-  "cost": 1200,
+  "description": "神器\n效能\n攻擊力+42\n攻擊速度+60%\n[On-Hit] 攻擊額外造成 10-1000 傷害，敵我距離越遠傷害越高 (0~10)(冷卻1秒)\n\n解說\n最近人口爆炸，天界感情部業績暴增，導致全球各部門的愛神邱比特出現腕關節炎等職業病症狀。有鑑於此，科技部研發了一批國產L65K2邱比特專用槍，減輕各部門邱比特手部負擔，唯時效性與準確性不佳，請多注意。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
@@ -13,17 +13,12 @@
     {
       "stat": "ad",
       "op": "flat",
-      "value": 35.1
-    },
-    {
-      "stat": "armor",
-      "op": "flat",
-      "value": 5.3
+      "value": 42
     },
     {
       "stat": "as",
       "op": "pctAdd",
-      "value": 0.351
+      "value": 0.6
     }
   ],
   "craftRole": "final",
@@ -32,5 +27,26 @@
       "godie-i012"
     ],
     "book": "godie-i02a"
-  }
+  },
+  "authoringNote": "攻擊力+42 / 攻擊速度+60% = modifiers。\n[On-Hit]「攻擊額外造成 10-1000 傷害,敵我距離越遠傷害越高 (0~10)」= passive onBasicAttack → damage.distanceScale {atRange:10, near:10, far:1000}(sim/effects/dynamicTerms.ts)。文案把三個數字都給了,所以這一件沒有任何設計決定:near/far/atRange 一一對應 10 / 1000 / (0~10)。線性內插,沒有曲線 —— sim/purity.test.ts 禁 `**` 與三角函式(火圈的縮圈法則也因此是線性的)。\n距離取的是**施法者與受害者的平面距離**,在 hook 觸發那一刻讀 transform:近戰路徑在 BasicAttackSystem 揮擊落點、遠程路徑在 ProjectileSystem 的**命中**那一刻(所以是箭矢飛完之後的兩點距離,那正是「敵我距離」的讀法)。\n⚠️ **owner 一定要看的數字 —— 這是這一批最大的一個**:文案的 far = **1000**。MEASURED(出貨 champion range,單位就是這裡的 sim 單位):\n    近戰 range 1.6  → 10 + 990×0.16 ≈ **168**\n    遠程 range 6.0  → ≈ **604**\n    遠程 range 8.2  → ≈ **822**   (11 位英雄是這一格)\n    遠程 range 12.0 → 夾在 atRange=10 → **1000**\n  再乘 combat-env damageDealt(出貨 0.5)分別約 84 / 302 / 411 / 500,而maxHealth 倍率 3 下一條血約 1,350。也就是說**一位 12 距離的射手每一次普攻額外打掉對手三分之一條血**。這是文案字面值,我照著出,但這是 owner 應該親自看一眼的那一個數字 —— 而他看了。\n⚠️ **owner 2026-08-01 裁定「冷卻1 秒」**,所以這條 hook 現在帶 `internalCooldown: 1`(秒)。**純內容改動**:節奏閘早就在 sim/effects/hooks.ts(絕對 tick 比較,`world.tick - hookLastFired < icdTicks`),一行 sim 都沒動。實際效果是這一發**每秒最多一次**,所以上面那四個 168 / 604 / 822 / 1000 現在是「每秒的上限」而不是「每一下」——攻速再高也不會讓它變快,這正是 owner 要收的那一條。\n⚠️ **這件的文案沒有寫冷卻**(只寫「攻擊額外造成 10-1000 傷害」),而 owner 沒有授權我改那一句,所以卡片目前**少講了**一個真實限制。要不要補「(冷卻1秒)」是 owner 的決定,不是我的 —— 記在這裡,不要被當成漏抄。\n⚠️ 冷卻長度是**欄位不是政策**:拿掉 `internalCooldown` 就回到「每一下都打」,填 3 就是三秒一次;道具來源的 ICD 還會再乘後台 combat-env 的 `itemCooldown`(hooks.ts 的 `src.kind === \"item\"` 那一行),所以全域節奏也調得動。\n⚠️ schema 上界 DISTANCE_SCALE_DAMAGE_MAX = 3000,工作是擋住多打一個零(10000),**不是**壓制 1000 —— 壓制它等於竄改文案。\n⚠️ 方向是資料不是程式:near > far 就是「越近越痛」,一樣寫得出來。\ndamageType 選 magic(炎神),吃魔抗。",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 0
+          },
+          "distanceScale": {
+            "atRange": 10,
+            "near": 10,
+            "far": 1000
+          }
+        }
+      ]
+    }
+  ]
 }

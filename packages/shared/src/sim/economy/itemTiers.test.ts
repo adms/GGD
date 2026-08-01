@@ -98,7 +98,7 @@ const hasEffect = (d: ItemDoc): boolean => itemHasEffect(d);
 const TIER_PRICES: number[] = [ITEM_TIER_PRICE.SIMPLE, ITEM_TIER_PRICE.POWERFUL];
 
 describe("the two prices (統一化)", () => {
-  it("every purchasable weapon carries EXACTLY one of the two tier prices", () => {
+  it("every weapon ON THE SHELF carries EXACTLY one of the two tier prices", () => {
     cover("econ-two-prices");
     // THE SHOP IS THE FINAL CRAFTED WEAPONS (owner rule 1, task #70 reopened):
     // 「只有最終合成武器才能上架可直接購買 (有製作書的)」. It is derived from the
@@ -107,18 +107,47 @@ describe("the two prices (統一化)", () => {
     // priced recipe component and put the quest reward 魔戒 on sale for 300g.
     // A final with no expressible payload (its power is an active item@1 cannot
     // hold — #56) is excluded by the same S3/hasEffect rule the client shop uses.
-    const shop = items.filter((d) => d.craftRole === "final" && hasEffect(d));
-    const simple = shop.filter((d) => d.cost === ITEM_TIER_PRICE.SIMPLE);
-    const powerful = shop.filter((d) => d.cost === ITEM_TIER_PRICE.POWERFUL);
+    const finals = items.filter((d) => d.craftRole === "final" && hasEffect(d));
 
-    // 28 finals-with-effect: 5 SIMPLE + 23 POWERFUL. The 23 include the 11 that
-    // task #82 had zeroed into the legendary pool (霸王槍/光魔杖/…), which rule 1
-    // moves back onto the shelf.
-    expect(shop.length).toBe(28);
-    expect(simple.length).toBe(5);
-    expect(powerful.length).toBe(23);
+    // ⚠️ RE-AIMED 2026-08-01. 「隨機三選一發放道具 都改成棱彩武器道具」 +
+    // 「傳說＝三選一專屬」: the owner DELISTED 25 items by setting `cost` to 0.
+    // 16 of them were `craftRole: final` WITH a payload, i.e. they were on this
+    // exact shelf the day before. Two more finals (雷神之鎚 godie-i01i /
+    // 天地崩裂魔杖 godie-i03h) were listed at 1200g while carrying NO modifiers
+    // at all, so `hasEffect` had already kept them out of the old census; the
+    // same edit gave them a payload AND zeroed them. That is why the
+    // delisted-final count below is 18 and not 16 — measured, not inferred.
+    // A `final` at 0g is therefore no longer a mis-priced item —
+    // it is an item the shop cannot sell at all, because `buyItem` refuses
+    // `def.cost <= 0` with `not-purchasable` BEFORE any gold moves (see
+    // economy/shop.ts). So the census is taken over the priced half, and the
+    // unpriced half is held to a different rule — see 「a delisted final still
+    // has a way to reach the player」 below, which is what stops a `cost` typo
+    // from quietly deleting an item instead of moving it.
+    //
+    // This split is what keeps the assertion pointed at the failure it was
+    // written for: a SHOP item at 700g (or at 0g while nothing else can ship
+    // it) still fails. What it deliberately no longer calls a bug is a
+    // legendary that left the shelf on purpose.
+    const shelf = finals.filter((d) => d.cost > 0);
+    const simple = shelf.filter((d) => d.cost === ITEM_TIER_PRICE.SIMPLE);
+    const powerful = shelf.filter((d) => d.cost === ITEM_TIER_PRICE.POWERFUL);
+
+    // Census of the shelf as it ships today: 12 finals-with-effect at a price,
+    // 3 SIMPLE + 9 POWERFUL (the other 18 finals are the delisted legendaries).
+    // These three numbers move whenever the owner curates, and that is the
+    // point — a re-curation has to come past this line.
+    expect(shelf.length).toBe(12);
+    expect(simple.length).toBe(3);
+    expect(powerful.length).toBe(9);
+    // NEITHER TIER MAY EMPTY OUT, and this is load-bearing rather than
+    // decorative: 「turn 1 buys exactly TWO SIMPLE items」 and 「a full 6-slot
+    // POWERFUL build」 further down describe purchases that must be makeable
+    // from real content, and both would pass over an empty shelf.
+    expect(simple.length, "no SIMPLE item is buyable — the turn-1 fork is fiction").toBeGreaterThan(0);
+    expect(powerful.length, "no POWERFUL item is buyable — the 6-slot endgame is fiction").toBeGreaterThan(0);
     // Every shop item must carry one of the two tier prices, nothing off-ladder.
-    for (const d of shop) {
+    for (const d of shelf) {
       expect(TIER_PRICES, `${d.id} (${d.name}) is a shop final priced ${d.cost}g`).toContain(d.cost);
     }
     // A price and a tier number that disagree would make the shop sort wrong
@@ -158,9 +187,101 @@ describe("legendary is DRAFT-ONLY", () => {
       const doc = byId.get(e.itemId);
       expect(doc, `legendary ${e.itemId} has no content doc`).toBeDefined();
       // 「傳說的武器道具，只能隨機三選一」 — a price here would make it buyable.
-      expect(doc!.cost, `legendary ${e.itemId} is directly purchasable at ${doc!.cost}g`).toBe(0);
+      //
+      // ⚠️ 訊息把**理由**一起講出來 (owner 2026-08-01):「所有傳說武器道具都是
+      // 0元，避免平衡問題 (目前只能抽到)」。0 不是「便宜」也不是還沒定價 ——
+      // 它是這件道具**唯一的發放管道是三選一**的那個開關(`economy/shop.ts`
+      // `buyItem` 在任何金幣移動之前就用 `def.cost <= 0` 擋掉)。所以看到這條紅
+      // 的人要改的是**定價**,不是這條測試。
+      expect(
+        doc!.cost,
+        `傳說 ${e.itemId}（${doc!.name}）標價 ${doc!.cost}g —— 它在 legendary-weapons ` +
+          `池裡，也就是「只能抽到」的那一批。owner 2026-08-01:「所有傳說武器道具都是` +
+          `0元，避免平衡問題 (目前只能抽到)」。標價會讓它同時變成可購買，` +
+          `平衡是照「只能抽到」算的。要上架就先把它移出 loot table。`,
+      ).toBe(0);
       expect(hasEffect(doc!), `legendary ${e.itemId} does nothing`).toBe(true);
     }
+  });
+
+  it("而且是真的買不到 —— 貨架全開、金幣滿手，`buyItem` 仍然逐件拒絕", async () => {
+    cover("econ-legendary-not-purchasable");
+    // 上面那一條是**屬性**斷言(cost === 0)。這一條是**行為**斷言,因為
+    // 「cost 0」與「買不到」是兩件事:0 也可以被讀成「免費送」。CLAUDE.md 失敗
+    // 形態 ⑦「掃屬性代替掃行為」就是這個形狀,所以兩條都在。
+    //
+    // ⚠️ `world.weaponShelfOpen = true` 是刻意的。出貨旗標是 CLOSED (#261
+    // 暫時下架),而 `buyItem` 的貨架檢查排在價格檢查**前面** —— 不打開的話這條
+    // 測試會拿到 "shelf-closed",對「0 元擋不擋得住」一個字都沒說,而 #261 是
+    // 「暫時」的。打開之後,擋住傳說的就只剩 `def.cost <= 0` 那一行。
+    const { registerAll } = await import("../../content/registries");
+    const { ContentLoader } = await import("../../content/loader");
+    const { FsContentSource } = await import("../../content/node/FsContentSource");
+    const { SimWorld } = await import("../SimWorld");
+    const { SKELETON_ARENA } = await import("../world/ArenaDef");
+    const { spawnChampion } = await import("../spawnChampion");
+    const { buyItem } = await import("./shop");
+    const { asSeatId, asTeamId } = await import("../../ids");
+
+    registerAll((await new ContentLoader(new FsContentSource(CONTENT_DIR)).load()).store);
+    const world = new SimWorld(SKELETON_ARENA, 9001);
+    world.weaponShelfOpen = true;
+    const z0 = SKELETON_ARENA.zones[0]!;
+    const id = spawnChampion(world, {
+      championId: "godie-h020" as never,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: z0.center.x + 2, z: z0.center.z },
+      zone: 0,
+    });
+    const champ = world.champion.get(id)!;
+    // 遠超過任何價格,所以拒絕的理由不可能是「錢不夠」。
+    champ.gold = 999_999;
+    const goldBefore = champ.gold;
+
+    const table = lootTables.find((t) => t.id === "legendary-weapons")!;
+    const sold: string[] = [];
+    for (const e of table.entries) {
+      const outcome = buyItem(world, id, e.itemId as never);
+      if (outcome !== "not-purchasable") sold.push(`${e.itemId} → ${outcome}`);
+    }
+    expect(
+      sold,
+      "這些傳說在貨架全開時**不是**被價格擋下來的 —— 「只能抽到」在那一刻就破了",
+    ).toEqual([]);
+    // 沒有付出任何一塊錢,也沒有佔掉任何一格。
+    expect(champ.gold).toBe(goldBefore);
+    expect(champ.items.filter((s) => s !== null)).toEqual([]);
+  });
+
+  it("a DELISTED final still has a way to reach the player — 0g is off the shelf, not deleted", () => {
+    cover("econ-legendary-not-purchasable");
+    // THE OTHER HALF OF THE 2026-08-01 DELISTING. 「傳說的武器道具，只能隨機三選
+    // 一」 is enforced above (a pool entry may not carry a price); this is the
+    // converse, and it is the assertion that replaces the pinned shop census as
+    // the tripwire on `cost`.
+    //
+    // WHY IT IS NEEDED. `buyItem` refuses `cost <= 0`, and `shopCatalogue` will
+    // not sell what the sim refuses, so an item whose price is zeroed vanishes
+    // from every shop-side count without a single test going red. If it is not
+    // in a draft pool either, it is unreachable content — 「made it but the
+    // player can never get it」, the failure form this repo has shipped before.
+    // A DELIBERATE delisting always moves the item into the legendary table, so
+    // that membership is exactly the evidence that the zero was intended.
+    const pool = new Set(
+      lootTables.find((t) => t.id === "legendary-weapons")!.entries.map((e) => e.itemId),
+    );
+    const orphaned = items
+      .filter((d) => d.craftRole === "final" && hasEffect(d) && d.cost <= 0 && !pool.has(d.id as string))
+      .map((d) => `${d.id} ${d.name}`);
+    expect(
+      orphaned,
+      "這些 final 既不能買、也不在傳說池裡 —— 等於做了但玩家永遠拿不到 (cost 打成 0 就會長這樣)",
+    ).toEqual([]);
+    // …and the set is not empty, so the rule above is not vacuously green: 18
+    // finals ship delisted-and-drafted today (霸王破甲槍/斬龍刀/…).
+    const delisted = items.filter((d) => d.craftRole === "final" && hasEffect(d) && d.cost <= 0);
+    expect(delisted.length, "no final is delisted at all — the rule above proves nothing").toBe(18);
   });
 
   it("the free quest card's items are free too", () => {

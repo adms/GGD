@@ -3,33 +3,63 @@
   "schema": "item@1",
   "name": "貫雷槍",
   "icon": "assets/icons/items/godie-i01g.webp",
-  "description": "武器\n效能\n10%機率淨化（法球）\n攻擊力+12.6\n裝甲+3.8\n生命+278\n攻擊速度+25.3%\n\n\n解說\n光之神-盧烏所持有的光之神槍，這支槍象徵其本身力量-太陽光以及天空的閃電。不管面對多遙遠的敵人，都可放射出死亡的光芒。",
+  "description": "武器\n效能\n[緩慢] 8%的機率造成敵方緩速，移動速度 -2，持續 0.6秒\n[伸長] 近戰攻擊距離+4；遠戰攻擊距離+2\n[重創] 敵方攻擊時吸血效果降低50%吸血回復量\n\n解說\n光之神-盧烏所持有的光之神槍，這支槍象徵其本身力量-太陽光以及天空的閃電。不管面對多遙遠的敵人，都可放射出死亡的光芒。",
   "cost": 0,
   "tier": 3,
-  "modifiers": [
-    {
-      "stat": "armor",
-      "op": "flat",
-      "value": 3.8
-    },
-    {
-      "stat": "as",
-      "op": "pctAdd",
-      "value": 0.253
-    },
-    {
-      "stat": "ad",
-      "op": "flat",
-      "value": 12.6
-    },
-    {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 278
-    }
-  ],
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "component"
+  "craftRole": "component",
+  "modifiers": [
+    {
+      "stat": "range",
+      "op": "flat",
+      "value": 4,
+      "requires": {
+        "attackType": "melee"
+      }
+    },
+    {
+      "stat": "range",
+      "op": "flat",
+      "value": 2,
+      "requires": {
+        "attackType": "ranged"
+      }
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.08,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 0.6,
+          "moveSpeedMult": 0.7
+        }
+      ]
+    },
+    {
+      "on": "onDamageTaken",
+      "damageSource": "basic",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 3.0,
+          "stackKey": "grievous-wounds",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "lifesteal",
+              "op": "pctMult",
+              "value": -0.5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "[伸長] 近戰+4 / 遠戰+2 是同一個 modifiers 陣列上的兩條 `requires` 閘（見 content/schema/item.ts 的 zGatedItemStatModifier），在裝備時由 sim/economy/itemSource.ts 解析；變身換攻擊型態會重解（三對變身跨近戰/遠程）。\n\n[緩慢] 用出貨的 slow30 標記 + moveSpeedMult 0.7。⚠️ 描述寫的是「移動速度 -2」＝一個 FLAT 差值，而 applyStatus 只吃倍率，表達不出來。實測全 119 位英雄 baseStats.ms（p10 5.5／中位 5.9／p90 6.4），slow30 拿掉的是 1.65–1.92（中位 −1.77），111/119 落在 −2±0.5。要精準 −2 只有兩條路：(a) applyBuff {ms flat −2}，但那條完全繞過 applyStatus 的免控閘與 CC 計分（魔免也躲不掉），(b) 給 applyStatus 加一個有上下界的 moveSpeedFlat 欄位＋MovementHold 開一條 flat 通道 —— 那是共用 CC 機制的改動，會一次服務全部 7 件 [緩慢] 道具，不該塞在單件道具的工作裡。等 owner 裁決。\n\n[重創] onDamageTaken 的事件實體是攻擊者（見 sim/combat/damage.ts:742 與 復仇之袍 godie-i02j 的前例），所以 applyBuff 直接落在他身上，lifesteal pctMult −0.5 → 吸血減半。⚠️ 真正在做事的是 **stackKey**：沒有它，每一次挨打都會 attach 一個**新的** buff source，而 statPipeline 對每一個 source 各跑一次 `pctMult *= 1 + value`（0.5^n），打五下就剩 3% 吸血 —— 那是另一個效果。⚠️ 2026-08-01 突變驗證改正（第三守則）：`maxStacks: 1` 在這裡是**惰性的**，因為 statPipeline 只讓 `Flat` / `PercentAdd` 乘 `src.stacks`，`PercentMult` 不看層數；留著是宣告意圖，不是機制。完整說明見 祕銀鎖子甲 godie-i01w 的同一段。持續 3 秒是描述沒給的數字（唯一一個），選 3 秒是為了跨得過對手兩次揮擊的間隔，讓對打時不會中途失效；要調就改這裡一個數字。\n\ndamageSource:\"basic\" 對應「敵方**攻擊**時」：吸血本來就只吃普攻（damage.ts `pkt.origin === \"basic\"`），所以不加也不會算錯，但少了它火圈灼燒與 DoT 每一跳都會重刷這個 debuff —— 那不是描述講的東西。\n\n【2026-08-01 [重創] 統一】stackKey 由 \"grievous-lance\" 改成 \"grievous-wounds\"，與晨曦之光 godie-i016 / 雷神之鎚 godie-i01i / 祕銀鎖子甲 godie-i01w 共用同一個 key。四段文案一字不差都是「吸血效果降低50%」，所以同時帶兩件應該還是 50% 而不是 75%（pctMult 是連乘的：0.5×0.5 = 只剩 25% 吸血）。要讓它們可疊，把其中一件的 stackKey 改掉即可。"
 }

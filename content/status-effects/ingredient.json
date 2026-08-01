@@ -1,0 +1,10 @@
+{
+  "id": "ingredient",
+  "schema": "status-effect@1",
+  "name": "食材化",
+  "description": "被殺豬刀剁成一塊會呼吸的食材，站在原地無法動作。",
+  "polarity": "debuff",
+  "tags": [
+    "stun"
+  ]
+}

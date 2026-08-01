@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "名刀-天狼",
   "icon": "assets/icons/items/godie-i00u.webp",
-  "description": "武器\n效能\n每次攻擊造成敵方英雄最大生命4%傷害（法球）\n攻擊速度+123.2%\n\n解說\n名刀-天狼源自於飛鼠先生的夥伴，傳說中的名匠呆牙之手，擁有不可思議的力量，可以穿透敵人生命之源汲取生命。",
+  "description": "武器\n效能\n[On-Hit] 每次攻擊造成敵方英雄現存生命 6%傷害（On-Hit）\n攻擊速度+60%\n普攻吸血+10%\n\n解說\n名刀-天狼源自於飛鼠先生的夥伴，傳說中的名匠呆牙之手，擁有不可思議的力量，可以穿透敵人生命之源汲取生命。",
   "cost": 0,
   "tier": 3,
   "tags": [
@@ -13,8 +13,31 @@
     {
       "stat": "as",
       "op": "pctAdd",
-      "value": 1.232
+      "value": 0.6
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.1
     }
   ],
-  "craftRole": "component"
+  "craftRole": "component",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {},
+          "hpPct": {
+            "basis": "current",
+            "perRank": [
+              0.06
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }

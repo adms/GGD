@@ -3,31 +3,26 @@
   "schema": "item@1",
   "name": "狂暴軒轅劍",
   "icon": "assets/icons/items/godie-i02e.webp",
-  "description": "傳說\n效能：\n攻擊力+32.2\n生命+202\n15%的機率增加225點傷害並暈眩0.4秒\n\n歷史\n傳說中的上古十大神器之ㄧ，被封為最強力量。",
-  "cost": 1200,
+  "description": "傳說\n效能：\n攻擊速度+200%\n[暈眩] 10%的機率普攻造成暈眩 0.1秒\n\n歷史\n傳說中的上古十大神器之ㄧ，被封為最強力量。對了，蝦皮好像也買的到。",
+  "cost": 0,
   "tier": 2,
   "modifiers": [
     {
-      "stat": "ad",
-      "op": "flat",
-      "value": 32.2
-    },
-    {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 202
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 2.0
     }
   ],
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.1,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "flat": 33.75
-          }
+          "kind": "applyStatus",
+          "statusId": "fang-stun",
+          "duration": 0.1,
+          "stun": true
         }
       ]
     }

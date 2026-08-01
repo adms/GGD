@@ -3,18 +3,32 @@
   "schema": "item@1",
   "name": "反射之盾",
   "icon": "assets/icons/items/godie-i03m.webp",
-  "description": "夢幻\n效能\n近戰傷害反彈100%\n裝甲+17\n\n解說\n死之王與飛鼠先生的死戰之中，詛咒飛鼠先生的裝甲，飛鼠先生為了破除詛咒將效應轉移到盾牌之上，從此飛鼠先生為無裝甲狀態，而此盾也具有了恐怖的反彈效果。",
-  "cost": 300,
+  "description": "夢幻\n效能\n[反彈] 反彈普通攻擊傷害 200%\n\n解說\n死之王與飛鼠先生的死戰之中，詛咒飛鼠先生的裝甲，飛鼠先生為了破除詛咒將效應轉移到盾牌之上，從此飛鼠先生為無裝甲狀態，而此盾也具有了恐怖的反彈效果。",
+  "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
-  "modifiers": [
+  "craftRole": "none",
+  "authoringNote": "w3x 出處:item I03M,abilities = A0C6 + AId5。A0C6 的 base 是 ANth(荊棘光環),data.1.1 = 1.0,物件編輯器後綴寫 (100%);AId5 是 +5 護甲。原作文案是「近戰傷害反彈150%」。\n\nowner 2026-08-01 改寫的文案是 GGD 的規格,三處刻意與原作不同,不是漏做:(1) 200% 而不是 150%;(2) 沒有護甲 +5,所以 modifiers 是空的;(3) 沒有「近戰」限制 —— 而且那個限制目前也表達不出來:`requires` 判的是**持有者**的攻擊型態,不是**攻擊者**的。\n\n實作:onDamageTaken + damageSource:\"basic\" + damage.incomingPct。basis 留空 = \"mitigated\"(護甲/魔抗之後、護盾之前);maxChainDepth 留空 = 0 = 反彈不會再被反彈。applyGlobalDamageMult 留空 = false = 反彈**不**再吃一次 combatEnv.damageDealt(三個讀數已經在倍率之後了,再乘一次「200%」就會變成 200%×k —— 2026-08-01 修);whenTooLate 留空 = \"drop\" = 一發塞不進這個 tick 剩餘排空輪數的反彈不排進佇列。四個預設都寫在 sim/effects/effect.ts 的 incomingPct 說明裡。守衛見 packages/shared/src/sim/effects/incomingReflect.test.ts。",
+  "passive": [
     {
-      "stat": "armor",
-      "op": "flat",
-      "value": 17
+      "on": "onDamageTaken",
+      "damageSource": "basic",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "flat": 0
+          },
+          "incomingPct": {
+            "perRank": [
+              2
+            ]
+          }
+        }
+      ]
     }
-  ],
-  "craftRole": "none"
+  ]
 }

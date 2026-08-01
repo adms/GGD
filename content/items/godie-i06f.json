@@ -1,31 +1,21 @@
 {
   "id": "godie-i06f",
   "schema": "item@1",
-  "name": "月神槍",
+  "name": "傲慢水龍王",
   "icon": "assets/icons/items/godie-i06f.webp",
-  "description": "飾品\n效能\n法術強度+99\n裝甲+13.2\n魔力+297\n每秒回復生命+8.29\n\n解說\n傳說來自月之海的夢幻武器，攜帶者會受到月之女神的守護。",
-  "cost": 1200,
+  "description": "飾品\n效能\n總 AP 額外 + 300%\n每秒回魔 + 7\n\n解說\n「因為三個老婆所以三倍!?」由阿斯拉王國宮廷魔術團頂尖魔杖製作師權·布羅奇翁打造。艾莉絲在主角魯迪烏斯10歲生日時贈送的高級魔杖，能大幅增幅魔術威力。",
+  "cost": 0,
   "tier": 2,
   "modifiers": [
     {
       "stat": "ap",
-      "op": "flat",
-      "value": 99
+      "op": "pctAdd",
+      "value": 3.0
     },
     {
-      "stat": "maxMana",
+      "stat": "manaRegen",
       "op": "flat",
-      "value": 297
-    },
-    {
-      "stat": "armor",
-      "op": "flat",
-      "value": 13.2
-    },
-    {
-      "stat": "healthRegen",
-      "op": "flat",
-      "value": 8.29
+      "value": 7
     }
   ],
   "tags": [

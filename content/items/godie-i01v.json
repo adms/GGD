@@ -3,27 +3,22 @@
   "schema": "item@1",
   "name": "螺旋劍",
   "icon": "assets/icons/items/godie-i01v.webp",
-  "description": "傳說\n施展需求魔力：260點\n技能冷卻時間：45秒\n效能\n螺旋擊\n攻擊力+45.6\n生命+54\n魔力+32\n\n解說\n點選使用螺旋擊，直線範圍傷害800。傳說中某個瘋子在夢中幻想出來的道具，委託飛鼠先生以風元素石鍛鍊，原本是失敗品，後來意外吸收了螺旋巨魔的魔力，變成了難得一見的神祕寶具。",
-  "cost": 1200,
+  "description": "傳說\n效能\n[On-Hit] 每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害(On-Hit)，同時消耗1%魔力\n攻擊速度+100%\n移動速度+2\n\n解說\n傳說中某個瘋子在夢中幻想出來的道具，委託飛鼠先生以風元素石鍛鍊，原本是失敗品，後來意外吸收了螺旋巨魔的魔力，變成了難得一見的神祕寶具。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
   ],
   "modifiers": [
     {
-      "stat": "ad",
-      "op": "flat",
-      "value": 45.6
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 1.0
     },
     {
-      "stat": "maxHealth",
+      "stat": "ms",
       "op": "flat",
-      "value": 54
-    },
-    {
-      "stat": "maxMana",
-      "op": "flat",
-      "value": 32
+      "value": 2
     }
   ],
   "craftRole": "final",
@@ -32,5 +27,46 @@
       "godie-i014"
     ],
     "book": "godie-i03z"
-  }
+  },
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "condition": {
+        "kind": "stat",
+        "subject": "self",
+        "stat": "mp",
+        "mode": "percent",
+        "op": ">=",
+        "value": 0.01
+      },
+      "effects": [
+        {
+          "kind": "spendMana",
+          "amount": {
+            "flat": 0
+          },
+          "pctMaxMana": 0.01
+        },
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "maxMana",
+                "coeff": 0.05
+              }
+            ]
+          },
+          "length": 3.6,
+          "width": 1.2,
+          "aim": "target",
+          "fromCaster": true,
+          "maxTargets": 5,
+          "includeOrigin": false
+        }
+      ]
+    }
+  ],
+  "authoringNote": "[On-Hit]「每次普通攻擊皆會施展螺旋擊，直線範圍造成魔力5%傷害(On-Hit)，同時消耗1%魔力」= passive[0]。\n· 「直線範圍」= damageLine（sim/effects/damageLine.ts）。出貨前例是 18-00 薔薇荊棘之刃（content/abilities/godie-nsjs.passive.json）：同樣是 onBasicAttack 拉一條「我 → 被打的那個人」方向的走廊。\n· 「消耗1%魔力」= spendMana pctMaxMana 0.01，而且**先扣再打**（effects 陣列的順序就是執行順序）。hook 的 condition「自身法力 ≥ 1%」是照 20-01 風王結界 的模型寫的：spendMana 自己不做門檻判斷（sim/effects/spendMana.ts 的檔頭講了三個理由），所以少了這個 condition，空魔的英雄會**免費**拿到螺旋擊。\n· 「魔力5%傷害」= ratios maxMana 0.05。⚠️ zScaling 讀的是施法者的**最終屬性表**，也就是 maxMana（最大魔力），不是現存魔力 —— 文案只寫「魔力」沒有寫「現存」，所以這裡取讀得到的那一個並寫在這裡，不是無聲的解讀。\n· length 3.6 / width 1.2 / maxTargets 5 / includeOrigin false 是**文案沒有給的**，四個都直接沿用薔薇荊棘之刃的房規（3 個身位長 × 1 個身位寬；被普攻打中的那個人不再吃一次，因為他已經領過普攻本身了）。四個都是欄位。"
 }

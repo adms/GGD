@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "落魂的嗜血劍",
   "icon": "assets/icons/items/godie-i00l.webp",
-  "description": "夢幻\n效能\n攻擊力+46.3\n吸血+23.2%\n\n解說\n聖劍與魔劍的差異在於影響持有者和武器心智的交互作用，而這把嗜血劍代表的就是魔劍的極致，歷代持有者為控制魔劍皆付出慘痛代價，魔力會不斷被貪婪的魔劍吸收，考據持有最久是死之王軍團長之一\"魔霜奈洛\"。",
+  "description": "夢幻\n效能\n攻擊力+128\n[神速] 攻擊速度+200%，攻速上限提升到10 (預設上限為4)\n全能吸血+30%\n每秒損失 3%現存生命\n\n解說\n聖劍與魔劍的差異在於影響持有者和武器心智的交互作用，而這把嗜血劍代表的就是魔劍的極致，歷代持有者為控制魔劍皆付出慘痛代價，魔力會不斷被貪婪的魔劍吸收，考據持有最久是死之王軍團長之一\"魔霜奈洛\"。",
   "cost": 0,
   "tier": 3,
   "tags": [
@@ -11,15 +11,46 @@
   ],
   "modifiers": [
     {
-      "stat": "lifesteal",
-      "op": "flat",
-      "value": 0.232
-    },
-    {
       "stat": "ad",
       "op": "flat",
-      "value": 46.3
+      "value": 128
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 2.0
+    },
+    {
+      "stat": "as",
+      "op": "capRaise",
+      "value": 10.0
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.3
     }
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "passive": [
+    {
+      "on": "onInterval",
+      "target": "self",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {},
+          "hpPct": {
+            "basis": "current",
+            "perRank": [
+              0.03
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "authoringNote": "四行效能全部落地：攻擊力+128、[神速] 攻速+200% + capRaise 10.0（ModOp.CapRaise，見 sim/statCaps.ts 與 GH#286）、吸血+30%、「每秒損失 3%現存生命」= passive[0]（onInterval + internalCooldown 1 + true damage hpPct basis \"current\" 0.03，打自己）。\n⚠️ 一個名詞差異記在這裡以免下次稽核當成缺陷：文案寫「**全能**吸血+30%」（omnivamp，技能傷害也吸），但 sim 只有 Stat.Lifesteal，而它在 sim/combat/damage.ts:675 是掛在 `pkt.origin === \"basic\"` 底下的 —— **只吃普攻**。要真的做出全能吸血需要一個第二條屬性（或讓 Lifesteal 帶一個 「吃哪些 origin」的欄位），那是屬性表層級的改動，不是這一件道具的工作。"
 }

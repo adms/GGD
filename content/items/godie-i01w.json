@@ -3,8 +3,8 @@
   "schema": "item@1",
   "name": "祕銀鎖子甲",
   "icon": "assets/icons/items/godie-i01w.webp",
-  "description": "防具\n效能\n裝甲+17\n抗魔25%\n\n解說\n由相當稀有的魔法金屬-奧里哈魯根所精練而成，相當貼身的護身鎧甲，是戰士和法師夢寐以求的防具。",
-  "cost": 300,
+  "description": "防具\n效能\n防禦+40\n魔抗+40%\n[重創] 敵方攻擊時吸血效果降低50%吸血回復量\n\n解說\n由相當稀有的魔法金屬-奧里哈魯根所精練而成，相當貼身的護身鎧甲，是戰士和法師夢寐以求的防具。",
+  "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
@@ -13,8 +13,35 @@
     {
       "stat": "armor",
       "op": "flat",
-      "value": 17
+      "value": 40
+    },
+    {
+      "stat": "mr",
+      "op": "flat",
+      "value": 66.7
     }
   ],
-  "craftRole": "component"
+  "craftRole": "component",
+  "passive": [
+    {
+      "on": "onDamageTaken",
+      "damageSource": "basic",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 3.0,
+          "stackKey": "grievous-wounds",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "lifesteal",
+              "op": "pctMult",
+              "value": -0.5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "[重創]「敵方攻擊時吸血效果降低50%吸血回復量」= onDamageTaken 的 applyBuff。\n· onDamageTaken 的事件實體是**攻擊者**（sim/combat/damage.ts:772 的 fireHooks(world, pkt.target, \"onDamageTaken\", pkt.source)），hook 的 target 省略 = \"event\"，所以 buff 直接落在打你的人身上；出貨前例是復仇之袍 content/items/godie-i02j.json。\n· lifesteal pctMult −0.5 → 吸血減半。吸血在 damage.ts:675 讀 srcStats.final[Stat.Lifesteal]，所以不需要任何新機制。\n· damageSource:\"basic\" 對應「敵方**攻擊**時」。吸血本來就只吃普攻，不加也不會算錯，但少了它火圈灼燒與 DoT 的每一跳都會重刷這個 debuff —— 那不是描述講的東西。\n· ⚠️ **真正在做事的是 stackKey，不是 maxStacks** —— 這一段是 2026-08-01 突變驗證改正的（CLAUDE.md 第三守則：註解會說謊，去驗證）。\n  (a) `stackKey` 是必要的：沒有它，每挨一下就 attach 一個**新的** ModifierSource，而 sim/stats/statPipeline.ts 對每一個 source 各跑一次 `pctMult *= 1 + m.value` —— 五下就是 0.5^5，只剩 3% 吸血，那是另一個效果。（突變 M4′ 實測：拿掉 stackKey，「連打五下」那條守衛變紅。）\n  (b) `maxStacks: 1` **對這個 buff 目前是惰性的**。statPipeline 只有 `Flat` 與 `PercentAdd` 會乘 `src.stacks`；`PercentMult` 那一支是 `pctMult *= 1 + m.value`，完全不看層數。所以層數疊到 5，吸血一樣只減半。（突變 M4 實測：拿掉 maxStacks，守衛**不會**紅 —— 它是一條「刪掉還是綠」的假守衛，所以這裡本來寫的「沒有它就 0.5^n」是錯的。）留著它是宣告意圖 + 保險：哪天這個 buff 加上 flat/pctAdd 欄位，這道上限就會開始咬人。\n  (c) 四件 [重創] 道具**共用同一個 key**（晨曦之光 / 貫雷槍 / 雷神之鎚 / 祕銀鎖子甲），因為四段文案一字不差都是「降低50%」：兩件疊起來應該還是 50%，不是 75%（實測兩個不同 key = 兩個 source = 只剩 25% 吸血）。要改成可疊，把其中一件的 stackKey 改掉即可 —— 那正是這個欄位存在的意義。\n· 持續 3 秒是**描述沒有給的唯一一個數字**。選 3 秒是為了跨得過對手兩次揮擊的間隔，讓對打時不會中途失效；它是一個欄位，要調就改這裡。\n\n「魔抗+40%」的 mr 66.7 是換算不是筆誤：引擎的魔法減傷是 100/(100+mr)，所以 mr = 100·r/(1−r)，r=0.40 → 66.67。同一條換算的說明見 月牙魔杖 godie-i06e 與 消失的密室 godie-i02d 的 authoringNote。"
 }

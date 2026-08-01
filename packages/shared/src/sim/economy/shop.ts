@@ -3,7 +3,7 @@ import type { EntityId, ItemId } from "../../ids";
 import type { ShopTxn } from "../components";
 import type { SimWorld } from "../SimWorld";
 import { Items, LootTables } from "../content/registry";
-import { attachSource, detachSource } from "../stats/statPipeline";
+import { attachItemSource, detachItemSource } from "./itemSource";
 import { LEGENDARY_ORB_ITEM_ID, STAT_TICK_ITEM_ID, itemHasEffect } from "./itemTiers";
 import { buyLegendaryOrb, purchasableSlots } from "./legendaryOrb";
 import { shelfListable } from "./shopShelf";
@@ -143,16 +143,25 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   const statStacksBefore = champ.statStacks;
   champ.gold -= def.cost;
   champ.items[slot] = itemId;
-  attachSource(world, id, {
-    id: `item:${itemId}#${slot}`,
-    kind: "item",
-    modifiers: def.modifiers,
-    hooks: def.passive,
-    // 光環 (#tier-5 積分獎勵). Forwarded on EVERY attach site — buy, undo-sell
-    // and free grant — because an item that projects an aura when bought but
-    // not when drafted is a bug that only shows up on the 三選一 path.
-    auras: def.auras,
-  });
+  // SITE 1 of 3. All three go through `attachItemSource` (economy/itemSource.ts)
+  // rather than building the literal here: the 光環 field once had to be pasted
+  // onto three sites and 「an item that projects an aura when bought but not when
+  // drafted is a bug that only shows up on the 三選一 path」 — and the 職業限定閘
+  // on `modifiers` (貫雷槍) would have been the second field to take that bet.
+  //
+  // ⚠️ CORRECTED 2026-08-01 (CLAUDE.md 第三守則). This paragraph used to cite
+  // 「`shopAttachSites.test.ts` drives all three paths」 — **THAT FILE DID NOT
+  // EXIST**, and the guard it promised is exactly the one that would have caught
+  // the editor's `previewItem` shipping a hand-built literal (it previewed 貫雷槍
+  // as +6 on every body). Two real files now hold up the claim:
+  //
+  //   · `itemGatedModifiers.test.ts` 「every attach site resolves the gate —
+  //     buy / undo-sell / free grant」 drives these THREE paths and compares the
+  //     resolved modifier lists, so dropping any one back to a literal goes red.
+  //   · `shopAttachSites.test.ts` parses the repo and fails on ANY hand-built
+  //     `kind:"item"` ModifierSource outside itemSource.ts — the net for the
+  //     FOURTH site, which no per-path test can see.
+  attachItemSource(world, id, itemId, slot, def);
   resetStatPath(world, id, itemId);
   // Record the exact reversal for the undo button. goldDelta is NEGATIVE (gold
   // spent); undo does `gold -= goldDelta` to refund precisely what was charged.
@@ -173,7 +182,11 @@ export function sellItem(world: SimWorld, id: EntityId, slot: number): boolean {
   const refund = Math.floor(def.cost * SELL_REFUND);
   champ.gold += refund;
   champ.items[slot] = null;
-  detachSource(world, id, `item:${itemId}#${slot}`);
+  // DETACH SITE 1 of 2 — through `detachItemSource`, never `detachSource`
+  // directly: the slot is cleared first, then the helper re-runs the 套裝 check
+  // so a completed set stops paying the moment a piece is sold. Bypassing it
+  // gives 「賣掉還留著」, which no per-item test can see.
+  detachItemSource(world, id, itemId, slot);
   // goldDelta is POSITIVE (refund received); undo does `gold -= goldDelta`.
   champ.undoStack.push({ kind: "sell", itemId, slot, goldDelta: refund, statStacksBefore: 0 });
   world.emit("itemSold", { id, itemId, slot, gold: champ.gold });
@@ -211,7 +224,8 @@ export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
     // reversing a buy: the item must still sit where it landed
     if (champ.items[txn.slot] !== txn.itemId) return "stale";
     champ.items[txn.slot] = null;
-    detachSource(world, id, `item:${txn.itemId}#${txn.slot}`);
+    // DETACH SITE 2 of 2 — see sellItem.
+    detachItemSource(world, id, txn.itemId, txn.slot);
     champ.gold -= txn.goldDelta; // goldDelta < 0 → refund the exact cost
     champ.statStacks = txn.statStacksBefore; // restore the streak the buy 歸零'd
   } else {
@@ -219,13 +233,8 @@ export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
     if (champ.items[txn.slot] !== null) return "stale";
     const def = Items.get(txn.itemId);
     champ.items[txn.slot] = txn.itemId;
-    attachSource(world, id, {
-      id: `item:${txn.itemId}#${txn.slot}`,
-      kind: "item",
-      modifiers: def.modifiers,
-      hooks: def.passive,
-      auras: def.auras, // see the buy path — same three fields, same reason
-    });
+    // SITE 2 of 3 — see the buy path.
+    attachItemSource(world, id, txn.itemId, txn.slot, def);
     champ.gold -= txn.goldDelta; // goldDelta > 0 → take the exact refund back
   }
 
@@ -264,16 +273,9 @@ export function grantItemFree(world: SimWorld, id: EntityId, itemId: ItemId): nu
   const slot = champ.items.findIndex((s) => s === null);
   if (slot < 0) return -1;
   champ.items[slot] = itemId;
-  attachSource(world, id, {
-    id: `item:${itemId}#${slot}`,
-    kind: "item",
-    modifiers: def.modifiers,
-    hooks: def.passive,
-    // 光環 (#tier-5 積分獎勵). Forwarded on EVERY attach site — buy, undo-sell
-    // and free grant — because an item that projects an aura when bought but
-    // not when drafted is a bug that only shows up on the 三選一 path.
-    auras: def.auras,
-  });
+  // SITE 3 of 3 — the 三選一 / gacha path, the one a hand-copied literal has
+  // already been forgotten on once. See the buy path.
+  attachItemSource(world, id, itemId, slot, def);
   return slot;
 }
 

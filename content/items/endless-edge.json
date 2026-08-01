@@ -2,7 +2,7 @@
   "id": "endless-edge",
   "schema": "item@1",
   "name": "無盡連刃",
-  "description": "武器\n效能\n攻擊速度上限+10\n每次普攻命中攻擊速度增加10%，可無限疊加，3秒內沒有新的普攻命中則全部層數歸零\n\n解說\n只有近戰英雄揮得動。停下來，它就冷掉了。",
+  "description": "武器\n效能\n[神速] 攻擊速度上限提升至 10 (預設上限為4)\n[疊層] 每次普攻命中攻擊速度增加10%，可無限疊加，1秒內沒有新的普攻命中則全部層數歸零\n\n解說\n拜託了！讓我砍個10秒左右就好 (!?",
   "cost": 0,
   "tier": 5,
   "tags": [
@@ -33,12 +33,13 @@
               "value": 0.1
             }
           ],
-          "duration": 3,
+          "duration": 1,
           "stackKey": "endless-edge"
         }
       ]
     }
   ],
   "icon": "assets/icons/items/endless-edge.png",
-  "craftRole": "none"
+  "craftRole": "none",
+  "authoringNote": "[神速]「攻擊速度上限提升至 10」= modifiers 的 ModOp.CapRaise（as → 10.0）。CapRaise **不給任何數值**，只把天花板搬高（sim/statCaps.ts 的 effectiveCap 再夾一次到 config.stat-caps@1 的 unlocked）；要真的打到 10 還是得靠下面的疊層或別件裝備。\n[疊層]「每次普攻命中攻擊速度增加10%，可無限疊加，1秒內沒有新的普攻命中則全部層數歸零」= passive[0]，而且**三句話都是逐字對上的**，不要「順手修好」它：\n· 「增加10%」= applyBuff modifiers as pctAdd 0.1；\n· 「可**無限**疊加」= **故意不寫 maxStacks**（sim/effects/applyBuff.ts：`const cap = e.maxStacks ?? Number.POSITIVE_INFINITY`）。加一個上限就是改掉這張卡。\n· 「1秒內沒有新的普攻命中則**全部**層數歸零」= duration 1 + stackKey。⚠️ 這一點很容易被誤讀成「每層各自 1 秒、會逐層掉」：**不會**。stackKey 讓所有層共用**同一個** ModifierSource，而每次命中都會把那一個 source 的 expiresAtTick 整個往後推（applyBuff.ts 的 stacking path）。所以層數是一起活、一起死的 —— 正是文案說的「全部歸零」。"
 }

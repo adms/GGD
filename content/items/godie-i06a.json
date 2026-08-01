@@ -3,23 +3,40 @@
   "schema": "item@1",
   "name": "妖物碎殺牙",
   "icon": "assets/icons/items/godie-i06a.webp",
-  "description": "神器\n效能\n攻擊力+22.2\n吸血+15.6%\n6%機率造成255穿刺傷害\n\n解說\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
+  "description": "神器\n效能\n攻擊力+112\n吸血+15％\n[On-Hit] 6%機率造成255傷害，持續3秒\n\n解說\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
   "cost": 0,
   "tier": 2,
   "modifiers": [
     {
-      "stat": "lifesteal",
-      "op": "flat",
-      "value": 0.156
-    },
-    {
       "stat": "ad",
       "op": "flat",
-      "value": 22.2
+      "value": 112
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.15
     }
   ],
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.06,
+      "effects": [
+        {
+          "kind": "dot",
+          "damageType": "physical",
+          "amountPerTick": {
+            "flat": 85
+          },
+          "intervalSec": 1,
+          "durationSec": 3
+        }
+      ]
+    }
+  ]
 }

@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "血染八月",
   "icon": "assets/icons/items/godie-i06o.webp",
-  "description": "夢幻\n效能\n攻擊力+26\n50%攻擊附帶暈眩0.01秒及88傷害\n\n解說\n眾神黃昏(Ragnarok)之戰中，飛鼠先生對上了當時最強的黑暗精靈族，飛鼠先生手持聖劍經過三個多星期的血戰，終於將黑暗精靈擊退，此劍被後人以血戰的八月命名為血染八月",
+  "description": "夢幻\n效能\n攻擊力+88\n[On-Hit] 攻擊敵方額外造成 88流血傷害，持續3秒\n[暈眩] 50%機率造成 0.01秒暈眩\n\n\n解說\n眾神黃昏(Ragnarok)之戰中，飛鼠先生對上了當時最強的黑暗精靈族，飛鼠先生手持聖劍經過三個多星期的血戰，終於將黑暗精靈擊退，此劍被後人以血戰的八月命名為血染八月",
   "cost": 0,
   "tier": 2,
   "tags": [
@@ -14,7 +14,7 @@
     {
       "stat": "ad",
       "op": "flat",
-      "value": 26
+      "value": 88
     }
   ],
   "passive": [
@@ -22,14 +22,29 @@
       "on": "onBasicAttack",
       "effects": [
         {
-          "kind": "damage",
+          "kind": "dot",
           "damageType": "physical",
-          "amount": {
-            "flat": 88
-          }
+          "amountPerTick": {
+            "flat": 29.33
+          },
+          "intervalSec": 1,
+          "durationSec": 3
+        }
+      ]
+    },
+    {
+      "on": "onBasicAttack",
+      "chance": 0.5,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "fang-stun",
+          "duration": 0.034,
+          "stun": true
         }
       ]
     }
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "authoringNote": "[On-Hit]「攻擊敵方額外造成 88流血傷害，持續3秒」= passive[0]（dot 29.33 × 3 跳 = 88，總量對得上文案）。\n\n[暈眩]「50%機率造成 0.01秒暈眩」= passive[1]，chance 0.5。\n· ⚠️ **duration 出貨值是 0.034 而不是文案的 0.01，這是刻意的，需要 owner 過目。**sim 是 30 Hz，applyStatus 換算是 expiresAtTick = tick + Math.round(duration/dt)（sim/effects/applyStatus.ts）。0.01 秒 → Math.round(0.3) = **0 tick** → 這個暈眩一次都不會發生，是一個玩家永遠拿不到的功能（CLAUDE.md 失敗形態 ②）。0.034 秒 = 1 tick，是這個引擎表達得出來的**最短**暈眩，也就是「0.01 秒」這個玩笑在 30 Hz 底下唯一能落地的樣子。同一個 30 Hz 地板在 content/schema/effect.ts 的 grantAttribute.durationSec（.min(0.067)）與 cycleBuff.steps[].duration 都有寫。\n· 它是一個欄位：owner 想要文案的字面 0.01（也就是明知它不會發生）只要把這個數字改回去。\n· statusId 用 fang-stun（出貨的極短僵直標記，緣一零式 godie-i013 與 消失的密室 godie-i02d 的 0.1 秒暈眩用的是同一個）。"
 }

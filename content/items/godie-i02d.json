@@ -2,34 +2,54 @@
   "id": "godie-i02d",
   "schema": "item@1",
   "name": "消失的密室",
-  "description": "作者威能超神器\n效能\n我超強\n攻擊力+1.1\n生命+23\n魔力+14\n移動速度+0.339\n你追不到我\n你打不著我\n你轟不痛我\n我有神出鬼沒的大蟒蛇(挺\n\n解說\n傳說等級的內褲，可刺激穿戴者使速度激增。除此之外，密室裡頭神出鬼沒的大蟒蛇也會趁虛擊暈敵人，是全天下的男人都想要擁有一件的夢幻珍寶！",
-  "cost": 300,
+  "description": "作者威能超神器\n效能\n防禦+100\n魔抗+66.7%\n[神速] 攻擊速度+100%，上限提升至10 (預設上限為4)\n移動速度+4\n[暈眩] 4%的機率普攻造成暈眩 0.1秒\n\n\n解說\n傳說等級的內褲，可刺激穿戴者使速度激增。除此之外，密室裡頭神出鬼沒的大蟒蛇也會趁虛擊暈敵人，是全天下的男人都想要擁有一件的夢幻珍寶！你追不到我、你打不著我、你轟不痛我、我有神出鬼沒的大蟒蛇(挺",
+  "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
   "modifiers": [
     {
-      "stat": "maxHealth",
+      "stat": "armor",
       "op": "flat",
-      "value": 23
+      "value": 100
     },
     {
-      "stat": "ad",
+      "stat": "mr",
       "op": "flat",
-      "value": 1.1
+      "value": 200
     },
     {
-      "stat": "maxMana",
-      "op": "flat",
-      "value": 14
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 1.0
+    },
+    {
+      "stat": "as",
+      "op": "capRaise",
+      "value": 10.0
     },
     {
       "stat": "ms",
       "op": "flat",
-      "value": 0.339
+      "value": 4
     }
   ],
   "icon": "assets/icons/items/godie-i02d.png",
-  "craftRole": "none"
+  "craftRole": "none",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.04,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "fang-stun",
+          "duration": 0.1,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "authoringNote": "【2026-08-01 owner 裁定「魔抗的 % 是減傷比例」】引擎的魔法減傷是 100/(100+mr)，所以 mr = 100·r/(1-r)。r=1.00（100% 減傷）需要 mr=∞，用 mr 永遠表達不出來 —— 字面上的『魔抗+100%』等於完全魔法免疫，owner 選擇不走真免疫路徑，改成一個讀得出來的數字。採用 mr 200（ITEM_MODIFIER_LIMITS 的上界，不需要動那道 mis-parse 護欄）= 66.7% 減傷，文案同步改成 66.7% 讓描述與資料一致（這一批的核心原則就是描述不可以說謊）。註：月牙魔杖這個值正好等於本批之前出貨的 mr 200，w3x 來源 AIsr『降低的傷害 0.5』則是 50%，見 docs/content/reconciliation/items.md。"
 }

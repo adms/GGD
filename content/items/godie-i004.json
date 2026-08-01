@@ -1,9 +1,9 @@
 {
   "id": "godie-i004",
   "schema": "item@1",
-  "name": "魔戒",
+  "name": "至尊魔戒",
   "icon": "assets/icons/items/godie-i004.webp",
-  "description": "任務\n效能\n攻擊力+1.9\n生命+39\n魔力+23\n永久隱身\n(死亡後掉落)\n\n解說\n王者之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
+  "description": "任務\n效能\n魔力+1000\n[隱身] 永久隱身 (不會被主動索敵)，但攻擊會現身，無動作 3秒後再次隱身。\n\n解說\n馭眾王之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
   "cost": 0,
   "tier": 1,
   "tags": [
@@ -11,20 +11,14 @@
   ],
   "modifiers": [
     {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 39
-    },
-    {
-      "stat": "ad",
-      "op": "flat",
-      "value": 1.9
-    },
-    {
       "stat": "maxMana",
       "op": "flat",
-      "value": 23
+      "value": 1000
     }
   ],
-  "craftRole": "quest"
+  "craftRole": "quest",
+  "authoringNote": "[隱身] = item@1 的 vision.stealthFadeDelaySec = 3，直接對上文案的「無動作 3秒後再次隱身」。「攻擊會現身」不需要另外寫：sim/stealth.ts 的淡入計時本來就由「有沒有動作」驅動，攻擊會把它重置。「不會被主動索敵」也已經是既有規則 —— config.stealth@1 的 blocksAutoAcquire 預設 true。w3x 出處 Apiv（永久隱形術），同族的 27-00 用 fade 4.0；這裡用 owner 文案自己給的 3 秒。\n\n【先前紀錄】【仍缺】[隱身]「永久隱身 (不會被主動索敵)，但攻擊會現身，無動作 3秒後再次隱身」。\n原語存在但**道具接不到**：zVisionGrant（packages/shared/src/content/schema/effect.ts）帶 stealthFadeDelaySec / trueSightRadius，而 sim/stealth.ts:258 的 syncVisionGrants 是走 `sc.sources` 的 —— 任何一個 ModifierSource 都可以帶它。缺的只有兩樣：(a) zItemDef 沒有 `vision` 欄位，(b) sim/economy/itemSource.ts 沒有把它轉發到 kind:\"item\" 的 source 上。今天只有 ability@1 的 passive rank 寫得出來。\n文案把兩個數字都給了：stealthFadeDelaySec = **3**（「無動作 3秒後再次隱身」，正好對應 WC3 Apiv 的 Dur 欄；27-00 永久性的隱形術 出貨 4.0）。所以這一件不需要任何設計決定，只需要那兩行接線。\n已落地：魔力+1000（maxMana flat 1000）。",
+  "vision": {
+    "stealthFadeDelaySec": 3
+  }
 }

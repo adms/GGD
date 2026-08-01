@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "月牙魔杖",
   "icon": "assets/icons/items/godie-i06e.webp",
-  "description": "夢幻\n效能\n每秒造成範圍流星傷害160（距離越遠流星傷害越低）\n魔法抗性+200\n\n解說\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
+  "description": "夢幻\n效能\n[流星] 流星每秒造成 100% AP 範圍傷害（距離越遠流星傷害越低）\n魔抗+66.7%\n\n解說\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
   "cost": 0,
   "tier": 3,
   "modifiers": [
@@ -15,19 +15,24 @@
   ],
   "passive": [
     {
-      "on": "onBasicAttack",
+      "on": "onInterval",
+      "target": "self",
       "internalCooldown": 1,
       "effects": [
         {
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 160
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
           },
           "radius": 5.0,
           "falloff": 0.35,
-          "maxTargets": 6,
-          "includeOrigin": true
+          "maxTargets": 6
         }
       ]
     }
@@ -35,5 +40,6 @@
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "authoringNote": "【2026-08-01 owner 裁定「魔抗的 % 是減傷比例」】引擎的魔法減傷是 100/(100+mr)，所以 mr = 100·r/(1-r)。r=1.00（100% 減傷）需要 mr=∞，用 mr 永遠表達不出來 —— 字面上的『魔抗+100%』等於完全魔法免疫，owner 選擇不走真免疫路徑，改成一個讀得出來的數字。採用 mr 200（ITEM_MODIFIER_LIMITS 的上界，不需要動那道 mis-parse 護欄）= 66.7% 減傷，文案同步改成 66.7% 讓描述與資料一致（這一批的核心原則就是描述不可以說謊）。註：月牙魔杖這個值正好等於本批之前出貨的 mr 200，w3x 來源 AIsr『降低的傷害 0.5』則是 50%，見 docs/content/reconciliation/items.md。"
 }

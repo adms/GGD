@@ -4,8 +4,8 @@
   "tier": 5,
   "craftRole": "none",
   "id": "cleaver-of-the-warden",
-  "name": "裂地巨斧",
-  "description": "傳說\n效能\n攻擊力+45\n生命+260\n普攻對周圍 3.5 範圍內最多 4 個敵人造成攻擊力 55% 的擴散傷害\n\n解說\n斧刃過重，只有貼身揮砍的人拿得動；遠遠丟出去只會砸到自己的腳。",
+  "name": "泰坦九頭蛇",
+  "description": "傳說\n效能\n最大生命+10%\n[On-Hit] 攻擊附帶額外的（15+1.5%自身最大生命值）物理傷害攻擊特效(On-Hit)，並生成一道衝擊波來對目標身後的敵人們造成（40+3%最大生命值）物理傷害。\n\n解說\n隔山打牛打到歪地人，飛鼠先生賜給你的打殭屍神器。",
   "tags": [
     "legendary",
     "cleave",
@@ -13,14 +13,9 @@
   ],
   "modifiers": [
     {
-      "stat": "ad",
-      "op": "flat",
-      "value": 45
-    },
-    {
       "stat": "maxHealth",
-      "op": "flat",
-      "value": 260
+      "op": "pctAdd",
+      "value": 0.1
     }
   ],
   "passive": [
@@ -32,21 +27,35 @@
       },
       "effects": [
         {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "flat": 15,
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.015
+              }
+            ]
+          }
+        },
+        {
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
+            "flat": 40,
             "ratios": [
               {
-                "stat": "ad",
-                "coeff": 0.55
+                "stat": "maxHealth",
+                "coeff": 0.03
               }
             ]
           },
           "radius": 3.5,
-          "maxTargets": 4,
-          "canCrit": true
+          "maxTargets": 4
         }
       ]
     }
-  ]
+  ],
+  "requiresAttackType": "melee"
 }

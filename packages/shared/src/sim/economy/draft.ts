@@ -153,22 +153,122 @@ export interface ItemOffer {
 }
 
 /**
- * Roll a 3-choose-1 item offer from a loot table (weighted, without
- * replacement, excluding items already owned). Deterministic via world.rng.
+ * What a card does when the ELIGIBLE POOL is genuinely smaller than the card —
+ * every gate has run and there are simply not `count` legal weapons left.
+ *
+ *   · `short`     — offer what exists. A 2-card is honest.
+ *   · `fallback`  — top up from `fallbackTable` (a second loot table).
+ *   · `duplicate` — repeat the drawn entries until the card is full.
+ *
+ * ⚠️ This is NOT the switch that fixes GH#249. The card owner saw shrink to one
+ * was NOT pool exhaustion — it was `MatchController` rolling 3 and THEN dropping
+ * the non-whitelisted ones. That is a bug and it is fixed by ordering (the
+ * whitelist is now inside {@link eligibleItemPool}), not by a policy an operator
+ * can turn off. This enum only governs the genuinely-exhausted case.
  */
-export function offerItems(world: SimWorld, entity: EntityId, tableId: string, count = 3): ItemOffer {
+export type ShortPoolMode = "short" | "fallback" | "duplicate";
+
+export interface ItemDraftPolicy {
+  shortPoolMode: ShortPoolMode;
+  /** loot table to borrow from under `fallback`; "" = nothing to borrow from */
+  fallbackTable: string;
+  /** hard ceiling on weighted draws for ONE card (see `offerItems`) */
+  maxDraws: number;
+}
+
+/**
+ * SHIPPED DEFAULT = `short`, deliberately the most conservative of the three.
+ *
+ * The other two both hand the player something the content does not say they
+ * should get: `duplicate` shows the same weapon twice, which is a card that
+ * LOOKS like a choice and is not (task #47's complaint one layer up), and
+ * `fallback` hands out items from a table the owner did not put in this round's
+ * pool. `short` states the truth — there really were only two legal weapons —
+ * and it is byte-identical to the behaviour that shipped before this policy
+ * existed, so turning the knob is what changes the game, not adding it.
+ *
+ * `maxDraws` 64 bounds ONE card's weighted draws. Every draw removes an entry
+ * from its working pool, so termination never depends on this number; it is a
+ * ceiling on a mis-typed `count` or a future replacement-mode draw, and 64 is
+ * comfortably above the largest shipped pool (49, `legendary-weapons`).
+ */
+export const DEFAULT_ITEM_DRAFT_POLICY: ItemDraftPolicy = {
+  shortPoolMode: "short",
+  fallbackTable: "",
+  maxDraws: 64,
+};
+
+interface PoolEntry {
+  itemId: ItemId;
+  weight: number;
+}
+
+/**
+ * Every weapon in `tableId` this champion could legally be offered RIGHT NOW.
+ *
+ * ---------------------------------------------------------------------------
+ * GH#249 — 「傳說武器有時候只有跳出一個而不是三選一」
+ * ---------------------------------------------------------------------------
+ * THREE gates, and the third one is the one that was in the wrong place:
+ *
+ *   1. already owned            — always filtered here
+ *   2. `itemOfferableTo`        — draftEligible + requiresAttackType (#189)
+ *   3. `world.itemEligible`     — the OPERATOR WHITELIST … which until GH#249
+ *      ran in `MatchController` AFTER the roll:
+ *
+ *          const offer = offerItems(world, entity, table, 3);
+ *          offer.choices = this.whitelist.filterItems(offer.choices);   // ← 3→1
+ *
+ * The pool is 49 entries. A whitelist that enables W of them turns a 3-card into
+ * an expected 3·W/49 cards — every non-enabled entry the roll happened to pick
+ * simply vanished off the card instead of the roll topping back up. That is why
+ * the shrink was INTERMITTENT: it depended on what the dice picked.
+ *
+ * The whitelist has always been a sim input (`SimWorld.itemEligible`, set from
+ * the curation snapshot and recorded in the replay header), and the 傳說寶玉 has
+ * always consulted it BEFORE its roll (`economy/legendaryOrb.legendaryPool`).
+ * The round card is now the same shape, in one shared function so there is no
+ * second copy to forget.
+ *
+ * ⚠️ This CHANGES THE RNG STREAM of a weapon round versus pre-GH#249 builds:
+ * rejected entries used to consume a draw and now never enter the pool. Same
+ * seed + same code still gives the same cards (that is the invariant replays
+ * need); a recording made by an older build will diverge from this round on.
+ */
+export function eligibleItemPool(world: SimWorld, entity: EntityId, tableId: string): PoolEntry[] {
   const champ = world.champion.get(entity);
   const owned = new Set(champ?.items ?? []);
   const table = LootTables.tryGet(tableId);
-  // #189 — the attack-type gate runs BEFORE the roll, exactly like the orb's.
-  // Post-filtering a rolled offer is how task #47's silent empty cards happened,
-  // and it would also make the rng draw depend on cards that were never legal.
-  const working = (table?.entries ?? [])
-    .filter((e) => !owned.has(e.itemId) && itemOfferableTo(world, entity, e.itemId))
-    .map((e) => ({ ...e }));
+  const allow = world.itemEligible;
+  const out: PoolEntry[] = [];
+  for (const e of table?.entries ?? []) {
+    if (owned.has(e.itemId)) continue;
+    if (allow !== null && !allow(e.itemId)) continue;
+    if (!itemOfferableTo(world, entity, e.itemId)) continue;
+    out.push({ itemId: e.itemId, weight: e.weight });
+  }
+  return out;
+}
 
-  const choices: ItemId[] = [];
-  while (choices.length < count && working.length > 0) {
+/**
+ * Draw up to `want` entries out of `working` (MUTATED — drawn entries are
+ * spliced out, so this is without replacement), weighted, appending onto
+ * `into`. Returns how many draws it spent, so one card's total stays bounded.
+ *
+ * The weighted pick is byte-identical to the pre-GH#249 loop: same
+ * `rng.next() * total`, same descending accumulation, same last-entry fallback
+ * when floating-point leaves the accumulator positive.
+ */
+function drawInto(
+  world: SimWorld,
+  working: PoolEntry[],
+  want: number,
+  budget: number,
+  into: ItemId[],
+): number {
+  let spent = 0;
+  while (into.length < want && working.length > 0 && spent < budget) {
+    spent++;
     const total = working.reduce((s, e) => s + e.weight, 0);
     let roll = world.rng.next() * total;
     let idx = working.length - 1;
@@ -179,11 +279,68 @@ export function offerItems(world: SimWorld, entity: EntityId, tableId: string, c
         break;
       }
     }
-    choices.push(working[idx]!.itemId);
+    into.push(working[idx]!.itemId);
     working.splice(idx, 1); // without replacement
   }
+  return spent;
+}
+
+/**
+ * Roll a `count`-choose-1 item card from a loot table.
+ *
+ * FILTER → ROLL → TOP UP. The filter is {@link eligibleItemPool} (owned +
+ * offer gates + operator whitelist) and it runs first, so the roll can only ever
+ * pick a card the player is allowed to receive and the card is `count` long
+ * whenever `count` legal weapons exist — see that function for the GH#249
+ * post-filter this replaces. The top-up only runs when the pool is GENUINELY
+ * exhausted, and what it does then is `policy.shortPoolMode`.
+ *
+ * DETERMINISM: every draw comes off `world.rng` in pool order (the loot table's
+ * own order — no Map iteration, no clock, no `Math.random`). Same seed + same
+ * pool ⇒ same card, every time; `draftTopUp.test.ts` runs one seed twice and
+ * compares.
+ */
+export function offerItems(
+  world: SimWorld,
+  entity: EntityId,
+  tableId: string,
+  count = 3,
+  policy: ItemDraftPolicy = DEFAULT_ITEM_DRAFT_POLICY,
+): ItemOffer {
+  const budget = Math.max(1, Math.trunc(policy.maxDraws));
+  const working = eligibleItemPool(world, entity, tableId);
+  const poolSize = working.length;
+
+  const choices: ItemId[] = [];
+  let spent = drawInto(world, working, count, budget, choices);
+
+  // ---- top-up: ONLY reachable when the eligible pool ran out ----
+  if (choices.length < count && policy.shortPoolMode === "fallback") {
+    // A fallback onto the same table is a no-op by construction (that pool is
+    // already empty), so it is skipped rather than spending draws proving it.
+    if (policy.fallbackTable !== "" && policy.fallbackTable !== tableId) {
+      const already = new Set(choices);
+      const extra = eligibleItemPool(world, entity, policy.fallbackTable).filter(
+        (e) => !already.has(e.itemId),
+      );
+      spent += drawInto(world, extra, count, budget - spent, choices);
+    }
+  }
+  if (choices.length < count && policy.shortPoolMode === "duplicate" && choices.length > 0) {
+    // Cycle the card in draw order. Consumes NO rng — a mode that drew more
+    // random values would make the stream depend on pool size, and the whole
+    // point of the exhausted branch is that there was nothing left to draw.
+    const distinct = choices.length;
+    for (let i = 0; choices.length < count && i < count; i++) {
+      choices.push(choices[i % distinct]!);
+    }
+  }
+
   const offer: ItemOffer = { entity, tier: ITEM_OFFER_TIER, choices, picked: null };
-  world.emit("itemOffer", { entity, tableId, choices });
+  // `poolSize` rides the event so the host can say WHY a card came up short
+  // (exhausted pool) instead of guessing. `itemOffer` is SERVER_ONLY in
+  // net/eventFanout.ts — the card itself reaches the client as SeatState.offers.
+  world.emit("itemOffer", { entity, tableId, choices, poolSize, draws: spent });
   return offer;
 }
 

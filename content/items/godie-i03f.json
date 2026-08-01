@@ -3,27 +3,22 @@
   "schema": "item@1",
   "name": "甘豆腐之袍",
   "icon": "assets/icons/items/godie-i03f.webp",
-  "description": "傳說\n施展需求魔力：200點\n技能冷卻時間：75秒\n效能\n治癒術\n魔力增幅\n裝甲+1.2\n生命+59\n魔力回復速度+22.3%\n\n解說\n傳說中的賢者甘豆腐所穿的衣服，看起來好像破破舊舊的，但是實際上蘊含著強大的魔力，每殺死一名英雄可以額外獲得10點智慧，最多累積7次，達最高層額外獲得40點智慧，死亡時將會降低2次累積，並可施展治癒術治療自身1000點生命。",
-  "cost": 300,
+  "description": "傳說\n效能\nMP + 600\n每秒魔力回復速度+4\n[疊層] 每殺死一名英雄可以額外獲得 10點智慧，上限 160\n\n解說\n傳說中的賢者甘豆腐所穿的衣服，看起來好像破破舊舊的，但是實際上蘊含著強大的魔力，畢竟是殺死炎魔升級過的裝備。",
+  "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
   "modifiers": [
     {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 600
+    },
+    {
       "stat": "manaRegen",
-      "op": "pctAdd",
-      "value": 0.223
-    },
-    {
-      "stat": "maxHealth",
       "op": "flat",
-      "value": 59
-    },
-    {
-      "stat": "armor",
-      "op": "flat",
-      "value": 1.2
+      "value": 4
     }
   ],
   "craftRole": "final",
@@ -32,5 +27,23 @@
       "godie-i00q"
     ],
     "book": "godie-i03g"
-  }
+  },
+  "authoringNote": "【已落地 2026-08-01】三行全到齊：MP+600、每秒魔力回復+4、[疊層]。\n· [疊層]「每殺死一名英雄可以額外獲得 10點智慧，上限 160」= `onKill` + `victim:\"champion\"` + `target:\"self\"` + `grantAttribute {attr:\"int\", amount:10, store:\"source\", maxSourceTotal:160}` = 最多 16 層。\n· **`store:\"source\"` 是新的那一半**，而且它就是「賣掉之後還在不在」這個問題的答案：點數記在這件袍子的 `ModifierSource.attrEarned` 上，不是 `ChampionComp.attrBonus`，所以 `detachSource`(賣掉/退貨)會把 160 點一起帶走 —— 不是被測出來的，是**沒有地方可以留下**。\n· **`maxSourceTotal` 不是 `maxAttribute`**：後者封的是英雄那條三圍的絕對值(含等級成長)，掛在一件智慧裝上會在高等法師身上直接把第一層就擋掉。這一條只數這件袍子自己發過多少。超過上限的那一發是**夾到剛好 160**，不是整發拒絕。\n· 死亡不清層、跨回合不清層 —— **這是量出來的，不是選的**：`MatchController.enterCombat` 只是把座位就地復活重置，英雄實體與它的 item source 從頭到尾是同一個，而 `attachItemSource` 只在買/退貨/三選一發放時跑。要「每回合歸零」得先有一個回合邊界的清除點，目前沒有。\n⚠️ 數字留給 owner 看：滿層 160 智慧。以出貨的 `intToAp` 係數換算，這一件在滿層時給的 AP 比它自己那條 MP+600 有感得多，而 16 個英雄擊殺大約是三到四個回合的量。",
+  "passive": [
+    {
+      "on": "onKill",
+      "victim": "champion",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "grantAttribute",
+          "attr": "int",
+          "mode": "flat",
+          "amount": 10,
+          "store": "source",
+          "maxSourceTotal": 160
+        }
+      ]
+    }
+  ]
 }

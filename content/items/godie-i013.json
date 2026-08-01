@@ -1,33 +1,35 @@
 {
   "id": "godie-i013",
   "schema": "item@1",
-  "name": "八取武士刀",
+  "name": "緣一零式",
   "icon": "assets/icons/items/godie-i013.webp",
-  "description": "武器\n效能\n攻擊力+32.2\n生命+202\n15%的機率增加140點傷害並暈眩0.1秒\n\n解說\n八取大師製作的精銳武士刀，追殺比爾裡人人都想要的名刀，據說有百萬的價值，能斬斷鋼鐵。",
+  "description": "武器\n效能\n攻擊力+38\n[暈眩] 8%的機率增加 140點傷害並暈眩0.1秒\n\n解說\n最強劍士繼國緣一傳承的漆黑日輪刀，由 300 年前某位不知名的刀匠所鍛造，並將所有的憤怒與希望注入其中，當作傳承傳給後世。",
   "cost": 0,
   "tier": 3,
   "modifiers": [
     {
       "stat": "ad",
       "op": "flat",
-      "value": 32.2
-    },
-    {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 202
+      "value": 38
     }
   ],
   "passive": [
     {
       "on": "onBasicAttack",
+      "chance": 0.08,
       "effects": [
         {
           "kind": "damage",
           "damageType": "physical",
           "amount": {
-            "flat": 21
+            "flat": 140
           }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "fang-stun",
+          "duration": 0.1,
+          "stun": true
         }
       ]
     }

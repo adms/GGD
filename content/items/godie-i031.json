@@ -3,22 +3,17 @@
   "schema": "item@1",
   "name": "天生牙",
   "icon": "assets/icons/items/godie-i031.webp",
-  "description": "法器\n技能冷卻時間：60秒\n效能\n攻擊力+8.2\n生命+181\n範圍復活\n\n解說\n天生牙是救贖之刀，也是彼世之刀，是屬於死者的世界的刀，可以使剛死去的死者復活。",
-  "cost": 1200,
+  "description": "法器\n效能\n[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄\n[回復] 殺死任一個敵方單位，回復我們全部英雄 1%生命\n每秒生命回復+20\n\n解說\n天生牙是救贖之刀，也是彼世之刀，是屬於死者的世界的刀，可以使剛死去的死者復活。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
   ],
   "modifiers": [
     {
-      "stat": "ad",
+      "stat": "healthRegen",
       "op": "flat",
-      "value": 8.2
-    },
-    {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 181
+      "value": 20
     }
   ],
   "craftRole": "final",
@@ -28,5 +23,29 @@
       "godie-i02q"
     ],
     "book": "godie-i032"
-  }
+  },
+  "authoringNote": "【已落地 2026-08-01】三行全到齊：每秒生命回復+20（modifier）、[回復]、[復活]。\n· [回復]「殺死任一個敵方單位，回復我們全部英雄 1%生命」= `onKill` + `victim:\"any\"` + **`target:\"allies\"`(新)** + `restore healthPct 0.01`。\n· [復活]「殺死任一個敵方英雄單位，將復活我方所有英雄」= 同一個作用域 + `victim:\"champion\"` + **`revive` effect(新)**。\n· 兩條的差別**只有 `victim` 一個欄位** —— 英雄 vs 單位是設計本身，不是兩條程式分支。\n· `revive` 沒有自己重寫一套復活：站起來的狀態合約是 `sim/revive.ts::reviveChampionAt`，也就是復活圈(#84/#206)完成時走的同一個函式。位置=自己的屍體，HP/MP=`arena-rules` 的 `reviveCircles.reviveHpPctMax/ManaPctMax`(出貨 0.5/0.5)，火圈全關時一律拒絕(#195)。\n· **一回合一次是一個欄位，出貨關著**：`revive.teamCharge` 預設 `\"ignore\"`(owner 文案沒有寫上限)，填 `\"requireAndSpend\"` 就與復活圈共用同一顆每隊每回合的復活額度。另一個現成的節流是 hook 自己的 `internalCooldown`。\n⚠️ 平衡數字留給 owner 看（**量到的**，不是猜的）：#84 的復活圈基準資料（docs/todo/revive-circles.md，12 場 12-bot 實跑 = 96 回合 / 160 場對決 / 566 次死亡）換算成 **每場對決 3.54 次英雄死亡**，其中一隊平均拿到約 1.8 個人頭，再分給隊上三個人 —— 也就是持有者本人一回合大約觸發 **[復活] 0.6 次**（尾巴很長：連殺時一回合兩三次是正常的）。\n⚠️ 那份資料是 #215 肉鴿殭屍波**之前**量的。對 [復活] 沒有影響（它只吃英雄擊殺），但 [回復] 吃任何單位，殭屍波之下它會變成幾乎整場常駐的 1%/擊殺 團隊回血 —— 這一行才是真正被小怪波放大的那一條，值得 owner 先看。\n要收，改上面那兩個欄位其中一個就好，不用改程式。",
+  "passive": [
+    {
+      "on": "onKill",
+      "victim": "champion",
+      "target": "allies",
+      "effects": [
+        {
+          "kind": "revive"
+        }
+      ]
+    },
+    {
+      "on": "onKill",
+      "victim": "any",
+      "target": "allies",
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.01
+        }
+      ]
+    }
+  ]
 }

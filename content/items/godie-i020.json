@@ -3,8 +3,8 @@
   "schema": "item@1",
   "name": "瑪那魔杖",
   "icon": "assets/icons/items/godie-i020.webp",
-  "description": "武器\n施展需求魔力：75點\n技能冷卻時間：25秒\n效能\n連鎖閃電\n法術強度+79\n魔力+237\n魔力回復速度+158.1%\n\n解說\n點選可施展瑪那連鎖閃電造成傷害275點，最多六個敵人。大巫師才會有的神聖法杖，只要握住便會感覺到魔力源源不絕的湧出。",
-  "cost": 1200,
+  "description": "武器\n效能\nAP+80\n魔力+520\n每秒魔力回復速度+12\n[On-Hit] 普攻附加敵方現存 MP 5%傷害，並且回復己方 MP 該傷害量(On-Hit)\n\n解說\n大巫師才會有的神聖白色長法杖，只要握住便會感覺到魔力源源不絕的想要噴發。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
@@ -13,18 +13,46 @@
     {
       "stat": "ap",
       "op": "flat",
-      "value": 79
+      "value": 80
     },
     {
       "stat": "maxMana",
       "op": "flat",
-      "value": 237
+      "value": 520
     },
     {
       "stat": "manaRegen",
-      "op": "pctAdd",
-      "value": 1.581
+      "op": "flat",
+      "value": 12
     }
   ],
-  "craftRole": "component"
+  "craftRole": "component",
+  "authoringNote": "AP+80 / 魔力+520 / 每秒魔力回復+12 = modifiers。\n[On-Hit]「普攻附加敵方現存 MP 5%傷害,並且回復己方 MP 該傷害量」= passive onBasicAttack → damage 的兩個欄位:\n  · resourcePct {subject:\"target\", resource:\"mana\", basis:\"current\", perRank:[0.05]}\n  · refund {resource:\"mana\", basis:\"hpLost\", pct:1}\n⚠️ **「該傷害量」讀的是哪一個數字**:refund 不是在 effects 裡算的,它騎在`DamagePacket.refund` 上,由 combat/damage.ts 的排空迴圈在**全域倍率 → 護甲/魔抗 → 格擋 → 護盾**都算完之後付款。basis 預設 \"hpLost\" = 真的從血條掉下來那一格,也就是玩家看到的浮動數字 —— 所以「回復該傷害量」在畫面上字面為真。在效果端算會拿到「打算打多少」,永遠比畫面大(#125 的形態)。\n⚠️ **owner 要看的數字**:敵人滿魔 1,000 → 意圖 50 點 → 乘上 combat-env 的 damageDealt(出貨 0.5)= 25 → 再過魔抗。所以實際回魔約 20 上下,不是 50。要它更有感就調 perRank,或把 refund.basis 改成 \"mitigated\"(護盾吃掉的也算)。\n⚠️ 護盾全吃掉的一下回 0 魔,那是誠實的(那一下沒有造成傷害)。要改成「護盾不影響回收」把 basis 改 \"mitigated\"。\n共用同一個 resourcePct 讀數的還有 熾天使之弓 godie-i012(它是**削魔**不是傷害,走 spendMana.pctCurrentMana)。",
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 0
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "mana",
+            "basis": "current",
+            "perRank": [
+              0.05
+            ]
+          },
+          "refund": {
+            "resource": "mana",
+            "basis": "hpLost",
+            "pct": 1
+          }
+        }
+      ]
+    }
+  ]
 }

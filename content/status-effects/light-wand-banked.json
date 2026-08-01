@@ -1,0 +1,10 @@
+{
+  "id": "light-wand-banked",
+  "schema": "status-effect@1",
+  "name": "光魔杖・燒盡的魔力",
+  "description": "剛剛被光魔杖抽乾的那一團魔力還懸在杖尖，下一瞬間它會變成傷害還回去。",
+  "polarity": "buff",
+  "tags": [
+    "banked"
+  ]
+}

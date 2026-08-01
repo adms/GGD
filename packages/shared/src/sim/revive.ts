@@ -34,6 +34,9 @@
 import type { EntityId, SeatId, TeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { Vec2 } from "./math/vec2";
+import { distSq } from "./math/vec2";
+import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
+import { fireRingRadius } from "./fireRing";
 
 /** EntityState.key / model doc id used for revive circles on the wire. */
 export const REVIVE_CIRCLE_MODEL_KEY = "prop.revive-circle";
@@ -235,4 +238,151 @@ export function endCombatRevives(world: SimWorld): void {
   for (const id of [...world.reviveCircle.keys()]) world.destroy(id);
   world.reviveCharges.clear();
   world.reviveRules = null;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE REVIVE PRIMITIVE —— 「站起來」 itself, with no circle attached
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * Everything below was EXTRACTED VERBATIM from `systems/ReviveSystem.ts`
+ * (`fireRingInnerRadius` + the body of `completeRevive`) so that a SECOND way
+ * to come back from the dead cannot exist. 天生牙 godie-i031 「[復活] 殺死任一個
+ * 敵方英雄單位，將復活我方所有英雄」 needs the same state contract the circle has
+ * and must not re-derive it: two revive paths that disagree about, say, whether
+ * shields carry through the grave is exactly the kind of divergence nobody ever
+ * notices until a player reports it as 「有時候復活會帶著護盾」.
+ *
+ * ReviveSystem now calls {@link reviveChampionAt} for the circle's completion,
+ * and `effects/revive.ts` calls it for the item. The circle keeps everything
+ * that is ABOUT THE CIRCLE (the channel, the charge, the entity, its events);
+ * this function is only 「這個人現在活過來，在這個座標」.
+ */
+
+/**
+ * The fire ring's INNER safe radius in `zone` right now, for a body of
+ * `bodyRadius` — or null when no ring is armed / it has not ignited yet.
+ *
+ * `<= 0` is the fully-closed ring (#195): there is no survivable space at all,
+ * so reviving anyone is a griefing loop — they stand up and burn at 20 %/s with
+ * nowhere to go, dropping a fresh circle, forever. Live circles expire and no
+ * new one may drop from that moment.
+ */
+export function fireRingInnerRadius(
+  world: SimWorld,
+  zone: number,
+  bodyRadius: number,
+): number | null {
+  const rules = world.fireRingRules;
+  if (!rules || world.fireRingTicks < 0) return null;
+  if (world.fireRingTicks < rules.startTicks) return null;
+  const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
+  if (!zoneDef) return null;
+  const r = fireRingRadius(rules, world.fireRingTicks - rules.startTicks, zoneDef.boundaryRadius);
+  return r - bodyRadius;
+}
+
+/** Where and how much a revive puts back. See {@link reviveChampionAt}. */
+export interface ReviveAtArgs {
+  /** REQUESTED spawn point; obstacles / boundary / fire ring may pull it in. */
+  pos: Vec2;
+  zone: number;
+  /** fraction of maxHp, clamped to at least 1 HP so 0 still yields a live body */
+  hpPct: number;
+  /** fraction of maxMana */
+  manaPct: number;
+}
+
+/**
+ * Bring `id` back to life at (a legal point near) `args.pos`. Returns the final
+ * position, or NULL when the revive was REFUSED — and every refusal is a
+ * REASON, never a silent nothing:
+ *
+ *   · no health/transform component (not a body that can live);
+ *   · already alive (nothing to undo);
+ *   · the fire ring has closed to nothing in that zone (#195): standing someone
+ *     up inside a total burn is a griefing loop, so both revive paths refuse.
+ *
+ * STATE CONTRACT (docs/todo/revive-circles.md, unchanged by the extraction):
+ * partial HP/mana, keeps items / gold / level / ability cooldowns, clears
+ * status + shields exactly like `enterCombat`, drops orders and any mid-leap
+ * airborne entry, and does NOT rewrite history — the death stays a death and
+ * the kill stays a kill (#25's counters and the S+..C- rating must never be
+ * corrupted).
+ *
+ * It does NOT: spend a team charge, record a scoreboard rescue, or emit an
+ * event. Those are the CALLER's, because the circle and the item disagree about
+ * all three — see `ReviveSystem.completeRevive` and `effects/revive.ts`.
+ *
+ * PURITY: `Math.sqrt` only (allowed — it IS correctly rounded in IEEE-754,
+ * unlike the transcendentals sim/purity.test.ts bans), no rng, no clock.
+ */
+export function reviveChampionAt(
+  world: SimWorld,
+  id: EntityId,
+  args: ReviveAtArgs,
+): Vec2 | null {
+  const hp = world.health.get(id);
+  const t = world.transform.get(id);
+  if (!hp || !t) return null;
+  if (hp.alive) return null;
+
+  const zoneDef = world.arena.zones[args.zone] ?? world.arena.zones[0];
+  if (!zoneDef) return null;
+
+  const body = { pos: { x: args.pos.x, z: args.pos.z }, radius: t.radius };
+  for (const ob of zoneDef.obstacles) pushOutOfObstacle(body, ob);
+  clampToBoundary(body, zoneDef);
+  // #195: a champion may not come back OUTSIDE the fire ring — that is an
+  // instant burn they never chose. Pull the spawn point toward the zone centre
+  // until the whole body sits inside, with 0.1 u of slack so the very next tick
+  // of shrink does not immediately push them out again. A ring that has closed
+  // COMPLETELY refuses the revive outright rather than picking a doomed point.
+  const inner = fireRingInnerRadius(world, args.zone, t.radius);
+  if (inner !== null && inner <= 0) return null;
+  if (inner !== null && inner > 0) {
+    const maxD = inner - 0.1;
+    const d2 = distSq(body.pos, zoneDef.center);
+    if (maxD > 0 && d2 > maxD * maxD) {
+      const d = Math.sqrt(d2);
+      const s = d > 0 ? maxD / d : 0;
+      body.pos = {
+        x: zoneDef.center.x + (body.pos.x - zoneDef.center.x) * s,
+        z: zoneDef.center.z + (body.pos.z - zoneDef.center.z) * s,
+      };
+    }
+  }
+
+  t.pos = body.pos;
+  t.zone = args.zone;
+  t.vel = { x: 0, z: 0 };
+  t.accel = 0;
+
+  hp.alive = true;
+  // at least 1 HP: a 0% config must still produce a living champion
+  hp.hp = Math.max(1, hp.maxHp * args.hpPct);
+  hp.mana = hp.maxMana * args.manaPct;
+  hp.shields = [];
+
+  const st = world.status.get(id);
+  if (st) st.effects = []; // no pre-death DoT/CC carries through the grave
+  const nav = world.nav.get(id);
+  if (nav) {
+    nav.order = null;
+    nav.moveTarget = null;
+    nav.attackTarget = null;
+    nav.attackTargetAuto = false;
+    nav.override = null;
+  }
+  world.airborne.delete(id); // #247: a revived body is never mid-arc
+  const ab = world.abilities.get(id);
+  if (ab) {
+    // ability COOLDOWNS are deliberately not reset — they are tick-based and
+    // kept running while dead, so you return with whatever happens to be up.
+    ab.cast = null;
+    ab.windup = null;
+  }
+  world.hitstop.delete(id);
+  world.knockdown.delete(id);
+
+  return body.pos;
 }

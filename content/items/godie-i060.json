@@ -3,23 +3,72 @@
   "schema": "item@1",
   "name": "死之王的意志",
   "icon": "assets/icons/items/godie-i060.webp",
-  "description": "傳說\n技能冷卻時間：45秒\n效能\n死亡閃電，消去600魔力並給予等同傷害\n生命+144\n每秒回復生命+5.98\n\n解說\n傳說死之王曾經是一位喜歡搞笑的學生，隸屬於一個魔法學校；但是他卻殺了整個班級，原因竟然只是認為同學不喜歡她的冷笑話。",
+  "description": "傳說\n[斬殺] 可直接斬殺生命低於 3%的敵方單位\n[緩慢] 周圍敵方 總移動速度 減半\n額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%\n\n解說\n傳說死之王曾經是一位喜歡搞笑的學生，隸屬於一個魔法學校；但是他卻殺了整個班級，原因竟然只是認為同學不喜歡她的冷笑話。",
   "cost": 0,
   "tier": 2,
-  "modifiers": [
-    {
-      "stat": "maxHealth",
-      "op": "flat",
-      "value": 144
-    },
-    {
-      "stat": "healthRegen",
-      "op": "flat",
-      "value": 5.98
-    }
-  ],
   "tags": [
     "wc3-import"
   ],
-  "craftRole": "none"
+  "sets": [
+    {
+      "id": "godie-set-lichking",
+      "name": "死之王套裝",
+      "pieces": [
+        "godie-i01d",
+        "godie-i060",
+        "godie-i061"
+      ],
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 1.0
+        }
+      ]
+    }
+  ],
+  "craftRole": "none",
+  "auras": [
+    {
+      "key": "lichking-will-slow",
+      "radius": 9.17,
+      "affects": "enemy",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctMult",
+          "value": -0.5
+        }
+      ]
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.03
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "flat": 0
+          },
+          "hpPct": {
+            "basis": "max",
+            "perRank": [
+              0.35
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "authoringNote": "[斬殺]「可直接斬殺生命低於 3%的敵方單位」= passive[0]，不需要任何新的 effect kind。\n· 「生命低於 3%」= condition {subject:\"target\", stat:\"hp\", mode:\"percent\", op:\"<\", value:0.03}（sim/content/condition.ts；「低於」是嚴格小於，與鍊金術之盾 godie-i06q 的 5% 寫法一致）。\n· 「直接斬殺」= 目標**最大生命 35%** 的真實傷害。對一個已經低於 3% 最大生命的身體，那是十倍以上的致死量；0.35 是 HP_PCT_DAMAGE_MAX（content/schema/effect.ts）的上界，也就是這個原語能給的最大保證。\n· ⚠️ 觸發事件選 onBasicAttack 而不是 onDamageDealt，是一個**決策**，理由是終止性：onDamageDealt 會被斬殺自己打出的那一發再次觸發（damage.ts:771），而 combatResolveSystem 的「死了就丟包」守衛是 `!hp.alive`，而 alive 要等 DeathSystem（slot 9）才翻，所以同一 tick 內會多跑幾輪空轉。onBasicAttack 完全沒有這條回路，而且與出貨的 幻之匕首（godie-i039，「3%機率造成敵方 20%生命傷害」）同一個事件。`on` 本身就是後台欄位：想讓技能傷害也能斬殺，把它改成 onDamageDealt 即可。\n· 【2026-08-01 落地】[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%」= 三份文件各自帶一份**一模一樣**的 sets 區塊（item@1.sets，pieces 三件、requiredPieces 省略 = 全部）。獎勵不是掛在每一件上，而是 sim/economy/itemSets.ts 依 set id 掛**一個** `item-set:` 來源 —— 每件各掛一份就會變成 pctAdd 3.0（+300%）。重算點在 economy/itemSource.ts 的 attachItemSource / detachItemSource，所以買 / 賣 / 反悔 / 三選一 / 商店預覽全都會重跑，不必各自記得。守衛：sim/lichkingSet.test.ts（出貨文件）與 sim/economy/itemSets.test.ts（機制）。\n· ⚠️ 這裡原本記的補法（在 modifier entry 上加 requiresItems 閘，再讓 shop.ts 的三個 attachSource 呼叫點各自重跑一次）**沒有採用**：那個形狀要在四個呼叫點各記得一次，而漏掉一個正是它自己預告的「買齊會亮、抽到不會亮」。改成把重算收進 attach/detach 這一道**唯一的縫**，呼叫點一個都不必改。"
 }

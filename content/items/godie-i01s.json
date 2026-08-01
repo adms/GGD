@@ -3,13 +3,29 @@
   "schema": "item@1",
   "name": "仙后座",
   "icon": "assets/icons/items/godie-i01s.webp",
-  "description": "積分獎勵\n施展需求魔力：75點\n技能冷卻時間：0秒\n效能\n瞬間移動\n25%物理傷害迴避\n\n解說\n使用可以瞬間移動一小段距離，技巧高超的魔法師甚至可以做到連續移動。傳說中儲存強大魔力並且可以瞬間改變空間的神祕道具，傳聞製造者是火星人。",
+  "description": "積分獎勵\n效能\n[迴避] 25%物理傷害迴避，迴避成功時瞬間移動 (前進一小段距離)\n最大魔力+100%\n每秒回魔+25\n\n解說\n技巧高超的魔法師甚至可以做到連續移動。傳說中儲存強大魔力並且可以瞬間改變空間的神祕道具，傳聞製造者是火星人。",
   "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
   "craftRole": "quest",
-  "draftEligible": false,
-  "authoringNote": "【完全沒有 payload】modifiers=0 passive=0 auras=0 —— 抽到這張卡的玩家什麼都沒拿到。原作 I01S 的 base 是 spsh(class: Campaign, charges 1),掛三支能力:A0DV◄AEbl「Warden - Blink」(最大 500 / 最小 50 / 冷卻 20 / 耗魔 75 / 持續 0.1)、A09X◄AIev「Evasion」閃避機率 0.25、A0JQ◄Asph「Sphere」(純視覺球體)。GGD 一支都沒有:主動瞬移 item@1 還存不下(卡在 #56 的主動效果 schema),0.25 迴避倒是**現在就存得下**(Stat.Evasion 有,sim/combat/evasion.ts 有,ITEM_MODIFIER_LIMITS 也給了 0..1 的帶),但補不補是內容決策,留給 owner。在補上之前 draftEligible=false,把它從任務三選一移出去 —— 一張空卡等於把三選一變成二選一。【描述與來源打架】文案寫「技能冷卻時間:0秒」,w3a 的 AEbl 寫 Cool 20;兩者不可能同時對,需要 owner 裁決(可能是刻意的隱藏機制,也可能是文案沒跟上)。"
+  "authoringNote": "【2026-08-01 owner 重寫，draftEligible 重新開啟】舊的關閉理由是「完全沒有 payload」——modifiers/passive/auras 三個都空，抽到什麼都拿不到。owner 新文案給了實際數值：最大魔力+100% (maxMana pctAdd 1.0)、每秒回魔+25 (manaRegen flat 25)、以及 25%物理傷害迴避 —— 最後這項用既有的 Stat.Evasion 表達 (evasion flat 0.25；ITEM_MODIFIER_LIMITS 帶 0..1，STAT_CLAMPS 再折到 [0,0.8]；判定在 sim/combat/evasion.ts)。空卡問題解決，關閉的理由消失。【仍缺】『迴避成功時瞬間移動 (前進一小段距離)』——迴避本身有了，但「迴避成功」目前不是一個掛鉤事件，item@1 也還存不下主動/觸發式位移 (見 #56)。要補需要一個 onEvade 事件 + 一個能掛在 item 上的 dash 效果。",
+  "modifiers": [
+    {
+      "stat": "evasion",
+      "op": "flat",
+      "value": 0.25
+    },
+    {
+      "stat": "maxMana",
+      "op": "pctAdd",
+      "value": 1.0
+    },
+    {
+      "stat": "manaRegen",
+      "op": "flat",
+      "value": 25
+    }
+  ]
 }

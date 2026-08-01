@@ -3,22 +3,33 @@
   "schema": "item@1",
   "name": "死之王的神盾",
   "icon": "assets/icons/items/godie-i061.webp",
-  "description": "傳說\n效能\n焚身每秒範圍傷害100點\n裝甲+17\n\n解說\n死之王最讓人害怕的時刻，莫過於在魔法學校的大屠殺。尤其當死之王學會奪取心智與魔力的魔法後，魔法學校的慘劇已成定局。",
+  "description": "傳說\n效能\n[焚身] 每秒造成周圍範圍燃燒 10% AP 傷害\n[腐蝕] 周圍敵方單位防禦 -30\n額外 [死之王套裝] 同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%\n\n解說\n死之王最讓人害怕的時刻，莫過於在魔法學校的大屠殺。尤其當死之王學會奪取心智與魔力的魔法後，魔法學校的慘劇已成定局。",
   "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
-  "modifiers": [
+  "sets": [
     {
-      "stat": "armor",
-      "op": "flat",
-      "value": 17
+      "id": "godie-set-lichking",
+      "name": "死之王套裝",
+      "pieces": [
+        "godie-i01d",
+        "godie-i060",
+        "godie-i061"
+      ],
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 1.0
+        }
+      ]
     }
   ],
   "passive": [
     {
-      "on": "onBasicAttack",
+      "on": "onInterval",
       "target": "self",
       "internalCooldown": 1,
       "effects": [
@@ -26,7 +37,12 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 100
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.1
+              }
+            ]
           },
           "radius": 4.0,
           "maxTargets": 5
@@ -34,5 +50,20 @@
       ]
     }
   ],
-  "craftRole": "none"
+  "craftRole": "none",
+  "auras": [
+    {
+      "key": "lichking-shield-corrode",
+      "radius": 4.0,
+      "affects": "enemy",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": -30
+        }
+      ]
+    }
+  ],
+  "authoringNote": "【2026-08-01 落地】[死之王套裝]「同時裝備死之王長槍、意志、神盾，則總 AP 額外 + 100%」= 三份文件各自帶一份**一模一樣**的 sets 區塊（item@1.sets，pieces 三件、requiredPieces 省略 = 全部）。獎勵不是掛在每一件上，而是 sim/economy/itemSets.ts 依 set id 掛**一個** `item-set:` 來源 —— 每件各掛一份就會變成 pctAdd 3.0（+300%）。重算點在 economy/itemSource.ts 的 attachItemSource / detachItemSource，所以買 / 賣 / 反悔 / 三選一 / 商店預覽全都會重跑，不必各自記得。守衛：sim/lichkingSet.test.ts（出貨文件）與 sim/economy/itemSets.test.ts（機制）。"
 }

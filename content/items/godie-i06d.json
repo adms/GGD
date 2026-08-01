@@ -2,37 +2,32 @@
   "id": "godie-i06d",
   "schema": "item@1",
   "name": "斬龍刀",
-  "description": "神器\n效能\n攻擊力+32.9\n裝甲+3.6\n攻擊速度+23.9%\n17.9%機率造成2.198倍傷害\n\n解說\n這把精良的重刀是由甘豆腐為飛鼠先生親手打造的，而且曾經出現在屠龍戰爭中，結束了飛龍部族的侵攻，此刀有混亂人心的副作用。",
-  "cost": 1200,
+  "description": "神器\n效能\n攻擊力+128\n防禦+12\n[暴擊] 20%機率造成 2倍傷害\n\n解說\n這把精良的重刀是由甘豆腐為飛鼠先生親手打造的，而且曾經出現在屠龍戰爭中，結束了飛龍部族的侵攻，此刀有混亂人心的副作用。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
   ],
   "modifiers": [
     {
-      "stat": "armor",
+      "stat": "ad",
       "op": "flat",
-      "value": 3.6
+      "value": 128
     },
     {
-      "stat": "as",
-      "op": "pctAdd",
-      "value": 0.239
+      "stat": "armor",
+      "op": "flat",
+      "value": 12
     },
     {
       "stat": "critChance",
       "op": "flat",
-      "value": 0.179
+      "value": 0.2
     },
     {
       "stat": "critDamage",
       "op": "flat",
-      "value": 0.448
-    },
-    {
-      "stat": "ad",
-      "op": "flat",
-      "value": 32.9
+      "value": 0.25
     }
   ],
   "icon": "assets/icons/items/godie-i06d.png",

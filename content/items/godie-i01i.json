@@ -3,8 +3,8 @@
   "schema": "item@1",
   "name": "雷神之鎚",
   "icon": "assets/icons/items/godie-i01i.webp",
-  "description": "法器\n施展需求魔力：300點\n技能冷卻時間：40秒\n效能\n疾風狂雷\n普通攻擊對部隊單位造成2倍傷害(會被法球覆蓋)\n\n解說\n點選可施展疾風狂雷，隨機產生7道造成300雷電傷害，並使範圍內部隊移動速度下降50%，持續3秒。普通攻擊的時候，對非英雄的一般部隊能增加100%傷害。相傳是雷公用來打蹧蹋食物的小壞蛋的寶具。",
-  "cost": 1200,
+  "description": "法器\n效能\n[On-Hit] 7%機率產生造成 100% AP 雷電範圍傷害 (On-Hit)，[緩慢] 並使範圍內部隊移動速度下降50%，持續1秒\n防禦+20\nAP+130\n[重創] 敵方攻擊時吸血效果降低50%吸血回復量\n\n解說\n相傳是雷公用來打蹧蹋食物的小壞蛋的寶具。",
+  "cost": 0,
   "tier": 2,
   "tags": [
     "wc3-import"
@@ -16,5 +16,66 @@
       "godie-i01c"
     ],
     "book": "godie-i01l"
-  }
+  },
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 20
+    },
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 130
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "chance": 0.07,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "radius": 3.5,
+          "maxTargets": 5,
+          "includeOrigin": true
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1,
+          "moveSpeedMult": 0.5
+        }
+      ]
+    },
+    {
+      "on": "onDamageTaken",
+      "damageSource": "basic",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 3.0,
+          "stackKey": "grievous-wounds",
+          "maxStacks": 1,
+          "modifiers": [
+            {
+              "stat": "lifesteal",
+              "op": "pctMult",
+              "value": -0.5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "authoringNote": "[On-Hit]「7%機率產生造成 100% AP 雷電範圍傷害」= passive[0] 的 damageArea（chance 0.07 / ratios ap 1.0 / damageType magic）。\n· includeOrigin:true —— 雷打在被你打中的那個人**身上**，所以震央本人要吃。（預設是 false，那是給泰坦九頭蛇那種「打 A 濺到 A 身後的 B」用的。）\n· radius 3.5 與 maxTargets 5 是**文案沒有給的數字**，兩個都是欄位不是常數：3.5 是這一批 on-hit 範圍傷害的出貨慣例（泰坦九頭蛇 / 丈八蛇矛 / 炎龍巨弩 都是 3.5），maxTargets 5 是為了不讓一發普攻掃掉整波殭屍（省略的話預設是上界 20，見 sim/effects/spreadLimits.ts）。要調就改這裡。\n\n[緩慢]「並使範圍內部隊移動速度下降50%，持續1秒」= passive[0] 的 applyStatus（slow40 + moveSpeedMult 0.5 = 減半，與老衲的棒子 godie-i06n 同一個寫法）。\n· ⚠️ **只落在被普攻打中的那一個人身上，不是「範圍內部隊」**。applyStatus 沒有 radius，作用對象是 ctx.targets；damageArea 也沒有辦法帶一個 status payload。這是這件道具唯一打折的地方，而且是刻意寫出來而不是假裝沒有。要補的最小改動是給 damageArea 一個「命中者一併套用的 status」欄位，或給 applyStatus 一個 radius —— 後者會一次服務全部 7 件 [緩慢] 道具，是共用 CC 機制的改動，不該塞在單件道具的工作裡。\n\n[重創]「敵方攻擊時吸血效果降低50%吸血回復量」= onDamageTaken + damageSource:\"basic\" 的 applyBuff（lifesteal pctMult −0.5，落在**攻擊者**身上 —— onDamageTaken 的事件實體是他，見 sim/combat/damage.ts:772）。持續 3 秒是文案沒給的唯一數字。**stackKey \"grievous-wounds\" 由四件 [重創] 共用**（晨曦之光 / 貫雷槍 / 雷神之鎚 / 祕銀鎖子甲），因為四段文案都是「降低50%」，兩件疊起來不該變 75%。完整理由（包含 2026-08-01 突變驗證改正的「maxStacks 其實是惰性的」那一段）寫在 祕銀鎖子甲 content/items/godie-i01w.json，不重複。"
 }

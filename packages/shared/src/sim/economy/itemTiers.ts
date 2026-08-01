@@ -109,9 +109,10 @@ export function isShopService(itemId: string): boolean {
  * S3 — «this item does SOMETHING in the shipped engine». THE definition of an
  * effect, in the one place both the price contract and the sim can read it.
  *
- * `item@1` can express exactly two payloads, `modifiers` and `passive`, so an
- * item carrying neither is inert BY CONSTRUCTION — no amount of tags, tier or
- * description makes it do anything at runtime. That is not hypothetical: 18
+ * `item@1` can express exactly three static payloads — `modifiers`, `passive`
+ * and (since 死之王套裝) `sets` — so an item carrying none of them is inert BY
+ * CONSTRUCTION: no amount of tags, tier or description makes it do anything at
+ * runtime. That is not hypothetical: 18
  * imported "final" items and all 55 recipe books (製作書) came out of the w3x
  * with their whole payload in an ACTIVE ability the schema cannot express yet,
  * so they ship as inert docs on purpose (the curation layer's own copy of this
@@ -122,8 +123,24 @@ export function isShopService(itemId: string): boolean {
  * boundary: `ItemDoc` (the loaded JSON, checked in itemTiers.test.ts) and
  * `ItemDef` (the registered runtime def, checked in shop.ts).
  */
-export function itemHasEffect(def: { modifiers?: readonly unknown[]; passive?: readonly unknown[] }): boolean {
-  return (def.modifiers?.length ?? 0) > 0 || (def.passive?.length ?? 0) > 0;
+export function itemHasEffect(def: {
+  modifiers?: readonly unknown[];
+  passive?: readonly unknown[];
+  /**
+   * 套裝. Counted, because an item whose only payload is a set clause is NOT
+   * payload-free — it is conditional. Leaving it out would make a future priced
+   * set piece refuse to sell with reason `no-effect`, i.e. a card the shop
+   * greys out for a reason that is not true. Purely ADDITIVE: none of the
+   * existing inert docs carry `sets`, so every current classification is
+   * unchanged.
+   */
+  sets?: readonly unknown[];
+}): boolean {
+  return (
+    (def.modifiers?.length ?? 0) > 0 ||
+    (def.passive?.length ?? 0) > 0 ||
+    (def.sets?.length ?? 0) > 0
+  );
 }
 
 /** Price of a shop service, or null when the id is a normal item. */

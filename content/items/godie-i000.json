@@ -3,19 +3,19 @@
   "schema": "item@1",
   "name": "丈八蛇矛",
   "icon": "assets/icons/items/godie-i000.webp",
-  "description": "夢幻\n效能\n攻擊力+28.7\n生命+237\n擴散傷害60%\n\n解說\n是把相當神奇的兵器，使用者智力會降低，至於原因仍然是個謎。",
+  "description": "夢幻\n效能\n攻擊力+87\n生命+872\n[擴散] 擴散傷害87%\n\n解說\n是把相當神奇的兵器，使用者智力會降低，至於原因仍然是個謎。",
   "cost": 0,
   "tier": 3,
   "modifiers": [
     {
       "stat": "ad",
       "op": "flat",
-      "value": 28.7
+      "value": 87
     },
     {
       "stat": "maxHealth",
       "op": "flat",
-      "value": 237
+      "value": 872
     }
   ],
   "passive": [
@@ -29,7 +29,7 @@
             "ratios": [
               {
                 "stat": "ad",
-                "coeff": 0.6
+                "coeff": 0.87
               }
             ]
           },

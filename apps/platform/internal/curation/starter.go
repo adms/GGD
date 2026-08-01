@@ -354,50 +354,48 @@ var (
 	// `cost` encodes neither crafting stage nor quest provenance. The owner had
 	// to restate the rule; this is the structural fix that lets it be expressed.
 	//
-	// Six more finals (雷神之鎚/黑色魔書/盾甲天書/嗜血邪書/天地崩裂魔杖/風行天衣)
-	// are `craftRole == "final"` too but carry NO expressible payload (their
-	// power is an active ability item@1 cannot hold yet — blocked on #56), so
-	// they are held off the shelf by the same S3/hasEffect gate the client and
-	// the sim use, and are NOT whitelisted here. They rejoin the moment item@1
-	// grows an active slot; the content docs already carry craftRole "final".
+	// FOUR finals (嗜血邪書/盾甲天書/黑色魔書/風行天衣) are `craftRole == "final"`
+	// too but carry NO expressible payload (their power is an active ability
+	// item@1 cannot hold yet — blocked on #56), so they are held off the shelf
+	// by the same S3/hasEffect gate the client and the sim use, and are NOT
+	// whitelisted here. They rejoin the moment item@1 grows an active slot; the
+	// content docs already carry craftRole "final". 雷神之鎚 (godie-i01i) and
+	// 天地崩裂魔杖 (godie-i03h) used to be on that payload-free list — owner gave
+	// them real modifiers + passives on 2026-08-01 and moved them into the 棱彩
+	// pool, so they are effective finals now, held off the shelf by the
+	// LEGENDARY rule below rather than by the #56 gate.
+	//
+	// ⚠️ owner 2026-08-01 — THE SHOP IS «FINAL WITH AN EFFECT» **MINUS THE
+	// LEGENDARY SURFACE**. 「隨機三選一發放道具 都改成棱彩武器道具」 put 49 items
+	// into content/loot-tables/legendary-weapons.json, EIGHTEEN of them
+	// craftRole "final" with a real payload, and the same edit zeroed `cost` on
+	// 25 items so nothing can sell them. Leaving those 16 on this list did not
+	// make them buyable — `buyItem` refuses cost<=0 with "not-purchasable" —
+	// but it made the whitelist claim a surface they had left, and it feeds
+	// `shopCatalogue` (craftRole "final" + hasEffect + whitelisted) eighteen
+	// dead 0g buttons the moment the 武器貨架 (#261) reopens. 「傳說＝三選一
+	// 專屬」 only holds if the shop list stops claiming them.
 	//
 	// TestStarterShopIsFinalWeapons pins this to the marker: it fails if any id
-	// here is not a `final` with an effect, or if a `final` with an effect is
-	// missing. Prices: SIMPLE 300 / POWERFUL 1200 (task #82's 統一化), stamped
-	// onto every final by tools/w3x-import/apply_item_roles.py.
+	// here is not a `final` with an effect, or if a `final` with an effect that
+	// the legendary pool has NOT claimed is missing. Prices: SIMPLE 300 /
+	// POWERFUL 1200 (task #82's 統一化), stamped onto every final by
+	// tools/w3x-import/apply_item_roles.py.
 	starterShopItems = []string{
-		// ---- SIMPLE, 300g (5)
-		"godie-i016", // 晨曦之光
+		// ---- SIMPLE, 300g (3)
 		"godie-i03d", // 光明虎徹
-		"godie-i03f", // 甘豆腐之袍
 		"godie-i041", // 火閃電
 		"godie-i05o", // 刺針
-		// ---- POWERFUL, 1200g (23). Includes the 11 finals task #82 had zeroed
-		// into the legendary pool — 霸王槍/光魔杖/狂暴軒轅劍/… — that rule 1 says
-		// belong here, on the shelf.
-		"godie-i00f", // 霸王槍
-		"godie-i00i", // 炎龍巨弩
-		"godie-i00j", // 奇門盾甲
-		"godie-i018", // 朗基努斯之槍
+		// ---- POWERFUL, 1200g (9)
 		"godie-i01j", // 靈魂魔石
 		"godie-i01o", // 死神裝束
-		"godie-i01v", // 螺旋劍
-		"godie-i027", // 光魔杖
-		"godie-i02e", // 狂暴軒轅劍
 		"godie-i02r", // 奇蹟之墜
-		"godie-i031", // 天生牙
-		"godie-i039", // 幻之匕首
 		"godie-i03b", // 真．雅典娜的驚嘆號
 		"godie-i040", // 破甲槍
 		"godie-i045", // 寂靜刃 - 詠月
 		"godie-i049", // 賢者之石
-		"godie-i04d", // 冰晶虎魄 - 改
 		"godie-i04i", // 厄夜鐮刀
 		"godie-i05h", // 失心匕首
-		"godie-i067", // 惡夢魔王碎片
-		"godie-i06d", // 斬龍刀
-		"godie-i06f", // 月神槍
-		"godie-i06i", // 炎神弩
 	}
 
 	// 2 SHOP SERVICES — listings that take gold but never occupy a slot. They
@@ -414,58 +412,79 @@ var (
 		"stat-attunement", // 能力屬性強化 375g — the repeatable stat tick
 	}
 
-	// LEGENDARY items — the 傳說寶玉 (legendary-orb) gacha pool ONLY. The round-5
-	// 3-choose-1 no longer rolls this table: under the owner's two-surface model
-	// (task #70) every item 3-choose-1 offers ONLY quest items, so round 5 now
-	// rolls `quest-rewards` like round 2. This surface is therefore just the orb.
+	// LEGENDARY items — the 棱彩 pool, reached TWO ways: the round-2 and round-5
+	// weapon 3-choose-1 (both `rounds[].weaponLootTable` point at
+	// legendary-weapons as of owner 2026-08-01 —「隨機三選一發放道具 都改成棱彩
+	// 武器道具」) and the 2400g 傳說寶玉 roll. `quest-rewards` is no longer wired
+	// to any round; it is still shipped content and still the DRAFT surface
+	// below, but nothing in a live match rolls it today.
 	//
-	// The 11 book-finals task #82 had zeroed into this pool (霸王槍/光魔杖/…) have
-	// MOVED to the shop, where rule 1 puts them, so this list is exactly the 14
-	// non-final entries that remain in content/loot-tables/legendary-weapons.json.
-	// They are 7 recipe components (名刀-天狼/熾天使之弓/…) and 7 direct-buy 神器
-	// (丈八蛇矛/落魂的嗜血劍/…) — a pool the owner has NOT re-endorsed and that the
-	// in-flight task #108 owns; this task leaves it to #108 rather than redesign
-	// the orb. See the report for the boundary.
+	// It is exactly the 49 entries of content/loot-tables/legendary-weapons.json,
+	// and the 25 of them that used to carry a shop price were zeroed by the same
+	// owner edit — 「傳說＝三選一專屬」. Composition: 18 finals, 17 role-less
+	// 神器, 8 recipe components and 6 QUEST items.
+	//
+	// ⚠️ The 6 quest ids are on the DRAFT surface as well. That is the one place
+	// the four surfaces are not a partition, and it is owner's own doing (see the
+	// disjointness note in arenaItemModel.test.ts). The bundle served to a match
+	// is a SET, so those 6 appear once — `starterItems` below is deduped.
 	starterLegendaryItems = []string{
+		// owner 2026-08-01 的棱彩三選一名單 —— 這 49 支就是 `content/loot-tables/
+		// legendary-weapons.json` 的全部條目，兩邊必須逐字相同。
+		//
+		// ⚠️ 白名單說「什麼存在」，sim 說「誰可以拿到」：`requiresAttackType` 的
+		// 近戰/遠程閘在 economy/offerEligibility.ts，不在這裡。漏一支的後果不是
+		// 「那支抽不到」而是整張武器卡變少甚至空掉 —— MatchController 先滾骰再
+		// 過濾（roll-before-filter），死條目會直接吃掉卡面。
+		"bulwark-charge-greaves", // 近擊的巨人鎧
+		"cleaver-of-the-warden", // 泰坦九頭蛇
+		"endless-edge", // 無盡連刃
 		"godie-i000", // 丈八蛇矛
+		"godie-i004", // 至尊魔戒
+		"godie-i006", // 雅典娜的驚嘆號
+		"godie-i007", // 虛哭神去
+		"godie-i00f", // 霸王破甲槍
+		"godie-i00i", // 炎龍巨弩
+		"godie-i00j", // 奇門盾甲
 		"godie-i00l", // 落魂的嗜血劍
+		"godie-i00s", // 黃金聖鬥衣
 		"godie-i00u", // 名刀-天狼
-		"godie-i007", // 妖刀村正
+		"godie-i00z", // 四魂之玉
 		"godie-i012", // 熾天使之弓
-		"godie-i013", // 八取武士刀
+		"godie-i013", // 緣一零式
 		"godie-i014", // 天叢雲劍
+		"godie-i016", // 晨曦之光
+		"godie-i018", // 朗基努斯之槍
 		"godie-i01d", // 死之王的長槍
 		"godie-i01g", // 貫雷槍
-		"godie-i02x", // 斬岩刃
-		"godie-i04v", // 正義之杖
-		"godie-i06e", // 月牙魔杖
-		"godie-i06g", // 殺豬刀
-		"godie-i06s", // 龍騎士之劍
-		// #189 無盡連刃 — the first legendary GGD authored rather than imported,
-		// and the first with `requiresAttackType: "melee"`. The attack-type gate
-		// lives in the SIM (economy/offerEligibility.ts), not here: the whitelist
-		// says WHAT EXISTS, the sim says WHO MAY BE OFFERED IT. Leaving it out of
-		// this list would make the item exist and never once be rollable.
-		"endless-edge", // 無盡連刃（近戰限定）
-		// #210 傳說池擴充 —— owner 「目前太少，很容易被抽完」. 15 -> 20.
-		// 只收 craftRole != "final"/"quest" 的道具: final 依 owner 規則一留在
-		// 商店貨架 (task #70), quest 是三選一那一面 —— 一件道具只能有一個入口。
-		"godie-i061", // 死之王的神盾（焚身·每秒範圍傷害）
-		"godie-i063", // 防狼電擊棒（電擊·最多 4 人）
-		"godie-i06o", // 血染八月
+		"godie-i01i", // 雷神之鎚
+		"godie-i01n", // 天堂之劍
+		"godie-i01s", // 仙后座
+		"godie-i01v", // 螺旋劍
+		"godie-i01w", // 祕銀鎖子甲
+		"godie-i020", // 瑪那魔杖
+		"godie-i027", // 光魔杖
+		"godie-i02d", // 消失的密室
+		"godie-i02e", // 狂暴軒轅劍
+		"godie-i031", // 天生牙
+		"godie-i039", // 幻之匕首
+		"godie-i03f", // 甘豆腐之袍
+		"godie-i03h", // 天地崩裂魔杖
+		"godie-i03m", // 反射之盾
+		"godie-i04d", // 冰晶虎魄 - 改
 		"godie-i060", // 死之王的意志
+		"godie-i061", // 死之王的神盾
+		"godie-i067", // 惡夢魔王碎片
 		"godie-i06a", // 妖物碎殺牙
-		// #149 職業限定閘的四件示範傳說。⚠️ 這四件曾經只被加進
-		// `content/loot-tables/legendary-weapons.json` 而漏了這裡 —— 後果不是
-		// 「抽不到」而已，是**回合武器三選一會壞掉**：`MatchController.ts:1036`
-		// 先 `offerItems()` 再 `whitelist.filterItems()`，所以 24 個條目裡有 4 個
-		// 是死的時候，約 44% 的武器卡只剩 1–2 個選項，甚至一個都不剩。
-		// 上面 `endless-edge` 的註解早就寫了規則：白名單說「什麼存在」，
-		// sim 說「誰可以拿到」。閘在 sim，不在這裡。
-		"cleaver-of-the-warden",  // 裂地巨斧（近戰·擴散）
-		"sage-ward-amulet",       // 賢者的護身符（智力·保命，不符改為減量而非封鎖）
-		"bulwark-charge-greaves", // 衝鋒重脛甲（近戰＋力量·雙軸衝刺）
-		"piercer-crossbow",       // 穿甲弩（遠程·真傷）
+		"godie-i06d", // 斬龍刀
+		"godie-i06e", // 月牙魔杖
+		"godie-i06f", // 傲慢水龍王
+		"godie-i06g", // 殺豬刀
+		"godie-i06i", // 炎神弩
+		"godie-i06j", // 獸人船長十字鎬
+		"godie-i06n", // 老衲的棒子
+		"godie-i06o", // 血染八月
+		"godie-i06q", // 鍊金術之盾
 	}
 
 	// DRAFT items — EXACTLY the quest set, and nothing else (owner rule 2, task
@@ -501,7 +520,12 @@ var (
 	// union of all four: an item that is not whitelisted is silently never
 	// offered, whichever surface it lives on. Note the legendary surface must
 	// stay in the union even though nothing there is purchasable — dropping it
-	// would empty the round-5 card, which is exactly task #47's silent failure.
+	// would empty the round-2/5 cards, which is exactly task #47's silent failure.
+	//
+	// `concat` keeps duplicates; `StarterSet` runs the result through `union`,
+	// which sorts AND dedupes. That matters since owner 2026-08-01: the 6 quest
+	// ids that are also 棱彩 entries appear on two lists here and exactly ONCE in
+	// the served bundle, so `len(starterItems) != len(StarterSet().Items)`.
 	starterItems = concat(starterShopItems, starterServiceItems, starterLegendaryItems, starterDraftItems)
 
 	// 265 abilities — the FULL kit of every starter champion ("<championId>.<slot>").

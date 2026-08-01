@@ -3,18 +3,59 @@
   "schema": "item@1",
   "name": "鍊金術之盾",
   "icon": "assets/icons/items/godie-i06q.webp",
-  "description": "夢幻\n技能冷卻時間：30秒\n效能\n嘲弄\n裝甲+17\n受攻擊機率將敵人變成黃金\n\n解說\n傑出的鍊金術師飛鼠先生在魔法學校結業考試中製作的防具，本來是留在魔法博物館展示，但是在一次戰亂中被強盜奪走，從此下落不明。",
-  "cost": 300,
+  "description": "夢幻\n效能\n[嘲弄] 每秒吸引周圍敵人優先攻擊自己，持續 0.5秒\n[煉金術] 受敵人攻擊時，有 10%機率將直接將 HP 低於 5% 的敵人變成黃金 (敵方單位直接死亡，黃金數量為敵方等級)\n\n解說\n傑出的鍊金術師飛鼠先生在魔法學校結業考試中製作的防具，本來是留在魔法博物館展示，但是在一次戰亂中被強盜奪走，從此下落不明。",
+  "cost": 0,
   "tier": 1,
   "tags": [
     "wc3-import"
   ],
-  "modifiers": [
+  "craftRole": "none",
+  "passive": [
     {
-      "stat": "armor",
-      "op": "flat",
-      "value": 17
+      "on": "onInterval",
+      "internalCooldown": 1,
+      "target": "self",
+      "effects": [
+        {
+          "kind": "taunt",
+          "durationSec": 0.5,
+          "radius": 9.17,
+          "maxTargets": 8
+        }
+      ]
+    },
+    {
+      "on": "onDamageTaken",
+      "chance": 0.1,
+      "condition": {
+        "kind": "stat",
+        "subject": "target",
+        "stat": "hp",
+        "mode": "percent",
+        "op": "<",
+        "value": 0.05
+      },
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "flat": 0
+          },
+          "hpPct": {
+            "basis": "max",
+            "perRank": [
+              0.35
+            ]
+          }
+        },
+        {
+          "kind": "grantGold",
+          "perTargetLevel": 1,
+          "to": "self"
+        }
+      ]
     }
   ],
-  "craftRole": "none"
+  "authoringNote": "[嘲弄] = passive[0]。「每秒」是 internalCooldown: 1（不是 taunt 效果自己的欄位 —— 節奏一律由 HookDef.internalCooldown 表達，見 systems/IntervalHookSystem.ts 決策 1，而且它會吃 combatEnv.itemCooldown）。「持續 0.5秒」= durationSec，會再乘上後台 config.taunt@1 的 durationMult。radius 9.17 = WC3 Taunt（Ntau）的 500 單位 ÷ 54.5：文案沒有給半徑，所以取原作同族技能的值而不是憑空挑一個；它還會再乘 combatEnv.abilityRange（出貨 0.6）→ 場上實際 5.5。maxTargets 8 是防止一發把整波 30 隻殭屍全部拉住。\n\n[煉金術] = passive[1]。「10%機率」= chance；「HP 低於 5%」= condition（subject: target —— onDamageTaken 的事件實體是**攻擊者**，見 combat/damage.ts 的 fireHooks(world, pkt.target, \"onDamageTaken\", pkt.source) 與 effects/hooks.ts）；「直接死亡」= 目標最大生命 35% 的真實傷害，對一個已經低於 5% 的身體是七倍致死；「黃金數量為敵方等級」= grantGold perTargetLevel 1。\n\n⚠️ 兩個已知限制，寫在這裡而不是假裝沒有：\n（1）金幣是在 proc 當下發的，不是在確認擊殺之後 —— 傷害走 damageQueue，這一 tick 稍後才結算，所以那一刻還沒有死亡可以掛。條件本身讓擊殺成為必然，但如果目標身上有大於自身最大生命 35% 的護盾，會出現「發了金幣但沒死」。現行內容沒有任何東西產得出那種護盾。用 onKill 反而更糟：onKill 不帶「是哪一發打死的」，掛在那裡會變成這位持有者的每一次擊殺都發錢，那是另一件道具。\n（2）小怪（殭屍）**沒有 per-entity 等級**（spawnMobBody 不寫 level，波次等級在 MobRules 上、由主機逐回合烘），所以轉化一隻殭屍付 0 金。殭屍本來就會付 #215 的 mobKill 賞金給補刀的人，所以不是白做工；要讓它也按等級付，得先讓 MobComp 帶等級，那是另一張單。"
 }

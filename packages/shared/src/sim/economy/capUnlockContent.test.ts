@@ -222,16 +222,55 @@ describe("GH#189 無盡連刃 —— 傳說近戰武器", () => {
 });
 
 /**
- * on-hit 疊層 —— owner 2026-07-28 的定案規格,逐字對照:
- *   「每一次攻擊 on-hit 都會 +10% 攻速」「可疊加」「每一層各自 3 秒」
- *   「3 秒內沒有新的普攻命中 → 整組歸零」「不需要冷卻時間」
+ * on-hit 疊層 —— owner 的定案規格,逐字對照出貨文件的文案:
+ *   「每次普攻命中攻擊速度增加10%,可無限疊加,1秒內沒有新的普攻命中則全部
+ *   層數歸零」(owner 2026-08-01 改寫,原文是 3 秒;`content/items/endless-edge.json`)
  *
  * ⚠️ 語意選擇寫死在這裡:**歸零,不是逐層掉**。兩種語意在「同一 tick 疊三層」
  * 的測法下**完全無法區分**,所以下面刻意在三個不同的 tick 疊三層 —— 逐層到期的
- * 實作會在第 90 tick 掉到 2 層,整組歸零的實作會在第 150 tick 一次掉到 0。
- * owner 說「歸零」,照字面做。
+ * 實作會在第一層自己的到期那一刻掉到 2 層,整組歸零的實作要等到**最後一刀**
+ * 的到期才一次掉到 0。owner 說「歸零」,照字面做。
+ *
+ * ⚠️ **秒數從出貨文件讀,層數與形狀不從文件讀。**
+ * owner 2026-08-01 把 3 秒改成 1 秒,而這一支守的是機制(整組共用一個到期、
+ * 命中刷新整組、到期用絕對 tick),不是那個秒數 —— 一個寫死 90 tick 的測試
+ * 會在每一次調參時變紅,而紅的原因跟它要守的東西無關。
+ * 但**只有秒數**是讀來的:「三層一起活、一起死」「連打不掉層」這些形狀仍然
+ * 寫死在斷言裡。實測過的三個突變(2026-08-01,都 RED):
+ *   ① `applyBuff.ts` 拿掉 `existing.expiresAtTick = expiresAtTick`
+ *      (命中不再刷新整組)→ 下面兩條一起紅;
+ *   ② `applyBuff.ts` 的 `if (e.stackKey !== undefined)` 短路掉
+ *      (每一刀變成各自獨立的一份 buff = 逐層到期)→ 同樣兩條一起紅;
+ *   ③ `expiresAtTick = world.tick + 90`(不讀文件秒數,寫死舊的 3 秒)
+ *      → 「整組歸零」那一條紅。第三個是這次改成讀文件之後**新增**的守備範圍。
  */
 describe("GH#189 無盡連刃 on-hit 疊層", () => {
+  /**
+   * 出貨文件上那一組疊層 buff 的持續秒數 —— `passive[0]` 裡那個 `applyBuff`
+   * 的 `duration`,也就是文案「N 秒內沒有新的普攻命中則全部層數歸零」的 N。
+   *
+   * 找 `kind === "applyBuff"` 而不是拿 `effects[0]`:哪天有人在前面插一個
+   * 特效/音效 effect,拿 `[0]` 會靜默量到錯的東西。
+   */
+  function shippedStackSeconds(): number {
+    const hook = Items.get(ITEM_ID).passive?.[0];
+    expect(hook?.on, "出貨文件的第一個被動不再掛在 onBasicAttack 上").toBe("onBasicAttack");
+    const buff = hook?.effects.find((e) => e.kind === "applyBuff");
+    expect(buff, "出貨文件的 onBasicAttack 被動已經不是 applyBuff —— 疊層機制不見了").toBeDefined();
+    const b = buff as Extract<typeof buff, { kind: "applyBuff" }>;
+    expect(b.stackKey, "沒有 stackKey —— 每一刀會變成各自獨立的一份 buff,不可能『整組歸零』").toBe(
+      "endless-edge",
+    );
+    // 「可**無限**疊加」= 故意不寫 maxStacks (endless-edge.json 的 authoringNote)。
+    expect(b.maxStacks, "出貨文件長出了 maxStacks —— 那就不是『可無限疊加』了").toBeUndefined();
+    expect(b.duration, "疊層 buff 沒有持續時間 —— 歸零永遠不會發生").toBeGreaterThan(0);
+    return b.duration;
+  }
+
+  /** 出貨的那個秒數換算成 tick(`applyBuff.ts` 用的是同一條 `duration / world.dt`)。 */
+  const stackTicks = (world: SimWorld): number =>
+    Math.round(shippedStackSeconds() / world.dt);
+
   /** 裝好刀、攻速被墊到 2.5 的近戰英雄,場上沒有敵人(避免其他系統插手)。 */
   function armed(world: SimWorld): EntityId {
     const id = heroAt(world, meleeChampion);
@@ -275,7 +314,7 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
     expect(stacksFrom(world, id)).toBe(2);
   });
 
-  it("★ 3 秒沒有新的命中 → 整組歸零(不是逐層掉),到期用絕對 tick", () => {
+  it("★ 沒有新的命中 → 整組歸零(不是逐層掉),到期用絕對 tick", () => {
     cover("legendary-onhit-stacks");
     const world = new SimWorld(SKELETON_ARENA, 1);
     const id = armed(world);
@@ -283,33 +322,42 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
       for (let i = 0; i < n; i++) world.step(new Map());
     };
 
-    // 三層,分別落在 t / t+30 / t+60(每次相隔 1 秒 @30Hz)。
+    const dur = stackTicks(world); // 出貨值:1 秒 @30Hz = 30 tick
+    // 三層,分別落在 t / t+gap / t+2·gap。三分之一是為了讓**第一層自己的到期**
+    // (t+dur)落在**最後一刀的到期**(t+2·gap+dur)之前 —— 那個空隙正是逐層到期
+    // 與整組歸零唯一分得開的地方。
+    const gap = Math.floor(dur / 3);
+    expect(
+      gap,
+      `出貨的疊層只有 ${dur} tick,三層擠在同一格 —— 這個測法分不出逐層/整組,不是通過`,
+    ).toBeGreaterThanOrEqual(1);
+
     const firstHitTick = world.tick;
     hit(world, id);
-    step(30);
+    step(gap);
     hit(world, id);
-    step(30);
+    step(gap);
     hit(world, id);
     const lastHitTick = world.tick;
-    expect(lastHitTick).toBe(firstHitTick + 60);
+    expect(lastHitTick).toBe(firstHitTick + 2 * gap);
     expect(stacksFrom(world, id)).toBe(3);
 
-    // 走到「第一次命中之後滿 3 秒」的那一刻再多一格。逐層到期的實作在這裡
-    // 只剩 2 層;整組歸零的實作因為到期被最後一刀刷新過,還是 3 層。
-    step(31);
-    expect(world.tick, "沒有真的越過第一層自己的 3 秒").toBeGreaterThan(firstHitTick + 90);
+    // 走到「第一次命中之後滿一個持續時間」的那一刻再多一格。逐層到期的實作在
+    // 這裡只剩 2 層;整組歸零的實作因為到期被最後一刀刷新過,還是 3 層。
+    step(dur + 1 - 2 * gap);
+    expect(world.tick, "沒有真的越過第一層自己的持續時間").toBeGreaterThan(firstHitTick + dur);
     expect(stacksFrom(world, id), "第一層自己掉了 —— 這是逐層到期,不是整組歸零").toBe(3);
 
     // 從最後一次命中算起還差一格的時候,三層都還在……
-    step(89 - 31);
-    expect(world.tick).toBe(lastHitTick + 89);
-    expect(stacksFrom(world, id), "還沒到 3 秒就先掉了").toBe(3);
+    step(2 * gap - 2);
+    expect(world.tick).toBe(lastHitTick + dur - 1);
+    expect(stacksFrom(world, id), "還沒到期就先掉了").toBe(3);
 
-    // ……跨過 3 秒之後,三層**一起**消失(不是 2、不是 1)。
+    // ……跨過到期之後,三層**一起**消失(不是 2、不是 1)。
     // 差的那一格是 `buffExpirySystem` 在 `tick++` 之前跑的系統順序,不是語意:
     // 到期比較的是絕對 tick(`expiresAtTick <= world.tick`),沒有遞減計數器。
     step(2);
-    expect(world.tick).toBe(lastHitTick + 91);
+    expect(world.tick).toBe(lastHitTick + dur + 1);
     expect(stacksFrom(world, id), "整組沒有歸零").toBe(0);
     expect(asOf(world, id)).toBeCloseTo(START_AS, 6);
   });
@@ -340,11 +388,16 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
       zone: 0,
     });
 
-    // 2 秒的窗口 —— 短於一層 3 秒的持續時間,所以「疊了幾層」與「揮了幾刀」
-    // 在這段時間裡必須完全相等,沒有任何一層有機會過期。
+    // 窗口 = **一個**疊層持續時間(出貨值 1 秒 = 30 tick,owner 2026-08-01)。
+    // 這個長度是被證明過的、不是估的:整組共用一個到期,而每一刀都會把它推到
+    // 「那一刀 + dur」。最早的一刀落在 tick >= 0,所以到期一定 >= dur;而最後
+    // 一次重算發生在 tick dur-1(迴圈最後一次 `step` 之前的那個 tick)。
+    // dur > dur-1,所以窗口內**不可能**有任何一層過期 —— 於是「疊了幾層」與
+    // 「揮了幾刀」必須完全相等,跟攻速多快、刀與刀相隔多遠都無關。
+    const windowTicks = stackTicks(world);
     const dummyPos = { ...world.transform.get(dummy)!.pos };
     let swings = 0;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < windowTicks; i++) {
       const hp = world.health.get(dummy)!;
       hp.hp = hp.maxHp; // 木樁不死、不被推開:兩者都會提早結束測量
       world.transform.get(dummy)!.pos = { ...dummyPos };
@@ -367,9 +420,15 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
     cover("legendary-onhit-stacks");
     const world = new SimWorld(SKELETON_ARENA, 1);
     const id = armed(world);
+    const dur = stackTicks(world);
+    // 出刀間隔取持續時間的三分之二:嚴格短於一個持續時間(所以「沒有刷新」的
+    // 實作一定會在下一刀之前掉光),又長到不可能是「同一 tick 連打」。
+    const gap = Math.floor((dur * 2) / 3);
+    expect(gap, "出刀間隔算出 0 —— 那就變成同一 tick 連打,測不到刷新").toBeGreaterThanOrEqual(1);
+    expect(gap, "出刀間隔比持續時間還長 —— 這樣掉層是正常的,測不到刷新").toBeLessThan(dur);
     for (let i = 0; i < 10; i++) {
       hit(world, id);
-      for (let k = 0; k < 60; k++) world.step(new Map()); // 每 2 秒一刀 < 3 秒
+      for (let k = 0; k < gap; k++) world.step(new Map());
     }
     expect(stacksFrom(world, id), "連續命中卻掉了層 —— 到期沒有被刷新").toBe(10);
   });
