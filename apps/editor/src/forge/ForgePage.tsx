@@ -4,11 +4,26 @@ import type { TemplateDoc } from "@ggd/shared/content";
 import { ForgeGallery } from "./ForgeGallery";
 import { ForgeStudio } from "./ForgeStudio";
 
+interface Pick {
+  readonly template: TemplateDoc;
+  /**
+   * The whole indexed set, carried through so the studio can offer SECOND and
+   * THIRD cards (模板複數套用) without re-querying. The gallery already has the
+   * list in hand; handing it over is one prop and saves the studio a fetch that
+   * could disagree with what the operator just clicked.
+   */
+  readonly catalog: readonly TemplateDoc[];
+}
+
 export function ForgePage() {
-  const [picked, setPicked] = useState<TemplateDoc | null>(null);
+  const [picked, setPicked] = useState<Pick | null>(null);
   return picked ? (
-    <ForgeStudio template={picked} onBack={() => setPicked(null)} />
+    <ForgeStudio
+      template={picked.template}
+      catalog={picked.catalog}
+      onBack={() => setPicked(null)}
+    />
   ) : (
-    <ForgeGallery onPick={setPicked} />
+    <ForgeGallery onPick={(template, catalog) => setPicked({ template, catalog })} />
   );
 }

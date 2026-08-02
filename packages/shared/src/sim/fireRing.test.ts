@@ -31,6 +31,8 @@ import {
   fireRingRatePerSec,
   fireRingRulesFromConfig,
   isBurnedByFireRing,
+  ringFullCloseSec,
+  DEFAULT_MAX_PCT_PER_SEC,
   type FireRingRules,
 } from "./fireRing";
 import { zConfigMatchDoc } from "../content/schema/config";
@@ -64,8 +66,7 @@ const shippedRules = (): FireRingRules =>
       startSec: 60,
       shrinkSec: 20,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
+      // omitted `burnCurve` = DEFAULT_BURN_CURVE = the shipped table.
       maxPctPerSec: 1,
     },
     DT,
@@ -170,31 +171,88 @@ describe("the safety predicate is WHOLE-BODY-INSIDE (firering-shrink)", () => {
 });
 
 // ---------------------------------------------------------------- rate curve
-describe("burn rate ramps with the SHRINK, not a staircase (firering-ramp)", () => {
-  it("4%/s at ignition → 20%/s once closed, linear in between, capped", () => {
+describe("burn rate follows the burnCurve, keyed on SECONDS SINCE IGNITION (firering-ramp)", () => {
+  it("shipped table: 4 %/s → 20 %/s → 100 %/s, linear between rows, held after", () => {
     cover("firering-ramp");
     const r = shippedRules();
+    // ── rows 1→2 (0–20 s). ⚠️ EVERY ONE OF THESE FIVE NUMBERS IS UNCHANGED
+    // from the retired two-point ramp, on purpose: owner asked for a hotter
+    // TAIL, not a hotter early game, so the shape nobody asked about had to
+    // stay bit-for-bit identical.
     expect(fireRingRatePerSec(r, 0)).toBeCloseTo(0.04, 12);
-    expect(fireRingRatePerSec(r, 150)).toBeCloseTo(0.08, 12); // 25% of the way
-    expect(fireRingRatePerSec(r, 300)).toBeCloseTo(0.12, 12);
-    expect(fireRingRatePerSec(r, 450)).toBeCloseTo(0.16, 12);
-    expect(fireRingRatePerSec(r, 600)).toBeCloseTo(0.2, 12);
-    expect(fireRingRatePerSec(r, 5000)).toBeCloseTo(0.2, 12); // clamped, not runaway
+    expect(fireRingRatePerSec(r, 150)).toBeCloseTo(0.08, 12); // 5 s
+    expect(fireRingRatePerSec(r, 300)).toBeCloseTo(0.12, 12); // 10 s
+    expect(fireRingRatePerSec(r, 450)).toBeCloseTo(0.16, 12); // 15 s
+    expect(fireRingRatePerSec(r, 600)).toBeCloseTo(0.2, 12); // 20 s — ring closed
+    // ── rows 2→3 (20–40 s): the part the old ramp COULD NOT EXPRESS. Under the
+    // two-point law the rate was pinned at 0.2 from here to the end of time.
+    expect(fireRingRatePerSec(r, 750)).toBeCloseTo(0.4, 12); // 25 s
+    expect(fireRingRatePerSec(r, 900)).toBeCloseTo(0.6, 12); // 30 s
+    expect(fireRingRatePerSec(r, 1050)).toBeCloseTo(0.8, 12); // 35 s
+    // 40 s past ignition = COMBAT SECOND 100 on the shipped `startSec: 60`.
+    // 100 %/s = a full health bar per second = owner's 「必死」.
+    expect(fireRingRatePerSec(r, 1200)).toBeCloseTo(1, 12);
+    // held flat past the last row (and the cap agrees), never extrapolated away
+    expect(fireRingRatePerSec(r, 5000)).toBeCloseTo(1, 12);
     expect(fireRingRatePerSec(r, -1)).toBe(0);
   });
 
-  it("respects maxPctPerSec, and an omitted cap does not clamp the authored end", () => {
+  it("maxPctPerSec is the ONLY wall; omitting it falls back to the SHIPPED cap", () => {
     cover("firering-ramp");
-    const capped = fireRingRulesFromConfig(
-      { startSec: 1, shrinkSec: 1, burnPctPerSecStart: 0.5, burnPctPerSecEnd: 1, maxPctPerSec: 0.6 },
-      DT,
-    );
+    const curve = [
+      { sec: 0, pctPerSec: 0.5 },
+      { sec: 1, pctPerSec: 1.6 },
+    ];
+    const capped = fireRingRulesFromConfig({ startSec: 1, burnCurve: curve, maxPctPerSec: 0.6 }, DT);
     expect(fireRingRatePerSec(capped, 30)).toBe(0.6);
-    const uncapped = fireRingRulesFromConfig(
-      { startSec: 1, shrinkSec: 1, burnPctPerSecStart: 0.5, burnPctPerSecEnd: 1 },
+    const omitted = fireRingRulesFromConfig({ startSec: 1, burnCurve: curve }, DT);
+    // ⚠️ This line has held `1e9`, then `Infinity`, and now the shipped default.
+    // 「沒填 = 不設限」 was a DRIFT, not a feature: the Zod field bounded the same
+    // knob while this branch answered 「無限」, and only the Zod-free callers
+    // (fixtures / MatchController substitutions / the admin preview with a blank
+    // box) could ever see the disagreement. Absent ⇒ 出貨預設, same convention as
+    // `compileBurnCurve`'s missing table and `sim/stealth.ts`'s missing doc.
+    expect(omitted.maxPctPerSec).toBe(DEFAULT_MAX_PCT_PER_SEC);
+    expect(omitted.maxPctPerSec).not.toBe(Number.POSITIVE_INFINITY);
+    // …and the fallback BITES: the curve asks for 1.6, the player takes 0.5.
+    expect(fireRingRatePerSec(omitted, 30)).toBeCloseTo(DEFAULT_MAX_PCT_PER_SEC, 12);
+  });
+
+  it("degenerate tables cannot produce NaN / Infinity damage", () => {
+    cover("firering-ramp");
+    // empty table → the shipped curve, NOT a burn of `undefined` (which lands
+    // in the health store as NaN and silently voids every hp comparison).
+    const empty = fireRingRulesFromConfig({ startSec: 0, burnCurve: [] }, DT);
+    expect(fireRingRatePerSec(empty, 0)).toBeCloseTo(0.04, 12);
+    // Two authored seconds rounding onto ONE tick. ⚠️ Measured, not assumed:
+    // this does NOT reach the `span > 0` ternary in `fireRingRatePerSec` (the
+    // scan skips the collapsed segment — see the proof at that line); what it
+    // proves is the end-to-end property that a collision cannot produce a
+    // non-finite rate, which is the thing that would matter.
+    const collide = fireRingRulesFromConfig(
+      {
+        startSec: 0,
+        burnCurve: [
+          { sec: 0, pctPerSec: 0.1 },
+          { sec: 0.01, pctPerSec: 0.9 },
+          { sec: 1, pctPerSec: 0.9 },
+        ],
+      },
       DT,
     );
-    expect(fireRingRatePerSec(uncapped, 30)).toBeCloseTo(1, 12);
+    for (let t = 0; t <= 60; t++) expect(Number.isFinite(fireRingRatePerSec(collide, t))).toBe(true);
+    // a negative rate would be the ring HEALING whoever stands in the fire.
+    const negative = fireRingRulesFromConfig(
+      {
+        startSec: 0,
+        burnCurve: [
+          { sec: 0, pctPerSec: -1 },
+          { sec: 1, pctPerSec: -1 },
+        ],
+      },
+      DT,
+    );
+    expect(fireRingRatePerSec(negative, 15)).toBe(0);
   });
 });
 
@@ -248,7 +306,7 @@ describe("fire-ring gating (firering-gate)", () => {
 
   it("armed but combatActive=false does not burn (settle stops the ring, #100)", () => {
     const rules = fireRingRulesFromConfig(
-      { startSec: 1 * DT, shrinkSec: 1 * DT, minRadius: 0.5, burnPctPerSecStart: 0.5, burnPctPerSecEnd: 0.5, maxPctPerSec: 1 },
+      { startSec: 1 * DT, shrinkSec: 1 * DT, minRadius: 0.5, burnCurve: [{ sec: 0, pctPerSec: 0.5 }, { sec: 9, pctPerSec: 0.5 }], maxPctPerSec: 1 },
       DT,
     );
     const w = new SimWorld(SKELETON_ARENA, 3);
@@ -265,7 +323,7 @@ describe("fire-ring gating (firering-gate)", () => {
 
   it("endCombatFireRing disarms and re-idles the system", () => {
     const rules = fireRingRulesFromConfig(
-      { startSec: 1 * DT, shrinkSec: 2 * DT, minRadius: 0.5, burnPctPerSecStart: 0.4, burnPctPerSecEnd: 0.4, maxPctPerSec: 1 },
+      { startSec: 1 * DT, shrinkSec: 2 * DT, minRadius: 0.5, burnCurve: [{ sec: 0, pctPerSec: 0.4 }, { sec: 9, pctPerSec: 0.4 }], maxPctPerSec: 1 },
       DT,
     );
     const { w, id } = armedWorld(rules);
@@ -300,7 +358,7 @@ describe("fire-ring gating (firering-gate)", () => {
     // armor/MR/shields/lifesteal/kill-credit must stay empty the whole time —
     // the ring applies hp directly and emits its own fireRingDamage event.
     const rules = fireRingRulesFromConfig(
-      { startSec: 0, shrinkSec: 20, minRadius: 0.5, burnPctPerSecStart: 0.04, burnPctPerSecEnd: 0.2, maxPctPerSec: 1 },
+      { startSec: 0, shrinkSec: 20, minRadius: 0.5, maxPctPerSec: 1 },
       DT,
     );
     const w = new SimWorld(SKELETON_ARENA, 9);
@@ -332,14 +390,36 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
     // combatMaxSec MUST come down with startSec: at 240 the `fireRing` bed and
     // the minimap rim would cover 75% of combat and the `combat` bed's
     // B-section (#87/#109) would never play.
-    expect(parsed.match.combatMaxSec).toBe(100);
+    expect(parsed.match.combatMaxSec).toBe(180);
     expect(parsed.match.fireRing).toEqual({
       startSec: 60,
       shrinkSec: 20,
-      minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
-      maxPctPerSec: 1,
+      // 二段制 (owner 2026-08-02 「燃燒是二段制…第一段…起始於 60 秒；第二段燒到
+      // 全地圖淹沒，起始於 90 秒」+「燒幾秒跟起始是幾秒，也可以在後台設定」)。
+      // 60 起燃 → 80 停在半徑 4（站得住的口袋）→ 90 第二段 → 110 半徑 0。
+      // ⚠️ 4.0 必須大於角色碰撞半徑 0.6，否則「停止縮圈」只是把處決延後 10 秒；
+      //    行為守衛在 fireRingTwoStage.test.ts（這裡只釘數字）。
+      stage1Radius: 4,
+      stage2StartSec: 90,
+      stage2ShrinkSec: 20,
+      minRadius: 0,
+      // 灼燒曲線 (owner 2026-08-02 「隨秒數越高越燒越痛」). `sec` 是**點燃之後**
+      // 的秒數,所以它跟著 `startSec` 一起移動 —— 這是刻意的形狀:
+      //   +0s  0.04/秒（剛點燃，還可以走位）
+      //   +20s 0.2 /秒（＝火圈全閉的那一刻，combat 第 110 秒）
+      //   +40s 1.0 /秒（被 maxPctPerSec 夾成 0.5/秒，combat 第 130 秒）
+      // ⚠️ 2026-08-02 二次裁決把 `startSec` 從 60 改成 90，所以 `sec: 40`
+      // **不再是「第 100 秒」**（現在是第 130 秒）。曲線本身沒有動,因為它綁的是
+      // 「點燃之後多久」而不是「回合第幾秒」—— 那正是它該綁的東西。
+      burnCurve: [
+        { sec: 0, pctPerSec: 0.04 },
+        { sec: 20, pctPerSec: 0.2 },
+        { sec: 40, pctPerSec: 1 },
+      ],
+      // 燃燒真傷上限 (owner 2026-08-02 「可以把燃燒真傷上限數值設定放在後台，
+      // 例如預設最高是50%之類，不必到100%」)。它**低於**上面曲線的最後一列，
+      // 而那是刻意的：第 100 秒的 100 %/秒被夾成 50 %/秒，還是必死，只是要兩秒。
+      maxPctPerSec: 0.5,
       // #248 — 回合硬上限 5 分鐘 (owner 2026-08-01 「不管什麼條件，每回合最長
       // 上限就是 5 分鐘出現火圈準備收場，不會無限增加時間」). It is the CEILING
       // on the ignition tick that bounds the `boss` extension below; behaviour
@@ -352,15 +432,22 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
       // never authored into the doc would slip past a narrower assertion.
       boss: { extendCombatSec: 180, delayFireRingSec: 180 },
     });
-    // 20 s of backstop left after the ring has fully closed
-    expect(parsed.match.fireRing!.startSec + parsed.match.fireRing!.shrinkSec).toBeLessThanOrEqual(
-      parsed.match.combatMaxSec,
-    );
+    // backstop left after the WHOLE ring (BOTH stages) has closed. ⚠️ Reading
+    // `shrinkSec` here would only cover 第一段 and would go on passing while the
+    // second stage ran past the backstop — the very drift `ringFullCloseSec`
+    // exists to have one answer to.
+    expect(ringFullCloseSec(parsed.match.fireRing!)).toBe(50); // 30 s gap + 20 s
+    expect(
+      parsed.match.fireRing!.startSec + ringFullCloseSec(parsed.match.fireRing!),
+    ).toBeLessThanOrEqual(parsed.match.combatMaxSec);
 
     const rules = fireRingRulesFromConfig(parsed.match.fireRing!, DT);
     expect(rules.startTicks).toBe(1800);
     expect(rules.shrinkTicks).toBe(600);
-    expect(rules.minRadius).toBe(0.5);
+    expect(rules.stage1Radius).toBe(4);
+    expect(rules.stage2GapTicks).toBe(900); // 90 − 60 = 30 s, stored as a GAP
+    expect(rules.stage2ShrinkTicks).toBe(600);
+    expect(rules.minRadius).toBe(0);
   });
 
   it("an absent fireRing block still validates (optional + additive)", () => {
@@ -408,6 +495,17 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
     expect(ticksLeftAtIgnition / 30).toBe(
       parsed.match.combatMaxSec - parsed.match.fireRing!.startSec,
     );
-    expect(ticksLeftAtIgnition / 30).toBe(40);
+    // ⚠️ 這個數字**只是出貨值的釘子**，上面那條 `combatMaxSec - startSec` 才是
+    // 不變量（推導本身沒有反轉）。owner 2026-08-02 二次裁決把窗口從 40 秒拉到
+    // 90 秒（`startSec 60→90`、`combatMaxSec 100→180`，配 `maxHealth 4→5`）——
+    // 理由是實測 480 場/格證明：互殺% ≈ P(TTK < 火圈死線)、<60s% = P(TTK < 60s)，
+    // **兩個門檻只差 20 秒**，單靠 maxHealth（乘法縮放整條分佈）永遠分不開它們。
+    // 要動的是那個窗口本身。
+    //
+    // ⚠️ 順帶一個沒有守衛的下游事實：`minRadius 0.5 < bodyRadius 0.6`，
+    // 所以火圈全閉（90+20=110s）之後全場沒有站得住的位置。窗口拉長不會改變
+    // 這一點，只是把它往後推了 30 秒。owner 知道並接受（2026-08-02:
+    //「現在這樣很好，不需要硬撐到 100% 真傷」）。
+    expect(ticksLeftAtIgnition / 30).toBe(120);
   });
 });

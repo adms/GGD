@@ -53,6 +53,11 @@ export interface EquipCell {
   readonly unique: boolean;
   /** the detailed hover description (✦ effect + WC3 claims + lore), or null */
   readonly tooltipBody: string | null;
+  /**
+   * owner 手寫的原文,給 `<ItemCardBody>` 渲染時解析(owner 2026-08-02)。
+   * `tooltipBody` 留著當**純文字**回退(無障礙 / 沒有 DOM 的地方),兩者同源。
+   */
+  readonly description: string | null;
   /** tooltip meta chips (the 唯一 chip for a unique item) */
   readonly meta: EquipMeta[];
 }
@@ -104,7 +109,16 @@ export function buildEquipmentCells(
   return Array.from({ length: cap }, (_, slot): EquipCell => {
     const itemId = items[slot] ?? "";
     if (!itemId) {
-      return { slot, itemId: null, name: null, icon: null, unique: false, tooltipBody: null, meta: [] };
+      return {
+        slot,
+        itemId: null,
+        name: null,
+        icon: null,
+        unique: false,
+        tooltipBody: null,
+        description: null,
+        meta: [],
+      };
     }
     const def = lookup(itemId);
     const unique = !!def?.unique;
@@ -118,6 +132,7 @@ export function buildEquipmentCells(
       icon: def?.icon ?? null,
       unique,
       tooltipBody: def ? itemDetailBody(def) : null,
+      description: def?.description ?? null,
       // the no-duplicate-unique feedback, carried into the hover tooltip
       meta: unique ? [{ label: "唯一", value: "不可重複持有" }] : [],
     };

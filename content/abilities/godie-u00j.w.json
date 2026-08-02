@@ -21,11 +21,11 @@
     275.0
   ],
   "range": 14.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           150,
           250,
@@ -39,9 +39,11 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.snapdragonmissilelaunch1",
   "targetsEnemies": true,

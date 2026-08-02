@@ -201,8 +201,8 @@ describe("every generated champion loads and stands correctly (#150 / #68)", () 
   it("faces +Z with its pack behind it, so NATIVE_GLB_YAW_OFFSET (0) applies", () => {
     for (const l of loaded) {
       const p = `assets/models/champions/blocky-${l.key}.glb`;
-      expect(glbYawOffset(p)).toBe(NATIVE_GLB_YAW_OFFSET);
-      expect(glbYawOffset(p)).toBe(0);
+      expect(glbYawOffset({ glbPath: p })).toBe(NATIVE_GLB_YAW_OFFSET);
+      expect(glbYawOffset({ glbPath: p })).toBe(0);
       // the face band is in FRONT of the pack — the measurable version of
       // "forward is +Z", checked against `knight.glb`'s cape at z = -0.215.
       expect(l.faceZ, `blocky-${l.key} face`).toBeGreaterThan(0);

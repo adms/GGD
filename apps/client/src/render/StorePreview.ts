@@ -239,7 +239,7 @@ export class StorePreview {
     const inst = container.instantiateModelsToScene((n) => `store-${n}`, false, { doNotInstantiate: true });
     const root = new TransformNode("store-model", this.scene);
     root.scaling.setAll(doc.scale);
-    root.rotation.y = glbYawOffset(doc.glbPath, doc.id);
+    root.rotation.y = glbYawOffset(doc);
     for (const node of inst.rootNodes) node.parent = root;
     this.modelRoot = root;
     this.frameToModel(root);

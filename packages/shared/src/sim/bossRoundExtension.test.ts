@@ -119,7 +119,11 @@ describe("殭屍王被召喚 → 兩個截止時間都真的延後 (boss-round-e
     step(w, 2100); // 70 s of combat: 10 s into the shrink
     const shrunk = currentFireRingRadius(w);
     expect(shrunk).toBeLessThan(ZONE_R);
-    expect(shrunk).toBeCloseTo(12.25, 6);
+    // 二段制: 第一段 runs 24 → `stage1Radius` (4) over 20 s, so 10 s in the
+    // radius is 24 + (4 − 24) × 0.5 = 14. (It was 12.25 while the single stage
+    // ran 24 → 0.5 — the number moved because the LAW moved, and this assertion
+    // is here to prove the ring is actually closing, which it still is.)
+    expect(shrunk).toBeCloseTo(14, 6);
 
     // ── the king walks in ──────────────────────────────────────────────────
     const fresh = shippedWorld();
@@ -128,13 +132,13 @@ describe("殭屍王被召喚 → 兩個截止時間都真的延後 (boss-round-e
     expect(id).not.toBeNull();
 
     // THE ASSERTION: at the very same tick count, the ring the player sees is
-    // the FULL zone boundary again, not the 12.25 it would have been. This is
+    // the FULL zone boundary again, not the 14 it would have been. This is
     // `currentFireRingRadius` — the function `snapshot.ts` writes onto the wire.
     expect(currentFireRingRadius(fresh.w)).toBe(ZONE_R);
     // and the ignition tick in force has moved by exactly 180 s of ticks
     expect(fireRingIgnitionTick(fresh.w)).toBe(1800 + 5400);
     // The un-extended control is still shrinking, so the difference is the king.
-    expect(currentFireRingRadius(w)).toBeCloseTo(12.25, 6);
+    expect(currentFireRingRadius(w)).toBeCloseTo(14, 6);
   });
 
   it("a champion standing outside STOPS BURNING after the summon (real HP, real ticks)", () => {
@@ -249,8 +253,6 @@ describe("extendRoundForBoss mechanics (boss-round-extension)", () => {
     startSec: 60,
     shrinkSec: 20,
     minRadius: 0.5,
-    burnPctPerSecStart: 0.04,
-    burnPctPerSecEnd: 0.2,
     maxPctPerSec: 1,
     boss,
   });

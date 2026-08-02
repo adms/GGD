@@ -38,7 +38,7 @@ export interface HudActions {
    * merchant's counter. Resolved through the same seam the arena view uses, so
    * an equipped skin applies here too. Null before champ-select confirms.
    */
-  localChampionModel(): { glbPath: string; scale: number; modelKey: string } | null;
+  localChampionModel(): { glbPath: string; scale: number; yawOffsetDeg?: number } | null;
   /**
    * 前往觀戰別的競技場 (#269). Camera-only, and REFUSED by the implementation
    * unless `zone` is the offer the frame loop is currently publishing — the HUD

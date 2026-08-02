@@ -2,6 +2,7 @@
 import { ApiClient, ApiError } from "./session";
 import { diffDoc, normalizeStarter, normalizeWhitelist, verifySaved } from "./curation";
 import type { BulkRequest, StarterBundle, VerifyResult, WhitelistDoc } from "./curation";
+import type { ResetRequestBody } from "./curationReset";
 import { normalizeAiConfig } from "./ai";
 import type { AiConfigMasked, AiConfigSave } from "./ai";
 import { normalizeCombatEnvDoc } from "./combatEnv";
@@ -445,6 +446,83 @@ export function applyStarterSet(): Promise<WhitelistDoc> {
   return api
     .request<unknown>("/curation/whitelist/starter", { body: {} })
     .then(normalizeWhitelist);
+}
+
+// ---- 回到原廠設定 (reset) ----------------------------------------------------
+// The only admin route that REPLACES rather than merges. The server computes
+// the plan (see apps/platform/internal/curation/reset.go); the console never
+// sends a target document, so a stale local read cannot roll back someone
+// else's edit and the empty-whitelist floor is enforced where it is enforceable.
+
+/** One consequence the server reports alongside a plan. */
+export interface ResetWarning {
+  code: string;
+  championId?: string;
+  missing?: string[];
+}
+
+/** The server's reply to POST /curation/whitelist/reset (dry run or real). */
+export interface ResetResponse {
+  dryRun: boolean;
+  scopes: string[];
+  before: Record<string, number>;
+  after: Record<string, number>;
+  disable: Record<string, string[]>;
+  enable: Record<string, string[]>;
+  warnings: ResetWarning[];
+  snapshotId?: string;
+  whitelist: WhitelistDoc;
+}
+
+/**
+ * Reset the selected kinds to the version-controlled starter bundle.
+ *
+ * `expect` is the SECOND confirmation, re-checked server-side under the
+ * whitelist mutex: if the count moved between the preview and the click, the
+ * call comes back 409 `confirm_mismatch` instead of quietly deleting more than
+ * the operator agreed to.
+ */
+export async function resetWhitelist(body: ResetRequestBody): Promise<ResetResponse> {
+  const raw = await api.request<Record<string, unknown>>("/curation/whitelist/reset", { body });
+  return {
+    dryRun: raw["dryRun"] === true,
+    scopes: Array.isArray(raw["scopes"]) ? (raw["scopes"] as string[]) : [],
+    before: (raw["before"] as Record<string, number>) ?? {},
+    after: (raw["after"] as Record<string, number>) ?? {},
+    disable: (raw["disable"] as Record<string, string[]>) ?? {},
+    enable: (raw["enable"] as Record<string, string[]>) ?? {},
+    warnings: Array.isArray(raw["warnings"]) ? (raw["warnings"] as ResetWarning[]) : [],
+    snapshotId: typeof raw["snapshotId"] === "string" ? raw["snapshotId"] : undefined,
+    whitelist: normalizeWhitelist(raw["whitelist"]),
+  };
+}
+
+export interface WhitelistSnapshot {
+  id: string;
+  takenAt: string;
+  actor: string;
+  reason: string;
+  scopes?: string[];
+  counts: Record<string, number>;
+}
+
+/** The undo points, newest first (admin only). */
+export function listWhitelistSnapshots(): Promise<WhitelistSnapshot[]> {
+  return api
+    .request<{ snapshots?: WhitelistSnapshot[] }>("/curation/whitelist/snapshots")
+    .then((r) => r.snapshots ?? []);
+}
+
+/** Put the whitelist back to a snapshot. Takes its own undo point first. */
+export function restoreWhitelistSnapshot(
+  snapshotId: string,
+): Promise<{ doc: WhitelistDoc; undoSnapshotId: string }> {
+  return api
+    .request<Record<string, unknown>>("/curation/whitelist/restore", { body: { snapshotId } })
+    .then((raw) => ({
+      doc: normalizeWhitelist(raw["whitelist"]),
+      undoSnapshotId: typeof raw["undoSnapshotId"] === "string" ? raw["undoSnapshotId"] : "",
+    }));
 }
 
 /**

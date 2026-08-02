@@ -68,15 +68,19 @@
         135.0
       ],
       "range": 6.42,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.beam",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-ubal.q.png",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              220.0,
-              340.0,
-              460.0
+              220,
+              340,
+              460
             ],
             "ratios": [
               {
@@ -84,13 +88,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.void.beam",
-      "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ubal.q.png",
-      "castTimeSec": 0.3
+      }
     },
     "W": {
       "id": "godie-ubal.w",
@@ -113,11 +115,15 @@
         650.0
       ],
       "range": 9.17,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.shockwave",
+      "sfxKey": "wc3.trollbatriderpissed2",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               450,
               450,
@@ -130,13 +136,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.void.shockwave",
-      "sfxKey": "wc3.trollbatriderpissed2",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "E": {
       "id": "godie-ubal.e",
@@ -159,11 +163,13 @@
         250.0
       ],
       "range": 7.33,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               300,
               450,
@@ -176,11 +182,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic"
         }
-      ],
-      "vfxKey": "fx.prim.void.explosion",
-      "targetsEnemies": true
+      },
+      "castTimeSec": 0
     },
     "R": {
       "id": "godie-ubal.r",
@@ -201,11 +207,15 @@
         450.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.pulse-lg",
+      "sfxKey": "wc3.shadowhunterready1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -217,13 +227,11 @@
                 "coeff": 0.7
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.void.pulse-lg",
-      "sfxKey": "wc3.shadowhunterready1",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     }
   },
   "skillOrder": [

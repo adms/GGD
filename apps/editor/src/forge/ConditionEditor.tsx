@@ -278,9 +278,26 @@ export interface ConditionEditorProps {
   label: string;
   value: EffectCondition | undefined;
   onChange(next: EffectCondition | undefined): void;
+  /**
+   * `data-field` namespace for this instance. Defaults to `"cond"`, which is
+   * what every single-condition mount reads.
+   *
+   * WHY IT EXISTS (模板複數套用, 2026-07-31): a stacked ability can carry the
+   * SAME slot on two different cards, so two ConditionEditors are on screen at
+   * once. With one hard-coded namespace `h.field("cond.sentence")` would return
+   * whichever happened to render first, and a test「editing card 2's gate」could
+   * silently be driving card 1 — 失敗形態 ④, an assertion pointed away from the
+   * defect. ForgeStudio passes `cond<cardIndex>`.
+   */
+  fieldPrefix?: string;
 }
 
-export function ConditionEditor({ label, value, onChange }: ConditionEditorProps) {
+export function ConditionEditor({
+  label,
+  value,
+  onChange,
+  fieldPrefix = "cond",
+}: ConditionEditorProps) {
   const flat = useMemo(() => flatten(value), [value]);
   const sentence = useMemo(() => describeCondition(value), [value]);
 
@@ -297,13 +314,13 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
           Keep each sentence on ONE source line — JSX folds a wrapped line into a
           space, which splits the phrase the guard reads.
         */}
-        <p className="forge-note" data-field="cond.readonly">
+        <p className="forge-note" data-field={`${fieldPrefix}.readonly`}>
           這個條件的結構，這張表單畫不出來（表單畫得出的是兩層：群組 → 條件；這一條不是巢狀太深，就是對「一整組」取「非」）。
           所以這裡只顯示不編輯 —— 它仍然會照常載入與執行。
           要改請直接編輯技能文件，或按下面的按鈕從頭建一組新的。
         </p>
-        <ConditionSentence sentence={sentence} />
-        <button type="button" data-field="cond.rebuild" onClick={() => onChange(undefined)}>
+        <ConditionSentence sentence={sentence} fieldPrefix={fieldPrefix} />
+        <button type="button" data-field={`${fieldPrefix}.rebuild`} onClick={() => onChange(undefined)}>
           清除並重建
         </button>
       </fieldset>
@@ -340,7 +357,7 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
           <span>群組之間</span>
           <select
             aria-label="群組組合方式"
-            data-field="cond.join"
+            data-field={`${fieldPrefix}.join`}
             value={flat.join}
             onChange={(e) => emit({ ...flat, join: e.target.value as Join })}
           >
@@ -353,6 +370,7 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
       {flat.groups.map((group, gi) => (
         <GroupBox
           key={gi}
+          fieldPrefix={fieldPrefix}
           index={gi}
           group={group}
           boxed={multi}
@@ -365,7 +383,7 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
         {flat.groups.length === 0 ? (
           <button
             type="button"
-            data-field="cond.addFirst"
+            data-field={`${fieldPrefix}.addFirst`}
             onClick={() =>
               emit({
                 ...flat,
@@ -379,7 +397,7 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
         {canAddGroup ? (
           <button
             type="button"
-            data-field="cond.addGroup"
+            data-field={`${fieldPrefix}.addGroup`}
             title="給這個條件加一個「例外情況」——例如「非英雄且血量低於 35%」之外，再開一組「是英雄且 1% 機率」。"
             disabled={flat.groups.length >= CONDITION_MAX_CHILDREN}
             onClick={() =>
@@ -399,13 +417,13 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
           </button>
         ) : null}
         {flat.groups.length > 0 ? (
-          <button type="button" data-field="cond.clear" onClick={() => onChange(undefined)}>
+          <button type="button" data-field={`${fieldPrefix}.clear`} onClick={() => onChange(undefined)}>
             清除（無條件觸發）
           </button>
         ) : null}
       </div>
 
-      <ConditionSentence sentence={sentence} />
+      <ConditionSentence sentence={sentence} fieldPrefix={fieldPrefix} />
     </fieldset>
   );
 }
@@ -414,9 +432,15 @@ export function ConditionEditor({ label, value, onChange }: ConditionEditorProps
  * The live 人話 line. It renders `describeCondition`'s output verbatim —
  * NO local phrasing, so the editor cannot drift from the card or the sim.
  */
-function ConditionSentence({ sentence }: { sentence: string | null }) {
+function ConditionSentence({
+  sentence,
+  fieldPrefix,
+}: {
+  sentence: string | null;
+  fieldPrefix: string;
+}) {
   return (
-    <p className="cond-sentence" data-testid="cond-sentence" data-field="cond.sentence">
+    <p className="cond-sentence" data-testid="cond-sentence" data-field={`${fieldPrefix}.sentence`}>
       <b>實際效果：</b>
       {sentence === null ? "無條件，每次都觸發。" : sentence}
     </p>
@@ -428,12 +452,14 @@ function ConditionSentence({ sentence }: { sentence: string | null }) {
  * common card looking exactly like the one-level form it replaced.
  */
 function GroupBox({
+  fieldPrefix,
   index,
   group,
   boxed,
   onChange,
   onRemove,
 }: {
+  fieldPrefix: string;
   index: number;
   group: ClauseGroup;
   boxed: boolean;
@@ -454,7 +480,7 @@ function GroupBox({
           <button
             type="button"
             className="cond-remove"
-            data-field={`cond.g${index}.remove`}
+            data-field={`${fieldPrefix}.g${index}.remove`}
             aria-label={`刪除第 ${index + 1} 組`}
             onClick={onRemove}
           >
@@ -468,7 +494,7 @@ function GroupBox({
           <span>組合方式</span>
           <select
             aria-label="組合方式"
-            data-field={`cond.g${index}.join`}
+            data-field={`${fieldPrefix}.g${index}.join`}
             value={group.join}
             onChange={(e) => onChange({ ...group, join: e.target.value as Join })}
           >
@@ -481,7 +507,7 @@ function GroupBox({
       {group.clauses.map((clause, ci) => (
         <ClauseRow
           key={ci}
-          path={`cond.g${index}.c${ci}`}
+          path={`${fieldPrefix}.g${index}.c${ci}`}
           clause={clause}
           onChange={(next) => setClause(ci, next)}
           onRemove={() => onChange({ ...group, clauses: group.clauses.filter((_, j) => j !== ci) })}
@@ -491,7 +517,7 @@ function GroupBox({
       <div className="cond-actions">
         <button
           type="button"
-          data-field={`cond.g${index}.add`}
+          data-field={`${fieldPrefix}.g${index}.add`}
           disabled={group.clauses.length >= CONDITION_MAX_CHILDREN}
           onClick={() =>
             onChange({

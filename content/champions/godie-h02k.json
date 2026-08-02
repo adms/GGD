@@ -74,9 +74,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.physical.shockwave",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -84,11 +88,9 @@
               "value": 0.25
             }
           ],
-          "duration": 3.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.3
+      }
     },
     "W": {
       "id": "godie-h02k.w",
@@ -111,9 +113,14 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.nature.explosion",
+      "sfxKey": "wc3.pandarenbrewmasterpissed8",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -121,12 +128,9 @@
               "value": 0.25
             }
           ],
-          "duration": 3.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.nature.explosion",
-      "sfxKey": "wc3.pandarenbrewmasterpissed8",
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-h02k.e",
@@ -213,9 +217,14 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.physical.shockwave-lg",
+      "sfxKey": "wc3.pandarenbrewmasteryes1",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "armor",
@@ -223,12 +232,9 @@
               "value": 25
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.physical.shockwave-lg",
-      "sfxKey": "wc3.pandarenbrewmasteryes1",
-      "castTimeSec": 0.3
+      }
     }
   },
   "skillOrder": [

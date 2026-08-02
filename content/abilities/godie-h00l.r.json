@@ -7,25 +7,27 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    170.0,
-    290.0,
-    410.0
+    170,
+    290,
+    410
   ],
-  "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 327,
+      "damage": {
         "perRank": [
-          450.0,
-          750.0,
-          1050.0
+          450,
+          750,
+          1050
         ],
         "ratios": [
           {
@@ -33,19 +35,17 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.8,
       "statusId": "burnstun",
-      "duration": 0.8,
-      "stun": true
+      "statusDurationSec": 0.8
     }
-  ],
+  },
   "vfxKey": "godie-bladestorm-swordeffect-p0",
   "sfxKey": "wc3.axemissilelaunch1",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
   "castTimeSec": 0.8,
   "hitFeel": {
@@ -55,7 +55,7 @@
     "shakeStyle": "omni",
     "sparkKind": "heavy",
     "flashColor": [
-      1.0,
+      1,
       0.9,
       0.8
     ],

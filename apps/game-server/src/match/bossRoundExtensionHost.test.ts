@@ -51,6 +51,7 @@ import {
   bossRoundExtensionTicks,
   combatDeadlineTick,
   fireRingIgnitionTick,
+  DEFAULT_BURN_CURVE,
 } from "@ggd/shared/sim/fireRing";
 import { anyMobsAlive, summonMobBoss } from "@ggd/shared/sim/mobs";
 import { DEFAULT_MOB_WAVES_CONFIG, type FireRingConfig, type MobWavesConfig } from "@ggd/shared/content";
@@ -73,8 +74,7 @@ const SHIPPED_RING: FireRingConfig = {
   startSec: 60,
   shrinkSec: 20,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.04,
-  burnPctPerSecEnd: 0.2,
+  burnCurve: [...DEFAULT_BURN_CURVE], // 出貨曲線的唯一字面值住在 sim/fireRing.ts
   maxPctPerSec: 1,
   // #248 —— 回合硬上限，鏡射出貨的 300 秒（不是隨手挑的：這個 fixture 的用途就是
   // 「出貨長什麼樣」，挑一個別的數字會讓它變成測一份不存在的設定）。

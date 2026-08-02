@@ -7,21 +7,23 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    50.0,
-    50.0,
-    50.0,
-    50.0
+    50,
+    50,
+    50,
+    50
   ],
   "manaCost": [
-    175.0,
-    255.0,
-    335.0,
-    415.0
+    175,
+    255,
+    335,
+    415
   ],
-  "range": 0.0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 15,
       "modifiers": [
         {
           "stat": "ad",
@@ -34,9 +36,9 @@
           "value": 3
         }
       ],
-      "duration": 15.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.sound.explosion",
   "schema": "ability@1",
   "castTimeSec": 0.3

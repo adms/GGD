@@ -1,22 +1,20 @@
 /**
- * Berserker 每秒回 1% 最大生命、**沒有保底** (GH#253).
+ * 百分比回血機制 (GH#253) —— 現在**沒有任何一位出貨英雄在用它**。
  *
  * ════════════════════════════════════════════════════════════════════════════
- * 這一支測的是**出貨的那一張卡**
+ * ⚠️ owner 2026-08-02 把方向反過來了
  * ════════════════════════════════════════════════════════════════════════════
- * 英雄卡從 `content/champions/godie-hapm.json` 讀進來註冊,不是測試自己手寫一個
- * `healthRegenPctOfMax: 0.01` 的 fixture —— 那種寫法在有人把那一格從卡片上刪掉
- * 之後永遠是綠的(失敗形態 ⑤)。
+ * 8/1 是「Berserker HP 回血 1%每秒,沒有保底」,於是 `godie-hapm` 的卡片上填了
+ * `healthRegenPctOfMax: 0.01`。8/2 的更正是「Berseker 是每秒**損失** 1%生命,
+ * 直到生命不足1%」—— 那一格已經翻成 `healthDrainPctOfMax`,行為守衛在
+ * `berserkerPctDrain.test.ts`。
  *
- * 量的是**真的跑過的 tick 之後血條動了多少**,不是 `world.regenRules` 上的欄位
- * 值(失敗形態 ⑦)。
- *
- * ════════════════════════════════════════════════════════════════════════════
- * 「沒有保底」在這裡怎麼證
- * ════════════════════════════════════════════════════════════════════════════
- * 保底的定義是「不管最大生命多少,每秒至少回 N 點」。所以反證是:**把最大生命
- * 壓到很低,回血必須跟著等比例變小**。第二組就是這件事 —— 一個 100 點血的身體
- * 每秒只回 1 點,而不是回一個跟固定回血一樣大的數字。
+ * 所以這一支的角色變了:它守的是**這個機制本身還能用、而且沒有人在用它**。
+ *   · 第一組:出貨的 Berserker 卡片上**不可以**再有回血百分比(擋回歸 —— 兩個
+ *     機制同時掛著會互相抵銷成 0,而畫面上只是「他的血不會動」);
+ *   · 其餘:機制的每一格仍然是欄位,用**手寫的 fixture 英雄**跑真的世界驗。
+ *     這裡用 fixture 是正確的(不是失敗形態 ⑤):出貨內容裡沒有這個機制的使用者,
+ *     「讀出貨的卡」在這裡會變成一條驗不到東西的空測試。
  */
 import { describe, it, expect, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
@@ -49,6 +47,17 @@ function shippedBerserker(): ChampionDef {
   ) as ChampionDef;
 }
 
+/**
+ * 機制測試用的**手寫 fixture**:出貨的那張卡,把自傷換成 1% 回血。
+ * 為什麼這裡可以手寫,見檔頭 —— 出貨內容沒有這個機制的使用者。
+ */
+function pctRegenFixture(): ChampionDef {
+  const card = shippedBerserker();
+  delete card.healthDrainPctOfMax;
+  card.healthRegenPctOfMax = 0.01;
+  return card;
+}
+
 function spawnBerserker(world: SimWorld): EntityId {
   return spawnChampion(world, {
     championId: BERSERKER,
@@ -72,15 +81,32 @@ function measureRegen(world: SimWorld, id: EntityId, seconds: number): number {
 beforeEach(() => {
   Champions.clear();
   registerSkeletonContent();
-  registerChampion(shippedBerserker());
+  registerChampion(pctRegenFixture());
 });
 
-describe("GH#253 —— 出貨的英雄卡真的帶著 1%", () => {
-  it("content/champions/godie-hapm.json 的 healthRegenPctOfMax 就是 0.01", () => {
-    expect(shippedBerserker().healthRegenPctOfMax).toBe(0.01);
+describe("owner 2026-08-02 —— 出貨內容裡沒有人在用百分比回血了", () => {
+  it("出貨的 Berserker 卡片上沒有 healthRegenPctOfMax(有的話會和自傷互相抵銷)", () => {
+    const card = shippedBerserker();
+    expect(card.healthRegenPctOfMax).toBeUndefined();
+    expect(card.healthDrainPctOfMax).toBe(0.012);
   });
 
-  it("content/config/regen.json 解析出 owner 的「取代 + 沒有保底」", () => {
+  it("整份出貨英雄目錄都沒有人填百分比回血 —— 這一族目前是 no-op", () => {
+    const index = JSON.parse(
+      readFileSync(join(CONTENT_DIR, "champions/_index.json"), "utf-8"),
+    ) as { entries: { id: string; path: string }[] };
+    // 反向守衛:目錄空了這條就變成 vacuously true,所以先釘住它不是空的。
+    expect(index.entries.length).toBeGreaterThan(100);
+    const withPctRegen = index.entries
+      .filter((e) => {
+        const doc = JSON.parse(readFileSync(join(CONTENT_DIR, e.path), "utf-8")) as ChampionDef;
+        return typeof doc.healthRegenPctOfMax === "number";
+      })
+      .map((e) => e.id);
+    expect(withPctRegen).toEqual([]);
+  });
+
+  it("content/config/regen.json 的回血那一族仍然是 owner 8/1 的「取代 + 沒有保底」", () => {
     const doc: unknown = JSON.parse(readFileSync(join(CONTENT_DIR, "config/regen.json"), "utf-8"));
     const rules = regenRulesFromDoc(doc);
     expect(rules.pctEnabled).toBe(true);
@@ -89,7 +115,7 @@ describe("GH#253 —— 出貨的英雄卡真的帶著 1%", () => {
   });
 });
 
-describe("GH#253 —— 跑真的 tick,量出來就是每秒 1% 最大生命", () => {
+describe("GH#253 —— 機制還在:跑真的 tick,量出來就是每秒 1% 最大生命", () => {
   it("10 秒回 10% 最大生命(誤差 < 1%)", () => {
     const world = new SimWorld(SKELETON_ARENA, 5);
     const id = spawnBerserker(world);

@@ -207,26 +207,7 @@
         450.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  250.0,
-                  400.0,
-                  550.0,
-                  700.0
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
       "castTimeSec": 0.5,
       "hitFeel": {
@@ -242,7 +223,26 @@
         ],
         "flashMs": 132,
         "camKick": 0.33
-      }
+      },
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "perRank": [
+              250,
+              400,
+              550,
+              700
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
+        }
+      },
+      "targetsEnemies": true
     },
     "R": {
       "id": "godie-e002.r",
@@ -263,15 +263,20 @@
         350.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "targetsEnemies": true,
+      "radius": 3.67,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-ground-nova",
+        "params": {
+          "radius": 200,
+          "damage": {
             "perRank": [
-              250.0,
-              500.0,
-              750.0
+              250,
+              500,
+              750
             ],
             "ratios": [
               {
@@ -279,13 +284,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.6
         }
-      ],
-      "vfxKey": "fx.prim.holy.nova-lg",
-      "targetsEnemies": true,
-      "radius": 3.67,
-      "castTimeSec": 0.6
+      }
     }
   },
   "skillOrder": [

@@ -13,11 +13,12 @@
     120.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 327,
+      "damage": {
         "flat": 900,
         "ratios": [
           {
@@ -25,9 +26,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.8
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.pulse-lg",
   "schema": "ability@1",
   "radius": 6.0,

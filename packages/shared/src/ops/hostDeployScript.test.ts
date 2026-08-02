@@ -106,6 +106,37 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
     ).toBe(true);
   });
 
+  it("★ 錄影：部署後要驗『真的寫得進去』，寫不進去要 die（GH#170 / owner 2026-08-02）", () => {
+    // 為什麼是 `replay.writable` 而不是「回放列表有幾筆」：剛部署完本來就是 0 筆，
+    // 而 0 筆讀起來像「還沒人打」。`writable` 是開機時真的建檔再刪掉的結果，
+    // 它是唯一在**沒有人打過**的時候就答得出來的訊號。
+    expect(/healthz/.test(code), "腳本沒有去問 game shard 的 /healthz").toBe(true);
+    expect(
+      /replay[^\n]*writable|writable[^\n]*replay/.test(code),
+      "沒有讀 /healthz 的 replay.writable —— 「一場都沒錄到」會再一次長得跟正常部署一模一樣。",
+    ).toBe(true);
+    expect(
+      /REPLAY_WRITABLE[\s\S]{0,400}die/.test(code),
+      "錄影寫不進去時沒有 die —— 那就只是印一行字，等於沒驗。",
+    ).toBe(true);
+    // 修法要寫在腳本裡（含 uid），因為那是失敗當下唯一會被讀到的地方。
+    expect(
+      /chown -R 1000:1000/.test(src),
+      "die 訊息裡沒有具體的 chown 修法 —— 操作者拿到一個沒有下一步的錯誤。",
+    ).toBe(true);
+    // ⛔ 腳本自己不可以 chown：那需要 sudo，而且改別人家檔案的擁有者不是
+    // 部署腳本該有的權力。它只能「說出來」。
+    //
+    // ⚠️ 這一條必須把**字串常值**也剝掉才問得對：上面那句 die 訊息裡就寫著
+    // `sudo chown -R 1000:1000`，而那是要印給人看的字，不是會被執行的指令。
+    // 只剝註解（`code` 做的事）在這裡不夠 —— 那會抓到自己的錯誤訊息。
+    const executable = code.replace(/"(?:[^"\\]|\\.)*"/gs, '""').replace(/'[^']*'/g, "''");
+    expect(
+      /(^|[;&|]|\bthen\b|\bdo\b)\s*sudo\b/.test(executable),
+      "腳本自己跑了 sudo —— 提權不是部署步驟，那是 owner 要在主機上手動做的。",
+    ).toBe(false);
+  });
+
   it("★ 腳本絕對不可以出現會刪掉玩家資料的指令", () => {
     // 這三個是唯一能弄丟 data/ 的路徑（見腳本檔頭）。出現在會執行的行裡就是紅。
     expect(/down\s+(-v|--volumes)/.test(code), "有 `docker compose down -v` —— 會刪具名 volume").toBe(false);

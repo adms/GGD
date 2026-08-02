@@ -14,6 +14,15 @@
  *   ROUND WIN → a short SmallFireworkFx volley (punctuation, fires every round).
  *   MATCH WIN (吃雞) → the full-screen ChickenFireworkFx (the joke, fires once).
  *
+ * ⚠️ **兩層各自有一個後台開關**（`config/victory-fx@1`，owner 2026-08-02
+ * 「請你直接取消煙火(變成後台開關)」），而**出貨值兩格都是關的**。閘門在
+ * `sync()` 裡、就在 `play()` 之前 —— 刻意放在這裡而不是 `play()` 裡面，因為
+ * `playChicken` / `playRoundVolley` 是 audition 頁（`render/presentationAudition`）
+ * 的入口，那一頁存在的唯一理由就是把煙火看清楚，關掉出貨煙火不該讓它變成一張黑畫面。
+ *
+ * ⚠️ 閘門**只擋煙火**。`onRoundWin` / `onMatchWin` 照樣在同一格 fire —— 那兩個
+ * callback 帶的是灰底/暗底與嘲弄語音，owner 要拿掉的是煙火，不是整個勝利表演。
+ *
  * This file owns NEITHER the screen tint (grey for a round, dark for the match)
  * NOR the taunt VO. Those belong to the umbrella presentation task, which owns
  * the death-grey reuse (#85) and the settlement (#25); this exposes exactly the
@@ -26,6 +35,8 @@ import type { Camera } from "@babylonjs/core/Cameras/camera";
 import { ChickenFireworkFx, type ChickenFireworkOptions } from "./ChickenFireworkFx";
 import { SmallFireworkFx } from "./SmallFireworkFx";
 import { VictoryGate, type VictoryFire, type VictoryInput } from "./victoryTrigger";
+import { victoryFxPolicy } from "./victoryFxPolicy";
+import type { VictoryFxPolicy } from "@ggd/shared/content";
 
 export interface VictoryFireworksOptions extends ChickenFireworkOptions {
   cameraFor?: () => Camera | null;
@@ -33,6 +44,15 @@ export interface VictoryFireworksOptions extends ChickenFireworkOptions {
   onRoundWin?: (round: number) => void;
   /** Fired on the frame the match win is detected (screen-dark + savage VO). */
   onMatchWin?: () => void;
+  /**
+   * 煙火開關的來源（測試 seam）。省略 = 讀 `vfx/victoryFxPolicy` 的現行政策,
+   * 也就是 `content/config/victory-fx.json` 推進來的那一份。
+   *
+   * ⚠️ 這是一個 **seam,不是一個必填的接線**。省略時的行為是「讀真正生效的
+   * 那份政策」而不是「一律放」—— 忘了接的結果必須和出貨狀態一致,否則這個
+   * 選項本身就會變成第②號故障（後台關了但某條路照樣放煙火）的來源。
+   */
+  policy?: () => VictoryFxPolicy;
 }
 
 export class VictoryFireworks {
@@ -65,11 +85,14 @@ export class VictoryFireworks {
    */
   sync(input: VictoryInput, nowMs: number): VictoryFire {
     const fire = this.gate.update(input);
+    // 後台開關 (config/victory-fx@1, owner 2026-08-02「請你直接取消煙火」)。
+    // 出貨兩格都是關的,所以出貨狀態下這兩個 play() 一次都不會被呼叫。
+    const policy = this.opts.policy?.() ?? victoryFxPolicy();
     if (fire.kind === "round") {
-      this.small.play(nowMs, fire.round);
+      if (policy.roundVolley.enabled) this.small.play(nowMs, fire.round);
       this.opts.onRoundWin?.(fire.round);
     } else if (fire.kind === "match") {
-      this.chicken.play(nowMs);
+      if (policy.matchChicken.enabled) this.chicken.play(nowMs);
       this.opts.onMatchWin?.();
     }
     return fire;

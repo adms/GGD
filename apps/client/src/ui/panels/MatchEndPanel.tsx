@@ -54,11 +54,13 @@ import { MATCH_WIN_STING, matchEndBedScene } from "../../audio/matchEndBed";
 import { useBedEnded, useBgmSceneOverride } from "../useAudio";
 import {
   MATCH_PANEL_HOLD_MS,
-  MATCH_QUOTE_DELAY_MS,
   MATCH_WASH_SETTLE_MS,
   matchCardHeld,
+  matchPanelHoldMs,
+  matchQuoteDelayMs,
   victoryPresentation,
 } from "../../render/victoryPresentation";
+import { victoryFxPolicy } from "../../vfx/victoryFxPolicy";
 import {
   AUTO_SCROLL_HIGHLIGHT_CSS,
   highlightClass,
@@ -426,14 +428,20 @@ export function MatchEndPanel({
   // card at full opacity for one commit before snapping it away (a visible
   // flash of the scoreboard over the launching shell) and arms/re-arms the #36
   // auto-scroll on that same commit. Only the "hold is OVER" edge needs state.
+  //
+  // ⚠️ 煙火現在有後台開關（`config/victory-fx@1`，出貨**關**）。壓住計分卡的
+  // 唯一理由就是讓那隻鳥被看到,所以煙火關掉時 `holdMs` 是 0 —— 不然玩家贏下
+  // 整場之後會盯著一個沒有煙火也沒有分數的畫面兩秒多,那是關掉煙火憑空造出來
+  // 的新缺陷。
+  const holdMs = matchPanelHoldMs(victoryFxPolicy().matchChicken.enabled);
   const [holdDone, setHoldDone] = useState(false);
-  const cardHeld = matchCardHeld(wonMatch, holdDone ? MATCH_PANEL_HOLD_MS : 0);
+  const cardHeld = holdMs > 0 && matchCardHeld(wonMatch, holdDone ? MATCH_PANEL_HOLD_MS : 0);
   useEffect(() => {
     setHoldDone(false);
-    if (!wonMatch) return;
-    const t = setTimeout(() => setHoldDone(true), MATCH_PANEL_HOLD_MS);
+    if (!wonMatch || holdMs <= 0) return;
+    const t = setTimeout(() => setHoldDone(true), holdMs);
     return () => clearTimeout(t);
-  }, [wonMatch]);
+  }, [wonMatch, holdMs]);
 
   // task #93 — the SAVAGE 吃雞 VO. Picked deterministically from the replicated
   // match id + winning team (audio/victoryTaunt), so every winner hears the same
@@ -472,6 +480,9 @@ export function MatchEndPanel({
   // task #93 DEFERS it past the savage taunt: two VO clips on one beat is the
   // likeliest defect here, and the joke rides the bird, so the 名言 follows once
   // the card is revealed rather than talking over it.
+  // 煙火關掉時計分卡不再被壓住,所以「卡片露出來之後再唸」這個順序要跟著縮短 ——
+  // 不然 名言 會在卡片已經在畫面上兩秒多之後才突然出聲。
+  const quoteDelayMs = matchQuoteDelayMs(holdMs > 0);
   const winQuoteChamp = localWinQuoteChampion(settlement, localSeatId);
   useEffect(() => {
     if (!winQuoteChamp) return;
@@ -480,9 +491,9 @@ export function MatchEndPanel({
       // the local match-winner's own cloned 勝利宣言 alongside the 名言 (client-only;
       // no generated pack → silent no-op).
       playContextualVoice(winQuoteChamp, "victory");
-    }, MATCH_QUOTE_DELAY_MS);
+    }, quoteDelayMs);
     return () => clearTimeout(t);
-  }, [winQuoteChamp]);
+  }, [winQuoteChamp, quoteDelayMs]);
 
   // Arm the ranking auto-scroll once per match — only when there IS a local row
   // to reveal (spectators / a missing seat leave the list untouched), and not

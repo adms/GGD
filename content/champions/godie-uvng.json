@@ -198,26 +198,7 @@
         470.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  650.0,
-                  900.0,
-                  1150.0,
-                  1400.0
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
       "castTimeSec": 0.6,
@@ -234,7 +215,26 @@
         ],
         "flashMs": 144,
         "camKick": 0.36
-      }
+      },
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "perRank": [
+              650,
+              900,
+              1150,
+              1400
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.6
+        }
+      },
+      "targetsEnemies": true
     },
     "R": {
       "id": "godie-uvng.r",
@@ -255,24 +255,7 @@
         300.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "ad",
-              "op": "pctAdd",
-              "value": 1.0
-            },
-            {
-              "stat": "manaRegen",
-              "op": "flat",
-              "value": -10
-            }
-          ],
-          "duration": 10.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.dragonroostwhat1",
       "castTimeSec": 0.4,
@@ -289,6 +272,25 @@
         ],
         "flashMs": 162,
         "camKick": 0.405
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 10,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1
+            },
+            {
+              "stat": "manaRegen",
+              "op": "flat",
+              "value": -10
+            }
+          ],
+          "castTimeSec": 0.4
+        }
       }
     }
   },

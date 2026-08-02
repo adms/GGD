@@ -49,7 +49,11 @@ import { VersionBadge } from "./VersionBadge";
 export function GlobalChrome(): React.JSX.Element {
   return (
     <>
-      {/* global music/SFX quick-toggle: portals to <body>, so it rides ABOVE
+      {/* ⚠️ 這段註解不能以小寫的 "global " 開頭。eslint 把任何 block comment
+          的開頭當成全域宣告指令去解析（連 JSX 裡的也算），原本那句
+          「global music/SFX quick-toggle: portals to body」於是被讀成
+          「宣告一個叫 portals 的全域變數」，整個檔案 FATAL。
+          App-wide music/SFX quick-toggle: portals to <body>, so it rides ABOVE
           the screen switch, the in-match HUD and the replay transport bar. */}
       <AudioToggle />
       {/* build stamp: fixed, bottom-pinned, click-through, low z-index — every

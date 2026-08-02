@@ -8,7 +8,11 @@
   "params": {
     "anchor": {
       "type": "enum",
-      "values": ["self", "point", "target"],
+      "values": [
+        "self",
+        "point",
+        "target"
+      ],
       "default": "point"
     },
     "radius": {
@@ -21,18 +25,30 @@
     "damage": {
       "type": "scaling",
       "default": {
-        "perRank": [150],
+        "perRank": [
+          150
+        ],
         "ratios": []
       }
     },
     "damageType": {
       "type": "enum",
-      "values": ["magic", "physical", "true"],
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
       "default": "magic"
     },
     "statusId": {
       "type": "enum",
-      "values": ["burnstun", "root", "slow25", "slow30", "slow40"],
+      "values": [
+        "burnstun",
+        "root",
+        "slow25",
+        "slow30",
+        "slow40"
+      ],
       "default": "burnstun",
       "optional": true
     },
@@ -45,6 +61,7 @@
     },
     "castTimeSec": {
       "type": "number",
+      "optional": true,
       "default": 0,
       "min": 0,
       "max": 5,
@@ -59,7 +76,9 @@
       "inert": "本版沒有「同一發 payload 同時落在多個錨點」的詞彙。原作有兩支這樣做:37-03 災難之牆在面向+90° 上排 9 隻牆單位(間距 100u, offset +400..-400, j:44568-44574)、94-02 橘山斬空破往 45/135/225/315 四個角各推一道震盪波(j:53912-53941)。填了會被忽略 —— 效果只在單一錨點結算一次。留著是為了把原作的實測值留在檔案裡"
     }
   },
-  "requires": ["applyStatus"],
+  "requires": [
+    "applyStatus"
+  ],
   "gapScore": 6,
   "exemplar": {
     "skill": "71-01 死亡隕落",

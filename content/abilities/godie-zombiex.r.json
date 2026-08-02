@@ -7,22 +7,24 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90.0,
-    80.0,
-    70.0
+    90,
+    80,
+    70
   ],
   "manaCost": [
-    100.0,
-    150.0,
-    200.0
+    100,
+    150,
+    200
   ],
-  "range": 0.0,
-  "radius": 4.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "range": 0,
+  "radius": 4,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 218,
+      "damage": {
         "perRank": [
           300,
           500,
@@ -34,15 +36,13 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.7,
       "statusId": "slow40",
-      "duration": 1.5,
-      "moveSpeedMult": 0.6
+      "statusDurationSec": 1.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.nova-lg",
   "targetsEnemies": true,
   "castTimeSec": 0.7

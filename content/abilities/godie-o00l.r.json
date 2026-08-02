@@ -17,15 +17,15 @@
     540.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          200.0,
-          200.0,
-          200.0
+          200,
+          200,
+          200
         ],
         "ratios": [
           {
@@ -33,9 +33,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.fire.explosion-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,

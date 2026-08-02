@@ -13,11 +13,12 @@
     450.0
   ],
   "range": 8.82,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 320.5,
+      "damage": {
         "flat": 300,
         "ratios": [
           {
@@ -25,9 +26,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.tornado-lg",
   "schema": "ability@1",
   "radius": 5.88,

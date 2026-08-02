@@ -17,15 +17,15 @@
     380.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          450.0,
-          650.0,
-          850.0
+          450,
+          650,
+          850
         ],
         "ratios": [
           {
@@ -33,9 +33,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.slash-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

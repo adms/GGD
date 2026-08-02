@@ -28,7 +28,7 @@ import { asTeamId, type TeamId } from "@ggd/shared/ids";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { MatchState, ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { ROYALE_ARENA, ROYALE_ZONE_RADIUS } from "@ggd/shared/sim/world/ArenaDef";
-import { currentFireRingRadius } from "@ggd/shared/sim/fireRing";
+import { currentFireRingRadius, DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
 import { guardiansAliveInZone } from "@ggd/shared/sim/systems/GuardianSystem";
 import { DEFAULT_GUARDIAN_TOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "./MatchController";
@@ -51,8 +51,7 @@ const RING: FireRingConfig = {
   startSec: 60,
   shrinkSec: 20,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.04,
-  burnPctPerSecEnd: 0.2,
+  burnCurve: [...DEFAULT_BURN_CURVE], // 出貨曲線的唯一字面值住在 sim/fireRing.ts
   maxPctPerSec: 1,
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

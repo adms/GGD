@@ -226,3 +226,54 @@ docker compose -f docker/compose.family.yaml logs game 2>&1 | grep ggd.replay
 
 結論：**本機那 95 個檔，一個都不能拿來證明正式機在錄。**
 唯一的證據是第 1 節那個 curl。
+
+---
+
+## 7. 開關本身（owner 2026-08-02「請幫我預設打開」）
+
+在 2026-08-02 之前，錄影**完全沒有開關** —— `MatchRoom.onCreate()` 無條件開錄影
+檔，落地間隔 `500` 與保留量 `200/30` 寫死在程式裡。所以「預設打開」在程式上一直
+是真的，owner 之所以覺得它是關的，是第 1 節那個 EACCES。
+
+現在它是一份可調的內容文件：**後台 → 系統設定 → 對戰錄影**
+（`content/config/replay.json`，schema `config.replay@1`）。
+
+| 欄位 | 出貨 | 它決定什麼 |
+|---|---|---|
+| `enabled` | `true` | 錄不錄。⚠️ **讀不到文件也是 `true`** —— fail-open，理由見 `packages/shared/src/content/replayPolicy.ts` 檔頭：內容載入失敗不可以順手把錄影關掉。 |
+| `flushIntervalMs` | `500` | 多久把緩衝交給磁碟一次 ＝ **程序被硬砍時最多丟幾秒**。範圍 50–10000。 |
+| `retainMaxFiles` | `200` | 磁碟上最多留幾份。 |
+| `retainMaxAgeDays` | `30` | 超過幾天一律刪（與上一格取先觸發的）。 |
+
+⚠️ **要重啟 game shard 才生效**（`Configs` 是開機時載入的登錄表），和
+`config.stat-caps@1` 同一個狀態。逐台 shard 的逃生門是 `GGD_REPLAY_ENABLED=0`，
+它壓過內容。
+
+### 「玩到一半就離開」到底怎麼落地的
+
+錄影檔是**邊打邊寫**的：`.jsonl` 從第一 tick 就在磁碟上，每 `flushIntervalMs`
+交出一段。所以中途離場／斷線本來就有一份可播的錄影，只是沒有結尾那一行，
+後台列表標成「未完成」。
+
+2026-08-02 補掉的是**最後一段**：`MatchRoom.onDispose()` 以前是
+`onDispose(): void` + `void rec?.abandon()`（射後不理），而 Colyseus 的
+`gracefullyShutdown()` 會 `await` 這個方法 —— 所以 SIGTERM（`docker compose
+restart`、部署、OOM）之後，程序可以在最後一次 flush 落地之前就結束。現在它回傳
+Promise 並等到串流真的關好。守衛：
+`apps/game-server/src/replay/replayDefaultAndLeave.test.ts`。
+
+### 為什麼 bind mount 會是 root 的（第 2 節那個坑的根因）
+
+`docker/compose.family.yaml` 把 host 的 `data/replays` mount 到 `/data/replays`。
+**那個目錄不存在時是 docker daemon 用 root 建的**，而 `docker/game.Dockerfile`
+第 61 行是 `USER node`（`node:22-alpine` 裡 `node` 是 uid 1000）。
+root:root 0755 的目錄，uid 1000 建檔就是 EACCES。
+
+`scripts/host-deploy.sh` 現在把 `/healthz` 的 `replay.writable` 列為**後置條件**
+（false 就回非零並印出修法）。修法本身仍然要 owner 手動跑，因為它需要 sudo：
+
+```bash
+sudo chown -R 1000:1000 ~/GGD/data/replays
+sudo chmod 755 ~/GGD/data/replays
+docker restart ggd-game-1
+```

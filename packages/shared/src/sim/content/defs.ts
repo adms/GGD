@@ -201,11 +201,26 @@ export interface ChampionDef {
    * 每秒回復「最大生命的百分比」(GH#253)。`0.01` = 每秒 1%。
    * 缺 = 這位英雄沒有百分比回血,只吃 `Stat.HealthRegen` 那條固定值。
    *
-   * 出貨內容只有 `godie-hapm`(海克力斯 - Berserker)填了它。百分比與固定值
-   * 的關係、以及「有沒有保底」都是 `config.regen@1` 的欄位 ——
+   * ⚠️ **出貨內容目前沒有任何一位填它。** 2026-08-02 之前是 `godie-hapm`
+   * (海克力斯 - Berserker)的 0.01,而 owner 那一天把方向反過來了 ——
+   * 他改填 {@link healthDrainPctOfMax}。這一格留著是因為它是一個可調的能力。
+   * 百分比與固定值的關係、以及「有沒有保底」都是 `config.regen@1` 的欄位 ——
    * 見 `sim/regenRules.ts`,消費端是 `systems/RegenSystem.ts`。
    */
   healthRegenPctOfMax?: number;
+  /**
+   * 每秒**流失**「最大生命的百分比」(owner 2026-08-02:「Berserker 是每秒損失
+   * 1%生命, 直到生命不足1%」)。`0.01` = 每秒 1%。缺 = 這位英雄沒有自傷。
+   *
+   * 出貨只有 `godie-hapm` 填了。**它不是傷害** —— 不走 `combat/damage.ts`,
+   * 所以不吃 `combatEnv.damageDealt`、不被護盾吸、不噴傷害數字、也扣不死人:
+   * 停在哪裡是 `config.regen@1` 的 `drainFloorPctOfMax`(出貨 0.01 =
+   * owner 的「直到生命不足 1%」)。語意見 `sim/regenRules.ts`。
+   *
+   * ⚠️ 這**不是**負的 `healthRegenPctOfMax`。分成兩格的理由(下游三個會把負號
+   * 吃掉的地方)寫在 `regenRules.ts` 的檔頭。
+   */
+  healthDrainPctOfMax?: number;
   /**
    * Ranged auto-attack projectile speed (GGD units/sec, ~= WC3 missile speed
    * × the import distance factor). Ignored for melee. Default applied by the

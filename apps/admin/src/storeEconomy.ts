@@ -53,12 +53,49 @@ export const MAX_UNLOCK_COST = 1_000_000;
  */
 export const SANE_UNLOCK_COST = 1000;
 
-/** The two fields this page owns, plus the reward table it must preserve. */
+/**
+ * 隨機選角（🎲）在**擁有權讀不到**的時候該怎麼辦。
+ *
+ * owner 2026-08-02:「隨機選角的時候，只能隨機到自己有解鎖的角色」。這是決策不是
+ * 數值，所以它是一個下拉選單而不是程式裡的一個 `if`。它**只**在一種狀態下起
+ * 作用：玩家有登入 session，但 `GET /wallet` / `/store/catalog` 讀不到（平台故障、
+ * 逾時，或選角剛開場那段還在載入）。已經讀到擁有權、以及根本沒登入（本機開發）
+ * 的兩種情況都不受這一欄影響 —— 前者一律只抽已解鎖的，後者沒有帳號可言。
+ */
+export type RandomPickOwnership = "block" | "whitelist";
+
+/** The fields this page owns, plus the reward table it must preserve. */
 export interface StoreEconomy {
   championUnlockCost: number;
   freeChampionIds: string[];
+  /** 見 {@link RandomPickOwnership} */
+  randomPickOwnership: RandomPickOwnership;
   mcoinRewards: McoinRewards;
 }
+
+/** 下拉選單的兩個選項 —— 說明寫「它影響什麼」，不是複述欄位名。 */
+export const RANDOM_PICK_OWNERSHIP_OPTIONS: readonly {
+  value: RandomPickOwnership;
+  label: string;
+  help: string;
+}[] = [
+  {
+    value: "block",
+    label: "不隨機（保護玩家的擁有權）",
+    help:
+      "平台讀不到玩家錢包時，🎲 這一次不抽，並在選角畫面說明原因。" +
+      "代價：平台故障期間登入中的玩家按 🎲 沒有東西可抽（手動點選英雄不受影響）。" +
+      "好處：絕不會抽出一隻玩家還沒用藍水晶解鎖的英雄 —— 那個當下伺服器那道擁有權" +
+      "檢查同樣拿不到名單，所以那一抽會真的打進場。",
+  },
+  {
+    value: "whitelist",
+    label: "照抽全部開放英雄（舊行為）",
+    help:
+      "平台讀不到錢包時，🎲 照樣從所有已開放的英雄裡抽。按鈕永遠能按，" +
+      "代價是平台故障期間可能抽到玩家沒解鎖的英雄。",
+  },
+];
 
 export interface McoinRewards {
   placement1: number;
@@ -83,6 +120,8 @@ export const SHIPPED_FREE_CHAMPION_IDS: readonly string[] = [
   "godie-u00n",
   "godie-udre",
 ];
+/** 出貨值 —— owner 明說的那個（`content/config/store.json`）。 */
+export const SHIPPED_RANDOM_PICK_OWNERSHIP: RandomPickOwnership = "block";
 
 const DEFAULT_REWARDS: McoinRewards = { placement1: 1, placement2: 0, placement3: 0, placement4: 0 };
 
@@ -106,6 +145,12 @@ export function extractStore(doc: unknown): StoreEconomy | null {
     freeChampionIds: Array.isArray(d.freeChampionIds)
       ? d.freeChampionIds.filter((x): x is string => typeof x === "string")
       : [],
+    // 缺欄位（2026-08-02 之前存的舊 overlay）⇒ 出貨預設，與 client 的
+    // `randomPickOwnershipMode` 及 Zod 的 DEFAULT_RANDOM_PICK_OWNERSHIP 同一個值。
+    randomPickOwnership:
+      d.randomPickOwnership === "whitelist" || d.randomPickOwnership === "block"
+        ? d.randomPickOwnership
+        : SHIPPED_RANDOM_PICK_OWNERSHIP,
     mcoinRewards: {
       placement1: intOr(rewardsRaw.placement1, DEFAULT_REWARDS.placement1),
       placement2: intOr(rewardsRaw.placement2, DEFAULT_REWARDS.placement2),
@@ -192,6 +237,7 @@ export function storeDocFor(economy: StoreEconomy): Record<string, unknown> {
     schema: STORE_SCHEMA,
     championUnlockCost: economy.championUnlockCost,
     freeChampionIds: [...economy.freeChampionIds].sort(),
+    randomPickOwnership: economy.randomPickOwnership,
     mcoinRewards: { ...economy.mcoinRewards },
   };
 }

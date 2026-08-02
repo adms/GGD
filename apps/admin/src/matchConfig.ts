@@ -36,6 +36,12 @@
  * 時**拒絕存檔**，因為替代方案是用一份猜出來的文件覆蓋線上。
  */
 import { zConfigMatchDoc } from "@ggd/shared/content/schema/config";
+import { TICK_HZ } from "@ggd/shared/constants";
+import {
+  fireRingRatePerSec,
+  fireRingRulesFromConfig,
+  type FireRingConfigLike,
+} from "@ggd/shared/sim/fireRing";
 import {
   boundsFor,
   deriveFields,
@@ -46,6 +52,7 @@ import {
   type DerivedField,
   type FieldBounds,
 } from "./configFields";
+import { validateCurve, type ConfigCurveSpec, type CurveRowDraft } from "./configCurve";
 
 export const MATCH_COLLECTION = "config";
 export const MATCH_DOC_ID = "config.match";
@@ -86,6 +93,9 @@ export const MATCH_CONSOLE_MAX: Readonly<Record<string, number>> = Object.freeze
   "match.fireRing.shrinkSec": 3600,
   // 火圈收完的最小半徑：競技場 boundaryRadius 是 24，比它大等於「火圈永遠在場外」。
   "match.fireRing.minRadius": 24,
+  // ⚠️ 二段制那三格（stage1Radius / stage2StartSec / stage2ShrinkSec）**不在這張表**：
+  // 它們在 Zod 自己就有上界（24 / 3600 / 3600），`boundsFor` 會直接拿到。抄一份到
+  // 這裡就是第二個「上限是多少」的答案 —— 這張表存在的理由正好相反。
   // 金錢／經驗：十萬。一場的確定性收入是 7,600 金，所以十萬已經是「一定是打錯」。
   "economy.startingGold": 100000,
   "economy.killGold": 100000,
@@ -180,35 +190,54 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     live: PHASE,
   },
   "match.fireRing.startSec": {
-    zh: "火圈起燃（戰鬥第幾秒）",
+    zh: "① 第一段起燃（戰鬥第幾秒）",
     note:
-      "**回合長度的單一真相**：戰鬥經過這麼多秒之後，火圈從場地邊界出現並開始收縮。調小 = 每回合更短更急；調大 = 更多對線時間。客戶端的緊張感音樂也是從這一格推出來的。",
+      "**回合長度的單一真相**：戰鬥經過這麼多秒之後，火圈從場地邊界出現並開始收縮（第一段）。調小 = 每回合更短更急；調大 = 更多對線時間。客戶端的緊張感音樂也是從這一格推出來的。" +
+      "⚠️ 下面的『第二段起燃』是**戰鬥第幾秒**的絕對值，但實際生效的是兩者的**差**：殭屍王把起燃往後推的時候，第二段會跟著推同樣多，整個圈的形狀不會被拆開。",
     live: RING + "；client audio/fireRingWindow",
   },
   "match.fireRing.shrinkSec": {
-    zh: "收圈耗時（秒）",
-    note: "從場地邊界收到最小半徑要多久。調小 = 火圈瞬間逼近，走位空間一下子沒了；調大 = 慢慢絞。",
+    zh: "② 第一段縮多久（秒）",
+    note:
+      "第一段從場地邊界收到『停止縮圈的半徑』要多久。調小 = 火圈瞬間逼近，走位空間一下子沒了；調大 = 慢慢絞。收圈**速率**是推出來的（（場地半徑 − 停止縮圈的半徑）÷ 這一格），所以動這一格不會動到口袋大小。",
     live: RING + "；client audio/fireRingWindow",
   },
-  "match.fireRing.minRadius": {
-    zh: "收完後的半徑",
+  "match.fireRing.stage1Radius": {
+    zh: "第一段停下來的半徑（可以站的口袋）",
     note:
-      "火圈完全收攏後的半徑。刻意設在角色碰撞半徑（0.6）**以下**，所以收完之後沒有任何人整個身體在圈內 —— 「沒有生存空間」不需要第二條規則。設成 0 會讓視覺塌成一個點。",
+      "owner 2026-08-02「第一段燒 20 秒就**停止縮圈**」—— 停在這個半徑，直到第二段開始。" +
+      "⚠️ **它必須比角色碰撞半徑（0.6）大**，否則「停止縮圈」只是把處決延後：判定是「整個身體要在圈內」，圈比身體小就等於全場沒有一個站得住的位置。出貨 4.0 = 可站立的圓盤半徑 3.4，三個人塞得下、又被逼到貼身。下界 1 就是為了守住這件事。" +
+      "⚠️ 留白 = **沒有口袋**，第一段直接縮到『全地圖淹沒後的半徑』（也就是二段制之前的行為）。",
     live: RING,
   },
-  "match.fireRing.burnPctPerSecStart": {
-    zh: "起燃時每秒燒（佔最大生命）",
-    note: "剛起燃時，圈**外**的人每秒掉多少比例的自身最大生命。這是**真實傷害**：不吃護甲、魔抗，也不吃「戰鬥系統」的傷害倍率。",
+  "match.fireRing.stage2StartSec": {
+    zh: "③ 第二段起燃（戰鬥第幾秒）",
+    note:
+      "owner 2026-08-02「第二段燒到**全地圖淹沒**，起始於 90 秒」。從這一秒起火圈**恢復收縮**，一路收到下面那個半徑。出貨 60 / 20 / 90 = 起燃 60、80 秒停住、喘息 10 秒、90 秒開始淹。" +
+      "⚠️ **必須 >= 第一段起燃 + 第一段縮多久**，否則喘息期是負的（存檔時會被擋下並指名這一格）。" +
+      "⚠️ **這一格留白 = 整個第二段關掉**，火圈就只有一段（二段制之前的行為）。線上如果先前存過一份舊的對戰設定，它裡面沒有這一格 —— 那一場會是單段，直到在這一頁把它存進去。",
     live: RING,
   },
-  "match.fireRing.burnPctPerSecEnd": {
-    zh: "收完時每秒燒（佔最大生命）",
-    note: "火圈完全收攏時的每秒燒傷比例。從起燃值隨收圈進度線性爬到這裡 —— 兩個數字的差距就是「拖到最後有多痛」。",
+  "match.fireRing.stage2ShrinkSec": {
+    zh: "④ 第二段縮多久（秒）",
+    note:
+      "第二段從『停止縮圈的半徑』收到『全地圖淹沒』要多久。調小 = 口袋瞬間消失，沒有走位餘地；調大 = 最後的絞殺拉長。只有在『第二段起燃』有填的時候才會被讀；留白 = 20 秒（和第一段一樣）。",
+    live: RING,
+  },
+  "match.fireRing.minRadius": {
+    zh: "全地圖淹沒後的半徑",
+    note:
+      "第二段的終點。出貨 **0** = owner 說的「全地圖淹沒」：圈收到沒有，全場都是火。" +
+      "⚠️ 任何小於角色碰撞半徑（0.6）的值都已經是「沒有生存空間」（判定是整個身體要在圈內），所以 0 和 0.5 在**機制上**一樣；差別是 0 才誠實地說出「淹沒」這件事。" +
+      "⚠️ 客戶端的火牆是一圈**帶狀**網格，半徑 0 的那一瞬間它會縮到看不見 —— 那是渲染的限制，不是機制的。",
     live: RING,
   },
   "match.fireRing.maxPctPerSec": {
-    zh: "每秒燒傷上限（選填）",
-    note: "燒傷比例的安全上限。留白 = 不設限（上面兩格自己說了算）。",
+    zh: "每秒燒傷上限（佔最大生命）",
+    note:
+      "**站在圈外時，每一秒最多能被扣掉最大生命的百分之幾。** 0.5 = 一秒最多掉半條命（滿血撐兩秒）；調到 1.0 = 一秒滿血變空；調低 = 圈外活得更久，收圈的壓迫感整個變鈍。owner 2026-08-02：「可以把燃燒真傷上限數值設定放在後台，例如預設最高是50%之類，不必到100%」。" +
+      "⚠️ 它是夾在灼燒曲線**之上**的一道牆，出貨值 0.5 **確實低於曲線的尾巴**（最後一列是 1.0）：第 100 秒那一下被夾成每秒半條命，還是必死，只是要兩秒不是一秒。要讓曲線的高處真的燒出來，就把這一格調高。" +
+      "⚠️ 留白 = 回到出貨的 0.5，**不是「不設限」**（schema 與 sim 兩層填的是同一個常數）。上界 1.0 以上不會改變任何玩家看得到的東西。",
     live: RING,
   },
   "match.fireRing.roundHardCapSec": {
@@ -370,13 +399,15 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
     title: "火圈（可調）",
     intro:
       "回合的收尾機制：起燃時間就是「這一回合打算打多久」，收圈把僵局逼出結果。整個區塊可以停用 —— 停用之後回合會一路打到硬底線。" +
-      "⚠️ 這一組裡有兩個**會延長回合**的格子（殭屍王那兩格）和一個**擋住延長**的格子（回合硬上限）：延長是每召喚一次就加一次，硬上限是總和的天花板。",
+      "**二段制**（owner 2026-08-02）：①第一段起燃 → ②縮 N 秒後**停在一個站得住的口袋** → ③第二段起燃 → ④再縮 N 秒到**全地圖淹沒**。出貨是 60 / 20 / 90 / 20，也就是 60 起、80 停、90 續、110 淹沒。" +
+      "⚠️ 這一組裡有兩個**會延長回合**的格子（殭屍王那兩格）和一個**擋住延長**的格子（回合硬上限）：延長是每召喚一次就加一次，硬上限是總和的天花板。它們推的是**整個圈**，兩段之間的間隔不會被拉開。",
     paths: [
       "match.fireRing.startSec",
       "match.fireRing.shrinkSec",
+      "match.fireRing.stage1Radius",
+      "match.fireRing.stage2StartSec",
+      "match.fireRing.stage2ShrinkSec",
       "match.fireRing.minRadius",
-      "match.fireRing.burnPctPerSecStart",
-      "match.fireRing.burnPctPerSecEnd",
       "match.fireRing.maxPctPerSec",
       "match.fireRing.roundHardCapSec",
       "match.fireRing.boss.extendCombatSec",
@@ -416,6 +447,109 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
 
 /** 火圈是唯一一個真的 `.optional()`、可以整塊拿掉的區塊。 */
 export const FIRE_RING_BLOCK = "match.fireRing";
+
+// ------------------------------------------------------ 灼燒曲線（斷點表）----
+
+/**
+ * `match.fireRing.burnCurve` —— owner 2026-08-02 的「隨秒數越高越燒越痛」。
+ *
+ * 它是**陣列**，所以 `deriveFields` 走不進去（放不進一個輸入框），會落在
+ * `MATCH_DERIVED.unsupported`。而「不編輯的分支只能原封不動帶著走」對這一張表
+ * 是錯的 —— 這次改動的**全部**就是這張表，把它宣告成「這一頁不編輯」等於這次
+ * 改動在後台不存在（`configCurve.ts` 檔頭對 `attackRangeCurve` 講的同一件事）。
+ * 所以它走 `configCurve.ts` 那條既有的「可加/刪列」路徑，不是 `MATCH_FIELDS`。
+ */
+export const BURN_CURVE_PATH = "match.fireRing.burnCurve";
+
+export const BURN_CURVE_SPEC: ConfigCurveSpec = {
+  path: BURN_CURVE_PATH,
+  title: "灼燒曲線（越燒越痛）",
+  intro: [
+    "火圈**點燃之後**，圈外的人每秒掉多少比例的**自身最大生命**。這是真實傷害：不吃護甲、魔抗，也不吃「戰鬥系統」的傷害倍率，所以 276,944 血的殭屍王和 3,000 血的英雄用的是同一個時鐘。",
+    "兩列之間**線性內插**，最後一列之後**維持**在那個值（不會繼續往上爬）。要更陡或更長就**加一列**，最多 8 列。",
+    "⚠️ 第一欄是「**點燃後**第幾秒」，不是「回合第幾秒」。殭屍王會把起燃往後推 180 秒、決賽輪直接改成 180 秒 —— 用回合秒數的話，那些回合的圈一出現就已經是最痛的那一格，圈外的人一秒蒸發。所以下面每一列都同時標出「回合第幾秒」，那一欄會跟著上面的『火圈起燃』一起動。",
+    "⚠️ 1.0 = 每秒燒掉一整條滿血 = 一秒必死（owner 說的極端值）。上限開到 2.0（半秒必死），再往上火圈就不是危險而是一條瞬殺線 —— 那是『收完後的半徑』的工作。",
+  ],
+  x: {
+    key: "sec",
+    zh: "點燃後第幾秒",
+    note: "從火圈出現那一刻起算的秒數。第一列必須是 0（起燃當下），而且必須由小到大。",
+    min: 0,
+    max: 600,
+  },
+  y: {
+    key: "pctPerSec",
+    zh: "每秒燒掉幾成最大生命",
+    note: "0.2 = 每秒 20%（五秒燒完一條命）。1 = 每秒 100% = 一秒必死。",
+    min: 0,
+    max: 2,
+  },
+  minRows: 2,
+  maxRows: 8,
+  // `curvePreviewRows` 是 bodyScale 專用的,火圈走下面自己那一支。
+  previewAt: [],
+};
+
+/** 曲線預覽的一列。 */
+export interface BurnCurvePreviewRow {
+  /** 點燃後第幾秒 */
+  sinceIgniteSec: number;
+  /** 同一刻是「回合第幾秒」（= 火圈起燃 + 上面那個數字） */
+  roundSec: number;
+  /** 這一刻每秒燒掉的最大生命比例（已經夾過上限） */
+  pctPerSec: number;
+  /** 從這一刻起站在圈外不回來，還能撐幾秒（null = 這條曲線燒不死人） */
+  secondsToDeath: number | null;
+}
+
+/** 預覽要問哪幾個「點燃後秒數」。涵蓋收圈中、剛收完、和 owner 的尾巴。 */
+const PREVIEW_SECONDS = [0, 5, 10, 20, 30, 40, 60] as const;
+
+/**
+ * 「這條曲線實際上怎麼燒人」的預覽。
+ *
+ * ⚠️ 走的是 sim **出貨的** `fireRingRulesFromConfig` + `fireRingRatePerSec`，
+ * 不是後台自己再算一次內插 —— 抄一份公式進來，後台就會很有自信地畫出一條和
+ * 伺服器不一樣的曲線，而兩邊都不會報錯（CLAUDE.md 第⑤種故障）。
+ *
+ * `secondsToDeath` 用和 sim 一樣的 30 Hz 逐格累加算，不是解析積分：實際扣血就是
+ * 一格一格 `maxHp * ratePerSec * dt` 扣的，用積分算出來的數字會和玩家數到的秒數
+ * 差一點點，而這一欄存在的意義就是「玩家會數到幾秒」。
+ */
+export function burnCurvePreview(
+  points: readonly { [k: string]: number }[] | null,
+  startSec: number,
+  maxPctPerSec: number | undefined,
+): BurnCurvePreviewRow[] {
+  if (points === null || points.length === 0) return [];
+  const cfg: FireRingConfigLike = {
+    startSec: startSec > 0 ? startSec : 1,
+    burnCurve: points.map((p) => ({ sec: p.sec!, pctPerSec: p.pctPerSec! })),
+    maxPctPerSec,
+  };
+  const dt = 1 / TICK_HZ;
+  const rules = fireRingRulesFromConfig(cfg, dt);
+  // 上限：跑滿 10 分鐘的點燃後時間就停。一條 rate 恆為 0 的曲線本來就燒不死人，
+  // 那時回 null 而不是一個假的大數字。
+  const MAX_TICKS = 600 * TICK_HZ;
+  const deathFrom = (fromTick: number): number | null => {
+    let hp = 1; // 一條滿血 = 1.0（比例制，和英雄的最大生命無關）
+    for (let t = fromTick; t < MAX_TICKS; t++) {
+      hp -= fireRingRatePerSec(rules, t) * dt;
+      if (hp <= 0) return (t - fromTick + 1) / TICK_HZ;
+    }
+    return null;
+  };
+  return PREVIEW_SECONDS.map((s) => {
+    const tick = Math.round(s * TICK_HZ);
+    return {
+      sinceIgniteSec: s,
+      roundSec: startSec + s,
+      pctPerSec: fireRingRatePerSec(rules, tick),
+      secondsToDeath: deathFrom(tick),
+    };
+  });
+}
 
 // --------------------------------------------------------------- 值 ---------
 
@@ -484,6 +618,19 @@ export function validateMatchValues(values: MatchValues, fireRingOn: boolean): R
 }
 
 /**
+ * 灼燒曲線的判決。火圈停用時整張表不參與驗證 —— 那時它根本不會被寫進文件。
+ * 走的是 `configCurve.ts` 的 `validateCurve`（空白 / 超界 / 列數 / 順序重複），
+ * 也就是 `attackRangeCurve` 用的同一支。
+ */
+export function validateBurnCurve(
+  rows: readonly CurveRowDraft[],
+  fireRingOn: boolean,
+): ReturnType<typeof validateCurve> {
+  if (!fireRingOn) return { rows: rows.map(() => ({})), table: null, points: [] };
+  return validateCurve(rows, BURN_CURVE_SPEC);
+}
+
+/**
  * 要 PUT 的文件 = **現行文件**（`base`）套上可調的格子。
  *
  * ⚠️ 從 base 出發不是偷懶，是唯一安全的作法：
@@ -491,12 +638,25 @@ export function validateMatchValues(values: MatchValues, fireRingOn: boolean): R
  *   · 那 18 格唯讀的值必須原封不動地帶著（schema 是必填，少一格整份文件被 loader 丟掉）
  *   · 之後 schema 長出新欄位時，這一頁不認得它，但也不會刪掉它
  */
-export function matchDocFrom(base: unknown, values: MatchValues, fireRingOn: boolean): Record<string, unknown> {
+export function matchDocFrom(
+  base: unknown,
+  values: MatchValues,
+  fireRingOn: boolean,
+  /**
+   * 灼燒曲線的列。`undefined` = 這個呼叫端沒有畫那張表 → **原封不動**帶著基底
+   * 裡那一份走（和 `draft.tierSchedule` 同一條規則）。傳了但驗不過 → 一樣不寫，
+   * 因為半張表寫進文件會被 loader 整份丟掉。
+   */
+  burnCurveRows?: readonly CurveRowDraft[],
+): Record<string, unknown> {
   const doc = JSON.parse(JSON.stringify(base)) as Record<string, unknown>;
   doc.id = MATCH_DOC_ID;
   doc.schema = MATCH_SCHEMA;
   if (!fireRingOn) {
     deleteAtPath(doc, FIRE_RING_BLOCK);
+  } else if (burnCurveRows !== undefined) {
+    const verdict = validateCurve(burnCurveRows, BURN_CURVE_SPEC);
+    if (verdict.points !== null) setAtPath(doc, BURN_CURVE_PATH, verdict.points);
   }
   for (const f of MATCH_FIELDS) {
     if (!isEditable(f.path)) continue;

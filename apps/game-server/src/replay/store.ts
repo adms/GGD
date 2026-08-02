@@ -28,11 +28,19 @@ import { createGzip, gunzipSync } from "node:zlib";
 import { pipeline } from "node:stream/promises";
 import { readFile } from "node:fs/promises";
 import { decodeLines, type ReplayFooter, type ReplayHeader, type ReplayLine } from "./format";
+import { DEFAULT_REPLAY_POLICY } from "@ggd/shared/content";
+import { replayPolicy } from "./policy";
 
-/** Keep at most this many recordings (newest wins). */
-export const RETAIN_MAX_FILES = 200;
-/** Delete recordings older than this regardless of count. */
-export const RETAIN_MAX_AGE_DAYS = 30;
+/**
+ * 出貨的保留量。**這兩個常數已經不是權威** —— 權威是
+ * `config.replay@1` 的 `retainMaxFiles` / `retainMaxAgeDays`，而
+ * `DEFAULT_REPLAY_POLICY` 是缺文件時的退路。留在這裡只為了讓既有的 import
+ * （測試、sidecar 的註解）還讀得到同一個數字，`replayPolicyShipped.test.ts`
+ * 釘住兩邊相等，所以它們不可能各自漂走。
+ */
+export const RETAIN_MAX_FILES = DEFAULT_REPLAY_POLICY.retainMaxFiles;
+/** 同上：出貨的天數，權威在 `config.replay@1`。 */
+export const RETAIN_MAX_AGE_DAYS = DEFAULT_REPLAY_POLICY.retainMaxAgeDays;
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -225,8 +233,11 @@ export async function pruneReplays(skipIds: readonly string[] = []): Promise<str
     }
   }
   files.sort((a, b) => b.mtime - a.mtime);
-  const cutoff = Date.now() - RETAIN_MAX_AGE_DAYS * 86_400_000;
-  const doomed = files.filter((f, idx) => idx >= RETAIN_MAX_FILES || f.mtime < cutoff);
+  // 後台可調 (config.replay@1)。讀在這裡而不是模組載入時，所以 owner 改了保留量
+  // 之後**下一次**保留掃描就照新的跑，不必等到重新 import 這個模組。
+  const { retainMaxFiles, retainMaxAgeDays } = replayPolicy();
+  const cutoff = Date.now() - retainMaxAgeDays * 86_400_000;
+  const doomed = files.filter((f, idx) => idx >= retainMaxFiles || f.mtime < cutoff);
   const deleted: string[] = [];
   for (const f of doomed) {
     try {

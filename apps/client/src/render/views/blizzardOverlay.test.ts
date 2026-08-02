@@ -132,9 +132,9 @@ describe("overlay PRESENT", () => {
   });
 
   it("renders overlay models with the w3x-imported yaw offset", () => {
-    expect(glbYawOffset("assets/blizzard-local/models/E00R.glb")).toBe(IMPORTED_GLB_YAW_OFFSET);
+    expect(glbYawOffset({ glbPath: "assets/blizzard-local/models/E00R.glb" })).toBe(IMPORTED_GLB_YAW_OFFSET);
     // …and leaves the native/KayKit family alone
-    expect(glbYawOffset(STAND_IN.glbPath)).toBe(NATIVE_GLB_YAW_OFFSET);
+    expect(glbYawOffset({ glbPath: STAND_IN.glbPath })).toBe(NATIVE_GLB_YAW_OFFSET);
   });
 
   it("never overrides a champion's own shipped model", async () => {

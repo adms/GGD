@@ -8,21 +8,23 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    12,
+    12,
+    12,
+    12
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
       "modifiers": [
         {
           "stat": "as",
@@ -30,9 +32,9 @@
           "value": 0.25
         }
       ],
-      "duration": 3.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.explosion",
   "sfxKey": "wc3.pandarenbrewmasterpissed8",
   "castTimeSec": 0.3

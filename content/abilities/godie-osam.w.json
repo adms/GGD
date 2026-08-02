@@ -21,9 +21,11 @@
     60.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
       "modifiers": [
         {
           "stat": "critChance",
@@ -31,9 +33,9 @@
           "value": 0.25
         }
       ],
-      "duration": 6.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.slash",
   "schema": "ability@1",
   "castTimeSec": 0.3

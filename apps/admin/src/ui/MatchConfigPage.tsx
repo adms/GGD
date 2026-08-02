@@ -17,6 +17,8 @@ import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } fro
 import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
 import type { DerivedField } from "../configFields";
 import {
+  BURN_CURVE_SPEC,
+  burnCurvePreview,
   FIRE_RING_BLOCK,
   MATCH_COLLECTION,
   MATCH_DOC_ID,
@@ -28,9 +30,17 @@ import {
   matchFieldBounds,
   matchInfoFor,
   readMatchDoc,
+  validateBurnCurve,
   validateMatchValues,
   type MatchValues,
 } from "../matchConfig";
+import {
+  addCurveRow,
+  curveRowsFrom,
+  removeCurveRow,
+  setCurveCell,
+  type CurveRowDraft,
+} from "../configCurve";
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -43,6 +53,7 @@ export function MatchConfigPage(): JSX.Element {
   const [base, setBase] = useState<unknown>(null);
   const [source, setSource] = useState<"none" | "overlay" | "content">("none");
   const [values, setValues] = useState<MatchValues>({});
+  const [burnRows, setBurnRows] = useState<CurveRowDraft[]>([]);
   const [fireRingOn, setFireRingOn] = useState(true);
   const [parseError, setParseError] = useState<string | null>(null);
   const [dirty, setDirty] = useState(false);
@@ -58,6 +69,7 @@ export function MatchConfigPage(): JSX.Element {
           const read = readMatchDoc(overlaid);
           setBase(overlaid);
           setValues(read.values);
+          setBurnRows(curveRowsFrom(overlaid, BURN_CURVE_SPEC));
           setFireRingOn(read.fireRingOn);
           setParseError(read.parseError);
           setSource("overlay");
@@ -68,6 +80,7 @@ export function MatchConfigPage(): JSX.Element {
           const read = readMatchDoc(shipped.doc);
           setBase(shipped.doc);
           setValues(read.values);
+          setBurnRows(curveRowsFrom(shipped.doc, BURN_CURVE_SPEC));
           setFireRingOn(read.fireRingOn);
           setParseError(read.parseError);
           setSource("content");
@@ -79,15 +92,41 @@ export function MatchConfigPage(): JSX.Element {
   }, []);
 
   const errors = useMemo(() => validateMatchValues(values, fireRingOn), [values, fireRingOn]);
+  const burnVerdict = useMemo(() => validateBurnCurve(burnRows, fireRingOn), [burnRows, fireRingOn]);
   const crossIssues = useMemo(
-    () => (base === null ? [] : matchDocIssues(matchDocFrom(base, values, fireRingOn))),
-    [base, values, fireRingOn],
+    () => (base === null ? [] : matchDocIssues(matchDocFrom(base, values, fireRingOn, burnRows))),
+    [base, values, fireRingOn, burnRows],
+  );
+  /**
+   * 「這條曲線實際上怎麼燒人」。⚠️ 用出貨的 `fireRingRulesFromConfig` +
+   * `fireRingRatePerSec` 算，不是這一頁自己內插一遍。
+   */
+  const burnPreview = useMemo(
+    () =>
+      burnCurvePreview(
+        burnVerdict.points,
+        Number(values["match.fireRing.startSec"] ?? "0"),
+        (values["match.fireRing.maxPctPerSec"] ?? "").trim() === ""
+          ? undefined
+          : Number(values["match.fireRing.maxPctPerSec"]),
+      ),
+    [burnVerdict.points, values],
   );
   const canSave =
-    base !== null && !busy && dirty && Object.keys(errors).length === 0 && crossIssues.length === 0;
+    base !== null &&
+    !busy &&
+    dirty &&
+    Object.keys(errors).length === 0 &&
+    crossIssues.length === 0 &&
+    burnVerdict.points !== null;
 
   const edit = (path: string, next: string): void => {
     setValues({ ...values, [path]: next });
+    setDirty(true);
+  };
+
+  const editCurve = (next: CurveRowDraft[]): void => {
+    setBurnRows(next);
     setDirty(true);
   };
 
@@ -96,7 +135,11 @@ export function MatchConfigPage(): JSX.Element {
     setBusy(true);
     setApiErr(null);
     try {
-      const head = await putOverlayDoc(MATCH_COLLECTION, MATCH_DOC_ID, matchDocFrom(base, values, fireRingOn));
+      const head = await putOverlayDoc(
+        MATCH_COLLECTION,
+        MATCH_DOC_ID,
+        matchDocFrom(base, values, fireRingOn, burnRows),
+      );
       setDirty(false);
       setSource("overlay");
       setFlash(`✓ 已寫入耐久覆蓋層（generation ${head.generation}）`);
@@ -168,6 +211,146 @@ export function MatchConfigPage(): JSX.Element {
           </div>
         )}
         {err && <div style={{ color: DANGER, fontSize: 12 }}>{err}</div>}
+      </div>
+    );
+  };
+
+  /**
+   * 灼燒曲線的斷點表 —— 「可以加/刪列」的兩欄表 + 一段用**出貨函式**算出來的預覽。
+   *
+   * 這張表不是 `MATCH_FIELDS` 的一格（它是陣列，`deriveFields` 走不進去），所以
+   * 它有自己的 draft state、自己的驗證、和自己的存檔路徑。
+   */
+  const burnCurveTable = (): JSX.Element => {
+    const disabled = !fireRingOn;
+    return (
+      <div
+        data-testid="match-burn-curve"
+        style={{
+          border: PANEL_BORDER,
+          borderRadius: 4,
+          padding: "10px 12px",
+          display: "grid",
+          gap: 8,
+          opacity: disabled ? 0.72 : 1,
+        }}
+      >
+        <div style={{ color: GOLD, fontSize: 13 }}>{BURN_CURVE_SPEC.title}</div>
+        {BURN_CURVE_SPEC.intro.map((line) => (
+          <div key={line} style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7 }}>
+            {line}
+          </div>
+        ))}
+        <div style={{ color: TEXT_DIM, fontSize: 11 }}>
+          讀這張表的是：{matchInfoFor("match.fireRing.minRadius").live}
+        </div>
+
+        <div style={{ display: "grid", gap: 6 }}>
+          {burnRows.map((r, i) => {
+            const e = burnVerdict.rows[i] ?? {};
+            const startSec = Number(values["match.fireRing.startSec"] ?? "0");
+            const secNum = Number(r.x.trim());
+            const roundSec = Number.isFinite(secNum) && r.x.trim() !== "" ? startSec + secNum : null;
+            return (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <span style={{ color: TEXT_DIM, fontSize: 11, minWidth: 34 }}>#{i + 1}</span>
+                <input
+                  aria-label={`${BURN_CURVE_SPEC.x.zh} 第 ${i + 1} 列`}
+                  data-field={`burnCurve.${i}.sec`}
+                  value={r.x}
+                  disabled={disabled}
+                  inputMode="decimal"
+                  onChange={(ev) => editCurve(setCurveCell(burnRows, i, "x", ev.target.value))}
+                  style={{
+                    width: 90,
+                    padding: "4px 6px",
+                    background: "transparent",
+                    color: e.x ? DANGER : TEXT_MAIN,
+                    border: e.x ? `1px solid ${DANGER}` : PANEL_BORDER,
+                    borderRadius: 3,
+                    textAlign: "right",
+                  }}
+                />
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+                  秒（點燃後）
+                  {roundSec === null ? "" : ` · 回合第 ${roundSec} 秒`}
+                </span>
+                <input
+                  aria-label={`${BURN_CURVE_SPEC.y.zh} 第 ${i + 1} 列`}
+                  data-field={`burnCurve.${i}.pctPerSec`}
+                  value={r.y}
+                  disabled={disabled}
+                  inputMode="decimal"
+                  onChange={(ev) => editCurve(setCurveCell(burnRows, i, "y", ev.target.value))}
+                  style={{
+                    width: 90,
+                    padding: "4px 6px",
+                    background: "transparent",
+                    color: e.y ? DANGER : TEXT_MAIN,
+                    border: e.y ? `1px solid ${DANGER}` : PANEL_BORDER,
+                    borderRadius: 3,
+                    textAlign: "right",
+                  }}
+                />
+                <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+                  /秒（1 = 100 % = 一秒必死）
+                </span>
+                <Btn
+                  disabled={disabled || burnRows.length <= BURN_CURVE_SPEC.minRows}
+                  onClick={() => editCurve(removeCurveRow(burnRows, i))}
+                >
+                  刪除
+                </Btn>
+                {(e.x ?? e.y) && (
+                  <span style={{ color: DANGER, fontSize: 12 }}>{e.x ?? e.y}</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Btn
+            disabled={disabled || burnRows.length >= BURN_CURVE_SPEC.maxRows}
+            onClick={() => editCurve(addCurveRow(burnRows))}
+          >
+            ＋ 加一列
+          </Btn>
+          <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+            {BURN_CURVE_SPEC.minRows}～{BURN_CURVE_SPEC.maxRows} 列
+          </span>
+        </div>
+        {burnVerdict.table && (
+          <div style={{ color: DANGER, fontSize: 12 }}>{burnVerdict.table}</div>
+        )}
+
+        {burnPreview.length > 0 && (
+          <div style={{ display: "grid", gap: 4, marginTop: 4 }}>
+            <div style={{ color: TEXT_MAIN, fontSize: 12 }}>
+              這條曲線實際上怎麼燒人（用伺服器出貨的那支函式算的，不是這一頁自己內插）
+            </div>
+            {burnPreview.map((p) => (
+              <div key={p.sinceIgniteSec} style={{ color: TEXT_DIM, fontSize: 12 }}>
+                點燃後 {p.sinceIgniteSec} 秒（回合第 {p.roundSec} 秒）→ 每秒燒{" "}
+                <b style={{ color: TEXT_MAIN }}>{(p.pctPerSec * 100).toFixed(1)} %</b>
+                ；從這一刻起站在圈外不回來，
+                {p.secondsToDeath === null ? (
+                  <b style={{ color: WARN }}>燒不死</b>
+                ) : (
+                  <>
+                    <b style={{ color: TEXT_MAIN }}>{p.secondsToDeath.toFixed(2)} 秒</b>後滿血死亡
+                  </>
+                )}
+              </div>
+            ))}
+            <div style={{ color: WARN, fontSize: 12, lineHeight: 1.7 }}>
+              ⚠️ 曲線尾巴今天<b>打不到任何人</b>：「收完後的半徑」（0.5）比角色碰撞半徑（0.6）小，
+              所以收圈完成後全場沒有安全位置，實測最後一個人在點燃後約 24 秒就死透了。
+              要讓 100 %/秒那一格真的被玩家經歷到，得把「收完後的半徑」抬到 0.6 以上（留一個站得住的口袋），
+              或把「收圈耗時」拉長 —— 那兩格都在上面。
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -248,6 +431,7 @@ export function MatchConfigPage(): JSX.Element {
               </div>
             )}
             {g.paths.map(row)}
+            {g.key === "fireRing" && burnCurveTable()}
           </div>
         ))}
       </div>

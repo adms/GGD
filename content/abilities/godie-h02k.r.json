@@ -8,19 +8,21 @@
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0
+    12,
+    12,
+    12
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 6,
       "modifiers": [
         {
           "stat": "armor",
@@ -28,9 +30,9 @@
           "value": 25
         }
       ],
-      "duration": 6.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "sfxKey": "wc3.pandarenbrewmasteryes1",
   "castTimeSec": 0.3

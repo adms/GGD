@@ -7,6 +7,12 @@
  * `@ggd/shared/content/node`.
  */
 export * from "./schema/index";
+// 道具卡片的渲染時解析 (owner 2026-08-02「排版連在一起不好閱讀」)。純函式,
+// 不動 owner 的 description 一個字 —— 見 itemCardText.ts 的檔頭。
+export * from "./itemCardText";
+// 對戰錄影政策 (owner 2026-08-02「請幫我預設打開」)。缺文件 = 出貨預設 = 開著,
+// 理由寫在 replayPolicy.ts 的檔頭 —— 內容載入失敗不可以順手把錄影關掉。
+export * from "./replayPolicy";
 export * from "./types";
 export * from "./errors";
 export { sha256Hex } from "./sha256";
@@ -66,8 +72,27 @@ export {
   StatusEffects,
   registerAll,
   auditAbilityMirrorDrift,
+  DEGRADED_ABILITY_NOTE,
   type AbilityMirrorDrift,
+  type RegisterAllOptions,
 } from "./registries";
+// 模板展開的 fail-soft 那一半:一支技能的模板壞掉只降級那一支,而降級留下的紀錄
+// 在 console 消失之後還讀得到。壞掉的 ref 曾經會讓 registerAll 整包擲錯 = 0 隻英雄。
+export {
+  TEMPLATE_FAILURE_LOG_CAP,
+  recordTemplateExpansionFailures,
+  templateExpansionFailures,
+  clearTemplateExpansionFailures,
+  templateExpansionFailureSummary,
+  type TemplateExpansionFailure,
+} from "./templates/failures";
+export {
+  hasTemplateBinding,
+  resolveTemplateExpansion,
+  type TemplateResolution,
+  type TemplateResolveFailure,
+  type TemplateFailurePhase,
+} from "./templates/resolve";
 export {
   HERO_NUMBER_RE,
   RANDOM_HERO_POOL_IDS,

@@ -7,38 +7,37 @@
   "castType": "skillshot",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    215.0,
-    300.0,
-    385.0,
-    470.0
+    215,
+    300,
+    385,
+    470
   ],
-  "range": 11.0,
-  "effects": [
-    {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              650.0,
-              900.0,
-              1150.0,
-              1400.0
-            ]
-          }
-        }
-      ]
+  "range": 11,
+  "effects": [],
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 6,
+      "stepSize": 200,
+      "segmentAoe": 400,
+      "damage": {
+        "perRank": [
+          650,
+          900,
+          1150,
+          1400
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "godie-tectonicfury-p0",
   "sfxKey": "wc3.dragonyes2",
   "schema": "ability@1",
@@ -56,5 +55,6 @@
     ],
     "flashMs": 144,
     "camKick": 0.36
-  }
+  },
+  "targetsEnemies": true
 }

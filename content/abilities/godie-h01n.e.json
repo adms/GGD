@@ -19,11 +19,11 @@
     300.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           450,
           600,
@@ -36,9 +36,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.beam",
   "targetsEnemies": true,
   "schema": "ability@1",

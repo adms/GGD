@@ -19,16 +19,16 @@
     60.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          12.0,
-          15.0,
-          18.0,
-          21.0
+          12,
+          15,
+          18,
+          21
         ],
         "ratios": [
           {
@@ -36,9 +36,11 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.pulse-sm",
   "targetsEnemies": true,
   "schema": "ability@1",

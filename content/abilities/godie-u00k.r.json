@@ -18,11 +18,11 @@
     350.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           150,
           300,
@@ -34,9 +34,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.nova-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,

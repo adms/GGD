@@ -260,9 +260,14 @@
         500.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.soulpreservation",
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -270,12 +275,9 @@
               "value": 0.25
             }
           ],
-          "duration": 3.0
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.fire.explosion-lg",
-      "sfxKey": "wc3.soulpreservation",
-      "castTimeSec": 0.4
+      }
     }
   },
   "skillOrder": [

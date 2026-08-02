@@ -1,0 +1,7 @@
+{
+  "id": "victory-fx",
+  "schema": "config.victory-fx@1",
+  "note": "#93/#235 勝利煙火的開關。owner 2026-08-02 裁決:「請你直接取消煙火(變成後台開關)」,所以兩格出貨都是 false。程式碼一行都沒有刪 —— 這是決策點不是 bug,改主意時是後台打一個勾(CLAUDE.md 第一守則,形狀同 GH#251 的 arenaFire)。兩格分開是因為成本與頻率差一個量級:回合小煙火一場放 3-5 次、峰值 +28 個粒子系統、約 1.3 秒;烤雞煙火一場放一次、峰值 +8 個粒子系統加一個自訂 shader 的 mesh、約 4.3 秒。關掉煙火不會動到結算畫面的灰底/暗底,也不會動到勝利嘲弄語音(config/victory-taunts.json)。",
+  "roundVolley": { "enabled": false },
+  "matchChicken": { "enabled": false }
+}

@@ -7,35 +7,35 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    150.0,
-    250.0,
-    350.0
+    150,
+    250,
+    350
   ],
-  "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 300,
+      "damage": {
         "perRank": [
-          150.0,
-          200.0,
-          250.0
+          150,
+          200,
+          250
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5,
       "statusId": "burnstun",
-      "duration": 0.5,
-      "stun": true
+      "statusDurationSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "radius": 5.5,

@@ -22,6 +22,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
+import { effectsOf } from "../../testkit/expandedEffects";
 import { fileURLToPath } from "node:url";
 
 const CONTENT = fileURLToPath(new URL("../../../../content/", import.meta.url));
@@ -66,7 +67,7 @@ function projectileIds(node: unknown, out: string[] = []): string[] {
 }
 
 describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () => {
-  const launchers = ABILITIES.filter((a) => projectileIds(a.effects).length > 0);
+  const launchers = ABILITIES.filter((a) => projectileIds(effectsOf(a)).length > 0);
 
   it("這批技能真的存在 —— 不是在測一個空集合", () => {
     expect(launchers.length).toBe(53);
@@ -74,7 +75,7 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
 
   it("每一個被引用的 projectileId 都真的有文件（referential integrity）", () => {
     for (const a of launchers) {
-      for (const pid of projectileIds(a.effects)) {
+      for (const pid of projectileIds(effectsOf(a))) {
         expect(PROJECTILES.has(pid), `${a.id} 指向不存在的 projectiles/${pid}`).toBe(true);
       }
     }
@@ -86,7 +87,7 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
     for (const a of launchers) {
       const want = elementOf(a.vfxKey);
       if (!want) continue; // w3x/godie 專屬特效：元素無法從 key 判定，不在這條的範圍
-      for (const pid of projectileIds(a.effects)) {
+      for (const pid of projectileIds(effectsOf(a))) {
         const got = elementOf(PROJECTILES.get(pid)?.vfxKey);
         // fx.prim.<el>.bolt 只存在於 9 個元素；holy / wind 沒有 bolt 原語，
         // 所以那幾支仍然停在共用文件上 —— 這一條不假裝它們修好了。
@@ -108,8 +109,8 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
         if (!emb?.id) continue;
         const standalone = byId.get(emb.id);
         if (!standalone) continue;
-        const a = projectileIds(standalone.effects);
-        const b = projectileIds(emb.effects);
+        const a = projectileIds(effectsOf(standalone));
+        const b = projectileIds(effectsOf(emb));
         if (a.length === 0 && b.length === 0) continue;
         compared++;
         if (JSON.stringify(a) !== JSON.stringify(b)) {
@@ -124,7 +125,7 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
   it("共用的兩份佔位文件仍然只服務「元素判不出來」的那些技能", () => {
     const stillShared: string[] = [];
     for (const a of launchers) {
-      for (const pid of projectileIds(a.effects)) {
+      for (const pid of projectileIds(effectsOf(a))) {
         if (pid === "imported.bolt" || pid === "imported.wave") stillShared.push(a.id);
       }
     }

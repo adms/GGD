@@ -75,6 +75,7 @@ import {
   fireRingIgnitionTick,
   fireRingRulesFromConfig,
   isCombatTimeUp,
+  ringFullCloseSec,
   type FireRingConfigLike,
 } from "./fireRing";
 import { mobRulesFromConfig, summonMobBoss, type MobRules } from "./mobs";
@@ -249,8 +250,12 @@ describe(`${TAG} — 不管什麼條件，回合到上限一定開始收場`, ()
     expect(justAfter).toBeLessThan(ZONE_R);
     step(w, 300); // 10 s in
     expect(currentFireRingRadius(w)).toBeLessThan(justAfter);
-    // …all the way to 「沒有生存空間」 at the end of the authored shrink.
-    step(w, shippedMatch().fireRing!.shrinkSec * TICKS_PER_SEC);
+    // …and all the way to 「全地圖淹沒」 at the end of the WHOLE ring — 二段制,
+    // so that is `ringFullCloseSec` (50 s shipped), NOT `shrinkSec` (20 s).
+    // ⚠️ Stepping only `shrinkSec` here would find the ring parked at
+    // `stage1Radius` and 「收場」 would be asserted about a ring still holding a
+    // standable pocket.
+    step(w, ringFullCloseSec(shippedMatch().fireRing!) * TICKS_PER_SEC);
     expect(currentFireRingRadius(w)).toBeCloseTo(shippedMatch().fireRing!.minRadius, 6);
   });
 
@@ -349,8 +354,9 @@ describe(`${TAG} — 沒有延長條件時，硬上限一格都不能動`, () =>
     const { w } = shippedWorld();
     expect(fireRingIgnitionTick(w)).toBe(m.fireRing!.startSec * TICKS_PER_SEC);
     expect(combatDeadlineTick(w)).toBe(m.combatMaxSec * TICKS_PER_SEC);
-    // and it really does close on the authored schedule, not the cap's
-    step(w, (m.fireRing!.startSec + m.fireRing!.shrinkSec) * TICKS_PER_SEC);
+    // and it really does close on the authored schedule, not the cap's.
+    // 二段制: 「closed」 means BOTH stages done → `ringFullCloseSec`.
+    step(w, (m.fireRing!.startSec + ringFullCloseSec(m.fireRing!)) * TICKS_PER_SEC);
     expect(currentFireRingRadius(w)).toBeCloseTo(m.fireRing!.minRadius, 6);
   });
 
@@ -364,8 +370,6 @@ describe(`${TAG} — 沒有延長條件時，硬上限一格都不能動`, () =>
       startSec: 60,
       shrinkSec: 20,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
       boss: { extendCombatSec: 180, delayFireRingSec: 180 },
     };
@@ -403,8 +407,6 @@ describe(`${TAG} — 開場就違規的設定`, () => {
         startSec: 400,
         shrinkSec: 20,
         minRadius: 0.5,
-        burnPctPerSecStart: 0.04,
-        burnPctPerSecEnd: 0.2,
         roundHardCapSec: 300,
       },
       DT,
@@ -424,9 +426,13 @@ describe(`${TAG} — 開場就違規的設定`, () => {
     const { w, hero, mobRules } = shippedWorld();
     summonKings(w, mobRules, hero, 8);
     const rules = w.fireRingRules!;
-    expect(rules.combatMaxTicks - rules.startTicks).toBeGreaterThanOrEqual(rules.shrinkTicks);
+    // 二段制: the room the deadline must leave is the WHOLE ring, and that is
+    // the invariant `fireRingRulesFromConfig` floors `authoredTail` at.
+    const fullClose = rules.stage2GapTicks + rules.stage2ShrinkTicks;
+    expect(fullClose).toBeGreaterThan(rules.shrinkTicks); // stage 2 really is on
+    expect(rules.combatMaxTicks - rules.startTicks).toBeGreaterThanOrEqual(fullClose);
     // and concretely: fully closed BEFORE the deadline, on the shipped numbers.
-    step(w, rules.startTicks + rules.shrinkTicks);
+    step(w, rules.startTicks + fullClose);
     expect(currentFireRingRadius(w)).toBeCloseTo(m.fireRing!.minRadius, 6);
     expect(isCombatTimeUp(w)).toBe(false);
   });

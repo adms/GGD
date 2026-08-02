@@ -1680,7 +1680,7 @@ export class ChampionView {
         // facing convention lives in one place (glbFacing); imported .glbs
         // need a different offset than native/KayKit ones. Yaw is about Y, so it
         // does not affect the vertical bounding measure below.
-        glbRoot.rotation.y = glbYawOffset(doc.glbPath, this.modelKey);
+        glbRoot.rotation.y = glbYawOffset(doc);
         for (const node of inst.rootNodes) node.parent = glbRoot;
         const glbMeshes = glbRoot.getChildMeshes(false);
         // EMPTY-GLB → KEEP THE PROCEDURAL FALLBACK (task #69). A few imported

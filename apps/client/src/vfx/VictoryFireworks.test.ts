@@ -139,7 +139,14 @@ describe("VictoryFireworks facade", () => {
   it("routes a match-win edge to the chicken and a callback, exactly once", () => {
     cover("victory-fireworks-facade");
     let matchCb = 0;
-    const fx = new VictoryFireworks(scene, { cameraFor: () => camera, onMatchWin: () => matchCb++ });
+    // ⚠️ ROUTING test — it must state its own policy. 出貨的煙火開關是**關**的
+    // (`config/victory-fx@1`, owner 2026-08-02),所以不傳 policy 的話這一條驗到的
+    // 會是那個開關而不是路由。開關本身的守衛在 `victoryFxPolicy.test.ts`。
+    const fx = new VictoryFireworks(scene, {
+      cameraFor: () => camera,
+      policy: () => ({ roundVolley: { enabled: true }, matchChicken: { enabled: true } }),
+      onMatchWin: () => matchCb++,
+    });
     fx.sync(input({}), 0);
     const decided = input({ phase: "resolution", outcomeDecided: true, myPlacement: 1 });
     expect(fx.sync(decided, 100).kind).toBe("match");

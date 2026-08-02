@@ -19,16 +19,17 @@
     145.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 300,
+      "damage": {
         "perRank": [
-          275.0,
-          425.0,
-          575.0,
-          725.0
+          275,
+          425,
+          575,
+          725
         ],
         "ratios": [
           {
@@ -36,9 +37,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.fire.bolt",
   "targetsEnemies": true,
   "radius": 5.5,

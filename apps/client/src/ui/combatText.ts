@@ -1191,12 +1191,35 @@ const WORD: Partial<Record<CombatTextCategory, string>> = {
 /** Every wordless (magnitude-free) category, exported for the guard test. */
 export const COMBAT_TEXT_WORDS: Readonly<Partial<Record<CombatTextCategory, string>>> = WORD;
 
-/** The string that actually gets drawn. */
-export function combatTextLabel(category: CombatTextCategory, amount: number): string {
+/**
+ * 暴擊的驚嘆號 —— owner 2026-08-02:
+ *   「角色傷害暴擊的時候，傷害數值後面會帶 " ! " 驚嘆號」
+ *
+ * ⚠️ 它是 SUFFIX 不是新的顏色,而且那是 owner 自己裁定的:
+ *   「暴擊：`!` + 字級放大（不加專屬顏色 —— 那會干擾「這是什麼傷害類型」的判讀）」
+ * 這條檔頭上面那段「RO does not recolour crits」講的是同一件事,現在有兩個理由:
+ * RO 的前例,以及 `textAxis: "damageType"` 之下色相已經被傷害屬性佔滿了。
+ *
+ * 只掛在**有數字**的類別上。`GUARD` / `閃避` / `MISS` 是字不是量,一個
+ * 「閃避!」在畫面上會被讀成「暴擊的閃避」,而那不是一個存在的東西。
+ */
+export const CRIT_SUFFIX = "!";
+
+/**
+ * The string that actually gets drawn.
+ *
+ * `crit` 只影響**尾巴的驚嘆號**;放大是 {@link CRIT_SIZE_MULT} 在
+ * `combatTextStyle` 那邊做的,兩個通道分開,所以任何一邊被改壞另一邊不會掩護它。
+ */
+export function combatTextLabel(
+  category: CombatTextCategory,
+  amount: number,
+  crit = false,
+): string {
   const word = WORD[category];
   if (word !== undefined) return word;
   const n = Math.max(0, Math.round(amount));
-  return `${BASE[category].prefix}${n}`;
+  return `${BASE[category].prefix}${n}${crit ? CRIT_SUFFIX : ""}`;
 }
 
 /**

@@ -12,6 +12,7 @@ import { Encoder, Decoder } from "@colyseus/schema";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import { MatchController } from "../match/MatchController";
 import { projectSnapshot } from "./snapshot";
+import { DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
 
 const FAST = { champSelectTicks: 5, intermissionTicks: 30, combatMaxTicks: 1200, resolutionTicks: 5 };
 
@@ -70,8 +71,7 @@ describe("schema encode regression (match-13)", () => {
       startSec: 0.2, // 6 ticks — armed and already shrinking well inside this test
       shrinkSec: 1,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
+      burnCurve: [...DEFAULT_BURN_CURVE],
       maxPctPerSec: 1,
       // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
       // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

@@ -115,16 +115,19 @@
         140.0
       ],
       "range": 6.42,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.lightning.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              450.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
@@ -132,12 +135,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.lightning.slash",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "E": {
       "id": "godie-nbbc.e",
@@ -203,15 +205,18 @@
         380.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.nature.slash-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              450.0,
-              650.0,
-              850.0
+              450,
+              650,
+              850
             ],
             "ratios": [
               {
@@ -219,12 +224,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.6
         }
-      ],
-      "vfxKey": "fx.prim.nature.slash-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.6
+      }
     }
   },
   "skillOrder": [

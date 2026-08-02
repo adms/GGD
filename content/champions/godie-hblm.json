@@ -69,11 +69,14 @@
         130.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.lightning.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               175,
               275,
@@ -85,12 +88,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.lightning.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "W": {
       "id": "godie-hblm.w",

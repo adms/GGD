@@ -2458,14 +2458,14 @@ export class GameApp {
 
   /**
    * The local champion's resolved model — glb path, normalising scale and the
-   * model key — for the intermission market to stand at the merchant's counter.
+   * doc's own facing correction — for the intermission market to stand at the merchant's counter.
    * Goes through the SAME `modelDocFor` seam the arena's ChampionView uses, so
    * an equipped skin and the dev-only Blizzard overlay both apply, and the hero
    * you shop with is the hero you fight with. Null before champ-select
    * confirms or while the content DB is still loading — the market then simply
    * shows no hero rather than a placeholder.
    */
-  private localChampionModel(): { glbPath: string; scale: number; modelKey: string } | null {
+  private localChampionModel(): { glbPath: string; scale: number; yawOffsetDeg?: number } | null {
     const hud = hudStore.getState();
     const seat = hud.seats.find((s) => s.seatId === hud.localSeatId);
     if (!seat?.championId) return null;
@@ -2473,7 +2473,7 @@ export class GameApp {
     if (!def) return null;
     const doc = this.modelDocFor(def.modelKey, seat.seatId);
     if (!doc) return null;
-    return { glbPath: doc.glbPath, scale: doc.scale, modelKey: doc.id };
+    return { glbPath: doc.glbPath, scale: doc.scale, yawOffsetDeg: doc.yawOffsetDeg };
   }
 
   /** ChampionId picked by the local seat (null until champ-select confirms). */

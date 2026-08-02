@@ -182,68 +182,93 @@ describe("golden per family (template + exemplar params → EffectDef shape)", (
   });
 });
 
+/**
+ * godie-hgam.e's HAND-WRITTEN behaviour half, exactly as it sat in
+ * `content/abilities/godie-hgam.e.json` before the 2026-08-02 adoption lane
+ * (`git show ae722e6b:content/abilities/godie-hgam.e.json`).
+ *
+ * ⚠️ WHY THIS IS FROZEN HERE INSTEAD OF READ OFF DISK. It used to be read off
+ * disk, and that is precisely what broke: this suite is the P1 ACCEPTANCE proof
+ * that `expand()` can reproduce a real hand-authored skill, and it used the
+ * shipped doc as its own fixture. On 2026-08-02 godie-hgam.e was itself
+ * re-authored onto a template, its `effects` became `[]`, and the "proof"
+ * started reading `[][0].amount` — i.e. the fixture moved under the test
+ * (失敗形態 ⑤: 被測的不是出貨的那個, in reverse).
+ *
+ * Frozen because the fact is otherwise UNRECOVERABLE once the file is rewritten
+ * — the same reason `PRE_LANE_CAST_TIMES` is frozen in castTimeCoverage.test.ts.
+ * The template itself is still loaded from the real `content/ability-templates`
+ * tree, so what is being proved (the expander reproduces this behaviour) is
+ * unchanged; only the baseline stopped being a moving target.
+ */
+const HGAM_E_PRE_TEMPLATE: Record<string, unknown> = {
+  castType: "targeted",
+  targetsEnemies: true,
+  castTimeSec: 0.5,
+  effects: [
+    {
+      kind: "damage",
+      damageType: "magic",
+      amount: { perRank: [350, 500, 650, 800], ratios: [{ stat: "ap", coeff: 0.6 }] },
+    },
+  ],
+};
+
+/**
+ * The params that re-author the frozen behaviour half through a template.
+ *
+ * ⚠️ WRITTEN OUT AS INDEPENDENT LITERALS ON PURPOSE — do NOT "simplify" this by
+ * deriving it from `HGAM_E_PRE_TEMPLATE`. A first cut of this file did exactly
+ * that (`damage: HGAM_E_PRE_TEMPLATE.effects[0].amount`), which made both sides
+ * of the diff the SAME OBJECT: mutating the frozen `coeff` from 0.6 to 0.7 moved
+ * the input and the expectation together and all 18 tests stayed green. That is
+ * a tautology, not an acceptance proof (失敗形態 ③/④). Two independent literals
+ * is what makes the roundtrip assertion able to fail.
+ */
+const HGAM_E_PARAMS: Record<string, unknown> = {
+  // radius OMITTED — hgam is castType "targeted" with no radius
+  damage: { perRank: [350, 500, 650, 800], ratios: [{ stat: "ap", coeff: 0.6 }] },
+  damageType: "magic",
+  castTimeSec: 0.5,
+};
+
 describe("ROUNDTRIP diff=0 — re-author godie-hgam.e via tpl-instant-blast (P1 acceptance)", () => {
-  it("expand reproduces the on-disk behaviour half with SEMANTIC diff zero", () => {
-    const hgam = loadAbility("godie-hgam.e");
+  it("expand reproduces the pre-template behaviour half with SEMANTIC diff zero", () => {
     const t = loadTemplate("tpl-instant-blast");
-
-    // Params recovered from the doc itself, so the damage scaling is byte-shared.
-    const params = {
-      // radius OMITTED — hgam is castType "targeted" with no radius
-      damage: hgam.effects != null ? (hgam.effects as { amount: unknown }[])[0]!.amount : null,
-      damageType: (hgam.effects as { damageType: string }[])[0]!.damageType,
-      castTimeSec: hgam.castTimeSec,
-    };
-    const ex = expand(t, params);
-
-    // The behaviour half the expander OWNS, as it sits on disk.
-    const onDisk: Record<string, unknown> = {
-      castType: hgam.castType,
-      effects: hgam.effects,
-      targetsEnemies: hgam.targetsEnemies,
-      castTimeSec: hgam.castTimeSec,
-    };
-
-    expect(diffDocs(onDisk, ex as unknown as Record<string, unknown>)).toEqual([]);
+    const ex = expand(t, HGAM_E_PARAMS);
+    expect(diffDocs(HGAM_E_PRE_TEMPLATE, ex as unknown as Record<string, unknown>)).toEqual([]);
   });
 
   it("the merged skeleton⊕expansion passes zAbilityDoc", () => {
+    // The skeleton is still the REAL shipped doc — only the behaviour baseline is
+    // frozen. Its `effects` is already `[]` now that it is template-authored.
     const hgam = loadAbility("godie-hgam.e");
     const t = loadTemplate("tpl-instant-blast");
-    // Skeleton: hgam minus its hand-written effects, carrying template ref instead.
     const skeleton: Record<string, unknown> = {
       ...hgam,
       effects: [],
-      template: {
-        ref: "tpl-instant-blast",
-        params: {
-          damage: (hgam.effects as { amount: unknown }[])[0]!.amount,
-          damageType: (hgam.effects as { damageType: string }[])[0]!.damageType,
-          castTimeSec: hgam.castTimeSec,
-        },
-      },
+      template: { ref: "tpl-instant-blast", params: HGAM_E_PARAMS },
     };
     const merged = mergeExpansion(
       skeleton,
       expand(t, (skeleton.template as { params: Record<string, unknown> }).params),
     );
     const parsed = zAbilityDoc.parse(merged);
-    // The expanded doc reproduces hgam's effects, and keeps the template link.
-    expect(parsed.effects).toEqual(hgam.effects);
+    // The expanded doc reproduces hgam's ORIGINAL effects, and keeps the link.
+    expect(parsed.effects).toEqual(HGAM_E_PRE_TEMPLATE.effects);
     expect((parsed as { template?: unknown }).template).toBeDefined();
   });
 
   it("eject inlines the expansion and drops the template link", () => {
     const hgam = loadAbility("godie-hgam.e");
     const t = loadTemplate("tpl-instant-blast");
-    const params = {
-      damage: (hgam.effects as { amount: unknown }[])[0]!.amount,
-      damageType: (hgam.effects as { damageType: string }[])[0]!.damageType,
-      castTimeSec: hgam.castTimeSec,
-    };
-    const ejected = eject({ ...hgam, effects: [], template: { ref: t.id, params } }, t, params);
+    const ejected = eject(
+      { ...hgam, effects: [], template: { ref: t.id, params: HGAM_E_PARAMS } },
+      t,
+      HGAM_E_PARAMS,
+    );
     expect(ejected.template).toBeUndefined();
-    expect(ejected.effects).toEqual(hgam.effects);
+    expect(ejected.effects).toEqual(HGAM_E_PRE_TEMPLATE.effects);
     expect(() => zAbilityDoc.parse(ejected)).not.toThrow();
   });
 });

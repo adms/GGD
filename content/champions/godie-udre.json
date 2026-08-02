@@ -71,19 +71,7 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "duration": 3.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
       "castTimeSec": 0.3,
       "hitFeel": {
@@ -99,6 +87,20 @@
         ],
         "flashMs": 108,
         "camKick": 0.27
+      },
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "castTimeSec": 0.3
+        }
       }
     },
     "W": {
@@ -122,16 +124,22 @@
         150.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.nova",
+      "targetsEnemies": true,
+      "radius": 3.67,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 200,
+          "damage": {
             "perRank": [
-              250.0,
-              325.0,
-              400.0,
-              475.0
+              250,
+              325,
+              400,
+              475
             ],
             "ratios": [
               {
@@ -139,19 +147,13 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.6,
           "statusId": "burnstun",
-          "duration": 0.8,
-          "stun": true
+          "statusDurationSec": 0.8
         }
-      ],
-      "vfxKey": "fx.prim.physical.nova",
-      "targetsEnemies": true,
-      "radius": 3.67,
-      "castTimeSec": 0.6
+      }
     },
     "E": {
       "id": "godie-udre.e",
@@ -223,9 +225,13 @@
         333.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.wind.pulse-lg",
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 3,
           "modifiers": [
             {
               "stat": "as",
@@ -233,11 +239,9 @@
               "value": 0.4
             }
           ],
-          "duration": 3.0
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.wind.pulse-lg",
-      "castTimeSec": 0.4
+      }
     }
   },
   "skillOrder": [

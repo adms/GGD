@@ -157,16 +157,29 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 4.0 (owner 2026-08-02:「預設成 4 就好」)", () => {
+  it("出貨的 combat-env 表把生命倍率鎖在 5.0 (owner 2026-08-02 二次裁決，配合火圈 90/180)", () => {
     cover("balance-265-env-multiplier");
     // 這個數字 owner 來回改過五次:#265 從 4 降到 3、2026-07-29 升回 4、
     // 2026-07-30 升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
     // 與初始生命 300→650),同日再依 TTK sweep 升到 9,2026-08-02 直接指定回 **4**。
     //
-    // ⚠️ 4.0 **與模擬器的建議相反**,那是刻意的,不是漏掉:#153 的 TTK sweep 量到
-    // x6 的自然淘汰平均只有 161s,建議值是 9.0。owner 指定 4 = 回合會明顯變短、
-    // 靠火圈收尾(stall)的比例會上升。這是 owner 的手感裁決,模擬器的建議是輸入不是結論。
-    // 下次有人「照 sweep 把它調回 9」之前,先問 owner —— 這一行不是忘了更新。
+    // ⚠️ **5.0 不是單獨的一個數字,它是三個欄位一起改的其中一格。** 另外兩格是
+    // `config.match.json` 的 `fireRing.startSec 90` 與 `combatMaxSec 180`。
+    // 只改這一格而不動火圈,實測互殺率只有 54%(480 場)。
+    //
+    // owner 2026-08-02 的判準:「回合結束靠英雄互殺而非火圈的情形佔 70% 以上
+    // 會是健康的,但回合少於 60 秒就結束佔比太高又代表太早結束」。
+    // 實測 480 場/格證明**單獨調 maxHealth 沒有任何值同時滿足兩條** ——
+    // 互殺 ≥70% 需要 ≤3.2,「<60 秒」壓下來需要 ≥5.6,中間是空的。
+    // 原因是結構性的:互殺% ≈ P(TTK < 火圈死線),<60s% = P(TTK < 60s),
+    // **兩個門檻只差 20 秒**,而 maxHealth 是乘法縮放整條分佈的單一常數。
+    // 所以要動的是那 20 秒的窗口本身(把火圈往後推),不是血量。
+    //
+    // owner 二次裁決把門檻放寬:「人類玩家通常比電腦模擬會操作太多了,
+    // 所以電腦模擬互殺數有超過 50% 就算 ok」。×5 在**出貨舊火圈**下量到 54%,
+    // 配上 90/180 之後只會更高(火圈晚 30 秒來 = 更多時間分出勝負)。
+    //
+    // ⚠️ 下次有人只改這一格之前:三格是一組,拆開改會回到「沒有一個值可以」的死角。
     //
     // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
     // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可
@@ -174,7 +187,7 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(4.0);
+    expect(doc.multipliers.maxHealth).toBe(5.0);
     // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
     expect(doc.multipliers.healthRegen).toBe(1.0);
   });

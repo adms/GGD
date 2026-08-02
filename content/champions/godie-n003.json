@@ -71,16 +71,22 @@
         190.0
       ],
       "range": 10.08,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.ice.shockwave",
+      "targetsEnemies": true,
+      "radius": 5.5,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 300,
+          "damage": {
             "perRank": [
-              150.0,
-              200.0,
-              250.0,
-              300.0
+              150,
+              200,
+              250,
+              300
             ],
             "ratios": [
               {
@@ -88,19 +94,13 @@
                 "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5,
           "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          "statusDurationSec": 1.5
         }
-      ],
-      "vfxKey": "fx.prim.ice.shockwave",
-      "targetsEnemies": true,
-      "radius": 5.5,
-      "castTimeSec": 0.5
+      }
     },
     "W": {
       "id": "godie-n003.w",
@@ -208,25 +208,7 @@
         960.0
       ],
       "range": 8.25,
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  150.0,
-                  250.0,
-                  350.0
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.locust.frostnova.p01",
       "castTimeSec": 0.5,
       "hitFeel": {
@@ -242,7 +224,25 @@
         ],
         "flashMs": 186,
         "camKick": 0.466
-      }
+      },
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "perRank": [
+              150,
+              250,
+              350
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
+        }
+      },
+      "targetsEnemies": true
     }
   },
   "skillOrder": [

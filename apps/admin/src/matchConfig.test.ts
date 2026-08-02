@@ -15,6 +15,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
+  BURN_CURVE_SPEC,
+  burnCurvePreview,
+  validateBurnCurve,
   FIRE_RING_BLOCK,
   MATCH_CONSOLE_MAX,
   MATCH_DERIVED,
@@ -31,11 +34,21 @@ import {
   validateMatchField,
 } from "./matchConfig";
 import { getAtPath } from "./configFields";
+import {
+  addCurveRow,
+  curveRowsFrom,
+  setCurveCell,
+  type CurveRowDraft,
+} from "./configCurve";
 import { validateOverlayDoc } from "./contentOverlay";
 // 真正的消費端 —— 不是這一頁自己寫的鏡像（第⑤種故障：被測的不是出貨的那個）。
 import { phaseConfigFromSeconds } from "../../game-server/src/match/phaseConfig";
 import { MAX_STARTING_TEAM_HEALTH } from "../../game-server/src/match/PairedDuels";
-import { fireRingRulesFromConfig } from "@ggd/shared/sim/fireRing";
+import {
+  DEFAULT_MAX_PCT_PER_SEC,
+  fireRingRatePerSec,
+  fireRingRulesFromConfig,
+} from "@ggd/shared/sim/fireRing";
 import { LEVEL_CAP } from "@ggd/shared/sim/economy/progression";
 import { TICK_HZ } from "@ggd/shared/constants";
 
@@ -63,9 +76,15 @@ describe("欄位是從 Zod schema 推導出來的", () => {
     expect(paths).toContain("match.fireRing.boss.delayFireRingSec");
   });
 
-  it("放不進輸入框的葉子只有已知的那一個（`draft.tierSchedule`）", () => {
+  it("放不進輸入框的葉子只有已知的那兩個", () => {
     cover(TAG);
-    expect(MATCH_DERIVED.unsupported.map((u) => u.path)).toEqual(["draft.tierSchedule"]);
+    // `match.fireRing.burnCurve` 是斷點表（陣列），`deriveFields` 走不進去 ——
+    // 但它**不是** `draft.tierSchedule` 那種「原封不動帶著走」的分支：它有自己的
+    // 編輯路徑（`BURN_CURVE_SPEC` + `configCurve.ts`），驗證在下面的 describe。
+    expect(MATCH_DERIVED.unsupported.map((u) => u.path).sort()).toEqual([
+      "draft.tierSchedule",
+      "match.fireRing.burnCurve",
+    ]);
   });
 
   it("可以整塊拿掉的區塊只有火圈 —— `.default({})` 的 boss 區塊不是", () => {
@@ -142,19 +161,95 @@ describe("可調的格子真的走得到消費端", () => {
   it("火圈 → sim 自己的 `fireRingRulesFromConfig` 給出不同的規則", () => {
     cover(TAG);
     const read = readMatchDoc(SHIPPED_DOC);
-    const doc = matchDocFrom(
-      SHIPPED_DOC,
-      { ...read.values, "match.fireRing.startSec": "30", "match.fireRing.burnPctPerSecEnd": "0.5" },
-      true,
-    );
+    const doc = matchDocFrom(SHIPPED_DOC, { ...read.values, "match.fireRing.startSec": "30" }, true);
     const ring = getAtPath(doc, FIRE_RING_BLOCK) as Parameters<typeof fireRingRulesFromConfig>[0];
     // `dt` = 一個 tick 幾秒，和 MatchRoom 餵給它的是同一個量。
     const rules = fireRingRulesFromConfig(ring, 1 / TICK_HZ, Number(read.values["match.combatMaxSec"]));
     expect(rules.startTicks).toBe(30 * TICK_HZ);
-    expect(rules.burnPctPerSecEnd).toBe(0.5);
     // 殭屍王的兩個延長鈕也走得到（它們在 schema 裡是 `.default()`，最容易掉隊）
     expect(rules.bossExtendTicks).toBe(180 * TICK_HZ);
     expect(rules.bossDelayTicks).toBe(180 * TICK_HZ);
+  });
+
+  it("灼燒曲線改一列 → 出貨的 `fireRingRatePerSec` 在那個秒數上真的變了", () => {
+    cover(TAG);
+    // ⚠️ 舊版這裡是 `expect(rules.burnPctPerSecEnd).toBe(0.5)` —— 掃屬性代替掃
+    // 行為（第⑦種故障）：一個把 rate 硬寫成常數的實作也會通過它。現在問的是
+    // 「餵這條曲線，第 40 秒每秒燒多少」。
+    const read = readMatchDoc(SHIPPED_DOC);
+    const rows = curveRowsFrom(SHIPPED_DOC, BURN_CURVE_SPEC);
+    expect(rows).toHaveLength(3); // 出貨三列讀得到（不是空表）
+
+    const rulesOf = (r: CurveRowDraft[]): ReturnType<typeof fireRingRulesFromConfig> => {
+      const doc = matchDocFrom(SHIPPED_DOC, read.values, true, r);
+      const ring = getAtPath(doc, FIRE_RING_BLOCK) as Parameters<typeof fireRingRulesFromConfig>[0];
+      return fireRingRulesFromConfig(ring, 1 / TICK_HZ, 100);
+    };
+    // ⚠️ 這一段問的秒數刻意在**上限以下**（出貨上限 0.5，第 20 秒的曲線值 0.2）。
+    // 問第 40 秒會拿到 0.5 —— 那是天花板不是曲線，一個把 rate 硬寫成 0.5 的實作
+    // 也會過（第⑦種故障）。
+    expect(fireRingRatePerSec(rulesOf(rows), 20 * TICK_HZ)).toBeCloseTo(0.2, 12);
+    // 把第 20 秒那一列的 y 改成 0.1 → 同一個秒數的燒傷跟著掉
+    const softened = setCurveCell(rows, 1, "y", "0.1");
+    expect(fireRingRatePerSec(rulesOf(softened), 20 * TICK_HZ)).toBeCloseTo(0.1, 12);
+    // 出貨的 `maxPctPerSec: 0.5` 是唯一那道牆（owner 2026-08-02「預設最高是50%…
+    // 不必到100%」）：曲線最後一列寫 1.0，玩家實際上一秒只掉半條命。
+    expect(fireRingRatePerSec(rulesOf(rows), 40 * TICK_HZ)).toBeCloseTo(0.5, 12);
+    // 加一列（第 60 秒 2.0）也走得到，但一樣被那道牆壓在 0.5。
+    const longer = setCurveCell(setCurveCell(addCurveRow(rows), 3, "x", "60"), 3, "y", "2");
+    expect(fireRingRatePerSec(rulesOf(longer), 60 * TICK_HZ)).toBeCloseTo(0.5, 12);
+
+    const ringOf = (v: Record<string, string>): Parameters<typeof fireRingRulesFromConfig>[0] =>
+      getAtPath(matchDocFrom(SHIPPED_DOC, v, true, longer), FIRE_RING_BLOCK) as Parameters<
+        typeof fireRingRulesFromConfig
+      >[0];
+    const rateAt60 = (v: Record<string, string>): number =>
+      fireRingRatePerSec(fireRingRulesFromConfig(ringOf(v), 1 / TICK_HZ, 100), 60 * TICK_HZ);
+    // 把上限這一格調到 1.0 → 同一條曲線真的燒到 1.0。這就是「這一格有消費端」。
+    expect(rateAt60({ ...read.values, "match.fireRing.maxPctPerSec": "1" })).toBeCloseTo(1, 12);
+    // ⚠️ 留白 **不是**「不設限」，是回到出貨預設 0.5。舊版這裡斷言 2.0（sim 缺席時
+    // 填 Infinity），而 Zod 同一格宣告的是有界的 —— 兩層對「上限是多少」給出相差
+    // 無限大的答案，那是 drift 不是功能。
+    expect(rateAt60({ ...read.values, "match.fireRing.maxPctPerSec": "" })).toBeCloseTo(
+      DEFAULT_MAX_PCT_PER_SEC,
+      12,
+    );
+  });
+
+  it("曲線壞掉時**不寫**，而且存檔被擋下來", () => {
+    cover(TAG);
+    const read = readMatchDoc(SHIPPED_DOC);
+    const rows = curveRowsFrom(SHIPPED_DOC, BURN_CURVE_SPEC);
+    // 第 2 列的秒數倒退 → 內插的分母會是負的，schema 也會拒絕
+    const broken = setCurveCell(rows, 1, "x", "0");
+    expect(validateBurnCurve(broken, true).points).toBeNull();
+    const doc = matchDocFrom(SHIPPED_DOC, read.values, true, broken);
+    // 半張表沒有被寫進文件 —— 基底那一份原封不動（loader 對驗不過的文件是整份丟掉）
+    expect(getAtPath(doc, "match.fireRing.burnCurve")).toEqual([
+      { sec: 0, pctPerSec: 0.04 },
+      { sec: 20, pctPerSec: 0.2 },
+      { sec: 40, pctPerSec: 1 },
+    ]);
+    // 而且超界的 y 會被逐格擋下來（#277：上界和下界一樣重要）
+    expect(validateBurnCurve(setCurveCell(rows, 2, "y", "5"), true).points).toBeNull();
+    expect(validateBurnCurve(setCurveCell(rows, 2, "y", "-1"), true).points).toBeNull();
+  });
+
+  it("後台的預覽走的是出貨函式，而且把「回合第幾秒」一起算出來", () => {
+    cover(TAG);
+    const rows = curveRowsFrom(SHIPPED_DOC, BURN_CURVE_SPEC);
+    const preview = burnCurvePreview(validateBurnCurve(rows, true).points, 60, 1);
+    const at40 = preview.find((p) => p.sinceIgniteSec === 40)!;
+    // owner 的那一句：點燃後 40 秒 = 回合第 100 秒 = 100 %/秒 = 一秒必死
+    expect(at40.roundSec).toBe(100);
+    expect(at40.pctPerSec).toBeCloseTo(1, 12);
+    // 1.033 s, not a clean 1.000: the preview counts REAL 30 Hz ticks the way the
+    // sim does, and `1 - 30 × (1/30)` leaves a float crumb, so the 31st tick is
+    // the one that finishes the bar. Showing 1.03 is more honest than showing a
+    // closed-form 1.00 the game will not reproduce.
+    expect(at40.secondsToDeath).toBeCloseTo(1.033, 2);
+    // 起燃那一刻站出去不回來 → 11.6 秒（和 sim 實測同一個數字）
+    expect(preview.find((p) => p.sinceIgniteSec === 0)!.secondsToDeath).toBeCloseTo(11.6, 2);
   });
 
   it("停用火圈 → 文件裡整塊不見 → `resolveFireRing` 那條路會回 null", () => {
@@ -215,8 +310,16 @@ describe("跨欄位規則 —— 單格上下界擋不住的那兩條", () => {
   it("火圈收不完就被硬底線砍掉時，存檔被擋下來", () => {
     cover(TAG);
     const read = readMatchDoc(SHIPPED_DOC);
-    // startSec 90 + shrinkSec 20 = 110 > combatMaxSec 100 → 圈還在縮就強制結束
-    const doc = matchDocFrom(SHIPPED_DOC, { ...read.values, "match.fireRing.startSec": "90" }, true);
+    // 二段制: 拉長**第二段**的收圈到 200 秒 → 整個圈 60 + (30 + 200) = 290 秒，
+    // 遠在 combatMaxSec 之外。⚠️ 這裡刻意動的是第二段而不是 `startSec`：
+    // 舊的檢查算式是 `startSec + shrinkSec`，只看第一段，對這個改動**完全沒有
+    // 反應** —— 也就是說這一條測試如果還在測 `startSec`，它對真正的缺陷是盲的
+    // （失敗形態 ④）。
+    const doc = matchDocFrom(
+      SHIPPED_DOC,
+      { ...read.values, "match.fireRing.stage2ShrinkSec": "200" },
+      true,
+    );
     const issues = matchDocIssues(doc);
     expect(issues.length).toBeGreaterThan(0);
     expect(issues.join(" ")).toContain("combatMaxSec");

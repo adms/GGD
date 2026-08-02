@@ -70,11 +70,15 @@
       ],
       "range": 7.0,
       "radius": 3.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.nova",
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 163.5,
+          "damage": {
             "perRank": [
               80,
               140,
@@ -87,17 +91,13 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
           "statusId": "slow30",
-          "duration": 1.5,
-          "moveSpeedMult": 0.7
+          "statusDurationSec": 1.5
         }
-      ],
-      "vfxKey": "fx.prim.void.nova",
-      "targetsEnemies": true
+      },
+      "castTimeSec": 0
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -167,11 +167,15 @@
       ],
       "range": 8.0,
       "radius": 3.5,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.shockwave",
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 191,
+          "damage": {
             "perRank": [
               60,
               110,
@@ -184,17 +188,13 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
           "statusId": "root",
-          "duration": 1.0,
-          "root": true
+          "statusDurationSec": 1
         }
-      ],
-      "vfxKey": "fx.prim.void.shockwave",
-      "targetsEnemies": true
+      },
+      "castTimeSec": 0
     },
     "R": {
       "id": "godie-zombiex.r",
@@ -215,11 +215,16 @@
       ],
       "range": 0.0,
       "radius": 4.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.7,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 218,
+          "damage": {
             "perRank": [
               300,
               500,
@@ -231,18 +236,13 @@
                 "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.7,
           "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          "statusDurationSec": 1.5
         }
-      ],
-      "vfxKey": "fx.prim.void.nova-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.7
+      }
     }
   },
   "skillOrder": [

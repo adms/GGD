@@ -19,11 +19,11 @@
     350.0
   ],
   "range": 9.17,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           350,
           500,
@@ -36,9 +36,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.root-snare",
   "targetsEnemies": true,
   "schema": "ability@1",

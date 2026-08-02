@@ -28,7 +28,16 @@ import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
-import { expand, mergeExpansion } from "./templates/expand";
+import {
+  hasTemplateBinding,
+  resolveTemplateExpansion,
+  type TemplateResolveFailure,
+} from "./templates/resolve";
+import {
+  recordTemplateExpansionFailures,
+  templateExpansionFailureSummary,
+  type TemplateExpansionFailure,
+} from "./templates/failures";
 
 class ContentRegistry<V extends { id: string }> {
   private map = new Map<string, V>();
@@ -135,7 +144,7 @@ function stable(v: unknown): string {
  * `content/abilities/<id>.json` the source of truth rather than the
  * denormalised copy embedded in the champion doc. See `registerChampion`.
  */
-export function registerAll(store: ContentStore): void {
+export function registerAll(store: ContentStore, options: RegisterAllOptions = {}): void {
   // 鑄技工坊: build the template map first, then expand any templated ability at
   // registration time — BOTH the standalone doc AND its champion-embedded twin,
   // so the store-authoritative standalone and the sim-read embedded copy get the
@@ -144,8 +153,14 @@ export function registerAll(store: ContentStore): void {
   const templates = new Map<string, TemplateDoc>(
     store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t]),
   );
-  const expandStandalone = (d: AbilityDef): AbilityDef => expandIfTemplated(d, templates, true);
-  const expandEmbedded = (d: AbilityDef): AbilityDef => expandIfTemplated(d, templates, false);
+  const onFailure = options.onTemplateFailure ?? "degrade";
+  const failures: TemplateExpansionFailure[] = [];
+  const expandStandalone = (d: AbilityDef): AbilityDef =>
+    expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+  const expandEmbedded =
+    (championId: string, slot: string) =>
+    (d: AbilityDef): AbilityDef =>
+      expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
 
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
   for (const d of store.all<ItemDef>("items")) Items.register(d.id, d);
@@ -167,36 +182,173 @@ export function registerAll(store: ContentStore): void {
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
   for (const d of store.all<SkinDoc>("skins")) Skins.register(d);
+
+  // ---- 要大聲 ----------------------------------------------------------------
+  // Everything above finished. If anything degraded, say so ONCE, in a line the
+  // deploy smoke test can grep next to `[client] content loaded: …`, and park
+  // the full records where they can still be read after the console is gone.
+  if (failures.length > 0) {
+    recordTemplateExpansionFailures(failures);
+    console.error(`[content] ${templateExpansionFailureSummary(failures)}`);
+  }
 }
 
+/**
+ * 決策點 (CLAUDE.md 第一守則): what a template that will not expand should do.
+ *
+ * `"degrade"` (shipped default) — only the offending skill is affected; every
+ * other champion, item, arena and config registers normally. `"throw"` keeps the
+ * pre-2026-08-02 behaviour, which is genuinely what an OFFLINE tool wants: a
+ * content-build or an audit script would rather stop than emit a set with a
+ * silently dead skill in it.
+ *
+ * ⚠️ This is an argument rather than a `content/config/*.json` field ONLY because
+ * `schema/config.ts` is under concurrent edit by another lane; the field is the
+ * right home and is named as follow-up work rather than quietly skipped. The
+ * default is not a coin-flip: the runtime consumer is the game client, and the
+ * failure this replaces is the 2026-08-01 empty-champion-select outage.
+ */
+export interface RegisterAllOptions {
+  readonly onTemplateFailure?: "degrade" | "throw";
+}
+
+/**
+ * The marker a degraded skill wears IN THE GAME.
+ *
+ * ⚠️ This is the third of the three signals, and the only one a PLAYER can see.
+ * The ledger and the boot log both need someone to go looking; the tooltip is
+ * read by whoever is standing in front of the broken skill wondering why nothing
+ * happened. 靜默降級 — content that half-dies and looks exactly like content that
+ * is fine — is the failure shape this project has paid for most often, so the
+ * degraded def says what happened in the one place it cannot be missed.
+ *
+ * It is stamped on BOTH `description` and `descriptionRoles`, because
+ * `ui/components/abilityText.ts` PREFERS the role markup when it exists — marking
+ * only `description` would put the notice on the field nobody renders (失敗形態
+ * ①: 畫在畫面外). Runtime only: nothing here is ever written back to disk.
+ */
+export const DEGRADED_ABILITY_NOTE = "⚠️【模板展開失敗，此技能目前沒有效果】";
+
 /** A doc that MAY carry the Skill-Forge template link (the field the sim type omits). */
-type MaybeTemplated = { readonly template?: { ref: string; params: Record<string, unknown> } };
+type MaybeTemplated = { readonly template?: unknown };
+
+/** Where an embedded twin came from, for the failure record. */
+interface EmbeddedOrigin {
+  readonly championId: string;
+  readonly slot: string;
+}
 
 /**
  * If `doc` references a template, expand it and re-validate the result with the
  * shared schema (standalone → zAbilityDoc keeps the `schema` tag; embedded →
  * zAbilityDef, which forbids it). Non-templated docs pass through untouched.
+ *
+ * ⚠️ FAILURE IS ISOLATED TO THIS ONE SKILL. It used to `throw`, from inside
+ * `registerAll`'s loop — see the header of `templates/resolve.ts` for what that
+ * cost. Under the shipped `"degrade"` policy a skill that will not expand is
+ * still registered (so its champion, and every OTHER champion, still exists),
+ * carrying only what a human hand-wrote on the doc, wearing
+ * {@link DEGRADED_ABILITY_NOTE}, and with a record in the failure ledger.
  */
 function expandIfTemplated(
   doc: AbilityDef,
   templates: Map<string, TemplateDoc>,
   standalone: boolean,
+  onFailure: "degrade" | "throw",
+  sink: TemplateExpansionFailure[],
+  origin: EmbeddedOrigin | undefined,
 ): AbilityDef {
-  const link = (doc as unknown as MaybeTemplated).template;
-  if (link === undefined) return doc;
-  const t = templates.get(link.ref);
-  if (t === undefined) {
-    throw new Error(`ability ${doc.id}: template "${link.ref}" not found in ability-templates`);
+  const raw = doc as unknown as Record<string, unknown>;
+  if (!hasTemplateBinding(raw)) return doc;
+
+  const resolution = resolveTemplateExpansion(raw, templates);
+  if (resolution.ok) {
+    const parsed = standalone
+      ? zAbilityDoc.safeParse(resolution.merged)
+      : zAbilityDef.safeParse(resolution.merged);
+    if (parsed.success) return parsed.data as unknown as AbilityDef;
+    // The expansion ran but produced a doc the schema rejects — a template bug,
+    // not a content bug, and exactly as fatal to this skill as a missing ref.
+    return handleFailure(
+      doc,
+      { phase: "expand", refs: resolution.refs, missingRefs: [], message: zodMessage(parsed.error) },
+      standalone,
+      onFailure,
+      sink,
+      origin,
+    );
   }
-  const merged = mergeExpansion(doc as unknown as Record<string, unknown>, expand(t, link.params));
-  const parsed = standalone ? zAbilityDoc.parse(merged) : zAbilityDef.parse(merged);
-  return parsed as unknown as AbilityDef;
+  return handleFailure(doc, resolution.failure, standalone, onFailure, sink, origin);
+}
+
+function zodMessage(err: { issues: readonly { path: PropertyKey[]; message: string }[] }): string {
+  const first = err.issues[0];
+  return first === undefined
+    ? "expansion failed schema validation"
+    : `expansion failed schema validation at ${first.path.join(".") || "(root)"}: ${first.message}`;
+}
+
+/**
+ * Degrade ONE ability (or, under `"throw"`, take the process down the way the
+ * pre-2026-08-02 code did).
+ *
+ * The degraded def:
+ *  · keeps the hand-authored `effects` and nothing else the template promised —
+ *    never a guess, so the skill is inert rather than approximately right;
+ *  · DROPS the `template` link, because a link that cannot expand must not go on
+ *    looking expandable to whatever reads the registered def next;
+ *  · carries {@link DEGRADED_ABILITY_NOTE} on both tooltip fields.
+ * If even that will not parse (a doc broken beyond its template link) the raw
+ * doc is returned unparsed — this function NEVER throws under `"degrade"`,
+ * because a throw here is the whole defect coming back.
+ */
+function handleFailure(
+  doc: AbilityDef,
+  failure: TemplateResolveFailure,
+  standalone: boolean,
+  onFailure: "degrade" | "throw",
+  sink: TemplateExpansionFailure[],
+  origin: EmbeddedOrigin | undefined,
+): AbilityDef {
+  const where = origin === undefined ? "standalone" : "embedded";
+  const detail =
+    `ability ${doc.id} (${where}${origin ? ` ${origin.championId}.${origin.slot}` : ""}): ` +
+    failure.message;
+  if (onFailure === "throw") throw new Error(detail);
+
+  const raw = doc as unknown as Record<string, unknown>;
+  const out: Record<string, unknown> = { ...raw };
+  delete out["template"];
+  const effects = Array.isArray(raw["effects"]) ? (raw["effects"] as unknown[]) : [];
+  out["effects"] = effects;
+  out["description"] = DEGRADED_ABILITY_NOTE + stringOr(raw["description"], "");
+  if (typeof raw["descriptionRoles"] === "string") {
+    out["descriptionRoles"] = DEGRADED_ABILITY_NOTE + raw["descriptionRoles"];
+  }
+
+  sink.push({
+    abilityId: doc.id,
+    where,
+    ...(origin === undefined ? {} : { championId: origin.championId, slot: origin.slot }),
+    phase: failure.phase,
+    refs: failure.refs,
+    missingRefs: failure.missingRefs,
+    message: failure.message,
+    degradedEffectCount: effects.length,
+  });
+
+  const parsed = standalone ? zAbilityDoc.safeParse(out) : zAbilityDef.safeParse(out);
+  return (parsed.success ? parsed.data : out) as unknown as AbilityDef;
+}
+
+function stringOr(v: unknown, fallback: string): string {
+  return typeof v === "string" ? v : fallback;
 }
 
 /** Expand the four embedded Q/W/E/R twins of a champion in place (immutably). */
 function expandChampionTemplates(
   def: ChampionDef,
-  expandEmbedded: (d: AbilityDef) => AbilityDef,
+  expandEmbedded: (championId: string, slot: string) => (d: AbilityDef) => AbilityDef,
 ): ChampionDef {
   const slots = ["Q", "W", "E", "R"] as const;
   let changed = false;
@@ -204,7 +356,7 @@ function expandChampionTemplates(
   for (const slot of slots) {
     const emb = def.abilities[slot];
     if ((emb as unknown as MaybeTemplated).template === undefined) continue;
-    abilities[slot] = expandEmbedded(emb);
+    abilities[slot] = expandEmbedded(def.id, slot)(emb);
     changed = true;
   }
   return changed ? { ...def, abilities } : def;

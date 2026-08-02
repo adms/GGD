@@ -203,6 +203,16 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .forge-degrade-panel .phase { color: #9a8f74; }
 .forge-ok-caps { margin: 8px 0 0; font-size: 11px; color: #77b98d; }
 
+/* 擋下寫回的理由 — RED, not amber. 落差告知 is「這版做不到」(you may proceed);
+   this is「存下去這支技能就死了」(you may not). Same colour would merge the two. */
+.forge-blockers {
+  margin: 12px 0; padding: 12px 14px;
+  border: 1px solid #7a2f2f; border-left-width: 4px; border-radius: 6px;
+  background: #2a1616;
+}
+.forge-blockers h4 { margin: 0 0 8px; font-size: 13px; color: #ff9a8a; }
+.forge-blockers ul { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.7; color: #e5c9c4; }
+
 .forge-cols { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr); gap: 20px; }
 .forge-col h3 { margin: 16px 0 6px; font-size: 13px; color: #c8d2e6; }
 .forge-col h3:first-child { margin-top: 0; }

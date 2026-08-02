@@ -47,6 +47,11 @@ describe("fire ring is armed + timed by the MatchController (firering-arm, BUG B
     const fr = shippedFireRing();
     expect(fr.startSec).toBe(60); // #195 owner directive (was 180 under #132)
     expect(fr.shrinkSec).toBe(20);
+    // 二段制 (owner 2026-08-02): the host must hand the SECOND stage through
+    // too — it is the same `match.fireRing` object, so a knob the operator can
+    // turn with no effect here would be failure mode ②.
+    expect(fr.stage2StartSec).toBe(90);
+    expect(fr.stage2ShrinkSec).toBe(20);
 
     const cfg = { champSelectTicks: 2, intermissionTicks: 3, combatMaxTicks: 100 * 30, resolutionTicks: 3 };
     const ctl = new MatchController(
@@ -69,9 +74,14 @@ describe("fire ring is armed + timed by the MatchController (firering-arm, BUG B
     // 60s × 30Hz = 1800 ticks (dt = 1/30) — 「戰鬥開始 60秒」.
     expect(ctl.world.fireRingRules!.startTicks).toBe(Math.round(60 / ctl.world.dt));
     expect(ctl.world.fireRingRules!.startTicks).toBe(1800);
-    // …and 20 s × 30Hz = 600 ticks to close — 「20秒時間縮到最小」.
+    // …and 20 s × 30Hz = 600 ticks for 第一段 — 「第一段燒 20 秒就停止縮圈」.
     expect(ctl.world.fireRingRules!.shrinkTicks).toBe(600);
-    expect(ctl.world.fireRingRules!.minRadius).toBe(0.5);
+    // 二段制 arrived at the sim intact: a 30 s gap to 第二段 (90 − 60) and
+    // another 600 ticks to 全地圖淹沒 at radius 0.
+    expect(ctl.world.fireRingRules!.stage1Radius).toBe(4);
+    expect(ctl.world.fireRingRules!.stage2GapTicks).toBe(900);
+    expect(ctl.world.fireRingRules!.stage2ShrinkTicks).toBe(600);
+    expect(ctl.world.fireRingRules!.minRadius).toBe(0);
     expect(ctl.world.fireRingTicks).toBe(0);
   });
 
@@ -83,8 +93,13 @@ describe("fire ring is armed + timed by the MatchController (firering-arm, BUG B
       startSec: 2,
       shrinkSec: 3,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.1,
-      burnPctPerSecEnd: 0.5,
+      // 10 %/s 起燃 → 3 秒收完時 50 %/s → 之後續爬到 100 %/s。x 軸是「點燃後
+      // 秒數」，所以最後一列不是收圈終點而是更晚的時間。
+      burnCurve: [
+        { sec: 0, pctPerSec: 0.1 },
+        { sec: 3, pctPerSec: 0.5 },
+        { sec: 6, pctPerSec: 1 },
+      ],
       maxPctPerSec: 1,
       // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
       // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

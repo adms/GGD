@@ -17,9 +17,11 @@
     333.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 3,
       "modifiers": [
         {
           "stat": "as",
@@ -27,9 +29,9 @@
           "value": 0.4
         }
       ],
-      "duration": 3.0
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.pulse-lg",
   "schema": "ability@1",
   "castTimeSec": 0.4

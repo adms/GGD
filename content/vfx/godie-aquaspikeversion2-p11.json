@@ -3,11 +3,11 @@
   "schema": "vfx@1",
   "emitter": {
     "shape": "cone",
-    "radius": 0.05,
+    "radius": 0.001,
     "angleDeg": 180.0
   },
   "mode": "burst",
-  "burstCount": 8,
+  "burstCount": 25,
   "lifetimeSec": {
     "min": 0.7,
     "max": 0.7

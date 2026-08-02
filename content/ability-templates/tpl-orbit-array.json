@@ -22,7 +22,10 @@
     },
     "aim": {
       "type": "enum",
-      "values": ["inward", "outward"],
+      "values": [
+        "inward",
+        "outward"
+      ],
       "default": "inward",
       "inert": "本版把整圈折算成一個圓盤:向內收與向外放的命中集合完全相同(兩者都是半徑=reach 的圓),所以這個選擇目前不改變任何結果。P2 有了逐道投射體之後才會生效 —— 現在填它是為了把原作的實測值留在檔案裡"
     },
@@ -37,24 +40,33 @@
     "damage": {
       "type": "scaling",
       "default": {
-        "perRank": [325],
+        "perRank": [
+          325
+        ],
         "ratios": []
       }
     },
     "damageType": {
       "type": "enum",
-      "values": ["magic", "physical", "true"],
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
       "default": "magic"
     },
     "castTimeSec": {
       "type": "number",
+      "optional": true,
       "default": 0,
       "min": 0,
       "max": 5,
       "unit": "s"
     }
   },
-  "requires": ["periodicDamage"],
+  "requires": [
+    "periodicDamage"
+  ],
   "gapScore": 6,
   "exemplar": {
     "skill": "57-04 竹蜻蜓",

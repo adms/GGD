@@ -33,6 +33,7 @@ const REWARDS = { placement1: 1, placement2: 0, placement3: 0, placement4: 0 };
 const economy = (over: Partial<StoreEconomy> = {}): StoreEconomy => ({
   championUnlockCost: SHIPPED_UNLOCK_COST,
   freeChampionIds: ["godie-e002", "godie-hart"],
+  randomPickOwnership: "block",
   mcoinRewards: REWARDS,
   ...over,
 });
@@ -49,6 +50,8 @@ describe("商店經濟: reading the doc", () => {
     expect(got).toEqual({
       championUnlockCost: 250,
       freeChampionIds: ["godie-hart"],
+      // 缺欄位的舊文件讀成出貨預設（owner 的「只能隨機到有解鎖的」）。
+      randomPickOwnership: "block",
       mcoinRewards: REWARDS,
     });
   });
@@ -137,8 +140,24 @@ describe("商店經濟: saving writes the WHOLE doc", () => {
       schema: STORE_SCHEMA,
       championUnlockCost: 250,
       freeChampionIds: ["godie-e002", "godie-hart"],
+      randomPickOwnership: "block",
       mcoinRewards: REWARDS,
     });
+  });
+
+  it("★ 🎲 擁有權欄位真的被寫進去，而且是操作員選的那一個（不是出貨預設）", () => {
+    // 突變：把 `randomPickOwnership: economy.randomPickOwnership` 從 storeDocFor
+    // 拿掉 → 這條紅。少了它，操作員在下拉選單改的東西存下去等於沒改（覆蓋層
+    // 那份會缺欄位，client 讀成出貨預設）—— 就是 #241「有入口也不叫可調」的形狀。
+    expect(storeDocFor(economy({ randomPickOwnership: "whitelist" })).randomPickOwnership).toBe("whitelist");
+    expect(storeDocFor(economy({ randomPickOwnership: "block" })).randomPickOwnership).toBe("block");
+  });
+
+  it("★ 舊 overlay 沒有這一欄 → 讀成 block，壞值也讀成 block", () => {
+    const base = { id: "store", schema: STORE_SCHEMA, championUnlockCost: 300, freeChampionIds: [], mcoinRewards: REWARDS };
+    expect(extractStore(base)?.randomPickOwnership).toBe("block");
+    expect(extractStore({ ...base, randomPickOwnership: "yes-please" })?.randomPickOwnership).toBe("block");
+    expect(extractStore({ ...base, randomPickOwnership: "whitelist" })?.randomPickOwnership).toBe("whitelist");
   });
 
   it("preserves a NON-default reward table — it must be echoed, not re-defaulted", () => {

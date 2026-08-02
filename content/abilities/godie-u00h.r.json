@@ -7,25 +7,27 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    175.0,
-    275.0,
-    375.0
+    175,
+    275,
+    375
   ],
-  "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 327,
+      "damage": {
         "perRank": [
-          333.0,
-          555.0,
-          777.0
+          333,
+          555,
+          777
         ],
         "ratios": [
           {
@@ -33,19 +35,17 @@
             "coeff": 0.6
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.8,
       "statusId": "burnstun",
-      "duration": 0.8,
-      "stun": true
+      "statusDurationSec": 0.8
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.tornado-lg",
   "sfxKey": "wc3.dragonyes2",
   "targetsEnemies": true,
-  "radius": 6.0,
+  "radius": 6,
   "schema": "ability@1",
   "castTimeSec": 0.8
 }

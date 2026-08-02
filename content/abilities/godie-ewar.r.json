@@ -16,11 +16,11 @@
     345.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           650.0,
           950.0,
@@ -32,9 +32,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "targetsEnemies": true,
   "schema": "ability@1",

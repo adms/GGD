@@ -19,16 +19,17 @@
     165.0
   ],
   "range": 10.08,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 400,
+      "damage": {
         "perRank": [
-          200.0,
-          275.0,
-          350.0,
-          425.0
+          200,
+          275,
+          350,
+          425
         ],
         "ratios": [
           {
@@ -36,9 +37,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.sound.nova",
   "targetsEnemies": true,
   "schema": "ability@1",

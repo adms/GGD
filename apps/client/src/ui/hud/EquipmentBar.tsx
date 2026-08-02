@@ -20,6 +20,8 @@ import type { ItemId } from "@ggd/shared/ids";
 import { useHud } from "../../net/RoomStore";
 import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
+// owner 2026-08-02 的卡片排版,四個渲染點之一(#140 的裝備欄 hover 詳情)。
+import { ItemCardBody } from "../components/ItemCardBody";
 import { UNKNOWN_ITEM_LABEL } from "../panels/itemStats";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM } from "../theme";
 import { hudSlotStyle, hudSlotWidth } from "./hudLayout";
@@ -95,7 +97,13 @@ export function EquipmentBar(): React.JSX.Element | null {
             <Tooltip
               key={cell.slot}
               title={cell.name ?? UNKNOWN_ITEM_LABEL}
+              // 純文字仍然傳,當作沒有 DOM 時的回退;有 DOM 時 bodyNode 贏。
               body={cell.tooltipBody ?? undefined}
+              bodyNode={
+                cell.description ? (
+                  <ItemCardBody description={cell.description} fontSize={11.5} />
+                ) : undefined
+              }
               meta={cell.meta.length > 0 ? cell.meta.map((m) => ({ label: m.label, value: m.value })) : undefined}
               style={{ display: "block" }}
             >

@@ -176,8 +176,11 @@ export function IntermissionStage(): React.JSX.Element | null {
     const model = hudActions.localChampionModel();
     if (!model) return;
     // championId last (#263): the shop must paint the SAME w3x art colour the
-    // arena does — `modelKey` cannot answer that, it is many-to-one.
-    void sceneRef.current?.setChampion(model.glbPath, model.scale, model.modelKey, championId);
+    // arena does — a modelKey cannot answer that, it is many-to-one.
+    // The third argument is the DOC's own `yawOffsetDeg`; it used to be a
+    // modelKey, which is how the shop and the arena came to key the facing
+    // exception off two different things for the same mesh.
+    void sceneRef.current?.setChampion(model.glbPath, model.scale, model.yawOffsetDeg, championId);
   }, [championId]);
 
   // ---- a completed purchase: merchant hands it over, YOUR hero RESPONDS -----

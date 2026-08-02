@@ -147,11 +147,15 @@
         275.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.snapdragonmissilelaunch1",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               150,
               250,
@@ -165,13 +169,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "sfxKey": "wc3.snapdragonmissilelaunch1",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "E": {
       "id": "godie-u00j.e",
@@ -194,11 +196,16 @@
         425.0
       ],
       "range": 6.42,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.pulse",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 327,
+          "damage": {
             "perRank": [
               150,
               250,
@@ -211,13 +218,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.prim.void.pulse",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.5
+      }
     },
     "R": {
       "id": "godie-u00j.r",
@@ -238,15 +243,18 @@
         440.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.explosion-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0
+              75,
+              75,
+              75
             ],
             "ratios": [
               {
@@ -254,12 +262,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.void.explosion-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     }
   },
   "skillOrder": [

@@ -42,6 +42,16 @@ import {
   type ConfigCurveSpec,
   type CurveRowDraft,
 } from "../configCurve";
+import {
+  addTableRow,
+  removeTableRow,
+  setTableCell,
+  tableDirty,
+  tableRowsFrom,
+  validateTable,
+  type ConfigTableSpec,
+  type TableRowDraft,
+} from "../configTables";
 
 function errText(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
@@ -71,6 +81,14 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
    * 存檔時再被拆回來一次 —— 兩次翻譯就是兩個會 drift 的地方。
    */
   const [curveRows, setCurveRows] = useState<CurveRowDraft[] | null>(null);
+  /**
+   * 對照表的畫面狀態，`path → 列`（`spec.tables` 沒宣告時永遠是空物件）。
+   *
+   * 和 `curveRows` 分開、也和 `draft` 分開，理由同上：一份「path → 一個字串」的
+   * draft 塞不下一張表，硬塞就要發明一套 `markers.7.value` 的路徑語法，而那套語法
+   * 存檔時還要再被拆回來一次 —— 兩次翻譯就是兩個會 drift 的地方。
+   */
+  const [tableRows, setTableRows] = useState<Record<string, TableRowDraft[]>>({});
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
@@ -94,6 +112,11 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
           setSource("none");
         }
         if (spec.curve) setCurveRows(curveRowsFrom(live, spec.curve));
+        if (spec.tables) {
+          const next: Record<string, TableRowDraft[]> = {};
+          for (const t of spec.tables) next[t.path] = tableRowsFrom(live, t);
+          setTableRows(next);
+        }
       } catch (err) {
         setApiErr(errText(err));
       }
@@ -129,9 +152,24 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
     return JSON.stringify(curveRows) !== JSON.stringify(curveRowsFrom(base, spec.curve));
   }, [spec.curve, curveRows, base]);
 
-  const dirty = Object.keys(draft).length > 0 || curveDirty;
+  /** 每一張對照表的判決（沒有表的文件是空陣列）。 */
+  const tableVerdicts = useMemo(
+    () =>
+      (spec.tables ?? []).map((t) => ({
+        spec: t,
+        rows: tableRows[t.path] ?? null,
+        verdict: validateTable(tableRows[t.path] ?? [], t),
+        dirty: tableDirty(tableRows[t.path] ?? null, base, t),
+      })),
+    [spec.tables, tableRows, base],
+  );
+
+  const dirty =
+    Object.keys(draft).length > 0 || curveDirty || tableVerdicts.some((t) => t.dirty);
   const allValid =
-    Object.keys(errors).length === 0 && (curveVerdict === null || curveVerdict.points !== null);
+    Object.keys(errors).length === 0 &&
+    (curveVerdict === null || curveVerdict.points !== null) &&
+    tableVerdicts.every((t) => t.verdict.value !== null);
   const canSave = dirty && allValid && base !== null && !busy;
 
   const save = async (): Promise<void> => {
@@ -151,6 +189,13 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         // 因為半張曲線在 sim 那端會整條退回出貨曲線，而畫面會說「✓ 已寫入」。
         if (!curveVerdict?.points) throw new Error(`${spec.curve.title}：這張表還沒填對`);
         edits.set(spec.curve.path, curveVerdict.points);
+      }
+      for (const t of tableVerdicts) {
+        if (!t.dirty) continue;
+        // 同上：半張表送出去比不送更糟 —— `markers` 少幾列不會報錯，只會讓那幾個
+        // 標記安靜地變成「沒登記過」的顏色。
+        if (t.verdict.value === null) throw new Error(`${t.spec.title}：這張表還沒填對`);
+        edits.set(t.spec.path, t.verdict.value);
       }
       // ⚠️ 整份文件 = 基底 ⊕ 編輯。把 `base` 換成 `{}` 或只放編輯過的鍵，
       // 這一頁不認得的分支就會在這一次儲存裡消失。
@@ -303,6 +348,15 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         />
       )}
 
+      {(spec.tables ?? []).map((t) => (
+        <DocTable
+          key={t.path}
+          spec={t}
+          rows={tableRows[t.path] ?? null}
+          setRows={(next) => setTableRows({ ...tableRows, [t.path]: next })}
+        />
+      ))}
+
       {spec.preserved.length > 0 && (
         <div
           data-field="preserved-note"
@@ -338,6 +392,156 @@ export function ConfigDocPage(props: { spec: ConfigDocSpec }): JSX.Element {
         </span>
       </div>
     </Panel>
+  );
+}
+
+// ─────────────────────────────────────────────────────── 對照表的表格 ──────
+
+/**
+ * 一張可以加/刪列的對照表（`item-card.markers` 那一族）。
+ *
+ * ⚠️ 這個元件**只負責畫**。「這一列填得對不對」「重複的鍵會怎麼樣」「存下去會變成
+ * 什麼形狀」全部在 `../configTables` —— 規則寫在畫面裡就沒有人測得到，而這張表最
+ * 容易錯的是「這一列永遠不會命中」（鍵前後多一個空白），那在畫面上完全看不出來。
+ */
+function DocTable(props: {
+  spec: ConfigTableSpec;
+  rows: TableRowDraft[] | null;
+  setRows: (next: TableRowDraft[]) => void;
+}): JSX.Element {
+  const { spec, rows, setRows } = props;
+  const verdict = useMemo(() => validateTable(rows ?? [], spec), [rows, spec]);
+  const live = rows ?? [];
+
+  return (
+    <div
+      data-field={`table-section.${spec.path}`}
+      style={{
+        marginTop: 14,
+        padding: "12px 14px",
+        border: `1px solid ${PANEL_BORDER}`,
+        borderRadius: 6,
+      }}
+    >
+      <div style={{ color: TEXT_MAIN, fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+        {spec.title}　<code style={{ color: TEXT_DIM, fontSize: 11 }}>{spec.path}</code>
+      </div>
+      {spec.intro.map((p, i) => (
+        <p key={i} style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.75, margin: "0 0 8px" }}>
+          {p}
+        </p>
+      ))}
+      <div style={{ color: TEXT_DIM, fontSize: 11, lineHeight: 1.7, margin: "0 0 10px" }}>
+        <b style={{ color: TEXT_MAIN }}>{spec.key.zh}</b>（最多 {spec.key.maxLen} 字）
+        {spec.key.note}
+        {spec.value && (
+          <>
+            <br />
+            <b style={{ color: TEXT_MAIN }}>{spec.value.zh}</b>
+            {spec.value.note}
+          </>
+        )}
+      </div>
+
+      {live.length === 0 ? (
+        <div data-field={`table-empty.${spec.path}`} style={{ color: TEXT_DIM, fontSize: 12 }}>
+          {spec.minRows > 0
+            ? `⚠️ 這份文件裡讀不到 ${spec.path}（或它是空的）。至少要 ${spec.minRows} 列。`
+            : "目前一列都沒有。"}
+        </div>
+      ) : (
+        <div style={{ display: "grid", gap: 6 }}>
+          {live.map((r, i) => {
+            const err = verdict.rows[i] ?? {};
+            return (
+              <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <span style={{ width: 34, color: TEXT_DIM, fontSize: 12, paddingTop: 6 }}>
+                  {i + 1}.
+                </span>
+                <span style={{ display: "inline-flex", flexDirection: "column", gap: 3 }}>
+                  <input
+                    aria-label={`第 ${i + 1} 列 ${spec.key.zh}`}
+                    data-field={`table.${spec.path}.${i}.key`}
+                    value={r.key}
+                    onChange={(e) => setRows(setTableCell(live, i, "key", e.target.value))}
+                    style={{
+                      width: 240,
+                      padding: "5px 8px",
+                      background: "#10141f",
+                      color: err.key ? DANGER : TEXT_MAIN,
+                      border: `1px solid ${err.key ? DANGER : PANEL_BORDER}`,
+                      borderRadius: 4,
+                      fontSize: 13,
+                    }}
+                  />
+                  {err.key && <span style={{ color: DANGER, fontSize: 11 }}>{err.key}</span>}
+                </span>
+                {spec.value && (
+                  <span style={{ display: "inline-flex", flexDirection: "column", gap: 3 }}>
+                    <select
+                      aria-label={`第 ${i + 1} 列 ${spec.value.zh}`}
+                      data-field={`table.${spec.path}.${i}.value`}
+                      value={r.value}
+                      onChange={(e) => setRows(setTableCell(live, i, "value", e.target.value))}
+                      style={{
+                        padding: "5px 8px",
+                        minWidth: 260,
+                        background: "#10141f",
+                        color: err.value ? DANGER : TEXT_MAIN,
+                        border: `1px solid ${err.value ? DANGER : PANEL_BORDER}`,
+                        borderRadius: 4,
+                        fontSize: 13,
+                      }}
+                    >
+                      {spec.value.options.map((o) => (
+                        <option key={o.value} value={o.value}>
+                          {o.zh}
+                        </option>
+                      ))}
+                    </select>
+                    {err.value && <span style={{ color: DANGER, fontSize: 11 }}>{err.value}</span>}
+                  </span>
+                )}
+                <Btn
+                  small
+                  kind="danger"
+                  dataField={`table.${spec.path}.remove.${i}`}
+                  disabled={live.length <= spec.minRows}
+                  title={
+                    live.length <= spec.minRows
+                      ? `已經只剩 ${spec.minRows} 列 —— 再刪這張表就不成立了`
+                      : "刪掉這一列"
+                  }
+                  onClick={() => setRows(removeTableRow(live, i))}
+                >
+                  刪除
+                </Btn>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 10 }}>
+        <Btn
+          small
+          dataField={`table.${spec.path}.add`}
+          disabled={live.length >= spec.maxRows}
+          title={
+            live.length >= spec.maxRows ? `最多 ${spec.maxRows} 列` : "加一列（填上去才存得出去）"
+          }
+          onClick={() => setRows(addTableRow(live, spec))}
+        >
+          ＋ 新增一列
+        </Btn>
+        <span style={{ color: TEXT_DIM, fontSize: 11 }}>目前 {live.length} 列</span>
+        {verdict.table && (
+          <span data-field={`table-error.${spec.path}`} style={{ color: DANGER, fontSize: 12 }}>
+            {verdict.table}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 

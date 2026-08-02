@@ -17,11 +17,11 @@
     300.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           600.0,
           800.0,
@@ -33,9 +33,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",

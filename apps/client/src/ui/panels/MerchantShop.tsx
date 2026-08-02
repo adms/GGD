@@ -74,6 +74,8 @@ import { attrBonusFromArray, statPathView } from "@ggd/shared/sim/economy/statPa
 import { inventoryAttrBonus } from "@ggd/shared/sim/economy/itemSource";
 import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
+// owner 2026-08-02 的卡片排版,四個渲染點之二(商店卡片 + 商店裡的道具欄 hover)。
+import { ItemCardBody } from "../components/ItemCardBody";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import {
   computeStatBlock,
@@ -1129,6 +1131,11 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
               key={slot}
               title={name}
               body={detailBody || undefined}
+              bodyNode={
+                row?.description ? (
+                  <ItemCardBody description={row.description} fontSize={11.5} />
+                ) : undefined
+              }
               meta={[{ label: "點擊賣出", value: `+${refundOf(itemId)} g` }]}
               style={{ display: "block" }}
             >
@@ -1415,11 +1422,6 @@ function ExpandedRow(props: {
   preview: ItemPreview | null;
 }): React.JSX.Element {
   const { row, preview } = props;
-  // the raw 效能 stat claims — WC3 原文, which frequently DISAGREES with the sim
-  // (#108). Classified by itemStats (same rule that built the effect line), shown
-  // ONLY here and clearly labelled as non-authoritative.
-  const claims = row.claims;
-
   const deltas = preview?.buyable
     ? Object.entries(preview.deltas)
         .filter(([stat, d]) => isVisibleDelta(stat as Stat, d as number))
@@ -1443,12 +1445,14 @@ function ExpandedRow(props: {
           ))}
         </div>
       )}
-      {row.lore && <div style={{ color: TEXT_DIM, marginBottom: 3 }}>{row.lore}</div>}
-      {claims.length > 0 && (
-        <div style={{ marginTop: 4, paddingTop: 4, borderTop: "1px dashed rgba(120,140,190,0.2)" }}>
-          <div style={{ fontSize: 9, color: "#9a8360" }}>原始說明（WC3 原文，非本作數值）</div>
-          <div style={{ color: TEXT_DIM, fontSize: 10 }}>{claims.join(" · ")}</div>
-        </div>
+      {/* owner 2026-08-02「卡片道具的排版連在一起不好閱讀」—— 展開的卡片改成
+          解析後的排版:一行一列、`[標記]` 上分類色、數值上數值色,解說自成一段。
+          `row.lore` / `claims` 那兩塊被它取代了(它們是同一份原文被 ` · ` 接過的
+          版本,並存只會出現同一句話兩次)。原文一個字都沒改 —— 見 ItemCardBody。 */}
+      {row.description ? (
+        <ItemCardBody description={row.description} fontSize={11} textColor="#b7c0d4" />
+      ) : (
+        row.lore && <div style={{ color: TEXT_DIM, marginBottom: 3 }}>{row.lore}</div>
       )}
     </div>
   );

@@ -600,9 +600,11 @@ export class SimWorld {
   bodyScaleRules: BodyScaleRules = DEFAULT_BODY_SCALE_RULES;
 
   /**
-   * 百分比回血規則 (see regenRules.ts, `config.regen@1`, GH#253)。
-   * 和 `statCaps` 同一條規矩:開賽前指派一次,之後不再動。預設**本身不改變
-   * 任何一場比賽** —— 百分比只有在英雄卡填了 `healthRegenPctOfMax` 時才啟動。
+   * 百分比回血**與百分比扣血**規則 (see regenRules.ts, `config.regen@1`, GH#253)。
+   * 和 `statCaps` 同一條規矩:開賽前指派一次,之後不再動。
+   * 兩族都是「英雄卡有填才啟動」:回血看 `healthRegenPctOfMax`(出貨**沒有人**
+   * 填),扣血看 `healthDrainPctOfMax`(出貨只有 `godie-hapm` 的 0.01 ——
+   * owner 2026-08-02「每秒損失 1%生命, 直到生命不足1%」)。
    */
   regenRules: RegenRules = DEFAULT_REGEN_RULES;
 

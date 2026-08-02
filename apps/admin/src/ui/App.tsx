@@ -83,14 +83,22 @@ import { DataMigrationPage } from "./DataMigrationPage";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
-
-interface NavItem {
-  page: Page;
-  label: string;
-  emoji: string;
-  /** left-rail section header this row lives under */
-  section: string;
-}
+import { resolveHubLinks, type HubEnv } from "../config";
+import {
+  allSections,
+  groupRows,
+  isNavItem,
+  isSectionOpen,
+  loadCollapsed,
+  rowKey,
+  saveCollapsed,
+  sectionOfPage,
+  toggleCollapsed,
+  type NavItem,
+  type NavLink,
+  type NavPrefStore,
+  type NavRow,
+} from "./navGroups";
 
 // The owner's four-section back-office (directive 2026-07-25). Every EXISTING
 // route stays reachable — this only regroups + adds. The dev-only 內容·素材管理
@@ -101,9 +109,36 @@ interface NavItem {
 const SEC_OPS = "營運";
 const SEC_CONTENT = "內容·素材管理";
 const SEC_ASSETS = "資產產線";
+// ── owner 2026-08-02 的四個新分類（「照你的分法」）────────────────────────────
+// 在它們出現之前「系統」一組有 26 列，佔了整條左欄的一半以上，而且裡面同時住著
+// 倍率表、畫質開關、殭屍節奏與運維工具 —— 想改攻速上限的人要在 26 列裡逐字掃。
+// 這四組不新增也不刪除任何一頁，只是把既有的搬出來（navSections.test.ts 逐一比對
+// 搬家前後「可到達的頁面集合」，漏一頁就紅）。
+const SEC_COMBAT = "戰鬥規則";
+const SEC_ITEMS = "武器道具";
+const SEC_MOBS = "肉鴿殭屍";
+const SEC_FORGE = "鑄技工坊";
 const SEC_SYS = "系統";
 
-const NAV: NavItem[] = [
+/**
+ * 左欄由上到下的分組順序。
+ *
+ * 分組現在是**算出來的**（`groupRows`）而不是靠 NAV 陣列裡剛好連在一起 —— 少了這
+ * 一層，把一列搬到別組時忘了同時搬它的位置，畫面上會出現同一個標題印兩次。
+ * ⚠️ 這張表沒列到的分組不會消失，只會被排到最後（見 `groupRows` 的註解）。
+ */
+export const SECTION_ORDER: readonly string[] = [
+  SEC_OPS,
+  SEC_CONTENT,
+  SEC_ASSETS,
+  SEC_COMBAT,
+  SEC_ITEMS,
+  SEC_MOBS,
+  SEC_FORGE,
+  SEC_SYS,
+];
+
+export const NAV: NavItem[] = [
   // 營運 — session-gated player/operations surfaces. 帳號審核 leads (task #126):
   // it is the one page with real people waiting, and it carries the pending badge.
   { page: "approvals", label: "帳號審核", emoji: "🛂", section: SEC_OPS },
@@ -149,30 +184,58 @@ const NAV: NavItem[] = [
   // in the eager shell, which is what makes it survive `vite build`.
   { page: "voxelBarcode", label: "體素條碼", emoji: "🎨", section: SEC_ASSETS },
   { page: "voxelBody", label: "體素身體", emoji: "🧍", section: SEC_ASSETS },
-  // 系統
-  { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
-  { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
+  // ── 戰鬥規則 (owner 2026-08-02) ────────────────────────────────────────────
+  // 「一位英雄站上場的時候有多強」的全部六頁,而且它們是六種**不同的語意**:
+  // 倍率(戰鬥系統) / 加數(基礎加成) / 天花板(屬性上限) / 規則參數(戰鬥手感) /
+  // 一場的時鐘(對戰設定) / 一條公式(體型與射程)。相鄰就是警告 —— 填的 4.0
+  // 在哪一頁代表什麼,靠的就是它上面那個標題。
+  { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_COMBAT },
   // 基礎加成 — sits right after 戰鬥系統 because it is the OTHER half of the same
   // question, and the adjacency is the warning: that page holds MULTIPLIERS,
   // this one holds FLAT GRANTS that deliberately escape them.
-  { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_SYS },
+  { page: "baseBonus", label: "基礎加成", emoji: "➕", section: SEC_COMBAT },
   // 屬性上限 — 這三頁是同一個問題的三個面:戰鬥系統 = 倍率,基礎加成 = 加數,
   // 這一頁 = 天花板(以及技能能把天花板抬到哪)。相鄰就是警告。
-  { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_SYS },
+  { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_COMBAT },
   // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條
   // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
   // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。
-  { page: "combatFeel", label: "戰鬥手感", emoji: "🥊", section: SEC_SYS },
+  { page: "combatFeel", label: "戰鬥手感", emoji: "🥊", section: SEC_COMBAT },
   // 對戰設定 — 一場對戰的**時鐘**(階段秒數、起始隊伍生命、火圈),和上面四頁的
   // 「英雄在場上多強」是不同的軸。⚠️ 這份文件有 19 格沒有消費端,頁面上是唯讀的。
-  { page: "matchConfig", label: "對戰設定", emoji: "⏱️", section: SEC_SYS },
-  // 商店經濟 — 英雄解鎖統一價 + 免費名單 (owner 2026-07-30). 接在數值三頁後面,
-  // 因為它是同一個「後台可調」家族的成員但問的是另一個問題:前三頁決定英雄在場上
-  // 多強,這一頁決定玩家要打幾場才拿得到他。
-  { page: "storeEconomy", label: "商店經濟", emoji: "💎", section: SEC_SYS },
+  { page: "matchConfig", label: "對戰設定", emoji: "⏱️", section: SEC_COMBAT },
+  // 體型與射程 (GH#252 · owner 2026-08-01「身體放大倍數 會影響攻擊距離延長倍數」)
+  // —— 這一頁只管普攻;技能距離在 戰鬥系統 的 abilityRange 那一格。
+  { page: "bodyScale", label: "體型與射程", emoji: "📏", section: SEC_COMBAT },
+  // ── 武器道具 (owner 2026-08-02) ────────────────────────────────────────────
+  // 玩家「拿得到什麼」的兩頁:一頁決定英雄要打幾場才解鎖得到,一頁決定回合獎勵的
+  // 三張卡從哪裡抽。
+  // 商店經濟 — 英雄解鎖統一價 + 免費名單 (owner 2026-07-30). 它問的不是英雄在場上
+  // 多強,而是玩家要打幾場才拿得到他。
+  { page: "storeEconomy", label: "商店經濟", emoji: "💎", section: SEC_ITEMS },
+  // 傳說武器三選一 — 候選不足時的補抽規則 (GH#249). ⚠️ 它與 殭屍波系統 編輯的是
+  // **同一份** `config/arena-rules.json` 的不同區塊,雖然現在分屬兩個分類。
+  { page: "itemDraft", label: "傳說武器三選一", emoji: "🗡️", section: SEC_ITEMS },
+  // ── 肉鴿殭屍 (owner 2026-08-02) ────────────────────────────────────────────
+  // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
+  // 擊殺獎勵 / 由誰擔任).
+  { page: "mobWaves", label: "殭屍波系統", emoji: "🧟", section: SEC_MOBS },
+  // 殭屍王出場演出 (owner 2026-08-02「殭屍王出場 會音效+大字講該英雄的名言，然後
+  // 跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示淡出消失」) —— 緊接在
+  // 殭屍波系統 後面，因為王是那一頁生出來的東西；那一頁決定牠多強，這一頁決定牠
+  // 走進場的那五秒畫面上出現什麼。⚠️ 王的臉是那一頁的 championSource 抽的，出貨
+  // 是隨機，所以這一頁的逐英雄文案表天生是不完整的。
+  { page: "bossIntro", label: "殭屍王出場演出", emoji: "📜", section: SEC_MOBS },
+  // ── 鑄技工坊 (owner 2026-08-02 · #205 / #230 / #272) ───────────────────────
+  // ⚠️ 這一組現在只有一頁半:住在 admin 裡的是**特效綁定**(下面這一列),而 /editor/
+  // 那一整套鑄技工坊還沒搬進來(#272 未完)。外部入口寫在 `NAV_EXTERNAL`,而不是在
+  // 這裡放一個指不到東西的路由。
+  // 鑄技工坊 · 特效綁定 —— 每支技能綁哪一個特效家族原型 + per-invocation 參數。
+  { page: "vfxForge", label: "鑄技工坊 · 特效綁定", emoji: "🔮", section: SEC_FORGE },
+  // ── 系統 ──────────────────────────────────────────────────────────────────
+  { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
-  // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。放在數值三頁之後,
-  // 因為它調的是同一批英雄的**外觀**而不是數值。
+  // 出來」全靠顏色/大小/球體掛件這三樣,而它們在 w3x 裡是空的。
   { page: "formVisuals", label: "變身外觀", emoji: "✨", section: SEC_SYS },
   // E2 —— 四份原本完全沒有後台入口的 config。共用 ui/ConfigDocPage 一個元件，
   // 欄位從 Zod schema 長出來、中文說明逐格手寫在 ../configForms。標籤寫在這裡
@@ -180,6 +243,9 @@ const NAV: NavItem[] = [
   // `vite build`。
   // 畫質分級 / 特效回收 挨在一起，因為它們是同一個問題的兩半：一個決定「載進來
   // 多重」，一個決定「打完之後留多少在記憶體裡」。owner 的原話是「一場就很燙」。
+  // 對戰錄影 (owner 2026-08-02「請幫我預設打開」)。放在系統設定區,因為它和
+  // 畫質分級/特效回收一樣是「一份 config 文件 = 一頁」的同一個引擎。
+  { page: "replayPolicy", label: "對戰錄影", emoji: "🎬", section: SEC_SYS },
   { page: "modelLod", label: "畫質分級", emoji: "🪄", section: SEC_SYS },
   { page: "vfxCleanup", label: "特效回收", emoji: "🧹", section: SEC_SYS },
   // 濺血程度 —— 調性決定，不是效能決定。放在它們後面而不是中間。
@@ -199,35 +265,58 @@ const NAV: NavItem[] = [
   // 嘲弄規則 —— 唯一一條會**強迫**一個單位改打別人的機制(目前只有鍊金術之盾用到)。
   // 緊接在 隱形規則 後面,因為兩頁問的是同一類問題:「索敵看得到誰 / 索敵被誰綁架」。
   { page: "tauntRules", label: "嘲弄規則", emoji: "🎯", section: SEC_SYS },
-  // 體型與射程 (GH#252 · owner 2026-08-01「身體放大倍數 會影響攻擊距離延長倍數」)
-  // —— 緊接在 嘲弄規則 後面,因為這三頁都在改「誰打得到誰」。這一頁只管普攻;
-  // 技能距離在 戰鬥系統 的 abilityRange 那一格。
-  { page: "bodyScale", label: "體型與射程", emoji: "📏", section: SEC_SYS },
-  // 回血規則 (GH#253 · owner 2026-08-01「Berserker HP 回血 1%每秒,沒有保底」)
-  // —— 百分比回血與英雄卡固定回血的關係,以及有沒有保底。
-  { page: "regenRules", label: "回血規則", emoji: "💚", section: SEC_SYS },
+  // 回血與扣血規則 (GH#253 · owner 2026-08-02「Berserker 是每秒損失 1%生命,
+  // 直到生命不足1%」—— 8/1 那句「回血 1%每秒」的方向更正)。百分比回血與固定
+  // 回血的關係、以及百分比自傷停在哪裡。
+  { page: "regenRules", label: "回血與扣血規則", emoji: "💚", section: SEC_SYS },
   // 場地環境火焰 (GH#251 · owner 2026-08-01「場地天空火焰很礙眼 請全部場地都去
   // 掉」) —— 出貨已經關掉，這一頁是「改主意的時候不用再改程式」的那把開關。
   // 排在 濺血程度 / 傷害數字配色 這些「畫面上出現什麼」的隔壁而不是效能三頁旁邊。
   { page: "arenaFire", label: "場地環境火焰", emoji: "🔥", section: SEC_SYS },
-  // 鑄技工坊 (#205 / #230 / #272) —— 每支技能綁哪一個特效家族原型 + per-invocation
-  // 參數。緊接在 變身外觀 後面,因為兩頁都是「看不看得出來」而不是「強不強」,
-  // 而且兩頁都同樣是「w3x 有事實但沒人把它接上去」的那一類。
-  { page: "vfxForge", label: "鑄技工坊", emoji: "🔮", section: SEC_SYS },
-  // 殭屍波系統 — the roguelite mob waves (出怪節奏 / 逐回合上限 / 能力數值 /
-  // 擊殺獎勵 / 由誰擔任). Sits next to 戰鬥系統 because it is the same job at a
-  // different scope: 戰鬥系統 tunes the global combat multipliers, this tunes the
-  // one PvE pressure source those multipliers act on.
-  { page: "mobWaves", label: "殭屍波系統", emoji: "🧟", section: SEC_SYS },
-  // 傳說武器三選一 — 候選不足時的補抽規則 (GH#249). Next to 殭屍波系統 because both
-  // edit one BLOCK of the same `config/arena-rules.json` document.
-  { page: "itemDraft", label: "傳說武器三選一", emoji: "🗡️", section: SEC_SYS },
+  // 勝利煙火 (#93 / #235 · owner 2026-08-02「請你直接取消煙火(變成後台開關)」)
+  // —— 出貨已經關掉,這一頁同樣是「改主意的時候不用再改程式」的那把開關。
+  // 緊接在 場地環境火焰 後面,因為兩頁問的是同一種問題:場上該不該有這團火。
+  { page: "victoryFx", label: "勝利煙火", emoji: "🎆", section: SEC_SYS },
+  // 道具卡片排版 (owner 2026-08-02「卡片道具的排版連在一起不好閱讀，關於效果及數值
+  // 的部分應該要特殊顏色表示」)。⚠️ 這一頁不改 owner 手寫的 description 一個字：
+  // 排版是渲染時解析出來的（`legendary49OwnerText.test.ts` 逐位元組守著那些原文）。
+  // ⚠️ 它留在「系統」而不是搬進「武器道具」，因為 owner 2026-08-02 核准的分類表
+  // 只點名了 商店經濟 與 傳說武器池 兩項；把沒被點名的東西一起搬走是替他決定。
+  { page: "itemCard", label: "道具卡片排版", emoji: "🃏", section: SEC_SYS },
   { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
   // #243 — 一鍵打包 ZIP 匯出／匯入平台資料，無痛移機. Session-gated (see
   // store.ts) and PRESENT IN THE PRODUCTION BUNDLE, because a migration tool
   // that only runs on localhost cannot migrate a host.
   { page: "dataMigration", label: "資料搬遷", emoji: "📦", section: SEC_SYS },
 ];
+
+/**
+ * 指向 console **以外**的入口。
+ *
+ * 目前只有一列:/editor/ 的鑄技工坊。#272(把 /editor/ 的編輯能力搬進線上 admin)
+ * 不在這次的範圍內,所以這裡刻意**不是**一個 `Page` —— 它是一個真的會開啟的網址
+ * 加一句說明「它還在外面」。兩個被拒絕的替代方案:
+ *
+ *   • 加一個 `page: "forgeStudio"` 卻沒有元件 → 點下去一片空白(失敗形態 ②)。
+ *   • 什麼都不放 → owner 看到「鑄技工坊」這個分類底下只有特效綁定,會以為搬完了。
+ *
+ * 網址走 `resolveHubLinks` 而不是寫死 "/editor/",因為 dev 的編輯器在
+ * 127.0.0.1:5174、線上才是同源的 /editor/ —— 寫死其中一個,另一個環境就是死連結。
+ */
+export function externalRows(): NavLink[] {
+  const raw = (import.meta as unknown as { env?: HubEnv & { PROD?: boolean } }).env ?? {};
+  const editor = resolveHubLinks(raw, raw.PROD === true ? "prod" : "dev").find((l) => l.key === "editor");
+  return [
+    {
+      key: "forgeStudioExternal",
+      label: "鑄技工坊（/editor/）",
+      emoji: "↗️",
+      section: SEC_FORGE,
+      href: editor?.url ?? "/editor/",
+      note: "技能／特效編輯器目前仍住在獨立的 /editor/，尚未搬進本後台（#272）。這一列會在新分頁開啟它。",
+    },
+  ];
+}
 
 /**
  * THE DEV GATE for 內容管理 (task #102).
@@ -387,6 +476,248 @@ function insertBefore(nav: readonly NavItem[], before: Page, entry: NavItem): Na
   return [...nav.slice(0, at), entry, ...nav.slice(at)];
 }
 
+/**
+ * 偏好存放處。包在 try 裡是因為 Safari 的隱私模式讀 `localStorage` 會直接丟例外,
+ * 而「記不住收納狀態」不該讓整個後台開不起來。node（vitest）下它是 undefined。
+ */
+function browserPrefStore(): NavPrefStore | null {
+  try {
+    return (globalThis as { localStorage?: NavPrefStore }).localStorage ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export interface NavRailProps {
+  rows: readonly NavRow[];
+  /** 目前這一頁（決定哪一列 active、以及哪一組被強制展開）。 */
+  page: Page;
+  /** 手機的橫向捲動條版型。 */
+  narrow: boolean;
+  /** 帳號審核的等待數（0 或負數 = 不畫徽章）。 */
+  pendingCount: number;
+  /** 這一頁沒有 session 就進不去嗎（畫 🔒）。 */
+  isLocked: (page: Page) => boolean;
+  onNavigate: (page: Page) => void;
+  /**
+   * 收納偏好的存放處。⚠️ `undefined`（沒傳）= 用瀏覽器的 localStorage；
+   * `null` = 明確地不要存。測試餵一個假的進來驗真的行為，而不是掃字串。
+   */
+  prefStore?: NavPrefStore | null;
+}
+
+/**
+ * 左欄導覽（owner 2026-08-02「請做成可以收納/展開的形式避免過長，並且多幾個類別」）。
+ *
+ * 抽成獨立的 export 元件，是為了讓守衛可以 `renderToString` 它而不必連帶啟動整個
+ * console（那會拉起 boot、輪詢、以及三十幾個頁面的 effect）。⚠️ 這正是失敗形態 ⑤
+ * 的反面：測試驗的就是出貨在用的這一個元件，不是測試自己另外寫一份導覽列。
+ */
+export function NavRail(props: NavRailProps): React.JSX.Element {
+  const { rows, page, narrow, pendingCount, isLocked, onNavigate } = props;
+  const store = props.prefStore === undefined ? browserPrefStore() : props.prefStore;
+  const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(() => loadCollapsed(store));
+  const currentSection = sectionOfPage(rows, page);
+  const groups = groupRows(rows, SECTION_ORDER);
+  const everyOpen = groups.every((g) => !collapsed.has(g.section));
+
+  const apply = (next: Set<string>): void => {
+    setCollapsed(next);
+    saveCollapsed(store, next);
+  };
+
+  return (
+    <nav
+      data-testid="nav-rail"
+      style={
+        narrow
+          ? // one scrollable row; nothing wraps, so the strip never eats the
+            // screen no matter how many consoles get added later
+            { display: "flex", flexDirection: "row", gap: 6, overflowX: "auto", paddingBottom: 4, alignItems: "center" }
+          : { display: "flex", flexDirection: "column", gap: 4, flex: 1 }
+      }
+    >
+      {/* 一鍵把八組全部收掉 —— owner 要的「避免過長」在這裡是一次點擊而不是八次。
+          收完之後畫面上只剩「你正在看的那一組」（`isSectionOpen` 強制展開它）。 */}
+      <button
+        onClick={() => apply(everyOpen ? new Set(allSections(rows, SECTION_ORDER)) : new Set())}
+        title={everyOpen ? "把所有分組收起來（目前所在的那一組會留著）" : "把所有分組展開"}
+        style={{
+          alignSelf: narrow ? "center" : "flex-start",
+          marginBottom: narrow ? 0 : 6,
+          padding: "4px 8px",
+          borderRadius: 6,
+          border: PANEL_BORDER,
+          background: "transparent",
+          color: TEXT_DIM,
+          cursor: "pointer",
+          fontSize: 11,
+          fontWeight: 700,
+          whiteSpace: "nowrap",
+          flexShrink: 0,
+        }}
+      >
+        {everyOpen ? "⊟ 全部收合" : "⊞ 全部展開"}
+      </button>
+      {groups.map((g) => {
+        const open = isSectionOpen(g.section, collapsed, currentSection);
+        const pinned = g.section === currentSection && collapsed.has(g.section);
+        return (
+          <Fragment key={g.section}>
+            <button
+              onClick={() => apply(toggleCollapsed(collapsed, g.section))}
+              aria-expanded={open}
+              title={
+                pinned
+                  ? `${g.section}：你正在看這一組裡的頁面，所以它先留著展開`
+                  : open
+                    ? `收起 ${g.section}`
+                    : `展開 ${g.section}（${g.rows.length} 項）`
+              }
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+                textAlign: "left",
+                padding: narrow ? "4px 8px" : "2px 8px",
+                margin: narrow ? 0 : "10px 0 2px 0",
+                border: narrow ? PANEL_BORDER : "none",
+                borderRadius: 6,
+                background: "transparent",
+                color: TEXT_DIM,
+                opacity: 0.85,
+                cursor: "pointer",
+                fontSize: 10,
+                fontWeight: 700,
+                letterSpacing: 1,
+                whiteSpace: "nowrap",
+                flexShrink: 0,
+              }}
+            >
+              <span aria-hidden="true">{open ? "▾" : "▸"}</span>
+              <span>{g.section}</span>
+              <span style={{ opacity: 0.6, letterSpacing: 0 }}>{g.rows.length}</span>
+              {/* ⚠️ 收納會吃掉徽章。#126 的整個重點是「有親戚在等審核」這件事要在
+                  owner 人不在那一頁的時候看得到 —— 一個被收起來的分組如果順手把
+                  待審人數也藏掉,收納功能就把那個通知殺掉了。所以組收起來的時候,
+                  徽章往上跳到標題上。 */}
+              {!open && pendingCount > 0 && g.rows.some((r) => isNavItem(r) && r.page === "approvals") && (
+                <span
+                  title={`${pendingCount} 個帳號在等審核（在收起來的「${g.section}」裡）`}
+                  style={{
+                    marginLeft: 4,
+                    minWidth: 18,
+                    padding: "1px 6px",
+                    borderRadius: 999,
+                    background: WARN,
+                    color: "#1a1206",
+                    fontSize: 11,
+                    fontWeight: 800,
+                    letterSpacing: 0,
+                    textAlign: "center",
+                  }}
+                >
+                  {pendingCount}
+                </span>
+              )}
+            </button>
+            {open &&
+              g.rows.map((row) => {
+                if (!isNavItem(row)) {
+                  // 外部入口（/editor/ 的鑄技工坊）。是 <a> 不是 <button>：它真的
+                  // 離開這個 SPA，而做成假的路由就是「點了沒反應」的那一類缺陷。
+                  return (
+                    <Fragment key={rowKey(row)}>
+                      <a
+                        href={row.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={row.note}
+                        style={{
+                          textAlign: "left",
+                          padding: "9px 12px",
+                          borderRadius: 8,
+                          border: `1px dashed ${PANEL_BORDER.split(" ").pop() ?? ACCENT}`,
+                          background: "transparent",
+                          color: TEXT_DIM,
+                          cursor: "pointer",
+                          fontSize: 13,
+                          fontWeight: 600,
+                          display: "flex",
+                          alignItems: "center",
+                          whiteSpace: "nowrap",
+                          flexShrink: 0,
+                          textDecoration: "none",
+                        }}
+                      >
+                        <span style={{ marginRight: 8 }}>{row.emoji}</span>
+                        <span style={{ flex: 1 }}>{row.label}</span>
+                      </a>
+                      {!narrow && (
+                        <div style={{ fontSize: 10, color: TEXT_DIM, opacity: 0.7, lineHeight: 1.5, margin: "0 8px 4px 8px" }}>
+                          {row.note}
+                        </div>
+                      )}
+                    </Fragment>
+                  );
+                }
+                const active = row.page === page;
+                const locked = isLocked(row.page);
+                return (
+                  <button
+                    key={rowKey(row)}
+                    onClick={() => onNavigate(row.page)}
+                    title={locked ? "需登入（平台管理 API）" : undefined}
+                    style={{
+                      textAlign: "left",
+                      padding: "9px 12px",
+                      borderRadius: 8,
+                      border: active ? `1px solid ${ACCENT}` : "1px solid transparent",
+                      background: active ? "#1b2338" : "transparent",
+                      color: active ? TEXT_MAIN : TEXT_DIM,
+                      cursor: "pointer",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      display: "flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <span style={{ marginRight: 8 }}>{row.emoji}</span>
+                    <span style={{ flex: 1 }}>{row.label}</span>
+                    {/* the waiting-queue badge — a filled amber pill, not a dot:
+                        the NUMBER is what tells the owner whether one cousin or the
+                        whole family is stuck on the approval screen */}
+                    {row.page === "approvals" && pendingCount > 0 && (
+                      <span
+                        title={`${pendingCount} 個帳號在等審核`}
+                        style={{
+                          marginLeft: 6,
+                          minWidth: 18,
+                          padding: "1px 6px",
+                          borderRadius: 999,
+                          background: WARN,
+                          color: "#1a1206",
+                          fontSize: 11,
+                          fontWeight: 800,
+                          textAlign: "center",
+                        }}
+                      >
+                        {pendingCount}
+                      </span>
+                    )}
+                    {locked && <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>🔒</span>}
+                  </button>
+                );
+              })}
+          </Fragment>
+        );
+      })}
+    </nav>
+  );
+}
+
 export function App(): React.JSX.Element {
   const screen = useApp((s) => s.screen);
   const boot = useApp((s) => s.boot);
@@ -456,6 +787,9 @@ function Console(): React.JSX.Element {
     voiceAdmin === null
       ? withContent
       : insertBefore(withContent, "curation", { ...voiceAdmin.nav, section: SEC_CONTENT });
+  // 內部路由 + 外部入口（/editor/ 的鑄技工坊）。分組是算出來的，所以外部那一列擺在
+  // 陣列尾端也照樣落進「鑄技工坊」那一組。
+  const rows: NavRow[] = [...nav, ...externalRows()];
   const onNavigate = (p: string, _selectId?: string): void => navigate(p as Page);
 
   // THE SPLIT GATE (task #102): a page whose data lives on the Go platform admin
@@ -491,86 +825,14 @@ function Console(): React.JSX.Element {
             <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 20 }}>operator console</div>
           </>
         )}
-        <nav
-          style={
-            narrow
-              ? // one scrollable row; nothing wraps, so the strip never eats the
-                // screen no matter how many consoles get added later
-                { display: "flex", flexDirection: "row", gap: 6, overflowX: "auto", paddingBottom: 4 }
-              : { display: "flex", flexDirection: "column", gap: 4, flex: 1 }
-          }
-        >
-          {nav.map((n, i) => {
-            const active = n.page === page;
-            const locked = account === null && pageRequiresSession(n.page);
-            // a dim section header whenever the section changes — only in the
-            // column layout (in the narrow horizontal strip a header would break
-            // the single scrollable row)
-            const showHeader = !narrow && (i === 0 || nav[i - 1]!.section !== n.section);
-            return (
-              <Fragment key={n.page}>
-                {showHeader && (
-                  <div
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      letterSpacing: 1,
-                      color: TEXT_DIM,
-                      opacity: 0.7,
-                      margin: i === 0 ? "0 0 4px 8px" : "12px 0 4px 8px",
-                    }}
-                  >
-                    {n.section}
-                  </div>
-                )}
-              <button
-                onClick={() => navigate(n.page)}
-                title={locked ? "需登入（平台管理 API）" : undefined}
-                style={{
-                  textAlign: "left",
-                  padding: "9px 12px",
-                  borderRadius: 8,
-                  border: active ? `1px solid ${ACCENT}` : "1px solid transparent",
-                  background: active ? "#1b2338" : "transparent",
-                  color: active ? TEXT_MAIN : TEXT_DIM,
-                  cursor: "pointer",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
-                }}
-              >
-                <span style={{ marginRight: 8 }}>{n.emoji}</span>
-                <span style={{ flex: 1 }}>{n.label}</span>
-                {/* the waiting-queue badge — a filled amber pill, not a dot:
-                    the NUMBER is what tells the owner whether one cousin or the
-                    whole family is stuck on the approval screen */}
-                {n.page === "approvals" && pendingCount > 0 && (
-                  <span
-                    title={`${pendingCount} 個帳號在等審核`}
-                    style={{
-                      marginLeft: 6,
-                      minWidth: 18,
-                      padding: "1px 6px",
-                      borderRadius: 999,
-                      background: WARN,
-                      color: "#1a1206",
-                      fontSize: 11,
-                      fontWeight: 800,
-                      textAlign: "center",
-                    }}
-                  >
-                    {pendingCount}
-                  </span>
-                )}
-                {locked && <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>🔒</span>}
-              </button>
-              </Fragment>
-            );
-          })}
-        </nav>
+        <NavRail
+          rows={rows}
+          page={page}
+          narrow={narrow}
+          pendingCount={pendingCount}
+          isLocked={(p) => account === null && pageRequiresSession(p)}
+          onNavigate={(p) => navigate(p)}
+        />
         <div
           style={
             narrow

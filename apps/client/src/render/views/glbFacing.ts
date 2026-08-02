@@ -1,94 +1,102 @@
 /**
  * glbFacing — THE single authoritative source of the .glb yaw-facing
- * convention. Both the in-arena ChampionView and the store's StorePreview
- * derive their glbRoot yaw offset from {@link glbYawOffset} here; there is no
- * other place a facing offset is defined.
+ * convention. ChampionView, StorePreview, the intermission scene and the model
+ * audition page all derive their glbRoot yaw from {@link glbYawOffset}; there
+ * is no other place a facing offset is defined.
  *
- * WHY A PER-SOURCE OFFSET (measured, not guessed)
- * -----------------------------------------------
- * A model's on-disk .glb bakes a "forward" axis. After Babylon's glTF loader
- * applies its right-handed→left-handed flip (the __root__ node with
- * scaling.z = -1), the two model families we ship point DIFFERENT ways in the
- * loaded frame:
+ * ⚠️ THIS HEADER WAS REWRITTEN 2026-08-02 BECAUSE IT WAS LYING (CLAUDE.md 第三
+ * 守則). Everything below is re-measured off the shipped .glb bytes by
+ * `modelFacing.test.ts`, which recomputes it on every run — so if this text
+ * ever drifts from the files again, that test goes red rather than this comment
+ * quietly becoming fiction. What the old header got wrong:
  *
- *   • KayKit / native glTF (assets/models/{champions,hex,props}/*.glb) bake
- *     forward = local +Z.
- *   • w3x-imported glTF (assets/models/imported/*.glb, produced by
- *     tools/w3x-import) bake forward = local -X — exactly 90° clockwise from
- *     KayKit. This is a property of the WC3→glTF basis change in
- *     tools/w3x-import/w3xlib/gltf.py (_v/_q merely PRESERVE the MDX forward,
- *     which lands on -X), NOT of any individual model.
+ *   1. 「w3x-imported … bake forward = local -X」 — FALSE. Measured +X, from
+ *      three independent cues (left/right skeleton chirality, the toe-vs-ankle
+ *      offset of foot-weighted vertices, and the head/chest forward lean). The
+ *      old header even contradicted itself: its own second measurement line
+ *      ("imported + Math.PI → world +X") is only true if forward is +X.
+ *   2. 「KayKit / native glTF」 — STALE. #226 deleted the KayKit characters;
+ *      the native family is now the procedurally baked box-men from
+ *      packages/shared/src/voxel/bake.ts. Their forward is +Z (measured).
+ *   3. 「Only `imported.heroryuk` is genuinely flipped … corroborated by its
+ *      hand cue」 — INCOMPLETE, and the corroboration was invented. The set
+ *      missed `imported.linkstik`, which IS 180° off and IS shipped, on
+ *      `godie-h00l 時空勇者 - 林克`.
+ *   4. 「`imported.heropika` … its hand attach-nodes are mislabeled ONLY」 —
+ *      right verdict, wrong reason. heropika's whole SKELETON is L/R-swapped
+ *      (Bone_Ear_L sits on the geometric right), not just the hands. Its true
+ *      forward is +X — proved by its tail bone, which sits at -X, and a tail
+ *      points backwards. It correctly takes the family default.
  *
- * Our facing convention is root.rotation.y = atan2(fx, fz) (the sim's planar
- * facing), then glbRoot.rotation.y = the offset below. Measured end-to-end
- * through this exact chain (NullEngine, sim facing +Z):
+ * THE LAW, stated so it is falsifiable
+ * ---------------------------------------------------------------------------
+ * A model's .glb bakes a "forward" axis. Let φ be that axis's yaw on disk,
+ * φ = atan2(forward.x, forward.z). Then:
  *
- *   • KayKit + Math.PI                → renders world -Z  (visually verified ✓)
- *   • imported + Math.PI              → renders world +X  (90° wrong — the
- *                                       "人物面向差90度" bug)
- *   • imported + (Math.PI + Math.PI/2) → renders world -Z  (matches KayKit ✓)
+ *       required glbRoot yaw offset  ≡  φ   (mod 360°)
  *
- * A single global offset therefore CANNOT satisfy both families (their baked
- * forwards are 90° apart). KayKit is the verified-correct reference, so the
- * imported family gets an extra +90° to line up with it.
+ * Babylon's glTF loader inserts a `__root__` carrying rotationQuaternion
+ * [0,1,0,0] (180° about Y) AND scaling (1,1,-1); the two compose to a pure X
+ * mirror (Z is preserved). Push each family through that and the law falls out:
  *
- * The true root-cause fix is to bake the +90° into the exporter and re-export
- * (tools/w3x-import/w3xlib/gltf.py), after which a single Math.PI would cover
- * everyone; that is deferred to the re-import job so the shipped .glbs are not
- * churned here. See docs/todo/models.md.
+ *   native   φ=  0° → mirror → +Z → offset   0° → renders world +Z  ✓
+ *   imported φ= 90° → mirror → -X → offset  90° → renders world +Z  ✓
+ *   flipped  φ=-90° → mirror → +X → offset 270° → renders world +Z  ✓
+ *
+ * and world +Z is exactly the sim facing the test drives in. The law is not
+ * asserted, it is CHECKED per model against real geometry in modelFacing.test.ts.
+ *
+ * WHY A PER-FAMILY DEFAULT AT ALL. The two shipped families really are 90°
+ * apart, because tools/w3x-import preserves the MDX forward (+X) while the
+ * voxel baker authors +Z. A single global offset cannot serve both.
+ *
+ * WHY THE EXCEPTIONS ARE CONTENT, NOT A Set HERE (CLAUDE.md 第一守則).
+ * The per-model correction now lives on the model doc as `yawOffsetDeg`
+ * (`content/models/*.json`). `content/` is a live bind-mount and the client is
+ * baked into its image, so as a doc field a mis-baked model is a file edit
+ * instead of a rebuild + redeploy. The old hardcoded Set was also keyed by
+ * `modelKey`, which could not express an override for the 40 Blizzard-overlay
+ * champions at all — they share stand-in modelKeys, so one entry would have
+ * rotated ~18 unrelated champions.
+ *
+ * ⚠️ Callers used to pass `this.modelKey` (ChampionView, IntermissionScene) or
+ * `doc.id` (StorePreview, the audition page) as the exception key — two
+ * different answers for the same mesh, harmless only while the Set was empty of
+ * anything either of them used. {@link glbYawOffset} now takes the DOC, so the
+ * arena and the shop cannot disagree by construction.
  */
+import type { ModelDoc } from "@ggd/shared/content";
 
-/** glbPath prefix identifying a w3x-imported model (basis 90° off KayKit). */
+/** glbPath prefix identifying a w3x-imported model (baked forward +X). */
 export const IMPORTED_GLB_PREFIX = "assets/models/imported/";
 
 /**
- * glbPath prefix of the LOCAL-ONLY Blizzard model overlay
- * (content/assets/blizzard-local/README.md — dev machines only, never
- * deployed). Those .glbs come out of the SAME tools/w3x-import converter as
- * `assets/models/imported/`, so they share the imported family's baked forward
- * (-X) and must take the imported yaw offset, not the native one.
+ * glbPath prefix of the Blizzard model overlay (task #177 ships it to the
+ * family host; `VITE_GGD_FULL_ASSETS=1` is what makes the client ask for it).
+ * Those .glbs come out of the SAME tools/w3x-import converter, so they share
+ * the imported family's baked forward — verified per file: 35 of the 40 measure
+ * +X and the remaining 5 are only unmeasurable (too few paired bones), none
+ * measures anything else.
  */
 export const BLIZZARD_LOCAL_GLB_PREFIX = "assets/blizzard-local/models/";
 
-// FACING SIGN (人物面向剛好相反 fix): the earlier pass aligned the two model
-// families but left BOTH rendering 180° backward (a model ordered to move +Z
-// faced world -Z, i.e. away from its movement) — the KayKit "verified correct"
-// baseline was never actually eyeballed in-match. Every offset below is the
-// previous value + 180° so a champion now faces the direction it moves.
-
-/** KayKit / native glTF authored forward +Z. Faces movement at offset 0. */
+/** Native/voxel-baked glTF authored forward +Z ⇒ φ = 0°. */
 export const NATIVE_GLB_YAW_OFFSET = 0;
 
-/** w3x-imported forward -X → +90° extra to match the native family's render. */
+/** w3x-imported forward +X ⇒ φ = 90°. */
 export const IMPORTED_GLB_YAW_OFFSET = Math.PI / 2;
 
-/** A w3x-imported .glb whose baked forward is +X (180° from its own family). */
+/**
+ * The offset for a .glb baked 180° from its own family (forward -X where the
+ * family is +X) ⇒ φ = -90° ≡ 270°. Not applied by prefix — a model earns it by
+ * carrying `yawOffsetDeg: 270` in its doc.
+ */
 export const IMPORTED_FLIPPED_GLB_YAW_OFFSET = Math.PI + Math.PI / 2;
 
 /**
- * modelKeys of imported .glbs whose baked forward is 180° opposite the
- * imported family (forward +X instead of -X), so they need
- * {@link IMPORTED_FLIPPED_GLB_YAW_OFFSET} instead of the family offset.
- *
- * Only `imported.heroryuk` is genuinely flipped (its foot/head/mid geometry
- * all point +X, corroborated by its hand cue). It is NOT referenced by any
- * champion or skin today, so it never reaches an in-arena ChampionView, but it
- * is listed here so the convention stays correct if it is ever adopted or
- * shown in the store preview.
- *
- * NOTE: `imported.heropika` looks flipped by its hand attach-nodes ONLY — its
- * Hand Left/Right nodes are mislabeled in the source. Its actual body geometry
- * (feet/head/torso) points -X like the rest of the family, so it is deliberately
- * NOT in this set and takes the normal imported offset.
- */
-export const FLIPPED_IMPORTED_MODEL_KEYS: ReadonlySet<string> = new Set([
-  "imported.heroryuk",
-]);
-
-/**
  * True when a model's .glb comes from the w3x import pipeline — either the
- * shipped `assets/models/imported/` family or the dev-only Blizzard overlay
- * (same converter ⇒ same baked forward ⇒ same yaw offset).
+ * shipped `assets/models/imported/` family or the Blizzard overlay (same
+ * converter ⇒ same baked forward ⇒ same default yaw offset).
  */
 export function isImportedGlb(glbPath: string): boolean {
   return (
@@ -96,15 +104,25 @@ export function isImportedGlb(glbPath: string): boolean {
   );
 }
 
+/** The family default for a path, ignoring any per-doc override. */
+export function familyGlbYawOffset(glbPath: string): number {
+  return isImportedGlb(glbPath) ? IMPORTED_GLB_YAW_OFFSET : NATIVE_GLB_YAW_OFFSET;
+}
+
+/** The subset of a ModelDoc this module needs (overlay docs are synthesized). */
+export type FacingModelDoc = Pick<ModelDoc, "glbPath"> & { yawOffsetDeg?: number };
+
 /**
  * The yaw offset (radians) to apply to a loaded .glb's glbRoot so its rendered
- * facing matches the sim's planar facing. `modelKey` is optional and only
- * consulted for the rare 180°-flipped imported models.
+ * facing matches the sim's planar facing.
+ *
+ * `yawOffsetDeg` on the doc wins when present — including when it is 0, which
+ * is a meaningful value (a native-family model, or an imported one re-exported
+ * to +Z), so the check is `undefined`, never falsiness.
  */
-export function glbYawOffset(glbPath: string, modelKey?: string): number {
-  if (!isImportedGlb(glbPath)) return NATIVE_GLB_YAW_OFFSET;
-  if (modelKey !== undefined && FLIPPED_IMPORTED_MODEL_KEYS.has(modelKey)) {
-    return IMPORTED_FLIPPED_GLB_YAW_OFFSET;
+export function glbYawOffset(doc: FacingModelDoc): number {
+  if (doc.yawOffsetDeg !== undefined && Number.isFinite(doc.yawOffsetDeg)) {
+    return (doc.yawOffsetDeg * Math.PI) / 180;
   }
-  return IMPORTED_GLB_YAW_OFFSET;
+  return familyGlbYawOffset(doc.glbPath);
 }

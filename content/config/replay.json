@@ -1,0 +1,9 @@
+{
+  "id": "replay",
+  "schema": "config.replay@1",
+  "note": "對戰錄影政策。owner 2026-08-02「請幫我預設打開，就算玩到一半就離開也應該有 replay 才對」。enabled 出貨為 true；flushIntervalMs 決定「程序被硬砍時最多丟幾秒」。",
+  "enabled": true,
+  "flushIntervalMs": 500,
+  "retainMaxFiles": 200,
+  "retainMaxAgeDays": 30
+}

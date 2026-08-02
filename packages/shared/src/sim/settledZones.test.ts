@@ -70,8 +70,6 @@ function ringNow(): FireRingRules {
       startSec: 0,
       shrinkSec: 20,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
     },
     DT,

@@ -25,6 +25,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync, readdirSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { effectsOf } from "../../testkit/expandedEffects";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import { zItemDoc, type ItemDoc } from "./schema/item";
 import { NO_ATTR_LOOKUP, resolveScaling, type Scaling } from "../sim/effects/effect";
@@ -52,7 +53,9 @@ function godieChampions(): ChampionDoc[] {
 function amountEffects(c: ChampionDoc) {
   const out: { slot: string; kind: string; dtype?: string; amount: Scaling }[] = [];
   for (const [slot, ab] of Object.entries(c.abilities ?? {})) {
-    for (const e of (ab?.effects ?? []) as unknown as Record<string, never>[]) {
+    // 讀**展開後**的形狀，不是文件裡打了什麼 —— 2026-08-02 之後有 143 支技能的
+    // effects 住在模板裡，`ab.effects` 是 `[]`（見 testkit/expandedEffects.ts）。
+    for (const e of effectsOf(ab) as Record<string, never>[]) {
       const amount = e["amount"] as unknown as Scaling | undefined;
       if (amount) {
         out.push({

@@ -1,10 +1,14 @@
 {
   "id": "regen",
   "schema": "config.regen@1",
-  "note": "百分比回血規則（GH#253，owner 2026-08-01：「Berserker HP 回血 1%每秒，沒有保底」）。百分比本身寫在英雄卡的 healthRegenPctOfMax（0.01 = 每秒 1%），出貨只有 godie-hapm（海克力斯 - Berserker）填了。這一頁決定它和英雄卡那條固定回血的關係，以及有沒有保底。⚠️ replace = 有填百分比的英雄不再計算固定回血 —— 這就是 owner 說的「沒有保底」，因為 add 模式下那條固定值是一條與最大生命無關的地板。⚠️ 保底出貨 0：查過三個可能的位置（base-bonus.json、STAT_CLAMPS、statCaps）都沒有生命回復的下限，所以現況本來就沒有保底，這一格只是把它變成可以打開的。語意寫在 packages/shared/src/sim/regenRules.ts，消費端是 systems/RegenSystem.ts。⚠️ 後台『回血規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "note": "百分比回血與百分比扣血規則（GH#253）。⚠️ owner 2026-08-02 更正：「Berserker 是每秒損失 1%生命, 直到生命不足1%」——方向和 8/1 那句「回血 1%每秒」相反，而且多了一條地板。所以出貨的英雄卡 godie-hapm（海克力斯 - Berserker）填的是 healthDrainPctOfMax: 0.01（每秒扣 1% 最大生命），不是 healthRegenPctOfMax；回血那一族目前沒有任何一位英雄在用，機制留著是因為它是可調的能力。⚠️ 扣血不是傷害：它不走 combat/damage.ts，所以不吃全域傷害倍率、不被護盾吸、不噴傷害數字，也扣不死人 —— 停在 drainFloorPctOfMax（0.01 = 最大生命的 1%）。⚠️ drainFloorMode=stop（出貨）是「扣血自己停手，但敵人照樣殺得死他」；clamp 是「每 tick 夾在地板」＝免疫致死，那不是 owner 要的。語意寫在 packages/shared/src/sim/regenRules.ts，消費端是 systems/RegenSystem.ts。⚠️ 後台『回血規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
   "pctEnabled": true,
   "pctMode": "replace",
   "floorPerSec": 0,
   "applyEnvMultiplier": true,
-  "championsOnly": true
+  "championsOnly": true,
+  "drainEnabled": true,
+  "drainFloorPctOfMax": 0.01,
+  "drainFloorMode": "stop",
+  "drainChampionsOnly": true
 }

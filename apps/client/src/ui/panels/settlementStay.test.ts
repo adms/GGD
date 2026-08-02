@@ -70,8 +70,12 @@ describe("#193 / owner 2026-07-27 — the settlement stays put", () => {
     // Guard on the guard: if a future edit strips every setTimeout from this
     // file the assertions above pass vacuously while the chicken firework hold
     // and the 名言 delay are both gone.
+    // ⚠️ 兩個名字在 2026-08-02 換了：煙火變成後台開關之後，兩段延遲都改成
+    // 「給定煙火開不開」的函式（`matchPanelHoldMs` / `matchQuoteDelayMs`），
+    // 因為煙火關掉時把計分卡壓住 2340 ms 是純粹的空等。行為守衛在
+    // `matchEndFireworkHold.test.ts`；這一條只是「setTimeout 沒有被整批刪光」。
     const c = code();
-    expect(c).toContain("MATCH_PANEL_HOLD_MS");
-    expect(c).toContain("MATCH_QUOTE_DELAY_MS");
+    expect(c).toContain("matchPanelHoldMs");
+    expect(c).toContain("matchQuoteDelayMs");
   });
 });

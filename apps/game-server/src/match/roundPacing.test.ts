@@ -45,8 +45,10 @@ const FIRE_RING: FireRingConfig = {
   startSec: 0.3, // 9 ticks @30Hz
   shrinkSec: 0.5, // 15 ticks to fully closed
   minRadius: 0.5,
-  burnPctPerSecStart: 0.3,
-  burnPctPerSecEnd: 0.6,
+  burnCurve: [
+    { sec: 0, pctPerSec: 0.3 },
+    { sec: 0.5, pctPerSec: 0.6 },
+  ],
   maxPctPerSec: 1,
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

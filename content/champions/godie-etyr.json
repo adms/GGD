@@ -196,16 +196,23 @@
         240.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.explosion",
+      "targetsEnemies": true,
+      "radius": 1.5,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-orbit-array",
+        "params": {
+          "rayCount": 12,
+          "reach": 82,
+          "aim": "inward",
+          "damage": {
             "perRank": [
-              250.0,
-              400.0,
-              550.0,
-              700.0
+              250,
+              400,
+              550,
+              700
             ],
             "ratios": [
               {
@@ -213,13 +220,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.prim.holy.explosion",
-      "targetsEnemies": true,
-      "radius": 1.5,
-      "castTimeSec": 0.5
+      }
     },
     "R": {
       "id": "godie-etyr.r",
@@ -240,11 +245,13 @@
         300.0
       ],
       "range": 8.25,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               200,
               400,
@@ -256,11 +263,11 @@
                 "coeff": 0.7
               }
             ]
-          }
+          },
+          "damageType": "magic"
         }
-      ],
-      "vfxKey": "fx.prim.holy.nova-lg",
-      "targetsEnemies": true
+      },
+      "castTimeSec": 0
     }
   },
   "skillOrder": [

@@ -170,11 +170,14 @@
         300.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               450,
               600,
@@ -187,12 +190,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.prim.void.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.5
+      }
     },
     "R": {
       "id": "godie-h01n.r",

@@ -73,6 +73,14 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Static TODO gate
         run: pnpm todo:check
+      # eslint (2026-08-02). 規則集刻意很小 —— 見 eslint.config.mjs 的檔頭。
+      # 核心是 `react-hooks/rules-of-hooks`：那條規則會直接抓到當天 owner
+      # 回報五次的「所有介面突然都消失」（hook 寫在 early return 之後）。
+      # ERROR 層今天是 0 筆，所以這一步是真的閘門而不是裝飾；WARN 層是既有債，
+      # 不擋 CI。⚠️ 不要加 `|| true`，也不要加 `--max-warnings 0`（後者會把
+      # 既有的 ~100 筆 warning 變成擋路，兩天內就會有人把整步刪掉）。
+      - name: Lint (eslint)
+        run: pnpm lint
       - name: Typecheck
         run: pnpm -r --if-present typecheck
       - name: Workspace tests (vitest, coverage beacons on)

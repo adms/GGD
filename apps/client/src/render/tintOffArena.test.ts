@@ -234,7 +234,7 @@ describe("intermission shop hero carries the w3x tint (tint263-intermission)", (
       assets,
     });
 
-    await im.setChampion(DOC.glbPath, 1, DOC.id, SABER);
+    await im.setChampion(DOC.glbPath, 1, DOC.yawOffsetDeg, SABER);
     const root = im.scene.getTransformNodeByName("im-champion");
     expect(root, "the hero is mounted at the counter").not.toBeNull();
     const painted = bodyAlbedo(root!.getChildMeshes(false))!;
@@ -243,7 +243,7 @@ describe("intermission shop hero carries the w3x tint (tint263-intermission)", (
     expect(shared.albedoColor.r, "cached source material stays stock").toBeCloseTo(BASE, 6);
 
     // swapping to the untinted control restores a pristine material
-    await im.setChampion(DOC.glbPath, 1, DOC.id, DORAEMON);
+    await im.setChampion(DOC.glbPath, 1, DOC.yawOffsetDeg, DORAEMON);
     const root2 = im.scene.getTransformNodeByName("im-champion");
     expect(bodyAlbedo(root2!.getChildMeshes(false))!.r).toBeCloseTo(BASE, 6);
     expect(shared.albedoColor.r).toBeCloseTo(BASE, 6);

@@ -17,14 +17,16 @@
     300.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 10,
       "modifiers": [
         {
           "stat": "ad",
           "op": "pctAdd",
-          "value": 1.0
+          "value": 1
         },
         {
           "stat": "manaRegen",
@@ -32,9 +34,9 @@
           "value": -10
         }
       ],
-      "duration": 10.0
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.flamessmoke.p01",
   "sfxKey": "wc3.dragonroostwhat1",
   "schema": "ability@1",

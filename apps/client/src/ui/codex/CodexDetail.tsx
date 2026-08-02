@@ -25,6 +25,8 @@ import { isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
 import { useDisplayBaseBonus } from "../displayBaseBonus";
 import { useDisplayStatCaps } from "../displayStatCaps";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
+// owner 2026-08-02 的卡片排版,四個渲染點之四(圖鑑 / 後台的道具詳情)。
+import { ItemCardBody } from "../components/ItemCardBody";
 import { CodexIcon } from "./CodexIcon";
 import { championSheetRows } from "../championSheet";
 import { contentBodyScaleRules } from "../displayBodyScale";
@@ -701,7 +703,14 @@ function ItemBody({ item, data, recipes, onNavigate }: { item: CodexItem; data: 
       </Section>
       <Section title="說明">
         <Editable path="description" kind="multiline">
-          <Description text={item.description} />
+          {/* 圖鑑與遊戲內讀同一個元件,所以同一支道具在後台與戰場上長得一樣。
+              `Editable` 的編輯態仍然編**原文**(那才是可以存回檔案的東西);
+              這裡換掉的只是**唯讀顯示**。 */}
+          {item.description ? (
+            <ItemCardBody description={item.description} />
+          ) : (
+            <Description text={item.description} />
+          )}
         </Editable>
       </Section>
       {recipe && (

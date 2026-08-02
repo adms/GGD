@@ -34,6 +34,7 @@ import {
   validateKeyInput,
   type OverlayStatusEntry,
 } from "./contentOverlay";
+import { pageRequiresSession } from "./store";
 
 const read = (rel: string): string =>
   readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8");
@@ -276,9 +277,17 @@ describe("this writer does not weaken the loopback posture", () => {
 
   it("is session-gated: it writes what every player sees", () => {
     cover("content-overlay-console-not-content-api");
-    const store = read("./store.ts");
-    const at = store.indexOf("SESSION_REQUIRED_PAGES");
-    const block = store.slice(at, store.indexOf("]", at));
-    expect(block).toContain('"contentOverlay"');
+    // ⚠️ 2026-08-02：這一條**以前是掃原始碼字串**，而它從那天起就一直紅著，
+    // 紅的理由還跟它想守的東西無關 —— 它做 `store.indexOf("SESSION_REQUIRED_PAGES")`
+    // 取第一個出現位置，而第一個出現位置在 store.ts:46 的**註解裡**，
+    // 於是它切出來的區塊是一段散文，永遠不含 `"contentOverlay"`。
+    // 也就是說「contentOverlay 到底有沒有 session gate」這個問題它根本沒問過
+    // （CLAUDE.md 失敗形態 ⑥：用掃原始碼字串代替行為）。
+    // 而且一條常駐紅燈會稀釋整包的訊號 —— 下一個人看到「1 failed」會習慣。
+    // 改成問**真的那支函式**：它讀的是真的 SESSION_REQUIRED_PAGES 集合。
+    expect(pageRequiresSession("contentOverlay")).toBe(true);
+    // 對照組：一個明確不需要 session 的頁必須回 false，否則「永遠回 true」
+    // 的實作也會讓上面那條過（失敗形態 ④：斷言方向跟缺陷無關）。
+    expect(pageRequiresSession("hub")).toBe(false);
   });
 });

@@ -59,6 +59,9 @@ import { Tooltip } from "../components/Tooltip";
 import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
 import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
+// owner 2026-08-02 的卡片排版,四個渲染點之一(三選一抽卡)。
+import { ItemCardBody } from "../components/ItemCardBody";
+import { itemCardDescription } from "./draftCardStyle";
 import {
   DRAFT_CHOICE_SUFFIX,
   draftCardDescId,
@@ -211,6 +214,9 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
           // keep resolveChoice's text for augments/abilities (they already
           // carry a description) and for a bare item (its cost).
           const cardDesc = weaponEffectDescription(choice) ?? desc;
+          // 傳說武器的原文走 <ItemCardBody>(標記 chip + 數值上色 + 一行一列);
+          // 增益/技能卡沒有 `效能` 結構,維持原本那一段純文字。
+          const cardDoc = itemCardDescription(choice);
           const faceUp = idx < revealed;
           return (
             <Tooltip
@@ -295,7 +301,11 @@ export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   id={draftCardDescId(offer.offerId, idx)}
                   style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}
                 >
-                  {cardDesc}
+                  {cardDoc ? (
+                    <ItemCardBody description={cardDoc} fontSize={10} textColor={TEXT_DIM} />
+                  ) : (
+                    cardDesc
+                  )}
                 </div>
               </SfxButton>
             </Tooltip>

@@ -37,7 +37,13 @@ import {
 } from "../../sim/taunt";
 // 火圈灼燒曲線的出貨值 —— 定義在 sim/fireRing.ts（sim 缺欄位時退回同一份），
 // schema 只是把它接上 Zod 的 `.default()`。抄第二份就是兩個「沒填的話燒多少」。
-import { DEFAULT_BURN_CURVE } from "../../sim/fireRing";
+import {
+  DEFAULT_BURN_CURVE,
+  DEFAULT_MAX_PCT_PER_SEC,
+  DEFAULT_STAGE1_RADIUS,
+  DEFAULT_STAGE2_SHRINK_SEC,
+  ringFullCloseSec,
+} from "../../sim/fireRing";
 
 /**
  * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
@@ -58,15 +64,61 @@ import { DEFAULT_BURN_CURVE } from "../../sim/fireRing";
  */
 export const zFireRingConfig = z
   .object({
-    /** combat-elapsed seconds until the ring ignites (the round-pacing knob) */
+    /** 第一段起燃：combat-elapsed seconds until the ring ignites (回合長度的旋鈕) */
     startSec: z.number().positive(),
-    /** seconds the ring takes to close from the zone boundary to `minRadius` */
+    /** 第一段縮多久：seconds to contract from the zone boundary to `stage1Radius` */
     shrinkSec: z.number().positive().default(20),
     /**
-     * the fully-closed radius. Deliberately BELOW a champion's collision radius
-     * (0.6), so once closed the whole-body-inside test is false for everyone —
-     * 「沒有生存空間」 with no second rule. 0 would collapse the visual to a
-     * point and make "dist exactly 0" a measure-zero safe spot.
+     * 第一段停下來的半徑 —— 二段制 (owner 2026-08-02 「第一段燒 20 秒就**停止
+     * 縮圈**」)。停止縮圈的那個半徑**必須站得住**，否則「停止」只是把處決往後
+     * 挪 10 秒：`fireRingIsSafe` 是「整個身體在圈內」，而角色碰撞半徑是 0.6
+     * (`spawnChampion.ts`)，所以下界 1 是**這條機制成不成立**的邊界，不是防手滑。
+     *
+     * 出貨 4.0 = 可站立的圓盤半徑 3.4，三個人肩並肩塞得下、還是被逼到貼身。
+     *
+     * ⚠️ 上界 24 = 出貨競技場的 `boundaryRadius`：比它大等於第一段在四張標準
+     * 場地上完全不縮（`arena.royale` 是 42，那裡 24 仍然是真的收圈）。
+     *
+     * ⚠️ 留白 ⇒ 沿用 `minRadius`，也就是**沒有口袋、單段**（見 `stage2StartSec`
+     * 的相容性註記）。只有在 `stage2StartSec` 有填的時候，缺席才會退回出貨的
+     * 4.0（`sim/fireRing.ts` 的 {@link DEFAULT_STAGE1_RADIUS}）。
+     */
+    stage1Radius: z.number().min(1).max(24).optional(),
+    /**
+     * 第二段起始（**戰鬥第幾秒**，絕對值，owner 說的 90）。
+     *
+     * ⚠️ **這一格有沒有填，就是二段制的總開關。** 留白 = 只有第一段，一路縮到
+     * `minRadius`，和二段制之前**逐 tick 完全一樣**。
+     *
+     * 為什麼「缺席 = 關掉」而不是「缺席 = 出貨的 90」：後台的耐久覆蓋層
+     * (data/, task #189) 可能**已經存過一份二段制之前的 `config.match`**，而它會
+     * 蓋掉 `content/`。如果缺席要補一個固定的 90，那份舊文件就得通過下面兩條
+     * 跨欄位檢查（例如它的 `combatMaxSec` 若還是舊的 100，90+20 就過不了）——
+     * 而覆蓋層裡一份**過不了 Zod 的文件不會只讓自己失效，它會讓整層覆蓋被丟掉**
+     * （`apps/platform/internal/contentoverlay/validate.go` 的檔頭把這個爆炸半徑
+     * 寫得很清楚：基礎加成、屬性上限、小怪波……全部一起退回 repo 的數字，而後台
+     * 還是回報「已寫入」）。所以這裡選的是**舊文件永遠不會變非法**：任何在這次
+     * 改動之前就能通過的文件，改動之後照樣通過。
+     *
+     * ⇒ 代價要講清楚：線上如果真的存過覆蓋層，deploy 之後那一場**還是單段**，
+     *   直到有人在後台把這兩格存進去。後台頁那一格的說明就是這麼寫的。
+     */
+    stage2StartSec: z.number().positive().max(3600).optional(),
+    /**
+     * 第二段縮多久（秒）—— 從 `stage1Radius` 收到 `minRadius`（全地圖淹沒）。
+     * 只有在 `stage2StartSec` 有填時才會被讀；留白 ⇒ sim 的
+     * {@link DEFAULT_STAGE2_SHRINK_SEC}（20，和第一段一樣）。
+     * 上界 3600 與 `startSec` 那組一致：一個小時的收圈已經遠在任何回合之外。
+     */
+    stage2ShrinkSec: z.number().positive().max(3600).optional(),
+    /**
+     * 全地圖淹沒後的半徑 —— 第二段的終點。出貨 **0**（owner 2026-08-02
+     * 「第二段燒到**全地圖淹沒**」）。
+     *
+     * ⚠️ 舊版這裡寫「0 會讓『距離剛好 0』變成一個測度為零的安全點」——**那是假的**：
+     * 判定是 `inner = radius - 0.6; inner > 0 && …`，半徑 0 時 `inner = -0.6`，
+     * 對所有人都是 false。真正需要 > 0 的是**畫面**（客戶端的火牆是一圈帶狀
+     * 網格，半徑 0 那一格會縮成看不見），那是渲染的事，不是這個欄位的語意。
      */
     minRadius: z.number().nonnegative().default(0.5),
     /**
@@ -129,12 +181,23 @@ export const zFireRingConfig = z
       })
       .default(DEFAULT_BURN_CURVE as { sec: number; pctPerSec: number }[]),
     /**
-     * 每秒燒傷的安全上限（佔最大生命）。留白 = 不設限（曲線自己說了算）。
+     * 每秒燒傷的天花板（佔最大生命）。owner 2026-08-02：
      *
-     * ⚠️ 上界和 `burnCurve[].pctPerSec` 一樣是 2，理由同上 —— 一道比曲線本身
-     * 還低的牆會讓操作者調了曲線卻沒有任何效果，那是最難查的一種「改了沒用」。
+     *   「可以把燃燒真傷上限數值設定放在後台，例如預設最高是50%之類，
+     *     不必到100%」
+     *
+     * 出貨 0.5，而且**留白不是「不設限」，是回到出貨的 0.5**（`.default()`
+     * 在這一層填，`fireRingRulesFromConfig` 的 `??` 在 sim 那一層填，兩邊指的
+     * 是同一個常數 {@link DEFAULT_MAX_PCT_PER_SEC}）。舊版這裡是 `.optional()`
+     * 配上 sim 的 `?? Infinity`，兩層對「上限是多少」給出相差無限大的答案。
+     *
+     * ⚠️ 上界是 1（= 一秒滿血變空）。比 1 大的數字改變不了任何玩家看得到的
+     * 東西，所以它不是一個可用的設定值，是一個打錯字的機會。
+     * ⚠️ 這道牆現在**確實低於出貨曲線的尾巴**（`burnCurve` 最後一列是 1.0）：
+     * 那是 owner 要的 —— 第 100 秒的 100 %/秒被夾成 50 %/秒，還是必死，只是
+     * 要兩秒不是一秒。要讓曲線的高處真的生效就把這一格調高。
      */
-    maxPctPerSec: z.number().min(0).max(2).optional(),
+    maxPctPerSec: z.number().min(0).max(1).default(DEFAULT_MAX_PCT_PER_SEC),
     /**
      * 回合硬上限 (#248). owner 2026-08-01:
      *
@@ -238,9 +301,14 @@ export type FireRingConfig = z.infer<typeof zFireRingConfig>;
 export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   startSec: 60,
   shrinkSec: 20,
-  minRadius: 0.5,
+  // 二段制的出貨形狀 (owner 2026-08-02)：60 起燃 → 80 停止縮圈（口袋 4.0）
+  // → 90 第二段 → 110 全地圖淹沒。
+  stage1Radius: DEFAULT_STAGE1_RADIUS,
+  stage2StartSec: 90,
+  stage2ShrinkSec: DEFAULT_STAGE2_SHRINK_SEC,
+  minRadius: 0,
   burnCurve: DEFAULT_BURN_CURVE as { sec: number; pctPerSec: number }[],
-  maxPctPerSec: 1,
+  maxPctPerSec: DEFAULT_MAX_PCT_PER_SEC,
   roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };
@@ -289,11 +357,45 @@ export const zConfigMatchDoc = z
         resolutionSec: z.number().positive(),
       })
       .strict()
-      .refine((m) => !m.fireRing || m.fireRing.startSec + m.fireRing.shrinkSec <= m.combatMaxSec, {
-        message:
-          "match.fireRing.startSec + shrinkSec must be <= match.combatMaxSec (the ring must finish closing before the hard combat backstop)",
-        path: ["fireRing", "startSec"],
-      })
+      /**
+       * 二段制 —— 第二段不可以比第一段收完更早 (owner 2026-08-02).
+       *
+       * 「第一段燒 20 秒就停止縮圈…第二段起始於 90 秒」 只有在 90 >= 60 + 20 的
+       * 時候才是一句話；填成 70 的話「停止縮圈」的窗口是負的，而畫面上完全正常
+       * ——圈只是連續縮完，操作者以為自己設了一個喘息期而玩家從來沒有拿到。
+       * sim 端會把它夾住（`fireRingRulesFromConfig` 的 `Math.max(shrinkTicks, …)`，
+       * 那是給不走 Zod 的 fixture 的安全帶），所以這裡**在作者時擋掉**才是唯一
+       * 會讓人知道自己填錯的地方 —— 夾住不報錯的話，操作者存了 70 卻在玩 80。
+       *
+       * 留白（單段）⇒ 這條不成立也不檢查。
+       */
+      .refine(
+        (m) =>
+          !m.fireRing ||
+          m.fireRing.stage2StartSec === undefined ||
+          m.fireRing.stage2StartSec >= m.fireRing.startSec + m.fireRing.shrinkSec,
+        {
+          message:
+            "match.fireRing.stage2StartSec 必須 >= startSec + shrinkSec（第二段不能比第一段停止縮圈更早開始，否則「停止縮圈」的喘息期是負的）",
+          path: ["fireRing", "stage2StartSec"],
+        },
+      )
+      /**
+       * 整個火圈（兩段都算）要在硬底線之前收完。
+       *
+       * ⚠️ 這條以前寫的是 `startSec + shrinkSec`，而二段制之後那個算式**只涵蓋
+       * 第一段**：出貨的圈從點燃到淹沒是 50 秒，不是 20 秒，所以舊算式會放行一份
+       * 「第二段縮到一半就被強制結束」的設定，而且是靜靜地放行（失敗形態 ④：
+       * 斷言方向跟缺陷無關）。長度只有一個答案，住在 {@link ringFullCloseSec}。
+       */
+      .refine(
+        (m) => !m.fireRing || m.fireRing.startSec + ringFullCloseSec(m.fireRing) <= m.combatMaxSec,
+        {
+          message:
+            "match.fireRing: 起燃秒數 + 整個火圈收完要幾秒（兩段都算）必須 <= match.combatMaxSec，否則圈還在縮就被硬底線強制結束",
+          path: ["fireRing", "startSec"],
+        },
+      )
       /**
        * #L1 — THE SAME INVARIANT, ONE 殭屍王 LATER.
        *
@@ -314,12 +416,12 @@ export const zConfigMatchDoc = z
           !m.fireRing ||
           m.fireRing.startSec +
             m.fireRing.boss.delayFireRingSec +
-            m.fireRing.shrinkSec -
+            ringFullCloseSec(m.fireRing) -
             m.fireRing.boss.extendCombatSec <=
             m.combatMaxSec,
         {
           message:
-            "match.fireRing.boss: after a 殭屍王 extension the ring must STILL finish closing before the backstop — require startSec + delayFireRingSec + shrinkSec <= combatMaxSec + extendCombatSec",
+            "match.fireRing.boss: after a 殭屍王 extension the ring must STILL finish closing before the backstop — require startSec + delayFireRingSec + 整個火圈收完要幾秒（兩段都算） <= combatMaxSec + extendCombatSec",
           path: ["fireRing", "boss", "delayFireRingSec"],
         },
       )
@@ -344,10 +446,10 @@ export const zConfigMatchDoc = z
       .refine(
         (m) =>
           !m.fireRing ||
-          m.fireRing.startSec + m.fireRing.shrinkSec <= m.fireRing.roundHardCapSec,
+          m.fireRing.startSec + ringFullCloseSec(m.fireRing) <= m.fireRing.roundHardCapSec,
         {
           message:
-            "match.fireRing.roundHardCapSec must leave room for the WHOLE un-extended ring — require startSec + shrinkSec <= roundHardCapSec (回合硬上限只能砍掉被延長的回合，不能砍掉正常回合)",
+            "match.fireRing.roundHardCapSec must leave room for the WHOLE un-extended ring — require startSec + 整個火圈收完要幾秒（兩段都算） <= roundHardCapSec (回合硬上限只能砍掉被延長的回合，不能砍掉正常回合)",
           path: ["fireRing", "roundHardCapSec"],
         },
       ),
@@ -428,8 +530,38 @@ export const zConfigStoreDoc = z
         placement4: z.number().int().min(0),
       })
       .strict(),
+    /**
+     * 隨機選角（🎲）在**擁有權讀不到**的時候該怎麼辦 —— owner 2026-08-02：
+     *「隨機選角的時候，只能隨機到自己有解鎖的角色」。
+     *
+     * 這是一個**決策點**，不是一個數字，所以它是一個欄位而不是一行程式碼裡的
+     * `if`。它只在一種狀態下有意義：客戶端**有登入 session、但錢包/目錄讀不到**
+     * （平台故障、請求逾時，或選角開頭那段還在載入的視窗）。三種狀態的分工：
+     *
+     *   · 讀得到擁有權 → 一律只抽 `owned ∩ whitelist`，本欄位管不到。
+     *   · 沒有 session（本機 `pnpm dev` / LAN 直連，根本沒有帳號）→ 一律照抽，
+     *     本欄位也管不到：沒有「自己」就沒有「自己解鎖的角色」，而伺服器對這種
+     *     座位同樣是 fail-open（apps/game-server/src/curation/ownership.ts），
+     *     擋掉只會讓 🎲 在開發機上變成一顆死按鈕。
+     *   · 有 session 但擁有權讀不到 → **就是這一欄**。
+     *
+     * `"block"`（出貨預設，owner 明說的那個）：不抽，按鈕停用並說明原因。寧可
+     * 讓 🎲 暫時不能用，也不要抽出一隻玩家沒解鎖的英雄 —— 平台故障時伺服器那
+     * 道擁有權閘同樣拿不到名單而 fail-open，所以那一抽是真的會打進場的。
+     * `"whitelist"`：照抽全白名單（2026-08-02 之前的行為），代價是平台故障期間
+     * 🎲 會抽到沒解鎖的英雄。
+     *
+     * 缺欄位 ⇒ `"block"`（見 DEFAULT_RANDOM_PICK_OWNERSHIP）。
+     */
+    randomPickOwnership: z.enum(["block", "whitelist"]).optional(),
   })
   .strict();
+
+/** 缺 `randomPickOwnership` 時的語意 —— owner 的「只能隨機到有解鎖的」。 */
+export const DEFAULT_RANDOM_PICK_OWNERSHIP = "block" as const;
+
+/** 擁有權讀不到時 🎲 的兩種模式（`config.store@1.randomPickOwnership`）。 */
+export type RandomPickOwnershipMode = "block" | "whitelist";
 
 /**
  * config.arena-rules@1 — LoL-Arena style ROUND RULES (`config/arena-rules.json`).
@@ -3709,8 +3841,77 @@ export const zConfigRosterDoc = z
   })
   .strict();
 
+/* ══════════════════════════════════════════════════════════════════════════
+ * config.replay@1 —— 對戰錄影政策 (owner 2026-08-02)
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * owner 2026-08-02：「請幫我預設打開，就算玩到一半就離開也應該有 replay 才對」
+ *
+ * ── 為什麼這份文件存在（＝在此之前的狀態）────────────────────────────────
+ * #175 的錄影從頭到尾**沒有開關**。`MatchRoom.onCreate` 無條件呼叫
+ * `MatchRecorder.open()`，落地間隔是 `Recorder.ts` 裡的 `const FLUSH_MS = 500`，
+ * 保留量是 `store.ts` 裡的 `RETAIN_MAX_FILES = 200` / `RETAIN_MAX_AGE_DAYS = 30`。
+ * 三個都是 CLAUDE.md 第一守則點名的那種寫死：**每一個都是一個「A 還是 B」的
+ * 決定**，而它們一個都不在後台，改任何一個都要 rebuild 映像 + 重啟容器。
+ *
+ * ⚠️ 「預設打開」在程式上一直是真的（沒有開關 ⇒ 永遠開）。owner 之所以覺得它
+ * 是關的，是因為 GH#170：正式機的 `/data/replays` 是 root 的、容器跑 uid 1000，
+ * `createWriteStream` **非同步**吃到 EACCES，於是每一場都「開了錄影、零位元組
+ * 落地」。那個病灶的解法在 `replayHealth.ts` + `docs/replay-observability.md`，
+ * 不在這份文件裡 —— 這份文件解的是「開關本身不存在」。
+ *
+ * ── 這份文件**不**收什麼 ──────────────────────────────────────────────────
+ * `GGD_REPLAY_DIR` / `GGD_REPLAY_REQUIRED` / `GGD_REPLAY_UNHEALTHY_AFTER` /
+ * `GGD_REPLAY_HEALTHZ_STATUS` 留在環境變數，**刻意的**：那四個是「這台機器的
+ * 監控行為」，一台一個值，而且 `/healthz` 要在內容樹載入之前就答得出來。
+ * 這份文件收的是「錄影政策」——每一場比賽都適用、owner 會想改的那些。
+ */
+export const zConfigReplayDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.replay@1"),
+    note: z.string().optional(),
+    /**
+     * 要不要錄影。**出貨值 true**（owner 2026-08-02「請幫我預設打開」）。
+     *
+     * 關掉之後這台 shard 上的每一場都完全不開錄影檔：後台「對戰回放」不會再有
+     * 新的一列，`/healthz` 的 `replay.opened` 停在原地。留這一格是因為錄影是
+     * best-effort 的旁路 —— 磁碟快滿、或某一場出了會讓錄影器自己爆掉的內容時，
+     * 這是唯一不用重新 build 映像就能止血的閥。
+     */
+    enabled: z.boolean(),
+    /**
+     * 緩衝的錄影行多久交給檔案串流一次（毫秒）。**出貨值 500**。
+     *
+     * 它決定的是「**中途離開最多丟掉幾秒**」：程序被 `kill -9`（容器重啟、OOM）
+     * 時，還沒交出去的那一段就沒了。調小 = 掉的秒數變少，代價是每分鐘多幾次
+     * write syscall；調大 = 反過來。**不可以調成 0** —— 那等於每 tick 寫檔，
+     * 而錄影器的第一條契約是「不准在 tick 路徑上做同步磁碟 I/O」。
+     *
+     * 上界 10000：再大的話一次容器重啟就會吃掉十秒以上的比賽，而那正是這張單
+     * 要修的東西。下界 50：低於這個值只是在燒 syscall，換不到有意義的秒數。
+     */
+    flushIntervalMs: z.number().int().min(50).max(10_000),
+    /**
+     * 磁碟上最多留幾份錄影（新的贏）。**出貨值 200**。
+     *
+     * 影響的是「多久以前的那一場還找得回來」與磁碟佔用。實測一場 4 分鐘 12 人
+     * 的比賽壓縮後約 60 KB，所以 200 份約 12 MB。調到 1 等於「只留最新一場」。
+     */
+    retainMaxFiles: z.number().int().min(1).max(5_000),
+    /**
+     * 超過幾天的錄影一律刪掉（與上面那條取先觸發的）。**出貨值 30**。
+     *
+     * 影響的是「上個月那一場還在不在」。錄影檔帶著玩家顯示名稱，所以這一格
+     * 同時是保留期限，不只是磁碟策略。
+     */
+    retainMaxAgeDays: z.number().int().min(1).max(3_650),
+  })
+  .strict();
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
+  zConfigReplayDoc,
   zConfigRosterDoc,
   zConfigBossIntroDoc,
   zConfigMatchDoc,
@@ -3803,6 +4004,8 @@ export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;
 export type ConfigTauntDoc = z.infer<typeof zConfigTauntDoc>;
 export type ConfigRosterDoc = z.infer<typeof zConfigRosterDoc>;
+/** 對戰錄影政策（`content/config/replay.json`）。 */
+export type ConfigReplayDoc = z.infer<typeof zConfigReplayDoc>;
 export type BossIntroChampionEntry = z.infer<typeof zBossIntroChampionEntry>;
 export type ConfigBossIntroDoc = z.infer<typeof zConfigBossIntroDoc>;
 

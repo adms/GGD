@@ -273,7 +273,9 @@ export function WorldAnchorLayer(): React.JSX.Element {
           ctEntryId[i] = -1; // force a text write for the new style
         }
         const style = ctStyle[i]!;
-        const label = combatTextLabel(e.category, e.amount);
+        // owner 2026-08-02「暴擊的時候，傷害數值後面會帶 ! 驚嘆號」。`e.crit` 就是
+        // 上面 `mods` 用來放大字級的同一格,所以驚嘆號與放大不可能各講各的。
+        const label = combatTextLabel(e.category, e.amount, e.crit);
         if (ctEntryId[i] !== e.id || node.textContent !== label) {
           node.textContent = label;
           ctEntryId[i] = e.id;

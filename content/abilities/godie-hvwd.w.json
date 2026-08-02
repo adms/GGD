@@ -7,21 +7,23 @@
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    12,
+    12,
+    12,
+    12
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60,
+    60
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 12,
       "modifiers": [
         {
           "stat": "ad",
@@ -29,9 +31,9 @@
           "value": 0.07
         }
       ],
-      "duration": 12.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.pulse",
   "schema": "ability@1",
   "castTimeSec": 0.3

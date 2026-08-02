@@ -11,14 +11,20 @@
     "startingTeamLives": 20,
     "champSelectSec": 20,
     "intermissionSec": 25,
-    "combatMaxSec": 100,
+    "combatMaxSec": 180,
     "fireRing": {
       "startSec": 60,
       "shrinkSec": 20,
-      "minRadius": 0.5,
-      "burnPctPerSecStart": 0.04,
-      "burnPctPerSecEnd": 0.2,
-      "maxPctPerSec": 1,
+      "stage1Radius": 4,
+      "stage2StartSec": 90,
+      "stage2ShrinkSec": 20,
+      "minRadius": 0,
+      "burnCurve": [
+        { "sec": 0, "pctPerSec": 0.04 },
+        { "sec": 20, "pctPerSec": 0.2 },
+        { "sec": 40, "pctPerSec": 1 }
+      ],
+      "maxPctPerSec": 0.5,
       "roundHardCapSec": 300,
       "boss": {
         "extendCombatSec": 180,

@@ -139,16 +139,25 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "dot", // lane P1 — 持續傷害
         "evasion", // lane P5 — 閃避
         "grantAttribute", // 08-00 龍紋記憶 —— 暫時把三圍推上去
+        // ── 鍊金術之盾 (godie-i06q) 的兩半 ────────────────────────────────
+        // 兩個都跟著 `PreviewController.effectLines` 的 case 一起進來，所以
+        // 這條釘子與那個 `never` 分支同時被滿足 —— 補 tag 不是修好它。
+        "grantGold", // 「黃金數量為敵方等級」
         "heal",
         "invulnerable", // lane P3 — 無敵
         "knockback", // lane P4 — 擊退
         "leap", // task #247
         "restore",
+        // 復活 —— 天生牙 godie-i031 「殺死任一個敵方英雄單位，將復活我方所有英雄」。
+        // 它與 `PreviewController.effectLines` 的 case 同時進來,所以補 tag 不是
+        // 修好它:那個 `never` 分支也必須認得它。
+        "revive",
         "shield",
         "spawnProjectile",
         "spawnVfx",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
+        "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)
       ].sort(),
     );
 

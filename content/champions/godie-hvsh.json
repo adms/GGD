@@ -71,16 +71,19 @@
         125.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              450.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
@@ -88,12 +91,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.arcane.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "W": {
       "id": "godie-hvsh.w",
@@ -116,9 +118,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.pulse",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "armor",
@@ -126,11 +132,9 @@
               "value": 25
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.arcane.pulse",
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-hvsh.e",
@@ -153,16 +157,19 @@
         345.0
       ],
       "range": 1.83,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.blood.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              75.0,
-              150.0,
-              225.0,
-              300.0
+              75,
+              150,
+              225,
+              300
             ],
             "ratios": [
               {
@@ -170,12 +177,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.blood.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "R": {
       "id": "godie-hvsh.r",
@@ -196,15 +202,18 @@
         430.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.arcane.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              300.0,
-              600.0,
-              900.0
+              300,
+              600,
+              900
             ],
             "ratios": [
               {
@@ -212,12 +221,11 @@
                 "coeff": 0.7
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.6
         }
-      ],
-      "vfxKey": "fx.prim.arcane.beam-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.6
+      }
     }
   },
   "skillOrder": [

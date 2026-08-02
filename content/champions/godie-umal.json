@@ -74,17 +74,20 @@
         85.0
       ],
       "range": 2.75,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.peondeath",
+      "targetsEnemies": true,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              150.0,
-              300.0,
-              450.0,
-              600.0,
-              750.0
+              150,
+              300,
+              450,
+              600,
+              750
             ],
             "ratios": [
               {
@@ -92,12 +95,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "magic"
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "sfxKey": "wc3.peondeath",
-      "targetsEnemies": true
+      },
+      "castTimeSec": 0
     },
     "W": {
       "id": "godie-umal.w",
@@ -120,16 +122,19 @@
         60.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              12.0,
-              15.0,
-              18.0,
-              21.0
+              12,
+              15,
+              18,
+              21
             ],
             "ratios": [
               {
@@ -137,12 +142,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.holy.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-umal.e",
@@ -165,16 +169,21 @@
         390.0
       ],
       "range": 2.75,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.7,
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 327,
+          "damage": {
             "perRank": [
-              300.0,
-              550.0,
-              800.0,
-              1050.0
+              300,
+              550,
+              800,
+              1050
             ],
             "ratios": [
               {
@@ -182,13 +191,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.7
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.7
+      }
     },
     "R": {
       "id": "godie-umal.r",

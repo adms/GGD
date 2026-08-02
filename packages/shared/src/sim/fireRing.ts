@@ -12,24 +12,63 @@
  *   • it ignites 60 s of combat-ELAPSED time in (`startSec`, unchanged in kind
  *     — see THE TRIGGER below, nothing inverted);
  *   • from that instant the ring radius CONTRACTS CONTINUOUSLY from the zone
- *     boundary (24) to `minRadius` (0.5) over `shrinkSec` (20 s) — 0.0392 u per
- *     30 Hz tick, i.e. visually smooth, never a staircase;
+ *     boundary (24) — see 二段制 below for where it stops and when it resumes;
  *   • a champion whose WHOLE BODY is inside the ring takes nothing; anyone
- *     outside burns with a %-of-own-maxHealth true-damage rate that ramps with
- *     the shrink progress (4 %/s at ignition → 20 %/s at the end);
+ *     outside burns with a %-of-own-maxHealth true-damage rate read off
+ *     {@link FireRingConfigLike.burnCurve} — a BREAKPOINT TABLE keyed on
+ *     SECONDS SINCE IGNITION (shipped 0 s → 4 %/s, 20 s → 20 %/s, 40 s → 100 %/s,
+ *     linearly interpolated, held flat past the last row) and then CLAMPED by
+ *     `maxPctPerSec`, which ships at 0.5 (owner 2026-08-02 「預設最高是50%…
+ *     不必到100%」) — so the curve's own tail above 50 %/s is a ceiling the
+ *     operator can raise in the admin console, not what a player meets today;
  *   • at the end `minRadius - bodyRadius < 0`, so the "inside" test is false for
  *     every champion at every position — 「沒有生存空間」 falls out of the same
  *     arithmetic instead of needing a second rule.
  *
- * WHY minRadius = 0.5 AND NOT 0. A champion's collision radius is 0.6
- * (`spawnChampion.ts`). The safety predicate is WHOLE-BODY-INSIDE:
- * `inner = radius - body.radius; inner > 0 && distSq <= inner*inner`. At 0.5,
- * `inner = -0.1 < 0` → false for everyone, everywhere, with no special case. At
- * 0 the visual would collapse to a point AND "dist exactly 0" would be a
- * measure-zero safe spot; 0.5 leaves a renderable flame cauldron that is
- * provably narrower than a body. Symmetrically, at t = 0 `inner = 23.4`, which
- * is EXACTLY `clampToBoundary`'s `boundaryRadius - body.radius`, so ignition
- * burns nobody — the ring only starts biting as it moves.
+ * 二段制 —— TWO STAGES, FOUR OPERATOR NUMBERS (owner 2026-08-02):
+ *
+ *   「燃燒是二段制，第一段燒 20 秒就停止縮圈，起始於 60 秒；
+ *     第二段燒到全地圖淹沒，起始於 90 秒」
+ *   「第一、第二段燒幾秒跟起始是幾秒，也可以在後台設定」
+ *
+ *   t=0 ───── 60s ═════ 80s ──── 90s ═══════════► 半徑 0（全地圖淹沒）
+ *             ↑起燃      ↑停止縮圈  ↑第二段起
+ *
+ * The four numbers are `startSec` / `shrinkSec` / `stage2StartSec` /
+ * `stage2ShrinkSec`, plus `stage1Radius` (where 「停止縮圈」 stops) and
+ * `minRadius` (「全地圖淹沒」 = 0). All of them are admin fields; the law that
+ * reads them is {@link fireRingRadius}.
+ *
+ * ⚠️ WHAT THE SECOND STAGE ACTUALLY FIXES, AND WHY THE POCKET IS THE POINT.
+ * The single-stage ring closed to `minRadius: 0.5`, and a champion's collision
+ * radius is 0.6 (`spawnChampion.ts`). The safety predicate is WHOLE-BODY-INSIDE
+ * (`inner = radius - body.radius; inner > 0 && distSq <= inner*inner`), so from
+ * the instant the shrink ended there was NOWHERE on the map a body fit — 「火圈」
+ * was a geometric execution on a timer, and the 20 s of closing tension ended in
+ * a guaranteed wipe rather than in a fight. 二段制 makes 「停止縮圈」 mean
+ * something: `stage1Radius` (4.0) is bounded STRICTLY ABOVE a body radius, so
+ * the 10 s breather has a pocket in it that a player can actually hold, and only
+ * 第二段 removes it. The old docstring here argued 0.5 was chosen over 0 partly
+ * because 「at 0 'dist exactly 0' would be a measure-zero safe spot」 — that was
+ * FALSE (with `inner > 0` in the predicate, radius 0 gives `inner = -0.6` and is
+ * safe for nobody), and it is exactly the kind of self-consistent wrong reason
+ * CLAUDE.md 第三守則 is about. `minRadius` now ships at 0 because owner said
+ * 全地圖淹沒 and 0 is the number that says it.
+ *
+ * At t = 0 `inner = 23.4`, which is EXACTLY `clampToBoundary`'s
+ * `boundaryRadius - body.radius`, so ignition burns nobody — the ring only
+ * starts biting as it moves. (Unchanged by 二段制.)
+ *
+ * ⚠️ THE BURN CURVE STILL RUNS ON ONE CLOCK ACROSS BOTH STAGES, AND THAT IS NOT
+ * A KNOB. Its x axis is SECONDS SINCE IGNITION and it does not reset, pause, or
+ * fork at 第二段. 「停止縮圈」 is a promise about the RADIUS, not about the fire:
+ * standing outside the pocket during the breather keeps costing what the curve
+ * says, which is what makes the pocket worth taking. The alternatives were
+ * considered and are worse in a way a reader can check: a second table would put
+ * two answers on 「此刻燒多少」 (the `tauntRules.priority` drift), and re-basing
+ * the clock at 第二段 would drop the rate back to 4 %/s at combat second 90 —
+ * i.e. the ring would get GENTLER exactly as it floods the map, and owner's
+ * 「第 100 秒 100%」 anchor would land in the wrong place.
  *
  * THE TRIGGER: `startSec` is combat-ELAPSED seconds and always was
  * (`FireRingSystem` counts up from combat entry). #195 changes its VALUE from
@@ -49,8 +88,8 @@
  *
  * SINGLE SOURCE OF TRUTH: the ring's schedule is `config.match@1`'s
  * `match.fireRing` block. `combatMaxSec` is only the hard phase backstop and
- * must be >= `startSec + shrinkSec` (schema-enforced), so the ring can always
- * finish closing before the phase force-ends.
+ * must be >= `startSec + ` {@link ringFullCloseSec} (schema-enforced), so the
+ * ring can always finish closing — BOTH stages — before the phase force-ends.
  *
  * 回合硬上限 — 不管什麼條件 (#248, owner 2026-08-01):
  *
@@ -124,15 +163,132 @@ export interface FireRingRules {
    * future — can push the ring past 回合硬上限.
    */
   startTicks: number;
-  /** ticks the ring takes to contract from the zone boundary to `minRadius`. */
+  /**
+   * ticks 第一段 takes to contract from the zone boundary to
+   * {@link stage1Radius}. (Pre-二段制 this closed all the way to `minRadius`;
+   * it still does whenever stage 2 is off, because then `stage1Radius` IS
+   * `minRadius` — see {@link stage1Radius}.)
+   */
   shrinkTicks: number;
   /** the fully-closed radius. Below a champion's body radius, on purpose. */
   minRadius: number;
-  /** per-second burn (fraction of maxHealth) the instant the ring ignites. */
-  burnPctPerSecStart: number;
-  /** per-second burn (fraction of maxHealth) once the ring is fully closed. */
-  burnPctPerSecEnd: number;
-  /** hard cap on the per-second rate (fraction of maxHealth). */
+
+  /* ── 二段制 (owner 2026-08-02) ─────────────────────────────────────────
+   *
+   *   「燃燒是二段制，第一段燒 20 秒就停止縮圈，起始於 60 秒；
+   *     第二段燒到全地圖淹沒，起始於 90 秒」
+   *   「第一、第二段燒幾秒跟起始是幾秒，也可以在後台設定」
+   *
+   * Shipped timeline, all four numbers authored in `config.match.json`:
+   *
+   *   t=0 ───── 60s ═════ 80s ──── 90s ═══════════► 半徑 0（全地圖淹沒）
+   *             ↑起燃      ↑停止縮圈  ↑第二段起
+   *             └ 20 秒 ┘  └10 秒喘息┘ └── 20 秒 ──┘
+   *
+   * WHY THE BREATHER NEEDS A STANDABLE POCKET. Before this, the single stage
+   * ran straight to `minRadius: 0.5`, which is BELOW a champion's body radius
+   * (0.6) — so the moment the shrink ended, `fireRingIsSafe` was false for
+   * everyone everywhere. 「火圈」 was a geometric execution, not a burn. A
+   * 「停止縮圈」 phase is only meaningful if there is somewhere to stop AT, so
+   * {@link stage1Radius} is a FIELD (shipped 4.0) bounded strictly above a body
+   * radius, and 「站在口袋裡的人不會被燒」 is a behavioural guard, not a comment.
+   *
+   * ⚠️ WHY THE POCKET RADIUS IS AN EXPLICIT FIELD AND NOT DERIVED FROM
+   * 「縮多久 × 速率」. Both spellings can express the shipped timeline; they rot
+   * differently. A derived stop radius makes the ONE number that must stay
+   * above 0.6 an EMERGENT product of two other knobs, so an operator who
+   * lengthens `shrinkSec` (a pacing edit, nothing to do with geometry) silently
+   * pushes the pocket under a body and restores the exact defect this redesign
+   * removes — with no field to bound and no error to read. Authored explicitly,
+   * the invariant is a `.min()` on the very number it constrains, checkable at
+   * the instant of editing (CLAUDE.md: 「只在遠離現場的地方響的警報不是守衛」).
+   * The shrink RATE is the derived quantity instead — (zoneR − stage1Radius) /
+   * shrinkSec — which nothing depends on being in any particular range.
+   */
+
+  /**
+   * 第一段停下來的半徑 —— the pocket the ring holds at during 「停止縮圈」.
+   *
+   * ⚠️ STAGE 2 OFF ⇒ THIS EQUALS {@link minRadius}, which collapses the whole
+   * law below back to the pre-二段制 single ramp, tick for tick. That is how a
+   * hand-built fixture / the client's prediction shadow / `MatchController`'s
+   * per-round substitution — none of which author stage-2 fields — stay
+   * byte-identical. See {@link fireRingRulesFromConfig}.
+   */
+  stage1Radius: number;
+  /**
+   * ticks AFTER IGNITION at which 第二段 starts closing again.
+   *
+   * ⚠️ A GAP, NOT AN ABSOLUTE TICK, even though the operator authors an
+   * absolute combat second (`stage2StartSec: 90`). `startTicks` is NOT a
+   * constant — `extendRoundForBoss` pushes it out by 180 s and
+   * {@link applyRoundHardCap} pulls it back — so an absolute stage-2 tick would
+   * drift out of the shape the operator drew: in a 殭屍王 round the ring would
+   * ignite at 4:00 with stage 2 already 150 s in the past, i.e. it would flood
+   * the map on the ignition tick. Freezing the AUTHORED GAP at arm time (30 s
+   * on the shipped 60/90) makes every mover of `startTicks` move the whole ring
+   * as one shape, for free. Same reasoning the burn curve's x axis already
+   * uses, and the same reasoning `hardDeadlineTicks` uses for `authoredTail`.
+   *
+   * Floored at {@link shrinkTicks} at arm time: 第二段 can never begin before
+   * 第一段 finished. The schema refines this too, but `FireRingConfigLike` is
+   * also hand-built by callers that never see Zod.
+   */
+  stage2GapTicks: number;
+  /**
+   * ticks 第二段 takes to close from {@link stage1Radius} to {@link minRadius}.
+   * **0 = 二段制 OFF** (the operator authored no `stage2StartSec`) — the single
+   * flag for the whole feature, so 「有沒有第二段」 has exactly one answer.
+   */
+  stage2ShrinkTicks: number;
+
+  /* ── THE BURN CURVE (owner 2026-08-02) ─────────────────────────────────
+   *
+   *   「火圈應該是隨秒數越高越燒越痛的生命百分比的真實傷害
+   *     (極端情形第100秒後燒100%真實傷害=必死)」
+   *
+   * The burn used to be a two-point ramp (`burnPctPerSecStart` →
+   * `burnPctPerSecEnd`) whose x axis was the SHRINK PROGRESS. Those two fields
+   * are GONE, and the reason they had to go rather than stay as a projection is
+   * that the shrink saturates: `p = min(1, ticksSinceStart / shrinkTicks)` pins
+   * the rate at its end value 20 s after ignition and it never rises again, so
+   * 「隨秒數越高越燒越痛」 was not expressible at all. The x axis is now
+   * SECONDS SINCE IGNITION, with no upper limit tied to the shrink.
+   *
+   * ⚠️ SINCE IGNITION, NOT SINCE ROUND START, AND THAT IS NOT A KNOB.
+   * `extendRoundForBoss` pushes `startTicks` out by `boss.delayFireRingSec`
+   * (180 s shipped) and `MatchController.fireRingForRound()` swaps in
+   * `ROYALE_FIRE_RING_START_SEC` (180) for the final round. A curve keyed on
+   * absolute combat seconds would therefore be FULLY WALKED THROUGH before a
+   * king round's ring even ignites — the first burning tick would already be
+   * the terminal rate and the whole 20 s of closing tension collapses into
+   * 「圈一出現，圈外的人一秒蒸發」 (measured: 1.03 s to death vs 11.60 s).
+   * A decision point with exactly one non-broken value is not a decision point,
+   * so there is deliberately no `burnCurveOrigin` switch. What DOES float with
+   * `startSec` is the translation of the owner's 「第 100 秒」 into a row of
+   * this table (shipped `startSec: 60` ⇒ the 100th second is `sec: 40`); the
+   * admin page shows both clocks side by side so that stays visible.
+   *
+   * COMPILED, NOT INTERPRETED. Two parallel, frozen, already-monotonic arrays,
+   * resolved ONCE in {@link fireRingRulesFromConfig}: `burnCurveTicks[i]` is the
+   * breakpoint in TICKS since ignition, `burnCurveRates[i]` its per-second burn.
+   * Parallel arrays and not an array of objects because `fireRingRatePerSec` is
+   * a per-tick read and this way the scan touches no property lookups and
+   * allocates nothing; frozen and pre-sorted because a Map/`Object.keys` walk
+   * would make a REPLAY's damage depend on insertion order (CLAUDE.md
+   * 「Map 迭代要先排序」 — here the sort is hoisted out of the hot path entirely).
+   *
+   * Both arrays are non-empty and the same length — invariants of the compiler.
+   */
+
+  /** breakpoint x values: TICKS since ignition, non-decreasing, `[0] >= 0`. */
+  burnCurveTicks: readonly number[];
+  /** breakpoint y values: per-second burn (fraction of the victim's maxHealth). */
+  burnCurveRates: readonly number[];
+  /**
+   * hard cap on the per-second rate (fraction of maxHealth).
+   * `Number.POSITIVE_INFINITY` = the config authored no cap.
+   */
   maxPctPerSec: number;
 
   /* ── THE ROUND CLOCK (#L1) ─────────────────────────────────────────────
@@ -227,13 +383,148 @@ export interface FireRingRules {
   hardDeadlineTicks: number;
 }
 
+/**
+ * One row of the burn curve: 「點燃後 `sec` 秒，每秒燒掉自身最大生命的
+ * `pctPerSec`」。 `pctPerSec: 1` = 100 %/s = a full health bar in exactly one
+ * second = the owner's 「必死」.
+ */
+export interface FireRingBurnPoint {
+  /** seconds SINCE IGNITION (not since round start — see FireRingRules). */
+  sec: number;
+  /** per-second burn at that instant, as a fraction of the victim's maxHealth. */
+  pctPerSec: number;
+}
+
+/**
+ * 出貨曲線 —— THE one literal. `content/config/config.match.json` carries the
+ * same three rows, `zFireRingConfig.burnCurve` uses this as its `.default()`,
+ * and every hand-built fixture that omits `burnCurve` lands here too, so there
+ * is exactly one answer to 「沒填的話燒多少」.
+ *
+ * WHY THESE THREE ROWS (owner 2026-08-02 「隨秒數越高越燒越痛…第100秒後燒
+ * 100%真實傷害=必死」):
+ *   · `{0, 0.04}` and `{20, 0.2}` are BIT-FOR-BIT the old two-point ramp's
+ *     endpoints under the shipped `shrinkSec: 20`, so the 0–20 s stretch — the
+ *     part nobody asked to change — has identical damage, tick for tick.
+ *   · `{40, 1.0}` is the owner's sentence: shipped `startSec: 60` ⇒ 60 + 40 =
+ *     COMBAT SECOND 100, burning 100 %/s = death in one second.
+ */
+export const DEFAULT_BURN_CURVE: readonly FireRingBurnPoint[] = Object.freeze([
+  Object.freeze({ sec: 0, pctPerSec: 0.04 }),
+  Object.freeze({ sec: 20, pctPerSec: 0.2 }),
+  Object.freeze({ sec: 40, pctPerSec: 1 }),
+]);
+
+/**
+ * 每秒燒傷的天花板（佔最大生命），出貨值 —— THE one literal, same rule as
+ * {@link DEFAULT_BURN_CURVE}. owner 2026-08-02:
+ *
+ *   「可以把燃燒真傷上限數值設定放在後台，例如預設最高是50%之類，不必到100%」
+ *
+ * `content/config/config.match.json` carries this number, `zFireRingConfig`
+ * uses it as the `.default()`, and `fireRingRulesFromConfig` fills it in for
+ * every hand-built fixture — so there is exactly one answer to 「沒填的話上限
+ * 是多少」.
+ *
+ * ⚠️ WHY ABSENT ⇒ THIS AND NOT `Infinity` (this is the DECISION POINT). Before
+ * 2026-08-02 an omitted cap resolved to `Number.POSITIVE_INFINITY` — 「沒填 =
+ * 完全不設限」 — while the Zod field bounded the same knob at 2. Two layers, two
+ * different answers, infinitely far apart, and the divergence was INVISIBLE:
+ * every doc that goes through the loader carries the field, so only the paths
+ * that skip Zod (fixtures, `MatchController`'s per-round substitutions, the
+ * admin preview when the box is blank) ever saw the `Infinity` branch, and they
+ * saw it silently. The project's convention is 「缺文件＝出貨預設，不是空表」
+ * (`sim/stealth.ts` returns `DEFAULT_STEALTH_RULES` for a missing doc, and
+ * `compileBurnCurve` two functions up returns `DEFAULT_BURN_CURVE` for a
+ * missing table); a missing CAP now follows the same rule. The cost of the
+ * other choice is asymmetric: 「忘了填 → 沒有上限」 is a one-second wipe nobody
+ * authored, 「忘了填 → 50 %/s」 is the shipped experience.
+ *
+ * An operator who genuinely wants the curve to speak for itself sets this to
+ * `1` (= 一秒滿血變空), which is the Zod maximum — there is no longer any
+ * setting that means 「無限」, on purpose: above 1 the number cannot change what
+ * any player sees.
+ */
+export const DEFAULT_MAX_PCT_PER_SEC = 0.5;
+
+/**
+ * 第一段停下來的半徑，出貨值 —— the pocket the ring holds at between the two
+ * stages. THE one literal (schema `.default()` + the sim's `??` both point here).
+ *
+ * WHY 4.0 AND NOT SOMETHING SMALLER. It has to clear a champion's collision
+ * radius (0.6, `spawnChampion.ts`) by enough that the pocket is a PLACE and not
+ * a pixel: `fireRingIsSafe` is whole-body-inside, so the standable disc is
+ * `4.0 − 0.6 = 3.4` across the radius, which holds a 3v3 shoulder-to-shoulder
+ * and still forces contact — that is the 「口袋」 the 10-second breather is for.
+ * Below ~1.2 the arithmetic still 「works」 while the breather means nothing,
+ * which is why the schema floors this at 1 rather than at 0.6 + ε.
+ *
+ * NOT a hard-coded fraction of the zone boundary (24), on purpose: `arena.royale`
+ * ships a 42-radius zone, and a fraction would silently make the pocket 1.75×
+ * bigger there — a pacing change nobody authored, in one arena, invisible.
+ */
+export const DEFAULT_STAGE1_RADIUS = 4;
+
+/**
+ * 第二段縮多久，出貨值（秒）—— used when the operator authored a
+ * `stage2StartSec` but left the duration blank. Mirrors 第一段's shipped 20 s,
+ * because owner named 20 for the first stage and named no number for the
+ * second; a duration that reads the same as the one he DID name is the least
+ * surprising blank-box answer, and it is a field, so it costs one edit to move.
+ */
+export const DEFAULT_STAGE2_SHRINK_SEC = 20;
+
 /** Seconds-based fire-ring config (mirror of config.match@1 `match.fireRing`). */
 export interface FireRingConfigLike {
+  /** 第一段起始 —— combat-elapsed seconds until the ring ignites. */
   startSec: number;
+  /** 第一段縮多久 —— seconds to contract from the zone boundary. */
   shrinkSec?: number;
+  /**
+   * 第一段停下來的半徑 (二段制). ABSENT ⇒ {@link minRadius}, i.e. 第一段 closes
+   * all the way and there is no pocket — the pre-二段制 shape.
+   */
+  stage1Radius?: number;
+  /**
+   * 第二段起始 —— the ABSOLUTE combat-elapsed second 第二段 starts closing at
+   * (owner's 90). Compiled into a gap from ignition; see
+   * {@link FireRingRules.stage2GapTicks} for why it cannot stay absolute.
+   *
+   * ⚠️ ABSENT ⇒ **二段制 OFF**: one stage, closing straight to `minRadius`,
+   * byte-identical to every recorded replay taken before this existed. This is
+   * the ONE fact that makes the change safe to deploy over a durable admin
+   * overlay that still holds a pre-二段制 `config.match` (see the schema's
+   * matching note): such a doc keeps parsing AND keeps playing the ring it was
+   * authored for, instead of being rejected — and a rejected overlay doc does
+   * not fail-safe itself, it discards THE WHOLE OVERLAY LAYER
+   * (`apps/platform/internal/contentoverlay/validate.go` documents that blast
+   * radius). The cost of the choice is stated where an operator can act on it:
+   * the admin console shows the two stage-2 boxes blank and says 「留白 = 只有
+   * 第一段」.
+   */
+  stage2StartSec?: number;
+  /**
+   * 第二段縮多久 —— seconds 第二段 takes to reach `minRadius`. Only consulted
+   * when `stage2StartSec` is authored; ABSENT ⇒ {@link DEFAULT_STAGE2_SHRINK_SEC}.
+   */
+  stage2ShrinkSec?: number;
+  /**
+   * 全地圖淹沒 —— the terminal radius. Ships at 0 since 二段制: the second stage
+   * is 「燒到全地圖淹沒」, and 0 is the only number that says so without a reader
+   * having to know that 0.5 happens to be under a body radius.
+   */
   minRadius?: number;
-  burnPctPerSecStart?: number;
-  burnPctPerSecEnd?: number;
+  /**
+   * The burn curve in SECONDS SINCE IGNITION. ABSENT ⇒ {@link DEFAULT_BURN_CURVE}
+   * — same convention the two retired `burnPctPerSec*` knobs had (`?? 0.04`,
+   * `?? 0.2`), so a hand-built fixture keeps burning without authoring a table.
+   */
+  burnCurve?: readonly FireRingBurnPoint[];
+  /**
+   * Ceiling on the per-second burn (fraction of maxHealth). ABSENT ⇒
+   * {@link DEFAULT_MAX_PCT_PER_SEC} (0.5), NOT 「uncapped」 — see that constant
+   * for why the old `Infinity` fallback was a drift and not a feature.
+   */
   maxPctPerSec?: number;
   /**
    * 殭屍王在場時的回合延長 (#L1) — mirror of `match.fireRing.boss`.
@@ -265,6 +556,72 @@ export interface FireRingConfigLike {
 }
 
 /**
+ * 「一個火圈從點燃到完全收攏，總共要幾秒」 —— THE one formula, in SECONDS,
+ * shared by the sim (`fireRingRulesFromConfig`'s deadline tail), the Zod
+ * cross-field refines, and the admin console's labels.
+ *
+ * ⚠️ IT EXISTS BECAUSE THE ANSWER CHANGED SHAPE. Before 二段制 it was literally
+ * `shrinkSec`, and that literal was written out by hand in FOUR refines plus
+ * the sim. Leaving four hand-written copies to be re-derived is how
+ * 「startSec + shrinkSec」 survives in a refine that is supposed to bound the
+ * WHOLE ring and quietly starts letting a 110-second ring through a 100-second
+ * backstop (failure mode ④: the assertion no longer points at the defect).
+ *
+ * 二段制 OFF (`stage2StartSec` absent) ⇒ `shrinkSec`, exactly as before.
+ */
+export function ringFullCloseSec(cfg: FireRingConfigLike): number {
+  const shrink = cfg.shrinkSec ?? 20;
+  if (cfg.stage2StartSec === undefined) return shrink;
+  // The authored gap, floored so a mis-authored 「第二段比第一段早」 cannot make
+  // the WHOLE ring look SHORTER than one stage — the refine that rejects it
+  // must not be fed a number this function already flattered.
+  const gap = Math.max(shrink, cfg.stage2StartSec - cfg.startSec);
+  return gap + (cfg.stage2ShrinkSec ?? DEFAULT_STAGE2_SHRINK_SEC);
+}
+
+/**
+ * Compile the authored seconds-domain burn curve into the two frozen,
+ * tick-domain, already-monotonic arrays {@link fireRingRatePerSec} reads.
+ *
+ * Runs ONCE per combat entry. Everything expensive or order-sensitive about a
+ * table lookup — the seconds→ticks division, the monotonicity, the freezing —
+ * happens here so the per-tick path is a bounded scan over ≤ 8 numbers with no
+ * allocation, no division by `dt` and no iteration whose order could differ
+ * between two replicas.
+ *
+ * THREE DEFENCES, and each one is a real failure this function has to absorb
+ * because `FireRingConfigLike` is ALSO hand-built by fixtures and by
+ * `MatchController`'s per-round substitutions, which never see Zod:
+ *
+ *   · EMPTY / MISSING table ⇒ {@link DEFAULT_BURN_CURVE}. An empty array would
+ *     otherwise make the lookup read `xs[0]` of nothing and burn `NaN` hp —
+ *     which silently sets every health bar to NaN rather than throwing.
+ *   · NON-MONOTONIC ticks ⇒ clamped to the previous breakpoint. The schema
+ *     already rejects an out-of-order table, but rounding can also collide two
+ *     distinct authored seconds onto one tick (`sec: 0.01` at 30 Hz). The
+ *     lookup treats a zero-width segment as a STEP rather than dividing by 0
+ *     (→ ±Infinity %/s), so a collision is harmless instead of lethal.
+ *   · NEGATIVE rates ⇒ 0. A negative burn is a heal from an environmental
+ *     hazard; the ring is a backstop and must never hand HP back.
+ */
+function compileBurnCurve(
+  curve: readonly FireRingBurnPoint[] | undefined,
+  dt: number,
+): { ticks: readonly number[]; rates: readonly number[] } {
+  const src = curve !== undefined && curve.length > 0 ? curve : DEFAULT_BURN_CURVE;
+  const ticks: number[] = [];
+  const rates: number[] = [];
+  for (const p of src) {
+    let t = Math.max(0, Math.round(p.sec / dt));
+    const prev = ticks.length > 0 ? ticks[ticks.length - 1]! : -1;
+    if (t < prev) t = prev;
+    ticks.push(t);
+    rates.push(p.pctPerSec > 0 ? p.pctPerSec : 0);
+  }
+  return { ticks: Object.freeze(ticks), rates: Object.freeze(rates) };
+}
+
+/**
  * Convert the seconds-based config block into tick-based sim rules. The
  * seconds→ticks conversion happens ONCE, here, at arm time — never per tick, so
  * no per-tick division can round differently on a different host.
@@ -286,6 +643,27 @@ export function fireRingRulesFromConfig(
     sec === undefined || !(sec > 0) ? 0 : Math.round(sec / dt);
   const startTicks = Math.max(0, Math.round(cfg.startSec / dt));
   const shrinkTicks = Math.max(1, Math.round((cfg.shrinkSec ?? 20) / dt));
+  const minRadius = cfg.minRadius ?? 0.5;
+  // ── 二段制, resolved ONCE (owner 2026-08-02) ─────────────────────────────
+  // `stage2StartSec` absent is THE off switch, and it is checked here rather
+  // than in three consumers so 「有沒有第二段」 has one answer. Off ⇒
+  // stage1Radius = minRadius and stage2ShrinkTicks = 0, which makes the shrink
+  // law below degenerate to the pre-二段制 single ramp with no branch of its own
+  // (see `fireRingRadius`) — that is what keeps every existing fixture and every
+  // recorded replay digest bit-identical.
+  const twoStage = cfg.stage2StartSec !== undefined;
+  const stage1Radius = twoStage ? (cfg.stage1Radius ?? DEFAULT_STAGE1_RADIUS) : minRadius;
+  // Seconds→ticks for the gap, NOT for an absolute stage-2 tick — see
+  // FireRingRules.stage2GapTicks for why an absolute tick cannot survive
+  // `extendRoundForBoss`. Floored at `shrinkTicks`: 第二段 never starts before
+  // 第一段 stopped. (The schema refines the same thing at author time; this is
+  // the belt for the Zod-free callers, and it is the number the law reads.)
+  const stage2GapTicks = twoStage
+    ? Math.max(shrinkTicks, Math.round((cfg.stage2StartSec! - cfg.startSec) / dt))
+    : shrinkTicks;
+  const stage2ShrinkTicks = twoStage
+    ? Math.max(1, Math.round((cfg.stage2ShrinkSec ?? DEFAULT_STAGE2_SHRINK_SEC) / dt))
+    : 0;
   const combatMaxTicks =
     combatMaxSec === undefined || !Number.isFinite(combatMaxSec) || combatMaxSec <= 0
       ? Number.POSITIVE_INFINITY
@@ -302,17 +680,35 @@ export function fireRingRulesFromConfig(
   // one full close so a cap can never force-end combat with the ring still
   // shrinking — the promise is 「出現火圈準備收場」, and a 收場 nobody gets to see
   // is failure mode ① one layer up.
+  //
+  // ⚠️ THE FLOOR IS THE WHOLE RING, NOT 第一段. Under 二段制 the ring is still
+  // closing 50 s after ignition on the shipped numbers; flooring at `shrinkTicks`
+  // (20 s) would let a capped round force-end with the second stage half shut,
+  // i.e. the promised 收場 never drawn — the exact ① this floor exists to stop.
+  const fullCloseTicks = stage2GapTicks + stage2ShrinkTicks;
   const authoredTail = Number.isFinite(combatMaxTicks)
-    ? Math.max(shrinkTicks, combatMaxTicks - startTicks)
-    : shrinkTicks;
+    ? Math.max(fullCloseTicks, combatMaxTicks - startTicks)
+    : fullCloseTicks;
+  const burn = compileBurnCurve(cfg.burnCurve, dt);
   const rules: FireRingRules = {
     startTicks,
     shrinkTicks,
-    minRadius: cfg.minRadius ?? 0.5,
-    burnPctPerSecStart: cfg.burnPctPerSecStart ?? 0.04,
-    burnPctPerSecEnd: cfg.burnPctPerSecEnd ?? 0.2,
-    // absent cap = no cap (a very large finite factor keeps min() deterministic).
-    maxPctPerSec: cfg.maxPctPerSec ?? 1e9,
+    minRadius,
+    stage1Radius,
+    stage2GapTicks,
+    stage2ShrinkTicks,
+    burnCurveTicks: burn.ticks,
+    burnCurveRates: burn.rates,
+    // ABSENT CAP = THE SHIPPED CAP (owner 2026-08-02 「預設最高是50%…不必到
+    // 100%」). This line has now held three different answers — `1e9`, then
+    // `Infinity`, now the shipped default — and the first two were both wrong
+    // in the same way: they answered 「上限是多少」 differently from the Zod field
+    // that bounds the very same knob, and nothing could see the disagreement
+    // because only the Zod-free callers (fixtures, MatchController's per-round
+    // substitutions, the admin preview with a blank box) reach this `??`.
+    // {@link DEFAULT_MAX_PCT_PER_SEC} is now the ONLY literal, referenced by
+    // both layers. (CLAUDE.md: 只能有一個地方回答一個問題.)
+    maxPctPerSec: cfg.maxPctPerSec ?? DEFAULT_MAX_PCT_PER_SEC,
     combatMaxTicks,
     bossExtendTicks: extTicks(cfg.boss?.extendCombatSec),
     bossDelayTicks: extTicks(cfg.boss?.delayFireRingSec),
@@ -508,15 +904,33 @@ export function bossRoundExtensionTicks(world: SimWorld): number {
 }
 
 /**
- * THE SHRINK LAW. Ring radius `ticksSinceStart` ticks past ignition, closing
- * from `zoneRadius` to `rules.minRadius` over `rules.shrinkTicks`.
+ * THE SHRINK LAW, 二段制 (owner 2026-08-02). Ring radius `ticksSinceStart` ticks
+ * past ignition:
+ *
+ *   ┌ t <= 0                    │ zoneRadius            (dormant / ignition tick)
+ *   ├ 0 < t < shrinkTicks       │ zoneRadius → stage1Radius   第一段, linear
+ *   ├ shrinkTicks <= t <= gap   │ stage1Radius          ⟵ 「停止縮圈」, the pocket
+ *   ├ gap < t < gap+stage2      │ stage1Radius → minRadius    第二段, linear
+ *   └ t >= gap + stage2Shrink   │ minRadius             全地圖淹沒, clamped
+ *
+ * THE HOLD IS THE FEATURE, and it is a hold in the ARITHMETIC rather than a
+ * flag: between the two ramps there is no term that varies with `t`, so
+ * 「80–90 秒之間半徑一格都不動」 is not a behaviour anyone has to remember to
+ * preserve. A guard steps a real world across that window and reads the radius
+ * back, because 「有一段時間不縮」 is precisely the kind of claim a property test
+ * over (monotone, ends at 0) would pass while the hold was deleted (⑦).
+ *
+ * 二段制 OFF ⇒ `stage1Radius === minRadius` and `stage2ShrinkTicks === 0`, so
+ * branch 2 returns `minRadius` and branch 3/4 are unreachable: the function is
+ * the pre-二段制 one-ramp law, value for value, with no `if (twoStage)` anywhere.
  *
  * `zoneRadius` is the ZONE's `boundaryRadius` — arena geometry, NOT an ability
  * radius, so it is deliberately not multiplied by `combatEnv.abilityRange`.
  *
- * `k` is the clamped progress in TICKS. Pure and monotonic non-increasing, with
- * no transcendentals: an eased curve (pow/exp) is the one thing that would pass
- * the purity gate today and still be genuinely platform-variable.
+ * Pure and monotonic non-increasing, with no transcendentals: an eased curve
+ * (pow/exp) is the one thing that would pass the purity gate today and still be
+ * genuinely platform-variable. Both ramps are a function of the tick COUNTER,
+ * never of tick history, so a replica that joins mid-round agrees exactly.
  */
 export function fireRingRadius(
   rules: FireRingRules,
@@ -524,8 +938,15 @@ export function fireRingRadius(
   zoneRadius: number,
 ): number {
   if (ticksSinceStart <= 0) return zoneRadius;
-  const k = ticksSinceStart < rules.shrinkTicks ? ticksSinceStart : rules.shrinkTicks;
-  return zoneRadius + (rules.minRadius - zoneRadius) * (k / rules.shrinkTicks);
+  if (ticksSinceStart < rules.shrinkTicks) {
+    const p = ticksSinceStart / rules.shrinkTicks;
+    return zoneRadius + (rules.stage1Radius - zoneRadius) * p;
+  }
+  const sinceStage2 = ticksSinceStart - rules.stage2GapTicks;
+  // 「停止縮圈」 — and, with stage 2 off, the permanent end state (= minRadius).
+  if (sinceStage2 <= 0 || rules.stage2ShrinkTicks <= 0) return rules.stage1Radius;
+  const k = sinceStage2 < rules.stage2ShrinkTicks ? sinceStage2 : rules.stage2ShrinkTicks;
+  return rules.stage1Radius + (rules.minRadius - rules.stage1Radius) * (k / rules.stage2ShrinkTicks);
 }
 
 /**
@@ -549,19 +970,85 @@ export function fireRingIsSafe(
 
 /**
  * The per-SECOND burn rate (fraction of a victim's maxHealth) at
- * `ticksSinceStart` ticks past ignition — for champions OUTSIDE the ring only.
+ * `ticksSinceStart` ticks past ignition — for anything OUTSIDE the ring.
  *
- * Ramps LINEARLY with the shrink progress (not a step staircase), so the punish
- * for standing outside grows exactly as fast as the space runs out: 4 %/s at
- * ignition → 20 %/s once closed. Step out at ignition and never come back and
- * ∫(0.04 + 0.008t)dt reaches 1 at t ≈ 11.6 s; a 3-second panic detour costs
- * ~13 % HP. Pure + branch-only.
+ * Reads the compiled breakpoint table (see {@link FireRingRules}), linearly
+ * interpolated between rows, FLAT before the first row and FLAT after the last.
+ *
+ * ⚠️ HELD FLAT PAST THE LAST ROW, ON PURPOSE — there is no 「keep extrapolating
+ * the final slope」 switch. Under the shipped table the last row IS 100 %/s and
+ * the cap IS 1, so hold and extrapolate produce byte-identical damage: the
+ * switch would be a knob the operator can turn with no effect (failure mode ②)
+ * everywhere except configs it did not ship with. What an operator actually
+ * wants — a steeper or longer tail — is another ROW, which the table already
+ * takes (up to 8) and which says what it does instead of implying it.
+ *
+ * ── WHAT THE SHIPPED CURVE ACTUALLY DOES ──────────────────────────────────
+ * Numbers below are MEASURED by stepping a real `SimWorld` at 30 Hz with a
+ * 1,242 hp champion parked outside the ring, not integrated on paper; the guard
+ * is `fireRingBurnCurve.test.ts`, which pins the death TICK.
+ *
+ *   · rate at t = 0 / 10 / 20 / 30 / 40 s → 4 / 12 / 20 / 60 / 100 %/s
+ *   · step out AT IGNITION and never come back → dead 351 ticks later, t =
+ *     11.700 s, i.e. combat second 71.700 on the shipped `startSec: 60`.
+ *     ⚠️ That tick is UNCHANGED from the retired two-point ramp (also 2151):
+ *     the whole 0–20 s stretch has bit-identical damage, so this redesign costs
+ *     the 「點燃就往外跑」 player exactly nothing.
+ *   · a 3-second panic detour AT IGNITION costs 15.6 % of your health bar
+ *     (∫₀³(0.04 + 0.008t)dt = 0.156 exactly; 15.56 % summing the 90 real ticks).
+ *     ⚠️ The docstring that used to live here said 「~13 %」 — it was wrong
+ *     BEFORE this change too, and wrong in shape as well as in value, because
+ *     the cost is not a constant: the same 3 seconds cost 39.6 % starting at
+ *     t = 10 and 77.8 % starting at t = 20 (measured, this curve).
+ *   · ⚠️ THE TAIL IS NOW SOMETHING A PLAYER LIVES TO MEET, and 二段制 is what
+ *     changed that. Under the single stage the ring closed to `minRadius: 0.5`
+ *     — under a body radius — at t = 19.933 s, so the last possible survivor
+ *     (full hp, zone centre, never attacked) was dead at t = 23.633 s, sixteen
+ *     seconds BEFORE the 40 s row he was supposed to feel. With the pocket
+ *     (`stage1Radius: 4.0`) he is safe through 第一段 and the breather, and only
+ *     starts burning when 第二段 pulls the radius under his body at t = 47.0 s;
+ *     the rate he meets there is already the capped 0.5/s, so he dies at
+ *     t = 49.033 s (combat second 109.033). MEASURED by stepping a real world;
+ *     the guard that pins the tick is `fireRingBurnCurve.test.ts`, and the
+ *     radius timeline it depends on is `fireRingTwoStage.test.ts`.
+ *     (The old note here recommended 「raise `minRadius` above 0.6」 as the fix
+ *     for that. That is exactly what `stage1Radius` now is — a knob whose whole
+ *     job is to be a pocket — except it is a SECOND radius, so the terminal one
+ *     could go to 0 and still mean 全地圖淹沒.)
+ *
+ * PURITY: no allocation, no Map, no property-name iteration, ≤ 8 comparisons.
+ * One subtract / divide / multiply / add per call, all IEEE-correctly-rounded.
  */
 export function fireRingRatePerSec(rules: FireRingRules, ticksSinceStart: number): number {
   if (ticksSinceStart < 0) return 0;
-  const p =
-    rules.shrinkTicks > 0 ? Math.min(1, Math.max(0, ticksSinceStart / rules.shrinkTicks)) : 1;
-  const rate = rules.burnPctPerSecStart + (rules.burnPctPerSecEnd - rules.burnPctPerSecStart) * p;
+  const xs = rules.burnCurveTicks;
+  const ys = rules.burnCurveRates;
+  const last = xs.length - 1;
+  let rate: number;
+  if (ticksSinceStart <= xs[0]!) {
+    rate = ys[0]!;
+  } else if (ticksSinceStart >= xs[last]!) {
+    rate = ys[last]!;
+  } else {
+    // xs is non-decreasing and xs[last] > ticksSinceStart, so this terminates
+    // with xs[i] >= ticksSinceStart and i >= 1.
+    let i = 1;
+    while (i < last && xs[i]! < ticksSinceStart) i++;
+    const x0 = xs[i - 1]!;
+    const span = xs[i]! - x0;
+    // ⚠️ HONEST NOTE (第三守則): `span === 0` is UNREACHABLE today, and a
+    // mutation test proved it — deleting this ternary keeps every test green.
+    // Proof: xs is non-decreasing, the loop stops at the FIRST i with
+    // `xs[i] >= ticksSinceStart`, and `ticksSinceStart > xs[0]` here; so if
+    // `xs[i-1] === xs[i]` the loop would already have stopped at `i-1`.
+    // It is kept as a ONE-COMPARISON belt because the failure it prevents is
+    // silent: `(t - x0) / 0` is ±Infinity, `hp -= maxHp * Infinity * dt` sets
+    // every health bar to -Infinity, and nothing downstream throws. Anyone who
+    // relaxes the monotonisation in `compileBurnCurve` makes it reachable.
+    const f = span > 0 ? (ticksSinceStart - x0) / span : 1;
+    const y0 = ys[i - 1]!;
+    rate = y0 + (ys[i]! - y0) * f;
+  }
   return Math.min(rules.maxPctPerSec, rate);
 }
 
@@ -644,8 +1131,8 @@ export function isBurnedByFireRing(world: SimWorld, id: EntityId): boolean {
  * damage tick for tick.
  *
  * WHY THERE IS NO `burnMobs` ADMIN SWITCH. Everything tunable about this burn —
- * ignition, shrink length, the 4 %/s → 20 %/s ramp and its cap — is ALREADY the
- * operator's, in `match.fireRing`, and every one of those knobs applies to mobs
+ * ignition, shrink length, the whole `burnCurve` table and its cap — is ALREADY
+ * the operator's, in `match.fireRing`, and every one of those knobs applies to mobs
  * unchanged because the damage is a fraction of the victim's own maxHealth. The
  * only thing left to make switchable would be 「保底 off」, and a round that can
  * no longer be guaranteed to end is not a setting anyone wants shipped.
@@ -713,26 +1200,3 @@ export function endCombatFireRing(world: SimWorld): void {
   world.fireRingRules = null;
   world.fireRingTicks = -1;
 }
-
-/**
- * 火圈灼燒曲線的出貨預設 —— **唯一的一份字面值**。
- *
- * `sec` 是**點燃之後**的秒數（不是回合第幾秒），所以它跟著 `startSec` 一起移動 ——
- * 那正是它該綁的東西：把它綁在「回合第幾秒」的話，一改 `startSec` 這條曲線的
- * 語意就悄悄變了。
- *
- * ⚠️ **為什麼是 export 而不是各自寫一份**：`content/schema/config.ts` 的
- * `burnCurve` 用它當 Zod 的 `.default()`，而 sim 這一側在欄位缺席時也要退回同一份。
- * 抄第二份就是兩個「沒填的話燒多少」，而它們遲早會分岔（這個專案已經有
- * `maxPctPerSec` 一個 Zod 說 `.max(1)`、sim 填 `Infinity` 的前例，差九個數量級）。
- *
- * ⚠️ 2026-08-02：這個 export **本來就該在這一版**，是我把 `schema/config.ts`
- * 的 import 提前 commit 了卻沒帶上它（`da082822` 掃進了平行工作流的半成品）——
- * 結果 `packages/shared` 在乾淨 checkout 上編譯不過，host 的 deploy build 直接失敗。
- * 教訓：commit 一個檔之前要確認它 import 的每一樣東西都在版控裡。
- */
-export const DEFAULT_BURN_CURVE: readonly { sec: number; pctPerSec: number }[] = Object.freeze([
-  Object.freeze({ sec: 0, pctPerSec: 0.04 }),
-  Object.freeze({ sec: 20, pctPerSec: 0.2 }),
-  Object.freeze({ sec: 40, pctPerSec: 1 }),
-]);

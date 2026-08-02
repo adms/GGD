@@ -73,17 +73,20 @@
         175.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.slash",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              55.0,
-              90.0,
-              125.0,
-              160.0,
-              200.0
+              55,
+              90,
+              125,
+              160,
+              200
             ],
             "ratios": [
               {
@@ -91,12 +94,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.holy.slash",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "W": {
       "id": "godie-ogrh.w",

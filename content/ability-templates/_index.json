@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "437d6c22682b",
+  "hash": "a6d151e8dfda",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -17,8 +17,8 @@
     {
       "id": "tpl-buff-self",
       "path": "ability-templates/tpl-buff-self.json",
-      "hash": "4e409cf8897f",
-      "size": 775
+      "hash": "086d133f9b87",
+      "size": 799
     },
     {
       "id": "tpl-channel-beam",
@@ -29,8 +29,8 @@
     {
       "id": "tpl-charge-push",
       "path": "ability-templates/tpl-charge-push.json",
-      "hash": "b3d4f9f32289",
-      "size": 2159
+      "hash": "f2db68515dbf",
+      "size": 2183
     },
     {
       "id": "tpl-data-no-trigger",
@@ -59,8 +59,8 @@
     {
       "id": "tpl-ground-nova",
       "path": "ability-templates/tpl-ground-nova.json",
-      "hash": "6bc87b80fbb6",
-      "size": 863
+      "hash": "976b12ed3cd5",
+      "size": 887
     },
     {
       "id": "tpl-growth-charge",
@@ -71,8 +71,8 @@
     {
       "id": "tpl-instant-blast",
       "path": "ability-templates/tpl-instant-blast.json",
-      "hash": "bffefccc4f30",
-      "size": 923
+      "hash": "4d96d004deae",
+      "size": 947
     },
     {
       "id": "tpl-leap-strike",
@@ -89,8 +89,8 @@
     {
       "id": "tpl-line-sweep",
       "path": "ability-templates/tpl-line-sweep.json",
-      "hash": "e5fd0f397eb0",
-      "size": 1580
+      "hash": "3546a1fa479e",
+      "size": 1604
     },
     {
       "id": "tpl-lock-combo",
@@ -113,8 +113,8 @@
     {
       "id": "tpl-orbit-array",
       "path": "ability-templates/tpl-orbit-array.json",
-      "hash": "d8bb64cbb831",
-      "size": 1887
+      "hash": "3b6dc9abd1a6",
+      "size": 1995
     },
     {
       "id": "tpl-periodic-field",
@@ -125,14 +125,14 @@
     {
       "id": "tpl-proxy-cast",
       "path": "ability-templates/tpl-proxy-cast.json",
-      "hash": "07ae0cc55382",
-      "size": 2981
+      "hash": "e7ea0a9bc7f2",
+      "size": 3145
     },
     {
       "id": "tpl-proxy-fanout",
       "path": "ability-templates/tpl-proxy-fanout.json",
-      "hash": "9b422ed6ab1e",
-      "size": 1564
+      "hash": "3e60881b76fc",
+      "size": 1680
     },
     {
       "id": "tpl-pull-throw",
@@ -149,8 +149,8 @@
     {
       "id": "tpl-random-barrage",
       "path": "ability-templates/tpl-random-barrage.json",
-      "hash": "eea37478940a",
-      "size": 2857
+      "hash": "1476bbae7102",
+      "size": 2965
     },
     {
       "id": "tpl-range-gamble",
@@ -167,8 +167,8 @@
     {
       "id": "tpl-single-strike",
       "path": "ability-templates/tpl-single-strike.json",
-      "hash": "70456ccbca2e",
-      "size": 801
+      "hash": "d2ff8fc508a8",
+      "size": 825
     },
     {
       "id": "tpl-strip-transform",

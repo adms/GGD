@@ -70,25 +70,7 @@
         170.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              100.0,
-              200.0,
-              300.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.nature.slash",
       "vfxLayers": [
         {
@@ -117,7 +99,28 @@
       ],
       "targetsEnemies": true,
       "radius": 4.12,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-ground-nova",
+        "params": {
+          "radius": 224.5,
+          "damage": {
+            "perRank": [
+              100,
+              200,
+              300
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
+        }
+      }
     },
     "W": {
       "id": "godie-hgam.w",
@@ -174,11 +177,14 @@
         350.0
       ],
       "range": 9.17,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.root-snare",
+      "targetsEnemies": true,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               350,
               500,
@@ -191,12 +197,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.root-snare",
-      "targetsEnemies": true,
-      "castTimeSec": 0.5
+      }
     },
     "R": {
       "id": "godie-hgam.r",
@@ -217,25 +222,7 @@
         400.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  600.0,
-                  900.0,
-                  1200.0
-                ]
-              }
-            }
-          ]
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "castTimeSec": 0.7,
       "hitFeel": {
@@ -251,7 +238,25 @@
         ],
         "flashMs": 178,
         "camKick": 0.446
-      }
+      },
+      "template": {
+        "ref": "tpl-line-sweep",
+        "params": {
+          "segmentCount": 6,
+          "stepSize": 200,
+          "segmentAoe": 400,
+          "damage": {
+            "perRank": [
+              600,
+              900,
+              1200
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.7
+        }
+      },
+      "targetsEnemies": true
     }
   },
   "skillOrder": [

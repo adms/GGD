@@ -232,11 +232,14 @@ type Service struct {
 	store *jsonstore.Store
 	mu    sync.Mutex
 	now   func() time.Time
+	// starter is the source of the built-in bundle, behind a seam so tests can
+	// inject one. See SetStarter in reset.go for why the seam has to exist.
+	starter func() Doc
 }
 
 // New builds the service. rdb may be nil (mirror disabled).
 func New(store *jsonstore.Store, rdb *redisx.Client) *Service {
-	return &Service{repo: NewRepo(store, rdb), store: store, now: time.Now}
+	return &Service{repo: NewRepo(store, rdb), store: store, now: time.Now, starter: StarterSet}
 }
 
 // SetNow overrides the clock seam (tests inject a fixed clock so updatedAt is
@@ -354,7 +357,7 @@ func (s *Service) Bulk(ctx context.Context, kind string, enable, disable []strin
 // removes anything) so a fresh install is one click away from being playable.
 // Idempotent.
 func (s *Service) ApplyStarterSet(ctx context.Context) (Doc, error) {
-	starter := StarterSet()
+	starter := s.starter()
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	doc, _, err := s.repo.Load()

@@ -19,11 +19,12 @@
     470.0
   ],
   "range": 8.25,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 280,
+      "damage": {
         "perRank": [
           400,
           600,
@@ -36,9 +37,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.lightning.nova",
   "targetsEnemies": true,
   "radius": 5.13,

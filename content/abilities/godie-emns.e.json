@@ -19,16 +19,19 @@
     300.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-orbit-array",
+    "params": {
+      "rayCount": 12,
+      "reach": 82,
+      "aim": "inward",
+      "damage": {
         "perRank": [
-          650.0,
-          750.0,
-          850.0,
-          950.0
+          650,
+          750,
+          850,
+          950
         ],
         "ratios": [
           {
@@ -36,9 +39,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.shockwave",
   "sfxKey": "wc3.rokhanwhat2",
   "targetsEnemies": true,

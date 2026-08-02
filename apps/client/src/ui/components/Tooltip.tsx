@@ -55,6 +55,20 @@ export interface TooltipProps {
   title: string;
   /** description paragraph (newlines preserved) */
   body?: string;
+  /**
+   * A pre-rendered body, for callers that need STRUCTURE the string path cannot
+   * carry — today that is `<ItemCardBody>` (owner 2026-08-02「卡片道具的排版連在
+   * 一起不好閱讀」), which colours `[標記]` chips and 數值 tokens and puts every
+   * 效能 line on its own row.
+   *
+   * When set it REPLACES the `body` block entirely, including the
+   * `WC3_PROSE_CAPTION` footnote — that caption is about the ability-prose
+   * rescale (`rescaleAbilityProse`), which does not run on a node body, so
+   * printing it here would be a claim about something that did not happen
+   * (第三守則). `body` is still what a11y / plain-text callers pass; a caller
+   * giving both gets the node, and should pass `body` only as the flat fallback.
+   */
+  bodyNode?: ReactNode;
   /** small key→value chips under the title (cast type / cooldown / mana / key) */
   meta?: TooltipMeta[];
   /** preferred side; default "top" (above the anchor, cursor-safe) */
@@ -84,6 +98,7 @@ const PANEL_STYLE: CSSProperties = {
 export function Tooltip({
   title,
   body,
+  bodyNode,
   meta,
   side = "top",
   children,
@@ -98,7 +113,7 @@ export function Tooltip({
   // post-multiplier FINAL and re-render when an operator changes the table.
   const env = useDisplayEnv();
 
-  const hasContent = !!(title || body || (meta && meta.length > 0));
+  const hasContent = !!(title || body || bodyNode || (meta && meta.length > 0));
 
   // Measure the anchor + freshly-rendered panel and resolve the placement.
   // Runs in a layout effect so the panel is positioned before the browser
@@ -151,7 +166,10 @@ export function Tooltip({
                 ))}
               </div>
             )}
-            {body && (
+            {bodyNode ? (
+              <div style={{ marginTop: 6 }}>{bodyNode}</div>
+            ) : (
+              body && (
               <>
                 <div
                   style={{
@@ -172,6 +190,7 @@ export function Tooltip({
                 </div>
                 <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
               </>
+              )
             )}
           </div>,
           document.body,

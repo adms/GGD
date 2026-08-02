@@ -17,15 +17,15 @@
     260.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          10.0,
-          15.0,
-          15.0
+          10,
+          15,
+          15
         ],
         "ratios": [
           {
@@ -33,9 +33,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.nova",
   "targetsEnemies": true,
   "schema": "ability@1",

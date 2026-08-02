@@ -176,7 +176,7 @@ export function startChampionModelAudition(
       // EXACTLY ChampionView.tryUpgradeToGlb's placement, in its order.
       const root = new TransformNode("aud-champ", scene);
       root.scaling.setAll(1);
-      root.rotation.y = glbYawOffset(doc.glbPath, doc.id);
+      root.rotation.y = glbYawOffset(doc);
       for (const node of inst.rootNodes) node.parent = root;
       root.position.z = opts.offsetZ ?? 0;
       root.computeWorldMatrix(true);

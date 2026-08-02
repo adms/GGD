@@ -47,6 +47,7 @@ import { sanitizeDisplayName } from "../net/sanitizeText";
 import { roomRegistry } from "./roomRegistry";
 import { verifyCreateToken } from "./createGate";
 import { MatchRecorder, reportRecorderSealFailure } from "../replay/Recorder";
+import { replayRecordingEnabled } from "../replay/policy";
 import { buildHeader } from "../replay/headerCodec";
 import { buildStamp } from "../replay/fingerprint";
 import { activeContentVersion } from "../replay/Player";
@@ -490,30 +491,37 @@ export class MatchRoom extends Room<MatchState> {
     // Open the recording BEFORE the tick loop starts, so tick 0 is captured.
     // Awaiting here is free: Colyseus does not accept joins until onCreate
     // resolves, and nothing after this point is on the tick path.
-    this.recorder = await MatchRecorder.open(
-      matchId,
-      buildHeader({
-        matchId,
-        seed,
-        contentVersion: activeContentVersion(),
-        seats: this.ctl.seats,
-        specIsBot: (seatId) => specs.find((s) => s.seatId === seatId)?.isBot ?? true,
-        startingLives,
-        arena,
-        arenaPool,
-        combatEnv,
-        baseBonus,
-        phaseConfig: phaseCfg,
-        fireRing,
-        arenaRules,
-        whitelist,
-        env: {
-          whitelistBypass: WHITELIST_BYPASS,
-          combatEnvBypass: process.env.GGD_COMBAT_ENV_BYPASS === "1",
-          devCheats: DEV_CHEATS,
-        },
-      }),
-    );
+    //
+    // 錄影開關 (config.replay@1, owner 2026-08-02「請幫我預設打開」). 在這之前
+    // 這一行是**無條件**的 —— 沒有開關，所以也沒有辦法在不重新 build 映像的情況
+    // 下關掉它。出貨值是 true，而且缺文件／壞文件也回 true（fail-open，理由寫在
+    // shared/content/replayPolicy.ts 的檔頭：內容載入失敗不可以順手把錄影關掉）。
+    this.recorder = !replayRecordingEnabled()
+      ? null
+      : await MatchRecorder.open(
+          matchId,
+          buildHeader({
+            matchId,
+            seed,
+            contentVersion: activeContentVersion(),
+            seats: this.ctl.seats,
+            specIsBot: (seatId) => specs.find((s) => s.seatId === seatId)?.isBot ?? true,
+            startingLives,
+            arena,
+            arenaPool,
+            combatEnv,
+            baseBonus,
+            phaseConfig: phaseCfg,
+            fireRing,
+            arenaRules,
+            whitelist,
+            env: {
+              whitelistBypass: WHITELIST_BYPASS,
+              combatEnvBypass: process.env.GGD_COMBAT_ENV_BYPASS === "1",
+              devCheats: DEV_CHEATS,
+            },
+          }),
+        );
     this.ctl.recorder = this.recorder;
 
     // #207 對戰事件記錄。和回放**分開的一份檔**,理由寫在 analytics/format.ts
@@ -826,7 +834,20 @@ export class MatchRoom extends Room<MatchState> {
     }
   }
 
-  override onDispose(): void {
+  /**
+   * ⚠️ 回傳 `Promise` 是**這個方法唯一重要的細節**（owner 2026-08-02「就算玩到
+   * 一半就離開也應該有 replay 才對」）。
+   *
+   * Colyseus 的 `gracefullyShutdown()` 會 `await` 每一間房的 `onDispose()`。
+   * 在此之前這裡是 `onDispose(): void` + `void rec?.abandon()` —— 也就是說
+   * 「把最後一段緩衝交出去、等串流關好」這件事被**射後不理**，而 Colyseus 拿到
+   * 的是一個立刻 resolve 的 `undefined`，於是 SIGTERM（`docker compose restart`、
+   * 部署、OOM 重排）之後程序可以在最後那一次 flush 落地之前就結束。
+   *
+   * 代價是關房多等幾毫秒（一次 `write` + `end`），換到的是「打到一半被重啟」
+   * 那一場的最後一段輸入真的在磁碟上。
+   */
+  override async onDispose(): Promise<void> {
     // Return the process-wide concurrent-room slot so a completed/disposed match
     // frees capacity for the next one (the room-cap DoS guard, roomRegistry).
     if (this.acquiredRoomSlot) {
@@ -840,13 +861,17 @@ export class MatchRoom extends Room<MatchState> {
     const rec = this.recorder;
     this.recorder = null;
     this.ctl.recorder = null;
-    void rec?.abandon();
     // #207:同樣的道理 —— 一場打到第 6 回合斷線的比賽,那 6 個回合已經寫在
     // 磁碟上而且完整可讀。沒有 final 行就是「這場沒打完」的判斷依據。
     const stats = this.statsRecorder;
     this.statsRecorder = null;
     this.ctl.statsSink = null;
-    void stats?.abandon();
+    // 兩份一起等,而且**一個失敗不可以害另一個沒落地** —— `allSettled`,不是 `all`。
+    // 房間關閉是 best-effort 的收尾，丟例外只會讓 Colyseus 的關機流程停在半路。
+    const results = await Promise.allSettled([rec?.abandon(), stats?.abandon()]);
+    for (const r of results) {
+      if (r.status === "rejected") console.error("[match] 收尾時落地失敗（比賽已結束，不影響玩家）", r.reason);
+    }
   }
 
   private async finishMatch(): Promise<void> {

@@ -13,11 +13,12 @@
     600.0
   ],
   "range": 7.06,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 513.5,
+      "damage": {
         "flat": 300,
         "ratios": [
           {
@@ -25,9 +26,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.explosion-lg",
   "schema": "ability@1",
   "radius": 9.41,

@@ -32,6 +32,7 @@
  * 不一樣的曲線,而兩邊都不會報錯。
  */
 import { attackRangeScaleFactor, type BodyScaleRules } from "@ggd/shared/sim/bodyScale";
+import { getAtPath } from "./configFields";
 
 /** 表格的一欄。 */
 export interface CurveColumnSpec {
@@ -90,10 +91,14 @@ export function emptyCurveRow(): CurveRowDraft {
 /**
  * 文件 → 畫面上的列。讀不到 / 不是陣列 → 空陣列(呼叫端會據此顯示「讀不到」而
  * 不是畫一張假的表)。
+ *
+ * ⚠️ `spec.path` 走 `getAtPath`,所以它是一條**點路徑**而不只是頂層鍵 ——
+ * `attackRangeCurve`(頂層,`bodyScale` 那一份)和 `match.fireRing.burnCurve`
+ * (巢狀,火圈灼燒曲線)用的是同一支。
  */
 export function curveRowsFrom(doc: unknown, spec: ConfigCurveSpec): CurveRowDraft[] {
   if (!doc || typeof doc !== "object") return [];
-  const raw = (doc as Record<string, unknown>)[spec.path];
+  const raw = getAtPath(doc, spec.path);
   if (!Array.isArray(raw)) return [];
   const out: CurveRowDraft[] = [];
   for (const item of raw) {

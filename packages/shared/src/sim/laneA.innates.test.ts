@@ -121,8 +121,18 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     expect(ctrlSc.final[Stat.Armor]).not.toBeCloseTo(after, 6);
   });
 
-  // ── ② 52-00 十二道試煉 —— maxHealth ×12 + 每秒 0.12% 流失 ──────────────────
-  it("52-00 十二道試煉:最大生命 ×12,而且每秒真的掉 0.12% 最大生命", () => {
+  // ── ② 52-00 十二道試煉 —— maxHealth ×12 + 每秒 1% 流失 ────────────────────
+  //
+  // ⚠️ owner 2026-08-02:「Berserker 是每秒損失 1%生命, 直到生命不足1%」。
+  // 流失從 0.12% 改成 1%,而且**換了住的地方**:它本來是這支天生技上的一個
+  // `onInterval` + 真實傷害 hook,現在是英雄卡的 `healthDrainPctOfMax` +
+  // `config.regen@1` 的地板(見 `sim/regenRules.ts`)。搬家的三個理由:
+  //   1. hook 走傷害管線 = 被 `combatEnv.damageDealt` 乘過,「1%」不會是 1%;
+  //   2. hook 的 `condition` 是**發不發射**的前提,不是一條夾值 —— 把流失調到
+  //      比地板大就會穿過地板把人打死,而「直到生命不足 1%」就變成假的;
+  //   3. 「碰到地板是停手還是夾住」「要不要給小怪」是決策點,hook 上沒有地方放。
+  // 這一條測的仍然是**出貨內容跑出來的血量**,只是斷言的數字換了。
+  it("52-00 十二道試煉:最大生命 ×12,而且每秒真的掉 1% 最大生命", () => {
     const { world, id } = arena(LANE_A.herc);
     const sc = world.stats.get(id)!;
     const hp = world.health.get(id)!;
@@ -149,11 +159,13 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     step(w2.world, 91); // 3 秒 + 1 tick 的結算餘裕
     const hpEnd = w2.world.health.get(w2.id)!.hp;
     const lost = hpStart - hpEnd;
-    // 3 次 payout × 0.12% —— 再生(healthRegen)會抵掉一部分,所以下界抓 2 次份,
-    // 上界抓 4 次份。**兩邊都有界**:把 coeff 打成 0.12(百倍)上界就紅,
-    // 把 hook 刪掉下界就紅。
-    expect(lost).toBeGreaterThan(max2 * 0.0012 * 2 * 0.5);
-    expect(lost).toBeLessThan(max2 * 0.0012 * 4);
+    // 3 秒 × 1.2% 最大生命（owner 2026-08-02:「hook => -1.2%,
+    // healthRegenPctOfMax=0」）。他**沒有**百分比自動回血了，所以 1.2% 是淨值；
+    // 只有固定 healthRegen(約 1.4 點/秒) 會抵掉一點零頭。
+    // 下界抓 2.5 秒份、上界抓 3.2 秒份。**兩邊都有界**:把百分比打成
+    // 0.12(十倍)上界就紅,把英雄卡那一格拿掉、或把符號翻回「回血」下界就紅。
+    expect(lost).toBeGreaterThan(max2 * 0.012 * 2.5);
+    expect(lost).toBeLessThan(max2 * 0.012 * 3.2);
     expect(hp.alive).toBe(true);
   });
 

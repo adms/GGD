@@ -313,9 +313,12 @@ export type StarterBundle = Record<Kind, string[]>;
  * Parse the platform's starter bundle.
  *
  * The bundle is SERVER-OWNED (apps/platform/internal/curation/starter.go): a
- * hand-picked, documented set of 12 champions + 30 items + their full 60-ability
- * kits, guarded by TestStarterSetMatchesContentTree against the real content
- * tree. The console used to compute its own first-10-by-id heuristic here; that
+ * hand-picked, documented set of champions + items + their full five-slot
+ * ability kits, guarded by TestStarterSetMatchesContentTree against the real
+ * content tree. (This paragraph used to name 「12 champions + 30 items + their
+ * full 60-ability kits」 — the numbers moved to 53/104/265 at tasks #138 and
+ * #82 and the sentence stayed. Counts belong in the response, not the comment.)
+ * The console used to compute its own first-10-by-id heuristic here; that
  * produced a different, unvetted set than the one the platform applies and the
  * one `make seed-demo` installs, so the console now previews and applies the
  * SAME bundle everything else uses.

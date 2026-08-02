@@ -416,6 +416,19 @@ export interface MobBossView {
   mine: boolean;
   /** spawn: the summoner's cumulative zombie tally that crossed the threshold */
   kills: number;
+  /**
+   * spawn: WHOSE FACE the king walked in wearing — the champion id the sim
+   * resolved at arm time (`MobBossRules.championId`). `""` = unknown.
+   *
+   * ⚠️ NOT DERIVABLE FROM THE MESH, which is why it rides the wire: the shipped
+   * `mobWaves.boss.championSource` is `"random"`, so the king is a DIFFERENT
+   * champion from one arm to the next, and `EntityState.key` names a model doc,
+   * not a character. `ui/hud/bossIntroModel` looks this id up to find the 名言／
+   * 描述／攻略要點／弱點 that the 出場演出 shows.
+   *
+   * Empty on `slain`: the settlement is about money, not about who it was.
+   */
+  championId: string;
   /** slain: the whole split, ascending by entity id as the sim emitted it */
   shares: MobBossShareView[];
   /**
@@ -881,6 +894,10 @@ export function parseMobBossEvent(
       // seat -1 is 「沒有座位」, never 「等於我的 null seat」
       mine: localSeatId !== null && summonerSeatId >= 0 && summonerSeatId === localSeatId,
       kills: Math.max(0, Math.trunc(num(ev.data.kills, 0))),
+      // 出場演出 (owner 2026-08-02). A non-string (old server, garbled packet)
+      // degrades to 「不知道是誰」 and the intro draws nothing — never to a
+      // champion id the sim did not send.
+      championId: typeof ev.data.championId === "string" ? ev.data.championId : "",
       shares: [],
       totalGold: 0,
       totalXp: 0,
@@ -917,6 +934,8 @@ export function parseMobBossEvent(
     summonerSeatId: -1,
     mine: false,
     kills: 0,
+    // the settlement never introduces anybody — the intro already happened
+    championId: "",
     shares,
     // TAKEN OFF THE WIRE, NEVER RE-DERIVED FROM `shares`. These are the sums the
     // sim actually paid (MobSystem.payBossBounty), and in `"bonus"` mode they

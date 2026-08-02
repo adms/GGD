@@ -21,11 +21,11 @@
     75.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
           150,
           250,
@@ -39,11 +39,13 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "physical"
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.slash",
   "sfxKey": "wc3.druidofthetalonmissilelaunch2",
   "targetsEnemies": true,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0
 }

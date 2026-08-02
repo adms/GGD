@@ -7,35 +7,34 @@
   "castType": "skillshot",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    500.0,
-    730.0,
-    960.0
+    500,
+    730,
+    960
   ],
   "range": 8.25,
-  "effects": [
-    {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              150.0,
-              250.0,
-              350.0
-            ]
-          }
-        }
-      ]
+  "effects": [],
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 6,
+      "stepSize": 200,
+      "segmentAoe": 400,
+      "damage": {
+        "perRank": [
+          150,
+          250,
+          350
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",
   "castTimeSec": 0.5,
@@ -48,9 +47,10 @@
     "flashColor": [
       0.6,
       0.82,
-      1.0
+      1
     ],
     "flashMs": 186,
     "camKick": 0.466
-  }
+  },
+  "targetsEnemies": true
 }

@@ -370,6 +370,16 @@ export interface ItemRow {
   requirements: string[];
   /** merged modifiers, for callers that want the raw numbers (tests / panel). */
   merged: MergedMod[];
+  /**
+   * owner 手寫的**原文**, 一個字都沒動 —— 給 `<ItemCardBody>` 在渲染時解析
+   * (owner 2026-08-02「卡片道具的排版連在一起不好閱讀」)。
+   *
+   * ⚠️ 它與上面的 `effect` / `claims` / `lore` **不是**同一件事, 而且 NOT 可以互相
+   * 取代:那三個是這個檔案為了做出「一行摘要」而**拆過、過濾過、用 ` · ` 接過**的
+   * 產物,正是 owner 抱怨的那個排版。這一格是未經處理的來源,讓卡片自己決定怎麼
+   * 分行上色。兩者並存是刻意的 —— 貨架的壓縮列仍然需要那一行摘要。
+   */
+  description: string | null;
 }
 
 /**
@@ -424,5 +434,6 @@ export function buildItemRow(item: RowItem, anchorStat: Stat | null): ItemRow {
     claims: parsed.efficacy.filter(isStatClaimLine),
     requirements,
     merged,
+    description: item.description ?? null,
   };
 }

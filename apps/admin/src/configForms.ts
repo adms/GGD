@@ -44,9 +44,12 @@
  */
 import {
   zConfigAmbientVfxDoc,
+  zConfigBossIntroDoc,
   zConfigDamageColorsDoc,
   zConfigGoreDoc,
+  zConfigItemCardDoc,
   zConfigModelLodDoc,
+  zConfigReplayDoc,
   zConfigBlockDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
@@ -54,6 +57,7 @@ import {
   zConfigStealthDoc,
   zConfigTauntDoc,
   zConfigVfxCleanupDoc,
+  zConfigVictoryFxDoc,
 } from "@ggd/shared/content";
 // 重用 `/editor` 的 Zod 走訪器而不是在後台再寫一支。理由和第一守則同源：兩支走訪器
 // 就是兩份會 drift 的「Zod 長什麼樣」的知識，而它們的分歧會以「後台少了一個欄位」
@@ -63,6 +67,7 @@ import {
 import { walkZod } from "../../editor/src/form/walk";
 import { humanize, type UINode } from "../../editor/src/form/uiSchema";
 import type { ConfigCurveSpec } from "./configCurve";
+import type { ConfigTableSpec } from "./configTables";
 
 /**
  * `ZodTypeAny`，**不從 `"zod"` 取**。
@@ -193,8 +198,14 @@ export interface ConfigFieldLabel {
    * 顏色：**「存了但畫面沒變」**，這個 repo 最討厭的那種失敗。
    *
    * ⚠️ 這是 Zod 之外的第二份規則，也就是一份會 drift 的規則。
-   * `configForms.test.ts` 的「文字欄位的 pattern 與 schema 判一樣的結果」用整份
-   * 文件的 `spec.zod.safeParse` 交叉驗證，drift 當場紅。
+   * `configForms.test.ts` 的「每一個 pattern 和 schema 對同一個值判一樣的結果」
+   * 拿一組候選字串逐一比對「pattern 收不收」與「整份文件的 `spec.zod.safeParse`
+   * 收不收」，兩邊判不一樣就當場紅。
+   *
+   * ⚠️ 2026-08-02：**在此之前這一段是假的**（第三守則）—— 它宣稱的那條測試在
+   * 整個 repo 不存在（`grep -rn "pattern" apps/admin/src/configForms.test.ts`
+   * 零命中），所以 HEX6 那九格從加進來的那天起就沒有任何東西在比對它和
+   * `zColorHex`。現在那條測試真的寫了，這一段才是真話。
    */
   pattern?: RegExp;
   /** `pattern` 不過時給操作者看的一句中文。有 `pattern` 就必須有它。 */
@@ -239,6 +250,18 @@ export interface ConfigDocSpec {
    * 邏輯與逐格驗證住在 `configCurve.ts`。
    */
   curve?: ConfigCurveSpec;
+  /**
+   * 幾張**可以編輯**的對照表（`Record<string, enum>` 或 `string[]`）。
+   *
+   * 和 `curve` 同一個理由，只是形狀不同：走訪器把 record 與 array 都歸成「不編輯
+   * 的分支」，而對 `item-card.markers` 那條出路是錯的 —— owner 2026-08-02 要改的
+   * 就是「`[On-Hit]` 算主動還是被動」，也就是那張表的一列。
+   *
+   * 所以非純量分支現在有**三條**明著宣告的路（preserved / curve / tables），
+   * `configForms.test.ts` 三邊都認，仍然沒有第四條「沒有人管它」的路。
+   * 邏輯與逐格驗證住在 `configTables.ts`。
+   */
+  tables?: readonly ConfigTableSpec[];
 }
 
 // ────────────────────────────────────────────── 畫質分級 (config/model-lod) ─
@@ -773,6 +796,41 @@ const ARENA_FIRE_SPEC: ConfigDocSpec = {
   ],
 };
 
+// ───────────────────────────────── 勝利煙火 (config/victory-fx) ────────────
+
+const VICTORY_FX_SPEC: ConfigDocSpec = {
+  page: "victoryFx",
+  collection: "config",
+  docId: "victory-fx",
+  schemaTag: "config.victory-fx@1",
+  zod: zConfigVictoryFxDoc,
+  title: "勝利煙火",
+  intro: [
+    "owner 2026-08-02 實戰回饋：「天空的火焰似乎沒有被移除，我懷疑是煙火的時間太長」→ 裁決「請你直接取消煙火(變成後台開關)」。這一頁就是那兩把開關，**出貨兩格都是關的**。",
+    "程式碼一行都沒有刪。「贏了要不要放煙火」是一個決策點不是一個 bug，所以它是兩格開關而不是一次刪除 —— 改主意時打勾就好，不必再改程式碼＋重新部署一次。形狀和 場地環境火焰 (GH#251) 一模一樣，理由也一樣。",
+    "⚠️ **量到的煙火長度其實很短**：回合小煙火約 1.3 秒、烤雞煙火約 4.3 秒，而且結束後場上不留任何粒子系統。owner 感覺到的「時間太長」有一個已知的機制解釋 —— 煙火的收尾**完全靠 requestAnimationFrame 驅動**，切到別的分頁／手機息屏時整個凍結在那一幀，切回來才在一幀之內自癒。所以「切出去再切回來」看到的就是一團不動的火。這一頁關掉煙火就不會遇到；要開回來的話這件事還在。",
+    "⚠️ 這兩格**只關煙火**。結算畫面的灰底（回合）與暗底（全場）、以及勝利嘲弄語音都不受影響 —— 那些是別的功能，一起關掉會是沒有人要求的迴歸。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/victory-fx.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/vfx/VictoryFireworks.ts 的 sync()（GameApp 每幀呼叫；政策由 ContentDb.load() 經 vfx/victoryFxPolicy 的 applyVictoryFxDoc 推進來）→ 決定 SmallFireworkFx.play() / ChickenFireworkFx.play() 要不要被呼叫；烤雞那格同時決定 ui/panels/MatchEndPanel 要不要把計分卡壓住 2340 毫秒",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（設定是在內容載入時讀進特效層的）。已經在進行中的那一場不會中途改變。",
+  fields: [
+    {
+      path: "roundVolley.enabled",
+      zh: "每回合贏的時候放小煙火",
+      note: "關（出貨值）＝ 打贏一個回合時天空不會有任何煙火，畫面只剩下灰底與獲勝者的角色。開＝ 每贏一回合放一輪三發的小煙火，約 1.3 秒。這是一場裡最常看到的那一種（一場打 3–5 回合就放 3–5 次），也是三個數字裡最貴的一個：峰值會多出約 28 個粒子系統，手機上最有感的就是它。",
+    },
+    {
+      path: "matchChicken.enabled",
+      zh: "全場獲勝時放烤雞煙火",
+      note: "關（出貨值）＝ 吃雞時天空不會出現那隻全螢幕的烤雞，而且**結算計分卡會立刻出現**（那 2.34 秒的延遲存在的唯一理由就是讓烤雞被看到，煙火關掉之後它就只是純粹的空等）。開＝ 一場只放一次、約 4.3 秒，然後計分卡才淡入。這是 #93 花了七次迭代才做到看得出是一隻雞的那個東西。",
+    },
+  ],
+  preserved: [],
+};
+
 // ───────────────────────────────────────── 體型與射程 (config/body-scale) ──
 
 const BODY_SCALE_SPEC: ConfigDocSpec = {
@@ -845,21 +903,22 @@ const REGEN_SPEC: ConfigDocSpec = {
   docId: "regen",
   schemaTag: "config.regen@1",
   zod: zConfigRegenDoc,
-  title: "回血規則",
+  title: "回血與扣血規則",
   intro: [
-    "owner 2026-08-01 實戰回饋：「Berserker HP 回血 1%每秒，沒有保底」。在這一頁出現之前，回血只有一條**固定點數/秒**（英雄卡的 healthRegen ＋ 成長 ＋ 力量），整條路上沒有任何一項讀最大生命 —— 也就是說「每秒回最大生命的 1%」不是被設錯的數字，是一個**不存在的機制**。",
-    "百分比本身寫在英雄卡（healthRegenPctOfMax，0.01 = 每秒 1%），出貨只有 海克力斯 - Berserker 填了。這一頁決定它和固定回血的關係，以及有沒有保底。",
-    "⚠️ 「保底」查過三個可能的位置（基礎加成、屬性最終夾值、屬性上限表）都沒有生命回復的下限，所以現況本來就沒有保底 —— 這一格是把它變成可以**打開**的，不是把既有的關掉。",
+    "⚠️ owner 2026-08-02 更正：「Berserker 是每秒**損失** 1%生命, 直到生命不足1%」。方向和 8/1 那句「回血 1%每秒」**相反**，而且多了一條 8/1 沒有的地板。所以出貨的英雄卡填的是**扣血** 1%，回血那一族目前沒有任何一位英雄在用。",
+    "兩族欄位都是「英雄卡有填才啟動」：回血看 healthRegenPctOfMax（目前**沒有人**填），扣血看 healthDrainPctOfMax（只有 海克力斯 - Berserker 填了 0.01 ＝ 每秒 1%）。",
+    "⚠️ **扣血不是傷害。** 它不走傷害管線，所以不吃 戰鬥系統 的傷害倍率、不會被護盾吸、不噴傷害數字、不算進任何人的輸出統計，也**扣不死人** —— 到了下面那條地板就停。要真的把人扣死，用的是天生技的真實傷害。",
+    "⚠️ 扣血只在**戰鬥中**進行（和火圈、殭屍波同一條規矩），中場與商店不扣；回血則不設這道閘，維持既有行為。",
   ],
   consumer:
-    "packages/shared/src/sim/regenRules.ts 的 healthRegenPerSec()，由 sim/systems/RegenSystem.ts 每 tick 對每一個活著的單位呼叫；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.regenRules",
+    "packages/shared/src/sim/regenRules.ts 的 healthRegenPerSec() / healthDrainPerSec() + applyHealthDrain()，由 sim/systems/RegenSystem.ts 每 tick 對每一個活著的單位呼叫；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.regenRules",
   effect:
     "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 護盾規則／格擋規則 同一個形態(#278)。",
   fields: [
     {
       path: "pctEnabled",
       zh: "百分比回血",
-      note: "關掉＝英雄卡上填的百分比全部當作沒填，所有人只吃固定回血（＝這個機制出現之前）。開著也只影響有填百分比的英雄，其他 112 位一點差別都沒有。",
+      note: "關掉＝英雄卡上填的百分比回血全部當作沒填，所有人只吃固定回血（＝這個機制出現之前）。⚠️ 出貨內容**目前沒有任何一位英雄**填百分比回血（2026-08-02 之前是 Berserker，那一格已經翻成扣血了），所以這一格現在開或關，場上都不會有任何差別 —— 它是留給下一位要用這個機制的英雄的。",
     },
     {
       path: "pctMode",
@@ -882,8 +941,76 @@ const REGEN_SPEC: ConfigDocSpec = {
     },
     {
       path: "championsOnly",
-      zh: "百分比只給英雄",
-      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃百分比回血。關掉之後，一隻臉是 Berserker 的隨機英雄殭屍王也會每秒回 1% 最大生命 —— 王的血量是英雄的好幾倍，那等於一堵打不動的牆。",
+      zh: "百分比回血只給英雄",
+      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃百分比回血。關掉之後，一隻臉是某位有填百分比回血的英雄的殭屍王也會每秒回同樣比例的最大生命 —— 王的血量是英雄的好幾倍，那等於一堵打不動的牆。",
+    },
+    {
+      path: "drainEnabled",
+      zh: "百分比扣血（自傷）",
+      note: "關掉＝英雄卡上填的自傷全部當作沒填，海克力斯 - Berserker 從此不再每秒掉血（＝ owner 2026-08-02 那句話出現之前）。線上發現扣血把某位英雄玩壞時，這一格是止血閥，不用改程式也不用重建映像。",
+    },
+    {
+      path: "drainFloorPctOfMax",
+      zh: "扣血停在最大生命的幾成",
+      note: "0.01＝出貨值＝ owner 的「直到生命不足 1%」。它是**比例不是點數**：90,000 血的身體停在 900，100 血的身體停在 1。調高＝自傷更早收手（角色更耐打），調低＝可以被自己壓得更低。⚠️ 填 0 也不會扣死人 —— 扣血不走傷害管線，沒有人會判定死亡，停在 0 只會生出一個「0 血還活著」的單位，所以實作把有效地板夾在 1 點之上。",
+    },
+    {
+      path: "drainFloorMode",
+      zh: "碰到地板那一刻做什麼",
+      note: "這兩個只有在「同時被敵人打」的時候看得出差別，而那正是它是一格選單而不是註解的原因。stop（出貨值）＝自傷自己收手，但**不會把血條往上拉**，敵人照樣一刀送他走 —— 這是自傷，不是無敵。clamp＝每 tick 把血條夾在地板上，被打到地板以下的人會被拉回來＝**免疫致死**，一隻殺不死的試煉怪。",
+      optionLabels: {
+        stop: "stop 停手，但敵人照樣殺得死他（出貨值＝owner 的裁決）",
+        clamp: "clamp 夾在地板上＝免疫致死",
+      },
+    },
+    {
+      path: "drainChampionsOnly",
+      zh: "扣血只給英雄",
+      note: "開（出貨值）＝小怪、殭屍王與召喚物不吃自傷。關掉之後，一隻臉是 Berserker 的隨機英雄殭屍王會自己每秒掉 1% 最大生命 —— 那等於一堵會自己倒的牆，玩家站著看就贏了。",
+    },
+  ],
+  preserved: [],
+};
+
+// ─────────────────────────────────────────── 對戰錄影 (config/replay) ──
+
+const REPLAY_SPEC: ConfigDocSpec = {
+  page: "replayPolicy",
+  collection: "config",
+  docId: "replay",
+  schemaTag: "config.replay@1",
+  zod: zConfigReplayDoc,
+  title: "對戰錄影",
+  intro: [
+    "owner 2026-08-02：「請幫我預設打開，就算玩到一半就離開也應該有 replay 才對」。這一頁就是那個開關 —— 在它出現之前錄影**完全沒有開關**：`MatchRoom` 無條件開錄影檔，落地間隔與保留量寫死在程式裡，要動任何一個都得重建映像。",
+    "⚠️ 「玩到一半就離開」本來就會留下一份錄影：錄影檔是**邊打邊寫**的（預設每 0.5 秒把緩衝交給磁碟），中途離場只是少了結尾那一行，列表會標成「未完成」，但仍然可以播。所以這一頁能改善的是「被硬砍時**最多丟幾秒**」，也就是下面的落地間隔。",
+    "⚠️ 錄影是否真的寫得進磁碟**不在這一頁**。正式機曾經整段時間一場都沒錄到，原因是 `/data/replays` 的擁有者不是容器的 uid（EACCES），而那件事只有 `/healthz` 的 `replay.writable` 看得出來 —— 查法寫在 `docs/replay-observability.md`。這一頁全開也救不了一個寫不進去的目錄。",
+    "⚠️ 錄影檔帶著每一位玩家的顯示名稱，所以下面兩格保留量同時是**個資保留期限**，不只是磁碟策略。",
+  ],
+  consumer:
+    "apps/game-server/src/replay/policy.ts 的 replayPolicy() / replayRecordingEnabled() → MatchRoom.onCreate() 決定要不要 MatchRecorder.open()、Recorder.ts 的 flushMs() 設定落地間隔、store.ts 的 pruneReplays() 套用兩條保留量",
+  effect:
+    "**要重啟 game-server shard 才生效**（`Configs` 是開機時載入的內容登錄表，只有 戰鬥系統 與 基礎加成 有即時快取）。和 屬性上限／回血規則 同一個形態(#278)，這裡不假裝它是「下一場生效」。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "錄影總開關",
+      note: "出貨**開著**（owner 的裁決）。關掉之後這台 shard 上的每一場都完全不開錄影檔：後台「對戰回放」不會再有新的一列，也就沒有任何一場可以回放。留這一格是因為錄影是旁路 —— 磁碟快滿、或某一場的內容讓錄影器自己爆掉時，這是唯一不用重建映像就能止血的閥。⚠️ 讀不到內容文件時它**仍然是開的**（fail-open）：內容載入失敗不可以順手把錄影關掉，那正是 2026 年 8 月「一場都沒錄到」沒有人發現的形狀。",
+    },
+    {
+      path: "flushIntervalMs",
+      zh: "多久把錄影寫進磁碟一次（毫秒）",
+      note: "它決定的是「**程序被硬砍時最多丟幾秒**」—— 容器重啟、部署、OOM 被殺的那一刻，還沒交給磁碟的那一段就沒了。出貨 500＝最多丟半秒。調小＝丟得更少，代價是每分鐘多幾次寫入；調大到 5000＝一次重啟可能吃掉五秒的操作。⚠️ **不可以是 0**：那等於每一個 tick 寫一次檔，而錄影器的第一條規矩是不准在 tick 路徑上做同步磁碟 I/O —— 那會直接讓場上的人卡頓。",
+    },
+    {
+      path: "retainMaxFiles",
+      zh: "磁碟上最多留幾份錄影",
+      note: "超過的從最舊的開始刪（正在錄的那一場永遠不會被刪）。出貨 200；實測一場 4 分鐘 12 人的比賽壓縮後約 60 KB，所以 200 份約 12 MB。調成 1＝只留最新一場，昨天那一場明天就找不回來了。",
+    },
+    {
+      path: "retainMaxAgeDays",
+      zh: "超過幾天的錄影一律刪掉",
+      note: "和上面那格取**先觸發**的。出貨 30 天。這一格是真正的「多久以前的那一場還看得到」，因為家庭測試一週打不到 200 場 —— 實際上會先撞到的是天數而不是份數。",
     },
   ],
   preserved: [],
@@ -896,6 +1023,264 @@ const REGEN_SPEC: ConfigDocSpec = {
  * {@link ConfigDocSpec.consumer} 寫出一個具體的、production 會呼叫到的函式。
  * 寫不出來就不要掛 —— 見檔頭第 1 條。
  */
+
+// ─────────────────────────────────── 殭屍王出場演出 (config/boss-intro) ──
+
+const BOSS_INTRO_SPEC: ConfigDocSpec = {
+  page: "bossIntro",
+  collection: "config",
+  docId: "boss-intro",
+  schemaTag: "config.boss-intro@1",
+  zod: zConfigBossIntroDoc,
+  title: "殭屍王出場演出",
+  intro: [
+    "殭屍王走進場的那幾秒要演什麼：既有的恐怖音效之後，中央跳出一面提示 —— 大字名言、那位英雄的描述、攻略要點、弱點 —— 停留幾秒之後淡出。",
+    "⚠️ **「那位英雄」不是固定的喪標麥可。** `mobWaves.boss.championSource` 的出貨值是 **隨機**，王每次上場借的是當回合抽到的那一位英雄的臉、模型與數值。所以這一頁調的是「演多久、講幾條」，逐英雄要講什麼是文件裡的 `champions` 表（這一頁不編輯它，但儲存時原封不動帶著走）。",
+    "⚠️ **名言（quote）出貨全部是空的，那不是漏填。** 每位英雄的名言是 GH#139／#142，資料還不存在；編一句台詞塞進去等於把缺資料偽裝成功能。空的時候大字整段不畫，其餘幾段照常顯示。",
+    "⚠️ 這一段提示全程不吃點擊、也不會蓋住血條或技能列（#107）：擺不下的時候它先丟描述、再丟攻略要點，真的放不下就整個不畫。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/boss-intro.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/ui/hud/bossIntroModel.ts 的 bossIntroRules()／bossIntroContent()／bossIntroLifetime()，由 ui/hud/BossIntroOverlay.tsx 在 HudRoot 的渲染樹裡消費；文件走客戶端開機時 bootContent 灌進去的 Configs registry",
+  effect:
+    "**下一次客戶端重新載入時生效**（內容 bundle 是開機時讀進 Configs 的），不需要重開 game-server —— 這一段演出整段活在客戶端。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "出場演出總開關",
+      note: "關掉＝只剩既有的「殭屍王降臨」橫幅與 4.4 秒恐怖音效，名言／描述／攻略要點／弱點一格都不畫。這是止血閥：這一面提示會吃掉螢幕中央走廊好幾秒，線上覺得礙眼時要能在不重新部署的情況下整個關掉。",
+    },
+    {
+      path: "introHoldSec",
+      zh: "提示停留幾秒才開始淡出",
+      note: "owner 明說五秒，所以出貨 5。⚠️ 這是**時間**不是節奏：它從王出場的那一刻起算，和恐怖音效（4.4 秒）平行跑，不是接在它後面。調小到 0 ＝ 出現的瞬間就開始淡出（等於只看得到淡出那段）。上界 30 是誤植守衛 —— 5 打成 50 會讓提示蓋著整場的前半。",
+    },
+    {
+      path: "fadeSec",
+      zh: "淡出花幾秒",
+      note: "停留結束之後,面板從全不透明線性掉到透明所花的時間。0 ＝ 直接消失,讀起來像掉幀而不像結束,所以出貨 0.6。這一格加上上面那格就是提示在畫面上的總時間。",
+    },
+    {
+      path: "descriptionMaxChars",
+      zh: "描述最多顯示幾個字",
+      note: "英雄文件裡的描述是完整的身世故事（喪標麥可那一份 400 字以上），整段搬到戰鬥畫面上就是一面牆。這一頁把描述的**非空行接成一段**再截到這個字數，超過的部分用刪節號收尾。⚠️ 刻意**不是**「只取第一段」——出貨的英雄文件幾乎都以一行標籤開頭（`故事：`換行才是本文），取第一段的話畫面上只會出現「故事：」三個字。**0 ＝ 不顯示描述那一段**（名言、攻略要點、弱點照常）。",
+    },
+    {
+      path: "maxTips",
+      zh: "最多列幾條攻略要點",
+      note: "文件裡那位英雄寫了幾條就有幾條，這一格是上限。**0 ＝ 不顯示攻略要點那一段**。⚠️ 條數直接換算成面板高度：中央走廊在矮螢幕（橫向手機）只有八十幾 px，填太多的結果不是擠在一起，是整段被丟掉（丟棄順序：描述 → 攻略要點 → 弱點）。",
+    },
+    {
+      path: "maxWeaknesses",
+      zh: "最多列幾條弱點",
+      note: "同上，但弱點是**最後才被丟掉**的那一段 —— 它是「現在要怎麼打」的答案，描述只是身世。**0 ＝ 不顯示弱點那一段**。",
+    },
+  ],
+  preserved: [
+    {
+      path: "champions",
+      why: "逐英雄的出場文案表（名言／攻略要點／弱點／推導依據）。這一頁不編輯它，但每次儲存都原封不動帶著走 —— 掉了的話王照樣會出場、面板照樣會跳，只是每一隻都只剩名字和描述，而畫面上完全看不出來少了東西。",
+    },
+  ],
+};
+
+// ────────────────────────────────── 道具卡片排版 (config/item-card) ────────
+
+/**
+ * 分類標籤的長度上界（#277 在字串上的形狀）。
+ *
+ * ⚠️ 它不是潔癖，是**兩個**真實後果：schema 是 `.min(1).max(12)`，所以 13 個字
+ * 的標籤在 PUT 那一關會被平台退回；而就算繞過 PUT（覆蓋層寫入路徑今天不跑 Zod，
+ * #283），客戶端 `itemCardTheme.acceptLabel` 對 `length > 12` 的值會**靜默退回
+ * 出貨標籤** —— 操作者存了、頁面顯示已儲存、卡片上還是舊字。
+ */
+const ITEM_CARD_LABEL = /^[\s\S]{1,12}$/;
+const ITEM_CARD_LABEL_ERROR =
+  "分類標籤要 1～12 個字：超過 12 個字客戶端會靜默退回出貨標籤，畫面上看不出來被拒絕了";
+
+/** 四個分類的中文，這一份表要和 `zItemCardCategory` 一模一樣（測試在比）。 */
+const ITEM_CARD_CATEGORY_OPTIONS = [
+  { value: "stat", zh: "stat 屬性加成（純數字，沒有觸發事件）" },
+  { value: "active", zh: "active 主動效果（有一個離散的觸發事件）" },
+  { value: "passive", zh: "passive 被動效果（常駐／每秒自動）" },
+  { value: "debuff", zh: "debuff 負面控場（作用在敵人身上）" },
+] as const;
+
+const ITEM_CARD_SPEC: ConfigDocSpec = {
+  page: "itemCard",
+  collection: "config",
+  docId: "item-card",
+  schemaTag: "config.item-card@1",
+  zod: zConfigItemCardDoc,
+  title: "道具卡片排版",
+  intro: [
+    "owner 2026-08-02：「卡片道具的排版連在一起不好閱讀，關於效果及數值的部分應該要特殊顏色表示」。這一頁就是那份排版表：四個分類各自的名稱與顏色、數值與解說的顏色，以及下面三張決定「方括號裡的字算哪一類」的對照表。",
+    "⚠️ **道具的 description 一個字都不會被這一頁改到。** owner 手寫的那 49 份原文是規格（`legendary49OwnerText.test.ts` 逐位元組比對），所以排版是在**畫的那一刻**解析出來的：`[焚身]` 這種方括號標記查下面的對照表決定顏色，`+87`／`30%`／`0.6秒` 這種數值自動抓出來上色。改這一頁＝改「同一段原文怎麼被畫出來」。",
+    "⚠️ 四個渲染點（商店 / 三選一卡 / 裝備欄 hover / 圖鑑）讀的是**同一份**設定，所以同一個 `[焚身]` 不可能在四個畫面上是四個顏色。",
+    "⚠️ 顏色是對卡片底色 `#12151d` 量過的：出貨六個顏色的對比度 5.93～15.15 全部過 4.5:1，四個分類彼此的 CIE76 ΔE 最小 57.7。換色之前請記得這兩件事 —— **太暗會讀不到**（低於 4.5:1），**兩個分類太接近就等於沒有分類**（ΔE 低於 ~25 就開始混淆）。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/item-card.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/ui/components/itemCardTheme.ts 的 applyItemCardDoc()（由 ContentDb.load() 呼叫）→ getItemCardConfig() 餵給 packages/shared/src/content/itemCardText.ts 的 parseItemCard()／tokenizeCardLine()，四個渲染點（MerchantShop / AugmentDraftPanel / EquipmentBar / CodexDetail）畫的是它吐出來的 token",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機載內容時套用）。不需要重開 game-server —— 這整段排版活在客戶端。",
+  fields: [
+    {
+      path: "categories.stat.label",
+      zh: "屬性加成的分類名",
+      note: "`[神速]`／`[閃避]` 這一族的分類名。⚠️ 這個字**不會印在卡片上** —— 玩家看到的是標記自己的原字（例如 `[神速]` 四個字本身），這一格只出現在滑鼠停在那個 chip 上時的**原生 tooltip**。它不影響哪些標記算這一類 —— 那是下面「標記 → 分類」那張表。",
+      pattern: ITEM_CARD_LABEL,
+      patternError: ITEM_CARD_LABEL_ERROR,
+    },
+    {
+      path: "categories.stat.color",
+      zh: "屬性加成的顏色",
+      note: "這一類 chip 的文字與邊框色，出貨 #6FD3C4 青綠。它是四個分類裡最「安靜」的一個，因為屬性加成在卡片上出現得最頻繁 —— 換成高彩度的顏色會讓整張卡片被最不重要的那一類佔滿。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "categories.active.label",
+      zh: "主動效果的分類名",
+      note: "`[On-Hit]`／`[暴擊]`／`[衝刺]` 這一族的分類名（同上，只出現在 chip 的 tooltip）。判準是「有沒有一個離散的觸發事件」，不是「玩家要不要按鍵」—— 這四個分類全部都是自動發生的。",
+      pattern: ITEM_CARD_LABEL,
+      patternError: ITEM_CARD_LABEL_ERROR,
+    },
+    {
+      path: "categories.active.color",
+      zh: "主動效果的顏色",
+      note: "出貨 #FFC24D 琥珀。⚠️ 它離數值色 #FFE9A3 的 ΔE 只有 32.7（四對裡最近的一對），再往淡黃調就會和那些 `+87`／`30%` 混成同一種顏色，而那正是 owner 要求「數值特殊顏色」時要分開的兩件事。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "categories.passive.label",
+      zh: "被動效果的分類名",
+      note: "`[無視]`／`[流星]`／`[格擋]` 這一族的分類名（同上，只出現在 chip 的 tooltip）。⚠️ 這一類同時是「查不到的標記落到哪一類」的出貨值 —— 所以**新標記**第一次出現時會借用它的顏色，但畫面上印的仍然是新標記自己的原字。",
+      pattern: ITEM_CARD_LABEL,
+      patternError: ITEM_CARD_LABEL_ERROR,
+    },
+    {
+      path: "categories.passive.color",
+      zh: "被動效果的顏色",
+      note: "出貨 #A9B6FF 藍紫。它同時是所有**沒被登記過**的新標記的顏色（見最下面那一格），所以換色的影響範圍比另外三類大一點。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "categories.debuff.label",
+      zh: "負面控場的分類名",
+      note: "`[暈眩]`／`[緩慢]`／`[腐蝕]` 這一族的分類名（同上，只出現在 chip 的 tooltip）。它是唯一一類**作用在敵人身上**的效果，所以它的**顏色**比這個名字重要得多。",
+      pattern: ITEM_CARD_LABEL,
+      patternError: ITEM_CARD_LABEL_ERROR,
+    },
+    {
+      path: "categories.debuff.color",
+      zh: "負面控場的顏色",
+      note: "出貨 #FF7BA6 粉紅。⚠️ 不要換成純紅：卡片上的紅在這個專案裡已經被「傷害／扣血」佔走了（傷害飄字 #FF5900、身體閃光 #FF2626），操作者會把控場讀成傷害。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "numberColor",
+      zh: "數值的顏色",
+      note: "**owner 那句話裡的「數值」就是這一格**：`+87`、`30%`、`*1.2`、`0.6秒`、`10-1000` 這些會被自動抓出來塗成這個顏色，不必在原文裡標任何東西。出貨 #FFE9A3 淡金對卡片底 15.15:1，是整張卡片上最亮的東西 —— 那是刻意的，玩家掃一張卡片時先找的就是數字。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "loreColor",
+      zh: "解說／歷史的顏色",
+      note: "`解說`／`歷史` 標題以下那一段散文的顏色，出貨 #8B93A6 灰。**它刻意比效果暗**（5.93:1，是六個顏色裡最低的一個）：那一段是身世不是規格，壓暗它玩家才會先讀到效果。調到和效果一樣亮，卡片就會退回 owner 抱怨的那個「連在一起」的狀態。",
+      pattern: HEX6,
+      patternError: HEX6_ERROR,
+    },
+    {
+      path: "unknownCategory",
+      zh: "沒登記過的標記算哪一類",
+      note: "下面那張表查不到的方括號標記落到這一類。它存在的理由是**新道具不可以讓卡片壞掉**：owner 明天寫一支用了新標記的道具，卡片照樣要畫得出 chip、有顏色、有分行，只是分類是這一格。⚠️ 這不是「錯誤處理」而是預設值，所以選一個最不會誤導人的：出貨選 passive（被動效果），因為把未知的東西說成「主動」或「負面」都是在講一件可能不是真的事。",
+      optionLabels: Object.fromEntries(ITEM_CARD_CATEGORY_OPTIONS.map((o) => [o.value, o.zh])),
+    },
+  ],
+  tables: [
+    {
+      path: "markers",
+      shape: "recordEnum",
+      title: "標記 → 分類（32 列）",
+      intro: [
+        "**這張表就是 owner 想改「`[On-Hit]` 算主動還是被動」時要改的地方。** 左邊是方括號裡的**原字**，右邊是它畫成哪一類的顏色。改一列存檔，四個畫面上同一個標記一起換色。",
+        "⚠️ 左邊是**逐字比對**，一個字都不能差。`On-Hit` 與 `OnHit` 是兩列而不是一列，因為 owner 的原稿兩種都寫過，而原稿不准改 —— 表要去遷就原文，不是反過來。",
+        "⚠️ 這張表**整批取代**，不和出貨值合併。刪掉一列＝那個標記從此落到「沒登記過的標記算哪一類」，不是「回到出貨分類」。（合併的話操作者刪掉的那一列會從預設值復活，變成一個查不出來的鬼。）",
+        "⚠️ active↔passive 那條線是**判斷不是真理**：出貨用的判準是「有沒有一個離散的觸發事件」，所以 `[擴散]`（普攻濺射）算 active、`[流星]`（每秒自動）算 passive。不同意就改這張表，不要回去改程式。",
+      ],
+      key: {
+        zh: "方括號裡的原字",
+        note: "不含方括號本身。道具原文寫 `[焚身]`，這裡就填 `焚身`。前後不可以有空白 —— 比對是逐字的，多一個空格這一列就永遠不會命中，而畫面上只會看到那個標記變成「沒登記過」的顏色。",
+        maxLen: 16,
+      },
+      value: {
+        zh: "畫成哪一類",
+        note: "決定這個標記的 chip 用哪一個分類的**顏色**（以及滑鼠停上去時 tooltip 顯示的分類名）。四個選項就是上面那四格顏色。",
+        options: ITEM_CARD_CATEGORY_OPTIONS,
+      },
+      minRows: 1,
+      maxRows: 300,
+    },
+    {
+      path: "inlineValueMarkers",
+      shape: "stringList",
+      title: "方括號裡其實是「填一個值」的那幾個",
+      intro: [
+        "這張表上的字**不畫成 chip，改用數值色畫**。owner 有時候用方括號當「這裡填一個數字」的佔位符而不是關鍵字，而那種字塞進 chip 會變成一個二十字寬的分類標籤 —— 那就是排版壞掉。",
+        "出貨只有一列，而且是實際存在的那一個：虛哭神去（godie-i007）的 `自身已損失的生命百分比數值(0~100)`。這不是為了通用性發明的欄位。",
+        "⚠️ 這張表**先於**上面那張被查：同一個字兩邊都有的話，它會被畫成數值而不是 chip。",
+      ],
+      key: {
+        zh: "方括號裡的原字",
+        note: "同樣不含方括號、同樣逐字比對。判準很簡單：這個方括號裡的東西是一個**要被填進去的值**（所以裡面通常有數字或範圍），還是一個**關鍵字**（所以它該有分類顏色）。",
+        maxLen: 40,
+      },
+      minRows: 0,
+      maxRows: 50,
+    },
+    {
+      path: "efficacyHeadings",
+      shape: "stringList",
+      title: "哪些整行的字是「效果區」的標題",
+      intro: [
+        "道具原文裡自成一行的 `效能` 這種字是**段落標題**而不是內容。它們不會被畫進卡片，只用來決定「這一行以下是效果還是解說」。",
+        "⚠️ 比對前會先去掉結尾的全形／半形冒號，所以 `效能` 這一列同時認得 `效能：`（狂暴軒轅劍 godie-i02e 寫的就是後者），不必兩列都填。",
+        "⚠️ 這張表**漏一個字的後果是看不見的**：一個沒被登記的標題會被當成一般內容畫進效果區，變成卡片上多出來的一行怪字，而不會有任何錯誤。",
+      ],
+      key: {
+        zh: "標題原字",
+        note: "整行完全等於這幾個字（去掉結尾冒號之後）才算標題。不要填半句話 —— 比對的是整行，不是「開頭包含」。",
+        maxLen: 12,
+      },
+      minRows: 0,
+      maxRows: 20,
+    },
+    {
+      path: "loreHeadings",
+      shape: "stringList",
+      title: "哪些整行的字是「解說區」的標題",
+      intro: [
+        "同上，但這些標題**以下**的內容會用解說色畫（暗色），而且**不解析數值** —— 那一段是散文不是規格，把裡面的年份塗成數值色只會誤導人。",
+        "出貨兩列：`解說` 與 `歷史`（狂暴軒轅劍拿 `歷史` 當解說標題，兩個都真的存在於原稿）。",
+        "⚠️ 這一格**只決定「從哪一行開始變暗」**。`ItemCard.loreHeading`（記下命中的是哪一個字）在客戶端目前**零消費端** —— 標題字本身從來沒有被畫出來過。所以這裡的順序與拼字都只影響「暗色從哪裡開始」，不影響畫面上出現什麼字。",
+      ],
+      key: {
+        zh: "標題原字",
+        note: "同上，整行相等才算。⚠️ 把一個常用詞（例如 `效果`）加進來要小心：從那一行以下的所有內容都會變成暗色散文，而且數值不再上色 —— 這是這一頁最容易一次弄壞一整張卡片的地方。",
+        maxLen: 12,
+      },
+      minRows: 0,
+      maxRows: 20,
+    },
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,
@@ -906,8 +1291,12 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   STEALTH_SPEC,
   TAUNT_SPEC,
   ARENA_FIRE_SPEC,
+  VICTORY_FX_SPEC,
   BODY_SCALE_SPEC,
   REGEN_SPEC,
+  BOSS_INTRO_SPEC,
+  ITEM_CARD_SPEC,
+  REPLAY_SPEC,
 ];
 
 export function specForPage(page: string): ConfigDocSpec | null {

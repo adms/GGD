@@ -181,7 +181,19 @@ export const PILL_COMPACT = { w: 92, h: 30 } as const;
  */
 export const COMPACT_VIEWPORT_H = 560;
 
-export function useCompactClock(vh: number, panelHeight = 0): boolean {
+/**
+ * ⚠️ 名字不能以 `use` 開頭 —— 這是一個**純函式**，不是 React hook。
+ *
+ * 它原本叫 `useCompactClock`，而 `PrepClock` 在一個 `return null` **之後**
+ * 才呼叫它。那正是 2026-08-02 讓整個 HUD 消失四個版本的形狀
+ * （見 `ui/hud/hookOrder.test.ts` 的檔頭）—— 只是這一支剛好裡面沒有 hook，
+ * 所以還沒炸。今天補上的 `react-hooks/rules-of-hooks` 兩處都報了它。
+ *
+ * 改名不是為了讓 linter 閉嘴：只要它還叫 `use*`，任何人哪天在裡面加一個
+ * `useState`（很合理 —— 「量一下 viewport」本來就想變成 hook），
+ * 這一支就會在條件式後面多長出 hook，重演同一個 T0。
+ */
+export function isCompactClock(vh: number, panelHeight = 0): boolean {
   if (panelHeight <= 0) return vh < COMPACT_VIEWPORT_H;
   const panelTop = (vh - Math.min(panelHeight, vh)) / 2;
   return panelTop < PREP_CLOCK_TOP_WHEN_DRAFTING + PILL_FULL.h;
@@ -193,7 +205,7 @@ export function prepClockRect(
   drafting: boolean,
   panelHeight = 0,
 ): { top: number; bottom: number; left: number; right: number } {
-  const compact = drafting && useCompactClock(vh, panelHeight);
+  const compact = drafting && isCompactClock(vh, panelHeight);
   const pill = compact ? PILL_COMPACT : PILL_FULL;
   const top = drafting
     ? compact

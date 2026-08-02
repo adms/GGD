@@ -68,9 +68,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "ms",
@@ -78,11 +82,9 @@
               "value": 0.5
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.physical.pulse-sm",
-      "castTimeSec": 0.3
+      }
     },
     "W": {
       "id": "godie-hpb1.w",

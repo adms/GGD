@@ -65,8 +65,12 @@ import {
   useWalletMeta,
   sortFavouritesFirst,
   rosterDisplayAndSelectable,
-  selectableIdsByOwnership,
 } from "./champselect/walletMeta";
+import {
+  planRandomPick,
+  randomPickBlockedHint,
+  randomPickOwnershipMode,
+} from "./champselect/randomPickGate";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
 import {
   observeLock,
@@ -102,6 +106,10 @@ export function ChampSelectPanel(): React.JSX.Element {
   // No `locked` argument is needed here: while locked the panel simply never
   // dispatches a "click" (commit() returns early), and hover costs nothing.
   const [preview, dispatchPreview] = useReducer(previewReducer, INITIAL_PREVIEW_STATE);
+  // 🎲 was pressed but the ownership gate refused (see champselect/randomPickGate).
+  // null = nothing to say. Held here rather than in the wallet hook because the
+  // refusal is a decision about THIS press, not a wallet state.
+  const [randomBlocked, setRandomBlocked] = useState<string | null>(null);
   const [, forceRender] = useReducer((n: number) => n + 1, 0);
 
   // operator content whitelist for this match (fetched once; NO_FILTER offline)
@@ -213,14 +221,29 @@ export function ChampSelectPanel(): React.JSX.Element {
   const pickRandom = (): void => {
     if (!pickAllowed(locked)) return; // 🎲 is disabled once locked
     dismissBriefing();
-    // Draw from `owned ∩ available`: whitelist first (availability), then drop
-    // any locked champion so 🎲 can NEVER roll a champion the account has not
-    // unlocked (task #201). Ownership is only known when meta is available; the
-    // server rejects an unowned pick regardless, so an offline fallback to
-    // whitelist-only is still safe.
-    let pool = whitelistedChampionIds(Champions.ids(), whitelist, retired);
-    if (meta.available) pool = selectableIdsByOwnership(pool, meta.prices, meta.owned);
-    const id = pickRandomId(pool);
+    // owner 2026-08-02:「隨機選角的時候，只能隨機到自己有解鎖的角色」。
+    //
+    // 這個決定**不在這裡**做 —— 它整個在 champselect/randomPickGate（純函式 +
+    // 後台欄位 `config.store@1.randomPickOwnership`），因為關鍵不是「有沒有套
+    // 擁有權過濾器」而是「擁有權到底看不看得見」。這裡以前寫的是
+    // `if (meta.available) pool = selectableIdsByOwnership(...)`，而 available
+    // 是 false 時 prices 是空的、過濾器是恆等函式 —— 那一行不管加不加都一樣，
+    // 平台故障時 🎲 照樣抽得到沒解鎖的英雄（伺服器那道閘在同一個故障下也失效）。
+    const whitelistedIds = whitelistedChampionIds(Champions.ids(), whitelist, retired);
+    const plan = planRandomPick({
+      whitelisted: whitelistedIds,
+      ownership: meta.ownership,
+      prices: meta.prices,
+      owned: meta.owned,
+      mode: randomPickOwnershipMode(),
+    });
+    if (plan.kind === "blocked") {
+      // 一定要說話：擋下來而不解釋，看起來就是按鈕壞了。
+      setRandomBlocked(randomPickBlockedHint(plan.reason));
+      return;
+    }
+    setRandomBlocked(null);
+    const id = pickRandomId(plan.pool);
     if (id) hudActions.selectChampion(id);
   };
 
@@ -425,6 +448,41 @@ export function ChampSelectPanel(): React.JSX.Element {
                 kind="ghost"
                 sfxVolume={0.4}
                 onClick={meta.dismissHint}
+                aria-label="dismiss"
+                style={{ background: "none", border: "none", color: "#cfeaff", cursor: "pointer" }}
+              >
+                ✕
+              </SfxButton>
+            </div>
+          )}
+
+          {/* owner 2026-08-02「只能隨機到自己有解鎖的角色」—— 🎲 被擋下來時說明
+              原因。沒有這一塊的話，擋下來的 🎲 和壞掉的 🎲 在畫面上完全一樣。 */}
+          {randomBlocked && (
+            <div
+              role="status"
+              style={{
+                marginBottom: 10,
+                padding: "6px 10px",
+                borderRadius: 8,
+                fontSize: 12,
+                color: "#cfeaff",
+                background: "rgba(120, 200, 255, 0.12)",
+                border: "1px solid rgba(120, 200, 255, 0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 8,
+              }}
+            >
+              <span>
+                <span aria-hidden style={{ marginRight: 6 }}>🎲</span>
+                {randomBlocked}
+              </span>
+              <SfxButton
+                kind="ghost"
+                sfxVolume={0.4}
+                onClick={() => setRandomBlocked(null)}
                 aria-label="dismiss"
                 style={{ background: "none", border: "none", color: "#cfeaff", cursor: "pointer" }}
               >

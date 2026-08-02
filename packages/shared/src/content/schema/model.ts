@@ -56,15 +56,25 @@ export const zModelDoc = z
      */
     voxel: zVoxelLook.optional(),
     /**
-     * 這一份模型的烘焙朝向修正（度）。缺 = 不修正。
+     * Yaw correction (DEGREES, CCW about +Y) applied to this model's glbRoot so
+     * its rendered facing matches the sim's. ABSENT ⇒ the family default for
+     * `glbPath` (see apps/client/src/render/views/glbFacing.ts).
      *
-     * ⚠️ 鍵在**模型文件**上而不是 `modelKey`：40 隻 Blizzard-overlay 英雄共用
-     * 同一個替身 modelKey（`champ.sela` / `champ.skin.*`），鍵在 modelKey 上的話
-     * 一筆設定會轉到 ~18 隻不相干的英雄。一份 doc = 一個網格。
-     * 範圍 ±360，所以 270 與 -90 兩種寫法都可以。
+     * WHY THIS IS CONTENT AND NOT A CONSTANT (CLAUDE.md 第一守則).
+     * It used to be `FLIPPED_IMPORTED_MODEL_KEYS`, a hardcoded Set in client
+     * code, which meant a mis-baked model could only be corrected by editing
+     * TypeScript and rebuilding + redeploying the client image. `content/` is a
+     * live bind-mount, so as a doc field the same correction is a file edit.
+     * That matters because the set was demonstrably INCOMPLETE — measuring the
+     * shipped geometry found `imported.linkstik` 180° off and unlisted (see
+     * modelFacing.test.ts, which re-derives every value from the .glb itself).
      *
-     * ⚠️ 2026-08-02：這一格沒跟出貨 bundle 同時進版，造成線上內容驗證失敗、
-     * 退回 2 隻骨架英雄。**commit 一個檔之前要確認它依賴的定義都在版控裡。**
+     * It also fixes a hole the Set could not express at all: it was keyed by
+     * `modelKey`, but the 40 Blizzard-overlay champions all share a stand-in
+     * modelKey (`champ.sela`/`champ.skin.*`), so one entry would have rotated
+     * ~18 unrelated champions. Keyed to the model DOC, one doc = one mesh.
+     *
+     * Range is ±360 so an author can write 270 or -90 for the same rotation.
      */
     yawOffsetDeg: z.number().gte(-360).lte(360).optional(),
   })

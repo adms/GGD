@@ -19,16 +19,17 @@
     390.0
   ],
   "range": 2.75,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 327,
+      "damage": {
         "perRank": [
-          300.0,
-          550.0,
-          800.0,
-          1050.0
+          300,
+          550,
+          800,
+          1050
         ],
         "ratios": [
           {
@@ -36,9 +37,11 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "physical",
+      "castTimeSec": 0.7
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "radius": 6.0,

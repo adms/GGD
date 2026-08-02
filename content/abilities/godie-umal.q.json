@@ -21,17 +21,17 @@
     85.0
   ],
   "range": 2.75,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          150.0,
-          300.0,
-          450.0,
-          600.0,
-          750.0
+          150,
+          300,
+          450,
+          600,
+          750
         ],
         "ratios": [
           {
@@ -39,11 +39,13 @@
             "coeff": 0.5
           }
         ]
-      }
+      },
+      "damageType": "magic"
     }
-  ],
+  },
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0
 }

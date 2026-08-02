@@ -30,6 +30,9 @@ import {
   type Stat,
   type EffectDef,
 } from "@ggd/shared/sim";
+import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
+import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
+import type { AttrLookup } from "@ggd/shared/sim";
 import { asSeatId, asTeamId, type EntityId } from "@ggd/shared/ids";
 
 export interface ChampionPreview {
@@ -97,6 +100,13 @@ function sandbox(def: ChampionDef, level: number): { world: SimWorld; id: Entity
 function effectLines(
   effects: readonly EffectDef[],
   finalStats: Record<Stat, number>,
+  /**
+   * 施法者的三圍讀取器 —— `Scaling.attrRatios`(「等同總力量」)唯一的資料來源。
+   * 由 `sandbox()` 建的**真實**沙盒實體提供,不是一個回 0 的樁:預覽如果不接
+   * 這一條,一張 朗基努斯之槍 式的卡在編輯器裡會顯示成 0 傷害,而設計師會照
+   * 那個假數字去調平衡(#106 的「預覽不可以說謊」)。
+   */
+  attrs: AttrLookup,
   maxRank: number,
   depth = 0,
   out: EffectLine[] = [],
@@ -104,7 +114,7 @@ function effectLines(
   for (const e of effects) {
     switch (e.kind) {
       case "damage": {
-        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         // 百分比生命與存款加成都必須出現在摘要裡:`perRank` 只是 `amount` 那一項,
         // 一張 12% 最大生命 + 存款加成的卡在預覽裡會看起來像一發平庸的固定傷害,
         // 而設計師會照那個假數字去調平衡。
@@ -117,10 +127,48 @@ function effectLines(
           e.bankedBonus === undefined
             ? ""
             : `, +存款「${e.bankedBonus.statusId}」×${e.bankedBonus.coeff}（上限 ${e.bankedBonus.max}）`;
+        // [反彈] 同一個理由,而且更極端:一張反彈卡的 `amount` 通常就是 0,
+        // 所以少了這一段,反射之盾在預覽裡會是一行乾淨的「physical damage 0」——
+        // 一個看起來壞掉、實際上是滿血的機制。
+        const reflect =
+          e.incomingPct === undefined
+            ? ""
+            : `, +反彈${
+                { raw: "原始", mitigated: "減免後", hpLost: "實際失血" }[
+                  e.incomingPct.basis ?? "mitigated"
+                ]
+              }傷害 ${e.incomingPct.perRank.map((v) => `${Math.round(v * 1000) / 10}%`).join("/")}`;
+        // 資源百分比 / 距離 / 折返 —— 同一個理由,而且更極端:這三支道具的
+        // `amount` 全部是 0,所以少了這幾段,虛哭神去 / 瑪那魔杖 / 炎神弩 在
+        // 預覽裡都會是一行乾淨的「physical damage 0」——一個看起來壞掉、實際上
+        // 是滿血的機制,設計師會照那個 0 去調平衡。
+        const RES_SUBJ = { self: "自身", target: "目標" } as const;
+        const RES_KIND = { health: "生命", mana: "魔力" } as const;
+        const RES_BASIS = { current: "現存", max: "最大", missing: "已損失" } as const;
+        const res =
+          e.resourcePct === undefined
+            ? ""
+            : `, +${RES_SUBJ[e.resourcePct.subject]}${RES_BASIS[e.resourcePct.basis]}` +
+              `${RES_KIND[e.resourcePct.resource]} ` +
+              ((e.resourcePct.scale ?? "ratio") === "points"
+                ? `百分比數值 ×${e.resourcePct.perRank.join("/")}(0~100 當點數)`
+                : e.resourcePct.perRank.map((v) => `${Math.round(v * 1000) / 10}%`).join("/"));
+        const distance =
+          e.distanceScale === undefined
+            ? ""
+            : `, +距離 0→${e.distanceScale.atRange}u 線性 ` +
+              `${e.distanceScale.near}→${e.distanceScale.far}`;
+        const refund =
+          e.refund === undefined
+            ? ""
+            : `, 折返己方${e.refund.resource === "mana" ? "魔力" : "生命"} ` +
+              `${Math.round(e.refund.pct * 100)}%（${
+                (e.refund.basis ?? "hpLost") === "hpLost" ? "實際失血" : "減免後"
+              }）`;
         out.push({
           depth,
           kind: e.kind,
-          summary: `${e.damageType} damage${pct}${banked}`,
+          summary: `${e.damageType} damage${pct}${banked}${reflect}${res}${distance}${refund}`,
           perRank,
         });
         break;
@@ -131,7 +179,7 @@ function effectLines(
       // single-target nuke — the same blank-preview trap the note below records,
       // one level subtler because it renders SOMETHING.
       case "damageArea": {
-        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         const taper = e.falloff !== undefined && e.falloff < 1 ? `, ×${e.falloff} at rim` : "";
         const cap = e.maxTargets !== undefined ? `, max ${e.maxTargets}` : "";
         const origin = e.includeOrigin === true ? ", incl. epicentre" : "";
@@ -144,12 +192,12 @@ function effectLines(
         break;
       }
       case "heal": {
-        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         out.push({ depth, kind: e.kind, summary: "heal", perRank });
         break;
       }
       case "shield": {
-        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         out.push({ depth, kind: e.kind, summary: `shield for ${e.duration}s`, perRank });
         break;
       }
@@ -189,12 +237,12 @@ function effectLines(
             e.landRadius ? `, land AoE ${e.landRadius}u` : ""
           }${e.onLand?.length ? ", on land:" : ""}`,
         });
-        if (e.onLand?.length) effectLines(e.onLand, finalStats, maxRank, depth + 1, out);
+        if (e.onLand?.length) effectLines(e.onLand, finalStats, attrs, maxRank, depth + 1, out);
         break;
       }
       case "spawnProjectile":
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
-        effectLines(e.onHit, finalStats, maxRank, depth + 1, out);
+        effectLines(e.onHit, finalStats, attrs, maxRank, depth + 1, out);
         break;
       // `restore` and `spawnVfx` used to fall through this switch silently, so an
       // ability made of them previewed as a BLANK effect list — the one place
@@ -338,7 +386,7 @@ function effectLines(
       // `throw`,所以少一個 case = **編輯器預覽碰到這個 kind 直接爆**,
       // 也就違反了「新機制要編輯器可調」。2026-07-31 由駁斥者量到。
       case "spendMana": {
-        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r));
+        const perRank = ranks(maxRank).map((r) => resolveScaling(finalStats, e.amount, r, attrs));
         out.push({
           depth,
           kind: e.kind,
@@ -360,7 +408,49 @@ function effectLines(
             `三圍 ${e.attr} ${e.mode === "pctOfCurrent" ? `×${1 + e.amount} (現有的 +${Math.round(e.amount * 100)}%)` : `+${e.amount}`}` +
             `${e.everyNth && e.everyNth > 1 ? ` · 每 ${e.everyNth} 次才發一次` : ""}` +
             `${e.maxAttribute !== undefined ? ` · 上限 ${e.maxAttribute}` : ""}` +
+            // 疊層 (甘豆腐之袍) —— 記在「來源」上的存款,賣掉道具就跟著走。
+            // 這一段必須跟 maxAttribute 分開講:兩個都叫「上限」,封的卻是不同的東西。
+            `${e.store === "source" ? " · 記在這件裝備上（賣掉就沒）" : ""}` +
+            `${e.maxSourceTotal !== undefined ? ` · 這件最多發 ${e.maxSourceTotal}` : ""}` +
             `${e.durationSec !== undefined ? ` · 持續 ${e.durationSec}s` : " · 永久"}`,
+        });
+        break;
+      // 復活 (天生牙 godie-i031) —— 「我方所有英雄」是 hook 的 target: "allies",
+      // 不是這一行;這一行只講「站起來的時候是什麼狀態」。
+      case "revive":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `復活` +
+            ` · HP ${e.hpPct !== undefined ? `${Math.round(e.hpPct * 100)}%` : "依復活圈設定"}` +
+            ` · MP ${e.manaPct !== undefined ? `${Math.round(e.manaPct * 100)}%` : "依復活圈設定"}` +
+            `${e.side === "any" ? " · 不限敵我" : " · 限我方"}` +
+            `${e.teamCharge === "requireAndSpend" ? " · 花掉本回合的復活額度" : " · 不佔復活額度"}`,
+        });
+        break;
+      // 嘲弄 (鍊金術之盾 godie-i06q) —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)。
+      // 「每秒」不在這裡:節奏是 hook 自己的 internalCooldown,這一行只講一發。
+      case "taunt":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `嘲弄 ${e.durationSec}s` +
+            `${e.radius !== undefined ? ` · 範圍 ${e.radius}（吃 abilityRange）` : " · 單體"}` +
+            `${e.radius !== undefined && e.maxTargets !== undefined ? ` · 最多 ${e.maxTargets} 人（由近到遠）` : ""}`,
+        });
+        break;
+      // 發放金幣 —— 「黃金數量為敵方等級」= perTargetLevel 1 (effects/grantGold.ts)。
+      case "grantGold":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `發放金幣` +
+            `${e.flat ? ` ${e.flat}` : ""}` +
+            `${e.perTargetLevel ? ` + 目標等級 ×${e.perTargetLevel}` : ""}` +
+            ` (${e.to === "target" ? "給目標" : "給自己"})`,
         });
         break;
       default: {
@@ -408,7 +498,16 @@ export function createSimPreviewController(): PreviewController {
       world = sb.world;
       const finalStats = { ...sb.world.stats.get(sb.id)!.final };
       const ability = champion.abilities[slot];
-      return { ability, casterStats: finalStats, lines: effectLines(ability.effects, finalStats, ability.maxRank) };
+      // REAL attribute lookup off the sandbox body — the same `liveAttribute`
+      // the sim calls, so a 「等同總力量」 card previews the number it will
+      // actually deal instead of 0.
+      const attrs: AttrLookup = (attr, basis) =>
+        liveAttribute(sb.world, sb.id, attr, basis) ?? 0;
+      return {
+        ability,
+        casterStats: finalStats,
+        lines: effectLines(ability.effects, finalStats, attrs, ability.maxRank),
+      };
     },
 
     previewItem(item, on, opts) {
@@ -416,12 +515,18 @@ export function createSimPreviewController(): PreviewController {
       const sb = sandbox(on, level);
       world = sb.world;
       const before = { ...sb.world.stats.get(sb.id)!.final };
-      attachSource(sb.world, sb.id, {
-        id: `preview:item:${item.id}`,
-        kind: "item",
-        modifiers: item.modifiers,
-        hooks: item.passive,
-      });
+      // THE SHARED BUILDER, never a literal — `attachItemSource` is the one
+      // place an item becomes a ModifierSource (economy/itemSource.ts), and the
+      // whole contract of this panel is 「表單看到的 == 遊戲跑的」.
+      //
+      // A hand-built literal here shipped a preview that LIED: it copied
+      // `item.modifiers` raw, so the 職業限定閘 was never resolved and 貫雷槍
+      // (godie-i01g, 近戰+4／遠戰+2) reported +6 — on BOTH bodies, a number no
+      // champion in the game can receive. TypeScript could not see it:
+      // `ItemStatModifier extends StatModifier`, so the un-resolved array is
+      // structurally assignable to the resolved field. Slot 0 because a preview
+      // holds one item and the slot only ever disambiguates stackables.
+      attachItemSource(sb.world, sb.id, item.id, 0, item);
       recomputeStats(sb.world, sb.id);
       const after = sb.world.stats.get(sb.id)!.final;
       return ALL_STATS.filter((s) => before[s] !== after[s]).map((s) => ({

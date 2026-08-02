@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "d250c4a77e9d",
+  "hash": "5a64cb75409e",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -53,7 +53,7 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "95953381ff27",
+      "hash": "da4952b0357c",
       "size": 775
     },
     {
@@ -65,8 +65,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "b09901aae3f1",
-      "size": 1102
+      "hash": "68c7a6acd5bd",
+      "size": 1184
     },
     {
       "id": "damage-colors",
@@ -111,6 +111,12 @@
       "size": 1428
     },
     {
+      "id": "replay",
+      "path": "config/replay.json",
+      "hash": "962ea76dadec",
+      "size": 374
+    },
+    {
       "id": "roster",
       "path": "config/roster.json",
       "hash": "52bb714efd5e",
@@ -143,8 +149,8 @@
     {
       "id": "store",
       "path": "config/store.json",
-      "hash": "f3479e15b182",
-      "size": 430
+      "hash": "99d410f3ca98",
+      "size": 464
     },
     {
       "id": "taunt",

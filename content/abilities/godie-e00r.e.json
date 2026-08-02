@@ -20,9 +20,11 @@
     60.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
+  "effects": [],
+  "template": {
+    "ref": "tpl-buff-self",
+    "params": {
+      "duration": 8,
       "modifiers": [
         {
           "stat": "armor",
@@ -30,9 +32,9 @@
           "value": 20
         }
       ],
-      "duration": 8.0
+      "castTimeSec": 0.3
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.heroeva01s2.p01",
   "castTimeSec": 0.3,
   "hitFeel": {

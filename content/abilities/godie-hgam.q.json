@@ -17,15 +17,16 @@
     170.0
   ],
   "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-ground-nova",
+    "params": {
+      "radius": 224.5,
+      "damage": {
         "perRank": [
-          100.0,
-          200.0,
-          300.0
+          100,
+          200,
+          300
         ],
         "ratios": [
           {
@@ -33,9 +34,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.prim.nature.slash",
   "vfxLayers": [
     {

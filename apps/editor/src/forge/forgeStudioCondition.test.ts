@@ -18,6 +18,14 @@
  * they are different failures: the widget can be perfect while the studio never
  * mounts it, or mounts it against the wrong slot, or seeds it from nothing.
  *
+ * ⚠️ THE `data-field` NAMESPACE IS `cond<cardIndex>`, NOT `cond` (模板複數套用,
+ * 2026-07-31). A stacked ability can put the SAME slot on two cards, so two
+ * editors are on screen at once; with one shared namespace `h.field("cond.…")`
+ * silently returns whichever rendered first and a test「driving card 2」would
+ * really be driving card 1 (失敗形態 ④). The rename is not a weakening — the
+ * last describe block below adds the two-card case the old names could not
+ * express at all.
+ *
  * WHAT IS REAL HERE AND WHAT IS NOT. The template is the SHIPPED
  * `content/ability-templates/tpl-on-attack.json`, read off disk; `paramsSchemaFor`,
  * `defaultParamsFor`, `walkZod`, `FormRenderer` and `ConditionEditor` are all
@@ -108,21 +116,21 @@ describe("ForgeStudio hands its condition slots to ConditionEditor", () => {
    * `conditionSlots.map(…)` block leaves the render tree.
    */
   it("the 攻擊觸發 template's condition slot renders as real dropdowns", () => {
-    expect(h.fieldOrNull("cond.sentence")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.sentence")).not.toBeNull();
     // four clauses across two groups — the flagship gate, editable
-    expect(h.fieldOrNull("cond.g0.c0.is")).not.toBeNull();
-    expect(h.fieldOrNull("cond.g0.c1.stat")).not.toBeNull();
-    expect(h.fieldOrNull("cond.g1.c0.is")).not.toBeNull();
-    expect(h.fieldOrNull("cond.g1.c1.chance")).not.toBeNull();
-    expect(h.fieldOrNull("cond.join")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.g0.c0.is")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.g0.c1.stat")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.g1.c0.is")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.g1.c1.chance")).not.toBeNull();
+    expect(h.fieldOrNull("cond0.join")).not.toBeNull();
     // and it is NOT the read-only degrade
-    expect(h.fieldOrNull("cond.readonly")).toBeNull();
+    expect(h.fieldOrNull("cond0.readonly")).toBeNull();
   });
 
   it("the widget is SEEDED from the template's own default, not from empty", () => {
     // `defaultParamsFor(template)` → `params.condition` → the editor's `value`.
     // Drop the `value={params[name]}` prop and this line reads 「無條件」.
-    expect(textOf(h.field("cond.sentence").children)).toBe(
+    expect(textOf(h.field("cond0.sentence").children)).toBe(
       `實際效果：${describeCondition(flagshipGate())}`,
     );
   });
@@ -133,15 +141,15 @@ describe("ForgeStudio hands its condition slots to ConditionEditor", () => {
 
   it("editing a dropdown flows back into params and out again", () => {
     // Drop the `onChange` half of the wiring and the sentence never moves.
-    h.enter(h.field("cond.g1.c1.chance"), "7");
-    expect(textOf(h.field("cond.sentence").children)).toContain("7% 機率");
-    expect(textOf(h.field("cond.sentence").children)).toContain("目標不是英雄");
+    h.enter(h.field("cond0.g1.c1.chance"), "7");
+    expect(textOf(h.field("cond0.sentence").children)).toContain("7% 機率");
+    expect(textOf(h.field("cond0.sentence").children)).toContain("目標不是英雄");
   });
 
   it("清除 empties the slot and the ＋ button comes back", () => {
-    h.press(h.field("cond.clear"));
-    expect(textOf(h.field("cond.sentence").children)).toBe("實際效果：無條件，每次都觸發。");
-    expect(h.fieldOrNull("cond.addFirst")).not.toBeNull();
+    h.press(h.field("cond0.clear"));
+    expect(textOf(h.field("cond0.sentence").children)).toBe("實際效果：無條件，每次都觸發。");
+    expect(h.fieldOrNull("cond0.addFirst")).not.toBeNull();
   });
 });
 

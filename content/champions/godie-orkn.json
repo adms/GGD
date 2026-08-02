@@ -105,11 +105,14 @@
         140.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.nature.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -122,12 +125,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.nature.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "E": {
       "id": "godie-orkn.e",
@@ -150,16 +152,19 @@
         225.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.fire.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              16.0,
-              32.0,
-              48.0,
-              64.0
+              16,
+              32,
+              48,
+              64
             ],
             "ratios": [
               {
@@ -167,12 +172,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.fire.explosion",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "R": {
       "id": "godie-orkn.r",

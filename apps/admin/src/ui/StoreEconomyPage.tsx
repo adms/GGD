@@ -28,8 +28,10 @@ import { Panel, Btn } from "./widgets";
 import { ACCENT, DANGER, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { getOverlayDoc, getShippedDoc, getWhitelist, putOverlayDoc } from "../api";
 import {
+  RANDOM_PICK_OWNERSHIP_OPTIONS,
   SANE_UNLOCK_COST,
   SHIPPED_FREE_CHAMPION_IDS,
+  SHIPPED_RANDOM_PICK_OWNERSHIP,
   SHIPPED_UNLOCK_COST,
   STORE_COLLECTION,
   STORE_DOC_ID,
@@ -39,6 +41,7 @@ import {
   parseFreeChampionIds,
   parseUnlockCost,
   storeDocFor,
+  type RandomPickOwnership,
   type StoreEconomy,
 } from "../storeEconomy";
 
@@ -50,6 +53,7 @@ export function StoreEconomyPage(): JSX.Element {
   const [loaded, setLoaded] = useState<StoreEconomy | null>(null);
   const [costText, setCostText] = useState("");
   const [freeText, setFreeText] = useState("");
+  const [randomPick, setRandomPick] = useState<RandomPickOwnership>(SHIPPED_RANDOM_PICK_OWNERSHIP);
   const [roster, setRoster] = useState<string[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -70,6 +74,7 @@ export function StoreEconomyPage(): JSX.Element {
           setLoaded(economy);
           setCostText(String(economy.championUnlockCost));
           setFreeText(freeListText(economy.freeChampionIds));
+          setRandomPick(economy.randomPickOwnership);
         }
       } catch (err) {
         setApiErr(errText(err));
@@ -94,13 +99,19 @@ export function StoreEconomyPage(): JSX.Element {
 
   const preview: StoreEconomy | null =
     loaded && cost.ok
-      ? { championUnlockCost: cost.value, freeChampionIds: free.ids, mcoinRewards: loaded.mcoinRewards }
+      ? {
+          championUnlockCost: cost.value,
+          freeChampionIds: free.ids,
+          randomPickOwnership: randomPick,
+          mcoinRewards: loaded.mcoinRewards,
+        }
       : null;
 
   const dirty =
     loaded !== null &&
     (costText.trim() !== String(loaded.championUnlockCost) ||
-      free.ids.join("\n") !== freeListText(loaded.freeChampionIds));
+      free.ids.join("\n") !== freeListText(loaded.freeChampionIds) ||
+      randomPick !== loaded.randomPickOwnership);
 
   const save = async (): Promise<void> => {
     if (!preview) return;
@@ -125,6 +136,7 @@ export function StoreEconomyPage(): JSX.Element {
   const resetToShipped = (): void => {
     setCostText(String(SHIPPED_UNLOCK_COST));
     setFreeText(freeListText(SHIPPED_FREE_CHAMPION_IDS));
+    setRandomPick(SHIPPED_RANDOM_PICK_OWNERSHIP);
     setFlash(null);
   };
 
@@ -205,6 +217,52 @@ export function StoreEconomyPage(): JSX.Element {
           新玩家一開始<b>一位英雄都解不開</b>，只能靠免費名單開打。
         </div>
       )}
+
+      {/* owner 2026-08-02「隨機選角的時候，只能隨機到自己有解鎖的角色」的決策欄位。
+          放在解鎖價下面因為它問的是同一件事：沒付錢的英雄能不能到手。 */}
+      <div
+        style={{
+          padding: "9px 10px",
+          border: `1px solid ${PANEL_BORDER}`,
+          borderRadius: 4,
+          fontSize: 13,
+          marginBottom: 12,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ color: TEXT_MAIN, minWidth: 130 }}>🎲 讀不到擁有權時</span>
+          <code style={{ color: TEXT_DIM, fontSize: 11, minWidth: 150 }}>randomPickOwnership</code>
+          <select
+            aria-label="隨機選角在讀不到擁有權時的行為"
+            data-field="randomPickOwnership"
+            value={randomPick}
+            onChange={(e) => setRandomPick(e.target.value as RandomPickOwnership)}
+            style={{
+              padding: "4px 6px",
+              background: "transparent",
+              color: TEXT_MAIN,
+              border: `1px solid ${PANEL_BORDER}`,
+              borderRadius: 3,
+            }}
+          >
+            {RANDOM_PICK_OWNERSHIP_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value} style={{ color: "#000" }}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <span style={{ color: TEXT_DIM, fontSize: 11 }}>
+            出貨值 {RANDOM_PICK_OWNERSHIP_OPTIONS.find((o) => o.value === SHIPPED_RANDOM_PICK_OWNERSHIP)?.label}
+          </span>
+        </div>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "8px 0 0" }}>
+          {RANDOM_PICK_OWNERSHIP_OPTIONS.find((o) => o.value === randomPick)?.help}
+        </p>
+        <p style={{ color: TEXT_DIM, fontSize: 12, lineHeight: 1.7, margin: "6px 0 0" }}>
+          ⚠️ 這一欄<b style={{ color: TEXT_MAIN }}>只在平台讀不到玩家錢包時</b>起作用。
+          讀得到的時候，🎲 一律只抽該帳號已解鎖的英雄，跟這裡選什麼無關。
+        </p>
+      </div>
 
       <div style={{ marginBottom: 6 }}>
         <span style={{ color: TEXT_MAIN, fontSize: 13 }}>免費名單</span>{" "}

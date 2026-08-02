@@ -15,7 +15,7 @@
  *
  *   • every hp assertion READS `world.health` off the real entity after real
  *     `world.step()` ticks — never a config field, never a rules object. A test
- *     that asserted `rules.burnPctPerSecEnd === 0.2` would pass against a burn
+ *     that asserted `rules.burnCurveRates[1] === 0.2` would pass against a burn
  *     that reaches nobody.
  *   • the 殭屍王 case is the one that separates PERCENT from FLAT: it carries
  *     276,944 hp — 92× the champion standing beside it — and the guard is that
@@ -82,8 +82,6 @@ function ringNow(): FireRingRules {
       startSec: 0,
       shrinkSec: 20,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
     },
     DT,

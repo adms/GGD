@@ -14,6 +14,7 @@
  */
 
 import type { ChampionAttributes } from "../sim/stats/attributes";
+import type { ClassRequirement } from "../sim/content/requirement";
 
 /** The three browsable collections. */
 export type CodexKind = "item" | "champion" | "ability";
@@ -26,6 +27,23 @@ export interface CodexModifier {
   readonly stat: string;
   readonly op: string;
   readonly value: number;
+  /**
+   * 職業限定閘 — 「這一條給誰」, carried through from the authored doc.
+   *
+   * ⚠️ NOT OPTIONAL DECORATION. The normaliser used to DROP this key, and the
+   * result was a codex that contradicted itself: 貫雷槍 (godie-i01g) authors
+   * 「近戰攻擊距離+4；遠戰攻擊距離+2」 as two gated rows on one stat, so the
+   * detail page printed two bare lines 「攻擊距離 +4」 / 「攻擊距離 +2」 and a
+   * reader had no way to learn that he gets exactly one of them. The shop card
+   * had already solved this (`panels/itemStats.formatAuthoredBonus` appends
+   * `requirementShortLabel`); the codex simply never carried the field.
+   *
+   * Rendered by `codexLabels.formatModifier` through that SAME shared renderer,
+   * so the sentence is derived from the object the sim gates on rather than
+   * typed in twice (CLAUDE.md 第三守則 — a hand-copied condition is a comment,
+   * and comments lie).
+   */
+  readonly requires?: ClassRequirement;
 }
 
 /**

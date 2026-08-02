@@ -25,7 +25,17 @@ async function fetchTemplates(): Promise<TemplateDoc[]> {
   });
 }
 
-export function ForgeGallery({ onPick }: { onPick(t: TemplateDoc): void }) {
+export function ForgeGallery({
+  onPick,
+}: {
+  /**
+   * The clicked card AND the whole indexed set. 模板複數套用 needs the studio to
+   * be able to offer a SECOND card, and the gallery is the only place that has
+   * already paid for the index — handing the list over is one argument and
+   * removes a second fetch that could disagree with what was just clicked.
+   */
+  onPick(t: TemplateDoc, all: readonly TemplateDoc[]): void;
+}) {
   const { data, error, isLoading } = useQuery({
     queryKey: ["forge", "templates"],
     queryFn: fetchTemplates,
@@ -54,7 +64,7 @@ export function ForgeGallery({ onPick }: { onPick(t: TemplateDoc): void }) {
       </h2>
       <div className="forge-grid">
         {enabled.map((t) => (
-          <TemplateCard key={t.id} t={t} onPick={onPick} />
+          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data)} />
         ))}
       </div>
 
@@ -66,7 +76,7 @@ export function ForgeGallery({ onPick }: { onPick(t: TemplateDoc): void }) {
       </h2>
       <div className="forge-grid">
         {drafts.map((t) => (
-          <TemplateCard key={t.id} t={t} onPick={onPick} />
+          <TemplateCard key={t.id} t={t} onPick={(x) => onPick(x, data)} />
         ))}
       </div>
     </div>

@@ -71,16 +71,21 @@
         165.0
       ],
       "range": 10.08,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.sound.nova",
+      "targetsEnemies": true,
+      "radius": 7.33,
+      "castTimeSec": 0.5,
+      "template": {
+        "ref": "tpl-instant-blast",
+        "params": {
+          "radius": 400,
+          "damage": {
             "perRank": [
-              200.0,
-              275.0,
-              350.0,
-              425.0
+              200,
+              275,
+              350,
+              425
             ],
             "ratios": [
               {
@@ -88,13 +93,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.5
         }
-      ],
-      "vfxKey": "fx.prim.sound.nova",
-      "targetsEnemies": true,
-      "radius": 7.33,
-      "castTimeSec": 0.5
+      }
     },
     "W": {
       "id": "godie-o02p.w",
@@ -161,9 +164,13 @@
         415.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.sound.explosion",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 15,
           "modifiers": [
             {
               "stat": "ad",
@@ -176,11 +183,9 @@
               "value": 3
             }
           ],
-          "duration": 15.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.sound.explosion",
-      "castTimeSec": 0.3
+      }
     },
     "R": {
       "id": "godie-o02p.r",

@@ -5,12 +5,24 @@
  *
  * Three tabs (英雄 / 道具 / 技能) list every authored doc with its w3x icon,
  * a search box, an enabled/disabled filter, multi-select (click, shift-range,
- * select-all-filtered), bulk enable/disable, a live 已啟用/共 counter, a
- * one-click 啟用起始組合 (so a fresh install is never dead) and a Save that
- * re-reads the doc and verifies it before reporting success.
+ * select-all-filtered), bulk enable/disable, a live 已啟用/共 counter and a Save
+ * that re-reads the doc and verifies it before reporting success.
  *
- * All list/selection/counter/starter/diff logic lives in ../curation.ts as
- * pure functions (unit-tested); this file is presentation + wiring only.
+ * TWO DOORS LEAD TO THE SAME VERSION-CONTROLLED STARTER BUNDLE, and the
+ * difference between them is the whole safety story:
+ *
+ *   ⭐ 啟用示範組合   UNION — merges the bundle into the draft, removes nothing.
+ *                      Safe by construction; a fresh install is never dead.
+ *   ⚠️ 回到原廠設定   REPLACE — makes the selected kinds EQUAL the bundle, so
+ *                      anything enabled that the bundle does not carry is turned
+ *                      OFF. Lives in the collapsed 危險操作 section with two
+ *                      different confirmations and a pre-change snapshot; the
+ *                      write itself is a server-side plan
+ *                      (POST /curation/whitelist/reset), not a draft merge.
+ *
+ * All list/selection/counter/starter/diff logic lives in ../curation.ts and the
+ * reset plan in ../curationReset.ts as pure functions (unit-tested); this file
+ * is presentation + wiring only.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getStarterSet, getWhitelist, saveWhitelist } from "../api";
@@ -40,6 +52,7 @@ import {
   type Selection,
   type WhitelistDoc,
 } from "../curation";
+import { CurationResetPanel } from "./CurationResetPanel";
 import { Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import { ACCENT, GOLD, OK, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
@@ -230,9 +243,23 @@ export function CurationPage(): React.JSX.Element {
     }
   };
 
-  /** Back to the documented default: nothing enabled. */
+  /**
+   * Back to the documented default: nothing enabled.
+   *
+   * The second sentence is not decoration. This button and 回到原廠設定 sit next
+   * to each other now, and 「停用全部」 is the one an operator reaches for when
+   * they mean 「重設」 — which would leave them with an empty champ-select
+   * instead of the shipped roster.
+   */
   const onDisableAll = (): void => {
-    if (!window.confirm("停用全部內容？白名單將回到「全新安裝」的空狀態。")) return;
+    if (
+      !window.confirm(
+        "停用全部內容？白名單將回到「全新安裝」的空狀態 — 沒有任何英雄可選。\n\n" +
+          "想回到出貨的預設組合，請用「回到原廠設定」，不要用這個。",
+      )
+    ) {
+      return;
+    }
     setDraft((d) => disableAll(d));
     setFlash({ ok: true, text: "已清空草稿 — 請按「儲存」寫入。" });
   };
@@ -295,8 +322,12 @@ export function CurationPage(): React.JSX.Element {
         >
           <b style={{ color: GOLD }}>目前沒有啟用任何英雄 — 玩家無法選角。</b>
           <br />
-          最快的修法：按下方的 <b>「⭐ 啟用示範組合」</b> 再按 <b>「儲存」</b>，即可載入 12 名英雄、30 件道具與
-          對應技能。
+          {/* No counts in this sentence ON PURPOSE. It used to promise
+              「12 名英雄、30 件道具」; the bundle has been 53 champions and 104
+              items since task #138/#82, so the number was a lie for weeks in the
+              one place a stuck operator reads most carefully. */}
+          最快的修法：按下方的 <b>「⭐ 啟用示範組合」</b> 再按 <b>「儲存」</b>，即可載入平台內建的起始組合
+          （英雄 + 道具 + 對應技能，實際數量以按下時伺服器回傳的為準）。
           <br />
           也可以用指令：<code>make seed-demo</code>（等同 <code>POST /api/v1/curation/whitelist/starter</code>）。
         </div>
@@ -379,16 +410,16 @@ export function CurationPage(): React.JSX.Element {
             kind="primary"
             onClick={() => void onStarter()}
             disabled={busy}
-            title="平台內建的示範組合：12 名英雄（各有專屬模型與完整 Q/W/E/R/EX）+ 30 件道具（400g–7850g，含傳說武器抽卡池）"
+            title="平台內建的起始組合（apps/platform/internal/curation/starter.go）。這是聯集：只會加入，永遠不會停用你已經開過的東西。要「取代成原廠」請用下方的危險操作。"
           >
             ⭐ 啟用示範組合
           </Btn>
           <Btn small onClick={() => void onEnableAll()} disabled={busy} title="救援用：開啟全部未審核內容">
             啟用全部
           </Btn>
-          <Btn small kind="danger" onClick={onDisableAll} disabled={busy} title="回到全新安裝的空白名單">
-            全部停用
-          </Btn>
+          {/* 全部停用 moved into the collapsed 危險操作 section below, next to
+              回到原廠設定 — the two removing actions belong together and behind
+              one extra click, not in the same row as 全選篩選結果. */}
         </div>
 
         <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 8 }}>
@@ -493,6 +524,21 @@ export function CurationPage(): React.JSX.Element {
           {busy ? "儲存中…" : "儲存 Save"}
         </Btn>
       </div>
+
+      <CurationResetPanel
+        dirty={dirty}
+        busy={busy}
+        onDisableAll={onDisableAll}
+        onApplied={(doc) => {
+          // The reset/restore writes SERVER-SIDE, so both copies move to the
+          // document the platform actually returned — not to a locally
+          // predicted one, which is how a "saved" tick can lie.
+          setServer(doc);
+          setDraft(doc);
+          setSel(EMPTY_SELECTION);
+          setFlash(null);
+        }}
+      />
     </div>
   );
 }

@@ -19,6 +19,7 @@ import { fileURLToPath } from "node:url";
 import { zArenaDoc, type ArenaDoc, type FireRingConfig } from "@ggd/shared/content";
 import { Arenas, Configs } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
+import { DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
 import { asSeatId } from "@ggd/shared/ids";
 import { DEFAULT_COMBAT_ENV, normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
 import { DEFAULT_BASE_BONUS, baseBonusFor, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
@@ -89,8 +90,7 @@ const RING: FireRingConfig = {
   startSec: 0.5,
   shrinkSec: 6,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.04,
-  burnPctPerSecEnd: 0.2,
+  burnCurve: [...DEFAULT_BURN_CURVE], // 出貨曲線的唯一字面值住在 sim/fireRing.ts
   maxPctPerSec: 1,
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

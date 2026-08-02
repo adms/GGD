@@ -70,16 +70,23 @@
         180.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.darksummoninglaunch1",
+      "targetsEnemies": true,
+      "radius": 6.0,
+      "castTimeSec": 0.7,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 327,
+          "damage": {
             "perRank": [
-              200.0,
-              300.0,
-              400.0,
-              500.0
+              200,
+              300,
+              400,
+              500
             ],
             "ratios": [
               {
@@ -87,20 +94,13 @@
                 "coeff": 0.5
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.7,
           "statusId": "burnstun",
-          "duration": 0.8,
-          "stun": true
+          "statusDurationSec": 0.8
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "sfxKey": "wc3.darksummoninglaunch1",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.7
+      }
     },
     "W": {
       "id": "godie-e00w.w",
@@ -123,9 +123,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.lightning.beam",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "critChance",
@@ -133,11 +137,9 @@
               "value": 0.25
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-e00w.e",
@@ -208,11 +210,14 @@
         300.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.lightning.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               600.0,
               800.0,
@@ -224,12 +229,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.6
         }
-      ],
-      "vfxKey": "fx.prim.lightning.beam-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.6
+      }
     }
   },
   "skillOrder": [

@@ -124,11 +124,14 @@
         200.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -141,12 +144,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.ki.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "E": {
       "id": "godie-ewar.e",
@@ -216,25 +218,7 @@
         345.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              650.0,
-              950.0,
-              1250.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.7
-              }
-            ]
-          }
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ewar.r.png",
@@ -252,6 +236,26 @@
         ],
         "flashMs": 178,
         "camKick": 0.446
+      },
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
+            "perRank": [
+              650.0,
+              950.0,
+              1250.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.6
+        }
       }
     }
   },

@@ -16,18 +16,28 @@
     "damage": {
       "type": "scaling",
       "default": {
-        "perRank": [280],
+        "perRank": [
+          280
+        ],
         "ratios": []
       }
     },
     "damageType": {
       "type": "enum",
-      "values": ["magic", "physical", "true"],
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
       "default": "magic"
     },
     "statusId": {
       "type": "enum",
-      "values": ["root", "burnstun", "slow30"],
+      "values": [
+        "root",
+        "burnstun",
+        "slow30"
+      ],
       "default": "root",
       "optional": true
     },
@@ -40,13 +50,16 @@
     },
     "castTimeSec": {
       "type": "number",
+      "optional": true,
       "default": 0,
       "min": 0,
       "max": 5,
       "unit": "s"
     }
   },
-  "requires": ["applyStatus"],
+  "requires": [
+    "applyStatus"
+  ],
   "gapScore": 8,
   "exemplar": {
     "skill": "45-02 千鳥流",

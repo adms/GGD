@@ -40,6 +40,7 @@ import {
   type ReplayLine,
 } from "./format";
 import { compressRecording, openRecordingStream, pruneReplays, safeRecordingId, summarise } from "./store";
+import { replayPolicy } from "./policy";
 import { forgetSidecarRows, upsertSidecarRow } from "./sidecar";
 import {
   formatReplayFailureLog,
@@ -62,8 +63,18 @@ function reportFailure(phase: ReplayFailurePhase, id: string, err: unknown): voi
   if (shouldLog) console.error(formatReplayFailureLog(phase, id, err, replayHealth.snapshot()), err);
 }
 
-/** How often the buffered lines are handed to the write stream. */
-const FLUSH_MS = 500;
+/**
+ * How often the buffered lines are handed to the write stream.
+ *
+ * ⚠️ 這**不再是**寫死的 500 —— 它是 `config.replay@1` 的 `flushIntervalMs`
+ * （出貨 500，缺文件回出貨值）。理由是 owner 2026-08-02「就算玩到一半就離開也
+ * 應該有 replay」：這個間隔決定的正是「程序被硬砍（容器重啟／OOM）時最多丟掉
+ * 幾秒」，也就是那句話唯一可調的那個旋鈕。每 tick 寫檔是不行的（tick 路徑不准
+ * 做同步磁碟 I/O），所以這是一個真的取捨，而取捨屬於後台。
+ */
+function flushMs(): number {
+  return replayPolicy().flushIntervalMs;
+}
 
 /**
  * Hard ceiling on buffered lines between flushes. Reaching it means our own
@@ -152,7 +163,9 @@ export class MatchRecorder implements MatchRecorderSink {
     replayHealth.noteOpened();
     rec.header = header;
     rec.push({ t: "header", ...header });
-    rec.timer = setInterval(() => rec.flush(), FLUSH_MS);
+    // Resolved ONCE per recording and frozen: a mid-match content reload must not
+    // retime a running recorder (the same rule `phaseCfg`/`combatEnv` follow).
+    rec.timer = setInterval(() => rec.flush(), flushMs());
     // Never hold the process open for a recorder.
     rec.timer.unref?.();
     return rec;

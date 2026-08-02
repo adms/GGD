@@ -597,19 +597,28 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // it — `moon-combo` is the 者、皆、陣 combo window (war3map.j:34438), a
   // caster-side marker that is unambiguously positive — so the exemption became
   // a lie and was deleted, which is exactly what this census asks for.
-  // 鑄技工坊 (Skill Forge P1, #141/#205): the `template` link landed on
-  // zAbilityDef this commit, and the 29 template@1 docs + the pure expand() ship
-  // with it, but NO existing content doc references a template yet — the editor's
-  // job is to re-author skills onto them. Until the 8 enabled families are
-  // adopted by real content this is an intentional zero. Kept as `debt` (not
-  // `landing`) so it stays visible in the banner rather than silently expiring.
-  "field:abilities.template": {
-    status: "debt",
-    why: "Skill Forge P1: the template@1 schema + expand() are live and the diff=0 roundtrip (godie-hgam.e via tpl-instant-blast) is proven in expand.test.ts, but no shipped ability yet stores template{ref,params} — that migration is the editor's writeback, done skill-by-skill. Adopting one skill turns this green.",
+  // 鑄技工坊 (Skill Forge P1, #141/#205). `field:abilities.template` USED TO SIT
+  // HERE, exempted with 「NO existing content doc references a template yet」.
+  // On 2026-08-02 that stopped being true: 143 standalone ability docs were
+  // re-authored onto the enabled families, each one proved lossless against its
+  // pre-conversion `git show HEAD:` effects, so the entry became a lie and was
+  // DELETED — which is exactly what this census asks for.
+  //
+  // ⚠️ `field:champions.abilities.*.template` ALSO used to sit here, exempted as
+  // 「the mirror writeback was not part of that lane」. The standalone→embedded
+  // sync ran the same day (106 embedded slots across 47 champions), so that
+  // exemption became a lie too and was deleted. This census is what caught it:
+  // it went red the moment the mirror adopted the key, which is the whole point
+  // of pinning exemptions to MEASURED adoption rather than to a hand-kept list.
+  // Both of these only became REACHABLE (denominator 0 → 143) when the docs above
+  // adopted templates; neither is a gap the adoption failed to fill.
+  "field:abilities.template|0.onConflict": {
+    status: "default-live",
+    why: "the stack conflict policy is only expressible in the {cards,onConflict} binding shape, and all 143 adopters use the 1-card {ref,params} shape — where a conflict is arithmetically impossible (there is no second card to collide with). The shipped behaviour comes from DEFAULT_TEMPLATE_CONFLICT=\"reject\" in schema/template.ts; the field exists to OVERRIDE it on a real multi-card stack.",
   },
-  "field:champions.abilities.*.template": {
+  "field:abilities.template|0.cards[].version": {
     status: "debt",
-    why: "the champion-embedded mirror of abilities.template; adopted at the same moment the first Q/W/E/R skill is re-authored onto a template (the mirror writeback writes both copies).",
+    why: "the §5 breaking-migration hook. zAbilityTemplateCard accepts it, but NOTHING reads it — normalizeTemplateBinding/expandStack never branch on a card version, so a doc that set it would be inert (the same shape as the onLevelUp hook above). Resolve by implementing version-aware re-expansion or by deleting the member — do not 'adopt' it.",
   },
 
   // ── 靈氣 (auras) — the container FELL BACK UNDER MIN_REACH on 2026-07-30 ---
@@ -940,6 +949,39 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 現存 MP 3%」的那一刻就變成假的。**豁免到期就是刪掉,不是延期** —— 一條寫著
   // 「還沒有人用」的豁免留在有人用之後,就是把 S8 普查的訊號改成雜訊。
 
+  // ── owner 在 24 小時內把同一件事翻了一次面(2026-08-02)─────────────────
+  //
+  // 8/1:「Berserker HP 回血 1%每秒,沒有保底」→ 做成 `healthRegenPctOfMax`,
+  //      唯一的使用者是 `godie-hapm`。
+  // 8/2:「Berseker 是每秒**損失** 1%生命, 直到生命不足1%」→ 那一格翻成
+  //      `healthDrainPctOfMax`(1/1 採用),回血那一格就此掉到 0。
+  //
+  // 下面兩條豁免都是**同一次改動的帳單**,而且刻意記成 `debt`(每一輪都印出
+  // 大字報、永不到期)而不是 `landing`:沒有任何一份內容「即將」採用它們,
+  // 假裝 30 天後會有人用是說謊。
+  "field:champions.healthRegenPctOfMax": {
+    status: "debt",
+    why:
+      "8/1 做的「每秒回最大生命的 N%」機制還活著、還可調、還有行為守衛" +
+      "(`sim/berserkerPctRegen.test.ts` 用手寫夾具跑真世界),但 8/2 之後**沒有任何一位出貨英雄填它**。" +
+      "留著而不是刪掉是刻意的:owner 在 24 小時內把這件事翻過一次面,下一次翻回來時它必須是" +
+      "「英雄卡上填一個數字」,不是一次 schema 改動 + rebuild + 部署(CLAUDE.md 第一守則)。" +
+      "⚠️ 這條豁免說的是「今天 0 筆是對的」,不是「這個機制不用測」——" +
+      "`berserkerPctRegen.test.ts` 另有一條掃全 119 份英雄卡的守衛釘住「真的沒有人填」," +
+      "所以第一位採用者出現的那一天,那一條會紅,而**這條豁免就該被刪掉**。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|0.op=>": {
+    status: "debt",
+    why:
+      "條件比較子 `>` 在 2026-08-02 之前唯一的內容使用者是 52-00 十二道試煉的" +
+      "`onInterval` hook(「只在生命高於最大生命的 1% 時才流失」)。owner 的更正把那條流失" +
+      "搬去 `healthDrainPctOfMax` + `config.regen@1` 的地板 —— 因為 hook 的 `condition` 是" +
+      "**發不發射**的前提而不是一條夾值(把流失調到比門檻大就會穿過去把人打死)," +
+      "而且 hook 走傷害管線會被 `combatEnv.damageDealt` 乘過,「1%」就不是 1%。" +
+      "所以 `>` 掉到 0 是那次搬家的直接後果,不是有人忘了寫。" +
+      "比較子本身還在編輯器的條件選單上、`effects/hooks.ts` 也照樣解析它;" +
+      "第一支需要「數值高於門檻才觸發」的卡出現時,這條豁免就該被刪掉。",
+  },
 };
 
 let census: Census;

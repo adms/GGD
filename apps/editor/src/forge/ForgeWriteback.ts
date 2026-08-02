@@ -21,6 +21,11 @@ import {
   writePlan,
   type DocChange,
 } from "@ggd/shared/content/editModel";
+import {
+  hasTemplateBinding,
+  resolveTemplateExpansion,
+} from "@ggd/shared/content/templates/resolve";
+import type { TemplateDoc } from "@ggd/shared/content/schema/template";
 import { api, WRITES_ENABLED } from "../api/client";
 
 /** The members a template-authored ability owns — the ONLY ones we splice. */
@@ -50,6 +55,42 @@ export interface ForgePlan {
   readonly abilityPatch: Record<string, unknown>;
   /** the embedded twin, or null when this ability has no champion slot */
   readonly mirror: { championId: string; slot: string; embedded: Record<string, unknown> } | null;
+  /**
+   * Reasons this plan MUST NOT be executed, in operator language. Empty = writable.
+   *
+   * ⚠️ This exists because of the specific rule CLAUDE.md draws from
+   * `buildIndexesValidates.test.ts`: 「只在遠離現場的地方響的警報不是守衛」. A doc
+   * whose `template.ref` names a template that does not exist is perfectly valid
+   * Zod — `zAbilityTemplateCard.ref` is a string — so `/validate` passes it and
+   * the failure only surfaces at the NEXT `registerAll()`, in a different
+   * process, on a different day, as a degraded skill. The rule has to run HERE,
+   * at the moment of editing, and it is the SAME function the loader runs
+   * (`resolveTemplateExpansion`), not a second copy that can drift from it.
+   */
+  readonly blockers: readonly string[];
+}
+
+/**
+ * Would this doc survive `registerAll()`? Returns the operator-facing reasons it
+ * would not (empty = fine). Non-templated docs are always fine.
+ */
+export function templateWriteBlockers(
+  after: Record<string, unknown>,
+  templates: ReadonlyMap<string, TemplateDoc>,
+): string[] {
+  if (!hasTemplateBinding(after)) return [];
+  const res = resolveTemplateExpansion(after, templates);
+  if (res.ok) return [];
+  const f = res.failure;
+  const head =
+    f.phase === "ref"
+      ? `模板不存在：${f.missingRefs.join("、")}`
+      : f.phase === "binding"
+        ? "模板綁定格式不合法"
+        : "模板展開失敗";
+  return [
+    `${head} —— 存下去之後這支技能在載入時會被降級成「沒有效果」，其他英雄不受影響但這支就死了。(${f.message})`,
+  ];
 }
 
 /**
@@ -63,6 +104,7 @@ export function planForgeWrite(
   before: Record<string, unknown>,
   after: Record<string, unknown>,
   championDoc: Record<string, unknown> | null,
+  templates: ReadonlyMap<string, TemplateDoc>,
 ): ForgePlan {
   const id = String(after["id"]);
   const steps: ForgePlanStep[] = [];
@@ -99,7 +141,7 @@ export function planForgeWrite(
     }
   }
 
-  return { steps, abilityPatch, mirror };
+  return { steps, abilityPatch, mirror, blockers: templateWriteBlockers(after, templates) };
 }
 
 export interface ForgeSaveResult {
@@ -115,11 +157,21 @@ export async function runForgeWrite(
   plan: ForgePlan,
   after: Record<string, unknown>,
   championAfter: Record<string, unknown> | null,
+  templates: ReadonlyMap<string, TemplateDoc>,
 ): Promise<ForgeSaveResult> {
   if (!WRITES_ENABLED) {
     throw new Error("此組建為唯讀（正式版不含 content-api），無法寫回");
   }
   const id = String(after["id"]);
+
+  // ---- 0. the template gate, BEFORE the server round-trip ------------------
+  // Re-run rather than trusting `plan.blockers`: a plan is built once and the
+  // confirm dialog can sit open while the card list changes underneath it.
+  // Same function the loader runs, so「編輯器接受的」==「載入器展開得動的」.
+  const blockers = templateWriteBlockers(after, templates);
+  if (blockers.length > 0) {
+    throw new Error(`拒絕寫回：${blockers.join("；")}`);
+  }
 
   // ---- 1. validate EVERY step before writing ANY step ----
   await api.validate("abilities", id, after);

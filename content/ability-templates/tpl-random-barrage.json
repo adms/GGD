@@ -23,13 +23,19 @@
     "impactDamage": {
       "type": "scaling",
       "default": {
-        "perRank": [150],
+        "perRank": [
+          150
+        ],
         "ratios": []
       }
     },
     "damageType": {
       "type": "enum",
-      "values": ["magic", "physical", "true"],
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
       "default": "magic"
     },
     "impactRadius": {
@@ -48,7 +54,10 @@
     },
     "payout": {
       "type": "enum",
-      "values": ["perImpact", "onceAtCast"],
+      "values": [
+        "perImpact",
+        "onceAtCast"
+      ],
       "default": "perImpact"
     },
     "openingDamage": {
@@ -57,13 +66,16 @@
     },
     "castTimeSec": {
       "type": "number",
+      "optional": true,
       "default": 0,
       "min": 0,
       "max": 5,
       "unit": "s"
     }
   },
-  "requires": ["periodicDamage"],
+  "requires": [
+    "periodicDamage"
+  ],
   "gapScore": 6,
   "exemplar": {
     "skill": "74-03 闇之天使",

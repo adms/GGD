@@ -125,6 +125,11 @@ export type Page =
    *
    * 四頁都走 `putOverlayDoc`，所以下面都要 session-gate。
    */
+  /**
+   * 對戰錄影 (`config/replay.json`, owner 2026-08-02「請幫我預設打開」):
+   * 錄不錄影、多久落地一次、留幾份留幾天。
+   */
+  | "replayPolicy"
   /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
   | "modelLod"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
@@ -173,6 +178,29 @@ export type Page =
    */
   | "regenRules"
   | "arenaFire"
+  /**
+   * 勝利煙火 (`config/victory-fx`, #93 / #235) —— owner 2026-08-02「請你直接取消
+   * 煙火(變成後台開關)」。回合小煙火與吃雞烤雞煙火各一格,出貨都是關的。
+   */
+  | "victoryFx"
+  /**
+   * 殭屍王出場演出 (`config/boss-intro`, owner 2026-08-02「殭屍王出場 會音效+大字
+   * 講該英雄的名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示
+   * 淡出消失」)。停留秒數／淡出秒數／描述字數上限／要點與弱點的條數上限。
+   * ⚠️ 逐英雄的文案表不在這一頁編輯（`champions`，儲存時原封不動帶著走）——
+   * 王的臉是 `mobWaves.boss.championSource` 抽的，出貨是隨機，所以那張表天生
+   * 是不完整的，而缺一位的正確表現是少畫幾段，不是空白面板。
+   */
+  | "bossIntro"
+  /**
+   * 道具卡片排版 (`config/item-card`, owner 2026-08-02「卡片道具的排版連在一起
+   * 不好閱讀，關於效果及數值的部分應該要特殊顏色表示」)。四個分類的名稱與顏色、
+   * 數值色、解說色，加上三張「方括號裡的字算哪一類」的對照表。
+   * ⚠️ 它是唯一一份**帶著可編輯對照表**的 `ConfigDocPage`（`spec.tables`）——
+   * 因為 owner 那天真正要改的是「`[On-Hit]` 算主動還是被動」，而那是表的一列，
+   * 不是一個純量欄位。
+   */
+  | "itemCard"
   /**
    * 鑄技工坊 · 特效綁定 (`config/vfx-bindings`, tasks #205 / #230 / #272) —— 每支
    * 技能綁哪一個**家族原型** + 六段 per-invocation 參數 (scale / tint / alpha /
@@ -361,6 +389,7 @@ export interface AppState {
  * content-api) and the read-only local consoles (hub, model-budget, icon-track).
  */
 const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
+  "contentOverlay",
   "players",
   "approvals",
   // #242: every one of its writes is platform-admin-backed (curation bulk +
@@ -375,7 +404,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // the loopback drop-in — this one writes what every player sees on the
   // deployed host, so it takes a real operator session like every other
   // platform-backed page.
-  "contentOverlay",
+  
   // #229: its save is a `putOverlayDoc` — the same admin-JWT, audited platform
   // writer 內容覆蓋層 uses — so without a session every 寫入覆蓋層 would 401 and
   // read as a broken page rather than a missing sign-in.
@@ -402,6 +431,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 畫質分級 / 特效回收 / 濺血程度 (E2): 同一個 `ConfigDocPage` 元件、同一條
   // `putOverlayDoc` 寫入路徑,所以同一條規則。少了這三行,登出的操作者會看到三頁
   // 完全可以編輯的表單,改完才在儲存時發現從頭到尾就沒有可以寫入的 session。
+  // 對戰錄影 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
+  // `putOverlayDoc`,所以同一條 session 規則。
+  "replayPolicy",
   "modelLod",
   "vfxCleanup",
   "gore",
@@ -421,6 +453,15 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "regenRules",
   // 場地環境火焰 (GH#251): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "arenaFire",
+  // 勝利煙火 (#93 / #235): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "victoryFx",
+  // 殭屍王出場演出 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
+  // `putOverlayDoc`,所以同一條規則。
+  "bossIntro",
+  // 道具卡片排版 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
+  // `putOverlayDoc`。這一頁的三張對照表也走同一條寫入路徑,所以沒有 session 時
+  // 操作者可以改完 32 列 markers 才在儲存時吃 401。
+  "itemCard",
   // 鑄技工坊: 同上。它讀 /content(不需要 session)但寫 `putOverlayDoc`(需要),
   // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
   // 發現從頭到尾就沒有可以寫入的 session。

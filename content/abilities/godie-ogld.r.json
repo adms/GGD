@@ -7,25 +7,27 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    90.0,
-    90.0,
-    90.0
+    90,
+    90,
+    90
   ],
   "manaCost": [
-    250.0,
-    350.0,
-    450.0
+    250,
+    350,
+    450
   ],
-  "range": 0.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "range": 0,
+  "effects": [],
+  "template": {
+    "ref": "tpl-proxy-cast",
+    "params": {
+      "anchor": "point",
+      "radius": 200,
+      "damage": {
         "perRank": [
-          180.0,
-          360.0,
-          540.0
+          180,
+          360,
+          540
         ],
         "ratios": [
           {
@@ -33,15 +35,13 @@
             "coeff": 0.7
           }
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.7,
       "statusId": "burnstun",
-      "duration": 0.8,
-      "stun": true
+      "statusDurationSec": 0.8
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "radius": 3.67,

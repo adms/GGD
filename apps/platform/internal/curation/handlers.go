@@ -22,6 +22,10 @@ const publicMaxAgeSeconds = "10"
 //	PUT  /api/v1/curation/whitelist          admin only — replace
 //	POST /api/v1/curation/whitelist/bulk     admin only — enable/disable one kind
 //	POST /api/v1/curation/whitelist/starter  admin only — union the starter bundle in
+//	POST /api/v1/curation/whitelist/reset    admin only — REPLACE the selected kinds
+//	                                         with the starter bundle (see reset.go)
+//	GET  /api/v1/curation/whitelist/snapshots admin only — the undo points
+//	POST /api/v1/curation/whitelist/restore  admin only — undo, by snapshot id
 type Handlers struct {
 	svc *Service
 	// adminOnly is the admin-role gate (admin.Service.AdminOnly), injected so
@@ -58,6 +62,16 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Put("/curation/whitelist", h.replace)
 		ar.Post("/curation/whitelist/bulk", h.bulk)
 		ar.Post("/curation/whitelist/starter", h.applyStarter)
+		// The reset family. NEVER on MountPublic: reset is the only route here
+		// that turns content off without naming an id.
+		ar.Post("/curation/whitelist/reset", h.reset)
+		ar.Get("/curation/whitelist/snapshots", h.listSnapshots)
+		// NOTE there is deliberately NO GET …/snapshots/{id}. The console lists
+		// snapshots and restores by id; it never needs the stored document, and
+		// internal/server/orphan_route_test.go fails a route no first-party UI
+		// calls — correctly, since an unreachable route is a feature that does
+		// not exist. Service.GetSnapshot stays as RestoreSnapshot's own read.
+		ar.Post("/curation/whitelist/restore", h.restore)
 	})
 }
 
@@ -74,7 +88,10 @@ func (h *Handlers) get(w http.ResponseWriter, r *http.Request) {
 // starter returns the built-in starter bundle WITHOUT applying it, so the
 // console can preview/diff it before the operator clicks the button.
 func (h *Handlers) starter(w http.ResponseWriter, r *http.Request) {
-	set := StarterSet()
+	// Through the SEAM, not StarterSet() directly: the preview the console
+	// diffs against must be the same bundle POST …/reset would apply, including
+	// when a test injects a different one.
+	set := h.svc.starter()
 	w.Header().Set("Cache-Control", "public, max-age="+publicMaxAgeSeconds)
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{
 		"champions": set.Champions,
@@ -131,6 +148,79 @@ func (h *Handlers) bulk(w http.ResponseWriter, r *http.Request) {
 		"kind": req.Kind, "enabled": len(req.Enable), "disabled": len(req.Disable),
 	})
 	httpx.WriteJSON(w, http.StatusOK, doc)
+}
+
+// reset — 回到原廠設定. Body is curation.ResetRequest; see reset.go for the
+// contract and the three empty-whitelist guards.
+//
+// `dryRun: true` is the console's PREVIEW and runs the identical plan code, so
+// the numbers the operator confirms are produced by the code that will do the
+// write, not by a second implementation that can drift from it.
+func (h *Handlers) reset(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req ResetRequest
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	req.Actor = me.AccountID
+	res, err := h.svc.Reset(r.Context(), req)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if !res.DryRun {
+		// Its OWN audit action, not curation.replace: after the fact, "the
+		// operator pressed 回到原廠設定" and "the operator hand-edited 40 ids"
+		// have to be tellable apart, and the snapshot id is the undo handle.
+		h.svc.Audit(me.AccountID, "curation.reset", map[string]any{
+			"scopes":     res.Scopes,
+			"snapshotId": res.SnapshotID,
+			"disabled": map[string]int{
+				KindChampions: len(res.Disable[KindChampions]),
+				KindItems:     len(res.Disable[KindItems]),
+				KindAbilities: len(res.Disable[KindAbilities]),
+			},
+			"champions": len(res.Whitelist.Champions),
+			"items":     len(res.Whitelist.Items),
+			"abilities": len(res.Whitelist.Abilities),
+		})
+	}
+	httpx.WriteJSON(w, http.StatusOK, res)
+}
+
+func (h *Handlers) listSnapshots(w http.ResponseWriter, r *http.Request) {
+	list, err := h.svc.ListSnapshots()
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{"snapshots": list})
+}
+
+type restoreReq struct {
+	SnapshotID string `json:"snapshotId"`
+}
+
+func (h *Handlers) restore(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req restoreReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	doc, undoID, err := h.svc.RestoreSnapshot(r.Context(), req.SnapshotID, me.AccountID)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	h.svc.Audit(me.AccountID, "curation.restore", map[string]any{
+		"snapshotId": req.SnapshotID, "undoSnapshotId": undoID,
+		"champions": len(doc.Champions), "items": len(doc.Items), "abilities": len(doc.Abilities),
+	})
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{
+		"whitelist": doc, "undoSnapshotId": undoID,
+	})
 }
 
 func (h *Handlers) applyStarter(w http.ResponseWriter, r *http.Request) {

@@ -419,6 +419,25 @@ export interface MobBossRules {
   radius: number;
   /** model doc id sent as EntityState.key (presentation only, never digested) */
   modelKey: string;
+  /**
+   * WHOSE FACE THIS KING WEARS — the champion id `mobKindChampion` resolved at
+   * arm time (#289), i.e. the 隨機 draw's answer when `championSource` is
+   * `"random"` (the SHIPPED value) and the inherited/authored id otherwise.
+   *
+   * ⚠️ IT IS NOT ALWAYS 喪標麥可, and that is the whole reason this field had to
+   * exist. `modelKey` next to it is a MODEL doc id — it names a mesh, not a
+   * character, so nothing downstream could recover 「這一隻穿的是誰」 from it
+   * (two champions may share a mesh, and `boss.modelKey` can override it
+   * outright). The 出場演出 (`ui/hud/bossIntroModel`) needs the CHARACTER to look
+   * up that champion's 描述／攻略要點／弱點, so the identity travels explicitly.
+   *
+   * ⚠️ OPTIONAL, and ABSENT MEANS 「不知道是誰」 — a hand-built `MobRules`
+   * (fixtures, any caller that skips `mobRulesFromConfig`) must degrade to an
+   * intro that draws nothing rather than fail to compile, the same 「缺席 = 今天
+   * 的行為」 rule every #206/#288/#289/#290 field follows. `mobRulesFromConfig`
+   * ALWAYS writes it.
+   */
+  championId?: string;
   /** 體型倍率 (GH#192) — see `MobRules.sizeMult`; owner default 10 */
   sizeMult: number;
   /**
@@ -1725,6 +1744,12 @@ export function mobRulesFromConfig(
             // mesh. Identical answer whenever no draw happened.
             modelKey:
               cfg.boss.modelKey ?? (bossFace.own ? mobChampionModelKey(bossFace.championId) : modelKey),
+            // …and the CHARACTER behind that mesh, for the 出場演出. Written
+            // UNCONDITIONALLY — including when `bossFace.own` is false and the
+            // king simply inherited the wave's champion — because 「這一隻是誰」
+            // has an answer in every branch, and gating it on `own` would make
+            // the intro silently blank for every arena that pins one champion.
+            championId: bossFace.championId,
             sizeMult: cfg.boss.sizeMult ?? DEFAULT_BOSS_SIZE_MULT,
             bountyGold: cfg.boss.bountyGold,
             bountyXp: cfg.boss.bountyXp,
@@ -2180,6 +2205,12 @@ export function summonMobBoss(
     summoner,
     summonerSeatId: world.team.get(summoner)?.seatId ?? -1,
     kills,
+    // 出場演出 (owner 2026-08-02) —— WHOSE FACE walked in. The client cannot
+    // derive this: `EntityState.key` carries a MODEL doc id, and the shipped
+    // `boss.championSource: "random"` means the answer changes every arm.
+    // `""` = 「這份 rules 沒有身分」 (a hand-built fixture); the intro then draws
+    // nothing rather than looking up champion `undefined`.
+    championId: rules.boss.championId ?? "",
     // #L1 — the REAL number, read back out of `extendRoundForBoss`, not the
     // authored `extendCombatSec`: a disarmed ring or a 0 knob extends nothing,
     // and a broadcast that said 「延長 180 秒」 anyway would be a lie the player

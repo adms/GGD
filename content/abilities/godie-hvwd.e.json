@@ -18,16 +18,16 @@
     315.0
   ],
   "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          350.0,
-          550.0,
-          750.0,
-          950.0
+          350,
+          550,
+          750,
+          950
         ],
         "ratios": [
           {
@@ -35,9 +35,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.5
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.heronarutos4effect.p00",
   "vfxLayers": [
     {

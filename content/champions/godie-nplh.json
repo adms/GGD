@@ -115,11 +115,14 @@
         60.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -132,12 +135,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.holy.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-nplh.e",
@@ -158,11 +160,14 @@
         300.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.beam",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -174,12 +179,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.holy.beam",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "R": {
       "id": "godie-nplh.r",

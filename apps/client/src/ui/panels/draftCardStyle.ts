@@ -49,6 +49,21 @@ export function weaponEffectDescription(choice: string): string | null {
   return parts.length > 0 ? parts.join(" · ") : null;
 }
 
+/**
+ * 這個抽卡選項如果是一件**有 owner 原文的道具**,回那段原文;否則 null。
+ *
+ * `weaponEffectDescription` 已經在做同一件查找,但它會在沒有原文時**回退成
+ * 「由 modifiers 重新推導出來的一句話」**。卡片排版只想要真正的原文 —— 推導出來
+ * 的那一句沒有 `效能` 結構、沒有 `[標記]`,丟給 `parseItemCard` 只會得到一行。
+ * 所以這裡分開一個查找,而不是在元件裡用字串特徵去猜哪一種回來了。
+ */
+export function itemCardDescription(choice: string): string | null {
+  const item = Items.tryGet(choice as ItemId);
+  if (!item) return null;
+  const authored = (item as unknown as RowItem).description?.trim();
+  return authored ? authored : null;
+}
+
 /** Rarity/kind → accent colour. Mirrors LoL-Arena's silver/gold/prismatic. */
 export const DRAFT_TIER_COLOR: Record<string, string> = {
   silver: "#b8c4d6",

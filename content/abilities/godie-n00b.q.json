@@ -8,38 +8,38 @@
   "castType": "skillshot",
   "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    35,
+    35,
+    35,
+    35
   ],
   "manaCost": [
-    65.0,
-    95.0,
-    125.0,
-    155.0
+    65,
+    95,
+    125,
+    155
   ],
   "range": 9.17,
-  "effects": [
-    {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0
-            ]
-          }
-        }
-      ]
+  "effects": [],
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 6,
+      "stepSize": 200,
+      "segmentAoe": 400,
+      "damage": {
+        "perRank": [
+          250,
+          350,
+          450,
+          550
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.wind.beam",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.4,
+  "targetsEnemies": true
 }

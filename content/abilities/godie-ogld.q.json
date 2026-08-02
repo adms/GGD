@@ -21,17 +21,17 @@
     300.0
   ],
   "range": 14.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          150.0,
-          300.0,
-          450.0,
-          450.0,
-          450.0
+          150,
+          300,
+          450,
+          450,
+          450
         ],
         "ratios": [
           {
@@ -39,9 +39,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.holy.pulse",
   "targetsEnemies": true,
   "schema": "ability@1",

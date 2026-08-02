@@ -401,8 +401,12 @@ describe("召喚物 決策點: 火圈 + 賞金 (gh289-summon)", () => {
         startSec: 0,
         shrinkSec: 1 / 30, // one tick to fully close
         minRadius: 0.5,
-        burnPctPerSecStart: 0.5,
-        burnPctPerSecEnd: 0.5,
+        // flat 50 %/s for the whole burn — this test is about WHO burns, not
+        // about the ramp, so the curve is deliberately constant.
+        burnCurve: [
+          { sec: 0, pctPerSec: 0.5 },
+          { sec: 60, pctPerSec: 0.5 },
+        ],
         maxPctPerSec: 1,
       },
       w.dt,

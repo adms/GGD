@@ -302,15 +302,40 @@ export const defaultMutators: WalletMutators = {
   },
 };
 
-export type LoadResult = { available: true; data: MetaData } | { available: false };
+/**
+ * How much this client knows about the local account's champion OWNERSHIP.
+ * The distinction exists because 🎲 (and only 🎲) needs to tell two very
+ * different "we have no owned set" situations apart — see `randomPickGate`:
+ *
+ *   "known"     — the wallet loaded; `owned`/`prices` are real.
+ *   "anonymous" — there is no session at all (local `pnpm dev`, LAN direct
+ *                 join). There is no account, so there is nothing to own; the
+ *                 game-server is fail-open for exactly these seats too.
+ *   "unknown"   — there IS a session but the wallet/catalog did not load (still
+ *                 loading, platform outage, malformed payload). We have an
+ *                 account whose ownership we cannot see. THIS is the state the
+ *                 old `meta.available` boolean silently merged with "anonymous",
+ *                 which is how 🎲 could roll an un-unlocked champion during a
+ *                 platform outage.
+ */
+export type OwnershipVisibility = "known" | "unknown" | "anonymous";
+
+export type LoadResult =
+  | { available: true; data: MetaData }
+  | { available: false; ownership: "unknown" | "anonymous" };
 
 /**
  * Load the wallet + catalog prices, degrading to `available:false` on ANY
  * failure (no session, offline platform, malformed payload). The champ-select
  * hides all meta chrome when unavailable and keeps its existing behaviour.
+ *
+ * The failure branch now REPORTS WHY (`ownership`): "anonymous" for a client
+ * with no session, "unknown" for a signed-in client whose wallet we could not
+ * read. Both hide the meta chrome identically — the difference only matters to
+ * the 🎲 gate.
  */
 export async function loadWalletMeta(deps: WalletMetaDeps = defaultDeps): Promise<LoadResult> {
-  if (!deps.hasSession()) return { available: false };
+  if (!deps.hasSession()) return { available: false, ownership: "anonymous" };
   try {
     const [wallet, prices] = await Promise.all([deps.fetchWallet(), deps.fetchPrices()]);
     return {
@@ -324,7 +349,9 @@ export async function loadWalletMeta(deps: WalletMetaDeps = defaultDeps): Promis
       },
     };
   } catch {
-    return { available: false };
+    // A signed-in client whose wallet call failed: we KNOW there is an account
+    // and we do NOT know what it owns. Deliberately not "anonymous".
+    return { available: false, ownership: "unknown" };
   }
 }
 
@@ -339,6 +366,15 @@ function errMessage(err: unknown): string {
 export interface WalletMetaHook {
   /** false → hide all meta chrome (offline / no session / unreachable). */
   available: boolean;
+  /**
+   * WHY `available` is false, for the one consumer that must care: the 🎲
+   * random pick. `available === true` ⇔ `ownership === "known"`; when it is
+   * false this says whether we are anonymous (no account exists) or merely
+   * blind (a real account whose wallet we could not read). See
+   * {@link OwnershipVisibility}. While `loading`, this is "unknown" for a
+   * signed-in client — a 🎲 press in the first frames must not fail open either.
+   */
+  ownership: OwnershipVisibility;
   loading: boolean;
   crystal: number;
   /**
@@ -377,6 +413,13 @@ export function useWalletMeta(
   mutators: WalletMutators = defaultMutators,
 ): WalletMetaHook {
   const [available, setAvailable] = useState(false);
+  // Seeded from `hasSession()` so the FIRST render of a signed-in client is
+  // already "unknown" (blind), not "anonymous" (nothing to be blind about).
+  // Getting this backwards would re-open the fail-open hole for the whole
+  // load window, which is exactly when an impatient player mashes 🎲.
+  const [ownership, setOwnership] = useState<OwnershipVisibility>(() =>
+    deps.hasSession() ? "unknown" : "anonymous",
+  );
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<MetaData>(EMPTY_DATA);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -394,8 +437,10 @@ export function useWalletMeta(
       if (res.available) {
         setData(res.data);
         setAvailable(true);
+        setOwnership("known");
       } else {
         setAvailable(false);
+        setOwnership(res.ownership);
       }
       setLoading(false);
     });
@@ -455,6 +500,7 @@ export function useWalletMeta(
 
   return {
     available,
+    ownership,
     loading,
     crystal: data.crystal,
     unlockCost: data.unlockCost,

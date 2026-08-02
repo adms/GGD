@@ -142,3 +142,93 @@ func TestAPIStarter(t *testing.T) {
 	}
 	assert.True(t, found, "starter-set application is audited")
 }
+
+// whitelist-api-reset-admin-only: 回到原廠設定 is the only route in this package
+// that turns content OFF without the caller naming an id, so it must be
+// unreachable without the admin role AND absent from the public mount.
+func TestAPIResetIsAdminOnly(t *testing.T) {
+	testkit.Cover(t, "whitelist-api-reset-admin-only")
+	ts := testutil.New(t)
+	normal := ts.Register("normal")
+	boss := ts.Register("boss")
+
+	body := map[string]any{"scopes": []string{"champions"}, "dryRun": true}
+
+	// No token → 401. A normal user → 403. Both BEFORE any admin exists, so a
+	// pass cannot come from the route simply not being mounted: the admin call
+	// below proves it is.
+	r := ts.Do(http.MethodPost, "/api/v1/curation/whitelist/reset", "", body)
+	assert.Equal(t, http.StatusUnauthorized, r.Status)
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/reset", normal.Access, body)
+	assert.Equal(t, http.StatusForbidden, r.Status)
+	assert.Equal(t, "admin_required", r.ErrCode())
+
+	// The snapshot + restore routes are gated identically.
+	r = ts.Do(http.MethodGet, "/api/v1/curation/whitelist/snapshots", normal.Access, nil)
+	assert.Equal(t, http.StatusForbidden, r.Status)
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/restore", normal.Access,
+		map[string]any{"snapshotId": "x"})
+	assert.Equal(t, http.StatusForbidden, r.Status)
+
+	grantAdmin(t, ts, boss.ID)
+	// Give the install something to reset FROM (a fresh whitelist has no
+	// champions, which guard ③ refuses on purpose).
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/starter", boss.Access, nil)
+	require.Equal(t, http.StatusOK, r.Status)
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/bulk", boss.Access,
+		map[string]any{"kind": "champions", "enable": []string{"not-in-starter"}})
+	require.Equal(t, http.StatusOK, r.Status)
+
+	// Admin dry run: 200, and it names the extra id.
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/reset", boss.Access, body)
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	disable, _ := r.Body["disable"].(map[string]any)
+	champsOff, _ := disable["champions"].([]any)
+	assert.Equal(t, []any{"not-in-starter"}, champsOff)
+	assert.Equal(t, true, r.Body["dryRun"])
+
+	// It is NOT still enabled-by-accident: the dry run wrote nothing.
+	r = ts.Do(http.MethodGet, "/api/v1/curation/whitelist", "", nil)
+	champs, _ := r.Body["champions"].([]any)
+	assert.Contains(t, champs, "not-in-starter")
+
+	// Real run WITHOUT the confirmation count → 400, still nothing written.
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/reset", boss.Access,
+		map[string]any{"scopes": []string{"champions"}})
+	assert.Equal(t, http.StatusBadRequest, r.Status)
+
+	// With it → 200, the id is gone, an undo point exists and it is audited as
+	// its own action.
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/reset", boss.Access,
+		map[string]any{"scopes": []string{"champions"}, "expect": map[string]any{"champions": 1}})
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	snapID, _ := r.Body["snapshotId"].(string)
+	assert.NotEmpty(t, snapID)
+
+	r = ts.Do(http.MethodGet, "/api/v1/curation/whitelist", "", nil)
+	champs, _ = r.Body["champions"].([]any)
+	assert.NotContains(t, champs, "not-in-starter")
+
+	r = ts.Do(http.MethodGet, "/api/v1/curation/whitelist/snapshots", boss.Access, nil)
+	require.Equal(t, http.StatusOK, r.Status)
+	snaps, _ := r.Body["snapshots"].([]any)
+	require.Len(t, snaps, 1)
+
+	r = ts.Do(http.MethodGet, "/api/v1/admin/audit", boss.Access, nil)
+	entries, _ := r.Body["entries"].([]any)
+	found := false
+	for _, e := range entries {
+		if m, ok := e.(map[string]any); ok && m["action"] == "curation.reset" {
+			found = true
+		}
+	}
+	assert.True(t, found, "reset is audited under its own action, not curation.replace")
+
+	// And the undo really undoes it.
+	r = ts.Do(http.MethodPost, "/api/v1/curation/whitelist/restore", boss.Access,
+		map[string]any{"snapshotId": snapID})
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	r = ts.Do(http.MethodGet, "/api/v1/curation/whitelist", "", nil)
+	champs, _ = r.Body["champions"].([]any)
+	assert.Contains(t, champs, "not-in-starter", "restore puts the operator's own id back")
+}

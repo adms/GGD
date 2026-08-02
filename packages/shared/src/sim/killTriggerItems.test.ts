@@ -586,8 +586,15 @@ describe("§7 a fully-closed fire ring refuses the item revive too", () => {
       startTicks: 0,
       shrinkTicks: 1,
       minRadius: 0.1,
-      burnPctPerSecStart: 0,
-      burnPctPerSecEnd: 0,
+      // 二段制 OFF for this fixture: `stage1Radius === minRadius` and
+      // `stage2ShrinkTicks === 0` is exactly what `fireRingRulesFromConfig`
+      // produces for a config with no `stage2StartSec`, i.e. the single-stage
+      // law this case has always been about (a ring that is ALREADY closed).
+      stage1Radius: 0.1,
+      stage2GapTicks: 1,
+      stage2ShrinkTicks: 0,
+      burnCurveTicks: [0],
+      burnCurveRates: [0],
       maxPctPerSec: 0,
       combatMaxTicks: Number.POSITIVE_INFINITY,
       // 殭屍王 extension knobs, all disarmed — this case is about the CLOSED

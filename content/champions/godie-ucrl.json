@@ -186,11 +186,15 @@
         60.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.earth.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
               80,
               120,
@@ -204,13 +208,11 @@
                 "coeff": 0.5
               }
             ]
-          }
+          },
+          "damageType": "physical",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.earth.pulse-sm",
-      "sfxKey": "wc3.mortarteampissed9",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "R": {
       "id": "godie-ucrl.r",

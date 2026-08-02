@@ -70,9 +70,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "critChance",
@@ -80,11 +84,9 @@
               "value": 0.25
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "castTimeSec": 0.3
+      }
     },
     "W": {
       "id": "godie-e00k.w",
@@ -105,9 +107,13 @@
         90.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.physical.slash",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "ms",
@@ -115,11 +121,9 @@
               "value": 0.5
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.physical.slash",
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-e00k.e",

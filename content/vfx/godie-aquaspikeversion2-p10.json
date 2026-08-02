@@ -3,7 +3,7 @@
   "schema": "vfx@1",
   "emitter": {
     "shape": "cone",
-    "radius": 0.05,
+    "radius": 0.014,
     "angleDeg": 7.5
   },
   "mode": "continuous",

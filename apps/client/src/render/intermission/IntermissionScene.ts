@@ -145,7 +145,7 @@ export interface IntermissionSceneOptions {
    * normalises it to 1.7 u (the same pair the arena's ChampionView uses). Absent
    * = no hero in frame, which is what champ-select-less dev boots get.
    */
-  champion?: { glbPath: string; scale: number } | null;
+  champion?: { glbPath: string; scale: number; yawOffsetDeg?: number } | null;
   /**
    * Inject the model loader (task #263 test seam, mirroring StorePreview's own
    * `assets` ctor arg). Headless runs cannot fetch a .glb — a relative URL has
@@ -505,7 +505,7 @@ export class IntermissionScene {
    * null on any failure, so a missing model leaves a hole in the dressing
    * rather than an empty screen or a thrown boot.
    */
-  private async buildProps(champion: { glbPath: string; scale: number } | null): Promise<void> {
+  private async buildProps(champion: { glbPath: string; scale: number; yawOffsetDeg?: number } | null): Promise<void> {
     const placements: Placement[] = [STALL, CART, ...TORCHES, ...DRESSING, ...silhouettes()];
     const paths = new Set(placements.map((p) => p.model));
     paths.add(MERCHANT.model);
@@ -548,7 +548,8 @@ export class IntermissionScene {
     this.buildShelfRack();
 
     this.setTeam(this.teamId);
-    if (champion) await this.setChampion(champion.glbPath, champion.scale);
+    if (champion)
+      await this.setChampion(champion.glbPath, champion.scale, champion.yawOffsetDeg);
     this.built = true;
   }
 
@@ -799,15 +800,21 @@ export class IntermissionScene {
    * The yaw offset comes from the shared `glbYawOffset` rule, so an imported
    * w3x hero faces the merchant exactly like a KayKit one.
    *
-   * `championId` (task #263) carries the w3x vertex tint. `modelKey` cannot
+   * `championId` (task #263) carries the w3x vertex tint. A modelKey cannot
    * stand in for it: it is many-to-one, and the colour is a per-champion art
    * field — without this the shop showed the hero in a different colour from
    * the arena he had just walked out of.
+   *
+   * `yawOffsetDeg` is the model doc's own facing correction and REPLACED a
+   * `modelKey` parameter here (2026-08-02). That parameter was the shop's half
+   * of a real divergence: the arena keyed the facing exception off `modelKey`
+   * while StorePreview keyed it off `doc.id`, so the same mesh could face two
+   * different ways in two scenes. Pass the doc's field and they cannot.
    */
   async setChampion(
     glbPath: string,
     scale: number,
-    modelKey?: string,
+    yawOffsetDeg?: number,
     championId?: string | null,
   ): Promise<void> {
     if (this.disposed) return;
@@ -828,7 +835,7 @@ export class IntermissionScene {
     );
     // the model's own baked-forward offset rides a child node, exactly as the
     // arena's ChampionView applies it, so facing means the same thing here
-    const offset = glbYawOffset(glbPath, modelKey);
+    const offset = glbYawOffset({ glbPath, yawOffsetDeg });
     for (const child of root.getChildren()) {
       if (child instanceof TransformNode) child.rotation.y += offset;
     }

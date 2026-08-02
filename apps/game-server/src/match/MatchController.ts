@@ -725,10 +725,12 @@ export class MatchController {
      */
     bodyScaleRules: BodyScaleRules = bodyScaleRulesFromDoc(Configs.tryGet(BODY_SCALE_DOC_ID)),
     /**
-     * 百分比回血 (`config.regen@1`, GH#253) —— 百分比與固定值的關係、保底。
+     * 百分比回血**與百分比扣血** (`config.regen@1`, GH#253) —— 百分比與固定值
+     * 的關係、保底、以及自傷停在哪裡。
      * 和 `tauntRules` 完全同一條路(含同一個已知限制:重啟 shard 才生效)。
-     * 出貨值本身不改變任何一場比賽:百分比只有在英雄卡填了
-     * `healthRegenPctOfMax` 時才啟動,而出貨只有 `godie-hapm` 填了。
+     * ⚠️ **出貨值會改變平衡**:owner 2026-08-02 的「Berserker 是每秒損失 1%生命,
+     * 直到生命不足1%」就住在這裡 —— 出貨英雄卡只有 `godie-hapm` 填了
+     * `healthDrainPctOfMax: 0.01`,而回血那一族目前沒有任何一位英雄在用。
      */
     regenRules: RegenRules = regenRulesFromDoc(Configs.tryGet(REGEN_DOC_ID)),
   ) {

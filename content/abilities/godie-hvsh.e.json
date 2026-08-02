@@ -19,16 +19,16 @@
     345.0
   ],
   "range": 1.83,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-single-strike",
+    "params": {
+      "damage": {
         "perRank": [
-          75.0,
-          150.0,
-          225.0,
-          300.0
+          75,
+          150,
+          225,
+          300
         ],
         "ratios": [
           {
@@ -36,9 +36,11 @@
             "coeff": 0.6
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.4
     }
-  ],
+  },
   "vfxKey": "fx.prim.blood.nova",
   "targetsEnemies": true,
   "schema": "ability@1",

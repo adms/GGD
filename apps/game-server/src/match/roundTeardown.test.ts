@@ -45,8 +45,12 @@ const FAST_RING: FireRingConfig = {
   startSec: 1,
   shrinkSec: 1,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.2,
-  burnPctPerSecEnd: 0.2,
+  // flat 20 %/s: this fixture wants a VISIBLE but non-lethal burn, so the
+  // curve is deliberately constant rather than ramping to 必死.
+  burnCurve: [
+    { sec: 0, pctPerSec: 0.2 },
+    { sec: 60, pctPerSec: 0.2 },
+  ],
   maxPctPerSec: 1,
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是

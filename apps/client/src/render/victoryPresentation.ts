@@ -123,9 +123,36 @@ export const ROUND_SUBTITLE_Z = 7;
  *
  * The panel implements this as a plain fail-open timer — never gated on a
  * firework callback, so a skipped or broken celebration still shows the score.
+ *
+ * ⚠️ This is the hold **when the bird actually flies**. Since the chicken became
+ * a back-office toggle (`config/victory-fx@1`, shipped OFF), the panel must ask
+ * {@link matchPanelHoldMs} rather than read this constant directly — see there.
  */
 export const MATCH_PANEL_HOLD_MS =
   CHICKEN_TIMELINE.launchMs + CHICKEN_TIMELINE.expandMs + CHICKEN_TIMELINE.holdMs;
+
+/**
+ * 結算計分卡要被壓住幾毫秒 —— 給定「這一場的烤雞煙火到底會不會放」。
+ *
+ * 這一段延遲**存在的唯一理由**就是讓那隻鳥被看到（上面那段自己就是這樣寫的）。
+ * owner 2026-08-02 把煙火變成後台開關並且出貨關閉之後，如果還照 2340 ms 壓住
+ * 計分卡，玩家在贏下整場之後會盯著一個沒有煙火、也沒有分數的畫面兩秒多 ——
+ * 那是一個由「關掉煙火」憑空製造出來的新缺陷，不是原本的行為。
+ *
+ * 所以：煙火關掉 → 完全不壓（0 ms，分數立刻出現）。
+ */
+export function matchPanelHoldMs(chickenEnabled: boolean): number {
+  return chickenEnabled ? MATCH_PANEL_HOLD_MS : 0;
+}
+
+/**
+ * 本地玩家的 名言 要在計分卡出現多久之後才唸。跟著 {@link matchPanelHoldMs} 走，
+ * 所以煙火關掉時它會從 3240 ms 縮成 900 ms —— 「卡片露出來之後再唸」這個順序
+ * （{@link MATCH_QUOTE_DELAY_MS} 的檔頭寫的）在兩種設定下都還是成立的。
+ */
+export function matchQuoteDelayMs(chickenEnabled: boolean): number {
+  return matchPanelHoldMs(chickenEnabled) + 900;
+}
 
 /**
  * Round taunt lands AFTER the round-end 名言 (ui/RoundEndVoice fires that on the
@@ -143,7 +170,8 @@ export const ROUND_TAUNT_DELAY_MS = 2200;
  * this ordering can be stated as data instead of negotiated at runtime.
  */
 export const MATCH_TAUNT_DELAY_MS = CHICKEN_TIMELINE.launchMs + 120;
-export const MATCH_QUOTE_DELAY_MS = MATCH_PANEL_HOLD_MS + 900;
+/** The 名言 delay with the chicken ON — the general case is {@link matchQuoteDelayMs}. */
+export const MATCH_QUOTE_DELAY_MS = matchQuoteDelayMs(true);
 
 /** Everything one victory beat needs, resolved from its tier. */
 export interface VictoryPresentationSpec {

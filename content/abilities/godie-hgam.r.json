@@ -7,35 +7,34 @@
   "castType": "skillshot",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    60,
+    60,
+    60
   ],
   "manaCost": [
-    200.0,
-    300.0,
-    400.0
+    200,
+    300,
+    400
   ],
-  "range": 14.0,
-  "effects": [
-    {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.wave",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              600.0,
-              900.0,
-              1200.0
-            ]
-          }
-        }
-      ]
+  "range": 14,
+  "effects": [],
+  "template": {
+    "ref": "tpl-line-sweep",
+    "params": {
+      "segmentCount": 6,
+      "stepSize": 200,
+      "segmentAoe": 400,
+      "damage": {
+        "perRank": [
+          600,
+          900,
+          1200
+        ]
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.7
     }
-  ],
+  },
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
   "schema": "ability@1",
   "castTimeSec": 0.7,
@@ -46,11 +45,12 @@
     "shakeStyle": "omni",
     "sparkKind": "magic",
     "flashColor": [
-      1.0,
+      1,
       0.92,
       0.6
     ],
     "flashMs": 178,
     "camKick": 0.446
-  }
+  },
+  "targetsEnemies": true
 }

@@ -73,9 +73,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.wind.slash",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 12,
           "modifiers": [
             {
               "stat": "ad",
@@ -83,11 +87,9 @@
               "value": 0.1
             }
           ],
-          "duration": 12.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.3
+      }
     },
     "W": {
       "id": "godie-osam.w",
@@ -112,9 +114,13 @@
         60.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
+      "effects": [],
+      "vfxKey": "fx.prim.wind.slash",
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-buff-self",
+        "params": {
+          "duration": 6,
           "modifiers": [
             {
               "stat": "critChance",
@@ -122,11 +128,9 @@
               "value": 0.25
             }
           ],
-          "duration": 6.0
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-osam.e",
@@ -149,16 +153,19 @@
         60.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.explosion",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              15.0,
-              15.0,
-              15.0,
-              15.0
+              15,
+              15,
+              15,
+              15
             ],
             "ratios": [
               {
@@ -166,12 +173,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.void.explosion",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "R": {
       "id": "godie-osam.r",
@@ -192,15 +198,18 @@
         400.0
       ],
       "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.ki.beam-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.6,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              600.0,
-              900.0,
-              1200.0
+              600,
+              900,
+              1200
             ],
             "ratios": [
               {
@@ -208,12 +217,11 @@
                 "coeff": 0.7
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.6
         }
-      ],
-      "vfxKey": "fx.prim.ki.beam-lg",
-      "targetsEnemies": true,
-      "castTimeSec": 0.6
+      }
     }
   },
   "skillOrder": [

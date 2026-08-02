@@ -13,11 +13,12 @@
     800.0
   ],
   "range": 9.41,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
+  "effects": [],
+  "template": {
+    "ref": "tpl-instant-blast",
+    "params": {
+      "radius": 257,
+      "damage": {
         "flat": 300,
         "ratios": [
           {
@@ -25,9 +26,11 @@
             "coeff": 0.7
           }
         ]
-      }
+      },
+      "damageType": "magic",
+      "castTimeSec": 0.6
     }
-  ],
+  },
   "vfxKey": "fx.prim.void.nova-lg",
   "schema": "ability@1",
   "radius": 4.71,

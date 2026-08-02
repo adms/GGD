@@ -73,17 +73,20 @@
         300.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.pulse",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              150.0,
-              300.0,
-              450.0,
-              450.0,
-              450.0
+              150,
+              300,
+              450,
+              450,
+              450
             ],
             "ratios": [
               {
@@ -91,12 +94,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.4
         }
-      ],
-      "vfxKey": "fx.prim.holy.pulse",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      }
     },
     "W": {
       "id": "godie-ogld.w",
@@ -117,15 +119,18 @@
         110.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.swarm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              20.0,
-              30.0,
-              40.0
+              20,
+              30,
+              40
             ],
             "ratios": [
               {
@@ -133,12 +138,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.void.swarm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "E": {
       "id": "godie-ogld.e",
@@ -159,15 +163,18 @@
         225.0
       ],
       "range": 14.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.holy.nova",
+      "targetsEnemies": true,
+      "castTimeSec": 0.3,
+      "template": {
+        "ref": "tpl-single-strike",
+        "params": {
+          "damage": {
             "perRank": [
-              6.0,
-              12.0,
-              18.0
+              6,
+              12,
+              18
             ],
             "ratios": [
               {
@@ -175,12 +182,11 @@
                 "coeff": 0.6
               }
             ]
-          }
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.3
         }
-      ],
-      "vfxKey": "fx.prim.holy.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3
+      }
     },
     "R": {
       "id": "godie-ogld.r",
@@ -201,15 +207,21 @@
         450.0
       ],
       "range": 0.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
+      "effects": [],
+      "vfxKey": "fx.prim.void.explosion-lg",
+      "targetsEnemies": true,
+      "radius": 3.67,
+      "castTimeSec": 0.7,
+      "template": {
+        "ref": "tpl-proxy-cast",
+        "params": {
+          "anchor": "point",
+          "radius": 200,
+          "damage": {
             "perRank": [
-              180.0,
-              360.0,
-              540.0
+              180,
+              360,
+              540
             ],
             "ratios": [
               {
@@ -217,19 +229,13 @@
                 "coeff": 0.7
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
+          },
+          "damageType": "magic",
+          "castTimeSec": 0.7,
           "statusId": "burnstun",
-          "duration": 0.8,
-          "stun": true
+          "statusDurationSec": 0.8
         }
-      ],
-      "vfxKey": "fx.prim.void.explosion-lg",
-      "targetsEnemies": true,
-      "radius": 3.67,
-      "castTimeSec": 0.7
+      }
     }
   },
   "skillOrder": [

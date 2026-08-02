@@ -49,8 +49,6 @@ function ringNow(): FireRingRules {
       startSec: 0,
       shrinkSec: 20,
       minRadius: 0.5,
-      burnPctPerSecStart: 0.04,
-      burnPctPerSecEnd: 0.2,
       maxPctPerSec: 1,
     },
     DT,
@@ -189,7 +187,7 @@ describe("burn arithmetic finishes the round (firering-kills)", () => {
     expect(deathTick / HZ).toBeLessThan(11.7);
   });
 
-  it("parked at the centre, death lands 5.0 ± 0.1 s after the ring closes", () => {
+  it("parked at the centre, death lands 3.69 ± 0.05 s after the ring closes", () => {
     cover("firering-kills");
     const w = world();
     const id = champ(w, ZONE0.center.x, ZONE0.center.z, 0);
@@ -200,11 +198,23 @@ describe("burn arithmetic finishes the round (firering-kills)", () => {
       if (!w.health.get(id)!.alive) deathTick = t;
     }
     expect(deathTick).toBeGreaterThan(0);
-    // burning starts when the ring closes ON the centre (k = 597.4, see above),
-    // at ~20 %/s → 5.0 s from full HP.
+    // Burning starts when the ring closes ON the centre (k = 597.4, see above).
+    //
+    // ⚠️ WHY THIS EXPECTATION MOVED 5.0 → 3.69 (owner 2026-08-02, 「隨秒數越高
+    // 越燒越痛」). The old number was 「20 %/s → 5.0 s from full HP」, and 20 %/s
+    // was the rate FOREVER once the ring closed, because the retired ramp's x
+    // axis saturated at `shrinkSec`. The burn now keeps climbing past the close
+    // (20 s → 20 %/s, 40 s → 100 %/s), so the same champion is eaten by an
+    // accelerating rate instead of a flat one: 3.687 s, measured.
+    //
+    // The NEW value is the correct one because the OLD one was a restatement of
+    // the very saturation the owner asked to remove — a guard that still
+    // demanded 5.0 s would be pinning the defect (第三守則 / 失敗形態 ④).
+    // Cross-checked in `fireRingBurnCurve.test.ts`, which pins the same event as
+    // an absolute tick (709 past ignition) rather than a window.
     const secAfterClose = deathTick / HZ - 597.4 / HZ;
-    expect(secAfterClose).toBeGreaterThan(4.9);
-    expect(secAfterClose).toBeLessThan(5.1);
+    expect(secAfterClose).toBeGreaterThan(3.64);
+    expect(secAfterClose).toBeLessThan(3.74);
   });
 
   it("the burn is environmental: no attacker, no kill credit", () => {

@@ -17,9 +17,11 @@ import type {
   ConfigGoreDoc,
   ConfigStealthDoc,
   ConfigDamageColorsDoc,
+  ConfigItemCardDoc,
   ConfigVfxFamiliesDoc,
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
+  ConfigVictoryFxDoc,
   FormVisual,
   AmbientVfxBinding,
   ArenaFire,
@@ -44,6 +46,10 @@ import { applyStealthDoc } from "../render/stealthVisual";
 // 改成別的顏色,場上永遠是出貨的白(第②號故障:算出來但從沒送到)。
 // 傳 null(檔案不存在或 schema 不合)= 用出貨的四色,不是「沒有顏色」。
 import { applyDamageColorsDoc } from "../render/damagePalette";
+// 道具卡片的排版與配色 (owner 2026-08-02)。沒有這一行,
+// `content/config/item-card.json` 就是一份沒人讀的檔案。
+import { applyItemCardDoc } from "../ui/components/itemCardTheme";
+import { applyVictoryFxDoc } from "../vfx/victoryFxPolicy";
 // GH#230 L2 —— w3x 特效家族的後台旋鈕。跟 applyGoreDoc 同一條縫、同一個理由:
 // render/** 不能自己讀 content mount,所以由這裡把 config doc 推進去。
 import { setFamilyTuning } from "../render/vfx/w3xAbilityArt";
@@ -255,6 +261,17 @@ export class ContentDb {
     applyDamageColorsDoc(
       this.configDoc<ConfigDamageColorsDoc>("damage-colors", "config.damage-colors@1"),
     );
+    // 道具卡片的標記分類表 + 卡片專用配色 (owner 2026-08-02「關於效果及數值的
+    // 部分應該要特殊顏色表示」)。owner 新增一個 `[標記]` 只要改這份 JSON;沒有
+    // 這一行的話那份 JSON 存了也沒人讀(失敗形態 ②)。傳 null(檔案不存在／
+    // schema 不合)= `DEFAULT_ITEM_CARD`,不是「沒有配色」。
+    applyItemCardDoc(this.configDoc<ConfigItemCardDoc>("item-card", "config.item-card@1"));
+    // 勝利煙火的兩個開關 (owner 2026-08-02「請你直接取消煙火(變成後台開關)」)。
+    // 沒有這一行,`content/config/victory-fx.json` 就是一份沒人讀的檔案:後台把
+    // 煙火打開,場上還是不會放(第②號故障:算出來了但從沒送到)。傳 null(檔案
+    // 不存在／schema 不合)= `DEFAULT_VICTORY_FX`,也就是兩格都關,不是「全開」。
+    applyVictoryFxDoc(this.configDoc<ConfigVictoryFxDoc>("victory-fx", "config.victory-fx@1"));
+
     // GH#230 L2 —— 21 個 w3x 特效家族原型 + 258 支技能的 per-invocation 參數。
     // 沒有這一行,`content/config/vfx-families.json` 就是一份沒人讀的檔案:
     // 後台改了大小/顏色/開關,場上完全不會變(第②號故障:算出來但從沒送到)。

@@ -57,18 +57,20 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
     }
   });
 
-  it("schema 裡每一個非純量分支都被宣告過：preserved（帶著走）或 curve（畫成表格）", () => {
+  it("schema 裡每一個非純量分支都被宣告過：preserved（帶著走）／curve／tables（畫成表格）", () => {
     cover("adminui-config-forms-labels");
     for (const spec of CONFIG_DOC_SPECS) {
       const { branches } = readSchema(spec.zod);
-      // 陣列分支有兩條**明著宣告**的路，沒有第三條「沒人管它」的路：
+      // 非純量分支有三條**明著宣告**的路，沒有第四條「沒人管它」的路：
       //   · preserved  = 這一頁不編輯，但儲存時原封不動帶著走（gore.championStyles）
-      //   · curve      = 這一頁就是要編輯它（body-scale.attackRangeCurve）
-      // 少宣告 = 儲存時把它弄不見（preserved 那一側）或畫不出來（curve 那一側），
-      // 兩種都是「畫面沒有錯誤但東西沒了」。
+      //   · curve      = 這一頁就是要編輯它，兩欄斷點表（body-scale.attackRangeCurve）
+      //   · tables     = 這一頁就是要編輯它，對照表（item-card.markers）
+      // 少宣告 = 儲存時把它弄不見（preserved 那一側）或畫不出來（curve / tables
+      // 那一側），兩種都是「畫面沒有錯誤但東西沒了」。
       const declared = [
         ...spec.preserved.map((p) => p.path),
         ...(spec.curve ? [spec.curve.path] : []),
+        ...(spec.tables ?? []).map((t) => t.path),
       ].sort();
       expect(
         branches.map((b) => b.path).sort(),
@@ -81,10 +83,49 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
           `${spec.docId}: curve.path "${spec.curve.path}" 在 schema 裡不是一個分支`,
         ).toBe(true);
       }
+      // curve 那一條的孿生檢查：tables 宣告的每一條路徑也必須真的是一個分支
+      // （打錯字的話它會安靜地畫一張空表，而且存檔時把一個不存在的鍵寫進文件）。
+      for (const t of spec.tables ?? []) {
+        expect(
+          branches.some((b) => b.path === t.path),
+          `${spec.docId}: tables 的 "${t.path}" 在 schema 裡不是一個分支`,
+        ).toBe(true);
+      }
       // 「為什麼」不可以留白 —— 那一行就是它為什麼值得被帶著走的理由。
       for (const p of spec.preserved) {
         expect(p.why.length, `${spec.docId}.${p.path} 的 why 太短`).toBeGreaterThan(15);
         expect(HAS_CJK.test(p.why)).toBe(true);
+      }
+    }
+  });
+
+  it("每一張對照表都有中文說明、上界、以及 enum 選項的中文", () => {
+    cover("adminui-config-forms-labels");
+    // 和純量欄位同一組規則（說明寫「它影響什麼」、字數有上界、enum 每個選項有
+    // 中文）—— 表格不是漏洞：一張沒有說明的 markers 表就是一個 JSON 編輯器。
+    for (const spec of CONFIG_DOC_SPECS) {
+      for (const t of spec.tables ?? []) {
+        expect(HAS_CJK.test(t.title), `${spec.docId}.${t.path} 的標題不是中文`).toBe(true);
+        expect(t.intro.length, `${spec.docId}.${t.path} 沒有說明段落`).toBeGreaterThan(0);
+        for (const p of t.intro) expect(HAS_CJK.test(p)).toBe(true);
+        expect(HAS_CJK.test(t.key.zh)).toBe(true);
+        expect(
+          t.key.note.length,
+          `${spec.docId}.${t.path} 的鍵說明太短，講不完它影響什麼`,
+        ).toBeGreaterThan(30);
+        expect(HAS_CJK.test(t.key.note)).toBe(true);
+        // 字串欄位的上界（#277 在字串上的形狀）：沒有它，一個 40 字的標記會被
+        // 存下去，然後在卡片上撐出一個看不完的 chip。
+        expect(t.key.maxLen).toBeGreaterThan(0);
+        expect(Number.isFinite(t.key.maxLen)).toBe(true);
+        expect(t.maxRows).toBeGreaterThanOrEqual(t.minRows);
+        if (t.shape === "recordEnum") {
+          expect(t.value, `${spec.docId}.${t.path} 是 recordEnum 但沒有值那一欄`).toBeTruthy();
+          expect(t.value!.options.length).toBeGreaterThan(1);
+          for (const o of t.value!.options) expect(HAS_CJK.test(o.zh)).toBe(true);
+        } else {
+          expect(t.value, `${spec.docId}.${t.path} 是 stringList，不該有值那一欄`).toBeUndefined();
+        }
       }
     }
   });
@@ -151,6 +192,59 @@ describe("設定文件標籤表 (adminui-config-forms-labels)", () => {
     expect(() => boundsFor(leaf, { path: leaf.path, zh: "x", note: "y", max: 99 })).toThrow(
       /schema 已經有上界/,
     );
+  });
+
+  it("每一個 pattern 和 schema 對同一個值判一樣的結果", () => {
+    cover("adminui-config-forms-labels");
+    /**
+     * ⚠️ 這一條在 2026-08-02 之前**不存在**，而 `ConfigFieldLabel.pattern` 的註解
+     * 卻宣稱它存在（第三守則）。也就是說 damage-colors 那九格 HEX6 從加進來的那天
+     * 起，就沒有任何東西在比對它和 `zColorHex`。
+     *
+     * 做法：拿一組候選字串，逐一問兩邊 ——「這一格的 pattern 收不收」與「把它塞進
+     * **整份出貨文件**之後 `spec.zod` 收不收」。兩邊判不一樣就是 drift，而 drift
+     * 的症狀是「後台擋了但 PUT 沒擋」或反過來，兩種都很難從畫面上看出來。
+     */
+    const CANDIDATES = [
+      "#FF5900",
+      "#ff5900",
+      "#FFF",
+      "#GGGGGG",
+      "#12345",
+      "白色",
+      "",
+      // 這兩個是 12 / 13 個字（`.length` 真的數過，見下面的斷言）—— 少了它們，
+      // 標籤欄位的 `.max(12)` 那一側就沒有任何候選字串踩得到。
+      "十二個字剛剛好的標籤內容",
+      "十三個字就會超過上界了唷唷",
+    ];
+    expect(CANDIDATES[7]!.length).toBe(12);
+    expect(CANDIDATES[8]!.length).toBe(13);
+    let checked = 0;
+    for (const spec of CONFIG_DOC_SPECS) {
+      const shipped = shippedDoc(spec.docId);
+      for (const f of spec.fields) {
+        if (!f.pattern) continue;
+        // pattern 一定要配一句中文，否則被擋下來的操作者看到的是「格式不對」。
+        expect(f.patternError, `${spec.docId}.${f.path} 有 pattern 但沒有 patternError`).toBeTypeOf(
+          "string",
+        );
+        expect(HAS_CJK.test(f.patternError!)).toBe(true);
+        // 出貨值本身一定要過自己的 pattern（不然這一頁一打開就是紅的）。
+        expect(f.pattern.test(String(getAt(shipped, f.path))), `${spec.docId}.${f.path}`).toBe(true);
+        for (const c of CANDIDATES) {
+          const doc = applyEdits(shipped, new Map([[f.path, c]]));
+          const zodOk = spec.zod.safeParse(doc).success;
+          expect(
+            f.pattern.test(c),
+            `${spec.docId}.${f.path}: pattern 與 schema 對 ${JSON.stringify(c)} 判得不一樣（schema ${zodOk ? "收" : "不收"}）`,
+          ).toBe(zodOk);
+          checked++;
+        }
+      }
+    }
+    // GUARD-THE-GUARD：一條「零個欄位有 pattern」的迴圈是恆綠的。
+    expect(checked).toBeGreaterThan(50);
   });
 
   it("每一份掛上後台的文件，content/ 裡真的有那一份而且過得了它自己的 schema", () => {

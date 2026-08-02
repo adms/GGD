@@ -22,7 +22,7 @@ import { INTERMISSION_Z } from "./intermissionLayout";
 import {
   PREP_CLOCK_BOTTOM,
   PREP_CLOCK_TOP_WHEN_DRAFTING,
-  useCompactClock,
+  isCompactClock,
   prepClockView,
 } from "./prepCountdown";
 
@@ -63,7 +63,11 @@ export function PrepClock(): React.JSX.Element | null {
   // On a phone in landscape the card stack very nearly IS the screen, so the
   // only non-card region is the panel's own header. Shrink to fit it rather
   // than pretend a gap exists.
-  const compact = drafting && useCompactClock(typeof window === "undefined" ? 1080 : window.innerHeight);
+  // ⚠️ `isCompactClock` 是純函式，不是 hook —— 所以它待在 early return 之後
+  // 是安全的。它原本叫 `useCompactClock`，那個名字讓這一行讀起來就是
+  // 2026-08-02 的 T0 形狀（見 ui/hud/hookOrder.test.ts）。名字改掉之後，
+  // 哪天真的有人想在裡面放 hook，`react-hooks/rules-of-hooks` 會在那一刻紅。
+  const compact = drafting && isCompactClock(typeof window === "undefined" ? 1080 : window.innerHeight);
 
   return (
     <div
