@@ -16,6 +16,19 @@ export const zClipMap = z
     cast: z.string().min(1),
     hurt: z.string().min(1),
     death: z.string().min(1),
+    /**
+     * 這一份模型的烘焙朝向修正(度)。缺 = 不修正。
+     *
+     * ⚠️ 鍵在**模型文件**上而不是 `modelKey`:40 隻 Blizzard-overlay 英雄共用
+     * 同一個替身 modelKey(`champ.sela` / `champ.skin.*`),鍵在 modelKey 上的話
+     * 一筆設定會轉到 ~18 隻不相干的英雄。一份 doc = 一個網格。
+     *
+     * 範圍 ±360,所以 270 與 -90 兩種寫法都可以。
+     *
+     * ⚠️ 2026-08-02:同 `healthDrainPctOfMax` —— 這一格沒跟出貨 bundle 同時進版,
+     * 造成線上內容驗證失敗、退回骨架。**commit 一個檔之前要確認它依賴的定義都在版控裡。**
+     */
+    yawOffsetDeg: z.number().gte(-360).lte(360).optional(),
   })
   .strict();
 

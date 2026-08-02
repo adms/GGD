@@ -174,6 +174,24 @@ export const zChampionDef = z
      * `config.regen@1` 的欄位(見 `sim/regenRules.ts`)。
      */
     healthRegenPctOfMax: z.number().min(0).max(0.5).optional(),
+    /**
+     * 每秒**流失**「最大生命的百分比」(owner 2026-08-02:「Berseker 是每秒
+     * 損失 1%生命, 直到生命不足1%」)。`0.012` = 每秒 1.2%。缺 = 沒有自傷。
+     *
+     * ⚠️ **它不是傷害** —— 不走 `combat/damage.ts`,所以不吃全域傷害倍率、
+     * 不被護盾吸、也扣不死人:停在「最大生命的 `drainFloorPctOfMax`」。
+     * 為什麼不是在 `healthRegenPctOfMax` 填負數:那條路上有三個地方會把負號
+     * **靜默吃掉**(`regenRules.ts` 檔頭列出來了),所以自傷是獨立的一格。
+     *
+     * 上界 0.5 與上面同一個手誤守衛:填 `1`(以為單位是百分比)會變成每秒扣光滿血。
+     *
+     * ⚠️ 2026-08-02:這一格**本來就該跟出貨 bundle 同時進版**。它沒有,結果
+     * committed 的 `content/bundle.json` 帶著這個 key、而 committed 的 schema
+     * 不認得它 → 線上 Zod 驗證失敗 → 退回 2 隻骨架英雄 → **選人畫面整個空掉**。
+     * 那是 2026-08-01 事故的同一個形狀,而且是同一天第三次「commit 了消費端、
+     * 沒 commit 它依賴的定義」。教訓寫在這裡而不是散文裡。
+     */
+    healthDrainPctOfMax: z.number().min(0).max(0.5).optional(),
     /** ranged auto-attack projectile speed (GGD units/sec) */
     missileSpeed: z.number().positive().optional(),
     /** wind-up (seconds) before a basic attack's hit lands */
