@@ -713,3 +713,26 @@ export function endCombatFireRing(world: SimWorld): void {
   world.fireRingRules = null;
   world.fireRingTicks = -1;
 }
+
+/**
+ * 火圈灼燒曲線的出貨預設 —— **唯一的一份字面值**。
+ *
+ * `sec` 是**點燃之後**的秒數（不是回合第幾秒），所以它跟著 `startSec` 一起移動 ——
+ * 那正是它該綁的東西：把它綁在「回合第幾秒」的話，一改 `startSec` 這條曲線的
+ * 語意就悄悄變了。
+ *
+ * ⚠️ **為什麼是 export 而不是各自寫一份**：`content/schema/config.ts` 的
+ * `burnCurve` 用它當 Zod 的 `.default()`，而 sim 這一側在欄位缺席時也要退回同一份。
+ * 抄第二份就是兩個「沒填的話燒多少」，而它們遲早會分岔（這個專案已經有
+ * `maxPctPerSec` 一個 Zod 說 `.max(1)`、sim 填 `Infinity` 的前例，差九個數量級）。
+ *
+ * ⚠️ 2026-08-02：這個 export **本來就該在這一版**，是我把 `schema/config.ts`
+ * 的 import 提前 commit 了卻沒帶上它（`da082822` 掃進了平行工作流的半成品）——
+ * 結果 `packages/shared` 在乾淨 checkout 上編譯不過，host 的 deploy build 直接失敗。
+ * 教訓：commit 一個檔之前要確認它 import 的每一樣東西都在版控裡。
+ */
+export const DEFAULT_BURN_CURVE: readonly { sec: number; pctPerSec: number }[] = Object.freeze([
+  Object.freeze({ sec: 0, pctPerSec: 0.04 }),
+  Object.freeze({ sec: 20, pctPerSec: 0.2 }),
+  Object.freeze({ sec: 40, pctPerSec: 1 }),
+]);
