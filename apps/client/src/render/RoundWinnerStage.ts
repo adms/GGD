@@ -41,6 +41,18 @@ import {
   ROUND_WASH_Z,
 } from "./victoryPresentation";
 import { victoryTaunts, type PlayTauntOptions, type VictoryTauntLine } from "../audio/victoryTaunt";
+import { crownSvg, CROWN_PALETTE, type CrownMedal } from "./victoryCrown";
+import {
+  DEFAULT_VICTORY_PODIUM,
+  type VictoryPodiumPolicy,
+  type VictoryRoundWinLine,
+} from "@ggd/shared/content/schema/victoryPodium";
+import { roundVictoryPodium, type PodiumSeatView } from "../ui/panels/victoryPodium";
+import {
+  roundEndQuoteChampion,
+  roundWinnerTeamChampions,
+  type RoundTeamView,
+} from "../ui/panels/settlementModel";
 
 /** The slice of StorePreview this stage drives (injectable for headless tests). */
 export interface WinnerPreview {
@@ -75,6 +87,18 @@ export interface WinnerEntry {
   doc: ModelDoc;
   /** carries the w3x vertex tint through to the previewer (task #263) */
   championId?: string;
+  /**
+   * 這一位的存活名次(1-based)與皇冠階級 (GH#257)。
+   *
+   * ⚠️ **由呼叫端算好傳進來,這個類別一格都不排。** 名次的唯一推導處是
+   * `sim/stats/roundSurvival.rankSurvival`,範圍規則在
+   * `ui/panels/victoryPodium`。這裡再排一次就會有第二份金銀銅,而玩家沒有
+   * 辦法分辨哪一份是真的(同 `roundVictory.ts` 對 `gradeRound` 的理由)。
+   *
+   * 兩個都是 optional:省略 = 沒有皇冠,單一勝利者的舊呼叫端因此完全不變。
+   */
+  place?: number;
+  medal?: CrownMedal | null;
 }
 
 export interface RoundWinnerStageOptions {
@@ -91,6 +115,36 @@ export interface RoundWinnerStageOptions {
   createPreview?: (canvas: HTMLCanvasElement) => WinnerPreview;
   /** taunt layer (default: the process-wide victoryTaunts; null disables VO). */
   taunt?: RoundTauntPort | null;
+  /**
+   * 回合勝利第一名說什麼 (GH#256) —— `taunt` / `quote` / `both`。
+   *
+   * 預設是 `DEFAULT_VICTORY_PODIUM.roundWinLine`,也就是 `both`,**也就是現行
+   * 出貨行為**:名言在 t=0 由 `ui/RoundEndVoice` 放,嘲諷在 t=2200ms 由這裡放
+   * (`ROUND_TAUNT_DELAY_MS`,`victoryPresentation.test.ts` 釘住這個順序)。
+   *
+   * ⚠️ 這一格只管**嘲諷要不要放**。名言的擁有者仍然是 `RoundEndVoice` ——
+   * 它有自己的相位邊緣觸發,而且在這個舞台因為模型還沒載好而完全不出現的那
+   * 幾拍**仍然會發聲**。把名言搬進來會讓「模型載不到」順手把語音也一起靜音
+   * (失敗形態 ②)。兩邊讀的是同一個政策物件,所以決策只有一處。
+   */
+  roundWinLine?: VictoryRoundWinLine;
+}
+
+/** 皇冠徽章 —— 釘在該張卡片的正上方,壓在灰底之上。 */
+function styleCrown(el: HTMLElement | null, index: number, total: number): void {
+  const s = el?.style;
+  if (!s) return;
+  const n = Math.max(1, total);
+  const centre = ((index + 0.5) / n) * 100;
+  s.position = "fixed";
+  s.left = `${centre}%`;
+  // 卡片的中心在 46%、高度上限 min(56vh…),所以冠要往上讓開卡片的上緣。
+  s.top = "13%";
+  s.transform = "translate(-50%, -50%)";
+  s.width = `min(${Math.round(11 / Math.max(1, n / 3))}vh, ${Math.round(22 / n)}vw)`;
+  s.zIndex = String(ROUND_SUBTITLE_Z);
+  s.pointerEvents = "none";
+  s.filter = "drop-shadow(0 4px 10px rgba(0,0,0,0.7))";
 }
 
 /**
@@ -204,7 +258,10 @@ export class RoundWinnerStage {
   private readonly createElement: (tag: string) => HTMLElement | null;
   private readonly createPreview: (canvas: HTMLCanvasElement) => WinnerPreview;
   private readonly taunt: RoundTauntPort | null;
+  private readonly roundWinLine: VictoryRoundWinLine;
   private canvases: HTMLCanvasElement[] = [];
+  /** 皇冠徽章,index-aligned with {@link canvases} (GH#257) */
+  private crowns: HTMLElement[] = [];
   private wash: HTMLElement | null = null;
   private subtitle: HTMLElement | null = null;
   private previews: WinnerPreview[] = [];
@@ -220,6 +277,15 @@ export class RoundWinnerStage {
       ((tag) => (typeof document !== "undefined" ? document.createElement(tag) : null));
     this.createPreview = opts.createPreview ?? ((c) => new StorePreview(c));
     this.taunt = opts.taunt === undefined ? victoryTaunts : opts.taunt;
+    this.roundWinLine = opts.roundWinLine ?? DEFAULT_VICTORY_PODIUM.roundWinLine;
+  }
+
+  /**
+   * 目前掛在台上的皇冠階級,由左到右(observability / tests)。
+   * 沒有皇冠的台階是 `""`。
+   */
+  get medals(): string[] {
+    return this.crowns.map((c) => c.getAttribute?.("data-medal") ?? "");
   }
 
   /** True while a winner is currently on the stage. */
@@ -274,8 +340,10 @@ export class RoundWinnerStage {
       // the arena back to full colour mid-beat.
       for (const p of this.previews) p.dispose();
       for (const c of this.canvases) c.remove();
+      for (const c of this.crowns) c.remove();
       this.previews = [];
       this.canvases = [];
+      this.crowns = [];
 
       if (!this.wash) {
         // wash FIRST so it is under the cards in both z-index and DOM order
@@ -293,6 +361,15 @@ export class RoundWinnerStage {
         this.host?.appendChild(canvas);
         this.canvases.push(canvas);
         this.previews.push(this.createPreview(canvas));
+        // 皇冠徽章:一張卡一個,建在卡片**之後**所以在 DOM 順序上蓋過它。
+        // 沒有名次的台階仍然建一個空節點,index 才會和卡片對齊 —— 少建一個
+        // 會讓第二名的冠飄到第三張卡上。
+        const crown = this.createElement("div");
+        styleCrown(crown, i, members.length);
+        if (crown) {
+          this.host?.appendChild(crown);
+          this.crowns.push(crown);
+        }
       }
 
       if (!this.subtitle) {
@@ -308,11 +385,14 @@ export class RoundWinnerStage {
     // 黑化Saber won a round and stood there as a plain gold Saber.
     members.forEach((m, i) => {
       void this.previews[i]?.show(m.doc, { championId: m.championId ?? null });
+      this.paintCrown(this.crowns[i] ?? null, m);
     });
 
     const seq = ++this.showSeq;
     this.setSubtitle("");
     const champ = ctx.championId;
+    // GH#256:`quote` 模式下嘲諷不放 —— 那一拍的聲音是 `ui/RoundEndVoice` 的名言。
+    if (this.roundWinLine === "quote") return;
     if (!champ || !this.taunt) return;
     // The line is picked deterministically from replicated state, so every
     // client hears the SAME joke; it is delayed past the round-end 名言 so the
@@ -341,6 +421,31 @@ export class RoundWinnerStage {
     if (this.subtitle) this.subtitle.textContent = text;
   }
 
+  /**
+   * 把一頂皇冠畫進 `el`。沒有名次的台階被**清空**(而不是留著上一回合那一頂)——
+   * 名次是每回合重算的,而卡片在人數沒變時是重用的,所以不清就會出現「這一回合
+   * 只有兩個人上台,但第三頂銅冠還掛在那裡」。
+   *
+   * `data-medal` 不是裝飾:它是這個功能唯一可以在 headless 下讀回來的證據,
+   * `roundPodium.test.ts` 讀的就是它 + `innerHTML` 裡真的那三個顏色。
+   */
+  private paintCrown(el: HTMLElement | null, m: WinnerEntry): void {
+    if (!el) return;
+    const medal = m.medal ?? null;
+    const place = m.place ?? 0;
+    if (!medal || place <= 0) {
+      el.innerHTML = "";
+      el.setAttribute?.("data-medal", "");
+      el.setAttribute?.("data-place", "");
+      return;
+    }
+    el.innerHTML = crownSvg(medal, place);
+    el.setAttribute?.("data-medal", medal);
+    el.setAttribute?.("data-place", String(place));
+    // 讀螢幕的人拿得到的那一份 —— 皇冠是這個畫面上唯一表達名次的東西。
+    el.setAttribute?.("aria-label", `第 ${place} 名 · ${CROWN_PALETTE[medal].label}`);
+  }
+
   /** Tear the stage down (dispose the previewer + remove every overlay layer). */
   clear(): void {
     this.showSeq += 1; // any in-flight taunt resolution is now stale
@@ -349,6 +454,8 @@ export class RoundWinnerStage {
     this.previews = [];
     for (const c of this.canvases) c.remove();
     this.canvases = [];
+    for (const c of this.crowns) c.remove();
+    this.crowns = [];
     for (const el of [this.wash, this.subtitle]) el?.remove();
     this.wash = null;
     this.subtitle = null;
@@ -359,4 +466,62 @@ export class RoundWinnerStage {
     this.disposed = true;
     this.clear();
   }
+}
+
+/**
+ * 一次回合結束表演的完整參數 —— {@link RoundWinnerStage.showTeam} 的兩個引數。
+ * `null` = 這一拍不演(觀戰 / 輪空 / 決勝回合 / 一個模型都載不到)。
+ */
+export interface RoundWinnerShowPlan {
+  members: WinnerEntry[];
+  ctx: RoundWinnerContext & { championId: string; round: number };
+}
+
+/**
+ * HUD 投影 → 這一拍要演什麼 (GH#257).
+ *
+ * ⚠️ **為什麼這段從 `GameApp.updateRoundWinner` 搬出來:** 它原本就寫在那個方法裡,
+ * 而 `GameApp` 抓 Babylon engine / canvas / socket,headless 起不來 —— 於是唯一
+ * 驗得到它的方式是掃 `GameApp.ts` 的原始碼字串(失敗形態 ⑥)。稽核實測:把整段
+ * podium 用法從 `updateRoundWinner` 拿掉(podium 恆為 `[]`),1292 條 client 測試
+ * **全綠**。搬成一支純函式之後,`roundWinnerPlan.test.ts` 就能餵真的 seats/teams
+ * 進 `hudStore`、把回傳值交給真的 `RoundWinnerStage`,斷言**舞台真的收到**存活順序
+ * 與金銀銅 —— 行為,不是字串。
+ *
+ * 三件事在這裡決定,三件都可以獨立壞掉:
+ *
+ *   1. **上台的人與順序** = `roundVictoryPodium`(存活順序 + 金銀銅 + 範圍政策)。
+ *      拿不到 `roundDeathTick` 的舊快照 → podium 是空的 → 退回
+ *      `roundWinnerTeamChampions`(「全員平手,照擊殺數排」),**不是**退回空舞台。
+ *   2. **模型載不到的人被丟掉**,不是讓他留一張空白卡:三張卡缺一張讀起來像 bug,
+ *      而兩張卡的這一拍仍然是正確的。皇冠跟著各自的 `place` 走,所以掉了銀牌那位
+ *      不會把銅牌那位偷偷升成銀冠。
+ *   3. **嘲諷仍然屬於回合 MVP**(`roundEndQuoteChampion`),不是金冠。兩者常常同一位
+ *      但不必然:台詞是寫給敗方聽的,而且 `audio/victoryTaunt` 用 championId+round
+ *      雜湊,每個客戶端算出同一句。改用 podium[0] 會**靜默換掉**全場聽到的那個笑話。
+ */
+export function planRoundWinnerShow(
+  seats: readonly PodiumSeatView[],
+  teams: readonly RoundTeamView[],
+  round: number,
+  docFor: (championId: string) => ModelDoc | null,
+  cfg: VictoryPodiumPolicy = DEFAULT_VICTORY_PODIUM,
+): RoundWinnerShowPlan | null {
+  const podium = roundVictoryPodium(seats, teams, cfg);
+  const fallback = podium.length > 0 ? [] : roundWinnerTeamChampions(seats, teams);
+
+  const members: WinnerEntry[] = [];
+  for (const p of podium) {
+    const doc = docFor(p.championId);
+    if (doc) members.push({ doc, championId: p.championId, place: p.place, medal: p.medal });
+  }
+  for (const id of fallback) {
+    const doc = docFor(id);
+    if (doc) members.push({ doc, championId: id });
+  }
+  if (members.length === 0) return null;
+
+  const championId =
+    roundEndQuoteChampion(seats, teams) ?? podium[0]?.championId ?? fallback[0] ?? "";
+  return { members, ctx: { championId, round } };
 }

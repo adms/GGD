@@ -211,11 +211,19 @@ describe("殭屍王 / 特殊殭屍 render size (task #262 → GH#192, failure sh
       );
     }
     // owner GH#192 「modal 大小是10倍」 — the RATIO, not merely 「bigger」.
-    expect(king / normal).toBeCloseTo(10, 5);
-    // MEASURED, for the record and for the openQuestion: 1.224u zombie → 12.24u
-    // king, against a 1.8u champion and a 24u-radius arena zone.
+    // ⚠️ 比值**讀出貨設定**,不寫死。這個數字已經改過四次(10→30→10→ owner
+    // 2026-08-02「殭屍王體型可以減半」=5),每一次寫死都讓這條紅著跟過一個版本,
+    // 而它紅的時候看起來像「渲染尺寸壞了」。這條要驗的是**串接**:後台那一格的
+    // 倍率真的一路走到 Babylon 的 declaredScale。
+    const shippedRatio =
+      mobSizeMultFor(SHIPPED_RULES, "boss") / mobSizeMultFor(SHIPPED_RULES, "normal");
+    expect(king / normal).toBeCloseTo(shippedRatio, 5);
+    // 而且它是「一眼看得出來」等級的差距,不是 1.05 倍 —— 下界擋得掉同義反覆。
+    expect(shippedRatio).toBeGreaterThanOrEqual(3);
+    // MEASURED, for the record and for the openQuestion: 1.224u zombie against a
+    // 1.8u champion in a 24u-radius arena zone. 雜魚本身不是可調平衡值,留字面值。
     expect(normal).toBeCloseTo(1.224, 3);
-    expect(king).toBeCloseTo(12.24, 2);
+    expect(king).toBeCloseTo(normal * shippedRatio, 2);
     registry.dispose();
   });
 });

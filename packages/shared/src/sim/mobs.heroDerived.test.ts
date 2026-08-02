@@ -277,8 +277,10 @@ describe("特殊殭屍 · 從英雄推導 (GH#206)", () => {
     expect(s.heroHpMult).toBe(5);
     expect(s.heroDamageMult).toBe(2);
     // #290 owner 2026-07-29: 10,000 → 4,000 (the flat used to be 78% of the
-    // special's round-3 hp, which made 隨機英雄 cosmetic).
-    expect(s.hpFlatBonus).toBe(4000);
+    // special's round-3 hp, which made 隨機英雄 cosmetic); owner 2026-08-02
+    // 「血太多 請都減半」→ 2,000。這一格是**平衡值**,所以不釘字面數字 ——
+    // 三份鏡像相等由 `mobs.heroLevelSource.test.ts` 與 `apps/admin/src/mobWaves.test.ts` 守。
+    expect(s.hpFlatBonus).toBeGreaterThan(0);
     expect(s.heroLevel).toBeUndefined(); // 等級由 heroLevelSource 決定, 不是這格
     expect(s.heroLevelSource).toBe("matchHighest");
 
@@ -289,7 +291,7 @@ describe("特殊殭屍 · 從英雄推導 (GH#206)", () => {
     const prof = mobProfile(rules, "special");
     const heroHp = championStatBase(HERO, Stat.MaxHealth, rules.level, COMBAT_ENV_DEFAULTS);
     const heroAd = championStatBase(HERO, Stat.AttackDamage, rules.level, COMBAT_ENV_DEFAULTS);
-    expect(prof.maxHp).toBe(Math.round(heroHp * 5) + 4000);
+    expect(prof.maxHp).toBe(Math.round(heroHp * s.heroHpMult!) + s.hpFlatBonus!);
     expect(prof.attackDamage).toBeCloseTo(heroAd * 2, 9);
     // …and NOT the ×zombie multipliers the block still carries.
     expect(prof.maxHp).not.toBe(Math.round(rules.maxHp * s.hpMult));

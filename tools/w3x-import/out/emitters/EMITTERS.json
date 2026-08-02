@@ -257,8 +257,9 @@
       "speedMin": 0.0,
       "speedMax": 0.1898,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0912,
-      "emitterHalfWidth": 0.6752,
+      "emitterFullLength": 0.0912,
+      "emitterFullWidth": 0.6752,
+      "emitterDiscRadius": 0.3376,
       "coneAngleDeg": 45.0,
       "sizeStops": [
        [
@@ -429,8 +430,9 @@
       "speedMin": 0.0,
       "speedMax": 0.3542,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0386,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0386,
+      "emitterDiscRadius": 0.0193,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -601,8 +603,9 @@
       "speedMin": 0.0,
       "speedMax": 0.4213,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.389,
-      "emitterHalfWidth": 0.0917,
+      "emitterFullLength": 1.389,
+      "emitterFullWidth": 0.0917,
+      "emitterDiscRadius": 0.6945,
       "coneAngleDeg": 45.0,
       "sizeStops": [
        [
@@ -996,8 +999,9 @@
       "speedMin": 8.0006,
       "speedMax": 12.001,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -1175,8 +1179,9 @@
       "speedMin": 7.3006,
       "speedMax": 12.701,
       "gravityY": -14.4957,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 16.5,
       "sizeStops": [
        [
@@ -1354,8 +1359,9 @@
       "speedMin": 10.512,
       "speedMax": 13.9344,
       "gravityY": -14.4957,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 7.0,
       "sizeStops": [
        [
@@ -1535,8 +1541,9 @@
       "speedMin": 5.0004,
       "speedMax": 8.334,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 15.5,
       "sizeStops": [
        [
@@ -1714,8 +1721,9 @@
       "speedMin": 5.0004,
       "speedMax": 8.334,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 15.5,
       "sizeStops": [
        [
@@ -1897,8 +1905,9 @@
       "speedMin": 1.6668,
       "speedMax": 3.8892,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 78.5,
       "sizeStops": [
        [
@@ -2076,8 +2085,9 @@
       "speedMin": 4.0559,
       "speedMax": 7.0561,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 33.0,
       "sizeStops": [
        [
@@ -2255,8 +2265,9 @@
       "speedMin": 5.7338,
       "speedMax": 7.6006,
       "gravityY": -0.25,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 14.0,
       "sizeStops": [
        [
@@ -2434,8 +2445,9 @@
       "speedMin": 2.9169,
       "speedMax": 4.8615,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 31.0,
       "sizeStops": [
        [
@@ -2612,8 +2624,9 @@
       "speedMin": 3.3336,
       "speedMax": 7.7784,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 86.0,
       "sizeStops": [
        [
@@ -2800,8 +2813,9 @@
       "speedMin": 0.4834,
       "speedMax": 0.6278,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0278,
-      "emitterHalfWidth": 0.0278,
+      "emitterFullLength": 0.0278,
+      "emitterFullWidth": 0.0278,
+      "emitterDiscRadius": 0.0139,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -2982,8 +2996,9 @@
       "speedMin": 13.89,
       "speedMax": 13.89,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -3774,8 +3789,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0278,
-      "emitterHalfWidth": 0.0278,
+      "emitterFullLength": 0.0278,
+      "emitterFullWidth": 0.0278,
+      "emitterDiscRadius": 0.0139,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -3957,8 +3973,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -4141,8 +4158,9 @@
       "speedMin": 0.4834,
       "speedMax": 0.6278,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0278,
-      "emitterHalfWidth": 0.0278,
+      "emitterFullLength": 0.0278,
+      "emitterFullWidth": 0.0278,
+      "emitterDiscRadius": 0.0139,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -4328,8 +4346,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -4504,8 +4523,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1945,
-      "emitterHalfWidth": 0.1945,
+      "emitterFullLength": 0.1945,
+      "emitterFullWidth": 0.1945,
+      "emitterDiscRadius": 0.0972,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -4680,8 +4700,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -4859,8 +4880,9 @@
       "speedMin": 1.1918,
       "speedMax": 1.864,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8057,
-      "emitterHalfWidth": 1.8057,
+      "emitterFullLength": 1.8057,
+      "emitterFullWidth": 1.8057,
+      "emitterDiscRadius": 0.9028,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -5352,8 +5374,9 @@
       "speedMin": 0.3889,
       "speedMax": 0.7223,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -5567,8 +5590,9 @@
       "speedMin": 0.3889,
       "speedMax": 0.7223,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 7.5,
       "sizeStops": [
        [
@@ -5783,8 +5807,9 @@
       "speedMin": 2.6391,
       "speedMax": 2.9169,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0278,
-      "emitterHalfWidth": 0.0278,
+      "emitterFullLength": 0.0278,
+      "emitterFullWidth": 0.0278,
+      "emitterDiscRadius": 0.0139,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -6184,8 +6209,9 @@
       "speedMin": 6.5339,
       "speedMax": 6.8005,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.5,
       "sizeStops": [
        [
@@ -6503,8 +6529,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2222,
-      "emitterHalfWidth": 0.2222,
+      "emitterFullLength": 0.2222,
+      "emitterFullWidth": 0.2222,
+      "emitterDiscRadius": 0.1111,
       "coneAngleDeg": 9.5,
       "sizeStops": [
        [
@@ -6691,8 +6718,9 @@
       "speedMin": 13.6122,
       "speedMax": 14.1678,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1945,
-      "emitterHalfWidth": 0.1945,
+      "emitterFullLength": 0.1945,
+      "emitterFullWidth": 0.1945,
+      "emitterDiscRadius": 0.0972,
       "coneAngleDeg": 9.5,
       "sizeStops": [
        [
@@ -6879,8 +6907,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2222,
-      "emitterHalfWidth": 0.2222,
+      "emitterFullLength": 0.2222,
+      "emitterFullWidth": 0.2222,
+      "emitterDiscRadius": 0.1111,
       "coneAngleDeg": 9.5,
       "sizeStops": [
        [
@@ -7163,8 +7192,9 @@
       "speedMin": 5.0004,
       "speedMax": 6.1116,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8247,
-      "emitterHalfWidth": 1.9477,
+      "emitterFullLength": 1.8247,
+      "emitterFullWidth": 1.9477,
+      "emitterDiscRadius": 0.9738,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -7344,8 +7374,9 @@
       "speedMin": 5.0004,
       "speedMax": 6.1116,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8247,
-      "emitterHalfWidth": 1.9477,
+      "emitterFullLength": 1.8247,
+      "emitterFullWidth": 1.9477,
+      "emitterDiscRadius": 0.9738,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -7529,8 +7560,9 @@
       "speedMin": 5.0004,
       "speedMax": 6.1116,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8247,
-      "emitterHalfWidth": 1.9477,
+      "emitterFullLength": 1.8247,
+      "emitterFullWidth": 1.9477,
+      "emitterDiscRadius": 0.9738,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -7714,8 +7746,9 @@
       "speedMin": 5.0004,
       "speedMax": 6.1116,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8247,
-      "emitterHalfWidth": 1.9477,
+      "emitterFullLength": 1.8247,
+      "emitterFullWidth": 1.9477,
+      "emitterDiscRadius": 0.9738,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -7895,8 +7928,9 @@
       "speedMin": 5.0004,
       "speedMax": 6.1116,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.8247,
-      "emitterHalfWidth": 1.9477,
+      "emitterFullLength": 1.8247,
+      "emitterFullWidth": 1.9477,
+      "emitterDiscRadius": 0.9738,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -8276,8 +8310,9 @@
       "speedMin": 0.7822,
       "speedMax": 2.3467,
       "gravityY": -0.4889,
-      "emitterHalfLength": 0.2445,
-      "emitterHalfWidth": 0.2445,
+      "emitterFullLength": 0.2445,
+      "emitterFullWidth": 0.2445,
+      "emitterDiscRadius": 0.1222,
       "coneAngleDeg": 60.0,
       "sizeStops": [
        [
@@ -8723,8 +8758,9 @@
       "speedMin": 1.6668,
       "speedMax": 2.778,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.6945,
-      "emitterHalfWidth": 0.6945,
+      "emitterFullLength": 0.6945,
+      "emitterFullWidth": 0.6945,
+      "emitterDiscRadius": 0.3473,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -9084,8 +9120,9 @@
       "speedMin": 4.9004,
       "speedMax": 5.1004,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.8334,
-      "emitterHalfWidth": 0.8334,
+      "emitterFullLength": 0.8334,
+      "emitterFullWidth": 0.8334,
+      "emitterDiscRadius": 0.4167,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -9322,8 +9359,9 @@
       "speedMin": 3.2669,
       "speedMax": 3.4003,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.7223,
-      "emitterHalfWidth": 0.7223,
+      "emitterFullLength": 0.7223,
+      "emitterFullWidth": 0.7223,
+      "emitterDiscRadius": 0.3611,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -9583,8 +9621,9 @@
       "speedMin": 0.4445,
       "speedMax": 0.4445,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.3334,
-      "emitterHalfWidth": 0.3334,
+      "emitterFullLength": 0.3334,
+      "emitterFullWidth": 0.3334,
+      "emitterDiscRadius": 0.1667,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -9931,8 +9970,9 @@
       "speedMin": 6.3561,
       "speedMax": 8.0895,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 13.5,
       "sizeStops": [
        [
@@ -10642,8 +10682,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -10831,8 +10872,9 @@
       "speedMin": 0.6945,
       "speedMax": 0.6945,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.6945,
-      "emitterHalfWidth": 0.6945,
+      "emitterFullLength": 0.6945,
+      "emitterFullWidth": 0.6945,
+      "emitterDiscRadius": 0.3473,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -11021,8 +11063,9 @@
       "speedMin": 0.6945,
       "speedMax": 0.6945,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -11207,8 +11250,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -11396,8 +11440,9 @@
       "speedMin": 1.8057,
       "speedMax": 1.8057,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -11673,8 +11718,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -11846,8 +11892,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12019,8 +12066,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12192,8 +12240,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12365,8 +12414,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12548,8 +12598,9 @@
       "speedMin": 4.0837,
       "speedMax": 4.2503,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12731,8 +12782,9 @@
       "speedMin": 4.0837,
       "speedMax": 4.2503,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -12914,8 +12966,9 @@
       "speedMin": 4.0837,
       "speedMax": 4.2503,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -13097,8 +13150,9 @@
       "speedMin": 4.0837,
       "speedMax": 4.2503,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -13280,8 +13334,9 @@
       "speedMin": 4.0837,
       "speedMax": 4.2503,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -13463,8 +13518,9 @@
       "speedMin": 7.7784,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -13656,8 +13712,9 @@
       "speedMin": 11.5704,
       "speedMax": 12.0426,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -13839,8 +13896,9 @@
       "speedMin": 7.7784,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14032,8 +14090,9 @@
       "speedMin": 11.5704,
       "speedMax": 12.0426,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14215,8 +14274,9 @@
       "speedMin": 7.7784,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14408,8 +14468,9 @@
       "speedMin": 11.5704,
       "speedMax": 12.0426,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14591,8 +14652,9 @@
       "speedMin": 7.7784,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14784,8 +14846,9 @@
       "speedMin": 11.5704,
       "speedMax": 12.0426,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -14967,8 +15030,9 @@
       "speedMin": 7.7784,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -15160,8 +15224,9 @@
       "speedMin": 11.5704,
       "speedMax": 12.0426,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1111,
-      "emitterHalfWidth": 0.1111,
+      "emitterFullLength": 0.1111,
+      "emitterFullWidth": 0.1111,
+      "emitterDiscRadius": 0.0556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -15561,8 +15626,9 @@
       "speedMin": 6.5339,
       "speedMax": 6.8005,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.5,
       "sizeStops": [
        [
@@ -15801,8 +15867,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -15994,8 +16061,9 @@
       "speedMin": 1.089,
       "speedMax": 1.1334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -16187,8 +16255,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -16394,8 +16463,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -16601,8 +16671,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -16794,8 +16865,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -16987,8 +17059,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -17194,8 +17267,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -17387,8 +17461,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -17594,8 +17669,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -17787,8 +17863,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -17994,8 +18071,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -18197,8 +18275,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -18486,8 +18565,9 @@
       "speedMin": 0.2722,
       "speedMax": 0.2834,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -18686,8 +18766,9 @@
       "speedMin": 0.2722,
       "speedMax": 0.2834,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -18886,8 +18967,9 @@
       "speedMin": 0.2722,
       "speedMax": 0.2834,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -19086,8 +19168,9 @@
       "speedMin": 0.2722,
       "speedMax": 0.2834,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -19286,8 +19369,9 @@
       "speedMin": 0.2722,
       "speedMax": 0.2834,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -19575,8 +19659,9 @@
       "speedMin": 6.6672,
       "speedMax": 6.6672,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -19761,8 +19846,9 @@
       "speedMin": 3.0558,
       "speedMax": 3.0558,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.0017,
-      "emitterHalfWidth": 1.1706,
+      "emitterFullLength": 1.0017,
+      "emitterFullWidth": 1.1706,
+      "emitterDiscRadius": 0.5853,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -19939,8 +20025,9 @@
       "speedMin": 3.378,
       "speedMax": 5.5116,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 130.5,
       "sizeStops": [
        [
@@ -20126,8 +20213,9 @@
       "speedMin": 0.7334,
       "speedMax": 1.489,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 1.0,
       "sizeStops": [
        [
@@ -20570,8 +20658,9 @@
       "speedMin": 0.2,
       "speedMax": 0.9112,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -20760,8 +20849,9 @@
       "speedMin": 2.2002,
       "speedMax": 10.023,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -22129,8 +22219,9 @@
       "speedMin": 0.0102,
       "speedMax": 0.0102,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -22610,8 +22701,9 @@
       "speedMin": 6.6672,
       "speedMax": 10.0008,
       "gravityY": 0.0,
-      "emitterHalfLength": 2.778,
-      "emitterHalfWidth": 2.778,
+      "emitterFullLength": 2.778,
+      "emitterFullWidth": 2.778,
+      "emitterDiscRadius": 1.389,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -23054,8 +23146,9 @@
       "speedMin": 0.0,
       "speedMax": 0.707,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 100.0,
       "sizeStops": [
        [
@@ -23316,8 +23409,9 @@
       "speedMin": 0.0,
       "speedMax": 1.407,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -23819,8 +23913,9 @@
       "speedMin": 10.5564,
       "speedMax": 10.5564,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -24010,8 +24105,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -25319,8 +25415,9 @@
       "speedMin": 9.1979,
       "speedMax": 9.6997,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0645,
-      "emitterHalfWidth": 0.065,
+      "emitterFullLength": 0.0645,
+      "emitterFullWidth": 0.065,
+      "emitterDiscRadius": 0.0325,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -26065,8 +26162,9 @@
       "speedMin": 8.5378,
       "speedMax": 9.0035,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0599,
-      "emitterHalfWidth": 0.0604,
+      "emitterFullLength": 0.0599,
+      "emitterFullWidth": 0.0604,
+      "emitterDiscRadius": 0.0302,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -26934,8 +27032,9 @@
       "speedMin": 9.8729,
       "speedMax": 10.4115,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0692,
-      "emitterHalfWidth": 0.0698,
+      "emitterFullLength": 0.0692,
+      "emitterFullWidth": 0.0698,
+      "emitterDiscRadius": 0.0349,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -27188,8 +27287,9 @@
       "speedMin": 3.1305,
       "speedMax": 3.2583,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.5,
       "sizeStops": [
        [
@@ -28104,8 +28204,9 @@
       "speedMin": 0.0,
       "speedMax": 0.2213,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.434,
-      "emitterHalfWidth": 0.434,
+      "emitterFullLength": 0.434,
+      "emitterFullWidth": 0.434,
+      "emitterDiscRadius": 0.217,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -30505,8 +30606,9 @@
       "speedMin": 0.0557,
       "speedMax": 0.058,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0142,
-      "emitterHalfWidth": 0.0142,
+      "emitterFullLength": 0.0142,
+      "emitterFullWidth": 0.0142,
+      "emitterDiscRadius": 0.0071,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -30764,8 +30866,9 @@
       "speedMin": 5.5703,
       "speedMax": 5.7977,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0426,
-      "emitterHalfWidth": 0.0426,
+      "emitterFullLength": 0.0426,
+      "emitterFullWidth": 0.0426,
+      "emitterDiscRadius": 0.0213,
       "coneAngleDeg": 80.0,
       "sizeStops": [
        [
@@ -31286,8 +31389,9 @@
       "speedMin": 8.6639,
       "speedMax": 9.1365,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0607,
-      "emitterHalfWidth": 0.0612,
+      "emitterFullLength": 0.0607,
+      "emitterFullWidth": 0.0612,
+      "emitterDiscRadius": 0.0306,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -32198,8 +32302,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -32371,8 +32476,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -32544,8 +32650,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -32717,8 +32824,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -32890,8 +32998,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -33063,8 +33172,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -33553,8 +33663,9 @@
       "speedMin": 0.7618,
       "speedMax": 0.7618,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -33830,8 +33941,9 @@
       "speedMin": 0.7618,
       "speedMax": 0.7618,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -34546,8 +34658,9 @@
       "speedMin": 10.5564,
       "speedMax": 10.5564,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -34737,8 +34850,9 @@
       "speedMin": 0.2778,
       "speedMax": 0.2778,
       "gravityY": 5.556,
-      "emitterHalfLength": 2.778,
-      "emitterHalfWidth": 2.778,
+      "emitterFullLength": 2.778,
+      "emitterFullWidth": 2.778,
+      "emitterDiscRadius": 1.389,
       "coneAngleDeg": 0.2,
       "sizeStops": [
        [
@@ -35201,8 +35315,9 @@
       "speedMin": 0.1484,
       "speedMax": 0.1544,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 2.271,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 2.271,
+      "emitterDiscRadius": 1.1355,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -35653,8 +35768,9 @@
       "speedMin": 7.6,
       "speedMax": 7.6,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 72.5,
       "sizeStops": [
        [
@@ -36140,8 +36256,9 @@
       "speedMin": 9.8433,
       "speedMax": 10.3802,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.069,
-      "emitterHalfWidth": 0.0696,
+      "emitterFullLength": 0.069,
+      "emitterFullWidth": 0.0696,
+      "emitterDiscRadius": 0.0348,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -36432,8 +36549,9 @@
       "speedMin": 1.8206,
       "speedMax": 1.895,
       "gravityY": -4.6445,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0004,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0004,
+      "emitterDiscRadius": 0.0002,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -37282,8 +37400,9 @@
       "speedMin": 20.6047,
       "speedMax": 21.7286,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1444,
-      "emitterHalfWidth": 0.1457,
+      "emitterFullLength": 0.1444,
+      "emitterFullWidth": 0.1457,
+      "emitterDiscRadius": 0.0728,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -38075,8 +38194,9 @@
       "speedMin": 0.0,
       "speedMax": 1.067,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.3545,
-      "emitterHalfWidth": 0.3545,
+      "emitterFullLength": 0.3545,
+      "emitterFullWidth": 0.3545,
+      "emitterDiscRadius": 0.1772,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -38332,8 +38452,9 @@
       "speedMin": 0.0,
       "speedMax": 0.1808,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0709,
-      "emitterHalfWidth": 0.0709,
+      "emitterFullLength": 0.0709,
+      "emitterFullWidth": 0.0709,
+      "emitterDiscRadius": 0.0355,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -38581,8 +38702,9 @@
       "speedMin": 0.0,
       "speedMax": 1.776,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1418,
-      "emitterHalfWidth": 0.1418,
+      "emitterFullLength": 0.1418,
+      "emitterFullWidth": 0.1418,
+      "emitterDiscRadius": 0.0709,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -38830,8 +38952,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.3545,
-      "emitterHalfWidth": 0.3545,
+      "emitterFullLength": 0.3545,
+      "emitterFullWidth": 0.3545,
+      "emitterDiscRadius": 0.1772,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -39614,8 +39737,9 @@
       "speedMin": 7.9147,
       "speedMax": 8.3464,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0555,
-      "emitterHalfWidth": 0.056,
+      "emitterFullLength": 0.0555,
+      "emitterFullWidth": 0.056,
+      "emitterDiscRadius": 0.028,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -40471,8 +40595,9 @@
       "speedMin": 1.0782,
       "speedMax": 1.0782,
       "gravityY": 1.3478,
-      "emitterHalfLength": 0.3594,
-      "emitterHalfWidth": 0.3594,
+      "emitterFullLength": 0.3594,
+      "emitterFullWidth": 0.3594,
+      "emitterDiscRadius": 0.1797,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -40699,8 +40824,9 @@
       "speedMin": 1.0782,
       "speedMax": 1.0782,
       "gravityY": 1.3478,
-      "emitterHalfLength": 0.3594,
-      "emitterHalfWidth": 0.3594,
+      "emitterFullLength": 0.3594,
+      "emitterFullWidth": 0.3594,
+      "emitterDiscRadius": 0.1797,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -40927,8 +41053,9 @@
       "speedMin": 1.0782,
       "speedMax": 1.0782,
       "gravityY": 1.3478,
-      "emitterHalfLength": 0.3594,
-      "emitterHalfWidth": 0.3594,
+      "emitterFullLength": 0.3594,
+      "emitterFullWidth": 0.3594,
+      "emitterDiscRadius": 0.1797,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -41665,8 +41792,9 @@
       "speedMin": 9.4279,
       "speedMax": 9.9422,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0661,
-      "emitterHalfWidth": 0.0667,
+      "emitterFullLength": 0.0661,
+      "emitterFullWidth": 0.0667,
+      "emitterDiscRadius": 0.0333,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -42530,8 +42658,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2118,
-      "emitterHalfWidth": 0.2118,
+      "emitterFullLength": 0.2118,
+      "emitterFullWidth": 0.2118,
+      "emitterDiscRadius": 0.1059,
       "coneAngleDeg": 50.0,
       "sizeStops": [
        [
@@ -42861,8 +42990,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2647,
-      "emitterHalfWidth": 0.2647,
+      "emitterFullLength": 0.2647,
+      "emitterFullWidth": 0.2647,
+      "emitterDiscRadius": 0.1324,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -43708,8 +43838,9 @@
       "speedMin": 9.6207,
       "speedMax": 10.1455,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0674,
-      "emitterHalfWidth": 0.068,
+      "emitterFullLength": 0.0674,
+      "emitterFullWidth": 0.068,
+      "emitterDiscRadius": 0.034,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -44406,8 +44537,9 @@
       "speedMin": 2.3335,
       "speedMax": 2.3335,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.1112,
-      "emitterHalfWidth": 1.1112,
+      "emitterFullLength": 1.1112,
+      "emitterFullWidth": 1.1112,
+      "emitterDiscRadius": 0.5556,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -44600,8 +44732,9 @@
       "speedMin": 0.0,
       "speedMax": 11.112,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.1112,
-      "emitterHalfWidth": 1.1112,
+      "emitterFullLength": 1.1112,
+      "emitterFullWidth": 1.1112,
+      "emitterDiscRadius": 0.5556,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -44790,8 +44923,9 @@
       "speedMin": 11.6676,
       "speedMax": 11.6676,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -44972,8 +45106,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": -13.89,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 36.0,
       "sizeStops": [
        [
@@ -45174,8 +45309,9 @@
       "speedMin": 1.389,
       "speedMax": 4.167,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 1.0,
       "sizeStops": [
        [
@@ -45357,8 +45493,9 @@
       "speedMin": 4.167,
       "speedMax": 12.501,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 1.0,
       "sizeStops": [
        [
@@ -47321,8 +47458,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -47503,8 +47641,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -47686,8 +47825,9 @@
       "speedMin": 1.5279,
       "speedMax": 1.5279,
       "gravityY": 0.0,
-      "emitterHalfLength": 3.0836,
-      "emitterHalfWidth": 3.0836,
+      "emitterFullLength": 3.0836,
+      "emitterFullWidth": 3.0836,
+      "emitterDiscRadius": 1.5418,
       "coneAngleDeg": 95.0,
       "sizeStops": [
        [
@@ -47868,8 +48008,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -48047,8 +48188,9 @@
       "speedMin": 2.0835,
       "speedMax": 2.0835,
       "gravityY": 0.0,
-      "emitterHalfLength": 3.0836,
-      "emitterHalfWidth": 3.0836,
+      "emitterFullLength": 3.0836,
+      "emitterFullWidth": 3.0836,
+      "emitterDiscRadius": 1.5418,
       "coneAngleDeg": 75.0,
       "sizeStops": [
        [
@@ -48230,8 +48372,9 @@
       "speedMin": 1.5279,
       "speedMax": 1.5279,
       "gravityY": 0.0,
-      "emitterHalfLength": 9.2507,
-      "emitterHalfWidth": 9.2507,
+      "emitterFullLength": 9.2507,
+      "emitterFullWidth": 9.2507,
+      "emitterDiscRadius": 4.6254,
       "coneAngleDeg": 111.0,
       "sizeStops": [
        [
@@ -48413,8 +48556,9 @@
       "speedMin": 0.6945,
       "speedMax": 0.6945,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.4167,
-      "emitterHalfWidth": 0.4167,
+      "emitterFullLength": 0.4167,
+      "emitterFullWidth": 0.4167,
+      "emitterDiscRadius": 0.2083,
       "coneAngleDeg": 111.0,
       "sizeStops": [
        [
@@ -48595,8 +48739,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -48864,8 +49009,9 @@
       "speedMin": 1.6668,
       "speedMax": 2.778,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.6945,
-      "emitterHalfWidth": 0.6945,
+      "emitterFullLength": 0.6945,
+      "emitterFullWidth": 0.6945,
+      "emitterDiscRadius": 0.3473,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -49239,8 +49385,9 @@
       "speedMin": 6.5339,
       "speedMax": 6.8005,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.5,
       "sizeStops": [
        [
@@ -49479,8 +49626,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -49672,8 +49820,9 @@
       "speedMin": 1.089,
       "speedMax": 1.1334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -49865,8 +50014,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -50072,8 +50222,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -50279,8 +50430,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -50472,8 +50624,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -50665,8 +50818,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -50872,8 +51026,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -51065,8 +51220,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -51272,8 +51428,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -51465,8 +51622,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -51672,8 +51830,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -51875,8 +52034,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -52167,8 +52327,9 @@
       "speedMin": 11.8648,
       "speedMax": 11.8648,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -52352,8 +52513,9 @@
       "speedMin": 11.8648,
       "speedMax": 11.8648,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.594,
-      "emitterHalfWidth": 1.594,
+      "emitterFullLength": 1.594,
+      "emitterFullWidth": 1.594,
+      "emitterDiscRadius": 0.797,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -52871,8 +53033,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -53148,8 +53311,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1241,
-      "emitterHalfWidth": 0.1241,
+      "emitterFullLength": 0.1241,
+      "emitterFullWidth": 0.1241,
+      "emitterDiscRadius": 0.062,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -53422,8 +53586,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -54248,8 +54413,9 @@
       "speedMin": 6.9059,
       "speedMax": 7.2826,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -54509,8 +54675,9 @@
       "speedMin": 6.9059,
       "speedMax": 7.2826,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -54777,8 +54944,9 @@
       "speedMin": 8.1565,
       "speedMax": 8.6015,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -55790,8 +55958,9 @@
       "speedMin": 1.3751,
       "speedMax": 1.4029,
       "gravityY": -0.0556,
-      "emitterHalfLength": 0.2778,
-      "emitterHalfWidth": 0.2778,
+      "emitterFullLength": 0.2778,
+      "emitterFullWidth": 0.2778,
+      "emitterDiscRadius": 0.1389,
       "coneAngleDeg": 15.0,
       "sizeStops": [
        [
@@ -56237,8 +56406,9 @@
       "speedMin": 0.5556,
       "speedMax": 0.5556,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.6668,
-      "emitterHalfWidth": 1.6668,
+      "emitterFullLength": 1.6668,
+      "emitterFullWidth": 1.6668,
+      "emitterDiscRadius": 0.8334,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -56431,8 +56601,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.1112,
-      "emitterHalfWidth": 1.1112,
+      "emitterFullLength": 1.1112,
+      "emitterFullWidth": 1.1112,
+      "emitterDiscRadius": 0.5556,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -56624,8 +56795,9 @@
       "speedMin": 0.5556,
       "speedMax": 0.5556,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 5.0,
       "sizeStops": [
        [
@@ -56804,8 +56976,9 @@
       "speedMin": 8.334,
       "speedMax": 8.334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -56990,8 +57163,9 @@
       "speedMin": 21.1128,
       "speedMax": 21.1128,
       "gravityY": -43.8924,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 27.5,
       "sizeStops": [
        [
@@ -57173,8 +57347,9 @@
       "speedMin": 13.89,
       "speedMax": 13.89,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -57386,8 +57561,9 @@
       "speedMin": 12.1676,
       "speedMax": 21.1684,
       "gravityY": -33.5082,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 40.5,
       "sizeStops": [
        [
@@ -57569,8 +57745,9 @@
       "speedMin": 0.2667,
       "speedMax": 0.8445,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 1.0,
       "sizeStops": [
        [
@@ -58040,8 +58217,9 @@
       "speedMin": 4.4448,
       "speedMax": 6.6672,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 28.0,
       "sizeStops": [
        [
@@ -58237,8 +58415,9 @@
       "speedMin": 0.0028,
       "speedMax": 0.0028,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0278,
-      "emitterHalfWidth": 0.0278,
+      "emitterFullLength": 0.0278,
+      "emitterFullWidth": 0.0278,
+      "emitterDiscRadius": 0.0139,
       "coneAngleDeg": 123.0,
       "sizeStops": [
        [
@@ -58531,8 +58710,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -58713,8 +58893,9 @@
       "speedMin": 0.0,
       "speedMax": 15.2778,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5556,
-      "emitterHalfWidth": 0.5556,
+      "emitterFullLength": 0.5556,
+      "emitterFullWidth": 0.5556,
+      "emitterDiscRadius": 0.2778,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -59186,8 +59367,9 @@
       "speedMin": 5.556,
       "speedMax": 16.668,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.6668,
-      "emitterHalfWidth": 1.6668,
+      "emitterFullLength": 1.6668,
+      "emitterFullWidth": 1.6668,
+      "emitterDiscRadius": 0.8334,
       "coneAngleDeg": 2.0,
       "sizeStops": [
        [
@@ -59450,8 +59632,9 @@
       "speedMin": 4.4448,
       "speedMax": 6.6672,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.6668,
-      "emitterHalfWidth": 1.6668,
+      "emitterFullLength": 1.6668,
+      "emitterFullWidth": 1.6668,
+      "emitterDiscRadius": 0.8334,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -59711,8 +59894,9 @@
       "speedMin": 0.0556,
       "speedMax": 0.0556,
       "gravityY": 0.0,
-      "emitterHalfLength": 2.5002,
-      "emitterHalfWidth": 2.5002,
+      "emitterFullLength": 2.5002,
+      "emitterFullWidth": 2.5002,
+      "emitterDiscRadius": 1.2501,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -59926,8 +60110,9 @@
       "speedMin": 0.0556,
       "speedMax": 0.0556,
       "gravityY": 0.0,
-      "emitterHalfLength": 4.167,
-      "emitterHalfWidth": 4.167,
+      "emitterFullLength": 4.167,
+      "emitterFullWidth": 4.167,
+      "emitterDiscRadius": 2.0835,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -60138,8 +60323,9 @@
       "speedMin": 2.778,
       "speedMax": 8.334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2778,
-      "emitterHalfWidth": 0.2778,
+      "emitterFullLength": 0.2778,
+      "emitterFullWidth": 0.2778,
+      "emitterDiscRadius": 0.1389,
       "coneAngleDeg": 60.0,
       "sizeStops": [
        [
@@ -60469,8 +60655,9 @@
       "speedMin": 1.3612,
       "speedMax": 1.4168,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2778,
-      "emitterHalfWidth": 0.2778,
+      "emitterFullLength": 0.2778,
+      "emitterFullWidth": 0.2778,
+      "emitterDiscRadius": 0.1389,
       "coneAngleDeg": 76.0,
       "sizeStops": [
        [
@@ -60901,8 +61088,9 @@
       "speedMin": 10.3106,
       "speedMax": 10.873,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0723,
-      "emitterHalfWidth": 0.0729,
+      "emitterFullLength": 0.0723,
+      "emitterFullWidth": 0.0729,
+      "emitterDiscRadius": 0.0364,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -61193,8 +61381,9 @@
       "speedMin": 1.9071,
       "speedMax": 1.9849,
       "gravityY": -4.865,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0004,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0004,
+      "emitterDiscRadius": 0.0002,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -62760,8 +62949,9 @@
       "speedMin": 1.0,
       "speedMax": 1.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 2.0833,
-      "emitterHalfWidth": 2.0833,
+      "emitterFullLength": 2.0833,
+      "emitterFullWidth": 2.0833,
+      "emitterDiscRadius": 1.0417,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -62953,8 +63143,9 @@
       "speedMin": 3.0556,
       "speedMax": 3.0556,
       "gravityY": 0.0,
-      "emitterHalfLength": 7.0833,
-      "emitterHalfWidth": 7.0833,
+      "emitterFullLength": 7.0833,
+      "emitterFullWidth": 7.0833,
+      "emitterDiscRadius": 3.5417,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -63146,8 +63337,9 @@
       "speedMin": 3.0556,
       "speedMax": 3.0556,
       "gravityY": 0.0,
-      "emitterHalfLength": 7.0833,
-      "emitterHalfWidth": 7.0833,
+      "emitterFullLength": 7.0833,
+      "emitterFullWidth": 7.0833,
+      "emitterDiscRadius": 3.5417,
       "coneAngleDeg": 10.0,
       "sizeStops": [
        [
@@ -63335,8 +63527,9 @@
       "speedMin": 1.0,
       "speedMax": 1.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 2.0833,
-      "emitterHalfWidth": 2.0833,
+      "emitterFullLength": 2.0833,
+      "emitterFullWidth": 2.0833,
+      "emitterDiscRadius": 1.0417,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -63532,8 +63725,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 13.8889,
-      "emitterHalfWidth": 13.8889,
+      "emitterFullLength": 13.8889,
+      "emitterFullWidth": 13.8889,
+      "emitterDiscRadius": 6.9444,
       "coneAngleDeg": 5.0,
       "sizeStops": [
        [
@@ -63801,8 +63995,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 13.8889,
-      "emitterHalfWidth": 13.8889,
+      "emitterFullLength": 13.8889,
+      "emitterFullWidth": 13.8889,
+      "emitterDiscRadius": 6.9444,
       "coneAngleDeg": 5.0,
       "sizeStops": [
        [
@@ -64070,8 +64265,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 2.0833,
-      "emitterHalfWidth": 2.0833,
+      "emitterFullLength": 2.0833,
+      "emitterFullWidth": 2.0833,
+      "emitterDiscRadius": 1.0417,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -64487,8 +64683,9 @@
       "speedMin": 8.9828,
       "speedMax": 9.4728,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.063,
-      "emitterHalfWidth": 0.0635,
+      "emitterFullLength": 0.063,
+      "emitterFullWidth": 0.0635,
+      "emitterDiscRadius": 0.0318,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -65159,8 +65356,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2222,
-      "emitterHalfWidth": 0.2222,
+      "emitterFullLength": 0.2222,
+      "emitterFullWidth": 0.2222,
+      "emitterDiscRadius": 0.1111,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -65347,8 +65545,9 @@
       "speedMin": 13.6122,
       "speedMax": 14.1678,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1945,
-      "emitterHalfWidth": 0.1945,
+      "emitterFullLength": 0.1945,
+      "emitterFullWidth": 0.1945,
+      "emitterDiscRadius": 0.0972,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -65535,8 +65734,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2222,
-      "emitterHalfWidth": 0.2222,
+      "emitterFullLength": 0.2222,
+      "emitterFullWidth": 0.2222,
+      "emitterDiscRadius": 0.1111,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -66007,8 +66207,9 @@
       "speedMin": 0.2667,
       "speedMax": 0.8445,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 1.0,
       "sizeStops": [
        [
@@ -66189,8 +66390,9 @@
       "speedMin": 20.4183,
       "speedMax": 21.2517,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -66368,8 +66570,9 @@
       "speedMin": 20.4183,
       "speedMax": 21.2517,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -67055,8 +67258,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": -34.725,
-      "emitterHalfLength": 2.778,
-      "emitterHalfWidth": 2.778,
+      "emitterFullLength": 2.778,
+      "emitterFullWidth": 2.778,
+      "emitterDiscRadius": 1.389,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -67293,8 +67497,9 @@
       "speedMin": 14.1567,
       "speedMax": 14.7345,
       "gravityY": -32.7804,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 68.0,
       "sizeStops": [
        [
@@ -68081,8 +68286,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -68484,8 +68690,9 @@
       "speedMin": 0.0,
       "speedMax": 10.9181,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.3243,
-      "emitterHalfWidth": 0.3243,
+      "emitterFullLength": 0.3243,
+      "emitterFullWidth": 0.3243,
+      "emitterDiscRadius": 0.1622,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -69077,8 +69284,9 @@
       "speedMin": 9.7162,
       "speedMax": 10.2482,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0681,
-      "emitterHalfWidth": 0.0687,
+      "emitterFullLength": 0.0681,
+      "emitterFullWidth": 0.0687,
+      "emitterDiscRadius": 0.0343,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -69983,8 +70191,9 @@
       "speedMin": 2.2224,
       "speedMax": 6.6672,
       "gravityY": 0.0,
-      "emitterHalfLength": 3.4725,
-      "emitterHalfWidth": 3.4725,
+      "emitterFullLength": 3.4725,
+      "emitterFullWidth": 3.4725,
+      "emitterDiscRadius": 1.7362,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -70148,8 +70357,9 @@
       "speedMin": 4.3559,
       "speedMax": 4.5337,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.7017,
-      "emitterHalfWidth": 1.6812,
+      "emitterFullLength": 1.7017,
+      "emitterFullWidth": 1.6812,
+      "emitterDiscRadius": 0.8508,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -70309,8 +70519,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": -8.334,
-      "emitterHalfLength": 1.7017,
-      "emitterHalfWidth": 1.6812,
+      "emitterFullLength": 1.7017,
+      "emitterFullWidth": 1.6812,
+      "emitterDiscRadius": 0.8508,
       "coneAngleDeg": 45.0,
       "sizeStops": [
        [
@@ -70473,8 +70684,9 @@
       "speedMin": 2.2224,
       "speedMax": 6.6672,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.7017,
-      "emitterHalfWidth": 1.6812,
+      "emitterFullLength": 1.7017,
+      "emitterFullWidth": 1.6812,
+      "emitterDiscRadius": 0.8508,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -70928,8 +71140,9 @@
       "speedMin": 0.5028,
       "speedMax": 0.5028,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5028,
-      "emitterHalfWidth": 0.5028,
+      "emitterFullLength": 0.5028,
+      "emitterFullWidth": 0.5028,
+      "emitterDiscRadius": 0.2514,
       "coneAngleDeg": 104.0,
       "sizeStops": [
        [
@@ -71524,8 +71737,9 @@
       "speedMin": 0.5028,
       "speedMax": 0.5028,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.5028,
-      "emitterHalfWidth": 0.5028,
+      "emitterFullLength": 0.5028,
+      "emitterFullWidth": 0.5028,
+      "emitterDiscRadius": 0.2514,
       "coneAngleDeg": 104.0,
       "sizeStops": [
        [
@@ -71949,8 +72163,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -72164,8 +72379,9 @@
       "speedMin": 0.3334,
       "speedMax": 0.3334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -72370,8 +72586,9 @@
       "speedMin": 0.3334,
       "speedMax": 0.3334,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0556,
-      "emitterHalfWidth": 0.0556,
+      "emitterFullLength": 0.0556,
+      "emitterFullWidth": 0.0556,
+      "emitterDiscRadius": 0.0278,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -72575,8 +72792,9 @@
       "speedMin": 5.4449,
       "speedMax": 5.6671,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1389,
-      "emitterHalfWidth": 0.1389,
+      "emitterFullLength": 0.1389,
+      "emitterFullWidth": 0.1389,
+      "emitterDiscRadius": 0.0694,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -73015,8 +73233,9 @@
       "speedMin": 0.5956,
       "speedMax": 0.5956,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0664,
-      "emitterHalfWidth": 0.0664,
+      "emitterFullLength": 0.0664,
+      "emitterFullWidth": 0.0664,
+      "emitterDiscRadius": 0.0332,
       "coneAngleDeg": 3.5,
       "sizeStops": [
        [
@@ -73260,8 +73479,9 @@
       "speedMin": 1.4608,
       "speedMax": 1.4608,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 6.5,
       "sizeStops": [
        [
@@ -73506,8 +73726,9 @@
       "speedMin": 3.5325,
       "speedMax": 3.9043,
       "gravityY": -9.5642,
-      "emitterHalfLength": 0.1328,
-      "emitterHalfWidth": 0.1328,
+      "emitterFullLength": 0.1328,
+      "emitterFullWidth": 0.1328,
+      "emitterDiscRadius": 0.0664,
       "coneAngleDeg": 40.5,
       "sizeStops": [
        [
@@ -73696,8 +73917,9 @@
       "speedMin": 1.1952,
       "speedMax": 1.1952,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.7794,
-      "emitterHalfWidth": 0.3894,
+      "emitterFullLength": 0.7794,
+      "emitterFullWidth": 0.3894,
+      "emitterDiscRadius": 0.3897,
       "coneAngleDeg": 2.0,
       "sizeStops": [
        [
@@ -73986,8 +74208,9 @@
       "speedMin": 0.9555,
       "speedMax": 0.9555,
       "gravityY": 0.0,
-      "emitterHalfLength": -0.1012,
-      "emitterHalfWidth": 0.166,
+      "emitterFullLength": -0.1012,
+      "emitterFullWidth": 0.166,
+      "emitterDiscRadius": 0.083,
       "coneAngleDeg": 15.5,
       "sizeStops": [
        [
@@ -74388,8 +74611,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.2177,
-      "emitterHalfWidth": 1.1018,
+      "emitterFullLength": 1.2177,
+      "emitterFullWidth": 1.1018,
+      "emitterDiscRadius": 0.6089,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -74799,8 +75023,9 @@
       "speedMin": 10.8898,
       "speedMax": 11.3342,
       "gravityY": 0.0,
-      "emitterHalfLength": 1.2177,
-      "emitterHalfWidth": 1.1018,
+      "emitterFullLength": 1.2177,
+      "emitterFullWidth": 1.1018,
+      "emitterDiscRadius": 0.6089,
       "coneAngleDeg": 90.0,
       "sizeStops": [
        [
@@ -75358,8 +75583,9 @@
       "speedMin": 13.0477,
       "speedMax": 13.7594,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0915,
-      "emitterHalfWidth": 0.0922,
+      "emitterFullLength": 0.0915,
+      "emitterFullWidth": 0.0922,
+      "emitterDiscRadius": 0.0461,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -75651,8 +75877,9 @@
       "speedMin": 2.4133,
       "speedMax": 2.5119,
       "gravityY": -2.6385,
-      "emitterHalfLength": 0.3518,
-      "emitterHalfWidth": 0.3518,
+      "emitterFullLength": 0.3518,
+      "emitterFullWidth": 0.3518,
+      "emitterDiscRadius": 0.1759,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -76319,8 +76546,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": -11.112,
-      "emitterHalfLength": 11.112,
-      "emitterHalfWidth": 5.556,
+      "emitterFullLength": 11.112,
+      "emitterFullWidth": 5.556,
+      "emitterDiscRadius": 5.556,
       "coneAngleDeg": 0.0,
       "sizeStops": [
        [
@@ -76814,8 +77042,9 @@
       "speedMin": 0.1456,
       "speedMax": 0.1456,
       "gravityY": 1.716,
-      "emitterHalfLength": 0.104,
-      "emitterHalfWidth": 0.416,
+      "emitterFullLength": 0.104,
+      "emitterFullWidth": 0.416,
+      "emitterDiscRadius": 0.208,
       "coneAngleDeg": 40.0,
       "sizeStops": [
        [
@@ -78176,8 +78405,9 @@
       "speedMin": 3.596,
       "speedMax": 3.596,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0899,
-      "emitterHalfWidth": 0.0899,
+      "emitterFullLength": 0.0899,
+      "emitterFullWidth": 0.0899,
+      "emitterDiscRadius": 0.0449,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -78407,8 +78637,9 @@
       "speedMin": 0.0,
       "speedMax": 0.0,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0899,
-      "emitterHalfWidth": 0.0899,
+      "emitterFullLength": 0.0899,
+      "emitterFullWidth": 0.0899,
+      "emitterDiscRadius": 0.0449,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -79663,8 +79894,9 @@
       "speedMin": 0.6096,
       "speedMax": 0.6096,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -79968,8 +80200,9 @@
       "speedMin": 0.6096,
       "speedMax": 0.6096,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0,
+      "emitterDiscRadius": 0.0,
       "coneAngleDeg": 180.0,
       "sizeStops": [
        [
@@ -80533,8 +80766,9 @@
       "speedMin": 59.2302,
       "speedMax": 62.4612,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.4152,
-      "emitterHalfWidth": 0.4187,
+      "emitterFullLength": 0.4152,
+      "emitterFullWidth": 0.4187,
+      "emitterDiscRadius": 0.2094,
       "coneAngleDeg": 63.5,
       "sizeStops": [
        [
@@ -80825,8 +81059,9 @@
       "speedMin": 10.9554,
       "speedMax": 11.4026,
       "gravityY": -27.9475,
-      "emitterHalfLength": 0.0,
-      "emitterHalfWidth": 0.0024,
+      "emitterFullLength": 0.0,
+      "emitterFullWidth": 0.0024,
+      "emitterDiscRadius": 0.0012,
       "coneAngleDeg": 20.0,
       "sizeStops": [
        [
@@ -83099,8 +83334,9 @@
       "speedMin": 1.5053,
       "speedMax": 1.5667,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.0742,
-      "emitterHalfWidth": 1.2288,
+      "emitterFullLength": 0.0742,
+      "emitterFullWidth": 1.2288,
+      "emitterDiscRadius": 0.6144,
       "coneAngleDeg": 100.0,
       "sizeStops": [
        [
@@ -83300,8 +83536,9 @@
       "speedMin": 1.5053,
       "speedMax": 1.5667,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.2304,
-      "emitterHalfWidth": 0.0768,
+      "emitterFullLength": 0.2304,
+      "emitterFullWidth": 0.0768,
+      "emitterDiscRadius": 0.1152,
       "coneAngleDeg": 100.0,
       "sizeStops": [
        [
@@ -83491,8 +83728,9 @@
       "speedMin": 1.5053,
       "speedMax": 1.5667,
       "gravityY": 0.0,
-      "emitterHalfLength": 0.1536,
-      "emitterHalfWidth": 0.0768,
+      "emitterFullLength": 0.1536,
+      "emitterFullWidth": 0.0768,
+      "emitterDiscRadius": 0.0768,
       "coneAngleDeg": 100.0,
       "sizeStops": [
        [

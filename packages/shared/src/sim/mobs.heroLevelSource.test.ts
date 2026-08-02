@@ -146,9 +146,24 @@ function spawnSpecialHp(
   return w.health.get(id)!.maxHp;
 }
 
-/** `round(championStatBase(MaxHealth, level) × 5) + 4000` — the owner's formula. */
+/**
+ * `round(championStatBase(MaxHealth, level) × heroHpMult) + hpFlatBonus` — the
+ * owner's formula, with **both knobs read off the shipped config**.
+ *
+ * ⚠️ 這兩個數字以前是寫死的（`× 5` / `+ 4000`）。它們是 owner 反覆調的平衡值
+ * （flat 走過 10,000 → 4,000 → 2,000），而寫死等於把它們釘進**第四個地方** ——
+ * 於是每一次調平衡都變成改程式，正好是 CLAUDE.md 第一守則在防的事。
+ *
+ * 讀設定並沒有讓這些測試變空：它們驗的是**公式的形狀**（英雄卡 × 倍率 + 定值,
+ * 且等級來自場上最高），不是那兩個數字本身。數字本身由
+ * 「schema DEFAULT ↔ content json ↔ 後台 SHIPPED」三面互釘的漂移測試守。
+ */
 function expectedSpecialHp(level: number): number {
-  return Math.round(championStatBase(HERO, Stat.MaxHealth, level, COMBAT_ENV_DEFAULTS) * 5) + 4000;
+  const s = ARENA_RULES.mobWaves.special!;
+  return (
+    Math.round(championStatBase(HERO, Stat.MaxHealth, level, COMBAT_ENV_DEFAULTS) * s.heroHpMult!) +
+    s.hpFlatBonus!
+  );
 }
 
 describe("#290 · 「跟當時場上英雄最高等級相同」 是在生成那一刻算的", () => {
@@ -358,12 +373,18 @@ describe("#290 · 另外兩個模式與「沒填」", () => {
   });
 });
 
-describe("#290 · flat 4,000 與出貨設定", () => {
-  it("出貨的特殊殭屍 flat 是 4,000, 而且真的進到 mobRulesFromConfig 的輸出", () => {
+describe("#290 · 出貨的 flat 與 heroLevelSource 真的走完出貨路徑", () => {
+  it("content json 與 schema DEFAULT 的 flat 完全一致, 而且真的進到 mobRulesFromConfig 的輸出", () => {
     cover("mob-special-hero-level-source");
-    // The doc says so…
-    expect(ARENA_RULES.mobWaves.special!.hpFlatBonus).toBe(4000);
-    expect(DEFAULT_MOB_WAVES_CONFIG.special!.hpFlatBonus).toBe(4000);
+    // 這一格是 owner 反覆調的平衡值(10,000 → 4,000 → 2,000, 2026-08-02 「請都減半」),
+    // 所以這裡驗的是**兩份出貨鏡像相等**,不是某一個字面數字 —— 釘字面值等於
+    // 每次調平衡都要改測試,而那正是第一守則在防的事。真正會壞的是「有人只改了
+    // 其中一份」,那個由下面這條等式抓。
+    const flat = ARENA_RULES.mobWaves.special!.hpFlatBonus!;
+    expect(DEFAULT_MOB_WAVES_CONFIG.special!.hpFlatBonus).toBe(flat);
+    // 仍然要有下界:flat 是「英雄卡以外的保底血」,0 會讓低等英雄的特殊殭屍
+    // 一擊即死,而那是靜默的 —— 沒有任何畫面會說「保底沒了」。
+    expect(flat).toBeGreaterThan(0);
     expect(ARENA_RULES.mobWaves.special!.heroLevelSource).toBe("matchHighest");
     expect(ARENA_RULES.mobWaves.boss!.heroLevelSource).toBe("fixed");
 
@@ -373,14 +394,14 @@ describe("#290 · flat 4,000 與出貨設定", () => {
     hero(w, 0, 25);
     const rules = mobRulesFromConfig(SHIPPED, DT, 3);
     const hp = mobSpawnProfile(w, 0, rules, "special").maxHp;
-    expect(hp).toBe(
-      Math.round(championStatBase(HERO, Stat.MaxHealth, 25, COMBAT_ENV_DEFAULTS) * 5) + 4000,
+    const heroPart = Math.round(
+      championStatBase(HERO, Stat.MaxHealth, 25, COMBAT_ENV_DEFAULTS) *
+        ARENA_RULES.mobWaves.special!.heroHpMult!,
     );
-    // The 6,000-point difference from the old +10,000 is far outside rounding —
-    // 「還是舊的 flat」 lands 6,000 high, every time.
-    expect(hp).toBe(
-      Math.round(championStatBase(HERO, Stat.MaxHealth, 25, COMBAT_ENV_DEFAULTS) * 5) + 10000 - 6000,
-    );
+    expect(hp).toBe(heroPart + flat);
+    // 而且 flat 真的是**加上去**的,不是被吞掉 —— 只驗 `hp === heroPart + flat`
+    // 在 flat 為 0 時對「完全不讀 flat」的實作也會過。
+    expect(hp - heroPart).toBe(flat);
   });
 
   it("殭屍王仍然是滿級 99 —— `fixed` 沒有把王的等級鬆綁", () => {

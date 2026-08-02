@@ -73,7 +73,7 @@ import { AimIndicator } from "./render/AimIndicator";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
 import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
-import { RoundWinnerStage } from "./render/RoundWinnerStage";
+import { RoundWinnerStage, planRoundWinnerShow } from "./render/RoundWinnerStage";
 // ONE number for how long the round-win beat owns the screen: the stage's grey
 // wash, the taunt delay and this trigger window all read the same constant, so
 // the window can never be shortened below the taunt delay and silently mute it.
@@ -164,7 +164,6 @@ import {
 import { prefersReducedMotion } from "./ui/buttonSfx";
 import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
-import { roundWinnerTeamChampions } from "./ui/panels/settlementModel";
 
 const SLOT_INDEX: Record<AbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
 /** authoritative error beyond which we treat the correction as a teleport */
@@ -2544,23 +2543,18 @@ export class GameApp {
     // edge into the round-end phase → present the round winner (if resolvable)
     if (state && phase === "resolution" && prev !== "resolution") {
       const hud = hudStore.getState();
-      // The whole winning TEAM, MVP first (owner: 「勝利的時候應該秀隊伍三人的模組」).
-      // A member whose model doc has not loaded is DROPPED rather than allowed to
-      // blank a card — three champions with one empty slot reads as a bug, and
-      // the beat is still correct with two.
-      const team = roundWinnerTeamChampions(hud.seats, hud.teams);
-      const members = team
-        .map((id) => {
-          const doc = this.roundWinnerModelDoc(id, hud.seats);
-          return doc ? { doc, championId: id } : null;
-        })
-        .filter((m): m is { doc: ModelDoc; championId: string } => m !== null);
-      if (members.length > 0) {
-        // Forward the MVP + round: the stage needs BOTH to pick the taunt
-        // deterministically (audio/victoryTaunt hashes championId+round), and
-        // with no ctx it silently skips the whole 嘲諷台詞 half of #93. The MVP
-        // is `team[0]`, which is also the leftmost card.
-        this.roundWinner.showTeam(members, { championId: team[0], round: state.round });
+      // The whole winning TEAM (owner 2026-07-27: 「勝利的時候應該秀隊伍三人的模組」),
+      // ordered by 存活順序 with 金/銀/銅 crowns (GH#257, owner:「只顯示最後活下來
+      // 順序的三位」). WHO stands where, WHICH models get dropped when a doc has not
+      // loaded, and WHOSE taunt plays all live in `planRoundWinnerShow`
+      // (render/RoundWinnerStage) — a pure function, so `roundWinnerPlan.test.ts`
+      // can drive the real hudStore → real stage path headlessly. Inlining it back
+      // here is what let the whole podium be deleted with 1292 tests still green.
+      const plan = planRoundWinnerShow(hud.seats, hud.teams, state.round, (id) =>
+        this.roundWinnerModelDoc(id, hud.seats),
+      );
+      if (plan) {
+        this.roundWinner.showTeam(plan.members, plan.ctx);
         this.roundWinnerUntilMs = nowMs + ROUND_PRESENT_MS;
       }
     }

@@ -157,7 +157,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     moveSpeed: 2.4,
     attackRange: 2.6,
     attackCdSec: 1.4,
-    radius: 1.8,
+    radius: 0.9,
     // ⚠️ MERGE SEAM (v0.9.12) — see the same note in
     // packages/shared/src/content/schema/config.ts. Two lanes each landed ONE
     // owner instruction and BOTH must survive: #187's 30,000 bounty AND #192's
@@ -175,7 +175,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.boss` — mobWaves.test.ts
     // pins the whole block, and this mirror is what the console renders before
     // the GET resolves.
-    sizeMult: 10,
+    sizeMult: 5,
     // #289 owner 2026-07-29 「特殊殭屍與殭屍王預設是隨機」 + 「從策展白名單抽」.
     // No `championId` beside it: 隨機 and 指定 are two branches, and showing a
     // named hero next to 「隨機」 reads as a contradiction on the page.
@@ -211,8 +211,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     healthBarReveal: "summon",
   },
   special: {
-    chancePercent: 5,
-    hpMult: 2,
+    chancePercent: 2.5,
+    hpMult: 1,
     damageMult: 1.5,
     // GH#206 owner 2026-07-29 「移動速度 −50%」 — was 1.25 (FASTER than a zombie).
     moveSpeedMult: 0.5,
@@ -227,7 +227,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     heroDamageMult: 2,
     // #290 owner 2026-07-29: 10,000 → 4,000. The flat used to be 78% of a
     // round-3 special's hp, which made 隨機英雄 cosmetic.
-    hpFlatBonus: 4000,
+    // owner 2026-08-02 「血太多 請都減半」: 4,000 → 2,000（同批 hpMult 2 → 1）。
+    hpFlatBonus: 2000,
     // #290 owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」.
     heroLevelSource: "matchHighest",
     // #288 owner 2026-07-29 「特殊殭屍也照傷害比例分,金錢 +5,000 · 等級提升 +5」.

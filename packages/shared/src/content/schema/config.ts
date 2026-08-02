@@ -25,6 +25,12 @@ import { BARCODE_SLOTS } from "../voxelSkin/types";
 // 每回合 S~D 評價的係數 (#212/#232)。整份 schema 定在自己的檔案裡(欄位多、
 // 上下界全部從 sim 的 ROUND_GRADE_BOUNDS 生),這裡只把它掛進 collection union。
 import { zConfigRoundGradeDoc } from "./roundGrade";
+// config.victory-podium@1 (GH#257/#256) 的整份 schema、出貨預設與解析器住在自己
+// 的檔案裡（欄位的理由很長,而且客戶端的 RoundWinnerStage / ui/panels/victoryPodium
+// 直接 import 它）。這裡只做兩件事:把它掛進 collection union（**漏掉這一步就是
+// 2026-08-02 那次線上事故的形狀** —— 內容裡有一個 union 不認得的 schema tag,
+// 整棵內容驗證失敗、客戶端 fail-open 退回 2 隻英雄的骨架）、以及原地 re-export。
+import { zConfigVictoryPodiumDoc } from "./victoryPodium";
 // config.vfx-families@1 lives in ./vfx next to the vfx@1 docs it tunes (the
 // w3x art family layer); only its union membership belongs here.
 import { zConfigVfxFamiliesDoc } from "./vfx";
@@ -1806,9 +1812,11 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     moveSpeed: 2.4,
     attackRange: 2.6,
     attackCdSec: 1.4,
-    // 1.8 against the zombie's 0.6 — the king is THREE TIMES as wide, which is
-    // the silhouette cue that says 「這不是雜魚」 before any model loads.
-    radius: 1.8,
+    // 0.9 against the zombie's 0.6 — owner 2026-08-02 halved BOTH the king's
+    // 體型 and its 判定 (「殭屍王體型可以減半」→「可以也減判定」), so the model and
+    // the hitbox stay the same size. It is still 1.5× a zombie, which keeps the
+    // silhouette cue that says 「這不是雜魚」 before any model loads. WAS 1.8.
+    radius: 0.9,
     // ⚠️ MERGE SEAM (v0.9.12): two lanes each landed ONE owner instruction here
     // and the conflict looked like a choice. It is not — BOTH must survive, and
     // dropping either one is invisible to every test in the repo:
@@ -1849,7 +1857,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // and `mobs.heroDerived.test.ts` + `apps/admin/src/mobWaves.test.ts` both
     // pin the three copies against each other — editing one alone is a red suite,
     // which is exactly what stopped this value drifting for a whole version.
-    sizeMult: 10,
+    // owner 2026-08-02 「殭屍王體型可以減半」—— WAS 10。與上面的 radius 一起減半,
+    // 兩個必須同動:只縮模型會讓玩家打到看不見的空氣,只縮判定會讓大模型穿不進去。
+    sizeMult: 5,
     // ── 從英雄推導 (GH#206, owner 2026-07-29) ───────────────────────────────
     // 「生命與能力屬性 = 該設定英雄的 20 倍, 基礎生命額外 +100,000, 移速 −80%,
     //   等級是滿級 99」. Against the shipped 喪標麥可 sheet that resolves to:
@@ -1915,8 +1925,11 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   // legible at a glance even before it has its own model; triple reward is what
   // makes hunting it a decision rather than trivia.
   special: {
-    chancePercent: 5,
-    hpMult: 2,
+    // owner 2026-08-02 「特殊殭屍出現頻率太高且血太多 請都減半」——
+    // chancePercent 5 → 2.5 (一波 20 隻約半隻), hpMult 2 → 1 (跟普通殭屍同底),
+    // hpFlatBonus 4,000 → 2,000 (見下)。三個一起減半才是「都減半」。
+    chancePercent: 2.5,
+    hpMult: 1,
     damageMult: 1.5,
     // owner 2026-07-29 (GH#206) 「移動速度 −50%」 — WAS 1.25, i.e. the special
     // used to be FASTER than a zombie. This one field is the whole reason 移速
@@ -1941,11 +1954,14 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // 「生命與能力屬性 = 該設定英雄的 5 倍, 基礎生命額外 +4,000」.
     heroHpMult: 5,
     heroDamageMult: 2,
-    // owner 2026-07-29: 10,000 → **4,000**. At round 3 the +10,000 was 78% of a
+    // owner 2026-07-29: 10,000 → 4,000. At round 3 the +10,000 was 78% of a
     // special's 12,764 hp — the hero it wears barely mattered and every special
-    // in the match was the same fat wall. 4,000 puts the HERO back in charge of
-    // the number, which is the whole point of 隨機英雄 + 「跟場上最高等級」.
-    hpFlatBonus: 4000,
+    // in the match was the same fat wall. Pulling the flat down puts the HERO
+    // back in charge of the number, which is the whole point of 隨機英雄 +
+    // 「跟場上最高等級」.
+    // owner 2026-08-02 「血太多 請都減半」: 4,000 → **2,000**, 與同批的 hpMult
+    // 2 → 1 相乘,實際血量剩約四分之一。
+    hpFlatBonus: 2000,
     // #290 — owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」. THE ONE FIELD
     // IN THIS DOC THAT IS NOT A CONSTANT: resolved in `spawnMob`, not at arm
     // time, because heroes level up inside a round. `"round"` restores the
@@ -3626,6 +3642,83 @@ export const zConfigVictoryFxDoc = z
   .strict();
 
 /**
+ * config.lobby-layout@1 — 大廳左欄的上下分割政策（GH#255）。
+ *
+ * owner:「原本排行榜移到朋友列表下半部，各佔左邊排的上下各半」。
+ *
+ * ⚠️ 值的**唯一真相**是 `apps/client/src/ui/platform/lobbyLayout.ts` 的
+ * `DEFAULT_LOBBY_LAYOUT` —— 那一份是螢幕真的在用的。這裡這一份是內容層的鏡像,
+ * `apps/admin/src/laneConfigDocs.test.ts` 逐格比對兩邊,所以它們不可能各走各的。
+ *
+ * ⚠️ **這份文件目前沒有執行期消費端**（`LobbyScreen.tsx` 直接吃常數）。它在
+ * `configDocCoverage.ts` 上以 DEFERRED 掛帳,到期條件是機器數出來的呼叫端數量。
+ * 不要在別的地方再抄一份預設值。
+ */
+export const zConfigLobbyLayoutDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.lobby-layout@1"),
+    note: z.string().optional(),
+    /**
+     * 左欄在寬螢幕上的固定寬度（px）。上界 480 是「左欄吃掉半個 1024 平板」;
+     * 下界 180 之下,朋友名字與排名列都會被截斷成看不懂。
+     */
+    leftColumnWidthPx: z.number().int().min(180).max(480),
+    /**
+     * 分割模式下,**朋友列表**佔左欄高度的比例（0..1）,排行榜拿剩下的。
+     * `0.5` 就是 owner 的「各半」。上下界 0.2 / 0.8 是「另一半至少還看得到兩列」。
+     */
+    friendsShare: z.number().min(0.2).max(0.8),
+    /** 堆疊模式下,每一塊面板保證拿到的高度（px）。 */
+    minSlotHeightPx: z.number().int().min(80).max(600),
+    /** 左欄矮於這個高度（px）就不分割、改成整欄一起捲。 */
+    splitMinHeightPx: z.number().int().min(320).max(1200),
+    /**
+     * 視窗窄於這個寬度（px）時左欄已經是整頁寬的一條,再按高度切一半沒有意義。
+     * 出貨值刻意等於 `ui/platform/ranking.css` 的 `@media (max-width: 720px)`。
+     */
+    stackBelowWidthPx: z.number().int().min(320).max(1600),
+  })
+  .strict();
+
+/**
+ * config.valhalla-sandbox@1 — 英靈殿技能試放空間的規則（GH#254）。
+ *
+ * owner 原話:「英靈殿 多一個施展技能小模擬空間(但人不會移動，鏡頭永遠跟著人)
+ * 以及一個生命 10,000 的假人 (生命歸零3秒後自動補滿)」——
+ * `dummyHealth` 與 `dummyRespawnSec` 兩格是他明說的,其餘五格是被寫成欄位的
+ * 決策點（CLAUDE.md 第一守則:「心裡出現要選 A 還是 B」的那些）。
+ *
+ * ⚠️ 值與上下界的**唯一真相**是
+ * `apps/client/src/ui/platform/valhalla/valhallaSandboxRules.ts` 的
+ * `DEFAULT_VALHALLA_SANDBOX` / `VALHALLA_SANDBOX_BOUNDS`;這裡是內容層的鏡像,
+ * `apps/admin/src/laneConfigDocs.test.ts` 逐格比對。
+ *
+ * ⚠️ 同樣**還沒有執行期消費端**（沙盒直接吃常數）,見 `configDocCoverage.ts`。
+ */
+export const zConfigValhallaSandboxDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.valhalla-sandbox@1"),
+    note: z.string().optional(),
+    /** 假人的生命上限。owner 明說 10,000。 */
+    dummyHealth: z.number().int().min(1).max(1_000_000),
+    /** 假人歸零之後幾秒補滿。owner 明說 3 秒;0 = 立刻補滿也是合法玩法。 */
+    dummyRespawnSec: z.number().min(0).max(60),
+    /** 假人站在英雄正前方幾公尺。太遠近戰會完全空揮（房間裡不能走路）。 */
+    dummyDistance: z.number().min(0.5).max(30),
+    /** 沙盒要不要套用線上的 combat-env 全域倍率（#125:預覽不可以說謊）。 */
+    applyCombatEnv: z.boolean(),
+    /** `anchor` = 連擊退/衝刺都推不動;`input` = 只吃掉走位指令。 */
+    movementLock: z.enum(["anchor", "input"]),
+    /** 進場就把 W/E/R 升到 1 級並解鎖 EX。關掉的話六格裡有五格是死的。 */
+    unlockAllSlots: z.boolean(),
+    /** 魔力不消耗。關掉的話多數英雄放兩三發就會 `no-mana`。 */
+    infiniteMana: z.boolean(),
+  })
+  .strict();
+
+/**
  * config.item-card@1 — 道具卡片的**排版與配色**（`config/item-card.json`）。
  *
  * owner 2026-08-02, verbatim:
@@ -3944,6 +4037,15 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigRegenDoc,
   zConfigVictoryFxDoc,
   zConfigItemCardDoc,
+  // ── 2026-08-02 收尾:三個 lane 各自定義的欄位,三個落點一次接完 ───────────
+  // ⚠️ **這三行是最重要的一步。** 新的 config 文件進了 `content/` 而 union 不認得
+  // 它的 schema tag,`zConfigDoc` 就會拒絕整份文件 → ContentLoader 驗證失敗 →
+  // `main.tsx` 的 fail-open 註冊 2 隻英雄的骨架 → 選人畫面整個空掉,而網站看起來
+  // 完全正常。那正是 2026-08-02 線上壞掉四小時的根因（roster / boss-intro /
+  // item-card / victory-fx 四個 tag 同時漏掉）。
+  zConfigLobbyLayoutDoc,
+  zConfigValhallaSandboxDoc,
+  zConfigVictoryPodiumDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -4157,6 +4259,79 @@ export const DEFAULT_VICTORY_FX: VictoryFxPolicy = {
 export function resolveVictoryFx(doc: ConfigVictoryFxDoc | null | undefined): VictoryFxPolicy {
   if (!doc) return DEFAULT_VICTORY_FX;
   return { roundVolley: doc.roundVolley, matchChicken: doc.matchChicken };
+}
+
+// ─────────────────────── 大廳版面 / 英靈殿沙盒（2026-08-02 收尾）──────────
+
+export type ConfigLobbyLayoutDoc = z.infer<typeof zConfigLobbyLayoutDoc>;
+export type ConfigValhallaSandboxDoc = z.infer<typeof zConfigValhallaSandboxDoc>;
+
+/** 去掉 id/schema/note 的殼之後,程式真正讀的那一份。 */
+export type LobbyLayoutPolicyDoc = Omit<ConfigLobbyLayoutDoc, "id" | "schema" | "note">;
+export type ValhallaSandboxPolicyDoc = Omit<ConfigValhallaSandboxDoc, "id" | "schema" | "note">;
+
+/**
+ * 出貨預設（＝內容載不到時的保險絲）。
+ *
+ * ⚠️ 每一格都必須和 `apps/client/src/ui/platform/lobbyLayout.ts` 的
+ * `DEFAULT_LOBBY_LAYOUT` 一字不差 —— 那一份才是螢幕真的在用的。
+ * `apps/admin/src/laneConfigDocs.test.ts` 逐格比對兩邊,差一格就紅。
+ */
+export const DEFAULT_LOBBY_LAYOUT_POLICY: LobbyLayoutPolicyDoc = {
+  leftColumnWidthPx: 280,
+  friendsShare: 0.5,
+  minSlotHeightPx: 168,
+  splitMinHeightPx: 560,
+  stackBelowWidthPx: 720,
+};
+
+/**
+ * 出貨預設。owner 明說的兩格是 `dummyHealth: 10000` 與 `dummyRespawnSec: 3`。
+ *
+ * ⚠️ 同上,唯一真相是 `valhallaSandboxRules.ts` 的 `DEFAULT_VALHALLA_SANDBOX`。
+ */
+export const DEFAULT_VALHALLA_SANDBOX_POLICY: ValhallaSandboxPolicyDoc = {
+  dummyHealth: 10_000,
+  dummyRespawnSec: 3,
+  dummyDistance: 3.2,
+  applyCombatEnv: true,
+  movementLock: "anchor",
+  unlockAllSlots: true,
+  infiniteMana: true,
+};
+
+/**
+ * 文件 → 政策。缺席／壞掉一律回退到出貨預設,理由和 `resolveVictoryFx` 同源:
+ * 內容載不到是 2026-08-01 骨架事故那一條路,而在那條路上把左欄高度變成 0
+ * 會讓「內容全毀」看起來像「朋友列表不見了」。
+ */
+export function resolveLobbyLayout(
+  doc: ConfigLobbyLayoutDoc | null | undefined,
+): LobbyLayoutPolicyDoc {
+  if (!doc) return DEFAULT_LOBBY_LAYOUT_POLICY;
+  return {
+    leftColumnWidthPx: doc.leftColumnWidthPx,
+    friendsShare: doc.friendsShare,
+    minSlotHeightPx: doc.minSlotHeightPx,
+    splitMinHeightPx: doc.splitMinHeightPx,
+    stackBelowWidthPx: doc.stackBelowWidthPx,
+  };
+}
+
+/** 同上。文件缺席時沙盒仍然要開得起來（假人 10,000 血、三秒補滿）。 */
+export function resolveValhallaSandbox(
+  doc: ConfigValhallaSandboxDoc | null | undefined,
+): ValhallaSandboxPolicyDoc {
+  if (!doc) return DEFAULT_VALHALLA_SANDBOX_POLICY;
+  return {
+    dummyHealth: doc.dummyHealth,
+    dummyRespawnSec: doc.dummyRespawnSec,
+    dummyDistance: doc.dummyDistance,
+    applyCombatEnv: doc.applyCombatEnv,
+    movementLock: doc.movementLock,
+    unlockAllSlots: doc.unlockAllSlots,
+    infiniteMana: doc.infiniteMana,
+  };
 }
 
 /**

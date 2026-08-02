@@ -164,12 +164,15 @@ describe("#247 A — 殭屍王無視碰撞穿透地形", () => {
     const on = walkKingThroughPillar(rulesWith({ noClip: true }));
     const off = walkKingThroughPillar(rulesWith({ noClip: false }));
 
-    // Through the middle of it. The king's own radius is 1.8, so anything under
-    // 1.0 means its CENTRE was inside a 1.8-radius pillar.
-    expect(on.closest).toBeLessThan(1.0);
-    // Stopped/deflected: the two radii sum to 3.6, and the collision layer never
-    // lets two bodies overlap, so a king that is still colliding cannot beat it.
-    expect(off.closest).toBeGreaterThanOrEqual(PILLAR.radius + 1.8 - 1e-6);
+    // ⚠️ 王的半徑**讀出貨設定**,不寫死。owner 2026-08-02 把它從 1.8 減半成 0.9
+    // （「殭屍王體型可以減半」→「可以也減判定」），而寫死 1.8 會讓這兩行在一次
+    // 平衡調整之後說假話：它們會紅，但紅的理由不是「無碰撞壞了」。
+    const KING_R = DEFAULT_MOB_WAVES_CONFIG.boss!.radius!;
+    // Through the middle of it: 圓心真的進到柱子裡面（柱心距離小於柱子半徑）。
+    expect(on.closest).toBeLessThan(PILLAR.radius);
+    // Stopped/deflected: 碰撞層不讓兩個身體重疊,所以還在碰撞的王不可能靠得比
+    // 兩個半徑之和更近。
+    expect(off.closest).toBeGreaterThanOrEqual(PILLAR.radius + KING_R - 1e-6);
     // …and the two are not the same number by accident.
     expect(off.closest - on.closest).toBeGreaterThan(2);
   });

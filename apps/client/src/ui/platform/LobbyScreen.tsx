@@ -3,6 +3,29 @@
  * logout), friends panel, room browser or room view, leaderboard, plus the
  * live invite prompts pushed over the lobby WS.
  *
+ * ---- TWO COLUMNS, NOT THREE (GH#255) ---------------------------------------
+ * owner: 「原本排行榜移到朋友列表下半部，各佔左邊排的上下各半」. The ladder used
+ * to own a third 280px column of its own; it now shares the LEFT column with
+ * the friends list, 朋友列表 on top and 排位榜 underneath. The two halves are
+ * flex slots whose sizing comes from ./lobbyLayout — including the split/stack
+ * decision on a short viewport, which is a policy value rather than a literal
+ * buried in the JSX (see that module's header for why).
+ *
+ * ---- ONE PLACE TO START A GAME (GH#258) ------------------------------------
+ * owner: 「單人 vs BOT 變成 create room 底下預設的一個房間 (意思是這兩個也合併)」.
+ * 一鍵開打 was a separate strip sitting above the room browser, so the lobby
+ * offered two unrelated-looking ways in. The strip is now the room browser's
+ * PINNED FIRST ENTRY — the default room, right under 「Create room」 — passed
+ * down as `pinned` so it still renders from this file (it is lobby chrome, not
+ * room-browser data) while living inside the list the owner asked for.
+ *
+ * ⚠️ It presses the SAME `playBotMatch` store action as before. That action is
+ * where the #200 first-press fix lives (it awaits the one-time content load
+ * BEFORE the platform mints a colyseus seat, so the reservation cannot expire
+ * during a cold download and bounce the player back to the lobby). Merging the
+ * entry points must never grow a second, hand-rolled start path — that would
+ * silently drop the fix. See botMatchPrime.test.ts.
+ *
  * TOP-RIGHT SAFE AREA (task #107): the header runs to the right edge, and the
  * persistent audio cluster is <body>-portaled above every screen — so ⚙
  * Settings / Logout used to render UNDERNEATH it. The header now RESERVES the
@@ -24,6 +47,7 @@ import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
 import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { DEFAULT_LOBBY_LAYOUT, leftColumnSlotStyle, leftColumnStyle, useLeftColumnMode } from "./lobbyLayout";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 /** The lobby shell's own edge padding — also the header's `outerInset`. */
@@ -97,7 +121,13 @@ export function ErrorToast(): React.JSX.Element | null {
 
 /**
  * BOT MATCH STRIP (#188) — 「play offline with bot 也要開放給有註冊的玩家在大廳
- * 一鍵開房直接玩」.
+ * 一鍵開房直接玩」 — and, since GH#258, the room browser's DEFAULT ROOM: it is
+ * rendered as the pinned first entry of the Rooms list, directly under
+ * 「Create room」, instead of as a separate strip above the browser.
+ *
+ * That merge is presentation only. The button still calls the store's
+ * `playBotMatch`, which is the shipped route (POST /rooms/solo) and the place
+ * the #200 first-press fix lives. Nothing here starts a match by itself.
  *
  * TWO BUTTONS THAT LOOK DIFFERENT BECAUSE THEY ARE DIFFERENT:
  *
@@ -172,18 +202,25 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
   const [rogueliteMobs, setRogueliteMobs] = useState(true);
   return (
     <Panel
+      data-ggd-default-room=""
       style={{
         border: `1px solid ${ACCENT}88`,
         background: `linear-gradient(180deg, ${ACCENT}1f 0%, ${PANEL_BG} 62%)`,
         gap: 12,
+        marginBottom: 8,
       }}
     >
       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
         {/* WHAT IT IS + WHAT IT PAYS — one block, so the reward never scrolls
             away from the name of the mode. */}
         <div style={{ flex: "1 1 230px", minWidth: 0 }}>
-          <div style={{ fontSize: 18, fontWeight: 900, letterSpacing: 1, color: TEXT_MAIN }}>
-            單人 vs BOT
+          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+            <div style={{ fontSize: 18, fontWeight: 900, letterSpacing: 1, color: TEXT_MAIN }}>
+              單人 vs BOT
+            </div>
+            {/* GH#258: says WHY this row sits above the open rooms — it is not
+                somebody's room, it is the one that is always here. */}
+            <RewardBadge color={ACCENT} text="預設房間" title="這一格永遠在：不用等人，按下去就開一場對 BOT 的正式比賽" />
           </div>
           <div style={{ fontSize: 12, color: TEXT_DIM, margin: "3px 0 7px" }}>
             一個人也能開打 —— 真的<span style={{ color: GOLD, fontWeight: 700 }}>計分</span>、記戰績、上排行榜
@@ -389,6 +426,9 @@ export function LobbyScreen(): React.JSX.Element {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
+  // GH#255 — split the left column into halves, or stack them when the column
+  // is too short/narrow for two readable halves. The decision is ./lobbyLayout's.
+  const leftMode = useLeftColumnMode(DEFAULT_LOBBY_LAYOUT);
 
   return (
     <div
@@ -467,12 +507,32 @@ export function LobbyScreen(): React.JSX.Element {
         <StoreScreen />
       ) : (
         // .ggd-lobby-body / .ggd-lobby-col let platform/ranking.css stack these
-        // three fixed columns on a narrow viewport (phone portrait) — desktop
-        // keeps the inline widths untouched.
+        // TWO columns on a narrow viewport (phone portrait) — desktop keeps the
+        // inline widths untouched. (Two, not three, since GH#255 moved the
+        // ladder into the left column; the stylesheet rule is per-column so it
+        // did not have to change.)
         <div className="ggd-lobby-body" style={{ display: "flex", gap: 12, flex: 1, minHeight: 0 }}>
-          <div className="ggd-lobby-col" style={{ width: 260, display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}>
-            <FriendsPanel />
-            <ReferralPanel />
+          {/* LEFT COLUMN, HALVED (GH#255) — 朋友列表 on top, 排位榜 underneath.
+              Both slots come from ./lobbyLayout, so the two halves are equal by
+              construction (one `friendsShare`) and the phone behaviour is a
+              policy decision rather than a literal in this JSX. Each slot
+              scrolls inside itself and clips horizontally, which is what keeps
+              a long name or a wide ladder row from widening the whole page. */}
+          <div
+            className="ggd-lobby-col"
+            data-ggd-lobby-left=""
+            style={leftColumnStyle(DEFAULT_LOBBY_LAYOUT)}
+          >
+            <div data-ggd-lobby-slot="friends" style={leftColumnSlotStyle("friends", leftMode, DEFAULT_LOBBY_LAYOUT)}>
+              <FriendsPanel />
+              {/* 邀請好友 lives with the friend list it is about; it renders
+                  null on an account with no code, so on most days the top half
+                  is the friends panel alone. */}
+              <ReferralPanel />
+            </div>
+            <div data-ggd-lobby-slot="leaderboard" style={leftColumnSlotStyle("leaderboard", leftMode, DEFAULT_LOBBY_LAYOUT)}>
+              <LeaderboardPanel />
+            </div>
           </div>
           <div className="ggd-lobby-col" style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
             {/* 英靈殿 (#258) — owner: 「大廳中央上面 (單人vsBot 之上)」. It is an
@@ -482,11 +542,10 @@ export function LobbyScreen(): React.JSX.Element {
                 off a phone in landscape (#151/#247). Hidden inside a room,
                 where the column belongs to the room view. */}
             {!room && <ValhallaPanel />}
-            {!room && <BotMatchStrip mapId={offlineMap} onMapId={setOfflineMap} />}
-            {room ? <RoomView /> : <RoomListPanel />}
-          </div>
-          <div className="ggd-lobby-col" style={{ width: 280, display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}>
-            <LeaderboardPanel />
+            {/* GH#258 — 單人 vs BOT is now the room browser's default room, so
+                it is handed DOWN into the Rooms list instead of being its own
+                strip above it. Same component, same `playBotMatch` press. */}
+            {room ? <RoomView /> : <RoomListPanel pinned={<BotMatchStrip mapId={offlineMap} onMapId={setOfflineMap} />} />}
           </div>
         </div>
       )}

@@ -176,10 +176,13 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(18);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(21);
     expect(byKind("OWN_PAGE")).toHaveLength(11);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
-    expect(byKind("DEFERRED")).toHaveLength(2);
+    // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
+    // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
+    // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
+    expect(byKind("DEFERRED")).toHaveLength(5);
     // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）與 roster（英雄上下架）。
     // 這個數字往上長就是欠債變多，而它變多的那一刻要有人按下同意。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual(["audio-map", "roster"]);
@@ -248,6 +251,46 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 呼叫）。少了它，上面那條對「掃描器永遠回 0」的壞實作也會過。
     expect(
       productionCallSites(REPO, "applyItemCardDoc", ["ui/components/itemCardTheme.ts"]),
+    ).toBeGreaterThan(0);
+  });
+
+  it("2026-08-02 收尾的三列 DEFERRED 也會自己到期：三個 resolver 目前 0 個 production 呼叫端", () => {
+    cover(TAG);
+    // ⚠️ 這一條就是那三列豁免的到期條件本人。三份文件的 Zod / union / 出貨值都
+    // 接完了,唯一缺的是「客戶端改讀文件而不是讀寫死的常數」。那一天到了,對應的
+    // resolver 會出現第一個呼叫端,這裡變成 1,守衛紅 —— 有人被迫回來刪掉豁免、
+    // 註冊一個 ConfigDocSpec。註解做不到這件事（第三守則）。
+    //
+    // 排除的路徑一律是「宣告本人」＋「這條守衛自己的文書作業」：豁免表在字串裡
+    // 寫著這三個名字,數到自己的文書作業就永遠不會綠（round-grade 那一列踩過）。
+    const PENDING = [
+      { docId: "lobby-layout", symbol: "resolveLobbyLayout", decl: "content/schema/config.ts" },
+      {
+        docId: "valhalla-sandbox",
+        symbol: "resolveValhallaSandbox",
+        decl: "content/schema/config.ts",
+      },
+      {
+        docId: "victory-podium",
+        symbol: "resolveVictoryPodium",
+        decl: "content/schema/victoryPodium.ts",
+      },
+    ] as const;
+    for (const p of PENDING) {
+      const row = CONFIG_DOC_EXEMPTIONS.find((e) => e.docId === p.docId);
+      expect(row, `${p.docId} 不在豁免表上 —— 這條到期條件沒有東西可以綁`).toBeTruthy();
+      expect(row!.kind).toBe("DEFERRED");
+      expect(
+        productionCallSites(REPO, p.symbol, [p.decl, "admin/src/configDocCoverage.ts"]),
+        `${p.symbol} 有 production 呼叫端了 —— ${p.docId} 的豁免已到期。` +
+          `去 configForms.ts 註冊一份 ConfigDocSpec（照 VICTORY_FX_SPEC 抄）、` +
+          `補 store.ts 的 Page union 與 session 表、App.tsx 的導覽列一列,然後刪掉這一列豁免。`,
+      ).toBe(0);
+    }
+    // 對照組同上：一個確實有 production 呼叫端的 resolver。少了它,上面那三條對
+    // 「掃描器永遠回 0」的壞實作也會全過（失敗形態 ④）。
+    expect(
+      productionCallSites(REPO, "resolveVictoryFx", ["content/schema/config.ts"]),
     ).toBeGreaterThan(0);
   });
 });

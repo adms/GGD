@@ -35,6 +35,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { readStarterRoster, STARTER_GO_REL } from "@ggd/shared/testkit/starterRoster";
+import { effectsOf } from "@ggd/shared/testkit/expandedEffects";
 import {
   SIM_GROUND_DEFAULT_RADIUS,
   deriveTelegraphGeometry,
@@ -76,6 +77,22 @@ interface AbilityDoc extends TelegraphAbilityLike {
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
+}
+
+/**
+ * 把一份 ability doc 變成**出貨登錄表裡的那個形狀**。
+ *
+ * ⚠️ 這一層不能省。v0.9.24 有 143 支技能改綁模板,它們的原始 JSON 是
+ * `effects: []` + 一個 `template` 綁定 —— 而 `registerAll` 會經過
+ * `content/templates/resolve` 把模板展開,所以**執行期拿到的 def 有 effects**。
+ * 少了這一層,這個檔就會對著「原始檔」宣告 `godie-uvng.e` / `godie-e002.e`
+ * 沒有預告可畫,而遊戲裡它們兩支都有 `spawnProjectile`（實測過）——
+ * 也就是 CLAUDE.md 失敗形態 ⑤：**被測的不是出貨的那個**，只是方向相反：
+ * 它報一個不存在的缺陷，代價是下一個人花時間去追一個沒有的 bug。
+ */
+function shipped(doc: AbilityDoc): AbilityDoc {
+  if ((doc as { template?: unknown }).template == null) return doc;
+  return { ...doc, effects: effectsOf(doc as never) as AbilityDoc["effects"] };
 }
 
 let roster: string[] = [];
@@ -126,7 +143,7 @@ beforeAll(() => {
     const byslot = new Map<Slot, AbilityDoc>();
     for (const slot of ["Q", "W", "E", "R"] as const) {
       const doc = champ.abilities?.[slot];
-      if (doc) byslot.set(slot, doc);
+      if (doc) byslot.set(slot, shipped(doc));
     }
     // EX and 天生技 live as standalone docs referenced by id
     for (const [key, slot] of [
@@ -135,7 +152,7 @@ beforeAll(() => {
     ] as const) {
       const id = champ[key];
       if (!id) continue;
-      byslot.set(slot, readJson<AbilityDoc>(join(CONTENT, "abilities", `${id}.json`)));
+      byslot.set(slot, shipped(readJson<AbilityDoc>(join(CONTENT, "abilities", `${id}.json`))));
     }
 
     for (const slot of SLOTS) {
@@ -286,12 +303,12 @@ describe("every enabled ability resolves to a telegraph (task #228)", () => {
 /** Re-read the ability doc behind a reported cell (cheap; ~290 small files). */
 function abilityDocFor(c: Cell): AbilityDoc {
   if (c.slot === "EX" || c.slot === "PASSIVE") {
-    return readJson<AbilityDoc>(join(CONTENT, "abilities", `${c.abilityId}.json`));
+    return shipped(readJson<AbilityDoc>(join(CONTENT, "abilities", `${c.abilityId}.json`)));
   }
   const champ = readJson<{ abilities?: Record<string, AbilityDoc> }>(
     join(CONTENT, "champions", `${c.champion}.json`),
   );
-  return champ.abilities![c.slot]!;
+  return shipped(champ.abilities![c.slot]!);
 }
 
 function renderReport(): string {

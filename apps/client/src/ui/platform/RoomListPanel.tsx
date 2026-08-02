@@ -2,6 +2,23 @@
  * RoomListPanel — open room browser (poll /lobby/rooms), create-room dialog
  * (name / mode / bot difficulty / localPlayers for future couch play) and the
  * join-by-code input for invite tokens.
+ *
+ * PINNED DEFAULT ROOM (GH#258) — owner: 「單人 vs BOT 變成 create room 底下預設
+ * 的一個房間 (意思是這兩個也合併)」. The caller hands the entry down as `pinned`
+ * and it renders as the FIRST row of the list, under the Create room button.
+ * It is a slot rather than a hard-coded row on purpose: the bot-match entry is
+ * lobby chrome (it owns the arena select, the payout badges and the store
+ * action), and this panel stays what it is — the browser for rooms the
+ * platform reports. Nothing here starts a match.
+ *
+ * `pinned` IS OPTIONAL AND MUST STAY OPTIONAL. There is exactly one caller
+ * today, and it always passes the entry — so any change that starts assuming
+ * `pinned` is present (an early return, a wrapper that needs a child, a
+ * required prop) would break every future caller without a single existing
+ * test noticing. `lobbyLayout.test.ts` therefore mounts THIS component with no
+ * props at all and reads the browser back off the DOM. (Mutation-verified: an
+ * `if (!pinned) return <Panel title="Rooms" />` early return fails it with
+ * `expected null not to be null` on the room list container.)
  */
 import { useEffect, useState } from "react";
 import { useApp } from "./store";
@@ -122,7 +139,7 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
   );
 }
 
-export function RoomListPanel(): React.JSX.Element {
+export function RoomListPanel({ pinned }: { pinned?: React.ReactNode } = {}): React.JSX.Element {
   const rooms = useApp((s) => s.rooms);
   const refreshRooms = useApp((s) => s.refreshRooms);
   const joinRoom = useApp((s) => s.joinRoom);
@@ -161,7 +178,9 @@ export function RoomListPanel(): React.JSX.Element {
         </Btn>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+      <div data-ggd-room-list="" style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+        {/* GH#258 — the default room, ahead of whatever the platform reports. */}
+        {pinned}
         {rooms.length === 0 && (
           <div style={{ fontSize: 12, color: TEXT_DIM, padding: 8 }}>
             No open rooms — create one and invite your friends.

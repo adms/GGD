@@ -230,6 +230,40 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     why: "119 個英雄 key，每格是 { select: [資產路徑], source, soundset } —— 走訪出來零個純量葉節點，通用表單引擎畫出來會是一堆讓人打錯字的檔案路徑輸入框。值確實會變（owner 會換「誰講什麼」），但變的形狀是「丟新檔進 content/assets + 重跑產線」，入口是語音產線頁 ui/VoiceGenPage.tsx。",
     expiresWhen: "語音產線頁真的能寫這份 doc 的那一天（或 schema 長出可調純量時）失效。",
   },
+  // ── 2026-08-02 收尾：三個 lane 的欄位,落點 1+2 接完了,落點 3 卡在客戶端 ──
+  //
+  // 這三份是同一個形狀,也和上面 `round-grade` 是同一個形狀:文件有了、Zod 有了、
+  // schema tag 進了 union（那一步是**必要**的,不做才會炸 —— 見 config.ts 的註解），
+  // 但**客戶端還在讀寫死的 `DEFAULT_*` 常數,沒有人讀這份文件**。
+  //
+  // 所以今天替它們開後台頁,就是 configForms.ts 檔頭第 1 條講的那句自我一致的
+  // 謊言:操作者存了值、重整讀得回自己填的數字、遊戲一輩子看不到。三列 DEFERRED
+  // 是誠實的那一版,而且到期條件是**機器數出來的**（`productionCallSites`），
+  // 不是一句「之後會做」。
+  {
+    docId: "lobby-layout",
+    kind: "DEFERRED",
+    issue: "GH#255",
+    why: "大廳左欄上下分割政策（friendsShare / splitMinHeightPx / minSlotHeightPx / stackBelowWidthPx）。內容文件與 Zod 都接好了,但唯一的消費端 apps/client/src/ui/platform/LobbyScreen.tsx 讀的是 lobbyLayout.ts 的 DEFAULT_LOBBY_LAYOUT 常數,不是這份文件 —— 今天開一頁後台,操作者改完存檔、重整讀得回來,而大廳一格都不會動。",
+    expiresWhen:
+      "`resolveLobbyLayout` 出現第一個 production 呼叫端的那一刻（＝有人把 ContentDb 的文件推進 LobbyScreen）。configDocCoverage.test.ts 真的去數呼叫端,所以那天它會自己紅,逼人刪掉這一列並註冊一個 ConfigDocSpec。",
+  },
+  {
+    docId: "valhalla-sandbox",
+    kind: "DEFERRED",
+    issue: "GH#254",
+    why: "英靈殿技能試放空間的七格規則（含 owner 明說的假人 10,000 血與 3 秒補滿）。內容文件與 Zod 都接好了,但 valhallaSandbox.ts 的建構子吃的是 `opts.rules ?? DEFAULT_VALHALLA_SANDBOX`,沒有任何人把這份文件餵進 opts.rules —— 開後台頁一樣是存了不生效。",
+    expiresWhen:
+      "`resolveValhallaSandbox` 出現第一個 production 呼叫端的那一刻。同上,守衛自己會紅。",
+  },
+  {
+    docId: "victory-podium",
+    kind: "DEFERRED",
+    issue: "GH#257 / GH#256",
+    why: "回合勝利頒獎台的四格（podiumSize=3 是 owner 原話「最後活下來順序的三位」;roundWinLine 出貨 both ＝現行行為,名言 t=0 + 嘲諷 t=2200ms）。schema 早就存在於 schema/victoryPodium.ts,這一輪把它掛進 collection union 並補上出貨文件,但 RoundWinnerStage / ui/panels/victoryPodium / RoundEndVoice 三個消費端全部直接 import `DEFAULT_VICTORY_PODIUM` 常數,沒有人讀文件。",
+    expiresWhen:
+      "`resolveVictoryPodium` 出現第一個 production 呼叫端的那一刻。⚠️ 它現在**已經有宣告**（schema/victoryPodium.ts 匯出它）但零呼叫端,所以這個數字從 0 變成 1 的那一天就是這一列該死的那一天。",
+  },
 
   // ── ④ KNOWN_GAP：確認是缺口，只是還沒做。這是帳單不是免死金牌 ───────────
   {

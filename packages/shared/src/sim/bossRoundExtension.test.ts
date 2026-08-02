@@ -69,6 +69,16 @@ const shippedMatch = (): ReturnType<typeof zConfigMatchDoc.parse>["match"] =>
     ),
   ).match;
 
+/**
+ * 出貨設定算出來的回合截止 tick。
+ *
+ * ⚠️ 這裡刻意**不寫死**。`combatMaxSec` 是後台可調的回合長度，2026-08-01 從 100
+ * 改成 180，而這個檔裡三處寫死的 `3000` 讓兩條測試從那一刻起就紅著跟過兩個版本
+ * —— 而且紅訊息說的是假話（看起來像「王的延長壞了」，實際上只是回合變長）。
+ * 這個檔要驗的是**差值**（召喚王 → 截止時間往後推 5,400 tick），基準線是變數。
+ */
+const SHIPPED_COMBAT_DEADLINE_TICK = Math.round(shippedMatch().combatMaxSec / DT);
+
 /** The SHIPPED arena rules' `mobWaves` block. */
 const shippedMobWaves = (): MobWavesConfig =>
   (
@@ -202,23 +212,27 @@ describe("殭屍王被召喚 → 兩個截止時間都真的延後 (boss-round-e
 
   it("pushes the ACTUAL combat deadline out by 180 s — read off isCombatTimeUp", () => {
     cover("boss-round-extension");
-    // combatMaxSec 100 → tick 3000. Two worlds, identical but for the king.
+    // ⚠️ 這裡的基準線**讀出貨設定**,不寫死。`combatMaxSec` 是後台可調的回合長度
+    // (2026-08-01 從 100 改成 180),而這條測試要驗的是「王把截止時間往後推」——
+    // 那是一個**差值**。把基準線寫死等於讓一次平衡調整把它變紅,而它紅的時候
+    // 說的是假話(它會說「延長壞了」,其實只是回合變長了)。
+    const BASE = SHIPPED_COMBAT_DEADLINE_TICK;
     const noKing = shippedWorld();
     const withKing = shippedWorld();
-    expect(combatDeadlineTick(noKing.w)).toBe(3000);
+    expect(combatDeadlineTick(noKing.w)).toBe(BASE);
 
     step(withKing.w, 100);
     summonMobBoss(withKing.w, 0, withKing.mobRules, withKing.hero, 100);
-    expect(combatDeadlineTick(withKing.w)).toBe(3000 + 5400);
+    expect(combatDeadlineTick(withKing.w)).toBe(BASE + 5400);
     expect(bossRoundExtensionTicks(withKing.w)).toBe(5400);
 
     // Run BOTH to the original deadline. The un-extended round is over; the
     // extended one is still going — 「避免打到一半結果回合結束」, measured on the
     // predicate a host ends combat with, not on a config field.
-    step(noKing.w, 3000);
-    step(withKing.w, 2900);
-    expect(noKing.w.fireRingTicks).toBe(3000);
-    expect(withKing.w.fireRingTicks).toBe(3000);
+    step(noKing.w, BASE);
+    step(withKing.w, BASE - 100);
+    expect(noKing.w.fireRingTicks).toBe(BASE);
+    expect(withKing.w.fireRingTicks).toBe(BASE);
     expect(isCombatTimeUp(noKing.w)).toBe(true);
     expect(isCombatTimeUp(withKing.w)).toBe(false);
 
@@ -232,15 +246,19 @@ describe("殭屍王被召喚 → 兩個截止時間都真的延後 (boss-round-e
   it("NO summon → neither deadline moves, for the whole round", () => {
     cover("boss-round-extension");
     const { w } = shippedWorld();
-    for (const t of [0, 600, 1799, 1800, 2400, 2999]) {
+    const END = SHIPPED_COMBAT_DEADLINE_TICK;
+    for (const t of [0, 600, 1799, 1800, 2400, END - 1]) {
       step(w, t - w.fireRingTicks);
       expect(fireRingIgnitionTick(w), `ignition @${t}`).toBe(1800);
-      expect(combatDeadlineTick(w), `deadline @${t}`).toBe(3000);
+      expect(combatDeadlineTick(w), `deadline @${t}`).toBe(END);
       expect(bossRoundExtensionTicks(w), `extension @${t}`).toBe(0);
     }
     // the ring really did do its job in the control world (else the guard is
     // asserting that nothing happened in a world where nothing happens)
-    expect(currentFireRingRadius(w)).toBeCloseTo(0.5, 6);
+    // ⚠️ 收到的是出貨設定的 `minRadius`,不是寫死的 0.5 —— v0.9.24 的二段火圈把
+    // 出貨值改成 0（第二段從 90 秒起再收一次）,而寫死 0.5 會讓這一行對「二段
+    // 根本沒跑」和「二段跑了」給出同一個答案的相反面:它會紅,但紅的理由是假的。
+    expect(currentFireRingRadius(w)).toBeCloseTo(shippedMatch().fireRing!.minRadius, 6);
     expect(isCombatTimeUp(w)).toBe(false);
     step(w, 1);
     expect(isCombatTimeUp(w)).toBe(true);

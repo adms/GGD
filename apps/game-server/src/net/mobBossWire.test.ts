@@ -174,13 +174,19 @@ describe("殭屍王 / 特殊殭屍 are visually distinct on the wire", () => {
       mobSizeMultFor(rules, "boss"),
     ];
     for (let i = 0; i < 3; i++) expect(sizes[i]!).toBeCloseTo(want[i]!, 6);
-    // owner GH#192 「modal 大小是10倍」 → GH#206 「體型 30 倍」 → back to **10** on
+    // owner GH#192 「modal 大小是10倍」 → GH#206 「體型 30 倍」 → back to 10 on
     // 2026-07-29 after a playtest (30 × 0.68 × 1.8u = 36.72u tall in a zone
-    // whose radius is 24u — the king filled the camera). Precision 5, not 6: the
-    // ratio is computed from two `float32` round-trips and the residual is
-    // larger than a 1e-6 tolerance, while still being orders of magnitude
-    // tighter than any wrong-by-a-factor bug this line exists to catch.
-    expect(sizes[2]! / sizes[0]!).toBeCloseTo(10, 5);
+    // whose radius is 24u — the king filled the camera) → owner 2026-08-02
+    // 「殭屍王體型可以減半」= 5。
+    // ⚠️ 比值**讀出貨設定**,不寫死。這個數字已經改過四次,每一次寫死都讓這條
+    // 紅著跟過一個版本,而它紅的時候看起來像「線路上的體型壞了」。這條要驗的是
+    // **後台那一格真的走到線路上**,加一個「一眼看得出來」的下界擋掉同義反覆。
+    // Precision 5, not 6: the ratio is computed from two `float32` round-trips
+    // and the residual is larger than a 1e-6 tolerance, while still being orders
+    // of magnitude tighter than any wrong-by-a-factor bug this line exists to catch.
+    const shippedRatio = want[2]! / want[0]!;
+    expect(sizes[2]! / sizes[0]!).toBeCloseTo(shippedRatio, 5);
+    expect(shippedRatio).toBeGreaterThanOrEqual(3);
     // …and `maxMana` MUST stay 0, or the HUD divides by it and paints a mana bar
     // out of the size number (`manaPct = maxMana > 0 ? mana / maxMana : 0`).
     for (const id of [normal, special, king]) {

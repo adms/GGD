@@ -651,18 +651,22 @@ describe("特殊殭屍 — the roll, and whether anyone can SEE it", () => {
       mobSizeMultFor(shipped, "boss"),
     ];
     expect(new Set(shippedSizes).size).toBe(3);
-    // The king is TEN TIMES the zombie — 「大一點」 is not 「看得出來是王」, so the
-    // ratio is pinned, not just ordered.
+    // 「大一點」 is not 「看得出來是王」, so the ratio carries a FLOOR, not just an
+    // order. A floor refuses the tautology (reading the doc back would pass for
+    // ratio 1.0 — an invisible king) without turning every balance nudge into a
+    // code change.
     //
-    // ⚠️ THE HISTORY, because this literal has moved twice: GH#192 「modal 大小是
-    // 10倍」 → GH#206 「體型 30 倍」 → owner 2026-07-29 back to **10** after a
-    // playtest (30 × 0.68 × 1.8u = 36.72u tall in a zone whose radius is 24u —
-    // the king ate the camera). Pinned to the literal on purpose: reading it
-    // back out of `DEFAULT_MOB_WAVES_CONFIG` would turn this into a tautology
-    // that passes for any number the doc happens to hold (failure shape ⑦).
-    expect(shippedSizes[2]! / shippedSizes[0]!).toBeCloseTo(10, 9);
-    // …and the special is 2× (owner, same message), between the two.
-    expect(shippedSizes[1]! / shippedSizes[0]!).toBeCloseTo(2, 9);
+    // ⚠️ THE HISTORY, because this number has now moved four times: GH#192
+    // 「modal 大小是 10 倍」 → GH#206 「體型 30 倍」 → owner 2026-07-29 back to 10
+    // after a playtest (30 × 0.68 × 1.8u = 36.72u tall in a zone whose radius is
+    // 24u — the king ate the camera) → owner 2026-08-02 「殭屍王體型可以減半」 = 5.
+    // 前一版把 10 釘成字面值,理由是「怕變成同義反覆」;那個顧慮是對的,但字面值
+    // 不是唯一的解法 —— 下界同樣擋得掉同義反覆,而且不會在 owner 調平衡時說假話。
+    // 3 的意思是「至少三倍寬」,那是「一眼看出不是雜魚」還成立的最小值。
+    expect(shippedSizes[2]! / shippedSizes[0]!).toBeGreaterThanOrEqual(3);
+    // …and the special sits strictly between the two, at least 1.5× the zombie.
+    expect(shippedSizes[1]! / shippedSizes[0]!).toBeGreaterThanOrEqual(1.5);
+    expect(shippedSizes[2]!).toBeGreaterThan(shippedSizes[1]!);
     // A mob whose rules were never armed reads as 1× rather than 0× / NaN×.
     expect(mobSizeMultFor(null, "boss")).toBe(1);
   });

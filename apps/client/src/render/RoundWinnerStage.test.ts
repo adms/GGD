@@ -82,9 +82,17 @@ function makeHarness(opts: { line?: VictoryTauntLine | null } = {}) {
   return { stage, host, canvases, divs, previews, taunt, speak };
 }
 
-/** wash is the first div created, subtitle the second (DOM order = paint order) */
+/**
+ * DOM order = paint order, and it is: wash → (one CROWN per card) → subtitle.
+ *
+ * ⚠️ The crowns (GH#257 金/銀/銅) were inserted BETWEEN the wash and the
+ * subtitle, so `divs[1]` stopped being the subtitle. Indexing by a magic 1 is
+ * exactly how a layer added later silently retargets every assertion in a file,
+ * so the subtitle is now addressed by the LAYOUT rule instead of a constant.
+ * `members` defaults to 1 because most cases here use the solo `show()`.
+ */
 const washOf = (divs: ReturnType<typeof makeFakeDiv>[]) => divs[0]!;
-const subOf = (divs: ReturnType<typeof makeFakeDiv>[]) => divs[1]!;
+const subOf = (divs: ReturnType<typeof makeFakeDiv>[], members = 1) => divs[members + 1]!;
 
 describe("RoundWinnerStage", () => {
   it("is inert until first shown (lazy: no canvas, no wash, no previewer)", () => {
@@ -107,8 +115,9 @@ describe("RoundWinnerStage", () => {
     // to an explicit `null` championId, never a stale one
     expect(previews[0]!.show).toHaveBeenCalledWith(DOC, { championId: null });
     expect(stage.active).toBe(true);
-    // wash + canvas + subtitle all mounted into the host
-    expect(host.appendChild).toHaveBeenCalledTimes(3);
+    // wash + canvas + CROWN + subtitle all mounted into the host (GH#257 added
+    // one crown badge per card, so this is 4 rather than the pre-podium 3)
+    expect(host.appendChild).toHaveBeenCalledTimes(4);
     // the canvas got centred-card styling (fixed + centre transform)
     expect(canvases[0]!.style.position).toBe("fixed");
     expect(canvases[0]!.style.pointerEvents).toBe("none");
@@ -197,8 +206,8 @@ describe("RoundWinnerStage", () => {
     stage.show(DOC);
     stage.show(DOC2);
     expect(canvases.length).toBe(1); // same canvas reused
-    expect(divs.length).toBe(2); // same wash + subtitle reused
-    expect(host.appendChild).toHaveBeenCalledTimes(3);
+    expect(divs.length).toBe(3); // same wash + crown + subtitle reused
+    expect(host.appendChild).toHaveBeenCalledTimes(4);
     expect(previews.length).toBe(1);
     expect(previews[0]!.show).toHaveBeenNthCalledWith(2, DOC2, { championId: null });
   });
@@ -222,9 +231,9 @@ describe("RoundWinnerStage", () => {
     stage.clear();
     stage.show(DOC2);
     expect(canvases.length).toBe(2);
-    expect(divs.length).toBe(4);
+    expect(divs.length).toBe(6); // (wash + crown + subtitle) x 2 mounts
     expect(previews.length).toBe(2);
-    expect(host.appendChild).toHaveBeenCalledTimes(6);
+    expect(host.appendChild).toHaveBeenCalledTimes(8);
     expect(previews[1]!.show).toHaveBeenCalledWith(DOC2, { championId: null });
     expect(stage.active).toBe(true);
   });
@@ -238,7 +247,7 @@ describe("RoundWinnerStage", () => {
     stage.show(DOC2, { championId: "godie-e001", round: 2 });
     expect(stage.active).toBe(false);
     expect(canvases.length).toBe(1); // no new canvas after dispose
-    expect(host.appendChild).toHaveBeenCalledTimes(3);
+    expect(host.appendChild).toHaveBeenCalledTimes(4);
     expect(taunt.playRound).not.toHaveBeenCalled();
   });
 

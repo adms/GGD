@@ -199,6 +199,33 @@ export class SeatState extends Schema {
    * long match, and a counter that silently stops at 255 is worse than none.
    */
   declare mobKills: number;
+  /**
+   * 這一回合**最後一次**陣亡的絕對 sim tick;`0` = 這一回合沒有被記過陣亡
+   * (還活著、輪空被停在場邊、或還沒生成實體)。GH#257 的頒獎台就靠它排名次。
+   *
+   * ⚠️ 「存活順序」這個資料在這個欄位之前**全 repo 都不存在**。實測 grep:
+   * `deathOrder` / `survivalOrder` / `eliminationOrder` / `diedAtTick` 一個都
+   * 沒有。快照上原本只有 `alive`(布林)、`roundKills`、`roundDeaths`(次數),
+   * 三個都答不出「誰是倒數第二個倒下的」—— 所以這不是一個少畫的面板,
+   * 是**這個數字從來沒有被送出去過**(失敗形態 ②)。
+   *
+   * 為什麼是「最後一次」而不是第一次:#84 的復活圈會把人拉起來,被拉起來又
+   * 再倒下的人真正離場的時間是後面那一次。
+   *
+   * 為什麼上線而不是讓客戶端從 death 事件自己數:和 `roundKills` 同一個理由 ——
+   * 一個中途加入或**重連**的客戶端沒有事件歷史,而每個客戶端都必須算出同一份
+   * 金銀銅,否則同一場比賽在兩個螢幕上會頒給不同的人。
+   *
+   * uint32 而不是 uint16:這是**絕對** tick(不是回合相對),一場比賽跑滿
+   * 30Hz × 數十分鐘會輕鬆越過 65535,而一個靜默停在 65535 的名次會把所有
+   * 後續陣亡者排成平手。它只在有人死掉的那一格改變,所以其餘 ~30 tick/s
+   * Colyseus 一個 byte 都不會送。
+   *
+   * ⚠️ `0` 同時是「沒死」的哨兵值。world tick 0 是 champSelect,戰鬥不可能在
+   * 那一格活著,所以真實的陣亡 tick 永遠 ≥ 1 —— 投影端(net/snapshot)仍然
+   * 明文夾在 `>= 1`,不靠這個推論。
+   */
+  declare roundDeathTick: number;
 
   constructor() {
     super();
@@ -235,6 +262,7 @@ export class SeatState extends Schema {
     this.roundDeaths = 0;
     this.coinsLeft = 0;
     this.mobKills = 0;
+    this.roundDeathTick = 0;
   }
 }
 defineTypes(SeatState, {
@@ -276,6 +304,10 @@ defineTypes(SeatState, {
   // it anywhere else would silently re-number every field after it and desync
   // any client built against the old order.
   mobKills: "uint16",
+  // APPEND-ONLY (見上):回合存活順序,GH#257。**放在最後**,因為它是最新的欄位 ——
+  // @colyseus/schema 用宣告索引編碼,插在任何別的位置都會靜默地把它後面每一個
+  // 欄位重新編號,讓任何用舊順序建出來的客戶端整個對不上。
+  roundDeathTick: "uint32",
 });
 
 /**

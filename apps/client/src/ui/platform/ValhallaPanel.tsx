@@ -36,12 +36,33 @@
  *    5× too long. The pre-match table is resolved by `useLobbyCombatEnv` and
  *    passed explicitly into every row.
  *
- * SILENCE IS A REQUIREMENT, NOT AN OVERSIGHT. Nothing in this file imports the
- * audio system, and the 「下一位」 control is a plain <button> rather than the
- * shared `Btn` — `Btn` carries the #24 hover/click SFX, and a showcase that
- * chirps every time a family member's cursor crosses the lobby (or clicks
- * through heroes) is noise. The 60-second auto-swap is likewise silent by
- * construction: there is no code path from here to `playSfx`.
+ * CHROME IS SILENT; THE CHAMPION IS NOT (GH#256, wired 2026-08-02).
+ * 「下一位」/「展開」/「試放」 are plain <button>s rather than the shared `Btn` —
+ * `Btn` carries the #24 hover/click SFX, and a showcase that chirps every time a
+ * family member's cursor crosses the lobby is noise. That part is unchanged.
+ *
+ * ⚠️ This header used to claim 「Nothing in this file imports the audio system…
+ * there is no code path from here to `playSfx`」. That is NO LONGER TRUE and the
+ * sentence was deleted rather than left to rot (CLAUDE.md 第三守則). owner asked
+ * for the opposite of silence on the ROTATION itself:
+ *
+ *   「英靈殿 展示的時候要發出該角色的自己語音宣言」
+ *
+ * So every time the stage changes champion — the 60-second auto-swap, the
+ * 「下一位」 button, and the first draw when the roster lands — this fires
+ * {@link playValhallaDeclaration} for the champion NOW ON STAGE.
+ *
+ * ⚠️⚠️ WHAT IT ACTUALLY PLAYS, honestly: **not a 名言**. Measured: `quote` /
+ * `famousQuote` is populated on 0 of 119 champion docs, so #139/#142 have no
+ * content to play yet. The declaration seam falls through to the champion's own
+ * per-champion voice (#27's ladder: authored map quip → generated pack → WC3
+ * soundset → 名乗り). That is still 「該角色的自己語音」, which is why it ships —
+ * but nobody should read this file and conclude the 名言 work is done. See
+ * `./valhalla/valhallaDeclaration.ts`, which owns that seam and that caveat.
+ *
+ * Browser autoplay policy means the first champion after a cold page load is
+ * usually inaudible until the player has clicked something; the mixer, not this
+ * file, decides. `playValhallaDeclaration` reports which happened.
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -60,6 +81,8 @@ import { attackTypeLabel } from "../codex/codexLabels";
 import { useLobbyCombatEnv } from "./lobbyCombatEnv";
 import { Panel, ACCENT } from "./widgets";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { ValhallaSandboxPanel } from "./valhalla/ValhallaSandboxPanel";
+import { playValhallaDeclaration } from "./valhalla/valhallaDeclaration";
 import {
   draw,
   EMPTY_ROTATION,
@@ -74,6 +97,21 @@ import {
 } from "./valhalla";
 
 const TITLE = "英靈殿";
+
+/**
+ * GH#256 —— 換人的時候要不要出聲。
+ *
+ * ⚠️ 這是一個**決策點**（CLAUDE.md 第一守則），所以它是一個可覆寫的值而不是一行
+ * 寫死的 `void play(...)`。預設 `true`，因為那是 owner 明說的那一側
+ * （「英靈殿展示的時候要發出該角色的自己語音宣言」）。
+ *
+ * ⛔ 它**還不是後台欄位**，而那是誠實的現況不是設計：英靈殿這一批的後台三落點
+ * （`content/config/*.json` / `schema/config.ts` / `apps/admin/*`）目前由
+ * `./valhalla/valhallaSandboxRules.ts` 的 `VALHALLA_SANDBOX_ADMIN_FIELDS` 那一批
+ * 一起送，這一格要跟著那一批走，不要另外開第二條路。在那之前，要關掉的人可以
+ * 傳 `declaimOnRotate={false}`。
+ */
+export const VALHALLA_DECLAIM_ON_ROTATE_DEFAULT = true;
 
 /** Live viewport box — the layout tier is a function of it, so it must track resizes. */
 function useViewport(): { width: number; height: number } {
@@ -331,7 +369,14 @@ function ValhallaSkeleton({ note }: { note: string }): React.JSX.Element {
   );
 }
 
-export function ValhallaPanel(): React.JSX.Element {
+export interface ValhallaPanelProps {
+  /** 換人時要不要播宣言。見 {@link VALHALLA_DECLAIM_ON_ROTATE_DEFAULT}。 */
+  declaimOnRotate?: boolean;
+}
+
+export function ValhallaPanel({
+  declaimOnRotate = VALHALLA_DECLAIM_ON_ROTATE_DEFAULT,
+}: ValhallaPanelProps): React.JSX.Element {
   const contentReady = useContentReady();
   const { whitelist, loading: whitelistLoading } = useWhitelist();
   const { env } = useLobbyCombatEnv(contentReady);
@@ -351,6 +396,13 @@ export function ValhallaPanel(): React.JSX.Element {
   const [current, setCurrent] = useState<string | null>(null);
   const [engaged, setEngaged] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  /**
+   * GH#254 —— 技能試放空間。**預設關著**，而那是一個刻意的決定，不是省事：
+   * 這個房間會開一個真的 `SimWorld` 並以 30Hz 步進，大廳輪播到誰就自動開一個
+   * 的話，一個掛在大廳的分頁會整天在跑 sim。要玩的人自己按開。
+   * 開著的時候輪播也停（`engaged`）—— 沒有人希望自己正在試放的英雄被換掉。
+   */
+  const [sandboxOpen, setSandboxOpen] = useState(false);
 
   const barRef = useRef<HTMLDivElement>(null);
   const elapsedRef = useRef(0);
@@ -381,12 +433,35 @@ export function ValhallaPanel(): React.JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roster]);
 
+  /**
+   * GH#256 —— 「英靈殿展示的時候要發出該角色的自己語音宣言」。
+   *
+   * 掛在 `current` 上，所以三條換人的路都會出聲，而且**只出聲一次**：
+   * 60 秒的自動輪播、「下一位 ▸」、以及 roster 到齊時的第一抽。
+   *
+   * ⚠️ 這一條在 2026-08-02 之前是**不存在的**。宣言只掛在試放空間裡的
+   * 🔊 按鈕上 —— 要先按「⚔ 試放技能」再按 🔊，兩層點擊之後才碰得到，而且只在
+   * full 版面有。也就是說 owner 要的「展示的時候」從來沒有發生過。刪掉這個
+   * effect，`valhallaDeclaration.test.ts` 那六條會**照樣全綠**（失敗形態 ③），
+   * 釘住它的是 `valhalla/ValhallaPanelMount.test.ts`。
+   *
+   * 播的是什麼、為什麼不是名言：見檔頭與 `valhalla/valhallaDeclaration.ts`。
+   * 回傳的 promise 刻意不 await —— 混音器沒解鎖時它回 `silent`，那是合法結果，
+   * 不是錯誤，展示櫃不因為沒聲音而改變任何畫面。
+   */
+  useEffect(() => {
+    if (!declaimOnRotate || current === null) return;
+    void playValhallaDeclaration(current);
+  }, [current, declaimOnRotate]);
+
   // THE CLOCK. One 500ms interval, and it only accrues while the card is
   // countable: a hidden tab, an off-screen card, or a player with the pointer
   // parked on it all FREEZE the counter rather than queueing swaps. So a
   // deferred rotation fires the instant the player looks away — never six at
   // once when they come back to the tab.
-  const counting = shouldCount({ hidden, offscreen: !onScreen, engaged });
+  // GH#254：試放空間開著 = 玩家正在用這一位英雄，輪播必須停（和 owner 的
+  // 「玩家正在讀的時候不要抽換」同一條規則，只是這次是「正在玩」）。
+  const counting = shouldCount({ hidden, offscreen: !onScreen, engaged: engaged || sandboxOpen });
   useEffect(() => {
     if (!counting || current === null) return;
     const timer = window.setInterval(() => {
@@ -458,6 +533,25 @@ export function ValhallaPanel(): React.JSX.Element {
     </button>
   );
 
+  // GH#254 —— 進試放空間。只出現在 full 模式：strip 是手機橫向的一行，塞不下
+  // 一個 200px 的 3D 舞台，而 #151/#247 的教訓是那一行的每一個像素都來自
+  // 「⚔️ 一鍵開打」的邊界。
+  const sandboxButton = layout.mode === "full" && (
+    <button
+      type="button"
+      data-ggd-valhalla-sandbox-open=""
+      onClick={() => setSandboxOpen((v) => !v)}
+      title={
+        sandboxOpen
+          ? "關閉技能試放空間"
+          : "開啟技能試放空間：對著 10,000 生命的假人試放這位英雄的六格技能（人不會移動）"
+      }
+      style={chip(false)}
+    >
+      {sandboxOpen ? "收起試放 ▴" : "⚔ 試放技能"}
+    </button>
+  );
+
   const header = (
     <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
       <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.2, color: TEXT_DIM, flexShrink: 0 }}>
@@ -467,6 +561,7 @@ export function ValhallaPanel(): React.JSX.Element {
         每分鐘輪播 · 共 {roster.length} 位
       </span>
       <div style={{ flex: 1 }} />
+      {sandboxButton}
       {expandButton}
       {nextButton}
     </div>
@@ -668,6 +763,15 @@ export function ValhallaPanel(): React.JSX.Element {
           </div>
         </div>
       </div>
+      {/* GH#254 技能試放空間。開著的時候輪播是停的（見 `counting`）。 */}
+      {sandboxOpen && (
+        <ValhallaSandboxPanel
+          championId={current}
+          combatEnv={env}
+          paused={hidden || !onScreen}
+          onClose={() => setSandboxOpen(false)}
+        />
+      )}
       <div style={{ height: 2, background: "#1b2233", borderRadius: 2, overflow: "hidden" }}>
         <div ref={barRef} style={{ height: "100%", width: "0%", background: `${ACCENT}aa` }} />
       </div>

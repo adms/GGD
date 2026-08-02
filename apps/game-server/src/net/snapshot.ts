@@ -129,6 +129,11 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     // Clamped to the uint8 wire field.
     ss.roundKills = Math.min(ctl.roundKills.get(seatId) ?? 0, 255);
     ss.roundDeaths = Math.min(ctl.roundDeaths.get(seatId) ?? 0, 255);
+    // GH#257 存活順序:這一回合最後一次陣亡的**絕對** sim tick,0 = 沒倒過。
+    // `roundDeaths` 答「倒了幾次」、這一格答「什麼時候倒的」—— 頒獎台要的是
+    // 後者,而前者永遠推不出先後(兩個各死一次的人在它上面完全相同)。
+    // 明文夾在 [0, uint32]:0 是「沒倒過」的哨兵,所以真的陣亡一律 >= 1。
+    ss.roundDeathTick = Math.max(0, Math.min(ctl.roundDeathTick.get(seatId) ?? 0, 0xffffffff));
 
     if (seat.entityId !== null) {
       ss.entityId = seat.entityId;

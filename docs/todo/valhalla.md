@@ -18,8 +18,11 @@ Lobby, centre column, **above 「單人 vs BOT」** (owner: 「大廳中央上�
   `championDisplayFor` (稱號/全名/blurb), `parseDescriptionSections` (故事),
   `skillRows(champSelectSkillSeat(def))` + champ-select's own `SkillRowView`, and
   `StorePreviewCanvas` for the 3D stage. Subscribes to `useContentReady()`; renders a SKELETON,
-  never `null`. Emits no sound at all — the controls are raw `<button>`s, not the SFX-carrying
-  shared `Btn`.
+  never `null`. The CHROME is silent — the controls are raw `<button>`s, not the SFX-carrying
+  shared `Btn`. **⚠️ 2026-08-02 更正:** 「Emits no sound at all」 是這一行原本的說法，現在是假的。
+  GH#256 之後每一次**換人**都會 `playValhallaDeclaration(current)`（自動輪播 / 「下一位」/
+  第一抽都算），播的是該英雄自己的語音 —— **不是名言**，119 隻的 `quote` 欄位實測 0/119，
+  #139/#142 還沒做。守衛：`valhalla/ValhallaPanelMount.test.ts`。
 - `apps/client/src/render/StorePreview.ts` — gains `setPaused()`; the preview's render loop was
   unconditional, so a lobby in a background tab span a WebGL context forever.
 - `apps/client/src/ui/platform/StorePreviewCanvas.tsx` — gains `paused`, `minHeight` and an

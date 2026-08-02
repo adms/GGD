@@ -364,6 +364,19 @@ export class MatchController {
   readonly roundKills = new Map<SeatId, number>();
   readonly roundDeaths = new Map<SeatId, number>();
   /**
+   * PER-ROUND 存活順序 (GH#257 的金銀銅頒獎台):每個座位這一回合**最後一次**倒下的
+   * **絕對** sim tick。`0` = 這一回合沒被記過陣亡(還活著、輪空被停在場邊、或還沒
+   * 生成實體)。生命週期與 roundKills 完全相同 —— 在 resetRoundTallies 歸零。
+   *
+   * ⚠️ 它與 `roundDeaths` 不可互相取代:`roundDeaths` 答「倒了幾次」,
+   * `roundDeathTick` 答「什麼時候倒的」。兩個各死一次的人在前者上完全相同,
+   * 所以**次數永遠推不出先後**,頒獎台要的是後者。
+   *
+   * 為什麼記「最後一次」而不是第一次:#84 的復活圈會把人拉起來,被拉起來又再
+   * 倒下的人真正離場的時間是後面那一次。
+   */
+  readonly roundDeathTick = new Map<SeatId, number>();
+  /**
    * PER-ROUND participation + duel result per TEAM (a ROUND_OUTCOME value), with
    * exactly the roundKills lifetime: NONE for everyone at combat entry, FOUGHT
    * the moment enterCombat places a team's seats into a duel zone, WON/LOST when
@@ -794,6 +807,7 @@ export class MatchController {
       this.deaths.set(seatId, 0);
       this.roundKills.set(seatId, 0);
       this.roundDeaths.set(seatId, 0);
+      this.roundDeathTick.set(seatId, 0);
     }
     for (let t = 0; t < TEAM_COUNT; t++) {
       this.teamHealth.set(asTeamId(t), startingTeamHealth);
@@ -1254,6 +1268,8 @@ export class MatchController {
     for (const seatId of this.seats.keys()) {
       this.roundKills.set(seatId, 0);
       this.roundDeaths.set(seatId, 0);
+      // 不清掉的話,上一回合的陣亡先後會原封不動沿用到這一回合的頒獎台。
+      this.roundDeathTick.set(seatId, 0);
     }
     for (const teamId of this.roundOutcome.keys()) this.roundOutcome.set(teamId, ROUND_OUTCOME.NONE);
   }
@@ -2948,6 +2964,9 @@ export class MatchController {
           if (seat.entityId === victim) {
             this.deaths.set(seat.seatId, (this.deaths.get(seat.seatId) ?? 0) + 1);
             this.roundDeaths.set(seat.seatId, (this.roundDeaths.get(seat.seatId) ?? 0) + 1);
+            // 同一個事件,存活順序那一格(GH#257)。覆寫而非累加 —— 復活後再倒下的
+            // 人,真正離場的是後面那一次。夾 >= 1 是因為 0 是「沒倒過」的哨兵。
+            this.roundDeathTick.set(seat.seatId, Math.max(1, this.world.tick));
           }
           if (victimIsChampion && killer !== null && seat.entityId === killer) {
             this.kills.set(seat.seatId, (this.kills.get(seat.seatId) ?? 0) + 1);

@@ -1,0 +1,9 @@
+{
+  "id": "victory-podium",
+  "schema": "config.victory-podium@1",
+  "note": "GH#257 / GH#256 回合勝利頒獎台。podiumSize=3 是 owner 原話「最後活下來順序的三位」。podiumScope 決定只排勝方隊伍還是這一回合上場過的所有座位(3v3 裡兩者幾乎同解,勝方有人斷線才分岔);podiumFill 決定排不滿三位時縮短還是把敗方裡活最久的補上台。roundWinLine 出貨是 both —— **這是現行出貨行為,不是新增的**:名言在 t=0(RoundEndVoice.tsx 的 playChampionQuote,quotes.json 有 114 筆)、嘲諷在 t=2200ms(ROUND_TAUNT_DELAY_MS),victoryPresentation.test.ts 的「sequences the two VO clips」把這個順序釘住了。設成 taunt 才是改變行為(＝把已經在放的名言關掉)。切到 quote 而該英雄沒有名言剪輯時會自動退回 taunt,不會變成一片安靜。⚠️ 值的唯一真相是 packages/shared/src/content/schema/victoryPodium.ts 的 DEFAULT_VICTORY_PODIUM。⚠️ 這份文件目前**還沒有執行期消費端** —— RoundWinnerStage 與 ui/panels/victoryPodium 直接吃那個常數,改這裡不會改變畫面。缺口記在 apps/admin/src/configDocCoverage.ts 的 DEFERRED 那一列。",
+  "podiumSize": 3,
+  "podiumScope": "winnerTeam",
+  "podiumFill": "shrink",
+  "roundWinLine": "both"
+}

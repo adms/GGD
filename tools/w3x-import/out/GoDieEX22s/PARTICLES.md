@@ -8,6 +8,8 @@
 - scale: per-model `scale_factor` from models_report.json (heroes normalized to 1.7 world units tall; props 1/36); applied to width/speed/gravity/segmentScaling/ribbon heights
 - latitude found stored in DEGREES in this map's v800 files (values 0..180) — used as angleDeg directly, clamped [1,180]
 - WC3 `variation` treated as a fraction of speed; negative speeds (inward shockwaves) folded to magnitude
+- `Width` x `Length` are the FULL sides of the emission rectangle (particles spawn over +/- half of each about the node), so `emitter.radius` = max(Width, Length) / 2 * scale — the disc that bounds that rectangle. Proven against the binary in extract_particles.emission_disc_radius(); identical to w3xEmitterToVfxDoc() in apps/client/src/render/vfx/w3xEmitter.ts
+- burst `burstCount` = emissionRate * density (density=1.0); 1.0 is faithful. Runtime particle budget lives in render/vfx/emitterBudget.ts and is NOT baked in here
 
 ## Per-model emitters
 
@@ -783,16 +785,24 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 
 ## Extraction notes
 
+- godie-1hswd-01-p0: rectangular 24.306x3.281 emission plane approximated by its bounding disc r=0.338 (vfx@1 has no box emitter)
+- godie-1hswd-01-p1: rectangular 1.389x0.0 emission plane approximated by its bounding disc r=0.019 (vfx@1 has no box emitter)
+- godie-1hswd-01-p2: rectangular 3.3x50.0 emission plane approximated by its bounding disc r=0.695 (vfx@1 has no box emitter)
 - godie-aquaspikeversion2-p5: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-aquaspikeversion2-p9: negative emissionRate -25.0 folded to abs
 - godie-blackhole-p6: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-blackhole1-p0: emissionRate 0, used KP2E peak 50.0
 - godie-blackhole1-p1: emissionRate 0, used KP2E peak 50.0
 - godie-blackhole1-p2: emissionRate 0, used KP2E peak 1000.0
+- godie-boomnl-p0: rectangular 70.111x65.683 emission plane approximated by its bounding disc r=0.974 (vfx@1 has no box emitter)
 - godie-boomnl-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-boomnl-p1: rectangular 70.111x65.683 emission plane approximated by its bounding disc r=0.974 (vfx@1 has no box emitter)
 - godie-boomnl-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-boomnl-p2: rectangular 70.111x65.683 emission plane approximated by its bounding disc r=0.974 (vfx@1 has no box emitter)
 - godie-boomnl-p2: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-boomnl-p3: rectangular 70.111x65.683 emission plane approximated by its bounding disc r=0.974 (vfx@1 has no box emitter)
 - godie-boomnl-p3: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-boomnl-p4: rectangular 70.111x65.683 emission plane approximated by its bounding disc r=0.974 (vfx@1 has no box emitter)
 - godie-boomnl-p4: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-bulbasaur-p0: emissionRate 0, used KP2E peak 10.0
 - godie-darkbreathdamage-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
@@ -808,14 +818,25 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 - godie-earthtornado2-p8: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-earthtornado2-p10: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-earthtornado2-p12: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-fireblast-p1: rectangular 42.139x36.059 emission plane approximated by its bounding disc r=0.585 (vfx@1 has no box emitter)
 - godie-heroeva01s2-p0: emissionRate 0, used KP2E peak 31.5
+- godie-herohanzouhattori-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.033 (vfx@1 has no box emitter)
+- godie-herohehi-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.03 (vfx@1 has no box emitter)
+- godie-herohimurakenshin-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.035 (vfx@1 has no box emitter)
 - godie-heromiku-p1: dropped 4x4 spriteSheet (substituted single-frame texture)
+- godie-heromusashimiyamoto-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.031 (vfx@1 has no box emitter)
 - godie-heroraichus3-p0: emissionRate 0, used KP2E peak 31.5
+- godie-herorider-p0: rectangular 150.0x0.0 emission plane approximated by its bounding disc r=1.136 (vfx@1 has no box emitter)
+- godie-herosaber-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.035 (vfx@1 has no box emitter)
+- godie-herosaber-p1: rectangular 0.03x0.0 emission plane approximated by its bounding disc r=0.001 (vfx@1 has no box emitter)
 - godie-herosasuke-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-herosephiroth-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.028 (vfx@1 has no box emitter)
 - godie-heroshana-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-heroshana-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-heroshana-p2: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-herotoshiiemaeda-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.033 (vfx@1 has no box emitter)
 - godie-heroxelloss-p0: dropped 4x4 spriteSheet (substituted single-frame texture)
+- godie-herokyo-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.034 (vfx@1 has no box emitter)
 - godie-holyawakening-p0: emissionRate 0, used KP2E peak 40.0
 - godie-holyawakening-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-holyawakening-p1: emissionRate 0, used KP2E peak 50.0
@@ -845,16 +866,35 @@ Names are SPN (spawn model), SPL (ground splat), UBR (uber splat), SND (sound) +
 - godie-netherstrike-p2: emissionRate 0, used KP2E peak 20.0
 - godie-netherstrike-p3: emissionRate 0, used KP2E peak 15.0
 - godie-netherstrike-p4: emissionRate 0, used KP2E peak 10.0
+- godie-renaryugu2-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.036 (vfx@1 has no box emitter)
+- godie-renaryugu2-p1: rectangular 0.03x0.0 emission plane approximated by its bounding disc r=0.001 (vfx@1 has no box emitter)
+- godie-sesshomaru-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.032 (vfx@1 has no box emitter)
 - godie-tectonicfury-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-tectonicfury-p1: negative emissionRate -10.41670036315918 folded to abs
 - godie-billy-p0: emissionRate 0, used KP2E peak 100.0
+- godie-cloud-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.034 (vfx@1 has no box emitter)
 - godie-flamessmoke-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-flamessmoke-p1: rectangular 60.517x61.255 emission plane approximated by its bounding disc r=0.851 (vfx@1 has no box emitter)
 - godie-flamessmoke-p1: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-flamessmoke-p2: rectangular 60.517x61.255 emission plane approximated by its bounding disc r=0.851 (vfx@1 has no box emitter)
+- godie-flamessmoke-p3: rectangular 60.517x61.255 emission plane approximated by its bounding disc r=0.851 (vfx@1 has no box emitter)
 - godie-flamessmoke-p3: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-frostnova-p0: emissionRate 0, used KP2E peak 75.0
 - godie-gumdam-p0: dropped 8x8 spriteSheet (substituted single-frame texture)
 - godie-gumdam-p2: negative emissionRate -15.399999618530273 folded to abs
+- godie-gumdam-p3: rectangular 58.639x117.377 emission plane approximated by its bounding disc r=0.39 (vfx@1 has no box emitter)
+- godie-gumdam-p4: rectangular 25.0x-15.241 emission plane approximated by its bounding disc r=0.083 (vfx@1 has no box emitter)
 - godie-gumdam-p4: dropped 8x8 spriteSheet (substituted single-frame texture)
+- godie-gx-p0: rectangular 39.661x43.835 emission plane approximated by its bounding disc r=0.609 (vfx@1 has no box emitter)
 - godie-gx-p0: emissionRate 0, used KP2E peak 50.0
+- godie-gxhuge-p0: rectangular 39.661x43.835 emission plane approximated by its bounding disc r=0.609 (vfx@1 has no box emitter)
 - godie-gxhuge-p0: emissionRate 0, used KP2E peak 50.0
+- godie-herofate-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.046 (vfx@1 has no box emitter)
+- godie-heroluffeattack-p0: rectangular 200.0x400.0 emission plane approximated by its bounding disc r=5.556 (vfx@1 has no box emitter)
 - godie-heroluffeattack-p0: emissionRate 0, used KP2E peak 60.0
+- godie-horse-p0: rectangular 40.0x10.0 emission plane approximated by its bounding disc r=0.208 (vfx@1 has no box emitter)
+- godie-niya-p0: rectangular 5.244x5.2 emission plane approximated by its bounding disc r=0.209 (vfx@1 has no box emitter)
+- godie-niya-p1: rectangular 0.03x0.0 emission plane approximated by its bounding disc r=0.001 (vfx@1 has no box emitter)
+- godie-ye-wuqi1-p0: rectangular 160.0x9.662 emission plane approximated by its bounding disc r=0.614 (vfx@1 has no box emitter)
+- godie-ye-wuqi1-p1: rectangular 10.0x30.0 emission plane approximated by its bounding disc r=0.115 (vfx@1 has no box emitter)
+- godie-ye-wuqi1-p2: rectangular 10.0x20.0 emission plane approximated by its bounding disc r=0.077 (vfx@1 has no box emitter)

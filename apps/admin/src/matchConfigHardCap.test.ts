@@ -104,8 +104,15 @@ describe("回合硬上限 (#248) 在後台是一格真的欄位", () => {
       combatMaxSec,
     );
     expect(after.hardCapTicks).toBe(420 * TICK_HZ);
-    // 硬底線的天花板跟著走：420 + (combatMaxSec 100 − startSec 60) = 460 秒。
-    expect(after.hardDeadlineTicks).toBe(460 * TICK_HZ);
+    // 硬底線的天花板跟著走：420 + (combatMaxSec − startSec)。
+    // ⚠️ 兩個減項都**讀出貨設定**，不寫死 —— `combatMaxSec` 2026-08-01 從 100 改成
+    // 180，而原本寫死的 460 讓這一條從那一刻起就紅著跟過兩個版本，訊息還誤導成
+    // 「後台那一格壞了」。這條要驗的是**公式**（改 hardCap → 天花板跟著平移），
+    // 不是某一組平衡值。
+    const startSec = Number(read.values["match.fireRing.startSec"]);
+    expect(after.hardDeadlineTicks).toBe((420 + combatMaxSec - startSec) * TICK_HZ);
+    // …而且它真的**跟著 hardCap 動**：420 比出貨的 300 多 120 秒，天花板也要多 120 秒。
+    expect(after.hardDeadlineTicks - before.hardDeadlineTicks).toBe(120 * TICK_HZ);
     // 沒被碰到的東西不動 —— 存檔不會順手重排火圈。
     expect(after.startTicks).toBe(before.startTicks);
     expect(after.shrinkTicks).toBe(before.shrinkTicks);

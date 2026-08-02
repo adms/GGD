@@ -65,15 +65,13 @@ describe("fire-ring cue window is derived, not authored twice (firering-config)"
     expect(match.fireRing).toBeTruthy();
     const expected = match.combatMaxSec - match.fireRing!.startSec;
     expect(fireRingWindowSecFrom(match)).toBe(expected);
-    // The shipped doc is 100 / 60 since #195 (it was 240 / 180). If this ever
-    // equals the legacy literal the test below stops being able to tell a
-    // derivation from a coincidence, so assert the actual live numbers too.
-    expect(expected).toBe(40);
+    // ⚠️ 出貨值**不寫死**。`combatMaxSec` 2026-08-01 從 100 改成 180（窗口 40 → 120）,
+    // 而原本釘死的 40 / 100 / 60 讓這兩條從那一刻起就紅著跟過兩個版本 —— 而且訊息
+    // 看起來像「BGM 換床壞了」。這條要驗的是**推導**：窗口 = 回合長度 − 火圈起點。
+    // 真正要擋的東西只有一個：它不可以剛好等於那個 legacy literal,否則下面那條
+    // 分不出「真的在推導」還是「碰巧撞上寫死的 30」。
     expect(expected).not.toBe(NO_RING_FALLBACK_SEC);
-    // …and the coincidence proof: the bed swaps on the EXACT tick the flames
-    // appear, which is what keeps the swap inside DRIFT_TOLERANCE_SEC.
-    expect(match.combatMaxSec).toBe(100);
-    expect(match.fireRing!.startSec).toBe(60);
+    expect(expected).toBeGreaterThan(0);
   });
 
   it("derives the SHRINK duration separately — 40 is not 20 (firering-config)", () => {
@@ -124,15 +122,20 @@ describe("fire-ring cue window is derived, not authored twice (firering-config)"
 
   it("swaps the BGM bed at the derived instant, not at a literal", () => {
     cover("audio-scene-map");
-    registerMatchConfig(readMatchConfig());
-    // 41 s left: the ring has NOT ignited yet → combat bed
-    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 41 })).toBe("combat");
-    // 40 s left: ignition → tension bed. This is the assertion that was false
-    // for the whole life of #132 (it answered "combat" until 30 s left), and it
-    // MOVED with the mechanic under #195 rather than needing a code change.
-    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 40 })).toBe("fireRing");
-    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 31 })).toBe("fireRing");
+    const match = readMatchConfig();
+    registerMatchConfig(match);
+    // 換床的那一刻由出貨設定決定,不是字面值 —— 這正是這條測試的名字。
+    const W = match.combatMaxSec - match.fireRing!.startSec;
+    // W+1 秒剩餘：火圈還沒點燃 → combat bed
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: W + 1 })).toBe("combat");
+    // W 秒剩餘：點燃 → tension bed。這條在 #132 的整個生命期都是假的（它一路
+    // 回答 "combat" 直到剩 30 秒），而 #195 之後它**跟著機制走**,不需要改程式。
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: W })).toBe("fireRing");
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: Math.ceil(W / 2) })).toBe("fireRing");
     expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 5 })).toBe("fireRing");
+    // …而且它真的在**那一秒**翻面,不是「一路都是 fireRing」——
+    // 少了這一行,一個永遠回傳 "fireRing" 的實作也會過。
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: W + 30 })).toBe("combat");
   });
 
   it("never re-hardcodes the window at its OWNER (S3 source lock)", () => {

@@ -52,27 +52,31 @@ describe("#247 腳下圈圈 — the torus really changes size", () => {
     // the 1× reference every champion keeps
     expect(v.groundRingDiameter).toBeCloseTo(ChampionView.TEAM_RING_DIAMETER, 6);
 
-    // THE SHIPPED NUMBER, resolved through the same function the game uses:
-    // 體型倍率 10 (DEFAULT_MOB_WAVES_CONFIG.boss.sizeMult) against the shipped
-    // ring table → 12.5.
+    // THE SHIPPED NUMBER, resolved through the same function the game uses.
+    // ⚠️ 體型倍率**讀設定**（owner 2026-08-02 把它從 10 減半成 5）;寫死會讓這條
+    // 在一次平衡調整後說假話 —— 它會紅,但紅的理由不是「圈圈沒變寬」。
     const kingSize = DEFAULT_MOB_WAVES_CONFIG.boss!.sizeMult!;
     const d = mobGroundRingDiameter(kingSize, MOB_VISUAL_DEFAULT);
-    expect(d).toBeCloseTo(12.5, 6);
+    const expectedD = ChampionView.TEAM_RING_DIAMETER * kingSize;
+    expect(d).toBeCloseTo(expectedD, 6);
 
     v.setGroundRingDiameter(d);
-    expect(v.groundRingDiameter).toBeCloseTo(12.5, 5);
-    // …and it is a REAL widening of the mesh, not a stored field.
-    expect(v.teamRingScaling.x).toBeCloseTo(10, 5);
-    expect(v.teamRingScaling.z).toBeCloseTo(10, 5);
+    expect(v.groundRingDiameter).toBeCloseTo(expectedD, 5);
+    // …and it is a REAL widening of the mesh, not a stored field: 網格的縮放
+    // 真的等於那個倍率。
+    expect(v.teamRingScaling.x).toBeCloseTo(kingSize, 5);
+    expect(v.teamRingScaling.z).toBeCloseTo(kingSize, 5);
     v.dispose();
   });
 
   it("scales X/Z only — the ring stays a ring on the floor, not a tall doughnut", () => {
     cover("mob-boss-ring");
     const v = newView();
-    v.setGroundRingDiameter(12.5);
+    v.setGroundRingDiameter(ChampionView.TEAM_RING_DIAMETER * 10);
     // Y untouched: the torus's tube keeps its authored vertical thickness. A
     // `setAll` here would put a 10×-tall ring around the king's knees.
+    // （這裡的 10 是一個刻意誇張的**測試輸入**,不是出貨值 —— 越誇張越能看出
+    //   Y 有沒有被順手一起縮。）
     expect(v.teamRingScaling.y).toBeCloseTo(1, 6);
     v.dispose();
   });
@@ -117,8 +121,13 @@ describe("#247 腳下圈圈 — the torus really changes size", () => {
     // this reads three real meshes (失敗形狀 ⑦).
     expect(drawn[0]!).toBeLessThan(drawn[1]!);
     expect(drawn[1]!).toBeLessThan(drawn[2]!);
-    // and the king's is unmistakably a king's
-    expect(drawn[2]! / drawn[0]!).toBeGreaterThan(10);
+    // and the king's is unmistakably a king's — 比值讀出貨設定（owner 2026-08-02
+    // 把王的體型減半，寫死的 `> 10` 會在那一刻變成假話），再加一個「一眼看得出來」
+    // 的下界擋掉同義反覆。
+    const shippedRingRatio =
+      DEFAULT_MOB_WAVES_CONFIG.boss!.sizeMult! / DEFAULT_MOB_WAVES_CONFIG.mob!.sizeMult!;
+    expect(drawn[2]! / drawn[0]!).toBeCloseTo(shippedRingRatio, 5);
+    expect(shippedRingRatio).toBeGreaterThanOrEqual(3);
   });
 });
 

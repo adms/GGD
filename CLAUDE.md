@@ -174,6 +174,16 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   下次再看到「規則寫在 schema 裡」，要問的是「那條規則在編輯發生的當下跑不跑」。
   守衛：`packages/shared/src/content/buildIndexesValidates.test.ts`（真的執行那支腳本，
   不是掃原始碼字串）。
+  ⛔ **而且「跑了 build 又 commit 產物」還不夠 —— 來源檔也要進版控。**
+  2026-08-02（同一天內第二次同型故障）：三個新的 config 原始檔在工作區但**沒 commit**，
+  `content:build` 照樣讀得到它們，把三份文件**內嵌進 `bundle.json`**、把三筆 path 寫進
+  `_index.json`，而那兩個**產物**被 commit 了。於是 repo 裡出現：
+  bundle 有這三份 → schema 不認得（改動也沒 commit）→ 原始檔根本不存在。
+  部署走 `git pull`，所以線上拿到的正是這個組合 → 內容載入整份失敗 → 退回 2 隻骨架。
+  **`shippedBundleIsCurrent` 對這個是綠的** —— 它在工作區重建，而工作區看得到未追蹤的檔。
+  守衛：`packages/shared/src/content/shippedBundleHasTrackedSources.test.ts`
+  —— 它比對 `git ls-files`。**出貨的是 git，不是你這台機器的工作區。**
+  它紅了會指名哪幾個檔沒進版控；`git add` 它們，不要改測試。
 - **`pnpm -s typecheck | grep error` 結構上永遠不會 match**（`-s` 吞掉子專案輸出）。
   一律看離開碼：`pnpm typecheck; echo "EXIT=$?"`。
   ⚠️ 同一個陷阱有**三種變形**，三種都真的騙過人：

@@ -11,9 +11,30 @@
  * It calls the same `buildHealthzPayload()` index.ts calls, over the same
  * process singleton — no hand-built fake (failure shape ⑤).
  */
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, beforeAll, afterEach } from "vitest";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { ContentLoader } from "@ggd/shared/content";
+import { FsContentSource } from "@ggd/shared/content/node";
+import { registerAll } from "@ggd/shared/content/registries";
 import { buildHealthzPayload, healthzStatus } from "./healthz";
 import { replayHealth } from "./replay/replayHealth";
+
+/**
+ * ⚠️ 這個 beforeAll 是必要的,不是裝飾。
+ *
+ * 2026-08-02 的第五項部署後置條件（`contentHealth.ts`）把**伺服器自己的登錄表**
+ * 接上 `/healthz`,而頂層 `ok` 現在會 AND 它。一個從來沒呼叫過 `registerAll` 的
+ * 行程,登錄表是 0 隻英雄 —— 那**確實**是降級,所以 `ok` 應該是 false。
+ *
+ * 換句話說：這三條原本在測「一個沒開機的 shard」。真正的 shard 在 `index.ts`
+ * 開機時就載入內容,所以要驗 replay 對 `ok` 的影響,必須先讓這個行程長得像一台
+ * 開了機的 shard —— 否則 replay 那一格是好是壞都被內容那一格蓋過去。
+ */
+beforeAll(async () => {
+  const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../..", "content");
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+});
 
 let saved: Record<string, string | undefined> = {};
 

@@ -77,6 +77,17 @@ export interface SeatView {
   maxMana: number;
   shield: number;
   alive: boolean;
+  /**
+   * 這一回合**最後一次**陣亡的絕對 sim tick;0 = 這一回合沒被記過陣亡
+   * (還活著 / 輪空被停在場邊 / 還沒生成實體)。GH#257 的金銀銅頒獎台就靠它。
+   *
+   * 直接從 `SeatState.roundDeathTick` 抄過來,**不是**從 death 事件自己數的:
+   * 重連的客戶端沒有事件歷史,而每個螢幕都必須算出同一份名次。
+   *
+   * OPTIONAL,理由和 `formIndex` 一樣:手刻的 fixture 省略它就是在斷言
+   * 「這一回合沒倒過」,而那正是缺席該有的意思。
+   */
+  roundDeathTick?: number;
   /** duel zone of this seat's entity (-1 = no entity); duel enemies share the local seat's zone */
   zone: number;
   /**
@@ -650,6 +661,9 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       maxMana,
       shield,
       alive,
+      // GH#257: read off the SEAT (authoritative, survives a reconnect), not
+      // tallied from the death-event stream this file also happens to see.
+      roundDeathTick: ss.roundDeathTick ?? 0,
       zone,
       formIndex,
       ready: ss.ready,

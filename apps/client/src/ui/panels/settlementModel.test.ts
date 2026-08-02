@@ -4,9 +4,6 @@
  * hints, stat formatters, and the ranking-table sort. No React/DOM.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
@@ -34,8 +31,15 @@ import {
   type RoundSeatView,
   type RoundTeamView,
 } from "./settlementModel";
+import type { ModelDoc } from "@ggd/shared/content";
+import { planRoundWinnerShow } from "../../render/RoundWinnerStage";
 
-const HERE = dirname(fileURLToPath(import.meta.url));
+/**
+ * 出貨呼叫端的那一支 —— `GameApp.updateRoundWinner` 呼叫的就是它。
+ * 這個檔案以前是 `readFileSync(GameApp.ts)` + 三條 regex(失敗形態 ⑥),
+ * 現在改成把同一支函式真的跑一遍。
+ */
+const WINNER_DOC = { modelKey: "champ.test", url: "/x.glb" } as unknown as ModelDoc;
 
 function stats(over: Partial<PlayerMatchStats> = {}): PlayerMatchStats {
   return { ...createMatchStats(), ...over };
@@ -426,15 +430,37 @@ describe("round-end winner = the leading team's round MVP (settle-round-mvp)", (
     expect(roundWinnerTeamChampions(seats, leadingTeams)[0]).toBe(
       roundEndQuoteChampion(seats, leadingTeams),
     );
-    const app = readFileSync(join(HERE, "..", "..", "GameApp.ts"), "utf8");
-    expect(app).toMatch(/roundWinnerTeamChampions\(hud\.seats, hud\.teams\)/);
-    expect(app).toMatch(/roundWinnerModelDoc\(id, hud\.seats\)/);
-    // …and that SAME champion is handed to the stage as context. Without it the
-    // stage's `if (!champ) return` silently drops the whole 嘲諷台詞 half of #93
-    // — the selector and the presentation would be wired but not connected.
-    expect(app).toMatch(
-      /this\.roundWinner\.showTeam\(members, \{\s*championId: team\[0\], round: state\.round \}\)/,
-    );
+    // …and that SAME champion is handed to the stage as the taunt context.
+    // Without it the stage's `if (!champ) return` silently drops the whole
+    // 嘲諷台詞 half of #93 — selector and presentation wired but not connected.
+    //
+    // ⚠️ This USED to be three `expect(GameApp.ts).toMatch(/…/)` regexes —
+    // 失敗形態 ⑥ (掃字串代替行為) in its textbook form: it went red the moment
+    // GH#257 legitimately changed that call site, while the actual defect it
+    // claimed to guard (the taunt losing its champion) would have sailed past
+    // any of the wordings it did not happen to spell out. The presentation was
+    // extracted into `planRoundWinnerShow` precisely so this can be exercised —
+    // the SAME function `GameApp.updateRoundWinner` calls, run for real here.
+    const plan = planRoundWinnerShow(seats, leadingTeams, 5, () => WINNER_DOC);
+    expect(plan).not.toBeNull();
+    expect(plan!.ctx.championId).toBe(roundEndQuoteChampion(seats, leadingTeams));
+    expect(plan!.ctx.round).toBe(5);
+    // and it stays the MVP even when the gold crown is SOMEBODY ELSE (GH#257):
+    // the taunt is keyed championId+round on every client, so re-keying it off
+    // the podium would silently change which joke the whole lobby hears.
+    const settled = [
+      rteam(0, { lives: 3, roundOutcome: ROUND_OUTCOME.WON }),
+      rteam(1, { lives: 1, roundOutcome: ROUND_OUTCOME.LOST }),
+    ];
+    const crowned = [
+      { ...rseat(2, 0, "ichigo", { roundKills: 0, alive: false }), roundDeathTick: 900 },
+      { ...rseat(7, 0, "luffy", { roundKills: 3, alive: false }), roundDeathTick: 100 },
+      { ...rseat(3, 1, "enemy", { roundKills: 9, alive: false }), roundDeathTick: 50 },
+    ];
+    const crownedPlan = planRoundWinnerShow(crowned, settled, 5, () => WINNER_DOC);
+    expect(crownedPlan!.members[0]!.championId).toBe("ichigo"); // 金冠 = 活最久
+    expect(crownedPlan!.members[0]!.medal).toBe("gold");
+    expect(crownedPlan!.ctx.championId).toBe("luffy"); // 嘲諷 = 回合 MVP
   });
 });
 
