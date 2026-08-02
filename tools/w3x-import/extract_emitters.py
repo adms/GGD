@@ -504,8 +504,18 @@ def emitter_record(idx, em, model, stem, scale, notes) -> dict:
             "speedMin": r(abs(em.speed) * max(0.0, 1.0 - abs(var)) * scale),
             "speedMax": r(abs(em.speed) * (1.0 + abs(var)) * scale),
             "gravityY": r(-em.gravity * scale),
-            "emitterHalfLength": r(em.length * scale),
-            "emitterHalfWidth": r(em.width * scale),
+            # PRE2 Width/Length are FULL side lengths of the emission rectangle
+            # (spawn is uniform over ±half about the node), so these are full
+            # extents and the bounding disc is max(w,l)/2. They shipped as
+            # `emitterHalfWidth`/`emitterHalfLength` until 2026-08-02 — names
+            # that claimed a half-extent while holding a full one, i.e. off by
+            # exactly the 2x this repo already fixed once in content
+            # (extract_particles.emission_disc_radius, w3xEmitter.ts
+            # `halfExtent`). Third reading of the same bytes, third chance to
+            # mislead; renamed so the survey agrees with the pipeline.
+            "emitterFullLength": r(em.length * scale),
+            "emitterFullWidth": r(em.width * scale),
+            "emitterDiscRadius": r(max(em.width, em.length) / 2.0 * scale),
             "coneAngleDeg": r(min(180.0, max(0.0, em.latitude))),
             "sizeStops": [[0.0, r(em.segment_scaling[0] * scale)],
                           [r(em.time if 0 < em.time < 1 else 0.5, 3),

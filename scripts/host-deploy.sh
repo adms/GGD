@@ -205,6 +205,47 @@ WL=$(curl -fsS -m 15 "$BASE/api/v1/curation/whitelist" \
 [ "$WL" -gt 0 ] 2>/dev/null || die "白名單啟用 0 隻英雄 —— 沒有人選得到角色"
 ok "白名單: $WL 隻英雄啟用"
 
+# ── 錄影真的寫得進去嗎（GH#170 / owner 2026-08-02「請幫我預設打開」）───────────
+# 為什麼這一條要在部署腳本裡，而不是留在 runbook：這台機器上量到過
+# **整段時間一場都沒有錄到**，而當時網站、大廳、比賽全都正常。唯一的訊號是
+# game shard 開機時真的建一個檔再刪掉的結果（`replay.writable`）。散文治不了
+# 「下次記得去 curl 一下 /healthz」，只有一支會自己回非零的程式可以。
+#
+# ⚠️ 根因（量過的，不是猜的）：`docker/compose.family.yaml` 把 host 的
+# `data/replays` bind-mount 到 `/data/replays`。**那個目錄不存在時，是 docker
+# daemon 用 root 建的**，而 `docker/game.Dockerfile` 第 61 行是 `USER node`
+# （`node:22-alpine` 裡 node 是 uid 1000）。root:root 0755 的目錄，uid 1000
+# 建檔就是 EACCES —— 而且 `createWriteStream` 是非同步開 fd，所以
+# `MatchRecorder.open()` 仍然回傳一個看起來完全正常的錄影器。
+#
+# 修法（⚠️ 只有 owner 在主機上手動跑，這支腳本**刻意不自己 chown**：
+# 改別人家的檔案擁有者不是部署腳本該有的權力，而且它需要 sudo）：
+#
+#     sudo chown -R 1000:1000 ~/GGD/data/replays
+#     sudo chmod 755 ~/GGD/data/replays
+#     docker restart ggd-game-1
+#
+# 不要用 chmod 777 —— 錄影檔帶著每一位玩家的顯示名稱。
+REPLAY_JSON=$(curl -fsS -m 15 "http://127.0.0.1:2567/healthz" 2>/dev/null || true)
+if [ -z "$REPLAY_JSON" ]; then
+  printf '\033[33m  ! game shard 的 /healthz 打不到（:2567）—— 跳過錄影檢查\033[0m\n'
+else
+  REPLAY_WRITABLE=$(printf '%s' "$REPLAY_JSON" \
+    | python3 -c 'import json,sys; print(json.load(sys.stdin).get("replay",{}).get("writable"))' \
+    2>/dev/null || echo None)
+  case "$REPLAY_WRITABLE" in
+    True) ok "錄影目錄可寫（開機時真的建檔再刪掉）" ;;
+    None) printf '\033[33m  ! /healthz 沒有 replay.writable 欄位 —— 這個映像比 GH#170 舊\033[0m\n' ;;
+    *)
+      die "錄影目錄寫不進去 —— 這台 shard **一場都不會錄到**，而遊戲會照常運作，所以沒有人會發現。
+     根因幾乎一定是 bind mount 的擁有者：docker 用 root 建了 data/replays，容器跑 uid 1000。
+     在這台機器上手動修（要 sudo，這支腳本刻意不自己做）：
+       sudo chown -R 1000:1000 ~/GGD/data/replays && sudo chmod 755 ~/GGD/data/replays
+       docker restart ggd-game-1
+     完整 runbook：docs/replay-observability.md" ;;
+  esac
+fi
+
 # 版本身分。⚠️ 這一條就是 2026-08-02 沒被擋下來的那個缺陷。
 JS=$(curl -fsS -m 15 "$BASE/" | grep -oE '/assets/[^"]+\.js' | head -1 || true)
 [ -n "$JS" ] || die "首頁抓不到 client bundle 的路徑 —— edge 可能沒起來"

@@ -157,10 +157,12 @@ def check_emitter_radius_reading() -> int:
     2. CONTRACT — the TS runtime path must still compute the same thing.
     3. CONTENT — are the shipped docs actually on the corrected reading?
 
-    (3) is deliberately non-fatal while it is knowingly false: content/vfx/** is
-    owned by the ability-binding lane and cannot be regenerated under it. What it
-    must never do is go QUIET — a stale corpus prints a REGENERATION PENDING
-    banner every single run, and a HALF-regenerated corpus fails hard.
+    (3) used to be non-fatal — a REGENERATION PENDING banner — because the
+    corpus was knowingly stale and content/vfx/** belonged to another lane.
+    2026-08-02 regenerated it in place, so the exemption expired with it and
+    this now FAILS. A warning that is expected to appear is not a signal; the
+    only reason it was survivable was that the thing it warned about was known,
+    and it stopped being known the moment it was fixed.
     """
     # -- 1. proof, from the bytes ------------------------------------------
     data = open(os.path.join(RAW, SWORD_MDX), "rb").read()
@@ -270,23 +272,75 @@ def check_emitter_radius_reading() -> int:
             f"emitter radius, {stale} still on the 2x-too-large one. A partial "
             "regeneration is worse than either state — rerun "
             "`python3 tools/w3x-import/extract_particles.py` over the whole set.")
-    if stale:
-        print("")
-        print("!! REGENERATION PENDING — emitter radius " + "!" * 34)
-        print(f"!! {stale}/{total} content/vfx/godie-*-p*.json still carry the "
-              f"2x-too-large ({agnostic} more are formula-agnostic)")
-        print("!! emitter radius (and ignore PRE2 `Length`). The extractor is "
-              "FIXED; the")
-        print("!! docs are not. They are not regenerated here because "
-              "content/vfx/** is")
-        print("!! owned by the ability-binding lane. Once that lands, run:")
-        print("!!     python3 tools/w3x-import/extract_particles.py")
-        print("!! and this banner disappears on its own.")
-        print("!! " + "!" * 60)
-        print("")
-    else:
-        print(f"PASS radius content: all {fresh} discriminating shipped vfx docs "
-              f"are on the corrected emitter radius ({agnostic} agnostic)")
+    assert not stale, (
+        f"{stale}/{total} content/vfx/godie-*-p*.json are STALE: they carry the "
+        f"pre-2026-07-24 emitter radius (width*scale, PRE2 `Length` ignored) "
+        f"while this extractor computes max(width,length)/2*scale "
+        f"({agnostic} more are formula-agnostic and prove nothing either way). "
+        "First stale ids: " + ", ".join(stale_ids[:5]) + ". "
+        "Fix by regenerating, NOT by relaxing this check:\n"
+        "    python3 tools/w3x-import/extract_particles.py && pnpm content:build")
+    print(f"PASS radius content: all {fresh} discriminating shipped vfx docs "
+          f"are on the corrected emitter radius ({agnostic} agnostic)")
+
+    # -- 4. ribbon@1: the #37 tuning is reproducible, not a frozen artifact ---
+    rc = check_ribbon_trail_budget()
+    return rc
+
+
+def check_ribbon_trail_budget() -> int:
+    """The 54 shipped ribbon@1 docs == a fresh extraction, budget applied.
+
+    Why this is the guard that was missing. Before 2026-08-02 the #37 刀光殘影
+    tuning existed ONLY as edited values inside those 54 files, and the only
+    thing protecting it was extract_particles' hand-tune rule, which at the time
+    was `tuned = shipped != fresh`: "a doc that differs from a fresh extraction
+    was hand-tuned, keep it". That rule cannot tell a hand-tune from a doc that
+    went stale — both differ — so once the extractor's ribbon output moved for
+    any reason, the guard would have gone on "protecting" a doc nobody could
+    regenerate.
+
+    Now the transform lives in ribbon_trail_budget(), so the claim is checkable:
+    re-extract and the result must EQUAL what ships. If a future parser change
+    moves the raw ribbon numbers, this fails and names the field — a signal that
+    rule structurally could not produce. (That rule is itself gone: see
+    extract_particles.classify_doc, which reads vfx-provenance.json and so can
+    answer "stale or hand-tuned?" instead of guessing.)
+
+    Whole-document equality on purpose (failure form 7): asserting only the
+    three tuned fields would pass while texture / anchorBone / blendMode rotted.
+    """
+    from extract_particles import build_ribbon_doc, TextureResolver  # noqa: E402
+
+    scale_by_source = {}
+    if os.path.isfile(os.path.join(OUT, "models_report.json")):
+        for e in json.load(open(os.path.join(OUT, "models_report.json"))):
+            if e.get("source") and e.get("scale_factor"):
+                scale_by_source[e["source"].lower()] = float(e["scale_factor"])
+    tex = TextureResolver(True)  # dry_run: resolve names, copy nothing
+    checked = 0
+    for f in sorted(os.listdir(RAW)):
+        if not f.lower().endswith(".mdx"):
+            continue
+        stem = slug(f[:-4])
+        scale = scale_by_source.get(f.lower(), DEFAULT_SCALE)
+        m = parse_particles(open(os.path.join(RAW, f), "rb").read())
+        for i, rb in enumerate(m.ribbons):
+            doc_id = f"godie-{stem}-r{i}"
+            p = os.path.join(VFX, doc_id + ".json")
+            if not os.path.isfile(p):
+                continue
+            fresh = build_ribbon_doc(doc_id, rb, m, scale, tex, [])
+            assert json.load(open(p)) == fresh, (
+                f"{doc_id} is not what extract_particles produces. Either the "
+                "doc drifted, or the ribbon extraction changed and the #37 "
+                "budget in ribbon_trail_budget() no longer reproduces what "
+                "ships. Do NOT loosen this: re-derive the tuning, then "
+                "regenerate.")
+            checked += 1
+    assert checked >= 50, checked
+    print(f"PASS ribbon budget: all {checked} shipped ribbon@1 docs are "
+          "reproduced exactly by extract_particles (#37 tuning included)")
     return 0
 
 

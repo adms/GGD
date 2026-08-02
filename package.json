@@ -14,7 +14,8 @@
     "build": "pnpm -r --if-present build",
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test",
-    "lint": "pnpm -r --if-present lint",
+    "lint": "eslint apps packages tools",
+    "lint:fix": "eslint apps packages tools --fix",
     "todo:check": "tsx tools/todo-check/src/cli.ts --static",
     "todo:runtime": "tsx tools/todo-check/src/cli.ts --runtime",
     "voice:index": "tsx tools/voice-gen/index-lines.mjs",
@@ -36,8 +37,13 @@
     "items:csv:requests": "python3 tools/item-csv/item_csv.py requests -i items.csv"
   },
   "devDependencies": {
+    "@eslint/js": "^10",
+    "eslint": "^10",
+    "eslint-plugin-react-hooks": "^7",
+    "globals": "^17.8.0",
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
+    "typescript-eslint": "^8",
     "vitest": "^2.1.4"
   }
 }

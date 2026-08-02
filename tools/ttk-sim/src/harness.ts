@@ -42,6 +42,7 @@ import { FsContentSource } from "@ggd/shared/content/node";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { normalizeCombatEnv, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
 import { TICK_HZ } from "@ggd/shared/constants";
+import { DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
 import { MatchController, type SeatSpec } from "@ggd/game-server/src/match/MatchController";
 import { type PhaseConfig } from "@ggd/game-server/src/match/PhaseMachine";
 import { DEFAULT_ARENA_RULES, type ArenaRules, type RoundGrant } from "@ggd/game-server/src/match/arenaRules";
@@ -91,9 +92,15 @@ export const PRODUCTION_FIRE_RING: FireRingConfig = {
   startSec: 60,
   shrinkSec: 20,
   minRadius: 0.5,
-  burnPctPerSecStart: 0.04,
-  burnPctPerSecEnd: 0.2,
+  burnCurve: [...DEFAULT_BURN_CURVE], // 出貨曲線的唯一字面值住在 sim/fireRing.ts
   maxPctPerSec: 1,
+  // ⚠️ PRE-EXISTING BREAKAGE, fixed in passing 2026-08-02: this literal is typed
+  // `FireRingConfig` (the Zod OUTPUT type, where `.default()` fields are
+  // REQUIRED) and has been missing `roundHardCapSec` since #248 added it — so
+  // `pnpm --filter ttk-sim typecheck` was already red on main, independently of
+  // the burn curve. 300 mirrors 出貨; with `boss` at 0/0 the cap can never bind
+  // here anyway, so it changes no TTK number.
+  roundHardCapSec: 300,
 };
 
 export interface DuelSample {
