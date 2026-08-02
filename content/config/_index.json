@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5a64cb75409e",
+  "hash": "80c93fb7f6fb",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "b75c582dc04e",
-      "size": 5999
+      "hash": "5e0d11741a6d",
+      "size": 6000
     },
     {
       "id": "audio-map",
@@ -99,6 +99,12 @@
       "size": 1757
     },
     {
+      "id": "lobby-layout",
+      "path": "config/lobby-layout.json",
+      "hash": "8ab10a33b14d",
+      "size": 1111
+    },
+    {
       "id": "model-lod",
       "path": "config/model-lod.json",
       "hash": "f62fe1b47808",
@@ -165,6 +171,12 @@
       "size": 26737
     },
     {
+      "id": "valhalla-sandbox",
+      "path": "config/valhalla-sandbox.json",
+      "hash": "ec920637826e",
+      "size": 1374
+    },
+    {
       "id": "vfx-cleanup",
       "path": "config/vfx-cleanup.json",
       "hash": "7913d37cf643",
@@ -181,6 +193,12 @@
       "path": "config/victory-fx.json",
       "hash": "23bbb1946e37",
       "size": 794
+    },
+    {
+      "id": "victory-podium",
+      "path": "config/victory-podium.json",
+      "hash": "74db3b354a24",
+      "size": 1310
     },
     {
       "id": "victory-taunts",
