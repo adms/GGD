@@ -24,7 +24,7 @@
  * renderless stub — and the UI says so rather than implying a shot that does not
  * happen.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
   paramsSchemaFor,
@@ -56,6 +56,17 @@ import { createSimPreviewController } from "../preview/PreviewController";
 import { badgeFor } from "./badge";
 import { degradeNotes, satisfiedCaps } from "./degrade";
 import { planForgeWrite, runForgeWrite, type ForgePlan } from "./ForgeWriteback";
+import { VfxLayerPanel } from "./VfxLayerPanel";
+import {
+  addLayer,
+  draftsFromDoc,
+  moveLayer,
+  patchForDoc,
+  patchLayer,
+  removeLayer,
+  vfxLayerBlockers,
+  type VfxLayerDraft,
+} from "./vfxLayerModel";
 import { ConditionEditor } from "./ConditionEditor";
 import type { EffectCondition } from "@ggd/shared/sim/content/condition";
 
@@ -84,6 +95,11 @@ export function ForgeStudio({
     { ref: template.id, params: defaultParamsFor(template) },
   ]);
   const [onConflict, setOnConflict] = useState<TemplateConflictPolicy>(DEFAULT_TEMPLATE_CONFLICT);
+  /**
+   * 特效堆疊。`null` = 還沒從 host doc 種下去（技能還沒選，或正在載）。
+   * 種子在下面的 effect 裡下，這樣切換技能時會跟著換成那一支自己的層。
+   */
+  const [layers, setLayers] = useState<VfxLayerDraft[] | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [plan, setPlan] = useState<ForgePlan | null>(null);
   const [signedOff, setSignedOff] = useState(false);
@@ -127,6 +143,20 @@ export function ForgeStudio({
   });
   const champions = useChampionDocs();
 
+  /**
+   * `content/vfx/` 的全部 id。這張表就是 #230 的入口：491 支從原作抽出來的
+   * 發射器裡有 433 支從來沒被任何技能引用過，它們不缺技術，只缺一個能填 id 的地方。
+   */
+  const vfxIndex = useQuery({
+    queryKey: ["forge", "vfx"],
+    queryFn: () => api.index("vfx"),
+    staleTime: 60_000,
+  });
+  const vfxIds = useMemo(
+    () => (vfxIndex.data?.entries ?? []).map((e) => e.id).sort(),
+    [vfxIndex.data],
+  );
+
   const host = useQuery({
     queryKey: ["forge", "ability", abilityId],
     queryFn: () => api.doc<Record<string, unknown>>("abilities", abilityId),
@@ -157,10 +187,25 @@ export function ForgeStudio({
     [cards, onConflict],
   );
 
+  // 換技能就重新種特效層 —— 種子是那支技能**現在真的在播**的東西，不是空白。
+  const hostId = host.data ? String(host.data["id"]) : "";
+  const seededFor = useRef<string>("");
+  useEffect(() => {
+    if (hostId === "" || seededFor.current === hostId) return;
+    seededFor.current = hostId;
+    setLayers(draftsFromDoc(host.data ?? null));
+  }, [hostId, host.data]);
+
   const after = useMemo(() => {
     if (!host.data || !expansion.ok) return null;
-    return mergeExpansion({ ...host.data, template: binding }, expansion.value.result);
-  }, [host.data, expansion, binding]);
+    const merged = mergeExpansion({ ...host.data, template: binding }, expansion.value.result);
+    if (layers === null) return merged;
+    // 特效欄位由工坊接管：`patchForDoc` 決定要寫單值 `vfxKey` 還是完整 `vfxLayers`。
+    // 舊的 `vfxLayers` 要**主動拿掉**，否則操作者把層清回一層之後，doc 上會留著
+    // 舊堆疊繼續播 —— 故障形態 ②。`planForgeWrite` 看到它不見了就送 null 去刪。
+    const { vfxLayers: _drop, ...rest } = merged as Record<string, unknown>;
+    return { ...rest, ...patchForDoc(layers) } as Record<string, unknown>;
+  }, [host.data, expansion, binding, layers]);
 
   const docErrors: ErrorMap = useMemo(() => {
     if (!after) return {};
@@ -263,10 +308,14 @@ export function ForgeStudio({
     }
   };
 
+  /** 特效層自己的問題（空的 vfxKey、超界的 delay、兩格的 tint…）。 */
+  const vfxBlockers = useMemo(() => vfxLayerBlockers(layers ?? []), [layers]);
+
   const blocked =
     conflictBlocks ||
     Object.keys(docErrors).length > 0 ||
-    paramErrors.some((m) => Object.keys(m).length > 0);
+    paramErrors.some((m) => Object.keys(m).length > 0) ||
+    vfxBlockers.length > 0;
 
   return (
     <div className="forge-studio">
@@ -378,6 +427,17 @@ export function ForgeStudio({
               <span className="forge-note">已達 {TEMPLATE_STACK_MAX_CARDS} 張上限</span>
             ) : null}
           </div>
+
+          {abilityId !== "" && layers !== null ? (
+            <VfxLayerPanel
+              layers={layers}
+              vfxIds={vfxIds}
+              onPatch={(i, patch) => setLayers((ls) => (ls ? patchLayer(ls, i, patch) : ls))}
+              onMove={(i, d) => setLayers((ls) => (ls ? moveLayer(ls, i, d) : ls))}
+              onRemove={(i) => setLayers((ls) => (ls ? removeLayer(ls, i) : ls))}
+              onAdd={() => setLayers((ls) => (ls ? addLayer(ls) : ls))}
+            />
+          ) : null}
         </section>
 
         <section className="forge-col">
@@ -423,7 +483,14 @@ export function ForgeStudio({
           >
             預覽寫入差異
           </button>
-          {blocked && after && !conflictBlocks ? (
+          {vfxBlockers.length > 0 ? (
+            <ul className="error">
+              {vfxBlockers.map((b) => (
+                <li key={b}>{b}</li>
+              ))}
+            </ul>
+          ) : null}
+          {blocked && after && !conflictBlocks && vfxBlockers.length === 0 ? (
             <p className="error">展開結果未通過校驗，無法寫回。</p>
           ) : null}
           {status ? <p className="forge-status">{status}</p> : null}

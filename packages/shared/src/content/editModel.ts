@@ -566,12 +566,98 @@ export function spliceTopLevelMember(text: string, key: string, value: unknown):
 }
 
 /**
- * Apply a member patch to a doc's TEXT, one splice per key, preserving every
- * byte outside the patched members. Key order on disk is untouched (a splice
- * never moves a member), so the resulting diff is minimal by construction.
+ * Add a top-level member that is NOT already on the doc, immediately before the
+ * closing brace, at the same indent as the last existing member.
+ *
+ * ── 為什麼這個函式必須存在 (2026-08-02) ────────────────────────────────────
+ *
+ * `spliceTopLevelMember` 對不存在的 key 直接 throw，理由寫在它自己的
+ * docstring 裡：「a blind append would put the key in the wrong place and
+ * silently reorder the doc」。那句話對**位置**是對的，但它推出的結論
+ * 「the caller must add new members through the full-doc PUT path instead」
+ * 會**毀掉整條線的存在理由** —— PUT 走一次 `JSON.stringify` 全文重寫，
+ * 把 Python 匯出器寫的 `350.0` 全部正規化成 `350`（實測 godie-hart.json
+ * 359 行裡有 56 行會變），而躲開這件事正是 PATCH 路線存在的原因（#78）。
+ *
+ * 這在實務上不是理論問題：鑄技工坊要幫一支**還沒有 `template` 欄位**的技能
+ * 綁模板，就是在加一個新成員；要幫一支只有 `vfxKey` 的技能加第二層特效，
+ * 就是在加 `vfxLayers`。646 支技能全部屬於後者。**所以「新成員會 throw」
+ * 等於工坊的兩個主功能都出貨即壞。**
+ *
+ * 解法不是放寬位置規則，是**把位置定死**：一律接在最後一個成員後面。
+ * 這樣位置是可預測的、diff 是純新增的、而且除了插入點以外一個位元組都沒動。
+ */
+export function appendTopLevelMember(text: string, key: string, value: unknown): string {
+  const rootBrace = text.indexOf("{");
+  if (rootBrace === -1) throw new Error("document is not a JSON object");
+  if (findKeyInObject(text, rootBrace, key) !== -1) {
+    throw new Error(`document already has top-level member "${key}" — splice it instead`);
+  }
+  // 最後一個 `}` 之前的最後一個非空白字元 —— 也就是最後一個成員的結尾。
+  const closeBrace = text.lastIndexOf("}");
+  if (closeBrace === -1) throw new Error("document has no closing brace");
+  let end = closeBrace - 1;
+  while (end > rootBrace && /\s/.test(text[end]!)) end--;
+  if (end <= rootBrace) throw new Error(`document is empty — cannot append "${key}"`);
+
+  // 縮排：從最後一個成員那一行讀，而不是猜 2 空白。
+  const lastMemberLine = text.lastIndexOf("\n", end) + 1;
+  let indent = "";
+  for (let i = lastMemberLine; i < text.length && " \t".includes(text[i]!); i++) indent += text[i];
+  if (indent === "") indent = "  ";
+
+  const serialized = stringifyEmbedded(value, indent);
+  return `${text.slice(0, end + 1)},\n${indent}${JSON.stringify(key)}: ${serialized}${text.slice(end + 1)}`;
+}
+
+/**
+ * Apply a member patch to a doc's TEXT, preserving every byte outside the
+ * patched members. Existing members are SPLICED in place (key order on disk is
+ * untouched); members the doc does not have yet are APPENDED at the end, so the
+ * diff stays pure-insert. Either way the file never goes through a
+ * `JSON.stringify` round-trip — see {@link appendTopLevelMember}.
+ *
+ * ⚠️ A `null` value DELETES the member. That is not a JSON convention, it is
+ * this route's convention, and it exists because「回到單值 `vfxKey`」 has to be
+ * expressible: a doc that keeps a stale `vfxLayers` after the operator emptied
+ * the layer list would keep playing the old stack — 故障形態 ②（設定改了，
+ * 消費端讀到的還是舊的）. `undefined` is not usable for this because
+ * `JSON.stringify` drops those keys before the body ever reaches the server.
  */
 export function spliceMembers(text: string, patch: Record<string, unknown>): string {
   let out = text;
-  for (const [k, v] of Object.entries(patch)) out = spliceTopLevelMember(out, k, v);
+  for (const [k, v] of Object.entries(patch)) {
+    const present = findKeyInObject(out, out.indexOf("{"), k) !== -1;
+    if (v === null) {
+      if (present) out = deleteTopLevelMember(out, k);
+      continue;
+    }
+    out = present ? spliceTopLevelMember(out, k, v) : appendTopLevelMember(out, k, v);
+  }
   return out;
+}
+
+/** Remove one top-level member and its line, leaving the rest byte-identical. */
+export function deleteTopLevelMember(text: string, key: string): string {
+  const rootBrace = text.indexOf("{");
+  const keyAt = findKeyInObject(text, rootBrace, key);
+  if (keyAt === -1) return text;
+  const colon = text.indexOf(":", keyAt);
+  let valueStart = colon + 1;
+  while (valueStart < text.length && " \t".includes(text[valueStart]!)) valueStart++;
+  const valueEnd = skipValue(text, valueStart);
+  const lineStart = text.lastIndexOf("\n", keyAt) + 1;
+  // 逗號在後面（不是最後一個成員）就連它一起吃掉；在前面（是最後一個成員）
+  // 就往回吃掉前一個成員結尾的那個逗號，否則會留下 `{ "a": 1, }`。
+  let after = valueEnd;
+  while (after < text.length && " \t".includes(text[after]!)) after++;
+  if (text[after] === ",") {
+    after++;
+    if (text[after] === "\n") after++;
+    return text.slice(0, lineStart) + text.slice(after);
+  }
+  let before = lineStart - 1; // 這一行前面的 "\n"
+  while (before > rootBrace && /\s/.test(text[before]!)) before--;
+  if (text[before] === ",") return text.slice(0, before) + text.slice(valueEnd);
+  return text.slice(0, lineStart) + text.slice(after);
 }

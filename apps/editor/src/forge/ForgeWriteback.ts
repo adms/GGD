@@ -28,7 +28,16 @@ import {
 import type { TemplateDoc } from "@ggd/shared/content/schema/template";
 import { api, WRITES_ENABLED } from "../api/client";
 
-/** The members a template-authored ability owns — the ONLY ones we splice. */
+/**
+ * The members a template-authored ability owns — the ONLY ones we splice.
+ *
+ * ⚠️ `vfxKey` / `vfxLayers` joined on 2026-08-02 (owner:「鑄技工坊 也請一起更新，
+ * 包括多重選取模板及**特效**的設定部分」). Before that the forge could author a
+ * skill whose BEHAVIOUR was exact and whose LOOK was still the shared placeholder,
+ * which is the state #230 measured: 491 emitters extracted from the original map,
+ * 58 referenced, **433 idle** — not blocked by anything, just with nowhere to be
+ * typed in.
+ */
 export const FORGE_OWNED_MEMBERS = [
   "template",
   "castType",
@@ -38,7 +47,25 @@ export const FORGE_OWNED_MEMBERS = [
   "targetsEnemies",
   "innateKind",
   "passive",
+  "vfxKey",
+  "vfxLayers",
 ] as const;
+
+/**
+ * Members that must be REMOVED from the doc rather than written.
+ *
+ * Only `vfxLayers` can need this, and only in one direction: the operator
+ * emptied the layer list back down to a single plain layer, so the doc should
+ * go back to the legacy single-`vfxKey` shape (which is the byte-identical
+ * compatibility path 646 abilities are on — see `schema/abilityVfx.ts`). A doc
+ * that kept a stale `vfxLayers` would keep playing the OLD stack: 故障形態 ②.
+ *
+ * `spliceMembers` deletes on `null`; `undefined` cannot be used because
+ * `JSON.stringify` drops those keys before the body reaches the server.
+ */
+function dropsFor(before: Record<string, unknown>, after: Record<string, unknown>): string[] {
+  return "vfxLayers" in before && after["vfxLayers"] === undefined ? ["vfxLayers"] : [];
+}
 
 export interface ForgePlanStep {
   readonly collection: "abilities" | "champions";
@@ -115,6 +142,8 @@ export function planForgeWrite(
   for (const k of FORGE_OWNED_MEMBERS) {
     if (after[k] !== undefined) abilityPatch[k] = after[k];
   }
+  // `null` = delete. See dropsFor().
+  for (const k of dropsFor(before, after)) abilityPatch[k] = null;
 
   steps.push({
     collection: "abilities",
