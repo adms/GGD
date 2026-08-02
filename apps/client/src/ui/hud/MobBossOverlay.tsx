@@ -315,6 +315,29 @@ export function MobBossOverlay(): React.JSX.Element | null {
     return () => clearInterval(iv);
   }, []);
 
+  // ⚠️ **這個 hook 必須在每一個 `return null` 之前** —— 它是 2026-08-01 起
+  // owner 回報五次「所有介面突然都消失」的 root cause。
+  //
+  // 它原本寫在下面那兩個 early return 之後（`4af1b5c1` / v0.9.17 插進來的）。
+  // `useBossHealthBarSpec` 是真的 hook 鏈（≥12 個 hook：4×useHud +
+  // useActiveHudPanels + useViewport + useBossMarker）。於是：
+  //   · 沒有連殺時 → 提早 return → 這一格的 hook 數是 N
+  //   · 連殺出現時 → 走到底 → hook 數變成 N+12
+  //   → React 丟 `Rendered more hooks than during the previous render.`
+  //     （production 是 minified #310；退場時反向丟 #300）
+  //   → **render 期間的未捕捉例外 = React 18 卸載整個 root**，而 `main.tsx`
+  //     的 `root.render` 只在開機呼叫一次 → 這個分頁剩下的時間都沒有介面。
+  //
+  // 為什麼是「殭屍波出現後才消失」：`KILL_COMBO_MIN_SHOWN = 2`（5 秒內 2 殺），
+  // 而 owner 裁定**殭屍與英雄都算同一個連殺數**（見 sim/combat/killCombo.ts）。
+  // 第 1–2 回合沒有殭屍波，英雄擊殺幾乎不可能 5 秒內連 2 殺 → 這個 hook 從來
+  // 沒被呼叫過 → hook 數穩定。第 3 回合殭屍波進場，一發 AoE 掃過殭屍堆就是
+  // 同一 tick 連殺 → 當場踩爆。owner 的第五句話一字不差。
+  //
+  // 守衛：`ui/hud/hookOrder.test.ts` 用真的 react-dom + jsdom 做兩次 render
+  // （第一次回 null、第二次有內容），把這一行搬回去就會紅。
+  const barRect = useBossHealthBarSpec()?.rect ?? null;
+
   if (phase !== "combat" || couch) return null;
   const life = bossLifetime(boss, now);
   if (!life || !boss) return null;
@@ -333,7 +356,6 @@ export function MobBossOverlay(): React.JSX.Element | null {
   // #247 —— 長血條 owns the top of this corridor while the king is alive, and it
   // is PERSISTENT while this banner/panel is a 4.6 s / 8.2 s beat, so this one
   // yields. Same one entry point the bar draws from.
-  const barRect = useBossHealthBarSpec()?.rect ?? null;
   const rect = mobBossOverlayRect(boss, viewport, {
     touch: hudTouch(),
     legendUp,
