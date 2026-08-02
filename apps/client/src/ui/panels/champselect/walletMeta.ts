@@ -338,6 +338,25 @@ export async function loadWalletMeta(deps: WalletMetaDeps = defaultDeps): Promis
   if (!deps.hasSession()) return { available: false, ownership: "anonymous" };
   try {
     const [wallet, prices] = await Promise.all([deps.fetchWallet(), deps.fetchPrices()]);
+    // ⚠️ AN EMPTY PRICE TABLE IS A FAILURE, NOT A ROSTER WHERE EVERYTHING IS FREE.
+    //
+    // `lockStateOf` (:134) reads `prices.get(id)` and returns "free" whenever the
+    // id is absent — correct per-champion (a champion with no price IS free), and
+    // catastrophic table-wide: with an empty map EVERY champion classifies "free",
+    // `selectableIdsByOwnership` degenerates into the identity function, and 🎲
+    // draws from the whole whitelist. That is exactly the symptom owner reported
+    // on 2026-08-02 (「隨機英雄應該要隨機到能選的(已解鎖)」).
+    //
+    // This branch is reachable WITHOUT any exception: the platform answers 200
+    // with `{champions: []}` when its catalogue is not mounted (EmptyCatalog —
+    // a missing file is not an error there), so the `catch` below never fires.
+    //
+    // Falling into "unknown" hands the decision to the admin field that already
+    // exists for it (`store.randomPickOwnership`, shipped default 「block」)
+    // rather than inventing a second switch — the 第一守則 split: this layer is
+    // DATA INTEGRITY (we cannot tell what is locked), the preference layer is
+    // already a field.
+    if (prices.size === 0) return { available: false, ownership: "unknown" };
     return {
       available: true,
       data: {

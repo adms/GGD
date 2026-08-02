@@ -165,6 +165,28 @@ describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
     expect(res.available).toBe(false);
   });
 
+  it("★ 空的價格表是故障，不是「整排都免費」（2026-08-02 owner 回報的 🎲 症狀）", async () => {
+    cover("meta-client-degrade");
+    // 平台在內容沒掛的時候會回 200 + `{champions: []}`（EmptyCatalog —— 缺檔
+    // 在那邊不是錯誤），所以**這條路不會丟例外**，上面那條 catch 分支接不到。
+    //
+    // 而 `lockStateOf` 對查不到價格的 id 一律回 "free"（逐隻是對的，整表是災難）：
+    // 空表 → 每一隻都 free → `selectableIdsByOwnership` 退化成恆等函式 →
+    // 🎲 從整個白名單抽。這正是 owner 說的「隨機英雄應該要隨機到能選的」。
+    const res = await loadWalletMeta({
+      ...okDeps,
+      fetchPrices: async () => new Map(),
+    });
+    expect(res.available, "空價格表被當成正常回應 —— 🎲 會從整個白名單抽").toBe(false);
+    if (!res.available) expect(res.ownership).toBe("unknown");
+  });
+
+  it("GUARD THE GUARD：非空的價格表仍然是 available（上一條不是把全部關掉）", async () => {
+    cover("meta-client-degrade");
+    const res = await loadWalletMeta(okDeps);
+    expect(res.available).toBe(true);
+  });
+
   it("normalizeWallet coerces missing / malformed fields to safe defaults", () => {
     cover("meta-client-degrade");
     expect(normalizeWallet(null)).toEqual({
