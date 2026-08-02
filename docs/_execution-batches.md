@@ -7,15 +7,42 @@
 
 ---
 
-## 📌 現況（2026-08-02 傍晚，v0.9.24 已推、**未部署**）
+## 📌 現況（2026-08-02 深夜，**v0.9.27 已部署且煙霧測試通過**）
 
 | | |
 |---|---|
-| 線上 | `5ed27c23` = **v0.9.23** —— 綠。console 那一行是 `content loaded: 119 champions (cv_3b03a3fe6cd9) via bundle`、白名單 63、帳號 147 |
-| main | `7ae385d8` = **v0.9.24** 已 push + release note，**刻意還沒 deploy** |
+| 線上 | `1639a59c` = **v0.9.27** —— console `content loaded: 119 champions (cv_8cbee315c3f3) via bundle`、白名單 63 隻、帳號 147、版本徽章 `1639a59c 2026-08-02`（不是 UNSTAMPED） |
+| main | 同上，沒有未推的 commit |
 
-**為什麼卡在協定第 3 步**：v0.9.24 動了三個平衡值與 143 支技能的內容形狀。
-owner 2026-08-02 決定「先 push + release note，deploy 等我在 localhost 打完」。
+### 🔴 這一天出了兩次同型的線上故障，都是「內容與能解析它的東西版本錯位」
+
+| 版本 | 症狀 | 成因 | 現在的守衛 |
+|---|---|---|---|
+| v0.9.25 之前 | 選人畫面空的、體素替身、商店空的 | `content/` 比映像新，四個新 schema tag 不在已部署映像的 Zod union 裡 | 部署後置條件 #5：讀伺服器**自己的登錄表**（`contentHealth.ts`）。**這一版是它第一次真的在線上跑，而且過了** |
+| v0.9.26 | 同上 | 三份 config **原始檔沒 commit**，`content:build` 從工作區讀得到它們，把文件烘進 `bundle.json` 並 commit 了產物 | `shippedBundleHasTrackedSources.test.ts`：比對 `_index.json` 的 path 與 `git ls-files` |
+
+**共同的形狀**：既有守衛都在**工作區**裡問問題，而工作區同時看得到已追蹤與未追蹤的檔。
+**出貨的是 git，不是某台機器的工作區。**
+
+### ⏳ 還沒做的（都要 owner 動手）
+
+1. **協定第 6 步：在線上真的打一場**，把感覺記回這一份。
+   v0.9.24 的三個平衡問題（打得動嗎 / 火圈第一段停在哪 / 三分鐘會不會太長）
+   到現在還沒有人實打驗過 —— 見下一節。
+2. **錄影目錄權限**（部署後置條件唯一的 ✗，會讓 `DEPLOY_EXIT=1`）：
+   ```
+   sudo chown -R 1000:1000 ~/GGD/data/replays && sudo chmod 755 ~/GGD/data/replays && docker restart ggd-game-1
+   ```
+3. **後台 → 對戰設定**：確認火圈 60/20/90/20 存過一次。
+   後台 override 會蓋掉 `content/`，而缺 `stage2StartSec` 會靜默退回單段。
+
+### 🐞 已知既有紅燈（都已隔離量測，不是 v0.9.27 帶進來的）
+
+- #262 — w3x importer 兩條 crit / 道具修飾詞測試
+- #263 — `#274 auto-acquire` 兩條棘輪該翻面 + 一條 `orderClearedWhileAlive` 真的回歸
+- `settlement.test.ts` 1 條 —— 在 `origin/main` 上就紅
+
+---
 
 ### 🎮 v0.9.24 localhost 實打要看什麼（協定第 3 步，待 owner）
 
