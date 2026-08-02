@@ -84,6 +84,9 @@ IMAGES=(ggd-edge ggd-game ggd-platform)
 say()  { printf '\n\033[1m→ %s\033[0m\n' "$*"; }
 die()  { printf '\n\033[31m✗ %s\033[0m\n' "$*" >&2; exit 1; }
 ok()   { printf '\033[32m  ✓ %s\033[0m\n' "$*"; }
+# 「這一項無法判定」——不是通過也不是失敗。新加的後置條件在舊映像上一定拿不到，
+# 那時候 die 會讓一次正確的部署看起來像壞的，而 ok 會讓一次沒驗到的看起來像驗過。
+warn() { printf '\033[33m  ⚠ %s\033[0m\n' "$*"; }
 
 [ -f docker/compose.yaml ] || die "請在 repo 根目錄執行（找不到 docker/compose.yaml）"
 [ -f "$ENV_FILE" ] || die "找不到 $ENV_FILE —— 這台不是部署主機，或 secrets 沒建好"
@@ -204,6 +207,49 @@ WL=$(curl -fsS -m 15 "$BASE/api/v1/curation/whitelist" \
   2>/dev/null || echo 0)
 [ "$WL" -gt 0 ] 2>/dev/null || die "白名單啟用 0 隻英雄 —— 沒有人選得到角色"
 ok "白名單: $WL 隻英雄啟用"
+
+# ── 這個映像的程式，讀不讀得懂它掛著的內容？(2026-08-02 的生產故障) ───────────
+#
+# 上面那兩項在那次故障中**全部是綠的**，而網站完全不能玩：無法鎖定英雄
+# （「選擇被拒: unknown champion」）、進場變成體素替身、商店空的。
+#
+# 根因：線上的 content/ 比映像新。四個 config schema tag（roster / boss-intro /
+# item-card / victory-fx）與四組欄位不在已部署映像的 Zod union 裡 → 內容載入
+# 整份失敗 → fail-open 退回骨架（2 隻英雄）。
+#
+# ⚠️ 為什麼前四項看不到它 —— 這才是真正的教訓：
+#
+#     1. bundle 英雄數  → 讀**檔案**，檔案是好的
+#     2. 白名單英雄數    → 讀**平台**，平台是好的
+#     3. 版本身分        → 讀**映像**，映像是好的
+#     4. 帳號數          → 讀**資料**，資料是好的
+#
+# **每一項都在驗一個「名詞」，沒有一項在驗兩個名詞之間的「關係」。**
+# 壞掉的是「這個映像能解析這份內容」——那是一個**配對**的性質，
+# 不可能由分別檢查每一半得到。而部署正是兩個獨立版本化的東西相遇的那一刻。
+#
+# 這一項讀的是 game shard **自己的登錄表**：那是「映像裡的 Zod」真的跑過
+# 「bind-mount 上的內容」之後得到的東西。靜態檔案伺服器會很樂意把一份
+# 客戶端解析不了的 bundle 送出去；登錄表不會。
+CONTENT_JSON=$(curl -fsS -m 15 "http://127.0.0.1:2567/healthz" 2>/dev/null || true)
+if [ -z "$CONTENT_JSON" ]; then
+  die "讀不到 game shard 的 /healthz —— 無法確認映像解析得了內容"
+fi
+CONTENT_OK=$(printf '%s' "$CONTENT_JSON" \
+  | python3 -c 'import json,sys; d=json.load(sys.stdin).get("content") or {}; print("1" if d.get("ok") else "0")' \
+  2>/dev/null || echo "?")
+if [ "$CONTENT_OK" = "?" ]; then
+  # 舊映像沒有這一格。不 die —— 這一項是新加的，第一次部署新版之前一定拿不到。
+  warn "這個映像的 /healthz 沒有 content 區塊（v0.9.25 之前的映像）—— 這一項略過"
+elif [ "$CONTENT_OK" != "1" ]; then
+  REASON=$(printf '%s' "$CONTENT_JSON" \
+    | python3 -c 'import json,sys; print((json.load(sys.stdin).get("content") or {}).get("reason") or "")' 2>/dev/null)
+  die "映像的登錄表是骨架 —— 內容載入失敗過。$REASON"
+else
+  RC=$(printf '%s' "$CONTENT_JSON" \
+    | python3 -c 'import json,sys; print((json.load(sys.stdin).get("content") or {}).get("champions") or 0)' 2>/dev/null)
+  ok "映像解析得了內容: 登錄表 $RC 隻英雄（不是骨架）"
+fi
 
 # ── 錄影真的寫得進去嗎（GH#170 / owner 2026-08-02「請幫我預設打開」）───────────
 # 為什麼這一條要在部署腳本裡，而不是留在 runbook：這台機器上量到過

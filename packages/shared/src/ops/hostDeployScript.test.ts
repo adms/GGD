@@ -137,6 +137,31 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
     ).toBe(false);
   });
 
+  it("★ 配對驗證：映像讀不讀得懂它掛著的內容（2026-08-02 的生產故障）", () => {
+    // 那次故障裡**前四項後置條件全部是綠的**，而網站完全不能玩：
+    // 無法鎖定英雄、體素替身、商店空的。根因是線上的 content/ 比映像新，
+    // 四個 config schema tag 不在映像的 Zod union 裡 → 內容載入整份失敗 →
+    // fail-open 退回骨架（2 隻英雄）。
+    //
+    // ⚠️ 為什麼前四項看不到 —— 這條測試守的就是這個道理：
+    // 它們每一項都在驗一個**名詞**（檔案／平台／映像／資料），
+    // 沒有一項在驗兩個名詞之間的**關係**。而「這個映像能解析這份內容」
+    // 是一個配對的性質，不可能由分別檢查每一半得到。
+    expect(src, "後置驗證沒有讀 game shard 的 /healthz —— 拿不到登錄表的真相").toMatch(
+      /healthz/,
+    );
+    expect(src, "沒有檢查 healthz 的 content 區塊").toMatch(/\.get\("content"\)|"content"/);
+    // 失敗要 die，不可以只印一行。
+    const block = src.slice(src.indexOf("CONTENT_JSON="), src.indexOf("CONTENT_JSON=") + 1600);
+    expect(block, "登錄表是骨架時沒有 die —— 一次做錯的部署又會長得跟做對的一樣").toMatch(
+      /die "映像的登錄表是骨架/,
+    );
+    // 舊映像拿不到這一格時要 warn，不可以 die（那會讓正確的部署看起來像壞的）
+    // 也不可以 ok（那會讓沒驗到的看起來像驗過）。
+    expect(block, "舊映像沒有 content 區塊時應該 warn").toMatch(/warn "/);
+    expect(src, "warn() 沒有定義").toMatch(/^warn\(\)/m);
+  });
+
   it("★ 腳本絕對不可以出現會刪掉玩家資料的指令", () => {
     // 這三個是唯一能弄丟 data/ 的路徑（見腳本檔頭）。出現在會執行的行裡就是紅。
     expect(/down\s+(-v|--volumes)/.test(code), "有 `docker compose down -v` —— 會刪具名 volume").toBe(false);

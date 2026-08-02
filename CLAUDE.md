@@ -98,6 +98,22 @@ owner 2026-07-30（把範圍講死）：
 | ⑥ | 用掃原始碼字串代替行為 | 掃 `grep championForm` 而不是跑真的 registry |
 | ⑦ | 掃屬性代替掃行為 | 「三個 kind 解析出三個 modelKey」是屬性，不是「畫面上不一樣大」 |
 
+### ⚠️ fail-open 沒錯，**靜默**才是缺陷
+
+這個專案有兩處刻意的 fail-open，兩處都造成過「壞掉跟正常長得一模一樣」：
+
+| 位置 | 為什麼刻意 | 代價（都真的發生了） |
+|---|---|---|
+| `main.tsx` 內容驗證失敗 → 註冊骨架 | 不讓首次繪製被內容擋住 | 內容全毀時網站照開，只有一行 console warn（2026-08-01、08-02 各一次） |
+| `MatchRecorder.open()` 非同步開 fd | 「壞掉的錄影不可以弄壞一場遊戲」 | 整段時間一場都沒錄到，而 `/healthz` 說 ok |
+
+**兩個都是對的設計。錯的是沒有任何東西 fail-loud。**
+選擇 fail-open 的同時，必須有一個**會回非零、或畫面上擋不掉**的東西說出來 ——
+一行沒有人讀的 log 不算。錄影那條後來補成 `/healthz` 的 `replay.writable`
+（開機真的建一個檔再刪掉），內容那條補成 `content.ok`（讀登錄表）。
+
+**判準：如果我在寫「失敗時退回一個安全值」，那就要同時問「誰會知道它退回了？」**
+
 **斷言要讀最終物件。** 例：`applyModelTint` 會 **clone** 材質再指回 `mesh.material`，
 所以任何對原始材質物件寫的斷言，不管有沒有生效都會過
 （見 `apps/client/src/render/views/mobTint.test.ts` 的檔頭）。
@@ -183,6 +199,54 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
 
 ⛔ **測試一律在 localhost 或暫存目錄，永遠不要在正式站上測。**
 
+### ⚠️ 後置條件只驗「名詞」抓不到相容性故障（2026-08-02 第二次事故）
+
+同一天下午又壞一次：**無法鎖定英雄**（「選擇被拒: unknown champion」）、
+進場**變成體素替身而不是 3D 模型**、**商店空的** —— 而 `host-deploy.sh` 的
+**四項後置條件全部是綠的**。
+
+```
+1. content bundle 英雄數 → 讀檔案 ，檔案是好的
+2. 白名單英雄數          → 讀平台 ，平台是好的
+3. 版本身分不是 UNSTAMPED → 讀映像 ，映像是好的
+4. 帳號數 147→147        → 讀資料 ，資料是好的
+```
+
+**每一項都在驗一個「名詞」，沒有一項在驗兩個名詞之間的「關係」。**
+壞掉的是「這個映像**能解析**這份內容」—— 那是一個**配對**的性質，
+不可能由分別檢查每一半得到。**而部署正是兩個獨立版本化的東西相遇的那一刻。**
+
+根因：`content/` 是 live bind-mount（跟著 `git pull` 走），映像只在完整部署時重建。
+四個 config schema tag（`config.roster@1` / `boss-intro` / `item-card` / `victory-fx`）
+與四組欄位（`healthDrainPctOfMax` / `yawOffsetDeg` / `fireRing.burnCurve` / `drain*`）
+不在已部署映像的 Zod union 裡 → 內容載入**整份**失敗 → fail-open 退回骨架（2 隻英雄）。
+三個症狀全部由此解釋：id 不在骨架註冊表 → unknown champion；骨架英雄沒 glb → 體素；
+骨架沒道具 → 商店空的。
+
+⚠️ **這條教訓上面那一段已經寫過了**（「內容與程式的版本必須一起動」），它還是發生了。
+散文治不了 —— 出事的當下沒有人在讀散文，只有後置條件在跑。
+
+**所以現在有第五項後置條件**：讀 game shard **自己的登錄表**
+（`/healthz` 的 `content` 區塊，`apps/game-server/src/contentHealth.ts`）——
+那是「映像裡的 Zod」真的跑過「bind-mount 上的內容」之後得到的東西。
+靜態檔案伺服器會很樂意把一份客戶端解析不了的 bundle 送出去；登錄表不會。
+守衛：`packages/shared/src/ops/hostDeployScript.test.ts`（兩個突變都驗過會紅）。
+
+**加新的後置條件時要問**：它驗的是一個名詞，還是兩個名詞的關係？
+只驗名詞的那一種，在相容性故障面前**必然是綠的**。
+
+### 💡 診斷這一類故障最快的一招（實測，不碰正式站）
+
+把**線上正在服務的那份 bundle** 抓下來，用**候選版本的 schema** 逐份驗：
+
+```bash
+curl -s https://ggd.adms.ai/content/bundle.json -o /private/tmp/prod-bundle.json
+# 再用 packages/shared 的 validateDoc(collection, doc) 跑一遍
+```
+
+2026-08-02 這一招給出「1,932 份文件，失敗 0 份」，
+把「我猜部署會修好」變成**部署前就量到的事實**。幾十秒有答案。
+
 ### 🔥 第 6 步的煙霧測試（30 秒，2026-08-01 事故之後補的，不准跳過）
 
 deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就是讀這一行**：
@@ -200,9 +264,16 @@ deploy 完打開 `https://ggd.adms.ai` 的瀏覽器 console，**第一件事就�
 （刻意的，不讓首次繪製被內容擋住），代價是**內容全毀看起來跟正常一模一樣**。
 所以那一行 log 是唯一的訊號，煙霧測試就是去讀它。
 
+⚠️ **一定要開全新分頁。** 瀏覽器的 console 緩衝區**跨導覽保留** ——
+在同一個分頁重整，舊的失敗訊息會留在新的成功訊息**上面**，看起來像還沒修好。
+2026-08-02 我差點就這樣誤判成「部署沒生效」。
+
 順手一起看：
 - `GET /api/v1/curation/whitelist` → `champions` 不是 0（0 = 白名單被洗掉了）
 - 版本徽章要顯示 `v0.9.xx`，不是 `v0.9.15-20-g4af1b5c1`（那代表 host 沒抓 tag）
+- `GET http://127.0.0.1:2567/healthz` → `content.ok` 為 true、`replay.ok` 為 true
+  （`replay.ok=false` 通常是 `data/replays` 的 EACCES，修法寫在 `host-deploy.sh` 的註解裡，
+  需要 owner 用 sudo 手動跑一次 chown）
 
 ### 🤖 部署指令只有一條 —— 不要憑記憶重打
 

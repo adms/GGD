@@ -18,6 +18,7 @@ import { roomRegistry } from "./rooms/roomRegistry";
 import { tickHealth } from "./match/tickHealth";
 import { platformStatusWithContent } from "./config/contentBus";
 import { degradedHealthzStatus, replayHealth, type ReplayHealthSnapshot } from "./replay/replayHealth";
+import { contentHealth, type ContentHealthSnapshot } from "./contentHealth";
 
 export interface HealthzPayload {
   /** Conjunction of every subsystem that can be unhealthy — today: replay. */
@@ -25,6 +26,12 @@ export interface HealthzPayload {
   rooms: ReturnType<typeof roomRegistry.stats>;
   sim: ReturnType<typeof tickHealth.snapshot>;
   replay: ReplayHealthSnapshot;
+  /**
+   * 「這個映像的程式讀不讀得懂它掛著的內容」—— 2026-08-02 生產故障之後補的。
+   * 見 ./contentHealth.ts 的檔頭：那次四項後置條件全綠而網站不能玩，
+   * 因為每一項都在驗一個名詞，沒有一項在驗兩個名詞之間的關係。
+   */
+  content: ContentHealthSnapshot;
   platform: ReturnType<typeof platformStatusWithContent>;
 }
 
@@ -66,12 +73,14 @@ export interface HealthzPayload {
  */
 export function buildHealthzPayload(): HealthzPayload {
   const replay = replayHealth.snapshot();
+  const content = contentHealth();
   return {
     // A real conjunction, not the literal `true` this used to be.
-    ok: replay.ok,
+    ok: replay.ok && content.ok,
     rooms: roomRegistry.stats(),
     sim: tickHealth.snapshot(),
     replay,
+    content,
     platform: platformStatusWithContent(),
   };
 }
