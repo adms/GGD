@@ -32,7 +32,10 @@ import {
   type RoundTeamView,
 } from "./settlementModel";
 import type { ModelDoc } from "@ggd/shared/content";
-import { planRoundWinnerShow } from "../../render/RoundWinnerStage";
+import {
+  planRoundWinnerShow,
+  type RoundWinnerAuthority,
+} from "../../render/RoundWinnerStage";
 
 /**
  * 出貨呼叫端的那一支 —— `GameApp.updateRoundWinner` 呼叫的就是它。
@@ -40,6 +43,9 @@ import { planRoundWinnerShow } from "../../render/RoundWinnerStage";
  * 現在改成把同一支函式真的跑一遍。
  */
 const WINNER_DOC = { modelKey: "champ.test", url: "/x.glb" } as unknown as ModelDoc;
+
+/** GH#265:沒有伺服器逐區答案的那一份快照(決賽單場 / 舊快照 / 純觀眾)。 */
+const NO_DUELS: RoundWinnerAuthority = { duels: [], zone: -1 };
 
 function stats(over: Partial<PlayerMatchStats> = {}): PlayerMatchStats {
   return { ...createMatchStats(), ...over };
@@ -441,7 +447,9 @@ describe("round-end winner = the leading team's round MVP (settle-round-mvp)", (
     // any of the wordings it did not happen to spell out. The presentation was
     // extracted into `planRoundWinnerShow` precisely so this can be exercised —
     // the SAME function `GameApp.updateRoundWinner` calls, run for real here.
-    const plan = planRoundWinnerShow(seats, leadingTeams, 5, () => WINNER_DOC);
+    // GH#265: 這幾條驗的是「嘲諷屬於誰」,不是「哪一區贏」,所以權威來源留空 ——
+    // 空的 `duels` 就是「這一份快照沒帶配對」,函式照舊走推導路徑。
+    const plan = planRoundWinnerShow(seats, leadingTeams, 5, () => WINNER_DOC, NO_DUELS);
     expect(plan).not.toBeNull();
     expect(plan!.ctx.championId).toBe(roundEndQuoteChampion(seats, leadingTeams));
     expect(plan!.ctx.round).toBe(5);
@@ -457,7 +465,7 @@ describe("round-end winner = the leading team's round MVP (settle-round-mvp)", (
       { ...rseat(7, 0, "luffy", { roundKills: 3, alive: false }), roundDeathTick: 100 },
       { ...rseat(3, 1, "enemy", { roundKills: 9, alive: false }), roundDeathTick: 50 },
     ];
-    const crownedPlan = planRoundWinnerShow(crowned, settled, 5, () => WINNER_DOC);
+    const crownedPlan = planRoundWinnerShow(crowned, settled, 5, () => WINNER_DOC, NO_DUELS);
     expect(crownedPlan!.members[0]!.championId).toBe("ichigo"); // 金冠 = 活最久
     expect(crownedPlan!.members[0]!.medal).toBe("gold");
     expect(crownedPlan!.ctx.championId).toBe("luffy"); // 嘲諷 = 回合 MVP

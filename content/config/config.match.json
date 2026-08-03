@@ -11,6 +11,8 @@
     "startingTeamLives": 20,
     "champSelectSec": 20,
     "champSelectSecVsBot": 320,
+    "champSelectEarlyStartVsBot": true,
+    "forceSettleVsBot": true,
     "intermissionSec": 25,
     "combatMaxSec": 180,
     "fireRing": {

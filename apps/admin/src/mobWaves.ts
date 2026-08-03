@@ -124,6 +124,16 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
   // owner 2026-08-02 的兩個回合結束旋鈕（見 schema/config.ts 的說明）。
   stopSpawnOnTeamWipe: true,
   roundHoldMobKinds: "boss",
+  // GH#268 精英小怪(特殊殭屍 + 殭屍王)頭上的小血條。34 × 5 是「比冠軍那條
+  // (64 × 6)小一號」,0.35u ≈ 頭頂上一個拳頭,1.0 = 全程顯示。
+  // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.healthBar`(mobWaves.test.ts 釘)。
+  healthBar: {
+    showHealthBar: true,
+    barWidth: 34,
+    barHeight: 5,
+    yOffset: 0.35,
+    showThreshold: 1,
+  },
   schedule: [
     { round: 6, mobsPerWaveCap: 10, maxAlivePerZone: 20 },
     { round: 7, mobsPerWaveCap: 15, maxAlivePerZone: 30 },
@@ -284,6 +294,12 @@ export type MobWavesFieldKey =
   | "maxAlivePerZone"
   | "stopSpawnOnTeamWipe"
   | "roundHoldMobKinds"
+  // GH#268 精英小怪血條的五格
+  | "healthBar.showHealthBar"
+  | "healthBar.barWidth"
+  | "healthBar.barHeight"
+  | "healthBar.yOffset"
+  | "healthBar.showThreshold"
   | "mob.maxHp"
   | "mob.attackDamage"
   | "mob.moveSpeed"
@@ -426,6 +442,11 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "maxAlivePerZone",
   "stopSpawnOnTeamWipe",
   "roundHoldMobKinds",
+  "healthBar.showHealthBar",
+  "healthBar.barWidth",
+  "healthBar.barHeight",
+  "healthBar.yOffset",
+  "healthBar.showThreshold",
   "mob.championSource",
   "mob.championId",
   "mob.modelKey",
@@ -594,6 +615,64 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     },
     optional: true,
     emptyMeans: "沿用出貨預設「只有殭屍王」",
+  },
+  "healthBar.showHealthBar": {
+    zh: "精英小怪頭上要不要有血條",
+    note:
+      "特殊殭屍與殭屍王頭上那條小血條(一般殭屍**不會**有 —— 波峰時一區 50 隻,50 條血條會把畫面糊掉)。" +
+      "關掉＝畫面上一個節點都不畫,不是畫成透明。⚠️ 這和下面殭屍王那條**長血條**是兩回事:" +
+      "長血條回答「這一區有沒有王」,這一條回答「我正在打的這一隻還剩多少」",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "顯示（出貨）", off: "完全不畫" },
+    optional: true,
+    emptyMeans: "留空 = 顯示",
+  },
+  "healthBar.barWidth": {
+    zh: "└ 血條寬度",
+    note:
+      "冠軍(玩家)那條是 64,精英刻意小一號 —— 波峰時畫面上同時有 12 個玩家,一條和玩家一樣寬的血條會被誤讀成「那裡有個人」。" +
+      "上限 200 是防呆:打成 5000 會蓋掉半個畫面",
+    unit: "px",
+    kind: "num",
+    min: 8,
+    max: 200,
+    optional: true,
+    emptyMeans: "留空 = 34",
+  },
+  "healthBar.barHeight": {
+    zh: "└ 血條厚度",
+    note: "太薄在手機上看不到,太厚會把小怪的頭蓋住。冠軍那條是 6",
+    unit: "px",
+    kind: "num",
+    min: 1,
+    max: 40,
+    optional: true,
+    emptyMeans: "留空 = 5",
+  },
+  "healthBar.yOffset": {
+    zh: "└ 血條離頭頂多高",
+    note:
+      "⚠️ 單位是**世界高度**,不是像素。特殊殭屍體型倍率 2、王 5,一個固定的像素偏移會讓王的血條埋進牠胸口。" +
+      "實際高度 = 1.8 × 體型倍率 + 這一格。負值 = 畫進頭裡面(極矮的模型會需要)",
+    unit: "單位",
+    kind: "num",
+    min: -2,
+    max: 6,
+    optional: true,
+    emptyMeans: "留空 = 0.35（頭頂上一個拳頭）",
+  },
+  "healthBar.showThreshold": {
+    zh: "└ 血量低於多少才亮血條",
+    note:
+      "1.0(出貨)＝ 只要是精英就全程顯示。0.5 ＝ 只有半血以下才亮,是一種「快死了才給線索」的玩法。" +
+      "⚠️ 這是**唯一**能讓血條在死亡前消失的格子 —— 其他任何提早消失都是缺陷(GH#268 兩次回報都是這個)",
+    unit: "比例",
+    kind: "num",
+    min: 0,
+    max: 1,
+    optional: true,
+    emptyMeans: "留空 = 1.0（全程顯示）",
   },
   "mob.championSource": {
     zh: "殭屍由誰擔任：指定還是隨機",
@@ -1401,6 +1480,19 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     ],
   },
   {
+    title: "精英小怪血條 · 特殊殭屍與殭屍王頭上那一條",
+    blurb:
+      "只有**精英**(特殊殭屍 + 殭屍王)有這條小血條;一般殭屍沒有,因為波峰時一區 50 隻。" +
+      "殭屍王另外還有一條畫在畫面頂端的**長血條**,設定在下面的「殭屍王」那一組。",
+    keys: [
+      "healthBar.showHealthBar",
+      "healthBar.barWidth",
+      "healthBar.barHeight",
+      "healthBar.yOffset",
+      "healthBar.showThreshold",
+    ],
+  },
+  {
     title: "殭屍身分 · 臉、模型、體型、染黑",
     blurb:
       "選了英雄就直接用那個英雄的 3D 模型（模型欄留空即可）。殭屍一律染黑，避免跟玩家的英雄混在一起。逐回合表可以再逐場覆蓋這裡的英雄。",
@@ -1571,6 +1663,20 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.stopSpawnOnTeamWipe === undefined ? "" : cfg.stopSpawnOnTeamWipe ? "1" : "0";
     case "roundHoldMobKinds":
       return cfg.roundHoldMobKinds ?? "";
+    case "healthBar.showHealthBar":
+      return cfg.healthBar?.showHealthBar === undefined
+        ? ""
+        : cfg.healthBar.showHealthBar
+          ? "1"
+          : "0";
+    case "healthBar.barWidth":
+      return formatNum(cfg.healthBar?.barWidth);
+    case "healthBar.barHeight":
+      return formatNum(cfg.healthBar?.barHeight);
+    case "healthBar.yOffset":
+      return formatNum(cfg.healthBar?.yOffset);
+    case "healthBar.showThreshold":
+      return formatNum(cfg.healthBar?.showThreshold);
     case "mob.maxHp":
       return formatNum(cfg.mob.maxHp);
     case "mob.attackDamage":
@@ -1937,7 +2043,10 @@ export interface MobWavesErrors {
  * Without this, opening the page on a pre-#262 arena-rules doc would light up
  * twenty 必填 errors and gate Save on filling in a mechanic nobody asked for.
  */
-export function blockEmpty(form: MobWavesForm, prefix: "boss." | "special."): boolean {
+export function blockEmpty(
+  form: MobWavesForm,
+  prefix: "boss." | "special." | "healthBar.",
+): boolean {
   return MOB_WAVES_FIELD_ORDER.filter((k) => k.startsWith(prefix)).every(
     (k) => form.fields[k].trim() === "",
   );
@@ -2122,6 +2231,27 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
           >,
         }
       : {}),
+    // GH#268 —— 精英小怪血條。⚠️ Zod 這一塊是 `.strict()` 而且五格**都必填**,
+    // 所以它只有「整塊寫」與「整塊不寫」兩種合法結果。五格全空 = 不寫這一塊
+    // (＝沿用出貨值);只要有人填了任何一格,五格都要有值,沒填的用出貨值補齊。
+    // 「只寫填了的那幾格」會產出一份 schema 拒絕的文件,而它被拒的地方遠在後台之外。
+    ...(blockEmpty(form, "healthBar.")
+      ? {}
+      : {
+          healthBar: {
+            showHealthBar: bool(
+              "healthBar.showHealthBar",
+              SHIPPED_MOB_WAVES.healthBar!.showHealthBar,
+            ),
+            barWidth: num("healthBar.barWidth", SHIPPED_MOB_WAVES.healthBar!.barWidth),
+            barHeight: num("healthBar.barHeight", SHIPPED_MOB_WAVES.healthBar!.barHeight),
+            yOffset: num("healthBar.yOffset", SHIPPED_MOB_WAVES.healthBar!.yOffset),
+            showThreshold: num(
+              "healthBar.showThreshold",
+              SHIPPED_MOB_WAVES.healthBar!.showThreshold,
+            ),
+          },
+        }),
     mob,
     reward: {
       gold: num("reward.gold", SHIPPED_MOB_WAVES.reward.gold),

@@ -7,7 +7,12 @@ import type { EntityId, SeatId } from "../../ids";
 import type { IntentFrame } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import { distSq, lenSq } from "../math/vec2";
-import { DEFAULT_AUTO_ENGAGE, type AutoEngageRules } from "../combatFeel";
+import {
+  DEFAULT_AUTO_ENGAGE,
+  DEFAULT_MANUAL_ORDER,
+  type AutoEngageRules,
+  type ManualOrderRules,
+} from "../combatFeel";
 import { bodyHeldByRules } from "../movementHold";
 import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
 import { reachTo } from "./BasicAttackSystem";
@@ -39,6 +44,15 @@ const HOLD_FRACTION = 0.9;
  */
 export function autoEngageRules(world: SimWorld): AutoEngageRules {
   return world.combatFeel.autoEngage ?? DEFAULT_AUTO_ENGAGE;
+}
+
+/**
+ * 玩家點名的目標 vs 自動索敵的規則表 (GH#266)。缺格 → 出貨預設,理由與
+ * `autoEngageRules` 完全一樣:空表的 `survivesGroundMove` 是 undefined,
+ * 而 `!undefined` 是 true —— 規則會**反過來**靜默生效,比消失更糟。
+ */
+export function manualOrderRules(world: SimWorld): ManualOrderRules {
+  return world.combatFeel.manualOrder ?? DEFAULT_MANUAL_ORDER;
 }
 
 /**
@@ -115,6 +129,8 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   // GH#216 —— 讀在最前面,因為**指令套用**那一段就已經要用到它了
   // (`respectLiveSteering`:一條新到的 move 當場把方向盤還給玩家)。
   const ae = autoEngageRules(world);
+  // GH#266 —— 玩家點名的目標撐不撐得過一條移動指令 (sim/combatFeel.ts)。
+  const mo = manualOrderRules(world);
 
   // Apply new orders in ascending seat order (Map iteration is insertion order,
   // so sort explicitly for determinism regardless of host map construction).
@@ -173,12 +189,31 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
           //     autoAcquirePass and, worse, blanking `attackTarget` for the whole
           //     of a committed wind-up (the A-click case that held a target 86%
           //     of the round and still landed 2 hits).
-          if (!nav.attackTargetAuto) nav.attackTarget = null;
+          //
+          // ---- GH#266: …除非 owner 說玩家點名的目標最高優先 ----
+          // ⭐ 決策點 `manualOrder.survivesGroundMove`(出貨 **true**)。上面那段
+          // LoL 語意在**滑鼠**上是對的:右鍵一次點擊只送一條指令,所以「點地面」
+          // 真的就是「我要取消攻擊」。壞掉的是把同一條規則套到**連續轉向**上 ——
+          // 類比搖桿與虛擬搖桿推著的時候**每一拍都送一條 move**
+          // (`GamepadInput` / `TouchInput`),那不是取消攻擊,那是走路。
+          //
+          // 量到的:一條明確的 `attackTarget` 指到特殊殭屍,之後每 tick 送一條
+          // move → **下一個 tick** 目標就變成旁邊的普通殭屍(`attackTargetAuto`
+          // false→true)。手選的壽命 = 1 tick。而且換掉之後回不來:比較器的
+          // key 3 是「血量低的優先」,特殊殭屍血量遠高於雜魚,所以只要旁邊有雜魚
+          // 自動索敵永遠不會挑它 —— 這就是 owner 的「玩家無法指定攻擊特殊殭屍」。
+          //
+          // ⚠️ 只放行 `kind:"move"`。`attackMove` 仍然取代手選目標(A 是玩家自己
+          // 下的另一條戰鬥決策,而且沒有任何輸入裝置會連續送它)。
+          const keepsManual = mo.survivesGroundMove && order.kind === "move";
+          if (!nav.attackTargetAuto && !keepsManual) nav.attackTarget = null;
           // …連**被嘲弄暫存起來**的那一條也一起取消。同一條規則:一條地面指令
           // 取代玩家自己的攻擊指令。少了這一行,一個在嘲弄期間改用走位的玩家會
           // 在嘲弄退掉的那一 tick 被「還原」到他早就放棄的那個目標身上 ——
           // 而畫面上完全看不出來為什麼英雄突然自己跑去打別人。
-          world.suspendedOrder.delete(id);
+          // (`keepsManual` 時一起留著,否則「嘲弄期間走了一步」= 永久忘記他點的
+          // 那一隻,而沒有嘲弄的同一步卻記得 —— 兩種行為對玩家沒有任何區別。)
+          if (!keepsManual) world.suspendedOrder.delete(id);
           // ---- GH#216: 玩家此刻正在轉方向盤 → 走位權無條件還給他 ----
           // 一條**新到的** move 是「玩家現在正在下指令」唯一誠實的訊號:搖桿與
           // 虛擬搖桿只在推著的時候每一拍送一條(GamepadInput / TouchInput),
@@ -259,7 +294,7 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   // task #221: fill the targeting VACUUM (runs before the chase resolve below,
   // so a target acquired this tick both walks a melee hero in and fires the
   // ranged swing on the same tick).
-  autoAcquirePass(world, ae);
+  autoAcquirePass(world, ae, mo);
 
   // Resolve attackTarget chase: close only until the target is inside our own
   // ATTACK REACH, then stop. The reach is `reachTo` — the exact same function
@@ -443,7 +478,11 @@ function tauntVsManualOrder(
   nav.attackTargetAuto = false;
 }
 
-function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
+function autoAcquirePass(
+  world: SimWorld,
+  ae: AutoEngageRules,
+  mo: ManualOrderRules,
+): void {
   if (!world.combatActive) return;
 
   // Explicit ascending-id iteration: `world.champion` is a Map, so its native
@@ -526,6 +565,27 @@ function autoAcquirePass(world: SimWorld, ae: AutoEngageRules): void {
     // 前搖那一行**仍然**在它上面 —— 前搖中改指向會讓那一刀砍空,那是既有且刻意
     // 的行為(見 taunt.test.ts 的「等這一刀收完」)。
     tauntVsManualOrder(world, id, nav);
+
+    // ---- GH#266: 手選目標的牽引距離 ----
+    // ⭐ 決策點 `manualOrder.leashUnits`(出貨 **0 = 不限制**,照 owner 的「永遠」)。
+    // 它是 `survivesGroundMove` 的出口:目標留下來之後,走位一走完(`nav.order`
+    // 被消耗成 null)追擊就會恢復,英雄會自己走回去找他點的那一隻。想要「跑遠了
+    // 就算了」的人在後台填一個距離。
+    //
+    // 清成 null 之後,下面的 switch 會把那條用掉的 `attackTarget` 指令一起消耗
+    // (`if (nav.attackTarget !== null) continue;` 不成立 → `nav.order = null`),
+    // 所以玩家不會握著一條死掉的指令站在原地。
+    //
+    // 自動索敵自己的 `ACQUIRE_LEASH`(2)故意沒有套在這裡:那是給**系統挑的**
+    // 目標用的滯後量,把它套上來等於偷偷把手選目標降級成自動目標。
+    if (mo.leashUnits > 0 && nav.attackTarget !== null && !nav.attackTargetAuto) {
+      const tgtT = world.transform.get(nav.attackTarget);
+      const leash = mo.leashUnits;
+      if (!tgtT || tgtT.zone !== t.zone || distSq(t.pos, tgtT.pos) > leash * leash) {
+        nav.attackTarget = null;
+        nav.attackTargetAuto = false;
+      }
+    }
 
     // ---- explicit-order suppression ----
     let holdPosition = false;

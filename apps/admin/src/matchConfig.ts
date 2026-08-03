@@ -119,6 +119,40 @@ export function matchFieldBounds(field: DerivedField): FieldBounds | null {
   return boundsFor(field, MATCH_CONSOLE_MAX);
 }
 
+/**
+ * 布林格的兩個狀態**叫什麼**。
+ *
+ * ⚠️ 這張表存在的理由不是美觀。`boundsFor` 對布林回 `null`（一個開關沒有上下界
+ * 可講），而這一頁在 2026-08-03 之前**只有數字**一條路：每一格都畫成文字輸入框、
+ * 存檔走 `Number(raw)`。把一個布林塞進那條路的結果是 `Number("true") = NaN`
+ * → 那一格**永遠不會被寫進文件**，而畫面上看起來一切正常。半套的可調欄位比寫死
+ * 更糟：它看起來可以調，實際上不生效 —— A1 上一輪就是因為這個被退回的。
+ *
+ * 一個布林值以裸的 "1"/"0"（或這裡的 "true"/"false"）顯示在控制台上是不可讀的，
+ * 操作者得猜哪一邊是哪一邊，所以畫面上只出現這兩句中文，原始值不上螢幕。
+ * `matchConfig.test.ts` 要求**每一個**布林欄位都在這張表裡。
+ */
+export interface MatchBoolLabels {
+  on: string;
+  off: string;
+}
+
+export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Object.freeze({
+  "match.champSelectEarlyStartVsBot": {
+    on: "鎖定就開打（出貨）",
+    off: "一律等選角倒數跑完",
+  },
+  "match.forceSettleVsBot": {
+    on: "我這場打完就結算其他場（出貨）",
+    off: "等每一區自己打完",
+  },
+});
+
+/** 這一格是不是布林（＝畫成開關而不是輸入框）。 */
+export function isBoolField(path: string): boolean {
+  return MATCH_FIELDS.find((f) => f.path === path)?.kind === "boolean";
+}
+
 // ------------------------------------------------------- 誰真的讀這一格 -----
 
 /**
@@ -179,6 +213,22 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
   "match.champSelectSecVsBot": {
     zh: "選角秒數（vs bot 一鍵開打）",
     note: "只有自己一個人、其餘都是 bot 的那種局，選角可以拉多長。沒有人在等你，所以這一格可以放心調大（出貨值 320 秒）。⚠️ 判準是「人類座位只有 1 個」，不是「場上有 bot」—— 每一場都有 bot 填空位。留空 = 跟上面那格一樣。",
+    live: PHASE,
+  },
+  "match.champSelectEarlyStartVsBot": {
+    zh: "vs bot：鎖定英雄就直接開打",
+    note:
+      "只有自己一個人類、其餘都是 bot 的那種局，人類鎖定英雄的那一刻就進戰鬥，不等上面那個選角倒數跑完（owner 2026-08-03:「vs bot 選角後就可以開始進入戰鬥不用等，一樣是因為不用等其他 bot」）。" +
+      "關掉＝一律等倒數，也就是這一格出現之前的行為。⚠️ 沒有第三種「等 bot 也選完」——bot 不在選角階段選，牠們是在階段結束時一次配好的。" +
+      "⚠️ 判準是「人類座位只有 1 個」，不是「場上有 bot」：每一場都有 bot 填空位，用它判會讓三個朋友一起打的局也被第一個鎖定的人拖走。",
+    live: PHASE,
+  },
+  "match.forceSettleVsBot": {
+    zh: "vs bot：我這場打完就強制結算其他場",
+    note:
+      "一個回合有兩個競技場，而相位要**每一區都有勝負**才結束 —— 所以一個人打 bot 局時，自己三十秒打完之後還要看著另一區的兩隊 bot 慢慢磨到火圈。" +
+      "開著（出貨）＝人類那一區記下勝負的同一刻，其餘還在打的區用**和時間到完全一樣的裁決**（團隊血量比例高者勝、平手擲骰）立刻結算。" +
+      "⚠️ 它只縮短**等待**，不改變任何一區的勝負規則，也碰不到你自己那一場的結果。人類那一隊輪空（這一回合沒有配對）時不會觸發 —— 否則那一回合會在第一個 tick 就結束。",
     live: PHASE,
   },
   "match.intermissionSec": {
@@ -398,6 +448,8 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.startingTeamLives",
       "match.champSelectSec",
       "match.champSelectSecVsBot",
+      "match.champSelectEarlyStartVsBot",
+      "match.forceSettleVsBot",
       "match.intermissionSec",
       "match.combatMaxSec",
       "match.resolutionSec",
@@ -612,6 +664,12 @@ export function validateMatchField(path: string, raw: string, fireRingOn: boolea
   if (!field) return `未知的欄位 ${path}`;
   if (!isEditable(path)) return null;
   if (!fireRingOn && path.startsWith(`${FIRE_RING_BLOCK}.`)) return null;
+  if (field.kind === "boolean") {
+    const t = raw.trim();
+    // 空白 = 「不設定」,只有 `.optional()` 的格子可以留白（缺席 ⇒ schema 的預設）。
+    if (t === "") return field.optional ? null : "不能空白";
+    return t === "true" || t === "false" ? null : "只能是開或關";
+  }
   const bounds = matchFieldBounds(field);
   if (!bounds) return null;
   return validateNumeric(raw, bounds, field.kind, field.optional);
@@ -674,6 +732,12 @@ export function matchDocFrom(
     if (raw === "") {
       // 選填欄位留白 = 不寫這一格（schema 的 `.default()` 或「不設限」接手）
       if (f.optional) deleteAtPath(doc, f.path);
+      continue;
+    }
+    // ⚠️ 布林要先攔下來。`Number("true")` 是 NaN,所以少了這一段,一個布林欄位
+    // 會**永遠寫不進文件**而畫面上毫無異狀（見 MATCH_BOOL_LABELS 的說明）。
+    if (f.kind === "boolean") {
+      setAtPath(doc, f.path, raw === "true");
       continue;
     }
     const n = Number(raw);

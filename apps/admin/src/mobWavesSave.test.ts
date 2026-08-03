@@ -166,6 +166,12 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "special.settlementMode": "toast",
       stopSpawnOnTeamWipe: "0",
       roundHoldMobKinds: "any",
+  // GH#268 精英小怪血條 —— 五格都和出貨值不同（true/34/5/0.35/1）。
+  "healthBar.showHealthBar": "0",
+  "healthBar.barWidth": "48",
+  "healthBar.barHeight": "9",
+  "healthBar.yOffset": "1.25",
+  "healthBar.showThreshold": "0.4",
   "mob.maxHp": "111",
   "mob.attackDamage": "2.5",
   "mob.moveSpeed": "3.75",

@@ -35,7 +35,13 @@ import {
   type ConfigVictoryPodiumDoc,
 } from "@ggd/shared/content/schema/victoryPodium";
 import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
-import { hudStore, resetHudStore, type SeatView, type TeamView } from "../net/RoomStore";
+import {
+  hudStore,
+  localDuelZone,
+  resetHudStore,
+  type SeatView,
+  type TeamView,
+} from "../net/RoomStore";
 import {
   RoundWinnerStage,
   planRoundWinnerShow,
@@ -145,7 +151,13 @@ function harness() {
 function present(docFor: (id: string) => ModelDoc | null = () => DOC) {
   const h = harness();
   const hud = hudStore.getState();
-  const plan = planRoundWinnerShow(hud.seats, hud.teams, hud.round, docFor);
+  // GH#265:這一支的 fixture 只有一個 zone,而且刻意**不帶** duels —— 驗的是
+  // 「權威來源缺席時仍然照舊演」的那條退路。逐區勝負本身的守衛在
+  // `roundWinnerZone.test.ts`。
+  const plan = planRoundWinnerShow(hud.seats, hud.teams, hud.round, docFor, {
+    duels: hud.duels,
+    zone: localDuelZone(hud),
+  });
   if (plan) h.stage.showTeam(plan.members, plan.ctx);
   return { ...h, plan };
 }
@@ -359,7 +371,10 @@ describe("金冠那位真的在慶祝 (round-podium-clip)", () => {
       taunt: null,
     });
     const hud = hudStore.getState();
-    const plan = planRoundWinnerShow(hud.seats, hud.teams, hud.round, () => MODEL);
+    const plan = planRoundWinnerShow(hud.seats, hud.teams, hud.round, () => MODEL, {
+      duels: hud.duels,
+      zone: localDuelZone(hud),
+    });
     stage.showTeam(plan!.members, plan!.ctx);
     // StorePreview.show 是 async(assets.load 回一個已解決的 promise)
     await new Promise((r) => setTimeout(r, 0));

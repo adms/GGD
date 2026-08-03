@@ -150,6 +150,13 @@
     "maxAlivePerZone": 15,
     "stopSpawnOnTeamWipe": true,
     "roundHoldMobKinds": "boss",
+    "healthBar": {
+      "showHealthBar": true,
+      "barWidth": 34,
+      "barHeight": 5,
+      "yOffset": 0.35,
+      "showThreshold": 1
+    },
     "schedule": [
       {
         "round": 6,

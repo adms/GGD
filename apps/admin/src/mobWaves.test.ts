@@ -91,6 +91,12 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "maxAlivePerZone",
   "stopSpawnOnTeamWipe",
   "roundHoldMobKinds",
+  // GH#268 精英小怪血條
+  "healthBar.showHealthBar",
+  "healthBar.barWidth",
+  "healthBar.barHeight",
+  "healthBar.yOffset",
+  "healthBar.showThreshold",
   "mob.maxHp",
   "mob.attackDamage",
   "mob.moveSpeed",
@@ -368,6 +374,13 @@ describe("每一個欄位 are reachable and labelled", () => {
       maxAlivePerZone: "9",
       stopSpawnOnTeamWipe: "0",
       roundHoldMobKinds: "any",
+      // GH#268 —— 五個 sentinel 都和出貨值不同（true/34/5/0.35/1），所以一條
+      // `configFromForm` 沒寫的行會以「拿到出貨值」的形態被抓到，而不是剛好相等。
+      "healthBar.showHealthBar": "0",
+      "healthBar.barWidth": "48",
+      "healthBar.barHeight": "9",
+      "healthBar.yOffset": "1.25",
+      "healthBar.showThreshold": "0.4",
       "mob.maxHp": "111",
       "mob.attackDamage": "2.5",
       "mob.moveSpeed": "4.5",

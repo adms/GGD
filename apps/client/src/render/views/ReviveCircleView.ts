@@ -40,6 +40,11 @@ import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { effectiveQuality, particleScaleFor, type Quality } from "../RenderConfig";
 import { TEAM_COLORS } from "./ChampionView";
+import {
+  deathFxBurnPolicy,
+  deathFxIntensity,
+  type DeathFxBurnPolicy,
+} from "./deathFxBurn";
 
 /** Flame tongues around the rim — the discrete progress read. */
 export const TONGUE_COUNT = 20;
@@ -101,6 +106,12 @@ export function flicker01(nowMs: number, phase: number, speed = FLICKER_SPEED): 
  * until the round ends), and with it the burn-down cue that used to dim the
  * fire and accelerate its beat as the clock ran out — a "hurry up" read with
  * nothing left to hurry for would be a lie.
+ *
+ * ⚠️ GH#267 —— 那個「沒有存續時間」正是 owner 抓到的「場地天空火」。圈圈的
+ * ENTITY 仍然沒有到期（機制不變，那是伺服器的事），但它的**火**現在會在
+ * `deathFxBurnSec` 之後收斂成低調的餘光（`render/views/deathFxBurn.ts`，後台可調）。
+ * 收斂只碰火柱／火舌／餘燼；地上那圈的 alpha 一格都沒動，因為那是「這裡還救得回來」
+ * 的錨點。有人真的踩進來復活（或敵人卡著）時火會立刻燒回全亮。
  */
 export interface ReviveCircleVisualState {
   /** channel fill 0..1 */
@@ -141,6 +152,14 @@ export class ReviveCircleView {
   private radius = 1;
   private team = 0;
   private lit = -1; // last applied tongue count (avoids redundant setEnabled)
+  /**
+   * GH#267 —— 這一團火第一次被畫出來的時間（ms）。`activate()` 拿不到 `nowMs`
+   * （呼叫端是 registry 的 pool，不帶時鐘），所以在第一個 `update()` latch。
+   * `null` = 還沒畫過任何一幀 ⇒ 年齡 0 ⇒ 全亮。
+   */
+  private bornMs: number | null = null;
+  /** 這一次啟用時生效的收斂政策（後台可調；每次 activate 重讀）。 */
+  private burn: DeathFxBurnPolicy = deathFxBurnPolicy();
 
   constructor(scene: Scene, quality: Quality = safeQuality()) {
     const id = ReviveCircleView.counter++;
@@ -257,6 +276,10 @@ export class ReviveCircleView {
    */
   activate(entityId: number, teamId: number, radius: number): void {
     this.active = true;
+    // GH#267: fresh circle ⇒ fresh burn clock, and re-read the backstage policy
+    // so a save takes effect on the NEXT death rather than the next process.
+    this.bornMs = null;
+    this.burn = deathFxBurnPolicy();
     this.phase = (entityId % 23) * 0.41 * Math.PI;
     this.team = teamId;
     this.radius = radius > 0 ? radius : 1;
@@ -301,6 +324,14 @@ export class ReviveCircleView {
   update(nowMs: number, st: ReviveCircleVisualState): void {
     if (!this.active) return;
 
+    // GH#267 —— 這一團死亡火現在燒到什麼程度。1 = 今天的樣子；燒過
+    // `burnSec` 之後降到 `calmScale`，但有人在復活/爭奪時立刻燒回 1。
+    if (this.bornMs === null) this.bornMs = nowMs;
+    const fire = deathFxIntensity(nowMs - this.bornMs, this.burn, {
+      channelling: st.channelling,
+      contested: st.contested,
+    });
+
     // calm beat, or a fast strobe while contested. The third case — an
     // accelerating, dimming beat as the lifetime ran out — went with the
     // lifetime itself (task #196), so the ring's intensity now means exactly
@@ -325,14 +356,15 @@ export class ReviveCircleView {
       t.scaling.y = s;
       t.position.y = (TONGUE_HEIGHT * s) / 2;
     }
-    this.tongueMat.alpha = 0.6 + flick * 0.4;
+    this.tongueMat.alpha = (0.6 + flick * 0.4) * fire;
 
     // — central pillar: height IS the progress, so a stacked fight still reads —
     const h = PILLAR_MIN_HEIGHT + st.progress * (PILLAR_MAX_HEIGHT - PILLAR_MIN_HEIGHT);
     this.pillar.scaling.y = h;
     this.pillar.position.y = h / 2;
     this.pillarMat.alpha =
-      PILLAR_MIN_ALPHA + (st.channelling ? beat : 0.25) * (PILLAR_MAX_ALPHA - PILLAR_MIN_ALPHA);
+      (PILLAR_MIN_ALPHA + (st.channelling ? beat : 0.25) * (PILLAR_MAX_ALPHA - PILLAR_MIN_ALPHA)) *
+      fire;
 
     // — contest: hot warning tint on ring + pillar; team hue otherwise —
     const rgb = st.contested ? CONTEST_RGB : teamRgb(this.team);
@@ -346,7 +378,10 @@ export class ReviveCircleView {
     // embers pour while somebody is actually channelling — an idle ring still
     // burns, but a driven one is visibly ALIVE. Both rates stay inside the
     // quality-scaled budget (`emberRate` is the capped full-throttle value).
-    this.embers.emitRate = st.channelling ? this.emberRate : this.emberRate * 0.3;
+    //
+    // GH#267: THIS is the 「天空的火焰」 —— 往上飄的 additive 餘燼。一個沒人來救
+    // 的圈圈以前會用這個速率噴到回合結束，現在燒完 `burnSec` 就收斂。
+    this.embers.emitRate = (st.channelling ? this.emberRate : this.emberRate * 0.3) * fire;
   }
 
   dispose(): void {

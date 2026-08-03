@@ -52,6 +52,7 @@
  */
 import type { ModelDoc } from "@ggd/shared/content";
 import { Configs } from "@ggd/shared/content/registries";
+import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import type { ClipState } from "./ClipAnimator";
 import { StorePreview } from "./StorePreview";
 import {
@@ -628,6 +629,95 @@ export interface RoundWinnerShowPlan {
   cfg: VictoryPodiumPolicy;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * GH#265 —— 「為什麼我最後活著 勝利的還是顯示別的隊伍」(owner, 2026-08-03)
+ *
+ * 伺服器**有**權威答案而且**有送出**:`MatchController.checkCombatEnd` 在「某一區
+ * 有一邊被清空」的那一 tick 就記下 `duelWinners[zone]`,`net/snapshot.ts` 把它鏡到
+ * `MatchState.duels[].winner`。頒獎台卻一格都沒讀 —— 它只拿到 seats/teams,自己
+ * **重新推導**一次誰贏。
+ *
+ * 兩個獨立推導不可能靠修其中一個變一致,而它們必然分岔,因為它們回答的不是同一題:
+ *
+ *   · 伺服器答的是「**這一區**誰贏」—— 一回合兩個 zone,兩個答案。
+ *   · `roundLeaderChampion` 答的是「所有 `WON` 的隊伍裡**戰績最好**的那一隊」——
+ *     一回合一個答案,而且它會被 `lives` / `teamId` 決定。
+ *
+ * 於是 4 隊 2 區時:你這一區贏了(命 1),另一區也有人贏(命 3)→ 排序把命 3 那隊
+ * 排前面 → 上台的是**你沒打過的那三個人**。這正是 owner 看到的畫面。
+ *
+ * ⚠️ 這跟「部署後置條件只驗名詞抓不到相容性故障」是同一個形狀:兩邊各自都對,
+ * 沒有任何東西驗**兩者一致**。所以修法不是改推導,是**讓客戶端讀已經送過來的那一格**,
+ * 並且加一條配對式守衛(`roundWinnerZone.test.ts`)。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * 伺服器對「誰贏了這一場決鬥」的權威答案,以及**要演哪一區**。
+ *
+ * `duels` 是 `HudState.duels`(= `MatchState.duels` 的逐欄投影);`zone` 是本機
+ * 玩家自己那一區(`net/RoomStore.localDuelZone`,讀實體的 zone,所以死掉/觀戰時
+ * 屍體仍然帶著正確的區)。
+ *
+ * ⚠️ **`zone` 從哪裡來是一個決策點,不是一個常數。** 「觀戰別的 zone 時要演誰」
+ * 有兩個都說得通的答案(你自己那一區的勝負 / 你鏡頭正在看的那一區的勝負),
+ * 而 #269 的「前往觀戰」讓後者是真的存在的狀態。這裡不替 owner 選 ——
+ * `GameApp` 傳什麼就演什麼,選擇留給 `config.victory-podium@1` 的
+ * `podiumZoneSource` 欄位(第二階段落地)。
+ */
+export interface RoundWinnerAuthority {
+  /** 逐區勝負(`HudState.duels`)。空 = 這一份快照沒帶配對。 */
+  duels: readonly { zone: number; winner: number }[];
+  /** 要演哪一區的勝負。-1 = 不知道(觀眾 / 還沒生成 / 決賽單場)。 */
+  zone: number;
+}
+
+/**
+ * 這一區的勝方 teamId,或 `-1` =「伺服器沒有給答案」。
+ *
+ * -1 有三種來源,三種都必須 fail-open 退回推導而不是把舞台清空:決賽單場
+ * (`pairings` 是空的)、還沒定勝負的快照(`winner < 0`)、以及本機玩家沒有區可歸。
+ * 「壞掉的權威來源不可以弄壞一場表演」—— 但 fail-open 的代價是靜默,所以
+ * `roundWinnerZone.test.ts` 的三條裡有一條就在釘這個退路真的還在。
+ */
+export function authoritativeRoundWinner(authority: RoundWinnerAuthority): number {
+  if (authority.zone < 0) return -1;
+  const duel = authority.duels.find((d) => d.zone === authority.zone);
+  return duel && duel.winner >= 0 ? duel.winner : -1;
+}
+
+/**
+ * 把「這一區的勝方」壓成 `roundOutcome` 裡**唯一**的 `WON`。
+ *
+ * 為什麼是改投影而不是加參數:`roundVictoryPodium` / `roundLeaderChampion` /
+ * `roundEndQuoteChampion` 三支都已經擁有一整套辛苦換來的規則(輪空隊用
+ * MEMBERSHIP 排除、勝者優先於參戰者、沒鎖英雄的隊往下遞)。把「哪一隊」forked
+ * 成第二套規則正是 model 與 VO 會分岔的那條路。它們讀的都是 `roundOutcome`,
+ * 所以只要那一欄說的是伺服器的答案,三支就自動一致。
+ *
+ * 只動兩種格子,其餘原封不動:
+ *   · 權威勝方 → `WON`(本來就是 `WON` 就不動)
+ *   · 其他隊的 `WON` → `FOUGHT`(它是**別區**的勝方,對這一拍而言只是「有上場」)
+ *
+ * ⛔ **`NONE` 一格都不碰。** 那是 #173 分辨「輪空」與「被團滅」的唯一訊號,
+ * 兩者在座位上讀起來 byte-identical。
+ *
+ * 認不得那個 teamId(舊快照 / 手刻 fixture)時整份原樣回傳 —— 寧可退回舊行為,
+ * 也不要造出一份沒有任何 `WON` 的隊伍表。
+ */
+function teamsScopedToWinner(
+  teams: readonly RoundTeamView[],
+  winnerTeamId: number,
+): readonly RoundTeamView[] {
+  if (winnerTeamId < 0) return teams;
+  if (!teams.some((t) => t.teamId === winnerTeamId)) return teams;
+  return teams.map((t) => {
+    if (t.teamId === winnerTeamId) {
+      return t.roundOutcome === ROUND_OUTCOME.WON ? t : { ...t, roundOutcome: ROUND_OUTCOME.WON };
+    }
+    return t.roundOutcome === ROUND_OUTCOME.WON ? { ...t, roundOutcome: ROUND_OUTCOME.FOUGHT } : t;
+  });
+}
+
 /**
  * HUD 投影 → 這一拍要演什麼 (GH#257).
  *
@@ -654,9 +744,16 @@ export interface RoundWinnerShowPlan {
  *      三個人一起慶祝就等於沒有說出誰是第一。退回路徑(沒有名次)一律 `idle`。
  *   5. **`soloWinner` 只演金冠一位**。截在這裡而不是在舞台上,因為它決定的是
  *      **演誰**;舞台只負責把交給它的人擺好。
+ *   6. **哪一隊上台**(GH#265)—— 這一件**不推導**,讀 `authority`:伺服器逐區記下
+ *      的那個 teamId。上面五件都是「在勝方裡怎麼演」,這一件是「勝方是誰」,
+ *      而它是唯一一件客戶端沒有資格自己算的。見檔案中段 GH#265 那一段。
+ *
+ * ⚠️ `authority` **不是 optional**,而且刻意排在 `cfg` 前面。它一旦可以省略,
+ * 出貨呼叫端就可以在測試全綠的情況下把它悄悄拿掉(失敗形態 ③ —— 這一支函式
+ * 本身就是因為那件事真的發生過才存在的)。現在拿掉它 typecheck 直接紅。
  *
  * ⚠️ `cfg` 的預設值是 `victoryPodiumPolicy()` —— **`content/config/victory-podium.json`
- * 本人**,不是 code 裡的常數。`GameApp.updateRoundWinner` 傳四個引數,所以走的就是
+ * 本人**,不是 code 裡的常數。`GameApp.updateRoundWinner` 不傳它,所以走的就是
  * 這個預設。在 2026-08-03 之前它是 `DEFAULT_VICTORY_PODIUM`,於是那份 JSON 是死的。
  */
 export function planRoundWinnerShow(
@@ -664,10 +761,15 @@ export function planRoundWinnerShow(
   teams: readonly RoundTeamView[],
   round: number,
   docFor: (championId: string) => ModelDoc | null,
+  authority: RoundWinnerAuthority,
   cfg: VictoryPodiumPolicy = victoryPodiumPolicy(),
 ): RoundWinnerShowPlan | null {
-  const podium = roundVictoryPodium(seats, teams, cfg);
-  const fallback = podium.length > 0 ? [] : roundWinnerTeamChampions(seats, teams);
+  // GH#265 —— 先把伺服器的逐區答案壓進這一份投影,再交給既有的選擇器。
+  // 底下三個呼叫(`roundVictoryPodium` / `roundWinnerTeamChampions` /
+  // `roundEndQuoteChampion`)全部吃 `scoped`,所以「哪一隊上台」只有一個答案。
+  const scoped = teamsScopedToWinner(teams, authoritativeRoundWinner(authority));
+  const podium = roundVictoryPodium(seats, scoped, cfg);
+  const fallback = podium.length > 0 ? [] : roundWinnerTeamChampions(seats, scoped);
 
   const members: WinnerEntry[] = [];
   for (const p of podium) {
@@ -695,6 +797,6 @@ export function planRoundWinnerShow(
   const shown = cfg.podiumLayout === "soloWinner" ? members.slice(0, 1) : members;
 
   const championId =
-    roundEndQuoteChampion(seats, teams) ?? podium[0]?.championId ?? fallback[0] ?? "";
+    roundEndQuoteChampion(seats, scoped) ?? podium[0]?.championId ?? fallback[0] ?? "";
   return { members: shown, ctx: { championId, round }, cfg };
 }

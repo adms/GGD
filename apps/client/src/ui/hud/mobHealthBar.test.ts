@@ -8,10 +8,14 @@
  *    不是「螢幕上多了一個東西」。
  * ⑤ 會是：測試自己寫一份「哪一隻算精英」的判斷 —— 出貨的那份判斷再怎麼錯都綠。
  *
- * 所以這裡的骨幹是：**出貨的** `mobBarAnchorFor`（`GameApp` 每幀呼叫的同一個
- * 函式，判準是伺服器投影寫的 `ENTITY_FLAG.MOB_ELITE`）→ 出貨的 `mobBarSpecs`
- * → 出貨的 `MobHealthBarsView`，最後 `renderToStaticMarkup` 把**節點與寬度字串**
- * 讀回來。中間任何一段斷掉都會紅。
+ * 所以這裡的骨幹是：**出貨的** `mobBarAnchorFor`（判準是伺服器投影寫的
+ * `ENTITY_FLAG.MOB_ELITE`）→ 出貨的 `mobBarSpecs` → 出貨的 `MobHealthBarsView`，
+ * 最後 `renderToStaticMarkup` 把**節點與寬度字串**讀回來。中間任何一段斷掉都會紅。
+ *
+ * ⛔ 這裡以前寫著「`GameApp` 每幀呼叫的同一個函式」。**那句話是假的**
+ * （第三守則）：`GameApp` 全檔沒有任何 `mobBars` 參照，`HudRoot` 也沒有掛
+ * `MobHealthBars` —— 見 `mobHealthBarModel.ts` 檔頭的「現況」。所以這一支測試
+ * 涵蓋的是**模型 → 畫面**那一段，**不涵蓋接線**；接線今天是斷的（GH#268）。
  *
  * 區分性輸入：同一次渲染裡同時餵一般殭屍、特殊殭屍、殭屍王與一位英雄。
  */
@@ -142,6 +146,29 @@ describe("特殊殭屍頭上的小血條真的畫出來了 (owner 2026-08-03)", 
       mobBarAnchorY(1, SHIPPED_MOB_HEALTH_BAR),
       9,
     );
+  });
+
+  it("殭屍王從滿血掉到 1%：**整段期間**畫面上都還有那條血條 (GH#268)", () => {
+    // owner 第二次回報:「殭屍王的血條還是沒持續到殭屍王死掉的時候才消失」。
+    //
+    // ⑦ 會是:`expect(mobBarVisible(...)).toBe(true)` 在滿血那一點驗一次 ——
+    //    那是一個屬性,而 owner 抱怨的是**一段時間**。所以這裡掃過整條血量曲線,
+    //    每一步都讀最終 markup。
+    // ④ 會是:只驗「有畫」而不驗「畫的東西在動」—— 一個畫一次就凍住的實作
+    //    （血條卡在 100%）對「有沒有節點」的斷言是全綠的。
+    cover("mob-special-visible");
+    const steps = [1, 0.9, 0.6, 0.4, 0.2, 0.05, 0.01];
+    const fills: string[] = [];
+    for (const pct of steps) {
+      const hp = Math.max(1, Math.round(BOSS_MOB.maxHp * pct));
+      const html = render([{ ...BOSS_MOB, hp }]);
+      expect(barIds(html), `王在 ${(pct * 100).toFixed(0)}% 血時血條就不見了`).toEqual([
+        BOSS_MOB.id,
+      ]);
+      fills.push(html.match(/width:([\d.]+)%/)![1]!);
+    }
+    // 每一步的填充都不同 = 這條血條是**即時**的,不是畫完就凍住
+    expect(new Set(fills).size).toBe(steps.length);
   });
 
   it("投影說看不到就不畫 —— 血條不會浮在畫面邊緣（失敗形態 ①）", () => {

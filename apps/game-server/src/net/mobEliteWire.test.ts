@@ -129,11 +129,16 @@ describe("精英小怪位元真的上線 (owner 2026-08-03 特殊殭屍血條)",
     expect(plain.flags).toBe(0);
   });
 
-  it("殭屍王也帶著 MOB_ELITE —— 王的血條因此只由快照決定，不靠那顆單槽事件", () => {
+  it("殭屍王也帶著 MOB_ELITE —— 快照這條路上，王的身分不靠那顆單槽事件", () => {
     // owner 2026-08-03「殭屍王血量在死之前都應該存在 現在玩起來會消失」。
     // 王的長血條走 `mobBossSpawn` 事件（RoomStore 只存**最後一顆**），所以另一區
-    // 的王一生成/一被殺就會把這一區的王從畫面上抹掉。頭上那條小血條走的是這個
-    // 位元，也就是走快照 —— 王活著它就在。
+    // 的王 —— 自 #288 起連**每一隻特殊殭屍**死掉發的 `mobBossSlain` 也算 ——
+    // 都會把這一格翻掉，本區那隻滿血的王的長血條就消失了。
+    //
+    // ⚠️ 這裡以前寫著「頭上那條小血條走這個位元，王活著它就在」。**那句話今天
+    // 是假的**（第三守則）：客戶端沒有任何人讀 `frameBus.mobBars`，`HudRoot` 也
+    // 沒有掛 `MobHealthBars`（見 `apps/client/src/ui/hud/mobHealthBarModel.ts`
+    // 檔頭的「現況」）。這條測試守的是**線路那一半真的沒問題**，接線是另一回事。
     cover("mob-special-visible");
     const ctl = combatController();
     const rules = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 3);
@@ -148,6 +153,46 @@ describe("精英小怪位元真的上線 (owner 2026-08-03 特殊殭屍血條)",
     const boss = decodedRow(ctl, bossId!);
     expect(boss.kind).toBe(ENTITY_KIND.MOB);
     expect(isEliteMob(boss.kind, boss.flags)).toBe(true);
+  });
+
+  it("王從滿血打到剩一滴：**整段期間**那一列都在線上、都還是精英 (GH#268)", () => {
+    // owner 第二次回報:「殭屍王的血條還是沒持續到殭屍王死掉的時候才消失」。
+    //
+    // 客戶端能不能一路畫，前提是**線路上一路都有東西可畫**。這條測試守的就是
+    // 那個前提，而且它是一段**時間**上的性質，不是生成那一瞬間的一個屬性
+    // （失敗形態 ⑦）—— 上面那條只在滿血時看一次，一個「掉血就不再寫這個位元」
+    // 或「殘血就把小怪從投影裡剔掉」的實作對它是全綠的。
+    //
+    // 血量直接寫 `world.health`（`projectSnapshot` 讀的就是這個元件，不是另一份
+    // 手寫 fixture），每一步都跑真的 `projectSnapshot` + 真的 encode→decode。
+    cover("mob-special-visible");
+    const ctl = combatController();
+    const rules = mobRulesFromConfig(DEFAULT_MOB_WAVES_CONFIG, DT, 3);
+    ctl.world.mobRules = rules;
+    beginCombatMobs(ctl.world, rules, [ZONE]);
+    const bossId = summonMobBoss(ctl.world, ZONE, rules, 0 as unknown as EntityId, 100);
+    expect(bossId, "shipped config must be able to summon a king").not.toBeNull();
+    const health = ctl.world.health.get(bossId!)!;
+    const maxHp = health.maxHp;
+    expect(maxHp).toBeGreaterThan(0); // guard the guard
+
+    const sentHp: number[] = [];
+    for (const pct of [1, 0.75, 0.5, 0.25, 0.1, 0.01]) {
+      health.hp = Math.max(1, Math.round(maxHp * pct));
+      const row = wire(ctl).entities.get(String(bossId!));
+      const at = `${(pct * 100).toFixed(0)}%`;
+      expect(row, `王在 ${at} 血時整列從快照消失了`).toBeDefined();
+      // ⬇ 這一行是「血條可以一路畫」的線路前提
+      expect(isEliteMob(row!.kind, row!.flags), `王在 ${at} 血時掉了 MOB_ELITE`).toBe(true);
+      // `GameApp` 的長血條真正的存續條件就是這一格
+      expect(row!.alive, `王在 ${at} 血時線路上就已經不是 alive 了`).toBe(true);
+      expect(row!.maxHp, `王在 ${at} 血時 maxHp 變了 —— 百分比會亂跳`).toBe(maxHp);
+      sentHp.push(row!.hp);
+    }
+    // 而且送出去的血量**真的在動**：一個每幀送同一個數字的投影會讓血條凍在滿血，
+    // 那對「有沒有這一列」的斷言是全綠的（失敗形態 ④）。
+    expect(new Set(sentHp).size).toBe(sentHp.length);
+    expect(sentHp).toEqual([...sentHp].sort((a, b) => b - a));
   });
 
   it("英雄不帶 MOB_ELITE —— 32768 只在 KIND_MOB 上有定義", () => {

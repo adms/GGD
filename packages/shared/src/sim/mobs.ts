@@ -321,6 +321,20 @@ export interface MobRules {
    * 收窄成「只有殭屍王」）。主機的 `checkCombatEnd` 讀它；見 {@link ROUND_HOLD_KINDS}。
    */
   roundHoldMobKinds?: RoundHoldMobKinds;
+  /**
+   * 精英小怪（特殊殭屍 + 殭屍王）頭上那條**小血條** (GH#268)。
+   *
+   * ⚠️ 和 `boss.healthBar*`（王的**長血條**）完全不同的東西:長血條回答「這一場
+   * 有沒有王」,這五格回答「我正在打的這一隻還剩多少」。
+   *
+   * ⚠️ 純畫面 —— sim 這一側**一個 tick 都不讀它**。它存在的唯一理由是
+   * {@link mobVisualJson} 要把它送到客戶端。這正是失敗形態 ②「算出來了但從沒送到
+   * 客戶端」的位置:GH#268 之前伺服器已經把 `ENTITY_FLAG.MOB_ELITE` 寫進快照,
+   * 而這五個設定值一格都沒有上線,於是客戶端只能用寫死的出貨值。
+   *
+   * ABSENT ⇒ {@link DEFAULT_ELITE_HEALTH_BAR}(＝出貨值),不是「關掉」。
+   */
+  eliteHealthBar?: EliteHealthBarRules;
 
   /**
    * The mob's EFFECTIVE LEVEL this round (task #217). Derived ONCE at arm time
@@ -537,6 +551,88 @@ export interface MobBossRules {
 export type BossHealthBarAnchor = "top" | "bottom";
 /** 長血條什麼時候亮 —— see `zMobWavesConfig.boss.healthBarReveal`. */
 export type BossHealthBarReveal = "summon" | "sighted";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * GH#268 —— 精英小怪頭上的**小血條**
+ *
+ * ⚠️ 這一組和上面兩個 `BossHealthBar*` 是**不同的東西**,名字像只是因為兩者都
+ * 叫血條:
+ *   · 長血條(`boss.healthBar*`)是一條畫在畫面頂端/技能列上方的橫條,一場最多
+ *     一條,回答「這一區有沒有王」。
+ *   · 這一組是浮在**每一隻精英頭上**的小條,特殊殭屍與王共用,回答「我正在打的
+ *     這一隻還剩多少」。
+ *
+ * 一般殭屍不吃這一組 —— 波峰時一區 50 隻,50 條血條就是把畫面糊掉。判準是伺服器
+ * 投影寫進快照的 `ENTITY_FLAG.MOB_ELITE`,不是體型/modelKey/血量(那三個都是設定
+ * 值,操作者一改就會讓「誰有血條」悄悄跟著變)。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** 精英小怪血條的五個後台決策。語意見 `zMobWavesConfig.healthBar`。 */
+export interface EliteHealthBarRules {
+  /** 畫不畫。false = 一個節點都不建（不是畫成透明）。 */
+  showHealthBar: boolean;
+  /** 寬度（CSS px）。冠軍那條是 64,精英刻意小一號。 */
+  barWidth: number;
+  /** 高度（CSS px）。 */
+  barHeight: number;
+  /**
+   * 離**頭頂**多高（**世界單位**,不是 px）。特殊殭屍體型倍率 2、王 5,一個固定
+   * 的 px 偏移會讓王的血條埋進胸口（失敗形態 ①）。
+   */
+  yOffset: number;
+  /** 血量低於這個比例才亮。1 = 全程顯示（出貨）。 */
+  showThreshold: number;
+}
+
+/**
+ * 出貨值。⚠️ 這五個數字同時住在三個地方（第一守則）：
+ *   1. `content/config/arena-rules.json` 的 `mobWaves.healthBar`
+ *   2. 這裡 + `schema/config.ts` 的 `DEFAULT_MOB_WAVES_CONFIG.healthBar`
+ *   3. `apps/admin/src/mobWaves.ts` 的 `SHIPPED_MOB_WAVES.healthBar`
+ * 外加客戶端拿不到表時的降級值
+ * （`apps/client/src/ui/hud/mobHealthBarModel.SHIPPED_MOB_HEALTH_BAR`）。
+ */
+export const DEFAULT_ELITE_HEALTH_BAR: EliteHealthBarRules = {
+  showHealthBar: true,
+  barWidth: 34,
+  barHeight: 5,
+  yOffset: 0.35,
+  showThreshold: 1,
+};
+
+/** 上下界 —— 和 `zMobWavesConfig.healthBar` 的 Zod 一字不差。 */
+const ELITE_BAR_LIMITS = {
+  barWidth: [8, 200],
+  barHeight: [1, 40],
+  yOffset: [-2, 6],
+  showThreshold: [0, 1],
+} as const;
+
+/**
+ * 一份（可能殘缺的）作者輸入 → 五格都在界內的規則。
+ *
+ * **逐格**降級,不是整塊 `?? DEFAULT`:一份只填了 `showThreshold` 的 config 必須
+ * 保住其他四格的出貨值。整塊退回會把操作者剛剛存的那一格靜默丟掉,而畫面上看
+ * 起來完全正常。
+ */
+export function eliteHealthBarRules(raw: unknown): EliteHealthBarRules {
+  const o = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  const num = (v: unknown, key: keyof typeof ELITE_BAR_LIMITS): number => {
+    const [lo, hi] = ELITE_BAR_LIMITS[key];
+    if (typeof v !== "number" || !Number.isFinite(v)) return DEFAULT_ELITE_HEALTH_BAR[key];
+    return Math.max(lo, Math.min(hi, v));
+  };
+  return {
+    showHealthBar:
+      typeof o.showHealthBar === "boolean"
+        ? o.showHealthBar
+        : DEFAULT_ELITE_HEALTH_BAR.showHealthBar,
+    barWidth: num(o.barWidth, "barWidth"),
+    barHeight: num(o.barHeight, "barHeight"),
+    yOffset: num(o.yOffset, "yOffset"),
+    showThreshold: num(o.showThreshold, "showThreshold"),
+  };
+}
 
 /**
  * 每回合上限算在哪一個範圍上 —— see `zMobWavesConfig.boss.maxPerRoundScope` for
@@ -902,6 +998,8 @@ export interface MobWavesConfigLike {
   stopSpawnOnTeamWipe?: boolean;
   /** owner 2026-08-02 「場上沒有殭屍王就該馬上結算」。ABSENT ⇒ `"boss"`。 */
   roundHoldMobKinds?: RoundHoldMobKinds;
+  /** GH#268 精英小怪頭上的小血條。ABSENT ⇒ {@link DEFAULT_ELITE_HEALTH_BAR}。 */
+  healthBar?: Partial<EliteHealthBarRules>;
   /**
    * per-round overrides (owner 2026-07-27); absent ⇒ authored caps everywhere.
    * `championId` (GH#191) is 「這一回合由誰擔任」 and, since GH#192, decides the
@@ -1699,6 +1797,10 @@ export function mobRulesFromConfig(
     // 不是「關掉」—— 一份沒有這兩格的舊 config 拿到的是 owner 現在要的行為。
     stopSpawnOnTeamWipe: cfg.stopSpawnOnTeamWipe ?? DEFAULT_STOP_SPAWN_ON_TEAM_WIPE,
     roundHoldMobKinds: cfg.roundHoldMobKinds ?? DEFAULT_ROUND_HOLD_KINDS,
+    // GH#268 —— 精英小怪血條的五格。逐格解析(不是整塊 `?? DEFAULT`):一份只
+    // 填了 `showThreshold` 的 config 必須保住其他四格的出貨值,整塊退回會把
+    // 操作者剛剛存的那一格靜默丟掉。
+    eliteHealthBar: eliteHealthBarRules(cfg.healthBar),
     level,
     maxHp,
     hpRegenPerSec,
@@ -1892,6 +1994,27 @@ export interface MobVisualTable {
   bossHealthBar: boolean;
   bossHealthBarAnchor: BossHealthBarAnchor;
   bossHealthBarReveal: BossHealthBarReveal;
+
+  /**
+   * GH#268 精英小怪頭上的小血條,五格。
+   *
+   * ⚠️ **key 的名字是客戶端訂的,不可以改。**
+   * `apps/client/src/ui/hud/mobHealthBarModel.mobHealthBarConfigFrom` 讀的正是
+   * `mobHealthBar` / `mobHealthBarWidth` / `mobHealthBarHeight` /
+   * `mobHealthBarYOffset` / `mobHealthBarShowThreshold` 這五個字面 —— 它是逐欄位
+   * 降級的,所以在這五個 key 開始上線之前它一律回出貨值(刻意的 fail-soft,
+   * **不是**「已經可調」)。改名 = 那一頭靜默退回出貨值而且全綠(失敗形態 ③)。
+   *
+   * 為什麼騎在**這一張表**上,而不是新開一條線:`MatchState` 的
+   * `defineTypes` 是 **APPEND-ONLY**(加錯回不去,而 `ENTITY_FLAG` 只剩兩格),
+   * 而這張表已經是「小怪長什麼樣子」的既有頻道,`parseMobVisualJson` 又是逐欄位
+   * 降級的 —— 舊 shard 前面的客戶端拿到的是出貨值,不是一張歸零的表。
+   */
+  mobHealthBar: boolean;
+  mobHealthBarWidth: number;
+  mobHealthBarHeight: number;
+  mobHealthBarYOffset: number;
+  mobHealthBarShowThreshold: number;
 }
 
 /** The shipped fallback — 「no tint」 is NOT what a missing/blank field means. */
@@ -1902,6 +2025,11 @@ export const MOB_VISUAL_DEFAULT: MobVisualTable = {
   bossHealthBar: DEFAULT_BOSS_HEALTH_BAR,
   bossHealthBarAnchor: DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
   bossHealthBarReveal: DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+  mobHealthBar: DEFAULT_ELITE_HEALTH_BAR.showHealthBar,
+  mobHealthBarWidth: DEFAULT_ELITE_HEALTH_BAR.barWidth,
+  mobHealthBarHeight: DEFAULT_ELITE_HEALTH_BAR.barHeight,
+  mobHealthBarYOffset: DEFAULT_ELITE_HEALTH_BAR.yOffset,
+  mobHealthBarShowThreshold: DEFAULT_ELITE_HEALTH_BAR.showThreshold,
 };
 
 /** Serialize the armed rules' visual half for `MatchState.mobVisualJson`. */
@@ -1918,6 +2046,15 @@ export function mobVisualJson(rules: MobRules | null): string {
           bossHealthBar: rules.boss?.healthBar ?? DEFAULT_BOSS_HEALTH_BAR,
           bossHealthBarAnchor: rules.boss?.healthBarAnchor ?? DEFAULT_BOSS_HEALTH_BAR_ANCHOR,
           bossHealthBarReveal: rules.boss?.healthBarReveal ?? DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+          // GH#268 —— 精英小怪血條的五格。**這一段就是那條「缺了它就到不了客戶端」
+          // 的線**:設定值在 arena-rules → Zod → MobRules 都到齊了,少了這五行,
+          // 客戶端讀到的永遠是它自己寫死的出貨值(失敗形態 ②)。
+          mobHealthBar: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR).showHealthBar,
+          mobHealthBarWidth: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR).barWidth,
+          mobHealthBarHeight: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR).barHeight,
+          mobHealthBarYOffset: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR).yOffset,
+          mobHealthBarShowThreshold: (rules.eliteHealthBar ?? DEFAULT_ELITE_HEALTH_BAR)
+            .showThreshold,
         };
   return JSON.stringify(table);
 }
@@ -1968,6 +2105,19 @@ export function parseMobVisualJson(json: string | null | undefined): MobVisualTa
       o.bossHealthBarReveal,
       BOSS_HEALTH_BAR_REVEALS,
       DEFAULT_BOSS_HEALTH_BAR_REVEAL,
+    ),
+    // GH#268 —— 同一條「每一格自己降級」的規則。上下界和
+    // `zMobWavesConfig.healthBar` 的 Zod 一字不差,因為一條 500px 寬的血條會蓋掉
+    // 半個畫面,而這條路上任何一段(舊 shard、手改的 override)都可能餵進它。
+    mobHealthBar: bool(o.mobHealthBar, DEFAULT_ELITE_HEALTH_BAR.showHealthBar),
+    mobHealthBarWidth: num(o.mobHealthBarWidth, 8, 200, DEFAULT_ELITE_HEALTH_BAR.barWidth),
+    mobHealthBarHeight: num(o.mobHealthBarHeight, 1, 40, DEFAULT_ELITE_HEALTH_BAR.barHeight),
+    mobHealthBarYOffset: num(o.mobHealthBarYOffset, -2, 6, DEFAULT_ELITE_HEALTH_BAR.yOffset),
+    mobHealthBarShowThreshold: num(
+      o.mobHealthBarShowThreshold,
+      0,
+      1,
+      DEFAULT_ELITE_HEALTH_BAR.showThreshold,
     ),
   };
 }

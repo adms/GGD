@@ -106,6 +106,9 @@ describe("欄位要有上界，不是只有下界 (#277)", () => {
     cover(TAG);
     let consoleSupplied = 0;
     for (const f of MATCH_FIELDS) {
+      // 布林沒有上下界可講（`boundsFor` 對它回 null）—— 它的「界」是那兩個具名
+      // 狀態，由下面「每一個布林都畫成開關」那一條守。
+      if (f.kind === "boolean") continue;
       const b = matchFieldBounds(f);
       expect(b, f.path).not.toBeNull();
       expect(Number.isFinite(b!.max), `${f.path} 沒有上界`).toBe(true);
@@ -132,6 +135,7 @@ describe("欄位要有上界，不是只有下界 (#277)", () => {
     cover(TAG);
     for (const f of MATCH_FIELDS) {
       if (!isEditable(f.path)) continue;
+      if (f.kind === "boolean") continue; // 開關沒有「超界」這回事
       const b = matchFieldBounds(f)!;
       expect(validateMatchField(f.path, String(b.max + 1), true), f.path).toMatch(/不能大於/);
       expect(validateMatchField(f.path, String(b.min - 1), true), f.path).toBeTruthy();

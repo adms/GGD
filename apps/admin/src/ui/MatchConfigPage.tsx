@@ -29,6 +29,7 @@ import {
   matchDocIssues,
   matchFieldBounds,
   matchInfoFor,
+  MATCH_BOOL_LABELS,
   readMatchDoc,
   validateBurnCurve,
   validateMatchValues,
@@ -174,23 +175,51 @@ export function MatchConfigPage(): JSX.Element {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
           <span style={{ color: TEXT_MAIN, fontSize: 13, minWidth: 220 }}>{info.zh}</span>
-          <input
-            aria-label={info.zh}
-            data-field={path}
-            value={values[path] ?? ""}
-            disabled={disabled}
-            inputMode="decimal"
-            onChange={(e) => edit(path, e.target.value)}
-            style={{
-              width: 100,
-              padding: "4px 6px",
-              background: "transparent",
-              color: err ? DANGER : editable ? TEXT_MAIN : TEXT_DIM,
-              border: err ? `1px solid ${DANGER}` : PANEL_BORDER,
-              borderRadius: 3,
-              textAlign: "right",
-            }}
-          />
+          {/*
+            ⚠️ 布林**不能**走上面那個文字框。存檔那一側是 `Number(raw)`，而
+            `Number("true")` 是 NaN，所以一個畫成輸入框的開關會永遠寫不進文件 ——
+            半套的可調欄位比寫死更糟：它看起來可以調，實際上不生效。
+            原始的 "true"/"false" 也不上螢幕：一個裸的布林在控制台上不可讀。
+          */}
+          {f?.kind === "boolean" ? (
+            <select
+              aria-label={info.zh}
+              data-field={path}
+              value={values[path] ?? ""}
+              disabled={disabled}
+              onChange={(e) => edit(path, e.target.value)}
+              style={{
+                minWidth: 220,
+                padding: "4px 6px",
+                background: "transparent",
+                color: err ? DANGER : editable ? TEXT_MAIN : TEXT_DIM,
+                border: err ? `1px solid ${DANGER}` : PANEL_BORDER,
+                borderRadius: 3,
+              }}
+            >
+              {f.optional && <option value="">（不設定 · 用出貨預設）</option>}
+              <option value="true">{MATCH_BOOL_LABELS[path]?.on ?? "開"}</option>
+              <option value="false">{MATCH_BOOL_LABELS[path]?.off ?? "關"}</option>
+            </select>
+          ) : (
+            <input
+              aria-label={info.zh}
+              data-field={path}
+              value={values[path] ?? ""}
+              disabled={disabled}
+              inputMode="decimal"
+              onChange={(e) => edit(path, e.target.value)}
+              style={{
+                width: 100,
+                padding: "4px 6px",
+                background: "transparent",
+                color: err ? DANGER : editable ? TEXT_MAIN : TEXT_DIM,
+                border: err ? `1px solid ${DANGER}` : PANEL_BORDER,
+                borderRadius: 3,
+                textAlign: "right",
+              }}
+            />
+          )}
           <code style={{ color: TEXT_DIM, fontSize: 11 }}>{path}</code>
           {bounds && (
             <span style={{ color: TEXT_DIM, fontSize: 11 }}>

@@ -42,6 +42,7 @@ import { MONSTER_TEAM, mobRulesFromConfig, type MobWavesConfigLike } from "./mob
 import { beginCombatMobs, mobSystem } from "./systems/MobSystem";
 import { acquireTarget, forcedTargetOf } from "./targeting";
 import { applyTaunt, DEFAULT_TAUNT_RULES, tauntedBy, type TauntRules } from "./taunt";
+import { DEFAULT_COMBAT_FEEL, DEFAULT_MANUAL_ORDER } from "./combatFeel";
 import { levelOfTarget } from "./effects/grantGold";
 import { runEffects } from "./effects/effectRunner";
 import * as V from "./math/vec2";
@@ -639,9 +640,18 @@ describe("⑥ `restoreManualOrderOnLapse` —— 方向盤還不還給玩家", (
     expect(world.nav.get(me)!.attackTargetAuto).toBe(false);
   });
 
-  it("玩家在嘲弄期間自己走位 → 還原被取消（新指令永遠贏）", () => {
+  // GH#266 —— 「一條走位取消暫存的手選目標」現在跟著 `manualOrder
+  // .survivesGroundMove` 走(出貨那一側是「撐得過」,見 combatFeel.ts):兩者
+  // 必須同進退,否則「嘲弄期間走了一步」= 永久忘記他點的那一隻,而**沒有嘲弄的
+  // 同一步卻記得** —— 那個不一致對玩家沒有任何可辨識的差別。這裡把欄位切到
+  // #274 那一側,原本的斷言就原封不動地繼續守著那一側。
+  it("`survivesGroundMove: false` → 玩家在嘲弄期間自己走位,還原被取消（新指令贏）", () => {
     cover(TAG);
     const { world, me, decoy, taunter, step } = withRealOrder();
+    world.combatFeel = {
+      ...DEFAULT_COMBAT_FEEL,
+      manualOrder: { ...DEFAULT_MANUAL_ORDER, survivesGroundMove: false },
+    };
     applyTaunt(world, me, taunter, 0.2);
     step(2);
     expect(world.suspendedOrder.get(me)).toBe(decoy);

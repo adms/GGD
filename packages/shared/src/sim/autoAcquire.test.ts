@@ -35,6 +35,7 @@ import type { IntentFrame } from "./intents";
 import { MONSTER_TEAM } from "./mobs";
 import { acquireTarget, MELEE_ACQUIRE_FLOOR, THREAT_WINDOW_TICKS } from "./targeting";
 import { TARGET_CLASS } from "./summonRules";
+import { DEFAULT_COMBAT_FEEL, DEFAULT_MANUAL_ORDER } from "./combatFeel";
 import * as V from "./math/vec2";
 
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -477,8 +478,17 @@ describe("#221 an EXPLICIT player action always wins", () => {
     }
   });
 
-  it("a move order still CANCELS an explicit attack-target (LoL right-click semantics)", () => {
+  // GH#266 —— 這一條的語意變成**一個欄位的一側**,不再是無條件的規則。
+  // owner 2026-08-03:「玩家指定攻擊的對象應該是最高優先級」,所以出貨那一側
+  // 現在是「手選目標撐得過移動指令」(守在 `manualTargetPriority.test.ts`)。
+  // 這裡改成明確把 `survivesGroundMove` 切到 #274 那一側 —— **不是刪掉守衛**,
+  // 是把它掛到它現在真正屬於的那一格上,否則那一側就變成沒有人測的死程式碼。
+  it("`survivesGroundMove: false` → 一條 move 仍然取消手選目標 (#274 的 LoL 語意)", () => {
     const world = combatWorld();
+    world.combatFeel = {
+      ...DEFAULT_COMBAT_FEEL,
+      manualOrder: { ...DEFAULT_MANUAL_ORDER, survivesGroundMove: false },
+    };
     const me = spawnFighter(world, 0, 0, at(0), 1.6);
     const chosen = spawnDummy(world, 1, 1, at(2));
     world.step(order({ kind: "attackTarget", entity: chosen }));

@@ -52,6 +52,7 @@ import {
   isMobBossEvent,
   resetSettlement,
   hudStore,
+  localDuelZone,
   setGamepadIndices,
   setLocalAccounts,
 } from "./net/RoomStore";
@@ -79,7 +80,7 @@ import { AimIndicator } from "./render/AimIndicator";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
 import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
-import { RoundWinnerStage, planRoundWinnerShow } from "./render/RoundWinnerStage";
+import { RoundWinnerStage, planRoundWinnerShow, victoryPodiumPolicy } from "./render/RoundWinnerStage";
 // ONE number for how long the round-win beat owns the screen: the stage's grey
 // wash, the taunt delay and this trigger window all read the same constant, so
 // the window can never be shortened below the taunt delay and silently mute it.
@@ -2644,8 +2645,29 @@ export class GameApp {
       // (render/RoundWinnerStage) — a pure function, so `roundWinnerPlan.test.ts`
       // can drive the real hudStore → real stage path headlessly. Inlining it back
       // here is what let the whole podium be deleted with 1292 tests still green.
-      const plan = planRoundWinnerShow(hud.seats, hud.teams, state.round, (id) =>
-        this.roundWinnerModelDoc(id, hud.seats),
+      //
+      // GH#265 —— **哪一隊上台不推導,讀伺服器記下的那一格。** `hud.duels` 是
+      // `MatchState.duels` 的投影,`localDuelZone` 是「我這一場在哪一區」的**唯一**
+      // 定義(音效閘與殭屍王橫幅讀的也是它)。之前這裡只交出 seats/teams,於是
+      // 頒獎台自己再猜一次「誰贏」,而 4 隊 2 區時兩隊都是 WON,它挑的是戰績最好
+      // 的那一隊 —— owner 2026-08-03:「為什麼我最後活著 勝利的還是顯示別的隊伍」。
+      //
+      // ⚠️ **「演哪一區」是一個決策點,不是一個常數**(第一守則)。#269 的
+      // 「前往觀戰」按鈕讓「我的英雄在 A 區、我的鏡頭在 B 區」是真的會發生的
+      // 狀態,而兩個答案都說得通。所以它是 `config.victory-podium@1` 的
+      // `podiumZoneSource`:出貨 `localSeat`(永遠演你自己那一場,owner 的原話),
+      // `spectated` 演你正在看的那一區。純函式 `authoritativeRoundWinner` 一行
+      // 都沒被動到 —— 這裡決定的只是餵給它的 `zone` 從哪裡來。
+      const zone =
+        victoryPodiumPolicy().podiumZoneSource === "spectated"
+          ? (this.spectateZoneByPlayer.get(0) ?? localDuelZone(hud))
+          : localDuelZone(hud);
+      const plan = planRoundWinnerShow(
+        hud.seats,
+        hud.teams,
+        state.round,
+        (id) => this.roundWinnerModelDoc(id, hud.seats),
+        { duels: hud.duels, zone },
       );
       if (plan) {
         this.roundWinner.showTeam(plan.members, plan.ctx);

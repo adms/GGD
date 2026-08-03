@@ -15,6 +15,10 @@
     "followThroughTicks": 3,
     "instantCastTicks": 6
   },
+  "manualOrder": {
+    "survivesGroundMove": true,
+    "leashUnits": 0
+  },
   "autoEngage": {
     "enabled": true,
     "stallTicks": 30,

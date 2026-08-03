@@ -124,6 +124,28 @@ export const VICTORY_PODIUM_CLIPS = ["celebrate", "idle", "death"] as const;
 export type VictoryPodiumClip = (typeof VICTORY_PODIUM_CLIPS)[number];
 
 /**
+ * 頒獎台演**哪一個競技場**的勝方 (GH#265, owner 2026-08-03:
+ * 「為什麼我最後活著 勝利的還是顯示別的隊伍」)。
+ *
+ *   `localSeat`  **出貨值。** 永遠演**你自己英雄站的那一區** —— 即使你按了
+ *                #269 的「前往觀戰」跑去看別區,上台的仍然是你打的那一場的勝方。
+ *                這是 owner 那句話要的答案。
+ *   `spectated`  演**你鏡頭當下正在看的那一區**。觀戰別人時比較不會錯亂
+ *                （畫面上在打的和台上領獎的是同一批人），代價是你自己那一場
+ *                的結果就不會被演出來。
+ *
+ * ⚠️ 這是一個**真的二選一**,不是一個數字:一回合有兩個競技場、兩個勝方,而
+ * 伺服器逐區都記了勝負(`MatchState.duels[].winner`)。#269 的「前往觀戰」按鈕
+ * 讓「你在看別區」是真的會發生的狀態,所以兩個答案都說得通。
+ *
+ * ⚠️ 它**不改變任何人的實際勝負或分數** —— 只改變你死後 / 觀戰時看到誰在領獎。
+ * 純函式 `authoritativeRoundWinner` 一行都沒有被它動到;它決定的是餵給那支函式
+ * 的 `zone` 從哪裡來（`RoundWinnerStage` 的 `GameApp` 呼叫端）。
+ */
+export const VICTORY_PODIUM_ZONE_SOURCES = ["localSeat", "spectated"] as const;
+export type VictoryPodiumZoneSource = (typeof VICTORY_PODIUM_ZONE_SOURCES)[number];
+
+/**
  * `winnerScale` 的上下界。
  *
  * ⚠️ 上界不是裝飾(同 `podiumSize`):金卡的寬高是**乘**上去的,1.25 打成 12.5
@@ -160,6 +182,13 @@ export const zConfigVictoryPodiumDoc = z
     clipSilver: z.enum(VICTORY_PODIUM_CLIPS),
     /** 銅冠那位播哪一個剪輯。 */
     clipBronze: z.enum(VICTORY_PODIUM_CLIPS),
+    /**
+     * 頒獎台看哪一區的勝負 (GH#265)。⚠️ `.optional()` 是刻意的:這份文件已經有
+     * 耐久覆蓋層在線上,一份存於這一格之前的 override 少了必填欄會被 Zod 整份
+     * 退回 → 內容載入失敗 → fail-open 退回骨架(2026-08-02 事故的形狀)。
+     * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.podiumZoneSource`。
+     */
+    podiumZoneSource: z.enum(VICTORY_PODIUM_ZONE_SOURCES).optional(),
   })
   .strict();
 
@@ -176,6 +205,7 @@ export interface VictoryPodiumPolicy {
   clipGold: VictoryPodiumClip;
   clipSilver: VictoryPodiumClip;
   clipBronze: VictoryPodiumClip;
+  podiumZoneSource: VictoryPodiumZoneSource;
 }
 
 /**
@@ -203,6 +233,7 @@ export const DEFAULT_VICTORY_PODIUM: VictoryPodiumPolicy = {
   clipGold: "celebrate",
   clipSilver: "idle",
   clipBronze: "idle",
+  podiumZoneSource: "localSeat",
 };
 
 /**
@@ -241,6 +272,7 @@ export function resolveVictoryPodium(
     clipGold: doc.clipGold,
     clipSilver: doc.clipSilver,
     clipBronze: doc.clipBronze,
+    podiumZoneSource: doc.podiumZoneSource ?? DEFAULT_VICTORY_PODIUM.podiumZoneSource,
   };
 }
 
@@ -325,5 +357,13 @@ export const VICTORY_PODIUM_FIELDS = [
     kind: "enum" as const,
     options: VICTORY_ROUND_WIN_LINES,
     help: "回合勝利時金冠那位說什麼:taunt 嘲諷敗方 / quote 自己的名言宣言 / both 兩個都說。該英雄沒有名言語音時 quote 會自動退回 taunt。",
+  },
+  {
+    key: "podiumZoneSource",
+    label: "看哪一區的勝負",
+    group: "頒獎台",
+    kind: "enum" as const,
+    options: VICTORY_PODIUM_ZONE_SOURCES,
+    help: "一回合有兩個競技場、兩個勝方。localSeat = 永遠演你自己英雄站的那一區(就算你按了『前往觀戰』跑去看別區);spectated = 演你鏡頭當下正在看的那一區。改這一格不會改變任何人的勝負或分數,只改變你死後/觀戰時看到誰在領獎。",
   },
 ] as const;

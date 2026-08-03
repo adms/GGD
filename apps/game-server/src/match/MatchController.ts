@@ -153,6 +153,7 @@ import { AIDriver } from "../ai/Tier0Brain";
 import { Whitelist } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
+import { resolveVsBotPacing, type VsBotPacing } from "./phaseConfig";
 import {
   pairTeams,
   royaleBout,
@@ -603,6 +604,17 @@ export class MatchController {
    */
   private readonly matchSeed: number;
 
+  /**
+   * vs bot 的節奏規則 (owner 2026-08-03, A1 強制結算 / A2 選角早退)。
+   *
+   * ⚠️ 在建構子裡解析一次就凍結,和 `phaseCfg` 完全一樣的理由:比賽中途換規則
+   * 等於在跑到一半的相位底下改結束條件。`soloVsBots` 從 **seatSpecs** 推導
+   * (錄影 header 帶著 `isBot`,所以重播重現同一個判斷);兩個旗標讀
+   * `config.match@1`,和 `combatFeel` / `shieldRules` 同一條路 —— 含同一個已知
+   * 限制:`Configs` 是 **boot 時**載入的,後台改了要重啟 shard。
+   */
+  public readonly vsBotPacing: VsBotPacing;
+
   constructor(
     public readonly matchId: string,
     seed: number,
@@ -752,6 +764,9 @@ export class MatchController {
     regenRules: RegenRules = regenRulesFromDoc(Configs.tryGet(REGEN_DOC_ID)),
   ) {
     this.matchSeed = seed;
+    // owner 2026-08-03 的兩個 vs bot 節奏旗標。判準是「人類座位數 <= 1」,不是
+    // 「場上有 bot」—— MatchRoom 把每個空位都填成 isBot,所以後者在每一場都成立。
+    this.vsBotPacing = resolveVsBotPacing(seatSpecs);
     // #207 的分析帳本。matchId 是它唯一的建構參數,而且它從第 0 tick 就存在 ——
     // champ-select 的 `selectOpenTick` 是 tick 0,晚一點建立就記不到那件事。
     this.ledger = new MatchLedger(matchId);
@@ -845,6 +860,33 @@ export class MatchController {
     // 「決定花了多久」問的是最後那一次決定,不是第一次動念。
     this.pickLockTick.set(seatId, this.world.tick);
     return { ok: true };
+  }
+
+  /**
+   * A2 的閘:人類座位全部鎖定了嗎（所以選角可以立刻結束）。
+   *
+   * 「鎖定」讀的是 {@link pickLockTick} —— 它只由**成功的** `selectChampion`
+   * 寫入,被拒的選取（非白名單 / 未擁有 / 錯的階段）不會留下記號。客戶端一次
+   * 點擊就是「選 + 鎖」（`ChampSelectPanel.commit`，鎖定之後名單就凍結），所以
+   * 這一格不會被 hover 觸發。
+   *
+   * ⚠️ **沒有第三種選項「等 bot 也選完」。** bot 根本不在選角階段選 —— 牠們是在
+   * 階段結束時由 `autoPickAndSpawn` 一次配好的,所以「等 bot」在程式上不存在。
+   * 這也是為什麼這個決策點只需要一個布林欄位。
+   *
+   * ⚠️ 零個人類座位回 false（見 `resolveVsBotPacing`）:全 bot 的沙盒沒有人在等,
+   * 而「全部鎖定」對空集合恆真 —— 少了那一關,每一條 all-bot 測試都會在第 1 個
+   * tick 跳過選角。
+   */
+  private champSelectEarlyStartDue(): boolean {
+    if (!this.vsBotPacing.earlyStart || !this.vsBotPacing.soloVsBots) return false;
+    let humans = 0;
+    for (const [seatId, spec] of this.specs) {
+      if (spec.isBot) continue;
+      humans++;
+      if (!this.pickLockTick.has(seatId)) return false;
+    }
+    return humans > 0;
   }
 
   /**
@@ -1799,7 +1841,74 @@ export class MatchController {
         );
       }
     }
+    // A1 —— vs bot 的強制結算 (owner 2026-08-03:「如果是 vs bot，玩家場勝負結算，
+    // 另一場的 bot 還沒則強制結算，不要讓玩家白等」)。
+    //
+    // 為什麼**放在迴圈之後**:上面那個迴圈才是「這一 tick 有沒有人分出勝負」的
+    // 唯一判定。放在前面的話,人類那一區在**這一 tick**剛剛結束的那一次會被漏掉,
+    // 強制結算要等到下一 tick —— 差一格看不出來,但它會讓守衛只在某些排列下綠。
+    if (this.forceSettleVsBotDue()) this.forceSettleRemainingZones();
     return this.duelWinners.size === this.pairings.length;
+  }
+
+  /**
+   * A1 的閘:現在該不該把還在打的 bot 區直接判掉。
+   *
+   * 三個條件缺一不可,而**第三個是這條規則的全部意義**:
+   *   · 後台開著（`config.match@1` 的 `forceSettleVsBot`）;
+   *   · 這是一場「只有一個人類」的 bot 局（見 `resolveVsBotPacing` 為什麼不是
+   *     「場上有 bot」，也為什麼零個人類不算）;
+   *   · **人類自己那一區已經有勝負** —— 沒有這一條就不是「不要讓玩家白等」，
+   *     而是「回合一開打就結束」。
+   *
+   * ⚠️ 人類這一隊**輪空**（這一回合沒有配對）時刻意**不**觸發:那時候
+   * `humanZones` 是空的,而「每一個都有勝負」對空集合恆真 —— 直接回 true 會讓
+   * 那一回合在第一個 combat tick 就結束,畫面上是一場零秒的比賽。空集合走
+   * `length > 0` 這一關擋掉。
+   */
+  private forceSettleVsBotDue(): boolean {
+    if (!this.vsBotPacing.forceSettle || !this.vsBotPacing.soloVsBots) return false;
+    if (this.duelWinners.size === this.pairings.length) return false;
+    const humanZones = this.humanDuelZones();
+    return humanZones.length > 0 && humanZones.every((z) => this.duelWinners.has(z));
+  }
+
+  /** 這一回合有人類座位在裡面的 zone（通常剛好一個）。 */
+  private humanDuelZones(): number[] {
+    const humanTeams = new Set<TeamId>();
+    for (const [seatId, spec] of this.specs) {
+      if (!spec.isBot) humanTeams.add(this.seats.get(seatId)!.teamId);
+    }
+    return this.pairings
+      .filter((p) => humanTeams.has(p.sideA) || humanTeams.has(p.sideB))
+      .map((p) => p.zone);
+  }
+
+  /**
+   * 把還沒定勝負的 zone 用**和時間到完全一樣的裁決**判掉:團隊血量比例高的贏,
+   * 完全平手擲 `world.rng`。
+   *
+   * ⚠️ 刻意複用 `timerExpired` 那一條分支的規則,而不是發明第二套(例如「A 隊
+   * 直接贏」或「兩邊都算輸」)。這一格只縮短**等待**,不改變任何一區的勝負規則
+   * —— 一套只在 bot 局跑的獨立裁決會是玩家看不到、也沒有人在測的第二種結局。
+   * 亂數同樣走 `world.rng`,所以同 seed 的重播判出同一個結果。
+   */
+  private forceSettleRemainingZones(): void {
+    for (const pairing of this.pairings) {
+      if (this.duelWinners.has(pairing.zone)) continue;
+      const aPct = this.teamHpPct(pairing.sideA, pairing.zone);
+      const bPct = this.teamHpPct(pairing.sideB, pairing.zone);
+      this.recordDuelWinner(
+        pairing.zone,
+        aPct > bPct
+          ? pairing.sideA
+          : bPct > aPct
+            ? pairing.sideB
+            : this.world.rng.chance(0.5)
+              ? pairing.sideA
+              : pairing.sideB,
+      );
+    }
   }
 
 
@@ -3019,7 +3128,11 @@ export class MatchController {
   private advancePhase(expired: boolean): void {
     switch (this.phase.phase) {
       case "champSelect":
-        if (expired) {
+        // A2 —— vs bot 的選角早退 (owner 2026-08-03:「vs bot 選角後就可以開始
+        // 進入戰鬥不用等，一樣是因為不用等其他 bot」)。走的是**同一條**出口
+        // (`autoPickAndSpawn` 幫 bot 配好 → advance → enterIntermission),所以
+        // 早退和倒數到底的結果一模一樣,只是不用等。
+        if (expired || this.champSelectEarlyStartDue()) {
           this.autoPickAndSpawn();
           this.phase.advance(); // -> intermission (round 1)
           this.enterIntermission();

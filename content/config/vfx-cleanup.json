@@ -1,8 +1,11 @@
 {
   "id": "vfx-cleanup",
   "schema": "config.vfx-cleanup@1",
-  "note": "回合邊界要把特效層的共用池子回收到什麼程度 (#262)。Telegraph 的預告圈網格是「每個 Scene 共用、以半徑為 key」的 free-list,#259 沒有清到它:實測 60 個不同半徑打完,連 dispose() 之後 scene 上都還留著 72 mesh / 73 material。enabled=false 是止血閥(完全回到 #259 的行為)。purgeSharedPoolsOnRoundEnd=true 時 maxPooledRings 不生效。",
+  "note": "回合邊界要把特效層的共用池子回收到什麼程度 (#262)。Telegraph 的預告圈網格是「每個 Scene 共用、以半徑為 key」的 free-list,#259 沒有清到它:實測 60 個不同半徑打完,連 dispose() 之後 scene 上都還留著 72 mesh / 73 material。enabled=false 是止血閥(完全回到 #259 的行為)。purgeSharedPoolsOnRoundEnd=true 時 maxPooledRings 不生效。 2026-08-03 GH#267 再加三格死亡火焰(復活圈的火柱/火舌/餘燼):deathFxBurnSec 全亮幾秒、deathFxCalmScale 收斂後剩幾成亮度(1 = 一鍵回到 #196 永不收斂的行為)、deathFxRelightOnChannel 有人來救時要不要燒回全亮。⚠️ 只改看起來多久,不改復活圈救不救得回來(那是伺服器決定的);地上那圈的亮度一格都不動,因為它是玩家判斷『這裡還救得回來』的錨點。消費端是 apps/client/src/render/views/deathFxBurn.ts。",
   "enabled": true,
   "purgeSharedPoolsOnRoundEnd": true,
-  "maxPooledRings": 24
+  "maxPooledRings": 24,
+  "deathFxBurnSec": 6,
+  "deathFxCalmScale": 0.25,
+  "deathFxRelightOnChannel": true
 }

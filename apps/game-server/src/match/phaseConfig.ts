@@ -96,6 +96,75 @@ export function resolvePhaseConfig(hasHumanOpponent = true): PhaseConfig {
   return phaseConfigFromSeconds(doc.match, DEFAULT_PHASE_CONFIG, hasHumanOpponent);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * vs bot 的兩個節奏旋鈕 (owner 2026-08-03)
+ *
+ *   A1「強制結算」:「如果是 vs bot，玩家場勝負結算，另一場的 bot 還沒則強制結算，
+ *                   不要讓玩家白等。」
+ *   A2「選角早退」:「vs bot 選角後就可以開始進入戰鬥不用等，一樣是因為不用等
+ *                   其他 bot。」
+ *
+ * ⚠️ **判準是「人類座位數 <= 1」,不是「場上有 bot」** —— 和 `champSelectSecVsBot`
+ * (v0.9.29) 同一條。`MatchRoom` 把每一個沒人坐的座位都填成 `isBot: true`,所以
+ * 「有 bot」在**每一場**都成立;用它判會讓三個朋友一起打的局也吃到 bot 局的規則。
+ *
+ * ⚠️ 而且**零個人類座位不算 vs bot 局**。純 bot 沙盒(單元測試、AI 對打的
+ * 觀察局)沒有任何人在等,把它當成 bot 局的話:A2 會在第一個 tick 就跳過選角、
+ * A1 會在第一個 zone 分出勝負的那一刻結束整個回合 —— 兩件都會靜默改寫每一條
+ * 既有的 all-bot 測試與每一份既有錄影,而畫面上沒有任何人被服務到。
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** vs bot 的節奏規則,由 {@link resolveVsBotPacing} 在建立比賽時解析並凍結。 */
+export interface VsBotPacing {
+  /**
+   * 這一場是不是「只有一個人類、其餘都是 bot」。
+   * 兩個旗標都必須**同時**和它成立才會生效 —— 它是那個判準本身。
+   */
+  soloVsBots: boolean;
+  /** A1:人類那一區記下勝負的同一 tick,強制結算其餘還在打的 bot 區。 */
+  forceSettle: boolean;
+  /** A2:人類座位全部鎖定英雄後,不等選角倒數直接進戰鬥。 */
+  earlyStart: boolean;
+}
+
+/**
+ * 出貨預設 = owner 明說的那一側(兩個都開)。⚠️ `soloVsBots: false` 是刻意的
+ * 保守面,和 `phaseConfigFromSeconds` 的 `hasHumanOpponent = true` 同一個方向:
+ * 一個沒有告訴我們座位的呼叫端拿到的是**今天的行為**,不是被靜默加速的比賽。
+ */
+export const DEFAULT_VS_BOT_PACING: VsBotPacing = Object.freeze({
+  soloVsBots: false,
+  forceSettle: true,
+  earlyStart: true,
+});
+
+/** `SeatSpec` 裡這支函式唯一在意的那一格 —— 避免把整個型別拖進來。 */
+interface SeatIsBot {
+  isBot: boolean;
+}
+
+/**
+ * 這一場的 vs bot 節奏規則。
+ *
+ * 兩個旗標讀 `config.match@1`(後台可調),`soloVsBots` 從**座位**推導 ——
+ * 座位不是設定,它是這一場的事實,而且它跟著錄影的 header 走,所以重播會重現
+ * 同一個判斷。
+ *
+ * 缺文件 / 缺欄位 ⇒ 出貨預設(兩個都開)。缺席不代表關掉:一份沒有這兩格的舊
+ * `config.match.json` 應該得到 owner 現在要的行為。
+ */
+export function resolveVsBotPacing(seats: readonly SeatIsBot[]): VsBotPacing {
+  const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
+  const m = doc?.schema === "config@1" ? doc.match : undefined;
+  const humans = seats.reduce((n, s) => n + (s.isBot ? 0 : 1), 0);
+  return {
+    // 「<= 1」是 owner 的判準,「>= 1」是上面那一段:沒有人類就沒有人在等。
+    soloVsBots: humans === 1,
+    forceSettle: m?.forceSettleVsBot ?? DEFAULT_VS_BOT_PACING.forceSettle,
+    earlyStart: m?.champSelectEarlyStartVsBot ?? DEFAULT_VS_BOT_PACING.earlyStart,
+  };
+}
+
 /**
  * The ACTIVE fire-ring schedule (task #132) — the round-pacing accelerator that
  * lives in `config.match@1`'s `match.fireRing` block, next to `combatMaxSec`

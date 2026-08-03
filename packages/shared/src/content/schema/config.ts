@@ -357,6 +357,41 @@ export const zConfigMatchDoc = z
          * 這一格本身就是那個決策點的開關:設成和 `champSelectSec` 一樣就等於關掉。
          */
         champSelectSecVsBot: z.number().positive().max(1800).optional(),
+        /**
+         * **vs bot 的選角早退**（owner 2026-08-03:「vs bot 選角後就可以開始進入
+         * 戰鬥不用等，一樣是因為不用等其他 bot」）。
+         *
+         * true（出貨）= 人類座位全部鎖定英雄的那一刻就進戰鬥，不等
+         * `champSelectSecVsBot` 的倒數跑完。false = 一律等倒數（這一格出現之前
+         * 的行為）。
+         *
+         * ⚠️ 沒有第三種選項「等 bot 也選完」—— bot 根本不在選角階段選，牠們是在
+         * 階段結束時由 `autoPickAndSpawn` 一次配好的。所以「等 bot」在程式上
+         * 不存在，這一格就是那個決策點的全部。
+         *
+         * ⚠️ 判準是**人類座位數 <= 1**，不是「場上有 bot」—— `MatchRoom` 把每一個
+         * 沒人坐的座位都填成 `isBot: true`，所以「有 bot」在**每一場**都成立。
+         * 用它判會讓三個朋友一起打的局也被第一個鎖定的人拖走。同理
+         * `champSelectSecVsBot`（v0.9.29）。
+         */
+        champSelectEarlyStartVsBot: z.boolean().optional(),
+        /**
+         * **vs bot 的強制結算**（owner 2026-08-03:「如果是 vs bot，玩家場勝負
+         * 結算，另一場的 bot 還沒則強制結算，不要讓玩家白等」）。
+         *
+         * 相位要**每一個 zone 都有勝負**才結束（`MatchController.checkCombatEnd`
+         * 回 `duelWinners.size === pairings.length`），所以一個人打 bot 局時，
+         * 自己那一場三十秒打完之後還要看著另外一區的兩隊 bot 慢慢磨到火圈。
+         *
+         * true（出貨）= 人類那一區記下勝負的**同一 tick**，其餘未決的 zone 用
+         * 和時間到完全一樣的裁決（團隊血量比例高者勝，平手擲 `world.rng`）
+         * 立刻結算。false = 這一格出現之前的行為（等每一區自己打完）。
+         *
+         * ⚠️ 它**只**縮短等待，不改變任何一區的勝負規則：用的是既有的
+         * `timerExpired` 裁決分支，不是新發明一套。人類那一隊自己那一場的勝負
+         * 一格都沒被碰到。
+         */
+        forceSettleVsBot: z.boolean().optional(),
         intermissionSec: z.number().positive(),
         /**
          * HARD combat backstop: the phase force-ends here (PhaseMachine). It is
@@ -1110,6 +1145,64 @@ export const zMobWavesConfig = z
      */
     roundHoldMobKinds: z.enum(["none", "boss", "bossAndSpecial", "any"]).optional(),
     /**
+     * 精英小怪（特殊殭屍 + 殭屍王）頭上那條**小血條** (GH#268)。
+     *
+     * ⚠️ 這是 `mobWaves` **本身**的一塊，不是 `boss` 的：血條要不要出現、多大、
+     * 多高，是「精英怪長什麼樣」的決定，特殊殭屍與王共用同一份。王另外還有一條
+     * **長血條**（`boss.healthBar*`，畫在畫面頂端／技能列上方），兩者是不同的
+     * 東西 —— 長血條回答「這一場有沒有王」，這一條回答「我正在打的這一隻還剩多少」。
+     *
+     * 一般殭屍**不吃這一塊**：波峰時一區 50 隻，50 條血條就是把畫面糊掉。判準是
+     * 伺服器投影寫進快照的 `ENTITY_FLAG.MOB_ELITE`（`isEliteMob`），不是體型、
+     * 不是 modelKey、不是血量 —— 那三個都是設定值，操作者一改就會讓「誰有血條」
+     * 悄悄跟著變。
+     *
+     * ⚠️ 它走的是 `MatchState.mobVisualJson`（`sim/mobs.ts` 的 `MobVisualTable`），
+     * 和染黑強度／腳下圈圈同一條既有頻道 —— 不新開 `defineTypes` 欄位（那是
+     * append-only、加錯回不去的一格）。客戶端的讀取器
+     * `ui/hud/mobHealthBarModel.mobHealthBarConfigFrom` 是**逐欄位**降級的，所以
+     * 一台跑在舊 shard 前面的客戶端拿到的是出貨值，不是一張歸零的表。
+     *
+     * ABSENT ⇒ 整塊退回出貨值（顯示、34 × 5、0.35u、全程顯示）。缺席不代表關掉：
+     * 一份沒有這塊的舊 arena 文件應該長得跟出貨一樣，而不是把血條靜默刪掉
+     * （失敗形態 ③：功能被刪掉而且全綠）。
+     */
+    healthBar: z
+      .object({
+        /**
+         * 到底畫不畫。false = 畫面上**一個節點都不建**（不是畫成透明），所以它
+         * 也是「血條把畫面弄亂了」的止血閥。
+         */
+        showHealthBar: z.boolean(),
+        /**
+         * 血條寬度（CSS px）。冠軍那條是 64，精英刻意小一號 —— 波峰時畫面上同時
+         * 有 12 個玩家，一條和玩家一樣寬的血條會被誤讀成「那裡有個人」。
+         * 上界 200 是防呆：打成 5000 會蓋掉半個畫面（#277 同型）。
+         */
+        barWidth: z.number().min(8).max(200),
+        /** 血條厚度（CSS px）。太薄在手機上看不到，太厚會把小怪的頭蓋掉。 */
+        barHeight: z.number().min(1).max(40),
+        /**
+         * 血條浮在**頭頂**上方多高 —— 給的是**世界高度**，不是像素偏移。
+         *
+         * ⚠️ 這一格的單位是刻意的：特殊殭屍體型倍率 2、王 5，一個固定的 px 偏移
+         * 會讓王的血條埋進牠胸口（失敗形態 ①：算出來但畫在看不到的地方）。
+         * 實際高度 = 1.8 × 體型倍率 + 這一格。負值（下界 −2）是「畫在頭裡面」，
+         * 是真的有人會想要的（極矮的模型）。
+         */
+        yOffset: z.number().min(-2).max(6),
+        /**
+         * 血量**低於**這個比例才亮血條。1（出貨）= 只要是精英就全程顯示。
+         *
+         * ⚠️ 這是**唯一**可以讓血條在死亡前消失的欄位。其他任何提早消失都是缺陷
+         * —— GH#268 的兩次回報都是把血條的存續綁到了比身體短命的東西上（一顆
+         * 單槽事件）。0.5 = 「半血以下才給線索」，是一種玩法，不是預設。
+         */
+        showThreshold: z.number().min(0).max(1),
+      })
+      .strict()
+      .optional(),
+    /**
      * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
      * caps above, for the escalation into the finale:
      *
@@ -1793,6 +1886,19 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   // owner 2026-08-02 的兩個回合結束旋鈕（見上面 Zod 的說明）。
   stopSpawnOnTeamWipe: true,
   roundHoldMobKinds: "boss",
+  // GH#268 精英小怪頭上的小血條。34 × 5 是「比冠軍那條（64 × 6）小一號」，
+  // 0.35u ≈ 頭頂上一個拳頭，1.0 = 全程顯示（owner 要的那個）。
+  // ⚠️ 這四個數字同時住在 `apps/client/src/ui/hud/mobHealthBarModel.ts` 的
+  // `SHIPPED_MOB_HEALTH_BAR`（客戶端在拿不到表時的降級值）與
+  // `apps/admin/src/mobWaves.ts` 的 `SHIPPED_MOB_WAVES`。三處漂開 = 後台顯示的
+  // 和實戰跑的不是同一個數字。
+  healthBar: {
+    showHealthBar: true,
+    barWidth: 34,
+    barHeight: 5,
+    yOffset: 0.35,
+    showThreshold: 1,
+  },
   // owner, 2026-07-27 (second pass — the ramp now starts at round 6 and climbs
   // by +5 alive a round instead of doubling). Round 10 is EMPTY: 乾淨總決賽.
   //
@@ -2441,6 +2547,37 @@ export const zConfigCombatFeelDoc = z
         walkEps: z.number().min(0).max(100),
         /** 小怪(含殭屍王)是否同樣受約束 */
         applyToMobs: z.boolean(),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 玩家**自己點名**的攻擊目標，對上系統的自動索敵 (GH#266)。語意、量到的數字
+     * 與出貨預設全部寫在 `sim/combatFeel.ts` 的 `ManualOrderRules`。
+     *
+     * ⚠️ 為什麼是欄位不是一行修正：#274 的「地面指令取代攻擊指令」在**滑鼠**上
+     * 是對的（WC3 / LoL 都這樣），右鍵一次點擊只送一條指令。壞掉的是把同一條規則
+     * 套到**連續轉向**上 —— 搖桿每一拍都送一條 `move`，那不是「我要取消攻擊」而是
+     * 「我正在走路」，於是手選目標的壽命是 1 tick（33 ms）。sim 分不出這兩者，
+     * 所以選擇權交給 owner。
+     *
+     * ABSENT ⇒ `DEFAULT_MANUAL_ORDER`（撐得過移動指令、不限制牽引距離）——
+     * 也就是 owner 2026-08-03 明說的那一側，**不是**今天的行為。
+     */
+    manualOrder: z
+      .object({
+        /**
+         * true（出貨）= 玩家點名的那一隻撐得過一條移動指令：走位照走，打的還是
+         * 他指的那一個。false = #274 的原行為（右鍵地面取消攻擊指令）。
+         * 只管 `kind:"move"`；A 移動（attackMove）兩側都一律取代手選目標。
+         */
+        survivesGroundMove: z.boolean(),
+        /**
+         * 手選目標的**牽引距離**（單位）；`0`（出貨）= 不限制，對應 owner 的
+         * 「永遠」。競技場半徑 24，所以 24 以上實務上等同不限制；上界 200 純粹
+         * 是擋「24 打成 2400」那種手滑 —— 一個荒謬的牽引距離不會有任何錯誤訊息，
+         * 只會讓這一格看起來沒作用（#277 的形狀）。
+         */
+        leashUnits: z.number().min(0).max(200),
       })
       .strict()
       .optional(),
@@ -3418,6 +3555,47 @@ export const zConfigVfxCleanupDoc = z
      * 量級,再高就沒有意義而只會讓打錯的數字靜默通過(#277 的形狀)。
      */
     maxPooledRings: z.number().int().min(0).max(512),
+
+    /* ── GH#267 死亡火焰的收斂（owner 2026-08-03）─────────────────────────
+     *
+     * 「我找到場地天空火的兇手了，是角色死亡後的特效，持續太久了變得很干擾」
+     *
+     * 兇手是**復活圈的火**：#196 把圈圈的存續時間整個拿掉，所以每死一位英雄，
+     * 場上就多一團永遠不滅、往天上飄的橘色火。這三格決定它燒多久、收斂到多暗、
+     * 以及有人來救時要不要燒回全亮。消費端是
+     * `apps/client/src/render/views/deathFxBurn.ts`（逐格降級讀取）。
+     *
+     * ⚠️ 三格都 `.optional()`，而且**必須**是 optional：`config.vfx-cleanup@1`
+     * 已經有耐久覆蓋層在線上（後台存過就有），一份存於新欄位之前的 override
+     * 少了必填欄就會整份被 Zod 退回 → 內容載入失敗 → fail-open 退回骨架。
+     * 那是 2026-08-02 兩次事故的形狀，不要再走一次。
+     */
+
+    /**
+     * 英雄倒下後留在屍體上的那團火（火柱／火舌／往天上飄的餘燼）用**全亮**燒幾秒。
+     * 燒完之後降到下面那格的比例。0 = 一出現就是低調狀態。
+     *
+     * ⚠️ 這只改**看起來**多久，不改復活圈本身還救不救得回來 —— 圈圈的存活由
+     * 伺服器決定（#196 無到期），這一格碰不到它。改大 = 回到 GH#267 之前那種
+     * 「燒到回合結束」的畫面。上界 600 秒＝十分鐘，比任何一個回合都長。
+     */
+    deathFxBurnSec: z.number().min(0).max(600).optional(),
+    /**
+     * 全亮秒數過完之後，火剩下原本的幾成（火柱與火舌的 alpha、餘燼的噴發速率
+     * 一起乘上這個數）。
+     *
+     * 1 = 永遠不收斂，等於一鍵回到 #196 的行為（**止血閥**）；0 = 完全熄掉，
+     * 只剩地上那圈。⚠️ 地上那圈的亮度**不受這一格影響**，因為它是玩家判斷
+     * 「這裡還救得回來」的錨點 —— 讓機制不可讀不是一個可選的美術取捨。
+     */
+    deathFxCalmScale: z.number().min(0).max(1).optional(),
+    /**
+     * 隊友踩進圈圈開始復活、或敵人站進來卡住時，要不要立刻把火燒回全亮。
+     *
+     * true（出貨）= 收斂不會吃掉「有人在救／被卡住」這個一眼可讀的訊號。
+     * false = 圈圈收斂後就一直低調，畫面最乾淨但要靠 HUD 才知道有人在救。
+     */
+    deathFxRelightOnChannel: z.boolean().optional(),
   })
   .strict();
 

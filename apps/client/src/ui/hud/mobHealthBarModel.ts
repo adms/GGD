@@ -3,6 +3,37 @@
  * 顯示即時血量」).
  *
  * ═════════════════════════════════════════════════════════════════════════════
+ * ⛔ 現況（2026-08-03 覆核，GH#268）—— **這條路的兩端都還沒接上**
+ * ═════════════════════════════════════════════════════════════════════════════
+ * 這個檔頭以前寫著「`GameApp` 的每幀錨點掃描直接呼叫 `mobBarAnchorFor`」。
+ * **那句話是假的**（第三守則），而且它就是 GH#268「修過而且沒生效」的原因：
+ *
+ *   · `apps/client/src/GameApp.ts` 全檔**沒有任何** `mobBars` / `mobBarAnchorFor`
+ *     / `mobBarAnchorY` 的參照 → {@link FrameBus.mobBars} **沒有寫入者**，永遠是
+ *     空陣列。
+ *   · `apps/client/src/ui/HudRoot.tsx` **沒有** import `MobHealthBars` →
+ *     這個功能**不在渲染樹上**。
+ *
+ * 也就是說：伺服器真的把 `ENTITY_FLAG.MOB_ELITE` 寫進快照（`snapshot.ts`，
+ * `mobEliteWire.test.ts` 證明它真的過線），而客戶端把它丟掉。整包功能可以從
+ * repo 裡刪掉、畫面上一個像素都不會變 —— **失敗形態 ③ 的教科書範例**，而且是在
+ * 已經付掉 `ENTITY_FLAG` 最後一格（32768，不可逆）之後。
+ *
+ * 接線只差兩處，都不在這一輪的可寫範圍：
+ *   1. `GameApp` 的每幀錨點掃描：`frameBus.mobBars.length = 0` 之後對每一列跑
+ *      `const a = mobBarAnchorFor(row, project(x, mobBarAnchorY(es.mana, cfg), z),
+ *      {x, z}); if (a) frameBus.mobBars.push(a)`（連同既有的 L3 zone cull）。
+ *   2. `HudRoot` 掛上 `<MobHealthBars />`。
+ *
+ * ⚠️ 而且那還只修一半。owner 抱怨的「殭屍王的血條」是**長血條**
+ * （`BossHealthBar` ← `frameBus.mobBoss`），它的存續條件是
+ * `GameApp.ts` 的 `hud.mobBoss?.kind === "spawn" ? bossId : -1` —— 一顆
+ * **一場只有一個槽**的事件（`RoomStore.recordMobBossEvent`）。自 #288 起
+ * **每一隻特殊殭屍死掉也會發 `mobBossSlain`**（`sim/systems/MobSystem.ts`），
+ * 所以任何一區的任何一隻精英死掉，都會把這一格翻成 `"slain"` → `bossId = -1`
+ * → 本區那隻**滿血的王**的長血條立刻消失。這才是 owner 看到的那個症狀。
+ *
+ * ═════════════════════════════════════════════════════════════════════════════
  * ① 為什麼這是一個新檔，而不是把小怪塞進 `hasOverheadBar`
  * ═════════════════════════════════════════════════════════════════════════════
  * `hasOverheadBar(kind)` 只看 kind，而**眼前這個決定是 per-entity 的**：同一個
@@ -15,22 +46,24 @@
  * 是**四個決策點**，第一守則說決策點要落後台，所以它們是欄位，不是常數。
  *
  * ═════════════════════════════════════════════════════════════════════════════
- * ② 設定值從哪裡來 —— ⚠️ 目前只到一半，而且**這句話必須是真的**（第三守則）
+ * ② 設定值從哪裡來 —— **2026-08-03 起這條路已經打通**（第三守則：這一段以前
+ *    寫著「還沒有任何設定值真的送到這裡」，那句話現在是假的，所以改掉）
  * ═════════════════════════════════════════════════════════════════════════════
  * 既有的小怪外觀頻道是 `MatchState.mobVisualJson`（`MobVisualTable`，殭屍王長血條
- * 的三格就騎在上面）。這四格**應該**走同一條路：
+ * 的三格就騎在上面）。這四格走的是同一條路，而且**每一段都接上了**：
  *
- *   content/config/arena-rules.json  `mobWaves.healthBar`
- *     → schema/config.ts  Zod（上下界）+ DEFAULT_MOB_WAVES_CONFIG
- *     → sim/mobs.ts       MobRules → MobVisualTable → mobVisualJson
+ *   content/config/arena-rules.json  `mobWaves.healthBar`（出貨值）
+ *     → schema/config.ts  Zod（上下界都有）+ DEFAULT_MOB_WAVES_CONFIG.healthBar
+ *     → sim/mobs.ts       MobRules.eliteHealthBar → MobVisualTable → mobVisualJson
  *     → parseMobVisualJson（逐欄位降級）→ {@link mobHealthBarConfigFrom}
+ *     → apps/admin/src/mobWaves.ts 的五個後台欄位（「精英小怪血條」那一組）
  *
- * 那條路上有三個檔不在這一輪的可寫範圍內（`schema/config.ts` / `sim/mobs.ts` /
- * 後台），所以**現在還沒有任何設定值真的送到這裡**：`mobHealthBarConfigFrom`
- * 對一張不含這些 key 的表回傳 {@link SHIPPED_MOB_HEALTH_BAR}。這是刻意的
- * fail-soft，而不是「已經可調」——**在那三個檔補上以前，後台改這四格不會生效**。
- * 這個檔不會假裝相反：讀取器是逐欄位的，那三個檔補上的當天它就開始生效，一個字
- * 都不用改。
+ * 守衛：`packages/shared/src/sim/mobEliteHealthBarWire.test.ts`（作者填的五格
+ * 原封不動到得了解碼端；突變驗過會紅）。
+ *
+ * ⛔ **但畫面上仍然看不到** —— 缺的已經不是設定值，而是①那一段列的那兩處渲染
+ * 接線（`GameApp` 的每幀錨點掃描 + `HudRoot` 掛上 `<MobHealthBars />`）。
+ * 也就是說：後台現在改得到、值真的送到了這個檔，而這個檔的輸出還沒有人畫。
  *
  * ═════════════════════════════════════════════════════════════════════════════
  * ③ 這個檔只回答「畫不畫、多大、在哪」，不碰 DOM
@@ -144,10 +177,10 @@ export interface MobBarRow {
 /**
  * 一列快照 → 一筆 `frameBus.mobBars`，或 null（＝這一隻不該有血條）。
  *
- * ⚠️ **「哪一隻算精英」這個判斷只有這裡一個實作**，而且它就是出貨的那一個：
- * `GameApp` 的每幀錨點掃描直接呼叫這個函式（`const a = mobBarAnchorFor(es, pose);
- * if (a) frameBus.mobBars.push(a)`）。守衛驅動的也是它 —— 如果判斷抄在
- * `GameApp` 裡、測試自己再抄一份，那就是失敗形態 ⑤：被測的不是出貨的那個。
+ * ⚠️ **「哪一隻算精英」這個判斷只有這裡一個實作**，守衛驅動的也是它 —— 如果判斷
+ * 抄在 `GameApp` 裡、測試自己再抄一份，那就是失敗形態 ⑤：被測的不是出貨的那個。
+ * ⛔ 但**今天沒有任何人呼叫它**（見檔頭「現況」）。接上去的時候請直接呼叫這個
+ * 函式，不要在 `GameApp` 裡重寫一次判斷。
  *
  * 判準是 `isEliteMob(kind, flags)`，也就是伺服器投影寫進 `ENTITY_FLAG.MOB_ELITE`
  * 的那一格 —— 不是體型、不是 modelKey、不是 hp 大小。那三個都是**設定值**：後台
@@ -219,6 +252,13 @@ export interface MobBarSpec {
  *
  * ⚠️ 「死了」不在這個清單裡，因為它根本進不來：`frameBus.mobBars` 每一幀從快照
  * 重建，屍體不在裡面。
+ *
+ * ⚠️ **這張清單上沒有「血量」這一項，而且不可以有**（GH#268）。血條的存續條件
+ * 只能綁在**那具身體還在不在**，不能綁在任何比身體短命的東西上 —— 一顆事件、
+ * 一個 aggro 集合、一個 target 欄位、或是「最近有沒有被打」。owner 兩次回報的
+ * 「殭屍王血量在死之前就消失」就是長血條綁到了一顆單槽事件上。
+ * `showThreshold` 是唯一的例外，而它是**後台明說要的玩法**，出貨 1.0 = 全程顯示。
+ * 守衛：`mobHealthBar.test.ts`「王從滿血掉到 1%」那一條。
  */
 export function mobBarVisible(bar: MobBarAnchor, cfg: MobHealthBarConfig): boolean {
   if (!cfg.showHealthBar) return false;

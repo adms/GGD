@@ -199,7 +199,7 @@ describe("存檔的文件", () => {
     const values = { ...shippedValues(), "autoEngage.enabled": "false" };
     const doc = feelDocFrom(values);
     expect(Object.keys(doc).sort()).toEqual(
-      ["autoEngage", "facing", "id", "knockback", "schema", "standstill"].sort(),
+      ["autoEngage", "facing", "id", "knockback", "manualOrder", "schema", "standstill"].sort(),
     );
     expect(doc.id).toBe(COMBAT_FEEL_DOC_ID);
     expect(doc.schema).toBe(COMBAT_FEEL_SCHEMA);

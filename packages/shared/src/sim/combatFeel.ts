@@ -307,9 +307,76 @@ export interface AutoEngageRules {
   ccPausesStall: boolean;
 }
 
+/**
+ * 玩家**自己點名**的攻擊目標,對上系統的自動索敵 (GH#266)。
+ *
+ * owner 2026-08-03:「玩家無法指定攻擊 特殊殭屍? **玩家指定攻擊的對象應該是
+ * 最高優先級**」。
+ *
+ * ── 量到的東西(`manualTargetPriority.test.ts` 每次跑都會重量一次)────────────
+ * 真的 `SimWorld`、真的 `spawnMob`、一隻特殊殭屍 + 一隻普通殭屍:
+ *
+ *   · 一條明確的 `attackTarget` 指令 → 目標正確寫進去,而且**只要玩家之後不送
+ *     任何 intent,它可以撐 12 tick 以上不變**(所以 #221 的自動索敵本身沒有在
+ *     覆寫「還握著的」手選目標)。
+ *   · 同一條指令,之後每 tick 送一條 `move`(= 類比搖桿 / 虛擬搖桿的**真實形狀**,
+ *     `GamepadInput` / `TouchInput` 推著的時候每一拍都送一條)→
+ *     **下一個 tick 目標就從特殊殭屍換成旁邊的普通殭屍,`attackTargetAuto`
+ *     從 false 變 true**。手選的壽命 = **1 tick(33 ms)**。
+ *
+ * 機制是兩步,而**傷害在第二步**:
+ *   ① `systems/OrderSystem.ts` 的地面指令分支把手選目標清成 null(#274 的
+ *      LoL 語意:右鍵地面 = 取消攻擊指令);
+ *   ② 同一 tick 的 `autoAcquirePass` 看到真空,**立刻填上系統自己挑的另一個敵人**。
+ *
+ * 只有①的話,玩家看到的是「英雄停手了」——難用但誠實。真正的缺陷是②:系統
+ * 悄悄把他點的那一隻換成別的。而且換掉之後**幾乎不可能換回來**:比較器的
+ * key 3 是「血量低的優先」,特殊殭屍的 `hpMult` 讓它血量遠高於普通殭屍,所以
+ * 只要旁邊有雜魚,自動索敵永遠不會挑特殊殭屍。這就是 owner 說的「無法指定攻擊」。
+ *
+ * ⚠️ 為什麼是欄位不是一行修正:#274 的「地面指令取代攻擊指令」在**滑鼠**上是
+ * 對的(WC3 與 LoL 都這樣),右鍵一次點擊只送一條指令。壞掉的是把同一條規則
+ * 套到**連續轉向**上 —— 搖桿送出的 move 不是「我要取消攻擊」,是「我正在走路」。
+ * sim 分不出這兩者(兩邊都是 `{kind:"move"}`),所以選擇權交給 owner。
+ */
+export interface ManualOrderRules {
+  /**
+   * 玩家點名的攻擊目標**撐不撐得過一條移動指令**。
+   *
+   * true(出貨)= owner 的規則:玩家指定 > 自動索敵。走位照走(追擊仍然讓路給
+   *              #274 的走位權),但打的還是他點的那一隻。
+   * false      = #274 的原行為(WC3 / LoL:右鍵地面取消攻擊指令)。在搖桿與
+   *              觸控上等於「手選目標只活 1 tick」,也就是上面量到的那個。
+   *
+   * ⚠️ 只管 `kind:"move"`。A 移動 (`attackMove`) **一律**取代手選目標,兩側都
+   * 一樣 —— A 是玩家自己下的另一條戰鬥決策(「打你遇到的」),而且沒有任何輸入
+   * 裝置會連續送它(`InputCapture` 的 A+左鍵、`GamepadInput` 的按鈕,都是一次
+   * 一條)。S / H(停手)、點名別人、目標死掉,三條出口在兩側也都沒有變。
+   */
+  survivesGroundMove: boolean;
+  /**
+   * 手選目標的**牽引距離**(單位)。超過就放手,方向盤還給自動索敵。
+   *
+   * `0`(出貨)= 不限制,對應 owner 的「**永遠**」。
+   *
+   * 它存在是因為 `survivesGroundMove: true` 有一個副作用:走位走完之後
+   * (`nav.order` 被消耗成 null)追擊會恢復,英雄會**自己走回去**找那個目標。
+   * 想要「跑掉就算了」的人把這一格設成一個距離即可(競技場半徑 24,所以 24
+   * 以上等於不限制)。自動索敵自己的 `ACQUIRE_LEASH` 是 2,那是給**系統挑的**
+   * 目標用的,故意沒有套在手選目標上。
+   */
+  leashUnits: number;
+}
+
 export interface CombatFeelRules {
   knockback: KnockbackRules;
   standstill: StandstillRules;
+  /**
+   * ⚠️ 選用的理由和 `facing` / `autoEngage` 完全一樣。讀的時候一律走
+   * `systems/OrderSystem.ts` 的 `manualOrderRules(world)`,它對缺格回退到
+   * `DEFAULT_MANUAL_ORDER`。
+   */
+  manualOrder?: ManualOrderRules;
   /**
    * ⚠️ 選用的理由和 `facing` 完全一樣(見下)。讀的時候一律走
    * `systems/OrderSystem.ts` 的 `autoEngageRules(world)`,它對缺格回退到
@@ -406,6 +473,19 @@ export const DEFAULT_AUTO_ENGAGE: AutoEngageRules = Object.freeze({
 });
 
 /**
+ * 出貨預設 = owner 2026-08-03 明說的那一側(「玩家指定攻擊的對象應該是最高
+ * 優先級」),**不是**今天的行為。這是刻意的:今天的行為是量到的缺陷
+ * (手選目標在搖桿 / 觸控上只活 1 tick),不是一個平起平坐的選項。
+ *
+ * `leashUnits: 0` = 「永遠」,同樣照 owner 的字面。想要「跑遠了就算了」的人在
+ * 後台填一個距離即可。
+ */
+export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
+  survivesGroundMove: true,
+  leashUnits: 0,
+});
+
+/**
  * 出貨預設。
  *
  * ⚠️ 缺文件 / 壞文件 → **回這個**,不是空表。回空表的話 `minPct` 是 0(每一下
@@ -417,6 +497,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   standstill: DEFAULT_STANDSTILL,
   facing: DEFAULT_FACING,
   autoEngage: DEFAULT_AUTO_ENGAGE,
+  manualOrder: DEFAULT_MANUAL_ORDER,
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台)共用這一個常數。 */
@@ -517,6 +598,23 @@ export function normalizeAutoEngageRules(raw: unknown): AutoEngageRules {
   });
 }
 
+/**
+ * 上界是刻意的(第一守則:「欄位要有上界,不是只有下界」)。`leashUnits` 夾到
+ * 200:競技場半徑 24,所以 24 以上實務上就是「不限制」,200 純粹是擋住
+ * 「24 打成 2400」那種手滑 —— 一個荒謬的牽引距離不會有任何錯誤訊息,只會讓
+ * 這一格看起來沒作用。
+ */
+export function normalizeManualOrderRules(raw: unknown): ManualOrderRules {
+  const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  return Object.freeze({
+    survivesGroundMove:
+      typeof r.survivesGroundMove === "boolean"
+        ? r.survivesGroundMove
+        : DEFAULT_MANUAL_ORDER.survivesGroundMove,
+    leashUnits: num(r.leashUnits, DEFAULT_MANUAL_ORDER.leashUnits, 0, 200),
+  });
+}
+
 export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
   if (!doc || typeof doc !== "object") return DEFAULT_COMBAT_FEEL;
   const d = doc as {
@@ -525,6 +623,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     standstill?: unknown;
     facing?: unknown;
     autoEngage?: unknown;
+    manualOrder?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -532,6 +631,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     standstill: normalizeStandstillRules(d.standstill),
     facing: normalizeFacingRules(d.facing),
     autoEngage: normalizeAutoEngageRules(d.autoEngage),
+    manualOrder: normalizeManualOrderRules(d.manualOrder),
   });
 }
 

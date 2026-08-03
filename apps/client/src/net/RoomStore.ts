@@ -213,6 +213,22 @@ export interface TeamView {
   roundOutcome: number;
 }
 
+/**
+ * 一場配對決鬥的**權威結果**,`MatchState.duels` 的逐欄投影 (GH#265)。
+ *
+ * `winner` 是伺服器在「這一區有一邊被清空」的那一 tick 記下的 teamId,
+ * `-1` = 這一區還在打(或這份快照不帶配對)。`render/spectateFocus.DuelView`
+ * 只把它壓成 `live = winner < 0`,因為攝影機只關心「還在不在打」;頒獎台關心
+ * 的是**誰贏**,所以這裡把整個號碼留著。
+ */
+export interface DuelWinnerView {
+  zone: number;
+  teamA: number;
+  teamB: number;
+  /** 勝方 teamId;-1 = 尚未定勝負 */
+  winner: number;
+}
+
 /** One couch player of THIS machine (player 0 = the owner/primary). */
 export interface LocalPlayerView {
   player: number;
@@ -285,6 +301,22 @@ export interface HudState {
   fireRingRadius: number;
   seats: SeatView[];
   teams: TeamView[];
+  /**
+   * 這一回合的**逐區勝負**,`MatchState.duels` 原封不動抄過來 (GH#265)。
+   *
+   * ⚠️ 這是伺服器對「誰贏了這一場 3v3」的**權威答案**,而且它是**按 zone** 的。
+   * `TeamState.roundOutcome` 不能取代它:一回合有兩個 zone,兩隊都會是 `WON`,
+   * 所以任何只讀 `teams` 的推導都必須自己再挑一個 —— 而它挑的是**戰績最好的**
+   * 那一隊,不是**你這一區**贏的那一隊。owner 2026-08-03:
+   * 「為什麼我最後活著 勝利的還是顯示別的隊伍」就是這麼來的。
+   *
+   * `render/RoundWinnerStage.planRoundWinnerShow` 讀的就是這一格。之前它整條線
+   * 都在(伺服器算了、`net/snapshot.ts` 也送了),只差**沒有人把它搬進 HUD 投影**
+   * —— 失敗形態 ②「算出來了但從沒送到客戶端」的最後一哩。
+   *
+   * 空陣列 = 這一份快照沒有配對(選角 / 中場 / 決賽單場)。
+   */
+  duels: DuelWinnerView[];
   /** client-side K/D tally from death events (not in the schema) */
   kills: Record<number, number>;
   deaths: Record<number, number>;
@@ -532,6 +564,7 @@ const initial: HudState = {
   fireRingRadius: 0,
   seats: [],
   teams: [],
+  duels: [],
   kills: {},
   deaths: {},
   localHp: 0,
@@ -590,6 +623,7 @@ export function useHud<T>(selector: (s: HudState) => T): T {
 
 let seatsCacheKey = "";
 let teamsCacheKey = "";
+let duelsCacheKey = "";
 let localsCacheKey = "";
 /** couch accountIds of this machine, index = local player (0 = primary) */
 let localAccounts: string[] = [];
@@ -598,6 +632,7 @@ export function resetHudStore(): void {
   hudStore.setState({ ...initial }, true);
   seatsCacheKey = "";
   teamsCacheKey = "";
+  duelsCacheKey = "";
   localsCacheKey = "";
   localAccounts = [];
   shopEventSeq = 0;
@@ -738,6 +773,21 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   if (teamsKey !== teamsCacheKey) {
     teamsCacheKey = teamsKey;
     patch.teams = teams;
+  }
+
+  // ---- duels (GH#265): 伺服器逐區記下的勝負,原封不動 ----
+  // `?? []` 是給舊快照 / 手刻 fixture 的:沒有這一欄讀成「這一份不帶配對」,
+  // 頒獎台於是退回推導,而不是炸掉。
+  const duels: DuelWinnerView[] = [...(state.duels ?? [])].map((d) => ({
+    zone: d.zone,
+    teamA: d.teamA,
+    teamB: d.teamB,
+    winner: d.winner,
+  }));
+  const duelsKey = JSON.stringify(duels);
+  if (duelsKey !== duelsCacheKey) {
+    duelsCacheKey = duelsKey;
+    patch.duels = duels;
   }
 
   // ---- couch players (per-viewport mini-HUD; length 1 in classic play) ----
