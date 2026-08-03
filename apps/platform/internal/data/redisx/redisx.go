@@ -239,6 +239,43 @@ func (c *Client) GetPresence(ctx context.Context, accountID string) (string, err
 	return v, err
 }
 
+// GetPresenceMany returns the state of every listed account IN ORDER, in ONE
+// round trip (MGET). A missing/expired key maps to "offline", exactly as
+// GetPresence does for a single id.
+//
+// It exists because the lobby's 線上玩家 list asks the same question about
+// EVERY account on the deploy, on a poll: doing that with GetPresence is one
+// round trip per account per poll per viewer, which is O(accounts × viewers)
+// network hops for a list that fits in one command. The per-id call is kept for
+// the callers that genuinely want one id (friends list, admin players page).
+//
+// A transport failure is returned, NOT swallowed into "everybody offline" — a
+// lobby that silently shows nobody online while everybody is online is the
+// fail-open-in-silence shape CLAUDE.md calls out. The caller decides.
+func (c *Client) GetPresenceMany(ctx context.Context, accountIDs []string) ([]string, error) {
+	out := make([]string, len(accountIDs))
+	if len(accountIDs) == 0 {
+		return out, nil
+	}
+	keys := make([]string, len(accountIDs))
+	for i, id := range accountIDs {
+		keys[i] = KeyPresence(id)
+	}
+	vals, err := c.R.MGet(ctx, keys...).Result()
+	if err != nil {
+		return nil, err
+	}
+	for i := range out {
+		out[i] = "offline"
+		if i < len(vals) {
+			if s, ok := vals[i].(string); ok && s != "" {
+				out[i] = s
+			}
+		}
+	}
+	return out, nil
+}
+
 // ClearPresence deletes the key and publishes an offline delta.
 func (c *Client) ClearPresence(ctx context.Context, accountID string) error {
 	if err := c.R.Del(ctx, KeyPresence(accountID)).Err(); err != nil {

@@ -1,17 +1,12 @@
 /**
- * config.victory-podium@1 —— 回合勝利頒獎台的四個決策點 (GH#257 / GH#256).
- *
- * ⚠️⚠️ 這個檔案**還沒有被接進出貨路徑**。它是刻意獨立的一支,理由寫在最下面的
- * 「整合待辦」。目前 `DEFAULT_VICTORY_PODIUM` 就是**實際生效的值** ——
- * 客戶端把它當參數傳進 `RoundWinnerStage`,所以行為是正確的、可測的,只是
- * **操作者還改不到**。接完之前不要在別的地方複製一份預設值。
+ * config.victory-podium@1 —— 回合勝利頒獎台的決策點 (GH#257 / GH#256).
  *
  * ═══════════════════════════════════════════════════════════════════════════
- * 為什麼這四格是欄位而不是常數
+ * 為什麼這些是欄位而不是常數
  * ═══════════════════════════════════════════════════════════════════════════
  * CLAUDE.md 第一守則:「如果我在寫程式時心裡出現『這裡要選 A 還是 B』,
- * 那就是一個決策點,它應該變成編輯器的一個開關。」下面四格逐一都是那個形狀,
- * 而且四格的錯誤成本都是「一次完整部署」:
+ * 那就是一個決策點,它應該變成編輯器的一個開關。」下面每一格都是那個形狀,
+ * 而且每一格的錯誤成本都是「一次完整部署」:
  *
  * | 欄位 | 心裡那個 A/B | 寫死的代價 |
  * |---|---|---|
@@ -19,30 +14,26 @@
  * | `podiumScope` | 只排勝方三人,還是這一回合上場的所有人? | 3v3 裡兩者常常同解,一旦有人斷線就分岔 |
  * | `podiumFill` | 湊不滿三位時縮短,還是補敗方? | 把戰敗的敵人擺上勝利頒獎台是設計偏好,不是資料問題 |
  * | `roundWinLine` | 嘲諷台詞?名言宣言?兩個都放? | GH#256 問的就是這一題。現行出貨行為是**兩個都放**(名言 t=0 由 `ui/RoundEndVoice`、嘲諷 t=2200ms 由 `render/RoundWinnerStage`),寫死等於把其中一半永久關掉 |
+ * | `podiumLayout` | 由左到右照名次排,還是把金冠放正中? | v0.9.27 就是寫死成「照 index 排」,於是三個人時**畫面正中央是第二名**(而第二名依定義已經倒下)—— owner 回報「回合勝利出現的 3d model 是勝利角色 但現在不是」的一半 |
+ * | `winnerScale` | 金卡要不要比銀銅大? | 寫死成 1.0 的時候三張卡同尺寸、同 z-order,誰贏了只能靠冠的顏色分辨 |
+ * | `clipGold/Silver/Bronze` | 站上台要播哪一個動作? | v0.9.27 三個人一律播 `idle`(`StorePreview` 裡一個硬字串),所以「勝利」看起來和「在商店發呆」一模一樣 |
  *
  * ═══════════════════════════════════════════════════════════════════════════
- * 整合待辦 —— 三個落點一個都還沒接
+ * 三個落點的現況(2026-08-03 覆核 —— 舊版註解在這裡說過謊)
  * ═══════════════════════════════════════════════════════════════════════════
- * 一個欄位要同時落在三個地方,缺一個 drift 測試就紅:
+ * 這一段以前寫著「三個落點一個都還沒接」,其中兩句已經是假的(第三守則):
+ *   1. `content/config/victory-podium.json`            ← **存在,而且已進版控**
+ *   2. `packages/shared/src/content/schema/config.ts`  ← **`:33` 有 import、
+ *      `zConfigDoc` 的 union 裡也有它**
+ *   3. `apps/admin/src/configForms.ts` + `store.ts`    ← 仍然**沒有** `victoryPodium` 頁
  *
- *   1. `content/config/victory-podium.json`            ← **沒有這個檔**
- *   2. `packages/shared/src/content/schema/config.ts`  ← 沒有 import 這一支
- *   3. `apps/admin/src/configForms.ts` + `store.ts`    ← 沒有 `victoryPodium` 頁
+ * 還缺的只有第 3 項。欄位順序/標籤/分組/說明見最下面的 `VICTORY_PODIUM_FIELDS`;
+ * admin 那邊照 `VICTORY_FX_SPEC`(`apps/admin/src/configForms.ts`)複製一份即可。
  *
- * 三個都沒接是**刻意**的,不是漏掉:這一輪是多個 lane 平行改同一棵樹,
- * `content/schema/config.ts` 與 `content/*.json` 的產物(`bundle.json` /
- * `manifest.json` / `_index.json`)都正被別的 lane 改著。在那三個檔上動手會
- * 撞車,而 `content/config/victory-podium.json` 一旦新增就必須跑
- * `pnpm content:build`,那會把別人尚未 commit 的產物一起重寫。
- * 誠實留給 integrator 收尾比撞掉別人的樹便宜。
- *
- * integrator 收尾時要做的完全是機械動作:
- *   · 把 `zConfigVictoryPodiumDoc` re-export 進 `config.ts`,並把
- *     `DEFAULT_VICTORY_PODIUM` / `resolveVictoryPodium` 一起搬過去(或直接 import)
- *   · 用 `SHIPPED_VICTORY_PODIUM_JSON` 的內容建 `content/config/victory-podium.json`,
- *     然後跑 `pnpm content:build` 並 `git add content/`
- *   · admin 那邊照 `VICTORY_FX_SPEC`(`apps/admin/src/configForms.ts:801`)複製一份,
- *     欄位順序/標籤/分組見下面的 `VICTORY_PODIUM_FIELDS`
+ * ⚠️ **執行期消費端在 2026-08-03 接上了。** `apps/client/src/render/RoundWinnerStage.ts`
+ * 的 `victoryPodiumPolicy()` 去 `Configs` 登錄表讀這份文件並跑 `resolveVictoryPodium`,
+ * `planRoundWinnerShow` 的 `cfg` 預設值就是它 —— 也就是說改這份 JSON **現在真的會改變
+ * 畫面**。在此之前 `resolveVictoryPodium` 是全 repo 零呼叫端的(失敗形態 ②)。
  */
 import { z } from "zod";
 
@@ -102,6 +93,46 @@ export type VictoryRoundWinLine = (typeof VICTORY_ROUND_WIN_LINES)[number];
 export const VICTORY_PODIUM_SIZE_MIN = 1;
 export const VICTORY_PODIUM_SIZE_MAX = 8;
 
+/**
+ * 三張卡怎麼排在畫面上。
+ *
+ *   `rank`        由左到右照名次(金在最左)。v0.9.27 寫死的那一種。
+ *   `centreFirst` **金冠站正中央、銀在左、銅在右。出貨值。**
+ *                 理由是量到的:`rank` 之下三張卡的位置只是 index 的函式,
+ *                 所以三個人時螢幕正中央是**第二名** —— 而第二名依定義是
+ *                 這一回合倒下的人。玩家的眼睛先看中間,於是「誰贏了」
+ *                 讀起來是錯的。
+ *   `soloWinner`  只站金冠一位(#143 原始的單人特寫)。最不會誤讀,
+ *                 代價是 owner 2026-07-27 明說的「勝利的時候應該秀隊伍三人的模組」
+ *                 就沒了 —— 所以它是選項,不是預設。
+ */
+export const VICTORY_PODIUM_LAYOUTS = ["rank", "centreFirst", "soloWinner"] as const;
+export type VictoryPodiumLayout = (typeof VICTORY_PODIUM_LAYOUTS)[number];
+
+/**
+ * 站上台的那一刻播哪一個動作剪輯。
+ *
+ *   `celebrate` 慶祝。`ClipAnimator` 的 `celebrate` 狀態,模糊比對
+ *               `celebrate` / `cheer` / `victory` / `dance` —— 體素/方塊人身上
+ *               那一支 `cheer`,以及 w3x 匯入模型的 `Stand Victory`。
+ *               **沒有這種剪輯的模型會退回 idle 並在 console 警告一次**
+ *               (`ClipAnimator.start` 的 warn-once),不是靜默退回。
+ *   `idle`      站著。v0.9.27 三個人都播這個 —— 所以勝利看起來和逛商店一樣。
+ *   `death`     倒下。給「敗方也上台」(`podiumFill: "opponents"`)那種玩法用的。
+ */
+export const VICTORY_PODIUM_CLIPS = ["celebrate", "idle", "death"] as const;
+export type VictoryPodiumClip = (typeof VICTORY_PODIUM_CLIPS)[number];
+
+/**
+ * `winnerScale` 的上下界。
+ *
+ * ⚠️ 上界不是裝飾(同 `podiumSize`):金卡的寬高是**乘**上去的,1.25 打成 12.5
+ * 會讓那張卡撐爆整個視窗、把銀銅完全蓋掉。3.0 已經比任何合理用法寬。
+ * 下界 0.5 允許「金卡反而比較小」這種刻意的反差,但不允許 0(整張卡消失)。
+ */
+export const VICTORY_WINNER_SCALE_MIN = 0.5;
+export const VICTORY_WINNER_SCALE_MAX = 3.0;
+
 export const zConfigVictoryPodiumDoc = z
   .object({
     id: z.string().min(1),
@@ -119,6 +150,16 @@ export const zConfigVictoryPodiumDoc = z
     podiumFill: z.enum(VICTORY_PODIUM_FILLS),
     /** 第一名說什麼:嘲諷 / 名言 / 兩個都說。 */
     roundWinLine: z.enum(VICTORY_ROUND_WIN_LINES),
+    /** 三張卡在畫面上的排法。出貨 `centreFirst`(金在正中)。 */
+    podiumLayout: z.enum(VICTORY_PODIUM_LAYOUTS),
+    /** 金卡相對其他卡的尺寸倍率。1.0 = 一樣大。 */
+    winnerScale: z.number().min(VICTORY_WINNER_SCALE_MIN).max(VICTORY_WINNER_SCALE_MAX),
+    /** 金冠那位播哪一個剪輯。 */
+    clipGold: z.enum(VICTORY_PODIUM_CLIPS),
+    /** 銀冠那位播哪一個剪輯。 */
+    clipSilver: z.enum(VICTORY_PODIUM_CLIPS),
+    /** 銅冠那位播哪一個剪輯。 */
+    clipBronze: z.enum(VICTORY_PODIUM_CLIPS),
   })
   .strict();
 
@@ -130,6 +171,11 @@ export interface VictoryPodiumPolicy {
   podiumScope: VictoryPodiumScope;
   podiumFill: VictoryPodiumFill;
   roundWinLine: VictoryRoundWinLine;
+  podiumLayout: VictoryPodiumLayout;
+  winnerScale: number;
+  clipGold: VictoryPodiumClip;
+  clipSilver: VictoryPodiumClip;
+  clipBronze: VictoryPodiumClip;
 }
 
 /**
@@ -141,17 +187,27 @@ export interface VictoryPodiumPolicy {
  * · `roundWinLine: "both"` —— **現行出貨行為**(名言 t=0 + 嘲諷 t=2200ms)。
  *   GH#256 要的「該角色自己的語音宣言」已經在放了;這一格是把它變成可關的,
  *   不是把它加進去。設成 `taunt` 才是改變行為。
+ * · `podiumLayout: "centreFirst"` —— owner 2026-08-03「回合勝利出現的 3d model
+ *   是勝利角色 但現在不是」。`rank` 之下正中央是第二名,而玩家先看中間。
+ * · `winnerScale: 1.25` —— 金卡明顯大一號 + 疊在上層,誰贏了不必去讀冠的顏色。
+ * · `clipGold: "celebrate"` / `clipSilver`、`clipBronze: "idle"` —— 只有第一名
+ *   在慶祝。三個人一起慶祝就沒有「誰是第一」這個訊息了。
  */
 export const DEFAULT_VICTORY_PODIUM: VictoryPodiumPolicy = {
   podiumSize: 3,
   podiumScope: "winnerTeam",
   podiumFill: "shrink",
   roundWinLine: "both",
+  podiumLayout: "centreFirst",
+  winnerScale: 1.25,
+  clipGold: "celebrate",
+  clipSilver: "idle",
+  clipBronze: "idle",
 };
 
 /**
- * 未來 `content/config/victory-podium.json` 的內容,一字不差。
- * integrator 直接把它寫成檔案即可;drift 測試比對的就是它和
+ * `content/config/victory-podium.json` 的內容,一字不差。
+ * drift 測試(`apps/admin/src/laneConfigDocs.test.ts`)比對的就是它和
  * `DEFAULT_VICTORY_PODIUM`。
  */
 export const SHIPPED_VICTORY_PODIUM_JSON: ConfigVictoryPodiumDoc = {
@@ -160,7 +216,9 @@ export const SHIPPED_VICTORY_PODIUM_JSON: ConfigVictoryPodiumDoc = {
   note:
     "GH#257 回合勝利頒獎台。podiumSize=3 是 owner 原話「最後活下來順序的三位」;" +
     "roundWinLine 預設 both —— 金冠那位先說自己的名言(t=0)、再嘲諷敗方(t=2200ms)," +
-    "這就是現行出貨行為。切到 quote 時若該英雄沒有名言語音會自動退回 taunt,不會變成一片安靜。",
+    "這就是現行出貨行為。切到 quote 時若該英雄沒有名言語音會自動退回 taunt,不會變成一片安靜。" +
+    "podiumLayout=centreFirst 把金冠擺正中央(rank 那種由左到右排法會讓螢幕正中央是第二名);" +
+    "winnerScale=1.25 讓金卡大一號並疊在上層;clipGold=celebrate 只有第一名在慶祝。",
   ...DEFAULT_VICTORY_PODIUM,
 };
 
@@ -178,6 +236,11 @@ export function resolveVictoryPodium(
     podiumScope: doc.podiumScope,
     podiumFill: doc.podiumFill,
     roundWinLine: doc.roundWinLine,
+    podiumLayout: doc.podiumLayout,
+    winnerScale: doc.winnerScale,
+    clipGold: doc.clipGold,
+    clipSilver: doc.clipSilver,
+    clipBronze: doc.clipBronze,
   };
 }
 
@@ -213,6 +276,47 @@ export const VICTORY_PODIUM_FIELDS = [
     kind: "enum" as const,
     options: VICTORY_PODIUM_FILLS,
     help: "排得出來的人少於頒獎台人數時:shrink 就少站幾個;opponents 會把敗方裡活最久的補上台。",
+  },
+  {
+    key: "podiumLayout",
+    label: "站位",
+    group: "頒獎台",
+    kind: "enum" as const,
+    options: VICTORY_PODIUM_LAYOUTS,
+    help: "金冠站哪裡:centreFirst 站正中央(銀左、銅右);rank 由左到右照名次,三個人時螢幕正中央會是第二名;soloWinner 只站第一名一個。",
+  },
+  {
+    key: "winnerScale",
+    label: "金卡放大倍率",
+    group: "頒獎台",
+    kind: "number" as const,
+    min: VICTORY_WINNER_SCALE_MIN,
+    max: VICTORY_WINNER_SCALE_MAX,
+    help: "第一名那張卡相對其他卡的尺寸倍率,同時決定它疊在上層。1.0 = 三張一樣大(誰贏了只能靠皇冠顏色分辨)。",
+  },
+  {
+    key: "clipGold",
+    label: "第一名的動作",
+    group: "動作",
+    kind: "enum" as const,
+    options: VICTORY_PODIUM_CLIPS,
+    help: "金冠那位站上台時播哪一個剪輯。celebrate 會找模型自己的 cheer / Stand Victory;沒有的模型退回站姿並在 console 警告一次。",
+  },
+  {
+    key: "clipSilver",
+    label: "第二名的動作",
+    group: "動作",
+    kind: "enum" as const,
+    options: VICTORY_PODIUM_CLIPS,
+    help: "銀冠那位播哪一個剪輯。三個人都設成 celebrate 的話,「誰是第一」這個訊息就從畫面上消失了。",
+  },
+  {
+    key: "clipBronze",
+    label: "第三名的動作",
+    group: "動作",
+    kind: "enum" as const,
+    options: VICTORY_PODIUM_CLIPS,
+    help: "銅冠那位播哪一個剪輯。把敗方補上台(人數不足時＝opponents)的玩法可以設 death,讓他們倒在台上。",
   },
   {
     key: "roundWinLine",

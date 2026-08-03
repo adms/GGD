@@ -176,13 +176,15 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(21);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(20);
     expect(byKind("OWN_PAGE")).toHaveLength(11);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。
+    // 2026-08-03：5 → 4。victory-podium **往下走了一格**:客戶端接上了消費端,
+    // 於是它從「做了一半」變成一頁真的後台（VICTORY_PODIUM_SPEC）。
     // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
-    expect(byKind("DEFERRED")).toHaveLength(5);
+    expect(byKind("DEFERRED")).toHaveLength(4);
     // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）與 roster（英雄上下架）。
     // 這個數字往上長就是欠債變多，而它變多的那一刻要有人按下同意。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual(["audio-map", "roster"]);
@@ -254,26 +256,28 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     ).toBeGreaterThan(0);
   });
 
-  it("2026-08-02 收尾的三列 DEFERRED 也會自己到期：三個 resolver 目前 0 個 production 呼叫端", () => {
+  it("2026-08-02 收尾剩下的兩列 DEFERRED 也會自己到期：兩個 resolver 目前 0 個 production 呼叫端", () => {
     cover(TAG);
-    // ⚠️ 這一條就是那三列豁免的到期條件本人。三份文件的 Zod / union / 出貨值都
+    // ⚠️ 這一條就是那幾列豁免的到期條件本人。文件的 Zod / union / 出貨值都
     // 接完了,唯一缺的是「客戶端改讀文件而不是讀寫死的常數」。那一天到了,對應的
     // resolver 會出現第一個呼叫端,這裡變成 1,守衛紅 —— 有人被迫回來刪掉豁免、
     // 註冊一個 ConfigDocSpec。註解做不到這件事（第三守則）。
     //
+    // ⚠️ **這件事在 2026-08-03 真的發生過一次**,而且這條守衛就是那樣被觸發的:
+    // `victory-podium` 原本是第三列,`RoundWinnerStage.victoryPodiumPolicy()` 接上
+    // 之後呼叫端從 0 變成 1 → 這裡紅 → `VICTORY_PODIUM_SPEC` 進了 configForms.ts、
+    // Page union / session 表 / 導覽列各補一列、豁免那一列被刪掉。它現在的守衛換成
+    // 上面那兩條（「每一份文件都有去向」＋「走通用引擎的每一頁都到得了」），
+    // 所以它從這張清單上消失**不是**失去覆蓋。
+    //
     // 排除的路徑一律是「宣告本人」＋「這條守衛自己的文書作業」：豁免表在字串裡
-    // 寫著這三個名字,數到自己的文書作業就永遠不會綠（round-grade 那一列踩過）。
+    // 寫著這些名字,數到自己的文書作業就永遠不會綠（round-grade 那一列踩過）。
     const PENDING = [
       { docId: "lobby-layout", symbol: "resolveLobbyLayout", decl: "content/schema/config.ts" },
       {
         docId: "valhalla-sandbox",
         symbol: "resolveValhallaSandbox",
         decl: "content/schema/config.ts",
-      },
-      {
-        docId: "victory-podium",
-        symbol: "resolveVictoryPodium",
-        decl: "content/schema/victoryPodium.ts",
       },
     ] as const;
     for (const p of PENDING) {
@@ -287,7 +291,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
           `補 store.ts 的 Page union 與 session 表、App.tsx 的導覽列一列,然後刪掉這一列豁免。`,
       ).toBe(0);
     }
-    // 對照組同上：一個確實有 production 呼叫端的 resolver。少了它,上面那三條對
+    // 對照組同上：一個確實有 production 呼叫端的 resolver。少了它,上面那幾條對
     // 「掃描器永遠回 0」的壞實作也會全過（失敗形態 ④）。
     expect(
       productionCallSites(REPO, "resolveVictoryFx", ["content/schema/config.ts"]),

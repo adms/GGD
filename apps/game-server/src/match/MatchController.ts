@@ -115,8 +115,12 @@ import {
 import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
 import {
   anyMobsAlive,
+  anyMobsAliveOfKinds,
   mobRulesFromConfig,
   pickMobChampion,
+  ROUND_HOLD_KINDS,
+  DEFAULT_ROUND_HOLD_KINDS,
+  DEFAULT_STOP_SPAWN_ON_TEAM_WIPE,
   type MobChampionPicker,
 } from "@ggd/shared/sim/mobs";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
@@ -1303,6 +1307,9 @@ export class MatchController {
     // …and the sim's mirror of it (#216): every zone is UNDECIDED again, so the
     // fire ring burns and the mob waves arrive in all of them from tick 0.
     this.world.settledZones.clear();
+    // …以及「一隊全滅就停止生怪」那一格（owner 2026-08-02）。跟 settledZones 同一
+    // 個生命週期:不清掉的話,上一回合被打光的那個 zone 這一回合一隻殭屍都不會生。
+    this.world.spawnHaltedZones.clear();
     this.resetRoundTallies();
 
     // Per-round arena rotation (task #145): pick THIS round's map deterministically
@@ -1755,14 +1762,33 @@ export class MatchController {
         );
       } else if (bAlive === 0 || aAlive === 0) {
         const survivor = bAlive === 0 ? pairing.sideA : pairing.sideB;
-        // 場上還有任何殭屍時,只剩一隊也不結束 (owner 2026-07-30). The duel is
-        // WON — remembered, so a later total wipe pays the right team — but the
-        // ROUND stays open while a 一般殭屍 / 特殊殭屍 / 殭屍王 is still standing
-        // in this zone. `timerExpired` always wins: the phase backstop (and the
-        // fire ring's %-HP burn on mobs, which is what actually clears a corner
-        // -camping zombie) are what stop this from being an unbounded hold.
+        // 只剩一隊時,回合要不要結束 (owner 2026-07-30 → **改過** 2026-08-02).
+        //
+        // 2026-07-30 的規則是「場上還有**任何**殭屍就不結束」。2026-08-02 owner
+        // 實打之後收窄：「已經只剩我方英雄 敵方英雄全死 並且**場上沒有殭屍王**
+        // 回合應該要馬上勝利結算才對」。所以現在讀後台的
+        // `mobWaves.roundHoldMobKinds`（出貨值 `"boss"`），不是寫死「任何」。
+        //
+        // ⚠️ 舊規則之所以變成玩家眼中的 bug，是因為它跟生成閘門形成一個
+        // **自我維持的迴圈**：
+        //     一隊全滅 → 想記勝負 → 場上有殭屍 → 不記
+        //                             ↓
+        //             沒記 = 沒進 settledZones = 繼續生成殭屍 ──┘
+        // 唯一能打破它的是火圈的百分比真實傷害，所以體感就是「一定要等火圈」。
+        // 下面兩行是那個迴圈的兩個切點，**兩個都要**：
+        //   · `spawnHaltedZones` —— 一隊全滅的那一刻就停止生怪（不等勝負被記下）
+        //   · `roundHoldMobKinds` —— 只有王（預設）壓得住回合
+        // 只切一刀都還會留尷尬：只停生成，場上剩的十幾隻仍要慢慢清；只收窄壓制，
+        // 結束那一瞬間可能還有殭屍在生。
+        //
+        // `timerExpired` 依然永遠贏：階段硬底線是這個 hold 不會無限延長的保證。
         this.pendingDuelWinners.set(pairing.zone, survivor);
-        if (!timerExpired && anyMobsAlive(this.world, pairing.zone)) continue;
+        const mobRules = this.world.mobRules;
+        if (mobRules?.stopSpawnOnTeamWipe ?? DEFAULT_STOP_SPAWN_ON_TEAM_WIPE) {
+          this.world.spawnHaltedZones.add(pairing.zone);
+        }
+        const holdKinds = ROUND_HOLD_KINDS[mobRules?.roundHoldMobKinds ?? DEFAULT_ROUND_HOLD_KINDS];
+        if (!timerExpired && anyMobsAliveOfKinds(this.world, pairing.zone, holdKinds)) continue;
         this.recordDuelWinner(pairing.zone, survivor);
       } else if (timerExpired) {
         const aPct = this.teamHpPct(pairing.sideA, pairing.zone);

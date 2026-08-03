@@ -847,6 +847,116 @@ export function isPanelExempt(spec: HudSlotSpec): boolean {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+ * A PANEL THAT OPENS *FROM* A SLOT (the third shape, and the smallest).
+ *
+ * `SLOTS` is persistent corner chrome. `HUD_PANELS` is a docked/full-screen
+ * panel that OWNS an edge and makes chrome yield. Neither describes the thing
+ * the scoreboard has always done: a transient drawer that belongs to one slot,
+ * appears while the player is interacting with it, paints at `HUD_Z.expanded`,
+ * and is gone the moment they stop. Those must NOT join either registry —
+ *
+ *   · as a SLOT it would take stack space it does not permanently occupy, and
+ *     `hudLayout.test.ts` pins the exact slot list of the bottom corners
+ *     (adding one to bottom-right fails 「gold-level, minimap, equipment」);
+ *   · as a PANEL it would declare `covers: ["bottom-right"]`, and the
+ *     panel-cover guard then rejects `equipment`'s default `inset` policy —
+ *     a red test describing a collision that only exists while a mouse is
+ *     resting on one 170×64 box.
+ *
+ * So the geometry is a FUNCTION of the anchor slot instead of a new row. That
+ * is the whole contribution: the drawer's offset is DERIVED from the registry
+ * (`hudSlotBand` / `hudStackEnd`), so moving the anchor moves the drawer, and a
+ * guard can resolve its rect in node exactly like a slot's.
+ *
+ * `HudSlotPanelOpen` IS A DECISION, therefore a parameter and not a constant:
+ *   anchor — start one gap past the ANCHOR's own band. Always has room, and
+ *            paints over the rest of that corner's stack (at `HUD_Z.expanded`,
+ *            which is what that layer is for).
+ *   stack  — start one gap past the corner's WHOLE stack, covering nothing.
+ *            Honest, and on a 360px-tall viewport the bottom-right stack already
+ *            ends at 348, so this leaves 2px — i.e. the drawer would never be
+ *            visible at all. That is failure shape ① with a straight face, which
+ *            is why it is not the default.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+export type HudSlotPanelOpen = "anchor" | "stack";
+
+/**
+ * Distance (px) from the corner's edge to the NEAR edge of a drawer opened from
+ * `anchor` — i.e. its `bottom` (bottom-* corners) or `top` (top-* corners).
+ */
+export function hudSlotPanelOffset(
+  anchor: HudSlotId,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): number {
+  if (open === "stack") {
+    // skipTransient: an opt-in dev overlay must never push real UI around —
+    // the same reading `hudStackEnd`'s other production caller uses.
+    return hudStackEnd(hudSlotCorner(anchor, touch), touch, { skipTransient: true }) + HUD_GAP;
+  }
+  return hudSlotBand(anchor, touch).end + HUD_GAP;
+}
+
+/**
+ * The tallest a drawer may be before it runs off the far edge of the viewport.
+ * Callers cap their own content with this; it is never negative.
+ */
+export function hudSlotPanelMaxHeight(
+  anchor: HudSlotId,
+  viewport: HudViewport,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): number {
+  return Math.max(0, viewport.height - hudSlotPanelOffset(anchor, touch, open) - HUD_EDGE);
+}
+
+/**
+ * A drawer's rect against a concrete viewport, with BOTH axes clamped to stay
+ * on screen. `want` is what the content would like; the returned `w`/`h` are
+ * what it gets.
+ */
+export function hudSlotPanelRect(
+  anchor: HudSlotId,
+  viewport: HudViewport,
+  want: { w: number; h: number },
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+): HudRect {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(anchor, touch));
+  const offset = hudSlotPanelOffset(anchor, touch, open);
+  const w = Math.max(0, Math.min(want.w, viewport.width - HUD_EDGE * 2));
+  const h = Math.max(0, Math.min(want.h, hudSlotPanelMaxHeight(anchor, viewport, touch, open)));
+  return {
+    x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE - w,
+    y: vertical === "top" ? offset : viewport.height - offset - h,
+    w,
+    h,
+  };
+}
+
+/**
+ * The absolute-position style for a drawer opened from `anchor`. Defaults to
+ * `HUD_Z.expanded` — the layer whose whole purpose is 「a panel opened FROM a
+ * slot, painting over the slots stacked below it」.
+ */
+export function hudSlotPanelStyle(
+  anchor: HudSlotId,
+  touch = false,
+  open: HudSlotPanelOpen = "anchor",
+  z: number = HUD_Z.expanded,
+): CSSProperties {
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(anchor, touch));
+  const offset = hudSlotPanelOffset(anchor, touch, open);
+  const style: CSSProperties = { position: "absolute", zIndex: z };
+  if (vertical === "top") style.top = offset;
+  else style.bottom = offset;
+  if (horizontal === "left") style.left = HUD_EDGE;
+  else style.right = HUD_EDGE;
+  return style;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
  * THE BUILD-STAMP BAND (task #245, inside the #107 contract).
  *
  * The version badge (ui/VersionBadge.tsx) is the one piece of chrome that must

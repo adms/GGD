@@ -256,6 +256,43 @@ interface InstanceSkeleton {
  * `mesh.material`（見 modelTint.ts 的 MATERIAL OWNERSHIP 段），所以只能在閃光的
  * 那一刻現查，不能在 push 進 `flashMeshes` 的時候先算好。
  */
+/**
+ * `getHierarchyBoundingVectors` predicate that skips meshes we turned OFF.
+ *
+ * Babylon's own implementation filters on "has boundingInfo && has vertices" —
+ * it does NOT consult `isEnabled`. So without this, a `hiddenPrimitives` entry
+ * would stop DRAWING the gore and still let it drive #150's height
+ * normalization and #61's ground offset. `isEnabled(false)` deliberately checks
+ * only the mesh's own flag: the ancestors (glbRoot → root) are mid-construction
+ * here and their state is not what this question is about.
+ */
+const ENABLED_ONLY = (m: AbstractMesh): boolean => m.isEnabled(false);
+
+/**
+ * The glTF `mesh.primitives[i]` index a Babylon mesh came from, or -1.
+ *
+ * Babylon's glTF 2.0 loader gives a multi-primitive mesh one child per
+ * primitive, named `${nodeName}_primitive${i}` (`GLTFLoader._loadMeshAsync`);
+ * `ChampionView` then re-prefixes every cloned node with `${entityId}-`, which
+ * leaves that suffix at the END of the string. A single-primitive mesh keeps
+ * the plain node name and returns -1 — hiding a model's only primitive would be
+ * "render nothing", which `hiddenPrimitives` is not for.
+ *
+ * This reads the name because the name is what Babylon actually produces; the
+ * guard (`hiddenPrimitives.test.ts`) loads the REAL .glb through the REAL
+ * loader rather than trusting this comment (CLAUDE.md 第三守則).
+ */
+function gltfPrimitiveIndexOf(name: string): number {
+  const m = /_primitive(\d+)$/.exec(name);
+  return m ? Number(m[1]) : -1;
+}
+
+/** Declared hidden primitive indices as a lookup. Absent/empty ⇒ hide nothing. */
+function hiddenPrimitiveIndexSet(list: readonly number[] | undefined): ReadonlySet<number> {
+  return list && list.length > 0 ? new Set(list) : EMPTY_HIDDEN;
+}
+const EMPTY_HIDDEN: ReadonlySet<number> = new Set<number>();
+
 function drawnOpacityOf(mesh: AbstractMesh): number {
   const mat = mesh.material as { alpha?: number } | null;
   const matAlpha = typeof mat?.alpha === "number" ? mat.alpha : 1;
@@ -1700,8 +1737,27 @@ export class ChampionView {
           glbRoot.dispose(false, false);
           return;
         }
+        // 屍體/血泥幾何 —— `model@1.hiddenPrimitives`(owner 2026-08-02
+        // 「初號機跟拳四郎一樣 3d model 連著屍體一起」)。WC3 的 `gutz*` 血泥
+        // geoset 靠 GEOA/KGAO 的 alpha 動畫平常藏著,而 #59 已經確認 mdx→glb
+        // 把 geoset 可見度動畫整個丟掉 —— 於是它變成永遠畫得出來的一片圖元。
+        // 這裡不重寫 glb(那棵樹是 gitignore 的執行期資產,改一次要重抽+重推
+        // 84MB),而是照文件宣告把那幾片關掉。
+        const hidden = hiddenPrimitiveIndexSet(doc.hiddenPrimitives);
         for (const mesh of glbMeshes) {
           mesh.isPickable = false;
+          if (hidden.size > 0 && hidden.has(gltfPrimitiveIndexOf(mesh.name))) {
+            mesh.setEnabled(false);
+            // ⚠️ 而且**不推進 `flashMeshes`**。受擊閃光走 Babylon 的
+            // OutlineRenderer,顏色與不透明度只讀 mesh 上的 `overlayColor`/
+            // `overlayAlpha`,材質的 alpha 與 mesh 的 visibility 一個都不看
+            // (見上面 `drawnOpacityOf` 的檔內註解 / GH#226 GH#227)。一片被
+            // `setEnabled(false)` 的網格如果留在 flashMeshes 裡,
+            // `applyDeathFade`/`applyVanish` 那幾條會直接寫 `m.visibility`,
+            // 把它重新變成一個「可見度 1 但 enabled=false」的曖昧狀態,而
+            // #220 的復活路徑會把整棵樹 setEnabled(true) —— 屍體就回來了。
+            continue;
+          }
           this.flashMeshes.push(mesh); // .glb meshes flash via per-mesh overlay
         }
         // HEIGHT-NORMALIZE (task #150): scale the glb so its full silhouette
@@ -1710,8 +1766,15 @@ export class ChampionView {
         // champion reads a consistent size regardless of its native mesh height.
         // A degenerate/geometry-less glb (native height unmeasurable) falls back
         // to the doc's declared scale rather than a nonsense normalization factor.
+        //
+        // ⚠️ `ENABLED_ONLY` 是 hiddenPrimitives 的一半功能,不是順手優化。
+        // `getHierarchyBoundingVectors` **不看 `isEnabled`**(Babylon 只跳過
+        // 沒有 boundingInfo / 0 頂點的節點),所以少了這個 predicate,被藏起來
+        // 的血泥仍然參與身高正規化與下面那行 `position.y = -min.y` 的落地。
+        // 實測 `Hblm.glb`(賈修)的血泥最低點 y=-0.063,身體最低點 y=0.025 ——
+        // 藏了卻不排除,結果是整隻英雄被墊高 0.088u 浮在空中(失敗形態 ①)。
         glbRoot.computeWorldMatrix(true);
-        const native = glbRoot.getHierarchyBoundingVectors(true);
+        const native = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
         const nativeH = native.max.y - native.min.y;
         // #77 —— 「這具網格是誰」決定用哪個倍率,而不是「這個英雄是誰」。
         // 替身英雄的 modelKey 永遠是那四個共用替身之一,但實際載進來的可能是
@@ -1735,7 +1798,7 @@ export class ChampionView {
         // champion stands ON the ground, not above or sunk into it. Runs after
         // the FINAL scaling so the shift is in the rendered (scaled) frame.
         glbRoot.computeWorldMatrix(true);
-        const { min } = glbRoot.getHierarchyBoundingVectors(true);
+        const { min } = glbRoot.getHierarchyBoundingVectors(true, ENABLED_ONLY);
         if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
         // #247: remember the ground offset, because `applyAirborne` REWRITES
         // `glbRoot.position.y` every frame (fly height + offset) and would

@@ -417,8 +417,29 @@ export interface MobBossShareView {
  * {@link KillComboView}: `atMs` is `comboNowMs()` (monotone), `seq` bumps per
  * recorded event so a second king restarts the entry animation.
  */
+/**
+ * #291 —— **哪一種怪**打完了這一場分紅：殭屍王，還是一隻特殊殭屍。
+ *
+ * ⚠️ 名字刻意不叫 `kind`。`MobBossView.kind` 已經是 `"spawn" | "slain"`（哪一個
+ * 節拍），而 payload 上的 `kind` 是 `"boss" | "special"`（哪一種怪）—— 兩個不同
+ * 的問題共用一個字，就是下一個人寫 `view.kind === "special"` 然後永遠拿到 false
+ * 的方式。
+ */
+export type MobBossMobKind = "boss" | "special";
+
 export interface MobBossView {
   kind: "spawn" | "slain";
+  /**
+   * #291 —— 這一則說的是**王**還是**特殊殭屍**。
+   *
+   * owner 2026-08-03:「特殊殭屍 不應該用殭屍王 分紅結算畫面」。兩種怪走的是同一顆
+   * `mobBossSlain`（sim/systems/MobSystem 的 #288 決定，理由寫在那裡），而
+   * `kind` **一直都在 payload 上**；缺的是這一行讀它。MobSystem 自己的註解就把
+   * 代價寫出來了：「until the client reads `kind`, a special's settlement renders
+   * with the king's wording and takes the king's single panel slot」——
+   * 也就是失敗形態 ②，資料過了線但沒有人接。
+   */
+  mobKind: MobBossMobKind;
   atMs: number;
   seq: number;
   /** spawn: the summoner's seat (-1 unknown); slain: unused */
@@ -895,6 +916,7 @@ export function parseMobBossEvent(
   localSeatId: number | null,
   nowMs: number,
   seq: number,
+  prev: MobBossView | null = null,
 ): MobBossView | null {
   const num = (v: unknown, fallback: number): number =>
     typeof v === "number" && Number.isFinite(v) ? v : fallback;
@@ -902,6 +924,9 @@ export function parseMobBossEvent(
     const summonerSeatId = num(ev.data.summonerSeatId, -1);
     return {
       kind: "spawn",
+      // 只有王會announce自己 —— `sim/mobs.summonMobBoss` 是 `mobBossSpawn` 唯一的
+      // 發射點,特殊殭屍是波裡生出來的,從來不發這顆事件。
+      mobKind: "boss",
       atMs: nowMs,
       seq,
       summonerSeatId,
@@ -941,8 +966,12 @@ export function parseMobBossEvent(
       lastHit: s.lastHit === true,
     });
   }
+  const bossId = num(ev.data.id, -1);
   return {
     kind: "slain",
+    // #291 —— THE LINE THAT WAS MISSING. Everything else about the special
+    // already worked; the settlement just wore the king's words.
+    mobKind: slainMobKind(ev.data.kind, bossId, prev),
     atMs: nowMs,
     seq,
     summonerSeatId: -1,
@@ -967,11 +996,40 @@ export function parseMobBossEvent(
     // about the player's money.
     lastHitMode: ev.data.lastHitMode === "weight" ? "weight" : "bonus",
     killerSeatId: num(ev.data.killerSeatId, -1),
-    bossId: num(ev.data.id, -1),
+    bossId,
     // MobSystem.settleBoss emits no `zone` — the king's entity is destroyed by
     // then. -1 here, and `recordMobBossEvent` inherits the spawn's.
     zone: num(ev.data.zone, -1),
   };
+}
+
+/**
+ * #291 —— 這一顆 `mobBossSlain` 說的是王還是特殊殭屍。
+ *
+ * ① `kind` 在 payload 上就直接用它。這是今天每一個 build 都會走的那條路
+ *    （`MobSystem.settleBoss` 一律帶 `kind`）。
+ *
+ * ② 沒有 `kind`（舊 server、壞掉的封包）**不猜，去驗一個關係**：這一隻有沒有
+ *    一顆 bossId 相同的 `mobBossSpawn` 出現過。王一定會 announce（`summonMobBoss`
+ *    發 `mobBossSpawn`），特殊殭屍**從來不會**，所以「有降臨橫幅」是王的正面證據。
+ *
+ *    ⚠️ 這正是 `recordMobBossEvent` 的 zone 繼承**已經在依賴的同一個假設**
+ *    （「王的 spawn 一定先到、而且就在 store 裡」）。用同一個關係回答同一種問題，
+ *    比在這裡發明第二套猜法好 —— 兩套會在不同情況下給出不同答案。
+ *
+ *    沒有證據 ⇒ `"special"`。方向是刻意的：舊 server 只有王會發這顆事件，而王的
+ *    spawn 必定先到，所以那條路走的是上面那個 `"boss"`；真的走到這裡（沒有 kind
+ *    又沒有降臨橫幅）比較像是一隻沒 announce 過的怪，而 owner 抱怨的正是特殊殭屍
+ *    穿著王的字。
+ */
+function slainMobKind(
+  raw: unknown,
+  bossId: number,
+  prev: MobBossView | null,
+): MobBossMobKind {
+  if (raw === "boss" || raw === "special") return raw;
+  const announced = prev !== null && prev.kind === "spawn" && bossId >= 0 && prev.bossId === bossId;
+  return announced ? "boss" : "special";
 }
 
 let mobBossSeq = 0;
@@ -984,7 +1042,10 @@ let mobBossSeq = 0;
  */
 export function recordMobBossEvent(ev: EventMessage, nowMs: number = comboNowMs()): void {
   const prev = hudStore.getState();
-  const view = parseMobBossEvent(ev, prev.localSeatId, nowMs, mobBossSeq + 1);
+  // #291 —— `prev.mobBoss` 是 `slainMobKind` 的交叉判斷用的（沒有 `kind` 的舊
+  // payload:「有沒有一顆同 id 的降臨橫幅」）。它同時也是下面 zone 繼承的來源,
+  // 兩者刻意讀同一個東西。
+  const view = parseMobBossEvent(ev, prev.localSeatId, nowMs, mobBossSeq + 1, prev.mobBoss);
   if (!view) return;
   // ZONE INHERITANCE. `mobBossSlain` cannot carry a zone — by the time it is
   // emitted the king's entity (and with it its position) is gone. The matching

@@ -1,6 +1,14 @@
 /**
  * mobBossModel — 殭屍王降臨橫幅 + 分紅結算面板 (task #262, GH #190).
  *
+ * ⚠️ #291（owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」）:
+ * 這一面板現在同時服務**兩種怪**。`mobBossSlain` 是王與特殊殭屍共用的事件
+ * （sim/systems/MobSystem 的 #288 決定），`kind` 一直都在 payload 上而客戶端
+ * 從來沒讀 —— 於是一隻特殊殭屍的結算穿著王的字、佔著王那唯一一格面板。
+ * 現在 `MobBossView.mobKind` 帶著它過來，而**抬頭與呈現模式是後台欄位**
+ * （`mobWaves.boss.settlementTitle` / `mobWaves.special.settlementTitle` /
+ * `mobWaves.special.settlementMode`），入口是 {@link mobSettlementWording}。
+ *
  * owner, 2026-07-28:
  *   「打死殭屍王的話,結算參與傷害的英雄,照傷害比例發獎金,補最後一刀的人獎金翻倍」
  *   「要播放恐怖音效3~5秒，打贏要播放中獎慶祝音效5~7秒」
@@ -93,7 +101,16 @@ import {
   TOP_CENTRE_BAND_END,
 } from "../controlLegendModel";
 import { legendObstacleRects } from "./killComboModel";
+import { Configs } from "@ggd/shared/content";
+import {
+  DEFAULT_MOB_SETTLEMENT_WORDING,
+  mobSettlementWordingFromDoc,
+  type MobSettlementMode,
+  type MobSettlementWording,
+} from "@ggd/shared/content";
 import type { MobBossLastHitMode, MobBossShareView, MobBossView } from "../../net/RoomStore";
+
+export type { MobSettlementMode, MobSettlementWording };
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * ① LIFETIME
@@ -186,8 +203,76 @@ export function bossVisibleInZone(view: MobBossView | null, localZone: number): 
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 export const BOSS_BANNER_TITLE = "殭屍王降臨";
-export const BOSS_SETTLEMENT_TITLE = "殭屍王 分紅結算";
+/**
+ * 殭屍王結算的**出貨**抬頭。
+ *
+ * ⚠️ 這不再是「畫面上一定是這幾個字」—— 它是 `mobWaves.boss.settlementTitle`
+ * 讀不到時的保險絲（#291）。畫的時候一律走 {@link bossSettlementTitle}，
+ * 因為特殊殭屍有它自己的一格。
+ */
+export const BOSS_SETTLEMENT_TITLE = DEFAULT_MOB_SETTLEMENT_WORDING.bossTitle;
+/** 特殊殭屍結算的出貨抬頭（`mobWaves.special.settlementTitle`）。 */
+export const BOSS_SPECIAL_SETTLEMENT_TITLE = DEFAULT_MOB_SETTLEMENT_WORDING.specialTitle;
 export const BOSS_LAST_HIT_TAG = "補刀";
+
+/** 這一份 arena-rules 編輯的 config 文件 id。 */
+export const ARENA_RULES_DOC_ID = "arena-rules";
+
+/**
+ * #291 —— 生效中的結算措辭：後台 overlay ?? `content/config/arena-rules.json`
+ * ?? {@link DEFAULT_MOB_SETTLEMENT_WORDING}。
+ *
+ * 走 `Configs`（開機時 bootContent 灌進去的那一份，和 `bossIntroRules()` 同一條
+ * 路）而不是 `MatchState`：分紅結算整段活在客戶端，走 sim 只會多一趟 schema→
+ * armed rules→snapshot 的接線，而每一段都是一個會斷掉的地方。
+ */
+export function mobSettlementWording(): MobSettlementWording {
+  return mobSettlementWordingFromDoc(Configs.tryGet(ARENA_RULES_DOC_ID));
+}
+
+/**
+ * PURE：這一則結算的抬頭。**這就是 owner 那句抱怨的答案** ——
+ * 「特殊殭屍 不應該用殭屍王 分紅結算畫面」(2026-08-03)。
+ */
+export function bossSettlementTitle(view: MobBossView, wording: MobSettlementWording): string {
+  return view.mobKind === "special" ? wording.specialTitle : wording.bossTitle;
+}
+
+/**
+ * PURE：這一則結算要怎麼呈現。
+ *
+ * 殭屍王**永遠**是 `"panel"` —— `settlementMode` 只掛在 `special` 上，因為那是
+ * owner 抱怨「怎麼會收到好幾次分紅結算」的那一種怪（一回合會死好幾隻），而王一個
+ * 回合最多一隻（`boss.maxPerRound`）。給王一個關得掉的開關等於讓那 30,000 金
+ * 有機會沒有任何畫面解釋它。
+ */
+export function bossSettlementMode(
+  view: MobBossView,
+  wording: MobSettlementWording,
+): MobSettlementMode {
+  return view.mobKind === "special" ? wording.specialMode : "panel";
+}
+
+/**
+ * `"toast"` 模式那一行字：抬頭 · 實發總額 · 你自己那一份。
+ *
+ * 為什麼還是印「你那一份」而不是只印抬頭：一行只講「有人分了錢」等於一個沒有資訊
+ * 的通知。`localSeatId` 不在名單上（你在別的競技場、或你一下都沒打）就只印總額 ——
+ * 不印一個假的 0。
+ */
+export function bossToastLine(
+  view: MobBossView,
+  title: string,
+  localSeatId: number | null,
+): string {
+  const gold = Math.max(0, Math.trunc(view.totalGold));
+  const mine =
+    localSeatId === null
+      ? undefined
+      : view.shares.find((s) => s.seatId >= 0 && s.seatId === localSeatId);
+  const head = `${title} · 總獎金 ${gold} 金`;
+  return mine ? `${head} · 你 +${Math.max(0, Math.trunc(mine.gold))} 金` : head;
+}
 
 /**
  * THE SENTENCE THIS WHOLE PANEL EXISTS FOR (see the module doc, ①), in the
@@ -314,6 +399,12 @@ export function bossFullHeight(n: number): number {
 
 /** px the COMPACT fallback needs (one row, one-line rule). */
 export const BOSS_COMPACT_H = BOSS_HEADER_COMPACT_H + BOSS_ROW_H + BOSS_NOTE_COMPACT_H;
+
+/**
+ * #291 `"toast"` 模式的高度 —— 一行字加上下留白。它**不是**一個更小的面板：
+ * 沒有表格、沒有規則句，只有 {@link bossToastLine} 那一行。
+ */
+export const BOSS_TOAST_H = 30;
 
 /**
  * Order the payout sheet the way a player reads it: BIGGEST PAYOUT FIRST, ties
@@ -561,7 +652,21 @@ export function mobBossCollisions(viewport: HudViewport, opts: BossPlacementOpts
 export function mobBossOverlayRect(
   view: MobBossView | null,
   viewport: HudViewport,
-  opts: { touch: boolean; legendUp: boolean; couchPlayers?: number; barRect?: HudRect | null },
+  opts: {
+    touch: boolean;
+    legendUp: boolean;
+    couchPlayers?: number;
+    barRect?: HudRect | null;
+    /**
+     * #291 —— 這一則結算的呈現模式（{@link bossSettlementMode}）。省略 ⇒
+     * `"panel"`，也就是這一格出現之前的行為，所以既有的呼叫端與測試一個字都不用改。
+     *
+     * ⚠️ 它在**這裡**而不是在元件裡分岐，因為連殺計數器的讓位
+     * （`killComboRect({ bossRect })`）讀的是這一支的結果：`"off"` 的時候要真的
+     * 回 `null`，否則走廊被一個沒有人畫的矩形佔著，連殺計數器白白讓位 8 秒。
+     */
+    settlementMode?: MobSettlementMode;
+  },
 ): HudRect | null {
   if (!view) return null;
   const base = {
@@ -574,6 +679,11 @@ export function mobBossOverlayRect(
     return mobBossRect(viewport, { ...base, wantH: BOSS_BANNER_H, minH: BOSS_BANNER_MIN_H });
   }
   if (view.shares.length === 0) return null;
+  const mode = opts.settlementMode ?? "panel";
+  if (mode === "off") return null;
+  if (mode === "toast") {
+    return mobBossRect(viewport, { ...base, wantH: BOSS_TOAST_H, minH: BOSS_TOAST_H });
+  }
   const full = bossFullHeight(view.shares.length);
   return (
     mobBossRect(viewport, { ...base, wantH: full, minH: full }) ??

@@ -207,9 +207,18 @@ export interface ReviveCircleMarker {
  * it gets one slot — not a relaxation of the mob cull.
  *
  * WHICH ENTITY IS THE KING comes from the `mobBossSpawn` event (RoomStore's
- * `mobBoss.bossId`), because the wire carries no boss BIT — `ENTITY_FLAG` has
- * two free values left and spending one on something an event already answers
- * would be the expensive way round.
+ * `mobBoss.bossId`), because the wire carries no boss BIT of its own.
+ *
+ * ⚠️ 這段以前寫著「`ENTITY_FLAG` 還有兩格空的」—— **那句話從 隱形原語 起就是假的**
+ * (第三守則)。16384 被 `INVISIBLE` 拿走，最後一格 32768 被
+ * {@link ENTITY_FLAG.MOB_ELITE} 拿走，現在**一格都沒有**。
+ *
+ * 而且那一格**不是**花在王身上：`MOB_ELITE` 說的是「精英小怪」（特殊殭屍或王），
+ * 不是「這一隻是王」。所以「哪一隻是王」仍然只有這個事件知道，而這條事件頻道
+ * **一場只有一個槽**（`RoomStore` 存最後一顆）—— 別區的王一生成或一被殺，就會把
+ * 這一格換掉／清成 -1，本區的長血條因此會在王還活著的時候消失
+ * （owner 2026-08-03「殭屍王血量在死之前都應該存在 現在玩起來會消失」）。
+ * 頭上那條小血條不受影響，因為它走 {@link FrameBus.mobBars}，也就是走快照。
  */
 export interface MobBossMarker {
   entityId: number;
@@ -232,6 +241,39 @@ export interface MobBossMarker {
   maxHp: number;
 }
 
+/**
+ * One 精英小怪 (特殊殭屍 / 殭屍王) that should carry a small over-head health bar
+ * — owner 2026-08-03「特殊殭屍 頭上應該要有小血條 顯示即時血量」.
+ *
+ * A LIST, NOT A `ChampionAnchor`. The champion anchor carries a name, a team
+ * colour, a mana strip and a cast bar, and everything that walks
+ * `frameBus.champions` (the minimap's pips, #85's death-spectator desaturation,
+ * the shadow layer) assumes those mean what they mean for a PLAYER. Fifty
+ * zombies a round pouring into that map is exactly the noise `hasOverheadBar`
+ * excludes mobs to avoid — so the elites get their own narrow channel, the same
+ * way `reviveCircles` and `mobBoss` do.
+ *
+ * WHICH mobs are in here is decided by {@link ENTITY_FLAG.MOB_ELITE} on the
+ * snapshot row (`isEliteMob`), NOT by the `mobBossSpawn` event that
+ * {@link MobBossMarker} rides. That is the whole point of spending the last flag
+ * bit: the event channel is one slot for the whole match, so a king dying in
+ * ANOTHER duel zone blanks it — which is precisely the 「殭屍王血量在死之前
+ * 就消失」 the owner reported on the same day. A row rebuilt from the snapshot
+ * every frame lives exactly as long as the body does.
+ */
+export interface MobBarAnchor {
+  entityId: number;
+  /** duel zone — the caller culls other zones exactly like the anchor sweep does */
+  zone: number;
+  /** 0..1 */
+  hpPct: number;
+  hp: number;
+  maxHp: number;
+  worldX: number;
+  worldZ: number;
+  pose: AnchorPose;
+}
+
 export interface FrameBus {
   /** per-champion world anchors (healthbars/names), written by the game loop */
   champions: Map<number, ChampionAnchor>;
@@ -240,6 +282,12 @@ export interface FrameBus {
    * {@link MobBossMarker} for why the king is not just another anchor.
    */
   mobBoss: MobBossMarker | null;
+  /**
+   * 精英小怪 (特殊殭屍 / 殭屍王) with an over-head bar this frame — rebuilt from
+   * scratch every frame like {@link FrameBus.reviveCircles}, so a dead elite
+   * clears itself with no death handler. See {@link MobBarAnchor}.
+   */
+  mobBars: MobBarAnchor[];
   /**
    * Floating combat-text pool (task #92) — FIXED LENGTH, never resized.
    * Iterate it and skip `!active`; do not push, splice or filter.
@@ -311,6 +359,7 @@ const combatTextPool: CombatTextEntry[] = Array.from({ length: MAX_COMBAT_TEXT }
 export const frameBus: FrameBus = {
   champions: new Map(),
   mobBoss: null,
+  mobBars: [],
   combatText: combatTextPool,
   reviveCircles: [],
   project: null,

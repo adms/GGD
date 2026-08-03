@@ -7,7 +7,14 @@
  */
 import { describe, it, expect, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { RoundWinnerStage, type RoundTauntPort, type WinnerPreview } from "./RoundWinnerStage";
+import {
+  RoundWinnerStage,
+  podiumSlotOrder,
+  type RoundTauntPort,
+  type WinnerPreview,
+} from "./RoundWinnerStage";
+import { DEFAULT_VICTORY_PODIUM } from "@ggd/shared/content/schema/victoryPodium";
+import { medalForPlace } from "./victoryCrown";
 import {
   ROUND_TAUNT_DELAY_MS,
   ROUND_WASH_FADE_MS,
@@ -113,7 +120,7 @@ describe("RoundWinnerStage", () => {
     expect(previews.length).toBe(1);
     // the 2nd arg is the #263 tint context — `show(doc)` with no ctx resolves
     // to an explicit `null` championId, never a stale one
-    expect(previews[0]!.show).toHaveBeenCalledWith(DOC, { championId: null });
+    expect(previews[0]!.show).toHaveBeenCalledWith(DOC, { championId: null, clip: "idle" });
     expect(stage.active).toBe(true);
     // wash + canvas + CROWN + subtitle all mounted into the host (GH#257 added
     // one crown badge per card, so this is 4 rather than the pre-podium 3)
@@ -209,7 +216,7 @@ describe("RoundWinnerStage", () => {
     expect(divs.length).toBe(3); // same wash + crown + subtitle reused
     expect(host.appendChild).toHaveBeenCalledTimes(4);
     expect(previews.length).toBe(1);
-    expect(previews[0]!.show).toHaveBeenNthCalledWith(2, DOC2, { championId: null });
+    expect(previews[0]!.show).toHaveBeenNthCalledWith(2, DOC2, { championId: null, clip: "idle" });
   });
 
   it("clear() disposes the previewer and removes every overlay layer", () => {
@@ -234,7 +241,7 @@ describe("RoundWinnerStage", () => {
     expect(divs.length).toBe(6); // (wash + crown + subtitle) x 2 mounts
     expect(previews.length).toBe(2);
     expect(host.appendChild).toHaveBeenCalledTimes(8);
-    expect(previews[1]!.show).toHaveBeenCalledWith(DOC2, { championId: null });
+    expect(previews[1]!.show).toHaveBeenCalledWith(DOC2, { championId: null, clip: "idle" });
     expect(stage.active).toBe(true);
   });
 
@@ -258,5 +265,119 @@ describe("RoundWinnerStage", () => {
     const match = victoryPresentation("match");
     expect(washOf(divs).style.background).not.toBe(match.background);
     expect(washOf(divs).style.backdropFilter).not.toBe(match.backdropFilter);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// GH#257 v0.9.27 迴歸:「回合勝利出現的 3d model 是勝利角色 但現在不是」
+// ══════════════════════════════════════════════════════════════════════════
+/**
+ * ⚠️ 這一段讀的是 **`canvas.style.left` 本人**。
+ *
+ * 稽核實測:在這一段之前,`apps/client/src/render/*.test.ts` 底下**零個**
+ * `style.left` 斷言 —— 而這個檔案第 121 行的註解寫著「the canvas got
+ * centred-card styling」,底下卻只驗了 `position` 與 `pointerEvents`,一格位置
+ * 都沒讀。於是 `styleOverlayCanvas` 的 `left` 算式(v0.9.27 直接用 member index)
+ * 可以完全錯掉而 1292 條測試全綠(失敗形態 ③ + ④)。
+ *
+ * 錯在哪:三張卡時 `((index + 0.5) / 3) * 100` 讓 **member[1] 落在 50%** ——
+ * 螢幕正中央、玩家第一眼看的地方,站的是**第二名**,而第二名依定義是這一回合
+ * 倒下的人。owner 看到的就是這個。
+ */
+describe("頒獎台的站位是一個欄位,而且畫面上真的照它擺 (round-podium-layout)", () => {
+  const TRIO = [1, 2, 3].map((place) => ({
+    doc: DOC,
+    championId: `c${place}`,
+    place,
+    medal: medalForPlace(place),
+  }));
+  const pct = (v: string | undefined): number => Number.parseFloat(String(v));
+
+  it("centreFirst(出貨值):金冠站正中央 50%,銀在左、銅在右", () => {
+    cover("client-round-winner-show");
+    const { stage, canvases } = makeHarness();
+    stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, podiumLayout: "centreFirst" });
+    expect(stage.memberCount).toBe(3);
+    // 金冠 = members[0]。字面上的 "50%",不是「大約中間」。
+    expect(canvases[0]!.style.left).toBe("50%");
+    expect(pct(canvases[1]!.style.left)).toBeLessThan(50); // 銀在左
+    expect(pct(canvases[2]!.style.left)).toBeGreaterThan(50); // 銅在右
+    // 純函式版本的同一件事(拿掉 slot 對映 → 這一條先紅)
+    expect(podiumSlotOrder(3, "centreFirst")).toEqual([1, 0, 2]);
+  });
+
+  it("★ 出貨值真的是 centreFirst —— 不傳 cfg 的呼叫端拿到的就是它", () => {
+    cover("client-round-winner-show");
+    // GameApp 的 `showTeam(plan.members, plan.ctx)` 是兩個引數,cfg 走預設。
+    // 預設如果退回 rank,畫面正中央又會變成第二名,而上面那一條(明著傳 cfg)
+    // 仍然是綠的 —— 失敗形態 ⑤:被測的不是出貨的那個。
+    const { stage, canvases } = makeHarness();
+    stage.showTeam(TRIO, {});
+    expect(canvases[0]!.style.left).toBe("50%");
+    expect(DEFAULT_VICTORY_PODIUM.podiumLayout).toBe("centreFirst");
+    expect(stage.memberCount).toBe(3);
+  });
+
+  it("rank(v0.9.27 的舊行為)反過來:正中央是第二名 —— 對照組", () => {
+    cover("client-round-winner-show");
+    // 少了這一條,上面那兩條對「left 永遠是 50%」的壞實作也會過。
+    const { canvases } = makeHarness();
+    const h2 = makeHarness();
+    h2.stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, podiumLayout: "rank" });
+    expect(h2.canvases[1]!.style.left).toBe("50%"); // ← 第二名在正中央
+    expect(pct(h2.canvases[0]!.style.left)).toBeLessThan(50); // 金冠被擠到最左
+    expect(canvases).toHaveLength(0); // (第一個 harness 沒被用到)
+    expect(podiumSlotOrder(3, "rank")).toEqual([0, 1, 2]);
+  });
+
+  it("winnerScale:金卡真的比較大,而且疊在鄰居上面", () => {
+    cover("client-round-winner-show");
+    const big = makeHarness();
+    big.stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, winnerScale: 1.25 });
+    expect(Number(big.canvases[0]!.style.zIndex)).toBeGreaterThan(
+      Number(big.canvases[1]!.style.zIndex),
+    );
+    expect(big.canvases[0]!.style.width).not.toBe(big.canvases[1]!.style.width);
+    expect(big.canvases[0]!.style.height).not.toBe(big.canvases[1]!.style.height);
+    // 欄位真的被讀:1.0 時三張卡回到一模一樣(而不是「有一個欄位存在」)
+    const flat = makeHarness();
+    flat.stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, winnerScale: 1 });
+    expect(flat.canvases[0]!.style.width).toBe(flat.canvases[1]!.style.width);
+    expect(flat.canvases[0]!.style.zIndex).toBe(flat.canvases[1]!.style.zIndex);
+    expect(DEFAULT_VICTORY_PODIUM.winnerScale).toBe(1.25);
+  });
+
+  it("人數沒變但政策變了的那一回合,版面也要跟著換(圖層是重用的)", () => {
+    cover("client-round-winner-swap");
+    const { stage, canvases } = makeHarness();
+    stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, podiumLayout: "rank" });
+    expect(canvases[0]!.style.left).not.toBe("50%");
+    // 同樣三個人 → 不重建圖層。只在建立時套用版面的實作會在這裡卡住舊位置。
+    stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, podiumLayout: "centreFirst" });
+    expect(canvases).toHaveLength(3);
+    expect(canvases[0]!.style.left).toBe("50%");
+  });
+
+  it("皇冠跟著自己那張卡走,不會飄到別人頭上", () => {
+    cover("client-round-winner-show");
+    const { stage, canvases, divs } = makeHarness();
+    stage.showTeam(TRIO, {}, { ...DEFAULT_VICTORY_PODIUM, podiumLayout: "centreFirst" });
+    expect(stage.memberCount).toBe(3);
+    // divs = wash, crown x3, subtitle —— 冠的 left 逐一等於它那張卡的 left
+    for (let i = 0; i < 3; i++) {
+      expect(divs[1 + i]!.style.left).toBe(canvases[i]!.style.left);
+    }
+  });
+
+  it("單人與雙人不會退化成一堆特例", () => {
+    cover("client-round-winner-show");
+    expect(podiumSlotOrder(1, "centreFirst")).toEqual([0]);
+    expect(podiumSlotOrder(2, "centreFirst")).toEqual([0, 1]);
+    expect(podiumSlotOrder(4, "centreFirst")).toEqual([1, 0, 2, 3]);
+    // 每一種都必須是一個真的排列(沒有兩個人搶同一格,也沒有空格)
+    for (const n of [1, 2, 3, 4, 5, 8]) {
+      const order = podiumSlotOrder(n, "centreFirst");
+      expect([...order].sort((a, b) => a - b)).toEqual(Array.from({ length: n }, (_, i) => i));
+    }
   });
 });

@@ -148,6 +148,8 @@
     "waveIntervalSec": 2,
     "mobsPerWaveCap": 5,
     "maxAlivePerZone": 15,
+    "stopSpawnOnTeamWipe": true,
+    "roundHoldMobKinds": "boss",
     "schedule": [
       {
         "round": 6,
@@ -234,7 +236,8 @@
       "aggroRank": -1,
       "healthBar": true,
       "healthBarAnchor": "top",
-      "healthBarReveal": "summon"
+      "healthBarReveal": "summon",
+      "settlementTitle": "殭屍王 分紅結算"
     },
     "special": {
       "chancePercent": 2.5,
@@ -255,7 +258,9 @@
       "lastHitMultiplier": 1,
       "lastHitMode": "bonus",
       "splitByDamage": true,
-      "countOverkill": false
+      "countOverkill": false,
+      "settlementTitle": "特殊殭屍 分紅結算",
+      "settlementMode": "panel"
     }
   },
   "nightPact": {

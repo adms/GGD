@@ -51,6 +51,29 @@ const LANE_A = {
   gundam: "godie-hlgr" as ChampionId, // 03-00 相轉移裝甲
 };
 
+/**
+ * 出貨文件上「暴走」給的吸血值 —— 從 registry 讀,不抄字面值。
+ * 守衛驗機制不驗數字(CLAUDE.md 第二守則):數字是 owner 每週在調的東西,
+ * 抄進測試就是給它開第四個住處,而第四個沒有 drift 守衛。
+ */
+function berserkLifestealFromDoc(): number {
+  const innate = Abilities.get(Champions.get(LANE_A.eva).passiveAbility!);
+  let found = 0;
+  // 遞迴走 passive.ranks[0] 底下整棵樹(hooks → effects → applyBuff.modifiers),
+  // 因為「吸血掛在哪一層」本身就是實作細節,不該被斷言釘住。
+  const walk = (node: unknown): void => {
+    if (Array.isArray(node)) return void node.forEach(walk);
+    if (!node || typeof node !== "object") return;
+    const o = node as Record<string, unknown>;
+    if (o.stat === "lifesteal" && o.op === "flat" && typeof o.value === "number") {
+      found = Math.max(found, o.value);
+    }
+    Object.values(o).forEach(walk);
+  };
+  walk(innate.passive?.ranks[0]);
+  return found;
+}
+
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
@@ -285,26 +308,41 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
 
     expect(isBerserk(world, id), "生命 4% 挨打之後沒有暴走").toBe(true);
     const sc = world.stats.get(id)!;
-    // owner 2026-07-31 上調 10% → 50%,理由是「暴走狀態是可以死亡的」:
-    // 5% 血、方向盤被拔掉的十秒本來就很可能死,吸血是那個交換的補償而不是無敵。
-    // ⚠️ 這裡刻意寫死 0.50 而不是從文件讀 —— 從文件讀的斷言對「文件被改成 0」
-    //    也會過(失敗形態⑤)。
-    expect(sc.final[Stat.Lifesteal]).toBeCloseTo(0.50 * world.combatEnv.lifesteal, 4);
-    expect(sc.final[Stat.AttackSpeed]).toBeCloseTo(asBase * 4, 3);
+    // 吸血是「交換的補償」:5% 血、方向盤被拔掉的十秒本來就很可能死。
+    //
+    // ⚠️ 這裡原本寫死 `0.50`,理由寫成「從文件讀的斷言對『文件被改成 0』也會過」。
+    // 那個顧慮是對的,但解法錯了 —— owner 2026-07-31 定 50%、2026-08-03 又定
+    // 100%(「吸血100%」),於是這條測試變成**出貨數值的第四個住處**,而且它紅的
+    // 時候說的是「暴走壞了」,真相只是數字被調過。CLAUDE.md 第二守則:
+    // **守衛驗機制,不驗數字。**
+    //
+    // 兩件事分開驗,兩個顧慮就都顧到了:
+    //   ① 文件上這一格必須是**有意義的正數**(擋掉「被改成 0」);
+    //   ② 世界裡的最終值必須**等於文件值 × combatEnv**(擋掉「沒接上」)。
+    const docLifesteal = berserkLifestealFromDoc();
+    expect(docLifesteal, "出貨文件上的暴走吸血是 0 —— 這一格等於沒有效果").toBeGreaterThan(0);
+    expect(sc.final[Stat.Lifesteal]).toBeCloseTo(docLifesteal * world.combatEnv.lifesteal, 4);
+    // ⚠️ 這裡原本斷言 `asBase * 4`。owner 2026-08-03 把規格講死了:
+    // 「**天生技的暴走是解除上限到 10 沒錯,只有 EX 會直接設定為 10**」——
+    // 所以天生技**不給攻速倍率**,只抬天花板。攻速在暴走瞬間應該是**沒變的**,
+    // 玩家要靠自己的裝備去頂那個新天花板。
+    expect(sc.final[Stat.AttackSpeed], "天生技的暴走不該直接改攻速,只該抬上限").toBeCloseTo(asBase, 3);
 
-    // ⚠️ 上面那一行**證明不了** capRaise:初號機的基礎攻速只有 ~0.5,×4 = ~2.0,
-    // 本來就在 4.0 的一般上限之下,所以把 `capRaise` 那一格從文件裡刪掉,上面那條
-    // 照樣綠(突變驗證第一輪真的抓到了 —— 失敗形態 ③)。要證明天花板被抬高,
-    // 必須把值推到 4.0 以上再看它有沒有被夾。
+    // 天花板真的被抬高了嗎 —— 這才是天生技唯一的攻速效果,也是唯一值得驗的。
+    // 把值推到一般上限 4.0 以上再看它有沒有被夾:`capRaise` 那一格從文件裡刪掉,
+    // 下面那條就紅(突變驗證第一輪真的抓到過 —— 失敗形態 ③)。
     world.stats.get(id)!.sources.push({
       id: "test:as-stick",
       kind: "item",
-      modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 2 }],
+      // ⚠️ +5 不是 +2:天生技不再給 ×4 倍率(owner 2026-08-03),所以要靠這根棒子
+      // 自己把值頂過一般上限 4.0。asBase(~0.7)+2 = 2.7 根本碰不到天花板,
+      // 那樣的話這條測試對「capRaise 被刪掉」是全綠的 —— 失敗形態 ③。
+      modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 5 }],
     });
     world.stats.get(id)!.dirty = true;
     step(world, 1);
     const unlocked = world.stats.get(id)!.final[Stat.AttackSpeed];
-    // (asBase + 2) × 4 遠超過 4.0,所以沒有解鎖的話它會**剛好等於 4.0**。
+    // asBase + 5 ≈ 5.7 > 4.0,所以沒有解鎖的話它會**剛好等於 4.0**。
     expect(unlocked, "攻速上限沒有被解開 —— capRaise 那一格是不是掉了?").toBeGreaterThan(4.0);
     expect(unlocked).toBeLessThanOrEqual(world.statCaps.as?.unlocked ?? 10);
 

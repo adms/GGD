@@ -107,6 +107,71 @@ export function armFacingLock(
 }
 
 /**
+ * 決策點 (GH#281 / owner 2026-08-03「攻擊面向卻是錯誤的」)：
+ * **自己的英雄**那具身體的面向，要用哪一條路。
+ *
+ * 為什麼這是一個決策點而不是一個實作細節 —— 遠端英雄沒有這個問題（`GameApp`
+ * 的 `poseFor` 對他們讀權威快照的 `fx/fz`），只有玩家自己的英雄走客戶端預測。
+ * 而預測那具「影子」只重播 `orderSystem` + `movementSystem`，所以：
+ *
+ *   · 走路時 `movementSystem` 會寫 facing（朝移動方向）→ 走路面向是對的；
+ *   · **站定出手**時 `movementSystem` 走 `!moved` 分支，那裡只認
+ *     `aimTick` / 面向鎖 / `nav.attackTarget`，而影子世界裡**三個都沒有**
+ *     （敵人不在影子裡，`orderSystem` 因此立刻把 `attackTarget` 清成 null）
+ *     → **沒有任何一行程式寫 facing**，身體凍在最後一次走路的方向。
+ *
+ * 三條路各自的代價是真的不一樣，所以它是欄位不是常數：
+ *
+ * | 模式 | 誰決定自己英雄的面向 | 代價 |
+ * |---|---|---|
+ * | `predicted` | 只有影子 | 零延遲，但站定出手仍然不轉身（= 這個缺陷本身） |
+ * | `authoritative` | 只有伺服器快照 | 永遠正確，但**每一次轉身都晚一趟 RTT** |
+ * | `hybrid`（出貨） | 影子為主 + 每張快照校正 | 跟手且最後一定轉對；兩者互補 |
+ *
+ * ⚠️ 這個列舉住在 `sim/` 而不是 client，是因為**出貨值與上下界要和權威端同一份
+ * 真值**（`config.combat-feel@1` 的 `facing.localMode`）。client 端的解析與
+ * 現值在 `apps/client/src/predict/localFacingMode.ts`。
+ */
+export type LocalFacingMode = "predicted" | "authoritative" | "hybrid";
+
+/** 合法值，依後台下拉選單要顯示的順序。 */
+export const LOCAL_FACING_MODES: readonly LocalFacingMode[] = [
+  "predicted",
+  "authoritative",
+  "hybrid",
+];
+
+/**
+ * 出貨值 = `hybrid`（owner 2026-08-03 的裁決：「(a) 與 (b) 兩個都做」）。
+ * (b) 讓它跟手，(a) 讓它可校正 —— 不是二選一。
+ */
+export const DEFAULT_LOCAL_FACING_MODE: LocalFacingMode = "hybrid";
+
+/**
+ * 把一個來路不明的值收斂成合法模式。**認不得就回出貨預設**，不是丟例外：
+ * 這條路上唯一的呼叫端是內容文件（後台可改），而一個打錯字的字串不應該讓整場
+ * 比賽的自己英雄失去面向。
+ *
+ * ⚠️ 這是刻意的 fail-open，所以它**有聲**：呼叫端 `localFacingMode.ts` 會在
+ * 落回預設時 warn 一次（CLAUDE.md「fail-open 沒錯，靜默才是缺陷」）。
+ */
+export function parseLocalFacingMode(v: unknown): LocalFacingMode {
+  return LOCAL_FACING_MODES.includes(v as LocalFacingMode)
+    ? (v as LocalFacingMode)
+    : DEFAULT_LOCAL_FACING_MODE;
+}
+
+/** `hybrid` / `authoritative` 才把權威快照的面向 snap 進影子（(a) 校正路徑）。 */
+export function facingModeSnapsFromAuthority(mode: LocalFacingMode): boolean {
+  return mode !== "predicted";
+}
+
+/** `hybrid` / `predicted` 才讓影子自己朝攻擊目標轉身（(b) 跟手路徑）。 */
+export function facingModePredictsLocally(mode: LocalFacingMode): boolean {
+  return mode !== "authoritative";
+}
+
+/**
  * 這個 tick 這個單位的瞄準方向，沒有（或已過期）則回 null。過期項目順手刪除，
  * 所以這張表不會隨著一場比賽無限長大。
  */

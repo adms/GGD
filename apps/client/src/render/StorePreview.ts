@@ -39,7 +39,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { ModelDoc } from "@ggd/shared/content";
 import { AssetManager } from "./AssetManager";
-import { ClipAnimator } from "./ClipAnimator";
+import { ClipAnimator, type ClipState } from "./ClipAnimator";
 import { FramePacer, menuFpsCap } from "./frameCap";
 import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
 import { glbYawOffset } from "./views/glbFacing";
@@ -230,8 +230,20 @@ export class StorePreview {
    *   the model alone cannot answer it (`champ.sela` is shared by 18 champions,
    *   tinted and untinted together). Omitted / unknown / untinted → nothing is
    *   painted and not one material is touched, exactly as before.
+   * @param opts.clip WHICH clip to play once the model is up (GH#257).
+   *   Defaults to `idle` — the store shelf and the champ-select portrait both
+   *   want a resting pose. The ROUND-WIN podium passes `celebrate` for the gold
+   *   card, and that is the whole point of this parameter: before it existed
+   *   the `play("idle")` below was the only `.play(` in this file, so the
+   *   winner's card and a champion standing in the shop were literally the same
+   *   animation (owner 2026-08-03「回合勝利出現的 3d model 是勝利角色 但現在不是」).
+   *   A champion whose .glb has no matching clip falls back to idle AND warns
+   *   once from `ClipAnimator.start` — loudly, never silently.
    */
-  async show(doc: ModelDoc, opts: { championId?: string | null } = {}): Promise<void> {
+  async show(
+    doc: ModelDoc,
+    opts: { championId?: string | null; clip?: ClipState } = {},
+  ): Promise<void> {
     const token = ++this.showToken;
     this.clearModel();
     const container = await this.assets.load(doc.glbPath);
@@ -250,7 +262,12 @@ export class StorePreview {
     // one model on demand instead of running a per-frame diff.
     applyModelTint(root, championTintForId(opts.championId ?? null) ?? null);
     this.animator = new ClipAnimator(inst.animationGroups, doc.clipMap);
-    this.animator.play("idle");
+    this.animator.play(opts.clip ?? "idle");
+  }
+
+  /** The clip state currently playing (observability / tests). */
+  get playingClip(): ClipState | null {
+    return this.animator?.currentClip ?? null;
   }
 
   /**

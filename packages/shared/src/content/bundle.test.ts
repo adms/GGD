@@ -154,7 +154,16 @@ const KNOWN_SIDECARS: Partial<Record<CollectionName, readonly string[]>> = {
   // channel. 特徵生成 batch one adds `_voxel-barcodes.json` — the L0 barcode
   // channel that outranks it. Both listed here EXPLICITLY (the point of this
   // table) so each is a reviewed addition rather than a silent one.
-  models: ["_standin-overrides.json", "_voxel-skins.json", "_voxel-barcodes.json"],
+  // `_overlay-hidden-geometry.json`(owner 2026-08-02「初號機跟拳四郎一樣 3d model
+  // 連著屍體一起」)—— blizzard-overlay 那 40 隻磁碟上沒有自己的 model 文件可以掛
+  // `hiddenPrimitives`,所以宣告只能住在這個 sidecar,由 blizzardOverlay 合成
+  // ModelDoc 時注入。同樣是**被審過**的一筆新增。
+  models: [
+    "_standin-overrides.json",
+    "_voxel-skins.json",
+    "_voxel-barcodes.json",
+    "_overlay-hidden-geometry.json",
+  ],
 };
 
 /**

@@ -232,14 +232,21 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
   },
   // ── 2026-08-02 收尾：三個 lane 的欄位,落點 1+2 接完了,落點 3 卡在客戶端 ──
   //
-  // 這三份是同一個形狀,也和上面 `round-grade` 是同一個形狀:文件有了、Zod 有了、
+  // 這兩份是同一個形狀,也和上面 `round-grade` 是同一個形狀:文件有了、Zod 有了、
   // schema tag 進了 union（那一步是**必要**的,不做才會炸 —— 見 config.ts 的註解），
   // 但**客戶端還在讀寫死的 `DEFAULT_*` 常數,沒有人讀這份文件**。
   //
   // 所以今天替它們開後台頁,就是 configForms.ts 檔頭第 1 條講的那句自我一致的
-  // 謊言:操作者存了值、重整讀得回自己填的數字、遊戲一輩子看不到。三列 DEFERRED
+  // 謊言:操作者存了值、重整讀得回自己填的數字、遊戲一輩子看不到。兩列 DEFERRED
   // 是誠實的那一版,而且到期條件是**機器數出來的**（`productionCallSites`），
   // 不是一句「之後會做」。
+  //
+  // ⚠️ 原本是**三**列。`victory-podium` 那一列在 2026-08-03 到期並被刪掉 ——
+  // `RoundWinnerStage.victoryPodiumPolicy()` 去 Configs 登錄表讀那份文件，
+  // `resolveVictoryPodium` 的呼叫端從 0 變成 1，`configDocCoverage.test.ts` 當場紅，
+  // 於是 `configForms.ts` 有了 `VICTORY_PODIUM_SPEC`、`store.ts` 有了那個 Page、
+  // App.tsx 有了導覽列那一列。**這就是「到期條件是機器數出來的」長什麼樣**：
+  // 沒有人需要記得回來看這一列。
   {
     docId: "lobby-layout",
     kind: "DEFERRED",
@@ -255,14 +262,6 @@ export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
     why: "英靈殿技能試放空間的七格規則（含 owner 明說的假人 10,000 血與 3 秒補滿）。內容文件與 Zod 都接好了,但 valhallaSandbox.ts 的建構子吃的是 `opts.rules ?? DEFAULT_VALHALLA_SANDBOX`,沒有任何人把這份文件餵進 opts.rules —— 開後台頁一樣是存了不生效。",
     expiresWhen:
       "`resolveValhallaSandbox` 出現第一個 production 呼叫端的那一刻。同上,守衛自己會紅。",
-  },
-  {
-    docId: "victory-podium",
-    kind: "DEFERRED",
-    issue: "GH#257 / GH#256",
-    why: "回合勝利頒獎台的四格（podiumSize=3 是 owner 原話「最後活下來順序的三位」;roundWinLine 出貨 both ＝現行行為,名言 t=0 + 嘲諷 t=2200ms）。schema 早就存在於 schema/victoryPodium.ts,這一輪把它掛進 collection union 並補上出貨文件,但 RoundWinnerStage / ui/panels/victoryPodium / RoundEndVoice 三個消費端全部直接 import `DEFAULT_VICTORY_PODIUM` 常數,沒有人讀文件。",
-    expiresWhen:
-      "`resolveVictoryPodium` 出現第一個 production 呼叫端的那一刻。⚠️ 它現在**已經有宣告**（schema/victoryPodium.ts 匯出它）但零呼叫端,所以這個數字從 0 變成 1 的那一天就是這一列該死的那一天。",
   },
 
   // ── ④ KNOWN_GAP：確認是缺口，只是還沒做。這是帳單不是免死金牌 ───────────

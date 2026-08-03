@@ -60,7 +60,7 @@ import { DEFAULT_VICTORY_PODIUM } from "@ggd/shared/content/schema/victoryPodium
 // 出貨值。抄一份數字進來比對等於製造第三份會 drift 的知識。
 // 兩個模組都是葉節點（valhallaSandboxRules 零 import、lobbyLayout 只 import react），
 // 所以在 node 環境的 vitest 裡拉得動,不會把 Babylon 拖進來。
-import { DEFAULT_LOBBY_LAYOUT } from "../../client/src/ui/platform/lobbyLayout";
+import { lobbyLayoutProblems, DEFAULT_LOBBY_LAYOUT } from "../../client/src/ui/platform/lobbyLayout";
 import {
   DEFAULT_VALHALLA_SANDBOX,
   VALHALLA_SANDBOX_BOUNDS,
@@ -118,8 +118,26 @@ describe("三份新 config 文件真的被接進出貨路徑 (adminui-lane-confi
     );
     // ② shared 的保險絲 vs 同一份客戶端常數
     expect(DEFAULT_LOBBY_LAYOUT_POLICY).toEqual({ ...DEFAULT_LOBBY_LAYOUT });
-    // ③ owner 明說的那一格:各佔上下各半
-    expect(DEFAULT_LOBBY_LAYOUT.friendsShare, "owner 的「各半」被改掉了").toBe(0.5);
+    // ③ owner 明說的那一件事 —— 但驗的是**機制**不是數字。
+    //
+    // ⚠️ 這裡原本是 `expect(...friendsShare).toBe(0.5)`,訊息寫「owner 的『各半』
+    // 被改掉了」。那句話在 2026-08-03 變成謊話:owner 說「大廳 FRIEND 跟排位榜
+    // **中間**,多出一個區域顯示所有大廳正在線上的玩家列表」—— 左欄從兩塊變三塊,
+    // 「各半」這個概念不存在了,而這條斷言會紅著說一句與真相無關的話。
+    // CLAUDE.md 第二守則:**守衛驗機制,不驗數字**。
+    //
+    // 真正該守的機制是「比例是不是真的是百分比」:flexbox 的 grow 是相對的,
+    // 0.5/0.5/0.5 會排得好好的而文件宣稱 150% —— 那就是後台一個「40%」欄位
+    // 停止是百分比的瞬間。這條由 lobbyLayout.ts 自己的 lobbyLayoutProblems() 判,
+    // 它同時檢查三段和為 1 與每一格的上下界。
+    expect(
+      lobbyLayoutProblems(DEFAULT_LOBBY_LAYOUT),
+      "出貨的大廳排版政策自己就不合法",
+    ).toEqual([]);
+    // 三塊都在(owner 要的是**三個**區域,不是兩個) —— 這是 owner 明說的那一件事。
+    expect(new Set(DEFAULT_LOBBY_LAYOUT.stackOrder)).toEqual(
+      new Set(["friends", "online", "leaderboard"]),
+    );
     // ④ resolver 真的把文件的值搬出來（不是永遠回預設）
     const parsed = zConfigLobbyLayoutDoc.parse({ ...doc, friendsShare: 0.7 });
     expect(resolveLobbyLayout(parsed).friendsShare).toBe(0.7);

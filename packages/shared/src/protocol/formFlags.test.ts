@@ -122,6 +122,6 @@ describe("ENTITY_FLAG bit budget — uint16, and the third collision must not be
     expect(ENTITY_FLAG.FORM_B).toBe(8192);
     // 隱形原語 took 16384 (ENTITY_FLAG.INVISIBLE). ONE bit is left; the next
     // feature must widen the field or claim its own channel.
-    expect(ENTITY_FLAG_FREE_BITS).toEqual([32768]);
+    expect(ENTITY_FLAG_FREE_BITS).toEqual([]);
   });
 });

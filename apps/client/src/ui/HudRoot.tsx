@@ -28,6 +28,7 @@ import { SpectateNotice } from "./hud/SpectateNotice";
 import { NoChampionNotice } from "./hud/NoChampionNotice";
 import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
+import { StatsHoverPanel } from "./hud/StatsHoverPanel";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
 import { BossIntroOverlay } from "./hud/BossIntroOverlay";
@@ -175,6 +176,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [BottomCluster, "血條與技能列"],
   [EnemyTeamPanel, "敵隊面板"],
   [GoldLevel, "金錢與等級"],
+  [StatsHoverPanel, "屬性懸停面板"],
   [EquipmentBar, "裝備欄"],
   [SpectatorHint, "陣亡觀戰提示"],
   [KillCombo, "連殺提示"],
@@ -321,6 +323,15 @@ export function HudRoot(): React.JSX.Element {
               the "enemy-team" slot (ui/hud/hudLayout); self-gates to combat. */}
           <EnemyTeamPanel />
           <GoldLevel />
+          {/* owner「戰鬥場景 滑鼠移到右下角 角色頭圖等級金幣區域時 可以顯示全部
+              屬性能力出來」。⚠️ 它**不是** GoldLevel 的子節點,也不是新的 HUD
+              槽位:那一欄在 780×360 只剩約 12px 的餘裕(hudBottomCluster.test.ts),
+              撐開它就會把裝備列推出畫面。它是一個從 gold-level 槽位展開的抽屜
+              (hudLayout.hudSlotPanelStyle),z 在 HUD_Z.expanded,而且
+              pointerEvents 永遠是 none —— 右下角那一格若被一層透明的接收層蓋住,
+              整場比賽在那裡按右鍵都不會移動。開關由 window 的 mousemove 對槽位
+              矩形做命中測試決定,見該檔檔頭 ②。 */}
+          <StatsHoverPanel />
           {/* persistent equipment bar (task #44): claims the "equipment" HUD
               slot (bottom-right desktop / top-right touch, task #107). */}
           <EquipmentBar />

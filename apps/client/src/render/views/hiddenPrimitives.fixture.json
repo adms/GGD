@@ -1,0 +1,1588 @@
+{
+  "goreJointMarker": "gutz",
+  "goreWeightShare": 0.5,
+  "models": {
+    "E00R.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 34,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 58,
+          "vertices": 435
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 53
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 53
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E00S.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 81,
+          "joint": "Bone_Turret",
+          "primitives": [
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "subtreeJoints": 109,
+          "vertices": 712
+        },
+        {
+          "animatedJoints": 9,
+          "joint": "Dummy02",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 12,
+          "vertices": 104
+        },
+        {
+          "animatedJoints": 4,
+          "joint": "Cylinder06",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 4,
+          "vertices": 88
+        },
+        {
+          "animatedJoints": 5,
+          "joint": "Sphere01",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 5,
+          "vertices": 25
+        },
+        {
+          "animatedJoints": 5,
+          "joint": "Sphere02",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 5,
+          "vertices": 25
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "leaf-fall01",
+          "primitives": [
+            0
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "leaf-fall02",
+          "primitives": [
+            1
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "leaf-fall03",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 14
+    },
+    "E00T.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 56,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 103,
+          "vertices": 482
+        },
+        {
+          "animatedJoints": 6,
+          "joint": "Dummy01",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 6,
+          "vertices": 42
+        },
+        {
+          "animatedJoints": 6,
+          "joint": "Dummy05",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 6,
+          "vertices": 8
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 5
+    },
+    "E00U.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 27,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 49,
+          "vertices": 504
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 53
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 53
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E00V.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 24,
+          "joint": "Bone_Bear_Dummy Center",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 54,
+          "vertices": 513
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz08",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 80
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz08"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 80
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "E015.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 48,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 55,
+          "vertices": 568
+        },
+        {
+          "animatedJoints": 2,
+          "joint": "1throw",
+          "primitives": [
+            3,
+            7
+          ],
+          "subtreeJoints": 13,
+          "vertices": 81
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "1axe-hide",
+          "primitives": [
+            4,
+            5
+          ],
+          "subtreeJoints": 11,
+          "vertices": 67
+        },
+        {
+          "animatedJoints": 2,
+          "joint": "1Box03",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 2,
+          "vertices": 12
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 8
+    },
+    "Ecen.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 83,
+          "joint": "BONE_ABDOMEN",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "subtreeJoints": 98,
+          "vertices": 782
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "SA 9",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 64
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Spring04",
+          "primitives": [
+            12
+          ],
+          "subtreeJoints": 1,
+          "vertices": 46
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Dummy03",
+          "primitives": [
+            13
+          ],
+          "subtreeJoints": 4,
+          "vertices": 12
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "SA 1",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 1,
+          "vertices": 8
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 14
+    },
+    "Efur.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 50,
+          "joint": "Bone_RootArchDruid",
+          "primitives": [
+            0,
+            1,
+            2,
+            10
+          ],
+          "subtreeJoints": 76,
+          "vertices": 696
+        },
+        {
+          "animatedJoints": 55,
+          "joint": "Bone_Root01ArchDruid",
+          "primitives": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            11,
+            12
+          ],
+          "subtreeJoints": 68,
+          "vertices": 532
+        },
+        {
+          "animatedJoints": 3,
+          "joint": "Object49ArchDruid",
+          "primitives": [
+            9,
+            13
+          ],
+          "subtreeJoints": 3,
+          "vertices": 44
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 14
+    },
+    "Ekee.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 23,
+          "joint": "DoC_Dummy",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 45,
+          "vertices": 630
+        },
+        {
+          "animatedJoints": 28,
+          "joint": "Bone_Bear_Dummy Center",
+          "primitives": [
+            3,
+            4,
+            5
+          ],
+          "subtreeJoints": 63,
+          "vertices": 523
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz08",
+          "primitives": [
+            7
+          ],
+          "subtreeJoints": 1,
+          "vertices": 80
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 70
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Plane10",
+          "primitives": [
+            8
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 6,
+          "vertices": 70
+        },
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00",
+            "gutz08"
+          ],
+          "mesh": 0,
+          "primitive": 7,
+          "vertices": 80
+        }
+      ],
+      "primitiveCount": 9
+    },
+    "H001.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 58,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "subtreeJoints": 69,
+          "vertices": 723
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Cylinder02",
+          "primitives": [
+            7
+          ],
+          "subtreeJoints": 2,
+          "vertices": 13
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Cylinder01",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 9
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 8
+    },
+    "H021.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root01",
+          "primitives": [
+            0
+          ],
+          "subtreeJoints": 36,
+          "vertices": 185
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            1
+          ],
+          "subtreeJoints": 1,
+          "vertices": 70
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 1,
+          "vertices": 70
+        }
+      ],
+      "primitiveCount": 2
+    },
+    "H02K.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 54,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            4,
+            5
+          ],
+          "subtreeJoints": 76,
+          "vertices": 660
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Mesh34",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 1,
+          "vertices": 72
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero2",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 16
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 7
+    },
+    "H02N.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 28,
+          "joint": "Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 39,
+          "vertices": 601
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 3
+    },
+    "H02S.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 31,
+          "joint": "Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 45,
+          "vertices": 660
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "SwordFall",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 18
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 16
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 7
+    },
+    "H02Y.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 28,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "subtreeJoints": 39,
+          "vertices": 527
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 5
+    },
+    "H02Z.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 31,
+          "joint": "Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 45,
+          "vertices": 660
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "SwordFall",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 18
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 16
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 7
+    },
+    "Hapm.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 38,
+          "vertices": 607
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 62
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Harf.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 28,
+          "joint": "Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 39,
+          "vertices": 601
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 3
+    },
+    "Hblm.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root01",
+          "primitives": [
+            0
+          ],
+          "subtreeJoints": 36,
+          "vertices": 185
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            1
+          ],
+          "subtreeJoints": 1,
+          "vertices": 70
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 1,
+          "vertices": 70
+        }
+      ],
+      "primitiveCount": 2
+    },
+    "Hpal.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 48,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            3,
+            4,
+            5
+          ],
+          "subtreeJoints": 118,
+          "vertices": 919
+        },
+        {
+          "animatedJoints": 71,
+          "joint": "Bone_Root Alternate",
+          "primitives": [
+            2,
+            8
+          ],
+          "subtreeJoints": 111,
+          "vertices": 615
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Dummy01",
+          "primitives": [
+            12
+          ],
+          "subtreeJoints": 9,
+          "vertices": 96
+        },
+        {
+          "animatedJoints": 2,
+          "joint": "Plane02",
+          "primitives": [
+            10,
+            11
+          ],
+          "subtreeJoints": 10,
+          "vertices": 84
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Dummy05",
+          "primitives": [
+            13
+          ],
+          "subtreeJoints": 7,
+          "vertices": 72
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bonedeath_hide",
+          "primitives": [
+            6,
+            7
+          ],
+          "subtreeJoints": 10,
+          "vertices": 51
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Plane80",
+          "primitives": [
+            9
+          ],
+          "subtreeJoints": 1,
+          "vertices": 20
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero",
+          "primitives": [
+            15,
+            16
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "HeroGlow03",
+          "primitives": [
+            14
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 17
+    },
+    "N00B.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 44,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "subtreeJoints": 61,
+          "vertices": 572
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 10
+    },
+    "N01L.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 31,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 59,
+          "vertices": 562
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero3",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Arrow",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 8
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 7
+    },
+    "Nbst.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 31,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 43,
+          "vertices": 798
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 5
+    },
+    "Nman.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 44,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 51,
+          "vertices": 556
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 3
+    },
+    "O02O.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 39,
+          "joint": "Bone Center",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 83,
+          "vertices": 577
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 144
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 144
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Obla.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 20,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "subtreeJoints": 41,
+          "vertices": 436
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 1,
+          "vertices": 45
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 4,
+          "vertices": 45
+        }
+      ],
+      "primitiveCount": 5
+    },
+    "Ogld.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 32,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 67,
+          "vertices": 664
+        },
+        {
+          "animatedJoints": 4,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 4,
+          "vertices": 62
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00",
+            "gutz02",
+            "gutz04",
+            "gutz05"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Orkn.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 28,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "subtreeJoints": 45,
+          "vertices": 649
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 6
+    },
+    "Oshd.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "subtreeJoints": 41,
+          "vertices": 532
+        },
+        {
+          "animatedJoints": 9,
+          "joint": "Rifle01bone",
+          "primitives": [
+            2,
+            5,
+            6,
+            7
+          ],
+          "subtreeJoints": 10,
+          "vertices": 135
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 8
+    },
+    "Othr.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            3
+          ],
+          "subtreeJoints": 37,
+          "vertices": 475
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 62
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 4
+    },
+    "U00B.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 64,
+          "joint": "Bone Horse",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 87,
+          "vertices": 691
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 5
+    },
+    "U00K.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 44,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 94,
+          "vertices": 614
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "hero2",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 4
+    },
+    "U012.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 47,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            11
+          ],
+          "subtreeJoints": 92,
+          "vertices": 607
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat11",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 5,
+          "vertices": 88
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat20",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 5,
+          "vertices": 66
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat18",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 5,
+          "vertices": 66
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat15",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat16",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat17",
+          "primitives": [
+            7
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat21",
+          "primitives": [
+            8
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat23",
+          "primitives": [
+            9
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Bat26",
+          "primitives": [
+            10
+          ],
+          "subtreeJoints": 5,
+          "vertices": 22
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 12
+    },
+    "U01F.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 17,
+          "joint": "Bone_Root",
+          "primitives": [
+            1,
+            2,
+            5
+          ],
+          "subtreeJoints": 39,
+          "vertices": 510
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Dummy01",
+          "primitives": [
+            0
+          ],
+          "subtreeJoints": 2,
+          "vertices": 167
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 1,
+          "vertices": 62
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "Grunt2_15AxeFree",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 4,
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 6
+    },
+    "Ubal.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 34,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2
+          ],
+          "subtreeJoints": 64,
+          "vertices": 452
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 62
+        },
+        {
+          "animatedJoints": 4,
+          "joint": "staff01",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 5,
+          "vertices": 27
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "skull",
+          "primitives": [
+            3
+          ],
+          "subtreeJoints": 1,
+          "vertices": 20
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 5,
+          "vertices": 62
+        }
+      ],
+      "primitiveCount": 6
+    },
+    "Ucrl.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 22,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 30,
+          "vertices": 463
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            6
+          ],
+          "subtreeJoints": 1,
+          "vertices": 45
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "hide-ax",
+          "primitives": [
+            5
+          ],
+          "subtreeJoints": 1,
+          "vertices": 26
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 6,
+          "vertices": 45
+        }
+      ],
+      "primitiveCount": 7
+    },
+    "Udea.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 64,
+          "joint": "Bone Horse",
+          "primitives": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "subtreeJoints": 87,
+          "vertices": 691
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 5
+    },
+    "Umal.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 16,
+          "joint": "Bone_Root",
+          "primitives": [
+            0,
+            1,
+            3
+          ],
+          "subtreeJoints": 38,
+          "vertices": 303
+        },
+        {
+          "animatedJoints": 14,
+          "joint": "Bone_Root01",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 26,
+          "vertices": 107
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            4
+          ],
+          "subtreeJoints": 1,
+          "vertices": 49
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 4,
+          "vertices": 49
+        }
+      ],
+      "primitiveCount": 5
+    },
+    "Usyl.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 19,
+          "joint": "Zerg01",
+          "primitives": [
+            0,
+            1
+          ],
+          "subtreeJoints": 25,
+          "vertices": 529
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "gutz00",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 69
+        }
+      ],
+      "gorePrimitives": [
+        {
+          "goreWeightShare": 1.0,
+          "joints": [
+            "gutz00"
+          ],
+          "mesh": 0,
+          "primitive": 2,
+          "vertices": 69
+        }
+      ],
+      "primitiveCount": 3
+    },
+    "Uwar.glb": {
+      "bodyRoots": [
+        {
+          "animatedJoints": 44,
+          "joint": "Bone_Root",
+          "primitives": [
+            0
+          ],
+          "subtreeJoints": 102,
+          "vertices": 614
+        },
+        {
+          "animatedJoints": 1,
+          "joint": "hero2",
+          "primitives": [
+            2
+          ],
+          "subtreeJoints": 1,
+          "vertices": 12
+        },
+        {
+          "animatedJoints": 0,
+          "joint": "hero",
+          "primitives": [
+            1
+          ],
+          "subtreeJoints": 1,
+          "vertices": 4
+        }
+      ],
+      "gorePrimitives": [],
+      "primitiveCount": 3
+    }
+  },
+  "note": "generated by tools/w3x-import/gore_geoset_census.py — do not hand-edit",
+  "source": "data/blizzard-overlay/models (gitignored; see task #10/#177)"
+}

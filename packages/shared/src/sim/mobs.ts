@@ -311,6 +311,18 @@ export interface MobRules {
   maxAlivePerZone: number;
 
   /**
+   * 「一隊全滅之後，這個 zone 還要不要繼續生殭屍」（owner 2026-08-02
+   * 「敵方英雄全死光 或我方英雄全死光 殭屍就不應該再生成」）。主機在偵測到
+   * 全滅的那一刻寫 `world.spawnHaltedZones`，`MobSystem` 的波次迴圈讀它。
+   */
+  stopSpawnOnTeamWipe?: boolean;
+  /**
+   * 「哪幾種怪會壓住回合不結束」（owner 2026-08-02 把 2026-07-30 的「任何殭屍」
+   * 收窄成「只有殭屍王」）。主機的 `checkCombatEnd` 讀它；見 {@link ROUND_HOLD_KINDS}。
+   */
+  roundHoldMobKinds?: RoundHoldMobKinds;
+
+  /**
    * The mob's EFFECTIVE LEVEL this round (task #217). Derived ONCE at arm time
    * from the ROUND — `baseLevel + levelPerRound * (round - fromRound)` — because
    * the round number lives on the host, never in the sim. Carried here (not on
@@ -886,6 +898,10 @@ export interface MobWavesConfigLike {
   waveIntervalSec: number;
   mobsPerWaveCap: number;
   maxAlivePerZone: number;
+  /** owner 2026-08-02 「一隊全滅就不要再生成殭屍」。ABSENT ⇒ true（出貨行為）。 */
+  stopSpawnOnTeamWipe?: boolean;
+  /** owner 2026-08-02 「場上沒有殭屍王就該馬上結算」。ABSENT ⇒ `"boss"`。 */
+  roundHoldMobKinds?: RoundHoldMobKinds;
   /**
    * per-round overrides (owner 2026-07-27); absent ⇒ authored caps everywhere.
    * `championId` (GH#191) is 「這一回合由誰擔任」 and, since GH#192, decides the
@@ -1679,6 +1695,10 @@ export function mobRulesFromConfig(
     // and still has no idea what a round is.
     mobsPerWaveCap: caps.mobsPerWaveCap,
     maxAlivePerZone: caps.maxAlivePerZone,
+    // owner 2026-08-02 的兩個回合結束旋鈕。ABSENT ⇒ 出貨預設（見上面兩個常數），
+    // 不是「關掉」—— 一份沒有這兩格的舊 config 拿到的是 owner 現在要的行為。
+    stopSpawnOnTeamWipe: cfg.stopSpawnOnTeamWipe ?? DEFAULT_STOP_SPAWN_ON_TEAM_WIPE,
+    roundHoldMobKinds: cfg.roundHoldMobKinds ?? DEFAULT_ROUND_HOLD_KINDS,
     level,
     maxHp,
     hpRegenPerSec,
@@ -2038,8 +2058,49 @@ export function mobsAliveInZone(world: SimWorld, zone: number): number {
  * supplies the fact. See the task write-up for the exact wiring.
  */
 export function anyMobsAlive(world: SimWorld, zone: number): boolean {
+  return anyMobsAliveOfKinds(world, zone, ROUND_HOLD_KINDS.any);
+}
+
+/**
+ * 「哪幾種怪會壓住回合不結束」—— owner 2026-08-02
+ * 「已經只剩我方英雄 敵方英雄全死 並且場上沒有殭屍王 回合應該要馬上勝利結算才對」
+ *
+ * ⚠️ 這是一個**決策點**，不是一個常數（CLAUDE.md 第一守則）。它已經被 owner 改過
+ * 一次了：2026-07-30 是「任何殭屍都算」（`anyMobsAlive` 的原始語意），2026-08-02
+ * 收窄成「只有殭屍王算」。所以它住在後台的 `mobWaves.roundHoldMobKinds`，
+ * 而不是寫死在這裡 —— 下次再改是一個下拉選單，不是一次部署。
+ *
+ * ⚠️ 為什麼「任何殭屍都算」會變成玩家眼中的 bug：那個規則跟生成閘門形成一個
+ * **自我維持的迴圈** —— 場上有殭屍 ⇒ 不記勝負 ⇒ 不進 `settledZones` ⇒ 繼續生殭屍。
+ * 唯一能打破它的是火圈的百分比真實傷害，所以玩家的體感就是「一定要等火圈」。
+ * 迴圈的另一個切點在 `world.spawnHaltedZones`（見 SimWorld）。
+ */
+export const ROUND_HOLD_KINDS = {
+  none: [] as readonly MobKind[],
+  boss: ["boss"] as readonly MobKind[],
+  bossAndSpecial: ["boss", "special"] as readonly MobKind[],
+  any: ["boss", "special", "normal"] as readonly MobKind[],
+} as const;
+
+export type RoundHoldMobKinds = keyof typeof ROUND_HOLD_KINDS;
+
+/**
+ * 出貨值 = owner 2026-08-02 的原話：「場上沒有殭屍王 → 回合應該要馬上勝利結算」。
+ * 這兩個常數是「設定缺席時的行為」，不是「唯一的行為」—— 真正的出貨值住在
+ * `content/config/arena-rules.json`，schema DEFAULT 與後台 SHIPPED 各有一份鏡像。
+ */
+export const DEFAULT_ROUND_HOLD_KINDS: RoundHoldMobKinds = "boss";
+export const DEFAULT_STOP_SPAWN_ON_TEAM_WIPE = true;
+
+export function anyMobsAliveOfKinds(
+  world: SimWorld,
+  zone: number,
+  kinds: readonly MobKind[],
+): boolean {
+  if (kinds.length === 0) return false;
   for (const [id, m] of world.mob) {
     if (m.zone !== zone) continue;
+    if (!kinds.includes(m.kind)) continue;
     if (isMobAlive(world, id)) return true;
   }
   return false;

@@ -43,6 +43,14 @@ func (s *Service) Get(ctx context.Context, accountID string) (string, error) {
 	return s.rdb.GetPresence(ctx, accountID)
 }
 
+// GetMany returns the state of every listed account in order, in one round
+// trip. Absent/expired keys read as StateOffline. A transport error is
+// returned rather than degraded into "everybody offline" — see
+// redisx.GetPresenceMany.
+func (s *Service) GetMany(ctx context.Context, accountIDs []string) ([]string, error) {
+	return s.rdb.GetPresenceMany(ctx, accountIDs)
+}
+
 // Clear removes the key and publishes an offline delta.
 func (s *Service) Clear(ctx context.Context, accountID string) error {
 	return s.rdb.ClearPresence(ctx, accountID)

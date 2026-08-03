@@ -36,15 +36,18 @@ import {
   BOSS_BANNER_TITLE,
   BOSS_LAST_HIT_TAG,
   BOSS_POLL_MS,
-  BOSS_SETTLEMENT_TITLE,
   bossLifetime,
   bossRuleNote,
   bossVisibleInZone,
   bossRuleNoteShort,
   bossSettlementLayout,
+  bossSettlementMode,
+  bossSettlementTitle,
   bossSummonLine,
+  bossToastLine,
   bossTotalLine,
   mobBossOverlayRect,
+  mobSettlementWording,
   type BossLifetime,
   type BossSettlementLayout,
 } from "./mobBossModel";
@@ -158,17 +161,25 @@ export function MobBossSettlementView({
   life,
   view,
   layout,
+  title,
 }: {
   rect: HudRect;
   life: BossLifetime;
   view: MobBossView;
   layout: BossSettlementLayout;
+  /**
+   * #291 —— 抬頭是**傳進來的**，不是這個檔的常數。owner 2026-08-03:
+   * 「特殊殭屍 不應該用殭屍王 分紅結算畫面」。以前這裡直接印
+   * `BOSS_SETTLEMENT_TITLE`，所以一隻特殊殭屍的結算永遠寫著「殭屍王 分紅結算」。
+   */
+  title: string;
 }): React.JSX.Element {
   const accent = "#ffd76a";
   const compact = layout.mode === "compact";
   return (
     <div
       data-mob-boss="settlement"
+      data-mob-boss-mob={view.mobKind}
       data-mob-boss-mode={layout.mode}
       style={{ ...shell(rect, life, accent), gap: compact ? 1 : 3 }}
       role="status"
@@ -186,7 +197,7 @@ export function MobBossSettlementView({
             animation: `ggd-boss-pop-${view.seq % 2} 320ms cubic-bezier(.2,1.6,.4,1)`,
           }}
         >
-          {BOSS_SETTLEMENT_TITLE}
+          {title}
         </span>
         <span
           data-mob-boss="settlement-total"
@@ -279,6 +290,59 @@ export function MobBossSettlementView({
   );
 }
 
+/* ── 分紅結算 · toast (#291) ──────────────────────────────────────────────── */
+
+/**
+ * `special.settlementMode: "toast"` 的那一行。
+ *
+ * 為什麼它是一個**真的元件**而不是「面板但矮一點」：owner 抱怨過「怎麼會收到好幾次
+ * 分紅結算」，而一隻特殊殭屍現在一回合會死好幾隻。`toast` 要的是「知道有這件事、
+ * 知道自己拿多少」，不是一張要讀的表 —— 所以它沒有列、沒有規則句，只有一行。
+ */
+export function MobBossToastView({
+  rect,
+  life,
+  view,
+  line,
+}: {
+  rect: HudRect;
+  life: BossLifetime;
+  view: MobBossView;
+  line: string;
+}): React.JSX.Element {
+  const accent = "#ffd76a";
+  return (
+    <div
+      data-mob-boss="settlement-toast"
+      data-mob-boss-mob={view.mobKind}
+      style={{
+        ...shell(rect, life, accent),
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "4px 12px",
+      }}
+      role="status"
+      aria-live="off"
+    >
+      <span
+        data-mob-boss="toast-line"
+        style={{
+          fontSize: 12,
+          fontWeight: 800,
+          color: "#ffeaa8",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          maxWidth: "100%",
+          fontVariantNumeric: "tabular-nums",
+        }}
+      >
+        {line}
+      </span>
+    </div>
+  );
+}
+
 /** Scoped keyframes, carried by the components rather than a global sheet. TWO
  * pop names alternating on `seq`, for the same reason KillCombo needs them:
  * re-assigning the SAME animation name does not restart it. */
@@ -353,6 +417,10 @@ export function MobBossOverlay(): React.JSX.Element | null {
     dismissed: readLegendDismissed(),
     panelCovering: panels.length > 0,
   });
+  // #291 —— 「這一則是王還是特殊殭屍」決定抬頭與呈現模式。讀的是同一份
+  // arena-rules（後台 overlay ?? content/），所以後台改完字，玩家重新整理就換。
+  const wording = mobSettlementWording();
+  const settlementMode = bossSettlementMode(boss, wording);
   // #247 —— 長血條 owns the top of this corridor while the king is alive, and it
   // is PERSISTENT while this banner/panel is a 4.6 s / 8.2 s beat, so this one
   // yields. Same one entry point the bar draws from.
@@ -361,6 +429,7 @@ export function MobBossOverlay(): React.JSX.Element | null {
     legendUp,
     couchPlayers: 1,
     barRect,
+    settlementMode,
   });
   // null = this viewport genuinely has no free room. Nothing is the correct
   // answer; painting over the player's own bars is not.
@@ -379,9 +448,24 @@ export function MobBossOverlay(): React.JSX.Element | null {
       />
     );
   }
+  const title = bossSettlementTitle(boss, wording);
+  // #291 —— `"toast"`：一行帶過。`"off"` 已經在 `mobBossOverlayRect` 回 null 了,
+  // 所以走到這裡只剩 panel / toast 兩種。
+  if (settlementMode === "toast") {
+    return (
+      <MobBossToastView
+        rect={rect}
+        life={life}
+        view={boss}
+        line={bossToastLine(boss, title, localSeatId)}
+      />
+    );
+  }
   // `rect.h` is what the corridor could actually give, so the table decides
   // full-vs-compact against the SAME number the box was drawn at.
   const layout = bossSettlementLayout(boss, localSeatId, nameOf, rect.h);
   if (!layout) return null;
-  return <MobBossSettlementView rect={rect} life={life} view={boss} layout={layout} />;
+  return (
+    <MobBossSettlementView rect={rect} life={life} view={boss} layout={layout} title={title} />
+  );
 }

@@ -184,6 +184,15 @@ export type Page =
    */
   | "victoryFx"
   /**
+   * 回合頒獎台 (`config/victory-podium`, GH#257 / GH#256) —— 回合分出勝負時中央
+   * 那一排 3D 模型站幾個人、誰站正中間、誰在慶祝、第一名說什麼。
+   * ⚠️ 這一頁的到期條件是**機器數出來的**：`configDocCoverage.ts` 上原本有一列
+   * DEFERRED 說「`resolveVictoryPodium` 零 production 呼叫端，開後台頁等於存了
+   * 不生效」，而 `RoundWinnerStage.victoryPodiumPolicy()` 在 2026-08-03 接上去
+   * 之後那一列就過期了 —— 守衛自己紅，逼人補這一頁。
+   */
+  | "victoryPodium"
+  /**
    * 殭屍王出場演出 (`config/boss-intro`, owner 2026-08-02「殭屍王出場 會音效+大字
    * 講該英雄的名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示
    * 淡出消失」)。停留秒數／淡出秒數／描述字數上限／要點與弱點的條數上限。
@@ -455,6 +464,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "arenaFire",
   // 勝利煙火 (#93 / #235): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "victoryFx",
+  // 回合頒獎台 (GH#257 / GH#256): 同上,同一個元件、同一條 `putOverlayDoc`。
+  "victoryPodium",
   // 殭屍王出場演出 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
   // `putOverlayDoc`,所以同一條規則。
   "bossIntro",

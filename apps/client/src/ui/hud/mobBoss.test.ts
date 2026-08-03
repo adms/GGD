@@ -32,6 +32,9 @@ import { describe, expect, it, beforeEach } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MOB_BOSS_SLAIN_EVENT, MOB_BOSS_SPAWN_EVENT } from "@ggd/shared/sim/mobBoss";
+// #291 —— 出貨的 arena-rules 灌進真的 registry，`mobSettlementWording()` 就是從
+// 這裡讀抬頭的（失敗形態⑤的守衛：被測的就是出貨的那一份）。
+import { Configs } from "@ggd/shared/content";
 import { FANNED_OUT_EVENT_TYPES } from "../../../../game-server/src/net/eventFanout";
 import {
   BOSS_BANNER_MS,
@@ -233,6 +236,11 @@ const slainEv = (over: Record<string, unknown> = {}) => ({
   tick: 1800,
   data: {
     id: 77,
+    // #291 —— `kind` IS ON THE WIRE (sim/systems/MobSystem `world.emit`), and
+    // this fixture used to omit it. That omission is exactly why every guard in
+    // this file kept passing while a 特殊殭屍's settlement wore the king's
+    // words: the fixture and the client agreed on a field neither of them read.
+    kind: "boss",
     killer: 105,
     killerSeatId: 5,
     totalGold: 3000,
@@ -1254,3 +1262,148 @@ describe("the payout panel tells the truth about GH#206 「bonus」 mode", () =>
     expect(visibleText(renderOverlay())).not.toContain("等");
   });
 });
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * ⑦ #291 —— 「特殊殭屍 不應該用殭屍王 分紅結算畫面」(owner 2026-08-03)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * 根因不是缺資料：`MobSystem.settleBoss` 一直都在 payload 上送 `kind`
+ * （`"boss"` | `"special"`），而客戶端從來沒讀。那個檔自己的註解就把代價寫出來了
+ * ——「until the client reads `kind`, a special's settlement renders with the
+ * king's wording and takes the king's single panel slot」。
+ *
+ * ⚠️ 這一節的斷言全部讀**畫面上的字**（`visibleText`，標籤連屬性一起剝掉），
+ * 不是「view 上有沒有 mobKind 這一格」——後者是屬性不是行為（失敗形態⑦），而且
+ * 對「讀了 kind 但沒有把它畫出來」的實作照樣會過。
+ */
+
+const specialSlainEv = (over: Record<string, unknown> = {}) =>
+  slainEv({ kind: "special", ...over });
+
+/** 出貨的 arena-rules —— 抬頭到底是哪幾個字，由這份文件說了算。 */
+const SHIPPED_ARENA_RULES = JSON.parse(
+  readFileSync(join(REPO, "content/config/arena-rules.json"), "utf8"),
+) as {
+  mobWaves: {
+    boss: { settlementTitle?: string };
+    special: { settlementTitle?: string; settlementMode?: string };
+  };
+};
+
+describe("#291 特殊殭屍的分紅結算穿自己的字", () => {
+  beforeEach(() => {
+    // ⚠️ 註冊**出貨的那一份**。這條 seam 是失敗形態⑤的守衛：`mobSettlementWording()`
+    // 走 `Configs`，所以「設定裡的字」與「畫面上的字」之間如果斷掉，這裡會紅。
+    Configs.register(SHIPPED_ARENA_RULES as never);
+  });
+
+  it("★ kind:\"special\" → 畫面上是特殊殭屍那一句，而且沒有殭屍王那一句", () => {
+    inCombat();
+    beat(specialSlainEv());
+    const text = visibleText(renderOverlay());
+    // 突變點：`parseMobBossEvent` 裡讀 `ev.data.kind` 的那一行拿掉 → 這裡紅。
+    expect(text, "特殊殭屍的結算沒有用自己的抬頭").toContain("特殊殭屍 分紅結算");
+    expect(text, "特殊殭屍的結算還印著殭屍王的字 —— owner 抱怨的就是這個").not.toContain(
+      "殭屍王 分紅結算",
+    );
+    // 表格本身照畫（「換一句話」不等於「少一半功能」）。
+    expect(text).toContain("1500 金");
+  });
+
+  it("★ kind:\"boss\" 仍然是殭屍王那一句（對照組，讓上一條可證偽）", () => {
+    inCombat();
+    beat(slainEv());
+    const text = visibleText(renderOverlay());
+    expect(text).toContain("殭屍王 分紅結算");
+    expect(text).not.toContain("特殊殭屍 分紅結算");
+  });
+
+  it("畫面上的抬頭就是 content/config/arena-rules.json 裡的那幾個字", () => {
+    // 失敗形態⑤：驗的是出貨那一份，不是測試自己手寫的字串。
+    const bossTitle = SHIPPED_ARENA_RULES.mobWaves.boss.settlementTitle!;
+    const specialTitle = SHIPPED_ARENA_RULES.mobWaves.special.settlementTitle!;
+    expect(bossTitle).not.toBe(specialTitle);
+    inCombat();
+    beat(slainEv());
+    expect(visibleText(renderOverlay())).toContain(bossTitle);
+    inCombat();
+    beat(specialSlainEv());
+    expect(visibleText(renderOverlay())).toContain(specialTitle);
+  });
+
+  it("沒有 kind 的舊 payload：有同 id 的降臨橫幅 ⇒ 王，沒有 ⇒ 特殊殭屍", () => {
+    // 驗的是一個**關係**（這一隻有沒有 announce 過），不是猜一個預設值。
+    inCombat();
+    beat({ ...slainEv(), data: omitKind(slainEv().data) });
+    expect(visibleText(renderOverlay()), "沒有降臨橫幅卻當成王").toContain("特殊殭屍 分紅結算");
+
+    inCombat();
+    beat(spawnEv()); // id 77 的降臨橫幅
+    beat({ ...slainEv(), data: omitKind(slainEv().data) }); // 同一個 id 77
+    expect(visibleText(renderOverlay()), "有降臨橫幅卻當成特殊殭屍").toContain("殭屍王 分紅結算");
+  });
+
+  it("settlementMode:\"toast\" ⇒ 一行字，不是一張表", () => {
+    Configs.register({
+      ...SHIPPED_ARENA_RULES,
+      mobWaves: {
+        ...SHIPPED_ARENA_RULES.mobWaves,
+        special: { ...SHIPPED_ARENA_RULES.mobWaves.special, settlementMode: "toast" },
+      },
+    } as never);
+    inCombat();
+    beat(specialSlainEv());
+    const html = renderOverlay();
+    const text = visibleText(html);
+    expect(text).toContain("特殊殭屍 分紅結算");
+    expect(text, "toast 應該印自己那一份").toContain("你 +1500 金");
+    // 一行 = 沒有列、沒有規則句。
+    expect(html).not.toContain('data-mob-boss="row"');
+    expect(text).not.toContain("補刀者除了自己那份");
+    // …而殭屍王不受這一格影響（它沒有逃生門）。
+    inCombat();
+    beat(slainEv());
+    expect(renderOverlay()).toContain('data-mob-boss="row"');
+  });
+
+  it("settlementMode:\"off\" ⇒ 什麼都不畫，而且不佔走廊（連殺計數器不會白讓位）", () => {
+    Configs.register({
+      ...SHIPPED_ARENA_RULES,
+      mobWaves: {
+        ...SHIPPED_ARENA_RULES.mobWaves,
+        special: { ...SHIPPED_ARENA_RULES.mobWaves.special, settlementMode: "off" },
+      },
+    } as never);
+    inCombat();
+    beat(specialSlainEv());
+    expect(renderOverlay()).toBe("");
+    // 矩形也要是 null —— 否則 `killComboRect({ bossRect })` 會為一個沒有人畫的
+    // 盒子讓位 8.2 秒（算出來但畫不出來的相反面）。
+    const view = parseMobBossEvent(specialSlainEv(), 2, 0, 1)!;
+    expect(
+      mobBossOverlayRect(view, { width: 1280, height: 800 }, {
+        touch: false,
+        legendUp: false,
+        settlementMode: "off",
+      }),
+    ).toBeNull();
+    // 對照組：panel 模式在同一個視窗真的拿得到矩形。
+    expect(
+      mobBossOverlayRect(view, { width: 1280, height: 800 }, {
+        touch: false,
+        legendUp: false,
+        settlementMode: "panel",
+      }),
+    ).not.toBeNull();
+    // …而殭屍王照畫。
+    inCombat();
+    beat(slainEv());
+    expect(visibleText(renderOverlay())).toContain("殭屍王 分紅結算");
+  });
+});
+
+/** `{...data}` 減掉 `kind` —— 模擬一個 #288 之前的 server。 */
+function omitKind(data: Record<string, unknown>): Record<string, unknown> {
+  const { kind: _kind, ...rest } = data;
+  return rest;
+}

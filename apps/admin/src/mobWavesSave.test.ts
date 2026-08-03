@@ -158,6 +158,14 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   waveIntervalSec: "4.5",
   mobsPerWaveCap: "7",
   maxAlivePerZone: "23",
+  // ⚠️ 跨線交接縫：這三格是「特殊殭屍不要用殭屍王結算畫面」那條線新增的後台欄位。
+  // 這個 fixture 刻意手寫完整的 Record（見檔頭），所以每次有人加欄位它就會紅 ——
+  // 那是它的用途，不是它的缺陷。
+  "boss.settlementTitle": "王的結算標題",
+  "special.settlementTitle": "特殊的結算標題",
+  "special.settlementMode": "toast",
+      stopSpawnOnTeamWipe: "0",
+      roundHoldMobKinds: "any",
   "mob.maxHp": "111",
   "mob.attackDamage": "2.5",
   "mob.moveSpeed": "3.75",

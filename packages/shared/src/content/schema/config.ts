@@ -1063,6 +1063,34 @@ export const zMobWavesConfig = z
     /** hard cap on mobs ALIVE per battlefield/duel zone at once */
     maxAlivePerZone: z.number().int().min(1).max(MOB_ALIVE_CAP_MAX),
     /**
+     * 「一隊全滅之後，這個 zone 還要不要繼續生殭屍」——
+     * owner 2026-08-02「敵方英雄全死光 或我方英雄全死光 殭屍就不應該再生成」。
+     *
+     * ⚠️ 這一格與下面那一格是**同一個迴圈的兩個切點**，而那個迴圈是玩家體感
+     * 「一定要等火圈」的根因：一隊全滅 → 主機想記勝負 → 場上有殭屍 → 不記 →
+     * 沒進 `settledZones` → 繼續生殭屍 → 場上永遠有殭屍。
+     *
+     * ABSENT ⇒ `true`。缺席退回**開啟**而不是關閉，因為 owner 的話是「不應該
+     * 再生成」—— 一份沒有這格的舊 config 應該得到他現在要的行為，不是舊行為。
+     */
+    stopSpawnOnTeamWipe: z.boolean().optional(),
+    /**
+     * 「哪幾種怪會壓住回合不結束」。
+     *
+     * ⚠️ 這是一個**改過的決策**，不是一個常數：2026-07-30 owner 說「場上還有任何
+     * 殭屍時，只剩一隊也不結束」；2026-08-02 實打後收窄成「場上沒有殭屍王 → 回合
+     * 應該要馬上勝利結算」。所以它是一個欄位，下次再改是一個下拉選單。
+     *
+     *   none            誰都壓不住 —— 一隊全滅就結束
+     *   boss            只有殭屍王（出貨值 = owner 2026-08-02 的原話）
+     *   bossAndSpecial  王 + 特殊殭屍
+     *   any             任何殭屍（2026-07-30 的舊行為）
+     *
+     * ABSENT ⇒ `"boss"`。`timerExpired`（階段硬底線）永遠贏過這一格，所以再怎麼
+     * 設定都不會出現「回合永遠不結束」。
+     */
+    roundHoldMobKinds: z.enum(["none", "boss", "bossAndSpecial", "any"]).optional(),
+    /**
      * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
      * caps above, for the escalation into the finale:
      *
@@ -1390,6 +1418,17 @@ export const zMobWavesConfig = z
          * `lastHitMode: "bonus"` inflates the whole payout, not just one share.
          */
         countOverkill: z.boolean().optional(),
+        /**
+         * #291 —— 分紅結算面板的**抬頭**。SHIPS 「殭屍王 分紅結算」。
+         *
+         * owner 2026-08-03:「特殊殭屍 不應該用殭屍王 分紅結算畫面」。
+         * 王與特殊殭屍走的是同一顆 `mobBossSlain` 事件（見 sim/systems/MobSystem
+         * 的 #288 說明），差別只有 payload 上的 `kind`。所以「畫面上要寫什麼」
+         * 必須是**兩格分開的字**，否則兩種怪只能共用一句話 —— 那正是 owner 抱怨
+         * 的東西。寫死在 `ui/hud/mobBossModel.ts` 的 `BOSS_SETTLEMENT_TITLE`
+         * 是它以前的樣子。
+         */
+        settlementTitle: z.string().min(1).max(24).optional(),
 
         /* ── 從英雄推導的數值 (owner 2026-07-29, GH#206) ──────────────────
          *
@@ -1695,6 +1734,26 @@ export const zMobWavesConfig = z
          * `boss.countOverkill`, so an arena with no king still controls this.
          */
         countOverkill: z.boolean().optional(),
+        /**
+         * #291 —— 特殊殭屍分紅結算面板的**抬頭**。SHIPS 「特殊殭屍 分紅結算」。
+         *
+         * owner 2026-08-03:「特殊殭屍 不應該用殭屍王 分紅結算畫面」。它自己的字，
+         * 而不是共用 `boss.settlementTitle` —— 共用就是 owner 抱怨的那個畫面。
+         */
+        settlementTitle: z.string().min(1).max(24).optional(),
+        /**
+         * #291 **決策點** —— 特殊殭屍的分紅結算**用哪一種呈現**。SHIPS `"panel"`。
+         *
+         *   · `"panel"` —— 和殭屍王同一面完整表格（自己的抬頭）。owner 的原話是
+         *     「不應該用殭屍王的畫面」＝要自己的字，所以出貨給它自己的面板。
+         *   · `"toast"` —— 一行字帶過（抬頭 + 總額 + 你自己那份），不吃整個走廊。
+         *   · `"off"`   —— 完全不畫。
+         *
+         * 逃生門是有實際來由的：一隻特殊殭屍現在有一萬多血、一回合會死好幾隻，而
+         * owner 抱怨過「怎麼會收到好幾次分紅結算」。面板一次佔中央走廊 8.2 秒，
+         * 所以「太吵」必須是後台一個下拉，不是一次改程式。
+         */
+        settlementMode: z.enum(["panel", "toast", "off"]).optional(),
       })
       .strict()
       .optional(),
@@ -1712,6 +1771,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   waveIntervalSec: 2,
   mobsPerWaveCap: 5,
   maxAlivePerZone: 15,
+  // owner 2026-08-02 的兩個回合結束旋鈕（見上面 Zod 的說明）。
+  stopSpawnOnTeamWipe: true,
+  roundHoldMobKinds: "boss",
   // owner, 2026-07-27 (second pass — the ramp now starts at round 6 and climbs
   // by +5 alive a round instead of doubling). Round 10 is EMPTY: 乾淨總決賽.
   //
@@ -1897,6 +1959,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     lastHitMode: "bonus" as const,
     // owner 2026-07-29:「溢傷算不算?=> 不算」
     countOverkill: false,
+    // #291 —— 這一串字以前寫死在 `ui/hud/mobBossModel.BOSS_SETTLEMENT_TITLE`。
+    // 一字不差搬過來,所以出貨行為不變,而它現在是後台一格。
+    settlementTitle: "殭屍王 分紅結算",
     // #247 owner 2026-08-01 —— 「應該要可以無視碰撞穿透地形 不然被卡住永遠走不到」.
     // All three permissions ON, the boundary clamp STILL ON. The king is granted
     // the same `FlightGrant` a flying champion carries (sim/flight.ts), so
@@ -1995,8 +2060,82 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     splitByDamage: true,
     // owner 2026-07-29 「溢傷算不算?=> 不算」 — the same ruling as the king's.
     countOverkill: false,
+    // #291 owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」——
+    // 它自己的抬頭 + 它自己的面板。`toast` / `off` 是逃生門,不是出貨值。
+    settlementTitle: "特殊殭屍 分紅結算",
+    settlementMode: "panel" as const,
   },
 };
+
+/* ══════════════════════════════════════════════════════════════════════════
+ * #291 分紅結算的措辭 —— 「特殊殭屍不應該用殭屍王的畫面」(owner 2026-08-03)
+ * ══════════════════════════════════════════════════════════════════════════
+ *
+ * 王與特殊殭屍共用同一顆 `mobBossSlain` 事件（sim/systems/MobSystem 的 #288
+ * 決定，理由寫在那裡），差別只有 payload 上的 `kind: "boss" | "special"`。
+ * 那個欄位**一直都在送**，只是客戶端從來沒讀 —— MobSystem 自己的註解就承認了
+ * 代價：「until the client reads `kind`, a special's settlement renders with the
+ * king's wording and takes the king's single panel slot」。
+ *
+ * 這三格是那句話的另一半：讀到 `kind` 之後，畫面上要講的**字**與**呈現方式**。
+ */
+
+/** 特殊殭屍的分紅結算怎麼呈現（見 `zMobWavesConfig.special.settlementMode`）。 */
+export type MobSettlementMode = NonNullable<MobSpecialConfig["settlementMode"]>;
+
+/** 出貨抬頭 —— 和 `content/config/arena-rules.json` 一字不差（drift 測試在守）。 */
+export const DEFAULT_BOSS_SETTLEMENT_TITLE = "殭屍王 分紅結算";
+export const DEFAULT_SPECIAL_SETTLEMENT_TITLE = "特殊殭屍 分紅結算";
+export const DEFAULT_SPECIAL_SETTLEMENT_MODE: MobSettlementMode = "panel";
+
+/** 一場比賽裡「分紅結算要怎麼講」的全部答案。 */
+export interface MobSettlementWording {
+  /** 殭屍王的抬頭 */
+  bossTitle: string;
+  /** 特殊殭屍的抬頭 */
+  specialTitle: string;
+  /** 特殊殭屍要不要畫、畫成什麼 */
+  specialMode: MobSettlementMode;
+}
+
+export const DEFAULT_MOB_SETTLEMENT_WORDING: MobSettlementWording = {
+  bossTitle: DEFAULT_BOSS_SETTLEMENT_TITLE,
+  specialTitle: DEFAULT_SPECIAL_SETTLEMENT_TITLE,
+  specialMode: DEFAULT_SPECIAL_SETTLEMENT_MODE,
+};
+
+/**
+ * 從一份 `config.arena-rules@1` 讀出這三格，缺一格就退回出貨值。
+ *
+ * ⚠️ **刻意逐格 typeof，而不是拿 `zConfigArenaRulesDoc` 整份 parse。** 這支函式
+ * 跑在客戶端畫面上：整份 parse 的話，arena-rules 裡**任何一個別的 block**
+ * （火圈、商店、守護者…）有一格不合，分紅面板的抬頭就會整個退回出貨值，而畫面上
+ * 看起來完全正常 —— 一個 block 的問題吃掉另一個 block 的設定。同一份文件的
+ * `mobWaves.boss.healthBar*` 是走 sim armed 的路，這一條沒有那條路可以走（結算
+ * 面板整段活在客戶端）。
+ *
+ * 空字串／只有空白的抬頭一律當成「沒填」：一面沒有抬頭的結算面板比一面寫著王的
+ * 字的面板更難懂。
+ */
+export function mobSettlementWordingFromDoc(doc: unknown): MobSettlementWording {
+  const dig = (obj: unknown, key: string): unknown =>
+    typeof obj === "object" && obj !== null ? (obj as Record<string, unknown>)[key] : undefined;
+  const waves = dig(doc, "mobWaves");
+  const title = (block: unknown, fallback: string): string => {
+    const t = dig(block, "settlementTitle");
+    return typeof t === "string" && t.trim() !== "" ? t.trim() : fallback;
+  };
+  const rawMode = dig(dig(waves, "special"), "settlementMode");
+  const specialMode: MobSettlementMode =
+    rawMode === "panel" || rawMode === "toast" || rawMode === "off"
+      ? rawMode
+      : DEFAULT_SPECIAL_SETTLEMENT_MODE;
+  return {
+    bossTitle: title(dig(waves, "boss"), DEFAULT_BOSS_SETTLEMENT_TITLE),
+    specialTitle: title(dig(waves, "special"), DEFAULT_SPECIAL_SETTLEMENT_TITLE),
+    specialMode,
+  };
+}
 
 export const zConfigArenaRulesDoc = z
   .object({
@@ -3665,10 +3804,32 @@ export const zConfigLobbyLayoutDoc = z
      */
     leftColumnWidthPx: z.number().int().min(180).max(480),
     /**
-     * 分割模式下,**朋友列表**佔左欄高度的比例（0..1）,排行榜拿剩下的。
-     * `0.5` 就是 owner 的「各半」。上下界 0.2 / 0.8 是「另一半至少還看得到兩列」。
+     * 分割模式下,**朋友列表**佔左欄高度的比例（0..1）。
+     *
+     * ⚠️ 語意在 2026-08-03 變了,舊註解「`0.5` 就是 owner 的『各半』」已經是謊話:
+     * owner 說「大廳 FRIEND 跟排位榜 **中間**,多出一個區域顯示所有大廳正在線上的
+     * 玩家列表」—— 左欄從**兩塊**變成**三塊**,所以「各半」不存在了,出貨值是
+     * 40 / 30 / 30。上下界從 0.2/0.8 收成 0.15/0.7,抄的是
+     * `apps/client/src/ui/platform/lobbyLayout.ts` 的 `LOBBY_LAYOUT_BOUNDS`
+     * （那份是渲染端自己的判準:低於 0.15 一塊面板就只剩標題沒有列）。
+     *
+     * ⚠️ 三段加起來必須是 1。flexbox **不會**檢查這件事（grow 是相對的）,所以
+     * 0.5/0.5/0.5 會排得好好的而文件宣稱 50%/50%/50% —— 那就是一個「40%」欄位
+     * 不再是百分比的瞬間。檢查在 `lobbyLayoutProblems()`,不是靠渲染器隱含。
      */
-    friendsShare: z.number().min(0.2).max(0.8),
+    friendsShare: z.number().min(0.15).max(0.7),
+    /** 分割模式下,**線上玩家**佔左欄高度的比例（0..1）。三段相加必須是 1。 */
+    onlineShare: z.number().min(0.15).max(0.7),
+    /** 分割模式下,**排位榜**佔左欄高度的比例（0..1）。三段相加必須是 1。 */
+    leaderboardShare: z.number().min(0.15).max(0.7),
+    /**
+     * 線上玩家列表遇到**已經是朋友**的人怎麼顯示 —— 這是決策點不是數值。
+     * `greyed-button` 那一列留著,按鈕變成不能按的「已加入」;
+     * `hide-row` 直接把那一列拿掉。
+     */
+    alreadyFriendMode: z.enum(["greyed-button", "hide-row"]),
+    /** 堆疊模式（手機）下三塊面板由上到下的順序。 */
+    stackOrder: z.array(z.enum(["friends", "online", "leaderboard"])).length(3),
     /** 堆疊模式下,每一塊面板保證拿到的高度（px）。 */
     minSlotHeightPx: z.number().int().min(80).max(600),
     /** 左欄矮於這個高度（px）就不分割、改成整欄一起捲。 */
@@ -3884,6 +4045,55 @@ export const zConfigBossIntroDoc = z
     maxTips: z.number().int().min(0).max(6),
     /** 最多列幾條弱點（超過的不畫）。0 = 不顯示這一段。 */
     maxWeaknesses: z.number().int().min(0).max(6),
+    /**
+     * #291 —— **版面高度**。owner 2026-08-03:「殭屍王出場的描述框 不夠大
+     * 描述還有很多沒顯示完」。
+     *
+     * ⚠️ 這一組以前是 `ui/hud/bossIntroModel.ts` 裡六個寫死的常數，而
+     * `descriptionMaxChars` 是唯一可調的那一格 —— 於是**把字數調大完全看不出
+     * 差別**：版面永遠只算 34px（約兩行）給描述，多出來的字被外框的
+     * `overflow: hidden` 吃掉。三層各自獨立在吃字，只改一層等於沒改。
+     *
+     * ⚠️ 這幾格是**和 `BossIntroOverlay.tsx` 的 CSS 對齊的量**，不是隨便填的
+     * 美感值：`descLineH` 要等於描述那一行的 `fontSize × lineHeight`
+     * （出貨 12 × 1.35 ≈ 16.2 → 17），`descCharsPerLine` 是 460px 寬的面板扣掉
+     * 24px 左右留白之後，12px 中文字大約塞得下的字數。填錯的代價是版面算出來的
+     * 高度和畫出來的高度不一樣 —— 算太少會截字（就是這次的缺陷），算太多會在
+     * 底下留一塊空白。
+     */
+    layout: z
+      .object({
+        /** 大字名言那一行的高度 */
+        quoteH: z.number().min(0).max(200),
+        /** 英雄名那一行的高度（這一行永遠在） */
+        nameH: z.number().min(0).max(200),
+        /** 描述**一行**多高 */
+        descLineH: z.number().min(1).max(80),
+        /** 描述最多佔幾行 —— 這一格才是「描述框有多大」 */
+        descMaxLines: z.number().int().min(1).max(24),
+        /** 描述一行大約幾個字（換算行數用） */
+        descCharsPerLine: z.number().int().min(1).max(200),
+        /** 一個段落標題（「攻略要點」／「弱點」）多高 */
+        headH: z.number().min(0).max(120),
+        /** 一條列點多高 */
+        rowH: z.number().min(0).max(120),
+        /** 外框上下留白合計 */
+        padH: z.number().min(0).max(120),
+      })
+      .strict()
+      .optional(),
+    /**
+     * #291 **決策點** —— 走廊高度不夠時**先丟哪一段**。
+     * SHIPS `["description", "tips", "weaknesses"]`（＝這一格出現之前寫死的順序）。
+     *
+     * 為什麼它現在必須是一格：把描述框加高的代價是**矮螢幕上更容易連攻略要點都
+     * 保不住**。原本的理由是「描述是身世故事，戰鬥中最不影響下一秒的動作；弱點是
+     * 『現在要怎麼打』的答案，最後才丟」—— 那是一個判斷，不是一條定律，而它的
+     * 後果會隨著描述變大而變重。填 `["tips","weaknesses","description"]` 就是
+     * 「我寧可先保住描述」。列表裡沒提到的段落＝**最後才丟**。
+     * 名言不在選項裡：它是 owner 指名的主角，而且只有真的有資料時才存在。
+     */
+    dropOrder: z.array(z.enum(["description", "tips", "weaknesses"])).max(3).optional(),
     /** championId -> 這一隻王穿上那張臉時要講什麼。沒有的 key = 那位沒有文案。 */
     champions: z.record(zBossIntroChampionEntry),
   })
@@ -4129,9 +4339,27 @@ export const DEFAULT_BOSS_INTRO: ConfigBossIntroDoc = {
   enabled: true,
   introHoldSec: 5,
   fadeSec: 0.6,
-  descriptionMaxChars: 120,
+  // #291 owner 2026-08-03「描述還有很多沒顯示完」—— 120 → 300。
+  // ⚠️ 單獨調大這一格**看不出任何差別**（那正是缺陷的一半）：版面必須同時給得出
+  // 高度，也就是下面 `layout.descMaxLines`。300 字 ÷ 36 字/行 ≈ 9 行 × 17px
+  // ≈ 146px，1280×800 的中央走廊有 424px，連攻略要點與弱點一起放得下。
+  descriptionMaxChars: 300,
   maxTips: 3,
   maxWeaknesses: 3,
+  // #291 —— 和 `content/config/boss-intro.json` 一字不差；出貨值等於這一格出現
+  // 之前 `bossIntroModel.ts` 那六個常數（DESC 那一格從「34px 固定」換成
+  // 「一行 17px × 最多 10 行」，因為固定值就是缺陷本身）。
+  layout: {
+    quoteH: 42,
+    nameH: 20,
+    descLineH: 17,
+    descMaxLines: 10,
+    descCharsPerLine: 36,
+    headH: 16,
+    rowH: 17,
+    padH: 14,
+  },
+  dropOrder: ["description", "tips", "weaknesses"],
   champions: {},
 };
 
@@ -4279,7 +4507,13 @@ export type ValhallaSandboxPolicyDoc = Omit<ConfigValhallaSandboxDoc, "id" | "sc
  */
 export const DEFAULT_LOBBY_LAYOUT_POLICY: LobbyLayoutPolicyDoc = {
   leftColumnWidthPx: 280,
-  friendsShare: 0.5,
+  // 40 / 30 / 30 —— owner 2026-08-03 在 FRIEND 與排位榜「中間」插進線上玩家列表,
+  // 左欄從兩塊變三塊,所以「各半」的 0.5 已經不存在了。三段相加必須是 1。
+  friendsShare: 0.4,
+  onlineShare: 0.3,
+  leaderboardShare: 0.3,
+  alreadyFriendMode: "greyed-button",
+  stackOrder: ["friends", "online", "leaderboard"],
   minSlotHeightPx: 168,
   splitMinHeightPx: 560,
   stackBelowWidthPx: 720,
@@ -4312,6 +4546,10 @@ export function resolveLobbyLayout(
   return {
     leftColumnWidthPx: doc.leftColumnWidthPx,
     friendsShare: doc.friendsShare,
+    onlineShare: doc.onlineShare,
+    leaderboardShare: doc.leaderboardShare,
+    alreadyFriendMode: doc.alreadyFriendMode,
+    stackOrder: doc.stackOrder,
     minSlotHeightPx: doc.minSlotHeightPx,
     splitMinHeightPx: doc.splitMinHeightPx,
     stackBelowWidthPx: doc.stackBelowWidthPx,

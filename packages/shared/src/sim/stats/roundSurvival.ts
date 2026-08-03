@@ -100,9 +100,23 @@ export function compareSurvival(a: SurvivalSeat, b: SurvivalSeat): number {
   const ta = survivalTier(a);
   const tb = survivalTier(b);
   if (ta !== tb) return ta - tb;
-  // 同一階層:倒得越晚越前面。SURVIVED / ABSENT 兩層的 deathTick 都是 0,
-  // 所以這一行對它們是 no-op,直接落到下面的平手規則。
-  if (a.roundDeathTick !== b.roundDeathTick) return b.roundDeathTick - a.roundDeathTick;
+  // 「倒得越晚越前面」**只在 ELIMINATED 這一層成立**。
+  //
+  // ⚠️ 這裡原本沒有這個條件，理由寫成「SURVIVED / ABSENT 兩層的 deathTick 都是 0,
+  // 所以這一行對它們是 no-op」—— **那句話是假的**，而且是 owner 2026-08-02 回報
+  // 「回合勝利出現的 3d model 應該是勝利角色 但現在不是」的根因之一。
+  //
+  // #84 的復活圈會把倒下的人拉起來。被拉起來、回合結束時還站著的人是
+  // `alive === true`（⇒ tier SURVIVED）**而且** `roundDeathTick > 0`（主機那一格
+  // 只在 `resetRoundTallies` 歸零，`revive.ts` 不碰它）。於是他跟「全程沒被打倒」
+  // 的人同層，而這一行把 deathTick 大的排前面 —— **復活過的人偷走金冠**，
+  // 而嘲諷語音走的是另一條選擇器，當場跟皇冠分岔。
+  //
+  // `alive === true ∧ roundDeathTick > 0` 這個組合在全 repo 沒有任何 fixture，
+  // 所以既有的測試對它是盲的（失敗形態 ④：斷言方向跟缺陷無關）。
+  if (ta === SURVIVAL_TIER.ELIMINATED && a.roundDeathTick !== b.roundDeathTick) {
+    return b.roundDeathTick - a.roundDeathTick;
+  }
   if (a.roundKills !== b.roundKills) return b.roundKills - a.roundKills;
   return a.seatId - b.seatId;
 }

@@ -31,8 +31,28 @@
  * port are injectable, so the lifecycle (mount → show → swap → clear → dispose),
  * the wash and the taunt selection unit-test in the node env without a DOM, a
  * WebGL context or a single sound.
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 2026-08-03 —— 「回合勝利出現的 3d model 是勝利角色 但現在不是」(v0.9.27 迴歸)
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 三件事一起讓「誰贏了」讀不出來,三件都變成 `config.victory-podium@1` 的欄位:
+ *
+ *   · **站位**(`podiumLayout`)。卡片位置本來只是 member index 的函式,所以三個人
+ *     時螢幕正中央站的是**第二名** —— 而第二名依定義是這一回合倒下的人。
+ *     出貨值改成 `centreFirst`(金正中、銀左、銅右)。
+ *   · **大小 / 疊層**(`winnerScale`)。三張卡本來同尺寸、無 z-order。
+ *   · **動作**(`clipGold` / `clipSilver` / `clipBronze`)。`StorePreview` 裡的
+ *     `play("idle")` 是全檔唯一的 `.play(`,一個硬字串,而商店 / 選角試鏡 / 頒獎台
+ *     共用那一支 previewer —— 所以「勝利」和「站在商店裡」播的是同一個剪輯。
+ *     出貨值:金 `celebrate`、銀銅 `idle`。
+ *
+ * 而在此之前那份 config **完全沒有執行期消費端**:`resolveVictoryPodium` 是全 repo
+ * 零呼叫端的,`planRoundWinnerShow` 的 `cfg` 預設值是寫死的常數。見
+ * {@link victoryPodiumPolicy}。
  */
 import type { ModelDoc } from "@ggd/shared/content";
+import { Configs } from "@ggd/shared/content/registries";
+import type { ClipState } from "./ClipAnimator";
 import { StorePreview } from "./StorePreview";
 import {
   victoryPresentation,
@@ -44,6 +64,10 @@ import { victoryTaunts, type PlayTauntOptions, type VictoryTauntLine } from "../
 import { crownSvg, CROWN_PALETTE, type CrownMedal } from "./victoryCrown";
 import {
   DEFAULT_VICTORY_PODIUM,
+  resolveVictoryPodium,
+  type ConfigVictoryPodiumDoc,
+  type VictoryPodiumClip,
+  type VictoryPodiumLayout,
   type VictoryPodiumPolicy,
   type VictoryRoundWinLine,
 } from "@ggd/shared/content/schema/victoryPodium";
@@ -54,10 +78,79 @@ import {
   type RoundTeamView,
 } from "../ui/panels/settlementModel";
 
+/**
+ * 現行的頒獎台政策 —— `content/config/victory-podium.json`,經
+ * `resolveVictoryPodium` 解出來的那一份 (GH#257)。
+ *
+ * ⚠️ **這一支就是「後台改得到畫面」的那一段。** 在 2026-08-03 之前
+ * `resolveVictoryPodium` 是全 repo **零 production 呼叫端**的:那份 JSON 存在、
+ * 進了版控、進了 `zConfigDoc` union、進了 bundle —— 而 `planRoundWinnerShow` 的
+ * `cfg` 預設值是寫死的 `DEFAULT_VICTORY_PODIUM` 常數。也就是說操作者把
+ * `podiumSize` 改成 5、存檔、部署,畫面上還是三個人(失敗形態 ②:算出來了但
+ * 從沒送到)。
+ *
+ * 讀 `Configs` 登錄表而不是 `ContentDb`:`render/**` 不持有 ContentDb,而登錄表
+ * 正是 `ContentLoader` 在開機時把驗證過的文件放進去的地方 —— 也就是 game shard
+ * `/healthz` 的 `content.ok` 讀的那一份。內容還沒載完 / 整份載失敗(骨架路徑)時
+ * `tryGet` 回 undefined,於是退回出貨預設,**不是**退回一個空的頒獎台。
+ *
+ * 每一回合重讀一次(不是模組載入時算一次):內容在第一次 `resolution` 之前才載完
+ * 是正常的,而快取一個「還沒載到」的答案會讓整場都用預設值。
+ */
+export function victoryPodiumPolicy(): VictoryPodiumPolicy {
+  const doc = Configs.tryGet("victory-podium") as { schema?: string } | undefined;
+  return resolveVictoryPodium(
+    doc?.schema === "config.victory-podium@1" ? (doc as ConfigVictoryPodiumDoc) : null,
+  );
+}
+
+/**
+ * 名次 → 螢幕上的第幾格 (GH#257)。`out[memberIndex] = slotIndex`。
+ *
+ * `rank` 是 v0.9.27 寫死的那一種:`slot === index`,所以三個人時**正中央那一格
+ * 是第二名**。玩家的眼睛先看中間,於是「誰贏了」讀起來是錯的 —— owner 2026-08-03
+ * 「回合勝利出現的 3d model 是勝利角色 但現在不是」。
+ *
+ * `centreFirst` / `soloWinner` 把第一名放中間那一格(`floor((n-1)/2)`),之後
+ * 左、右、左、右交錯填,越界的偏移直接跳過。n=3 → `[1, 0, 2]`(金正中、銀左、
+ * 銅右);n=1 → `[0]`;n=2 → `[0, 1]`。純函式,所以「金在哪一格」測得到。
+ */
+export function podiumSlotOrder(total: number, layout: VictoryPodiumLayout): number[] {
+  const n = Math.max(1, Math.floor(total));
+  if (layout === "rank") return Array.from({ length: n }, (_, i) => i);
+  const mid = Math.floor((n - 1) / 2);
+  const out: number[] = [];
+  for (let step = 0; out.length < n && step < 4 * n + 8; step++) {
+    const k = Math.ceil(step / 2);
+    const slot = step === 0 ? mid : mid + (step % 2 === 1 ? -k : k);
+    if (slot >= 0 && slot < n && !out.includes(slot)) out.push(slot);
+  }
+  return out;
+}
+
+/** 名次 → 該播哪一個剪輯。沒有冠的台階(第四名以後 / 舊呼叫端)一律站姿。 */
+export function podiumClipFor(
+  medal: CrownMedal | null | undefined,
+  cfg: VictoryPodiumPolicy,
+): VictoryPodiumClip {
+  if (medal === "gold") return cfg.clipGold;
+  if (medal === "silver") return cfg.clipSilver;
+  if (medal === "bronze") return cfg.clipBronze;
+  return "idle";
+}
+
 /** The slice of StorePreview this stage drives (injectable for headless tests). */
 export interface WinnerPreview {
-  /** `opts.championId` carries the w3x vertex tint through (task #263). */
-  show(doc: ModelDoc, opts?: { championId?: string | null }): Promise<void> | void;
+  /**
+   * `opts.championId` carries the w3x vertex tint through (task #263);
+   * `opts.clip` is WHICH animation plays on the card (GH#257) — before that
+   * existed every card played `idle`, so a round win looked exactly like a
+   * champion standing in the shop.
+   */
+  show(
+    doc: ModelDoc,
+    opts?: { championId?: string | null; clip?: ClipState },
+  ): Promise<void> | void;
   dispose(): void;
 }
 
@@ -99,6 +192,12 @@ export interface WinnerEntry {
    */
   place?: number;
   medal?: CrownMedal | null;
+  /**
+   * 這一張卡要播的剪輯 (GH#257)。省略 = `idle`(舊呼叫端完全不變)。
+   * 由 {@link planRoundWinnerShow} 依名次從政策算好,理由和 `place`/`medal` 一樣:
+   * 這個類別一格都不決定,否則會出現第二份「誰在慶祝」的答案。
+   */
+  clip?: VictoryPodiumClip;
 }
 
 export interface RoundWinnerStageOptions {
@@ -130,22 +229,36 @@ export interface RoundWinnerStageOptions {
   roundWinLine?: VictoryRoundWinLine;
 }
 
-/** 皇冠徽章 —— 釘在該張卡片的正上方,壓在灰底之上。 */
-function styleCrown(el: HTMLElement | null, index: number, total: number): void {
+/**
+ * 皇冠徽章 —— 釘在該張卡片的正上方,壓在灰底之上。
+ *
+ * `slot` 是**畫面上的第幾格**,不是名次 —— 在 `centreFirst` 之下金冠的 slot 是
+ * 中間那一格。冠和卡片吃同一個 slot,所以冠永遠在自己那張卡的正上方。
+ */
+function styleCrown(
+  el: HTMLElement | null,
+  slot: number,
+  total: number,
+  scale = 1,
+): void {
   const s = el?.style;
   if (!s) return;
   const n = Math.max(1, total);
-  const centre = ((index + 0.5) / n) * 100;
+  const centre = ((slot + 0.5) / n) * 100;
   s.position = "fixed";
   s.left = `${centre}%`;
   // 卡片的中心在 46%、高度上限 min(56vh…),所以冠要往上讓開卡片的上緣。
   s.top = "13%";
   s.transform = "translate(-50%, -50%)";
-  s.width = `min(${Math.round(11 / Math.max(1, n / 3))}vh, ${Math.round(22 / n)}vw)`;
-  s.zIndex = String(ROUND_SUBTITLE_Z);
+  s.width = `min(${Math.round((11 / Math.max(1, n / 3)) * scale)}vh, ${Math.round((22 / n) * scale)}vw)`;
+  // 金冠和它的卡片一起疊上一層,否則放大後的金卡會蓋住自己的冠。
+  s.zIndex = String(ROUND_SUBTITLE_Z + (scale > 1 ? 1 : 0));
   s.pointerEvents = "none";
   s.filter = "drop-shadow(0 4px 10px rgba(0,0,0,0.7))";
 }
+
+/** 卡片的基礎 z-index。放大的那一張(金冠)踩 +1,所以它疊在鄰居上面。 */
+const CARD_Z = 6;
 
 /**
  * Position one winner's canvas within the ROW of them.
@@ -153,34 +266,51 @@ function styleCrown(el: HTMLElement | null, index: number, total: number): void 
  * The owner asked for the whole team, not the MVP alone (2026-07-27:
  * 「勝利的時候應該秀隊伍三人的模組」) — a 3v3v3v3 round is won by three people
  * and presenting only the top scorer quietly told the other two they were
- * scenery. So the card became a row, and every card is laid out from its INDEX
- * rather than pinned to dead centre.
+ * scenery. So the card became a row.
+ *
+ * ⚠️ `slot` is WHERE ON SCREEN this card goes, and it is NOT the member index.
+ * Until 2026-08-03 it was, and that is exactly the defect the owner reported
+ * (「回合勝利出現的 3d model 是勝利角色 但現在不是」): with three cards the
+ * middle of the screen — the first place anyone looks — held member[1], the
+ * SECOND place, who by definition is somebody who went down this round.
+ * {@link podiumSlotOrder} owns that mapping now, so the row order is a config
+ * field instead of an accident of the loop counter.
+ *
+ * `scale` is the same story for SIZE: three identically-sized cards with no
+ * z-order made "who won" readable only from the crown's colour.
  *
  * Sized from the count, not from a constant: one winner keeps the full-width
  * portrait the single-model beat always had, and three share the width without
- * anyone falling off a phone. `left` walks the row in even steps and each card
- * is centred on its own step, so the row is symmetric about the screen for any
- * `total` — no special case for 1, 2 or 3.
+ * anyone falling off a phone. Every dimension is clamped so a large
+ * `winnerScale` cannot push a card past the viewport.
  *
  * Fixed to the viewport, above the world-anchored HP bars (#anchor-layer, z 5)
  * and below the HUD (#hud-root, z 10); never intercepts input.
  */
-function styleOverlayCanvas(canvas: HTMLCanvasElement, index: number, total: number): void {
+function styleOverlayCanvas(
+  canvas: HTMLCanvasElement,
+  slot: number,
+  total: number,
+  scale = 1,
+): void {
   const s = canvas.style;
   if (!s) return; // headless fake — nothing to style
   const n = Math.max(1, total);
+  const k = scale > 0 ? scale : 1;
+  const vh = (v: number): number => Math.min(88, Math.round(v * k));
+  const vw = (v: number): number => Math.min(96, Math.round(v * k));
   // width per card: the solo card keeps its old size; a row divides the space.
-  const w = n === 1 ? "min(40vh, 84vw)" : `min(${Math.round(34 / n + 8)}vh, ${Math.round(88 / n)}vw)`;
-  const h = n === 1 ? "min(54vh, 96vw)" : `min(${Math.round(46 / n + 10)}vh, ${Math.round(96 / n)}vw)`;
-  // centre of this card's slot, as a percentage across the viewport
-  const centre = ((index + 0.5) / n) * 100;
+  const w = n === 1 ? `min(${vh(40)}vh, ${vw(84)}vw)` : `min(${vh(34 / n + 8)}vh, ${vw(88 / n)}vw)`;
+  const h = n === 1 ? `min(${vh(54)}vh, ${vw(96)}vw)` : `min(${vh(46 / n + 10)}vh, ${vw(96 / n)}vw)`;
+  // centre of this card's SLOT, as a percentage across the viewport
+  const centre = ((slot + 0.5) / n) * 100;
   s.position = "fixed";
   s.left = `${centre}%`;
   s.top = "46%";
   s.transform = "translate(-50%, -50%)";
   s.width = w;
   s.height = h;
-  s.zIndex = "6";
+  s.zIndex = String(k > 1 ? CARD_Z + 1 : CARD_Z);
   s.pointerEvents = "none";
   s.borderRadius = "14px";
   s.outline = "none";
@@ -329,7 +459,11 @@ export class RoundWinnerStage {
    *
    * Never throws — every model load and the taunt all self-degrade to nothing.
    */
-  showTeam(members: readonly WinnerEntry[], ctx: RoundWinnerContext = {}): void {
+  showTeam(
+    members: readonly WinnerEntry[],
+    ctx: RoundWinnerContext = {},
+    cfg: VictoryPodiumPolicy = victoryPodiumPolicy(),
+  ): void {
     if (this.disposed || members.length === 0) return;
     const spec = victoryPresentation("round");
 
@@ -357,7 +491,6 @@ export class RoundWinnerStage {
 
       for (let i = 0; i < members.length; i++) {
         const canvas = this.createCanvas();
-        styleOverlayCanvas(canvas, i, members.length);
         this.host?.appendChild(canvas);
         this.canvases.push(canvas);
         this.previews.push(this.createPreview(canvas));
@@ -365,7 +498,6 @@ export class RoundWinnerStage {
         // 沒有名次的台階仍然建一個空節點,index 才會和卡片對齊 —— 少建一個
         // 會讓第二名的冠飄到第三張卡上。
         const crown = this.createElement("div");
-        styleCrown(crown, i, members.length);
         if (crown) {
           this.host?.appendChild(crown);
           this.crowns.push(crown);
@@ -380,11 +512,24 @@ export class RoundWinnerStage {
       }
     }
 
+    // 版面每一次都重算,不是只在圖層重建時算:人數沒變但**政策變了**
+    // (操作者把 podiumLayout 從 rank 切成 centreFirst)的那一回合,圖層是重用的,
+    // 所以只在建立時套用會讓那個欄位看起來完全沒作用(失敗形態 ②)。
+    const slots = podiumSlotOrder(members.length, cfg.podiumLayout);
     // #263: hand each winner's championId to its previewer so the w3x art
     // colour is painted here too. Before this the card showed the RAW mesh —
     // 黑化Saber won a round and stood there as a plain gold Saber.
     members.forEach((m, i) => {
-      void this.previews[i]?.show(m.doc, { championId: m.championId ?? null });
+      // 金冠那一張放大並疊到上層;其餘 1.0。`place` 缺席(舊的單人呼叫端)也是 1.0。
+      const scale = m.place === 1 ? cfg.winnerScale : 1;
+      const slot = slots[i] ?? i;
+      const canvas = this.canvases[i];
+      if (canvas) styleOverlayCanvas(canvas, slot, members.length, scale);
+      styleCrown(this.crowns[i] ?? null, slot, members.length, scale);
+      void this.previews[i]?.show(m.doc, {
+        championId: m.championId ?? null,
+        clip: m.clip ?? "idle",
+      });
       this.paintCrown(this.crowns[i] ?? null, m);
     });
 
@@ -475,6 +620,12 @@ export class RoundWinnerStage {
 export interface RoundWinnerShowPlan {
   members: WinnerEntry[];
   ctx: RoundWinnerContext & { championId: string; round: number };
+  /**
+   * 這一拍用的政策,原封不動帶回來。呼叫端可以把它交給
+   * {@link RoundWinnerStage.showTeam} 的第三個引數,讓「挑人」與「擺位」讀的
+   * 是**同一次**登錄表快照;不傳的話舞台自己再讀一次(同一拍,同解)。
+   */
+  cfg: VictoryPodiumPolicy;
 }
 
 /**
@@ -488,7 +639,7 @@ export interface RoundWinnerShowPlan {
  * 進 `hudStore`、把回傳值交給真的 `RoundWinnerStage`,斷言**舞台真的收到**存活順序
  * 與金銀銅 —— 行為,不是字串。
  *
- * 三件事在這裡決定,三件都可以獨立壞掉:
+ * 五件事在這裡決定,五件都可以獨立壞掉:
  *
  *   1. **上台的人與順序** = `roundVictoryPodium`(存活順序 + 金銀銅 + 範圍政策)。
  *      拿不到 `roundDeathTick` 的舊快照 → podium 是空的 → 退回
@@ -499,13 +650,21 @@ export interface RoundWinnerShowPlan {
  *   3. **嘲諷仍然屬於回合 MVP**(`roundEndQuoteChampion`),不是金冠。兩者常常同一位
  *      但不必然:台詞是寫給敗方聽的,而且 `audio/victoryTaunt` 用 championId+round
  *      雜湊,每個客戶端算出同一句。改用 podium[0] 會**靜默換掉**全場聽到的那個笑話。
+ *   4. **每一位播哪一個剪輯**(`podiumClipFor`)。出貨是金 `celebrate` / 銀銅 `idle` ——
+ *      三個人一起慶祝就等於沒有說出誰是第一。退回路徑(沒有名次)一律 `idle`。
+ *   5. **`soloWinner` 只演金冠一位**。截在這裡而不是在舞台上,因為它決定的是
+ *      **演誰**;舞台只負責把交給它的人擺好。
+ *
+ * ⚠️ `cfg` 的預設值是 `victoryPodiumPolicy()` —— **`content/config/victory-podium.json`
+ * 本人**,不是 code 裡的常數。`GameApp.updateRoundWinner` 傳四個引數,所以走的就是
+ * 這個預設。在 2026-08-03 之前它是 `DEFAULT_VICTORY_PODIUM`,於是那份 JSON 是死的。
  */
 export function planRoundWinnerShow(
   seats: readonly PodiumSeatView[],
   teams: readonly RoundTeamView[],
   round: number,
   docFor: (championId: string) => ModelDoc | null,
-  cfg: VictoryPodiumPolicy = DEFAULT_VICTORY_PODIUM,
+  cfg: VictoryPodiumPolicy = victoryPodiumPolicy(),
 ): RoundWinnerShowPlan | null {
   const podium = roundVictoryPodium(seats, teams, cfg);
   const fallback = podium.length > 0 ? [] : roundWinnerTeamChampions(seats, teams);
@@ -513,15 +672,29 @@ export function planRoundWinnerShow(
   const members: WinnerEntry[] = [];
   for (const p of podium) {
     const doc = docFor(p.championId);
-    if (doc) members.push({ doc, championId: p.championId, place: p.place, medal: p.medal });
+    if (doc) {
+      members.push({
+        doc,
+        championId: p.championId,
+        place: p.place,
+        medal: p.medal,
+        clip: podiumClipFor(p.medal, cfg),
+      });
+    }
   }
   for (const id of fallback) {
     const doc = docFor(id);
-    if (doc) members.push({ doc, championId: id });
+    // 退回路徑沒有名次,所以沒有冠、也沒有慶祝 —— 給第一位 `celebrate` 會是在
+    // 一個「大家平手」的排序上宣稱誰贏了。
+    if (doc) members.push({ doc, championId: id, clip: "idle" });
   }
   if (members.length === 0) return null;
 
+  // `soloWinner`:只留第一名(#143 原始的單人特寫)。截在這裡而不是在舞台上,
+  // 因為它決定的是**演誰**,而舞台只負責把交給它的人擺好。
+  const shown = cfg.podiumLayout === "soloWinner" ? members.slice(0, 1) : members;
+
   const championId =
     roundEndQuoteChampion(seats, teams) ?? podium[0]?.championId ?? fallback[0] ?? "";
-  return { members, ctx: { championId, round } };
+  return { members: shown, ctx: { championId, round }, cfg };
 }

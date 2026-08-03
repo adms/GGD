@@ -33,6 +33,7 @@ import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
+import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import {
   DEFAULT_TAUNT_RULES,
   forgetSuspendedOrdersOn,
@@ -299,6 +300,23 @@ export class SimWorld {
    * the whole arena (protocol/schema.ts) and the still-live zone needs it.
    */
   readonly settledZones = new Set<number>();
+
+  /**
+   * 「一隊全滅之後，這個 zone 不再生新的殭屍」—— owner 2026-08-02
+   * 「敵方英雄全死光 或我方英雄全死光 殭屍就不應該再生成」。
+   *
+   * ⚠️ 為什麼這是一個**獨立**的集合，而不是直接寫進 `settledZones`：
+   * `settledZones` 同時代表三件事（不生怪 ⊕ 掉仇恨 ⊕ 火圈不燒），而主機在
+   * 「一隊全滅但殭屍王還站著」那一刻**只想要第一件**。把 zone 丟進
+   * `settledZones` 會順手讓王掉仇恨，王就變成一個站著不還手的沙包 —— 那不是
+   * 「壓住回合是為了讓你去打王」的意思。
+   *
+   * ⚠️ 它跟 `settledZones` 一起在 `MatchController.enterCombat` 清空。
+   * 生成閘門是 `MobSystem` 那一圈的 `settledZones.has(zone) ||
+   * spawnHaltedZones.has(zone)`；兩個都是 SIM 狀態（不是主機狀態），所以客戶端
+   * 預測重播得到一樣的結果。
+   */
+  readonly spawnHaltedZones = new Set<number>();
 
   /**
    * Combat-juice freeze state (deterministic, part of world state so client
@@ -889,6 +907,16 @@ export class SimWorld {
    * false,也就是隱形只剩畫面、完全不影響索敵,而畫面上看起來一切正常。
    */
   stealthRules: StealthRules = DEFAULT_STEALTH_RULES;
+
+  /**
+   * 暴走規則 (`config.berserk@1`, see abilities/berserkRules.ts) —— 主動暴走的
+   * 生命門檻(≤15%)與暴走期間的技能冷卻倍率(×2)。和 `stealthRules` 完全同
+   * 一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨表**(owner 2026-08-03 定稿),不是空物件 —— 空表會讓
+   * `castHpPct` 讀成 undefined,於是「快死才放得出來」的閘靜默消失,而按鈕
+   * 在畫面上看起來一切正常。
+   */
+  berserkRules: BerserkRules = DEFAULT_BERSERK_RULES;
 
   constructor(arena: ArenaDef, seed: number) {
     this.arena = arena;

@@ -3,13 +3,18 @@
  * logout), friends panel, room browser or room view, leaderboard, plus the
  * live invite prompts pushed over the lobby WS.
  *
- * ---- TWO COLUMNS, NOT THREE (GH#255) ---------------------------------------
- * owner: 「原本排行榜移到朋友列表下半部，各佔左邊排的上下各半」. The ladder used
- * to own a third 280px column of its own; it now shares the LEFT column with
- * the friends list, 朋友列表 on top and 排位榜 underneath. The two halves are
- * flex slots whose sizing comes from ./lobbyLayout — including the split/stack
- * decision on a short viewport, which is a policy value rather than a literal
- * buried in the JSX (see that module's header for why).
+ * ---- TWO COLUMNS, AND THE LEFT ONE IS IN THREE -----------------------------
+ * owner 2026-08-02: 「原本排行榜移到朋友列表下半部，各佔左邊排的上下各半」(GH#255)
+ * owner 2026-08-03: 「大廳 FRIEND 跟排位榜 中間，多出一個區域顯示所有大廳正在線上
+ * 的玩家列表，並且名字旁邊有按鈕可以一鍵加入朋友」
+ *
+ * The ladder used to own a third 280px column of its own; it now shares the
+ * LEFT column with the friends list AND the new 線上玩家 panel, in that order:
+ * 朋友列表 / 線上玩家 / 排位榜 at 40% / 30% / 30%. The three slots are flex
+ * slots whose ORDER and SIZE both come from ./lobbyLayout — including the
+ * split/stack decision on a short viewport and the phone stacking order, which
+ * are policy values rather than literals buried in this JSX (see that module's
+ * header for why).
  *
  * ---- ONE PLACE TO START A GAME (GH#258) ------------------------------------
  * owner: 「單人 vs BOT 變成 create room 底下預設的一個房間 (意思是這兩個也合併)」.
@@ -39,6 +44,7 @@ import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { FriendsPanel } from "./FriendsPanel";
 import { LobbyAnnouncement } from "./LobbyAnnouncement";
 import { LeaderboardPanel } from "./LeaderboardPanel";
+import { OnlinePlayersPanel } from "./OnlinePlayersPanel";
 import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
 import { StoreScreen } from "./StoreScreen";
@@ -47,7 +53,13 @@ import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
 import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
-import { DEFAULT_LOBBY_LAYOUT, leftColumnSlotStyle, leftColumnStyle, useLeftColumnMode } from "./lobbyLayout";
+import {
+  DEFAULT_LOBBY_LAYOUT,
+  leftColumnSlots,
+  leftColumnSlotStyle,
+  leftColumnStyle,
+  useLeftColumnMode,
+} from "./lobbyLayout";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 /** The lobby shell's own edge padding — also the header's `outerInset`. */
@@ -508,31 +520,41 @@ export function LobbyScreen(): React.JSX.Element {
       ) : (
         // .ggd-lobby-body / .ggd-lobby-col let platform/ranking.css stack these
         // TWO columns on a narrow viewport (phone portrait) — desktop keeps the
-        // inline widths untouched. (Two, not three, since GH#255 moved the
-        // ladder into the left column; the stylesheet rule is per-column so it
-        // did not have to change.)
+        // inline widths untouched. (Two COLUMNS, since GH#255 moved the ladder
+        // into the left one; the stylesheet rule is per-column, so neither that
+        // change nor the 線上玩家 panel added inside the left column touched it.)
         <div className="ggd-lobby-body" style={{ display: "flex", gap: 12, flex: 1, minHeight: 0 }}>
-          {/* LEFT COLUMN, HALVED (GH#255) — 朋友列表 on top, 排位榜 underneath.
-              Both slots come from ./lobbyLayout, so the two halves are equal by
-              construction (one `friendsShare`) and the phone behaviour is a
-              policy decision rather than a literal in this JSX. Each slot
-              scrolls inside itself and clips horizontally, which is what keeps
-              a long name or a wide ladder row from widening the whole page. */}
+          {/* LEFT COLUMN, IN THREE (GH#255 + owner 2026-08-03) — 朋友列表 /
+              線上玩家 / 排位榜. Every slot's ORDER and SIZE comes from
+              ./lobbyLayout, so the shares are one set of policy numbers
+              (40/30/30) and the phone stacking order is a policy value rather
+              than the order somebody happened to type here. Each slot scrolls
+              inside itself and clips horizontally, which is what keeps a long
+              name or a wide ladder row from widening the whole page. */}
           <div
             className="ggd-lobby-col"
             data-ggd-lobby-left=""
             style={leftColumnStyle(DEFAULT_LOBBY_LAYOUT)}
           >
-            <div data-ggd-lobby-slot="friends" style={leftColumnSlotStyle("friends", leftMode, DEFAULT_LOBBY_LAYOUT)}>
-              <FriendsPanel />
-              {/* 邀請好友 lives with the friend list it is about; it renders
-                  null on an account with no code, so on most days the top half
-                  is the friends panel alone. */}
-              <ReferralPanel />
-            </div>
-            <div data-ggd-lobby-slot="leaderboard" style={leftColumnSlotStyle("leaderboard", leftMode, DEFAULT_LOBBY_LAYOUT)}>
-              <LeaderboardPanel />
-            </div>
+            {leftColumnSlots(leftMode, DEFAULT_LOBBY_LAYOUT).map((slot) => (
+              <div
+                key={slot}
+                data-ggd-lobby-slot={slot}
+                style={leftColumnSlotStyle(slot, leftMode, DEFAULT_LOBBY_LAYOUT)}
+              >
+                {slot === "friends" && (
+                  <>
+                    <FriendsPanel />
+                    {/* 邀請好友 lives with the friend list it is about; it
+                        renders null on an account with no code, so on most days
+                        the top slot is the friends panel alone. */}
+                    <ReferralPanel />
+                  </>
+                )}
+                {slot === "online" && <OnlinePlayersPanel policy={DEFAULT_LOBBY_LAYOUT} />}
+                {slot === "leaderboard" && <LeaderboardPanel />}
+              </div>
+            ))}
           </div>
           <div className="ggd-lobby-col" style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
             {/* 英靈殿 (#258) — owner: 「大廳中央上面 (單人vsBot 之上)」. It is an

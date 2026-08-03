@@ -106,6 +106,18 @@ interface Result {
    * MatchController / ReviveSystem — so measuring past the first death would
    * report a clear that the WALK never earned.) `false` here is #269's own
    * forensic marker: the destination was never reached, not even once.
+   *
+   * ⚠️ 2026-08-03 —— 這一格也必須跟 `hijackedTicks` 一樣**只在 `combatActive`
+   * 為真時取樣**,理由完全相同而且下面那一段早就寫著:回合一結算,
+   * `MatchController.freezeCombatIntent` 就把意圖改寫成 `stop`,而 `OrderSystem`
+   * 的 `case "stop"` 會消耗掉 `nav.order` —— 於是「回合結束了」被這個儀器讀成
+   * 「他走到他點的地方了」。
+   *
+   * 實測(obstacle 情境,seed 7919):最後一 tick t=2447,`combatActive=false`、
+   * `settledZones={0,1}`、玩家還活著、離柱子 15.52 單位 —— 一步都沒走到,而這一格
+   * 在補上閘門之前回報 true。owner 2026-08-02 的
+   * `mobWaves.roundHoldMobKinds="boss"` 讓一隊全滅的 zone 當場結算(不再被普通殭屍
+   * 壓著),所以現在戰鬥經常在玩家**還活著**的時候結束,這條路徑才第一次被走到。
    */
   orderClearedWhileAlive: boolean;
   /**
@@ -272,7 +284,17 @@ function runMatch(feed: Feed, seed = SEED): Result {
       if (hp?.alive) aliveTicks++;
       else if (sawMoveOrder) diedOnce = true;
       if (nav?.order?.kind === "move") sawMoveOrder = true;
-      else if (sawMoveOrder && !diedOnce && hp?.alive && nav?.order == null) {
+      else if (
+        sawMoveOrder &&
+        !diedOnce &&
+        hp?.alive &&
+        nav?.order == null &&
+        // …and combat is still LIVE. A settled zone rewrites the intent to `stop`
+        // by design (MatchController.freezeCombatIntent), and `stop` is consumed
+        // by OrderSystem — that clear belongs to the round ending, not to the
+        // walk arriving. Same gate, same reason, as `hijackedTicks` below.
+        ctl.world.combatActive
+      ) {
         orderClearedWhileAlive = true;
       }
 
@@ -358,20 +380,22 @@ function report(r: Result): string {
 //    · ONE right-click OUTSIDE the zone   hits 0 → 20/30 swings，held 0 → 2117/2489
 //    · ONE right-click INTO A PILLAR      hits 0 → 23/35 swings，held 0 → 2313/2409
 //
-// ⛔ 仍然是 `it.fails`，而且**是刻意的**（兩條都是 `stick` 情境）：
-//    `stick` 每一 tick 都送一條新的 move（真的搖桿就是這樣），所以玩家**正在**
-//    轉方向盤。2026-07-30 量到：讓接敵去救他的代價是整場 2,039/2,355（86.6%）
-//    的走位 tick 被改寫，`moveTarget` 被指到玩家**背後** 18 單位外 —— 推右邊、
-//    角色往左跑，持續 68 秒。那是 owner 回報的「搶走走位還不放手」本身。
+// ✅ 2026-08-03 —— 兩條 `stick` 也翻回 `it` 了，而且**沒有放寬任何一個期望**。
+//    上一版寫「`hits > 0` 和 `combatFeel.standstill` 直接矛盾，唯一的解是讓 sim
+//    接管走位」——那個推論漏了「打就站定」自己的例外：**朝目標靠近時可以起手**。
+//    重新量到的實況（seed 7919，`hijackedTicks` 仍然是 0/2449，一格都沒讓）：
+//      · 第 72 tick 就握住第一個目標，當時 |v| = 5.80 = **全速**。
+//        「走路時索敵仍然在」是 #221/#274 的規格本身，這一格證明它成立。
+//      · 整場 341/2450 tick 握著目標；t=2071 在東牆邊 |v| = 2.52 朝目標靠近
+//        （standstill 的例外）committed 一次揮擊，t=2082 命中。
+//    所以兩條期望同時成立，走位權一個 tick 都沒有被拿去換。
 //
-//    而且 `hits > 0` 這個期望對這個 feed 是**和 `combatFeel.standstill` 直接矛盾**的：
-//    harness 讓玩家一路 +x 撞到 zone 0 的東牆（x ≈ −16.66），全速跑過敵人身邊。
-//    「打就站定」規定走動中不得起手（朝目標靠近除外），所以全速掠過 = 不出手。
-//    唯一能讓它 `hits > 0` 的辦法，就是讓 sim 接管走位把角色停在敵人旁邊 ——
-//    也就是同一個 describe 裡 `hijackedTicks === 0` 那條**明文禁止**的事。
-//    兩條期望不可能同時成立，而該讓步的是 `hits > 0`，不是走位權。
+//    ⚠️ `hits` 只有 **1**（`heldTicks` 是 341）。這是這條規則裡比較薄的一半：
+//    命中與否還要看 standstill 與撞牆的幾何，內容一動就可能回到 0。真正對應標題
+//    「移動指令不得關掉自動攻擊」的機制斷言是 `heldTicks > 0` —— 它紅了才是索敵
+//    被關掉；`hits` 紅了先去看 standstill 與 harness 的撞牆路徑，不要直接動索敵。
 //
-//    ⚠️ 所以：**不要**為了把這兩條翻成 `it` 而放寬 `hijackedTicks`。要動它們，
+//    ⚠️ 仍然成立的那一半：**不要**為了任何理由放寬 `hijackedTicks`。要動它，
 //    先跟 owner 確認「握著搖桿撞牆時，要不要讓系統接手轉向」——那是設計裁決，
 //    不是測試維護。後台已經有開關：`combat-feel.autoEngage.respectLiveSteering`。
 //
@@ -389,7 +413,7 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     expect(r.hits).toBeGreaterThan(0);
   }, 300_000);
 
-  it.fails("STICK HELD — a continuous move order must NOT switch auto-attack off", () => {
+  it("STICK HELD — a continuous move order must NOT switch auto-attack off", () => {
     const r = runMatch("stick");
     console.log(report(r));
     // THE REGRESSION. Pre-#274 this was exactly 0 hits and 0 held ticks over
@@ -503,17 +527,19 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
  * nothing is the failure mode this whole file exists to answer.
  */
 /**
- * 5%, from measurement rather than taste. Baseline is 3.12% (62/1986 ticks,
- * 11 hits, seed 7919). Quadrupling `hitstopTicks` in combat/damage.ts lifts it
- * to 5.56% and trips this — note that it lands at 5.56 and not 12.5 because
- * `HITSTOP_COUNTER_CAP` already clamps the per-hit freeze, so what this ceiling
- * really watches is that cap and the per-champion hit-feel table, not the raw
- * impact formula. 60% headroom over the baseline absorbs seed variance.
+ * ⚠️ 2026-08-03 —— 這個常數以前寫 5、附一整段「5% 是量出來的」的說明，而**它從來
+ * 沒有被用過**：下面的斷言寫的是字面量 20。也就是說那段說明是假的（CLAUDE.md
+ * 第三守則）。現在把常數校正成實際在跑的那個上界並真的用它，**行為一格都沒變**
+ * —— 這是把註解改成不說謊，不是放寬期望。
+ *
+ * 上界看的是什麼：`HITSTOP_COUNTER_CAP` 與逐英雄的手感表（#133），不是原始的
+ * 衝擊公式。重新量到的基線（seed 7919）是 **6/2449 = 0.24%**，離 20 很遠 ——
+ * 這一格會紅，代表凍結預算真的長了一個數量級，不是種子抖動。
  */
-const CEILING_PCT = 5;
+const CEILING_PCT = 20;
 
 describe("#274 the movement budget: hit-feel may cost the walk, but only a little", () => {
-  it.fails("STICK HELD — hitstop eats a bounded slice of the commanded walk", () => {
+  it("STICK HELD — hitstop eats a bounded slice of the commanded walk", () => {
     const r = runMatch("stick");
 
     // The instrument has to be live, or the ceiling below proves nothing.
@@ -529,7 +555,7 @@ describe("#274 the movement budget: hit-feel may cost the walk, but only a littl
         `ticks the player was commanding a walk. Measured 4.2% at base attack speed. If this ` +
         `climbs, holding the stick starts to feel like the game is fighting you — re-check ` +
         `hitstopTicks in combat/damage.ts and the per-champion hit-feel table (#133).`,
-    ).toBeLessThan(20);
+    ).toBeLessThan(CEILING_PCT);
   });
 
   it("the wheel-theft and freeze indicators measure DIFFERENT things", () => {

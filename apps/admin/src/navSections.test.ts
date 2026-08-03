@@ -77,6 +77,11 @@ const BASELINE_PAGES: readonly Page[] = [
   "regenRules",
   "arenaFire",
   "victoryFx",
+  // 回合頒獎台 —— 2026-08-03 由 configDocCoverage 那條「到期條件」逼出來的新頁
+  // （`resolveVictoryPodium` 有了 production 呼叫端，DEFERRED 那一列當場過期）。
+  // 它和 對戰錄影 同一個理由列在這份基準裡：不列的話這條守衛會把「別人加的新頁」
+  // 誤報成分類重編出錯。它留在「系統」，因為 owner 核准的四個新分類沒有點名它。
+  "victoryPodium",
   "vfxForge",
   "mobWaves",
   "bossIntro",

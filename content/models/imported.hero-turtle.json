@@ -12,6 +12,9 @@
     "hurt": "StandHit",
     "death": "Death"
   },
+  "hiddenPrimitives": [
+    1
+  ],
   "attachPoints": {
     "Head -": {
       "x": 0.4545,

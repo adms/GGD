@@ -1,8 +1,19 @@
 /**
  * @vitest-environment jsdom
  *
- * LOBBY LAYOUT GUARDS — GH#255 (排行榜移到朋友列表下半部) + GH#258 (單人 vs BOT
- * 變成 create room 底下預設的一個房間).
+ * LOBBY LAYOUT GUARDS — GH#255 (排行榜移到朋友列表下半部), the 2026-08-03
+ * 線上玩家 panel wedged between them, and GH#258 (單人 vs BOT 變成 create room
+ * 底下預設的一個房間).
+ *
+ * ---- 2026-08-03: THE COLUMN WENT FROM TWO SLOTS TO THREE --------------------
+ * owner:「大廳 FRIEND 跟排位榜 中間，多出一個區域顯示所有大廳正在線上的玩家列表」.
+ * The 「各半」 assertions below USED to read `f.flexGrow === l.flexGrow`, which
+ * is the right guard for two equal halves and exactly the wrong one for three
+ * unequal thirds — it would have gone green on a column that dropped the middle
+ * panel entirely. They now parse all three slots' declared shares off the DOM
+ * and check the set: three slots, in the owner's order, summing to 100%.
+ * (Mutation-verified: deleting the `online` slot from LobbyScreen.tsx fails
+ * both 「三段」 tests.)
  *
  * ---- WHY THIS FILE MOUNTS THE REAL SCREEN ----------------------------------
  * Both requirements are about WHERE something is and WHAT PRESSING IT DOES, and
@@ -65,6 +76,21 @@ vi.mock("./api", async (importOriginal) => {
   };
 });
 
+/**
+ * The 線上玩家 panel's own network seam. ONLY the two request functions are
+ * replaced — `visibleRows` / `addButtonFor` stay real, so the slot this file
+ * asserts about still renders through the shipped decision code. The roster's
+ * own behaviour (what pressing 加好友 does) is guarded in onlinePlayers.test.ts.
+ */
+vi.mock("./onlinePlayers", async (importOriginal) => {
+  const real = await importOriginal<typeof import("./onlinePlayers")>();
+  return {
+    ...real,
+    listOnlinePlayers: async () => ({ players: [], total: 0, truncated: false }),
+    addFriendById: async () => ({ status: "ok" }),
+  };
+});
+
 /** Hand-controlled stand-in for the one-time content load (same seam as #200). */
 const gate = vi.hoisted(() => {
   let resolveFn: (() => void) | null = null;
@@ -89,9 +115,12 @@ const { RoomListPanel } = await import("./RoomListPanel");
 const { ARENA_OPTIONS, DEFAULT_MAP_ID } = await import("./maps");
 const {
   DEFAULT_LOBBY_LAYOUT,
+  leftColumnSlots,
   leftColumnSlotStyle,
+  lobbyLayoutProblems,
   resolveLeftColumnMode,
 } = await import("./lobbyLayout");
+type Slot = "friends" | "online" | "leaderboard";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -153,10 +182,31 @@ function lobbyColStackBreakpointFromStylesheet(): number {
 }
 
 /** The one element carrying `data-ggd-lobby-slot="<name>"`. */
-function slot(name: "friends" | "leaderboard"): HTMLElement {
+function slot(name: Slot): HTMLElement {
   const found = container.querySelectorAll<HTMLElement>(`[data-ggd-lobby-slot="${name}"]`);
   expect(found.length).toBe(1); // exactly one home for each panel
   return found[0]!;
+}
+
+/** Slot names in DOM order inside the left column. */
+function renderedOrder(): string[] {
+  const left = container.querySelector<HTMLElement>("[data-ggd-lobby-left]")!;
+  return [...left.querySelectorAll<HTMLElement>("[data-ggd-lobby-slot]")].map(
+    (el) => el.dataset["ggdLobbySlot"]!,
+  );
+}
+
+/**
+ * The share each rendered slot DECLARES, parsed back off the DOM in document
+ * order. This is the reading the browser would lay out: three `flex-grow`
+ * values against `flex-basis: 0` inside one flex column ARE the three
+ * percentages of the column's height.
+ */
+function renderedShares(): number[] {
+  const left = container.querySelector<HTMLElement>("[data-ggd-lobby-left]")!;
+  return [...left.querySelectorAll<HTMLElement>("[data-ggd-lobby-slot]")].map((el) =>
+    Number(el.style.flexGrow),
+  );
 }
 
 beforeEach(async () => {
@@ -183,44 +233,52 @@ afterEach(async () => {
   container.remove();
 });
 
-describe("lobby left column — 朋友列表 上半 / 排行榜 下半 (GH#255)", () => {
-  it("puts BOTH panels in the left column, and nowhere else", () => {
+describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three segments", () => {
+  it("puts ALL THREE panels in the left column, in the owner's order", () => {
     cover("lobby-left-column-split");
     const left = container.querySelector<HTMLElement>("[data-ggd-lobby-left]");
     expect(left).not.toBeNull();
 
-    // Containment read off the real tree: the ladder is a descendant of the
-    // LEFT column. Moving it back to a column of its own fails here.
-    expect(left!.contains(slot("friends"))).toBe(true);
-    expect(left!.contains(slot("leaderboard"))).toBe(true);
+    // Containment read off the real tree: each panel is a descendant of the
+    // LEFT column. Moving the ladder back to a column of its own fails here.
+    for (const name of ["friends", "online", "leaderboard"] as const) {
+      expect(left!.contains(slot(name))).toBe(true);
+    }
 
-    // …and it really is the ladder, not an empty slot: the panel's own heading
-    // ("排位榜…") renders inside it.
+    // …and they really are the panels, not empty slots: each renders its own
+    // heading. 線上玩家 is checked the same way as the other two — a slot that
+    // exists but renders nothing is precisely the shape of failure form ③.
     expect(slot("leaderboard").textContent ?? "").toContain("排位榜");
     expect(slot("friends").textContent ?? "").toContain("Friends");
+    expect(slot("online").textContent ?? "").toContain("線上玩家");
 
-    // 上半 / 下半 — friends comes FIRST in document order inside the column.
-    const order = [...left!.querySelectorAll<HTMLElement>("[data-ggd-lobby-slot]")].map(
-      (el) => el.dataset["ggdLobbySlot"],
-    );
-    expect(order).toEqual(["friends", "leaderboard"]);
+    // owner:「FRIEND 跟排位榜 中間」 — 線上玩家 is BETWEEN them, in document
+    // order, not merely present somewhere in the column.
+    expect(renderedOrder()).toEqual(["friends", "online", "leaderboard"]);
   });
 
-  it("splits the column into equal halves that each scroll on their own", () => {
+  it("divides the column into three shares that add up to 100%", () => {
     cover("lobby-left-column-split");
-    const f = slot("friends").style;
-    const l = slot("leaderboard").style;
+    const shares = renderedShares();
 
-    // 各半: same grow against a zero basis inside one flex column ⇒ equal
-    // heights whatever the column measures. This is the assertion that fails
-    // if somebody re-weights the split.
-    expect(f.flexGrow).toBe(l.flexGrow);
-    expect(f.flexBasis).toBe("0px");
-    expect(l.flexBasis).toBe("0px");
-    expect(Number(f.flexGrow)).toBeCloseTo(DEFAULT_LOBBY_LAYOUT.friendsShare, 5);
+    // 三段, not two and not four. The old two-panel version of this test read
+    // `friends.flexGrow === leaderboard.flexGrow`, which stays green on a
+    // column that lost the middle panel — this one cannot.
+    expect(shares).toHaveLength(3);
+    // Every share is a real slice of the column…
+    for (const s of shares) expect(s).toBeGreaterThan(0);
+    // …and together they are the whole column: the numbers in the policy are
+    // PERCENTAGES, and flexbox would happily lay out 0.5/0.5/0.5 while the
+    // document claimed 50/50/50.
+    expect(shares.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 5);
+    // owner: 朋友最常用給最大 — 40 / 30 / 30, biggest first.
+    expect(shares).toEqual([0.4, 0.3, 0.3]);
+    expect(shares[0]).toBeGreaterThan(shares[1]!);
 
-    // 各自內部捲動 + never widen the page (both halves of the ask).
-    for (const s of [f, l]) {
+    // 各自內部捲動 + never widen the page (both halves of the original ask).
+    for (const name of ["friends", "online", "leaderboard"] as const) {
+      const s = slot(name).style;
+      expect(s.flexBasis).toBe("0px");
       expect(s.overflowY).toBe("auto");
       expect(s.overflowX).toBe("hidden");
       expect(s.minHeight).toBe("0px"); // or the panels' own min-heights push out
@@ -228,22 +286,38 @@ describe("lobby left column — 朋友列表 上半 / 排行榜 下半 (GH#255)"
     }
   });
 
-  it("stops splitting when a half would be unreadable (#151 phone landscape)", async () => {
+  it("the shipped policy is self-consistent (sum, bounds, stack order)", () => {
+    cover("lobby-left-column-split");
+    // The same contract stated against the POLICY rather than the DOM, so a
+    // future edit to the numbers is caught even before anything renders — and
+    // this is the check whose bounds the Zod document will mirror.
+    expect(lobbyLayoutProblems(DEFAULT_LOBBY_LAYOUT)).toEqual([]);
+    // Reverse control: the checker is not a function that always returns [].
+    expect(
+      lobbyLayoutProblems({ ...DEFAULT_LOBBY_LAYOUT, onlineShare: 0.5 }).join(" "),
+    ).toContain("100%");
+  });
+
+  it("stops splitting when a slice would be unreadable (#151 phone landscape)", async () => {
     cover("lobby-left-column-split");
     // iPhone in landscape: 844 wide clears ranking.css's 720px stack rule, so
-    // WITHOUT this policy the column would still be halved — into two ~170px
-    // slivers. The policy stacks instead and gives each panel a floor.
+    // WITHOUT this policy the column would still be divided — now into THREE
+    // ~110px slivers, worse than the two ~170px ones this threshold was
+    // originally chosen for. The policy stacks instead and gives each panel a
+    // floor.
     await setViewport(844, 390);
-    for (const name of ["friends", "leaderboard"] as const) {
+    for (const name of ["friends", "online", "leaderboard"] as const) {
       const s = slot(name).style;
       expect(s.flexGrow).toBe("0");
       expect(s.minHeight).toBe(`${DEFAULT_LOBBY_LAYOUT.minSlotHeightPx}px`);
     }
+    // All three survive the stack — stacking must not be a way to lose a panel.
+    expect(renderedOrder()).toEqual([...DEFAULT_LOBBY_LAYOUT.stackOrder]);
 
     // …and it goes back when there is room again, so a rotated phone or a
     // resized desktop window is not stranded in the fallback.
     await setViewport(1440, 900);
-    expect(slot("friends").style.flexGrow).toBe(String(DEFAULT_LOBBY_LAYOUT.friendsShare));
+    expect(renderedShares()).toEqual([0.4, 0.3, 0.3]);
   });
 
   it("the rendered slots are the policy's output, not hand-written literals", () => {
@@ -251,12 +325,38 @@ describe("lobby left column — 朋友列表 上半 / 排行榜 下半 (GH#255)"
     // Ties the screen to the module: if the JSX ever stops calling the policy,
     // the phone branch above silently dies while everything still looks right
     // on a desktop (failure form ③ — deletable without turning anything red).
-    for (const name of ["friends", "leaderboard"] as const) {
+    for (const name of ["friends", "online", "leaderboard"] as const) {
       const expected = leftColumnSlotStyle(name, "split", DEFAULT_LOBBY_LAYOUT);
       const s = slot(name).style;
       expect(Number(s.flexGrow)).toBeCloseTo(Number(expected.flexGrow), 5);
       expect(s.overflowY).toBe(expected.overflowY);
     }
+    // …and the ORDER comes from the module too, in both modes.
+    expect(renderedOrder()).toEqual(leftColumnSlots("split", DEFAULT_LOBBY_LAYOUT));
+  });
+});
+
+describe("stack order is read from the policy, not from the JSX", () => {
+  it("a re-ordered policy re-orders the column (and a broken one does not lose a panel)", () => {
+    cover("lobby-left-column-split");
+    // The shipped stackOrder happens to EQUAL the desktop order, so asserting
+    // the rendered phone order against the shipped values proves nothing about
+    // where that order came from (failure form ④). Scramble the policy and
+    // watch the pure function follow it.
+    const scrambled = {
+      ...DEFAULT_LOBBY_LAYOUT,
+      stackOrder: ["leaderboard", "friends", "online"] as Slot[],
+    };
+    expect(leftColumnSlots("stack", scrambled)).toEqual(["leaderboard", "friends", "online"]);
+    // Split is deliberately NOT configurable — the owner placed 線上玩家
+    // between the two by name.
+    expect(leftColumnSlots("split", scrambled)).toEqual(["friends", "online", "leaderboard"]);
+
+    // A hand-edited policy that drops a panel falls back to all three rather
+    // than rendering a lobby with no friends list, and says so out loud.
+    const broken = { ...DEFAULT_LOBBY_LAYOUT, stackOrder: ["friends", "friends"] as Slot[] };
+    expect(leftColumnSlots("stack", broken)).toEqual(["friends", "online", "leaderboard"]);
+    expect(lobbyLayoutProblems(broken).join(" ")).toContain("stackOrder");
   });
 });
 

@@ -82,6 +82,16 @@ export const BOSS_CAP_SCOPES = ["zone", "match"] as const;
 export const BOSS_BAR_ANCHORS = ["top", "bottom"] as const;
 export const BOSS_BAR_REVEALS = ["summon", "sighted"] as const;
 
+/**
+ * #291 —— 特殊殭屍分紅結算的三種呈現,依「操作者會先想到的」排序:
+ * 完整面板(出貨)→ 一行 toast → 完全不畫。
+ *
+ * MUST stay equal to `zMobWavesConfig.special.settlementMode` 的 enum ——
+ * `validateField` 只收這張表上的值,schema 多一個而這裡沒有的值會變成
+ * 「後台存不進去的設定」。`mobWaves.test.ts` 在比對。
+ */
+export const SETTLEMENT_MODES = ["panel", "toast", "off"] as const;
+
 /** `DEFAULT_MOB_BASE_LEVEL` / `DEFAULT_MOB_LEVEL_PER_ROUND` in sim/mobs.ts. */
 export const MOB_BASE_LEVEL_FALLBACK = 3;
 export const MOB_LEVEL_PER_ROUND_FALLBACK = 1;
@@ -111,6 +121,9 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
   waveIntervalSec: 2,
   mobsPerWaveCap: 5,
   maxAlivePerZone: 15,
+  // owner 2026-08-02 的兩個回合結束旋鈕（見 schema/config.ts 的說明）。
+  stopSpawnOnTeamWipe: true,
+  roundHoldMobKinds: "boss",
   schedule: [
     { round: 6, mobsPerWaveCap: 10, maxAlivePerZone: 20 },
     { round: 7, mobsPerWaveCap: 15, maxAlivePerZone: 30 },
@@ -209,6 +222,9 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     healthBar: true,
     healthBarAnchor: "top",
     healthBarReveal: "summon",
+    // #291 owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」——
+    // 抬頭以前寫死在 ui/hud/mobBossModel.ts，一字不差搬進設定。
+    settlementTitle: "殭屍王 分紅結算",
   },
   special: {
     chancePercent: 2.5,
@@ -244,6 +260,10 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     lastHitMode: "bonus",
     splitByDamage: true,
     countOverkill: false,
+    // #291 —— 它自己的字 + 它自己的面板。`toast` / `off` 是逃生門(owner 抱怨過
+    // 「怎麼會收到好幾次分紅結算」),不是出貨值。
+    settlementTitle: "特殊殭屍 分紅結算",
+    settlementMode: "panel",
   },
 };
 
@@ -262,6 +282,8 @@ export type MobWavesFieldKey =
   | "waveIntervalSec"
   | "mobsPerWaveCap"
   | "maxAlivePerZone"
+  | "stopSpawnOnTeamWipe"
+  | "roundHoldMobKinds"
   | "mob.maxHp"
   | "mob.attackDamage"
   | "mob.moveSpeed"
@@ -324,6 +346,7 @@ export type MobWavesFieldKey =
   | "boss.healthBar"
   | "boss.healthBarAnchor"
   | "boss.healthBarReveal"
+  | "boss.settlementTitle"
   // 特殊殭屍 (#262)
   | "special.chancePercent"
   | "special.hpMult"
@@ -347,7 +370,9 @@ export type MobWavesFieldKey =
   | "special.lastHitMultiplier"
   | "special.lastHitMode"
   | "special.splitByDamage"
-  | "special.countOverkill";
+  | "special.countOverkill"
+  | "special.settlementTitle"
+  | "special.settlementMode";
 
 /** How a box is typed + validated. `champion`/`model` are text with a picker. */
 export type FieldKind = "int" | "num" | "text" | "champion" | "model" | "bool" | "enum";
@@ -399,6 +424,8 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "waveIntervalSec",
   "mobsPerWaveCap",
   "maxAlivePerZone",
+  "stopSpawnOnTeamWipe",
+  "roundHoldMobKinds",
   "mob.championSource",
   "mob.championId",
   "mob.modelKey",
@@ -465,6 +492,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.healthBar",
   "boss.healthBarAnchor",
   "boss.healthBarReveal",
+  // #291 —— 分紅結算的字。排在長血條之後,因為它們回答的是同一種問題:
+  // 「牠出現／死掉之後,畫面上要說什麼」。
+  "boss.settlementTitle",
   "special.chancePercent",
   "special.championSource",
   "special.championId",
@@ -489,6 +519,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "special.lastHitMultiplier",
   "special.lastHitMode",
   "special.countOverkill",
+  // #291 —— owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」。
+  "special.settlementTitle",
+  "special.settlementMode",
 ] as const;
 
 /**
@@ -537,6 +570,30 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 1,
     max: MOB_ALIVE_CAP_MAX,
     optional: false,
+  },
+  stopSpawnOnTeamWipe: {
+    zh: "一隊全滅就停止生成殭屍",
+    note: "開（預設）＝任何一隊的英雄全部倒下的那一刻，那個戰場立刻不再生新的殭屍。關＝照原本的波次一直生到回合結束。⚠️ 關掉會讓回合拖很久：場上的殭屍與下面那格一起決定回合什麼時候能結算，而殭屍一直生就一直有殭屍",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "一隊全滅就停生", off: "照波次一直生" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「一隊全滅就停生」",
+  },
+  roundHoldMobKinds: {
+    zh: "哪幾種殭屍會壓住回合不結束",
+    note: "只剩一隊還站著時，場上還有這幾種殭屍就先不宣佈勝利。出貨值是「只有殭屍王」（owner 2026-08-02「場上沒有殭屍王 回合應該要馬上勝利結算」）。選「任何殭屍」會回到 2026-07-30 的舊行為，那會讓回合幾乎一定要等火圈燒完",
+    unit: "",
+    kind: "enum",
+    values: ["none", "boss", "bossAndSpecial", "any"],
+    valueLabels: {
+      none: "都不壓 —— 一隊全滅就結束",
+      boss: "只有殭屍王（出貨值）",
+      bossAndSpecial: "殭屍王 + 特殊殭屍",
+      any: "任何殭屍（舊行為）",
+    },
+    optional: true,
+    emptyMeans: "沿用出貨預設「只有殭屍王」",
   },
   "mob.championSource": {
     zh: "殭屍由誰擔任：指定還是隨機",
@@ -871,6 +928,14 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     valueLabels: { summon: "召喚那一刻（出貨）", sighted: "王進入視野才亮" },
     optional: true,
     emptyMeans: "留空 = 召喚那一刻",
+  },
+  "boss.settlementTitle": {
+    zh: "└ 分紅結算面板的抬頭",
+    note: "打死殭屍王之後那面「誰打了多少、誰領多少」的表格，最上面那一行字。owner 2026-08-03 抱怨過特殊殭屍的結算也寫著殭屍王，所以王與特殊殭屍各有一格，改這裡只會動到王的那一面",
+    unit: "",
+    kind: "text",
+    optional: true,
+    emptyMeans: "留空 = 用出貨的「殭屍王 分紅結算」",
   },
   "boss.championSource": {
     zh: "殭屍王由誰擔任：指定還是隨機",
@@ -1280,6 +1345,28 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     optional: true,
     emptyMeans: "沿用出貨預設「額外加碼」",
   },
+  "special.settlementTitle": {
+    zh: "特殊殭屍分紅結算的抬頭",
+    note: "owner 2026-08-03：「特殊殭屍 不應該用殭屍王 分紅結算畫面」。兩種怪走的是同一顆結算事件，以前畫面上一律印殭屍王那一行字；這一格就是它自己的字",
+    unit: "",
+    kind: "text",
+    optional: true,
+    emptyMeans: "留空 = 用出貨的「特殊殭屍 分紅結算」",
+  },
+  "special.settlementMode": {
+    zh: "特殊殭屍分紅結算怎麼呈現",
+    note: "完整面板（出貨）＝和殭屍王同一張表，佔中央走廊 8.2 秒；一行通知＝只寫抬頭、總獎金與你自己那一份，不吃整條走廊；不顯示＝完全不畫（金錢照發，只是沒有畫面說明）。牠一回合會死好幾隻，覺得洗版就往下調",
+    unit: "",
+    kind: "enum",
+    values: ["panel", "toast", "off"],
+    valueLabels: {
+      panel: "完整面板（出貨）",
+      toast: "一行通知",
+      off: "不顯示",
+    },
+    optional: true,
+    emptyMeans: "留空 = 完整面板",
+  },
   "special.countOverkill": {
     zh: "特殊殭屍溢傷算不算",
     note: "關（預設）＝只算牠真的掉的血，所以對剩 100 血的牠丟 4000 傷害只算 100。這格和殭屍王那格是分開的，關掉殭屍王也不影響這裡",
@@ -1303,7 +1390,15 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
   {
     title: "出怪節奏 · 什麼時候、來幾隻",
     blurb: "逐回合表沒列到的回合，用這裡的兩個「基準」上限。",
-    keys: ["fromRound", "firstWaveSec", "waveIntervalSec", "mobsPerWaveCap", "maxAlivePerZone"],
+    keys: [
+      "fromRound",
+      "firstWaveSec",
+      "waveIntervalSec",
+      "mobsPerWaveCap",
+      "maxAlivePerZone",
+      "stopSpawnOnTeamWipe",
+      "roundHoldMobKinds",
+    ],
   },
   {
     title: "殭屍身分 · 臉、模型、體型、染黑",
@@ -1383,6 +1478,7 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.healthBar",
       "boss.healthBarAnchor",
       "boss.healthBarReveal",
+      "boss.settlementTitle",
     ],
   },
   {
@@ -1419,6 +1515,8 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "special.lastHitMultiplier",
       "special.lastHitMode",
       "special.countOverkill",
+      "special.settlementTitle",
+      "special.settlementMode",
     ],
   },
 ];
@@ -1469,6 +1567,10 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.mobsPerWaveCap);
     case "maxAlivePerZone":
       return formatNum(cfg.maxAlivePerZone);
+    case "stopSpawnOnTeamWipe":
+      return cfg.stopSpawnOnTeamWipe === undefined ? "" : cfg.stopSpawnOnTeamWipe ? "1" : "0";
+    case "roundHoldMobKinds":
+      return cfg.roundHoldMobKinds ?? "";
     case "mob.maxHp":
       return formatNum(cfg.mob.maxHp);
     case "mob.attackDamage":
@@ -1596,6 +1698,9 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.boss?.healthBarAnchor ?? "";
     case "boss.healthBarReveal":
       return cfg.boss?.healthBarReveal ?? "";
+    // #291 —— 空白 = 沒填 = 用出貨抬頭,和其他 optional 欄位同一條規則。
+    case "boss.settlementTitle":
+      return cfg.boss?.settlementTitle ?? "";
     case "boss.lastHitMode":
       // Absent in a doc authored before GH#206 — show the shipped default
       // rather than an empty box, because an empty box here reads as
@@ -1649,6 +1754,10 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return cfg.special?.splitByDamage === undefined ? "" : cfg.special.splitByDamage ? "1" : "0";
     case "special.countOverkill":
       return cfg.special?.countOverkill === undefined ? "" : cfg.special.countOverkill ? "1" : "0";
+    case "special.settlementTitle":
+      return cfg.special?.settlementTitle ?? "";
+    case "special.settlementMode":
+      return cfg.special?.settlementMode ?? "";
   }
 }
 
@@ -2001,6 +2110,18 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     waveIntervalSec: num("waveIntervalSec", SHIPPED_MOB_WAVES.waveIntervalSec),
     mobsPerWaveCap: num("mobsPerWaveCap", SHIPPED_MOB_WAVES.mobsPerWaveCap),
     maxAlivePerZone: num("maxAlivePerZone", SHIPPED_MOB_WAVES.maxAlivePerZone),
+    // ⚠️ 兩格都是 optional：空白 = 「沿用出貨預設」而不是 false / "none"。
+    // 把空白寫成 false 會把 owner 2026-08-02 的規則靜默關掉（ABSENT ≠ ZERO）。
+    ...(optBool("stopSpawnOnTeamWipe") === undefined
+      ? {}
+      : { stopSpawnOnTeamWipe: optBool("stopSpawnOnTeamWipe") }),
+    ...(form.fields["roundHoldMobKinds"].trim()
+      ? {
+          roundHoldMobKinds: form.fields["roundHoldMobKinds"].trim() as NonNullable<
+            MobWavesConfig["roundHoldMobKinds"]
+          >,
+        }
+      : {}),
     mob,
     reward: {
       gold: num("reward.gold", SHIPPED_MOB_WAVES.reward.gold),
@@ -2093,6 +2214,9 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (bhba !== undefined) boss.healthBarAnchor = bhba;
     const bhbr = optEnum("boss.healthBarReveal", BOSS_BAR_REVEALS);
     if (bhbr !== undefined) boss.healthBarReveal = bhbr;
+    // #291 —— OMITTED when blank: 清空抬頭 = 「用出貨的字」,不是「面板沒有抬頭」。
+    const bst = optText("boss.settlementTitle");
+    if (bst !== undefined) boss.settlementTitle = bst;
     out.boss = boss;
   }
   if (!blockEmpty(form, "special.")) {
@@ -2148,6 +2272,13 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (sSplit !== undefined) special.splitByDamage = sSplit;
     const sOver = optBool("special.countOverkill");
     if (sOver !== undefined) special.countOverkill = sOver;
+    // #291 —— 同上,兩格都 omit-when-blank。特別是 `settlementMode`:
+    // 用 `optEnum` 而不是 `enumOf`,否則清空會被寫回 "panel",操作者永遠清不掉,
+    // 而 `changedFields` 會報一個沒人做過的 diff(#289 踩過的同一個坑)。
+    const sst = optText("special.settlementTitle");
+    if (sst !== undefined) special.settlementTitle = sst;
+    const ssm = optEnum("special.settlementMode", SETTLEMENT_MODES);
+    if (ssm !== undefined) special.settlementMode = ssm;
     out.special = special;
   }
   return out;

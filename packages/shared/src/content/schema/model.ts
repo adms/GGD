@@ -77,6 +77,46 @@ export const zModelDoc = z
      * Range is ±360 so an author can write 270 or -90 for the same rotation.
      */
     yawOffsetDeg: z.number().gte(-360).lte(360).optional(),
+    /**
+     * glTF `mesh.primitives[i]` indices this model must NOT draw. ABSENT/empty
+     * ⇒ draw everything (today's behaviour for all 124 shipped model docs).
+     *
+     * WHY THIS EXISTS — 「3d model 連著屍體一起」(owner 2026-08-02, 初號機 +
+     * 拳四郎). Warcraft III unit models carry a `gutz*` GORE geoset: the pool of
+     * blood/entrails the corpse leaves behind. WC3 keeps it invisible until the
+     * decay sequence by animating the geoset's alpha (GEOA/KGAO) — and #59
+     * established that the mdx→glb converter DROPS geoset visibility animation,
+     * so every one of those geosets converts to a permanently-visible primitive.
+     * Measured on `data/blizzard-overlay/models/` (see the census tool below):
+     * 16 of the 40 extracted unit models ship one, and it is not subtle —
+     * `E00R.glb`'s is a flat slab spanning x −0.03…1.64 at y 0.12…0.26 on a body
+     * only ~1.7u tall, i.e. a corpse-sized splat lying on the floor beside the
+     * champion. `Umal.glb` additionally carries a whole SECOND animated skeleton
+     * (`Bone_Root01`, 107 verts) standing ~1.2u away in +Z, driven by all 13
+     * clips — it walks, attacks and dies with you.
+     *
+     * WHY IT IS AN INDEX LIST AND NOT A JOINT-NAME LIST.
+     * The obvious spelling is "hide the subtree under joint `gutz00`", but that
+     * cannot be implemented in the render layer: the gore is SKINNED geometry
+     * inside a shared mesh, so disabling a bone's TransformNode moves nothing —
+     * the vertices follow the bone matrices regardless. Hiding has to happen at
+     * the drawable, and the drawable is the primitive. A field whose value the
+     * renderer silently cannot honour is failure form ② (計算了但從沒送到畫面),
+     * so the joint analysis stays in the offline tool where it can actually run
+     * (tools/w3x-import/gore_geoset_census.py resolves joint roots → indices)
+     * and the doc records the answer.
+     *
+     * THE COST OF INDICES IS DRIFT — a re-extraction can renumber them, and a
+     * wrong index either misses (gore returns) or hits the body (champion
+     * vanishes). That is exactly why the census is committed as a fixture and
+     * `apps/client/src/render/views/hiddenPrimitives.test.ts` re-derives every
+     * declared index from the real .glb bytes: drift goes red, it does not rot.
+     *
+     * Bounded both ways (CLAUDE.md 第一守則): a glTF mesh with >256 primitives
+     * is not a champion body, and 32 hidden primitives is already far more than
+     * the worst measured model needs (2, `Ekee.glb`).
+     */
+    hiddenPrimitives: z.array(z.number().int().gte(0).lte(255)).max(32).optional(),
   })
   .strict();
 

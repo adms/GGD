@@ -26,6 +26,7 @@ import { BOSS_POLL_MS, bossVisibleInZone } from "./mobBossModel";
 import { useBossHealthBarSpec } from "./BossHealthBar";
 import {
   bossIntroContentFor,
+  bossIntroLayoutRules,
   bossIntroLifetime,
   bossIntroPlacement,
   bossIntroRules,
@@ -132,7 +133,15 @@ export function BossIntroView({
             lineHeight: 1.35,
             fontWeight: 600,
             color: "#d8cfe6",
-            overflow: "hidden",
+            // #291 —— **沒有 `overflow: hidden`，而且 `flexShrink: 0`。**
+            // 那一行是缺陷的第三層：版面只算 34px 給描述，這個 span 再把多出來的
+            // 字剪掉，於是 `descriptionMaxChars` 調到多大都一樣。
+            // 高度現在由 `bossIntroDescriptionHeight()` 依字數算出來，走廊給不下
+            // 的時候 `bossIntroLayout` 會**整段丟掉**描述（可見的決定），而不是
+            // 畫一半再偷偷剪掉（看不見的截斷）。
+            flexShrink: 0,
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
           }}
         >
           {layout.description}
@@ -209,12 +218,15 @@ export function BossIntroOverlay(): React.JSX.Element | null {
     dismissed: readLegendDismissed(),
     panelCovering: panels.length > 0,
   });
-  const placed = bossIntroPlacement(content, viewport, {
-    touch: hudTouch(),
-    legendUp,
-    couchPlayers: 1,
-    barRect,
-  });
+  const placed = bossIntroPlacement(
+    content,
+    viewport,
+    { touch: hudTouch(), legendUp, couchPlayers: 1, barRect },
+    // #291 —— 版面高度來自**同一份** `boss-intro.json`（`layout` / `dropOrder`）。
+    // 少了這個參數，`bossIntroPlacement` 會退回程式裡的保險絲，而後台改了描述行數
+    // 之後畫面一動也不動 —— 那正是這次缺陷的形狀。
+    bossIntroLayoutRules(rules),
+  );
   if (!placed) return null;
   return <BossIntroView rect={placed.rect} life={life} layout={placed.layout} />;
 }

@@ -882,27 +882,57 @@ export const ENTITY_FLAG = {
    * bits the #249 budget note left; ONE (32768) remains after this.
    */
   INVISIBLE: 16384,
+  /**
+   * 精英小怪 —— 這一隻小怪是**特殊殭屍或殭屍王**，不是雜兵
+   * (owner 2026-08-03「特殊殭屍 頭上應該要有小血條 顯示即時血量」).
+   *
+   * ⚠️ 這是**線上最後一格 ENTITY_FLAG**。用掉之後 `ENTITY_FLAG_FREE_BITS` 是空的
+   * ——下一個功能不能再拿 bit，必須加寬欄位或自己開頻道。
+   *
+   * WHY THE WIRE NEEDED A NEW BIT AT ALL. `EntityState` 上小怪能帶的東西全都已經
+   * 有別的意思了：`kind` 是 `ENTITY_KIND.MOB`（三種殭屍共用一格）、`key` 自 GH#192
+   * 起三種通常解析到**同一個** modelKey、`mana` 是體型倍率、`maxMana` 必須維持 0
+   * 才不會長出法力條、`seatId` 是 -1 中立。也就是說**線路上特殊殭屍跟普通殭屍
+   * 一模一樣**——客戶端沒有任何辦法認出它，血條就無從畫起（失敗形態 ②）。
+   *
+   * WHY NOT AN EVENT, THE WAY 殭屍王 DOES IT. 王是靠 `mobBossSpawn` 事件認出來的
+   * （`frameBus.ts` 的 `MobBossMarker` 說明了那條路）。那條路對**一場一隻**的王
+   * 划算，對特殊殭屍不划算：第 9 回合一區 50 隻、2.5% 機率，波峰時是一串額外的
+   * 事件流量，而 owner 正在為 ping 破千困擾。一顆 bit 騎在**已經在每個 patch 裡**
+   * 的 uint16 上，出貨值 0（雜兵）被 Colyseus 的 delta 編碼器直接省掉。
+   *
+   * ⚠️ 它**不區分特殊殭屍與殭屍王**——一顆 bit 只有兩個值，而剩下的就這一顆。
+   * 兩者都是「值得一條血條的精英」，客戶端要再細分的話仍然只能靠 `mobBossSpawn`。
+   * 這也是刻意的好處：王的頭上血條因此**只由快照決定**，王活著它就在，不受那條
+   * 單槽事件頻道影響（owner 2026-08-03「殭屍王血量在死之前都應該存在
+   * 現在玩起來會消失」）。
+   *
+   * 讀它請用 {@link isEliteMob}，不要自己 `flags & 32768` —— kind 必須一起檢查，
+   * 這一格在**非小怪**的實體上沒有定義。
+   */
+  MOB_ELITE: 32768,
 } as const;
 
 /**
  * BIT BUDGET FOR `ENTITY_FLAG` — read this before adding a flag.
  *
  * `EntityState.flags` is a **uint16** (`defineTypes` above), so there are
- * EXACTLY 16 bits and they are not extensible. After 隱形原語:
+ * EXACTLY 16 bits and they are not extensible. After 精英小怪:
  *
- *   used  (15): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
+ *   used  (16): 1 DASHING · 2 ROOTED · 4 STUNNED · 8 SLOWED · 16 CASTING ·
  *               32 WINDUP · 64 CHANNELLING · 128 CONTESTED · 256 BURNING ·
  *               512 MUD_SWELL · 1024 MUD_BOSS · 2048 AIRBORNE ·
- *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE
- *   FREE   (1): 32768
+ *               4096 FORM_A · 8192 FORM_B · 16384 INVISIBLE · 32768 MOB_ELITE
+ *   FREE   (0): —— 沒有了
  *
- * This is the FOURTH feature to collide here (#244 vs #247 fought over 512,
- * #249 took the comfortable pair, 隱形原語 took 16384), so the count is written
- * down rather than recounted by eye. **ONE BIT IS LEFT.** When it is gone the
- * next feature must WIDEN the field or claim its own channel — silently reusing
- * an occupied bit desyncs a live client with no error anywhere.
+ * This is the FIFTH feature to collide here (#244 vs #247 fought over 512,
+ * #249 took the comfortable pair, 隱形原語 took 16384, 精英小怪 took the last
+ * one), so the count is written down rather than recounted by eye.
+ * **THE BUDGET IS NOW EXHAUSTED — ZERO BITS LEFT.** The next feature must WIDEN
+ * the field or claim its own channel; silently reusing an occupied bit desyncs a
+ * live client with no error anywhere.
  */
-export const ENTITY_FLAG_FREE_BITS = [32768] as const;
+export const ENTITY_FLAG_FREE_BITS = [] as const;
 
 /**
  * The two visible-stack thresholds behind `ENTITY_FLAG.MUD_SWELL` / `MUD_BOSS`
@@ -936,6 +966,21 @@ export function formIndexFromFlags(flags: number): 0 | 1 | 2 | 3 {
   const lo = (flags & ENTITY_FLAG.FORM_A) !== 0 ? 1 : 0;
   const hi = (flags & ENTITY_FLAG.FORM_B) !== 0 ? 2 : 0;
   return (lo + hi) as 0 | 1 | 2 | 3;
+}
+
+/**
+ * 這一列快照是不是**精英小怪**（特殊殭屍或殭屍王）—— {@link ENTITY_FLAG.MOB_ELITE}
+ * 的唯一讀法。
+ *
+ * ⚠️ `kind` 一起檢查是這個函式存在的理由，不是禮貌：32768 這一格**只在
+ * `ENTITY_KIND.MOB` 上有定義**。冠軍的 flags 也是同一個 uint16，未來若有人在冠軍
+ * 那一支加東西，`flags & 32768` 這種手寫測試就會把冠軍讀成精英殭屍。
+ *
+ * 出貨值是 false：雜兵寫 0，而 0 會被 Colyseus 的 delta 編碼器整格省掉，所以一場
+ * 沒有特殊殭屍的比賽在線路上一個 byte 都不多付。
+ */
+export function isEliteMob(kind: number, flags: number): boolean {
+  return kind === ENTITY_KIND.MOB && (flags & ENTITY_FLAG.MOB_ELITE) !== 0;
 }
 
 /**

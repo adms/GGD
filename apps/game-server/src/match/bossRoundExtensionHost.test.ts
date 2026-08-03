@@ -22,11 +22,25 @@
  *   · the countdown is read back through `projectSnapshot` — the only channel a
  *     player learns the round clock by.
  *
+ * ⚠️ SPEC CHANGE, owner 2026-08-02: 「已經只剩我方英雄 敵方英雄全死 並且**場上沒有
+ * 殭屍王** 回合應該要馬上勝利結算才對」. 2026-07-30's rule (「場上還有**任何**殭屍就
+ * 不結束」) is now the `any` setting of a BACKSTAGE FIELD, `mobWaves.roundHoldMobKinds`
+ * (sim/mobs.ts `ROUND_HOLD_KINDS`), whose shipped value holds for kings only. So the
+ * hold tests below are written as ONE mechanism in two groups — 普通殭屍 vs 殭屍王 —
+ * and every expectation is DERIVED from the setting in force on `world.mobRules`,
+ * never from a literal: flip the dropdown and these follow it instead of lying.
+ *
  * MUTATION LOG — every one applied by hand, red confirmed, reverted:
  *   1. `fireRingRulesFromConfig(ring, dt, …)` → drop the 3rd argument
  *      ⇒ 3 red: "延長 5400 ticks", "runs the extra ticks", "wire countdown".
- *   2. `checkCombatEnd`: delete the `anyMobsAlive` hold
- *      ⇒ 2 red: the duel is recorded on the wipe tick.
+ *   2. `checkCombatEnd`: delete the `roundHoldMobKinds` hold line
+ *      ⇒ 3 red: the king no longer holds, the pending winner is never built,
+ *         and the halted zone settles instead of staying open.
+ *   2b. `checkCombatEnd`: widen the hold to `ROUND_HOLD_KINDS.any`
+ *      ⇒ 1 red: 普通殭屍 group — the round the owner asked to settle at once
+ *         goes back to waiting for the field to clear.
+ *   2c. `checkCombatEnd`: drop the `spawnHaltedZones.add` line
+ *      ⇒ 1 red: waves keep arriving in the wiped zone while the king holds it.
  *   3. `checkCombatEnd`: move the mob hold ABOVE the 玩家全滅 branch
  *      ⇒ 2 red: the round stays open with every champion dead.
  *   4. `checkCombatEnd`: drop the `pending ??` in the 玩家全滅 branch
@@ -53,7 +67,14 @@ import {
   fireRingIgnitionTick,
   DEFAULT_BURN_CURVE,
 } from "@ggd/shared/sim/fireRing";
-import { anyMobsAlive, summonMobBoss } from "@ggd/shared/sim/mobs";
+import {
+  anyMobsAlive,
+  anyMobsAliveOfKinds,
+  mobsAliveInZone,
+  summonMobBoss,
+  ROUND_HOLD_KINDS,
+  DEFAULT_ROUND_HOLD_KINDS,
+} from "@ggd/shared/sim/mobs";
 import { DEFAULT_MOB_WAVES_CONFIG, type FireRingConfig, type MobWavesConfig } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
@@ -89,6 +110,9 @@ const ONE_WAVE: MobWavesConfig = {
   firstWaveSec: 0.2,
   waveIntervalSec: 9999,
 };
+
+/** Same, but the waves KEEP coming — so 「還在不在生」 is observable in a few dozen ticks. */
+const REPEAT_WAVES: MobWavesConfig = { ...ONE_WAVE, waveIntervalSec: 0.2 };
 
 const rulesWithMobs = (): ArenaRules => ({ ...DEFAULT_ARENA_RULES, mobWaves: ONE_WAVE });
 
@@ -378,22 +402,109 @@ describe("a round with zombies still standing does not end early (#L2)", () => {
     return ctl;
   }
 
-  it("只剩一隊存活但殭屍還在 → 回合不結束;清空殭屍後才結束", () => {
+  /**
+   * 「這一刻哪幾種怪壓得住回合」 —— read off the rules ACTUALLY ARMED on the world,
+   * never off a literal. That is the whole point of the field: owner has already
+   * moved this decision once (任何殭屍 → 只有殭屍王), so a test that copied the
+   * answer in would become the fourth home of a value that has three, and would
+   * lie on the day he moves it again.
+   */
+  const holdKindsInForce = (ctl: MatchController) =>
+    ROUND_HOLD_KINDS[ctl.world.mobRules?.roundHoldMobKinds ?? DEFAULT_ROUND_HOLD_KINDS];
+
+  /** A 殭屍王 into every duel zone, through the one door kings enter by. */
+  function summonKingInEveryZone(ctl: MatchController): void {
+    for (const p of ctl.pairings) {
+      const seat = [...ctl.seats.values()].find(
+        (s) => s.entityId !== null && ctl.world.transform.get(s.entityId)?.zone === p.zone,
+      );
+      const king = summonMobBoss(ctl.world, p.zone, ctl.world.mobRules!, seat!.entityId!, 100);
+      expect(king, `no king summoned into zone ${p.zone}`).not.toBeNull();
+    }
+  }
+
+  // 兩組,一個機制. owner 2026-08-02 收窄了「誰壓得住回合」,所以 這兩組必須分開跑:
+  // 普通殭屍 = 馬上結算(他實打之後要的),殭屍王 = 仍然壓住(#L2 的延長機制沒被拆掉).
+  // 期望值不是寫死的 "combat"/"resolution",是從 `roundHoldMobKinds` 推導的 —— 後台
+  // 把它調回 `any`,這兩條會自己跟著改答案,而不是變成兩條說謊的紅燈.
+  for (const kind of ["normal", "boss"] as const) {
+    const label = kind === "boss" ? "殭屍王" : "普通殭屍";
+    it(`只剩一隊存活、場上是${label} → 結不結算由 roundHoldMobKinds 決定`, () => {
+      cover("boss-round-extension-host");
+      const ctl = withMobsOnField(7);
+      if (kind === "boss") summonKingInEveryZone(ctl);
+      const hold = holdKindsInForce(ctl);
+      // 前置:這一種怪真的站在場上,否則下面驗的是空氣.
+      for (const p of ctl.pairings) {
+        expect(anyMobsAliveOfKinds(ctl.world, p.zone, [kind]), `zone ${p.zone} 沒有${label}`).toBe(
+          true,
+        );
+      }
+      // 規格:這個 zone 這一刻該不該被壓住.
+      const held = ctl.pairings.map((p) => anyMobsAliveOfKinds(ctl.world, p.zone, hold));
+
+      for (const p of ctl.pairings) wipeSideInZone(ctl, p.sideB, p.zone);
+      ctl.tick();
+      for (const [i, p] of ctl.pairings.entries()) {
+        expect(ctl.duelWinnerOf(p.zone), `zone ${p.zone}`).toBe(held[i] ? undefined : p.sideA);
+      }
+      expect(ctl.phase.phase).toBe(held.some(Boolean) ? "combat" : "resolution");
+
+      if (held.some(Boolean)) {
+        // …被壓住的那一種:場地清空才結算 —— #L2 的「除非全死不然不會提前結束」
+        // 對它原封不動.
+        for (const p of ctl.pairings) expect(anyMobsAlive(ctl.world, p.zone)).toBe(true);
+        killAllMobs(ctl);
+        ctl.tick();
+        expect(ctl.phase.phase).toBe("resolution");
+        for (const p of ctl.pairings) expect(ctl.duelWinnerOf(p.zone)).toBe(p.sideA);
+      }
+    });
+  }
+
+  it("一隊全滅的那一刻就停止生怪,不必等勝負被記下 (spawnHaltedZones)", () => {
     cover("boss-round-extension-host");
-    const ctl = withMobsOnField(7);
-    for (const p of ctl.pairings) wipeSideInZone(ctl, p.sideB, p.zone);
+    // 舊規則之所以變成玩家眼中的 bug,是一個自我維持的迴圈:有殭屍 ⇒ 不記勝負 ⇒
+    // 沒進 settledZones ⇒ 繼續生殭屍. 這一條站在迴圈的另一刀上:回合**還被殭屍王
+    // 壓著**(所以 settledZones 依然是空的),而波次必須已經停了. 用一個還在打的
+    // zone 當對照組 —— 同樣的 60 tick,它必須還在長.
+    const cfg = { champSelectTicks: 2, intermissionTicks: 3, combatMaxTicks: 3000, resolutionTicks: 3 };
+    const ctl = new MatchController(
+      "l2-halt",
+      5,
+      allBots(),
+      cfg,
+      undefined,
+      { ...DEFAULT_ARENA_RULES, mobWaves: REPEAT_WAVES },
+      undefined,
+      undefined,
+      NO_DAMAGE,
+    );
+    toCombat(ctl);
+    for (let i = 0; i < 12; i++) ctl.tick();
+    expect(ctl.pairings.length).toBe(2);
+    const wiped = ctl.pairings[0]!;
+    const control = ctl.pairings[1]!;
 
-    ctl.tick();
-    // #208 alone would have recorded BOTH duels here and advanced the phase.
-    expect(ctl.phase.phase).toBe("combat");
-    for (const p of ctl.pairings) expect(ctl.duelWinnerOf(p.zone)).toBeUndefined();
-    // …and it is genuinely the zombies holding it: they are still up.
-    for (const p of ctl.pairings) expect(anyMobsAlive(ctl.world, p.zone)).toBe(true);
+    const seat = [...ctl.seats.values()].find(
+      (s) => s.entityId !== null && ctl.world.transform.get(s.entityId)?.zone === wiped.zone,
+    )!;
+    expect(summonMobBoss(ctl.world, wiped.zone, ctl.world.mobRules!, seat.entityId!, 100)).not.toBeNull();
 
-    killAllMobs(ctl);
+    wipeSideInZone(ctl, wiped.sideB, wiped.zone);
     ctl.tick();
-    expect(ctl.phase.phase).toBe("resolution");
-    for (const p of ctl.pairings) expect(ctl.duelWinnerOf(p.zone)).toBe(p.sideA);
+    expect(ctl.world.spawnHaltedZones.has(wiped.zone)).toBe(true);
+    expect(ctl.world.spawnHaltedZones.has(control.zone)).toBe(false);
+    // THE WINDOW settledZones cannot cover: the duel is NOT recorded yet.
+    expect(ctl.world.settledZones.has(wiped.zone)).toBe(false);
+    expect(ctl.duelWinnerOf(wiped.zone)).toBeUndefined();
+
+    const haltedBefore = mobsAliveInZone(ctl.world, wiped.zone);
+    const controlBefore = mobsAliveInZone(ctl.world, control.zone);
+    for (let i = 0; i < 60; i++) ctl.tick();
+    expect(ctl.phase.phase, "回合早就結束了,這 60 tick 沒有在測生成閘門").toBe("combat");
+    expect(mobsAliveInZone(ctl.world, wiped.zone)).toBe(haltedBefore);
+    expect(mobsAliveInZone(ctl.world, control.zone)).toBeGreaterThan(controlBefore);
   });
 
   it("玩家全滅 → 立即結束,不管殭屍在不在", () => {
@@ -414,14 +525,24 @@ describe("a round with zombies still standing does not end early (#L2)", () => {
     for (const p of ctl.pairings) expect(ctl.duelWinnerOf(p.zone)).not.toBeUndefined();
   });
 
-  it("被殭屍拖住之後才全滅 → 勝利歸先前存活的那一隊,不是擲硬幣", () => {
+  it("被殭屍王拖住之後才全滅 → 勝利歸先前存活的那一隊,不是擲硬幣", () => {
     cover("boss-round-extension-host");
     // Six independent seeds × two zones = twelve decisions. A coin would have to
     // land right twelve times in a row (p = 2^-12) for this to pass by luck.
+    //
+    // 王,不是普通殭屍:出貨設定下只有王壓得住回合,而「先前存活的那一隊」這件記憶
+    // 只有在回合被壓住的那段時間裡才有東西可記.
     for (const seed of [1, 2, 3, 5, 8, 13]) {
       const ctl = withMobsOnField(seed);
+      summonKingInEveryZone(ctl);
+      for (const p of ctl.pairings) {
+        expect(
+          anyMobsAliveOfKinds(ctl.world, p.zone, holdKindsInForce(ctl)),
+          `seed ${seed}: roundHoldMobKinds 現在誰都壓不住,這一條的前提不成立了`,
+        ).toBe(true);
+      }
       for (const p of ctl.pairings) wipeSideInZone(ctl, p.sideB, p.zone);
-      ctl.tick(); // held open by the zombies — sideA is the pending winner
+      ctl.tick(); // held open by the king — sideA is the pending winner
       expect(ctl.phase.phase, `seed ${seed}`).toBe("combat");
 
       for (const p of ctl.pairings) wipeSideInZone(ctl, p.sideA, p.zone);

@@ -2,8 +2,16 @@
 
 > **自動產生。**重跑方式見檔尾的「怎麼重算」。
 > 基準：`content/bundle.json`（v0.9.24）+ `docs/ability-templates.csv` + 兩張執行期晉升表。
-> 用途：**P1（模板開 vfx 欄位）與 P2（接上 6 張零採用模板）的進度對照表** ——
+> 用途：**P1（模板開 vfx 欄位）與 P2（接上零採用模板）的進度對照表** ——
 > 做完一批就重跑一次，看 ✘ 變 ✔ 了幾支。
+>
+> 📦 **要寫程式讀這份資料的話，讀 `docs/_ability-fidelity-ledger.json`，不要 parse 這份 md。**
+> 兩份是同一支產生器、同一份記憶體資料產的（`ability_ledger.py --json --md`），
+> JSON 版多帶 `castType` / `cooldown` / `isPassiveOnly` / `vfxAuthority` / `vfxEditable` /
+> `effectsSource` 這些介面需要、md 表格塞不下的欄位。形狀見
+> `docs/_ability-ledger-editor-spec.md` §7。
+>
+> 這份 md 有四節：**總覽 → 特效由誰說了算 → 技能模板 → vfx 族 → 逐支明細**。
 
 ---
 

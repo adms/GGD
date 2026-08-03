@@ -1,0 +1,145 @@
+{
+  "schema": "overlay-hidden-geometry@1",
+  "note": [
+    "Blizzard-overlay 的 model@1.hiddenPrimitives 宣告 —— owner 2026-08-02",
+    "「初號機跟拳四郎一樣 3d model 連著屍體一起」。",
+    "",
+    "⚠️ 這份資料**還沒有接上**,而且它現在放錯地方(故意的)。",
+    "",
+    "它的歸屬地是 content/models/_overlay-hidden-geometry.json —— 和",
+    "_standin-overrides.json 同一個模式(底線開頭 ⇒ fsStore.ts:95 的索引器不當它是",
+    "文件,由 ContentDb 用路徑直接抓)。放不進去是因為要動兩個不屬於本次範圍的檔:",
+    "",
+    "  1. packages/shared/src/content/bundle.test.ts 的 KNOWN_SIDECARS.models",
+    "     要加 \"_overlay-hidden-geometry.json\"。那張表刻意要求每一個新 sidecar",
+    "     都是一筆**被審過**的新增,不是靜悄悄多出來的 —— 所以這不是繞過,是照它",
+    "     的規矩走。沒加的話 bundle.test.ts 會紅在「models index vs disk」。",
+    "",
+    "  2. apps/client/src/render/views/blizzardOverlay.ts 的 overlayModelDoc()",
+    "     要把宣告併進合成出來的 ModelDoc。那 40 隻 overlay 英雄磁碟上沒有 model",
+    "     文件可以掛欄位(champion.ts:250 的 tint 為了同一個理由被迫掛在 champion",
+    "     上),所以合成的那一刻是唯一的注入點。",
+    "",
+    "在 2 接上之前,overlay 英雄身上的屍體仍然看得見 —— schema 與渲染端已經好了,",
+    "缺的是這一段接線。",
+    "",
+    "數字不是手打的:tools/w3x-import/gore_geoset_census.py 從真的 glb 位元組解出來,",
+    "hiddenPrimitives.test.ts 每次都拿 hiddenPrimitives.fixture.json 對一遍。"
+  ],
+  "models": {
+    "assets/blizzard-local/models/E00R.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "最終泛用人型決戰兵器 - 初號機(godie-e00r)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(53 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/E00U.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "完全而瀟灑的女僕 - 十六夜Sakuya(godie-e00u)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(53 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/E00V.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "百畝森林的霸主 - 維尼(godie-e00v)",
+      "why": "prim2 = WC3 gutz08 血泥 geoset(80 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Ekee.glb": {
+      "hiddenPrimitives": [
+        6,
+        7
+      ],
+      "champions": "會叫的野獸 - 傳說中的大刀(godie-ekee)",
+      "why": "prim6 = WC3 gutz00 血泥 geoset(70 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來; prim7 = WC3 gutz00/gutz08 血泥 geoset(80 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/H021.glb": {
+      "hiddenPrimitives": [
+        1
+      ],
+      "champions": "破銅爛鐵 - 阿強一號(godie-h021)",
+      "why": "prim1 = WC3 gutz00 血泥 geoset(70 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Hapm.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "海克力斯 - Berserker(godie-hapm)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(62 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Hblm.glb": {
+      "hiddenPrimitives": [
+        1
+      ],
+      "champions": "慈悲的王者 - 賈修貝爾(godie-hblm)",
+      "why": "prim1 = WC3 gutz00 血泥 geoset(70 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/O02O.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "曹操孟德 - 阿瞞大人(godie-o02o)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(144 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Obla.glb": {
+      "hiddenPrimitives": [
+        4
+      ],
+      "champions": "被剝削的勞工階級 - 牧太郎(godie-obla)",
+      "why": "prim4 = WC3 gutz00 血泥 geoset(45 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Ogld.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "美白大法師 - 黑人牙膏(godie-ogld)",
+      "why": "prim2 = WC3 gutz00/gutz02/gutz04/gutz05 血泥 geoset(62 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Othr.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "X戰警 - 金鋼狼(godie-othr)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(62 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/U01F.glb": {
+      "hiddenPrimitives": [
+        4
+      ],
+      "champions": "萬夫莫敵 - 黑化張飛(godie-u01f)",
+      "why": "prim4 = WC3 gutz00 血泥 geoset(62 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Ubal.glb": {
+      "hiddenPrimitives": [
+        5
+      ],
+      "champions": "魔界霸主 - 巴恩大魔王(godie-ubal)",
+      "why": "prim5 = WC3 gutz00 血泥 geoset(62 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Ucrl.glb": {
+      "hiddenPrimitives": [
+        6
+      ],
+      "champions": "職業獵人 - 傑 富力士(godie-ucrl)",
+      "why": "prim6 = WC3 gutz00 血泥 geoset(45 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    },
+    "assets/blizzard-local/models/Umal.glb": {
+      "hiddenPrimitives": [
+        2,
+        4
+      ],
+      "champions": "北斗神拳掌門人 - 拳四郎(godie-umal)",
+      "why": "prim4 = WC3 gutz00 血泥 geoset(49 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來; prim2 = Bone_Root01 = 第二具完整骨架(107 頂點),rest 站在本體 +Z 1.2u 外,13 個動畫全部驅動它 —— 它跟著走、跟著打、跟著死"
+    },
+    "assets/blizzard-local/models/Usyl.glb": {
+      "hiddenPrimitives": [
+        2
+      ],
+      "champions": "殺戮之牙 - 異形(godie-usyl)",
+      "why": "prim2 = WC3 gutz00 血泥 geoset(69 頂點,權重 100%),#59 掉了 geoset 可見度動畫所以永遠畫得出來"
+    }
+  }
+}

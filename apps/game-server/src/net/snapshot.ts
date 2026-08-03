@@ -397,7 +397,22 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           es.alive = hp.alive;
           es.shield = 0;
         }
-        es.flags = 0;
+        // 精英小怪 (owner 2026-08-03「特殊殭屍 頭上應該要有小血條 顯示即時血量」).
+        //
+        // THE WHOLE POINT: without this bit the wire cannot tell a 特殊殭屍 from a
+        // 雜兵 AT ALL. Everything above is either shared (`kind`, and since GH#192
+        // `key` normally resolves to the SAME champion doc for all three kinds) or
+        // already spoken for (`mana` = 體型倍率, `maxMana` pinned to 0, `seatId`
+        // -1). So a client asked to 「畫特殊殭屍的血條」 had no way to know which
+        // body that was — 失敗形態 ②, computed server-side and never sent.
+        //
+        // 一般殭屍寫 0，而 0 是 Colyseus delta 編碼器直接省略的值，所以一場沒有
+        // 特殊殭屍的比賽在線路上一個 byte 都不多付。
+        //
+        // Written as an EXPLICIT positive list, not `kind !== "normal"`: a mob
+        // kind added later must OPT IN to being elite, rather than inheriting a
+        // health bar (and, one day, a 分紅結算) nobody designed for it.
+        es.flags = mob.kind === "special" || mob.kind === "boss" ? ENTITY_FLAG.MOB_ELITE : 0;
         continue;
       }
       const team = world.team.get(id);

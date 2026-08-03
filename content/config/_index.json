@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "80c93fb7f6fb",
+  "hash": "711d3141aa03",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,8 +11,8 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "5e0d11741a6d",
-      "size": 6000
+      "hash": "83797f6e92d6",
+      "size": 6204
     },
     {
       "id": "audio-map",
@@ -41,8 +41,8 @@
     {
       "id": "boss-intro",
       "path": "config/boss-intro.json",
-      "hash": "3af93a342d44",
-      "size": 2613
+      "hash": "7923400b57e3",
+      "size": 3305
     },
     {
       "id": "champion-voices",
@@ -101,8 +101,8 @@
     {
       "id": "lobby-layout",
       "path": "config/lobby-layout.json",
-      "hash": "8ab10a33b14d",
-      "size": 1111
+      "hash": "147b47d7e630",
+      "size": 1359
     },
     {
       "id": "model-lod",
@@ -143,8 +143,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "306d9b14688b",
-      "size": 201
+      "hash": "2bb076f13318",
+      "size": 268
     },
     {
       "id": "stealth",
@@ -197,8 +197,8 @@
     {
       "id": "victory-podium",
       "path": "config/victory-podium.json",
-      "hash": "74db3b354a24",
-      "size": 1310
+      "hash": "2f54b500cd7a",
+      "size": 1825
     },
     {
       "id": "victory-taunts",

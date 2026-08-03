@@ -40,6 +40,7 @@ import {
   MOB_WAVES_FIELD_ORDER,
   MOB_WAVES_GROUPS,
   MOB_WAVES_LABELS,
+  SETTLEMENT_MODES,
   SHIPPED_MOB_WAVES,
   addScheduleRow,
   capsForRound,
@@ -88,6 +89,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "waveIntervalSec",
   "mobsPerWaveCap",
   "maxAlivePerZone",
+  "stopSpawnOnTeamWipe",
+  "roundHoldMobKinds",
   "mob.maxHp",
   "mob.attackDamage",
   "mob.moveSpeed",
@@ -145,6 +148,8 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.healthBar",
   "boss.healthBarAnchor",
   "boss.healthBarReveal",
+  // #291 分紅結算的字 (owner 2026-08-03「特殊殭屍 不應該用殭屍王 分紅結算畫面」)
+  "boss.settlementTitle",
   // 從英雄推導 (GH#206) — 生命與能力屬性 = 該設定英雄的 N 倍, +M, 移速 ×K, 等級 99
   "boss.heroHpMult",
   "boss.heroDamageMult",
@@ -179,6 +184,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "special.lastHitMode",
   "special.splitByDamage",
   "special.countOverkill",
+  // #291 —— 它自己的字 + 它自己的呈現模式
+  "special.settlementTitle",
+  "special.settlementMode",
 ];
 
 // ---------------------------------------------------------------------------
@@ -358,6 +366,8 @@ describe("每一個欄位 are reachable and labelled", () => {
       waveIntervalSec: "5",
       mobsPerWaveCap: "7",
       maxAlivePerZone: "9",
+      stopSpawnOnTeamWipe: "0",
+      roundHoldMobKinds: "any",
       "mob.maxHp": "111",
       "mob.attackDamage": "2.5",
       "mob.moveSpeed": "4.5",
@@ -428,6 +438,9 @@ describe("每一個欄位 are reachable and labelled", () => {
   "boss.healthBar": "0",
   "boss.healthBarAnchor": "bottom",
   "boss.healthBarReveal": "sighted",
+  // #291 —— sentinel 和出貨的「殭屍王 分紅結算」不同,所以一行沒寫進 payload
+  // 會顯示成出貨值而不是碰巧對上。
+  "boss.settlementTitle": "王 · 結算",
       "special.chancePercent": "12",
       "special.hpMult": "2.5",
       "special.damageMult": "1.75",
@@ -455,6 +468,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       "special.lastHitMode": "weight",
       "special.splitByDamage": "0",
       "special.countOverkill": "1",
+      // #291 —— 同上,兩格 sentinel 都和出貨值不同(「特殊殭屍 分紅結算」/ panel)。
+      "special.settlementTitle": "特殊 · 結算",
+      "special.settlementMode": "toast",
     };
     let form = formFromConfig(SHIPPED_MOB_WAVES);
     for (const [k, v] of Object.entries(edits)) form = setField(form, k as MobWavesFieldKey, v);
@@ -733,5 +749,75 @@ describe("the champion picker shows people, not slugs", () => {
       { id: "godie-b", name: "阿banana" },
     ]);
     expect(sorted[0]?.id).toBe("godie-b");
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * #291 分紅結算的措辭 —— owner 2026-08-03
+ *   「特殊殭屍 不應該用殭屍王 分紅結算畫面」
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("#291 分紅結算的抬頭與呈現模式", () => {
+  it("三個模式和 schema 的 enum 是同一張表（多一個少一個都存不進去）", () => {
+    cover("admin-mob-waves");
+    for (const m of SETTLEMENT_MODES) {
+      const cfg = {
+        ...DEFAULT_MOB_WAVES_CONFIG,
+        special: { ...DEFAULT_MOB_WAVES_CONFIG.special!, settlementMode: m },
+      };
+      expect(zMobWavesConfig.safeParse(cfg).success, `${m} 被 schema 拒絕`).toBe(true);
+      expect(validateField("special.settlementMode", m), `${m} 被後台擋掉`).toBe("");
+    }
+    // 反向對照組：schema 不認得的值，後台也必須擋 —— 否則上面那組對「什麼都放行」
+    // 的實作也會全過（失敗形態④）。
+    // ⚠️ 不列 `"toast "`：`validateField` 和整頁一樣先 trim，所以前後空白是合法的
+    // 輸入（存進去的是 trim 過的值）。列進來只會測到 trim 本身。
+    for (const bad of ["Panel", "none", "hidden", "0"]) {
+      expect(validateField("special.settlementMode", bad), `${bad} 被放行`).not.toBe("");
+      const cfg = {
+        ...DEFAULT_MOB_WAVES_CONFIG,
+        special: { ...DEFAULT_MOB_WAVES_CONFIG.special!, settlementMode: bad },
+      };
+      expect(zMobWavesConfig.safeParse(cfg).success, `${bad} 被 schema 放行`).toBe(false);
+    }
+  });
+
+  it("兩個抬頭出貨值不一樣 —— 相同就等於這一格從來沒做", () => {
+    cover("admin-mob-waves");
+    const boss = SHIPPED_MOB_WAVES.boss!.settlementTitle;
+    const special = SHIPPED_MOB_WAVES.special!.settlementTitle;
+    expect(boss).toBeTruthy();
+    expect(special).toBeTruthy();
+    expect(special, "特殊殭屍還是穿著殭屍王的字").not.toBe(boss);
+    // 而且 SHIPPED_* 必須等於 content/ 那一份（這一頁在 GET 回來之前畫的就是它）。
+    expect(boss).toBe(extractMobWaves(ARENA_RULES)!.boss!.settlementTitle);
+    expect(special).toBe(extractMobWaves(ARENA_RULES)!.special!.settlementTitle);
+  });
+
+  it("清空三格 ⇒ key 消失，不是被寫回出貨值（#289 的同一個坑）", () => {
+    cover("admin-mob-waves");
+    let form = formFromConfig(SHIPPED_MOB_WAVES);
+    for (const k of [
+      "boss.settlementTitle",
+      "special.settlementTitle",
+      "special.settlementMode",
+    ] as const) {
+      form = setField(form, k, "");
+    }
+    const cfg = configFromForm(form);
+    expect("settlementTitle" in cfg.boss!).toBe(false);
+    expect("settlementTitle" in cfg.special!).toBe(false);
+    expect("settlementMode" in cfg.special!).toBe(false);
+    expect(zMobWavesConfig.safeParse(cfg).success).toBe(true);
+  });
+
+  it("抬頭有上界 —— 24 字過、25 字被 schema 擋（只有下界等於沒有驗證）", () => {
+    cover("admin-mob-waves");
+    const ok = { ...DEFAULT_MOB_WAVES_CONFIG.boss!, settlementTitle: "字".repeat(24) };
+    const tooLong = { ...DEFAULT_MOB_WAVES_CONFIG.boss!, settlementTitle: "字".repeat(25) };
+    expect(zMobWavesConfig.safeParse({ ...DEFAULT_MOB_WAVES_CONFIG, boss: ok }).success).toBe(true);
+    expect(
+      zMobWavesConfig.safeParse({ ...DEFAULT_MOB_WAVES_CONFIG, boss: tooLong }).success,
+    ).toBe(false);
   });
 });

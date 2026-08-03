@@ -48,6 +48,20 @@
  * 垂直上它從 **降臨橫幅底下**起算（`BOSS_BANNER_H`），因為那條橫幅在同一段時間
  * 也在畫；擠不下就一段一段丟（見 {@link bossIntroLayout}），真的一段都放不下就
  * 回 `null` ＝ 什麼都不畫，而不是「照樣畫在 0,0」。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ④ #291「描述框不夠大」—— 版面高度現在也是設定
+ * ════════════════════════════════════════════════════════════════════════════
+ * owner 2026-08-03：「殭屍王出場的描述框 不夠大 描述還有很多沒顯示完」。
+ * 根因是**三層各自在吃字，而只有一層可調**：`descriptionMaxChars`（可調）、
+ * 這個檔寫死的 `BOSS_INTRO_DESC_H = 34`（不可調，永遠只算兩行）、以及
+ * `BossIntroOverlay.tsx` 那個 `<span>` 的 `overflow: hidden`。三層都得改，
+ * 只改一層在畫面上是零差別。
+ *
+ * 所以：六個版面常數 + 丟棄順序全部搬進 `content/config/boss-intro.json` 的
+ * `layout` / `dropOrder`（入口 {@link bossIntroLayoutRules}），描述高度改成
+ * 「一行多高 × 需要幾行，上限 `descMaxLines`」（{@link bossIntroDescriptionHeight}），
+ * 而那個 span 不再自己剪字。守衛在 `bossIntroDescription.test.ts`。
  */
 import { Configs } from "@ggd/shared/content";
 import {
@@ -219,12 +233,27 @@ export function bossIntroLifetime(
  * ③ 版面
  * ═══════════════════════════════════════════════════════════════════════════ */
 
-/** 大字名言那一行 */
+/**
+ * ⚠️ #291（owner 2026-08-03「殭屍王出場的描述框 不夠大 描述還有很多沒顯示完」）
+ * —— 這一組**不再是版面的答案**，只是 `boss-intro.json` 的 `layout` 讀不到時的
+ * 保險絲。畫的時候一律走 {@link bossIntroLayoutRules}。
+ *
+ * 為什麼原本會壞：**三層各自獨立在吃字，而只有一層可調**。
+ *   1. `descriptionMaxChars`（出貨 120）—— 唯一在後台的那一格；
+ *   2. `BOSS_INTRO_DESC_H = 34` —— 版面**寫死**只算兩行的高度，字再多也一樣；
+ *   3. `BossIntroOverlay.tsx` 描述那個 `<span>` 的 `overflow: hidden`。
+ * 於是把 (1) 調大**完全看不出差別**，因為 (2) 沒有多給高度、(3) 把多的字剪掉。
+ * 現在 (2) 變成「一行多高 × 最多幾行」兩格、(3) 不再剪，(1) 出貨值升到 300。
+ */
 export const BOSS_INTRO_QUOTE_H = 42;
 /** 英雄名那一行（永遠在，用來說「這是誰」） */
 export const BOSS_INTRO_NAME_H = 20;
-/** 描述（兩行） */
-export const BOSS_INTRO_DESC_H = 34;
+/** 描述**一行**多高（≒ fontSize 12 × lineHeight 1.35） */
+export const BOSS_INTRO_DESC_LINE_H = 17;
+/** 描述最多幾行 —— 「描述框有多大」就是這一格 */
+export const BOSS_INTRO_DESC_MAX_LINES = 10;
+/** 描述一行大約幾個字（460px 面板扣掉 24px 留白，12px 中文） */
+export const BOSS_INTRO_DESC_CHARS_PER_LINE = 36;
 /** 一個段落標題（「攻略要點」／「弱點」） */
 export const BOSS_INTRO_HEAD_H = 16;
 /** 一條列點 */
@@ -234,6 +263,74 @@ export const BOSS_INTRO_PAD_H = 14;
 
 export const BOSS_INTRO_PREF_W = 460;
 export const BOSS_INTRO_MIN_W = 240;
+
+/** 走廊不夠高時可以被丟掉的三段（名言不在裡面 —— 見 {@link bossIntroLayout}）。 */
+export type BossIntroSection = "description" | "tips" | "weaknesses";
+
+/** 出貨的丟棄順序：描述 → 攻略要點 → 弱點。 */
+export const BOSS_INTRO_DROP_ORDER: readonly BossIntroSection[] = [
+  "description",
+  "tips",
+  "weaknesses",
+];
+
+/** 版面尺寸，已經套過 `boss-intro.json` 的 `layout`。 */
+export interface BossIntroLayoutRules {
+  quoteH: number;
+  nameH: number;
+  descLineH: number;
+  descMaxLines: number;
+  descCharsPerLine: number;
+  headH: number;
+  rowH: number;
+  padH: number;
+  dropOrder: readonly BossIntroSection[];
+}
+
+/**
+ * PURE：這份設定的版面尺寸。缺 `layout` ⇒ 上面那組常數（＝ #291 之前的行為，
+ * 除了描述那一格 —— 34px 固定就是缺陷本身，所以保險絲也是「一行 × 最多幾行」）。
+ *
+ * `dropOrder` 會被**補完**：沒有列到的段落排在最後（＝最後才丟）。重複的只算第一次。
+ * 這樣一份只寫了 `["tips"]` 的設定意思是「先丟攻略要點，其他照舊」，而不是
+ * 「描述與弱點永遠不丟」——後者會讓面板在矮螢幕上直接消失（`bossIntroLayout` 回
+ * null），而操作者只填了一個字。
+ */
+export function bossIntroLayoutRules(rules: ConfigBossIntroDoc): BossIntroLayoutRules {
+  const l = rules.layout;
+  const order: BossIntroSection[] = [];
+  for (const s of rules.dropOrder ?? BOSS_INTRO_DROP_ORDER) {
+    if (!order.includes(s)) order.push(s);
+  }
+  for (const s of BOSS_INTRO_DROP_ORDER) if (!order.includes(s)) order.push(s);
+  return {
+    quoteH: l?.quoteH ?? BOSS_INTRO_QUOTE_H,
+    nameH: l?.nameH ?? BOSS_INTRO_NAME_H,
+    descLineH: l?.descLineH ?? BOSS_INTRO_DESC_LINE_H,
+    descMaxLines: l?.descMaxLines ?? BOSS_INTRO_DESC_MAX_LINES,
+    descCharsPerLine: l?.descCharsPerLine ?? BOSS_INTRO_DESC_CHARS_PER_LINE,
+    headH: l?.headH ?? BOSS_INTRO_HEAD_H,
+    rowH: l?.rowH ?? BOSS_INTRO_ROW_H,
+    padH: l?.padH ?? BOSS_INTRO_PAD_H,
+    dropOrder: order,
+  };
+}
+
+/**
+ * PURE：一段 `n` 個字的描述要多高。
+ *
+ * **這一支就是缺陷的修法。** 以前是一個常數 34（兩行），所以 120 字的描述有
+ * 五分之三是畫在框外、被 `overflow: hidden` 吃掉的 —— owner 看到的
+ * 「描述還有很多沒顯示完」。現在高度跟著字數走，上限是 `descMaxLines`：
+ * 上限存在的理由是這面板在中央走廊，無上限的描述會把攻略要點與弱點整段擠掉。
+ */
+export function bossIntroDescriptionHeight(chars: number, rules: BossIntroLayoutRules): number {
+  if (chars <= 0) return 0;
+  const perLine = Math.max(1, Math.trunc(rules.descCharsPerLine));
+  const maxLines = Math.max(1, Math.trunc(rules.descMaxLines));
+  const lines = Math.min(maxLines, Math.max(1, Math.ceil(chars / perLine)));
+  return lines * rules.descLineH;
+}
 
 /** 哪幾段真的畫得下，以及畫下來要多高。 */
 export interface BossIntroLayout {
@@ -247,12 +344,17 @@ export interface BossIntroLayout {
   dropped: string[];
 }
 
-function heightOf(l: Omit<BossIntroLayout, "height" | "dropped">): number {
-  let h = BOSS_INTRO_PAD_H + BOSS_INTRO_NAME_H;
-  if (l.quote !== null) h += BOSS_INTRO_QUOTE_H;
-  if (l.description !== null) h += BOSS_INTRO_DESC_H;
-  if (l.tips.length > 0) h += BOSS_INTRO_HEAD_H + l.tips.length * BOSS_INTRO_ROW_H;
-  if (l.weaknesses.length > 0) h += BOSS_INTRO_HEAD_H + l.weaknesses.length * BOSS_INTRO_ROW_H;
+function heightOf(
+  l: Omit<BossIntroLayout, "height" | "dropped">,
+  rules: BossIntroLayoutRules,
+): number {
+  let h = rules.padH + rules.nameH;
+  if (l.quote !== null) h += rules.quoteH;
+  // #291 —— 描述的高度**跟著字數走**。以前這裡是一個常數，所以把
+  // `descriptionMaxChars` 調大不會多給一個 px（缺陷的第二層）。
+  if (l.description !== null) h += bossIntroDescriptionHeight(l.description.length, rules);
+  if (l.tips.length > 0) h += rules.headH + l.tips.length * rules.rowH;
+  if (l.weaknesses.length > 0) h += rules.headH + l.weaknesses.length * rules.rowH;
   return h;
 }
 
@@ -270,6 +372,7 @@ function heightOf(l: Omit<BossIntroLayout, "height" | "dropped">): number {
 export function bossIntroLayout(
   content: BossIntroContent,
   availableH: number,
+  rules: BossIntroLayoutRules = bossIntroLayoutRules(DEFAULT_BOSS_INTRO),
 ): BossIntroLayout | null {
   const dropped: string[] = [];
   let cur = {
@@ -279,13 +382,19 @@ export function bossIntroLayout(
     tips: [...content.tips],
     weaknesses: [...content.weaknesses],
   };
-  const steps: { label: string; apply: () => void }[] = [
-    { label: "description", apply: () => (cur = { ...cur, description: null }) },
-    { label: "tips", apply: () => (cur = { ...cur, tips: [] }) },
-    { label: "weaknesses", apply: () => (cur = { ...cur, weaknesses: [] }) },
-  ];
+  const apply: Record<BossIntroSection, () => void> = {
+    description: () => (cur = { ...cur, description: null }),
+    tips: () => (cur = { ...cur, tips: [] }),
+    weaknesses: () => (cur = { ...cur, weaknesses: [] }),
+  };
+  // #291 —— 順序來自設定（`dropOrder`），不是三個寫死的 `steps`。把描述框加高的
+  // 代價是矮螢幕上更容易連攻略要點都保不住，所以「先丟誰」必須是可以改的。
+  const steps: { label: BossIntroSection; apply: () => void }[] = rules.dropOrder.map((label) => ({
+    label,
+    apply: apply[label],
+  }));
   for (;;) {
-    const h = heightOf(cur);
+    const h = heightOf(cur, rules);
     if (h <= availableH) return { ...cur, height: h, dropped };
     const next = steps.shift();
     if (!next) return null; // 名言 + 名字都放不下 ⇒ 不畫
@@ -385,13 +494,13 @@ export function bossIntroPlacement(
   content: BossIntroContent,
   viewport: HudViewport,
   opts: { touch: boolean; legendUp: boolean; couchPlayers?: number; barRect?: HudRect | null },
+  rules: BossIntroLayoutRules = bossIntroLayoutRules(DEFAULT_BOSS_INTRO),
 ): { rect: HudRect; layout: BossIntroLayout } | null {
-  const full = bossIntroLayout(content, Number.POSITIVE_INFINITY);
+  const full = bossIntroLayout(content, Number.POSITIVE_INFINITY, rules);
   if (!full) return null;
   // 最低要求＝「名言 + 名字」那一版的高度：走廊給不出這麼多就整段不畫。
   // 不用 0 —— 0 高的矩形是一個看不見的面板，那是失敗形態①而不是一個 fallback。
-  const minH =
-    BOSS_INTRO_PAD_H + BOSS_INTRO_NAME_H + (content.quote === null ? 0 : BOSS_INTRO_QUOTE_H);
+  const minH = rules.padH + rules.nameH + (content.quote === null ? 0 : rules.quoteH);
   const base = {
     touch: opts.touch,
     legendUp: opts.legendUp,
@@ -400,7 +509,7 @@ export function bossIntroPlacement(
   };
   const rect = bossIntroRect(viewport, { ...base, wantH: full.height, minH });
   if (!rect) return null;
-  const layout = bossIntroLayout(content, rect.h);
+  const layout = bossIntroLayout(content, rect.h, rules);
   if (!layout) return null;
   return { rect, layout };
 }

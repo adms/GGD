@@ -59,6 +59,11 @@ import {
   zConfigVfxCleanupDoc,
   zConfigVictoryFxDoc,
 } from "@ggd/shared/content";
+// ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
+// 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
+// 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
+// 同一條。
+import { zConfigVictoryPodiumDoc } from "@ggd/shared/content/schema/victoryPodium";
 // 重用 `/editor` 的 Zod 走訪器而不是在後台再寫一支。理由和第一守則同源：兩支走訪器
 // 就是兩份會 drift 的「Zod 長什麼樣」的知識，而它們的分歧會以「後台少了一個欄位」
 // 的形態出現 —— 那正是這張單要修的東西。
@@ -831,6 +836,107 @@ const VICTORY_FX_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ────────────────────────────────── 回合頒獎台 (config/victory-podium) ─────
+
+/**
+ * 三個「播哪一個剪輯」共用同一組中文。三格問的是同一個問題，答案不一樣的時候
+ * 才有訊息（三個都 celebrate 就沒有「誰是第一」了），所以選項的說明要一致。
+ */
+const VICTORY_PODIUM_CLIP_LABELS: Record<string, string> = {
+  celebrate: "celebrate（慶祝｜找模型自己的 cheer／Stand Victory，沒有的退回站姿並在 console 警告一次）",
+  idle: "idle（站著｜和在商店裡發呆同一個動作）",
+  death: "death（倒下｜給「敗方也上台」那種玩法用的）",
+};
+
+const VICTORY_PODIUM_SPEC: ConfigDocSpec = {
+  page: "victoryPodium",
+  collection: "config",
+  docId: "victory-podium",
+  schemaTag: "config.victory-podium@1",
+  zod: zConfigVictoryPodiumDoc,
+  title: "回合頒獎台",
+  intro: [
+    "一個回合分出勝負時，畫面中央那一排 3D 模型要站幾個人、誰站正中間、誰在慶祝、第一名開口說什麼。owner 2026-08-03：「回合勝利出現的 3d model 是勝利角色 但現在不是」——**站位**那一格就是那句話的答案。",
+    "⚠️ 這一頁在 2026-08-03 之前是**存了不生效**的：文件在、Zod 在、進了 bundle，但畫面讀的是程式裡寫死的常數。現在 `RoundWinnerStage` 真的去內容登錄表讀這一份，所以這一頁的每一格都改得到畫面。",
+    "⚠️ **頒獎台人數不是一個純顯示的數字**：每一位站上台的角色是一個獨立的 WebGL context，而瀏覽器同時大約只給 16 個。調高會直接吃顯示記憶體，手機最先受不了。",
+    "⚠️ **第一名的台詞出貨是「兩個都說」，那就是現行行為**，不是這一頁新加的東西：名言在勝負底定的那一刻、嘲諷在 2.2 秒之後。改成「只嘲諷」才是改變行為（＝把已經在放的名言關掉）。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/victory-podium.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "apps/client/src/render/RoundWinnerStage.ts 的 victoryPodiumPolicy()（每一回合從 Configs 登錄表重讀一次）→ planRoundWinnerShow() 的 cfg 預設值 → podiumSlotOrder / StorePreview 的剪輯與縮放；台詞那一格同時決定 ui/RoundEndVoice 與 audio/victoryTaunt 誰會出聲",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（內容登錄表是開機時載入的），之後的每一個回合結束都會重讀。不需要重開 game-server —— 這整段演出活在客戶端。",
+  fields: [
+    {
+      path: "podiumSize",
+      zh: "頒獎台站幾個人",
+      note: "回合結束時中央排幾個 3D 模型。⚠️ 每一個都是一個獨立的 WebGL context，而瀏覽器同時大約只開得了 16 個 —— 這一格是這一頁唯一會直接吃顯示記憶體的東西，調高在手機上最先炸。排不滿的時候怎麼辦看下面那一格。",
+    },
+    {
+      path: "podiumScope",
+      zh: "排名要算誰",
+      note: "只排勝方三人，還是這一回合上場過的所有座位。3v3 裡兩者幾乎永遠同解（最後活著的三個人就是勝方），**只有勝方有人中途斷線時才會分岔** —— 那時候 allFought 會讓敗方裡活最久的那位補進名次，winnerTeam 則是少一位。",
+      optionLabels: {
+        winnerTeam: "winnerTeam（只排勝方隊伍｜「回合勝利畫面」的字面意思）",
+        allFought: "allFought（這一回合上場過的所有座位｜含敗方）",
+      },
+    },
+    {
+      path: "podiumFill",
+      zh: "人數排不滿時",
+      note: "排得出來的人比上面那一格少的時候要不要補人。⚠️ 補人是**設計偏好不是資料修補**：把剛剛被打倒的敵人擺上勝利頒獎台是一種玩法，不是一個更完整的畫面。空著的台階讀起來像 bug，所以出貨是「有幾個站幾個」。",
+      optionLabels: {
+        shrink: "shrink（有幾個站幾個｜出貨值）",
+        opponents: "opponents（用敗方裡活最久的補滿）",
+      },
+    },
+    {
+      path: "podiumLayout",
+      zh: "第一名站哪裡",
+      note: "owner 2026-08-03「回合勝利出現的 3d model 是勝利角色 但現在不是」講的就是這一格：由左到右照名次排的話，三個人時**螢幕正中央站的是第二名**，而第二名依定義是這一回合倒下的人 —— 玩家的眼睛先看中間，於是「誰贏了」讀起來是錯的。",
+      optionLabels: {
+        rank: "rank（由左到右照名次｜三個人時正中央是第二名）",
+        centreFirst: "centreFirst（金冠站正中央、銀左銅右｜出貨值）",
+        soloWinner: "soloWinner（只站第一名一位｜最不會誤讀，但沒有隊伍三人的畫面）",
+      },
+    },
+    {
+      path: "winnerScale",
+      zh: "第一名那張卡放大幾倍",
+      note: "第一名相對其他人的尺寸倍率，同時決定它疊在上層。1 ＝ 三張一樣大，那時候「誰贏了」只剩皇冠顏色一個線索（金銀銅在暗底上並不好分）。往下調到 1 以下是刻意的反差玩法，不是壞掉。",
+    },
+    {
+      path: "clipGold",
+      zh: "第一名做什麼動作",
+      note: "站上台的那一刻播哪一個動作剪輯。在這一格出現之前三個人一律站著不動 —— 也就是「勝利」和「在商店裡逛街」看起來一模一樣，這是玩家最直接感覺到「贏了但沒有反應」的地方。",
+      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
+    },
+    {
+      path: "clipSilver",
+      zh: "第二名做什麼動作",
+      note: "同上，但這一格的重點是**不要跟第一名一樣**：三個人一起慶祝的話，「誰是第一」這個訊息就從畫面上完全消失了，只剩下皇冠顏色。",
+      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
+    },
+    {
+      path: "clipBronze",
+      zh: "第三名做什麼動作",
+      note: "同上。把敗方補上台（上面「人數排不滿時」選 opponents）的玩法可以把這一格設成倒下，讓被補上來的人躺在台上 —— 那時候台上就同時說得出「誰贏了」和「誰輸了」。",
+      optionLabels: VICTORY_PODIUM_CLIP_LABELS,
+    },
+    {
+      path: "roundWinLine",
+      zh: "第一名開口說什麼",
+      note: "⚠️ 出貨是「兩個都說」，而那**就是現行行為**：名言在勝負底定的那一刻、嘲諷在 2.2 秒之後。所以選「只嘲諷」不是維持現狀，是把已經在放的名言關掉。選「只說名言」時，該英雄沒有名言剪輯就自動退回嘲諷，不會變成一片安靜。",
+      optionLabels: {
+        taunt: "taunt（只嘲諷敗方）",
+        quote: "quote（只說自己的名言｜沒有剪輯時退回嘲諷）",
+        both: "both（名言 → 2.2 秒後嘲諷｜出貨值，也是現行行為）",
+      },
+    },
+  ],
+  preserved: [],
+};
+
 // ───────────────────────────────────────── 體型與射程 (config/body-scale) ──
 
 const BODY_SCALE_SPEC: ConfigDocSpec = {
@@ -1075,8 +1181,62 @@ const BOSS_INTRO_SPEC: ConfigDocSpec = {
       zh: "最多列幾條弱點",
       note: "同上，但弱點是**最後才被丟掉**的那一段 —— 它是「現在要怎麼打」的答案，描述只是身世。**0 ＝ 不顯示弱點那一段**。",
     },
+    // ── #291 版面高度那一組 ────────────────────────────────────────────────
+    // owner 2026-08-03：「殭屍王出場的描述框 不夠大 描述還有很多沒顯示完」。
+    // ⚠️ 這一組在後台缺席時，上面的 描述最多顯示幾個字 是**調了看不出差別**的：
+    // 字數放大了，但版面仍然只算得出兩行的高度，多出來的字被外框的
+    // `overflow: hidden` 吃掉。兩層各自在吃字，只開放其中一層等於沒開放。
+    {
+      path: "layout.descMaxLines",
+      zh: "描述最多佔幾行",
+      note: "這一格才是「描述框有多大」。上面的 描述最多顯示幾個字 決定截幾個字，這一格決定**畫得下幾行** —— 兩格取小的那一個才是玩家真正看得到的量，所以只調其中一格會出現「字數調大了但畫面一個字都沒多」。調大會往下擠掉攻略要點與弱點（丟棄順序見下面那張表），矮螢幕上更容易只剩名字。",
+    },
+    {
+      path: "layout.descLineH",
+      zh: "描述一行多高（px）",
+      note: "⚠️ 這是**和面板 CSS 對齊的量**，不是美感值：它要等於描述那一行的字級 × 行高（出貨 12 × 1.35 ≈ 16.2，取 17）。填太小 → 算出來的高度比畫出來的矮，字會被外框截掉（就是 #291 那個缺陷）；填太大 → 描述底下留一塊沒有人用的空白，而且提早擠掉弱點。改字級的時候要一起改這一格。",
+    },
+    {
+      path: "layout.descCharsPerLine",
+      zh: "描述一行大約幾個字",
+      note: "把字數換算成行數用的除數（字數 ÷ 這一格 = 需要幾行），不會改變畫面上真正的換行位置 —— 真正的換行是瀏覽器做的。它只影響**版面替描述保留多少高度**：估太少會保留過多高度、白白擠掉弱點；估太多會保留不足、描述又被截掉。出貨 36 是 460px 寬的面板扣掉左右留白之後 12px 中文字塞得下的量。",
+    },
+    {
+      path: "layout.quoteH",
+      zh: "大字名言那一行的高度（px）",
+      note: "名言那一段在版面計算裡佔多高。⚠️ 出貨的名言**全部是空的**（資料是 GH#139／#142），而空的時候這一段整段不畫也不佔高度 —— 所以今天改這一格在畫面上看不到任何變化，要等名言真的填進去才有意義。填 0 等於名言有資料時也不替它留位置，字會和英雄名疊在一起。",
+    },
+    {
+      path: "layout.nameH",
+      zh: "英雄名那一行的高度（px）",
+      note: "英雄名是**唯一一定會出現**的那一行（描述／要點／弱點都可能被丟掉，它不會），所以這一格加上下面的外框留白就是這面提示的最低高度 —— 中央走廊比它還矮的時候，整面提示會直接不畫。填太小會讓名字和底下的描述黏在一起。",
+    },
+    {
+      path: "layout.headH",
+      zh: "段落標題的高度（px）",
+      note: "「攻略要點」「弱點」這兩個小標題各佔多高。只有那一段真的有內容時才會算進去，所以它和下面那一格一起決定「多列一條要點要多付多少高度」。填太小會讓標題和第一條列點擠在一起，看起來像列點多了一條。",
+    },
+    {
+      path: "layout.rowH",
+      zh: "一條列點的高度（px）",
+      note: "攻略要點與弱點裡**每一條**佔多高，所以它會被條數乘起來：要點與弱點各 3 條時，這一格多 4px 就是版面多要 24px。走廊高度不夠時付不出這個高度的段落會被整段丟掉（不是擠成一團），所以調大它等於讓矮螢幕更早只剩名字。",
+    },
+    {
+      path: "layout.padH",
+      zh: "外框上下留白合計（px）",
+      note: "面板外框上下加起來的內距，一律先算進去（不管有幾段內容）。它直接吃掉可以給描述與列點的高度，所以在橫向手機那種八十幾 px 的走廊裡，調大這一格最先犧牲掉的是弱點那一段。",
+    },
   ],
   preserved: [
+    {
+      // #291 —— 走訪器把陣列一律歸成「不編輯的分支」，而這一格的合法值是
+      // 三個字面字串的 enum。通用引擎唯一畫得出陣列的形狀是 `tables` 的
+      // `stringList`，而它收的是**自由文字**：操作者打成 `descrption` 後台會放行、
+      // 平台的嚴格 Zod 在 PUT 那一關才退回，理由是一句英文的 schema 錯誤。
+      // 那比「這一頁不編輯它」更糟，所以它先走 preserved。
+      path: "dropOrder",
+      why: "走廊高度不夠時**先丟哪一段**（出貨 描述 → 攻略要點 → 弱點）。這一頁不編輯它，但每次儲存都原封不動帶著走 —— 掉了的話它會靜靜地退回出貨順序，於是「我明明設過先丟攻略要點」在下一次存檔之後就消失了，而畫面上只有在矮螢幕、而且剛好放不下的那幾場才看得出來。",
+    },
     {
       path: "champions",
       why: "逐英雄的出場文案表（名言／攻略要點／弱點／推導依據）。這一頁不編輯它，但每次儲存都原封不動帶著走 —— 掉了的話王照樣會出場、面板照樣會跳，只是每一隻都只剩名字和描述，而畫面上完全看不出來少了東西。",
@@ -1292,6 +1452,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   TAUNT_SPEC,
   ARENA_FIRE_SPEC,
   VICTORY_FX_SPEC,
+  VICTORY_PODIUM_SPEC,
   BODY_SCALE_SPEC,
   REGEN_SPEC,
   BOSS_INTRO_SPEC,

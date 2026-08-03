@@ -70,6 +70,10 @@ const CAST_REASON: Readonly<Record<CastResult, string>> = {
   "out-of-range": "距離太遠",
   "bad-target": "沒有合法目標",
   passive: "這是永久被動，沒有東西可以施放",
+  // 暴走系主動技（59-001 完全暴走）：血夠低才按得下去。門檻是後台欄位
+  // `world.berserkRules.castHpPct`（出貨 15%），見
+  // packages/shared/src/sim/abilities/berserkRules.ts。
+  "hp-too-high": "血還太多 —— 生命 15% 以下才放得出來",
   recovery: "上一發打空了，後搖中",
 };
 

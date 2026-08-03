@@ -86,13 +86,24 @@ export const AP_CAP_OPEN = 100000;
  *   `ModOp.CapRaise` 用到。
  * · 法強 100000 / 100000 —— owner 2026-08-01「所以要有這個欄位,但先不要夾」。
  *   見 `AP_CAP_OPEN`。
+ * · 吸血 0.8 / 1.0 —— owner 2026-08-03 的暴走定稿要求「吸血 **100%**」,而
+ *   `STAT_CLAMPS[Stat.Lifesteal]` 的上界是 0.8。沒有這一列的話 `capFor` 會退回
+ *   那個 0.8 而且 `base === unlocked`,於是 `flat 1.0` 被**靜默**夾成 0.8 ——
+ *   面板寫 100%、實際回 80%,而且沒有任何一行訊息會提到它。第二層(1.0)只有
+ *   帶著 `ModOp.CapRaise` 的來源(59-00 / 59-001 暴走)拿得到,所以對其他
+ *   115 張卡與每一件吸血裝逐位元不變:一般上限仍然是 0.8。
  *
  * 其餘屬性仍然**故意沒有列**:替它們憑空發明一個 `unlocked` 等於默默放寬平衡。
  * 要新增就在後台(或這裡)明確加一列。
+ *
+ * ⚠️ 這張表必須和 `content/config/stat-caps.json` **逐格相同** ——
+ * `sim/economy/capUnlockContent.test.ts` 的「文件與程式預設一致」在守它。
+ * 兩邊不一致 = 後台顯示的預設、和沒有文件時實際生效的,是兩個不同的數字。
  */
 export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   [Stat.AttackSpeed]: Object.freeze({ base: 4.0, unlocked: 10.0 }),
   [Stat.AbilityPower]: Object.freeze({ base: AP_CAP_OPEN, unlocked: AP_CAP_OPEN }),
+  [Stat.Lifesteal]: Object.freeze({ base: 0.8, unlocked: 1.0 }),
 });
 
 // ------------------------------------------------------------- bounds ------

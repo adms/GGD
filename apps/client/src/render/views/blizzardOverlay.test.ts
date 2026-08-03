@@ -162,7 +162,14 @@ describe("overlay PRESENT", () => {
     overlay.resolve(STAND_IN, "godie-e00r");
     overlay.resolve(STAND_IN, "godie-uwar");
     await Promise.all([overlay.load(), overlay.load()]);
-    expect(fetchFn).toHaveBeenCalledTimes(1);
+    // ⚠️ 數的是 **MANIFEST 的請求次數**,不是 fetch 的總次數。`load()` 現在同時抓
+    // `_overlay-hidden-geometry.json`(屍體幾何宣告,owner 2026-08-02),所以一次
+    // load = 兩個不同 URL 的請求。這條守的是「單飛」——同一個 URL 不重複抓——
+    // 把總數釘成 1 會在加任何一份 sidecar 時假紅。
+    const manifestCalls = fetchFn.mock.calls.filter((c) =>
+      String(c[0]).includes(BLIZZARD_OVERLAY_MANIFEST_PATH),
+    );
+    expect(manifestCalls, "manifest 被重複抓了 —— 單飛壞了").toHaveLength(1);
   });
 });
 

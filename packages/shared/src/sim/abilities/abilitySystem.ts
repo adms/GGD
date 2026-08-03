@@ -16,6 +16,7 @@ import { circle } from "../collision/shapes";
 import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
+import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
 import { breakStealth, canSee } from "../stealth";
 import {
@@ -90,6 +91,19 @@ export type CastResult =
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
   | "passive"
   /**
+   * 暴走系主動技的生命門檻沒到 —— 「你還沒虛弱到需要把方向盤交出去」
+   * (owner 2026-08-03:EX 完全暴走 HP ≤ 15% 才放得出來)。
+   *
+   * 它是一個**獨立的**理由而不是 `bad-target`,因為玩家能做的事完全不同:
+   * bad-target 是「換一個目標」,這一條是「等你被打到剩 15% 再按」。
+   * 門檻本身是欄位(`world.berserkRules.castHpPct`),見 `abilities/berserkRules.ts`。
+   *
+   * ⚠️ 客戶端 `apps/client/src/ui/castFeedback.ts` 的 `CastRejectReason` 是一份
+   * **本地**聯集(刻意的,見那個檔的註解),所以這一個新成員在舊客戶端上會退回
+   * 通用句「現在無法施放」而不是型別錯誤。要那句專屬文案,見回報的 needsOthers。
+   */
+  | "hp-too-high"
+  /**
    * still committed to the RECOVERY of a previous ability that WHIFFED
    * (abilityRecovery.ts). Distinct from "cooldown" on purpose: the HUD should
    * be able to say "you missed and you're still recovering", which is the whole
@@ -137,6 +151,16 @@ export function castAbility(
   // activated. Reject BEFORE any cost is paid — the old shape charged mana and
   // a fabricated cooldown for a button WC3 does not even let you press.
   if (isPassiveOnly(def)) return "passive";
+  // 暴走系主動技的生命門檻 (owner 2026-08-03:EX 完全暴走 HP ≤ 15%).
+  //
+  // 位置是**所有付出成本之前**,和 `isPassiveOnly` 同一段:被這條擋下來的一次
+  // 按鍵,魔力一點都不扣、冷卻一格都不轉。寫在效果裡的話按鈕會照樣吃掉 120 秒
+  // 冷卻然後什麼都不發生(失敗形態 ②)。
+  //
+  // 判定的是「這支技能會不會給暴走」而不是英雄 id,所以下一支暴走技自動繼承
+  // 同一條規則 —— 見 abilities/berserkRules.ts。
+  const berserkBlock = berserkCastBlock(world, def, caster);
+  if (berserkBlock) return berserkBlock;
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
 
@@ -229,7 +253,19 @@ export function castAbility(
   const cdr = sc.final[Stat.CooldownReduction] ?? 0;
   // world.combatEnv.cooldown: global env factor on the cooldown SECONDS (2.0 =
   // twice as long). One seam covers Q/W/E/R and the EX slot alike.
-  const cdSecs = (def.cooldown[inst.rank - 1] ?? 0) * (1 - cdr) * world.combatEnv.cooldown;
+  //
+  // 暴走中的冷卻倍率 (owner 2026-08-03:「冷卻時間 ×2」) 乘在**同一個seam**上,
+  // 理由和 `combatEnv.cooldown` 完全相同:分開一條路線就會有一半的技能忘記
+  // 套用。不是暴走中 → 回 1,所以每一份既有錄影逐位元不變。
+  //
+  // ⚠️ 讀的是**開始施放的那一刻**的狀態,所以 EX 自己的 120 秒不會被自己剛掛上
+  // 的暴走加倍(效果在付完成本之後才跑),而暴走**之前**就已經在轉的冷卻也不會
+  // 被追溯加倍 —— 那會讓玩家看到冷卻進度條倒退。
+  const cdSecs =
+    (def.cooldown[inst.rank - 1] ?? 0) *
+    (1 - cdr) *
+    world.combatEnv.cooldown *
+    berserkCooldownFactor(world, caster);
   inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
 
   // ---- 面向：commit 瞄準方向 (task #264) ----

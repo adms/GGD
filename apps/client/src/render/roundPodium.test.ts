@@ -19,7 +19,8 @@ import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { DEFAULT_VICTORY_PODIUM } from "@ggd/shared/content/schema/victoryPodium";
 import { RoundWinnerStage, type WinnerPreview } from "./RoundWinnerStage";
 import { CROWN_PALETTE, crownSvg, medalForPlace } from "./victoryCrown";
-import { roundVictoryPodium, type PodiumSeatView } from "../ui/panels/victoryPodium";
+import { mvpSeatFor, roundVictoryPodium, type PodiumSeatView } from "../ui/panels/victoryPodium";
+import { roundEndQuoteChampion } from "../ui/panels/settlementModel";
 
 const DOC = { modelKey: "champ.test", url: "/x.glb" } as unknown as ModelDoc;
 
@@ -148,6 +149,74 @@ describe("頒獎台照存活順序排,不是照擊殺數", () => {
     });
     expect(filled.map((p) => p.seatId)).toEqual([0, 4, 3]);
     expect(filled.map((p) => p.filler)).toEqual([false, true, true]);
+  });
+});
+
+// ───────────────────────────────── 1b. 座位鍵是 seatId,不是 championId ──
+/**
+ * v0.9.27 迴歸的另一半:`MatchController` 的英雄抽選**有放回**(沒有唯一性閘),
+ * 所以同一支英雄可以同時在兩隊。舊實作用 `seats.find(s => s.championId === mvp)`
+ * 找 MVP 的座位,而 `hud.seats` 依 seatId 排序 —— 撞名時它拿到的是**最小 seatId
+ * 的那一個**,常常在敗方。
+ *
+ * 這裡的兩個場景各自對應 owner 看到的一個症狀,而且兩個都只靠一行的差別區分:
+ *   · 撞名在**敗方** → 整個頒獎台翻成輸家,金冠戴在一個已經倒下的人頭上;
+ *   · 撞名在**輪空隊伍** → 範圍是空的 → 頒獎台是空的 → 呼叫端退回舊選擇器,
+ *     畫面上一頂皇冠都沒有。
+ */
+describe("撞名的英雄不會把金冠送給敗方 (podium-seat-key)", () => {
+  /** 勝方 team 0 的 MVP 是 `dup`,而 `dup` 同時被一個 seatId 更小的座位用著。 */
+  const winnerTeamSeats: PodiumSeatView[] = [
+    seat({ seatId: 3, teamId: 0, championId: "a", roundDeathTick: 100 }),
+    seat({ seatId: 4, teamId: 0, championId: "b", roundDeathTick: 200 }),
+    seat({ seatId: 5, teamId: 0, championId: "dup", alive: true, roundKills: 5 }),
+  ];
+
+  it("撞名落在敗方時,金冠仍然是勝方那一位", () => {
+    const seats: PodiumSeatView[] = [
+      // seatId 0 < 5,所以舊的 `find` 會挑中這一個 —— 一個死掉的輸家
+      seat({ seatId: 0, teamId: 1, championId: "dup", roundDeathTick: 50 }),
+      seat({ seatId: 1, teamId: 1, championId: "y", roundDeathTick: 60 }),
+      seat({ seatId: 2, teamId: 1, championId: "z", roundDeathTick: 70 }),
+      ...winnerTeamSeats,
+    ];
+    const teams = [team(0, ROUND_OUTCOME.WON), team(1, ROUND_OUTCOME.LOST, 1)];
+    const podium = roundVictoryPodium(seats, teams);
+    // 整個頒獎台屬於勝方,而且金冠是那個**還活著**的座位 5
+    expect(podium.every((p) => p.teamId === 0)).toBe(true);
+    expect(podium[0]!.seatId).toBe(5);
+    expect(podium[0]!.championId).toBe("dup");
+    expect(podium.map((p) => p.medal)).toEqual(["gold", "silver", "bronze"]);
+  });
+
+  it("撞名落在輪空隊伍時,頒獎台不會整個空掉(#173 的那條路)", () => {
+    const seats: PodiumSeatView[] = [
+      // 輪空隊伍的座位:alive:false / kills 0 / 從沒發過 death 事件
+      seat({ seatId: 0, teamId: 2, championId: "dup" }),
+      ...winnerTeamSeats,
+      seat({ seatId: 6, teamId: 1, championId: "y", roundDeathTick: 60 }),
+    ];
+    const teams = [
+      team(0, ROUND_OUTCOME.WON),
+      team(1, ROUND_OUTCOME.LOST, 1),
+      team(2, ROUND_OUTCOME.NONE),
+    ];
+    const podium = roundVictoryPodium(seats, teams);
+    // 舊實作在這裡回 [] —— 於是呼叫端退回 roundWinnerTeamChampions,一頂冠都沒有
+    expect(podium).toHaveLength(3);
+    expect(podium.every((p) => p.teamId === 0)).toBe(true);
+    expect(podium[0]!.seatId).toBe(5);
+  });
+
+  it("沒有撞名時,結果和舊的 find 逐字同解(這是修消歧義,不是改排序)", () => {
+    const seats: PodiumSeatView[] = [
+      seat({ seatId: 0, teamId: 1, championId: "x", roundDeathTick: 50 }),
+      ...winnerTeamSeats,
+    ];
+    const teams = [team(0, ROUND_OUTCOME.WON), team(1, ROUND_OUTCOME.LOST, 1)];
+    const mvp = roundEndQuoteChampion(seats, teams)!;
+    expect(mvpSeatFor(seats, teams, mvp)).toBe(seats.find((s) => s.championId === mvp));
+    expect(roundVictoryPodium(seats, teams).map((p) => p.seatId)).toEqual([5, 4, 3]);
   });
 });
 

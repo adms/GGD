@@ -32,6 +32,12 @@ import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
 import { stealthVisualFor } from "./render/stealthVisual";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import {
+  facingModePredictsLocally,
+  facingModeSnapsFromAuthority,
+} from "@ggd/shared/sim/facingLock";
+import { localFacingMode } from "./predict/localFacingMode";
+import { localRenderPose } from "./predict/localRenderPose";
 
 import type { RoomConnection } from "./net/RoomConnection";
 import { MultiSession, type SeatTokenEntry } from "./net/MultiSession";
@@ -182,6 +188,14 @@ interface PendingAuth {
   entityId: number;
   x: number;
   z: number;
+  /**
+   * 權威面向 (GH#281 (a) 校正路徑). 在此之前這個 interface 只有位置 ——
+   * 也就是說**自己的英雄的權威面向從來沒有被取樣過**，`poseFor` 又把整個權威
+   * pose 換成預測 pose，所以那兩個 float 一路從 wire 走到 client 然後被丟掉。
+   * 站定出手時影子沒有任何一行寫 facing，身體就凍在最後一次走路的方向。
+   */
+  fx: number;
+  fz: number;
   zone: number;
   ackSeq: number;
 }
@@ -459,6 +473,25 @@ export class GameApp {
   private pendingAuth: PendingAuth | null = null;
   private predictedEntityId: number | null = null;
   /**
+   * 玩家自己下的 `attackTarget` 訂單指到的實體 (GH#281 (b) 跟手路徑).
+   *
+   * 為什麼這一筆要在 client 自己記一份，而不是問影子的 `nav.attackTarget`：
+   * `orderSystem` 每一 tick 都會把一個「transform 查不到」的攻擊目標清成 null
+   * （systems/OrderSystem.ts 的 chase 解析），而影子世界裡除了自己一具身體之外
+   * **什麼都沒有** —— 所以那個欄位在影子裡結構上永遠是 null，問不到。
+   *
+   * 這一筆是玩家自己按下去的，所以它是**零延遲**的（不必等 ack、不必等快照），
+   * 這正是 (b) 存在的理由。伺服器自動索敵 (#221) 挑的目標不會走這裡，那一半由
+   * (a) 校正路徑補上 —— 兩條路互補。
+   */
+  private attackOrderTargetId: number | null = null;
+  /**
+   * `LocalFacingMode.authoritative` 的 render pose —— 預測位置 + 權威面向。
+   * 每幀重複使用同一個物件（`poseFor` 一秒被呼叫上千次，per-frame 配置在這條
+   * 路徑上是量得到的 GC 壓力）。
+   */
+  private readonly localAuthPose = { x: 0, z: 0, fx: 1, fz: 0 };
+  /**
    * Active combat-env multiplier table (MatchState.combatEnvJson, parsed once
    * per change). Of all factors ONLY moveSpeed matters client-side: prediction
    * replays just order+movement; every other quantity reaches the client via
@@ -726,6 +759,16 @@ export class GameApp {
       // facing was decided by its move direction until the authority caught up
       // — one full RTT of wrong facing on the champion the player is watching.
       if (msg.order || msg.aim) this.prediction.recordInput(msg.seq, msg.order, msg.aim);
+      // GH#281 (b): remember WHO the player just told this hero to attack. Any
+      // other navigation order releases it — the same thing `orderSystem` does
+      // server-side (`if (!nav.attackTargetAuto) nav.attackTarget = null` on a
+      // move), so the shadow and the authority let go at the same moment.
+      if (msg.order) {
+        this.attackOrderTargetId =
+          msg.order.kind === "attackTarget" && msg.order.entity !== undefined
+            ? msg.order.entity
+            : null;
+      }
       // ping estimate: stamp each seq so the ack delta measures RTT
       this.connStats.noteSent(msg.seq, performance.now());
       // hum idle latch: any issued input means you are NOT idle (voice §三).
@@ -1122,6 +1165,8 @@ export class GameApp {
           entityId: es.id,
           x: es.x,
           z: es.z,
+          fx: es.fx,
+          fz: es.fz,
           zone: es.zone,
           ackSeq: seat.lastAckSeq,
         };
@@ -1236,16 +1281,37 @@ export class GameApp {
 
     // 3) local prediction: (re)spawn shadow, reconcile, fixed-step
     if (state) this.ensurePredictionEntity(state);
+    // 自己英雄的面向來源 (GH#281) —— 決策點，`config.combat-feel@1` 的
+    // `facing.localMode`，出貨 `hybrid` = (b) 為主 + (a) 校正。
+    const facingMode = localFacingMode();
     if (this.pendingAuth && this.prediction.active) {
       const pa = this.pendingAuth;
       this.pendingAuth = null;
       const authPos: Vec2 = { x: pa.x, z: pa.z };
+      // (a) 校正路徑：`predicted` 那一側不交面向，其餘兩側交。
+      const authFacing = facingModeSnapsFromAuthority(facingMode)
+        ? { x: pa.fx, z: pa.fz }
+        : undefined;
       if (pa.zone !== this.prediction.zone || this.prediction.errorTo(authPos) > TELEPORT_EPS) {
-        this.prediction.teleport(authPos, pa.zone);
+        // ⚠️ teleport = 權威把我搬到別的地方（換 zone、或位置差超過 TELEPORT_EPS）。
+        // 實際上這就是「新回合重生」那一刻。在此之前這裡**不清** attackOrderTargetId，
+        // 而它只在「目標死掉/離開快照」時才被清（:2371）—— 於是上一回合的對手如果是
+        // 活著結束回合的（時間到、或他那一邊贏），這個 id 會原樣跨過回合邊界，
+        // 新回合一開場影子就朝著一個在別處的人轉身。伺服器那一側是清的
+        // （MatchController 的 resetRoundTallies），只有客戶端漏了。
+        this.attackOrderTargetId = null;
+        this.prediction.teleport(authPos, pa.zone, authFacing);
       } else {
-        this.prediction.reconcile(authPos, pa.ackSeq);
+        this.prediction.reconcile(authPos, pa.ackSeq, authFacing);
       }
     }
+    // (b) 跟手路徑：把「我正在打的那個東西在哪」餵給影子，讓它站定時自己轉身
+    // （否則影子那幾 tick 一行 facing 都不寫，身體凍在最後一次走路方向）。
+    // `authoritative` 那一側刻意不裝這條通道 —— 那個模式的定義就是「面向只由
+    // 伺服器決定」，裝了就不是那個模式了。
+    this.prediction.setCombatFacingTarget(
+      facingModePredictsLocally(facingMode) ? this.combatFacingTargetPos(state, renderTick) : null,
+    );
     if (frozen) {
       // settlement freeze: hold the prediction shadow (the server pins the hero);
       // reconcile above still snaps it to the idle authority so it stays put.
@@ -1299,7 +1365,13 @@ export class GameApp {
       this.views.sync({
         entities,
         poseFor: (e) => {
-          if (e.id === this.predictedEntityId && localPose && e.alive) return localPose;
+          if (e.id === this.predictedEntityId && localPose && e.alive) {
+            // GH#281：在此之前這條 return 把權威的 `fx/fz` 連同整個 pose 一起
+            // 丟掉，所以自己的英雄從來看不到任何伺服器算出來的面向。規則本身
+            // （位置永遠走預測、面向依模式）在 predict/localRenderPose.ts，
+            // 那裡守得到；這裡只是接線。
+            return localRenderPose(facingMode, localPose, e, this.localAuthPose);
+          }
           return this.interp.sample(e.id, renderTick) ?? { x: e.x, z: e.z, fx: e.fx, fz: e.fz };
         },
         nowMs,
@@ -2286,6 +2358,28 @@ export class GameApp {
     const hud = hudStore.getState();
     if (hud.localEntityId === null) return null;
     return this.schemaPos(hud.localEntityId);
+  }
+
+  /**
+   * GH#281 (b) 跟手路徑 —— 「我這一刻正在打的那個東西」在哪，或 null。
+   *
+   * 讀的是**畫面上**的位置（`interp.sample`，也就是遠端實體真正被畫在哪），
+   * 而不是快照的原始座標：身體要轉向的是玩家看得到的那個目標，不是一個
+   * INTERP_DELAY_MS 之後才會被畫出來的位置。取樣不到才退回快照座標。
+   *
+   * 目標死了 / 離開快照 → 連同記憶中的 id 一起清掉，否則身體會一直朝著一具已經
+   * 消失的屍體（或它最後停下來的地方）站著。
+   */
+  private combatFacingTargetPos(state: MatchState | null, renderTick: number): Vec2 | null {
+    const id = this.attackOrderTargetId;
+    if (id === null || !state) return null;
+    const es = state.entities.get(String(id));
+    if (!es || !es.alive) {
+      this.attackOrderTargetId = null;
+      return null;
+    }
+    const p = this.interp.sample(id, renderTick);
+    return p ? { x: p.x, z: p.z } : { x: es.x, z: es.z };
   }
 
   private localAbility(slot: CastableSlot): AimAbility | null {

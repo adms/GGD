@@ -9,6 +9,10 @@
     "ap": {
       "base": 100000,
       "unlocked": 100000
+    },
+    "lifesteal": {
+      "base": 0.8,
+      "unlocked": 1.0
     }
   }
 }

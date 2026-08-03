@@ -1,13 +1,24 @@
 {
   "id": "boss-intro",
   "schema": "config.boss-intro@1",
-  "note": "殭屍王出場演出 (owner 2026-08-02「殭屍王出場 會音效+大字講該英雄的名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示淡出消失」)。⚠️ 殭屍王借的是 mobWaves.boss.championSource 抽到的那位英雄的臉，出貨值是 random，所以出場的可能是任何一位英雄 —— 這裡沒有 key 的英雄就只會顯示名字與描述，那是預期行為不是缺陷。⚠️ quote（名言）出貨一律留空：每位英雄的名言是 GH#139/#142，資料還不存在，而編一句台詞塞進去等於把缺資料偽裝成功能。victory-taunts.json 裡的是對輸家講的嘲弄，不是那個角色的名言，不可以拿來頂替。",
+  "note": "殭屍王出場演出 (owner 2026-08-02「殭屍王出場 會音效+大字講該英雄的名言，然後跳出該英雄的描述及攻略注意要點及弱點等提示，五秒後提示淡出消失」)。⚠️ 殭屍王借的是 mobWaves.boss.championSource 抽到的那位英雄的臉，出貨值是 random，所以出場的可能是任何一位英雄 —— 這裡沒有 key 的英雄就只會顯示名字與描述，那是預期行為不是缺陷。⚠️ quote（名言）出貨一律留空：每位英雄的名言是 GH#139/#142，資料還不存在，而編一句台詞塞進去等於把缺資料偽裝成功能。victory-taunts.json 裡的是對輸家講的嘲弄，不是那個角色的名言，不可以拿來頂替。⚠️ #291（owner 2026-08-03「描述框 不夠大 描述還有很多沒顯示完」）：descriptionMaxChars 單獨調大**看不出任何差別** —— 版面高度是 layout 那一組決定的，descriptionMaxChars 300 字必須配 layout.descMaxLines ≥ 9 才畫得出來。dropOrder 是「走廊塞不下時先丟哪一段」，把描述加高的代價就是矮螢幕上更容易連攻略要點都保不住，所以它是一格而不是寫死的順序。",
   "enabled": true,
   "introHoldSec": 5,
   "fadeSec": 0.6,
-  "descriptionMaxChars": 120,
+  "descriptionMaxChars": 300,
   "maxTips": 3,
   "maxWeaknesses": 3,
+  "layout": {
+    "quoteH": 42,
+    "nameH": 20,
+    "descLineH": 17,
+    "descMaxLines": 10,
+    "descCharsPerLine": 36,
+    "headH": 16,
+    "rowH": 17,
+    "padH": 14
+  },
+  "dropOrder": ["description", "tips", "weaknesses"],
   "champions": {
     "godie-zombiex": {
       "quote": "",

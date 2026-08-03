@@ -314,8 +314,43 @@ export function hasDedicatedShippedModel(doc: ModelDoc | null | undefined): bool
   return !doc.glbPath.startsWith(STOCK_CHAMPION_GLB_PREFIX);
 }
 
-/** Synthesize the ModelDoc ChampionView needs for an overlay unit. */
-export function overlayModelDoc(unit: BlizzardOverlayUnit): ModelDoc {
+/**
+ * `content/models/_overlay-hidden-geometry.json` —— glbPath → 要藏起來的 primitive
+ * 索引（owner 2026-08-02「初號機跟拳四郎一樣 3d model 連著屍體一起」）。
+ *
+ * ⚠️ **為什麼宣告不能掛在 model 文件上**：blizzard-overlay 那 40 隻在磁碟上沒有
+ * 自己的 `model@1` 文件 —— 它們的 ModelDoc 是這支檔案在執行期**合成**出來的
+ * （`champion.ts:250` 的 tint 為了同一個理由被迫掛在 champion 上）。所以合成的
+ * 那一刻是唯一的注入點，而宣告只能住在一個 sidecar。
+ *
+ * 它放在 `content/` 而不是 client 原始碼裡，是為了第一守則：`content/` 在主機上
+ * 是 live bind-mount，operator 改一個索引存檔就生效，不必重建映像。
+ */
+export type OverlayHiddenGeometry = Readonly<Record<string, number[]>>;
+
+/** 容錯解析：不是這個形狀就回空表（少藏一塊幾何 ≠ 值得擋住整個 overlay）。 */
+export function overlayHiddenGeometryFromDoc(doc: unknown): OverlayHiddenGeometry {
+  const models = (doc as { models?: unknown } | null)?.models;
+  if (!models || typeof models !== "object") return {};
+  const out: Record<string, number[]> = {};
+  for (const [glb, entry] of Object.entries(models as Record<string, unknown>)) {
+    const prims = (entry as { hiddenPrimitives?: unknown } | null)?.hiddenPrimitives;
+    if (Array.isArray(prims) && prims.every((n) => typeof n === "number")) {
+      out[glb] = prims as number[];
+    }
+  }
+  return out;
+}
+
+/**
+ * Synthesize the ModelDoc ChampionView needs for an overlay unit.
+ *
+ * ⚠️ `hidden` 是**必要的參數**，不是選配的裝飾：`ChampionView` 讀的是
+ * `doc.hiddenPrimitives`，所以這裡不填，那 16 筆宣告就完全到不了渲染端
+ * —— 資料在、schema 在、渲染端在，而玩家還是看得到屍體（失敗形態 ②）。
+ */
+export function overlayModelDoc(unit: BlizzardOverlayUnit, hidden?: OverlayHiddenGeometry): ModelDoc {
+  const hiddenPrimitives = hidden?.[unit.glb];
   return {
     id: `blizzard-local.${unit.unitId.toLowerCase()}`,
     schema: "model@1",
@@ -323,8 +358,12 @@ export function overlayModelDoc(unit: BlizzardOverlayUnit): ModelDoc {
     scale: OVERLAY_MODEL_SCALE,
     collisionRadius: OVERLAY_COLLISION_RADIUS,
     clipMap: unit.clipMap,
+    ...(hiddenPrimitives && hiddenPrimitives.length > 0 ? { hiddenPrimitives: [...hiddenPrimitives] } : {}),
   };
 }
+
+/** sidecar 的取得路徑 —— 走 `content/`，跟 `_standin-overrides.json` 同一個模式。 */
+export const OVERLAY_HIDDEN_GEOMETRY_PATH = "/content/models/_overlay-hidden-geometry.json";
 
 /**
  * Is this bundle allowed to look for the overlay at all?
@@ -363,6 +402,8 @@ export class BlizzardOverlayModels {
   private readonly warn: (msg: string, err?: unknown) => void;
   /** null until the probe settles; then the (possibly empty) index. */
   private idx: BlizzardOverlayIndex | null = null;
+  /** `_overlay-hidden-geometry.json` 的內容；載入前為空表（等於「沒有要藏的」）。 */
+  private hidden: OverlayHiddenGeometry = {};
   private promise: Promise<BlizzardOverlayIndex | null> | null = null;
 
   readonly enabled: boolean;
@@ -388,13 +429,18 @@ export class BlizzardOverlayModels {
   load(): Promise<BlizzardOverlayIndex | null> {
     if (!this.enabled) return Promise.resolve(null);
     if (!this.promise) {
-      this.promise = this.fetchManifest().then((doc) => {
-        const parsed = doc === null ? null : blizzardOverlayFromDoc(doc);
-        // settle either way: a missing/garbage manifest must stop holding
-        // champions back (they fall through to the shipped stand-in).
-        this.idx = parsed ?? new Map<string, BlizzardOverlayUnit>();
-        return parsed;
-      });
+      // 兩份一起抓：宣告表跟 manifest 是同一個生命週期，晚到就等於沒到
+      // （`resolve()` 在 idx 落地的那一刻就會開始合成 ModelDoc）。
+      this.promise = Promise.all([this.fetchManifest(), this.fetchHiddenGeometry()]).then(
+        ([doc, hidden]) => {
+          const parsed = doc === null ? null : blizzardOverlayFromDoc(doc);
+          this.hidden = hidden;
+          // settle either way: a missing/garbage manifest must stop holding
+          // champions back (they fall through to the shipped stand-in).
+          this.idx = parsed ?? new Map<string, BlizzardOverlayUnit>();
+          return parsed;
+        },
+      );
     }
     return this.promise;
   }
@@ -459,7 +505,22 @@ export class BlizzardOverlayModels {
       return null; // hold the stand-in upgrade until the probe settles
     }
     const unit = this.unitFor(champId) ?? this.unitFor(inheritFrom);
-    return unit ? overlayModelDoc(unit) : shipped;
+    return unit ? overlayModelDoc(unit, this.hidden) : shipped;
+  }
+
+  /**
+   * 抓 `content/models/_overlay-hidden-geometry.json`。失敗一律回空表 ——
+   * 少藏一塊屍體幾何不值得擋住整個 overlay（那會讓 40 隻英雄退回體素替身）。
+   */
+  private async fetchHiddenGeometry(): Promise<OverlayHiddenGeometry> {
+    try {
+      const res = await this.fetchFn(OVERLAY_HIDDEN_GEOMETRY_PATH);
+      if (!res.ok) return {};
+      return overlayHiddenGeometryFromDoc((await res.json()) as unknown);
+    } catch (err) {
+      this.warn(`${OVERLAY_HIDDEN_GEOMETRY_PATH} failed to load (silent)`, err);
+      return {};
+    }
   }
 
   /** Fetch the manifest; null on 404 / bad JSON / network error. */

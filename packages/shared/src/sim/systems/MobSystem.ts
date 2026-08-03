@@ -104,7 +104,13 @@ export function mobSystem(world: SimWorld): void {
     for (const zone of zones) {
       // #216: a zone whose duel is already decided gets no new wave — the round
       // is over there, and PvE that keeps arriving is PvE that keeps hitting.
-      if (world.settledZones.has(zone)) continue;
+      //
+      // owner 2026-08-02「敵方英雄全死光 或我方英雄全死光 殭屍就不應該再生成」——
+      // `settledZones` 來得太晚：主機要等到勝負被**記下**才寫它，而勝負又被
+      // 「場上還有殭屍」壓著不記，於是形成一個自我維持的迴圈（有殭屍 ⇒ 不記 ⇒
+      // 繼續生 ⇒ 永遠有殭屍）。`spawnHaltedZones` 在**一隊全滅的那一刻**就寫，
+      // 不等勝負，這是切斷那個迴圈的其中一刀（另一刀是收窄「哪幾種怪壓住回合」）。
+      if (world.settledZones.has(zone) || world.spawnHaltedZones.has(zone)) continue;
       for (let i = 0; i < count; i++) {
         if (mobsAliveInZone(world, zone) >= rules.maxAlivePerZone) break;
         spawnMob(world, zone, rules, k, i);

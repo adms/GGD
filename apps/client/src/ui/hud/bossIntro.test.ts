@@ -227,6 +227,8 @@ describe("可達性：事件真的過得了線", () => {
 
 const spawnView = (atMs: number): MobBossView => ({
   kind: "spawn",
+  // #291 —— 只有王會 announce 自己（特殊殭屍沒有 `mobBossSpawn`）。
+  mobKind: "boss",
   atMs,
   seq: 1,
   summonerSeatId: 2,

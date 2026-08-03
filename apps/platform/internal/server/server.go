@@ -562,6 +562,13 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			pr.Group(func(rr chi.Router) {
 				rr.Use(s.Auth.PlayableOnly)
 				room.NewHandlers(s.Rooms, templates, s.Cfg.InviteTTL).Mount(rr)
+				// GET /lobby/online — the lobby's 線上玩家 roster (owner
+				// 2026-08-03). It is the ONE endpoint that hands a caller
+				// every other player's name, so it sits behind the same
+				// PlayableOnly gate as playing: task #210 is the recorded
+				// case of a rejected account with a still-valid token
+				// walking past plain token auth. See internal/friend/online.go.
+				friend.NewHandlers(s.Friends, s.Accounts, s.Presence).MountPlayable(rr)
 			})
 			ranking.NewHandlers(s.Ranking).MountAuthed(pr)
 			wallet.NewHandlers(s.Wallet).Mount(pr)

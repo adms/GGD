@@ -1,6 +1,7 @@
 /**
  * ClipAnimator — maps AnimationGroups from a loaded .glb onto the visual
- * anim states (idle/run/attack/cast/hurt/death). Clip names come from the
+ * anim states (idle/run/attack/cast/hurt/death) plus the presentation-only
+ * `celebrate` (see {@link ClipState}). Clip names come from the
  * model doc's clipMap (exact match, case-insensitive) with fuzzy fallback
  * matching for GLBs without a doc. Cloned instances rename groups to
  * "<entityId>-<clip>", so matching is prefix-tolerant (suffix match after a
@@ -15,22 +16,55 @@
 import type { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { PULSE_MS, type AnimState } from "./anim/AnimationStateMachine";
 
-const DEFAULT_CLIP_NAMES: Record<AnimState, string[]> = {
+/**
+ * PRESENTATION-ONLY clip states (GH#257).
+ *
+ * `AnimState` is what the SIM's `AnimationStateMachine` can derive from
+ * authoritative data — alive/moving plus the three event pulses. `celebrate`
+ * is NOT one of those: nothing in a match ever produces it. It exists because
+ * the presentation screens (回合頒獎台, and any future 英靈殿 showcase) need to
+ * ASK for a clip that the state machine can never ask for.
+ *
+ * Widening the animator's key type here instead of widening `AnimState` keeps
+ * the sim-facing contract exactly six states — every `AnimState` is a valid
+ * `ClipState`, so every existing caller still typechecks unchanged, but a new
+ * `AnimationStateMachine.update()` return value can never be `celebrate`.
+ */
+export type PresentationClip = "celebrate";
+export type ClipState = AnimState | PresentationClip;
+
+/**
+ * Fuzzy name candidates per state, used when the model doc's `clipMap` has no
+ * entry (or names a clip the .glb does not contain).
+ *
+ * `celebrate` measured against the shipped roster (247 .glb files under
+ * `content/assets/models/{champions,imported}`): 8 carry `cheer` (the voxel /
+ * blocky rig's 7th clip, see `@ggd/shared/voxel/clips`) and 6 carry
+ * `Stand Victory` (w3x imports). The remaining 233 have NOTHING — they resolve
+ * to nothing and `start()` warns once before falling back to idle, which is the
+ * fail-LOUD half of that fallback (CLAUDE.md: fail-open is fine, SILENT is the
+ * defect). Do not add a silent second fallback path here.
+ */
+const DEFAULT_CLIP_NAMES: Record<ClipState, string[]> = {
   idle: ["idle", "stand"],
   run: ["run", "walk", "move"],
   attack: ["attack", "swing", "shoot"],
   cast: ["cast", "spell", "ability"],
   hurt: ["hurt", "hit", "flinch"],
   death: ["death", "die", "ko"],
+  celebrate: ["celebrate", "cheer", "victory", "dance"],
 };
 
-const LOOPING: Record<AnimState, boolean> = {
+const LOOPING: Record<ClipState, boolean> = {
   idle: true,
   run: true,
   attack: false,
   cast: false,
   hurt: false,
   death: false,
+  // a podium beat lasts seconds; a one-shot cheer would freeze on its last
+  // frame halfway through and read as "the winner also stopped moving".
+  celebrate: true,
 };
 
 const BLENDING_SPEED = 0.1;
@@ -171,10 +205,10 @@ export function clipNameMatches(groupName: string, clipName: string): boolean {
 /** Resolve state → AnimationGroup using the clipMap, with fuzzy fallback. */
 export function resolveClips(
   groups: readonly { name: string }[],
-  clipMap?: Partial<Record<AnimState, string>>,
-): Map<AnimState, number> {
-  const out = new Map<AnimState, number>();
-  for (const state of Object.keys(DEFAULT_CLIP_NAMES) as AnimState[]) {
+  clipMap?: Partial<Record<ClipState, string>>,
+): Map<ClipState, number> {
+  const out = new Map<ClipState, number>();
+  for (const state of Object.keys(DEFAULT_CLIP_NAMES) as ClipState[]) {
     const explicit = clipMap?.[state];
     let idx = explicit ? groups.findIndex((g) => clipNameMatches(g.name, explicit)) : -1;
     if (idx < 0) {
@@ -195,7 +229,7 @@ export function resolveClips(
  */
 export function pulseSpeedRatio(
   clipDurationSec: number,
-  state: AnimState,
+  state: ClipState,
   windowSec?: number,
 ): number {
   if (LOOPING[state] || state === "death") return 1.0;
@@ -221,27 +255,27 @@ export class ClipAnimator {
    * to free them or they leak exactly like the mapped ones.
    */
   private readonly groups: AnimationGroup[];
-  private readonly byState = new Map<AnimState, AnimationGroup>();
-  private current: AnimState | null = null;
+  private readonly byState = new Map<ClipState, AnimationGroup>();
+  private current: ClipState | null = null;
   /** per-state one-shot window override (seconds), set by event wiring */
-  private readonly pulseWindowSec = new Map<AnimState, number>();
+  private readonly pulseWindowSec = new Map<ClipState, number>();
   /**
    * per-state STRIKE alignment (startup + strike fraction). Takes precedence
    * over `pulseWindowSec`: the window is then derived, not given.
    */
-  private readonly pulseAlign = new Map<AnimState, { startupSec: number; strikeFraction: number }>();
+  private readonly pulseAlign = new Map<ClipState, { startupSec: number; strikeFraction: number }>();
   /** a delayed start in flight: hold frame 0 until `remainingSec` runs out. */
-  private pending: { state: AnimState; remainingSec: number; rate: number } | null = null;
+  private pending: { state: ClipState; remainingSec: number; rate: number } | null = null;
   /** the plan the current one-shot started with (diagnostics / audition page). */
-  private lastPlanValue: (ClipStrikePlan & { state: AnimState }) | null = null;
+  private lastPlanValue: (ClipStrikePlan & { state: ClipState }) | null = null;
   private locomotionRate = 1.0;
   /** hitstop: current group frozen (speedRatio 0) for the impact window. */
   private frozen = false;
   private savedRate = 1.0;
   /** states already reported as unresolved — warn once, never per frame. */
-  private readonly warnedStates = new Set<AnimState>();
+  private readonly warnedStates = new Set<ClipState>();
 
-  constructor(groups: AnimationGroup[], clipMap?: Partial<Record<AnimState, string>>) {
+  constructor(groups: AnimationGroup[], clipMap?: Partial<Record<ClipState, string>>) {
     this.groups = groups.slice();
     const resolved = resolveClips(groups, clipMap);
     for (const [state, idx] of resolved) this.byState.set(state, groups[idx]!);
@@ -258,8 +292,20 @@ export class ClipAnimator {
     return this.byState.size > 0;
   }
 
+  /**
+   * The state whose clip is currently playing (observability / tests).
+   *
+   * This is what the caller ASKED for, not what resolved: a model with no
+   * `celebrate` clip reports `celebrate` while the idle group actually turns —
+   * which is the honest answer for "did the podium request the cheer?", and the
+   * fallback itself is reported by `start()`'s warn-once.
+   */
+  get currentClip(): ClipState | null {
+    return this.current;
+  }
+
   /** Idempotent per frame. */
-  play(state: AnimState): void {
+  play(state: ClipState): void {
     if (state === this.current) return;
     const prev = this.current ? this.byState.get(this.current) : undefined;
     if (prev && prev !== this.byState.get(state)) prev.stop();
@@ -306,7 +352,7 @@ export class ClipAnimator {
   }
 
   /** Restart the one-shot for a re-triggered pulse (attack spam, etc.). */
-  restart(state: AnimState): void {
+  restart(state: ClipState): void {
     if (state !== this.current || LOOPING[state]) return;
     this.byState.get(state)?.stop();
     this.start(state);
@@ -319,7 +365,7 @@ export class ClipAnimator {
    * state; pass `undefined` to go back to plain window-fitting.
    */
   setPulseAlignment(
-    state: AnimState,
+    state: ClipState,
     align: { startupSec: number; strikeFraction: number } | undefined,
   ): void {
     if (align && align.startupSec > 0) this.pulseAlign.set(state, align);
@@ -346,12 +392,12 @@ export class ClipAnimator {
   }
 
   /** The plan the current one-shot started with (diagnostics / audition page). */
-  get lastPlan(): (ClipStrikePlan & { state: AnimState }) | null {
+  get lastPlan(): (ClipStrikePlan & { state: ClipState }) | null {
     return this.lastPlanValue;
   }
 
   /** Authored length (seconds) of the clip a state resolves to, or 0. */
-  clipDurationSec(state: AnimState): number {
+  clipDurationSec(state: ClipState): number {
     const g = this.byState.get(state);
     return g ? (g.to - g.from) / GLTF_FPS : 0;
   }
@@ -361,7 +407,7 @@ export class ClipAnimator {
    * Cast wiring passes castTimeSec; attack wiring passes the wind-up span.
    * Pass undefined to fall back to the default PULSE_MS window.
    */
-  setPulseWindow(state: AnimState, windowSec: number | undefined): void {
+  setPulseWindow(state: ClipState, windowSec: number | undefined): void {
     if (windowSec !== undefined && windowSec > 0) this.pulseWindowSec.set(state, windowSec);
     else this.pulseWindowSec.delete(state);
   }
@@ -398,7 +444,7 @@ export class ClipAnimator {
     this.current = null;
   }
 
-  private start(state: AnimState): void {
+  private start(state: ClipState): void {
     let group = this.byState.get(state);
     if (!group) {
       // A model whose clipMap points at a clip its .glb does not contain (or

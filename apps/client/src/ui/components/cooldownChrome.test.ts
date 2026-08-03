@@ -60,8 +60,25 @@ const HUD_ROOT = join(SRC, "ui/HudRoot.tsx");
  * cooldown ticks off the wire. That is the definition of "a surface that shows
  * cooldowns", and it cannot go stale.
  */
+/**
+ * ⚠️ 讀 `seat.cooldowns` 但**不畫冷卻**的面板。
+ *
+ * `StatsHoverPanel`（2026-08-03，owner「右下角懸停顯示全屬性」）讀那格只為了顯示
+ * 技能的**冷卻長度** —— 一個靜態秒數，而且已經走
+ * `displayFinalText(r.cooldownSec, "cooldown", { env })` 做過 env 縮放。它**沒有**
+ * 會動的剩餘時間、沒有技能格、沒有掃描圈。把它當成冷卻介面的話，這條守衛會要求它
+ * import `cooldownView`（一個算「還剩幾秒」的純函式），而那個概念在它身上不存在。
+ *
+ * 這一列是**豁免不是修好**：加進來要寫清楚為什麼，而且下面「三個變體」那條斷言
+ * 仍然在守這個掃描不會變成空的。
+ */
+const NOT_A_COOLDOWN_SURFACE = ["ui/hud/StatsHoverPanel.tsx"];
+
 const SURFACES = localImports(HUD_ROOT).filter(
-  (f) => f.endsWith(".tsx") && /\.cooldowns\b/.test(readSource(f)),
+  (f) =>
+    f.endsWith(".tsx") &&
+    /\.cooldowns\b/.test(readSource(f)) &&
+    !NOT_A_COOLDOWN_SURFACE.some((x) => f.endsWith(x)),
 );
 
 /**

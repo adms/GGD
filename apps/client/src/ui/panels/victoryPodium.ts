@@ -69,6 +69,51 @@ function toSurvivalSeat(s: PodiumSeatView): SurvivalSeat {
   };
 }
 
+/**
+ * MVP 的 championId → 他**那一個座位**。
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 為什麼 `seats.find((s) => s.championId === mvp)` 是一個缺陷
+ * ═══════════════════════════════════════════════════════════════════════════
+ * `MatchController` 的英雄抽選**有放回** —— 沒有任何唯一性閘,所以同一支英雄可以
+ * 同時出現在兩隊。`hud.seats` 依 seatId 排序,於是撞名時 `find` 回傳的是**最小
+ * seatId 的那一個**,而那一個常常在敗方。後果是整串的:
+ *
+ *   · `mvpSeat.teamId` 變成敗方 → `winnerTeam` 範圍把整個頒獎台翻成輸家,
+ *     金冠戴在一個已經倒下的人頭上;
+ *   · 撞名落在**輪空**隊伍時 `inScope` 是空的 → podium 空 → 呼叫端退回
+ *     `roundWinnerTeamChampions` → 畫面上**一頂皇冠都沒有**。
+ *
+ * 這裡只修**消歧義**,不重排名次:候選限縮成「championId 相同的座位」之後,
+ * 依隊伍的回合結果分層 —— 有隊伍 WON 就只認 WON 的那一層,否則認打過的那一層。
+ * `roundEndQuoteChampion`(→`roundLeaderChampion`)的規則本來就是「有贏家先看
+ * 贏家」,所以這個分層和它同向;而**沒有撞名時這個函式和舊的 `find` 逐字同解**。
+ *
+ * ⚠️ 真正的修法是讓 `settlementModel` 直接交出座位(`roundEndQuoteSeat`),
+ * 因為 `roundWinnerTeamChampions`(`settlementModel.ts`)與 `GameApp.roundWinnerModelDoc`
+ * 各自有一份一模一樣的 `find`。那兩個檔不在這一條線的範圍內,已列進交辦。
+ * 同層之間仍然用最小 seatId 收尾 —— 純粹為了決定性,不是因為它有意義。
+ */
+export function mvpSeatFor(
+  seats: readonly PodiumSeatView[],
+  teams: readonly RoundTeamView[],
+  mvp: string,
+): PodiumSeatView | undefined {
+  const outcomeOf = new Map(teams.map((t) => [t.teamId, t.roundOutcome]));
+  const tier = (s: PodiumSeatView): number => {
+    const o = outcomeOf.get(s.teamId);
+    if (o === ROUND_OUTCOME.WON) return 0;
+    if (o === ROUND_OUTCOME.FOUGHT || o === ROUND_OUTCOME.LOST) return 1;
+    return 2; // 輪空 (NONE) / 名單還沒對上的隊伍
+  };
+  let best: PodiumSeatView | undefined;
+  for (const s of seats) {
+    if (s.championId !== mvp) continue;
+    if (!best || tier(s) < tier(best)) best = s;
+  }
+  return best;
+}
+
 /** 這一回合真的上場過的座位(輪空 / 已淘汰的隊伍不算)。 */
 function foughtThisRound(
   seats: readonly PodiumSeatView[],
@@ -84,10 +129,11 @@ function foughtThisRound(
  * 這一回合的頒獎台,第一名在最前面。空陣列 = 這一拍不該演
  * (觀戰 / 輪空 / 決勝回合 —— 全部由 `roundEndQuoteChampion` 回傳 null 表示)。
  *
- * `cfg` 預設是 `DEFAULT_VICTORY_PODIUM`,也就是**目前實際生效的值**。
- * 那一份還沒有接上 `content/config` 與後台(見 `victoryPodium.ts` 的檔頭),
- * 所以這個參數現在只有測試在餵 —— 接完之後呼叫端改傳 ContentDb 讀出來的政策
- * 就好,這一支一行都不用動。
+ * `cfg` 預設是 `DEFAULT_VICTORY_PODIUM`(＝出貨的保險絲)。**出貨呼叫端不吃這個
+ * 預設** —— `render/RoundWinnerStage.planRoundWinnerShow` 傳的是
+ * `victoryPodiumPolicy()`,也就是 `content/config/victory-podium.json` 經
+ * `resolveVictoryPodium` 解出來的那一份。這個預設只在「內容還沒載/載壞了」
+ * 以及測試裡出現。
  */
 export function roundVictoryPodium(
   seats: readonly PodiumSeatView[],
@@ -97,7 +143,8 @@ export function roundVictoryPodium(
   // 勝方是誰,不自己判(見檔頭)。null = 這一拍不演。
   const mvp = roundEndQuoteChampion(seats, teams);
   if (!mvp) return [];
-  const mvpSeat = seats.find((s) => s.championId === mvp);
+  // 座位鍵是 seatId,不是 championId —— 見 `mvpSeatFor` 的檔頭(英雄抽選有放回)。
+  const mvpSeat = mvpSeatFor(seats, teams, mvp);
   if (!mvpSeat) return [];
 
   const size = Math.max(0, Math.floor(cfg.podiumSize));
