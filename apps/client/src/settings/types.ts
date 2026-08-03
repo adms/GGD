@@ -74,6 +74,18 @@ export interface NetworkSettings {
   interpolationDelayMs: number;
   showPerfOverlay: boolean;
   showPing: boolean;
+  /**
+   * GH#270 —— 特效發射器診斷面板（右上角，`ui/VfxDebugPanel.tsx`）。
+   *
+   * ⚠️ **它自己就是一個閘，不掛在 `showPerfOverlay` 底下。** 同一個 Network
+   * 區塊裡的 `showPing` 就是反例：它只 gate 了 perf overlay 裡的一行，而整個
+   * overlay 在 `showPerfOverlay=false` 時就 `return null` —— 所以那個開關對
+   * 一個沒開 overlay 的人是**死的**。這一格由 `VfxDebugPanel` 唯一持有。
+   *
+   * 預設 false：這是診斷用的東西，不可以出現在玩家畫面上。做成設定而不是
+   * build flag，是因為 owner 要在**已經部署的線上**打開它（第一守則）。
+   */
+  showVfxDebug: boolean;
   /** widen interp delay slightly when snapshot arrival variance is high. */
   adaptiveJitterBuffer: boolean;
   /**
@@ -152,6 +164,8 @@ export const DEFAULT_NETWORK: NetworkSettings = {
   interpolationDelayMs: INTERP_DELAY_MS,
   showPerfOverlay: false,
   showPing: true,
+  // 診斷面板，預設關 —— 玩家畫面上不可以有它
+  showVfxDebug: false,
   adaptiveJitterBuffer: false,
   // 派生,不是字面量 —— 預設就是「每一個 sim tick 都有你的輸入」。
   intentHz: INTENT_HZ_DEFAULT,
@@ -208,6 +222,10 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
     ),
     showPerfOverlay: Boolean(n.showPerfOverlay),
     showPing: Boolean(n.showPing),
+    // 壞掉的值退回 false（＝關）。這一格跟 combatTextScope / goreIntensity
+    // 相反：那兩個退回「關」會讀成缺陷，而這個退回「開」才會 —— 一個診斷
+    // 面板在玩家畫面上憑空出現，才是那個讀起來像 bug 的方向。
+    showVfxDebug: Boolean(n.showVfxDebug),
     adaptiveJitterBuffer: Boolean(n.adaptiveJitterBuffer),
     // 有**上界**,不是只有下界(CLAUDE.md #277 的教訓):30 打成 300 會讓手機
     // 每秒送 300 個保證被伺服器丟掉的封包。clampIntentHz 兩邊都夾。

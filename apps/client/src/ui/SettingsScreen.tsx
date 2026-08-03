@@ -439,6 +439,21 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
             text="Performance overlay"
           />
           <Toggle on={n.showPing} onChange={(v) => store.patchNetwork({ showPing: v })} text="Show ping" />
+          {/* GH#270 —— 「現在有哪些粒子發射器在跑、在哪裡」。
+              ⚠️ 它**不掛在 Performance overlay 底下**：上面那個 Show ping 就是
+              反例，它只 gate 了 overlay 裡的一行，而整個 overlay 在
+              showPerfOverlay=false 時就 return null，所以對沒開 overlay 的人
+              那個開關是死的。這一個自己就是 VfxDebugPanel 的唯一閘。 */}
+          <Toggle
+            on={n.showVfxDebug}
+            onChange={(v) => store.patchNetwork({ showVfxDebug: v })}
+            text="特效發射器診斷"
+          />
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            右上角列出場上每一個粒子發射器：名稱、x/z 座標、是否還在發射、活粒子數、emitRate。
+            追「憑空出現／跑到場地外」的特效用的（GH#270）。獨立開關，不需要開 Performance
+            overlay。
+          </div>
         </Section>
 
         <AudioSection />

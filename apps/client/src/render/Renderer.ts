@@ -14,6 +14,7 @@ import "@babylonjs/core/Culling/ray";
 import { autoQuality } from "../input/mobileDetect";
 import { dprCapFor, resolutionToHardwareScaling } from "./RenderConfig";
 import { qualityController } from "./QualityController";
+import { setVfxDebugScene } from "../vfxDebugBus";
 
 /** Plain scene stats (no Babylon types leak past the render seam). */
 export interface RenderStats {
@@ -43,6 +44,11 @@ export class Renderer {
     if (typeof window !== "undefined") {
       (window as unknown as { __ggdScene?: Scene }).__ggdScene = this.scene;
     }
+    // GH#270 —— 特效發射器診斷面板要讀的那一份 scene。刻意從**這裡**交出去
+    // （應用程式自己持有的參照），不是讓面板去抓全域的 `BABYLON.Engine.
+    // LastCreatedScene`：出貨是 minify + tree-shaken 的，那個全域根本不存在，
+    // owner 已經被這個擋過一次。見 ../vfxDebugBus 檔頭 ②。
+    setVfxDebugScene(this.scene);
     // the GameApp loop renders explicitly; skip Babylon's pointer-pick overhead
     this.scene.skipPointerMovePicking = true;
     if (typeof window !== "undefined") window.addEventListener("resize", this.onResize);
@@ -68,6 +74,8 @@ export class Renderer {
 
   dispose(): void {
     this.offParams();
+    // 先解除註冊再 dispose：否則診斷面板下一次取樣會走進一個已經被銷毀的 scene。
+    setVfxDebugScene(null);
     if (typeof window !== "undefined") window.removeEventListener("resize", this.onResize);
     this.scene.dispose();
     this.engine.dispose();

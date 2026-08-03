@@ -46,6 +46,7 @@ import { MatchEndPanel } from "./panels/MatchEndPanel";
 import { RoundVictoryPanel } from "./panels/RoundVictoryPanel";
 import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
+import { VfxDebugPanel } from "./VfxDebugPanel";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 import { hudActions } from "./actions";
 import { HudBoundaryGroup, type HudBoundaryLabels } from "./HudBoundaryGroup";
@@ -199,6 +200,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [RoundOverPill, "回合結束提示"],
   [RoundVictoryPanel, "回合勝利畫面"],
   [MatchEndPanel, "結算畫面"],
+  [VfxDebugPanel, "特效發射器診斷"],
 ]);
 
 export function HudRoot(): React.JSX.Element {
@@ -297,6 +299,12 @@ export function HudRoot(): React.JSX.Element {
           identical for all four seats, so four copies would be four times the
           ink on an already-quartered screen for no extra information. */}
       <ControlLegend />
+      {/* GH#270 特效發射器診斷（設定 → Network → 特效發射器診斷，預設關）。
+          掛在 `inGame && !couch` 群組**外面**是刻意的：owner 要在戰鬥、商店、
+          回合切換的**任何一刻**都能打開它去比對「第一場沒有、第二場才有」，
+          而跨回合殘留正好會發生在相位邊界上。它自己的閘只有那個設定，
+          關著的時候整支 return null（連 interval 都不建）。 */}
+      <VfxDebugPanel />
       {inGame && !couch && (
         <>
           {/* 「HP&MP 條應該是跟技能格子緊鄰但不重疊」 (owner 2026-07-30). ONE box
