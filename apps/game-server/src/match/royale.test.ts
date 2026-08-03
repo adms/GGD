@@ -30,7 +30,7 @@ import { MatchState, ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import { ROYALE_ARENA, ROYALE_ZONE_RADIUS } from "@ggd/shared/sim/world/ArenaDef";
 import { currentFireRingRadius, DEFAULT_BURN_CURVE } from "@ggd/shared/sim/fireRing";
 import { guardiansAliveInZone } from "@ggd/shared/sim/systems/GuardianSystem";
-import { DEFAULT_GUARDIAN_TOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
+import { Configs, DEFAULT_GUARDIAN_TOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { DEFAULT_ARENA_RULES, type ArenaRules } from "./arenaRules";
 import {
@@ -285,6 +285,24 @@ describe("team health no longer removes anybody (royale-no-elimination)", () => 
     cover("royale-no-elimination");
     // The card is what the client's leave-through-settlement gate expects when it
     // sees `eliminated`. Removing elimination must NOT have removed the card.
+    //
+    // ⚠️ GH#264: 「血耗光就發卡」 is now the OPT-IN half of a console field
+    // (`match.settlementCardOnHealthSpent`) because on the shipped default a
+    // spent team is NOT out — it can still win the finale, and the card invited
+    // it to leave. What THIS case guards is the card itself: it still exists,
+    // and it still fires exactly once per team at the tick the pool empties.
+    // So it runs the opt-in side explicitly; which side ships is pinned in
+    // settlement.test.ts, not here (one home per question).
+    //
+    // A MINIMAL doc on purpose: every other `config.match` reader
+    // (resolveStartingTeamHealth / resolveFireRing / resolveVsBotPacing) sees an
+    // absent key and falls back to exactly what an unregistered registry gave
+    // it, so this changes nothing but the flag under test.
+    Configs.register({
+      id: "config.match",
+      schema: "config@1",
+      match: { settlementCardOnHealthSpent: true },
+    } as never);
     const ctl = new MatchController("roy-193", 55, allBots(), FAST);
     let cards: { teamId: number }[] = [];
     /** health each team was on AT THE MOMENT its card fired — see below. */

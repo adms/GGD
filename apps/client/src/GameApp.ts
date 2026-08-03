@@ -132,9 +132,20 @@ import {
   clearCombatText,
   clearWorldAnchors,
   expireCombatText,
+  mobBossMarkerFor,
   setCombatTextScope,
   setDamageNumberCap,
 } from "./frameBus";
+// GH#268 —— 精英小怪頭上那條小血條的**模型**（純 TS，沒有 React，符合 client-08
+// 的「React 只在 ui/*」）。判斷「哪一隻算精英」與「血條該從哪個世界高度投影」
+// 只有這一份實作,不在這裡重寫（失敗形態 ⑤）。
+import {
+  SHIPPED_MOB_HEALTH_BAR,
+  mobBarAnchorFor,
+  mobBarAnchorY,
+  mobHealthBarConfigFrom,
+  type MobHealthBarConfig,
+} from "./ui/hud/mobHealthBarModel";
 import { perfBus } from "./perfBus";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
@@ -509,6 +520,12 @@ export class GameApp {
    */
   private mobVisualJson = "";
   private mobVisual: MobVisualTable = MOB_VISUAL_DEFAULT;
+  /**
+   * 精英小怪血條的四格 (GH#268)，從 `mobVisual` 抽出來並且**跟著它一起**重算。
+   * 快取的理由跟上面同一個：`updateFrameBus` 每一幀都要用它算投影高度，而
+   * `mobHealthBarConfigFrom` 每次都配一個新物件。
+   */
+  private mobBarCfg: MobHealthBarConfig = SHIPPED_MOB_HEALTH_BAR;
   private readonly teamBySeat = new Map<number, number>();
   /** per-player last-observed alive state (death-spectator camera transitions) */
   private readonly aliveByPlayer = new Map<number, boolean>();
@@ -1751,6 +1768,9 @@ export class GameApp {
     if (state.mobVisualJson !== this.mobVisualJson) {
       this.mobVisualJson = state.mobVisualJson;
       this.mobVisual = parseMobVisualJson(state.mobVisualJson);
+      // GH#268 —— 同一張表的另外五格（開關/寬/高/離頭頂/門檻）。逐欄位降級,
+      // 所以跑在舊 shard 前面的客戶端拿到的是出貨值,不是一張歸零的表。
+      this.mobBarCfg = mobHealthBarConfigFrom(this.mobVisual);
     }
     let i = 0;
     state.entities.forEach((es) => {
@@ -3057,7 +3077,30 @@ export class GameApp {
 
     const seen = this.fbSeen;
     seen.clear();
+    // ---- 精英小怪頭上的小血條 (GH#268) --------------------------------------
+    // REBUILT FROM SCRATCH EVERY FRAME, like `reviveCircles` below: 一條血條的
+    // 存續條件就是「那一列還在快照裡」,所以屍體與離場的怪自己就消失了,不需要
+    // 任何 death handler。
+    //
+    // ⚠️ v0.9.28 出貨時**這個迴圈不存在** —— 伺服器把 `ENTITY_FLAG.MOB_ELITE`
+    // 寫上線(付掉最後一格,不可逆),客戶端一個字都沒讀,整包功能可以刪掉而畫面
+    // 不變(失敗形態 ③)。守衛:`ui/hud/mobHealthBarWiring.test.ts`。
+    const bars = frameBus.mobBars;
+    bars.length = 0;
+    const barCfg = this.mobBarCfg;
     state.entities.forEach((es) => {
+      if (es.kind === KIND_MOB) {
+        // L3 ZONE CULL —— 別區的小怪血條沒有消費者(`MobHealthBars` 只畫投影到
+        // 螢幕上的),而波峰時一區 50 隻,少跑一次 `project()` 是真的省。
+        if (!this.visibleZones.has(es.zone)) return;
+        const mp = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
+        // ⚠️ `es.mana` 是體型倍率(GH#192),不是法力 —— 一般殭屍 0.68 / 特殊 2 /
+        // 王 5。不餵它的話 `yOffset` 就是一個寫了沒人讀的欄位,而王的血條會掛在
+        // 牠膝蓋上(失敗形態 ①)。
+        const bar = mobBarAnchorFor(es, project(mp.x, mobBarAnchorY(es.mana, barCfg), mp.z), mp);
+        if (bar) bars.push(bar);
+        return;
+      }
       // champions AND neutral objectives (kind 2 flower, kind 4 guardian) carry
       // overhead bars. A guardian is NEUTRAL (task #89): no name, teamId -1, and
       // an explicit neutral bar colour (anchorColorFor) — never a team tint.
@@ -3127,29 +3170,27 @@ export class GameApp {
     // ui/hud/minimapBossMarker turns it into the map ping the source map's
     // war3map.j:11824 `PingMinimapLocForForce` did.
     //
-    // WHICH entity is the king comes from `mobBossSpawn` (hud.mobBoss.bossId) —
-    // the wire has no boss bit, and `ENTITY_FLAG` has two free values left that
-    // are worth more elsewhere. Rebuilt from scratch every frame, so a king that
-    // died (no live entity with that id) clears itself with no death handler.
-    const bossId = hud.mobBoss && hud.mobBoss.kind === "spawn" ? hud.mobBoss.bossId : -1;
-    frameBus.mobBoss = null;
-    if (bossId >= 0) {
-      const king = state.entities.get(String(bossId));
-      if (king && king.alive) {
-        const kp = this.views.posOf(king.id) ?? { x: king.x, z: king.z };
-        frameBus.mobBoss = {
-          entityId: king.id,
-          zone: king.zone,
-          worldX: kp.x,
-          worldZ: kp.z,
-          hpPct: king.maxHp > 0 ? king.hp / king.maxHp : 0,
-          // #247 長血條 —— the RAW numbers as well as the fraction. See
-          // `MobBossMarker` for why a percentage alone is not enough.
-          hp: king.hp,
-          maxHp: king.maxHp,
+    // WHICH entity is the king comes from `mobBossSpawn` — the wire has no boss
+    // bit. Rebuilt from scratch every frame, so a king that died (no live entity
+    // with that id) clears itself with no death handler.
+    //
+    // ⛔ GH#268 —— 這裡以前讀的是 `hud.mobBoss`（「最後一則王的消息」），也就是一顆
+    // **一場只有一個槽**的欄位；而自 #288 起每一隻特殊殭屍死掉也發 `mobBossSlain`,
+    // 所以任何一區任何一隻精英一死就把 bossId 打成 -1,本區那隻**滿血的王**的長
+    // 血條當場消失（owner 回報兩次）。現在讀的是 `hud.mobBossLive`（「現在場上有沒有
+    // 王」），它只被同一顆 bossId 的結算清掉。決策本身在 `mobBossMarkerFor` ——
+    // `GameApp` headless 起不來,寫在這裡的判斷沒有任何行為測試搆得到。
+    frameBus.mobBoss = mobBossMarkerFor(
+      hud.mobBossLive,
+      (bossId) => {
+        const row = state.entities.get(String(bossId));
+        return {
+          row,
+          world: row ? (this.views.posOf(row.id) ?? { x: row.x, z: row.z }) : { x: 0, z: 0 },
         };
-      }
-    }
+      },
+      localDuelZone(hud),
+    );
 
     // ---- revive circles (task #84) -----------------------------------------
     // Their own frameBus list, NOT champion anchors: they carry no HP bar and

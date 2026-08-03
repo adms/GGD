@@ -207,18 +207,31 @@ export interface ReviveCircleMarker {
  * it gets one slot — not a relaxation of the mob cull.
  *
  * WHICH ENTITY IS THE KING comes from the `mobBossSpawn` event (RoomStore's
- * `mobBoss.bossId`), because the wire carries no boss BIT of its own.
+ * `mobBossLive.bossId`), because the wire carries no boss BIT of its own.
  *
  * ⚠️ 這段以前寫著「`ENTITY_FLAG` 還有兩格空的」—— **那句話從 隱形原語 起就是假的**
  * (第三守則)。16384 被 `INVISIBLE` 拿走，最後一格 32768 被
  * {@link ENTITY_FLAG.MOB_ELITE} 拿走，現在**一格都沒有**。
  *
  * 而且那一格**不是**花在王身上：`MOB_ELITE` 說的是「精英小怪」（特殊殭屍或王），
- * 不是「這一隻是王」。所以「哪一隻是王」仍然只有這個事件知道，而這條事件頻道
- * **一場只有一個槽**（`RoomStore` 存最後一顆）—— 別區的王一生成或一被殺，就會把
- * 這一格換掉／清成 -1，本區的長血條因此會在王還活著的時候消失
+ * 不是「這一隻是王」。所以「哪一隻是王」仍然只有 `mobBossSpawn` 這顆事件知道。
+ *
+ * ⛔ GH#268 —— **這一格以前讀的是 `hud.mobBoss`，那是一場只有一個槽的欄位**，
+ * 而自 #288 起**每一隻特殊殭屍死掉也會發 `mobBossSlain`**
+ * （`sim/systems/MobSystem.ts`）。於是任何一區任何一隻精英一死 → 那一格翻成
+ * `"slain"` → bossId 變 -1 → 本區那隻**滿血的王**的長血條當場消失
  * （owner 2026-08-03「殭屍王血量在死之前都應該存在 現在玩起來會消失」）。
- * 頭上那條小血條不受影響，因為它走 {@link FrameBus.mobBars}，也就是走快照。
+ *
+ * 修法是把「當前活著的王」與「最後一則結算」拆成 `RoomStore` 的**兩個欄位** ——
+ * 它們本來就是兩件事。這一格只讀前者（`hud.mobBossLive`），而它只在**同一顆
+ * bossId** 的 `mobBossSlain` 到達時才會被清掉。
+ * 判準寫在 {@link mobBossMarkerFor}：血條的存續條件只能綁在「那具身體還在不在」，
+ * 不能綁在任何比身體短命的東西上。
+ *
+ * ⚠️ 頭上那條小血條走的是另一條路（{@link FrameBus.mobBars} ← 快照的
+ * `ENTITY_FLAG.MOB_ELITE`）。這裡以前寫著「所以它不受影響」—— 在 GH#268 之前
+ * **那句話沒有意義**：那條路的讀端整個是死的（`GameApp` 不寫、`HudRoot` 不掛），
+ * 一條不存在的血條當然不受影響。兩條路都是 GH#268 才真的接上。
  */
 export interface MobBossMarker {
   entityId: number;
@@ -242,6 +255,76 @@ export interface MobBossMarker {
 }
 
 /**
+ * 快照那一列身上，王的長血條需要的全部欄位。刻意是**結構型**而不是 `EntityState`：
+ * `frameBus` 不該去 import Colyseus 的 schema 類別，而 `GameApp` 手上那一列剛好就是
+ * 這個形狀。
+ */
+export interface MobBossRow {
+  id: number;
+  zone: number;
+  alive: boolean;
+  hp: number;
+  maxHp: number;
+}
+
+/** `GameApp` 每幀給 {@link mobBossMarkerFor} 的那一列 + 它的內插位置。 */
+export interface MobBossLookup {
+  row: MobBossRow | undefined;
+  world: { x: number; z: number };
+}
+
+/**
+ * 這一幀的 {@link FrameBus.mobBoss}，或 null —— **`GameApp` 每幀呼叫的就是這個函式**。
+ *
+ * 為什麼要是一個獨立的純函式，而不是 `GameApp` 裡的四行：`GameApp` 抓 Babylon
+ * engine + canvas + socket，headless 起不來，所以寫在那裡的判斷**沒有任何行為測試
+ * 搆得到**。GH#268 的長血條就是這樣壞掉又沒有人發現的。切出來之後，
+ * 「王還活著的整段期間血條還在不在」變成一條真的可以跑的斷言
+ * （`ui/hud/mobHealthBarWiring.test.ts` 的守衛 A）。
+ *
+ * ⚠️ **存續條件只有兩個，而且兩個都綁在「那具身體」上**：
+ *   ① `live` 裡有這一隻（`hud.mobBossLive`，只在**同 id** 的結算到達時才移除）；
+ *   ② 那一列還在快照裡而且 `alive`。
+ * 不可以再加第三個綁在比身體短命的東西上的條件 —— 一顆事件、一個 aggro 集合、
+ * 一個 target 欄位、或「最近有沒有被打」。owner 兩次回報的「殭屍王血量在死之前
+ * 就消失」就是長血條綁到了一顆單槽事件上。
+ *
+ * ⚠️ **`live` 是一個清單，不是一格**：王的每回合上限預設算「每個戰場」
+ * （`MobBossRules.maxPerRoundScope` 出貨 `"zone"`），所以四個 duel zone 可以同時
+ * 各有一隻王。用一格存就會出現「隔壁區的王一召喚，我這條血條就沒了」——
+ * 跟原本的缺陷同一型，只是換一個觸發條件。
+ *
+ * `preferZone` 是本地玩家自己那一區：同區的王優先，沒有才退回第一隻活著的
+ * （小地圖與觀戰仍然拿得到東西，而長血條自己的 zone 閘會擋掉不該畫的）。
+ */
+export function mobBossMarkerFor(
+  live: readonly { bossId: number }[],
+  resolve: (bossId: number) => MobBossLookup,
+  preferZone: number,
+): MobBossMarker | null {
+  let fallback: MobBossMarker | null = null;
+  for (const l of live) {
+    if (l.bossId < 0) continue;
+    const { row, world } = resolve(l.bossId);
+    if (!row || row.id !== l.bossId || !row.alive) continue;
+    const maxHp = Math.max(0, row.maxHp);
+    const hp = Math.max(0, Math.min(maxHp, row.hp));
+    const marker: MobBossMarker = {
+      entityId: row.id,
+      zone: row.zone,
+      worldX: world.x,
+      worldZ: world.z,
+      hpPct: maxHp > 0 ? hp / maxHp : 0,
+      hp,
+      maxHp,
+    };
+    if (marker.zone === preferZone) return marker;
+    if (!fallback) fallback = marker;
+  }
+  return fallback;
+}
+
+/**
  * One 精英小怪 (特殊殭屍 / 殭屍王) that should carry a small over-head health bar
  * — owner 2026-08-03「特殊殭屍 頭上應該要有小血條 顯示即時血量」.
  *
@@ -255,11 +338,16 @@ export interface MobBossMarker {
  *
  * WHICH mobs are in here is decided by {@link ENTITY_FLAG.MOB_ELITE} on the
  * snapshot row (`isEliteMob`), NOT by the `mobBossSpawn` event that
- * {@link MobBossMarker} rides. That is the whole point of spending the last flag
- * bit: the event channel is one slot for the whole match, so a king dying in
- * ANOTHER duel zone blanks it — which is precisely the 「殭屍王血量在死之前
- * 就消失」 the owner reported on the same day. A row rebuilt from the snapshot
- * every frame lives exactly as long as the body does.
+ * {@link MobBossMarker} rides: a row rebuilt from the snapshot every frame lives
+ * exactly as long as the body does.
+ *
+ * ⛔ **這個清單在 v0.9.28 出貨時沒有任何寫入者**（GH#268）—— 伺服器真的把
+ * `ENTITY_FLAG.MOB_ELITE` 寫進快照（`net/snapshot.ts`，`mobEliteWire.test.ts` 證明
+ * 過線），而 `GameApp` 全檔沒有一個 `mobBars` 參照、`HudRoot` 也沒有掛
+ * `MobHealthBars`。整包功能可以從 repo 刪掉、畫面上一個像素都不會變
+ * （失敗形態 ③），而且是在已經付掉 `ENTITY_FLAG` 最後一格之後。
+ * 寫入者現在是 `GameApp.updateFrameBus` 的每幀掃描（`ui/hud/mobHealthBarModel`
+ * 的 `mobBarAnchorFor` / `mobBarAnchorY`），讀取者是 `ui/hud/mobHealthBar.tsx`。
  */
 export interface MobBarAnchor {
   entityId: number;
@@ -641,6 +729,9 @@ export function clearWorldAnchors(): void {
   // it set would paint a skull on the intermission map at the last position it
   // held, for as long as nobody started another round.
   frameBus.mobBoss = null;
+  // 同理，而且**更容易漏掉**：`mobBars` 是一個原地重用的陣列，不清空的話中場
+  // 那幾幀會有一排精英血條掛在商店上（就是 #216「戰場上的血條」那個症狀的小怪版）。
+  frameBus.mobBars.length = 0;
   frameBus.reviveCircles.length = 0;
   frameBus.localCast = null;
   clearCombatText();

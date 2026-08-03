@@ -388,6 +388,32 @@ export interface HudState {
    * sim-only, so this event is the only way the numbers can ever reach a screen.
    */
   mobBoss: MobBossView | null;
+  /**
+   * 場上**現在還活著的每一隻王**的降臨事件 (GH#268)。空陣列 = 沒有王。
+   *
+   * ⚠️ 為什麼這不是 {@link HudState.mobBoss} 的一個查詢，而是第二個欄位：
+   * 上面那一格是「**最後一則**王的消息」，這一格是「**現在**有哪些王」——
+   * 兩個不同壽命的問題，而把它們塞進同一個槽正是 GH#268 的根因。
+   *
+   * 自 #288 起**每一隻特殊殭屍死掉也會發 `mobBossSlain`**
+   * （`sim/systems/MobSystem.ts`），所以 `mobBoss` 一秒內會被翻好幾次；長血條
+   * 讀它就會在王滿血的時候消失。這裡只認 `bossId`：一顆 `mobBossSpawn` 進來就
+   * 入列，**只有同一顆 bossId 的 `mobBossSlain`** 能把它移出，別區的王、別隻精英
+   * 都動不了別人那一筆。
+   *
+   * ⚠️ **是清單不是一格**：王的每回合上限預設算「每個戰場」
+   * （`MobBossRules.maxPerRoundScope` 出貨 `"zone"`），四個 duel zone 可以同時各有
+   * 一隻王，而事件是廣播給整場的。用一格存就變成「隔壁區一召喚，我的血條就沒了」。
+   *
+   * ⚠️ 回合結束時小怪是**靜默 despawn** 的（`MobSystem` 不發 `mobBossSlain`），
+   * 所以一筆過期的紀錄可能留在這裡。它是惰性的 —— `mobBossMarkerFor` 要求那一列
+   * 還在快照裡而且 alive —— 而且清單被截到 {@link MAX_LIVE_BOSSES} 筆，不會長大。
+   *
+   * 消費者：`GameApp.updateFrameBus` → `frameBus.mobBoss` → `ui/hud/BossHealthBar`
+   * 與小地圖的紅點。⚠️ 分紅結算面板（`MobBossOverlay`）**不可以**改讀這一格 ——
+   * 它要的正是「最後一則結算」，那是 `mobBoss`。
+   */
+  mobBossLive: MobBossView[];
 }
 
 /**
@@ -581,6 +607,7 @@ const initial: HudState = {
   killCombo: null,
   mobsAlive: 0,
   mobBoss: null,
+  mobBossLive: [],
 };
 
 let shopEventSeq = 0;
@@ -1085,10 +1112,29 @@ function slainMobKind(
 let mobBossSeq = 0;
 
 /**
- * Record one drained `mobBossSpawn` / `mobBossSlain` (called from GameApp's
- * event drain). A `slain` overwrites a still-showing `spawn` on purpose: the
- * settlement is strictly newer news than the arrival, and two king panels
- * stacked on each other is the failure the single slot exists to prevent.
+ * 同時存在的王最多幾隻 —— 一個 duel zone 一隻（`MobBossRules.maxPerRoundScope`
+ * 出貨 `"zone"`，而地圖是四座競技場）。它的作用是**兜底**，不是規則：回合結束的
+ * 靜默 despawn 不發 `mobBossSlain`，沒有上限的話這個清單會隨著比賽單向長大。
+ */
+export const MAX_LIVE_BOSSES = 4;
+
+/**
+ * TWO SLOTS, TWO QUESTIONS (GH#268).
+ *
+ * `mobBoss`     = 「最後一則王的消息」. A `slain` overwrites a still-showing
+ *                 `spawn` on purpose: the settlement is strictly newer news than
+ *                 the arrival, and two king panels stacked on each other is the
+ *                 failure that single slot exists to prevent.
+ * `mobBossLive` = 「現在場上有哪些王」. A `spawn` 入列，而**只有同一顆 `bossId` 的
+ *                 `slain`** 能把它移出。
+ *
+ * ⛔ 為什麼一定要拆：自 #288 起**每一隻特殊殭屍死掉也會發 `mobBossSlain`**
+ * （`sim/systems/MobSystem.ts` 的決定，理由寫在那裡），而事件是廣播給整場的。
+ * 所以「最後一則消息」這一格一回合會被翻好幾次 —— 長血條讀它，就會在王**滿血**
+ * 的時候消失。owner 為此回報了兩次。
+ *
+ * ⚠️ 移出的判準是 `bossId` 相等，不是「來了一顆 slain」。這一行就是整個修正：
+ * 別區的王、本區的特殊殭屍、任何一隻精英的結算，都動不了別人那一筆。
  */
 export function recordMobBossEvent(ev: EventMessage, nowMs: number = comboNowMs()): void {
   const prev = hudStore.getState();
@@ -1108,7 +1154,12 @@ export function recordMobBossEvent(ev: EventMessage, nowMs: number = comboNowMs(
     view.zone = prev.mobBoss.zone;
   }
   mobBossSeq++;
-  hudStore.setState({ mobBoss: view });
+  // 「現在場上有哪些王」。⚠️ 只有**王**會 announce（`sim/mobs.summonMobBoss` 是
+  // `mobBossSpawn` 的唯一發射點，特殊殭屍是波裡生出來的），所以 `spawn` 一定是一隻
+  // 王；而移出必須認 id —— `view.bossId` 不等於某一筆的話，那顆結算說的是別隻怪。
+  const rest = prev.mobBossLive.filter((b) => b.bossId !== view.bossId);
+  const live = view.kind === "spawn" ? [...rest, view].slice(-MAX_LIVE_BOSSES) : rest;
+  hudStore.setState({ mobBoss: view, mobBossLive: live });
 }
 
 /**

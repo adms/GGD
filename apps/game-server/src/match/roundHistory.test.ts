@@ -16,6 +16,7 @@
  */
 import { describe, it, expect } from "vitest";
 import type { MatchSettlement } from "@ggd/shared/protocol/messages";
+import { Configs } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "./MatchController";
 
 const FAST = { champSelectTicks: 5, intermissionTicks: 30, combatMaxTicks: 1200, resolutionTicks: 5 };
@@ -61,6 +62,20 @@ function runToFirstElimination(): {
   /** how many rounds the LIVE payload carried at the instant it was drained */
   roundsAtDrain: number;
 } {
+  // ⚠️ GH#264: 「血耗光就發卡」 is now the OPT-IN half of a console field
+  // (`match.settlementCardOnHealthSpent`) — on the shipped default nobody is out
+  // mid-match, so no card is queued at all. What this suite guards is the
+  // PAYLOAD of that card (its per-round history is internally consistent, it is
+  // frozen at drain time, it is an independent tree), which only exists in the
+  // opt-in mode, so it opts in explicitly. Which side ships is pinned in
+  // settlement.test.ts. The doc is minimal on purpose: every other
+  // `config.match` reader sees an absent key and falls back to exactly what an
+  // unregistered registry gave it.
+  Configs.register({
+    id: "config.match",
+    schema: "config@1",
+    match: { settlementCardOnHealthSpent: true },
+  } as never);
   const ctl = new MatchController("rh-elim", 99, allBots(), FAST);
   let live: MatchSettlement | null = null;
   let captured: MatchSettlement | null = null;

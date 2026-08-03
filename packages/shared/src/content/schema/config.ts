@@ -392,6 +392,28 @@ export const zConfigMatchDoc = z
          * 一格都沒被碰到。
          */
         forceSettleVsBot: z.boolean().optional(),
+        /**
+         * **血耗光的隊伍要不要當場收到一張結算卡**（GH#264 / #193）。
+         *
+         * #193 的中途結算卡本來掛在「團隊生命歸零」上，因為當時歸零**就是**出局。
+         * owner 2026-07-27 取消淘汰之後那兩件事分家了：歸零只是計分板見底，那一
+         * 隊照樣打完十回合，**而且照樣可能奪冠**（第 1 名由決賽決定、不看團隊
+         * 生命）。所以舊的觸發條件會在比賽中途對未來的冠軍送出一張
+         * `winnerTeam: -1` 的「戰鬥結束」卡，而那張卡在客戶端是直接附「返回大廳」
+         * 的 —— 按下去就是放棄一場自己會贏的比賽。
+         *
+         * false（出貨）= 比賽沒結束就沒有人出局，沒有人收到中途結算卡；離場走
+         * #271 的一般確認框。這一側是 owner 明說的那一側：「不管前面被淘汰與否，
+         * 大家都回來打第 10 回合」。
+         * true = 這一格出現之前的行為（血一歸零就發卡），讓計分板墊底的人可以提早
+         * 看評價再離場。⚠️ 打開就會重現上面那個「冠軍先收到淘汰卡」的情況。
+         *
+         * ⚠️ 布林沒有上下界可講 —— 它的「界」是這兩個具名狀態，由後台的
+         * `MATCH_BOOL_LABELS` 守（`matchConfig.test.ts` 要求每一個布林都在裡面）。
+         * 缺席 = false，和其他兩個 `.optional()` 布林同一個約定：一份還沒有這一格
+         * 的舊文件應該得到 owner 現在要的行為。
+         */
+        settlementCardOnHealthSpent: z.boolean().optional(),
         intermissionSec: z.number().positive(),
         /**
          * HARD combat backstop: the phase force-ends here (PhaseMachine). It is

@@ -146,6 +146,10 @@ export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Obje
     on: "我這場打完就結算其他場（出貨）",
     off: "等每一區自己打完",
   },
+  "match.settlementCardOnHealthSpent": {
+    on: "血一歸零就發結算卡（舊行為）",
+    off: "只有整場結束才結算（出貨）",
+  },
 });
 
 /** 這一格是不是布林（＝畫成開關而不是輸入框）。 */
@@ -230,6 +234,16 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "開著（出貨）＝人類那一區記下勝負的同一刻，其餘還在打的區用**和時間到完全一樣的裁決**（團隊血量比例高者勝、平手擲骰）立刻結算。" +
       "⚠️ 它只縮短**等待**，不改變任何一區的勝負規則，也碰不到你自己那一場的結果。人類那一隊輪空（這一回合沒有配對）時不會觸發 —— 否則那一回合會在第一個 tick 就結束。",
     live: PHASE,
+  },
+  "match.settlementCardOnHealthSpent": {
+    zh: "隊伍生命歸零就發「戰鬥結束」結算卡",
+    note:
+      "團隊生命打到 0 的那一刻，要不要**當場**發給那一隊一張結算卡（評價 + 返回大廳）。" +
+      "⚠️ 開著會有一個真實的後果：團隊生命是**計分板**，它只決定 2/3/4 名 —— 第 1 名由第 10 回合的決賽決定，**不看團隊生命**。" +
+      "所以一支第 7 回合把血打光的隊伍照樣打完全場、照樣可能奪冠，而牠已經先收到一張寫著「戰鬥結束」的卡並被請去大廳。按下去就是放棄一場自己會贏的比賽（GH#264 實測：seed 4242 的 team 0 就是這樣拿第 1 名的）。" +
+      "關著（出貨）= owner 2026-07-27「不管前面被淘汰與否，大家都回來打第 10 回合」的字面意思：比賽沒結束就沒有人出局，離場走一般的「確定要離開嗎」確認框。" +
+      "打開的代價換來的是：計分板墊底的人可以提早看自己的評價再走。",
+    live: "game-server MatchController.eliminatedTeams → takeEliminationSettlements → MatchRoom 廣播",
   },
   "match.intermissionSec": {
     zh: "中場（商店）秒數",
@@ -450,6 +464,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.champSelectSecVsBot",
       "match.champSelectEarlyStartVsBot",
       "match.forceSettleVsBot",
+      "match.settlementCardOnHealthSpent",
       "match.intermissionSec",
       "match.combatMaxSec",
       "match.resolutionSec",

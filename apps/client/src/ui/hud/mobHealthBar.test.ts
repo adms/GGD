@@ -12,10 +12,11 @@
  * `ENTITY_FLAG.MOB_ELITE`）→ 出貨的 `mobBarSpecs` → 出貨的 `MobHealthBarsView`，
  * 最後 `renderToStaticMarkup` 把**節點與寬度字串**讀回來。中間任何一段斷掉都會紅。
  *
- * ⛔ 這裡以前寫著「`GameApp` 每幀呼叫的同一個函式」。**那句話是假的**
+ * ⛔ 這裡以前寫著「`GameApp` 每幀呼叫的同一個函式」，而在 v0.9.28 **那句話是假的**
  * （第三守則）：`GameApp` 全檔沒有任何 `mobBars` 參照，`HudRoot` 也沒有掛
- * `MobHealthBars` —— 見 `mobHealthBarModel.ts` 檔頭的「現況」。所以這一支測試
- * 涵蓋的是**模型 → 畫面**那一段，**不涵蓋接線**；接線今天是斷的（GH#268）。
+ * `MobHealthBars`。GH#268 把兩端都接上了，但**這一支仍然只涵蓋「模型 → 畫面」**
+ * 那一段 —— 接線是不是還在，由 `mobHealthBarWiring.test.ts` 的守衛 B 顧
+ * （在 jsdom 掛出貨的 `HudRoot`）。兩支缺一不可，理由就是這一段歷史。
  *
  * 區分性輸入：同一次渲染裡同時餵一般殭屍、特殊殭屍、殭屍王與一位英雄。
  */
@@ -40,11 +41,20 @@ const POSE: AnchorPose = { sx: 400, sy: 300, visible: true };
 const WORLD = { x: 1, z: 2 };
 
 /** 快照上真的會出現的四種列。flags 用的是**協定的常數**，不是手寫的 32768。 */
-const NORMAL_MOB: MobBarRow = { id: 11, kind: ENTITY_KIND.MOB, flags: 0, hp: 12, maxHp: 24, zone: 0 };
+const NORMAL_MOB: MobBarRow = {
+  id: 11,
+  kind: ENTITY_KIND.MOB,
+  flags: 0,
+  alive: true,
+  hp: 12,
+  maxHp: 24,
+  zone: 0,
+};
 const SPECIAL_MOB: MobBarRow = {
   id: 12,
   kind: ENTITY_KIND.MOB,
   flags: ENTITY_FLAG.MOB_ELITE,
+  alive: true,
   hp: 3000,
   maxHp: 8000,
   zone: 0,
@@ -53,6 +63,7 @@ const BOSS_MOB: MobBarRow = {
   id: 13,
   kind: ENTITY_KIND.MOB,
   flags: ENTITY_FLAG.MOB_ELITE,
+  alive: true,
   hp: 100,
   maxHp: 400,
   zone: 0,
@@ -62,6 +73,7 @@ const CHAMPION: MobBarRow = {
   id: 14,
   kind: ENTITY_KIND.CHAMPION,
   flags: ENTITY_FLAG.MOB_ELITE,
+  alive: true,
   hp: 500,
   maxHp: 1000,
   zone: 0,
@@ -169,6 +181,14 @@ describe("特殊殭屍頭上的小血條真的畫出來了 (owner 2026-08-03)", 
     }
     // 每一步的填充都不同 = 這條血條是**即時**的,不是畫完就凍住
     expect(new Set(fills).size).toBe(steps.length);
+  });
+
+  it("屍體沒有血條 —— 死掉那一列建不出錨點", () => {
+    cover("mob-special-visible");
+    // `MobSystem` 是「先結算再 despawn」，所以死掉那一 tick 這一列仍然在快照上。
+    // 一條掛在屍體上的滿血條比沒有血條更難懂（而且會在原地停一整幀）。
+    expect(mobBarAnchorFor({ ...SPECIAL_MOB, alive: false }, POSE, WORLD)).toBeNull();
+    expect(barIds(render([{ ...SPECIAL_MOB, alive: false }, BOSS_MOB]))).toEqual([BOSS_MOB.id]);
   });
 
   it("投影說看不到就不畫 —— 血條不會浮在畫面邊緣（失敗形態 ①）", () => {

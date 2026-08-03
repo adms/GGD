@@ -100,17 +100,28 @@ ls -ld ~/GGD/data/replays
 ```
 
 預期：容器裡 `id` 印 `uid=1000(node)`（`docker/game.Dockerfile` 的 `USER node`）。
-如果 host 那一行印的是 `drwxr-xr-x … root root`，那就是這張單講的那個坑 ——
-目錄是 root 的，容器裡的 `node` 寫不進去。
+如果 host 那一行印的**不是** uid 1000，那就是這張單講的那個坑 —— 目錄是別人的，
+容器裡的 `node` 寫不進去。2026-08-03 在線上量到的實際擁有者是 **65532**，
+那是**更早的映像**用的 uid（目錄不存在時由 docker daemon 建，之後就一直是那個）。
 
-### 2-2 修（在正式機上，host side）
+### 2-2 修
+
+⚠️ **`scripts/host-deploy.sh` 從 2026-08-03（GH#269）起會自己做這一段。**
+部署時 `replay.writable` 不是 `true`，腳本會自己 chown → 重啟 →
+**重讀 `/healthz` 重驗**，仍然不過才回非零。下面是同一件事的手動版，
+給「不想跑整支部署腳本」的時候用：
 
 ```bash
-sudo chown -R 1000:1000 ~/GGD/data/replays
-sudo chmod 755 ~/GGD/data/replays
-docker compose -f docker/compose.family.yaml restart game
+docker exec -u root ggd-game-1 chown -R 1000:1000 /data/replays
+docker exec -u root ggd-game-1 chmod 755 /data/replays
+docker restart ggd-game-1
 ```
 
+> **不需要 host 的 sudo。** 這是**容器自己的 root** 改**容器自己的掛載點**，
+> 走的是 docker 權限（跑得動 compose 的人本來就有），不是主機提權。
+> owner 2026-08-03 對「請你在主機上跑一次 sudo」的回覆是「**無法**」——
+> 所以在這個專案裡，任何以 `sudo` 開頭的修法等於「不會被執行」。
+>
 > `1000` 是 `node` 在 `node:22-alpine` 裡的 uid。不要用 `chmod 777` ——
 > 錄影檔帶著每一個玩家的顯示名稱。
 
@@ -269,11 +280,23 @@ Promise 並等到串流真的關好。守衛：
 第 61 行是 `USER node`（`node:22-alpine` 裡 `node` 是 uid 1000）。
 root:root 0755 的目錄，uid 1000 建檔就是 EACCES。
 
-`scripts/host-deploy.sh` 現在把 `/healthz` 的 `replay.writable` 列為**後置條件**
-（false 就回非零並印出修法）。修法本身仍然要 owner 手動跑，因為它需要 sudo：
+`scripts/host-deploy.sh` 把 `/healthz` 的 `replay.writable` 列為**後置條件**。
+2026-08-03（GH#269）起它不只是回報，而是**自己修完再重驗**：
 
 ```bash
-sudo chown -R 1000:1000 ~/GGD/data/replays
-sudo chmod 755 ~/GGD/data/replays
-docker restart ggd-game-1
+docker exec -u root ggd-game-1 chown -R 1000:1000 /data/replays
+docker exec -u root ggd-game-1 chmod 755 /data/replays
+docker restart ggd-game-1 && sleep 12
+# 然後重讀 /healthz —— 重驗還是不過才 die（那時候根因就不是擁有者了：
+# 查唯讀掛載 / 磁碟或 inode 滿 / SELinux）
 ```
+
+⚠️ 這一段原本寫著「修法本身仍然要 owner 手動跑，**因為它需要 sudo**」。
+那句話是假的（第三守則）：`docker exec -u root` 走的是 docker 權限，不是主機提權。
+而它的代價是真的 —— owner 2026-08-03 對「請你跑一次 sudo」的回覆是「**無法**」，
+所以那個修法從來沒有被自動化，而**手動 chown 一次只治那一次**（擁有者是舊映像
+留下來的 65532，換映像／重建目錄它就回來），這個缺陷因此復發過。
+
+⚠️ **重驗那一步才是重點，不是 chown。** 只修不重讀 `/healthz`，就是把一個沒驗證
+的修法當成成功 —— 跟這張單第 1 節在講的是同一個形態。
+守衛：`packages/shared/src/ops/hostDeployScript.test.ts`（三個突變都驗過會紅）。

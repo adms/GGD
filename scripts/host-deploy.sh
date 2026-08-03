@@ -258,20 +258,29 @@ fi
 # 「下次記得去 curl 一下 /healthz」，只有一支會自己回非零的程式可以。
 #
 # ⚠️ 根因（量過的，不是猜的）：`docker/compose.family.yaml` 把 host 的
-# `data/replays` bind-mount 到 `/data/replays`。**那個目錄不存在時，是 docker
-# daemon 用 root 建的**，而 `docker/game.Dockerfile` 第 61 行是 `USER node`
-# （`node:22-alpine` 裡 node 是 uid 1000）。root:root 0755 的目錄，uid 1000
-# 建檔就是 EACCES —— 而且 `createWriteStream` 是非同步開 fd，所以
-# `MatchRecorder.open()` 仍然回傳一個看起來完全正常的錄影器。
+# `data/replays` bind-mount 到 `/data/replays`。**那個目錄的擁有者不是容器跑的
+# 那個 uid**：目錄不存在時由 docker daemon 用 root 建，而 2026-08-03 在線上量到
+# 的實際擁有者是 **65532** —— 那是**更早的映像**用的 uid。現在的映像是
+# `docker/game.Dockerfile` 第 61 行的 `USER node`（`node:22-alpine` 裡 node 是
+# uid 1000）。別人家的目錄，uid 1000 建檔就是 EACCES —— 而且
+# `createWriteStream` 是非同步開 fd，所以 `MatchRecorder.open()` 仍然回傳一個
+# 看起來完全正常的錄影器。
 #
-# 修法（⚠️ 只有 owner 在主機上手動跑，這支腳本**刻意不自己 chown**：
-# 改別人家的檔案擁有者不是部署腳本該有的權力，而且它需要 sudo）：
+# ── 為什麼 2026-08-03 起腳本自己動手修（GH#269）──────────────────────────────
+# 舊版這裡只印一行「請 owner 用 sudo 在 host 上 chown」。兩個問題：
+#   · 那個修法**一次只治一次**。擁有者是舊映像留下來的，換映像／重建目錄它就
+#     回來 —— 這個缺陷已經復發過。
+#   · owner 2026-08-03 對「請你在主機上跑一次 sudo」的回覆是「**無法**」。
+#     在那個前提下，「腳本只能說出來」實際上等於「這件事永遠不會被修」。
 #
-#     sudo chown -R 1000:1000 ~/GGD/data/replays
-#     sudo chmod 755 ~/GGD/data/replays
-#     docker restart ggd-game-1
+# 而「腳本自己 chown 需要 sudo」這句話**是假的**（第三守則，它在這裡寫了一整天）：
+# `docker exec -u root ggd-game-1 chown …` 用的是 **docker 權限**（跑得動
+# compose 的人本來就有），是容器自己的 root 改容器自己的掛載點，不是主機提權。
+# 腳本仍然一行 `sudo` 都不跑 —— **那條要求沒有變**，變的只是「這件事需要它」。
 #
-# 不要用 chmod 777 —— 錄影檔帶著每一位玩家的顯示名稱。
+# ⚠️ 修完一定要**重新問一次 /healthz**。只 chown 不重驗，就是把一個沒驗證的
+# 修法當成成功 —— 那正是這個專案一再踩到的形態（fail-open + 沒有人讀的訊號）。
+# ⛔ 不要用 chmod 777 —— 錄影檔帶著每一位玩家的顯示名稱。
 REPLAY_JSON=$(curl -fsS -m 15 "http://127.0.0.1:2567/healthz" 2>/dev/null || true)
 if [ -z "$REPLAY_JSON" ]; then
   printf '\033[33m  ! game shard 的 /healthz 打不到（:2567）—— 跳過錄影檢查\033[0m\n'
@@ -283,12 +292,45 @@ else
     True) ok "錄影目錄可寫（開機時真的建檔再刪掉）" ;;
     None) printf '\033[33m  ! /healthz 沒有 replay.writable 欄位 —— 這個映像比 GH#170 舊\033[0m\n' ;;
     *)
-      die "錄影目錄寫不進去 —— 這台 shard **一場都不會錄到**，而遊戲會照常運作，所以沒有人會發現。
-     根因幾乎一定是 bind mount 的擁有者：docker 用 root 建了 data/replays，容器跑 uid 1000。
-     在這台機器上手動修（要 sudo，這支腳本刻意不自己做）：
-       sudo chown -R 1000:1000 ~/GGD/data/replays && sudo chmod 755 ~/GGD/data/replays
+      # ⚠️ 自動修**只在完整部署／內容部署時做**，`--verify-only` 不做。
+      #
+      # 理由：修法包含 `docker restart ggd-game-1`，那會**把正在打的人踢掉**。
+      # 而 `--verify-only`（煙霧測試）正是你在**有人在線上時**最可能跑的東西 ——
+      # 「跑一次檢查可能中斷一場比賽」不是一個檢查該有的權力。
+      # 完整部署本來就會重啟，那時候順手修沒有額外代價。
+      if [ "$MODE" = "verify" ]; then
+        die "錄影目錄寫不進去（writable=$REPLAY_WRITABLE）—— 這台 shard **一場都不會錄到**，
+     而遊戲會照常運作，所以沒有人會發現。
+     ⚠️ `--verify-only` 刻意**不自動修**：修法要重啟 game shard，會踢掉正在打的人。
+     沒有人在線上的話，跑一次完整部署（它會自己修），或手動：
+       docker exec -u root ggd-game-1 chown -R 1000:1000 /data/replays
        docker restart ggd-game-1
-     完整 runbook：docs/replay-observability.md" ;;
+     完整 runbook：docs/replay-observability.md"
+      fi
+      # 先自己修，再重驗。不是「印出修法」——見上面那一段。
+      warn "錄影目錄寫不進去（writable=$REPLAY_WRITABLE）—— 先自己修擁有者（容器內的 root，不是主機 sudo）"
+      docker exec -u root ggd-game-1 chown -R 1000:1000 /data/replays || warn "容器內 chown 沒成功（繼續，讓下面的重驗來裁決）"
+      docker exec -u root ggd-game-1 chmod 755 /data/replays || warn "容器內 chmod 沒成功（繼續，讓下面的重驗來裁決）"
+      docker restart ggd-game-1 >/dev/null || warn "ggd-game-1 重啟失敗"
+      # `writable` 是**開機時**建檔再刪掉的結果，所以一定要等 shard 真的重新起來
+      # 再讀 —— 讀太早拿到的是上一輪的答案，或什麼都拿不到。
+      sleep 12
+      # ⚠️ 這一步才是重點，不是上面的 chown。只修不驗＝把一個沒驗證的修法當成成功。
+      REPLAY_RECHECK=$(curl -fsS -m 15 "http://127.0.0.1:2567/healthz" 2>/dev/null \
+        | python3 -c 'import json,sys; print(json.load(sys.stdin).get("replay",{}).get("writable"))' \
+        2>/dev/null || echo None)
+      if [ "$REPLAY_RECHECK" = True ]; then
+        ok "錄影目錄本來寫不進去，腳本自己修好了（容器內 chown 1000:1000 + 重啟 + 重讀 /healthz 驗過）"
+      else
+        die "錄影目錄仍然寫不進去（重驗拿到 '$REPLAY_RECHECK'）—— 這台 shard **一場都不會錄到**，
+     而遊戲會照常運作，所以沒有人會發現。
+     ⚠️ 擁有者**已經自動修過了**（容器內 root：chown -R 1000:1000 /data/replays + chmod 755
+     + 重啟 + 重讀 /healthz），而且重驗還是不過，**所以根因不是擁有者**。往這三個查：
+       · 掛載是唯讀的     docker inspect ggd-game-1 --format '{{json .Mounts}}'   看 RW 是不是 false
+       · 主機磁碟或 inode 滿了   df -h /   與   df -i /
+       · SELinux / AppArmor 擋住   getenforce   有的話 bind mount 要加 :z
+     完整 runbook：docs/replay-observability.md"
+      fi ;;
   esac
 fi
 

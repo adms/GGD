@@ -307,6 +307,55 @@ export type StoredOffer = (
   reservesSlot?: boolean;
 };
 
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * GH#264 —— 「什麼叫做被淘汰」是一個決策點，不是一個常數
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * #193 的中途結算卡原本掛在「團隊生命歸零」上，因為當時歸零**就是**出局。
+ * owner 2026-07-27 取消淘汰之後這兩件事分家了：
+ *
+ *   · 「血耗光」= 計分板見底，這一隊**照樣打完十回合**（{@link participatingTeams}）
+ *   · 「出局」  = 不存在了 —— 第 1 名由決賽決定、**不看團隊生命**
+ *
+ * 於是一支第 7 回合把血打光的隊伍會先收到一張 `winnerTeam: -1` 的「戰鬥結束」
+ * 卡（客戶端 `LeaveSettlementOverlay` 用它換掉 #271 的離場確認框，直接提供
+ * 「返回大廳」），然後在第 10 回合奪冠。seed 4242 就是這一場：team 0 在第 7 回合
+ * 歸零、拿到卡、最後拿第 1 名。玩家按下去就是**放棄一場自己會贏的比賽**。
+ *
+ * ── 為什麼這是欄位而不是一行修正 ────────────────────────────────────────────
+ * 「0 血照樣參戰還能奪冠」本身是 owner 明說的設計，所以缺陷不在血量模型，而在
+ * **那張卡什麼時候該發**。那是一個決策點（CLAUDE.md 第一守則），兩邊都有人要：
+ *
+ *   關（出貨）= 比賽沒結束就沒有人出局，沒有人拿得到那張卡。
+ *   開（舊行為）= 血一歸零就發，讓計分板墊底的人可以提早看評價、提早離場。
+ *
+ * 出貨值選 owner 明說的那一側：「不管前面被淘汰與否，大家都回來打第 10 回合」。
+ *
+ * ⚠️ 它**不是** sim 規則，所以和隔壁那一票 `*FromDoc` 不同，它不寫進 `SimWorld`
+ * 也不進 `digest()` —— 它決定的是 host 往外送什麼，不是場上算什麼。這也是為什麼
+ * 讀它不會動到重播的決定性（`takeEliminationSettlements` 是純輸出，
+ * settlement.test.ts 的「draining the queue mutates nothing」在守這件事）。
+ */
+export const DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT = false;
+
+/** `config.match@1` 的文件 id（`phaseConfig` 的三支 resolve* 讀的是同一份）。 */
+const MATCH_CONFIG_DOC_ID = "config.match";
+
+/**
+ * `match.settlementCardOnHealthSpent` 的**現行值**。
+ *
+ * 缺文件 / 缺欄位 / schema 對不上 ⇒ {@link DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT}。
+ * 缺席就是出貨預設，和 `resolveVsBotPacing` 同一個約定：一份還沒有這一格的舊
+ * `config.match.json` 應該得到 owner 現在要的行為，不是隨機的一半。
+ */
+export function settlementCardOnHealthSpentFromDoc(doc: unknown): boolean {
+  const d = doc as { schema?: string; match?: { settlementCardOnHealthSpent?: unknown } } | undefined;
+  if (d?.schema !== "config@1") return DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT;
+  const v = d.match?.settlementCardOnHealthSpent;
+  return typeof v === "boolean" ? v : DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT;
+}
+
 export class MatchController {
   readonly world: SimWorld;
   readonly seats = new Map<SeatId, Seat>();
@@ -460,6 +509,11 @@ export class MatchController {
    * digest, so replays stay deterministic. Only populated for eliminations that
    * do NOT end the match; the deciding elimination is covered by the final
    * matchEnd settlement (maybeFinish), so it is never double-broadcast.
+   *
+   * ⚠️ GH#264: 「被淘汰」 is {@link eliminatedTeams}, NOT 「血耗光」. On the shipped
+   * default this queue therefore stays EMPTY for a whole match — see
+   * {@link DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT} for why that is the correct
+   * reading of owner's 取消淘汰 ruling and how to switch the old trigger back on.
    */
   private eliminationSettlements: { teamId: number; settlement: MatchSettlement }[] = [];
 
@@ -762,6 +816,18 @@ export class MatchController {
      * `healthDrainPctOfMax: 0.01`,而回血那一族目前沒有任何一位英雄在用。
      */
     regenRules: RegenRules = regenRulesFromDoc(Configs.tryGet(REGEN_DOC_ID)),
+    /**
+     * GH#264 —— 血耗光的隊伍要不要**當場**收到 #193 的中途結算卡
+     * (`config.match@1` 的 `match.settlementCardOnHealthSpent`)。
+     * 完整的理由寫在 {@link DEFAULT_SETTLEMENT_CARD_ON_HEALTH_SPENT} 的檔頭。
+     *
+     * 和 `combatFeel` 同一條路（含同一個已知限制:`Configs` 是 boot 時載入的,
+     * 後台改了要重啟 shard），但**不寫進 `SimWorld`**：它是 host 的輸出策略，
+     * 不是場上的規則，所以碰不到 `digest()`，重播照樣逐位元相同。
+     */
+    public readonly settlementCardOnHealthSpent: boolean = settlementCardOnHealthSpentFromDoc(
+      Configs.tryGet(MATCH_CONFIG_DOC_ID),
+    ),
   ) {
     this.matchSeed = seed;
     // owner 2026-08-03 的兩個 vs bot 節奏旗標。判準是「人類座位數 <= 1」,不是
@@ -1069,6 +1135,31 @@ export class MatchController {
    */
   private healthSpentTeams(): TeamId[] {
     return [...this.teamHealth.entries()].filter(([, hp]) => hp <= 0).map(([t]) => t);
+  }
+
+  /**
+   * 「誰**出局了**」—— #193 那張中途結算卡唯一該發給的隊伍（GH#264）。
+   *
+   * ⚠️ 它刻意**不是** {@link healthSpentTeams}。那個函式自己的註解就寫著
+   * 「Not "out of the match" — just bottom of the scoreboard」，而 #193 的佇列
+   * 從 2026-07-27 取消淘汰之後一直把兩者當成同一件事。分家之後：
+   *
+   *   · 血耗光 → 計分板見底，照樣打完十回合、照樣拿等級/金錢/三選一，
+   *     **而且照樣可能在決賽奪冠**（第 1 名不看團隊生命）。
+   *   · 出局   → 這一隊不會再參加任何一回合。`participatingTeams()` 是全部的
+   *     隊伍，所以在比賽結束之前這個集合是**空的**。
+   *
+   * 後台把舊行為留成一個開關（{@link settlementCardOnHealthSpent}）：打開就退回
+   * 「血一歸零就發卡」，也就是這一格出現之前的行為。
+   */
+  private eliminatedTeams(): TeamId[] {
+    if (this.settlementCardOnHealthSpent) return this.healthSpentTeams();
+    // 「存在但不再參賽的隊伍」。owner 2026-07-27:「不管前面被淘汰與否，大家都
+    // 回來打第 10 回合」—— `participatingTeams()` 就是全部，所以今天這個補集是
+    // 空的，而且**是推導出來的空，不是寫死的 `[]`**：哪一天淘汰回來了
+    // (`participatingTeams` 開始變小)，這張卡會自己跟著活過來。
+    const playing = new Set(this.participatingTeams());
+    return [...this.teamHealth.keys()].filter((t) => !playing.has(t));
   }
 
   /**
@@ -2098,7 +2189,7 @@ export class MatchController {
       }
     }
 
-    this.queueHealthSpentSettlements();
+    this.queueEliminationSettlements();
   }
 
   /**
@@ -2136,24 +2227,32 @@ export class MatchController {
    * RUNNING for everyone, itself included — snapshot the scoreboard and queue it
    * for that team, so its players can open the evaluation screen before leaving.
    *
-   * ⚠️ THIS PATH SURVIVED THE NO-ELIMINATION RULING ON PURPOSE. `teams[].eliminated`
-   * is still `lives <= 0` on the wire and the client's leave-flow still gates on
-   * it (`leaveSettlement.localTeamEliminated`), so a team draining to 0 must still
-   * produce the settlement card that flow expects — the only thing that changed is
-   * that the team then walks back into the next round instead of leaving. Deleting
-   * this queue because "nobody is eliminated any more" would have been a silent
-   * feature withdrawal, which is exactly what the hand-off warned about.
+   * ⚠️ GH#264 CORRECTED WHAT "ELIMINATED" MEANS HERE. This used to read
+   * {@link healthSpentTeams} — 「血耗光」—— which stopped meaning 「出局」 the day
+   * elimination was removed. The predicate is now {@link eliminatedTeams}, and the
+   * legacy trigger survives as an operator switch
+   * ({@link settlementCardOnHealthSpent}) rather than as the hardcoded default:
+   * deleting the queue outright would have been the silent feature withdrawal the
+   * hand-off warned about, and leaving it on the old predicate handed the eventual
+   * CHAMPION a 「戰鬥結束」 card mid-match.
+   *
+   * ⚠️ `teams[].eliminated` on the wire is untouched — it is still `lives <= 0`,
+   * and the client's leave-flow still gates on it
+   * (`leaveSettlement.localTeamEliminated`). What changed is only whether a card
+   * is queued to go with it; with no card, `shouldSettleBeforeLeave`'s
+   * `hasSettlement` is false and that player gets the ordinary #271 leave
+   * confirmation instead. No client change is needed for either mode.
    *
    * Suppressed on the finale: `maybeFinish` broadcasts the authoritative final
    * settlement seconds later and a duplicate card would only race it.
    */
-  private queueHealthSpentSettlements(): void {
-    const newlySpent = this.healthSpentTeams().filter((t) => !this.healthSpentAnnounced.has(t));
-    if (newlySpent.length === 0) return;
-    for (const teamId of newlySpent) this.healthSpentAnnounced.add(teamId);
+  private queueEliminationSettlements(): void {
+    const newlyOut = this.eliminatedTeams().filter((t) => !this.healthSpentAnnounced.has(t));
+    if (newlyOut.length === 0) return;
+    for (const teamId of newlyOut) this.healthSpentAnnounced.add(teamId);
     if (isRoyaleRound(this.phase.round)) return;
     const snapshot = this.buildSettlement();
-    for (const teamId of newlySpent) {
+    for (const teamId of newlyOut) {
       this.eliminationSettlements.push({ teamId, settlement: snapshot });
     }
   }

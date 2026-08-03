@@ -101,12 +101,17 @@ function sameSpecs(a: readonly MobBarSpec[], b: readonly MobBarSpec[]): boolean 
 }
 
 export function MobHealthBars(): React.JSX.Element | null {
-  // ⚠️ 目前 `mobVisualJson` 還沒有帶這四格（見 mobHealthBarModel 的 ② 段），所以
-  // 這裡拿到的是出貨值。讀取器是逐欄位的，那條路補上的當天就會自己生效。
+  // `mobVisualJson` 真的帶著這五格（arena-rules → Zod → MobRules → MobVisualTable，
+  // 見 mobHealthBarModel 的 ② 段）。讀取器是逐欄位降級的，所以跑在舊 shard 前面
+  // 的客戶端拿到的是出貨值，不是一張歸零的表。
   const mobVisualJson = useHud((s) => s.mobVisualJson);
   const cfg: MobHealthBarConfig = mobHealthBarConfigFrom(safeParse(mobVisualJson));
-  const [specs, setSpecs] = useState<MobBarSpec[]>([]);
-  const live = useRef<MobBarSpec[]>([]);
+  // ⚠️ LAZY INITIALISER，不是 `useState([])`：`frameBus.mobBars` 這一幀已經有東西了
+  // （`GameApp` 在 render 之前就寫好了），從空陣列起跑等於**第一幀一定沒有血條**，
+  // 而掛載這件事在戰鬥中會發生很多次（phase/round 換 key、boundary 重試）。
+  // 它同時也是守衛 B 能在 jsdom 裡不轉 rAF 就讀到節點的原因。
+  const [specs, setSpecs] = useState<MobBarSpec[]>(() => mobBarSpecs(frameBus.mobBars, cfg));
+  const live = useRef<MobBarSpec[]>(specs);
   const cfgRef = useRef(cfg);
   cfgRef.current = cfg;
 

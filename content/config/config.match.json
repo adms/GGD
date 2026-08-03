@@ -13,6 +13,7 @@
     "champSelectSecVsBot": 320,
     "champSelectEarlyStartVsBot": true,
     "forceSettleVsBot": true,
+    "settlementCardOnHealthSpent": false,
     "intermissionSec": 25,
     "combatMaxSec": 180,
     "fireRing": {

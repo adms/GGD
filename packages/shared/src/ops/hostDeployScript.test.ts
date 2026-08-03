@@ -115,26 +115,100 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
       /replay[^\n]*writable|writable[^\n]*replay/.test(code),
       "沒有讀 /healthz 的 replay.writable —— 「一場都沒錄到」會再一次長得跟正常部署一模一樣。",
     ).toBe(true);
+    // ⚠️ 這個 `{0,1600}` 是一個**距離啟發式**，2026-08-03 從 400 放寬到 1600。
+    // 放寬的是啟發式，**不是要求** —— 要求還是原來那一句：「寫不進去絕對不可以
+    // 只印一行字就走人」。die 只是離得更遠了，因為中間多了 GH#269 的自動修
+    // （chown → restart → sleep → 重讀 /healthz），而那段本身是下面那條在守。
     expect(
-      /REPLAY_WRITABLE[\s\S]{0,400}die/.test(code),
+      /REPLAY_WRITABLE[\s\S]{0,1600}die/.test(code),
       "錄影寫不進去時沒有 die —— 那就只是印一行字，等於沒驗。",
     ).toBe(true);
     // 修法要寫在腳本裡（含 uid），因為那是失敗當下唯一會被讀到的地方。
     expect(
       /chown -R 1000:1000/.test(src),
-      "die 訊息裡沒有具體的 chown 修法 —— 操作者拿到一個沒有下一步的錯誤。",
+      "腳本裡沒有具體的 chown 修法（含 uid）—— 操作者拿到一個沒有下一步的錯誤。",
     ).toBe(true);
-    // ⛔ 腳本自己不可以 chown：那需要 sudo，而且改別人家檔案的擁有者不是
-    // 部署腳本該有的權力。它只能「說出來」。
+    // ⛔ 保留下來的要求只有一條：**腳本自己不可以提權**。
     //
-    // ⚠️ 這一條必須把**字串常值**也剝掉才問得對：上面那句 die 訊息裡就寫著
-    // `sudo chown -R 1000:1000`，而那是要印給人看的字，不是會被執行的指令。
-    // 只剝註解（`code` 做的事）在這裡不夠 —— 那會抓到自己的錯誤訊息。
+    // ⚠️ 這裡原本還寫著「腳本自己不可以 chown：**那需要 sudo**」。
+    // 那句話今天是假的（第三守則），而且它在這個檔裡躺了一整天：
+    // `docker exec -u root ggd-game-1 chown …` 只需要 **docker 權限**
+    // （跑得動 compose 的人本來就有），是容器自己的 root 改容器自己的掛載點 ——
+    // 那不是主機提權。所以「不可以 chown」從來就不是「不可以 sudo」的推論。
+    //
+    // 為什麼非拆開不可：owner 2026-08-03 對「請你在主機上跑一次 sudo」的回覆是
+    // 「**無法**」。在那個前提下，「腳本只能說出來」＝「這件事永遠不會被修」，
+    // 而它已經復發過（目錄擁有者是 65532 —— 更早的映像用的 uid）。
+    // 於是 GH#269 讓腳本自己修，而下面這一條**一個字都沒放寬**。
+    //
+    // ⚠️ 這一條必須把**字串常值**也剝掉才問得對：die 訊息裡會出現要印給人看的
+    // 指令字串，那是字，不是會被執行的指令。只剝註解（`code` 做的事）不夠。
     const executable = code.replace(/"(?:[^"\\]|\\.)*"/gs, '""').replace(/'[^']*'/g, "''");
     expect(
       /(^|[;&|]|\bthen\b|\bdo\b)\s*sudo\b/.test(executable),
-      "腳本自己跑了 sudo —— 提權不是部署步驟，那是 owner 要在主機上手動做的。",
+      "腳本自己跑了 sudo —— 提權不是部署步驟。容器內的 root（docker exec -u root）才是。",
     ).toBe(false);
+  });
+
+  it("★ 錄影寫不進去時腳本要**自己修 + 重驗**（GH#269 / owner 2026-08-03 對 sudo 說「無法」）", () => {
+    // 舊版這裡只印一行「請 owner 用 sudo chown」。它治不了這個缺陷，因為：
+    //   · 根因是**擁有者**（線上量到 65532 —— 更早的映像用的 uid，現在的映像跑
+    //     node=1000），手動 chown 一次只治那一次，換映像／重建目錄它就回來；
+    //   · owner 對「請你跑一次 sudo」的回覆是「無法」。
+    // 兩件事合起來 = 這件事永遠不會被修。守的是「腳本自己動手」這個機制。
+    //
+    // 範圍限定在錄影那一段，免得抓到腳本別處的 curl / die。
+    const from = code.indexOf("REPLAY_WRITABLE=");
+    const to = code.indexOf("JS=$(curl");
+    expect(from >= 0 && to > from, "找不到錄影檢查那一段").toBe(true);
+    const block = code.slice(from, to);
+
+    // ① 真的去修 —— 而且要看**會被執行的**那一版。
+    //    ⚠️ 舊的 die 訊息裡就印著一模一樣的 chown 指令，掃全文會把「說出來」
+    //    誤判成「做了」（失敗形態 ⑥）。所以這裡把字串常值剝掉再問。
+    const blockExec = block.replace(/"(?:[^"\\]|\\.)*"/gs, '""').replace(/'[^']*'/g, "''");
+    expect(
+      /docker exec[^\n]*-u root[^\n]*\bchown\b[^\n]*1000:1000/.test(blockExec),
+      "腳本沒有真的去修擁有者（容器內 root 的 chown）—— 在 owner 說「無法」跑 sudo 之後，" +
+        "只把修法印出來等於這件事永遠不會被修。",
+    ).toBe(true);
+
+    // ② 修完要**重讀 /healthz 重驗**。這一項才是重點，不是 ①：
+    //    只修不驗＝把一個沒驗證的修法當成成功，那正是這個專案一再踩到的形態。
+    const chownAt = block.indexOf("chown");
+    const recheckAt = block.search(/curl[^\n]*healthz/);
+    expect(
+      chownAt >= 0 && recheckAt > chownAt,
+      "修完沒有再讀一次 /healthz —— 那是把一個沒驗證的修法當成成功，比原本只印一行更糟：" +
+        "它會讓一台一場都不會錄到的 shard 通過部署。",
+    ).toBe(true);
+
+    // ③ 重驗還是不過，仍然要 die。自動修不可以變成把失敗吞掉。
+    //
+    // ⚠️ 問的是「**重驗之後有沒有** die」，不是「第一個 die 在不在重驗後面」。
+    // 原本寫 `block.indexOf('die "') > recheckAt`，那在 2026-08-04 變成假紅：
+    // 自動修前面多了一個 `--verify-only` 專用的 die（煙霧測試不可以重啟 shard，
+    // 那會踢掉正在打的人），於是 `indexOf` 先撈到那一個。
+    // 兩個 die 都是對的，而這條守衛只該管**後面那一個存不存在**。
+    expect(
+      block.indexOf('die "', recheckAt) > -1,
+      "重驗失敗時沒有 die —— 自動修就變成了一個會吃掉失敗的 fail-open。",
+    ).toBe(true);
+
+    // ④ `--verify-only` **不可以**觸發自動修 —— 修法含 `docker restart ggd-game-1`，
+    // 而煙霧測試正是你在**有人在線上時**最可能跑的東西。「跑一次檢查可能中斷一場
+    // 比賽」不是一個檢查該有的權力；完整部署本來就會重啟，那時候順手修沒有代價。
+    //
+    // ⚠️ 這一條是 2026-08-04 補的，因為當時實測**把那個閘整段拿掉，12 條測試
+    // 照樣全綠** —— 一個可以刪掉而沒有東西會紅的保護，就不是保護（失敗形態 ③）。
+    const gateAt = block.indexOf('MODE" = "verify"');
+    expect(
+      gateAt > -1 && gateAt < block.indexOf("docker exec -u root"),
+      "自動修前面沒有 --verify-only 的閘 —— 跑一次煙霧測試會重啟 shard，把正在打的人踢掉。",
+    ).toBe(true);
+
+    // ⛔ 不可以用 chmod 777 —— 錄影檔帶著每一位玩家的顯示名稱。
+    expect(/chmod\s+0?777\b/.test(code), "用了 chmod 777 —— 錄影檔帶著玩家顯示名稱。").toBe(false);
   });
 
   it("★ 配對驗證：映像讀不讀得懂它掛著的內容（2026-08-02 的生產故障）", () => {

@@ -33,6 +33,7 @@ import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
 import { BossIntroOverlay } from "./hud/BossIntroOverlay";
 import { BossHealthBar } from "./hud/BossHealthBar";
+import { MobHealthBars } from "./hud/mobHealthBar";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -185,6 +186,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [MobBossOverlay, "殭屍王"],
   [BossIntroOverlay, "殭屍王出場演出"],
   [BossHealthBar, "殭屍王血條"],
+  [MobHealthBars, "精英小怪血條"],
   [ExUnlockToast, "EX 解鎖提示"],
   [TouchControls, "觸控操作"],
   [CouchHudGrid, "分割畫面介面"],
@@ -366,6 +368,13 @@ export function HudRoot(): React.JSX.Element {
               誰蓋誰是 `bossHealthBarSpec` / `mobBossRect` 算出來的矩形決定的,
               兩個都 `position: absolute` + 同一個 z-index(#107)。 */}
           <BossHealthBar />
+          {/* GH#268 —— 特殊殭屍/殭屍王頭上那條小血條（owner 2026-08-03「特殊殭屍
+              頭上應該要有小血條 顯示即時血量」）。⚠️ v0.9.28 出貨時**這一行不存在**：
+              伺服器付掉 `ENTITY_FLAG` 最後一格把 `MOB_ELITE` 送過線，`mobHealthBar.tsx`
+              也寫好了，而沒有人掛它 —— 整包功能可以從 repo 刪掉而畫面不變（失敗形態 ③）。
+              它自己每幀取樣 `frameBus.mobBars`（`GameApp` 每幀從快照重建），沒有精英
+              就回 null，所以一場沒有殭屍波的比賽它一次都不會重畫。 */}
+          <MobHealthBars />
           <ExUnlockToast />
         </>
       )}
