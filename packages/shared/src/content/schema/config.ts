@@ -2140,7 +2140,7 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // owner 2026-08-02 「特殊殭屍出現頻率太高且血太多 請都減半」——
     // chancePercent 5 → 2.5 (一波 20 隻約半隻), hpMult 2 → 1 (跟普通殭屍同底),
     // hpFlatBonus 4,000 → 2,000 (見下)。三個一起減半才是「都減半」。
-    chancePercent: 2.5,
+    chancePercent: 1.25,
     hpMult: 1,
     damageMult: 1.5,
     // owner 2026-07-29 (GH#206) 「移動速度 −50%」 — WAS 1.25, i.e. the special
@@ -4726,11 +4726,12 @@ export type ValhallaSandboxPolicyDoc = Omit<ConfigValhallaSandboxDoc, "id" | "sc
  */
 export const DEFAULT_LOBBY_LAYOUT_POLICY: LobbyLayoutPolicyDoc = {
   leftColumnWidthPx: 280,
-  // 40 / 30 / 30 —— owner 2026-08-03 在 FRIEND 與排位榜「中間」插進線上玩家列表,
-  // 左欄從兩塊變三塊,所以「各半」的 0.5 已經不存在了。三段相加必須是 1。
-  friendsShare: 0.4,
-  onlineShare: 0.3,
-  leaderboardShare: 0.3,
+  // 30 / 20 / 50 —— owner 2026-08-04:「FRIEND, 線上玩家, 排位榜 UI 佔的高度比例
+  // 應該是 3:2:5」。（2026-08-03 插進線上玩家那一版是 40/30/30。）
+  // 三段相加必須是 1 —— flexbox 不會替你檢查，`lobbyLayoutProblems()` 會。
+  friendsShare: 0.3,
+  onlineShare: 0.2,
+  leaderboardShare: 0.5,
   alreadyFriendMode: "greyed-button",
   stackOrder: ["friends", "online", "leaderboard"],
   minSlotHeightPx: 168,

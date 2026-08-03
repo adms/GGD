@@ -120,9 +120,9 @@ export interface LobbyLayoutPolicy {
  */
 export const DEFAULT_LOBBY_LAYOUT: LobbyLayoutPolicy = {
   leftColumnWidthPx: 280,
-  friendsShare: 0.4,
-  onlineShare: 0.3,
-  leaderboardShare: 0.3,
+  friendsShare: 0.3,
+  onlineShare: 0.2,
+  leaderboardShare: 0.5,
   alreadyFriendMode: "greyed-button",
   stackOrder: ["friends", "online", "leaderboard"],
   minSlotHeightPx: 168,

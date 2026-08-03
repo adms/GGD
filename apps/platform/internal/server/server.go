@@ -368,6 +368,17 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// (auth.Service treats a nil gate as "off"). The resolved value is logged on
 	// every boot — this is the only thing keeping strangers off the family
 	// deploy, so it must never be a quiet decision. See config.resolveRequireInvite.
+	//
+	// ⚠️ `cfg.RequireInvite` IS THE PRODUCTION HALF OF THIS OR, AND IT IS THE ONLY
+	// ONE. cmd/platform calls server.New(cfg, server.Options{}) — the shipped
+	// binary never sets opts.RequireInvite; that field exists so a test can gate
+	// one instance without touching the environment. Until GH#236 EVERY test that
+	// exercised the gate went through the opts half, so deleting `|| cfg.RequireInvite`
+	// left the whole platform module green while turning ggd.adms.ai into open
+	// signup with the #179 enumeration oracle wide open (measured 2026-08-04).
+	// The guard that now fails on that deletion is
+	// auth/register_gate_wiring_test.go — it boots with Options{} and posts the
+	// four enumeration probes. Do not "simplify" this condition.
 	if opts.RequireInvite || cfg.RequireInvite {
 		authSvc.SetInviteGate(inviteSvc)
 		// GH#179 residual: with the gate on, an un-invited caller cannot

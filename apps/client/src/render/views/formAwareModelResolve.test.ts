@@ -769,3 +769,157 @@ describe("#223 26 對的出貨普查(這是量測,不是引用)", () => {
     expect(SHARED_MODEL_COUNTERPART.get("godie-h00w")).toBe("godie-harf");
   });
 });
+
+// ===========================================================================
+// 4. GH#239 —— 61 克勞薩的身體:出貨的 hook × 出貨的 overlay 覆蓋率
+// ===========================================================================
+/**
+ * ⚠️ 為什麼上面兩組都還漏得掉這一條(2026-08-04 逐個突變實測,不是推論)。
+ *
+ * GH#239 點名的那個退步是**具體看得見**的:61 克勞薩 變身之後，身體從
+ * `assets/blizzard-local/models/U012.glb`(真的 HeroDreadLord)掉成
+ * `assets/models/champions/blocky-barbarian.glb`(通用方塊人)。上面有兩組
+ * 各覆蓋了它的一半，接縫處誰也沒站:
+ *
+ *  · **第 2 組**的「缺省即繼承:61 克勞薩…」確實會因為 `modelDocFor` 少傳
+ *    `inheritFrom` 而紅(實測:那是全 repo 唯一一條會紅的)。但它餵的 overlay 是
+ *    `realOverlay({ U012: … })` —— 一份**在測試裡手寫的** manifest。
+ *    「出貨的抽取到底有沒有收錄克勞薩的本體」它從來沒問過，所以
+ *    `BLIZZARD_MODEL_CHAMPIONS` 掉了 `godie-u012` 的那一天它仍然全綠，而畫面上
+ *    兩態一起變方塊人。(失敗形態 ⑤:被測的不是出貨的那個。)
+ *
+ *  · **第 3 組**的 rank 普查確實讀出貨的覆蓋率清單，但它**直接呼叫
+ *    `overlay.resolve()`**，完全不經過 `championBodyHooks`。實測:把
+ *    `bodyChampionIdFor` 還原成形態盲、或把 `modelDocFor` 的 `inheritFrom` 拿掉，
+ *    這一組**兩次都是綠的** —— 它驗的是 `resolve()` 這個函式的性質，不是
+ *    「出貨的渲染路徑會把哪一個字串交給 `assets.load()`」。(失敗形態 ③。)
+ *
+ * 這一組把兩半接起來:**出貨的工廠** × **出貨的覆蓋率清單** × **出貨的
+ * `content/` 文件** × 真的 `EntityViewRegistry`，斷言真的被載入的那個路徑。
+ */
+describe("GH#239 克勞薩的身體 —— 出貨的 hook 拿到出貨的覆蓋率會畫出什麼", () => {
+  /**
+   * 出貨的 overlay 索引。`champId` 欄就是 `BLIZZARD_MODEL_CHAMPIONS`
+   * (那個常數的檔頭正是這樣定義它自己的:抽取器拉的 40 個可選單位)，
+   * `unitId` 是英雄 id 去掉 `godie-` 前綴之後的 w3x rawcode。
+   *
+   * ⚠️ 真正的 `data/blizzard-overlay/MANIFEST.json` 是 **git-ignored 的執行期
+   * 狀態**(84MB，不進版控)，測試不可以依賴它存不存在 —— 所以這裡由出貨的常數
+   * 重建。承重的是「**哪些 champId 有覆蓋**」這件事，不是檔名;不過對
+   * `godie-u012` 這條規則還原出來的正好就是出貨的 `…/U012.glb`，所以下面那條
+   * 斷言釘的是真的路徑，不是一個編出來的樣子。
+   */
+  const shippedCoverageOverlay = (): Promise<BlizzardOverlayModels> =>
+    realOverlay(
+      Object.fromEntries(
+        BLIZZARD_MODEL_CHAMPIONS.map((champId) => {
+          const unitId = champId.replace(/^godie-/, "").toUpperCase();
+          return [unitId, { champId, glb: `${BLIZZARD_LOCAL_GLB_PREFIX}${unitId}.glb` }];
+        }),
+      ),
+    );
+
+  /** 出貨的 `content/models/*.json` —— 不是 stub,glbPath 逐個從磁碟讀。 */
+  const shippedContent = (): ChampionBodyContent => ({
+    modelFor: (modelKey) => {
+      const glb = shippedGlb(modelKey);
+      return glb ? doc(glb) : null;
+    },
+    standinOverrideFor: () => null,
+    voxelSkinOverrideFor: () => null,
+    formVisualFor: () => null,
+  });
+
+  /**
+   * 出貨的 `championBodyHooks` 對「座位選了 `seated`、現在是第 `formIndex` 態」
+   * 這具身體交出來的 glbPath。
+   *
+   * `e.key` 用**這具身體自己的** modelKey —— snapshot 每 tick 用
+   * `Champions.get(championId).modelKey` 重算，所以變身後 registry 拿到的就是它
+   * (見 `apps/game-server/src/net/snapshot.ts` 的 #249 註解)。
+   */
+  const hookGlb = (
+    overlay: BlizzardOverlayModels,
+    seated: string,
+    formIndex: 0 | 1,
+  ): string | null => {
+    const bodyId = formIndex === 0 ? seated : (counterpartFormId(seated) ?? seated);
+    const modelKey = shippedModelKey(bodyId);
+    if (!modelKey) return null;
+    const hooks = championBodyHooks({
+      championIdForSeat: (seatId) => (seatId === SEAT ? seated : null),
+      resolveModelKey: (key) => key,
+      overlay,
+      content: shippedContent(),
+    });
+    return hooks.modelDocFor(modelKey, SEAT, formIndex)?.glbPath ?? null;
+  };
+
+  it("61 克勞薩:出貨覆蓋率下,變身後真的載到 U012.glb —— 不是 blocky-barbarian", async () => {
+    // 前提逐條讀出貨的資料，不是相信註解(第三守則)。這三件事湊在一起才讓
+    // 「變身 = 掉成方塊人」成為可能，缺一條下面的斷言就不再有意義。
+    expect(BLIZZARD_MODEL_CHAMPIONS, "本體有被抽取器收錄").toContain(KRAUSER_BASE);
+    expect(BLIZZARD_MODEL_CHAMPIONS, "變身態沒有 —— 抽取器只拉可選單位").not.toContain(
+      KRAUSER_ALT,
+    );
+    expect(SHARED_MODEL_COUNTERPART.has(KRAUSER_ALT), "事實表依法收不了這一對").toBe(false);
+    expect(shippedGlb(shippedModelKey(KRAUSER_ALT)), "而它出貨穿的就是那個方塊人").toBe(
+      STANDIN_GLB,
+    );
+
+    const overlay = await shippedCoverageOverlay();
+    const { loaded } = await runTransform(overlay, KRAUSER_BASE, [
+      KRAUSER_BASE_KEY,
+      KRAUSER_ALT_KEY,
+    ]);
+    expect(
+      loaded,
+      "變身後掉回通用方塊人 —— 這就是 GH#239 指名的、掛在「修復」名義下的美術退步",
+    ).not.toContain(STANDIN_GLB);
+    expect(
+      [...new Set(loaded)],
+      "兩態都應該是同一具 HeroDreadLord(U012.glb)",
+    ).toEqual([KRAUSER_BASE_GLB]);
+  });
+
+  it("26 對:出貨的 hook 一具變身身體都不可以掉成通用方塊人", async () => {
+    const overlay = await shippedCoverageOverlay();
+    const worse: string[] = [];
+    /** 變身態自己穿替身、卻靠繼承拿到本體真模型的那些 —— 保底真的承重的證據。 */
+    const rescued: string[] = [];
+    for (const p of CHAMPION_FORM_PAIRS) {
+      const base = hookGlb(overlay, p.baseId, 0);
+      const alt = hookGlb(overlay, p.baseId, 1);
+      if (!isStandin(base) && isStandin(alt)) {
+        worse.push(`#${p.heroNumber} ${p.alternateId} ${base} → ${alt}`);
+      }
+      if (isStandin(shippedGlb(shippedModelKey(p.alternateId))) && alt !== null && !isStandin(alt)) {
+        rescued.push(p.alternateId);
+      }
+    }
+    expect(
+      worse,
+      "這些變身態的身體比它們的本體差。出貨的 modelDocFor 少了一張保底，" +
+        "或 BLIZZARD_MODEL_CHAMPIONS 掉了對應的本體",
+    ).toEqual([]);
+    // ⚠️ 正面斷言，而且它是這一組的支點:只驗「沒有變差」的話，overlay 從頭到尾
+    // 沒出手過也是零退步(第 3 組就是這樣對兩個突變都綠的)。這一行讓「一具都沒
+    // 救到」也是一個失敗。
+    // 這 6 具就是第 3 組量到的「變身態穿共用替身」的那 6 個。它們靠三條不同的
+    // 路拿到真模型,所以這個清單同時是那三條路各自還活著的證據:
+    //   · o02o —— 自己就在 BLIZZARD_MODEL_CHAMPIONS 裡(直接命中);
+    //   · h00w / o030 / n01b / e010 —— `SHARED_MODEL_COUNTERPART`(w3u 同模型路徑);
+    //   · u011 —— 只剩 `resolve(…, inheritFrom)` 這一張,少了它就進上面的 `worse`。
+    expect(
+      rescued.sort(),
+      "沒有任何一具穿替身的變身身體拿到真模型 —— 保底整條沒生效",
+    ).toEqual([
+      "godie-e010",
+      "godie-h00w",
+      "godie-n01b",
+      "godie-o02o",
+      "godie-o030",
+      "godie-u011",
+    ]);
+  });
+});

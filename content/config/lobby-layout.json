@@ -1,11 +1,11 @@
 {
   "id": "lobby-layout",
   "schema": "config.lobby-layout@1",
-  "note": "GH#255 + owner 2026-08-03「大廳 FRIEND 跟排位榜 中間,多出一個區域是顯示所有大廳正在線上的玩家列表,並且名字旁邊有按鈕可以一鍵加朋友」—— 左欄從兩塊變三塊,出貨比例 40/30/30。⚠️ 舊 note 說「friendsShare 0.5 就是那句『各半』」,那句話在三塊之後已經是假的。三段相加必須是 1:flexbox 不會檢查(grow 是相對的),0.5/0.5/0.5 會排得好好的而文件宣稱 150%,檢查在 lobbyLayout.ts 的 lobbyLayoutProblems()。alreadyFriendMode 是決策點不是數值:已經是朋友的人那一列要留著變灰(greyed-button)還是整列拿掉(hide-row)。splitMinHeightPx / stackBelowWidthPx 是「太矮或太窄就不要硬切」的兩個門檻,minSlotHeightPx 是改成堆疊之後每一塊保證拿到的高度。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyLayout.ts 的 DEFAULT_LOBBY_LAYOUT,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。",
+  "note": "GH#255 + owner 2026-08-03「大廳 FRIEND 跟排位榜 中間,多出一個區域是顯示所有大廳正在線上的玩家列表,並且名字旁邊有按鈕可以一鍵加朋友」—— 左欄從兩塊變三塊,出貨比例 30/20/50（owner 2026-08-04「3:2:5」）。⚠️ 舊 note 說「friendsShare 0.5 就是那句『各半』」,那句話在三塊之後已經是假的。三段相加必須是 1:flexbox 不會檢查(grow 是相對的),0.5/0.5/0.5 會排得好好的而文件宣稱 150%,檢查在 lobbyLayout.ts 的 lobbyLayoutProblems()。alreadyFriendMode 是決策點不是數值:已經是朋友的人那一列要留著變灰(greyed-button)還是整列拿掉(hide-row)。splitMinHeightPx / stackBelowWidthPx 是「太矮或太窄就不要硬切」的兩個門檻,minSlotHeightPx 是改成堆疊之後每一塊保證拿到的高度。⚠️ 值的唯一真相是 apps/client/src/ui/platform/lobbyLayout.ts 的 DEFAULT_LOBBY_LAYOUT,這一份是內容層的鏡像(apps/admin/src/laneConfigDocs.test.ts 逐格比對)。",
   "leftColumnWidthPx": 280,
-  "friendsShare": 0.4,
-  "onlineShare": 0.3,
-  "leaderboardShare": 0.3,
+  "friendsShare": 0.3,
+  "onlineShare": 0.2,
+  "leaderboardShare": 0.5,
   "alreadyFriendMode": "greyed-button",
   "stackOrder": [
     "friends",

@@ -115,6 +115,7 @@ const { RoomListPanel } = await import("./RoomListPanel");
 const { ARENA_OPTIONS, DEFAULT_MAP_ID } = await import("./maps");
 const {
   DEFAULT_LOBBY_LAYOUT,
+  LOBBY_LAYOUT_BOUNDS,
   leftColumnSlots,
   leftColumnSlotStyle,
   lobbyLayoutProblems,
@@ -271,9 +272,22 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // PERCENTAGES, and flexbox would happily lay out 0.5/0.5/0.5 while the
     // document claimed 50/50/50.
     expect(shares.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 5);
-    // owner: 朋友最常用給最大 — 40 / 30 / 30, biggest first.
-    expect(shares).toEqual([0.4, 0.3, 0.3]);
-    expect(shares[0]).toBeGreaterThan(shares[1]!);
+    // ⚠️ 這裡原本寫死 `[0.4, 0.3, 0.3]` 並附註「朋友最常用給最大，biggest first」。
+    // 兩件事在 2026-08-04 都失效了：owner 把比例改成 **3:2:5**（排位榜最大），
+    // 所以「最大的在最前面」也不再成立。CLAUDE.md 第二守則：**守衛驗機制，不驗數字**。
+    // 數字是 owner 會反覆調的東西，抄進斷言就是第四個住處（content/config + Zod
+    // DEFAULT + 客戶端常數之外），而第四個沒有 drift 守衛 —— 必過期，而且紅的時候
+    // 說的是與真相無關的話。
+    //
+    // 真正該守的機制是「**畫面上的比例 == 政策裡的比例**」，那個由下面這一行守：
+    expect(shares).toEqual([
+      DEFAULT_LOBBY_LAYOUT.friendsShare,
+      DEFAULT_LOBBY_LAYOUT.onlineShare,
+      DEFAULT_LOBBY_LAYOUT.leaderboardShare,
+    ]);
+    // 每一段都要是「看得到的一塊」而不是被壓成一條線 —— 這是上下界在守的東西，
+    // 這裡再確認一次它真的到了畫面上。
+    for (const s of shares) expect(s).toBeGreaterThanOrEqual(LOBBY_LAYOUT_BOUNDS.friendsShare.min);
 
     // 各自內部捲動 + never widen the page (both halves of the original ask).
     for (const name of ["friends", "online", "leaderboard"] as const) {
@@ -317,7 +331,12 @@ describe("lobby left column — 朋友列表 / 線上玩家 / 排位榜, three s
     // …and it goes back when there is room again, so a rotated phone or a
     // resized desktop window is not stranded in the fallback.
     await setViewport(1440, 900);
-    expect(renderedShares()).toEqual([0.4, 0.3, 0.3]);
+    // 同上：從政策推導，不抄字面值（owner 2026-08-04 把比例改成 3:2:5）。
+    expect(renderedShares()).toEqual([
+      DEFAULT_LOBBY_LAYOUT.friendsShare,
+      DEFAULT_LOBBY_LAYOUT.onlineShare,
+      DEFAULT_LOBBY_LAYOUT.leaderboardShare,
+    ]);
   });
 
   it("the rendered slots are the policy's output, not hand-written literals", () => {

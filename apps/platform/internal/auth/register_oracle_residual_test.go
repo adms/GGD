@@ -21,6 +21,16 @@ package auth_test
 // tests below are, in order: the boundary that holds, the residual that does
 // not, and the knob that prices the residual.
 //
+// ⚠️ AND THEY ALL INSTALL THE GATE THROUGH server.Options{RequireInvite: true},
+// WHICH THE SHIPPED BINARY NEVER SETS. That gap is GH#236: proving "the gate
+// closes enumeration" here and proving "a networked config resolves the gate ON"
+// in config/golive_test.go are two NOUNS, and the RELATIONSHIP between them —
+// the resolved value actually reaching the router — was guarded by neither, so
+// one deleted token in server.New reopened the oracle on the family deploy with
+// the whole module green. The relationship now has its own guard:
+// register_gate_wiring_test.go. Read it before trusting that the posture
+// described here is the posture ggd.adms.ai is actually in.
+//
 // Nothing here is a source-code scan or a property assertion. Every test posts
 // the four real requests through the fully-wired router and reads what comes
 // back, because "the four answers are indistinguishable" is the whole claim.

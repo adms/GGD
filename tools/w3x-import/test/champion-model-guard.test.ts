@@ -12,6 +12,7 @@
  *
  * Guarded so it degrades cleanly when the content tree is absent.
  */
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,6 +23,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..", "..");
 const CH_DIR = join(REPO, "content", "champions");
 const MODELS_DIR = join(REPO, "content", "models");
+const SKIN_DIR = join(REPO, "content", "skins");
 const CONTENT = join(REPO, "content");
 const haveContent = existsSync(CH_DIR) && existsSync(MODELS_DIR);
 
@@ -68,6 +70,42 @@ function championModels(): Map<string, string> {
     out.set(d.modelKey, join(CONTENT, doc.glbPath));
   }
   return out;
+}
+
+/**
+ * Every `imported.*` body a SKIN puts on a champion (`skin@1.modelKey`).
+ *
+ * A skin swaps the champion's whole body glb, so these are shipped champion
+ * bodies by every definition that matters to the player — but they are named by
+ * NO champion doc, which is why `championModels()` above cannot see them.
+ */
+function skinBodyModelKeys(): string[] {
+  if (!existsSync(SKIN_DIR)) return [];
+  const out: string[] = [];
+  for (const f of readdirSync(SKIN_DIR)) {
+    if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    let d: { schema?: string; modelKey?: string };
+    try {
+      d = JSON.parse(readFileSync(join(SKIN_DIR, f), "utf8"));
+    } catch {
+      continue;
+    }
+    if (d.schema === "skin@1" && d.modelKey?.startsWith("imported.")) out.push(d.modelKey);
+  }
+  return [...new Set(out)].sort();
+}
+
+/** A python3 that can run the sweep (stdlib only), or null → the test skips. */
+function findPython(): string[] | null {
+  for (const c of [["python3"], ["/opt/homebrew/bin/python3"], ["/usr/bin/python3"]]) {
+    try {
+      execFileSync(c[0]!, [...c.slice(1), "-c", "import json, glob"], { stdio: "pipe" });
+      return c;
+    } catch {
+      /* try the next candidate */
+    }
+  }
+  return null;
 }
 
 function nodeDepths(gltf: Gltf): number[] {
@@ -140,6 +178,46 @@ describe.runIf(haveContent)("champion model geometry + orientation guards", () =
       if (glow.length) offenders.push(`${mk}: ${glow.map((m) => m.name).join(",")}`);
     }
     expect(offenders, `models still carry a baked team-glow billboard:\n${offenders.join("\n")}`).toEqual([]);
+  });
+
+  /**
+   * GH#233 —— 上面那條 `#73 no TeamGlow` 判的是 `championModels()`,而那個集合
+   * 是**比出貨集合小的**:它只讀 `content/champions/*.json` 的 `modelKey`。
+   * `skin@1` 也指定身體 glb,兩邊都看不到它 —— 於是
+   * `strip_teamglow.py --dry-run` 印 0 行、上面那條測試全綠,而出貨的
+   * `heropika.glb`(`skin.godie-u00l.heropika`,godie-u00l 的皮卡丘造型)
+   * **還帶著 `TeamGlow1` @ primitive 1**(直接讀 glb 位元組量到的)。
+   * CLAUDE.md 失敗形態 ⑤:被測的不是出貨的那個。
+   *
+   * 這一條釘的是**機制**:那支掃描器判斷用的集合,必須涵蓋每一具會被穿到身上的
+   * 身體。斷言讀的是 `strip_teamglow.py --list-models` 真的吐出來的東西
+   * (跑那支程式,不是 grep 它的原始碼 —— 失敗形態 ⑥),再跟這裡獨立從
+   * `content/skins/` 讀出來的清單對帳。
+   */
+  it("the #73 TeamGlow sweep must see SKIN-selected champion bodies too (GH#233)", () => {
+    cover("model-teamglow-stripped");
+    const py = findPython();
+    if (!py) return; // python3 absent (CI image without it) — nothing to check
+    const skins = skinBodyModelKeys();
+    expect(skins.length, "content/skins ships no imported.* body — premise gone").toBeGreaterThan(0);
+
+    const out = execFileSync(py[0]!, [...py.slice(1), join(HERE, "..", "strip_teamglow.py"), "--list-models"], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    const swept = new Set(
+      out
+        .split("\n")
+        .map((l) => l.split("\t")[0]!.trim())
+        .filter(Boolean),
+    );
+    const blind = skins.filter((mk) => !swept.has(mk));
+    expect(
+      blind,
+      `strip_teamglow.py's sweep is blind to these SHIPPED skin bodies, so its\n` +
+        `"clean" verdict says nothing about them:\n  ${blind.join("\n  ")}\n` +
+        `Fix the enumerator (champion_body_model_keys), not this test.`,
+    ).toEqual([]);
   });
 
   it("every re-grounded clip now starts UPRIGHT (root frame-0 ≈ identity) (#68)", () => {

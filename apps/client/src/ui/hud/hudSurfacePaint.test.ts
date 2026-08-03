@@ -101,8 +101,52 @@
  *          owner's report ① with every numeric assertion above still passing.
  *          1920 `src/ui` tests GREEN.
  *   Closed the same way as the inline style — a closed allowlist, this time
- *   {@link STYLESHEET_PROPS} — plus a ban on the `class` attribute, which is the
- *   handle a sheet would need to reach a box it cannot name.
+ *   {@link STYLESHEET_PROPS} — plus a ban on the `class` attribute, which is ONE
+ *   of the handles a sheet can reach the box with. (That last clause used to say
+ *   「THE handle」, and see the next section for why that was wrong.)
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ CORRECTED AGAIN 2026-08-04 (#235) — THREE MORE, AND ONE OF THEM IS THE
+ * SAME MISTAKE THE ALLOWLIST WAS INTRODUCED TO FIX
+ * ─────────────────────────────────────────────────────────────────────────────
+ * The property allowlist above is right, and the five bypasses #235 lists
+ * (`translate`, `inset`, B1, B2, B3) were re-run on 2026-08-04 and every one of
+ * them is red. But the allowlist is closed over exactly one thing — THE PROPERTY
+ * NAMES ON THE SURFACE ROOT'S OWN INLINE STYLE — and three doors into the same
+ * box were not:
+ *
+ *   M19  THE HANDLE BLACKLIST. `surfaceTargetedSheetProblems` skipped every rule
+ *        whose selector did not contain the literal `data-hud-surface`. That is a
+ *        one-item blacklist of HANDLES, one layer under the property blacklist it
+ *        had just replaced — the banner's root is also a `div` with
+ *        `data-spectate-notice`, `data-spectate-tier`, `role` and `aria-live`.
+ *        M18's rule with its selector changed to `[data-spectate-notice]` and
+ *        moved into `PhaseTimer` (a HudRoot child that owns no surface, so
+ *        `markupProblems` never sees its markup) restored owner report ①:
+ *        170 files / 2239 `src/ui` tests GREEN.
+ *        → now {@link sheetReachProblems}: can this rule's SUBJECT match a box
+ *          that IS a surface root? Unparsable selectors count as reaching.
+ *
+ *   M20  THE WRAPPER. `findSurface` asserted the ancestor chain by TAG NAME, so
+ *        the declared `["div"]` wash around the 戰績變化 card could declare
+ *        anything. `transform: translateY(120px)` on it makes the wash the
+ *        chart's containing block and offsets it — the chart paints 120 px below
+ *        the rectangle the collision sweep proved clear, with its own
+ *        left/top/width/max-height still matching the registry exactly.
+ *        170 files / 2239 `src/ui` tests GREEN.
+ *        → now {@link ANCESTOR_PROPS} + {@link ancestorProblems}.
+ *
+ *   M21  PLACED, NOT PAINTED. `display` and `opacity` are on
+ *        {@link COSMETIC_PROPS} because neither can MOVE the box — and
+ *        `display: none` / `opacity: 0` delete it from the screen while every
+ *        coordinate assertion in this file still passes. (⚠️ the first attempt at
+ *        this mutation was equivalent: dropping `display: "none"` after the
+ *        spread is overwritten by the literal's own later `display: "flex"`. It
+ *        has to go at the END of the object.)
+ *        170 files / 2239 `src/ui` tests GREEN.
+ *        → now {@link UNPAINTED}: the two names the allowlist admits get a VALUE
+ *          predicate, because this file's claim is that the surfaces are PAINTED
+ *          where the registry says.
  */
 import { afterEach, describe, expect, it } from "vitest";
 import { createElement } from "react";
@@ -207,15 +251,35 @@ const VOID_TAGS = new Set([
   "source", "track", "wbr",
 ]);
 
+/** One start tag's attributes, as a lower-cased name → value map. */
+function attrMap(attrs: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const m of attrs.matchAll(/([-\w:]+)(?:="([^"]*)")?/g)) {
+    out[m[1]!.toLowerCase()] = m[2] ?? "";
+  }
+  return out;
+}
+
+/** One element in the rendered markup, as much of it as a string scan can see. */
+interface MarkupEl {
+  tag: string;
+  attrs: Record<string, string>;
+  /** its inline `style` attribute, parsed */
+  style: Record<string, string>;
+}
+
+function markupEl(tag: string, attrs: string): MarkupEl {
+  const map = attrMap(attrs);
+  return { tag: tag.toLowerCase(), attrs: map, style: declarations(map["style"] ?? "") };
+}
+
 /**
  * The element carrying `data-hud-surface="<id>"` in a SHIPPED component's
- * markup — its inline style, plus the tags that WRAP it.
+ * markup — its inline style, plus the elements that WRAP it.
  *
- * The ancestor list is asserted, not informational. Reading the marked element
- * instead of the render root is only safe while the marked element IS the
- * surface's own outermost box; a component that grew a positioned wrapper
- * around it would be the pre-#219 bug wearing a different hat, and the wrapper
- * shows up here as an extra tag in the chain.
+ * The ancestor list is asserted, not informational, and since 2026-08-04 it
+ * carries each wrapper's own inline style rather than just its tag name — see
+ * {@link ANCESTOR_PROPS} for the measured reason (M20).
  *
  * React escapes `<`, `>` and `"` inside attribute values, so a plain tag scan
  * cannot be fooled by an attribute that contains markup.
@@ -223,8 +287,8 @@ const VOID_TAGS = new Set([
 function findSurface(
   html: string,
   id: string,
-): { style: Record<string, string>; ancestors: string[]; attrs: string } {
-  const stack: string[] = [];
+): { style: Record<string, string>; ancestors: MarkupEl[]; attrs: string } {
+  const stack: MarkupEl[] = [];
   const tag = /<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g;
   for (let m = tag.exec(html); m !== null; m = tag.exec(html)) {
     const closing = m[1] === "/";
@@ -239,9 +303,18 @@ function findSurface(
       if (!s) throw new Error(`the \`${id}\` surface root carries no inline style`);
       return { style: declarations(s[1]!), ancestors: [...stack], attrs };
     }
-    if (!attrs.trimEnd().endsWith("/") && !VOID_TAGS.has(name)) stack.push(name);
+    if (!attrs.trimEnd().endsWith("/") && !VOID_TAGS.has(name)) stack.push(markupEl(name, attrs));
   }
   throw new Error(`nothing in the rendered markup carries data-hud-surface="${id}"`);
+}
+
+/** Every surface root in a rendered tree, whatever phase it happens to be in. */
+function surfaceRootsIn(html: string): MarkupEl[] {
+  const out: MarkupEl[] = [];
+  for (const m of html.matchAll(/<([a-zA-Z][\w-]*)([^>]*data-hud-surface="[^"]*"[^>]*)>/g)) {
+    out.push(markupEl(m[1]!, m[2]!));
+  }
+  return out;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -306,6 +379,104 @@ const COSMETIC_PROPS = new Set([
 ]);
 
 /**
+ * VALUES THAT DELETE THE BOX. {@link COSMETIC_PROPS} admits a property NAME
+ * once it is shown unable to move or resize the outer box — and two of the
+ * names it admits have a value that removes the box from the screen entirely,
+ * which passes every coordinate assertion in this file because the coordinates
+ * are still perfect.
+ *
+ * Measured 2026-08-04 (mutation M21): one line after the `hudSurfaceStyle`
+ * spread in `SpectateNotice`,
+ *     display: "none",
+ * and the banner is gone from the game. 170 files / 2239 `src/ui` tests GREEN.
+ * `opacity: 0` is the same hole with a different name.
+ *
+ * This file's claim is that the surfaces are PAINTED where the registry says,
+ * so the allowlist gets a value predicate for exactly the properties whose
+ * values can falsify the first half of that sentence.
+ */
+const UNPAINTED: Record<string, (v: string) => boolean> = {
+  display: (v) => v.trim() === "none",
+  opacity: (v) => Number(v) === 0,
+  visibility: (v) => v.trim() === "hidden",
+};
+
+/**
+ * WHAT AN ANCESTOR MAY DECLARE — the closed allowlist, one level up.
+ *
+ * ⚠️ ADDED 2026-08-04. {@link findSurface} has asserted the wrapper chain since
+ * #219, but it compared TAG NAMES only, so the declared `["div"]` wash around
+ * the 戰績變化 card could say anything it liked. An absolutely-positioned box
+ * is placed against its containing BLOCK, not against the viewport, and an
+ * ancestor decides both which box that is and where it starts. Measured
+ * (mutation M20): adding
+ *     transform: "translateY(120px)"
+ * to the settlement wash makes the wash the chart's containing block AND
+ * offsets it, so the chart paints 120 px lower than the rect the collision
+ * sweep proved clear — owner report ③'s family — with the chart's own
+ * left/top/width/max-height still matching the registry exactly. 170 files /
+ * 2239 `src/ui` tests GREEN.
+ *
+ * The rule for adding a name here: it must be unable to move a descendant's
+ * containing-block ORIGIN away from the viewport origin, and unable to clip the
+ * descendant. That is why `transform` / `translate` / `scale` / `rotate` /
+ * `perspective` / `contain` / `will-change` / `zoom` are absent (they offset it
+ * or make it offsettable), why `border` and `margin` are absent (the containing
+ * block is the ancestor's PADDING box, so padding is fine and a border is not),
+ * and why `overflow` is absent (a clipped surface is invisible, not misplaced —
+ * a different failure with the same look). `position`/`inset` are handled by
+ * the pairing rule below instead of by name.
+ */
+const ANCESTOR_PROPS = new Set([
+  "display", "align-items", "justify-content", "flex-direction", "gap",
+  "background", "background-color", "color", "opacity", "pointer-events",
+  "padding", "padding-top", "padding-right", "padding-bottom", "padding-left",
+  "box-sizing", "z-index", "transition", "backdrop-filter", "-webkit-backdrop-filter",
+]);
+
+/**
+ * Every wrapper between the render root and the surface root must be
+ * ORIGIN-TRANSPARENT: whatever it does to itself, an absolutely-placed
+ * descendant must still resolve `left`/`top` against the viewport.
+ */
+function ancestorProblems(id: string, ancestors: MarkupEl[]): string[] {
+  const out: string[] = [];
+  for (const el of ancestors) {
+    for (const [prop, value] of Object.entries(el.style)) {
+      const p = prop.toLowerCase();
+      if (p === "position" || p === "inset") continue; // the pairing rule below
+      if (ANCESTOR_PROPS.has(p)) continue;
+      out.push(
+        `${id}: the wrapping <${el.tag}> declares \`${p}: ${value}\`, which is not on ` +
+          "ANCESTOR_PROPS. A wrapper decides which box the surface's left/top are measured " +
+          "from, so if it truly cannot move that origin add it there with that reasoning; " +
+          "if it can, this is #219 coming back one level up.",
+      );
+    }
+    const position = el.style["position"];
+    if (position === undefined) continue;
+    // A positioned wrapper becomes the containing block, so it is only harmless
+    // while its own padding box starts at the viewport origin.
+    if (position !== "absolute" && position !== "static") {
+      out.push(
+        `${id}: the wrapping <${el.tag}> is \`position: ${position}\` — it becomes the ` +
+          "surface's containing block, and only a full-bleed `absolute` one leaves the " +
+          "registry's viewport coordinates meaning what they say",
+      );
+    }
+    const inset = el.style["inset"];
+    if (position === "absolute" && inset !== "0" && inset !== "0px") {
+      out.push(
+        `${id}: the wrapping <${el.tag}> is positioned with \`inset: ${inset ?? "(unset)"}\` ` +
+          "rather than 0 — its padding box no longer starts at the viewport origin, so the " +
+          "surface's registry coordinates are measured from somewhere else",
+      );
+    }
+  }
+  return out;
+}
+
+/**
  * THE SECOND CHANNEL INTO THE SAME BOX. Two of the surface owners ship a
  * `<style>` element of their own (`SpectateNotice`'s pulse keyframes,
  * `MatchEndPanel`'s row-highlight sheet), and a stylesheet beats an inline
@@ -344,6 +515,125 @@ function declarationBlocks(css: string): string[] {
   return [...css.matchAll(/\{([^{}]*)\}/g)].map((m) => m[1]!);
 }
 
+/* ── CAN THIS RULE REACH THE BOX? ────────────────────────────────────────────
+ *
+ * ⚠️ REWRITTEN 2026-08-04. The previous version of the sibling-sheet check
+ * skipped every rule whose selector did not contain the literal string
+ * `data-hud-surface`, and justified it with 「`data-hud-surface` is the only
+ * handle such a rule has, because the roots are separately proven to carry no
+ * `class`」. That sentence is false: the banner's root also carries
+ * `data-spectate-notice`, `data-spectate-tier`, `role` and `aria-live`, and it
+ * is a `div`. So the filter was a ONE-ITEM BLACKLIST OF HANDLES — the very
+ * shape #235 was filed about, one layer down from the property blacklist it
+ * had just replaced. Measured (M19): the same rule the previous session used
+ * for M18, with its selector changed from `[data-hud-surface="spectate-notice"]`
+ * to `[data-spectate-notice]` and moved into `PhaseTimer` (a HudRoot child that
+ * owns no surface, so `markupProblems` never sees its markup) put the banner
+ * back on the 「Round over」 pill — owner report ① — with 170 files / 2239
+ * `src/ui` tests GREEN.
+ *
+ * So the question is asked the other way now: not 「which handle did it use?」
+ * but 「can this rule's subject match a box that IS a surface root?」, evaluated
+ * against the roots really present in the rendered tree. Anything the matcher
+ * cannot parse counts as REACHING, because an unclassified selector is exactly
+ * the case that must not slip through.
+ */
+
+/** `[attr]`, `[attr="v"]`, `[attr*='v']`, … against one element's attributes. */
+function attrSelectorMatches(token: string, attrs: Record<string, string>): boolean {
+  const m = /^\[\s*([-\w:]+)\s*(?:([~^$*|]?=)\s*(?:"([^"]*)"|'([^']*)'|([^\]]*?))\s*)?\]$/.exec(token);
+  if (!m) return true; // unparsable → assume it reaches
+  const name = m[1]!.toLowerCase();
+  if (!(name in attrs)) return false;
+  if (m[2] === undefined) return true;
+  const have = attrs[name]!;
+  const want = m[3] ?? m[4] ?? m[5] ?? "";
+  switch (m[2]) {
+    case "=":
+      return have === want;
+    case "^=":
+      return have.startsWith(want);
+    case "$=":
+      return have.endsWith(want);
+    case "*=":
+      return have.includes(want);
+    case "~=":
+      return have.split(/\s+/).includes(want);
+    default:
+      return true;
+  }
+}
+
+/** Can this compound selector (`div[data-x].y:hover`) match `el`? */
+function compoundReaches(compound: string, el: MarkupEl): boolean {
+  const token = /[#.][-\w]+|\[[^\]]*\]|::?[-\w]+(?:\([^)]*\))?|\*|[-\w]+/g;
+  let consumed = 0;
+  let reaches = true;
+  for (const m of compound.matchAll(token)) {
+    const t = m[0];
+    consumed += t.length;
+    if (t === "*" || t.startsWith(":")) continue; // a pseudo can always be true
+    if (t.startsWith("#")) {
+      if (el.attrs["id"] !== t.slice(1)) reaches = false;
+    } else if (t.startsWith(".")) {
+      if (!(el.attrs["class"] ?? "").split(/\s+/).includes(t.slice(1))) reaches = false;
+    } else if (t.startsWith("[")) {
+      if (!attrSelectorMatches(t, el.attrs)) reaches = false;
+    } else if (t.toLowerCase() !== el.tag) {
+      reaches = false;
+    }
+  }
+  // whatever the tokenizer could not account for is UNCLASSIFIED, and an
+  // unclassified selector must be treated as reaching, never as exempt
+  if (consumed !== compound.trim().length) return true;
+  return reaches;
+}
+
+/** Does any branch of this selector list have a SUBJECT that reaches a root? */
+function selectorReaches(selector: string, roots: MarkupEl[]): boolean {
+  // belt: a rule that names the marker is #219's own door, caught even in a
+  // phase where the surface it names is not currently mounted
+  if (selector.includes("data-hud-surface")) return true;
+  return selector.split(",").some((part) => {
+    const bits = part.trim().split(/[\s>+~]+/).filter(Boolean);
+    const subject = bits.length > 0 ? bits[bits.length - 1]! : part.trim();
+    return roots.some((r) => compoundReaches(subject, r));
+  });
+}
+
+/**
+ * `@keyframes` blocks lifted out of a sheet, so the rest can be read as plain
+ * rules. A keyframe step is a declaration block that no selector matches, so it
+ * can only reach a box through an `animation` that names it — which is why the
+ * caller checks these BY REFERENCE rather than by selector.
+ */
+function splitKeyframes(css: string): { body: string; keyframes: Map<string, string[]> } {
+  const keyframes = new Map<string, string[]>();
+  const re = /@(?:-\w+-)?keyframes\s+([-\w]+)\s*\{/g;
+  let body = "";
+  let cut = 0;
+  for (let m = re.exec(css); m !== null; m = re.exec(css)) {
+    body += css.slice(cut, m.index);
+    let depth = 1;
+    let j = m.index + m[0].length;
+    for (; j < css.length && depth > 0; j++) {
+      if (css[j] === "{") depth++;
+      else if (css[j] === "}") depth--;
+    }
+    const inner = css.slice(m.index + m[0].length, Math.max(j - 1, m.index + m[0].length));
+    keyframes.set(m[1]!, [...(keyframes.get(m[1]!) ?? []), ...declarationBlocks(inner)]);
+    cut = j;
+    re.lastIndex = j;
+  }
+  return { body: body + css.slice(cut), keyframes };
+}
+
+/** The bare identifiers in an `animation` / `animation-name` value. */
+function animationRefs(decls: Record<string, string>): string[] {
+  const raw = `${decls["animation"] ?? ""} ${decls["animation-name"] ?? ""}`;
+  return [...raw.matchAll(/[-\w]+/g)].map((m) => m[0]);
+}
+
 /**
  * THE SIBLING'S SHEET — the same door as {@link STYLESHEET_PROPS}, one component
  * over. {@link markupProblems} only ever sees the markup a surface's OWN owner
@@ -357,33 +647,62 @@ function declarationBlocks(css: string): string[] {
  * tests green, because the banner's own render carries no such sheet and the
  * pill's render carries no `spectate-notice` root.
  *
- * The check is deliberately SELECTOR-SCOPED rather than a blanket ban on
- * properties in HudRoot's sheets: a sibling's `@keyframes` legitimately animates
- * `transform`, and failing that would be a false red on work that never touches
- * a surface. What is NOT legitimate is any rule anywhere in the HUD tree that
- * NAMES a surface and then declares something off {@link STYLESHEET_PROPS} —
- * `data-hud-surface` is the only handle such a rule has, because the roots are
- * separately proven to carry no `class`.
+ * Every rule in every `<style>` in the tree whose subject can REACH a surface
+ * root (see {@link selectorReaches}) must declare only {@link STYLESHEET_PROPS}
+ * — the sheet's declarations outrank the registry's inline placement whenever
+ * they want to. Rules that provably miss every root are exempt, which is what
+ * keeps a sibling's own `.ggd-row-pulse` animation from being a false red.
  *
- * Returns the pairs `[selector, body]`; nested at-rules resolve to the inner
- * block, which is the one that carries the selector.
+ * `animation` stays allowed and no longer smuggles anything in: a keyframe step
+ * is a declaration block no selector matches, so it is checked BY REFERENCE —
+ * if a reaching rule (or a root's own inline style) names it, its steps face
+ * the same allowlist.
  */
-function surfaceTargetedSheetProblems(html: string): string[] {
+function sheetReachProblems(html: string): string[] {
   const out: string[] = [];
+  const roots = surfaceRootsIn(html);
+  const keyframes = new Map<string, string[]>();
+  const named = new Set<string>();
+  const reaching: Array<{ selector: string; decls: Record<string, string> }> = [];
+
+  for (const r of roots) for (const n of animationRefs(r.style)) named.add(n);
+
   for (const sheet of html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)) {
-    for (const rule of sheet[1]!.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+    const split = splitKeyframes(sheet[1]!);
+    for (const [name, blocks] of split.keyframes) {
+      keyframes.set(name, [...(keyframes.get(name) ?? []), ...blocks]);
+    }
+    for (const rule of split.body.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
       const selector = rule[1]!.trim();
-      if (!selector.includes("data-hud-surface")) continue;
-      for (const decl of rule[2]!.split(";")) {
-        const i = decl.indexOf(":");
-        if (i < 0) continue;
-        const prop = decl.slice(0, i).trim().toLowerCase();
-        if (prop === "" || STYLESHEET_PROPS.has(prop)) continue;
+      if (!selectorReaches(selector, roots)) continue;
+      reaching.push({ selector, decls: declarations(rule[2]!) });
+    }
+  }
+
+  for (const rule of reaching) {
+    for (const n of animationRefs(rule.decls)) named.add(n);
+    for (const prop of Object.keys(rule.decls)) {
+      const p = prop.toLowerCase();
+      if (p === "" || STYLESHEET_PROPS.has(p)) continue;
+      out.push(
+        `a <style> element somewhere in HudRoot's tree has the rule \`${rule.selector}\`, ` +
+          `whose subject can match a surface root, and it declares \`${p}\` — off ` +
+          "STYLESHEET_PROPS. A sheet outranks the registry's inline placement and it does " +
+          "not have to live in the surface's own component, so this is #219 coming back " +
+          "through the sibling's door.",
+      );
+    }
+  }
+
+  for (const name of named) {
+    for (const block of keyframes.get(name) ?? []) {
+      for (const prop of Object.keys(declarations(block))) {
+        const p = prop.toLowerCase();
+        if (p === "" || STYLESHEET_PROPS.has(p)) continue;
         out.push(
-          `a <style> element somewhere in HudRoot's tree targets \`${selector}\` and ` +
-            `declares \`${prop}\` — off STYLESHEET_PROPS. A sheet outranks the registry's ` +
-            "inline placement and it does not have to live in the surface's own component, " +
-            "so this is #219 coming back through the sibling's door.",
+          `\`@keyframes ${name}\` is referenced by something that reaches a surface root ` +
+            `and one of its steps declares \`${p}\` — off STYLESHEET_PROPS. An animated ` +
+            "step is a declaration block like any other, so this moves the box.",
         );
       }
     }
@@ -438,6 +757,15 @@ function styleContractProblems(id: string, style: Record<string, string>): strin
     }
   }
   for (const key of Object.keys(style)) {
+    const unpainted = UNPAINTED[key];
+    if (unpainted !== undefined && unpainted(style[key]!)) {
+      out.push(
+        `${id}: the root declares \`${key}: ${style[key]}\` — the box is placed exactly ` +
+          "where the registry says and then not painted at all. Every coordinate below " +
+          "still matches, which is the whole point of checking the value here.",
+      );
+      continue;
+    }
     if ((PLACEMENT_KEYS as readonly string[]).includes(key)) continue;
     if (COSMETIC_PROPS.has(key)) continue;
     out.push(
@@ -809,7 +1137,7 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
         continue;
       }
       const html = spec.render();
-      let found: { style: Record<string, string>; ancestors: string[]; attrs: string };
+      let found: { style: Record<string, string>; ancestors: MarkupEl[]; attrs: string };
       try {
         found = findSurface(html, id);
       } catch (err) {
@@ -842,10 +1170,16 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
       }
       problems.push(...styleContractProblems(id, found.style));
       problems.push(...markupProblems(id, html, found.attrs));
-      if (JSON.stringify(found.ancestors) !== JSON.stringify([...spec.ancestors])) {
+      problems.push(...sheetReachProblems(html));
+      // …and the WRAPPERS: their tags are declared, and what they declare about
+      // themselves has to leave the registry's viewport coordinates meaning
+      // what they say. See ANCESTOR_PROPS (mutation M20).
+      problems.push(...ancestorProblems(id, found.ancestors));
+      const chain = found.ancestors.map((a) => a.tag);
+      if (JSON.stringify(chain) !== JSON.stringify([...spec.ancestors])) {
         problems.push(
           `${id} (${spec.mount}): the surface root is now wrapped in ` +
-            `${JSON.stringify(found.ancestors)}, declared ${JSON.stringify([...spec.ancestors])} — ` +
+            `${JSON.stringify(chain)}, declared ${JSON.stringify([...spec.ancestors])} — ` +
             "a new wrapper can pin the box while the marked element still reads clean",
         );
       }
@@ -935,10 +1269,10 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
       frameBus.spectateZone = null;
       frameBus.spectateOffer = 1;
       const html = renderToStaticMarkup(createElement(HudRoot));
-      // …and no sheet ANYWHERE in the tree names a surface (the sibling's door).
-      // Runs for every row, including the `mount`-proof ones, so all three phases
-      // HudRoot is driven through here are swept.
-      problems.push(...surfaceTargetedSheetProblems(html));
+      // …and no sheet ANYWHERE in the tree can REACH a surface root (the
+      // sibling's door). Runs for every row, including the `mount`-proof ones,
+      // so all three phases HudRoot is driven through here are swept.
+      problems.push(...sheetReachProblems(html));
 
       if (c.proof.kind === "mount") {
         if (!html.includes(c.proof.marker)) {
@@ -956,7 +1290,7 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
         problems.push(`${id}: the resolver returned null in HudRoot's own scene`);
         continue;
       }
-      let found: { style: Record<string, string>; ancestors: string[]; attrs: string };
+      let found: { style: Record<string, string>; ancestors: MarkupEl[]; attrs: string };
       try {
         found = findSurface(html, id);
       } catch {
@@ -974,7 +1308,9 @@ describe("the SHIPPED components paint where the registry says (client-27b)", ()
       const want = `${rect.x}px ${rect.y}px ${rect.w}px ${rect.h}px`;
       if (seen !== want) problems.push(`${id}: HudRoot painted ${seen}, registry says ${want}`);
       if (found.ancestors.length > 0) {
-        problems.push(`${id}: wrapped in ${JSON.stringify(found.ancestors)} inside HudRoot`);
+        problems.push(
+          `${id}: wrapped in ${JSON.stringify(found.ancestors.map((a) => a.tag))} inside HudRoot`,
+        );
       }
       problems.push(...styleContractProblems(id, found.style));
     }

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "3f4178dc66a9",
+  "hash": "f64c123cbaf9",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,7 +11,7 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "5f7ac9391e58",
+      "hash": "55adeeb0231f",
       "size": 6351
     },
     {
@@ -101,8 +101,8 @@
     {
       "id": "lobby-layout",
       "path": "config/lobby-layout.json",
-      "hash": "147b47d7e630",
-      "size": 1359
+      "hash": "f112e56c1d4b",
+      "size": 1392
     },
     {
       "id": "model-lod",

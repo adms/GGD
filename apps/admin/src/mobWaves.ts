@@ -237,7 +237,7 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     settlementTitle: "殭屍王 分紅結算",
   },
   special: {
-    chancePercent: 2.5,
+    chancePercent: 1.25,
     hpMult: 1,
     damageMult: 1.5,
     // GH#206 owner 2026-07-29 「移動速度 −50%」 — was 1.25 (FASTER than a zombie).
