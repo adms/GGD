@@ -71,11 +71,17 @@ import {
   trimTelegraphPools,
   disposeTelegraphShared,
 } from "./Telegraph";
-import { vfxCleanupPolicy, ringCapForRoundBoundary } from "./vfxCleanupPolicy";
+import {
+  vfxCleanupPolicy,
+  ringCapForRoundBoundary,
+  oneShotEmitterCap,
+  emitterSweepMs,
+  purgeImpactPoolOnRoundEnd,
+} from "./vfxCleanupPolicy";
 import { TelegraphLayer } from "./TelegraphLayer";
 import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphShape";
 import type { TelegraphRelation } from "./telegraphChannel";
-import { HitSpark } from "./HitSpark";
+import { HitSpark, impactComposerFor } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
 import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
@@ -101,7 +107,7 @@ import { CastPillarFx } from "./CastPillarFx";
 import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
-import { DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } from "./oneShotLife";
+import { clampOneShotLife, DEFAULT_ONE_SHOT_MAX_LIFE_SEC, oneShotMaxLifeSec } from "./oneShotLife";
 
 /** Reusable scratch for the #233 headroom probe — no per-frame allocation. */
 const HEADROOM_F = new Vector3();
@@ -399,20 +405,12 @@ export function tintOfDoc(doc: VfxDoc): Rgb {
  * Clamp a one-shot's particle lifetime to the impact band. Returns the SAME
  * object when it already fits (identity = "nothing to retune").
  *
- * `maxLifeSec` 預設讀**現在生效的後台值**。呼叫端幾乎都不該傳它 —— 參數存在
- * 是為了讓 `VfxSystem` 在同一幀內把「這一份 shaped doc 是照哪個天花板算的」
- * 綁進池 key,而不是讓每個呼叫端各自去猜一個數字。
+ * GH#270: the implementation moved to `./oneShotLife` so that
+ * `vfxPresets.makeBurstSystem` (the whole `vfx-preset-*` family) can apply the
+ * SAME ceiling without a circular import back through this module. Re-exported
+ * here because every existing caller and test imports it from `VfxSystem`.
  */
-export function clampOneShotLife(
-  life: { min: number; max: number },
-  maxLifeSec = oneShotMaxLifeSec(),
-): {
-  min: number;
-  max: number;
-} {
-  if (life.max <= maxLifeSec) return life;
-  return { min: Math.min(life.min, maxLifeSec * 0.5), max: maxLifeSec };
-}
+export { clampOneShotLife };
 
 /**
  * 被夾過的 doc 在粒子池裡的 id。
@@ -546,6 +544,21 @@ export class VfxSystem {
   private readonly w3xCast: W3xCastFx;
   /** last `update()` timestamp — the rig ticks on dt, not on absolute time */
   private lastUpdateMs: number | null = null;
+  /** GH#270: wall clock of the last one-shot emitter sweep (`-Infinity` = never). */
+  private lastSweepMs = -Infinity;
+  /**
+   * GH#270: how many pooled one-shot emitters the hard cap has thrown away in
+   * this match. **This number exists so the cap is not silent** (CLAUDE.md:
+   * fail-open is fine, silent is the defect). `vfxDebugBus`'s panel reads it,
+   * so an owner who set `maxOneShotEmitters` too low sees the eviction counter
+   * climbing instead of wondering why impacts flicker.
+   */
+  private oneShotEvictions = 0;
+
+  /** Pooled one-shot emitters evicted by the hard cap so far (diagnostic). */
+  get oneShotEvictionCount(): number {
+    return this.oneShotEvictions;
+  }
 
   constructor(
     private readonly scene: Scene,
@@ -1636,6 +1649,17 @@ export class VfxSystem {
     this.telegraphLayer.update(nowMs);
     for (const s of this.sparks) s.update(nowMs);
     this.sparks = this.sparks.filter((s) => !s.done);
+    // GH#270 ①: pump the SHARED ImpactComposer **unconditionally**.
+    //
+    // It used to be pumped only from `HitSpark.update()`, i.e. only while at
+    // least one per-hit handle was still alive. Its reaper (`BurstPool.update`,
+    // 8 s idle) therefore stopped running the moment the fight went quiet —
+    // exactly when the debris should have been collected. `HitSpark.update()`
+    // still pumps at most once per frame (`kit.lastPumpMs`), so this is not a
+    // double tick; it just guarantees there IS one.
+    impactComposerFor(this.scene).update(nowMs);
+    // GH#270 ②: the hard cap. See `sweepOneShotEmitters`.
+    this.sweepOneShotEmitters(nowMs);
     // decal fades + idle-pool reaping for the task #39 layers
     this.blood.update(nowMs);
     this.feedback.update(nowMs);
@@ -1647,6 +1671,40 @@ export class VfxSystem {
     // #205 多層特效模板:到期的延遲層。放在最後,所以一層在它被排定的那一幀
     // 之後才會播 —— delay 0 的層走的是 playLayeredCast 的立即分支,不經過這裡。
     this.drainPendingLayers(nowMs);
+  }
+
+  /**
+   * GH#270 —— 一次性發射器的**硬上限**（`config.vfx-cleanup@1`）。
+   *
+   * owner 2026-08-04 在線上量到：Round 2 = 144 個發射器 / 2,819 顆活粒子，
+   * Round 4 = 266 / 5,975。線性成長。
+   *
+   * 上面那兩個池子（`this.pool` per doc id、rig 的 per doc id）在回合邊界會被
+   * 整個還回去，所以它們不是兇手。真正只增不減的是 `HitSpark` 的**共用**
+   * `ImpactComposer`：它掛在 per-Scene 的 WeakMap 上、**不屬於這個 class**，
+   * 而它的 key 把 intensity **和 tint** 一起烘進去（`ex/1,0.2,0.15/sparks`）。
+   * 一場比賽會一直遇到新的 tint（英雄升級解鎖 R/EX、每支技能自己的
+   * `tintOfDoc`、殭屍加入），所以「每個 key 上限 4 個」根本不構成上界 ——
+   * key 的數量本身沒有上界。
+   *
+   * 這一格把它變成有界的：**超過上限就回收最久沒用的**，而且回收數字被記在
+   * `oneShotEvictions` 上讓診斷面板讀得到。這不是修法本身（修法是上面那個
+   * 無條件打點 + 下面的回合邊界清空），它是 fail-safe：就算之後又有人新增
+   * 一個沒人管的池子，成長也只會撞到這條線而不是一路長到手機發燙。
+   *
+   * 掃描頻率也是後台可調的（`emitterSweepSec`），因為「多久掃一次」是體感與
+   * 開銷的取捨，不是事實。`enabled=false` ⇒ 上限 `Infinity` + 間隔 `Infinity`，
+   * 也就是一鍵回到這一段存在之前的行為（止血閥）。
+   */
+  private sweepOneShotEmitters(nowMs: number): void {
+    const policy = vfxCleanupPolicy();
+    const everyMs = emitterSweepMs(policy);
+    if (!Number.isFinite(everyMs)) return;
+    if (nowMs - this.lastSweepMs < everyMs) return;
+    this.lastSweepMs = nowMs;
+    const cap = oneShotEmitterCap(policy);
+    if (!Number.isFinite(cap)) return;
+    this.oneShotEvictions += impactComposerFor(this.scene).trimIdleTo(cap, nowMs);
   }
 
   /**
@@ -1676,8 +1734,12 @@ export class VfxSystem {
    *   2. 把「只會長不會縮的池子」整個還給 Babylon（`pool` 與 rig）。
    *      下一次 `play()` 會自然重建 —— 池子本來就是 lazy 的。
    *
-   * 刻意**不**碰的：blood / feedback 這些 BurstPool 有 per-key 上限，
-   * 是有界的；把它們也丟掉只是讓下一回合第一次揮刀要重新配置。
+   * ⚠️ **這一段以前寫著「blood / feedback / 打擊感這些 BurstPool 有 per-key
+   * 上限，是有界的」—— 那句話是假的**（GH#270，owner 在線上量到發射器數
+   * 144 → 266 線性成長）。per-key 上限只有在 **key 的數量有上界**時才構成上界，
+   * 而打擊感的 key 把 tint 烘進去（`ex/1,0.2,0.15/sparks`），一場比賽會一直
+   * 遇到新的 tint。血/打擊回饋的 key 是有限的列舉，那兩個確實有界；
+   * **打擊感不是**，所以現在它也在回合邊界被還回去（後台可切）。
    */
   resetForRound(): void {
     // 1) 一次性效果：就地結束（dispose 會把 pooled mesh 還回 free-list）
@@ -1705,7 +1767,16 @@ export class VfxSystem {
     //     的圈 release 回這個 free-list —— 也就是說 #259 之後，網格照樣一個都
     //     沒有離開 scene。實測 60 個不同半徑打完，連 dispose() 之後 scene 上
     //     都還留著 72 mesh / 73 material。上限是後台可調的（第一守則）。
-    trimTelegraphPools(this.scene, ringCapForRoundBoundary(vfxCleanupPolicy()));
+    const policy = vfxCleanupPolicy();
+    trimTelegraphPools(this.scene, ringCapForRoundBoundary(policy));
+    // 2c) GH#270 —— 打擊感的共用池（`vfx-preset-*`）。它掛在 per-Scene 的
+    //     WeakMap 上，所以上面那一輪 `this.pool` / rig 的回收一個都沒碰到它，
+    //     而 `for (const s of this.sparks) s.dispose()` 只是把**每一拳的把手**
+    //     標成 done —— `HitSpark.dispose()` 的註解自己就寫著「pooled systems
+    //     live on with the scene」。owner 量到的那 144 → 266 個發射器裡，
+    //     粒子數最高的九列全部是這個池子。
+    if (purgeImpactPoolOnRoundEnd(policy)) impactComposerFor(this.scene).purge();
+    this.lastSweepMs = -Infinity; // 下一幀就掃一次，不必等滿一個間隔
 
     // 3) 上一回合的 per-entity 記憶。entity id 不會跨回合重用，留著只是
     //    永遠不會被讀到的垃圾（殭屍每回合最多 30 隻，都是新 id）。

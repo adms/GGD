@@ -61,3 +61,47 @@ export function ringCapForRoundBoundary(policy: ConfigVfxCleanupDoc): number {
   if (!policy.enabled) return Infinity;
   return policy.purgeSharedPoolsOnRoundEnd ? 0 : policy.maxPooledRings;
 }
+
+// ---------------------------------------------------------------------------
+// GH#270 —— 一次性粒子發射器的預算
+// ---------------------------------------------------------------------------
+
+/**
+ * 三格新欄位都是 `.optional()`（線上已經有耐久覆蓋層，一份存於新欄位之前的
+ * override 少了必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 退回骨架，
+ * 見 schema 的註解）。所以讀的時候要**逐格**降級，不能整份二選一：一份只存過
+ * `deathFx*` 的舊 override 仍然要拿得到這三格的出貨值。
+ *
+ * ⚠️ 每一格都自己夾回 schema 的上下界。`Configs.tryGet` 走的是**寬鬆**路徑
+ * （`readVfxCleanupPolicy` 只檢查 #262 那幾格），所以一個界外的數字有可能走到
+ * 這裡；夾在這裡而不是在消費端，是因為消費端有三個。
+ */
+const ONE_SHOT_EMITTER_BOUNDS = { min: 16, max: 1024 } as const;
+const SWEEP_SEC_BOUNDS = { min: 0.5, max: 60 } as const;
+
+/** 同時允許閒置的一次性發射器上限（`enabled=false` ⇒ 不設限，止血閥）。 */
+export function oneShotEmitterCap(policy: ConfigVfxCleanupDoc): number {
+  if (!policy.enabled) return Infinity;
+  const v = policy.maxOneShotEmitters;
+  if (typeof v !== "number" || !Number.isFinite(v)) {
+    return DEFAULT_VFX_CLEANUP.maxOneShotEmitters ?? 96;
+  }
+  return Math.min(ONE_SHOT_EMITTER_BOUNDS.max, Math.max(ONE_SHOT_EMITTER_BOUNDS.min, Math.floor(v)));
+}
+
+/** 掃描間隔（毫秒）。`enabled=false` ⇒ `Infinity`（永遠不掃）。 */
+export function emitterSweepMs(policy: ConfigVfxCleanupDoc): number {
+  if (!policy.enabled) return Infinity;
+  const v = policy.emitterSweepSec;
+  const sec =
+    typeof v === "number" && Number.isFinite(v)
+      ? Math.min(SWEEP_SEC_BOUNDS.max, Math.max(SWEEP_SEC_BOUNDS.min, v))
+      : (DEFAULT_VFX_CLEANUP.emitterSweepSec ?? 2);
+  return sec * 1000;
+}
+
+/** 回合結束要不要把打擊感共用池整個丟掉。`enabled=false` ⇒ false。 */
+export function purgeImpactPoolOnRoundEnd(policy: ConfigVfxCleanupDoc): boolean {
+  if (!policy.enabled) return false;
+  return policy.purgeImpactPoolOnRoundEnd ?? DEFAULT_VFX_CLEANUP.purgeImpactPoolOnRoundEnd ?? true;
+}

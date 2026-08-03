@@ -38,6 +38,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { clampOneShotLife } from "./oneShotLife";
 import type { VfxBlendMode } from "@ggd/shared/content";
 import { blendModeFor, type ColorStop, type SizeStop } from "./particleFactory";
 
@@ -244,8 +245,20 @@ export function makeBurstSystem(
     ps.createPointEmitter(new Vector3(-0.6, 0.3, -0.6), new Vector3(0.6, 1, 0.6)); // up-biased splash
   }
 
-  ps.minLifeTime = spec.lifetimeSec.min;
-  ps.maxLifeTime = spec.lifetimeSec.max;
+  // GH#270 (甲) —— the one-shot lifetime CEILING also applies here.
+  //
+  // `config.vfx-families@1.oneShotMaxLifeSec` used to be enforced at exactly
+  // ONE site: `VfxSystem.frontLoadDoc`, i.e. only on the `vfx-<docId>` family.
+  // Everything built through THIS factory — the whole `vfx-preset-*` family
+  // (impact flash / sparks / smoke, blood, feedback, status) — was outside it.
+  // At shipped values that is a NO-OP (every authored preset already runs
+  // 0.045–0.6 s and the ceiling is 0.6), so this changes not one pixel today;
+  // what it changes is that a future preset cannot quietly out-live the knob
+  // the owner uses to control exactly this. `clampOneShotLife` returns the SAME
+  // object when nothing is over, so the byte-identical claim is structural.
+  const life = clampOneShotLife(spec.lifetimeSec);
+  ps.minLifeTime = life.min;
+  ps.maxLifeTime = life.max;
   ps.minEmitPower = spec.speed.min;
   ps.maxEmitPower = spec.speed.max;
   ps.updateSpeed = 0.016;
@@ -399,6 +412,58 @@ export class BurstPool {
     if (!ps.isStarted()) ps.start();
     fireBurst(ps, spec, scale);
     return ps;
+  }
+
+  /** Total pooled instances across every key (the GH#270 budget reads this). */
+  get size(): number {
+    let n = 0;
+    for (const list of this.pool.values()) n += list.length;
+    return n;
+  }
+
+  /**
+   * GH#270 —— HARD CAP. Dispose least-recently-used instances until at most
+   * `cap` remain, and REPORT how many went (the caller surfaces it; a silent
+   * cap is the defect, not the cap — CLAUDE.md).
+   *
+   * Only instances whose particles have all expired are eligible: evicting a
+   * system mid-burst would blink an impact off the screen, and the whole point
+   * of the cap is the DEBRIS, not the hit the player is looking at. `nowMs`
+   * decides that the same way `fireAt` does (birth frame + longest life), so
+   * a busy fight can legitimately sit above the cap for a few frames.
+   */
+  trimIdleTo(cap: number, nowMs: number): number {
+    if (!Number.isFinite(cap) || this.size <= cap) return 0;
+    const idle: { key: string; i: number; lastUsedMs: number }[] = [];
+    for (const [key, list] of this.pool) {
+      for (let i = 0; i < list.length; i++) {
+        const e = list[i]!;
+        if (nowMs - e.lastUsedMs >= e.spec.lifetimeSec.max * 1000) {
+          idle.push({ key, i, lastUsedMs: e.lastUsedMs });
+        }
+      }
+    }
+    idle.sort((a, b) => a.lastUsedMs - b.lastUsedMs); // oldest first
+    let evicted = 0;
+    let live = this.size;
+    for (const slot of idle) {
+      if (live <= cap) break;
+      const list = this.pool.get(slot.key);
+      const entry = list?.[slot.i];
+      if (!list || !entry) continue;
+      entry.ps.dispose();
+      list[slot.i] = null as unknown as PoolEntry; // hole; compacted below
+      evicted++;
+      live--;
+    }
+    if (evicted > 0) {
+      for (const [key, list] of [...this.pool]) {
+        const kept = list.filter((e) => e !== null && e !== undefined);
+        if (kept.length === 0) this.pool.delete(key);
+        else this.pool.set(key, kept);
+      }
+    }
+    return evicted;
   }
 
   /** Reap systems idle past idleReapMs (call once per frame). */
@@ -656,6 +721,34 @@ export class ImpactComposer {
   update(nowMs: number): void {
     for (const r of this.rings) r.update(nowMs);
     this.pool.update(nowMs);
+  }
+
+  /** Pooled ParticleSystems this composer is holding (GH#270 budget). */
+  get pooledCount(): number {
+    return this.pool.size;
+  }
+
+  /** GH#270 hard cap — returns how many instances were evicted. */
+  trimIdleTo(cap: number, nowMs: number): number {
+    return this.pool.trimIdleTo(cap, nowMs);
+  }
+
+  /**
+   * GH#270 —— give EVERY pooled system back (round boundary).
+   *
+   * ⚠️ The composer survives `dispose()` of any one `HitSpark` by design (the
+   * handle is per-hit, the systems are per-scene), and `VfxSystem.resetForRound`
+   * used to skip it entirely on the grounds that a per-key cap makes it
+   * "bounded". It does not: the key bakes intensity + TINT, and a match keeps
+   * meeting new tints. This is the call that makes the claim true.
+   *
+   * The shockwave RINGS are deliberately left alone: `this.rings` is a
+   * fixed-size array with its own `MAX_POOLED_RINGS` steal-oldest discipline,
+   * so it is bounded already and throwing it away would only cost a mesh
+   * rebuild on the next heavy hit.
+   */
+  purge(): void {
+    this.pool.dispose();
   }
 
   dispose(): void {

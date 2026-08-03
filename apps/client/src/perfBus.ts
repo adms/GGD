@@ -20,14 +20,28 @@ export type NetMode = "live" | "replay";
 export interface PerfBus {
   /** smoothed instantaneous fps (1000 / frame delta). */
   fps: number;
-  /** avg fps over the rolling frame-cost window. */
+  /**
+   * avg fps over the rolling window of DELIVERED frames — the number the pill
+   * prints. GH#271: this used to be `1000 / avg(workMs)`, i.e. the machine's
+   * CAPABILITY, so a 60-capped session with 4.4 ms frames printed 「228 fps」.
+   * Capability now lives in `capabilityFps` under its own name.
+   */
   avgFps: number;
-  /** min fps over the window (worst frame). */
+  /** min fps over the window (the longest gap between two delivered frames). */
   minFps: number;
   /** avg wall frame delta (ms, post-cap). */
   frameMs: number;
   /** avg frame WORK cost (ms, pre-cap) — the adaptive signal. */
   workMs: number;
+  /**
+   * 「這台機器畫得動幾張」= 1000 / avg(workMs). NOT the frame rate — it ignores
+   * the fps cap entirely, which is exactly why it must never be labelled "fps".
+   * Kept because it is the real headroom read-out (and what the adaptive ladder
+   * decides on); shown next to `fpsCap` so the two can be compared on screen.
+   */
+  capabilityFps: number;
+  /** fps cap currently in force (0 = uncapped) — `renderParams.fpsCap`. */
+  fpsCap: number;
 
   /** round-trip time estimate (ms) from input-ack deltas. */
   pingMs: number;
@@ -71,6 +85,8 @@ export const perfBus: PerfBus = {
   minFps: 0,
   frameMs: 0,
   workMs: 0,
+  capabilityFps: 0,
+  fpsCap: 0,
   pingMs: 0,
   jitterMs: 0,
   snapshotGapMs: 0,

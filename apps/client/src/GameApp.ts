@@ -116,6 +116,7 @@ import {
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
 import { driveFrame, type FrameWork } from "./render/frameCap";
+import { FrameRateMeter } from "./render/fpsMeter";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 import { VfxSystem } from "./vfx/VfxSystem";
 import { AmbientVfx } from "./vfx/AmbientVfx";
@@ -389,7 +390,12 @@ export class GameApp {
   private renderSuppressed = false;
   private lastFrameMs = 0;
   private predAccumMs = 0;
-  private fpsEma = 0;
+  /**
+   * 送出去的幀率計 (GH#271). 餵它的是**兩次真的繪製之間的間隔**;它同時是
+   * `perfBus` 那五個 fps 欄位的唯一作者。以前這裡是一個裸的 `fpsEma` 數字,
+   * 而它算對了卻沒有人讀 —— pill 讀的是被 adaptive 的 workMs 視窗覆寫的 avgFps。
+   */
+  private readonly frameRate = new FrameRateMeter();
   private renderParams: RenderParams = qualityController.getParams();
   private offParams: (() => void) | null = null;
   /**
@@ -1698,8 +1704,11 @@ export class GameApp {
 
   /** Feed the adaptive manager the frame COST and publish perf stats. */
   private samplePerf(nowMs: number, dtMs: number, workMs: number): void {
-    const instFps = 1000 / dtMs;
-    this.fpsEma = this.fpsEma === 0 ? instFps : this.fpsEma + (instFps - this.fpsEma) * 0.1;
+    // GH#271 —— 這一幀真的畫出去了,所以它的**間隔**進幀率計。
+    // ⚠️ `dtMs`(間隔)與 `workMs`(成本)是兩件事,而這一行以前不存在:fps 欄位
+    // 全部由下面那個 adaptive 視窗(裝的是 workMs)供應,於是 60 fps 上限之下
+    // 一顆 4.4 ms 的幀在 pill 上寫成「228 fps」。見 render/fpsMeter.ts 檔頭。
+    this.frameRate.sample(dtMs);
 
     // adaptive: workMs is the pre-cap cost → capability signal. May recompute
     // renderParams synchronously (via the qualityController subscription).
@@ -1709,9 +1718,9 @@ export class GameApp {
     const cs = this.connStats.sample(nowMs);
     const rstats = this.renderer.stats();
 
-    perfBus.fps = this.fpsEma;
-    perfBus.avgFps = stats.avgFps || this.fpsEma;
-    perfBus.minFps = stats.minFps || this.fpsEma;
+    // fps / avgFps / minFps / capabilityFps / fpsCap 一起寫,住在 FrameRateMeter
+    // ——那是唯一可以被守衛打到的地方(samplePerf 本身在測試裡建構不出來)。
+    this.frameRate.publish(perfBus, stats, p.fpsCap);
     perfBus.frameMs = dtMs;
     perfBus.workMs = stats.avgMs || workMs;
     perfBus.pingMs = cs.pingMs;

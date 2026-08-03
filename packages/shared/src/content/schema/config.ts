@@ -3618,6 +3618,57 @@ export const zConfigVfxCleanupDoc = z
      * false = 圈圈收斂後就一直低調，畫面最乾淨但要靠 HUD 才知道有人在救。
      */
     deathFxRelightOnChannel: z.boolean().optional(),
+
+    /* ── GH#270 一次性發射器的「有界」保證（owner 2026-08-04 實測）──────────
+     *
+     * owner 用 v0.9.33 的診斷面板在真的線上對局量到 **線性洩漏**：
+     * Round 2 = 144 個發射器 / 2,819 顆活粒子 → Round 4 = 266 / 5,975。
+     * 每回合大約 +60 個發射器。
+     *
+     * 上面 #262 那三格管的是**預告圈網格**；一次性**粒子發射器**的池子當時
+     * 完全沒有人管：
+     *   · `HitSpark` 的共用 `ImpactComposer`（`vfx-preset-*`）掛在
+     *     per-Scene WeakMap 上，**不屬於 VfxSystem**，`resetForRound()` 明文
+     *     寫著不碰它；它唯一的回收器 `BurstPool.update()` 又只在**還有活的
+     *     HitSpark** 時才被打點 —— 戰鬥一安靜就再也不回收。
+     *   · `AmbientVfx.psPool`（`ambient-*`）只增不減、沒有上限、沒有回合重置。
+     *
+     * 兩者都是**只長不縮**。所以這三格把它變成有界的：
+     *   · `maxOneShotEmitters`      同時允許幾個閒置的一次性發射器（硬上限）
+     *   · `emitterSweepSec`         多久掃一次（把閒置的還回去）
+     *   · `purgeImpactPoolOnRoundEnd` 回合結束要不要把打擊感池整個丟掉
+     *
+     * ⚠️ 全部 `.optional()`，理由和上面那三格一樣：線上已經有耐久覆蓋層，
+     * 少一個必填欄會讓整份 config 被 Zod 退回 → 內容載入失敗 → 退回骨架。
+     */
+
+    /**
+     * 同時允許**閒置**的一次性粒子發射器上限（整個 scene）。
+     *
+     * 「閒置」= 這一格的池子裡沒有粒子在飛、也沒有人正在用。超出的部分在下一次
+     * 掃描時被丟掉（最久沒用的先丟），而且**會被說出來**：`VfxSystem` 把每一次
+     * 驅逐的數字累加在 `oneShotEvictions` 上，診斷面板讀得到（CLAUDE.md：
+     * 靜默夾掉才是缺陷）。
+     *
+     * 上下界都有。下界 16 = 一組打擊感（3 層 × 4 個實例）加上幾個常見 doc，
+     * 再低就等於每一拳都要重新配置。上界 1024 遠高於 owner 量到的 266，
+     * 打錯一個 0 不會靜默通過（#277 的形狀）。
+     */
+    maxOneShotEmitters: z.number().int().min(16).max(1024).optional(),
+    /**
+     * 多久掃一次閒置發射器（秒）。掃描本身只走一次 `scene.particleSystems`
+     * 等級的清單，很便宜；設小 = 殘骸活得更短、記憶體更平，代價是回收動作
+     * 更頻繁。0.5–60 秒。
+     */
+    emitterSweepSec: z.number().min(0.5).max(60).optional(),
+    /**
+     * 回合結束要不要把**打擊感共用池**（`vfx-preset-*`：白光/火花/煙）整個丟掉。
+     *
+     * true（出貨）= 商店那一段場上一個一次性發射器都不留，下一回合從零長回來。
+     * false = 留著，下一回合第一拳不用重新配置，代價是那些系統整場都在場景裡
+     * 被每一幀走訪 —— 那正是 GH#270 量到的東西，所以關它是**止血閥**不是省事。
+     */
+    purgeImpactPoolOnRoundEnd: z.boolean().optional(),
   })
   .strict();
 
@@ -4635,6 +4686,11 @@ export const DEFAULT_VFX_CLEANUP: ConfigVfxCleanupDoc = {
   enabled: true,
   purgeSharedPoolsOnRoundEnd: true,
   maxPooledRings: 24,
+  // GH#270 —— 出貨值必須和 `content/config/vfx-cleanup.json` 一字不差；
+  // `vfxCleanupPolicy.test.ts` 的 drift 斷言在守。
+  maxOneShotEmitters: 96,
+  emitterSweepSec: 2,
+  purgeImpactPoolOnRoundEnd: true,
 };
 
 /**

@@ -44,3 +44,25 @@ export function setOneShotMaxLifeSec(v: number | undefined): void {
 export function oneShotMaxLifeSec(): number {
   return clampOneShotMaxLifeSec(activeMaxLifeSec);
 }
+
+/**
+ * 把一次性特效的粒子壽命夾進撞擊帶。已經在範圍內時回**同一個物件**
+ * （identity = 「沒有東西需要重調」，呼叫端靠這個判斷要不要換池 key）。
+ *
+ * ⚠️ 這支函式**住在這裡而不是 `VfxSystem.ts`**（GH#270）。它原本是
+ * `VfxSystem` 的 export，於是 `vfxPresets.makeBurstSystem`（`vfx-preset-*`
+ * 那一整族）想用它就會形成 `VfxSystem → vfxPresets → VfxSystem` 的循環
+ * import —— 而「不能 import」正是那一族當初完全沒有被天花板管到的原因。
+ * `VfxSystem.ts` 仍然把它 re-export 出去，所以既有的呼叫端一個字都不用改。
+ *
+ * `maxLifeSec` 預設讀**現在生效的後台值**。呼叫端幾乎都不該傳它 —— 參數存在
+ * 是為了讓 `VfxSystem` 在同一幀內把「這一份 shaped doc 是照哪個天花板算的」
+ * 綁進池 key，而不是讓每個呼叫端各自去猜一個數字。
+ */
+export function clampOneShotLife(
+  life: { min: number; max: number },
+  maxLifeSec = oneShotMaxLifeSec(),
+): { min: number; max: number } {
+  if (life.max <= maxLifeSec) return life;
+  return { min: Math.min(life.min, maxLifeSec * 0.5), max: maxLifeSec };
+}

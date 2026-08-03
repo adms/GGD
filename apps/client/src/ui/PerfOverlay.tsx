@@ -28,6 +28,8 @@ interface Snap {
   minFps: number;
   frameMs: number;
   workMs: number;
+  capabilityFps: number;
+  fpsCap: number;
   pingMs: number;
   jitterMs: number;
   snapshotGapMs: number;
@@ -49,6 +51,8 @@ function snapshot(): Snap {
     minFps: perfBus.minFps,
     frameMs: perfBus.frameMs,
     workMs: perfBus.workMs,
+    capabilityFps: perfBus.capabilityFps,
+    fpsCap: perfBus.fpsCap,
     pingMs: perfBus.pingMs,
     jitterMs: perfBus.jitterMs,
     snapshotGapMs: perfBus.snapshotGapMs,
@@ -95,6 +99,11 @@ export function FpsPill(): React.JSX.Element | null {
   // The reported task #107 collision: this pill painted over the left-docked
   // shop card. Dev telemetry yields (hides) while a panel covers its corner.
   if (useHudSlotHidden("fps", touch)) return null;
+  // GH#271: this pill's number said 「frames per second」 while printing
+  // 1000/avg(workMs) — the machine's CAPABILITY, which ignores the fps cap
+  // entirely (a 60-capped session with 4.4 ms frames printed 「228 fps」).
+  // `perfBus.avgFps` is the DELIVERED rate now; headroom + the cap in force
+  // are two separate rows in the expanded panel below.
   return (
     <div
       data-hud-slot="fps"
@@ -115,7 +124,7 @@ export function FpsPill(): React.JSX.Element | null {
         gap: 6,
         alignItems: "center",
       }}
-      title="frames per second (avg over the perf window)"
+      title="frames per second actually drawn (avg over the perf window)"
     >
       <span>{Math.round(snap.avgFps)} fps</span>
       <span
@@ -180,6 +189,15 @@ export function PerfOverlay(): React.JSX.Element | null {
         </span>
       </div>
       <Row label="min / avg" value={`${Math.round(snap.minFps)} / ${Math.round(snap.avgFps)}`} />
+      {/* GH#271 — the two numbers that make the pill falsifiable. `cap` is the
+          limit actually in force (renderParams.fpsCap, 0 = uncapped); `headroom`
+          is 1000/avg(workMs), i.e. what the box COULD draw. When the cap works,
+          avg ≈ cap and headroom sits far above it — which is exactly the state
+          that used to be printed as 「228 fps」. */}
+      <Row
+        label="cap / headroom"
+        value={`${snap.fpsCap === 0 ? "max" : snap.fpsCap} / ${Math.round(snap.capabilityFps)}`}
+      />
       <Row label="frame ms" value={`${snap.frameMs.toFixed(1)} (${snap.workMs.toFixed(1)})`} />
       {showPing && <Row label="ping / jitter" value={`${Math.round(snap.pingMs)} / ${Math.round(snap.jitterMs)} ms`} />}
       <Row
