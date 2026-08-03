@@ -102,7 +102,7 @@ describe("欄位是從 Zod schema 推導出來的", () => {
 });
 
 describe("欄位要有上界，不是只有下界 (#277)", () => {
-  it("32 個數字欄位全部兩邊有界 —— 包含 schema 只給下界的那 24 格", () => {
+  it("每一個數字欄位都兩邊有界 —— schema 給的優先，其餘由後台補", () => {
     cover(TAG);
     let consoleSupplied = 0;
     for (const f of MATCH_FIELDS) {
@@ -111,8 +111,11 @@ describe("欄位要有上界，不是只有下界 (#277)", () => {
       expect(Number.isFinite(b!.max), `${f.path} 沒有上界`).toBe(true);
       if (b!.maxFromConsole) consoleSupplied++;
     }
-    // schema 自己只給了 8 格上界；其餘 24 格由後台補。這個數字會隨 schema 改動而動，
-    // 而它一動就代表有人碰了上下界，值得看一眼。
+    // 兩邊都是推導的：`consoleSupplied` 數的是實際走後台那條路的欄位，
+    // `MATCH_CONSOLE_MAX` 是宣告。對不上有兩種意思，都值得停下來看：
+    //   · console < 宣告 → 有人在 schema 補了上界，這張表多了一格死的（拿掉）
+    //   · console > 宣告 → 新欄位兩邊都沒上界，`matchFieldBounds` 會回 null 先紅
+    // 2026-08-03 就是第一種：`champSelectSec` 的上界搬進 Zod 了。
     expect(consoleSupplied).toBe(Object.keys(MATCH_CONSOLE_MAX).length);
   });
 

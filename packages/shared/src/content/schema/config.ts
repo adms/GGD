@@ -337,7 +337,26 @@ export const zConfigMatchDoc = z
         teamSize: z.number().int().min(1),
         /** shared team lives at match start (PairedDuels) */
         startingTeamLives: z.number().int().positive(),
-        champSelectSec: z.number().positive(),
+        /**
+         * 選角階段長度（秒）—— **有人類對手的一般對局**。
+         *
+         * ⚠️ 上界 600 是 2026-08-03 補的:在此之前這一格只有 `positive()`,
+         * 所以 20 打成 2000 會過後台,而選角會卡在那裡 33 分鐘,沒有任何東西擋。
+         * CLAUDE.md:「欄位要有上界,不是只有下界」。
+         */
+        champSelectSec: z.number().positive().max(600),
+        /**
+         * 選角階段長度（秒）—— **vs bot 的一鍵開打**（owner 2026-08-03:
+         * 「vs bot 一鍵開打的時候，選角色時間可以延長+300秒」）。
+         *
+         * 為什麼是**獨立一格**而不是把 `champSelectSec` 調大:那兩個情境的成本
+         * 完全不同。PvP 多等 5 分鐘是**別人**在等；bot 局只有自己,想看多久英雄
+         * 資料都行。共用一格的話,調長 bot 局就一定會拖慢 PvP。
+         *
+         * 缺席（`undefined`）時退回 `champSelectSec` —— 也就是「不特別處理」。
+         * 這一格本身就是那個決策點的開關:設成和 `champSelectSec` 一樣就等於關掉。
+         */
+        champSelectSecVsBot: z.number().positive().max(1800).optional(),
         intermissionSec: z.number().positive(),
         /**
          * HARD combat backstop: the phase force-ends here (PhaseMachine). It is

@@ -36,6 +36,8 @@ import { DEFAULT_STARTING_TEAM_HEALTH, MAX_STARTING_TEAM_HEALTH } from "./Paired
 /** The seconds block of `config.match@1` this module consumes. */
 export interface PhaseSeconds {
   champSelectSec: number;
+  /** vs bot 的一鍵開打專用；缺席就退回 `champSelectSec`（＝不特別處理）。 */
+  champSelectSecVsBot?: number;
   intermissionSec: number;
   combatMaxSec: number;
   resolutionSec: number;
@@ -58,9 +60,24 @@ const toTicks = (seconds: number, fallback: number): number => {
 export function phaseConfigFromSeconds(
   sec: Partial<PhaseSeconds>,
   fallback: PhaseConfig = DEFAULT_PHASE_CONFIG,
+  /**
+   * 這一場有沒有**人類對手**。owner 2026-08-03:「vs bot 一鍵開打的時候，
+   * 選角色時間可以延長+300秒」。
+   *
+   * ⚠️ 判準是「除了我以外還有沒有別的人」,不是「有沒有 bot」—— 每一場都有 bot
+   * 填空位（MatchRoom 把沒人坐的座位一律標成 isBot）,所以用「有 bot」判會讓
+   * **每一場**都吃到 320 秒,包括三個朋友一起打的那種。
+   *
+   * 預設 `false`(＝當成有人類對手,用一般值)是刻意的保守面:呼叫端忘了傳,
+   * 結果是 PvP 的 20 秒,不是讓所有人一起等 5 分鐘。
+   */
+  hasHumanOpponent = true,
 ): PhaseConfig {
+  const champSelect = hasHumanOpponent
+    ? sec.champSelectSec
+    : (sec.champSelectSecVsBot ?? sec.champSelectSec);
   return {
-    champSelectTicks: toTicks(sec.champSelectSec ?? NaN, fallback.champSelectTicks),
+    champSelectTicks: toTicks(champSelect ?? NaN, fallback.champSelectTicks),
     intermissionTicks: toTicks(sec.intermissionSec ?? NaN, fallback.intermissionTicks),
     combatMaxTicks: toTicks(sec.combatMaxSec ?? NaN, fallback.combatMaxTicks),
     resolutionTicks: toTicks(sec.resolutionSec ?? NaN, fallback.resolutionTicks),
@@ -73,10 +90,10 @@ export function phaseConfigFromSeconds(
  * room creation, so the durations are frozen for the match's lifetime — a
  * mid-match content reload can never retime a phase under a running sim.
  */
-export function resolvePhaseConfig(): PhaseConfig {
+export function resolvePhaseConfig(hasHumanOpponent = true): PhaseConfig {
   const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
   if (!doc || doc.schema !== "config@1" || !doc.match) return DEFAULT_PHASE_CONFIG;
-  return phaseConfigFromSeconds(doc.match);
+  return phaseConfigFromSeconds(doc.match, DEFAULT_PHASE_CONFIG, hasHumanOpponent);
 }
 
 /**
@@ -153,3 +170,4 @@ export function resolveStartingTeamHealth(): number {
  * reaching across the boundary.
  */
 export const resolveStartingLives = resolveStartingTeamHealth;
+

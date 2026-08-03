@@ -1802,6 +1802,7 @@ export class MatchController {
     return this.duelWinners.size === this.pairings.length;
   }
 
+
   /**
    * Record a zone's duel winner — and, in the SAME instant, tell the SIM that
    * this zone is done (task #216).

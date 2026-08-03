@@ -413,7 +413,13 @@ export class MatchRoom extends Room<MatchState> {
     // the same three tables (task #175): a recording that stored a re-resolved
     // copy could disagree with what the match actually ran on if content reloaded
     // between the two calls, and the whole point of the header is that it cannot.
-    const phaseCfg = resolvePhaseConfig();
+    // owner 2026-08-03:「vs bot 一鍵開打的時候，選角色時間可以延長+300秒」。
+    //
+    // ⚠️ 判準是**人類座位數 <= 1**,不是「有沒有 bot」。上面那個迴圈把每一個沒人
+    // 坐的座位都填成 `isBot: true`,所以「有 bot」在**每一場**都成立 —— 用它判
+    // 會讓三個朋友一起打的那種局也吃到 320 秒的選角。
+    const hasHumanOpponent = humanSeats.length > 1;
+    const phaseCfg = resolvePhaseConfig(hasHumanOpponent);
     // Round-pacing fire ring (task #132): resolved from the SAME config.match@1
     // doc as the phase durations, so `match.fireRing.startSec` is the single
     // round-length source of truth. null (absent block) leaves the ring off.

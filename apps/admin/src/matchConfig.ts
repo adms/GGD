@@ -83,8 +83,11 @@ export const MATCH_CONSOLE_MAX: Readonly<Record<string, number>> = Object.freeze
   // `resolveStartingTeamHealth` 會夾到 MAX_STARTING_TEAM_HEALTH(60)；填得比它大
   // 只會讓畫面和實戰不一致，所以後台就擋在同一個數字。
   "match.startingTeamLives": 60,
-  // 階段秒數：10 分鐘。再長的選角／中場／結算都不是設定錯就是誤觸。
-  "match.champSelectSec": 600,
+  // 階段秒數：10 分鐘。再長的中場／結算都不是設定錯就是誤觸。
+  // ⚠️ `champSelectSec` 與 `champSelectSecVsBot` **不在這張表裡** —— 2026-08-03
+  // 起它們的上界寫在 Zod schema（600 / 1800），而 `matchFieldBounds` 以 schema
+  // 優先。在這裡再補一份會變成第二個住處，兩邊漂開的時候後台會擋在一個平台
+  // 根本不認的數字上（或反過來放行一個會被 PUT 退回的值）。
   "match.intermissionSec": 600,
   "match.resolutionSec": 600,
   // 戰鬥硬底線：1 小時。殭屍王每次召喚還會 +180 秒，所以基底不需要更大。
@@ -169,8 +172,13 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
     live: "game-server phaseConfig.resolveStartingTeamHealth → PairedDuels",
   },
   "match.champSelectSec": {
-    zh: "選角秒數",
-    note: "champ-select 階段多長。太短玩家來不及看英雄檔案（客戶端的簡報閘要求它有餘裕），太長每一場開頭都在等。",
+    zh: "選角秒數（有人類對手）",
+    note: "champ-select 階段多長。太短玩家來不及看英雄檔案（客戶端的簡報閘要求它有餘裕），太長每一場開頭**其他人**都在等。",
+    live: PHASE,
+  },
+  "match.champSelectSecVsBot": {
+    zh: "選角秒數（vs bot 一鍵開打）",
+    note: "只有自己一個人、其餘都是 bot 的那種局，選角可以拉多長。沒有人在等你，所以這一格可以放心調大（出貨值 320 秒）。⚠️ 判準是「人類座位只有 1 個」，不是「場上有 bot」—— 每一場都有 bot 填空位。留空 = 跟上面那格一樣。",
     live: PHASE,
   },
   "match.intermissionSec": {
@@ -389,6 +397,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
     paths: [
       "match.startingTeamLives",
       "match.champSelectSec",
+      "match.champSelectSecVsBot",
       "match.intermissionSec",
       "match.combatMaxSec",
       "match.resolutionSec",

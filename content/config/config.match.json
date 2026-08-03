@@ -10,6 +10,7 @@
     "teamSize": 3,
     "startingTeamLives": 20,
     "champSelectSec": 20,
+    "champSelectSecVsBot": 320,
     "intermissionSec": 25,
     "combatMaxSec": 180,
     "fireRing": {
@@ -20,9 +21,18 @@
       "stage2ShrinkSec": 20,
       "minRadius": 0,
       "burnCurve": [
-        { "sec": 0, "pctPerSec": 0.04 },
-        { "sec": 20, "pctPerSec": 0.2 },
-        { "sec": 40, "pctPerSec": 1 }
+        {
+          "sec": 0,
+          "pctPerSec": 0.04
+        },
+        {
+          "sec": 20,
+          "pctPerSec": 0.2
+        },
+        {
+          "sec": 40,
+          "pctPerSec": 1
+        }
       ],
       "maxPctPerSec": 0.5,
       "roundHardCapSec": 300,
