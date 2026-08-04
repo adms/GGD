@@ -115,7 +115,7 @@ import {
   KIND_NIGHT_FLAG,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
-import { driveFrame, type FrameWork } from "./render/frameCap";
+import { driveFrame, FrameDelta, type FrameWork } from "./render/frameCap";
 import { FrameRateMeter } from "./render/fpsMeter";
 import { RoundVfxLifecycle } from "./render/roundVfxLifecycle";
 import { VfxSystem } from "./vfx/VfxSystem";
@@ -389,6 +389,21 @@ export class GameApp {
    */
   private renderSuppressed = false;
   private lastFrameMs = 0;
+  /**
+   * 畫面上那顆 fps pill 的分母。
+   *
+   * ⚠️ **不可以用 `lastFrameMs`。** 那一格是 `driveFrame` 的**節流累加器** ——
+   * 它記的是「上一次**被允許**畫的理想時刻」而不是「上一張真的畫出來的時刻」,
+   * 兩者在 cap 生效時差一個餘數。拿它當 dt 會讓真的 30 fps 被報成 25(GH#271),
+   * 也就是 owner 回報的「會在 25-26fps 跳動」。
+   *
+   * `FrameDelta` 記的是**牆上時間**,所以它答的是「這一張離上一張多久」。
+   * 守衛:`render/frameCap.test.ts` 的「出貨的 GameApp.renderFrame 真的用 FrameDelta」
+   * —— 它掃原始碼(失敗形態 ⑥),因為 `GameApp` 抓 Babylon engine / canvas / socket,
+   * headless 建構不起來;這個檔案的既有做法就是這樣,理由寫在
+   * `GameApp.frameWiring.test.ts` 的檔頭。
+   */
+  private readonly frameDelta = new FrameDelta();
   private predAccumMs = 0;
   /**
    * 送出去的幀率計 (GH#271). 餵它的是**兩次真的繪製之間的間隔**;它同時是
@@ -1000,6 +1015,8 @@ export class GameApp {
     this.input.attach();
     this.touch?.attach(this.canvas);
     this.lastFrameMs = performance.now();
+    // 忘掉上一場的最後一張,否則這一場第一張的 dt 是 FRAME_DELTA_MAX。
+    this.frameDelta.reset();
     // #282 —— **兩個時鐘**。rAF 是主要來源;IntentClock 的 watchdog 計時器是
     // 第二個,只有在 rAF 停擺(切到背景手勢、發熱降到個位數 fps、Babylon 卡在
     // 一次大載入)時才接手。rAF 健康時 watchdog 是純 no-op,見 IntentClock.wake。
@@ -1270,7 +1287,7 @@ export class GameApp {
   }
 
   private renderFrame(nowMs: number): void {
-    const dtMs = Math.min(Math.max(nowMs - this.lastFrameMs, 1), 100);
+    const dtMs = this.frameDelta.take(nowMs);
 
     const state = this.conn.room?.state ?? null;
 
