@@ -19,6 +19,8 @@ import {
   type QualityPreset,
 } from "../settings";
 import { lodTierForPreset, type ModelLodTier } from "../render/modelLod";
+import { defaultFpsCap } from "../render/frameCap";
+import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
 import { perfBus } from "../perfBus";
 import { audioSystem } from "../audio";
 import { SfxButton } from "./SfxButton";
@@ -345,6 +347,18 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
             <div style={{ marginTop: 4 }}>
               <Segmented options={FPS_CAPS} value={g.fpsCap} onPick={(v) => store.patchGraphics({ fpsCap: v })} />
             </div>
+          </div>
+          {/* GH#271 決策點:「畫質預設要不要覆蓋玩家的明確選擇」。出貨值 = 不要。
+              放在 fps 那一排的正下方,因為它唯一影響的就是上面那個選擇會不會活著。 */}
+          <Toggle
+            on={g.fpsCapFollowsPreset}
+            onChange={(v) => store.patchGraphics({ fpsCapFollowsPreset: v })}
+            text="Quality presets reset the fps cap"
+          />
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            {g.fpsCapFollowsPreset
+              ? `On: picking Low/Medium/High also puts the cap back to this device's default (${defaultFpsCap(isTouchDevice(readTouchEnv()))} fps).`
+              : "Off: picking Low/Medium/High changes resolution, particles, shadows and draw distance only — your frame-rate choice above stays."}
           </div>
           <Slider
             text="Particle density"

@@ -1,0 +1,6 @@
+{
+  "id": "augment-filter",
+  "schema": "config.augment-filter@1",
+  "note": "稜彩增益卡的敵方過濾器全域覆寫。目前只有一格：殭屍算不算 hook 上 victim:\"enemyChampion\" 的敵人。出貨值 false 是 owner 2026-08-04 的裁決（決策點 1-1：per-card 維持字面語意，全域覆寫預設關）—— 所以這份文件出現本身不改變任何一場比賽。真正的表達方式是 per-card：那一張卡的 hook 寫 victim:\"enemy\" 就收殭屍，改一次不用重建映像（content/ 是 live bind-mount）。這一格是給 owner 打完一場現場翻的覆寫，不是替代品：symphony 的 12 層、master-of-duality 的 20 層、cerberus 的 3 充能在殭屍潮裡是三種不同的平衡答案，一顆布林答不完。⚠️ 打開它不會讓殭屍長出 StatsComp，掛在殭屍身上的 buff/status 照樣是靜默 no-op。語意寫在 packages/shared/src/sim/augmentEnemyFilter.ts。⚠️ 後台『增益卡敵方過濾』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "mobsCountAsEnemy": false
+}

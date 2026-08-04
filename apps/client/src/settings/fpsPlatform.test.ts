@@ -30,7 +30,7 @@ import {
   SETTINGS_STORAGE_KEY,
 } from "./types";
 import { SettingsStore } from "./SettingsStore";
-import { applyPreset, paramsForPreset } from "./presets";
+import { PRESET_PARAMS, applyPreset, paramsForPreset } from "./presets";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -125,6 +125,81 @@ describe("fps 上限依平台 (client-fps-platform)", () => {
     const desk = new SettingsStore(mem(), false);
     desk.setPreset("high");
     expect(desk.graphics().fpsCap).toBe(60);
+  });
+
+  /**
+   * ⭐ GH#271 —— owner 2026-08-04:「我選了 max 反而會變成固定 30」。
+   *
+   * `paramsForPreset` 無條件把**平台預設**塞進 fpsCap,而 `applyPreset` 無條件
+   * 把它 spread 進去,所以按任何一個固定畫質預設 = 玩家在 fps 那一排選的東西
+   * 被丟掉,而 Segmented 仍然亮著他選的那個。上面那兩條既有測試看不見這件事,
+   * 因為它們的基底剛好**就是**平台預設(30/60),覆蓋前後同一個值。
+   *
+   * 這一條用一個**跟平台預設不同**的值,兩者才分得開。
+   */
+  it("⭐ 玩家選了 X,套畫質預設之後仍然是 X(出貨值:玩家贏)", () => {
+    cover("client-fps-platform");
+    // 期望值從常數推導,不寫死 60/30(owner 常設:守衛驗機制不驗數字)。
+    // 只要不是「這台裝置的平台預設」都可以;0 = Max,正是 owner 按的那一個。
+    const PLAYER_PICKED = 0 as const; // "Max"
+    for (const touch of [false, true]) {
+      expect(PLAYER_PICKED, "測試選的值剛好等於平台預設就分不開了").not.toBe(
+        defaultFpsCap(touch),
+      );
+      const store = new SettingsStore(mem(), touch);
+      store.patchGraphics({ fpsCap: PLAYER_PICKED });
+      for (const preset of ["low", "medium", "high", "auto"] as const) {
+        store.setPreset(preset);
+        expect(
+          store.graphics().fpsCap,
+          `${touch ? "手機" : "桌機"}選了 Max,按「${preset}」之後被改成 ` +
+            `${store.graphics().fpsCap} —— 設定 UI 最糟的那種行為`,
+        ).toBe(PLAYER_PICKED);
+      }
+      // 而畫質欄位**確實**被預設換掉了 —— 不是整個 applyPreset 都失效了
+      store.setPreset("low");
+      expect(store.graphics().resolutionScale).toBe(PRESET_PARAMS.low.resolutionScale);
+      expect(store.graphics().shadows).toBe(false);
+    }
+  });
+
+  it("⭐ 決策點是一個欄位:打開 fpsCapFollowsPreset 就回到舊行為(平台預設贏)", () => {
+    cover("client-fps-platform");
+    // 第一守則:拿不定主意的決策做成兩種模式 + 後台可切,而不是挑一個然後在
+    // 註解裡辯護。這一條證明**另一半**真的接得上,不是一個沒人讀的旗標。
+    for (const touch of [false, true]) {
+      const store = new SettingsStore(mem(), touch);
+      store.patchGraphics({ fpsCap: 0, fpsCapFollowsPreset: true });
+      store.setPreset("high");
+      expect(store.graphics().fpsCap).toBe(defaultFpsCap(touch));
+      // 純函式層兩種模式都要分得開
+      const g = { ...DEFAULT_GRAPHICS, fpsCap: 0 as const };
+      expect(applyPreset(g, "high", touch, false).fpsCap).toBe(0);
+      expect(applyPreset(g, "high", touch, true).fpsCap).toBe(defaultFpsCap(touch));
+    }
+    // 出貨值 = 玩家贏(這一格如果哪天被改成 true,這裡就紅)
+    expect(DEFAULT_GRAPHICS.fpsCapFollowsPreset).toBe(false);
+    // 舊的 blob(沒有這一格)也拿到出貨值,不是 undefined
+    expect(migrateSettings({ version: 4, graphics: {}, network: {} }).graphics.fpsCapFollowsPreset)
+      .toBe(false);
+  });
+
+  /**
+   * 失敗形態 ②「做了但玩家拿不到」的防線 —— 這正是同一個 repo 的 gore 那次
+   * (`ui/SettingsScreen.gore.test.ts`):整條管線接好了、預設值也對,但**沒有
+   * 任何畫面寫得到那一格**,於是它永遠凍在預設。這裡用同一種做法(去掉註解
+   * 再掃出貨的那個檔),因為 SettingsScreen 要 React DOM 才跑得起來。
+   */
+  it("設定頁真的寫得到這一格 —— 不是一個只有測試碰得到的旗標", () => {
+    cover("client-fps-platform");
+    const src = readFileSync(join(HERE, "../ui/SettingsScreen.tsx"), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\/\/[^\n]*/g, "");
+    expect(src, "SettingsScreen 沒有任何控制項寫 fpsCapFollowsPreset").toMatch(
+      /patchGraphics\(\s*\{\s*fpsCapFollowsPreset:/,
+    );
+    // 而且 fps 那一排本身還在(這一格的意義完全取決於上面那個選擇存在)
+    expect(src).toMatch(/patchGraphics\(\s*\{\s*fpsCap:/);
   });
 
   it("每一條 render loop 都走 frameCap,沒有人自己抄一份數字", () => {

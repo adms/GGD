@@ -53,6 +53,23 @@ export interface GraphicsSettings {
   antialias: boolean;
   /** allow the adaptive manager to nudge resolution even on a fixed preset. */
   dynamicResolution: boolean;
+  /**
+   * 套用畫質預設（低/中/高）時,要不要**連 fps 上限一起**重設 (GH#271).
+   *
+   * ⚠️ 這是一個**決策點**,不是一個數字:「預設要不要覆蓋玩家的明確選擇」。
+   * 出貨值 `false` = **玩家在 fps 那一排選過的東西贏**。owner 2026-08-04
+   * 「我選了 max 反而會變成固定 30」—— 他按了、畫面顯示他選的那個、而它不生效,
+   * 那是設定 UI 最糟的一種行為（同族前例:`showPing` 那個死開關）。
+   *
+   * `true` 是 v0.9.x 之前的行為:按任何一個固定預設 → fpsCap 被拉回**平台預設**
+   * （桌機 `DESKTOP_FPS_CAP` / 手機 `MOBILE_FPS_CAP`）。留著它是因為「按預設
+   * 就是要一鍵回到推薦組態」也是一種合理的期待 —— 兩種模式都做,後台可切,
+   * 預設選 owner 明說的那個。
+   *
+   * ⚠️ 這一格**不影響**全新安裝與「重設為建議值」:那兩條路的基底本來就是
+   * `defaultGraphicsFor(touch)`,平台預設在那裡就已經套好了。
+   */
+  fpsCapFollowsPreset: boolean;
   /** max concurrent floating combat-text numbers (density cap). */
   damageNumberCap: number;
   /** how much of the fight is numbered (see CombatTextScope). */
@@ -152,6 +169,8 @@ export const DEFAULT_GRAPHICS: GraphicsSettings = {
   drawDistance: 140,
   antialias: true,
   dynamicResolution: true,
+  // 出貨值 = 玩家的明確選擇贏。見 GraphicsSettings.fpsCapFollowsPreset。
+  fpsCapFollowsPreset: false,
   damageNumberCap: 48,
   combatTextScope: "team",
   goreStyle: "default",
@@ -203,6 +222,9 @@ export function clampGraphics(g: GraphicsSettings): GraphicsSettings {
     drawDistance: clamp(g.drawDistance, 20, 400),
     antialias: Boolean(g.antialias),
     dynamicResolution: Boolean(g.dynamicResolution),
+    // 缺這一格（舊的 blob）→ `Boolean(undefined)` = false = 出貨值「玩家贏」。
+    // 所以不需要 SETTINGS_VERSION 遷移:沒有資料要搬,只是多一個安全的預設。
+    fpsCapFollowsPreset: Boolean(g.fpsCapFollowsPreset),
     damageNumberCap: Math.round(clamp(g.damageNumberCap, 4, 64)),
     // a corrupt value falls back to "team" (the default), never to "off" —
     // silently killing the feature would read as a bug, not as a setting

@@ -105,6 +105,10 @@ export function shouldRenderFrame(nowMs: number, lastRenderMs: number, capFps: n
  *
  * @returns 新的 `lastRenderMs`(沒畫就原樣回傳 —— 被跳過的幀不可以推進它,
  *          否則上限會失效,見 `shouldRenderFrame`)。
+ *
+ * ⛔ 這個回傳值是**節流用的累加器,不是上一張的牆上時刻**。拿它去減出動畫的
+ *    dt 會在機器追不上上限時每隔一張多算一個步長(GH#271:真實 30 fps 被報成
+ *    25.4)。要 dt 請用 `FrameDelta`。
  */
 export interface FrameWork {
   /** 每一個 animation frame 都跑:輸入取樣 + intent 送出。與渲染無關。 */
@@ -144,6 +148,57 @@ export function driveFrame(
   // 落後太多就重新對時:分頁切到背景、裝置睡眠回來時,`nowMs` 會跳掉好幾秒,
   // 這時追進度只會連噴幾十張沒有意義的畫面。一個步長是「抖動」與「斷線」的界線。
   return nowMs - advanced > step ? nowMs : advanced;
+}
+
+/**
+ * 幀間隔的下界 / 上界（ms）。下界擋掉 0（同一毫秒兩張 → 除以零）；上界擋掉
+ * 分頁切回前景那一次幾秒的跳躍，不讓動畫瞬移。搬自 `GameApp.renderFrame`
+ * 原本內嵌的 `Math.min(Math.max(dt, 1), 100)`，數值不變。
+ */
+export const FRAME_DELTA_MIN_MS = 1;
+export const FRAME_DELTA_MAX_MS = 100;
+
+/**
+ * 「距離上一張**真的畫出去**的幀有多久」 —— 動畫的 dt (GH#271 第三段)。
+ *
+ * ── 為什麼這是一個獨立的東西,而不是 `nowMs - driveFrame 的回傳值` ─────────
+ * `driveFrame` 回傳的是**節流用的固定步長累加器**（見上面「進位,不是歸零」
+ * 那一段）。它刻意**不是**上一張的牆上時刻:144 Hz 面板要走出 2-2-3 的節奏,
+ * 靠的就是讓它落後真實時間、把餘數留給下一次。
+ *
+ * `GameApp.renderFrame` 曾經拿它當時刻用（`nowMs - this.lastFrameMs`）。
+ * 機器**追得上**上限時兩者剛好相等,所以桌機 60 fps 上一切正常;機器**追不上**
+ * 上限時累加器每隔一張就落後一個步長,dt 就在「真值」與「真值＋一個步長」
+ * 之間跳。用出貨的 `driveFrame` 量到的（`frameCap.test.ts` 有這條）：
+ *
+ *     面板實際只送得出 30 Hz、上限 60 → 真實 30.0 fps,dt 報成 33/50/33/50…
+ *                                        → 畫面上的 pill 寫 **25.4**
+ *     同樣的機器,上限選「Max」(0)       → 累加器直接 = nowMs → 誠實的 **30.0**
+ *
+ * owner 2026-08-04:「我明明是 mac 卻被鎖 25fps」「我選了 max 反而會變成固定
+ * 30」——**顛倒的那一句就是這個**:上限沒有變慢,是量錯了。
+ *
+ * ⚠️ 而且這不只是儀表。同一個 `dtMs` 餵給預測、骨架動畫、火圈、塵埃、後製
+ * 衰減 —— 真實 33 ms 的幀被說成 50 ms,那些動畫就會以 1.5 倍速跳一下再回來。
+ * 機器越吃力,抖得越明顯。
+ *
+ * 有副作用（`take` 呼叫即記時），命名照 `FramePacer.take` 的先例。
+ */
+export class FrameDelta {
+  private lastDrawMs = -Infinity;
+
+  /** 這一張與上一張之間的牆上間隔（夾在 MIN..MAX）。第一張回傳 MIN。 */
+  take(nowMs: number): number {
+    const raw = nowMs - this.lastDrawMs;
+    this.lastDrawMs = nowMs;
+    if (!Number.isFinite(raw)) return FRAME_DELTA_MIN_MS;
+    return Math.min(Math.max(raw, FRAME_DELTA_MIN_MS), FRAME_DELTA_MAX_MS);
+  }
+
+  /** 暫停/重開一場時忘掉上一張,避免用一個很舊的時刻算出 MAX。 */
+  reset(): void {
+    this.lastDrawMs = -Infinity;
+  }
 }
 
 /**

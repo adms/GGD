@@ -128,12 +128,16 @@ export class SettingsStore {
   /**
    * Apply a quality preset (writes concrete values for fixed presets).
    *
-   * ⚠️ `this.touch` MUST be passed. `applyPreset` overwrites `fpsCap`, and its
-   * default is the DESKTOP one — so a phone player tapping 「高畫質」 silently
-   * undid the v0.9.9 platform default and went back to 60 fps, while the
+   * ⚠️ `this.touch` MUST be passed. When `fpsCapFollowsPreset` is ON, this is
+   * what decides whether the reset lands on 60 or 30 — a phone player tapping
+   * 「高畫質」 would otherwise silently go back to the DESKTOP default while the
    * settings page kept showing the preset they picked. `resetToRecommended`
    * below had the argument from the start; this one did not, which is exactly
    * the shape of a fix applied to one of two sibling call sites.
+   *
+   * ⚠️ 出貨值下 `applyPreset` **不碰 fpsCap**(GH#271) —— 玩家在 fps 那一排選過
+   * 的東西贏。那個決策點住在 `GraphicsSettings.fpsCapFollowsPreset`,而
+   * `applyPreset` 直接從傳進去的 graphics 讀它,所以這裡不需要多傳一個參數。
    */
   setPreset(preset: QualityPreset): void {
     this.commit({
