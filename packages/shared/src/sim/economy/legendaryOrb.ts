@@ -108,28 +108,43 @@ export function legendaryPool(world: SimWorld, id: EntityId): ItemId[] {
 }
 
 /**
- * THE SECOND-DOOR GUARD (task #70, reopened). The report found that buying the
- * 2400g orb could hand the player a raw recipe COMPONENT (天叢雲劍/貫雷槍/名刀-
- * 天狼/斬岩刃/熾天使之弓/龍騎士之劍/八取武士刀), because the pool was filtered by
- * ownership + whitelist ALONE — a rule-1 violation through a different door.
- * This closes it STRUCTURALLY: a component (or a 兌換 token, or a shop service)
- * can NEVER be rolled by the orb, whatever the loot table or the whitelist hold.
+ * THE SECOND-DOOR GUARD (task #70, reopened) — **它的 craftRole 那一半在
+ * 2026-08-04 搬走了，這裡只剩「發出去的東西必須做得了事」。**
  *
- * WHY NOT "finals only". The orb is explicitly NOT a direct purchase of a
- * weapon — 「購買也可傳說寶玉觸發而非直接購買」 — so rule 1's shelf rule
- * (`buyItem` = finals only) does not govern it; the confirmed VIOLATION was
- * components, and this excludes exactly those (plus tokens/services, which are
- * inert or nonsensical in a reward pool). The 7 direct-buy 神器 that remain in
- * content/loot-tables/legendary-weapons.json — a pool the owner has not re-
- * endorsed — are task #108's to keep or cut; this guard does not pre-empt that
- * decision, it only stops the component leak. A doc with no role marker is
- * legacy/skeleton and passes. Everything offered must still DO something.
+ * ── 原本的守衛 ─────────────────────────────────────────────────────────────
+ * The report found that buying the 2400g orb could hand the player a raw recipe
+ * COMPONENT (天叢雲劍/貫雷槍/名刀-天狼/斬岩刃/熾天使之弓/龍騎士之劍/八取武士刀),
+ * because the pool was filtered by ownership + whitelist ALONE. It closed that
+ * by excluding `component` / `token` / `service` **here, in this file only**.
+ *
+ * ── 為什麼搬走 ─────────────────────────────────────────────────────────────
+ * ⛔ **只在這裡擋，就是本檔與 `economy/offerEligibility.ts` 兩份檔頭都警告過的
+ * 「半套修法」的活標本** —— 第 2/5 回合的免費武器卡走 `economy/draft.ts`，
+ * 那條路**從來沒有 craftRole 閘**（2026-08-04 實測 `grep craftRole draft.ts`
+ * 零命中）。於是同一支合成原料：免費卡發得出來、寶玉抽不到。
+ *
+ * owner 2026-08-04:「**49支可被隨機三選一 就好**」 →
+ * 判斷是**放寬**而不是把免費卡也關起來，三個理由：
+ *   1. **GGD 沒有合成系統**（owner 2026-07-22:「理論上競技場上的所有道具跟武器
+ *      都不需要合成」），所以 `craftRole:"component"` 描述的是一個不存在的系統
+ *      裡的角色 —— 它在這個遊戲裡不是「半成品」，就只是一件武器。
+ *   2. owner 2026-08-01 **逐支親筆寫了全部 49 支的「效能」文案**
+ *      (`content/__fixtures__/legendary49OwnerText.json`) —— 那就是核准。
+ *   3. 那 8 支每一支都通過 `itemHasEffect`，不是空殼。
+ *
+ * 現在清單住在 `offerEligibility.DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES`
+ * ＋後台欄位 `config.arena-rules@1` 的 `itemDraft.excludedCraftRoles`，
+ * **兩條門讀同一份**（`itemOfferableTo` 在下面的 filter 裡已經被呼叫）。
+ * 出貨值保留 `token` / `service`（獎勵池裡無意義，而且 49 支裡一支都不是，
+ * 所以留著零代價）。owner 想把 `component` 關回去是**存檔不是部署**。
+ *
+ * 這裡剩下的 `itemHasEffect` 是**不可協商**的那一半：
+ * A doc with no role marker is legacy/skeleton and passes.
+ * **Everything offered must still DO something.**
  */
-const ORB_EXCLUDED_ROLES: ReadonlySet<string> = new Set(["component", "token", "service"]);
 function orbEligible(itemId: ItemId): boolean {
   const def = Items.tryGet(itemId);
   if (!def) return false;
-  if (def.craftRole !== undefined && ORB_EXCLUDED_ROLES.has(def.craftRole)) return false;
   return itemHasEffect(def);
 }
 

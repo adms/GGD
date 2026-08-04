@@ -142,6 +142,7 @@ import {
 } from "@ggd/shared/sim/economy/draft";
 import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
+import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { applyAttrPick, rollAttrChoices, ATTR_OFFER_TIER } from "@ggd/shared/sim/economy/attrDraft";
 import { rankUpAbility, learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
@@ -886,6 +887,14 @@ export class MatchController {
     // #47's "the card silently grants nothing" bug happened. allowAll leaves
     // this a constant-true, so nothing changes on the default path.
     this.world.itemEligible = this.whitelist.bypass ? null : (itemId) => this.whitelist.allowsItem(itemId);
+    // craftRole 排除清單 (owner 2026-08-04「49支可被隨機三選一 就好」). Same shape
+    // as `itemEligible` above: host CONFIG, assigned once before tick 0, read by
+    // `economy/offerEligibility.itemOfferableTo` — the ONE predicate both the
+    // round card (`economy/draft`) and the 傳說寶玉 (`economy/legendaryOrb`) use.
+    // Before this it lived as a hard-coded Set inside legendaryOrb ALONE, which
+    // is why the same 合成原料 was card-offerable but orb-unrollable.
+    this.world.offerExcludedCraftRoles =
+      this.rules.itemDraft.excludedCraftRoles ?? DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES;
     this.phase = new PhaseMachine(phaseCfg);
 
     for (const spec of seatSpecs) {

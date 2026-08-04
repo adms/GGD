@@ -10,7 +10,7 @@ import type { AugmentTier } from "../content/defs";
 import { Augments, LootTables } from "../content/registry";
 import { attachSource } from "../stats/statPipeline";
 import { grantItemFree } from "./shop";
-import { itemOfferableTo } from "./offerEligibility";
+import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES, itemOfferableTo } from "./offerEligibility";
 
 export interface AugmentOffer {
   entity: EntityId;
@@ -174,6 +174,16 @@ export interface ItemDraftPolicy {
   fallbackTable: string;
   /** hard ceiling on weighted draws for ONE card (see `offerItems`) */
   maxDraws: number;
+  /**
+   * 三選一不可以發哪些 `craftRole`（owner 2026-08-04）。省略 = 出貨值
+   * {@link DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES}。
+   *
+   * ⚠️ **它不在這個檔案裡被讀** —— host 把它抄到 `world.offerExcludedCraftRoles`，
+   * 而真正的閘在 `economy/offerEligibility.itemOfferableTo`，**兩條門共用**
+   * （免費卡走這裡的 `eligibleItemPool`，寶玉走 `legendaryOrb.legendaryPool`）。
+   * 放在 policy 上只是因為它是同一塊後台設定；讀取點刻意只有一個。
+   */
+  excludedCraftRoles?: readonly string[];
 }
 
 /**
@@ -196,6 +206,7 @@ export const DEFAULT_ITEM_DRAFT_POLICY: ItemDraftPolicy = {
   shortPoolMode: "short",
   fallbackTable: "",
   maxDraws: 64,
+  excludedCraftRoles: DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES,
 };
 
 interface PoolEntry {

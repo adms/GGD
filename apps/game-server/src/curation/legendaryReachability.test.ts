@@ -85,6 +85,7 @@ import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { offerItems } from "@ggd/shared/sim/economy/draft";
 import { legendaryPool } from "@ggd/shared/sim/economy/legendaryOrb";
 import { LEGENDARY_POOL_TABLE } from "@ggd/shared/sim/economy/itemTiers";
+import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "@ggd/shared/ids";
 import { Whitelist } from "./whitelist";
 
@@ -298,31 +299,35 @@ describe("卡片深度 —— 三選一必須真的有三張 (eco-weapon-card-de
 
 describe("傳說寶玉的池子 (eco-orb-pool-reachable)", () => {
   /**
-   * `economy/legendaryOrb.orbEligible` 排掉的 craftRole。**這裡是鏡射不是引用**,
-   * 理由同 `splitByAttackType`:引用出貨的謂詞會讓突變兩邊一起動。
+   * craftRole 排除清單。**2026-08-04 之前這裡是一份手抄的 Set** —— 那是對的,
+   * 因為當時清單也是手寫死在 `legendaryOrb.orbEligible` 裡,鏡射才擋得住突變。
    *
-   * ⚠️ 同樣是**部分鏡射**:`orbEligible` 是「craftRole 不在這個集合」**且**
-   * `itemHasEffect(def)`。第二個條件這裡刻意不抄,方向一樣是安全的 —— 池子裡
-   * 哪天出現一條沒有 modifier 也沒有 passive 的條目,它會留在 `want` 裡卻不會
-   * 出現在真的 pool,於是轉紅,而「發得出去但什麼都不做」本來就該紅。
-   * 2026-08-01 實測:49 條全部都有 modifier 或 passive。
+   * ⛔ **現在不是了。** owner 2026-08-04「49支可被隨機三選一 就好」之後,清單
+   * 升格成後台欄位(`config.arena-rules@1` 的 `itemDraft.excludedCraftRoles`),
+   * 而**兩條門讀同一份**(`economy/offerEligibility.itemOfferableTo`)。
+   * 再抄一份就變成 CLAUDE.md 說的「第四個住處」——它一定會過期,而且會用錯誤的
+   * 訊息紅(「寶玉池對不起來」,真相是有人在後台改了一格)。
+   *
+   * 所以這裡改成**讀出貨值**。守衛的價值沒有消失,只是搬家了:
+   * 「兩條門必須讀同一份清單」由
+   * `packages/shared/src/sim/economy/offerCraftRoleGate.test.ts` 的三條守著
+   * (三個突變都驗過會紅);這一條守的仍然是**可達性** ——
+   * 出貨設定下,棱彩表裡配得上這位英雄的每一條,寶玉都要真的滾得到。
    */
-  const ORB_EXCLUDED_ROLES = new Set(["component", "token", "service"]);
+  const excluded = new Set(DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES);
 
-  it("★ 2400g 寶玉的池子 = 整張表扣掉 orbEligible 明講擋掉的那些", () => {
+  it("★ 2400g 寶玉的池子 = 整張表扣掉排除清單擋掉的那些", () => {
     cover("eco-orb-pool-reachable");
     // 寶玉走的是**先濾後抽**(legendaryPool 讀 world.itemEligible),所以它不會
     // 發空卡 —— 但白名單漏掉的東西一樣永遠滾不出來。兩條路都要守。
     //
-    // ⚠️ 兩條路**不等價**,而這是 owner 2026-08-01 之後才出現的事實:
-    // 回合武器卡只過 `itemOfferableTo`(draftEligible + 攻擊型態),寶玉還多過
-    // 一層 `orbEligible`(task #70 的「第二道門」守衛,擋 component/token/
-    // service)。owner 的 49 支裡有 8 支是 craftRole "component",所以那 8 支
-    // **回合卡發得出來、寶玉永遠滾不到**。這條斷言把差集釘死到 id:少一支或
-    // 多一支都紅,不是「有幾件在裡面就算過」。
+    // ⭐ 2026-08-04 起兩條路對 craftRole **等價**了。在那之前回合武器卡只過
+    // `itemOfferableTo`、寶玉還多一層寫死在 legendaryOrb 裡的 Set,於是 49 支裡
+    // 8 支 component **回合卡發得出來、寶玉永遠滾不到** —— 那正是
+    // `offerEligibility.ts` 檔頭警告過的「半套修法」,而它自己就是。
     const attackType = attackTypeOf(MELEE_HERO);
     const { fits } = splitByAttackType(attackType);
-    const want = fits.filter((id) => !ORB_EXCLUDED_ROLES.has(Items.get(id as ItemId).craftRole ?? "")).sort();
+    const want = fits.filter((id) => !excluded.has(Items.get(id as ItemId).craftRole ?? "")).sort();
 
     const { world, id } = hero(7, MELEE_HERO);
     world.itemEligible = (itemId) => wl.allowsItem(itemId);
@@ -330,28 +335,34 @@ describe("傳說寶玉的池子 (eco-orb-pool-reachable)", () => {
     world.itemEligible = null;
     expect(
       pool,
-      "傳說寶玉的池子跟棱彩表對不起來 —— 白名單、orbEligible(craftRole/有沒有效果) " +
-        "或攻擊型態閘吃掉了本來該滾得到的條目",
+      "傳說寶玉的池子跟棱彩表對不起來 —— 白名單、craftRole 排除清單、" +
+        "itemHasEffect 或攻擊型態閘吃掉了本來該滾得到的條目",
     ).toEqual(want);
 
-    // 差集本身也釘死,免得哪天 orbEligible 悄悄多擋一類就被上面那條「重新推導」
-    // 一起吸收掉。這 8 支是 owner 放進棱彩池的 recipe component。
+    // ⭐ owner 的裁決本身也要有守衛:出貨設定下,那 8 支 recipe component
+    // **必須**滾得到。突變:把 "component" 加回 DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES
+    // → 這一條紅。⛔ 不寫死「差集是空的」——寫死清單內容才抓得到「悄悄多擋一類」。
+    const COMPONENTS_OWNER_WANTS_ROLLABLE = [
+      "godie-i006", // 雅典娜的驚嘆號
+      "godie-i00u", // 名刀-天狼
+      "godie-i013", // 緣一零式
+      "godie-i014", // 天叢雲劍
+      "godie-i01g", // 貫雷槍
+      "godie-i01w", // 祕銀鎖子甲
+      "godie-i020", // 瑪那魔杖
+      // ⚠️ godie-i012 熾天使之弓 不在這裡:它是 ranged 限定,對近戰英雄本來就
+      // 滾不到 —— 那是 requiresAttackType 這個**功能**,不是 craftRole 這道閘。
+    ];
+    for (const id of COMPONENTS_OWNER_WANTS_ROLLABLE) {
+      expect(pool, `${id} 是 owner 裁決要能被隨機三選一發出來的合成原料`).toContain(id);
+    }
+
+    // 近戰英雄唯一滾不到的,只剩攻擊型態不符的那一支。
     expect(
       poolEntries()
         .filter((x) => !pool.includes(x))
         .sort(),
-      "寶玉撈不到的條目變了 —— 這是 owner 的內容決定與 orbEligible 的衝突,要重新判",
-    ).toEqual(
-      [
-        "godie-i006", // 雅典娜的驚嘆號
-        "godie-i00u", // 名刀-天狼
-        "godie-i012", // 熾天使之弓（component，且 ranged 限定）
-        "godie-i013", // 緣一零式
-        "godie-i014", // 天叢雲劍
-        "godie-i01g", // 貫雷槍
-        "godie-i01w", // 祕銀鎖子甲
-        "godie-i020", // 瑪那魔杖
-      ].sort(),
-    );
+      "寶玉撈不到的條目變了 —— 要重新判這是內容決定還是閘的行為改變",
+    ).toEqual(["godie-i012"]);
   });
 });

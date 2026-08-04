@@ -927,6 +927,25 @@ export const zItemDraftConfig = z
      * still sitting an order of magnitude above the 49-entry shipped pool.
      */
     maxDraws: z.number().int().min(1).max(512),
+    /**
+     * 哪些 `craftRole` **不可以**被三選一發出去（owner 2026-08-04
+     * 「49支可被隨機三選一 就好」）。
+     *
+     * 出貨值 `["token","service"]` —— 完整理由與它取代了什麼寫在
+     * `sim/economy/offerEligibility.ts` 的 `DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES`。
+     * 一句話版：2026-08-04 之前 `component` 也在名單裡，而那道閘**只掛在
+     * 傳說寶玉上**，免費武器卡沒有 —— 同一支合成原料免費卡發得出來、寶玉抽不到。
+     * 現在兩條門讀同一份清單，而 `component` 被拿掉了（GGD 沒有合成系統，
+     * 那個標記描述的是一個不存在的系統裡的角色）。
+     *
+     * ⚠️ **要把 `component` 關回去，在這裡加一個字串就好** —— 不用改程式、
+     * 不用重建映像（`content/` 是 live bind-mount）。
+     *
+     * 省略 = 出貨值。上界 8 個成員 / 每個 32 字元：`craftRole` 今天只有四個值
+     * (`final`/`component`/`quest`/`token`)＋`service`，8 是留給未來的餘裕，
+     * 而不是一個可以貼進一整段文字的欄位（#277 的教訓：**欄位要有上界**）。
+     */
+    excludedCraftRoles: z.array(z.string().min(1).max(32)).max(8).optional(),
   })
   .strict();
 

@@ -21,6 +21,7 @@ import { FsContentSource } from "@ggd/shared/content/node";
 import { Items, LootTables } from "@ggd/shared/sim/content/registry";
 import { buyItem, SELL_REFUND } from "@ggd/shared/sim/economy/shop";
 import { legendaryPool } from "@ggd/shared/sim/economy/legendaryOrb";
+import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "@ggd/shared/sim/economy/offerEligibility";
 import { statPathView } from "@ggd/shared/sim/economy/statPath";
 import {
   ITEM_TIER_PRICE,
@@ -297,7 +298,21 @@ describe("no legendary is directly purchasable, whatever the surface says", () =
  * has to close, verified against the REAL content tree, not a fixture.
  */
 describe("rule 1 covers every gold route, not just the shop shelf", () => {
-  it("the 傳說寶玉 pool can never surface a recipe component (the reported second door)", () => {
+  /**
+   * ⚠️ **owner 2026-08-04 縮小了這一條的範圍**:「49支可被隨機三選一 就好」。
+   *
+   * task #70 重開時,這條斷言的是「寶玉永遠不會發 component / token / service」。
+   * 那道閘寫死在 `legendaryOrb.orbEligible` 裡,而**免費武器卡那條路根本沒有它**
+   * —— 同一支合成原料回合卡發得出來、寶玉抽不到,正是 `offerEligibility.ts`
+   * 檔頭警告過的「半套修法」。
+   *
+   * 現在清單是後台欄位(`itemDraft.excludedCraftRoles`,出貨 token/service)而且
+   * **兩條門共用**。所以這條改成斷言「**出貨清單真的被執行**」——
+   * 池子裡不可以出現排除清單上的任何角色,而清單本身從出貨值讀,不再手抄。
+   * `component` 現在**應該**滾得到,那由 `curation/legendaryReachability.test.ts`
+   * 逐支釘住(owner 的裁決本身要有守衛,不是靜靜地變寬)。
+   */
+  it("the 傳說寶玉 pool obeys the shipped craftRole exclusion list (both doors read it)", () => {
     cover("econ-orb-no-component");
     const ctl = spawnedMatch(9);
     const { entity } = humanBuyer(ctl);
@@ -307,15 +322,24 @@ describe("rule 1 covers every gold route, not just the shop shelf", () => {
     const pool = legendaryPool(ctl.world, entity);
     expect(pool.length, "the orb pool went empty — that would silently disable the orb").toBeGreaterThan(0);
     for (const id of pool) {
-      const role = Items.get(id).craftRole;
-      expect(role, `${id} (${Items.get(id).name}) is offerable by the orb but is a ${role}`).not.toBe("component");
-      expect(role).not.toBe("token");
-      expect(role).not.toBe("service");
+      const role = Items.get(id).craftRole ?? "";
+      expect(
+        DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES,
+        `${id} (${Items.get(id).name}) is offerable by the orb but its role ${role} is on the exclusion list`,
+      ).not.toContain(role);
     }
-    // and the loot table DOES still declare components — so the guard, not an
-    // empty table, is what keeps them out.
-    const declared = LootTables.get(LEGENDARY_POOL_TABLE).entries.map((e) => Items.get(e.itemId).craftRole);
-    expect(declared, "test is vacuous — put a component back in legendary-weapons.json").toContain("component");
+    // ⭐ owner 的裁決:合成原料**現在滾得到**。突變:把 "component" 加回
+    // DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES → 這一條紅(而且訊息說得出是哪一支)。
+    const components = LootTables.get(LEGENDARY_POOL_TABLE)
+      .entries.map((e) => e.itemId)
+      .filter((id) => Items.get(id).craftRole === "component");
+    expect(components.length, "test is vacuous — put a component back in legendary-weapons.json").toBeGreaterThan(0);
+    // 近戰英雄拿得到的那些(排除攻擊型態不符的)必須真的在池子裡。
+    const rollable = components.filter((id) => Items.get(id).requiresAttackType === undefined);
+    expect(rollable.length).toBeGreaterThan(0);
+    for (const id of rollable) {
+      expect(pool, `${id} 是 owner 裁決要能被隨機三選一發出來的合成原料`).toContain(id);
+    }
   });
 
   it("a priced, effectful recipe component is refused with gold — even if whitelisted", () => {

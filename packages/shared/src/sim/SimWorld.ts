@@ -38,6 +38,7 @@ import {
 } from "./augmentEnemyFilter";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
+import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
   DEFAULT_TAUNT_RULES,
   forgetSuspendedOrdersOn,
@@ -521,6 +522,20 @@ export class SimWorld {
    * on every replica, never mutated by a system.
    */
   itemEligible: ((itemId: ItemId) => boolean) | null = null;
+
+  /**
+   * 三選一不可以發哪些 `craftRole`（owner 2026-08-04「49支可被隨機三選一 就好」）。
+   *
+   * 出貨值與完整理由住在 `economy/offerEligibility.ts` 的
+   * {@link DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES}；後台欄位是
+   * `config.arena-rules@1` 的 `itemDraft.excludedCraftRoles`。
+   *
+   * ⚠️ 與 `itemEligible` 同一類：host CONFIG，在 tick 0 之前指派一次、每個複本
+   * 相同、**沒有任何 system 會改它**，所以決定性不受影響。
+   * ⚠️ 它必須在 roll **之前**過濾（`offerEligibility.itemOfferableTo` 就在那個
+   * 位置）—— 事後把抽出來的卡濾掉正是 task #47 的空卡缺陷。
+   */
+  offerExcludedCraftRoles: readonly string[] = DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES;
 
   /**
    * 武器貨架 open/closed (#261) — 「除了能力屬性強化、及傳說寶玉外，其他武器道具

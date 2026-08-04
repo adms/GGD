@@ -202,8 +202,8 @@ describe("每一格都有人話，而且沒有多餘的 (adminui-item-draft)", (
 describe("存檔一定送整份文件 (adminui-item-draft)", () => {
   it("★ patchItemDraft 只換掉 itemDraft，其他區塊一個都不掉", () => {
     cover(TAG);
-    const next = patchItemDraft(realDoc, { shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 8 });
-    expect(next.itemDraft).toEqual({ shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 8 });
+    const next = patchItemDraft(realDoc, { shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 8, excludedCraftRoles: []  });
+    expect(next.itemDraft).toEqual({ shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 8, excludedCraftRoles: []  });
     // 逐個 key 比,不是「有幾個 key」—— 換掉一個區塊也會保持數量相同。
     for (const key of Object.keys(realDoc)) {
       if (key === "itemDraft") continue;
@@ -228,10 +228,20 @@ describe("存檔一定送整份文件 (adminui-item-draft)", () => {
 
   it("★ 表單 → 文件 → 表單 是無損的，而且 changedFields 說得出改了哪幾格", () => {
     cover(TAG);
-    const cfg = { shortPoolMode: "fallback" as const, fallbackTable: "quest-rewards", maxDraws: 128 };
+    const cfg = { shortPoolMode: "fallback" as const, fallbackTable: "quest-rewards", maxDraws: 128, excludedCraftRoles: []  };
     expect(itemDraftFromForm(formFromConfig(cfg))).toEqual(cfg);
     expect(changedFields(SHIPPED_ITEM_DRAFT)).toEqual([]);
-    expect(changedFields(cfg).sort()).toEqual(["fallbackTable", "maxDraws", "shortPoolMode"]);
+    // `cfg` 的 excludedCraftRoles 是 []，出貨值是 ["token","service"] → 也算改過。
+    expect(changedFields(cfg).sort()).toEqual([
+      "excludedCraftRoles",
+      "fallbackTable",
+      "maxDraws",
+      "shortPoolMode",
+    ]);
+    // ★ 陣列欄位要比**內容**不是比參考：出貨值複製一份出來必須算「沒改」。
+    expect(
+      changedFields({ ...SHIPPED_ITEM_DRAFT, excludedCraftRoles: [...SHIPPED_ITEM_DRAFT.excludedCraftRoles] }),
+    ).toEqual([]);
   });
 
   it("★ 摘要說的是玩家會看到什麼，包含「選了 fallback 卻沒填表」那個陷阱", () => {
@@ -239,13 +249,13 @@ describe("存檔一定送整份文件 (adminui-item-draft)", () => {
     expect(itemDraftSummary(SHIPPED_ITEM_DRAFT, 3)).toContain("3 張");
     expect(itemDraftSummary(SHIPPED_ITEM_DRAFT, 3)).toContain("短卡");
     expect(
-      itemDraftSummary({ shortPoolMode: "fallback", fallbackTable: "", maxDraws: 64 }, 3),
+      itemDraftSummary({ shortPoolMode: "fallback", fallbackTable: "", maxDraws: 64, excludedCraftRoles: []  }, 3),
       "選了借獎池但沒填表時，摘要必須說實話（實際上會發短卡）",
     ).toContain("實際上會發短卡");
     expect(
-      itemDraftSummary({ shortPoolMode: "fallback", fallbackTable: "quest-rewards", maxDraws: 64 }, 3),
+      itemDraftSummary({ shortPoolMode: "fallback", fallbackTable: "quest-rewards", maxDraws: 64, excludedCraftRoles: []  }, 3),
     ).toContain("quest-rewards");
-    expect(itemDraftSummary({ shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 64 }, 4)).toContain(
+    expect(itemDraftSummary({ shortPoolMode: "duplicate", fallbackTable: "", maxDraws: 64, excludedCraftRoles: []  }, 4)).toContain(
       "4 張",
     );
   });

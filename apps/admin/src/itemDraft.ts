@@ -35,6 +35,8 @@ export interface ItemDraftConfig {
   shortPoolMode: ShortPoolMode;
   fallbackTable: string;
   maxDraws: number;
+  /** 三選一不可以發哪些 `craftRole`（owner 2026-08-04）。 */
+  excludedCraftRoles: readonly string[];
 }
 
 /**
@@ -45,18 +47,20 @@ export const SHIPPED_ITEM_DRAFT: Readonly<ItemDraftConfig> = Object.freeze({
   shortPoolMode: "short" as const,
   fallbackTable: "",
   maxDraws: 64,
+  excludedCraftRoles: Object.freeze(["token", "service"]),
 });
 
 /** 出貨的卡片張數（唯讀顯示；真正的欄位是 arena-rules 頂層的 `offerCount`）。 */
 export const SHIPPED_OFFER_COUNT = 3;
 
 /** 這一頁的欄位,**順序就是畫面順序**。 */
-export type ItemDraftField = "shortPoolMode" | "fallbackTable" | "maxDraws";
+export type ItemDraftField = "shortPoolMode" | "fallbackTable" | "maxDraws" | "excludedCraftRoles";
 
 export const ITEM_DRAFT_FIELD_ORDER: readonly ItemDraftField[] = [
   "shortPoolMode",
   "fallbackTable",
   "maxDraws",
+  "excludedCraftRoles",
 ];
 
 /**
@@ -65,12 +69,13 @@ export const ITEM_DRAFT_FIELD_ORDER: readonly ItemDraftField[] = [
  * (見下面 SHIPPED_RETIRED_LOOT_TABLES 的說明),但它調的是同一個東西 ——
  * 「這一場的三選一可以從哪些池子抽」 —— 所以放在同一頁。
  */
-export type ItemDraftGroup = "policy" | "safety" | "retire";
+export type ItemDraftGroup = "policy" | "safety" | "retire" | "pool";
 
 export const ITEM_DRAFT_GROUP_ZH: Readonly<Record<ItemDraftGroup, string>> = Object.freeze({
   policy: "候選不足時怎麼辦",
   safety: "保險",
   retire: "退場的獎池",
+  pool: "哪些東西可以被發出去",
 });
 
 export interface FieldLabel {
@@ -106,7 +111,27 @@ export const ITEM_DRAFT_LABELS: Readonly<Record<ItemDraftField, FieldLabel>> = O
       "「卡片張數被打成很大的數字」時整場卡在發卡上。",
     group: "safety",
   },
+  excludedCraftRoles: {
+    zh: "不可以發出去的道具角色",
+    note:
+      "列在這裡的 craftRole，免費武器卡與 2400 金傳說寶玉**兩條路都不會發**。" +
+      "出貨值 token、service（兌換券與商店服務放進獎勵池沒有意義）。" +
+      "⚠️ 2026-08-04 之前 component（合成原料）也在名單裡，但那道閘**只掛在寶玉上** —— " +
+      "同一支原料免費卡發得出來、寶玉抽不到。owner 裁決「49 支可被隨機三選一就好」，" +
+      "所以 component 被拿掉（這個遊戲沒有合成系統）。**要關回去就在這裡加一個 component。**",
+    group: "pool",
+  },
 });
+
+/**
+ * 出貨樹裡真的存在的 `craftRole` 值。**警告用不是驗證用**（同 KNOWN_LOOT_TABLES）：
+ * 新增一個角色而忘了更新這裡，`itemDraftShippedCopy.test.ts` 會紅。
+ */
+export const KNOWN_CRAFT_ROLES: readonly string[] = ["final", "component", "quest", "token", "service"];
+
+/** 鏡射 `zItemDraftConfig.excludedCraftRoles` 的 `.max(8)` 與每格 `.max(32)`。 */
+export const EXCLUDED_ROLES_MAX = 8;
+export const CRAFT_ROLE_MAXLEN = 32;
 
 /** 下拉選項 —— 每一個都寫「玩家會看到什麼」。 */
 export const SHORT_POOL_MODE_OPTIONS: readonly { value: ShortPoolMode; zh: string; note: string }[] = [
@@ -259,6 +284,10 @@ export function extractItemDraft(doc: unknown): ItemDraftConfig | null {
       typeof b.maxDraws === "number" && Number.isFinite(b.maxDraws)
         ? Math.trunc(b.maxDraws)
         : SHIPPED_ITEM_DRAFT.maxDraws,
+    // `.optional()`：舊文件沒有這一格 = 出貨清單，不是「什麼都不排除」。
+    excludedCraftRoles: Array.isArray(b.excludedCraftRoles)
+      ? b.excludedCraftRoles.filter((v): v is string => typeof v === "string")
+      : [...SHIPPED_ITEM_DRAFT.excludedCraftRoles],
   };
 }
 
@@ -292,6 +321,8 @@ export interface ItemDraftForm {
   shortPoolMode: ShortPoolMode;
   fallbackTable: string;
   maxDrawsText: string;
+  /** 逗號 / 換行分隔，與退場清單同一個輸入形狀。 */
+  excludedCraftRolesText: string;
 }
 
 export function formFromConfig(cfg: ItemDraftConfig): ItemDraftForm {
@@ -299,6 +330,7 @@ export function formFromConfig(cfg: ItemDraftConfig): ItemDraftForm {
     shortPoolMode: cfg.shortPoolMode,
     fallbackTable: cfg.fallbackTable,
     maxDrawsText: String(cfg.maxDraws),
+    excludedCraftRolesText: cfg.excludedCraftRoles.join(", "),
   };
 }
 
@@ -347,6 +379,25 @@ export function validateItemDraftForm(form: ItemDraftForm): FieldError[] {
     }
   }
 
+  const roles = parseRetiredTables(form.excludedCraftRolesText);
+  if (roles.length > EXCLUDED_ROLES_MAX) {
+    out.push({
+      field: "excludedCraftRoles",
+      error: `最多只能列 ${EXCLUDED_ROLES_MAX} 個角色（超過通常代表貼錯東西進來了）`,
+    });
+  } else {
+    for (const r of roles) {
+      if (r.length > CRAFT_ROLE_MAXLEN) {
+        out.push({ field: "excludedCraftRoles", error: `角色名稱不可超過 ${CRAFT_ROLE_MAXLEN} 個字元：${r.slice(0, 20)}…` });
+        break;
+      }
+      if (!/^[a-z][a-z0-9-]*$/.test(r)) {
+        out.push({ field: "excludedCraftRoles", error: `角色名稱只能是小寫英數字與連字號：${r}` });
+        break;
+      }
+    }
+  }
+
   return out;
 }
 
@@ -356,6 +407,7 @@ export function itemDraftFromForm(form: ItemDraftForm): ItemDraftConfig {
     shortPoolMode: form.shortPoolMode,
     fallbackTable: form.fallbackTable.trim(),
     maxDraws: Math.trunc(Number(form.maxDrawsText.trim())),
+    excludedCraftRoles: parseRetiredTables(form.excludedCraftRolesText),
   };
 }
 
@@ -381,7 +433,12 @@ export function itemDraftSummary(cfg: ItemDraftConfig, offerCount: number): stri
 export function changedFields(cfg: ItemDraftConfig): ItemDraftField[] {
   const out: ItemDraftField[] = [];
   for (const f of ITEM_DRAFT_FIELD_ORDER) {
-    if (cfg[f] !== SHIPPED_ITEM_DRAFT[f]) out.push(f);
+    // ⚠️ 陣列欄位要比**內容**不是比參考 —— `!==` 對兩個內容相同的陣列永遠為真,
+    // 那會讓「已修改」在沒有人改過的時候就亮著（一個永遠說謊的指示燈）。
+    const a = cfg[f];
+    const b = SHIPPED_ITEM_DRAFT[f];
+    const same = Array.isArray(a) && Array.isArray(b) ? a.length === b.length && a.every((v, i) => v === b[i]) : a === b;
+    if (!same) out.push(f);
   }
   return out;
 }

@@ -15,6 +15,7 @@ import {
   ARENA_RULES_COLLECTION,
   ARENA_RULES_DOC_ID,
   ITEM_DRAFT_FIELD_ORDER,
+  KNOWN_CRAFT_ROLES,
   ITEM_DRAFT_GROUP_ZH,
   ITEM_DRAFT_LABELS,
   KNOWN_LOOT_TABLES,
@@ -241,6 +242,24 @@ export function ItemDraftPage(): JSX.Element {
                     />
                   )}
 
+                  {field === "excludedCraftRoles" && (
+                    <input
+                      aria-label={label.zh}
+                      data-field="excludedCraftRoles"
+                      value={form.excludedCraftRolesText}
+                      placeholder="token, service"
+                      onChange={(e) => setForm({ ...form, excludedCraftRolesText: e.target.value })}
+                      style={{
+                        width: "100%",
+                        padding: "4px 6px",
+                        background: "transparent",
+                        color: err ? DANGER : TEXT_MAIN,
+                        border: `1px solid ${err ? DANGER : PANEL_BORDER}`,
+                        borderRadius: 3,
+                      }}
+                    />
+                  )}
+
                   <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 4, lineHeight: 1.6 }}>
                     {label.note}
                   </div>
@@ -257,6 +276,12 @@ export function ItemDraftPage(): JSX.Element {
                   {field === "maxDraws" && (
                     <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
                       合法範圍 {MAX_DRAWS_MIN}–{MAX_DRAWS_MAX} · 出貨值 {SHIPPED_ITEM_DRAFT.maxDraws}
+                    </div>
+                  )}
+                  {field === "excludedCraftRoles" && (
+                    <div style={{ color: TEXT_DIM, fontSize: 11, marginTop: 3 }}>
+                      出貨樹裡的角色：{KNOWN_CRAFT_ROLES.join(" · ")} · 出貨值{" "}
+                      {SHIPPED_ITEM_DRAFT.excludedCraftRoles.join("、") || "（不排除任何角色）"}
                     </div>
                   )}
                   {err && <div style={{ color: DANGER, fontSize: 12, marginTop: 4 }}>{err}</div>}
