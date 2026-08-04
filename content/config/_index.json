@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "8f5234c25708",
+  "hash": "1964c8538961",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -19,6 +19,12 @@
       "path": "config/audio-map.json",
       "hash": "a36465eb3e58",
       "size": 28438
+    },
+    {
+      "id": "augment-filter",
+      "path": "config/augment-filter.json",
+      "hash": "759e7cc37d82",
+      "size": 1140
     },
     {
       "id": "base-bonus",
@@ -53,8 +59,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "da4952b0357c",
-      "size": 775
+      "hash": "da8b6a607808",
+      "size": 900
     },
     {
       "id": "combat-feel",

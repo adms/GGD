@@ -31,6 +31,11 @@ import {
   type BlockRules,
 } from "@ggd/shared/sim/blockRules";
 import {
+  AUGMENT_ENEMY_FILTER_DOC_ID,
+  augmentEnemyFilterFromDoc,
+  type AugmentEnemyFilter,
+} from "@ggd/shared/sim/augmentEnemyFilter";
+import {
   STEALTH_DOC_ID,
   stealthRulesFromDoc,
   type StealthRules,
@@ -785,6 +790,15 @@ export class MatchController {
      */
     blockRules: BlockRules = blockRulesFromDoc(Configs.tryGet(BLOCK_DOC_ID)),
     /**
+     * 增益卡敵方過濾 (`config.augment-filter@1`, 批 1 決策點 1-1) —— 殭屍算不算
+     * `victim: "enemyChampion"` 的敵人。和 `blockRules` 完全同一條路(含同一個
+     * 已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
+     * 出貨值 `false` = 字面語意 = 這個欄位出現之前的行為,所以它不改變平衡。
+     */
+    augmentEnemyFilter: AugmentEnemyFilter = augmentEnemyFilterFromDoc(
+      Configs.tryGet(AUGMENT_ENEMY_FILTER_DOC_ID),
+    ),
+    /**
      * 隱形規則 (`config.stealth@1`, 隱形原語 lane D) —— 隱形擋不擋自動索敵/
      * 手動點選/技能 AoE、破隱條件、兩個渲染不透明度。和 `shieldRules` 完全同
      * 一條路(含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟
@@ -856,6 +870,8 @@ export class MatchController {
     this.world.shieldRules = shieldRules;
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
     this.world.blockRules = blockRules;
+    // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
+    this.world.augmentEnemyFilter = augmentEnemyFilter;
     // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
     this.world.stealthRules = stealthRules;
     // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。
@@ -1098,7 +1114,17 @@ export class MatchController {
       // match-income arithmetic the whole price ladder is derived from —
       // assumes 600. At 500 the turn-1 purse buys ONE 300g SIMPLE item instead
       // of two, which deletes the opening decision the prices exist to create.
-      grantGold(this.world, seat.entityId, STARTING_GOLD);
+      //
+      // 回合發放倍率 (owner 2026-08-04). ⚠️ THE OPENING PURSE IS IN THE 回合
+      // BUCKET, and that is a judgement the owner should see: it is not paid
+      // "per round", but it IS the deterministic schedule income the round
+      // grants belong to, and `STARTING_GOLD` is a CONSTANT with no 後台 field
+      // of its own (`config.match economy.startingGold` is read-only and unread
+      // — see apps/admin/src/matchConfig.ts's header), so this multiplier is
+      // currently the only knob that reaches it at all. The cost of the choice,
+      // stated: at 0.5 the purse is 300, which buys ONE 300g SIMPLE item and
+      // deletes the turn-1 fork task #82 built the price ladder around.
+      grantGold(this.world, seat.entityId, STARTING_GOLD, "round");
     }
   }
 
@@ -1216,7 +1242,8 @@ export class MatchController {
             if (ab && ab.slots[slot].rank === 0) rankUpAbility(this.world, entity, slot);
           }
         }
-        if (grant.grantGold) grantGold(this.world, entity, grant.grantGold);
+        // 回合發放倍率 (owner 2026-08-04) —— arena-rules 的每回合排程金.
+        if (grant.grantGold) grantGold(this.world, entity, grant.grantGold, "round");
       }
     }
 
@@ -2168,10 +2195,11 @@ export class MatchController {
       for (const seat of this.seats.values()) {
         if (seat.entityId === null) continue;
         if (seat.teamId === winner) {
-          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundWin);
+          // 回合發放倍率 (owner 2026-08-04) —— 回合勝/負/輪空與決賽結算金全部同一格.
+          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundWin, "round");
           grantXp(this.world, seat.entityId, XP_REWARDS.roundSurvive);
         } else if (seat.teamId === loser) {
-          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose);
+          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose, "round");
           grantXp(this.world, seat.entityId, Math.floor(XP_REWARDS.roundSurvive / 2));
         }
       }
@@ -2184,7 +2212,7 @@ export class MatchController {
     if (this.bye !== null) {
       for (const seat of this.seats.values()) {
         if (seat.teamId === this.bye && seat.entityId !== null) {
-          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose);
+          grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose, "round");
         }
       }
     }
@@ -2213,10 +2241,10 @@ export class MatchController {
     for (const seat of this.seats.values()) {
       if (seat.entityId === null) continue;
       if (seat.teamId === winner) {
-        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundWin);
+        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundWin, "round");
         grantXp(this.world, seat.entityId, XP_REWARDS.roundSurvive);
       } else {
-        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose);
+        grantGold(this.world, seat.entityId, GOLD_REWARDS.roundLose, "round");
         grantXp(this.world, seat.entityId, Math.floor(XP_REWARDS.roundSurvive / 2));
       }
     }
@@ -3539,7 +3567,9 @@ export class MatchController {
         return true;
       }
       case "grantGold":
-        grantGold(this.world, entity, Math.floor(cheat.amount));
+        // 刻意不乘倍率:開發者作弊指令說「給我 N」就必須給 N,
+        // 否則除錯工具自己在說謊(見 GoldPayoutCategory 的 unscaled).
+        grantGold(this.world, entity, Math.floor(cheat.amount), "unscaled");
         return true;
       case "maxAbilities": {
         const ab = this.world.abilities.get(entity);

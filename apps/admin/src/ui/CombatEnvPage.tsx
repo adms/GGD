@@ -101,6 +101,9 @@ export function CombatEnvPage(): React.JSX.Element {
           全域戰鬥倍率表：每個數值都是一個乘算係數，<b style={{ color: TEXT_MAIN }}>1 = 預設</b>（與原本完全相同）。
           例如「造成傷害 1.2」= 全場傷害提高 20%，「技能冷卻時間 0.8」= 冷卻縮短 20%。可調整範圍 {MIN_FACTOR}～{MAX_FACTOR}。
           <br />
+          「經濟 · 金錢發放倍率」那一組的下限是 <b style={{ color: TEXT_MAIN }}>0</b>（＝那一類完全不發），
+          上限 {MAX_FACTOR}；其餘倍率的下限是 {MIN_FACTOR}，因為傷害或攻速乘 0 等於整場打不動。
+          <br />
           最後一組「三圍派生」不是倍率，是<b style={{ color: TEXT_MAIN }}>每 1 點力量／敏捷／智慧換算出多少數值</b>
           （預設就是魔獸三代原值，例如力量→生命 25），可調整範圍 0～100；它作用在上面那些倍率<b style={{ color: TEXT_MAIN }}>之前</b>。
         </div>

@@ -56,6 +56,54 @@ func TestKeysMatchTheSharedSimList(t *testing.T) {
 		path)
 }
 
+// goldKeysRe pulls the quoted entries out of the GOLD_ENV_KEYS array literal in
+// the shared sim package.
+var goldKeysRe = regexp.MustCompile(`(?s)GOLD_ENV_KEYS\s*:\s*readonly GoldEnvKey\[\]\s*=\s*\[(.*?)\]`)
+
+// combatenv-gold-factors-in-sync: membership in GoldFactors is what gives a key
+// the [MinGoldFactor, MaxGoldFactor] band instead of the ×factor [0.1, 10] one,
+// and 0 ("這一類完全不發") is a setting the owner asked for by name.
+//
+// Keys and GoldFactors are TWO lists, so a rename that lands in one and not the
+// other is silent: the key still exists, the console still renders it, and the
+// only symptom is a PUT of 0 answering 400 — i.e. the one value the feature was
+// built to allow. Assert the set against the shared sim's own GOLD_ENV_KEYS.
+func TestGoldFactorsMatchTheSharedSimList(t *testing.T) {
+	testkit.Cover(t, "combatenv-keys-in-sync")
+
+	root, err := filepath.Abs(filepath.Join("..", "..", "..", ".."))
+	require.NoError(t, err)
+	path := filepath.Join(root, "packages", "shared", "src", "sim", "combatEnv.ts")
+	raw, err := os.ReadFile(path)
+	require.NoError(t, err)
+
+	m := goldKeysRe.FindSubmatch(stripTSComments(raw))
+	require.Len(t, m, 2, "could not find the GOLD_ENV_KEYS array literal in %s", path)
+
+	var shared []string
+	for _, q := range quotedRe.FindAllSubmatch(m[1], -1) {
+		shared = append(shared, string(q[1]))
+	}
+	require.NotEmpty(t, shared, "parsed an empty gold-key list from %s — the guard would be vacuous", path)
+
+	var mine []string
+	for k := range combatenv.GoldFactors {
+		mine = append(mine, k)
+	}
+	assert.ElementsMatch(t, shared, mine,
+		"combatenv.GoldFactors has drifted from GOLD_ENV_KEYS in %s. A gold key missing here keeps the "+
+			"0.1 ×factor floor, so the console rejects the 0 the owner asked to be able to set.", path)
+
+	// and every one of them must be a KNOWN key with the gold band, or the
+	// platform drops it from every table it serves (the #136 abilityRange shape).
+	for _, k := range shared {
+		assert.True(t, combatenv.KnownKey(k), "%s is a gold factor but not in combatenv.Keys", k)
+		lo, hi := combatenv.Bounds(k)
+		assert.Equal(t, combatenv.MinGoldFactor, lo, "%s should use the gold lower bound", k)
+		assert.Equal(t, combatenv.MaxGoldFactor, hi, "%s should use the gold upper bound", k)
+	}
+}
+
 var attrDefaultsRe = regexp.MustCompile(`(?s)ATTRIBUTE_ENV_DEFAULTS\s*=\s*\{(.*?)\}`)
 var pairRe = regexp.MustCompile(`([a-zA-Z]+):\s*([0-9.]+)`)
 

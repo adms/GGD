@@ -48,6 +48,43 @@
  *                   re-query, and the ability projectile hit radius in
  *                   ProjectileSystem, all via resolveAbilityRange/Radius)
  *
+ * THE FIVE 金錢發放 FACTORS (owner 2026-08-04「金錢發放有點太浮濫了」) join the
+ * same table for the same reason the coefficients did — this IS the project's
+ * 系統倍率 mechanism, and a second one would mean a second admin page, a second
+ * snapshot path and a second thing to keep in sync:
+ *
+ *   goldRoundPayout × 回合發放: 開局購物金, arena-rules 的每回合 grantGold 排程,
+ *                     回合勝/負/輪空 與決賽的結算金
+ *   goldMobKill     × 打一般殭屍: 每隻普通殭屍的 rewardGold, 召喚物賞金,
+ *                     以及技能/道具把「非英雄的屍體」變成錢的發放 (鍊金術之盾)
+ *   goldEliteKill   × 打特殊殭屍與殭屍王: 特殊殭屍的 rewardGold(含 rewardMult)
+ *                     與它的分紅獎池, 殭屍王的分紅獎池
+ *   goldHeroKill    × 擊敗英雄: 擊殺獎勵 + 首殺賞金 (#90)
+ *   goldQuest       × 完成任務: 守衛塔補刀獎勵 (#89) 等場上目標物
+ *
+ * ⚠️ WHY 一般 AND 特殊/王 ARE TWO ROWS, NOT ONE (owner 2026-08-04:
+ * 「打殭屍 => 0.1x 這樣看起來就好了」+「普通殭屍 的確也可以單獨倍率, 預設改成
+ * 0.5」). They are two different economies wearing the same coat: a 一般殭屍 is a
+ * per-kill trickle a player farms dozens of, while a 特殊殭屍 or a 殭屍王 is a
+ * single lump the size of an item build. One knob cannot make the lump sane and
+ * leave the trickle alone, which is exactly the complaint 「太浮濫」 names.
+ *
+ * ⚠️ 殭屍王 IS `goldEliteKill`, NOT `goldQuest`, and that is a correction, not a
+ * preference. It was briefly filed under 完成任務 because #262 calls it the
+ * quest's prize — but #262/#263 are both still pending, so NO QUEST PAYS ANY
+ * GOLD TODAY, and the king is the single largest gold source in a match. Filing
+ * the biggest payout under a knob the owner would never think to turn is how
+ * 「我把打殭屍調成 0.1 了, 錢還是很多」 happens. `goldQuest` is not left empty:
+ * the 守衛塔 last-hit reward (#89) pays through it.
+ *
+ * All five apply at ONE seam — `economy/progression.ts grantGold`, whose
+ * category argument is REQUIRED so a new payout site cannot compile without
+ * naming its bucket. AT 1.0 EACH ONE IS BIT-IDENTICAL BY CONSTRUCTION (the
+ * scaler returns the amount untouched when the factor is exactly 1), not by
+ * luck of rounding — which is what makes the two rows that ship BELOW 1.0
+ * (see content/config/combat-env.json) a deliberate balance change and every
+ * other row a no-op.
+ *
  * THE NINE 三圍 COEFFICIENTS (task #248, ninth added by GH#221) join the same
  * table rather than inventing a second config surface, so the admin 戰鬥系統 page
  * tunes them with everything else and a match snapshots them exactly like the rest:
@@ -137,9 +174,118 @@ export const COMBAT_ENV_KEYS = [
   // the Go mirror, `content/config/combat-env.json` and `apps/admin`; do not
   // rely on ordering being protected, because it is not.
   "intToMagicResist",
+  // ── 金錢發放倍率 ×5 (owner 2026-08-04「金錢發放有點太浮濫了…分為 回合發放倍率,
+  //    打殭屍發放倍率, 擊敗英雄發放倍率, 完成任務發放倍率」+ 同日追加
+  //    「普通殭屍 的確也可以單獨倍率, 預設改成 0.5」) ──────────────────────────
+  //
+  // A THIRD KIND OF ENTRY in this table. The eighteen legacy factors scale a
+  // STAT or a DURATION; the nine 三圍 rows are COEFFICIENTS. These five scale a
+  // PAYOUT, and they differ from the ×factors in exactly one way that matters:
+  // 0 is a legal, meaningful setting (「這一類完全不發」), where a 0 damage
+  // multiplier is not. So they get their own band — see isGoldEnvKey /
+  // GOLD_FACTOR_MIN / GOLD_FACTOR_MAX below and `combatenv.Bounds` in the Go
+  // mirror, which must agree or the console accepts a value the PUT rejects.
+  //
+  // They are applied at exactly ONE seam, like every other row:
+  // `economy/progression.ts grantGold`, which takes a REQUIRED category
+  // argument so a new payout site cannot compile without choosing a bucket.
+  //
+  // ⚠️ 一般 vs 特殊/王 是兩格。elite 收的是 特殊殭屍 + 殭屍王 —— 兩者都是「一次
+  // 一大筆」, 而 mob 收的是玩家整場刷幾十次的涓流。用同一格調, 就沒辦法在壓掉
+  // 大筆的同時留住涓流, 而那正是 owner 說 0.1 時要的東西。
+  "goldRoundPayout",
+  "goldMobKill",
+  "goldEliteKill",
+  "goldHeroKill",
+  "goldQuest",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
+
+/**
+ * The five 金錢發放 factors (owner 2026-08-04). Membership here is what gives a
+ * key the [GOLD_FACTOR_MIN, GOLD_FACTOR_MAX] band instead of the ×factor one —
+ * the same mechanism `isAttributeEnvKey` uses for the 三圍 coefficients.
+ *
+ * ⚠️ THE FLOOR IS 0 AND THAT IS THE POINT. 「完全不發」 is a setting the owner
+ * asked for; the legacy 0.1 floor exists because a 0× damage multiplier is a
+ * broken match, and that reasoning does not transfer to a payout.
+ *
+ * ⚠️ SPELLED OUT, NOT a `startsWith("gold")` prefix test — the Go mirror's
+ * `GoldFactors` says the same thing for the same reason: a future key that
+ * merely READS as an economy row must not inherit a 0 floor nobody reviewed.
+ * The `GoldEnvKey[]` annotation is what makes a typo a compile error instead of
+ * a key that silently keeps the 0.1 floor.
+ */
+const GOLD_ENV_KEYS: readonly GoldEnvKey[] = [
+  "goldRoundPayout",
+  "goldMobKill",
+  "goldEliteKill",
+  "goldHeroKill",
+  "goldQuest",
+];
+
+const GOLD_KEY_SET: ReadonlySet<string> = new Set(GOLD_ENV_KEYS);
+
+/** True when `k` is one of the five 金錢發放 factors. */
+export function isGoldEnvKey(k: string): k is GoldEnvKey {
+  return GOLD_KEY_SET.has(k);
+}
+
+/**
+ * The 金錢發放 factor keys. Derived from `CombatEnvKey` so a key that exists
+ * here but not in `COMBAT_ENV_KEYS` cannot compile.
+ */
+export type GoldEnvKey = Extract<
+  CombatEnvKey,
+  "goldRoundPayout" | "goldMobKill" | "goldEliteKill" | "goldHeroKill" | "goldQuest"
+>;
+
+/** 完全不發 is legal for a payout factor (it is not for a damage factor). */
+export const GOLD_FACTOR_MIN = 0;
+/**
+ * Upper bound. NOT decoration — #277 is 「後台打錯一個數字全英雄一開場就死」, and
+ * an unbounded payout factor is the same defect wearing an economy's clothes:
+ * a mistyped 100 turns one zombie into a full item build.
+ */
+export const GOLD_FACTOR_MAX = 10;
+
+/**
+ * Apply one 金錢發放倍率 to a configured amount. THE ONLY COPY OF THIS RULE.
+ *
+ * `sim/economy/progression.scaleGoldPayout` calls it (the payout side) and the
+ * ADMIN CONSOLE calls it (the display side, 後台 → 殭屍波系統's 「實發」 column).
+ * That second caller is the reason it lives here rather than inside
+ * `progression.ts`: this module is a leaf (one import, `Stat`), while
+ * `progression.ts` pulls the scoreboard in, and the console page is EAGERLY
+ * bundled.
+ *
+ * ⚠️ WHY THE CONSOLE MUST CALL THIS AND NOT RE-DERIVE IT (owner 2026-08-04
+ * 「顯示不說謊 => 顯示真實值，跟其他系統倍率一樣」 —— the same rule as #125).
+ * 後台's 殭屍波系統 printed the CONFIGURED 殭屍王獎金池 while a real match paid
+ * something else entirely. A second `Math.round(x * f)` written in the page would
+ * fix today's number and silently drift the first time the rounding or the
+ * fail-safe below changes — the console would be lying again, in a new way, with
+ * every test still green.
+ *
+ * ⚠️ AND THIS FUNCTION ALONE IS NOT THE WHOLE ANSWER FOR THE TWO BOUNTY POOLS.
+ * A pool's payout is a RANGE, not a number: `splitBossBounty`'s shipped
+ * `lastHitMode: "bonus"` pays the last hitter a second copy of their own share,
+ * so the total lands in `[pool, pool × lastHitMultiplier]` BEFORE this factor is
+ * applied, and where inside that range depends on the damage split. Quoting one
+ * measured figure for it is how the console ended up with three mutually
+ * contradictory 「measured」 numbers on 2026-08-04 — they were three points on one
+ * range. The console derives both endpoints from those two config fields; see
+ * `apps/admin/src/mobWaves.ts` → `goldPoolLastHitBonus`.
+ *
+ * ROUNDING + the two fail-safes are documented at `scaleGoldPayout`; the
+ * `factor === 1` early return is the bit-identical-at-1.0 regression guard.
+ */
+export function applyGoldFactor(amount: number, factor: number): number {
+  if (factor === 1) return amount;
+  if (!Number.isFinite(factor) || factor < 0) return amount; // same fail-safe as normalizeCombatEnv
+  return Math.round(amount * factor);
+}
 
 /**
  * The nine 三圍 coefficients (task #248 shipped eight; GH#221 added the ninth)

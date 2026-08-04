@@ -1458,16 +1458,28 @@ export class VfxSystem {
       case "goldGrant": {
         const payee = ev.data.target as number | undefined;
         const amount = ev.data.amount as number | undefined;
-        // Defence against a malformed / renamed payload, NOT against a real
-        // emit. ⚠️ CORRECTED 2026-08-01 (第三守則): this comment used to claim
-        // 「the sim CAN emit a zero payout — transmuting a zombie pays `flat`
-        // alone」. That is FALSE and was self-consistent across three places
-        // (here, the paired test's title, and the report that shipped it).
-        // `sim/effects/grantGold.ts` does `if (amount <= 0) return;` BEFORE its
-        // `for (const p of payees)` emit loop, so a zero payout produces no
-        // event at all — running the real effect on a level-less body yields
-        // `world.events === []`. The guard stays because a client must never
-        // trust a wire payload, but it defends against nothing the sim does today.
+        // ⚠️ THIS COMMENT HAS BEEN WRONG TWICE (第三守則). Current, measured:
+        //
+        //   A ZERO PAYOUT **IS** SOMETHING THE SIM EMITS.
+        //
+        // `sim/effects/grantGold.ts` does `if (amount <= 0) return;` before its
+        // emit loop — but that gate reads the REQUESTED amount, and since the
+        // 金錢發放倍率 round (owner 2026-08-04) the event carries the PAID one.
+        // With 「打一般殭屍發放倍率」 set to 0, transmuting a level-3 zombie is
+        // requested=3 (passes the gate) → paid=0 → `goldGrant { amount: 0 }`
+        // really crosses the wire. Measured in
+        // packages/shared/src/sim/alchemyShieldShipped.test.ts.
+        //
+        // (The previous version of this comment said the opposite in as many
+        // words, and it was self-consistent with the paired test's title — both
+        // are corrected. The version before THAT claimed the zombie case paid
+        // `flat` alone, which was also false. Two different wrong stories about
+        // the same three lines is why this one cites a test that runs.)
+        //
+        // So the branch below now guards TWO things, and both are real:
+        //   · a malformed / renamed wire payload;
+        //   · a legitimate 0-gold grant — the purse did not move, so a coin
+        //     burst would be the display lying (owner 2026-08-04「顯示不說謊」).
         if (typeof amount !== "number" || !(amount > 0)) break;
         const pos = payee !== undefined ? this.ctx.entityPos(payee) : null;
         if (!isFinitePos(pos)) break;

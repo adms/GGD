@@ -21,12 +21,15 @@
 import {
   ATTRIBUTE_COEF_MAX,
   COMBAT_ENV_KEYS,
+  GOLD_FACTOR_MAX,
+  GOLD_FACTOR_MIN,
   defaultForKey,
   isAttributeEnvKey,
+  isGoldEnvKey,
   type CombatEnvKey,
 } from "@ggd/shared/sim/combatEnv";
 
-export { COMBAT_ENV_KEYS, defaultForKey, isAttributeEnvKey };
+export { COMBAT_ENV_KEYS, defaultForKey, isAttributeEnvKey, isGoldEnvKey };
 export type { CombatEnvKey };
 
 // ------------------------------------------------------------- bounds ------
@@ -49,9 +52,11 @@ export const STEP = 0.05;
  * value this page accepts is a value the PUT accepts.
  */
 export function minFactorFor(key: CombatEnvKey): number {
+  if (isGoldEnvKey(key)) return GOLD_FACTOR_MIN; // 0 = 這一類完全不發
   return isAttributeEnvKey(key) ? 0 : MIN_FACTOR;
 }
 export function maxFactorFor(key: CombatEnvKey): number {
+  if (isGoldEnvKey(key)) return GOLD_FACTOR_MAX;
   return isAttributeEnvKey(key) ? ATTRIBUTE_COEF_MAX : MAX_FACTOR;
 }
 
@@ -169,6 +174,32 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   // 魔獸三代沒有魔抗這個概念 —— 所以這一格沒有「原作值」可以對照,只有 owner 的設計值。
   // ⚠️ 它同時是 AP 傷害的減傷來源:調高它會讓所有法系英雄一起變弱,不只是「多一點抗性」。
   intToMagicResist: { zh: "智慧 → 魔抗", note: "每 1 點智慧增加的魔法抗性,直接減免受到的 AP 傷害（owner 設計值 0.6；魔獸三代沒有這根軸）" },
+  // 金錢發放倍率 (owner 2026-08-04「金錢發放有點太浮濫了」)。這五格的下限是 0
+  // ——「完全不發」是刻意要能設定的，跟其他倍率的 0.1 下限不同。
+  // note 一律寫「它影響什麼」，因為操作者要知道自己調的是哪一條收入。
+  //
+  // 打殭屍拆成兩格 (owner 同日「普通殭屍 的確也可以單獨倍率，預設改成 0.5」)：
+  // 普通殭屍是整場刷幾十次的涓流，特殊殭屍與殭屍王是一次一大筆。
+  goldRoundPayout: {
+    zh: "回合發放金錢",
+    note: "開局購物金、每回合排程發放、回合勝／負／輪空與決賽的結算金。0 = 這一類完全不發",
+  },
+  goldMobKill: {
+    zh: "打一般殭屍發放金錢",
+    note: "每隻普通殭屍的擊殺金、召喚物賞金，以及把「非英雄的屍體」變成錢的技能／道具（鍊金術之盾）。0 = 完全不發",
+  },
+  goldEliteKill: {
+    zh: "打特殊殭屍／殭屍王發放金錢",
+    note: "特殊殭屍的擊殺金（含它的獎勵倍率）與傷害分紅獎池，以及殭屍王的分紅獎池（全場最大的一筆）。0 = 完全不發",
+  },
+  goldHeroKill: {
+    zh: "擊敗英雄發放金錢",
+    note: "擊殺敵方英雄的獎勵，以及每位敵人只給一次的首殺賞金。0 = 完全不發",
+  },
+  goldQuest: {
+    zh: "完成任務發放金錢",
+    note: "守衛塔補刀獎勵等場上目標物。殭屍王不在這一格（它算特殊殭屍那一格）。0 = 完全不發",
+  },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -190,6 +221,12 @@ export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
   { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
   { title: "暴擊", keys: ["critChance", "critDamage"] },
   { title: "資源 · 魔力", keys: ["maxMana", "manaRegen"] },
+  {
+    // owner 2026-08-04「金錢發放有點太浮濫了」。自己一組,因為它們不影響戰鬥
+    // 數值,只影響經濟 —— 混進上面任何一組都會讓操作者以為調它會動到戰力。
+    title: "經濟 · 金錢發放倍率",
+    keys: ["goldRoundPayout", "goldMobKill", "goldEliteKill", "goldHeroKill", "goldQuest"],
+  },
   {
     // #248: 三圍派生係數。放在最後，因為它們作用在其他倍率「之前」——
     // 先由三圍算出英雄的基礎值，再乘上上面那些倍率。

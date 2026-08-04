@@ -53,7 +53,11 @@ export function deathSystem(world: SimWorld): void {
       recordChampionDeath(world, id, killer);
       if (killer !== null && world.champion.has(killer)) {
         grantXp(world, killer, XP_REWARDS.kill);
-        grantGold(world, killer, GOLD_REWARDS.kill);
+        // 擊敗英雄發放倍率 (owner 2026-08-04): both the base kill reward and the
+        // #90 first-blood bounty below are the SAME bucket — they are two halves
+        // of one 「殺了一個英雄」 payout, so splitting them across two knobs
+        // would give the operator a dial that cannot express 「英雄擊殺減半」.
+        grantGold(world, killer, GOLD_REWARDS.kill, "hero");
         // Kill BOUNTY (task #90): a one-time premium the FIRST time THIS enemy
         // champion is killed. Marked paid by victim entity id (stable across a
         // revive), so a revived-then-rekilled victim yields base kill gold only
@@ -61,7 +65,7 @@ export function deathSystem(world: SimWorld): void {
         // the bounty is only ever spent when a killer actually collects it.
         if (!world.bountyPaid.has(id)) {
           world.bountyPaid.add(id);
-          grantGold(world, killer, GOLD_REWARDS.killBounty);
+          grantGold(world, killer, GOLD_REWARDS.killBounty, "hero");
         }
         fireHooks(world, killer, "onKill", id);
         // 連殺 COMBO (owner, 2026-07-27). A CHAMPION kill feeds the very same

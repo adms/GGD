@@ -559,7 +559,11 @@ function payout(
     const kt = world.transform.get(killer);
     const valid = !!khp?.alive && !!kt && kt.zone === sc.zone;
     if (valid) {
-      grantGold(world, killer, rules.rewardGold);
+      // 完成任務發放倍率 (owner 2026-08-04). The tower is a 場上目標物, not a
+      // farmed unit: one per zone per round, killed once, paid once — the same
+      // shape as the 殭屍王 prize and nothing like the per-zombie stream. Named
+      // here rather than left unscaled so 「金錢太浮濫」 cannot route around it.
+      const paidGold = grantGold(world, killer, rules.rewardGold, "quest");
       // 滿 HP&MP — over-amounts clamp to max. score:false (not a healingDone stat).
       healTarget(world, {
         source: killer,
@@ -584,7 +588,9 @@ function payout(
         x,
         z,
         killerSeatId: world.team.get(killer)?.seatId ?? -1,
-        gold: rules.rewardGold,
+        // WHAT WAS PAID, not what was configured — this number is printed to
+        // the player, so it has to be the one that entered the purse.
+        gold: paidGold,
       });
       return;
     }

@@ -50,6 +50,11 @@ import type { IntentFrame } from "./intents";
 import { tauntedBy } from "./taunt";
 import { MONSTER_TEAM, mobRulesFromConfig, type MobWavesConfigLike } from "./mobs";
 import { beginCombatMobs } from "./systems/MobSystem";
+import {
+  COMBAT_ENV_DEFAULTS,
+  normalizeCombatEnv,
+  type CombatEnvMultipliers,
+} from "./combatEnv";
 import * as V from "./math/vec2";
 
 const TAG = "taunt-forced-targeting";
@@ -416,5 +421,101 @@ describe("[煉金術] HP 低於 5% 的敵人變成黃金", () => {
 
     expect(run(world, 900)).toHaveLength(0);
     expect(world.health.get(attacker)!.alive).toBe(true);
+  });
+
+  /* ══════════════════════════════════════════════════════════════════════
+   * 發放倍率：這一筆錢算在哪一格 —— **由屍體是誰決定**，不是由卡片決定
+   * ══════════════════════════════════════════════════════════════════════
+   * `effects/grantGold.ts` 的
+   *
+   *   victim !== undefined && world.champion.has(victim) ? "hero" : "mob"
+   *
+   * 是一個三元式，而三元式有**兩個方向**。複驗實測（2026-08-04）：把它塌成常數
+   * `"hero"` 或常數 `"mob"`，**兩邊都是 9,058 條全綠** —— 這條線在出貨那一天
+   * 完全沒有守衛（失敗形態 ③）。
+   *
+   * 為什麼這件事會被玩家看到：鍊金術之盾在傳說寶玉池裡，它的 passive[1] 掛
+   * `onDamageTaken`，而攻擊盾主的可能是**英雄**也可能是**殭屍** —— 實戰兩個
+   * 分支都會走到。接錯格子的症狀是「我把打殭屍調成 0.1，轉化殭屍還是給滿額」，
+   * 或者反過來「我沒動英雄那格，殺人卻只拿到一折」。
+   *
+   * ⚠️ 兩條測試都刻意各自關掉**兩個**格子：「關掉自己那格 → 歸零」單獨一條
+   * 只能抓到一個方向（塌成另一個常數時它照樣紅或照樣綠），要「關掉別人那格 →
+   * 原封不動」補上另一半，才蓋得住兩個方向。
+   *
+   * ⚠️ 一個字面金額都沒有：`neutral` 跑同一個情境當對照組，倍率 0 的期望值是
+   * 0（那是「不發」的定義，不是一個出貨數值）。
+   */
+  describe("發放倍率：轉化英雄走「擊敗英雄」那格，轉化殭屍走「打一般殭屍」那格", () => {
+    /** 轉化一個**英雄**：回傳事件上的金額與盾主錢包裡真的有的錢。 */
+    function transmuteChampion(m: CombatEnvMultipliers): { amount: number; wallet: number } {
+      const world = combatWorld(3);
+      world.combatEnv = m;
+      const holder = fighter(world, 0, at(0));
+      const attacker = fighter(world, 1, at(1.2), { maxHp: 100_000, hp: 4_000, level: 7 });
+      world.rebuildGrid();
+      grantItemFree(world, holder, SHIELD);
+      const paid = run(world, 900);
+      expect(paid.length, "30 秒之內轉化一次都沒有觸發 —— 這條守衛失去主體").toBeGreaterThan(0);
+      expect(world.health.get(attacker)!.alive, "被轉化的英雄還活著").toBe(false);
+      // 錢包從 0 起跳（`fighter` 建的），所以餘額就是差額。
+      return { amount: paid[0]!.amount, wallet: world.champion.get(holder)!.gold };
+    }
+
+    /** 轉化一隻**殭屍**：同上。SILENT_WAVES 的 `reward.gold` 是 0，所以錢包裡
+     *  只會有轉化這一筆 —— 補刀獎勵不會混進來。 */
+    function transmuteZombie(m: CombatEnvMultipliers): { amount: number; wallet: number } {
+      const world = combatWorld(3);
+      world.combatEnv = m;
+      beginCombatMobs(world, mobRulesFromConfig(SILENT_WAVES, world.dt, 5), [0]);
+      const holder = fighter(world, 0, at(0));
+      const zombie = mobBody(world, at(1.2), { maxHp: 100_000, hp: 4_000 });
+      world.rebuildGrid();
+      grantItemFree(world, holder, SHIELD);
+      const paid = run(world, 900);
+      expect(paid.length, "30 秒之內轉化一次都沒有觸發 —— 這條守衛失去主體").toBeGreaterThan(0);
+      expect(world.health.get(zombie)?.alive ?? false, "殭屍沒有被轉化掉").toBe(false);
+      return { amount: paid[0]!.amount, wallet: world.champion.get(holder)!.gold };
+    }
+
+    it("★ 轉化**英雄**：關掉擊敗英雄那格 → 一毛都沒有；關掉打殭屍那格 → 原封不動", () => {
+      cover(TAG);
+      const neutral = transmuteChampion(COMBAT_ENV_DEFAULTS);
+      expect(neutral.amount, "中性表下就沒發錢 —— 下面兩條會變成在比較 0 和 0").toBeGreaterThan(0);
+
+      const heroOff = transmuteChampion(normalizeCombatEnv({ goldHeroKill: 0 }));
+      expect(
+        heroOff.wallet,
+        "把「擊敗英雄發放倍率」關到 0，轉化英雄還是進了錢 —— 這筆錢沒走英雄那格",
+      ).toBe(0);
+      // 事件上的數字＝**實付**。這一行同時是「+N 金」浮動字的守衛：報請求值的
+      // 話畫面會寫 +7 而錢包一毛沒動（失敗形態 ②）。
+      expect(heroOff.amount, "面板/浮動字報的是請求值，不是真的進袋的錢").toBe(0);
+
+      const mobOff = transmuteChampion(normalizeCombatEnv({ goldMobKill: 0 }));
+      expect(
+        mobOff.amount,
+        "轉化英雄卻讀到了「打一般殭屍」那格 —— 三元式塌成常數的典型症狀",
+      ).toBe(neutral.amount);
+    });
+
+    it("★ 轉化**殭屍**：關掉打殭屍那格 → 一毛都沒有；關掉擊敗英雄那格 → 原封不動", () => {
+      cover(TAG);
+      const neutral = transmuteZombie(COMBAT_ENV_DEFAULTS);
+      expect(neutral.amount, "中性表下就沒發錢 —— 下面兩條會變成在比較 0 和 0").toBeGreaterThan(0);
+
+      const mobOff = transmuteZombie(normalizeCombatEnv({ goldMobKill: 0 }));
+      expect(
+        mobOff.wallet,
+        "把「打一般殭屍發放倍率」關到 0，轉化殭屍還是進了錢 —— 這筆錢沒走殭屍那格",
+      ).toBe(0);
+      expect(mobOff.amount, "面板/浮動字報的是請求值，不是真的進袋的錢").toBe(0);
+
+      const heroOff = transmuteZombie(normalizeCombatEnv({ goldHeroKill: 0 }));
+      expect(
+        heroOff.amount,
+        "轉化殭屍卻讀到了「擊敗英雄」那格 —— 三元式塌成常數的另一個方向",
+      ).toBe(neutral.amount);
+    });
   });
 });

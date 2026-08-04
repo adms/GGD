@@ -31,30 +31,58 @@
  * ════════════════════════════════════════════════════════════════════════════
  * WHAT IT DELIBERATELY DOES NOT COVER
  *
- * The bodies here are bare `world.spawn()` entities, not champions. That is
- * enough and it is honest: `grantGold` emits UNCONDITIONALLY after calling
- * `economy/progression.grantGold` (which no-ops on a non-champion), so the
- * payload is bit-identical either way, and `taunt` without a `radius` resolves
- * straight from `ctx.targets` and never touches the broad phase. The SHIPPED
- * card — real doc off disk, real `grantItemFree`, real hooks, real 10 % roll —
- * is covered by `packages/shared/src/sim/alchemyShieldShipped.test.ts`; this
- * file is about the wire, not about the card.
+ * The TAUNT bodies here are bare `world.spawn()` entities, not champions, and
+ * that is honest: `taunt` without a `radius` resolves straight from
+ * `ctx.targets` and never touches the broad phase. The SHIPPED card — real doc
+ * off disk, real `grantItemFree`, real hooks, real 10 % roll — is covered by
+ * `packages/shared/src/sim/alchemyShieldShipped.test.ts`; this file is about
+ * the wire, not about the card.
+ *
+ * ⚠️ THE GOLD PAYEE IS A REAL CHAMPION, AND IT HAS TO BE (corrected 2026-08-04).
+ * This file used to say 「the payload is bit-identical either way」 because
+ * `grantGold` no-ops on a non-champion — TRUE while the event carried the
+ * REQUESTED amount, FALSE the moment it started carrying the PAID one (the
+ * 金錢發放倍率 round: the floating 「+N 金」 must be the money that entered a
+ * purse). Against a bare body the paid amount is 0, so the assertion below
+ * would have pinned a zero and gone green no matter what the multiplier did —
+ * failure shape ④, 斷言與缺陷無關. A champion payee is what makes the number real.
  */
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
+import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
+import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
+import { asSeatId, asTeamId, type ChampionId } from "@ggd/shared/ids";
 import { runEffects } from "@ggd/shared/sim/effects/effectRunner";
 import type { SimEvent } from "@ggd/shared/sim/SimWorld";
 import { FANNED_OUT_EVENT_TYPES, SERVER_ONLY_EVENT_TYPES, isFannedOutEvent } from "./eventFanout";
 
 const TAG = "taunt-forced-targeting";
 
-/** Run one authored effect on a throwaway world and hand back what it emitted. */
-function emitted(effect: Record<string, unknown>, targets: number[] = []): SimEvent[] {
+beforeAll(() => registerSkeletonContent());
+
+/**
+ * Run one authored effect on a throwaway world and hand back what it emitted.
+ * `championCaster` spawns a REAL champion as the caster — required for any
+ * payout assertion, see the ⚠️ in the file header.
+ */
+function emitted(
+  effect: Record<string, unknown>,
+  targets: number[] = [],
+  championCaster = false,
+): SimEvent[] {
   const world = new SimWorld(SKELETON_ARENA, 7);
   world.combatActive = true;
-  const caster = world.spawn();
+  const caster = championCaster
+    ? spawnChampion(world, {
+        championId: "thorne" as ChampionId,
+        seatId: asSeatId(0),
+        teamId: asTeamId(0),
+        pos: { x: -40, z: 0 },
+        zone: 0,
+      })
+    : world.spawn();
   const bodies = targets.map(() => world.spawn());
   world.events.length = 0;
   runEffects([effect as never], {
@@ -83,7 +111,7 @@ describe("鍊金術之盾 — the two new sim events actually reach a client", (
 
   it("煉金術's payout crosses the wire", () => {
     cover(TAG);
-    const evs = emitted({ kind: "grantGold", flat: 12, to: "self" });
+    const evs = emitted({ kind: "grantGold", flat: 12, to: "self" }, [], true);
     const gold = evs.find((e) => e.type === "goldGrant");
     expect(gold, "the grantGold effect emitted nothing — the rest of this file is vacuous").toBeDefined();
     expect(isFannedOutEvent(gold!), "the payout is dropped before MatchRoom broadcast").toBe(true);
@@ -117,13 +145,16 @@ describe("鍊金術之盾 — the two new sim events actually reach a client", (
 
   it("煉金術 carries the PAYEE as `target`, and the rounded amount", () => {
     cover(TAG);
-    const gold = emitted({ kind: "grantGold", flat: 12, to: "self" })
+    const gold = emitted({ kind: "grantGold", flat: 12, to: "self" }, [], true)
       .find((e) => e.type === "goldGrant")!;
     const data = gold.data as Record<string, unknown>;
     // ⚠️ `target` is the PAYEE, NOT the transmuted victim — grantGold.ts loops
     // over `payees`. A consumer that read it as 「the enemy」 would draw the
     // burst on the wrong body, and nothing would ever say so.
     expect(typeof data.target, "VfxSystem anchors the burst on `target`").toBe("number");
+    // The world here carries the NEUTRAL combat-env table (a fresh `SimWorld`
+    // never had one injected), so 「付出去的」 and 「要求的」 coincide at 12 — which
+    // is the point: the neutral table must be bit-identical to the pre-倍率 sim.
     expect(data.amount).toBe(12);
     expect(data.origin).toBe("item:godie-i06q");
   });

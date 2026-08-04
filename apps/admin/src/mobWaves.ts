@@ -30,6 +30,10 @@
 
 // A TYPE-ONLY import: erased at build time, so no zod reaches the bundle.
 import type { MobWavesConfig } from "@ggd/shared/content/schema/config";
+// A VALUE import, and a deliberately cheap one: `sim/combatEnv` is a leaf
+// (its only import is `Stat`) and the admin bundle already carries it for the
+// 戰鬥系統 page. `applyGoldFactor` is the SIM's own arithmetic — see 「實發」 below.
+import { applyGoldFactor, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
 
 export type { MobWavesConfig };
 
@@ -842,7 +846,9 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   },
   "reward.gold": {
     zh: "每殺一隻給金錢",
-    note: "誰打死的誰拿，直接進那個人的錢包",
+    // ⚠️ 第三守則：「直接進那個人的錢包」在 2026-08-04 的 金錢發放倍率 之後就是
+    // 半句真話 —— 錢是直接進錢包沒錯，但進去的不是這個數字（量到的：20 → 10）。
+    note: "誰打死的誰拿，直接進那個人的錢包。這是**設定值不是實發**：普通殭屍再乘一次戰鬥系統的「打一般殭屍發放金錢」（右邊的「實發」就是它），特殊殭屍走的是另一格，而且還要再乘上面的「獎勵倍率」",
     unit: "金",
     kind: "int",
     min: 0,
@@ -1171,8 +1177,16 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   },
   "boss.bountyGold": {
     zh: "殭屍王獎金池",
-    // ⚠️ 舊文案寫「總金額」，在預設的「額外加碼」模式下那是謊話 —— 實發會超過。
-    note: "照傷害比例分給參戰的人。⚠️ 在「額外加碼」模式下實發會**超過**這個數字（最多 ×下面的倍率）",
+    // ⚠️ 第三守則，這句話**第三次**因為同型理由被改寫（2026-08-04）。
+    // 第一版寫「總金額」→ 假的（「額外加碼」模式會超過）。
+    // 第二版寫「實發會**超過**這個數字」→ 也是假的，而且方向相反：2026-08-04
+    // 上線的 金錢發放倍率 在 `grantGold` 裡再乘一次，出貨的
+    // 「打特殊殭屍／殭屍王發放倍率」是 1.0 以下，所以實發被壓下去。
+    // 第三版曾在這裡寫一個量到的數字（「30,000 → 3,090」）→ 也是假的，因為
+    // 實發根本**不是一個數字是一個區間**，那個 3,090 只是某一種傷害分佈下的一點；
+    // 換成「單一英雄包辦全部傷害＋補刀」再量就是 6,000。
+    // 所以這一版一個具體數字都不寫 —— 兩個乘算講出來，端點由右邊的「實發」現場算。
+    note: "照傷害比例分給參戰的人。這是**獎池設定值，不是實發**：「額外加碼」模式下補刀的人會多領一份自己的份額，所以總額會超出獎池（超出多少看傷害分佈），戰鬥系統的「打特殊殭屍／殭屍王發放金錢」再乘一次 —— 右邊的「實發」印的才是玩家真的拿到的錢，而它是一個區間",
     unit: "金",
     kind: "int",
     min: 0,
@@ -1367,7 +1381,9 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
   // ── 特殊殭屍分紅獎池 (#288) ──────────────────────────────────────────────
   "special.bountyGold": {
     zh: "特殊殭屍分紅獎金",
-    note: "照傷害比例分給所有打過牠的人（不是只給補刀的）。留空＝不分紅，回到上面那個「獎勵倍率」的老規則",
+    // ⚠️ 第三守則：跟 boss.bountyGold 同一個 2026-08-04 的謊話 —— 這裡寫的是
+    // 獎池設定值，而 金錢發放倍率 會在發放的那一刻再乘一次（量到的：5,000 → 500）。
+    note: "照傷害比例分給所有打過牠的人（不是只給補刀的）。這是**獎池設定值，不是實發** —— 戰鬥系統的「打特殊殭屍／殭屍王發放金錢」會再乘一次，右邊的「實發」才是玩家真的拿到的錢。留空＝不分紅，回到上面那個「獎勵倍率」的老規則",
     unit: "金",
     kind: "int",
     min: 0,
@@ -2021,6 +2037,162 @@ export function boundsText(spec: MobWavesFieldSpec): string {
   if (spec.min !== undefined) return `範圍 ≥ ${spec.min}`;
   if (spec.max !== undefined) return `範圍 > 0，最多 ${spec.max}`;
   return "範圍 > 0";
+}
+
+// ───────────────────────────────────────────────────────── 實發（顯示真實值）──
+//
+// owner 2026-08-04:「顯示不說謊 => **顯示真實值，跟其他系統倍率一樣**」——
+// 也就是 #125「每一個顯示的數字都是乘完倍率的最終值」的同一條規則。
+//
+// 這一頁上三個金錢欄位在 2026-08-04 的 金錢發放倍率 上線之後就開始說謊：框裡的
+// 數字是**設定值**，而發放的那一刻 `grantGold` 還會再乘一格倍率上去，這一頁從來
+// 沒有把那一格告訴操作者。
+//
+// ⚠️ 但「實發」對兩個獎池**不是一個數字，是一個區間** —— 而這正是第一版做錯的地方。
+// 殭屍王與特殊殭屍走 `splitBossBounty`，出貨的 `lastHitMode: "bonus"`（額外加碼）
+// 意思是「補刀的人除了自己那份，**再多領一份自己的份額**」，所以總額**會超出獎池，
+// 超出多少取決於傷害分佈**：
+//   · 多人平分傷害、補刀者佔比極小 → 逼近 `獎池 × 發放倍率`（下界）
+//   · 一個人包辦全部傷害又補刀     → `獎池 × 補刀倍率 × 發放倍率`（上界）
+// `"weight"`（權重）模式是守恆的 —— 補刀傷害以 ×倍率 計入分母，總額固定等於獎池
+// —— 所以**那個模式下不是區間，是單一數字**，`lastHitMultiplier ≤ 1` 同理。
+// 普通殭屍的「每殺一隻給金錢」不走獎池，永遠是單一數字。
+//
+// ⛔ 這一段的前一版本身就是第三守則的案例。它寫著「殭屍王獎金池寫 30,000 而實打發
+// 3,090」，而同一份工作區裡 chip 印 3,000、複驗者用真 sim 量到 6,000 —— 三個互相
+// 矛盾的「量到的」數字，因為它們量的是**同一個區間的不同點**（3,090 是三人分紅的
+// 某一種傷害分佈，6,000 是單一英雄包辦全部傷害＋補刀的上界）。所以這裡不再寫任何
+// 單一數字：端點由 `lastHitMode` / `lastHitMultiplier` **現場算**，
+// 見 `goldPoolLastHitBonus`。
+//
+// ⚠️ 為什麼是「旁邊多一欄」而不是「把框裡的數字改成實發」：框裡那個數字是
+// 操作者**要編輯的東西**，它必須是會被存進 arena-rules 的那一個。把它換成
+// 乘完的值，存檔就會把倍率烘進設定裡，下一次再乘一遍。所以設定值留在框裡，
+// 實發印在旁邊 —— 跟 屬性上限 頁的 `effective` 同一個作法。
+
+/**
+ * 哪一個欄位會被哪一格 發放倍率 乘過。
+ *
+ * ⚠️ 這三條對應**必須跟 sim 的分桶一致**（`GoldPayoutCategory`）：
+ *   · `reward.gold`         普通殭屍的擊殺金 → `mob`
+ *   · `special.bountyGold`  特殊殭屍的分紅獎池 → `elite`
+ *   · `boss.bountyGold`     殭屍王的分紅獎池 → `elite`（**不是** quest）
+ * 對錯了的症狀不是錯誤訊息，是一個看起來很有說服力的錯數字。
+ */
+export const MOB_WAVES_GOLD_ENV_KEY: Readonly<Partial<Record<MobWavesFieldKey, CombatEnvKey>>> =
+  Object.freeze({
+    "reward.gold": "goldMobKill",
+    "special.bountyGold": "goldEliteKill",
+    "boss.bountyGold": "goldEliteKill",
+  });
+
+/**
+ * 把「實發」從一個數字撐成一個區間的那個係數 —— 也就是**上界是下界的幾倍**。
+ * `1` = 不是區間（單一數字）。
+ *
+ * ⛔ 端點一律從**現在這一份設定**推導，不寫死 2 或 200%：`lastHitMultiplier` 與
+ * `lastHitMode` 都是後台可調欄位（第一守則），把出貨值抄進這裡就是替一個預期會
+ * 變的東西上鎖，而且錯的時候長得跟對的一模一樣。
+ *
+ * 三個讓區間塌回單一數字的條件，每一個都對應 `splitBossBounty` 裡真的那一行：
+ *   · `"weight"` 模式 —— 補刀傷害以 ×倍率 計入分母，總額守恆等於獎池；
+ *   · `lastHitMultiplier ≤ 1` —— `mult - 1` 是 0，加碼那一步加了個 0（出貨的
+ *     特殊殭屍就是這一種，所以它的 chip 從第一天就是對的）；
+ *   · 特殊殭屍的 `splitByDamage` 關掉 —— damager 表是空的，走的是
+ *     「沒有人造成可測量的傷害」那條分支，而那條分支**兩種模式都不加碼**。
+ *     殭屍王沒有這個欄位（`mobBountyRules` 寫死 `splitByDamage: true`）。
+ *
+ * `reward.gold` 不走獎池（每殺一隻直接發），所以永遠是 `1`。
+ */
+export function goldPoolLastHitBonus(
+  fieldKey: MobWavesFieldKey,
+  cfg: MobWavesConfig | null,
+): number {
+  if (cfg === null) return 1;
+  const block =
+    fieldKey === "boss.bountyGold"
+      ? cfg.boss
+      : fieldKey === "special.bountyGold"
+        ? cfg.special
+        : undefined;
+  if (block === undefined) return 1;
+  // 特殊殭屍才有的逃生門；殭屍王永遠照傷害分。
+  if ("splitByDamage" in block && block.splitByDamage === false) return 1;
+  // 空 = 沿用 schema 預設「額外加碼」，和 `configFromForm` 的 `enumOf` 同一個回退。
+  const mode = block.lastHitMode ?? "bonus";
+  if (mode !== "bonus") return 1;
+  const mult = block.lastHitMultiplier;
+  if (typeof mult !== "number" || !Number.isFinite(mult) || mult <= 1) return 1;
+  return mult;
+}
+
+export interface EffectiveGold {
+  /** 實發**下界** = 設定值 × 倍率（走 sim 自己的 `applyGoldFactor`）。 */
+  paid: number;
+  /**
+   * 實發**上界**。不是區間時 === `paid` —— 呼叫端一律比較這兩個，不要自己重算
+   * 「這是不是區間」，那是第二個住處。
+   */
+  paidMax: number;
+  /** 設定值本身 */
+  configured: number;
+  /** 乘的是哪一格 */
+  envKey: CombatEnvKey;
+  /** 那一格現在的值 */
+  factor: number;
+  /** 撐開區間的補刀倍率（不是區間時是 1）—— 印出來才知道區間是誰造成的。 */
+  lastHitBonus: number;
+}
+
+/**
+ * 一個欄位的「實發」。回 `null` = 這一欄不需要顯示實發，四種情況：
+ *   1. 這個欄位不是金錢欄（大多數）；
+ *   2. 戰鬥系統那張表還沒讀到（頁面剛開、或平台連不上）—— 這時**寧可不印**，
+ *      印一個猜的實發比不印更糟；
+ *   3. 欄位是空的（optional 欄位留空 = 不分紅，沒有東西可以乘）；
+ *   4. 倍率剛好是 1.0 **而且不是區間** —— 實發等於設定值，多印一次只是雜訊。
+ *      ⚠️ 「而且不是區間」是 2026-08-04 補的：倍率調回 1.0 之後，殭屍王的實發
+ *      仍然是 `[獎池, 獎池 × 補刀倍率]`，這時候把 chip 收起來就等於又回去說
+ *      「實發就是 30,000」那個謊 —— 只是換一個方式說。
+ *
+ * `cfg` 是**現在生效的那一份**（不是編輯中的表單）：這一行回答的是「現在這一場
+ * 真的發多少」。給 `null` 就當作沒有區間資訊。
+ */
+export function effectiveGold(
+  fieldKey: MobWavesFieldKey,
+  value: string,
+  multipliers: Readonly<Partial<Record<CombatEnvKey, number>>> | null,
+  cfg: MobWavesConfig | null,
+): EffectiveGold | null {
+  const envKey = MOB_WAVES_GOLD_ENV_KEY[fieldKey];
+  if (envKey === undefined || multipliers === null) return null;
+  const factor = multipliers[envKey];
+  if (typeof factor !== "number" || !Number.isFinite(factor)) return null;
+  const text = value.trim();
+  if (text === "") return null;
+  const configured = Number(text);
+  if (!Number.isFinite(configured)) return null;
+  const lastHitBonus = goldPoolLastHitBonus(fieldKey, cfg);
+  const paid = applyGoldFactor(configured, factor);
+  // 上界走的是**同一個** `applyGoldFactor`，而且順序跟 sim 一致：加碼先發生在
+  // 份額上（`splitBossBounty` 第 4 步），發放倍率最後才乘（`grantGold`）。
+  const paidMax = lastHitBonus > 1 ? applyGoldFactor(configured * lastHitBonus, factor) : paid;
+  if (factor === 1 && paidMax === paid) return null;
+  return { paid, paidMax, configured, envKey, factor, lastHitBonus };
+}
+
+/**
+ * 印在欄位旁邊的那一句。標出**乘的是哪一格**，否則操作者不知道去哪裡改；是區間
+ * 的時候還要說出**為什麼**是區間，否則兩個端點看起來像是有人算不出來。
+ */
+export function effectiveGoldText(e: EffectiveGold, envLabel: string): string {
+  const src = `${envLabel} ×${e.factor}`;
+  if (e.paidMax <= e.paid) return `實發 ${e.paid} 金（${src}）`;
+  return (
+    `實發 ${e.paid} – ${e.paidMax} 金（${src}；` +
+    `補刀的人會額外再多領一份自己的份額 ×${e.lastHitBonus}，` +
+    `所以總額看傷害分佈 —— 多人平分接近下界，一個人包辦全部傷害又補刀就是上界）`
+  );
 }
 
 export interface ScheduleRowErrors {

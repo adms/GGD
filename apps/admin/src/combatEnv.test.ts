@@ -101,7 +101,8 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
     // the page's key list IS the sim's — no drift possible.
     // 19 ×factors (#189 added `itemCooldown`) + the 8 三圍 coefficients #248
     // added to the same table.
-    expect(COMBAT_ENV_KEYS).toHaveLength(28); // #221 加入 intToMagicResist
+    // owner 2026-08-04 再加金錢發放倍率：回合／一般殭屍／特殊殭屍與王／英雄／任務 五格。
+    expect(COMBAT_ENV_KEYS).toHaveLength(33); // #221 加入 intToMagicResist
     for (const k of COMBAT_ENV_KEYS) {
       expect(COMBAT_ENV_LABELS[k].zh, `label for ${k}`).toBeTruthy();
       expect(COMBAT_ENV_LABELS[k].note, `note for ${k}`).toBeTruthy();

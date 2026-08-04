@@ -72,7 +72,10 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { EffectKindSpec } from "./effectKind";
-import { grantGold as grantGoldTo } from "../economy/progression";
+import {
+  grantGold as grantGoldTo,
+  type GoldPayoutCategory,
+} from "../economy/progression";
 
 /** Default for `grantGold.mobLevelSource` — 小怪按**波次等級**算。 */
 export const DEFAULT_MOB_LEVEL_SOURCE: MobLevelSource = "wave";
@@ -138,12 +141,26 @@ export const grantGoldEffect: EffectKindSpec<"grantGold"> = {
     const amount = Math.round(flat + levelTerm);
     if (amount <= 0) return;
 
+    // 發放倍率 (owner 2026-08-04) — CHOSEN BY THE VICTIM, not by the card.
+    // 鍊金術之盾 turns a BODY into gold, so 「這筆錢是打誰來的」 has a real
+    // answer at runtime: a champion body is 擊敗英雄, anything else (殭屍, 召喚物)
+    // is 打一般殭屍. Pinning the whole effect to one bucket would put alchemy
+    // gold in a category the player can see is wrong the moment they transmute
+    // the other kind of body. No victim at all (a pure `flat` payout) has nobody
+    // to attribute to and falls back to `mob` — the SMALLEST governed bucket
+    // (it ships below 1.0), so an un-attributable payout can never dodge a
+    // tightened knob by landing somewhere looser.
+    const category: GoldPayoutCategory =
+      victim !== undefined && world.champion.has(victim) ? "hero" : "mob";
     const payees = e.to === "target" ? ctx.targets : [ctx.caster];
     for (const p of payees) {
       // `grantGold` no-ops on a non-champion, so transmuting a zombie while a
       // summon holds the shield costs nothing and crashes nothing.
-      grantGoldTo(world, p, amount);
-      world.emit("goldGrant", { target: p, amount, origin: ctx.origin });
+      const paid = grantGoldTo(world, p, amount, category);
+      // PAID, not requested: `goldGrant` drives a floating 「+N 金」 in the VFX
+      // lane (see VfxSystem's grantGold comments), and a number the purse never
+      // received is failure shape ② with a particle effect on top.
+      world.emit("goldGrant", { target: p, amount: paid, origin: ctx.origin });
     }
   },
 };

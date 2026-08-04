@@ -174,19 +174,28 @@ describe("煉金術 — the payout is drawn on the payee", () => {
     vfx.dispose();
   });
 
-  it("stays silent on a ZERO/absent payout — a malformed wire payload, NOT something the sim emits", () => {
+  it("stays silent on a ZERO/absent payout — and a ZERO one is something the sim REALLY emits", () => {
     cover(TAG);
     const { vfx, requested } = makeSystem();
     const fire = vi.spyOn(impactComposerFor(scene), "fire");
-    // ⚠️ CORRECTED 2026-08-01 (第三守則). This case used to be titled 「the 殭屍
-    // case, which is a real emit」 and claimed 「the sim still runs the effect」.
-    // Both are FALSE: `sim/effects/grantGold.ts` returns on `amount <= 0` BEFORE
-    // its emit loop, so a zero payout never reaches the wire — driving the real
-    // effect on a level-less body gives `world.events === []`.
-    // What this case actually pins is client-side robustness: a renamed or
-    // truncated payload must not cost a particle budget or announce 「你獲得了 0 金」.
-    // Keeping the old title would have made a fabricated sim behaviour look
-    // verified, which is worse than having no test at all.
+    // ⚠️ CORRECTED TWICE — 第三守則 in both directions, so read the whole thing.
+    //
+    // v1 (原始) 「the 殭屍 case, which is a real emit」 —— 假的,那時殭屍的等級
+    //           讀成 0,`amount <= 0` 早退,根本沒有事件。
+    // v2 (2026-08-01) 「a malformed wire payload, NOT something the sim emits」
+    //           —— 修對了 v1,但把結論寫得太滿,而**它現在也是假的**。
+    // v3 (2026-08-04, 這一版) 金錢發放倍率上線之後,那道閘擋的是**請求值**:
+    //           `if (amount <= 0) return;` 在乘倍率**之前**,而 emit 送的是
+    //           乘完的 `paid`。所以「打殭屍發放倍率 = 0」的一場裡,一隻 3 級
+    //           殭屍被轉化 → requested 3 過閘 → paid 0 → `goldGrant { amount: 0 }`
+    //           **真的會發**。實測見
+    //           packages/shared/src/sim/alchemyShieldShipped.test.ts 的
+    //           「關掉那一格 → 一毛都沒有」(它斷言事件上的 amount 是 0)。
+    //
+    // 所以這一條同時守兩件事,而且兩件都是真的:
+    //   · 壞掉/改名的封包不可以燒粒子預算;
+    //   · **合法的 0 金發放也不可以**畫一個金幣爆點 —— 玩家一毛都沒拿到,
+    //     畫面上卻噴金幣,那是 owner 2026-08-04「顯示不說謊」的反面。
     vfx.handleEvent(ev("goldGrant", { target: SHIELD_HOLDER, amount: 0 }), 4000);
     vfx.handleEvent(ev("goldGrant", { target: SHIELD_HOLDER }), 4001);
     expect(requested).not.toContain(GOLD_GRANT_VFX);

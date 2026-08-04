@@ -121,6 +121,14 @@ describe("combat-env stat multipliers (env-01)", () => {
         "healing",
         "shield",
         "abilityRange",
+        // 金錢發放倍率 ×5 (owner 2026-08-04). Formula-site keys like `cooldown`:
+        // they multiply a PAYOUT at `economy/progression.ts grantGold`, never a
+        // stat, so they belong on this side of the split.
+        "goldRoundPayout",
+        "goldMobKill",
+        "goldEliteKill",
+        "goldHeroKill",
+        "goldQuest",
         ...Object.keys(ATTRIBUTE_ENV_DEFAULTS),
       ].sort(),
     );

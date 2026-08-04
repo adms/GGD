@@ -67,6 +67,11 @@ import {
   sortChampions,
   validateField,
   validateForm,
+  effectiveGold,
+  effectiveGoldText,
+  goldPoolLastHitBonus,
+  MOB_WAVES_GOLD_ENV_KEY,
+  type MobWavesConfig,
   type MobWavesFieldKey,
 } from "./mobWaves";
 
@@ -832,5 +837,244 @@ describe("#291 分紅結算的抬頭與呈現模式", () => {
     expect(
       zMobWavesConfig.safeParse({ ...DEFAULT_MOB_WAVES_CONFIG, boss: tooLong }).success,
     ).toBe(false);
+  });
+});
+
+/**
+ * 「實發」——顯示真實值 (owner 2026-08-04「顯示不說謊 => 顯示真實值，跟其他系統
+ * 倍率一樣」，同 #125).
+ *
+ * ⚠️ 這是體驗層（一個後台欄位旁邊多印一行字），所以是**一條薄守衛**，不開對抗
+ * 輪：刪掉 `effectiveGold` 的乘算或把欄位接到錯的那一格會紅，其餘不深挖。
+ *
+ * ⛔ 一個出貨數值都沒有抄進來：金額由「跑兩個不同的倍率去比」得到，端點由
+ * `SHIPPED_MOB_WAVES` 推導，不是寫死「30,000 → 3,000 – 6,000」（0.1 / 2 都是
+ * owner 每週在動的東西）。
+ */
+describe("實發（金錢欄位旁邊的乘完值）", () => {
+  const GOLD_FIELDS = ["reward.gold", "special.bountyGold", "boss.bountyGold"] as const;
+  /** 沒有獎池分紅資訊的那一份 —— 「補刀加碼」問不到，所以永遠是單一數字。 */
+  const NO_POOL = null;
+
+  it("★ 三個金錢欄位都認得，其餘欄位一律不印實發", () => {
+    cover("admin-mob-waves");
+    for (const k of GOLD_FIELDS) {
+      expect(MOB_WAVES_GOLD_ENV_KEY[k], `${k} 沒有對應到任何一格發放倍率`).toBeDefined();
+    }
+    // 非金錢欄位問到的是 null —— 否則「每殺一隻給經驗」旁邊會冒出一個「實發 N 金」。
+    for (const k of ["reward.xp", "mob.maxHp", "boss.bountyXp"] as const) {
+      expect(effectiveGold(k, "100", { goldMobKill: 0.5, goldEliteKill: 0.5 }, NO_POOL)).toBeNull();
+    }
+  });
+
+  it("★ 倍率真的被乘進去了（半倍 → 一半，0 → 0）", () => {
+    cover("admin-mob-waves");
+    // 用「同一個欄位、兩張不同的表」比較，所以沒有任何出貨數值住在這裡。
+    const half = effectiveGold("reward.gold", "1000", { goldMobKill: 0.5 }, NO_POOL);
+    expect(half, "半倍下沒算出實發").not.toBeNull();
+    expect(half!.paid).toBe(500);
+    expect(half!.configured, "設定值被改掉了 —— 框裡那個數字必須原封不動").toBe(1000);
+    expect(effectiveGold("reward.gold", "1000", { goldMobKill: 0 }, NO_POOL)!.paid).toBe(0);
+  });
+
+  it("★ 普通殭屍與特殊殭屍/殭屍王讀的是**不同**的兩格（跟 sim 的分桶一致）", () => {
+    cover("admin-mob-waves");
+    // 只關掉「打一般殭屍」那一格：每殺一隻歸零，兩個獎池不動。
+    const onlyMobOff = { goldMobKill: 0, goldEliteKill: 0.5 };
+    expect(effectiveGold("reward.gold", "1000", onlyMobOff, NO_POOL)!.paid).toBe(0);
+    expect(effectiveGold("special.bountyGold", "1000", onlyMobOff, NO_POOL)!.paid).toBe(500);
+    expect(
+      effectiveGold("boss.bountyGold", "1000", onlyMobOff, NO_POOL)!.paid,
+      "殭屍王接到了「打一般殭屍」那一格 —— sim 把它算在特殊殭屍那格",
+    ).toBe(500);
+  });
+
+  it("★ 沒有倍率表 / 空欄位 / 中性 1.0 → 不印（寧可不印，也不要印一個猜的）", () => {
+    cover("admin-mob-waves");
+    expect(effectiveGold("reward.gold", "1000", null, NO_POOL), "讀不到表卻印了實發").toBeNull();
+    expect(effectiveGold("special.bountyGold", "", { goldEliteKill: 0.5 }, NO_POOL)).toBeNull();
+    expect(
+      effectiveGold("reward.gold", "1000", { goldMobKill: 1 }, NO_POOL),
+      "1.0 是雜訊",
+    ).toBeNull();
+  });
+
+  it("★ 那一行字要指名是哪一格倍率（否則操作者不知道去哪裡改）", () => {
+    cover("admin-mob-waves");
+    const e = effectiveGold("boss.bountyGold", "1000", { goldEliteKill: 0.5 }, NO_POOL)!;
+    const text = effectiveGoldText(e, "打特殊殭屍／殭屍王發放金錢");
+    expect(text).toContain("實發");
+    expect(text).toContain("500");
+    expect(text, "沒有說是哪一格在乘").toContain("打特殊殭屍／殭屍王發放金錢");
+  });
+});
+
+/**
+ * 實發**是一個區間** —— 第一版 chip 對殭屍王少報了一半 (2026-08-04)。
+ *
+ * 為什麼會少報：`設定值 × 倍率` 是**下界**，而出貨的 `lastHitMode: "bonus"`
+ * （額外加碼）讓補刀的人「除了自己那份再多領一份自己的份額」，所以總額會超出
+ * 獎池，超出多少**取決於傷害分佈** —— 複驗者在三人分紅量到一個值、在單一英雄
+ * 包辦全部傷害＋補刀量到另一個值，兩個都對，它本來就是一個區間。
+ *
+ * ⛔ 驗的是**機制**不是數字：「是不是區間」「端點是不是由 `lastHitMode` /
+ * `lastHitMultiplier` 這兩個後台欄位算出來的」。30000 / 2 / 0.1 一個都沒有抄進
+ * 斷言 —— 期望值全部從 `SHIPPED_MOB_WAVES` 推導，倍率用一個測試自己挑的探針值。
+ *
+ * 薄守衛，不開對抗輪：這是體驗層（欄位旁邊多一行字）。
+ */
+describe("實發是一個區間（補刀加碼撐開的上界）", () => {
+  /** 測試自己挑的探針倍率 —— 不是出貨值，出貨值換了它也不會紅。 */
+  const PROBE = 0.5;
+  const ENV = { goldMobKill: PROBE, goldEliteKill: PROBE };
+  const LABEL = "打特殊殭屍／殭屍王發放金錢";
+
+  /** 出貨那一份，只換掉殭屍王的兩個補刀欄位。 */
+  function bossWith(patch: {
+    lastHitMode?: "bonus" | "weight";
+    lastHitMultiplier?: number;
+  }): MobWavesConfig {
+    return {
+      ...SHIPPED_MOB_WAVES,
+      boss: { ...SHIPPED_MOB_WAVES.boss!, ...patch },
+    };
+  }
+
+  it("★ 出貨設定（額外加碼 + 倍率>1）→ 實發是區間，上界 = 下界 × 補刀倍率", () => {
+    cover("admin-mob-waves");
+    const shippedBoss = SHIPPED_MOB_WAVES.boss!;
+    // 前提檢查：出貨真的是「會撐開區間」的那一組。這一行紅掉代表 owner 把出貨值
+    // 改成守恆模式了 —— 那時候要動的是這個 describe 的前提，不是實作。
+    expect(
+      goldPoolLastHitBonus("boss.bountyGold", SHIPPED_MOB_WAVES),
+      "出貨的殭屍王已經不是「額外加碼 + 倍率>1」了",
+    ).toBeGreaterThan(1);
+
+    const e = effectiveGold(
+      "boss.bountyGold",
+      String(shippedBoss.bountyGold),
+      ENV,
+      SHIPPED_MOB_WAVES,
+    )!;
+    expect(e, "出貨設定下完全沒算出實發").not.toBeNull();
+    // 端點從設定推導，不抄字面值。
+    expect(e.paid, "下界不是 獎池 × 發放倍率").toBe(
+      Math.round(shippedBoss.bountyGold * PROBE),
+    );
+    expect(e.paidMax, "上界沒有把補刀加碼算進去 —— 這就是 chip 少報一半的那個缺陷").toBe(
+      Math.round(shippedBoss.bountyGold * shippedBoss.lastHitMultiplier * PROBE),
+    );
+    expect(e.paidMax, "上界沒有比下界高，等於根本不是區間").toBeGreaterThan(e.paid);
+
+    const text = effectiveGoldText(e, LABEL);
+    expect(text, "區間的下界沒印在畫面上").toContain(String(e.paid));
+    expect(text, "區間的上界沒印在畫面上 —— 操作者看到的還是單一數字").toContain(
+      String(e.paidMax),
+    );
+    expect(text, "沒說為什麼是區間（補刀者多領一份 → 看傷害分佈）").toContain("傷害分佈");
+  });
+
+  it("★ 上界是「讀操作者設的補刀倍率」算的,不是寫死出貨的那個值", () => {
+    cover("admin-mob-waves");
+    // 為什麼要這一條:上面那條的每一個期望值都拿**出貨的** lastHitMultiplier 當來源,
+    // 所以 `goldPoolLastHitBonus` 的 `return mult;` 改成 `return <出貨值>;`(＝無視操作者
+    // 在後台打的數字,永遠假設出貨那個倍率)之後,apps/admin 全套 1,141 條**全綠**。
+    // 「有讀那個欄位」與「寫死一個常數」在那條斷言眼裡一模一樣 —— 失敗形態 ④。
+    //
+    // 所以這裡刻意用一個**不等於出貨值**的倍率:操作者在後台把它調大,chip 的上界
+    // 就必須跟著動。倍率本身仍然從 `SHIPPED_*` 推導(× 2),不抄字面值 —— 出貨值哪天
+    // 從 2 改成 5,這條測試不用跟著改,而它守的東西沒有變。
+    const shippedBoss = SHIPPED_MOB_WAVES.boss!;
+    const operatorMult = shippedBoss.lastHitMultiplier * 2;
+    expect(
+      operatorMult,
+      "探針倍率跟出貨值一樣,那寫死出貨值的實作照樣會過 —— 這條測試就白寫了",
+    ).not.toBe(shippedBoss.lastHitMultiplier);
+
+    expect(
+      goldPoolLastHitBonus("boss.bountyGold", bossWith({ lastHitMultiplier: operatorMult })),
+      "沒有讀操作者設的補刀倍率",
+    ).toBe(operatorMult);
+
+    const e = effectiveGold(
+      "boss.bountyGold",
+      String(shippedBoss.bountyGold),
+      ENV,
+      bossWith({ lastHitMultiplier: operatorMult }),
+    )!;
+    expect(e.paid, "下界不該被補刀倍率影響 —— 它是「沒人獨吃」那一端").toBe(
+      Math.round(shippedBoss.bountyGold * PROBE),
+    );
+    expect(e.paidMax, "上界沒有跟著操作者調的倍率走,等於實作把倍率寫死了").toBe(
+      Math.round(shippedBoss.bountyGold * operatorMult * PROBE),
+    );
+    expect(
+      effectiveGoldText(e, LABEL),
+      "畫面上印的上界還是出貨倍率算出來的那個數字",
+    ).toContain(String(e.paidMax));
+  });
+
+  it("★ 切成「權重」（守恆）→ 變回單一數字", () => {
+    cover("admin-mob-waves");
+    const cfg = bossWith({ lastHitMode: "weight" });
+    expect(goldPoolLastHitBonus("boss.bountyGold", cfg)).toBe(1);
+    const e = effectiveGold("boss.bountyGold", String(cfg.boss!.bountyGold), ENV, cfg)!;
+    expect(e.paidMax, "守恆模式還在印區間 —— 權重模式的總額是固定的").toBe(e.paid);
+    expect(effectiveGoldText(e, LABEL)).not.toContain("–");
+  });
+
+  it("★ 補刀倍率 ≤ 1（加碼加了個 0）→ 也是單一數字", () => {
+    cover("admin-mob-waves");
+    const cfg = bossWith({ lastHitMode: "bonus", lastHitMultiplier: 1 });
+    expect(goldPoolLastHitBonus("boss.bountyGold", cfg)).toBe(1);
+    const e = effectiveGold("boss.bountyGold", String(cfg.boss!.bountyGold), ENV, cfg)!;
+    expect(e.paidMax).toBe(e.paid);
+  });
+
+  it("★ 普通殭屍的每殺一隻不走獎池 → 永遠單一數字，就算獎池是加碼模式", () => {
+    cover("admin-mob-waves");
+    expect(goldPoolLastHitBonus("reward.gold", SHIPPED_MOB_WAVES)).toBe(1);
+    const e = effectiveGold("reward.gold", "1000", ENV, SHIPPED_MOB_WAVES)!;
+    expect(e.paidMax, "每殺一隻給金錢被當成獎池了").toBe(e.paid);
+  });
+
+  it("★ 發放倍率調回中性 1.0 → 區間照印（收起來就等於又說「實發就是獎池」）", () => {
+    cover("admin-mob-waves");
+    const neutral = { goldMobKill: 1, goldEliteKill: 1 };
+    const shippedBoss = SHIPPED_MOB_WAVES.boss!;
+    const e = effectiveGold(
+      "boss.bountyGold",
+      String(shippedBoss.bountyGold),
+      neutral,
+      SHIPPED_MOB_WAVES,
+    );
+    expect(e, "1.0 下把區間收起來了 —— 那一場實發仍然不等於獎池").not.toBeNull();
+    expect(e!.paid).toBe(shippedBoss.bountyGold);
+    expect(e!.paidMax).toBeGreaterThan(e!.paid);
+    // 而普通殭屍在 1.0 下仍然不印（它真的沒有東西可說）。
+    expect(effectiveGold("reward.gold", "1000", neutral, SHIPPED_MOB_WAVES)).toBeNull();
+  });
+
+  it("★ 特殊殭屍關掉「照傷害比例分」→ 全額給補刀的人、不加碼 → 單一數字", () => {
+    cover("admin-mob-waves");
+    // `splitByDamage` 關掉 = damager 表是空的 = `splitBossBounty` 的
+    // 「沒有人造成可測量的傷害」分支，而那條分支兩種模式都不加碼。
+    const cfg: MobWavesConfig = {
+      ...SHIPPED_MOB_WAVES,
+      special: {
+        ...SHIPPED_MOB_WAVES.special!,
+        lastHitMode: "bonus",
+        lastHitMultiplier: 3,
+        splitByDamage: false,
+      },
+    };
+    expect(goldPoolLastHitBonus("special.bountyGold", cfg)).toBe(1);
+    // 打開就會撐開 —— 否則上一行是被別的理由擋掉的（斷言方向與缺陷無關）。
+    expect(
+      goldPoolLastHitBonus("special.bountyGold", {
+        ...cfg,
+        special: { ...cfg.special!, splitByDamage: true },
+      }),
+    ).toBeGreaterThan(1);
   });
 });

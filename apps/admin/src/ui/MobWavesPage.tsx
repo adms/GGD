@@ -36,8 +36,9 @@
  * is presentation + wiring.
  */
 import { useEffect, useMemo, useState } from "react";
-import { getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
+import { getCombatEnv, getOverlayDoc, getShippedDoc, putOverlayDoc } from "../api";
 import { loadCollection } from "../content";
+import { COMBAT_ENV_LABELS, type CombatEnvKey } from "../combatEnv";
 import {
   APPLY_NOTE,
   ARENA_RULES_COLLECTION,
@@ -55,6 +56,8 @@ import {
   changedFields,
   championLabel,
   configFromForm,
+  effectiveGold,
+  effectiveGoldText,
   extractMobWaves,
   formFromConfig,
   formValid,
@@ -92,6 +95,14 @@ export function MobWavesPage(): React.JSX.Element {
   const [doc, setDoc] = useState<Record<string, unknown> | null>(null);
   const [source, setSource] = useState<"overlay" | "shipped" | "none">("none");
   const [champions, setChampions] = useState<ChampionOption[]>([]);
+  /**
+   * 戰鬥系統那張表 —— 只用來印「實發」，`null` = 還沒讀到／讀不到。
+   *
+   * ⚠️ BEST-EFFORT ON PURPOSE：這一頁的職責是編 arena-rules，倍率表只是拿來
+   * 說實話用的。平台連不上時要能照常編輯與存檔，所以它自己 catch 掉，失敗就是
+   * 少一欄「實發」，不是整頁一個紅色錯誤條。
+   */
+  const [multipliers, setMultipliers] = useState<Record<CombatEnvKey, number> | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [apiErr, setApiErr] = useState<string | null>(null);
@@ -136,6 +147,21 @@ export function MobWavesPage(): React.JSX.Element {
         setChampions(sortChampions(rows.map((r) => ({ id: r.id, name: r.name }))));
       } catch {
         setChampions([]);
+      }
+    })();
+  }, []);
+
+  // 「顯示真實值」(owner 2026-08-04「顯示不說謊 => 顯示真實值，跟其他系統倍率
+  // 一樣」). 三個金錢欄位印的是設定值，而 金錢發放倍率 會在發放的那一刻再乘一
+  // 次 —— 沒有這一段的話這一頁會理直氣壯地把獎池設定值當成玩家拿到的錢。
+  // Best-effort：讀不到就只是少一欄，見 `multipliers` 的宣告。
+  useEffect(() => {
+    void (async () => {
+      try {
+        const env = await getCombatEnv();
+        setMultipliers(env.multipliers);
+      } catch {
+        setMultipliers(null);
       }
     })();
   }, []);
@@ -276,6 +302,8 @@ export function MobWavesPage(): React.JSX.Element {
                 value={form.fields[key]}
                 error={errors.fields[key]}
                 live={readField(saved, key)}
+                liveConfig={saved}
+                multipliers={multipliers}
                 champions={champions}
                 disabled={busy}
                 onChange={(v) => patch(setField(form, key, v))}
@@ -460,13 +488,21 @@ function RoundTr(props: {
   );
 }
 
-/** One scalar knob: 中文 label + 影響 + 目前生效值 + input + unit + 重設. */
+/** One scalar knob: 中文 label + 影響 + 目前生效值 + 實發 + input + unit + 重設. */
 function FieldRow(props: {
   fieldKey: MobWavesFieldKey;
   value: string;
   error?: string;
   /** the value CURRENTLY IN FORCE (from the loaded doc), for the side-by-side */
   live: string;
+  /**
+   * 整份 CURRENTLY-IN-FORCE 設定 —— 「實發」要它才知道那個獎池的補刀模式與倍率，
+   * 而那兩個決定實發是一個數字還是一個**區間**。跟 `live` 一樣讀的是 `saved`
+   * 不是編輯中的表單：這一行回答的是「現在這一場真的發多少」。
+   */
+  liveConfig: MobWavesConfig;
+  /** 戰鬥系統那張表（讀不到就是 null）—— 只有金錢欄位會用到 */
+  multipliers: Record<CombatEnvKey, number> | null;
   champions: readonly ChampionOption[];
   disabled: boolean;
   onChange: (v: string) => void;
@@ -475,6 +511,9 @@ function FieldRow(props: {
   const spec = MOB_WAVES_LABELS[props.fieldKey];
   const unsaved = props.value.trim() !== props.live.trim();
   const shipped = readField(SHIPPED_MOB_WAVES, props.fieldKey);
+  // 「顯示真實值」(owner 2026-08-04). 讀的是 LIVE 那一份而不是輸入框裡的字：
+  // 這一行回答的是「現在這一場真的發多少」，不是「我打到一半的這個數字會發多少」。
+  const eff = effectiveGold(props.fieldKey, props.live, props.multipliers, props.liveConfig);
   const liveText =
     props.live.trim() === ""
       ? (spec.emptyMeans ?? "（未設定）")
@@ -508,6 +547,22 @@ function FieldRow(props: {
         <div style={{ fontSize: 11.5, color: TEXT_DIM, marginTop: 1 }}>{spec.note}</div>
         <div style={{ fontSize: 11, color: ACCENT, marginTop: 2 }}>
           目前生效：<b>{liveText}</b>
+          {/*
+            ⚠️ 「目前生效」上面那一行印的是**設定值**,而 2026-08-04 之後設定值
+            不等於玩家拿到的錢。這一格是 屬性上限 頁 `effective` 的同一個作法:
+            設定值留在框裡(存檔要存它),實發印在旁邊。金額由 sim 自己的
+            `applyGoldFactor` 算,不是這一頁重寫一次。
+
+            ⚠️ 兩個獎池的實發是一個**區間**不是一個數字(「額外加碼」模式下補刀
+            的人多領一份自己的份額,總額看傷害分佈)。那個判斷與兩個端點都住在
+            mobWaves.ts 的 `effectiveGold` / `goldPoolLastHitBonus` 裡,這一頁
+            只負責印 —— 在這裡多寫一行「× 2」就是把一個後台可調欄位抄成第二份。
+          */}
+          {eff && (
+            <span data-field={`effective-${props.fieldKey}`} style={{ color: GOLD, marginLeft: 8 }}>
+              {effectiveGoldText(eff, COMBAT_ENV_LABELS[eff.envKey].zh)}
+            </span>
+          )}
           <span style={{ color: TEXT_DIM, marginLeft: 8 }}>
             出貨版 {shipped === "" ? "未設定" : shipped}
           </span>

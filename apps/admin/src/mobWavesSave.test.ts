@@ -37,7 +37,8 @@ import {
   type MobWavesConfig,
   type MobWavesFieldKey,
 } from "./mobWaves";
-import { mount, optionLabels, optionValues } from "./testkit/headlessUi";
+import { COMBAT_ENV_LABELS } from "./combatEnv";
+import { mount, optionLabels, optionValues, textOf } from "./testkit/headlessUi";
 
 // --------------------------------------------------------------- fixtures ---
 
@@ -49,6 +50,8 @@ const bus = vi.hoisted(() => ({
   champions: [] as Array<{ id: string; name: string }>,
   championsReject: false,
   generation: 0,
+  /** 戰鬥系統那張表 —— 只有「實發」那一欄讀它。`null` = 平台連不上。 */
+  combatEnv: null as Record<string, number> | null,
 }));
 
 /**
@@ -68,6 +71,17 @@ vi.mock("./api", async (importOriginal) => {
   return {
     ...actual,
     getOverlayDoc: async (): Promise<unknown> => bus.overlayDoc,
+    // ⚠️ 沒有這一行的話它會是**真的** `getCombatEnv`（`...actual`），在 node 裡
+    // 送 HTTP 然後 throw —— 頁面 catch 掉，「實發」永遠不出現，而下面那組守衛
+    // 會在一個「功能被拿掉也一樣」的世界裡全綠（失敗形態 ④）。
+    getCombatEnv: async (): Promise<{
+      version: number;
+      updatedAt: string;
+      multipliers: Record<string, number>;
+    }> => {
+      if (bus.combatEnv === null) throw new Error("平台的 /admin/combat-env 連不上");
+      return { version: 1, updatedAt: "", multipliers: bus.combatEnv };
+    },
     getShippedDoc: async (): Promise<{ present: boolean; hash: string; doc: unknown }> => ({
       present: false,
       hash: "",
@@ -272,6 +286,7 @@ beforeEach(() => {
   bus.generation = 0;
   bus.overlayDoc = LIVE_DOC();
   bus.champions = ROSTER.map((c) => ({ ...c }));
+  bus.combatEnv = null; // 預設「讀不到」——想量「實發」的測試自己設。
 });
 
 async function open(): Promise<ReturnType<typeof mount>> {
@@ -508,5 +523,127 @@ describe("由誰擔任 is a real dropdown of 中文名, not a bare id box", () =
     h.click(SAVE);
     await h.flush();
     expect(sentBlock().mob.championId).toBe("godie-efur");
+  });
+});
+
+/**
+ * 「實發」真的畫在頁面上 (owner 2026-08-04「顯示不說謊 => 顯示真實值，跟其他系統
+ * 倍率一樣」).
+ *
+ * ⚠️ 為什麼不能只留 `mobWaves.test.ts` 的純函式守衛：`effectiveGold` 可以是
+ * 完全正確的，而 `FieldRow` 裡那個 `{eff && …}` 被刪掉，操作者看到的還是
+ * 30,000 —— 失敗形態 ③（可以從渲染樹刪掉但測試全綠），也就是這個檔案存在的
+ * 全部理由（見檔頭）。所以這一組**掛真的頁面**，讀真的節點。
+ *
+ * 薄守衛，不開對抗輪：這是體驗層（欄位旁邊多一行字）。
+ */
+describe("金錢欄位旁邊真的印出「實發」", () => {
+  /** LIVE_DOC 的 reward.gold 換成一個對半分乾淨的數，避免測試自己重算一次四捨五入。 */
+  function withRewardGold(gold: number): Record<string, unknown> {
+    const doc = LIVE_DOC();
+    const waves = doc["mobWaves"] as Record<string, unknown>;
+    waves["reward"] = { gold, xp: 41, killsPerLevel: 7 };
+    return doc;
+  }
+
+  it("倍率 0.5 → 每殺一隻給金錢旁邊出現實發的一半，而且指名是哪一格", async () => {
+    cover("admin-mob-waves");
+    bus.overlayDoc = withRewardGold(200);
+    bus.combatEnv = { goldMobKill: 0.5, goldEliteKill: 0.5 };
+    const h = await open();
+
+    const chip = h.fieldOrNull("effective-reward.gold");
+    expect(chip, "頁面完全沒有畫出「實發」—— 操作者看到的還是設定值").not.toBeNull();
+    const text = textOf(chip!.children);
+    expect(text).toContain("實發");
+    expect(text, "實發不是設定值的一半").toContain("100");
+    expect(text, "沒說是哪一格倍率在乘，操作者不知道去哪裡改").toContain(
+      COMBAT_ENV_LABELS.goldMobKill.zh,
+    );
+    // 設定值那個輸入框必須原封不動 —— 存檔存的是它。
+    expect(h.field("reward.gold").props["value"]).toBe("200");
+  });
+
+  it("讀不到戰鬥系統那張表 → 一個字都不印（寧可不印，也不要印一個猜的）", async () => {
+    cover("admin-mob-waves");
+    bus.overlayDoc = withRewardGold(200);
+    bus.combatEnv = null; // 平台連不上
+    const h = await open();
+    expect(h.fieldOrNull("effective-reward.gold")).toBeNull();
+    // 而且頁面照常能編輯 —— best-effort 不可以把整頁擋掉。
+    expect(h.field("reward.gold").props["value"]).toBe("200");
+  });
+
+  it("中性 1.0 → 不印（實發等於設定值，多一行只是雜訊）", async () => {
+    cover("admin-mob-waves");
+    bus.overlayDoc = withRewardGold(200);
+    bus.combatEnv = { goldMobKill: 1, goldEliteKill: 1 };
+    const h = await open();
+    expect(h.fieldOrNull("effective-reward.gold")).toBeNull();
+  });
+
+  it("非金錢欄位（每殺一隻給經驗）永遠不會冒出「實發 N 金」", async () => {
+    cover("admin-mob-waves");
+    bus.overlayDoc = withRewardGold(200);
+    bus.combatEnv = { goldMobKill: 0.5, goldEliteKill: 0.5 };
+    const h = await open();
+    expect(h.fieldOrNull("effective-reward.xp")).toBeNull();
+  });
+
+  /**
+   * 殭屍王的實發是一個**區間**，而 chip 第一版對它少報了一半（2026-08-04）。
+   *
+   * ⚠️ 純函式守衛（mobWaves.test.ts）擋不住這一格：`effectiveGold` 可以完全正確，
+   * 而 `FieldRow` 忘了把「現在生效的那一份設定」餵給它 —— 那樣它問不到補刀模式，
+   * 於是**每一個獎池都退回單一數字**，畫面上看起來跟修好之前一模一樣。所以這一條
+   * 掛真的頁面，讀真的節點（失敗形態 ⑤：被測的不是出貨的那個）。
+   *
+   * ⛔ 端點從送進頁面的那份 doc 推導，一個字面值都不抄。
+   */
+  it("殭屍王（額外加碼 + 倍率>1）→ 頁面印的是區間，兩端都在", async () => {
+    cover("admin-mob-waves");
+    const POOL = 1000;
+    const MULT = 2; // 這份 fixture 自己設的補刀倍率，不是出貨值
+    const FACTOR = 0.5; // 探針倍率
+    const doc = LIVE_DOC();
+    (doc["mobWaves"] as Record<string, unknown>)["boss"] = {
+      bountyGold: POOL,
+      lastHitMultiplier: MULT,
+      lastHitMode: "bonus",
+    };
+    bus.overlayDoc = doc;
+    bus.combatEnv = { goldMobKill: FACTOR, goldEliteKill: FACTOR };
+    const h = await open();
+
+    const chip = h.fieldOrNull("effective-boss.bountyGold");
+    expect(chip, "殭屍王獎金池旁邊完全沒有畫出「實發」").not.toBeNull();
+    const text = textOf(chip!.children);
+    expect(text, "下界（獎池 × 發放倍率）不在畫面上").toContain(String(POOL * FACTOR));
+    expect(
+      text,
+      "上界不在畫面上 —— 頁面又在說「實發就是這個數字」，正是要修的那個缺陷",
+    ).toContain(String(POOL * MULT * FACTOR));
+    expect(text, "沒說為什麼是區間").toContain("傷害分佈");
+  });
+
+  it("同一格切成「權重」（守恆）→ 頁面變回單一數字", async () => {
+    cover("admin-mob-waves");
+    const POOL = 1000;
+    const FACTOR = 0.5;
+    const doc = LIVE_DOC();
+    (doc["mobWaves"] as Record<string, unknown>)["boss"] = {
+      bountyGold: POOL,
+      lastHitMultiplier: 2,
+      lastHitMode: "weight",
+    };
+    bus.overlayDoc = doc;
+    bus.combatEnv = { goldMobKill: FACTOR, goldEliteKill: FACTOR };
+    const h = await open();
+
+    const chip = h.fieldOrNull("effective-boss.bountyGold");
+    expect(chip, "守恆模式下連實發都不印了").not.toBeNull();
+    const text = textOf(chip!.children);
+    expect(text).toContain(String(POOL * FACTOR));
+    expect(text, "守恆模式的總額是固定的，不該印成區間").not.toContain("–");
   });
 });

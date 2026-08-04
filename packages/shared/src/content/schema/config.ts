@@ -11,7 +11,13 @@
 import { z } from "zod";
 import { zAlpha, zCoreAbilitySlot, zId, zRef, zTintRgb } from "./common";
 import { zAugmentTier } from "./augment";
-import { COMBAT_ENV_KEYS, type CombatEnvKey } from "../../sim/combatEnv";
+import {
+  COMBAT_ENV_KEYS,
+  GOLD_FACTOR_MAX,
+  GOLD_FACTOR_MIN,
+  isGoldEnvKey,
+  type CombatEnvKey,
+} from "../../sim/combatEnv";
 // 基礎加成的 per-stat 區間 (task #277) — 定義在 sim 那一份,schema 只是把它搬上
 // Zod,所以「頁面 / schema / sim」三層守的是同一組數字。
 import { ALL_STATS, Stat } from "../../sim/stats/statTypes";
@@ -2392,12 +2398,21 @@ export const zConfigArenaRulesDoc = z
  */
 const zEnvFactor = z.number().min(0).max(100);
 
+/**
+ * 金錢發放倍率 (owner 2026-08-04) get a TIGHTER ceiling than the shared 0..100.
+ * 100 is the band the 三圍 coefficients need (23 hp per STR); for a payout
+ * factor it is 「一隻殭屍給你一整套裝備」, i.e. exactly the #277 shape — a
+ * mistyped digit that the console happily accepts and the sim happily obeys.
+ * Mirrors GOLD_FACTOR_MIN/MAX in the sim and `combatenv.Bounds` in the Go
+ * platform; all three must agree or one of them is lying about what is legal.
+ */
+const zGoldEnvFactor = z.number().min(GOLD_FACTOR_MIN).max(GOLD_FACTOR_MAX);
+
 export const zCombatEnvMultipliers = z
   .object(
-    Object.fromEntries(COMBAT_ENV_KEYS.map((k) => [k, zEnvFactor.optional()])) as Record<
-      CombatEnvKey,
-      z.ZodOptional<z.ZodNumber>
-    >,
+    Object.fromEntries(
+      COMBAT_ENV_KEYS.map((k) => [k, (isGoldEnvKey(k) ? zGoldEnvFactor : zEnvFactor).optional()]),
+    ) as Record<CombatEnvKey, z.ZodOptional<z.ZodNumber>>,
   )
   .strict();
 
@@ -3752,6 +3767,41 @@ export const zConfigBlockDoc = z
   .strict();
 
 /**
+ * config.augment-filter@1 — 稜彩增益卡的敵方過濾器全域覆寫（批 1 決策點 1-1）。
+ *
+ * 目前只有一格:**殭屍算不算 `HookDef.victim: "enemyChampion"` 的敵人**。
+ * 語意、owner 的裁決、以及「為什麼它不是一顆單一的全域布林」全部寫在
+ * `sim/augmentEnemyFilter.ts`。
+ *
+ * 出貨值 `false` ＝ 字面語意 ＝ 這個欄位出現之前的行為，所以這份文件出現本身
+ * **不改變任何一場比賽**（同 `config.shield@1`、與 `config.block@1` 相反）。
+ *
+ * 為什麼是自己一份文件而不是塞進 `config.combat-env@1`:那一份是**數值倍率
+ * 表**（每一格都是一個 number，Go 平台 `apps/platform/internal/combatenv` 有一份
+ * key 對 key 的鏡射，`keysync_test.go` 在守），塞一個 boolean 進去等於同時改
+ * 三個語言的形狀。也不塞 `config.arena-rules@1`:那一份講的是**場地**（火圈、
+ * 花、守衛塔、殭屍波），而這一格講的是**卡片文案怎麼解釋「敵」這個字**。
+ *
+ * **缺文件 = 出貨預設**，不是空表 —— 一個 `undefined` 的布林今天剛好等於
+ * `false`，但那是巧合不是設計，而下一格（predicate 反過來的那種）不會這麼幸運。
+ */
+export const zConfigAugmentFilterDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.augment-filter@1"),
+    note: z.string().optional(),
+    /**
+     * 打開之後，`victim: "enemyChampion"` 的 hook 也把敵對陣營的**小怪（殭屍）**
+     * 算成合格目標。`"allyChampion"` 不受影響，`"enemy"` 本來就收。
+     *
+     * ⚠️ 它**不會**讓殭屍長出 `StatsComp`，所以掛在殭屍身上的 buff/status 照樣
+     * 是靜默 no-op —— 這一格救得到的是「效果掛在自己身上」的那一族卡。
+     */
+    mobsCountAsEnemy: z.boolean(),
+  })
+  .strict();
+
+/**
  * config.stealth@1 — 隱形規則 (隱形原語 lane D).
  *
  * 每一格的語意、以及「為什麼出貨值是這一個」寫在 `packages/shared/src/sim/
@@ -4511,6 +4561,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,
+  // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證
+  // 失敗 → main.tsx 的 fail-open 退回 2 隻骨架英雄**,而網站看起來完全正常。
+  // 那正是 2026-08-02 線上壞掉四小時的形狀,理由寫在下面那一段。
+  zConfigAugmentFilterDoc,
   zConfigStealthDoc,
   zConfigTauntDoc,
   zConfigBodyScaleDoc,
@@ -4584,6 +4638,7 @@ export type ConfigModelLodDoc = z.infer<typeof zConfigModelLodDoc>;
 export type ConfigVfxCleanupDoc = z.infer<typeof zConfigVfxCleanupDoc>;
 export type ConfigShieldDoc = z.infer<typeof zConfigShieldDoc>;
 export type ConfigBlockDoc = z.infer<typeof zConfigBlockDoc>;
+export type ConfigAugmentFilterDoc = z.infer<typeof zConfigAugmentFilterDoc>;
 export type ConfigTauntDoc = z.infer<typeof zConfigTauntDoc>;
 export type ConfigRosterDoc = z.infer<typeof zConfigRosterDoc>;
 /** 對戰錄影政策（`content/config/replay.json`）。 */

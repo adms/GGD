@@ -52,7 +52,12 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
-import { grantGold, grantXp, grantLevels } from "../economy/progression";
+import {
+  grantGold,
+  grantXp,
+  grantLevels,
+  type GoldPayoutCategory,
+} from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
 import { creditKillCombo } from "../combat/killCombo";
 import { fireRingBurnMobs } from "../fireRing";
@@ -290,8 +295,19 @@ export function mobSystem(world: SimWorld): void {
       let gold: number;
       if (shares === null) {
         const mult = mobProfile(rules, dead.kind).rewardMult;
-        gold = Math.round(rules.rewardGold * mult);
-        grantGold(world, killer, gold);
+        // 打殭屍發放倍率 (owner 2026-08-04) — 一般與特殊走**不同的兩格**.
+        // `rewardMult` is exactly what makes them different economies: the
+        // special pays a multiple of the normal reward precisely because it is
+        // meant to be a lump, so scaling both through one knob would undo the
+        // separation the owner asked for (「普通殭屍 的確也可以單獨倍率」).
+        // A `boss` never reaches this line — MobSystem's boss branch returns
+        // above, and `mobProfile` documents the king's flat reward as 0 anyway.
+        const bucket: GoldPayoutCategory = dead.kind === "special" ? "elite" : "mob";
+        // `grantGold` RETURNS what actually landed, and `gold` must be that
+        // number — it is what the floating 「+N 金」 over the corpse prints, so
+        // reading the pre-multiplier request here would make the corpse say 60
+        // while the purse moved 30.
+        gold = grantGold(world, killer, Math.round(rules.rewardGold * mult), bucket);
         grantXp(world, killer, Math.round(rules.rewardXp * mult));
       } else {
         gold = shares.find((s) => s.id === killer)?.gold ?? 0;
@@ -414,10 +430,36 @@ function payMobBounty(
   // request and the grant diverge at `LEVEL_CAP`, and it is the GRANT that the
   // settlement panel must show. Accumulated here rather than re-derived from
   // `shares`, because `shares[].levels` is the request.
+  // 發放倍率 (owner 2026-08-04) — WHICH BUCKET A POOL PAYS THROUGH IS `kind`.
+  //
+  // BOTH POOLS ARE `elite`. A 特殊殭屍 and a 殭屍王 are the same economic shape:
+  // one kill, one lump, split by damage — the opposite of the per-kill trickle
+  // `mob` collects. That is why the owner's 0.1 belongs on this row and his 0.5
+  // on the other one.
+  //
+  // ⚠️ THE KING IS **NOT** `quest`, and that is a correction of an earlier call.
+  // It was filed under 完成任務 because the branch above calls it 「the quest's
+  // PRIZE」 — true as design intent, wrong as wiring: #262/#263 are both still
+  // pending, so no quest pays gold today, while the king is the LARGEST single
+  // gold source in a match. Under 完成任務 it would sit behind a knob nobody
+  // turns, and 「打殭屍調成 0.1 了, 錢還是很多」 is the bug report that follows.
+  // `quest` is not left dangling: 守衛塔補刀 (#89) pays through it.
+  //
+  // `normal` never reaches this line with a pool today (一般殭屍 authors none,
+  // so `shares` is null and the flat path above pays it), but it is named
+  // rather than folded into the ternary's else-branch: the day someone authors
+  // a pool for 一般殭屍, it must land in the trickle bucket, not the lump one.
+  const category: GoldPayoutCategory = kind === "normal" ? "mob" : "elite";
   let paidLevels = 0;
   const grantedPerShare = new Map<EntityId, number>();
+  // What each share ACTUALLY received. The event below reports the split to the
+  // 分紅結算 panel, and its own comment insists those numbers are 「SUMS OF WHAT
+  // WAS PAID, NOT THE CONFIGURED POOL」 — a multiplier applied inside `grantGold`
+  // and not reflected here would turn that sentence into a lie, which is the
+  // exact failure (④ 斷言/顯示與缺陷無關) the panel was built to avoid.
+  const paidGold = new Map<EntityId, number>();
   for (const s of shares) {
-    if (s.gold > 0) grantGold(world, s.id, s.gold);
+    paidGold.set(s.id, s.gold > 0 ? grantGold(world, s.id, s.gold, category) : 0);
     if (s.xp > 0) grantXp(world, s.id, s.xp);
     if (s.levels > 0) {
       const got = grantLevels(world, s.id, s.levels);
@@ -425,6 +467,10 @@ function payMobBounty(
       paidLevels += got;
     }
   }
+  const paidShares: BossBountyShare[] = shares.map((s) => ({
+    ...s,
+    gold: paidGold.get(s.id) ?? 0,
+  }));
   // FAILURE SHAPE ② (「算出來了但從沒送到客戶端」): without this the whole
   // mechanic is server-side arithmetic. The payload carries the WHOLE split —
   // every participant, their damage, their gold/xp and who doubled — so the
@@ -474,15 +520,17 @@ function payMobBounty(
     // GH#206's `"bonus"` mode they can EXCEED it (up to ×lastHitMultiplier).
     // Any consumer that substitutes `boss.bountyGold` here is lying to the
     // player; `bossTotalLine` reads these.
-    totalGold: shares.reduce((a, s) => a + s.gold, 0),
+    totalGold: paidShares.reduce((a, s) => a + s.gold, 0),
     totalXp: shares.reduce((a, s) => a + s.xp, 0),
     totalLevels: paidLevels,
     lastHitMultiplier: bounty.lastHitMultiplier,
     lastHitMode: bounty.lastHitMode,
-    shares: shares.map((s) => ({
+    shares: paidShares.map((s) => ({
       id: s.id,
       seatId: world.team.get(s.id)?.seatId ?? -1,
       damage: s.damage,
+      // PAID, not requested — same rule as `levels` below, now that a 發放倍率
+      // can sit between the pool and the purse.
       gold: s.gold,
       xp: s.xp,
       // GRANTED, not requested — see `paidLevels` above.
@@ -490,7 +538,10 @@ function payMobBounty(
       lastHit: s.lastHit,
     })),
   });
-  return shares;
+  // The PAID sheet is also what the caller reads to print the 「+N 金」 over a
+  // 特殊殭屍's corpse, so the returned array carries the same numbers the event
+  // does — one answer to 「這個人領了多少」, not two.
+  return paidShares;
 }
 
 /**

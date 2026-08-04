@@ -386,7 +386,14 @@ export function summonSystem(world: SimWorld): void {
         // through the SAME channel every other gold source uses. A bespoke
         // `summonBounty` event would need a fanout rule in another lane's file
         // to be anything but dead weight.
-        if (killer !== undefined) grantGold(world, killer, bounty);
+        // 打一般殭屍發放倍率 (owner 2026-08-04): the `mob` bucket is 「殺掉一個
+        // 雜兵的賞金」, and a 召喚物 is exactly that shape — small, repeatable,
+        // and there are several on the field at once. Not `hero` (killing
+        // someone's summon is not killing them) and not `elite` (that row is
+        // for the one-lump 特殊殭屍/殭屍王 payouts). Ships at 0 bounty by
+        // default, so today this multiplies nothing; it is wired anyway so the
+        // day an author turns a summon bounty on, it is already governed.
+        if (killer !== undefined) grantGold(world, killer, bounty, "mob");
       }
       despawn(id, sm, "death");
       continue;

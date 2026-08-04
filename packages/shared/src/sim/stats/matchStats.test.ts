@@ -198,7 +198,7 @@ describe("matchStats accumulation (settle-02)", () => {
   it("gold / xp accrue through the grant paths", () => {
     const world = new SimWorld(SKELETON_ARENA, 5);
     const { sela } = duel(world);
-    grantGold(world, sela, 137);
+    grantGold(world, sela, 137, "hero");
     grantXp(world, sela, 42);
     expect(getMatchStats(world, sela).goldEarned).toBe(137);
     expect(getMatchStats(world, sela).xp).toBe(42);

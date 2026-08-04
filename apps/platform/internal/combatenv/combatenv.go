@@ -118,6 +118,55 @@ var Keys = []string{
 	// 會被平台從它服務的每一張表**丟掉** —— 後台看不到、改不了,對操作者等同寫死。
 	// 這正是 keysync_test.go 檔頭記的 #136 abilityRange 事故。
 	"intToMagicResist",
+	// 金錢發放倍率 ×5 (owner 2026-08-04「金錢發放有點太浮濫了…分為 回合發放倍率,
+	// 打殭屍發放倍率, 擊敗英雄發放倍率, 完成任務發放倍率」, 同日追加「普通殭屍
+	// 的確也可以單獨倍率, 預設改成 0.5」—— 打殭屍那一格因此拆成 mob / elite).
+	//
+	// ⚠️ 它們的下限是 0,不是 MinFactor(0.1) —— 「這一類完全不發」是 owner 指名
+	// 要能設定的狀態。見 GoldFactors / Bounds。上限 MaxGoldFactor(10) 是防呆:
+	// 手滑打成 100 會讓一隻殭屍等於一整套裝備。
+	//
+	// ⚠️ goldEliteKill 收的是 特殊殭屍 + 殭屍王 (不是 goldQuest)。殭屍王是全場
+	// 最大的一筆金源, 而 #262/#263 都還 pending —— 掛在 完成任務 那一格等於掛在
+	// 一個沒人會去轉的旋鈕上。
+	"goldRoundPayout",
+	"goldMobKill",
+	"goldEliteKill",
+	"goldHeroKill",
+	"goldQuest",
+}
+
+// Bounds for the five 金錢發放 factors. They are ×factors like the eighteen
+// legacy rows — their neutral value IS 1.0, so DefaultFor needs no entry — but
+// their FLOOR is 0: 「完全不發」 is a setting the owner asked for, whereas a 0
+// damage multiplier is a broken match, which is the only reason MinFactor is
+// 0.1. Mirrors GOLD_FACTOR_MIN / GOLD_FACTOR_MAX in packages/shared.
+//
+// NOTE two of the five SHIP below 1.0 (goldMobKill 0.5, goldEliteKill 0.1) —
+// that lives in content/config/combat-env.json, which loadContentDefaults reads,
+// NOT in DefaultFor. DefaultFor stays the neutral floor exactly like every other
+// ×factor, so a platform with no content tree still serves a table that changes
+// nothing.
+const (
+	MinGoldFactor = 0.0
+	MaxGoldFactor = 10.0
+)
+
+// GoldFactors is the membership test that gives a key the gold band. Kept as a
+// set (not a prefix check on "gold") so a future key that merely READS as an
+// economy row cannot silently inherit a 0 floor it was never reviewed for.
+var GoldFactors = map[string]struct{}{
+	"goldRoundPayout": {},
+	"goldMobKill":     {},
+	"goldEliteKill":   {},
+	"goldHeroKill":    {},
+	"goldQuest":       {},
+}
+
+// IsGoldFactor reports whether k is one of the five 金錢發放 factors.
+func IsGoldFactor(k string) bool {
+	_, ok := GoldFactors[k]
+	return ok
 }
 
 // AttrDefaults is the SHIPPED value of each 三圍 coefficient (task #248),
@@ -168,6 +217,9 @@ func DefaultFor(k string) float64 {
 func Bounds(k string) (float64, float64) {
 	if IsAttrCoef(k) {
 		return MinAttrCoef, MaxAttrCoef
+	}
+	if IsGoldFactor(k) {
+		return MinGoldFactor, MaxGoldFactor
 	}
 	return MinFactor, MaxFactor
 }
@@ -228,6 +280,35 @@ type contentDoc struct {
 //
 // Never fatal: an unreadable or malformed file leaves the neutral table, which
 // is exactly the behaviour that existed before, and is logged once.
+//
+// ⚠️ READ ONCE, AT PROCESS START — AND `--content-only` DOES NOT RESTART THIS
+// PROCESS (noted 2026-08-04, for whoever tunes the gold knobs next).
+//
+// There is exactly one call site in the whole tree: Service.New, from
+// server.go's boot. So the map below is a SNAPSHOT of content/config at the
+// moment the platform started. content/ is a live bind-mount that `git pull`
+// updates, and `scripts/host-deploy.sh --content-only` deliberately restarts
+// only the game shard — so after a content-only deploy:
+//
+//   · a real MATCH reads the NEW value. The game-server merges
+//     `{...content, ...adminOverride}` itself (apps/game-server/src/config/
+//     combatEnv.ts) off the same bind-mount, and it was restarted.
+//   · the 後台 戰鬥系統 page shows the OLD one, because the "base an operator
+//     edits from" is this stale map — and every un-overridden key renders from
+//     it.
+//
+// Concretely: edit `goldMobKill` / `goldEliteKill` in content/config/
+// combat-env.json, deploy with --content-only, and the console will keep
+// showing the previous numbers (and a save would write them back as the
+// operator override, pinning the stale value for real). It is not wrong
+// enough to be a fail-loud condition — the game is correct — but it is a
+// display that lies, which is the exact shape of defect the 顯示真實值 rule
+// exists for.
+//
+// Two honest ways out when this starts costing time: re-read the file per
+// GetStored (cheap; it is a few hundred bytes), or make --content-only bounce
+// the platform too. Neither is done here because both are behaviour changes
+// beyond the lane that found it.
 func loadContentDefaults(contentDir string) map[string]float64 {
 	out := make(map[string]float64, len(Keys))
 	if contentDir == "" {
