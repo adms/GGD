@@ -2523,5 +2523,33 @@ function spawnMobBody(
     attackCdTicks: 0,
     spawnTick: world.mobTicks,
   });
+  /**
+   * 狀態欄 —— owner 2026-08-04 裁決「建 StatsComp 吧」的**第一段**（A3a）。
+   *
+   * ── 為什麼一行就夠 ────────────────────────────────────────────────────────
+   * 在這一行之前，`effects/applyStatus.ts` 的第一句是
+   * `const st = world.status.get(target); if (!st) continue;` ——
+   * 殭屍沒有 StatusComp，所以【暈眩】【定身】【減速】【詛咒】【暴走】
+   * 打在殭屍身上是**靜默丟掉**，沒有任何錯誤訊息（CLAUDE.md 失敗形態 ②）。
+   * 而第 3 場之後場上大多數敵人就是殭屍，等於半個遊戲裡那五根軸不存在。
+   *
+   * ⭐ 補上之後**不需要任何額外接線**，因為讀取端本來就是實體無關的：
+   *   · `sim/movementHold.ts:38` 直接 `world.status.get(id)` → 暈眩／定身／減速
+   *   · `combat/evasion.ts::missChanceOf` 讀攻擊者的狀態 → 詛咒
+   *   · `sim/berserk.ts` 讀 `berserk` 旗標 → 暴走
+   *   · `systems/StatusSystem.ts` 的到期過濾對空陣列是零成本
+   *
+   * ── ⚠️ 這一段**不含**屬性（A3b/A3c） ──────────────────────────────────────
+   * StatsComp 是另一件事，而且不是一行：`stats/statPipeline.recomputeStats`
+   * 的第一句是 `if (!sc || (!champ && !sm)) return;`，而且它 `Champions.get(
+   * sc.championId)` —— 殭屍兩者都沒有。所以【破甲】【易傷】【虛弱】【凋零】
+   * **今天對殭屍仍然無效**，那是明示的取捨，要寫在編輯器的提示裡。
+   * 完整的三段拆解見 `docs/ability補完計畫.md` 的 A3。
+   *
+   * ⚠️ `spawnUnitBody` 是和 `summons.ts` 共用的，而召喚物在自己那邊
+   * （`summons.ts:148`）已經建過一份 —— 所以這一行放在**只有殭屍會走**的
+   * `spawnMobBody` 裡，不是放在共用的那支，避免同一顆身體被寫兩次。
+   */
+  world.status.set(id, { effects: [] });
   return id;
 }

@@ -41,6 +41,8 @@ import { registerSkeletonContent } from "../content/skeleton";
 import { LootTables, Items } from "../content/registry";
 import { spawnChampion } from "../spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
+import { Stat } from "../stats/statTypes";
+import { ModOp } from "../stats/modifiers";
 import { eligibleItemPool } from "./draft";
 import { legendaryPool } from "./legendaryOrb";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./offerEligibility";
@@ -66,7 +68,7 @@ beforeAll(() => {
     tier: 3,
     tags: [],
     craftRole: "component",
-    modifiers: [{ stat: "armor", op: "flat", value: 10 }],
+    modifiers: [{ stat: Stat.Armor, op: ModOp.Flat, value: 10 }],
   });
   Items.register(PLAIN_ITEM, {
     id: PLAIN_ITEM,
@@ -74,7 +76,7 @@ beforeAll(() => {
     cost: 0,
     tier: 3,
     tags: [],
-    modifiers: [{ stat: "ad", op: "flat", value: 10 }],
+    modifiers: [{ stat: Stat.AttackDamage, op: ModOp.Flat, value: 10 }],
   });
 });
 
