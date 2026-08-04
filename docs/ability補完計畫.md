@@ -988,16 +988,124 @@ chain（彈跳）/ homing（追蹤）/ boomerang（回力）三個都不存在�
 ⚠️ **這是唯一一次授權改 owner 親筆描述**，而且只加這一行。
 ⛔ 之後不可以引用這次當前例去改其他描述。
 
-### 上架檢查清單
-
-> 由 [ggd-item-shelf-audit 工作流](#) 的盤點結果填入 —— 見下一節。
-
 ### 49 支傳說武器的上架盤點
 
-> **這一節由盤點工作流的結果填入。**
-> `docs/_legendary-49-status.md`（自動產生）宣稱 49/49 都在抽獎池與白名單裡，
-> ⚠️ 但「在白名單裡」與「玩家一場看得到幾支」是兩件事 —— 那份報告沒有回答第二個問題，
-> 而 owner 問的很可能是第二個。盤點完再寫，**不要照抄那份報告**（第三守則）。
+> 盤點方式：五路平行讀實作 → 合成 → **三個對抗性複驗者**。
+> ⚠️ **三個複驗者全部推翻了合成的頭條**，下面是修正後的版本，
+> 每一條我都獨立重跑驗證過。
+
+#### 結論：**成員資格 49/49 沒有缺漏，但「玩家拿得到」從來不是 49**
+
+「上架」在這個遊戲裡有**三個**互不相同的意思，答案完全不一樣：
+
+| 「上架」的意思 | 49 支的狀態 |
+|---|---|
+| **在池子與白名單裡**（membership） | ✅ **49/49**，四條清單雙向差集皆空、零空卡 |
+| **抽得到**（reachability） | ⚠️ **從來不是 49** —— 見下面兩道 sim 閘 |
+| **商店買得到** | ❌ **0/49**，兩層擋著 |
+
+#### 兩道讓 reachability ≠ 49 的 sim 閘
+
+**① 8 支是合成原料，傳說寶玉（2400g）永遠抽不到**
+`sim/economy/legendaryOrb.ts:128` 的
+`ORB_EXCLUDED_ROLES = new Set(["component","token","service"])`，`:132` 執行。
+我 parse 49 份文件的 `craftRole`：**final 18 / none 17 / component 8 / quest 6**。
+
+被排除的 8 支：`godie-i006` 雅典娜的驚嘆號 · `godie-i00u` 名刀-天狼 ·
+`godie-i012` 熾天使之弓 · `godie-i013` 緣一零式 · `godie-i014` 天叢雲劍 ·
+`godie-i01g` 貫雷槍 · `godie-i01w` 祕銀鎖子甲 · `godie-i020` 瑪那魔杖
+
+**② 6 支帶攻擊型別鎖，兩條路都擋**
+`sim/economy/offerEligibility.ts:65-70` 的 `itemOfferableTo`
+（免費卡走 `draft.ts:246`，寶玉走 `legendaryOrb.ts:105`）。
+近戰限定 5 支：泰坦九頭蛇 · 無盡連刃 · 丈八蛇矛 · 霸王破甲槍 · 冰晶虎魄-改；
+遠程限定 1 支：熾天使之弓（它同時也是 component，兩道閘都中）。
+
+**→ 沒有任何一位英雄拿得到 49 支：**
+
+| | 免費卡池 | 寶玉池 |
+|---|---|---|
+| 近戰英雄 | 48 / 49 | **41 / 49** |
+| 遠程英雄 | 44 / 49 | **36 / 49** |
+
+⚠️ `starter.go:443-444` 的註解**早就寫過這件事**：
+「白名單說『什麼存在』，sim 說『誰可以拿到』」。
+只做白名單那一半的普查，就會得到「49/49 全通」這個錯的答案 —— 合成階段正是這樣錯的。
+
+#### 商店 0/49 的兩層原因
+
+1. `packages/shared/src/sim/economy/shopShelf.ts:46` `WEAPON_SHELF_OPEN = false`（GH#261）
+2. **49 支的 `cost` 全部是 0**，而 `shop.ts:114` 是 `if (def.cost <= 0) return "not-purchasable"`
+
+⚠️ **而且這撞上 owner 自己立的規則**：`starter.go:160` 引 owner 原話
+「**傳說的武器道具，只能隨機三選一**」。所以「49 支進商店」與那條規則直接衝突 ——
+建議拆成**兩個獨立開關**（普通武器回架 / 傳說武器可買），不是一個。
+
+#### owner 感覺「沒上架」的真正原因：曝光率
+
+- 13 個回合裡**只有第 2、5 回合**排了 `weaponLootTable`（`content/config/arena-rules.json:29` / `:46`）
+- 每張卡 3 個選項（`arena-rules.json:6` `offerCount: 3`）
+- 背包 6 格（`shop.ts:12` `INVENTORY_SLOTS = 6`）
+
+→ **一場保底 2 支到手、6 張臉看得到**，佔可達池的 12–14%。
+⚠️ 拿到幾支是**區間 2–6，不是單一數字**（取決於買幾顆 2400g 寶玉）。
+
+⭐ **要「常看到它們」該動的是回合排程，不是白名單** ——
+`weaponLootTable` 已經是每回合一個後台欄位，**不用改程式**。
+
+#### ⛔ 盤點順手抓到兩個今天就在騙玩家的缺陷（已開 issue）
+
+- **[#274](https://github.com/adms/GGD/issues/274)** 回合報告卡硬給 `shelfOpen=true`
+  （`RoundReportCard.tsx:96`）→ 提示說「買得起 4 件」而隔壁商店只有 1 個按鈕能按。
+  它的 docstring 還宣稱自己絕不會這樣做。`affordableFrom` **零測試**。
+- **[#275](https://github.com/adms/GGD/issues/275)** 免費卡**沒有 craftRole 閘**
+  （`grep craftRole draft.ts` = 0 命中）→ 傳說卡會發合成原料，
+  而同一支東西買寶玉絕對抽不到。**這是 GH#70 的復發**，
+  而 `offerEligibility.ts:14-17` 檔頭逐字警告過「只修一條路是最典型的半套」。
+
+#### 三件指名道具的現況
+
+三件**都抽得到**（在池子、在白名單、無 `draftEligible:false`、無攻擊型別鎖），
+三件**都買不到**（同上兩層 + 仙后座的 `craftRole` 是 `quest`，
+還會被 `shop.ts:131` 的 `craftRole !== "final"` 再擋一層）。
+
+⚠️ **仙后座的文案承諾了一個資料裡不存在的效果**：
+`content/items/godie-i01s.json:6` 寫「迴避成功時瞬間移動」，
+而 `modifiers` 只有 evasion / maxMana / manaRegen 三條。
+它的 `authoringNote` 自承缺 `onEvade` 事件 + 可掛在 item 上的 dash。
+⭐ `onEvade` 正是 [B4](#b4--事件補完) 要建的 —— **做完 B4 這半句話才會變成真的**。
+
+### 上架檢查清單
+
+任何一支道具要「上架」，這六關全中才算數：
+
+| # | 關卡 | 動哪裡 | 漏了會怎樣 |
+|---|---|---|---|
+| ① | **內容檔進版控 + 產物同步** | `content/items/<id>.json` → `pnpm content:build` → **產物與來源檔一起 commit** | 只 commit 產物 = 線上內容**整份**載入失敗 → 退回骨架英雄 |
+| ② | **後台白名單有勾** | 線上平台 DB。⚠️ `starter.go` **只是 seed，不是權威**（`curation.go:401-403` 只在全空時才寫，`host-deploy.sh:41-42` 刻意不跑 seed）→ **改 seed 再部署，線上完全不會變** | 靜默消失：商店不列、抽獎不進 |
+| ③ | **商店貨架旗標** | `shopShelf.ts:46` `WEAPON_SHELF_OPEN` ⛔ **寫死的 TS 常數** | 只影響商店，抽獎不受影響 |
+| ④ | **商店資格三條同時成立** | `cost > 0`（`shop.ts:114`）· 有 payload（`:119`）· `craftRole === "final"`（`:131`） | 商店灰掉 |
+| ⑤ | **抽獎池成員 + 有回合會滾** | id 進 loot table，且該表被某回合的 `weaponLootTable` 指到，且不在 `retiredLootTables` | 白名單有勾也沒有任何回合會發它 |
+| ⑥ | **sim 兩道閘** | `draftEligible` 不可 false、`requiresAttackType` 要對得上（`offerEligibility.ts:65-70`）；走寶玉的話 `craftRole` 不可為 component/token/service（`legendaryOrb.ts:128`） | ⚠️ **這一關就是上面「49 ≠ 49」的來源** |
+
+⚠️ **兩個會讓上面全部白做的覆蓋層**：
+- **content overlay** 無條件蓋掉 `content/` 的出貨檔（`contentoverlay/precedence.go:7-12`），
+  game shard 只在**開機**鋪這一層 → 改 config 前先查線上有沒有存過 override，改完要重啟 shard。
+  ⚠️ `loot-tables` **本身就是可 overlay 的集合**（`validate.go:112-120`）——
+  線上若存過一份 `legendary-weapons` 的 override，整個池子會被換掉而 `content/` 看不出來。
+- **白名單是 fail-open allow-all**：平台不可達 → `Whitelist.allowAll()`（`whitelist.ts:202`/`:210`/`:231`），
+  **219 支道具全開**，訊號只有一行 `console.warn`。英雄側有退場檢查排在 bypass 之前，**道具側沒有**。
+
+#### 順帶：三條過期的註解（第三守則）
+
+- `shopShelf.ts:55-56` 說 `world.weaponShelfOpen` 是「host-overridable」——
+  **零 host 在 override 它**，全 repo 指派它為 true 的地方**全部是 `.test.ts`**。
+- `starter.go:444-446` 說「MatchController **先滾骰再過濾**」——
+  GH#249 之後已經反過來（`MatchController.ts:1287` 明寫 `filterItems` 被刻意移除）。
+  ⛔ **同一條假敘述也活在 `docs/_legendary-49-status.md` 裡**，
+  而那份是**自動產生**的 → 只改 `starter.go` 修不掉，要改 `tools/legendary-status/status.py`。
+- `starter.go:146` / `:153-156` 的統計寫「ITEMS 104 / SHOP 70 / LEGENDARY 25 / DRAFT 7」，
+  同檔下方真正的四個陣列是 **12 / 2 / 49 / 13**（去重 70）。`Makefile:138` 也一起過期。
 
 ---
 
