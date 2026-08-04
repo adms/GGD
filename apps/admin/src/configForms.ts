@@ -51,6 +51,7 @@ import {
   zConfigModelLodDoc,
   zConfigReplayDoc,
   zConfigBlockDoc,
+  zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
   zConfigShieldDoc,
@@ -481,6 +482,35 @@ const BLOCK_SPEC: ConfigDocSpec = {
         independent: "independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）",
         best: "best 只有最強的那一件會擋（改成欄位之前的行為）",
       },
+    },
+  ],
+  preserved: [],
+};
+
+// ──────────────────────────── 增益卡敵方過濾 (config/augment-filter) ──
+
+const AUGMENT_FILTER_SPEC: ConfigDocSpec = {
+  page: "augmentEnemyFilter",
+  collection: "config",
+  docId: "augment-filter",
+  schemaTag: "config.augment-filter@1",
+  zod: zConfigAugmentFilterDoc,
+  title: "增益卡敵方過濾",
+  intro: [
+    "稜彩增益卡上寫「敵方英雄」的那些 hook，在**殭屍波**裡到底算不算數。第 3 場之後場上最多的東西就是殭屍，所以這一格決定了那一族卡片在半個遊戲裡活不活。",
+    "真正的表達方式是**每張卡自己選**（那張卡的 hook 寫 `victim: \"enemy\"` 就連殭屍一起收，`\"enemyChampion\"` 只收敵方英雄）。這一頁是**全域覆寫**，給你打完一場覺得某一族卡太廢／太肥時現場翻一次，不用逐張改文件。",
+    "⚠️ 打開它**不會**讓殭屍長出屬性表，所以「對敵人上 debuff」那一類卡片還是打不到殭屍身上。它救得到的是效果掛在**自己**身上的那一族：疊層、充能、打到人就回血。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/augment-filter.json`** —— 線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/effects/hooks.ts 的 victimPasses()（每一次 hook 派發都會呼叫，讀 world.augmentEnemyFilter.mobsCountAsEnemy）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.augmentEnemyFilter",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／護盾規則 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格。",
+  fields: [
+    {
+      path: "mobsCountAsEnemy",
+      zh: "殭屍算不算「敵方英雄」",
+      note: "關著（出貨值）＝ 照字面：只有敵方**英雄**會觸發那些卡，殭屍潮裡一層都不疊。打開＝敵對陣營的殭屍也算，於是「打到敵人就疊一層」那一族卡在殭屍波裡會**非常快**滿層（一波三十隻）—— 那正是它要不要打開的全部：你想要那些卡在 PvE 段落也有存在感，還是想讓它們專門獎勵打人。⚠️ 它只影響寫 `enemyChampion` 的 hook；寫 `enemy` 的本來就收殭屍，寫 `allyChampion` 的永遠不受影響。",
     },
   ],
   preserved: [],
@@ -1487,6 +1517,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DAMAGE_COLORS_SPEC,
   SHIELD_SPEC,
   BLOCK_SPEC,
+  AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,
   TAUNT_SPEC,
   ARENA_FIRE_SPEC,

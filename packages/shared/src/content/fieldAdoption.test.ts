@@ -318,6 +318,52 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-07-30",
     why: "A DECISION, not a migration. No teamless unit can receive an aura under any value of `affects` (`world.stats.set` is called only in spawnChampion.ts / auraCarrier.ts), and 0 of the 86 aura-derived map abilities target friend and enemy together. Either author the first friend-and-foe aura or DELETE the member together with `AuraAffects` and the `affects === \"all\"` early-return in `affectsTarget`.",
   },
+  // --- 批 1 · Hook 詞彙加寬（稜彩卡計畫，2026-08-04）-----------------------
+  // 這一批的**設計就是零採用**：它「解鎖 0 張卡，是 10 張卡的前置」。三個新的
+  // union 成員與一格 scope 是後面 11 批寫內容時要引用的字彙 —— 先立字彙，
+  // 後面每一批才不會各自發明一套。第一批真的會用到它們的內容是批 2（
+  // master-of-duality / doomsayer 的堆層）與批 4（mystic-punch）。
+  //
+  // ⚠️ 為什麼是 `landing` 而不是 `default-live`：這些成員**沒有**程式預設可以
+  // 退回去。`victim: "enemyChampion"` 不會從任何地方自己發生，它要有一份文件
+  // 寫下來才存在。所以 30 天之後這一格再紅一次是對的 —— 那時候如果還是零，
+  // 代表批 2/4 沒有落地，而那才是真正該被看到的事實。
+  "enum:abilities.effects[]#applyBuff.hooks[].victim=enemyChampion": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "批 1 決策點 1-2 的成員：17 張稜彩卡有 13 個 hook 位置寫「敵方英雄」，而在它之前引擎的 `champion` 對隊友也成立。sim 那一側已經完整實作並有行為守衛（sim/effects/hookVocabulary.test.ts ①，突變驗證過），等的是批 2/4 的卡片文件。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].victim=allyChampion": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "`enemyChampion` 的另一半（同一次列舉加寬）。它比 enemyChampion 更遠：17 張卡裡沒有一張需要「只對隊友觸發」，留著是因為做成單邊的過濾器會讓下一張『鼓舞隊友』的卡再改一次 union。守衛同上 ①。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].victim=enemy": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "⭐ 批 1 決策點 1-1，全計畫最重要的一格：owner 已裁決不給殭屍 StatsComp，所以 9 張在殭屍波裡半殘的卡唯一的活路就是這個成員。零採用是因為那 9 張卡本身還沒寫（跨批 2/3/4/5）。全域覆寫在 config/augment-filter.json，守衛在 sim/effects/hookVocabulary.test.ts ①。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageSource=ability": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "批 1 決策點 1-3：`nonBasic` 把技能、DoT、火圈、守衛、小怪混成一堆，而戰爭交響曲說的是「普攻**或技能**」—— 火圈燒到人不該回血。判斷重用 combat/damageTypeOverride.ts 的 originInScope（不是第二份 startsWith）。第一個消費者是 symphony-of-war，它跨 5 批。守衛：hookVocabulary.test.ts ②，突變驗證過。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].damageSource=other": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "`ability` 的補集（既不是普攻也不是技能：火圈、守衛塔、小怪）。列舉加寬時一起做，因為「只加正面那一半」的過濾器等於逼下一個作者用 not() 繞路。守衛同上 ②。",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].internalCooldownScope": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "批 1 決策點 1-4：末日預言的 perAbilityCooldown 不是第二個冷卻數字，是既有 internalCooldown 的**作用域**。省略 = \"source\" = 這個欄位出現之前每一份文件的行為，所以零採用等於零位移。第一個消費者是 doomsayer（批 2）。守衛：hookVocabulary.test.ts ③，突變驗證過。",
+  },
+  "field:items.passive[].internalCooldownScope": {
+    status: "landing",
+    since: "2026-08-04",
+    why: "同一個欄位落在共用的 zHookDefBase 上，所以普查在道具與技能 applyBuff 兩個節點各看到一次（同 fromResource 那一格的形狀）。道具這一側今天沒有需求：每一件道具被動的 ICD 都是「這件裝備多久觸發一次」，不分槽位。分兩份 schema 只為了讓其中一邊閉嘴，會讓這條規則變成兩份。",
+  },
+
   "field:items.passive[].abilitySlot": {
     status: "landing",
     since: "2026-07-30",

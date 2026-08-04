@@ -191,8 +191,33 @@ export interface HookDef {
    *
    * The filter is skipped when the event carries no entity at all (a hook with
    * `target: "self"` on an entity-less event still fires, as before).
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * 批 1 (2026-08-04) 加的三個成員 —— **會比隊伍**的那一半
+   *
+   * 上面三個成員問的是「那個實體**是什麼**」,一個字都沒問「它站在哪一邊」。
+   * owner 的 17 張稜彩卡有 13 個 hook 位置寫的是「敵方**英雄**」,而在這三個
+   * 成員之前那句話寫不出來 —— 最接近的 `"champion"` 對**隊友**也成立,於是
+   * 「敵人被我控住時」那一族卡會被自己人的身體觸發。
+   *
+   *   · `"enemyChampion"` —— 帶 `ChampionComp` **且不同隊**
+   *   · `"allyChampion"`  —— 帶 `ChampionComp` **且同隊**(含自己)
+   *   · `"enemy"`         —— **任何**不同隊的身體,含殭屍/召喚物/小怪
+   *
+   * ⭐ `"enemy"` 是這一批最重要的一格。owner 已裁決**不給殭屍 `StatsComp`**
+   * (效能與順暢度),所以 9 張在殭屍波裡半殘的卡唯一的活路就是這個成員 ——
+   * 那 9 張的效果都掛在**自己**身上(疊層/充能/回血),只有過濾器擋著。
+   *
+   * ⚠️ **沒有 `TeamComp` 的身體一律不通過**,三個成員都一樣。客戶端的預測
+   * 影子世界、以及裸的測試實體都沒有隊伍,而「不知道你站哪邊」不可以被讀成
+   * 「你是敵人」——那會讓預測端跑出一份伺服器沒有的觸發。方向與
+   * {@link alliedChampions}(無隊伍 → 空名單)一致。
+   *
+   * ⚠️ 全域覆寫 `world.augmentEnemyFilter.mobsCountAsEnemy`(出貨 false)只動
+   * `"enemyChampion"`:打開之後它也收敵對陣營的小怪。`"allyChampion"` 永遠
+   * 不受影響(殭屍不會變成隊友),`"enemy"` 本來就收。見 `sim/augmentEnemyFilter.ts`。
    */
-  victim?: "champion" | "mob" | "any";
+  victim?: "champion" | "mob" | "any" | "enemyChampion" | "allyChampion" | "enemy";
   /**
    * 觸發這個 hook 的那一發傷害**是不是普通攻擊**。Absent = `"any"` = 不過濾,
    * 也就是這個欄位出現之前的每一份文件。
@@ -205,11 +230,30 @@ export interface HookDef {
    *
    *   · `"basic"`    —— 只有 `origin === "basic"` 的封包(普通攻擊)
    *   · `"nonBasic"` —— 其餘全部
+   *   · `"ability"`  —— 只有技能傷害(批 1)
+   *   · `"other"`    —— 既不是普攻也不是技能(批 1)
    *   · `"any"`/省略 —— 不過濾
    *
-   * ⚠️ 為什麼不叫 `"ability"` 而叫 `"nonBasic"`:走那條路的不只有技能,還有
-   * DoT、道具 proc、火圈、守衛塔。取名 `"ability"` 會是一個**名字說謊**的欄位
-   * (CLAUDE.md 第三守則),而 `origin` 字串沒有一個乾淨的「這是技能」子集。
+   * ⚠️ 為什麼 `"nonBasic"` 不叫 `"ability"`:走那條路的不只有技能,還有
+   * DoT、道具 proc、火圈、守衛塔、小怪。取名 `"ability"` 會是一個**名字說謊**
+   * 的欄位(CLAUDE.md 第三守則)。所以批 1 沒有改它的語意,而是在旁邊加了
+   * **真的**只收技能的那一個。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * 批 1 (2026-08-04) 加的兩個成員 —— 把 `"nonBasic"` 那一坨拆開
+   *
+   * 戰爭交響曲說的是「普攻**或技能**造成傷害時回血」。用 `"nonBasic"` 寫,
+   * **火圈燒到人也會回血** —— 那是另一張卡(而且是強得多的一張)。所以:
+   *
+   *   · `"ability"` —— `origin` 是 `` `ability:${id}` ``。**技能留下的延燒
+   *     (DoT)也算**,因為 `effects/dotTick.ts` 逐字沿用施法者的 `origin`
+   *     (owner 2026-08-01:「技能留下的延燒…算不算技能傷害? => yes」)。
+   *   · `"other"` —— 兩者皆非:火圈、守衛塔、小怪、hook 自己排出來的封包。
+   *
+   * ⛔ 判斷**重用 `combat/damageTypeOverride.ts` 的 `originInScope`**,不是
+   * 第二份 `startsWith("ability:")`。兩份就會有兩種「什麼算技能傷害」,而它們
+   * 分歧的那一天,惡夢魔王碎片(`scope:"ability"`)與這個欄位會對同一發封包
+   * 給出不同的答案。
    *
    * ⚠️ 事件沒有帶傷害時(`onKill` / `onBasicAttack` / `onInterval` …)這個過濾
    * **一律不通過**,而不是像 `victim` 那樣退化成「不過濾」。兩者不對稱是刻意的:
@@ -219,9 +263,36 @@ export interface HookDef {
    * 這條在正常內容上碰不到:`zHookDef` 在載入時就擋掉把它掛到無傷害事件上的
    * 文件,所以「寫得出來但永遠不會觸發」不是一個能出貨的狀態。
    */
-  damageSource?: "any" | "basic" | "nonBasic";
+  damageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
   /** internal cooldown in seconds (0/undefined = every trigger) */
   internalCooldown?: number;
+  /**
+   * {@link internalCooldown} 的**作用域** —— 這條 hook 的冷卻是「整條共用一份」
+   * 還是「每個技能槽位各一份」。批 1 (2026-08-04),決策點 1-4。
+   *
+   *   · `"source"`        —— 一份冷卻,不分槽位。**省略 = 這一個**,
+   *                          也就是這個欄位出現之前每一份文件的行為。
+   *   · `"perAbilitySlot"` —— Q/W/E/R/EX/PASSIVE **各記各的**:Q 剛觸發過
+   *                          不會擋住 W 的第一次。
+   *
+   * 為什麼是「作用域」而不是第二個冷卻數字:末日預言的 `perAbilityCooldown`
+   * 讀起來像另一格秒數,但它問的其實是**同一個 10 秒該怎麼記帳**。做成第二個
+   * 數字就會有「兩個都填了誰贏」這個沒有正確答案的問題,而任何一種答法都要
+   * 靠註解解釋(同 `IntervalHookSystem.ts` 對 `everySec` 的論證)。
+   *
+   * 為什麼是**槽位**而不是技能 id(決策點 1-4 的 A vs B):對**一位英雄**
+   * 「每槽位」≡「每技能 id」(一格只放得下一支),而槽位**已經**是
+   * `fireHooks(…, abilitySlot)` 的參數 —— 技能 id 要多接一條參數鏈,換來的是
+   * 同一個答案。
+   *
+   * ⚠️ **`onDamageDealt` / `onDamageTaken` / `onBasicAttack` / `onKill` /
+   * `onInterval` / `onStunned` 發射時 `abilitySlot` 是 `undefined`**,所以
+   * `"perAbilitySlot"` 在那些事件上**退化成一份全域冷卻**(所有無槽位的觸發
+   * 共用同一格)。它只在 `onAbilityCast` / `onAbilityHit` 上真的分得開。
+   * 這一句必須留在欄位說明裡:不然作者會以為它處處有效,而「退化」和「生效」
+   * 在畫面上長得一模一樣。
+   */
+  internalCooldownScope?: "source" | "perAbilitySlot";
   /**
    * Proc probability 0..1, rolled on the seeded `world.rng` every time the hook
    * would otherwise fire (absent = always). This is the WC3 proc-chance column
@@ -401,6 +472,23 @@ export interface ModifierSource {
   auras?: AuraDef[];
   /** runtime: last tick each hook fired (internal-cooldown bookkeeping) */
   hookLastFired?: number[];
+  /**
+   * RUNTIME (never authored), **只有 `internalCooldownScope: "perAbilitySlot"`
+   * 的 hook 會用到**:`hooks[hi]` ↔ 「這個槽位上一次觸發是第幾 tick」。
+   *
+   * 為什麼是第二個欄位而不是把 {@link hookLastFired} 改成 Record:那個陣列是
+   * **每一份既有 hook** 的冷卻記帳,改它的形狀等於同時改動 100+ 支移植過來的
+   * WC3 被動的節奏 —— 而這一批的硬約束是「省略新欄位 = 逐位元不變」。
+   * 兩個欄位並存的代價是一行 `?? -1e9`;合併的代價是一次全內容重測。
+   *
+   * ⚠️ 索引順序與 `hooks` **完全相同**,所以 `hooks` 陣列被換掉時(變身
+   * re-resolve、靈氣 rank-up)這一份和 `hookLastFired` **必須一起作廢** ——
+   * `aura/aura.ts` 兩個都清。
+   *
+   * ⚠️ 只做 `get`/`set`,**從不迭代** —— `sim/purity.test.ts` 禁的是「靠 Map
+   * 迭代順序決定行為」,而這裡的 key 只被用來查一個數字。
+   */
+  hookLastFiredBySlot?: (Map<string, number> | undefined)[];
   /**
    * RUNTIME, `kind: "aura"` only: which emitter/aura projected this source.
    * Written by `auraSystem` when it attaches, read by it when it removes (the

@@ -348,6 +348,11 @@ export function auraSystem(world: SimWorld): void {
           // hookLastFired is indexed by hook position — a different hooks array
           // invalidates it, and fireHooks rebuilds it lazily.
           s.hookLastFired = undefined;
+          // …and so is the per-slot ledger (`internalCooldownScope:
+          // "perAbilitySlot"`), which is indexed by the SAME positions. Leaving
+          // it behind would carry one hook's cooldown onto whatever hook lands
+          // at that index next.
+          s.hookLastFiredBySlot = undefined;
           dirty = true;
         }
         if ((s.stacks ?? 1) !== want.stacks) {

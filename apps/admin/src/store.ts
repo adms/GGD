@@ -158,6 +158,13 @@ export type Page =
    * 存過的值要遷移。
    */
   | "blockRules"
+  /**
+   * 增益卡敵方過濾 (`config/augment-filter.json`, 批 1 決策點 1-1): 殭屍算不算
+   * hook 上 `victim: "enemyChampion"` 的敵人。自己一頁而不是併進 戰鬥系統,
+   * 同 護盾規則 的理由 —— 戰鬥系統那一份是純數值倍率表(而且 Go 平台有一份
+   * key 對 key 的鏡射在守),塞一個 boolean 進去是同時改三個語言的形狀。
+   */
+  | "augmentEnemyFilter"
   | "stealthRules"
   /**
    * 嘲弄規則 (`config/taunt.json`): 誰拉得動誰、拉多久、以及嘲弄能不能從**玩家
@@ -453,6 +460,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "shieldRules",
   // 格擋規則: 第五頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "blockRules",
+  // 增益卡敵方過濾: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "augmentEnemyFilter",
   "stealthRules",
   // 嘲弄規則: 第六頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "tauntRules",

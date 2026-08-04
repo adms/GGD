@@ -871,7 +871,6 @@ export class MatchController {
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
     this.world.blockRules = blockRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
-    this.world.augmentEnemyFilter = augmentEnemyFilter;
     // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
     this.world.stealthRules = stealthRules;
     // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。

@@ -261,6 +261,10 @@ export const NAV: NavItem[] = [
   // 格擋在護盾之前判、而且刻意不吃護盾。owner 2026-07-31 裁決兩件格擋要獨立
   // 各判一次，那條裁決就住在這一頁。
   { page: "blockRules", label: "格擋規則", emoji: "🪖", section: SEC_SYS },
+  // 增益卡敵方過濾 (批 1 決策點 1-1) —— 稜彩卡上「敵方英雄」那句話在殭屍波裡算不算
+  // 數。緊接在 格擋規則 後面：三頁都是「同一段結算的規則」，而這一頁決定的是
+  // hook 到底跑不跑，也就是前兩頁那些判定有沒有機會被叫到。
+  { page: "augmentEnemyFilter", label: "增益卡敵方過濾", emoji: "🧟", section: SEC_SYS },
   { page: "stealthRules", label: "隱形規則", emoji: "👻", section: SEC_SYS },
   // 嘲弄規則 —— 唯一一條會**強迫**一個單位改打別人的機制(目前只有鍊金術之盾用到)。
   // 緊接在 隱形規則 後面,因為兩頁問的是同一類問題:「索敵看得到誰 / 索敵被誰綁架」。

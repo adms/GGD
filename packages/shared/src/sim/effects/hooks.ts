@@ -13,6 +13,7 @@ import type { CastableSlot } from "../intents";
 import { requirementScale, scaleEffects } from "../content/requirement";
 import { evaluateCondition } from "../content/condition";
 import type { TriggerDamage } from "./effect";
+import { originInScope } from "../combat/damageTypeOverride";
 
 /**
  * 全隊作用域 —— every CHAMPION on `owner`'s team, ALIVE OR DEAD, owner included,
@@ -40,6 +41,113 @@ export function alliedChampions(world: SimWorld, owner: EntityId): EntityId[] {
   out.sort((a, b) => a - b);
   return out;
 }
+
+/**
+ * `HookDef.victim` 的閘 —— 「那個實體符不符合這條 hook 要的身分」。
+ *
+ * 純函式,**沒有 rng、沒有時鐘**,所以它可以(而且必須)坐在 ICD 閘與機率骰
+ * 之前:被它擋掉的一發不可以燒掉持有者的冷卻,也不可以動到 seed。
+ *
+ * ── 三個「比隊伍」的成員(批 1)──────────────────────────────────────────
+ * `world.team.get()` 回 `undefined` 時**一律不通過**。這不是保守的隨手選擇,
+ * 是與 {@link alliedChampions} 同向的一條政策:客戶端的預測影子世界裡的身體
+ * 沒有 `TeamComp`,而「不知道你站哪一邊」若被讀成「你是敵人」,預測端就會跑出
+ * 一份伺服器沒有的觸發 —— 那是一個玩家看得到、而且只在網路上出現的分歧。
+ *
+ * ── `mobsCountAsEnemy` 只動 `"enemyChampion"` ────────────────────────────
+ * `"allyChampion"` 不受影響(殭屍永遠不是隊友);`"enemy"` 本來就收。
+ * 全域覆寫存在的理由與它為什麼不是單一布林,見 `sim/augmentEnemyFilter.ts`。
+ */
+function victimPasses(
+  world: SimWorld,
+  owner: EntityId,
+  victim: HookDef["victim"],
+  target: EntityId,
+): boolean {
+  switch (victim) {
+    // Positive tests on BOTH sides: a neutral that is neither (a guardian,
+    // a flower) matches neither filter, which is the honest reading of the
+    // field name.
+    case "mob":
+      return world.mob.has(target);
+    case "champion":
+      return world.champion.has(target);
+    case "enemyChampion":
+      // ⚠️ `sameTeam(...) !== false` → `=== false` 是 `"champion"` 與
+      // `"enemyChampion"` 的**全部**差別。拿掉隊伍比較,13 個寫著「敵方英雄」
+      // 的 hook 位置會被隊友的身體觸發,而畫面上跟正常一模一樣。
+      return (
+        sameTeam(world, owner, target) === false &&
+        (world.champion.has(target) ||
+          (world.augmentEnemyFilter.mobsCountAsEnemy && world.mob.has(target)))
+      );
+    case "allyChampion":
+      return sameTeam(world, owner, target) === true && world.champion.has(target);
+    case "enemy":
+      return sameTeam(world, owner, target) === false;
+    default:
+      return true;
+  }
+}
+
+/**
+ * 兩個身體同不同隊 —— `undefined` = **至少一邊沒有 `TeamComp`**,也就是
+ * 「不知道」,而不是「不同隊」。
+ *
+ * 三個呼叫端都拿 `=== true` / `=== false` 比,所以「不知道」對三個成員一律
+ * 是不通過。這個三態是刻意的:寫成 boolean 的話,客戶端預測影子世界裡那些
+ * 沒有隊伍的身體會被歸進「不同隊」= 敵人,於是預測端跑出一份伺服器沒有的
+ * 觸發。方向與 {@link alliedChampions}(沒有隊伍 → 空名單)一致。
+ */
+function sameTeam(world: SimWorld, a: EntityId, b: EntityId): boolean | undefined {
+  const ta = world.team.get(a);
+  const tb = world.team.get(b);
+  if (!ta || !tb) return undefined;
+  return ta.teamId === tb.teamId;
+}
+
+/**
+ * `HookDef.damageSource` 的閘 —— 「觸發這一次的那一發封包是什麼來路」。
+ *
+ * ⛔ `"ability"` / `"other"` 走 `combat/damageTypeOverride.ts` 的
+ * {@link originInScope},**不是**第二份 `startsWith("ability:")`。兩份就會有
+ * 兩種「什麼算技能傷害」,而它們分歧的那一天,惡夢魔王碎片(`scope:"ability"`)
+ * 與這個欄位會對同一發封包給出不同的答案。
+ */
+function damageSourcePasses(want: NonNullable<HookDef["damageSource"]>, origin: string): boolean {
+  const isBasic = originInScope(origin, "basic");
+  switch (want) {
+    case "basic":
+      return isBasic;
+    case "nonBasic":
+      return !isBasic;
+    case "ability":
+      return originInScope(origin, "ability");
+    case "other":
+      return !isBasic && !originInScope(origin, "ability");
+    default:
+      return true;
+  }
+}
+
+/**
+ * 這條 hook 這一次的內部冷卻該記在哪一格 —— `internalCooldownScope` 的全部。
+ *
+ * `"source"`(省略 = 這一個)回 `hookLastFired[hi]`,也就是這個欄位出現之前
+ * 每一份文件走的那一格。`"perAbilitySlot"` 回該槽位自己的一格,而**沒有槽位的
+ * 事件**(`onDamageDealt` / `onBasicAttack` / `onInterval` …)共用 `""` 那一格
+ * —— 那正是欄位說明裡寫的「退化成全域」。
+ */
+const ICD_NO_SLOT_KEY = "";
+
+/**
+ * 「這一格從來沒發動過」的 sentinel。夠負,所以 `world.tick - NEVER_FIRED`
+ * 一定大於任何 `icdTicks`(上界 `HOOK_INTERNAL_COOLDOWN_MAX_SEC` = 300 秒
+ * = 9,000 tick)。與 `hookLastFired` 的初值是**同一個常數**,不是兩個抄過來的
+ * 字面值 —— 兩份 sentinel 分歧的那一天,per-slot 的第一次觸發會跟 source 的
+ * 不一樣,而那個差別只在某一張卡上看得到。
+ */
+const NEVER_FIRED = -1e9;
 
 /**
  * 這個 hook 這一次的觸發門檻,`undefined` = 不用抽(必定通過)。
@@ -86,7 +194,7 @@ export function fireHooks(
   for (const src of sc.sources) {
     if (!src.hooks) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
-    if (!src.hookLastFired) src.hookLastFired = new Array(src.hooks.length).fill(-1e9);
+    if (!src.hookLastFired) src.hookLastFired = new Array(src.hooks.length).fill(NEVER_FIRED);
 
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
@@ -94,12 +202,13 @@ export function fireHooks(
       if (hook.abilitySlot && hook.abilitySlot !== abilitySlot) continue;
       // #244 — WHAT died / was hit. Absent or "any" = no filter, so every
       // pre-#244 hook is untouched. An entity-less event never filters.
+      //
+      // 批 1 (2026-08-04) 把 union 從「是什麼」加寬到「站在哪一邊」
+      // (enemyChampion / allyChampion / enemy),判斷搬進 `victimPasses`。
+      // ⛔ 位置一個字都沒動 —— 它必須留在 ICD 閘與機率骰**之前**(理由與下方
+      // `requires` 那一段完全相同:被擋掉的一發不可以燒 ICD、不可以動 seed)。
       if (hook.victim !== undefined && hook.victim !== "any" && target !== undefined) {
-        // Positive tests on BOTH sides: a neutral that is neither (a guardian,
-        // a flower) matches neither filter, which is the honest reading of the
-        // field name.
-        const ok = hook.victim === "mob" ? world.mob.has(target) : world.champion.has(target);
-        if (!ok) continue;
+        if (!victimPasses(world, owner, hook.victim, target)) continue;
       }
 
       // [反彈] 「普通攻擊」 過濾 —— owner 的文案是「反彈**普通攻擊**傷害 200%」,
@@ -114,8 +223,7 @@ export function fireHooks(
       // 沒有封包 = 不通過(跟 `victim` 相反,理由見 `HookDef.damageSource`)。
       if (hook.damageSource !== undefined && hook.damageSource !== "any") {
         if (incoming === undefined) continue;
-        const isBasic = incoming.origin === "basic";
-        if (hook.damageSource === "basic" ? !isBasic : isBasic) continue;
+        if (!damageSourcePasses(hook.damageSource, incoming.origin)) continue;
       }
 
       // 職業限定閘 (owner 2026-07-30: 近戰專用擴散 / 法師保命 / 坦克衝刺 /
@@ -153,10 +261,19 @@ export function fireHooks(
       // their ICDs from a factor labelled 道具冷卻 in the console would be a
       // number that does not do what it says. Shipped at 1.0, so every existing
       // hook keeps its exact pre-#189 cadence.
+      //
+      // `internalCooldownScope` (批 1, 決策點 1-4) 只換**記在哪一格**,不換
+      // 上面任何一句:省略 = `"source"` = `hookLastFired[hi]`,也就是這個欄位
+      // 出現之前每一份文件走的那一格,所以既有節奏一個 tick 都沒動。
+      const perSlot = hook.internalCooldownScope === "perAbilitySlot";
+      const slotKey = abilitySlot ?? ICD_NO_SLOT_KEY;
       if (hook.internalCooldown) {
         const factor = src.kind === "item" ? world.combatEnv.itemCooldown : 1;
         const icdTicks = Math.round((hook.internalCooldown * factor) / world.dt);
-        if (world.tick - src.hookLastFired[hi]! < icdTicks) continue;
+        const last = perSlot
+          ? (src.hookLastFiredBySlot?.[hi]?.get(slotKey) ?? NEVER_FIRED)
+          : src.hookLastFired[hi]!;
+        if (world.tick - last < icdTicks) continue;
       }
       // proc chance (WC3 Hbh1/Ocr1/War1 …) — seeded rng, so a replay of the
       // same seed rolls identically. A failed roll leaves the ICD clock alone.
@@ -196,7 +313,20 @@ export function fireHooks(
       if (!evaluateCondition(world, hook.condition, { self: owner, ...(target !== undefined ? { target } : {}) })) {
         continue;
       }
+      // 記帳。`"source"` 那一格**永遠**寫,連 `perAbilitySlot` 也寫 —— 這樣
+      // 一條 hook 從 per-slot 改回 source(後台切一格)不會拿到一份空的歷史,
+      // 而且 `hookLastFired` 仍是「這條 hook 最後一次發動」的單一真相
+      // (診斷面板、未來的 UI 都讀它)。
       src.hookLastFired[hi] = world.tick;
+      if (perSlot) {
+        if (!src.hookLastFiredBySlot) src.hookLastFiredBySlot = new Array(src.hooks.length);
+        let m = src.hookLastFiredBySlot[hi];
+        if (!m) {
+          m = new Map<string, number>();
+          src.hookLastFiredBySlot[hi] = m;
+        }
+        m.set(slotKey, world.tick);
+      }
 
       const resolveAgainst =
         hook.target === "allies"

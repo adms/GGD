@@ -1163,16 +1163,80 @@ const DAMAGE_BEARING_EVENTS: readonly string[] = ["onDamageTaken", "onDamageDeal
  * `damage.incomingPct` 對沒有 `incoming` 的情況是**整條不執行**,所以巢狀誤用的
  * 後果是「什麼都不做」,不是「付一半」。
  */
+/**
+ * 每一次評估都**要付一次代價**的條件葉子 —— `onInterval` 漏填
+ * `internalCooldown` 時,這些是把「每秒 30 次」從一句註解變成一個問題的那些。
+ *
+ * ⚠️ **這張表是 refine 的全部**,所以加葉子的人要順手看一眼這裡。今天只有
+ * 一個成員:
+ *
+ *   · `"chance"` —— 每一次評估**抽一次 `world.rng`**。掛在沒有 ICD 的
+ *     `onInterval` 上就是每 tick 一抽 × 每個持有者,而抽籤是**亂數流**上的
+ *     動作:一份這樣的文件不只是慢,它會讓那一場的 seed 以 30Hz 前進,
+ *     任何人事後想從錄影推理都要先扣掉它。
+ *
+ * 批 10 的空間葉子(`enemyChampionWithinRange`:沒有敵人在範圍內時 ICD 閘
+ * **不會**擋,因為 `hookLastFired` 只在成功發射後才寫,所以條件會每 tick 做
+ * 一次網格查詢)加進這張表就自動被擋 —— 那正是決策點 1-5 選 A 的理由,
+ * 而這張表就是它落地的地方。
+ */
+const INTERVAL_BUDGET_CONDITION_KINDS: readonly string[] = ["chance"];
+
+/** 這棵條件樹裡有沒有任何一顆「每次評估都要付錢」的葉子。 */
+function hasBudgetedLeaf(cond: unknown): boolean {
+  if (!cond || typeof cond !== "object") return false;
+  const c = cond as Record<string, unknown>;
+  if (typeof c.kind === "string") return INTERVAL_BUDGET_CONDITION_KINDS.includes(c.kind);
+  for (const key of ["all", "any"] as const) {
+    const arr = c[key];
+    if (Array.isArray(arr) && arr.some(hasBudgetedLeaf)) return true;
+  }
+  return hasBudgetedLeaf(c.not);
+}
+
 export function refineHookDamageContext(
   hook: {
     on: string;
     damageSource?: string | undefined;
     chance?: number | undefined;
     chanceFrom?: { min: number; max: number } | undefined;
+    internalCooldown?: number | undefined;
+    condition?: unknown;
     effects: readonly { kind: string; incomingPct?: unknown }[];
   },
   ctx: z.RefinementCtx,
 ): void {
+  // ── `onInterval` 的節奏 (批 1, 決策點 1-5) ────────────────────────────────
+  //
+  // owner 的 TSV 把節奏寫成 `interval: 0.5`。引擎的欄位叫 `internalCooldown`,
+  // 而 `zHookDefBase` 是 `.strict()`,所以 `interval` 這個 key 本身進不來 ——
+  // 問題不在拼錯,在**漏填**:`onInterval` 沒有 `internalCooldown` = 每一 tick
+  // 都發 = 30 次/秒,而那在畫面上跟「每 0.5 秒一次」長得一模一樣,只是更燙。
+  //
+  // ⚠️ 為什麼不是「一律要求 `internalCooldown`」:03-00 相轉移裝甲的常駐魔免
+  // **就是**要每 tick 發,出貨的 7 條 `onInterval` 也全部有 ICD。所以這條只擋
+  // 「每次評估都要付錢的條件 + 沒有節奏」這個組合 —— 見
+  // {@link INTERVAL_BUDGET_CONDITION_KINDS}。
+  //
+  // CLAUDE.md 的 fail-loud 條款:錯誤要在**編輯發生的當下**響(載入這份文件
+  // 就爆,訊息由 `SchemaValidationError` 冠上 collection + 文件 id),
+  // 不是等到某條剛好跑到它的測試。
+  if (
+    hook.on === "onInterval" &&
+    !hook.internalCooldown &&
+    hasBudgetedLeaf(hook.condition)
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["internalCooldown"],
+      message:
+        "onInterval + 需要每次評估付出代價的條件(" +
+        `${INTERVAL_BUDGET_CONDITION_KINDS.join(" / ")})卻沒有 internalCooldown ——` +
+        " 這條 hook 會**每一 tick**(30 次/秒)評估一次條件並抽一次亂數。" +
+        "節奏就寫在 internalCooldown(0.5 = 每 0.5 秒),那個欄位本來就存在;" +
+        "owner TSV 上的 `interval` 指的就是它,不是第二個欄位。",
+    });
+  }
   // ── 機率的兩個欄位:互斥,而且區間不可以顛倒 ──────────────────────────────
   // 這一段**在 DAMAGE_BEARING_EVENTS 的 early-return 之前**,因為機率跟事件
   // 帶不帶封包無關 —— 放在後面的話,`onDamageTaken` 上的一份壞文件會安靜地
@@ -1225,6 +1289,25 @@ export function refineHookDamageContext(
  * 而 `ZodEffects` 沒有 `.extend()`。`zAuraDef` / `zItemAuraDef` 已經踩過同一個
  * 坑(那邊用的是 `.innerType()`)。item.ts 會把同一個 refine 再套一次,兩邊共用
  * `refineHookDamageContext` 這一個函式,所以規則不可能只在一邊生效。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⚠️ 寫卡片的人最常打錯的四個字 —— **它們都不是缺的功能,是拼寫**
+ * ════════════════════════════════════════════════════════════════════════════
+ * 稜彩增益卡的規格 TSV 用的是一套人話字彙,而其中四個字在引擎裡**已經有對應的
+ * 欄位**。照 TSV 字面新增欄位的唯一產出是**同義詞**,而同義詞是最貴的一種技術
+ * 債:兩個都填得起來、誰贏要靠註解解釋,而註解會過期(CLAUDE.md 第三守則)。
+ *
+ *   TSV 寫的            引擎已出貨的                        住在哪裡
+ *   ──────────────────  ──────────────────────────────────  ─────────────────
+ *   op: "conversion"    op: "percentOf" + from/fromResource  ModOp.PercentOf
+ *                                                            (sim/stats/modifiers.ts)
+ *   op: "set"           op: "override"                       ModOp.Override
+ *   conditions: [ … ]   condition: { all: [ … ] }            本檔 `condition`
+ *   interval: 0.5       internalCooldown: 0.5                本檔 `internalCooldown`
+ *
+ * 前三個由 `.strict()` 自動擋(未知的 key → 解析錯誤,而 `SchemaValidationError`
+ * 會冠上 collection 與文件 id)。第四個擋得到「漏填」但擋不到「拼錯」,所以它
+ * 另有一段 refine —— 見 `refineHookDamageContext` 的 `onInterval` 那一段。
  */
 export const zHookDefBase = z
   .object({
@@ -1311,7 +1394,21 @@ export const zHookDefBase = z
      * "any" (every pre-#244 hook). Lets one `onKill` doc pay differently for a
      * 部隊 kill and a 英雄 kill.
      */
-    victim: z.enum(["champion", "mob", "any"]).optional(),
+    victim: z
+      .enum(["champion", "mob", "any", "enemyChampion", "allyChampion", "enemy"])
+      .optional(),
+    /**
+     * {@link zHookDefBase.shape.internalCooldown} 的**作用域**(批 1,
+     * 決策點 1-4)。`"source"`(省略 = 這一個)= 一份冷卻不分槽位,也就是這個
+     * 欄位出現之前每一份文件的行為;`"perAbilitySlot"` = Q/W/E/R/EX/PASSIVE
+     * 各記各的(末日預言的 `perAbilityCooldown`)。
+     *
+     * ⚠️ **只在 `onAbilityCast` / `onAbilityHit` 上真的分得開** —— 其餘事件
+     * 發射時沒有槽位,`"perAbilitySlot"` 在那裡退化成一份全域冷卻。完整的
+     * 理由與「為什麼是槽位不是技能 id」寫在 `sim/stats/modifiers.ts` 的
+     * `HookDef.internalCooldownScope`。
+     */
+    internalCooldownScope: z.enum(["source", "perAbilitySlot"]).optional(),
     /**
      * [反彈] 觸發這個 hook 的那一發傷害**是不是普通攻擊** —— mirrors
      * `HookDef.damageSource` in sim/stats/modifiers.ts, where the naming
@@ -1321,7 +1418,7 @@ export const zHookDefBase = z
      * `onDamageTaken` 分不出普攻、技能與 DoT,那件道具只能被實作成「反彈所有
      * 傷害」—— 一件強得多的、不同的道具。
      */
-    damageSource: z.enum(["any", "basic", "nonBasic"]).optional(),
+    damageSource: z.enum(["any", "basic", "nonBasic", "ability", "other"]).optional(),
   })
   .strict();
 

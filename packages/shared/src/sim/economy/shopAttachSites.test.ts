@@ -130,6 +130,7 @@ const SOURCE_ONLY_KEYS = [
   "visualStacks",
   "damageReduction",
   "hookLastFired",
+  "hookLastFiredBySlot",
   "auraOrigin",
 ];
 

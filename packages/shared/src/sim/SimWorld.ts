@@ -32,6 +32,10 @@ import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
+import {
+  DEFAULT_AUGMENT_ENEMY_FILTER,
+  type AugmentEnemyFilter,
+} from "./augmentEnemyFilter";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import {
@@ -652,6 +656,17 @@ export class SimWorld {
    * `blockCutFor` 兩條分支都不走,於是格擋整族靜默失效。
    */
   blockRules: BlockRules = DEFAULT_BLOCK_RULES;
+
+  /**
+   * 敵方過濾器的全域覆寫 (see augmentEnemyFilter.ts) —— 目前只有「殭屍算不算
+   * `victim: "enemyChampion"` 的敵人」一格 (`config.augment-filter@1`)。
+   * 和 `blockRules` / `shieldRules` 同一條規矩:開賽前指派一次,之後不再動。
+   *
+   * 預設是**出貨值** `mobsCountAsEnemy: false`(＝這個欄位出現之前的字面語意),
+   * 所以掛上它不改變任何一場比賽。⚠️ 客戶端的預測影子世界拿的也是這個預設,
+   * 而預設等於伺服器的出貨值 —— 兩邊對得起來。
+   */
+  augmentEnemyFilter: AugmentEnemyFilter = DEFAULT_AUGMENT_ENEMY_FILTER;
 
   /**
    * Combat-elapsed ticks driving the flower spawn cadence. -1 = not in combat
