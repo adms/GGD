@@ -57,6 +57,7 @@ import { extendRoundForBoss, fireRingIgnitionTick } from "./fireRing";
 import { Champions } from "./content/registry";
 import { Stat } from "./stats/statTypes";
 import { championStatBase } from "./stats/attributes";
+import { LEVEL_CAP } from "./economy/progression";
 import { COMBAT_ENV_DEFAULTS, type CombatEnvMultipliers } from "./combatEnv";
 // 索敵排名的那一根軸。VALUE import,而且**沒有**造成模組循環:summonRules.ts
 // 只 import 了一個 type，它不 import 這個檔,也不 import targeting.ts。
@@ -169,13 +170,54 @@ export const MOB_CHAMPION_SLOTS: readonly MobChampionSlot[] = ["mob", "boss", "s
 // 每 N 隻 +1 級、王的 `bountyLevels`),所以「當時」只有在**生成那一刻**才成立。
 // arm time 版本會讓同一回合的第二隻特殊殭屍跟第一隻一模一樣 —— 一個加了模式但
 // 沒有生效的功能,而且沒有任何現有斷言看得見。
-export type MobHeroLevelSource = "round" | "fixed" | "matchHighest";
+export type MobHeroLevelSource = "round" | "fixed" | "matchHighest" | "curve";
+
+/**
+ * 等級曲線 —— owner 2026-08-04 給的三條公式，一個形狀吃下去。
+ *
+ * ```
+ *   等級 = 回合² × perRoundSq  +  回合 × perRound  +  flat
+ * ```
+ *
+ * | 誰 | owner 的式子 | perRoundSq | perRound | flat |
+ * |---|---|---|---|---|
+ * | 普通殭屍 | `回合數*2+1`       | 0 | 2 | 1 |
+ * | 特殊殭屍 | `回合數*3+5`       | 0 | 3 | 5 |
+ * | 殭屍王   | `回合數*回合數+10` | 1 | 0 | 10 |
+ *
+ * ── 為什麼是「二次多項式」而不是三個寫死的公式 ────────────────────────────
+ * 三條裡兩條線性、一條二次。做三個 `if (kind === …)` 等於把 owner 每週會改的
+ * 東西寫進程式（第一守則）；一組係數之後，「殭屍王改成 1.5 倍成長」是後台改一
+ * 個數字，不是一次部署。二次項是**必要**的 —— 沒有它 `回合²+10` 表達不出來。
+ *
+ * ⚠️ **purity**：`sim/**` 禁用 `**`（`purity.test.ts` 在守），所以是 `r * r`。
+ * ⚠️ 一律夾在 [1, {@link LEVEL_CAP}]。今天夾不到（第 10 回合起不生殭屍，
+ * R9 的王是 91）—— 但把 `schedule` 的 R10 那一列打開的那天，`10²+10 = 110`
+ * 就會越界。夾在這裡，不是等某個下游靜默截斷。
+ */
+export interface MobLevelCurve {
+  /** 回合² 的係數。0 = 線性。 */
+  perRoundSq: number;
+  /** 回合 的係數。 */
+  perRound: number;
+  /** 常數項。 */
+  flat: number;
+}
+
+/** 曲線上第 `round` 回合的等級，夾在 [1, {@link LEVEL_CAP}]。 */
+export function mobLevelFromCurve(curve: MobLevelCurve, round: number): number {
+  const r = Math.max(0, Math.round(round));
+  // ⚠️ r * r，不是 r ** 2 —— sim/purity.test.ts 禁用冪運算。
+  const raw = Math.round(r * r * curve.perRoundSq + r * curve.perRound + curve.flat);
+  return Math.min(LEVEL_CAP, Math.max(1, raw));
+}
 
 /**
  * 三個模式,依 console 顯示的順序。⚠️ 必須與 schema 的 `zMobHeroLevelSource`
  * 相等 —— 後台的 `validateField` 只放行這個清單裡的值。
  */
 export const MOB_HERO_LEVEL_SOURCES: readonly MobHeroLevelSource[] = [
+  "curve",
   "round",
   "fixed",
   "matchHighest",
@@ -1032,6 +1074,11 @@ export interface MobWavesConfigLike {
     groundRingSizeFollow?: number;
     baseLevel?: number;
     levelPerRound?: number;
+    /**
+     * owner 2026-08-04「普通殭屍等級: 回合數*2+1」——**有它就以它為準**,
+     * `baseLevel`/`levelPerRound` 一併不看。見 {@link MobLevelCurve}。
+     */
+    levelCurve?: MobLevelCurve;
     /** #244 — the mob's OWN hp curve: round(baseHp + hpPerLevel*(level-1)) */
     baseHp?: number;
     hpPerLevel?: number;
@@ -1086,6 +1133,8 @@ export interface MobWavesConfigLike {
     heroLevel?: number;
     /** #290 — 怎麼決定上面那格;ABSENT ⇒ 今天的行為 (`heroLevel ?? 該回合等級`) */
     heroLevelSource?: MobHeroLevelSource;
+    /** owner 2026-08-04「殭屍王等級: 回合數*回合數+10」。配 `heroLevelSource: "curve"`。 */
+    levelCurve?: MobLevelCurve;
     /* ── #247 無視碰撞 + 每回合上限 (owner 2026-08-01) ─────────────────────
      * ABSENT on all six ⇒ the pre-#247 behaviour, byte-identical: no flight
      * grant is written and the per-round gate is wide open. Every arena doc
@@ -1133,6 +1182,8 @@ export interface MobWavesConfigLike {
     heroLevel?: number;
     /** #290 — 怎麼決定上面那格. SHIPS `"matchHighest"`; see {@link MobHeroLevelSource} */
     heroLevelSource?: MobHeroLevelSource;
+    /** owner 2026-08-04「特殊殭屍等級: 回合數*3+5」。配 `heroLevelSource: "curve"`。 */
+    levelCurve?: MobLevelCurve;
     /* ── 分紅獎池 (#288, owner 2026-07-29) — see {@link MobSpecialBounty} ─────
      * ALL THREE ABSENT ⇒ no pool, no damage ledger, and the pre-#288
      * `rewardMult`-to-the-last-hitter payout, unchanged. */
@@ -1393,6 +1444,10 @@ export function mobChampionModelKey(championId: string): string {
 }
 
 export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number {
+  // 曲線是**絕對**的（吃回合本身，不是 `round - fromRound`）。沒有曲線 = 每一份
+  // 2026-08-04 之前的文件，走原本的線性式，逐位元不變。
+  const curve = cfg.mob.levelCurve;
+  if (curve) return mobLevelFromCurve(curve, round);
   const base = cfg.mob.baseLevel ?? DEFAULT_MOB_BASE_LEVEL;
   const per = cfg.mob.levelPerRound ?? DEFAULT_MOB_LEVEL_PER_ROUND;
   return base + per * Math.max(0, Math.round(round) - cfg.fromRound);
@@ -1489,12 +1544,21 @@ export function heroDerivedStats(
  * {@link MobHeroDeriveRule.armedLevel} records — see the note there.
  */
 export function mobArmedHeroLevel(
-  block: { heroLevel?: number; heroLevelSource?: MobHeroLevelSource },
+  block: { heroLevel?: number; heroLevelSource?: MobHeroLevelSource; levelCurve?: MobLevelCurve },
   roundLevel: number,
+  round?: number,
 ): number {
   switch (block.heroLevelSource) {
     case "round":
       return roundLevel;
+    // owner 2026-08-04 的兩條 per-kind 公式（特殊 `回合*3+5`、王 `回合²+10`）。
+    // ⚠️ 吃的是**回合本身**，而 `roundLevel` 是普通殭屍那條曲線的輸出 —— 兩者
+    // 不同，所以 `round` 是新的第三個參數。沒帶進來（或沒填曲線）就退回
+    // `roundLevel`，也就是這個模式出現之前的行為。
+    case "curve":
+      return block.levelCurve !== undefined && round !== undefined
+        ? mobLevelFromCurve(block.levelCurve, round)
+        : roundLevel;
     case "fixed":
       // 選了「指定」卻沒填數字 ⇒ 退回該回合等級,而不是 1。空欄位是「還沒填」,
       // 不是「一級」。
@@ -1740,9 +1804,9 @@ export function mobRulesFromConfig(
   // the repo is written against the inherited champion.
   const bossFace = mobKindChampion(cfg.boss, championId, "boss", round, pickChampion);
   const specialFace = mobKindChampion(cfg.special, championId, "special", round, pickChampion);
-  const bossArmedLevel = cfg.boss === undefined ? level : mobArmedHeroLevel(cfg.boss, level);
+  const bossArmedLevel = cfg.boss === undefined ? level : mobArmedHeroLevel(cfg.boss, level, round);
   const specialArmedLevel =
-    cfg.special === undefined ? level : mobArmedHeroLevel(cfg.special, level);
+    cfg.special === undefined ? level : mobArmedHeroLevel(cfg.special, level, round);
   const bossHero =
     cfg.boss === undefined
       ? NO_HERO_DERIVED
@@ -1765,6 +1829,7 @@ export function mobRulesFromConfig(
     heroDamageMult?: number;
     hpFlatBonus?: number;
     heroLevelSource?: MobHeroLevelSource;
+    levelCurve?: MobLevelCurve;
   };
   const deriveFor = (
     block: HeroDeriveBlock | undefined,

@@ -40,7 +40,13 @@ import { Stat } from "./stats/statTypes";
 import { COMBAT_ENV_DEFAULTS } from "./combatEnv";
 import type { ChampionDef } from "./content/defs";
 import type { ChampionId } from "../ids";
-import { MOB_CHAMPION_ID, mobProfile, mobRulesFromConfig, type MobWavesConfigLike } from "./mobs";
+import {
+  MOB_CHAMPION_ID,
+  mobLevelForRound,
+  mobProfile,
+  mobRulesFromConfig,
+  type MobWavesConfigLike,
+} from "./mobs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -97,7 +103,24 @@ beforeAll(() => {
 const HERO = { baseStats: DOC.baseStats, growth: DOC.growth, attributes: DOC.attributes };
 
 /** The shipped block, as the sim's own config-like view of it. */
-const SHIPPED = ARENA_RULES.mobWaves as unknown as MobWavesConfigLike;
+/**
+ * ⚠️ **等級來源被釘死，是這一族測試的前提不是它的主題**（2026-08-04）。
+ *
+ * 本檔量的是「從英雄卡推導王／特殊的血量與攻擊」那條**算術**（×倍率、再 +固定值、
+ * 兩個旋鈕互不相干）——「幾級」只是它的一個輸入。owner 2026-08-04 把出貨的
+ * `heroLevelSource` 改成 `"curve"`（王 `回合²+10`、特殊 `回合*3+5`），於是本檔每一條
+ * 寫著 99 的斷言一起紅，而**它們紅的原因跟推導算術一點關係都沒有**。
+ *
+ * 所以這裡把來源釘回各自原本的模式：王 `"fixed"`（吃 `heroLevel: 99`）、
+ * 特殊 `"matchHighest"`。出貨曲線由 `mobLevelCurve.test.ts` 守 —— 兩件事分開之後，
+ * 改任何一邊都不會用**錯誤的訊息**弄紅另一邊。
+ */
+const SHIPPED_RAW = ARENA_RULES.mobWaves as unknown as MobWavesConfigLike;
+const SHIPPED = {
+  ...SHIPPED_RAW,
+  boss: { ...(SHIPPED_RAW.boss as object), heroLevelSource: "fixed" },
+  special: { ...(SHIPPED_RAW.special as object), heroLevelSource: "matchHighest" },
+} as unknown as MobWavesConfigLike;
 
 /** `mobRulesFromConfig` over a copy of the shipped doc with `boss` patched. */
 function withBoss(patch: Record<string, unknown>, round = 3) {
@@ -178,8 +201,19 @@ describe("殭屍王 · 從英雄推導 (GH#206)", () => {
     }
     // ABSENT `heroLevel` = the ROUND's mob level, not a hidden 99 — otherwise
     // the 特殊殭屍's 「跟著回合成長」 would silently be 「always max level」.
-    expect(withBoss({ heroLevel: undefined }, 3).boss!.maxHp).toBe(atThree);
-    expect(withBoss({ heroLevel: undefined }, 9).boss!.maxHp).toBeGreaterThan(atThree);
+    //
+    // ⚠️ 期望值從 `mobLevelForRound` **推導**，不是寫死 3（2026-08-04）：
+    // owner 給了普通殭屍一條曲線（`回合*2+1`），所以「該回合的小怪等級」在第 3
+    // 回合是 7 不是 3。寫死的話這一條會因為**別人**改了曲線而紅，而訊息會說
+    // 「heroLevel 沒接上」—— 一個用錯誤訊息紅掉的斷言（CLAUDE.md）。
+    const roundLevel3 = mobLevelForRound(SHIPPED, 3);
+    const heroAtRound3 = championStatBase(HERO, Stat.MaxHealth, roundLevel3, COMBAT_ENV_DEFAULTS);
+    expect(withBoss({ heroLevel: undefined }, 3).boss!.maxHp).toBe(
+      Math.round(heroAtRound3 * 20) + 100000,
+    );
+    expect(withBoss({ heroLevel: undefined }, 9).boss!.maxHp).toBeGreaterThan(
+      withBoss({ heroLevel: undefined }, 3).boss!.maxHp,
+    );
   });
 
   it("血量與攻擊力是「兩個」旋鈕 —— 動其中一個不會動到另一個", () => {
@@ -282,7 +316,10 @@ describe("特殊殭屍 · 從英雄推導 (GH#206)", () => {
     // 三份鏡像相等由 `mobs.heroLevelSource.test.ts` 與 `apps/admin/src/mobWaves.test.ts` 守。
     expect(s.hpFlatBonus).toBeGreaterThan(0);
     expect(s.heroLevel).toBeUndefined(); // 等級由 heroLevelSource 決定, 不是這格
-    expect(s.heroLevelSource).toBe("matchHighest");
+    // ⚠️ owner 2026-08-04 把出貨的特殊殭屍改成 `"curve"`（`回合*3+5`）。
+    // 這一條讀的是**未釘死的原始出貨值**，所以它守的是「出貨檔真的照 owner 改了」。
+    expect(SHIPPED_RAW.special!.heroLevelSource).toBe("curve");
+    expect(SHIPPED_RAW.special!.levelCurve).toBeDefined();
 
     // READ THROUGH `mobProfile`, which is what `spawnMob` / MobSystem's melee /
     // MovementSystem all call — not through `rules.special`, which no system

@@ -119,6 +119,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "mob.groundRingSizeFollow",
   "mob.baseLevel",
   "mob.levelPerRound",
+  "mob.levelCurve.perRoundSq",
+  "mob.levelCurve.perRound",
+  "mob.levelCurve.flat",
   "mob.baseHp",
   "mob.hpPerLevel",
   "mob.baseRegen",
@@ -169,6 +172,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "boss.heroLevel",
   // 等級來源:跟場上最高 / 指定 / 沿用回合 (#290)
   "boss.heroLevelSource",
+  "boss.levelCurve.perRoundSq",
+  "boss.levelCurve.perRound",
+  "boss.levelCurve.flat",
   // 特殊殭屍 (#262)
   "special.chancePercent",
   "special.hpMult",
@@ -187,6 +193,9 @@ const EVERY_FIELD: readonly MobWavesFieldKey[] = [
   "special.hpFlatBonus",
   "special.heroLevel",
   "special.heroLevelSource",
+  "special.levelCurve.perRoundSq",
+  "special.levelCurve.perRound",
+  "special.levelCurve.flat",
   // 分紅獎池 (#288) — owner 2026-07-29 「特殊殭屍也照傷害比例分」
   "special.bountyGold",
   "special.bountyXp",
@@ -290,9 +299,18 @@ describe("drift pins — the console's copies match the engine", () => {
 
   it("hpForRound uses the #244 mob-card law, and says so when there is no card", () => {
     cover("admin-mob-waves");
-    // baseHp 20 + hpPerLevel 20 * (level-1); round 3 → level 3 → 20 + 40 = 60
-    expect(hpForRound(SHIPPED_MOB_WAVES, 3)).toBe(60);
-    expect(hpForRound(SHIPPED_MOB_WAVES, 6)).toBe(120);
+    // 律:`baseHp + hpPerLevel × (該回合等級 − 1)`。⚠️ 期望值從**這一頁自己的**
+    // `levelForRound` 推導,而那一支在上面已經被釘成跟引擎逐位元相同 —— 所以這條
+    // 仍然是「後台印的血量 = 玩家打到的血量」,而不是一個會被 owner 調等級曲線
+    // 撞紅的字面值(它以前寫死 60 / 120)。
+    const law = (round: number): number =>
+      Math.round(
+        SHIPPED_MOB_WAVES.mob.baseHp! +
+          SHIPPED_MOB_WAVES.mob.hpPerLevel! * (levelForRound(SHIPPED_MOB_WAVES, round) - 1),
+      );
+    expect(hpForRound(SHIPPED_MOB_WAVES, 3)).toBe(law(3));
+    expect(hpForRound(SHIPPED_MOB_WAVES, 6)).toBe(law(6));
+    expect(law(6)).toBeGreaterThan(law(3));
     const noCurve = {
       ...SHIPPED_MOB_WAVES,
       mob: { ...SHIPPED_MOB_WAVES.mob, baseHp: undefined },
@@ -405,6 +423,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       "mob.groundRingSizeFollow": "0.5",
       "mob.baseLevel": "5",
       "mob.levelPerRound": "2",
+      "mob.levelCurve.perRoundSq": "0.5",
+      "mob.levelCurve.perRound": "3.5",
+      "mob.levelCurve.flat": "4",
       "mob.baseHp": "33",
       "mob.hpPerLevel": "44",
       "mob.baseRegen": "1.5",
@@ -435,6 +456,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       // #290 — not the shipped "fixed", so a `configFromForm` line that never
       // wrote this key shows up as a diff instead of matching by luck.
       "boss.heroLevelSource": "round",
+      "boss.levelCurve.perRoundSq": "2",
+      "boss.levelCurve.perRound": "1.5",
+      "boss.levelCurve.flat": "12",
       "boss.modelKey": "champ.mob.king-double",
       "boss.bountyGold": "4200",
       "boss.bountyXp": "1600",
@@ -474,6 +498,9 @@ describe("每一個欄位 are reachable and labelled", () => {
       "special.heroLevel": "42",
       // #290 — not the shipped "matchHighest", same reason as the king's.
       "special.heroLevelSource": "fixed",
+      "special.levelCurve.perRoundSq": "0.25",
+      "special.levelCurve.perRound": "4.5",
+      "special.levelCurve.flat": "7",
       "special.modelKey": "champ.mob.special-double",
       // #288 — every sentinel differs from the shipped block (5000/200/5/1/
       // bonus/on/off), so a `configFromForm` line that was never written shows
@@ -493,12 +520,15 @@ describe("每一個欄位 are reachable and labelled", () => {
     let form = formFromConfig(SHIPPED_MOB_WAVES);
     for (const [k, v] of Object.entries(edits)) form = setField(form, k as MobWavesFieldKey, v);
     const cfg = configFromForm(form) as unknown as Record<string, unknown>;
-    const at = (key: MobWavesFieldKey): unknown => {
-      const [head, tail] = key.split(".");
-      if (tail === undefined) return cfg[head!];
-      const block = cfg[head!] as Record<string, unknown> | undefined;
-      return block?.[tail];
-    };
+    // ⚠️ 走**全部**路徑段,不是只走兩段。2026-08-04 的 `levelCurve.*` 是三段的
+    // （`mob.levelCurve.perRoundSq`），而舊版的 `const [head, tail] = split(".")`
+    // 會停在 `levelCurve` 上、拿到那個物件,於是「這一格有沒有送到 payload」
+    // 這件事**根本沒被問**,而斷言訊息會說它「沒到」—— 兩邊都是假的。
+    const at = (key: MobWavesFieldKey): unknown =>
+      key.split(".").reduce<unknown>(
+        (node, seg) => (node as Record<string, unknown> | undefined)?.[seg],
+        cfg,
+      );
     for (const key of EVERY_FIELD) {
       const kind = MOB_WAVES_LABELS[key].kind;
       const expected =

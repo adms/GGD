@@ -91,6 +91,23 @@ beforeAll(() => {
 });
 
 const CFG: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG };
+
+/**
+ * 出貨的**舊線性等級通道**（`baseLevel + levelPerRound × (回合 − fromRound)`）。
+ *
+ * owner 2026-08-04 給了普通殭屍一條曲線（`回合*2+1`），而 `mobLevelForRound` 的
+ * 規則是「有曲線就以它為準」。舊通道**沒有被刪掉** —— 清空曲線就回到它，而每一份
+ * 2026-08-04 之前的競技場文件都還走它。所以它仍然需要一條守衛，只是那條守衛必須
+ * 明確地把曲線清掉才驗得到自己要驗的東西（失敗形態 ⑤：被測的不是你以為的那個）。
+ */
+const LINEAR_CFG: MobWavesConfig = {
+  ...CFG,
+  mob: { ...CFG.mob, levelCurve: undefined },
+};
+
+/** 該回合的小怪血量，由**該回合的等級**推出來 —— 不抄字面值（見檔頭）。 */
+const hpAtRound = (round: number): number =>
+  Math.round(BASE_HP + GROWTH_HP * (mobLevelForRound(CFG, round) - 1));
 const DT = 1 / 30;
 
 /** The registered hero sheet, as an AttributeCarrier for the #248 helpers. */
@@ -127,13 +144,14 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
       expect(rules.maxHp).toBe(Math.round(BASE_HP + GROWTH_HP * (level - 1)));
       expect(rules.hpRegenPerSec).toBeCloseTo(BASE_REGEN + GROWTH_REGEN * (level - 1), 10);
     }
-    // The owner's concrete expectation: round 3 -> lv3 -> 20 + 20*2 = 60 hp.
-    // These literals are the contract. If you are here because they went red,
-    // the fix is to restore the mob card, NOT to update the numbers —
-    // the ONLY reason they have ever moved is an explicit owner directive, and
-    // each move is dated in the sibling test above.
-    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);
-    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(80);
+    // ⚠️ 這兩行以前寫死 60 / 80（= 卡片 20/+20 在**第 3 級**）。2026-08-04 owner
+    // 換掉的是**等級通道**（`回合*2+1`），不是卡片 —— 但寫死的版本會紅，而訊息說
+    // 「小怪卡片被動過了」，害人去修一個沒壞的東西。卡片本身（20/+20/regen 0）由
+    // 上面那條姊妹測試釘住，這裡只驗**律**：血量 = 卡片套在該回合的等級上。
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(hpAtRound(3));
+    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(hpAtRound(4));
+    // 而且真的隨回合長（擋「律接上了但等級每回合都一樣」）。
+    expect(hpAtRound(4)).toBeGreaterThan(hpAtRound(3));
   });
 
   it("falls back to the flat config maxHp when neither a mob curve nor a champion doc exists", () => {
@@ -163,11 +181,14 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     cover("mob-244-legacy-champion-tier");
     // No baseHp/… on the card → the hero sheet is read, exactly as before #244.
     // This is what keeps every pre-split arena doc loading unchanged.
+    // ⚠️ `LINEAR_CFG`：一份真的 pre-#244 的競技場文件既沒有小怪卡,**也沒有等級
+    // 曲線**（那是 2026-08-04 才有的欄位）。用帶曲線的 `CFG` 去扮演「舊文件」,
+    // 測的就不是舊文件了（失敗形態 ⑤）。
     const legacy = mobRulesFromConfig(
       {
-        ...CFG,
+        ...LINEAR_CFG,
         mob: {
-          ...CFG.mob,
+          ...LINEAR_CFG.mob,
           baseHp: undefined,
           hpPerLevel: undefined,
           baseRegen: undefined,
@@ -185,7 +206,7 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // 從「記得傳 championHealthBonus:false」變成結構性的 —— 見 attributes.ts。
     expect(legacy.maxHp).toBe(
       Math.round(
-        championStatBase(HERO_DEF, Stat.MaxHealth, 3),
+        championStatBase(HERO_DEF, Stat.MaxHealth, mobLevelForRound(LINEAR_CFG, 3)),
       ),
     );
   });
@@ -239,35 +260,44 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     expect(
       championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1),
     ).toBe(380);
-    // …and the mob curve does not budge.
-    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);
-    expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(120);
+    // …and the mob curve does not budge —— 這條守的是「英雄卡不可以動到小怪卡」，
+    // 所以期望值一樣從小怪卡推導（見 `hpAtRound`）。英雄卡若真的漏進來，血量會是
+    // 上面那個 5,321 等級的東西，跟這個差兩個數量級，不是捨入。
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(hpAtRound(3));
+    expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(hpAtRound(6));
   });
 });
 
 describe("#217 (c) the ROUND is the mob's level channel", () => {
   it("round 3 → lv3 and every later round is +1 (levelPerRound)", () => {
     cover("mob-217-level-per-round");
-    expect(mobLevelForRound(CFG, 3)).toBe(3);
-    expect(mobLevelForRound(CFG, 4)).toBe(4);
-    expect(mobLevelForRound(CFG, 5)).toBe(5);
-    expect(mobLevelForRound(CFG, 12)).toBe(12);
+    // ⚠️ `LINEAR_CFG`，不是 `CFG`：出貨已經改吃曲線（見它的說明）。用 `CFG` 的話
+    // 這條會紅，而訊息說「每回合 +1 壞了」—— 真相是它根本沒在跑那條路。
+    expect(mobLevelForRound(LINEAR_CFG, 3)).toBe(3);
+    expect(mobLevelForRound(LINEAR_CFG, 4)).toBe(4);
+    expect(mobLevelForRound(LINEAR_CFG, 5)).toBe(5);
+    expect(mobLevelForRound(LINEAR_CFG, 12)).toBe(12);
+    // 而出貨的那一份**不**走這條 —— 否則上面四行會變成在測一條沒人跑的死路。
+    expect(mobLevelForRound(CFG, 3)).not.toBe(mobLevelForRound(LINEAR_CFG, 3));
   });
 
   it("a round BELOW fromRound clamps to the base level — never 0 or negative", () => {
     cover("mob-217-level-clamp");
-    expect(mobLevelForRound(CFG, 1)).toBe(3);
-    expect(mobLevelForRound(CFG, 2)).toBe(3);
+    expect(mobLevelForRound(LINEAR_CFG, 1)).toBe(3);
+    expect(mobLevelForRound(LINEAR_CFG, 2)).toBe(3);
     // omitting the argument entirely means "the floor" (pre-#217 call sites)
-    expect(mobRulesFromConfig(CFG, DT).level).toBe(3);
+    expect(mobRulesFromConfig(LINEAR_CFG, DT).level).toBe(3);
+    // 曲線那一邊也不可以掉到 0 或負的（它是絕對的，`fromRound` 之前照樣算得出來）。
+    expect(mobLevelForRound(CFG, 0)).toBeGreaterThanOrEqual(1);
+    expect(mobLevelForRound(CFG, -5)).toBeGreaterThanOrEqual(1);
   });
 
   it("baseLevel / levelPerRound are honoured when the arena overrides them", () => {
     cover("mob-217-level-config");
     const cfg: MobWavesConfig = {
-      ...CFG,
+      ...LINEAR_CFG,
       fromRound: 2,
-      mob: { ...CFG.mob, baseLevel: 5, levelPerRound: 2 },
+      mob: { ...LINEAR_CFG.mob, baseLevel: 5, levelPerRound: 2 },
     };
     expect(mobLevelForRound(cfg, 2)).toBe(5);
     expect(mobLevelForRound(cfg, 4)).toBe(9);
@@ -284,9 +314,11 @@ describe("#217 (c) the ROUND is the mob's level channel", () => {
       const [id] = [...w.mob.keys()];
       return w.health.get(id!)!.maxHp;
     };
-    expect(hpOfFirstMob(3)).toBe(60);
-    expect(hpOfFirstMob(4)).toBe(80);
-    expect(hpOfFirstMob(6)).toBe(120);
+    expect(hpOfFirstMob(3)).toBe(hpAtRound(3));
+    expect(hpOfFirstMob(4)).toBe(hpAtRound(4));
+    expect(hpOfFirstMob(6)).toBe(hpAtRound(6));
+    // 「越晚的回合越硬」才是這條的症狀，所以它自己要被斷言。
+    expect(hpOfFirstMob(6)).toBeGreaterThan(hpOfFirstMob(3));
   });
 
   it("a mob regenerates its levelled hp — RegenSystem never sees it (no StatsComp)", () => {

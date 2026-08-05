@@ -16,6 +16,13 @@ import { RESOLVE_TS_FIRST } from "./vitest.shared";
  * so the snapshots must stay on disk — exclude them instead.
  *
  * `.backup*` covers both `.backups/` and `.backup-<task>-<stamp>/`.
+ *
+ * ⚠️ `.claude/worktrees/` is the SAME failure with a different cause
+ * (2026-08-04): background agents leave git worktrees there, each a full copy
+ * of the tree WITHOUT its own `node_modules`. A root run collects them, fails
+ * to resolve `zod`, and reports 「1 failed」 for a file that is green in the
+ * real tree — so an honest run looks broken and a broken one is easy to
+ * dismiss. They are already in `.git/info/exclude`; exclude them here too.
  */
 export default defineConfig({
   resolve: RESOLVE_TS_FIRST,
@@ -24,6 +31,7 @@ export default defineConfig({
       ...configDefaults.exclude,
       "**/.backup*/**",
       "**/backup-*/**",
+      "**/.claude/worktrees/**",
     ],
   },
 });

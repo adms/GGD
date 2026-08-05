@@ -61,15 +61,20 @@ export const MOB_MODEL_FALLBACK = "champ.godie-zombiex";
  */
 export const CHAMPION_SOURCES = ["fixed", "random", "inherit"] as const;
 /**
- * #290 英雄卡讀在幾級的三個來源, in the order the picker shows them: 跟場上最高
- * first (it is the 特殊殭屍's shipped answer and the thing the owner asked for),
- * 指定 second, 沿用回合 last.
+ * #290 英雄卡讀在幾級的來源, in the order the picker shows them: 公式 first
+ * (owner 2026-08-04 把王與特殊殭屍都改成它), 跟場上最高 second, 指定 third,
+ * 沿用回合 last.
  *
  * MUST stay equal to `zMobHeroLevelSource` / `MOB_HERO_LEVEL_SOURCES` — the
  * console's `validateField` rejects anything outside this list, so a value the
  * schema gained and this list did not would be un-savable from the page.
+ *
+ * ⚠️ 2026-08-04 這條差一點就踩到:`"curve"` 進了 Zod 與出貨檔,如果這裡沒跟上,
+ * 操作者打開 小怪波 頁按存檔,`optEnum` 會把一個它不認得的值當成「沒填」而**整格
+ * 丟掉** —— 存檔成功、畫面正常、王悄悄退回滿級 99。後台 override 蓋掉 content
+ * 的那一類故障,沒有任何訊息。
  */
-export const HERO_LEVEL_SOURCES = ["matchHighest", "fixed", "round"] as const;
+export const HERO_LEVEL_SOURCES = ["curve", "matchHighest", "fixed", "round"] as const;
 
 /**
  * #247 —— 每回合上限算在哪一個範圍上. Restated here rather than imported from
@@ -167,6 +172,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     groundRingSizeFollow: 1,
     baseLevel: 3,
     levelPerRound: 1,
+    // owner 2026-08-04「普通殭屍等級: 回合數*2+1」。有它就以它為準,上面兩格不看。
+    levelCurve: { perRoundSq: 0, perRound: 2, flat: 1 },
     baseHp: 20,
     hpPerLevel: 20,
     baseRegen: 0,
@@ -216,7 +223,10 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     heroLevel: 99,
     // #290 — 「就用上面那個 99」 said out loud, so 「跟場上最高」 shows up as a real
     // alternative on the page instead of being invisible.
-    heroLevelSource: "fixed",
+    // ⚠️ owner 2026-08-04「殭屍王等級: 回合數*回合數+10」把它換成了公式,所以上面
+    // 那個 99 **還在檔裡但不再被讀** —— 清掉下面的公式才會回到它。
+    heroLevelSource: "curve",
+    levelCurve: { perRoundSq: 1, perRound: 0, flat: 10 },
     bountyGold: 30000,
     bountyXp: 1200,
     bountyLevels: 50,
@@ -259,8 +269,10 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // round-3 special's hp, which made 隨機英雄 cosmetic.
     // owner 2026-08-02 「血太多 請都減半」: 4,000 → 2,000（同批 hpMult 2 → 1）。
     hpFlatBonus: 2000,
-    // #290 owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」.
-    heroLevelSource: "matchHighest",
+    // #290 owner 2026-07-29 「預設是跟當時場上英雄最高等級相同」;
+    // owner 2026-08-04 改成公式「特殊殭屍等級: 回合數*3+5」。
+    heroLevelSource: "curve",
+    levelCurve: { perRoundSq: 0, perRound: 3, flat: 5 },
     // #288 owner 2026-07-29 「特殊殭屍也照傷害比例分,金錢 +5,000 · 等級提升 +5」.
     // MUST stay equal to `DEFAULT_MOB_WAVES_CONFIG.special` — mobWaves.test.ts
     // pins the whole block, and this mirror is what the console renders before
@@ -320,6 +332,9 @@ export type MobWavesFieldKey =
   | "mob.groundRingSizeFollow"
   | "mob.baseLevel"
   | "mob.levelPerRound"
+  | "mob.levelCurve.perRoundSq"
+  | "mob.levelCurve.perRound"
+  | "mob.levelCurve.flat"
   | "mob.baseHp"
   | "mob.hpPerLevel"
   | "mob.baseRegen"
@@ -356,6 +371,9 @@ export type MobWavesFieldKey =
   | "boss.heroLevel"
   // 等級來源:跟場上最高 / 指定 / 沿用回合 (#290)
   | "boss.heroLevelSource"
+  | "boss.levelCurve.perRoundSq"
+  | "boss.levelCurve.perRound"
+  | "boss.levelCurve.flat"
   | "boss.noClip"
   | "boss.noClipUnits"
   | "boss.noClipObstacles"
@@ -383,6 +401,9 @@ export type MobWavesFieldKey =
   | "special.hpFlatBonus"
   | "special.heroLevel"
   | "special.heroLevelSource"
+  | "special.levelCurve.perRoundSq"
+  | "special.levelCurve.perRound"
+  | "special.levelCurve.flat"
   // 特殊殭屍分紅獎池 (#288)
   | "special.bountyGold"
   | "special.bountyXp"
@@ -460,6 +481,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "mob.groundRingSizeFollow",
   "mob.baseLevel",
   "mob.levelPerRound",
+  "mob.levelCurve.perRoundSq",
+  "mob.levelCurve.perRound",
+  "mob.levelCurve.flat",
   "mob.baseHp",
   "mob.hpPerLevel",
   "mob.baseRegen",
@@ -485,6 +509,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   // #290 — the SOURCE sits above the number it selects, for the same reason:
   // 「幾級」 is meaningless until you know which of the three answers is live.
   "boss.heroLevelSource",
+  "boss.levelCurve.perRoundSq",
+  "boss.levelCurve.perRound",
+  "boss.levelCurve.flat",
   "boss.heroLevel",
   "boss.heroHpMult",
   "boss.hpFlatBonus",
@@ -526,6 +553,9 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "special.modelKey",
   "special.sizeMult",
   "special.heroLevelSource",
+  "special.levelCurve.perRoundSq",
+  "special.levelCurve.perRound",
+  "special.levelCurve.flat",
   "special.heroLevel",
   "special.heroHpMult",
   "special.hpFlatBonus",
@@ -763,6 +793,36 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     min: 0,
     optional: true,
     emptyMeans: `留空 = ${MOB_LEVEL_PER_ROUND_FALLBACK}`,
+  },
+  "mob.levelCurve.perRoundSq": {
+    zh: "一般殭屍等級公式 · 回合² 係數 (A)",
+    note: "等級 = 回合² × A + 回合 × B + C，結果夾在 1–99。三格要嘛一起填、要嘛一起留空 —— 只填一兩格會被當成沒填。填 0 = 直線成長。出貨是 A=0 · B=2 · C=1，也就是「回合×2+1」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 5,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（改回上面的「起始等級 + 每回合升幾級」）",
+  },
+  "mob.levelCurve.perRound": {
+    zh: "一般殭屍等級公式 · 回合 係數 (B)",
+    note: "每過一個回合等級加多少（線性那一項）。出貨是 A=0 · B=2 · C=1，也就是「回合×2+1」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 50,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
+  },
+  "mob.levelCurve.flat": {
+    zh: "一般殭屍等級公式 · 常數 (C)",
+    note: "第 0 回合的底,也就是整條線往上抬多少。出貨是 A=0 · B=2 · C=1，也就是「回合×2+1」",
+    unit: "級",
+    kind: "num",
+    min: 0,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
   },
   "mob.baseHp": {
     zh: "1 級血量",
@@ -1066,14 +1126,45 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     note: "出貨是「指定」：王固定用下面那格的 99。選「跟場上最高」的話，王會在被召喚的那一刻改讀「王所在那個 zone 的全部英雄，死活都算」裡最高的等級 —— 會是一隻軟很多的王",
     unit: "",
     kind: "enum",
-    values: ["matchHighest", "fixed", "round"],
+    values: ["curve", "matchHighest", "fixed", "round"],
     valueLabels: {
+      curve: "公式（用下面三格算）",
       matchHighest: "跟場上最高（生成當下算）",
       fixed: "指定（用下面那個數字）",
       round: "沿用該回合殭屍等級",
     },
     optional: true,
     emptyMeans: "留空 = 有填下面那格就用它，沒填就沿用回合等級（舊行為）",
+  },
+  "boss.levelCurve.perRoundSq": {
+    zh: "殭屍王等級公式 · 回合² 係數 (A)",
+    note: "等級 = 回合² × A + 回合 × B + C，結果夾在 1–99。三格要嘛一起填、要嘛一起留空 —— 只填一兩格會被當成沒填。填 0 = 直線成長。出貨是 A=1 · B=0 · C=10，也就是「回合×回合+10」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 5,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（改回上面選單的其他模式）",
+  },
+  "boss.levelCurve.perRound": {
+    zh: "殭屍王等級公式 · 回合 係數 (B)",
+    note: "每過一個回合等級加多少（線性那一項）。出貨是 A=1 · B=0 · C=10，也就是「回合×回合+10」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 50,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
+  },
+  "boss.levelCurve.flat": {
+    zh: "殭屍王等級公式 · 常數 (C)",
+    note: "第 0 回合的底,也就是整條線往上抬多少。出貨是 A=1 · B=0 · C=10，也就是「回合×回合+10」",
+    unit: "級",
+    kind: "num",
+    min: 0,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
   },
   "boss.heroLevel": {
     zh: "殭屍王當作幾級的英雄來算",
@@ -1292,14 +1383,45 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     note: "出貨是「跟場上最高」：每生一隻就當場去看「牠所在那個 zone 的全部英雄，死活都算」裡最高幾級，所以玩家越強牠越強、同一回合裡也會越生越強。屍體照算 —— 隊友倒下不會讓殭屍跟著變弱。只有那個 zone 真的一個英雄都沒有時才退回該回合的殭屍等級",
     unit: "",
     kind: "enum",
-    values: ["matchHighest", "fixed", "round"],
+    values: ["curve", "matchHighest", "fixed", "round"],
     valueLabels: {
+      curve: "公式（用下面三格算）",
       matchHighest: "跟場上最高（生成當下算）",
       fixed: "指定（用下面那個數字）",
       round: "沿用該回合殭屍等級",
     },
     optional: true,
     emptyMeans: "留空 = 有填下面那格就用它，沒填就沿用回合等級（舊行為）",
+  },
+  "special.levelCurve.perRoundSq": {
+    zh: "特殊殭屍等級公式 · 回合² 係數 (A)",
+    note: "等級 = 回合² × A + 回合 × B + C，結果夾在 1–99。三格要嘛一起填、要嘛一起留空 —— 只填一兩格會被當成沒填。填 0 = 直線成長。出貨是 A=0 · B=3 · C=5，也就是「回合×3+5」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 5,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（改回上面選單的其他模式）",
+  },
+  "special.levelCurve.perRound": {
+    zh: "特殊殭屍等級公式 · 回合 係數 (B)",
+    note: "每過一個回合等級加多少（線性那一項）。出貨是 A=0 · B=3 · C=5，也就是「回合×3+5」",
+    unit: "",
+    kind: "num",
+    min: 0,
+    max: 50,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
+  },
+  "special.levelCurve.flat": {
+    zh: "特殊殭屍等級公式 · 常數 (C)",
+    note: "第 0 回合的底,也就是整條線往上抬多少。出貨是 A=0 · B=3 · C=5，也就是「回合×3+5」",
+    unit: "級",
+    kind: "num",
+    min: 0,
+    max: 99,
+    optional: true,
+    emptyMeans: "留空 = 不用公式（同上）",
   },
   "special.heroLevel": {
     zh: "特殊殭屍當作幾級的英雄來算",
@@ -1528,6 +1650,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
     keys: [
       "mob.baseLevel",
       "mob.levelPerRound",
+      "mob.levelCurve.perRoundSq",
+      "mob.levelCurve.perRound",
+      "mob.levelCurve.flat",
       "mob.baseHp",
       "mob.hpPerLevel",
       "mob.baseRegen",
@@ -1558,6 +1683,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.modelKey",
       "boss.sizeMult",
       "boss.heroLevelSource",
+      "boss.levelCurve.perRoundSq",
+      "boss.levelCurve.perRound",
+      "boss.levelCurve.flat",
       "boss.heroLevel",
       "boss.heroHpMult",
       "boss.hpFlatBonus",
@@ -1600,6 +1728,9 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "special.modelKey",
       "special.sizeMult",
       "special.heroLevelSource",
+      "special.levelCurve.perRoundSq",
+      "special.levelCurve.perRound",
+      "special.levelCurve.flat",
       "special.heroLevel",
       "special.heroHpMult",
       "special.hpFlatBonus",
@@ -1723,6 +1854,12 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.mob.baseLevel);
     case "mob.levelPerRound":
       return formatNum(cfg.mob.levelPerRound);
+    case "mob.levelCurve.perRoundSq":
+      return formatNum(cfg.mob.levelCurve?.perRoundSq);
+    case "mob.levelCurve.perRound":
+      return formatNum(cfg.mob.levelCurve?.perRound);
+    case "mob.levelCurve.flat":
+      return formatNum(cfg.mob.levelCurve?.flat);
     case "mob.baseHp":
       return formatNum(cfg.mob.baseHp);
     case "mob.hpPerLevel":
@@ -1787,6 +1924,12 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
     // real state (「沿用今天的行為」) and must round-trip as an empty picker.
     case "boss.heroLevelSource":
       return cfg.boss?.heroLevelSource ?? "";
+    case "boss.levelCurve.perRoundSq":
+      return formatNum(cfg.boss?.levelCurve?.perRoundSq);
+    case "boss.levelCurve.perRound":
+      return formatNum(cfg.boss?.levelCurve?.perRound);
+    case "boss.levelCurve.flat":
+      return formatNum(cfg.boss?.levelCurve?.flat);
     case "boss.bountyGold":
       return formatNum(cfg.boss?.bountyGold);
     case "boss.bountyXp":
@@ -1858,6 +2001,12 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.special?.heroLevel);
     case "special.heroLevelSource":
       return cfg.special?.heroLevelSource ?? "";
+    case "special.levelCurve.perRoundSq":
+      return formatNum(cfg.special?.levelCurve?.perRoundSq);
+    case "special.levelCurve.perRound":
+      return formatNum(cfg.special?.levelCurve?.perRound);
+    case "special.levelCurve.flat":
+      return formatNum(cfg.special?.levelCurve?.flat);
     // #288 分紅獎池 — `formatNum(undefined)` is "", which is the honest reading
     // of an un-authored OPTIONAL pool: a 0 here would say 「獎金 0」, and
     // `configFromForm` would then write that 0 back and permanently disable the
@@ -2335,6 +2484,26 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     const t = form.fields[key].trim();
     return (allowed as readonly string[]).includes(t) ? (t as T) : undefined;
   };
+  /**
+   * 等級公式的三格 —— **全有或全無**。
+   *
+   * ⚠️ 這裡不可以逐格 `optNum` 然後 `?? 0`:`levelCurve` 是 `.strict()` 的三欄
+   * 物件,少一欄 Zod 直接拒收整份文件(而拒收的訊息會指向別的檔,見 CLAUDE.md)。
+   * 而補 0 更糟 —— 只填了 B 的操作者會拿到 `C = 0`,也就是一條**穿過原點**的線,
+   * 第 3 回合的殭屍從 7 級變 6 級,沒有任何訊息說他少填了東西。
+   *
+   * 所以:三格都填 = 寫出物件;一格都沒填 = 整個 key 省略(回到公式之前的行為);
+   * 填了一兩格 = 也省略,並由 `formValid` 那條「這一區沒填完」的閘擋在存檔之前。
+   */
+  const curveOf = (prefix: "mob" | "boss" | "special"):
+    | { perRoundSq: number; perRound: number; flat: number }
+    | undefined => {
+    const a = optNum(`${prefix}.levelCurve.perRoundSq` as MobWavesFieldKey);
+    const b = optNum(`${prefix}.levelCurve.perRound` as MobWavesFieldKey);
+    const c = optNum(`${prefix}.levelCurve.flat` as MobWavesFieldKey);
+    if (a === undefined || b === undefined || c === undefined) return undefined;
+    return { perRoundSq: a, perRound: b, flat: c };
+  };
 
   const mob: MobWavesConfig["mob"] = {
     maxHp: num("mob.maxHp", SHIPPED_MOB_WAVES.mob.maxHp),
@@ -2367,6 +2536,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
   putNum("groundRingSizeFollow", "mob.groundRingSizeFollow");
   putNum("baseLevel", "mob.baseLevel");
   putNum("levelPerRound", "mob.levelPerRound");
+  const mobCurve = curveOf("mob");
+  if (mobCurve !== undefined) mob.levelCurve = mobCurve;
   putNum("baseHp", "mob.baseHp");
   putNum("hpPerLevel", "mob.hpPerLevel");
   putNum("baseRegen", "mob.baseRegen");
@@ -2488,6 +2659,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     // has to mean 「回到舊行為」, not 「悄悄寫回 fixed」.
     const bhls = optEnum("boss.heroLevelSource", HERO_LEVEL_SOURCES);
     if (bhls !== undefined) boss.heroLevelSource = bhls;
+    const bcv = curveOf("boss");
+    if (bcv !== undefined) boss.levelCurve = bcv;
     // #247 —— OMITTED when blank (`optBool`, not `bool`). Clearing 「無視碰撞」
     // has to mean 「回到舊行為」, and writing `false` back would be a LOUDER
     // statement than the operator made — the same rule `heroLevelSource` states
@@ -2550,6 +2723,8 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
     if (shl !== undefined) special.heroLevel = shl;
     const shls = optEnum("special.heroLevelSource", HERO_LEVEL_SOURCES);
     if (shls !== undefined) special.heroLevelSource = shls;
+    const scv = curveOf("special");
+    if (scv !== undefined) special.levelCurve = scv;
     // #288 分紅獎池 — OMITTED when blank, never written as 0/false. Clearing all
     // three pool boxes is how an operator asks for the pre-#288 特殊殭屍 back
     // (`rewardMult` straight to the last hitter, and no damage ledger at all);
@@ -2632,8 +2807,33 @@ export function capsForRound(
   };
 }
 
-/** The console's copy of `mobLevelForRound`. Same pinning rule as above. */
+/**
+ * `等級 = 回合² × perRoundSq + 回合 × perRound + flat`,夾在 [1, 99] ——
+ * the console's copy of `mobLevelFromCurve`. Same pinning rule as above.
+ * (99 是 `packages/shared/src/sim/economy/progression.ts` 的 `LEVEL_CAP`;
+ * 這頁不 import 它的理由與檔頭給 `BOSS_CAP_SCOPES` 的一樣。)
+ */
+export const CURVE_LEVEL_CAP = 99;
+
+export function levelFromCurve(
+  curve: { perRoundSq: number; perRound: number; flat: number },
+  round: number,
+): number {
+  const r = Math.max(0, Math.round(round));
+  const raw = Math.round(r * r * curve.perRoundSq + r * curve.perRound + curve.flat);
+  return Math.min(CURVE_LEVEL_CAP, Math.max(1, raw));
+}
+
+/**
+ * The console's copy of `mobLevelForRound`. Same pinning rule as above.
+ *
+ * ⚠️ 曲線**優先**,而且是**絕對**的(吃回合本身,不是 `round - fromRound`)——
+ * 跟 `sim/mobs.mobLevelForRound` 逐字相同。這一段不跟上,逐回合預覽表會印出一份
+ * 跟實際開打不一樣的等級,而那正是操作者拿來調平衡的那張表。
+ */
 export function levelForRound(cfg: MobWavesConfig, round: number): number {
+  const curve = cfg.mob.levelCurve;
+  if (curve) return levelFromCurve(curve, round);
   const base = cfg.mob.baseLevel ?? MOB_BASE_LEVEL_FALLBACK;
   const per = cfg.mob.levelPerRound ?? MOB_LEVEL_PER_ROUND_FALLBACK;
   return base + per * Math.max(0, Math.round(round) - cfg.fromRound);

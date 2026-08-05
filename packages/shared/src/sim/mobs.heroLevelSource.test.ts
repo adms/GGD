@@ -48,7 +48,11 @@ import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { Champions } from "./content/registry";
 import { zChampionDoc } from "../content/schema/champion";
-import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "../content/schema/config";
+import {
+  DEFAULT_MOB_WAVES_CONFIG,
+  zMobHeroLevelSource,
+  type MobWavesConfig,
+} from "../content/schema/config";
 import { championStatBase } from "./stats/attributes";
 import { Stat } from "./stats/statTypes";
 import { COMBAT_ENV_DEFAULTS } from "./combatEnv";
@@ -59,6 +63,7 @@ import {
   MOB_HERO_LEVEL_SOURCES,
   matchHighestChampionLevel,
   mobArmedHeroLevel,
+  mobLevelForRound,
   mobProfile,
   mobRulesFromConfig,
   mobSpawnProfile,
@@ -223,10 +228,14 @@ describe("#290 · 「跟當時場上英雄最高等級相同」 是在生成那�
     expect(matchHighestChampionLevel(w, 0)).toBeNull();
     const rules = withSpecial({ heroLevelSource: "matchHighest" }, 7);
     expect(() => spawnMob(w, 0, rules, 1, 0)).not.toThrow();
-    // round 7 ⇒ mob level 7 ⇒ the `"round"` fallback, spelled out. 死活都算之後
-    // 這是 `armedLevel` 唯一還走得到的路:那個 zone 真的一個英雄都沒有。
-    expect(rules.level).toBe(7);
-    expect(spawnSpecialHp(w, rules, 1)).toBe(expectedSpecialHp(7));
+    // ⇒ `"round"` fallback, spelled out. 死活都算之後這是 `armedLevel` 唯一還走
+    // 得到的路:那個 zone 真的一個英雄都沒有。
+    //
+    // ⚠️ 期望值從 `mobLevelForRound` 推導,不是寫死 7(2026-08-04 owner 給了
+    // 普通殭屍一條曲線)。寫死的話這條會因為**曲線被調過**而紅,訊息卻說
+    // 「空世界的 fallback 壞了」—— 用錯誤訊息紅掉的斷言(CLAUDE.md)。
+    expect(rules.level).toBe(mobLevelForRound(SHIPPED, 7));
+    expect(spawnSpecialHp(w, rules, 1)).toBe(expectedSpecialHp(rules.level));
   });
 
   it("最高等級的讀取走排序過的迭代,而且真的是 MAX 不是 first/last", () => {
@@ -283,7 +292,8 @@ describe("#290 · 「該小怪所在 zone 的」 —— 隔壁擂台的高等英
     hero(w, 0, 99, 2);
     expect(matchHighestChampionLevel(w, 0)).toBeNull();
     const rules = withSpecial({ heroLevelSource: "matchHighest" }, 4);
-    expect(spawnSpecialHp(w, rules, 0, 0)).toBe(expectedSpecialHp(4));
+    // `rules.level` = 該回合的小怪等級(曲線推導,見上一條的說明)。
+    expect(spawnSpecialHp(w, rules, 0, 0)).toBe(expectedSpecialHp(rules.level));
   });
 });
 
@@ -306,12 +316,13 @@ describe("#290 · 另外兩個模式與「沒填」", () => {
     cover("mob-special-hero-level-source");
     const w = newWorld();
     hero(w, 0, 88);
-    expect(spawnSpecialHp(w, withSpecial({ heroLevelSource: "round" }, 3), 0)).toBe(
-      expectedSpecialHp(3),
-    );
-    expect(spawnSpecialHp(w, withSpecial({ heroLevelSource: "round" }, 9), 1)).toBe(
-      expectedSpecialHp(9),
-    );
+    const r3 = withSpecial({ heroLevelSource: "round" }, 3);
+    const r9 = withSpecial({ heroLevelSource: "round" }, 9);
+    expect(spawnSpecialHp(w, r3, 0)).toBe(expectedSpecialHp(r3.level));
+    expect(spawnSpecialHp(w, r9, 1)).toBe(expectedSpecialHp(r9.level));
+    // 「隨回合成長」是這條的主張,所以它要自己被斷言,不能只靠兩個等式碰巧不同。
+    expect(r9.level).toBeGreaterThan(r3.level);
+    expect(spawnSpecialHp(w, r9, 2)).toBeGreaterThan(spawnSpecialHp(w, r3, 3));
   });
 
   it("ABSENT 退化成 #290 之前的鏈 `heroLevel ?? 該回合等級`, 兩邊都測", () => {
@@ -322,7 +333,7 @@ describe("#290 · 另外兩個模式與「沒填」", () => {
     //     特殊殭屍 (「跟著回合成長」).
     const legacyRound = withSpecial({ heroLevelSource: undefined, heroLevel: undefined }, 6);
     expect(legacyRound.special!.heroDerive ?? null).toBeNull();
-    expect(spawnSpecialHp(w, legacyRound, 0)).toBe(expectedSpecialHp(6));
+    expect(spawnSpecialHp(w, legacyRound, 0)).toBe(expectedSpecialHp(legacyRound.level));
     // (b) an authored `heroLevel` with no mode ⇒ that number, exactly like the
     //     pre-#290 king. This is the half that a 「absent means round」 shortcut
     //     would break, and it would break it by cutting the king's hp in half.
@@ -367,9 +378,17 @@ describe("#290 · 另外兩個模式與「沒填」", () => {
     }
   });
 
-  it("三個模式名稱與 schema 一致 (少一個就會有一個存不進去的選項)", () => {
+  it("模式名稱與 schema 一致 (少一個就會有一個存不進去的選項)", () => {
     cover("mob-special-hero-level-source");
-    expect([...MOB_HERO_LEVEL_SOURCES].sort()).toEqual(["fixed", "matchHighest", "round"]);
+    // 「後台選單」與「sim 認得的」是兩份清單,少一邊 = 後台存得進去、遊戲讀不懂,
+    // 而且是靜默的(落到 default 分支)。`"curve"` 是 2026-08-04 加的第四個。
+    expect([...MOB_HERO_LEVEL_SOURCES].sort()).toEqual([
+      "curve",
+      "fixed",
+      "matchHighest",
+      "round",
+    ]);
+    expect([...zMobHeroLevelSource.options].sort()).toEqual([...MOB_HERO_LEVEL_SOURCES].sort());
   });
 });
 
@@ -385,17 +404,23 @@ describe("#290 · 出貨的 flat 與 heroLevelSource 真的走完出貨路徑", 
     // 仍然要有下界:flat 是「英雄卡以外的保底血」,0 會讓低等英雄的特殊殭屍
     // 一擊即死,而那是靜默的 —— 沒有任何畫面會說「保底沒了」。
     expect(flat).toBeGreaterThan(0);
-    expect(ARENA_RULES.mobWaves.special!.heroLevelSource).toBe("matchHighest");
-    expect(ARENA_RULES.mobWaves.boss!.heroLevelSource).toBe("fixed");
+    // owner 2026-08-04 把出貨的兩格都改成 `"curve"`(特殊 `回合*3+5`、王 `回合²+10`)。
+    // 這兩行守的是「出貨檔真的照裁決改了」,所以它們**故意**釘字面值。
+    expect(ARENA_RULES.mobWaves.special!.heroLevelSource).toBe("curve");
+    expect(ARENA_RULES.mobWaves.boss!.heroLevelSource).toBe("curve");
+    expect(ARENA_RULES.mobWaves.special!.levelCurve).toBeDefined();
+    expect(ARENA_RULES.mobWaves.boss!.levelCurve).toBeDefined();
 
-    // …and the SHIPPED PATH produces it. Read through the armed rules, at a
-    // level the world actually decides, so a doc-only edit cannot pass this.
+    // …and the SHIPPED PATH produces it. 等級從**出貨的那條曲線**推導,所以
+    // 「曲線沒接上」(退回 roundLevel = 7)在這裡就是紅的,差 ~1.9 倍不是捨入。
     const w = newWorld();
     hero(w, 0, 25);
     const rules = mobRulesFromConfig(SHIPPED, DT, 3);
+    const armed = mobArmedHeroLevel(ARENA_RULES.mobWaves.special!, rules.level, 3);
+    expect(armed).not.toBe(rules.level);
     const hp = mobSpawnProfile(w, 0, rules, "special").maxHp;
     const heroPart = Math.round(
-      championStatBase(HERO, Stat.MaxHealth, 25, COMBAT_ENV_DEFAULTS) *
+      championStatBase(HERO, Stat.MaxHealth, armed, COMBAT_ENV_DEFAULTS) *
         ARENA_RULES.mobWaves.special!.heroHpMult!,
     );
     expect(hp).toBe(heroPart + flat);
@@ -404,16 +429,30 @@ describe("#290 · 出貨的 flat 與 heroLevelSource 真的走完出貨路徑", 
     expect(hp - heroPart).toBe(flat);
   });
 
-  it("殭屍王仍然是滿級 99 —— `fixed` 沒有把王的等級鬆綁", () => {
+  it("殭屍王的等級來自曲線,而且不看場上的英雄", () => {
     cover("mob-special-hero-level-source");
+    // ⚠️ 這條以前叫「殭屍王仍然是滿級 99」。owner 2026-08-04 把王改成
+    // `回合*回合+10`,所以「滿級 99」從**規格**變成**過期的斷言** —— 留著它會
+    // 在下一個人改對的時候紅,而訊息說「fixed 把等級鬆綁了」。
+    //
+    // 沒變的那一半才是這條要守的:王的等級**不看場上英雄**(`heroDerive` 為
+    // null,熱路徑一次重算都不做),而且不會被一隊菜英雄拖下去。
     const w = newWorld();
     hero(w, 0, 12); // a low-level field must not drag the king down
-    const rules = mobRulesFromConfig(SHIPPED, DT, 3);
-    const expected =
-      Math.round(championStatBase(HERO, Stat.MaxHealth, 99, COMBAT_ENV_DEFAULTS) * 20) + 100000;
-    expect(rules.boss!.maxHp).toBe(expected);
-    expect(mobSpawnProfile(w, 0, rules, "boss").maxHp).toBe(expected);
-    expect(rules.boss!.heroDerive ?? null).toBeNull();
+    for (const round of [3, 9]) {
+      const rules = mobRulesFromConfig(SHIPPED, DT, round);
+      const level = mobArmedHeroLevel(ARENA_RULES.mobWaves.boss!, rules.level, round);
+      const expected =
+        Math.round(championStatBase(HERO, Stat.MaxHealth, level, COMBAT_ENV_DEFAULTS) * 20) +
+        100000;
+      expect(rules.boss!.maxHp, `R${round}`).toBe(expected);
+      expect(mobSpawnProfile(w, 0, rules, "boss").maxHp, `R${round}`).toBe(expected);
+      expect(rules.boss!.heroDerive ?? null).toBeNull();
+    }
+    // 而且真的**隨回合長**(擋「曲線接上了但每回合都回同一個數字」)。
+    expect(mobRulesFromConfig(SHIPPED, DT, 9).boss!.maxHp).toBeGreaterThan(
+      mobRulesFromConfig(SHIPPED, DT, 3).boss!.maxHp,
+    );
   });
 });
 
@@ -438,7 +477,7 @@ describe("#290 · 已知缺口 (刻意記錄,不是通過)", () => {
       9,
     );
     expect(armTime).toBeCloseTo(
-      championStatBase(HERO, Stat.AttackDamage, 3, COMBAT_ENV_DEFAULTS) * 2,
+      championStatBase(HERO, Stat.AttackDamage, rules.level, COMBAT_ENV_DEFAULTS) * 2,
       9,
     );
   });

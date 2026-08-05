@@ -1119,7 +1119,33 @@ export const zMobChampionSource = z.enum(["inherit", "fixed", "random"]);
  * THE ENUMERATION IS THE BOUND —— 和 `zMobChampionSource` 同一條規矩:字串旋鈕沒有
  * min/max 可講,清單本身就是界線,後台的 `validateField` 讀同一份清單。
  */
-export const zMobHeroLevelSource = z.enum(["round", "fixed", "matchHighest"]);
+/**
+ * ⚠️ `"curve"`（owner 2026-08-04）要配同一個區塊的 `levelCurve` 一起填。
+ * 選了 `"curve"` 卻沒填曲線 = 退回該回合等級（不是 1）—— 空欄位是「還沒填」,
+ * 不是「零級」，同 `"fixed"` 的既有慣例。
+ */
+export const zMobHeroLevelSource = z.enum(["curve", "round", "fixed", "matchHighest"]);
+
+/**
+ * 等級曲線 —— `等級 = 回合² × perRoundSq + 回合 × perRound + flat`。
+ *
+ * owner 2026-08-04：普通 `回合*2+1`、特殊 `回合*3+5`、王 `回合*回合+10`。
+ * 兩條線性一條二次，所以是二次多項式而不是三個寫死的公式（第一守則）。
+ *
+ * ⚠️ **每一格兩端都有界**（#277）。`perRoundSq` 上界 5 —— 5×13² 早就超過等級
+ * 上限 99，再高只是讓一個打錯的數字看起來合法。結果一律夾在 [1, 99]，
+ * 見 `sim/mobs.ts` 的 `mobLevelFromCurve`。
+ */
+export const zMobLevelCurve = z
+  .object({
+    /** 回合² 的係數。0 = 線性（普通與特殊都是 0）。 */
+    perRoundSq: z.number().min(0).max(5),
+    /** 回合 的係數。 */
+    perRound: z.number().min(0).max(50),
+    /** 常數項。 */
+    flat: z.number().min(0).max(99),
+  })
+  .strict();
 
 /**
  * 殭屍上限的上界 (owner 2026-07-30 裁定「上限值 500」).
@@ -1413,6 +1439,12 @@ export const zMobWavesConfig = z
         /** #217 — levels gained per round past `fromRound` (owner: 每場 +1) */
         levelPerRound: z.number().int().min(0).optional(),
         /**
+         * owner 2026-08-04「普通殭屍等級: 回合數*2+1」。**有它就以它為準**,
+         * `baseLevel`/`levelPerRound` 一併不看（`sim/mobs.mobLevelForRound`）。
+         * 省略 = 2026-08-04 之前的線性式，逐位元不變。
+         */
+        levelCurve: zMobLevelCurve.optional(),
+        /**
          * #244 — THE MOB'S OWN HP CURVE, split out of the hero sheet.
          *
          * Before #244 the mob's hp was `championDoc.baseStats.maxHealth +
@@ -1637,6 +1669,8 @@ export const zMobWavesConfig = z
          * this field is byte-identical. See {@link zMobHeroLevelSource}.
          */
         heroLevelSource: zMobHeroLevelSource.optional(),
+        /** 配 `heroLevelSource: "curve"` —— owner 2026-08-04 的 per-kind 等級公式。 */
+        levelCurve: zMobLevelCurve.optional(),
 
         /* ── #247 owner 2026-08-01 實戰回饋 ────────────────────────────────
          *
@@ -1821,6 +1855,8 @@ export const zMobWavesConfig = z
          * 就退回 #290 之前那條會隨回合成長的曲線。
          */
         heroLevelSource: zMobHeroLevelSource.optional(),
+        /** 配 `heroLevelSource: "curve"` —— owner 2026-08-04 的 per-kind 等級公式。 */
+        levelCurve: zMobLevelCurve.optional(),
         /**
          * 體型倍率 (GH#192) — the RENDERED size, aligned in meaning with the
          * king's. Distinct from `radiusMult` (the collision body) on purpose:
@@ -1997,6 +2033,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     groundRingSizeFollow: 1,
     baseLevel: 3,
     levelPerRound: 1,
+    // owner 2026-08-04「普通殭屍等級: 回合數*2+1」。
+    levelCurve: { perRoundSq: 0, perRound: 2, flat: 1 },
     // #244 — the mob's OWN curve (owner 2026-07-26): 100 + 100*(level-1), so the
     // round-3 floor of level 3 is 300 hp, round 4 → 400, round 5 → 500,
     // round 6 → 600. Regen 1 + 0.2*(level-1). These used to live on the
@@ -2117,7 +2155,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // #290 — 「就用上面那個 99」 said out loud. The owner's 滿級 99 ruling is
     // unchanged; naming the mode is what makes 「跟場上最高」 a visible ALTERNATIVE
     // in the console rather than an invisible one.
-    heroLevelSource: "fixed" as const,
+    // owner 2026-08-04「殭屍王等級: 回合數*回合數+10」。`heroLevel: 99` 保留但不再被讀。
+    heroLevelSource: "curve" as const,
+    levelCurve: { perRoundSq: 1, perRound: 0, flat: 10 },
     bountyGold: 30000,
     // XP stays at 1,200. GH#206 added 等級提升 as its OWN currency rather than
     // inflating this — the owner asked for 「等級提升+50」, and levels and XP are
@@ -2203,7 +2243,9 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // IN THIS DOC THAT IS NOT A CONSTANT: resolved in `spawnMob`, not at arm
     // time, because heroes level up inside a round. `"round"` restores the
     // pre-#290 curve (round 3 → the round-3 sheet, round 9 → the round-9 one).
-    heroLevelSource: "matchHighest" as const,
+    // owner 2026-08-04「特殊殭屍等級: 回合數*3+5」。
+    heroLevelSource: "curve" as const,
+    levelCurve: { perRoundSq: 0, perRound: 3, flat: 5 },
     // ── 分紅獎池 (#288, owner 2026-07-29) ──────────────────────────────────
     // 「特殊殭屍也照傷害比例分,獎勵是金錢 +5,000 · 等級提升 +5」. Both numbers
     // are the owner's, verbatim.

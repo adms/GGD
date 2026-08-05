@@ -43,7 +43,9 @@ import type { ChampionId } from "../ids";
 import {
   MOB_CHAMPION_ID,
   MOB_CHAMPION_SLOTS,
+  mobArmedHeroLevel,
   mobChampionForRound,
+  mobLevelForRound,
   mobModelKeyFor,
   mobRulesFromConfig,
   pickMobChampion,
@@ -218,15 +220,27 @@ describe("pickMobChampion —— 純函式抽籤 (可重播,不吃 rng)", () => 
 // ---------------------------------------------------------------------------
 
 describe("⭐ 抽到誰,數值就是誰的 (擋「只換臉」)", () => {
-  /** 該英雄在 `level` 的卡面血量 × heroHpMult + hpFlatBonus —— 王的那條式子。 */
-  const expectedBossHp = (def: ChampionDef, cfg: MobWavesConfig): number =>
-    Math.max(
+  /**
+   * 該英雄在**該回合王的等級**的卡面血量 × heroHpMult + hpFlatBonus。
+   *
+   * ⚠️ 等級從 `mobArmedHeroLevel` 推導,不是直接讀 `cfg.boss.heroLevel`
+   * (2026-08-04):owner 把王改成 `heroLevelSource: "curve"`,於是 `heroLevel: 99`
+   * 那一格**還在檔裡但不再被讀** —— 抄它的測試會用一個沒人用的數字去驗一條
+   * 真的有在跑的路,而紅的時候訊息說「抽籤沒進到數值」。
+   */
+  const expectedBossHp = (def: ChampionDef, cfg: MobWavesConfig, round: number): number => {
+    const level = mobArmedHeroLevel(
+      cfg.boss!,
+      mobLevelForRound(cfg as never, round),
+      round,
+    );
+    return Math.max(
       1,
       Math.round(
-        championStatBase(def, Stat.MaxHealth, cfg.boss!.heroLevel!, COMBAT_ENV_DEFAULTS) *
-          cfg.boss!.heroHpMult!,
+        championStatBase(def, Stat.MaxHealth, level, COMBAT_ENV_DEFAULTS) * cfg.boss!.heroHpMult!,
       ) + (cfg.boss!.hpFlatBonus ?? 0),
     );
+  };
 
   it("殭屍王:抽到 TINY 和抽到 HUGE 是兩份完全不同的血量,而且都對得回那位的卡面", () => {
     cover("mob-289-random-champion");
@@ -239,8 +253,8 @@ describe("⭐ 抽到誰,數值就是誰的 (擋「只換臉」)", () => {
     // ① 真的不一樣(擋「兩邊都退回沿用」的假通過)
     expect(tiny.boss!.maxHp).not.toBe(huge.boss!.maxHp);
     // ② 而且各自等於**抽到那位**的卡面推導 —— 這一條才是「不是只換臉」
-    expect(tiny.boss!.maxHp).toBe(expectedBossHp(TINY, cfg));
-    expect(huge.boss!.maxHp).toBe(expectedBossHp(HUGE, cfg));
+    expect(tiny.boss!.maxHp).toBe(expectedBossHp(TINY, cfg, 3));
+    expect(huge.boss!.maxHp).toBe(expectedBossHp(HUGE, cfg, 3));
     // ③ 攻擊力同一條路
     expect(huge.boss!.attackDamage).toBeGreaterThan(tiny.boss!.attackDamage);
   });
@@ -265,11 +279,14 @@ describe("⭐ 抽到誰,數值就是誰的 (擋「只換臉」)", () => {
     const huge = mobRulesFromConfig(cfg, DT, 3, undefined, always(HUGE.id));
     expect(tiny.special!.maxHp).not.toBe(huge.special!.maxHp);
     expect(tiny.special!.attackDamage).not.toBe(huge.special!.attackDamage);
+    // ⚠️ 不是 `tiny.level`(該回合的**小怪**等級)—— 2026-08-04 起特殊殭屍走自己
+    // 那條曲線(`回合*3+5`),兩者不同。用小怪等級會少算 ~1.9 倍。
+    const specialLevel = mobArmedHeroLevel(cfg.special!, tiny.level, 3);
     expect(huge.special!.maxHp).toBe(
       Math.max(
         1,
         Math.round(
-          championStatBase(HUGE, Stat.MaxHealth, tiny.level, COMBAT_ENV_DEFAULTS) *
+          championStatBase(HUGE, Stat.MaxHealth, specialLevel, COMBAT_ENV_DEFAULTS) *
             cfg.special!.heroHpMult!,
         ) + (cfg.special!.hpFlatBonus ?? 0),
       ),
@@ -284,10 +301,22 @@ describe("⭐ 抽到誰,數值就是誰的 (擋「只換臉」)", () => {
     const pool = [TINY.id, HUGE.id];
     const pick: MobChampionPicker = (slot: MobChampionSlot, round: number) =>
       pickMobChampion(pool, 0xabcd, round, slot) ?? undefined;
-    const hp = [3, 4, 5, 6, 7, 8, 9].map(
-      (r) => mobRulesFromConfig(cfg, DT, r, undefined, pick).boss!.maxHp,
-    );
-    expect(new Set(hp).size, "每一回合的王血量都一樣 ⇒ 抽籤沒有進到數值").toBe(2);
+    const rounds = [3, 4, 5, 6, 7, 8, 9];
+    const hp = rounds.map((r) => mobRulesFromConfig(cfg, DT, r, undefined, pick).boss!.maxHp);
+
+    // ⚠️ 這條以前是 `new Set(hp).size === 2` —— 兩位英雄、王等級固定 99,所以
+    // 「只有兩種血量」就等於「抽籤真的換了人」。2026-08-04 王改吃曲線之後**血量
+    // 每回合本來就不同**,那個 2 變成 7,而且更糟:就算抽籤整條斷掉,7 也還是 7。
+    // 一個對正確與壞掉的實作都會過的斷言(失敗形態 ④)。
+    //
+    // 改成逐回合對回**那一回合抽到的那位**的卡面 —— 抽籤沒進到數值就會紅,
+    // 而且是嚴格更強的主張。
+    const picked = rounds.map((r) => pick("boss", r));
+    expect(new Set(picked).size, "雜湊逐回合都抽同一位 ⇒ 這條沒在測換人").toBe(2);
+    rounds.forEach((r, i) => {
+      const def = picked[i] === TINY.id ? TINY : HUGE;
+      expect(hp[i], `R${r} 抽到 ${picked[i]}`).toBe(expectedBossHp(def, cfg, r));
+    });
   });
 });
 

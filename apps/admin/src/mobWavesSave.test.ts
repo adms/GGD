@@ -203,6 +203,9 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "mob.groundRingSizeFollow": "0.5",
   "mob.baseLevel": "4",
   "mob.levelPerRound": "2",
+  "mob.levelCurve.perRoundSq": "0.5",
+  "mob.levelCurve.perRound": "3.5",
+  "mob.levelCurve.flat": "4",
   "mob.baseHp": "31",
   "mob.hpPerLevel": "13",
   "mob.baseRegen": "0.5",
@@ -231,6 +234,9 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.heroLevel": "66",
   // #290 — distinct from the shipped "fixed".
   "boss.heroLevelSource": "round",
+  "boss.levelCurve.perRoundSq": "2",
+  "boss.levelCurve.perRound": "1.5",
+  "boss.levelCurve.flat": "12",
   "boss.modelKey": "champ.mob.king-double",
   "boss.bountyGold": "4200",
   "boss.bountyXp": "1600",
@@ -265,6 +271,9 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "special.heroLevel": "38",
   // #290 — distinct from the shipped "matchHighest".
   "special.heroLevelSource": "fixed",
+  "special.levelCurve.perRoundSq": "0.25",
+  "special.levelCurve.perRound": "4.5",
+  "special.levelCurve.flat": "7",
   "special.modelKey": "champ.mob.special-double",
   // #288 分紅獎池 — distinct sentinels, same reason as every line above.
   "special.bountyGold": "6100",

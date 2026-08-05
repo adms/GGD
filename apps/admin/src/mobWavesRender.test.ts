@@ -40,7 +40,13 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { MobWavesPage } from "./ui/MobWavesPage";
-import { MOB_WAVES_LABELS, type MobWavesFieldKey } from "./mobWaves";
+import {
+  MOB_WAVES_LABELS,
+  SHIPPED_MOB_WAVES,
+  hpForRound,
+  levelForRound,
+  type MobWavesFieldKey,
+} from "./mobWaves";
 
 const REPO = fileURLToPath(new URL("../../../", import.meta.url));
 const read = (rel: string): string => readFileSync(join(REPO, rel), "utf8");
@@ -228,10 +234,15 @@ describe("the per-round table reads as a curve", () => {
 
   it("shows the derived 等級 and 每隻血量 for the active rounds", () => {
     cover("admin-mob-waves");
-    // round 3 = level 3 (baseLevel), round 10 = level 10
-    expect(HTML).toContain("Lv 3");
-    expect(HTML).toContain("Lv 10");
-    // hp at level 3 = 20 + 20*2 = 60
-    expect(HTML).toContain(">60<");
+    // ⚠️ 期望值從 `levelForRound` / `hpForRound` 推導,不是寫死 `Lv 3` / `>60<`
+    // （2026-08-04 owner 換了等級曲線,那兩個字面值當場過期,而紅的訊息會說
+    // 「逐回合表沒有印等級」）。這條問的是**表上印的等於這頁算出來的**,也就是
+    // 「算了但沒畫出來」那一類缺陷,不是等級公式是哪一條。
+    for (const round of [3, 10]) {
+      expect(HTML, `R${round} 的等級沒印出來`).toContain(
+        `Lv ${levelForRound(SHIPPED_MOB_WAVES, round)}`,
+      );
+    }
+    expect(HTML, "R3 的每隻血量沒印出來").toContain(`>${hpForRound(SHIPPED_MOB_WAVES, 3)}<`);
   });
 });

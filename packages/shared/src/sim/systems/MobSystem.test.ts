@@ -20,6 +20,7 @@ import {
   type MobRules,
   MONSTER_TEAM,
   MOB_MODEL_KEY,
+  mobLevelForRound,
   mobRulesFromConfig,
   mobSpawnPos,
   mobsAliveInZone,
@@ -119,9 +120,15 @@ describe("MobSystem — wave schedule (#215)", () => {
     // combat-second (2k-1): tick 30 (s1), 90 (s3), 150 (s5).
     expect(rules.firstWaveTicks).toBe(30);
     expect(rules.waveIntervalTicks).toBe(60);
-    // #217: the `round` argument is optional and defaults to `fromRound`, i.e.
-    // the level FLOOR — which is exactly what this pre-#217 call site means.
-    expect(rules.level).toBe(DEFAULT_MOB_WAVES_CONFIG.mob.baseLevel);
+    // #217: the `round` argument is optional and defaults to `fromRound` ——
+    // 「開始出殭屍的那一回合」, which is exactly what this pre-#217 call site
+    // means. ⚠️ 以前這裡寫 `mob.baseLevel`,而 2026-08-04 owner 給了等級曲線之後
+    // 「第 fromRound 回合的等級」不再等於 `baseLevel`（曲線優先）。期望值改成走
+    // 同一支 `mobLevelForRound`,所以它問的仍然是「省略參數 = fromRound 嗎」,
+    // 不是「等級公式是哪一條」。
+    expect(rules.level).toBe(
+      mobLevelForRound(DEFAULT_MOB_WAVES_CONFIG, DEFAULT_MOB_WAVES_CONFIG.fromRound),
+    );
     const w = newWorld();
     beginCombatMobs(w, rules, [0]);
     step(w, 30); // s1
