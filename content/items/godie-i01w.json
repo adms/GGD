@@ -21,7 +21,7 @@
       "value": 66.7
     }
   ],
-  "craftRole": "component",
+  "craftRole": "final",
   "passive": [
     {
       "on": "onDamageTaken",

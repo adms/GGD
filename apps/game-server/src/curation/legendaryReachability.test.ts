@@ -339,23 +339,14 @@ describe("傳說寶玉的池子 (eco-orb-pool-reachable)", () => {
         "itemHasEffect 或攻擊型態閘吃掉了本來該滾得到的條目",
     ).toEqual(want);
 
-    // ⭐ owner 的裁決本身也要有守衛:出貨設定下,那 8 支 recipe component
-    // **必須**滾得到。突變:把 "component" 加回 DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES
-    // → 這一條紅。⛔ 不寫死「差集是空的」——寫死清單內容才抓得到「悄悄多擋一類」。
-    const COMPONENTS_OWNER_WANTS_ROLLABLE = [
-      "godie-i006", // 雅典娜的驚嘆號
-      "godie-i00u", // 名刀-天狼
-      "godie-i013", // 緣一零式
-      "godie-i014", // 天叢雲劍
-      "godie-i01g", // 貫雷槍
-      "godie-i01w", // 祕銀鎖子甲
-      "godie-i020", // 瑪那魔杖
-      // ⚠️ godie-i012 熾天使之弓 不在這裡:它是 ranged 限定,對近戰英雄本來就
-      // 滾不到 —— 那是 requiresAttackType 這個**功能**,不是 craftRole 這道閘。
-    ];
-    for (const id of COMPONENTS_OWNER_WANTS_ROLLABLE) {
-      expect(pool, `${id} 是 owner 裁決要能被隨機三選一發出來的合成原料`).toContain(id);
-    }
+    // ⭐ owner 2026-08-04:「**49支已經全部都是傳說武器道具，並非原料**」。
+    // 那 8 支曾經被標成 `component` 的是 WC3 匯入留下的錯標記（在原作它們是別人的
+    // 合成材料，而 GGD 沒有合成系統），資料已改成 "final"。這一條釘住那個內容決定。
+    // 突變：把任何一支改回 "component" → 紅。
+    expect(
+      poolEntries().filter((id) => Items.get(id as ItemId).craftRole === "component"),
+      "傳說池裡出現 craftRole:\"component\" —— owner 裁決 49 支全部是武器道具不是原料",
+    ).toEqual([]);
 
     // 近戰英雄唯一滾不到的,只剩攻擊型態不符的那一支。
     expect(

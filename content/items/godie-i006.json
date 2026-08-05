@@ -21,7 +21,7 @@
       "value": 13
     }
   ],
-  "craftRole": "component",
+  "craftRole": "final",
   "passive": [
     {
       "on": "onBasicAttack",

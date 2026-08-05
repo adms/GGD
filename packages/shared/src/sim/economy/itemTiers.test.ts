@@ -278,10 +278,16 @@ describe("legendary is DRAFT-ONLY", () => {
       orphaned,
       "這些 final 既不能買、也不在傳說池裡 —— 等於做了但玩家永遠拿不到 (cost 打成 0 就會長這樣)",
     ).toEqual([]);
-    // …and the set is not empty, so the rule above is not vacuously green: 18
-    // finals ship delisted-and-drafted today (霸王破甲槍/斬龍刀/…).
+    // …and the set is not empty, so the rule above is not vacuously green:
+    // some finals ship delisted-and-drafted (霸王破甲槍/斬龍刀/…).
+    //
+    // ⛔ 這裡**不寫死數量**（2026-08-04 改）。原本是 `.toBe(18)`，而 owner 把 8 支
+    // 被 WC3 匯入錯標成 `component` 的武器改回 `final` 之後它變成 26，於是這條
+    // 用「傳說池的組成變了」這個**無關的訊息**紅掉。出貨數量是 owner 每週在動的
+    // 東西（CLAUDE.md：驗機制不驗數字）——這條要守的是「規則不是空的」，
+    // 而那只需要 > 0。
     const delisted = items.filter((d) => d.craftRole === "final" && hasEffect(d) && d.cost <= 0);
-    expect(delisted.length, "no final is delisted at all — the rule above proves nothing").toBe(18);
+    expect(delisted.length, "no final is delisted at all — the rule above proves nothing").toBeGreaterThan(0);
   });
 
   it("the free quest card's items are free too", () => {

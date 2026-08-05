@@ -328,18 +328,20 @@ describe("rule 1 covers every gold route, not just the shop shelf", () => {
         `${id} (${Items.get(id).name}) is offerable by the orb but its role ${role} is on the exclusion list`,
       ).not.toContain(role);
     }
-    // ⭐ owner 的裁決:合成原料**現在滾得到**。突變:把 "component" 加回
-    // DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES → 這一條紅(而且訊息說得出是哪一支)。
-    const components = LootTables.get(LEGENDARY_POOL_TABLE)
+    // ⭐ owner 2026-08-04:「**49支已經全部都是傳說武器道具，並非原料**」——
+    // 那 8 支曾經被標成 `component` 的其實是神器/武器/防具(每一支都有完整
+    // modifiers + passive，描述自己就寫著「武器」)。標記是 WC3 匯入留下的：
+    // 在原作它們是別人的合成材料，而 **GGD 沒有合成系統**。資料已改成 "final"。
+    //
+    // 所以這一條現在釘的是那個**內容決定**：傳說池裡不可以再出現 component。
+    // 突變：把任何一支改回 "component" → 紅，而且訊息說得出是哪一支。
+    const mislabelled = LootTables.get(LEGENDARY_POOL_TABLE)
       .entries.map((e) => e.itemId)
       .filter((id) => Items.get(id).craftRole === "component");
-    expect(components.length, "test is vacuous — put a component back in legendary-weapons.json").toBeGreaterThan(0);
-    // 近戰英雄拿得到的那些(排除攻擊型態不符的)必須真的在池子裡。
-    const rollable = components.filter((id) => Items.get(id).requiresAttackType === undefined);
-    expect(rollable.length).toBeGreaterThan(0);
-    for (const id of rollable) {
-      expect(pool, `${id} 是 owner 裁決要能被隨機三選一發出來的合成原料`).toContain(id);
-    }
+    expect(
+      mislabelled,
+      "傳說池裡出現 craftRole:\"component\" —— owner 裁決 49 支全部是武器道具不是原料",
+    ).toEqual([]);
   });
 
   it("a priced, effectful recipe component is refused with gold — even if whitelisted", () => {
