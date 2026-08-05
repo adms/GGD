@@ -124,6 +124,36 @@ describe("shieldBreak —— 【破盾】", () => {
     ]);
   });
 
+  it("⛔ 省略 side 時打的是**敵人**,不是隊友", () => {
+    cover("sb-default-side-enemies");
+    // 2026-08-05 稽核抓到的真缺陷：`shapeTargets` 的 else 分支走友方（那對淨化
+    // 是對的），而 schema / TS union / 編輯器預覽三份文件都寫「破盾預設打敵人」。
+    // 一張沒寫 side 的破盾卡會去破**自己隊友的盾**，而卡片上寫著敵方。
+    const { world, hero } = stage();
+    const mate = ally(world, 1, 1);
+    const foe = spawnChampion(world, {
+      championId: SELA.id as ChampionId,
+      seatId: asSeatId(2),
+      teamId: asTeamId(1),
+      pos: { x: C.x + 1.5, z: C.z },
+      zone: 0,
+    });
+    world.step(new Map());
+    shield(world, mate, "m");
+    shield(world, foe, "f");
+
+    fire(world, hero, [hero], {
+      kind: "shieldBreak",
+      shape: "circle",
+      radius: 8, // 兩個都在圈內 —— 差別只能來自 side 的預設
+    } as EffectDef);
+
+    // ⛔ 兩個方向一起讀：敵人的盾沒了、隊友的盾還在。
+    // 只驗一邊的話，一個「兩邊都破」的實作照樣過。
+    expect(world.health.get(foe)!.shields).toHaveLength(0);
+    expect(world.health.get(mate)!.shields).toHaveLength(1);
+  });
+
   it("shape 走的是與淨化同一支解析器（圈外的人沒被破盾）", () => {
     cover("sb-shares-shape");
     const { world, hero } = stage();

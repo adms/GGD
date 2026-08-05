@@ -42,6 +42,8 @@ import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 beforeAll(() => registerSkeletonContent());
 
 const CENTER = SKELETON_ARENA.zones[0]!.center;
+/** onReflect 那張卡回多少血。只要 > 自然回血的雜訊即可,不是被驗的數字。 */
+const HEAL = 40;
 
 function makeWorld(): SimWorld {
   const w = new SimWorld(SKELETON_ARENA, 1);
@@ -156,6 +158,45 @@ describe("onReflect —— 反彈成功時", () => {
     });
     hit(mixed, a3, v3, 100);
     expect(mixed.pendingReflectHooks).toEqual([{ reflector: v3, victim: a3 }]);
+  });
+
+  it("⛔ hook 真的被觸發了 —— 不是只有進佇列", () => {
+    cover("refl-hook-actually-fires");
+    // 2026-08-05 稽核抓到：上面三條**全部**只讀 `pendingReflectHooks`，
+    // 所以把 `ReflectHookSystem` 的 `fireHooks(...)` 那一行刪掉（保留 splice）
+    // 三條照樣綠 —— 而那一行正是整個功能。失敗形態 ③。
+    //
+    // ⚠️ 而我這一條的**第一版也沒抓到**：它只斷言「血變多了」，
+    // 而 `w.step()` 本來就會跑自然回血 —— 所以刪掉 fireHooks 之後它照樣綠。
+    // 那正是失敗形態 ④（斷言方向跟缺陷無關）。改成 **A/B 對照**：
+    // 兩個世界唯一的差別是那張 onReflect 卡，所以差額只能來自它。
+    function reflectAndStep(withOnReflectCard: boolean): number {
+      const w = makeWorld();
+      const attacker = hero(w, 0, 0);
+      const victim = hero(w, 1, 1);
+      const hooks: HookDef[] = [reflectHook(2)];
+      if (withOnReflectCard) {
+        hooks.push({
+          on: "onReflect",
+          target: "self",
+          effects: [{ kind: "heal", amount: { flat: HEAL } }],
+        } as HookDef);
+      }
+      attachSource(w, victim, { id: "src:reflect", kind: "item", hooks });
+      const hp = w.health.get(victim)!;
+      hp.hp = hp.maxHp * 0.3; // 挖坑，否則回血被 maxHp 夾掉
+      hit(w, attacker, victim, 100);
+      const before = hp.hp;
+      w.step(new Map()); // ReflectHookSystem 在這裡跑
+      return hp.hp - before;
+    }
+
+    const withCard = reflectAndStep(true);
+    const without = reflectAndStep(false);
+
+    // 兩個世界的自然回血一樣多，所以差額就是那張卡回的血。
+    // ⛔ 刪掉 `fireHooks` 之後這個差額會變成 0。
+    expect(withCard - without).toBeGreaterThan(0);
   });
 
   it("系統真的把佇列排空了 —— 否則下一 tick 會重發一次", () => {

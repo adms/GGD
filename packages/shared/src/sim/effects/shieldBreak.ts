@@ -30,7 +30,15 @@ import { shapeTargets } from "./shapeTargets";
 export const shieldBreakEffect: EffectKindSpec<"shieldBreak"> = {
   apply(e, ctx) {
     const { world } = ctx;
-    for (const id of shapeTargets(e, ctx)) {
+    // ⛔ `side` 省略時**打敵人** —— 這一行是 2026-08-05 稽核抓到的真缺陷的修正。
+    // `shapeTargets` 的 `else` 分支走友方（那對【淨化】是對的，淨化本來就是給
+    // 自己人解狀態），而 schema、TS union、編輯器預覽**三份文件都寫著**
+    // 「破盾的預設是打敵人」。於是一張沒寫 `side` 的破盾卡會去破**自己隊友的盾**，
+    // 而卡片上寫著敵方 —— 三份文件一致地說謊，程式碼安靜地做相反的事。
+    //
+    // ⚠️ 修的是這裡而不是 `shapeTargets`：兩個 kind 的預設**本來就該不一樣**，
+    // 所以每一個 kind 自己解析自己的預設，共用的那一支只管幾何。
+    for (const id of shapeTargets({ ...e, side: e.side ?? "enemies" }, ctx)) {
       clearPools(world, id, {
         // ⛔ 只有這一池。寫死是刻意的 —— 這個 kind 的**定義**就是「打掉護盾」，
         // 讓它可以順便清別的池子等於重新發明 `dispel`，而那已經存在了。
