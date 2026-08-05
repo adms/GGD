@@ -27,6 +27,11 @@ export default defineConfig({
   },
   test: {
     environment: "node",
-    include: ["src/**/*.test.ts"],
+    // ⚠️ `.tsx` **必須**在這裡：任何 React 元件的測試都得是 `.tsx`（它有 JSX），
+    // 而 2026-08-05 之前這個樣式只收 `.ts` —— 也就是**整個副檔名被靜默排除**。
+    // 一條寫好的元件守衛會安靜地不跑，而 `pnpm test` 照樣全綠：
+    // 檔案數少一個沒有人會發現。`fieldHint.test.tsx`（欄位說明渲染）就是
+    // 第一個踩到的，它在被加進來的那一刻是「綠的」，因為它根本沒被執行。
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
 });
