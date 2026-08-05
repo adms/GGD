@@ -226,6 +226,26 @@ export function fireHooks(
         if (!damageSourcePasses(hook.damageSource, incoming.origin)) continue;
       }
 
+      // B2 (2026-08-05) —— 「那一發是什麼型別 / 是不是暴擊」。
+      //
+      // ⛔ 位置與 `damageSource` 完全相同,而且理由**一個字都沒變**:這兩條是
+      // 「這一則事件是什麼」的過濾,rng-FREE,必須在**內部冷卻閘與機率骰之前**。
+      // 搬到骰子後面 = 被擋掉的一發也抽了籤 = 每一次被非暴擊打到都偷偷推進亂數流,
+      // 而那一發根本不可能觸發 —— 那是一條只有 `world.rng.state` 前後比對才看得見
+      // 的決定性缺陷,錄影會在幾百 tick 之後才對不起來。
+      //
+      // 沒有封包 = 不通過(同 `damageSource`):「沒有傷害」不可能是一發魔法傷害,
+      // 也不可能是一次暴擊。載入時 `refineHookDamageContext` 已經擋掉把它們掛到
+      // 無傷害事件上的文件,所以正常內容碰不到這一行。
+      if (hook.damageType !== undefined && hook.damageType !== "any") {
+        if (incoming === undefined) continue;
+        if (incoming.type !== hook.damageType) continue;
+      }
+      if (hook.damageCrit !== undefined && hook.damageCrit !== "any") {
+        if (incoming === undefined) continue;
+        if (incoming.crit !== (hook.damageCrit === "crit")) continue;
+      }
+
       // 職業限定閘 (owner 2026-07-30: 近戰專用擴散 / 法師保命 / 坦克衝刺 /
       // 射手百分比傷害). See sim/content/requirement.ts for the axes and why
       // `role` is not one of them.

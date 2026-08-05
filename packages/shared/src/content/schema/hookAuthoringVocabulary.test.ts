@@ -162,3 +162,87 @@ describe("A/B/C · 新成員真的進得了 schema（不然 sim 那一半永遠�
     ).toBe(false);
   });
 });
+
+// ===========================================================================
+// B2 (2026-08-05) —— `damageType` / `damageCrit` 掛錯事件 → 載入失敗
+//
+// 這一段是新兩格的 **fail-loud 那一半**。沒有它，一條寫著「暴擊時」的 hook
+// 掛在 `onInterval` 上會：schema 收下 → 後台存得起來 → 卡片上看得到 →
+// 而 sim 永遠不給那個事件封包 → **一次都不會觸發，沒有任何訊息**（失敗形態 ②）。
+// ===========================================================================
+describe("B2 · damageType / damageCrit 只掛得上帶傷害的事件", () => {
+  // ⚠️ 用 `heal` 不是 `damage`：`damage` 這個 kind 自己**必填** `damageType`，
+  // 少了它整份文件在 base parse 就被拒，`superRefine` 根本不會跑 —— 於是這幾條
+  // 會「紅得對、理由全錯」（它們驗的是 B2 的閘，不是 damage kind 的必填欄位）。
+  // 第一版就是這樣紅的。
+  const HIT = { kind: "heal" as const, amount: { flat: 10 } };
+
+  it("★ 掛在 onInterval / onKill / onBasicAttack 上 → 拒絕，而且訊息指名那一格", () => {
+    cover(TAG);
+    for (const on of ["onInterval", "onKill", "onBasicAttack"] as const) {
+      for (const [key, val] of [
+        ["damageType", "magic"],
+        ["damageCrit", "crit"],
+      ] as const) {
+        const res = zHookDef.safeParse({
+          on,
+          target: "self",
+          internalCooldown: 1,
+          effects: [HIT],
+          [key]: val,
+        });
+        expect(res.success, `${on} + ${key} 被收下了`).toBe(false);
+        if (!res.success) {
+          // 訊息要指名**哪一格**，不是只說「有問題」——「填哪裡」是作者唯一
+          // 需要的資訊，而 Zod 的 path 是唯一能帶著它走完整條錯誤鏈的東西。
+          expect(res.error.issues.some((i) => i.path.includes(key)), `${on}/${key} 沒指名欄位`).toBe(
+            true,
+          );
+        }
+      }
+    }
+  });
+
+  it("★ 掛在 onDamageTaken / onDamageDealt 上 → 收下（對照組）", () => {
+    cover(TAG);
+    // 少了這一條，一個「永遠拒絕」的實作也會過上面那條（失敗形態 ④）。
+    for (const on of ["onDamageTaken", "onDamageDealt"] as const) {
+      const res = zHookDef.safeParse({
+        on,
+        target: "self",
+        effects: [HIT],
+        damageType: "magic",
+        damageCrit: "crit",
+      });
+      expect(res.success, `${on} 被拒了：${res.success ? "" : res.error.issues[0]?.message}`).toBe(
+        true,
+      );
+    }
+  });
+
+  it("★ `\"any\"` 在任何事件上都合法 —— 它的語意就是「不過濾」", () => {
+    cover(TAG);
+    const res = zHookDef.safeParse({
+      on: "onInterval",
+      target: "self",
+      internalCooldown: 1,
+      effects: [HIT],
+      damageType: "any",
+      damageCrit: "any",
+    });
+    expect(res.success).toBe(true);
+  });
+
+  it("★ 打錯字被 .strict() 擋掉（`isCrit` / `damageIsCrit` 這種順手寫法）", () => {
+    cover(TAG);
+    for (const bad of ["isCrit", "damageIsCrit", "crit"]) {
+      const res = zHookDef.safeParse({
+        on: "onDamageTaken",
+        target: "self",
+        effects: [HIT],
+        [bad]: true,
+      });
+      expect(res.success, `${bad} 被收下了 —— 那是一格永遠沒人讀的欄位`).toBe(false);
+    }
+  });
+});

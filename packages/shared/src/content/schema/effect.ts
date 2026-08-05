@@ -1198,6 +1198,8 @@ export function refineHookDamageContext(
   hook: {
     on: string;
     damageSource?: string | undefined;
+    damageType?: string | undefined;
+    damageCrit?: string | undefined;
     chance?: number | undefined;
     chanceFrom?: { min: number; max: number } | undefined;
     internalCooldown?: number | undefined;
@@ -1266,6 +1268,26 @@ export function refineHookDamageContext(
       path: ["damageSource"],
       message:
         `「${hook.damageSource}」是對觸發傷害的過濾,只有 ${DAMAGE_BEARING_EVENTS.join(" / ")} ` +
+        `帶得到那一發封包。掛在 ${hook.on} 上這條 hook 一次都不會觸發。`,
+    });
+  }
+  // B2 (2026-08-05) —— 新的兩格走**同一道閘**,不是第二套規則。
+  // 它們與 `damageSource` 是同一族(都在問「觸發這一次的那一發封包長什麼樣」),
+  // 所以「只有帶傷害的事件談得上『那一發』」對它們逐字成立。
+  //
+  // ⚠️ 這一段存在的理由就是失敗形態 ②:一條 `damageCrit: "crit"` 掛在
+  // `onInterval` 上,schema 收得下、後台存得起來、卡片上寫著「暴擊時」,
+  // 而 sim 永遠不會給那個事件一發封包 —— 它一次都不會觸發,沒有任何錯誤訊息。
+  for (const [key, val] of [
+    ["damageType", hook.damageType],
+    ["damageCrit", hook.damageCrit],
+  ] as const) {
+    if (val === undefined || val === "any") continue;
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: [key],
+      message:
+        `「${val}」是對觸發傷害的過濾,只有 ${DAMAGE_BEARING_EVENTS.join(" / ")} ` +
         `帶得到那一發封包。掛在 ${hook.on} 上這條 hook 一次都不會觸發。`,
     });
   }
@@ -1419,6 +1441,24 @@ export const zHookDefBase = z
      * 傷害」—— 一件強得多的、不同的道具。
      */
     damageSource: z.enum(["any", "basic", "nonBasic", "ability", "other"]).optional(),
+    /**
+     * B2 —— 觸發這個 hook 的那一發傷害**是什麼型別**。mirrors
+     * `HookDef.damageType` in sim/stats/modifiers.ts。
+     *
+     * 讀的是**最後一次型別轉換之後**的型別,所以一發被轉成魔法的物理傷害在這裡
+     * 是 `"magic"` —— 與護甲／魔抗吃到的那一個相同。
+     *
+     * 省略 = 不過濾(每一份既有文件逐位元不變)。
+     */
+    damageType: z.enum(["any", "physical", "magic", "true"]).optional(),
+    /**
+     * B2 —— 觸發這個 hook 的那一發傷害**是不是暴擊**。mirrors
+     * `HookDef.damageCrit` in sim/stats/modifiers.ts。
+     *
+     * ⚠️ 三值而不是 boolean:`false` 與「沒填」在後台表單上分不開,而
+     * 「不過濾」與「只在非暴擊時」是兩件完全不同的事。
+     */
+    damageCrit: z.enum(["any", "crit", "nonCrit"]).optional(),
   })
   .strict();
 

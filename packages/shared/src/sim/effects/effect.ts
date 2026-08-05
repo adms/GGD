@@ -81,6 +81,31 @@ export interface TriggerDamage {
    * 反彈用它算「還剩幾輪」,一發塞不下的反彈按 `incomingPct.whenTooLate` 處置。
    */
   readonly resolvePass: number;
+  /**
+   * 這一發封包的**傷害型別** —— `HookDef.damageType` 讀它。
+   *
+   * ⚠️ 它是 `DamagePacket.type`，也就是**最後一次型別轉換之後**的型別（惡夢魔王
+   * 碎片那一族 `damageTypeOverride` 改的就是它）。想問「轉換前是什麼」的人要的是
+   * `DamagePacket.impactType`，而那一格**沒有**被抄進來 —— 它今天唯一的消費者是
+   * 擊倒衝擊反應那道閘，把它一起送上來等於多一個沒有人讀的欄位。
+   *
+   * ── 為什麼它到 2026-08-05 才出現 ──────────────────────────────────────────
+   * 資料一直就在原地：組出這個物件的那個迴圈（`combat/damage.ts`）手上就握著
+   * `pkt`，`pkt.type` 與 `pkt.crit` 是它的第 44、45 個欄位。它們沒被抄過來，
+   * 於是【這一發是 AP】【是 AD】【是真傷】三個標籤**寫不出來** —— 不是引擎做不到，
+   * 是這兩行沒寫。抄過來的成本是零（同一個作用域、同一個物件字面）。
+   */
+  readonly type: DamageType;
+  /**
+   * 這一發封包**是不是暴擊** —— `HookDef.damageCrit` 讀它。
+   *
+   * 同上：`pkt.crit` 就在手邊。它解鎖【暴擊時】，而那是玩家最講得出名字的一個
+   * 觸發時機。
+   *
+   * ⚠️ 它是**這一發封包**的暴擊旗標，不是持有者的暴擊率。一條
+   * `damageCrit: "crit"` 的 hook 問的是「剛剛那一下爆了嗎」，不是「我暴擊率夠不夠」。
+   */
+  readonly crit: boolean;
 }
 
 /** Rank-aware scaling: flat + per-rank + stat ratios of the caster. */

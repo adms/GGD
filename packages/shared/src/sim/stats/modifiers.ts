@@ -264,6 +264,32 @@ export interface HookDef {
    * 文件,所以「寫得出來但永遠不會觸發」不是一個能出貨的狀態。
    */
   damageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
+  /**
+   * B2 (2026-08-05) —— 觸發這個 hook 的那一發傷害**是什麼型別**。
+   * 解鎖【這一發是 AP】【是 AD】【是真傷】。
+   *
+   * 讀 `TriggerDamage.type`，也就是 `DamagePacket.type` —— **最後一次型別轉換
+   * 之後**的型別。所以一發被惡夢魔王碎片轉成魔法的物理傷害，在這裡是 `"magic"`。
+   * 那是對的：作者問的是「打到我身上的是什麼」，而護甲／魔抗吃的也是轉換後的型別。
+   *
+   * ⚠️ **與 `damageSource` 的三條規則逐字相同**（刻意的，它們是同一族）：
+   *   · 省略或 `"any"` = 不過濾，所以每一份既有文件逐位元不變
+   *   · **沒有封包 = 不通過**（不是退化成「不過濾」）—— 理由見 `damageSource`
+   *   · 位置在**內部冷卻閘與機率骰之前**，被擋掉的一發不燒 ICD、不動 seed
+   */
+  damageType?: "any" | "physical" | "magic" | "true";
+  /**
+   * B2 (2026-08-05) —— 觸發這個 hook 的那一發傷害**是不是暴擊**。解鎖【暴擊時】。
+   *
+   * ⚠️ **為什麼是三值 enum 而不是 `boolean`**：`false` 與「沒填」在後台表單上
+   * 分不開（`optBool` 那一整段的教訓 —— 空白格會被寫回 `false`，而
+   * 「不過濾」與「只在非暴擊時」是兩件完全不同的事）。`"any"` 讓「不過濾」
+   * 是一個作者**打得出來**的值，而且與 `damageSource` / `damageType` 的
+   * `"any"` 慣例一致。
+   *
+   * ⚠️ 主詞是**那一發封包**，不是持有者的暴擊率。`"crit"` 問「剛剛那一下爆了嗎」。
+   */
+  damageCrit?: "any" | "crit" | "nonCrit";
   /** internal cooldown in seconds (0/undefined = every trigger) */
   internalCooldown?: number;
   /**

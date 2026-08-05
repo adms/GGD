@@ -1010,6 +1010,12 @@ export function combatResolveSystem(world: SimWorld): void {
         // [On-Hit] 道具)最早也要第 1 輪才解算,而 `reflectLimits.ts` 以前那個
         // 「深度 d 在第 d 輪落地」的推導正是漏了這件事。反彈鏈用它算剩幾輪。
         resolvePass: pass,
+        // B2 (2026-08-05) —— 這兩格**本來就在手上**。`pkt` 的第 44、45 個欄位
+        // 就是 `type` 與 `crit`，而在這兩行出現之前它們沒有被抄過來,於是
+        // 【暴擊時】【這一發是 AP／AD／真傷】四個標籤在編輯器上寫不出來。
+        // 成本是零:同一個作用域、同一個物件字面,沒有多讀任何東西。
+        type: pkt.type,
+        crit: pkt.crit,
       };
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
       fireHooks(world, pkt.target, "onDamageTaken", pkt.source, undefined, trigger);

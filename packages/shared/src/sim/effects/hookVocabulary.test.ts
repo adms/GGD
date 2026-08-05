@@ -466,3 +466,146 @@ describe("④ 新過濾器坐在骰子之前：擋掉的一發不抽籤", () => 
     expect(run()).toEqual(run());
   });
 });
+
+// ===========================================================================
+// ⑤ B2 —— `damageType` / `damageCrit`（2026-08-05）
+//
+// 這兩格解鎖【暴擊時】【這一發是 AP】【是 AD】【是真傷】四個標籤。
+// 資料一直就在原地（`DamagePacket` 的第 44、45 個欄位），缺的只是
+// `combat/damage.ts` 把它們抄進 `TriggerDamage` 的那兩行。
+//
+// ⚠️ 這裡**沒有一條**斷言長成「schema 收得下 `crit` 這個字串」（失敗形態 ⑦）。
+// 每一條都推真的封包進 `world.damageQueue`，由真的 `combatResolveSystem` 在
+// `w.step()` 裡解算 —— 那是 `TriggerDamage` 唯一的產地。
+// ===========================================================================
+describe("⑤ B2: damageType / damageCrit 真的過濾那一發封包", () => {
+  /**
+   * 一個**乾淨的舞台**推一發封包給 `foe`，回傳「掛在 foe 身上的那條 hook 觸發了幾次」。
+   *
+   * ⚠️ **每一發都自己開一個 stage**，不是在同一個世界連推。探針 `HIT` 打的是
+   * `hero`（`onDamageTaken` 解析出來的對象＝攻擊者），一發 500 真傷，兩發就把
+   * 他打死了 —— 第三發之後血條不動，而那看起來跟「過濾器擋掉了」**一模一樣**。
+   * 第一版就是這樣紅的，而紅的訊息說「省略沒有變成不過濾」，是假的。
+   *
+   * ⚠️ `|| 0` 是在正規化 **`-0`**：`RegenSystem` 在同一個 `step()` 裡回了一點血，
+   * 沒觸發時 delta 是個微負數，`Math.round` 給出 `-0`，而 `expect(-0).toBe(0)`
+   * 在 `Object.is` 底下是**紅的**。這不是被測行為的一部分。
+   */
+  function probe(
+    hook: Omit<HookDef, "effects">,
+    pkt: { type: "physical" | "magic" | "true"; crit: boolean },
+  ): number {
+    const s = stage();
+    arm(s.world, s.foe, { ...hook, effects: [HIT] } as HookDef);
+    const before = hp(s.world, s.hero);
+    s.world.damageQueue.push({
+      source: s.hero,
+      target: s.foe,
+      amount: 10,
+      type: pkt.type,
+      crit: pkt.crit,
+      origin: "basic",
+    });
+    s.world.step(new Map());
+    return procsFrom(before - hp(s.world, s.hero)) || 0;
+  }
+
+  const TAKEN = { on: "onDamageTaken" } as const;
+
+  it("★ damageCrit: crit —— 暴擊那一發觸發，非暴擊那一發完全不觸發", () => {
+    cover("hook-damage-crit-filter");
+    // 對照組先寫：暴擊**一定**要觸發。少了它，一個「永遠不觸發」的實作也會過
+    //（失敗形態 ④）。
+    expect(probe({ ...TAKEN, damageCrit: "crit" }, { type: "physical", crit: true })).toBe(1);
+    // 靶：刪掉 `incoming.crit !== (hook.damageCrit === "crit")` 那一行 → 變 1 → 紅。
+    expect(probe({ ...TAKEN, damageCrit: "crit" }, { type: "physical", crit: false })).toBe(0);
+  });
+
+  it("★ damageCrit: nonCrit 是完全相反的一格（擋「三值被當成 boolean」）", () => {
+    cover("hook-damage-crit-noncrit");
+    expect(probe({ ...TAKEN, damageCrit: "nonCrit" }, { type: "physical", crit: false })).toBe(1);
+    expect(probe({ ...TAKEN, damageCrit: "nonCrit" }, { type: "physical", crit: true })).toBe(0);
+  });
+
+  it("★ damageType 三種型別各自只收自己那一種（3×3 全表）", () => {
+    cover("hook-damage-type-filter");
+    const KINDS = ["physical", "magic", "true"] as const;
+    for (const want of KINDS) {
+      for (const got of KINDS) {
+        expect(probe({ ...TAKEN, damageType: want }, { type: got, crit: false }), `want=${want} got=${got}`).toBe(
+          got === want ? 1 : 0,
+        );
+      }
+    }
+  });
+
+  it("★ 省略 = 不過濾 —— 每一份既有文件逐位元不變", () => {
+    cover("hook-damage-filter-absent-is-noop");
+    // 這一條擋的是「新閘寫成 `!== undefined` 以外的形狀」——例如把 `undefined`
+    // 當成一個要比對的值，那會把**每一條既有 hook** 安靜地關掉。
+    expect(probe(TAKEN, { type: "physical", crit: false })).toBe(1);
+    expect(probe(TAKEN, { type: "magic", crit: true })).toBe(1);
+    expect(probe(TAKEN, { type: "true", crit: false })).toBe(1);
+    // `"any"` 明寫出來也一樣。
+    expect(
+      probe({ ...TAKEN, damageType: "any", damageCrit: "any" }, { type: "magic", crit: false }),
+    ).toBe(1);
+  });
+
+  it("★ 兩格是 AND 不是 OR —— 只對得上一半的封包不觸發", () => {
+    cover("hook-damage-filter-and");
+    const both = { ...TAKEN, damageType: "magic", damageCrit: "crit" } as const;
+    expect(probe(both, { type: "magic", crit: true })).toBe(1); // 兩個都中
+    expect(probe(both, { type: "magic", crit: false })).toBe(0); // 只中型別
+    expect(probe(both, { type: "physical", crit: true })).toBe(0); // 只中暴擊
+  });
+
+  it("⛔ 被 damageType / damageCrit 擋掉的那一發不抽籤（順序硬約束）", () => {
+    cover("hook-damage-filter-before-roll");
+    // 與 `victim` / `damageSource` 那兩條是同一個主張：新過濾器必須坐在
+    // **內部冷卻閘與機率骰之前**。靶：把這兩道閘搬到 `chance` 骰子後面 →
+    // 被擋掉的一發也抽了籤 → `rng.state` 位移 → 紅。
+    //
+    // ⚠️ 探針效果用 `applyBuff` 而不是 `HIT`：這一條量的是**亂數流**，不是血量，
+    // 而 `HIT` 會把血量的變化混進來讓失敗訊息變模糊。
+    const cases = [
+      ["damageType", { on: "onDamageTaken", damageType: "magic", chance: 0.5 }],
+      ["damageCrit", { on: "onDamageTaken", damageCrit: "crit", chance: 0.5 }],
+    ] as const;
+    for (const [label, hook] of cases) {
+      const s = stage();
+      arm(s.world, s.foe, {
+        ...hook,
+        target: "self",
+        effects: [{ kind: "applyBuff", modifiers: [], duration: 999, stackKey: `b2-${label}` }],
+      } as HookDef);
+      const before = s.world.rng.state;
+      // 一發**不合格**的封包（物理、非暴擊）—— 兩條 hook 都應該擋掉它。
+      s.world.damageQueue.push({
+        source: s.hero,
+        target: s.foe,
+        amount: 10,
+        type: "physical",
+        crit: false,
+        origin: "basic",
+      });
+      s.world.step(new Map());
+      expect(s.world.rng.state, `被 ${label} 擋掉的一發抽了籤 → 亂數流位移`).toBe(before);
+    }
+  });
+
+  it("⛔ 沒有封包的事件一律不通過（與 damageSource 的不對稱逐字相同）", () => {
+    cover("hook-damage-filter-no-packet");
+    // `onBasicAttack` 不帶封包。`victim` 在那裡退化成「不過濾」，但這一族**不行**：
+    // 「沒有傷害」不可能是一發魔法傷害，也不可能是一次暴擊。
+    // 靶：把 `if (incoming === undefined) continue;` 拿掉 → 觸發 → 紅。
+    const s = stage();
+    arm(s.world, s.hero, { on: "onBasicAttack", damageCrit: "crit", effects: [HIT] });
+    expect(swing(s, "onBasicAttack", s.foe)).toBe(0);
+    // 對照組：同一個事件、拿掉過濾器一定觸發 —— 證明這條路本來是通的，
+    // 而不是 `onBasicAttack` 自己就發不出來。
+    const t = stage();
+    arm(t.world, t.hero, { on: "onBasicAttack", effects: [HIT] });
+    expect(swing(t, "onBasicAttack", t.foe)).toBe(1);
+  });
+});

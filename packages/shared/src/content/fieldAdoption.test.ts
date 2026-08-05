@@ -630,6 +630,48 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "debt",
     why: "sim/combat/damage.ts:582 FIRES this hook every time damage is dealt, and no content subscribes to it across all 43 hook-carrying docs (abilities, items, augments, champion passives). Every on-damage-dealt proc in the source map is currently unimported.",
   },
+  // --- B2 · damageType / damageCrit (2026-08-05) ----------------------------
+  //
+  // 機制今天上架:`TriggerDamage` 多了 `type` 與 `crit`,`hooks.ts` 兩道閘坐在
+  // ICD 與骰子之前,載入時的閘擋掉掛錯事件的文件,行為守衛在
+  // `sim/effects/hookVocabulary.test.ts`(⑤ 段,五個突變都驗過)。
+  //
+  // ⛔ **內容是零,而且原因是具體的,不是「還沒空寫」**:
+  // 全 repo 只有一份文件的文案在講這件事 —— 天堂之劍 `godie-i01n`:
+  //
+  //     「[暴擊吸血] 6%機率造成10倍暴擊傷害,暴擊時吸血回復100%傷害」
+  //
+  // 它的第二句需要一個**今天不存在的原語**:「治療觸發這一發的 X%」。
+  // `heal` 只吃 `zScaling`(flat / perRank / ratios),讀不到那一發打了多少;
+  // 對稱的東西只有 `damage.incomingPct`(反彈那一發的 X%),而它是傷害不是治療。
+  // 硬寫成 `heal{flat: N}` 等於**發明一個 owner 沒說過的數字**,那比零採用更糟。
+  //
+  // ⚠️ 順帶查到的、更嚴重的事:天堂之劍**整段上半都沒實作** —— 它今天只有
+  // `maxHealth −50%`,是一件**純壞處**的道具。已開 issue,不在這一批處理
+  //(改它的暴擊數值是平衡決策,而它是 `craftRole: "quest"` 且 quest-rewards
+  // 已在 `retiredLootTables` 裡,所以今天沒有玩家拿得到)。
+  //
+  // 30 天後這四條會自己再紅一次 —— 那時該有的是原語,不是更長的理由。
+  "field:abilities.effects[]#applyBuff.hooks[].damageType": {
+    status: "landing",
+    since: "2026-08-05",
+    why: "B2 的機制今天上架且有行為守衛;唯一講得出這件事的文案(天堂之劍 godie-i01n)卡在一個不存在的原語「治療觸發這一發的 X%」。見本段上方的完整說明。",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].damageCrit": {
+    status: "landing",
+    since: "2026-08-05",
+    why: "同上 —— B2 的另一半。【暴擊時】的第一個消費者是天堂之劍的第二句,而那一句需要的原語還沒有。",
+  },
+  "field:items.passive[].damageType": {
+    status: "landing",
+    since: "2026-08-05",
+    why: "同上,道具那一面的同一格。天堂之劍正是一件道具,所以它會是這一格的第一個採用者。",
+  },
+  "field:items.passive[].damageCrit": {
+    status: "landing",
+    since: "2026-08-05",
+    why: "道具那一面的【暴擊時】。這四格裡它是最接近被採用的一格 —— 天堂之劍 godie-i01n 是一件道具,它的文案「暴擊時吸血回復100%傷害」就是這一格的第一個消費者,卡住它的是缺一個「治療觸發這一發的 X%」原語(`heal` 只吃 zScaling,對稱的 `damage.incomingPct` 是傷害不是治療)。",
+  },
   "enum:abilities.effects[]#applyBuff.hooks[].on=onLevelUp": {
     status: "debt",
     why: "the opposite failure, found by the same census: the member exists in zHookEvent and in modifiers.ts's HookEvent type, but NOTHING in sim/ ever fires it. Content adopting it would be inert. Resolve by implementing the dispatch or deleting the member — do not 'adopt' it.",
