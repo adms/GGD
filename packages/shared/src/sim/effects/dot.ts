@@ -199,7 +199,8 @@ export const dotEffect: EffectKindSpec<"dot"> = {
         const inst: DotInstance = {
           sourceId: ctx.caster,
           origin: ctx.origin,
-          damageType: e.damageType,
+          // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
+          damageType: e.damageType ?? world.damageRules.defaultAbilityDamageType,
           amountPerTick: perTick,
           baseAmountPerTick: perTick,
           stacks: 1,
@@ -222,7 +223,7 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // silently zero. Only the DEADLINE moves.
       existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
       existing.baseAmountPerTick = perTick;
-      existing.damageType = e.damageType;
+      existing.damageType = e.damageType ?? world.damageRules.defaultAbilityDamageType;
       existing.intervalTicks = intervalTicks;
       existing.stacking = stacking;
       existing.maxStacks = maxStacks;

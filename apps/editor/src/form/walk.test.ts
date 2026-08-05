@@ -347,8 +347,22 @@ describe("discriminated EffectDef union (editor-02)", () => {
 
     const dmg = defaultForVariant(union, "damage") as Record<string, unknown>;
     expect(dmg.kind).toBe("damage");
-    expect(dmg.damageType).toBeDefined();
     expect(dmg.amount).toEqual({});
+
+    // ⚠️ `damageType` **刻意不被種進去**（owner 2026-08-05：「技能傷害預設都改成
+    // AP 傷害…如果有特別指定 真實傷害 或 物理傷害(AD)，則照技能上附註的計算」）。
+    // 種一個 "magic" 進每一張新卡的話，後台「傷害規則」那一格對新卡就**永遠沒用** ——
+    // 它只管「沒寫的那些」，而每一張卡都寫了。所以留空才是對的。
+    expect(dmg.damageType).toBeUndefined();
+
+    // ⛔ 但「留空」的代價是作者不知道自己會拿到什麼,所以那一格**必須**有說明文字
+    // 講清楚省略時的行為。少了這一行,上面那條斷言就是在保護一個沉默的預設
+    //（v0.9.42 之前編輯器根本不畫 description,那 25 句寫好的話一個字都沒出現過）。
+    const dmgVariant = union.variants.find((v) => v.tag === "damage")!;
+    const typeField = dmgVariant.fields.find(
+      (f) => f.path.split(".").pop() === "damageType",
+    )!;
+    expect(typeField.description ?? "").toContain("省略");
 
     const spawn = defaultForVariant(union, "spawnProjectile") as Record<string, unknown>;
     expect(spawn).toMatchObject({ kind: "spawnProjectile", onHit: [] });

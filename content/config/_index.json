@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "502ab93e125f",
+  "hash": "100be49998c2",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -85,6 +85,12 @@
       "path": "config/damage-colors.json",
       "hash": "1984e7e4e981",
       "size": 1471
+    },
+    {
+      "id": "damage-rules",
+      "path": "config/damage-rules.json",
+      "hash": "0a4975f8e3f5",
+      "size": 651
     },
     {
       "id": "dispel",

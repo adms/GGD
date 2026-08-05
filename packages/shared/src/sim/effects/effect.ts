@@ -169,7 +169,14 @@ export const NO_ATTR_LOOKUP: AttrLookup = () => 0;
 export type EffectDef =
   | {
       kind: "damage";
-      damageType: DamageType;
+      /**
+       * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
+       *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
+       *
+       * ⚠️ 這一格與**係數來源**（`amount` 的 `Scaling` 讀 ap/ad/str/agi/int）
+       * 是兩件事：型別決定吃護甲還是魔抗，係數決定數字多大。
+       */
+      damageType?: DamageType;
       amount: Scaling;
       canCrit?: boolean;
       /**
@@ -370,7 +377,14 @@ export type EffectDef =
    */
   | {
       kind: "damageArea";
-      damageType: DamageType;
+      /**
+       * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
+       *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
+       *
+       * ⚠️ 這一格與**係數來源**（`amount` 的 `Scaling` 讀 ap/ad/str/agi/int）
+       * 是兩件事：型別決定吃護甲還是魔抗，係數決定數字多大。
+       */
+      damageType?: DamageType;
       /** 每個受害者在**圓心**吃到的量 (再乘 falloff 的距離衰減) */
       amount: Scaling;
       /**
@@ -402,7 +416,14 @@ export type EffectDef =
    */
   | {
       kind: "damageLine";
-      damageType: DamageType;
+      /**
+       * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
+       *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
+       *
+       * ⚠️ 這一格與**係數來源**（`amount` 的 `Scaling` 讀 ap/ad/str/agi/int）
+       * 是兩件事：型別決定吃護甲還是魔抗，係數決定數字多大。
+       */
+      damageType?: DamageType;
       amount: Scaling;
       /** how far forward the lash reaches, GGD units (3 身位 = 3 × 1.2 = 3.6) */
       length: number;
@@ -984,7 +1005,14 @@ export type EffectDef =
        * the `damage` kind — a 「中毒」 that ignored armour would be `"true"` on
        * purpose, not by accident.
        */
-      damageType: DamageType;
+      /**
+       * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
+       *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
+       *
+       * ⚠️ 這一格與**係數來源**（`amount` 的 `Scaling` 讀 ap/ad/str/agi/int）
+       * 是兩件事：型別決定吃護甲還是魔抗，係數決定數字多大。
+       */
+      damageType?: DamageType;
       /** damage per PAYOUT (not per second) — resolved against the caster at apply */
       amountPerTick: Scaling;
       /**

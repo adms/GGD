@@ -320,7 +320,12 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damage"),
-      damageType: zDamageType,
+      damageType: zDamageType.optional().describe(
+        "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
+          "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
+          "「技能傷害預設都改成 AP 傷害」）。⚠️ 它與**係數來源**是兩件事：" +
+          "型別決定吃什麼減免，`amount` 的 Scaling(ap/ad/str/agi/int) 決定數字多大。",
+      ),
       amount: zScaling,
       canCrit: z.boolean().optional(),
       /** combo-window bonus, added only while the CASTER holds `statusId` (j:34189) */
@@ -491,7 +496,12 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damageArea"),
-      damageType: zDamageType,
+      damageType: zDamageType.optional().describe(
+        "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
+          "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
+          "「技能傷害預設都改成 AP 傷害」）。⚠️ 它與**係數來源**是兩件事：" +
+          "型別決定吃什麼減免，`amount` 的 Scaling(ap/ad/str/agi/int) 決定數字多大。",
+      ),
       amount: zScaling,
       /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
       radius: z.number().positive().max(SPREAD_MAX_RADIUS),
@@ -518,7 +528,12 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damageLine"),
-      damageType: zDamageType,
+      damageType: zDamageType.optional().describe(
+        "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
+          "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
+          "「技能傷害預設都改成 AP 傷害」）。⚠️ 它與**係數來源**是兩件事：" +
+          "型別決定吃什麼減免，`amount` 的 Scaling(ap/ad/str/agi/int) 決定數字多大。",
+      ),
       amount: zScaling,
       /** GGD 單位, 往前的長度。3 個身位 = 3 × 體寬 1.2 = 3.6 */
       length: z.number().positive().max(SPREAD_MAX_RADIUS),
@@ -942,7 +957,12 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("dot"),
-      damageType: zDamageType,
+      damageType: zDamageType.optional().describe(
+        "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
+          "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
+          "「技能傷害預設都改成 AP 傷害」）。⚠️ 它與**係數來源**是兩件事：" +
+          "型別決定吃什麼減免，`amount` 的 Scaling(ap/ad/str/agi/int) 決定數字多大。",
+      ),
       /** damage per PAYOUT, not per second */
       amountPerTick: zScaling,
       /**

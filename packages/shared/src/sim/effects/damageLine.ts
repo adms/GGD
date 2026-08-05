@@ -161,7 +161,9 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
         source: ctx.caster,
         target: v.id,
         amount,
-        type: e.damageType,
+        // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
+        // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
+        type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
         crit,
         origin: ctx.origin,
       });

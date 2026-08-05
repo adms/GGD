@@ -40,6 +40,7 @@ import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./steal
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
+import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
   DEFAULT_TAUNT_RULES,
@@ -946,6 +947,8 @@ export class SimWorld {
   dispelRules: DispelRules = DEFAULT_DISPEL_RULES;
   /** 【重創】多筆同時在身上時怎麼疊（A6，#278）。 */
   woundRules: WoundRules = DEFAULT_WOUND_RULES;
+  /** 傷害規則 —— 今天只有「沒寫 `damageType` 時用哪一種」。 */
+  damageRules: DamageRules = DEFAULT_DAMAGE_RULES;
 
   /**
    * 隱形規則 (`config.stealth@1`, see stealth.ts) —— 隱形擋不擋自動索敵／手動

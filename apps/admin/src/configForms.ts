@@ -54,6 +54,7 @@ import {
   zConfigBerserkDoc,
   zConfigDispelDoc,
   zConfigWoundsDoc,
+  zConfigDamageRulesDoc,
   zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
@@ -484,6 +485,39 @@ const BLOCK_SPEC: ConfigDocSpec = {
       optionLabels: {
         independent: "independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）",
         best: "best 只有最強的那一件會擋（改成欄位之前的行為）",
+      },
+    },
+  ],
+  preserved: [],
+};
+
+const DAMAGE_RULES_SPEC: ConfigDocSpec = {
+  page: "damageRules",
+  collection: "config",
+  docId: "damage-rules",
+  schemaTag: "config.damage-rules@1",
+  zod: zConfigDamageRulesDoc,
+  title: "傷害規則",
+  intro: [
+    "一份傷害效果**沒有寫**傷害型別時，遊戲要當它是哪一種。owner 2026-08-05：「技能傷害預設都改成 AP 傷害」。",
+    "⚠️ **在這之前沒有預設** —— 傷害型別是必填的，忘了寫會在載入時被擋下來。現在忘了寫會**安靜地變成魔法傷害**，所以這一頁存在的意義就是讓那個「安靜」變成看得到、改得到的一格。",
+    "⚠️ 這一格**只影響沒寫的那些**。已經明寫型別的技能（出貨的絕大多數都寫了）一支都不會被改到，所以在這裡改成物理不會把全樹翻過來。",
+    "⚠️ 它**不是**「技能吃 AP 加成」。傷害型別決定吃護甲還是魔抗；數字多大是每個效果自己的係數（力量/敏捷/智慧/AD/AP）決定的，兩者互不影響 —— 一支「數字吃 AP、打出去是物理」的技能完全合法。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/damage-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/effects/damage.ts（以及 damageArea.ts / damageLine.ts / dot.ts，共五個 `e.damageType ?? world.damageRules.defaultAbilityDamageType` 讀取點）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.damageRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 淨化規則／重創規則／格擋規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "defaultAbilityDamageType",
+      zh: "沒寫型別時當成哪一種傷害",
+      note: "魔法＝吃目標的魔抗（出貨值，owner 2026-08-05 裁定）；物理＝吃護甲；真實＝什麼減免都不吃，血條直接掉。⚠️ 選「真實」要非常小心：那等於讓每一張忘記填型別的卡都變成無視防禦，而防禦裝在那一刻對它完全沒有用。",
+      optionLabels: {
+        physical: "物理（吃護甲）",
+        magic: "魔法 / AP（吃魔抗，出貨值）",
+        true: "真實（什麼都不吃）",
       },
     },
   ],
@@ -1677,6 +1711,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   BERSERK_SPEC,
   DISPEL_SPEC,
   WOUNDS_SPEC,
+  DAMAGE_RULES_SPEC,
   AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,
   TAUNT_SPEC,
