@@ -38,7 +38,47 @@ export function FieldErrors({ dataPath, errors }: { dataPath: string; errors: Er
   );
 }
 
+/**
+ * 欄位說明 —— schema 上 `.describe()` 寫的那一句。
+ *
+ * ⛔ **這個管線在 2026-08-05 之前是斷的。** `walk.ts` 一路把 `description` 收進
+ * 節點（`walk.ts:74` 的 `base`）、`UIBase.description` 也宣告了，而**十個 widget
+ * 沒有一個畫它** —— 全 `apps/editor/src/form/widgets/` grep `node.description`
+ * 零命中。今天 repo 裡已經有 **25 句**作者寫好的 `.describe()`
+ * （`schema/item.ts` 24 句、`schema/common.ts` 1 句），而編輯器上一個字都看不到。
+ *
+ * 這是失敗形態 ③ 的教科書案例：**整條路可以從渲染樹刪掉而測試全綠**，
+ * 因為它本來就沒有被畫出來。
+ *
+ * 補在 `renderNode` 而不是十個 widget 各補一次，理由有兩個：
+ *   ① 一個地方 = 十個 widget 一起活過來，而且**下一個新 widget 免費得到它**；
+ *   ② widget 各補一次的話，「有一個忘了」跟「那個欄位沒有說明」長得一模一樣。
+ */
+function FieldHint({ text }: { text: string }): ReactElement {
+  return (
+    <p className="field-hint" data-testid="field-hint">
+      {text}
+    </p>
+  );
+}
+
 export function renderNode(props: FieldProps): ReactElement {
+  const el = renderWidget(props);
+  const d = props.node.description;
+  // ⚠️ `ref:` 開頭的那一種不是給人看的說明，是 walker 拿來標「這是一個參照」的
+  //（見 `walk.ts` 的 `refFromDescription`）。`walk.ts:74` 已經把它濾掉了，
+  // 這裡不再濾第二次 —— 兩個地方各濾一次，改一邊就會有一邊過期。
+  return d ? (
+    <>
+      {el}
+      <FieldHint text={d} />
+    </>
+  ) : (
+    el
+  );
+}
+
+function renderWidget(props: FieldProps): ReactElement {
   const { node } = props;
   switch (node.kind) {
     case "text":
