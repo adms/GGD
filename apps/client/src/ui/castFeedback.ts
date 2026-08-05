@@ -71,6 +71,7 @@ export type CastRejectReason =
   | "not-learned"
   | "dead"
   | "stunned"
+  | "silenced"
   | "cooldown"
   | "no-mana"
   | "out-of-range"
@@ -87,6 +88,8 @@ export const CAST_REJECT_TEXT: Record<CastRejectReason, string> = {
   "not-learned": "尚未學習（用技能上的 ＋ 加點）",
   dead: "陣亡中，無法施放",
   stunned: "被控制中，無法施放",
+  // 【沉默】C1（#278）—— 與被控制分開的字，因為玩家仍然走得動、打得到。
+  silenced: "被沉默，無法施放技能",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
   "out-of-range": "距離太遠",

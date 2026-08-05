@@ -315,7 +315,10 @@ export function isAutoTargetable(world: SimWorld, self: EntityId, cand: EntityId
   const myTeam = world.team.get(self);
   const theirTeam = world.team.get(cand);
   if (!myTeam || !theirTeam) return false;
-  if (myTeam.teamId === theirTeam.teamId) return false;
+  // 【混亂】C2（#278）—— 唯一一個「隊友也算目標」的旁路。
+  // ⚠️ 只讀 `self` 身上的旗標：混亂的是**我**，不是被我看到的那個人。
+  // `berserk` 已經負責「丟掉座位的指令 + 交還給自動索敵」，這裡只多開這一道。
+  if (myTeam.teamId === theirTeam.teamId && !isConfused(world, self)) return false;
   const hp = world.health.get(cand);
   return !!hp?.alive;
 }
@@ -489,6 +492,16 @@ function beatsForSwap(
  * caller that passes a hold-band radius is guaranteed no target it acquires can
  * make the chase step forward.
  */
+/** 【混亂】—— 這個人現在不分敵我嗎（C2，#278）。 */
+export function isConfused(world: SimWorld, id: EntityId): boolean {
+  const st = world.status.get(id);
+  if (!st) return false;
+  for (const e of st.effects) {
+    if (e.targetsAllies === true && e.expiresAtTick > world.tick) return true;
+  }
+  return false;
+}
+
 export function acquireTarget(
   world: SimWorld,
   self: EntityId,

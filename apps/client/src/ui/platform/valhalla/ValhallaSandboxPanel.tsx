@@ -65,6 +65,7 @@ const CAST_REASON: Readonly<Record<CastResult, string>> = {
   "not-learned": "這一格還沒學",
   dead: "英雄倒下了",
   stunned: "被控制中",
+  silenced: "被沉默",
   cooldown: "冷卻中",
   "no-mana": "魔力不足",
   "out-of-range": "距離太遠",

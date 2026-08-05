@@ -69,6 +69,9 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 淨化拔不到它(`clearPools.polarityPasses`:「不知道」不當成「是」)。
           polarity: Statuses.tryGet(e.statusId)?.polarity,
           // C4 睡眠 —— 受傷即提早解除這一筆（`sim/statusBreak.ts`）。
+          // C1 沉默 / C2 混亂（#278）。
+          silenced: e.silenced,
+          targetsAllies: e.targetsAllies,
           breakOnDamage: e.breakOnDamage,
           breakOnDamageMin: e.breakOnDamageMin,
           // 【重創】A6 —— 三格獨立（治療 / 吸血係數 / 自然回復）。

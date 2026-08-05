@@ -419,6 +419,20 @@ export interface StatusEffect {
    * 那是淨化不是打醒。實作在 `sim/statusBreak.ts`，呼叫點在 `combat/damage.ts`
    * 的傷害落地處（`world.emit("damage")` 的旁邊）。
    */
+  /**
+   * 【沉默】（C1，#278）—— 不能施放技能，但**可以走、可以普攻**。
+   * ⛔ 與 `stun` 分開的理由：暈眩是硬控（記 ccAppliedTicks、被免控攔），
+   * 沉默不是 —— 一個被沉默的人仍然在跑在打，只是按 QWER 沒反應。
+   * 閘在 `abilities/abilitySystem.ts`，就在 stun 那一道旁邊。
+   */
+  silenced?: boolean;
+  /**
+   * 【混亂】（C2，#278）—— `berserk` 失控的基礎上再加「不分敵我」。
+   * ⚠️ 它**不是**獨立狀態：`berserk` 已經是「丟掉座位的指令 + 自動尋敵」，
+   * 混亂只多改索敵那一步（`targeting.ts` 的 `isAutoTargetable` 敵我閘）。
+   * 所以一張混亂卡是 `{ berserk: true, targetsAllies: true }`。
+   */
+  targetsAllies?: boolean;
   breakOnDamage?: boolean;
   /**
    * 打醒門檻：這一發**實際扣掉**的傷害要 ≥ 它才算數。省略 = 0 = 任何傷害都醒

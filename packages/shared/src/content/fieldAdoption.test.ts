@@ -1197,6 +1197,36 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "regen 不經過 `healTarget`。理由同 healingTakenMult。",
   },
 
+  // ── C1 沉默 + C2 混亂的兩格「等內容」(2026-08-05, #278) ──────────────────
+  //
+  // ⚠️ 與上面那五格同一種形狀,但兩者的**閘在完全不同的地方**,所以分開記:
+  //   `silenced`     → `abilities/abilitySystem.ts` 的施法閘(緊接在暈眩之後)
+  //   `targetsAllies`→ `sim/targeting.ts` 的同隊旁路(`isConfused`)
+  // 兩條守衛在 `sim/c1c2.test.ts`,兩個突變都驗過會紅(刪掉沉默那一行 → c1 紅;
+  // 拿掉 `!isConfused(world, self)` → c2 紅)。
+  //
+  // 零採用是**內容決定**而不是機制缺席:樹上今天沒有任何一支技能是沉默系或混亂系。
+  // 第一支上架的那天,這兩條豁免就該被刪掉。
+  "field:abilities.effects[]#applyStatus.silenced": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "C1【沉默】—— 被沉默時 QWER/EX 一律施放不出去,而**魔力不扣、冷卻不進入**" +
+      "(那兩件事才是「沉默」與「施法失敗」的差別,而畫面上看不出來:兩者都是沒放出技能)。" +
+      "閘在 `abilities/abilitySystem.ts`,回傳 `\"silenced\"`,客戶端 `ui/castFeedback.ts` " +
+      "把它翻成「被沉默,無法施放技能」。守衛 `sim/c1c2.test.ts`。" +
+      "零採用是因為樹上今天沒有沉默系技能 —— 那是內容決定,不是我可以代填的。",
+  },
+  "field:abilities.effects[]#applyStatus.targetsAllies": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "C2【混亂】—— 自動索敵把**隊友**也算成可打的目標。⚠️ 它做成 `targeting.ts` 的" +
+      "同隊旁路而不是「換一個隊伍」,是刻意的:改隊伍會連帶影響傷害歸屬、賞金、勝負判定," +
+      "而混亂只該影響**挑誰打**這一件事。守衛 `sim/c1c2.test.ts` 兩個方向一起讀" +
+      "(掛之前挑不到隊友、掛之後挑得到)。零採用同 `silenced`:等第一支混亂系技能上架。",
+  },
+
   "enum:abilities.effects[]#dispel.polarity=any": {
     status: "default-live",
     why:

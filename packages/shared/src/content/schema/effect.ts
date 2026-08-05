@@ -731,6 +731,14 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * C4 睡眠（#278）—— 受傷即提早解除**這一筆**。
        * ⛔ 只拔標了它的那一筆；身上的其他 status 一格不動。
        */
+      /** 【沉默】C1（#278）。不能施放技能,但**可以走、可以普攻** —— 與暈眩不同。 */
+      silenced: z.boolean().optional(),
+      /**
+       * 【混亂】C2（#278）。⚠️ **要配 `berserk: true` 一起寫**：
+       * `berserk` 負責「丟掉玩家的指令 + 自動尋敵」，這一格只多開「不分敵我」。
+       * 單獨填它等於什麼都不會發生（人還是聽玩家的）。
+       */
+      targetsAllies: z.boolean().optional(),
       breakOnDamage: z.boolean().optional(),
       /**
        * 打醒門檻：這一發實際扣掉的傷害要 ≥ 它。省略 = 0 = 任何傷害都醒。

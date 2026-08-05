@@ -714,6 +714,10 @@ export type EffectDef =
        * C4 睡眠（#278）—— **受傷即提早解除這一筆**。
        * ⛔ 只拔標了它的那幾筆；身上的其他 status 一格不動（`sim/statusBreak.ts`）。
        */
+      /** 【沉默】C1（#278）—— 不能施放技能，但走得動、打得到。 */
+      silenced?: boolean;
+      /** 【混亂】C2（#278）—— 配 `berserk: true` 用：失控之後**不分敵我**。 */
+      targetsAllies?: boolean;
       breakOnDamage?: boolean;
       /** 打醒門檻（實際扣掉的傷害）。省略 = 0 = 任何傷害都醒（WC3 沉睡的語意）。 */
       breakOnDamageMin?: number;

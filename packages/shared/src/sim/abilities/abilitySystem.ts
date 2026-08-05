@@ -84,6 +84,7 @@ export type CastResult =
   | "not-learned"
   | "dead"
   | "stunned"
+  | "silenced"
   | "cooldown"
   | "no-mana"
   | "out-of-range"
@@ -134,6 +135,10 @@ export function castAbility(
 
   const st = world.status.get(caster);
   if (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick)) return "stunned";
+  // 【沉默】C1（#278）。⛔ 位置是刻意的：**在扣魔力與進冷卻之前**。
+  // 放到後面的話按 Q 會「沒放出來但魔力沒了、冷卻也轉了」—— 那比不能施法更糟，
+  // 而且畫面上只看得到一個沒反應的按鈕（`c1c2.test.ts` 的第二條在釘這個）。
+  if (st?.effects.some((e) => e.silenced && e.expiresAtTick > world.tick)) return "silenced";
   // Combat-juice: a knocked-down (prone) caster is hard-CC'd like a stun.
   if ((world.knockdown.get(caster) ?? 0) > 0) return "stunned";
   // already mid-cast (another ability's cast time) — animation-locked
