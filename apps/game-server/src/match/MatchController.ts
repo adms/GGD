@@ -872,6 +872,17 @@ export class MatchController {
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
     this.world.blockRules = blockRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
+    //
+    // ⛔ 2026-08-05：**這一行本來不存在，而它上面那句註解一直在那裡。**
+    // 建構子第 799 行收下了參數、後台有整頁在編輯它、`configForms.ts` 的說明
+    // 甚至逐字寫著「文件由 game-server 的 MatchController 在開場 tick 0 之前灌進
+    // world.augmentEnemyFilter」—— 而全樹沒有任何一處寫過它。
+    // `hooks.ts:82` 讀到的永遠是 `SimWorld.ts:684` 的出貨預設。
+    //
+    // 後果：`mobsCountAsEnemy` 這個開關**從來沒有在任何一場比賽裡生效過**，
+    // 而畫面上、後台上、註解上全部說它有。失敗形態 ②（算了但沒送到）＋
+    // 第三守則（註解說謊），兩個同時發生在同一個五行窗口裡。
+    this.world.augmentEnemyFilter = augmentEnemyFilter;
     // 隱形規則 (`config.stealth@1`) —— 同樣在 tick 0 之前定格。
     this.world.stealthRules = stealthRules;
     // 嘲弄規則 (`config.taunt@1`) —— 同樣在 tick 0 之前定格。
