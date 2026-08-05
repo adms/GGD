@@ -3921,6 +3921,36 @@ export const zConfigDispelDoc = z
   })
   .strict();
 
+/**
+ * `config.wounds@1` —— 【重創】的全域規則（A6，#278）。
+ *
+ * 今天只有一格，而它是一個真的決策點：引擎自己對「同型效果怎麼疊」**沒有一致
+ * 答案**（`missChance` 取 max、護盾相加），所以寫死等於替 owner 挑一個而不告訴他。
+ * ⚠️ 三格倍率**不在**這裡 —— 它們住在施加重創的那張卡上（`applyStatus`），
+ * 因為「這一支技能的重創有多重」本來就該逐支不同。
+ */
+export const zConfigWoundsDoc = z
+  .object({
+    id: z.literal("wounds"),
+    schema: z.literal("config.wounds@1"),
+    note: z.string().optional(),
+    stackMode: z
+      .enum(["max", "multiply"])
+      .describe(
+        "多筆重創同時在身上時怎麼合成。max = 只算最重的那一筆（與失手率一致，出貨值）；" +
+          "multiply = 相乘，兩層 0.5 變成 0.25，疊到第三層幾乎等於禁療。",
+      ),
+  })
+  .strict();
+export type ConfigWoundsDoc = z.infer<typeof zConfigWoundsDoc>;
+
+/** ⚠️ 缺文件 = 這一份，不是空物件（同 `DEFAULT_DISPEL_RULES` 的規矩）。 */
+export const SHIPPED_WOUNDS: ConfigWoundsDoc = {
+  id: "wounds",
+  schema: "config.wounds@1",
+  stackMode: "max",
+};
+
 export const zConfigBerserkDoc = z
   .object({
     id: zId,
@@ -4750,6 +4780,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigShieldDoc,
   zConfigBlockDoc,
   zConfigBerserkDoc,
+  zConfigWoundsDoc,
   zConfigDispelDoc,
   // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證
   // 失敗 → main.tsx 的 fail-open 退回 2 隻骨架英雄**,而網站看起來完全正常。

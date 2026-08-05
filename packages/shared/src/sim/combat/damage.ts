@@ -27,6 +27,8 @@ import { normalize, sub, lenSq, dist } from "../math/vec2";
 import { knockbackRaw, afterGap } from "../combatFeel";
 import { Abilities, Champions } from "../content/registry";
 import { noteAbilityConnect } from "../abilities/abilityRecovery";
+import { breakStatusesOnDamage } from "../statusBreak";
+import { woundMult } from "../grievousWounds";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -882,7 +884,16 @@ export function combatResolveSystem(world: SimWorld): void {
             healTarget(world, {
               source: pkt.source,
               target: pkt.source,
-              amount: dmg * ls * world.combatEnv.healing,
+              // 【重創】A6 —— 讀取點②，打在**係數**那一步。
+              // ⛔ 這裡是 `lifestealMult` 而不是 `healingTakenMult`：底下那一發
+              // `healTarget` 已經會咬 `healingTakenMult`，在這裡再乘一次同一格
+              // 會讓帶重創的人吸血變成 0.25 倍而不是 0.5 倍
+              //（`grievousWounds.test.ts` 的第四條就是在釘這個）。
+              amount:
+                dmg *
+                ls *
+                world.combatEnv.healing *
+                woundMult(world, pkt.source, "lifestealMult"),
               origin: "lifesteal",
               score: true,
             });
@@ -963,6 +974,14 @@ export function combatResolveSystem(world: SimWorld): void {
         shieldAbsorbed > 1e-9 &&
         eligibleShieldTotal(hp.shields, world.tick, pkt.type) <= 1e-9;
       const killingBlow = hpBefore > 0 && hp.hp <= 0; // only the packet that crosses 0
+
+      // C4 睡眠（#278）—— 受傷即提早解除標了 `breakOnDamage` 的那幾筆。
+      // ⚠️ 位置是刻意的：在 `world.emit("damage")` **之前**，所以客戶端收到那一發
+      // 傷害的同一個 tick，被打醒的人已經不是睡著的狀態了 —— 否則畫面上會有一格
+      // 「打到了但他還在睡」（同檔 :775 那段註解在講的同一件事）。
+      // `dmg` 是護盾吃掉之後**實際扣掉**的數，門檻比的就是它。
+      breakStatusesOnDamage(world, pkt.target, dmg);
+
       const tt = world.transform.get(pkt.target);
 
       world.emit("damage", {

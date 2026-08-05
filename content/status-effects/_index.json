@@ -1,6 +1,6 @@
 {
   "collection": "status-effects",
-  "hash": "1fd55ce9203c",
+  "hash": "f1404756144e",
   "entries": [
     {
       "id": "berserk",
@@ -27,6 +27,12 @@
       "size": 226
     },
     {
+      "id": "grievous-wounds",
+      "path": "status-effects/grievous-wounds.json",
+      "hash": "1fb6f60a28ba",
+      "size": 403
+    },
+    {
       "id": "ingredient",
       "path": "status-effects/ingredient.json",
       "hash": "d024bd68f6f6",
@@ -49,6 +55,12 @@
       "path": "status-effects/nen-banked.json",
       "hash": "bf3fd573bd7b",
       "size": 263
+    },
+    {
+      "id": "no-heal",
+      "path": "status-effects/no-heal.json",
+      "hash": "6f4e3dc40db2",
+      "size": 360
     },
     {
       "id": "omnislash-lock",

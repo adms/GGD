@@ -1,0 +1,11 @@
+{
+  "id": "grievous-wounds",
+  "schema": "status-effect@1",
+  "name": "重創",
+  "description": "傷口不肯癒合 —— 治療、吸血、自然回復全部打折。owner 2026-08-03：「【減療 / 禁療】=> 用重創代替就好，吸血/治療同時減半」。三格倍率各自獨立，寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "wound",
+    "antiheal"
+  ]
+}

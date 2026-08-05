@@ -93,10 +93,15 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       "burnstun",
       "curse",
       "fang-stun",
+      // A6（#278）—— 【重創】與【禁療】。禁療**不是第二個機制**：它就是三格倍率
+      // 都填 0 的一份文件，所以它與重創共用 `sim/grievousWounds.ts` 的同一支
+      // `woundMult`，也一樣被淨化拔得掉。
+      "grievous-wounds",
       "ingredient",
       "light-wand-banked",
       "moon-combo",
       "nen-banked",
+      "no-heal",
       //   omnislash-lock    01-04 超究武神霸斬 (GH#250) 打在**目標**身上的硬控:
       //                     war3map.j `Trig_SuperFF7_Actions` 對目標
       //                     PauseUnitBJ(true) + 反覆 IssueImmediateOrderBJ("stop")

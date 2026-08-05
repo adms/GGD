@@ -475,6 +475,21 @@ function effectLines(
         });
         break;
       }
+      case "shieldBreak": {
+        // ⚠️ 這一行刻意講明「只打護盾」—— 破盾與淨化在卡片上長得很像,
+        // 而它們的差別（止血閥、不看 dispellable）在預覽上看不到。
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            "破盾（只打護盾,狀態一格不動）" +
+            `${e.shape === "circle" ? ` · 圓形 ${e.radius ?? "?"}（吃 abilityRange）` : " · 單體"}` +
+            `${e.shape === "circle" ? `／${e.side === "allies" ? "友方" : "敵方"}` : ""}` +
+            `${e.maxTargets !== undefined ? ` · 最多 ${e.maxTargets} 人` : ""}` +
+            `${e.count !== undefined ? ` · 每人最多 ${e.count} 片` : " · 整池打掉"}`,
+        });
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

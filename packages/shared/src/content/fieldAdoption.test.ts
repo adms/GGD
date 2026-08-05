@@ -1079,6 +1079,19 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 下面四格全部是「省略 = 讀 `config.dispel@1`」的那一種:寫進文件等於在
   // **一支道具上**烘死一個本來全域可調的決定。零採用正是它們該有的樣子 ——
   // 有人寫它的那天,意思是「這一支要跟全域規則不一樣」,那才是它存在的理由。
+  "variant:abilities.effects[]#shieldBreak": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "D1【破盾】。行為在 `sim/effects/shieldBreak.ts`,三條守衛在 " +
+      "`sim/effects/shieldBreak.test.ts`(含「⛔ 只碰護盾,身上的增益一格都沒動」" +
+      "那一條 —— 破盾與淨化的全部差別就在那裡,而畫面上看不出來)。" +
+      "⚠️ 它與 `dispel` 分開的理由是**止血閥**:`dispelRules.enabled = false` 的意思是" +
+      "「關掉淨化那一族」,不該順手廢掉一件破盾道具。" +
+      "零採用是因為今天沒有任何一件出貨道具是破盾 —— 那是 owner 的內容決定。" +
+      "第一件破盾道具上架的那天,這條豁免就該被刪掉。",
+  },
+
   "field:abilities.effects[]#dispel.pools": {
     status: "default-live",
     why:
@@ -1103,6 +1116,63 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "玩家看到的是「這道具壞了」而不是「這是設計」。" +
       "留著是因為攻擊型範圍淨化(敵方圓)一定會需要它,那時候上限是平衡旋鈕不是 bug。",
   },
+  // ── C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278) ──────────────────
+  //
+  // ⚠️ 這五格是**兩個機制的介面**,而它們的行為守衛已經在跑真世界:
+  //   `sim/statusBreak.test.ts`(三條,含「打醒不會順手解掉其他 status」)
+  //   `sim/grievousWounds.test.ts`(四條,含「吸血不可以打折兩次」)
+  // 所以「機制不存在」不是這裡的狀況 —— 缺的是**誰用它**,而那是一個
+  // owner 的內容決定(哪一支技能是睡眠、哪一件道具掛重創),不是我可以代填的。
+  //
+  // 記成 `landing` 而不是 `debt` 是刻意的:owner 已經逐字裁決過重創
+  //(「【減療 / 禁療】=> 用重創代替就好」+ 裁決⑥ 三格 0.5),所以內容**真的**
+  // 在路上,30 天的自動到期正好是那份內容該落地的時窗。
+  "field:abilities.effects[]#applyStatus.breakOnDamage": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "C4【睡眠】的閘 ——「受傷即提早解除**這一筆**」。引擎在 `sim/statusBreak.ts`," +
+      "呼叫點在 `combat/damage.ts` 的傷害落地處,守衛 `sim/statusBreak.test.ts` 跑真的傷害管線。" +
+      "零採用是因為樹上今天沒有任何一支技能是睡眠系 —— 那是一個內容決定。" +
+      "第一支睡眠技能上架的那天,這條豁免就該被刪掉。",
+  },
+  "field:abilities.effects[]#applyStatus.breakOnDamageMin": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "睡眠的打醒門檻。省略 = 0 = 任何傷害都醒(WC3 沉睡的語意),所以**零採用正是** " +
+      "它該有的樣子。它存在的理由是第 3 回合之後場上到處是 DoT:一個「被燃燒每 tick " +
+      "3 點打醒」的睡眠等於沒有睡眠,而那是設計決定不是常數。與 `breakOnDamage` 同一批。",
+  },
+  "field:abilities.effects[]#applyStatus.healingTakenMult": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "A6【重創】三格之一(治療)。owner 2026-08-03 逐字:「【減療 / 禁療】=> 用重創代替就好," +
+      "吸血/治療同時減半」,裁決⑥「三格獨立倍率,預設全部 0.5」。三個讀取點都接上了" +
+      "(`combat/restore.ts` / `combat/damage.ts` / `systems/RegenSystem.ts`)," +
+      "四條守衛在 `sim/grievousWounds.test.ts`,含「吸血不可以打折兩次」那一條。" +
+      "缺的是掛重創的那幾張卡 —— 那是 owner 的內容決定。",
+  },
+  "field:abilities.effects[]#applyStatus.lifestealMult": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "A6【重創】三格之一(吸血係數)。⛔ 它與 `healingTakenMult` 分成兩格是**必要的**," +
+      "不是對稱美學:吸血最後是一發 `healTarget`,所以 `healingTakenMult` 已經會咬到它 —— " +
+      "`lifestealMult` 必須作用在 `dmg * ls` 那一步,否則帶重創的人吸血是 0.25 倍而不是 " +
+      "0.5 倍,而畫面上只是「好像有點少」。`sim/grievousWounds.test.ts` 的第四條走出貨的" +
+      "傷害管線釘住這一點。缺的是掛重創的那幾張卡,那是 owner 的內容決定。",
+  },
+  "field:abilities.effects[]#applyStatus.regenMult": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "A6【重創】三格之一(自然回復)。⚠️ 它是 owner 的裁決**推翻我的建議**的那一格" +
+      "(我原本主張自然回復不打折),而且是三個讀取點裡最容易被漏掉的一個 —— " +
+      "regen 不經過 `healTarget`。理由同 healingTakenMult。",
+  },
+
   "enum:abilities.effects[]#dispel.polarity=any": {
     status: "default-live",
     why:

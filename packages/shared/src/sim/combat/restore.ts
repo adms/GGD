@@ -36,6 +36,7 @@
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { recordHealing } from "../stats/matchStats";
+import { woundMult } from "../grievousWounds";
 
 /**
  * Restores below this are not worth an event (and would otherwise let a
@@ -66,7 +67,11 @@ export interface RestoreOpts {
 export function healTarget(world: SimWorld, opts: RestoreOpts): number {
   const hp = world.health.get(opts.target);
   if (!hp?.alive) return 0;
-  const requested = opts.amount;
+  // 【重創】A6（#278）—— 讀取點①。所有**治療**都經過這裡（heal / restore /
+  // 治療花 / 守衛塔 / 吸血），所以打折一次就全部到位。
+  // ⚠️ `restoreMana` 底下那一份**故意**不打折 —— 重創是治療軸，不是法力軸。
+  // ⚠️ 吸血的**係數**在 `combat/damage.ts` 另外打折，那不是重複，見那一段。
+  const requested = opts.amount * woundMult(world, opts.target, "healingTakenMult");
   if (!(requested > 0)) return 0;
 
   const before = hp.hp;

@@ -550,6 +550,27 @@ export type EffectDef =
       order?: "newest" | "oldest";
     }
   | {
+      /**
+       * 【破盾】（D1，#278）。只打掉 `HealthComp.shields`，`st.effects` 一格不動。
+       *
+       * ⚠️ 它與 `dispel` 分開的理由是**止血閥**（`dispelRules.enabled` 不該
+       * 順手廢掉一件破盾道具）—— 完整理由見 `sim/effects/shieldBreak.ts` 檔頭。
+       */
+      kind: "shieldBreak";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。語意與 `dispel` 的那一格相同。 */
+      shape: "single" | "circle";
+      /** `shape:"circle"` 必填。吃 `combatEnv.abilityRange` 倍率。 */
+      radius?: number;
+      /** `shape:"circle"` 才有意義。破盾的預設是**打敵人**（與淨化相反）。 */
+      side?: "allies" | "enemies";
+      /** `shape:"circle"` 的人數上限。省略 = 圓內全部。 */
+      maxTargets?: number;
+      /** 最多打掉幾層盾。省略 = 整池。⚠️ 這裡沒有全域上限（破盾不是淨化）。 */
+      count?: number;
+      /** 打不完時先打哪一邊。省略 = `"newest"`（先打最晚掛上的那一片）。 */
+      order?: "newest" | "oldest";
+    }
+  | {
       kind: "revive";
       /**
        * Fraction of maxHp to come back on. ABSENT = the match's own
@@ -645,6 +666,20 @@ export type EffectDef =
        * own. Model + decisions: `sim/berserk.ts`.
        */
       berserk?: boolean;
+      /**
+       * C4 睡眠（#278）—— **受傷即提早解除這一筆**。
+       * ⛔ 只拔標了它的那幾筆；身上的其他 status 一格不動（`sim/statusBreak.ts`）。
+       */
+      breakOnDamage?: boolean;
+      /** 打醒門檻（實際扣掉的傷害）。省略 = 0 = 任何傷害都醒（WC3 沉睡的語意）。 */
+      breakOnDamageMin?: number;
+      /**
+       * 【重創】A6（#278）—— 治療 / 吸血 / 自然回復三格**獨立**倍率。
+       * owner 裁決⑥：出貨的重創三格都是 0.5；**禁療 = 三格都填 0 的一份文件**。
+       */
+      healingTakenMult?: number;
+      lifestealMult?: number;
+      regenMult?: number;
     }
   /**
    * `perRank` (index rank-1, clamped to the last entry) is the rank-indexed

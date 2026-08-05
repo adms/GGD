@@ -16,11 +16,8 @@
  * `sim/purity.test.ts` 禁三角函式。文件要存 `coneCosHalfAngle`（dot 門檻），
  * 度數↔餘弦的換算放後台表單那一層（admin 不受純度閘管）。
  */
-import type { EntityId } from "../../ids";
 import type { EffectKindSpec } from "./effectKind";
-import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
-import { alliedChampions } from "./hooks";
-import { distSq } from "../math/vec2";
+import { shapeTargets } from "./shapeTargets";
 import { clearPools, type ClearPolarity, type PoolSelection } from "../clearPools";
 
 export const dispelEffect: EffectKindSpec<"dispel"> = {
@@ -32,42 +29,9 @@ export const dispelEffect: EffectKindSpec<"dispel"> = {
     if (!rules.enabled) return;
 
     // ── 誰被清 ──────────────────────────────────────────────────────────
-    // `single` = hook/技能已經解析好的那些人（`target: self|event|allies`
-    // 那一層決定的），這個 kind 不重新發明目標選擇。
-    let victims: EntityId[] = [...ctx.targets];
-
-    if (e.shape === "circle") {
-      const radius = resolveAbilityRadius(world, e.radius ?? 0);
-      if (radius <= 0) return;
-      const centre =
-        (ctx.targets[0] !== undefined ? world.transform.get(ctx.targets[0])?.pos : undefined) ??
-        ctx.point ??
-        world.transform.get(ctx.caster)?.pos;
-      if (!centre) return;
-
-      if (e.side === "enemies") {
-        victims = enemiesInCircle(world, ctx.caster, centre, radius);
-      } else {
-        // 友方圓 —— 用**同一份** broadphase 的反面：先取全隊英雄，再用半徑濾。
-        // ⚠️ 沒有 `alliesInCircle`，而我不新造第二套空間查詢：
-        // `alliedChampions` 已經是排序過的全序名單（`sim/purity.test.ts` 在守
-        // Map 迭代順序），一場最多 12 個人，距離濾是 12 次平方比較。
-        const r2 = radius * radius;
-        victims = alliedChampions(world, ctx.caster).filter((id) => {
-          const t = world.transform.get(id);
-          return t !== undefined && distSq(centre, t.pos) <= r2;
-        });
-      }
-
-      // TOTAL ORDER：近的先，同距離時 id 小的先。`maxTargets` 正好在這裡切一刀，
-      // 所以少了第二關鍵字就是把「誰被淨化」交給 Array.prototype.sort 的實作
-      //（理由與 `damageArea.ts` 那一段逐字相同）。
-      const withD = victims
-        .map((id) => ({ id, d2: distSq(centre, world.transform.get(id)!.pos) }))
-        .sort((a, b) => (a.d2 !== b.d2 ? a.d2 - b.d2 : a.id - b.id));
-      const cap = e.maxTargets ?? withD.length;
-      victims = withD.slice(0, Math.max(0, cap)).map((v) => v.id);
-    }
+    // `shape` 的解析走 `shapeTargets`（D1 破盾也走它）—— 兩個 kind 各手寫一份
+    // 「圓怎麼取人」，分歧的那一天沒有人會發現。
+    const victims = shapeTargets(e, ctx);
 
     // ── 每一個目標清什麼 ────────────────────────────────────────────────
     const pools: PoolSelection = e.pools ?? {

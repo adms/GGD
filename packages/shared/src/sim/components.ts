@@ -412,6 +412,32 @@ export interface StatusEffect {
    * 任何啟發式都會在某一張卡上錯。
    */
   polarity?: "buff" | "debuff";
+  /**
+   * C4 睡眠（#278）—— **受傷即提早解除這一筆**。
+   *
+   * ⛔ 只拔標了這一格的那幾筆：被打醒的同一發傷害不可以順手解掉身上的減速，
+   * 那是淨化不是打醒。實作在 `sim/statusBreak.ts`，呼叫點在 `combat/damage.ts`
+   * 的傷害落地處（`world.emit("damage")` 的旁邊）。
+   */
+  breakOnDamage?: boolean;
+  /**
+   * 打醒門檻：這一發**實際扣掉**的傷害要 ≥ 它才算數。省略 = 0 = 任何傷害都醒
+   *（WC3 沉睡的語意）。
+   *
+   * ⚠️ 它存在的理由是第 3 回合之後場上到處是 DoT：一個「被燃燒每 tick 3 點
+   * 打醒」的睡眠等於沒有睡眠，而那是一個**設計決定**不是一個常數。
+   */
+  breakOnDamageMin?: number;
+  /**
+   * 【重創】三格獨立倍率（A6，#278）。owner 裁決⑥：**預設全部 0.5**。
+   * ⚠️ 禁療不是第二個機制 —— 它是三格都填 0 的一份內容文件。
+   * 三個讀取點與「吸血不可以打折兩次」的理由見 `sim/grievousWounds.ts` 檔頭。
+   */
+  healingTakenMult?: number;
+  /** 【重創】吸血**係數**那一步的倍率。⛔ 不在 `healTarget` 那一步套用。 */
+  lifestealMult?: number;
+  /** 【重創】自然回復（`RegenSystem`）的倍率。⚠️ 它不經過 `healTarget`。 */
+  regenMult?: number;
 }
 
 export interface StatusComp {

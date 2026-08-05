@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "ae24d1620755",
+  "hash": "502ab93e125f",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -235,6 +235,12 @@
       "path": "config/voxel-bodies.json",
       "hash": "2c4008f4c7ac",
       "size": 598
+    },
+    {
+      "id": "wounds",
+      "path": "config/wounds.json",
+      "hash": "0f1d752b60e0",
+      "size": 357
     }
   ]
 }

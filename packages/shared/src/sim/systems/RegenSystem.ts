@@ -23,6 +23,7 @@ import type { SimWorld } from "../SimWorld";
 import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { applyHealthDrain, healthDrainPerSec, healthRegenPerSec } from "../regenRules";
+import { woundMult } from "../grievousWounds";
 
 export function regenSystem(world: SimWorld): void {
   // ⭐ 扣血只在戰鬥中 —— **回血不是**。
@@ -55,7 +56,10 @@ export function regenSystem(world: SimWorld): void {
       },
       world.regenRules,
     );
-    hp.hp = Math.min(hp.maxHp, hp.hp + perSec * world.dt);
+    // 【重創】A6（#278）—— 讀取點③。⛔ **最容易被漏掉的一個**：自然回復
+    // 不經過 `healTarget`，所以只改治療那一條路會讓它靜默地不生效
+    //（七種失敗形態 ②）。owner 裁決⑥明說自然回復也要打折。
+    hp.hp = Math.min(hp.maxHp, hp.hp + perSec * woundMult(world, id, "regenMult") * world.dt);
 
     // 扣血 —— 順序與「為什麼不是傷害」寫在檔頭。
     const drainPerSec = drainArmed

@@ -180,7 +180,9 @@ export const zResourcePctTerm = z
   .strict()
   .superRefine((t, ctx) => {
     const cap =
-      (t.scale ?? "ratio") === "points" ? RESOURCE_PCT_POINTS_MAX : RESOURCE_PCT_RATIO_MAX;
+      (t.scale ?? "ratio") === "points"
+        ? RESOURCE_PCT_POINTS_MAX
+        : RESOURCE_PCT_RATIO_MAX;
     t.perRank.forEach((v, i) => {
       if (v > cap) {
         ctx.addIssue({
@@ -215,11 +217,14 @@ function refineDotResourceBudget(
   const term = e.resourcePct;
   if (term === undefined) return;
   const payouts =
-    Math.max(1, Math.floor(e.durationSec / e.intervalSec)) + (e.tickOnApply === true ? 1 : 0);
+    Math.max(1, Math.floor(e.durationSec / e.intervalSec)) +
+    (e.tickOnApply === true ? 1 : 0);
   const peak = Math.max(...term.perRank);
   const points = (term.scale ?? "ratio") === "points";
   const total = points ? peak * 100 * payouts : peak * payouts;
-  const cap = points ? DOT_RESOURCE_PCT_POINTS_TOTAL_MAX : DOT_RESOURCE_PCT_RATIO_TOTAL_MAX;
+  const cap = points
+    ? DOT_RESOURCE_PCT_POINTS_TOTAL_MAX
+    : DOT_RESOURCE_PCT_RATIO_TOTAL_MAX;
   if (total > cap) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -240,14 +245,15 @@ function refineDotResourceBudget(
  * 什麼都沒發生，而且沒有任何訊息 —— 失敗形態 ②。
  */
 function refineDispelShape(
-  e: Extract<EffectDef, { kind: "dispel" }>,
+  e: Extract<EffectDef, { kind: "dispel" | "shieldBreak" }>,
   ctx: z.RefinementCtx,
 ): void {
   if (e.shape === "circle" && e.radius === undefined) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["radius"],
-      message: 'shape:"circle" 一定要有 radius —— 沒有半徑的圓在執行期會直接 return，技能放得出來但什麼都不會發生',
+      message:
+        'shape:"circle" 一定要有 radius —— 沒有半徑的圓在執行期會直接 return，技能放得出來但什麼都不會發生',
     });
   }
   // 反向：單體卻寫了圓的欄位 = 作者以為自己設定了範圍，而那三格沒有人讀。
@@ -264,7 +270,9 @@ function refineDispelShape(
 
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
-  if (e.kind === "dispel") return refineDispelShape(e, ctx);
+  // 【淨化】與【破盾】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
+  if (e.kind === "dispel" || e.kind === "shieldBreak")
+    return refineDispelShape(e, ctx);
   if (e.kind !== "grantAttribute") return;
   if (e.store !== "source") {
     if (e.maxSourceTotal !== undefined) {
@@ -385,7 +393,9 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
         .object({
           /** 拿哪一個讀數當基數。省略 = `"mitigated"`(護甲/魔抗之後、護盾之前) */
           basis: z.enum(["raw", "mitigated", "hpLost"]).optional(),
-          perRank: z.array(z.number().min(INCOMING_PCT_MIN).max(INCOMING_PCT_MAX)).min(1),
+          perRank: z
+            .array(z.number().min(INCOMING_PCT_MIN).max(INCOMING_PCT_MAX))
+            .min(1),
           /** 反彈可以再被反彈幾層。省略 = 0 = 反彈本身不可被反彈 */
           maxChainDepth: z
             .number()
@@ -475,7 +485,11 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
       radius: z.number().positive().max(SPREAD_MAX_RADIUS),
       /** 邊緣倍率: 1 = 不衰減 (預設), 0 = 邊緣歸零 */
-      falloff: z.number().min(SPREAD_MIN_FALLOFF).max(SPREAD_MAX_FALLOFF).optional(),
+      falloff: z
+        .number()
+        .min(SPREAD_MIN_FALLOFF)
+        .max(SPREAD_MAX_FALLOFF)
+        .optional(),
       /** 一次最多濺到幾個人 (不含震央) */
       maxTargets: z.number().int().min(1).max(SPREAD_MAX_TARGETS).optional(),
       canCrit: z.boolean().optional(),
@@ -687,6 +701,25 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * not make your own berserk refuse to land on you.
        */
       berserk: z.boolean().optional(),
+      /**
+       * C4 睡眠（#278）—— 受傷即提早解除**這一筆**。
+       * ⛔ 只拔標了它的那一筆；身上的其他 status 一格不動。
+       */
+      breakOnDamage: z.boolean().optional(),
+      /**
+       * 打醒門檻：這一發實際扣掉的傷害要 ≥ 它。省略 = 0 = 任何傷害都醒。
+       * 上界 5000 ≈ 一個滿裝英雄的血量：再高就等於「打不醒」，
+       * 而那應該用 `breakOnDamage: false` 表達，不是一個假裝有門檻的數字。
+       */
+      breakOnDamageMin: z.number().min(0).max(5000).optional(),
+      /**
+       * 【重創】A6（#278）。三格**獨立**，各自 0–1（0 = 完全禁掉，1 = 不打折）。
+       * ⛔ 上界是 1：重創**只會**變弱不會變強。要做「治療加成」是另一個機制
+       *（走 modifier），把它塞進同一格會讓一張卡同時是重創與增益。
+       */
+      healingTakenMult: z.number().min(0).max(1).optional(),
+      lifestealMult: z.number().min(0).max(1).optional(),
+      regenMult: z.number().min(0).max(1).optional(),
     })
     .strict(),
   z
@@ -698,7 +731,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       perRank: z
         .array(
           z
-            .object({ modifiers: z.array(zStatModifier), duration: z.number().min(0) })
+            .object({
+              modifiers: z.array(zStatModifier),
+              duration: z.number().min(0),
+            })
             .strict(),
         )
         .min(1)
@@ -910,7 +946,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        */
       resourcePct: zResourcePctTerm.optional(),
       /** seconds between payouts — one sim tick (1/30 s) is the floor */
-      intervalSec: z.number().min(1 / 30).max(60),
+      intervalSec: z
+        .number()
+        .min(1 / 30)
+        .max(60),
       /** total seconds; the 60 s ceiling is the longest shipped combat round */
       durationSec: z.number().positive().max(60),
       /**
@@ -1231,13 +1270,44 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       order: z.enum(["newest", "oldest"]).optional(),
     })
     .strict(),
+
+  /**
+   * 【破盾】`shieldBreak`（D1，#278）。只打掉 `HealthComp.shields`。
+   *
+   * ⚠️ 它與 `dispel` 分開的理由是**止血閥**：`dispelRules.enabled = false`
+   * 不該順手廢掉一件破盾道具。完整理由見 `sim/effects/shieldBreak.ts` 檔頭。
+   * 行為在那一支；`shape` 的解析與 dispel 共用 `sim/effects/shapeTargets.ts`。
+   */
+  z
+    .object({
+      kind: z.literal("shieldBreak"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      /** `shape:"circle"` **必填**（載入時擋）。吃 `combatEnv.abilityRange`。 */
+      radius: z.number().positive().max(40).optional(),
+      /** 破盾的預設是**打敵人**（與淨化相反）。 */
+      side: z.enum(["allies", "enemies"]).optional(),
+      /** 圓內人數上限。省略 = 全部。上界 24 = 一場的總人數。 */
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /**
+       * 最多打掉幾層盾。省略 = 整池。
+       * ⚠️ 上界 20：一個人身上同時掛 20 片盾已經是異常，再大就是打錯字。
+       */
+      count: z.number().int().positive().max(20).optional(),
+      /** 打不完時先打哪一邊。省略 = `"newest"`。 */
+      order: z.enum(["newest", "oldest"]).optional(),
+    })
+    .strict(),
 ]);
 
 /**
  * 帶著一發傷害封包的事件 —— 也就是 `EffectContext.incoming` 唯一會被填的兩個。
  * 是 `combatResolveSystem` 那兩行 `fireHooks` 的**唯一**真實來源鏡像。
  */
-const DAMAGE_BEARING_EVENTS: readonly string[] = ["onDamageTaken", "onDamageDealt"];
+const DAMAGE_BEARING_EVENTS: readonly string[] = [
+  "onDamageTaken",
+  "onDamageDealt",
+];
 
 /**
  * 把「只有帶傷害的事件才談得上『那一發』」變成一個**載入時的解析錯誤**,
@@ -1279,7 +1349,8 @@ const INTERVAL_BUDGET_CONDITION_KINDS: readonly string[] = ["chance"];
 function hasBudgetedLeaf(cond: unknown): boolean {
   if (!cond || typeof cond !== "object") return false;
   const c = cond as Record<string, unknown>;
-  if (typeof c.kind === "string") return INTERVAL_BUDGET_CONDITION_KINDS.includes(c.kind);
+  if (typeof c.kind === "string")
+    return INTERVAL_BUDGET_CONDITION_KINDS.includes(c.kind);
   for (const key of ["all", "any"] as const) {
     const arr = c[key];
     if (Array.isArray(arr) && arr.some(hasBudgetedLeaf)) return true;
@@ -1345,7 +1416,10 @@ export function refineHookDamageContext(
         "而任何一種選法都會在某一張卡上讀起來像 bug。要活的門檻就只留 chanceFrom。",
     });
   }
-  if (hook.chanceFrom !== undefined && hook.chanceFrom.min > hook.chanceFrom.max) {
+  if (
+    hook.chanceFrom !== undefined &&
+    hook.chanceFrom.min > hook.chanceFrom.max
+  ) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["chanceFrom", "min"],
@@ -1436,7 +1510,11 @@ export const zHookDefBase = z
      * (sim/effects/hooks.ts 的順序註解)。道具來源還會再乘後台 combat-env 的
      * `itemCooldown`。上界見 {@link HOOK_INTERNAL_COOLDOWN_MAX_SEC}。
      */
-    internalCooldown: z.number().min(0).max(HOOK_INTERNAL_COOLDOWN_MAX_SEC).optional(),
+    internalCooldown: z
+      .number()
+      .min(0)
+      .max(HOOK_INTERNAL_COOLDOWN_MAX_SEC)
+      .optional(),
     /** proc probability 0..1 on the seeded rng (absent = always) */
     chance: z.number().min(0).max(1).optional(),
     /**
@@ -1510,7 +1588,14 @@ export const zHookDefBase = z
      * 部隊 kill and a 英雄 kill.
      */
     victim: z
-      .enum(["champion", "mob", "any", "enemyChampion", "allyChampion", "enemy"])
+      .enum([
+        "champion",
+        "mob",
+        "any",
+        "enemyChampion",
+        "allyChampion",
+        "enemy",
+      ])
       .optional(),
     /**
      * {@link zHookDefBase.shape.internalCooldown} 的**作用域**(批 1,
@@ -1533,7 +1618,9 @@ export const zHookDefBase = z
      * `onDamageTaken` 分不出普攻、技能與 DoT,那件道具只能被實作成「反彈所有
      * 傷害」—— 一件強得多的、不同的道具。
      */
-    damageSource: z.enum(["any", "basic", "nonBasic", "ability", "other"]).optional(),
+    damageSource: z
+      .enum(["any", "basic", "nonBasic", "ability", "other"])
+      .optional(),
     /**
      * B2 —— 觸發這個 hook 的那一發傷害**是什麼型別**。mirrors
      * `HookDef.damageType` in sim/stats/modifiers.ts。
@@ -1638,9 +1725,14 @@ export const zVisionGrant = z
     trueSightRadius: z.number().positive().max(40).optional(),
   })
   .strict()
-  .refine((v) => v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined, {
-    message: "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
-  });
+  .refine(
+    (v) =>
+      v.stealthFadeDelaySec !== undefined || v.trueSightRadius !== undefined,
+    {
+      message:
+        "vision grant must carry at least one of stealthFadeDelaySec / trueSightRadius",
+    },
+  );
 
 /**
  * 飛行 (無視碰撞) grant on a passive rank — mirrors `FlightGrant` in

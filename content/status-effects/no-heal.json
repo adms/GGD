@@ -1,0 +1,11 @@
+{
+  "id": "no-heal",
+  "schema": "status-effect@1",
+  "name": "禁療",
+  "description": "血條被鎖住，任何治療都是 0。⚠️ 它不是第二個機制 —— 就是【重創】三格倍率都填 0 的那一份內容，所以淨化拔得掉它、到期規則也完全一樣。",
+  "polarity": "debuff",
+  "tags": [
+    "wound",
+    "antiheal"
+  ]
+}

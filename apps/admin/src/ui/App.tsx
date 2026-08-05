@@ -263,6 +263,7 @@ export const NAV: NavItem[] = [
   { page: "blockRules", label: "格擋規則", emoji: "🪖", section: SEC_SYS },
   { page: "berserkRules", label: "暴走規則", emoji: "😡", section: SEC_SYS },
   { page: "dispelRules", label: "淨化規則", emoji: "✨", section: SEC_SYS },
+  { page: "woundRules", label: "重創規則", emoji: "🩸", section: SEC_SYS },
   // 增益卡敵方過濾 (批 1 決策點 1-1) —— 稜彩卡上「敵方英雄」那句話在殭屍波裡算不算
   // 數。緊接在 格擋規則 後面：三頁都是「同一段結算的規則」，而這一頁決定的是
   // hook 到底跑不跑，也就是前兩頁那些判定有沒有機會被叫到。

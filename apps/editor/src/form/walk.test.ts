@@ -157,6 +157,8 @@ describe("discriminated EffectDef union (editor-02)", () => {
         // 修好它:那個 `never` 分支也必須認得它。
         "revive",
         "shield",
+        // 【破盾】D1（#278）。與 `PreviewController` 的 `case "shieldBreak"` 同時進來。
+        "shieldBreak",
         "spawnProjectile",
         "spawnVfx",
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力

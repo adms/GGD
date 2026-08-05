@@ -68,6 +68,13 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 而 sim 透過 `Statuses` 登錄表讀它。查不到 = undefined = 有方向的
           // 淨化拔不到它(`clearPools.polarityPasses`:「不知道」不當成「是」)。
           polarity: Statuses.tryGet(e.statusId)?.polarity,
+          // C4 睡眠 —— 受傷即提早解除這一筆（`sim/statusBreak.ts`）。
+          breakOnDamage: e.breakOnDamage,
+          breakOnDamageMin: e.breakOnDamageMin,
+          // 【重創】A6 —— 三格獨立（治療 / 吸血係數 / 自然回復）。
+          healingTakenMult: e.healingTakenMult,
+          lifestealMult: e.lifestealMult,
+          regenMult: e.regenMult,
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);
