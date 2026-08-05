@@ -31,6 +31,11 @@ import {
   type BlockRules,
 } from "@ggd/shared/sim/blockRules";
 import {
+  BERSERK_DOC_ID,
+  berserkRulesFromDoc,
+  type BerserkRules,
+} from "@ggd/shared/sim/abilities/berserkRules";
+import {
   AUGMENT_ENEMY_FILTER_DOC_ID,
   augmentEnemyFilterFromDoc,
   type AugmentEnemyFilter,
@@ -791,6 +796,17 @@ export class MatchController {
      */
     blockRules: BlockRules = blockRulesFromDoc(Configs.tryGet(BLOCK_DOC_ID)),
     /**
+     * 暴走規則 (`config.berserk@1`) —— 主動暴走的生命門檻與暴走中的冷卻倍率。
+     * 和 `blockRules` 完全同一條路（含同一個已知限制：`Configs` 是 boot 時載入的，
+     * 後台改了要重啟 shard）。
+     *
+     * ⚠️ 這一格在 2026-08-05 之前**整條路都不存在** —— sim 讀 `world.berserkRules`、
+     * `berserkRulesFromDoc()` 也在，但沒有文件、沒有 schema、沒有這個參數，
+     * 所以那個解析器從上架起沒有拿到過一份真的文件。出貨值逐字等於
+     * `DEFAULT_BERSERK_RULES`，所以接上它不改變平衡。
+     */
+    berserkRules: BerserkRules = berserkRulesFromDoc(Configs.tryGet(BERSERK_DOC_ID)),
+    /**
      * 增益卡敵方過濾 (`config.augment-filter@1`, 批 1 決策點 1-1) —— 殭屍算不算
      * `victim: "enemyChampion"` 的敵人。和 `blockRules` 完全同一條路(含同一個
      * 已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
@@ -871,6 +887,8 @@ export class MatchController {
     this.world.shieldRules = shieldRules;
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
     this.world.blockRules = blockRules;
+    // 暴走規則 (`config.berserk@1`) —— 同樣在 tick 0 之前定格。
+    this.world.berserkRules = berserkRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
     //
     // ⛔ 2026-08-05：**這一行本來不存在，而它上面那句註解一直在那裡。**

@@ -158,6 +158,7 @@ export type Page =
    * 存過的值要遷移。
    */
   | "blockRules"
+  | "berserkRules"
   /**
    * 增益卡敵方過濾 (`config/augment-filter.json`, 批 1 決策點 1-1): 殭屍算不算
    * hook 上 `victim: "enemyChampion"` 的敵人。自己一頁而不是併進 戰鬥系統,
@@ -460,6 +461,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "shieldRules",
   // 格擋規則: 第五頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "blockRules",
+  "berserkRules",
   // 增益卡敵方過濾: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "augmentEnemyFilter",
   "stealthRules",

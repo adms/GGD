@@ -97,6 +97,9 @@ export interface BerserkRules {
  * 的規矩)。空物件會讓 `castHpPct` 讀成 undefined → 閘永遠不成立 → EX 在滿血
  * 也放得出來,而且沒有任何錯誤訊息。
  */
+/** `content/config/berserk.json` 的文件 id —— 與 `BLOCK_DOC_ID` 同一個慣例。 */
+export const BERSERK_DOC_ID = "berserk";
+
 export const DEFAULT_BERSERK_RULES: BerserkRules = Object.freeze({
   castHpPct: 0.15,
   cooldownMult: 2,

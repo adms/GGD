@@ -3828,6 +3828,56 @@ export const zConfigBlockDoc = z
   .strict();
 
 /**
+ * config.berserk@1 — 暴走規則（59-00 初號機那一族）。
+ *
+ * ⚠️ **這個 schema tag 在 2026-08-05 之前不存在，而 sim 早就在讀它的三格。**
+ * `sim/abilities/berserkRules.ts` 有 `DEFAULT_BERSERK_RULES`、有
+ * `berserkRulesFromDoc()`、`SimWorld` 有 `berserkRules` 欄位、`abilitySystem`
+ * 有兩處在讀它 —— 少的只是**文件、schema、後台頁與那條接線**。
+ * 也就是說那個解析器從上架起就沒有拿到過一份真的文件，而三格的值只能是寫死的
+ * 那一份。這正是 `augmentEnemyFilter` 的同型病理（見 `MatchController` 的
+ * 賦值區註解），只是這一個連文件那一半都沒有。
+ *
+ * 出貨值逐字等於當時的 `DEFAULT_BERSERK_RULES`，所以建立它不改變任何平衡。
+ *
+ * **缺文件 = 出貨預設**（`normalizeBerserkRules` 的最裡層），不是空表 ——
+ * 一個 undefined 的 `castHpPct` 會讓門檻永遠不成立，EX 在滿血也放得出來，
+ * 而且沒有任何錯誤訊息。
+ */
+export const zConfigBerserkDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.berserk@1"),
+    note: z.string().optional(),
+    /**
+     * 主動暴走可以按下去的**生命比例**（0.15 = 15%）。生命 ≤ 它才放得出來；
+     * 高於它 `castAbility` 回 `"hp-too-high"`，**魔力與冷卻一格都不扣**。
+     *
+     * 兩端都有界（#277）：上界 1 不是平衡政策，是保險絲 —— 打成 15 而不是 0.15
+     * 等於「隨時能放」，而夾掉之後畫面上看不出差別。
+     */
+    castHpPct: z.number().min(0).max(1),
+    /**
+     * 暴走期間，**這一次**施法的冷卻要乘多少。2 = 變兩倍長（owner 的字面意思，
+     * 暴走的代價）。1 = 不影響。
+     *
+     * 下界 0.1 而不是 0：0 = 每一支技能都沒有冷卻，那不是「冷卻縮短」是
+     * 「無限連放」，而一個打錯的 0 看起來跟關掉這個功能一模一樣。
+     */
+    cooldownMult: z.number().min(0.1).max(10),
+    /**
+     * 上面兩格套用在誰身上。
+     *
+     *   berserkGrantors  只有會授予暴走的**主動技**（出貨值 —— 天生技走 hook
+     *                    的 condition，不需要這道閘）
+     *   off              施法閘不存在、冷卻也不加倍（＝這個功能整個下線，
+     *                    但**看得見**它是被關掉的，不是壞掉的）
+     */
+    trigger: z.enum(["berserkGrantors", "off"]),
+  })
+  .strict();
+
+/**
  * config.augment-filter@1 — 稜彩增益卡的敵方過濾器全域覆寫（批 1 決策點 1-1）。
  *
  * 目前只有一格:**殭屍算不算 `HookDef.victim: "enemyChampion"` 的敵人**。
@@ -4622,6 +4672,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,
+  zConfigBerserkDoc,
   // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證
   // 失敗 → main.tsx 的 fail-open 退回 2 隻骨架英雄**,而網站看起來完全正常。
   // 那正是 2026-08-02 線上壞掉四小時的形狀,理由寫在下面那一段。

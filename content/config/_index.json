@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "19ab2e3f88d9",
+  "hash": "5bdb64248220",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -31,6 +31,12 @@
       "path": "config/base-bonus.json",
       "hash": "0ff7082d3602",
       "size": 99
+    },
+    {
+      "id": "berserk",
+      "path": "config/berserk.json",
+      "hash": "fc2afe60e751",
+      "size": 985
     },
     {
       "id": "block",

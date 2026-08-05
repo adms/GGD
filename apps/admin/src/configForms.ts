@@ -51,6 +51,7 @@ import {
   zConfigModelLodDoc,
   zConfigReplayDoc,
   zConfigBlockDoc,
+  zConfigBerserkDoc,
   zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
@@ -481,6 +482,47 @@ const BLOCK_SPEC: ConfigDocSpec = {
       optionLabels: {
         independent: "independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）",
         best: "best 只有最強的那一件會擋（改成欄位之前的行為）",
+      },
+    },
+  ],
+  preserved: [],
+};
+
+const BERSERK_SPEC: ConfigDocSpec = {
+  page: "berserkRules",
+  collection: "config",
+  docId: "berserk",
+  schemaTag: "config.berserk@1",
+  zod: zConfigBerserkDoc,
+  title: "暴走規則",
+  intro: [
+    "暴走（59-00 初號機那一族）的三格：主動暴走可以按下去的生命門檻、暴走期間施法的冷卻倍率、以及這兩格套用在誰身上。",
+    "⚠️ **這一頁在 2026-08-05 之前不存在，而遊戲一直在讀這三個值。** `sim/abilities/berserkRules.ts` 早就有預設表與解析器、`SimWorld` 有欄位、`abilitySystem` 有兩處在讀 —— 少的只是文件、schema、這一頁與那條接線。所以那個解析器從上架起沒有拿到過一份真的文件，三格的值只能是程式裡寫死的那一份。",
+    "出貨值**逐字等於**當時寫死的預設（15% / 2 倍 / 只管主動技），所以這一頁上線不改變任何平衡 —— 它把三個本來改不到的數字變成改得到的。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/berserk.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "packages/shared/src/sim/abilities/abilitySystem.ts 的 berserkCastBlock()（每一次按技能都會呼叫，讀 world.berserkRules.castHpPct）與 berserkCooldownFactor()（施法成功時讀 cooldownMult）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.berserkRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／護盾規則／基礎加成 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格。",
+  fields: [
+    {
+      path: "castHpPct",
+      zh: "主動暴走的生命門檻",
+      note: "0..1 的**比例**，不是百分比數字：0.15 = 生命剩 15% 以下才按得下去。高於它按了會被拒（回 hp-too-high），而且**魔力與冷卻一格都不扣** —— 玩家不會因為誤按而付代價。填 1 = 隨時可放（等於這道閘不存在）；填 0 = 只有剛好 0 血那一瞬間，也就是永遠放不出來。",
+    },
+    {
+      path: "cooldownMult",
+      zh: "暴走期間施法的冷卻倍率",
+      note: "2 = 冷卻時間變兩倍長（owner 的字面意思，暴走的代價）。1 = 不影響。小於 1 會變成獎勵。⚠️ 它乘的是**開始施放的那一刻**算出來的秒數，所以暴走**之前**就已經轉起來的冷卻不會被追溯加倍 —— 那會讓玩家看到進度條倒退。下界 0.1 而不是 0：0 是「無限連放」不是「冷卻縮短」，而一個打錯的 0 看起來跟關掉這個功能一模一樣。",
+    },
+    {
+      path: "trigger",
+      zh: "上面兩格套用在誰身上",
+      note: "berserkGrantors＝只有會授予暴走的**主動技**吃這兩格（出貨值；天生技走 hook 的 condition，本來就不需要這道閘）。off＝施法閘不存在、冷卻也不加倍，也就是這個功能整個下線 —— 但**看得見它是被關掉的**，而不是壞掉的。",
+      optionLabels: {
+        berserkGrantors: "berserkGrantors 只管會授予暴走的主動技（出貨值）",
+        off: "off 整個關掉（門檻與冷卻倍率都不套用）",
       },
     },
   ],
@@ -1517,6 +1559,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DAMAGE_COLORS_SPEC,
   SHIELD_SPEC,
   BLOCK_SPEC,
+  BERSERK_SPEC,
   AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,
   TAUNT_SPEC,
