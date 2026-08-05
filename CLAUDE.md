@@ -164,6 +164,21 @@ owner 2026-08-05（帳單已經幾萬美金）：
 ⛔ 而且這些話 owner 已經講過三次（記憶裡有三則），**散文顯然治不了** ——
 所以下面全部是**可以當場檢查的數字**，不是態度。
 
+### ⛔ 動 CLAUDE.md 或記憶之前：先跑快照
+
+```bash
+bash scripts/backup-rules.sh
+```
+
+owner 2026-08-05：「每次改變 CLAUDE.md 與記憶 就產生一個舊的 backup file」。
+
+⚠️ **兩者的處境完全不同（實測）**：CLAUDE.md 在 git 裡已有 10 版；
+**記憶 43 份檔案在 2026-08-05 之前零版本控制** —— 改壞、刪錯、覆蓋都救不回來。
+所以那支腳本除了存時間戳快照，也把記憶目錄變成一個本機 git repo（216K，成本等於零），
+`bash scripts/backup-rules.sh --diff` 看得到自上次以來改了什麼。
+
+守衛：`packages/shared/src/ops/backupRules.test.ts`（真的把腳本跑起來，不是掃字串）。
+
 ### 六條硬規則
 
 1. **預設不派 subagent／workflow。** 只有兩種情況可以派：
