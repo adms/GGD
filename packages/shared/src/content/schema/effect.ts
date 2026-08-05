@@ -148,6 +148,30 @@ export const zHookEvent = z.enum([
    * `target: "self"`。
    */
   "onReflect",
+
+  // ── 由 `sim/systems/WorldHookSystem.ts` 從事件流轉成 hook 的六個（2026-08-06）──
+  //
+  // ⚠️ 這六個時刻 sim **每一場都在發**（`world.emit()`，給客戶端畫面用），
+  // 而在這一批之前內容側一個都掛不上去 —— 因為 `fireHooks` 的呼叫點沒有一個
+  // 讀事件流。缺的從來不是「事件」，是「廣播器」。
+  //
+  // ⛔ 加第七個的完整成本：`WORLD_HOOKS` 一列 + `HookEvent` 一個成員 +
+  // 這裡一個成員 + `fieldAdoption` 一筆豁免。**不用寫新系統。**
+  // 語意（誰是持有者、有沒有 target）逐一寫在 `sim/stats/modifiers.ts` 的
+  // `HookEvent` 上，不在這裡重複一份 —— 兩份會分岔。
+
+  /** 殭屍王出現（世界廣播）。 */
+  "onBossSpawn",
+  /** 火圈點燃（世界廣播，只在點燃那一 tick 發一次）。 */
+  "onFireRingIgnite",
+  /** 守衛塔倒下（世界廣播）。⚠️ 打塔不發 `onKill`，所以這是唯一接得到的路。 */
+  "onGuardianDown",
+  /** 死亡時。持有者＝死掉的人，target＝兇手（燒死時沒有 target）。 */
+  "onDeath",
+  /** 復活時。持有者＝被復活的人，不是頂圈圈的隊友。 */
+  "onRevive",
+  /** 迴避時。⚠️ 持有者＝**閃掉的那個**，target＝攻擊者。 */
+  "onEvade",
 ]);
 
 /**

@@ -155,7 +155,41 @@ export type HookEvent =
    * 理由與 `onStunned` 逐字相同：從 `effects/damage.ts` 直接呼叫 `fireHooks`
    * 會關上 effectRegistry 檔頭警告的那個 import 環。
    */
-  | "onReflect";
+  | "onReflect"
+  /**
+   * ── 以下六個由 `systems/WorldHookSystem.ts` 從**事件流**轉成 hook ──────
+   *
+   * 它們與上面那些的差別不在語意，在**來源**：上面每一個都有一個手寫的
+   * `fireHooks(` 呼叫點，這六個是一張對照表的六列。
+   * 加第七個時刻的成本 = 那張表加一列 + 這裡加一個成員，**不用寫新系統**。
+   *
+   * ⚠️ 為什麼它們不是「早就有了」：這六個時刻 sim 每一場都在 `world.emit()`
+   *（給客戶端畫面用），但 `fireHooks` 的呼叫點沒有一個讀事件流，所以內容側
+   * 一個都掛不上去 —— 做了、送出去了、但沒有人收得到（失敗形態②）。
+   */
+  /** 殭屍王出現（世界廣播，發給場上每一位活著的單位；沒有 target）。 */
+  | "onBossSpawn"
+  /** 火圈點燃 —— 只在點燃那一 tick 發一次，不是每 tick（世界廣播，沒有 target）。 */
+  | "onFireRingIgnite"
+  /**
+   * 守衛塔倒下（世界廣播，沒有 target）。
+   * ⚠️ 打倒守衛塔**不發 `onKill`**（獎勵由 GuardianSystem 自己付），所以在這個
+   * 成員之前，「塔倒了」在內容側完全接不到。
+   */
+  | "onGuardianDown"
+  /**
+   * 死亡的那一刻。持有者 = 死掉的那個人，target = 兇手。
+   * ⚠️ 火圈／DoT 燒死時**沒有兇手**，那時 hook 沒有 target —— 那是對的，
+   * 所以「死亡時對兇手爆炸」要自己帶 `condition`，不能假設 target 一定在。
+   */
+  | "onDeath"
+  /** 被復活的那一刻。持有者 = 被復活的人，不是頂著圈圈的隊友。 */
+  | "onRevive"
+  /**
+   * 迴避成功的那一刻。⚠️ 持有者 = **閃掉的那個**，target = 攻擊者
+   *（與 `onStunned` / `onReflect` 同一個方向）。
+   */
+  | "onEvade";
 
 export interface HookDef {
   on: HookEvent;

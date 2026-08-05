@@ -63,13 +63,18 @@ describe("C1 沉默 / C2 混亂", () => {
     put(w, hero, { silenced: true });
 
     const manaBefore = hp.mana;
-    const cdBefore = JSON.stringify(ab.cooldowns ?? {});
+    // ⚠️ 冷卻住在**每一格自己**的 `cooldownRemainingTicks`(stats/statsComp.ts)，
+    // 不是 comp 上的一張 map。2026-08-06 修正：這一行原本讀 `ab.cooldowns`，
+    // 那個屬性不存在，所以斷言是 `{} === {}` —— 永遠成立、什麼都沒驗
+    //(失敗形態④)。vitest 不做型別檢查，所以它綠了一整天，是 `pnpm typecheck`
+    // 抓到的。**測試自己也會有啞斷言。**
+    const cdBefore = ab.slots.Q.cooldownRemainingTicks;
 
-    expect(castAbility(w, hero, "Q")).toBe("silenced");
+    expect(castAbility(w, hero, "Q", { type: "self" })).toBe("silenced");
     // ⛔ 三件事一起讀：被拒 + 魔力沒少 + 冷卻沒動。
     // 只驗「被拒」的話，一個把閘放在 spendMana 之後的實作照樣過。
     expect(hp.mana).toBe(manaBefore);
-    expect(JSON.stringify(ab.cooldowns ?? {})).toBe(cdBefore);
+    expect(ab.slots.Q.cooldownRemainingTicks).toBe(cdBefore);
   });
 
   it("C2 混亂時自動索敵挑得到隊友", () => {

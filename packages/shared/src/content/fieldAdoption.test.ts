@@ -1227,6 +1227,49 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "(掛之前挑不到隊友、掛之後挑得到)。零採用同 `silenced`:等第一支混亂系技能上架。",
   },
 
+  // ── 事件流廣播的六個時刻 (2026-08-06, `sim/systems/WorldHookSystem.ts`) ──
+  //
+  // ⚠️ 這六個與其他 landing 豁免的形狀**不一樣**,值得寫清楚:一般的零採用是
+  // 「機制剛做好,還沒有人寫卡」;這六個是**機制早就在跑了** —— sim 每一場都在
+  // `world.emit()` 這六個時刻(給客戶端畫面用),缺的只是把它們轉成 hook 的
+  // 那一個廣播器。所以「零採用」在這裡的意思是「作者從今天起才寫得出來」。
+  //
+  // 行為守衛 `sim/systems/worldHook.test.ts` 兩條,兩個突變都驗過會紅
+  //(刪掉 world 廣播分支 / 把迴避那一列的 actorKey 與 targetKey 對調)。
+  //
+  // ⛔ 六筆分開記而不是合成一筆,是因為它們**會各自被採用**:第一支「死亡時
+  // 爆炸」的技能上架時,只有 onDeath 那一筆該被刪掉,其餘五筆仍然誠實。
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onBossSpawn": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "殭屍王出現(世界廣播,發給場上每一位活著的單位)。發射點是 `sim/mobs.ts` 早就在發的 `mobBossSpawn` 事件。零採用是因為樹上還沒有任何一張卡寫「殭屍王出現時⋯」——那是內容決定。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onFireRingIgnite": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "火圈點燃(世界廣播)。⚠️ 只在點燃那**一** tick 發一次,不是每 tick —— 來源是 `FireRingSystem` 的 `ticksSinceStart === 0` 那一發 `fireRingStart`。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onGuardianDown": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "守衛塔倒下(世界廣播)。⚠️ 打倒守衛塔**不發 `onKill`**(獎勵由 GuardianSystem 自己付),所以在這個成員之前,「塔倒了」在內容側完全接不到。⭐ 它同時是 GH#263(拆塔即勝)的掛載點。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onDeath": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "死亡的那一刻。持有者＝死掉的那個人,target＝兇手。⚠️ 火圈/DoT 燒死時**沒有兇手**,那時 hook 沒有 target —— 所以「死亡時對兇手爆炸」的卡要自己帶條件,不能假設 target 一定在。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onRevive": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "被復活的那一刻。持有者＝被復活的人,不是頂著圈圈的隊友 —— 兩個都合理,選前者是因為「復活後獲得無敵 2 秒」是這一格最常見的用法。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onEvade": {
+    status: "landing",
+    since: "2026-08-06",
+    why: "迴避成功的那一刻。⚠️ 持有者＝**閃掉的那個**,target＝攻擊者(與 onStunned/onReflect 同方向)。`worldHook.test.ts` 的第二條就是釘這個方向 —— 兩個 key 反了畫面上看不出差別。⭐ 這一格是仙后座 godie-i01s 文案「迴避成功時瞬間移動」變成真的的前置。",
+  },
+
   "enum:abilities.effects[]#dispel.polarity=any": {
     status: "default-live",
     why:

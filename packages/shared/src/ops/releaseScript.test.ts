@@ -84,11 +84,25 @@ function run(cwd: string, args: string[]): { code: number; out: string; err: str
   return { code: r.status ?? -1, out: (r.stdout ?? "").trim(), err: (r.stderr ?? "").trim() };
 }
 
-/** 今天與昨天的 ISO 日期 —— 腳本讀的是系統時鐘，所以夾具也要。 */
+/**
+ * 今天與昨天的 ISO 日期 —— 腳本讀的是系統時鐘，所以夾具也要。
+ *
+ * ⛔ **必須用本機日期，不可以用 `toISOString()`**（2026-08-06 修的真缺陷）。
+ * `toISOString()` 回的是 **UTC**，而 `release.sh` 比的是 `date +%F`（**本機**）。
+ * 在 UTC+8 上，本機 00:00–08:00 這八個小時裡 UTC 還停在前一天 —— 於是夾具造出
+ * 「昨天」的 tag 卻跟「今天」比，`rel-same-day` 被判成跨天而紅。
+ *
+ * ⚠️ 它不是偶發，是**每天固定紅八小時**：白天寫的守衛白天全綠，所以它昨天
+ * 出貨時看起來是好的。這一類「只在某個時段紅」的缺陷比全紅更貴 ——
+ * 它會讓人以為是自己那一批改壞的（我今天就先去查了自己的 diff）。
+ * 時鐘相關的夾具一律問一次：**我和被測的東西，是不是同一個時區？**
+ */
 function isoDaysAgo(n: number): string {
   const d = new Date();
   d.setDate(d.getDate() - n);
-  return `${d.toISOString().slice(0, 10)}T12:00:00+08:00`;
+  const p = (x: number): string => String(x).padStart(2, "0");
+  // 本機年月日（與 `date +%F` 同一個時區），不是 UTC。
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T12:00:00+08:00`;
 }
 
 beforeAll(() => {

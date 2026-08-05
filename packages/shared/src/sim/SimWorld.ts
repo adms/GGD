@@ -82,6 +82,7 @@ import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
 import { reviveSystem } from "./systems/ReviveSystem";
 import { coinSystem } from "./systems/CoinSystem";
+import { worldHookSystem } from "./systems/WorldHookSystem";
 import { regenSystem } from "./systems/RegenSystem";
 import { statusExpirySystem } from "./systems/StatusSystem";
 import { hitstopDecaySystem } from "./systems/HitstopSystem";
@@ -1299,6 +1300,17 @@ export class SimWorld {
     //                             AFTER deathSystem/reviveSystem/guardianSystem so
     //                             this tick's alive-state is final before anyone is
     //                             paid; the throw itself happened back at slot 3.
+    worldHookSystem(this); // 9f. 事件流 → hook 廣播（`systems/WorldHookSystem.ts`）:
+    //                             【死亡時】【復活時】【迴避時】【殭屍王出現】
+    //                             【火圈點燃】【守衛塔倒下】。⚠️ 位置是硬約束 ——
+    //                             它讀 `this.events`，而那個陣列在 step() 開頭才被
+    //                             清空，所以它必須排在**所有發射者之後**：
+    //                             evade(8) · fireRingStart(8b) · death(9) ·
+    //                             reviveComplete(9c) · guardianSlain(9d) ·
+    //                             mobBossSpawn(9d′)。往前搬一格就會有事件收不到，
+    //                             而那種漏接**看起來跟「沒有人寫這種卡」一模一樣**。
+    //                             它排出來的傷害/狀態與 onStunned·onReflect 一樣，
+    //                             下一 tick 由 combatResolveSystem 結算。
     regenSystem(this); // 10. hp/mana regen
     resourceStatSystem(this); // 10a. 資源衍生屬性 (光魔杖「AP+ (目前MP的 5%)」):
     //                             mark dirty when the LIVE hp/mana a
