@@ -672,10 +672,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-05",
     why: "道具那一面的【暴擊時】。這四格裡它是最接近被採用的一格 —— 天堂之劍 godie-i01n 是一件道具,它的文案「暴擊時吸血回復100%傷害」就是這一格的第一個消費者,卡住它的是缺一個「治療觸發這一發的 X%」原語(`heal` 只吃 zScaling,對稱的 `damage.incomingPct` 是傷害不是治療)。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onLevelUp": {
-    status: "debt",
-    why: "the opposite failure, found by the same census: the member exists in zHookEvent and in modifiers.ts's HookEvent type, but NOTHING in sim/ ever fires it. Content adopting it would be inert. Resolve by implementing the dispatch or deleting the member — do not 'adopt' it.",
-  },
   "enum:items.craftRole=direct": {
     status: "debt",
     why: "extract_item_roles.py recovers 7 roles from the map triggers and assigned `direct` to nothing across 214 items. Either the extractor never emits it (a recovery gap worth checking against the JASS) or the role is redundant and should leave the enum.",

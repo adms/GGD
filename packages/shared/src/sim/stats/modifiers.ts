@@ -97,7 +97,7 @@ export type HookEvent =
   | "onDamageDealt"
   | "onDamageTaken"
   | "onKill"
-  | "onLevelUp"
+  // `"onLevelUp"` 刪於 2026-08-05 —— 理由寫在 content/schema/effect.ts 的 `zHookEvent`。
   /**
    * 週期 —— 每一 tick 對每一個活著、有 `StatsComp` 的單位發射一次
    * (`systems/IntervalHookSystem.ts`)。**節奏由 `internalCooldown` 表達**,

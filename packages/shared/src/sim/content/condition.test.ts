@@ -182,19 +182,25 @@ describe("① 目標種類", () => {
   });
 
   /**
-   * DECISION 2 in behaviour, BOTH directions. An entity-less event (`onLevelUp`
+   * DECISION 2 in behaviour, BOTH directions. An entity-less event (`onInterval`
    * with a `target: "self"` hook) is fired for real and the hp of the body it
    * lands on is read back.
+   *
+   * ⚠️ 這裡的「無實體事件」以前是 `onLevelUp`，而 `onLevelUp` 於 2026-08-05 被
+   * **刪出作者詞彙表** —— 它從進 enum 的那天起就零發射點（理由寫在
+   * `content/schema/effect.ts` 的 `zHookEvent`）。換成 `onInterval`：它同樣不帶
+   * 實體，差別是它**真的有人發**（`systems/IntervalHookSystem.ts`），所以這條
+   * 守衛從「用一個假事件驗真行為」變成「用一個真事件驗真行為」。
    */
-  function selfProcOnLevelUp(cond: EffectCondition): number {
+  function selfProcOnEntitylessEvent(cond: EffectCondition): number {
     const s = stage();
     attachSource(s.world, s.hero, {
       id: "test:selfproc",
       kind: "item",
-      hooks: [{ ...procHook(cond), target: "self", on: "onLevelUp" }],
+      hooks: [{ ...procHook(cond), target: "self", on: "onInterval" }],
     });
     const before = hp(s.world, s.hero);
-    fireHooks(s.world, s.hero, "onLevelUp");
+    fireHooks(s.world, s.hero, "onInterval");
     s.world.step(new Map());
     return before - hp(s.world, s.hero);
   }
@@ -203,7 +209,7 @@ describe("① 目標種類", () => {
     cover("condition-no-target");
     expect(
       fired(
-        selfProcOnLevelUp({
+        selfProcOnEntitylessEvent({
           kind: "stat",
           subject: "target",
           stat: "hp",
@@ -219,7 +225,7 @@ describe("① 目標種類", () => {
     // 這一條是刻意釘住 condition.ts DECISION 2 那段「會嚇到人」的推論：葉子讀
     // false，`not` 就把它翻成 true。它不是缺陷，但它必須是**被測到的**行為，
     // 否則下一個人會以為沒有目標時整棵樹都會被跳過。
-    expect(fired(selfProcOnLevelUp(notChampion))).toBe(true);
+    expect(fired(selfProcOnEntitylessEvent(notChampion))).toBe(true);
   });
 });
 

@@ -119,7 +119,17 @@ export const zHookEvent = z.enum([
   "onDamageDealt",
   "onDamageTaken",
   "onKill",
-  "onLevelUp",
+  // ⛔ `"onLevelUp"` 在這裡待到 2026-08-05 為止。owner 裁決 A2（泛化 pending-hook
+  // 佇列）**不做**，而它從進 enum 的那天起就**零發射點** —— 全 sim 的 `fireHooks`
+  // 只發八種事件，它不在裡面。留著它等於在編輯器下拉裡放一個「寫了什麼都不會
+  // 發生」的選項，而作者不會知道：schema 收下、後台存得起來、卡片上看得到。
+  //
+  // 刪掉是安全的：`fieldAdoption` 的普查證明**零份文件**用過它，所以沒有任何
+  // 一份既有內容會因此載入失敗。
+  //
+  // ⚠️ 這只是把**這一個**謊話拿掉，不是把「下拉裡有、引擎沒有」這個**形狀**關掉。
+  // 結構性的守衛是 B1（謂詞池統一）的工作：登錄表同時宣告「能不能當觸發」與
+  // 「誰在發射」，於是下一個 `onLevelUp` 在加進去的當下就會紅。
   /** 被暈眩的那一刻 — 為什麼是新成員、為什麼纏繞/減速不算,見
    *  sim/stats/modifiers.ts 的 `HookEvent`。 */
   "onStunned",
