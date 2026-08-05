@@ -35,6 +35,7 @@ import {
   berserkRulesFromDoc,
   type BerserkRules,
 } from "@ggd/shared/sim/abilities/berserkRules";
+import { clearForFreshBody } from "@ggd/shared/sim/clearPools";
 import {
   AUGMENT_ENEMY_FILTER_DOC_ID,
   augmentEnemyFilterFromDoc,
@@ -1607,9 +1608,9 @@ export class MatchController {
           hp.alive = true;
           hp.hp = hp.maxHp;
           hp.mana = hp.maxMana;
-          hp.shields = [];
-          const st = this.world.status.get(seat.entityId);
-          if (st) st.effects = [];
+          // A4(#278) —— 見 `sim/clearPools.ts`。這一段以前漏掉 `world.dot`,
+          // 所以上一回合的燃燒會燒進新回合的開場。
+          clearForFreshBody(this.world, seat.entityId);
           fighters.push(seat.entityId);
           slot++;
         }
@@ -1865,9 +1866,10 @@ export class MatchController {
         hp.alive = true;
         hp.hp = hp.maxHp;
         hp.mana = hp.maxMana;
-        hp.shields = [];
-        const st = this.world.status.get(seat.entityId);
-        if (st) st.effects = [];
+        // A4(#278) —— 大亂鬥那一條路。⚠️ **兩個 enterCombat 站點都要改** ——
+        // 只改決鬥那一條會讓大亂鬥回合的殘留活下來,而決鬥回合是乾淨的,
+        // 測起來像隨機故障。
+        clearForFreshBody(this.world, seat.entityId);
         fighters.push(seat.entityId);
         slot++;
       }

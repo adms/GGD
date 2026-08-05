@@ -120,6 +120,16 @@ export interface DotInstance {
   maxStacks?: number;
   /** does this burn outlive the entity that applied it? ABSENT = `"continue"`. */
   onCasterDeath?: DotOnCasterDeath;
+  /**
+   * A4(#278) —— 這一筆延燒可不可以被淨化拔掉。缺席 = 讀
+   * `world.dispelRules.dotDefaultDispellable`（出貨 true）。
+   *
+   * ⚠️ 它單獨一格而不是跟 status 共用一個預設,因為 `world.dot` 在 A4 之前
+   * **完全沒有任何移除路徑** —— 把它打開是一次真的能力增加,值得有自己的閥。
+   */
+  dispellable?: boolean;
+  /** A4(#278) —— 極性。缺席時 `clearPools` 當 `"debuff"`（這一池只出現過那一種）。 */
+  polarity?: "buff" | "debuff";
 }
 
 /*
@@ -127,9 +137,13 @@ export interface DotInstance {
  * `amountPerTick`, `nextTick`, `intervalTicks`, `expiresAtTick` — and that is
  * deliberate: they are precisely the shape the GH#289 seam reserved, so a
  * `DotInstance` built by hand (`sim/reservedStores.test.ts`, any fixture) still
- * compiles AND still behaves. The other five are optional and each documents
+ * compiles AND still behaves. The other **seven** are optional and each documents
  * what its absence means, the same 「缺席 = 今天的行為」 rule the rest of #289
- * follows. `dotEffect.apply` always writes all twelve.
+ * follows. `dotEffect.apply` always writes all fourteen.
+ *
+ * ⚠️ 「其餘五個 / 十二個」是 2026-08-05 之前的計數 —— A4(#278) 加了
+ * `dispellable` 與 `polarity` 兩格。這一段自己就是「註解會說謊」的候選人：
+ * 一個寫死的數量在下一次加欄位的時候不會有人記得改
  */
 
 export const dotEffect: EffectKindSpec<"dot"> = {

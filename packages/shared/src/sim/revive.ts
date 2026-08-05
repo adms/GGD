@@ -33,6 +33,7 @@
  */
 import type { EntityId, SeatId, TeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
+import { clearForFreshBody } from "./clearPools";
 import type { Vec2 } from "./math/vec2";
 import { distSq } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
@@ -304,7 +305,8 @@ export interface ReviveAtArgs {
  *
  * STATE CONTRACT (docs/todo/revive-circles.md, unchanged by the extraction):
  * partial HP/mana, keeps items / gold / level / ability cooldowns, clears
- * status + shields exactly like `enterCombat`, drops orders and any mid-leap
+ * status + shields + **DoT** exactly like `enterCombat`（三者都走
+ * `clearPools.ts` 的 `clearForFreshBody`）, drops orders and any mid-leap
  * airborne entry, and does NOT rewrite history — the death stays a death and
  * the kill stays a kill (#25's counters and the S+..C- rating must never be
  * corrupted).
@@ -361,10 +363,15 @@ export function reviveChampionAt(
   // at least 1 HP: a 0% config must still produce a living champion
   hp.hp = Math.max(1, hp.maxHp * args.hpPct);
   hp.mana = hp.maxMana * args.manaPct;
-  hp.shields = [];
-
-  const st = world.status.get(id);
-  if (st) st.effects = []; // no pre-death DoT/CC carries through the grave
+  // ⛔ A4(#278) —— 這三池以前是**兩行手寫**,而那兩行只清了 status 與 shields。
+  // `world.dot` 沒有被碰到,所以**死前身上的燃燒會跟著復活的身體一起回來**,
+  // 在血條上看起來只是「復活之後莫名其妙一直在掉血」。
+  // `effects/dotTick.ts` 的檔頭自己寫著這件事(「the host's round reset …
+  // knows nothing about world.dot」),而它一直沒有人修。
+  //
+  // 現在三個清池站點(這裡 + MatchController 的兩個 enterCombat)走同一支函式,
+  // 所以「復活清什麼」與「開新回合清什麼」在結構上不可能再分岔。
+  clearForFreshBody(world, id);
   const nav = world.nav.get(id);
   if (nav) {
     nav.order = null;

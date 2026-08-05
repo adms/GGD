@@ -391,6 +391,27 @@ export interface StatusEffect {
    * PURITY: 一個 float,寫入時已經是決定性的(clamp 過的實扣量)。
    */
   magnitude?: number;
+  /**
+   * A4(#278) —— 這一筆**可不可以被淨化拔掉**。
+   *
+   * 缺席 = 讀 `world.dispelRules.statusDefaultDispellable`（出貨 true）。
+   * 三值語意（true / false / 缺席）是刻意的:「作者明講不可驅散」與
+   * 「作者沒有想過這件事」在後台是兩種不同的狀態,而後者的答案應該是一個
+   * **操作者調得到的全域預設**,不是寫死在這裡。
+   *
+   * ⚠️ 回合重置與復活**不看這一格**(`clearForFreshBody` 傳
+   * `requireDispellable: false`)—— 那不是淨化,是重置。
+   */
+  dispellable?: boolean;
+  /**
+   * A4(#278) —— 增益還是減益。`clearPools` 的 `polarity` 過濾讀它。
+   *
+   * ⚠️ **施加的那一刻從 status 文件推導寫下**(`status-effect@1` 的
+   * `polarity`,14 份文件 14 份都填了),不是事後從欄位猜。一個
+   * `moveSpeedMult: 1.3` 的加速與 `0.7` 的減速在結構上長得一模一樣,
+   * 任何啟發式都會在某一張卡上錯。
+   */
+  polarity?: "buff" | "debuff";
 }
 
 export interface StatusComp {

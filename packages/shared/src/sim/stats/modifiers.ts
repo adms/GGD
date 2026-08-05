@@ -469,6 +469,17 @@ export interface ModifierSource {
   grantedAbilities?: AbilityId[];
   /** for buffs: expiry tick (undefined = permanent) */
   expiresAtTick?: number;
+  /**
+   * A4(#278) —— 這個來源可不可以被淨化拔掉。缺席 = 讀
+   * `world.dispelRules.buffDefaultDispellable`（**出貨 false**）。
+   *
+   * ⛔ 這一格必須是**施加時寫下的欄位**,不可以推導:一個 source 可以同時帶
+   * `{ms,+0.3}` 與 `{armor,-0.5}`,任何「看修飾詞猜極性」的啟發式都會在某一張
+   * 卡上錯,而且從編輯器修不掉。
+   */
+  dispellable?: boolean;
+  /** A4(#278) —— 增益還是減益。同上,施加時寫下,不推導。 */
+  polarity?: "buff" | "debuff";
   stacks?: number;
   /**
    * PRESENTATION tag (task #244): this source's `stacks` are meant to be SEEN.
