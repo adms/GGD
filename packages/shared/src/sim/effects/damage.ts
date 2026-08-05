@@ -167,6 +167,16 @@ export const damageEffect: EffectKindSpec<"damage"> = {
         // 之後真的掉了多少。在這裡算會拿到「打算打多少」,而文案講的是打中了多少。
         ...(e.refund !== undefined ? { refund: e.refund } : {}),
       });
+      // 【反彈成功】—— owner 2026-08-05:「onReflect／反彈成功時 這個也要」。
+      // ⛔ 位置是刻意的:**在 push 之後**,也就是上面三道閘(沒有觸發封包 /
+      // 超過鏈深 / 排空預算來不及)全部沒有攔下來的時候。任何更早的位置都會讓
+      // 「反彈時回血」實際上變成「被打時回血」,而畫面上看不出差別。
+      // ⚠️ 這裡**不** import `fireHooks` —— 那會關上 effectRegistry 檔頭警告的
+      // 那個環。只 push,由 `systems/ReflectHookSystem.ts` 在同一個 tick 稍後轉成
+      // hook(逐字照抄 `onStunned` 的作法)。
+      if (reflectDepth !== undefined) {
+        world.pendingReflectHooks.push({ reflector: ctx.caster, victim: target });
+      }
     }
   },
 

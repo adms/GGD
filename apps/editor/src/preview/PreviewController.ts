@@ -490,6 +490,22 @@ function effectLines(
         });
         break;
       }
+      case "devour": {
+        // ⚠️ 一定要把「處決線」與「回多少」都印出來 —— 這個 kind 的兩個數字
+        // 分別是它的門檻與它的報酬,只印一個的話卡片看起來像另一支技能。
+        const line = e.thresholdPctOfMax.map((p) => `${(p * 100).toFixed(0)}%`).join("/");
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `吞噬（處決）：目標生命剩 ${line} 以下時即死` +
+            `${e.victim === "any" ? "（含殭屍）" : "（只吞英雄）"}` +
+            ` · 回復吞下去的 ${((e.healPct ?? 1) * 100).toFixed(0)}%` +
+            `${e.throughShields === false ? " · ⚠️ 不穿盾（帶盾時吞不死）" : " · 穿盾"}` +
+            `${e.shape === "circle" ? ` · 圓形 ${e.radius ?? "?"}（吃 abilityRange）` : " · 單體"}`,
+        });
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

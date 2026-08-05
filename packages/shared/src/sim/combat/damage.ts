@@ -617,7 +617,7 @@ function eligibleShields(
 }
 
 /** Sum of the pools that could pay for this packet (the guard-break basis). */
-function eligibleShieldTotal(
+export function eligibleShieldTotal(
   shields: import("../components").Health["shields"],
   tick: number,
   type: DamageType,

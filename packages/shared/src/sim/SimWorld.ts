@@ -73,6 +73,7 @@ import { combatResolveSystem } from "./combat/damage";
 import { flightSystem } from "./flight";
 import { attrGrantExpirySystem } from "./effects/grantAttribute";
 import { ccHookSystem } from "./systems/CcHookSystem";
+import { reflectHookSystem } from "./systems/ReflectHookSystem";
 import { dotTickSystem } from "./effects/dotTick";
 import { intervalHookSystem } from "./systems/IntervalHookSystem";
 import { deathSystem } from "./systems/DeathSystem";
@@ -889,6 +890,15 @@ export class SimWorld {
   readonly pendingStunHooks: { victim: EntityId; source: EntityId }[] = [];
 
   /**
+   * 反彈成功 → `onReflect`（owner 2026-08-05）。與 `pendingStunHooks` 同一個形態
+   * 與同一個理由（見 `systems/ReflectHookSystem.ts` 檔頭）。
+   *
+   * `reflector` 是**反彈的那個人**（hook 的持有者），`victim` 是被反彈到的那個人
+   *（原本打他的人）。
+   */
+  readonly pendingReflectHooks: { reflector: EntityId; victim: EntityId }[] = [];
+
+  /**
    * 嘲弄 (see taunt.ts) —— 受害者 → 「誰嘲弄我 + 到哪一絕對 tick 為止」。
    *
    * 自己一張 Map 而**不是** `StatusEffect` 上的一個旗標，理由是量出來的：
@@ -1238,6 +1248,7 @@ export class SimWorld {
     combatResolveSystem(this); // 8. drain damage queue (mitigation/shields/hooks
     //                             + combat-juice: hitstop/knockback/knockdown)
     ccHookSystem(this); //   8a. 被暈眩時 → `onStunned` hooks (08-00 龍紋記憶).
+    reflectHookSystem(this); // 8b. 反彈成功時 → `onReflect` hooks (owner 08-05).
     //                             AFTER the queue drain so a stun applied by an
     //                             on-damage hook is seen THIS tick, BEFORE
     //                             deathSystem so a champion killed on the same

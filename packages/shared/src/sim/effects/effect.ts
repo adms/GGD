@@ -571,6 +571,29 @@ export type EffectDef =
       order?: "newest" | "oldest";
     }
   | {
+      /**
+       * 【吞噬】—— 處決 + 等值回復（owner 2026-08-05，初號機 EX）。
+       * 行為與「為什麼走傷害佇列 / 為什麼要穿盾」見 `sim/effects/devour.ts` 檔頭。
+       */
+      kind: "devour";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 逐階處決線：`hp <= maxHp × 這一格`。owner 的 3/5/7/9% = `[0.03,0.05,0.07,0.09]`。 */
+      thresholdPctOfMax: number[];
+      /** 回復「吞下去的生命」的幾成。省略 = 1（＝owner 的「回復等值生命」）。 */
+      healPct?: number;
+      /** 吞得掉誰。省略 = `"champion"`（owner 文案的「敵方**英雄**單位」）。 */
+      victim?: "champion" | "any";
+      /**
+       * 致死量要不要把當下的護盾一起算進去。省略 = **true**。
+       * ⛔ false 的話一個帶盾的目標「進了處決線但吞不死」，而卡上寫著即死。
+       */
+      throughShields?: boolean;
+    }
+  | {
       kind: "revive";
       /**
        * Fraction of maxHp to come back on. ABSENT = the match's own

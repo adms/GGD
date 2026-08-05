@@ -1079,6 +1079,30 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 下面四格全部是「省略 = 讀 `config.dispel@1`」的那一種:寫進文件等於在
   // **一支道具上**烘死一個本來全域可調的決定。零採用正是它們該有的樣子 ——
   // 有人寫它的那天,意思是「這一支要跟全域規則不一樣」,那才是它存在的理由。
+  "variant:abilities.effects[]#devour": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "【吞噬】—— owner 2026-08-05 逐字給的規格（初號機 EX:「吞噬生命剩餘 3/5/7/9% " +
+      "敵方英雄(即死),並回復等值生命」)。行為在 `sim/effects/devour.ts`,五條守衛在 " +
+      "`sim/effects/devour.test.ts`,其中兩條釘的是這個 kind 特有的坑:致死量**含護盾**" +
+      "(否則帶盾的目標「進了處決線但吞不死」,而卡上寫著即死)、致死量**不吃全域傷害倍率**" +
+      "(k=0.5 的那天處決會變成「打掉一半殘血」)。零採用是因為初號機那一支 EX 的文件還沒寫 " +
+      "—— 那是內容,不是引擎。它上架的那天這條豁免就該被刪掉。",
+  },
+
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onReflect": {
+    status: "landing",
+    since: "2026-08-05",
+    why:
+      "【反彈成功時】—— owner 2026-08-05:「onReflect／反彈成功時 這個也要」。發射點在 " +
+      "`sim/effects/damage.ts`(反彈封包**真的排出去**的那一行),轉成 hook 的是 " +
+      "`sim/systems/ReflectHookSystem.ts`,三條守衛在 `sim/systems/reflectHook.test.ts`。" +
+      "⚠️ 最重要的一條驗的是**它不該發的時候不發**:`incomingPct` 的三道閘任何一道攔下來" +
+      "都不算成功,否則「反彈時回血」會實際變成「被打時回血」。" +
+      "零採用是因為今天沒有任何一張卡掛在這個事件上 —— 那是內容決定。",
+  },
+
   "variant:abilities.effects[]#shieldBreak": {
     status: "landing",
     since: "2026-08-05",

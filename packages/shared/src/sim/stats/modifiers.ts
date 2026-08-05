@@ -132,7 +132,30 @@ export type HookEvent =
    * owner 說的是「被暈眩」,而一個會讓小呆覺醒的減速等於把全遊戲的減速都變成
    * 送禮。「哪些控場算」是候選欄位,不是定案 —— 見 openQuestions。
    */
-  | "onStunned";
+  | "onStunned"
+  /**
+   * **反彈成功的那一刻**（owner 2026-08-05：「onReflect／反彈成功時 這個也要」）。
+   *
+   * 「成功」在這裡有一個很窄的定義，而窄是刻意的：**一發反彈封包真的被排出去了**。
+   * `effects/damage.ts` 的 `incomingPct` 有三道閘會讓反彈整條不發生
+   *（沒有觸發封包 · 超過 `maxChainDepth` · 排空預算來不及的 `whenTooLate:"drop"`），
+   * 而**那三種情況都不算成功** —— 一個在「其實沒反彈到」時照樣觸發的
+   * `onReflect` 會讓「反彈時回血」變成「被打時回血」，那是另一支技能。
+   *
+   * ⚠️ 它與 `onDamageTaken` 不同,而這個差別正是它沒辦法用現有成員表達的原因：
+   * `onDamageTaken` 每一發傷害都發,而反彈是**有條件**的（要有 `incomingPct`、
+   * 要沒撞到鏈深上限）。用 `onDamageTaken` + 條件湊出來的話,作者要自己重寫
+   * 那三道閘,而它們會分岔。
+   *
+   * ⛔ **持有者是反彈的人（受害者），hook 的 target 是被反彈到的那個人**
+   *（＝原本打你的人）—— 與 `onStunned` 同一個方向。所以「反彈時自己回血」
+   * 要寫 `target: "self"`,而「反彈時額外燒對方的魔」是預設的 target。
+   *
+   * 由 `systems/ReflectHookSystem.ts` 從 `world.pendingReflectHooks` 轉成 hook,
+   * 理由與 `onStunned` 逐字相同：從 `effects/damage.ts` 直接呼叫 `fireHooks`
+   * 會關上 effectRegistry 檔頭警告的那個 import 環。
+   */
+  | "onReflect";
 
 export interface HookDef {
   on: HookEvent;

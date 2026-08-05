@@ -137,6 +137,17 @@ export const zHookEvent = z.enum([
    *  43-00 觀音大士「每 10 秒生成一個護盾」、03-00 相轉移裝甲的常駐魔免都是它。
    *  見 sim/stats/modifiers.ts 的 `HookEvent` 與 systems/IntervalHookSystem.ts。 */
   "onInterval",
+  /**
+   * 反彈成功時（owner 2026-08-05：「onReflect／反彈成功時 這個也要」）。
+   *
+   * ⛔ 「成功」= **一發反彈封包真的排出去了**。`incomingPct` 的三道閘
+   *（沒有觸發封包 / 超過 `maxChainDepth` / 排空預算來不及且 `whenTooLate:"drop"`）
+   * 任何一道攔下來都**不算**。理由與發射點見
+   * `sim/systems/ReflectHookSystem.ts`；持有者是反彈的人，hook 的 target 是
+   * 被反彈到的那個人（與 `onStunned` 同方向），所以「反彈時自己回血」寫
+   * `target: "self"`。
+   */
+  "onReflect",
 ]);
 
 /**
@@ -245,7 +256,7 @@ function refineDotResourceBudget(
  * 什麼都沒發生，而且沒有任何訊息 —— 失敗形態 ②。
  */
 function refineDispelShape(
-  e: Extract<EffectDef, { kind: "dispel" | "shieldBreak" }>,
+  e: Extract<EffectDef, { kind: "dispel" | "shieldBreak" | "devour" }>,
   ctx: z.RefinementCtx,
 ): void {
   if (e.shape === "circle" && e.radius === undefined) {
@@ -1296,6 +1307,34 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       count: z.number().int().positive().max(20).optional(),
       /** 打不完時先打哪一邊。省略 = `"newest"`。 */
       order: z.enum(["newest", "oldest"]).optional(),
+    })
+    .strict(),
+
+  /**
+   * 【吞噬】—— 處決 + 等值回復（owner 2026-08-05，初號機 EX）。
+   * 行為在 `sim/effects/devour.ts`；`shape` 與 dispel/shieldBreak 共用 `shapeTargets`。
+   */
+  z
+    .object({
+      kind: z.literal("devour"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /**
+       * 逐階處決線（`hp <= maxHp ×` 這一格）。owner 的 3/5/7/9% 就是
+       * `[0.03, 0.05, 0.07, 0.09]`。
+       * ⛔ 上界 0.5：一條「剩一半就吞得掉」的處決線已經不是處決而是一發必殺技，
+       * 而那應該用 `damage` 寫（看得到數字、吃得到護甲）。
+       */
+      thresholdPctOfMax: z.array(z.number().positive().max(0.5)).min(1).max(5),
+      /** 回復「吞下去的生命」的幾成。省略 = 1。上界 2 = 最多回兩倍。 */
+      healPct: z.number().min(0).max(2).optional(),
+      /** 吞得掉誰。省略 = `"champion"`。 */
+      victim: z.enum(["champion", "any"]).optional(),
+      /** 致死量含不含護盾。省略 = true（否則「即死」會被護盾靜默擋掉）。 */
+      throughShields: z.boolean().optional(),
     })
     .strict(),
 ]);

@@ -95,6 +95,7 @@ import { grantGoldEffect } from "./grantGold"; // 「黃金數量為敵方等級
 // TRIGGER a revive, never a second definition of what a revived champion is.
 import { dispelEffect } from "./dispel";
 import { shieldBreakEffect } from "./shieldBreak";
+import { devourEffect } from "./devour";
 import { reviveEffect } from "./revive";
 
 /**
@@ -154,6 +155,7 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   //    行為 ./dispel.ts，池子語意 ../clearPools.ts，旋鈕 ../dispelRules.ts。
   dispel: dispelEffect,
   shieldBreak: shieldBreakEffect,
+  devour: devourEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)
