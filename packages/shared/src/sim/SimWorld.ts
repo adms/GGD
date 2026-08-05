@@ -38,6 +38,7 @@ import {
 } from "./augmentEnemyFilter";
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
+import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
   DEFAULT_TAUNT_RULES,
@@ -927,6 +928,11 @@ export class SimWorld {
    * 也就是嘲弄靜默消失,而道具照樣買得到、描述照樣寫著。
    */
   tauntRules: TauntRules = DEFAULT_TAUNT_RULES;
+  /**
+   * 淨化規則 (`config.dispel@1`, A4b/#278) —— 【淨化】拔哪幾池、拔幾層、
+   * 沒標 `dispellable` 的東西算不算可拔。見 `sim/dispelRules.ts`。
+   */
+  dispelRules: DispelRules = DEFAULT_DISPEL_RULES;
 
   /**
    * 隱形規則 (`config.stealth@1`, see stealth.ts) —— 隱形擋不擋自動索敵／手動

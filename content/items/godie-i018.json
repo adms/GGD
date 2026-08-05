@@ -1,51 +1,63 @@
 {
-  "id": "godie-i018",
-  "schema": "item@1",
-  "name": "朗基努斯之槍",
-  "icon": "assets/icons/items/godie-i018.webp",
-  "description": "神器\n效能\n力量+12\n敏捷+12\n[On-Hit] (總敏捷)% 機率性造成等同 (總力量) 之閃電傷害 (On-Hit)\n\n解說\n據說是沾有神之血的傳說武器，無法判定是否為真品。",
-  "cost": 0,
-  "tier": 2,
-  "attributes": {
-    "agi": 12,
-    "str": 12
-  },
-  "tags": [
-    "wc3-import"
-  ],
-  "craftRole": "final",
-  "recipe": {
-    "book": "godie-i024",
-    "components": [
-      "godie-i01g"
-    ]
-  },
-  "authoringNote": "「力量+12 敏捷+12」= attributes {str:12, agi:12}(item@1.attributes,機制見 四魂之玉 godie-i00z 與 sim/stats/attrSources.ts)。\n⚠️ **攻速加成沒有了 —— owner 2026-08-01 裁定「取消攻速加成」**。所以這份文件現在**一條 modifiers 都沒有**,而文案裡的「攻擊速度+55%」那一行也在同一次改寫裡刪掉:留著文案卻拿掉資料,三選一卡片就會承諾一個玩家永遠拿不到的數字(legendaryClaims.test.ts 正是抓這個)。這次文案改寫登記在 packages/shared/src/content/__fixtures__/legendary49OwnerText.json 的 _sanctionedRewrites。要放回去是**加回一條 modifiers {stat:\"as\", op:\"pctAdd\", value:0.55} 並把那一行文案寫回去**,不是改程式。\n[On-Hit]「(總敏捷)% 機率性造成等同 (總力量) 之閃電傷害」= passive onBasicAttack,兩個軸各自落在一個新欄位上:\n  · 機率 = HookDef.chanceFrom {attr:\"agi\", basis:\"total\", coeff:0.01, min:0, max:1}\n  · 傷害 = Scaling.attrRatios [{attr:\"str\", basis:\"total\", coeff:1}]\n「總」= basis \"total\"(含裝備),對應 Blizzard 的 GetHeroStatBJ(…, true);原作也用過 false(蒼月潮 07-00 的 120 敏上限),所以 basis 是欄位不是寫死。\n⚠️ **機率是無界的,而我沒有偷偷夾它**。max 出貨值是 **1.0**,也就是「機率的數學上限」而不是一個設計上的削弱 —— 把 max 壓在 1.0 以下會讓文案在後期變成謊話,而竄改 owner 的文案不是我的權限。MEASURED(出貨 combat-env,AGI 基礎 20 + 成長 2.3/級 + 本槍 12):\n    lv1  ≈ 32 敏 → 32%      lv10 ≈ 53 敏 → 53%\n    lv15 ≈ 64 敏 → 64%      再加滿 20 層屬性強化(最多 +40)→ 90%+\n  也就是說**後期接近必定觸發**。如果 owner 要一個真的上限,`max` 就是那個欄位(例如 0.5),改一個下拉、不用改程式。\n⚠️ coeff 的 schema 上界是 CHANCE_PER_ATTR_MAX = 0.1,那是**打錯數字的守衛**:寫 1 而不是 0.01 = 「一點敏捷 100%」,而 clamp 會幫它藏起來(永遠觸發,diff 裡看不出來)。\n⚠️ chance 與 chanceFrom **互斥**(schema 在載入時擋)——「相乘還是取代」沒有正確答案。抽籤的**次數與位置**完全沒變,所以既有內容的亂數流一個位元都沒動。\n⚠️ **owner 要看的數字**:傷害 = 總力量 × 1.0。STR 基礎 20 + 成長 + 本槍 12,lv10 約 53 點,再乘 combat-env damageDealt(0.5)≈ 26 —— 配 53% 觸發率、而且**攻速加成已由 owner 取消**(所以每秒揮幾下完全由英雄自己的攻速決定),DPS 增益溫和。要更兇就調 attrRatios.coeff(原作 JASS 最大用到 9)。\ndamageType 選 magic(閃電),吃魔抗。",
-  "passive": [
-    {
-      "chanceFrom": {
-        "attr": "agi",
-        "basis": "total",
-        "coeff": 0.01,
-        "max": 1,
-        "min": 0
-      },
-      "effects": [
-        {
-          "amount": {
-            "attrRatios": [
-              {
-                "attr": "str",
-                "basis": "total",
-                "coeff": 1
-              }
-            ]
-          },
-          "damageType": "magic",
-          "kind": "damage"
-        }
-      ],
-      "on": "onBasicAttack"
-    }
+ "id": "godie-i018",
+ "schema": "item@1",
+ "name": "朗基努斯之槍",
+ "icon": "assets/icons/items/godie-i018.webp",
+ "description": "神器\n效能\n力量+12\n敏捷+12\n[On-Hit] (總敏捷)% 機率性造成等同 (總力量) 之閃電傷害 (On-Hit)\n[淨化] On-Hit 機率移除目標身上的增益\n\n解說\n據說是沾有神之血的傳說武器，無法判定是否為真品。",
+ "cost": 0,
+ "tier": 2,
+ "attributes": {
+  "agi": 12,
+  "str": 12
+ },
+ "tags": [
+  "wc3-import"
+ ],
+ "craftRole": "final",
+ "recipe": {
+  "book": "godie-i024",
+  "components": [
+   "godie-i01g"
   ]
+ },
+ "authoringNote": "「力量+12 敏捷+12」= attributes {str:12, agi:12}(item@1.attributes,機制見 四魂之玉 godie-i00z 與 sim/stats/attrSources.ts)。\n⚠️ **攻速加成沒有了 —— owner 2026-08-01 裁定「取消攻速加成」**。所以這份文件現在**一條 modifiers 都沒有**,而文案裡的「攻擊速度+55%」那一行也在同一次改寫裡刪掉:留著文案卻拿掉資料,三選一卡片就會承諾一個玩家永遠拿不到的數字(legendaryClaims.test.ts 正是抓這個)。這次文案改寫登記在 packages/shared/src/content/__fixtures__/legendary49OwnerText.json 的 _sanctionedRewrites。要放回去是**加回一條 modifiers {stat:\"as\", op:\"pctAdd\", value:0.55} 並把那一行文案寫回去**,不是改程式。\n[On-Hit]「(總敏捷)% 機率性造成等同 (總力量) 之閃電傷害」= passive onBasicAttack,兩個軸各自落在一個新欄位上:\n  · 機率 = HookDef.chanceFrom {attr:\"agi\", basis:\"total\", coeff:0.01, min:0, max:1}\n  · 傷害 = Scaling.attrRatios [{attr:\"str\", basis:\"total\", coeff:1}]\n「總」= basis \"total\"(含裝備),對應 Blizzard 的 GetHeroStatBJ(…, true);原作也用過 false(蒼月潮 07-00 的 120 敏上限),所以 basis 是欄位不是寫死。\n⚠️ **機率是無界的,而我沒有偷偷夾它**。max 出貨值是 **1.0**,也就是「機率的數學上限」而不是一個設計上的削弱 —— 把 max 壓在 1.0 以下會讓文案在後期變成謊話,而竄改 owner 的文案不是我的權限。MEASURED(出貨 combat-env,AGI 基礎 20 + 成長 2.3/級 + 本槍 12):\n    lv1  ≈ 32 敏 → 32%      lv10 ≈ 53 敏 → 53%\n    lv15 ≈ 64 敏 → 64%      再加滿 20 層屬性強化(最多 +40)→ 90%+\n  也就是說**後期接近必定觸發**。如果 owner 要一個真的上限,`max` 就是那個欄位(例如 0.5),改一個下拉、不用改程式。\n⚠️ coeff 的 schema 上界是 CHANCE_PER_ATTR_MAX = 0.1,那是**打錯數字的守衛**:寫 1 而不是 0.01 = 「一點敏捷 100%」,而 clamp 會幫它藏起來(永遠觸發,diff 裡看不出來)。\n⚠️ chance 與 chanceFrom **互斥**(schema 在載入時擋)——「相乘還是取代」沒有正確答案。抽籤的**次數與位置**完全沒變,所以既有內容的亂數流一個位元都沒動。\n⚠️ **owner 要看的數字**:傷害 = 總力量 × 1.0。STR 基礎 20 + 成長 + 本槍 12,lv10 約 53 點,再乘 combat-env damageDealt(0.5)≈ 26 —— 配 53% 觸發率、而且**攻速加成已由 owner 取消**(所以每秒揮幾下完全由英雄自己的攻速決定),DPS 增益溫和。要更兇就調 attrRatios.coeff(原作 JASS 最大用到 9)。\ndamageType 選 magic(閃電),吃魔抗。 ｜ [淨化]（A4b/#278）：`chance: 0.1` 逐字來自它自己的製作書 godie-i024「10%機率淨化(法球)」（WC3 Purge 法球）。`count: 1` 表示一次拔一層；**沒有寫 count 的話會用後台「淨化規則」頁的全域上限（出貨 3）**，而那對一件 On-Hit 道具太強。要調強弱改這裡的 chance 或 count，要改「拔不拔得到沒標記的增益」則是後台那一頁的 buffDefaultDispellable（出貨關著）。",
+ "passive": [
+  {
+   "chanceFrom": {
+    "attr": "agi",
+    "basis": "total",
+    "coeff": 0.01,
+    "max": 1,
+    "min": 0
+   },
+   "effects": [
+    {
+     "amount": {
+      "attrRatios": [
+       {
+        "attr": "str",
+        "basis": "total",
+        "coeff": 1
+       }
+      ]
+     },
+     "damageType": "magic",
+     "kind": "damage"
+    }
+   ],
+   "on": "onBasicAttack"
+  },
+  {
+   "on": "onBasicAttack",
+   "chance": 0.1,
+   "effects": [
+    {
+     "kind": "dispel",
+     "shape": "single",
+     "polarity": "buff",
+     "count": 1
+    }
+   ]
+  }
+ ]
 }

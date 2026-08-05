@@ -113,14 +113,18 @@ function onHitCategory(): string {
 }
 
 describe("道具卡片排版頁 (adminui-item-card-save)", () => {
-  it("32 列標記真的被畫出來 —— 這一頁不是只有六格顏色", async () => {
+  it("出貨的每一列標記都真的被畫出來 —— 這一頁不是只有六格顏色", async () => {
     cover(TAG);
     const h = await open();
-    // 32 個鍵輸入框 + 32 個分類下拉。少了它們，這一頁就退回「六格顏色」，
-    // 而 owner 那天要改的東西一格都改不到。
+    // 每一列都要有一個鍵輸入框 + 一個分類下拉。少了它們，這一頁就退回
+    // 「六格顏色」，而 owner 那天要改的東西一格都改不到。
+    // ⚠️ 列數**從出貨文件推導**：寫死 32 的那一版在加了【淨化】之後就會紅，
+    // 而且訊息會指向「這一頁壞了」，真相只是表變長了（CLAUDE.md 第四個住處）。
+    const n = Object.keys(shippedDoc("item-card")["markers"] as object).length;
+    expect(n).toBeGreaterThan(10); // 夾具前提：出貨表不是空的
     expect(h.fieldOrNull("table.markers.0.key")).not.toBeNull();
-    expect(h.fieldOrNull("table.markers.31.key")).not.toBeNull();
-    expect(h.fieldOrNull("table.markers.32.key")).toBeNull();
+    expect(h.fieldOrNull(`table.markers.${n - 1}.key`)).not.toBeNull();
+    expect(h.fieldOrNull(`table.markers.${n}.key`)).toBeNull();
     expect(h.field("table.markers.4.key").props["value"]).toBe("On-Hit");
     expect(h.field("table.markers.4.value").props["value"]).toBe("active");
     // 另外三張表也在（純字串那一族）。
@@ -147,8 +151,12 @@ describe("道具卡片排版頁 (adminui-item-card-save)", () => {
     expect(bus.puts[0]!.id).toBe("item-card");
     expect(doc["schema"]).toBe("config.item-card@1");
     expect((doc["markers"] as Record<string, string>)["On-Hit"]).toBe("passive");
-    // 另外 31 列一列都沒掉（整批取代，所以掉了就真的掉了）。
-    expect(Object.keys(doc["markers"] as object)).toHaveLength(32);
+    // 其餘每一列都沒掉（整批取代，所以掉了就真的掉了）。
+    // ⚠️ 長度從出貨文件推導,不抄字面值 —— 這一頁的正確性是「改了一列、
+    // 其他列原封不動」,跟表有幾列無關(CLAUDE.md：驗機制不驗數字)。
+    expect(Object.keys(doc["markers"] as object)).toHaveLength(
+      Object.keys(shippedDoc("item-card")["markers"] as object).length,
+    );
     // ⚠️ `OnHit`（沒有連字號的那一種寫法）**不會**被一起改 —— 它是另外一列。
     expect((doc["markers"] as Record<string, string>)["OnHit"]).toBe("active");
 
@@ -170,7 +178,9 @@ describe("道具卡片排版頁 (adminui-item-card-save)", () => {
     await h.flush();
 
     const doc = bus.puts[0]!.doc;
-    expect(Object.keys(doc["markers"] as object)).toHaveLength(31);
+    expect(Object.keys(doc["markers"] as object)).toHaveLength(
+      Object.keys(shippedDoc("item-card")["markers"] as object).length - 1,
+    );
     expect((doc["markers"] as Record<string, string>)["神速"]).toBeUndefined();
 
     applyItemCardDoc(doc as never);

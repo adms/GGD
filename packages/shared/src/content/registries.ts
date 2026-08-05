@@ -9,6 +9,7 @@ import {
   Items,
   LootTables,
   Projectiles,
+  Statuses,
   registerChampion,
 } from "../sim/content/registry";
 import type {
@@ -181,6 +182,12 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
+  // sim 那一側只要 `polarity`(A4b/#278)。兩張表分開是刻意的:
+  // UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿一格布林式的事實,
+  // 而 `sim/**` 不 import `content/**`(那條分層今天是乾淨的,別弄髒它)。
+  for (const d of store.all<StatusEffectDoc>("status-effects")) {
+    Statuses.register(d.id, { polarity: d.polarity });
+  }
   for (const d of store.all<SkinDoc>("skins")) Skins.register(d);
 
   // ---- 要大聲 ----------------------------------------------------------------

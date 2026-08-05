@@ -547,3 +547,19 @@ export interface LootTable {
   id: string;
   entries: { itemId: ItemId; weight: number }[];
 }
+
+/**
+ * `status-effect@1` 裡**唯一被 sim 讀到**的那一格（A4b，#278）。
+ *
+ * ⚠️ 這份 def 刻意只有一個欄位。`status-effect@1` 的其餘內容（name / icon /
+ * description）是**顯示身分**，由 UI 那一側自己讀 `content/registries.ts` 的
+ * `StatusEffects` —— sim 不需要、也不該把它們拉進純度閘裡面。
+ *
+ * ⛔ 而 `polarity` 必須走這條路，不可以在 `applyStatus` 裡從欄位猜：一個
+ * `moveSpeedMult: 1.3` 的加速與 `0.7` 的減速在結構上長得一模一樣，任何啟發式
+ * 都會在某一張卡上錯，而且從編輯器修不掉（`components.ts` 的 `StatusEffect.polarity`
+ * 檔頭寫的就是這件事）。
+ */
+export interface StatusMeta {
+  polarity?: "buff" | "debuff";
+}

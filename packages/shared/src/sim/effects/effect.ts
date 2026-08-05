@@ -516,6 +516,39 @@ export type EffectDef =
    * 天生牙 godie-i031 「[復活] 殺死任一個敵方英雄單位，將復活我方所有英雄」 —— the
    * 「我方所有英雄」 half is the hook's `target: "allies"` scope, not this effect.
    */
+  /**
+   * 【淨化】【驅散】(A4b, #278) —— 把目標身上選定的池子清掉。
+   * 行為在 `sim/effects/dispel.ts`，池子的語意在 `sim/clearPools.ts`，
+   * 全域旋鈕在 `sim/dispelRules.ts`（`config.dispel@1`）。
+   */
+  | {
+      kind: "dispel";
+      /**
+       * ⭐ E1 硬約束（owner 核准）：**新 kind 一律帶 `shape`**。
+       *
+       *   single  清 hook/技能已經解析好的那些人（`target: self|event|allies`
+       *           那一層決定的）—— 這個 kind 不重新發明目標選擇
+       *   circle  以受害者/施法點/施法者為圓心的一個圓
+       *
+       * ⚠️ `line` / `cone` **刻意不在 enum 裡**：今天沒有任何一份文件需要它們，
+       * 而一個 schema 收得下、引擎沒實作的值正是同一批裡剛刪掉的 `onLevelUp`。
+       */
+      shape: "single" | "circle";
+      /** `shape:"circle"` 必填。吃 `combatEnv.abilityRange` 倍率。 */
+      radius?: number;
+      /** `shape:"circle"` 才有意義：清友軍（預設）還是清敵人。 */
+      side?: "allies" | "enemies";
+      /** `shape:"circle"` 的人數上限。省略 = 圓內全部。 */
+      maxTargets?: number;
+      /** 清哪幾池。省略 = `config.dispel@1` 的四個 `defaultPool*`。 */
+      pools?: { status?: boolean; shields?: boolean; dot?: boolean; buffs?: boolean };
+      /** 只清這一種極性。省略 = `"debuff"`（淨化的字面意思）。 */
+      polarity?: "buff" | "debuff" | "any";
+      /** 每一池最多拔幾層。省略 = `maxCountCap`；寫了也**夾不過**它。 */
+      count?: number;
+      /** 拔不完時先拔哪一邊。省略 = `defaultOrder`。 */
+      order?: "newest" | "oldest";
+    }
   | {
       kind: "revive";
       /**

@@ -231,8 +231,40 @@ function refineDotResourceBudget(
   }
 }
 
+/**
+ * `shape` 與幾何欄位的**交叉檢查**（A4b / E1）。
+ *
+ * ⚠️ 為什麼是**載入時**的解析錯誤而不是執行期的靜默退化：
+ * 一份 `{kind:"dispel", shape:"circle"}` 沒寫 radius 的文件，在執行期
+ * `radius ?? 0` → `radius <= 0` → **直接 return**。技能放得出來、動畫演完、
+ * 什麼都沒發生，而且沒有任何訊息 —— 失敗形態 ②。
+ */
+function refineDispelShape(
+  e: Extract<EffectDef, { kind: "dispel" }>,
+  ctx: z.RefinementCtx,
+): void {
+  if (e.shape === "circle" && e.radius === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["radius"],
+      message: 'shape:"circle" 一定要有 radius —— 沒有半徑的圓在執行期會直接 return，技能放得出來但什麼都不會發生',
+    });
+  }
+  // 反向：單體卻寫了圓的欄位 = 作者以為自己設定了範圍，而那三格沒有人讀。
+  for (const k of ["radius", "side", "maxTargets"] as const) {
+    if (e.shape === "single" && e[k] !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [k],
+        message: `shape:"single" 讀不到 ${k} —— 要用範圍請改成 shape:"circle"，否則這一格是一個看起來有設、其實沒有人讀的數字`,
+      });
+    }
+  }
+}
+
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
+  if (e.kind === "dispel") return refineDispelShape(e, ctx);
   if (e.kind !== "grantAttribute") return;
   if (e.store !== "source") {
     if (e.maxSourceTotal !== undefined) {
@@ -1146,6 +1178,57 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       fallbackLevel: z.number().int().min(0).max(99).optional(),
       /** 誰收錢：施法者（預設）或每一個解析出來的目標 */
       to: z.enum(["self", "target"]).optional(),
+    })
+    .strict(),
+  /**
+   * 【淨化】/【驅散】(A4b, #278) —— mirrors the `dispel` member of `EffectDef`
+   * in sim/effects/effect.ts。行為在 `sim/effects/dispel.ts`。
+   */
+  z
+    .object({
+      kind: z.literal("dispel"),
+      /**
+       * ⭐ **E1 硬約束（owner 核准）：新 kind 一律帶 `shape`。**
+       *
+       * ⚠️ `line` / `cone` 刻意不在 enum 裡 —— 今天沒有文件需要它們，而一個
+       * schema 收得下、引擎沒實作的值，正是同一批裡剛被刪掉的 `onLevelUp`。
+       */
+      shape: z.enum(["single", "circle"]),
+      /**
+       * `shape:"circle"` **必填**（由 `refineDispelShape` 在載入時擋）。
+       * 吃 `combatEnv.abilityRange`。上界 40 ≈ 競技場直徑：再大就是「全場」，
+       * 而那該用 `target:"allies"` 的全隊語意寫，不是一個假裝有半徑的圓。
+       */
+      radius: z.number().positive().max(40).optional(),
+      /** `shape:"circle"` 清友軍（預設）還是清敵人。 */
+      side: z.enum(["allies", "enemies"]).optional(),
+      /** 圓內人數上限。省略 = 全部。上界 24 = 一場的總人數。 */
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /**
+       * 清哪幾池。省略 = `config.dispel@1` 的四個 `defaultPool*`。
+       *
+       * ⚠️ `buffs` 打開 = 拔得掉道具被動／增益卡／靈氣投影。出貨的
+       * `buffDefaultDispellable` 是 **false**，所以就算這一格開著，
+       * 沒有明確標 `dispellable: true` 的來源仍然拔不走 —— 兩道閘是刻意的。
+       */
+      pools: z
+        .object({
+          status: z.boolean().optional(),
+          shields: z.boolean().optional(),
+          dot: z.boolean().optional(),
+          buffs: z.boolean().optional(),
+        })
+        .strict()
+        .optional(),
+      /** 只清這一種極性。省略 = `"debuff"`（淨化的字面意思）。 */
+      polarity: z.enum(["buff", "debuff", "any"]).optional(),
+      /**
+       * 每一池最多拔幾層。省略 = 後台的 `maxCountCap`；
+       * **寫了也夾不過它**（一句話管到底，見 `sim/dispelRules.ts`）。
+       */
+      count: z.number().int().positive().max(50).optional(),
+      /** 拔不完時先拔哪一邊。省略 = 後台的 `defaultOrder`。 */
+      order: z.enum(["newest", "oldest"]).optional(),
     })
     .strict(),
 ]);

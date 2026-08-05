@@ -129,6 +129,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "damageArea", // task #210
         "damageLine", // 13-03 龍頭戲畫。佈壁 —— 一條走廊，不是一個圓
         "dash",
+        // 【淨化】A4b（#278）。它與 `PreviewController.effectLines` 的
+        // `case "dispel"` 同時進來 —— 那個 `never` 分支在我加進 union 的當下就
+        // 把編譯打紅了，所以「補 tag」在這一支從來不是一個選項。
+        "dispel",
         // ── GH#289 RESERVED KINDS ─────────────────────────────────────────
         // Five slots landed AHEAD of their implementations so that six
         // parallel primitive lanes never edit the shared union concurrently.

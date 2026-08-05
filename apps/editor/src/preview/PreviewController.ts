@@ -453,6 +453,28 @@ function effectLines(
             ` (${e.to === "target" ? "給目標" : "給自己"})`,
         });
         break;
+      // 【淨化】/【驅散】(A4b, #278)。⚠️ 這一格是 EXHAUSTIVENESS TRIPWIRE
+      // 逼出來的 —— 它做的正是下面那段註解說的事：新 kind 沒有在這裡處理，
+      // 編譯就過不去，而不是安靜地預覽成一行空白。
+      case "dispel": {
+        const pools = e.pools
+          ? (["status", "dot", "shields", "buffs"] as const)
+              .filter((k) => e.pools?.[k])
+              .join(" + ")
+          : "後台預設的池子";
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `淨化 ${e.polarity === "buff" ? "增益" : e.polarity === "any" ? "增益與減益" : "減益"}` +
+            ` · ${pools}` +
+            `${e.shape === "circle" ? ` · 圓形 ${e.radius ?? "?"}（吃 abilityRange）` : " · 單體"}` +
+            `${e.shape === "circle" ? `／${e.side === "enemies" ? "敵方" : "友方"}` : ""}` +
+            `${e.maxTargets !== undefined ? ` · 最多 ${e.maxTargets} 人` : ""}` +
+            `${e.count !== undefined ? ` · 每人最多 ${e.count} 層` : " · 層數用後台上限"}`,
+        });
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

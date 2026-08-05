@@ -515,8 +515,18 @@ describe("§5 the shipped docs still say what the 效能 prose says", () => {
     const d = doc(FANG) as { description: string; passive: Record<string, unknown>[] };
     expect(d.description).toContain("[復活] 殺死任一個敵方英雄單位");
     expect(d.description).toContain("[回復] 殺死任一個敵方單位");
-    const hooks = d.passive;
+    // ⚠️ 這裡篩 `on === "onKill"` 而不是斷言 `d.passive.length === 2`。
+    // 這條測試的標題就寫著它守的是什麼:「**兩條 onKill** 只差在 victim」——
+    // 「這件道具總共只有兩條被動」是另一件事,而那件事沒有人主張過。
+    // 2026-08-05（A4b/#278）天生牙依 owner 裁決多了一條 `onInterval` 的
+    // 【淨化】光環,總數斷言就此變成一條**過期的規格**:它會在別人做對事情的
+    // 時候紅,而且用錯誤的訊息紅(參 CLAUDE.md「itemTiers 那一型」)。
+    const hooks = d.passive.filter((h) => h.on === "onKill");
     expect(hooks.length).toBe(2);
+    // 但也不可以就這樣放生:第三條必須真的是那條被授權的淨化,
+    // 否則任何人往這件道具上黏任何東西都不會被發現。
+    const others = d.passive.filter((h) => h.on !== "onKill");
+    expect(others.map((h) => (h.effects as { kind: string }[])[0]!.kind)).toEqual(["dispel"]);
     for (const h of hooks) {
       expect(h.on).toBe("onKill");
       expect(h.target).toBe("allies"); // 「我方所有英雄」 / 「我們全部英雄」

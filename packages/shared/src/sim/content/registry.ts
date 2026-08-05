@@ -4,7 +4,15 @@
  * JSON ContentLoader later) is invisible to engine code.
  */
 import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
-import type { AbilityDef, AugmentDef, ChampionDef, ItemDef, LootTable, ProjectileDef } from "./defs";
+import type {
+  AbilityDef,
+  AugmentDef,
+  ChampionDef,
+  ItemDef,
+  LootTable,
+  ProjectileDef,
+  StatusMeta,
+} from "./defs";
 
 class Registry<K extends string, V> {
   private map = new Map<K, V>();
@@ -37,6 +45,20 @@ export const Items = new Registry<ItemId, ItemDef>();
 export const Augments = new Registry<AugmentId, AugmentDef>();
 export const Projectiles = new Registry<ProjectileId, ProjectileDef>();
 export const LootTables = new Registry<string, LootTable>();
+/**
+ * statusId → 它是增益還是減益（A4b，#278）。
+ *
+ * ⚠️ **在此之前這條線根本不存在**：14 份 `status-effect@1` 文件 14 份都填了
+ * `polarity`，`StatusEffect.polarity` 這一格也在，而 `applyStatus` 從來沒有
+ * 把前者寫進後者 —— 於是每一發【淨化】在真的遊戲裡都拔不到任何東西
+ *（七種失敗形態 ②：算出來了但從沒送到）。
+ * `components.ts` 那句「施加的那一刻從 status 文件推導寫下」在 2026-08-05 之前
+ * 是一句**假的**註解（第三守則）。
+ *
+ * 空的登錄表（骨架、單元測試）＝ 查不到 ＝ `polarity` 留 undefined，
+ * 而 `clearPools` 對「不知道」的答案是**不拔**，所以退化方向是安全的那一邊。
+ */
+export const Statuses = new Registry<string, StatusMeta>();
 
 const CORE_SLOTS = ["Q", "W", "E", "R"] as const;
 

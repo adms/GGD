@@ -1068,6 +1068,49 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "比較子本身還在編輯器的條件選單上、`effects/hooks.ts` 也照樣解析它;" +
       "第一支需要「數值高於門檻才觸發」的卡出現時,這條豁免就該被刪掉。",
   },
+
+  // ── 【淨化】dispel 的四格「不寫最好」旋鈕 (A4b, 2026-08-05, #278) ─────────
+  //
+  // ⚠️ 先講**機制不在零**:`dispel` 這個 kind 本身 3/3 採用(朗基努斯之槍
+  // godie-i018 / 仙后座 godie-i01s / 光之聖劍 godie-i031),`shape` 3/3、
+  // `polarity` 3/3(buff 1 + debuff 2)、`count` 3/3,而
+  // `sim/effects/dispel.test.ts` 從真世界兩個方向驗它。
+  //
+  // 下面四格全部是「省略 = 讀 `config.dispel@1`」的那一種:寫進文件等於在
+  // **一支道具上**烘死一個本來全域可調的決定。零採用正是它們該有的樣子 ——
+  // 有人寫它的那天,意思是「這一支要跟全域規則不一樣」,那才是它存在的理由。
+  "field:abilities.effects[]#dispel.pools": {
+    status: "default-live",
+    why:
+      "省略 = 讀 `dispelRules.defaultPool{Status,Dot,Shields,Buffs}`(出貨:狀態✅ DoT✅ 護盾❌ 增益❌)。" +
+      "三支出貨道具全部要的就是「照全域規則」,所以零採用是對的。" +
+      "它存在是為了讓某一支未來的技能可以說「我**只**破盾」(D1 破盾正是這樣用) " +
+      "而不必替它開一個新的 effect kind。",
+  },
+  "field:abilities.effects[]#dispel.order": {
+    status: "default-live",
+    why:
+      "省略 = 讀 `dispelRules.defaultOrder`(出貨 `newest` = 先拔最晚掛上的," +
+      "也就是「剛被暈到就解得掉」那一種玩家預期)。逐支覆寫的意義只有在" +
+      "「這一支專門清殘渣」時才成立,今天沒有那一支。" +
+      "⚠️ 它不是裝飾:`count` 砍不完時「留下哪幾筆」必須決定性,見 `sim/clearPools.ts` 的全序註解。",
+  },
+  "field:abilities.effects[]#dispel.maxTargets": {
+    status: "default-live",
+    why:
+      "只對 `shape: \"circle\"` 有意義,省略 = 圈內全中。唯一的圓形出貨(光之聖劍 godie-i031 " +
+      "的隊友淨化光環)刻意不設上限 —— 一個「有時候會漏掉某個隊友」的光環, " +
+      "玩家看到的是「這道具壞了」而不是「這是設計」。" +
+      "留著是因為攻擊型範圍淨化(敵方圓)一定會需要它,那時候上限是平衡旋鈕不是 bug。",
+  },
+  "enum:abilities.effects[]#dispel.polarity=any": {
+    status: "default-live",
+    why:
+      "`any` = 增益減益一起拔。三支出貨全部是有方向的(對敵拔增益 / 對己拔減益)," +
+      "因為**無差別淨化會拔掉自己隊友的增益**,那幾乎一定是作者手滑而不是意圖。" +
+      "所以零採用正是它該有的樣子:它要留在選單上(WC3 的 Dispel Magic 本體就是無差別," +
+      "1:1 還原那一支的那天要用得到),但不該是任何人不小心選到的預設。",
+  },
 };
 
 let census: Census;

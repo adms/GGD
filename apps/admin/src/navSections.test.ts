@@ -73,6 +73,8 @@ const BASELINE_PAGES: readonly Page[] = [
   "blockRules",
   // #278 Wave 0 —— `config.berserk@1` 從「解析器存在但沒有文件」補成一整條路。
   "berserkRules",
+  // #278 A4b —— 【淨化】的十一個旋鈕。
+  "dispelRules",
   // 批 1（稜彩卡計畫 2026-08-04）新增的一頁：增益卡上「敵方英雄」在殭屍波裡
   // 算不算數。與 護盾規則／格擋規則 同一族，共用 ConfigDocPage。
   "augmentEnemyFilter",

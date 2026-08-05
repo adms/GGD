@@ -93,6 +93,7 @@ import { grantGoldEffect } from "./grantGold"; // 「黃金數量為敵方等級
 // Delegates the STATE CONTRACT to `sim/revive.ts::reviveChampionAt`, the same
 // function the 復活圈 (#84/#206) completes through — so this is a new way to
 // TRIGGER a revive, never a second definition of what a revived champion is.
+import { dispelEffect } from "./dispel";
 import { reviveEffect } from "./revive";
 
 /**
@@ -147,6 +148,10 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   //    the state contract («what a revived champion looks like») is the
   //    circle's own `sim/revive.ts::reviveChampionAt`. See ./revive.ts.
   revive: reviveEffect,
+
+  // ── 【淨化】/【驅散】(A4b) — 清 status / dot / shields / buffs 的選定子集。
+  //    行為 ./dispel.ts，池子語意 ../clearPools.ts，旋鈕 ../dispelRules.ts。
+  dispel: dispelEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)

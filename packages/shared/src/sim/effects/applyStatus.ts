@@ -6,6 +6,7 @@
 import type { EffectKindSpec } from "./effectKind";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
+import { Statuses } from "../content/registry";
 
 export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
   apply(e, ctx) {
@@ -61,6 +62,12 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 暴走 (59-00). 它跟著 status 一起到期,所以「永久失去方向盤」在結構上
           // 不可能發生 —— 見 components.ts 的 `StatusEffect.berserk`。
           berserk: e.berserk,
+          // 增益還是減益 —— A4b(#278) 把這條線接上。
+          // ⛔ 不從 `moveSpeedMult` 之類的欄位猜:1.3 的加速與 0.7 的減速在結構上
+          // 一模一樣。答案住在 `status-effect@1` 文件裡(14/14 都填了),
+          // 而 sim 透過 `Statuses` 登錄表讀它。查不到 = undefined = 有方向的
+          // 淨化拔不到它(`clearPools.polarityPasses`:「不知道」不當成「是」)。
+          polarity: Statuses.tryGet(e.statusId)?.polarity,
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);

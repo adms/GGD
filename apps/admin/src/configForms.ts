@@ -52,6 +52,7 @@ import {
   zConfigReplayDoc,
   zConfigBlockDoc,
   zConfigBerserkDoc,
+  zConfigDispelDoc,
   zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
   zConfigRegenDoc,
@@ -483,6 +484,87 @@ const BLOCK_SPEC: ConfigDocSpec = {
         independent: "independent 各自獨立判定、剩餘往下傳（出貨值＝owner 裁決）",
         best: "best 只有最強的那一件會擋（改成欄位之前的行為）",
       },
+    },
+  ],
+  preserved: [],
+};
+
+const DISPEL_SPEC: ConfigDocSpec = {
+  page: "dispelRules",
+  collection: "config",
+  docId: "dispel",
+  schemaTag: "config.dispel@1",
+  zod: zConfigDispelDoc,
+  title: "淨化規則",
+  intro: [
+    "一發【淨化】拔掉什麼：哪幾池（狀態／延燒／護盾／增益來源）、每一池最多拔幾層、拔不完時留下哪幾個。",
+    "⚠️ **三個「沒標時算不算可拔」是這一頁唯一會真的改變平衡的三格**，而出貨值是刻意不對稱的：狀態與延燒開著（減速／纏繞／燃燒本來就該解得掉，關掉的話【淨化】上線當天什麼都拔不到，而那看起來跟功能壞掉一模一樣），增益來源關著（沒有人預期自己買的裝備效果可以被敵人剝掉）。",
+    "⚠️ 這一頁**不影響復活與回合重置** —— 那兩條走的是另一支函式（`clearForFreshBody`），因為它們不是淨化而是重置：一個標了不可驅散的減速也不可以跨過墳墓活下來。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/dispel.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/effects/dispel.ts（每一發 dispel effect 都會呼叫，讀 world.dispelRules 的全部十一格）→ sim/clearPools.ts；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.dispelRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／暴走規則／基礎加成 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "淨化功能總開關",
+      note: "關掉之後 dispel 這個效果整條不作用（技能還是放得出來，只是什麼都不會被拔）。⚠️ 它**只**關淨化 —— 復活與回合重置照樣清池，那兩條走的是另一支函式。",
+    },
+    {
+      path: "statusDefaultDispellable",
+      zh: "沒標「可驅散」的狀態算不算可拔",
+      note: "14 份狀態文件今天一格都沒標，所以這一格實際上就是「【淨化】拔不拔得到減速／纏繞／暈眩」。填**否**＝上線當天什麼都拔不到。⚠️ 這是三個真的改變平衡的格子之一。",
+    },
+    {
+      path: "dotDefaultDispellable",
+      zh: "沒標「可驅散」的延燒算不算可拔",
+      note: "燃燒／中毒／流血。單獨一格而不是跟狀態共用，因為延燒在這一版之前**完全沒有任何移除路徑** —— 打開它是一次真的能力增加，值得有自己的閥。",
+    },
+    {
+      path: "buffDefaultDispellable",
+      zh: "沒標「可驅散」的增益來源算不算可拔",
+      note: "道具被動／增益卡／靈氣投影。**出貨關著**：沒有人預期自己買的裝備效果可以被敵人剝掉。打開會讓「敵方淨化」變成一個能拆對手裝備的機制 —— 那是一個設計決定，不是一個預設值。",
+    },
+    {
+      path: "defaultPoolStatus",
+      zh: "文件沒寫時預設清不清 狀態",
+      note: "一份 dispel 文件可以自己指定清哪幾池；沒寫的時候用這四格。狀態＝減速／纏繞／暈眩／詛咒那一族。",
+    },
+    {
+      path: "defaultPoolDot",
+      zh: "文件沒寫時預設清不清 延燒",
+      note: "燃燒／中毒／流血這一族的持續傷害。**出貨開著**：這是玩家最預期「一發淨化就該解掉」的東西，關掉的話身上著火時按淨化會完全沒有反應，而畫面上看起來就像技能壞了。",
+    },
+    {
+      path: "defaultPoolShields",
+      zh: "文件沒寫時預設清不清 護盾",
+      note: "**出貨關著**：淨化的語意是「拔狀態」，順手把護盾也吃掉會讓【破盾】那件獨立道具失去存在理由。要破盾的道具自己在文件裡寫 pools。",
+    },
+    {
+      path: "defaultPoolBuffs",
+      zh: "文件沒寫時預設清不清 增益來源",
+      note: "**出貨關著**，理由同上面那一格。⚠️ 就算打開，沒有明確標「可驅散」的來源仍然拔不走 —— 兩道閘是刻意的。",
+    },
+    {
+      path: "maxCountCap",
+      zh: "一發淨化每一池最多拔幾層",
+      note: "全域上限：文件沒寫層數時用它，**文件寫了也夾不過它**。一句話管到底，避免出現兩個會分歧的上限。填 1＝每發只解一層（很弱但很好懂）；填大＝一發清光。",
+    },
+    {
+      path: "defaultOrder",
+      zh: "層數不夠時先拔哪一邊",
+      note: "newest＝先拔**最晚**掛上的（剛被暈到就解得掉 —— 玩家預期的那一種）。oldest＝先拔最早掛上的（優先清快過期的殘渣，實際上比較弱）。⚠️ 這一格同時保證「拔哪一筆」是決定性的：沒有它就是靠陣列順序決定，而那是錄影對不起來的來源。",
+      optionLabels: {
+        newest: "newest 先拔最晚掛上的（出貨值）",
+        oldest: "oldest 先拔最早掛上的",
+      },
+    },
+    {
+      path: "appliesToMobs",
+      zh: "殭屍身上的狀態吃不吃淨化",
+      note: "獨立一格的理由與 嘲弄規則 那一頁的同名欄位一模一樣：第 3 場之後場上大多數敵人就是殭屍，PvE 與 PvP 的答案不一定相同。關掉＝淨化只對英雄有效。",
     },
   ],
   preserved: [],
@@ -1560,6 +1642,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   SHIELD_SPEC,
   BLOCK_SPEC,
   BERSERK_SPEC,
+  DISPEL_SPEC,
   AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,
   TAUNT_SPEC,

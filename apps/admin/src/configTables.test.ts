@@ -15,7 +15,7 @@
  *    以為自己設了兩條規則，實際上只有一條，而兩列都還在畫面上。
  *
  * ⚠️ 基底用的是 `content/config/item-card.json` **本人**，不是捏一份三列的假表 ——
- * 捏一份的話「32 列一列都不能掉」那條就是空的（失敗形態 ⑤）。
+ * 捏一份的話「出貨的每一列都不能掉」那條就是空的（失敗形態 ⑤）。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -52,14 +52,18 @@ function table(path: string): ConfigTableSpec {
 }
 
 describe("道具卡片的對照表 (adminui-config-tables)", () => {
-  it("出貨的 32 列標記讀進來、驗過、寫回去，逐鍵逐值相同", () => {
+  it("出貨的每一列標記都讀進來、驗過、寫回去，逐鍵逐值相同", () => {
     cover(TAG);
     const doc = shippedItemCard();
     const spec = table("markers");
     const rows = tableRowsFrom(doc, spec);
-    // 32 是出貨表的長度。寫死它是刻意的：這條守衛要擋的正是「讀進來少了幾列」，
-    // 而 `rows.length > 0` 對「只讀到一列」也會過。
-    expect(rows).toHaveLength(32);
+    // ⚠️ 這裡要擋的是「讀進來少了幾列」，而 `rows.length > 0` 對「只讀到一列」
+    // 也會過。所以長度要**從出貨文件推導**，不是抄一個字面值 —— 原本寫死的 32
+    // 在 2026-08-05 加了【淨化】那一列之後就變成謊話，而且它會在別人做對事情
+    // 的時候紅（CLAUDE.md：出貨數值住進測試＝第四個住處，必過期）。
+    const shippedCount = Object.keys(doc["markers"] as object).length;
+    expect(shippedCount).toBeGreaterThan(10); // 夾具前提：出貨表不是空的
+    expect(rows).toHaveLength(shippedCount);
     expect(rows[0]).toEqual({ key: "神速", value: "stat" });
     expect(rows.find((r) => r.key === "On-Hit")?.value).toBe("active");
     // `On-Hit` 與 `OnHit` 是兩列，因為 owner 的原稿兩種都寫過。
@@ -150,9 +154,11 @@ describe("道具卡片的對照表 (adminui-config-tables)", () => {
     expect(validateTable([{ key: "新標記", value: row.value }], spec).value).toEqual({
       新標記: "stat",
     });
-    const grown = addTableRow(tableRowsFrom(shippedItemCard(), spec), spec);
-    expect(grown).toHaveLength(33);
-    expect(removeTableRow(grown, 32)).toHaveLength(32);
+    const base = tableRowsFrom(shippedItemCard(), spec);
+    const grown = addTableRow(base, spec);
+    expect(grown).toHaveLength(base.length + 1);
+    // 拿掉剛加的那一列（索引 = 原本的長度）就回到原狀。
+    expect(removeTableRow(grown, base.length)).toHaveLength(base.length);
   });
 
   it("純字串表（段落標題）進出都是一個陣列", () => {

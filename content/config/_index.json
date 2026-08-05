@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5bdb64248220",
+  "hash": "ae24d1620755",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -87,6 +87,12 @@
       "size": 1471
     },
     {
+      "id": "dispel",
+      "path": "config/dispel.json",
+      "hash": "44e21261266d",
+      "size": 1156
+    },
+    {
       "id": "form-visuals",
       "path": "config/form-visuals.json",
       "hash": "93452b5fa521",
@@ -107,8 +113,8 @@
     {
       "id": "item-card",
       "path": "config/item-card.json",
-      "hash": "aa0245bab4d6",
-      "size": 1757
+      "hash": "e71a89e8339e",
+      "size": 1971
     },
     {
       "id": "lobby-layout",

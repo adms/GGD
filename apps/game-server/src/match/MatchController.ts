@@ -37,6 +37,11 @@ import {
 } from "@ggd/shared/sim/abilities/berserkRules";
 import { clearForFreshBody } from "@ggd/shared/sim/clearPools";
 import {
+  DISPEL_DOC_ID,
+  dispelRulesFromDoc,
+  type DispelRules,
+} from "@ggd/shared/sim/dispelRules";
+import {
   AUGMENT_ENEMY_FILTER_DOC_ID,
   augmentEnemyFilterFromDoc,
   type AugmentEnemyFilter,
@@ -808,6 +813,11 @@ export class MatchController {
      */
     berserkRules: BerserkRules = berserkRulesFromDoc(Configs.tryGet(BERSERK_DOC_ID)),
     /**
+     * 淨化規則 (`config.dispel@1`) —— 【淨化】拔哪幾池、拔幾層。
+     * 和 `blockRules` 完全同一條路（含同一個已知限制：後台改了要重啟 shard）。
+     */
+    dispelRules: DispelRules = dispelRulesFromDoc(Configs.tryGet(DISPEL_DOC_ID)),
+    /**
      * 增益卡敵方過濾 (`config.augment-filter@1`, 批 1 決策點 1-1) —— 殭屍算不算
      * `victim: "enemyChampion"` 的敵人。和 `blockRules` 完全同一條路(含同一個
      * 已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
@@ -890,6 +900,8 @@ export class MatchController {
     this.world.blockRules = blockRules;
     // 暴走規則 (`config.berserk@1`) —— 同樣在 tick 0 之前定格。
     this.world.berserkRules = berserkRules;
+    // 淨化規則 (`config.dispel@1`) —— 同樣在 tick 0 之前定格。
+    this.world.dispelRules = dispelRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
     //
     // ⛔ 2026-08-05：**這一行本來不存在，而它上面那句註解一直在那裡。**

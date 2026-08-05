@@ -1,0 +1,16 @@
+{
+  "id": "dispel",
+  "schema": "config.dispel@1",
+  "note": "淨化規則（A4b / #278）。決定一發【淨化】拔掉什麼：哪幾池、拔幾層、拔不完時留下哪幾個、以及「作者沒標 dispellable 時算不算可拔」。⚠️ 三個 *DefaultDispellable 是刻意不對稱的：status 與 dot 出貨 true（減速/纏繞/燃燒本來就該解得掉，否則【淨化】上線當天什麼都拔不到，而那看起來跟壞掉一模一樣），buffs 出貨 false（沒有人預期自己買的裝備效果可以被敵人剝掉 —— 打開它是一個設計決定，不是一個預設值）。語意與上下界寫在 packages/shared/src/sim/dispelRules.ts。⚠️ 後台『淨化規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案 —— 線上存過之後，改這裡不會生效。",
+  "enabled": true,
+  "statusDefaultDispellable": true,
+  "dotDefaultDispellable": true,
+  "buffDefaultDispellable": false,
+  "defaultPoolStatus": true,
+  "defaultPoolDot": true,
+  "defaultPoolShields": false,
+  "defaultPoolBuffs": false,
+  "maxCountCap": 3,
+  "defaultOrder": "newest",
+  "appliesToMobs": true
+}
