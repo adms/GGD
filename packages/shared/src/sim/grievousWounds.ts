@@ -36,7 +36,24 @@ import type { SimWorld } from "./SimWorld";
 import type { EntityId } from "../ids";
 import type { StatusEffect } from "./components";
 
-/** 三格倍率各自的取用軸。 */
+/**
+ * 三格倍率各自的取用軸。
+ *
+ * ── ⚠️ `lifestealMult` 通常**不是**你要的東西 —— 吸血請改 `lifesteal` 屬性 ──
+ * 2026-08-05 我試著把出貨的四件重創道具（祕銀鎖子甲／雷神之鎚／貫雷槍／晨曦之光）
+ * 從 `applyBuff` + `{stat:"lifesteal", op:"pctMult", value:-0.5}` 遷到這一格，
+ * 理由是「一個標籤不該有兩套機制」。**遷移是錯的，而既有守衛擋下來了** ——
+ * `lanceGodieI01g.test.ts` 與 `economy/legendaryTags.test.ts` 共 5 條，
+ * 它們讀的是 `final[Stat.Lifesteal]` 本身。
+ *
+ * 它們是對的：走屬性那條路，玩家的**屬性面板會顯示吸血掉一半**；走係數那一步，
+ * 面板顯示原值而回血偷偷減半 —— 那正是 task #125「顯示的數字必須是最終值」在防的。
+ * 所以 `lifestealMult` 只在你**真的需要 `stackMode` 語意**（多發重創取 max 而不是
+ * 相乘）時才用。
+ *
+ * ⭐ 另外兩格沒有這個選擇：**治療與自然回復不是 Stat**，屬性管線表達不了，
+ * 只能走這裡 —— 那才是這一族存在的理由，而它們在等一張真的需要減療的卡。
+ */
 export type WoundAxis = "healingTakenMult" | "lifestealMult" | "regenMult";
 
 /** 多筆重創怎麼疊。 */
