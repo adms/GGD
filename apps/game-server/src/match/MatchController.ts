@@ -1515,16 +1515,25 @@ export class MatchController {
     // 的** —— 它在的理由是:哪天安全網被繞過(skipPhase 作弊、fault failsafe
     // 強制推進階段),那三張卡的存在會被記下來而不是憑空消失。picked=null 的
     // 紀錄讓 `offered = picked + autoPicked + declined` 這條等式仍然成立。
-    for (const offer of this.offers.values()) {
-      this.ledger.recordOffer({
-        seatId: offer.seatId,
-        round: this.phase.round,
-        tick: this.world.tick,
-        kind: MatchController.offerKindOf(offer),
-        offered: [...offer.choices],
-        picked: null,
-        auto: false,
-      });
+    // ⭐ 2026-08-06 —— 這裡以前只是**記下來**再 `clear()`,也就是把卡丟掉。
+    // owner:「我前面已購買 寶玉 或 強化屬性 出現隨機三選一來不及選,請隨機幫我
+    // 選一個避免買了沒選到吃虧」。
+    //
+    // ⛔ 上面那段舊註解說「正常情況下這個迴圈是空的,#207 的過期安全網會處理」
+    // —— 那句話**有一個沒說出口的前提**:安全網只跑在 `case "intermission"` 裡。
+    // 而寶玉／強化屬性是在**商店**買的,陣亡者可以在**戰鬥中**買
+    //(見 `sim/economy/shopAccess.ts`),所以那張卡是在 `combat` 相位生出來的,
+    // 中間經過 resolution 完全沒有人管它。只要相位被 skipPhase 或 failsafe 推進,
+    // 它就走到這裡被丟掉 —— 而玩家已經付了 2400 金或 375 金。
+    //
+    // 改成**在丟掉之前一定先自動選**,用與 #207 完全同一支 `autoPickIndex`
+    //(seeded off the match,不是 Math.random / world.rng),所以同種子重播一致。
+    // `applyPick` 自己記帳(auto=true → 算進 `autoPicked` 而不是 `picked`)也自己
+    // 從 `offers` 移除,所以這裡不再需要手動 recordOffer。
+    //
+    // ⚠️ 用快照迭代:`applyPick` 會動 `this.offers`(同 intermission 那一支)。
+    for (const [offerId, offer] of [...this.offers]) {
+      this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer), true);
     }
     this.offers.clear();
     // 這一回合的戰鬥從這一 tick 開始 —— `RoundGradeContext.roundTicks` 的減數。
