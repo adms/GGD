@@ -512,6 +512,23 @@ export class SimWorld {
   economyOpen = true;
 
   /**
+   * 回合已經結算、中場還沒開始的那一段（`MatchPhase` 的 `"resolution"`）。
+   *
+   * ⛔ 沒有這一格的話，那一段在商店眼裡與選角／全場結束**完全一樣** ——
+   * `economyOpen` 與 `combatActive` 都是 false，所以 `shopAccess` 推導出
+   * `"closed"`，連**剛剛被打倒的那個人**都被拒（訊息還是「現在不是備戰時間」）。
+   *
+   * ⚠️ 而那正是最常撞到的一刻：「只剩一隊存活就立即宣佈回合勝利」（#208）
+   * 讓**你被打倒的瞬間往往就是結算的瞬間**，所以陣亡者按下商店時，相位已經
+   * 走進那個窗口了。owner 2026-08-06 的規則是「被打倒就可以買，被復活就不行」，
+   * 而復活發生在中場，所以這一段必須對陣亡者開著。
+   *
+   * 兩個既有旗標都是 host 維護的純世界狀態（客戶端照樣重播），這一格同一個
+   * 生命週期：`concludeCombat` 設 true，`enterIntermission` / `enterCombat` 清掉。
+   */
+  roundResolving = false;
+
+  /**
    * Host-armed ITEM ELIGIBILITY predicate — the operator content whitelist,
    * projected into the sim as a pure function (task #82). null (default) means
    * "everything is eligible", which is what unit tests and the client's

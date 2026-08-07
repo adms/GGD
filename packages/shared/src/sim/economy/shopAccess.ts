@@ -41,7 +41,7 @@ import type { SimWorld } from "../SimWorld";
  * `MatchPhase` — champSelect / resolution / matchEnd all shop-behave the same,
  * and collapsing them means a new phase can never silently open the shop.
  */
-export type ShopPhase = "prep" | "combat" | "closed";
+export type ShopPhase = "prep" | "combat" | "resolution" | "closed";
 
 /** Why a shop action was refused. `ok` never appears here — see ShopAccess. */
 export type ShopDenyReason =
@@ -93,7 +93,18 @@ export function shopOpen(phase: ShopPhase, alive: boolean, eliminated = false): 
   // loud rather than leaving a silently-unused argument for a reader to wonder at.
   void eliminated;
   if (phase === "prep") return OPEN;
-  if (phase === "combat") return alive ? DENY_COMBAT_ALIVE : OPEN;
+  // ⛔ `resolution` 與 `combat` **同一條規則**，而這是 owner 2026-08-06 的裁決：
+  // 「只要我回合被打倒就可以到商店購買，但是被復活就又不行」。
+  //
+  // 在這之前 `resolution` 掉進最後那一行的 `DENY_PHASE`，所以**剛剛被打倒的人
+  // 在結算那一段買不到東西** —— 而 #208「只剩一隊存活就立即宣佈回合勝利」讓
+  // 「被打倒」與「回合結算」常常是同一瞬間，於是那個窗口正好蓋住玩家真的會去
+  // 按商店的那一刻。⚠️ 症狀是誤導的：訊息說「現在不是備戰時間」，聽起來像
+  // 時機不對，實際上是這一格漏了。
+  //
+  // 「被復活就不行」不需要額外的程式：復活把 `alive` 翻回 true，這一行就自動
+  // 拒絕了 —— 資格跟著身體走，不是跟著一個會忘記清掉的旗標走。
+  if (phase === "combat" || phase === "resolution") return alive ? DENY_COMBAT_ALIVE : OPEN;
   return DENY_PHASE;
 }
 
@@ -105,6 +116,8 @@ export function shopOpen(phase: ShopPhase, alive: boolean, eliminated = false): 
 export function shopPhaseOf(matchPhase: string): ShopPhase {
   if (matchPhase === "intermission") return "prep";
   if (matchPhase === "combat") return "combat";
+  // 回合結算 —— 與 combat 同一條規則（只有躺著的人買得到）。見 `shopOpen`。
+  if (matchPhase === "resolution") return "resolution";
   return "closed";
 }
 
@@ -117,7 +130,17 @@ export function shopPhaseOf(matchPhase: string): ShopPhase {
  */
 export function shopAccess(world: SimWorld, entity: EntityId): ShopAccess {
   if (!world.champion.has(entity)) return DENY_NO_CHAMPION;
-  const phase: ShopPhase = world.economyOpen ? "prep" : world.combatActive ? "combat" : "closed";
+  // ⚠️ `roundResolving` 必須排在最後一格**之前**看：結算那一段 `economyOpen` 與
+  // `combatActive` 都是 false，與選角／全場結束**在這兩個布林上完全一樣**，所以
+  // 沒有第三個訊號就只能推導出 `"closed"` —— 那正是 2026-08-06 的缺陷（陣亡者在
+  // 結算時買不到東西，而那常常就是他被打倒的同一瞬間）。
+  const phase: ShopPhase = world.economyOpen
+    ? "prep"
+    : world.combatActive
+      ? "combat"
+      : world.roundResolving
+        ? "resolution"
+        : "closed";
   // A champion with no health component cannot be proven down, so it is treated
   // as alive — denial is the safe direction for an authoritative gate.
   const alive = world.health.get(entity)?.alive ?? true;

@@ -68,7 +68,13 @@ describe("shopAccess rule", () => {
     cover("shop-gate-phase-map");
     expect(shopPhaseOf("intermission")).toBe("prep");
     expect(shopPhaseOf("combat")).toBe("combat");
-    for (const p of ["champSelect", "resolution", "matchEnd", "connecting", ""]) {
+    // ⚠️ 2026-08-06：`resolution` **從這一列搬走了**，而那是刻意的行為改變，
+    // 不是斷言鬆掉。它以前落在 `closed`，代價是剛被打倒的人在回合結算那一段
+    // 買不到東西 —— 而 #208「只剩一隊存活就立即宣佈回合勝利」讓那常常就是他
+    // 被打倒的同一瞬間。owner 的規則是「被打倒就可以買，被復活就不行」，所以
+    // 結算改成與 combat 同一條規則。行為守衛在 `shopResolution.test.ts`。
+    expect(shopPhaseOf("resolution")).toBe("resolution");
+    for (const p of ["champSelect", "matchEnd", "connecting", ""]) {
       expect(shopPhaseOf(p)).toBe("closed");
     }
   });

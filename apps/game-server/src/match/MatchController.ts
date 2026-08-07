@@ -1268,6 +1268,8 @@ export class MatchController {
   private enterIntermission(): void {
     this.world.economyOpen = true;
     this.world.combatActive = false; // scoreboard time-alive pauses between rounds
+    // 結算窗口結束 —— 中場對所有人開放，不再需要「只有陣亡者」那條規則。
+    this.world.roundResolving = false;
     for (const seat of this.seats.values()) seat.ready = false;
     const round = this.phase.round;
     // Project the deterministic round into the sim so the stat-path capstone
@@ -1505,6 +1507,9 @@ export class MatchController {
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
+    // 保險：正常路徑上 enterIntermission 已經清過，但 skipPhase / failsafe
+    // 會直接跳到這裡，而一個沒清掉的 roundResolving 會讓下一次結算的判斷失真。
+    this.world.roundResolving = false;
     // #207:一張走到這裡還沒被解決的卡,是「發了但沒有人拿」。今天 #207 的過期
     // 安全網會在中場結束時把每一張都自動選掉,所以這個迴圈**正常情況下是空
     // 的** —— 它在的理由是:哪天安全網被繞過(skipPhase 作弊、fault failsafe
@@ -2417,6 +2422,12 @@ export class MatchController {
     this.recordLedgerRound();
     this.settleRound();
     this.world.combatActive = false;
+    // ⭐ 結算窗口開始（owner 2026-08-06：「只要我回合被打倒就可以到商店購買，
+    // 但是被復活就又不行」）。在這一格之前，這裡到中場之間 `shopAccess` 推導出
+    // `"closed"`，連剛剛被打倒的人都被拒 —— 而 #208「只剩一隊存活就立即宣佈回合
+    // 勝利」讓那常常就是他被打倒的同一瞬間。復活發生在中場，所以「被復活就不行」
+    // 由 `alive` 自己表達，不需要在這裡做任何事。
+    this.world.roundResolving = true;
     // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the
     // in-flight swing/cast, sticky nav targets and residual momentum — so the
     // scene freezes for the round-win / settlement beat instead of letting the
