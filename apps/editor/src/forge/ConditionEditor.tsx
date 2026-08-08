@@ -82,7 +82,11 @@ import {
   CONDITION_MAX_CHILDREN,
   CONDITION_STATS,
   CONDITION_SUBJECTS,
+  EQUIPMENT_TAG_MAX_LEN,
+  STATUS_TAG_MAX_LEN,
   describeCondition,
+  isEquipmentItemLeaf,
+  isStatusIdLeaf,
   retargetStatLeaf,
   setStatLeafMode,
   statSupportsPercent,
@@ -93,6 +97,7 @@ import {
   type ConditionSubject,
   type EffectCondition,
 } from "@ggd/shared/sim/content/condition";
+import type { ItemId, StatusId } from "@ggd/shared/ids";
 
 // ---------------------------------------------------------------------------
 // LABELS. Chinese in the dropdowns, because every other Forge control is.
@@ -131,13 +136,37 @@ const OP_LABEL: Record<CompareOp, string> = {
   "!=": "≠ 不等於",
 };
 
-/** The three clause shapes the dropdowns can build. */
-type ClauseKind = "stat" | "kind" | "chance";
+/** The clause shapes the dropdowns can build. */
+type ClauseKind = "stat" | "kind" | "chance" | "status" | "equipment";
 
 const CLAUSE_LABEL: Record<ClauseKind, string> = {
   stat: "數值比較（屬性 / HP / MP）",
   kind: "目標種類（英雄 / 小兵 …）",
   chance: "機率",
+  status: "狀態標記（某一份 / 某一類：[暈眩] / [燃燒] / [致盲] …）",
+  equipment: "裝備了道具（某一件 / 某一類）",
+};
+
+/** 「某一件」還是「某一類」—— 這一列右邊要畫哪一個輸入框。 */
+type EquipmentMatch = "item" | "tag";
+
+const EQUIPMENT_MATCH_LABEL: Record<EquipmentMatch, string> = {
+  item: "這一件",
+  tag: "這一類",
+};
+
+/**
+ * 狀態那一列的同一個問題：「這一份」還是「這一類」。
+ *
+ * ⭐ 分開一個型別而不是共用 {@link EquipmentMatch}，是因為畫面上的字不一樣
+ * （道具論「件」，狀態論「份」），而共用型別會逼兩邊共用標籤或多長一層對照。
+ * 兩者的**結構**共用的地方在 schema 那一側（兩個都是 union，寫法逐字相同）。
+ */
+type StatusMatch = "id" | "tag";
+
+const STATUS_MATCH_LABEL: Record<StatusMatch, string> = {
+  id: "這一份",
+  tag: "這一類",
 };
 
 type Join = "all" | "any";
@@ -169,6 +198,15 @@ const DEFAULT_LEAF: Record<ClauseKind, ConditionLeaf> = {
   stat: { kind: "stat", subject: "target", stat: "hp", mode: "percent", op: "<", value: 0.35 },
   kind: { kind: "kind", subject: "target", is: "champion" },
   chance: { kind: "chance", p: 0.15 },
+  // 預填一個**真的存在**的 status（`content/status-effects/root.json`）而不是空字串:
+  // 空字串過不了 `zId`,於是「剛切到這個種類」的那一刻卡片就是不可儲存的,而表單
+  // 上看不出為什麼。預填一個能存的值,作者改成他要的那一個即可。
+  status: { kind: "status", subject: "target", statusId: "root" as StatusId },
+  // 77-002 御雷劍問的是**自己**帶著什麼，跟其他四種葉子的「目標」相反，所以這
+  // 一格的預填主體是 self。同上一則的理由：預填一個**存得起來**的 id（skeleton
+  // 的 `ember-rod` 是真的存在的道具），空字串過不了 `zId`，作者會看到一張莫名
+  // 其妙存不了的卡。
+  equipment: { kind: "equipment", subject: "self", itemId: "ember-rod" as ItemId },
 };
 
 /**
@@ -578,6 +616,18 @@ function ClauseRow({
           leaf={clause.leaf}
           onChange={(leaf) => onChange({ ...clause, leaf })}
         />
+      ) : clause.leaf.kind === "status" ? (
+        <StatusFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
+      ) : clause.leaf.kind === "equipment" ? (
+        <EquipmentFields
+          path={path}
+          leaf={clause.leaf}
+          onChange={(leaf) => onChange({ ...clause, leaf })}
+        />
       ) : clause.leaf.kind === "kind" ? (
         <KindFields
           path={path}
@@ -602,6 +652,171 @@ function ClauseRow({
         ✕
       </button>
     </div>
+  );
+}
+
+/**
+ * 狀態標記那一列 —— 主體 + 「這一份／這一類」 + 編號或 tag。
+ *
+ * ⭐ 中間那個下拉就是 union 的兩個分支（`statusId` / `tag`），而切換它會**整顆換
+ * 掉葉子**而不是留著舊那一格：`{statusId, tag}` 兩格並存兩個分支都不收（schema
+ * `.strict()`），所以留著等於做出一張存不回去的卡。跟 {@link EquipmentFields} 是
+ * 同一件事的同一個理由（也跟 `retargetStatLeaf` 修 `mode`/`value` 同理）。
+ *
+ * ⭐ 「這一類」是熊貓那一族技能真正要的東西：89-00「敵方[暈眩]狀態下追加[致盲]」
+ * 裡的「暈眩」在出貨內容裡是**五份不同的文件**，寫 exact 編號的那張卡會在第六份
+ * 暈眩上架時安靜地漏掉它。
+ *
+ * ⚠️ 兩邊都是**純文字輸入**而不是下拉：這個編輯器沒有 `status-effects` 這份集合
+ * 可以讀（`ConditionEditor` 只吃 `EffectCondition`，不吃 store），而一個「只列得
+ * 出硬寫在這裡的那幾個」的下拉會在第 20 個狀態上架時安靜地漏掉它。
+ * `zRef(soft)` 與 `min/max` 在存檔那一刻擋打錯字 —— 有人擋，只是擋在存檔而不是
+ * 輸入。
+ */
+function StatusFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "status" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  const match: StatusMatch = isStatusIdLeaf(leaf) ? "id" : "tag";
+  return (
+    <>
+      <select
+        aria-label="主體"
+        data-field={`${path}.subject`}
+        value={leaf.subject}
+        onChange={(e) => onChange({ ...leaf, subject: e.target.value as ConditionSubject })}
+      >
+        {CONDITION_SUBJECTS.map((s) => (
+          <option key={s} value={s}>
+            {SUBJECT_LABEL[s]}
+          </option>
+        ))}
+      </select>
+      <span className="cond-fixed">帶有</span>
+      <select
+        aria-label="狀態比對方式"
+        data-field={`${path}.match`}
+        value={match}
+        onChange={(e) =>
+          onChange(
+            (e.target.value as StatusMatch) === "id"
+              ? { kind: "status", subject: leaf.subject, statusId: "" as StatusId }
+              : { kind: "status", subject: leaf.subject, tag: "" },
+          )
+        }
+      >
+        {(Object.keys(STATUS_MATCH_LABEL) as StatusMatch[]).map((m) => (
+          <option key={m} value={m}>
+            {STATUS_MATCH_LABEL[m]}
+          </option>
+        ))}
+      </select>
+      {isStatusIdLeaf(leaf) ? (
+        <input
+          aria-label="狀態編號"
+          data-field={`${path}.statusId`}
+          type="text"
+          placeholder="狀態編號（例：root）"
+          value={leaf.statusId}
+          onChange={(e) => onChange({ ...leaf, statusId: e.target.value as StatusId })}
+        />
+      ) : (
+        <input
+          aria-label="狀態分類"
+          data-field={`${path}.tag`}
+          type="text"
+          maxLength={STATUS_TAG_MAX_LEN}
+          placeholder="狀態分類 tag（例：stun）"
+          value={leaf.tag}
+          onChange={(e) => onChange({ ...leaf, tag: e.target.value })}
+        />
+      )}
+    </>
+  );
+}
+
+/**
+ * 裝備那一列 —— 主體 + 「這一件／這一類」 + 編號或 tag。
+ *
+ * ⭐ 中間那個下拉就是 union 的兩個分支（`itemId` / `tag`），而切換它會**整顆換掉
+ * 葉子**而不是留著舊那一格：`{itemId, tag}` 兩格並存兩個分支都不收（schema
+ * `.strict()`），所以留著等於做出一張存不回去的卡。這跟 `retargetStatLeaf` 修
+ * `mode`/`value` 是同一件事的同一個理由。
+ *
+ * ⚠️ 兩邊都是**純文字輸入**而不是下拉，跟 `StatusFields` 同一個理由：這個編輯器
+ * 手上沒有 `items` 集合可以列（它只吃 `EffectCondition`，不吃 store），而一個
+ * 「只列得出硬寫在這裡那幾件」的下拉會在下一件道具上架時安靜地漏掉它。
+ * `zRef(soft)` 與 `min/max` 在存檔那一刻擋打錯字。
+ */
+function EquipmentFields({
+  path,
+  leaf,
+  onChange,
+}: {
+  path: string;
+  leaf: Extract<ConditionLeaf, { kind: "equipment" }>;
+  onChange(next: ConditionLeaf): void;
+}) {
+  const match: EquipmentMatch = isEquipmentItemLeaf(leaf) ? "item" : "tag";
+  return (
+    <>
+      <select
+        aria-label="主體"
+        data-field={`${path}.subject`}
+        value={leaf.subject}
+        onChange={(e) => onChange({ ...leaf, subject: e.target.value as ConditionSubject })}
+      >
+        {CONDITION_SUBJECTS.map((s) => (
+          <option key={s} value={s}>
+            {SUBJECT_LABEL[s]}
+          </option>
+        ))}
+      </select>
+      <span className="cond-fixed">裝備了</span>
+      <select
+        aria-label="比對方式"
+        data-field={`${path}.match`}
+        value={match}
+        onChange={(e) =>
+          onChange(
+            (e.target.value as EquipmentMatch) === "item"
+              ? { kind: "equipment", subject: leaf.subject, itemId: "" as ItemId }
+              : { kind: "equipment", subject: leaf.subject, tag: "" },
+          )
+        }
+      >
+        {(Object.keys(EQUIPMENT_MATCH_LABEL) as EquipmentMatch[]).map((m) => (
+          <option key={m} value={m}>
+            {EQUIPMENT_MATCH_LABEL[m]}
+          </option>
+        ))}
+      </select>
+      {isEquipmentItemLeaf(leaf) ? (
+        <input
+          aria-label="道具編號"
+          data-field={`${path}.itemId`}
+          type="text"
+          placeholder="道具編號（例：godie-i01n）"
+          value={leaf.itemId}
+          onChange={(e) => onChange({ ...leaf, itemId: e.target.value as ItemId })}
+        />
+      ) : (
+        <input
+          aria-label="道具分類"
+          data-field={`${path}.tag`}
+          type="text"
+          maxLength={EQUIPMENT_TAG_MAX_LEN}
+          placeholder="道具分類 tag（例：onhit）"
+          value={leaf.tag}
+          onChange={(e) => onChange({ ...leaf, tag: e.target.value })}
+        />
+      )}
+    </>
   );
 }
 

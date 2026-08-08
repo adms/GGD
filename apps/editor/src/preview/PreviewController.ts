@@ -506,6 +506,115 @@ function effectLines(
         });
         break;
       }
+      // ── Lane 1（2026-08-08）的四個新 kind ──────────────────────────────
+      case "modifyCooldown": {
+        // ⚠️ **一定要印出「哪一支」** —— 這個 kind 與全域 cdr 的差別全部在那裡，
+        // 少了它，卡片上「冷卻縮短 50%」看起來就是一件完全不同的東西。
+        const which =
+          `${e.slot !== undefined ? `[${e.slot}]` : ""}` +
+          `${e.abilityId !== undefined ? `《${e.abilityId}》` : ""}`;
+        const how =
+          e.mode === "reset"
+            ? "冷卻立刻重置"
+            : e.mode === "reduceFlat"
+              ? `冷卻 ${e.amount ?? 0} 秒`
+              : `冷卻 ${((e.amount ?? 0) * 100).toFixed(0)}%（${
+                  e.basis === "base" ? "基礎冷卻的比例" : "剩餘量的比例"
+                }）`;
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `${e.who === "target" ? "目標" : "自己"}的 ${which} ${how}`,
+        });
+        break;
+      }
+      case "weightedBranch": {
+        // 權重是相對的，所以印**百分比**才看得懂；分母是總權重。
+        const total = e.branches.reduce((s, b) => s + Math.max(0, b.weight), 0);
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `加權抽一支（整段只抽一次）：${e.branches.length} 個分支`,
+        });
+        e.branches.forEach((b, i) => {
+          const pct = total > 0 ? ((Math.max(0, b.weight) / total) * 100).toFixed(1) : "0.0";
+          out.push({
+            depth: depth + 1,
+            kind: e.kind,
+            summary: `分支 ${i + 1}：${pct}%（weight ${b.weight}）${b.weight <= 0 ? " ⚠️ 抽不到" : ""}`,
+          });
+          effectLines(b.effects, finalStats, attrs, maxRank, depth + 2, out);
+        });
+        break;
+      }
+      case "swapResource": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `與目標交換${(e.resource ?? "health") === "mana" ? "法力" : "生命"}` +
+            ` · 下限 ${e.clampMin ?? 1}${(e.clampMin ?? 1) <= 0 ? "（⚠️ 可能交換到死）" : "（不會交換到死）"}` +
+            ` · 目標失效時${(e.onInvalidTarget ?? "abort") === "abort" ? "整招失敗" : "跳過那一個"}` +
+            `${e.shape === "circle" ? ` · 圓形 ${e.radius ?? "?"}（吃 abilityRange）` : " · 單體"}`,
+        });
+        break;
+      }
+      case "eventValueConversion": {
+        const src =
+          (e.source ?? "incomingDamage") === "incomingDamage"
+            ? `這一發傷害的 ${e.basis ?? "mitigated"}（⚠️ 基數待 owner freeze）`
+            : "目標當下的剩餘生命";
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `把${src} × ${e.ratio} 轉成${(e.to ?? "mana") === "mana" ? "法力" : "生命"}` +
+            ` → ${e.who === "target" ? "目標" : "自己"}` +
+            `${e.buff ? ` · 另外 ${e.buff.durationSec}s 內 ${e.buff.stat} +（同一個數值 × ${e.buff.ratio ?? e.ratio}）` : ""}`,
+        });
+        break;
+      }
+      // ── Lane 2（2026-08-08）三個新 kind ────────────────────────────────
+      case "randomArea": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `以${e.who === "target" ? "目標" : "自己"}為中心，半徑 ${e.scatterRadius} 內隨機落點` +
+            ` · 每 ${e.intervalSec}s 一發，共 ${e.count.join("/")} 發` +
+            `${(e.firstAtCast ?? true) ? "（第一發在施法當下）" : "（第一發等一個間隔）"}` +
+            ` · 抽 ${2 * Math.max(...e.count)} 次亂數（施法時一次抽完）` +
+            `${e.stopOnCasterDeath === true ? " · 施法者陣亡即停" : ""}`,
+        });
+        effectLines(e.effects, finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
+      case "manaBarrier": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `魔力屏障 ${e.durationSec}s：每 1 點魔力抵 ${e.perMana} 點傷害` +
+            ` · 擋 ${e.damageTypes.join("/")}` +
+            `${e.minManaReserve ? ` · 抵到剩 ${e.minManaReserve} 魔力就停` : "（抵到見底）"}` +
+            " · ⛔ 在扣血之前把傷害換成扣魔（不是受傷後補護盾）",
+        });
+        break;
+      }
+      case "extendBuff": {
+        const per =
+          e.perDamagePctOfMaxHealth !== undefined
+            ? `自身最大生命 ${(e.perDamagePctOfMaxHealth * 100).toFixed(1)}%`
+            : `${e.perDamageFlat ?? "?"} 點`;
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `每承受 ${per} 的傷害（讀 ${e.basis ?? "hpLost"}），把「${e.stackKey}」延長 ${e.addSec}s` +
+            ` · 剩餘時間上限 ${e.maxRemainingSec}s（⚠️ 這條是正回饋，上限是安全閥）`,
+        });
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

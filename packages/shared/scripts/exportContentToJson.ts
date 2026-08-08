@@ -28,6 +28,7 @@ import {
   SKELETON_ARENA,
 } from "../src/sim/index";
 import type { EffectDef } from "../src/sim/effects/effect";
+import { MAX_ROUNDS_UNLIMITED } from "../src/roomSettings";
 import type { HookDef } from "../src/sim/stats/modifiers";
 import { COLLECTIONS, type CollectionName } from "../src/content/schema/index";
 import type { ConfigDoc } from "../src/content/schema/config";
@@ -121,6 +122,10 @@ const MATCH_CONFIG: ConfigDoc = {
     intermissionSec: 60,
     combatMaxSec: 90,
     resolutionSec: 6,
+    // 0 = 不設限（照賽制打到最後一回合／決賽為止；⛔ 不是「團隊生命歸零」——
+    // 2026-07-27 取消淘汰之後生命歸零不讓任何人出局）—— 這支一次性遷移腳本寫的是骨架值，
+    // 出貨值以 content/config/config.match.json 為準。#288 讓這一格出現在型別上。
+    maxRounds: MAX_ROUNDS_UNLIMITED,
   },
   economy: {
     startingGold: 600,

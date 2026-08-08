@@ -63,6 +63,7 @@ import {
 import { SseHub } from "./sse";
 import { registerDevWriteGuard } from "./guard";
 import { listSnapshots, readSnapshot, snapshotFile, snapshotText } from "./backup";
+import { registerImportRoutes } from "./importRoutes";
 
 export interface ContentApiOptions {
   contentDir: string;
@@ -564,6 +565,9 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       return reply.send({ path: `assets/${rel}`, bytes: buf.length });
     },
   );
+
+  // ---------- Editor package importer (G1 握手層，唯讀；importRoutes.ts) ----------
+  registerImportRoutes(app, { contentDir: root, gameVersion: process.env.GGD_BUILD_STAMP ?? null });
 
   // ---------- SSE ----------
   app.get("/content-api/events", (req, reply) => {

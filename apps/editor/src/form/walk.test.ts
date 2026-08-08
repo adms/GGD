@@ -167,6 +167,20 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "spendMana", // 20-01 風王結界 / 13-002 絕。暗殺奧義 —— 燒法力
         "summon", // lane P2 — 召喚物
         "taunt", // [嘲弄] —— 強迫敵人優先攻擊施法者 (sim/taunt.ts)
+        // ── Lane 1（2026-08-08）的四個新 kind ────────────────────────────
+        // 四個同一天進來，而且**四個都是**同一個形狀的實例（`shape` + 決策欄位）。
+        // 它們與 `PreviewController.effectLines` 的四個 case 同時落地 ——
+        // 那個 `never` 分支在我把它們加進 union 的當下就把 apps/editor 編譯打紅了，
+        // 所以「只補 tag」在這一批從來不是一個選項。
+        "eventValueConversion", // 15-002 太陰道 / 59-01 吞噬（⚠️ basis 待 freeze）
+        "modifyCooldown", // #284 —— 縮短**特定一支**技能的冷卻，不是全域 cdr
+        "swapResource", // 44-002 交換筆記本 —— 原子交換現存生命
+        "weightedBranch", // 89-002 俄羅斯輪盤 —— 整段只抽一次 rng
+        // ── Lane 2（2026-08-08）的三個新 kind ────────────────────────────
+        // 同一句話：它們與 `PreviewController.effectLines` 的三個 case 同時落地。
+        "extendBuff", // 52-01 狂戰士之怒 —— 受傷延長狂怒（無狀態，連續比例）
+        "manaBarrier", // 44-00 機警 —— 每點魔力抵 3 點傷害（扣血之前換成扣魔）
+        "randomArea", // 13-04 龍星群 / 70-04 千年練成 —— 隨機落點排程（2×count draws）
       ].sort(),
     );
 
