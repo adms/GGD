@@ -133,7 +133,13 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
             pctAdd += m.value * stacks;
             break;
           case ModOp.PercentMult:
-            pctMult *= 1 + m.value;
+            // 乘 `stacks`,和 `Flat` / `PercentAdd` / `PercentOf` **同一條規矩**
+            // (GH#286)。在此之前只有這一個 op 漏掉 —— 於是任何寫成 `pctMult` 的
+            // 「每層 +X%」不論疊到幾層都只有一層,而面板 / 商店預覽 / codex 全部
+            // 從這一條管線推導,所以三處會**一致地**顯示同一個錯的小數字。
+            // 語意是**線性**(3 層 ×10% = +30%),不是複利(×1.331):完整推導與
+            // 「怎麼寫才拿得到複利」寫在 `stats/modifiers.ts` 的 `PercentMult`。
+            pctMult *= 1 + m.value * stacks;
             break;
           case ModOp.Override:
             override = m.value;

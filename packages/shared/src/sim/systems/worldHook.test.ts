@@ -28,6 +28,10 @@ import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
 import { attachSource } from "../stats/statPipeline";
 import { worldHookSystem } from "./WorldHookSystem";
+import { deathSystem } from "./DeathSystem";
+import { reviveSystem } from "./ReviveSystem";
+import { beginCombatRevives } from "../revive";
+import { fireHooks } from "../effects/hooks";
 import type { HookDef, HookEvent } from "../stats/modifiers";
 import type { EffectDef } from "../effects/effect";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
@@ -105,5 +109,57 @@ describe("worldHookSystem —— 事件流 → hook 廣播", () => {
 
     expect(marks(w, evader)).toEqual(["dodged"]);
     expect(marks(w, attacker)).toEqual([]);
+  });
+
+  it("⛔ #293 死亡時發得出去（持有者已經死了），而死者的其他 hook 仍然不響", () => {
+    cover("wh-death-owner-dead");
+    const w = stage();
+    const victim = hero(w, 0, 0);
+    const killer = hero(w, 1, 1);
+    attachSource(w, victim, {
+      id: "src:victim",
+      kind: "item",
+      hooks: [markCard("onDeath", "died"), markCard("onDamageTaken", "hurt")],
+    });
+
+    // 出貨那條路:`DeathSystem`（slot 9）**先**寫 alive=false 才 emit，
+    // `worldHookSystem`（9f）晚它一步 —— 這個順序就是 #293 的全部。
+    w.health.get(victim)!.hp = 0;
+    deathSystem(w);
+    expect(w.health.get(victim)!.alive).toBe(false); // 這條守衛的前提，不是結論
+    worldHookSystem(w);
+    expect(marks(w, victim)).toEqual(["died"]);
+
+    // ⛔ 反向:存活閘還在。少了這一段，「把 fireHooks 的存活閘整個刪掉」
+    // 也會讓上面那行變綠 —— 而那會讓屍體繼續吃 AoE 觸發被動。
+    fireHooks(w, victim, "onDamageTaken", killer);
+    expect(marks(w, victim)).toEqual(["died"]);
+  });
+
+  it("⛔ #294 復活時掛在被復活的人身上 —— 走真的復活圈那條路", () => {
+    cover("wh-revive-owner");
+    const w = stage();
+    const victim = hero(w, 0, 0);
+    const rescuer = hero(w, 1, 0); // 站在屍體旁 1u，在 radius 內
+    for (const id of [victim, rescuer]) {
+      attachSource(w, id, { id: `src:${id}`, kind: "item", hooks: [markCard("onRevive", "back")] });
+    }
+    // 夾具值（不是出貨值）:channelTicks 1 讓一個 tick 就完成詠唱。
+    beginCombatRevives(
+      w,
+      { channelTicks: 1, radius: 2, decayMult: 2, revivesPerTeamPerRound: 1,
+        reviveHpPctMax: 0.5, reviveManaPctMax: 0.5, contestPauses: true,
+        damageInterrupts: false, ccInterrupts: true },
+      [asTeamId(0)],
+    );
+
+    w.health.get(victim)!.hp = 0;
+    deathSystem(w); //   9  —— emit death
+    reviveSystem(w); //  9c —— 落下圈圈、隊友詠唱完成 → emit reviveComplete
+    worldHookSystem(w); // 9f
+
+    // `reviveComplete.id` 是**圈圈**（發完就 destroy），只有 `ownerId` 是英雄。
+    expect(marks(w, victim)).toEqual(["back"]);
+    expect(marks(w, rescuer)).toEqual([]); // 也不是頂著圈圈的那位
   });
 });

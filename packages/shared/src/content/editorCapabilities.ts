@@ -232,7 +232,15 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     probe: (f) => f.effectKinds.has("restore") && f.hookEvents.has("onDeath"),
     caveat:
       "攔截點在 `combat/damage.ts` 的護盾之後、扣血之前，符合計畫的「death commit 前」。" +
-      "⛔ 但**火圈燒傷攔不到** —— `FireRingSystem` 直寫 `hp.hp -=` 不走傷害佇列（無敵也一樣擋不住）。",
+      "⚠️ **火圈燒傷是一個要知道的例外，而它現在是一格後台開關**（GH#287）：火圈不走傷害佇列" +
+      "（那條路會帶來每 tick 的浮動數字、擊倒、擊殺歸屬 —— 全都不是環境傷害要的），" +
+      "改走 `combat/environmentalBurn.ts` 這唯一的第二條路，它直接呼叫佇列**自己在用的**" +
+      "`refusesDamage` 與 `lethalSaveFor`。所以：**無敵擋得住火圈**（`invulnerable` 的 " +
+      "`blocksTrueDamage`，無條件），而**免死擋不擋火圈是 `match.fireRing.lethalSaveApplies`**，" +
+      "⛔ **出貨預設關**（＝火圈無視免死，維持今天的行為，等 owner 裁決）。" +
+      "⇒ 寫「受到致命傷害時 ⋯」的卡片時，不要假設它在火圈裡會生效。" +
+      "⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「火圈燒傷攔不到 —— 直寫 `hp.hp -=`，" +
+      "無敵也一樣擋不住」，那是寫在 GH#287 落地**之前**的（同 `defense.mana-barrier@1` 那一格）。",
     evidence: "packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts（兩個突變都驗過）",
   },
   {
@@ -718,24 +726,34 @@ export const KNOWN_BROKEN: readonly { token: string; what: string; issue: string
   {
     token: "hook:onDeath",
     what:
-      "出貨路徑上一次都不會發：DeathSystem 先寫 hp.alive=false 才 emit(\"death\")，" +
-      "而 fireHooks 第三行就擋掉死掉的持有者。⛔ 不要用它設計任何「死亡時 ⋯」的內容。",
-    issue: "GH#293",
+      "⚠️ **一半修好，一半沒有 —— 兩半的成因不同，不要只讀一句結論。** " +
+      "✅ **英雄那一半已修（GH#293）**：`WorldHookSystem` 的【死亡】那一列填了 " +
+      "`firesWhenOwnerDead: true`，`fireHooks` 的存活閘改成逐事件放行，所以「自己死亡時 ⋯」寫得出來。" +
+      "⛔ **小怪（`world.mob`）那一半仍然發不出去**：`mobSystem`（step slot 9d′）在 " +
+      "`worldHookSystem`（9f）之前就 `world.destroy(id)` 掉屍體，所以派發時 `world.stats` " +
+      "已經沒有那個實體 —— 它在**缺 stats** 那一行就 return，**不是**存活閘，因此 GH#293 的 " +
+      "`firesWhenOwnerDead` 對它完全無效。" +
+      "→ 「殺死小怪時 ⋯」請用 `onKill`（會發，掛在擊殺者身上）；" +
+      "「**小怪死亡時** ⋯」（不論誰殺的、含環境傷害與火圈）今天寫不出來，" +
+      "⛔ 不可以用 `onKill` 近似 —— 沒有擊殺者的死亡它一次都不會發。",
+    issue: "GH#296",
   },
-  {
-    token: "hook:onRevive",
-    what:
-      "只有 `revive` effect kind 那條路會發（全庫 1 份）。實戰唯一的復活路徑（復活圈）" +
-      "取到的是圈圈的 entity id 而不是英雄，所以打空。",
-    issue: "GH#294",
-  },
-  {
-    token: "effect:dispel.pools.buffs",
-    what:
-      "勾了一筆都拔不掉：出貨 buffDefaultDispellable=false，而**沒有任何 authoring 欄位**" +
-      "可以把一個來源標成 dispellable。status / dot 兩池是真的通的，buffs 與 shields 不是。",
-    issue: "GH#295",
-  },
+  // GH#293 已修（`WorldHookSystem` 的【死亡】那一列填了 `firesWhenOwnerDead: true`，
+  // `fireHooks` 的存活閘改成逐事件放行），所以 `hook:onDeath` 的**英雄那一半**撤掉 ——
+  // 但小怪那一半（成因不同，見上面那一筆）仍然壞著，GH#296 開好之後加回來了。
+  // ⚠️ 這裡示範了這張表最危險的失效方式：`onDeath` 是**一個 token 兩個實作**，
+  // 寫「已修」或寫「壞掉」都只有一半是真的，而兩種寫法都會讓對方做出錯的決定
+  // （前者做出上線就是死的內容，後者連能用的那一半也不敢用）。
+  //
+  // GH#294 已修（`reviveComplete` 那一列的 `actorKey` 從 `"id"`（圈圈）改成
+  // `"ownerId"`（英雄）），所以 `hook:onRevive` 這一筆撤掉。
+  //
+  // GH#295 已修（`applyBuff.dispellable` / `.polarity` 兩格 authoring 欄位補上，
+  // `applyBuff.ts` 真的寫進 `ModifierSource`），所以 `effect:dispel.pools.buffs`
+  // 這一筆從這裡撤掉 —— 這份清單的規矩就是「issue 關掉時回來刪」。
+  // ⚠️ `pools.shields` 從來不是壞的：它在 `polarity:"debuff"` 下整池跳過是刻意的
+  // （護盾沒有極性，一發「解自己身上的減益」不該吃掉自己的盾），寫 `"any"`/`"buff"`
+  // 或用 `shieldBreak` 就打得到。那是一句要寫在欄位說明裡的話，不是一筆已知壞掉。
 ];
 
 /**

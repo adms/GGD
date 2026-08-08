@@ -41,6 +41,11 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
             // (失敗形態 ②). One shared source ⇒ one shared `hookLastFired`,
             // which is the honest reading of "one stack of one buff".
             ...(e.hooks !== undefined ? { hooks: e.hooks } : {}),
+            // 【淨化】的兩格 —— GH#295。⚠️ 疊層路徑也要帶，理由與上面 `hooks`
+            // 同一條：一支技能一旦也填了 `stackKey`，這兩格就會靜默失效，
+            // 而畫面上跟正常一模一樣（失敗形態 ②）。
+            dispellable: e.dispellable,
+            polarity: e.polarity,
             expiresAtTick,
             stacks: 1,
             ...(e.stackVisual ? { visualStacks: true } : {}),
@@ -58,6 +63,13 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         // `hookLastFired` is per-source-INSTANCE, an `internalCooldown` on one
         // of these reads 「這次施放最多觸發幾次」, not a global cooldown.
         ...(e.hooks !== undefined ? { hooks: e.hooks } : {}),
+        // 【淨化】能不能拔掉這一份增益（GH#295），以及它的極性。
+        // ⛔ 兩格都是**施加時寫下**，不從 `modifiers` 推導：一個來源可以同時帶
+        // `{ms,+0.3}` 與 `{armor,-0.5}`，任何啟發式都會在某一張卡上錯。
+        // 缺席的語意：`dispellable` → `dispelRules.buffDefaultDispellable`（出貨
+        // false）；`polarity` → 無極性 = 有方向的淨化拔不到它。
+        dispellable: e.dispellable,
+        polarity: e.polarity,
         expiresAtTick,
       });
     }

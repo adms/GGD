@@ -145,6 +145,7 @@
 import type { SimWorld } from "./SimWorld";
 import type { EntityId } from "../ids";
 import { distSq } from "./math/vec2";
+import { applyEnvironmentalBurn } from "./combat/environmentalBurn";
 
 /** Fire-ring rules in TICKS (converted from the config doc's seconds). */
 export interface FireRingRules {
@@ -381,6 +382,26 @@ export interface FireRingRules {
    * 5:00, is fully closed at 5:20 and force-settles at 5:40.
    */
   hardDeadlineTicks: number;
+
+  /* ── 攔截層 (GH#287) ────────────────────────────────────────────────────── */
+
+  /**
+   * 免死（帶 `lethal` 規則的具名標記，例：十二道試煉）擋不擋火圈燒傷。
+   *
+   * ⚠️ ABSENT ⇒ **false = 今天的行為（火圈無視免死）**，所以加上這個欄位對每一份
+   * 手寫夾具、客戶端預測影子、既有錄影都是嚴格 no-op。
+   *
+   * ⚠️ 這是**設計決策點，等 owner 裁決**：火圈存在的理由是強制結束回合，而免死
+   * 若擋得住火圈，一個帶 12 層【十二道試煉】的人可以在圈外站 12 次。兩種答案都
+   * 說得通，所以它是一個欄位而不是程式裡的一個分支（CLAUDE.md 第一守則），預設
+   * 選「保留今天行為」的那一個。
+   *
+   * ⛔ **無敵沒有對應的欄位，而那不是漏了**：內容側已經有一格
+   * （`invulnerable` 的 `blocksTrueDamage`，省略時跟著 `blocksDamage:"all"`），
+   * 所以「這支技能擋不擋火圈」本來就是編輯器卡片上的一個選項。再開一個全域開關
+   * 會變成兩個地方回答同一個問題。
+   */
+  lethalSaveApplies?: boolean;
 }
 
 /**
@@ -474,6 +495,18 @@ export const DEFAULT_STAGE1_RADIUS = 4;
  */
 export const DEFAULT_STAGE2_SHRINK_SEC = 20;
 
+/**
+ * 免死擋不擋火圈燒傷，出貨值 (GH#287) —— THE one literal, same rule as
+ * {@link DEFAULT_MAX_PCT_PER_SEC}: `content/config/config.match.json` 帶這個值，
+ * `zFireRingConfig.lethalSaveApplies` 用它當 `.default()`，
+ * `fireRingRulesFromConfig` 的 `??` 也指這裡 —— 三層對「沒填的話擋不擋」只有一個答案。
+ *
+ * ⚠️ **false = 今天的行為（火圈無視免死）**，而這是一個 owner 還沒表態的**決策點**，
+ * 所以預設選的是「保留現況」的那一個（CLAUDE.md 第一守則）。推導寫在
+ * {@link FireRingRules.lethalSaveApplies}。
+ */
+export const DEFAULT_LETHAL_SAVE_APPLIES = false;
+
 /** Seconds-based fire-ring config (mirror of config.match@1 `match.fireRing`). */
 export interface FireRingConfigLike {
   /** 第一段起始 —— combat-elapsed seconds until the ring ignites. */
@@ -553,6 +586,21 @@ export interface FireRingConfigLike {
    * prediction shadow stays byte-identical to pre-#248.
    */
   roundHardCapSec?: number;
+  /**
+   * 免死擋不擋火圈燒傷 (GH#287). ABSENT ⇒ {@link DEFAULT_LETHAL_SAVE_APPLIES}
+   * （false ＝今天的行為，火圈無視免死），所以每一份手寫夾具、客戶端預測影子與
+   * 既有錄影逐位元不變。完整推導與「等 owner 裁決」的標記寫在
+   * {@link FireRingRules.lethalSaveApplies}。
+   *
+   * ⭐ 三個住處都到齊了（CLAUDE.md 第一守則）：`content/config/config.match.json`
+   * 的出貨值 · `content/schema/config.ts` 的 `zFireRingConfig` + `.default()` ·
+   * `apps/admin/src/matchConfig.ts` 的欄位說明與「火圈」分組。
+   * ⚠️ 這句話在 2026-08-08 當天有過一個中間版本寫著「只有 sim 這一層讀得到它，
+   * 後台還沒有這一格」—— 那是寫在後台那一格落地**之前**的。留這一行是因為一個
+   * 只住在 sim 裡的「可切旋鈕」等於不存在：owner 切不到，而它的整個存在理由就是
+   * 讓 owner 可以切。
+   */
+  lethalSaveApplies?: boolean;
 }
 
 /**
@@ -718,6 +766,13 @@ export function fireRingRulesFromConfig(
     hardDeadlineTicks: Number.isFinite(hardCapTicks)
       ? hardCapTicks + authoredTail
       : Number.POSITIVE_INFINITY,
+    // GH#287 —— ⭐ 這一行就是「後台那一格 → sim」的接線。ABSENT ⇒
+    // `DEFAULT_LETHAL_SAVE_APPLIES`（false ⇒ 火圈無視免死 = 今天的行為）。
+    // 指常數而不是寫字面值,理由與 `maxPctPerSec` 那一段相同:Zod 的 `.default()`
+    // 與這個 `??` 必須是同一個答案,而只有 Zod-free 的呼叫端(夾具 / 預測影子 /
+    // 後台預覽)會走到這個 `??`。
+    // 守衛:`fireRingLethalSaveConfig.test.ts`(刪掉這一行 → 後台開了也不生效 → 紅)。
+    lethalSaveApplies: cfg.lethalSaveApplies ?? DEFAULT_LETHAL_SAVE_APPLIES,
   };
   // Arm-time clamp. A no-op on any doc the schema validated (its refine already
   // requires `startSec + shrinkSec <= roundHardCapSec`), but `FireRingConfigLike`
@@ -1153,6 +1208,9 @@ export function fireRingBurnMobs(world: SimWorld): void {
   const ratePerSec = fireRingRatePerSec(rules, ticksSinceStart);
   if (ratePerSec <= 0) return; // degenerate config: no damage, same as champions
   const dt = world.dt;
+  // GH#287 攔截層規則 — same object shape and same source of truth as the
+  // champion loop's, hoisted once per tick.
+  const envRules = { lethalSaveApplies: rules.lethalSaveApplies ?? false };
   for (const id of [...world.mob.keys()].sort((a, b) => a - b)) {
     const hp = world.health.get(id);
     if (!hp || !hp.alive) continue;
@@ -1169,10 +1227,14 @@ export function fireRingBurnMobs(world: SimWorld): void {
     if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) continue;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) continue;
-    hp.hp -= dmg; // %-HP TRUE burn: no armour/MR, no shields, no combat-env
+    // GH#287 —— same gate as the champion loop, through the same one function.
+    // Still no armour/MR, no shields, no combat-env (see `combat/environmentalBurn.ts` ③);
+    // what it adds is 無敵/免死, which a bare `hp.hp -=` could never see.
+    const dealt = applyEnvironmentalBurn(world, id, dmg, envRules);
+    if (dealt <= 0) continue; // refused — nothing left the health bar
     world.emit("fireRingDamage", {
       id,
-      amount: dmg,
+      amount: dealt,
       dmgType: "true",
       origin: "fireRing",
       x: t.pos.x,

@@ -151,6 +151,10 @@ export const MATCH_BOOL_LABELS: Readonly<Record<string, MatchBoolLabels>> = Obje
     on: "血一歸零就發結算卡（舊行為）",
     off: "只有整場結束才結算（出貨）",
   },
+  "match.fireRing.lethalSaveApplies": {
+    on: "免死擋得住火圈（回合可能被拖長）",
+    off: "火圈無視免死，燒到 0 就是死（出貨）",
+  },
 });
 
 /** 這一格是不是布林（＝畫成開關而不是輸入框）。 */
@@ -326,6 +330,15 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "⚠️ 它是夾在灼燒曲線**之上**的一道牆，出貨值 0.5 **確實低於曲線的尾巴**（最後一列是 1.0）：第 100 秒那一下被夾成每秒半條命，還是必死，只是要兩秒不是一秒。要讓曲線的高處真的燒出來，就把這一格調高。" +
       "⚠️ 留白 = 回到出貨的 0.5，**不是「不設限」**（schema 與 sim 兩層填的是同一個常數）。上界 1.0 以上不會改變任何玩家看得到的東西。",
     live: RING,
+  },
+  "match.fireRing.lethalSaveApplies": {
+    zh: "火圈燒傷擋不擋得住【免死】",
+    note:
+      "**火圈燒傷會不會被【免死】擋下來。** 關閉（出貨預設）= 火圈無視免死，燒到 0 就是死 —— 火圈存在的理由是**強制結束回合**。" +
+      "開啟 = 帶免死標記的英雄（例如狂戰士【十二道試煉】的 12 層）會在火圈裡**逐層消耗**免死次數，等於一個人可以在圈外站 12 次，回合會被拖長。" +
+      "⚠️ 這一格 owner 還沒表態，所以預設是「保留今天的行為」那一個；要不要讓試煉在火圈裡也算數，是這個開關要問的問題。" +
+      "⛔ **無敵不吃這一格**：那是每支技能自己卡片上的 `blocksTrueDamage`，不是全域開關 —— 同一個問題只有一個地方回答。",
+    live: RING + " → sim/combat/environmentalBurn",
   },
   "match.fireRing.roundHardCapSec": {
     zh: "回合硬上限（秒）",
@@ -504,6 +517,7 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
       "match.fireRing.stage2ShrinkSec",
       "match.fireRing.minRadius",
       "match.fireRing.maxPctPerSec",
+      "match.fireRing.lethalSaveApplies",
       "match.fireRing.roundHardCapSec",
       "match.fireRing.boss.extendCombatSec",
       "match.fireRing.boss.delayFireRingSec",

@@ -74,10 +74,15 @@
  *   · **驅散 / 淨化**。整個 sim 沒有任何 dispel/purge 原語(grep 過:零個站點)。
  *     加一個 `dispellable` 欄位會是**沒有任何讀者的欄位** —— 正好是 CLAUDE.md
  *     失敗形態 ②(卡片上寫了,遊戲裡不存在)。等 dispel 這根軸真的存在再加。
- *   · **火圈**。champion 的火圈燒傷直接寫 `hp.hp -=`,在
- *     `sim/systems/FireRingSystem.ts` —— 那是別條 lane 的領域,P3 不能碰。
- *     `blocksTrueDamage` 目前只對**走傷害佇列**的真實傷害生效。
- *     修法是一行:在該檔 line 92 之前 `if (refusesDamage(world, id, "true")) continue;`。
+ *   · ~~**火圈**~~ —— ✅ **已修 (GH#287, 2026-08-09)**。這一段原本寫著
+ *     「champion 的火圈燒傷直接寫 `hp.hp -=`⋯修法是一行⋯」,而**那一行一年
+ *     沒有被加**,連它引用的行號都漂掉了 —— CLAUDE.md 第三守則的活教材:
+ *     一份沒有守衛的修法備忘不會紅,所以它會一直是備忘。
+ *     現在火圈(champion / 召喚物 / 小怪三條路)都經過
+ *     `combat/environmentalBurn.ts::applyEnvironmentalBurn`,而那個函式問的就是
+ *     這個檔的 `refusesDamage(world, id, "true")`。所以 `blocksTrueDamage` 現在
+ *     **真的**擋得住火圈。守衛:`systems/FireRingSystem.test.ts` 的
+ *     「無敵擋得住火圈 (firering-invuln)」——把那道閘拿掉會紅。
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";

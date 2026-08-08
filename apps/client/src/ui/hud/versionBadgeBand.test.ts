@@ -440,6 +440,76 @@ function walk(dir: string, out: string[] = []): string[] {
 }
 
 /**
+ * Read ONE declaration value starting at `i`, respecting nesting and strings.
+ *
+ * ⚠️ THIS USED TO BE `([^,}\n;]+)` AND THAT WAS A HOLE (GH#291). A character
+ * class stops at the FIRST comma — and the comma that matters is INSIDE
+ * `env(safe-area-inset-bottom, 0px)`, so every derived template-literal offset
+ * in the app truncated to the byte-identical prefix ``​`calc(env(safe-area-inset-bottom``.
+ * The ledger key is `file + " " + value`, so three different bars (MarkBar +190,
+ * SelfStatusBar +122, ZombieWaveBar dynamic) all keyed on a string that CONTAINED
+ * NONE OF THEIR ARITHMETIC. Measured: moving MarkBar to `HUD_STAMP_BAND - 190`
+ * dropped the whole bar ~180px below the viewport and this file stayed 12/12
+ * green, because the truncated key still matched.
+ *
+ * A depth-aware read is the fix rather than a cleverer regex: the terminator is
+ * a `,` / `;` / `}` at NESTING DEPTH ZERO, which no regex can express. Newlines
+ * are NOT terminators — CastNotice.tsx puts its value on the line after the
+ * colon, and stopping at the newline would silently truncate it exactly the way
+ * the comma did. An interface's `bottom: number` still terminates on its own `;`
+ * or the closing `}` and is dropped by the primitive-type filter below.
+ */
+function readDeclValue(src: string, i: number): string {
+  let depth = 0;
+  let out = "";
+  while (i < src.length) {
+    const c = src[i]!;
+    if (depth === 0 && (c === "," || c === ";" || c === "}")) break;
+    if (c === '"' || c === "'" || c === "`") {
+      const quote = c;
+      out += c;
+      i++;
+      while (i < src.length) {
+        const d = src[i]!;
+        if (d === "\\") {
+          out += src.slice(i, i + 2);
+          i += 2;
+          continue;
+        }
+        // `${…}` may itself contain quotes and braces — count braces through it
+        if (quote === "`" && d === "$" && src[i + 1] === "{") {
+          const start = i;
+          let braces = 0;
+          i += 1;
+          while (i < src.length) {
+            if (src[i] === "{") braces++;
+            else if (src[i] === "}") {
+              braces--;
+              if (braces === 0) {
+                i++;
+                break;
+              }
+            }
+            i++;
+          }
+          out += src.slice(start, i);
+          continue;
+        }
+        out += d;
+        i++;
+        if (d === quote) break;
+      }
+      continue;
+    }
+    if (c === "(" || c === "[" || c === "{") depth++;
+    else if (c === ")" || c === "]" || c === "}") depth--;
+    out += c;
+    i++;
+  }
+  return out;
+}
+
+/**
  * Every `bottom:` declaration under ui/, comments stripped.
  *
  * `(?<![-\w])` keeps `margin-bottom` / `borderBottom` out; comments are removed
@@ -447,14 +517,16 @@ function walk(dir: string, out: string[] = []): string[] {
  * mistaken for code.
  */
 function collectBottomDecls(): BottomDecl[] {
-  const decl = /(?<![-\w])bottom:\s*([^,}\n;]+)/g;
+  const decl = /(?<![-\w])bottom:\s*/g;
   const out: BottomDecl[] = [];
   for (const full of walk(UI_ROOT)) {
     const src = readFileSync(full, "utf8")
       .replace(/\/\*[\s\S]*?\*\//g, "")
       .replace(/\/\/[^\n]*/g, "");
     for (const m of src.matchAll(decl)) {
-      const value = (m[1] ?? "").trim().replace(/\s+/g, " ");
+      const value = readDeclValue(src, m.index + m[0].length)
+        .trim()
+        .replace(/\s+/g, " ");
       // `bottom: number` in an interface is a TYPE, not a style — it paints
       // nothing. Skipping it is the one exclusion here, and it is by SHAPE
       // (a bare primitive type name) rather than by file, so a real
@@ -611,7 +683,9 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
   {
     file: "components/CastNotice.tsx",
-    value: "hudCastNoticeBottom(touch",
+    value:
+      "hudCastNoticeBottom(touch, { resources: true, abilities: !touch }) + " +
+      "(touch ? TOUCH_EXTRA : 0)",
     count: 1,
     why:
       "the refusal line rides above the bottom cluster, so its offset is DERIVED " +
@@ -655,13 +729,13 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
   {
     file: "platform/ChampionMarquee.tsx",
-    value: '"max(46px',
+    value: '"max(46px, calc(env(safe-area-inset-bottom, 0px) + 42px))"',
     count: 1,
-    why: "`max(46px, env(safe-area-inset-bottom))` — at least 46px up. (The scan splits on the comma inside max(); the floor is what matters)",
+    why: "`max(46px, …)` — at least 46px up, and the env() term only pushes it further up",
   },
   {
     file: "platform/HomeFooter.tsx",
-    value: '"max(10px',
+    value: '"max(10px, env(safe-area-inset-bottom, 0px))"',
     count: 1,
     why: "`max(10px, env(safe-area-inset-bottom))` — the TIGHTEST thing in the app: its bottom edge lands exactly on the band's top edge, adjacent to the badge and not overlapping it. Lowering that 10 puts the login credits under the stamp",
   },
@@ -686,7 +760,7 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
   {
     file: "hud/SelfStatusBar.tsx",
-    value: "`calc(env(safe-area-inset-bottom",
+    value: "`calc(env(safe-area-inset-bottom, 0px) + ${HUD_STAMP_BAND + 122}px)`",
     count: 1,
     why:
       "自身狀態列 (owner 2026-07-27 「看不出來自己暈眩」). The offset is " +
@@ -694,13 +768,15 @@ const BAND_LEDGER: readonly LedgerRow[] = [
       "tracks the band if that ever grows. It cannot collide by arithmetic: the " +
       "bar's lowest pixel sits 122px above the band's top edge, and it stacks " +
       "UPWARD (flex-column, bottom-anchored), so more rows move it further away, " +
-      "never closer. The scanner cannot fold a template literal, which is why it " +
-      "lands here rather than being evaluated — the value it could not read is " +
-      "the derivation itself.",
+      "never closer. It lands here rather than being cleared automatically because " +
+      "the scan reads source, not a rendered layout, and cannot fold a template " +
+      "literal into px — but the KEY now carries the whole declaration (GH#291), " +
+      "and the 「derived bottom-anchored bars」 test below re-derives the +122 " +
+      "arithmetically, so this row is prose ON TOP OF a check, not instead of one.",
   },
   {
     file: "hud/ZombieWaveBar.tsx",
-    value: "`calc(env(safe-area-inset-bottom",
+    value: "`calc(env(safe-area-inset-bottom, 0px) + ${zombieBarBottom(touch)}px)`",
     count: 1,
     why:
       "殭屍來襲 + 已擊殺數 (task #258). The offset is `zombieBarBottom(touch)` = " +
@@ -710,21 +786,22 @@ const BAND_LEDGER: readonly LedgerRow[] = [
       "arithmetic: `hudStackEnd` starts at HUD_EDGE and only grows, and " +
       "HUD_STAMP_BAND === HUD_EDGE is pinned by the first test in this file, so the " +
       "offset is always >= the band height, and the bar stacks UPWARD from there. " +
-      "The scanner cannot fold a template literal, which is why it lands here rather " +
-      "than being evaluated — the value it could not read IS the derivation. " +
+      "The scan cannot fold a call into px, which is why it lands here rather than " +
+      "being cleared automatically — but the KEY now carries the whole declaration " +
+      "(GH#291), so re-pointing it at another helper fails as an undeclared offset. " +
       "zombieWave.test.ts asserts the clearance numerically on every guard viewport.",
   },
   {
     file: "hud/MarkBar.tsx",
-    value: "`calc(env(safe-area-inset-bottom",
+    value: "`calc(env(safe-area-inset-bottom, 0px) + ${HUD_STAMP_BAND + 190}px)`",
     count: 1,
     why:
       "具名標記層數列 (task #278, 十二道試煉). THE THIRD MEMBER of the same family as " +
-      "SelfStatusBar and ZombieWaveBar above, and it lands here for the same reason they " +
-      "do — not because the offset is doubtful, but because the SCANNER SPLITS ON THE " +
-      "COMMA INSIDE `env(safe-area-inset-bottom, 0px)`, so every derived template-literal " +
-      "offset in the app truncates to this same unevaluatable prefix. The value it could " +
-      "not read IS the derivation. The offset is " +
+      "SelfStatusBar and ZombieWaveBar above, and THE ONE THAT EXPOSED GH#291: the scan " +
+      "used to split on the comma inside `env(safe-area-inset-bottom, 0px)`, so all three " +
+      "bars keyed on the byte-identical prefix ``calc(env(safe-area-inset-bottom`` and " +
+      "moving this bar off the bottom of the screen kept the suite green. The key is now " +
+      "the WHOLE declaration. The offset is " +
       "`calc(env(safe-area-inset-bottom, 0px) + ${HUD_STAMP_BAND + 190}px)` — DERIVED from " +
       "the band, not a magic number, so it tracks the band if that ever grows. It cannot " +
       "collide by arithmetic: `env()` is non-negative, so the bar's lowest pixel sits at " +
@@ -736,7 +813,7 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
   {
     file: "mobile.css",
-    value: "env(safe-area-inset-bottom",
+    value: "env(safe-area-inset-bottom, 0px)",
     count: 1,
     why: "#hud-root's own coarse-pointer inset — the HUD LAYER, not a widget in it. The badge portals to <body> and applies the same inset itself (versionBadgeStyle marginBottom)",
   },
@@ -785,6 +862,52 @@ describe("nothing else claims the band — enumerated from the source tree", () 
       (r) => `${r.file}  bottom: ${r.value}  — no longer present; delete this BAND_LEDGER row`,
     );
     expect(stale, `Stale BAND_LEDGER rows:\n  ${stale.join("\n  ")}`).toEqual([]);
+  });
+
+  /**
+   * THE BAND-DERIVED BARS, CHECKED AS ARITHMETIC (GH#291).
+   *
+   * The ledger key above now carries the whole declaration, so nobody can move
+   * one of these bars WITHOUT this file failing. That closes the silent hole,
+   * but it leaves the offset itself defended by a ledger `why` — prose, which
+   * has an expiry date. This re-derives the ones that are stated in terms of
+   * HUD_STAMP_BAND straight out of the declaration the scan read, so
+   * `HUD_STAMP_BAND - 190` fails on the ARITHMETIC as well as on the key.
+   *
+   * ZombieWaveBar is deliberately not evaluable here (its offset comes from the
+   * corner registry via `zombieBarBottom`); zombieWave.test.ts pins that one
+   * numerically on every guard viewport.
+   */
+  const DERIVED_BAR = /^`calc\(env\(safe-area-inset-bottom, 0px\) \+ \$\{(.+)\}px\)`$/;
+
+  it("the band-derived bottom bars really do clear the band — arithmetic, not prose", () => {
+    cover("version-badge-band");
+    const family = collectBottomDecls().filter((d) => DERIVED_BAR.test(d.value));
+    expect(
+      family.length,
+      "the `calc(env(safe-area-inset-bottom, 0px) + ${…}px)` bar family vanished — this check " +
+        "has nothing left to read, which is exactly how it would go quietly vacuous",
+    ).toBeGreaterThanOrEqual(3);
+
+    let evaluated = 0;
+    for (const d of family) {
+      const expr = DERIVED_BAR.exec(d.value)![1]!;
+      const m = /^HUD_STAMP_BAND\s*([+-])\s*(\d+(?:\.\d+)?)$/.exec(expr);
+      if (!m) continue; // not band-derived — the key still guards it
+      evaluated++;
+      const px = HUD_STAMP_BAND + (m[1] === "+" ? 1 : -1) * Number(m[2]);
+      expect(
+        px,
+        `${d.file}: bottom is \`${expr}\` = ${px}px, which is INSIDE (or below) the reserved ` +
+          `bottom ${HUD_STAMP_BAND}px band — the version badge paints over it on every screen. ` +
+          "A bar anchored to the viewport bottom must sit at or above the band's top edge.",
+      ).toBeGreaterThanOrEqual(HUD_STAMP_BAND);
+    }
+    expect(
+      evaluated,
+      "no member of the bar family states its offset as `HUD_STAMP_BAND ± N` any more, so this " +
+        "check evaluated nothing. Re-derive it rather than deleting it",
+    ).toBeGreaterThanOrEqual(2);
   });
 
   it("the champ-select hint is clear of the band — the collision that motivated the rewrite", () => {

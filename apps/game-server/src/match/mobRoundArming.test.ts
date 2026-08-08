@@ -21,11 +21,21 @@
  * ── 為什麼答案分得開 (失敗形狀 ④) ──────────────────────────────────────────
  * schedule 只給第 1 回合一列並指定 sela;第 2 回合沒有列 ⇒ 沿用全場的 thorne。
  * 一個凍在 `fromRound`(=1) 的實作在兩個回合都回答 sela,第二條斷言就掛。等級也
- * 一起斷言(1 → 2),所以「換臉」與「升級」是兩個獨立可證偽的數字。
+ * 一起斷言,所以「換臉」與「升級」是兩個獨立可證偽的數字。
+ *
+ * ── 等級期望值為什麼是**推導**的 (GH#290) ──────────────────────────────────
+ * 這支原本寫 `baseLevel: 1, levelPerRound: 1` 再斷言 `1 → 2`。但 `mobLevelForRound`
+ * 讓 `mob.levelCurve` **優先**於那兩個欄位,而曲線住在出貨設定裡 —— 於是一次純
+ * 數值調整(#2fa6985a 的殭屍波曲線)就讓這支用「逐回合武裝壞了」的訊息紅,而真相
+ * 與武裝無關。現在期望值一律走 `mobLevelForRound(MOB_WAVES, round)`:它是**同一個
+ * 回合號**餵給**同一個純函式**,所以這支問的仍然只有一件事 ——「controller 交進去
+ * 的是不是當下的回合」。凍在 `fromRound` 的實作兩回合拿到同一個等級,下面
+ * `r1.level !== r2.level` 那條就掛。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "@ggd/shared/content";
+import { mobLevelForRound } from "@ggd/shared/sim/mobs";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -55,7 +65,9 @@ const MOB_WAVES: MobWavesConfig = {
   fromRound: 1,
   firstWaveSec: 999,
   waveIntervalSec: 999,
-  mob: { ...DEFAULT_MOB_WAVES_CONFIG.mob, championId: "thorne", baseLevel: 1, levelPerRound: 1 },
+  // ⚠️ 只覆寫「臉」。等級三兄弟(`levelCurve` / `baseLevel` / `levelPerRound`)一律沿用
+  // 出貨設定 —— 它們之間的優先權是 `mobLevelForRound` 的事,不該在夾具裡再抄一份。
+  mob: { ...DEFAULT_MOB_WAVES_CONFIG.mob, championId: "thorne" },
   schedule: [{ round: 1, mobsPerWaveCap: 3, maxAlivePerZone: 7, championId: "sela" }],
 };
 
@@ -88,7 +100,7 @@ describe("逐回合的殭屍規則是用**當下的回合**武裝的 (GH#191 / #
     expect(r1, "第 1 回合沒有武裝殭屍規則").not.toBeNull();
     // 這是 snapshot.ts 寫進 EntityState.key 的那個字串。
     expect(r1!.modelKey).toBe("champ.sela");
-    expect(r1!.level).toBe(1);
+    expect(r1!.level).toBe(mobLevelForRound(MOB_WAVES, 1));
     // 逐回合上限也走同一個 round —— 一起釘住,免得只有一半的通道活著。
     expect(r1!.mobsPerWaveCap).toBe(3);
     expect(r1!.maxAlivePerZone).toBe(7);
@@ -98,13 +110,17 @@ describe("逐回合的殭屍規則是用**當下的回合**武裝的 (GH#191 / #
     expect(r2).not.toBeNull();
     // 第 2 回合沒有列 ⇒ 沿用全場設定。一個凍在 fromRound 的實作在這裡仍是 sela。
     expect(r2!.modelKey).toBe("champ.thorne");
-    expect(r2!.level).toBe(2);
+    expect(r2!.level).toBe(mobLevelForRound(MOB_WAVES, 2));
     expect(r2!.mobsPerWaveCap).toBe(DEFAULT_MOB_WAVES_CONFIG.mobsPerWaveCap);
     expect(r2!.maxAlivePerZone).toBe(DEFAULT_MOB_WAVES_CONFIG.maxAlivePerZone);
 
     // 兩個回合真的給出不同答案 —— 否則上面每一條都可能在功能全死時通過。
     expect(r1!.modelKey).not.toBe(r2!.modelKey);
-    expect(r1!.level).not.toBe(r2!.level);
+    expect(
+      r1!.level,
+      "第 1 與第 2 回合推導出同一個等級,所以等級那兩條斷言不再能分辨「凍在 fromRound」的實作。" +
+        "出貨的等級曲線被調成逐回合不變了 —— 這支要改用另一組回合,不是刪掉這條。",
+    ).not.toBe(r2!.level);
   });
 
   it("染黑強度也是從**武裝過的** rules 發布的,不是常數", () => {

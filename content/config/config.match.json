@@ -39,6 +39,7 @@
         }
       ],
       "maxPctPerSec": 0.5,
+      "lethalSaveApplies": false,
       "roundHardCapSec": 300,
       "boss": {
         "extendCombatSec": 180,

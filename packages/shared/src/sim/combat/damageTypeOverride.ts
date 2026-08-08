@@ -80,7 +80,8 @@ import type { DamageType } from "../effects/effect";
  *   `"guardian"` / `"guardian-heir"` —— `systems/GuardianSystem.ts`
  *
  * (`"fireRing"` / `"flower"` / `"lifesteal"` 看起來像但**不是**傷害封包的
- * origin:火圈直接寫 `hp.hp -=`,另外兩個是治療/事件。)
+ * origin:火圈走 `combat/environmentalBurn.ts` 的環境燒傷出口 —— 過無敵/免死,
+ * 但**不進佇列**,所以型別轉換碰不到它;另外兩個是治療/事件。)
  *
  *   · `"basic"`   —— `origin === "basic"`,也就是普通攻擊(近戰在
  *                    `BasicAttackSystem`,遠程在 `ProjectileSystem`,兩個都算)。

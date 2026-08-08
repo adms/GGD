@@ -20,6 +20,8 @@
  * burning — with no error anywhere.
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import {
   ENTITY_FLAG,
   ENTITY_FLAG_FREE_BITS,
@@ -120,8 +122,39 @@ describe("ENTITY_FLAG bit budget — uint16, and the third collision must not be
     // separately and a renumber would desync a client mid-match with no error.
     expect(ENTITY_FLAG.FORM_A).toBe(4096);
     expect(ENTITY_FLAG.FORM_B).toBe(8192);
-    // 隱形原語 took 16384 (ENTITY_FLAG.INVISIBLE). ONE bit is left; the next
-    // feature must widen the field or claim its own channel.
+    // 隱形原語 took 16384 (INVISIBLE) and 精英小怪 took 32768 (MOB_ELITE), so the
+    // budget is EXHAUSTED — the next feature must widen the field or claim its
+    // own channel. (This comment used to say 「ONE bit is left」 while the line
+    // under it asserted the list was empty: GH#285's exact shape, inside the
+    // guard for it.)
     expect(ENTITY_FLAG_FREE_BITS).toEqual([]);
+  });
+
+  /**
+   * …AND CLAUDE.md HAS TO AGREE (GH#285).
+   *
+   * The budget above was already guarded on the CODE side, loudly, in this very
+   * file. It still went wrong where it mattered: `CLAUDE.md` — the document
+   * everybody is told to read FIRST — went on saying 「目前剩 16384 / 32768 兩格」
+   * for months after both were taken. Nothing read that sentence, so nothing
+   * could contradict it. This does.
+   */
+  it("CLAUDE.md's ENTITY_FLAG sentence agrees with ENTITY_FLAG_FREE_BITS", () => {
+    const doc = readFileSync(
+      fileURLToPath(new URL("../../../../CLAUDE.md", import.meta.url)),
+      "utf8",
+    );
+    const line = doc.split("\n").find((l) => l.includes("ENTITY_FLAG"));
+    expect(line, "CLAUDE.md no longer mentions ENTITY_FLAG at all — the bit budget is the kind " +
+      "of irreversible constraint that has to stay in the rules, not only in a schema comment")
+      .toBeDefined();
+    const claimsExhausted = /用光|用盡|沒有了|空陣列|zero|exhaust/i.test(doc.slice(doc.indexOf(line!), doc.indexOf(line!) + 600));
+    expect(
+      claimsExhausted,
+      `ENTITY_FLAG_FREE_BITS has ${ENTITY_FLAG_FREE_BITS.length} bit(s) left, but CLAUDE.md says:\n` +
+        `  ${line!.trim()}\n` +
+        "When the budget is empty CLAUDE.md must say so; when bits come back (only by WIDENING the " +
+        "field) it must say how many. A rule nobody can falsify is the thing GH#285 was about.",
+    ).toBe(ENTITY_FLAG_FREE_BITS.length === 0);
   });
 });

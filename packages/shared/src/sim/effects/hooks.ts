@@ -185,11 +185,29 @@ export function fireHooks(
    * 完全寫不出來。順便也是 `HookDef.damageSource`(普攻/非普攻)的資料來源。
    */
   incoming?: TriggerDamage,
+  /**
+   * 這一次呼叫允不允許在**持有者已經死了**的時候發動 —— 省略 = 不允許,
+   * 也就是這個參數出現之前每一個呼叫點走的那一條路。
+   *
+   * ⚠️ 下面那道存活閘不是可有可無的:一個躺在地上的人,他的道具被動、光環、
+   * 反彈、`onDamageTaken` 都不該繼續作用(屍體照樣會被 AoE 掃到,所以那些事件
+   * 真的還在發)。⛔ 所以這不是一個「關掉存活閘」的全域開關,而是**逐事件**的
+   * 一格 —— 誰有資格開,由 `systems/WorldHookSystem.ts` 那張表上的
+   * `firesWhenOwnerDead` 決定,今天只有【死亡時】那一列填了 true。
+   *
+   * ⛔ 也不可以寫成 `if (event === "onDeath")`:那是「為某一個技能/事件寫一個
+   * if」的形狀(CLAUDE.md 第〇·五守則),下一個「陣亡後遺留」的時刻就要再寫一個。
+   * 表格說話,這裡只認參數。
+   */
+  firesWhenOwnerDead?: boolean,
 ): void {
   const sc = world.stats.get(owner);
   if (!sc) return;
   const ownerHp = world.health.get(owner);
-  if (ownerHp && !ownerHp.alive) return;
+  // #293 —— 在此之前這一行沒有 `firesWhenOwnerDead`,而 `DeathSystem` 是**先**寫
+  // `hp.alive = false` 再 `emit("death")` 的,所以 `onDeath` 在出貨路徑上一次都
+  // 發不出來(失敗形態②:做了但沒有人收得到)。
+  if (ownerHp && !ownerHp.alive && !firesWhenOwnerDead) return;
 
   for (const src of sc.sources) {
     if (!src.hooks) continue;

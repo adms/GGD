@@ -94,6 +94,9 @@ export const PRODUCTION_FIRE_RING: FireRingConfig = {
   minRadius: 0.5,
   burnCurve: [...DEFAULT_BURN_CURVE], // 出貨曲線的唯一字面值住在 sim/fireRing.ts
   maxPctPerSec: 1,
+  // GH#287 出貨預設：火圈無視免死。TTK 掃描不裝任何免死標記，所以這一格在這裡
+  // 只有型別意義（`.default()` 讓它在 Zod 的 OUTPUT 型別上是必填）。
+  lethalSaveApplies: false,
   // ⚠️ PRE-EXISTING BREAKAGE, fixed in passing 2026-08-02: this literal is typed
   // `FireRingConfig` (the Zod OUTPUT type, where `.default()` fields are
   // REQUIRED) and has been missing `roundHardCapSec` since #248 added it — so

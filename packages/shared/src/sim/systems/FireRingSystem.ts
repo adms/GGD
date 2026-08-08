@@ -43,6 +43,7 @@ import type { EntityId } from "../../ids";
 import { distSq } from "../math/vec2";
 import { fireRingIsSafe, fireRingRadius, fireRingRatePerSec } from "../fireRing";
 import { summonBurnsInFireRing } from "../summonRules";
+import { applyEnvironmentalBurn } from "../combat/environmentalBurn";
 
 export function fireRingSystem(world: SimWorld): void {
   const rules = world.fireRingRules;
@@ -72,6 +73,9 @@ export function fireRingSystem(world: SimWorld): void {
   if (ratePerSec <= 0) return; // degenerate config: telegraph only, no damage
 
   const dt = world.dt;
+  // GH#287 攔截層規則, hoisted ONCE per tick rather than rebuilt per body: the
+  // burn closure below runs for every champion AND every burning 召喚物.
+  const envRules = { lethalSaveApplies: rules.lethalSaveApplies ?? false };
 
   /**
    * One body's burn. Extracted so the champion pass and the 召喚物 pass below
@@ -95,10 +99,17 @@ export function fireRingSystem(world: SimWorld): void {
     if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) return;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) return;
-    hp.hp -= dmg; // pure %-HP true burn: ignores armor/MR, shields and combat-env
+    // GH#287 —— ⛔ NOT `hp.hp -= dmg` any more. That bare write bypassed EVERY
+    // interception on the damage queue (無敵 / 免死), silently, for a year: the
+    // ring is the round's most common cause of death, so 「受到致命傷害時…」
+    // content was buying a card the game did not honour (失敗形態 ②).
+    // `applyEnvironmentalBurn` is the ONE place those gates live; it still skips
+    // armour/MR, shields and `combatEnv.damageDealt` on purpose (see its ③).
+    const dealt = applyEnvironmentalBurn(world, id, dmg, envRules);
+    if (dealt <= 0) return; // refused — no HP moved, so no burn to telegraph
     world.emit("fireRingDamage", {
       id,
-      amount: dmg,
+      amount: dealt,
       dmgType: "true",
       origin: "fireRing",
       x: t.pos.x,

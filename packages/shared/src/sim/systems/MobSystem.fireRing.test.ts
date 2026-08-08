@@ -56,6 +56,7 @@ import {
 import { normalizeCombatEnv } from "../combatEnv";
 import { type MobRules, spawnMob, summonMobBoss, MOB_MODEL_KEY } from "../mobs";
 import { beginCombatMobs } from "./MobSystem";
+import { grantImmunity } from "../effects/invulnerable";
 
 beforeAll(() => registerSkeletonContent());
 
@@ -427,5 +428,36 @@ describe("英雄的既有行為完全不變 (firering-hero-unchanged)", () => {
     // the whole time, so "identical" means "unchanged", not "nothing happened".
     expect(mobBurn).toBeGreaterThan(0);
     expect(a.health.get(heroA)!.hp).toBeLessThan(a.health.get(heroA)!.maxHp);
+  });
+});
+
+/**
+ * GH#287 攔截層 —— **小怪那一條路**。`fireRingBurnMobs` 是與英雄/召喚物分開的
+ * 第二個燒傷站點,而 #287 的守衛只蓋到 `FireRingSystem`:實測把這裡改回
+ * `hp.hp -= dmg`,全 repo 3,309 條測試**全綠**。這一條就是那個洞。
+ * 對照組不可省:單獨一句「血沒掉」對「火圈根本沒燒到小怪」也會過(失敗形態④)。
+ * 突變:`applyEnvironmentalBurn` → `hp.hp -= dmg` → 這一條紅(已驗)。
+ */
+describe("攔截層：小怪的火圈燒傷也走傷害管線 (GH#287)", () => {
+  it("無敵的殭屍站在圈外不掉血,免疫一過期就照燒", () => {
+    cover("firering-burns-mobs");
+    const w = world();
+    beginCombatMobs(w, BASE_RULES, [0]);
+    beginCombatFireRing(w, ringNow());
+    const id = spawnMob(w, 0, BASE_RULES, 1, 0);
+    parkAt(w, id, ZONE0, 23.4);
+    // 只給真傷那一根軸 —— 火圈是 #270 的真實傷害。
+    const until = w.tick + 2 * HZ;
+    grantImmunity(w, id, { physicalUntil: 0, magicUntil: 0, trueUntil: until, controlUntil: 0 });
+
+    let burnedWhileImmune = 0;
+    for (let t = 0; t < 2 * HZ; t++) burnedWhileImmune += (step(w), ringDmg(w, id));
+    expect(burnedWhileImmune).toBe(0);
+    expect(w.health.get(id)!.hp).toBe(BASE_RULES.maxHp); // 一格都沒掉
+
+    // 對照組：同一隻、同一格、同一個圈 —— 免疫一過期就燒。
+    let burnedAfter = 0;
+    for (let t = 0; t < 10; t++) burnedAfter += (step(w), ringDmg(w, id));
+    expect(burnedAfter).toBeGreaterThan(0);
   });
 });

@@ -53,12 +53,12 @@ import (
 // High Stakes round every 4th round from round 5 that pays each winner +15.
 //
 //	REFERENCE POINT — 4 teams x 20 starting Team Health:
-//	one match  = champ-select 20s + ~11.6 rounds x (~60s combat + 40s
-//	             intermission + 6s resolution) ~= 21 minutes.
-//	             (content/config/config.match.json: combatMaxSec 100,
+//	one match  = champ-select 20s + ~11.6 rounds x (~60s combat + 25s
+//	             intermission + 6s resolution) ~= 18 minutes.
+//	             (content/config/config.match.json: combatMaxSec 180,
 //	             fireRing.startSec 60 so a round typically resolves near 1
-//	             minute; every round going the full 100 is ~29 minutes.)
-//	one family evening ~= 1-2 hours ~= 3-6 matches.
+//	             minute; every round going the full 180 is ~41 minutes.)
+//	one family evening ~= 1-2 hours ~= 3-7 matches.
 //
 // THAT IS A REFERENCE POINT, NOT A LIVE READING, and it is deliberately the
 // CONSERVATIVE one: it comes from a model that treats every duel as a coin flip,
@@ -80,10 +80,10 @@ import (
 // compiling in a copy. The tuning lever is still the GRANT, not the cost:
 //
 //	place 1  240  -> 1.25 matches per unlock (~0.4h of play)
-//	place 2   90  -> 3.3  matches per unlock (~1.2h of play)
-//	place 3   70  -> 4.3  matches per unlock (~1.5h of play)
-//	place 4   60  -> 5.0  matches per unlock (~1.7h of play)
-//	average  115  -> 2.6  matches per unlock (~0.9h of play)
+//	place 2   90  -> 3.3  matches per unlock (~1.0h of play)
+//	place 3   70  -> 4.3  matches per unlock (~1.3h of play)
+//	place 4   60  -> 5.0  matches per unlock (~1.5h of play)
+//	average  115  -> 2.6  matches per unlock (~0.8h of play)
 //
 // THE MATCH GOT SHORTER; THE GRANTS DID NOT MOVE, AND THAT IS THE DECISION —
 // NOT AN OVERSIGHT (#250). Read the history in order, because the obvious
@@ -95,11 +95,20 @@ import (
 //	per TWO evenings, with raising the grants flagged as an open question.
 //	Then #132 and #153 tuned the ROUND down — combatMaxSec 240 -> 100,
 //	fireRing.startSec 180 -> 60, champ-select 40s -> 20s. The same ~11.6
-//	rounds now take ~21 minutes, so the play-hours landed back on the ~1h /
+//	rounds now take ~18 minutes, so the play-hours landed back on the ~1h /
 //	~2h / ~1.5h the grants were originally tuned against and
 //	「about one champion per evening」 holds again at the average.
 //	The 44 was never re-derived, so this file went on claiming a match length
 //	that had not existed for two content revisions.
+//	AND IT HAPPENED AGAIN (GH#292). The block above then said 21 minutes for
+//	a while, because two later balance edits — intermissionSec 40 -> 25
+//	(「商店 40→25 秒」) and combatMaxSec 100 -> 180 — moved the typical round
+//	from 106s to 91s without anyone re-deriving this comment. THIS is the
+//	whole reason matchlength_test.go re-computes the two numbers above: the
+//	number that goes stale is never the one somebody is looking at, and 3
+//	minutes of drift is exactly the size that survives a reading and dies in
+//	a test. The typical round is now 25 + 60 + 6 = 91s; the long one, if
+//	every round runs to combatMaxSec, is 25 + 180 + 6 = 211s.
 //
 // The owner was shown the resulting gap — the economy pays out per match at a
 // rate set for a match twice as long — and ruled:

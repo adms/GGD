@@ -949,6 +949,19 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       healingTakenMult: z.number().min(0).max(1).optional(),
       lifestealMult: z.number().min(0).max(1).optional(),
       regenMult: z.number().min(0).max(1).optional(),
+      /**
+       * A4（#278 / GH#295）—— 這一筆狀態**可不可以被【淨化】拔掉**。
+       *
+       * 三值語意是刻意的：`true` / `false` / **省略**。省略 = 讀後台
+       * `config.dispel@1` 的 `statusDefaultDispellable`（出貨 **true**）——
+       * 「作者明講不可驅散」與「作者沒想過這件事」是兩種不同的狀態，而後者的
+       * 答案應該是一個操作者調得到的全域預設，不是寫死在文件裡。
+       *
+       * ⚠️ 回合重置與復活**不看這一格**（`clearForFreshBody` 傳
+       * `requireDispellable: false`）—— 那不是淨化，是重置：一個標了不可驅散的
+       * 減速也不可以跨過墳墓活下來。
+       */
+      dispellable: z.boolean().optional(),
     })
     .strict(),
   z
@@ -989,6 +1002,31 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * here cannot outlive the buff that granted it.
        */
       hooks: z.array(z.lazy(() => zHookDef)).optional(),
+      /**
+       * A4（#278 / GH#295）—— 這一份增益**可不可以被【淨化】拔掉**。
+       *
+       * 省略 = 讀後台 `config.dispel@1` 的 `buffDefaultDispellable`，而出貨值是
+       * **false**（「沒有人預期自己買的裝備效果可以被敵人剝掉 —— 打開它是一個
+       * 設計決定，不是一個預設值」）。所以在出貨設定下，**只有明確填 `true` 的
+       * 來源拔得走**：這一格就是那個「打開它」的動作。
+       *
+       * ⚠️ GH#295 之前這一格**不存在**，於是 `dispel.pools.buffs` 是一個死開關：
+       * 兩道閘相乘為零（預設 false × 沒有任何 authoring 欄位能標 true）。
+       */
+      dispellable: z.boolean().optional(),
+      /**
+       * A4（#278 / GH#295）—— 這一份來源是**增益還是減益**（`dispel.polarity`
+       * 的過濾讀它）。
+       *
+       * ⛔ 不可以事後推導：一個來源可以同時帶 `{ms,+0.3}` 與 `{armor,-0.5}`，
+       * 任何「看修飾詞猜極性」的啟發式都會在某一張卡上錯，而且從編輯器修不掉。
+       *
+       * ⚠️ 省略 = 沒有極性，而**有方向的淨化拔不到沒有極性的來源**
+       *（`clearPools.polarityPasses`：「不知道」不當成「是」）。也就是說要讓一發
+       * 「淨化敵方增益」（`polarity: "buff"`）拔得到它，`dispellable: true` 與
+       * `polarity: "buff"` **兩格都要填**。
+       */
+      polarity: z.enum(["buff", "debuff"]).optional(),
     })
     .strict(),
   /**
@@ -1203,6 +1241,15 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       tickOnApply: z.boolean().optional(),
       /** does the burn outlive its caster? absent = "continue" (WC3's reading) */
       onCasterDeath: z.enum(["continue", "stop"]).optional(),
+      /**
+       * A4（#278 / GH#295）—— 這一筆延燒**可不可以被【淨化】拔掉**。
+       * 省略 = 讀後台 `config.dispel@1` 的 `dotDefaultDispellable`（出貨 **true**，
+       * 燃燒/中毒本來就該解得掉）。填 `false` = 這一筆解不掉。
+       *
+       * ⚠️ 它單獨一格而不是跟 status 共用一個預設，因為 `world.dot` 在 A4 之前
+       * 完全沒有任何移除路徑 —— 把它打開是一次真的能力增加，值得有自己的閥。
+       */
+      dispellable: z.boolean().optional(),
     })
     .strict(),
   z
@@ -1480,9 +1527,18 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /**
        * 清哪幾池。省略 = `config.dispel@1` 的四個 `defaultPool*`。
        *
-       * ⚠️ `buffs` 打開 = 拔得掉道具被動／增益卡／靈氣投影。出貨的
-       * `buffDefaultDispellable` 是 **false**，所以就算這一格開著，
-       * 沒有明確標 `dispellable: true` 的來源仍然拔不走 —— 兩道閘是刻意的。
+       * ⚠️ `buffs` 打開 = 拔得掉道具被動／增益卡／靈氣投影，而它**後面還有兩道閘**，
+       * 兩道都要作者主動打開，否則勾了這一格一筆都不會掉：
+       *   ① `applyBuff.dispellable: true` —— 出貨的 `buffDefaultDispellable` 是
+       *      **false**，所以沒標的來源一律拔不走（GH#295 之前**連這一格都不存在**，
+       *      於是這一池是一個死開關：兩道閘相乘為零）；
+       *   ② `applyBuff.polarity` 要對得上這裡的 `polarity` —— 沒填極性的來源，
+       *      任何有方向的淨化都拔不到（「不知道」不當成「是」）。
+       *
+       * ⚠️ `shields` 在 `polarity: "debuff"`（本 kind 的預設）下**整池跳過**，而那是
+       * 刻意的不是缺陷：護盾沒有極性也沒有 `dispellable`，一發「解掉自己身上的減益」
+       * 不該順手吃掉自己的護盾。要打盾就寫 `polarity: "any"` / `"buff"`，或者用
+       * 專門的 `shieldBreak` kind（它不受 `dispelRules.enabled` 這個止血閥影響）。
        */
       pools: z
         .object({

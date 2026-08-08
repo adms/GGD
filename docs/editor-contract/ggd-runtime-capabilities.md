@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `e6843214`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `c60e27de`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -20,7 +20,7 @@
 
 | 能力 | 狀態 | 出處章節 | 說明（限制／為什麼還沒有） | 佐證 |
 |---|---|---|---|---|
-| `hook.on-lethal-damage@1` | ⚠️ 部分支援 | §12 G4 · §13「lethal hook 在 death commit 前」 | 攔截點在 `combat/damage.ts` 的護盾之後、扣血之前，符合計畫的「death commit 前」。⛔ 但**火圈燒傷攔不到** —— `FireRingSystem` 直寫 `hp.hp -=` 不走傷害佇列（無敵也一樣擋不住）。 | packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts（兩個突變都驗過） |
+| `hook.on-lethal-damage@1` | ⚠️ 部分支援 | §12 G4 · §13「lethal hook 在 death commit 前」 | 攔截點在 `combat/damage.ts` 的護盾之後、扣血之前，符合計畫的「death commit 前」。⚠️ **火圈燒傷是一個要知道的例外，而它現在是一格後台開關**（GH#287）：火圈不走傷害佇列（那條路會帶來每 tick 的浮動數字、擊倒、擊殺歸屬 —— 全都不是環境傷害要的），改走 `combat/environmentalBurn.ts` 這唯一的第二條路，它直接呼叫佇列**自己在用的**`refusesDamage` 與 `lethalSaveFor`。所以：**無敵擋得住火圈**（`invulnerable` 的 `blocksTrueDamage`，無條件），而**免死擋不擋火圈是 `match.fireRing.lethalSaveApplies`**，⛔ **出貨預設關**（＝火圈無視免死，維持今天的行為，等 owner 裁決）。⇒ 寫「受到致命傷害時 ⋯」的卡片時，不要假設它在火圈裡會生效。⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「火圈燒傷攔不到 —— 直寫 `hp.hp -=`，無敵也一樣擋不住」，那是寫在 GH#287 落地**之前**的（同 `defense.mana-barrier@1` 那一格）。 | packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts（兩個突變都驗過） |
 | `effect.charge-ledger@1` | ✅ 支援 | §12 G4 · §13「十二道試煉的 ledger 跨 round 不跨 match」 | — | packages/shared/src/sim/marks.ts（具名標記：count/spent/expiresAtTick/resetOn）。`resetOn:"match"` 就是計畫要的「跨 round 不跨 match」——`SimWorld` 一場比賽一個。 |
 | `hook.on-evade@1` | ⚠️ 部分支援 | §7 P1 · §12 G4 | 事件會發到**閃掉的那一方**（`WorldHookSystem` 的 actorKey=target），符合計畫的 defender hook。⛔ 尚未區分「真閃避」與「attacker fumble」，計畫 §13 要求 fumble 零次 —— 這一格還沒守。 | packages/shared/src/sim/systems/WorldHookSystem.ts + worldHook.test.ts |
 | `hook.on-ability-hit@1` | ✅ 支援 | §2.1.1（配合 condition.target-status@1） | — | content/schema/effect.ts 的 zHookEvent |

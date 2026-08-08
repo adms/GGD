@@ -1804,9 +1804,12 @@ export class MatchController {
     ) {
       // #217: the ROUND is the mob's LEVEL channel. `this.phase.round` is the same
       // deterministic host counter that already arms guardian HP two blocks up;
-      // mobRulesFromConfig bakes level = baseLevel + levelPerRound*(round-fromRound)
-      // — round 3 → lv3, round 4 → lv4 — and the levelled maxHp/regen into the
-      // rules ONCE, here. The sim never sees a round, and a replay re-arms from its
+      // mobRulesFromConfig bakes the level (`mobLevelForRound` — the `mob.levelCurve`
+      // when one is configured, else the legacy baseLevel + levelPerRound line) and
+      // the levelled maxHp/regen into the rules ONCE, here. ⚠️ Do NOT restate the
+      // formula here: it moved once already (GH#290) and the copy that used to sit
+      // in this comment is exactly what went stale.
+      // The sim never sees a round, and a replay re-arms from its
       // own recorded ArenaRules + its own replayed round, so it round-trips exactly.
       beginCombatMobs(
         this.world,

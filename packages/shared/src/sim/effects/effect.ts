@@ -953,6 +953,12 @@ export type EffectDef =
       healingTakenMult?: number;
       lifestealMult?: number;
       regenMult?: number;
+      /**
+       * A4（#278 / GH#295）—— 這一筆狀態可不可以被【淨化】拔掉。
+       * 省略 = `world.dispelRules.statusDefaultDispellable`（出貨 true）。
+       * 回合重置與復活不看它（`clearForFreshBody` 傳 `requireDispellable: false`）。
+       */
+      dispellable?: boolean;
     }
   /**
    * `perRank` (index rank-1, clamped to the last entry) is the rank-indexed
@@ -1005,6 +1011,17 @@ export type EffectDef =
        * 「一次施放最多觸發幾次」 rather than a global clock.
        */
       hooks?: HookDef[];
+      /**
+       * A4（#278 / GH#295）—— 這一份增益可不可以被【淨化】拔掉。
+       * 省略 = `world.dispelRules.buffDefaultDispellable`（出貨 **false**），
+       * 所以出貨設定下只有明確填 true 的來源拔得走。寫進 `ModifierSource`。
+       */
+      dispellable?: boolean;
+      /**
+       * A4（#278 / GH#295）—— 增益還是減益。⛔ 施加時寫下，不推導（一個來源可以
+       * 同時帶正負修飾詞）。省略 = 無極性 = **有方向的淨化拔不到它**。
+       */
+      polarity?: "buff" | "debuff";
     }
   /**
    * cycleBuff (揍敵客阿福 13-00 念。攻防轉換) — 輪替增益: apply the NEXT step of a
@@ -1311,6 +1328,11 @@ export type EffectDef =
        *     is revived (a revive is not a re-cast).
        */
       onCasterDeath?: "continue" | "stop";
+      /**
+       * A4（#278 / GH#295）—— 這一筆延燒可不可以被【淨化】拔掉。
+       * 省略 = `world.dispelRules.dotDefaultDispellable`（出貨 true）。
+       */
+      dispellable?: boolean;
     }
   /**
    * summon — 召喚物 (GH#289 lane P2). Spawns one or more bodies that fight for
@@ -1470,9 +1492,10 @@ export type EffectDef =
        * (WC3 `Avul` 擋所有東西)。
        *
        * ⚠️ 火圈是 #270 明確的**真實傷害**,而「無敵要不要免疫縮圈」是 owner 的
-       * 平衡決定,所以它是欄位而不是程式裡的分支。⚠️ 但**今天它還管不到火圈**:
-       * champion 的燒傷直接寫 `hp.hp -=`(systems/FireRingSystem.ts),沒有走
-       * 傷害佇列 —— 見 effects/invulnerable.ts 檔頭 ⑤。
+       * 平衡決定,所以它是欄位而不是程式裡的分支。
+       * ✅ GH#287 起**它真的管得到火圈**:三條燒傷路徑都經過
+       * `combat/environmentalBurn.ts`,那裡問的是同一個 `refusesDamage(…, "true")`。
+       * (這一段以前寫著「今天它還管不到火圈」—— 那是真的,而且真了一年。)
        */
       blocksTrueDamage?: boolean;
       /**

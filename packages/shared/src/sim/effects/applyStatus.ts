@@ -84,6 +84,11 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 而 sim 透過 `Statuses` 登錄表讀它。查不到 = undefined = 有方向的
           // 淨化拔不到它(`clearPools.polarityPasses`:「不知道」不當成「是」)。
           polarity: Statuses.tryGet(e.statusId)?.polarity,
+          // 可不可以被淨化拔掉 —— GH#295。缺席時 `clearPools` 讀
+          // `dispelRules.statusDefaultDispellable`（出貨 true），所以這一格是
+          // 「作者明講不可驅散」的**唯一**寫法。不寫這一行 = schema 收得下、
+          // 後台畫得出來、而引擎永遠讀不到（失敗形態 ②）。
+          dispellable: e.dispellable,
           // C4 睡眠 —— 受傷即提早解除這一筆（`sim/statusBreak.ts`）。
           // C1 沉默 / C2 混亂（#278）。
           silenced: e.silenced,

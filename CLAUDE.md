@@ -380,7 +380,18 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   （`sim/purity.test.ts` 在守）。到期一律用**絕對 tick**，不是遞減計數器。
   Map 迭代要先排序。
 - **Colyseus `defineTypes` 是 APPEND-ONLY** —— 新欄位只能加在最後，**加錯回不去**。
-  優先用 `ENTITY_FLAG` 的空位 bit（值編碼，可以改回來）。目前剩 16384 / 32768 兩格。
+  ⛔ **`ENTITY_FLAG` 的 16 顆 bit 已經用光了**（`EntityState.flags` 是 uint16，
+  `ENTITY_FLAG_FREE_BITS` 現在是**空陣列**）。所以「拿一顆空位 bit」這條退路**沒有了**：
+  下一個要標記狀態的功能只能**加寬欄位**（= 動 `defineTypes`，append-only、加錯回不去）
+  **或自己開一條頻道**（事件流）。
+  ⛔ **不要「重用」看起來閒置的 bit** —— 16 顆全都有意義，重用會讓線上的舊客戶端 desync，
+  而且**任何一處都不會報錯**。真正的清單與每一顆的用途在
+  `packages/shared/src/protocol/schema.ts` 的 BIT BUDGET 區塊，以那份為準。
+  ⚠️ 這一行在 2026-08-08 之前寫著「目前剩 16384 / 32768 兩格」，而那兩格早就被
+  `INVISIBLE` 與 `MOB_ELITE` 拿走了 —— 程式碼一直是對的，說謊的是這份**規定大家先讀**的
+  文件（GH#285）。守衛：`packages/shared/src/protocol/formFlags.test.ts` 的
+  「CLAUDE.md's ENTITY_FLAG sentence agrees with ENTITY_FLAG_FREE_BITS」——
+  它真的讀這一行，這一行再說謊就會紅。
 - 每一次 `content/` 編輯都要跑 `pnpm content:build`，**而且要把產物一起 commit**：
   `bundle.json` / `manifest.json` / 各集合的 `_index.json`。
   ⚠️ **「否則 `bundle.test.ts` 紅」這句話曾經寫在這裡，而它是假的**（第三守則）——

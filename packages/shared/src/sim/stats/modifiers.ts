@@ -17,6 +17,31 @@ import type { EffectCondition } from "../content/condition";
 export enum ModOp {
   Flat = "flat",
   PercentAdd = "pctAdd",
+  /**
+   * 乘區 —— `final` 式子裡 `Π(1 + value)` 的那一項。**每一個來源自己一格**,
+   * 所以兩份 +50% 是 ×2.25(不是 ×2.0,那是 `PercentAdd`)。
+   *
+   * ⚠️ **乘 `stacks`,而且是線性的**:`1 + value × stacks`(GH#286)。
+   * 3 層 ×10% = +30%,不是複利的 +33.1%。
+   *
+   * ── 為什麼線性,而不是「N 層 ≡ N 份來源」的複利 ─────────────────────────
+   * 複利那個讀法有它的道理(`stacks` 是 `applyBuff` 把 N 次施加**收合**成一格),
+   * 但這裡選線性,三個理由:
+   *   ① `stacks` 在這份 enum 裡只有**一個**意思 ——「把這條 modifier 的量放大
+   *      N 倍」。`Flat` / `PercentAdd` / {@link PercentOf} 都是這個意思,
+   *      再給 `PercentMult` 第二種意思等於讓同一個欄位在不同 op 上回答不同問題。
+   *   ② 引擎裡**已經有兩處**手算過「N 倍的 pctMult」,而兩處都是線性:
+   *      `sim/marks.ts::syncPerStackSource`(value × spent)與
+   *      `sim/content/requirement.ts::scaleModifiers`(value × k)。複利會讓
+   *      管線與那兩處對同一句話給出不同的數字。
+   *   ③ 複利要在 `recomputeStats`(每 tick、每條屬性)裡跑 O(stacks) 次乘法,
+   *      而 `applyBuff` 的 `maxStacks` 是**選填**(缺席 = `Infinity`),所以層數
+   *      沒有上界。`sim/**` 又禁 `**`,只能寫迴圈。
+   *
+   * ⭐ **要複利的內容寫得出來**:`applyBuff` 不填 `stackKey` 時每一次施加都
+   * attach 自己的一份來源,而這個式子本來就是 `Π` —— N 份來源就是 (1+v)^N。
+   * 也就是說兩種語意都在,差別是作者選 `stackKey` 收合(線性)或不收合(複利)。
+   */
   PercentMult = "pctMult",
   Override = "override",
   /**

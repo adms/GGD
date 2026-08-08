@@ -33,6 +33,9 @@
  *   · 圓形分支的 `distSq(...) <= r2` → `true`        → dsp-circle-edge 紅
  *   · `if (!rules.appliesToMobs …) continue` 刪掉    → dsp-mobs 紅
  *   · `Math.min(e.count ?? cap, cap)` → `e.count ?? cap` → dsp-count-cap 紅
+ *   · `applyBuff.ts` 的 `dispellable: e.dispellable` 刪掉 → dsp-buff-authoring 紅
+ *   · `applyStatus.ts` 的 `dispellable: e.dispellable` 刪掉 → dsp-status-dot-authoring 紅
+ *   · `zApplyBuff` 的 `dispellable` 欄位刪掉         → dsp-authoring-schema 紅
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../../testkit/cover";
@@ -44,6 +47,7 @@ import { runEffects } from "./effectRunner";
 import { resolveAbilityRadius } from "../abilities/abilitySystem";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "../dispelRules";
 import type { EffectContext, EffectDef } from "./effect";
+import { zEffectDef } from "../../content/schema/effect";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import type { StatusEffect } from "../components";
 import { Statuses } from "../content/registry";
@@ -317,5 +321,99 @@ describe("dispel —— 【淨化】", () => {
 
     // 只掉一筆 —— 全域上限管得到逐支文件,不然那一格就只是裝飾。
     expect(ids(world, hero)).toHaveLength(2);
+  });
+
+  /**
+   * ⭐ GH#295 —— `pools.buffs` 以前是一個**死開關**：出貨
+   * `buffDefaultDispellable: false`，而全 repo 沒有任何 authoring 欄位可以把一個
+   * 來源標成 `dispellable: true`，兩道閘相乘為零。
+   *
+   * ⚠️ 這一條**一定要走出貨的施加路徑**（`applyBuff`）。手寫一個 `ModifierSource`
+   * 再看它被拔掉，驗的是 `clearPools` 的過濾器 —— 而缺陷從來不在那裡
+   *（失敗形態 ⑤：被測的不是出貨的那個）。
+   */
+  it("⭐ 標了 dispellable 的增益淨化拔得掉,沒標的拔不掉（GH#295）", () => {
+    cover("dsp-buff-authoring");
+    const { world, hero } = rig(); // 出貨規則：buffDefaultDispellable = false
+    const buffIds = (): string[] =>
+      (world.stats.get(hero)?.sources ?? []).map((s) => s.id).filter((i) => i.startsWith("buff:"));
+
+    const marked = {
+      kind: "applyBuff",
+      modifiers: [],
+      duration: 10,
+      dispellable: true,
+      polarity: "buff",
+    } as unknown as EffectDef;
+    fire(world, hero, [hero], marked);
+    const canGo = buffIds().at(-1)!;
+    world.step(new Map()); // 換一個 tick，兩份增益才會拿到不同的 source id
+    fire(world, hero, [hero], { ...marked, dispellable: undefined } as EffectDef);
+    const stays = buffIds().at(-1)!;
+    expect(canGo).not.toBe(stays);
+
+    fire(world, hero, [hero], {
+      kind: "dispel",
+      shape: "single",
+      pools: { buffs: true },
+      polarity: "buff",
+      count: 5,
+    } as EffectDef);
+
+    // 兩個方向一起讀：只驗「標了的走了」的話，一個把整池清空的實作也會過。
+    expect(buffIds()).not.toContain(canGo);
+    expect(buffIds()).toContain(stays);
+  });
+
+  it("applyStatus / dot 的 dispellable 也真的從文件走到執行期（GH#295）", () => {
+    cover("dsp-status-dot-authoring");
+    const { world, hero } = rig();
+    // ⚠️ 一定要**登錄**這份狀態並給它 `polarity` —— 沒登錄的話極性是 undefined，
+    // 它會因為「有方向的淨化拔不到沒極性的東西」而活下來，於是這一條就算把
+    // `dispellable` 那一行刪掉也照樣綠（失敗形態 ④，實測過）。
+    Statuses.register("unbreakable", { polarity: "debuff" });
+    fire(world, hero, [hero], {
+      kind: "applyStatus",
+      statusId: "unbreakable",
+      duration: 10,
+      moveSpeedMult: 0.7,
+      dispellable: false, // 出貨預設是 true，所以只有這一格能讓它留下來
+    } as unknown as EffectDef);
+    fire(world, hero, [hero], {
+      kind: "dot",
+      amountPerTick: { flat: 1 },
+      intervalSec: 1,
+      durationSec: 10,
+      dispellable: false,
+    } as unknown as EffectDef);
+
+    fire(world, hero, [hero], {
+      kind: "dispel",
+      shape: "single",
+      pools: { status: true, dot: true },
+      polarity: "debuff",
+      count: 5,
+    } as EffectDef);
+
+    // 全域預設說「可拔」，文件說「不可拔」—— 文件那一格要贏，否則它是裝飾。
+    expect(ids(world, hero)).toEqual(["unbreakable"]);
+    expect(world.dot.get(hero) ?? []).toHaveLength(1);
+  });
+
+  it("三個 kind 的 dispellable 在 Zod 上真的存在（`.strict()` 會擋掉不存在的欄位）", () => {
+    cover("dsp-authoring-schema");
+    for (const doc of [
+      { kind: "applyBuff", modifiers: [], duration: 1, dispellable: true, polarity: "buff" },
+      { kind: "applyStatus", statusId: "slow", duration: 1, dispellable: false },
+      {
+        kind: "dot",
+        amountPerTick: { flat: 1 },
+        intervalSec: 1,
+        durationSec: 1,
+        dispellable: false,
+      },
+    ]) {
+      expect(zEffectDef.safeParse(doc).success, `${doc.kind} 收不下 dispellable`).toBe(true);
+    }
   });
 });

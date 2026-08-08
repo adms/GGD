@@ -40,6 +40,7 @@ import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
 import { AugmentDraftPanel } from "./panels/AugmentDraftPanel";
 import { MerchantShop } from "./panels/MerchantShop";
+import { shopPhaseActive } from "./panels/shopGate";
 import { BattlefieldIntelRecorder } from "./panels/useBattlefieldIntel";
 import { PrepClock } from "./panels/PrepClock";
 import { ReadyButton } from "./panels/ReadyButton";
@@ -211,9 +212,14 @@ export function HudRoot(): React.JSX.Element {
   const connected = useHud((s) => s.connected);
   // couch play: >1 local player = split-screen per-viewport mini-HUDs
   const couch = useHud((s) => s.localPlayers.length > 1);
-  // the shop's own gate decides when it mounts (prep, or combat while down), so
-  // HudRoot renders it in BOTH phases and lets MerchantShop return null.
-  const shopPhase = phase === "intermission" || phase === "combat";
+  // the shop's own gate decides when it mounts (prep, or combat/resolution while
+  // down), so HudRoot renders it wherever the shop CAN exist and lets
+  // MerchantShop return null for everyone else.
+  // ⚠️ #289：這裡原本是 `phase === "intermission" || phase === "combat"`，一份手抄
+  // 的相位名單，而 owner 2026-08-06 把 `resolution` 併進「陣亡者可以買」那條規則之後
+  // 它沒跟上 —— 於是結算那一段 `<MerchantShop />` **根本沒被 render**，`shopGate`
+  // 算得再對也送不到畫面上。改成問共用規則，名單不會再過期。
+  const shopPhase = shopPhaseActive(phase);
 
   if (!connected) {
     return (

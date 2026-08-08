@@ -1313,6 +1313,43 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "玩家看到的是「這道具壞了」而不是「這是設計」。" +
       "留著是因為攻擊型範圍淨化(敵方圓)一定會需要它,那時候上限是平衡旋鈕不是 bug。",
   },
+  // ── 被淨化那一側的三格 authoring 欄位 (GH#295, 2026-08-09) ────────────────
+  //
+  // 這三格是 #295 的修法:在此之前**執行期三個型別都有 `dispellable`,而沒有任何
+  // Zod 欄位可以把它填成 true**,於是 `dispel.pools.buffs` 是一個死開關
+  //(出貨預設 false × 沒有辦法標 true = 相乘為零)。現在填得到了。
+  //
+  // 三格都是「省略 = 讀 `config.dispel@1` 的那一格全域預設」,所以零採用正是它們
+  // 該有的樣子 —— 有人寫它的那天,意思是「這一筆跟全域規則不一樣」。
+  "field:abilities.effects[]#applyStatus.dispellable": {
+    status: "default-live",
+    why:
+      "省略 = 讀 `dispelRules.statusDefaultDispellable`(出貨 **true**),也就是今天每一份狀態的行為。" +
+      "填它只有一個意思:`false` = 這一筆解不掉。零採用 = 沒有任何一支想要一個拔不掉的減速,那是誠實的。" +
+      "⚠️ 回合重置與復活不看它(`clearForFreshBody` 傳 requireDispellable:false)。守衛在 sim/effects/dispel.test.ts。",
+  },
+  "field:abilities.effects[]#dot.dispellable": {
+    status: "default-live",
+    why:
+      "同上,省略 = `dispelRules.dotDefaultDispellable`(出貨 **true** —— 燃燒/中毒本來就該解得掉)。" +
+      "它與 status 分開一格是因為 `world.dot` 在 A4 之前完全沒有移除路徑,打開它是一次真的能力增加。",
+  },
+  "field:abilities.effects[]#applyBuff.dispellable": {
+    status: "default-live",
+    why:
+      "省略 = `dispelRules.buffDefaultDispellable`,而出貨值是 **false**(「沒有人預期自己買的裝備效果" +
+      "可以被敵人剝掉 —— 打開它是一個設計決定,不是一個預設值」)。所以零採用 = 出貨行為原封不動," +
+      "正是這一版該有的樣子:GH#295 修的是「想開的人開不了」,不是「預設要改」。" +
+      "三支出貨淨化道具都沒有勾 `pools.buffs`,所以今天也沒有任何一份文件需要它。",
+  },
+  "field:abilities.effects[]#applyBuff.polarity": {
+    status: "default-live",
+    why:
+      "省略 = 這份增益沒有極性,而 `clearPools.polarityPasses` 對「不知道」一律不當成「是」—— " +
+      "也就是有方向的淨化拔不到它,正是今天的出貨行為。它與 `dispellable` 是**一對**:要讓一發" +
+      "「淨化敵方增益」(polarity:\"buff\")拔得到一份 buff,兩格都要填。" +
+      "⛔ 不可以從 modifiers 推導(一個來源可以同時帶 +移速 與 -護甲),見 sim/stats/modifiers.ts 那一格的註解。",
+  },
   // ── C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278) ──────────────────
   //
   // ⚠️ 這五格是**兩個機制的介面**,而它們的行為守衛已經在跑真世界:

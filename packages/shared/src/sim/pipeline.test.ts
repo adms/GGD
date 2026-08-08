@@ -90,6 +90,34 @@ describe("stat pipeline", () => {
     expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBe(1);
   });
 
+  it("`stacks` scales every scalable op the same way (GH#286)", () => {
+    // 一份 modifier 疊 N 層 ≡ 同一份放大 N 倍 —— 三個 op 同一條規矩。
+    // `pctMult` 曾經是唯一漏掉 `* stacks` 的那一個(疊到幾層都只有一層)。
+    const finalAd = (op: ModOp, value: number, stacks?: number): number => {
+      const world = makeWorld();
+      const { sela } = duel(world);
+      attachSource(world, sela, {
+        id: "t:stack",
+        kind: "buff",
+        modifiers: [{ stat: Stat.AttackDamage, op, value }],
+        ...(stacks === undefined ? {} : { stacks }),
+      });
+      recomputeStats(world, sela);
+      return world.stats.get(sela)!.final[Stat.AttackDamage];
+    };
+    const N = 3;
+    for (const [op, v] of [
+      [ModOp.Flat, 12],
+      [ModOp.PercentAdd, 0.2],
+      [ModOp.PercentMult, 0.2],
+    ] as const) {
+      // ① 疊層真的會動(拿掉 `* stacks` 的那一行 → 這裡紅)
+      expect(finalAd(op, v, N)).toBeGreaterThan(finalAd(op, v));
+      // ② 而且動的量正好是「同一份放大 N 倍」—— 線性,不是複利
+      expect(finalAd(op, v, N)).toBeCloseTo(finalAd(op, v * N), 9);
+    }
+  });
+
   it("clamps AS/CDR/crit/MS (fx-02)", () => {
     cover("stats-clamps");
     const world = makeWorld();

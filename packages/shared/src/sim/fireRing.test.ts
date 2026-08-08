@@ -420,6 +420,12 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
       // 例如預設最高是50%之類，不必到100%」)。它**低於**上面曲線的最後一列，
       // 而那是刻意的：第 100 秒的 100 %/秒被夾成 50 %/秒，還是必死，只是要兩秒。
       maxPctPerSec: 0.5,
+      // GH#287 — 免死擋不擋火圈。**出貨關 = 今天的行為**（火圈無視免死，燒到 0
+      // 就是死），這是 owner 還沒表態的決策點，所以預設選「保留現況」的那一個。
+      // 行為守衛在 `fireRingLethalSaveConfig.test.ts`（兩個方向 + 接線突變），
+      // 這一行只釘出貨值 —— 它出現在這個 `toEqual` 裡正是下面那段註解說的理由：
+      // 一個「schema 有、文件沒寫」的旋鈕會從比較窄的斷言底下溜過去。
+      lethalSaveApplies: false,
       // #248 — 回合硬上限 5 分鐘 (owner 2026-08-01 「不管什麼條件，每回合最長
       // 上限就是 5 分鐘出現火圈準備收場，不會無限增加時間」). It is the CEILING
       // on the ignition tick that bounds the `boss` extension below; behaviour

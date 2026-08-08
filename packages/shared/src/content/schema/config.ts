@@ -51,6 +51,7 @@ import {
 // schema 只是把它接上 Zod 的 `.default()`。抄第二份就是兩個「沒填的話燒多少」。
 import {
   DEFAULT_BURN_CURVE,
+  DEFAULT_LETHAL_SAVE_APPLIES,
   DEFAULT_MAX_PCT_PER_SEC,
   DEFAULT_STAGE1_RADIUS,
   DEFAULT_STAGE2_SHRINK_SEC,
@@ -217,6 +218,26 @@ export const zFireRingConfig = z
      */
     maxPctPerSec: z.number().min(0).max(1).default(DEFAULT_MAX_PCT_PER_SEC),
     /**
+     * 【免死】擋不擋火圈燒傷 (GH#287)。
+     *
+     * ⚠️ 這是一個 **owner 還沒表態的設計決策點**，所以它是一個欄位而不是程式裡的
+     * 一個分支（CLAUDE.md 第一守則），而預設值選的是「保留今天行為」的那一個：
+     * **關閉（出貨預設）= 火圈無視免死**，燒到 0 就是死 —— 火圈存在的理由是**強制
+     * 結束回合**。開啟之後，帶免死標記的英雄（例如狂戰士 52-002【十二道試煉】的
+     * 12 層）會在火圈裡逐層消耗免死次數，也就是一個人可以在圈外站 12 次，回合會被
+     * 拖長；那正是這個開關要讓 owner 自己決定的事。
+     *
+     * ⛔ **無敵沒有對應的欄位，而那不是漏了**：內容側已經有一格
+     * （`invulnerable` 的 `blocksTrueDamage`），所以「這支技能擋不擋火圈」本來就是
+     * 編輯器卡片上的一個選項。再開一個全域開關會變成兩個地方回答同一個問題。
+     *
+     * 缺席 ⇒ {@link DEFAULT_LETHAL_SAVE_APPLIES}（false）—— 和 sim 那一層
+     * `fireRingRulesFromConfig` 的 `??` 指同一個常數，所以「沒填的話擋不擋」只有
+     * 一個答案（`maxPctPerSec` 那一段記錄過兩層各說各話的代價）。耐久覆蓋層裡一份
+     * 這一格出現之前的舊文件因此仍然合法，而且照舊玩它被授權的那個火圈。
+     */
+    lethalSaveApplies: z.boolean().default(DEFAULT_LETHAL_SAVE_APPLIES),
+    /**
      * 回合硬上限 (#248). owner 2026-08-01:
      *
      *   「時間延長太久了，**不管什麼條件**，每回合最長上限就是 5 分鐘出現火圈
@@ -327,6 +348,7 @@ export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
   minRadius: 0,
   burnCurve: DEFAULT_BURN_CURVE as { sec: number; pctPerSec: number }[],
   maxPctPerSec: DEFAULT_MAX_PCT_PER_SEC,
+  lethalSaveApplies: DEFAULT_LETHAL_SAVE_APPLIES,
   roundHardCapSec: 300,
   boss: { extendCombatSec: 180, delayFireRingSec: 180 },
 };

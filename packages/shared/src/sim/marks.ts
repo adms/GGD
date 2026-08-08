@@ -130,15 +130,15 @@ export interface MarkSpec {
 /**
  * 把「每失去一層的永久加成」同步成一筆 `ModifierSource`。
  *
- * ⛔ **這裡自己乘 `spent`，不靠 `ModifierSource.stacks`，而那是量出來的必要**：
- * `stats/statPipeline.ts:126-127` 的 `ModOp.PercentMult` 是
- * `pctMult *= 1 + m.value;` —— 旁邊的 `Flat` 與 `PercentAdd` 都有 `* stacks`，
- * **只有 `PercentMult` 沒有**。所以一個寫成 `pctMult` 的「每層 +10%」會永遠
- * 只有一層的效果，而面板／商店預覽／codex 會**一致地**顯示那個小數字 ——
- * 三個地方互相印證同一個錯誤，畫面上看不出來（失敗形態④）。
+ * **這裡自己乘 `spent`，不寫 `ModifierSource.stacks`** —— 兩者今天算出來的數字
+ * **完全相同**：`statPipeline` 的四個可縮放 op（`Flat` / `PercentAdd` /
+ * `PercentMult` / `PercentOf`）都是「把 `value` 放大 `stacks` 倍」，而這裡放大的
+ * 是同一個量。所以作者寫 `pctAdd` 或 `pctMult` 都是對的，沒有哪一個會靜默失效。
  *
- * 自己乘之後，作者寫 `pctAdd` 或 `pctMult` 都是對的，而不是「其中一個會靜默
- * 失效」。
+ * ⚠️ 這段註解的前一版說「`PercentMult` 沒有乘 `stacks`，所以只能自己乘」——
+ * 那是 GH#286 修好之前的事實（見 `stats/modifiers.ts` 的 `PercentMult`）。
+ * 現在自己乘的理由只剩一個而且是弱的：`spent` 是標記狀態自己的累計數，
+ * 寫在 `value` 上就只有一個真相，不用再讓 `stacks` 跟著它同步。
  *
  * ⚠️ `attachSource` **不去重**（`statPipeline.ts:233-249` 只有 `push`），
  * 所以這裡走 find-or-create：同一個 `src.id` push 兩次會疊兩份，而

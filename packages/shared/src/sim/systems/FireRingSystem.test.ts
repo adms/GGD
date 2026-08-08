@@ -17,6 +17,8 @@ import { spawnChampion } from "../spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import { beginCombatFireRing, fireRingRulesFromConfig, type FireRingRules } from "../fireRing";
 import { normalizeCombatEnv } from "../combatEnv";
+import { grantImmunity } from "../effects/invulnerable";
+import { installMark, markCount } from "../marks";
 
 beforeAll(() => registerSkeletonContent());
 
@@ -230,5 +232,100 @@ describe("burn arithmetic finishes the round (firering-kills)", () => {
     }
     expect(death).not.toBeNull();
     expect(death!.killerId ?? null).toBeNull();
+  });
+});
+
+/**
+ * GH#287 —— 攔截層。一年來火圈是 `hp.hp -= dmg`,所以**沒有任何**掛在傷害管線上
+ * 的攔截看得到它,而且是靜默的。這一組驗的是「攔截機制有沒有生效」,
+ * ⛔ 不驗燒了多少血 / 幾秒死 —— 那些是 owner 每週在調的(第零守則⑦)。
+ *
+ * 兩條都帶**對照組**,因為單獨一句「血沒掉」對「火圈根本沒開」也會過(失敗形態④)。
+ */
+describe("攔截層：火圈不再繞過傷害管線 (GH#287)", () => {
+  /** 圈外最遠的合法站位,和上面 firering-kills 用的是同一格。 */
+  const rim = (w: SimWorld): EntityId => champ(w, ZONE0.center.x + 23.4, ZONE0.center.z, 0);
+
+  it("無敵(blocksTrueDamage)的人站在圈外不掉血,免疫一過期就照燒", () => {
+    const w = world();
+    const id = rim(w);
+    beginCombatFireRing(w, ringNow());
+    // 只給真傷那一根軸 —— 火圈是 #270 的真實傷害,其他三根軸不該影響結果。
+    grantImmunity(w, id, {
+      physicalUntil: w.tick + 3 * HZ,
+      magicUntil: 0,
+      trueUntil: w.tick + 3 * HZ,
+      controlUntil: 0,
+    });
+
+    let burnedWhileImmune = 0;
+    for (let t = 0; t < 3 * HZ; t++) {
+      step(w);
+      burnedWhileImmune += ringDmg(w, id);
+    }
+    expect(burnedWhileImmune).toBe(0);
+    expect(w.health.get(id)!.hp).toBe(w.health.get(id)!.maxHp); // 一格都沒掉
+
+    // 對照組：同一個人、同一個位置、同一個圈,免疫過期之後照燒。
+    let burnedAfter = 0;
+    for (let t = 0; t < 1 * HZ; t++) {
+      step(w);
+      burnedAfter += ringDmg(w, id);
+    }
+    expect(burnedAfter).toBeGreaterThan(0);
+  });
+
+  it("免死擋不擋火圈是一個欄位：預設關(＝今天的行為),打開才救得到", () => {
+    const MARK = "mark.test-lethal";
+    const withTrial = (w: SimWorld, id: EntityId): void =>
+      installMark(w, id, {
+        markId: MARK,
+        initial: 3,
+        max: 3,
+        durationSec: 999,
+        resetOn: "never",
+        lethal: {
+          consume: 1,
+          surviveHpPct: 0.5,
+          damageTypes: ["true"], // 明列真傷,否則這條測試會因為別的理由綠
+          internalCooldown: 0.5,
+          selfEffects: [],
+          aoeEffects: [],
+          aoeRadius: 0,
+        },
+      });
+    /** 跑到死為止(或跑滿),回報「免死有沒有觸發過」。 */
+    const run = (w: SimWorld, id: EntityId): boolean => {
+      let saved = false;
+      for (let t = 0; t < 20 * HZ; t++) {
+        step(w);
+        if (w.events.some((e) => e.type === "lethalSaved" && e.data.id === id)) saved = true;
+        if (!w.health.get(id)!.alive) break;
+      }
+      return saved;
+    };
+
+    // 關 = 出貨預設：帶著三層免死牌照樣被燒死,一層都沒燒到。
+    const off = world();
+    const a = rim(off);
+    withTrial(off, a);
+    beginCombatFireRing(off, ringNow());
+    expect(run(off, a)).toBe(false);
+    expect(off.health.get(a)!.alive).toBe(false);
+    expect(markCount(off, a, MARK)).toBe(3);
+
+    // 開：同一張牌、同一個位置、同一個圈 —— 免死真的觸發,層數真的被燒。
+    const on = world();
+    const b = rim(on);
+    withTrial(on, b);
+    beginCombatFireRing(
+      on,
+      fireRingRulesFromConfig(
+        { startSec: 0, shrinkSec: 20, minRadius: 0.5, maxPctPerSec: 1, lethalSaveApplies: true },
+        DT,
+      ),
+    );
+    expect(run(on, b)).toBe(true);
+    expect(markCount(on, b, MARK)).toBeLessThan(3);
   });
 });

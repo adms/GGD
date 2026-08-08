@@ -21,9 +21,11 @@
  * true — `combat/damage.ts`'s `mitigate`), lets shields eat it, feeds
  * `recordDamage` for the scoreboard, and routes the killing blow through
  * `deathSystem` so a burn that finishes someone pays the bounty to the caster.
- * The fire ring deliberately does the OPPOSITE (`hp.hp -= dmg`) because it is
- * environmental round pacing with no attacker; a DoT has one, so it must not
- * copy that shortcut.
+ * The fire ring deliberately stays OUT of the queue because it is environmental
+ * round pacing with no attacker — but since GH#287 it is not a bare `hp.hp -=`
+ * either: it goes through `combat/environmentalBurn.ts`, which applies the
+ * INTERCEPTIONS (無敵 / 免死) without the queue's attribution and presentation
+ * layers. A DoT has an attacker, so it must not copy that exit.
  *
  * ── EVERY DECISION IS A FIELD (CLAUDE.md 第一守則) ──────────────────────────
  * owner 2026-07-30: 「所有開發都要以編輯器可以彈性設定為準，尤其是決策點」.
@@ -137,13 +139,16 @@ export interface DotInstance {
  * `amountPerTick`, `nextTick`, `intervalTicks`, `expiresAtTick` — and that is
  * deliberate: they are precisely the shape the GH#289 seam reserved, so a
  * `DotInstance` built by hand (`sim/reservedStores.test.ts`, any fixture) still
- * compiles AND still behaves. The other **seven** are optional and each documents
+ * compiles AND still behaves. Every OTHER field is optional and each documents
  * what its absence means, the same 「缺席 = 今天的行為」 rule the rest of #289
- * follows. `dotEffect.apply` always writes all fourteen.
+ * follows.
  *
- * ⚠️ 「其餘五個 / 十二個」是 2026-08-05 之前的計數 —— A4(#278) 加了
- * `dispellable` 與 `polarity` 兩格。這一段自己就是「註解會說謊」的候選人：
- * 一個寫死的數量在下一次加欄位的時候不會有人記得改
+ * ⛔ 這一段以前寫著「其餘五個 / 十二個 / `apply` 寫滿十四格」,而那三個數字
+ * **全部過期過**(A4 #278 加了 `dispellable` 與 `polarity`,而 `apply` 當時
+ * 一格都沒寫 —— GH#295)。所以現在這裡不再寫死任何數量:一個寫死的計數在下一次
+ * 加欄位的時候不會有人記得改,而它會用最有說服力的語氣說錯話。
+ * ⚠️ `polarity` 是**故意**不寫的:`clearPools` 對缺席的 dot 極性當 `"debuff"`,
+ * 而那是這一池唯一出現過的東西 —— 不是漏接。
  */
 
 export const dotEffect: EffectKindSpec<"dot"> = {
@@ -210,6 +215,10 @@ export const dotEffect: EffectKindSpec<"dot"> = {
           stacking,
           maxStacks,
           onCasterDeath,
+          // 【淨化】拔不拔得掉這一筆（GH#295）。缺席 = 讀
+          // `dispelRules.dotDefaultDispellable`（出貨 true），所以這一格是
+          // 「這一筆燒傷解不掉」的唯一寫法。
+          dispellable: e.dispellable,
         };
         if (list === undefined) world.dot.set(target, [inst]);
         else list.push(inst);

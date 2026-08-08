@@ -707,9 +707,13 @@ const PANELS = [
     // by render/intermission SHOP_CARD_SIDE (left) + its layout.test.ts.
     size: { fraction: 0.45, maxPx: 560 },
     covers: ["top-left", "bottom-left"],
-    // auto-open prep + defeated-player combat (shopGate.mounted); HudRoot mounts
-    // MerchantShop in BOTH phases and the gate returns null for everyone else.
-    phases: ["intermission", "combat"],
+    // auto-open prep + defeated-player combat/resolution (shopGate.mounted);
+    // HudRoot mounts MerchantShop in all three and the gate returns null for
+    // everyone else.
+    // ⚠️ #289：`resolution` 原本不在這一列，所以 owner 2026-08-06 讓陣亡者在結算
+    // 時能買之後，**版面守衛的場景掃描從來沒掃過「結算 + 商店掛著」那一格** ——
+    // 那正是回合評價卡與「Round over」也在畫面上的時候。
+    phases: ["intermission", "combat", "resolution"],
     // ABOVE slots (25) and expanded (30) — and the panel really PAINTS there:
     // MerchantShop sets `zIndex: INTERMISSION_Z.panel` (= this number) on both
     // its card and its collapsed rail. It used to set none at all, which made

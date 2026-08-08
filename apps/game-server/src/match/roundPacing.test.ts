@@ -50,6 +50,8 @@ const FIRE_RING: FireRingConfig = {
     { sec: 0.5, pctPerSec: 0.6 },
   ],
   maxPctPerSec: 1,
+  // GH#287 出貨預設：火圈無視免死（＝這一格出現之前的行為）。
+  lethalSaveApplies: false,
   // 殭屍王回合延長 (#L1)。`config.match@1` 的 fireRing.boss 帶 `.default()`,
   // 所以 Zod 的 OUTPUT 型別上它是必填 —— 這個 fixture 少了它就不是
   // FireRingConfig。值就是出貨預設 (content/config/config.match.json)。
