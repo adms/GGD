@@ -4,7 +4,9 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState, formFlagsForIndex } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SEAT_COUNTER_MAX, SeatState, TeamState, formFlagsForIndex } from "@ggd/shared/protocol/schema";
+import { forEachMark } from "@ggd/shared/sim/marks";
+import { clampMarkCount, markExpired } from "@ggd/shared/sim/markLimits";
 import { flightHoverHeight } from "@ggd/shared/sim/flight";
 import { championFormIndex } from "@ggd/shared/sim/systems/ChampionFormSystem";
 import { visualStackCount } from "@ggd/shared/sim/stats/visualStacks";
@@ -18,7 +20,8 @@ import { mobModelKeyFor, mobSizeMultFor, mobVisualJson } from "@ggd/shared/sim/m
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import { isHidden } from "@ggd/shared/sim/stealth";
 import { attrBonusArray } from "@ggd/shared/sim/economy/statPath";
-import type { ChampionId } from "@ggd/shared/ids";
+import type { ChampionId, EntityId } from "@ggd/shared/ids";
+import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
 
@@ -28,6 +31,55 @@ function setArray<T extends string | number>(arr: ArraySchema<T>, values: readon
   if (arr.length === values.length && values.every((v, i) => arr[i] === v)) return;
   arr.clear();
   for (const v of values) arr.push(v);
+}
+
+/**
+ * ⭐【具名計數器】—— 這個實體身上**每一個**計數器的 `(id, 層數)`，id 字典序
+ * (GH#304)。這是 `SeatState.counterIds` / `counterCounts` 的唯一產生點。
+ *
+ * ⛔ 兩個來源**合併成一套**，因為它們在線路上本來就是同一個形狀（`(既有文件
+ * id, 整數)`，見 `sim/marks.ts` ②「標記的身分是借來的」）：
+ *   · `world.marks` —— 具名標記的層數（十二道試煉、風王結界、縮地）
+ *   · `world.status` —— **作者明寫了 `stacks`** 的那些狀態（GH#301-5）
+ *
+ * ⚠️ `e.stacks === undefined` 那道閘是**相容性本身**，不是保守：出貨的 28 份
+ * status 文件沒有一份寫這一格，而缺席的語意是「他身上有這個狀態」= 一層
+ * （`effects/effectCommon.statusStacks`）。無條件收進來的話，每一次【暈眩】
+ * 【減速】都會在玩家的計數器列上長出一個「×1」，而那不是一個在疊的東西。
+ * 同一道閘也讓今天的每一場比賽這兩條陣列都是空的 → 線路上零成本。
+ *
+ * ⭐ 同一個 id 兩邊都有 → **相加**，而不是「標記優先」。這不是新發明的仲裁
+ * 規則，是 `statusStacks` 已經在用的那一條（跨 `sourceId` 相加，理由：
+ * 「玩家問的是他身上總共破了幾層」）—— 一個標記與一筆狀態就是兩個來源。
+ * 換成「標記優先」會讓一個計數器的值取決於哪一個機制剛好寫過它。
+ *
+ * 上界走 `clampMarkCount`（同一份 `sim/markLimits.ts`），⛔ 不抄 999：
+ * uint16 的容量與內容層的上界是同一個問題的兩半，抄一份就是第四個住處。
+ */
+function namedCounters(world: SimWorld, id: EntityId): { id: string; count: number }[] {
+  const totals = new Map<string, number>();
+  const add = (key: string, n: number): void => {
+    totals.set(key, (totals.get(key) ?? 0) + n);
+  };
+  // 標記。`forEachMark` 自己排序（Map 插入序在兩個 replica 上可能不同），
+  // 到期的那些明文跳過 —— `MarkSystem` 會在它自己的 tick 掃掉，但一個在 sim
+  // step 與投影之間過期的標記否則會多騎一格快照（同 statusIds 的處理）。
+  forEachMark(world, id, (markId, st) => {
+    if (markExpired(st.expiresAtTick, world.tick)) return;
+    add(markId, st.count);
+  });
+  const sc = world.status.get(id);
+  for (const e of sc?.effects ?? []) {
+    if (e.expiresAtTick <= world.tick) continue;
+    if (e.stacks === undefined) continue; // 見檔頭：相容性閘，不是保守
+    add(String(e.statusId), e.stacks);
+  }
+  return [...totals.entries()]
+    // id 字典序（**不是**層數）：層數排序會讓陣列在每次計數變動時整個重排，
+    // 把 Colyseus 的 delta 編碼優勢丟掉。決定性排序也讓截斷是可重現的。
+    .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0))
+    .slice(0, SEAT_COUNTER_MAX)
+    .map(([counterId, n]) => ({ id: counterId, count: clampMarkCount(n) }));
 }
 
 export function projectSnapshot(ctl: MatchController, state: MatchState, humanDrivers: Map<number, HumanDriver>): void {
@@ -186,6 +238,19 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           ss.statusRemainTicks,
           live.map((e) => Math.min(65535, Math.max(0, e.expiresAtTick - world.tick))),
         );
+        // ⭐【具名計數器】(GH#304) —— 標記層數 + 狀態層數，合併成一套。
+        //
+        // ⚠️ 這兩行是「層數到得了螢幕」的**全部**。在它們之前層數只走
+        // `markChanged` 事件（`net/eventFanout.ts`），而事件是**瞬間**的：
+        // 中途加入或重連的客戶端沒有事件歷史，於是十二道試煉的那 12 條命在
+        // 重連之後從 HUD 上整個消失 —— owner 2026-08-09 選「加欄位」而不是
+        // 「發事件」的唯一理由就是這個。同 `roundKills` / `coinsLeft` /
+        // `roundDeathTick` 的那條規矩：一個 socket 眨眼不可以改變玩家看到的事實。
+        //
+        // 空集合送空陣列（今天的每一場都是），Colyseus 對此不付任何 byte。
+        const counters = namedCounters(world, seat.entityId);
+        setArray(ss.counterIds, counters.map((c) => c.id));
+        setArray(ss.counterCounts, counters.map((c) => c.count));
       }
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;

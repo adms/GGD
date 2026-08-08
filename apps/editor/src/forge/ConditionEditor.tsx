@@ -97,6 +97,9 @@ import {
   type ConditionSubject,
   type EffectCondition,
 } from "@ggd/shared/sim/content/condition";
+// 層數的上界跟 schema、`applyStatus.stacks` 與 sim 的夾取共用同一份表 ——
+// 這一格抄一個 999 就是那份表的第四個住處（CLAUDE.md 第零守則⑦）。
+import { MARK_MAX_COUNT } from "@ggd/shared/sim/markLimits";
 import type { ItemId, StatusId } from "@ggd/shared/ids";
 
 // ---------------------------------------------------------------------------
@@ -717,14 +720,37 @@ function StatusFields({
         ))}
       </select>
       {isStatusIdLeaf(leaf) ? (
-        <input
-          aria-label="狀態編號"
-          data-field={`${path}.statusId`}
-          type="text"
-          placeholder="狀態編號（例：root）"
-          value={leaf.statusId}
-          onChange={(e) => onChange({ ...leaf, statusId: e.target.value as StatusId })}
-        />
+        <>
+          <input
+            aria-label="狀態編號"
+            data-field={`${path}.statusId`}
+            type="text"
+            placeholder="狀態編號（例：root）"
+            value={leaf.statusId}
+            onChange={(e) => onChange({ ...leaf, statusId: e.target.value as StatusId })}
+          />
+          {/*
+           * 層數門檻（GH#301-5）。⭐ 空白 = **不寫這一格** = 只問有無，
+           * 而不是 `minStacks: 0` —— schema 是 `.min(1)` 且 `.strict()`，寫 0
+           * 會做出一張存不回去的卡（跟上面那個「切分支要整顆換掉」同一個理由）。
+           * ⛔ 只出現在「這一份」那一支：`tag` 分支的 schema 沒有這一格
+           *（「這一類合計幾層」沒有定義過），畫出來就是一個存檔會紅的欄位。
+           */}
+          <input
+            aria-label="層數門檻"
+            data-field={`${path}.minStacks`}
+            type="number"
+            min={1}
+            max={MARK_MAX_COUNT}
+            placeholder="層數（留空＝不看層數）"
+            value={leaf.minStacks ?? ""}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              const { minStacks: _drop, ...rest } = leaf;
+              onChange(e.target.value === "" || !Number.isFinite(n) ? rest : { ...rest, minStacks: n });
+            }}
+          />
+        </>
       ) : (
         <input
           aria-label="狀態分類"

@@ -226,6 +226,81 @@ export class SeatState extends Schema {
    * 明文夾在 `>= 1`,不靠這個推論。
    */
   declare roundDeathTick: number;
+  /**
+   * ⭐【具名計數器】—— 這位英雄身上**每一個**計數器的 `(id, 層數)`，index-aligned
+   * (GH#304, owner 2026-08-09 裁決「加一個新欄位」)。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * ⛔ 為什麼這一格必須一次涵蓋**整套**計數器，不能只送狀態層數
+   *
+   * `defineTypes` 是 APPEND-ONLY 而且**不可逆**：加窄了不能收回，只能再 append
+   * 第二格，然後同一個概念在線路上有兩份、兩個投影點、兩個讀取端。而 repo 裡
+   * 這一刻**已經有兩套**層數：
+   *   · 具名標記 `SimWorld.marks`（`sim/marks.ts`，十二道試煉的 12 條命）
+   *   · 狀態層數 `StatusEffect.stacks`（GH#301-5，`sim/effects/applyStatus.ts`）
+   * 兩者的**身分都是借來的**（一個技能編號 或 一個 status-effect id，見
+   * `marks.ts` ②），所以它們在線路上本來就是同一個形狀：`(既有文件 id, 整數)`。
+   * 這一格因此是「一個實體身上的具名計數器**集合**」，不是「狀態層數」。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * ① 格式：兩條 index-aligned 的原始陣列，**不是** ArraySchema<Schema>
+   *
+   * 與正上方的 `statusIds` / `statusRemainTicks` 逐字同一個決定，理由也同一個：
+   * Colyseus 對巢狀 Schema 的每一個元素都要帶一份自己的變更追蹤，而一個計數器
+   * 只有兩個事實。也**不是**一顆 JSON 字串（`combatEnvJson` 那種）—— 那一格
+   * 一場設定一次就不再變，而這一格會在戰鬥中變，JSON 每次變都要整串重送再讓
+   * 客戶端 parse 一次，等於把 Colyseus 自己的 delta 編碼繞過去。
+   *
+   * ⚠️ 兩個宣告 = 一個邏輯欄位。兩條都 append 在最後一格。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * ② id 怎麼過線：**裸字串，沒有 id → 小整數對照表**
+   *
+   * 「逐 tick 送字串很貴」這個直覺在 Colyseus 上是錯的：patch 是 DELTA 編碼的，
+   * 而投影端的 `setArray` 在內容相同時**根本不寫**（early-return），所以一個
+   * 沒有變動的計數器集合每 tick 花 **0 byte**。字串只在集合或層數真的改變的
+   * 那一格過線。
+   *
+   * 而一張「這一場用到的 id → 小整數」的對照表要付的代價是真的：那張表本身是
+   * 必須複製的狀態，要有自己的版本、自己的 append-only 欄位，而**中途加入的
+   * 客戶端在拿到表之前收到的每一筆計數器都是無法解讀的數字** —— 一個為了省
+   * 幾十 byte 而自己造出來的失敗形態 ②。正上方的 `statusIds` 已經送了兩個月的
+   * 裸 id 字串，成本可量測地是零。
+   *
+   * 量一下最壞情況（不是那個「20 Hz × 12 × N」的直覺）：這一格在 **SeatState**
+   * 上，所以是 ≤12 列（不是 `entities` 的幾十~幾百列）。集合變動的那一格，
+   * `setArray` 會整條重建 → 一筆 ≈ id 字串 24 B + uint16 2 B ≈ 26 B，撞到
+   * {@link SEAT_COUNTER_MAX} 上限也只有 ~420 B，而且只有**那一個座位、那一格
+   * tick**。層數會動的時機是「被打到致命傷」「疊上一層」——不是每 tick。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * ③ 上限 {@link SEAT_COUNTER_MAX}，超過的**丟掉**，丟法是決定性的
+   *
+   * 不設上限的代價是一份寫壞的內容（迴圈裡 `installMark`）可以讓單一 patch 爆
+   * 掉；設得太小的代價是玩家看不到自己的某些層數（失敗形態 ②）。選 16 的理由
+   * 是它比**任何可達的數字都大一個量級**：一位英雄只有 6 個技能槽（天生技/
+   * QWER/EX），出貨的整份名單最多的一位帶 1 個標記。
+   * 排序用 **id 字典序**而不是層數 —— 層數排序會讓陣列在每次計數變動時重新
+   * 排列，等於把 delta 編碼的好處丟掉；id 序是穩定的，所以只有集合真的改變
+   * 時才動。
+   * ⚠️ 而且線路上限**不是玩家會先撞到的那一個**：HUD 的 `MARK_MAX_ROWS` 只畫
+   * 4 列（`apps/client/src/ui/hud/markModel.ts`），所以 16 是顯示上限的 4 倍。
+   *
+   * ─────────────────────────────────────────────────────────────────────────
+   * ④ 為什麼在 SeatState 而不是 EntityState
+   *
+   * 問題是「**我**疊到第幾層」，跟 `statusIds` 一字不差。放 EntityState 要對
+   * 每一顆投射物、每一隻殭屍（波峰時一區 50 隻）都付一份沒有人讀的欄位。
+   * 敵人身上剩幾層是**另一個**問題，那一天要做的是另一次 append，不是把這一格
+   * 撐大。
+   *
+   * ⚠️ 出貨的 28 份 status 文件沒有一份寫 `stacks`，而投影端只收**作者明寫了
+   * `stacks`** 的那些（`net/snapshot.ts`）—— 所以今天的每一場比賽這兩條陣列都
+   * 是空的，線路上一個 byte 都不多付，也不會讓每一次【暈眩】長出一個「×1」。
+   */
+  declare counterIds: ArraySchema<string>;
+  /** {@link counterIds} 每一筆的層數，index-aligned。0 是合法且**有意義**的值。 */
+  declare counterCounts: ArraySchema<number>;
 
   constructor() {
     super();
@@ -263,6 +338,8 @@ export class SeatState extends Schema {
     this.coinsLeft = 0;
     this.mobKills = 0;
     this.roundDeathTick = 0;
+    this.counterIds = new ArraySchema<string>();
+    this.counterCounts = new ArraySchema<number>();
   }
 }
 defineTypes(SeatState, {
@@ -308,7 +385,23 @@ defineTypes(SeatState, {
   // @colyseus/schema 用宣告索引編碼,插在任何別的位置都會靜默地把它後面每一個
   // 欄位重新編號,讓任何用舊順序建出來的客戶端整個對不上。
   roundDeathTick: "uint32",
+  // APPEND-ONLY (GH#304):【具名計數器】。⛔ **最後兩格**，而且是**一起**加的 ——
+  // 兩條陣列是一個邏輯欄位（id ↔ 層數 index-aligned），分兩次 append 會讓中間
+  // 插進來的任何欄位把它們拆散。uint16 裝得下 `MARK_MAX_COUNT`(999)，而
+  // `sim/markLimits.clampMarkCount` 在投影端夾過一次，所以永遠不會溢位成
+  // 一個荒謬的數字。完整的三個決策（格式 / id / 上限）寫在 SeatState 的宣告上。
+  counterIds: ["string"],
+  counterCounts: ["uint16"],
 });
+
+/**
+ * 一個座位最多送幾筆具名計數器（GH#304）。理由與「超過怎麼辦」寫在
+ * `SeatState.counterIds` 的宣告上；投影端 `net/snapshot.ts` 是唯一的執行點。
+ *
+ * ⚠️ 它**不是**畫面上的上限 —— HUD 只畫 `MARK_MAX_ROWS`(4) 列。這一格擋的是
+ * 「一份寫壞的內容讓單一 patch 爆掉」，不是可讀性。
+ */
+export const SEAT_COUNTER_MAX = 16;
 
 /**
  * TeamState.roundOutcome — what a team DID in the round that just ran. Ordered

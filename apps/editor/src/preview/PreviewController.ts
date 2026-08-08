@@ -615,6 +615,23 @@ function effectLines(
         });
         break;
       }
+      // ── 契約層（2026-08-09，GH#301-2）真瞬移 ───────────────────────────
+      case "blink": {
+        const dest =
+          e.to === "point" ? "指定地點" : e.to === "caster" ? "施法者身邊" : "目標身上";
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `瞬移${e.applyTo === "target" ? "目標" : "自己"}到${dest}` +
+            `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "enemies" ? "敵人" : "隊友"}一起）` : ""}` +
+            `${e.stopShortUnits ? ` · 落在前方 ${e.stopShortUnits} 單位處` : ""}` +
+            " · ⛔ 真瞬移：沒有中間位置（與 leap 的差別就在這裡）" +
+            " · ⚠️ 引擎側尚未實作（GH#301-2），現在放出來會丟例外",
+        });
+        effectLines(e.onArrive ?? [], finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
       default: {
         // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
         // fall through silently, which is how `restore`, `spawnVfx` and then

@@ -18,7 +18,7 @@
 import React from "react";
 import { useHud } from "../../net/RoomStore";
 import { HUD_STAMP_BAND, HUD_Z } from "./hudLayout";
-import { MARK_SAVE_FLASH_MS, markColor, markRows, type MarkRow } from "./markModel";
+import { MARK_SAVE_FLASH_MS, markColor, markRows, markViewsFromWire, type MarkRow } from "./markModel";
 
 /** 免死閃動要自己退場，而它沒有別的時鐘（事件驅動，不是每幀）。 */
 const MARK_POLL_MS = 120;
@@ -100,6 +100,13 @@ export function MarkBarView({ rows }: { rows: readonly MarkRow[] }): React.JSX.E
                 textShadow: "0 1px 3px rgba(0,0,0,0.9)",
               }}
             >
+              {/* ⭐ 決策點（GH#304）：**層數是 1 也印數字**，不套「多數遊戲
+                  ×1 不顯示」那條慣例。理由是這個引擎的計數器**下界是 0 而且 0
+                  有意義** —— 一個 0 層的標記仍然掛在身上，而「你沒有免死了」
+                  正是玩家最需要看到的那一格（見 markModel 的 `MarkView.count`）。
+                  0 一定要印，那 1 就不能藏：0、(空白)、2、3 這個序列在戰鬥中
+                  讀起來是壞掉的。那條慣例來自「層數歸 0 就整格消失」的遊戲，
+                  我們不是。 */}
               {`×${r.count}`}
             </span>
           </div>
@@ -111,7 +118,11 @@ export function MarkBarView({ rows }: { rows: readonly MarkRow[] }): React.JSX.E
 
 export function MarkBar(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
+  const localSeatId = useHud((s) => s.localSeatId);
+  const seats = useHud((s) => s.seats);
+  // 免死閃動（`savedAtMs` / `seq`）—— 只有這個還是事件驅動的。
   const marks = useHud((s) => s.marks);
+  const seat = localSeatId === null ? undefined : seats.find((x) => x.seatId === localSeatId);
   const [nowMs, setNowMs] = React.useState(() => nowMsSafe());
   const flashing = marks.some((m) => m.savedAtMs !== null && nowMs - m.savedAtMs < MARK_SAVE_FLASH_MS);
   React.useEffect(() => {
@@ -124,8 +135,10 @@ export function MarkBar(): React.JSX.Element | null {
   React.useEffect(() => setNowMs(nowMsSafe()), [seqSum]);
   // 戰鬥階段限定：商店畫面上飄著一行「試煉 ×11」是在講一件此刻不存在的事，
   // 而那個畫面是商店的（跟 SelfStatusBar 同一條規矩）。
-  if (phase !== "combat") return null;
-  return <MarkBarView rows={markRows(marks, nowMs)} />;
+  if (phase !== "combat" || !seat) return null;
+  // ⭐ 層數讀**快照**（GH#304），閃動讀事件。所以一個剛連上的客戶端從第一份
+  // 快照就畫得出正確層數 —— 這正是 owner 選「加欄位」而不是「發事件」的理由。
+  return <MarkBarView rows={markRows(markViewsFromWire(seat.counterIds, seat.counterCounts, marks), nowMs)} />;
 }
 
 function nowMsSafe(): number {

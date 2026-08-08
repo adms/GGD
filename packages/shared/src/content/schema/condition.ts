@@ -49,6 +49,9 @@ import {
   conditionDepth,
   type EffectCondition,
 } from "../../sim/content/condition";
+// `minStacks` 的上界與 `applyStatus.stacks` **同一份表**（`sim/markLimits.ts`），
+// 所以「寫得進去」與「問得出來」在結構上不可能各自漂移到不同的天花板。
+import { MARK_MAX_COUNT } from "../../sim/markLimits";
 
 /** Turn a readonly string list into the non-empty tuple `z.enum` demands. */
 function enumOf<T extends string>(values: readonly T[]): z.ZodEnum<[T, ...T[]]> {
@@ -155,6 +158,23 @@ export const zStatusIdLeaf = z
     kind: z.literal("status"),
     subject: zConditionSubject,
     statusId: zRef<StatusId>("status-effects", { soft: true }),
+    /**
+     * ⭐ 「至少疊了幾層」（GH#301-5 的**讀取端**）。缺席 = 只問有無 ——
+     * 出貨的 2,030 份文件一份都沒寫，所以缺席那一條路逐字等於這一格出現之前。
+     *
+     * ⛔ 沒有這一格的話 `applyStatus.stacks` 是**只寫不讀**的：層數存進
+     * `StatusEffect.stacks`、`statusStacks()` 讀得出來，而**沒有任何內容問得到它**
+     * —— 那就是 CLAUDE.md 的失敗形態②（算出來了但沒人拿得到）。owner #299 第 8 條
+     * 要的是「狀態除了『有無』也要是**數字**層數」，而一個比較不出來的數字仍然只是有無。
+     *
+     * ⚠️ **只掛在「這一份」那個分支，不掛在 `tag` 分支**：「【破甲】類的狀態合計
+     * 幾層」沒有人定義過（三份不同的破甲各 2 層算 6 層還是 2 層？），而這個檔案
+     * 的規矩就是把沒定義過的語意做成 PARSE ERROR，不是讓求值端替作者決定。
+     *
+     * 上界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（與 `applyStatus.stacks`
+     * 同一份表）；下界是 1，因為「≥0 層」對每一個身體都成立，那不是一個閘。
+     */
+    minStacks: z.number().int().min(1).max(MARK_MAX_COUNT).optional(),
   })
   .strict();
 

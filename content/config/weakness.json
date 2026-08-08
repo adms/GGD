@@ -1,0 +1,8 @@
+{
+  "id": "weakness",
+  "schema": "config.weakness@1",
+  "note": "【虛弱】的全域定義（GH#301-4 / owner 2026-08-09：「虛弱 => 攻擊速度暫時減半、AP/AD 造成傷害暫時減半」）。⚠️ 兩個倍率在這裡而不在卡片上，因為 owner 給的是一個定義（「虛弱就是減半」）而不是逐支不同的強度 —— 這一點與【重創】相反。statusTag 決定哪一類狀態算虛弱，引擎裡沒有任何寫死的狀態編號。",
+  "statusTag": "weakness",
+  "attackSpeedMult": 0.5,
+  "damageDealtMult": 0.5
+}

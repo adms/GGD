@@ -40,14 +40,55 @@
  * 另一邊是玩家已經拿到一個沒有人設計過的爆發。
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * ③ 兩個倍率同時成立時 —— **取 max,不相乘**
+ * ③ 多個倍率同時成立時 —— **每一條獨立骰、倍率依序相乘**(owner 2026-08-09)
  *
- * 一發同時被英雄自己的暴擊(`critDamage`,預設 1.75)和這個 grant(10.0)打中時,
- * 答案是 10 倍還是 17.5 倍?這個專案對「同類乘數多來源怎麼算」**已經有一條規則**
- * 而且已經論證過:`combat/block.ts` ⑤ 的「取 max,不相加」,它自己又是沿用
- * `combat/evasion.ts` 的 `abilityEvasionOf`。再發明第三條仲裁規則才是缺陷。
+ * owner 逐字(GH#302):
  *
- * 所以:`amount = base × max(critDamage, damageMult)`。
+ *   「我同時獲得 1%機率 100倍 以及 10%機率 2倍暴擊傷害,這樣我會有三種結果,
+ *     100x2=200、100、2倍,**因為是每一條暴擊獨立算完傷害再帶入下一條**」
+ *
+ * 所以一發攻擊上的每一條暴擊來源(英雄自己的 `Stat.CritChance`,加上每一個
+ * 來源攜帶的 grant)**各抽各的骰**,抽中的把自己的倍率乘進總倍率。
+ *
+ * ⚠️ **這一段在 2026-08-09 之前寫的是「取 max,不相乘」**,而且附了一整段論證:
+ * 「這個 repo 對同類乘數已經有一條規則(`block.ts` ⑤ 的取 max),再發明第三條
+ * 仲裁規則才是缺陷」。那段論證**被 owner 推翻了,所以它整段不見了** ——
+ * CLAUDE.md 第三守則:一個活得比它描述的行為還久的辯護,比沒有註解更糟。
+ *
+ * ⭐ 新規則的理由,以及**為什麼暴擊與格擋/迴避本來就不該同一條**:
+ * 暴擊是**肉鴿三選一會發的東西**。取 max 的世界裡,玩家的第二張暴擊卡是廢牌 ——
+ * 撿到它畫面上什麼都不會變,而那是這個模式最不能有的手感。格擋/迴避是**防守側
+ * 的保命率**,兩件疊起來趨近 100% 本來就該收斂(不然就沒有人打得死你);
+ * 暴擊是**進攻側的爆發**,它的樂趣就在疊起來會炸。兩條仲裁規則並存不是缺陷,
+ * 前提是兩條**各自寫得出自己的理由** —— 這一段就是暴擊那一條的理由。
+ *
+ * ⛔ 而且「怎麼算」本身是**後台的一格下拉**,不是這裡的一個決定:
+ * `sim/critRules.ts` 的 `stackMode`(`multiply` 出貨 / `max` 舊行為 / `add`),
+ * 外加 `maxTotalMult`(總倍率上限,出貨 100)與 `sourceCap`(最多算幾條,出貨 5)。
+ * owner 2026-08-09:「暴擊計算方式 上限 這些參數都要能後台彈性設定」。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ③-b 決定性的代價:**抽幾次骰變成「身上有幾條暴擊」的函式**
+ *
+ * `multiply` / `add` 下,每一條合格的 grant 都自己抽一次 `world.rng.chance`。
+ * 舊行為是**整發只抽一次**(只有最強的那一條參與)。所以同一顆種子的**既有錄影
+ * 對不上** —— owner 選了接受這個代價(錄影只在同一個版本內有效)。
+ *
+ * ⚠️ 但它**不是無界的**:`sourceCap`(出貨 5)給了每一次攻擊的 draw 次數一個
+ * 上界 —— 最多 1 次(英雄自己的暴擊率,由 `BasicAttackSystem` 抽)加上 `sourceCap`
+ * 次,出貨設定下 ≤ 6。所以決定性沒有變差,變的只是同一顆種子對應的那一串結果。
+ *
+ * ⚠️ **ZERO GUARANTEE 仍然成立**:身上一條 grant 都沒有時這裡一次都不抽
+ * (見 ⑥),而出貨內容只有天堂之劍一支帶 `critStrike` —— 也就是說絕大多數既有
+ * 錄影其實逐位元不變,會變的只有「真的帶了兩把以上暴擊武器」的那些。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ③-c 超出 `sourceCap` 時**丟掉哪幾條** —— 明確且決定性
+ *
+ * 照**期望增益 `chance × damageMult` 由大到小**排序,取前 `sourceCap` 條;
+ * 同分時取 `sc.sources` 插入序靠前的那一個。⛔ 不是插入序取前 N ——
+ * 那會讓「剛買到的那把最強的劍」被上限吃掉,而畫面上完全看不出來。
+ * 這個排名指標不是新發明的:`critStrikeFor` 從第一天就用它挑「最好的一條」。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ④ 吸血:為什麼是**封包上的一個覆寫**,而不是暴擊時再讀一次屬性
@@ -86,7 +127,8 @@
  *
  * 骰子一律走 `world.rng.chance`(播種、狀態折進 `SimWorld.digest()`);沒有
  * `Math.random`、沒有時鐘、沒有三角函式、沒有 `**`;唯一的迭代是插入序的
- * `sc.sources` 陣列。
+ * `sc.sources` 陣列,以及它排序之後的複本 —— 比較器是「權重降序 + 插入序升序」,
+ * 插入序唯一,所以那是一個**全序**,不靠 `Array.prototype.sort` 穩不穩定。
  *
  * **ZERO GUARANTEE**:身上沒有任何一個活著的 `critStrike` 來源時,
  * {@link critStrikeFor} 在**碰 rng 之前**就回 `null`,`rollCritStrike` 因此一次
@@ -94,6 +136,7 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
+import type { CritRules } from "../critRules";
 
 /**
  * 這個 grant 的加成套用在**哪些**暴擊上 —— 見檔頭 ②。
@@ -117,10 +160,12 @@ export interface CritStrikeGrant {
   /** 觸發機率 0..1。天堂之劍 = `0.06`(文案的「6%機率」)。 */
   chance: number;
   /**
-   * 抽中時這一發的**總**倍率(不是加在 `critDamage` 上的增量)。
+   * 抽中時**這一條**貢獻的倍率(不是加在 `critDamage` 上的增量)。
    * 天堂之劍 = `10`(文案的「10倍暴擊傷害」)。
    *
-   * 和英雄自己的 `Stat.CritDamage` **取 max,不相乘** —— 見檔頭 ③。
+   * ⚠️ 它是「這一條」不是「這一發」:出貨的 `stackMode: "multiply"` 下,它會和
+   * 英雄自己的 `Stat.CritDamage`、以及其他抽中的 grant **相乘** —— 見檔頭 ③。
+   * (2026-08-09 以前這裡寫的是「取 max,不相乘」。)
    */
   damageMult: number;
   /**
@@ -153,79 +198,155 @@ function clamp01(v: number): number {
   return v > 1 ? 1 : v;
 }
 
+/** 一條**合格**的來源,連同它的排序鍵。 */
+interface RankedGrant {
+  g: CritStrikeGrant;
+  /** 期望增益 `chance × damageMult` —— 排序的主鍵(降序)。 */
+  weight: number;
+  /** `sc.sources` 的插入序 —— 排序的次鍵(升序),唯一,所以比較器是全序。 */
+  order: number;
+}
+
 /**
- * 這個單位身上**最好的**一個 `critStrike` 來源,`null` = 一個都沒有。
+ * 這一發**有資格參與**的暴擊來源,已經照期望增益由大到小排好。
  *
- * 「最好」= **`chance × damageMult` 最大者**(期望增益),同值時取 `sc.sources`
- * 陣列裡靠前的那一個。`sc.sources` 是插入序陣列、每個 replica 一致,所以不需要
- * 排序正規化。
+ * 合格 = 有 `critStrike`、還沒過期、而且 `chance × damageMult > 0`。
+ * 最後那一條就是 ZERO GUARANTEE 的真正所在地:一個 `chance: 0`(或
+ * `damageMult: 0`)的 grant 永遠不可能改變任何東西,所以它連骰都不該抽。
  *
- * ⚠️ 2026-07-31 更正(第三守則):這裡本來寫「和 `combat/block.ts` 的
- * `blockCutFor` 同一條」。**已經不是了** —— owner 裁決格擋改成鏈式獨立判定
- * (`sim/blockRules.ts`,`stacking: "independent"`),`chance × fraction` 這個
- * 排名指標在那邊只剩 `best` 模式在用。
- *
- * 這邊**維持**取最好的一個,而且刻意不順手跟著改:owner 的裁決講的是格擋,
- * 沒有講暴擊。今天全 `content/items/` 只有天堂之劍 (godie-i01n) 一支帶
- * `critStrike`,所以「兩支疊起來」在出貨內容裡是 0 筆(它**不是** `unique`,
- * 所以兩把同名武器買得到 —— 但兩把同樣的 grant 在這個指標下和一把等價)。
- * 第二支一旦上架,「暴擊 proc 多來源怎麼算」就變成 owner 已經替格擋答過的
- * 同一題,那時它應該和 `blockStacking` 一樣變成一個欄位,而不是繼續躺在這裡。
- *
- * ⚠️ 這個函式**不碰 rng** —— 它就是 ZERO GUARANTEE 的所在地。
+ * ⚠️ **這個函式不碰 rng,也不讀 `critRules`** —— 上限與模式是呼叫端的事,
+ * 它只負責「誰有資格、誰排前面」。分開是為了讓 `critStrikeFor`(吸血那一半在用)
+ * 與 `rollCritStrike`(傷害那一半)問的是**同一個排名**,不會漂成兩套。
  */
-export function critStrikeFor(world: SimWorld, id: EntityId): CritStrikeGrant | null {
+function rankedGrants(world: SimWorld, id: EntityId): RankedGrant[] {
   const sc = world.stats.get(id);
-  if (!sc) return null;
-  let best: CritStrikeGrant | null = null;
-  let bestWeight = 0;
+  if (!sc) return [];
+  const out: RankedGrant[] = [];
+  let order = 0;
   for (const src of sc.sources) {
+    order++;
     const g = src.critStrike;
     if (g === undefined) continue;
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     const weight = clamp01(g.chance) * (g.damageMult > 0 ? g.damageMult : 0);
-    // 嚴格大於 ⇒ 同分取陣列裡靠前的那一個 ⇒ 每個 replica 選到同一個來源。
-    if (weight > bestWeight) {
-      bestWeight = weight;
-      best = g;
-    }
+    if (weight <= 0) continue;
+    out.push({ g, weight, order });
   }
-  return bestWeight > 0 ? best : null;
+  // 權重降序 + 插入序升序。`order` 唯一 ⇒ 全序 ⇒ 不依賴 sort 的穩定性,
+  // 每個 replica 得到逐位元相同的順序(檔頭 ⑥)。
+  out.sort((a, b) => (b.weight === a.weight ? a.order - b.order : b.weight - a.weight));
+  return out;
 }
 
 /**
- * 把「這一發普攻」交給 [暴擊吸血] 判一次。
+ * 這個單位身上**最好的**一個 `critStrike` 來源,`null` = 一個都沒有。
+ *
+ * 「最好」= **`chance × damageMult` 最大者**(期望增益),同值時取 `sc.sources`
+ * 陣列裡靠前的那一個。
+ *
+ * ⚠️ 2026-08-09 之後它**不再是傷害那一半的入口**(owner 推翻了「只算最好的
+ * 那一條」,見檔頭 ③)。它現在只剩兩個用途:`stackMode: "max"` 那一條回滾路徑,
+ * 以及 {@link effectiveLifesteal} 讀 `lifestealMode`。
+ *
+ * ⚠️ 這個函式**不碰 rng**。
+ */
+export function critStrikeFor(world: SimWorld, id: EntityId): CritStrikeGrant | null {
+  return rankedGrants(world, id)[0]?.g ?? null;
+}
+
+/** 這一條 grant 這一發吃不吃得到 —— 檔頭 ② 的整個決策點,兩條路徑共用。 */
+function empoweredBy(g: CritStrikeGrant, procced: boolean, ownCrit: boolean): boolean {
+  // `"everyCrit"` 讓英雄自己骰出來的暴擊也吃這個 grant;`"ownProcOnly"`(預設)
+  // 只認這個 grant 自己抽中的那一發。
+  return procced || ((g.empowers ?? "ownProcOnly") === "everyCrit" && ownCrit);
+}
+
+/** 這一條 grant 貢獻的倍率。<= 0 的誤植當成 1(不影響),不是當成 0(歸零傷害)。 */
+function multOf(g: CritStrikeGrant): number {
+  return g.damageMult > 0 ? g.damageMult : 1;
+}
+
+/** 總倍率的天花板 —— `critRules.maxTotalMult`,夾的是**合成之後**的那一個。 */
+function capTotal(mult: number, rules: CritRules): number {
+  return mult > rules.maxTotalMult ? rules.maxTotalMult : mult;
+}
+
+/**
+ * 把「這一發普攻」交給暴擊系統結算 —— 英雄自己那一條與每一條 grant 一起。
  *
  * @param baseAmount  **沒有**乘任何暴擊倍率的攻擊力
- * @param amount      已經算好的傷害(英雄自己的暴擊已經乘進去了,或沒有)
- * @param crit        英雄自己的暴擊骰結果
+ * @param ownCritMult 英雄自己 `Stat.CritChance` 骰出來的倍率;**沒暴擊時 = 1**
+ * @param ownCrit     英雄自己的暴擊骰結果(骰在 `BasicAttackSystem`,不在這裡)
  *
- * 恰好消耗 **1 次** rng draw,而且只在真的有一個合格來源時;沒有來源時 0 次
- * (見檔頭 ⑥ ZERO GUARANTEE),所以既有 replay 逐位元不變。
+ * ⚠️ 2026-08-09 之前第四個參數是**已經算好的 `amount`**。改成倍率是因為新規則
+ * 要把每一條的倍率相乘,而從 `amount` 反推倍率要除以 `baseAmount` —— 一個
+ * `baseAmount === 0` 的攻擊會得到 NaN,而 NaN 傷害在畫面上就是「這一刀沒打到」。
+ *
+ * rng 消耗(檔頭 ③-b):`multiply` / `add` 每一條合格 grant 各 1 次、最多
+ * `critRules.sourceCap` 次;`max` 恰好 1 次(舊行為);一條合格 grant 都沒有時
+ * **0 次**(ZERO GUARANTEE),所以那些場次的既有 replay 逐位元不變。
  */
 export function rollCritStrike(
   world: SimWorld,
   attacker: EntityId,
   baseAmount: number,
-  amount: number,
-  crit: boolean,
+  ownCritMult: number,
+  ownCrit: boolean,
 ): CritStrikeRoll {
-  const g = critStrikeFor(world, attacker);
-  if (g === null) return { crit, amount };
+  const rules = world.critRules;
+  const ranked = rankedGrants(world, attacker);
+  // ZERO GUARANTEE —— 在碰 rng 之前就走人。
+  if (ranked.length === 0) {
+    return { crit: ownCrit, amount: baseAmount * capTotal(ownCritMult, rules) };
+  }
 
-  const procced = world.rng.chance(clamp01(g.chance));
-  // `"everyCrit"` 讓英雄自己骰出來的暴擊也吃這個 grant;`"ownProcOnly"`(預設)
-  // 只認這個 grant 自己抽中的那一發。這一行就是檔頭 ② 的整個決策點。
-  const empowered = procced || ((g.empowers ?? "ownProcOnly") === "everyCrit" && crit);
-  if (!empowered) return { crit, amount };
+  if (rules.stackMode === "max") {
+    // 回滾路徑:只有最強的那一條參與,**整發只抽一次**。連 draw 次數都跟舊行為
+    // 一樣是刻意的 —— 合成規則回去了但每發抽兩次骰的話,兩件暴擊武器的觸發率
+    // 仍然被改掉了,那不是回滾,是第三種行為(見 `critRules.ts` 的 `CritStackMode`)。
+    const g = ranked[0]!.g;
+    const procced = world.rng.chance(clamp01(g.chance));
+    if (!empoweredBy(g, procced, ownCrit)) {
+      return { crit: ownCrit, amount: baseAmount * capTotal(ownCritMult, rules) };
+    }
+    const m = ownCritMult > multOf(g) ? ownCritMult : multOf(g);
+    return {
+      crit: true,
+      amount: baseAmount * capTotal(m, rules),
+      critLifesteal: clamp01(g.lifestealFraction),
+    };
+  }
 
-  // 取 max,不相乘(檔頭 ③)。`baseAmount × damageMult` 比較的對象是**已經**算好
-  // 的 `amount`,所以英雄自己的 critDamage 比 10 倍還高時他保留自己的數字。
-  const boosted = baseAmount * g.damageMult;
+  // ── multiply(出貨)/ add ──────────────────────────────────────────────
+  // 每一條**各抽各的骰**,抽中的把自己的倍率帶進來(owner 2026-08-09)。
+  const cap = ranked.length < rules.sourceCap ? ranked.length : rules.sourceCap;
+  const multiply = rules.stackMode === "multiply";
+  // `add` 是「有貢獻的那幾條相加」,所以它要數有幾條在貢獻:一條都沒有時總倍率
+  // 是 1(不暴擊),不是 0(這一刀不痛)。`multiply` 用 1 當單位元就沒有這個問題。
+  let product = ownCrit ? ownCritMult : 1;
+  let sum = ownCrit ? ownCritMult : 0;
+  let contributors = ownCrit ? 1 : 0;
+  let anyGrant = false;
+  let critLifesteal: number | undefined;
+  for (let i = 0; i < cap; i++) {
+    const g = ranked[i]!.g;
+    const procced = world.rng.chance(clamp01(g.chance));
+    if (!empoweredBy(g, procced, ownCrit)) continue;
+    anyGrant = true;
+    product *= multOf(g);
+    sum += multOf(g);
+    contributors++;
+    // 吸血跟著**最強的那一條吃得到的 grant**走(`ranked` 已排序,所以是第一條)。
+    // 多條同時 proc 時不相加:吸血的基數是「真的掉下來的血」,兩條 100% 相加
+    // 等於回兩倍的傷害量,那是另一個機制。
+    if (critLifesteal === undefined) critLifesteal = clamp01(g.lifestealFraction);
+  }
+
+  const total = multiply ? product : contributors === 0 ? 1 : sum;
   return {
-    crit: true,
-    amount: boosted > amount ? boosted : amount,
-    critLifesteal: clamp01(g.lifestealFraction),
+    crit: ownCrit || anyGrant,
+    amount: baseAmount * capTotal(total, rules),
+    ...(critLifesteal !== undefined ? { critLifesteal } : {}),
   };
 }
 

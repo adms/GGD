@@ -7,6 +7,7 @@ import type { EffectKindSpec } from "./effectKind";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
 import { Statuses } from "../content/registry";
+import { clampMarkCount } from "../markLimits";
 
 export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
   apply(e, ctx) {
@@ -59,15 +60,40 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         (s) => s.statusId === e.statusId && s.sourceId === ctx.origin,
       );
       let addedTicks = 0;
+      /** 這一次施加**真的把層數推高了**嗎 —— 見下面 `statusApplied` 那一段。 */
+      let stacksGrew = false;
       if (existing) {
         addedTicks = Math.max(0, expiresAtTick - existing.expiresAtTick);
         existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
+        /**
+         * ⭐ 層數累加（GH#301-5）。
+         *
+         * ⛔ **只有作者明寫 `stacks` 的那些卡才累加。** 沒寫 = 這不是一支疊層的
+         * 狀態 = 續期就只是續期，跟這一行之前逐字相同。這個條件不是保守，它是
+         * 相容性本身：出貨的 28 份狀態沒有一份寫了 `stacks`，無條件累加會讓
+         * 每一次重複施加的【暈眩】【減速】默默變成 2 層、3 層 —— 沒有人會在
+         * 畫面上看出來，但任何一顆問層數的條件葉從此對它們全部說謊。
+         *
+         * 上界走 `clampMarkCount`（`sim/markLimits.ts`，同一份表、同一個夾取），
+         * ⛔ 不抄字面值 999：schema 的 `.max(MARK_MAX_COUNT)` 擋的是**一次施加**
+         * 寫得太大，這裡擋的是**累加**爬過頭，兩道守的是同一個上界。
+         */
+        if (e.stacks !== undefined) {
+          const before = existing.stacks ?? 1;
+          existing.stacks = clampMarkCount(before + e.stacks);
+          stacksGrew = existing.stacks > before;
+        }
       } else {
         addedTicks = Math.max(0, expiresAtTick - world.tick);
         st.effects.push({
           statusId: e.statusId,
           sourceId: ctx.origin,
           expiresAtTick,
+          // ⭐ 層數（GH#301-5）。作者沒寫 = `undefined`，讀取端一律當 1
+          // （`statusStacks`）。⛔ 這裡**不要**寫 `e.stacks ?? 1`：那會讓 28 份
+          // 出貨狀態全部長出一格「1」，然後「這一份有沒有在疊層」就永遠分不出來，
+          // 而上面那道「沒寫就不累加」的相容性閘會失去它的判準。
+          stacks: e.stacks !== undefined ? clampMarkCount(e.stacks) : undefined,
           moveSpeedMult: e.moveSpeedMult,
           root: e.root,
           stun: e.stun,
@@ -102,6 +128,37 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         });
       }
       if (isCc) recordCc(world, ctx.caster, target, addedTicks);
+      // 【狀態被套用的當下】(GH#300) —— `systems/WorldHookSystem.ts` 把它轉成
+      // `onStatusApplied`。emit 而不是 `fireHooks`，理由與下面那個 `stunApplied`
+      // 逐字相同（import 環）。
+      //
+      // ⛔ **續期不重觸發**。少了這道閘，一支每 tick 續期的減速會讓「狀態掛上時
+      // 獲得 X」每秒發 30 次 —— 與 `onStunned` 當初窄化的理由一模一樣。
+      // ⛔ 也在免控那道 `continue` **之後**：被免控拒絕掛上的那一筆不算套用成功，
+      // 否則「敵人中了狀態就追加」會在對方完全免疫時照樣發動。
+      //
+      // ─────────────────────────────────────────────────────────────────────
+      // ⭐ 決策點（B×D 交互，2026-08-09 整合時裁決）：**疊上第 2 層算不算「被套用」？**
+      //
+      // 算 —— 但只有**層數真的長高**的那一次算，純續期不算。三種寫法都試過：
+      //
+      //   ① 只有第一次算（`!existing`）：`stacks` 從此只有第一層看得見，
+      //      「疊到 N 層引爆」這種卡**寫不出來** —— 而那正是 owner 在 #299 第 8 條
+      //      要層數的理由（「會連動技能 ID 或狀態疊層」）。做了一個數字卻沒有任何
+      //      時刻可以掛在上面，就是失敗形態②。
+      //   ② 每一次施加都算：把上面那道「續期不重觸發」的閘整個拆掉，
+      //      一支每 tick 續期的減速又會每秒發 30 次。
+      //   ③（選這個）**新掛上** ∪ **層數真的增加**。
+      //
+      // ⭐ ③ 為什麼在相容性上是安全的：`stacksGrew` 只可能在作者**明寫了
+      // `stacks`** 的卡上為真（上面那個 `e.stacks !== undefined` 閘），而出貨的
+      // 28 份狀態沒有一份寫 —— 所以既有內容一次都不會多發一則。
+      // ⭐ 而且它用的是 `> before` 而不是「有沒有寫 stacks」：夾到上限（999）
+      // 之後再疊不會發，因為那一刻身上的層數**沒有變**，而這則事件說的是
+      // 「這個人身上的層數變了」，不是「有人又打了一發」。
+      if (!existing || stacksGrew) {
+        world.emit("statusApplied", { target, source: ctx.caster, statusId: e.statusId, origin: ctx.origin });
+      }
       // 被暈眩的那一刻 (勇者小呆 08-00 龍紋記憶). Emitted, NOT dispatched: firing
       // `fireHooks` from here would close the import ring
       // applyStatus → hooks → effectRunner → effectRegistry → applyStatus, which

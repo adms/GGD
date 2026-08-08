@@ -56,6 +56,8 @@ import {
   RESOURCE_PCT_POINTS_MAX,
   RESOURCE_PCT_RATIO_MAX,
 } from "../../sim/effects/dynamicTerms";
+// 層數的上界 —— 一份表兩個消費端（標記系統與 `applyStatus.stacks`），⛔ 不抄字面值。
+import { MARK_MAX_COUNT } from "../../sim/markLimits";
 import { TAUNT_MAX_DURATION_SEC, TAUNT_MAX_TARGETS } from "../../sim/taunt";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../sim/flight";
 
@@ -199,6 +201,25 @@ export const zHookEvent = z.enum([
   "onRevive",
   /** 迴避時。⚠️ 持有者＝**閃掉的那個**，target＝攻擊者。 */
   "onEvade",
+
+  // ── 契約層 2026-08-09（GH#300）加的四個，⛔ **發射點由 lane B 接** ────────
+  //
+  // owner 點名這一族「使用率超高請一定要實作」。契約層先把**名字**定下來，
+  // 因為四路平行實作全部要 import 同一個字面量；發射點在 GH#300。
+  //
+  // ⛔ 在發射點接上之前，這四個是「下拉裡有、引擎不發」——`onLevelUp` 被刪掉的
+  // 那個形狀。語意（誰是持有者、有沒有 target、什麼不算）逐一寫在
+  // `sim/stats/modifiers.ts` 的 `HookEvent`，**不在這裡重複一份**（兩份會分岔）。
+  // ⛔ GH#300 收尾時沒接到的那幾個要**刪掉**，不是留著。
+
+  /** 護盾產生時。持有者＝拿到護盾的人。 */
+  "onShieldGained",
+  /** 護盾破碎時（護盾池歸零那一格）。⚠️ 與【破盾】那個**動作**不是同一件事。 */
+  "onShieldBroken",
+  /** 隊友陣亡時。⚠️ 持有者＝**活著的隊友**，方向與 `onDeath` 相反。 */
+  "onAllyDeath",
+  /** 狀態被掛上的那一刻。⚠️「身上有某狀態時」走的是效果上的 `condition`，不是它。 */
+  "onStatusApplied",
 ]);
 
 /**
@@ -323,7 +344,11 @@ function refineDispelShape(
         // Lane 2（2026-08-08）：同一組幾何欄位 → **同一份**檢查。
         | "randomArea"
         | "manaBarrier"
-        | "extendBuff";
+        | "extendBuff"
+        // 契約層（2026-08-09，GH#301-2）：`blink` 用**同一組** shape/radius/
+        // side/maxTargets，所以走**同一份**檢查。開第二份的那一天它們會分岔，
+        // 而兩份看起來都對。
+        | "blink";
     }
   >,
   ctx: z.RefinementCtx,
@@ -459,8 +484,8 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
     if (e.kind === "modifyCooldown") refineModifyCooldown(e, ctx);
     return;
   }
-  // 【淨化】與【破盾】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
-  if (e.kind === "dispel" || e.kind === "shieldBreak")
+  // 【淨化】/【破盾】/【瞬移】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
+  if (e.kind === "dispel" || e.kind === "shieldBreak" || e.kind === "blink")
     return refineDispelShape(e, ctx);
   if (e.kind !== "grantAttribute") return;
   if (e.store !== "source") {
@@ -494,10 +519,41 @@ export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(
   () => zEffectDefUnion.superRefine(refineEffectDef),
 ) as unknown as z.ZodType<EffectDef, z.ZodTypeDef, unknown>;
 
+/**
+ * ⭐ 每一個 effect kind **共有**的欄位 —— `sim/effects/effect.ts` 的
+ * {@link EffectCommon} 在 Zod 這一側的鏡子。
+ *
+ * ⛔ **一份，不是 34 份。** 每個聯集成員都 `...EFFECT_COMMON_SHAPE,` 展開它；
+ * 下一個共有欄位加在這裡一格，34 個成員自動全部拿到（第零守則⑨）。
+ * ⚠️ 不做成 `zEffectDefUnion.options.map(o => o.extend(...))` 是因為
+ * `z.discriminatedUnion` 需要一個**元組**型別，`.map` 回來的陣列要靠 `as` 騙進去，
+ * 而那一個 `as` 會讓整個聯集的推導型別退化 —— 展開一個常數形狀是 zod 的慣用法，
+ * 而且型別完全精確、零 cast。
+ */
+const EFFECT_COMMON_SHAPE = {
+  /**
+   * 這一段效果要不要發生。與 **hook 上的 `condition` 是同一個型別、同一個求值器、
+   * 同一組葉子**（`zEffectCondition`）—— ⛔ 不是第二套條件系統。
+   *
+   * 語意（逐一判斷 / 空目標退化成整段閘 / 一個都沒通過就不呼叫 handler）完整寫在
+   * `sim/effects/effect.ts` 的 `EffectCommon.condition`，**不在這裡重複一份**。
+   * 省略 = 無條件執行（今天所有內容的行為）。
+   */
+  condition: zEffectCondition
+    .optional()
+    .describe(
+      "觸發條件：只有條件成立的目標才吃到這一段效果（省略＝所有目標都吃到）。" +
+        "與觸發器上的條件用同一組判斷式；「對身上有〔恐懼〕的敵人追加傷害」是**逐一**" +
+        "判斷的，範圍技裡沒有恐懼的人不會被算進去。沒有目標的效果（自我增益／落點特效）" +
+        "則是整段成立或整段不發生。",
+    ),
+} as const;
+
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damage"),
+      ...EFFECT_COMMON_SHAPE,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -674,6 +730,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damageArea"),
+      ...EFFECT_COMMON_SHAPE,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -706,6 +763,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damageLine"),
+      ...EFFECT_COMMON_SHAPE,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -742,6 +800,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("grantAttribute"),
+      ...EFFECT_COMMON_SHAPE,
       attr: z.enum(["str", "agi", "int"]),
       /**
        * "flat" (預設) = 加 `amount` 點; "pctOfCurrent" = 加「現有屬性 × amount」,
@@ -831,16 +890,18 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("revive"),
+      ...EFFECT_COMMON_SHAPE,
       hpPct: z.number().min(0).max(1).optional(),
       manaPct: z.number().min(0).max(1).optional(),
       side: z.enum(["ally", "any"]).optional(),
       teamCharge: z.enum(["ignore", "requireAndSpend"]).optional(),
     })
     .strict(),
-  z.object({ kind: z.literal("heal"), amount: zScaling }).strict(),
+  z.object({ kind: z.literal("heal"), ...EFFECT_COMMON_SHAPE, amount: zScaling }).strict(),
   z
     .object({
       kind: z.literal("shield"),
+      ...EFFECT_COMMON_SHAPE,
       amount: zScaling,
       duration: z.number().min(0),
       /**
@@ -860,7 +921,22 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("applyStatus"),
+      ...EFFECT_COMMON_SHAPE,
       statusId: zRef<StatusId>("status-effects", { soft: true }),
+      /**
+       * ⭐ 層數（owner 2026-08-09 / GH#301-5：「狀態除了有無也會是數字層數」）。
+       *
+       * 省略 = 1 = 今天的行為（「身上有這個狀態」）。⛔ 不是 0 —— 0 層等於沒有，
+       * 而一份沒寫這一格的舊文件的意思是「有」。
+       * 上界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（999，擋「12 打成 120」
+       * 那種多一個零），⛔ 不抄字面值：那已經是這個 repo 對「一個計數器最多幾層」
+       * 的答案，抄第二份就是第四個住處。
+       *
+       * ⚠️ 層數怎麼**送到客戶端**還沒有答案（`ENTITY_FLAG_FREE_BITS` 是空的），
+       * 三條路與各自的代價寫在 `sim/effects/effect.ts` 的 `applyStatus.stacks`。
+       * 在裁決之前，⛔ 任何「HUD 會顯示第幾層」的文案都是謊話。
+       */
+      stacks: z.number().int().min(1).max(MARK_MAX_COUNT).optional(),
       /**
        * 這個狀態掛多久(秒)。**兩端都有界**(CLAUDE.md「欄位要有上界」/ #277) ——
        * 這一格在 2026-08-01 之前只有 `.min(0)`,也就是完全沒有上界,而 owner 當天
@@ -967,6 +1043,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("applyBuff"),
+      ...EFFECT_COMMON_SHAPE,
       modifiers: z.array(zStatModifier),
       duration: z.number().min(0),
       /** rank-indexed override (index rank-1, clamped) — WC3 buff columns are per level */
@@ -1043,6 +1120,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("cycleBuff"),
+      ...EFFECT_COMMON_SHAPE,
       /** namespace for the step source ids — two rings on one body must differ */
       cycleKey: z.string().min(1).max(48),
       applyTo: z.enum(["self", "target"]).optional(),
@@ -1070,6 +1148,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("restore"),
+      ...EFFECT_COMMON_SHAPE,
       /** 0..1 of the TARGET's max health (WC3 SetUnitLifePercentBJ) */
       healthPct: z.number().min(0).max(1).optional(),
       /** 0..1 of the TARGET's max mana (WC3 SetUnitManaPercentBJ) */
@@ -1088,6 +1167,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("spendMana"),
+      ...EFFECT_COMMON_SHAPE,
       amount: zScaling,
       pctMaxMana: z.number().min(0).max(1).optional(),
       /**
@@ -1117,6 +1197,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("dash"),
+      ...EFFECT_COMMON_SHAPE,
       mode: z.enum(["forward", "toPoint"]),
       speed: z.number().positive(),
       maxDistance: z.number().positive(),
@@ -1131,6 +1212,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("leap"),
+      ...EFFECT_COMMON_SHAPE,
       applyTo: z.enum(["self", "target"]).optional(),
       mode: z.enum(["toPoint", "inPlace"]),
       apexHeight: z.number().min(0),
@@ -1140,6 +1222,42 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       dragToCaster: z.boolean().optional(),
       landRadius: z.number().min(0).optional(),
       onLand: z.array(z.lazy(() => zEffectDef)).optional(),
+    })
+    .strict(),
+  /**
+   * ⭐ blink — **真瞬移**（owner 2026-08-09 / GH#301-2），mirrors the `blink`
+   * member of `EffectDef`。為什麼它不是 `leap` 的一個選項、`templates/expand.ts`
+   * 那句「deliberately was not added」為什麼被推翻、三個 `to` 值各對應哪幾支
+   * JASS 技能 —— 全部寫在 `sim/effects/effect.ts`，⛔ 不在這裡重複一份。
+   */
+  z
+    .object({
+      kind: z.literal("blink"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`（守衛 `newKindShape.test.ts`）。 */
+      shape: z.enum(["single", "circle"]).describe(
+        "誰被瞬移：single＝一個身體（施法者或這次的目標）；circle＝半徑內的一群（集結隊友）。",
+      ),
+      /**
+       * `shape:"circle"` 的半徑，GGD 單位。上界 40 與 `extendBuff` 的圓一致
+       *（決鬥區半徑 24，40 蓋得住任何合理的集結範圍而擋得住漏換算的 wc3 數字）。
+       */
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      to: z
+        .enum(["point", "targetUnit", "caster"])
+        .describe("目的地：指定的地點 / 目標身上 / 集結到施法者身邊。"),
+      applyTo: z.enum(["self", "target"]).optional(),
+      /**
+       * 落在目的地前面多少單位（27-04 飛燕閃在 JASS 裡落在目標前 150 wc3 ≈
+       * 2.75 GGD）。省略 = 0 = 正好落在目的地。
+       * 上界 20 與 `KB_MAX_DISTANCE` 同一個理由：大於任何真實值、小於決鬥區半徑
+       * 的兩倍，所以「150」直接貼進來（沒換算）會被擋在門外。
+       */
+      stopShortUnits: z.number().min(0).max(20).optional(),
+      /** 抵達之後**同一個 tick**執行的效果。⛔ 這裡沒有 `arriveRadius`，理由見 sim 端。 */
+      onArrive: z.array(z.lazy(() => zEffectDef)).optional(),
     })
     .strict(),
   /**
@@ -1154,6 +1272,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("championForm"),
+      ...EFFECT_COMMON_SHAPE,
       /** "alternate"/"base" force a direction; "toggle" is the w3x 風王結界/紮根 form */
       to: z.enum(["alternate", "base", "toggle"]),
       /** w3a `ahdu` at the cast rank; ABSENT = never times out (the toggles) */
@@ -1163,6 +1282,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("spawnProjectile"),
+      ...EFFECT_COMMON_SHAPE,
       projectileId: zRef<ProjectileId>("projectiles"),
       onHit: z.array(z.lazy(() => zEffectDef)),
     })
@@ -1170,6 +1290,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("spawnVfx"),
+      ...EFFECT_COMMON_SHAPE,
       /** vfx@1 doc id (SOFT ref — the doc may be imported/authored later). */
       vfxId: zRef("vfx", { soft: true }),
       /** where the one-shot plays: caster (default), first target, or the cast point. */
@@ -1198,6 +1319,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("dot"),
+      ...EFFECT_COMMON_SHAPE,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -1255,6 +1377,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("summon"),
+      ...EFFECT_COMMON_SHAPE,
       /**
        * WHOSE BODY. `"self"` clones the CASTER's own champion (57-03 複製鏡,
        * 27-002 霧隱分身之術), so those docs need not name their own hero twice.
@@ -1357,6 +1480,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("invulnerable"),
+      ...EFFECT_COMMON_SHAPE,
       /** seconds. Capped hard: an unbounded immunity is an unwinnable round. */
       durationSec: z.number().positive().max(30),
       applyTo: z.enum(["self", "target"]).optional(),
@@ -1378,6 +1502,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("knockback"),
+      ...EFFECT_COMMON_SHAPE,
       /**
        * GGD units **AT GAP 0** — the FLOOR, not a fixed length: the GH#193 gap
        * subtraction still runs on top (see sim/effects/knockback.ts). Bounds
@@ -1401,6 +1526,20 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       subtractGap: z.boolean().optional(),
       /** 擊飛: apex height in GGD units; > 0 turns the shove into a parabola */
       launchHeight: z.number().min(0).max(KB_MAX_LAUNCH_HEIGHT).optional(),
+      /**
+       * ⭐ 擊飛的**落點**，四檔（owner 2026-08-09 / GH#301-1）。
+       * 省略 = 今天的行為（＝ `"default"`，由 `distance` / `impactPower` / 距離
+       * 減法推算）。⛔ 不是自由數字 —— 那是 owner 明講的簡化。
+       * 完整推導與「四檔的實際距離必須住在 `config.combat-feel@1`、不可以是
+       * 引擎裡的常數」寫在 `sim/effects/effect.ts` 的 `knockback.launchDistance`。
+       */
+      launchDistance: z
+        .enum(["short", "default", "long", "toEdge"])
+        .optional()
+        .describe(
+          "擊飛落點：一小段 / 預設（系統推算，＝省略時的行為）/ 一大段 / 到底部（推到決鬥區邊緣）。" +
+            "四檔的實際距離在後台「戰鬥手感」頁調，這裡只選檔位。",
+        ),
       /** 期間不可控制 (world.knockdown). ABSENT = true. */
       uncontrollable: z.boolean().optional(),
       /** extra 不可控制 ticks after landing (the 爬起來 window) */
@@ -1410,6 +1549,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("evasion"),
+      ...EFFECT_COMMON_SHAPE,
       /**
        * 0..1 BEFORE the ceiling. Both dodge channels are capped at
        * `effectiveCap(statCaps, Stat.Evasion)` — shipping 0.8, editable on the
@@ -1451,6 +1591,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("taunt"),
+      ...EFFECT_COMMON_SHAPE,
       /** 持續幾秒 (乘上後台的 `tauntRules.durationMult` 之後換算成絕對 tick) */
       durationSec: z.number().min(0.034).max(TAUNT_MAX_DURATION_SEC),
       /**
@@ -1477,6 +1618,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("grantGold"),
+      ...EFFECT_COMMON_SHAPE,
       /** 固定金額。省略 = 0（純按等級發放是合法的） */
       flat: z.number().min(0).max(5000).optional(),
       /** 每一級發多少金。「黃金數量為敵方等級」= 1。沒有目標時這一項是 0 */
@@ -1507,6 +1649,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("dispel"),
+      ...EFFECT_COMMON_SHAPE,
       /**
        * ⭐ **E1 硬約束（owner 核准）：新 kind 一律帶 `shape`。**
        *
@@ -1571,6 +1714,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("shieldBreak"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       /** `shape:"circle"` **必填**（載入時擋）。吃 `combatEnv.abilityRange`。 */
@@ -1596,6 +1740,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("devour"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1627,6 +1772,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("modifyCooldown"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1655,6 +1801,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("weightedBranch"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1683,6 +1830,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("swapResource"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1701,6 +1849,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("eventValueConversion"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1737,6 +1886,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("randomArea"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1764,6 +1914,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("manaBarrier"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
@@ -1786,6 +1937,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("extendBuff"),
+      ...EFFECT_COMMON_SHAPE,
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),

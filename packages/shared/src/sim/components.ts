@@ -406,6 +406,36 @@ export interface StatusEffect {
    */
   magnitude?: number;
   /**
+   * ⭐ 這一筆標記**疊了幾層**（owner 2026-08-09 / GH#301-5：「狀態除了有無也會是
+   * 數字層數」）。
+   *
+   * ── 缺席 = 1，⛔ 不是 0 ──────────────────────────────────────────────────
+   * 一份沒寫這一格的舊文件的意思是「他身上有這個狀態」，而那是一層。0 層等於
+   * 沒有，把缺席讀成 0 會讓出貨的 28 份狀態全部在條件端變成「不存在」。
+   * 所以讀取端一律 `s.stacks ?? 1`，而**寫入端只有作者明寫時才寫這一格** ——
+   * 見 `effects/applyStatus.ts` 裡「為什麼沒填就不累加」那一段。
+   *
+   * ── 它跟 `ModifierSource.stacks` 是**兩件事**，不是同一個機制的兩份拷貝 ──
+   * | | 住在哪 | 誰讀 | 做什麼 |
+   * |---|---|---|---|
+   * | `ModifierSource.stacks`（`applyBuff.stackKey`，#244） | `StatsComp.sources` | `statPipeline` | 把 modifier 的**數字乘 N** |
+   * | 這一格 | `StatusComp.effects` | 條件葉／技能閘 | 回答**「幾層」**，沒有任何東西被乘 |
+   *
+   * 合成成一套的代價是致命的：屬性那一套住在 `StatsComp` 上，而**小兵沒有
+   * StatsComp**（`stats/statPipeline.ts::recomputeStats` 第一句就 return）。
+   * 把層數搬過去 = 第 3 場之後場上大多數敵人身上疊不了層 —— 那正是 GH#301-6
+   * 要修的那個洞的形狀。兩個都叫「層」，但一個是乘法的因子，一個是計數器。
+   *
+   * ── 到期 ────────────────────────────────────────────────────────────────
+   * 層數跟著**這一筆**一起到期（`StatusSystem` 清掉整筆），沒有「一秒掉一層」的
+   * 半衰期。要那個的話它是另一個機制（每層自己的絕對 tick），不是這一格。
+   *
+   * ⚠️ **客戶端今天看不到層數。** `ENTITY_FLAG_FREE_BITS` 已經是空的（GH#285）
+   * 而 `defineTypes` 是 APPEND-ONLY，所以怎麼送是一個要裁決的決定，不是一個
+   * 實作細節。在裁決之前，任何「HUD 顯示第幾層」的文案都是謊話（失敗形態 ②）。
+   */
+  stacks?: number;
+  /**
    * A4(#278) —— 這一筆**可不可以被淨化拔掉**。
    *
    * 缺席 = 讀 `world.dispelRules.statusDefaultDispellable`（出貨 true）。
@@ -441,10 +471,20 @@ export interface StatusEffect {
    */
   silenced?: boolean;
   /**
-   * 【混亂】（C2，#278）—— `berserk` 失控的基礎上再加「不分敵我」。
-   * ⚠️ 它**不是**獨立狀態：`berserk` 已經是「丟掉座位的指令 + 自動尋敵」，
-   * 混亂只多改索敵那一步（`targeting.ts` 的 `isAutoTargetable` 敵我閘）。
-   * 所以一張混亂卡是 `{ berserk: true, targetsAllies: true }`。
+   * 【混亂】（C2，#278 → ⭐ owner 2026-08-09 改判，GH#299 第 9 條 / GH#301-3）。
+   *
+   * ⚠️ **這一格的語意換過一次，欄位名沒換。** 2026-08-05 它真的是「不分敵我」
+   * （`isAutoTargetable` 的敵我閘旁路），而 owner 明說那是錯的裁決：
+   * 「混亂應該是**完全無法指定目標**，並且會**亂走路**，跟恐懼一樣」。
+   * 現在它是混亂的**標記旗標**，行為在 `sim/chaos.ts`（丟指令 + 選不到任何
+   * 目標 + `world.rng` 抽方向亂走），與 `feared` / `berserk` 同一個形狀。
+   *
+   * ⛔ 名字沒改是刻意的：它是 `sim/content/condition.ts` 推導【混亂】標籤的
+   * join key，也是 223 份既有文件寫的那一格 —— 改名要連 schema、條件葉、
+   * fieldAdoption 一起動，而那是一次沒有任何行為收益的大位移。
+   *
+   * ⚠️ `berserk` 現在是**多餘的**（`{ targetsAllies: true }` 自己就是完整的
+   * 混亂）。兩個一起寫時混亂贏，理由見 `chaos.ts` 的決策 3。
    */
   targetsAllies?: boolean;
   breakOnDamage?: boolean;

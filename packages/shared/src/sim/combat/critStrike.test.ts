@@ -19,8 +19,13 @@
  *   2. `empowers` IS A REAL FIELD. `ownProcOnly` (shipped) leaves the champion's
  *      OWN crits alone; `everyCrit` empowers them. A hard-coded choice passes
  *      one of these two and fails the other.
- *   3. TWO MULTIPLIERS TAKE MAX, NOT PRODUCT — the arbitration `combat/block.ts`
- *      ⑤ already established for this codebase.
+ *   3. EVERY SOURCE ROLLS ON ITS OWN AND THE MULTIPLIERS MULTIPLY — owner's
+ *      2026-08-09 ruling (GH#302), stated as his own worked example. ⛔ This one
+ *      deliberately does NOT assert 「there was a crit」: that is green under the
+ *      old take-the-max arbitration too (失敗形態 ④). It asserts the PRODUCT,
+ *      which take-the-max cannot produce. `stackMode` / `maxTotalMult` /
+ *      `sourceCap` each get one case, because all three are 後台 fields and a
+ *      hard-coded choice passes one branch and fails the others.
  *   4. `undefined` ≠ `0` ON THE PACKET. A `lifestealFraction: 0` grant must not
  *      be indistinguishable from "did not proc", or a non-proccing swing would
  *      zero the wielder's own lifesteal.
@@ -74,7 +79,7 @@ describe("① 沒有內容用它的時候,它不存在", () => {
     expect(critStrikeFor(world, a)).toBeNull();
 
     const before = world.rng.state;
-    const r = rollCritStrike(world, a, 100, 100, false);
+    const r = rollCritStrike(world, a, 100, 1, false);
     expect(world.rng.state, "the gate drew from the rng with no grant attached").toBe(before);
     expect(r).toEqual({ crit: false, amount: 100 });
   });
@@ -84,7 +89,7 @@ describe("① 沒有內容用它的時候,它不存在", () => {
     const a = hero(world, "thorne", Z0.center.x, 0, 0);
     grant(world, a, { chance: 0, damageMult: 10, lifestealFraction: 1 });
     const before = world.rng.state;
-    rollCritStrike(world, a, 100, 100, false);
+    rollCritStrike(world, a, 100, 1, false);
     expect(world.rng.state).toBe(before);
   });
 });
@@ -96,29 +101,30 @@ describe("② `empowers` 是一個真的欄位,不是一個寫死的選擇", () 
     const a = hero(world, "thorne", Z0.center.x, 0, 0);
     grant(world, a, g);
     const base = 100;
-    const incoming = ownCrit ? base * 1.75 : base;
+    // 英雄自己那一條骰出來的倍率(不是已經乘好的傷害 —— 見 GH#302 的簽章更動)。
+    const ownMult = ownCrit ? 1.75 : 1;
     let procced = -1;
     let plain = -1;
     for (let i = 0; i < 500 && (procced < 0 || plain < 0); i++) {
-      const r = rollCritStrike(world, a, base, incoming, ownCrit);
+      const r = rollCritStrike(world, a, base, ownMult, ownCrit);
       if (r.critLifesteal !== undefined) procced = r.amount;
       else plain = r.amount;
     }
     return { procced, plain };
   }
 
-  it("ownProcOnly (SHIPPED): the champion's OWN crit is left at 1.75×", () => {
+  it("ownProcOnly (SHIPPED): 沒抽中的那一發只有英雄自己的 1.75×", () => {
     const { procced, plain } = outcomes({ ...SWORD, empowers: "ownProcOnly" }, true);
     expect(procced, "the proc did not fire in 500 rolls at 6%").toBeGreaterThan(0);
-    expect(procced).toBeCloseTo(1000, 6); // 100 × 10
-    // ⚠️ THE WHOLE POINT: a natural crit keeps `Stat.CritDamage`'s 1.75, so a
-    // champion who has stacked crit chance does not get 10× on all of it.
+    expect(procced).toBeCloseTo(1750, 6); // 100 × (1.75 × 10) —— 兩條都算,相乘
+    // ⚠️ THE WHOLE POINT: 這件武器**沒抽中**的那一發不會被它加成,所以一個堆滿
+    // 暴擊率的英雄不會整場都是 10 倍 —— 他拿到的是自己的 1.75。
     expect(plain).toBeCloseTo(175, 6);
   });
 
   it("everyCrit: the champion's OWN crit is empowered too", () => {
     const { procced, plain } = outcomes({ ...SWORD, empowers: "everyCrit" }, true);
-    expect(procced).toBeCloseTo(1000, 6);
+    expect(procced).toBeCloseTo(1750, 6);
     // Under `everyCrit` there is no 「plain」 outcome while `ownCrit` is true —
     // every swing is empowered — so the loop above never fills it. That IS the
     // difference between the two modes, stated as an assertion.
@@ -132,41 +138,107 @@ describe("② `empowers` 是一個真的欄位,不是一個寫死的選擇", () 
   });
 });
 
-describe("③ 兩個倍率取 max,不相乘", () => {
-  it("a champion whose own critDamage exceeds the grant keeps his own number", () => {
-    const world = new SimWorld(SKELETON_ARENA, 4242);
-    const a = hero(world, "thorne", Z0.center.x, 0, 0);
-    grant(world, a, { chance: 1, damageMult: 2, lifestealFraction: 1 });
-    // incoming = a 20× natural crit; the grant's 2× must NOT win, and must NOT
-    // multiply (2 × 20 = 40 would be the bug).
-    const r = rollCritStrike(world, a, 100, 2000, true);
-    expect(r.amount).toBeCloseTo(2000, 6);
+/**
+ * ③ owner 2026-08-09 (GH#302) 的裁決,逐字當成斷言。
+ *
+ * ⛔ 這裡刻意**不驗「有沒有暴擊」** —— 那對舊的取 max 實作也是綠的(失敗形態 ④)。
+ * 驗的是「兩條各自的倍率**乘**起來的那個數字真的出現」,而那個數字在取 max 底下
+ * 不可能出現。
+ *
+ * ⚠️ 出貨值也不抄進斷言(第零守則:出貨值有三個住處 + drift 測試在守)。
+ * 每一條都自己造來源、自己算「該是多少」。
+ */
+describe("③ 每一條暴擊獨立骰、倍率依序相乘 (owner 2026-08-09)", () => {
+  /** owner 的例子:1% × 100倍 + 10% × 2倍。機率換成必中/必不中來釘出每一種結果。 */
+  function twoSources(world: SimWorld, a: EntityId, hit1: boolean, hit2: boolean): void {
+    grant(world, a, { chance: hit1 ? 1 : 0, damageMult: 100, lifestealFraction: 0 }, "t:x100");
+    grant(world, a, { chance: hit2 ? 1 : 0, damageMult: 2, lifestealFraction: 0 }, "t:x2");
+  }
+
+  /** 上限開到夠大,好讓「相乘」這件事本身看得見(上限自己另有一條驗)。 */
+  function uncapped(seed: number): { world: SimWorld; a: EntityId } {
+    const world = new SimWorld(SKELETON_ARENA, seed);
+    world.critRules = { ...world.critRules, maxTotalMult: 100000 };
+    return { world, a: hero(world, "thorne", Z0.center.x, 0, 0) };
+  }
+
+  it("兩條都中 = 100 × 2 = 200 倍 —— 取 max 拿不到這個數字", () => {
+    const { world, a } = uncapped(4242);
+    twoSources(world, a, true, true);
+    const r = rollCritStrike(world, a, 100, 1, false);
+    expect(r.crit).toBe(true);
+    // 100 × (100 × 2)。取 max 會給 100 × 100 = 10000,相加會給 100 × 102 = 10200。
+    expect(r.amount).toBeCloseTo(20000, 6);
   });
 
-  it("and the grant wins when it is the bigger of the two", () => {
-    const world = new SimWorld(SKELETON_ARENA, 4242);
-    const a = hero(world, "thorne", Z0.center.x, 0, 0);
-    grant(world, a, { chance: 1, damageMult: 10, lifestealFraction: 1 });
-    const r = rollCritStrike(world, a, 100, 175, true);
-    expect(r.amount).toBeCloseTo(1000, 6); // not 175 × 10 = 1750
+  it("只中其中一條 → 就是那一條的倍率(兩個方向各一次)", () => {
+    const only100 = uncapped(4242);
+    twoSources(only100.world, only100.a, true, false);
+    expect(rollCritStrike(only100.world, only100.a, 100, 1, false).amount).toBeCloseTo(10000, 6);
+
+    const only2 = uncapped(4242);
+    twoSources(only2.world, only2.a, false, true);
+    expect(rollCritStrike(only2.world, only2.a, 100, 1, false).amount).toBeCloseTo(200, 6);
   });
 
-  it("multiple grants: the best by chance × damageMult wins, and ONE draw is spent", () => {
+  it("都沒中 = 不暴擊,倍率 1", () => {
+    const { world, a } = uncapped(4242);
+    twoSources(world, a, false, false);
+    const r = rollCritStrike(world, a, 100, 1, false);
+    expect(r.crit).toBe(false);
+    expect(r.amount).toBeCloseTo(100, 6);
+  });
+
+  it("英雄自己的暴擊也是一條 —— 它跟著一起乘,不是被比大小", () => {
+    const { world, a } = uncapped(4242);
+    grant(world, a, { chance: 1, damageMult: 3, lifestealFraction: 0 }, "t:x3");
+    // 自己 4 倍暴擊 + 一條 3 倍 grant → 12 倍。取 max 會給 4(自己比較大)。
+    const r = rollCritStrike(world, a, 100, 4, true);
+    expect(r.amount).toBeCloseTo(1200, 6);
+  });
+
+  it("stackMode 是一個真的欄位:同一組來源 + 同一顆種子 → 三種模式三個數字", () => {
+    const amounts: Record<string, number> = {};
+    for (const mode of ["multiply", "max", "add"] as const) {
+      const { world, a } = uncapped(4242);
+      world.critRules = { ...world.critRules, stackMode: mode };
+      twoSources(world, a, true, true);
+      amounts[mode] = rollCritStrike(world, a, 100, 1, false).amount;
+    }
+    expect(amounts.multiply).toBeCloseTo(20000, 6); // 100 × 2
+    expect(amounts.max).toBeCloseTo(10000, 6); // 只算最強的那一條
+    expect(amounts.add).toBeCloseTo(10200, 6); // 100 + 2
+  });
+
+  it("maxTotalMult 真的夾得到 —— 而且夾的是**合成後**的總倍率", () => {
     const world = new SimWorld(SKELETON_ARENA, 4242);
     const a = hero(world, "thorne", Z0.center.x, 0, 0);
-    grant(world, a, { chance: 1, damageMult: 3, lifestealFraction: 0.5 }, "t:weak");
-    grant(world, a, { chance: 1, damageMult: 9, lifestealFraction: 1 }, "t:strong");
+    world.critRules = { ...world.critRules, maxTotalMult: 150 };
+    twoSources(world, a, true, true); // 相乘 = 200 倍
+    expect(rollCritStrike(world, a, 100, 1, false).amount).toBeCloseTo(15000, 6);
+  });
+
+  it("sourceCap 只留最強的前 N 條,而且被丟掉的那些連骰都不抽", () => {
+    const world = new SimWorld(SKELETON_ARENA, 4242);
+    const a = hero(world, "thorne", Z0.center.x, 0, 0);
+    world.critRules = { ...world.critRules, sourceCap: 2, maxTotalMult: 100000 };
+    // 插入序刻意「弱的先進」,好證明取捨看的是期望增益不是插入序。
+    grant(world, a, { chance: 1, damageMult: 2, lifestealFraction: 0 }, "t:weak");
+    grant(world, a, { chance: 1, damageMult: 5, lifestealFraction: 0 }, "t:mid");
+    grant(world, a, { chance: 1, damageMult: 7, lifestealFraction: 0 }, "t:strong");
     const before = world.rng.state;
-    const r = rollCritStrike(world, a, 100, 100, false);
-    expect(r.amount).toBeCloseTo(900, 6); // the strong one, not 3 × 9 = 27×
-    expect(r.critLifesteal).toBe(1);
-    // ONE draw, not two — carrying two crit weapons must not double the odds.
-    const world2 = new SimWorld(SKELETON_ARENA, 4242);
-    const b = hero(world2, "thorne", Z0.center.x, 0, 0);
-    grant(world2, b, { chance: 1, damageMult: 9, lifestealFraction: 1 }, "t:strong");
-    const before2 = world2.rng.state;
-    rollCritStrike(world2, b, 100, 100, false);
-    expect(world.rng.state - before).toBe(world2.rng.state - before2);
+    const r = rollCritStrike(world, a, 100, 1, false);
+    expect(r.amount).toBeCloseTo(3500, 6); // 7 × 5,弱的那條被丟掉
+
+    // 兩次 draw,不是三次 —— 上限也是亂數預算的上界(檔頭 ③-b)。
+    const twoDraws = new SimWorld(SKELETON_ARENA, 4242);
+    const b = hero(twoDraws, "thorne", Z0.center.x, 0, 0);
+    grant(twoDraws, b, { chance: 1, damageMult: 7, lifestealFraction: 0 }, "t:a");
+    grant(twoDraws, b, { chance: 1, damageMult: 5, lifestealFraction: 0 }, "t:b");
+    const before2 = twoDraws.rng.state;
+    rollCritStrike(twoDraws, b, 100, 1, false);
+    expect(world.rng.state).toBe(twoDraws.rng.state);
+    expect(world.rng.state - before).toBe(twoDraws.rng.state - before2);
   });
 });
 

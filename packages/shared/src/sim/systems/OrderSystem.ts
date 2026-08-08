@@ -16,6 +16,7 @@ import {
 import { bodyHeldByRules } from "../movementHold";
 import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
 import { fearDropsOrders, fearPass } from "../fear";
+import { chaosDropsOrders, chaosPass } from "../chaos";
 import { reachTo } from "./BasicAttackSystem";
 import {
   ACQUIRE_LEASH,
@@ -176,7 +177,16 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       // 一樣只丟 `order`、一樣不丟 `aim`。差別在後面那一半:暴走把身體交還給
       // 自動索敵,恐懼把身體推離最近的敵人而且不攻擊(`fearPass`,這支函式的
       // 最後一步)。
-      if (berserkDropsOrders(world, id) || fearDropsOrders(world, id)) break; // one entity per seat
+      // ---- 混亂:第三個鏡像(sim/chaos.ts) ----
+      // owner 2026-08-09:「完全無法指定目標,並且會亂走路,跟恐懼一樣」。
+      // 一樣只丟 `order`、一樣不丟 `aim`。差別在後面那一半:恐懼逃離最近的敵人,
+      // 混亂走 `world.rng` 抽出來的方向(`chaosPass`,這支函式的最後一步)。
+      if (
+        berserkDropsOrders(world, id) ||
+        fearDropsOrders(world, id) ||
+        chaosDropsOrders(world, id)
+      )
+        break; // one entity per seat
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
@@ -389,6 +399,13 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
   // 掃 `world.nav` 而不是 `world.champion`:#215 的殭屍也有 nav,而 52-002 /
   // 52-02 的範圍恐懼打到的多半正是它們。
   fearPass(world);
+  // ---- 混亂:亂走 (sim/chaos.ts) ----
+  // ⚠️ 和恐懼**同一個位置、同一個理由**:上面每一段都會寫 `nav.moveTarget`,
+  // 跑在中間的話這一 tick 剛抽好的亂走點會被追擊蓋回去 —— 而「被蓋回去」在
+  // 畫面上就是**完全正常地打架**,狀態圖示還亮著(失敗形態 ②)。
+  // 一個人不可能同時恐懼又混亂到互相打架:兩支都只寫 `nav.moveTarget`,後跑的
+  // 贏,而那是一個確定的答案(混亂贏),不是一個競態。
+  chaosPass(world);
 }
 
 /**

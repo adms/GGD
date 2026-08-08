@@ -1,9 +1,10 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "c60e27de",
+  "fingerprint": "ef984bcc",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
+    "blink",
     "championForm",
     "cycleBuff",
     "damage",
@@ -40,6 +41,7 @@
   "hookEvents": [
     "onAbilityCast",
     "onAbilityHit",
+    "onAllyDeath",
     "onBasicAttack",
     "onBossSpawn",
     "onDamageDealt",
@@ -52,6 +54,9 @@
     "onKill",
     "onReflectSuccess",
     "onRevive",
+    "onShieldBroken",
+    "onShieldGained",
+    "onStatusApplied",
     "onStunned"
   ],
   "conditionLeafKinds": [
@@ -60,6 +65,20 @@
     "kind",
     "stat",
     "status"
+  ],
+  "conditionLeafFields": [
+    "is",
+    "itemId",
+    "kind",
+    "minStacks",
+    "mode",
+    "op",
+    "p",
+    "stat",
+    "statusId",
+    "subject",
+    "tag",
+    "value"
   ],
   "hookFields": [
     "abilitySlot",
@@ -287,10 +306,11 @@
     },
     {
       "key": "condition.stack-count@1",
-      "plan": "§2.1.1.2（層數門檻）· §12 G4",
-      "state": "unsupported",
-      "reason": "「≥N 層才觸發 / 滿層引爆」沒有 typed condition。⛔ 不可以用 `chance` 近似（那是機率不是計數），也不可以用 `stat` 近似（讀的是別的池子）。",
-      "nearestExisting": "⚠️ **層數本身是有的** —— `sim/marks.ts` 的具名標記帶 `count` / `spent` / `expiresAtTick` / `resetOn`，這張表的 `effect.charge-ledger@1` 也已經宣告 `supported`。⛔ 不算數的理由是**沒有任何條件葉讀得到它**：`zConditionLeaf` 今天只有 chance / stat / kind / status / equipment 五種。所以層數寫得進去、**問不出來**。最接近的葉是 `zStatLeaf`，但它讀的是屬性池（hp / mp / 三圍），不是標記池。"
+      "plan": "§2.1.1.2（層數門檻）· §12 G4 · GH#301-5",
+      "state": "partial",
+      "caveat": "✅ 寫得出來的是「某個主體身上的**某一份狀態**疊到 ≥N 層」：`{kind:\"status\", subject, statusId, minStacks:N}`（缺 `minStacks` = 只問有無，與這一格出現前逐字相同）。層數由 `applyStatus.stacks` 寫入、多來源相加、上界 `MARK_MAX_COUNT`(999)。⛔ 三件**還不行**，不要繞：① 讀不到 `sim/marks.ts` 的具名標記池（`effect.charge-ledger@1` 那一套的 `count`/`spent`）——那是另一個池子，`minStacks` 只看 `StatusComp`；② `tag` 那個分支**刻意沒有** `minStacks`（「【破甲】類的狀態合計幾層」沒有人定義過語意，所以它是 PARSE ERROR 而不是由求值端替作者猜）；③ 只有「≥」一種比較 —— 「剛好 N 層」「至多 N 層」寫不出來（後者用 `not` 包一個 `minStacks:N+1`）。⚠️ 還有一件對方一定要知道的：出貨的 28 份狀態文件**沒有一份**寫 `stacks`，而 `applyStatus` 只在作者明寫 `stacks` 時才累加 —— 所以對既有狀態問 `minStacks:2` 永遠是 false，那不是壞掉，是那些狀態根本不疊層。",
+      "evidence": "packages/shared/src/content/schema/condition.ts 的 `zStatusIdLeaf.minStacks` + packages/shared/src/sim/content/condition.ts 的求值（走 `statusStacks`）與中文標籤。",
+      "nearestExisting": "`sim/marks.ts` 的具名標記（`count` / `spent`）—— 那是**另一個池子**，`minStacks` 讀不到它，見下面 caveat 的第 ①點。"
     },
     {
       "key": "condition.ability-state@1",
@@ -323,7 +343,6 @@
   ],
   "unsupported": [
     "condition.ability-state@1",
-    "condition.stack-count@1",
     "effect.attack-dash@1",
     "effect.control-restriction@1",
     "effect.dash-on-end@1",

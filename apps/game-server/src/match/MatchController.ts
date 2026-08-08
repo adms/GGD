@@ -31,6 +31,11 @@ import {
   type BlockRules,
 } from "@ggd/shared/sim/blockRules";
 import {
+  CRIT_DOC_ID,
+  critRulesFromDoc,
+  type CritRules,
+} from "@ggd/shared/sim/critRules";
+import {
   BERSERK_DOC_ID,
   berserkRulesFromDoc,
   type BerserkRules,
@@ -47,6 +52,11 @@ import {
   WOUNDS_DOC_ID,
   type WoundRules,
 } from "@ggd/shared/sim/grievousWounds";
+import {
+  weaknessRulesFromDoc,
+  WEAKNESS_DOC_ID,
+  type WeaknessRules,
+} from "@ggd/shared/sim/weakness";
 import {
   damageRulesFromDoc,
   DAMAGE_RULES_DOC_ID,
@@ -814,6 +824,15 @@ export class MatchController {
      */
     blockRules: BlockRules = blockRulesFromDoc(Configs.tryGet(BLOCK_DOC_ID)),
     /**
+     * 暴擊規則 (`config.crit@1`, GH#302) —— 多條暴擊來源怎麼合成、總倍率上限、
+     * 最多算幾條。和 `blockRules` 完全同一條路（含同一個已知限制：`Configs` 是
+     * boot 時載入的，後台改了要重啟 shard）。
+     *
+     * ⚠️ 出貨值 `multiply` **會改變平衡**（owner 2026-08-09 推翻了「取 max」），
+     * 這一點和 `blockRules` 相同、和 `shieldRules` 相反。
+     */
+    critRules: CritRules = critRulesFromDoc(Configs.tryGet(CRIT_DOC_ID)),
+    /**
      * 暴走規則 (`config.berserk@1`) —— 主動暴走的生命門檻與暴走中的冷卻倍率。
      * 和 `blockRules` 完全同一條路（含同一個已知限制：`Configs` 是 boot 時載入的，
      * 後台改了要重啟 shard）。
@@ -830,6 +849,12 @@ export class MatchController {
      */
     dispelRules: DispelRules = dispelRulesFromDoc(Configs.tryGet(DISPEL_DOC_ID)),
     woundRules: WoundRules = woundRulesFromDoc(Configs.tryGet(WOUNDS_DOC_ID)),
+    /**
+     * 虛弱規則 (`config.weakness@1`, GH#301-4) —— 哪個 tag 算虛弱、攻速倍率、
+     * 造成傷害倍率。和 `woundRules` 完全同一條路（含同一個已知限制：`Configs`
+     * 是 boot 時載入的，後台改了要重啟 shard）。
+     */
+    weaknessRules: WeaknessRules = weaknessRulesFromDoc(Configs.tryGet(WEAKNESS_DOC_ID)),
     damageRules: DamageRules = damageRulesFromDoc(Configs.tryGet(DAMAGE_RULES_DOC_ID)),
     /**
      * 增益卡敵方過濾 (`config.augment-filter@1`, 批 1 決策點 1-1) —— 殭屍算不算
@@ -912,11 +937,17 @@ export class MatchController {
     this.world.shieldRules = shieldRules;
     // 格擋規則 (`config.block@1`) —— 同樣在 tick 0 之前定格。
     this.world.blockRules = blockRules;
+    // 暴擊規則 (`config.crit@1`, GH#302) —— 同樣在 tick 0 之前定格。
+    // ⚠️ 少了這一行就是 `augmentEnemyFilter` 的同型故障（見下面那一段）：後台整頁
+    // 在編輯它、說明逐字寫著「MatchController 在開場 tick 0 之前灌進 world」，
+    // 而 sim 讀到的永遠是 `SimWorld` 的出貨預設。
+    this.world.critRules = critRules;
     // 暴走規則 (`config.berserk@1`) —— 同樣在 tick 0 之前定格。
     this.world.berserkRules = berserkRules;
     // 淨化規則 (`config.dispel@1`) —— 同樣在 tick 0 之前定格。
     this.world.dispelRules = dispelRules;
     this.world.woundRules = woundRules;
+    this.world.weaknessRules = weaknessRules;
     this.world.damageRules = damageRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
     //

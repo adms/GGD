@@ -484,6 +484,23 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // simply has no authored users yet.
   "toggleEnter",
   "toggleExit",
+  // GH#300 的兩個新時刻 (2026-08-09). 它們存在的理由是**內容側**的:
+  // `systems/WorldHookSystem.ts` 把它們轉成 `onShieldGained` / `onStatusApplied`
+  // 兩個 hook 事件。同 `recoveryBegin` 的規則 —— 今天沒有客戶端 handler,
+  // 現在開線買不到任何東西,只會把缺口藏起來:「一個沒有消費者的事件在線上跟一個
+  // 消費者靜默 no-op 的事件長得一模一樣」。
+  //
+  //   shieldGained — `{ target, source, amount, origin }`. 護盾的**量**本來就在
+  //     快照裡(`EntityState.shield`),所以缺的只是「剛剛多了一片」那個 beat。
+  //     要開線的話跟畫它的東西一起開。CADENCE: 一次 `addShield` 一則,由施法次數
+  //     決定,不是 per-tick。
+  //   statusApplied — `{ target, source, statusId, origin }`. ⚠️ 它是 `stunApplied`
+  //     的**上位集合**,而 `stunApplied` 已經在上面過線了。兩個一起送 = 每一次暈眩
+  //     發兩則,而客戶端會用兩條不同的路畫同一件事(檔頭第 3 點 DOUBLE-FIRE)。
+  //     真要開線的話,正確的做法是先決定 `stunApplied` 要不要被它取代。
+  //     CADENCE: transition-only(續期不重發),所以是「被上狀態的次數」不是 tick 數。
+  "shieldGained",
+  "statusApplied",
   // Guardian's last-hit buff expiring (GuardianSystem). The buff itself shows
   // through replicated stats; no cue was ever authored for its end.
   "guardianBuffExpire",

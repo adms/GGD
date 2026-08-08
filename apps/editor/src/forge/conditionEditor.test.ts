@@ -345,6 +345,17 @@ describe("ConditionEditor — the coupled dropdowns repair each other", () => {
     expect(derivedSentence(h)).toBe("1% 機率");
   });
 
+  // 層數門檻（GH#301-5）。⭐ 承重的是**清空**那一半：schema 是 `.strict()` + `.min(1)`，
+  // 一個留下 `minStacks: 0` 或 `NaN` 的實作會做出一張存不回去的卡，而畫面上看不出來。
+  it("層數門檻寫得進去，清空是拿掉整格而不是留一個 0", () => {
+    const h = open({ kind: "status", subject: "target", statusId: "root" as never });
+    h.enter(h.field("cond.g0.c0.minStacks"), "3");
+    expect(bus.value).toEqual({ kind: "status", subject: "target", statusId: "root", minStacks: 3 });
+    h.enter(h.field("cond.g0.c0.minStacks"), "");
+    expect(bus.value).toEqual({ kind: "status", subject: "target", statusId: "root" });
+    expect(zEffectCondition.safeParse(bus.value).success).toBe(true);
+  });
+
   it("每一個 select 只列出 shared 模組承認的值", () => {
     const h = open({ kind: "kind", subject: "target", is: "champion" });
     expect(optionValues(h.field("cond.g0.c0.subject"))).toEqual(["self", "target"]);

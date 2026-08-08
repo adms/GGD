@@ -158,9 +158,18 @@ export type Page =
    * 存過的值要遷移。
    */
   | "blockRules"
+  /**
+   * 暴擊規則 (`config/crit.json`, GH#302): 一次攻擊上有多條暴擊時怎麼合成
+   * (owner 2026-08-09「每一條暴擊獨立算完傷害再帶入下一條」,出貨 multiply)、
+   * 總倍率上限、最多算幾條。自己一頁而不是併進 格擋規則,同 護盾規則 的理由 ——
+   * 那是**兩份文件**,併進去等於把 `config.block@1` 升版,而一份線上已經存過
+   * overlay 的文件升版,代價是操作者存過的值要遷移。
+   */
+  | "critRules"
   | "berserkRules"
   | "dispelRules"
   | "woundRules"
+  | "weaknessRules"
   | "damageRules"
   /**
    * 增益卡敵方過濾 (`config/augment-filter.json`, 批 1 決策點 1-1): 殭屍算不算
@@ -464,9 +473,12 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "shieldRules",
   // 格擋規則: 第五頁,同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "blockRules",
+  // 暴擊規則 (GH#302): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "critRules",
   "berserkRules",
   "dispelRules",
   "woundRules",
+  "weaknessRules",
   "damageRules",
   // 增益卡敵方過濾: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "augmentEnemyFilter",

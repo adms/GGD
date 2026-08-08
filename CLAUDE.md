@@ -448,10 +448,21 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
    一行一個：**是什麼 · 多嚴重 · 修起來多大 · 不修玩家會遇到什麼**。
    ⚠️ 這一項是第零守則⑧（順手缺陷開 issue 不當場修）的**回收閥** ——
    少了它，⑧ 就從「把排序權還給 owner」變成「把缺陷埋進 issue 堆」。
-3. **在 localhost 真的打一場**，把發現記進 `docs/_execution-batches.md`
+3. ⛔ **不要用瀏覽器手動打一場。** owner 2026-08-09：「你不用玩遊戲測試 太浪費時間了」。
+   ⚠️ 這一步**在此之前寫的是「在 localhost 真的打一場」**，而那是 owner 自己立的
+   （2026-07-25）—— 他退掉的是**我逐格點擊操作一場比賽**這件事，不是驗證本身。
+   留下來的是**機械的、幾秒鐘就有答案的**那些：
+   - `GET http://127.0.0.1:<port>/healthz` → `content.ok` 為 true 且英雄數不是 2、`replay.ok` 為 true
+   - 客戶端 console 那一行 `[client] content loaded: N champions (cv_xxx) via bundle`
+     （看到 `falling back to skeleton` 就是壞了）
+   - 房間真的建得起來（`rooms.active` 從 0 變 1、錄影 `opened` 從 0 變 1）
+   判準：**這個檢查會不會因為這次改動而變？** 會 → 留著（它是閘）；
+   不會 → 那它只是在花時間（第零守則）。
+   ⛔ 也不要為了「驗證」去請 owner 自己打一場 —— 那是把成本轉嫁，不是消除。
 4. 重整那份文件，確認沒有讓這次更新變得不智的問題
 5. `git push` + GitHub release note（同一天只 bump 第三段）
-6. deploy 到 ggd.adms.ai → **開啟 console 做下面的煙霧測試** → **在線上真的再打一場**
+6. deploy 到 ggd.adms.ai → **開啟 console 做下面的煙霧測試**（⛔ 這一步不可以省，
+   它是 2026-08-01 事故之後補的，30 秒）→ ⛔ **不要在線上手動打一場**（同第 3 步，owner 2026-08-09）
    → 記回 `docs/_execution-batches.md`
 
 ⛔ **測試一律在 localhost 或暫存目錄，永遠不要在正式站上測。**

@@ -136,7 +136,7 @@ import { liveAttribute } from "../stats/attrSources";
 // `StatusSystem` 在 tick 開頭就把過期的清掉了,但它跑在技能結算**之前**,
 // 所以 `> world.tick` 的**再**檢查才是「這一 tick 到底還算不算」的真答案。
 // 抄第二份 = 兩個答案,而它們只會在某一 tick 的邊緣分歧 —— 那是查不出來的那種。
-import { hasStatus } from "../effects/effectCommon";
+import { hasStatus, statusStacks } from "../effects/effectCommon";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -344,9 +344,18 @@ export interface KindLeaf {
  * 遲早會分歧（`describeCondition` 也得跟著長出兩條分支）。
  *
  * ⚠️ 讀的是**還沒到期**的那一筆（`expiresAtTick > world.tick`，見
- * `effects/effectCommon.ts` 的 `hasStatus`）。沒有 `StatusComp` 的身體（小兵一個
- * 都沒有，`SimWorld.ts:941`）永遠回 false —— 那是 DECISION 2 的同一個方向：
- * 讀不到就是 false，而不是「跳過」或「通過」。
+ * `effects/effectCommon.ts` 的 `hasStatus`）。沒有 `StatusComp` 的身體永遠回
+ * false —— 那是 DECISION 2 的同一個方向：讀不到就是 false，而不是「跳過」或
+ * 「通過」。
+ *
+ * ⚠️ **2026-08-09 更正（第三守則）**：這一段原本寫著「小兵一個都沒有
+ * （`SimWorld.ts:941`）」，而那句話從 2026-08-04 起就是假的 ——
+ * `sim/mobs.ts::spawnMobBody` 會替每一隻殭屍建 `world.status.set(id, {effects:[]})`
+ * （A3a，守衛 `sim/mobs.status.test.ts`）。所以【破甲】【破防】【破魔】這一族
+ * **掛得上殭屍，也查得到**（GH#301-6，owner：「這三個雖然是無效，但還是可以有
+ * buff 被 check」）。真正對殭屍無效的是**屬性**那一半（`applyBuff` →
+ * `attachSource` 第一句 `if (!sc) return;`），因為殭屍沒有 `StatsComp`。
+ * 兩件事在這一顆葉子上有相反的答案，而舊註解把它們混成一句。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * ⭐ 決策點（2026-08-08）：「這一份」還是「這一類」—— 兩種都做
@@ -387,6 +396,17 @@ export interface StatusIdLeaf {
   subject: ConditionSubject;
   /** `status-effect@1` 的編號 —— 跟 `applyStatus.statusId` 是同一個命名空間。 */
   statusId: StatusId;
+  /**
+   * ⭐ 「至少疊了幾層」（GH#301-5）。缺席 = 只問有無，逐字等於這一格出現之前。
+   *
+   * 讀的是 {@link statusStacks}（`effects/effectCommon.ts`）—— **同一個讀取器**，
+   * 不是第二份層數規則：多來源相加、過期不算、上界夾在 `MARK_MAX_COUNT`。
+   * ⛔ 不要在這裡自己走一遍 `world.status`：那會長出第二套「哪一筆還算數」，
+   * 而兩套遲早對「剛好這一 tick 到期」給出不同答案。
+   *
+   * ⚠️ 只有這個分支有；`tag` 那個分支刻意沒有（見 schema 那一格的說明）。
+   */
+  minStacks?: number;
 }
 
 /** 「某一類狀態」—— 比對 `status-effect@1.tags`。見 {@link StatusIdLeaf} 的說明。 */
@@ -838,6 +858,14 @@ export const STATUS_FIELD_TAGS: Readonly<
   polarity: [],
   /** 標記**帶的一個數字**（`spendMana.bankAs` 的存款）。一筆金額不是一個分類。 */
   magnitude: [],
+  /**
+   * 疊了幾層（GH#301-5）。⛔ 與 `magnitude` 同一個理由：**一個計數不是一個分類**。
+   * 「他身上有幾層破甲」是一個數字問題，而 tag 回答的是「這是哪一族的東西」。
+   * 想問層數的那一天，加的是一格數字比較（`statusStacks` 已經在
+   * `effects/effectCommon.ts` 等著），不是一個 `stacked` tag —— 那會讓「1 層」與
+   * 「12 層」在條件端變成同一件事。
+   */
+  stacks: [],
 };
 
 /**
@@ -997,9 +1025,12 @@ function evalNode(
   if (cond.kind === "status") {
     const id = subjectOf(ctx, cond.subject);
     if (id === undefined) return false;
-    return isStatusIdLeaf(cond)
-      ? hasStatus(world, id, cond.statusId)
-      : hasStatusTag(world, id, cond.tag);
+    if (!isStatusIdLeaf(cond)) return hasStatusTag(world, id, cond.tag);
+    // ⛔ `minStacks` 缺席時走的是**原本那一行**，不是 `statusStacks(...) >= 1`：
+    // 兩者在今天等價，但 `hasStatus` 是「有沒有」的唯一定義，而層數是另一個問題。
+    // 合成一行等於把兩個問題綁在一起，之後任何一邊改語意都會安靜地拖動另一邊。
+    if (cond.minStacks === undefined) return hasStatus(world, id, cond.statusId);
+    return statusStacks(world, id, cond.statusId) >= cond.minStacks;
   }
   if (cond.kind === "equipment") {
     const id = subjectOf(ctx, cond.subject);
@@ -1171,9 +1202,12 @@ function statusLabel(statusId: StatusId): string {
 
 /** 「帶有…」那一句的受詞 —— 一份是【編號】，一類是【tag】類的狀態。 */
 function statusMatchLabel(leaf: StatusLeaf): string {
-  return isStatusIdLeaf(leaf)
+  if (!isStatusIdLeaf(leaf)) return `【${leaf.tag}】類的狀態`;
+  // ⛔ 層數一定要進句子：一張「疊到 5 層才引爆」的卡如果印成「帶有【破甲】」，
+  // 那句文案對玩家與作者**兩邊**都是假的（#202 / #227 是同一個形態）。
+  return leaf.minStacks === undefined
     ? `【${statusLabel(leaf.statusId)}】`
-    : `【${leaf.tag}】類的狀態`;
+    : `${leaf.minStacks} 層以上的【${statusLabel(leaf.statusId)}】`;
 }
 
 /**

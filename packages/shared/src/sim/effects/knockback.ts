@@ -59,8 +59,18 @@
  *   `hpBasis`        % of MAX health (default — the shipped rule) or CURRENT
  *   `subtractGap`    default TRUE — owner:「並減去雙方距離」
  *   `launchHeight`   0 = ground slide (default), > 0 = 擊飛 parabola
+ *   `launchDistance` ⭐ 四檔落點 (GH#301-1) — 缺席 = 今天的推算行為
  *   `uncontrollable` default TRUE — owner:「期間不可控制」
  *   `getupTicks`     the 爬起來 window after landing
+ *
+ * ⭐ `launchDistance`（owner 2026-08-09，GH#301-1）推翻了規範裡的「落點與飛行
+ * 時間由系統推算，作者指定不了」，同時把它簡化成四檔（一小段 / 預設 / 一大段 /
+ * 到底部）。⛔ 四檔的**實際距離不在這支檔案裡** —— 它們是
+ * `config.combat-feel@1` 的 `knockback.launchShortUnits` /
+ * `launchLongUnits` / `launchEdgeUsesFireRing`（第一守則：寫死才需要理由）。
+ * 這裡只有 `tierDistance`，而它做的是把那三格讀出來、把「到底部」換算成一條
+ * 射線的長度。飛行時間仍然是 `distance / speed`，所以擊飛的弧線與作者選的那一
+ * 檔永遠對得上。
  *
  * ⚠️ `hpBasis: "current"` deserves its own note, because `combat/damage.ts`
  * explicitly REJECTS current-hp for the global rule:「用當前生命的話,殘血的人
@@ -103,6 +113,7 @@ import type { Vec2 } from "../math/vec2";
 import type { SimWorld } from "../SimWorld";
 import { dist, lenSq, normalize, sub } from "../math/vec2";
 import { afterGap, knockbackRaw } from "../combatFeel";
+import { currentFireRingRadius } from "../fireRing";
 import { cancelLeap, leapTicks, resolveLandingPoint, startLeap } from "../movement/leap";
 import {
   KB_MAX_DISTANCE,
@@ -146,6 +157,64 @@ function shoveDir(
   return { x: 1, z: 0 };
 }
 
+/**
+ * ⭐ 四檔落點 → 這一次真的要飛多遠（GH#301-1，owner 2026-08-09）。
+ *
+ * ── 為什麼三檔都**繞過**上面那條 gap 減法 ────────────────────────────────
+ * 減距離（GH#193）存在的理由寫在 `combatFeel.ts`：擋掉**傷害驅動**的擊退變成
+ * 遠程的永久風箏。它管的是「系統替你算出來的那個長度」。而這四檔回答的是
+ * 完全不同的一句話 —— 作者**指定的落點**。一個被 gap 吃掉的「到底部」不會到
+ * 底部，一個被 gap 吃掉的「一大段」在遠程手上是 0：那不是被平衡，是這一格
+ * 從來沒有生效過（失敗形態 ②）。
+ *
+ * ⚠️ 所以四檔與 `subtractGap` 不是同一個問題的兩半：
+ *   · `launchDistance` 缺席（或 `"default"`）→ 一格都沒變，走 `subtractGap`。
+ *   · 明確選了一檔 → 那一檔就是落點，`distance` / `impactPower` / gap 全部不看。
+ * 想要「推算出來的長度」的作者寫的就是 `"default"`，那一格已經表達得完整。
+ *
+ * ── 「到底部」是一條射線打在圓上，不是一個大數字 ──────────────────────
+ * 決鬥區是一個**圓盤**，所以「邊緣」離身體多遠取決於他站在哪、往哪飛。直接
+ * 塞一個 999 讓碰撞去夾也會「到底部」，但 `uncontrollable` 的鎖是
+ * `distance / speed` 算出來的 —— 一個假的長度會讓被擊飛的人在牆邊躺 30 秒。
+ *
+ * ⚠️ 火圈縮小的情況（issue 明講要處理）由 `launchEdgeUsesFireRing` 決定，
+ * ⛔ 不是這裡的一個 if —— 見 `combatFeel.ts` 的那一格為什麼是決策點。
+ * 已經站在該圓之外（火圈縮過頭、人在火裡）時判別式 ≤ 0 → 回 0 → 不推：
+ * 把一個已經在燒的人再往外推是純粹的加害，而且方向上沒有「邊緣」可言。
+ *
+ * PURITY: 只有 + − × ÷ 與一次 `Math.sqrt`（IEEE-754 正確捨入，`math/vec2.ts`
+ * 早就在用）。無 rng、無時鐘、無三角函式。
+ */
+function tierDistance(
+  world: SimWorld,
+  tier: "short" | "long" | "toEdge",
+  pos: Vec2,
+  bodyRadius: number,
+  zone: number,
+  dir: Vec2,
+): number {
+  const kb = world.combatFeel.knockback;
+  if (tier === "short") return kb.launchShortUnits;
+  if (tier === "long") return kb.launchLongUnits;
+  const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
+  if (zoneDef === undefined) return 0;
+  const edge = kb.launchEdgeUsesFireRing
+    ? currentFireRingRadius(world, zone)
+    : zoneDef.boundaryRadius;
+  // 身體要整個留在圈內 —— 落點是「半徑 edge − 體半徑」那個圓，與 `relaxBody`
+  // 的邊界夾限同一個定義，所以算出來的長度不會在落地那一刻被再夾一次。
+  const rim = edge - bodyRadius;
+  if (!(rim > 0)) return 0;
+  const fx = pos.x - zoneDef.center.x;
+  const fz = pos.z - zoneDef.center.z;
+  const b = fx * dir.x + fz * dir.z;
+  const c = fx * fx + fz * fz - rim * rim; // 站在圈內時為負
+  const disc = b * b - c;
+  if (!(disc > 0)) return 0;
+  const hit = Math.sqrt(disc) - b;
+  return hit > 0 ? hit : 0;
+}
+
 /** `bumpFreeze` from combat/damage.ts, which is module-private there. Max-merge. */
 function lockOut(world: SimWorld, id: EntityId, ticks: number): void {
   if (ticks <= 0) return;
@@ -185,18 +254,9 @@ export const knockbackEffect: EffectKindSpec<"knockback"> = {
       // two fighters, and there is none.
       const gap = ct !== undefined && id !== ctx.caster ? dist(t.pos, ct.pos) : 0;
 
-      // ── GH#193's law, reached through combatFeel.ts's OWN function so the
-      //    operator's live minPct / maxBodies / bodyUnit govern authored shoves
-      //    exactly as they govern damage-driven ones.
-      let raw = floor;
-      if (power > 0 && hp !== undefined) {
-        const basis = (e.hpBasis ?? "max") === "current" ? hp.hp : hp.maxHp;
-        raw = Math.max(raw, knockbackRaw(world.combatFeel.knockback, power, basis));
-      }
-      // ⚠️ THE SUBTRACTION. Do not "simplify" it away — see the header.
-      const distance = (e.subtractGap ?? true) ? afterGap(raw, gap) : raw;
-      if (!(distance > 0)) continue;
-
+      // ⚠️ 方向要在距離**之前**算出來（GH#301-1）：`"toEdge"` 的長度是一條
+      // 沿著推的方向打在邊界圓上的射線，沒有方向就沒有那個長度。順序換了但
+      // 兩條路徑都是 `continue`，所以哪一個先判都不會多推或少推一個身體。
       const dir = shoveDir(
         e.from ?? "caster",
         t.pos,
@@ -206,6 +266,27 @@ export const knockbackEffect: EffectKindSpec<"knockback"> = {
         ctx.direction,
       );
       if (dir === null) continue;
+
+      // ── GH#193's law, reached through combatFeel.ts's OWN function so the
+      //    operator's live minPct / maxBodies / bodyUnit govern authored shoves
+      //    exactly as they govern damage-driven ones.
+      //
+      // ⭐ …除非作者**指定了落點**（四檔，GH#301-1）。缺席 / `"default"` =
+      //    這一整段推算，一格都沒變；其餘三檔整段跳過，見 `tierDistance`。
+      const tier = e.launchDistance ?? "default";
+      let distance: number;
+      if (tier === "default") {
+        let raw = floor;
+        if (power > 0 && hp !== undefined) {
+          const basis = (e.hpBasis ?? "max") === "current" ? hp.hp : hp.maxHp;
+          raw = Math.max(raw, knockbackRaw(world.combatFeel.knockback, power, basis));
+        }
+        // ⚠️ THE SUBTRACTION. Do not "simplify" it away — see the header.
+        distance = (e.subtractGap ?? true) ? afterGap(raw, gap) : raw;
+      } else {
+        distance = tierDistance(world, tier, t.pos, t.radius, t.zone, dir);
+      }
+      if (!(distance > 0)) continue;
 
       // A body already mid-arc owns `world.airborne`; drop it out of the air
       // through the shipped path before touching its override (see header).

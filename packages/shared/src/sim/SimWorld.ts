@@ -32,6 +32,7 @@ import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
+import { DEFAULT_CRIT_RULES, type CritRules } from "./critRules";
 import type { MarkId, MarkState } from "./marks";
 import {
   DEFAULT_AUGMENT_ENEMY_FILTER,
@@ -41,6 +42,7 @@ import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./steal
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
+import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
 import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
@@ -716,6 +718,16 @@ export class SimWorld {
   blockRules: BlockRules = DEFAULT_BLOCK_RULES;
 
   /**
+   * 暴擊規則 (see critRules.ts) —— 多條暴擊來源怎麼合成 (`config.crit@1`,
+   * GH#302)。和 `blockRules` 同一條規矩:開賽前指派一次,之後不再動。
+   * 預設是**出貨值** `multiply` / 總倍率上限 100 / 最多 5 條(owner 2026-08-09:
+   * 「每一條暴擊獨立算完傷害再帶入下一條」),不是空物件 —— 一個 undefined 的
+   * `stackMode` 會讓 `rollCritStrike` 的分支全部落空,於是暴擊整族靜默失效
+   * (暴擊數字照跳、傷害照舊)。
+   */
+  critRules: CritRules = DEFAULT_CRIT_RULES;
+
+  /**
    * 敵方過濾器的全域覆寫 (see augmentEnemyFilter.ts) —— 目前只有「殭屍算不算
    * `victim: "enemyChampion"` 的敵人」一格 (`config.augment-filter@1`)。
    * 和 `blockRules` / `shieldRules` 同一條規矩:開賽前指派一次,之後不再動。
@@ -1015,6 +1027,13 @@ export class SimWorld {
   dispelRules: DispelRules = DEFAULT_DISPEL_RULES;
   /** 【重創】多筆同時在身上時怎麼疊（A6，#278）。 */
   woundRules: WoundRules = DEFAULT_WOUND_RULES;
+  /**
+   * 【虛弱】的全域定義（GH#301-4）—— 哪個 tag 算虛弱、攻速倍率、造成傷害倍率。
+   * 和 `woundRules` / `dispelRules` 完全同一條規矩：開賽前指派一次，之後不再動。
+   * 預設是**出貨表**，不是空物件 —— 空表會讓兩個倍率讀成 undefined，
+   * 也就是虛弱靜默消失，而技能照樣放得出來、狀態照樣掛得上。
+   */
+  weaknessRules: WeaknessRules = DEFAULT_WEAKNESS_RULES;
   /** 傷害規則 —— 今天只有「沒寫 `damageType` 時用哪一種」。 */
   damageRules: DamageRules = DEFAULT_DAMAGE_RULES;
 

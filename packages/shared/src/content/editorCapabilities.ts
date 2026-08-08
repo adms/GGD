@@ -131,6 +131,17 @@ export interface CapabilityProbeInput {
    */
   readonly conditionLeafKinds: ReadonlySet<string>;
   /**
+   * 條件葉身上的**欄位名**（所有分支的聯集），從出貨的 `zConditionLeaf` 推導。
+   *
+   * ⚠️ 為什麼 `conditionLeafKinds` 不夠：不是每一個 typed condition 都長成一顆
+   * 新葉子。`condition.stack-count@1`（「≥N 層」）落地的形狀是**既有 status 葉子
+   * 上多一格 `minStacks`** —— 只問 kind 的 probe 對它是 false，於是那一列會宣告
+   * 「引擎裡什麼都沒有」並且自己跟自己對得上。那正是檔頭 ③ 記的兩次撒謊的形狀。
+   *
+   * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
+   */
+  readonly conditionLeafFields: ReadonlySet<string>;
+  /**
    * `HookDef` 的欄位名，從出貨的 `zHookDefBase.shape` 推導。
    *
    * ⚠️ `hook.consume-policy@1`（「下一次普攻」用掉就沒了）也不是 kind 或 event，
@@ -580,18 +591,34 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
   },
   {
     key: "condition.stack-count@1",
-    plan: "§2.1.1.2（層數門檻）· §12 G4",
-    expected: "unsupported",
-    probe: anyCondLeaf("stackCount", "stacks", "markCount", "charges"),
+    plan: "§2.1.1.2（層數門檻）· §12 G4 · GH#301-5",
+    // 2026-08-09 從 `unsupported` 改成 `partial`：owner #299 第 8 條把「狀態除了
+    // 有無也要是數字層數」定案，`applyStatus.stacks` 寫得進去，而**讀取端**
+    // 落在 status 葉子的 `minStacks` 上。
+    // ⚠️ probe 也一起改：舊的問的是「有沒有一顆叫 stackCount 的葉子」，而落地的
+    // 形狀是**既有葉子多一格** —— 不改 probe 的話這一列會維持 unsupported 並且
+    // 自己跟自己對得上，也就是檔頭 ③ 記的那兩次撒謊再來一次。
+    expected: "partial",
+    probe: (f) => f.conditionLeafFields.has("minStacks"),
     nearestExisting:
-      "⚠️ **層數本身是有的** —— `sim/marks.ts` 的具名標記帶 `count` / `spent` / `expiresAtTick` / " +
-      "`resetOn`，這張表的 `effect.charge-ledger@1` 也已經宣告 `supported`。" +
-      "⛔ 不算數的理由是**沒有任何條件葉讀得到它**：`zConditionLeaf` 今天只有 " +
-      "chance / stat / kind / status / equipment 五種。所以層數寫得進去、**問不出來**。" +
-      "最接近的葉是 `zStatLeaf`，但它讀的是屬性池（hp / mp / 三圍），不是標記池。",
-    reason:
-      "「≥N 層才觸發 / 滿層引爆」沒有 typed condition。" +
-      "⛔ 不可以用 `chance` 近似（那是機率不是計數），也不可以用 `stat` 近似（讀的是別的池子）。",
+      "`sim/marks.ts` 的具名標記（`count` / `spent`）—— 那是**另一個池子**，" +
+      "`minStacks` 讀不到它，見下面 caveat 的第 ①點。",
+    caveat:
+      "✅ 寫得出來的是「某個主體身上的**某一份狀態**疊到 ≥N 層」：" +
+      "`{kind:\"status\", subject, statusId, minStacks:N}`（缺 `minStacks` = 只問有無，與這一格出現前逐字相同）。" +
+      "層數由 `applyStatus.stacks` 寫入、多來源相加、上界 `MARK_MAX_COUNT`(999)。" +
+      "⛔ 三件**還不行**，不要繞：" +
+      "① 讀不到 `sim/marks.ts` 的具名標記池（`effect.charge-ledger@1` 那一套的 `count`/`spent`）——" +
+      "那是另一個池子，`minStacks` 只看 `StatusComp`；" +
+      "② `tag` 那個分支**刻意沒有** `minStacks`（「【破甲】類的狀態合計幾層」沒有人定義過語意，" +
+      "所以它是 PARSE ERROR 而不是由求值端替作者猜）；" +
+      "③ 只有「≥」一種比較 —— 「剛好 N 層」「至多 N 層」寫不出來（後者用 `not` 包一個 `minStacks:N+1`）。" +
+      "⚠️ 還有一件對方一定要知道的：出貨的 28 份狀態文件**沒有一份**寫 `stacks`，" +
+      "而 `applyStatus` 只在作者明寫 `stacks` 時才累加 —— 所以對既有狀態問 `minStacks:2` 永遠是 false，" +
+      "那不是壞掉，是那些狀態根本不疊層。",
+    evidence:
+      "packages/shared/src/content/schema/condition.ts 的 `zStatusIdLeaf.minStacks` + " +
+      "packages/shared/src/sim/content/condition.ts 的求值（走 `statusStacks`）與中文標籤。",
   },
   {
     key: "condition.ability-state@1",
@@ -677,6 +704,11 @@ export interface RuntimeCapabilityManifest {
   readonly hookEvents: readonly string[];
   /** `condition@1` 的葉子種類 —— 對方要靠它知道哪些 typed condition 寫得出來。 */
   readonly conditionLeafKinds: readonly string[];
+  /**
+   * 條件葉的欄位名（所有分支聯集）—— 有些 typed condition 是**既有葉子多一格**
+   * 而不是一顆新葉子（`minStacks`），只看 `conditionLeafKinds` 會漏掉它們。
+   */
+  readonly conditionLeafFields: readonly string[];
   /** `HookDef` 的欄位名 —— 一次性消耗、節流、機率這幾格在不在，看這裡。 */
   readonly hookFields: readonly string[];
   readonly templateFamilies: readonly string[];
@@ -785,6 +817,33 @@ function literalKindsOf(schema: unknown, out: Set<string>): void {
   }
 }
 
+/**
+ * 走同一棵 union 收集每個分支的**欄位名**（{@link literalKindsOf} 的姊妹）。
+ *
+ * ⛔ 為什麼不共用一支函式回 `{kinds, fields}`：`literalKindsOf` 只在看到
+ * `kind` 字面量時才收，而這裡要收的是**每個物件分支的所有鍵**（含 `.strict()`
+ * 包起來的與 optional 的）。硬塞成一支會長出一個 mode 參數，而兩種收法的
+ * 終止條件不同 —— 那正是 CLAUDE.md 說的「同一件事兩種問法遲早分歧」的反面：
+ * 這是兩件事，就該是兩支。
+ */
+function leafFieldsOf(schema: unknown, out: Set<string>): void {
+  const node = schema as
+    | { _def?: { typeName?: string; schema?: unknown }; options?: readonly unknown[]; shape?: Record<string, unknown> }
+    | undefined;
+  const typeName = node?._def?.typeName;
+  if (typeName === "ZodEffects") {
+    leafFieldsOf(node?._def?.schema, out);
+    return;
+  }
+  if (typeName === "ZodUnion" || typeName === "ZodDiscriminatedUnion") {
+    for (const o of node?.options ?? []) leafFieldsOf(o, out);
+    return;
+  }
+  if (typeName === "ZodObject") {
+    for (const k of Object.keys(node?.shape ?? {})) out.add(k);
+  }
+}
+
 /** FNV-1a over the derived facts. 純函式、無時鐘、無 I/O。 */
 function fingerprintOf(parts: readonly string[]): string {
   let h = 0x811c9dc5;
@@ -815,6 +874,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   const conditionLeafSet = new Set<string>();
   literalKindsOf(zConditionLeaf, conditionLeafSet);
   const conditionLeafKinds = [...conditionLeafSet].sort();
+  const conditionFieldSet = new Set<string>();
+  leafFieldsOf(zConditionLeaf, conditionFieldSet);
+  const conditionLeafFields = [...conditionFieldSet].sort();
   const hookFields = Object.keys(zHookDefBase.shape).sort();
   const simCapabilities: Record<string, { available: boolean; caveat?: string }> = {};
   for (const key of Object.keys(SIM_CAPABILITIES).sort()) {
@@ -834,6 +896,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     simCapabilities: new Set(Object.keys(simCapabilities).filter((k) => simCapabilities[k]!.available)),
     abilityFields: new Set(abilityFields),
     conditionLeafKinds: conditionLeafSet,
+    conditionLeafFields: conditionFieldSet,
     hookFields: new Set(hookFields),
   };
 
@@ -856,6 +919,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       ...effectKinds,
       ...hookEvents,
       ...conditionLeafKinds,
+      // 欄位也折進指紋：`minStacks` 這種「既有葉子多一格」的 capability 不會改動
+      // 任何一個 kind，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
+      ...conditionLeafFields,
       ...hookFields,
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
@@ -865,6 +931,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     effectKinds,
     hookEvents,
     conditionLeafKinds,
+    conditionLeafFields,
     hookFields,
     templateFamilies,
     simCapabilities,
@@ -906,6 +973,7 @@ export function probeCapability(e: CapabilityEntry): boolean {
     ),
     abilityFields: new Set(Object.keys(zAbilityDef.shape)),
     conditionLeafKinds: new Set(m.conditionLeafKinds),
+    conditionLeafFields: new Set(m.conditionLeafFields),
     hookFields: new Set(m.hookFields),
   });
 }

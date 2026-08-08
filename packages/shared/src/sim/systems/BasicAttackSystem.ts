@@ -28,6 +28,7 @@ import { rollCritStrike } from "../combat/critStrike";
 import { armFacingLock, facingTicks } from "../facingLock";
 import { standstillBlocks } from "../combatFeel";
 import { breakStealth } from "../stealth";
+import { weaknessMult } from "../weakness";
 
 /**
  * Fallback wind-up (seconds) when a champion doc omits attackDamagePoint.
@@ -296,7 +297,14 @@ export function basicAttackSystem(world: SimWorld): void {
 
     // commit the whole-interval cooldown now; the wind-up is part of it.
     const baseAttackTime = cdef?.baseAttackTime ?? 1.0;
-    const attacksPerSec = Math.max(0.01, sc.final[Stat.AttackSpeed]);
+    // 【虛弱】攻速減半（GH#301-4）。讀取時乘，**不進屬性管線** —— 狀態的到期由
+    // `StatusSystem` 清理，那條路不碰 `sc.dirty`，所以進管線的話虛弱到期後攻速
+    // 會永遠停在半速。同 `moveSpeedMult` / `missChance` / `woundMult` 的形狀。
+    // 沒有虛弱時回 1，對今天的每一場比賽位元等價。
+    const attacksPerSec = Math.max(
+      0.01,
+      sc.final[Stat.AttackSpeed] * weaknessMult(world, id, "attackSpeedMult"),
+    );
     ab.basicAttackCdTicks = Math.max(1, Math.round(baseAttackTime / attacksPerSec / world.dt));
 
     const dpSec =
@@ -367,30 +375,35 @@ function resolveAttack(
   // places would dodge a ranged auto twice. See combat/evasion.ts DECISION 2.
 
   const baseAmount = sc.final[Stat.AttackDamage];
-  let amount = baseAmount;
   let crit = false;
+  // 英雄自己那**一條**暴擊來源骰出來的倍率;沒暴擊 = 1(＝相乘的單位元)。
+  // ⚠️ 這裡故意只算倍率、不乘進 `amount`:合成是 `rollCritStrike` 的工作,
+  // 它要看得到「這一條貢獻多少」才乘得起來(owner 2026-08-09,GH#302)。
+  let ownCritMult = 1;
   const cc = sc.final[Stat.CritChance];
   if (cc > 0 && world.rng.chance(cc)) {
     crit = true;
-    amount *= sc.final[Stat.CritDamage] || 1.75;
+    ownCritMult = sc.final[Stat.CritDamage] || 1.75;
   }
 
-  // [暴擊吸血] (天堂之劍 godie-i01n) — AFTER the champion's own crit roll, so the
-  // 「取 max,不相乘」 arbitration in `combat/critStrike.ts` ③ can see both
-  // multipliers. It is a source-carried grant rather than two stat modifiers
-  // because 「10 倍只屬於這 6%」 and 「這一發吸滿」 both die the moment they are
-  // aggregated into `Stat.CritDamage` / `Stat.Lifesteal` — full derivation in
-  // that file's header.
+  // 暴擊合成 (owner 2026-08-09 / GH#302) — AFTER the champion's own crit roll, so
+  // `combat/critStrike.ts` ③ 的「每一條獨立骰、倍率相乘」 can see every multiplier
+  // on this swing at once. 來源攜帶的 grant (天堂之劍 godie-i01n) is a
+  // source-carried grant rather than two stat modifiers because 「10 倍只屬於這 6%」
+  // and 「這一發吸滿」 both die the moment they are aggregated into
+  // `Stat.CritDamage` / `Stat.Lifesteal` — full derivation in that file's header.
   //
-  // ZERO rng draws while nobody carries the grant (`critStrikeFor` returns
-  // before touching `world.rng`), so every existing replay/digest is
-  // bit-identical. `critLifesteal` rides the packet — and, for the ranged half,
-  // the PROJECTILE — because the roll happens at the swing and the lifesteal is
-  // paid in the damage queue, which by then has no way to know which swing this
+  // ZERO rng draws while nobody carries a grant (`rankedGrants` comes back empty
+  // before `world.rng` is touched), so every existing replay/digest for those
+  // matches is bit-identical. 帶了 grant 的那些**會**變 — draw 次數現在是
+  // 「身上有幾條暴擊」的函式,上界 1 + `critRules.sourceCap`(檔頭 ③-b,
+  // owner 接受了這個代價)。`critLifesteal` rides the packet — and, for the ranged
+  // half, the PROJECTILE — because the roll happens at the swing and the lifesteal
+  // is paid in the damage queue, which by then has no way to know which swing this
   // was (the two-push-site trap `combat/damageTypeOverride.ts` documents).
-  const cs = rollCritStrike(world, id, baseAmount, amount, crit);
+  const cs = rollCritStrike(world, id, baseAmount, ownCritMult, crit);
   crit = cs.crit;
-  amount = cs.amount;
+  let amount = cs.amount;
   const critLifesteal = cs.critLifesteal;
 
   const weaponClass = weaponClassOf(cdef, attackType);

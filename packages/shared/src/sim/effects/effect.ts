@@ -12,6 +12,7 @@ import type { Vec2 } from "../math/vec2";
 import type { SimWorld } from "../SimWorld";
 import type { Rng } from "../math/rng";
 import type { CastableSlot } from "../intents";
+import type { EffectCondition } from "../content/condition";
 
 export type DamageType = "physical" | "magic" | "true";
 
@@ -166,7 +167,12 @@ export type AttrLookup = (attr: AttrKey, basis: AttrBasis) => number;
  */
 export const NO_ATTR_LOOKUP: AttrLookup = () => 0;
 
-export type EffectDef =
+/**
+ * 一個 effect 的**本體**（kind 專屬欄位）。⛔ 不要直接用它 —— 出貨的型別是
+ * {@link EffectDef}，也就是這個聯集再交上每個 kind 共有的欄位。分成兩層的理由
+ * 見 `EffectDef` 的註解（第零守則⑨：34 個同型項目 = 1 個模板，不是 34 次複製）。
+ */
+type EffectVariant =
   | {
       kind: "damage";
       /**
@@ -907,6 +913,35 @@ export type EffectDef =
       statusId: StatusId;
       duration: number;
       /**
+       * ⭐ 狀態的**層數**（owner 2026-08-09 / GH#301-5：「狀態除了有無也會是
+       * 數字層數」）。
+       *
+       * 在它之前一筆 status 只有「有 / 沒有」。owner 的修正表第 8 條說層數累積
+       * 會連動技能 ID 或狀態疊層，所以〔破甲 3 層〕與〔破甲 1 層〕必須是兩件
+       * 不同的事，而條件葉子問得出差別。
+       *
+       * ABSENT = 1（＝今天的行為，「有這個狀態」）。⛔ 不是 0 —— 0 層等於沒有，
+       * 而一份沒寫這一格的舊文件的意思是「有」。
+       * 界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（999），因為那已經是這個
+       * repo 對「一個計數器最多幾層」的答案；抄第二個數字就是第四個住處。
+       *
+       * ⛔⛔ **未解決：層數怎麼送到客戶端。** 契約層只做了 schema 這一半。
+       * `ENTITY_FLAG_FREE_BITS` 已經是空的（`protocol/schema.ts:942`，GH#285），
+       * 所以層數**不可能**用旗標位送，而 `defineTypes` 是 APPEND-ONLY。
+       * 三條路，⛔ 由 owner／主控裁決，不要在實作時順手挑一條：
+       *   ① 加寬 `MatchState` 的 entity（一格 `statusStacks` 之類）—— 動
+       *      `defineTypes`，**加錯回不去**，而且要決定「同時帶多筆狀態時送哪一
+       *      筆」。
+       *   ② 走事件流 —— `SimWorld.marks` 的 `markChanged` 已經是這個形狀的前例
+       *      （`apps/game-server/src/net/eventFanout.ts` 那一段把理由寫完了：
+       *      標記完全不在 `MatchState` 上，事件是它唯一到得了螢幕的通道）。
+       *      成本是「事件流不是狀態」——中途加入／重連的客戶端補不回層數。
+       *   ③ 不送 —— 層數只影響伺服器端的判定，畫面上不顯示。誠實但等於承認
+       *      「玩家看不到自己疊到第幾層」。
+       * ⚠️ 在三選一之前，任何「層數會顯示在 HUD」的文案都是謊話（失敗形態 ②）。
+       */
+      stacks?: number;
+      /**
        * Who receives it: each resolved target (default), or the CASTER. The
        * self form is how a combo WINDOW is opened — 者、皆、陣 is a
        * unit-targeted strike whose JASS also sets the caster-side marker
@@ -1193,6 +1228,75 @@ export type EffectDef =
       landRadius?: number;
       /** effects run on the LANDING tick, centred on the landing point */
       onLand?: EffectDef[];
+    }
+  /**
+   * ⭐ blink — **真瞬移**（owner 2026-08-09 / GH#301-2）。
+   *
+   * ── 它為什麼不是 `leap` 的一個選項 ────────────────────────────────────────
+   * 今天所有「瞬移」的技能都被展開成 `leap` 配一個極短的 `travelSec`，而
+   * `MIN_LEAP_TICKS = 2`（`sim/movement/leap.ts`）把飛行時間**壓在地板上** ——
+   * 身體真的存在於中間的每一個位置，0.067 秒。規範因此寫「不是瞬間傳送，是極短
+   * 平移，過程看得見」，owner 的裁決是：**「是真的瞬移，不是平移」**。
+   *
+   * ⛔ 差別不是美術上的。中途位置存在 = 可以被打到、可以被範圍技掃到、
+   * 會被地形擋（`leap` 的落點阻擋規則）。瞬移的定義就是那兩格不存在。
+   * 把它做成 `leap` 的一個布林值會讓「有沒有中間位置」變成 `leap` 積分器內部
+   * 的一個 if，而那正是第〇·五守則說的越線。
+   *
+   * ── `templates/expand.ts` 那句「deliberately was not added」已經被推翻 ─────
+   * 那句話當時的理由是「effect union / Zod / registry 三個檔正被別的 lane 同時
+   * 編輯」，並明說「Named in the report as the owner's call」。owner 2026-08-09
+   * 做了那個 call。⛔ 註解已同步改掉 —— 一句不再成立的辯護留著就是第三守則講
+   * 的那種謊。
+   *
+   * ── 欄位 ─────────────────────────────────────────────────────────────────
+   * `shape` 是 E1 硬約束（A4b 之後每一個新 kind 都要講得清楚作用範圍，守衛
+   * `content/schema/newKindShape.test.ts` 從出貨註冊表推導，不是抄名字）。
+   * 它回答的是「**誰**被瞬移」：`single` = 一個身體（施法者，或這一次的目標）；
+   * `circle` = 半徑內的一群（集結隊友那一族：A0EY 英雄之笛 / A0YA 和諧世界 /
+   * A10U 84-002），沿用 Lane 1/2 那一組 `radius` / `side` / `maxTargets` 欄位
+   * 與**同一份** `refineDispelShape` 檢查。
+   */
+  | {
+      kind: "blink";
+      /** ⭐ E1 硬約束：誰被瞬移 —— 一個身體，還是半徑內的一群。 */
+      shape: "single" | "circle";
+      /** `shape:"circle"` 的半徑，GGD 單位。單體時寫它會被 schema 擋下。 */
+      radius?: number;
+      /** `shape:"circle"` 收誰（集結隊友 = `"allies"`）。 */
+      side?: "allies" | "enemies";
+      /** `shape:"circle"` 最多帶幾個。 */
+      maxTargets?: number;
+      /**
+       * 目的地。三個值對應 JASS 那 11 個成員真正做的三件事：
+       *   · `"targetUnit"` 貼上目標（7 支，最大宗：17-03 空破圓斬、08-02
+       *     萊丁快速劍、13-03 快步、34- 冥道殘月破、阿福 EX、76-01 橡膠戰斧、
+       *     27-04 飛燕閃）
+       *   · `"point"`      指向點（82-02 虛空瞬動，讀 `GetOrderPointLoc`）
+       *   · `"caster"`     集結到施法者身邊（3 支，配 `applyTo:"target"`）
+       */
+      to: "point" | "targetUnit" | "caster";
+      /** 誰移動：施法者（預設），或每一個解算出來的目標（集結／拉人）。 */
+      applyTo?: "self" | "target";
+      /**
+       * 落在目的地**前面**多少單位。27-04 飛燕閃在 JASS 裡落在目標前 150 wc3
+       * 單位（j:41669），而 `leap` 沒有這一格，所以那一支今天是**貼在對方身上**
+       * 落地。ABSENT = 0 = 正好落在目的地。
+       */
+      stopShortUnits?: number;
+      /**
+       * 抵達之後**立刻**執行的效果，同一個 tick。
+       *
+       * ⚠️ 為什麼需要它、而不是把傷害寫在 `effects[]` 的下一格：這一族每一個
+       * 會傷害的成員都是**先位移再打**（27-04 在 j:41669 瞬移，j:41671 才
+       * `UnitDamageTargetBJ`）。寫在同一層的下一格會在**起跳點**解算，那正是
+       * `leap.onLand` 存在的理由。
+       *
+       * ⛔ 這裡**沒有** `arriveRadius`（`leap.landRadius` 的對應物），是刻意的：
+       * 落點的圓由 `damageArea` 自己的半徑表達，多一格半徑等於同一件事有兩個
+       * 住處，而它們會分岔。
+       */
+      onArrive?: EffectDef[];
     }
   /**
    * championForm (task #249 變身) — the map's own WC3 **Metamorphosis** pair,
@@ -1565,6 +1669,35 @@ export type EffectDef =
        */
       launchHeight?: number;
       /**
+       * ⭐ 擊飛的**落點**（owner 2026-08-09 / GH#301-1）。
+       *
+       * 規範原本寫「落點與飛行時間由系統推算，作者指定不了」。owner 推翻了它，
+       * 但同時把它**簡化成四檔**：
+       *
+       *   · `"short"`   一小段
+       *   · `"default"` 預設 —— 也就是今天的行為（由 `distance` / `impactPower`
+       *                 / gap 減法推算出來的那個長度）
+       *   · `"long"`    一大段
+       *   · `"toEdge"`  到底部 —— 推到**決鬥區邊緣**（不是地圖邊緣）
+       *
+       * ⛔ **不是自由數字，而且這是 owner 明講的簡化**：「應該要可以[指定落點]，
+       * 但簡化成 一小段 / 預設 / 一大段 / 到底部 四種」。一格自由距離會讓每一張
+       * 卡都要重新決定一次「多遠算遠」，四檔讓它變成一格下拉選單。
+       *
+       * ABSENT = 今天的行為（等同 `"default"`）—— 所有既有內容一格不變。
+       *
+       * ⛔⛔ **四檔的實際距離不可以是這支引擎裡的常數**（CLAUDE.md 第一守則）。
+       * 它們是 owner 每週會改的那種數字，所以必須住在
+       * `config.combat-feel@1` 的 `knockback` 群組底下（那裡已經有 `minPct` /
+       * `maxBodies` / `bodyUnit` 三個同族旋鈕），三個住處 + admin 欄位一起補。
+       * 實作 #301-1 的那一路：如果你在 `effects/knockback.ts` 裡寫下
+       * `const SHORT = 4`，那就是越線了。
+       * ⚠️ 契約層（2026-08-09）**沒有**動 `schema/config.ts`：加一格 config 欄位
+       * 要連 `content/config/combat-feel.json` 與 admin 表單一起動，而那超出
+       * 「只改型別與 schema」的範圍。這是一筆**明確交接**的債，不是漏掉的。
+       */
+      launchDistance?: "short" | "default" | "long" | "toEdge";
+      /**
        * 期間不可控制. DEFAULT TRUE. Writes `world.knockdown` for the flight, the
        * one channel every actor already reads (abilitySystem rejects the cast,
        * BasicAttackSystem the swing, CastResolveSystem interrupts, movementHold
@@ -1678,6 +1811,79 @@ export type EffectDef =
        */
       fallbackLevel?: number;
     };
+
+/**
+ * ⭐ 每一個 effect kind **共有**的欄位。今天只有一格 —— `condition`。
+ *
+ * 寫成一份交集而不是往 34 個聯集成員各貼一行,是第零守則⑨:34 個同型項目 =
+ * 1 個模板 + 一張表。⛔ 下一個共有欄位也走這裡,不要開始複製貼上。
+ */
+export interface EffectCommon {
+  /**
+   * ⭐ 「這一段效果要不要發生」的閘 —— owner 2026-08-09 裁決（GH#300）。
+   *
+   * ── 為什麼會有這一格 ────────────────────────────────────────────────────
+   * 在它之前,`condition` **只是 `HookDef` 的一個欄位**,全 repo 只有一個
+   * `evaluateCondition` 呼叫點。於是「若目標身上有〔恐懼〕則追加傷害」只寫得成
+   * 一條 hook,掛在主動技的 `effects[]` 上**寫不出來** —— 而 owner 說這一族的
+   * 使用率超高。
+   *
+   * ⛔ 它與 hook 上的那一格是**同一個型別、同一個求值器、同一組葉子**
+   * ({@link EffectCondition} / `evaluateCondition` / `zEffectCondition`)。
+   * 做第二套條件系統是這一批最容易犯、也最貴的錯:兩份葉子清單保證分岔,
+   * 而編輯器只看得到其中一份。
+   *
+   * ── 語意（DECIDED，lane A 照這個實作）─────────────────────────────────
+   *
+   * **① 缺席 = 無條件執行。** 今天所有已上架內容的行為一格不變。
+   *
+   * **② `self` 永遠是 `ctx.caster`。** 與 hook 上的 `subject:"self"` 同義。
+   *
+   * **③ `target` 是【逐一判斷】,不是整段全有全無。**
+   *   對 `ctx.targets` 的每一個身體各求值一次(`{self: caster, target: t}`),
+   *   通過的那些組成新的目標清單交給 handler。
+   *
+   *   ⭐ 為什麼選逐一:owner 點名的寫法(「對身上有恐懼的敵人追加傷害」)本身
+   *   就是逐一的。整段閘會在**每一支 AoE** 上安靜地算錯 —— 而且是失敗形態 ④:
+   *   單體技的行為兩種語意完全相同(N=1),所以壞掉的那一種在測試與手感上
+   *   都跟正確的一模一樣,只有 AoE 的玩家會覺得「有時候不生效」。
+   *   成本說清楚:`chance` 葉子變成**每個目標各擲一次**,一發打 8 個人的 AoE
+   *   會消耗 8 × `conditionChanceCount(cond)` 次 rng。這是刻意的(「每個人各有
+   *   50% 機率被燒」才是那張卡的意思),但它是一筆真的預算。
+   *
+   * **④ `ctx.targets` 是空的時候,退化成整段閘。**
+   *   自我增益 / 落點特效 / 發金幣這種本來就沒有目標的效果,若照③過濾會變成
+   *   永遠不執行。所以空清單時求值**一次**,`target` 傳 `undefined` ——
+   *   也就是 hook 今天在「沒有 target 的事件」上的行為,`subjectOf` 回
+   *   `undefined`、葉子回 `false`。因此在一段沒有目標的效果上寫
+   *   `subject:"target"` 的條件 = 這段效果不執行,而那是誠實的答案
+   *  （「你問了一個不存在的人身上有沒有恐懼」）。
+   *
+   * **⑤ 一個都沒通過 → handler **完全不被呼叫**。**
+   *   ⭐ 這條是 owner 要求的「『沒通過條件』與『執行了但沒打到人』要分得開」。
+   *   兩者在今天的引擎裡都會長成「血條沒變」,所以差別必須做在**呼叫與否**上,
+   *   不是做在傳一個空陣列進去 —— 有些 handler(`damageArea` / `randomArea`)
+   *   拿到空陣列還是會自己去解算圓圈,那就會變成「條件沒通過但效果照發」。
+   *
+   * ── 已知的邊界（named gap，不是漏掉）────────────────────────────────────
+   * 過濾只作用在 `ctx.targets`,也就是**執行器交給 handler 的那一份清單**。
+   * 自己在內部重新解算身體的 kind(`damageArea` / `damageLine` / `randomArea`
+   * / `leap.onLand` 的落地圈)不會被逐一過濾;對它們,③ 的結果只決定
+   * 「這段效果整段跑不跑」。要讓圓圈**內部**也逐一過濾是另一個機制
+   *（等於「範圍內只打有某狀態的人」),⛔ 不要用這一格假裝有做。
+   */
+  condition?: EffectCondition;
+}
+
+/**
+ * 出貨的 effect 型別 = kind 專屬欄位（{@link EffectVariant}）交上共有欄位
+ * （{@link EffectCommon}）。
+ *
+ * ⚠️ TS 會把 `(A|B) & C` 正規化成 `(A&C)|(B&C)`,所以 `Extract<EffectDef,
+ * {kind:"damage"}>`、`EffectDef["kind"]` 的映射型別（`EffectRegistry`）、
+ * 以及 `e.kind === "damage"` 的收窄**全部照舊**。
+ */
+export type EffectDef = EffectVariant & EffectCommon;
 
 export interface EffectContext {
   world: SimWorld;

@@ -877,67 +877,73 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 成員」—— 那句話對「機制上量不量得到」是對的(`onDamageTaken` 在扣血之後才
   // 發射,所以「正好等於門檻」是測度為零的事件),但對「內容會不會用它」是錯的:
   // 內容用的是 **owner 說出口的那個符號**,而他說的是「≤」。
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|0.op=!=": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=!=": {
     status: "landing",
     since: "2026-07-31",
     why: "比較運算子,鑄技工坊 ConditionEditor 的下拉選單成員之一(apps/editor/src/forge/ConditionEditor.tsx)。出貨的條件卡都是門檻式(`<=` / `>`),沒有一張需要相等比較。第一個自然的採用者是「等級剛好 N」或「層數 == 上限」這種整數比較 —— 目前沒有這種卡。若 30 天後仍是 0,誠實的結論是這兩個成員該從 zCondition 拿掉,而不是硬編一張卡去餵它。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|0.op===": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op===": {
     status: "landing",
     since: "2026-07-31",
     why: "同上。相等比較在整數軸(level / 層數)才有意義,而條件目前唯一被授權的整數軸是 level,還沒有卡用它。",
+  },
+
+  "field:abilities.effects[]#applyBuff.condition|0|3|0.minStacks": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "狀態層數門檻(GH#301-5 的讀取端,owner #299 第 8 條)。零採用是**成對的**,不是這一格單獨落空:出貨的 28 份 status-effect 文件沒有一份寫 `applyStatus.stacks`,而 applyStatus 只在作者明寫時才累加 —— 所以今天全場的層數都是 1,一張問 `minStacks:2` 的卡必然永遠 false。⛔ 不要為了餵這一格去硬加一張卡:先有一支真的疊層的狀態(owner 正在手工重製技能),`minStacks` 才有東西可問。機制本身由 sim/content/conditionStacks.test.ts 走出貨的 evaluateCondition 驗過會動。",
   },
 
   // ── 觸發條件的屬性軸 ───────────────────────────────────────────────────
   // 出貨的兩張條件卡都讀 `hp`。下面十個成員是同一個下拉選單的其他選項。
   // 它們共用一條 why:機制是同一條 `evaluateCondition` 的 `stat` 分支,
   // 已經被 hp 證明會動(sim/content/condition.test.ts 讀真的 world.stats)。
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=ad": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=ad": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的屬性軸。`hp` 已採用並由 condition.test.ts 讀真實 world.stats 驗證,所以走訪路徑是活的;這十個成員差在「有沒有一張卡想讀它」。攻擊力門檻的自然客戶是「攻擊力高於 N 時追加」這一類 —— owner 2026-07-30 明說要的「>=< 某個常數或某個數值條件」正是這個軸,所以它是 landing 不是 debt。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=agi": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=agi": {
     status: "landing",
     since: "2026-07-31",
     why: "同 stat=ad。三圍軸(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),條件讀它是下一步而不是這一步。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=ap": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=ap": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的法強軸。`hp` 已採用並由 condition.test.ts 讀真實 world.stats 驗證,所以走訪路徑是活的;差的是「有沒有一張卡想讀它」。法強門檻的自然客戶是法系的「法強超過 N 時改放強化版」—— w3x 那批「智力達 X」的敘述今天全部靠 perRank 表達,而 perRank 是技能等級不是屬性。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=armor": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=armor": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的防禦軸。同一條 `stat` 分支,已由 hp 證明會動。防禦門檻的自然客戶是穿透類:「對防禦高於 N 的目標改走真實傷害」—— 這正是 owner 2026-07-30 講的「>=< 某個常數或某個數值條件」在坦克向上的讀法,所以是 landing 不是 debt。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=attackSpeed": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=attackSpeed": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的攻速軸。同一條 `stat` 分支。自然客戶是攻速流的「攻速達上限後把溢出換成傷害」—— 要等 #286(攻速解鎖上限 10.0)落地才有意義,所以它排在那張票後面。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=int": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=int": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的智力軸。三圍(str/agi/int)在 #248 之後才真的活起來(三圍→AD/攻速/AP),而條件讀三圍是再下一步:今天所有「智力達 X」的敘述都寫在描述文字裡,沒有一支變成可判定的門檻。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=level": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=level": {
     status: "landing",
     since: "2026-07-31",
     why: "同 stat=ad,而且是這十個裡最可能先被採用的一個:w3x 有一整批「N 級之後才…」的天生技,它們今天全部靠 perRank 表達,那是升技能等級不是升英雄等級 —— 兩者在這個遊戲裡並不同步。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=magicResist": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=magicResist": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的魔抗軸。同 armor,兩者在 w3x 的敘述裡幾乎總是成對出現(「防禦或魔抗高於 N」),所以它們會同時被採用或同時留在 0。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=moveSpeed": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=moveSpeed": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的移速軸。同一條 `stat` 分支。自然客戶是追擊類的「目標移速低於 N 時追加傷害」(配合減速),w3x 有這個家族但今天都只做了減速那一半。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|1.stat=str": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|1.stat=str": {
     status: "landing",
     since: "2026-07-31",
     why: "條件的力量軸。同 int:三圍在 #248 之後才活,而條件讀三圍還沒有任何一張卡。力量門檻的自然客戶是「力量高於 N 時擊退距離加倍」這種近戰卡。",
@@ -1141,7 +1147,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "`berserkerPctRegen.test.ts` 另有一條掃全 119 份英雄卡的守衛釘住「真的沒有人填」," +
       "所以第一位採用者出現的那一天,那一條會紅,而**這條豁免就該被刪掉**。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].condition|0|1|0.op=>": {
+  "enum:abilities.effects[]#applyBuff.condition|0|1|0.op=>": {
     status: "debt",
     why:
       "條件比較子 `>` 在 2026-08-02 之前唯一的內容使用者是 52-00 十二道試煉的" +
@@ -1487,6 +1493,172 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "因為**無差別淨化會拔掉自己隊友的增益**,那幾乎一定是作者手滑而不是意圖。" +
       "所以零採用正是它該有的樣子:它要留在選單上(WC3 的 Dispel Magic 本體就是無差別," +
       "1:1 還原那一支的那天要用得到),但不該是任何人不小心選到的預設。",
+  },
+
+  // ══ 契約層 2026-08-09（GH#299 / #300 / #301）══════════════════════════════
+  //
+  // ⚠️ **先讀這一段再看下面 25 筆**，否則它看起來像一次「把普查關掉」。
+  //
+  // ── ① 13 個 key **改名了，不是消失了** ────────────────────────────────────
+  // `enum:…#applyBuff.hooks[].condition|…` 全部變成 `enum:…#applyBuff.condition|…`。
+  // 原因與 2026-08-08 `items.block.lethalBasis` 那一次逐字相同：`nameSchemas()`
+  // 依**物件識別**給每個 schema 一個正規名字，而 `zEffectCondition` 現在也掛在
+  // 每一個 effect 上（owner 的裁決，見 ②），所以它第一次被走訪到的路徑變成
+  // `applyBuff.condition`。條件系統本身一格沒動，採用數也一格沒變。
+  // ⛔ 不要為了讓名字好看就把 schema 拆兩份 —— 那正是 `fromResource` 那一格
+  // 已經寫過的警告：兩份 schema 會讓規則變成兩份。
+  //
+  // ── ② 19 筆 `#<kind>.condition` 是**同一個欄位**在 19 個節點上 ────────────
+  // owner 2026-08-09 裁決：條件不只能掛在 hook 上，也要能掛在**效果**上
+  //（「若目標身上有〔恐懼〕則追加」在主動技的 effects[] 上本來寫不出來）。
+  // 它是共用的 `EFFECT_COMMON_SHAPE`（一份，不是 19 份），普查在每個 kind 的
+  // 節點各看到一次。零採用是**內容決定不是機制缺席**：owner 正在手動重製 90 支
+  // 技能，⛔ 契約層依令沒有動 `content/abilities/`。
+  // ⚠️ 求值端由 lane A 接（同一個 `evaluateCondition`，⛔ 不是第二套）——
+  // 在那之前這 19 筆是「schema 收得下、引擎不讀」，這正是 landing 而不是
+  // default-live 的原因：省略確實等於無條件執行，但**寫了**今天還不會發生任何事。
+  //
+  // ── ③ 四個 hook 事件今天是**零發射點** ───────────────────────────────────
+  // 契約層先定名字（四路平行實作要 import 同一個字面量），發射點是 GH#300。
+  // ⛔ #300 收尾時沒接到的那幾個要從 `zHookEvent` **刪掉**，不是留在這裡。
+  //
+  // 三族全部 30 天到期。到期時若仍是 0，誠實的結論不是「再展延」。
+  "field:abilities.effects[]#applyBuff.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#applyStatus.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#championForm.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#damage.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#damageArea.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#damageLine.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#dash.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#dispel.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#dot.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#grantAttribute.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#heal.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#invulnerable.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#knockback.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#leap.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#restore.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#shield.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#spawnProjectile.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#spawnVfx.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "field:abilities.effects[]#spendMana.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
+  },
+  "variant:abilities.effects[]#blink": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "真瞬移（owner 2026-08-09 推翻了 templates/expand.ts 那句「deliberately was not added」，GH#301-2）。" +
+      "⭐ 引擎側**已經落地**（2026-08-09 下午）：`sim/movement/blink.ts` 在**同一個 tick** 內改寫 " +
+      "`Transform.pos`，`sim/effects/blink.ts` 負責「誰移動、移到哪」，⛔ 它已經不再丟例外。" +
+      "⚠️ 它與 `leap` 的差別不是美術：`MIN_LEAP_TICKS = 2` 讓身體真的存在於中間兩格（會被範圍技掃到、" +
+      "會被地形擋），而瞬移的定義就是那兩格不存在。零採用剩下的那一半是**內容遷移**：" +
+      "11 支 JASS 成員今天仍然展開成 `leap`（`templates/expand.ts` 的 tpl-blink-strike 還沒改接），" +
+      "而 owner 正在手動重製技能 —— 那批文件進來時這一筆就該刪掉。",
+  },
+  "field:abilities.effects[]#applyStatus.stacks": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "狀態層數（owner 2026-08-09「狀態除了有無也會是數字層數」，GH#301-5）。省略＝1＝今天的行為，所以既有 223 份文件一格都不用改 —— 但它**不是** default-live：owner 要的是〔破甲 3 層〕與〔破甲 1 層〕是兩件事，而那必須有人真的寫這一格才會發生。⚠️ 層數怎麼送到客戶端還沒裁決（ENTITY_FLAG 已滿），見 sim/effects/effect.ts。",
+  },
+  "field:abilities.effects[]#knockback.launchDistance": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "擊飛四檔落點（owner 2026-08-09，GH#301-1：「應該要可以[指定落點]，但簡化成 一小段/預設/一大段/到底部 四種」）。省略＝default＝今天的推算行為，所以既有 5 份文件一格都不用改。⭐ 引擎側**已經落地**（`sim/effects/knockback.ts` 的 `tierDistance`），四檔的實際距離住在 `config.combat-feel@1` 的 `knockback.launchShortUnits` / `launchLongUnits` / `launchEdgeUsesFireRing`（⛔ 不是引擎常數，第一守則）。零採用＝owner 手動重製中的技能還沒挑這一格。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onShieldGained": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "護盾產生時。持有者＝拿到護盾的人,target＝給護盾的人。✅ 發射點已接（GH#300）：`effects/shield.ts` 每一次 `addShield` 發一則 `shieldGained`，`systems/WorldHookSystem.ts` 那張表轉成 hook。⚠️ 口徑是「新出現一片盾」不是「這個人身上的盾變多了」——一發 AoE 給三個人＝三則。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onShieldBroken": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "護盾破碎時(護盾池歸零那一格)。✅ 發射點已接（GH#300）：吃 `combat/damage.ts` 早就在發的 `guardBreak`（判準逐字就是「打之前 >0、這一發吃到、之後合格總量 <=0」），沒有第二套判斷。⚠️ 三件**不算**破碎:被打到但還有剩 · 自然到期 · 【破盾】(`shieldBreak` effect)主動拆掉別人的——最後這一項是**已知缺口不是漏掉**（那是動作，這是時刻），要不要納入是 owner 的裁決。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onAllyDeath": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "隊友陣亡時。⚠️ 持有者＝**還活著的隊友**,方向與 `onDeath` 相反 —— 「隊友死了我暴怒」掛在死人身上不會發生任何事。✅ 發射點已接（GH#300）：**沒有新事件**，吃的是【死亡時】同一則 `death`，差別只在 `WorldHookSystem` 的新作用域 `scope:\"allies\"`（成員規則走現成的 `alliedChampions`，死者自己排除，活著的閘由 `fireHooks` 那一道負責）。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].on=onStatusApplied": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "狀態被掛上的那一刻。⚠️ 與 owner 說的「身上有某狀態時」不是同一件事:那一族的答案是效果上的 `condition`(EffectCommon.condition),因為「持續期間都成立」是狀態查詢不是時刻。✅ 發射點已接（GH#300）：`effects/applyStatus.ts` 在 `st.effects.push` 那一支發 `statusApplied`。⛔ 兩道窄化都在發射端:**續期不重觸發**(`!existing`)、**被免控擋掉的不算**(在那道 `continue` 之後)。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
   },
 };
 

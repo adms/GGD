@@ -143,6 +143,12 @@ describe("combat-feel 設定表的正規化", () => {
       bodyUnit: 1.5,
       authoredWins: DEFAULT_KNOCKBACK.authoredWins,
       longerDamageWins: DEFAULT_KNOCKBACK.longerDamageWins,
+      // 四檔落點（GH#301-1）同理：缺格 = 出貨值。⛔ 這裡讀 `DEFAULT_KNOCKBACK`
+      // 而不是抄 3 / 12 / true —— 出貨值是 owner 會改的東西，抄一份進測試就是
+      // 第四個住處（第零守則：驗機制不驗數字）。
+      launchShortUnits: DEFAULT_KNOCKBACK.launchShortUnits,
+      launchLongUnits: DEFAULT_KNOCKBACK.launchLongUnits,
+      launchEdgeUsesFireRing: DEFAULT_KNOCKBACK.launchEdgeUsesFireRing,
     });
     expect(rules.standstill).toEqual({ enabled: false, walkEps: 0.8, applyToMobs: false });
   });

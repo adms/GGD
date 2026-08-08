@@ -312,13 +312,20 @@ export function isAutoTargetable(world: SimWorld, self: EntityId, cand: EntityId
   // becomes render-only. That is a legitimate config, not a broken one.
   if (world.stealthRules.blocksAutoAcquire && !canSee(world, self, cand)) return false;
   if (targetClassOf(world, cand) === null) return false;
+  // ⭐【混亂】—— owner 2026-08-09 改判（GH#299 第 9 條 / GH#301-3）：
+  //   「混亂應該是**完全無法指定目標**，並且會亂走路，跟恐懼一樣」
+  //
+  // ⚠️ 只讀 `self` 身上的旗標：混亂的是**我**，不是被我看到的那個人。
+  // ⛔ 這一行取代了原本那句「混亂時**隊友也算目標**」的旁路。舊行為是「照常
+  // 打架，只是有時候打到隊友」，owner 明說那是錯的裁決。整個引擎裡「誰算得上
+  // 目標」只有這一份規則，所以閘下在這裡 —— 下在 `chaos.ts` 只清 attackTarget
+  // 的話，`autoAcquirePass` 仍然每 tick 挑一個再被清掉，而這一行會繼續是綠的
+  // 卻對玩家不可見（失敗形態 ④／⑤）。行為與亂走見 `sim/chaos.ts`。
+  if (isConfused(world, self)) return false;
   const myTeam = world.team.get(self);
   const theirTeam = world.team.get(cand);
   if (!myTeam || !theirTeam) return false;
-  // 【混亂】C2（#278）—— 唯一一個「隊友也算目標」的旁路。
-  // ⚠️ 只讀 `self` 身上的旗標：混亂的是**我**，不是被我看到的那個人。
-  // `berserk` 已經負責「丟掉座位的指令 + 交還給自動索敵」，這裡只多開這一道。
-  if (myTeam.teamId === theirTeam.teamId && !isConfused(world, self)) return false;
+  if (myTeam.teamId === theirTeam.teamId) return false;
   const hp = world.health.get(cand);
   return !!hp?.alive;
 }

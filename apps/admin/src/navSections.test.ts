@@ -71,11 +71,16 @@ const BASELINE_PAGES: readonly Page[] = [
   "damageColors",
   "shieldRules",
   "blockRules",
+  // 暴擊規則 —— GH#302 新增的一頁（owner 2026-08-09「每一條暴擊獨立算完傷害
+  // 再帶入下一條」）。與 格擋規則 同族，共用 ConfigDocPage。
+  "critRules",
   // #278 Wave 0 —— `config.berserk@1` 從「解析器存在但沒有文件」補成一整條路。
   "berserkRules",
   // #278 A4b —— 【淨化】的十一個旋鈕。
   "dispelRules",
   "woundRules",
+  // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
+  "weaknessRules",
   "damageRules",
   // 批 1（稜彩卡計畫 2026-08-04）新增的一頁：增益卡上「敵方英雄」在殭屍波裡
   // 算不算數。與 護盾規則／格擋規則 同一族，共用 ConfigDocPage。

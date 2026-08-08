@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c17eeabbb28d",
+  "hash": "6df93cfebf04",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -79,6 +79,12 @@
       "path": "config/config.match.json",
       "hash": "dd99e325b683",
       "size": 1466
+    },
+    {
+      "id": "crit",
+      "path": "config/crit.json",
+      "hash": "3345634f03ec",
+      "size": 1183
     },
     {
       "id": "damage-colors",
@@ -241,6 +247,12 @@
       "path": "config/voxel-bodies.json",
       "hash": "2c4008f4c7ac",
       "size": 598
+    },
+    {
+      "id": "weakness",
+      "path": "config/weakness.json",
+      "hash": "0b3229cb05e5",
+      "size": 560
     },
     {
       "id": "wounds",

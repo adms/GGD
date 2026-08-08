@@ -85,6 +85,44 @@ export interface MarkRow {
 }
 
 /**
+ * PURE：把**快照上的**具名計數器（GH#304 的 `SeatState.counterIds` /
+ * `counterCounts`）變成這一支已經在畫的 {@link MarkView}。
+ *
+ * ⭐ **層數的數字從這裡來，不再從事件來。** 事件是瞬間的：一個中途加入或重連
+ * 的客戶端沒有事件歷史，於是十二道試煉的 12 條命在 socket 眨一下之後從 HUD 上
+ * 整個消失。快照沒有這個問題 —— 它是**狀態**，第一份 patch 就帶著全部。
+ *
+ * 事件（`RoomStore.recordMarkEvent`）留下來的只剩一件事：`savedAtMs` ——
+ * 「剛剛靠它免死了」那一下的閃動。那是一個**表演**，本來就不該在重連之後還亮
+ * 著，所以它正確地只活在事件裡。`seq` 同理（重播閃動用）。
+ *
+ * ⚠️ 兩條陣列 index-aligned。少一半的那一筆是投影缺陷，不是計數器 —— 丟掉，
+ * 跟 `selfStatusModel` 對「有 tick 沒 id」的處理一字不差。
+ */
+export function markViewsFromWire(
+  counterIds: readonly string[] | undefined,
+  counterCounts: readonly number[] | undefined,
+  flashes: readonly MarkView[],
+): MarkView[] {
+  if (!counterIds || counterIds.length === 0) return [];
+  const views: MarkView[] = [];
+  for (let i = 0; i < counterIds.length; i++) {
+    const markId = counterIds[i];
+    if (!markId) continue;
+    const count = counterCounts?.[i];
+    if (count === undefined || !Number.isFinite(count) || count < 0) continue;
+    const flash = flashes.find((f) => f.markId === markId);
+    views.push({
+      markId,
+      count: Math.trunc(count),
+      seq: flash?.seq ?? 0,
+      savedAtMs: flash?.savedAtMs ?? null,
+    });
+  }
+  return views;
+}
+
+/**
  * PURE：這一幀該畫哪幾列。
  *
  * 排序是「快用完的排前面」（層數少的優先），因為玩家在戰鬥中要問的是

@@ -112,6 +112,15 @@ describe("discriminated EffectDef union (editor-02)", () => {
       [
         "applyBuff",
         "applyStatus",
+        // ⭐ 真瞬移（owner 2026-08-09 / GH#301-2）。它推翻了 templates/expand.ts
+        // 那句「a `kind: "blink"` … deliberately was not added」—— 那句辯護的
+        // 前提（三個檔正被別的 lane 同時編輯）不再成立，而 owner 的裁決是
+        // 「是真的瞬移，不是平移」。⛔ 與上面那五個保留槽位同一個形狀：schema
+        // 認得它、`sim/effects/blink.ts` 的 apply **會丟例外**，而
+        // `PreviewController` 的 case 印「⚠️ 引擎側尚未實作」——
+        // 那個 `never` 分支在我把它加進 union 的當下就先把編譯打紅了，
+        // 所以「補一個 tag」在這一支從來不是一個選項。
+        "blink",
         "championForm", // task #249 — the w3x Eme1/Emeu body swap
         // ── 2026-07-31 技能批次的四個新 kind ────────────────────────────
         // 這四個是**同一天**進來的，而這條釘子沒有跟上 —— 也就是說有四張卡

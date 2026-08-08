@@ -1,6 +1,6 @@
 # GGD 遊戲端執行期能力清單（`ggd-runtime-capabilities@1`）
 
-**指紋 `c60e27de`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
+**指紋 `ef984bcc`** —— 編輯器用它 pin base。指紋只在引擎事實真的改變時才會變。
 
 ## 這份文件是什麼
 
@@ -41,7 +41,7 @@
 | `state.exclusive-group@1` | ⚠️ 部分支援 | §12 G4 · §16.15（涅吉三形態） | ✅ 15-02/03/04 逐字寫的「([變身]為唯一狀態不可疊加)」**對變身成立，而且是結構性的**：一個實體只有一格形態、一個身體只有一個 `championId`，所以第二個形態不可能與第一個並存 —— ⛔ 技能文件**不需要、也不應該**自己檢查「我是不是已經變身了」。重複進入時「舊形態的剩餘時間怎麼辦」是欄位（`champion@1.transform.reenter`：`restart` / `keepLongest` / `reject`），預設 = 出貨現況，被回絕會走 `castRejected`。⛔ 仍缺兩件，**涅吉三形態今天仍然表達不出來**：① **它只是【變身】的互斥，不是泛化的互斥狀態群** —— 沒有「這三個 buff 互斥」的模型，而 15-02/03/04 讀起來更像三個**屬性狀態**（移速倍率／攻速％／普攻附加傷害）而不是三個 3D body；② **一個英雄只有一個 `transform.counterpartId`**，而 `championForm` effect 的 `to` 只有`alternate`/`base`/`toggle`，沒有「變成指定的那一個形態」—— 所以第二個**不同**的形態根本不是目的地：再施放一次只會刷新當前形態（WC3 Metamorphosis 的語意，刻意保留）。⚠️ 這兩件都卡在計畫 §16.15 還沒裁決「三個 gameplay state 還是三個 3D body」——⛔ 在那之前不要把三形態降級成三個獨立變身，那會是一個**看起來**能用的錯誤答案。 | packages/shared/src/sim/systems/ChampionFormSystem.ts + sim/championFormExclusive.test.ts（四個突變都驗過會紅：拿掉 `sc.championId` 的寫入、`championForm.set` 改成不覆寫、拿掉 `keepLongest`、拿掉整個 `reject` 分支） |
 | `state.lifecycle@1` | ⚠️ 部分支援 | §12 G4（與 `state.exclusive-group@1` 同一列）· §13「風王結界手動關閉與 MP 不足自動關閉都走同一個 onExit child」 | ✅ 計畫 §13 逐字要求的那一條**已經成立**：`exitToggle()` 是全專案唯一的關閉出口，手動關閉（`castAbility` 第二次按下，刻意排在冷卻閘之前）與 MP 不足自動關閉（`toggleUpkeepSystem`）都只是呼叫它，所以「關閉時釋放風王鐵槌」不可能只發生一半。開關成本（`ability@1.manaCost`）與維持成本（`toggle.upkeepCost`）是兩個獨立數列，節奏 `none`/`perAttack`/`perSecond` 是欄位。⛔ 仍缺三件：① **stable state key 與 exclusive group** —— 一顆按鈕一個切換，沒有「這三個狀態互斥」的模型（那一半是 `state.exclusive-group@1`）；② **duration / refresh policy** —— 切換沒有自帶時限，要限時請用 `applyBuff`；③ **死亡不觸發 onExit** —— 屍體不付維持成本但旗標留著，「大招要不要從屍體放出來」是一個還沒裁決的決策點，⛔ 不可以在遊戲端偷開第二條出口去補它。 | packages/shared/src/sim/abilities/toggle.ts + toggle.test.ts（三個突變都驗過會紅：拿掉自動關閉、拿掉 perAttack 節奏閘、拿掉 onExit 的 runEffects） |
 | `condition.has-equipment@1` | ✅ 支援 | §2.1.1.2（77-002 御雷劍）· §12 G4 | — | packages/shared/src/content/schema/condition.ts 的 `zEquipmentItemLeaf` / `zEquipmentTagLeaf`（⭐ 一個 UNION 而不是一個帶兩個 optional 欄位的物件，所以 `{itemId, tag}` 同時寫是 **PARSE ERROR**，不會安靜地由求值端替作者決定哪一格贏）+ packages/shared/src/sim/content/condition.ts 的求值與中文標籤。✅ 計畫要的「只接穩定 itemId、禁止用顯示名稱連結」成立：`itemId` 走 `zRef<ItemId>("items")`。⚠️ 對方要知道的一件事：那個 ref 是 **soft**（御雷劍那一族的道具文件還沒進 `content/items/`），所以打錯的 itemId **不會在載入時被擋**，它只是永遠不成立。 |
-| `condition.stack-count@1` | ⛔ 不支援 | §2.1.1.2（層數門檻）· §12 G4 | 「≥N 層才觸發 / 滿層引爆」沒有 typed condition。⛔ 不可以用 `chance` 近似（那是機率不是計數），也不可以用 `stat` 近似（讀的是別的池子）。 | — |
+| `condition.stack-count@1` | ⚠️ 部分支援 | §2.1.1.2（層數門檻）· §12 G4 · GH#301-5 | ✅ 寫得出來的是「某個主體身上的**某一份狀態**疊到 ≥N 層」：`{kind:"status", subject, statusId, minStacks:N}`（缺 `minStacks` = 只問有無，與這一格出現前逐字相同）。層數由 `applyStatus.stacks` 寫入、多來源相加、上界 `MARK_MAX_COUNT`(999)。⛔ 三件**還不行**，不要繞：① 讀不到 `sim/marks.ts` 的具名標記池（`effect.charge-ledger@1` 那一套的 `count`/`spent`）——那是另一個池子，`minStacks` 只看 `StatusComp`；② `tag` 那個分支**刻意沒有** `minStacks`（「【破甲】類的狀態合計幾層」沒有人定義過語意，所以它是 PARSE ERROR 而不是由求值端替作者猜）；③ 只有「≥」一種比較 —— 「剛好 N 層」「至多 N 層」寫不出來（後者用 `not` 包一個 `minStacks:N+1`）。⚠️ 還有一件對方一定要知道的：出貨的 28 份狀態文件**沒有一份**寫 `stacks`，而 `applyStatus` 只在作者明寫 `stacks` 時才累加 —— 所以對既有狀態問 `minStacks:2` 永遠是 false，那不是壞掉，是那些狀態根本不疊層。 | packages/shared/src/content/schema/condition.ts 的 `zStatusIdLeaf.minStacks` + packages/shared/src/sim/content/condition.ts 的求值（走 `statusStacks`）與中文標籤。 |
 | `condition.ability-state@1` | ⛔ 不支援 | §2.1.1.2（哥哥、絕。暗殺奧義、虛化）· §12 G4 | 「某支技能正在冷卻 / 已學會 / 正在開啟」問不出來 —— `zConditionLeaf` 沒有這一種葉。⛔ 禁止以技能顯示名稱（「哥哥」「千年練成」）連結（計畫 §2.1.1.2 逐字）。 | — |
 | `ability-augment@1` | ⚠️ 部分支援 | §2.1.1 P1 · §12 G4 · §13 | ✅ 計畫 §4.4 的兩條禁令都守住了：目標是 **exact ability ref**（`zRef("abilities")`，不是槽位、不是名稱文字），操作是一個 **allowlist enum** —— `procChance`（改機率）/ `durationSec`（改持續時間）/ `damageCoeffAp`（加 AP 傷害係數）/ `thresholdPct`（改門檻），四個剛好對上四支出貨卡（77-002 / 77-002 / 70-002 / 59-001），⛔ 沒有位置 JSON Pointer。每個 op 的 `value` **兩端都有界**（`AUGMENT_OP_BOUNDS`），`mode` 只有 `set` / `add`。**fail closed 在載入時**：目標指不到就 `DanglingRefError`（`content/refs.ts::abilityRefs` 推的是**硬** ref edge），不是執行期靜默跳過；`thresholdPct` 另外強制填 `nodeKind`，那一格就是 §13「不得套到相鄰效果」的閘（一棵 condition 樹裡通常不只一個 `value`）。⛔ 仍缺三件，寫技能的人一定會撞到：① **這一版是執行期，不是編譯期** —— 計畫要的 reverse dependency closure 重編需要一個住在 `content/registries.ts` 的 compiler。現在是 `abilityPassives.ts::rankBlock` 在把 passive 區塊組成 `ModifierSource` 的那一刻讀 augment 表再算（**可觀測等價**：同一組 ops、同一個目標解析、同一份界），但沒有 closure、不遞迴（強化一支自己也被強化的技能不成立）；② **只有被動區塊這一個 seam 接上了** —— 主動施放路徑（`castAbility` 讀 `def.effects`）還沒問過 augment，所以 70-002 / 92-002 那種「強化一支**主動技**的傷害」今天拿不到；77-002（77-02 的 proc 機率 / 77-03 的持續時間）與 59-001（59-00 hook 的門檻）拿得到；③ **`nodeKind` 是自由字串**（condition 的 kind 表住在另一份 schema，抄過來就是第二份會過期的真相），所以打錯字 = 那條操作匹配不到任何節點、靜默無效。⛔ 不要假裝它會紅。 | packages/shared/src/sim/abilities/abilityAugment.ts（收集 + 純改寫）+ packages/shared/src/sim/abilities/abilityPassives.ts（唯一接上的 seam）；守衛 packages/shared/src/sim/abilities/abilityAugment.test.ts（兩個方向一起讀：學了 → 真的變；沒學 → 一格不動。突變驗過會紅） |
 | `defense.block-source@1` | ⚠️ 部分支援 | §2.1.1 P1 · §12 G4 | `BlockGrant`（含 `lethalOnly` / `lethalBasis` / `internalCooldown` / 鏈式獨立判定）已出貨且時序正確（`mitigate()` 之後、護盾之前），寫入點現在有**兩個**：道具（`economy/itemSource.ts`）與**技能被動**（`ability@1.passive.ranks[].block` → `abilities/abilityPassives.ts`，配 `whileForm` 就寫得出「卍解狀態下才格擋」）。兩者走同一個 `ModifierSource.block`，所以鏈式判定與型別過濾逐條相同。⛔ 仍然缺的是**限時 buff / status 授予格擋**：`applyBuff` 掛上去的來源沒有這一格，所以「接下來 5 秒內格擋」還是沒有形狀。⚠️ 另外 `internalCooldown` 的記帳住在 source 上，而技能被動的 source 在升級 / EX 解鎖 /變身時會 detach + attach，等於冷卻歸零 —— 出貨的兩支技能格擋都沒有 ICD，所以今天不可觀測。 | packages/shared/src/sim/combat/blockFromPassive.test.ts |
@@ -52,7 +52,6 @@
 編輯器產出的內容只要用到下列任何一項，遊戲端就會回 `unsupported-runtime`：
 
 - `condition.ability-state@1`
-- `condition.stack-count@1`
 - `effect.attack-dash@1`
 - `effect.control-restriction@1`
 - `effect.dash-on-end@1`
@@ -63,11 +62,11 @@
 
 這是引擎執行期**真的有處理器**的全部種類；不在這張表上的名稱一律會被拒絕。
 
-`applyBuff` · `applyStatus` · `championForm` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `grantAttribute` · `grantGold` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `randomArea` · `restore` · `revive` · `shield` · `shieldBreak` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
+`applyBuff` · `applyStatus` · `blink` · `championForm` · `cycleBuff` · `damage` · `damageArea` · `damageLine` · `dash` · `devour` · `dispel` · `dot` · `evasion` · `eventValueConversion` · `extendBuff` · `grantAttribute` · `grantGold` · `heal` · `invulnerable` · `knockback` · `leap` · `manaBarrier` · `modifyCooldown` · `randomArea` · `restore` · `revive` · `shield` · `shieldBreak` · `spawnProjectile` · `spawnVfx` · `spendMana` · `summon` · `swapResource` · `taunt` · `weightedBranch`
 
 ## 4. 可以掛的 hook 事件
 
-`onAbilityCast` · `onAbilityHit` · `onBasicAttack` · `onBossSpawn` · `onDamageDealt` · `onDamageTaken` · `onDeath` · `onEvade` · `onFireRingIgnite` · `onGuardianDown` · `onInterval` · `onKill` · `onReflectSuccess` · `onRevive` · `onStunned`
+`onAbilityCast` · `onAbilityHit` · `onAllyDeath` · `onBasicAttack` · `onBossSpawn` · `onDamageDealt` · `onDamageTaken` · `onDeath` · `onEvade` · `onFireRingIgnite` · `onGuardianDown` · `onInterval` · `onKill` · `onReflectSuccess` · `onRevive` · `onShieldBroken` · `onShieldGained` · `onStatusApplied` · `onStunned`
 
 ## 5. 可展開的技能模板家族
 

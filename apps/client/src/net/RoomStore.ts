@@ -155,6 +155,20 @@ export interface SeatView {
   statusIds?: string[];
   statusRemainTicks?: number[];
   /**
+   * ⭐【具名計數器】(GH#304) —— 你身上每一個計數器的 id 與層數，index-aligned。
+   * 一套涵蓋兩個機制：具名標記（十二道試煉的 12 條命）與有 `stacks` 的狀態。
+   *
+   * ⚠️ 它取代不了 `markChanged` 事件，它取代的是**事件當成狀態用**：事件是
+   * 瞬間的，重連/中途加入的客戶端補不回層數，所以層數的**數字**從這裡讀。
+   * 事件仍然負責「剛剛免死了」那一下的閃動（`HudState.marks.savedAtMs`）——
+   * 那是一個表演，本來就不該在重連後還亮著。
+   *
+   * OPTIONAL 的理由與 `statusIds` 一字不差：省略的夾具就是在斷言「沒有任何
+   * 計數器」，而那正是空陣列在線路上的意思。
+   */
+  counterIds?: string[];
+  counterCounts?: number[];
+  /**
    * How many buy/sell steps of THIS shopping session can still be reversed
    * (task #121) — the server's own `champ.undoStack.length`.
    *
@@ -418,11 +432,15 @@ export interface HudState {
   /**
    * 【具名標記】—— 本機英雄身上每一個標記的層數（GH#278）。
    *
-   * ⚠️ 為什麼是事件驅動而不是快照欄位：標記**不在 `MatchState` 上**。
-   * `SimWorld.marks` 是一張 sim 內部的 Map，沒有 snapshot 欄位也沒有
-   * `ENTITY_FLAG` 位元（那組位元只剩兩格，而且 `defineTypes` 是 APPEND-ONLY，
-   * 加錯回不去）。所以 `markChanged` / `lethalSaved` 這兩顆事件是層數唯一能到
-   * 螢幕的通道 —— 這正是這個 repo 的第②種失敗（算出來但從沒送到客戶端）。
+   * ⛔ **這一格已經不是層數的來源了（GH#304）。** 這裡原本寫著「`markChanged`
+   * / `lethalSaved` 這兩顆事件是層數唯一能到螢幕的通道」，而 owner 2026-08-09
+   * 裁決加一個快照欄位之後那句話是假的（第三守則）：層數走
+   * `SeatView.counterIds` / `counterCounts`，`MarkBar` 從那裡讀。
+   *
+   * 這一格活下來只為了**免死那一下的閃動**（`savedAtMs`）與重播閃動的 `seq`。
+   * 那是一個瞬間的表演，事件正是它該走的通道 —— 反過來，層數是**狀態**，而
+   * 事件補不回中途加入／重連的客戶端漏掉的歷史，那就是 owner 選欄位的理由。
+   * `count` 仍然被寫進來（同一顆事件帶著它），但畫面不讀它。
    *
    * 只收**自己**的：事件帶的是 ENTITY id，`recordMarkEvent` 拿它跟
    * `localEntityId` 比對，跟 `killCombo` 用 seat 比對是同一條規矩。敵人剩幾層
@@ -780,6 +798,10 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       attrBonus: [...(ss.attrBonus ?? [])],
       statusIds: [...(ss.statusIds ?? [])],
       statusRemainTicks: [...(ss.statusRemainTicks ?? [])],
+      // 【具名計數器】(GH#304)。`?? []` 覆蓋舊/未投影的快照 —— 讀成「沒有任何
+      // 計數器」,跟這裡每一個 append 上來的欄位同一種降級。
+      counterIds: [...(ss.counterIds ?? [])],
+      counterCounts: [...(ss.counterCounts ?? [])],
       undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,

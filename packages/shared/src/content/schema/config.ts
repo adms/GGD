@@ -2703,6 +2703,17 @@ export const zConfigCombatFeelDoc = z
          * 往反方向推出去。
          */
         longerDamageWins: z.boolean().optional(),
+        /**
+         * ⭐ 擊飛四檔落點(GH#301-1)的兩段長度 + 「到底部」指哪個邊緣。
+         * 語意與出貨預設(3 / 12 / true)全部寫在 `sim/combatFeel.ts` 的
+         * `KnockbackRules`。ABSENT = 出貨預設。
+         *
+         * ⛔ 它們**不可以**是 `effects/knockback.ts` 裡的常數:四檔是列舉(作者
+         * 選哪一檔),但一檔多遠是操作者每週會改的數字(第一守則)。
+         */
+        launchShortUnits: z.number().min(0).max(100).optional(),
+        launchLongUnits: z.number().min(0).max(100).optional(),
+        launchEdgeUsesFireRing: z.boolean().optional(),
       })
       .strict()
       .optional(),
@@ -3897,6 +3908,80 @@ export const zConfigBlockDoc = z
   .strict();
 
 /**
+ * config.crit@1 — 暴擊規則（GH#302）。
+ *
+ * owner 2026-08-09 逐字：
+ *
+ * > 我同時獲得 1%機率 100倍 以及 10%機率 2倍暴擊傷害，這樣我會有三種結果，
+ * > 100x2=200、100、2倍，**因為是每一條暴擊獨立算完傷害再帶入下一條**
+ *
+ * ⚠️ 和 `config.shield@1` 不同、和 `config.block@1` 相同：**這份文件的出貨值會
+ * 改變平衡**，而且是故意的 —— owner 推翻了原本的「取最好的那一條、整發只抽一次」。
+ * 舊行為保留成 `stackMode: "max"`，後台切得回去（連抽幾次骰都一樣，見
+ * `sim/critRules.ts` 的 `CritStackMode`）。
+ *
+ * ⭐ owner 同一天另外交代：「**暴擊計算方式 上限 這些參數都要能後台彈性設定**」——
+ * 所以這裡是三格而不是一格：怎麼算（`stackMode`）、總倍率上限（`maxTotalMult`）、
+ * 最多算幾條（`sourceCap`）。
+ *
+ * 為什麼是自己一份文件而不是塞進 `config.block@1`：格擋與暴擊是 `damage.ts` 兩段
+ * 不相干的結算（一個在防守側、一個在出手側），而 schema 加一格等於把
+ * `config.block@1` 升版 —— 一份已經在線上存過 overlay 的文件升版，代價是操作者
+ * 存過的值全部要遷移。同理也不塞 `config.combat-feel@1`（那一頁的欄位是
+ * `deriveFields()` 從 Zod 推導的，而那支推導器只認得 number / boolean，塞一個
+ * enum 進去就是把隔壁工作流的頁面弄紅）。
+ *
+ * **缺文件 = 出貨預設**（{@link SHIPPED_CRIT}），不是空表 —— 一個 undefined 的
+ * `stackMode` 會讓 `rollCritStrike` 的分支全部落空，也就是暴擊整族靜默失效：
+ * 暴擊數字照跳、音效照響、傷害一點都沒多。
+ */
+export const zConfigCritDoc = z
+  .object({
+    id: z.literal("crit"),
+    schema: z.literal("config.crit@1"),
+    note: z.string().optional(),
+    /**
+     * 多條暴擊來源同時吃得到這一發時，它們怎麼合成。
+     *
+     *   multiply  每一條各抽各的骰，抽中的倍率**相乘**（出貨值 = owner 的裁決）
+     *   max       只有期望增益最高的那一條參與，整發只抽一次
+     *             （= 這條規則變成欄位之前的行為）
+     *   add       每一條各抽各的骰，抽中的倍率**相加**
+     *
+     * 三個值都有行為守衛（`sim/combat/critStrike.test.ts`：同一組來源 + 同一顆
+     * 種子 → 三種模式給出三組不同的總倍率）。
+     */
+    stackMode: z.enum(["multiply", "max", "add"]),
+    /**
+     * 一次攻擊的**總**倍率上限（owner 指定 100）。夾的是合成之後的那一個數字。
+     *
+     * ⚠️ 兩端都有界（#277）。下界 1 不是平衡政策，是保險絲：一個 <1 的「上限」
+     * 會把每一次暴擊變成減傷，而畫面上只看得到「暴擊怎麼比平砍還不痛」。
+     */
+    maxTotalMult: z.number().min(1).max(1000),
+    /**
+     * 同一次攻擊最多算**幾條來源攜帶的**暴擊（owner 指定 5）。超出的照期望增益
+     * 由高到低排序後整條不參與，連骰都不抽 —— 所以它同時是每一發的亂數預算上界。
+     *
+     * ⚠️ 它不管英雄自己的 `Stat.CritChance`（那是一條聚合屬性，永遠只有一條）。
+     * 理由寫在 `sim/critRules.ts`：讓它佔格的話，把這一格調到 1 會讓每一個堆了
+     * 暴擊率的英雄完全吃不到暴擊武器，而畫面上就是「這把劍壞了」。
+     */
+    sourceCap: z.number().int().min(1).max(16),
+  })
+  .strict();
+export type ConfigCritDoc = z.infer<typeof zConfigCritDoc>;
+
+/** ⚠️ 缺文件 = 這一份，不是空物件（同 `SHIPPED_WEAKNESS` 的規矩）。 */
+export const SHIPPED_CRIT: ConfigCritDoc = {
+  id: "crit",
+  schema: "config.crit@1",
+  stackMode: "multiply",
+  maxTotalMult: 100,
+  sourceCap: 5,
+};
+
+/**
  * config.berserk@1 — 暴走規則（59-00 初號機那一族）。
  *
  * ⚠️ **這個 schema tag 在 2026-08-05 之前不存在，而 sim 早就在讀它的三格。**
@@ -4048,6 +4133,60 @@ export const SHIPPED_WOUNDS: ConfigWoundsDoc = {
   id: "wounds",
   schema: "config.wounds@1",
   stackMode: "max",
+};
+
+/**
+ * `config.weakness@1` —— 【虛弱】的全域定義（GH#301-4）。
+ *
+ * owner 2026-08-09：「虛弱 => **攻擊速度暫時減半、AP/AD 造成傷害暫時減半**」。
+ *
+ * ⚠️ 這三格**不在卡片上**，這是它與【重創】的分野：重創的倍率逐卡不同（「這一支
+ * 技能的重創有多重」），而虛弱是 owner 給的一個**全域定義**（「虛弱就是減半」）。
+ * 定義住在一個地方，所以調整它只要動這一頁，不用逐卡改。
+ *
+ * ⚠️ 兩個倍率兩端都有界（#277）：上界 1 不是平衡政策，是保險絲 —— 一個 >1 的
+ * 「虛弱」會讓中了虛弱的人變強，而畫面上只看得到「他怎麼突然打很痛」。
+ * 完整推導（為什麼砍封包不砍屬性、為什麼層數不放大它）見 `sim/weakness.ts` 檔頭。
+ */
+export const zConfigWeaknessDoc = z
+  .object({
+    id: z.literal("weakness"),
+    schema: z.literal("config.weakness@1"),
+    note: z.string().optional(),
+    statusTag: z
+      .string()
+      .min(1)
+      .max(64)
+      .describe(
+        "哪一個**狀態分類**算虛弱（狀態文件 tags 上的一個字串）。引擎不認任何寫死的狀態編號 —— " +
+          "只要一份 status-effect 文件的 tags 帶了這個字，掛上它就會觸發虛弱。改這一格＝換一個分類。",
+      ),
+    attackSpeedMult: z
+      .number()
+      .min(0)
+      .max(1)
+      .describe(
+        "被虛弱時攻擊速度乘多少。0.5 = 減半（出貨值，owner 2026-08-09）；1 = 這一半關掉；0 = 完全打不出來。",
+      ),
+    damageDealtMult: z
+      .number()
+      .min(0)
+      .max(1)
+      .describe(
+        "被虛弱時**造成**的傷害乘多少。0.5 = 減半（出貨值）。⚠️ 是「他打出去的」不是「他受到的」，" +
+          "而且連固定值傷害一起打折（砍 AD/AP 屬性的寫法對固定值完全沒作用）。",
+      ),
+  })
+  .strict();
+export type ConfigWeaknessDoc = z.infer<typeof zConfigWeaknessDoc>;
+
+/** ⚠️ 缺文件 = 這一份，不是空物件（同 `SHIPPED_WOUNDS` 的規矩）。 */
+export const SHIPPED_WEAKNESS: ConfigWeaknessDoc = {
+  id: "weakness",
+  schema: "config.weakness@1",
+  statusTag: "weakness",
+  attackSpeedMult: 0.5,
+  damageDealtMult: 0.5,
 };
 
 export const zConfigBerserkDoc = z
@@ -4878,8 +5017,14 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigRoundGradeDoc,
   zConfigShieldDoc,
   zConfigBlockDoc,
+  // 暴擊規則（GH#302）。⚠️ 漏掉這一行 = 一份 crit.json 進了 content/ 之後整份
+  // 內容驗證失敗 → 骨架英雄，理由見下面那一段。
+  zConfigCritDoc,
   zConfigBerserkDoc,
   zConfigWoundsDoc,
+  // 【虛弱】的全域定義（GH#301-4）。⚠️ 漏掉這一行 = 一份 weakness.json 進了
+  // content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
+  zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
   zConfigDispelDoc,
   // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證

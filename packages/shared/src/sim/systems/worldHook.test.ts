@@ -19,6 +19,17 @@
  * 突變紀錄（都真的做過，見 commit message）:
  *   · `WorldHookSystem.ts` 的 `scope === "world"` 那一支整段刪掉 → wh-world 紅
  *   · 迴避那一列的 `actorKey`/`targetKey` 對調                  → wh-evade-owner 紅
+ *
+ * ── GH#300 的四個新時刻（2026-08-09）—— 一個時刻一條，四條各一次突變 ────
+ *   · `effects/shield.ts` 的 `emit("shieldGained")` 拿掉      → wh-shield-gained 紅
+ *   · `WORLD_HOOKS` 的 `guardBreak` 那一列拿掉                → wh-shield-broken 紅
+ *   · `WORLD_HOOKS` 的 `onAllyDeath` 那一列拿掉               → wh-ally-death 紅
+ *   · `effects/applyStatus.ts` 的 `emit("statusApplied")` 拿掉 → wh-status-applied 紅
+ * 四條各自只紅自己那一條（其餘 7 綠），所以它們沒有互相代打。
+ *
+ * ⭐ 四條都**跑出貨那條路**（真的施法／真的挨一發封包走完 `step()`／真的死），
+ * 不是斷言 `world.emit` 被呼叫過 —— 後者對「事件發了但 `fireHooks` 的存活閘把它
+ * 吃掉」是綠的，而那正是 #293 的形狀。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../../testkit/cover";
@@ -32,9 +43,14 @@ import { deathSystem } from "./DeathSystem";
 import { reviveSystem } from "./ReviveSystem";
 import { beginCombatRevives } from "../revive";
 import { fireHooks } from "../effects/hooks";
+import { runEffects } from "../effects/effectRunner";
+import { addShield } from "../combat/damage";
 import type { HookDef, HookEvent } from "../stats/modifiers";
 import type { EffectDef } from "../effects/effect";
-import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
+import type { IntentFrame } from "../intents";
+import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../../ids";
+
+const NO_INTENTS: ReadonlyMap<SeatId, IntentFrame> = new Map();
 
 beforeAll(() => registerSkeletonContent());
 
@@ -161,5 +177,86 @@ describe("worldHookSystem —— 事件流 → hook 廣播", () => {
     // `reviveComplete.id` 是**圈圈**（發完就 destroy），只有 `ownerId` 是英雄。
     expect(marks(w, victim)).toEqual(["back"]);
     expect(marks(w, rescuer)).toEqual([]); // 也不是頂著圈圈的那位
+  });
+
+  // ── GH#300 的四個新時刻 ────────────────────────────────────────────────
+  // ⭐ 每一條都**真的跑出貨那條路**（真的施法／真的挨一發封包／真的死），
+  // 不是斷言 `world.emit` 被呼叫 —— 後者對「發了但 fireHooks 吃掉」是綠的。
+  // 突變紀錄見檔尾。
+
+  it("⛔ 護盾產生時發給拿到盾的人,不是給盾的人", () => {
+    cover("wh-shield-gained");
+    const w = stage();
+    const giver = hero(w, 0, 0);
+    const ally = hero(w, 1, 0);
+    for (const id of [giver, ally]) {
+      attachSource(w, id, { id: `src:${id}`, kind: "item", hooks: [markCard("onShieldGained", "barrier")] });
+    }
+    // 真的跑出貨的 `shield` effect（不是手寫 emit）。
+    runEffects([{ kind: "shield", amount: { flat: 100 }, duration: 5 } as EffectDef], {
+      world: w, caster: giver, rank: 1, targets: [ally], origin: "ability:test.shield", rng: w.rng,
+    });
+    worldHookSystem(w);
+    expect(marks(w, ally)).toEqual(["barrier"]);
+    expect(marks(w, giver)).toEqual([]); // 持有者是收盾的那個
+  });
+
+  it("⛔ 護盾破碎只在真的被打空那一發,還有剩不算", () => {
+    cover("wh-shield-broken");
+    const w = stage();
+    const victim = hero(w, 0, 0);
+    const attacker = hero(w, 1, 1);
+    attachSource(w, victim, { id: "src:v", kind: "item", hooks: [markCard("onShieldBroken", "shattered")] });
+    addShield(w, victim, 100, 30, "ability:test.shield");
+
+    // ① 打不破 → 不響。⛔ 少了這一段,「每一發傷害都發」也會讓②變綠。
+    w.damageQueue.push({ source: attacker, target: victim, amount: 10, type: "physical", crit: false, origin: "basic" });
+    w.step(NO_INTENTS);
+    expect(marks(w, victim)).toEqual([]);
+
+    // ② 打空 → 響。走完整 step()，所以 guardBreak(8) → worldHookSystem(9f)
+    //    的槽位順序也一起被驗到。
+    w.damageQueue.push({ source: attacker, target: victim, amount: 500, type: "physical", crit: false, origin: "basic" });
+    w.step(NO_INTENTS);
+    expect(marks(w, victim)).toEqual(["shattered"]);
+  });
+
+  it("⛔ 隊友陣亡發給活著的隊友,死者自己與敵人都收不到", () => {
+    cover("wh-ally-death");
+    const w = stage();
+    const victim = hero(w, 0, 0);
+    const ally = hero(w, 1, 0);
+    const enemy = hero(w, 2, 1);
+    for (const id of [victim, ally, enemy]) {
+      attachSource(w, id, { id: `src:${id}`, kind: "item", hooks: [markCard("onAllyDeath", "avenge")] });
+    }
+    w.health.get(victim)!.hp = 0;
+    deathSystem(w); //    9
+    worldHookSystem(w); // 9f
+    expect(marks(w, ally)).toEqual(["avenge"]);
+    // ⛔ 兩個反向一起讀:少了它們,「發給全場」與「發給死者本人（＝onDeath）」
+    // 兩種壞掉的實作都會讓上面那行變綠。
+    expect(marks(w, victim)).toEqual([]);
+    expect(marks(w, enemy)).toEqual([]);
+  });
+
+  it("⛔ 狀態掛上時發一次,續期不重發", () => {
+    cover("wh-status-applied");
+    const w = stage();
+    const caster = hero(w, 0, 1);
+    const target = hero(w, 1, 0);
+    attachSource(w, target, { id: "src:t", kind: "item", hooks: [markCard("onStatusApplied", "reacted")] });
+    const slow: EffectDef = { kind: "applyStatus", statusId: "slow-test", duration: 9, moveSpeedMult: 0.5 } as unknown as EffectDef;
+    const ctx = { world: w, caster, rank: 1, targets: [target], origin: "ability:test.cc", rng: w.rng };
+
+    runEffects([slow], ctx);
+    worldHookSystem(w);
+    expect(marks(w, target)).toEqual(["reacted", "slow-test"]);
+
+    // 續期同一筆（同 statusId + 同 origin）→ ⛔ 不可以再發一次。記號卡自己會
+    // 被續期而不是新增,所以計數改看事件流。
+    w.events.length = 0;
+    runEffects([slow], ctx);
+    expect(w.events.filter((e) => e.type === "statusApplied")).toHaveLength(0);
   });
 });

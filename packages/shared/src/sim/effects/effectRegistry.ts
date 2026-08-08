@@ -84,6 +84,8 @@ import { summonEffect } from "./summon"; // P2 召喚物 — lifecycle half in .
 
 // ── reserved slots (GH#289) — schema-known, registry-slotted, LOUDLY unimplemented
 import { evasionEffect } from "./evasion";
+// ── 契約層 2026-08-09 (GH#301-2) — 真瞬移。⛔ 保留槽位，`apply` 目前 THROW。
+import { blinkEffect } from "./blink";
 
 // ── 嘲弄 / 煉金術 (鍊金術之盾 godie-i06q) ────────────────────────────────────
 import { tauntEffect } from "./taunt"; // 強制索敵 — model + config in ../taunt.ts
@@ -188,6 +190,13 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   manaBarrier: manaBarrierEffect,
   // 受傷延長增益（52-01 狂戰士之怒）。⭐ 無狀態、零接線，見 ./extendBuff.ts。
   extendBuff: extendBuffEffect,
+
+  // ── 真瞬移 (GH#301-2)。owner 推翻了 templates/expand.ts 那句「a `kind:
+  //    "blink"` … deliberately was not added」。⭐ 行為**已經落地**(2026-08-09
+  //    下午):同一個 tick 換座標,中間位置一格都不存在 —— 這正是它與 `leap`
+  //    (`MIN_LEAP_TICKS = 2`) 的全部差別。機制在 ../movement/blink.ts,
+  //    「誰移動、移到哪」在 ./blink.ts。⛔ 它已經不再丟例外。
+  blink: blinkEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)

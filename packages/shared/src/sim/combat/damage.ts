@@ -31,6 +31,7 @@ import { Abilities, Champions } from "../content/registry";
 import { noteAbilityConnect } from "../abilities/abilityRecovery";
 import { breakStatusesOnDamage } from "../statusBreak";
 import { woundMult } from "../grievousWounds";
+import { weaknessMult } from "../weakness";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -802,6 +803,23 @@ export function combatResolveSystem(world: SimWorld): void {
       // 反彈就會被乘第二次(比例變成 `pct × k`)。整段推導寫在 `DamagePacket`
       // 那個欄位上,開關是 `incomingPct.applyGlobalDamageMult`。
       if (pkt.skipGlobalDamageMult !== true) pkt.amount *= world.combatEnv.damageDealt;
+
+      // 【虛弱】—— 攻擊者**造成的傷害**打折（GH#301-4，owner 2026-08-09：
+      // 「攻擊速度暫時減半、AP/AD 造成傷害暫時減半」）。
+      //
+      // ⛔ 它是 `pkt.source` 的減益，不是 `pkt.target` 的減傷 —— 兩者在單挑時
+      // 長得一模一樣（失敗形態 ④），在混戰裡完全不同：虛弱的人打**誰**都軟。
+      //
+      // ⭐ 位置：緊貼全域傷害倍率那一行，也就是**傷害封包**這一層而不是屬性層。
+      //   · 在 `mitigate()` 之前 → 它是「你出手多重」而不是「他扛得多好」；
+      //   · 不砍 AD/AP 屬性 → 一支「固定 300 點」的技能**也**被減半（砍屬性的
+      //     寫法對固定值一點作用都沒有，而那正是文案與行為對不上的地方）；
+      //   · 每一發封包各乘一次，普攻 / 技能 / DoT / 道具觸發全部走這條隊列。
+      // 完整推導（含「為什麼不進 statPipeline」）寫在 `sim/weakness.ts` 檔頭。
+      //
+      // 沒有任何一筆虛弱時 `weaknessMult` 回 1，所以這一行對今天的每一場比賽都是
+      // 位元等價的 —— 直到有一份帶 `weakness` 分類的狀態文件上架。
+      pkt.amount *= weaknessMult(world, pkt.source, "damageDealtMult");
 
       // "impact" = post-mitigation, PRE-shield damage: the blow's raw force,
       // used to scale hitstop/knockback even when a shield eats the hp loss.

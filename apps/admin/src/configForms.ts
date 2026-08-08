@@ -51,9 +51,11 @@ import {
   zConfigModelLodDoc,
   zConfigReplayDoc,
   zConfigBlockDoc,
+  zConfigCritDoc,
   zConfigBerserkDoc,
   zConfigDispelDoc,
   zConfigWoundsDoc,
+  zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
   zConfigAugmentFilterDoc,
   zConfigBodyScaleDoc,
@@ -491,6 +493,51 @@ const BLOCK_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ───────────────────────────────────────────────── 暴擊規則 (config/crit) ──
+
+const CRIT_SPEC: ConfigDocSpec = {
+  page: "critRules",
+  collection: "config",
+  docId: "crit",
+  schemaTag: "config.crit@1",
+  zod: zConfigCritDoc,
+  title: "暴擊規則",
+  intro: [
+    "一次攻擊上同時有**好幾條**暴擊時，它們怎麼合起來算。來源有兩種：英雄自己的暴擊率（屬性面板那一格），加上每一件裝備／每一張三選一卡片各自帶的暴擊（例：天堂之劍「6%機率造成10倍暴擊傷害」）。",
+    "owner 2026-08-09 的裁決是「**每一條暴擊獨立算完傷害再帶入下一條**」，他自己舉的例子是：同時拿到「1%機率100倍」與「10%機率2倍」，會有三種結果 —— 兩條都中 100×2＝200 倍、只中第一條 100 倍、只中第二條 2 倍。所以出貨值是 multiply。",
+    "⚠️ 這一頁**會改變平衡**，和 護盾規則 那一頁不同（那一頁的出貨值刻意等於改成欄位之前的行為）。舊行為保留成 max，切回去就是「只有期望值最高的那一條會算，整發只抽一次骰」—— 那個世界裡玩家的第二張暴擊卡是廢牌，撿到它畫面上什麼都不會變。",
+    "⚠️ 改成獨立骰之後，一次攻擊抽幾次亂數變成「這個人身上有幾條暴擊」的函式，所以**同一顆種子的舊錄影會對不上**（owner 已接受：錄影只在同一個版本內有效）。「最多算幾條」那一格給了它一個上界，所以次數不是無限的。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/crit.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果，要改就從這一頁改。",
+  ],
+  consumer:
+    "packages/shared/src/sim/combat/critStrike.ts 的 rollCritStrike()（每一次普攻的傷害點都會呼叫一次，近戰在 systems/BasicAttackSystem.ts、遠程同一處算好之後塞進投射物，讀 world.critRules）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.critRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 格擋規則／護盾規則／基礎加成 同一個形態(#278)：shard 開機載入內容樹時讀一次就定格，寫成「下一場生效」會害操作者以為功能壞了。",
+  fields: [
+    {
+      path: "stackMode",
+      zh: "多條暴擊同時成立時怎麼合成",
+      note: "multiply＝每一條各抽各的骰，抽中的把自己的倍率**乘**上去（1%×100倍 與 10%×2倍 都中 = 200 倍）；這是唯一一個讓第二張暴擊卡真的變強的選項，肉鴿三選一疊得起來就靠它。max＝只有期望增益（機率×倍率）最高的那一條會算，整發只抽一次骰，所以第二件暴擊裝完全白帶（這是 2026-08-09 之前的行為，連抽骰次數都一樣，切回去等於整條回滾）。add＝各抽各的骰但倍率**相加**（上面那個例子 = 102 倍），疊得起來但很快就被上限追上。差別只在**同時有兩條以上**的時候，只有一條暴擊的人三種設定完全一樣。",
+      optionLabels: {
+        multiply: "multiply 每條獨立骰、倍率相乘（出貨值＝owner 裁決）",
+        max: "max 只取最高的那一條（2026-08-09 之前的行為）",
+        add: "add 每條獨立骰、倍率相加",
+      },
+    },
+    {
+      path: "maxTotalMult",
+      zh: "一次攻擊的總倍率上限",
+      note: "合成完之後夾在這個數字（出貨 100，owner 指定）。⚠️ 夾的是**總倍率**不是逐條：owner 例子裡那個 100×2＝200 在出貨設定下會被夾回 100，也就是說第二條暴擊在那個極端組合下確實吃不到 —— 這是刻意的，multiply 沒有上限就是指數爆炸，五張暴擊卡疊起來一刀刪掉對手，遊戲就沒了。調小＝爆發封頂變低、後期靠疊暴擊的路線變弱；調大＝允許更誇張的一擊必殺 build。",
+    },
+    {
+      path: "sourceCap",
+      zh: "同一次攻擊最多算幾條暴擊來源",
+      note: "身上暴擊來源超過這個數量時，只有**期望增益（機率×倍率）最高的前幾條**參與，其餘整條不算、連骰都不抽（出貨 5，owner 指定）。丟掉的一定是最弱的那幾條，不是最晚買的 —— 所以剛買到的強力武器不會被上限吃掉。它同時是每一發攻擊的亂數預算上界，也就是「換一個版本之後錄影還能不能對得上」的那個界。⚠️ 它**不管英雄自己的暴擊率**（那是一條聚合屬性，永遠只有一條）；讓它算進來的話，把這一格填 1 會讓每一個堆了暴擊率的英雄完全吃不到暴擊武器，而畫面上看起來就是那把武器壞了。",
+    },
+  ],
+  preserved: [],
+};
+
 const DAMAGE_RULES_SPEC: ConfigDocSpec = {
   page: "damageRules",
   collection: "config",
@@ -553,6 +600,44 @@ const WOUNDS_SPEC: ConfigDocSpec = {
     },
   ],
   // 這一頁只有一格純量,沒有任何不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const WEAKNESS_SPEC: ConfigDocSpec = {
+  page: "weaknessRules",
+  collection: "config",
+  docId: "weakness",
+  schemaTag: "config.weakness@1",
+  zod: zConfigWeaknessDoc,
+  title: "虛弱規則",
+  intro: [
+    "【虛弱】= 攻擊速度減半 + **造成的傷害**減半（owner 2026-08-09：「虛弱 => 攻擊速度暫時減半、AP/AD 造成傷害暫時減半」）。",
+    "⚠️ 「造成的傷害」不等於「AD/AP 屬性」：這一頁砍的是他**打出去的每一發**，所以連「固定 300 點」那種不吃屬性的技能也一起減半。砍屬性的寫法對固定值一點作用都沒有。",
+    "⚠️ 屬性面板**不會**顯示 AD/AP 掉一半 —— 它們真的沒掉。虛弱是掛在身上的減益，該出現的地方是狀態列不是屬性表。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/weakness.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/weakness.ts::weaknessMult（兩個讀取點各呼叫一次：systems/BasicAttackSystem.ts 的攻速、combat/damage.ts 的出手傷害）；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.weaknessRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 淨化規則／重創規則／格擋規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "statusTag",
+      zh: "哪一個狀態分類算虛弱",
+      note: "引擎不認任何寫死的狀態編號 —— 它問的是「這個人身上有沒有一筆帶著這個分類的狀態」。所以只要一份狀態文件的 tags 帶了這個字，任何技能掛上它就會虛弱。⚠️ 目前出貨的 28 份狀態沒有一份帶這個分類，所以在那一份文件上架之前，這個機制一場比賽裡一次都不會發生。",
+    },
+    {
+      path: "attackSpeedMult",
+      zh: "被虛弱時攻速乘多少",
+      note: "0.5 = 減半（出貨值）。1 = 把攻速那一半關掉，只留傷害那一半。0 = 完全打不出普攻。⚠️ 它乘的是最終攻速，不進屬性面板。",
+    },
+    {
+      path: "damageDealtMult",
+      zh: "被虛弱時造成的傷害乘多少",
+      note: "0.5 = 減半（出貨值）。⚠️ 是「他打出去的」不是「他受到的」—— 單挑時兩者看起來一樣，混戰裡完全不同：虛弱的人打誰都軟。普攻／技能／持續傷害／道具觸發全部走同一條隊列，所以每一發各打折一次。",
+    },
+  ],
+  // 這一頁三格純量,沒有任何不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -1708,9 +1793,11 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DAMAGE_COLORS_SPEC,
   SHIELD_SPEC,
   BLOCK_SPEC,
+  CRIT_SPEC,
   BERSERK_SPEC,
   DISPEL_SPEC,
   WOUNDS_SPEC,
+  WEAKNESS_SPEC,
   DAMAGE_RULES_SPEC,
   AUGMENT_FILTER_SPEC,
   STEALTH_SPEC,

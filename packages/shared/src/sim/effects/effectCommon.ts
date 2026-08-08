@@ -14,6 +14,7 @@ import type { AttrLookup, EffectContext, EffectDef } from "./effect";
 import { resolveScaling } from "./effect";
 import type { Stat } from "../stats/statTypes";
 import { liveAttribute } from "../stats/attrSources";
+import { clampMarkCount } from "../markLimits";
 
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
@@ -46,6 +47,34 @@ export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): bo
   const st = world.status.get(id);
   if (!st) return false;
   return st.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick);
+}
+
+/**
+ * `id` 身上這個狀態**現在疊了幾層**（GH#301-5）。沒有 = `0`。
+ *
+ * ⚠️ 這是 `hasStatus` 的**同一個問題的數字版**，所以到期規則逐字相同
+ * （`> world.tick`，理由見 `hasStatus`）—— 兩者對「這一 tick 還算不算」給不同
+ * 答案的那一天，會出現「條件說有、層數說 0」的分裂。
+ *
+ * ⭐ **相加**而不是取最大：兩個不同來源（`sourceId`）各自掛了一筆【破甲】就是
+ * 兩筆獨立的標記，而玩家問的是「他身上總共破了幾層」。同一個來源的重複施加已經
+ * 在 `applyStatus` 那邊累加成一筆了，所以這裡不會重複計算同一次施加。
+ * 總和一樣走 `clampMarkCount` —— 十個來源各 999 層不會溢出成一個荒謬的數字。
+ *
+ * ⚠️ **缺席的 `stacks` 讀成 1**（見 `components.ts` 的 `StatusEffect.stacks`）：
+ * 一份沒寫這一格的舊文件的意思是「他身上有」，而那是一層。
+ *
+ * 純度：走一個陣列 + 整數加法。沒有 rng、沒有時鐘。
+ */
+export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId): number {
+  const st = world.status.get(id);
+  if (!st) return 0;
+  let n = 0;
+  for (const s of st.effects) {
+    if (s.statusId !== statusId || s.expiresAtTick <= world.tick) continue;
+    n += s.stacks ?? 1;
+  }
+  return clampMarkCount(n);
 }
 
 /**

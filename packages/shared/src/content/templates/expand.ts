@@ -921,10 +921,18 @@ const FAMILIES: Readonly<Record<string, Family>> = {
   // MINIMUM rather than hidden: the shipped default sits ON the floor, and an
   // author who wants a visible streak raises it.
   //
-  // A `kind: "blink"` would close it, and deliberately was not added: the
-  // effect union / Zod mirror / registry are three files under concurrent edit
-  // by other lanes, and a 0.067 s warp is behaviourally a warp. Named in the
-  // report as the owner's call, not silently decided here.
+  // ⚠️ 2026-08-09 —— **owner 推翻了這一段原本的辯護**（GH#301-2）。
+  // 原文是「A `kind: "blink"` would close it, and DELIBERATELY was not added …
+  // a 0.067 s warp is behaviourally a warp. Named in the report as the owner's
+  // call」。owner 做了那個 call，而答案是相反的：**「是真的瞬移，不是平移」**。
+  // 0.067 秒的中間位置不是美術問題 —— 那兩格身體真的存在，會被範圍技掃到、
+  // 會被地形擋，而瞬移的定義就是那兩格不存在。
+  //
+  // `kind: "blink"` 已經在 `sim/effects/effect.ts` / `content/schema/effect.ts`
+  // / `effectRegistry.ts` 上（契約層 2026-08-09），行為是 GH#301-2。
+  // ⛔ 這個模板**還沒**改接 `blink` —— 遷移那 11 支要連同行為一起驗，屬於
+  // GH#301-2 的範圍。這段註解留在這裡是為了說明「為什麼還是 leap」，
+  // 不是為了替它辯護（第三守則：一句不再成立的辯護留著就是謊）。
   //
   // ── WHAT IS **NOT** A PARAMETER (陷阱 ③ 導出值不是參數) ────────────────────
   //   · THE BLINK DISTANCE. 82-02 縮地 hops a fixed 200 u per order

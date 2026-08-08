@@ -77,6 +77,34 @@ export interface KnockbackRules {
    *               身體會被往**反方向**推出去,鉤索當場失效。想開之前先想清楚。
    */
   longerDamageWins: boolean;
+  /**
+   * ⭐ 擊飛四檔落點的「一小段」有多長（GGD 單位，GH#301-1）。
+   *
+   * owner 2026-08-09 推翻了「落點由系統推算，作者指定不了」，同時把它**簡化成
+   * 四檔**：一小段 / 預設 / 一大段 / 到底部。四檔是**列舉**（`knockback
+   * .launchDistance`），但四檔各自**多遠**是操作者每週會改的那種數字 ——
+   * ⛔ 所以它住在這裡，不是 `effects/knockback.ts` 裡的 `const SHORT = 3`。
+   *
+   * 出貨 3：競技場半徑 24、體半徑 0.6、近戰射程約 1.6，所以 3 是「推出一個
+   * 身位半、對方一步就走得回來」—— 一小段該有的量級。
+   */
+  launchShortUnits: number;
+  /** 「一大段」有多長（GGD 單位）。出貨 12 = 競技場半徑的一半，橫跨半個場。 */
+  launchLongUnits: number;
+  /**
+   * 決策點：「到底部」推到**哪一個**邊緣。
+   *
+   * true（出貨）= 目前**還能站的**邊緣，也就是火圈此刻的半徑（火圈沒縮 / 沒
+   *              武裝時就是決鬥區邊界）。
+   * false        = 決鬥區的**幾何**邊界，無視火圈。
+   *
+   * ⚠️ 這一格為什麼不能寫死：`false` 那一側在火圈縮到一半之後，「到底部」會把
+   * 人**扔進火裡**（真傷、每 tick 扣），也就是一支平平無奇的擊飛技在第 3 回合
+   * 之後突然變成處決技 —— 一個只在後半場出現、而且完全靜默的機制。出貨選
+   * true 是因為「底部」對玩家的意思是「我還站得住的地方的盡頭」；想要那個處決
+   * 手感的話 owner 自己開。
+   */
+  launchEdgeUsesFireRing: boolean;
 }
 
 /** 打就站定規則(全部後台可調)。 */
@@ -408,6 +436,9 @@ export const DEFAULT_KNOCKBACK: KnockbackRules = Object.freeze({
   bodyUnit: 1.0,
   authoredWins: true,
   longerDamageWins: false,
+  launchShortUnits: 3,
+  launchLongUnits: 12,
+  launchEdgeUsesFireRing: true,
 });
 
 export const DEFAULT_STANDSTILL: StandstillRules = Object.freeze({
@@ -533,6 +564,14 @@ export function normalizeKnockbackRules(raw: unknown): KnockbackRules {
       typeof r.longerDamageWins === "boolean"
         ? r.longerDamageWins
         : DEFAULT_KNOCKBACK.longerDamageWins,
+    // 上界 100 與 `maxBodies` / `bodyUnit` 同一個帶：競技場半徑 24，所以 100
+    // 以上實務上等同「到底部」，留著只是擋「12 打成 1200」那種手滑（#277）。
+    launchShortUnits: num(r.launchShortUnits, DEFAULT_KNOCKBACK.launchShortUnits, 0, 100),
+    launchLongUnits: num(r.launchLongUnits, DEFAULT_KNOCKBACK.launchLongUnits, 0, 100),
+    launchEdgeUsesFireRing:
+      typeof r.launchEdgeUsesFireRing === "boolean"
+        ? r.launchEdgeUsesFireRing
+        : DEFAULT_KNOCKBACK.launchEdgeUsesFireRing,
   });
 }
 

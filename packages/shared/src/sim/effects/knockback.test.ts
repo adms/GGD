@@ -41,6 +41,8 @@ import { runEffects } from "./effectRunner";
 import type { EffectContext, EffectDef } from "./effect";
 import { KB_MAX_DISTANCE } from "./knockbackLimits";
 import { startLeap } from "../movement/leap";
+import { DEFAULT_KNOCKBACK } from "../combatFeel";
+import { currentFireRingRadius, fireRingRulesFromConfig } from "../fireRing";
 import { asSeatId, asTeamId, type EntityId, type SeatId } from "../../ids";
 import type { IntentFrame } from "../intents";
 import * as V from "../math/vec2";
@@ -390,5 +392,62 @@ describe("knockback — 上界與既有狀態 (kb-bounds / kb-midleap)", () => {
     // 沒有殘留的 airborne 項目 —— 有的話 digest 會 hash 它, 客戶端會把角色畫在空中。
     expect(r.world.airborne.has(r.victim)).toBe(false);
     expect(r.world.nav.get(r.victim)!.override).toBeNull();
+  });
+});
+
+/**
+ * ⭐ 四檔落點 (GH#301-1, owner 2026-08-09)。
+ *
+ * ⛔ 這裡驗的是**機制**不是數字：期望值一律從 `DEFAULT_KNOCKBACK` 推導，
+ * 不抄 3 / 12（第零守則：出貨值已經有三個住處 + drift 測試在守，測試裡再抄
+ * 一份就是第四個住處，而且它一定會過期）。
+ *
+ * 突變紀錄（都真的做過）:
+ *   · `tier === "default"` 改成永遠成立（四檔整段跳過）→ kb-launch-tier /
+ *     kb-launch-edge 兩條全紅（走回 distance/gap 推算，短檔量到 0.1−2 = 不推）
+ *   · `tierDistance` 的 `kb.launchEdgeUsesFireRing` 分支改成永遠讀
+ *     `zoneDef.boundaryRadius`                        → kb-launch-edge 紅
+ */
+describe("knockback — 四檔落點 (kb-launch-tier)", () => {
+  it("作者選的那一檔說了算：距離來自後台，而且不再被減掉雙方距離", () => {
+    cover("kb-launch-tier");
+    // 同一份 effect、同一個 gap，只有 `launchDistance` 不同。
+    // `distance: 0.1` 是刻意的：推算路徑在 gap 2 下會算出 0（0.1 − 2 < 0，
+    // 完全不推），所以「量到的位移 > 0」本身就證明四檔繞過了那條路徑。
+    const short = rig({ gap: 2 });
+    const long = rig({ gap: 2 });
+    shoveAndRun(short, kb({ distance: 0.1, speed: 40, launchDistance: "short" }), 40);
+    shoveAndRun(long, kb({ distance: 0.1, speed: 40, launchDistance: "long" }), 40);
+
+    expect(travelled(short)).toBeCloseTo(DEFAULT_KNOCKBACK.launchShortUnits, 3);
+    expect(travelled(long)).toBeCloseTo(DEFAULT_KNOCKBACK.launchLongUnits, 3);
+    expect(travelled(long)).toBeGreaterThan(travelled(short));
+
+    // …而「預設」那一檔一格都沒變：仍然是 max(distance, hp 推算) 再減 gap。
+    const dflt = rig({ gap: 2 });
+    shoveAndRun(dflt, kb({ distance: 6, speed: 40, launchDistance: "default" }), 40);
+    expect(travelled(dflt)).toBeCloseTo(4, 3);
+  });
+
+  it("「到底部」推到**還站得住**的邊緣 —— 火圈縮了就跟著縮", () => {
+    cover("kb-launch-edge");
+    const r = rig({ gap: 2 });
+    // 火圈縮到一半。⚠️ 不開 `combatActive`：`fireRingSystem` 因此不會推進時鐘、
+    // 也不會燒人，所以量到的軌跡只有這一個 effect 造成的（同檔頭「同隊」那段）。
+    const rules = fireRingRulesFromConfig(
+      { startSec: 0, shrinkSec: 20, minRadius: 0.5, maxPctPerSec: 1 },
+      1 / 30,
+    );
+    r.world.fireRingRules = rules;
+    r.world.fireRingTicks = rules.startTicks + Math.round(rules.shrinkTicks / 2);
+    const rim = currentFireRingRadius(r.world, 0);
+    expect(rim).toBeLessThan(Z0.boundaryRadius); // 前提：火圈真的縮了
+
+    shoveAndRun(r, kb({ distance: 0.1, speed: 60, launchDistance: "toEdge" }), 40);
+    // 落在「還能站的圓」上，整個身體都在裡面（rim − 體半徑）。
+    const t = r.world.transform.get(r.victim)!;
+    expect(V.dist(t.pos, C)).toBeCloseTo(rim - t.radius, 2);
+    // ⛔ 而且**沒有**被推到幾何邊界去 —— 那一側會把人扔進火裡。
+    expect(V.dist(t.pos, C)).toBeLessThan(Z0.boundaryRadius - 1);
   });
 });

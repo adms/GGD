@@ -360,9 +360,11 @@ export function HudRoot(): React.JSX.Element {
               returns null when the corridor has no room. */}
           <KillCombo />
           <SelfStatusBar />
-          {/* 【具名標記】層數 (GH#278)。52-00【十二道試煉】的 12 層是 12 條命,
-              而它不在 MatchState 上 —— `markChanged` 這顆事件是它到螢幕的唯一
-              通道。自己管戰鬥階段閘,沒有標記就回 null。 */}
+          {/* 【具名標記】層數 (GH#278)。52-00【十二道試煉】的 12 層是 12 條命。
+              ⚠️ 這裡原本寫著「`markChanged` 這顆事件是它到螢幕的唯一通道」——
+              GH#304 之後那句話是假的（第三守則）:層數走 `SeatState.counterIds`
+              / `counterCounts`,事件只剩免死那一下的閃動。差別是重連:事件補不回
+              層數,快照第一份就帶著。自己管戰鬥階段閘,沒有計數器就回 null。 */}
           <MarkBar />
           {/* 殭屍來襲 + 即時已擊殺數 (task #258). The roguelite waves have
               shipped since #215 and the word 殭屍 appeared NOWHERE in combat;
