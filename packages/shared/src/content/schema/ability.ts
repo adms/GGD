@@ -2,7 +2,8 @@
 import { z } from "zod";
 import type { AbilityId } from "../../ids";
 import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zTintRgb } from "./common";
-import { zAbilityPassive, zEffectDef } from "./effect";
+import { zAbilityPassive, zEffectDef, zHookEvent } from "./effect";
+import { zMarkSpec } from "./mark";
 import { zAbilityTemplateBinding } from "./template";
 import { zAbilityVfxLayers } from "./abilityVfx";
 
@@ -61,6 +62,273 @@ export const zHitFeel = z
   })
   .strict();
 
+/**
+ * 維持成本的上界。50 打成 500 會過後台、然後在下游被靜默夾掉（#277 的形狀），
+ * 所以每一格都要有**上界不只下界**（CLAUDE.md 第一守則）。
+ *
+ * 500 不是平衡政策，是**打錯字的閘**：出貨最貴的一支是 20-01 風王結界的
+ * 90（rank 4），而一個真的超過 500 的維持成本代表「按一下就空魔」——
+ * 那不是切換技，那是一發技能，應該用 `manaCost` 表達。
+ */
+export const TOGGLE_UPKEEP_MAX = 500;
+/** `perSecond` 節奏的週期上界（秒）。超過一場戰鬥長度 = 這一格沒有意義。 */
+export const TOGGLE_INTERVAL_MAX_SEC = 60;
+
+/**
+ * 【切換】—— 同一顆按鈕的開／關兩態（20-01 風王結界 · 70-00 紮根）。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 為什麼「開關成本」與「維持成本」是**兩個**欄位
+ *
+ * 20-01 的文案逐字寫著兩組不同的數字：
+ *   「每次[開關]耗[MP] 50/100/150/200」          ← 這是 `ability@1.manaCost`
+ *   「開啟時[每次攻擊][消耗]MP30/50/70/90」      ← 這是 `upkeepCost`
+ * 用同一格表達的話，20-01 的兩個數列必須二選一，而**兩個都是文案上印出來的**。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ `onExit` 是必要欄位，不是選配
+ *
+ * 一個沒有 `onExit` 的切換技只是一個開關；20-01 的傷害**有一半在關閉那一刻**
+ * （「關閉時，凝聚的風能一次釋放『風王鐵槌』」）。做成選填的話，忘了填的那一支
+ * 在畫面上跟正常一模一樣 —— 玩家只會覺得「這招怎麼沒傷害」（失敗形態 ②）。
+ * 空陣列是合法的，但那是作者**明說**「關掉時什麼都不發生」。
+ *
+ * ⛔ 而且手動關閉與資源耗盡自動關閉走的是**同一個 onExit**，見
+ * `sim/abilities/toggle.ts` 的 `exitToggle` —— 兩條路 = 兩份會各自腐爛的實作。
+ */
+export const zAbilityToggle = z
+  .object({
+    /**
+     * 維持成本的**節奏**。這是一個決策點，所以它是一格而不是一個 if：
+     * 20-01 是「每次攻擊」，70-00 紮根**完全沒有維持成本**。
+     *
+     * · `"none"`      —— 開著不花錢（70-00 紮根）。`upkeepCost` 被忽略。
+     * · `"perAttack"` —— 每一次普攻揮出時扣一次（20-01 風王結界）。
+     *                    ⚠️ 依據是「揮出」不是「打中」：`basicAttack` 事件在
+     *                    迴避／失手判定**之前**發射，而文案寫的是「每次攻擊」。
+     * · `"perSecond"` —— 每 `upkeepIntervalSec` 秒扣一次。
+     */
+    upkeepCadence: z.enum(["none", "perAttack", "perSecond"]),
+    /**
+     * 每一次維持扣多少（per rank，index = rank-1）。20-01 是 30/50/70/90。
+     * ⚠️ 與 `ability@1.manaCost`（開關成本）是**不同的數列**，見檔頭。
+     */
+    upkeepCost: z.array(z.number().min(0).max(TOGGLE_UPKEEP_MAX)).min(1),
+    /**
+     * 維持成本扣哪一種資源。省略 = `"mana"`（【燒魔】）。
+     * `"health"` 是留給【燒血】型切換技的那一半 —— 它今天沒有客戶，但它是
+     * 一個決策點，寫死成 mana 就等於替下一支燒血技決定了它不存在。
+     */
+    upkeepResource: z.enum(["mana", "health"]).optional(),
+    /** `perSecond` 的週期（秒）。省略 = 1 秒。其他節奏下**不得填**（見 refine）。 */
+    upkeepIntervalSec: z.number().min(0.1).max(TOGGLE_INTERVAL_MAX_SEC).optional(),
+    /**
+     * 關閉那一刻跑的效果 —— 20-01 的「風王鐵槌」住在這裡。
+     * 手動關閉與資源耗盡自動關閉**共用這一份**（`exitToggle` 是唯一出口）。
+     */
+    onExit: z.array(zEffectDef),
+    /**
+     * 資源不足以支付維持成本時，要不要自動關閉。省略 = `true`
+     * （20-01 文案：「[MP]不足則自動關閉」）。
+     *
+     * 填 `false` 的讀法是「付不出來就那一次不扣，但繼續開著」—— 那是一個
+     * 真的有人會想要的設計（免費維持的儀式型切換），所以它是一格而不是一個
+     * 寫死的 true。
+     */
+    exitOnResourceEmpty: z.boolean().optional(),
+    /**
+     * 手動關閉要不要再付一次 `ability@1.manaCost`。省略 = `true`
+     * （20-01 文案：「每次**開關**耗[MP]」—— 開一次、關一次，各付一次）。
+     *
+     * ⚠️ **自動關閉永遠不付**，而且那不是這一格能改的：自動關閉的觸發條件
+     * 就是「付不出維持成本」，再要求它付一筆更貴的開關成本是自相矛盾的。
+     */
+    costOnExit: z.boolean().optional(),
+    /**
+     * 關閉要不要讓這支技能重新進冷卻。省略 = `false`。
+     *
+     * 預設 false 的理由：20-01 的 60 秒冷卻是**擋重新開啟**的，開一次就轉一次
+     * 已經夠了；關閉再轉一次等於同一次使用被收兩次租。填 true 就變成
+     * 「關掉之後還要再等 60 秒才能再開」的另一種設計。
+     */
+    cooldownOnExit: z.boolean().optional(),
+  })
+  .strict()
+  .superRefine((t, ctx) => {
+    // 填了但永遠不會發生 = 失敗形態 ②，而且它在後台看起來完全正常。
+    if (t.upkeepCadence !== "perSecond" && t.upkeepIntervalSec !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["upkeepIntervalSec"],
+        message: 'upkeepIntervalSec 只在 upkeepCadence: "perSecond" 下有意義',
+      });
+    }
+  });
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * 【跨技能強化】`ability-augment@1` —— 一支技能**指名改寫另一支技能的數字**
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * 覆蓋矩陣（`docs/_skill-mechanics-coverage-20260808.md`）的第二名，擋著四支，
+ * 而且**未來每一隻英雄的 EX 大多長這樣**：
+ *
+ *   · 59-001 完全暴走 —— 改寫 59-00 暴走的**門檻**（降為最大生命 20%）
+ *   · 70-002 樹海降臨 —— 對 70-04 千年練成**追加 500% AP**
+ *   · 77-002 御雷劍   —— 77-02 雷鳴劍**機率**上升至 50%、
+ *                        77-03 GLADIARIA ALAT **持續時間**增加至 30 秒
+ *   · 92-002 最終戈壁 —— 強化 92-04 馬勒戈壁
+ *
+ * 這四支要的操作剛好就是四種：**改機率 · 改持續時間 · 加傷害係數 · 改門檻**，
+ * 所以 {@link AUGMENT_OPS} 就是這四個 —— ⛔ 沒有第五個「以後可能會用到」的成員。
+ * 一個沒有客戶的操作在後台看起來完全正常，而它什麼都不會做（失敗形態 ②）。
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * ⛔ 為什麼「操作」是一個 enum，不是一條 JSON Pointer
+ *
+ * `main_load_editor_plan.md` §4.4 明列禁止兩件事，而它們是同一個東西的兩面：
+ *
+ *   ① **不可從技能名稱文字反推**目標 —— 所以 {@link zAbilityAugmentTarget}
+ *      的 `abilityId` 是 `zRef("abilities")`，一個**硬參照**：打錯字在
+ *      `validateReferences` 就被擋下（見 `content/refs.ts` 的 `abilityRefs`），
+ *      不是在某一場比賽裡靜默地什麼都沒發生。
+ *   ② **不可用位置 JSON Pointer**（`/effects/2/amount/ratios/0/coeff`）——
+ *      因為目標技能被重排一次，那條路徑就會安靜地指到**相鄰的另一個效果**。
+ *      計畫 §13 對這件事的要求逐字是「刪除、改名或重排 target 的 stable edge 時
+ *      **fail closed**，不得套到相鄰效果」。
+ *
+ * 這裡的解法是：操作**指名一種數字**（機率／持續時間／AP 係數／門檻），
+ * 而不是指名一個位置。重排 hooks 不會改變「哪一格是機率」，所以這條邊
+ * 天生對重排免疫 —— 不需要一個會過期的索引。
+ *
+ * ⚠️ 語意是明講的：一個操作套用在目標技能裡**每一個同名數字**上。
+ * 「雷鳴劍發動機率上升至 50%」講的就是那一支技能的機率，不是「第 0 個 hook 的」。
+ * 要更窄就填 {@link zAbilityAugmentOp} 的兩格選擇器（`hookOn` / `nodeKind`），
+ * 它們一樣是**具名的**，不是位置。
+ */
+export const AUGMENT_OPS = ["procChance", "durationSec", "damageCoeffAp", "thresholdPct"] as const;
+export type AugmentOpName = (typeof AUGMENT_OPS)[number];
+
+/**
+ * 每一種操作的 `value` 兩端界 —— **上界不只下界**（CLAUDE.md 第一守則）。
+ *
+ * 上界不是平衡政策，是**打錯字的閘**：`procChance` 把 50% 抄成 `50` 而不是
+ * `0.5` 等於「永遠觸發」，而那在後台跟正確的值長得一模一樣。
+ */
+export const AUGMENT_OP_BOUNDS: Readonly<Record<AugmentOpName, readonly [number, number]>> = {
+  /** 機率是比例。77-002 的「上升至 50%」= `set 0.5`。 */
+  procChance: [0, 1],
+  /** 秒。77-002 的「增加至 30 秒」= `set 30`；上界 600 秒遠超一場戰鬥。 */
+  durationSec: [0, 600],
+  /** AP 係數。70-002 的「追加 500% [AP]」= `add 5`。負值 = 減益向的強化。 */
+  damageCoeffAp: [-10, 10],
+  /** 門檻比例。59-001 的「降為低於最大生命 20%」= `set 0.2`。 */
+  thresholdPct: [0, 1],
+};
+
+const AUGMENT_VALUE_MIN = Math.min(...Object.values(AUGMENT_OP_BOUNDS).map((b) => b[0]));
+const AUGMENT_VALUE_MAX = Math.max(...Object.values(AUGMENT_OP_BOUNDS).map((b) => b[1]));
+
+/** 一個目標最多幾條操作 —— 打錯字的閘，不是設計上限。 */
+export const AUGMENT_MAX_OPS = 8;
+/** 一支技能最多強化幾支 —— 同上。77-002 是目前最多的那一支（兩支）。 */
+export const AUGMENT_MAX_TARGETS = 8;
+
+export const zAbilityAugmentOp = z
+  .object({
+    /** ⭐ allowlist。⛔ 不是路徑、不是欄位名、不是名稱文字。 */
+    op: z.enum(AUGMENT_OPS),
+    /**
+     * 怎麼改。**兩個成員，因為四支文案剛好用到兩種**：
+     * · `"set"` —— 「上升**至** 50%」「增加**至** 30 秒」「降**為** 20%」（77-002 / 59-001）
+     * · `"add"` —— 「**追加** 500% [AP]」（70-002）
+     *
+     * ⛔ 沒有 `"mult"`：四支沒有一支要它，而一個沒有客戶的模式只會在後台
+     * 多一個選項、在遊戲裡什麼都不做。加它的成本是**一行**，等有卡再加。
+     */
+    mode: z.enum(["set", "add"]),
+    /** 界依 `op` 而定，見 {@link AUGMENT_OP_BOUNDS}（superRefine 逐條驗）。 */
+    value: z.number().min(AUGMENT_VALUE_MIN).max(AUGMENT_VALUE_MAX),
+    /**
+     * 只套用在**這個事件**的 hook 上。省略 = 目標技能的全部 hook。
+     * 具名（`zHookEvent` 的 allowlist），所以重排 hooks 不影響它。
+     */
+    hookOn: zHookEvent.optional(),
+    /**
+     * 只套用在 `kind` 等於這個字串的節點上（effect kind 或 condition kind）。
+     * 省略 = 那一種數字的每一個出現位置。
+     *
+     * ⭐ `op: "thresholdPct"` **必填**（superRefine 擋）—— 這就是計畫 §13
+     * 「不得套到相鄰效果」的閘：一棵 condition 樹裡可以有好幾個 `value`
+     * （機率、層數、距離…），沒有這一格的話「改門檻」會順手改掉它們。
+     * ⚠️ 它是一個字串而不是 enum，因為 condition 的 kind 表住在另一份 schema；
+     * 把它抄過來就是第二份會過期的真相。打錯字 = 這條操作**匹配不到任何節點**，
+     * 語意上等於沒填 —— 這是這一版已知的軟點，寫在 `editorCapabilities` 的
+     * `ability-augment@1` caveat 裡，⛔ 不要假裝它會紅。
+     */
+    nodeKind: z.string().min(1).optional(),
+  })
+  .strict()
+  .superRefine((o, ctx) => {
+    const [lo, hi] = AUGMENT_OP_BOUNDS[o.op];
+    if (o.value < lo || o.value > hi) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["value"],
+        message: `op "${o.op}" 的 value 必須落在 [${lo}, ${hi}]（拿到 ${o.value}）`,
+      });
+    }
+    if (o.mode === "set" && o.value < 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["value"],
+        message: 'mode "set" 不接受負值 —— 負的機率/持續時間/門檻沒有意義；要減請用 "add"',
+      });
+    }
+    if (o.op === "procChance" && o.nodeKind !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["nodeKind"],
+        message:
+          'op "procChance" 改的是 hook 自己的 chance 欄位,沒有節點可以挑 —— ' +
+          "要縮小範圍請用 hookOn。填了 nodeKind 會是一格永遠不被讀的設定(失敗形態 ②)",
+      });
+    }
+    if (o.op === "thresholdPct" && o.nodeKind === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["nodeKind"],
+        message:
+          'op "thresholdPct" 必須指名 nodeKind —— 一棵 condition 樹裡通常不只一個 value，' +
+          "沒有這一格就會套到相鄰的條件上（計畫 §13：不得套到相鄰效果）",
+      });
+    }
+  });
+
+/** 一個被強化的目標 —— **exact ability ref** + 一組操作。 */
+export const zAbilityAugmentTarget = z
+  .object({
+    /**
+     * 被強化的那一支。**硬參照**：`validateReferences` 在**載入時**擋下
+     * 指不到的 id（fail closed），而不是在執行期靜默跳過。
+     *
+     * ⭐ 為什麼不做 `slot`（「強化我自己的 R」）：計畫要的是 exact ref，
+     * 而四支文案每一支都指名了一支具體的技能。多一種目標形式 = 多一條今天
+     * 沒有客戶的解析路徑。要加是 schema 一格 + 收集器三行，等真的有卡再加。
+     */
+    abilityId: zRef<AbilityId>("abilities"),
+    ops: z.array(zAbilityAugmentOp).min(1).max(AUGMENT_MAX_OPS),
+  })
+  .strict();
+
+/**
+ * `ability@1.augment` —— 缺席 = 這支技能不強化任何東西，整條管線在它身上
+ * **結構性不存在**（`sim/abilities/abilityAugment.ts` 的入口先問這一格）。
+ */
+export const zAbilityAugment = z
+  .object({ targets: z.array(zAbilityAugmentTarget).min(1).max(AUGMENT_MAX_TARGETS) })
+  .strict();
+
 /** Embedded form (champion.abilities[slot]) — no schema discriminator. */
 export const zAbilityDef = z
   .object({
@@ -114,6 +382,18 @@ export const zAbilityDef = z
      * activated `self` + `applyBuff` with an invented cooldown and mana cost.
      */
     passive: zAbilityPassive.optional(),
+    /**
+     * 這支技能**進場時**要在持有者身上安裝哪些具名標記（【試煉】【風王結界】
+     * 【縮地】共用同一個機制，見 `sim/marks.ts`）。
+     *
+     * 和上面的 `passive` 是兩件事：`passive` 給的是「rank>0 就一直在」的屬性
+     * 加成，這裡給的是**一個有層數、會被消耗、可以跨回合的計數器**，而且它
+     * 可以掛一張免死牌（`lethal`）。海克力斯的【十二道試煉】是第一個使用者。
+     *
+     * ⚠️ **optional**：1,900 份既有技能文件一份都不帶它，缺席 = 這支技能不發
+     * 任何標記，傷害管線上完全不存在（`lethalSaveFor` 的 ZERO GUARANTEE）。
+     */
+    marks: z.array(zMarkSpec).optional(),
     vfxKey: zRef("vfx", { soft: true }).optional(),
     /**
      * 多層特效模板 (#205 / #230). Present = this array IS the ability's cast
@@ -205,6 +485,18 @@ export const zAbilityDef = z
      * accepted, and all three normalise to the same ordered card list.
      */
     template: zAbilityTemplateBinding.optional(),
+    /**
+     * 【切換】—— 這支技能是一顆開／關兩態的按鈕（20-01 風王結界 · 70-00 紮根）。
+     * 缺席 = 一般的一次性施放，整條切換管線在這支技能上**結構性不存在**
+     * （`sim/abilities/toggle.ts` 的每一個入口都先問這一格）。
+     * 完整語意見 {@link zAbilityToggle}。
+     */
+    toggle: zAbilityToggle.optional(),
+    /**
+     * 【跨技能強化】—— 這支技能**指名改寫另一支技能的數字**（59-001 / 70-002 /
+     * 77-002 / 92-002）。缺席 = 不強化任何東西。完整語意見 {@link zAbilityAugment}。
+     */
+    augment: zAbilityAugment.optional(),
   })
   .strict();
 

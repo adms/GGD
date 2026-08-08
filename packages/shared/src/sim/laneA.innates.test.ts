@@ -14,8 +14,11 @@
  *
  * ⚠️ 為什麼不是 `it.each(掃磁碟)` + `toBeGreaterThan(0)`:那種形狀下**刪掉內容
  * 等於刪掉測試**(清單變空 → 零條案例 → 全綠)。這裡七個 id 是**寫死的常數**,
- * 而且每一條斷言都比對一個**具體的數字**(×12、0.10、+50%、免疫、0.4 秒),
+ * 而且每一條斷言都比對一個**具體的量**(0.10、+50%、免疫、0.4 秒、標記層數),
  * 所以把哪一支的 passive 清空,對應那一條就會紅。
+ *
+ * ⚠️ 「有內容的天生技」有**兩種形狀**(2026-08-08):`passive`(靜態屬性/hook)
+ * 或 `marks`(具名標記,見 `sim/marks.ts`)。52-00 十二道試煉是第二種。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -29,8 +32,8 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { Stat } from "./stats/statTypes";
-import { baseBonusFor } from "./baseBonus";
 import { isBerserk } from "./berserk";
+import { markCount } from "./marks";
 import { refusesDamage } from "./effects/invulnerable";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
@@ -104,10 +107,20 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     for (const cid of Object.values(LANE_A)) {
       const def = Champions.get(cid);
       const innate = Abilities.get(def.passiveAbility!);
+      // ⚠️ 2026-08-08:「有內容的天生技」有**兩種形狀**,這一條原本只認得第一種。
+      //   ① `passive` —— 靜態屬性 / hook(六支)
+      //   ② `marks`   —— 具名標記(52-00 十二道試煉)。它**沒有** `passive` 區塊,
+      //      因為它的加成是「每失去一層才長出來」的(`MarkSpec.perStackLost`),
+      //      靜態屬性區塊裡沒有地方放。
+      // 兩者相加 > 0 才算有內容。寫成「或」而不是「一定要有 passive」,和
+      // `content/castTimeFormula.ts` 的 EXEMPTION 1 是**同一個**判斷,兩處要一致
+      // (那邊寫 `def.passive !== undefined || (def.marks?.length ?? 0) > 0`)。
+      // ⛔ 不要為了讓十二道試煉過這一條而去補一個空的 `modifiers: []` ——
+      // 那正是 #224 修掉的形狀。
       const rank0 = innate.passive?.ranks[0];
-      expect(rank0, `${cid} 沒有 passive.ranks[0]`).toBeDefined();
-      const payload = (rank0!.modifiers?.length ?? 0) + (rank0!.hooks?.length ?? 0);
-      expect(payload, `${cid} 的天生技是空的`).toBeGreaterThan(0);
+      const staticPayload = (rank0?.modifiers?.length ?? 0) + (rank0?.hooks?.length ?? 0);
+      const markPayload = innate.marks?.length ?? 0;
+      expect(staticPayload + markPayload, `${cid} 的天生技是空的`).toBeGreaterThan(0);
     }
   });
 
@@ -144,52 +157,43 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     expect(ctrlSc.final[Stat.Armor]).not.toBeCloseTo(after, 6);
   });
 
-  // ── ② 52-00 十二道試煉 —— maxHealth ×12 + 每秒 1% 流失 ────────────────────
+  // ── ② 52-00 十二道試煉 —— 具名標記真的發到英雄身上 ────────────────────────
   //
-  // ⚠️ owner 2026-08-02:「Berserker 是每秒損失 1%生命, 直到生命不足1%」。
-  // 流失從 0.12% 改成 1%,而且**換了住的地方**:它本來是這支天生技上的一個
-  // `onInterval` + 真實傷害 hook,現在是英雄卡的 `healthDrainPctOfMax` +
-  // `config.regen@1` 的地板(見 `sim/regenRules.ts`)。搬家的三個理由:
-  //   1. hook 走傷害管線 = 被 `combatEnv.damageDealt` 乘過,「1%」不會是 1%;
-  //   2. hook 的 `condition` 是**發不發射**的前提,不是一條夾值 —— 把流失調到
-  //      比地板大就會穿過地板把人打死,而「直到生命不足 1%」就變成假的;
-  //   3. 「碰到地板是停手還是夾住」「要不要給小怪」是決策點,hook 上沒有地方放。
-  // 這一條測的仍然是**出貨內容跑出來的血量**,只是斷言的數字換了。
-  it("52-00 十二道試煉:最大生命 ×12,而且每秒真的掉 1% 最大生命", () => {
+  // ⚠️ owner 2026-08-08 重製了這支天生技,舊機制(最大生命 ×12 + 每秒流失
+  // 1.2% 最大生命)**整個不存在了** —— 英雄卡的 `healthDrainPctOfMax` 已歸 0,
+  // 那個 ×12 的 `passive.ranks[0].modifiers` 也拆掉了。新文案:
+  //   「初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層⋯每失去一層試煉,
+  //     永久提升 10% 攻擊力與 10% 最大生命。(跨回合共享)」
+  // 所以加成不再是進場就有的靜態屬性,而是「每失去一層才長出來」的 ——
+  // 這也是為什麼這支技能沒有 `passive` 區塊(見上面那條的註解)。
+  //
+  // ⛔ 這一條刻意**不斷言 12 層 / 10% / 1.5 秒**:那些是 owner 每週在調的數值,
+  // 抄進測試就是給它開第四個住處(第零守則⑦)。層數從**載入的那份文件**推導。
+  // ⛔ 也刻意不只斷言「文件裡有 marks 這個鍵」—— 那是掃屬性不是驗行為
+  // (失敗形態⑦)。斷言讀的是 `world.marks`,也就是跑完 `spawnChampion` 之後
+  // **世界上真的有的那個計數器**;把 `installMarksForChampion(...)` 的接線拔掉
+  // 這一條就紅(突變驗證過)。
+  it("52-00 十二道試煉:出貨文件宣告的【試煉】標記,進場就真的在世界上", () => {
+    const spec = Abilities.get(Champions.get(LANE_A.herc).passiveAbility!).marks?.[0];
+    expect(spec, "出貨文件上沒有標記 —— 這支天生技等於沒有效果").toBeDefined();
+
     const { world, id } = arena(LANE_A.herc);
-    const sc = world.stats.get(id)!;
-    const hp = world.health.get(id)!;
+    const live = (): number => markCount(world, id, spec!.markId);
+    // 層數 = 文件宣告的初始值(夾在 max 內),不抄字面值。
+    expect(live()).toBe(Math.min(spec!.initial, spec!.max));
+    expect(live(), "標記發下去了但一層都沒有").toBeGreaterThan(0);
 
-    // ×12 是相對於「沒有這支天生技」的同一張英雄卡。用 detach 反推,而不是
-    // 相信另一位英雄的血量 —— 兩位英雄的 baseStats 本來就不同。
-    const withIt = sc.final[Stat.MaxHealth];
-    const idx = sc.sources.findIndex((s) => s.modifiers?.some((m) => m.stat === Stat.MaxHealth));
-    expect(idx, "找不到 52-00 掛上去的 maxHealth 來源").toBeGreaterThanOrEqual(0);
-    sc.sources.splice(idx, 1);
-    sc.dirty = true;
-    step(world, 1);
-    const without = world.stats.get(id)!.final[Stat.MaxHealth];
-    // ⚠️ `finalizeStat` = 值 × combatEnv **然後 +基礎加成**(#273:基礎加成不參與
-    // 倍率)。所以 final 的比值不是 12,要先把那一份平坦加成扣掉,否則這條斷言
-    // 會隨後台的「初始 HP +300」漂移 —— 而那正是它該獨立於的東西。
-    const bbHp = baseBonusFor(world.baseBonus, Stat.MaxHealth);
-    expect((withIt - bbHp) / (without - bbHp)).toBeCloseTo(12, 2);
+    // 對照組:沒有這支天生技的英雄身上不該有這個標記。少了這一行,上面那條
+    // 對「世界給每個人都發標記」也會過(失敗形態④)。
+    const ctrl = arena(LANE_A.gundam);
+    expect(markCount(ctrl.world, ctrl.id, spec!.markId)).toBe(0);
 
-    // 流失:重開一個世界(上面那個已經被拆過),跑 3 秒,量掉了多少。
-    const w2 = arena(LANE_A.herc);
-    const max2 = w2.world.stats.get(w2.id)!.final[Stat.MaxHealth];
-    const hpStart = w2.world.health.get(w2.id)!.hp;
-    step(w2.world, 91); // 3 秒 + 1 tick 的結算餘裕
-    const hpEnd = w2.world.health.get(w2.id)!.hp;
-    const lost = hpStart - hpEnd;
-    // 3 秒 × 1.2% 最大生命（owner 2026-08-02:「hook => -1.2%,
-    // healthRegenPctOfMax=0」）。他**沒有**百分比自動回血了，所以 1.2% 是淨值；
-    // 只有固定 healthRegen(約 1.4 點/秒) 會抵掉一點零頭。
-    // 下界抓 2.5 秒份、上界抓 3.2 秒份。**兩邊都有界**:把百分比打成
-    // 0.12(十倍)上界就紅,把英雄卡那一格拿掉、或把符號翻回「回血」下界就紅。
-    expect(lost).toBeGreaterThan(max2 * 0.012 * 2.5);
-    expect(lost).toBeLessThan(max2 * 0.012 * 3.2);
-    expect(hp.alive).toBe(true);
+    // 永久:`durationSec: -1` → 絕對到期 tick 是「永不」,跑幾秒不會被
+    // `expireMarks` 掃掉。把它寫成一個有限秒數這裡就紅。
+    step(world, 91);
+    expect(live(), "標記自己過期了 —— 它應該是永久的").toBe(
+      Math.min(spec!.initial, spec!.max),
+    );
   });
 
   // ── ③ 43-00 觀音大士的守護 —— 每 10 秒一個 10% 最大生命的護盾,不疊加 ───────

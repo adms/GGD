@@ -6,12 +6,16 @@
  * ════════════════════════════════════════════════════════════════════════════
  * 8/1 是「Berserker HP 回血 1%每秒,沒有保底」,於是 `godie-hapm` 的卡片上填了
  * `healthRegenPctOfMax: 0.01`。8/2 的更正是「Berseker 是每秒**損失** 1%生命,
- * 直到生命不足1%」—— 那一格已經翻成 `healthDrainPctOfMax`,行為守衛在
- * `berserkerPctDrain.test.ts`。
+ * 直到生命不足1%」—— 那一格翻成了 `healthDrainPctOfMax`。
  *
- * 所以這一支的角色變了:它守的是**這個機制本身還能用、而且沒有人在用它**。
- *   · 第一組:出貨的 Berserker 卡片上**不可以**再有回血百分比(擋回歸 —— 兩個
- *     機制同時掛著會互相抵銷成 0,而畫面上只是「他的血不會動」);
+ * ⚠️ 2026-08-08 又動了一次:owner 把海克力斯的天生技 52-00 重製成【十二道試煉】的
+ * **標記**機制(`sim/marks.ts`),`healthDrainPctOfMax` 因此也歸 0。所以現在
+ * **回血與自傷兩族在出貨內容裡都是零使用者** —— 自傷那半邊的機制守衛與零使用者
+ * 反向守衛都搬去了 `healthPctDrain.test.ts`(它同時改名了,因為它已經與 Berserker
+ * 無關)。這一支只留回血那半邊。
+ *
+ * 所以這一支守的是**這個機制本身還能用、而且沒有人在用它**。
+ *   · 第一組:掃全部出貨英雄卡,釘住「真的沒有人填百分比回血」;
  *   · 其餘:機制的每一格仍然是欄位,用**手寫的 fixture 英雄**跑真的世界驗。
  *     這裡用 fixture 是正確的(不是失敗形態 ⑤):出貨內容裡沒有這個機制的使用者,
  *     「讀出貨的卡」在這裡會變成一條驗不到東西的空測試。
@@ -48,8 +52,10 @@ function shippedBerserker(): ChampionDef {
 }
 
 /**
- * 機制測試用的**手寫 fixture**:出貨的那張卡,把自傷換成 1% 回血。
+ * 機制測試用的**手寫 fixture**:出貨的那張卡,加上 1% 百分比回血。
  * 為什麼這裡可以手寫,見檔頭 —— 出貨內容沒有這個機制的使用者。
+ * `delete` 那一行是防呆:哪天有人把自傷填回這張卡,兩個機制會互相抵銷,
+ * 而畫面上只是「他的血不太會動」。
  */
 function pctRegenFixture(): ChampionDef {
   const card = shippedBerserker();
@@ -85,10 +91,11 @@ beforeEach(() => {
 });
 
 describe("owner 2026-08-02 —— 出貨內容裡沒有人在用百分比回血了", () => {
-  it("出貨的 Berserker 卡片上沒有 healthRegenPctOfMax(有的話會和自傷互相抵銷)", () => {
-    const card = shippedBerserker();
-    expect(card.healthRegenPctOfMax).toBeUndefined();
-    expect(card.healthDrainPctOfMax).toBe(0.012);
+  it("出貨的 Berserker 卡片上沒有 healthRegenPctOfMax", () => {
+    // 這張卡是這個機制唯一有過的使用者(8/1 那一版),所以單獨釘一條擋回歸。
+    // ⛔ 這裡**不再**順帶斷言自傷那一格:2026-08-08 之後它歸 0,而那半邊的守衛
+    //    (含「零使用者」反向守衛)住在 `healthPctDrain.test.ts`。
+    expect(shippedBerserker().healthRegenPctOfMax).toBeUndefined();
   });
 
   it("整份出貨英雄目錄都沒有人填百分比回血 —— 這一族目前是 no-op", () => {

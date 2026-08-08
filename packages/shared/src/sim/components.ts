@@ -372,6 +372,20 @@ export interface StatusEffect {
    */
   berserk?: boolean;
   /**
+   * 恐懼 —— `berserk` 的**鏡像**（`sim/fear.ts`）。
+   *
+   * ⚠️ 與 `berserk` 一樣**不是**第三個硬控旗標:`root` / `stun` 拿走身體,
+   * 這一個拿走方向盤。差別只在方向 —— 暴走自己找最近的敵人打,恐懼自己遠離
+   * 最近的敵人而且不打。
+   *
+   * ⚠️ 與 `berserk` **不一樣**的那一格:它**算 CC**,`refusesControl` 擋得掉。
+   * 暴走是自己給自己的增益,恐懼是敵人塞給你的 —— 理由寫在 `sim/fear.ts` 決策 3。
+   *
+   * 讀者有兩處:`sim/fear.ts`(行為)與 A4b 的條件謂詞(52-04 巨神一擊「若敵人
+   * 具有[恐懼]狀態」)。兩邊讀同一個旗標,所以文案說的恐懼與判斷的恐懼是同一件事。
+   */
+  feared?: boolean;
+  /**
    * 這個標記**帶的一個數字** —— 目前唯一的作者是 `spendMana.bankAs`,唯一的
    * 讀者是 `damage.bankedBonus`(effectCommon.ts::bankedAddend)。
    *

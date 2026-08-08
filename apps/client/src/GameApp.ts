@@ -48,8 +48,10 @@ import {
   recordShopEvent,
   recordKillComboEvent,
   recordMobBossEvent,
+  recordMarkEvent,
   isShopEvent,
   isMobBossEvent,
+  isMarkEvent,
   resetSettlement,
   hudStore,
   localDuelZone,
@@ -136,6 +138,7 @@ import {
   mobBossMarkerFor,
   setCombatTextScope,
   setDamageNumberCap,
+  pushMarkSaveText,
 } from "./frameBus";
 // GH#268 —— 精英小怪頭上那條小血條的**模型**（純 TS，沒有 React，符合 client-08
 // 的「React 只在 ui/*」）。判斷「哪一隻算精英」與「血條該從哪個世界高度投影」
@@ -147,6 +150,8 @@ import {
   mobHealthBarConfigFrom,
   type MobHealthBarConfig,
 } from "./ui/hud/mobHealthBarModel";
+// GH#278 —— 標記的名字要從它借身分的那份文件上拿（純 TS，沒有 React）。
+import { markSaveText } from "./ui/hud/markModel";
 import { perfBus } from "./perfBus";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
@@ -1710,6 +1715,14 @@ export class GameApp {
     // belongs to everyone on it — `parseMobBossEvent` records who summoned it
     // and who was paid, and the overlay decides the wording from that.
     if (isMobBossEvent(ev.type)) recordMobBossEvent(ev, nowMs);
+    // 【具名標記】(GH#278)。兩顆事件、兩個去處,而且兩個都是「玩家拿不拿得到」
+    // 的唯一通道 —— 標記完全不在 MatchState 上。
+    //   ① 層數 → HUD（自己那一列;`recordMarkEvent` 內部用 localEntityId 過濾）
+    //   ② 免死那一刻 → 身上的浮動文字（名字查文件,不是裸 id,見 #202）
+    if (isMarkEvent(ev.type)) {
+      recordMarkEvent(ev, localId, nowMs);
+      if (ev.type === "lethalSaved") this.pushMarkSaveFloat(ev, nowMs);
+    }
     // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
     // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
     // SAME record path so a knocked-out player's leave-flow already holds their
@@ -1717,6 +1730,30 @@ export class GameApp {
     if (ev.type === SETTLEMENT_EVENT || ev.type === TEAM_SETTLEMENT_EVENT) {
       recordSettlement(ev.data as unknown as MatchSettlement);
     }
+  }
+
+  /**
+   * 一次免死攔截 → 被救的那具身上的浮動文字（GH#278）。
+   *
+   * ⚠️ 位置從**渲染出來的身體**拿（`audioEntityPos` = `views.posOf` 退回
+   * schema），不是從事件裡拿：`lethalSaved` 沒有帶 x/z，因為救活的當下那具身體
+   * 一定還活著（免死的定義就是它沒死），跟 `coinPickedUp` 必須自帶座標的情況
+   * 相反。查不到位置就不畫 —— 一行飄在原點的字比沒有字更糟。
+   */
+  private pushMarkSaveFloat(ev: EventMessage, nowMs: number): void {
+    const id = Number(ev.data.id);
+    const markId = ev.data.markId;
+    const remaining = ev.data.remaining;
+    if (!Number.isFinite(id) || typeof markId !== "string" || typeof remaining !== "number") return;
+    const pos = this.audioEntityPos(id);
+    if (!pos) return;
+    pushMarkSaveText({
+      target: id,
+      label: markSaveText(markId, remaining),
+      worldX: pos.x,
+      worldZ: pos.z,
+      nowMs,
+    });
   }
 
   /** Feed the adaptive manager the frame COST and publish perf stats. */

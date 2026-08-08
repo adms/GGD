@@ -27,7 +27,11 @@
  * `conditionDepth` from the sim module so the two cannot drift.
  */
 import { z } from "zod";
+import type { ItemId, StatusId } from "../../ids";
+import { zRef } from "./common";
 import {
+  EQUIPMENT_TAG_MAX_LEN,
+  EQUIPMENT_TAG_MIN_LEN,
   CONDITION_ABSOLUTE_MAX,
   CONDITION_ABSOLUTE_MIN,
   CONDITION_CHANCE_MAX,
@@ -40,6 +44,8 @@ import {
   COMPARE_OPS,
   PLAIN_STATS,
   RESOURCE_STATS,
+  STATUS_TAG_MAX_LEN,
+  STATUS_TAG_MIN_LEN,
   conditionDepth,
   type EffectCondition,
 } from "../../sim/content/condition";
@@ -122,7 +128,89 @@ export const zKindLeaf = z
   })
   .strict();
 
-export const zConditionLeaf = z.union([zChanceLeaf, zStatLeaf, zKindLeaf]);
+/**
+ * 「某個主體身上有某個狀態」—— owner 2026-08-08 那 90 支文案裡擋住最多支的
+ * 一顆（至少 12 支：燃燒 / 破魔 / 破甲 / 恐懼 / 致盲 / 混亂 / 狂怒 …）。語意、
+ * 為什麼共用 `subject`、以及為什麼「沒有」只走 `not` 而不多開一個欄位，全部
+ * 寫在 `sim/content/condition.ts` 的 `StatusLeaf`。
+ *
+ * ⭐ `statusId` 是 **soft ref**，和 `applyStatus.statusId` / `damage.comboBonus`
+ * 逐字相同。這一格不是隨手選的：條件端用 hard ref 而施加端用 soft，會長出
+ * 「這個狀態掛得上去、卻寫不出一條讀它的條件」的不對稱，而那個不對稱從 schema
+ * 上讀不出來，只有作者在後台被擋下來的那一刻才會發現。
+ *
+ * ⭐ **兩個分支各只帶一格**（`statusId` ＝這一份 / `tag` ＝這一類），而且都
+ * `.strict()` —— 形狀跟同一檔的 `zEquipmentLeaf` 與 `zStatLeaf` 逐字一樣，不是
+ * 第三套寫法。`{statusId, tag}` 兩格一起寫**兩個分支都不收**，所以「且？或？」
+ * 這個沒有人定義過的語意在後台是當場紅一格，而不是安靜地由求值端替作者決定。
+ * 為什麼需要「這一類」（暈眩在出貨內容裡是**五份**文件）寫在
+ * `sim/content/condition.ts` 的 {@link StatusIdLeaf}。
+ *
+ * ⚠️ `statusId` 沒有數字，所以沒有上下界要訂；界由 `zRef` 底下的 `zId` 給
+ * （≤64 字、限定字元集）。`tag` 不是 ref（`status-effect@1.tags` 是自由字串，
+ * 沒有集合可以指），所以它自己要帶上下界 —— 見 `STATUS_TAG_MIN_LEN` / `MAX_LEN`。
+ */
+export const zStatusIdLeaf = z
+  .object({
+    kind: z.literal("status"),
+    subject: zConditionSubject,
+    statusId: zRef<StatusId>("status-effects", { soft: true }),
+  })
+  .strict();
+
+export const zStatusTagLeaf = z
+  .object({
+    kind: z.literal("status"),
+    subject: zConditionSubject,
+    tag: z.string().min(STATUS_TAG_MIN_LEN).max(STATUS_TAG_MAX_LEN),
+  })
+  .strict();
+
+export const zStatusLeaf = z.union([zStatusIdLeaf, zStatusTagLeaf]);
+
+/**
+ * 「某個主體身上裝備了某件／某類道具」—— 77-002 御雷劍那一張卡的閘。
+ * 語意、為什麼是 UNION（同一張卡同時說了「某類」與「御雷劍」）、為什麼「類」
+ * 讀 `tags` 而不是 `tier`、以及為什麼沒有「幾件」，全部寫在
+ * `sim/content/condition.ts` 的 {@link EquipmentItemLeaf}。
+ *
+ * ⭐ **兩個分支各只帶一格**，而且都 `.strict()` —— 這才是「兩格一起寫」被擋下來
+ * 的地方。寫成一個物件配兩個 optional 欄位加一句註解，那句註解就是 CLAUDE.md
+ * 第三守則講的那種註解：`{itemId, tag}` 會安靜地解析成功，然後由求值端替作者
+ * 決定哪一格贏。這裡它是 PARSE ERROR，後台當場紅一格。
+ * （形狀跟同一檔的 `zStatLeaf` 逐字一樣，不是第二套寫法。）
+ *
+ * ⚠️ `itemId` 是 **soft ref**，跟 `zStatusLeaf.statusId` 同一個理由：御雷劍那一
+ * 族的道具文件今天還沒進 `content/items/`，硬 ref 會讓「條件寫得出來」被「道具
+ * 還沒上架」擋住。上下界由 `zRef` 底下的 `zId` 給（≤64 字、限定字元集）。
+ * `tag` 不是 ref（`ItemDef.tags` 是自由字串，沒有集合可以指），所以它自己要帶
+ * 上下界 —— 見 `EQUIPMENT_TAG_MIN_LEN` / `MAX_LEN`。
+ */
+export const zEquipmentItemLeaf = z
+  .object({
+    kind: z.literal("equipment"),
+    subject: zConditionSubject,
+    itemId: zRef<ItemId>("items", { soft: true }),
+  })
+  .strict();
+
+export const zEquipmentTagLeaf = z
+  .object({
+    kind: z.literal("equipment"),
+    subject: zConditionSubject,
+    tag: z.string().min(EQUIPMENT_TAG_MIN_LEN).max(EQUIPMENT_TAG_MAX_LEN),
+  })
+  .strict();
+
+export const zEquipmentLeaf = z.union([zEquipmentItemLeaf, zEquipmentTagLeaf]);
+
+export const zConditionLeaf = z.union([
+  zChanceLeaf,
+  zStatLeaf,
+  zKindLeaf,
+  zStatusLeaf,
+  zEquipmentLeaf,
+]);
 
 /**
  * The recursive tree. `.min(1)` on both group arrays is load-bearing: an empty
@@ -131,7 +219,16 @@ export const zConditionLeaf = z.union([zChanceLeaf, zStatLeaf, zKindLeaf]);
  * 「內容刪掉時測試不是失敗，是根本不存在」 shape. Making it unauthorable is
  * cheaper than detecting it later.
  */
-const zConditionInner: z.ZodType<EffectCondition> = z.lazy(() =>
+/**
+ * ⚠️ 第三個型別參數（INPUT）是 `unknown`，不是 `EffectCondition`。
+ *
+ * `zStatusLeaf.statusId` 走 `zRef<StatusId>`，而 `zRef` 的**輸入是沒有品牌的
+ * `string`**、輸出才是 `StatusId` —— 那正是每一份從磁碟讀進來的 JSON 的形狀。
+ * 把 INPUT 也釘成 `EffectCondition` 等於宣稱「餵進來的東西已經是加好品牌的」，
+ * 而 `safeParse(未知的 JSON)` 這個唯一的真實用法從來不是那樣，union 也因此整個
+ * 賦值不上去。
+ */
+const zConditionInner: z.ZodType<EffectCondition, z.ZodTypeDef, unknown> = z.lazy(() =>
   z.union([
     zConditionLeaf,
     z.object({ all: z.array(zConditionInner).min(1).max(CONDITION_MAX_CHILDREN) }).strict(),
@@ -144,7 +241,11 @@ const zConditionInner: z.ZodType<EffectCondition> = z.lazy(() =>
  * The authorable condition. Depth-capped — see the header for why the cap is a
  * post-parse walk rather than a recursion limit.
  */
-export const zEffectCondition: z.ZodType<EffectCondition> = zConditionInner.superRefine(
+export const zEffectCondition: z.ZodType<
+  EffectCondition,
+  z.ZodTypeDef,
+  unknown
+> = zConditionInner.superRefine(
   (cond, ctx) => {
     const d = conditionDepth(cond);
     if (d > CONDITION_MAX_DEPTH) {

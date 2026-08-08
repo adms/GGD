@@ -30,7 +30,10 @@ import {
   zAbilityTemplateBinding,
 } from "../schema/template";
 import type { EffectCondition } from "../../sim/content/condition";
+import type { MarkResetPolicy, MarkSpec } from "../../sim/marks";
+import type { MarkLethalRule } from "../../sim/combat/lethalSave";
 import { zEffectCondition } from "../schema/condition";
+import { zId } from "../schema/common";
 
 // ---------------------------------------------------------------------------
 // LENGTH CONVERSION — load-bearing constant (design §四, verified in expand.test.ts)
@@ -220,6 +223,14 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   // tpl-lock-combo, whose 7-of-8 members all wear `Avul` for the whole 演出.
   invulnerable: { p: 3, available: true },
   combo: { p: 3, available: false },
+  // 具名標記 (2026-08-08). `SimWorld.marks` + `sim/marks.ts` 的 install/grant/
+  // consume/reset + `combat/lethalSave.ts` 的免死攔截全部已經出貨。
+  //
+  // 它**不在** simCapabilityDrift 的 `CAPABILITY_KIND` 裡，理由與 `hooks` /
+  // `auras` 相同：標記不是一個 `EffectDef.kind`，而是技能文件上的一個結構欄位
+  // (`ability@1.marks`)，所以拿 `EFFECT_HANDLERS` 去對它只會得到假精確。守衛在
+  // `sim/combat/lethalSave.test.ts` 與這一路自己的 `markStacks.test.ts`。
+  marks: { p: 1, available: true },
   // Lane P1 持續傷害: `kind: "dot"` + SimWorld.dot + dotTickSystem all shipped,
   // `dot.test.ts` (21 cases) green. Not named in the brief this landed under —
   // it was found by diffing EFFECT_HANDLERS against this table, which is the
@@ -245,6 +256,15 @@ export interface ExpandResult {
   /** proc families (on-attack / on-hit-react) are PASSIVE; effects stays [] */
   innateKind?: "passive";
   passive?: AbilityPassive;
+  /**
+   * 進場時要裝在持有者身上的具名標記（【試煉】【風王結界】【縮地】——
+   * `sim/marks.ts`）。`effects` 是「施放時做什麼」，這裡是「一開始身上有什麼」，
+   * 所以一張只發標記的卡 `effects` 是空的而**不是**一個什麼都不做的技能。
+   *
+   * ⚠️ LIST-VALUED, 所以它跟 `effects` 一樣**串接**而不是走 `STACK_SCALAR_KEYS`
+   * 的衝突政策（見 `expandStack`）。兩張卡各發一個標記 = 兩個標記。
+   */
+  marks?: MarkSpec[];
 }
 
 // ---------------------------------------------------------------------------
@@ -306,6 +326,27 @@ function str(t: TemplateDoc, params: Record<string, unknown>, name: string): str
     throw new ExpandError(`template ${t.id}: param "${name}" must be a string`);
   }
   return v;
+}
+
+/**
+ * 一個 `docRef` 槽 —— 另一份文件的編號（技能編號 或 status-effect id）。
+ *
+ * 驗**格式**不驗**存在**，而那個界線是刻意的：一個標記的身分可以來自
+ * `abilities` 或 `status-effects` 兩個不同的 collection（owner 2026-08-08
+ * 「都可以任意替換設定為 [技能編號/buff/debuff狀態]」），所以綁不到單一
+ * collection 的存在性檢查上（完整推導見 `schema/mark.ts` 檔頭①）。
+ * 用的是 `zId` 本人 —— 和編輯器表單那一側（`paramsSchema.ts` 的 `docRef` 分支）
+ * 同一個 schema，這樣「表單收得下的」與「展開收得下的」不可能分岔。
+ */
+function docRef(t: TemplateDoc, params: Record<string, unknown>, name: string): string {
+  const v = str(t, params, name);
+  const parsed = zId.safeParse(v);
+  if (!parsed.success) {
+    throw new ExpandError(
+      `template ${t.id}: param "${name}"="${v}" 不是合法的文件編號（小寫 a-z0-9 與 . _ -，1–64 字）`,
+    );
+  }
+  return parsed.data;
 }
 
 function damageType(t: TemplateDoc, params: Record<string, unknown>, name: string): DamageType {
@@ -387,6 +428,24 @@ const CC_MECHANIC: Readonly<Record<string, { root?: true; stun?: true; moveSpeed
   root: { root: true },
   burnstun: { stun: true },
   slow30: { moveSpeedMult: 0.7 },
+};
+
+/**
+ * 免死牌吃哪幾種傷害 —— 一個下拉選單 → `MarkLethalRule.damageTypes`。
+ *
+ * ⚠️ 為什麼是 enum 而不是「三個勾選框」：`damageTypes: []` 是一張永遠不觸發的
+ * 免死牌，而文件看起來設定完整（`schema/mark.ts` 用 `.min(1)` 擋這件事）。三個
+ * 各自獨立的布林槽可以組出那個空集合；一個下拉選單組不出來。
+ *
+ * 「真傷能不能被免死」因此是**選單上的一個選項**，不是程式裡的一個分支
+ * （`combat/lethalSave.ts` 檔頭③）。
+ */
+const LETHAL_DAMAGE_TYPES: Readonly<Record<string, DamageType[]>> = {
+  all: ["physical", "magic", "true"],
+  physicalMagic: ["physical", "magic"],
+  physical: ["physical"],
+  magic: ["magic"],
+  true: ["true"],
 };
 
 /** Wrap one damage effect in a proc hook rank. */
@@ -1167,6 +1226,114 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       effects,
     };
   },
+
+  // 具名標記 (owner 2026-08-08) —— 一個有層數、會被消耗、可以跨回合的計數器，
+  // 外加一張**可選的**免死牌。第一個使用者是海克力斯 52-00【十二道試煉】。
+  //
+  // ── 為什麼它是一個家族，而不是「十二道試煉」這一支 ────────────────────────
+  // owner 的原話是「[試煉] 可以是任意技能的標記 like [風王結界] [縮地]」「都可以
+  // 任意替換設定為 [技能編號/buff/debuff狀態]」。也就是**標記的身分本身**就是
+  // 一個參數，而不是三支各寫一次的技能。所以 `markId` 是一個 `docRef` 槽（新增
+  // 的槽型別，見 schema/template.ts）而不是一份白名單 —— `CC_MECHANIC` 那種
+  // 「只有我列進去的三個 id 能用」的形狀正好是這條需求要避免的東西。
+  //
+  // ── 這張卡**不產生 `effects`**，而那不是空技能 ───────────────────────────
+  // `effects` 是「施放時做什麼」，`marks` 是「一開始身上有什麼」。天生技把標記
+  // 發下去之後，真正會動的是傷害管線上的 `lethalSaveFor` 與屬性管線上的
+  // `syncPerStackSource`，兩者都不經過 `runEffects`。所以 `castType: "self"` +
+  // `innateKind: "passive"` + 空 `effects`，跟 攻擊觸發 / 受擊反應 同一個形狀。
+  //
+  // ── 免死那一條鏈，逐段對照 owner 的規格 ──────────────────────────────────
+  //   「受到致命傷害時消耗一層試煉」        → lethal.consume / damageTypes
+  //   「進入 [無敵] 狀態1.5秒」             → selfEffects[0] invulnerable
+  //   「隨後 [回復] 50%最大生命」           → selfEffects[1] restore.healthPct
+  //   「並[擊退]並[暈眩] 0.5秒 [周圍]敵人」 → aoeEffects knockback + applyStatus
+  //   「每失去一層永久提升10%攻/血」        → perStackLost（`spent` 乘在 sim 端）
+  //   「跨回合共享12次」                    → resetOn: "match" + durationSec: -1
+  //
+  // ⚠️ 兩個**已知的落差**，寫在這裡而不是留給下一個人自己發現：
+  //   · 「隨後」不存在。`lethalSaveFor` 把 selfEffects 與 aoeEffects 都跑在**救活
+  //     的同一格**，sim 沒有「N tick 之後再跑這批效果」的排程器（鎖定連段是拿
+  //     `leap.onLand` 當排程器用的，而這裡沒有位移可以掛）。所以無敵、回血、擊退
+  //     同時發生。玩家看得到的差別：無敵的那 1.5 秒是**回血之後**才開始保護他。
+  //   · `surviveHpPct` 與 `restoreHealthPct` 是**兩個**旋鈕而不是一個。前者是
+  //     「扣血那一刻血條停在哪」（沒有它人就死了），後者是緊接著的回復。十二道
+  //     試煉把前者設在 1%、後者 50%，所以畫面上是「剩一絲血 → 回到半血」。
+  //     兩個都設 0.5 也是合法的（直接停在半血，不演那一下）。
+  "mark-stacks": (t, p) => {
+    const lethalOn = str(t, p, "lethalMode") === "save";
+    let lethal: MarkLethalRule | undefined;
+    if (lethalOn) {
+      const selfEffects: EffectDef[] = [
+        {
+          kind: "invulnerable",
+          durationSec: num(t, p, "invulnerableSec"),
+          // `invulnerable` 的 applyTo 預設就是 self，寫出來是因為隔壁的
+          // `knockback`/`applyStatus` 預設是 target —— 這一組效果同時有兩種
+          // 受詞，讓它們各自沉默地吃預設值是這段最容易讀錯的地方。
+          applyTo: "self",
+          // 免控與免傷是兩根獨立的軸（sim/effects/invulnerable.ts 檔頭②），
+          // 而「被救回來的同一刻立刻被暈住」是不是可接受，是設計偏好。
+          blocksControl: str(t, p, "invulnerableScope") === "damageAndControl",
+        },
+      ];
+      // 0 = 不回復（純靠 surviveHpPct 停血）。一個 healthPct: 0 的 restore 是
+      // 一個什麼都不做的效果，留著只會讓稽核以為回血壞了。
+      const restoreHealthPct = num(t, p, "restoreHealthPct");
+      if (restoreHealthPct > 0) selfEffects.push({ kind: "restore", healthPct: restoreHealthPct });
+
+      // 0 = 不做 AoE。schema 那一側也擋了反過來的組合（有 aoeEffects 卻沒有
+      // 半徑 → `lethalSave.ts:162` 的閘會讓那批效果永遠不跑）。
+      const aoeRadius = num(t, p, "aoeRadius");
+      const aoeEffects: EffectDef[] = [];
+      if (aoeRadius > 0) {
+        // 清空 `knockbackDistance` 真的會拿掉擊退，語意跟 衝鋒推撞 清空
+        // `pushDistance` 一致。
+        if (has(t, p, "knockbackDistance")) {
+          aoeEffects.push({
+            kind: "knockback",
+            distance: num(t, p, "knockbackDistance"),
+            speed: num(t, p, "knockbackSpeed"),
+            // 免死的「施法者」是被救回來的那個人自己，所以 "caster" = 以他為圓心
+            // 向外推。"pull"（把人拉進來）與 "facing"（照他的面向推）都是合法
+            // 設計，所以這是一個下拉選單而不是一行寫死的方向。
+            from: str(t, p, "knockbackFrom") as "caster" | "facing" | "pull",
+          });
+        }
+        if (has(t, p, "stunSec")) {
+          aoeEffects.push({
+            kind: "applyStatus",
+            // status 文件只帶 tags，真正會暈的是**效果上的** `stun: true`
+            // （見 CC_MECHANIC 上面那段）。所以 statusId 在這裡只決定 HUD 上
+            // 掛哪一個名字，機制不跟著它跑 —— 這也是它可以是自由 docRef 的原因。
+            statusId: docRef(t, p, "stunStatusId") as StatusId,
+            duration: num(t, p, "stunSec"),
+            applyTo: "target",
+            stun: true,
+          });
+        }
+      }
+      lethal = {
+        consume: num(t, p, "lethalConsume"),
+        surviveHpPct: num(t, p, "surviveHpPct"),
+        damageTypes: LETHAL_DAMAGE_TYPES[str(t, p, "lethalDamageTypes")] ?? [],
+        internalCooldown: num(t, p, "internalCooldown"),
+        selfEffects,
+        aoeEffects,
+        aoeRadius,
+      };
+    }
+    const spec: MarkSpec = {
+      markId: docRef(t, p, "markId"),
+      initial: num(t, p, "initial"),
+      max: num(t, p, "max"),
+      durationSec: num(t, p, "durationSec"),
+      resetOn: str(t, p, "resetOn") as MarkResetPolicy,
+      ...(has(t, p, "perStackLost") ? { perStackLost: modifiers(t, p, "perStackLost") } : {}),
+      ...(lethal !== undefined ? { lethal } : {}),
+    };
+    return { castType: "self", innateKind: "passive", effects: [], marks: [spec] };
+  },
 };
 
 /**
@@ -1310,6 +1477,13 @@ export interface StackCardTrace {
   readonly effectCount: number;
   /** passive hooks it contributed */
   readonly hookCount: number;
+  /**
+   * 具名標記它貢獻了幾個。⚠️ 這一格是必要的而不是裝飾：一張只發標記的卡
+   * （mark-stacks 家族）`effectCount` 與 `hookCount` **都是 0**，而那個組合正是
+   * 「這張卡被靜默丟掉了」的訊號。少了這一欄，展開來源面板會對一張完全正常的
+   * 卡片說謊。
+   */
+  readonly markCount: number;
 }
 
 /**
@@ -1487,6 +1661,7 @@ export function expandStack(
   const effectTraces: StackEffectTrace[] = [];
   const cardTraces: StackCardTrace[] = [];
   const effects: EffectDef[] = [];
+  const marks: MarkSpec[] = [];
   let passive: AbilityPassive | undefined;
 
   for (const [index, card] of cards.entries()) {
@@ -1497,6 +1672,9 @@ export function expandStack(
       effectTraces.push({ index: effects.length, cardIndex: index, templateId, kind: e.kind });
       effects.push(e);
     }
+    // 標記跟 effects 一樣是 LIST-VALUED，所以**串接**而不是走 STACK_SCALAR_KEYS
+    // 的衝突政策：兩張卡各發一個標記是兩個標記，不是一場衝突。
+    for (const m of ex.marks ?? []) marks.push(m);
 
     const before = hookCount(passive);
     passive = mergePassive(passive, ex.passive, {
@@ -1547,6 +1725,7 @@ export function expandStack(
       owns: [],
       effectCount: ex.effects.length,
       hookCount: contributedHooks,
+      markCount: ex.marks?.length ?? 0,
     });
   }
 
@@ -1566,6 +1745,9 @@ export function expandStack(
   const result: Record<string, unknown> = { effects };
   for (const k of keys) result[k.key] = k.winner.value;
   if (passive !== undefined) result["passive"] = passive;
+  // 只在真的有標記時才寫這個鍵 —— 一張標記卡都沒有的堆疊必須跟從前**逐鍵相同**
+  // （stack.test.ts 的 1-card byte-identical 宣稱就靠這個）。
+  if (marks.length > 0) result["marks"] = marks;
 
   return {
     result: result as unknown as ExpandResult,
@@ -1626,6 +1808,10 @@ const EXPANDED_KEYS = [
   "targetsEnemies",
   "innateKind",
   "passive",
+  // ⚠️ 少了這一列，mark-stacks 展開出來的標記會在 merge 時被整包丟掉：
+  // `expand()` 產出了它、`ExpandResult` 帶著它，而寫進技能文件的那一步不認得它
+  // ——「做了但玩家拿不到」的失敗形態②，而且四個層面都會自洽地全綠。
+  "marks",
 ] as const;
 
 /**

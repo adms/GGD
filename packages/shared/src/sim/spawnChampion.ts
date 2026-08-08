@@ -9,6 +9,7 @@ import { recomputeStats } from "./stats/statPipeline";
 import { createMatchStats } from "./stats/matchStats";
 import { INVENTORY_SLOTS } from "./economy/shop";
 import { innateSupersedesLegacyPassive, syncAbilityPassives } from "./abilities/abilityPassives";
+import { installMarksForChampion } from "./markInstall";
 
 export interface SpawnChampionArgs {
   championId: ChampionId;
@@ -99,6 +100,10 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
   // per-player match scoreboard (accumulated by the combat/death/heal/ability/
   // flower/economy paths; graded at match end)
   world.matchStats.set(id, createMatchStats());
+
+  // 技能文件宣告的具名標記（【試煉】【風王結界】【縮地】）在這裡發下去。
+  // 必須在 `recomputeStats` 之前 —— `perStackLost` 是走 stats 那條路的。
+  installMarksForChampion(world, id, args.championId);
 
   // Q starts learned, so its permanent passive (if any) is on from spawn — and
   // so is the 天生技 innate, which spawns at rank 1 by definition.

@@ -5,6 +5,11 @@
   "description": "Cannot move.",
   "polarity": "debuff",
   "tags": [
-    "root"
+    "root",
+    "immobilize",
+    "move-denied",
+    "disable",
+    "cc",
+    "debuff"
   ]
 }

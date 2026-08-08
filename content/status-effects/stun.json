@@ -1,0 +1,18 @@
+{
+  "id": "stun",
+  "schema": "status-effect@1",
+  "name": "暈眩",
+  "description": "眼前一黑，整個人卡在那一格：走不動、打不出手、技能也放不出來。這是通用的那一份 —— 帶名字的那幾種（牙突・僵直、試煉衝擊、食材化、超究武神霸斬・拘束）是同一種硬控的不同張臉，所以它們跟這裡帶同一個 stun 標籤。持續多久寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "generic",
+    "debuff"
+  ]
+}

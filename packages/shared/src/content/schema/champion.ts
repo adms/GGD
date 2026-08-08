@@ -62,6 +62,25 @@ const zTransformLink = z
     normalUnitRawcode: z.string().min(4).max(4),
     /** `Emeu` — the rawcode of the ALTERNATE-form unit in war3map.w3u. */
     alternateUnitRawcode: z.string().min(4).max(4),
+    /**
+     * 【變身唯一狀態】的**碰撞規則** —— 一個實體已經在形態中，又被要求再次進入
+     * 形態時，舊形態的**剩餘時間**怎麼辦。
+     *
+     * ⚠️ 互斥本身不是這個欄位在做的事，也不需要任何欄位：`SimWorld.championForm`
+     * 是 `Map<EntityId, ChampionFormComp>`，一個實體只有一格，而身體只有一個
+     * `championId`。所以「同時只能有一個形態」是**結構性**的 —— 沒有一支技能
+     * 需要自己檢查（守衛：`sim/championFormExclusive.test.ts`）。
+     * 這個欄位補的是互斥**必然**帶來的那個決策：贏家的計時器從哪裡算。
+     *
+     * · `"restart"`（預設）—— 舊的剩餘時間丟棄，用新的時長重新計時。
+     *   WC3 Metamorphosis 重施就是重新計時，也是 2026-08-08 之前寫死的行為。
+     * · `"keepLongest"` —— 取 max(舊剩餘, 新時長)。擋掉「一個 1 秒的形態把一個
+     *   還剩 59 秒的形態砍短」這種靜默削弱（`restart` 下真的會發生）。
+     *   永不到期（toggle）視為無限長，永遠贏。
+     * · `"reject"` —— 已在形態中就拒絕，走 `castRejected`，舊形態原封不動。
+     *   給「變身期間不准再變」的設計用。
+     */
+    reenter: z.enum(["restart", "keepLongest", "reject"]).optional(),
     /** The transform ability, as the map's own w3a entry describes it. */
     triggerAbility: z
       .object({
@@ -265,7 +284,12 @@ export const zChampionDef = z
     /**
      * 變身 form link — see `zTransformLink`. Present on both halves of each of
      * the 26 w3x transform pairs; absent on every champion that has no second
-     * form. DATA ONLY: no behaviour reads it yet.
+     * form.
+     *
+     * ⚠️ 「DATA ONLY: no behaviour reads it yet」曾經寫在這一行，而它已經是謊話
+     * （第三守則）：`sim/systems/ChampionFormSystem.ts` 的 `destinationFor` 讀
+     * `counterpartId` 決定目的地，`applyChampionForm` 讀 `reenter` 決定重複進入
+     * 時的計時規則。
      */
     transform: zTransformLink.optional(),
     /** AI hints (Q/W/E/R only; EX is auto-unlocked, never in skill order) */

@@ -56,6 +56,12 @@ import {
   DEFAULT_STAGE2_SHRINK_SEC,
   ringFullCloseSec,
 } from "../../sim/fireRing";
+// 開房房主可調的四格（#288）的上下界 —— **只有一份**，住在 `roomSettings.ts`。
+// 那四格同時被四層讀（client 表單的 min/max、game-server 的權威夾取、這一份 Zod、
+// 後台顯示），所以抄一份數字進來就是第二個「上限是多少」的答案：房主表單擋在
+// 1800，Zod 放行 3600，兩邊漂開的那一天沒有任何東西會紅。
+// ⚠️ 相依方向是安全的：`roomSettings.ts` 自己一個 import 都沒有（純表 + 純函式）。
+import { MAX_ROUNDS_UNLIMITED, ROOM_SETTING_LIMITS } from "../../roomSettings";
 
 /**
  * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
@@ -344,6 +350,32 @@ export const zConfigMatchDoc = z
         /** shared team lives at match start (PairedDuels) */
         startingTeamLives: z.number().int().positive(),
         /**
+         * 一場最多打幾回合（#288）。{@link MAX_ROUNDS_UNLIMITED}（0）= **不設限**，
+         * 也就是照賽制打到最後一回合（決賽，game-server 的 `PairedDuels.FINAL_ROUND`）
+         * 為止 —— 出貨值就是 0，因為 owner 2026-08-08 說的是「預設值保留現在」。
+         *
+         * ⛔ **不是**「打到團隊生命歸零」。這句話在 2026-08-08 的第一版寫錯了（第三守則）：
+         * owner 2026-07-27 取消淘汰之後 `startingTeamLives` 歸零**不會讓任何人出局**，
+         * 它只是排名次的計分板。整份推導寫在 `PairedDuels.FINAL_ROUND` 的檔頭。
+         *
+         * 上下界 import 自 `roomSettings.ts` 的 `ROOM_SETTING_LIMITS.maxRounds`：
+         * 開房房主可以覆蓋這一格，兩層必須是同一個界，否則後台存得進去的數字房主
+         * 設不了（或反過來）。
+         *
+         * ⚠️ 為什麼是 `.default()` 而不是必填：耐久覆蓋層（`data/`, task #189）裡
+         * 可能已經存過一份**這一格出現之前**的 `config.match`。必填會讓那份舊文件
+         * 當場變成非法，而一份過不了 Zod 的覆蓋文件**不會只讓自己失效，它會讓整層
+         * 覆蓋被丟掉**（`apps/platform/internal/contentoverlay/validate.go` 的檔頭）。
+         * 這裡選的是和 `stage2StartSec` 同一條規矩：**舊文件永遠不會變非法**，而且
+         * 缺席補進來的 0 剛好就是「今天的行為」。
+         */
+        maxRounds: z
+          .number()
+          .int()
+          .min(ROOM_SETTING_LIMITS.maxRounds.min)
+          .max(ROOM_SETTING_LIMITS.maxRounds.max)
+          .default(MAX_ROUNDS_UNLIMITED),
+        /**
          * 選角階段長度（秒）—— **有人類對手的一般對局**。
          *
          * ⚠️ 上界 600 是 2026-08-03 補的:在此之前這一格只有 `positive()`,
@@ -420,7 +452,16 @@ export const zConfigMatchDoc = z
          * 的舊文件應該得到 owner 現在要的行為。
          */
         settlementCardOnHealthSpent: z.boolean().optional(),
-        intermissionSec: z.number().positive(),
+        /**
+         * 中場（商店）秒數。
+         *
+         * ⚠️ 上界是 #288 補的：這一格從此**房主開房時可以覆蓋**，而房主那條路不會
+         * 經過後台的 `MATCH_CONSOLE_MAX`（那張表只在後台頁裡）。少了這一行，表單
+         * 擋住的 601 用 HTTP 直送照樣進得去 —— CLAUDE.md「欄位要有上界，不是只有
+         * 下界」的同一個形狀（`champSelectSec` 2026-08-03 已經補過）。
+         * 數字 import 自 `ROOM_SETTING_LIMITS.intermissionSec`，不是打字。
+         */
+        intermissionSec: z.number().positive().max(ROOM_SETTING_LIMITS.intermissionSec.max),
         /**
          * HARD combat backstop: the phase force-ends here (PhaseMachine). It is
          * NOT the intended round length — the fire ring (below) closes in first
@@ -428,8 +469,14 @@ export const zConfigMatchDoc = z
          * WHOLE ring (`startSec + shrinkSec`), not just its ignition: a ring
          * that is still shrinking when the phase force-ends never gets to
          * finish anyone (refine below).
+         *
+         * ⚠️ 上界是 #288 補的，理由同 `intermissionSec`：這一格從此房主開房時可以
+         * 覆蓋，而房主那條路不經過後台的 `MATCH_CONSOLE_MAX`。數字 import 自
+         * `ROOM_SETTING_LIMITS.combatMaxSec`（1800 = 30 分鐘）—— 它比後台原本自己
+         * 補的 3600 緊，是刻意的：`roundHardCapSec` 的上界本來就是 1800，一場回合
+         * 的硬底線沒有理由可以設得比「回合絕對上限」更遠。
          */
-        combatMaxSec: z.number().positive(),
+        combatMaxSec: z.number().positive().max(ROOM_SETTING_LIMITS.combatMaxSec.max),
         /**
          * Fire ring (火圈 / 火環, tasks #132/#195) — the round-pacing ring.
          * `startSec` is the SINGLE SOURCE OF TRUTH for round length: at that

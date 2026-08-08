@@ -131,6 +131,15 @@ interface InternalMatchRequest {
   // only an explicit `false` from the room host disarms the mobs. Passed straight
   // into the MatchRoom bag and merged onto arenaRules in onCreate.
   rogueliteMobs?: boolean;
+  // PER-ROOM 開房設定 (#288). 和 `rogueliteMobs` 同一條路：Go 那一層只做透明轉送
+  // （界限只能有一份，而 Go 沒辦法 import `@ggd/shared/roomSettings`），權威的
+  // 夾取在 `MatchRoom.onCreate` 的 `sanitizeRoomSettings()`。
+  // 每一格缺席 = 用 `config.match@1` 的出貨值，**包含 vs bot 的選角秒數**。
+  champSelectSec?: number;
+  intermissionSec?: number;
+  combatMaxSec?: number;
+  /** 總回合數上限。0 = 不設限 = 今天的行為。 */
+  maxRounds?: number;
 }
 
 async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, rawBody: string): Promise<void> {
@@ -176,6 +185,13 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     callbackUrl: body.callbackUrl,
     // Per-room roguelite-mob toggle (#215); undefined here keeps it ON.
     rogueliteMobs: body.rogueliteMobs,
+    // 開房設定 (#288) —— 原封不動地轉送，**不在這裡驗**。這裡驗就是第二份界限，
+    // 而界限只能有一份（`@ggd/shared/roomSettings`），權威在 MatchRoom.onCreate。
+    // undefined 一路保持 undefined = 缺席 = 用出貨值（語意①：缺席 ≠ 重設）。
+    champSelectSec: body.champSelectSec,
+    intermissionSec: body.intermissionSec,
+    combatMaxSec: body.combatMaxSec,
+    maxRounds: body.maxRounds,
     // Server-only proof that THIS create came from the /_internal path; the
     // room's onCreate rejects a client-initiated create that lacks it (prod).
     createToken: mintCreateToken(SHARED_SECRET),

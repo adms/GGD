@@ -715,6 +715,26 @@ const BAND_LEDGER: readonly LedgerRow[] = [
       "zombieWave.test.ts asserts the clearance numerically on every guard viewport.",
   },
   {
+    file: "hud/MarkBar.tsx",
+    value: "`calc(env(safe-area-inset-bottom",
+    count: 1,
+    why:
+      "具名標記層數列 (task #278, 十二道試煉). THE THIRD MEMBER of the same family as " +
+      "SelfStatusBar and ZombieWaveBar above, and it lands here for the same reason they " +
+      "do — not because the offset is doubtful, but because the SCANNER SPLITS ON THE " +
+      "COMMA INSIDE `env(safe-area-inset-bottom, 0px)`, so every derived template-literal " +
+      "offset in the app truncates to this same unevaluatable prefix. The value it could " +
+      "not read IS the derivation. The offset is " +
+      "`calc(env(safe-area-inset-bottom, 0px) + ${HUD_STAMP_BAND + 190}px)` — DERIVED from " +
+      "the band, not a magic number, so it tracks the band if that ever grows. It cannot " +
+      "collide by arithmetic: `env()` is non-negative, so the bar's lowest pixel sits at " +
+      "least 190px above the band's top edge, and it stacks UPWARD (flex-column, " +
+      "bottom-anchored) so more mark rows move it further away, never closer. 190 > the " +
+      "122 SelfStatusBar uses, which is what puts it directly above that bar as its module " +
+      "doc claims. Like SelfStatusBar it is NOT a hudLayout corner slot, so the slot-rect " +
+      "suites above cannot see it and this row is its only account.",
+  },
+  {
     file: "mobile.css",
     value: "env(safe-area-inset-bottom",
     count: 1,

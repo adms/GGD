@@ -53,8 +53,13 @@ describe("paramsSchemaFor / defaultParamsFor — the form↔expander agreement",
       const ex = expand(t, defaultParamsFor(t));
       expect(ex.castType, t.id).toBeTruthy();
       // a template either produces effects, or is a passive whose behaviour
-      // hangs off hooks — never both empty, which would be a silent no-op skill
-      const inert = ex.effects.length === 0 && ex.passive === undefined;
+      // hangs off hooks, or installs a named MARK — never all empty, which
+      // would be a silent no-op skill. (`marks` joined the list on 2026-08-08:
+      // 具名標記 does its work in the damage pipeline and the stat pipeline,
+      // never through `runEffects`, so a mark-only card legitimately ships an
+      // empty `effects` — see the `mark-stacks` family in expand.ts.)
+      const inert =
+        ex.effects.length === 0 && ex.passive === undefined && (ex.marks?.length ?? 0) === 0;
       expect(inert, `${t.id} expands to a skill that does NOTHING`).toBe(false);
     }
   });

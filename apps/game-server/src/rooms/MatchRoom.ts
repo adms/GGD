@@ -19,7 +19,13 @@ import { asSeatId, type SeatId } from "@ggd/shared/ids";
 import { normalizeCombatEnv, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
 import { MatchController, type MatchResult, type SeatSpec } from "../match/MatchController";
 import type { MatchPhase } from "../match/PhaseMachine";
-import { resolvePhaseConfig, resolveFireRing, resolveStartingLives } from "../match/phaseConfig";
+import {
+  resolvePhaseConfig,
+  resolveFireRing,
+  resolveStartingLives,
+  resolveMaxRounds,
+} from "../match/phaseConfig";
+import { sanitizeRoomSettings, minCombatMaxSecFor } from "@ggd/shared/roomSettings";
 import { planTicks } from "../match/tickLoop";
 import { tickHealth, formatShedLog } from "../match/tickHealth";
 import { resolveArenaRules } from "../match/arenaRules";
@@ -116,6 +122,24 @@ export interface MatchRoomOptions {
    * rest of ArenaRules, so a tape replays with the value it was played on.
    */
   rogueliteMobs?: boolean;
+  /**
+   * PER-ROOM 開房設定 (#288, owner 2026-08-08:「開房房主可以設定 選角、商店、
+   * 每回合的時間跟總回合數，但**預設值保留現在**（包含 vs bot）」).
+   * 走的路和 `rogueliteMobs` 逐字相同：client → Go room → gamelink → 這個袋子。
+   *
+   * ⚠️ 型別寫 `number` 但**不可以相信它** —— 這個袋子是從 HTTP body 直接展開的，
+   * 裡面可能是字串、`null`、`NaN`、或超出上下界的數字。權威的檢查在
+   * `onCreate` 的 `sanitizeRoomSettings()`（見 `@ggd/shared/roomSettings` 的檔頭：
+   * Go 那一層故意不驗，界限只能有一份，而 Go 沒辦法 import 那張表）。
+   *
+   * ⚠️ 每一格 `undefined` 的語意是**缺席 ≠ 重設**：退回
+   * `content/config/config.match.json` 的出貨值，**包含 vs bot 的 320 秒選角**。
+   */
+  champSelectSec?: number;
+  intermissionSec?: number;
+  combatMaxSec?: number;
+  /** 總回合數上限。0 = 不設限 = 今天的行為（打到決賽才結束）。 */
+  maxRounds?: number;
   /**
    * NOTE — there is deliberately NO `serverOps` field here.
    *
@@ -419,16 +443,42 @@ export class MatchRoom extends Room<MatchState> {
     // 坐的座位都填成 `isBot: true`,所以「有 bot」在**每一場**都成立 —— 用它判
     // 會讓三個朋友一起打的那種局也吃到 320 秒的選角。
     const hasHumanOpponent = humanSeats.length > 1;
-    const phaseCfg = resolvePhaseConfig(hasHumanOpponent);
     // Round-pacing fire ring (task #132): resolved from the SAME config.match@1
     // doc as the phase durations, so `match.fireRing.startSec` is the single
     // round-length source of truth. null (absent block) leaves the ring off.
+    //
+    // ⚠️ 這一行搬到 `resolvePhaseConfig` 上面了（#288）：房主的「每回合時間」下界
+    // 是**從火圈推導**的，所以要先有圈才能洗設定，洗完才能算相位。
     const fireRing = resolveFireRing();
+    // ── 開房設定 (#288) —— 這裡是**權威**的那一道 ───────────────────────────
+    // Go 那一層故意只做透明轉送（見 @ggd/shared/roomSettings 檔頭），所以送到這裡
+    // 的東西完全沒有被驗過。下界用 `minCombatMaxSecFor` 從**出貨火圈**推導，不是
+    // 寫死一個數字：`config@1` 有一條「火圈整個收完 <= combatMaxSec」的跨欄位
+    // 不變式，而那條 refine 只在載入內容時跑，完全攔不到房間設定。
+    const roomSettings = sanitizeRoomSettings(options, minCombatMaxSecFor(fireRing ?? undefined));
+    // 語意②：越界就拒絕，而且**必須有人知道它被拒了**。表單擋在前面是第一道，
+    // 但偽造的 body / 舊版 client / Go 那層改了欄位名都會繞過它，所以這裡指名
+    // 欄位、原值與界限記一行。⛔ 吞掉 `rejected` 就是這一批的新缺陷。
+    for (const r of roomSettings.rejected) {
+      console.warn(
+        `[room-settings] ${matchId}: 房主的 ${r.key}=${JSON.stringify(r.received)} 被拒絕` +
+          `（${r.reason}，允許 ${r.min}–${r.max}）—— 這一格改用出貨值。`,
+      );
+    }
+    const phaseCfg = resolvePhaseConfig(hasHumanOpponent, roomSettings.settings);
     // Merge the PER-ROOM roguelite-mob toggle (#215) onto the resolved rules
     // BEFORE the one object is handed to both the live MatchController and
     // buildHeader below — so the live sim and the recording can never disagree.
     // `!== false` keeps absent/undefined === ON (default-ON owner directive).
-    const arenaRules = { ...resolveArenaRules(), rogueliteMobs: options.rogueliteMobs !== false };
+    //
+    // 總回合數上限 (#288) 走同一行、同一個理由：它必須進 replay header，否則一場
+    // 3 回合的比賽會被重播成 10 回合。房主沒設 → `resolveMaxRounds()` 退回
+    // `config.match@1` 的出貨值（0 = 不設限 = 今天的行為）。
+    const arenaRules = {
+      ...resolveArenaRules(),
+      rogueliteMobs: options.rogueliteMobs !== false,
+      maxRounds: resolveMaxRounds(roomSettings.settings.maxRounds),
+    };
     // STARTING TEAM LIVES from the SAME config.match@1 doc (`startingTeamLives`).
     // Was a hardcoded `3` while the doc's authored value sat unread — the owner
     // held the match-length dial and turning it did nothing. Resolved here, once,

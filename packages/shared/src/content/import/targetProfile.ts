@@ -1,0 +1,298 @@
+/**
+ * `ggd-content-target-profile@1` —— 給**外部技能模板編輯器**的離線 base receipt。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⛔ 這支最重要的一件事：**沒有的東西一律 `null`，不准編一個 digest 出來**
+ *
+ * 對面（Codex 上的模板編輯器）拿這份 profile 做兩件事：
+ *   ① pin `base.activationDigest` / `base.authoringDigest`，用它建 `delta` package；
+ *   ② 事後在 apply 時由我們 CAS 重驗那兩個 digest。
+ *
+ * 所以一個**假的 base digest 不會被當場抓到，它會在對方那邊活好幾天** ——
+ * 對方照著它產出一整包 delta，每一份文件都以那個不存在的 base 為出發點，
+ * 然後 apply 永遠 `stale-base`，而且**無法修復**（真正的 base 從來不存在，
+ * 沒有任何 diff 能把它接回來）。整包要重做。
+ *
+ * 相對地，`null` 讓對方在**建包之前**就停下來：規格 §4.1 明寫
+ * 「缺少精確 profile 時不得產 production-ready delta」。
+ * 一個誠實的 null 花對方三秒；一個好看的假 digest 花對方三天。
+ *
+ * 2026-08-08 的實況：這個 repo **還沒有 authoring store、也還沒有 activation**
+ * （計畫 §12 的 G2 才做）。所以：
+ *   · `base.activationDigest` = null
+ *   · `base.authoringDigest`  = null
+ *   · `authoringStoreState`   = "absent"
+ *   · `supportedModes`        = ["bootstrap"]  ⛔ 不含 full / delta
+ * 而 `content.*` 是真的（`content/manifest.json` 一直都在），所以它不是 null。
+ *
+ * 守衛：`targetProfile.test.ts`（把 null 換成假 digest 會紅）。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ② `profileDigest` 刻意**不含** `generatedAt`
+ *
+ * 規格 §12 要的是「deterministic、canonical、可 hash receipt」。若時間戳進了
+ * digest，同一份內容連抓兩次會得到兩個 digest，對方就無法用它判斷
+ * 「遊戲端變了沒有」—— 那正是這個欄位唯一的用途。
+ * 所以 digest 蓋在**除了 `generatedAt` 與 `profileDigest` 以外的全部**上面。
+ *
+ * ③ 這支是純函式：不讀檔、不看時鐘。事實由呼叫端（route）注入。
+ */
+import { sha256Hex } from "../sha256";
+import { stableStringify } from "../hash";
+import {
+  buildCapabilityManifest,
+  type RuntimeCapabilityManifest,
+} from "../editorCapabilities";
+
+export const TARGET_PROFILE_SCHEMA = "ggd-content-target-profile@1";
+export const IMPORT_RESULT_SCHEMA = "ggd-content-import-result@1";
+export const IMPORT_HEALTH_SCHEMA = "ggd-content-import-health@1";
+
+/** 這一輪（計畫 §12）走到哪一階段。對方用它決定能不能建包。 */
+export const IMPLEMENTED_STAGE = "G1";
+
+/**
+ * authoring store 的三態。⛔ **不是 boolean** ——
+ * 「還沒有」與「有但還在 bootstrap」對建包來說是完全不同的答案。
+ */
+export type AuthoringStoreState = "absent" | "bootstrapping" | "ready";
+
+/** 規格 §4.2 的三種 package 模式。 */
+export type PackageMode = "bootstrap" | "full" | "delta";
+
+/** 計畫 §4.1：啟用後怎麼讓新內容生效。**這是一個決策點，所以它是欄位。** */
+export type ReloadMode = "process-reload" | "new-match-snapshot" | "hot-reload";
+
+/**
+ * Transport / staging 預算（規格 §4.3）。
+ *
+ * ⚠️ 每一格都有**上界**，不是只有下界（CLAUDE.md 第一守則）——
+ * 一個打錯成 500MB 的 `maxArchiveBytes` 會在 G2 變成一個 zip bomb 的入口。
+ * `clampImportLimits()` 是唯一的寫入口。
+ *
+ * ⚠️ G2（真的收 package）之前這些只是**宣告**，對方靠它決定要不要分包。
+ * 等 validate/apply 真的落地時，它們應該搬進 `content/config/*.json` +
+ * Zod `DEFAULT_*` + admin `SHIPPED_*` 三個住處（第一守則），不要留在這裡。
+ */
+export interface ImportLimits {
+  readonly maxArchiveBytes: number;
+  readonly maxEntryBytes: number;
+  readonly maxEntries: number;
+  readonly maxDocuments: number;
+  readonly maxExpandedGraphNodes: number;
+  readonly maxScenarios: number;
+}
+
+const LIMIT_BOUNDS: Readonly<Record<keyof ImportLimits, readonly [number, number]>> = {
+  maxArchiveBytes: [1024, 64 * 1024 * 1024],
+  maxEntryBytes: [1024, 16 * 1024 * 1024],
+  maxEntries: [1, 20000],
+  maxDocuments: [1, 20000],
+  maxExpandedGraphNodes: [1, 100000],
+  maxScenarios: [1, 5000],
+};
+
+export const DEFAULT_IMPORT_LIMITS: ImportLimits = {
+  maxArchiveBytes: 32 * 1024 * 1024,
+  maxEntryBytes: 4 * 1024 * 1024,
+  maxEntries: 5000,
+  maxDocuments: 5000,
+  maxExpandedGraphNodes: 20000,
+  maxScenarios: 1000,
+};
+
+/** 夾進上下界。超界**不是**靜默夾掉的藉口 —— 回傳 `clamped[]` 讓呼叫端說得出口。 */
+export function clampImportLimits(input: Partial<ImportLimits> | undefined): {
+  limits: ImportLimits;
+  clamped: readonly string[];
+} {
+  const out: Record<string, number> = { ...DEFAULT_IMPORT_LIMITS };
+  const clamped: string[] = [];
+  for (const key of Object.keys(LIMIT_BOUNDS).sort() as (keyof ImportLimits)[]) {
+    const raw = input?.[key];
+    if (raw === undefined) continue;
+    const [lo, hi] = LIMIT_BOUNDS[key];
+    if (!Number.isFinite(raw)) {
+      clamped.push(`${key}: 非數字，改用出貨值`);
+      continue;
+    }
+    const v = Math.min(hi, Math.max(lo, Math.floor(raw)));
+    if (v !== raw) clamped.push(`${key}: ${raw} → ${v}（允許 ${lo}–${hi}）`);
+    out[key] = v;
+  }
+  return { limits: out as unknown as ImportLimits, clamped };
+}
+
+/** 出貨內容的事實 —— 由呼叫端讀 `content/manifest.json` 得到。 */
+export interface ContentFacts {
+  /** `cv_<12 hex>`，全部集合雜湊的純函式。 */
+  readonly contentVersion: string;
+  /** collection → 12 hex 雜湊（`manifest.json` 的 `collections[*].hash`）。 */
+  readonly collectionHashes: Readonly<Record<string, string>>;
+}
+
+export interface TargetProfileInput {
+  /** ISO 時間字串。⚠️ 由呼叫端給，這支不看時鐘（可測性 + 決定性）。 */
+  readonly generatedAt: string;
+  /** 建置戳記（版本徽章那一個）。拿不到就 `null`，⛔ 不要填 "unknown" 之類的字串。 */
+  readonly gameVersion: string | null;
+  /** `content/manifest.json` 讀得到就給；讀不到（未 build）給 null。 */
+  readonly content: ContentFacts | null;
+  readonly capabilities?: RuntimeCapabilityManifest;
+  readonly limits?: Partial<ImportLimits>;
+  readonly reloadMode?: ReloadMode;
+}
+
+/** 一格「現在拿不到」的東西：欄位名 + **為什麼** + 對方該怎麼辦。 */
+export interface UnavailableField {
+  readonly field: string;
+  readonly reason: string;
+}
+
+export interface TargetProfile {
+  readonly schema: typeof TARGET_PROFILE_SCHEMA;
+  readonly generatedAt: string;
+  readonly gameVersion: string | null;
+  /** 走到計畫 §12 的哪一階段。對方靠它判斷哪些 route 是真的。 */
+  readonly implementedStage: string;
+  /** 規格 §4.2 的 base。⛔ 三個 digest 在 G1 都是 null，**不可以填假值**。 */
+  readonly base: {
+    readonly activationDigest: string | null;
+    readonly authoringDigest: string | null;
+    readonly contentVersion: string | null;
+    readonly contentDigest: string | null;
+  };
+  readonly authoringStoreState: AuthoringStoreState;
+  /** ⛔ authoring store 不在時只有 `bootstrap`；delta 需要一個真的 base。 */
+  readonly supportedModes: readonly PackageMode[];
+  /** ⭐ 對方最該先讀的一行：現在能不能產 production-ready delta。 */
+  readonly deltaExportAllowed: boolean;
+  readonly compiler: {
+    readonly contractVersion: string | null;
+    readonly fingerprint: string | null;
+  };
+  readonly runtimeCapabilities: RuntimeCapabilityManifest;
+  readonly distribution: {
+    readonly digest: string | null;
+    readonly championCurationDigest: string | null;
+    readonly itemCurationDigest: string | null;
+  };
+  readonly assetManifestDigest: string | null;
+  readonly limits: ImportLimits;
+  readonly reloadMode: ReloadMode;
+  readonly verification: {
+    /** 這份 profile 有沒有被後台簽章。G1 沒有簽章基礎建設 → false。 */
+    readonly signed: boolean;
+    readonly method: "none";
+    readonly note: string;
+  };
+  /** 每一個 null 的出處。⚠️ 沒有這一格，null 跟「忘了填」長得一模一樣。 */
+  readonly unavailable: readonly UnavailableField[];
+  /** 除了 `generatedAt` 與自己以外，全部欄位的 sha256（前 16 hex）。 */
+  readonly profileDigest: string;
+}
+
+/**
+ * 建出 target profile。純函式：同樣的 input → 同樣的 output（含 digest）。
+ *
+ * ⛔ 這裡**沒有任何一行**在 authoring store 不存在時生一個 digest。
+ * 那是刻意的，見檔頭。
+ */
+export function buildTargetProfile(input: TargetProfileInput): TargetProfile {
+  const capabilities = input.capabilities ?? buildCapabilityManifest();
+  const { limits } = clampImportLimits(input.limits);
+
+  // authoring store 尚未存在（G2 才做）—— 這是事實，不是設定值。
+  const authoringStoreState: AuthoringStoreState = "absent";
+
+  const unavailable: UnavailableField[] = [
+    {
+      field: "base.activationDigest",
+      reason:
+        "尚未實作 immutable activation storage 與 ACTIVE pointer（計畫 §12 G2）。" +
+        "⛔ 不可以拿 contentVersion 當它用 —— 那是內容雜湊，不是 activation 身分。",
+    },
+    {
+      field: "base.authoringDigest",
+      reason:
+        "尚未有 managed authoring store（計畫 §4.2）。第一包必須是 `bootstrap`，" +
+        "由它攜帶完整 authoring corpus 與 migration fingerprint。",
+    },
+    {
+      field: "compiler.contractVersion / compiler.fingerprint",
+      reason:
+        "effect-template/product/chain compiler 尚未實作（計畫 §4.4）；" +
+        "現有的是 legacy template expander，不是規格要的 compiler，兩者指紋不可互換。",
+    },
+    {
+      field: "distribution.digest",
+      reason: "distribution-index 尚未從 curation 分離（計畫 §12 G3）。",
+    },
+    {
+      field: "distribution.championCurationDigest / itemCurationDigest",
+      reason:
+        "白名單住在 platform（Go）服務，不在這個 content 服務的邊界內；" +
+        "跨服務讀取要等 G3 決定 distribution index 落點。",
+    },
+    {
+      field: "assetManifestDigest",
+      reason: "尚無版本化的 asset manifest；V1 也明確排除 binary asset upload（規格 §14）。",
+    },
+  ];
+  if (input.content === null) {
+    unavailable.push({
+      field: "base.contentVersion / base.contentDigest",
+      reason: "content/manifest.json 讀不到 —— 請先跑 `pnpm content:build`。",
+    });
+  }
+  if (input.gameVersion === null) {
+    unavailable.push({
+      field: "gameVersion",
+      reason: "建置戳記不在環境裡（GGD_BUILD_STAMP 未注入）。",
+    });
+  }
+
+  const body = {
+    schema: TARGET_PROFILE_SCHEMA as typeof TARGET_PROFILE_SCHEMA,
+    gameVersion: input.gameVersion,
+    implementedStage: IMPLEMENTED_STAGE,
+    base: {
+      activationDigest: null,
+      authoringDigest: null,
+      contentVersion: input.content?.contentVersion ?? null,
+      contentDigest: input.content === null ? null : digestOf(input.content.collectionHashes),
+    },
+    authoringStoreState,
+    supportedModes: ["bootstrap"] as readonly PackageMode[],
+    deltaExportAllowed: false,
+    compiler: { contractVersion: null, fingerprint: null },
+    runtimeCapabilities: capabilities,
+    distribution: {
+      digest: null,
+      championCurationDigest: null,
+      itemCurationDigest: null,
+    },
+    assetManifestDigest: null,
+    limits,
+    reloadMode: input.reloadMode ?? "process-reload",
+    verification: {
+      signed: false,
+      method: "none" as const,
+      note:
+        "G1 沒有簽章基礎建設。⛔ 這份 receipt 只在信任的通道上有意義；" +
+        "apply 時仍必須由遊戲端 CAS 重驗（規格 §12）。",
+    },
+    unavailable,
+  };
+
+  return {
+    ...body,
+    generatedAt: input.generatedAt,
+    profileDigest: digestOf(body),
+  };
+}
+
+/** canonical JSON → sha256 前 16 hex。 */
+function digestOf(value: unknown): string {
+  return sha256Hex(stableStringify(value)).slice(0, 16);
+}

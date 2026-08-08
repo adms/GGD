@@ -138,9 +138,21 @@ export interface RegenRules {
  *     (2026-08-02 之前是 `godie-hapm` 的 0.01,那一格已經翻成扣血了)。所以
  *     `pctEnabled` / `pctMode` / `floorPerSec` 這一族目前對每一場比賽都是 no-op,
  *     機制留著是因為它是可調的能力,不是因為有人在用。
- *   · 百分比**扣血** —— 出貨只有 `godie-hapm`(海克力斯 - Berserker)填了
- *     `healthDrainPctOfMax: 0.01`,而 `drainFloorPctOfMax: 0.01` 就是 owner 的
- *     「直到生命不足 1%」。
+ *   · 百分比**扣血** —— ⚠️ **2026-08-08 起也是零使用者**。`godie-hapm`
+ *     (海克力斯 - Berserker)曾經是唯一的填寫者,但 owner 那天把 52-00
+ *     【十二道試煉】整支重製成標記機制(`sim/marks.ts`),那一格因此歸零。
+ *     `drainFloorPctOfMax: 0.01`(owner 的「直到生命不足 1%」)仍然是出貨值,
+ *     只是現在沒有人踩得到它。
+ *
+ * ⚠️ 所以**兩個機制目前都是 no-op**,而那是一個事實不是缺陷 —— 它們是可調的
+ * 能力,留著等下一個要用的內容。守衛在 `sim/healthPctDrain.test.ts`:機制本身
+ * 用合成英雄驅動(所以零使用者不會讓它變成 vacuous),另有一條**反向**守衛掃
+ * 全部英雄卡,有人重新開始用就會紅 —— 那時候該把機制守衛接回真實內容
+ * (失敗形態⑤:被測的不是出貨的那個)。
+ *
+ * ⚠️ 這段文字在 2026-08-08 之前寫的是「出貨只有 godie-hapm 填了 0.01」,而卡片
+ * 上其實是 **0.012** —— 一句沒有守衛的散文連它引用的數字都會漂(第三守則)。
+ * 現在這裡不再抄任何數字。
  */
 export const DEFAULT_REGEN_RULES: RegenRules = Object.freeze({
   pctEnabled: true,

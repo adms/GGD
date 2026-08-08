@@ -15,7 +15,7 @@
  *「預設值 = 範本實測」 premise.
  */
 import { z } from "zod";
-import { zScaling, zStatModifier } from "../schema/common";
+import { zId, zScaling, zStatModifier } from "../schema/common";
 import { zEffectCondition } from "../schema/condition";
 import type { ParamSlot, TemplateDoc } from "../schema/template";
 
@@ -43,6 +43,14 @@ function slotSchema(slot: ParamSlot): z.ZodTypeAny {
       return zScaling;
     case "statModifiers":
       return z.array(zStatModifier);
+    case "docRef":
+      // 借用另一份文件的編號當身分（具名標記的 `markId`／`stunStatusId`）。
+      // ⚠️ 刻意**不**加 `ref:` 描述:那個描述會讓 walk.ts 渲染成 RefSelect,而
+      // RefSelect 只認得一個 collection —— 這個槽的整個存在理由就是「技能編號
+      // **或** buff/debuff 狀態」跨得過 collection 邊界(見 schema/template.ts
+      // 的 `docRef` 說明與 schema/mark.ts 檔頭①)。所以是純文字輸入 + 格式驗證,
+      // 和 `expand.ts` 的 `docRef()` 讀取器用的是同一個 `zId`。
+      return zId;
     case "condition":
       // The SAME schema `zHookDef.condition` uses, so a gate the Forge accepts
       // is a gate the ability doc accepts — there is no second validation of a

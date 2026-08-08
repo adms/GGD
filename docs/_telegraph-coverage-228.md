@@ -8,21 +8,21 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 282 | shape derived from the ability's own authored data |
+| ✅ OK | 283 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 1 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 34 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 33 | permanent WC3 passive, never cast, nothing to warn about |
 
-**283 / 283 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**284 / 284 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 106 | self marker at the caster's feet |
+| `self` | 107 | self marker at the caster's feet |
 | `targeted` | 96 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `ground` | 50 | circle — the real `enemiesInCircle` disc; you can walk out |
-| `—` | 34 | not cast |
+| `—` | 33 | not cast |
 | `skillshot` | 23 | line — the projectile's corridor; step sideways |
 | `dash` | 8 | line — the sweep of the dash body |
 
@@ -138,7 +138,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | E | 92-02 消化液 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | R | 92-04 馬勒戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | EX | 92-002 最終戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `—` | — | 🟣 PASSIVE | never cast |
+| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 海克力斯 - Berserker `godie-hapm` | Q | 52-01 狂戰士之怒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 海克力斯 - Berserker `godie-hapm` | W | 52-02 蹂躪編年史 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 海克力斯 - Berserker `godie-hapm` | E | 52-03 無銘斧劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

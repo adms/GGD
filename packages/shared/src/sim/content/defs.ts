@@ -11,6 +11,7 @@ import type { AuraDef } from "../aura/aura";
 import type { ClassRequirement } from "./requirement";
 import type { VisionGrant } from "../stealth";
 import type { EffectDef } from "../effects/effect";
+import type { MarkSpec } from "../marks";
 import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
@@ -50,6 +51,22 @@ export interface AbilityPassiveRank {
    * (`godie-h020.passive` / `godie-hjai.passive`) is the only user.
    */
   flight?: import("../flight").FlightGrant;
+  /**
+   * 格擋 this rank grants — see `sim/combat/block.ts`. A FIFTH payload kind for
+   * the same reason `vision` was a third and `flight` a fourth: 「擋不擋得下
+   * 這一發」 is not a number on a stat table (型別過濾 and `lethalOnly` vanish
+   * the moment you sum it into a `Stat`) and it is not projected onto anybody.
+   *
+   * ⭐ It is THE SAME `ModifierSource.block` field an equipped item writes
+   * (`economy/itemSource.ts`), NOT a second mechanism: `blockCutFor` walks
+   * `StatsComp.sources` without caring about `kind`, so an ability-granted
+   * block obeys the identical 鏈式獨立判定 / 型別過濾 / 致死判定 / 內部冷卻.
+   * The whole wiring is one forward in `abilities/abilityPassives.ts rankBlock`.
+   *
+   * 20-00 銀色甲胄 (Saber 天生技, 「30%機率格擋 100% 魔法傷害」) and 79-002 虛化
+   * (卍解 狀態下的物理格擋, so `whileForm: "alternate"`) are the two users.
+   */
+  block?: import("../combat/block").BlockGrant;
   /**
    * 形態閘 (task #249 變身) — which BODY this rank's payload is attached to.
    * ABSENT = "any" = both, i.e. every passive authored before this field.
@@ -114,6 +131,21 @@ export interface AbilityDef {
    * cost, exactly as WC3 refuses to cast a passive button.
    */
   passive?: AbilityPassive;
+  /**
+   * 這支技能進場時要在持有者身上安裝哪些【具名標記】（層數）。
+   * 語意與「為什麼不能用 applyBuff/applyStatus 表達」寫在 `sim/marks.ts` 檔頭。
+   *
+   * ⚠️ 它是**第二種**「純被動」的形狀。在它之前，`passive !== undefined &&
+   * effects.length === 0` 是判斷純被動的唯一寫法（見上一段註解與
+   * `content/castTimeFormula.ts` 的 EXEMPTION 1）。一支只安裝標記的天生技
+   * （十二道試煉）**兩個條件都不符**：它沒有靜態 `passive` 屬性區塊，
+   * 因為它的加成是「每失去一層才長出來」的。
+   *
+   * ⛔ 不要為了滿足舊判斷而補一個空的 `passive.ranks[].modifiers: []` ——
+   * 那正是 #224（天生技空 modifier）修掉的形狀。正確的做法是讓每一個
+   * 「什麼算純被動」的判斷點同時認得這一格。
+   */
+  marks?: readonly MarkSpec[];
   vfxKey?: string;
   /**
    * WC3-derived per-ability cast sound cue (audio-map SFX key, e.g.
@@ -152,6 +184,27 @@ export interface AbilityDef {
    * w3x BLP→PNG). Absent = client falls back to letter-tile rendering.
    */
   icon?: string;
+  /**
+   * 【切換】—— 這支技能是一顆開／關兩態的按鈕（20-01 風王結界 · 70-00 紮根）。
+   * Mirrors `zAbilityToggle` in content/schema/ability.ts, which carries the
+   * full authoring contract. Absent = 一般的一次性施放，切換管線整條不存在。
+   */
+  toggle?: AbilityToggle;
+}
+
+/**
+ * 【切換】的執行期形狀 —— mirrors `zAbilityToggle` (content/schema/ability.ts).
+ * ⛔ 語意寫在 schema 上，不在這裡重複一份（兩份會分岔）。
+ */
+export interface AbilityToggle {
+  upkeepCadence: "none" | "perAttack" | "perSecond";
+  upkeepCost: readonly number[];
+  upkeepResource?: "mana" | "health";
+  upkeepIntervalSec?: number;
+  onExit: readonly EffectDef[];
+  exitOnResourceEmpty?: boolean;
+  costOnExit?: boolean;
+  cooldownOnExit?: boolean;
 }
 
 export interface ChampionDef {
@@ -271,14 +324,19 @@ export interface ChampionDef {
    * `Emeu` (task #249) — see `content/schema/champion.ts` for the full contract
    * and `content/championForms.ts` for the shipped 26-pair table.
    *
-   * DATA ONLY: the sim never reads this. It rides along exactly like `icon` and
-   * `tint` so registry reads stay typed, and so the transform MECHANIC (task
-   * #119) can be built without another trip into the .w3x. `role: "alternate"`
-   * marks a body that is NOT independently pickable.
+   * ⚠️ 「DATA ONLY: the sim never reads this」曾經寫在這裡，而它已經是謊話
+   * （第三守則）：`sim/systems/ChampionFormSystem.ts` 讀 `counterpartId`（目的地）
+   * 與 `reenter`（重複進入形態時的計時規則）。`role: "alternate"` 仍然只是標記
+   * 一個不可獨立挑選的身體。
    */
   transform?: {
     role: "base" | "alternate";
     counterpartId?: ChampionId;
+    /**
+     * 變身唯一狀態的碰撞規則 —— 見 `content/schema/champion.ts` 的 `zTransformLink`。
+     * 缺省 = `DEFAULT_FORM_REENTER`（`sim/systems/ChampionFormSystem.ts`）。
+     */
+    reenter?: "restart" | "keepLongest" | "reject";
     normalUnitRawcode: string;
     alternateUnitRawcode: string;
     triggerAbility: {
@@ -549,11 +607,12 @@ export interface LootTable {
 }
 
 /**
- * `status-effect@1` 裡**唯一被 sim 讀到**的那一格（A4b，#278）。
+ * `status-effect@1` 裡**被 sim 讀到**的那幾格（A4b，#278；`tags` 於 2026-08-08 加）。
  *
- * ⚠️ 這份 def 刻意只有一個欄位。`status-effect@1` 的其餘內容（name / icon /
- * description）是**顯示身分**，由 UI 那一側自己讀 `content/registries.ts` 的
- * `StatusEffects` —— sim 不需要、也不該把它們拉進純度閘裡面。
+ * ⚠️ 這份 def 刻意**只**收 sim 真的要做決定的欄位。`status-effect@1` 的其餘內容
+ * （name / icon / description）是**顯示身分**，由 UI 那一側自己讀
+ * `content/registries.ts` 的 `StatusEffects` —— sim 不需要、也不該把它們拉進純度
+ * 閘裡面。加欄位之前先問：「sim 會拿它來分岔嗎？」不會就別加。
  *
  * ⛔ 而 `polarity` 必須走這條路，不可以在 `applyStatus` 裡從欄位猜：一個
  * `moveSpeedMult: 1.3` 的加速與 `0.7` 的減速在結構上長得一模一樣，任何啟發式
@@ -562,4 +621,19 @@ export interface LootTable {
  */
 export interface StatusMeta {
   polarity?: "buff" | "debuff";
+  /**
+   * 這份狀態屬於哪幾**類**（`stun` / `cc` / `slow` / `banked` …），逐字取自
+   * `status-effect@1` 的 `tags`。
+   *
+   * ⭐ 為什麼它必須進 sim，而 name/icon 不必：`condition.ts` 的
+   * {@link StatusTagLeaf} 問的是「身上有沒有**任何一份**帶著這個 tag 的狀態」，
+   * 那是一個**求值時的分岔**，不是顯示。而「暈眩」在出貨內容裡是五份不同的
+   * 文件（`burnstun` / `fang-stun` / `ingredient` / `omnislash-lock` /
+   * `trial-stun`），所以沒有這一格的話，89-00「敵方暈眩時追加致盲」就得由作者
+   * 手寫五個 id 的 `any:[…]`，而第六份暈眩上架的那一天它會安靜地漏掉。
+   *
+   * ⛔ 不要在 sim 這一側另外開一份 id→tag 表（`hasEquipment` 的註解寫的是同一
+   * 件事）：那是第二個答案，只會在某一份狀態改了 tags 的那天跟這裡分歧。
+   */
+  tags?: readonly string[];
 }

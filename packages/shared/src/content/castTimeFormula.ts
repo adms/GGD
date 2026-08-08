@@ -310,7 +310,16 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   // castTimeSec on one of these is unreachable in the sim (activateAbility
   // returns "passive" first) AND a lie in the codex, so the field must be
   // ABSENT, not 0.
-  if (def.passive !== undefined && def.effects.length === 0) {
+  //
+  // ⚠️ 2026-08-08 擴充：**「純被動」有第二種形狀**。一支只安裝【具名標記】的
+  // 天生技（52-00 十二道試煉）沒有靜態 `passive` 屬性區塊 —— 它的加成是
+  // 「每失去一層才長出來」的（`MarkSpec.perStackLost`），所以舊條件把它判成
+  // 一支主動技並要求 0.3 秒吟唱，而那個吟唱在 sim 裡永遠跑不到
+  // （`activateAbility` 仍然先回 "passive"）—— 一個只存在於 codex 上的謊。
+  //
+  // ⛔ 反過來「補一個空的 `passive.ranks[].modifiers: []` 去滿足舊條件」是錯的：
+  // 那正是 #224（天生技空 modifier）修掉的形狀。認得新形狀才是修法。
+  if ((def.passive !== undefined || (def.marks?.length ?? 0) > 0) && def.effects.length === 0) {
     return exempt("passive-only", undefined, f);
   }
 

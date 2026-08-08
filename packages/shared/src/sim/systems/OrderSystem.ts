@@ -15,6 +15,7 @@ import {
 } from "../combatFeel";
 import { bodyHeldByRules } from "../movementHold";
 import { berserkDropsOrders, berserkSeek, isBerserk } from "../berserk";
+import { fearDropsOrders, fearPass } from "../fear";
 import { reachTo } from "./BasicAttackSystem";
 import {
   ACQUIRE_LEASH,
@@ -171,7 +172,11 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       // 客戶端預測還在跑,強行歸零只會讓模型抽搐。玩家推搖桿還是能「看向那邊」,
       // 走不走由不得他。為什麼是這裡而不是 `movementHold`、為什麼不是 `root`,
       // 見 sim/berserk.ts 的決策 1。
-      if (berserkDropsOrders(world, id)) break; // one entity per seat
+      // ---- 恐懼:同一個模型的鏡像(sim/fear.ts) ----
+      // 一樣只丟 `order`、一樣不丟 `aim`。差別在後面那一半:暴走把身體交還給
+      // 自動索敵,恐懼把身體推離最近的敵人而且不攻擊(`fearPass`,這支函式的
+      // 最後一步)。
+      if (berserkDropsOrders(world, id) || fearDropsOrders(world, id)) break; // one entity per seat
       const order = frame.order;
       if (!order) continue;
       nav.order = order;
@@ -374,6 +379,16 @@ export function orderSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Intent
       }
     }
   }
+
+  // ---- 恐懼:逃 (sim/fear.ts) ----
+  // ⚠️ **最後一步,而且必須是最後一步。** 上面每一段都會寫 `nav.moveTarget`:
+  // 追擊迴圈把它指向攻擊目標、抵達檢查把它清成 null。跑在中間的話這一 tick 剛
+  // 寫好的逃跑點會被追擊蓋回去 —— 而「被蓋回去」在畫面上就是**完全不逃**,
+  // 狀態圖示還亮著(失敗形態 ②:算出來了但玩家拿不到)。
+  //
+  // 掃 `world.nav` 而不是 `world.champion`:#215 的殭屍也有 nav,而 52-002 /
+  // 52-02 的範圍恐懼打到的多半正是它們。
+  fearPass(world);
 }
 
 /**

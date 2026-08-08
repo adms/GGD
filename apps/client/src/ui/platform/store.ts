@@ -10,6 +10,7 @@ import { createStore } from "zustand/vanilla";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
+import { ROOM_SETTING_KEYS, type RoomMatchSettings } from "@ggd/shared/roomSettings";
 
 import * as apiFns from "./api";
 import { api } from "./api";
@@ -258,7 +259,21 @@ export interface AppState {
   declineFriend(accountId: string): Promise<void>;
 
   refreshRooms(): Promise<void>;
-  createRoom(name: string, botDifficulty: string, mapId?: string, rogueliteMobs?: boolean): Promise<void>;
+  /**
+   * Create a room. `settings` is the #288 host block (選角 / 商店 / 每回合時間 +
+   * 總回合數) and is ONE OBJECT on purpose — four extra positional parameters
+   * after `rogueliteMobs` would be eight in a row, i.e. a signature that gets
+   * called wrong. Callers that omit it send no settings at all, which is the
+   * contract's 缺席 ≠ 重設: every field falls back to config.match@1's shipped
+   * value, vs-bot champ select included.
+   */
+  createRoom(
+    name: string,
+    botDifficulty: string,
+    mapId?: string,
+    rogueliteMobs?: boolean,
+    settings?: RoomMatchSettings,
+  ): Promise<void>;
   joinRoom(roomId: string): Promise<void>;
   leaveRoom(): Promise<void>;
   refreshRoom(): Promise<void>;
@@ -315,6 +330,25 @@ export interface AppState {
   /** Surface a message in the error toast (a CLIENT-side failure, not an API one). */
   showError(message: string): void;
   clearError(): void;
+}
+
+/**
+ * #288 — drop every host setting the room creator did not fill in.
+ *
+ * ⭐ The load-bearing half of 缺席 ≠ 重設. `JSON.stringify` already drops
+ * `undefined` values, but the object also travels through the Go platform's
+ * `*float64` decode, where an explicit `null` is NOT the same as a missing key.
+ * Building the payload with only the present keys makes "the host left it
+ * blank" unrepresentable rather than merely unlikely.
+ */
+function presentRoomSettings(settings: RoomMatchSettings | undefined): RoomMatchSettings {
+  const out: RoomMatchSettings = {};
+  if (!settings) return out;
+  for (const key of ROOM_SETTING_KEYS) {
+    const v = settings[key];
+    if (typeof v === "number" && Number.isFinite(v)) out[key] = v;
+  }
+  return out;
 }
 
 function errText(err: unknown): string {
@@ -747,7 +781,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async createRoom(name, botDifficulty, mapId, rogueliteMobs) {
+    async createRoom(name, botDifficulty, mapId, rogueliteMobs, settings) {
       try {
         const resp = await apiFns.createRoom({
           name,
@@ -757,6 +791,12 @@ export const appStore = createStore<AppState>()((set, get) => {
           // whole chain default-ON (#215). `=== false` guards against passing a
           // stray truthy/undefined that would still serialize a key.
           ...(rogueliteMobs === false ? { rogueliteMobs: false } : {}),
+          // #288 語意①: only the fields the host actually filled in. A key the
+          // host left blank must NOT appear — `undefined`/`null` would read as
+          // an explicit value downstream (0 is out of range for the three time
+          // fields and means "no cap" for maxRounds), so it is dropped here
+          // rather than serialized.
+          ...presentRoomSettings(settings),
         });
         set({ room: resp, myReady: false, myPick: "", myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
       } catch (err) {

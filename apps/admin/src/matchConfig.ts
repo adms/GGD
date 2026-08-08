@@ -83,15 +83,16 @@ export const MATCH_CONSOLE_MAX: Readonly<Record<string, number>> = Object.freeze
   // `resolveStartingTeamHealth` 會夾到 MAX_STARTING_TEAM_HEALTH(60)；填得比它大
   // 只會讓畫面和實戰不一致，所以後台就擋在同一個數字。
   "match.startingTeamLives": 60,
-  // 階段秒數：10 分鐘。再長的中場／結算都不是設定錯就是誤觸。
-  // ⚠️ `champSelectSec` 與 `champSelectSecVsBot` **不在這張表裡** —— 2026-08-03
-  // 起它們的上界寫在 Zod schema（600 / 1800），而 `matchFieldBounds` 以 schema
-  // 優先。在這裡再補一份會變成第二個住處，兩邊漂開的時候後台會擋在一個平台
-  // 根本不認的數字上（或反過來放行一個會被 PUT 退回的值）。
-  "match.intermissionSec": 600,
+  // 結算秒數：10 分鐘。再長的結算演出不是設定錯就是誤觸。
+  // ⚠️ `champSelectSec` / `champSelectSecVsBot` / `intermissionSec` /
+  // `combatMaxSec` / `maxRounds` **不在這張表裡** —— 它們的上界寫在 Zod schema
+  // （600 / 1800 / 600 / 1800 / 50），而 `matchFieldBounds` 以 schema 優先。
+  // 在這裡再補一份會變成第二個住處，兩邊漂開的時候後台會擋在一個平台根本不認的
+  // 數字上（或反過來放行一個會被 PUT 退回的值）。
+  // 前兩格是 2026-08-03 搬進 Zod 的；後三格是 2026-08-08（#288）—— 那三格從此
+  // **開房房主也能覆蓋**，而房主那條路不經過這張表，界只能有一份，住在
+  // `packages/shared/src/roomSettings.ts` 的 `ROOM_SETTING_LIMITS`。
   "match.resolutionSec": 600,
-  // 戰鬥硬底線：1 小時。殭屍王每次召喚還會 +180 秒，所以基底不需要更大。
-  "match.combatMaxSec": 3600,
   "match.fireRing.startSec": 3600,
   "match.fireRing.shrinkSec": 3600,
   // 火圈收完的最小半徑：競技場 boundaryRadius 是 24，比它大等於「火圈永遠在場外」。
@@ -209,6 +210,17 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
       "整場對戰有多長就是這一格決定的：每回合輸的隊伍扣 2/4/6…（第 7 回合起再多 3），扣到 0 淘汰。調大 = 回合數變多、整場變長；調小 = 很快就結束。⚠️ 名字寫「生命」但它是一池**分數**，不是每人幾條命。",
     live: "game-server phaseConfig.resolveStartingTeamHealth → PairedDuels",
   },
+  "match.maxRounds": {
+    zh: "總回合數上限",
+    note:
+      "一場最多打幾回合。**0 = 不設限**，也就是照賽制打到最後一回合（決賽）為止（＝現在的行為，出貨值）。" +
+      "填 6 = 第 6 回合打完就結算，不管各隊的團隊生命還剩多少。⚠️ 它只加一條**提前**結束的條件，" +
+      "原本「打完決賽才結束」那條一格都沒被碰到（兩條是 OR，先到的算），所以填得比決賽回合數還大 = 沒有效果。" +
+      "⚠️ 不要把它想成「打到團隊生命歸零」—— owner 2026-07-27 取消淘汰之後，生命歸零**不會讓任何人出局**，" +
+      "它只是決定名次的計分板（見 game-server 的 PairedDuels.FINAL_ROUND 檔頭）。" +
+      "⚠️ **開房的房主可以覆蓋這一格**（#288）——這裡設的是「房主沒特別指定時用哪個」，不是每一場的最終值。",
+    live: "game-server MatchRoom 回合上限（roomSettings.roundCapReached）→ 提前進入結算",
+  },
   "match.champSelectSec": {
     zh: "選角秒數（有人類對手）",
     note: "champ-select 階段多長。太短玩家來不及看英雄檔案（客戶端的簡報閘要求它有餘裕），太長每一場開頭**其他人**都在等。",
@@ -247,13 +259,16 @@ export const MATCH_FIELD_INFO: Readonly<Record<string, MatchFieldInfo>> = Object
   },
   "match.intermissionSec": {
     zh: "中場（商店）秒數",
-    note: "回合之間逛商店的時間。太短買不完三選一 + 商店；太長節奏會斷。",
+    note:
+      "回合之間逛商店的時間。太短買不完三選一 + 商店；太長節奏會斷。" +
+      "⚠️ **開房的房主可以覆蓋這一格**（#288）——這裡設的是「房主沒特別指定時用哪個」。",
     live: PHASE,
   },
   "match.combatMaxSec": {
     zh: "戰鬥硬底線（秒）",
     note:
-      "戰鬥階段強制結束的時間點。⚠️ 它**不是**預期的回合長度 —— 火圈會先收完並逼出結果。必須留得下**整個火圈**（起燃秒數＋收圈秒數），否則圈還在縮就被強制結束，僵局破不了。",
+      "戰鬥階段強制結束的時間點。⚠️ 它**不是**預期的回合長度 —— 火圈會先收完並逼出結果。必須留得下**整個火圈**（起燃秒數＋收圈秒數），否則圈還在縮就被強制結束，僵局破不了。" +
+      "⚠️ **開房的房主可以覆蓋這一格**（#288），而房主那一側的**最小值是從火圈設定推導的**（起燃 + 整個圈收完）：這裡把火圈調長，房主能設的每回合時間下限就跟著往上。",
     live: PHASE,
   },
   "match.resolutionSec": {
@@ -457,9 +472,13 @@ export const MATCH_GROUPS: readonly MatchGroup[] = [
   {
     key: "clock",
     title: "回合時鐘（可調）",
-    intro: "一場對戰的節奏：每個階段多長、整場打幾回合。這一組每一格都真的被 game-server 讀。",
+    intro:
+      "一場對戰的節奏：每個階段多長、整場打幾回合。這一組每一格都真的被 game-server 讀。" +
+      "⚠️ 其中四格（選角秒數／中場秒數／戰鬥硬底線／總回合數上限）從 #288 起**開房的房主可以覆蓋**：" +
+      "這一頁設的是**房主沒特別指定時**用哪個值，房主動過的那一場以房間設定為準。房主沒碰的欄位一律退回這裡的值 —— 包含 vs bot 的選角秒數。",
     paths: [
       "match.startingTeamLives",
+      "match.maxRounds",
       "match.champSelectSec",
       "match.champSelectSecVsBot",
       "match.champSelectEarlyStartVsBot",

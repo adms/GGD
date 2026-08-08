@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "100be49998c2",
+  "hash": "00bff6140ffb",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -77,8 +77,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "f433a2fb0859",
-      "size": 1412
+      "hash": "f58a617b00ad",
+      "size": 1432
     },
     {
       "id": "damage-colors",
@@ -137,8 +137,8 @@
     {
       "id": "regen",
       "path": "config/regen.json",
-      "hash": "9f060d545e41",
-      "size": 1428
+      "hash": "c51fc34f99aa",
+      "size": 1474
     },
     {
       "id": "replay",

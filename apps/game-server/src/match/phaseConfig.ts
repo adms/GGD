@@ -30,6 +30,7 @@
 import { TICK_HZ } from "@ggd/shared/constants";
 import { Configs } from "@ggd/shared/content";
 import type { ConfigMatchDoc, FireRingConfig } from "@ggd/shared/content";
+import { MAX_ROUNDS_UNLIMITED, type RoomMatchSettings } from "@ggd/shared/roomSettings";
 import { DEFAULT_PHASE_CONFIG, type PhaseConfig } from "./PhaseMachine";
 import { DEFAULT_STARTING_TEAM_HEALTH, MAX_STARTING_TEAM_HEALTH } from "./PairedDuels";
 
@@ -72,14 +73,33 @@ export function phaseConfigFromSeconds(
    * 結果是 PvP 的 20 秒,不是讓所有人一起等 5 分鐘。
    */
   hasHumanOpponent = true,
+  /**
+   * 房主在開房面板設的秒數（#288），**已經過 `sanitizeRoomSettings` 洗過**。
+   * 每一格 optional，而 optional 在這裡的語意是語意①：**缺席 ≠ 重設** ——
+   * 缺席的那一格原封不動地用下面算出來的出貨基準值，包含 vs bot 的那一格。
+   */
+  host: RoomMatchSettings = {},
 ): PhaseConfig {
-  const champSelect = hasHumanOpponent
+  // ── 覆蓋順序（owner「預設值保留現在（包含 vs bot）」的精確實現）────────────
+  // ① 先按 hasHumanOpponent 選出**基準值**：PvP 用 champSelectSec，
+  //    vs bot 用 champSelectSecVsBot。
+  const baseChampSelect = hasHumanOpponent
     ? sec.champSelectSec
     : (sec.champSelectSecVsBot ?? sec.champSelectSec);
+  // ② 房主有設 → 房主贏，**兩條分支都一樣**（他明說要幾秒就是幾秒，bot 局也是）。
+  // ③ 房主沒設 → 基準值原封不動。
+  //
+  // ⚠️ 兩個方向都會壞而且都很安靜：只把房主的值套在 PvP 分支上 → 房主在 bot 局
+  // 設了完全沒反應；房主沒設時去碰 vs bot 分支 → 320 秒被靜默換成 20 秒。
+  const champSelect = host.champSelectSec ?? baseChampSelect;
   return {
     champSelectTicks: toTicks(champSelect ?? NaN, fallback.champSelectTicks),
-    intermissionTicks: toTicks(sec.intermissionSec ?? NaN, fallback.intermissionTicks),
-    combatMaxTicks: toTicks(sec.combatMaxSec ?? NaN, fallback.combatMaxTicks),
+    intermissionTicks: toTicks(
+      host.intermissionSec ?? sec.intermissionSec ?? NaN,
+      fallback.intermissionTicks,
+    ),
+    combatMaxTicks: toTicks(host.combatMaxSec ?? sec.combatMaxSec ?? NaN, fallback.combatMaxTicks),
+    // 結算秒數不是房主可調的四格之一（契約只開了三個時間 + 總回合數）。
     resolutionTicks: toTicks(sec.resolutionSec ?? NaN, fallback.resolutionTicks),
   };
 }
@@ -90,10 +110,42 @@ export function phaseConfigFromSeconds(
  * room creation, so the durations are frozen for the match's lifetime — a
  * mid-match content reload can never retime a phase under a running sim.
  */
-export function resolvePhaseConfig(hasHumanOpponent = true): PhaseConfig {
+export function resolvePhaseConfig(
+  hasHumanOpponent = true,
+  /** 房主覆寫（#288）。空物件 = 沒有人碰過任何一格 = 完全等於這一格出現之前。 */
+  host: RoomMatchSettings = {},
+): PhaseConfig {
   const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
-  if (!doc || doc.schema !== "config@1" || !doc.match) return DEFAULT_PHASE_CONFIG;
-  return phaseConfigFromSeconds(doc.match, DEFAULT_PHASE_CONFIG, hasHumanOpponent);
+  const authored = !doc || doc.schema !== "config@1" || !doc.match ? {} : doc.match;
+  // ⚠️ 缺文件時**不能**直接 return DEFAULT_PHASE_CONFIG —— 那會讓房主的設定在
+  // 骨架開機／單元測試底下靜靜地消失。空的 `authored` 走同一條路，每一格都退回
+  // `fallback`，結果與舊的早退逐格相同。
+  return phaseConfigFromSeconds(authored, DEFAULT_PHASE_CONFIG, hasHumanOpponent, host);
+}
+
+/**
+ * 這一場的**總回合數上限**（#288）—— 打完第 N 回合就結束，名次照剩餘團隊生命。
+ *
+ * 語意①（缺席 ≠ 重設）：房主沒設 → 退回 `config.match@1` 的 `match.maxRounds`
+ * 出貨值；那一格也沒有 → {@link MAX_ROUNDS_UNLIMITED}（0，＝今天的行為）。
+ *
+ * ⚠️ 讀 doc 時走的是**寬鬆的 cast**，理由和 {@link resolveStartingTeamHealth} 的
+ * `Math.floor` + clamp 同一條：`Configs.tryGet` **在讀的時候不重跑 Zod**，所以
+ * 這裡拿到的可能是後台耐久覆蓋層寫進來、從沒被驗過的任何東西（#283）。
+ * 非數字 / 非有限 / <= 0 一律讀成「不設限」＝今天的行為，而不是丟例外把房間弄死。
+ *
+ * ⛔ 這裡**不夾取**、也不判上界 —— 房主那一側的界限由 `sanitizeRoomSettings`
+ * 一份表管完（語意②：越界拒絕，不靜默夾取）。內容那一側由 Zod 管。
+ */
+export function resolveMaxRounds(host?: number): number {
+  if (host !== undefined) return host;
+  const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
+  const m = doc?.schema === "config@1" ? (doc.match as { maxRounds?: unknown } | undefined) : undefined;
+  const authored = m?.maxRounds;
+  if (typeof authored !== "number" || !Number.isFinite(authored) || authored <= 0) {
+    return MAX_ROUNDS_UNLIMITED;
+  }
+  return Math.floor(authored);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

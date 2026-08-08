@@ -9,6 +9,7 @@
     "teamCount": 4,
     "teamSize": 3,
     "startingTeamLives": 20,
+    "maxRounds": 0,
     "champSelectSec": 20,
     "champSelectSecVsBot": 320,
     "champSelectEarlyStartVsBot": true,

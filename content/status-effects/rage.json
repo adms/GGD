@@ -1,0 +1,15 @@
+{
+  "id": "rage",
+  "schema": "status-effect@1",
+  "name": "狂怒",
+  "description": "吼完之後整個人快一圈，打得又急又貪，血直接從對手身上補回來。⚠️ 它不是【暴走】—— 方向盤還在你手上，只是脾氣上來了。52-02 蹂躪編年史會回頭問一句「牠還在氣頭上嗎」。加速多少、吸多少、延長規則，寫在施加它的那張卡上。",
+  "polarity": "buff",
+  "tags": [
+    "rage",
+    "frenzy",
+    "haste",
+    "lifesteal-up",
+    "stat-up",
+    "buff"
+  ]
+}

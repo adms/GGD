@@ -113,11 +113,30 @@
  * draws in phase 1 only. No clock, no Math.random, no trig, no `**` — safe under
  * sim/purity.test.ts.
  */
-import type { EntityId } from "../../ids";
+import type { EntityId, ItemId, StatusId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
+// 「這一筆狀態實例真的在做什麼」的真相就住在這個型別上，而它同時是
+// {@link STATUS_FIELD_TAGS} 那道**編譯期**閘的來源：`Record<keyof StatusEffect, …>`
+// 表示往它加一格旗標而不在推導表表態，`pnpm typecheck` 就回非零。型別 import，
+// 執行期沒有這條邊。
+import type { StatusEffect } from "../components";
+// 「他身上帶著哪些道具」的**分類**要從道具文件上讀（`ItemDef.tags`），而登錄表
+// 就是 sim 這一側的道具真相 —— `economy/itemSets.ts`（套裝：「同時裝備 A、B、C」）
+// 走的是同一條路。⛔ 不要在這裡另外開一份 id→tag 表：那是第二個答案，而它只會在
+// 某一份道具改了 tags 的那一天跟這裡分歧。
+// 「他身上那些狀態各屬於哪一**類**」的真相同樣在登錄表上（`StatusMeta.tags`，
+// 由 `content/registries.ts` 從 `status-effect@1.tags` 帶過來）。⛔ 同上：不要在
+// 這裡另外開一份 id→tag 表。
+import { Items, Statuses } from "./registry";
 import { Stat } from "../stats/statTypes";
 import type { AttrKey } from "../stats/attributes";
 import { liveAttribute } from "../stats/attrSources";
+// ⛔ 不要在這裡再寫一次「他身上還有沒有這個 status」。`effects/effectCommon.ts`
+// 的 `hasStatus` 已經是那個答案,而且它的檔頭記著一個很細的理由:
+// `StatusSystem` 在 tick 開頭就把過期的清掉了,但它跑在技能結算**之前**,
+// 所以 `> world.tick` 的**再**檢查才是「這一 tick 到底還算不算」的真答案。
+// 抄第二份 = 兩個答案,而它們只會在某一 tick 的邊緣分歧 —— 那是查不出來的那種。
+import { hasStatus } from "../effects/effectCommon";
 
 // ---------------------------------------------------------------------------
 // THE VOCABULARY
@@ -234,6 +253,35 @@ export const CONDITION_CHANCE_MAX = 1;
 export const CONDITION_MAX_DEPTH = 5;
 export const CONDITION_MAX_CHILDREN = 8;
 
+/**
+ * 「某一類道具」那一格（{@link EquipmentTagLeaf}）的字串長度上下界。
+ *
+ * 下界 1：空字串是一個**看起來寫好了、卻永遠比不中**的閘（失敗形態 ②），
+ * 而且它在表單上跟「還沒填」長得一模一樣。
+ * 上界 40：出貨的 `ItemDef.tags` 全是短 slug（`legendary` / `onhit` / `boots`
+ * / `stat-path`），最長 11 字。40 是「這是把整段描述貼進來了」的那條線 ——
+ * 誤植攔截，不是設計政策（同 `zAuraDef.radius` 的 40 的用法）。
+ */
+export const EQUIPMENT_TAG_MIN_LEN = 1;
+export const EQUIPMENT_TAG_MAX_LEN = 40;
+
+/**
+ * 「某一類狀態」那一格（{@link StatusTagLeaf}）的字串長度上下界。
+ *
+ * 跟 {@link EQUIPMENT_TAG_MIN_LEN} / {@link EQUIPMENT_TAG_MAX_LEN} 是**兩對數字
+ * 而不是共用一對**，理由是它們指的是兩個不同集合的自由字串：`ItemDef.tags` 與
+ * `status-effect@1.tags` 沒有任何理由永遠同界，而共用一個常數會讓「調寬道具那
+ * 一邊」在狀態這一邊產生一個沒有人要求過的副作用。
+ *
+ * 下界 1：空字串是一個**看起來寫好了、卻永遠比不中**的閘（失敗形態 ②），而且
+ * 它在表單上跟「還沒填」長得一模一樣。
+ * 上界 40：出貨的 `status-effect@1.tags` 全是短 slug（`stun` / `hard-cc` /
+ * `slow` / `uncontrollable` / `antiheal`），最長 14 字。40 是「這是把整段描述
+ * 貼進來了」的那條線 —— 誤植攔截，不是設計政策。
+ */
+export const STATUS_TAG_MIN_LEN = 1;
+export const STATUS_TAG_MAX_LEN = 40;
+
 // ---------------------------------------------------------------------------
 // THE SHAPE
 // ---------------------------------------------------------------------------
@@ -276,7 +324,154 @@ export interface KindLeaf {
   is: ConditionEntityKind;
 }
 
-export type ConditionLeaf = ChanceLeaf | StatLeaf | KindLeaf;
+/**
+ * 「這個主體身上**現在**有沒有某個狀態」—— owner 2026-08-08 那 90 支文案裡
+ * 出現最多次的閘（至少 12 支）：
+ *
+ *   45-04 千鳥「命中帶[燃燒]標記的敵人」· 79-02/79-03「若對方在[破魔]狀態」·
+ *   80-03「若對方在[破甲]狀態」· 52-02/52-04「若敵人具有[恐懼]狀態」·
+ *   13-002「對[致盲]狀態的敵人」· 92-04「身上有[致盲]標記」·
+ *   12-03「敵人身上有[混亂]標記時」·
+ *   89-00/89-01/89-02/89-04（熊貓整隻英雄就是暈眩→致盲→混亂的狀態連鎖）
+ *
+ * ⭐ 為什麼是 `subject` 而不是「目標專用」：52-02 的另一半是「若**自身**在
+ * [狂怒]狀態」。同一個機制的兩半，共用 {@link ConditionSubject}（跟 `stat` /
+ * `kind` 兩顆葉子逐字一樣的寫法），而不是開第二套詞彙。
+ *
+ * ⭐ 為什麼**沒有** `has: boolean` 之類的欄位：`not` 組合子已經存在而且包得住
+ * 一顆葉子（`{ not: { kind:"status", … } }`），所以「沒有[破甲]」是既有語法的
+ * 一個用法，不是一個新欄位。多開一格 = 同一件事有兩種寫法，而兩種寫法的內容
+ * 遲早會分歧（`describeCondition` 也得跟著長出兩條分支）。
+ *
+ * ⚠️ 讀的是**還沒到期**的那一筆（`expiresAtTick > world.tick`，見
+ * `effects/effectCommon.ts` 的 `hasStatus`）。沒有 `StatusComp` 的身體（小兵一個
+ * 都沒有，`SimWorld.ts:941`）永遠回 false —— 那是 DECISION 2 的同一個方向：
+ * 讀不到就是 false，而不是「跳過」或「通過」。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 決策點（2026-08-08）：「這一份」還是「這一類」—— 兩種都做
+ *
+ * 上面那張清單裡的**熊貓六支有五支**（89-00/01/02/04/002）與 92-04 卡在同一個
+ * 地方，而且卡點不是「條件葉不存在」，是**它只吃 exact id**：
+ *
+ *   89-00「敵方[暈眩]狀態下額外追加[致盲]」
+ *
+ * 「暈眩」在出貨內容裡**不是一份文件**，是五份（`burnstun` / `fang-stun` /
+ * `ingredient` / `omnislash-lock` / `trial-stun`），因為每一支施加暈眩的技能都
+ * 帶著自己的文案與圖示。所以 exact id 逼作者寫成 `any:[五個 id]`，而那張卡會在
+ * **第六份暈眩上架的那一天安靜地漏掉它** —— 沒有任何東西會紅，卡片看起來也
+ * 完全正常（失敗形態 ②：算出來了但這一半從沒送到）。
+ *
+ * 所以這顆葉子跟 {@link EquipmentItemLeaf} 一樣是一個 UNION，寫法逐字相同
+ * （兩個分支各只帶**一格**，都 `.strict()`）：
+ *
+ *   `{ kind:"status", subject:"target", statusId:"trial-stun" }` ← 這一份
+ *   `{ kind:"status", subject:"target", tag:"stun"            }` ← 這一類
+ *
+ * `{statusId, tag}` 兩格一起寫兩個分支都不收 —— 那是一個**沒有人定義過**的語意
+ * （且？或？），而它在表單上看起來完全正常。這跟 `zStatLeaf` 用 union 表達
+ * 「percent 只在有分母的屬性上開放」是同一個手法，不是第二套寫法。
+ *
+ * ⭐ 為什麼「類」讀 `status-effect@1.tags` 而不是 `polarity`：polarity 只有
+ * buff/debuff 兩格，它回答的是 HUD 要畫紅框還是綠框，不是「這是哪一族的東西」。
+ * tags 才是內容真的帶著的語意分類（`stun` / `hard-cc` / `cc` / `slow` /
+ * `antiheal` / `uncontrollable` …），而且它已經在出貨文件上了。
+ *
+ * ⭐ 為什麼是**單一 tag** 而不是一個陣列 + `mode:"any"|"all"`：owner 那 90 支
+ * 文案裡**沒有一句**在問兩個類別（每一句都是「[暈眩]狀態下」「帶[致盲]標記」）。
+ * 真的需要那一天，加的是**一格 `mode`**（配一個陣列），不是第二顆葉子 —— 兩顆
+ * 葉子會讓 `describeCondition`、編輯器與求值端各長出兩條分支，而它們只會分歧。
+ */
+export interface StatusIdLeaf {
+  kind: "status";
+  subject: ConditionSubject;
+  /** `status-effect@1` 的編號 —— 跟 `applyStatus.statusId` 是同一個命名空間。 */
+  statusId: StatusId;
+}
+
+/** 「某一類狀態」—— 比對 `status-effect@1.tags`。見 {@link StatusIdLeaf} 的說明。 */
+export interface StatusTagLeaf {
+  kind: "status";
+  subject: ConditionSubject;
+  /** 狀態文件上的一個 tag（`stun` / `hard-cc` / `slow` …）。逐字比對。 */
+  tag: string;
+}
+
+export type StatusLeaf = StatusIdLeaf | StatusTagLeaf;
+
+/** 這顆葉子問的是哪一種？型別謂詞，讓求值端與編輯器共用同一個答案。 */
+export function isStatusIdLeaf(leaf: StatusLeaf): leaf is StatusIdLeaf {
+  return (leaf as StatusIdLeaf).statusId !== undefined;
+}
+
+/**
+ * 「某個主體身上**現在**裝備著某件／某類道具」——
+ * owner 2026-08-08 那 90 支文案裡 **77-002 御雷劍** 的閘：
+ *
+ *   [被動][機率][裝備了某類道具時]
+ *   「使用從者道具"御雷劍"的剎那，其雷鳴劍發動[機率]上升至50%，
+ *    [GLADIARIA ALAT] 持續時間增加至30秒。」
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 決策點：「這一件」還是「這一類」—— 兩種都做，因為**同一張卡同時說了兩句**
+ *
+ * 那張卡的方括號標籤寫的是「裝備了**某類**道具時」，而它的內文指名的是**一件**
+ * （御雷劍）。這不是文案不精確，這是這個閘真正的形狀：owner 在寫規格的時候
+ * 想的就是「一族」，落到這一支英雄身上剛好只有一件。
+ *
+ * 所以這顆葉子是一個 UNION，寫法跟同一檔的 {@link StatLeaf} 逐字一樣
+ * （`ResourceStatLeaf | PlainStatLeaf`，Zod 那側 `z.union`），兩個分支各只帶
+ * **一格**：
+ *
+ *   `{ kind:"equipment", subject:"self", itemId:"godie-i0xx" }`  ← 這一件
+ *   `{ kind:"equipment", subject:"self", tag:"onhit"         }`  ← 這一類
+ *
+ * `.strict()` 讓「兩格一起寫」兩個分支都不收 —— 那是一個**沒有人定義過**的
+ * 語意（且？或？），而它在表單上看起來完全正常。
+ *
+ * ⭐ 為什麼「類」讀 `ItemDef.tags` 而不是 `tier`：`tier` 是 #82 訂的**價格帶**
+ * （1..5，商店貨架用的），不是「這是哪一族的東西」。tags 才是內容真的帶著的
+ * 語意分類（`legendary` / `onhit` / `boots` / `stat-path` …），而且它已經是
+ * `economy/legendaryTags.ts` 讀的那一格。要是哪天 owner 真的要「第 5 階的任何
+ * 道具」，那是這個 union 的**第三個分支**，不是把 tags 硬掰成價格。
+ *
+ * ⭐ 為什麼**沒有**「幾件」（`op` + `count`）：出貨文案沒有一句在數件數，而一個
+ * 數量比較會是 {@link StatLeaf} 那套 `op`/`value` 詞彙的第二份抄本 —— 兩份遲早
+ * 分歧。「一件都沒有」已經有寫法：`not` 包住它（跟 {@link StatusLeaf} 同一個
+ * 理由）。真的需要數的那天，加的是一格 `minCount`，不是一整套比較運算子。
+ *
+ * ⚠️ `itemId` 是 **soft ref**（跟 `StatusLeaf.statusId` 同一個理由）：御雷劍
+ * 這一族的道具文件今天還沒進 `content/items/`，硬 ref 會讓「條件寫得出來」被
+ * 「道具還沒上架」擋住，而那兩件事沒有先後關係。
+ *
+ * ⚠️ 讀的是 `ChampionComp.items`（`sim/components.ts`），也就是**背包那 6 格**
+ * ——「裝備了」在這個遊戲裡就是「在背包裡」，沒有第二層穿戴欄。小兵／召喚物／
+ * 守護者身上沒有 `ChampionComp`，所以對它們永遠回 false：DECISION 2 的同一個
+ * 方向（讀不到就是 false，不是「跳過」也不是「通過」）。
+ */
+export interface EquipmentItemLeaf {
+  kind: "equipment";
+  subject: ConditionSubject;
+  /** 指名的那一件道具編號 —— 跟 `champion.buildPriority` 同一個命名空間。 */
+  itemId: ItemId;
+}
+
+/** 「某一類道具」—— 比對 `ItemDef.tags`。見 {@link EquipmentItemLeaf} 的說明。 */
+export interface EquipmentTagLeaf {
+  kind: "equipment";
+  subject: ConditionSubject;
+  /** 道具文件上的一個 tag（`onhit` / `legendary` / `boots` …）。逐字比對。 */
+  tag: string;
+}
+
+export type EquipmentLeaf = EquipmentItemLeaf | EquipmentTagLeaf;
+
+/** 這顆葉子問的是哪一種？型別謂詞，讓求值端與編輯器共用同一個答案。 */
+export function isEquipmentItemLeaf(leaf: EquipmentLeaf): leaf is EquipmentItemLeaf {
+  return (leaf as EquipmentItemLeaf).itemId !== undefined;
+}
+
+export type ConditionLeaf = ChanceLeaf | StatLeaf | KindLeaf | StatusLeaf | EquipmentLeaf;
 
 /** 且 — every child must hold. Schema requires ≥1 child, so it is never vacuous. */
 export interface AllCondition {
@@ -425,6 +620,280 @@ export function entityIsKind(world: SimWorld, id: EntityId, is: ConditionEntityK
   }
 }
 
+/**
+ * `id` 的背包裡有沒有符合 `leaf` 的道具？
+ *
+ * ⚠️ 讀的是**真的裝備欄** `ChampionComp.items`（6 格，`null` = 空），跟
+ * `economy/itemSets.ts` 判斷「套裝湊齊了沒」讀的是同一個陣列 —— 所以買、賣、
+ * 三選一免費發、傳說寶玉、撤銷一次購買，全部不必知道這顆葉子存在就會被看見。
+ *
+ * 沒有 `ChampionComp` 的身體（小兵一個都沒有）回 false，不是「跳過」（DECISION 2）。
+ *
+ * 純度：依索引走固定長度陣列 + 讀登錄表，沒有 Map 迭代順序、沒有 rng、沒有時鐘。
+ */
+export function hasEquipment(world: SimWorld, id: EntityId, leaf: EquipmentLeaf): boolean {
+  const champ = world.champion.get(id);
+  if (!champ) return false;
+  for (let slot = 0; slot < champ.items.length; slot++) {
+    const itemId = champ.items[slot];
+    if (!itemId) continue;
+    if (isEquipmentItemLeaf(leaf)) {
+      if (itemId === leaf.itemId) return true;
+      continue;
+    }
+    // 道具文件還沒註冊（白名單關掉、內容改壞）→ 它沒有 tags 可以比，就是不算。
+    const def = Items.tryGet(itemId);
+    if (def !== undefined && def.tags.includes(leaf.tag)) return true;
+  }
+  return false;
+}
+
+// ---------------------------------------------------------------------------
+// 推導的狀態 tag —— 「這一筆狀態實例真的在做什麼」
+// ---------------------------------------------------------------------------
+
+/**
+ * ⭐ 決策（2026-08-08）：一個 tag 查詢同時看**兩個來源**。
+ *
+ *   (a) **宣告的** —— `status-effect@1.tags`，作者手寫在文件上的分類。
+ *   (b) **推導的** —— 這一筆**真的掛上去的** {@link StatusEffect} 實例上的機制
+ *       旗標（`stun` / `root` / `silenced` / `berserk` / `feared` /
+ *       `moveSpeedMult` / `missChance` / 三格治療倍率）。
+ *
+ * ⛔ 只做 (a) 有一個**靜默失效**，而且它不是假設：出貨內容裡「暈眩」是**五份**
+ * 不同文件（`stun` / `burnstun` / `fang-stun` / `ingredient` / `omnislash-lock`
+ * / `trial-stun` 其實是六份），而 `applyStatus` 的 `stun: true` 寫在**技能**上，
+ * 不在狀態文件上。所以一支技能完全可以拿一份**沒有標 `stun` tag** 的文件掛出
+ * 一個貨真價實的暈眩 —— 畫面上兩者一模一樣，而「敵方暈眩時」那個條件查不到它。
+ * 靠作者記憶補 tag 一定會漏（失敗形態 ②：算出來了，但這一半從沒送到）。
+ *
+ * (b) 讓「這個狀態會不會暈眩人」變成**事實**而不是**宣告**。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 決策：**不加前綴**，兩個來源共用同一個命名空間
+ *
+ * 推導出來的 tag 就叫 `stun`、`slow`、`cc`，不是 `cc:stun`。理由是 owner 的用意
+ * （2026-08-08）：「讓其他技能透過 **check tag 是否存在** 來交互延伸效果判斷」。
+ * 寫卡的人問的是「他暈了沒」，他**不該需要知道**這個答案是文件宣告的還是實例
+ * 推導的 —— 那是實作細節，而把它洩漏到內容裡等於逼每一張卡寫
+ * `any:[宣告的, 推導的]`，也就是把這裡省下的那個洞原封不動搬到內容層。
+ *
+ * **撞名時會發生什麼**：一份宣告了 `stun` 的文件被 `stun: true` 掛上來 → 兩個
+ * 來源都說是 → `hasStatusTag` 回 true。兩者是 **OR**，沒有計數、沒有堆疊，所以
+ * 重複是**無害**的（這也是為什麼 (b) 可以安全地當成 (a) 的補網，而不是替代品）。
+ *
+ * ⚠️ 代價講清楚：作者**不能**用「不標 tag」來讓一個真的會暈人的狀態躲開
+ * 「敵方暈眩時」的查詢。那是刻意的 —— 那種躲藏能力正是這一段要消滅的東西。
+ * 真的需要一個「暈了但不算暈眩」的機制，那要的是一個**新的旗標**（於是它在下面
+ * 這張表裡有自己的一行），不是一份少標一個字的文件。
+ */
+export interface DerivedStatusTagRule {
+  /** 推導出來的 tag，跟 `status-effect@1.tags` 同一個命名空間（見上）。 */
+  readonly tag: string;
+  /** 這一筆實例符不符合。純函式，只讀那一格。 */
+  readonly when: (s: StatusEffect) => boolean;
+}
+
+/**
+ * 倍率的中性值。**`< 它` = 打折**（減速 / 禁療），**`> 它` = 加成**（加速）。
+ *
+ * ⚠️ 這個門檻是這張表裡最容易寫錯的一格，而錯法是**有方向的**：
+ * `moveSpeedMult: 1.3` 的加速與 `0.7` 的減速在結構上長得一模一樣（`components.ts`
+ * 的 `polarity` 註解為了同一個理由拒絕從欄位猜增益/減益）。用 `!== 1` 或
+ * `!== undefined` 當門檻，會讓每一張加速卡都被標成 `slow`，於是「對減速中的敵人
+ * 追加」在**幫隊友加速**的那一刻誤觸 —— 那是一個看不出來的錯誤。
+ *
+ * 1 而不是 0.999：倍率的單位就是「原本的幾倍」，等於 1 就是沒有改變它，
+ * 這不是一個平衡數值（沒有人會想調它），所以它不進後台。
+ */
+export const DERIVED_NEUTRAL_MULT = 1;
+
+/**
+ * 失手率的「沒有」。**`> 它` 才算失手。**
+ *
+ * `missChance` 是 0..1 的機率（`components.ts`：攻擊者的失手，不是防禦者的閃避），
+ * 而 `0` 同時是「這一格沒填」與「填了 0」的答案 —— 兩者都是「他沒有比較容易打空」，
+ * 所以同一條線切得乾淨。用 `!== undefined` 當門檻會讓一份寫了 `missChance: 0` 的
+ * 文件被標成 `miss`，那是一句假話。
+ */
+export const DERIVED_NO_MISS_CHANCE = 0;
+
+/**
+ * ⭐ **每一格 `StatusEffect` 都必須在這裡表態** —— 這是這張表最重要的性質，
+ * 而它是一道**閘**不是一個判準：型別是
+ * `Record<keyof StatusEffect, …>`，所以下一個往 `components.ts` 加旗標的人
+ * **不加這裡的一行就 `pnpm typecheck` 回非零**。他不需要記得這張表存在。
+ *
+ * ⛔ 這正是「不要把推導表寫成一張會漂的手抄清單」的意思：一張 `Partial<>` 或一個
+ * 裸物件字面值會在新旗標上架的那一天安靜地少一格，而少的那一格長得跟「這個旗標
+ * 刻意不推導 tag」一模一樣。空陣列 `[]` 是一個**寫下來的決定**，缺一格不是。
+ *
+ * ⚠️ `cc` 這個 tag 的成員必須跟 `effects/applyStatus.ts` 的 `isCc` **一致**
+ * （那是「免控擋不擋得掉」與「記不記 ccAppliedTicks」的同一個問題）。
+ * 守衛在 `conditionDerivedStatusTag.test.ts`：它走出貨的 `applyStatus`，逐條
+ * 把這裡標了 `cc` 的旗標打到一個免控的身體上，掛得上去就紅。
+ * ⛔ 沉默**不在** `cc` 裡，那不是漏掉：`components.ts` 的 `silenced` 註解明說
+ * 「暈眩是硬控（記 ccAppliedTicks、被免控攔），沉默不是」。
+ */
+export const STATUS_FIELD_TAGS: Readonly<
+  Record<keyof StatusEffect, readonly DerivedStatusTagRule[]>
+> = {
+  // ── 身分與記帳：不是「它在做什麼」，一個 tag 都不推導 ──────────────────
+  /** 哪一份文件。`statusId` 那顆葉子（{@link StatusIdLeaf}）已經在問這件事。 */
+  statusId: [],
+  /** 誰掛的。它回答的是歸屬，不是效果。 */
+  sourceId: [],
+  /** 到期。`hasStatusTag` 已經先用它篩過「這一 tick 還算不算」。 */
+  expiresAtTick: [],
+
+  // ── 硬控 / 失控：owner 那 90 支文案裡最常被問的一族 ────────────────────
+  stun: [
+    { tag: "stun", when: (s) => s.stun === true },
+    { tag: "hard-cc", when: (s) => s.stun === true },
+    { tag: "cc", when: (s) => s.stun === true },
+  ],
+  root: [
+    { tag: "root", when: (s) => s.root === true },
+    { tag: "cc", when: (s) => s.root === true },
+  ],
+  feared: [
+    { tag: "fear", when: (s) => s.feared === true },
+    { tag: "uncontrollable", when: (s) => s.feared === true },
+    { tag: "cc", when: (s) => s.feared === true },
+  ],
+  /** 暴走拿走方向盤但**不算 CC**（自己給自己的增益，`sim/fear.ts` 決策 3）。 */
+  berserk: [
+    { tag: "berserk", when: (s) => s.berserk === true },
+    { tag: "uncontrollable", when: (s) => s.berserk === true },
+  ],
+  /** 「不分敵我」是【混亂】唯一的那一格，所以它推導的就是那個名字。 */
+  targetsAllies: [{ tag: "confusion", when: (s) => s.targetsAllies === true }],
+  /** 沉默：不能放技能，但走得動也打得到 —— 所以有自己的 tag，不進 `cc`。 */
+  silenced: [{ tag: "silence", when: (s) => s.silenced === true }],
+  /** ⚠️ 兩個方向是**兩條規則**：加速不是減速的反面標籤，是另一件事。 */
+  moveSpeedMult: [
+    {
+      tag: "slow",
+      when: (s) => s.moveSpeedMult !== undefined && s.moveSpeedMult < DERIVED_NEUTRAL_MULT,
+    },
+    {
+      tag: "cc",
+      when: (s) => s.moveSpeedMult !== undefined && s.moveSpeedMult < DERIVED_NEUTRAL_MULT,
+    },
+    {
+      tag: "haste",
+      when: (s) => s.moveSpeedMult !== undefined && s.moveSpeedMult > DERIVED_NEUTRAL_MULT,
+    },
+  ],
+  /**
+   * 推導的是**族名** `miss`，不是【致盲】/【詛咒】那兩個**名字** ——
+   * 出貨的兩份文件各自宣告了自己的名字（`blind` / `curse`）而**共用** `miss`，
+   * 所以名字那一半本來就是文件的權力（`ggd-naming-layer`：改名不是缺陷）。
+   * 從一個數字推導一個名字才是越權。
+   */
+  missChance: [
+    {
+      tag: "miss",
+      when: (s) => s.missChance !== undefined && s.missChance > DERIVED_NO_MISS_CHANCE,
+    },
+  ],
+
+  // ── 【重創】三格獨立倍率：任何一格打折都是「他被禁療了」 ──────────────
+  healingTakenMult: [
+    {
+      tag: "antiheal",
+      when: (s) => s.healingTakenMult !== undefined && s.healingTakenMult < DERIVED_NEUTRAL_MULT,
+    },
+  ],
+  lifestealMult: [
+    {
+      tag: "antiheal",
+      when: (s) => s.lifestealMult !== undefined && s.lifestealMult < DERIVED_NEUTRAL_MULT,
+    },
+  ],
+  regenMult: [
+    {
+      tag: "antiheal",
+      when: (s) => s.regenMult !== undefined && s.regenMult < DERIVED_NEUTRAL_MULT,
+    },
+  ],
+
+  // ── 表態成「不推導」的那幾格，各自帶著理由 ────────────────────────────
+  /**
+   * 「怎麼結束」不是「它在做什麼」。一份會被打醒的標記可能是睡眠，也可能是
+   * 任何一個作者想讓傷害打斷的標記 —— 從這一格推 `sleep` 是替內容取名字。
+   * 睡眠要自己的 tag，就在它的文件上宣告一個。
+   */
+  breakOnDamage: [],
+  /** 上面那一格的門檻。門檻不是第二個機制。 */
+  breakOnDamageMin: [],
+  /** 淨化拔不拔得掉 —— 那是**別人**能對它做什麼，不是它對身體做什麼。 */
+  dispellable: [],
+  /**
+   * 增益還是減益。⛔ 刻意不推導成 `buff` / `debuff` tag：它已經是一格有自己
+   * 讀者的欄位（`clearPools` 的極性過濾），再開一個 tag 等於同一件事有兩種問法，
+   * 而兩種問法遲早分歧（`hasStatusTag` 與 `polarityPasses` 對「不知道」的處理
+   * 本來就不同：這裡是 false，那裡是「不當成是」）。
+   */
+  polarity: [],
+  /** 標記**帶的一個數字**（`spendMana.bankAs` 的存款）。一筆金額不是一個分類。 */
+  magnitude: [],
+};
+
+/**
+ * 這一筆**實例**推不推得出 `tag`？（來源 (b)）
+ *
+ * 先比 `tag` 再跑謂詞，所以一次查詢只執行同名規則的那幾個閉包 —— 常見情況是 0
+ * 或 1 個。走的是物件字面值的固定鍵序，沒有 Map 迭代、沒有 rng、沒有時鐘。
+ */
+export function statusInstanceHasTag(s: StatusEffect, tag: string): boolean {
+  for (const rules of Object.values(STATUS_FIELD_TAGS)) {
+    for (const rule of rules) {
+      if (rule.tag === tag && rule.when(s)) return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * `id` 身上**現在**有沒有一份帶著 `tag` 的狀態？
+ *
+ * ⚠️ 到期規則跟 `effects/effectCommon.ts` 的 `hasStatus` **逐字相同**
+ * （`expiresAtTick > world.tick`），而且必須相同：`StatusSystem` 在 tick 開頭就
+ * 把過期的清掉了，但它跑在技能結算**之前**，所以這裡的再檢查才是「這一 tick 到底
+ * 還算不算」的真答案。
+ *
+ * ⛔ 這裡沒有轉呼叫 `hasStatus`，不是因為想要第二個答案，是因為**問的方向相反**：
+ * `hasStatus` 拿著一個 id 去找，這裡拿著一個 tag，而「哪些 id 帶著這個 tag」只有
+ * 走完身上這幾筆才知道。共用的是那條到期規則，而它就是上面那一行 —— 改到期語意
+ * 的人請一起改這裡（`conditionStatusTag.test.ts` 走的是出貨的 `applyStatus`，
+ * 所以到期算法變了它會紅）。
+ *
+ * 登錄表查不到（狀態文件還沒上架、骨架內容、單元測試沒註冊）→ 宣告的那一半沒有
+ * tags 可以比，**但推導的那一半照常成立**（它讀的是實例，不是登錄表）。沒有
+ * `StatusComp` 的身體回 false，不是「跳過」（DECISION 2）。
+ *
+ * ⭐ 兩個來源是 **OR**：文件宣告的 tag（{@link Statuses} → `status-effect@1.tags`）
+ * 或這一筆實例推導出來的 tag（{@link STATUS_FIELD_TAGS}）。為什麼要兩個、為什麼
+ * 不加前綴、撞名會怎樣，全部寫在 {@link DerivedStatusTagRule} 上面那一段。
+ *
+ * 純度：走一個陣列 + 讀登錄表 + 跑一組純謂詞。沒有 Map 迭代順序、沒有 rng、
+ * 沒有時鐘。
+ */
+export function hasStatusTag(world: SimWorld, id: EntityId, tag: string): boolean {
+  const st = world.status.get(id);
+  if (!st) return false;
+  for (const s of st.effects) {
+    if (!(s.expiresAtTick > world.tick)) continue;
+    // (a) 宣告的 —— 作者寫在狀態文件上的分類。
+    const meta = Statuses.tryGet(s.statusId);
+    if (meta?.tags?.includes(tag) === true) return true;
+    // (b) 推導的 —— 這一筆實例真的帶著的機制旗標。作者漏標也查得到。
+    if (statusInstanceHasTag(s, tag)) return true;
+  }
+  return false;
+}
+
 function compare(op: CompareOp, left: number, right: number): boolean {
   switch (op) {
     case ">=":
@@ -524,6 +993,18 @@ function evalNode(
     const id = subjectOf(ctx, cond.subject);
     if (id === undefined) return false;
     return entityIsKind(world, id, cond.is);
+  }
+  if (cond.kind === "status") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    return isStatusIdLeaf(cond)
+      ? hasStatus(world, id, cond.statusId)
+      : hasStatusTag(world, id, cond.tag);
+  }
+  if (cond.kind === "equipment") {
+    const id = subjectOf(ctx, cond.subject);
+    if (id === undefined) return false;
+    return hasEquipment(world, id, cond);
   }
   const id = subjectOf(ctx, cond.subject);
   if (id === undefined) return false;
@@ -669,9 +1150,64 @@ function num(v: number): string {
   return Number.isInteger(v) ? String(v) : String(Math.round(v * 100) / 100);
 }
 
+/**
+ * 狀態在句子裡怎麼稱呼它。**今天印的是編號**（`armor-break`），不是顯示名
+ * （【破甲】），而這是一個知情的取捨，不是漏掉：
+ *
+ *   · sim 這一側的 `Statuses` 登錄表**只有 `polarity` 一格** ——
+ *     `sim/content/defs.ts` 的 `StatusMeta` 檔頭明說那是刻意的，名字/圖示由
+ *     UI 側的 `content/registries.ts` 的 `StatusEffects` 拿，而 `sim/**` 不
+ *     import `content/**`（那條分層今天是乾淨的）。
+ *   · 所以「印出【破甲】」需要的是**替 `StatusMeta` 加一格 `name` 並在
+ *     `registries.ts` 註冊它**，那是另一條線的檔案，不是這顆葉子的事。
+ *
+ * ⚠️ 留成一支具名函式而不是把 `leaf.statusId` 直接塞進樣板字串，是為了讓那一
+ * 天只要改這裡一行 —— 而且讓「卡片上是編號」是一件**看得見的、寫下來的**事，
+ * 不是散落在字串裡的意外（#202 / #227 就是這個形態）。
+ */
+function statusLabel(statusId: StatusId): string {
+  return statusId;
+}
+
+/** 「帶有…」那一句的受詞 —— 一份是【編號】，一類是【tag】類的狀態。 */
+function statusMatchLabel(leaf: StatusLeaf): string {
+  return isStatusIdLeaf(leaf)
+    ? `【${statusLabel(leaf.statusId)}】`
+    : `【${leaf.tag}】類的狀態`;
+}
+
+/**
+ * 道具在句子裡怎麼稱呼它 —— **印名字**（御雷劍），不是編號。
+ *
+ * ⚠️ 這一格跟 {@link statusLabel} 的取捨**故意相反**，而理由是可以查證的：
+ * `StatusMeta`（`sim/content/defs.ts`）身上只有 `polarity`，**沒有 name**，所以
+ * 狀態那一行印不出中文；`ItemDef` 有 `name`，而 `Items` 登錄表就在這一層
+ * （`./registry`，同一個 import）。既然拿得到就要拿 —— 卡片上出現原始 id 是
+ * 這個專案已經修過兩次的缺陷（#202 商店顯示 item ID、#227 大廳商店顯示 ID）。
+ *
+ * 登錄表沒註冊時（編輯器沙盒、道具還沒上架）退回 id：那是一個**看得出來**的
+ * 退化（畫面上就是那串編號），不是一句假話。
+ */
+function itemLabel(itemId: ItemId): string {
+  return Items.tryGet(itemId)?.name ?? itemId;
+}
+
+/** 「裝備了…」那一句的受詞 —— 一件是【名字】，一類是【tag】類的道具。 */
+function equipmentLabel(leaf: EquipmentLeaf): string {
+  return isEquipmentItemLeaf(leaf)
+    ? `【${itemLabel(leaf.itemId)}】`
+    : `【${leaf.tag}】類的道具`;
+}
+
 function describeLeaf(leaf: ConditionLeaf): string {
   if (leaf.kind === "chance") return `${pct(leaf.p)} 機率`;
   if (leaf.kind === "kind") return `${SUBJECT_LABEL[leaf.subject]}是${KIND_LABEL[leaf.is]}`;
+  if (leaf.kind === "status") {
+    return `${SUBJECT_LABEL[leaf.subject]}帶有${statusMatchLabel(leaf)}`;
+  }
+  if (leaf.kind === "equipment") {
+    return `${SUBJECT_LABEL[leaf.subject]}裝備了${equipmentLabel(leaf)}`;
+  }
   const who = SUBJECT_LABEL[leaf.subject];
   const what = STAT_LABEL[leaf.stat];
   const op = OP_LABEL[leaf.op];
@@ -704,6 +1240,17 @@ function describeNode(cond: EffectCondition, depth: number): string {
     const inner = cond.not;
     if (isLeaf(inner) && inner.kind === "kind") {
       return `${SUBJECT_LABEL[inner.subject]}不是${KIND_LABEL[inner.is]}`;
+    }
+    // 「沒有這個狀態」是這顆葉子**一半的用法**（79-03 反面、破甲未上時的分支），
+    // 而 `not` 是它唯一的寫法（見 StatusLeaf 的說明）。所以它跟 `kind` 一樣要有
+    // 自己的句子 —— 「非（目標帶有【破甲】）」把最常見的一句話寫成了機器翻譯。
+    if (isLeaf(inner) && inner.kind === "status") {
+      return `${SUBJECT_LABEL[inner.subject]}沒有${statusMatchLabel(inner)}`;
+    }
+    // 同理:「沒有裝備 X」是這顆葉子的另一半用法(而 `not` 是它唯一的寫法),
+    // 「非（自己裝備了【御雷劍】）」把最常見的一句話寫成了機器翻譯。
+    if (isLeaf(inner) && inner.kind === "equipment") {
+      return `${SUBJECT_LABEL[inner.subject]}沒有裝備${equipmentLabel(inner)}`;
     }
     return `非（${describeNode(inner, depth + 1)}）`;
   }

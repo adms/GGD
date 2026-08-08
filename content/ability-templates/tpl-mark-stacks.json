@@ -1,0 +1,141 @@
+{
+  "id": "tpl-mark-stacks",
+  "schema": "template@1",
+  "name": "具名標記-層數與免死",
+  "description": "在持有者身上裝一個有層數的具名標記（【試煉】【風王結界】【縮地】），可跨回合、可永久，並可選擇讓它變成一張免死牌：受致命傷害時消耗一層 → 無敵 → 回復 → 擊退暈眩周圍敵人；每失去一層永久獲得一組加成。⚠️ 落差：無敵/回復/擊退是救活的同一格一起發生（sim 沒有延後排程），文案上的「隨後」看不出來；火圈燒傷不走傷害佇列，這張免死牌擋不到它。",
+  "family": "mark-stacks",
+  "status": "enabled",
+  "params": {
+    "markId": {
+      "type": "docRef",
+      "default": "godie-hapm.passive"
+    },
+    "initial": {
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "max": 999,
+      "unit": "count"
+    },
+    "max": {
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 999,
+      "unit": "count"
+    },
+    "durationSec": {
+      "type": "number",
+      "default": -1,
+      "min": -1,
+      "max": 600,
+      "unit": "s"
+    },
+    "resetOn": {
+      "type": "enum",
+      "default": "match",
+      "values": ["match", "round", "never"]
+    },
+    "perStackLost": {
+      "type": "statModifiers",
+      "optional": true,
+      "default": [
+        { "stat": "ad", "op": "pctAdd", "value": 0.1 },
+        { "stat": "maxHealth", "op": "pctAdd", "value": 0.1 }
+      ]
+    },
+    "lethalMode": {
+      "type": "enum",
+      "default": "save",
+      "values": ["save", "none"]
+    },
+    "lethalConsume": {
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 999,
+      "unit": "count"
+    },
+    "surviveHpPct": {
+      "type": "number",
+      "default": 0.01,
+      "min": 0.01,
+      "max": 1,
+      "unit": "ratio"
+    },
+    "lethalDamageTypes": {
+      "type": "enum",
+      "default": "all",
+      "values": ["all", "physicalMagic", "physical", "magic", "true"]
+    },
+    "internalCooldown": {
+      "type": "number",
+      "default": 0.5,
+      "min": 0,
+      "max": 30,
+      "unit": "s"
+    },
+    "invulnerableSec": {
+      "type": "number",
+      "default": 1.5,
+      "min": 0.1,
+      "max": 30,
+      "unit": "s"
+    },
+    "invulnerableScope": {
+      "type": "enum",
+      "default": "damageAndControl",
+      "values": ["damageAndControl", "damageOnly"]
+    },
+    "restoreHealthPct": {
+      "type": "number",
+      "optional": true,
+      "default": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio"
+    },
+    "aoeRadius": {
+      "type": "number",
+      "default": 6,
+      "min": 0,
+      "max": 12
+    },
+    "knockbackDistance": {
+      "type": "number",
+      "optional": true,
+      "default": 4,
+      "min": 0.1,
+      "max": 20
+    },
+    "knockbackSpeed": {
+      "type": "number",
+      "default": 16,
+      "min": 1,
+      "max": 200
+    },
+    "knockbackFrom": {
+      "type": "enum",
+      "default": "caster",
+      "values": ["caster", "facing", "pull"]
+    },
+    "stunSec": {
+      "type": "number",
+      "optional": true,
+      "default": 0.5,
+      "min": 0.034,
+      "max": 20,
+      "unit": "s"
+    },
+    "stunStatusId": {
+      "type": "docRef",
+      "default": "trial-stun"
+    }
+  },
+  "requires": ["marks", "invulnerable", "knockback", "applyStatus"],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "52-00 十二道試煉（海克力斯 Berserker 天生技）",
+    "jass": "無 JASS 出處 —— owner 2026-08-08 口述規格，不是從 war3map.j 復原的家族"
+  }
+}

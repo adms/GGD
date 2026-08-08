@@ -134,28 +134,52 @@ export type HookEvent =
    */
   | "onStunned"
   /**
-   * **反彈成功的那一刻**（owner 2026-08-05：「onReflect／反彈成功時 這個也要」）。
+   * **反彈成功的那一刻**（owner 2026-08-05：「onReflect／反彈成功時 這個也要」；
+   * 2026-08-08 從 `onReflect` 更名並補上 provenance，見下）。
    *
-   * 「成功」在這裡有一個很窄的定義，而窄是刻意的：**一發反彈封包真的被排出去了**。
-   * `effects/damage.ts` 的 `incomingPct` 有三道閘會讓反彈整條不發生
-   *（沒有觸發封包 · 超過 `maxChainDepth` · 排空預算來不及的 `whenTooLate:"drop"`），
-   * 而**那三種情況都不算成功** —— 一個在「其實沒反彈到」時照樣觸發的
-   * `onReflect` 會讓「反彈時回血」變成「被打時回血」，那是另一支技能。
+   * ── 「成功」的判準：**一發 `reflectDepth > 0` 的封包真的落地** ─────────────
+   *
+   * 兩層閘，缺一不可，而**兩層都不是這個事件自己的程式碼**：
+   *
+   *   Ⅰ 反彈封包**生得出來** —— `effects/damage.ts` 的 `incomingPct` 三道閘
+   *     （沒有觸發封包 · `reflectDepth > maxChainDepth` · 排空預算來不及且
+   *      `whenTooLate:"drop"`）任何一道攔下來就沒有封包。
+   *     ⚠️ 還有第四道:**反彈量 ≤ 0 的封包根本不會被 push**（同檔那條
+   *     「反彈了 0 就不發封包」）。所以「原傷害被完全擋下」= 不算成功，
+   *     而「什麼算 0」由作者的 `incomingPct.basis`（raw / mitigated / hpLost）決定
+   *     —— 那個決策點**已經是一個欄位**，不需要第二個。
+   *
+   *   Ⅱ 那一發封包**真的解算了** —— 目標還活著、沒有無敵/免疫、沒有被
+   *     技能迴避擋掉。`combat/damage.ts` 的排空迴圈對這三種都是 `continue`。
+   *
+   * ⛔ 為什麼要窄到這個地步：一個在「其實沒反彈到」時照樣觸發的事件，會讓
+   * 「反彈時回血」實際上變成「被打時回血」—— 那是另一支技能，
+   * 而且**畫面上看不出差別**。
+   *
+   * ── payload（計畫 §2.1.1 明列的四項 provenance）────────────────────────
+   *
+   *   · **防禦者** = hook 的持有者（`target: "self"` 指到他）
+   *   · **攻擊者** = hook 的 `target`（＝被反彈到的那個人）
+   *   · **反彈傷害** = `EffectContext.incoming` —— 那一發**反彈封包自己的**
+   *     `TriggerDamage`（raw / mitigated / hpLost 三個讀數都是真的，因為事件
+   *     是在它落地的那一格發的）。20-002「每次造成 7 倍[反彈]傷害」讀的就是它。
+   *   · **原傷害** = 同一個 tick、同一個持有者的 `onDamageTaken` 已經帶著它
+   *     （`TriggerDamage` 是封閉型別，再塞一份進來只會是第二個真相）。
    *
    * ⚠️ 它與 `onDamageTaken` 不同,而這個差別正是它沒辦法用現有成員表達的原因：
    * `onDamageTaken` 每一發傷害都發,而反彈是**有條件**的（要有 `incomingPct`、
-   * 要沒撞到鏈深上限）。用 `onDamageTaken` + 條件湊出來的話,作者要自己重寫
-   * 那三道閘,而它們會分岔。
+   * 要沒撞到鏈深上限、要真的落地）。用 `onDamageTaken` + 條件湊出來的話,
+   * 作者要自己重寫上面那兩層閘,而它們會分岔。
    *
-   * ⛔ **持有者是反彈的人（受害者），hook 的 target 是被反彈到的那個人**
+   * ⛔ **持有者是反彈的人（防禦者），hook 的 target 是被反彈到的那個人**
    *（＝原本打你的人）—— 與 `onStunned` 同一個方向。所以「反彈時自己回血」
    * 要寫 `target: "self"`,而「反彈時額外燒對方的魔」是預設的 target。
    *
    * 由 `systems/ReflectHookSystem.ts` 從 `world.pendingReflectHooks` 轉成 hook,
-   * 理由與 `onStunned` 逐字相同：從 `effects/damage.ts` 直接呼叫 `fireHooks`
-   * 會關上 effectRegistry 檔頭警告的那個 import 環。
+   * 理由與 `onStunned` 逐字相同：從封包解算處直接呼叫 `fireHooks` 之外，
+   * 排在 `deathSystem` 之前才不會「死後才反彈」。
    */
-  | "onReflect"
+  | "onReflectSuccess"
   /**
    * ── 以下六個由 `systems/WorldHookSystem.ts` 從**事件流**轉成 hook ──────
    *
@@ -187,7 +211,7 @@ export type HookEvent =
   | "onRevive"
   /**
    * 迴避成功的那一刻。⚠️ 持有者 = **閃掉的那個**，target = 攻擊者
-   *（與 `onStunned` / `onReflect` 同一個方向）。
+   *（與 `onStunned` / `onReflectSuccess` 同一個方向）。
    */
   | "onEvade";
 

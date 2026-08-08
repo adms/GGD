@@ -182,11 +182,16 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     else VfxDefs.register(d);
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
-  // sim 那一側只要 `polarity`(A4b/#278)。兩張表分開是刻意的:
-  // UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿一格布林式的事實,
-  // 而 `sim/**` 不 import `content/**`(那條分層今天是乾淨的,別弄髒它)。
+  // sim 那一側只要 `polarity` 與 `tags`(A4b/#278;`tags` 2026-08-08 加)。
+  // 兩張表分開是刻意的:UI 讀 `StatusEffects` 拿名字與圖示,sim 讀 `Statuses` 拿
+  // 它**真的會拿來分岔**的那幾格,而 `sim/**` 不 import `content/**`(那條分層
+  // 今天是乾淨的,別弄髒它)。
+  // ⚠️ `tags` 一定要從這裡帶過去,不能讓 sim 自己維護一份 id→類別表:
+  // 「暈眩」在出貨內容裡是五份不同的文件,而條件葉 `{kind:"status", tag:"stun"}`
+  // 問的就是「任何一份」。這一行漏掉的話,那顆葉子會對每一個目標回 false ——
+  // 一個從畫面上看起來跟「條件沒成立」一模一樣的死法(七種失敗形態 ②)。
   for (const d of store.all<StatusEffectDoc>("status-effects")) {
-    Statuses.register(d.id, { polarity: d.polarity });
+    Statuses.register(d.id, { polarity: d.polarity, tags: d.tags });
   }
   for (const d of store.all<SkinDoc>("skins")) Skins.register(d);
 

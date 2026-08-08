@@ -14,6 +14,8 @@ import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
 import { rollEvadeAbility } from "./evasion";
 import { blockCutFor } from "./block";
+import { manaBarrierCutFor } from "../effects/manaBarrier";
+import { lethalSaveFor } from "./lethalSave";
 import { effectiveLifesteal } from "./critStrike";
 import {
   applyDamageConversion,
@@ -857,6 +859,42 @@ export function combatResolveSystem(world: SimWorld): void {
       hp.shields = hp.shields.filter((s) => s.amount > 0 && s.expiresAtTick > world.tick);
       const shieldAbsorbed = shieldBefore - eligibleShieldTotal(hp.shields, world.tick, pkt.type);
 
+      // ---- 魔力屏障 (44-00 機警「每點魔力可以抵免 3 點傷害」) ---------------
+      // 位置：護盾**之後**、免死與扣血**之前**。三個邊界各有理由，推導寫在
+      // `effects/manaBarrier.ts` 檔頭②：
+      //   · `mitigate()` 之後 → 卡上說的「抵擋傷害」是玩家真的會吃到的量；
+      //   · 護盾池之後 → 護盾是專款專用、會過期的池子，魔力還要拿來施法，
+      //     所以先花前者**嚴格花掉玩家更少的東西**；
+      //   · 免死之前 → 一發被魔力整包吃掉的重擊不該燒掉一層【試煉】。
+      //
+      // ⚠️ 「魔力先付還是護盾先付」是一個真的決策點，但它的旋鈕**不在這裡** ——
+      // 一個欄位要生效需要兩個呼叫點都讀它，所以正確的家是 `sim/shieldRules.ts`
+      // （那裡已經有 `absorbOrder` 這個名字與後台頁）。今天固定成護盾優先。
+      //
+      // `manaBarrierCutFor` 自帶 ZERO GUARANTEE（沒有來源授予屏障時在碰任何東西
+      // 之前就回 0），所以在內容填進來之前這一段是嚴格的 no-op。
+      if (dmg > 0) dmg -= manaBarrierCutFor(world, pkt.target, pkt.type, dmg);
+
+      // ---- 免死 (十二道試煉 · 任何帶 `lethal` 規則的具名標記) --------------
+      // 位置：護盾吃飽**之後**、扣血**之前**。這裡的 `dmg` 是真的要進血條的
+      // 那一份，所以「這一發會不會殺死我」在這一行才是字面意思 —— 一發被護盾
+      // 整包吃掉的重擊不該燒掉一層試煉。完整推導見 `combat/lethalSave.ts` ①。
+      //
+      // ⚠️ 與 `blockCutFor` 的差別是刻意的：格擋站在護盾**之前**（它的致死判定
+      // 因此要自己把 `shieldBefore` 加回去），免死站在護盾**之後**。兩者都對，
+      // 因為它們回答的是不同的問題（「這一擊多重」vs「我會不會死」）。
+      //
+      // `lethalSaveFor` 有自己的 ZERO GUARANTEE（受害者身上沒有帶 `lethal` 的
+      // 標記時，它在碰任何東西之前就回 undefined），所以在內容填進來之前這一段
+      // 是嚴格的 no-op —— 既有 replay 與 digest 逐位元不變。
+      if (dmg > 0) {
+        const floor = lethalSaveFor(world, pkt.target, pkt.type, dmg, hp.hp);
+        // 把這一發削到「剛好留下 floor」。⛔ 不是 `dmg = 0`：留著這一段扣血
+        // 才能讓下游（浮動數字、吸血、擊殺歸屬）看到一發真的發生過的傷害，
+        // 而玩家看到的是血條被打到底再被拉住 —— 那正是免死該有的畫面。
+        if (floor !== undefined) dmg = Math.max(0, hp.hp - floor);
+      }
+
       const hpBefore = hp.hp;
       if (dmg > 0) hp.hp -= dmg;
 
@@ -1038,6 +1076,39 @@ export function combatResolveSystem(world: SimWorld): void {
       };
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
       fireHooks(world, pkt.target, "onDamageTaken", pkt.source, undefined, trigger);
+
+      // ────────────────────────────────────────────────────────────────────
+      // 【反彈成功時】`onReflectSuccess` —— 20-002 解放.約束勝利劍MAX /
+      // 60-002 絕光斬。owner 2026-08-05:「onReflect／反彈成功時 這個也要」。
+      // ────────────────────────────────────────────────────────────────────
+      //
+      // 判準 = **一發 `reflectDepth > 0` 的封包真的走到了這一行**。
+      // `reflectDepth` 只有 `effects/damage.ts` 的 `incomingPct` 會寫,而它寫之前
+      // 已經過了四道閘(沒有觸發封包 / 超過 `maxChainDepth` / 排空預算來不及且
+      // `whenTooLate:"drop"` / 反彈量 ≤ 0 不發封包);走到這一行又代表它沒有被
+      // 目標的死亡、無敵免疫或技能迴避 `continue` 掉。**兩層都是既有的程式碼**,
+      // 這裡沒有第二套「什麼算反彈」的判斷 —— 有第二套,兩套就會分岔。
+      //
+      // ⭐ 位置:**在 `trigger` 之後**,因為 provenance 的核心就是它 ——
+      // 那一發反彈封包自己的 raw / mitigated / hpLost,三個都是真的。
+      // 在封包被「排進佇列」的地方發這個事件,後兩個讀數根本還不存在。
+      //
+      // ⚠️ 這裡**不**直接 `fireHooks`,而是 push 給 `systems/ReflectHookSystem.ts`。
+      // 兩個理由,兩個都試過反面:
+      //   ① 排在 `deathSystem` **之前、排空迴圈之後**,才不會有人「死掉的那一 tick
+      //      還在反彈」,也不會在半條鏈還沒解算完的時候就跑 hook。
+      //   ② 終止性:hook 的效果排出來的傷害進的是**下一個 tick** 的佇列,而不是
+      //      這個 `for (pass...)` 迴圈正在走的那一批。A→B→A 的互相觸發因此每回合
+      //      只推進一步,由 `reflectDepth`(嚴格遞增、上界 `REFLECT_MAX_CHAIN_DEPTH`)
+      //      與 `DAMAGE_QUEUE_MAX_PASSES` 這兩個既有的界一起夾住 —— 這個事件
+      //      **一個新的迴圈都沒有加**。
+      if ((pkt.reflectDepth ?? 0) > 0) {
+        world.pendingReflectHooks.push({
+          reflector: pkt.source, // 防禦者 = 反彈的那一方 = hook 持有者
+          attacker: pkt.target, // 攻擊者 = 被反彈打到的那一方 = hook 的 target
+          incoming: trigger, // 反彈傷害(三個讀數都是落地後的真值)
+        });
+      }
     }
   }
 }

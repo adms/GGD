@@ -18,6 +18,7 @@ import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
+import { enterToggle, exitToggle, isToggleOn } from "./toggle";
 import { breakStealth, canSee } from "../stealth";
 import {
   armFacingLock,
@@ -133,6 +134,25 @@ export function castAbility(
   if (!inst || inst.rank <= 0) return "not-learned";
   if (!hp.alive) return "dead";
 
+  // `def` is resolved HERE — one line earlier than it used to be — because the
+  // 【切換】OFF branch below needs it, and re-reading the registry a second time
+  // would be a second place for the two reads to disagree.
+  const def = Abilities.get(inst.abilityId);
+
+  // ── 【切換】第二次按下 = 關閉 (sim/abilities/toggle.ts) ──────────────────
+  //
+  // 位置是刻意的：**在冷卻 / 沉默 / 魔力 / 射程每一道閘之前**。
+  // 20-01 風王結界的冷卻是 60 秒，開一次就轉滿 —— 把關閉排在冷卻閘之後，
+  // 玩家開了以後那 60 秒**關不掉**，等於方向盤被拿走，而「關閉時放風王鐵槌」
+  // 也就變成一個由冷卻決定何時發生的東西。
+  //
+  // ⛔ 這裡**不可以**自己跑 onExit：`exitToggle` 是全專案唯一的關閉出口，
+  // 手動與 MP 不足自動關閉共用它（計畫 §13）。這一段只是「按鈕被按了」。
+  if (def.toggle && isToggleOn(ab, slot)) {
+    exitToggle(world, caster, slot, "manual");
+    return "ok";
+  }
+
   const st = world.status.get(caster);
   if (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick)) return "stunned";
   // 【沉默】C1（#278）。⛔ 位置是刻意的：**在扣魔力與進冷卻之前**。
@@ -145,7 +165,6 @@ export function castAbility(
   if (ab.cast) return "cooldown";
   if (inst.cooldownRemainingTicks > 0) return "cooldown";
 
-  const def = Abilities.get(inst.abilityId);
   // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
   // WC3 D-slot innates. A permanent 天生技 (迴避/靈氣/on-hit proc) answers
   // "passive", keyed on the AUTHORED KIND so it holds even if a mis-authored
@@ -272,6 +291,18 @@ export function castAbility(
     world.combatEnv.cooldown *
     berserkCooldownFactor(world, caster);
   inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
+
+  // ── 【切換】打開 ───────────────────────────────────────────────────────
+  //
+  // 位置是刻意的：**就在成本付完的下一行**，而不是在效果跑完之後。理由是
+  // 「玩家已經付了錢」—— 施法被打斷（`interruptOn: "damage"`）時效果不會跑，
+  // 但那 50~200 點魔力已經扣掉了，這時候如果按鈕還是關的，他就是純虧。
+  // 出貨的兩支切換技 `castTimeSec` 都是 0，所以今天兩者是同一 tick；
+  // 這一行是替第一支「有吟唱的切換技」先把答案定下來。
+  //
+  // ⛔ 這裡沒有「已經開著就關閉」的分支 —— 那一段在函式最上方（冷卻閘之前），
+  // 而且它走的是 `exitToggle`，全專案唯一的關閉出口。
+  if (def.toggle) enterToggle(world, caster, slot, def);
 
   // ---- 面向：commit 瞄準方向 (task #264) ----
   // 過去這裡只是 `t.facing = direction`，而 MovementSystem 在同一 tick 稍後

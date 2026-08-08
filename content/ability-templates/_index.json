@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "a6d151e8dfda",
+  "hash": "7ef045b21040",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -97,6 +97,12 @@
       "path": "ability-templates/tpl-lock-combo.json",
       "hash": "1bd1ded1e8a7",
       "size": 2152
+    },
+    {
+      "id": "tpl-mark-stacks",
+      "path": "ability-templates/tpl-mark-stacks.json",
+      "hash": "04c2a5472a51",
+      "size": 3561
     },
     {
       "id": "tpl-on-attack",

@@ -5,6 +5,15 @@
   "description": "被念力頂上天，暫時失去對自己身體的所有發言權。",
   "polarity": "debuff",
   "tags": [
-    "stun"
+    "fang-stun",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "named-variant",
+    "debuff"
   ]
 }

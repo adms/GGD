@@ -32,6 +32,7 @@ import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
 import { DEFAULT_COMBAT_FEEL, type CombatFeelRules } from "./combatFeel";
 import { DEFAULT_SHIELD_RULES, type ShieldRules } from "./shieldRules";
 import { DEFAULT_BLOCK_RULES, type BlockRules } from "./blockRules";
+import type { MarkId, MarkState } from "./marks";
 import {
   DEFAULT_AUGMENT_ENEMY_FILTER,
   type AugmentEnemyFilter,
@@ -53,6 +54,8 @@ import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
 import type { PlayerMatchStats } from "./stats/matchStats";
 import { accumulateTimeAlive } from "./stats/matchStats";
 import type { DamagePacket } from "./combat/damage";
+// `pendingReflectHooks` 的 provenance。type-only —— 編譯後整行消失，不成環。
+import type { TriggerDamage } from "./effects/effect";
 import type { KillComboState } from "./combat/killCombo";
 import { SpatialHash } from "./collision/spatialHash";
 import type { ArenaDef } from "./world/ArenaDef";
@@ -69,6 +72,7 @@ import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
 import { recoveryDecaySystem } from "./systems/RecoverySystem";
 import { basicAttackSystem } from "./systems/BasicAttackSystem";
+import { toggleUpkeepSystem } from "./abilities/toggle";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { combatResolveSystem } from "./combat/damage";
 import { flightSystem } from "./flight";
@@ -77,6 +81,7 @@ import { ccHookSystem } from "./systems/CcHookSystem";
 import { reflectHookSystem } from "./systems/ReflectHookSystem";
 import { dotTickSystem } from "./effects/dotTick";
 import { intervalHookSystem } from "./systems/IntervalHookSystem";
+import { randomAreaSystem } from "./effects/randomArea";
 import { deathSystem } from "./systems/DeathSystem";
 import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
@@ -233,6 +238,22 @@ export class SimWorld {
    * GuardianSystem; folded into digest() so a desync surfaces.
    */
   readonly guardianBuffs = new Map<EntityId, GuardianBuff>();
+
+  /**
+   * 具名標記（層數）—— 【試煉】【風王結界】【縮地】共用的同一個機制。
+   * 外層 key 是持有者，內層 key 是**一份既有文件的 id**（技能編號 或
+   * status-effect id）。整套語意與「為什麼不能用 applyBuff/applyStatus 表達」
+   * 寫在 `sim/marks.ts` 的檔頭。
+   *
+   * ⭐ **它跨回合活著，而且那是免費的**：`SimWorld` 在 `MatchController` 的
+   * 建構子裡建，一場比賽只有一個（`MatchController.ts:894`）。所以
+   * `resetOn: "match"`（十二道試煉的「跨回合共享 12 次」）**不需要任何程式**，
+   * 需要程式的是反過來的 `resetOn: "round"`（`resetMarksForRound`）。
+   *
+   * 折進 `digest()`：層數決定「這一發會不會殺死你」，一個層數不同步的 replica
+   * 會在某個人該死沒死的那一 tick 分岔，而那正是最難反推的一種。
+   */
+  readonly marks = new Map<EntityId, Map<MarkId, MarkState>>();
 
   /**
    * Per-player match scoreboard (see stats/matchStats.ts). Part of world state
@@ -840,6 +861,22 @@ export class SimWorld {
   readonly summon = new Map<EntityId, import("./effects/summon").SummonComp>();
 
   /**
+   * 隨機落點排程（13-04 龍星群「每 0.2 秒隨機地點落下一顆流星，共 10 顆」·
+   * 70-04 千年練成「隨機招喚樹精」）。⚠️ 是**陣列不是 Map**：同一位施法者可以
+   * 有兩波同時在天上，而 Map 會讓第二次施放把第一波無聲蓋掉。
+   *
+   * ⭐ 落點在**施法那一刻就抽完**（`randomAreaDrawBudget = 2 × count`），不是
+   * 到期才抽。理由是計畫 §13 的決定性要求：draw 次數必須是**輸入的函式** ——
+   * 邊落邊抽的話，一波被打斷（施法者死亡、回合結束）就會少抽幾次，
+   * 之後所有隨機事件全部位移，同一顆種子的錄影對不上。
+   *
+   * 不折進 `digest()`：整波的結果（傷害、召喚物）在它們各自的來源已經被折過，
+   * 而一個排程不同步的 replica 會在**該落的那一 tick 沒落**時當場分岔。
+   * 走 `bossDamage` / `killTracking` 的同一個先例。
+   */
+  readonly randomArea: import("./effects/randomArea").RandomAreaWave[] = [];
+
+  /**
    * 無敵 / 免疫 (lane P3, LANDED) — entity → the ABSOLUTE tick EACH IMMUNITY
    * AXIS lapses. A dedicated map on the `hitstop` / `knockdown` / `hitstun`
    * precedent, because `combatResolveSystem` asks this question of every queued
@@ -909,13 +946,26 @@ export class SimWorld {
   readonly pendingStunHooks: { victim: EntityId; source: EntityId }[] = [];
 
   /**
-   * 反彈成功 → `onReflect`（owner 2026-08-05）。與 `pendingStunHooks` 同一個形態
-   * 與同一個理由（見 `systems/ReflectHookSystem.ts` 檔頭）。
+   * 反彈成功 → `onReflectSuccess`（owner 2026-08-05；2026-08-08 補 provenance）。
+   * 與 `pendingStunHooks` 同一個形態與同一個理由（見 `systems/ReflectHookSystem.ts`
+   * 檔頭）。
    *
-   * `reflector` 是**反彈的那個人**（hook 的持有者），`victim` 是被反彈到的那個人
-   *（原本打他的人）。
+   * ⭐ 三個欄位就是計畫 §2.1.1 要的 provenance，名字**照角色取**而不是照位置取
+   *（舊名 `victim` 在反彈的語境裡讀起來像「被反彈的人」，實際上是攻擊者）：
+   *   · `reflector` = **防禦者**，反彈的那一方，也是 hook 的持有者
+   *   · `attacker`  = **攻擊者**，被反彈打到的那一方，也是 hook 的 `target`
+   *   · `incoming`  = **反彈傷害**，那一發反彈封包自己的 `TriggerDamage`
+   *
+   * ⚠️ `incoming` 三個讀數（raw / mitigated / hpLost）都是**真的**，因為這一筆是
+   * 在反彈封包**落地的那一格**被 push 的（`combat/damage.ts`），不是在它被排進
+   * 佇列的時候。排隊時 mitigated / hpLost 還不存在 —— 在那裡 push 就只能編一個
+   * 數字出來，而「7 倍反彈傷害」乘的正是它。
    */
-  readonly pendingReflectHooks: { reflector: EntityId; victim: EntityId }[] = [];
+  readonly pendingReflectHooks: {
+    reflector: EntityId;
+    attacker: EntityId;
+    incoming: TriggerDamage;
+  }[] = [];
 
   /**
    * 嘲弄 (see taunt.ts) —— 受害者 → 「誰嘲弄我 + 到哪一絕對 tick 為止」。
@@ -1238,6 +1288,21 @@ export class SimWorld {
     //                             `leap` override and leaves the body alone.
     movementSystem(this); // 5. integrate + collide
     basicAttackSystem(this); // 6. autos on attack targets in range
+    toggleUpkeepSystem(this); // 6a. 【切換】維持成本 + MP 不足自動關閉
+    //                             (`abilities/toggle.ts`). 20-01 風王結界
+    //                             「開啟時每次攻擊消耗 MP，不足則自動關閉」。
+    //
+    //                             ⚠️ 位置是硬約束，兩個方向都是：
+    //                             · 必須在 basicAttackSystem(6) **之後** —— 它讀
+    //                               `this.events` 裡這一 tick 的 `basicAttack`，
+    //                               往前搬一格 `perAttack` 就永遠收不到任何一刀，
+    //                               而那看起來跟「沒有人開這個技能」一模一樣。
+    //                             · 必須在 combatResolveSystem(8) **之前** ——
+    //                               自動關閉會跑 onExit（風王鐵槌），那一發傷害
+    //                               要在**同一 tick** 被排乾、減傷、計分。
+    //
+    //                             `AbilitiesComp.toggles` 空的時候是嚴格 no-op，
+    //                             所以每一份既有錄影逐位元不變。
     projectileSystem(this); // 7. advance projectiles, swept hits
     hitstopDecaySystem(this); //  7b. age hitstop/knockdown AFTER their gates ran
     //                             (movement/attack), BEFORE this tick's hits set
@@ -1266,10 +1331,15 @@ export class SimWorld {
     //                             already written when `refusesDamage` is asked.
     //                             Gated on `combatActive`, so every pre-existing
     //                             replay hashes byte-identically (see that file).
+    randomAreaSystem(this); // 7e. 隨機落點排程：付掉這一 tick 到期的落點。
+    //                             ⚠️ 位置是硬約束，理由與 `dotTick` 逐字相同：
+    //                             排在排空之前，一顆這一 tick 該落的流星才會在
+    //                             **這一 tick** 被減傷、計分、結算。搬到 8 之後
+    //                             整波每一發都晚一個 tick，而畫面上看不出來。
     combatResolveSystem(this); // 8. drain damage queue (mitigation/shields/hooks
     //                             + combat-juice: hitstop/knockback/knockdown)
     ccHookSystem(this); //   8a. 被暈眩時 → `onStunned` hooks (08-00 龍紋記憶).
-    reflectHookSystem(this); // 8b. 反彈成功時 → `onReflect` hooks (owner 08-05).
+    reflectHookSystem(this); // 8b. 反彈成功時 → `onReflectSuccess` hooks (owner 08-05).
     //                             AFTER the queue drain so a stun applied by an
     //                             on-damage hook is seen THIS tick, BEFORE
     //                             deathSystem so a champion killed on the same
@@ -1326,7 +1396,7 @@ export class SimWorld {
     //                             reviveComplete(9c) · guardianSlain(9d) ·
     //                             mobBossSpawn(9d′)。往前搬一格就會有事件收不到，
     //                             而那種漏接**看起來跟「沒有人寫這種卡」一模一樣**。
-    //                             它排出來的傷害/狀態與 onStunned·onReflect 一樣，
+    //                             它排出來的傷害/狀態與 onStunned·onReflectSuccess 一樣，
     //                             下一 tick 由 combatResolveSystem 結算。
     regenSystem(this); // 10. hp/mana regen
     resourceStatSystem(this); // 10a. 資源衍生屬性 (光魔杖「AP+ (目前MP的 5%)」):
@@ -1444,6 +1514,28 @@ export class SimWorld {
         mix(id);
         mix(cf.index);
         mix(cf.expiresTick);
+      }
+      // 具名標記（層數）。⚠️ 這一格比它看起來重要：層數決定「這一發會不會殺死
+      // 你」（`combat/lethalSave.ts`），所以一個層數不同步的 replica 會在某個人
+      // 該死沒死的那一 tick 分岔 —— 而那是最難反推的一族（受害者的 hp 在兩邊都
+      // 是對的，直到其中一邊突然歸零）。
+      //
+      // 折進來的是 `count` 與 `spent` 兩個：`spent` 是永久加成的乘數，兩邊
+      // 算出不同的 spent 就是兩個不同強度的英雄，而 `count` 相同時它看不出來。
+      // `expiresAtTick` 不折 —— 絕大多數標記是永久的（-1），而會過期的那些，
+      // 到期的後果就是 `count` 歸零，在這裡照樣說得出來。
+      //
+      // 只在**真的持有標記**時折進去，照上面 `attackTarget`/`airborne`/
+      // `championForm` 的先例：沒有人用標記的世界（今天的每一場）逐位元不變，
+      // #191 的 disarmed-golden canary 不會被打破。
+      const bag = this.marks.get(id);
+      if (bag !== undefined && bag.size > 0) {
+        mix(id);
+        for (const markId of [...bag.keys()].sort()) {
+          const st = bag.get(markId)!;
+          mix(st.count);
+          mix(st.spent);
+        }
       }
       // GH#289 reserved stores. Folded in NOW, before their lanes land, so that
       // P1/P2/P3 need not reopen this method — the merge conflict the whole

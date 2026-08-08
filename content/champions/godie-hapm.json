@@ -44,7 +44,7 @@
     "source": "w3x"
   },
   "bodyScale": 1.2,
-  "healthDrainPctOfMax": 0.012,
+  "healthDrainPctOfMax": 0,
   "hitFeel": {
     "hitstopTicks": 4,
     "shakeMag": 0.55,

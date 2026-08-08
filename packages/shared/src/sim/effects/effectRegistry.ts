@@ -98,6 +98,17 @@ import { shieldBreakEffect } from "./shieldBreak";
 import { devourEffect } from "./devour";
 import { reviveEffect } from "./revive";
 
+// ── Lane 1 (2026-08-08) — 同一個形狀的四個實例，界共用 ./kindLimits.ts ──────
+import { modifyCooldownEffect } from "./modifyCooldown";
+import { weightedBranchEffect } from "./weightedBranch";
+import { swapResourceEffect } from "./swapResource";
+import { eventValueConversionEffect } from "./eventValueConversion";
+
+// ── Lane 2 (2026-08-08) — 同一個形狀的三個實例，界共用 ./kindLimits.ts ──────
+import { randomAreaEffect } from "./randomArea";
+import { manaBarrierEffect } from "./manaBarrier";
+import { extendBuffEffect } from "./extendBuff";
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -156,6 +167,27 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   dispel: dispelEffect,
   shieldBreak: shieldBreakEffect,
   devour: devourEffect,
+
+  // ── Lane 1 (#284 / §16.12 / §16.14 / §16.16) ─────────────────────────────
+  // 縮短**特定一支**技能的冷卻（⛔ 不是全域 cdr）。行為 ./modifyCooldown.ts。
+  modifyCooldown: modifyCooldownEffect,
+  // 一次 RNG 抽一個加權分支（俄羅斯輪盤）。⭐ 只 draw 一次，見 ./weightedBranch.ts。
+  weightedBranch: weightedBranchEffect,
+  // 原子交換雙方資源（交換筆記本）。行為 ./swapResource.ts。
+  swapResource: swapResourceEffect,
+  // 把這次事件的數值轉成另一種資源（太陰道 / 吞噬）。行為 ./eventValueConversion.ts。
+  eventValueConversion: eventValueConversionEffect,
+
+  // ── Lane 2 (2026-08-08 覆蓋矩陣 X9 / X7 / X20) ────────────────────────────
+  // 隨機落點排程（13-04 龍星群 · 70-04 千年練成）。⭐ draw 預算 = 2×count，
+  // 只在施法那一刻花掉；到期走絕對 tick。⚠️ 它需要 `randomAreaSystem` 被接進
+  // `SimWorld.step()` 的 7c″ 才會落地 —— 見 ./randomArea.ts 檔頭④。
+  randomArea: randomAreaEffect,
+  // 魔力抵傷（44-00 機警）。⛔ 不是受傷後補護盾：`manaBarrierCutFor` 在扣血之前
+  // 把傷害換成扣魔。⚠️ 需要 `combat/damage.ts` 一行呼叫 —— 見 ./manaBarrier.ts 檔頭②。
+  manaBarrier: manaBarrierEffect,
+  // 受傷延長增益（52-01 狂戰士之怒）。⭐ 無狀態、零接線，見 ./extendBuff.ts。
+  extendBuff: extendBuffEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)

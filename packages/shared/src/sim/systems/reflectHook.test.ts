@@ -19,12 +19,17 @@
  *
  * ── 為什麼數 `pendingReflectHooks` 而不是數 hook 的副作用 ────────────────
  * 因為要區分的是「這一發**有沒有**被判定成反彈成功」，而 hook 的 payload 是
- * 內容的自由。讀佇列讀的正是那個判定本身，而佇列由出貨的 `effects/damage.ts`
+ * 內容的自由。讀佇列讀的正是那個判定本身，而佇列由出貨的 `combat/damage.ts`
  * 填、由出貨的 `ReflectHookSystem` 排空 —— 兩端都是出貨的那一個。
  *
+ * ⚠️ 2026-08-08：事件更名為 `onReflectSuccess`，push 點從「反彈封包被排進佇列」
+ * 搬到「反彈封包**落地**」（`combat/damage.ts`），因為 provenance 的三個讀數
+ * 只有在落地那一格才是真的。判準只有變緊沒有變鬆，所以下面四條的方向一字未改。
+ * provenance 與 child chain 的守衛在 `reflectSuccessProvenance.test.ts`。
+ *
  * 突變紀錄（都真的做過，見 commit message）:
- *   · `damage.ts` 的 `pendingReflectHooks.push(...)` 那一段刪掉 → refl-fires 紅
- *   · 那一段的 `if (reflectDepth !== undefined)` 拿掉（永遠 push）→ refl-not-when-blocked 紅
+ *   · `combat/damage.ts` 的 `pendingReflectHooks.push(...)` 那一段刪掉 → refl-fires 紅
+ *   · 那一段的 `(pkt.reflectDepth ?? 0) > 0` 改成恆真 → refl-not-when-blocked 紅
  *   · `SimWorld` 的 `reflectHookSystem(this)` 那一行刪掉 → refl-drained 紅
  */
 import { describe, it, expect, beforeAll } from "vitest";
@@ -102,7 +107,7 @@ describe("onReflect —— 反彈成功時", () => {
 
     hit(w, attacker, victim, 100);
 
-    expect(w.pendingReflectHooks).toEqual([{ reflector: victim, victim: attacker }]);
+    expect(w.pendingReflectHooks).toMatchObject([{ reflector: victim, attacker }]);
   });
 
   it("⛔ 沒有反彈發生時一筆都不發 —— 三道閘各驗一次", () => {
@@ -126,7 +131,7 @@ describe("onReflect —— 反彈成功時", () => {
     hit(depth, a2, v2, 100);
     // ⚠️ 讀的是「幾筆」而不是「有沒有」:一個把閘拿掉的實作在這裡是**兩筆**,
     // 而「有沒有」對兩筆與一筆都會過。
-    expect(depth.pendingReflectHooks).toEqual([{ reflector: v2, victim: a2 }]);
+    expect(depth.pendingReflectHooks).toMatchObject([{ reflector: v2, attacker: a2 }]);
 
     // ③ ⛔ **同一個 hook 裡的普通傷害效果不算反彈。**
     //    這是那個 `if (reflectDepth !== undefined)` 實際在守的東西 —— 上面兩道閘
@@ -157,7 +162,7 @@ describe("onReflect —— 反彈成功時", () => {
       ],
     });
     hit(mixed, a3, v3, 100);
-    expect(mixed.pendingReflectHooks).toEqual([{ reflector: v3, victim: a3 }]);
+    expect(mixed.pendingReflectHooks).toMatchObject([{ reflector: v3, attacker: a3 }]);
   });
 
   it("⛔ hook 真的被觸發了 —— 不是只有進佇列", () => {
@@ -177,7 +182,7 @@ describe("onReflect —— 反彈成功時", () => {
       const hooks: HookDef[] = [reflectHook(2)];
       if (withOnReflectCard) {
         hooks.push({
-          on: "onReflect",
+          on: "onReflectSuccess",
           target: "self",
           effects: [{ kind: "heal", amount: { flat: HEAL } }],
         } as HookDef);

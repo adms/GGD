@@ -2,6 +2,7 @@
  * Typed wrappers over every platform endpoint the web UI consumes.
  * All functions go through the shared ApiClient (Bearer + refresh-on-401).
  */
+import type { RoomMatchSettings } from "@ggd/shared/roomSettings";
 import { ApiClient } from "./session";
 import { PAGE_SIZE } from "./ranking";
 import type {
@@ -216,6 +217,17 @@ export function listOpenRooms(): Promise<{ rooms: OpenRoom[] }> {
   return api.request<{ rooms: OpenRoom[] }>("/lobby/rooms");
 }
 
+/**
+ * POST /rooms.
+ *
+ * ⚠️ The four #288 host settings ride as FLAT keys in the same body as
+ * `rogueliteMobs`, not as a nested object: the platform forwards them the same
+ * way (#215's `RogueliteMobs *bool` is the live precedent) and the game server
+ * feeds the body straight to `sanitizeRoomSettings`, which reads top-level keys.
+ * A key that is ABSENT means "keep the shipped value" all the way down — so
+ * never spread an object with `undefined` values in here (JSON.stringify drops
+ * them, but a `null` would not be dropped and reads as an explicit clear).
+ */
 export function createRoom(settings: {
   name?: string;
   mapId?: string;
@@ -223,7 +235,7 @@ export function createRoom(settings: {
   // Per-room 肉鴿殭屍模式 toggle (#215). Only send `false` when the host unchecks;
   // omitting it entirely keeps the default-ON behavior all the way down.
   rogueliteMobs?: boolean;
-}): Promise<RoomResp> {
+} & RoomMatchSettings): Promise<RoomResp> {
   return api.request<RoomResp>("/rooms", { body: settings });
 }
 

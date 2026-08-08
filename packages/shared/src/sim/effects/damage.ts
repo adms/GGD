@@ -169,16 +169,19 @@ export const damageEffect: EffectKindSpec<"damage"> = {
         // 之後真的掉了多少。在這裡算會拿到「打算打多少」,而文案講的是打中了多少。
         ...(e.refund !== undefined ? { refund: e.refund } : {}),
       });
-      // 【反彈成功】—— owner 2026-08-05:「onReflect／反彈成功時 這個也要」。
-      // ⛔ 位置是刻意的:**在 push 之後**,也就是上面三道閘(沒有觸發封包 /
-      // 超過鏈深 / 排空預算來不及)全部沒有攔下來的時候。任何更早的位置都會讓
-      // 「反彈時回血」實際上變成「被打時回血」,而畫面上看不出差別。
-      // ⚠️ 這裡**不** import `fireHooks` —— 那會關上 effectRegistry 檔頭警告的
-      // 那個環。只 push,由 `systems/ReflectHookSystem.ts` 在同一個 tick 稍後轉成
-      // hook(逐字照抄 `onStunned` 的作法)。
-      if (reflectDepth !== undefined) {
-        world.pendingReflectHooks.push({ reflector: ctx.caster, victim: target });
-      }
+      // 【反彈成功】的 push **不在這裡** —— 2026-08-08 搬到 `combat/damage.ts`
+      // 那一發封包**落地**的地方。
+      //
+      // ⛔ 為什麼要搬:這裡拿得到的「反彈傷害」只有 `amount`(打算打多少),
+      // `mitigated` / `hpLost` 在這一刻**還不存在**。而 `onReflectSuccess` 的
+      // 存在理由就是讓 20-002「每次造成 7 倍[反彈]傷害」乘得到那個數 ——
+      // 在這裡 push 就只能編一個讀數出來,那是三個欄位裡兩個是謊話。
+      //
+      // 判準沒有變鬆,只有變緊:上面那三道閘(沒有觸發封包 / 超過鏈深 /
+      // 排空預算來不及)加上「反彈了 0 就不發封包」那一條,擋掉的封包**不存在**,
+      // 自然也不會落地。落地那一端只是再多擋「目標死了 / 免疫 / 被迴避」。
+      // 身分標記照舊由 `reflectDepth` 帶著走,那是 `combat/damage.ts` 認得出
+      // 「這一發是反彈」的唯一憑據。
     }
   },
 

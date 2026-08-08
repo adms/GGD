@@ -36,6 +36,7 @@ import {
   type BerserkRules,
 } from "@ggd/shared/sim/abilities/berserkRules";
 import { clearForFreshBody } from "@ggd/shared/sim/clearPools";
+import { resetMarksForRound } from "@ggd/shared/sim/marks";
 import {
   DISPEL_DOC_ID,
   dispelRulesFromDoc,
@@ -181,6 +182,7 @@ import { Whitelist } from "../curation/whitelist";
 import { Ownership } from "../curation/ownership";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import { resolveVsBotPacing, type VsBotPacing } from "./phaseConfig";
+import { roundCapReached } from "@ggd/shared/roomSettings";
 import {
   pairTeams,
   royaleBout,
@@ -1548,6 +1550,26 @@ export class MatchController {
     // …以及「一隊全滅就停止生怪」那一格（owner 2026-08-02）。跟 settledZones 同一
     // 個生命週期:不清掉的話,上一回合被打光的那個 zone 這一回合一隻殭屍都不會生。
     this.world.spawnHaltedZones.clear();
+    // 【具名標記】的回合邊界 —— `resetOn:"round"` 的標記在這裡補回 initial。
+    //
+    // ⚠️ 決策點：重置該放「上一回合結束（concludeCombat / enterIntermission）」
+    // 還是「下一回合開始（這裡）」？選了**下一回合開始**，三個理由：
+    //  1) 中場商店看到的是**真實剩餘層數**。玩家在商店做的決策（買什麼、要不要
+    //     留錢）建立在「我這回合燒掉了幾層」上；提早補滿會把那段資訊抹掉，
+    //     跟 `resetRoundTallies` 刻意不在 concludeCombat 清 K/D 是同一個理由。
+    //  2) 與 hp/mana 同一個生命週期 —— 兩個 placement 迴圈也是在 enterCombat
+    //     才 `hp.hp = hp.maxHp`。標記是「新身體」的一部分,跟著 `clearForFreshBody`
+    //     走（同一個相位）語意才一致。
+    //  3) ⛔ `enterIntermission` **是可以被跳過的**（skipPhase 作弊 / fault
+    //     failsafe 直接推進到 enterCombat,見上面 roundResolving 那段保險）。
+    //     重置放在中場 = 那些路徑會讓玩家帶著上一回合花掉的層數開打。
+    //     enterCombat 是每一回合**必經**的那一個。
+    //
+    // 呼叫一次就夠：它是 world 級的（掃 world.marks 全表）,所以決鬥與大亂鬥
+    // 兩條 placement 路徑共用這一行,不會有「只改一條」的那種隨機故障。
+    // `resetOn:"match"` / `"never"` 的標記它不碰 —— 十二道試煉跨回合共享 12 層
+    // 就是靠這個區分,無條件全部重置會讓那個機制整個消失。
+    resetMarksForRound(this.world);
     this.resetRoundTallies();
 
     // Per-round arena rotation (task #145): pick THIS round's map deterministically
@@ -2350,14 +2372,16 @@ export class MatchController {
    * `hasSettlement` is false and that player gets the ordinary #271 leave
    * confirmation instead. No client change is needed for either mode.
    *
-   * Suppressed on the finale: `maybeFinish` broadcasts the authoritative final
-   * settlement seconds later and a duplicate card would only race it.
+   * Suppressed on the LAST round (the finale, or the host's round cap — #288):
+   * `maybeFinish` broadcasts the authoritative final settlement seconds later and
+   * a duplicate card would only race it. Same predicate, one home
+   * ({@link isLastRound}).
    */
   private queueEliminationSettlements(): void {
     const newlyOut = this.eliminatedTeams().filter((t) => !this.healthSpentAnnounced.has(t));
     if (newlyOut.length === 0) return;
     for (const teamId of newlyOut) this.healthSpentAnnounced.add(teamId);
-    if (isRoyaleRound(this.phase.round)) return;
+    if (this.isLastRound()) return;
     const snapshot = this.buildSettlement();
     for (const teamId of newlyOut) {
       this.eliminationSettlements.push({ teamId, settlement: snapshot });
@@ -2445,10 +2469,11 @@ export class MatchController {
     // frozen until enterCombat re-parks and re-arms combat next round.
     this.freezeControls();
     // THE MATCH IS DECIDED WHEN THE FINALE IS OVER — not when someone runs out of
-    // team health, because nobody is removed by that any more. This is the same
-    // predicate `maybeFinish` uses one resolution phase later; latching it here
-    // is what stops the bots trading blows through the victory beat (#100).
-    if (isRoyaleRound(this.phase.round)) {
+    // team health, because nobody is removed by that any more. …or when the host's
+    // round cap is reached (#288). This is the same predicate `maybeFinish` uses
+    // one resolution phase later; latching it here is what stops the bots trading
+    // blows through the victory beat (#100).
+    if (this.isLastRound()) {
       this.outcomeDecided = true;
     }
   }
@@ -2753,7 +2778,32 @@ export class MatchController {
   }
 
   /**
-   * End the match — iff the FINALE has been played.
+   * 「**這一回合是這一場的最後一回合嗎**」—— 唯一的住處。
+   *
+   * 兩條結束條件，OR：
+   *   ① 決賽打完了（`isRoyaleRound`）—— owner 2026-07-27 的裁定，取消淘汰之後
+   *      這一直是唯一的一條；
+   *   ② 房主設的**總回合數上限**打到了（#288，owner 2026-08-08）。
+   *
+   * ⛔ ① **沒有被改掉**：沒設上限時 `roundCapReached` 恆回 false（`maxRounds`
+   * 是 0 / undefined），所以出貨預設下這整條機制在行為上**不存在** ——
+   * 這就是 owner 那句「預設值保留現在」的一半。
+   *
+   * ⚠️ 上限 >= {@link FINAL_ROUND} 沒有效果，這是對的：兩條是 OR，決賽先到。
+   *
+   * ⛔ 而且它是**一個**謂詞，被三個地方讀（中途結算卡的抑制、`concludeCombat`
+   * 的凍結latch、`maybeFinish` 的收場）。另開一條平行的結束路徑 = 兩份「比賽
+   * 怎麼結束」的邏輯，那正是這個檔在 2026-07-27 花一整段註解拆掉的東西。
+   */
+  private isLastRound(): boolean {
+    return (
+      isRoyaleRound(this.phase.round) || roundCapReached(this.phase.round, this.rules.maxRounds)
+    );
+  }
+
+  /**
+   * End the match — iff the FINALE has been played, **or the host's round cap
+   * has been reached** (#288; see {@link isLastRound}).
    *
    * ⚠️ THIS IS THE ONLY END CONDITION LEFT, and it is the load-bearing half of
    * the owner's ruling. The old test was `aliveTeams().length <= 1`, i.e. "team
@@ -2761,9 +2811,14 @@ export class MatchController {
    * unreachable and a match would cycle intermission→combat→resolution forever.
    * Reaching round {@link FINAL_ROUND}'s resolution ends it, and the standings are
    * written here in one place ({@link finalStandings}).
+   *
+   * ⚠️ A CAPPED last round is an ORDINARY duel round, not a royale: `royaleWinner`
+   * is null, so {@link finalStandings} orders EVERY team by team health → round
+   * wins → team id. That is exactly 「名次照剩餘團隊生命」 — the cap borrows the
+   * settlement path (#193), it does not invent a second one.
    */
   private maybeFinish(): boolean {
-    if (!isRoyaleRound(this.phase.round)) return false;
+    if (!this.isLastRound()) return false;
     // 1/2/3/4 for EVERY team — champion first, then team health. Assigning all
     // four (rather than only the winner) is what keeps the settlement board a
     // total order instead of "#1 and three blanks".

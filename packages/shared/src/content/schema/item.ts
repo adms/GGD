@@ -11,6 +11,7 @@ import {
 import {
   refineHookDamageContext,
   zAuraDef,
+  zBlockGrant,
   zDamageType,
   zFlightGrant,
   zHookDefBase,
@@ -327,77 +328,26 @@ export const zItemDamageTypeOverride = z
   .strict();
 
 /**
- * 格擋 —— mirrors `BlockGrant` in `sim/combat/block.ts`, which is where the
- * mechanism, the WC3 evidence and every one of these decisions is argued out.
+ * 格擋 —— **`zBlockGrant` 的別名**,定義與六根軸的完整推導在
+ * `schema/effect.ts`(機制本身在 `sim/combat/block.ts` 的檔頭)。
  *
- * 四支出貨道具、三種讀法、一組軸:
+ * ⚠️ 這裡曾經是它的**定義**,2026-08-08 移走的理由是「授予它的不只有道具」——
+ * `zAbilityPassiveRank` 現在也帶同一格(20-00 銀色甲胄是 Saber 的天生技,
+ * 79-002 虛化是卍解狀態下的物理格擋),而 `schema/effect.ts` **不能** import
+ * 這一支(item → effect 已經是單向的,反向 import 會 closed 一個真的模組循環)。
+ * 留成別名而不是改名,是因為 `zItemBlockGrant.shape` 是
+ * `content/blockNoteTruth.test.ts` 用來數「N 根軸」的那一份 —— 別名保住同一個
+ * ZodObject 實例,所以那條守衛與 `block.shipped.test.ts` 逐條照舊。
+ * ⛔ 不要在這裡再寫一份 z.object:兩份會 drift,而 drift 的那一天兩邊的測試
+ * 各自只看自己那一半,全綠。
+ *
+ * 四支出貨道具、三種讀法:
  *   奇門盾甲   `{damageTypes:["physical","magic"], chance:0.5, fraction:1}`
  *   黃金聖鬥衣 `{damageTypes:["magic"],            chance:0.5, fraction:1}`
  *   晨曦之光/殺豬刀 `{damageTypes:[…三種都列], chance:0.3, fraction:1, lethalOnly:true,
  *                    internalCooldown:1}`
- *
- * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
- *   · `chance` / `fraction` 上界 **1** —— 文案寫的是「50%」「30%」,而一個把
- *     百分比直接抄進來的 `0.5 → 50` 在沒有上界時就是**永遠觸發**(`chance`)或
- *     **把傷害變成治療**(`fraction > 1` ⇒ `impact - cut < 0`)。上界 1 讓這種
- *     誤植在**載入時**就紅,而不是在某一場比賽裡變成一個無敵的玩家。
- *   · `chance` / `fraction` 下界 **>0**(`.positive()`)—— `0` 是一個合法但
- *     **會說謊**的值:卡片上寫著 [格擋],骰子照抽、擋格語音照喊,傷害一點沒少。
- *     這正是這一批要消滅的「描述承諾了、資料沒有付」再往下一層。
- *   · `damageTypes` 必填且 `.min(1)` —— 「真實傷害無法阻擋」必須是這個陣列的
- *     內容,不是程式裡的一行 `if`;而空陣列是一件永遠不會觸發的裝備。
- *   · `internalCooldown` 上界 **300 秒** —— owner 選的是 1 秒,w3x 原作那兩支是
- *     Cool 45 / Cool 100,所以 300 是「這是誤植不是設計」的那條線(把 1 打成
- *     1000 = 這件裝備一整場只擋一次,而畫面上完全看不出來),不是平衡政策。
- *     下界 0 是合法且有意義的(= 沒有冷卻),所以是 `.min(0)` 不是 `.positive()`。
  */
-export const zItemBlockGrant = z
-  .object({
-    damageTypes: z
-      .array(zDamageType)
-      .min(1)
-      .describe(
-        "這個格擋擋得住哪些傷害型別。想表達「真實傷害無法阻擋」就**不要**把 true 列進來 —— " +
-          "擋不擋真傷是這個欄位的內容,不是寫死的規則。",
-      ),
-    chance: z
-      .number()
-      .positive()
-      .max(1)
-      .describe("觸發機率,0~1(0.5 = 50%)。每一發合格的傷害各抽一次,抽中才擋。"),
-    fraction: z
-      .number()
-      .positive()
-      .max(1)
-      .describe(
-        "抽中時擋掉這一發的幾成,0~1(1 = 整包擋掉)。擋掉的部分不會進護盾池,也不會扣血;" +
-          "沒擋掉的部分照常走護盾與血條。",
-      ),
-    lethalOnly: z
-      .boolean()
-      .optional()
-      .describe(
-        "只擋「會殺死我」的那一發(抵擋致命一擊)。留空 = 每一發合格的傷害都可能被擋。",
-      ),
-    lethalBasis: z
-      .enum(["hp", "hpAndShields"])
-      .optional()
-      .describe(
-        "致死怎麼算:hpAndShields(預設)= 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」;" +
-          "hp = 只看血條(文案的字面讀法)。只有 lethalOnly 打開時才有意義。",
-      ),
-    internalCooldown: z
-      .number()
-      .min(0)
-      .max(300)
-      .optional()
-      .describe(
-        "內部冷卻(秒):這件擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻," +
-          "每一發合格的傷害都各抽一次(奇門盾甲、黃金聖鬥衣就是這樣)。" +
-          "抽輸不會進冷卻,只有真的擋中才會。",
-      ),
-  })
-  .strict();
+export const zItemBlockGrant = zBlockGrant;
 
 /**
  * [暴擊吸血] —— mirrors `CritStrikeGrant` in `sim/combat/critStrike.ts`, which is

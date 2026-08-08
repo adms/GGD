@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "52-00 十二道試煉",
   "icon": "assets/icons/abilities/godie-hapm.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n眾神給了海克力斯十二條命，但沒有附電池。肉身大得離譜，然後每一秒都在漏。\n\n• 最大生命 ×12（是倍率不是加值，買血裝也一起 ×12）\n• 每 1 秒流失【最大】生命的 1.2%（不是當前生命 —— 用當前的話會變成永遠死不了的漸近線）\n• 他【沒有】百分比自動回血，所以那 1.2% 是淨值，不會被抵掉\n• 流失到【最大生命的 1%】就停手：試煉會折磨你，但不負責殺你\n• 停手不等於無敵 —— 它只是自己不再往下扣，敵人照樣一刀送你走\n• 換算：滿血站著不動，約 82 秒見底（99% ÷ 1.2%）\n• 這一條不是傷害：不吃全域傷害倍率、不會被護盾擋、也不算進任何人的輸出",
+  "description": "[被動]\n0秒冷卻\n\n「十二條命聽起來很多，直到你遇到會算數的玩家」\n初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層試煉，進入 [無敵] 狀態1.5秒，隨後 [回復] 50%最大生命，並[擊退]並[暈眩] 0.5秒 [周圍]敵人。每失去一層試煉，永久提升10%攻擊力與10%最大生命。\n(跨回合共享12次 [試煉] 標記)",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
@@ -16,18 +16,64 @@
   ],
   "range": 0,
   "effects": [],
-  "passive": {
-    "name": "52-00 十二道試煉",
-    "ranks": [
-      {
-        "modifiers": [
+  "marks": [
+    {
+      "markId": "godie-hapm.passive",
+      "initial": 12,
+      "max": 12,
+      "durationSec": -1,
+      "resetOn": "match",
+      "perStackLost": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        },
+        {
+          "stat": "maxHealth",
+          "op": "pctAdd",
+          "value": 0.1
+        }
+      ],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 0.5,
+        "aoeRadius": 8,
+        "selfEffects": [
           {
-            "stat": "maxHealth",
-            "op": "pctMult",
-            "value": 11
+            "kind": "invulnerable",
+            "durationSec": 1.5,
+            "applyTo": "self",
+            "blocksDamage": "all",
+            "blocksTrueDamage": true,
+            "blocksControl": true
+          },
+          {
+            "kind": "restore",
+            "healthPct": 0.5
+          }
+        ],
+        "aoeEffects": [
+          {
+            "kind": "knockback",
+            "distance": 4,
+            "speed": 40,
+            "from": "caster"
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "trial-stun",
+            "duration": 0.5,
+            "stun": true
           }
         ]
       }
-    ]
-  }
+    }
+  ]
 }

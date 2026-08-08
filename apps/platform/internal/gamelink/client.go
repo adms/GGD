@@ -97,6 +97,15 @@ type MatchRequest struct {
 	// match the game server's InternalMatchRequest.rogueliteMobs byte-for-byte;
 	// a typo would drop the field and mask an intended OFF as an ON.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// The #288 host-set pacing knobs (選角 / 商店 / 每回合秒數 + 總回合數),
+	// embedded so they inline into this JSON body under the SAME field names the
+	// room hash and the client form use. Every field is a pointer: nil is absent
+	// on the wire, which the game server reads as "use the shipped
+	// config.match@1 value" — including the 320s vs-bot champ select. Values are
+	// forwarded UNVALIDATED by design; the bounds table lives in
+	// packages/shared/src/roomSettings.ts and the game server is the one
+	// authority that applies it (see room.MatchSettings for why).
+	room.MatchSettings
 }
 
 // Reservation is one human's seat token.
@@ -304,6 +313,9 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 		CallbackURL: s.callback + "/api/v1/internal/matches/" + matchID + "/result",
 		// Forward the per-room #215 toggle; nil stays nil === ON on the wire.
 		RogueliteMobs: rm.RogueliteMobs,
+		// Forward the #288 pacing knobs wholesale — one assignment for all four,
+		// so a new knob added to room.MatchSettings cannot be left behind here.
+		MatchSettings: rm.MatchSettings,
 	}
 	body, err := json.Marshal(req)
 	if err != nil {

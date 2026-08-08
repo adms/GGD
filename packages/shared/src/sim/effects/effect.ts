@@ -3,7 +3,7 @@
  * augment hooks, and status DoTs all execute the SAME ordered EffectDef[] via
  * one interpreter (effectRunner). Data, not code → JSON-authorable.
  */
-import type { EntityId, ProjectileId, StatusId } from "../../ids";
+import type { AbilityId, EntityId, ProjectileId, StatusId } from "../../ids";
 import type { Stat } from "../stats/statTypes";
 import type { HookDef, StatModifier } from "../stats/modifiers";
 import type { AttrBasis, AttrKey } from "../stats/attributes";
@@ -614,6 +614,225 @@ export type EffectDef =
        */
       throughShields?: boolean;
     }
+  /**
+   * ── Lane 1（2026-08-08）四個新 kind ────────────────────────────────────
+   * 四個是**同一個形狀**的四個實例（`shape` + 決策欄位 + 一個 handler），
+   * 界都住在 `sim/effects/kindLimits.ts`（一份，schema 與 handler 共用）。
+   */
+  | {
+      /**
+       * 【縮短特定技能冷卻】(#284)。行為與兩個決策點的完整理由見
+       * `sim/effects/modifyCooldown.ts` 檔頭。
+       * ⛔ 它**不是**全域 CDR —— 那條屬性早就存在，做成那個等於沒做。
+       */
+      kind: "modifyCooldown";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`who:"self"` 時它不參與解析。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 改誰的冷卻。省略 = `"self"`（owner 那三支技能全部是自己）。 */
+      who?: "self" | "target";
+      /** 只改這一格。與 `abilityId` 可以同時寫（= 兩個條件都要滿足）。 */
+      slot?: CastableSlot;
+      /**
+       * 只改**這一支具名技能**所在的格子 —— 「[瞬步] 冷卻縮短 50%」講的是
+       * 一支技能，它裝在哪一格是英雄的事。
+       * ⛔ schema 擋掉 `slot` 與 `abilityId` **都不填**：那是「改全部六格」，
+       * 而那正是這個 kind 存在要避免的東西。
+       */
+      abilityId?: AbilityId;
+      /**
+       * `reduce` = 按比例（配 `basis`）· `reduceFlat` = 按秒 · `reset` = 歸零。
+       * 負的 `amount` 走同一條路，語意是**延長**。
+       */
+      mode: "reduce" | "reduceFlat" | "reset";
+      /** `reduce` 是 0..1 的比例，`reduceFlat` 是秒。`reset` 忽略它。 */
+      amount?: number;
+      /**
+       * `reduce` 的分母。省略 = `"remaining"`（剩餘量的百分比）。
+       * `"base"` = 這一階**基礎冷卻**的百分比 —— 「這一招冷卻縮短 50%」
+       * 在一次性效果裡唯一與「還剩多久」無關的寫法。
+       */
+      basis?: "remaining" | "base";
+    }
+  | {
+      /**
+       * 【加權分支】—— 一次 RNG 抽一個分支（89-002 俄羅斯輪盤）。
+       * ⭐ **只 draw 一次**，理由（錄影決定性）見
+       * `sim/effects/weightedBranch.ts` 檔頭；那不是欄位，是預算。
+       */
+      kind: "weightedBranch";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。中選分支在這組目標上執行。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /**
+       * 分支表。權重是**相對**的（1/1/4 與 10/10/40 完全等價）。
+       * `weight: 0` = 先關掉這個分支但不刪它；總和為 0 在**載入時**被擋。
+       */
+      branches: { weight: number; effects: EffectDef[] }[];
+    }
+  | {
+      /**
+       * 【交換資源】(44-002 交換筆記本)。cast resolve tick 原子交換，
+       * 三個決策點都是欄位 —— 見 `sim/effects/swapResource.ts` 檔頭。
+       */
+      kind: "swapResource";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 決策點①：交換哪一項。省略 = `"health"`（owner 文案的「現存生命」）。 */
+      resource?: "health" | "mana";
+      /**
+       * 決策點②：夾住的下限。省略 = **1**（§16.16 的建議：交換不殺人）。
+       * 設 0 = 「交換到 0 就死」，由既有的 `deathSystem` 解算。
+       */
+      clampMin?: number;
+      /**
+       * 決策點③：目標失效（死了 / 不存在）時。
+       * 省略 = `"abort"`（§16.16 的「全招失敗」）；`"skip"` = 跳過那一個。
+       */
+      onInvalidTarget?: "abort" | "skip";
+    }
+  | {
+      /**
+       * 【事件數值轉換】(15-002 太陰道 · 59-01 吞噬)。
+       * ⚠️ `basis` 待 owner freeze（計畫 §16.12）—— 見
+       * `sim/effects/eventValueConversion.ts` 檔頭。
+       */
+      kind: "eventValueConversion";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /**
+       * 轉換誰。省略 = `"incomingDamage"`（`EffectContext.incoming`，
+       * 缺席時**整條不執行**）。`"targetCurrentHealth"` = 目標當下的生命。
+       */
+      source?: "incomingDamage" | "targetCurrentHealth";
+      /**
+       * `source:"incomingDamage"` 讀哪一個讀數。省略 = `"mitigated"`。
+       * ⚠️ **待 freeze**（計畫 §16.12），所以它是欄位不是寫死。
+       */
+      basis?: IncomingBasis;
+      /** 轉換比例。1 = 等量。 */
+      ratio: number;
+      /** 轉成什麼。省略 = `"mana"`（太陰道的「轉化為自身魔力」）。 */
+      to?: "mana" | "health";
+      /** 誰收。省略 = `"self"`。 */
+      who?: "self" | "target";
+      /**
+       * 「以及**短暫**加成至 AP」—— 一個限時的 flat 屬性來源。
+       * `ratio` 省略時沿用外層的 `ratio`（兩件事同一個數值的兩種用途）。
+       */
+      buff?: { stat: Stat; durationSec: number; ratio?: number };
+    }
+  /**
+   * ── Lane 2（2026-08-08）三個新 kind ────────────────────────────────────
+   * 與 Lane 1 **同一個形狀**（`shape` + 決策欄位 + 一個 handler），界一樣住在
+   * `sim/effects/kindLimits.ts`（一份，schema 與 handler 共用）。
+   */
+  | {
+      /**
+       * 【隨機落點排程】(13-04 龍星群 · 70-04 千年練成)。
+       * ⭐ draw 預算 = `2 × count`，而且**只在施法那一刻花掉** —— 完整的
+       * 決定性推導見 `sim/effects/randomArea.ts` 檔頭②。
+       */
+      kind: "randomArea";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`who:"self"` 時它不參與解析。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 以誰為圓心。省略 = `"self"`（兩支都是「自身[周圍]」）。 */
+      who?: "self" | "target";
+      /** 逐階發數。70-04 的 4/6/8 就是 `[4,6,8]`；13-04 是 `[10]`。 */
+      count: number[];
+      /** 兩發之間隔幾秒。13-04 = 0.2。執行期夾成**至少 1 tick**。 */
+      intervalSec: number;
+      /** 落點的散佈半徑（以圓心為中心）。 */
+      scatterRadius: number;
+      /**
+       * 第一發落在施法 tick 上。省略 = **true**，理由與 `random-barrage`
+       * 模板的 `tickOnApply` 逐字相同（原作是「先放一發，再 sleep」）。
+       */
+      firstAtCast?: boolean;
+      /**
+       * 施法者陣亡就整波停掉。省略 = **false**（流星已經在天上了）。
+       * ⚠️ 分區決鬥結束（`settledZones`）**一律**停，那不是欄位 ——
+       * 回合結束後還在落東西是玩家看得見的缺陷（#100/#216）。
+       */
+      stopOnCasterDeath?: boolean;
+      /** 每一發落地時跑的東西（傷害／召喚／特效走同一條路）。 */
+      effects: EffectDef[];
+    }
+  | {
+      /**
+       * 【魔力屏障】(44-00 機警「每點魔力可以抵免 3 點傷害」)。
+       * ⛔ **不是**受傷後補護盾 —— 它在扣血之前把傷害換成扣魔，完整推導見
+       * `sim/effects/manaBarrier.ts` 檔頭①②。
+       */
+      kind: "manaBarrier";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 給誰。省略 = `"self"`。 */
+      who?: "self" | "target";
+      /** 一點魔力抵幾點傷害。44-00 = 3。 */
+      perMana: number;
+      /**
+       * 對哪些傷害型別生效。**必填、明列**（與 `BlockGrant.damageTypes` 同一個
+       * 設計）：「可抵擋**全部**傷害」= 三種都寫進來，不是程式裡的一行 `if`。
+       */
+      damageTypes: DamageType[];
+      /** 抵到剩多少魔力就停手。省略 = 0（抵到見底）。 */
+      minManaReserve?: number;
+      /** 屏障持續幾秒。 */
+      durationSec: number;
+    }
+  | {
+      /**
+       * 【受傷延長增益】(52-01 狂戰士之怒)。
+       * ⭐ **無狀態**：延長量是這一發傷害的連續比例，不是累積計數器 ——
+       * 理由（以及「現有詞彙為什麼組不出來」的逐條結論）見
+       * `sim/effects/extendBuff.ts` 檔頭①②。
+       */
+      kind: "extendBuff";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`who:"self"` 時它不參與解析。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 延長誰身上的。省略 = `"self"`。 */
+      who?: "self" | "target";
+      /** 要延長的那個 buff 的 `applyBuff.stackKey`。 */
+      stackKey: string;
+      /** 滿一份門檻延長幾秒。52-01 = 2。 */
+      addSec: number;
+      /** 門檻 = 自身最大生命的幾成。52-01 = 0.05。 */
+      perDamagePctOfMaxHealth?: number;
+      /** 門檻 = 固定點數（與上面二選一，上面優先）。 */
+      perDamageFlat?: number;
+      /**
+       * 讀 `incoming` 的哪一個讀數。省略 = **`"hpLost"`**（「承受」對照的是血條，
+       * 護盾吃掉的那一份不算）—— 與 `eventValueConversion` 的預設刻意不同，
+       * 理由見那支檔頭④。
+       */
+      basis?: IncomingBasis;
+      /**
+       * ⭐ **必填**：延長後的剩餘時間上限（秒）。
+       * 這條機制是正回饋，沒有它會變成永久，而症狀是「回合打不完」——
+       * 一個不會讓任何東西變紅的故障。見 `extendBuff.ts` 檔頭③。
+       */
+      maxRemainingSec: number;
+    }
   | {
       kind: "revive";
       /**
@@ -710,6 +929,12 @@ export type EffectDef =
        * own. Model + decisions: `sim/berserk.ts`.
        */
       berserk?: boolean;
+      /**
+       * 恐懼 —— `berserk` 的鏡像：一樣沒收座位的指令，但身體**遠離**最近的敵人
+       * 而且**不攻擊**。模型與三個決策點：`sim/fear.ts`。
+       * ⚠️ 它**是** CC（免控擋得掉），也只管腳 —— 要連技能一起封請配 `silenced`。
+       */
+      feared?: boolean;
       /**
        * C4 睡眠（#278）—— **受傷即提早解除這一筆**。
        * ⛔ 只拔標了它的那幾筆；身上的其他 status 一格不動（`sim/statusBreak.ts`）。

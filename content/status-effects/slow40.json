@@ -5,6 +5,12 @@
   "description": "Movement speed reduced by 40%.",
   "polarity": "debuff",
   "tags": [
-    "slow"
+    "slow40",
+    "slow",
+    "move-speed-down",
+    "stat-down",
+    "soft-cc",
+    "cc",
+    "debuff"
   ]
 }

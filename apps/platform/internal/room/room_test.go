@@ -167,6 +167,60 @@ func TestRogueliteMobsToggle(t *testing.T) {
 	require.Equal(t, true, r.Body["room"].(map[string]any)["rogueliteMobs"], "omitted field must not reset the toggle")
 }
 
+// TestRoomMatchSettings covers the #288 host knobs through the platform's ONE
+// job for them: transparent forwarding. The load-bearing guarantee is the same
+// one #215 needed — an omitted field is never a reset — plus the reason those
+// fields are pointers at all: maxRounds 0 (無上限) is a CHOICE and must survive
+// as 0 instead of collapsing back into "unset". Bounds are deliberately not
+// asserted here; this layer does not validate (see room.MatchSettings).
+func TestRoomMatchSettings(t *testing.T) {
+	testkit.Cover(t, "room-match-settings")
+	ts := testutil.New(t)
+	host := ts.Register("host")
+
+	// (1) Knobs the host never touched stay off the wire entirely, so the game
+	// server keeps the shipped config.match@1 values — including vs-bot select.
+	rm := createRoom(ts, host, "Defaults")["room"].(map[string]any)
+	for _, k := range []string{"champSelectSec", "intermissionSec", "combatMaxSec", "maxRounds"} {
+		_, present := rm[k]
+		require.False(t, present, "%s must stay omitted when the host never set it", k)
+	}
+
+	// (2) Knobs the host DID set round-trip through the Redis hash untouched,
+	// fractional seconds included (they must not be rounded on the way).
+	r := ts.Do(http.MethodPost, "/api/v1/rooms", host.Access, map[string]any{
+		"name": "Fast", "champSelectSec": 12.5, "intermissionSec": 15,
+		"combatMaxSec": 90, "maxRounds": 5,
+	})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	rid := roomID(r.Body)
+	require.EqualValues(t, 12.5, r.Body["room"].(map[string]any)["champSelectSec"])
+
+	// (3) A PATCH that only renames the room must not reset the knobs.
+	r = ts.Do(http.MethodPatch, "/api/v1/rooms/"+rid+"/settings", host.Access,
+		map[string]any{"name": "Renamed"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	rm = r.Body["room"].(map[string]any)
+	require.EqualValues(t, 90, rm["combatMaxSec"], "omitted field must not reset the knob")
+	require.EqualValues(t, 5, rm["maxRounds"], "omitted field must not reset the knob")
+
+	// (4) An explicit 0 (無上限) persists as 0 and is not swallowed as absence.
+	r = ts.Do(http.MethodPatch, "/api/v1/rooms/"+rid+"/settings", host.Access,
+		map[string]any{"maxRounds": 0})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.EqualValues(t, 0, r.Body["room"].(map[string]any)["maxRounds"])
+
+	// (5) They reach the game server verbatim — nothing here clamps or drops.
+	r = ts.Do(http.MethodPost, "/api/v1/rooms/"+rid+"/start", host.Access, nil)
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	reqs := ts.Node.Requests()
+	require.Len(t, reqs, 1)
+	require.NotNil(t, reqs[0].CombatMaxSec)
+	require.EqualValues(t, 90, *reqs[0].CombatMaxSec)
+	require.NotNil(t, reqs[0].MaxRounds, "an explicit 無上限 must not arrive as absent")
+	require.EqualValues(t, 0, *reqs[0].MaxRounds)
+}
+
 func TestReadyTracking(t *testing.T) {
 	testkit.Cover(t, "room-ready")
 	ts := testutil.New(t)

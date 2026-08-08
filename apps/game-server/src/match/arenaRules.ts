@@ -12,6 +12,7 @@ import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { AUGMENT_TIER_SCHEDULE, DEFAULT_ITEM_DRAFT_POLICY } from "@ggd/shared/sim/economy/draft";
 import type { ItemDraftPolicy } from "@ggd/shared/sim/economy/draft";
 import { Configs, scheduledRetiredTables } from "@ggd/shared/content";
+import { MAX_ROUNDS_UNLIMITED } from "@ggd/shared/roomSettings";
 import type {
   ConfigArenaRulesDoc,
   FlowerConfig,
@@ -79,6 +80,25 @@ export interface ArenaRules {
    * so it is a deterministic, replay-recorded input — never a client cosmetic.
    */
   rogueliteMobs: boolean;
+  /**
+   * 房主設定的**總回合數上限**（#288，owner 2026-08-08:「開房房主可以設定 選角、
+   * 商店、每回合的時間跟總回合數，但**預設值保留現在**」）。
+   * {@link MAX_ROUNDS_UNLIMITED}（0）= 不設限 = 今天的行為。
+   *
+   * ⚠️ 它和 `rogueliteMobs` 走**完全同一條路**，而且是刻意的：這是一格 PER-ROOM
+   * 的設定，不是 `config.arena-rules@1` 的內容欄位（出貨預設住在
+   * `config.match@1` 的 `match.maxRounds`，由 `phaseConfig.resolveMaxRounds` 讀，
+   * 房主沒設時就用它 —— 語意①「缺席 ≠ 重設」）。住在 ArenaRules 換到三件事：
+   *   ① 建構子已經有這一格（第 6 個位置），不必再加第 26 個位置參數；
+   *   ② 回放 header 已經整份記錄 `arenaRules` 並由 `rebuildRules` 還原，
+   *      所以一場 3 回合的比賽重播出來也是 3 回合，不是 10 回合；
+   *   ③ `MatchRoom.onCreate` 已經在同一行合併房主的 `rogueliteMobs`。
+   *
+   * ⚠️ 舊錄影沒有這一格 → `undefined` → `roundCapReached` 回 false → 不設限。
+   * 型別上宣告成必填（和 `rogueliteMobs` 一樣）是為了強迫新的建構點想一次，
+   * 消費端一律走 `roundCapReached`，它自己吃得下 undefined。
+   */
+  maxRounds: number;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
@@ -107,6 +127,9 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   // arena-rules doc that supplies mobWaves will spawn unless a room turns this
   // off — which is exactly the pre-existing behavior, now switchable.
   rogueliteMobs: true,
+  // 不設限 = 今天的行為（比賽打到決賽才結束）。房主沒設、內容沒設、單元測試、
+  // 骨架開機、舊錄影 —— 全部落在這一格，所以這個機制在出貨預設下不存在。
+  maxRounds: MAX_ROUNDS_UNLIMITED,
 };
 
 /**
@@ -173,6 +196,9 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     // NOT a content-doc field: the per-room toggle defaults ON here and is only
     // ever driven to false by the room override merged in MatchRoom.onCreate.
     rogueliteMobs: true,
+    // 同上：不是 `arena-rules@1` 的欄位。出貨預設在 `config.match@1`，房主的值
+    // 在 `MatchRoom.onCreate` 合併進來。這裡放「不設限」＝今天的行為。
+    maxRounds: MAX_ROUNDS_UNLIMITED,
   };
 }
 

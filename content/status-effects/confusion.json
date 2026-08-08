@@ -1,0 +1,15 @@
+{
+  "id": "confusion",
+  "schema": "status-effect@1",
+  "name": "混亂",
+  "description": "分不清誰是誰，手上那一刀砍向了自己人。它跟【暴走】共用同一種「不聽你的」—— 差別在暴走還認得敵人，混亂連這個都不認得了。持續多久寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "confusion",
+    "uncontrollable",
+    "ai-override",
+    "friendly-fire",
+    "cc",
+    "debuff"
+  ]
+}

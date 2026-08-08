@@ -28,6 +28,7 @@ import { SpectateNotice } from "./hud/SpectateNotice";
 import { NoChampionNotice } from "./hud/NoChampionNotice";
 import { KillCombo } from "./hud/KillCombo";
 import { SelfStatusBar } from "./hud/SelfStatusBar";
+import { MarkBar } from "./hud/MarkBar";
 import { StatsHoverPanel } from "./hud/StatsHoverPanel";
 import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
@@ -183,6 +184,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [SpectatorHint, "陣亡觀戰提示"],
   [KillCombo, "連殺提示"],
   [SelfStatusBar, "自身狀態"],
+  [MarkBar, "標記層數"],
   [ZombieWaveBar, "殭屍來襲提示"],
   [MobBossOverlay, "殭屍王"],
   [BossIntroOverlay, "殭屍王出場演出"],
@@ -352,6 +354,10 @@ export function HudRoot(): React.JSX.Element {
               returns null when the corridor has no room. */}
           <KillCombo />
           <SelfStatusBar />
+          {/* 【具名標記】層數 (GH#278)。52-00【十二道試煉】的 12 層是 12 條命,
+              而它不在 MatchState 上 —— `markChanged` 這顆事件是它到螢幕的唯一
+              通道。自己管戰鬥階段閘,沒有標記就回 null。 */}
+          <MarkBar />
           {/* 殭屍來襲 + 即時已擊殺數 (task #258). The roguelite waves have
               shipped since #215 and the word 殭屍 appeared NOWHERE in combat;
               the kill tally was not even on the wire. Owns its own gate

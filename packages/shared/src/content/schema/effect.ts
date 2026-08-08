@@ -6,8 +6,26 @@
  */
 import { z } from "zod";
 import type { EffectDef } from "../../sim/effects/effect";
-import type { ProjectileId, StatusId } from "../../ids";
-import { zCastableSlot, zRef, zScaling, zStatModifier } from "./common";
+import type { AbilityId, ProjectileId, StatusId } from "../../ids";
+import { zCastableSlot, zRef, zScaling, zStat, zStatModifier } from "./common";
+// Lane 1/2（2026-08-08）七個新 kind 的界 —— 一份，schema 與 handler 共用。
+import {
+  BRANCH_MAX_COUNT,
+  BRANCH_MAX_WEIGHT,
+  CD_REDUCE_MAX_FLAT_SEC,
+  CD_REDUCE_MAX_PCT,
+  CONVERT_BUFF_MAX_SEC,
+  CONVERT_MAX_RATIO,
+  SWAP_CLAMP_MIN_MAX,
+  EXTEND_BUFF_MAX_ADD_SEC,
+  EXTEND_BUFF_MAX_REMAINING_SEC,
+  EXTEND_BUFF_MAX_THRESHOLD_PCT,
+  MANA_BARRIER_MAX_DURATION_SEC,
+  MANA_BARRIER_MAX_PER_MANA,
+  RANDOM_AREA_MAX_COUNT,
+  RANDOM_AREA_MAX_INTERVAL_SEC,
+  RANDOM_AREA_MAX_SCATTER_RADIUS,
+} from "../../sim/effects/kindLimits";
 import {
   SPREAD_MAX_FALLOFF,
   SPREAD_MAX_RADIUS,
@@ -138,16 +156,25 @@ export const zHookEvent = z.enum([
    *  見 sim/stats/modifiers.ts 的 `HookEvent` 與 systems/IntervalHookSystem.ts。 */
   "onInterval",
   /**
-   * 反彈成功時（owner 2026-08-05：「onReflect／反彈成功時 這個也要」）。
+   * 反彈成功時（owner 2026-08-05：「onReflect／反彈成功時 這個也要」；
+   * 2026-08-08 更名自 `onReflect` 並補上 provenance）。
    *
-   * ⛔ 「成功」= **一發反彈封包真的排出去了**。`incomingPct` 的三道閘
-   *（沒有觸發封包 / 超過 `maxChainDepth` / 排空預算來不及且 `whenTooLate:"drop"`）
-   * 任何一道攔下來都**不算**。理由與發射點見
-   * `sim/systems/ReflectHookSystem.ts`；持有者是反彈的人，hook 的 target 是
-   * 被反彈到的那個人（與 `onStunned` 同方向），所以「反彈時自己回血」寫
-   * `target: "self"`。
+   * ⛔ 「成功」= **一發 `reflectDepth > 0` 的封包真的落地**。兩層閘：
+   * ①`incomingPct` 的四道（沒有觸發封包 / 超過 `maxChainDepth` / 排空預算來不及且
+   * `whenTooLate:"drop"` / 反彈量 ≤ 0）；②那一發封包沒有被目標的死亡、無敵免疫
+   * 或技能迴避擋掉。任何一道攔下來都**不算**。
+   *
+   * ⭐ 它**帶得到那一發封包**（`DAMAGE_BEARING_EVENTS` 的第三個成員）——
+   * hook 裡的 `damage.incomingPct` 反彈的是**那一發反彈封包**，也就是
+   * 20-002「每次造成 7 倍[反彈]傷害」寫得出來的原因。
+   * ⚠️ 那一發的 `reflectDepth` 已經是 1，所以要一起寫 `maxChainDepth: 1`，
+   * 否則會被鏈深閘擋掉（那正是終止性在做它的事）。
+   *
+   * 理由與發射點見 `sim/systems/ReflectHookSystem.ts`；持有者是反彈的人
+   *（防禦者），hook 的 target 是被反彈到的那個人（攻擊者，與 `onStunned` 同方向），
+   * 所以「反彈時自己回血」寫 `target: "self"`。
    */
-  "onReflect",
+  "onReflectSuccess",
 
   // ── 由 `sim/systems/WorldHookSystem.ts` 從事件流轉成 hook 的六個（2026-08-06）──
   //
@@ -280,7 +307,25 @@ function refineDotResourceBudget(
  * 什麼都沒發生，而且沒有任何訊息 —— 失敗形態 ②。
  */
 function refineDispelShape(
-  e: Extract<EffectDef, { kind: "dispel" | "shieldBreak" | "devour" }>,
+  e: Extract<
+    EffectDef,
+    {
+      kind:
+        | "dispel"
+        | "shieldBreak"
+        | "devour"
+        // Lane 1（2026-08-08）：四個新 kind 用同一組幾何欄位，所以用**同一份**
+        // 檢查。各寫一份的那一天它們會分岔，而每一份看起來都對。
+        | "modifyCooldown"
+        | "weightedBranch"
+        | "swapResource"
+        | "eventValueConversion"
+        // Lane 2（2026-08-08）：同一組幾何欄位 → **同一份**檢查。
+        | "randomArea"
+        | "manaBarrier"
+        | "extendBuff";
+    }
+  >,
   ctx: z.RefinementCtx,
 ): void {
   if (e.shape === "circle" && e.radius === undefined) {
@@ -303,8 +348,117 @@ function refineDispelShape(
   }
 }
 
+/**
+ * `weightedBranch` 的**總權重不得為 0**（Lane 1）。
+ *
+ * ⚠️ 為什麼不能只靠 `weight: z.number().positive()`：那樣就沒有辦法「先關掉
+ * 一個分支但不刪掉它」，而那是編輯器裡最常見的一個動作。下界留 0，總和的檢查
+ * 就必須是一條**跨欄位**的規則 —— 而它必須在**載入時**跑：一份總權重 0 的
+ * 文件在執行期只會 `return`，技能放得出來、動畫演完、什麼都沒發生（失敗形態 ②）。
+ */
+function refineWeightedBranch(
+  e: Extract<EffectDef, { kind: "weightedBranch" }>,
+  ctx: z.RefinementCtx,
+): void {
+  let total = 0;
+  for (const b of e.branches) total += b.weight;
+  if (total > 0) return;
+  ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    path: ["branches"],
+    message:
+      "所有分支的 weight 加起來是 0 —— 這一發抽不到任何東西，在遊戲裡看起來" +
+      "跟技能壞掉一模一樣。至少要有一個分支的 weight 大於 0。",
+  });
+}
+
+/**
+ * `modifyCooldown` 的兩條跨欄位規則（Lane 1）。
+ *
+ * ① `slot` 與 `abilityId` **至少要有一個** —— 兩個都不填 = 改全部六格，
+ *    而「不是全域 cdr」正是這個 kind 存在的理由（owner 明說）。
+ * ② `mode:"reduce"` 的 `amount` 是**比例**，所以它的上界是 1 而不是欄位宣告的
+ *    120 秒。少了這一條，「50」（作者想寫 50%）會被 handler 靜默夾成 100% ——
+ *    同 #277 的形狀：後台收得下、下游才夾掉，而且沒有人被告知。
+ */
+function refineModifyCooldown(
+  e: Extract<EffectDef, { kind: "modifyCooldown" }>,
+  ctx: z.RefinementCtx,
+): void {
+  if (e.slot === undefined && e.abilityId === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["slot"],
+      message:
+        "要指名**哪一支**技能：填 slot（哪一格）或 abilityId（哪一支）。" +
+        "兩個都不填等於改全部六格，而那是全域冷卻縮減（已經有一條屬性在做）。",
+    });
+  }
+  if (e.mode === "reset") return;
+  if (e.amount === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["amount"],
+      message: `mode:"${e.mode}" 一定要有 amount —— 省略它等於這個效果什麼都不做`,
+    });
+    return;
+  }
+  if (e.mode === "reduce" && Math.abs(e.amount) > CD_REDUCE_MAX_PCT) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["amount"],
+      message:
+        `mode:"reduce" 的 amount 是**比例**（0.5 = 縮短 50%），上限 ${CD_REDUCE_MAX_PCT}。` +
+        "想按秒縮短請改 mode:\"reduceFlat\"。",
+    });
+  }
+}
+
+/**
+ * `extendBuff` 的**門檻二選一**（Lane 2）。
+ *
+ * ⚠️ 為什麼要在載入時擋：兩格都不填的話，handler 算出 `threshold = 0` → 早退，
+ * 於是這個效果**掛得上、永遠不做事**（失敗形態 ②：卡上寫著「延長 2 秒」，
+ * 遊戲裡從來不延長，而且沒有任何訊息）。兩格都填則是「作者以為自己設了兩種
+ * 條件」，而實際上只有百分比那一格被讀 —— 一個沉默的謊。
+ */
+function refineExtendBuff(
+  e: Extract<EffectDef, { kind: "extendBuff" }>,
+  ctx: z.RefinementCtx,
+): void {
+  const pct = e.perDamagePctOfMaxHealth !== undefined;
+  const flat = e.perDamageFlat !== undefined;
+  if (pct === flat) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["perDamagePctOfMaxHealth"],
+      message: pct
+        ? "perDamagePctOfMaxHealth 與 perDamageFlat **只能填一個** —— 兩個都填時只有百分比那一格會被讀到，另一格是一個看起來有設、沒有人讀的數字"
+        : "要填一個門檻：perDamagePctOfMaxHealth（52-01 的「自身最大生命 5%」）或 perDamageFlat。兩個都不填 = 這個效果掛得上但永遠不延長任何東西",
+    });
+  }
+}
+
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
+  // Lane 2：共用的 `shape` 檢查 + `extendBuff` 自己的跨欄位規則。
+  if (e.kind === "randomArea" || e.kind === "manaBarrier" || e.kind === "extendBuff") {
+    refineDispelShape(e, ctx);
+    if (e.kind === "extendBuff") refineExtendBuff(e, ctx);
+    return;
+  }
+  // Lane 1：先跑共用的 `shape` 檢查，再跑各自的跨欄位規則。
+  if (
+    e.kind === "modifyCooldown" ||
+    e.kind === "weightedBranch" ||
+    e.kind === "swapResource" ||
+    e.kind === "eventValueConversion"
+  ) {
+    refineDispelShape(e, ctx);
+    if (e.kind === "weightedBranch") refineWeightedBranch(e, ctx);
+    if (e.kind === "modifyCooldown") refineModifyCooldown(e, ctx);
+    return;
+  }
   // 【淨化】與【破盾】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
   if (e.kind === "dispel" || e.kind === "shieldBreak")
     return refineDispelShape(e, ctx);
@@ -751,6 +905,23 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * not make your own berserk refuse to land on you.
        */
       berserk: z.boolean().optional(),
+      /**
+       * 恐懼 —— 「嚇到轉頭就跑」。`berserk` 的**鏡像**：一樣丟掉座位的指令，
+       * 但身體自己**遠離**此刻最近的敵人，而且**不攻擊**。
+       * 整個模型與三個決策點寫在 `sim/fear.ts`。
+       *
+       * 出貨用戶（owner 2026-08-08 文案）：89-002 俄羅斯輪盤 2 秒 ·
+       * 52-02 蹂躪編年史 3 秒 · 52-002 射殺百頭 3 秒；52-04 巨神一擊**讀**它。
+       *
+       * ⚠️ 它**是** CC，與 `berserk` 相反 —— 敵人施加的純減益，所以
+       * `refusesControl`（免控）會拒絕它並發 `immuneControl`。
+       *
+       * ⚠️ 它只管**腳**，不管手上的技能。要做成「連技能都放不出來」的恐懼，
+       * 配 `silenced: true` 一起寫（與 C2 混亂 `{berserk, targetsAllies}` 同一個
+       * 先例）—— 「不能施法」在這個引擎裡只有 `silenced` 一個住處，多開第二個
+       * 布林就等於讓免控對其中一個有效、對另一個無效而沒有人會發現。
+       */
+      feared: z.boolean().optional(),
       /**
        * C4 睡眠（#278）—— 受傷即提早解除**這一筆**。
        * ⛔ 只拔標了它的那一筆；身上的其他 status 一格不動。
@@ -1389,15 +1560,217 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       throughShields: z.boolean().optional(),
     })
     .strict(),
+
+  /**
+   * ── Lane 1（2026-08-08）四個新 kind ────────────────────────────────────
+   * 四個是同一個形狀的四個實例；上下界一律從 `sim/effects/kindLimits.ts` 讀，
+   * ⛔ 不在這裡抄字面值（那會是一個沒有守衛的第二住處）。
+   */
+
+  /** 【縮短特定技能冷卻】(#284) —— 鏡像 `EffectDef` 的同名成員。 */
+  z
+    .object({
+      kind: z.literal("modifyCooldown"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      who: z.enum(["self", "target"]).optional(),
+      slot: zCastableSlot.optional(),
+      abilityId: zRef<AbilityId>("abilities", { soft: true }).optional(),
+      mode: z.enum(["reduce", "reduceFlat", "reset"]),
+      /**
+       * 兩端都有界（CLAUDE.md「欄位要有上界」）。單位隨 `mode`：
+       * `reduce` 是比例、`reduceFlat` 是秒。負值 = 延長。
+       * ⚠️ 這裡收的是兩個 mode 的**聯集**上界，`refineModifyCooldown` 再按
+       * mode 收緊 —— 否則 `reduce` 寫 120 會被當成 12000% 靜默夾掉。
+       */
+      amount: z
+        .number()
+        .min(-CD_REDUCE_MAX_FLAT_SEC)
+        .max(CD_REDUCE_MAX_FLAT_SEC)
+        .optional(),
+      basis: z.enum(["remaining", "base"]).optional(),
+    })
+    .strict(),
+
+  /** 【加權分支】(89-002 俄羅斯輪盤)。⭐ 一次施放只 draw 一次。 */
+  z
+    .object({
+      kind: z.literal("weightedBranch"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /**
+       * ⚠️ 下界是 **0**（允許「先關掉一個分支」），所以**總和為 0**要靠
+       * `refineWeightedBranch` 在載入時擋 —— 一份總權重 0 的文件在執行期
+       * 是「技能放得出來、什麼都不會發生」，正是失敗形態 ②。
+       */
+      branches: z
+        .array(
+          z
+            .object({
+              weight: z.number().min(0).max(BRANCH_MAX_WEIGHT),
+              effects: z.array(zEffectDef).min(1),
+            })
+            .strict(),
+        )
+        .min(1)
+        .max(BRANCH_MAX_COUNT),
+    })
+    .strict(),
+
+  /** 【交換資源】(44-002 交換筆記本)。三個決策點都是欄位。 */
+  z
+    .object({
+      kind: z.literal("swapResource"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /** 決策點①。省略 = `"health"`。 */
+      resource: z.enum(["health", "mana"]).optional(),
+      /** 決策點②。省略 = 1（§16.16：交換不殺人）。0 = 允許交換到 0。 */
+      clampMin: z.number().min(0).max(SWAP_CLAMP_MIN_MAX).optional(),
+      /** 決策點③。省略 = `"abort"`（§16.16 的「目標失效則全招失敗」）。 */
+      onInvalidTarget: z.enum(["abort", "skip"]).optional(),
+    })
+    .strict(),
+
+  /** 【事件數值轉換】(15-002 太陰道 · 59-01 吞噬)。⚠️ `basis` 待 freeze。 */
+  z
+    .object({
+      kind: z.literal("eventValueConversion"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      source: z.enum(["incomingDamage", "targetCurrentHealth"]).optional(),
+      /**
+       * ⚠️ **計畫 §16.12 未 freeze**，所以三個讀數是一格欄位、不是我挑一個。
+       * 省略 = `"mitigated"`，與 `damage.incomingPct.basis` 的預設同一句話。
+       */
+      basis: z.enum(["raw", "mitigated", "hpLost"]).optional(),
+      ratio: z.number().min(-CONVERT_MAX_RATIO).max(CONVERT_MAX_RATIO),
+      to: z.enum(["mana", "health"]).optional(),
+      who: z.enum(["self", "target"]).optional(),
+      /** 「以及**短暫**加成至 AP」。`ratio` 省略時沿用外層的。 */
+      buff: z
+        .object({
+          stat: zStat,
+          durationSec: z.number().positive().max(CONVERT_BUFF_MAX_SEC),
+          ratio: z.number().min(-CONVERT_MAX_RATIO).max(CONVERT_MAX_RATIO).optional(),
+        })
+        .strict()
+        .optional(),
+    })
+    .strict(),
+
+  /**
+   * ── Lane 2（2026-08-08）三個新 kind ────────────────────────────────────
+   * 與 Lane 1 同一個形狀；上下界一律從 `sim/effects/kindLimits.ts` 讀，
+   * ⛔ 不在這裡抄字面值。
+   */
+
+  /** 【隨機落點排程】(13-04 龍星群 · 70-04 千年練成)。⭐ draw 預算 = 2×count。 */
+  z
+    .object({
+      kind: z.literal("randomArea"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      who: z.enum(["self", "target"]).optional(),
+      /** 逐階發數（70-04 = `[4,6,8]`、13-04 = `[10]`）。 */
+      count: z
+        .array(z.number().int().positive().max(RANDOM_AREA_MAX_COUNT))
+        .min(1)
+        .max(5),
+      intervalSec: z.number().positive().max(RANDOM_AREA_MAX_INTERVAL_SEC),
+      scatterRadius: z.number().positive().max(RANDOM_AREA_MAX_SCATTER_RADIUS),
+      firstAtCast: z.boolean().optional(),
+      stopOnCasterDeath: z.boolean().optional(),
+      /**
+       * 每一發落地跑的東西。`.min(1)` 是刻意的：一波什麼都不做的流星在遊戲裡
+       * 跟「技能壞掉」一模一樣（失敗形態 ②）。
+       */
+      effects: z.array(zEffectDef).min(1),
+    })
+    .strict(),
+
+  /** 【魔力屏障】(44-00 機警)。⛔ 不是受傷後補護盾。 */
+  z
+    .object({
+      kind: z.literal("manaBarrier"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      who: z.enum(["self", "target"]).optional(),
+      perMana: z.number().positive().max(MANA_BARRIER_MAX_PER_MANA),
+      /**
+       * **必填、明列**（同 `zItemBlockGrant.damageTypes`）：「可抵擋**全部**傷害」
+       * 是這個陣列的內容，不是程式裡的一行 `if`。`.min(1)` —— 空陣列 = 沒有屏障，
+       * 而那是一份「掛得上、不會擋」的文件。
+       */
+      damageTypes: z.array(zDamageType).min(1).max(3),
+      minManaReserve: z.number().min(0).max(10000).optional(),
+      durationSec: z.number().positive().max(MANA_BARRIER_MAX_DURATION_SEC),
+    })
+    .strict(),
+
+  /** 【受傷延長增益】(52-01 狂戰士之怒)。⭐ `maxRemainingSec` 必填（正回饋）。 */
+  z
+    .object({
+      kind: z.literal("extendBuff"),
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      who: z.enum(["self", "target"]).optional(),
+      /** 要延長的那個 buff 的 `applyBuff.stackKey`。 */
+      stackKey: z.string().min(1).max(64),
+      addSec: z.number().positive().max(EXTEND_BUFF_MAX_ADD_SEC),
+      perDamagePctOfMaxHealth: z
+        .number()
+        .positive()
+        .max(EXTEND_BUFF_MAX_THRESHOLD_PCT)
+        .optional(),
+      perDamageFlat: z.number().positive().max(100000).optional(),
+      basis: z.enum(["raw", "mitigated", "hpLost"]).optional(),
+      /**
+       * ⭐ **必填**，不是選填的保險：這條機制是正回饋（挨越多、越久），
+       * 沒有上界會變成永久，而症狀是「這個回合打不完」—— 一個不會讓任何測試
+       * 變紅的故障。理由完整寫在 `sim/effects/extendBuff.ts` 檔頭③。
+       */
+      maxRemainingSec: z.number().positive().max(EXTEND_BUFF_MAX_REMAINING_SEC),
+    })
+    .strict(),
 ]);
 
 /**
- * 帶著一發傷害封包的事件 —— 也就是 `EffectContext.incoming` 唯一會被填的兩個。
- * 是 `combatResolveSystem` 那兩行 `fireHooks` 的**唯一**真實來源鏡像。
+ * 帶著一發傷害封包的事件 —— 也就是 `EffectContext.incoming` 唯一會被填的那幾個。
+ * 是 `combatResolveSystem` 裡那幾個帶 `trigger` 的 `fireHooks` 的**唯一**真實來源
+ * 鏡像（`onDamageDealt` / `onDamageTaken` 是直接發，`onReflectSuccess` 走
+ * `pendingReflectHooks` → `ReflectHookSystem`，但帶的是同一個 `trigger` 物件）。
  */
 const DAMAGE_BEARING_EVENTS: readonly string[] = [
   "onDamageTaken",
   "onDamageDealt",
+  // 2026-08-08 —— 第三個。`onReflectSuccess` 是在**反彈封包落地的那一格**發的
+  //（`combat/damage.ts` 排空迴圈裡，`trigger` 就是那一發封包本身），所以它跟
+  // 上面兩個一樣帶得到 `EffectContext.incoming`。
+  // ⛔ 少了這一列，20-002「[反彈]成功時…每次造成 7 倍[反彈]傷害」會在**載入時**
+  // 被這個 refine 拒絕 —— 引擎做得到、schema 不收，也就是最貴的那種假的缺口。
+  "onReflectSuccess",
 ];
 
 /**
@@ -1849,6 +2222,82 @@ export const zFlightGrant = z
   })
   .strict();
 
+/**
+ * 格擋 —— mirrors `BlockGrant` in `sim/combat/block.ts`, which is where the
+ * mechanism, the WC3 evidence and every one of these six axes is argued out.
+ *
+ * ⚠️ 它住在**這一支**而不是 `schema/item.ts`,理由跟 {@link zVisionGrant} /
+ * {@link zFlightGrant} 住在這裡一模一樣:授予它的**不只有道具**。
+ * `zAbilityPassiveRank` 也要用同一份(20-00 銀色甲胄「30%機率格擋 100% 魔法傷害」
+ * 是 Saber 的天生技,79-002 虛化是卍解狀態下的物理格擋),而 `schema/item.ts`
+ * import 這一支 —— 反過來 import 會closed 一個真的模組循環,兩份定義則會 drift。
+ * `zItemBlockGrant` 就是這一個常數的別名,不是第二份。
+ *
+ * 一組軸、三種讀法(道具那三支的實際值列在 `schema/item.ts` 的 `zItemBlockGrant`):
+ *   平擋   `{damageTypes:["physical","magic"], chance:0.5, fraction:1}`
+ *   限型別 `{damageTypes:["magic"],            chance:0.3, fraction:1}`
+ *   保命   `{…, lethalOnly:true, internalCooldown:1}`
+ *
+ * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
+ *   · `chance` / `fraction` 上界 **1** —— 文案寫的是「30%」「50%」,而一個把
+ *     百分比直接抄進來的 `0.3 → 30` 在沒有上界時就是**永遠觸發**(`chance`)或
+ *     **把傷害變成治療**(`fraction > 1` ⇒ `impact - cut < 0`)。上界 1 讓這種
+ *     誤植在**載入時**就紅,而不是在某一場比賽裡變成一個無敵的玩家。
+ *   · `chance` / `fraction` 下界 **>0**(`.positive()`)—— `0` 是一個合法但
+ *     **會說謊**的值:卡片上寫著 [格擋],骰子照抽、擋格語音照喊,傷害一點沒少。
+ *   · `damageTypes` 必填且 `.min(1)` —— 「真實傷害無法阻擋」必須是這個陣列的
+ *     內容,不是程式裡的一行 `if`;而空陣列是一個永遠不會觸發的格擋。
+ *   · `internalCooldown` 上界 **300 秒** —— owner 對道具選的是 1 秒,w3x 原作
+ *     那兩支是 Cool 45 / Cool 100,所以 300 是「這是誤植不是設計」的那條線,
+ *     不是平衡政策。下界 0 是合法且有意義的(= 沒有冷卻),所以是 `.min(0)`。
+ */
+export const zBlockGrant = z
+  .object({
+    damageTypes: z
+      .array(zDamageType)
+      .min(1)
+      .describe(
+        "這個格擋擋得住哪些傷害型別。想表達「真實傷害無法阻擋」就**不要**把 true 列進來 —— " +
+          "擋不擋真傷是這個欄位的內容,不是寫死的規則。",
+      ),
+    chance: z
+      .number()
+      .positive()
+      .max(1)
+      .describe("觸發機率,0~1(0.5 = 50%)。每一發合格的傷害各抽一次,抽中才擋。"),
+    fraction: z
+      .number()
+      .positive()
+      .max(1)
+      .describe(
+        "抽中時擋掉這一發的幾成,0~1(1 = 整包擋掉)。擋掉的部分不會進護盾池,也不會扣血;" +
+          "沒擋掉的部分照常走護盾與血條。",
+      ),
+    lethalOnly: z
+      .boolean()
+      .optional()
+      .describe(
+        "只擋「會殺死我」的那一發(抵擋致命一擊)。留空 = 每一發合格的傷害都可能被擋。",
+      ),
+    lethalBasis: z
+      .enum(["hp", "hpAndShields"])
+      .optional()
+      .describe(
+        "致死怎麼算:hpAndShields(預設)= 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」;" +
+          "hp = 只看血條(文案的字面讀法)。只有 lethalOnly 打開時才有意義。",
+      ),
+    internalCooldown: z
+      .number()
+      .min(0)
+      .max(300)
+      .optional()
+      .describe(
+        "內部冷卻(秒):這個來源擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻," +
+          "每一發合格的傷害都各抽一次。抽輸不會進冷卻,只有真的擋中才會。",
+      ),
+  })
+  .strict();
+
 /** One rank of `ability@1.passive` — mirrors `AbilityPassiveRank`. */
 export const zAbilityPassiveRank = z
   .object({
@@ -1857,6 +2306,25 @@ export const zAbilityPassiveRank = z
     auras: z.array(zAuraDef).optional(),
     vision: zVisionGrant.optional(),
     flight: zFlightGrant.optional(),
+    /**
+     * 格擋 this rank grants — see {@link zBlockGrant} and `sim/combat/block.ts`.
+     *
+     * A FIFTH payload kind, and it is here for the same reason `vision` and
+     * `flight` became the third and fourth: 「擋不擋得下這一發」 is not a number
+     * on a stat table (型別過濾 + `lethalOnly` disappear the moment you sum it
+     * into a `Stat`) and it is not projected onto anybody else.
+     *
+     * ⭐ 它是**同一個** `ModifierSource.block` 欄位,不是第二套機制 ——
+     * `sim/combat/block.ts::blockCutFor` 走 `StatsComp.sources` 而**不看
+     * `kind`**,所以一支技能授予的格擋跟一件裝備授予的格擋在鏈式獨立判定、
+     * 型別過濾、致死判定與內部冷卻上逐條相同。這一格的整條接線就是
+     * `abilities/abilityPassives.ts::rankBlock` 把它轉發到 source 上。
+     *
+     * 出貨用它的兩支都是招牌被動:20-00 銀色甲胄(Saber 天生技,
+     * 「30%機率格擋 100% 魔法傷害」)與 79-002 虛化(卍解狀態下的物理格擋,
+     * 配 `whileForm: "alternate"`)。
+     */
+    block: zBlockGrant.optional(),
     /**
      * 形態閘 — WHICH BODY this rank's payload is attached to (task #249 變身).
      * ABSENT = `"any"` = attached in both bodies, which is every passive

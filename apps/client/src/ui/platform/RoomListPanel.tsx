@@ -21,12 +21,155 @@
  * `expected null not to be null` on the room list container.)
  */
 import { useEffect, useState } from "react";
-import { useApp } from "./store";
-import { Btn, TextInput, Panel, Badge, ACCENT, OK } from "./widgets";
+import { Configs } from "@ggd/shared/content";
+import type { ConfigMatchDoc } from "@ggd/shared/content";
+import {
+  MAX_ROUNDS_UNLIMITED,
+  ROOM_SETTING_KEYS,
+  ROOM_SETTING_LIMITS,
+  minCombatMaxSecFor,
+  type RoomMatchSettings,
+  type RoomSettingKey,
+} from "@ggd/shared/roomSettings";
+import { appStore, useApp } from "./store";
+import { Btn, TextInput, Panel, Badge, FieldError, ACCENT, OK } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { useContentReady } from "./ContentGate";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 
 const ROOM_POLL_MS = 5000;
+
+// ------------------------------------------------- 房主每房設定 (#288) ----
+
+/**
+ * 建房表單的四格（選角 / 商店 / 每回合時間 + 總回合數）—— **一律存字串**。
+ *
+ * 空字串是這個功能唯一重要的狀態：「房主沒碰這一格」。存成 number 就得拿 0 或
+ * NaN 去代表「沒填」，而 0 對三個時間欄位是越界拒絕、對 `maxRounds` 是「不設限」
+ * —— 兩種都不是使用者的意思。
+ */
+export type RoomSettingsForm = Record<RoomSettingKey, string>;
+
+export const EMPTY_ROOM_SETTINGS_FORM: RoomSettingsForm = {
+  champSelectSec: "",
+  intermissionSec: "",
+  combatMaxSec: "",
+  maxRounds: "",
+};
+
+/**
+ * 表單 → `RoomMatchSettings`。
+ *
+ * ⭐ **承重點**：留空的格子**不可以出現在回傳的物件裡**（契約語意①，缺席 ≠ 重設）。
+ * 房主沒碰的欄位要一路缺席到伺服器，才會退回 `content/config/config.match.json`
+ * 的出貨值 —— 包含 vs bot 的 320 秒選角。送一個 0 下去會被當成「明確設定 0」。
+ */
+export function roomSettingsFromForm(form: RoomSettingsForm): RoomMatchSettings {
+  const out: RoomMatchSettings = {};
+  for (const key of ROOM_SETTING_KEYS) {
+    const raw = (form[key] ?? "").trim();
+    if (raw === "") continue;
+    const n = Number(raw);
+    if (!Number.isFinite(n)) continue; // 打壞的輸入等同沒填，不要送 NaN
+    out[key] = n;
+  }
+  return out;
+}
+
+/** `config.match@1` 的 match 區塊 —— 這一頁讀出貨預設值的**唯一**來源。 */
+interface ShippedMatchBlock {
+  champSelectSec?: number;
+  champSelectSecVsBot?: number;
+  intermissionSec?: number;
+  combatMaxSec?: number;
+  maxRounds?: number;
+  fireRing?: { startSec?: number; shrinkSec?: number; stage2StartSec?: number; stage2ShrinkSec?: number };
+}
+
+function shippedMatchBlock(): ShippedMatchBlock | undefined {
+  const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
+  return doc?.schema === "config@1" ? (doc.match as unknown as ShippedMatchBlock) : undefined;
+}
+
+const numText = (n: number | undefined): string => (typeof n === "number" ? String(n) : "預設");
+
+interface RoomSettingField {
+  key: RoomSettingKey;
+  label: string;
+  placeholder: string;
+  hint: string;
+  min: number;
+  max: number;
+  step: number;
+}
+
+/**
+ * 四格的畫面定義。**這一頁不擁有任何一個數字**：上下界來自
+ * `ROOM_SETTING_LIMITS`（契約），預設值來自載入的 `config.match@1`。
+ *
+ * ⚠️ `combatMaxSec` 的下界是**推導的**（契約語意③）：`config@1` 有一條跨欄位
+ * 不變式「火圈起燃 + 整個收完 <= combatMaxSec」，而那條 refine 只在載入內容時
+ * 跑，攔不到房間設定。所以這裡用 `minCombatMaxSecFor(出貨火圈)` 算；內容還沒
+ * 載入完（大廳不等內容）就退回靜態絕對下界，**並且接受伺服器可能回拒** ——
+ * 伺服器才是權威，這個 min 只是先擋住明顯的誤植。
+ */
+function roomSettingFields(m: ShippedMatchBlock | undefined): readonly RoomSettingField[] {
+  const ring = m?.fireRing;
+  const minCombat =
+    typeof ring?.startSec === "number" && typeof ring?.shrinkSec === "number"
+      ? minCombatMaxSecFor({
+          startSec: ring.startSec,
+          shrinkSec: ring.shrinkSec,
+          stage2StartSec: ring.stage2StartSec,
+          stage2ShrinkSec: ring.stage2ShrinkSec,
+        })
+      : ROOM_SETTING_LIMITS.combatMaxSec.min;
+  const L = ROOM_SETTING_LIMITS;
+  const vsBot = m?.champSelectSecVsBot ?? m?.champSelectSec;
+  return [
+    {
+      key: "champSelectSec",
+      label: "選角時間（秒）",
+      placeholder: numText(m?.champSelectSec),
+      hint: `留空 = 用預設（一般 ${numText(m?.champSelectSec)} 秒 · vs bot ${numText(vsBot)} 秒）`,
+      min: L.champSelectSec.min,
+      max: L.champSelectSec.max,
+      step: 1,
+    },
+    {
+      key: "intermissionSec",
+      label: "商店時間（秒）",
+      placeholder: numText(m?.intermissionSec),
+      hint: `留空 = 用預設（${numText(m?.intermissionSec)} 秒）`,
+      min: L.intermissionSec.min,
+      max: L.intermissionSec.max,
+      step: 1,
+    },
+    {
+      key: "combatMaxSec",
+      label: "每回合時間（秒）",
+      placeholder: numText(m?.combatMaxSec),
+      hint: `留空 = 用預設（${numText(m?.combatMaxSec)} 秒）· 至少 ${minCombat} 秒，火圈才收得完`,
+      min: minCombat,
+      max: L.combatMaxSec.max,
+      step: 1,
+    },
+    {
+      key: "maxRounds",
+      label: "總回合數",
+      placeholder: numText(m?.maxRounds ?? MAX_ROUNDS_UNLIMITED),
+      // ⚠️ 這句話寫錯過一次（第三守則）：不設限**不是**「打到某隊團隊生命歸零」。
+      // owner 2026-07-27 取消淘汰之後，團隊生命只是計分板，歸零不會讓任何人出局；
+      // 今天唯一的結束條件是打完賽制的最後一回合（決賽）。所以設得比賽制總回合數
+      // 還大的數字沒有效果 —— 兩條是 OR，決賽先到。房主看不到那個數字，所以這裡
+      // 只說「沒有效果」，不在客戶端替它開第四個住處。
+      hint: `留空 = 用預設 · ${MAX_ROUNDS_UNLIMITED} = 不設限（照賽制打到最後一回合）· 設得比賽制總回合數還大不會有效果`,
+      min: L.maxRounds.min,
+      max: L.maxRounds.max,
+      step: 1,
+    },
+  ];
+}
 
 function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
   const createRoom = useApp((s) => s.createRoom);
@@ -37,6 +180,37 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
   // 肉鴿殭屍模式 (#215) — default CHECKED (ON) per the owner directive. Only when a
   // host UNCHECKS it does createRoom transmit `false` down the chain.
   const [rogueliteMobs, setRogueliteMobs] = useState(true);
+  // #288 房主每房設定。四格全部從空字串開始 = 四格全部缺席 = 全部用出貨值。
+  const [settingsForm, setSettingsForm] = useState<RoomSettingsForm>(EMPTY_ROOM_SETTINGS_FORM);
+  const [busy, setBusy] = useState(false);
+  // 語意②：伺服器指名的越界欄位必須被看見 —— 留在對話框裡，不靜默關掉重開。
+  const [submitErr, setSubmitErr] = useState<string | null>(null);
+  // 大廳不等內容載入完（ContentGate 只擋 match 畫面），所以出貨預設值可能還沒
+  // 到。訂閱這個訊號，內容一落地就用真的數字重畫 placeholder 與動態下界。
+  useContentReady();
+  const fields = roomSettingFields(shippedMatchBlock());
+
+  const submit = (): void => {
+    if (busy) return;
+    setBusy(true);
+    setSubmitErr(null);
+    void (async () => {
+      await createRoom(
+        name.trim() || "New Room",
+        difficulty,
+        mapId,
+        rogueliteMobs,
+        roomSettingsFromForm(settingsForm),
+      );
+      setBusy(false);
+      // store.createRoom 把失敗吞進 lastError；房間有建起來才關對話框。
+      if (appStore.getState().room) {
+        props.onClose();
+        return;
+      }
+      setSubmitErr(appStore.getState().lastError ?? "建立房間失敗");
+    })();
+  };
 
   const selStyle: React.CSSProperties = {
     padding: "8px 10px",
@@ -107,6 +281,27 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
               <span style={{ fontSize: 11, color: TEXT_DIM }}>(第3場起喪屍湧入 · 預設開啟)</span>
             </span>
           </label>
+          {/* #288 —— 房主的四格。留空 = 缺席 = 用出貨值（含 vs bot 的選角長度）。 */}
+          <div data-ggd-room-settings="" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {fields.map((f) => (
+              <div key={f.key}>
+                <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
+                  {f.label} <span style={{ opacity: 0.8 }}>— {f.hint}</span>
+                </div>
+                <input
+                  type="number"
+                  data-ggd-room-setting={f.key}
+                  min={f.min}
+                  max={f.max}
+                  step={f.step}
+                  placeholder={f.placeholder}
+                  value={settingsForm[f.key]}
+                  onChange={(e) => setSettingsForm((s) => ({ ...s, [f.key]: e.target.value }))}
+                  style={{ ...selStyle, boxSizing: "border-box" }}
+                />
+              </div>
+            ))}
+          </div>
           <div>
             <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
               Local players (couch co-op — coming soon)
@@ -120,15 +315,9 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
               style={{ ...selStyle, boxSizing: "border-box" }}
             />
           </div>
+          <FieldError text={submitErr} />
           <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
-            <Btn
-              kind="primary"
-              style={{ flex: 1 }}
-              onClick={() => {
-                void createRoom(name.trim() || "New Room", difficulty, mapId, rogueliteMobs);
-                props.onClose();
-              }}
-            >
+            <Btn kind="primary" style={{ flex: 1 }} disabled={busy} onClick={submit}>
               Create
             </Btn>
             <Btn onClick={props.onClose}>Cancel</Btn>

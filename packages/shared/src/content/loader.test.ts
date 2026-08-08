@@ -89,19 +89,47 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     //                     (換模型要一格 ENTITY_FLAG,而 BIT BUDGET 只剩一格,見
     //                      protocol/schema.ts;推導寫在該道具的 authoringNote)
     expect(StatusEffects.ids().sort()).toEqual([
+      // ── 2026-08-08 技能重製：90 支文案點名、但先前沒有身分文件的狀態 ──────
+      // ⭐ 它們的 `tags` 是**類別條件**（`condition.status` 的 tag 分支）的查詢基礎。
+      // ⛔ 2026-08-08 owner 否決了初版的「同類共用一個 tag」（破防兩支共用 `shred`、
+      // 失手類共用 `miss`、不可控共用 `uncontrollable`）：
+      //   「[狀態 tag]**應該要做成開放架構，tag 盡可能多不要共用**」
+      // 共用把「這是什麼」與「它屬於哪一類」壓進同一格，於是想精確查【破魔】的人
+      // 只查得到「所有破防」。現在每一份帶**專屬 tag ＋ 所有適用的類別 tag**，
+      // 詞彙表在 `docs/_status-effect-tag-vocabulary.md`（給外部編輯器專案）。
+      // 「暈眩」在出貨內容裡是**五份不同文件**，那正是 exact id 條件擋住熊貓五支的原因。
+      // ⛔ status 文件只是**身分**（名字／極性／分類）；魔抗減半多少、每秒燒多少
+      // 住在施加它的那支技能的 `applyStatus` 上。
+      "armor-break",
       "berserk",
+      "blind",
+      "burn",
       "burnstun",
+      "confusion",
       "curse",
       "fang-stun",
+      // 【恐懼】(2026-08-08) —— 89-002 俄羅斯輪盤 / 52-02 / 52-04 / 52-002。
+      // 與【暴走】同一條路（`applyStatus` 的一個布林），但方向相反：暴走是
+      // 自我增益帶 downside 所以**不算 CC**，恐懼是敵人施加的純減益所以**算**。
+      "fear",
       // A6（#278）—— 【重創】與【禁療】。禁療**不是第二個機制**：它就是三格倍率
       // 都填 0 的一份文件，所以它與重創共用 `sim/grievousWounds.ts` 的同一支
       // `woundMult`，也一樣被淨化拔得掉。
       "grievous-wounds",
       "ingredient",
       "light-wand-banked",
+      "magic-break",
       "moon-combo",
       "nen-banked",
       "no-heal",
+      // 【麻痺】(2026-08-08) —— 52-03 無銘斧劍「附加 [麻痺] 效果,持續0.6秒」。
+      // ⛔ 先前沒建,理由是「到底是暈眩還是定身」查不出來。那個理由**不成立**:
+      // 那是**機制**問題,而機制住在施加它的技能的 `applyStatus`(`stun` / `root`
+      // 兩個旗標);status 文件只是**身分**。既有文件早就立下這條分層 ——
+      // `omnislash-perform` 的 description 明寫「無敵由同一支技能的 invulnerable
+      // 效果負責,不在這個標記上」。所以兩份都建,description 誠實寫出
+      // 「它擋住什麼由施加它的技能決定」,⛔ 不宣稱它是哪一種。
+      "numbness",
       //   omnislash-lock    01-04 超究武神霸斬 (GH#250) 打在**目標**身上的硬控:
       //                     war3map.j `Trig_SuperFF7_Actions` 對目標
       //                     PauseUnitBJ(true) + 反覆 IssueImmediateOrderBJ("stop")
@@ -112,10 +140,21 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       //                     (buff),共用會讓其中一邊的字在畫面上是錯的。
       "omnislash-lock",
       "omnislash-perform",
+      // 【癱瘓】(2026-08-08) —— 89-02 憤怒的菊花「造成 [癱瘓] 及 [詛咒]」。
+      // 同【麻痺】,見上面那一段。
+      "paralysis",
+      "rage",
       "root",
       "slow25",
       "slow30",
       "slow40",
+      "stun",
+      // 2026-08-08 52-00【十二道試煉】重製：免死觸發時對 [周圍] 敵人的
+      //   trial-stun  擊退 + 0.5 秒暈眩的 debuff（`marks[].lethal.aoeEffects`）
+      // ⚠️ 這份清單刻意是**精確**的（見上面那段）：`applyStatus.statusId` 的參照
+      // 在 `refs.ts` 是 **soft**（只發 warning），所以「文件在但沒被註冊」這一種
+      // 只有這裡數得出來。新增一份 status 文件就補一行，這是它的維護成本。
+      "trial-stun",
     ]);
   });
 

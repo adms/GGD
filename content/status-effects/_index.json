@@ -1,102 +1,168 @@
 {
   "collection": "status-effects",
-  "hash": "f1404756144e",
+  "hash": "45a28b91ce41",
   "entries": [
+    {
+      "id": "armor-break",
+      "path": "status-effects/armor-break.json",
+      "hash": "583810c8d372",
+      "size": 515
+    },
     {
       "id": "berserk",
       "path": "status-effects/berserk.json",
-      "hash": "846650ef4e2f",
-      "size": 345
+      "hash": "dc5246691b45",
+      "size": 395
+    },
+    {
+      "id": "blind",
+      "path": "status-effects/blind.json",
+      "hash": "36474925f4be",
+      "size": 604
+    },
+    {
+      "id": "burn",
+      "path": "status-effects/burn.json",
+      "hash": "36e23118d4c8",
+      "size": 519
     },
     {
       "id": "burnstun",
       "path": "status-effects/burnstun.json",
-      "hash": "bc55859bf21c",
-      "size": 178
+      "hash": "2892a4ea8556",
+      "size": 340
+    },
+    {
+      "id": "confusion",
+      "path": "status-effects/confusion.json",
+      "hash": "314d149a1787",
+      "size": 465
     },
     {
       "id": "curse",
       "path": "status-effects/curse.json",
-      "hash": "e7a885283093",
-      "size": 250
+      "hash": "ee0697927abe",
+      "size": 331
     },
     {
       "id": "fang-stun",
       "path": "status-effects/fang-stun.json",
-      "hash": "9526d76bd601",
-      "size": 226
+      "hash": "84afcf29061e",
+      "size": 377
+    },
+    {
+      "id": "fear",
+      "path": "status-effects/fear.json",
+      "hash": "560cef434917",
+      "size": 555
     },
     {
       "id": "grievous-wounds",
       "path": "status-effects/grievous-wounds.json",
-      "hash": "1fb6f60a28ba",
-      "size": 403
+      "hash": "afe1998cf669",
+      "size": 497
     },
     {
       "id": "ingredient",
       "path": "status-effects/ingredient.json",
-      "hash": "d024bd68f6f6",
-      "size": 224
+      "hash": "97819ca656b7",
+      "size": 376
     },
     {
       "id": "light-wand-banked",
       "path": "status-effects/light-wand-banked.json",
-      "hash": "9451fdf4cfbe",
-      "size": 279
+      "hash": "4a656eddc90d",
+      "size": 354
+    },
+    {
+      "id": "magic-break",
+      "path": "status-effects/magic-break.json",
+      "hash": "b7315d34c3dd",
+      "size": 568
     },
     {
       "id": "moon-combo",
       "path": "status-effects/moon-combo.json",
-      "hash": "6e6ba7e26ae1",
-      "size": 335
+      "hash": "fc071a39ff75",
+      "size": 385
     },
     {
       "id": "nen-banked",
       "path": "status-effects/nen-banked.json",
-      "hash": "bf3fd573bd7b",
-      "size": 263
+      "hash": "8cbd81f21d08",
+      "size": 331
     },
     {
       "id": "no-heal",
       "path": "status-effects/no-heal.json",
-      "hash": "6f4e3dc40db2",
-      "size": 360
+      "hash": "81abd405499e",
+      "size": 464
+    },
+    {
+      "id": "numbness",
+      "path": "status-effects/numbness.json",
+      "hash": "40c2562c82ae",
+      "size": 774
     },
     {
       "id": "omnislash-lock",
       "path": "status-effects/omnislash-lock.json",
-      "hash": "08f5686a6c60",
-      "size": 501
+      "hash": "186f4840d470",
+      "size": 657
     },
     {
       "id": "omnislash-perform",
       "path": "status-effects/omnislash-perform.json",
-      "hash": "871c9a9656fd",
-      "size": 603
+      "hash": "2674d2af08eb",
+      "size": 752
+    },
+    {
+      "id": "paralysis",
+      "path": "status-effects/paralysis.json",
+      "hash": "92ac23eff891",
+      "size": 720
+    },
+    {
+      "id": "rage",
+      "path": "status-effects/rage.json",
+      "hash": "96167a4c7f4b",
+      "size": 535
     },
     {
       "id": "root",
       "path": "status-effects/root.json",
-      "hash": "3795008df6d9",
-      "size": 155
+      "hash": "be09afe3aed8",
+      "size": 231
     },
     {
       "id": "slow25",
       "path": "status-effects/slow25.json",
-      "hash": "b12ba1186015",
-      "size": 179
+      "hash": "a7ffd23fed49",
+      "size": 272
     },
     {
       "id": "slow30",
       "path": "status-effects/slow30.json",
-      "hash": "4c6af68f7300",
-      "size": 179
+      "hash": "f99e76ea1ad9",
+      "size": 272
     },
     {
       "id": "slow40",
       "path": "status-effects/slow40.json",
-      "hash": "c46824562e6c",
-      "size": 179
+      "hash": "d5cfebaef43a",
+      "size": 272
+    },
+    {
+      "id": "stun",
+      "path": "status-effects/stun.json",
+      "hash": "f7a864f72d31",
+      "size": 624
+    },
+    {
+      "id": "trial-stun",
+      "path": "status-effects/trial-stun.json",
+      "hash": "7017babea3f3",
+      "size": 456
     }
   ]
 }

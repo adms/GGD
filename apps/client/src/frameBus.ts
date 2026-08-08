@@ -97,6 +97,19 @@ export interface CombatTextEntry {
   killingBlow: boolean;
   /** damage school; undefined for non-damage kinds (heal/mana/evade never set this) */
   dmgType?: "physical" | "magic" | "true";
+  /**
+   * 覆蓋掉 `combatTextLabel` 算出來的字（GH#278【具名標記】）。
+   *
+   * ⚠️ 為什麼是覆蓋而不是一個新的 category：標記的字是**內容決定的**
+   * （「試煉 ×11」——名字來自那份技能文件，數字來自事件），而 `ui/combatText` 的
+   * 每一個 category 都綁著一組出貨過的字級/色相/對比量測。為了一行動態文字新增
+   * 一個 category，等於把那整張量測表再攤一次，而它量的東西一個都沒變。
+   * 所以標記走既有的「無量值」通道（`kind: "evade"`），只把字換掉 ——
+   * 入場政策、同 tick 合併、每體上限、優先admission、多段錯開全部原封不動繼承。
+   *
+   * undefined = 照舊由 category + amount 決定（絕大多數的數字）。
+   */
+  label?: string;
   /** entity the number belongs to — drives the per-target cap and coalescing */
   targetId: number;
   /** admission priority, lower = kept (see combatText.worstEntryIndex) */
@@ -442,6 +455,7 @@ const combatTextPool: CombatTextEntry[] = Array.from({ length: MAX_COMBAT_TEXT }
   bornMs: 0,
   lifeMs: 0,
   pose: { sx: 0, sy: 0, visible: false },
+  label: undefined as string | undefined,
 }));
 
 export const frameBus: FrameBus = {
@@ -505,6 +519,8 @@ export interface CombatTextInput {
   nowMs: number;
   /** damage school — only meaningful when kind === "damage" */
   dmgType?: "physical" | "magic" | "true";
+  /** 覆蓋掉算出來的字（見 {@link CombatTextEntry.label}） */
+  label?: string;
 }
 
 /**
@@ -557,6 +573,12 @@ export function pushCombatText(input: CombatTextInput): void {
       // sides are `undefined` and this compares equal, so heal/mana coalescing
       // is untouched.
       if (e.dmgType !== input.dmgType) continue;
+      // …以及**同一行字**。標記的浮動文字借用 `evade` 這個 category（見
+      // `CombatTextEntry.label`），所以一次免死跟一次真的閃避在這裡長得一樣，
+      // 合併起來就會把「試煉 ×11」跟「閃避」揉成同一格 —— 而合併是把 amount
+      // 加起來，字卻是先到的那個，於是螢幕上只剩一個。兩邊都 undefined 時
+      // 這行比較相等，所有既有的合併行為原封不動。
+      if (e.label !== input.label) continue;
       if (now - e.bornMs > COALESCE_MS || now < e.bornMs) continue;
       e.amount += input.amount;
       e.worldX = input.worldX;
@@ -600,6 +622,9 @@ export function pushCombatText(input: CombatTextInput): void {
   entry.crit = input.crit;
   entry.killingBlow = input.killingBlow;
   entry.dmgType = input.dmgType;
+  // 一定要**每次**寫（含 undefined）—— 這是一個被重複認領的池格，漏掉這行的話
+  // 一個標記的「試煉 ×11」會黏在下一個接手這格的普通數字上。
+  entry.label = input.label;
   entry.targetId = input.targetId;
   entry.rank = style.rank;
   entry.lane = lane;
@@ -686,6 +711,52 @@ export function pushEvadeText(input: {
     worldX: input.worldX,
     worldZ: input.worldZ,
     nowMs: input.nowMs,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 【具名標記】的免死攔截 (GH#278)
+// ---------------------------------------------------------------------------
+
+/**
+ * 一次免死攔截浮在被救的那具身上：「試煉 ×11」。
+ *
+ * ⚠️ 這是玩家**唯一**知道剛才發生了什麼的通道。免死是在 sim 的傷害管線裡、
+ * 護盾之後扣血之前做掉的（`combat/lethalSave.ts`），沒有快照欄位、沒有
+ * `ENTITY_FLAG` 位元 —— 沒有這行字，一次成功的救活在螢幕上長得跟「那一發傷害
+ * 算錯了」一模一樣（`immune` / `taunt` 進 eventFanout 用的是同一個理由）。
+ *
+ * 跟 {@link pushEvadeText} 一樣刻意做成 `pushCombatText` 的薄轉接：入場政策、
+ * 同 tick 合併、每體上限、優先 admission、多段錯開、#164 那個漸層填色全部免費
+ * 繼承。差別只有一個 —— 字是內容給的，所以走 `label` 覆蓋。
+ *
+ * ⚠️ **已知限制（誠實寫下來）**：category 由 `combatTextCategory` 從關係推導，
+ * 而 `evade` 這個 kind 對「敵方身上」回 null。所以敵人免死時這行字不會畫。
+ * 那跟閃避的既有政策一致（別人的無量值事件不進你的畫面），但它是一個選擇，
+ * 不是疏漏 —— 要改的話是給標記自己一個 category，不是在這裡繞過去。
+ */
+export function pushMarkSaveText(input: {
+  /** 被救的那具身體 —— 字掛在它身上 */
+  target: number;
+  /** 已經解析成人看得懂的字（`ui/hud/markModel.markSaveText`） */
+  label: string;
+  worldX: number;
+  worldZ: number;
+  nowMs: number;
+}): void {
+  pushCombatText({
+    kind: "evade",
+    amount: 0,
+    sourceRel: "unknown",
+    targetRel: relationToLocal(input.target),
+    crit: false,
+    blocked: false,
+    killingBlow: false,
+    targetId: input.target,
+    worldX: input.worldX,
+    worldZ: input.worldZ,
+    nowMs: input.nowMs,
+    label: input.label,
   });
 }
 

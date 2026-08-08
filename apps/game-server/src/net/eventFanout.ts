@@ -409,6 +409,25 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // condition, i.e. rarer than a kill. The same `onInterval` caveat as 嘲弄 above
   // applies, with the same answer.
   "goldGrant",
+  // ── 具名標記（十二道試煉 · 風王結界 · 縮地）─────────────────────────────
+  //
+  // ⛔ 三顆都是 MANDATORY，而理由正是這張清單存在的理由：
+  // **標記完全不在 `MatchState` 上**。`SimWorld.marks` 是一張 sim 內部的 Map，
+  // 沒有 snapshot 欄位，也拿不到 `ENTITY_FLAG` 的位元 —— `ENTITY_FLAG_FREE_BITS`
+  // 已經是空的（`protocol/schema.ts:942`；CLAUDE.md 說「還剩兩格」是過期的，
+  // 見 GH#285），而 `defineTypes` 是 APPEND-ONLY，加錯回不去。
+  //
+  // 所以這三顆事件是「我還剩幾層」與「我剛剛免死了」**唯一**能到螢幕的通道。
+  // 少了它們，整套機制在伺服器上完美運作而玩家什麼都看不到 —— 那正是
+  // CLAUDE.md 失敗形態②（做了但從沒送到客戶端）的教科書形狀。
+  //
+  // CADENCE：`markChanged` 每次層數真的變動才發（安裝、消耗、回合重置、過期），
+  // 不是每 tick；十二道試煉整場最多 12 次消耗 + 1 次安裝。`lethalSaved` 嚴格
+  // 少於或等於它。`markInstallConflict` 只在同一個 markId 被兩支技能宣告時發，
+  // 出貨內容裡是零次 —— 它是一個**內容錯誤的告警**，不是遊戲事件。
+  "markChanged",
+  "lethalSaved",
+  "markInstallConflict",
 ]);
 
 /**
@@ -447,6 +466,24 @@ export const SERVER_ONLY_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // indistinguishable on the wire from one whose consumer silently no-ops.
   "recoveryBegin",
   "recoveryEnd",
+  // 切換型技能的開/關 (abilities/toggle.ts, 2026-08-08). Same rule as
+  // `recoveryBegin`/`recoveryEnd` directly above: no client handler exists yet,
+  // so opening the wire now buys nothing and hides the gap.
+  //
+  // ⚠️ BUT THIS ONE HAS AN EXTRA HALF, and whoever wires it must read this:
+  // a toggle is STATE, not a moment. It lives in `AbilitiesComp.toggles` and is
+  // in NO snapshot field, so a client that only learns the EDGE is wrong for
+  // every late join, reconnect and spectator switch — they arrive mid-toggle and
+  // see it off. Fanning these two out is therefore NOT sufficient wiring; the
+  // on/off state has to be replicated too. That is the expensive half:
+  // `defineTypes` is APPEND-ONLY and `ENTITY_FLAG_FREE_BITS` is empty (GH#285),
+  // so it needs a deliberate schema decision, not a spare bit.
+  //
+  // Zero content uses `ability@1.toggle` today (the Codex skill editor will emit
+  // the first ones), so nothing is invisible in game right now — the mechanism
+  // simply has no authored users yet.
+  "toggleEnter",
+  "toggleExit",
   // Guardian's last-hit buff expiring (GuardianSystem). The buff itself shows
   // through replicated stats; no cue was ever authored for its end.
   "guardianBuffExpire",

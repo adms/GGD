@@ -18,6 +18,7 @@ import {
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_KIND, formIndexFromFlags } from "@ggd/shared/protocol/schema";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
+import type { MarkView } from "../ui/hud/markModel";
 
 export interface OfferView {
   offerId: string;
@@ -414,6 +415,20 @@ export interface HudState {
    * 它要的正是「最後一則結算」，那是 `mobBoss`。
    */
   mobBossLive: MobBossView[];
+  /**
+   * 【具名標記】—— 本機英雄身上每一個標記的層數（GH#278）。
+   *
+   * ⚠️ 為什麼是事件驅動而不是快照欄位：標記**不在 `MatchState` 上**。
+   * `SimWorld.marks` 是一張 sim 內部的 Map，沒有 snapshot 欄位也沒有
+   * `ENTITY_FLAG` 位元（那組位元只剩兩格，而且 `defineTypes` 是 APPEND-ONLY，
+   * 加錯回不去）。所以 `markChanged` / `lethalSaved` 這兩顆事件是層數唯一能到
+   * 螢幕的通道 —— 這正是這個 repo 的第②種失敗（算出來但從沒送到客戶端）。
+   *
+   * 只收**自己**的：事件帶的是 ENTITY id，`recordMarkEvent` 拿它跟
+   * `localEntityId` 比對，跟 `killCombo` 用 seat 比對是同一條規矩。敵人剩幾層
+   * 試煉不是這一格要回答的問題。
+   */
+  marks: MarkView[];
 }
 
 /**
@@ -608,6 +623,7 @@ const initial: HudState = {
   mobsAlive: 0,
   mobBoss: null,
   mobBossLive: [],
+  marks: [],
 };
 
 let shopEventSeq = 0;
@@ -961,6 +977,74 @@ export function recordKillComboEvent(ev: EventMessage, nowMs: number = comboNowM
   hudStore.setState({
     killCombo: { count, atMs: nowMs, seq: (prev.killCombo?.seq ?? 0) + 1 },
   });
+}
+
+/* ── 【具名標記】(GH#278) ────────────────────────────────────────────────────
+ * owner 的規格：「初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層試煉…」
+ *
+ * 層數是 sim 決定的（`shared/sim/marks.ts` + `combat/lethalSave.ts`），這裡只做
+ * 事件 → store 的投影，理由跟 `recordKillComboEvent` 一模一樣：
+ * `architecture.test.ts`(client-08) 只准這一支檔案呼叫 zustand `setState`。
+ *
+ * 兩顆事件都收，而且它們**不重複**：
+ *   markChanged  `{ id, markId, count }`    —— 層數變了（進場發放 / 消耗 / 回合重置）
+ *   lethalSaved  `{ id, markId, remaining, spent, hp }` —— 剛剛靠它免死了
+ * 免死那一刻 `lethalSave.ts` 會**先**發 markChanged 再發 lethalSaved，所以第二顆
+ * 帶的 `remaining` 跟第一顆的 `count` 一致；這裡兩邊都讀，任一顆掉包了層數也對。
+ */
+
+/** 這顆事件是不是標記事件（GameApp 的 drain 用來省掉一次函式呼叫）。 */
+export function isMarkEvent(type: string): boolean {
+  return type === MARK_CHANGED_EVENT || type === LETHAL_SAVED_EVENT;
+}
+
+const MARK_CHANGED_EVENT = "markChanged";
+const LETHAL_SAVED_EVENT = "lethalSaved";
+
+/**
+ * PURE：這顆事件對**本機英雄**說了什麼，或 null（不是標記事件 / 不是我的 / 壞的）。
+ *
+ * 拆出來的理由跟 {@link localKillComboCount} 一樣 ——「別人的試煉不可以畫在我的
+ * HUD 上」要能被直接斷言，而不是繞過 store 去推論。
+ */
+export function localMarkUpdate(
+  ev: EventMessage,
+  localEntityId: number | null,
+): { markId: string; count: number; saved: boolean } | null {
+  if (!isMarkEvent(ev.type)) return null;
+  if (localEntityId === null) return null;
+  const id = ev.data.id;
+  if (typeof id !== "number" || id !== localEntityId) return null;
+  const markId = ev.data.markId;
+  if (typeof markId !== "string" || markId.length === 0) return null;
+  const saved = ev.type === LETHAL_SAVED_EVENT;
+  const raw = saved ? ev.data.remaining : ev.data.count;
+  if (typeof raw !== "number" || !Number.isFinite(raw) || raw < 0) return null;
+  return { markId, count: Math.trunc(raw), saved };
+}
+
+/** 記下一顆已 drain 的標記事件（由 GameApp 的事件 drain 呼叫）。 */
+export function recordMarkEvent(
+  ev: EventMessage,
+  localEntityId: number | null,
+  nowMs: number = comboNowMs(),
+): void {
+  const upd = localMarkUpdate(ev, localEntityId);
+  if (!upd) return;
+  const prev = hudStore.getState().marks;
+  const idx = prev.findIndex((m) => m.markId === upd.markId);
+  const old = idx >= 0 ? prev[idx]! : null;
+  const next: MarkView = {
+    markId: upd.markId,
+    count: upd.count,
+    seq: (old?.seq ?? 0) + 1,
+    // 免死的那一刻蓋上時戳；一般的層數變動保留舊時戳，讓閃動照自己的節奏退場。
+    savedAtMs: upd.saved ? nowMs : (old?.savedAtMs ?? null),
+  };
+  const marks = prev.slice();
+  if (idx >= 0) marks[idx] = next;
+  else marks.push(next);
+  hudStore.setState({ marks });
 }
 
 /* ── 殭屍王 (task #262 / GH #190) ───────────────────────────────────────────

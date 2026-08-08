@@ -27,6 +27,7 @@ import type { AbilityDef } from "../content/defs";
 import type { ModifierSource } from "../stats/modifiers";
 import { Abilities } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
+import { applyAugmentToHooks, collectAugmentOps } from "./abilityAugment";
 
 /** Stable, collision-free source id for one ability's passive. */
 export function abilityPassiveSourceId(abilityId: string): string {
@@ -127,9 +128,22 @@ function rankBlock(
   // so without this clause the source would never attach, `stealthSystem` would
   // never find a grant, and the whole feature would be dead content with every
   // test still green (failure form ②).
+  // 【跨技能強化】—— 持有者身上有沒有別的技能指名改寫**這一支**的數字
+  // （59-001 改 59-00 的門檻、77-002 改 77-02 的機率…）。
+  //
+  // ⭐ 位置是刻意的：就在 source 被組出來的前一刻，套在**這一份 clone** 上。
+  // 理由和 `whileForm` 形態閘完全相同 —— `syncAbilityPassives` 是 detach +
+  // attach，而它在升級 / EX 解鎖 / 變身時都會重跑，所以「學會強化技的那一刻
+  // 被強化的那支就變強」不需要第二條通知路徑。
+  // ⛔ 不可以就地改 `block.hooks`：那是註冊表裡的那一份，改下去會跨英雄、跨場次。
+  // ⚠️ 只有這一個 seam 接上了；主動施放路徑的落差寫在
+  //    `abilityAugment.ts` 檔頭與 `editorCapabilities` 的 caveat 裡。
+  const augmentOps = collectAugmentOps(world, id, def.id);
+  const hooks = applyAugmentToHooks(block.hooks, augmentOps);
+
   if (
     !block.modifiers?.length &&
-    !block.hooks?.length &&
+    !hooks?.length &&
     !block.auras?.length &&
     !block.vision &&
     // 飛行 is the THIRD payload with an empty `modifiers` array by design
@@ -137,17 +151,42 @@ function rankBlock(
     // same reason as `auras` and `vision`: without it the source never attaches,
     // `flightSystem` never finds a grant, and the whole feature is dead content
     // with every test still green (failure form ②).
-    !block.flight
+    !block.flight &&
+    // 格擋 is the FOURTH payload with an empty `modifiers` array by design, and
+    // the two docs that need it are BOTH 招牌被動 whose whole text is the block:
+    // 20-00 銀色甲胄 「有30%[機率][格擋]100%魔法([AP])傷害」 and 79-002 虛化.
+    // Same clause, same reason: without it the source never attaches,
+    // `blockCutFor` never finds a grant, and 「技能授予格擋」 is dead content
+    // with every test still green (failure form ②).
+    !block.block
   )
     return null;
   return {
     id: abilityPassiveSourceId(def.id),
     kind: "passive",
     ...(block.modifiers ? { modifiers: block.modifiers } : {}),
-    ...(block.hooks ? { hooks: block.hooks } : {}),
+    ...(hooks ? { hooks: hooks as typeof block.hooks } : {}),
     ...(block.auras ? { auras: block.auras } : {}),
     ...(block.vision ? { vision: block.vision } : {}),
     ...(block.flight ? { flight: block.flight } : {}),
+    // 格擋 rides the source untouched, exactly as `vision` / `flight` do —— 這是
+    // 「技能也能授予格擋」的**整條**接線,而不是第二套 block 邏輯。
+    // 讀它的只有 `combat/damage.ts` 的佇列抽乾迴圈(透過 `combat/block.ts::
+    // blockCutFor`),它走 `StatsComp.sources` 而**不看 `kind`**,所以一支技能
+    // 授予的格擋與 `economy/itemSource.ts` 寫進來的那一份走同一條鏈、同一組
+    // 型別過濾、同一個致死判定、同一個內部冷卻。⛔ 不要在 sim 裡為技能格擋開
+    // 第二條分支:那會變成「兩個可以各自為真的東西」。
+    //
+    // ⚠️ `internalCooldown` 的記帳(`ModifierSource.blockLastFired`)住在
+    // **source 上**,而 `syncAbilityPassives` 是 detach + attach —— 所以每一次
+    // 升級 / EX 解鎖 / 變身都會把這個來源的格擋冷卻**歸零**(那正是
+    // `economy/itemSource.ts::syncItemSources` 之所以改成 IN PLACE 的同一個
+    // 缺陷形態)。今天出貨的兩支技能格擋都**沒有** `internalCooldown`
+    // (20-00 與 79-002 的文案都只寫機率),所以這是**當下不可觀測**的;
+    // 一旦有人 author 了一支帶 ICD 的技能格擋,修法是把舊 source 的
+    // `blockLastFired` 在重新掛上時搬過去(純量,沒有索引可以錯位 ——
+    // 見 `stats/modifiers.ts` 對這一格的說明),不是在這裡加第二個時鐘。
+    ...(block.block ? { block: block.block } : {}),
   };
 }
 

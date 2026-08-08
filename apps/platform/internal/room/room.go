@@ -48,6 +48,81 @@ type Room struct {
 	// "unset" === ON (the owner's default-ON directive); only an explicit false
 	// disarms the mobs. Forwarded to the game server as *bool as well.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// MatchSettings are the #288 host-set pacing knobs. Embedded (JSON-inlined)
+	// so Room, Settings and gamelink.MatchRequest carry ONE declaration of the
+	// four fields — forwarding is `x.MatchSettings = y.MatchSettings`, which is
+	// what makes "forgot to forward the fourth field" structurally impossible.
+	MatchSettings
+}
+
+// MatchSettings are the four per-room 對局節奏 knobs the HOST may set (#288):
+// champ-select / shop / per-round seconds, plus the total round cap.
+//
+// EVERY FIELD IS A POINTER because "omitted" and "set to 0" are different
+// answers. `maxRounds: 0` is the host explicitly choosing 無上限; nil means the
+// host never touched the knob and the game server must fall back to the shipped
+// config.match@1 value — INCLUDING the 320s vs-bot champ select. Absent is never
+// a reset, the same guarantee RogueliteMobs above buys with its *bool.
+//
+// ⛔ THIS LAYER DELIBERATELY DOES NOT VALIDATE — it is a transparent pipe. Do
+// not "helpfully" add range checks here. The bounds live in exactly one place,
+// packages/shared/src/roomSettings.ts (ROOM_SETTING_LIMITS), and combatMaxSec's
+// real floor is DERIVED there from the shipped fire-ring config; Go can import
+// neither. Authoritative rejection happens once, in the game server (TS). A
+// second validation point is a second copy of the bounds, and the copy that
+// drifts will silently refuse settings the host is entitled to — while looking
+// exactly like a working system. Same call as #215's RogueliteMobs.
+type MatchSettings struct {
+	ChampSelectSec  *float64 `json:"champSelectSec,omitempty"`
+	IntermissionSec *float64 `json:"intermissionSec,omitempty"`
+	CombatMaxSec    *float64 `json:"combatMaxSec,omitempty"`
+	MaxRounds       *int     `json:"maxRounds,omitempty"`
+}
+
+// merge overlays only the knobs the caller actually sent. A nil field leaves the
+// live value alone, so a settings PATCH that changes just the room name can
+// never silently reset 每回合時間 back to the shipped default.
+func (m *MatchSettings) merge(in MatchSettings) {
+	if in.ChampSelectSec != nil {
+		m.ChampSelectSec = in.ChampSelectSec
+	}
+	if in.IntermissionSec != nil {
+		m.IntermissionSec = in.IntermissionSec
+	}
+	if in.CombatMaxSec != nil {
+		m.CombatMaxSec = in.CombatMaxSec
+	}
+	if in.MaxRounds != nil {
+		m.MaxRounds = in.MaxRounds
+	}
+}
+
+// redisFields adds the SET knobs to a room-hash write. A nil knob writes no key
+// at all — that absence is precisely what keeps "unset" distinguishable from
+// "0" on read-back (HGetAll yields no entry, versus the string "0").
+func (m MatchSettings) redisFields(fields map[string]any) {
+	if m.ChampSelectSec != nil {
+		fields["champSelectSec"] = floatToRedis(*m.ChampSelectSec)
+	}
+	if m.IntermissionSec != nil {
+		fields["intermissionSec"] = floatToRedis(*m.IntermissionSec)
+	}
+	if m.CombatMaxSec != nil {
+		fields["combatMaxSec"] = floatToRedis(*m.CombatMaxSec)
+	}
+	if m.MaxRounds != nil {
+		fields["maxRounds"] = strconv.Itoa(*m.MaxRounds)
+	}
+}
+
+// matchSettingsFromRedis reads the knobs back out of a room hash.
+func matchSettingsFromRedis(h map[string]string) MatchSettings {
+	return MatchSettings{
+		ChampSelectSec:  parseOptFloat(h, "champSelectSec"),
+		IntermissionSec: parseOptFloat(h, "intermissionSec"),
+		CombatMaxSec:    parseOptFloat(h, "combatMaxSec"),
+		MaxRounds:       parseOptInt(h, "maxRounds"),
+	}
 }
 
 // Settings are the host-editable knobs.
@@ -58,6 +133,8 @@ type Settings struct {
 	// Per-room 肉鴿殭屍模式 toggle (#215); nil = unchanged/ON (see Room). *bool so
 	// an omitted field on the wire never zero-values a live room to OFF.
 	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
+	// The #288 pacing knobs, same nil = unchanged rule (see MatchSettings).
+	MatchSettings
 }
 
 // Member is one room member with ready state. LocalPlayers (1..4) is how many
@@ -129,6 +206,9 @@ func (s *Service) Get(ctx context.Context, roomID string) (Room, error) {
 		// Absent field (old rooms, ON-by-default) → nil pointer → ON. "1"/"0"
 		// otherwise. Never zero-value to false on a missing key.
 		RogueliteMobs: parseOptBool(m, "rogueliteMobs"),
+		// Same rule for the #288 knobs: a missing key stays nil (host never set
+		// it) so the game server applies the shipped config.match@1 value.
+		MatchSettings: matchSettingsFromRedis(m),
 	}, nil
 }
 
@@ -143,6 +223,7 @@ func (s *Service) write(ctx context.Context, rm Room) error {
 	if rm.RogueliteMobs != nil {
 		fields["rogueliteMobs"] = boolToRedis(*rm.RogueliteMobs)
 	}
+	rm.MatchSettings.redisFields(fields)
 	return s.rdb.R.HSet(ctx, redisx.KeyRoom(rm.ID), fields).Err()
 }
 
@@ -162,6 +243,41 @@ func boolToRedis(b bool) string {
 		return "1"
 	}
 	return "0"
+}
+
+// parseOptFloat / parseOptInt are parseOptBool for the #288 numeric knobs: a
+// missing key is nil (unset → shipped default), never a zero-valued 0 — and 0
+// is a MEANINGFUL value here (maxRounds 0 = 無上限), so the two must not
+// collapse. An unparseable value is treated as unset for the same reason: a
+// corrupt hash must not read back as "the host chose zero".
+func parseOptFloat(m map[string]string, key string) *float64 {
+	v, ok := m[key]
+	if !ok {
+		return nil
+	}
+	f, err := strconv.ParseFloat(v, 64)
+	if err != nil {
+		return nil
+	}
+	return &f
+}
+
+func parseOptInt(m map[string]string, key string) *int {
+	v, ok := m[key]
+	if !ok {
+		return nil
+	}
+	n, err := strconv.Atoi(v)
+	if err != nil {
+		return nil
+	}
+	return &n
+}
+
+// floatToRedis writes the shortest round-tripping decimal, so 22.5 comes back
+// as 22.5 and 180 comes back as 180 rather than 1.8e+02.
+func floatToRedis(f float64) string {
+	return strconv.FormatFloat(f, 'f', -1, 64)
 }
 
 // Create makes a new open room hosted by actor, joins them, and lists it in the
@@ -187,6 +303,10 @@ func (s *Service) create(ctx context.Context, actor string, st Settings, listed 
 		// Pass the per-room toggle straight through: nil (unset) === ON, so both
 		// the solo/bot path (empty Settings) and a normal create default to mobs.
 		RogueliteMobs: st.RogueliteMobs,
+		// #288: whatever the host sent at create, verbatim. A fresh room has
+		// nothing to preserve, so this is a straight copy — every knob the host
+		// omitted stays nil and the game server uses the shipped value.
+		MatchSettings: st.MatchSettings,
 	}
 	if err := s.write(ctx, rm); err != nil {
 		return Room{}, err
@@ -446,6 +566,9 @@ func (s *Service) UpdateSettings(ctx context.Context, actor, roomID string, st S
 	if st.RogueliteMobs != nil {
 		rm.RogueliteMobs = st.RogueliteMobs
 	}
+	// #288: same rule for the pacing knobs — only the fields actually sent
+	// overwrite. (Also next-match: the game server freezes them at match start.)
+	rm.MatchSettings.merge(st.MatchSettings)
 	if err := s.write(ctx, rm); err != nil {
 		return Room{}, err
 	}

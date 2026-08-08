@@ -1,0 +1,16 @@
+{
+  "id": "armor-break",
+  "schema": "status-effect@1",
+  "name": "破甲",
+  "description": "甲被劈開一道口子，接下來每一下都是往那道口子裡打。破防的一種，對的是物理那一側。80-02 弒鬼神砸出這道口子，80-03 鬼神烈戟就是衝著它去的。防禦掉多少、掉多久，寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "armor-break",
+    "shred",
+    "resist-down",
+    "armor-down",
+    "stat-down",
+    "physical",
+    "debuff"
+  ]
+}

@@ -5,6 +5,15 @@
   "description": "被殺豬刀剁成一塊會呼吸的食材，站在原地無法動作。",
   "polarity": "debuff",
   "tags": [
-    "stun"
+    "ingredient",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "named-variant",
+    "debuff"
   ]
 }

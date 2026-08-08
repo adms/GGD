@@ -78,6 +78,35 @@ import { syncItemSources } from "../economy/itemSource";
 export const FORM_NEVER_EXPIRES = -1;
 
 /**
+ * 【變身唯一狀態】的碰撞規則 —— 完整契約寫在 `content/schema/champion.ts` 的
+ * `zTransformLink.reenter`，這裡是 sim 側的鏡子。
+ */
+export type FormReenterRule = "restart" | "keepLongest" | "reject";
+
+/**
+ * 缺省的碰撞規則。⛔ 這不是「我覺得 restart 比較好」，三個理由都是外部的：
+ *
+ * ① owner 的文案（15-02 疾風迅雷 / 15-03 獄炎煉我 / 15-04 雷天大壯，逐字
+ *    「([變身]為唯一狀態不可疊加)」）只說了**不可疊加**，沒說贏家的計時器從哪
+ *    裡算。沒說的那一半就是決策點，決策點要是欄位而不是這裡的一行（第一守則）。
+ * ② `restart` 就是 2026-08-08 之前**出貨的行為** —— `expiresTick` 本來就無條件
+ *    重算。把預設釘在現況上，26 對已上架的變身一對都不會改變行為，
+ *    所以這一批的風險只落在**主動選了另外兩個值**的文件上。
+ * ③ WC3 Metamorphosis 重施本來就是重新計時，與來源地圖一致。
+ */
+export const DEFAULT_FORM_REENTER: FormReenterRule = "restart";
+
+/**
+ * `castRejected.reason` for 「你已經在形態中，而這支英雄選了 `reject`」。
+ *
+ * 與 {@link FORM_REJECT_REASON} 分開，因為兩者要玩家做的事完全相反：`no-form`
+ * 是「這招對這支英雄沒有目的地」（永遠不會成功），`form-busy` 是「等它結束再按」
+ * （等一下就會成功）。共用一個字串會讓 HUD 永遠說不出正確的那一句。
+ * 客戶端還不認得它時走既有的 `GENERIC_REJECT` 退路，所以玩家今天仍有回饋。
+ */
+export const FORM_BUSY_REASON = "form-busy";
+
+/**
  * 變身 state — present EXACTLY while the entity is NOT in its base body.
  *
  * ABSENCE MEANS BASE FORM, and reverting DELETES the entry rather than setting
@@ -167,6 +196,33 @@ function destinationFor(
 }
 
 /**
+ * 這個實體的碰撞規則 —— 一律讀 **base 身體**那一份 doc。
+ *
+ * 為什麼不是讀「當前身體」：alternate 身體依 schema 的契約**不可獨立挑選**
+ * （`role: "alternate"`），玩家挑的、後台編輯的都是 base 那一份；而 base id 在
+ * 形態中仍然拿得到（`ChampionFormComp.baseId`）。schema 也記著一對的兩半帶
+ * **相同**的 w3x 事實，所以這個選擇不改變 26 對的答案 —— 它只是讓「該去改哪一
+ * 份文件」有唯一解，不會出現「改了 base 卻沒生效，因為碰撞發生在 alternate 上」。
+ */
+function reenterRuleFor(world: SimWorld, id: EntityId): FormReenterRule {
+  const baseId = world.championForm.get(id)?.baseId ?? world.champion.get(id)?.championId;
+  if (baseId === undefined) return DEFAULT_FORM_REENTER;
+  return Champions.tryGet(baseId)?.transform?.reenter ?? DEFAULT_FORM_REENTER;
+}
+
+/**
+ * 兩個 ABSOLUTE tick 到期，哪一個比較晚。
+ *
+ * ⚠️ `FORM_NEVER_EXPIRES` 必須**特判**：它是 -1，直接丟進大小比較會變成「最早
+ * 到期」，於是 `keepLongest` 會把一個永不到期的切換（風王結界 / 紮根）靜默降級
+ * 成立刻過期 —— 正好是它要防的那種靜默削弱，方向還反了。
+ */
+function laterExpiry(a: number, b: number): number {
+  if (a === FORM_NEVER_EXPIRES || b === FORM_NEVER_EXPIRES) return FORM_NEVER_EXPIRES;
+  return a > b ? a : b;
+}
+
+/**
  * THE ONLY writer of a champion's body. Writes BOTH id copies (see the module
  * header) and marks the stat cache dirty so the next `statRecomputeSystem` pass
  * rebuilds the base stats from the new doc.
@@ -250,11 +306,36 @@ export function applyChampionForm(
     });
     return false;
   }
-  const baseId = world.championForm.get(id)?.baseId ?? world.champion.get(id)!.championId;
-  const expiresTick =
+  const current = world.championForm.get(id);
+  const baseId = current?.baseId ?? world.champion.get(id)!.championId;
+  let expiresTick =
     dest.nextIndex === 0 || durationSec === undefined
       ? FORM_NEVER_EXPIRES
       : world.tick + Math.round(durationSec / world.dt);
+
+  // 【變身唯一狀態】的碰撞 —— 已經在形態中，又被要求進入形態。
+  //
+  // ⚠️ 互斥本身**不是這一段在做的**，而且不需要任何程式：`world.championForm`
+  // 一個實體只有一格，而身體只有一個 `championId`（`setBody` 是唯一的寫入者），
+  // 所以第二個形態在結構上不可能與第一個並存 —— 沒有一支技能需要自己檢查
+  // 「我是不是已經變身了」。守衛：`sim/championFormExclusive.test.ts`。
+  //
+  // 這一段補的是互斥**必然**帶來、而 owner 文案沒說的那個決策：贏家的計時器
+  // 從哪裡算。2026-08-08 之前它被寫死成 restart，代價是一個 1 秒的形態可以把一
+  // 個還剩 59 秒的形態砍成 1 秒，而畫面上兩者長得一模一樣。
+  if (current !== undefined && dest.nextIndex === 1) {
+    const rule = reenterRuleFor(world, id);
+    if (rule === "reject") {
+      world.emit("castRejected", {
+        entity: id,
+        slot: from.slot,
+        reason: FORM_BUSY_REASON,
+        origin: from.origin,
+      });
+      return false;
+    }
+    if (rule === "keepLongest") expiresTick = laterExpiry(current.expiresTick, expiresTick);
+  }
   setBody(world, id, dest.nextId, dest.nextIndex, baseId, expiresTick);
   return true;
 }

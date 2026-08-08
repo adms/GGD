@@ -13,8 +13,21 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
     const { world } = ctx;
     const expiresAtTick = world.tick + Math.round(e.duration / world.dt);
     // hard/soft CC (stun/root/slow) applied to an enemy scores ccAppliedTicks
+    //
+    // ⭐ 恐懼**算** CC，而它上面那位鄰居 `berserk` 刻意不算 —— 兩者的差別不是
+    // 「有多硬」，是**誰授權的**（`sim/fear.ts` 決策 3）：
+    //   · 暴走是自我增益帶 downside，所以一個魔免 buff 不該讓初號機自己的暴走
+    //     落不到自己身上；
+    //   · 恐懼是**敵人塞過來的**純減益，而且比同一行裡已經算 CC 的
+    //     `moveSpeedMult < 1` 更徹底地拿走控制權。免控擋得掉 30% 減速卻擋不掉
+    //     「這 3 秒你不能操作」，那個組合對玩家無法解釋。
+    // 加在這一行（而不是四個 CC 讀取點）換到兩件事：免控會拒絕**掛上**並發
+    // `immuneControl` 讓玩家看見，而且恐懼的時間會進 `ccAppliedTicks` 戰績。
     const isCc =
-      e.stun === true || e.root === true || (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1);
+      e.stun === true ||
+      e.root === true ||
+      e.feared === true ||
+      (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1);
     // `applyTo: "self"` is the COMBO-WINDOW form: the marker belongs on the
     // caster even though the ability's own targeting resolved enemies (07-02
     // 者、皆、陣 is unit-targeted and still sets udg_MoonCombo, j:34438).
@@ -62,6 +75,9 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 暴走 (59-00). 它跟著 status 一起到期,所以「永久失去方向盤」在結構上
           // 不可能發生 —— 見 components.ts 的 `StatusEffect.berserk`。
           berserk: e.berserk,
+          // 恐懼 —— 暴走的鏡像（`sim/fear.ts`）。同樣跟著 status 到期,所以
+          // 「永久嚇到不能玩」在結構上不可能發生。
+          feared: e.feared,
           // 增益還是減益 —— A4b(#278) 把這條線接上。
           // ⛔ 不從 `moveSpeedMult` 之類的欄位猜:1.3 的加速與 0.7 的減速在結構上
           // 一模一樣。答案住在 `status-effect@1` 文件裡(14/14 都填了),

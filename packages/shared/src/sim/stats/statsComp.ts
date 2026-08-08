@@ -97,6 +97,31 @@ export interface AttackWindup {
   ticksLeft: number;
 }
 
+/**
+ * 一顆**開著的**【切換】技（20-01 風王結界 · 70-00 紮根）。
+ *
+ * 語意與四個決策欄位住在 `content/schema/ability.ts` 的 `zAbilityToggle`；
+ * 這裡只有執行期需要記住的三件事。⛔ 不要把 `upkeepCost` 之類的**數值**複製
+ * 進來 —— rank 在這裡，成本每次現讀 `def.toggle`，所以後台改了數字，
+ * 已經開著的那一顆下一次扣款就吃到新值（同 `combatEnv` 的讀法）。
+ *
+ * ⚠️ 陣列而不是 `Record<slot, …>`：`sim/purity.test.ts` 禁止依賴 Map/物件的
+ * 迭代順序，而這一串每 tick 都會被走一遍。陣列的順序是插入順序，
+ * 插入順序由確定性的施法序列決定。
+ */
+export interface ToggleState {
+  /** 哪一顆按鈕（Q/W/E/R/EX/天生技都可能是切換技）。 */
+  slot: CastableSlot;
+  /** 開的時候是哪一支技能 —— 變身換了技能表也追得回來。 */
+  abilityId: AbilityId;
+  /**
+   * `upkeepCadence: "perSecond"` 的下一次扣款時刻，**絕對 tick**。
+   * ⛔ 硬約束：到期一律用絕對 tick，不是遞減計數器（CLAUDE.md）。
+   * 其他節奏下這一格不被讀。
+   */
+  nextUpkeepTick: number;
+}
+
 export interface AbilitiesComp {
   slots: Record<CoreAbilitySlot, AbilityInstance>;
   /**
@@ -141,4 +166,12 @@ export interface AbilitiesComp {
    * because the hit cancels it.
    */
   recovery?: RecoveryState | null;
+  /**
+   * 目前**開著的**【切換】技。缺席／空陣列 = 這個身體身上沒有任何切換技開著，
+   * 也就是每一個 2026-08-08 之前的世界 —— `toggleUpkeepSystem` 在空陣列上是
+   * 嚴格 no-op，所以既有錄影逐位元不變。
+   *
+   * 見 {@link ToggleState} 與 `sim/abilities/toggle.ts`。
+   */
+  toggles?: ToggleState[];
 }

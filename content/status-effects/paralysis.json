@@ -1,0 +1,14 @@
+{
+  "id": "paralysis",
+  "schema": "status-effect@1",
+  "name": "癱瘓",
+  "description": "神經斷了線，身體整個不聽使喚。⚠️ 它到底擋住哪幾格（走不走得動、打不打得出手、放不放得出技能）**不在這個標記上** —— 那由施加它的那支技能的 applyStatus 決定，stun 與 root 是兩個不同的旗標，玩家體感完全不同。這份文件只負責身分：名字、極性、分類。89-02 憤怒的菊花 反彈時對周圍敵人灑的就是它，同一下還附帶【詛咒】。持續多久同樣寫在施加它的那張卡上。",
+  "polarity": "debuff",
+  "tags": [
+    "paralysis",
+    "disable",
+    "cc",
+    "mechanism-on-card",
+    "debuff"
+  ]
+}

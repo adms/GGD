@@ -1,41 +1,48 @@
 /**
- * `onReflect` DISPATCH —— 「反彈成功時」（owner 2026-08-05：「onReflect／反彈成功時
- * 這個也要」）。
+ * `onReflectSuccess` DISPATCH —— 「反彈成功時」（owner 2026-08-05：「onReflect／
+ * 反彈成功時 這個也要」；2026-08-08 更名並補上 provenance）。
  *
  * ─────────────────────────────────────────────────────────────────────────────
- * 為什麼是一個系統，而不是在 `effects/damage.ts` 裡直接 `fireHooks`
+ * 為什麼是一個系統，而不是在封包解算處直接 `fireHooks`
  *
- * 那個 import 會關上一個環：
+ * 兩個理由，而且**只有第二個在 2026-08-08 之後還成立**：
  *
- *     effects/damage → effects/hooks → effectRunner → effectRegistry → effects/damage
+ * ① （歷史）事件本來是在 `effects/damage.ts` 排出反彈封包的那一行發的，而那個檔
+ *    直接 import `fireHooks` 會關上一個環：
  *
- * `effectRegistry.ts` 的檔頭自己指名這個危害，並且說它**不是**編譯錯誤（沒有），
- * 而是某個打包順序下一個執行期 `undefined` 的 handler —— 也就是整張效果表在某一份
- * build 裡靜默消失。所以 `effects/damage.ts` 只做一件不需要 import 任何東西的事
- *（往 `world.pendingReflectHooks` push 一筆），由這裡把它變成 hook。
+ *        effects/damage → effects/hooks → effectRunner → effectRegistry → effects/damage
  *
- * ⚠️ 這一段推導是逐字照抄 `CcHookSystem.ts` 的，因為它是**同一個**危害。
+ *    `effectRegistry.ts` 的檔頭自己指名這個危害，而且說它**不是**編譯錯誤 ——
+ *    是某個打包順序下一個執行期 `undefined` 的 handler，也就是整張效果表在某一份
+ *    build 裡靜默消失。發射點搬走之後這一條不再適用（`combat/damage.ts` 本來就
+ *    import 得起 `fireHooks`），但留著，因為它解釋了這個檔為什麼長這樣。
+ *
+ * ② **排序與終止性**，這一條今天仍然是它存在的理由：
+ *    · 跑在 `deathSystem` **之前** → 一個被同一發封包打死的人不會「死後才反彈」；
+ *    · 跑在 `combatResolveSystem` 的排空迴圈**之外** → hook 排出來的傷害進的是
+ *      **下一個 tick** 的佇列，不是正在走的那一批 pass。A 反彈 B、B 的 hook 又
+ *      打 A、A 再反彈…… 這條鏈因此每 tick 只推進一步，而不是在一個 tick 裡遞迴。
+ *
+ * ⚠️ ①那一段推導是逐字照抄 `CcHookSystem.ts` 的，因為它是**同一個**危害。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 「反彈成功」的定義，以及為什麼要窄
  *
- * 只有**一發反彈封包真的被排進 `damageQueue`** 才算。`incomingPct` 有三道閘會讓
- * 反彈整條不發生：
+ * 只有**一發 `reflectDepth > 0` 的封包真的落地**才算。兩層閘，兩層都是既有的
+ * 程式碼，這個檔裡**沒有**第二套判斷：
  *
- *   ① 沒有觸發封包（`ctx.incoming === undefined`）—— 這一發不是被打出來的
- *   ② `reflectDepth > maxChainDepth` —— 反彈鏈到底了
- *   ③ 排空預算來不及，而 `whenTooLate` 是 `"drop"`（出貨預設）
+ *   Ⅰ 封包生得出來 —— `effects/damage.ts` 的 `incomingPct` 四道：
+ *     ① 沒有觸發封包（`ctx.incoming === undefined`）—— 這一發不是被打出來的
+ *     ② `reflectDepth > maxChainDepth` —— 反彈鏈到底了
+ *     ③ 排空預算來不及，而 `whenTooLate` 是 `"drop"`（出貨預設）
+ *     ④ **反彈量 ≤ 0 不發封包** —— 原傷害被完全擋下時就是這一道。
+ *        ⭐ 「什麼算 0」是作者的 `incomingPct.basis`（raw / mitigated / hpLost）
+ *        決定的，所以那個決策點**早就是一個欄位**，不需要在這裡再開一個。
  *
- * 三種都**不算成功**。一個在「其實沒反彈到」時照樣觸發的 `onReflect`，會讓
- * 「反彈時回血」實際上變成「被打時回血」—— 那是另一支技能，而畫面上看不出差別。
+ *   Ⅱ 封包真的解算了 —— 目標活著、沒有無敵免疫、沒有被技能迴避擋掉。
  *
- * ─────────────────────────────────────────────────────────────────────────────
- * 它在 tick 裡的位置
- *
- * 緊接在 `ccHookSystem`（8a）之後、`deathSystem` 之前 —— 與 `onStunned` 同一格的
- * 理由：反彈封包是在 `combatResolveSystem`（步驟 8）的排空迴圈裡生出來的，所以
- * 那是一個 tick 裡最早「每一發反彈都已經發生過」的點。放在 `deathSystem` 之後會
- * 讓一個在同一 tick 被打死的人「死後才反彈」。
+ * 全部都不算成功。一個在「其實沒反彈到」時照樣觸發的事件，會讓「反彈時回血」
+ * 實際上變成「被打時回血」—— 那是另一支技能，而畫面上看不出差別。
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * 決定性
@@ -61,6 +68,10 @@ export function reflectHookSystem(world: SimWorld): void {
     // 打死的人仍然是 `alive`，否則他會在死掉的那一 tick 觸發反彈 hook。
     const hp = world.health.get(ev.reflector);
     if (hp && !hp.alive) continue;
-    fireHooks(world, ev.reflector, "onReflect", ev.victim);
+    // ⭐ 第六個參數 = **反彈傷害的 provenance**。少了它，`onReflectSuccess` 的
+    // 效果裡的 `damage.incomingPct` 會走 `ctx.incoming === undefined` 那個
+    // early-return，於是 20-002「每次造成 7 倍[反彈]傷害」整條靜默變成 0 ——
+    // 一個做了但玩家拿不到的功能（失敗形態 ②）。
+    fireHooks(world, ev.reflector, "onReflectSuccess", ev.attacker, undefined, ev.incoming);
   }
 }

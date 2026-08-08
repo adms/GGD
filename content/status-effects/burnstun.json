@@ -5,6 +5,16 @@
   "description": "Stunned by the firestorm.",
   "polarity": "debuff",
   "tags": [
-    "stun"
+    "burnstun",
+    "stun",
+    "hard-cc",
+    "cc",
+    "disable",
+    "move-denied",
+    "attack-denied",
+    "cast-denied",
+    "named-variant",
+    "fire",
+    "debuff"
   ]
 }

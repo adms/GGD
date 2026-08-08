@@ -39,8 +39,27 @@ export const zParamUnit = z.enum(["wc3u", "wc3h", "s", "count", "ratio"]);
  * than a family-specific field so that any behaviour family that grows a gate
  * (proc families first, but 受擊反應 / 週期力場 next) declares it the same way
  * and gets the same dropdown editor for free.
+ *
+ * ⭐ `docRef` (owner 2026-08-08 「都可以任意替換設定為 **[技能編號/buff/debuff
+ * 狀態]**」) is「另一份文件的編號」—— 一個 {@link zId} 格式的自由字串, **不是**
+ * `enum`。差別是決定性的:
+ *   · `enum` 只能挑作者當初列進 `values` 的那幾個 —— 具名標記家族用 enum 就會
+ *     退化成 `CC_MECHANIC` 那張白名單, 而 owner 要的正是「任意」;
+ *   · `zRef(collection)` 又綁死**單一** collection, 而一個標記的身分可能來自
+ *     `abilities`(`godie-hapm.passive`) **或** `status-effects`(`berserk`)。
+ *     同一個取捨與理由已經在 `schema/mark.ts` 檔頭①推導過一次, 這裡逐字適用。
+ * 所以它驗**格式**不驗**存在**: 打錯大小寫或塞進一個句子會被擋下, 指到一份還
+ * 沒寫的文件則放行(標記的機制不依賴那份文件, 只有顯示依賴它)。
+ * ⚠️ 多 collection 的 ref 哪天做出來了, 這一格就該換過去。
  */
-export const zParamType = z.enum(["number", "enum", "scaling", "statModifiers", "condition"]);
+export const zParamType = z.enum([
+  "number",
+  "enum",
+  "scaling",
+  "statModifiers",
+  "condition",
+  "docRef",
+]);
 
 /**
  * One parameter slot. `type` selects how the expander reads it and how the
@@ -49,6 +68,7 @@ export const zParamType = z.enum(["number", "enum", "scaling", "statModifiers", 
  *   enum          → EnumSelect over `values`, value is one of them
  *   scaling       → the shared zScaling card, value validated at fill time
  *   statModifiers → z.array(zStatModifier), value validated at fill time
+ *   docRef        → a plain text field holding another doc's id (格式驗證, 見上)
  * `default` is the exemplar's MEASURED value (never invented). `optional: true`
  * marks a slot the ability may omit (radius/terminalBurst/internalCooldown…).
  */
