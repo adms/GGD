@@ -344,9 +344,11 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "計畫點名的兩格都在：`perMana` 就是 damage-to-MP ratio，remainder 由函式回傳" +
       "（抵不完的部分原封不動往下走進 免死 → 血條）。三個決策點都是欄位" +
       "（`perMana` / `damageTypes` **必填明列** / `minManaReserve`）。" +
-      "⛔ 但**接線還沒接**：它要 `combat/damage.ts` 的佇列排空迴圈呼叫一次（護盾池之後、免死之前），" +
-      "而那支檔案不屬於這一路 —— 在那一行進去之前，44-00 掛得上但擋不了任何傷害。" +
-      "要插的那一行與確切位置寫在 `sim/effects/manaBarrier.ts` 檔頭②。",
+      "接線**已經接上**（`combat/damage.ts`，護盾池之後、免死之前）—— 44-00 掛上去就會擋。" +
+      "⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「接線還沒接」，那是寫在接線落地**之前**的；" +
+      "留這句話在這裡是因為它示範了這份清單最危險的失效方式：" +
+      "守衛只檢查 caveat 是不是空字串，**從不讀它的內容**，所以一句過期的散文可以把" +
+      "一個已經可用的機制擋在門外，而且什麼都不會紅（見檔頭③與 GH#291 的同型）。",
     evidence: "packages/shared/src/sim/effects/manaBarrier.ts + lane2Kinds.test.ts",
   },
   {
@@ -383,9 +385,9 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "一次施放固定花 `2 × count` 次 `world.rng.next()`，**全部在施法那一刻抽完** —— " +
       "所以「這一波抽了幾次」不受場上人數、也不受它有沒有被打斷影響。" +
       "到期是**絕對 tick**；方形→圓形用 elliptical grid mapping（`sim/**` 禁三角函式）。" +
-      "⛔ 但**接線還沒接**：`randomAreaSystem` 要被掛進 `SimWorld.step()` 的 7c″" +
-      "（`intervalHookSystem` 之後、`combatResolveSystem` 之前），而 `SimWorld.ts` 不屬於這一路 —— " +
-      "在那一行進去之前，13-04 / 70-04 排得出來但不會落地。見 `sim/effects/randomArea.ts` 檔頭④。" +
+      "接線**已經接上**：`randomAreaSystem` 掛在 `SimWorld.step()` 的 slot 7e" +
+      "（`combatResolveSystem` 之前），13-04 / 70-04 排得出來也落得下去。" +
+      "（同 `effect.mana-barrier@1`：這一句 2026-08-08 當天曾寫著「接線還沒接」而接線就在那裡。）" +
       "⚠️ `content/templates/expand.ts` 的 `random-barrage` 那 8 張卡**仍然走 `dot`**，" +
       "遷移到這個 kind 是獨立的一批。",
     evidence:
@@ -683,7 +685,58 @@ export interface RuntimeCapabilityManifest {
   }[];
   /** ⛔ 編輯器**不可以**產出用到這些的內容 —— 遊戲端會回 `unsupported-runtime`。 */
   readonly unsupported: readonly string[];
+  /**
+   * ⛔ **枚舉裡有、schema 收得下、但今天在出貨路徑上是壞的。**
+   *
+   * ── 為什麼這一格非有不可 ───────────────────────────────────────────────
+   * 上面的 `effectKinds` / `hookEvents` / `conditionLeafKinds` 都是從出貨的
+   * 註冊表**推導**的，所以它們回答的是「這個名字存不存在」。那是一個**名詞**問題。
+   * 而「這個 hook 真的會發嗎」是一個**關係**問題（發射點 × 過濾閘），
+   * 而 CLAUDE.md 的部署教訓正是：只驗名詞的檢查在相容性故障面前**必然是綠的**。
+   *
+   * 2026-08-08 的對抗複驗實測到兩個活例，兩個都會讓對方做出「上線就是死的」內容：
+   *   · `onDeath` —— `DeathSystem` 先寫 `alive=false` 才 emit，而 `fireHooks`
+   *     開頭就擋死人 → 出貨路徑上一次都不會發（GH#293）。
+   *   · `onRevive` —— 廣播表對復活圈那條路取到圈圈的 entity id 而不是英雄（GH#294）。
+   *
+   * ⚠️ 它們不在 `unsupported` 裡是刻意的：`unsupported` 的語意是「遊戲端會**回報**
+   * `unsupported-runtime`」，而這兩個會被**安靜地收下**。那是更危險的一類，
+   * 所以要有自己的欄位，不能混進去。
+   *
+   * 每一筆都要帶 issue 編號 —— 沒有 issue 的「已知壞掉」只是另一句會過期的散文。
+   */
+  readonly knownBroken: readonly { token: string; what: string; issue: string }[];
 }
+
+/**
+ * {@link RuntimeCapabilityManifest.knownBroken} 的內容。
+ *
+ * ⛔ 這一份**必須手寫** —— 沒有辦法從註冊表推導出「它會不會真的發」，
+ * 那正是它存在的理由。代價是它會過期，所以每一筆的 issue 關掉時要回來刪。
+ */
+export const KNOWN_BROKEN: readonly { token: string; what: string; issue: string }[] = [
+  {
+    token: "hook:onDeath",
+    what:
+      "出貨路徑上一次都不會發：DeathSystem 先寫 hp.alive=false 才 emit(\"death\")，" +
+      "而 fireHooks 第三行就擋掉死掉的持有者。⛔ 不要用它設計任何「死亡時 ⋯」的內容。",
+    issue: "GH#293",
+  },
+  {
+    token: "hook:onRevive",
+    what:
+      "只有 `revive` effect kind 那條路會發（全庫 1 份）。實戰唯一的復活路徑（復活圈）" +
+      "取到的是圈圈的 entity id 而不是英雄，所以打空。",
+    issue: "GH#294",
+  },
+  {
+    token: "effect:dispel.pools.buffs",
+    what:
+      "勾了一筆都拔不掉：出貨 buffDefaultDispellable=false，而**沒有任何 authoring 欄位**" +
+      "可以把一個來源標成 dispellable。status / dot 兩池是真的通的，buffs 與 shields 不是。",
+    issue: "GH#295",
+  },
+];
 
 /**
  * 走一棵 Zod union 收集每個分支的 `kind` 字面量。
@@ -788,6 +841,8 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       ...hookFields,
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
+      // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
+      ...KNOWN_BROKEN.map((b) => `broken:${b.token}=${b.issue}`),
     ]),
     effectKinds,
     hookEvents,
@@ -799,6 +854,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     unsupported: PLANNED_CAPABILITIES.filter((e) => e.expected === "unsupported")
       .map((e) => e.key)
       .sort(),
+    knownBroken: KNOWN_BROKEN,
   };
 }
 

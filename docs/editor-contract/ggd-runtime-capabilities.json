@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "17f97fa4",
+  "fingerprint": "e6843214",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -198,7 +198,7 @@
       "key": "defense.mana-barrier@1",
       "plan": "§12 G4",
       "state": "partial",
-      "caveat": "primitive 已出貨（`manaBarrier`）：`manaBarrierCutFor` 在**扣血之前**把傷害換成扣魔 —— ⛔ 不是受傷後補護盾，魔力真的被扣、期間回的魔力真的會變成新的抵擋量。計畫點名的兩格都在：`perMana` 就是 damage-to-MP ratio，remainder 由函式回傳（抵不完的部分原封不動往下走進 免死 → 血條）。三個決策點都是欄位（`perMana` / `damageTypes` **必填明列** / `minManaReserve`）。⛔ 但**接線還沒接**：它要 `combat/damage.ts` 的佇列排空迴圈呼叫一次（護盾池之後、免死之前），而那支檔案不屬於這一路 —— 在那一行進去之前，44-00 掛得上但擋不了任何傷害。要插的那一行與確切位置寫在 `sim/effects/manaBarrier.ts` 檔頭②。",
+      "caveat": "primitive 已出貨（`manaBarrier`）：`manaBarrierCutFor` 在**扣血之前**把傷害換成扣魔 —— ⛔ 不是受傷後補護盾，魔力真的被扣、期間回的魔力真的會變成新的抵擋量。計畫點名的兩格都在：`perMana` 就是 damage-to-MP ratio，remainder 由函式回傳（抵不完的部分原封不動往下走進 免死 → 血條）。三個決策點都是欄位（`perMana` / `damageTypes` **必填明列** / `minManaReserve`）。接線**已經接上**（`combat/damage.ts`，護盾池之後、免死之前）—— 44-00 掛上去就會擋。⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「接線還沒接」，那是寫在接線落地**之前**的；留這句話在這裡是因為它示範了這份清單最危險的失效方式：守衛只檢查 caveat 是不是空字串，**從不讀它的內容**，所以一句過期的散文可以把一個已經可用的機制擋在門外，而且什麼都不會紅（見檔頭③與 GH#291 的同型）。",
       "evidence": "packages/shared/src/sim/effects/manaBarrier.ts + lane2Kinds.test.ts",
       "nearestExisting": "（2026-08-08 起不再適用 —— 這一格留著是為了說明**為什麼**那兩件零件不算數。）`shield`（`shield.absorbs` 能吸收指定型別的傷害）加上 `spendMana`（20-01 風王結界每擊扣魔）擺在一起**看起來**像魔力護盾，⛔ 但沒有任何東西把**傷害導進魔力池**。"
     },
@@ -213,7 +213,7 @@
       "key": "scheduler.random-area@1",
       "plan": "§12 G4",
       "state": "partial",
-      "caveat": "排程器已出貨（`randomArea`），而且 §13 要的 draw 預算模型是**明確**的：一次施放固定花 `2 × count` 次 `world.rng.next()`，**全部在施法那一刻抽完** —— 所以「這一波抽了幾次」不受場上人數、也不受它有沒有被打斷影響。到期是**絕對 tick**；方形→圓形用 elliptical grid mapping（`sim/**` 禁三角函式）。⛔ 但**接線還沒接**：`randomAreaSystem` 要被掛進 `SimWorld.step()` 的 7c″（`intervalHookSystem` 之後、`combatResolveSystem` 之前），而 `SimWorld.ts` 不屬於這一路 —— 在那一行進去之前，13-04 / 70-04 排得出來但不會落地。見 `sim/effects/randomArea.ts` 檔頭④。⚠️ `content/templates/expand.ts` 的 `random-barrage` 那 8 張卡**仍然走 `dot`**，遷移到這個 kind 是獨立的一批。",
+      "caveat": "排程器已出貨（`randomArea`），而且 §13 要的 draw 預算模型是**明確**的：一次施放固定花 `2 × count` 次 `world.rng.next()`，**全部在施法那一刻抽完** —— 所以「這一波抽了幾次」不受場上人數、也不受它有沒有被打斷影響。到期是**絕對 tick**；方形→圓形用 elliptical grid mapping（`sim/**` 禁三角函式）。接線**已經接上**：`randomAreaSystem` 掛在 `SimWorld.step()` 的 slot 7e（`combatResolveSystem` 之前），13-04 / 70-04 排得出來也落得下去。（同 `effect.mana-barrier@1`：這一句 2026-08-08 當天曾寫著「接線還沒接」而接線就在那裡。）⚠️ `content/templates/expand.ts` 的 `random-barrage` 那 8 張卡**仍然走 `dot`**，遷移到這個 kind 是獨立的一批。",
       "evidence": "packages/shared/src/sim/effects/randomArea.ts + lane2Kinds.test.ts（draw 預算做過突變驗證）",
       "nearestExisting": "三個零件各有一半：`damageArea` / `shapeTargets` 的 `circle`（**一個**圓的落點與命中）、`dot` 與 hook 的 `internalCooldown`（**節奏**：每 N 秒一次）、`weightedBranch`（**一次** `world.rng` 抽樣的正確做法）。⛔ 不算數的理由是沒有把三者接起來的排程器：「count=10、interval=0.2s、每一發自己抽落點」沒有形狀，而更關鍵的是**沒有 draw 預算模型** —— 誰在哪一 tick 抽第幾次沒有定義，replay 就重現不出同一組落點（計畫 §13）。（2026-08-08 起不再適用 —— 留著是為了說明那三件零件為什麼不算數。）"
     },
@@ -329,5 +329,22 @@
     "effect.dash-on-end@1",
     "effect.target-set-chain@1",
     "hook.consume-policy@1"
+  ],
+  "knownBroken": [
+    {
+      "token": "hook:onDeath",
+      "what": "出貨路徑上一次都不會發：DeathSystem 先寫 hp.alive=false 才 emit(\"death\")，而 fireHooks 第三行就擋掉死掉的持有者。⛔ 不要用它設計任何「死亡時 ⋯」的內容。",
+      "issue": "GH#293"
+    },
+    {
+      "token": "hook:onRevive",
+      "what": "只有 `revive` effect kind 那條路會發（全庫 1 份）。實戰唯一的復活路徑（復活圈）取到的是圈圈的 entity id 而不是英雄，所以打空。",
+      "issue": "GH#294"
+    },
+    {
+      "token": "effect:dispel.pools.buffs",
+      "what": "勾了一筆都拔不掉：出貨 buffDefaultDispellable=false，而**沒有任何 authoring 欄位**可以把一個來源標成 dispellable。status / dot 兩池是真的通的，buffs 與 shields 不是。",
+      "issue": "GH#295"
+    }
   ]
 }

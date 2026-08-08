@@ -99,6 +99,29 @@ describe("ggd-runtime-capabilities@1 —— 對外契約不可能過期", () => 
     expect(shipped.size).toBeGreaterThan(0);
   });
 
+  /**
+   * ⭐ `knownBroken` 是這份清單裡**唯一手寫**的一格（「它會不會真的發」推導不出來）。
+   * 手寫的代價是它會過期，所以這一條把兩個方向都釘住：
+   *  ① token 必須真的存在於推導事實裡 —— 指到一個已經被刪掉的名字 = 這一筆過期了；
+   *  ② 每一筆都要帶 issue 編號 —— 沒有 issue 的「已知壞掉」只是另一句會過期的散文。
+   */
+  it("⛔ 已知壞掉的每一筆都指向真的存在的 token，而且掛著 issue", () => {
+    cover("ec-broken");
+    const m = buildCapabilityManifest();
+    const known = new Set<string>([
+      ...m.hookEvents.map((h) => `hook:${h}`),
+      ...m.effectKinds.map((k) => `effect:${k}`),
+      ...m.conditionLeafKinds.map((c) => `condition:${c}`),
+    ]);
+    for (const b of m.knownBroken) {
+      // `effect:dispel.pools.buffs` 這種帶欄位路徑的，只驗到 kind 那一段。
+      const root = b.token.split(".")[0] as string;
+      expect(known.has(root), `${b.token} 指向一個不存在的 token —— 這一筆過期了`).toBe(true);
+      expect(b.issue, `${b.token} 沒有 issue 編號`).toMatch(/^GH#\d+$/);
+      expect(b.what.trim().length, `${b.token} 沒說它怎麼壞的`).toBeGreaterThan(20);
+    }
+  });
+
   it("⛔ 指紋是純函式：同一份引擎連算兩次逐位元相同", () => {
     cover("ec-fingerprint");
     expect(buildCapabilityManifest().fingerprint).toBe(buildCapabilityManifest().fingerprint);
