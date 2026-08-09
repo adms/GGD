@@ -35,6 +35,7 @@
  * — so damage and HP scale like a round 3–4 fight rather than level 1. See
  * MID_MATCH_GRANT.
  */
+import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ContentLoader, registerAll, Models } from "@ggd/shared/content";
 import type { FireRingConfig } from "@ggd/shared/content";
@@ -64,17 +65,51 @@ export const MID_MATCH_GRANT: RoundGrant = {
   augmentTier: "gold",
 };
 
+/** Raw `multipliers` block of a content tree's `config/combat-env.json`. */
+function shippedMultipliers(contentDir: string = CONTENT_DIR): Record<string, number> {
+  const raw = JSON.parse(readFileSync(join(contentDir, "config", "combat-env.json"), "utf8")) as {
+    multipliers?: Record<string, number>;
+  };
+  return { ...(raw.multipliers ?? {}) };
+}
+
 /**
- * The shipped combat-env base (content/config/combat-env.json) MINUS maxHealth,
- * which the sweep overrides per run. Kept in sync with the shipped file by hand;
- * the sweep re-reads the live file at startup and asserts these match so drift
- * is caught. Only the non-1.0 factors matter here: cooldown ×0.25 and
- * abilityRange ×0.6 are the ones the task says to hold fixed.
+ * The shipped combat-env base MINUS maxHealth, which every caller overrides per
+ * run. `normalizeCombatEnv` ignores keys outside `COMBAT_ENV_KEYS`, so handing
+ * it the whole block is safe.
+ *
+ * ⚠️ GH#297 — THIS USED TO BE TWO HAND-COPIED LITERALS (`cooldown: 0.25`,
+ * `abilityRange: 0.6`) and it had gone stale: the shipped file moved cooldown to
+ * 0.2 and grew `manaRegen: 8` / `strTo*` / gold factors, none of which this
+ * table knew about. `ttk248.ts`'s header已經寫著這件事, and it worked around it
+ * by reading the file itself — so the repo already had TWO readings of "the
+ * shipped env" and the harness was the wrong one. Ability uptime (cooldown +
+ * manaRegen) is one of the two biggest inputs to TTK, so a stale base does not
+ * shift the numbers slightly — it moves them off the shipped balance entirely,
+ * which is how `harness.test.ts` ended up asserting against a world that had
+ * not existed for weeks.
+ *
+ * CLAUDE.md 第二守則: a shipped number lives in `content/config/` + the Zod
+ * `DEFAULT_*` + the admin `SHIPPED_*`, and a fourth copy in a fixture has no
+ * drift guard, so it WILL expire. Derive it; never re-type it.
  */
-export const COMBAT_ENV_BASE: Partial<Record<CombatEnvKey, number>> = {
-  cooldown: 0.25,
-  abilityRange: 0.6,
-};
+export function shippedEnvBase(contentDir: string = CONTENT_DIR): Partial<Record<CombatEnvKey, number>> {
+  const t = shippedMultipliers(contentDir);
+  delete t.maxHealth; // varied per run — the whole point of the sweep
+  return t as Partial<Record<CombatEnvKey, number>>;
+}
+
+/** The shipped `multipliers.maxHealth`. The ONE probe point that is real. */
+export function shippedMaxHealth(contentDir: string = CONTENT_DIR): number {
+  const v = shippedMultipliers(contentDir).maxHealth;
+  if (typeof v !== "number" || !Number.isFinite(v) || v <= 0) {
+    throw new Error(`combat-env.json has no usable multipliers.maxHealth (got ${String(v)})`);
+  }
+  return v;
+}
+
+/** @deprecated name kept for `sweep.ts`; it is now DERIVED, not hand-copied. */
+export const COMBAT_ENV_BASE: Partial<Record<CombatEnvKey, number>> = shippedEnvBase();
 
 /**
  * Real fire-ring schedule from content/config/config.match.json (match.fireRing).

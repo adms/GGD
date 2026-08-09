@@ -361,10 +361,15 @@ if [ -f "$PREV_FILE" ]; then
 fi
 cat <<'NEXT'
 
-⚠️ 腳本驗不到的最後一步（部署協定第 6 步，只有人能做）：
-   開 https://ggd.adms.ai 的瀏覽器 console，確認看到
-       [client] content loaded: N champions (cv_…) via bundle
-   而不是
+⚠️ 腳本驗不到的最後一步（部署協定第 6 步，只有人能做，30 秒）：
+   開 https://ggd.adms.ai 的**全新分頁**，看瀏覽器 console 那一行 ——
+       [client] content loaded: N champions (cv_…) via bundle      ← 要看到這個
        [client] content load failed (…); falling back to skeleton (2 champions)
-   然後**在線上真的打一場**，把發現記回 docs/_execution-batches.md。
+                                                                   ← 看到這個就是壞了
+   （⛔ 不可以省。它是 2026-08-01 事故之後補的，而那次「網站打得開」卻沒有人能進場，
+     唯一的破綻就是這一行。⚠️ 一定要開新分頁：console 緩衝區跨導覽保留，
+     在舊分頁重整會把上一次的失敗訊息留在成功訊息上面。）
+
+⛔ 不要在線上手動打一場。owner 2026-08-09：「你不用玩遊戲測試 太浪費時間了」。
+   他退掉的是「逐格點擊操作一場比賽」，不是驗證本身 —— 機械的那幾項上面已經跑完了。
 NEXT

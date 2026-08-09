@@ -9,6 +9,16 @@ beforeAll(async () => {
   roster = await loadRoster(CONTENT_DIR);
 }, 60_000);
 
+/**
+ * ⚠️ GH#297 — the `maxHealth` numbers below (8 / 4 / 16) are deliberate PROBE
+ * POINTS, not copies of any shipped value, so tuning `combat-env.json` must not
+ * touch them. The thing that DID expire was the env base these probes ran on:
+ * `harness.ts`'s `COMBAT_ENV_BASE` was two hand-typed literals stuck at cooldown
+ * ×0.25 while the shipped file had moved to ×0.2 and grown `manaRegen ×8`, so
+ * both failures were the harness fighting a world that no longer existed —
+ * duels that should end in ~90 s stalled past the 240 s cap. It is derived from
+ * the file now; the model was never wrong.
+ */
 describe("ttk harness", () => {
   it("loads a real, model-backed champion roster", () => {
     expect(roster.length).toBeGreaterThan(40);

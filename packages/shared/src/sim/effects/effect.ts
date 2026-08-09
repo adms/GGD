@@ -922,25 +922,26 @@ type EffectVariant =
        *
        * ABSENT = 1（＝今天的行為，「有這個狀態」）。⛔ 不是 0 —— 0 層等於沒有，
        * 而一份沒寫這一格的舊文件的意思是「有」。
-       * 界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（999），因為那已經是這個
+       * 界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（±999），因為那已經是這個
        * repo 對「一個計數器最多幾層」的答案；抄第二個數字就是第四個住處。
        *
-       * ⛔⛔ **未解決：層數怎麼送到客戶端。** 契約層只做了 schema 這一半。
-       * `ENTITY_FLAG_FREE_BITS` 已經是空的（`protocol/schema.ts:942`，GH#285），
-       * 所以層數**不可能**用旗標位送，而 `defineTypes` 是 APPEND-ONLY。
-       * 三條路，⛔ 由 owner／主控裁決，不要在實作時順手挑一條：
-       *   ① 加寬 `MatchState` 的 entity（一格 `statusStacks` 之類）—— 動
-       *      `defineTypes`，**加錯回不去**，而且要決定「同時帶多筆狀態時送哪一
-       *      筆」。
-       *   ② 走事件流 —— `SimWorld.marks` 的 `markChanged` 已經是這個形狀的前例
-       *      （`apps/game-server/src/net/eventFanout.ts` 那一段把理由寫完了：
-       *      標記完全不在 `MatchState` 上，事件是它唯一到得了螢幕的通道）。
-       *      成本是「事件流不是狀態」——中途加入／重連的客戶端補不回層數。
-       *   ③ 不送 —— 層數只影響伺服器端的判定，畫面上不顯示。誠實但等於承認
-       *      「玩家看不到自己疊到第幾層」。
-       * ⚠️ 在三選一之前，任何「層數會顯示在 HUD」的文案都是謊話（失敗形態 ②）。
+       * ⭐ **負數 = 減層**（GH#304 軸①【隨觸發】／軸②【隨時間】）。整套三條軸
+       * 的分工寫在 `sim/marks.ts` 檔頭⑤，這一格是其中兩條唯一需要的新詞彙。
+       *
+       * ⭐ 送到客戶端的路**已經選好了**（owner 2026-08-09 選①）：
+       * `SeatState.counterIds[]` / `counterCounts[]` —— 一份泛型的
+       * `(id, 層數)` 清單，標記層數與狀態層數合併成一套送
+       *（`apps/game-server/src/net/snapshot.ts` 的 `namedCounters`）。
+       * ⚠️ 上一版這裡寫著「未解決，三條路等裁決」，那句話從
+       * `counterIds` 落地的那一刻起就是謊話（CLAUDE.md 第三守則）。
        */
       stacks?: number;
+      /**
+       * 重複施加時要不要把到期時間往後推。省略 = `"extend"` = 舊行為。
+       * ⚠️ 減層（`stacks < 0`）一律當 `"keep"`。理由與整段語意見
+       * `content/schema/effect.ts` 的同名欄位。
+       */
+      refresh?: "extend" | "keep";
       /**
        * Who receives it: each resolved target (default), or the CASTER. The
        * self form is how a combo WINDOW is opened — 者、皆、陣 is a
@@ -1057,6 +1058,25 @@ type EffectVariant =
        * 同時帶正負修飾詞）。省略 = 無極性 = **有方向的淨化拔不到它**。
        */
       polarity?: "buff" | "debuff";
+      /**
+       * ⭐ 限時授予**格擋 / 暴擊來源**（owner GH#299 第 2 · 6 條）。
+       *
+       * 這兩格是「主動技能」與「限時」兩個授權格的**同一個**答案：一支 Q 想給
+       * 「接下來 5 秒內 30% 機率格擋」或「這段期間 20% 機率 3 倍暴擊」，寫的是
+       * 一份 `applyBuff`，⛔ 不是一個新的 effect kind —— 新 kind 會變成第二套
+       * 格擋 / 第二套暴擊，而 `blockCutFor` / `rankedGrants` 只認得
+       * `StatsComp.sources` 上的這兩格。
+       *
+       * 到期由這份 buff 自己的 `expiresAtTick` 管（兩個讀取端都已經在跳過過期的
+       * source），所以**沒有第二個時鐘**。`blockLastFired` 住在 source 實例上，
+       * 而每次施放都是一份新的 source，所以掛在這裡的 `internalCooldown` 讀作
+       * 「這一次施放最多擋幾次」—— 與 `hooks` 那一格逐字相同的語意。
+       *
+       * ⚠️ 疊層路徑（`stackKey`）也帶，理由與 `hooks` / `dispellable` 完全相同：
+       * 一支技能一旦也填了 `stackKey`，這兩格就會靜默失效（失敗形態 ②）。
+       */
+      block?: import("../combat/block").BlockGrant;
+      critStrike?: import("../combat/critStrike").CritStrikeGrant;
     }
   /**
    * cycleBuff (揍敵客阿福 13-00 念。攻防轉換) — 輪替增益: apply the NEXT step of a

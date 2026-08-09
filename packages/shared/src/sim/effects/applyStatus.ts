@@ -2,12 +2,41 @@
  * `applyStatus` — attach / refresh a status marker (CC, combo window, …).
  *
  * Moved out of the effectRunner switch by GH#289; body unchanged.
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ * ⭐ GH#304 —— 它同時是**計數器的 ±N**，而且「一個 id 在一個身體上只有一個
+ *    計數器」
+ *
+ * owner 2026-08-09：「疊層機制 可能會 1. 隨觸發 2. 隨時間 3. 隨回合
+ * 增加/減少」。軸①②的答案就是這個 kind：把它掛在 `HookEvent` 上
+ *（`onBasicAttack` / `onDamageTaken` / … 15 個）＝隨觸發，掛在 `onInterval` 上
+ * 配 `internalCooldown` ＝隨時間。三條軸的分工寫在 `sim/marks.ts` 檔頭⑤。
+ *
+ * ── ⛔ 為什麼要「路由到標記」，而不是各疊各的 ────────────────────────────
+ * 這個 repo 有**兩個**層數儲存：`world.marks`（具名標記）與
+ * `world.status[].stacks`（狀態層數）。它們的**身分空間是同一個** —— 兩邊的
+ * key 都是「一份既有文件的 id」（`sim/marks.ts` ②：標記的身分是借來的），
+ * 而 `net/snapshot.ts` 的 `namedCounters` 早就把同一個 id 的兩邊**相加**送給
+ * 客戶端。
+ *
+ * 所以在這一段之前，一個作者寫「每次普攻 +1 層【十二道試煉】」會得到：
+ *   · HUD 顯示 13 —— 看起來完全正確；
+ *   · `lethalSaveFor` 讀的是 `MarkState.count`，還是 12 —— **那一層是假的**，
+ *     它一次都救不了人。
+ * 這正是 CLAUDE.md 失敗形態②最貴的變體：卡片、後台、HUD 三個地方都同意，
+ * 只有真正的判定不同意。所以 id 撞上一個**已經在這個身體上**的標記時，
+ * 增減走 {@link adjustMarkCount}，狀態那半整段跳過。
+ *
+ * ⚠️ 路由的閘是 `stacks !== undefined`，不是「id 是不是標記」。少了這個閘，
+ * 一個 statusId 剛好與某人身上的標記同名的【暈眩】會被吞掉 —— 而暈眩不見
+ * 比多一層更難查。
  */
 import type { EffectKindSpec } from "./effectKind";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
 import { Statuses } from "../content/registry";
 import { clampMarkCount } from "../markLimits";
+import { adjustMarkCount } from "../marks";
 
 export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
   apply(e, ctx) {
@@ -55,16 +84,37 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
         world.emit("immuneControl", { target, source: ctx.caster, statusId: e.statusId, origin: ctx.origin });
         continue;
       }
+      // ⭐ GH#304 —— 「一個 id 在一個身體上只有一個計數器」。這個身體身上已經有
+      // 同名的**具名標記**時，層數的增減走標記那一套（`max` / `spent` /
+      // `perStackLost` / 免死都掛在它上面），狀態那半整段跳過。理由見檔頭。
+      //
+      // ⛔ 位置在免控閘**之後**：一發被免疫拒絕的效果不該動對方的計數器。
+      if (e.stacks !== undefined && world.marks.get(target)?.has(e.statusId) === true) {
+        adjustMarkCount(world, target, e.statusId, e.stacks);
+        continue;
+      }
       // refresh rule: same status id + origin replaces (no stacking in skeleton)
       const existing = st.effects.find(
         (s) => s.statusId === e.statusId && s.sourceId === ctx.origin,
       );
+      // ⭐ GH#304 —— 減層**不建立**新的一筆。身上沒有這個狀態時「-1 層」的正確
+      // 答案是「什麼都不做」，不是「掛一筆 0 層的狀態」（那會讓 `hasStatus` 從此
+      // 為真、讓計數器列上長出一個 ×0，而作者要的只是把不存在的東西再減一次）。
+      if (existing === undefined && e.stacks !== undefined && e.stacks < 0) continue;
       let addedTicks = 0;
       /** 這一次施加**真的把層數推高了**嗎 —— 見下面 `statusApplied` 那一段。 */
       let stacksGrew = false;
       if (existing) {
-        addedTicks = Math.max(0, expiresAtTick - existing.expiresAtTick);
-        existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
+        // ⭐ GH#304 —— 續不續期是一格欄位（`refresh`），而**減層一律不續期**。
+        // 少了這一行，一個掛在 `onInterval` 上每 3 秒 +1 層的計數器會每次都把
+        // 到期時間推到滿，於是「20 秒內疊到 5 層」變成「永久 5 層」——
+        // 一個在畫面上跟正確行為一模一樣的故障（失敗形態②）。
+        const keepWindow =
+          e.refresh === "keep" || (e.stacks !== undefined && e.stacks < 0);
+        addedTicks = keepWindow ? 0 : Math.max(0, expiresAtTick - existing.expiresAtTick);
+        if (!keepWindow) {
+          existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
+        }
         /**
          * ⭐ 層數累加（GH#301-5）。
          *
@@ -82,6 +132,27 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           const before = existing.stacks ?? 1;
           existing.stacks = clampMarkCount(before + e.stacks);
           stacksGrew = existing.stacks > before;
+          // ⭐ GH#304 —— **層數掉到 0 就把這一筆拿掉**。
+          //
+          // ⛔ 這不是一個決策點，是這個 repo 已經寫死的語意：`stacks` 的欄位說明
+          // （兩個檔都有）明講「0 層等於沒有」。留著一筆 0 層的狀態會讓
+          // `hasStatus` 從此為真、讓 `condition.target-status@1` 對「他身上還有
+          // 【破甲】嗎」說謊、讓客戶端的計數器列上留一個 ×0 —— 三個消費端一起錯，
+          // 而畫面上跟「還剩一層」長得幾乎一樣。
+          //
+          // ⚠️ 只有**扣到 0** 才拿掉（`before > 0`）：一筆本來就是 0 層的狀態
+          // 不存在，所以這一行碰不到既有內容 —— 出貨的 28 份 status 沒有一份寫
+          // `stacks`，`before` 對它們永遠是 1。
+          //
+          // ⛔ **不發事件**：`statusExpirySystem` 自然到期時也不發（`grep -n emit
+          // systems/StatusSystem.ts` = 零筆），狀態列走的是每 tick 的快照投影
+          // （`net/snapshot.ts` 的 `statusIds`）而不是事件流。在這裡發明一個
+          // 沒有人監聽的事件名只會是一個假訊號。
+          if (existing.stacks === 0) {
+            const at = st.effects.indexOf(existing);
+            if (at >= 0) st.effects.splice(at, 1);
+            continue;
+          }
         }
       } else {
         addedTicks = Math.max(0, expiresAtTick - world.tick);

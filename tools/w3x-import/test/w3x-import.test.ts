@@ -156,7 +156,12 @@ describe("w3x importer — real imported content", () => {
     ).baseStats.critDamage;
     expect(champBase).toBe(1.75);
 
-    const TOOLTIP = /([\d.]+)%機率造成([\d.]+)倍傷害/;
+    // ⚠️ GH#277 ① — `\s*` after 造成. 斬龍刀 ships 「20%機率造成 2倍傷害」 WITH a
+    // space, so the old space-less pattern silently skipped it and the guard's
+    // coverage fell from 4 items to 2 while staying green. The fix is the
+    // pattern, never the owner's authored 文案 (it is pinned byte-for-byte in
+    // `packages/shared/src/content/__fixtures__/legendary49OwnerText.json`).
+    const TOOLTIP = /([\d.]+)%機率造成\s*([\d.]+)倍傷害/;
     let checked = 0;
     for (const f of readdirSync(join(contentDir, "items"))) {
       const doc = JSON.parse(readFileSync(join(contentDir, "items", f), "utf-8"));
@@ -181,9 +186,25 @@ describe("w3x importer — real imported content", () => {
         5,
       );
     }
-    // 天堂之劍 (exempt from the rescale, so still its authored 3% / 50x),
-    // 斬龍刀, 龍騎士之劍 and 武聖手鐲.
-    expect(checked, "no crit items matched the tooltip pattern").toBe(4);
+    // ⚠️ GH#277 ② — THE FOURTH ITEM IS 天堂之劍 godie-i01n, AND IT LEFT ON PURPOSE.
+    // The owner rewrote it on 2026-08-01 to 「6%機率造成10倍暴擊傷害，暴擊時吸血
+    // 回復100%傷害」 and the mechanic moved out of `modifiers` into the
+    // `critStrike` block (chance / damageMult / lifestealFraction), because a
+    // flat `critDamage` delta cannot express 「暴擊時吸血」. So the modifier-shaped
+    // population is THREE, not four, and a literal `toBe(4)` is a fifth home for
+    // a number that content legitimately changes (CLAUDE.md 第二守則).
+    //
+    // A floor, not an equality: this still goes red the moment the pattern stops
+    // matching (the exact regression above), while a new crit item is not a
+    // failure. The fourth item keeps its own line below so coverage cannot
+    // shrink silently the way it just did.
+    expect(checked, "no crit items matched the tooltip pattern").toBeGreaterThanOrEqual(3);
+
+    const heaven = JSON.parse(readFileSync(join(contentDir, "items", "godie-i01n.json"), "utf-8"));
+    const heavenTip = /([\d.]+)%機率造成\s*([\d.]+)倍暴擊傷害/.exec(heaven.description ?? "");
+    expect(heavenTip, "天堂之劍 no longer states a crit tooltip at all").not.toBeNull();
+    expect(heaven.critStrike?.chance, "天堂之劍 critStrike chance").toBeCloseTo(Number(heavenTip![1]) / 100, 5);
+    expect(heaven.critStrike?.damageMult, "天堂之劍 critStrike multiplier").toBeCloseTo(Number(heavenTip![2]), 5);
     cover("w3x-item-crit-multiplier");
   });
 
@@ -218,14 +239,39 @@ describe("w3x importer — real imported content", () => {
   //   斬龍刀   'Iatt 55' / 'Iagi 20' — read from the map, mnemonic codes
   //   龍騎士之劍 an UNMODIFIED `AIaz`, absent from the w3a entirely, whose 敏捷+10
   //            can only come from the stock `Units\AbilityData.slk` row
+  /**
+   * ⚠️ GH#277 ② — THE EXPECTED STAT LIST IS NOW DERIVED FROM EACH ITEM'S OWN
+   * 效能 LINES, not a hard-coded five.
+   *
+   * The old list demanded `as` on BOTH items, and 斬龍刀 godie-i06d has not had
+   * an attack-speed line since 2026-08-01, when the owner rewrote its card to
+   * 「攻擊力+128 / 防禦+12 / [暴擊] 20%機率造成 2倍傷害」 (commit aee543fb, and the
+   * text is pinned byte-for-byte in `legendary49OwnerText.json`). So the guard
+   * was demanding a modifier the design deliberately removed — it was the TEST
+   * that expired, not the importer.
+   *
+   * Re-deriving also makes it a stronger guard than the literal was: any 效能 line
+   * on ANY of these cards that the doc fails to carry now fails here, instead of
+   * only the five stats someone happened to type out.
+   */
   it.runIf(hasImports)("item abilities beside a crit still contribute their stats", () => {
+    /** 效能 line → the modifier stat(s) the doc must carry for it. */
+    const LINES: [RegExp, string[]][] = [
+      [/攻擊力\s*\+/, ["ad"]],
+      [/(?:裝甲|防禦)\s*\+/, ["armor"]],
+      [/攻擊速度\s*\+/, ["as"]],
+      [/[\d.]+%機率造成\s*[\d.]+倍傷害/, ["critChance", "critDamage"]],
+    ];
     for (const id of ["godie-i06d", "godie-i06s"]) {
       const doc = JSON.parse(readFileSync(join(contentDir, "items", `${id}.json`), "utf-8"));
       const stats = new Set<string>(
         ((doc.modifiers ?? []) as { stat: string }[]).map((m) => m.stat),
       );
-      for (const stat of ["ad", "armor", "as", "critChance", "critDamage"]) {
-        expect(stats.has(stat), `${doc.name} lost its ${stat} modifier`).toBe(true);
+      const want = LINES.filter(([re]) => re.test(doc.description ?? "")).flatMap(([, s]) => s);
+      // A card that promises nothing would make every assertion below vacuous.
+      expect(want.length, `${doc.name} matched no 效能 line — the card or the patterns moved`).toBeGreaterThanOrEqual(3);
+      for (const stat of want) {
+        expect(stats.has(stat), `${doc.name} promises it but lost its ${stat} modifier`).toBe(true);
       }
     }
     cover("w3x-item-data-column");

@@ -674,14 +674,20 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     probe: (f) => f.simCapabilities.has("hooks"),
     caveat:
       "`BlockGrant`（含 `lethalOnly` / `lethalBasis` / `internalCooldown` / 鏈式獨立判定）已出貨且時序正確" +
-      "（`mitigate()` 之後、護盾之前），寫入點現在有**兩個**：道具（`economy/itemSource.ts`）與" +
-      "**技能被動**（`ability@1.passive.ranks[].block` → `abilities/abilityPassives.ts`，" +
-      "配 `whileForm` 就寫得出「卍解狀態下才格擋」）。兩者走同一個 `ModifierSource.block`，" +
-      "所以鏈式判定與型別過濾逐條相同。⛔ 仍然缺的是**限時 buff / status 授予格擋**：" +
-      "`applyBuff` 掛上去的來源沒有這一格，所以「接下來 5 秒內格擋」還是沒有形狀。" +
+      "（`mitigate()` 之後、護盾之前）。⭐ 2026-08-09（owner #299 第 6 條「授權格要放寬」）之後" +
+      "寫入點有**四個**：道具（`economy/itemSource.ts`）、**技能被動**" +
+      "（`ability@1.passive.ranks[].block`，配 `whileForm` 就寫得出「卍解狀態下才格擋」）、" +
+      "**三選一增益卡**（`augment@1.block`）、以及 **`applyBuff.block`**（限時授予 ——" +
+      "「接下來 5 秒內格擋」，同時也是**主動技能**那一格的答案：⛔ 不需要新的 effect kind）。" +
+      "四者走同一個 `ModifierSource.block`（`blockCutFor` 不看 `kind`），所以鏈式判定與型別過濾逐條相同；" +
+      "轉發只有一份（`sim/stats/sourceGrants.ts`）。" +
+      "⛔ 仍然缺的是**「格擋的那一刻」這個時機** —— 擋下來不會觸發任何 hook。" +
       "⚠️ 另外 `internalCooldown` 的記帳住在 source 上，而技能被動的 source 在升級 / EX 解鎖 /" +
-      "變身時會 detach + attach，等於冷卻歸零 —— 出貨的兩支技能格擋都沒有 ICD，所以今天不可觀測。",
-    evidence: "packages/shared/src/sim/combat/blockFromPassive.test.ts",
+      "變身時會 detach + attach、`applyBuff` 每次施放都是新的 source，等於冷卻歸零；" +
+      "後者的正確讀法是「這一次施放最多擋幾次」。出貨的兩支技能格擋都沒有 ICD，所以今天不可觀測。",
+    evidence:
+      "packages/shared/src/sim/combat/blockFromPassive.test.ts + " +
+      "packages/shared/src/sim/stats/sourceGrants.test.ts（四個授權面，四個突變都驗過會紅）",
   },
   {
     key: "effect.convert-hit-damage-type@1",
@@ -761,13 +767,15 @@ export const KNOWN_BROKEN: readonly { token: string; what: string; issue: string
       "⚠️ **一半修好，一半沒有 —— 兩半的成因不同，不要只讀一句結論。** " +
       "✅ **英雄那一半已修（GH#293）**：`WorldHookSystem` 的【死亡】那一列填了 " +
       "`firesWhenOwnerDead: true`，`fireHooks` 的存活閘改成逐事件放行，所以「自己死亡時 ⋯」寫得出來。" +
-      "⛔ **小怪（`world.mob`）那一半仍然發不出去**：`mobSystem`（step slot 9d′）在 " +
-      "`worldHookSystem`（9f）之前就 `world.destroy(id)` 掉屍體，所以派發時 `world.stats` " +
-      "已經沒有那個實體 —— 它在**缺 stats** 那一行就 return，**不是**存活閘，因此 GH#293 的 " +
-      "`firesWhenOwnerDead` 對它完全無效。" +
-      "→ 「殺死小怪時 ⋯」請用 `onKill`（會發，掛在擊殺者身上）；" +
-      "「**小怪死亡時** ⋯」（不論誰殺的、含環境傷害與火圈）今天寫不出來，" +
-      "⛔ 不可以用 `onKill` 近似 —— 沒有擊殺者的死亡它一次都不會發。",
+      "⛔ **小怪（`world.mob`）那一半仍然掛不上去，但成因在 2026-08-09 換了一個** —— " +
+      "⚠️ 這一段先前寫的是「`mobSystem`（slot 9d′）在 `worldHookSystem`（9f）之前就 `destroy` 掉屍體」，" +
+      "**那個成因已經被 GH#296 修掉了**（`MobSystem` 兩處改成 `destroyAfterHooks`，屍體留到 slot 9g）。" +
+      "留著這句過期的理由比沒有理由更糟：對方會照一個假的閘去繞路，而真正的閘在別的地方。" +
+      "**真正的閘是**：`spawnMobBody` 沒有 `world.stats.set`（殭屍沒有屬性表，owner 2026-08-04 的 A3a 裁決），" +
+      "而 `attachSource` 第一句就是 `if (!sc) return` —— 所以沒有任何內容掛得上小怪的 onDeath。" +
+      "⭐ 這是**被守著的**，不是疏忽：`mobs.statusVsStats.test.ts` 逐字斷言 `world.stats.has(mob) === false`。" +
+      "→ 「殺死小怪時 ⋯」用 `onKill`（會發，掛在擊殺者身上）；" +
+      "「**小怪死亡時** ⋯」要等殭屍拿到屬性表，⛔ 不可以用 `onKill` 近似 —— 沒有擊殺者的死亡它一次都不會發。",
     issue: "GH#296",
   },
   // GH#293 已修（`WorldHookSystem` 的【死亡】那一列填了 `firesWhenOwnerDead: true`，

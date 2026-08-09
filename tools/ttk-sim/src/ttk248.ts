@@ -10,11 +10,15 @@
  *   1. the CONTENT TREE is a CLI argument, so the identical matchups can be
  *      fought once on the SHIPPED champion cards and once on the #248 DERIVED
  *      cards (str/agi/int → HP/AD/armor/AS/mana/AP), and
- *   2. the combat-env base is read from the target tree's own
- *      content/config/combat-env.json rather than harness.ts's hand-copied
- *      `COMBAT_ENV_BASE` — that constant still says cooldown 0.25 while the
- *      shipped file has moved to 0.2, and it omits maxMana ×3 / manaRegen ×4
- *      entirely, both of which change ability uptime and therefore TTK.
+ *   2. the combat-env base is read from the TARGET TREE's own
+ *      content/config/combat-env.json (`shippedEnvBase(contentDir)`), because
+ *      the two trees may configure it differently.
+ *
+ *      ⚠️ This used to also be a WORKAROUND: harness.ts's `COMBAT_ENV_BASE` was
+ *      hand-copied and had gone stale (cooldown 0.25 vs the shipped 0.2, and no
+ *      manaRegen at all — both of which move ability uptime and therefore TTK).
+ *      GH#297 made that constant DERIVED and moved the reader into harness.ts,
+ *      so there is now ONE implementation and this file just passes a directory.
  *
  * Champion matchup is a pure function of the match seed and INDEPENDENT of
  * both the content tree and maxHealth, so every cell fights the identical
@@ -24,8 +28,6 @@
  *
  * Emits one JSON line per cell on stdout (prefixed `RESULT `).
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { ContentLoader, registerAll, Models } from "@ggd/shared/content";
 import type { FireRingConfig } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
@@ -35,16 +37,7 @@ import { TICK_HZ } from "@ggd/shared/constants";
 import { MatchController, type SeatSpec } from "@ggd/game-server/src/match/MatchController";
 import { type PhaseConfig } from "@ggd/game-server/src/match/PhaseMachine";
 import { DEFAULT_ARENA_RULES, type ArenaRules, type RoundGrant } from "@ggd/game-server/src/match/arenaRules";
-import { MID_MATCH_GRANT, PRODUCTION_FIRE_RING, pickChampions } from "./harness";
-
-function envBaseFrom(contentDir: string): Partial<Record<CombatEnvKey, number>> {
-  const raw = JSON.parse(readFileSync(join(contentDir, "config", "combat-env.json"), "utf8")) as {
-    multipliers: Record<string, number>;
-  };
-  const t = { ...raw.multipliers } as Record<string, number>;
-  delete t.maxHealth; // varied per cell
-  return t as Partial<Record<CombatEnvKey, number>>;
-}
+import { MID_MATCH_GRANT, PRODUCTION_FIRE_RING, pickChampions, shippedEnvBase } from "./harness";
 
 async function loadTree(contentDir: string): Promise<string[]> {
   const res = await new ContentLoader(new FsContentSource(contentDir)).load();
@@ -151,7 +144,7 @@ async function main(): Promise<void> {
   const hps = (hpArg ?? "4,6,8,10,12").split(",").map(Number);
   const matches = Number(matchesArg ?? 30);
   const roster = await loadTree(contentDir);
-  const envBase = envBaseFrom(contentDir);
+  const envBase = shippedEnvBase(contentDir);
   process.stderr.write(`[${label}] roster ${roster.length}, envBase ${JSON.stringify(envBase)}\n`);
   for (const mode of ["natural", "production"] as const) {
     const fireRing = mode === "production";

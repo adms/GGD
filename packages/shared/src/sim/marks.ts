@@ -50,6 +50,34 @@
  * 不抽 rng、不看時鐘、沒有三角函式、沒有 `**`。到期一律是**絕對 tick**，
  * 沒有任何遞減計數器（CLAUDE.md 硬性技術約束，`sim/purity.test.ts` 在守）。
  * 對外的迭代（{@link forEachMark}）**明確排序**，不吃 Map 插入序。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⑤ ⭐ 疊層的三條軸（GH#304，owner 2026-08-09：「隨觸發／隨時間／隨回合
+ *     增加/減少」）—— **一個機制，三個觸發點**
+ *
+ * ⛔ 三條軸**不是**三個機制。真正的機制只有一個：{@link adjustMarkCount}
+ * ——「這個計數器 ±N」。三條軸是**誰去呼叫它**：
+ *
+ * | 軸 | 誰觸發 | 引擎要做什麼 |
+ * |---|---|---|
+ * | ① 隨觸發 | `HookEvent` 的 15 個成員任一（`onBasicAttack` +1、`onDamageTaken` -1…） | **零** —— `applyStatus{stacks:±N}` 掛在 hook 上 |
+ * | ② 隨時間 | `onInterval` + `HookDef.internalCooldown: N`（＝「每 N 秒」） | **零** —— 同上，`IntervalHookSystem` 已經在跑 |
+ * | ③ 隨回合 | 回合邊界（{@link resetMarksForRound}，`MatchController.enterCombat`） | {@link MarkSpec.roundDelta} |
+ *
+ * ⭐ ①②需要的引擎程式是 **0 行新系統、0 個新 effect kind**：`applyStatus` 已經
+ * 是一個可以掛在任何 hook 上的效果，這一批做的只是讓它的 `stacks` 能是**負數**、
+ * 並且在 id 撞上一個標記時把增減**送進這裡**（`effects/applyStatus.ts` 的
+ * 「一個 id 在一個身體上只有一個計數器」）。
+ *
+ * ⛔ 為什麼**不**在 `MarkSpec` 上開一格 `decayEverySec`：那會是**第二個**冷卻
+ * 概念，與 `HookDef.internalCooldown` 平行、語意重疊、兩個都填得下 ——
+ * 逐字就是 `systems/IntervalHookSystem.ts` 決策 1 拒絕過的那個欄位。而且它需要
+ * 一個每 tick 掃 `world.marks` 的新系統，**而這個檔案裡已經有一支沒有人呼叫的
+ * 掃描器**（見 {@link expireMarks} 的警告）—— 再加一支只會多一個假 ✅。
+ *
+ * ⚠️ ③沒辦法走同一條路，而理由是可查的：`HookEvent` 的 15 個成員裡**沒有**
+ * 回合邊界（沒有 `onRoundStart` / `onRoundEnd`），所以「每回合 ±N」在內容側
+ * 一個字都寫不出來。它是這一批唯一真的需要引擎程式的那條軸。
  */
 import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
@@ -97,6 +125,24 @@ export interface MarkState {
   /** `resetOn: "round"` 補回來的值，也是 `spent` 的分母。 */
   initial: number;
   /**
+   * 疊到幾層封頂。
+   *
+   * ⚠️ GH#304 之前這一格**只活在 `MarkSpec` 上**，執行期的狀態不記得它 ——
+   * 於是 `grantMark` 必須由呼叫端傳一個 `max` 進來，而全 repo 沒有任何呼叫端
+   * （它是死程式）。「加層」這件事在此之前結構上就寫不出來：唯一知道上限的人
+   * 是那份已經被丟掉的 spec。三條軸全部要加層，所以上限必須跟著狀態走。
+   */
+  max: number;
+  /**
+   * ⭐ 軸③【隨回合】—— 回合邊界的 ±N（0 = 不做，也就是這一格出現之前的每一份
+   * 文件）。負數就是「每回合掉 N 層」，正數是「每回合長 N 層」。
+   *
+   * ⚠️ 與 `resetOn: "round"`（補回 `initial`）**互斥**，schema 在載入時擋
+   * （`content/schema/mark.ts`）：一個「每回合補滿」又「每回合 -1」的計數器
+   * 沒有可以寫出來的語意，而執行期靜默挑一邊就是失敗形態④。
+   */
+  roundDelta: number;
+  /**
    * **累計**失去過幾層 —— 「每失去一層，永久提升 10% 攻擊力與 10% 最大生命」
    * 的乘數就是它。
    *
@@ -123,6 +169,8 @@ export interface MarkSpec {
   /** 秒；{@link MARK_DURATION_PERMANENT}(-1) = 永久。 */
   readonly durationSec: number;
   readonly resetOn: MarkResetPolicy;
+  /** ⭐ 軸③【隨回合】的 ±N。省略 = 0 = 回合邊界不動它。見 {@link MarkState.roundDelta}。 */
+  readonly roundDelta?: number;
   readonly perStackLost?: readonly StatModifier[];
   readonly lethal?: MarkLethalRule;
 }
@@ -201,6 +249,8 @@ export function installMark(world: SimWorld, id: EntityId, spec: MarkSpec): void
     expiresAtTick: markExpiryTick(world, spec.durationSec),
     resetOn: spec.resetOn,
     initial: clampMarkCount(spec.initial),
+    max: clampMarkCount(spec.max),
+    roundDelta: Math.trunc(spec.roundDelta ?? 0),
     spent: 0,
     perStackLost: spec.perStackLost ?? [],
     ...(spec.lethal !== undefined ? { lethal: spec.lethal } : {}),
@@ -209,26 +259,75 @@ export function installMark(world: SimWorld, id: EntityId, spec: MarkSpec): void
 }
 
 /**
+ * ⭐⭐ **三條軸唯一的寫入口** —— 這個計數器 ±N，回傳**實際**動了幾層（帶正負號）。
+ *
+ * ── 為什麼是一支函式而不是三支 ────────────────────────────────────────────
+ * owner 說的「隨觸發／隨時間／隨回合，各自能增能減」在**寫入端**是同一件事：
+ * 夾到 `[0, max]`、失去的層數要記進 `spent`、要重算永久加成、要發
+ * `markChanged`。這四件事在 GH#304 之前**散在三個地方各抄一份**
+ * （`grantMark` 只做了夾取與事件、`consumeMark` 四件都做、
+ * `combat/lethalSave.ts:132-141` 又逐行抄了一次），而三份已經不一致：
+ * `grantMark` 加層時不碰 `spent`（對的），`lethalSave` 那一份卻是唯一會
+ * `syncPerStackSource` 的（也是對的）—— 只是沒有人保證第四個呼叫端會選對。
+ * 三條軸都要寫這一格，所以它現在只有一個住處（第零守則⑨）。
+ *
+ * ── 三個刻意的決定 ────────────────────────────────────────────────────────
+ * ① **加層夾 `max`，扣層夾 0**，兩邊都夾 —— `clampMarkCount` 只擋得住上面那半。
+ * ② **只有真的失去的那幾層算 `spent`**（不是請求值）。撞到 0 之後再扣不算
+ *    「失去一層」，否則「每失去一層永久 +10% AD」會在層數見底之後繼續長大，
+ *    而畫面上完全看不出來（失敗形態②的鏡像：發了玩家沒付的錢）。
+ * ③ **一層都沒動就不發事件**。`markChanged` 是客戶端計數器條的更新訊號，
+ *    一個每 tick 掛在 `onInterval` 上、早就見底的衰減會變成每秒 30 則廣播。
+ *
+ * ⚠️ 過期的標記回 0 而不是「復活它」：到期的語意是「它不在身上了」
+ * （`markCount` 讀出來也是 0），對一個不在身上的計數器 ±N 應該什麼都不做。
+ *
+ * PURE：不抽 rng、不看時鐘（`world.tick` 是狀態不是時鐘）、沒有 `**`。
+ */
+export function adjustMarkCount(
+  world: SimWorld,
+  id: EntityId,
+  markId: MarkId,
+  delta: number,
+): number {
+  const st = world.marks.get(id)?.get(markId);
+  if (st === undefined) return 0;
+  if (markExpired(st.expiresAtTick, world.tick)) return 0;
+  const want = Math.trunc(delta);
+  if (want === 0) return 0;
+  // ① 兩邊都夾。`max` 自己也走一次 `clampMarkCount`，所以一份繞過 schema 的
+  // override（後台是第二條寫入路徑）也上不了 999 以上。
+  const ceiling = clampMarkCount(st.max);
+  const next = Math.max(0, Math.min(ceiling, st.count + want));
+  const applied = next - st.count;
+  if (applied === 0) return 0; // ③
+  st.count = next;
+  if (applied < 0) {
+    st.spent += -applied; // ②
+    // 「每失去一層，永久提升 X」—— 失去的同一刻就要生效，不能等下一個系統。
+    syncPerStackSource(world, id, markId, st);
+  }
+  world.emit("markChanged", { id, markId, count: st.count });
+  return applied;
+}
+
+/**
  * 加 N 層。回傳**實際**加了幾層（撞到 `max` 會少於請求值）。
  *
  * ⚠️ 回傳實際值而不是 void，是因為 `grantLevels` 那個前科：靜默截斷但面板報
  * 請求值（CLAUDE.md 失敗形態②）。呼叫端拿得到真相才有機會說實話。
+ *
+ * ⚠️ GH#304 拿掉了 `max` 參數 —— 上限現在住在 {@link MarkState.max}，
+ * 由 `installMark` 從 spec 抄一次。呼叫端自己帶一個 `max` 進來的形狀是
+ * 「同一個上限有兩個住處」，而其中一個（呼叫端那個）沒有任何守衛。
  */
 export function grantMark(
   world: SimWorld,
   id: EntityId,
   markId: MarkId,
   amount: number,
-  max: number,
 ): number {
-  const st = world.marks.get(id)?.get(markId);
-  if (st === undefined) return 0;
-  if (markExpired(st.expiresAtTick, world.tick)) return 0;
-  const before = st.count;
-  st.count = clampMarkCount(Math.min(st.count + Math.trunc(amount), max));
-  const added = st.count - before;
-  if (added !== 0) world.emit("markChanged", { id, markId, count: st.count });
-  return added;
+  return adjustMarkCount(world, id, markId, Math.max(0, Math.trunc(amount)));
 }
 
 /**
@@ -236,6 +335,9 @@ export function grantMark(
  *
  * 全有全無而不是「能扣多少扣多少」，是因為唯一的消費端是「用一層換一次免死」——
  * 扣一半等於玩家付了錢沒拿到東西。
+ *
+ * ⚠️ 「全有全無」是這一支與 {@link adjustMarkCount} 的**唯一**差別，所以它是
+ * 一道前置檢查加一次委派，不是第二份扣層邏輯。
  */
 export function consumeMark(
   world: SimWorld,
@@ -248,16 +350,25 @@ export function consumeMark(
   if (st === undefined) return false;
   if (markExpired(st.expiresAtTick, world.tick)) return false;
   if (st.count < need) return false;
-  st.count -= need;
-  st.spent += need;
-  // 「每失去一層，永久提升 X」—— 消耗的同一刻就要生效，不能等下一個系統。
-  syncPerStackSource(world, id, markId, st);
-  world.emit("markChanged", { id, markId, count: st.count });
-  return true;
+  return adjustMarkCount(world, id, markId, -need) === -need;
 }
 
 /**
- * 回合邊界的重置。**只動 `resetOn: "round"` 的**。
+ * ⭐ 軸③【隨回合】—— 回合邊界對每一個計數器做的事。由
+ * `MatchController.enterCombat` 呼叫一次（不是中場，理由寫在那個呼叫點）。
+ *
+ * 兩種政策，**互斥**（schema 在載入時擋，見 {@link MarkState.roundDelta}）：
+ *
+ *   · `roundDelta !== 0` → **±N**（owner 2026-08-09 的軸③）。走
+ *     {@link adjustMarkCount}，所以它跟另外兩條軸共用同一套夾取／`spent`／
+ *     永久加成／事件 —— 「每回合掉一層試煉」與「打中掉一層」在帳面上是
+ *     同一件事，這正是合併的意義。
+ *   · `resetOn: "round"` → 補回 `initial`（這一格出現之前的唯一行為）。
+ *
+ * ⛔ 補回 `initial` **不是** delta 的特例，所以它沒有被改寫成一次 `adjustMarkCount`：
+ * 「回到 12」與「+3」在 `spent` 上是相反的 —— 重置是**發新的一批**（不記帳），
+ * delta 掉層是**失去**（要記帳、要長永久加成）。把重置寫成
+ * `adjustMarkCount(initial - count)` 會讓每一次回合重置都倒著長一次永久加成。
  *
  * ⛔ `spent` **不歸零**，而這是刻意的：`resetOn: "round"` 說的是「層數每回合
  * 補回來」，不是「永久加成每回合還原」。兩者要一起還原的話那是第三種政策，
@@ -269,6 +380,10 @@ export function resetMarksForRound(world: SimWorld): void {
     if (bag === undefined) continue;
     for (const markId of [...bag.keys()].sort()) {
       const st = bag.get(markId)!;
+      if (st.roundDelta !== 0) {
+        adjustMarkCount(world, id, markId, st.roundDelta);
+        continue;
+      }
       if (st.resetOn !== "round") continue;
       if (st.count === st.initial) continue;
       st.count = st.initial;
@@ -278,9 +393,17 @@ export function resetMarksForRound(world: SimWorld): void {
 }
 
 /**
- * 掃掉過期的標記。由 `systems/MarkSystem.ts` 每 tick 呼叫。
+ * 掃掉過期的標記。
  *
- * 永久標記（絕大多數）在這裡是一次比較就跳過，所以這支對現況幾乎免費。
+ * ⛔⛔ **今天沒有任何人呼叫它**（`grep -rn expireMarks` 只有這裡與一條測試的
+ * 註解）。上一版的這段註解寫著「由 `systems/MarkSystem.ts` 每 tick 呼叫」——
+ * **那個檔案不存在**（CLAUDE.md 第三守則：註解會說謊，去驗證）。
+ *
+ * ⚠️ 它不是缺陷，是**沒有人需要它**：到期在**讀取端**執行（`markCount` /
+ * `namedCounters` / `lethalSaveFor` / {@link adjustMarkCount} 都先問
+ * `markExpired`），所以一個過期的標記對玩家已經是 0 層。這一支只是 GC。
+ * ⛔ 但也因此，**不要**把「每 N 秒掉一層」做成這裡的一個新掃描器再指望它會被
+ * 呼叫 —— 那正是這一支自己的處境。軸②走 `onInterval` hook，見檔頭⑤。
  */
 export function expireMarks(world: SimWorld): void {
   for (const id of sortedMarkHolders(world)) {

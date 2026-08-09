@@ -68,6 +68,24 @@ export interface AbilityPassiveRank {
    */
   block?: import("../combat/block").BlockGrant;
   /**
+   * 暴擊來源 this rank grants — see `sim/combat/critStrike.ts`. A SIXTH payload
+   * kind, and the reason is owner's own (GH#299 第 2 條): 暴擊 has TWO axes,
+   * 「%」 and 「幾倍」, and they belong to ONE source rather than to the champion.
+   *
+   * ⛔ `Stat.CritChance` + `Stat.CritDamage` cannot express it: those AGGREGATE,
+   * so +8.25 critDamage turns EVERY crit this champion ever rolls into 10× —
+   * 「6% 的那一次是 10 倍」 has no shape at all (`combat/critStrike.ts` ①).
+   *
+   * ⭐ THE SAME `ModifierSource.critStrike` field an equipped item writes:
+   * `rankedGrants` walks `StatsComp.sources` without caring about `kind`
+   * (measured 2026-08-09 — a grant on an `augment` / `passive` / `buff` source
+   * all roll identically), so the whole wiring is one forward in
+   * `abilities/abilityPassives.ts rankBlock` via `stats/sourceGrants.ts`.
+   *
+   * Pairs with `whileForm`: 「只有卍解狀態下才有的暴擊」 is one dropdown away.
+   */
+  critStrike?: import("../combat/critStrike").CritStrikeGrant;
+  /**
    * 形態閘 (task #249 變身) — which BODY this rank's payload is attached to.
    * ABSENT = "any" = both, i.e. every passive authored before this field.
    *
@@ -587,6 +605,19 @@ export interface AugmentDef {
   weight: number;
   modifiers?: StatModifier[];
   hooks?: HookDef[];
+  /**
+   * 格擋 / 暴擊來源 this augment grants (owner GH#299 第 2 · 6 條). Forwarded onto
+   * the `kind: "augment"` ModifierSource by `economy/draft.ts::applyAugmentPick`
+   * through `stats/sourceGrants.ts` — the SAME two fields an item writes, not a
+   * second mechanism.
+   *
+   * The 三選一 side is where `critRules.stackMode: "multiply"` earns its keep:
+   * the whole argument for multiplying (owner 2026-08-09) is 「玩家的第二張暴擊卡
+   * 不可以是廢牌」, and before this field a card had no way to BE a second
+   * independent crit source — it could only add to the aggregate two stats.
+   */
+  block?: import("../combat/block").BlockGrant;
+  critStrike?: import("../combat/critStrike").CritStrikeGrant;
   tags: string[];
 }
 

@@ -12,6 +12,7 @@ import {
   refineHookDamageContext,
   zAuraDef,
   zBlockGrant,
+  zCritStrikeGrant,
   zDamageType,
   zFlightGrant,
   zHookDefBase,
@@ -350,67 +351,22 @@ export const zItemDamageTypeOverride = z
 export const zItemBlockGrant = zBlockGrant;
 
 /**
- * [暴擊吸血] —— mirrors `CritStrikeGrant` in `sim/combat/critStrike.ts`, which is
- * where the mechanism and every one of these decisions is argued out.
+ * [暴擊吸血] —— **`zCritStrikeGrant` 的別名**,定義與五根軸的完整推導在
+ * `schema/effect.ts`(機制本身在 `sim/combat/critStrike.ts` 的檔頭)。
  *
- * 一支出貨道具、五根軸:天堂之劍 godie-i01n
+ * ⚠️ 這裡曾經是它的**定義**,2026-08-09 移走的理由與 {@link zItemBlockGrant}
+ * 一模一樣:授予它的不只有道具 —— owner #299 第 2 條要的「一條自己的機率 +
+ * 自己的倍率」現在天生技被動、三選一增益卡與限時增益都寫得出來,四個授權面
+ * 展開的是 `schema/effect.ts` 的**同一個** `SOURCE_GRANT_SHAPE`。
+ * 留成別名而不是改名,是為了保住同一個 ZodObject 實例(既有守衛與
+ * `fieldAdoption` 的 schema 命名都靠物件識別)。
+ * ⛔ 不要在這裡再寫一份 z.object:兩份會 drift,而 drift 的那一天兩邊的測試
+ * 各自只看自己那一半,全綠。
+ *
+ * 一支出貨道具:天堂之劍 godie-i01n
  * `{chance:0.06, damageMult:10, lifestealFraction:1}`.
- *
- * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
- *   · `chance` 上界 **1** —— 文案寫的是「6%」,一個把百分比直接抄進來的
- *     `0.06 → 6` 在沒有上界時就是**每一發都 10 倍而且回滿血**。
- *   · `chance` / `lifestealFraction` 下界 `.positive()` / `.min(0)` ——
- *     `chance: 0` 是一個合法但**會說謊**的值:卡片上寫著 [暴擊吸血],骰子照抽,
- *     什麼都不會發生。`lifestealFraction: 0` 反而是合法且有意義的(一個只給
- *     倍率、不給吸血的 grant),所以那一格的下界是 0 不是正數。
- *   · `damageMult` 下界 **1** —— 小於 1 的「暴擊」會讓暴擊比普通攻擊還弱,
- *     那不是平衡選擇,那是把 10 打成 0.1。
- *   · `damageMult` 上界 **50** —— 出貨最強是 10。50 是「這是誤植不是設計」的
- *     那條線(把 10 打成 100 會被擋在載入時),而不是平衡政策;真的要更高是
- *     這裡一行,改的人知道自己在改什麼。
  */
-export const zItemCritStrike = z
-  .object({
-    chance: z
-      .number()
-      .positive()
-      .max(1)
-      .describe("觸發機率,0~1(0.06 = 6%)。每一次普攻(近戰揮擊/遠程射出)各抽一次。"),
-    damageMult: z
-      .number()
-      .min(1)
-      .max(50)
-      .describe(
-        "抽中時**這一條**貢獻的倍率(10 = 10倍),不是加在暴擊傷害屬性上的增量。" +
-          "和英雄自己的暴擊傷害、以及其他抽中的暴擊來源**相乘**(owner 2026-08-09," +
-          "後台『暴擊規則』的 stackMode 可改),總倍率再夾在該頁的上限。" +
-          "⚠️ 2026-08-09 以前這裡寫的是「取大的那一個,不相乘」。",
-      ),
-    lifestealFraction: z
-      .number()
-      .min(0)
-      .max(1)
-      .describe(
-        "抽中時吸回**真的從血條掉下來的量**的幾成,0~1(1 = 100%)。" +
-          "打在護盾上被吃掉的部分不算,和一般吸血同一個基數。",
-      ),
-    empowers: z
-      .enum(["ownProcOnly", "everyCrit"])
-      .optional()
-      .describe(
-        "倍率與吸血套用在哪些暴擊上:ownProcOnly(預設)= 只有這件裝備自己抽中的那一發;" +
-          "everyCrit = 這一發只要是暴擊就算(包含英雄自己暴擊率骰出來的)。" +
-          "預設選較弱的那一個 —— 一個已經堆滿暴擊率的英雄不會因為撿到它就整場 10 倍。",
-      ),
-    lifestealMode: z
-      .enum(["replace", "add"])
-      .optional()
-      .describe(
-        "這一發的吸血怎麼結合持有者原本的吸血:replace(預設)= 直接用上面那個比例;" +
-          "add = 加在原本的吸血上面。預設 replace 是較弱的那一個。",
-      ),
-  })
-  .strict();
+export const zItemCritStrike = zCritStrikeGrant;
 
 export const zItemDef = z
   .object({

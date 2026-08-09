@@ -514,6 +514,178 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   }
 }
 
+/**
+ * 格擋 —— mirrors `BlockGrant` in `sim/combat/block.ts`, which is where the
+ * mechanism, the WC3 evidence and every one of these six axes is argued out.
+ *
+ * ⚠️ 它住在**這一支**而不是 `schema/item.ts`,理由跟 {@link zVisionGrant} /
+ * {@link zFlightGrant} 住在這裡一模一樣:授予它的**不只有道具**。
+ * `zAbilityPassiveRank` 也要用同一份(20-00 銀色甲胄「30%機率格擋 100% 魔法傷害」
+ * 是 Saber 的天生技,79-002 虛化是卍解狀態下的物理格擋),而 `schema/item.ts`
+ * import 這一支 —— 反過來 import 會closed 一個真的模組循環,兩份定義則會 drift。
+ * `zItemBlockGrant` 就是這一個常數的別名,不是第二份。
+ *
+ * 一組軸、三種讀法(道具那三支的實際值列在 `schema/item.ts` 的 `zItemBlockGrant`):
+ *   平擋   `{damageTypes:["physical","magic"], chance:0.5, fraction:1}`
+ *   限型別 `{damageTypes:["magic"],            chance:0.3, fraction:1}`
+ *   保命   `{…, lethalOnly:true, internalCooldown:1}`
+ *
+ * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
+ *   · `chance` / `fraction` 上界 **1** —— 文案寫的是「30%」「50%」,而一個把
+ *     百分比直接抄進來的 `0.3 → 30` 在沒有上界時就是**永遠觸發**(`chance`)或
+ *     **把傷害變成治療**(`fraction > 1` ⇒ `impact - cut < 0`)。上界 1 讓這種
+ *     誤植在**載入時**就紅,而不是在某一場比賽裡變成一個無敵的玩家。
+ *   · `chance` / `fraction` 下界 **>0**(`.positive()`)—— `0` 是一個合法但
+ *     **會說謊**的值:卡片上寫著 [格擋],骰子照抽、擋格語音照喊,傷害一點沒少。
+ *   · `damageTypes` 必填且 `.min(1)` —— 「真實傷害無法阻擋」必須是這個陣列的
+ *     內容,不是程式裡的一行 `if`;而空陣列是一個永遠不會觸發的格擋。
+ *   · `internalCooldown` 上界 **300 秒** —— owner 對道具選的是 1 秒,w3x 原作
+ *     那兩支是 Cool 45 / Cool 100,所以 300 是「這是誤植不是設計」的那條線,
+ *     不是平衡政策。下界 0 是合法且有意義的(= 沒有冷卻),所以是 `.min(0)`。
+ */
+export const zBlockGrant = z
+  .object({
+    damageTypes: z
+      .array(zDamageType)
+      .min(1)
+      .describe(
+        "這個格擋擋得住哪些傷害型別。想表達「真實傷害無法阻擋」就**不要**把 true 列進來 —— " +
+          "擋不擋真傷是這個欄位的內容,不是寫死的規則。",
+      ),
+    chance: z
+      .number()
+      .positive()
+      .max(1)
+      .describe("觸發機率,0~1(0.5 = 50%)。每一發合格的傷害各抽一次,抽中才擋。"),
+    fraction: z
+      .number()
+      .positive()
+      .max(1)
+      .describe(
+        "抽中時擋掉這一發的幾成,0~1(1 = 整包擋掉)。擋掉的部分不會進護盾池,也不會扣血;" +
+          "沒擋掉的部分照常走護盾與血條。",
+      ),
+    lethalOnly: z
+      .boolean()
+      .optional()
+      .describe(
+        "只擋「會殺死我」的那一發(抵擋致命一擊)。留空 = 每一發合格的傷害都可能被擋。",
+      ),
+    lethalBasis: z
+      .enum(["hp", "hpAndShields"])
+      .optional()
+      .describe(
+        "致死怎麼算:hpAndShields(預設)= 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」;" +
+          "hp = 只看血條(文案的字面讀法)。只有 lethalOnly 打開時才有意義。",
+      ),
+    internalCooldown: z
+      .number()
+      .min(0)
+      .max(300)
+      .optional()
+      .describe(
+        "內部冷卻(秒):這個來源擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻," +
+          "每一發合格的傷害都各抽一次。抽輸不會進冷卻,只有真的擋中才會。",
+      ),
+  })
+  .strict();
+
+/**
+ * 暴擊來源 —— mirrors `CritStrikeGrant` in `sim/combat/critStrike.ts`, which is
+ * where the mechanism and every one of these five axes is argued out.
+ *
+ * ⭐ **這一格就是 owner #299 第 2 條要的那根軸。** 他說暴擊「分 % 幾倍傷害,
+ * 不是純暴擊數字累加,反而像是多個獨立技能判斷」——「合成規則」那一半
+ * 2026-08-09 已經做完了(`sim/critRules.ts` 的 `stackMode: "multiply"`,
+ * 每一條各抽各的骰、倍率相乘);剩下的那一半是**作者要寫得出「一條自己的機率
+ * + 自己的倍率」的來源**,而那就是這個物件。
+ * ⛔ 它不是 `Stat.CritChance` / `Stat.CritDamage` 兩條屬性的第三種寫法:
+ * 那兩條是**聚合**的,加下去之後這位英雄的每一次暴擊都變成那個倍率,
+ * 「6% 的那一次是 10 倍」在結構上寫不出來(`critStrike.ts` 檔頭 ①)。
+ *
+ * ⚠️ 它住在**這一支**而不是 `schema/item.ts`,理由與 {@link zBlockGrant}
+ * 一模一樣:授予它的不只有道具。`zItemCritStrike` 是這一個常數的**別名**,
+ * 不是第二份 —— 兩份會 drift,而 drift 的那一天兩邊的測試各自只看自己那一半。
+ *
+ * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
+ *   · `chance` 上界 **1** —— 文案寫的是「6%」,一個把百分比直接抄進來的
+ *     `0.06 → 6` 在沒有上界時就是**每一發都 10 倍而且回滿血**。
+ *   · `chance` 下界 `.positive()` —— `0` 是一個合法但**會說謊**的值:
+ *     卡片上寫著 [暴擊],骰子照抽,什麼都不會發生。
+ *     `lifestealFraction: 0` 反而是合法且有意義的(只給倍率、不給吸血),
+ *     所以那一格的下界是 0 不是正數。
+ *   · `damageMult` 下界 **1** —— 小於 1 的「暴擊」比普通攻擊還弱,
+ *     那不是平衡選擇,那是把 10 打成 0.1。
+ *   · `damageMult` 上界 **50** —— 出貨最強是 10(天堂之劍)。50 是
+ *     「這是誤植不是設計」的那條線,不是平衡政策。
+ */
+export const zCritStrikeGrant = z
+  .object({
+    chance: z
+      .number()
+      .positive()
+      .max(1)
+      .describe("觸發機率,0~1(0.06 = 6%)。每一次普攻(近戰揮擊/遠程射出)各抽一次。"),
+    damageMult: z
+      .number()
+      .min(1)
+      .max(50)
+      .describe(
+        "抽中時**這一條**貢獻的倍率(10 = 10倍),不是加在暴擊傷害屬性上的增量。" +
+          "和英雄自己的暴擊傷害、以及其他抽中的暴擊來源**相乘**(owner 2026-08-09," +
+          "後台『暴擊規則』的 stackMode 可改),總倍率再夾在該頁的上限。",
+      ),
+    lifestealFraction: z
+      .number()
+      .min(0)
+      .max(1)
+      .describe(
+        "抽中時吸回**真的從血條掉下來的量**的幾成,0~1(1 = 100%)。" +
+          "打在護盾上被吃掉的部分不算,和一般吸血同一個基數。",
+      ),
+    empowers: z
+      .enum(["ownProcOnly", "everyCrit"])
+      .optional()
+      .describe(
+        "倍率與吸血套用在哪些暴擊上:ownProcOnly(預設)= 只有這個來源自己抽中的那一發;" +
+          "everyCrit = 這一發只要是暴擊就算(包含英雄自己暴擊率骰出來的)。" +
+          "預設選較弱的那一個 —— 一個已經堆滿暴擊率的英雄不會因為撿到它就整場 10 倍。",
+      ),
+    lifestealMode: z
+      .enum(["replace", "add"])
+      .optional()
+      .describe(
+        "這一發的吸血怎麼結合持有者原本的吸血:replace(預設)= 直接用上面那個比例;" +
+          "add = 加在原本的吸血上面。預設 replace 是較弱的那一個。",
+      ),
+  })
+  .strict();
+
+/**
+ * ⭐ **一個來源可以攜帶的「非屬性」授予** —— 一份,不是四份(第零守則⑨)。
+ *
+ * `ModifierSource` 上有一族東西不是 `Stat` 上的數字:格擋與暴擊來源。
+ * 兩者的共同性質是 `sim` 端**完全不看 `kind`** —— `combat/block.ts::blockCutFor`
+ * 與 `combat/critStrike.ts::rankedGrants` 都只走 `StatsComp.sources`。
+ * 所以「哪一種來源授予得起」從來不是引擎的限制,而是**授權格**的限制:
+ * schema 上有沒有這一格 + 建構那個 source 的地方有沒有轉發。
+ *
+ * ⛔ 所以它是一個**展開的常數**,不是抄四次:
+ * `applyBuff`(限時授予 / 主動技能)、`zAbilityPassiveRank`(天生技與被動)、
+ * `zAugmentDef`(三選一增益卡)、`zItemDef`(道具)全部展開同一份。
+ * 下一個「騎在來源上的授予」加在這裡一格,四個授權面自動全部拿到。
+ *
+ * ⚠️ 道具那一面歷史上先落地,所以 `schema/item.ts` 仍然逐格寫(它還帶著
+ * `zItemBlockGrant` / `zItemCritStrike` 兩個別名給既有守衛用),但**指向的是
+ * 同一個 ZodObject 實例** —— 不是第二份定義。
+ *
+ * ⚠️ 轉發那一半在 `sim/stats/sourceGrants.ts::sourceGrants()`,同樣是一份。
+ */
+export const SOURCE_GRANT_SHAPE = {
+  block: zBlockGrant.optional(),
+  critStrike: zCritStrikeGrant.optional(),
+} as const;
+
 /** Recursive knot: spawnProjectile.onHit is EffectDef[] again. */
 export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(
   () => zEffectDefUnion.superRefine(refineEffectDef),
@@ -924,19 +1096,51 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       ...EFFECT_COMMON_SHAPE,
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       /**
-       * ⭐ 層數（owner 2026-08-09 / GH#301-5：「狀態除了有無也會是數字層數」）。
+       * ⭐ 層數的**增減**（owner 2026-08-09 / GH#301-5「狀態除了有無也會是數字
+       * 層數」＋ GH#304「疊層可能會隨觸發／隨時間 增加**或減少**」）。
        *
        * 省略 = 1 = 今天的行為（「身上有這個狀態」）。⛔ 不是 0 —— 0 層等於沒有，
-       * 而一份沒寫這一格的舊文件的意思是「有」。
-       * 上界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（999，擋「12 打成 120」
+       * 而一份沒寫這一格的舊文件的意思是「有」。**0 本身被拒絕**：一個什麼都不
+       * 做的效果掛在卡片上是失敗形態②。
+       *
+       * ⭐ **負數 = 減層**（GH#304 軸①②）。這一格是這一批唯一需要的新詞彙：
+       *   · 軸①【隨觸發】把這個效果掛在任何一個 `HookEvent` 上
+       *     （`onBasicAttack` +1、`onDamageTaken` -1、`onKill` +2…）；
+       *   · 軸②【隨時間】掛在 `onInterval` 上，節奏用 `HookDef.internalCooldown`
+       *     表達（`internalCooldown: 3` 就是「每 3 秒」）。
+       * ⛔ 兩條軸都**沒有**新的引擎機制，這是刻意的：`IntervalHookSystem` 決策 1
+       * 已經拒絕過「第二個冷卻概念」，而 `sim/marks.ts` 檔頭⑤說明了為什麼在
+       * `MarkSpec` 上開一格 `decayEverySec` 會多出一支沒有人呼叫的掃描器。
+       *
+       * ⚠️ 減層**不會**憑空建立一筆狀態（身上沒有 = 什麼都不做），也**不會**
+       * 把到期時間往後推 —— 見 `refresh`。
+       *
+       * 界共用 `sim/markLimits.ts` 的 `MARK_MAX_COUNT`（±999，擋「12 打成 120」
        * 那種多一個零），⛔ 不抄字面值：那已經是這個 repo 對「一個計數器最多幾層」
        * 的答案，抄第二份就是第四個住處。
-       *
-       * ⚠️ 層數怎麼**送到客戶端**還沒有答案（`ENTITY_FLAG_FREE_BITS` 是空的），
-       * 三條路與各自的代價寫在 `sim/effects/effect.ts` 的 `applyStatus.stacks`。
-       * 在裁決之前，⛔ 任何「HUD 會顯示第幾層」的文案都是謊話。
        */
-      stacks: z.number().int().min(1).max(MARK_MAX_COUNT).optional(),
+      stacks: z
+        .number()
+        .int()
+        .min(-MARK_MAX_COUNT)
+        .max(MARK_MAX_COUNT)
+        .refine((n) => n !== 0, {
+          message: "stacks 不可以是 0 —— 一個不動任何層數的效果在卡片上看得到、在遊戲裡什麼都不會發生",
+        })
+        .optional(),
+      /**
+       * 重複施加時**要不要把到期時間往後推**。省略 = `"extend"` = 這一格出現
+       * 之前的行為（`Math.max(舊到期, 新到期)`）。
+       *
+       * ⭐ 它是 GH#304 軸②的必要條件，不是選配：一個掛在 `onInterval` 上、
+       * 每 3 秒 +1 層的計數器如果每次都續期，那筆狀態就**永遠不會到期** ——
+       * 「20 秒內疊到 5 層」會變成「永久 5 層」，而畫面上完全看不出差別
+       *（失敗形態②）。`"keep"` 讓層數與窗口變成兩件獨立的事。
+       *
+       * ⚠️ 減層（`stacks < 0`）**一律**當作 `"keep"`，不管這一格填什麼：
+       * 「扣一層」不是「重新施加」，而一個會延長減益的減益是沒有人要的東西。
+       */
+      refresh: z.enum(["extend", "keep"]).optional(),
       /**
        * 這個狀態掛多久(秒)。**兩端都有界**(CLAUDE.md「欄位要有上界」/ #277) ——
        * 這一格在 2026-08-01 之前只有 `.min(0)`,也就是完全沒有上界,而 owner 當天
@@ -1104,6 +1308,25 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * `polarity: "buff"` **兩格都要填**。
        */
       polarity: z.enum(["buff", "debuff"]).optional(),
+      /**
+       * ⭐ **限時授予格擋 / 暴擊來源**（owner #299 第 2 · 6 條）。
+       *
+       * 在這一格之前，`block` 只掛得到道具與天生技被動、`critStrike` 只掛得到
+       * 道具 —— 所以「接下來 5 秒內格擋」與「這支大招期間 20% 機率 3 倍暴擊」
+       * **完全沒有形狀**，而那正是 owner 說「授權格要放寬」的那一格。
+       *
+       * ⭐ 它同時也是**主動技能**那一格的答案：Q/W/E/R/EX 的效果清單裡不需要
+       * 一個 `kind: "block"`，因為「暫時獲得格擋」本來就是一份增益。
+       * ⛔ 開一個新的 effect kind 才是錯的形狀 —— 那會變成第二套格擋。
+       *
+       * 到期由這份增益自己的 `expiresAtTick` 管：`blockCutFor` 與
+       * `rankedGrants` 都已經在跳過過期的 source，所以這裡**沒有第二個時鐘**。
+       * ⚠️ 內部冷卻的記帳（`blockLastFired`）住在 source 實例上，而每一次施放
+       * 都是一份新的 source，所以掛在這裡的 `internalCooldown` 讀作
+       * 「這一次施放最多擋幾次」——與 `hooks` 那一格的 `internalCooldown`
+       * 逐字相同的語意，不是全域冷卻。
+       */
+      ...SOURCE_GRANT_SHAPE,
     })
     .strict(),
   /**
@@ -2430,82 +2653,6 @@ export const zFlightGrant = z
   })
   .strict();
 
-/**
- * 格擋 —— mirrors `BlockGrant` in `sim/combat/block.ts`, which is where the
- * mechanism, the WC3 evidence and every one of these six axes is argued out.
- *
- * ⚠️ 它住在**這一支**而不是 `schema/item.ts`,理由跟 {@link zVisionGrant} /
- * {@link zFlightGrant} 住在這裡一模一樣:授予它的**不只有道具**。
- * `zAbilityPassiveRank` 也要用同一份(20-00 銀色甲胄「30%機率格擋 100% 魔法傷害」
- * 是 Saber 的天生技,79-002 虛化是卍解狀態下的物理格擋),而 `schema/item.ts`
- * import 這一支 —— 反過來 import 會closed 一個真的模組循環,兩份定義則會 drift。
- * `zItemBlockGrant` 就是這一個常數的別名,不是第二份。
- *
- * 一組軸、三種讀法(道具那三支的實際值列在 `schema/item.ts` 的 `zItemBlockGrant`):
- *   平擋   `{damageTypes:["physical","magic"], chance:0.5, fraction:1}`
- *   限型別 `{damageTypes:["magic"],            chance:0.3, fraction:1}`
- *   保命   `{…, lethalOnly:true, internalCooldown:1}`
- *
- * ⚠️ 上下界不是裝飾,每一個都擋一種真的會發生的誤植:
- *   · `chance` / `fraction` 上界 **1** —— 文案寫的是「30%」「50%」,而一個把
- *     百分比直接抄進來的 `0.3 → 30` 在沒有上界時就是**永遠觸發**(`chance`)或
- *     **把傷害變成治療**(`fraction > 1` ⇒ `impact - cut < 0`)。上界 1 讓這種
- *     誤植在**載入時**就紅,而不是在某一場比賽裡變成一個無敵的玩家。
- *   · `chance` / `fraction` 下界 **>0**(`.positive()`)—— `0` 是一個合法但
- *     **會說謊**的值:卡片上寫著 [格擋],骰子照抽、擋格語音照喊,傷害一點沒少。
- *   · `damageTypes` 必填且 `.min(1)` —— 「真實傷害無法阻擋」必須是這個陣列的
- *     內容,不是程式裡的一行 `if`;而空陣列是一個永遠不會觸發的格擋。
- *   · `internalCooldown` 上界 **300 秒** —— owner 對道具選的是 1 秒,w3x 原作
- *     那兩支是 Cool 45 / Cool 100,所以 300 是「這是誤植不是設計」的那條線,
- *     不是平衡政策。下界 0 是合法且有意義的(= 沒有冷卻),所以是 `.min(0)`。
- */
-export const zBlockGrant = z
-  .object({
-    damageTypes: z
-      .array(zDamageType)
-      .min(1)
-      .describe(
-        "這個格擋擋得住哪些傷害型別。想表達「真實傷害無法阻擋」就**不要**把 true 列進來 —— " +
-          "擋不擋真傷是這個欄位的內容,不是寫死的規則。",
-      ),
-    chance: z
-      .number()
-      .positive()
-      .max(1)
-      .describe("觸發機率,0~1(0.5 = 50%)。每一發合格的傷害各抽一次,抽中才擋。"),
-    fraction: z
-      .number()
-      .positive()
-      .max(1)
-      .describe(
-        "抽中時擋掉這一發的幾成,0~1(1 = 整包擋掉)。擋掉的部分不會進護盾池,也不會扣血;" +
-          "沒擋掉的部分照常走護盾與血條。",
-      ),
-    lethalOnly: z
-      .boolean()
-      .optional()
-      .describe(
-        "只擋「會殺死我」的那一發(抵擋致命一擊)。留空 = 每一發合格的傷害都可能被擋。",
-      ),
-    lethalBasis: z
-      .enum(["hp", "hpAndShields"])
-      .optional()
-      .describe(
-        "致死怎麼算:hpAndShields(預設)= 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」;" +
-          "hp = 只看血條(文案的字面讀法)。只有 lethalOnly 打開時才有意義。",
-      ),
-    internalCooldown: z
-      .number()
-      .min(0)
-      .max(300)
-      .optional()
-      .describe(
-        "內部冷卻(秒):這個來源擋中一次之後,要隔多久才能再擋一次。留空 / 0 = 沒有冷卻," +
-          "每一發合格的傷害都各抽一次。抽輸不會進冷卻,只有真的擋中才會。",
-      ),
-  })
-  .strict();
-
 /** One rank of `ability@1.passive` — mirrors `AbilityPassiveRank`. */
 export const zAbilityPassiveRank = z
   .object({
@@ -2531,8 +2678,16 @@ export const zAbilityPassiveRank = z
      * 出貨用它的兩支都是招牌被動:20-00 銀色甲胄(Saber 天生技,
      * 「30%機率格擋 100% 魔法傷害」)與 79-002 虛化(卍解狀態下的物理格擋,
      * 配 `whileForm: "alternate"`)。
+     *
+     * ⭐ 2026-08-09:它與 `critStrike` 一起改由 {@link SOURCE_GRANT_SHAPE} 展開
+     * (⛔ 一份,不是四份)。**`block` 這一格一個字都沒變** —— 同一個
+     * `zBlockGrant` 實例、同一個鍵名;變的只是它現在跟另外三個授權面共用一份
+     * 定義,所以下一個「騎在來源上的授予」不會又出現四份。
+     * 而 `critStrike` 是**新的**:owner #299 第 2 條的「一條自己的機率 + 自己的
+     * 倍率」在此之前只有道具寫得出來,配 `whileForm` 就寫得出
+     * 「只有變身之後才有的暴擊」。
      */
-    block: zBlockGrant.optional(),
+    ...SOURCE_GRANT_SHAPE,
     /**
      * 形態閘 — WHICH BODY this rank's payload is attached to (task #249 變身).
      * ABSENT = `"any"` = attached in both bodies, which is every passive

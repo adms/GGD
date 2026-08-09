@@ -27,6 +27,7 @@ import type { AbilityDef } from "../content/defs";
 import type { ModifierSource } from "../stats/modifiers";
 import { Abilities } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
+import { hasSourceGrant, sourceGrants } from "../stats/sourceGrants";
 import { applyAugmentToHooks, collectAugmentOps } from "./abilityAugment";
 
 /** Stable, collision-free source id for one ability's passive. */
@@ -158,7 +159,13 @@ function rankBlock(
     // Same clause, same reason: without it the source never attaches,
     // `blockCutFor` never finds a grant, and 「技能授予格擋」 is dead content
     // with every test still green (failure form ②).
-    !block.block
+    //
+    // ⭐ 2026-08-09：`!block.block` 換成 `!hasSourceGrant(block)`（GH#299 第 2 條）。
+    // ⛔ 不是「多加一個 `&& !block.critStrike`」—— 那是這條註解已經寫過四次的
+    // 同一個坑（auras / vision / flight / block 各踩一次），而每一次都是**加一格
+    // 就要記得回來改這裡**。第七個授予出現時，只要它進了 `SourceGrantFields`，
+    // 這一行不用再動一次。
+    !hasSourceGrant(block)
   )
     return null;
   return {
@@ -186,7 +193,11 @@ function rankBlock(
     // 一旦有人 author 了一支帶 ICD 的技能格擋,修法是把舊 source 的
     // `blockLastFired` 在重新掛上時搬過去(純量,沒有索引可以錯位 ——
     // 見 `stats/modifiers.ts` 對這一格的說明),不是在這裡加第二個時鐘。
-    ...(block.block ? { block: block.block } : {}),
+    //
+    // ⭐ 2026-08-09:`critStrike` 從這裡一起轉發(GH#299 第 2 條)——
+    // 「一條自己的機率 + 自己的倍率」的暴擊來源在此之前只有道具寫得出來。
+    // ⛔ 一份轉發,不是兩行 —— 見 `stats/sourceGrants.ts` 檔頭。
+    ...sourceGrants(block),
   };
 }
 

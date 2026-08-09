@@ -23,6 +23,7 @@ import { Stat } from "./stats/statTypes";
 import { queryOverlap } from "./collision/queries";
 import { circle } from "./collision/shapes";
 import { isAutoTargetable } from "./targeting";
+import { grantImmunity } from "./effects/invulnerable";
 import {
   NIGHT_PACT_AURA_SOURCE_ID,
   beginCombatNightPact,
@@ -397,7 +398,11 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     nightPactSystem(world);
 
     expect(world.health.get(enemy)!.mana, "魔力全失 = to ZERO, not a fraction").toBe(0);
-    expect(world.health.get(enemy)!.hp, "…並且受到傷害").toBeCloseTo(enemyHpBefore - 25, 6);
+    expect(
+      world.damageQueue.some((p) => p.target === enemy && p.source === king && p.amount === 25),
+      "…並且受到傷害 — a REAL packet (GH#298), so the interception layer can see it",
+    ).toBe(true);
+    expect(world.health.get(enemy)!.hp, "…and NOT written behind the queue's back").toBe(enemyHpBefore);
     expect(world.health.get(mate)!.mana, "an ALLY casting beside 死之王 is safe").toBeGreaterThan(0);
     expect(world.health.get(farEnemy)!.mana, "an enemy 20u away is out of range").toBeGreaterThan(0);
     expect(world.health.get(king)!.mana, "死之王 never burns itself").toBeGreaterThan(0);
@@ -416,6 +421,41 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     e2.mana = e2.maxMana;
     nightPactSystem(world);
     expect(world.health.get(enemy)!.mana, "chance 0 → never").toBeGreaterThan(0);
+  });
+
+  /**
+   * GH#298 — THE BEARING LINE. 「並且受到傷害」 was `chp.hp -= burn.damage`, i.e.
+   * a write no interception could ever see. This asserts the CONSEQUENCE, not
+   * the shape: two identical enemy casters, one wearing 無敵, and only the naked
+   * one bleeds. MUTATION: restore the bare `hp -=` → the 無敵 caster bleeds → red.
+   */
+  it("GH#298 the burn is queued, so 無敵 really refuses it", () => {
+    world.nightPactRules = nightPactRulesFromConfig({
+      ...CFG,
+      manaBurn: { enabled: true, radius: 8, chance: 1, damage: 25 },
+    });
+    spawn(KING, 0, P(0));
+    const naked = spawn(PLAIN, 1, P(2));
+    const warded = spawn(PLAIN, 1, P(-2));
+    world.step(NO_INTENTS);
+    grantImmunity(world, warded, {
+      physicalUntil: 0,
+      magicUntil: 0,
+      trueUntil: world.tick + 100,
+      controlUntil: 0,
+    });
+    const before = new Map([naked, warded].map((id) => [id, world.health.get(id)!.hp] as const));
+
+    world.events.length = 0;
+    for (const id of [naked, warded]) world.emit("abilityCast", { caster: id, slot: "Q", abilityId: "x" });
+    nightPactSystem(world); // slot 9c′ — the drain (slot 8)已經跑過了
+    world.step(NO_INTENTS); // …so the packet lands on the NEXT tick's slot 8
+
+    expect(before.get(naked)! - world.health.get(naked)!.hp, "an unprotected caster bleeds").toBeGreaterThan(0);
+    expect(
+      world.health.get(warded)!.hp,
+      "無敵 refuses it — a bare `hp -=` could never see this",
+    ).toBeGreaterThanOrEqual(before.get(warded)!);
   });
 
   it("the shipped default block validates against its own Zod schema", () => {

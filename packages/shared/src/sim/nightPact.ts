@@ -411,9 +411,68 @@ function nightAuraSource(rules: NightPactRules, stacks: number): ModifierSource 
 }
 
 /**
+ * `origin` for a mana-burn packet — the 天生技 doc the proc actually comes from,
+ * read off the body the carrier is WEARING this tick (same reading as
+ * {@link isNightPactCarrier}), so a 變身 of 死之王 keeps correct provenance for
+ * free. Falls back to the first configured id when a carrier somehow has no
+ * resolvable passive — a packet with a nonsense origin is worse than one with a
+ * slightly stale one, because `damageSource`/型別轉換 both branch on the prefix.
+ */
+function burnOrigin(world: SimWorld, carrier: EntityId, rules: NightPactRules): string {
+  const champ = world.champion.get(carrier);
+  const passiveId = champ ? Champions.tryGet(champ.championId)?.passiveAbility : undefined;
+  return `ability:${passiveId ?? rules.abilityIds[0] ?? "nightPact"}`;
+}
+
+/**
  * PASS 3 — 「在死之王附近想施展技能的敵方單位有 12% 的機率魔力全失,並且受到傷害」.
  *
  * Nothing to do with flags (DECISION 4). Reads this tick's `abilityCast`.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * GH#298 — 「並且受到傷害」 IS A REAL DAMAGE PACKET, NOT A BARE `chp.hp -=`.
+ *
+ * ① WHY NOT the火圈 fix. `combat/environmentalBurn.ts` exists for 傷害**沒有
+ *    攻擊者**的那一種, and it buys that exemption by deliberately dropping the
+ *    whole downstream: no `emit("damage")`, no kill credit, no scoreboard, no
+ *    lifesteal, no impact. Every one of those omissions is wrong here, because
+ *    this proc HAS a source — the living carrier `near`, 死之王 himself. A kill
+ *    by it must pay HIM the bounty and land in `death.killerId`; the victim must
+ *    see the red number that explains why he lost hp. Routing it through the
+ *    environmental exit would fix the interception half and silently break the
+ *    attribution half.
+ *
+ *    The rate argument that forced 火圈 out of the queue also does not hold:
+ *    火圈 is one packet PER LIVING BODY PER TICK (~360/s); this is one packet per
+ *    enemy CAST times a 12 % roll.
+ *
+ * ② WHICH SLOT, and why the packet lands one tick later.
+ *    `nightPactSystem` runs at 9c′ — AFTER `combatResolveSystem` (8) drained the
+ *    queue — so what we push here is resolved by the NEXT tick's slot 8, i.e.
+ *    1/30 s later. That is a uniform, deterministic, replica-identical delay,
+ *    and it is FORCED: PASS 1 has to read this tick's `death` events, which
+ *    `deathSystem` (9) only emits after the drain. The precedent is verbatim —
+ *    `guardianSystem` (9d) and `worldHookSystem` (9f) both queue from post-drain
+ *    slots for exactly this reason (see SimWorld.step's comment on 9f).
+ *
+ * ③ RECURSION. Queueing is also what makes a loop impossible. The drain runs
+ *    on-damage hooks that may queue MORE damage, and it bounds that chain with
+ *    `DAMAGE_QUEUE_MAX_PASSES`. Our packet is inside that budget like every
+ *    other one. Resolving inline here instead would run hooks from a slot the
+ *    pass-counter knows nothing about.
+ *
+ * ④ WHAT ACTUALLY CHANGES. `type: "true"` is what the field has always
+ *    documented, and `mitigate()` is a pass-through for true — so 護甲/魔抗
+ *    behave exactly as they did. The delta is precisely the four the issue
+ *    names: 無敵 (`refusesDamage`) · 免死 (`lethalSaveFor`) · 護盾池 · 魔力屏障,
+ *    plus kill credit and the scoreboard. `combatEnv.damageDealt` now applies:
+ *    every ability packet in the tree is multiplied by it, and the one exemption
+ *    (火圈) is justified by 「後台調低輸出不可以讓保底結束回合失效」, which says
+ *    nothing about a 12 % proc.
+ *
+ * ⑤ 魔力全失 STAYS UNCONDITIONAL. It is a resource write, not damage — an
+ *    invulnerable caster still loses his mana, exactly as before. Only the
+ *    「並且受到傷害」 half was ever interceptable, and only that half moved.
  */
 function resolveManaBurn(world: SimWorld, rules: NightPactRules): void {
   const burn = rules.manaBurn;
@@ -447,11 +506,25 @@ function resolveManaBurn(world: SimWorld, rules: NightPactRules): void {
     if (world.rng.next() >= burn.chance) continue;
     const drained = chp.mana;
     chp.mana = 0; // 魔力全失 —全失 means to zero, not "a fraction"
-    if (burn.damage > 0) chp.hp -= burn.damage;
+    if (burn.damage > 0) {
+      world.damageQueue.push({
+        source: near,
+        target: caster,
+        amount: burn.damage,
+        type: "true",
+        crit: false,
+        origin: burnOrigin(world, near, rules),
+      });
+    }
     world.emit("nightPactBurn", {
       id: caster,
       source: near,
       manaLost: drained,
+      // ⚠️ the amount QUEUED, not the amount that will land — the interception
+      // layer (無敵/免死/護盾) only speaks next tick, inside the drain. The number
+      // the PLAYER sees is the queue's own `damage` event, so there is still
+      // exactly one number on screen and this field is not rendered by anything
+      // (its documented consumer in `net/eventFanout.ts` is the blue MP drain).
       damage: burn.damage,
       x: ct.pos.x,
       z: ct.pos.z,

@@ -108,26 +108,35 @@ function fmt(x: number): string {
   return Number.isFinite(x) ? x.toFixed(0) : "—";
 }
 
-function assertEnvBaseInSync(): string[] {
-  const warnings: string[] = [];
+/**
+ * Report what the sweep actually ran at.
+ *
+ * ⚠️ GH#297 — this used to DIFF `COMBAT_ENV_BASE` against the shipped file and
+ * warn on mismatch. That check could not work: it only compared the keys the
+ * hand-written table happened to contain, so the two keys it knew about drifted
+ * (cooldown 0.25 vs 0.2) while the ones it did not know about (manaRegen ×8, the
+ * whole 三圍 coefficient block) were invisible to it by construction. The table
+ * is DERIVED now, so drift is structurally impossible and there is nothing left
+ * to diff — what remains is the provenance line the report needs.
+ */
+function envBaseProvenance(): string[] {
+  const notes: string[] = [];
   try {
     const doc = JSON.parse(readFileSync(COMBAT_ENV_PATH, "utf8")) as { multipliers?: Record<string, number> };
     const mult = doc.multipliers ?? {};
-    for (const [k, v] of Object.entries(COMBAT_ENV_BASE)) {
-      if (mult[k] !== v) warnings.push(`combat-env.json ${k}=${mult[k]} but harness base uses ${v}`);
-    }
-    if (typeof mult.maxHealth === "number") warnings.push(`current shipped maxHealth = ${mult.maxHealth}`);
+    notes.push(`env base read from combat-env.json: ${JSON.stringify(COMBAT_ENV_BASE)}`);
+    if (typeof mult.maxHealth === "number") notes.push(`current shipped maxHealth = ${mult.maxHealth}`);
   } catch (e) {
-    warnings.push(`could not read combat-env.json: ${(e as Error).message}`);
+    notes.push(`could not read combat-env.json: ${(e as Error).message}`);
   }
-  return warnings;
+  return notes;
 }
 
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   const t0 = Date.now();
   const roster = await loadRoster(CONTENT_DIR);
-  const envWarnings = assertEnvBaseInSync();
+  const envWarnings = envBaseProvenance();
 
   console.log(
     `[ttk] roster=${roster.length} champions, matches/value=${args.matches} ` +
@@ -250,7 +259,7 @@ function renderReport(c: ReportCtx): string {
       `rules, phase timings) is set before tick 0.`,
   );
   L.push(`- **Sample.** ${c.roster}-champion model-backed roster (the live random-pick pool). Each match spawns 12 bots → two parallel 3v3 duels → 2 samples. ${c.args.matches} matches per HP value → ~${c.args.matches * 2} duels per value per mode. Champion matchup is a deterministic function of the match seed and INDEPENDENT of maxHealth, so every HP value fights the identical matchups (controlled comparison).`);
-  L.push(`- **Combat env.** Shipped \`combat-env.json\` base (cooldown ×0.25, abilityRange ×0.6, move speed ×1.0, all else 1.0) with \`maxHealth\` overridden per run.`);
+  L.push(`- **Combat env.** Read live from \`combat-env.json\` (${JSON.stringify(COMBAT_ENV_BASE)}) with \`maxHealth\` overridden per run.`);
   L.push(`- **Mid-match loadout.** Each bot is granted a mid-match power level at the pre-combat intermission (level ${1 + (MID_MATCH_GRANT.grantLevels ?? 0)}, Q/W/E learned + R unlocked, ~${600 + (MID_MATCH_GRANT.grantGold ?? 0)} g spent down its real buildPriority, one ${MID_MATCH_GRANT.augmentTier} augment) so damage/HP scale like a round 3–4 fight, not naked level 1.`);
   L.push(`- **Two modes.** *natural* = fire ring OFF (pure elimination TTK — the clean HP→TTK signal, and the floor on round length since the ring can only shorten a round). *production* = fire ring ON with the real \`config.match@1\` schedule (startSec 180), so Tier-0 stalemates resolve ~180–240 s as they do live.`);
   L.push(`- **COMBAT duration** = ticks from combat-entry to team-elimination ÷ 30 (TICK_HZ) = seconds. Natural mode caps at ${c.args.cap} s (high enough that resolvable matchups — which finish by ~315 s even at ×20 — are never censored; only true stalemates hit it). Production mode caps at ${PRODUCTION_CAP_SEC} s (the shipped \`combatMaxSec\`, which a live round cannot exceed).`);

@@ -248,17 +248,19 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "機制(同時只能有一個形態)是結構性的,不靠這個欄位 —— 它只是把「重複變身時計時器從哪裡算」這個決策從程式挪到後台(CLAUDE.md 第一守則)。預設 restart = 出貨現況,所以 26 對變身零採用是**正確且刻意**的:要一份文件寫 keepLongest/reject 只為了讓這一列變綠,等於替 owner 決定了一支英雄的手感。機制與三種規則的守衛在 sim/championFormExclusive.test.ts(四個突變都驗過會紅)。",
   },
 
-  // ⚠️ 2026-08-08:這一格原本叫 `field:items.block.lethalBasis`,**名字換了而不是
-  // 消失了**。`zItemBlockGrant` 現在是 `zBlockGrant`(schema/effect.ts)的**別名**
-  // —— 技能被動也授予格擋(`ability@1.passive.ranks[].block`),兩邊共用同一個
-  // ZodObject 實例。而 `nameSchemas()` 依**物件識別**給每個 schema 一個正規名字,
-  // 所以這一顆 grant 的子欄位現在全部掛在技能那條路徑底下,道具那條只剩最外層的
-  // `field:items.block`(仍然 4/4 採用)。
-  // ⛔ 不要為了讓名字好看就把 schema 拆成兩份 —— 那正是上面 `fromResource` 那一格
+  // ⚠️ 這一格的**名字換過兩次,兩次都是「名字換了而不是欄位消失了」**:
+  //   · 2026-08-08 `field:items.block.lethalBasis` → `field:abilities.passive.ranks[].block.lethalBasis`
+  //     (`zItemBlockGrant` 變成 `zBlockGrant` 的別名,技能被動也授予格擋)
+  //   · 2026-08-09 → `field:abilities.effects[]#applyBuff.block.lethalBasis`
+  //     (`applyBuff` 也授予格擋了,而它在 schema 走訪順序上比 passive 早)
+  // `nameSchemas()` 依**物件識別**給每個 schema 一個正規名字,所以這一顆共用的
+  // grant 的子欄位一律掛在**第一個被走到**的那條路徑底下;外層那幾格
+  // (`field:items.block` 4/4、`field:augments.block`、…) 各自還在。
+  // ⛔ 不要為了讓名字穩定就把 schema 拆成兩份 —— 那正是上面 `fromResource` 那一格
   // 已經寫過的警告:「分開兩份 schema 只為了讓其中一邊閉嘴,會讓規則變成兩份」。
-  "field:abilities.passive.ranks[].block.lethalBasis": {
+  "field:abilities.effects[]#applyBuff.block.lethalBasis": {
     status: "default-live",
-    why: "省略 = \"hpAndShields\" = 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」。晨曦之光 / 殺豬刀 兩件都用預設,所以零採用正是它該有的樣子。寫 \"hp\" 是文案的字面讀法(只看血條),留著是因為那是 owner 會想切的一題 —— 見 sim/combat/block.ts BlockLethalBasis。⚠️ 這個 key 的名字掛在技能路徑上,但 reach 數的是**道具**那四支:格擋 grant 的 schema 是道具與技能共用的同一個實例。",
+    why: "省略 = \"hpAndShields\" = 血 + 這一發吃得到的護盾,也就是「這一發真的會殺死我嗎」。晨曦之光 / 殺豬刀 兩件都用預設,所以零採用正是它該有的樣子。寫 \"hp\" 是文案的字面讀法(只看血條),留著是因為那是 owner 會想切的一題 —— 見 sim/combat/block.ts BlockLethalBasis。⚠️ 這個 key 的名字掛在 applyBuff 路徑上,但 reach 數的是**道具**那四支:格擋 grant 的 schema 是四個授權面共用的同一個實例。",
   },
   // 技能授予格擋 —— 引擎側 2026-08-08 接通(`abilities/abilityPassives.ts` 把
   // `passive.ranks[].block` 轉發到同一個 `ModifierSource.block`,行為守衛
@@ -270,6 +272,44 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-08",
     why: "引擎側已通:被動技能的 rank 現在可以帶 block,走的是道具那條**同一個** ModifierSource.block(所以鏈式獨立判定/型別過濾/致死判定/內部冷卻逐條相同,沒有第二套邏輯)。零採用是因為 content/abilities/ 這一輪由 owner 手動重製,20-00 與 79-002 還沒寫進去 —— 那是內容決定,不是機制缺席。",
+  },
+
+  // ── 授權格放寬:格擋 / 暴擊來源(owner GH#299 第 2 · 6 條,2026-08-09) ────
+  //
+  // ⭐ 這五格是**同一次**改動,而且**沒有一格改到引擎** —— 真的跑過模擬量到
+  // `combat/block.ts::blockCutFor` 與 `combat/critStrike.ts::rankedGrants`
+  // 從第一天起就**不看 `ModifierSource.kind`**(把 grant 掛在 augment / passive /
+  // buff 三種來源上,擋跟乘的行為與道具逐條相同)。所以「只有道具寫得出來」從來
+  // 不是引擎的限制,是**授權格**的限制:schema 少一格 + 建構點少一次轉發。
+  // 這一批加的就是那兩樣,轉發集中在 `sim/stats/sourceGrants.ts`(一份,不是四份)。
+  //
+  // 零採用是**內容決定**:content/abilities/ 這一輪由 owner 手動重製、
+  // content/augments/ 的 31 張卡是 #260 那一版的三圍卡,兩邊都還沒有人寫暴擊卡。
+  // 第一份內容落地時這五筆就該一起刪掉。
+  "field:abilities.passive.ranks[].critStrike": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "引擎側已通:天生技/被動的 rank 現在可以帶「一條自己的機率 + 自己的倍率」的暴擊來源,走的是道具那條**同一個** ModifierSource.critStrike。⛔ 它不是 critChance/critDamage 兩條屬性的第三種寫法 —— 那兩條是聚合的,加下去之後每一次暴擊都變成那個倍率。配 whileForm 就寫得出「只有變身後才有的暴擊」。",
+  },
+  "field:abilities.effects[]#applyBuff.block": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "引擎側已通:限時來源現在授予得起格擋,所以「接下來 5 秒內格擋」與「主動技能給格擋」兩個授權格一起補上了(⛔ 不開新的 effect kind —— 那會變成第二套格擋)。到期走這份 buff 自己的 expiresAtTick,blockCutFor 本來就在跳過過期的 source。零採用是內容決定:owner 手寫的 90 支技能還沒寫進 content/abilities/。",
+  },
+  "field:abilities.effects[]#applyBuff.critStrike": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同上,暴擊那一半:「這支大招期間 20% 機率 3 倍」在此之前完全沒有形狀。rankedGrants 本來就在跳過過期的 source,所以限時不需要第二個時鐘。",
+  },
+  "field:augments.block": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "引擎側已通(economy/draft.ts::applyAugmentPick 轉發到 kind:\"augment\" 的來源)。零採用是內容決定:出貨的 31 張三選一卡是 #260 那一版的三圍卡,沒有一張是防禦卡。",
+  },
+  "field:augments.critStrike": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "引擎側已通。⭐ 這一格是 critRules.stackMode:\"multiply\"(owner 2026-08-09)的理由指向的東西:那條規則存在就是為了「玩家的第二張暴擊卡不可以是廢牌」,而在這一格之前一張卡根本沒有辦法**成為**第二條獨立的暴擊來源(只能加聚合屬性)。零採用是內容決定,不是機制缺席。",
   },
 
   // ── 跨技能強化 ability@1.augment (2026-08-08) ─────────────────────────────
@@ -1367,6 +1407,24 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 記成 `landing` 而不是 `debt` 是刻意的:owner 已經逐字裁決過重創
   //(「【減療 / 禁療】=> 用重創代替就好」+ 裁決⑥ 三格 0.5),所以內容**真的**
   // 在路上,30 天的自動到期正好是那份內容該落地的時窗。
+  // GH#304 —— 疊層三條軸的「續不續期」旋鈕。
+  //
+  // 零採用是**成對的**（同 `condition.target-status@1` 的 `minStacks` 那一則）：
+  // 這一格只在一個計數器**每隔一段時間自己增減**的時候才有意義，而出貨的 28 份
+  // status 文件沒有一份寫 `stacks`，所以今天沒有任何一支疊層狀態可以填它。
+  // ⛔ 不要為了餵綠它去硬加一張卡：先有一支真的疊層的技能（owner 手動重製中），
+  // 這一格才有東西可寫。機制本身由 `sim/counterAxes.test.ts` 走真的 `world.step()`
+  // 驗過（軸②那條就是靠它才不會續期續成永久）。
+  "field:abilities.effects[]#applyStatus.refresh": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "GH#304 軸②【隨時間】的必要條件 —— 「重複施加要不要把到期時間往後推」。" +
+      "省略 = \"extend\" = 這一格出現之前的行為，所以零採用時引擎行為逐字不變。" +
+      "它存在的理由是：一個掛在 `onInterval` 上每 N 秒 ±M 的計數器如果每次都續期，" +
+      "那筆狀態永遠不會到期，「20 秒內疊到 5 層」會變成「永久 5 層」，而畫面上看不出差別" +
+      "（失敗形態②）。零採用＝owner 手動重製中的疊層技能還沒進 content/abilities/。",
+  },
   "field:abilities.effects[]#applyStatus.breakOnDamage": {
     status: "landing",
     since: "2026-08-05",

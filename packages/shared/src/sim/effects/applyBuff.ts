@@ -5,6 +5,7 @@
  */
 import type { EffectKindSpec } from "./effectKind";
 import { attachSource } from "../stats/statPipeline";
+import { sourceGrants } from "../stats/sourceGrants";
 
 export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
   apply(e, ctx) {
@@ -46,6 +47,11 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
             // 而畫面上跟正常一模一樣（失敗形態 ②）。
             dispellable: e.dispellable,
             polarity: e.polarity,
+            // 格擋 / 暴擊來源（GH#299 第 2 · 6 條）。⚠️ 疊層路徑也要帶，理由與
+            // 上面 `hooks` 逐字相同：一支技能一旦也填了 `stackKey`，這兩格就會
+            // 靜默失效，而畫面上跟正常一模一樣（失敗形態 ②）。
+            // ⛔ 一份轉發，不是四份 —— 見 `stats/sourceGrants.ts` 檔頭。
+            ...sourceGrants(e),
             expiresAtTick,
             stacks: 1,
             ...(e.stackVisual ? { visualStacks: true } : {}),
@@ -70,6 +76,11 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         // false）；`polarity` → 無極性 = 有方向的淨化拔不到它。
         dispellable: e.dispellable,
         polarity: e.polarity,
+        // 【限時格擋 / 限時暴擊來源】(GH#299 第 2 · 6 條) —— 主動技能與「接下來
+        // N 秒」兩個授權格的同一個答案。到期走這份 buff 自己的 `expiresAtTick`
+        // （`blockCutFor` 與 `rankedGrants` 都已經在跳過過期的 source），所以
+        // 這裡沒有第二個時鐘。⛔ 一份轉發 —— 見 `stats/sourceGrants.ts` 檔頭。
+        ...sourceGrants(e),
         expiresAtTick,
       });
     }

@@ -14,7 +14,7 @@ import type { AttrLookup, EffectContext, EffectDef } from "./effect";
 import { resolveScaling } from "./effect";
 import type { Stat } from "../stats/statTypes";
 import { liveAttribute } from "../stats/attrSources";
-import { clampMarkCount } from "../markLimits";
+import { clampMarkCount, markExpired } from "../markLimits";
 
 export function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
@@ -45,8 +45,15 @@ export function casterAttrs(ctx: EffectContext): AttrLookup {
  */
 export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): boolean {
   const st = world.status.get(id);
-  if (!st) return false;
-  return st.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick);
+  if (st?.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick) === true) {
+    return true;
+  }
+  // ⭐ GH#304 —— 具名標記也算「身上有」。這一行與 {@link statusStacks} 的
+  // 同一行是**成對的**：少了它，一個標記型計數器會對「有沒有」說 false、
+  // 對「幾層」說 12 —— 而那正是這一段檔頭警告的「條件說有、層數說 0」的分裂，
+  // 只是方向相反。⚠️ 出貨零影響：唯一的標記 id 是 `godie-hapm.passive`，
+  // 沒有任何內容拿它當 statusId 問。
+  return statusStacks(world, id, statusId) > 0;
 }
 
 /**
@@ -68,12 +75,26 @@ export function hasStatus(world: SimWorld, id: EntityId, statusId: StatusId): bo
  */
 export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId): number {
   const st = world.status.get(id);
-  if (!st) return 0;
   let n = 0;
-  for (const s of st.effects) {
+  for (const s of st?.effects ?? []) {
     if (s.statusId !== statusId || s.expiresAtTick <= world.tick) continue;
     n += s.stacks ?? 1;
   }
+  // ⭐ GH#304 —— **具名標記也是這個計數器**。
+  //
+  // 兩個儲存（`world.marks` / `world.status[].stacks`）共用**同一個身分空間**：
+  // 兩邊的 key 都是「一份既有文件的 id」（`sim/marks.ts` ②）。`net/snapshot.ts`
+  // 的 `namedCounters` 早就把同一個 id 的兩邊相加送給客戶端 —— 少了這一行，
+  // 引擎自己是唯一**看不到**標記層數的那一個：
+  //   · 「敵人身上【試煉】≥ 5 層時追加傷害」(`condition.target-status@1` 的
+  //     `minStacks`) 對十二道試煉永遠讀到 0 → 條件永遠不成立；
+  //   · 而 HUD 上明明寫著 12。
+  // 兩個消費端對同一個問題給不同答案，就是這個 issue 說的「一定會漂」。
+  // ⚠️ 到期規則與上面那半**逐字相同**（`markExpired`，而不是自己比大小）——
+  // 兩個到期判斷分歧的那一天，會出現「條件說有、層數說 0」的分裂，
+  // 而那正是 `hasStatus` / `statusStacks` 這一段檔頭警告過的形狀。
+  const mk = world.marks.get(id)?.get(statusId);
+  if (mk !== undefined && !markExpired(mk.expiresAtTick, world.tick)) n += mk.count;
   return clampMarkCount(n);
 }
 

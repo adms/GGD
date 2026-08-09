@@ -24,7 +24,11 @@
  *                then regenerates `rules.hpRegenPerSec * dt` (#217: a mob has no
  *                StatsComp, so RegenSystem never sees it).
  *   4) MELEE   — a mob in range with a ready cooldown queues one melee packet.
- *   5) PAYOUT  — pay the killer for mobs that DIED this tick, then despawn them.
+ *   5) PAYOUT  — pay the killer for mobs that DIED this tick, then QUEUE the
+ *                corpse for removal at slot 9g. GH#296: destroying it HERE wiped
+ *                the StatsComp `worldHookSystem` (9f) needs to dispatch the mob's
+ *                own 【死亡時】, so the hook died in `fireHooks`' first line.
+ *                Same tick, later slot — see `SimWorld.destroyAfterHooks`.
  *
  * WHY SLOT 9d (after deathSystem): so it reads THIS tick's `death` events and
  * the settled alive-state before paying, exactly like guardianSystem; and it
@@ -245,7 +249,8 @@ export function mobSystem(world: SimWorld): void {
   }
 
   // 5) DEATH PAYOUT + CLEANUP — pay the killer for mobs that died THIS tick,
-  //    then remove the corpse. A mob killed by a non-champion (another mob, the
+  //    then QUEUE the corpse (GH#296 — `world.destroyAfterHooks`, drained at slot
+  //    9g, AFTER this tick's hook dispatch). A mob killed by a non-champion (another mob, the
   //    fire ring, a DoT with no champion source) pays nobody — mirrors
   //    DeathSystem's no-killer path and the guardian/coin `champion.has` gate.
   for (const ev of world.events) {
@@ -269,7 +274,7 @@ export function mobSystem(world: SimWorld): void {
         fireHooks(world, killer, "onKill", id);
         creditKillCombo(world, killer, id, "mob");
       }
-      world.destroy(id);
+      world.destroyAfterHooks(id);
       continue;
     }
 
@@ -365,7 +370,7 @@ export function mobSystem(world: SimWorld): void {
     } else {
       world.emit("mobSlain", { id, killer: null, killerSeatId: -1, gold: 0, kills: 0, kind: dead.kind });
     }
-    world.destroy(id);
+    world.destroyAfterHooks(id);
   }
 }
 

@@ -143,6 +143,26 @@ export const zMarkSpec = z
      */
     resetOn: z.enum(["match", "round", "never"]),
     /**
+     * ⭐ 軸③【隨回合】(GH#304，owner 2026-08-09「疊層可能會隨回合增加/減少」)
+     * —— 每一個回合開始時 **±N**。省略／0 = 回合邊界不動它（＝這一格出現之前
+     * 的每一份文件）。
+     *
+     * ⚠️ 與 `resetOn: "round"` **互斥**（下面的 refine 擋）：一個「每回合補回
+     * 12 層」又「每回合 -1」的計數器沒有可以寫出來的語意，而執行期靜默挑一邊
+     * 就是 CLAUDE.md 失敗形態④（斷言方向跟缺陷無關的那一族）。
+     * `resetOn: "match"` / `"never"` 配 `roundDelta` 才是這條軸的正常寫法：
+     * 「跨回合共享的那 12 層，每回合自己掉 1 層」。
+     *
+     * 界共用 `MARK_MAX_COUNT`（±999）——「一個計數器一次最多動幾層」與
+     * 「最多疊幾層」是同一個問題的兩半，抄第二個數字就是第四個住處。
+     */
+    roundDelta: z
+      .number()
+      .int()
+      .min(-MARK_MAX_COUNT)
+      .max(MARK_MAX_COUNT)
+      .optional(),
+    /**
      * 每**失去**一層永久獲得的加成（累計，不會隨層數加回而倒退）。
      * 省略 / 空陣列 = 沒有這個機制。
      */
@@ -166,6 +186,18 @@ export const zMarkSpec = z
           `durationSec 只能是 ${MARK_DURATION_PERMANENT}（永久）或 ` +
           `≥ ${MARK_MIN_DURATION_SEC} 秒（一個 tick）—— ${s.durationSec} 秒不到半個 tick，` +
           `標記會在掛上去的同一瞬間過期，玩家永遠看不到它`,
+      });
+    }
+    // ⭐ 軸③的互斥閘。兩個都填 = 兩條相反的回合政策，執行期一定要挑一邊挑，
+    // 而挑哪一邊都是一個沒有人看得出來的靜默決定。
+    if (s.resetOn === "round" && s.roundDelta !== undefined && s.roundDelta !== 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["roundDelta"],
+        message:
+          `resetOn:"round"（每回合補回 initial）與 roundDelta(${s.roundDelta})（每回合 ±N）` +
+          `是兩條相反的回合政策，只能擇一 —— 要「跨回合共享而且每回合自己掉層」` +
+          `請把 resetOn 改成 "match" 或 "never"`,
       });
     }
     // 靜默夾取的另一半：`installMark` 走 `Math.min(initial, max)`，所以

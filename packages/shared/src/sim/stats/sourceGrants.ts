@@ -1,0 +1,74 @@
+/**
+ * ⭐ **一個來源可以攜帶的「非屬性」授予** —— 轉發那一半，一份，不是四份。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 這支存在的理由（量出來的，2026-08-09）
+ *
+ * `ModifierSource` 上有一族東西不是 `Stat` 上的數字：**格擋** (`block`) 與
+ * **暴擊來源** (`critStrike`)。兩者的共同性質是 sim 端**完全不看 `kind`**：
+ *
+ *   · `combat/block.ts::blockCutFor`      走 `StatsComp.sources`，不問 kind
+ *   · `combat/critStrike.ts::rankedGrants` 走 `StatsComp.sources`，不問 kind
+ *
+ * 真的跑過模擬確認：把 `block` 掛在 `kind:"augment"` / `kind:"buff"` 的來源上，
+ * `blockCutFor` 照擋；把 `critStrike` 掛在 `augment` / `passive` / `buff` 上，
+ * `rollCritStrike` 照乘。**引擎從第一天就沒有限制過誰授予得起。**
+ *
+ * 所以 owner #299 第 2 / 6 條「授權格要放寬」要放寬的**不是引擎**，是兩件事：
+ *   ① schema 上有沒有那一格（`content/schema/effect.ts` 的 `SOURCE_GRANT_SHAPE`）
+ *   ② **建構那個 source 的地方有沒有把它轉發下去** ← 這支
+ *
+ * ⛔ 而②正是最容易變成「到處改改改」的地方：四個建構點各自寫一次
+ * `...(x.block ? { block: x.block } : {})`，下一個騎在來源上的授予就要再改四處，
+ * 而漏掉的那一處**不會紅** —— 那個欄位在 schema 上存在、後台畫得出來、
+ * 引擎永遠讀不到（CLAUDE.md 失敗形態 ②）。第零守則⑨：一份模板 + 一張表。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 為什麼是 `exactOptionalPropertyTypes` 風格的展開而不是直接 `{ block: x.block }`
+ *
+ * 這個 repo 打開了 `exactOptionalPropertyTypes`，所以 `{ block: undefined }` 與
+ * 「沒有 block 這個鍵」是**不同的型別**。既有的四個建構點全部走條件展開，
+ * 這支照抄同一個形狀，所以既有來源的物件形狀逐鍵不變。
+ */
+import type { BlockGrant } from "../combat/block";
+import type { CritStrikeGrant } from "../combat/critStrike";
+
+/**
+ * 一份內容文件（道具 / 天生技 rank / 增益卡 / `applyBuff` 效果）上，
+ * 「騎在來源上的授予」那一族欄位。
+ *
+ * ⛔ 加一格的時候三個地方一起加：這裡、`content/schema/effect.ts` 的
+ * `SOURCE_GRANT_SHAPE`、以及 {@link sourceGrants} 的回傳。少一個就是一個
+ * 畫得出來但引擎讀不到的欄位。
+ */
+export interface SourceGrantFields {
+  block?: BlockGrant;
+  critStrike?: CritStrikeGrant;
+}
+
+/**
+ * 把一份文件上的授予欄位攤成可以直接展進 `ModifierSource` 字面量的物件。
+ *
+ * 缺席的欄位**不會產生鍵**（見檔頭最後一段），所以
+ * `{ id, kind, ...sourceGrants(def) }` 對一份沒有授予的文件而言，
+ * 產出的物件與這支存在之前逐鍵相同。
+ */
+export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
+  return {
+    ...(from.block !== undefined ? { block: from.block } : {}),
+    ...(from.critStrike !== undefined ? { critStrike: from.critStrike } : {}),
+  };
+}
+
+/**
+ * 這份文件**有沒有**帶任何授予 —— 給「這個 rank 是不是空的」那一類判斷用。
+ *
+ * `abilities/abilityPassives.ts` 的空值測試需要它：一支只授予格擋（或只授予
+ * 暴擊）的天生技，`modifiers` 是空陣列**是刻意的**（「擋不擋得下這一發」不是
+ * 屬性表上的數字），少了這一條那個來源根本不會被掛上，整個功能是死的而所有
+ * 測試全綠 —— 那正是 `auras` / `vision` / `flight` / `block` 四次各自踩過的
+ * 同一個坑。⛔ 不要在那邊逐格寫 `!block.block && !block.critStrike`。
+ */
+export function hasSourceGrant(from: SourceGrantFields): boolean {
+  return from.block !== undefined || from.critStrike !== undefined;
+}

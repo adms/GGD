@@ -9,6 +9,7 @@ import type { SimWorld } from "../SimWorld";
 import type { AugmentTier } from "../content/defs";
 import { Augments, LootTables } from "../content/registry";
 import { attachSource } from "../stats/statPipeline";
+import { sourceGrants } from "../stats/sourceGrants";
 import { grantItemFree } from "./shop";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES, itemOfferableTo } from "./offerEligibility";
 
@@ -134,6 +135,11 @@ export function applyAugmentPick(world: SimWorld, offer: AugmentOffer, pick: Aug
     kind: "augment",
     modifiers: def.modifiers,
     hooks: def.hooks,
+    // 格擋 / 暴擊來源（GH#299 第 2 · 6 條）—— 三選一增益卡在此之前只發得出
+    // `modifiers` + `hooks`，所以「這一場每次攻擊 20% 機率 3 倍」只能退化成加
+    // 兩條**聚合**屬性，而那會讓身上每一次暴擊都變成那個倍率，不是這張卡自己的
+    // 那一次。⛔ 一份轉發 —— 見 `stats/sourceGrants.ts` 檔頭。
+    ...sourceGrants(def),
   });
   world.emit("augmentPicked", { entity: offer.entity, augmentId: pick });
   return true;

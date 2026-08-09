@@ -71,6 +71,7 @@ import type { ItemDef } from "../content/defs";
 import type { ModifierSource } from "../stats/modifiers";
 import { resolveGatedModifiers } from "../content/requirement";
 import { attachSource, detachSource } from "../stats/statPipeline";
+import { sourceGrants } from "../stats/sourceGrants";
 import { Items } from "../content/registry";
 import {
   addAttrGrants,
@@ -140,23 +141,21 @@ export function itemModifierSource(
     // branch, no new stat, and the shop's live preview cannot drift from the
     // sim because both build the source through this one function.
     damageTypeOverride: def.damageTypeOverride,
-    // 格擋 rides the source untouched, for the same reason every field above
-    // does: the ONLY reader is `combat/damage.ts`'s queue drain (through
-    // `combat/block.ts::blockCutFor`), which walks `StatsComp.sources` and reads
-    // this key without caring about `kind`. So forwarding here is the entire
-    // wiring for 奇門盾甲 / 黃金聖鬥衣 / 晨曦之光 / 殺豬刀 — no new sim branch,
-    // no new stat, no new event, and the shop's live preview cannot drift from
-    // the sim because both build the source through this one function.
-    block: def.block,
-    // [暴擊吸血] rides the source untouched, for the same reason every field
-    // above does: its ONLY readers are `systems/BasicAttackSystem.ts`'s swing
-    // point (the roll) and `combat/damage.ts`'s lifesteal段 (the payout), both
-    // through `combat/critStrike.ts`, and both walk `StatsComp.sources` without
-    // caring about `kind`. So forwarding here is the entire wiring for 天堂之劍
-    // — no new sim branch, no new stat, no new event, and the shop's live
-    // preview cannot drift from the sim because both build the source through
-    // this one function.
-    critStrike: def.critStrike,
+    // 格擋 (奇門盾甲 / 黃金聖鬥衣 / 晨曦之光 / 殺豬刀) 與 [暴擊吸血] (天堂之劍)
+    // ride the source untouched, for the same reason every field above does:
+    // their ONLY readers walk `StatsComp.sources` WITHOUT caring about `kind`
+    // (`combat/block.ts::blockCutFor` from the damage-queue drain;
+    // `combat/critStrike.ts::rankedGrants` from the swing point and the
+    // lifesteal段). No new sim branch, no new stat, no new event, and the shop's
+    // live preview cannot drift from the sim because both build the source
+    // through this one function.
+    //
+    // ⭐ 2026-08-09 (GH#299 第 2 · 6 條): 這兩格不再是道具專屬 —— 天生技被動、
+    // 三選一增益卡與 `applyBuff` 的限時來源全部授予得起,而**轉發是一份**
+    // (`stats/sourceGrants.ts`)。⛔ 這一行改成展開就是為了讓「誰授予得起」
+    // 有且只有一張表:下一個騎在來源上的授予加進 `SourceGrantFields`,
+    // 四個建構點自動全部拿到,漏掉一處就不會再是一個畫得出來卻讀不到的欄位。
+    ...sourceGrants(def),
   };
 }
 

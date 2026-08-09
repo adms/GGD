@@ -1075,6 +1075,58 @@ export class SimWorld {
     return asEntityId(this.nextId++);
   }
 
+  /**
+   * 這一 tick 要銷毀、但**要等 hook 派發完**的實體 —— GH#296。
+   *
+   * 空的時候 {@link drainPendingDestroy} 是嚴格 no-op，所以任何沒有小怪的世界
+   * （客戶端預測影子世界、骨架、既有測試）逐位元不變。
+   */
+  private readonly pendingDestroy: EntityId[] = [];
+
+  /**
+   * 「這具屍體要銷毀，但**不是現在**」—— 排到本 tick 的 hook 派發之後（slot 9g）。
+   *
+   * ── 為什麼需要它（量出來的，不是推論）──────────────────────────────────
+   * `deathSystem`（slot 9）發 `death` 事件，`worldHookSystem`（9f）才把它派發成
+   * `onDeath`。中間的 `mobSystem`（9d′）原本就地 `destroy()` 掉屍體，而
+   * `destroy()` 會 `this.stats.delete(id)` —— 於是 9f 跑到時 `fireHooks` 在
+   * **第一行**（`const sc = world.stats.get(owner); if (!sc) return;`）就回頭了。
+   * ⚠️ 那**不是** GH#293 的存活閘，所以 `firesWhenOwnerDead` 對它完全無效。
+   *
+   * 2026-08-09 實測（跑真的 `step()`，不是讀程式碼推論）：同一張卡、同一隻小怪，
+   * 走 `step()` → 效果**沒有**執行；把派發挪到銷毀之前 → 執行。
+   *
+   * ── 為什麼是「延後銷毀」而不是另外兩種修法 ────────────────────────────
+   * ⛔ **對調 slot 順序**（把 9f 往前搬）：`mobBossSpawn` 是 `mobSystem` 自己在
+   *    9d′ 發的（`mobs.ts::summonMobBoss`），`guardianSlain` 在 9d —— 往前搬等於
+   *    用【殭屍王出現】【守衛塔倒下】換【死亡時】，換一個壞的回來。
+   * ⛔ **銷毀前就地派發**：那會變成第二個「死亡要廣播成什麼」的決定點，而那張表
+   *    只有一份（`WorldHookSystem.ts` 的 `WORLD_HOOKS`）。第〇·五守則點名的形狀。
+   * ✅ **延後銷毀**，而且**不跨 tick**：屍體只多活 9d′→9g 這一段，期間跑的是
+   *    `summonSystem`（讀 `world.summon`）、`coinSystem`（讀 `world.coin` 與活著的
+   *    英雄）、`worldHookSystem`（收件人濾掉死人）—— 三支都不看 `world.mob`。
+   *    快照在 `step()` 之後才抽，所以渲染、碰撞、`mobsAliveInZone` 的波次上限
+   *    看到的東西一個位元都沒變。⚠️ 「多留一個 tick」那個版本會動到這些，
+   *    這一版刻意不。
+   *
+   * 重複排隊或已經被別人銷毀都無害：`destroy()` 的每一格都是 idempotent 的 delete。
+   */
+  destroyAfterHooks(id: EntityId): void {
+    this.pendingDestroy.push(id);
+  }
+
+  /**
+   * slot 9g —— 把 {@link destroyAfterHooks} 排隊的屍體真的清掉。
+   *
+   * 順序 = push 順序 = `mobSystem` 走 `world.events` 的順序，而那個陣列由固定的
+   * 系統順序追加，所以每個複本清的順序相同（`destroy` 本身也與順序無關）。
+   */
+  private drainPendingDestroy(): void {
+    if (this.pendingDestroy.length === 0) return;
+    for (const id of this.pendingDestroy) this.destroy(id);
+    this.pendingDestroy.length = 0;
+  }
+
   destroy(id: EntityId): void {
     // #288 — CAPTURED BEFORE `this.champion.delete(id)` fifteen lines down. The
     // `bossDamage` sweep at the bottom needs to know whether this entity could
@@ -1417,6 +1469,16 @@ export class SimWorld {
     //                             而那種漏接**看起來跟「沒有人寫這種卡」一模一樣**。
     //                             它排出來的傷害/狀態與 onStunned·onReflectSuccess 一樣，
     //                             下一 tick 由 combatResolveSystem 結算。
+    this.drainPendingDestroy(); // 9g. GH#296：`mobSystem`(9d′) 排隊的屍體在這裡才
+    //                             真的消失 —— 它原本就地 destroy()，而 destroy()
+    //                             會 stats.delete()，於是上面那一行跑到時小怪的
+    //                             【死亡時】在 `fireHooks` 缺 stats 那一句就 return
+    //                             了（**不是**存活閘，所以 #293 的修法到不了）。
+    //                             理由與另外兩種修法為什麼被否決，見
+    //                             `destroyAfterHooks` 的說明。
+    //                             ⚠️ 位置是硬約束的**下界**：必須在 9f 之後。
+    //                             上界是 regenSystem(10) —— 排得比它晚，一具屍體
+    //                             會多吃一次回血掃描。空佇列時嚴格 no-op。
     regenSystem(this); // 10. hp/mana regen
     resourceStatSystem(this); // 10a. 資源衍生屬性 (光魔杖「AP+ (目前MP的 5%)」):
     //                             mark dirty when the LIVE hp/mana a
