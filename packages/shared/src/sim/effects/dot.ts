@@ -175,7 +175,9 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // schedule — turning the flag on must not also be a stealth nerf.
     const firstTick = e.tickOnApply === true ? world.tick : world.tick + intervalTicks;
 
-    for (const target of ctx.targets) {
+    // ⭐ G11（GH#299）—— 燒在自己身上（獻祭型）。省略 = target = 今天的行為。
+    const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+    for (const target of subjects) {
       // No health component = nothing to burn (revive circles, dropped coins,
       // aura carriers). Writing an instance there would be a store entry that
       // can never pay and never expires against anything.

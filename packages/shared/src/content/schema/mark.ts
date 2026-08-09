@@ -31,6 +31,7 @@ import { z } from "zod";
 import { ModOp } from "../../sim/stats/modifiers";
 import {
   MARK_DURATION_PERMANENT,
+  MARK_LETHAL_RESTORE_MODES,
   MARK_MAX_COUNT,
   MARK_MAX_DURATION_SEC,
   MARK_MAX_PER_STACK_VALUE,
@@ -76,12 +77,27 @@ export const zMarkLethalRule = z
     /** 一次免死消耗幾層。 */
     consume: z.number().int().min(1).max(MARK_MAX_COUNT),
     /**
-     * 救活後留下最大生命的幾成（0 < x ≤ 1）。
+     * 免死的**血量地板**，最大生命的幾成（0 < x ≤ 1）。
+     *
+     * ⚠️ 它預設是「這一發最多把你扣到這裡」，**不是**「救完回到這裡」——
+     * 兩者只在血量**已經低於**它的時候不同，而那一半由 `restoreMode` 決定。
+     * 想要卡片上的「免死，並留在 20% 生命」請一起填 `restoreMode: "restore"`。
      *
      * 不能是 0：那等於「救活成 0 血」，下一格 deathSystem 照樣把人判死，
      * 於是一層標記被燒掉而玩家什麼都沒拿到（失敗形態②）。
      */
     surviveHpPct: z.number().gt(0).max(1),
+    /**
+     * ⭐ GH#306 —— `surviveHpPct` 的兩種語意，省略 = `"clamp"` = 今天的行為。
+     *
+     *   · `"clamp"`   夾住這一發：血低於地板時這一發被擋掉，但**一格血都不補**；
+     *   · `"restore"` 保證血量：救完血量 **= 地板**，與挨打前的血量無關
+     *     （owner：「是到生命 0 以下，再回到 20%，不是停在 20%」）。
+     *
+     * 出貨預設刻意是 `"clamp"`，所以既有的每一份文件語意逐字不變（十二道試煉
+     * 的地板是 1%，它的回血來自緊接著的 `restore` 效果，不是地板）。
+     */
+    restoreMode: z.enum(MARK_LETHAL_RESTORE_MODES).optional(),
     /**
      * 對哪些傷害型別生效。**必填、明列**。
      *

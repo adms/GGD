@@ -4,6 +4,7 @@
  * Moved out of the effectRunner switch by GH#289; body unchanged.
  */
 import type { EffectKindSpec } from "./effectKind";
+import { rankScalar } from "../perRank";
 import { applyChampionForm } from "../systems/ChampionFormSystem";
 
 export const championFormEffect: EffectKindSpec<"championForm"> = {
@@ -20,7 +21,7 @@ export const championFormEffect: EffectKindSpec<"championForm"> = {
     // A refused change (no counterpart, or one the registry does not know)
     // writes NOTHING and emits `castRejected` — see ChampionFormSystem for
     // why a bad id must never reach `champ.championId`.
-    applyChampionForm(world, ctx.caster, e.to, e.durationSec, {
+    applyChampionForm(world, ctx.caster, e.to, rankScalar(e.durationSec, ctx.rank), {
       slot: ctx.abilitySlot,
       origin: ctx.origin,
     });

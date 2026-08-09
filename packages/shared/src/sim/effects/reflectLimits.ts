@@ -24,16 +24,20 @@ export const DAMAGE_QUEUE_MAX_PASSES = 4;
 export const INCOMING_PCT_MIN = 0;
 
 /**
- * `damage.incomingPct.perRank` 一欄的上界 = 500%。
+ * `damage.incomingPct.perRank` 一欄的上界 = 1000%。
+ *
+ * ⭐ 2026-08-09（GH#299 第 1 條）從 5 抬到 10：20-002「每次造成 7 倍[反彈]傷害」
+ * 是 owner 的文案，而 7 被一條**自稱是打錯數字的守衛**擋下來 —— 護欄裝錯位置。
+ * 10 仍然遠低於那個真的會發生的手誤（下面那一段），所以擋掉的東西一個都沒少。
  *
  * ⚠️ 這是**打錯數字的守衛**,不是平衡政策(跟 `HP_PCT_DAMAGE_MAX` 同性質)。
  * 出貨最強的一筆是反射之盾的 2.0(owner 的文案「反彈普通攻擊傷害 200%」),
- * 所以 5 留了 2.5 倍的設計空間,同時擋住那個真的會發生的手誤:
+ * 而 10 擋住那個真的會發生的手誤:
  * 「200」打在該寫「2.00」的格子裡。那不是一件很強的裝備,那是 20,000% 反彈 ——
  * 任何人普攻你一下就當場死亡,而且在 JSON diff 裡跟正確值長得一模一樣
  * (#277 的形態:2026-07-29 之前 `validateField` 只檢查 `min`)。
  */
-export const INCOMING_PCT_MAX = 5;
+export const INCOMING_PCT_MAX = 10;
 
 /** `damage.incomingPct.maxChainDepth` 的下界。0 = 反彈不會再被反彈(預設)。 */
 export const REFLECT_MIN_CHAIN_DEPTH = 0;

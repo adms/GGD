@@ -76,6 +76,7 @@
  * clock, no Math.* — safe under sim/purity.test.ts.
  */
 import type { EntityId } from "../../ids";
+import { scaleRankScalar } from "../perRank";
 import type { SimWorld } from "../SimWorld";
 import type { PrimaryAttr } from "../stats/attributes";
 import type { EffectDef, Scaling } from "../effects/effect";
@@ -277,7 +278,8 @@ export function scaleEffects(effects: readonly EffectDef[], k: number): EffectDe
       case "shield":
         return { ...e, amount: scaleScaling(e.amount, k), duration: e.duration * k };
       case "applyStatus":
-        return { ...e, duration: e.duration * k };
+        // ⭐ G2 —— 逐階陣列要**逐格**乘，形狀不變（見 `sim/perRank.ts`）。
+        return { ...e, duration: scaleRankScalar(e.duration, k) };
       case "applyBuff":
         return { ...e, duration: e.duration * k };
       default:

@@ -42,6 +42,7 @@
  * 0.35 s values did NOT have this property (10.5 ticks -> 11 -> 0.367 s).
  */
 import type { AbilityDef } from "../sim/content/defs";
+import { rankScalarMax } from "../sim/perRank";
 import type { EffectDef } from "../sim/effects/effect";
 
 /** Ladder step, seconds. Every step is a whole number of 1/30 s sim ticks. */
@@ -200,15 +201,21 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
         shield += scalingMax(e.amount);
         effectDuration = Math.max(effectDuration, e.duration);
         break;
-      case "applyStatus":
-        effectDuration = Math.max(effectDuration, e.duration);
-        if (e.stun || e.root || (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1)) {
-          ccDuration = Math.max(ccDuration, e.duration);
+      case "applyStatus": {
+        // ⭐ G2 —— 這三格逐階可以是陣列，而這支**不知道階數**（它在推導一支技能
+        // 的前搖）。所以取 `rankScalarMax`：問的是「這一支最強會是多少」，
+        // 而 rank 1 是最弱的一階（見 `sim/perRank.ts::rankScalarMax`）。
+        const dur = rankScalarMax(e.duration) ?? 0;
+        const msm = rankScalarMax(e.moveSpeedMult);
+        effectDuration = Math.max(effectDuration, dur);
+        if (e.stun || e.root || (msm !== undefined && msm < 1)) {
+          ccDuration = Math.max(ccDuration, dur);
         }
         if (e.stun) hardCc = true;
         if (e.root) root = true;
-        if (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1) slow = true;
+        if (msm !== undefined && msm < 1) slow = true;
         break;
+      }
       case "applyBuff": {
         let d = e.duration;
         if (e.perRank?.length) d = Math.max(d, ...e.perRank.map((p) => p.duration));

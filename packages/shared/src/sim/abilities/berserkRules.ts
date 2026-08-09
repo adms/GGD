@@ -44,10 +44,14 @@
  * ════════════════════════════════════════════════════════════════════════════
  * ⭐ 決策 —— 閘掛在「這支技能會給暴走」上,不是掛在 `godie-e00r.ex` 這個 id 上
  *
- * `grantsBerserk()` 讀的是**出貨的那一份 def**:效果列表裡有沒有一發
- * `applyStatus { berserk: true }`。所以規則講得出來、而且對下一支暴走系技能自動
- * 成立:「一支會讓你失控的主動技,只有在你快死的時候按得下去」。
- * 用英雄 id 寫死的話,這條規則會在下一位英雄身上安靜地消失。
+ * `grantsBerserk()` 讀的是**出貨的那一份 def**:效果列表裡有沒有一發落在
+ * **施法者自己**身上的 `applyStatus { berserk: true }`。所以規則講得出來、而且
+ * 對下一支暴走系技能自動成立:「一支會讓**你自己**失控的主動技,只有在你快死的
+ * 時候按得下去」。用英雄 id 寫死的話,這條規則會在下一位英雄身上安靜地消失。
+ *
+ * ⛔ 「落在自己身上」那半是 GH#305 補的,而它不是細節:【混亂】(對敵人下的
+ * 暴走)共用同一格 `berserk: true`,少了受詞判斷,每一支混亂技都會被這條閘鎖住
+ * (實測 12-01 鬥仙術滿血放不出來)。逐行推導見 {@link grantsBerserk}。
  *
  * ── 純度 ──────────────────────────────────────────────────────────────────
  * 全部是純讀取 + 數值比較。沒有 rng、沒有時鐘、沒有三角函式、沒有 `**`,
@@ -159,15 +163,39 @@ export function berserkRulesFromDoc(doc: unknown): BerserkRules {
 }
 
 /**
- * 這支技能會不會把施法者變成暴走狀態 —— 讀**出貨的那一份 def**,不是英雄 id。
+ * 這支技能會不會把**施法者自己**變成暴走狀態 —— 讀**出貨的那一份 def**,
+ * 不是英雄 id。
  *
  * ⚠️ 讀 `def.effects`,而 `Abilities.get()` 回的是**模板展開之後**的 def,所以
  * 用 `template` 寫的暴走技也算得到(CLAUDE.md 失敗形態 ⑤:被測的必須是出貨的
  * 那一個)。
+ *
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⛔ GH#305 ——「有沒有一發 `berserk: true`」**不是**這個問題的答案
+ *
+ * 【暴走】與【混亂】共用同一格 `applyStatus.berserk`(schema 明講混亂必須配
+ * `berserk: true`,owner 2026-08-09:「混亂應該是完全無法指定目標,並且會亂走
+ * 路」)。差別**只在受詞**:暴走落在自己身上,混亂落在敵人身上。
+ *
+ * 所以在這一段之前,一支「對敵人下混亂」的普通技(12-01 鬥仙術,12 秒冷卻)被
+ * 判成「自我暴走」,吃到下面那條「血夠低才放得出來」的閘 —— **滿血按下去回
+ * `"hp-too-high"`,掉到 10% 血才放得出來**。上架就是死的。
+ *
+ * ⭐ 判斷受詞的那一行**逐字鏡射** `effects/applyStatus.ts` 的
+ *
+ *     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+ *
+ * 兩種寫法都落在施法者身上,兩種都算:
+ *   · `applyTo: "self"` —— 明寫(59-001 完全暴走 EX 就是這樣寫的);
+ *   · `castType: "self"` —— `ctx.targets` 本身就是 `[caster]`
+ *     (`abilitySystem.ts` 的 `case "self": targets = [caster]`)。
+ * ⛔ 不要只留前者:一支沒寫 `applyTo` 的自我暴走技會從閘裡漏出去,滿血就放得
+ * 出來,而畫面上跟正確行為一模一樣(失敗形態②)。
  */
 export function grantsBerserk(def: AbilityDef): boolean {
   for (const e of def.effects) {
-    if (e.kind === "applyStatus" && e.berserk === true) return true;
+    if (e.kind !== "applyStatus" || e.berserk !== true) continue;
+    if (e.applyTo === "self" || def.castType === "self") return true;
   }
   return false;
 }

@@ -40,6 +40,7 @@ import { spawnChampion } from "../spawnChampion";
 import { attachSource } from "../stats/statPipeline";
 import { fireHooks } from "../effects/hooks";
 import { runEffects } from "../effects/effectRunner";
+import { rankScalar } from "../perRank";
 import { grantImmunity } from "../effects/invulnerable";
 import { asSeatId, asTeamId, type EntityId, type StatusId } from "../../ids";
 import type { StatusEffect } from "../components";
@@ -164,11 +165,19 @@ const CC_PROBES: readonly { readonly label: string; readonly patch: StatusPatch 
   { label: "slow", patch: { moveSpeedMult: DERIVED_NEUTRAL_MULT - 0.6 } },
 ];
 
+/**
+ * ⚠️ 授權形狀 ≠ 執行期形狀。GH#299（G2）之後 `applyStatus` 的
+ * `moveSpeedMult` / `missChance` 是 {@link RankScalar}（純量**或**逐階陣列），
+ * 而掛在身上的那一筆 `StatusEffect` 一定是**解好的數字** —— `applyStatus.ts`
+ * 在掛上去之前就 `rankScalar(…, ctx.rank)` 過了。所以這裡不能直接 spread。
+ */
 const asInstance = (patch: StatusPatch): StatusEffect => ({
   statusId: QUIET,
   sourceId: "test",
   expiresAtTick: 0,
   ...patch,
+  moveSpeedMult: rankScalar(patch.moveSpeedMult, 1),
+  missChance: rankScalar(patch.missChance, 1),
 });
 
 /** 掛完之後，那個身體身上到底有沒有多一筆？ */

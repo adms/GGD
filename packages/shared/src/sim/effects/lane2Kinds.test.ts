@@ -7,12 +7,13 @@
  * ⚠️ 每一條讀的都是**最終世界狀態**（落點座標 / `hp.mana` / `expiresAtTick` /
  * `rng.state`），不是「EffectDef 長什麼樣」。出貨數值一個都沒有進斷言。
  *
- * ── ⛔ 誠實標注：兩個 kind 的**接線還沒接** ────────────────────────────────
- * `randomAreaSystem` 還沒被掛進 `SimWorld.step()`、`manaBarrierCutFor` 還沒被
- * `combat/damage.ts` 呼叫（那兩支檔案屬於別的並行路）。所以下面驗的是**機制**，
- * 不是「玩家真的拿得到」—— 那正是 CLAUDE.md 失敗形態 ⑤ 的形狀，寫在這裡是為了
- * 讓它**不能**被誤讀成「做完了」。要接的兩行寫在各自的檔頭（randomArea ④ /
- * manaBarrier ②）與交接回報裡。
+ * ── ⛔ 誠實標注：`randomArea` 的**接線還沒接** ────────────────────────────
+ * `randomAreaSystem` 還沒被掛進 `SimWorld.step()`（那支檔案屬於別的並行路），
+ * 所以那一條驗的是**機制**，不是「玩家真的拿得到」—— CLAUDE.md 失敗形態 ⑤ 的
+ * 形狀，寫在這裡是為了讓它**不能**被誤讀成「做完了」。要接的那一行寫在
+ * `randomArea.ts` 檔頭④。
+ * ⚠️ `manaBarrierCutFor` 這一半**已經接上**了（`combat/damage.ts:894`）——
+ * 這段話原本把它一起列為未接線，那是寫在接線落地之前的（第三守則）。
  *
  * ── 突變紀錄（四個都真的跑過：改壞 → 紅 → 改回來，訊息逐字抄在下面）─────────
  *  · ⭐ 承重線 —— draw 預算：`rollScatterPoints` 的第二次 `rng.next()` 拿掉
@@ -29,6 +30,17 @@
  *  · `extendBuff` 的 `Math.min(capTicks, …)` 拿掉
  *      → 紅：「延長後的剩餘時間超過了 maxRemainingSec: expected 60240 to be <= 300」
  *        （＝狂怒被一發爆表傷害延長成 33 分鐘）
+ *
+ * ── GH#307 的三個突變（`durationSec` 選填 = 常駐；強制停止一律是魔力耗盡）─────
+ *  · ⭐ 承重線 —— 兩個 `drained.push` 都加上 `if (src.expiresAtTick === undefined)`
+ *    （＝「有填秒數就不看魔力」，owner 明說不可以的那個實作）
+ *      → 只有「有填秒數」那一條紅：「有填秒數就不看魔力 = 強制停止不是共同的:
+ *        expected { …(6) } to be undefined」，常駐那一條仍然全綠 ——
+ *        這正是為什麼**兩條都要寫**。
+ *  · 迴圈外的 `detachSource` 整行拿掉（＝耗盡只「抵 0」不拔掉）
+ *      → 兩條同時紅（常駐：「魔力耗盡了屏障還在身上 = 常駐永遠不會結束」）。
+ *  · `apply` 的 `if (e.durationSec !== undefined)` 改成永遠 false（＝秒數被忽略）
+ *      → 「有填秒數」那一條紅（到期 tick 不存在）—— 證明 (a) 半不是空跑的。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "../../../testkit/cover";
@@ -183,6 +195,79 @@ describe("Lane 2 的三個 effect kind", () => {
       "型別不在名單裡卻仍然擋了",
     ).toBe(0);
     expect(hp.mana, "型別不合卻扣了魔力").toBeCloseTo(10, 6);
+  });
+
+  // ── GH#307：`durationSec` 選填 —— 省略 = 常駐，而**強制停止只有魔力耗盡一個**。
+  // 兩條 it 一起才守得住：只驗常駐那一條的話，「有填秒數就不看魔力」照樣全綠。
+  const barrierOf = (world: SimWorld, body: EntityId) =>
+    world.stats.get(body)!.sources.find((s) => s.id.startsWith("buff:manaBarrier:"));
+
+  it("manaBarrier 常駐（省略 durationSec）：沒有到期 tick，只有魔力耗盡停得掉", () => {
+    cover("mb-permanent-until-mana-empty");
+    const { world, caster } = stage(3071);
+    const hp = world.health.get(caster)!;
+    const perMana = 3;
+    hp.mana = 10;
+    // ⭐ 走**出貨的** apply（不是手寫一個 source）—— 失敗形態 ⑤。
+    run(world, caster, [caster], [
+      { kind: "manaBarrier", shape: "single", perMana, damageTypes: ["physical", "magic", "true"] },
+    ]);
+    const src = barrierOf(world, caster);
+    expect(src, "屏障沒掛上").toBeDefined();
+    expect(src!.expiresAtTick, "常駐卻寫了到期 tick（-1 會被 buffExpirySystem 當場掃掉）").toBeUndefined();
+
+    // ① 魔力還在 → 真的擋。
+    expect(manaBarrierCutFor(world, caster, "physical", perMana), "有魔力卻沒擋").toBeCloseTo(perMana, 6);
+
+    // ② 魔力抵到見底 → 屏障**被拔掉**，不是只有「這一發抵 0」。
+    manaBarrierCutFor(world, caster, "physical", hp.mana * perMana + 50);
+    expect(barrierOf(world, caster), "魔力耗盡了屏障還在身上 = 常駐永遠不會結束").toBeUndefined();
+
+    // ③ 承重：魔力回滿也不會復活（只「抵 0」而不拔掉的實作在這一行才會紅）。
+    hp.mana = 999;
+    expect(manaBarrierCutFor(world, caster, "physical", perMana), "耗盡後又擋回來了").toBe(0);
+  });
+
+  it("manaBarrier 有填秒數：時間到會停 **而且** 魔力先耗盡也會停", () => {
+    cover("mb-timed-stops-both-ways");
+    const perMana = 3;
+    const durationSec = 0.2; // 夾具自己選的短命長度，不是出貨值。
+    const barrier: EffectDef = {
+      kind: "manaBarrier",
+      shape: "single",
+      perMana,
+      damageTypes: ["physical", "magic", "true"],
+      durationSec,
+    };
+
+    // (a) 時間先到：魔力一路都夠，屏障仍然要停。
+    {
+      const { world, caster } = stage(3072);
+      const hp = world.health.get(caster)!;
+      hp.mana = 50;
+      run(world, caster, [caster], [barrier]);
+      const expiry = barrierOf(world, caster)!.expiresAtTick!;
+      expect(expiry, "填了秒數卻沒有到期 tick").toBeGreaterThan(world.tick);
+      expect(manaBarrierCutFor(world, caster, "physical", perMana), "到期前就不擋了").toBeCloseTo(perMana, 6);
+      while (world.tick <= expiry) world.step(new Map());
+      hp.mana = 50;
+      expect(manaBarrierCutFor(world, caster, "physical", perMana), "過期了還在擋").toBe(0);
+    }
+
+    // (b) ⭐ 承重線：魔力先耗盡 —— 到期 tick 還沒到，屏障也必須停。
+    //     「有填秒數就不看魔力」的實作只有這一段會紅。
+    {
+      const { world, caster } = stage(3073);
+      const hp = world.health.get(caster)!;
+      hp.mana = 10;
+      run(world, caster, [caster], [barrier]);
+      const expiry = barrierOf(world, caster)!.expiresAtTick!;
+      manaBarrierCutFor(world, caster, "physical", hp.mana * perMana + 50);
+      expect(world.tick, "夾具已經走過到期點了 —— 這一條驗不到「魔力先到」").toBeLessThan(expiry);
+      expect(barrierOf(world, caster), "有填秒數就不看魔力 = 強制停止不是共同的").toBeUndefined();
+      hp.mana = 999;
+      expect(manaBarrierCutFor(world, caster, "physical", perMana), "耗盡後又擋回來了").toBe(0);
+    }
   });
 
   it("extendBuff：受傷延長既有 buff，而上界真的擋得住（正回饋不會變永久）", () => {

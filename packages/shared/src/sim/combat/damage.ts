@@ -1144,13 +1144,48 @@ export function addShield(
    * the two spellings are normalised here rather than at every read site.
    */
   absorbs?: import("../components").ShieldAbsorb,
+  /**
+   * ⭐ GH#299（S1）—— 不疊加政策。**兩格一起**才有意義：
+   *
+   *   · `stackKey` 缺席 → 這一片盾誰也不認得，照舊 push 一片新的。
+   *     ⛔ 這是 2026-08-09 之前**每一片盾**的行為，所以既有內容逐字不變。
+   *   · `stackKey` 有值 → 身上同 key 的那一片是「同一片盾」，`onExisting` 決定
+   *     怎麼合併：`replace`（預設，新的整片蓋掉舊的：量與到期都換新）/
+   *     `keepLarger`（量大的留下，到期取晚的）/ `stack`（量相加，到期取晚的）。
+   *
+   * 這一格存在的理由是量出來的：59-03 的文案明寫「[護盾]不會疊加」，而實測
+   * 連放兩次拿到**兩片各 300 點**的獨立池子 —— 卡片說不疊、遊戲裡疊，而且
+   * 畫面上兩片盾長得跟一片厚的一模一樣（失敗形態②）。
+   */
+  stack?: { stackKey: string; onExisting: "replace" | "keepLarger" | "stack" },
 ): void {
   const hp = world.health.get(target);
   if (!hp) return;
+  const expiresAtTick = world.tick + Math.round(durationSecs / world.dt);
+  const absorbsPart = absorbs !== undefined && absorbs !== "all" ? { absorbs } : {};
+  if (stack !== undefined) {
+    // ⚠️ 找**還沒過期**的那一片：一片到期的盾還躺在陣列裡（清掃是消費端的事），
+    // 而「跟一片已經失效的盾合併」會讓新盾繼承一個過去的到期 tick = 掛上去就沒了。
+    const live = hp.shields.find(
+      (s) => s.stackKey === stack.stackKey && s.expiresAtTick > world.tick,
+    );
+    if (live !== undefined) {
+      if (stack.onExisting === "stack") live.amount += amount;
+      else if (stack.onExisting === "keepLarger") live.amount = Math.max(live.amount, amount);
+      else live.amount = amount;
+      // `replace` 以外的兩種取**較晚**的到期 —— 一片被續上的盾不該因為新那次
+      // 比較短就提早消失；`replace` 是「整片換新」，所以無條件用新的。
+      live.expiresAtTick =
+        stack.onExisting === "replace" ? expiresAtTick : Math.max(live.expiresAtTick, expiresAtTick);
+      live.sourceId = sourceId;
+      return;
+    }
+  }
   hp.shields.push({
     amount,
-    expiresAtTick: world.tick + Math.round(durationSecs / world.dt),
+    expiresAtTick,
     sourceId,
-    ...(absorbs !== undefined && absorbs !== "all" ? { absorbs } : {}),
+    ...absorbsPart,
+    ...(stack !== undefined ? { stackKey: stack.stackKey } : {}),
   });
 }

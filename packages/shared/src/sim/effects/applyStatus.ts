@@ -32,6 +32,7 @@
  * 比多一層更難查。
  */
 import type { EffectKindSpec } from "./effectKind";
+import { rankScalar } from "../perRank";
 import { recordCc } from "../stats/matchStats";
 import { refusesControl } from "./invulnerable";
 import { Statuses } from "../content/registry";
@@ -41,7 +42,13 @@ import { adjustMarkCount } from "../marks";
 export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
   apply(e, ctx) {
     const { world } = ctx;
-    const expiresAtTick = world.tick + Math.round(e.duration / world.dt);
+    // ⭐ G2（GH#299）—— 三格逐階欄位在**進迴圈之前**解一次：階數是這一次施放的
+    // 屬性，不是每個受害者各自不同的東西（同 `damage.ts` 對 combo/存款的處理）。
+    // ⛔ 讀取一律走 `rankScalar`，不要手寫 `typeof x === "number" ? …`。
+    const duration = rankScalar(e.duration, ctx.rank) ?? 0;
+    const moveSpeedMult = rankScalar(e.moveSpeedMult, ctx.rank);
+    const missChance = rankScalar(e.missChance, ctx.rank);
+    const expiresAtTick = world.tick + Math.round(duration / world.dt);
     // hard/soft CC (stun/root/slow) applied to an enemy scores ccAppliedTicks
     //
     // ⭐ 恐懼**算** CC，而它上面那位鄰居 `berserk` 刻意不算 —— 兩者的差別不是
@@ -57,7 +64,7 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       e.stun === true ||
       e.root === true ||
       e.feared === true ||
-      (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1);
+      (moveSpeedMult !== undefined && moveSpeedMult < 1);
     // `applyTo: "self"` is the COMBO-WINDOW form: the marker belongs on the
     // caster even though the ability's own targeting resolved enemies (07-02
     // 者、皆、陣 is unit-targeted and still sets udg_MoonCombo, j:34438).
@@ -165,10 +172,10 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // 出貨狀態全部長出一格「1」，然後「這一份有沒有在疊層」就永遠分不出來，
           // 而上面那道「沒寫就不累加」的相容性閘會失去它的判準。
           stacks: e.stacks !== undefined ? clampMarkCount(e.stacks) : undefined,
-          moveSpeedMult: e.moveSpeedMult,
+          moveSpeedMult,
           root: e.root,
           stun: e.stun,
-          missChance: e.missChance,
+          missChance,
           // 暴走 (59-00). 它跟著 status 一起到期,所以「永久失去方向盤」在結構上
           // 不可能發生 —— 見 components.ts 的 `StatusEffect.berserk`。
           berserk: e.berserk,

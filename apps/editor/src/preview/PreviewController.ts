@@ -30,6 +30,7 @@ import {
   type Stat,
   type EffectDef,
 } from "@ggd/shared/sim";
+import { rankScalar } from "@ggd/shared/sim/perRank";
 import { attachItemSource } from "@ggd/shared/sim/economy/itemSource";
 import { liveAttribute } from "@ggd/shared/sim/stats/attrSources";
 import type { AttrLookup } from "@ggd/shared/sim";
@@ -250,8 +251,14 @@ function effectLines(
       // 鑄技工坊's 原地震波 / 變身強化 templates emit both, so they are covered now.
       case "restore": {
         const parts: string[] = [];
-        if (e.healthPct !== undefined) parts.push(`${Math.round(e.healthPct * 100)}% max HP`);
-        if (e.manaPct !== undefined) parts.push(`${Math.round(e.manaPct * 100)}% max mana`);
+        // ⭐ G2（GH#299）—— 這兩格逐階可以是陣列。預覽面板讀的是 `maxRank`，
+        // 因為它回答的是「這支技能練滿是什麼樣」；⛔ 取 rank 1 會讓一支逐階
+        // 遞增的回復在編輯器上永遠顯示最弱的那一階，而那正是這個 case 當初
+        // 補進來要修的同一種病（表單看到的 ≠ 遊戲跑的）。
+        const healthPct = rankScalar(e.healthPct, maxRank);
+        const manaPct = rankScalar(e.manaPct, maxRank);
+        if (healthPct !== undefined) parts.push(`${Math.round(healthPct * 100)}% max HP`);
+        if (manaPct !== undefined) parts.push(`${Math.round(manaPct * 100)}% max mana`);
         out.push({
           depth,
           kind: e.kind,
@@ -594,9 +601,12 @@ function effectLines(
           depth,
           kind: e.kind,
           summary:
-            `魔力屏障 ${e.durationSec}s：每 1 點魔力抵 ${e.perMana} 點傷害` +
+            // GH#307：`durationSec` 選填 —— 省略 = 常駐。⛔ 不可以印 `undefined s`。
+            `魔力屏障 ${e.durationSec === undefined ? "常駐" : `${e.durationSec}s`}` +
+            `：每 1 點魔力抵 ${e.perMana} 點傷害` +
             ` · 擋 ${e.damageTypes.join("/")}` +
             `${e.minManaReserve ? ` · 抵到剩 ${e.minManaReserve} 魔力就停` : "（抵到見底）"}` +
+            " · ⛔ 魔力耗盡一律強制停止（有沒有填秒數都一樣）" +
             " · ⛔ 在扣血之前把傷害換成扣魔（不是受傷後補護盾）",
         });
         break;

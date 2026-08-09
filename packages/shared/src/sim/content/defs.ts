@@ -13,6 +13,10 @@ import type { VisionGrant } from "../stealth";
 import type { EffectDef } from "../effects/effect";
 import type { MarkSpec } from "../marks";
 import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
+// ⭐ 「騎在來源上的授予」那一族 —— 一份表（第零守則⑨）。三個 def 都 `extends` 它，
+// 所以下一個授予加進 `SourceGrantFields` 一格，三個授權面自動全部拿到，
+// 而不是三個檔各補一行（漏掉的那一行**不會紅**）。見 sim/stats/sourceGrants.ts。
+import type { SourceGrantFields } from "../stats/sourceGrants";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 
@@ -22,7 +26,7 @@ export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
  * uses `ranks[N-1]` (clamped to the last entry), and rank 0 (unlearned) grants
  * nothing at all.
  */
-export interface AbilityPassiveRank {
+export interface AbilityPassiveRank extends SourceGrantFields {
   modifiers?: StatModifier[];
   hooks?: HookDef[];
   /**
@@ -411,7 +415,7 @@ export interface ItemSetBonus {
   modifiers: ItemStatModifier[];
 }
 
-export interface ItemDef {
+export interface ItemDef extends SourceGrantFields {
   id: ItemId;
   name: string;
   cost: number;
@@ -597,7 +601,7 @@ export interface ItemRecipe {
 
 export type AugmentTier = "silver" | "gold" | "prismatic";
 
-export interface AugmentDef {
+export interface AugmentDef extends SourceGrantFields {
   id: AugmentId;
   name: string;
   description: string;

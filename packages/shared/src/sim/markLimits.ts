@@ -62,6 +62,36 @@ export const MARK_MAX_COUNT = 999;
  */
 export const MARK_MAX_PER_STACK_VALUE = 10;
 
+/**
+ * ⭐ GH#306 —— 免死救活時,`surviveHpPct` 是**這一發的扣血上限**還是**救完的血量**。
+ *
+ * 這一格存在的理由是一句被寫壞的卡片文案:「免死,並留在 20% 生命」。
+ * 在它之前只有一種行為 —— `combat/damage.ts` 的 `max(0, hp - floor)` ——
+ * 那是「這一發最多扣到 floor」,所以血**已經低於** floor 的時候免死攔住了你、
+ * 一格血都不補,下一隻殭屍碰一下就死。而編輯器上這個欄位看起來完全正常
+ * (CLAUDE.md 失敗形態②:靜默)。
+ *
+ * ⭐ owner 2026-08-09 把語意講死了:
+ *
+ * > 「是**到生命 0 以下,再回到 20%**,不是停在 20%」
+ *
+ * 所以 `"restore"` 是一個**無條件設值**,不是一個條件式補血:免死觸發之後
+ * 血量恆等於 floor,**與觸發前的血量無關**。60% 血挨一發致命傷 → 20%(降下來);
+ * 5% 血挨一發 → 20%(升上去)。⛔ 只驗其中一邊的守衛分不出這三種語意
+ * (夾取 / 低於才補 / 無條件設值),對三種實作都會過(失敗形態④)。
+ *
+ * 兩個都是合法設計,所以它是一格下拉選單而不是一行寫死的政策(第一守則):
+ *   · `"clamp"`   —— **出貨預設 = 今天的行為**。缺席的每一份文件語意逐字不變。
+ *   · `"restore"` —— 救完血量 = floor,不管挨打前是多少(卡片文案的字面意思)。
+ *
+ * ⛔ 預設不可以改成 `"restore"`:那會靜默改變每一份既有的免死內容
+ * (十二道試煉的 floor 是 1%,它靠緊接著的 `restore` 效果回血,不是靠 floor)。
+ */
+export const MARK_LETHAL_RESTORE_MODES = ["clamp", "restore"] as const;
+export type MarkLethalRestoreMode = (typeof MARK_LETHAL_RESTORE_MODES)[number];
+/** 省略 `restoreMode` 時的意思 —— 今天的行為。 */
+export const MARK_LETHAL_RESTORE_MODE_DEFAULT: MarkLethalRestoreMode = "clamp";
+
 /** `expiresAtTick` 是不是「永不過期」。**唯一**該做這個判斷的地方。 */
 export function markNeverExpires(expiresAtTick: number): boolean {
   return expiresAtTick === MARK_NEVER_EXPIRES;

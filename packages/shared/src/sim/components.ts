@@ -48,7 +48,18 @@ export interface Health {
    * damage-type filter: a `"magic"` pool is invisible to a physical packet — it
    * neither absorbs nor is consumed by it.
    */
-  shields: { amount: number; expiresAtTick: number; sourceId: string; absorbs?: ShieldAbsorb }[];
+  /**
+   * ⚠️ `stackKey` 是 GH#299（S1）加的**不疊加政策**的身分欄位，不是顯示用的名字：
+   * 兩片 key 相同的盾是「同一片盾」，怎麼合併由 `addShield` 的 `onExisting` 決定。
+   * 缺席 = 這一片盾誰也不認得，永遠獨立存在（2026-08-09 之前每一片盾的行為）。
+   */
+  shields: {
+    amount: number;
+    expiresAtTick: number;
+    sourceId: string;
+    absorbs?: ShieldAbsorb;
+    stackKey?: string;
+  }[];
 }
 
 export interface TeamComp {

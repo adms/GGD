@@ -11,6 +11,7 @@ import { Stat } from "../stats/statTypes";
 import { enemiesInCircle } from "../abilities/abilitySystem";
 import { distSq } from "../math/vec2";
 import { casterAttrs, casterStats } from "./effectCommon";
+import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 
 /**
@@ -71,6 +72,12 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
       let t = Math.sqrt(v.d2) / radius;
       if (t > 1) t = 1;
       let amount = base * (1 - (1 - falloff) * t);
+      // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
+      // 讀取器，per-target 解算（分母是**某一個身體**的條，一次範圍技的每個
+      // 受害者本來就該算出不同的數字 —— 見 `dynamicTerms.ts` 檔頭）。
+      if (e.resourcePct !== undefined) {
+        amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+      }
       let crit = false;
       if (e.canCrit) {
         const cc = stats[Stat.CritChance] ?? 0;

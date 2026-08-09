@@ -72,6 +72,7 @@ import { queryOverlap } from "../collision/queries";
 import { canSee } from "../stealth";
 import { distSq, len, normalize, sub, type Vec2 } from "../math/vec2";
 import { casterAttrs, casterStats } from "./effectCommon";
+import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
 
 /** Which way the lash goes. `aim: "target"` degrades to facing, never to nothing. */
@@ -149,6 +150,12 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
     for (const v of victims) {
       let amount = base;
+      // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
+      // 讀取器，per-target 解算（分母是**某一個身體**的條，一次範圍技的每個
+      // 受害者本來就該算出不同的數字 —— 見 `dynamicTerms.ts` 檔頭）。
+      if (e.resourcePct !== undefined) {
+        amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
+      }
       let crit = false;
       if (e.canCrit) {
         const cc = stats[Stat.CritChance] ?? 0;

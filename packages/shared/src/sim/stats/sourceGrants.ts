@@ -4,15 +4,21 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * 這支存在的理由（量出來的，2026-08-09）
  *
- * `ModifierSource` 上有一族東西不是 `Stat` 上的數字：**格擋** (`block`) 與
- * **暴擊來源** (`critStrike`)。兩者的共同性質是 sim 端**完全不看 `kind`**：
+ * `ModifierSource` 上有一族東西不是 `Stat` 上的數字：**格擋** (`block`)、
+ * **暴擊來源** (`critStrike`)、**三圍** (`attributes`) 與**傷害型別轉換**
+ * (`damageTypeOverride`)。四者的共同性質是 sim 端**完全不看 `kind`**：
  *
  *   · `combat/block.ts::blockCutFor`      走 `StatsComp.sources`，不問 kind
  *   · `combat/critStrike.ts::rankedGrants` 走 `StatsComp.sources`，不問 kind
+ *   · `stats/attrSources.ts::sourceAttrGrants`            同上
+ *   · `combat/damageTypeOverride.ts::resolveDamageConversion` 同上
  *
  * 真的跑過模擬確認：把 `block` 掛在 `kind:"augment"` / `kind:"buff"` 的來源上，
  * `blockCutFor` 照擋；把 `critStrike` 掛在 `augment` / `passive` / `buff` 上，
- * `rollCritStrike` 照乘。**引擎從第一天就沒有限制過誰授予得起。**
+ * `rollCritStrike` 照乘；2026-08-09 又對後兩格量了同一件事 —— `attributes`
+ * 掛在那三種 kind 上，`liveAttribute` 一律從 24 變成 54；`damageTypeOverride`
+ * 掛在那三種上，`resolveDamageTypeOverride` 一律回 `"true"`。
+ * **引擎從第一天就沒有限制過誰授予得起。**
  *
  * 所以 owner #299 第 2 / 6 條「授權格要放寬」要放寬的**不是引擎**，是兩件事：
  *   ① schema 上有沒有那一格（`content/schema/effect.ts` 的 `SOURCE_GRANT_SHAPE`）
@@ -32,6 +38,9 @@
  */
 import type { BlockGrant } from "../combat/block";
 import type { CritStrikeGrant } from "../combat/critStrike";
+import type { DamageTypeOverride } from "../combat/damageTypeOverride";
+import type { FlightGrant } from "../flight";
+import type { AttrGrant } from "./attributes";
 
 /**
  * 一份內容文件（道具 / 天生技 rank / 增益卡 / `applyBuff` 效果）上，
@@ -44,6 +53,31 @@ import type { CritStrikeGrant } from "../combat/critStrike";
 export interface SourceGrantFields {
   block?: BlockGrant;
   critStrike?: CritStrikeGrant;
+  /**
+   * ⭐ 2026-08-09 (G7) —— 三圍 (力/敏/智)。以前**只有道具**寫得出來,所以
+   * 「這支大招期間力量 +30」「這張三選一卡永久 +15 智」在編輯器上沒有形狀。
+   *
+   * ⛔ 引擎從第一天就沒有限制過誰授予得起:`stats/attrSources.ts::sourceAttrGrants`
+   * 走 `StatsComp.sources` 而**不問 `kind`**(真的跑過模擬 —— 掛在
+   * `buff` / `augment` / `passive` 三種來源上,`liveAttribute` 一律 24 → 54)。
+   * 擋住它的只有 schema 的那一格與這裡的轉發。
+   */
+  attributes?: AttrGrant;
+  /**
+   * ⭐ 2026-08-09 (G7) —— 傷害型別轉換(「接下來 5 秒你的普攻是真傷」)。
+   * 同上:`combat/damageTypeOverride.ts::resolveDamageConversion` 也走
+   * `StatsComp.sources` 而不問 `kind`(同一次模擬:三種來源都回 `"true"`)。
+   */
+  damageTypeOverride?: DamageTypeOverride;
+  /**
+   * ⭐ 2026-08-09 (S11) —— 飛行。以前**只有道具與天生技 rank** 寫得出來,而後者
+   * 一旦到 rank>0 就是永久,所以「限時飛行 6 秒」在引擎裡沒有形狀。
+   *
+   * ⛔ 同前三格:`sim/flight.ts::flightSystem` 掃 `StatsComp.sources` 而**不問
+   * `kind`**,所以掛在 `applyBuff` 生出來的限時 source 上就是限時飛行,
+   * 到期由那個 source 自己的 `expiresAtTick` 收掉,不需要第二支掃描器。
+   */
+  flight?: FlightGrant;
 }
 
 /**
@@ -57,6 +91,11 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
   return {
     ...(from.block !== undefined ? { block: from.block } : {}),
     ...(from.critStrike !== undefined ? { critStrike: from.critStrike } : {}),
+    ...(from.attributes !== undefined ? { attributes: from.attributes } : {}),
+    ...(from.damageTypeOverride !== undefined
+      ? { damageTypeOverride: from.damageTypeOverride }
+      : {}),
+    ...(from.flight !== undefined ? { flight: from.flight } : {}),
   };
 }
 
@@ -70,5 +109,11 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
  * 同一個坑。⛔ 不要在那邊逐格寫 `!block.block && !block.critStrike`。
  */
 export function hasSourceGrant(from: SourceGrantFields): boolean {
-  return from.block !== undefined || from.critStrike !== undefined;
+  return (
+    from.block !== undefined ||
+    from.critStrike !== undefined ||
+    from.attributes !== undefined ||
+    from.damageTypeOverride !== undefined ||
+    from.flight !== undefined
+  );
 }

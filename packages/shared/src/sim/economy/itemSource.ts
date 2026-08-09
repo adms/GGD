@@ -109,15 +109,6 @@ export function itemModifierSource(
     id: itemSourceId(itemId, slot),
     kind: "item",
     modifiers: resolveGatedModifiers(world, holder, def.modifiers),
-    // 三圍 (力/敏/智) rides the source BY REFERENCE and is never mutated —
-    // 四魂之玉 「力敏智+30」, 朗基努斯之槍 「力量+12 敏捷+12」. The only reader is
-    // `stats/statPipeline.recomputeStats`, which folds it into the champion's
-    // BASE through `championStatBase`, so an item point and a 能力屬性強化 card
-    // point pick up the SAME live combat-env coefficients. Forwarding here is
-    // the entire wiring: sell / undo-sell / 三選一 grant / 變身 all go through
-    // the source lifecycle that already exists, so 「賣掉了三圍還留著」 is
-    // unreachable rather than tested-for. See `stats/attrSources.ts`.
-    attributes: def.attributes,
     hooks: def.passive,
     auras: def.auras,
     // 隱形/真視 and 飛行 ride the source untouched. `sim/stealth.ts`
@@ -133,15 +124,7 @@ export function itemModifierSource(
     // they read the same function.
     vision: def.vision,
     flight: def.flight,
-    // 傷害型別轉換 (無視防禦 / 真實傷害) rides the source untouched, for the
-    // same reason `vision` / `flight` do: the ONLY reader is
-    // `combat/damage.ts`'s queue drain, which walks `StatsComp.sources` and
-    // reads this key without caring about `kind`. So forwarding here is the
-    // entire wiring for 霸王破甲槍 / 死之王的長槍 / 惡夢魔王碎片 — no new sim
-    // branch, no new stat, and the shop's live preview cannot drift from the
-    // sim because both build the source through this one function.
-    damageTypeOverride: def.damageTypeOverride,
-    // 格擋 (奇門盾甲 / 黃金聖鬥衣 / 晨曦之光 / 殺豬刀) 與 [暴擊吸血] (天堂之劍)
+    // 三圍 (力/敏/智) · 傷害型別轉換 · 格擋 (奇門盾甲 / 黃金聖鬥衣 / 晨曦之光 / 殺豬刀)
     // ride the source untouched, for the same reason every field above does:
     // their ONLY readers walk `StatsComp.sources` WITHOUT caring about `kind`
     // (`combat/block.ts::blockCutFor` from the damage-queue drain;

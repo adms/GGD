@@ -1148,6 +1148,18 @@ export class SimWorld {
     this.coinBudget.delete(id);
     this.structure.delete(id);
     this.guardianBuffs.delete(id);
+    // GH#308 — 具名標記（層數）。TWO costs, and neither is a visible defect today,
+    // which is exactly why it survived: `world.marks` is keyed by holder and
+    // nothing else ever removed a key, so a match grew one bag per zombie for
+    // nine rounds and never gave one back. And `resetMarksForRound` walks
+    // `world.marks.keys()` — every round boundary re-ticked every corpse's
+    // counter and emitted `markChanged` for an entity that no longer exists.
+    this.marks.delete(id);
+    // GH#308 — 浮空 y. Its contract is "created at takeoff, DELETED at
+    // landing/cancel", so anything that dies MID-LEAP leaks one. A recycled
+    // entityId inheriting it spawns hovering, and the digest folds `airborne`
+    // in whenever it is PRESENT — so the stale entry is a desync source too.
+    this.airborne.delete(id);
     // task #215: a recycled entityId must never inherit a stale mob marker or
     // kill counter (mobKills is keyed by CHAMPION id, but registering it here is
     // the same defensive contract every other per-entity store follows).

@@ -24,7 +24,19 @@ export const shieldEffect: EffectKindSpec<"shield"> = {
       // only」). The author's choice rides straight through to the pool; absent
       // (and the explicit `"all"`) both mean 「吸收所有傷害」, which is exactly
       // the pre-filter behaviour — see addShield, which normalises the two.
-      addShield(world, target, amount, e.duration, ctx.origin, e.absorbs);
+      // ⭐ S1（GH#299）—— 不疊加政策。`stackKey` 缺席時 `stack` 是 undefined，
+      // 而 `addShield` 那一條路徑逐字是 2026-08-09 之前的行為。
+      addShield(
+        world,
+        target,
+        amount,
+        e.duration,
+        ctx.origin,
+        e.absorbs,
+        e.stackKey !== undefined
+          ? { stackKey: e.stackKey, onExisting: e.onExisting ?? "replace" }
+          : undefined,
+      );
       // 【護盾產生時】(GH#300) —— 一個**時刻**，交給 `systems/WorldHookSystem.ts`
       // 那張表轉成 `onShieldGained`。這裡只 emit，不 `fireHooks`：直接呼叫會關上
       // effectRegistry.ts 檔頭指名的那個 import 環（shield → hooks → effectRunner

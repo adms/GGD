@@ -35,6 +35,9 @@
  *     「真傷無法被免死」= 這個陣列裡沒有 `"true"`，不是程式裡的一個分支。
  *   · `surviveHpPct` —— 救完剩多少血。十二道試煉留 1%（隨後那一段自己回 50%），
  *     但「留 1 點」與「留半血」都是合法設計，所以它是數字不是常數。
+ *   · `restoreMode` —— 上面那個數字是**這一發的扣血上限**還是**救完的血量**。
+ *     ⛔ GH#306：在它之前只有前者，於是「免死並留在 20% 生命」這種卡片在血
+ *     **已經低於** 20% 時一格都不補（見 {@link MarkLethalRule.restoreMode}）。
  *   · `internalCooldown` —— 同一 tick 內連續兩發封包會不會燒掉兩層。
  *     ⚠️ 預設 **0.5 秒**而不是 0：一次 AoE 在同一 tick 打出多發封包是常態
  *     （`damageArea` 就是），而 0 會讓十二層在一次爆炸裡全部蒸發。
@@ -67,7 +70,11 @@ import type { SimWorld } from "../SimWorld";
 import type { DamageType, EffectDef } from "../effects/effect";
 import { runEffects } from "../effects/effectRunner";
 import { enemiesInCircle } from "../abilities/abilitySystem";
-import { markExpired } from "../markLimits";
+import {
+  MARK_LETHAL_RESTORE_MODE_DEFAULT,
+  markExpired,
+  type MarkLethalRestoreMode,
+} from "../markLimits";
 import { syncPerStackSource } from "../marks";
 
 /**
@@ -79,8 +86,29 @@ import { syncPerStackSource } from "../marks";
 export interface MarkLethalRule {
   /** 一次免死消耗幾層。十二道試煉 = 1。 */
   readonly consume: number;
-  /** 救活後剩下最大生命的幾成（0 < x <= 1）。 */
+  /**
+   * 免死的**血量地板**，最大生命的幾成（0 < x <= 1）。
+   *
+   * ⚠️ 它是「地板」不是「回復量」—— 這一發最多把你扣到這裡。血量**已經低於**
+   * 它的時候會發生什麼，由 {@link restoreMode} 決定。
+   */
   readonly surviveHpPct: number;
+  /**
+   * ⭐ GH#306 —— `surviveHpPct` 是**這一發的扣血上限**還是**救完的血量**。
+   *
+   * 缺席 = `"clamp"` = 這一格出現之前的每一份文件的行為（`combat/damage.ts`
+   * 的 `max(0, hp - floor)`）。owner 的場景是它壞掉的樣子：
+   * 「卡片寫『免死，並留在 20% 生命』。你被磨到剩 5% 血 → 挨一發 → 免死攔住
+   * 你沒死，**但你還是 5% 血** → 下一隻殭屍碰你一下就死了。」
+   *
+   * `"restore"` 是 owner 2026-08-09 講死的那一句 ——「是到生命 0 以下，
+   * **再回到** 20%，不是停在 20%」—— 一個**無條件設值**：救完血量 == floor，
+   * 與挨打前是 60% 還是 5% 無關。
+   *
+   * ⛔ 兩種模式**只在血量已經低於地板時**行為不同；血量高於地板時兩者逐字
+   * 相同（都是削到剛好 floor）。任何只驗「高於地板」情況的守衛驗不出差別。
+   */
+  readonly restoreMode?: MarkLethalRestoreMode;
   /** 對哪些傷害型別生效。**必填、明列**，`[]` 不合法（見檔頭③）。 */
   readonly damageTypes: readonly DamageType[];
   /** 內部冷卻（秒）—— 防止一次 AoE 的多發封包把層數一口氣燒光。 */
@@ -138,6 +166,35 @@ export function lethalSaveFor(
     // **之前**同步，否則這一次救活留下的血是用舊的 maxHp 算的（少一層份）。
     syncPerStackSource(world, victim, markId, st);
     const floor = Math.max(1, Math.round(health.maxHp * rule.surviveHpPct));
+
+    // ⭐ GH#306 —— 「到生命 0 以下，再回到 N%」的那一半（owner 2026-08-09 的原話：
+    // 「是到生命 0 以下，再回到 20%，**不是停在 20%**」）。
+    //
+    // ⭐ `"restore"` 的規格是一句**無條件**的話：
+    //
+    //        免死觸發之後，血量 == floor。與觸發前的血量無關。
+    //
+    // 而它由**兩段**共同達成，所以兩段都不可以單獨讀：
+    //   ① 血高於 floor —— 呼叫端（`combat/damage.ts` 與 `combat/environmentalBurn.ts`）
+    //      的 `dmg = max(0, hp.hp - floor)` 把它削到剛好 floor（**降下來**）。
+    //      ⛔ 這一段刻意留著扣血，下游（浮動數字、吸血、擊殺歸屬）才看得到一發
+    //      真的發生過的傷害 —— 那正是「被打到底再被拉住」的畫面。
+    //   ② 血已經低於 floor —— 呼叫端的夾取算出 0（整發被擋掉、一格血都不補，
+    //      那就是 owner 描述的壞掉樣子），所以**由下面這一行把血抬上來**（升上去）。
+    //
+    // 兩段合起來 = 無條件設值。⛔ 守衛因此必須驗**兩個起始血量**：只驗高於
+    // floor 的那一邊，「夾取」「低於才補」「無條件設值」三種實作都會過（失敗形態④）。
+    //
+    // ⛔ 補血在**這裡**做而不是在呼叫端：兩個呼叫端都在這一行之後才讀 `hp.hp`，
+    // 所以抬上來之後它們的夾取自然算出 0，兩條路一次修好。在呼叫端各補一次
+    // 就是同一個語意的第二、第三份（第零守則⑨）。
+    //
+    // ⛔ 不走 `healTarget()`：那是一次「治療」，會吃【重創】的 `healingTakenMult`
+    // 與各種治療加成 —— 而這一格是卡片承諾的**保證血量**，被減療砍到 12% 的
+    // 「留在 20% 生命」就又是一個畫面上看不出來的謊。
+    if ((rule.restoreMode ?? MARK_LETHAL_RESTORE_MODE_DEFAULT) === "restore" && health.hp < floor) {
+      health.hp = floor;
+    }
 
     world.emit("markChanged", { id: victim, markId, count: st.count });
     // ⭐ 這個事件是「玩家看得到這件事發生了」的唯一通道（失敗形態②）。

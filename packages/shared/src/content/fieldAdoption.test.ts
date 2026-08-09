@@ -312,6 +312,65 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "引擎側已通。⭐ 這一格是 critRules.stackMode:\"multiply\"(owner 2026-08-09)的理由指向的東西:那條規則存在就是為了「玩家的第二張暴擊卡不可以是廢牌」,而在這一格之前一張卡根本沒有辦法**成為**第二條獨立的暴擊來源(只能加聚合屬性)。零採用是內容決定,不是機制缺席。",
   },
 
+  // ── GH#299 第一輪「授權格」(2026-08-09) ────────────────────────────────────
+  // ⭐ 這一整批的共同性質：**引擎那一半從第一天就在跑**，擋住作者的只有 schema
+  // 上那一格與一行轉發。owner 2026-08-09：「引擎會做那件事，但 JSON 上沒有那一格
+  // 可以填，所以作者寫不出來。=> 請修正」。
+  //
+  // 零採用因此是**內容決定**而不是機制缺席：content/abilities/ 這一輪由 owner
+  // 手動重製，那 90 支還沒寫進樹裡（⛔ 不可以由我代寫，見 CLAUDE.md）。
+  // 每一筆的「哪一支技能會用它」寫在 why 裡，那一支落地時這一筆就該刪掉。
+  "field:abilities.effects[]#damage.applyTo": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "G11 —— 「施法者付自己的血」。applyStatus/spendMana/leap/invulnerable/knockback 早就有 applyTo,damage/dot/heal/restore 沒有,所以 44-01 的自傷代價只能靠 randomArea{who:\"self\"} → weightedBranch 兩層包裝繞。⛔ 沒有提進 EFFECT_COMMON_SHAPE:那會開在全部 34 個 kind 上,包括 handler 不讀它的那些 —— 作者填了什麼都不會發生,是失敗形態②的鏡像。等 44-01 落地。",
+  },
+  "field:abilities.effects[]#dot.applyTo": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同 damage.applyTo 的另一個 kind:一段燒在**自己**身上的持續傷害（獻祭型代價）。dot 的 handler 與 damage 走同一條 subjects 選擇,所以兩者行為對得起來,不是第二套語意。零採用同上:owner 手寫的那批技能還沒進樹。",
+  },
+  "field:abilities.effects[]#heal.applyTo": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同 damage.applyTo,治療自己的那一種。89-002 今天靠 randomArea{who:\"self\"} → weightedBranch{side:\"allies\", maxTargets:1} 兩層包裝繞,那一支改寫時這一筆就該刪掉。",
+  },
+  "field:abilities.effects[]#restore.applyTo": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同 heal.applyTo,百分比（SetUnitLifePercentBJ 式）回復自己的那一種。restore 與 heal 分成兩個 kind 的理由在 sim/effects/effect.ts 的 restore 註解裡:heal 的 Scaling 讀的是**施法者**的屬性,寫不出「目標最大生命的 30%」。零採用同上。",
+  },
+  "field:abilities.effects[]#damageArea.resourcePct": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "S2 —— resourcePct 以前只有 damage/dot 有,所以 20-002「對前方敵人造成(現存魔力+AP)×7」的**魔力那一項**被 .strict() 拒收,那份文件看起來完全正常卻只剩 AP×7（失敗形態②）。⛔ 共用 zResourcePctTerm 與 resourcePctAmount 同一份,不是第二套讀數。",
+  },
+  "field:abilities.effects[]#damageLine.resourcePct": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同 damageArea.resourcePct 的直線版本 —— 20-002「對**前方直線**敵人造成(現存魔力+AP)×7」要的正是這個節點。兩個 kind 各接一次而不是抽一層,是因為它們的受害者集合各自在自己的 handler 裡解出來(圓 vs 膠囊),而 resourcePct 是 per-target 的:分母是某一個身體的條。",
+  },
+  "field:abilities.effects[]#shield.stackKey": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "S1 —— 59-03 的文案明寫「[護盾]不會疊加」,而實測連放兩次拿到**兩片各 300 點**的獨立池子:卡片說不疊、遊戲裡疊,而兩片盾在畫面上跟一片厚的長得一樣。缺席 = 每次都是新的一片 = 2026-08-09 之前的行為,所以既有 20 份文件逐字不變。",
+  },
+  "field:abilities.effects[]#shield.onExisting": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同上的另一半(replace/keepLarger/stack)。⛔ 兩格要一起填 —— 只填 onExisting 會被 refineEffectDef 擋下並指名那一格,免得它變成一個永遠不會被讀到的欄位。",
+  },
+  "field:abilities.effects[]#applyBuff.flight": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "S11 —— 限時飛行。ModifierSource.flight 早就存在而 flightSystem 掃 sources **不問 kind**,擋住的只有 schema:flight 在此之前只掛得到 passive.ranks[].flight,而被動一到 rank>0 就是**永久**的 —— 77-03 因此出現「rank 4 加速活 15 秒、翅膀只有 6 秒」。開在 SOURCE_GRANT_SHAPE 而不是 applyBuff 自己一格,所以一次落在四個授權面上,而且到期由 source 自己的 expiresAtTick 收掉,⛔ 不需要第二支掃描器。",
+  },
+  "field:augments.flight": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "同一格授權的三選一卡那一面。⛔ 與 applyBuff.flight 是同一個 SOURCE_GRANT_SHAPE 展開出來的,所以**一起豁免**（見 ggd-mirror-authority-model:鏡像的兩側分開處理就會有一天只修到一邊）。",
+  },
+
   // ── 跨技能強化 ability@1.augment (2026-08-08) ─────────────────────────────
   //
   // 一支技能指名改寫**另一支**技能的數字(冷卻/傷害/持續/射程…)。引擎側 2026-08-08
@@ -339,6 +398,15 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
 
   // ── 傷害型別轉換 items@1.damageTypeOverride (2026-08-01) ──────────────────
   //
+  // ⚠️ 2026-08-09 —— 下面四個 key **改名了，不是消失了**（第三次同型改名，理由與
+  // `items.block.lethalBasis` 那兩次逐字相同）。G7 把 `zItemDamageTypeOverride`
+  // 變成 `schema/effect.ts` 的 `zDamageTypeOverrideGrant` 的**別名**，因為授予它的
+  // 不再只有道具（`SOURCE_GRANT_SHAPE` 展開它 → 天生技一階 / 三選一 / applyBuff）。
+  // `nameSchemas()` 依**物件識別**命名，所以這一顆共用 schema 的子欄位一律掛在
+  // **第一個被走到**的路徑（`applyBuff`）底下。外層那格 `field:items.damageTypeOverride`
+  // 的 3/3 採用一格沒動 —— 動的只有名字。
+  // ⛔ 不要為了名字穩定就把 schema 拆兩份（見 `fromResource` 那一格的同一則警告）。
+  //
   // 三件出貨:霸王破甲槍 godie-i00f / 死之王的長槍 godie-i01d (scope "basic")、
   // 惡夢魔王碎片 godie-i067 (scope "ability")。所以**機制本身完全不在零** ——
   // `becomes=true` 3/3、`scope=basic` 2/3、`scope=ability` 1/3、`impactType` 1/3,
@@ -359,21 +427,68 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 設計選擇**印成「ACCEPTED FAILURE」,那句話對這三格是重的。真正的修法是替
   // ExemptionStatus 加一個講「列舉比內容寬,而且是故意的」的成員 —— 但那個成員必須
   // 照樣印在 banner 上,否則它就是一個更好聽的沉默鍵,也就是這份普查存在要擋的東西。
-  "field:items.damageTypeOverride.applyAt": {
+  "field:abilities.effects[]#applyBuff.damageTypeOverride.applyAt": {
     status: "default-live",
     why: "省略 = \"afterGates\",而且那個預設**真的在跑**:sim/combat/damageTypeOverride.ts 的 resolveDamageConversion 逐個來源比對 `(ov.applyAt ?? \"afterGates\") !== phase`,三件出貨武器全部走這一條。它的意思是無敵/免疫與閃避**先用原本的型別**判定,轉換只影響護甲魔抗與護盾型別過濾 —— 也就是 owner 文案「無視防禦」字面上要的東西,一點不多。寫 \"beforeGates\" 是「連魔法免疫也穿透」,那是一個沒有人要求過的隱性升級,所以零採用正是它該有的樣子。兩側都由 sim/combat/damageTypeOverride.test.ts 的「applyAt —— the conservative default leaves 魔法免疫 working」逐條驅動(預設那條與 beforeGates 那條各一),所以這一格不是「schema 有個欄位」。",
   },
-  "enum:items.damageTypeOverride.scope=all": {
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
     status: "debt",
     why: "sim 認得它(originInScope 的 `scope === \"all\"` 早退,由 damageTypeOverride.test.ts 的 origin 分類表逐列驅動,含 hook: / mob / guardian 三種只有 \"all\" 抓得到的封包),但沒有任何一件出貨道具要它:三件的文案分別講「普攻」與「技能」,而 \"all\" 會額外把道具 proc、小怪與守衛塔封包一起轉成真傷 —— 惡夢魔王碎片 godie-i067 的 authoringNote 就是這樣寫的:「那是另一件道具」。這一格是**列舉比內容寬**,不是壞掉的機制;掛 debt 是因為六個 status 裡只有它能讓這一列永遠留在 banner 上而不說謊(理由見上面那段)。刪掉這一條的日子,是有人真的做出「這位持有者打出去的每一發都是真傷」那件道具的日子;若 owner 裁定永遠不會有,誠實的做法是把成員從 zItemDamageTypeOverride 拿掉,不是改成一個聽起來比較舒服的 status。",
   },
-  "enum:items.damageTypeOverride.becomes=magic": {
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=magic": {
     status: "debt",
     why: "`becomes` 被**刻意**做成完整的 DamageType 而不是 `toTrue: boolean` —— 理由寫在 sim/combat/damageTypeOverride.ts 的 DamageTypeOverride.becomes:WC3 有一整族「攻擊屬性轉換」(物理↔魔法)的道具與光環,用同一個機制就寫得出來,而多開一個 boolean 才是把決策烘進程式(第一守則)。所以這一格的零是**那個決定的必然結果**,不是有人忘了填:今天三件出貨全部是 \"true\",而 GGD 還沒有匯入任何一件物理↔魔法轉換道具。sim 這一側是活的(CONVERSION_RANK 的全序由 damageTypeOverride.test.ts 的「two conflicting sources resolve the same way in EITHER attach order」用 becomes:\"magic\" 真的驅動)。掛 debt 而不是 landing:沒有遷移在路上,而 30 天的鬧鐘只會逼出一件為了餵測試而生的道具。",
   },
-  "enum:items.damageTypeOverride.becomes=physical": {
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=physical": {
     status: "debt",
     why: "同 becomes=magic 的另一半:「把魔法傷害打成物理」。它比 magic 更遠 —— 出貨內容裡連一句承諾這種轉換的文案都沒有(掃過 219 份 item 文件的 description)。留著的理由是列舉鏡射 DamageType 這個決定本身,而不是有人要求過。⚠️ 它與 magic 的差別值得記一筆:magic 那格在 sim 測試裡被真的驅動過(CONVERSION_RANK 排序),physical 只作為排序表的最低位存在。所以如果 owner 裁定這一族永遠不進 GGD,physical 是第一個該被拿掉的成員,而拿掉它會同時簡化 CONVERSION_RANK。",
+  },
+
+  // ══ G7 授權格第二批 2026-08-09（GH#299 第 6 條「授權格要放寬」）════════════
+  //
+  // ⚠️ 這六筆是**同兩個欄位**在三個新授權面上的節點，不是六個機制。
+  // `attributes`（三圍）與 `damageTypeOverride`（傷害型別轉換）在 2026-08-09
+  // 之前**只有道具**寫得出來，而擋住其餘三面的從來不是引擎 —— 真的跑過模擬：
+  // 把兩者掛在 `kind:"buff"/"augment"/"passive"` 的來源上，`liveAttribute` 與
+  // `resolveDamageConversion` 一律照讀（`stats/attrSources.ts` 與
+  // `combat/damageTypeOverride.ts` 都走 `StatsComp.sources` 而不問 `kind`）。
+  // 擋住的只有 schema 那一格與轉發，這一批補的就是那兩樣。
+  //
+  // 零採用是**內容決定不是機制缺席**：owner 正在手動重製 90 支技能，
+  // ⛔ 契約層依令沒有動 `content/abilities/`；三選一增益卡池也還沒重排（#149）。
+  // 行為守衛：`sim/stats/sourceGrants.test.ts`（三個授權面各讀出貨消費端，
+  // 兩個突變都驗過會紅 —— 拿掉轉發 4 條紅、拿掉 schema 授權格最後那條紅）。
+  //
+  // 30 天到期。到期仍是 0 時，誠實的問題是「那 90 支技能為什麼還沒進來」。
+  "field:abilities.effects[]#applyBuff.attributes": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "限時三圍（「這支大招期間力量 +30」）。以前只有道具授予得起，所以這句話在編輯器上沒有形狀。到期走這份 buff 自己的 expiresAtTick（`sourceAttrGrants` 已經在跳過過期來源），沒有第二個時鐘。",
+  },
+  "field:abilities.effects[]#applyBuff.damageTypeOverride": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "限時傷害型別轉換（「接下來 5 秒你的普攻是真傷」）。同上，到期走同一個 expiresAtTick（`resolveDamageConversion` 已經在跳過過期來源）。",
+  },
+  "field:abilities.passive.ranks[].attributes": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "天生技逐階授予三圍（WC3 的屬性型被動整族都是這個形狀）。與道具寫的是**同一格** `ModifierSource.attributes`，所以升級／EX 解鎖／變身都走既有的 detach+attach 生命週期。",
+  },
+  "field:abilities.passive.ranks[].damageTypeOverride": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "天生技授予傷害型別轉換（「這位英雄的普攻無視防禦」在此之前只能靠一件裝備）。與道具同一格、同一個解析器、同一組 scope 語意。",
+  },
+  "field:augments.attributes": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "三選一增益卡授予三圍。⚠️ 與 #260 的「能力屬性強化」**不是**同一條路：那張卡走 `ChampionComp.attrBonus`（永久累加），這一格騎在 source 上（卡片被移除就跟著消失），兩者由 `sourceAttrGrants` 折在同一個地方，下游分不出來。",
+  },
+  "field:augments.damageTypeOverride": {
+    status: "landing",
+    since: "2026-08-09",
+    why: "三選一增益卡授予傷害型別轉換（「這一場你的技能都是真傷」是一張典型的 prismatic 卡）。卡池重排見 #149。",
   },
 
   "field:abilities.effects[]#applyStatus.feared": {

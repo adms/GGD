@@ -60,8 +60,29 @@ import {
 import { MARK_MAX_COUNT } from "../../sim/markLimits";
 import { TAUNT_MAX_DURATION_SEC, TAUNT_MAX_TARGETS } from "../../sim/taunt";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../sim/flight";
+import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
+// 三圍授予的上下界 —— 一份表兩個消費端（道具與其餘三個授權面），⛔ 不抄字面值。
+import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../sim/stats/attributes";
 
 export const zDamageType = z.enum(["physical", "magic", "true"]);
+
+/**
+ * ⭐ GH#299 第 2 條（owner：「授權格沒開⋯**請修正**」）—— 把一格既有的**純量**
+ * 欄位開放成「逐階可以不一樣」，**而且不動任何一份既有文件**。
+ *
+ *   · `duration: 3`        每一階都是 3（今天所有內容的寫法，語意逐字不變）
+ *   · `duration: [2,3,4,5]` 一階一格，rank-1 起算、超出長度夾在最後一格
+ *
+ * ⛔ 不開第二個欄位名（`durationPerRank`）：那是同一個量的第二個住處，
+ * 而它會在有人只改一邊的那一天靜默地贏。完整推導與讀取器住在
+ * `sim/perRank.ts` —— ⛔ 這裡不重複一份。
+ *
+ * @param inner 那一格原本的純量 schema（含它自己的上下界）——
+ *              陣列的每一格**共用同一組界**，所以打錯的數字在哪一階都擋得住。
+ */
+function zRankScalar<T extends z.ZodTypeAny>(inner: T): z.ZodUnion<[T, z.ZodArray<T>]> {
+  return z.union([inner, z.array(inner).min(1).max(RANK_SCALAR_MAX_COLUMNS)]);
+}
 
 /**
  * Ceiling on ONE rank column of `damage.hpPct` (a 0..1 ratio of the victim's
@@ -73,7 +94,31 @@ export const zDamageType = z.enum(["physical", "magic", "true"]);
  * every cast one-shots every body it touches. Bounded on BOTH ends because
  * CLAUDE.md says 「欄位要有上界，不是只有下界」.
  */
-export const HP_PCT_DAMAGE_MAX = 0.35;
+export const HP_PCT_DAMAGE_MAX = RESOURCE_PCT_RATIO_MAX;
+
+/**
+ * ⭐ `applyStatus.duration` 的**兩層**上界（2026-08-09 / GH#299 第 1 條）。
+ *
+ * 在此之前只有一個數字（20 秒）管所有狀態，而它的理由 ——「一個 30 秒的暈眩在
+ * 一場三分鐘的回合裡等於那個人這一場不用玩了」——**只對硬控成立**。於是一個
+ * 24 秒的計數視窗（不動控制、不動數值，只是「這段時間內」）也被同一條界擋下來。
+ *
+ * 所以現在是兩條：
+ *   · {@link STATUS_MAX_DURATION_SEC} = 60 —— 一般狀態。仍然是**打錯數字的守衛**
+ *     （20 打成 200 照樣擋得下），不是平衡政策。
+ *   · {@link HARD_CC_MAX_DURATION_SEC} = 20 —— `stun` / `root` / `feared` /
+ *     `silenced` 任何一格為真時。**逐字是舊的那個數字**，一格都沒放寬。
+ *
+ * ⚠️ 判準是「玩家這段時間還能不能操作」，所以 `moveSpeedMult` 不在硬控那一組
+ * （減速仍然打得到、放得出技能），而 `silenced` 在（放不出技能就是被拿走一半的
+ * 操作）。⛔ 新增一個「拿走操作」的布林時要一起加進 `HARD_CC_FLAGS`，
+ * 否則它會安靜地拿到 60 秒。
+ */
+export const STATUS_MAX_DURATION_SEC = 60;
+/** 硬控（拿走操作）的上界 —— 2026-08-09 之前**所有**狀態共用的那個數字。 */
+export const HARD_CC_MAX_DURATION_SEC = 20;
+/** 哪幾格算「拿走操作」。⛔ 新增同類布林時一起加，見上。 */
+const HARD_CC_FLAGS = ["stun", "root", "feared", "silenced"] as const;
 
 /**
  * `damage.bankedBonus` 的三個上界(owner 2026-07-31 的「係數要是欄位 + 要有一個
@@ -465,6 +510,22 @@ function refineExtendBuff(
 }
 
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
+  if (e.kind === "applyStatus") return refineHardCcDuration(e, ctx);
+  if (e.kind === "shield") {
+    // `onExisting` 沒有 `stackKey` 就沒有東西可以比對 —— 一格看起來有設、
+    // 實際上永遠不會被讀到的欄位（失敗形態②）。與 `grantAttribute` 的
+    // `maxSourceTotal` 需要 `store:"source"` 是同一條規矩、同一個訊息形狀。
+    if (e.onExisting !== undefined && e.stackKey === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["onExisting"],
+        message:
+          'onExisting 需要 stackKey —— 沒有 key 就沒有「已經有的那一片」可以比對, ' +
+          "這一格永遠不會被讀到, 而護盾照樣一片一片疊上去",
+      });
+    }
+    return;
+  }
   if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
   // Lane 2：共用的 `shape` 檢查 + `extendBuff` 自己的跨欄位規則。
   if (e.kind === "randomArea" || e.kind === "manaBarrier" || e.kind === "extendBuff") {
@@ -681,10 +742,152 @@ export const zCritStrikeGrant = z
  *
  * ⚠️ 轉發那一半在 `sim/stats/sourceGrants.ts::sourceGrants()`,同樣是一份。
  */
+/**
+ * 三圍 (力/敏/智) 授予 —— 定義**搬到這裡**（2026-08-09，GH#299 第 6 條的第二批）。
+ *
+ * ⚠️ 它以前住在 `schema/item.ts` 叫 `zItemAttributes`，搬家的理由與 `zBlockGrant`
+ * 2026-08-08 那一次逐字相同：授予它的不只有道具。`item → effect` 是單向 import，
+ * 所以要讓 `SOURCE_GRANT_SHAPE` 展開得到它，定義就必須住在這一側；item.ts 留一個
+ * 別名（既有守衛用 `zItemAttributes.shape` 數欄位）。
+ *
+ * 每一格都 optional 而整體 `.refine` 拒絕 `{}`：一個空的授予區塊看起來有 author 過
+ * 卻一毛不付，正是這一族要關的洞。上下界的推導（下界 0 是因為大負敏會經由那唯一
+ * 一條乘法推導把攻速靜默歸零；上界 500 是打錯數量級的守衛，不是平衡意見）住在
+ * `sim/stats/attributes.ts`，⛔ 這裡只引用常數。
+ *
+ * ⚠️ NOT `.int()` —— 能力屬性強化三選一每張付 0.1–2.0（#260），小數三圍在一場
+ * 比賽裡本來就是常態。
+ */
+export const zAttrGrant = z
+  .object({
+    str: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
+    agi: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
+    int: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
+  })
+  .strict()
+  .refine((a) => a.str !== undefined || a.agi !== undefined || a.int !== undefined, {
+    message: "attributes must grant at least one of str/agi/int",
+  });
+
+/**
+ * 傷害型別轉換（無視防禦 / 真實傷害家族）—— 同樣從 `schema/item.ts` 搬過來，
+ * 同樣的理由。四個欄位各自的完整推導留在 `schema/item.ts` 的別名註解與
+ * `sim/combat/damageTypeOverride.ts` 檔頭，⛔ 不在這裡抄第二份。
+ */
+export const zDamageTypeOverrideGrant = z
+  .object({
+    scope: z
+      .enum(["basic", "ability", "all"])
+      .describe(
+        "換哪些傷害:basic = 普通攻擊(近戰與遠程投射物都算)、" +
+          "ability = 技能,含技能留下的延燒/中毒每一跳、" +
+          "all = 這個來源的持有者打出去的每一發(額外含道具觸發、小怪與守衛塔封包)。",
+      ),
+    becomes: zDamageType.describe(
+      "換成什麼型別。true = 真實傷害(完全跳過護甲與魔抗,而且只有不指定型別的護盾吃得到)。",
+    ),
+    applyAt: z
+      .enum(["afterGates", "beforeGates"])
+      .optional()
+      .describe(
+        "什麼時候換。afterGates(預設)= 無敵/免疫與閃避先用原本的型別判定,轉換只影響護甲魔抗與護盾;" +
+          "beforeGates = 連免疫與閃避也用新型別判定(例:被轉成真傷的法術,魔法免疫就擋不住了)。",
+      ),
+    impactType: z
+      .enum(["original", "converted"])
+      .optional()
+      .describe(
+        "換完之後,擊倒判定讀哪一個型別。original(預設)= 讀轉換前的型別 —— " +
+          "被轉成真傷的法術跳過魔抗,但不會因此多出一個它本來沒有的擊倒;" +
+          "converted = 讀轉換後的型別,也就是「轉真傷順便附贈擊倒」。",
+      ),
+  })
+  .strict();
+
+/**
+ * 飛行 (無視碰撞) grant on a passive rank — mirrors `FlightGrant` in
+ * sim/flight.ts.
+ *
+ * ⚠️ `stayInsideBoundary` DEFAULTS TO TRUE and that default is the whole safety
+ * story: without it 「無視碰撞」 walks 莉娜因巴斯 off the 24-unit arena disc, and
+ * every zone-scoped mechanic (duel resolution, teamAliveInZone, the minimap)
+ * then reasons about a champion who is nowhere. Turning it off is a deliberate
+ * authoring act, not a default anybody falls into.
+ *
+ * `hoverHeight` is presentation only (it rides the existing `EntityState.h`
+ * channel) and is bounded on BOTH ends: a champion floating 40 units up is off
+ * the top of a fixed-pitch camera, i.e. invisible, which reads as the model
+ * failing to load rather than as a feature.
+ */
+export const zFlightGrant = z
+  .object({
+    hoverHeight: z.number().min(0).max(FLIGHT_MAX_HOVER_HEIGHT).optional(),
+    ignoreUnits: z.boolean().optional(),
+    ignoreObstacles: z.boolean().optional(),
+    stayInsideBoundary: z.boolean().optional(),
+  })
+  .strict();
+
 export const SOURCE_GRANT_SHAPE = {
   block: zBlockGrant.optional(),
   critStrike: zCritStrikeGrant.optional(),
+  /**
+   * ⭐ 2026-08-09 —— G7 的第三、第四格。**引擎從第一天就不看 `kind`**（真的跑過
+   * 模擬：把 `attributes` 掛在 `kind:"buff"/"augment"/"passive"` 的來源上，
+   * `stats/attrSources.ts::sourceAttrGrants` 照樣把 24 力加成 54；把
+   * `damageTypeOverride` 掛在同樣三種上，`combat/damageTypeOverride.ts::
+   * resolveDamageConversion` 照樣回 `"true"`）。擋住「這支大招期間三圍 +30」
+   * 「這張卡讓你的普攻變真傷」的**只有**這兩格 schema 與轉發。
+   */
+  attributes: zAttrGrant.optional(),
+  damageTypeOverride: zDamageTypeOverrideGrant.optional(),
+  /**
+   * ⭐ 2026-08-09 —— S11（GH#299）的第一半，**又是同一個授權格**。
+   *
+   * `ModifierSource.flight` 早就存在，而 `sim/flight.ts::flightSystem` 每 tick
+   * 掃 `StatsComp.sources` 找它、**不問 `kind`**（那份檔頭自己寫著「NOTHING else
+   * reads it」）。擋住「限時飛行」的只有 schema：`flight` 在此之前只掛得到
+   * `ability@1.passive.ranks[].flight`，而被動一旦到 rank>0 就是**永久**的 ——
+   * 於是 77-03 的「翅膀 6 秒」只能靠 `whileForm` 閘去繞，結果 rank 4 的加速活
+   * 15 秒、翅膀只有 6 秒，兩個本來該同時結束。
+   *
+   * 開在這裡（而不是 `applyBuff` 自己一格）的好處是它一次落在**四個授權面**上：
+   * 道具、天生技 rank、增益卡、`applyBuff` —— 而一份限時的 `applyBuff` source
+   * 到期時 `flight` 跟著整個 source 一起消失，⛔ 不需要第二支到期掃描器。
+   */
+  flight: zFlightGrant.optional(),
 } as const;
+
+/**
+ * ⭐ 硬控的那一條較嚴的上界（見 {@link HARD_CC_MAX_DURATION_SEC}）。
+ *
+ * 住在 `refineEffectDef` 而不是 `duration` 自己的 `.max()`，有兩個各自獨立的
+ * 理由，兩個都是硬的：
+ *   ① 它是一個**跨欄位**規則 —— 同一個 24 秒在計數視窗上合法、在暈眩上不合法，
+ *      而 `z.number()` 看不到隔壁那格布林。
+ *   ② `zEffectDefUnion` 是 `z.discriminatedUnion`，它的成員**必須是 ZodObject**；
+ *      在那一格掛 `.superRefine` 會讓它變成 `ZodEffects` 而整個聯集建不起來。
+ *      ⛔ 這不是風格問題，是 zod 的型別約束（試過，`pnpm typecheck` 直接紅）。
+ */
+function refineHardCcDuration(
+  e: Extract<EffectDef, { kind: "applyStatus" }>,
+  ctx: z.RefinementCtx,
+): void {
+  const flags = HARD_CC_FLAGS.filter((f) => e[f] === true);
+  if (flags.length === 0) return;
+  const cols = typeof e.duration === "number" ? [e.duration] : e.duration;
+  cols.forEach((v, i) => {
+    if (v <= HARD_CC_MAX_DURATION_SEC) return;
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: typeof e.duration === "number" ? ["duration"] : ["duration", i],
+      message:
+        `硬控（${flags.join("/")}）最長 ${HARD_CC_MAX_DURATION_SEC} 秒，拿到 ${v}。` +
+        "一場回合三分鐘，再長等於「那個人這一場不用玩了」。" +
+        `不拿走操作的狀態（計數視窗、減速、減益數值）可以到 ${STATUS_MAX_DURATION_SEC} 秒。`,
+    });
+  });
+}
 
 /** Recursive knot: spawnProjectile.onHit is EffectDef[] again. */
 export const zEffectDef: z.ZodType<EffectDef, z.ZodTypeDef, unknown> = z.lazy(
@@ -721,11 +924,32 @@ const EFFECT_COMMON_SHAPE = {
     ),
 } as const;
 
+/**
+ * ⭐ G11（GH#299）—— 「這一段落在誰身上」。
+ *
+ * `applyStatus` / `spendMana` / `leap` / `invulnerable` / `knockback` /
+ * `blink` / `evasion` / `cycleBuff` 早就有這一格，而 `damage` / `dot` /
+ * `heal` / `restore` **沒有**，於是「施法者付自己的血」被 `.strict()` 拒收，
+ * 89-002 只好靠 `randomArea{who:"self"}` → `weightedBranch{side:"allies",
+ * maxTargets:1}` **兩層包裝**繞過去。
+ *
+ * ⛔ **沒有**提進 {@link EFFECT_COMMON_SHAPE}（原本的計畫），因為那會把這一格
+ * 開在全部 34 個 kind 上，包括 handler 根本不讀它的那些 —— 作者填了、什麼都
+ * 不會發生，那是失敗形態②的鏡像（「JSON 有那一格但引擎不看」），跟這一批要修的
+ * 「引擎會做但 JSON 沒那一格」一樣糟。所以是**開一格、接一條線**，逐 kind 加。
+ */
+const zApplyToSelfOrTarget = z
+  .enum(["self", "target"])
+  .optional()
+  .describe("落在誰身上：target（預設，這次解出來的每個目標）或 self（施法者自己）。");
+
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
       kind: z.literal("damage"),
       ...EFFECT_COMMON_SHAPE,
+      /** ⭐ G11（GH#299）—— 「施法者付自己的血」。見 {@link zApplyToSelfOrTarget}。 */
+      applyTo: zApplyToSelfOrTarget,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -923,6 +1147,14 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       canCrit: z.boolean().optional(),
       /** 震央本人要不要再吃一次 (預設 false — 他已經吃過觸發這一擊了) */
       includeOrigin: z.boolean().optional(),
+      /**
+       * ⭐ S2（GH#299）—— 與 `damage.resourcePct` **完全同一份 schema、同一個
+       * 讀取器**（`sim/effects/dynamicTerms.ts::resourcePctAmount`）。
+       * 在此之前只有 `damage` / `dot` 有這一格，於是「對範圍內敵人造成
+       * （現存魔力 + AP）×7」的**魔力那一項**被 `.strict()` 拒收，只剩 AP×7 ——
+       * 而那份文件看起來完全正常（失敗形態②）。
+       */
+      resourcePct: zResourcePctTerm.optional(),
     })
     .strict(),
   /**
@@ -955,6 +1187,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       canCrit: z.boolean().optional(),
       /** 觸發這一次的那個人要不要再吃一次 (預設 false —— 他已經吃過普攻了) */
       includeOrigin: z.boolean().optional(),
+      /** ⭐ S2（GH#299）—— 見 `damageArea.resourcePct`，同一份 schema 同一個讀取器。 */
+      resourcePct: zResourcePctTerm.optional(),
     })
     .strict(),
   /**
@@ -1069,7 +1303,15 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       teamCharge: z.enum(["ignore", "requireAndSpend"]).optional(),
     })
     .strict(),
-  z.object({ kind: z.literal("heal"), ...EFFECT_COMMON_SHAPE, amount: zScaling }).strict(),
+  z
+    .object({
+      kind: z.literal("heal"),
+      ...EFFECT_COMMON_SHAPE,
+      amount: zScaling,
+      /** ⭐ G11（GH#299）—— 回自己。省略 = target = 今天的行為。 */
+      applyTo: zApplyToSelfOrTarget,
+    })
+    .strict(),
   z
     .object({
       kind: z.literal("shield"),
@@ -1088,6 +1330,21 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * combat/damage.ts 的 `absorbOrder`。
        */
       absorbs: z.enum(["all", "physical", "magic", "true"]).optional(),
+      /**
+       * ⭐ GH#299（S1）—— 「[護盾]不會疊加」寫得出來了。
+       *
+       * 同一個 `stackKey` 的護盾視為**同一片**；缺席 = 每次都是新的一片
+       *（2026-08-09 之前的行為，既有內容逐字不變）。合併規則見 `onExisting`。
+       * ⛔ 兩格要一起填 —— 只填 `onExisting` 會被拒（見 `refineShieldStack`）。
+       */
+      stackKey: z.string().min(1).max(48).optional(),
+      /**
+       * 身上已經有同 key 的一片時怎麼辦。`stackKey` 有填而這格沒填 = `"replace"`。
+       *   · `replace`    整片換新（量與到期都用新的）—— 「不會疊加」的字面意思
+       *   · `keepLarger` 留量大的那一片，到期取較晚的
+       *   · `stack`      量相加，到期取較晚的
+       */
+      onExisting: z.enum(["replace", "keepLarger", "stack"]).optional(),
     })
     .strict(),
   z
@@ -1151,16 +1408,42 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        *   數字會 round 成 **0 tick** —— 狀態掛上去的同一瞬間就過期,玩家永遠拿不到
        *   (失敗形態 ②)。這不是理論:出貨最短的一格正是 0.034(血染八月
        *   `godie-i06o` 的 fang-stun),下界因此貼著它而不是憑空挑的。
-       * · 上界 20 秒。出貨最長的是 10 秒(59-00 暴走 `godie-e00r.passive`),所以
-       *   20 給了一倍的空間;它擋的是**小數點打錯一位**:0.3 打成 3 沒有任何界擋
-       *   得住(那是一個合法的設計值),但 0.3 打成 30、3 打成 30、20 打成 200
-       *   都會在 `pnpm content:build` 當場被擋下並指名檔案與欄位。一個 30 秒的
-       *   暈眩在一場三分鐘的回合裡等於「那個人這一場不用玩了」。
+       * · 上界分兩層（⭐ 2026-08-09 / GH#299 第 1 條改的）：
+       *   **硬控** ≤ {@link HARD_CC_MAX_DURATION_SEC}（20 秒，逐字是舊的那個數字），
+       *   其餘 ≤ {@link STATUS_MAX_DURATION_SEC}（60 秒）。
+       *
+       *   ⛔ 在此之前**一個數字管兩件事**，而「一個 30 秒的暈眩等於那個人這一場
+       *   不用玩了」這句話**只對硬控成立** —— 它被套在每一種狀態上，於是一個
+       *   24 秒的**計數視窗**（不動控制、不動數值，只是「這段時間內」）也被擋下來，
+       *   而那正是 GH#299 量到的 7 支之一。放寬與收緊在這一次是同一件事：
+       *   一般上界抬到 60，硬控那一格的護欄一格都沒動（見下面的 `superRefine`）。
+       *
+       *   它擋的仍然是**小數點打錯一位**：0.3 打成 3 沒有任何界擋得住（那是一個
+       *   合法的設計值），但 0.3 打成 30 的**暈眩**、20 打成 200 的任何狀態，
+       *   都會在 `pnpm content:build` 當場被擋下並指名檔案與欄位。
+       *
+       * ⭐ 逐階（GH#299 第 2 條）：填陣列 = 一階一格。見 {@link zRankScalar}。
        */
-      duration: z.number().min(0.034).max(20),
+      duration: zRankScalar(z.number().min(0.034).max(STATUS_MAX_DURATION_SEC)),
       /** "self" puts it on the CASTER (combo windows); default "target" */
       applyTo: z.enum(["self", "target"]).optional(),
-      moveSpeedMult: z.number().positive().optional(),
+      /**
+       * 移速倍率。1 = 不動，0.5 = 減速一半。
+       *
+       * ⭐ 2026-08-09（GH#299 第 1 條）：下界從 `.positive()`（> 0）改成 **0**。
+       * `0 = 完全不能動`，而在此之前它**寫不出來** —— 唯一的替代品是 `root: true`，
+       * 但那兩件事在引擎裡不一樣：`root` 是一筆**硬控**（吃免控、進 `ccAppliedTicks`
+       * 戰績、被【淨化】的規則管），而「速度歸零」是一個純數值減益（例如「泥沼」
+       * 這種可以被位移技掙脫的東西）。把它們折成同一格會讓免控對其中一個有效、
+       * 對另一個無效，而畫面上看不出來。
+       *
+       * ⚠️ 上界仍然刻意沒有：加速也走這一格（`1.3` 的加速與 `0.7` 的減速在結構上
+       * 長得一模一樣，見 `sim/components.ts`），而加速的天花板由 `Stat.MoveSpeed`
+       * 的 `STAT_CLAMPS`／`config.stat-caps@1` 管，不是這裡。
+       *
+       * ⭐ 逐階（GH#299 第 2 條）：填陣列 = 一階一格。
+       */
+      moveSpeedMult: zRankScalar(z.number().min(0)).optional(),
       root: z.boolean().optional(),
       stun: z.boolean().optional(),
       /**
@@ -1173,7 +1456,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * Shipped user: 66-00 恐懼 (godie-e00t) at 0.33 — Blizzard's own
        * `Acrs.DataA1`, which the map's `A0IF` does not override.
        */
-      missChance: z.number().min(0).max(1).optional(),
+      missChance: zRankScalar(z.number().min(0).max(1)).optional(),
       /**
        * 暴走 —— 「不可控制並自動尋敵」(59-00 初號機). While this status is live
        * the SEAT's own orders are dropped on the floor and the body auto-seeks:
@@ -1372,10 +1655,15 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
     .object({
       kind: z.literal("restore"),
       ...EFFECT_COMMON_SHAPE,
-      /** 0..1 of the TARGET's max health (WC3 SetUnitLifePercentBJ) */
-      healthPct: z.number().min(0).max(1).optional(),
-      /** 0..1 of the TARGET's max mana (WC3 SetUnitManaPercentBJ) */
-      manaPct: z.number().min(0).max(1).optional(),
+      /** 0..1 of the TARGET's max health (WC3 SetUnitLifePercentBJ). ⭐ 逐階可填陣列。 */
+      healthPct: zRankScalar(z.number().min(0).max(1)).optional(),
+      /** 0..1 of the TARGET's max mana (WC3 SetUnitManaPercentBJ). ⭐ 逐階可填陣列。 */
+      manaPct: zRankScalar(z.number().min(0).max(1)).optional(),
+      /**
+       * ⭐ G11（GH#299）—— 回誰身上。省略 = `"target"` = 今天的行為。
+       * 「回自己」在此之前只能靠 `randomArea{who:"self"}` 包一層繞過去。
+       */
+      applyTo: z.enum(["self", "target"]).optional(),
     })
     .strict(),
   /**
@@ -1498,8 +1786,14 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       ...EFFECT_COMMON_SHAPE,
       /** "alternate"/"base" force a direction; "toggle" is the w3x 風王結界/紮根 form */
       to: z.enum(["alternate", "base", "toggle"]),
-      /** w3a `ahdu` at the cast rank; ABSENT = never times out (the toggles) */
-      durationSec: z.number().positive().optional(),
+      /**
+       * w3a `ahdu` at the cast rank; ABSENT = never times out (the toggles).
+       *
+       * ⭐ G2（GH#299）—— 逐階可以是陣列。w3a 的 `ahdu` 本來就是**一階一格**，
+       * 而在此之前這裡只收一個數字，於是 77-03 出現「rank 4 的加速活 15 秒、
+       * 翅膀只有 6 秒」這種兩半各走各的。
+       */
+      durationSec: zRankScalar(z.number().positive()).optional(),
     })
     .strict(),
   z
@@ -1543,6 +1837,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
     .object({
       kind: z.literal("dot"),
       ...EFFECT_COMMON_SHAPE,
+      /** ⭐ G11（GH#299）—— 一段燒在**自己**身上的持續傷害（獻祭型）。 */
+      applyTo: zApplyToSelfOrTarget,
       damageType: zDamageType.optional().describe(
         "傷害型別：吃護甲(physical)、吃魔抗(magic)、什麼都不吃(true)。" +
           "**省略 = 後台「傷害規則」頁的預設**（出貨 magic —— owner 2026-08-05" +
@@ -2152,7 +2448,13 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        */
       damageTypes: z.array(zDamageType).min(1).max(3),
       minManaReserve: z.number().min(0).max(10000).optional(),
-      durationSec: z.number().positive().max(MANA_BARRIER_MAX_DURATION_SEC),
+      /**
+       * **選填**（GH#307，owner 2026-08-09：「這個技能是常駐沒錯，這個也是參數之一，
+       * 也可以設定秒數，但**共同的強制停止都是魔力耗盡**」）：
+       * 省略 = **常駐**到魔力耗盡；填數字 = 到期或魔力耗盡，先到先停。
+       * ⛔ 在此之前它是必填，所以「常駐」寫不出來 —— 作者只能填一個猜的秒數。
+       */
+      durationSec: z.number().positive().max(MANA_BARRIER_MAX_DURATION_SEC).optional(),
     })
     .strict(),
 
@@ -2629,29 +2931,6 @@ export const zVisionGrant = z
     },
   );
 
-/**
- * 飛行 (無視碰撞) grant on a passive rank — mirrors `FlightGrant` in
- * sim/flight.ts.
- *
- * ⚠️ `stayInsideBoundary` DEFAULTS TO TRUE and that default is the whole safety
- * story: without it 「無視碰撞」 walks 莉娜因巴斯 off the 24-unit arena disc, and
- * every zone-scoped mechanic (duel resolution, teamAliveInZone, the minimap)
- * then reasons about a champion who is nowhere. Turning it off is a deliberate
- * authoring act, not a default anybody falls into.
- *
- * `hoverHeight` is presentation only (it rides the existing `EntityState.h`
- * channel) and is bounded on BOTH ends: a champion floating 40 units up is off
- * the top of a fixed-pitch camera, i.e. invisible, which reads as the model
- * failing to load rather than as a feature.
- */
-export const zFlightGrant = z
-  .object({
-    hoverHeight: z.number().min(0).max(FLIGHT_MAX_HOVER_HEIGHT).optional(),
-    ignoreUnits: z.boolean().optional(),
-    ignoreObstacles: z.boolean().optional(),
-    stayInsideBoundary: z.boolean().optional(),
-  })
-  .strict();
 
 /** One rank of `ability@1.passive` — mirrors `AbilityPassiveRank`. */
 export const zAbilityPassiveRank = z
@@ -2660,7 +2939,8 @@ export const zAbilityPassiveRank = z
     hooks: z.array(zHookDef).optional(),
     auras: z.array(zAuraDef).optional(),
     vision: zVisionGrant.optional(),
-    flight: zFlightGrant.optional(),
+    // ⭐ 2026-08-09：`flight` 也改由 {@link SOURCE_GRANT_SHAPE} 展開（見那裡的
+    // 說明），所以這裡**不再**單獨列一格 —— 兩處同名會被後展開的那份靜默蓋掉。
     /**
      * 格擋 this rank grants — see {@link zBlockGrant} and `sim/combat/block.ts`.
      *

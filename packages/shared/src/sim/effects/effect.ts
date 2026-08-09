@@ -5,6 +5,7 @@
  */
 import type { AbilityId, EntityId, ProjectileId, StatusId } from "../../ids";
 import type { Stat } from "../stats/statTypes";
+import type { RankScalar } from "../perRank";
 import type { HookDef, StatModifier } from "../stats/modifiers";
 import type { AttrBasis, AttrKey } from "../stats/attributes";
 import type { DamageRefund, DistanceScaleTerm, ResourcePctTerm } from "./dynamicTerms";
@@ -175,6 +176,11 @@ export const NO_ATTR_LOOKUP: AttrLookup = () => 0;
 type EffectVariant =
   | {
       kind: "damage";
+      /**
+       * ⭐ G11（GH#299）—— 這一段傷害打在誰身上。省略 = `"target"` = 今天的行為;
+       * `"self"` 是「施法者付自己的血」（獻祭型的資源代價）。
+       */
+      applyTo?: "self" | "target";
       /**
        * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
        *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
@@ -384,6 +390,11 @@ type EffectVariant =
   | {
       kind: "damageArea";
       /**
+       * ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` **同一份型別、
+       * 同一個讀取器**（`dynamicTerms.ts::resourcePctAmount`），per-target 解算。
+       */
+      resourcePct?: ResourcePctTerm;
+      /**
        * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
        *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
        *
@@ -422,6 +433,11 @@ type EffectVariant =
    */
   | {
       kind: "damageLine";
+      /**
+       * ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` **同一份型別、
+       * 同一個讀取器**（`dynamicTerms.ts::resourcePctAmount`），per-target 解算。
+       */
+      resourcePct?: ResourcePctTerm;
       /**
        * 傷害型別。**省略 = `world.damageRules.defaultAbilityDamageType`**
        *（出貨 `magic` —— owner 2026-08-05「技能傷害預設都改成 AP 傷害」）。
@@ -800,8 +816,12 @@ type EffectVariant =
       damageTypes: DamageType[];
       /** 抵到剩多少魔力就停手。省略 = 0（抵到見底）。 */
       minManaReserve?: number;
-      /** 屏障持續幾秒。 */
-      durationSec: number;
+      /**
+       * 屏障持續幾秒。**省略 = 常駐**（沒有到期 tick）。
+       * ⭐ 兩種情況的**強制停止都是魔力耗盡**（owner GH#307）——
+       * 填了秒數也照樣看魔力，先到的那個停。推導見 `manaBarrier.ts` 檔頭⑤。
+       */
+      durationSec?: number;
     }
   | {
       /**
@@ -884,11 +904,20 @@ type EffectVariant =
        */
       teamCharge?: "ignore" | "requireAndSpend";
     }
-  | { kind: "heal"; amount: Scaling }
+  | {
+      kind: "heal";
+      amount: Scaling;
+      /** ⭐ G11 —— 治療落在誰身上。省略 = "target"。 */
+      applyTo?: "self" | "target";
+    }
   | {
       kind: "shield";
       amount: Scaling;
       duration: number;
+      /** ⭐ S1（GH#299）—— 不疊加政策的身分。缺席 = 每次都是新的一片。 */
+      stackKey?: string;
+      /** ⭐ S1 —— 身上已經有同 key 那一片時怎麼辦。`stackKey` 有值而這格沒填 = replace。 */
+      onExisting?: "replace" | "keepLarger" | "stack";
       /**
        * WHICH damage the pool eats. owner 2026-07-30: 「護盾的確有分**吸收所有
        * 傷害**跟**吸收 AP 傷害 only**」 — that is a DECISION POINT, so it is a
@@ -911,7 +940,12 @@ type EffectVariant =
   | {
       kind: "applyStatus";
       statusId: StatusId;
-      duration: number;
+      /**
+       * ⭐ G2 —— 逐階可以是陣列。⛔ 讀它一律走 `sim/perRank.ts::rankScalar`，
+       * **不要**寫 `typeof d === "number" ? d : d[rank-1]` —— 那句話已經在這個
+       * repo 裡被抄過五次（見那支檔頭）。
+       */
+      duration: RankScalar;
       /**
        * ⭐ 狀態的**層數**（owner 2026-08-09 / GH#301-5：「狀態除了有無也會是
        * 數字層數」）。
@@ -949,7 +983,8 @@ type EffectVariant =
        * (j:34438), so without `applyTo` the marker would land on the victim.
        */
       applyTo?: "self" | "target";
-      moveSpeedMult?: number;
+      /** ⭐ G2 —— 逐階可以是陣列（`0` = 完全不能動，見 schema 的同名欄位）。 */
+      moveSpeedMult?: RankScalar;
       root?: boolean;
       stun?: boolean;
       /**
@@ -958,7 +993,8 @@ type EffectVariant =
        * on, this one sabotages it. See `components.ts::StatusEffect.missChance`
        * for why the direction matters and why it lives on the status.
        */
-      missChance?: number;
+      /** ⭐ G2 —— 逐階可以是陣列。 */
+      missChance?: RankScalar;
       /**
        * 暴走 —— 「不可控制並自動尋敵」(59-00 初號機 暴走). The carrier loses the
        * wheel: `orderSystem` drops that seat's orders and the body hunts on its
@@ -1077,6 +1113,19 @@ type EffectVariant =
        */
       block?: import("../combat/block").BlockGrant;
       critStrike?: import("../combat/critStrike").CritStrikeGrant;
+      /**
+       * ⭐ 2026-08-09 (G7) —— 第三、第四格授予，語意與上面兩格逐字相同（同一份
+       * `SourceGrantFields`、同一個 `sourceGrants()` 轉發、同一個 `expiresAtTick`
+       * 當時鐘）。它們解鎖的是「這支大招期間力量 +30」與「接下來 5 秒你的普攻
+       * 是真傷」—— 兩件在此之前**只有道具**寫得出來的事。
+       *
+       * ⛔ 這裡不能直接 `& SourceGrantFields`：`EffectDef` 是一個
+       * `discriminatedUnion` 的鏡子，成員必須是純物件型別。加一格授予時這四行
+       * 要跟 `SourceGrantFields` 一起改 —— 而 `content/compat.test.ts` 的
+       * 型別鏡射斷言就是那道會紅的閘。
+       */
+      attributes?: import("../stats/attributes").AttrGrant;
+      damageTypeOverride?: import("../combat/damageTypeOverride").DamageTypeOverride;
     }
   /**
    * cycleBuff (揍敵客阿福 13-00 念。攻防轉換) — 輪替增益: apply the NEXT step of a
@@ -1134,7 +1183,14 @@ type EffectVariant =
    * this ally to full" ultimate (初音's `MikuEX`) had nowhere to go and shipped
    * as a damage nuke. 0..1 of the TARGET's max; absent = untouched.
    */
-  | { kind: "restore"; healthPct?: number; manaPct?: number }
+  | {
+      kind: "restore";
+      /** ⭐ G2 —— 逐階可以是陣列。讀取一律走 `sim/perRank.ts::rankScalar`。 */
+      healthPct?: RankScalar;
+      manaPct?: RankScalar;
+      /** ⭐ G11 —— 回自己。省略 = "target"。 */
+      applyTo?: "self" | "target";
+    }
   /**
    * spendMana — 消耗法力. The MIRROR of `restore.manaPct`, and the missing half
    * of the vocabulary: every path that could move mana before this only ever
@@ -1340,7 +1396,12 @@ type EffectVariant =
    * TOGGLES and 61-00 百連我殺 is a death-state morph. Three of 26; an absent
    * duration is a recovered fact, not missing data.
    */
-  | { kind: "championForm"; to: "alternate" | "base" | "toggle"; durationSec?: number }
+  | {
+      kind: "championForm";
+      to: "alternate" | "base" | "toggle";
+      /** ⭐ G2 —— 逐階可以是陣列（rank 4 的變身活得比 rank 1 久）。 */
+      durationSec?: RankScalar;
+    }
   | { kind: "spawnProjectile"; projectileId: ProjectileId; onHit: EffectDef[] }
   /**
    * spawnVfx — the WC3 "dummy effect unit" idiom (化繁為簡): a Locust/invuln
@@ -1369,6 +1430,8 @@ type EffectVariant =
    */
   | {
       kind: "dot";
+      /** ⭐ G11（GH#299）—— 燒在誰身上。省略 = `"target"`。 */
+      applyTo?: "self" | "target";
       /**
        * Armour (physical) / MR (magic) / neither (true). Payouts go through the
        * damage QUEUE, so this is the same knob and the same mitigation curve as

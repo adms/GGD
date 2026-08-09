@@ -10,16 +10,16 @@ import {
 } from "./common";
 import {
   refineHookDamageContext,
+  zAttrGrant,
   zAuraDef,
   zBlockGrant,
   zCritStrikeGrant,
-  zDamageType,
+  zDamageTypeOverrideGrant,
   zFlightGrant,
   zHookDefBase,
   zVisionGrant,
 } from "./effect";
 import { MISMATCH_SCALE_MAX, MISMATCH_SCALE_MIN } from "../../sim/content/requirement";
-import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../sim/stats/attributes";
 // 套裝的上下界定義在 sim 那一份(它也是判斷「湊齊了沒」的地方),schema 只是把
 // 同一組數字接上 Zod,所以兩層守的不可能是兩個數字。
 import { ITEM_SET_MAX_PIECES, ITEM_SET_MIN_PIECES } from "../../sim/economy/itemSets";
@@ -145,17 +145,14 @@ export const zGatedItemStatModifier = zStatModifierFields
  * ⚠️ NOT `.int()`. The 能力屬性強化 三選一 pays 0.1–2.0 per pick (#260), so
  * fractional 三圍 are already normal in a live match and an integer-only item
  * field would be a second, contradictory rule about what an attribute is.
+ *
+ * ⚠️ 2026-08-09 —— 這裡現在是 **`zAttrGrant` 的別名**,定義搬到 `schema/effect.ts`。
+ * 理由與 `zItemBlockGrant` 2026-08-08 那一次逐字相同:授予它的不只有道具了
+ * (`SOURCE_GRANT_SHAPE` 展開它,所以天生技一階 / 三選一增益卡 / `applyBuff` 的
+ * 限時來源同時拿到),而 `item → effect` 是單向 import。留成別名而不是改名,
+ * 是因為既有守衛用 `zItemAttributes` 這個名字。**指向同一個 ZodType 實例**。
  */
-export const zItemAttributes = z
-  .object({
-    str: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
-    agi: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
-    int: z.number().min(ATTR_GRANT_MIN).max(ATTR_GRANT_MAX).optional(),
-  })
-  .strict()
-  .refine((a) => a.str !== undefined || a.agi !== undefined || a.int !== undefined, {
-    message: "attributes must grant at least one of str/agi/int",
-  });
+export const zItemAttributes = zAttrGrant;
 
 /**
  * An aura authorable on an ITEM — `zAuraDef` with the item hook type, so a
@@ -297,36 +294,13 @@ export const zItemSetBonus = z
  * 一起變成真傷。列舉沒辦法擋這種誤植,所以擋它的是守衛 ——
  * `sim/combat/damageTypeOverride.shipped.test.ts` 逐件釘死出貨的 scope,
  * 新增或改動任何一件都會紅。
+ *
+ * ⚠️ 2026-08-09 —— 這裡現在是 **`zDamageTypeOverrideGrant` 的別名**,定義搬到
+ * `schema/effect.ts`,理由與上面 `zItemAttributes` / `zItemBlockGrant` 完全相同:
+ * `SOURCE_GRANT_SHAPE` 要展開它,而 `item → effect` 是單向 import。
+ * 別名保住這個名字給既有守衛用,**指向同一個 ZodObject 實例**。
  */
-export const zItemDamageTypeOverride = z
-  .object({
-    scope: z
-      .enum(["basic", "ability", "all"])
-      .describe(
-        "換哪些傷害:basic = 普通攻擊(近戰與遠程投射物都算)、" +
-          "ability = 技能,含技能留下的延燒/中毒每一跳、" +
-          "all = 這件裝備的持有者打出去的每一發(額外含道具觸發、小怪與守衛塔封包)。",
-      ),
-    becomes: zDamageType.describe(
-      "換成什麼型別。true = 真實傷害(完全跳過護甲與魔抗,而且只有不指定型別的護盾吃得到)。",
-    ),
-    applyAt: z
-      .enum(["afterGates", "beforeGates"])
-      .optional()
-      .describe(
-        "什麼時候換。afterGates(預設)= 無敵/免疫與閃避先用原本的型別判定,轉換只影響護甲魔抗與護盾;" +
-          "beforeGates = 連免疫與閃避也用新型別判定(例:被轉成真傷的法術,魔法免疫就擋不住了)。",
-      ),
-    impactType: z
-      .enum(["original", "converted"])
-      .optional()
-      .describe(
-        "換完之後,擊倒判定讀哪一個型別。original(預設)= 讀轉換前的型別 —— " +
-          "被轉成真傷的法術跳過魔抗,但不會因此多出一個它本來沒有的擊倒;" +
-          "converted = 讀轉換後的型別,也就是「轉真傷順便附贈擊倒」。",
-      ),
-  })
-  .strict();
+export const zItemDamageTypeOverride = zDamageTypeOverrideGrant;
 
 /**
  * 格擋 —— **`zBlockGrant` 的別名**,定義與六根軸的完整推導在

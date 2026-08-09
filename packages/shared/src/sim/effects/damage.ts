@@ -117,7 +117,12 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     const resTerm = e.resourcePct;
     const distTerm = e.distanceScale;
     const attrs = casterAttrs(ctx);
-    for (const target of ctx.targets) {
+    // ⭐ G11（GH#299）—— 「施法者付自己的血」。省略 = `"target"` = 今天的行為，
+    // 所以既有的每一份文件逐位元不變。⚠️ `source` 仍然是 `ctx.caster`：一發
+    // 自傷封包的來源就是自己，而 `combat/damage.ts` 的吸血只認 `origin:"basic"`，
+    // 所以不會出現「打自己一拳還回自己血」。
+    const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+    for (const target of subjects) {
       let amount =
         resolveScaling(stats, e.amount, ctx.rank, attrs) + comboAdd + bankedAdd + reflectAdd;
       if (pctCol !== undefined && pct > 0) {

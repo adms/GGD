@@ -361,8 +361,12 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "primitive 已出貨（`manaBarrier`）：`manaBarrierCutFor` 在**扣血之前**把傷害換成扣魔 —— " +
       "⛔ 不是受傷後補護盾，魔力真的被扣、期間回的魔力真的會變成新的抵擋量。" +
       "計畫點名的兩格都在：`perMana` 就是 damage-to-MP ratio，remainder 由函式回傳" +
-      "（抵不完的部分原封不動往下走進 免死 → 血條）。三個決策點都是欄位" +
-      "（`perMana` / `damageTypes` **必填明列** / `minManaReserve`）。" +
+      "（抵不完的部分原封不動往下走進 免死 → 血條）。**四個**決策點都是欄位" +
+      "（`perMana` / `damageTypes` **必填明列** / `minManaReserve` / `durationSec`）。" +
+      "⭐ 2026-08-09（GH#307）`durationSec` 改成**選填**：省略 = **常駐**（沒有到期 tick），" +
+      "填數字 = 到期或魔力耗盡先到的那個停。⛔ 兩種寫法的**強制停止都是魔力耗盡** ——" +
+      "魔力見底時屏障是真的被**拔掉**（`detachSource`），不是「這一發抵 0」，" +
+      "否則常駐的那一半永遠不會結束（owner 2026-08-09 明說「共同的強制停止都是魔力耗盡」）。" +
       "接線**已經接上**（`combat/damage.ts`，護盾池之後、免死之前）—— 44-00 掛上去就會擋。" +
       "⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「接線還沒接」，那是寫在接線落地**之前**的；" +
       "留這句話在這裡是因為它示範了這份清單最危險的失效方式：" +
@@ -473,8 +477,10 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "⚠️ 兩個限制，寫技能的人一定會撞到：" +
       "① 那一發的 `reflectDepth` 已經是 1，child chain 的 `incomingPct` 要一起寫 " +
       "`maxChainDepth: 1`，否則被鏈深閘擋掉（那是終止性，不是 bug）；" +
-      "② `incomingPct.perRank` 的上界是 `INCOMING_PCT_MAX = 5`，所以「7 倍」要靠" +
-      "`amount` 那一項補，不能寫成單一個 7。" +
+      "② ⭐ 2026-08-09 已解除：`INCOMING_PCT_MAX` 從 5 抬到 **10**，所以「7 倍」" +
+      "現在直接寫成 `perRank: [7]`，不必再靠 `amount` 那一項補。" +
+      "（在此之前那條上界自稱是「打錯數字的守衛」卻擋住了 owner 的文案 —— " +
+      "護欄裝在錯的位置；10 仍然擋得住「200 打在該寫 2.00 的格子裡」。）" +
       "⛔ 計畫 §2.1.1 四項 provenance 裡的**原傷害**沒有進 payload：`TriggerDamage` 是" +
       "封閉型別，而同一個 tick、同一個持有者的 `onDamageTaken` 已經帶著它 —— 再塞一份" +
       "進來就是第二個真相。要「原傷害的百分比」請掛在 `onDamageTaken` 上。",
@@ -697,8 +703,17 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     caveat:
       "`damageTypeOverride` 能轉換傷害型別且有 `impactGateType` 處理擊倒閘，" +
       "但計畫要的是「以逐級機率把**該次普攻**完整轉成真傷」—— 逐級機率那一格沒有。" +
-      "⛔ 不可以改成「另外補一段真傷」，那是不同的東西（計畫 §2.1.1 明列）。",
-    evidence: "packages/shared/src/sim/combat/damageTypeOverride.ts",
+      "⛔ 不可以改成「另外補一段真傷」，那是不同的東西（計畫 §2.1.1 明列）。" +
+      "⭐ 2026-08-09（G7）之後寫入點與 `defense.block-source@1` 一樣有**四個**：" +
+      "道具、`ability@1.passive.ranks[].damageTypeOverride`、`augment@1.damageTypeOverride`、" +
+      "以及 `applyBuff.damageTypeOverride`（限時 ——「接下來 5 秒你的普攻是真傷」，" +
+      "到期走那份 buff 自己的 `expiresAtTick`，⛔ 不需要新的 effect kind）。" +
+      "同一批也把**三圍授予**（`attributes`）放寬到同樣四個面。" +
+      "四者走同一個 `ModifierSource` 欄位（`resolveDamageConversion` / `sourceAttrGrants` 都不看 `kind`），" +
+      "轉發只有一份（`sim/stats/sourceGrants.ts`）。",
+    evidence:
+      "packages/shared/src/sim/combat/damageTypeOverride.ts + " +
+      "packages/shared/src/sim/stats/sourceGrants.test.ts（授權格與轉發表逐鍵對齊，兩個突變都驗過會紅）",
   },
 ];
 

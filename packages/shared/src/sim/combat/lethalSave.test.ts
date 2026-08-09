@@ -41,6 +41,7 @@ import { ModOp } from "../stats/modifiers";
 import { Stat } from "../stats/statTypes";
 import { MARK_DURATION_PERMANENT } from "../markLimits";
 import type { MarkSpec } from "../marks";
+import type { MarkLethalRule } from "./lethalSave";
 import type { IntentFrame } from "../intents";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../../ids";
 
@@ -70,7 +71,7 @@ function rig(): Rig {
 }
 
 /** 一個【試煉】式的標記：永久、跨回合、免死、每失去一層永久 +AD。 */
-function trialSpec(lethal: boolean): MarkSpec {
+function trialSpec(lethal: boolean, over: Partial<MarkLethalRule> = {}): MarkSpec {
   return {
     markId: "godie-hapm.passive",
     initial: 3,
@@ -88,6 +89,7 @@ function trialSpec(lethal: boolean): MarkSpec {
             selfEffects: [],
             aoeEffects: [],
             aoeRadius: 0,
+            ...over,
           },
         }
       : {}),
@@ -137,6 +139,58 @@ describe("免死 —— 具名標記接在出貨的傷害管線上", () => {
     expect(hp.alive).toBe(false);
     expect(st.count).toBe(3);
     expect(st.spent).toBe(0);
+  });
+
+  /**
+   * GH#306 —— owner 2026-08-09 把語意講死了：
+   *
+   * > 「是**到生命 0 以下，再回到 20%**，不是停在 20%」
+   *
+   * 所以 `"restore"` 是一個**無條件設值**：免死觸發之後血量 == floor，
+   * **與觸發前的血量無關**。守衛因此驗**兩個起始血量**（60% 要降下來、
+   * 5% 要升上去），而斷言是「兩次落在同一格」——
+   *
+   * ⛔ 這正是三種候選實作分得開的唯一斷言：
+   *   · 夾取（今天的 `clamp`）    60%→floor、5%→5%      ⇒ 兩次**不**同 ⇒ 紅
+   *   · 低於才補 / 無條件設值      60%→floor、5%→floor   ⇒ 兩次相同 ⇒ 綠
+   *
+   * 只驗 60% 那一邊，三種實作全部會過（失敗形態④）；只驗 5% 那一邊，
+   * 「低於才補」與「無條件設值」仍然分不開，但至少抓得到今天的缺陷。
+   * ⚠️ 斷言寫「兩次相同」而不是「等於某個數字」，因為 `step()` 會跑一個 tick
+   * 的回血 —— 釘死一個數字就是把回血速率抄進測試（第二守則：驗機制不驗數字）。
+   */
+  it("⛔ restore 是無條件設值：60% 與 5% 起手的免死落在同一格血量", () => {
+    cover("ls-restore-mode");
+    const run = (
+      mode: "clamp" | "restore",
+      startPct: number,
+    ): { hp: number; floor: number; alive: boolean } => {
+      const r = rig();
+      installMark(r.world, r.hero, trialSpec(true, { surviveHpPct: 0.2, restoreMode: mode }));
+      const hp = r.world.health.get(r.hero)!;
+      hp.hp = hp.maxHp * startPct;
+      killShot(r);
+      // 地板取自**引擎自己發的那則事件**，不是測試再算一次 —— 抄一份算式就是
+      // 第二個住處，而它會在 maxHp 的來源改變的那一天用錯誤的訊息紅。
+      const saved = r.world.events.find((e) => e.type === "lethalSaved");
+      expect(saved, "免死根本沒有發生").toBeDefined();
+      return { hp: hp.hp, floor: (saved!.data as { hp: number }).hp, alive: hp.alive };
+    };
+
+    // ── restore：兩個方向都要走到同一格 ────────────────────────────────
+    const fromHigh = run("restore", 0.6); // 挨打前遠高於地板 → 要**降下來**
+    const fromLow = run("restore", 0.05); // 挨打前遠低於地板 → 要**升上去**
+    expect(fromHigh.alive && fromLow.alive, "免死沒攔住").toBe(true);
+    expect(
+      Math.abs(fromHigh.hp - fromLow.hp),
+      "restore 的血量還跟挨打前有關 —— 那就不是「回到 20%」而是「停在 20%」",
+    ).toBeLessThan(0.001);
+    expect(fromLow.hp, "低血起手沒有被拉到地板").toBeGreaterThanOrEqual(fromLow.floor);
+
+    // ── clamp（出貨預設）：owner 描述的壞掉樣子，逐字保留 ──────────────
+    const clampedLow = run("clamp", 0.05);
+    expect(clampedLow.alive).toBe(true);
+    expect(clampedLow.hp, "clamp 竟然補血了 —— 預設語意被改掉了").toBeLessThan(clampedLow.floor);
   });
 
   it("⛔ 每失去一層的永久加成真的到得了 final（不是只加在 spent 上）", () => {
