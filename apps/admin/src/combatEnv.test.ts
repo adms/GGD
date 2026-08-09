@@ -102,7 +102,8 @@ describe("combat-env doc parse + labels (adminui-combatenv)", () => {
     // 19 ×factors (#189 added `itemCooldown`) + the 8 三圍 coefficients #248
     // added to the same table.
     // owner 2026-08-04 再加金錢發放倍率：回合／一般殭屍／特殊殭屍與王／英雄／任務 五格。
-    expect(COMBAT_ENV_KEYS).toHaveLength(33); // #221 加入 intToMagicResist
+    // 2026-08-10 owner 再加三格:moveSpeedMelee / moveSpeedRanged / magicResistMult。
+    expect(COMBAT_ENV_KEYS).toHaveLength(36);
     for (const k of COMBAT_ENV_KEYS) {
       expect(COMBAT_ENV_LABELS[k].zh, `label for ${k}`).toBeTruthy();
       expect(COMBAT_ENV_LABELS[k].note, `note for ${k}`).toBeTruthy();
@@ -161,9 +162,16 @@ describe("combat-env form editing (adminui-combatenv)", () => {
     const form = neutralForm();
     expect(stepField(form, "cooldown", STEP).cooldown).toBe("1.05");
     expect(stepField(form, "cooldown", -STEP).cooldown).toBe("0.95");
-    // clamps at both ends rather than producing a value the platform would 400
-    expect(stepField(setField(form, "cooldown", "0.1"), "cooldown", -STEP).cooldown).toBe(String(MIN_FACTOR));
-    expect(stepField(setField(form, "cooldown", "10"), "cooldown", STEP).cooldown).toBe(String(MAX_FACTOR));
+    // clamps at both ends rather than producing a value the platform would 400.
+    // ⛔ 起點從 MIN_FACTOR / MAX_FACTOR 推導,不抄字面值 —— 舊版寫死 "10",
+    // 2026-08-10 上界 10→50 之後它變成「從 10 往上踩一格」,量到 10.05 卻宣稱
+    // 夾頂壞了。夾的機制與上界是**兩件事**,這裡只驗前者。
+    expect(stepField(setField(form, "cooldown", String(MIN_FACTOR)), "cooldown", -STEP).cooldown).toBe(
+      String(MIN_FACTOR),
+    );
+    expect(stepField(setField(form, "cooldown", String(MAX_FACTOR)), "cooldown", STEP).cooldown).toBe(
+      String(MAX_FACTOR),
+    );
     // stepping from a garbage box starts at the neutral value
     expect(stepField(setField(form, "cooldown", "abc"), "cooldown", STEP).cooldown).toBe("1.05");
   });
@@ -193,21 +201,26 @@ describe("combat-env form editing (adminui-combatenv)", () => {
 });
 
 describe("combat-env validation + save payload (adminui-combatenv-save)", () => {
-  it("field validation mirrors the platform's [0.1, 10] bounds", () => {
+  it("field validation mirrors the platform's [MIN_FACTOR, MAX_FACTOR] bounds", () => {
     cover("adminui-combatenv-save");
+    // ⛔ 這一條的**界**從 MIN_FACTOR / MAX_FACTOR 推導,不抄字面值。舊版寫死
+    // [0.1, 10],2026-08-10 上界 10→50 之後 "10.5" 變成合法,而它用「驗證壞了」
+    // 的訊息紅。驗的機制是「界內收、界外拒、訊息印得出那兩個界」,不是界是多少。
+    const BELOW = MIN_FACTOR / 2;
+    const ABOVE = MAX_FACTOR + STEP;
     expect(validateFactor("1")).toBe("");
-    expect(validateFactor("0.1")).toBe(""); // the exact floor is legal
-    expect(validateFactor("10")).toBe(""); // the exact ceiling is legal
+    expect(validateFactor(String(MIN_FACTOR))).toBe(""); // the exact floor is legal
+    expect(validateFactor(String(MAX_FACTOR))).toBe(""); // the exact ceiling is legal
     expect(validateFactor(" 2.5 ")).toBe("");
 
     // each rejection carries a zh-Hant message the page can print verbatim
-    for (const bad of ["", "   ", "abc", "0.05", "10.5", "-1", "0", "Infinity"]) {
+    for (const bad of ["", "   ", "abc", String(BELOW), String(ABOVE), "-1", "0", "Infinity"]) {
       const msg = validateFactor(bad);
       expect(msg, `"${bad}" must be rejected`).not.toBe("");
       expect(msg).toMatch(/[一-鿿]/);
     }
-    expect(validateFactor("0.05")).toContain(String(MIN_FACTOR));
-    expect(validateFactor("11")).toContain(String(MAX_FACTOR));
+    expect(validateFactor(String(BELOW))).toContain(String(MIN_FACTOR));
+    expect(validateFactor(String(ABOVE))).toContain(String(MAX_FACTOR));
     expect(parseFactor("")).toBeNull();
     expect(parseFactor("abc")).toBeNull();
     expect(parseFactor(" 1.25 ")).toBe(1.25);

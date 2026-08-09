@@ -49,6 +49,7 @@ import { normalizeCombatEnv } from "../combatEnv";
 import { flightSystem } from "../flight";
 import { runEffects } from "./effectRunner";
 import { zEffectDef } from "../../content/schema/effect";
+import type { StatusId } from "../../ids";
 import type { EffectContext, EffectDef } from "./effect";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 
@@ -92,7 +93,14 @@ describe("GH#299 第一輪授權格 —— 六個機制的行為", () => {
     cover("g2-per-rank-duration");
     const held = (rank: number): number => {
       const { world, caster, foe } = stage();
-      run(world, caster, [foe], [{ kind: "applyStatus", statusId: "slow", duration: [2, 4, 8] }], rank);
+      run(
+        world,
+        caster,
+        [foe],
+        // `StatusId` 是 branded string —— 字面值要顯式冠上（同 `ids.ts` 的慣例）。
+        [{ kind: "applyStatus", statusId: "slow" as StatusId, duration: [2, 4, 8] }],
+        rank,
+      );
       const st = world.status.get(foe)!.effects.find((e) => e.statusId === "slow");
       expect(st, "狀態根本沒掛上").toBeDefined();
       return st!.expiresAtTick - world.tick;

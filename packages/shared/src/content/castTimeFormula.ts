@@ -217,8 +217,11 @@ export function castTimeFeatures(def: AbilityDef): CastTimeFeatures {
         break;
       }
       case "applyBuff": {
-        let d = e.duration;
-        if (e.perRank?.length) d = Math.max(d, ...e.perRank.map((p) => p.duration));
+        // ⭐ S4a：`duration` 之後是選填（與 `permanent` 互斥）。一份永久增益對
+        // 「這一招的效果持續多久」這個問題沒有有限的答案，所以它貢獻 0 ——
+        // 與這個欄位出現之前每一份文件（一律有 duration）逐字相同。
+        let d = e.duration ?? 0;
+        if (e.perRank?.length) d = Math.max(d, ...e.perRank.map((p) => p.duration ?? 0));
         effectDuration = Math.max(effectDuration, d);
         break;
       }

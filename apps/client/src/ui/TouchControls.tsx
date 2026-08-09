@@ -8,6 +8,8 @@
  * per-frame data never touches React state, client-08).
  */
 import { useEffect, useRef } from "react";
+import { hudScale, hudScaleTappable, hudScaleTier } from "./hudScale";
+import { HUD_STAMP_BAND } from "./hud/hudLayout";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
@@ -38,6 +40,18 @@ const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
 const EX_ACCENT = "#f2a13c";
 
 /** attack-button center offset from the bottom-right corner (CSS px) */
+/**
+ * ⭐ HUD 縮放（owner 2026-08-10）—— 手機/平板走的是**這一支**，不是 `AbilityBar`
+ * （`HudRoot.tsx` 的 `abilities={!touchControls && <AbilityBar />}`）。owner 逐字點名
+ * 「最小適合 iphone、小適合 ipad」，所以這支不接的話那兩個場景一格都不會動。
+ *
+ * ⛔ 這裡沒有任何 `* 倍率` 的算術：倍率、四捨五入、觸控下限全部只住在 `ui/hudScale.ts`
+ * 的算子裡（第零守則⑨：一個模板不是 N 份）。可點擊的走 `hudScaleTappable`
+ * （最小 10% 時停在 44px 而不是 5.8px），純視覺的走 `hudScale`。
+ *
+ * ⚠️ **極座標的半徑一定要跟著縮**：`ARC_RADIUS` 不縮而按鈕縮，放大時圓弧上的六個
+ * 按鈕會互相重疊 —— 那是「畫的變大、排的沒變」同一個失敗形態（⑤）的極座標版本。
+ */
 const ATTACK_CENTER = 84;
 const ATTACK_SIZE = 88;
 const ABILITY_SIZE = 58;
@@ -52,14 +66,50 @@ const ARC_RADIUS = 122;
  * tall so nothing may grow upward (#151/#159). Off-arc also keeps it out of the
  * path of a mis-swiped Q.
  */
-const PASSIVE_CENTER = { right: ATTACK_CENTER + ARC_RADIUS + ABILITY_SIZE, bottom: ATTACK_CENTER };
+// ⚠️ `PASSIVE_CENTER` 拿掉了：它是三個基準常數的算術，而縮放之後那三個都變成
+// `touchMetrics()` 的欄位 —— 留著一份用未縮放常數算的座標，就是「畫的縮了、
+// 排的沒縮」（失敗形態⑤）。天生技的位置現在直接從 `m` 算，與圓弧同一組數字。
 
 /** Q at due-left of the attack button, R due-above, W/E on the arc between. */
-function arcCenter(i: number): { right: number; bottom: number } {
+/** 這一次繪製的實際尺寸。⛔ 全部從 `hudScale*` 來，這裡不做算術。 */
+function touchMetrics(tier = hudScaleTier()): {
+  attackCenter: number;
+  attackSize: number;
+  abilitySize: number;
+  arcRadius: number;
+  s: (px: number) => number;
+  tap: (px: number) => number;
+} {
+  const s = (px: number): number => hudScale(px, tier);
+  const tap = (px: number): number => hudScaleTappable(px, tier);
+  const attackSize = tap(ATTACK_SIZE);
+  /**
+   * ⭐ **錨點不可以縮進版本徽章的保留帶**（`versionBadgeBand.test.ts` 抓到的）。
+   *
+   * 整個觸控叢集都是從 `attackCenter` 往上長的，而 `hudScale(84,"min") = 8` ——
+   * 比 `HUD_STAMP_BAND`（10px，版本徽章在**每一個畫面**都畫在那裡）還低。
+   * 也就是最小檔位會把攻擊鈕壓進徽章底下：按鈕在那裡、字也在那裡，兩個疊著。
+   *
+   * ⛔ 這不是「把徽章讓開」可以解的 —— 徽章是 #245 刻意提到最上層的（它是
+   * 「這是哪一版」的唯一答案）。所以是**錨點有下限**：叢集的最低點至少要在
+   * 帶子之上。⚠️ 下限是 `HUD_STAMP_BAND`，⛔ 不是一個新發明的數字。
+   */
+  const anchorFloor = HUD_STAMP_BAND + attackSize / 2;
+  return {
+    attackCenter: Math.max(s(ATTACK_CENTER), anchorFloor),
+    attackSize,
+    abilitySize: tap(ABILITY_SIZE),
+    arcRadius: s(ARC_RADIUS),
+    s,
+    tap,
+  };
+}
+
+function arcCenter(i: number, m = touchMetrics()): { right: number; bottom: number } {
   const angle = (i / (SLOTS.length - 1)) * (Math.PI / 2);
   return {
-    right: ATTACK_CENTER + Math.cos(angle) * ARC_RADIUS,
-    bottom: ATTACK_CENTER + Math.sin(angle) * ARC_RADIUS,
+    right: m.attackCenter + Math.cos(angle) * m.arcRadius,
+    bottom: m.attackCenter + Math.sin(angle) * m.arcRadius,
   };
 }
 
@@ -170,6 +220,9 @@ export function TouchControls(): React.JSX.Element | null {
   // reset each combat entry) is 0 for exactly those seats, and `localMaxHp > 0`
   // additionally proves a champion exists at all.
   const coinMode = phase === "combat" && !localAlive && localMaxHp > 0 && seat.coinsLeft > 0;
+  // ⭐ 這一次繪製的尺寸。⚠️ 讀模組單例（不是 React state）—— 與 `AbilityBar` /
+  // `EnemyTeamPanel` 同一個做法，所以改設定要等下一次 hud snapshot 才重繪。
+  const m = touchMetrics();
 
   return (
     <div ref={rootRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 20 }}>
@@ -228,14 +281,14 @@ export function TouchControls(): React.JSX.Element | null {
         onTouchStart={coinMode ? dropCoin : pressHandler("ATTACK")}
         style={{
           ...circleBase,
-          right: ATTACK_CENTER - ATTACK_SIZE / 2,
-          bottom: ATTACK_CENTER - ATTACK_SIZE / 2,
-          width: ATTACK_SIZE,
-          height: ATTACK_SIZE,
+          right: m.attackCenter - m.attackSize / 2,
+          bottom: m.attackCenter - m.attackSize / 2,
+          width: m.attackSize,
+          height: m.attackSize,
           background: coinMode ? "rgba(58, 46, 18, 0.9)" : "rgba(58, 28, 30, 0.85)",
           border: coinMode ? `2px solid ${GOLD}` : "2px solid #7a3230",
           color: coinMode ? GOLD : TEXT_MAIN,
-          fontSize: coinMode ? 13 : 30,
+          fontSize: coinMode ? m.s(13) : m.s(30),
           lineHeight: 1.25,
           fontWeight: coinMode ? 700 : 400,
         }}
@@ -243,7 +296,7 @@ export function TouchControls(): React.JSX.Element | null {
         {coinMode ? (
           <>
             <div>丟 100金</div>
-            <div style={{ fontSize: 11, opacity: 0.85 }}>{seat.coinsLeft}/{COINS_PER_ROUND}</div>
+            <div style={{ fontSize: m.s(11), opacity: 0.85 }}>{seat.coinsLeft}/{COINS_PER_ROUND}</div>
           </>
         ) : (
           "⚔"
@@ -261,16 +314,16 @@ export function TouchControls(): React.JSX.Element | null {
         );
         // passive-only skill (no castable effects) — dashed tile + soft cue
         const passive = isPassiveOnly(ability);
-        const { right, bottom } = arcCenter(i);
+        const { right, bottom } = arcCenter(i, m);
         return (
           <div
             key={slot}
             style={{
               position: "absolute",
-              right: right - ABILITY_SIZE / 2,
-              bottom: bottom - ABILITY_SIZE / 2,
-              width: ABILITY_SIZE,
-              height: ABILITY_SIZE,
+              right: right - m.abilitySize / 2,
+              bottom: bottom - m.abilitySize / 2,
+              width: m.abilitySize,
+              height: m.abilitySize,
               pointerEvents: "none",
             }}
           >
@@ -310,12 +363,12 @@ export function TouchControls(): React.JSX.Element | null {
               }}
             >
               {/* slot letter as a small badge, ability NAME under it (task #152) */}
-              <div style={{ fontSize: 13, fontWeight: "bold", lineHeight: 1 }}>{slot}</div>
+              <div style={{ fontSize: m.s(13), fontWeight: "bold", lineHeight: 1 }}>{slot}</div>
               <div
                 style={{
                   marginTop: 2,
-                  maxWidth: ABILITY_SIZE - 12,
-                  fontSize: 9,
+                  maxWidth: m.abilitySize - m.s(12),
+                  fontSize: m.s(9),
                   lineHeight: 1.1,
                   overflow: "hidden",
                   whiteSpace: "nowrap",
@@ -326,7 +379,7 @@ export function TouchControls(): React.JSX.Element | null {
                 {stripAbilityNumber(ability.name)}
               </div>
               {/* cooldown chrome — the shared radial wipe + number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={20} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} />
             </div>
             {seat.unspentPoints > 0 && rank < ability.maxRank && (
               <SfxButton
@@ -341,11 +394,11 @@ export function TouchControls(): React.JSX.Element | null {
                   transform: "translateX(-50%)",
                   width: 26,
                   height: 26,
-                  borderRadius: 13,
+                  borderRadius: m.s(13),
                   border: "1px solid #f2c637",
                   background: "#5d4a12",
                   color: GOLD,
-                  fontSize: 14,
+                  fontSize: m.s(14),
                   padding: 0,
                   pointerEvents: "auto",
                   touchAction: "none",
@@ -385,10 +438,10 @@ export function TouchControls(): React.JSX.Element | null {
             }}
             style={{
               ...circleBase,
-              right: ATTACK_CENTER + ARC_RADIUS - ABILITY_SIZE / 2,
-              bottom: ATTACK_CENTER + ARC_RADIUS - ABILITY_SIZE / 2,
-              width: ABILITY_SIZE,
-              height: ABILITY_SIZE,
+              right: m.attackCenter + m.arcRadius - m.abilitySize / 2,
+              bottom: m.attackCenter + m.arcRadius - m.abilitySize / 2,
+              width: m.abilitySize,
+              height: m.abilitySize,
               background: "rgba(58, 42, 18, 0.92)",
               border: `2px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
               boxShadow: `0 0 8px ${EX_ACCENT}88`,
@@ -398,11 +451,11 @@ export function TouchControls(): React.JSX.Element | null {
             }}
           >
             {/* EX badge + ability NAME under it (task #152) */}
-            <div style={{ fontSize: 14, fontWeight: "bold", lineHeight: 1 }}>EX</div>
+            <div style={{ fontSize: m.s(14), fontWeight: "bold", lineHeight: 1 }}>EX</div>
             <div
               style={{
                 marginTop: 2,
-                maxWidth: ABILITY_SIZE - 12,
+                maxWidth: m.abilitySize - m.s(12),
                 fontSize: 9,
                 lineHeight: 1.1,
                 overflow: "hidden",
@@ -416,7 +469,7 @@ export function TouchControls(): React.JSX.Element | null {
             {/* cooldown chrome. Before #219 the touch EX painted the dark rect
                 and NO NUMBER at all — the phone could see that the EX was down
                 but never how long for. Same component as every other tile. */}
-            <CooldownChrome cd={cd} fontSize={20} />
+            <CooldownChrome cd={cd} fontSize={m.s(20)} />
           </div>
         );
       })()}
@@ -466,10 +519,10 @@ export function TouchControls(): React.JSX.Element | null {
             }}
             style={{
               ...circleBase,
-              right: PASSIVE_CENTER.right - ABILITY_SIZE / 2,
-              bottom: PASSIVE_CENTER.bottom - ABILITY_SIZE / 2,
-              width: ABILITY_SIZE,
-              height: ABILITY_SIZE,
+              right: m.attackCenter + m.arcRadius + m.abilitySize - m.abilitySize / 2,
+              bottom: m.attackCenter - m.abilitySize / 2,
+              width: m.abilitySize,
+              height: m.abilitySize,
               background: active ? "rgba(43, 35, 64, 0.92)" : "rgba(30, 27, 44, 0.9)",
               border: `2px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
               color: PASSIVE_ACCENT,
@@ -479,14 +532,14 @@ export function TouchControls(): React.JSX.Element | null {
               transition: "transform 80ms ease, filter 80ms ease",
             }}
           >
-            <div style={{ fontSize: 11, fontWeight: "bold", lineHeight: 1 }}>
+            <div style={{ fontSize: m.s(11), fontWeight: "bold", lineHeight: 1 }}>
               {PASSIVE_SLOT_LABEL}
-              <span style={{ fontSize: 8, marginLeft: 2 }}>{innateKindLabel(innate.innateKind)}</span>
+              <span style={{ fontSize: m.s(8), marginLeft: m.s(2) }}>{innateKindLabel(innate.innateKind)}</span>
             </div>
             <div
               style={{
                 marginTop: 2,
-                maxWidth: ABILITY_SIZE - 12,
+                maxWidth: m.abilitySize - m.s(12),
                 fontSize: 9,
                 lineHeight: 1.1,
                 overflow: "hidden",
@@ -497,14 +550,14 @@ export function TouchControls(): React.JSX.Element | null {
             >
               {innate.displayName}
             </div>
-            <div style={{ fontSize: 7.5, color: TEXT_DIM, lineHeight: 1.1 }}>
+            <div style={{ fontSize: m.s(7.5), color: TEXT_DIM, lineHeight: 1.1 }}>
               {inert ? "未實作" : "Lv1"}
             </div>
             {/* cooldown chrome — only an active innate can carry one, and it
                 must be readable on the phone too or the button looks ready for
                 its whole 40 s. Before #219 this tile showed the dark rect and
                 NO NUMBER; it now speaks the same language as every other. */}
-            <CooldownChrome cd={cd} fontSize={20} />
+            <CooldownChrome cd={cd} fontSize={m.s(20)} />
           </div>
         );
       })()}
@@ -514,14 +567,14 @@ export function TouchControls(): React.JSX.Element | null {
         onTouchStart={() => hudActions.sendCommand({ kind: "recall" })}
         style={{
           ...circleBase,
-          right: ATTACK_CENTER - 22,
-          bottom: ATTACK_CENTER + ARC_RADIUS + 46,
-          width: 44,
-          height: 44,
+          right: m.attackCenter - m.tap(44) / 2,
+          bottom: m.attackCenter + m.arcRadius + m.s(46),
+          width: m.tap(44),
+          height: m.tap(44),
           background: PANEL_BG,
           border: "1px solid #2c3448",
           color: TEXT_DIM,
-          fontSize: 16,
+          fontSize: m.s(16),
         }}
       >
         ⌂

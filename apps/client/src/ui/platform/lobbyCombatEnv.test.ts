@@ -59,16 +59,33 @@ describe("lobbyCombatEnv", () => {
     expect(await fetchAdminCombatEnv("/x", notOk as unknown as typeof fetch)).toBeNull();
   });
 
-  it("THE BUG: the shipped table makes cooldowns 5x shorter than the neutral one", () => {
+  it("THE BUG: the shipped table's cooldown is NOT the neutral one, and it reaches displayFinal", () => {
     cover("valhalla-env-125");
     // If this ever stops being true the lobby could safely use the neutral
     // table — but as long as it IS true, showing base cooldowns in the lobby is
-    // a 5x lie, and that is exactly what this module exists to prevent.
+    // a lie, and that is exactly what this module exists to prevent.
+    //
+    // ⛔ 這裡曾經寫死 `cooldown === 0.2` / `abilityRange === 0.6` / `12`。那三個
+    // 都是出貨值的**第四個住處**(content/config + Zod DEFAULT_* + admin SHIPPED_*
+    // 已經有三個,而且彼此有 drift 測試在守),所以 owner 2026-08-10 調平衡
+    // (abilityRange 0.6→0.8)的那一刻,它用「lobby 壞了」的訊息紅 —— 而 lobby
+    // 好得很。守的機制是**出貨表真的流過 merge → displayFinal**,不是那些數字。
+    const cdFactor = SHIPPED.multipliers.cooldown;
+    const rangeFactor = SHIPPED.multipliers.abilityRange;
+    // 夾具前提，不是被測的性質：出貨表真的有這兩格（少了就不是「lobby 壞了」）。
+    if (typeof cdFactor !== "number" || typeof rangeFactor !== "number") {
+      throw new Error("content/config/combat-env.json 少了 cooldown / abilityRange");
+    }
     const shipped = mergeCombatEnv(pickKnown(SHIPPED.multipliers), null);
-    expect(shipped.cooldown).toBe(0.2);
-    expect(shipped.abilityRange).toBe(0.6);
-    expect(displayFinal(60, "cooldown", shipped)).toBeCloseTo(12, 6);
+    expect(shipped.cooldown).toBe(cdFactor);
+    expect(shipped.abilityRange).toBe(rangeFactor);
+    // the premise of the whole module: shipped ≠ neutral, so the lobby MUST resolve
+    expect(shipped.cooldown).not.toBe(DEFAULT_COMBAT_ENV.cooldown);
+    const final = 60 * cdFactor;
+    expect(displayFinal(60, "cooldown", shipped)).toBeCloseTo(final, 6);
     expect(displayFinal(60, "cooldown", DEFAULT_COMBAT_ENV)).toBe(60);
-    expect(displayFinalText(60, "cooldown", { env: shipped })).toBe("12");
+    expect(displayFinalText(60, "cooldown", { env: shipped })).toBe(
+      String(Number(final.toFixed(3))),
+    );
   });
 });

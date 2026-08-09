@@ -84,7 +84,7 @@
  * 比沒有 importer 更糟，它會**接受**錯的東西。
  */
 import { EFFECT_HANDLERS } from "../sim/effects/effectRegistry";
-import { zHookEvent, zHookDefBase } from "./schema/effect";
+import { zHookEvent, zHookDefBase, zEffectDefUnion } from "./schema/effect";
 import { SIM_CAPABILITIES, isExpandable } from "./templates/expand";
 import { zAbilityDef } from "./schema/ability";
 import { zConditionLeaf } from "./schema/condition";
@@ -148,6 +148,17 @@ export interface CapabilityProbeInput {
    * 它是 hook 自己身上的幾格（`maxTriggers` / `consumeOn` / …）。
    */
   readonly hookFields: ReadonlySet<string>;
+  /**
+   * effect kind 身上的**欄位名**（所有分支的聯集），從出貨的 `zEffectDefUnion` 推導。
+   *
+   * ⚠️ 為什麼 `effectKinds` 不夠：有些 capability 是**既有 kind 多一格**而不是一個
+   * 新 kind。`effect.target-set-chain@1` 落地的形狀就是 `damageArea` / `damageLine`
+   * 上多一格 `onHitTargets` —— 只問 kind 的 probe 對它永遠是 false，那一列就會
+   * 自己跟自己對得上地撒謊（檔頭 ③ 記過兩次的形狀）。
+   *
+   * 純度不變：讀 Zod 物件的 shape，沒有 I/O、沒有時鐘。
+   */
+  readonly effectFields: ReadonlySet<string>;
 }
 export type CapabilityProbe = (f: CapabilityProbeInput) => boolean;
 
@@ -251,8 +262,19 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "⛔ **出貨預設關**（＝火圈無視免死，維持今天的行為，等 owner 裁決）。" +
       "⇒ 寫「受到致命傷害時 ⋯」的卡片時，不要假設它在火圈裡會生效。" +
       "⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「火圈燒傷攔不到 —— 直寫 `hp.hp -=`，" +
-      "無敵也一樣擋不住」，那是寫在 GH#287 落地**之前**的（同 `defense.mana-barrier@1` 那一格）。",
-    evidence: "packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts（兩個突變都驗過）",
+      "無敵也一樣擋不住」，那是寫在 GH#287 落地**之前**的（同 `defense.mana-barrier@1` 那一格）。" +
+      "⭐ 2026-08-09（GH#306）**`surviveHpPct` 現在有兩種語意，而預設是舊的那一種** —— " +
+      "這是寫免死卡的人一定要讀的一格：`restoreMode:\"clamp\"`（**省略時的預設**，逐位元等於" +
+      "這一格出現前的每一份文件）＝「這一發最多把你扣到這裡」，所以血**已經低於**地板時" +
+      "一格都不補；`restoreMode:\"restore\"` ＝ owner 2026-08-09 講死的那一句「到生命 0 以下，" +
+      "**再回到** 20%，不是停在 20%」，是一個**無條件設值**（救完血量 == 地板，與挨打前是 60% " +
+      "還是 5% 無關）。⛔ 卡片文案寫「免死，並留在 N% 生命」卻沒填 `restoreMode:\"restore\"` 的話，" +
+      "被磨到剩 5% 血的玩家會被救活在 5% 血 —— 下一發就死，而畫面上跟正常一模一樣。" +
+      "⚠️ 兩種模式**只在血量已經低於地板時**行為不同，所以任何只試「滿血挨一發」的驗證看不出差別。",
+    evidence:
+      "packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts" +
+      "（`restoreMode` 那一條真的用**兩個起始血量**跑同一發致命傷，斷言兩者落在同一格血量；" +
+      "只驗高於地板的那一邊，三種實作都會過）",
   },
   {
     key: "effect.charge-ledger@1",
@@ -292,7 +314,14 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     evidence:
       "packages/shared/src/sim/effects/modifyCooldown.ts（`slot` 或 `abilityId` 指名一支；" +
       "`reduce`/`reduceFlat`/`reset` 三種模式，`basis` 決定百分比的分母是剩餘量還是基礎冷卻）。" +
-      "守衛 packages/shared/src/sim/effects/lane1Kinds.test.ts。",
+      "⭐ 2026-08-10（S3）多一條路：`target` 決定縮短的是**技能槽位**（`abilitySlot`，省略時的預設" +
+      "＝這個 kind 在此之前的全部行為）還是**觸發器的內部冷卻**（`hookInternalCooldown` ——" +
+      "「重置某個 proc 的 ICD」，`hookKey` 比對 `HookDef.key`，`hookScope` 決定只碰觸發這一發的" +
+      "那一份來源（`originSource`，預設，較窄）還是身上全部來源（`allSources`，此時 `hookKey` 必填）)。" +
+      "⚠️ `hookScope:\"originSource\"` 只認得 `origin` 是 `hook:…` 的呼叫 —— 從**施放**跑出來的" +
+      "`modifyCooldown`（`origin` 是 `ability:…`）不屬於任何一份來源，那條路下什麼都不會發生，" +
+      "而且是**靜默**的：要從施放去重置 proc，請用 `allSources` + `hookKey`。" +
+      "守衛 packages/shared/src/sim/effects/lane1Kinds.test.ts + hookFamily.test.ts。",
   },
   {
     key: "effect.execute@1",
@@ -380,16 +409,31 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     expected: "unsupported",
     probe: has("controlRestriction"),
     nearestExisting:
-      "`applyStatus` 的五個獨立布林（root / stun / silenced / berserk / feared）—— " +
+      "`applyStatus` 的**六個**獨立布林（root / stun / silenced / berserk / feared / **disarmed**）—— " +
       "它們**真的擋得住**移動、施法與普攻，所以「臥草泥馬不能動」寫得出來。" +
-      "⛔ 不算數的理由是它不是一張表：計畫要的 move / basicAttack / cast / playerOrders / AI control " +
-      "五個維度**不能分開組合**，每多一種控制就多一個布林，而「這個狀態擋住哪幾種行為」" +
-      "散落在各個消費端的 `if` 裡。",
+      "⭐ 2026-08-10（S8）新增的 `disarmed`【繳械】是「揮不出來」而不是「揮空刀」：" +
+      "它併進 `BasicAttackSystem` 的**暈眩那一道閘**，而那道閘排在 `breakStealth` / 冷卻 commit / " +
+      "`attackWindup` 之前，所以繳械期間不會空燒冷卻。它也算 CC（進 `isCc`，免控擋得掉、" +
+      "秒數進 `ccAppliedTicks`），與 `feared` 同一列。" +
+      "⚠️ **`berserk` 那一格是一個受詞題，不是一個布林題** —— 【暴走】與【混亂】共用同一格 " +
+      "`applyStatus.berserk`，差別**只在落在誰身上**：落在自己 = 暴走，落在敵人 = 混亂" +
+      "（owner 2026-08-09：「混亂應該是完全無法指定目標，並且會亂走路」）。" +
+      "⛔ 這件事有後果：**自我暴走**吃一道「血夠低才放得出來」的施法閘（`config.berserk@1`），" +
+      "而**對敵人下混亂**不吃。受詞由 `applyTo:\"self\"` 或 `castType:\"self\"` 判定，" +
+      "逐字鏡射 `effects/applyStatus.ts` 自己那一行 —— 所以一支「對敵人下混亂」的普通技" +
+      "⛔ **不要**寫 `applyTo:\"self\"`，寫了它就會在滿血時被拒（`cast rejected: hp-too-high`），" +
+      "而那是 GH#305 之前 12-01 鬥仙術真的踩過的樣子。" +
+      "⛔ 不算數的理由**沒有變**，而且每加一個布林就更成立一次：它不是一張表。計畫要的 " +
+      "move / basicAttack / cast / playerOrders / AI control 五個維度**不能分開組合**，" +
+      "而「這個狀態擋住哪幾種行為」散落在各個消費端的 `if` 裡。",
     reason:
-      "`applyStatus` 目前有 root / stun / silenced / berserk / feared 五個獨立布林" +
-      "（`feared` 是 2026-08-08 為 89-002 俄羅斯輪盤與 52-02/04/002 加的），" +
+      "`applyStatus` 目前有 root / stun / silenced / berserk / feared / disarmed 六個獨立布林" +
+      "（`feared` 是 2026-08-08 為 89-002 俄羅斯輪盤與 52-02/04/002 加的，" +
+      "`disarmed` 是 2026-08-10 的 S8），" +
       "但**沒有可組合的 typed 控制限制模型** —— 每多一種控制就多一個布林，" +
-      "而「這個狀態擋住哪幾種行為」散落在各個消費端的 if 裡，不是一張表。",
+      "而「這個狀態擋住哪幾種行為」散落在各個消費端的 if 裡，不是一張表。" +
+      "⚠️ 所以這一列停在 `unsupported` 是**對的**，但它的 `nearestExisting` 才是對方要讀的那一半：" +
+      "六個布林各自都是能用的，⛔ 不要因為這一列寫 unsupported 就繞開它們。",
   },
   {
     key: "scheduler.random-area@1",
@@ -449,20 +493,34 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
     // 「沒被點名」在對方眼裡等於「不需要」，而它其實擋著 15-04 雷天大壯。
     key: "hook.consume-policy@1",
     plan: "§2.1.1.2（雷天大壯「施放技能後的下一次普攻」）· §12 G4",
-    expected: "unsupported",
+    // ⭐ 2026-08-10（Lane 3 / S6）：**authoring 與執行兩面都落地了**。
+    // ⚠️ 這一段前一版寫的是「authoring 面落地了，執行面還沒」，而它**正下方的
+    // caveat 第一句就寫著相反的話** —— 同一個物件裡兩句互相打臉（第三守則）。
+    // 實測（`sim/effects/lane3Kinds.test.ts` 的「S6 hook 額度」那一條真的跑起來
+    // 數觸發次數）：`sim/effects/hooks.ts` 真的讀 `maxTriggers` 並扣帳，所以
+    // **caveat 那一句是真的，這一句是假的**，假的那一句刪掉。
+    // 這一列停在 `partial` 而不是 `supported` 的理由**不是**「引擎還沒讀」，
+    // 而是 `consumeOn` 今天只有 `"fire"` 一個值（見 caveat 最後一段）。
+    // ⛔ 也不可以退回 `unsupported`：probe 看得到那幾格，對帳閘會紅（它應該紅）。
+    expected: "partial",
     // ⚠️ 收四個候選名而不是一個 —— 見檔頭 ③：單一名字猜錯就永遠回 false。
     probe: anyHookField("maxTriggers", "consumeOn", "expiresAt", "perTarget"),
-    nearestExisting:
-      "`zHookDefBase` 的 `internalCooldown` / `internalCooldownScope` / `chance` / `chanceFrom` —— " +
-      "節流與機率都有；限時也有（`schema/effect.ts` 自己的註解就寫著「要限時，把這個 hook 掛在一個帶 " +
-      "`expiresAtTick` 的 buff source 上」）。" +
-      "⛔ 不算數的理由是這些全部是**時間**與**機率**，不是**次數**：一條掛在 5 秒 buff 上的 " +
-      "`onBasicAttack` hook，在攻速 4 的英雄身上會觸發 20 次，而卡上寫的是「下一次」。" +
-      "`consumeOn` 的 `success` / `attempt` 之分（打空算不算用掉）也沒有任何欄位表達得出來。",
-    reason:
-      "一次性消耗沒有形狀 —— `maxTriggers` / `consumeOn` / `expiresAt` / `perTarget` 四格都不存在。" +
-      "⛔ 不可以用 `internalCooldown` 近似成「每 N 秒一次」：攻速快的英雄會**多觸發**、" +
-      "慢的會**漏觸發**，而兩種錯法在畫面上都看不出來（它只是偶爾多打或少打一下）。",
+    caveat:
+      "⭐ **執行面已經落地**（2026-08-10 Lane 3 / S6，這一句前一版寫的是「只有欄位，" +
+      "引擎還沒讀」而那已經不成立 —— 第三守則）。`sim/effects/hooks.ts` 的額度閘坐在" +
+      "**內部冷卻閘與機率骰之前**（與 `victim` / `damageSource` 同一族的 rng-FREE 過濾），" +
+      "所以一條額度用完的 hook **不燒 ICD、不動 seed**。扣帳走 `ModifierSource." +
+      "hookFireCount` / `hookFireCountByTarget`（依 `hooks[hi]` 位置索引）。" +
+      "⚠️ 仍然是 `partial`，剩下的限制只有一個：`consumeOn` 只有 `\"fire\"`（見下）。" +
+      "⛔ **不可以**改用 `internalCooldown` 近似成「每 N 秒一次」：攻速快的英雄會" +
+      "**多觸發**、慢的會**漏觸發**，而兩種錯法在畫面上都看不出來（只是偶爾多打或少打" +
+      "一下）—— 那是**時間**界，這一族要的是**次數**界。" +
+      "⚠️ `consumeOn` 今天刻意只有 `\"fire\"` 一個值：`\"hit\"`（下游真的打到人才算）" +
+      "需要把扣帳搬到傷害落地那條路，那是第二條接線，⛔ 不先開一個接不到的選項。",
+    evidence:
+      "packages/shared/src/content/schema/effect.ts（zHookDefBase）+ " +
+      "packages/shared/src/sim/effects/hooks.ts（額度閘 + consumeTrigger + detachSource）+ " +
+      "packages/shared/src/sim/effects/lane3Kinds.test.ts",
   },
   {
     key: "hook.on-reflect-success@1",
@@ -493,16 +551,23 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
   {
     key: "effect.target-set-chain@1",
     plan: "§6 P1 · §12 G4",
-    expected: "unsupported",
-    probe: has("targetSetChain"),
-    nearestExisting:
-      "`shapeTargets`（每個 effect 自己解目標，`side: allies|enemies` 已經分得開敵我）+ " +
-      "上游傳下來的 `ctx.targets`。⛔ 不算數的理由是計畫要的是**兩個具名 target set 同一 tick 並存** —— " +
-      "而 `ctx.targets` 只有**一個**且是 mutable，所以「ally selector 回 MP、enemy selector 造成傷害」" +
-      "今天只能靠後者覆寫前者，兩組必然互相汙染。",
-    reason:
-      "selector 選出的 victims 沒辦法安全傳進 nested Product chain。" +
-      "現況：`shape:\"circle\"` 只在**單一 effect 內**解目標，跨 effect 傳遞要靠上游 ctx.targets。",
+    expected: "partial",
+    // ⛔ probe 換成真的問得到答案的那一個。舊的 `has("targetSetChain")` 是一個
+    // **永遠回 false 的名字**（引擎裡沒有這個 kind，也不該有）—— 只改 expected
+    // 會留下檔頭 ③ 記過兩次的撒謊形狀。
+    probe: (f) => f.effectFields.has("onHitTargets"),
+    caveat:
+      "`damageArea` / `damageLine` 現在把**自己解出來、`victimCondition` 過濾完、`maxTargets` 切完**" +
+      "的那一組人當成 `ctx.targets` 交給 `onHitTargets`（`onHitTargetsMode` 決定整群一次 batch " +
+      "還是一個一個 perTarget；下游若是圓／線那類自己解幾何的 kind，batch 只會炸出一個圈）。" +
+      "`runOnEmptyHit` 決定一個人都沒打到時要不要照樣跑（預設不跑）。" +
+      "⛔ 仍然**不是**計畫要的『兩個具名 target set 同一 tick 並存』：`ctx.targets` 只有一個，" +
+      "所以「ally selector 回 MP、enemy selector 造成傷害」還是只能靠後者覆寫前者 —— " +
+      "要兩組並存請維持 `unsupported-runtime`。",
+    evidence:
+      "packages/shared/src/sim/effects/victimFilter.ts（`selectVictims` + `runOnHitChain`，" +
+      "兩個 kind 共用一支模板）；守衛 areaVictimChain.test.ts" +
+      "（下游收到的是真的挨打的那群人而不是上游的震央；突變驗過會紅）",
   },
   {
     key: "effect.attack-dash@1",
@@ -518,42 +583,61 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
   {
     key: "effect.dash-on-end@1",
     plan: "§2.1.1 P1（條件式）· §16.7",
-    expected: "unsupported",
-    probe: has("dashOnEnd"),
+    // ⭐ 2026-08-10（Lane 3 / S7）：落地了，所以這一列從 `unsupported` 走到
+    // `supported`。⛔ 它**不是**一個新 kind（`has("dashOnEnd")` 會永遠是 false，
+    // 那正是檔頭③說的「probe 問錯問題」）—— 它是 `dash` 上的三格欄位，所以 probe
+    // 問的是 `effectFields`。
+    expected: "supported",
+    probe: (f) => f.effectFields.has("onEndOn"),
     nearestExisting:
-      "`leap.onLand` —— **固定落點**的版本今天就精確表達得出來（`sim/effects/leap.ts`，#247 那一批）。" +
-      "⛔ 不算數的只有 collision-aware 的那一版（「撞到東西就停在那裡」），而計畫 §16.7 自己說" +
-      "那要等 owner 選定停止語意才做。",
-    reason:
-      "計畫自己說這個**只有在 owner 選擇 collision-aware 停止語意時才要做**；" +
-      "固定落點的案例用既有 `leap.onLand` 就精確表達得出來。⛔ 在 §16.7 freeze 前不要宣告它。",
+      "`leap.onLand` —— **固定落點**的版本一直就精確表達得出來（`sim/effects/leap.ts`，#247 那一批）。" +
+      "（2026-08-10 起不再適用 —— 留著是為了說明「衝刺**結束的那一刻**」為什麼需要另一條路：" +
+      "effect 在 step slot 2b/3 跑完、位移在 slot 5 才發生，所以同一個 `effects[]` 裡的 AoE" +
+      "**必然**用衝刺前的座標。）",
+    evidence:
+      "packages/shared/src/sim/effects/dashOnEnd.ts（`dashOnEndSystem`，掛在 " +
+      "`SimWorld.step()` 的 slot 5′）+ lane3Kinds.test.ts 的三臂量測",
   },
   {
     key: "state.exclusive-group@1",
     plan: "§12 G4 · §16.15（涅吉三形態）",
     expected: "partial",
-    // 【變身】的互斥不是一個 effect kind，它是 `championForm` 這個 kind 的**結構**：
-    // `SimWorld.championForm` 是 `Map<EntityId, ChampionFormComp>`（一實體一格），
-    // 身體只有一個 `championId`，而 `setBody` 是唯一的寫入者。所以 kind 在 ⇒ 互斥在。
-    probe: (f) => f.effectKinds.has("championForm"),
+    // 這一列有**兩個**互斥，兩個都要在：
+    // ① 【變身】的互斥不是一個 effect kind，它是 `championForm` 這個 kind 的**結構**：
+    //    `SimWorld.championForm` 是 `Map<EntityId, ChampionFormComp>`（一實體一格），
+    //    身體只有一個 `championId`，而 `setBody` 是唯一的寫入者。所以 kind 在 ⇒ 互斥在。
+    // ② 2026-08-10（G5）落地的**泛化 buff 互斥群**是 `applyBuff` 上的一格欄位，
+    //    不是新 kind —— 只問 kind 的 probe 對它永遠是 false（檔頭 ③ 的形狀）。
+    // 兩者以 AND 相連是刻意的：任何一半被撤掉，下面的 caveat 就有一半變成謊話，
+    // 而對帳閘會替我們紅。
+    probe: (f) => f.effectKinds.has("championForm") && f.effectFields.has("exclusiveGroup"),
     caveat:
       "✅ 15-02/03/04 逐字寫的「([變身]為唯一狀態不可疊加)」**對變身成立，而且是結構性的**：" +
       "一個實體只有一格形態、一個身體只有一個 `championId`，所以第二個形態不可能與第一個" +
       "並存 —— ⛔ 技能文件**不需要、也不應該**自己檢查「我是不是已經變身了」。" +
       "重複進入時「舊形態的剩餘時間怎麼辦」是欄位（`champion@1.transform.reenter`：" +
       "`restart` / `keepLongest` / `reject`），預設 = 出貨現況，被回絕會走 `castRejected`。" +
-      "⛔ 仍缺兩件，**涅吉三形態今天仍然表達不出來**：" +
-      "① **它只是【變身】的互斥，不是泛化的互斥狀態群** —— 沒有「這三個 buff 互斥」的模型，" +
-      "而 15-02/03/04 讀起來更像三個**屬性狀態**（移速倍率／攻速％／普攻附加傷害）而不是三個 3D body；" +
+      "⭐ 2026-08-10（G5）：**泛化的互斥狀態群落地了** —— 這一句前一版寫的是「沒有『這三個 buff " +
+      "互斥』的模型」，那已經不成立（第三守則）。`applyBuff.exclusiveGroup` 是一個自由字串群名，" +
+      "掛上之前先掃 `sc.sources`：同組且未過期的舊來源整份卸下（`exclusiveOnExisting:\"replace\"`，" +
+      "省略時的預設，形狀抄 `shield.onExisting`）或整發不掛（`\"reject\"`）。" +
+      "所以 15-02/03/04 逐字寫的「[變身]為唯一狀態不可疊加」在**數值那一層**已經成立：" +
+      "三個形態的移速倍率／攻速％／普攻附加傷害不會再連乘（⛔ 技能文件仍然不需要自己檢查）。" +
+      "⚠️ 它作用在 **gameplay state（buff source）** 這一層，⛔ **不可以拿它假裝三個 3D 形態** —— " +
+      "那是下面 ② 的事，而 ② 還沒解。" +
+      "⛔ 仍缺一件，**涅吉三形態的「三個身體」今天仍然表達不出來**：" +
       "② **一個英雄只有一個 `transform.counterpartId`**，而 `championForm` effect 的 `to` 只有" +
       "`alternate`/`base`/`toggle`，沒有「變成指定的那一個形態」—— 所以第二個**不同**的形態" +
       "根本不是目的地：再施放一次只會刷新當前形態（WC3 Metamorphosis 的語意，刻意保留）。" +
-      "⚠️ 這兩件都卡在計畫 §16.15 還沒裁決「三個 gameplay state 還是三個 3D body」——" +
-      "⛔ 在那之前不要把三形態降級成三個獨立變身，那會是一個**看起來**能用的錯誤答案。",
+      "⚠️ 它卡在計畫 §16.15 還沒裁決「三個 gameplay state 還是三個 3D body」——" +
+      "⛔ 在那之前不要把三形態降級成三個獨立變身，那會是一個**看起來**能用的錯誤答案。" +
+      "（那個裁決**不會**再回頭改 `exclusiveGroup` 那一層：數值互斥與身體選擇是兩件事。）",
     evidence:
       "packages/shared/src/sim/systems/ChampionFormSystem.ts + sim/championFormExclusive.test.ts" +
       "（四個突變都驗過會紅：拿掉 `sc.championId` 的寫入、`championForm.set` 改成不覆寫、" +
-      "拿掉 `keepLongest`、拿掉整個 `reject` 分支）",
+      "拿掉 `keepLongest`、拿掉整個 `reject` 分支）；泛化互斥群在 " +
+      "packages/shared/src/sim/effects/applyBuff.ts::enforceExclusiveGroup + " +
+      "sim/exclusiveDisarmNegate.test.ts（同一次執行裡比四臂：互斥 / 只掛一份 / 不填 group 仍然相乘 / reject）",
   },
   {
     key: "state.lifecycle@1",
@@ -568,8 +652,15 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "（`toggleUpkeepSystem`）都只是呼叫它，所以「關閉時釋放風王鐵槌」不可能只發生一半。" +
       "開關成本（`ability@1.manaCost`）與維持成本（`toggle.upkeepCost`）是兩個獨立數列，" +
       "節奏 `none`/`perAttack`/`perSecond` 是欄位。" +
-      "⛔ 仍缺三件：① **stable state key 與 exclusive group** —— 一顆按鈕一個切換，" +
-      "沒有「這三個狀態互斥」的模型（那一半是 `state.exclusive-group@1`）；" +
+      "⭐ 2026-08-10（G13-2）：`toggle.whileOn` 落地 —— 開著的期間掛一份**被動區塊**" +
+      "（重用 `AbilityPassive`，⛔ 不是第二份 `EffectDef[]`），走的是 `abilityPassives.ts` 那**同一份**" +
+      "程式（形態閘／六種授予轉發／四個強化面只有一份）。attach 掛在 `enterToggle`、detach 掛在" +
+      "`exitToggle`，所以手動關閉與 MP 不足自動關閉都一定卸得掉；`whileOnDuringExit` 只決定卸下與" +
+      "`onExit` 的**順序**，不決定會不會卸下。⚠️ 已知邊界：開著的時候升級**不換 rank**（加成停在" +
+      "開啟當下那一階）。" +
+      "⛔ 仍缺三件：① **stable state key** —— 一顆按鈕一個切換；「這幾個狀態互斥」現在寫得出來了" +
+      "（`applyBuff.exclusiveGroup`，見 `state.exclusive-group@1`），但那是**buff 層**的互斥，" +
+      "切換本身沒有群的概念；" +
       "② **duration / refresh policy** —— 切換沒有自帶時限，要限時請用 `applyBuff`；" +
       "③ **死亡不觸發 onExit** —— 屍體不付維持成本但旗標留著，「大招要不要從屍體放出來」" +
       "是一個還沒裁決的決策點，⛔ 不可以在遊戲端偷開第二條出口去補它。",
@@ -615,7 +706,12 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "層數由 `applyStatus.stacks` 寫入、多來源相加、上界 `MARK_MAX_COUNT`(999)。" +
       "⛔ 三件**還不行**，不要繞：" +
       "① 讀不到 `sim/marks.ts` 的具名標記池（`effect.charge-ledger@1` 那一套的 `count`/`spent`）——" +
-      "那是另一個池子，`minStacks` 只看 `StatusComp`；" +
+      "那是另一個池子。⚠️ **但「`minStacks` 只看 `StatusComp`」這句話 2026-08-10 起不成立了**" +
+      "（第三守則）：G10 之後 `statusStacks` 讀**三本帳** —— `StatusComp.effects`、`world.marks`，" +
+      "以及帶 `statusId` 的 `ModifierSource`（`applyBuff.statusId`：標記與數值變成同一個物件，" +
+      "所以到期／淨化／卸下只有一條路，`extendBuff` 一行都不用改就把標記一起延長了）。" +
+      "→ 對方要「破甲同時是狀態也是數值」時，寫 **一發** `applyBuff{stackKey, statusId, modifiers}`，" +
+      "⛔ 不要拆成 `applyStatus` + `applyBuff` 兩份 —— 拆了的那一份 `extendBuff` 只延長得到後者；" +
       "② `tag` 那個分支**刻意沒有** `minStacks`（「【破甲】類的狀態合計幾層」沒有人定義過語意，" +
       "所以它是 PARSE ERROR 而不是由求值端替作者猜）；" +
       "③ 只有「≥」一種比較 —— 「剛好 N 層」「至多 N 層」寫不出來（後者用 `not` 包一個 `minStacks:N+1`）。" +
@@ -652,26 +748,31 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "✅ 計畫 §4.4 的兩條禁令都守住了：目標是 **exact ability ref**（`zRef(\"abilities\")`，" +
       "不是槽位、不是名稱文字），操作是一個 **allowlist enum** —— `procChance`（改機率）/ " +
       "`durationSec`（改持續時間）/ `damageCoeffAp`（加 AP 傷害係數）/ `thresholdPct`（改門檻），" +
-      "四個剛好對上四支出貨卡（77-002 / 77-002 / 70-002 / 59-001），⛔ 沒有位置 JSON Pointer。" +
+      "四個剛好對上四支出貨卡（77-002 / 77-002 / 70-002 / 59-001）加上 `modifierValue`" +
+      "（改一條 `StatModifier` 的數值，必填 `stat`），⛔ 沒有位置 JSON Pointer。" +
       "每個 op 的 `value` **兩端都有界**（`AUGMENT_OP_BOUNDS`），`mode` 只有 `set` / `add`。" +
       "**fail closed 在載入時**：目標指不到就 `DanglingRefError`（`content/refs.ts::abilityRefs` " +
       "推的是**硬** ref edge），不是執行期靜默跳過；`thresholdPct` 另外強制填 `nodeKind`，" +
       "那一格就是 §13「不得套到相鄰效果」的閘（一棵 condition 樹裡通常不只一個 `value`）。" +
-      "⛔ 仍缺三件，寫技能的人一定會撞到：" +
+      "⭐ 2026-08-10：**四個面全部接上了** —— `scope` 那一格（`all` 預設 / `hooks` / `effects` / " +
+      "`grants`）決定一條操作打得到 hook 的 `chance` 與 hook 效果樹、主動施放的 `def.effects`" +
+      "（`castAbility` 與 `CastResolveSystem` 兩個入口都問）、來源授予的 `critStrike.chance`，" +
+      "或 passive 區塊的 `modifiers`（`modifierValue`，只有預設的 `all` 打得到）。" +
+      "`AugmentTarget.condition` 也讀了（77-002「裝備了某類道具時」；求值主體只有 `self`，" +
+      "所以 `subject:\"target\"` 的葉子恆為假）。" +
+      "⛔ 仍缺兩件，寫技能的人一定會撞到：" +
       "① **這一版是執行期，不是編譯期** —— 計畫要的 reverse dependency closure 重編需要一個" +
-      "住在 `content/registries.ts` 的 compiler。現在是 `abilityPassives.ts::rankBlock` 在把 " +
-      "passive 區塊組成 `ModifierSource` 的那一刻讀 augment 表再算（**可觀測等價**：同一組 ops、" +
-      "同一個目標解析、同一份界），但沒有 closure、不遞迴（強化一支自己也被強化的技能不成立）；" +
-      "② **只有被動區塊這一個 seam 接上了** —— 主動施放路徑（`castAbility` 讀 `def.effects`）" +
-      "還沒問過 augment，所以 70-002 / 92-002 那種「強化一支**主動技**的傷害」今天拿不到；" +
-      "77-002（77-02 的 proc 機率 / 77-03 的持續時間）與 59-001（59-00 hook 的門檻）拿得到；" +
-      "③ **`nodeKind` 是自由字串**（condition 的 kind 表住在另一份 schema，抄過來就是第二份" +
+      "住在 `content/registries.ts` 的 compiler。現在是「組出那一份 clone 的前一刻」讀 augment " +
+      "表再算（**可觀測等價**：同一組 ops、同一個目標解析、同一份界），但沒有 closure、不遞迴" +
+      "（強化一支自己也被強化的技能不成立）；" +
+      "② **`nodeKind` 是自由字串**（condition 的 kind 表住在另一份 schema，抄過來就是第二份" +
       "會過期的真相），所以打錯字 = 那條操作匹配不到任何節點、靜默無效。⛔ 不要假裝它會紅。",
     evidence:
-      "packages/shared/src/sim/abilities/abilityAugment.ts（收集 + 純改寫）+ " +
-      "packages/shared/src/sim/abilities/abilityPassives.ts（唯一接上的 seam）；" +
-      "守衛 packages/shared/src/sim/abilities/abilityAugment.test.ts" +
-      "（兩個方向一起讀：學了 → 真的變；沒學 → 一格不動。突變驗過會紅）",
+      "packages/shared/src/sim/abilities/abilityAugment.ts（收集 + 純改寫 + `opHitsSurface` " +
+      "是全 sim 唯一讀 `scope` 的地方）；四個 seam：abilityPassives.ts::rankBlock（hooks / " +
+      "modifiers / grants）、abilitySystem.ts::castAbility 與 systems/CastResolveSystem.ts（effects）；" +
+      "守衛 packages/shared/src/sim/abilities/abilityAugment.test.ts（被動那一面）+ " +
+      "abilityAugmentCastAndScope.test.ts（主動施放那一面，突變驗過會紅）",
   },
   {
     key: "defense.block-source@1",
@@ -715,6 +816,88 @@ export const PLANNED_CAPABILITIES: readonly CapabilityEntry[] = [
       "packages/shared/src/sim/combat/damageTypeOverride.ts + " +
       "packages/shared/src/sim/stats/sourceGrants.test.ts（授權格與轉發表逐鍵對齊，兩個突變都驗過會紅）",
   },
+
+  // ── 2026-08-10（Lane 3）補：**出貨了但契約上沒有自己的一列**的兩個 kind ──────
+  //
+  // ⚠️ 它們與上面每一列的差別是「為什麼漏掉」而不是「做了沒有」：`delayed` 與
+  // `proxyCast` 是 Lane 3 自己開的新 kind，**計畫 §12 G4 沒有點名它們**，所以
+  // 這張「照計畫逐條對帳」的表天然不會長出它們的列。
+  //
+  // ⛔ 而「effectKinds 那張表裡看得到」不等於「對方拿得到 caveat」：
+  // `effectKinds` 只回答**名詞**（這個名字存不存在），一列 `PLANNED_CAPABILITIES`
+  // 才回答**邊界**（上界是多少、預設值是哪一個、哪一種寫法會靜默無效）。
+  // 這正是檔頭 ② 說的那件事的另一面：`unsupported` 會撒謊，而**整列缺席**比撒謊
+  // 更安靜 —— 對方連「這裡有一個要讀的限制」都不知道。
+  //
+  // ⛔ 兩列的 probe 一樣**從出貨註冊表推導**（`has()` 讀 `EFFECT_HANDLERS`），
+  // 沒有任何一格是手寫的 true。
+  {
+    key: "effect.delayed-sequence@1",
+    plan: "計畫未點名（Lane 3 / G12：20-002 連續七次斬擊 · 52-002 連續 100 下）",
+    expected: "partial",
+    probe: has("delayed"),
+    nearestExisting:
+      "`randomArea`（同樣是排在未來 tick 的一串）—— ⛔ 但它到期時用**圓心重解**目標，" +
+      "所以目標走開就打空；`delayed` 到期時用**施放那一刻凍住的名單**。兩者長得像，" +
+      "混用會安靜地做錯（兩支檔頭都寫了這一句）。`targetMode:\"reresolve\"` 就是把這一格" +
+      "切回 `randomArea` 的語意，那是設計偏好不是缺陷。",
+    caveat:
+      "✅ 機制已出貨並接線（`SimWorld.step()` 的 7e′，排在 `combatResolveSystem` 之前，" +
+      "所以這一 tick 落下的一刀在**同一個 tick** 被減傷、被護盾吃、被記分、被結算）。" +
+      "⭐ 它**完全不碰 rng**（沒有落點要抽），所以一次施放推進亂數流 0 步 —— " +
+      "⛔ 不必像 `scheduler.random-area@1` 那樣去算 draw 預算。排程是**絕對 tick**。" +
+      "⛔ 四個邊界，寫技能的人一定會撞到：" +
+      "① **發數有硬上界**（`sim/effects/kindLimits.ts::DELAYED_MAX_COUNT`，今天是 32）——" +
+      "52-002 的「連續 100 下」**寫不到 100**，schema 在載入時就拒絕，⛔ 不要靠疊兩發 `delayed` 去湊，" +
+      "那會變成兩串各自獨立的排程（`finalEffects` 也會跑兩次）；" +
+      "② **間隔被夾成至少 1 tick** —— 0.001 秒與一個 tick 在 30Hz 下是同一件事，" +
+      "所以「瞬間 32 連擊」拿不到，那是刻意的（整波塞進同一 tick 正是這個 kind 要修的症狀）；" +
+      "③ `finalEffects` 是**追加**不是取代（省略 = 最後一發與其餘完全相同，⛔ 不是「最後一發不跑」）；" +
+      "④ 三個會讓整串**提前停掉**的情境是欄位或規則，不是 bug：目標死亡（`dropDeadTargets`，" +
+      "預設跳過）、施法者死亡（`stopOnCasterDeath`，**預設繼續**）、以及該分區的決鬥已經結束" +
+      "（`settledZones`，⛔ 不可調 —— 回合結束後還在扣血是玩家看得見的缺陷）。" +
+      "⚠️ payload 在**施法那一刻烘焙**（同 `randomArea.effects` / `leap.onLand`），" +
+      "所以第七刀用的是施法時的 `comboBonus`，不是落地當下的。",
+    evidence:
+      "packages/shared/src/sim/effects/delayed.ts（`delayedEffect` + `delayedSystem`）+ " +
+      "packages/shared/src/content/schema/effect.ts 的 `delayed` 分支 + " +
+      "packages/shared/src/sim/effects/lane3Kinds.test.ts（「名單在施放那一刻凍住，" +
+      "而且分散在不同的 tick 上落下」）",
+  },
+  {
+    key: "effect.proxy-cast@1",
+    plan: "計畫未點名（Lane 3 / S5：80-04 赤兔咆哮「攻擊時有 20% 機率使出弒鬼神」）",
+    expected: "partial",
+    probe: has("proxyCast"),
+    nearestExisting:
+      "⛔ **不是** `content/templates/expand.ts` 的 `\"proxy-cast\"` 模板家族 —— 同一個字已經" +
+      "指過兩件事（那個家族自己的檔頭寫著「這裡不召喚任何東西」，展開結果只有 `damage` " +
+      "＋選配 `applyStatus`）。在此之前這一族只能**手抄一份 payload**：80-04 帶著自己的 " +
+      "`spawnProjectile` + damage 陣列，而 80-02 弒鬼神本人是另一份 —— 兩份會各自腐爛，" +
+      "而畫面上看不出是哪一份在跑。",
+    caveat:
+      "✅ 代放走的是**目標技能自己的 payload**，所以改 80-02 就等於改 80-04 觸發的那一發。" +
+      "`payCosts`（`none` 預設 / `mana` / `manaAndCooldown`）決定要不要付代價，後兩者走 " +
+      "`castAbility` 的**同一排閘**（魔力／沉默／暈眩／擊倒／暴走／學過沒有／已在吟唱），" +
+      "⛔ 不是在這裡重寫一次那些 if。" +
+      "⛔ 四個邊界，寫技能的人一定會撞到：" +
+      "① **鏈深上界**（`sim/effects/kindLimits.ts::PROXY_MAX_CHAIN_DEPTH`，今天是 3），" +
+      "而 `maxDepth` **省略時是 0** —— 被代放的技能自己的代放直接被擋，那是終止性不是 bug；" +
+      "② `abilityId` 是**軟參照**（代放一支還沒上架的技能不會讓內容載入失敗），代價是" +
+      "**打錯的 id 不會在載入時被擋**，它只是永遠什麼都不發生 —— ⛔ 不要假裝它會紅；" +
+      "③ 三個預設值是**刻意**的，改之前先想一遍：不付冷卻（`payCosts:\"none\"`）、" +
+      "不看那一格的冷卻（`respectCooldown` 省略 = 冷卻中照樣代放）、要求已學會" +
+      "（`requireLearned` 省略 = 沒點那一招時什麼都不發生）。⚠️ 一個每次普攻都可能觸發的 proc " +
+      "若改成 `manaAndCooldown`，那支大招就會**自己把自己鎖住**，而畫面上只看得到「W 一直是灰的」；" +
+      "④ `slot` 與 `abilityId` **恰好填一個**（superRefine 擋，不是由求值端替作者挑）；" +
+      "代放的主詞永遠是**施法者自己**，⛔ 不會去掃 registry 找「誰有這支」。",
+    evidence:
+      "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` " +
+      "＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ " +
+      "packages/shared/src/content/schema/effect.ts 的 `proxyCast` 分支 + " +
+      "packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，" +
+      "而且鏈一定會停」）",
+  },
 ];
 
 export interface RuntimeCapabilityManifest {
@@ -732,6 +915,11 @@ export interface RuntimeCapabilityManifest {
   readonly conditionLeafFields: readonly string[];
   /** `HookDef` 的欄位名 —— 一次性消耗、節流、機率這幾格在不在，看這裡。 */
   readonly hookFields: readonly string[];
+  /**
+   * effect kind 的欄位名（所有分支聯集）—— 有些 capability 是**既有 kind 多一格**
+   * 而不是一個新 kind（`onHitTargets`），只看 `effectKinds` 會漏掉它們。
+   */
+  readonly effectFields: readonly string[];
   readonly templateFamilies: readonly string[];
   readonly simCapabilities: Readonly<Record<string, { available: boolean; caveat?: string }>>;
   readonly planned: readonly {
@@ -901,6 +1089,11 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
   leafFieldsOf(zConditionLeaf, conditionFieldSet);
   const conditionLeafFields = [...conditionFieldSet].sort();
   const hookFields = Object.keys(zHookDefBase.shape).sort();
+  // ⛔ 一定要傳 `zEffectDefUnion`（ZodDiscriminatedUnion），不是 `zEffectDef`
+  //（那是 ZodLazy，`leafFieldsOf` 走不進去，會安靜地回一個空集合）。
+  const effectFieldSet = new Set<string>();
+  leafFieldsOf(zEffectDefUnion, effectFieldSet);
+  const effectFields = [...effectFieldSet].sort();
   const simCapabilities: Record<string, { available: boolean; caveat?: string }> = {};
   for (const key of Object.keys(SIM_CAPABILITIES).sort()) {
     const c = SIM_CAPABILITIES[key]!;
@@ -921,6 +1114,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafKinds: conditionLeafSet,
     conditionLeafFields: conditionFieldSet,
     hookFields: new Set(hookFields),
+    effectFields: effectFieldSet,
   };
 
   const planned = PLANNED_CAPABILITIES.map((e) => ({
@@ -946,6 +1140,9 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
       // 任何一個 kind，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
       ...conditionLeafFields,
       ...hookFields,
+      // 同一個理由：`onHitTargets` 這種「既有 kind 多一格」的 capability 不會改動
+      // 任何一個 kind 名，指紋不含它的話對方 pin 的 base 會在契約真的變了的那天不動。
+      ...effectFields,
       ...templateFamilies,
       ...PLANNED_CAPABILITIES.map((e) => `${e.key}=${e.expected}`),
       // 已知壞掉的清單也折進指紋：一筆進來或修好離開，對方 pin 的 base 就該換。
@@ -956,6 +1153,7 @@ export function buildCapabilityManifest(): RuntimeCapabilityManifest {
     conditionLeafKinds,
     conditionLeafFields,
     hookFields,
+    effectFields,
     templateFamilies,
     simCapabilities,
     planned,
@@ -998,5 +1196,6 @@ export function probeCapability(e: CapabilityEntry): boolean {
     conditionLeafKinds: new Set(m.conditionLeafKinds),
     conditionLeafFields: new Set(m.conditionLeafFields),
     hookFields: new Set(m.hookFields),
+    effectFields: new Set(m.effectFields),
   });
 }

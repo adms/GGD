@@ -113,6 +113,18 @@ export function championSheetRows(
   );
   const level = Math.max(1, ctx.level ?? 1);
   const attrBonus = ctx.attrBonus ?? NO_ATTR_BONUS;
+  /**
+   * ⭐ 2026-08-10 —— 近戰/遠程各自的移速倍率（owner 的 `moveSpeedMelee` /
+   * `moveSpeedRanged`）需要知道**這張卡是誰**。
+   *
+   * ⛔ 少了這一格，面板算出來的移速與魔抗會是**沒有乘那兩個係數的數字** ——
+   * 也就是 #125「顯示的數字必須是最終值」被打破，而且是安靜地破：面板照樣
+   * 印一個看起來很正常的數，只是跟遊戲裡不一樣。
+   *
+   * ⚠️ `attackType` 缺席時傳 `undefined`，`statEnvFactor` 會退回中性 1.0
+   * （＝今天的行為），⛔ 不要在這裡猜一個預設邊。
+   */
+  const subject = { attackType: (def as { attackType?: "melee" | "ranged" }).attackType };
   const base = def.baseStats as Readonly<Record<string, number | undefined>>;
   const growth = def.growth as Readonly<Record<string, number | undefined>>;
   const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
@@ -148,7 +160,7 @@ export function championSheetRows(
         final:
           stat === undefined || b === undefined
             ? undefined
-            : finalizeStat(b, stat, { env, baseBonus, caps, rangeScale }),
+            : finalizeStat(b, stat, { env, baseBonus, caps, rangeScale, subject }),
       };
     }
     const g = championStatGrowth(def, stat, env);
@@ -158,7 +170,7 @@ export function championSheetRows(
       base: b,
       growth: Math.abs(g) < EPS ? undefined : g,
       fromAttribute: true,
-      final: finalizeStat(b, stat, { env, baseBonus, caps, rangeScale }),
+      final: finalizeStat(b, stat, { env, baseBonus, caps, rangeScale, subject }),
     };
   });
 }

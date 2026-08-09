@@ -5,10 +5,12 @@
  */
 import type { EffectKindSpec } from "./effectKind";
 import { Stat } from "../stats/statTypes";
-import { resolveScaling } from "./effect";
+import { resolveScaling, type TriggerDamage } from "./effect";
 import { bankedAddend, casterAttrs, casterStats, comboAddend } from "./effectCommon";
 import { DAMAGE_QUEUE_MAX_PASSES } from "./reflectLimits";
 import { distanceScaleAmount, resourcePctAmount } from "./dynamicTerms";
+// ⭐ ⑨（2026-08-10）—— 技能暴擊與普攻走**同一支**判定，見那支的檔頭。
+import { rollAbilityCrit } from "../combat/critStrike";
 
 export const damageEffect: EffectKindSpec<"damage"> = {
   apply(e, ctx) {
@@ -73,6 +75,16 @@ export const damageEffect: EffectKindSpec<"damage"> = {
     let reflectAdd = 0;
     let reflectDepth: number | undefined;
     let skipGlobalDamageMult: boolean | undefined;
+    /**
+     * ⭐ S10 —— 被這一發反彈掉的**原封包**的分類（60-04 迴旋斬「若成功反彈敵方
+     * **技能** AP 傷害」）。只有分類，沒有量：原傷害的量由同一 tick 的
+     * `onDamageTaken` 帶著，再抄一份進來才是第二個真相。
+     *
+     * 這裡是**唯一**寫得出它的地方 —— 只有這一格同時握著原封包（`ctx.incoming`）
+     * 與正要生出來的反彈封包。`onReflectSuccess` 在反彈封包落地時才發，那時原封包
+     * 早就結算完了。
+     */
+    let reflectedFrom: { origin: string; type: TriggerDamage["type"] } | undefined;
     if (incPct !== undefined) {
       const trig = ctx.incoming;
       if (trig === undefined) return; // ①
@@ -91,6 +103,8 @@ export const damageEffect: EffectKindSpec<"damage"> = {
       const src = basis === "raw" ? trig.raw : basis === "hpLost" ? trig.hpLost : trig.mitigated;
       reflectAdd = src * col;
       reflectDepth = trig.reflectDepth + 1;
+      // ⭐ S10 —— 原封包的 provenance 與型別，原封不動往下傳（見宣告處）。
+      reflectedFrom = { origin: trig.origin, type: trig.type };
       // 乘兩次的修正。三個讀數都已經過了 `combatEnv.damageDealt`,所以這一發
       // 反彈封包預設**免除**排空迴圈裡的那一行,反彈比才會剛好等於文案寫的
       // 百分比(在任何一個 k 下)。要讓它跟著旋鈕走是內容的決定,不是這裡的
@@ -135,13 +149,23 @@ export const damageEffect: EffectKindSpec<"damage"> = {
       if (distTerm !== undefined) {
         amount += distanceScaleAmount(world, ctx.caster, target, distTerm);
       }
+      // ⭐ 2026-08-10（⑨）—— 走 `combat/critStrike.ts::rollAbilityCrit`，**不是**
+      // 第二段就地擲骰。在那之前這裡只認英雄自己那條聚合屬性，所以封包永遠不帶
+      // `critSources`，而 `HookDef.critSource:"thisSource"` 掛在技能暴擊上是永遠
+      // 不觸發的（失敗形態②）。ZERO GUARANTEE 與抽籤位置都沒動，見那支的檔頭。
       let crit = false;
+      let critSources: readonly string[] | undefined;
       if (e.canCrit) {
-        const cc = stats[Stat.CritChance] ?? 0;
-        if (cc > 0 && ctx.rng.chance(cc)) {
-          crit = true;
-          amount *= stats[Stat.CritDamage] || 1.75;
-        }
+        const cr = rollAbilityCrit(
+          world,
+          ctx.caster,
+          stats[Stat.CritChance] ?? 0,
+          stats[Stat.CritDamage] || 1.75,
+          ctx.rng,
+        );
+        crit = cr.crit;
+        if (cr.crit) amount *= cr.mult;
+        critSources = cr.critSources;
       }
       // 反彈了 0 就**不發封包**。這不是最佳化:一發 0 的封包照樣會
       // `world.emit("damage")`(攻擊者頭上跳一個 0)、照樣再觸發雙方的
@@ -166,9 +190,14 @@ export const damageEffect: EffectKindSpec<"damage"> = {
         // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
         type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
         crit,
+        // ⭐ 這一發被哪幾條暴擊來源加成了 —— `combat/damage.ts` 把它交給
+        // `TriggerDamage.critSources`，`HookDef.critSource:"thisSource"` 讀它。
+        ...(critSources !== undefined ? { critSources } : {}),
         origin: ctx.origin,
         ...(reflectDepth !== undefined ? { reflectDepth } : {}),
         ...(skipGlobalDamageMult === true ? { skipGlobalDamageMult: true } : {}),
+        // ⭐ S10 —— 只有反彈封包帶得到它（缺席 = 這不是一發反彈），嚴格 no-op。
+        ...(reflectedFrom !== undefined ? { reflectedFrom } : {}),
         // 「回復己方 MP 該傷害量」—— 只是把**指示**掛在封包上;真正付款的是
         // `combat/damage.ts`,因為只有那裡知道全域倍率 / 護甲魔抗 / 格擋 / 護盾
         // 之後真的掉了多少。在這裡算會拿到「打算打多少」,而文案講的是打中了多少。

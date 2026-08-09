@@ -26,7 +26,8 @@ import { audioSystem } from "../audio";
 import { SfxButton } from "./SfxButton";
 import { useAllSettings } from "./useSettings";
 import { useAudioVolumes } from "./useAudio";
-import { HUD_Z } from "./hud/hudLayout";
+import { HUD_Z, hudSlotScaleTier } from "./hud/hudLayout";
+import { HUD_SCALE_TIERS, hudScaleSpec, type HudScaleTier } from "./hudScale";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 /** What each model tier means in the file the client downloads (task #115). */
@@ -35,6 +36,15 @@ const MODEL_LOD_LABEL: Record<ModelLodTier, string> = {
   mid: "reduced (-mid .glb, ~half the triangles)",
   small: "minimal (-small .glb, ~a third of the triangles)",
 };
+
+/**
+ * ⭐ HUD 縮放的七格 —— **從 `HUD_SCALE_TIERS` 推導**，⛔ 不是第二份標籤清單。
+ * 抄一份到這裡的話，加一個檔位就會出現「資料有八格、畫面只有七格」而沒有人會紅。
+ */
+const HUD_SCALE_OPTIONS: { value: HudScaleTier; label: string }[] = HUD_SCALE_TIERS.map((t) => ({
+  value: t.id,
+  label: t.label,
+}));
 
 const PRESETS: { value: QualityPreset; label: string }[] = [
   { value: "low", label: "Low" },
@@ -256,8 +266,24 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
   const settings = useAllSettings();
   const g = settings.graphics;
   const n = settings.network;
+  const ui = settings.ui;
   const fps = useLiveFps();
   const store = settingsStore;
+  /**
+   * ⭐ 這個螢幕**實際**吃得到的檔位 —— `hudSlotScaleTier` 在裝不下時往下退（下限「中」）。
+   *
+   * ⚠️ 問的是 `enemy-team`：它是 top-left 疊到最後的一格，也就是**最先撞牆**的那個，
+   * 所以它退檔的門檻就是整個 HUD 的門檻。⛔ 不要在這裡自己算一次幾何 —— 那會變成
+   * 第二份規則，而它跟 `hudLayout` 分岔的那天，設定頁會開始說謊。
+   *
+   * viewport 明寫而不是讓它讀 ambient window：設定畫面自己就在那個視窗裡，
+   * 但 `hudSlotScaleTier` 的 ambient 讀取是在**呼叫當下**，React 重繪時機不保證。
+   */
+  const effectiveHudTier = hudSlotScaleTier(
+    "enemy-team",
+    isTouchDevice(readTouchEnv()),
+    typeof window === "undefined" ? null : { width: window.innerWidth, height: window.innerHeight },
+  );
 
   return (
     <div
@@ -421,6 +447,31 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
           <div style={{ color: TEXT_DIM, fontSize: 10 }}>
             血花 spray style. "Default" follows the content config; "Off" disables it entirely.
           </div>
+          <div>
+            {label("介面大小")}
+            <div style={{ marginTop: 4 }}>
+              <Segmented
+                options={HUD_SCALE_OPTIONS}
+                value={ui.hudScale}
+                onPick={(v) => store.patchUi({ hudScale: v })}
+              />
+            </div>
+          </div>
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            技能圖標與敵方資訊面板的**框、字、內距一起**縮放。
+            {hudScaleSpec(ui.hudScale).useCase ? `　適合：${hudScaleSpec(ui.hudScale).useCase}` : ""}
+          </div>
+          {/*
+            ⭐ 這一行是承重的：`hudSlotScaleTier` 會在裝不下時**往下退檔**（下限「中」），
+            所以在小視窗上選「最大」實際生效的可能是「大」。少了這句話，設定頁就會
+            「顯示他選的那個、而它不生效」—— 這個 repo 自己列為最糟的設定行為。
+          */}
+          {effectiveHudTier !== ui.hudScale && (
+            <div style={{ color: "#d8a657", fontSize: 10 }}>
+              ⚠️ 這個視窗放不下「{hudScaleSpec(ui.hudScale).label}」，實際會用「
+              {hudScaleSpec(effectiveHudTier).label}」。換更大的螢幕或視窗才吃得到。
+            </div>
+          )}
           <Slider
             text="Gore intensity"
             value={g.goreIntensity}

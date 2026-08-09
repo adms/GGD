@@ -18,12 +18,12 @@
     {
       "stat": "as",
       "op": "pctAdd",
-      "value": 2.0
+      "value": 2
     },
     {
       "stat": "as",
       "op": "capRaise",
-      "value": 10.0
+      "value": 10
     },
     {
       "stat": "lifesteal",

@@ -8,6 +8,9 @@ import { z } from "zod";
 import type { EffectDef } from "../../sim/effects/effect";
 import type { AbilityId, ProjectileId, StatusId } from "../../ids";
 import { zCastableSlot, zRef, zScaling, zStat, zStatModifier } from "./common";
+// `refineApplyBuff` 的 `maxStat.basis:"thisSource"` 規則要問「這條 modifier 是不是
+// 一個絕對量」——⛔ 不抄字面值 "flat"，比對出貨的那個 enum。
+import { ModOp } from "../../sim/stats/modifiers";
 // Lane 1/2（2026-08-08）七個新 kind 的界 —— 一份，schema 與 handler 共用。
 import {
   BRANCH_MAX_COUNT,
@@ -25,6 +28,15 @@ import {
   RANDOM_AREA_MAX_COUNT,
   RANDOM_AREA_MAX_INTERVAL_SEC,
   RANDOM_AREA_MAX_SCATTER_RADIUS,
+  // Lane 3（2026-08-10）—— 同一張表，⛔ 不抄字面值。
+  DASH_ON_END_MAX_EFFECTS,
+  DELAYED_MAX_COUNT,
+  DELAYED_MAX_DELAY_SEC,
+  DELAYED_MAX_INTERVAL_SEC,
+  EFFECT_CHAIN_MAX_STEPS,
+  HOOK_MAX_TRIGGERS,
+  PROXY_MAX_CHAIN_DEPTH,
+  STAT_CEILING_MAX,
 } from "../../sim/effects/kindLimits";
 import {
   SPREAD_MAX_FALLOFF,
@@ -118,7 +130,7 @@ export const STATUS_MAX_DURATION_SEC = 60;
 /** 硬控（拿走操作）的上界 —— 2026-08-09 之前**所有**狀態共用的那個數字。 */
 export const HARD_CC_MAX_DURATION_SEC = 20;
 /** 哪幾格算「拿走操作」。⛔ 新增同類布林時一起加，見上。 */
-const HARD_CC_FLAGS = ["stun", "root", "feared", "silenced"] as const;
+const HARD_CC_FLAGS = ["stun", "root", "feared", "silenced", "disarmed"] as const;
 
 /**
  * `damage.bankedBonus` 的三個上界(owner 2026-07-31 的「係數要是欄位 + 要有一個
@@ -387,13 +399,18 @@ function refineDispelShape(
         | "swapResource"
         | "eventValueConversion"
         // Lane 2（2026-08-08）：同一組幾何欄位 → **同一份**檢查。
-        | "randomArea"
+        // ⛔ `randomArea` 2026-08-10 從這裡**拿掉**了 —— 它根本沒有那四格
+        // （理由寫在它自己的 schema 註解上：它解的是**落點**不是受害者）。
         | "manaBarrier"
         | "extendBuff"
         // 契約層（2026-08-09，GH#301-2）：`blink` 用**同一組** shape/radius/
         // side/maxTargets，所以走**同一份**檢查。開第二份的那一天它們會分岔，
         // 而兩份看起來都對。
-        | "blink";
+        | "blink"
+        // Lane 3（2026-08-10）：`delayed` / `proxyCast` 用**同一組**幾何欄位，
+        // 所以走同一份檢查。⛔ 各寫一份的那一天它們會分岔，而每一份看起來都對。
+        | "delayed"
+        | "proxyCast";
     }
   >,
   ctx: z.RefinementCtx,
@@ -455,13 +472,67 @@ function refineModifyCooldown(
   e: Extract<EffectDef, { kind: "modifyCooldown" }>,
   ctx: z.RefinementCtx,
 ): void {
-  if (e.slot === undefined && e.abilityId === undefined) {
+  // ⚠️ 規則①的理由是「兩個都不填 = 改全部六格 = 全域 CDR」，而那句話對
+  // `target:"hookInternalCooldown"` **不成立** —— 那條路根本不碰技能槽位，
+  // 它指名的是一條觸發器（`hookKey`）。⛔ 留著不放寬，S3 解鎖的技能就寫不出
+  // 文件，而錯誤訊息會叫作者去填一個會被 handler 忽略的欄位（比沒有訊息更糟）。
+  // `target` 省略 = `"abilitySlot"` = 規則①照舊生效 = 今天每一份文件走的那條路。
+  if (
+    (e.target ?? "abilitySlot") === "abilitySlot" &&
+    e.slot === undefined &&
+    e.abilityId === undefined
+  ) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["slot"],
       message:
         "要指名**哪一支**技能：填 slot（哪一格）或 abilityId（哪一支）。" +
         "兩個都不填等於改全部六格，而那是全域冷卻縮減（已經有一條屬性在做）。",
+    });
+  }
+  // ⭐ S3 —— `hookScope:"allSources"` 不指名 `hookKey`，就是「重置身上**每一條**
+  // 觸發器」。那不是任何人會故意寫的東西，而它在畫面上跟一個超強的被動分不出來。
+  if (e.hookScope === "allSources" && e.hookKey === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["hookKey"],
+      message:
+        'hookScope:"allSources" 一定要有 hookKey —— 不指名的話它會重置這個身體上' +
+        "**每一條**觸發器（含別件裝備、別張增益卡的），而畫面上看不出來。",
+    });
+  }
+  // ⭐ ⑤（2026-08-10）—— `target:"hookInternalCooldown"` 一定要**明寫** `hookScope`。
+  //
+  // 為什麼：`hookScope:"originSource"` 的實作（`effects/modifyCooldown.ts`）只認得
+  // `origin` 是 `hook:…` 的呼叫。從**施放**跑出來的同一個效果（`origin` 是
+  // `ability:…`）在那裡是一個**靜默的 no-op** —— 技能放得出來、動畫演完、那條
+  // 觸發器一格都沒動，而畫面上跟「這招就設計成這樣」分不出來（失敗形態②）。
+  //
+  // ⛔ schema **測不出**「這個效果會不會從施放路徑跑」：同一支 `zEffectDef` 同時
+  // 是 hook 的 `effects` 與技能的 `effects`，而 refine 只看得到節點本身。所以擋得住
+  // 的是**真正的那個缺陷**：作者沒有選過就吃到預設值。明寫 `originSource` 的人，
+  // 欄位說明會告訴他那句「只有掛在觸發器底下才有作用」。
+  //
+  // ⚠️ 出貨 0 份 `modifyCooldown`，而 `target:"hookInternalCooldown"` 這條路是
+  // S3 才開的，所以這一條擋不到任何既有文件。
+  if (e.target === "hookInternalCooldown" && e.hookScope === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["hookScope"],
+      message:
+        "改觸發器冷卻一定要明寫 hookScope：originSource（只碰**這一發效果自己所屬**" +
+        "的那份被動／道具 —— ⚠️ 它只有在這個效果**掛在一條觸發器底下**時才有作用，" +
+        "從技能施放跑出來時什麼都不會發生）或 allSources（＋hookKey）。",
+    });
+  }
+  // ⭐ S3 —— `hookKey` 只在改觸發器冷卻時有意義。少了這一條它就是一格填得下、
+  // 永遠不被讀的欄位（失敗形態②），而且作者會以為自己縮短的是那條觸發器。
+  if (e.hookKey !== undefined && e.target !== "hookInternalCooldown") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["hookKey"],
+      message:
+        'hookKey 只在 target:"hookInternalCooldown" 下有意義 —— 你現在改的是技能槽位的冷卻。',
     });
   }
   if (e.mode === "reset") return;
@@ -509,7 +580,207 @@ function refineExtendBuff(
   }
 }
 
+/**
+ * ⭐ `applyBuff` 的兩條跨欄位規則（Lane 3，2026-08-10）。
+ *
+ * ① **`permanent` 與 `duration` 互斥且必填其一。**
+ *    ⛔ 刻意**不**讓「省略 duration」自己等於永久：那會讓一個打字漏填變成一份
+ *    靜默的永久增益，而那正是這個 repo 反覆踩到的那一類。兩格都省略在這一格
+ *    出現之前就是 `invalid_type@duration Required`，所以行為逐字不變。
+ * ② **`exclusiveOnExisting` 需要 `exclusiveGroup`** —— 沒有組就沒有「已經有的
+ *    那一份」可以比對，這一格永遠不會被讀到。與 `shield.onExisting` 需要
+ *    `stackKey` 是同一條規矩、同一個訊息形狀。
+ */
+function refineApplyBuff(
+  e: Extract<EffectDef, { kind: "applyBuff" }>,
+  ctx: z.RefinementCtx,
+): void {
+  const perm = e.permanent === true;
+  if (perm && e.duration !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["duration"],
+      message:
+        "永久與持續秒數只能填一格 —— 兩個都填時只有其中一個會被讀到，另一個是一個" +
+        "看起來有設、沒有人讀的數字。",
+    });
+  }
+  if (!perm && e.duration === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["duration"],
+      message: "請填持續秒數，或勾選「永久」。⛔ 省略秒數本身**不等於**永久。",
+    });
+  }
+  if (perm) {
+    e.perRank?.forEach((r, i) => {
+      if (r.duration === undefined) return;
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["perRank", i, "duration"],
+        message: "永久增益的逐階欄位不可以帶持續秒數 —— 那一格永遠不會被讀到。",
+      });
+    });
+  }
+  // ⭐ S4b —— 「只算這份增益自己」需要一個 key 才認得出「這份」。
+  // 與 `shield.onExisting` 需要 `stackKey`、`grantAttribute.maxSourceTotal` 需要
+  // `store:"source"`、`exclusiveOnExisting` 需要 `exclusiveGroup` 是同一條規矩、
+  // 同一個訊息形狀。
+  if (e.maxStat?.basis === "thisSource" && e.stackKey === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["maxStat", "basis"],
+      message:
+        "「只算這份增益自己」需要 stackKey —— 沒有 key 的話每一次施放都是一份全新的" +
+        "來源，這個上限永遠不會咬到，而增益照樣一份一份疊上去。",
+    });
+  }
+  // ⭐ S4b（2026-08-10）——「只算這份增益自己」配**純百分比**的加成 ⇒ 天花板恆為 0。
+  //
+  // `applyBuff.sourceStatAmount` 折的是 `flat × (1 + pctAdd) × pctMult`，也就是說
+  // **沒有任何 `flat` 的那一條屬性算出來永遠是 0**（百分比疊出來的絕對量取決於底值，
+  // 而底值正是 `basis:"final"` 讀的那個東西 —— 那一段推導寫在 `applyBuff.ts` 的
+  // `sourceStatAmount` 檔頭）。於是 `now >= cap.value` 的左邊永遠是 0：
+  //   · `value > 0` → 上限**永遠咬不到**，增益一層一層無限疊；
+  //   · `value = 0` → 反過來**第一層就被拒**，整支技能安靜地不生效。
+  // 兩種都是「作者設了上限、遊戲裡看不出來」（失敗形態②），所以擋在載入時。
+  //
+  // ⚠️ 讀的是 handler **真的會讀到**的那幾份清單：`perRank` 有填的時候 handler 走
+  // `perRank[rank-1].modifiers`，`e.modifiers` 那一份就沒有人讀。
+  if (e.maxStat?.basis === "thisSource") {
+    const lists =
+      e.perRank !== undefined && e.perRank.length > 0
+        ? e.perRank.map((r) => r.modifiers)
+        : [e.modifiers];
+    const stat = e.maxStat.stat;
+    const reachable = lists.some((ms) =>
+      ms.some((m) => m.stat === stat && m.op === ModOp.Flat),
+    );
+    if (!reachable) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["maxStat", "basis"],
+        message:
+          `「只算這份增益自己」是用這份來源的 ${stat} **絕對量**去比的，而這份增益的 ` +
+          `modifiers 裡沒有任何一條是「${stat} + 固定值」——` +
+          "純百分比的加成算出來永遠是 0，所以這個上限要嘛永遠咬不到、要嘛第一層就把" +
+          "整發擋掉，兩種在遊戲裡都看不出來。請改成 basis:final（比角色面板上的最終值），" +
+          `或替 ${stat} 補一條固定值加成。`,
+      });
+    }
+  }
+  if (e.exclusiveOnExisting !== undefined && e.exclusiveGroup === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["exclusiveOnExisting"],
+      message:
+        "exclusiveOnExisting 需要 exclusiveGroup —— 沒有互斥組就沒有「已經有的那一份」" +
+        "可以比對，這一格永遠不會被讀到，而增益照樣一份一份疊上去。",
+    });
+  }
+}
+
+/**
+ * ⭐ `devour.onDevourPer` 需要 `onDevour`（Lane 3）—— 沒有後續就沒有「跑幾次」
+ * 可言。同 `refineApplyBuff` ② 的形狀。
+ */
+function refineDevour(
+  e: Extract<EffectDef, { kind: "devour" }>,
+  ctx: z.RefinementCtx,
+): void {
+  refineDispelShape(e, ctx);
+  if (e.onDevourPer !== undefined && e.onDevour === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["onDevourPer"],
+      message: "onDevourPer 需要 onDevour —— 沒有後續效果就沒有「跑幾次」可言。",
+    });
+  }
+}
+
+/**
+ * ⭐ 45-00 —— `incomingPct.negateOriginal` 與 `basis:"hpLost"` **不可以並存**。
+ *
+ * 免傷之後這一發的「實際掉血」恆為 0，所以反彈量會**永遠是 0**，而編輯器上看起來
+ * 完全正常（失敗形態②的教科書案例：欄位都在、數字永遠是 0）。寫成載入期錯誤才會
+ * 在**編輯發生的當下**跟作者說。
+ */
+function refineNegateOriginal(
+  e: Extract<EffectDef, { kind: "damage" }>,
+  ctx: z.RefinementCtx,
+): void {
+  if (e.incomingPct?.negateOriginal !== true) return;
+  if (e.incomingPct.basis === "hpLost") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["incomingPct", "basis"],
+      message:
+        '免傷之後「實際掉血」恆為 0，所以 basis:"hpLost" 的反彈量會永遠是 0 —— ' +
+        '而卡片上看起來完全正常。請改用 "raw" 或 "mitigated"。',
+    });
+  }
+}
+
+/**
+ * ⭐ `proxyCast` 的跨欄位規則（Lane 3）。
+ *
+ * ① `slot` 與 `abilityId` **恰好填一個**。⛔ 不給預設：兩個都不填沒有一個誠實的
+ *    答案，而「挑一個當預設」會讓一份打錯字的文件安靜地代放錯技能。
+ * ② `rankMode:"fixed"` 一定要有 `fixedRank`，反之填了 `fixedRank` 卻不是 fixed
+ *    模式 = 一格永遠不被讀的設定。
+ */
+function refineProxyCast(
+  e: Extract<EffectDef, { kind: "proxyCast" }>,
+  ctx: z.RefinementCtx,
+): void {
+  refineDispelShape(e, ctx);
+  const named = (e.slot !== undefined ? 1 : 0) + (e.abilityId !== undefined ? 1 : 0);
+  if (named !== 1) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["abilityId"],
+      message:
+        "要指名代放**哪一支**：填 slot（我自己的哪一格）或 abilityId（哪一支技能），" +
+        "而且**恰好一個**。兩個都不填沒有誠實的答案；兩個都填時只有一個會被讀到。",
+    });
+  }
+  // ⭐ S5 ③ —— 要**付代價**就必須指名 `slot`。
+  // 這是一個**資料完整性**問題，不是設計偏好（所以它是一條 refine，不是一格欄位）：
+  // `abilityId` 指的可能是一支施法者根本沒有的技能 —— 沒有魔力可扣、也沒有按鈕
+  // 可以轉冷卻。⛔ 不在 handler 裡靜默降級成 `"none"`：靜默降級正是失敗形態②
+  //（作者勾了「扣魔」、遊戲裡免費放，而畫面上一模一樣）。
+  if ((e.payCosts ?? "none") !== "none" && e.slot === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["payCosts"],
+      message:
+        "要付代價就必須指名 slot（我自己的哪一格）—— abilityId 指的可能是一支施法者" +
+        "根本沒有的技能，沒有魔力可扣、也沒有按鈕可以轉冷卻。",
+    });
+  }
+  if (e.rankMode === "fixed" && e.fixedRank === undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["fixedRank"],
+      message: 'rankMode:"fixed" 一定要有 fixedRank —— 否則不知道要用第幾階施放',
+    });
+  }
+  if (e.rankMode !== "fixed" && e.fixedRank !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["fixedRank"],
+      message: 'fixedRank 只有 rankMode:"fixed" 讀得到 —— 這一格永遠不會被讀到',
+    });
+  }
+}
+
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
+  if (e.kind === "damage") return refineNegateOriginal(e, ctx);
+  if (e.kind === "applyBuff") return refineApplyBuff(e, ctx);
+  if (e.kind === "devour") return refineDevour(e, ctx);
+  // Lane 3（2026-08-10）：`delayed` / `proxyCast` 走同一份 `shape` 檢查。
+  if (e.kind === "delayed") return refineDispelShape(e, ctx);
+  if (e.kind === "proxyCast") return refineProxyCast(e, ctx);
   if (e.kind === "applyStatus") return refineHardCcDuration(e, ctx);
   if (e.kind === "shield") {
     // `onExisting` 沒有 `stackKey` 就沒有東西可以比對 —— 一格看起來有設、
@@ -528,7 +799,8 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   }
   if (e.kind === "dot") return refineDotResourceBudget(e, ctx);
   // Lane 2：共用的 `shape` 檢查 + `extendBuff` 自己的跨欄位規則。
-  if (e.kind === "randomArea" || e.kind === "manaBarrier" || e.kind === "extendBuff") {
+  // ⛔ `randomArea` 不在這裡：它沒有 `shape`（2026-08-10 拿掉了那四格孤兒欄位）。
+  if (e.kind === "manaBarrier" || e.kind === "extendBuff") {
     refineDispelShape(e, ctx);
     if (e.kind === "extendBuff") refineExtendBuff(e, ctx);
     return;
@@ -546,6 +818,7 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
     return;
   }
   // 【淨化】/【破盾】/【瞬移】共用同一組形狀檢查 —— 兩份會分岔，一份不會。
+  // ⚠️ `devour` 已經在上面走 `refineDevour`（它多一條 `onDevourPer` 的規則）。
   if (e.kind === "dispel" || e.kind === "shieldBreak" || e.kind === "blink")
     return refineDispelShape(e, ctx);
   if (e.kind !== "grantAttribute") return;
@@ -943,6 +1216,77 @@ const zApplyToSelfOrTarget = z
   .optional()
   .describe("落在誰身上：target（預設，這次解出來的每個目標）或 self（施法者自己）。");
 
+/**
+ * ⭐ G1（2026-08-10）—— 範圍技的**圈內逐一過濾**那一族，四個共用常數。
+ *
+ * ⛔ **沒有**提進 {@link EFFECT_COMMON_SHAPE}，理由與 {@link zApplyToSelfOrTarget}
+ * 逐字相同：那會把四格開在全部 36 個 kind 上，包括 handler 根本不讀它們的那些 ——
+ * 作者填了、什麼都不會發生（失敗形態②的鏡像）。所以是**開一格、接一條線**，
+ * 逐 kind 加：今天只有 `damageArea` 與 `damageLine`。
+ *
+ * ⛔ 也**不**給 `damageArea` / `damageLine` 加 `shape`：它們有自己的幾何
+ *（`radius` / `length`+`width`），而 E1「新 kind 一律帶 shape」只約束**新** kind。
+ * 加了會變成兩份互相打架的範圍定義。
+ */
+const zVictimCondition = zEffectCondition.optional().describe(
+  "圈內逐一過濾：只有通過這個條件的敵人才吃到這一段（「範圍內只打帶〔恐懼〕的敵人」）。" +
+    "留空＝圈內每個人都吃到。⚠️ 它與上面那格「觸發條件」不是同一件事：" +
+    "觸發條件讀的是上游交下來的目標、決定「這一段跑不跑」；這一格讀的是這個圓／" +
+    "這條線自己解出來的人、決定「圈內誰挨打」。兩者用同一組判斷式。",
+);
+
+const zMaxTargetsCounts = z
+  .enum(["qualified", "candidates"])
+  .optional()
+  .describe(
+    "「最多幾人」數的是誰：qualified（預設）＝通過上面那個過濾的前 N 個" +
+      "（卡面「最多 5 名帶〔恐懼〕的敵人」）；candidates＝先取最近的 N 個再過濾" +
+      "（「最近 5 人裡帶〔恐懼〕的」）。沒填過濾條件時這一格沒有作用。",
+  );
+
+const zOnHitTargets = z
+  .array(z.lazy(() => zEffectDef))
+  .min(1)
+  .max(EFFECT_CHAIN_MAX_STEPS)
+  .optional()
+  .describe(
+    "命中之後接著跑的一段，而且**它收到的目標是這個圓／這條線真的打到的那群人**" +
+      "（不是上游交下來的）。「打到的每個人都中毒」「濺射到的人再被擊退」寫的就是這裡。",
+  );
+
+const zRunOnEmptyHit = z
+  .boolean()
+  .optional()
+  .describe(
+    "一個人都沒打到時，要不要照樣跑上面那一段。留空＝不跑（＝沒有這一格之前的行為）。" +
+      "打開它才寫得出「打空了也留下一個落地特效」。",
+  );
+
+/**
+ * ⭐ G1 ② —— 下一段怎麼收那群人：整群一次，還是一個一個分開跑。
+ *
+ * 省略 = `"batch"`，也就是 {@link zOnHitTargets} 的檔頭**已經公告過**的語意
+ * （「把這一圈真的打到的那群人當成 ctx.targets 交給這一段」）。⛔ 所以它不是一個
+ * 新語意，只是把那句話裡本來就藏著的第二個選項拿出來當欄位（第一守則：決策點）。
+ *
+ * ⚠️ 為什麼一定要有 `perTarget`：下游若是 `damageArea` / `damageLine` 這種**自己解
+ * 幾何**的 kind，它們只讀 `ctx.targets[0]` 當圓心 —— batch 模式下 5 個受害者只會炸
+ * 出**一個**圈，而畫面上跟壞掉一模一樣（失敗形態②）。
+ *
+ * ⚠️ 預算誠實記一筆：`perTarget` 讓下游的 rng draw 隨受害者數線性成長。受害者清單
+ * 本身已經是全序決定性的，所以決定性不破，但那是一筆看得見的成本。
+ *
+ * 上下界由 enum 本身封閉，無數值界。
+ */
+const zOnHitTargetsMode = z
+  .enum(["batch", "perTarget"])
+  .optional()
+  .describe(
+    "下一段收到的是**整群人一次**（batch，預設）還是**一個一個分開跑**（perTarget）。" +
+      "要寫「每個被打到的人腳下再炸一圈」必須選 perTarget —— 圓形／直線那類效果只認" +
+      "第一個目標當圓心，整群一次交下去只會炸出一個圈。",
+  );
+
 export const zEffectDefUnion = z.discriminatedUnion("kind", [
   z
     .object({
@@ -1059,6 +1403,20 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
            * 省略 = `"drop"`(不發) / `"spill"`(排進佇列,下一個 tick 才落地)。
            */
           whenTooLate: z.enum(["drop", "spill"]).optional(),
+          /**
+           * ⭐ 45-00 —— 反彈的同時**這一發不扣我的血**。
+           * 省略 = **false** = 只把傷害打回去（＝今天的行為，也是出貨唯一用
+           * `incomingPct` 的反射之盾 `godie-i03m` 寫的那個語意）。
+           * ⚠️ owner 說的「反彈預設都是免傷」是**那一類技能的設計預設**，不是引擎
+           * 的相容性預設 —— 引擎預設改成 true 會靜默把一件已上架的道具變成免傷神裝。
+           */
+          negateOriginal: z
+            .boolean()
+            .optional()
+            .describe(
+              "反彈的同時免除這一發傷害（自己不掉血）。留空＝照樣掉血，只是把傷害打回去。" +
+                "⚠️ 打開它之後這一發的「已損失生命」是 0，所以反彈量不可以用「實際掉血」當基數。",
+            ),
         })
         .strict()
         .optional(),
@@ -1147,6 +1505,13 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       canCrit: z.boolean().optional(),
       /** 震央本人要不要再吃一次 (預設 false — 他已經吃過觸發這一擊了) */
       includeOrigin: z.boolean().optional(),
+      /** ⭐ G1 —— 圈內逐一過濾 + 「最多幾人」數誰。見 {@link zVictimCondition}。 */
+      victimCondition: zVictimCondition,
+      maxTargetsCounts: zMaxTargetsCounts,
+      /** ⭐ G1 ② —— effect.target-set-chain@1。見 {@link zOnHitTargets}。 */
+      onHitTargets: zOnHitTargets,
+      runOnEmptyHit: zRunOnEmptyHit,
+      onHitTargetsMode: zOnHitTargetsMode,
       /**
        * ⭐ S2（GH#299）—— 與 `damage.resourcePct` **完全同一份 schema、同一個
        * 讀取器**（`sim/effects/dynamicTerms.ts::resourcePctAmount`）。
@@ -1187,6 +1552,17 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       canCrit: z.boolean().optional(),
       /** 觸發這一次的那個人要不要再吃一次 (預設 false —— 他已經吃過普攻了) */
       includeOrigin: z.boolean().optional(),
+      /**
+       * ⭐ G1 —— 與 `damageArea` **同名同語意**（同一組常數）。
+       * ⛔ 兩個 kind 在這一族上是同一個機制的兩個形狀；欄位名一旦分岔，編輯器上
+       * 長得一樣的兩格就會是兩件事。
+       */
+      victimCondition: zVictimCondition,
+      maxTargetsCounts: zMaxTargetsCounts,
+      onHitTargets: zOnHitTargets,
+      runOnEmptyHit: zRunOnEmptyHit,
+      /** ⭐ G1 ② —— 見 `damageArea.onHitTargetsMode`。⛔ 同名同語意，不是第二件事。 */
+      onHitTargetsMode: zOnHitTargetsMode,
       /** ⭐ S2（GH#299）—— 見 `damageArea.resourcePct`，同一份 schema 同一個讀取器。 */
       resourcePct: zResourcePctTerm.optional(),
     })
@@ -1492,6 +1868,20 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** 【沉默】C1（#278）。不能施放技能,但**可以走、可以普攻** —— 與暈眩不同。 */
       silenced: z.boolean().optional(),
       /**
+       * ⭐【繳械】S8（92-01「無法移動與攻擊」的攻擊那一半）。
+       * ⛔ 它**不是** `missChance` 的包裝：實測 `missChance:1` 的人照樣揮刀
+       *（動畫、音效、破隱、攻擊冷卻全部照跑），只是傷害 0。「揮空刀」與
+       * 「揮不出來」在畫面與聽覺上是兩件事。
+       * ⚠️ 它在 {@link HARD_CC_FLAGS} 裡，所以吃較嚴的硬控秒數上界。
+       */
+      disarmed: z
+        .boolean()
+        .optional()
+        .describe(
+          "【繳械】打不出普通攻擊（連前搖都開不了）。⛔ 不擋技能 —— 要連技能一起封請同時勾【沉默】。" +
+            "要做「打得到人但會失手」請改用失手率，那是另一件事。",
+        ),
+      /**
        * 【混亂】C2（#278）。⚠️ **要配 `berserk: true` 一起寫**：
        * `berserk` 負責「丟掉玩家的指令 + 自動尋敵」，這一格只多開「不分敵我」。
        * 單獨填它等於什麼都不會發生（人還是聽玩家的）。
@@ -1532,14 +1922,116 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       kind: z.literal("applyBuff"),
       ...EFFECT_COMMON_SHAPE,
       modifiers: z.array(zStatModifier),
-      duration: z.number().min(0),
+      /**
+       * 持續秒數。⭐ S4a 之後是**選填**，與 {@link permanent} **互斥且必填其一**
+       *（`refineApplyBuff` 兩個方向都關死）。
+       * ⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的
+       * 永久增益。既有 240 份文件全部帶數字，所以放寬對它們是嚴格的 no-op。
+       */
+      duration: z.number().min(0).optional(),
+      /**
+       * ⭐ S4a —— **永久**（80-00 / 92-03「永久 +1 AP」）。
+       *
+       * 引擎層從第一天就做得到（`ModifierSource.expiresAtTick` 缺席 = 永久），
+       * 缺的一直是這一格 —— 於是出貨已經有四份文件用 `duration: 99999` 假裝永久。
+       * 語意是**整場**。⛔ 沒有 `permanentScope:"round"`：今天唯一能掛「回合清掉」
+       * 的鉤子復活時也會跑，所以那個值實際的意思會是「直到你死一次」。
+       */
+      permanent: z
+        .boolean()
+        .optional()
+        .describe("永久生效（不會到期）。勾了就不要填持續秒數，兩者只能填一格。"),
+      /**
+       * ⭐ G10 —— 這份增益**同時是一個具名標記**（52-01 的〔狂怒〕、破甲、破魔）。
+       *
+       * 省略 = 不是任何標記 = 今天。⭐ 它把「標記」與「數值」變成同一個物件，所以
+       * 兩本帳不可能再腐爛：延長改的就是這一份來源的到期 tick（實測缺陷：buff 延長
+       * 到 573 而 status 停在 361，於是讀〔狂怒〕的那個閘在玩家還在狂怒中就關了）。
+       * ⛔ 因此**不需要**再開一格 `extendBuff.statusId` —— 那是替同一個問題做第二套機制。
+       */
+      statusId: zRef<StatusId>("status-effects", { soft: true })
+        .optional()
+        .describe(
+          "讓這份增益同時掛上一個具名狀態（讓別的技能問得到「他身上有沒有〔狂怒〕」）。" +
+            "⭐ 它與數值是**同一份**來源：延長／淨化／到期會一起發生，不會出現" +
+            "「圖示還在但條件已經讀不到」。",
+        ),
+      /** ⭐ S9b —— 落在誰身上。省略 = target（＝今天）。見 {@link zApplyToSelfOrTarget}。 */
+      applyTo: zApplyToSelfOrTarget,
+      /**
+       * ⭐ G5（state.exclusive-group@1）—— 這份增益屬於哪一個**互斥組**。
+       *
+       * 省略 = 不互斥 = 今天（實測：三份形態 buff 同時掛著，乘區逐位元等於 1.4³）。
+       * ⚠️ `stackKey` **不是**這題的答案：實測同 key 的第二發會把 modifiers
+       * **整組丟掉**，只把層數加一。
+       */
+      exclusiveGroup: z
+        .string()
+        .min(1)
+        .max(48)
+        .optional()
+        .describe(
+          "互斥組名：身上同一組只會有一份（15-02/03/04 那種「永遠只有一種戰型」）。" +
+            "⛔ 它只管屬性狀態，不換 3D 模型 —— 換身體仍然是變身那條路。",
+        ),
+      /**
+       * ⭐ G5 —— 同組已經有一份時怎麼辦。省略 = `"replace"`（抄
+       * `shield.onExisting` 的預設）。⚠️ 沒有 `exclusiveGroup` 卻填了它 =
+       * PARSE ERROR（同一條規矩、同一個訊息形狀）。
+       */
+      exclusiveOnExisting: z
+        .enum(["replace", "reject"])
+        .optional()
+        .describe(
+          "同一個互斥組已經有一份時：replace（預設，新的接手）或 reject（新的不生效）。",
+        ),
+      /**
+       * ⭐ S4b —— 這條加成加到某個**絕對值**就停（80-00「上限到 10」那一族）。
+       *
+       * 整格省略 = 沒有絕對上限 = 今天（實測：同一個 stackKey 疊 21 次 +1 攻擊距離，
+       * 11 一路長到 32，沒有任何東西攔它）。
+       *
+       * ⛔ 為什麼既有的四個都不是答案：
+       *   · `maxStacks` 數的是**層數**，而層數→屬性的換算依賴基礎值，逐英雄不同；
+       *   · `ModOp.CapRaise` 只把 `effectiveCap` **抬高**（是 max 不是 min，語意相反）；
+       *   · `grantAttribute.maxAttribute` 只走 attributes 那條路、只給三圍；
+       *   · `STAT_CLAMPS` / `config.stat-caps@1` 是**全域**天花板，不是「這一份增益的」。
+       *
+       * ⭐ `basis` 是第一守則的決策點：「上限到 10」有兩種都合理的讀法。
+       *   · `final`（預設）—— 讀玩家面板上那個最終值（#125「顯示的就是拿到的」）。
+       *   · `thisSource` —— 只管這一份 `stackKey` 來源自己貢獻了多少
+       *     （「這個 buff 最多加 +10」）。一個基礎攻擊距離已經 11 的英雄在 `final`
+       *     讀法下永遠疊不上第一層 —— 對某些卡是對的，對某些卡是荒謬的。
+       * ⛔ 不做第三個值：同義詞是最貴的技術債。
+       *
+       * ⚠️ 語意是**只 refuse、不回收也不夾取**（逐字沿用
+       * `grantAttribute.maxAttribute` 的既有先例），所以最後一層可能小幅越線。
+       * ⚠️ `basis:"final"` 讀的是 clamp **之後**的值，所以 value 高過 `STAT_CLAMPS` /
+       * `config.stat-caps@1` 上界的設定永遠不會咬到 —— 不是缺陷，是兩個天花板取低。
+       */
+      maxStat: z
+        .object({
+          stat: zStat,
+          /** 兩端都有界；上界是打錯數字的護欄，見 `kindLimits.STAT_CEILING_MAX`。 */
+          value: z.number().min(0).max(STAT_CEILING_MAX),
+          basis: z.enum(["final", "thisSource"]).optional(),
+        })
+        .strict()
+        .optional()
+        .describe(
+          "這條加成加到某個絕對值就停（「攻擊距離上限 10」）。basis 決定那個數字" +
+            "比的是誰：final（預設＝角色面板上的最終值）或 thisSource（只算這一份" +
+            "增益自己疊出來的量，需要 stackKey）。⚠️ 它只**拒絕**再疊，不會把已經" +
+            "疊上去的收回來，所以最後一層可能小幅越線。",
+        ),
       /** rank-indexed override (index rank-1, clamped) — WC3 buff columns are per level */
       perRank: z
         .array(
           z
             .object({
               modifiers: z.array(zStatModifier),
-              duration: z.number().min(0),
+              /** ⭐ S4a：`permanent` 時整份不填秒數，所以這一格也要是選填。 */
+              duration: z.number().min(0).optional(),
             })
             .strict(),
         )
@@ -1712,6 +2204,43 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       mode: z.enum(["forward", "toPoint"]),
       speed: z.number().positive(),
       maxDistance: z.number().positive(),
+      /**
+       * ⭐ S7 —— **衝刺結束那一刻**才跑的一段（52-04「向前衝刺 400 距離後揮出」）。
+       * 省略 = 沒有回呼 = 今天，一個 tick 都不差（出貨 29 份帶 dash 的文件全部缺席）。
+       *
+       * ⚠️ 沒有它的話那一刀是從**起點**揮的：實測 `[dash, damageArea]` 寫在同一個
+       * `effects[]` 裡，受害者掉血與「完全不放那個 AoE」**逐字相同**（43.47），
+       * 而同一個 AoE 從終點放是 199.83。原因是順序：effect 在 slot 2b/3 跑完，
+       * 位移在 slot 5 才發生。
+       *
+       * `z.lazy` 的理由與 `leap.onLand` 逐字相同（遞迴結）。
+       */
+      onEnd: z
+        .array(z.lazy(() => zEffectDef))
+        .min(1)
+        .max(DASH_ON_END_MAX_EFFECTS)
+        .optional()
+        .describe(
+          "衝刺**結束之後**才跑的效果（「衝刺後揮出」）。留空＝只有位移。" +
+            "⚠️ 寫在這裡的範圍傷害圓心是**終點**；寫在外面的效果圓心是起點。",
+        ),
+      /**
+       * ⭐ S7 —— 被牆擋下來的衝刺算不算「衝完」。省略 = `"always"`。
+       * ⚠️ 這是一個真的岔路：位移系統今天把「撞牆停下」與「跑完距離」合成**同一個**
+       * 結束條件。預設選 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家
+       * 看不見的失敗。
+       */
+      onEndOn: z
+        .enum(["always", "completed"])
+        .optional()
+        .describe(
+          "被地形擋下來的衝刺算不算衝完：always（預設，照樣揮出）或 completed（只有跑完距離才揮）。",
+        ),
+      /** ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = false（同 randomArea 的同名欄位）。 */
+      onEndWhenDead: z
+        .boolean()
+        .optional()
+        .describe("衝刺途中陣亡還要不要跑結束效果。留空＝不跑。"),
     })
     .strict(),
   /**
@@ -2278,6 +2807,37 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       victim: z.enum(["champion", "any"]).optional(),
       /** 致死量含不含護盾。省略 = true（否則「即死」會被護盾靜默擋掉）。 */
       throughShields: z.boolean().optional(),
+      /**
+       * ⭐ S9a —— **真的吞掉之後**才跑的那一段（92-03「每吞噬一名 +1 AP，永久」）。
+       * 省略 = 沒有後續 = 今天（`content/` 裡 devour 文件數 = 0）。
+       *
+       * ⛔ 「用 onKill 代替」不成立：`onKill` 的三個發射點都沒有 abilitySlot、沒有
+       * incoming，所以「吞噬殺掉的」與「普攻殺掉的」在觸發器端分不出來。
+       * `.min(1)` 同 `all`/`any` 的反空陣列規則；`.max(6)` 與 `leap.onLand` 對齊。
+       *
+       * ⚠️ 觸發時刻是「處決線通過、致死量已排出去」那一刻，**不是**「屍體確認了」。
+       * 一個帶【免死】的目標會被吞噬打到卻活下來，而這一段已經跑過。
+       */
+      onDevour: z
+        .array(z.lazy(() => zEffectDef))
+        .min(1)
+        .max(6)
+        .optional()
+        .describe(
+          "真的吞掉之後才跑的效果（「每吞噬一名敵人永久 +1 AP」）。⚠️ 它在「致死傷害送出去」" +
+            "那一刻就跑，所以帶免死的目標可能活下來而這一段已經發生。",
+        ),
+      /**
+       * ⭐ S9a —— 一次吞掉多人時 {@link onDevour} 跑幾次。
+       * 省略 = `"victim"`。⚠️ 對 `shape:"single"`（出貨唯一形狀）兩者完全等價，
+       * 也就是預設值不替任何人做決定。
+       */
+      onDevourPer: z
+        .enum(["victim", "cast"])
+        .optional()
+        .describe(
+          "後續效果跑幾次：victim（預設，每吞掉一個人各跑一次）或 cast（只要有人被吞掉就跑一次）。",
+        ),
     })
     .strict(),
 
@@ -2313,6 +2873,69 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
         .max(CD_REDUCE_MAX_FLAT_SEC)
         .optional(),
       basis: z.enum(["remaining", "base"]).optional(),
+      /**
+       * ⭐ S3 —— 這一發改的是**哪一種**冷卻。
+       * 省略 = `"abilitySlot"` = 這個 kind 今天的全部行為（三份既有文件都不填）。
+       *
+       * `"hookInternalCooldown"` 解鎖的是 60-002 絕光斬那一族：一支 passive-only
+       * 的技能永遠不會被 cast，所以它的技能冷卻**恆為 0**，而
+       * `if (inst.cooldownRemainingTicks <= 0) continue;` 在第一道就跳過它 ——
+       * 「120 秒一次」與「反彈成功立即重置」於是二選一。
+       *
+       * ⛔ 為什麼不「自動偵測」：那會讓一支寫錯 `abilityId` 的文件安靜地去重置某條
+       * 觸發器，而作者以為自己在縮短技能冷卻。
+       */
+      target: z
+        .enum(["abilitySlot", "hookInternalCooldown"])
+        .optional()
+        .describe(
+          "改哪一種冷卻：abilitySlot（預設，技能按鈕的冷卻）或 hookInternalCooldown" +
+            "（一條觸發器的內部冷卻 —— 被動技唯一有冷卻的那一格）。",
+        ),
+      /**
+       * ⭐ S3 —— `target: "hookInternalCooldown"` 時指名哪一條觸發器（比對
+       * `HookDef.key`）。省略 = 那份來源上的**每一條**。
+       * ⚠️ `target` 不是 hook 時填了它 = PARSE ERROR（`refineModifyCooldown`）。
+       */
+      hookKey: z
+        .string()
+        .min(1)
+        .max(64)
+        .optional()
+        .describe(
+          "只重置／縮短這一條觸發器（填它的名字）。留空＝那個被動上的每一條。",
+        ),
+      /**
+       * ⭐ S3 —— 這一發碰得到**誰的**觸發器。這是這個機制唯一真正的「A 還是 B」，
+       * 所以它是一格欄位而不是註解裡的一段辯護（第一守則：決策點）。
+       *
+       * ⚠️ 2026-08-10（⑤）：`target:"hookInternalCooldown"` 下它**必填**，不再有
+       * 預設值。理由是 `originSource` 從**施放**路徑跑出來時是一個靜默的 no-op，
+       * 而「沒選過就吃到預設值」正是那個缺陷唯一真的會發生的形狀
+       * （`refineModifyCooldown` 擋；schema 測不出執行路徑，所以擋的是預設值）。
+       *
+       * · `originSource` —— 只動這一發效果**自己所屬**的那一份來源。
+       *   60-002 絕光斬要的就是它：「反彈成功 → 重置**我自己**那條 120 秒的觸發器」，
+       *   兩條 hook 住在同一份被動來源上。
+       * · `allSources` —— 「這張卡重置你身上**所有**叫這個名字的觸發器」。
+       *   ⚠️ 它必須指名 `hookKey`（`refineModifyCooldown` 擋）。
+       *
+       * 預設選 `originSource` 因為它**嚴格較窄**：一份打錯 `hookKey` 的文件在它之下
+       * 什麼都不會發生，在 `allSources` 之下會安靜地重置**別件裝備**的 proc。
+       *
+       * ⚠️ 這條路今天整條不存在（出貨 0 份 `modifyCooldown`），所以「等於今天的
+       * 行為」在這裡的正確讀法是**最保守的那一個**：只碰自己那一份。
+       */
+      hookScope: z
+        .enum(["originSource", "allSources"])
+        .optional()
+        .describe(
+          "碰得到誰的觸發器：originSource（只有這一發效果自己所屬的那份被動／道具" +
+            " —— ⚠️ 它只有在這個效果**掛在一條觸發器底下**時才有作用，從技能施放" +
+            "跑出來時它一格都不會動）或 allSources（這個身體上每一份叫得出同一個" +
+            " hookKey 的來源）。allSources 一定要填 hookKey，否則就是「重置身上每" +
+            "一條觸發器」。⚠️ 改觸發器冷卻時這一格**必填**（沒有預設值可以吃）。",
+        ),
     })
     .strict(),
 
@@ -2401,16 +3024,28 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
    * ⛔ 不在這裡抄字面值。
    */
 
-  /** 【隨機落點排程】(13-04 龍星群 · 70-04 千年練成)。⭐ draw 預算 = 2×count。 */
+  /**
+   * 【隨機落點排程】(13-04 龍星群 · 70-04 千年練成)。⭐ draw 預算 = 2×count。
+   *
+   * ⛔ **這個 kind 沒有 `shape` / `radius` / `side` / `maxTargets`**（2026-08-10
+   * 拿掉，遷移成本 0：`content/` 當時有 **0 份** randomArea）。理由是可以從
+   * handler 讀出來的，不是風格偏好：
+   *
+   *   `randomArea` 解的是**落點**，不是**受害者**。它 `push` 一個 wave，到期時用
+   *   `targets: []` + `point: hit.pos` 跑 `wave.effects` —— 「打到誰」是**巢狀的**
+   *   `damageArea` 自己拿 `ctx.point` 當圓心解出來的。所以 `sim/effects/randomArea.ts`
+   *   **一格都不讀**那四格：它們是同一件事的第二個住處，作者填了完全沒有效果，
+   *   而畫面上跟「這招就設計成這樣」分不出來。
+   *
+   * ⭐ 它的作用範圍由 {@link scatterRadius}（落點散佈半徑）+ `who`（以誰為圓心）
+   * 講清楚 —— 那正是 E1 要的東西，只是不叫 `shape`。⛔ 反過來把 `shapeTargets`
+   * 接上去是在做 `delayed` 已經做的事（「施放那一刻凍住的名單」），
+   * 兩個 kind 的差別就是那一句話。
+   */
   z
     .object({
       kind: z.literal("randomArea"),
       ...EFFECT_COMMON_SHAPE,
-      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
-      shape: z.enum(["single", "circle"]),
-      radius: z.number().positive().max(40).optional(),
-      side: z.enum(["allies", "enemies"]).optional(),
-      maxTargets: z.number().int().positive().max(24).optional(),
       who: z.enum(["self", "target"]).optional(),
       /** 逐階發數（70-04 = `[4,6,8]`、13-04 = `[10]`）。 */
       count: z
@@ -2426,6 +3061,141 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 跟「技能壞掉」一模一樣（失敗形態 ②）。
        */
       effects: z.array(zEffectDef).min(1),
+    })
+    .strict(),
+
+  /**
+   * ── Lane 3（2026-08-10）兩個新 kind ──────────────────────────────────────
+   * 上下界一律從 `sim/effects/kindLimits.ts` 讀，⛔ 不在這裡抄字面值。
+   */
+
+  /**
+   * ⭐ G12【延遲序列】(20-002 連續七次斬擊 · 52-002 連續 100 下)。
+   *
+   * ⭐ 它與 `randomArea` 的差別只有一句話，而那句話就是它存在的理由：
+   * `randomArea` 到期時用**圓心重解**（目標走開就打空），`delayed` 到期時用
+   * **施放那一刻凍住的名單**。今天寫「連續七次斬擊」只能寫成同一 tick 七發傷害 ——
+   * 畫面上那不是連擊。
+   * ⭐ 這個 kind **完全不碰 rng**（沒有落點要抽）。
+   */
+  z
+    .object({
+      kind: z.literal("delayed"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /** 第一發等多久（秒）。 */
+      delaySec: z.number().positive().max(DELAYED_MAX_DELAY_SEC),
+      /** 總共幾發。省略 = 1（＝退化成純延遲）。 */
+      count: z.number().int().positive().max(DELAYED_MAX_COUNT).optional(),
+      /**
+       * 兩發之間隔幾秒（`count > 1` 才有意義）。執行期夾成**至少 1 tick** ——
+       * 0.001 秒與 0.033 秒在 30Hz 下是同一件事，而算出 0 tick 間隔的排程會把整波
+       * 塞進同一個 tick。
+       */
+      intervalSec: z.number().positive().max(DELAYED_MAX_INTERVAL_SEC).optional(),
+      /** 每一發跑的東西。`.min(1)` 同 `randomArea`：什麼都不做 = 看起來壞掉。 */
+      effects: z.array(z.lazy(() => zEffectDef)).min(1),
+      /**
+       * **最後一發**額外跑的東西。省略 = 最後一發與其餘完全相同
+       *（⛔ **不是**「最後一發不跑」）。20-002 的「最後再給予…」住在這裡。
+       */
+      finalEffects: z
+        .array(z.lazy(() => zEffectDef))
+        .min(1)
+        .optional()
+        .describe("只有最後一下才追加的效果（「最後一擊附加擊退＋恐懼」）。"),
+      targetMode: z
+        .enum(["frozen", "reresolve"])
+        .optional()
+        .describe(
+          "目標怎麼決定：frozen（預設，施放那一刻就鎖定，追著他打）或 " +
+            "reresolve（每一發到期時重新以落點解目標，走開就打空）。",
+        ),
+      dropDeadTargets: z
+        .boolean()
+        .optional()
+        .describe("鎖定的目標死了就跳過他。留空＝跳過（不繼續鞭屍）。"),
+      stopOnCasterDeath: z.boolean().optional(),
+    })
+    .strict(),
+
+  /**
+   * ⭐ S5【代放】(80-04 赤兔咆哮「攻擊時有 20% 使出弒鬼神」)。
+   *
+   * ⚠️ `content/templates/expand.ts` 的 `"proxy-cast"` 是一個**模板家族名**，
+   * 不是這個 kind（它自己的檔頭寫著「這裡不召喚任何東西」）。
+   * ⛔ 終止性由 `EffectContext.proxyDepth` 嚴格遞增 + {@link PROXY_MAX_CHAIN_DEPTH}
+   * 保證，形狀與 `damage.incomingPct` 的 `reflectDepth` 逐字相同。
+   */
+  z
+    .object({
+      kind: z.literal("proxyCast"),
+      ...EFFECT_COMMON_SHAPE,
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: z.enum(["single", "circle"]),
+      radius: z.number().positive().max(40).optional(),
+      side: z.enum(["allies", "enemies"]).optional(),
+      maxTargets: z.number().int().positive().max(24).optional(),
+      /** 代放**我自己的哪一格**。與 `abilityId` **恰好填一個**（superRefine 擋）。 */
+      slot: zCastableSlot.optional(),
+      /**
+       * 代放**哪一支具名技能**。**軟參照**：代放的目標可能是一支還沒上架的技能，
+       * 硬參照會讓白名單一縮就整份內容載入失敗（2026-08-02 事故的形狀）。
+       */
+      abilityId: zRef<AbilityId>("abilities", { soft: true }).optional(),
+      payCosts: z
+        .enum(["none", "mana", "manaAndCooldown"])
+        .optional()
+        .describe(
+          "代放要不要付代價：none（預設，不扣魔也不轉冷卻）／mana（扣魔）／" +
+            "manaAndCooldown（扣魔並讓那一格進冷卻）。⚠️ 一個每次普攻都可能觸發的" +
+            "代放若會轉冷卻，那支大招就會自己把自己鎖住。",
+        ),
+      respectCooldown: z
+        .boolean()
+        .optional()
+        .describe("代放要不要看那一格按鈕的冷卻。留空＝不看（冷卻中照樣代放）。"),
+      requireLearned: z
+        .boolean()
+        .optional()
+        .describe("沒點那一招時什麼都不發生。留空＝要求已學會。"),
+      rankMode: z
+        .enum(["casterRank", "fixed"])
+        .optional()
+        .describe("用哪一階施放：casterRank（預設，玩家點的等級）或 fixed。"),
+      fixedRank: z.number().int().min(1).max(5).optional(),
+      targetMode: z
+        .enum(["inherit", "reresolve"])
+        .optional()
+        .describe("目標從哪來：inherit（預設，沿用觸發這次的那個目標）或 reresolve。"),
+      /** 代放鏈最多再往下幾層。省略 = 0（被代放的技能自己的代放直接被擋）。 */
+      maxDepth: z.number().int().min(0).max(PROXY_MAX_CHAIN_DEPTH).optional(),
+      /**
+       * ⭐ 第一守則（2026-08-10）—— `payCosts:"none"` 要不要發
+       * `onAbilityCast` / `onAbilityHit`。省略 = `false` = **今天的行為**。
+       *
+       * 在這一格出現之前，「不發」是寫死在 handler 裡的一個沒有欄位的選擇：
+       * `"none"` 那條路直接 `runEffects`，繞過 `castAbility`，所以那兩個事件從來
+       * 不發。⛔ 而那正是「這裡選 A 還是 B」——「代放算不算一次施法」是**設計偏好**，
+       * 不是引擎事實：80-04 的赤兔咆哮不該再觸發一輪「施法時」被動（會遞迴），
+       * 但一支「大絕結束後自動再放一次 Q」的卡片會希望它算數。
+       *
+       * ⚠️ `"mana"` / `"manaAndCooldown"` 走 `castAbility`，那兩個事件**本來就會發**，
+       * 所以這一格對它們沒有作用（handler 只在 `"none"` 那條路讀它）。
+       */
+      emitCastEvents: z
+        .boolean()
+        .optional()
+        .describe(
+          "不付代價的代放要不要算成一次「施法」（發出施法/命中事件，讓「施法時」" +
+            "那一類被動吃得到）。留空＝不發（今天的行為）。⚠️ 打開它之前先看" +
+            "「最多再往下幾層」：一支被代放的技能若自己掛著「施法時代放」的被動，" +
+            "這一格就是那條鏈的入口；終止靠的是深度上限，不是靠這一格關著。",
+        ),
     })
     .strict(),
 
@@ -2542,8 +3312,15 @@ const DAMAGE_BEARING_EVENTS: readonly string[] = [
  */
 const INTERVAL_BUDGET_CONDITION_KINDS: readonly string[] = ["chance"];
 
-/** 這棵條件樹裡有沒有任何一顆「每次評估都要付錢」的葉子。 */
-function hasBudgetedLeaf(cond: unknown): boolean {
+/**
+ * 這棵條件樹裡有沒有任何一顆「每次評估都要付錢」的葉子。
+ *
+ * ⭐ EXPORTED（2026-08-10）—— `schema/ability.ts` 的 `zAbilityAugmentTarget`
+ * 用同一支函式擋掉「強化的前提含機率葉」。兩處問的是**同一個**問題（這棵樹每次
+ * 求值會不會抽 `world.rng`），所以共用一份；抄第二份的那一天，加新葉子的人只會
+ * 想到更新其中一邊。
+ */
+export function hasBudgetedLeaf(cond: unknown): boolean {
   if (!cond || typeof cond !== "object") return false;
   const c = cond as Record<string, unknown>;
   if (typeof c.kind === "string")
@@ -2561,6 +3338,10 @@ export function refineHookDamageContext(
     damageSource?: string | undefined;
     damageType?: string | undefined;
     damageCrit?: string | undefined;
+    critSource?: string | undefined;
+    reflectedDamageSource?: string | undefined;
+    reflectedDamageType?: string | undefined;
+    perTarget?: boolean | undefined;
     chance?: number | undefined;
     chanceFrom?: { min: number; max: number } | undefined;
     internalCooldown?: number | undefined;
@@ -2625,6 +3406,67 @@ export function refineHookDamageContext(
         "永遠回傳 min,也就是一件「機率性」道具安靜地卡在一個固定值上。",
     });
   }
+  // ── S10：`reflected*` 只有 `onReflectSuccess` 帶得到原封包 ──────────────────
+  // ⚠️ 它**不能**併進下面那個 for 迴圈：那個迴圈的條件是「不是帶傷害的事件」，
+  // 而這兩格更窄 —— `onDamageTaken` / `onDamageDealt` 也帶不到「被反彈掉的原封包」。
+  // ⛔ 少了它就是失敗形態②：schema 收得下、後台存得起來、卡片上寫著「反彈技能傷害
+  // 時」，而 sim 永遠不會給那個事件一份原封包。
+  // 這一段在 early-return **之前**，理由與上面機率那一段逐字相同。
+  for (const [key, val] of [
+    ["reflectedDamageSource", hook.reflectedDamageSource],
+    ["reflectedDamageType", hook.reflectedDamageType],
+  ] as const) {
+    if (val === undefined || val === "any") continue;
+    if (hook.on === "onReflectSuccess") continue;
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: [key],
+      message:
+        `「${val}」問的是**被反彈掉的那一發原封包**長什麼樣,只有 onReflectSuccess ` +
+        `帶得到它。掛在 ${hook.on} 上這條 hook 一次都不會觸發。`,
+    });
+  }
+  // ── S6：`perTarget` 需要一個「對象」。`onInterval` 發射時沒有 ───────────────
+  if (hook.perTarget === true && hook.on === "onInterval") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["perTarget"],
+      message:
+        "perTarget 問的是「對每個敵人各算一次」,而 onInterval 發射時沒有對象 —— " +
+        "這一格在那裡退化成一份共用額度,也就是一個看起來有設、實際上沒作用的設定。",
+    });
+  }
+  // ── 45-00：免傷只有**被打的那一側**問得到 ─────────────────────────────────
+  //
+  // ⚠️ 這一段在 2026-08-10 換過一次，換掉的理由要留著（第三守則）：
+  // 它**本來**禁的是「帶 `negateOriginal` 的 hook 不可以有 chance / chanceFrom /
+  // internalCooldown」，支撐是「扣血那一半與反彈那一半會各問一次，兩次可以分岔」。
+  // 而落地的實作把兩者併成**同一次詢問**（帶免傷的 `onDamageTaken` hook 只在扣血前
+  // 的預掃描裡執行一次，含 ICD 與擲骰；`fireHooks` 一律跳過它們）——
+  // 一個判定點就**不可能**分岔，所以那個禁令的支撐消失了。
+  //
+  // ⛔ 而它擋住的正是 owner 親自裁決的 45-00 寫輪眼（「有 **20% 機率**反彈魔法傷害」）：
+  // 照裁決寫下去會是 PARSE ERROR。留著它 = 一格會拒絕正確內容的閘。
+  //
+  // 換上的這一條擋的是真的問不出答案的情況：免傷是「這一發不扣**我**的血」，
+  // 只有被打的那一側帶得到「即將扣掉的那一發」。掛在 `onDamageDealt`（攻擊者視角）
+  // 或任何別的事件上，那條 hook 一次都不會被預掃描看到 —— 而畫面上跟「這張卡就是
+  // 沒生效」一模一樣（失敗形態②）。
+  const negates = hook.effects.some(
+    (e) =>
+      e.kind === "damage" &&
+      (e.incomingPct as { negateOriginal?: boolean } | undefined)?.negateOriginal === true,
+  );
+  if (negates && hook.on !== "onDamageTaken") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["on"],
+      message:
+        "免傷是「這一發不扣我的血」，只有被打的那一側問得到 —— onDamageTaken 是唯一" +
+        `帶得到「即將扣掉的那一發」的事件。掛在 ${hook.on} 上這條 hook 的免傷一次都` +
+        "不會生效。",
+    });
+  }
   if (DAMAGE_BEARING_EVENTS.includes(hook.on)) return;
   if (hook.damageSource !== undefined && hook.damageSource !== "any") {
     ctx.addIssue({
@@ -2645,6 +3487,9 @@ export function refineHookDamageContext(
   for (const [key, val] of [
     ["damageType", hook.damageType],
     ["damageCrit", hook.damageCrit],
+    // ⭐ G8（2026-08-10）—— 走**同一道閘**，不是第二套規則：它與上面兩格是同一族
+    // （都在問「觸發這一次的那一發封包長什麼樣」）。
+    ["critSource", hook.critSource],
   ] as const) {
     if (val === undefined || val === "any") continue;
     ctx.addIssue({
@@ -2698,6 +3543,19 @@ export function refineHookDamageContext(
 export const zHookDefBase = z
   .object({
     on: zHookEvent,
+    /**
+     * ⭐ S3 —— 這條觸發器在它所屬的那份被動／道具裡的**穩定名字**，讓
+     * `modifyCooldown{target:"hookInternalCooldown"}` 指得到它。
+     * 省略 = 沒有名字 = 沒有任何效果指得到它（也就是今天）。
+     * ⭐ 形狀抄 `zAuraDef.key`。⛔ **不可以用陣列索引定址** —— `hooks[2]` 在作者
+     * 插入一條新觸發器的那一刻就指到別人身上，而畫面上完全看不出來。
+     */
+    key: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe("這條觸發器的名字（讓「重置這條觸發器的冷卻」指得到它）。同一份被動裡不要重複。"),
     /** restrict to one slot; "PASSIVE" is the level-1 天生技 (zCastableSlot). */
     abilitySlot: zCastableSlot.optional(),
     effects: z.array(zEffectDef),
@@ -2836,11 +3694,129 @@ export const zHookDefBase = z
      * 「不過濾」與「只在非暴擊時」是兩件完全不同的事。
      */
     damageCrit: z.enum(["any", "crit", "nonCrit"]).optional(),
+    /**
+     * ⭐ G8 —— 觸發這個 hook 的那一發暴擊**是不是這一份來源自己那條暴擊來源**
+     * 造成的（89-01「**這一招**想起頭槌的那一下把敵人震昏」，不是「這位英雄任何
+     * 一次暴擊都震昏」）。
+     *
+     * 省略 = `"any"` = 不過濾 = {@link zHookDefBase.shape.damageCrit} 今天的行為。
+     * ⭐ hook 與暴擊來源本來就住在**同一份** source 上，所以「我自己那一條」是一個
+     * **關係**不是一個字串 —— ⛔ 不做「填一個 source id」（那會多一個會腐爛的 join key）。
+     */
+    critSource: z
+      .enum(["any", "thisSource"])
+      .optional()
+      .describe(
+        "只在**這個被動自己的暴擊**觸發時才算：any（預設，任何來源的暴擊都算）或 " +
+          "thisSource（只有這份被動自己那條暴擊來源打出來的才算）。",
+      ),
+    /**
+     * ⭐ S10 —— 被**反彈掉的那一發原封包**是不是普通攻擊（60-04「若成功反彈敵方
+     * **技能** AP 傷害」）。字彙與 {@link zHookDefBase.shape.damageSource} 完全相同，
+     * 因為問的是完全相同的問題，只是主詞換成原封包。
+     * ⚠️ 只有 `onReflectSuccess` 帶得到原封包（`refineHookDamageContext` 擋）。
+     * 省略 = 不過濾 = 今天（每一條 `onReflectSuccess` 都是無條件觸發）。
+     */
+    reflectedDamageSource: z
+      .enum(["any", "basic", "nonBasic", "ability", "other"])
+      .optional()
+      .describe(
+        "只在被反彈掉的**原本那一發**是某種來源時才算（「反彈到的是技能傷害」）。留空＝不過濾。",
+      ),
+    /** ⭐ S10 —— 被反彈掉的原封包**是什麼型別**（60-04 的「AP」那一半）。 */
+    reflectedDamageType: z
+      .enum(["any", "physical", "magic", "true"])
+      .optional()
+      .describe(
+        "只在被反彈掉的**原本那一發**是某種傷害型別時才算（「反彈到的是 AP 傷害」）。留空＝不過濾。",
+      ),
+    /**
+     * ⭐ S6 —— 這條觸發器**總共**能發動幾次（15-04「**下一次**普攻」）。
+     * 省略 = **無限次** = 這個欄位出現之前每一條 hook 的行為。
+     * ⛔ 不要用「掛一個 duration 極短的增益」假裝一次性：那是**時間**界不是**次數**界，
+     * 攻速一高就會吃到兩次，而畫面上跟正確的一模一樣。
+     */
+    maxTriggers: z
+      .number()
+      .int()
+      .positive()
+      .max(HOOK_MAX_TRIGGERS)
+      .optional()
+      .describe("這條觸發器總共只能發動幾次（「下一次普攻附加雷擊」＝ 1）。留空＝無限次。"),
+    /**
+     * ⭐ S6 —— 額度什麼時候被扣掉。今天只有 `"fire"`（真的發動的那一刻）。
+     * ⚠️ 這一格刻意先存在：它把「這裡有二選一」寫進契約，而 `"hit"`（下游真的打到
+     * 人才算）上線那天只是加一個 enum 成員、不是改語意。
+     * ⛔ 不先開 `"hit"` —— schema 開了 handler 沒接正是失敗形態②。
+     */
+    consumeOn: z
+      .enum(["fire"])
+      .optional()
+      .describe("什麼時候扣掉一次額度：fire（預設，觸發器發動的那一刻）。"),
+    onConsumed: z
+      .enum(["stop", "detachSource"])
+      .optional()
+      .describe(
+        "額度用完之後：stop（預設，觸發器不再發動，但增益與屬性留著）或 " +
+          "detachSource（整份來源卸下，圖示跟著消失）。",
+      ),
+    perTarget: z
+      .boolean()
+      .optional()
+      .describe(
+        "額度是每個敵人各一份還是全部共用。留空＝共用一份（「一次性」最直觀的意思）。" +
+          "⚠️ 只有帶對象的事件談得上「每個敵人」。",
+      ),
   })
   .strict();
 
 /** `zHookDefBase` + 「只有帶傷害的事件談得上『那一發』」的載入時檢查。 */
 export const zHookDef = zHookDefBase.superRefine(refineHookDamageContext);
+
+/**
+ * ⭐ G4 —— **拿不到技能階級的載體**上，多欄 `perRank` 是一格謊。
+ *
+ * `fireHooks` 給 hook payload 的 `rank` 來自那一份 `ModifierSource` 的
+ * `grantRank`；而**道具 / 增益卡 / 道具靈氣**三種載體結構上沒有階級可言
+ * （`economy/itemSource.ts` 與 `economy/draft.ts` 建來源時都沒有 rank 可帶）。
+ * 所以掛在它們身上的 payload 永遠只讀得到 `perRank` 的**第 1 欄**。
+ *
+ * ⛔ **不可以寫成執行期 fallback**：靜默付第 1 欄正是這個缺陷的本體 ——
+ * 作者填了三欄、看到的永遠是第一欄，而畫面上跟「這支技能就是這麼弱」一模一樣
+ * （失敗形態②）。CLAUDE.md 的 fail-open 條款要求「選擇退回安全值的同時，
+ * 要有一個會回非零、或畫面上擋不掉的東西說出來」—— 載入期拒絕就是那個東西，
+ * 而且 `SchemaValidationError` 會冠上 collection + 文件 id，**響在編輯發生的
+ * 當下**而不是下游某條剛好跑到它的測試。
+ *
+ * ⚠️ 只填 1 欄（或不填）不會被擋：那是「不分階」，逐份既有文件不變。實測全樹
+ * 113 條 hook 一條都不會被它擋下來（帶多欄 `perRank` 的 hook effect：0 條）。
+ */
+export function refineUnrankedHookPerRank(
+  hook: { effects: readonly unknown[] },
+  ctx: z.RefinementCtx,
+): void {
+  const seen = new Set<object>();
+  const hit = (node: unknown): boolean => {
+    if (node === null || typeof node !== "object") return false;
+    if (seen.has(node as object)) return false;
+    seen.add(node as object);
+    if (Array.isArray(node)) return node.some(hit);
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+      if (k === "perRank" && Array.isArray(v) && v.length > 1) return true;
+      if (hit(v)) return true;
+    }
+    return false;
+  };
+  if (!hook.effects.some(hit)) return;
+  ctx.addIssue({
+    code: z.ZodIssueCode.custom,
+    path: ["effects"],
+    message:
+      "這條觸發器掛在**拿不到技能階級**的載體上（道具／增益卡／道具靈氣），" +
+      "它的 payload 只會永遠讀第 1 欄。要分階就把它掛到 ability.passive.ranks[] " +
+      "或 applyBuff 上；只想要一個固定值就把 perRank 收成一欄。",
+  });
+}
 
 /**
  * One AURA (靈氣) projected by a passive — mirrors `AuraDef` in

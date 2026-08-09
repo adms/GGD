@@ -8,6 +8,7 @@
 import { INTERP_DELAY_MS, SNAPSHOT_MS } from "@ggd/shared/constants";
 import { defaultFpsCap } from "../render/frameCap";
 import { INTENT_HZ_DEFAULT, clampIntentHz } from "../input/IntentClock";
+import { DEFAULT_HUD_SCALE_TIER, isHudScaleTier, type HudScaleTier } from "../ui/hudScale";
 
 /** Top-level graphics selector. "auto" hands quality to the adaptive manager. */
 export type QualityPreset = "low" | "medium" | "high" | "auto";
@@ -116,14 +117,33 @@ export interface NetworkSettings {
   intentHz: number;
 }
 
+/**
+ * 介面/無障礙設定 —— **刻意不放在 `graphics` 裡**（owner 2026-08-10 的 HUD 縮放）。
+ *
+ * 理由跟 `goreStyle` 同形：`resetToRecommended()` 會整個重建 `graphics`
+ * （`applyPreset(defaultGraphicsFor(touch), …)`），所以任何住在 graphics 裡的東西
+ * 都會被「重設為建議值」洗掉。**把老花眼玩家的 300% 打回 100%** 不是畫質重設該做的
+ * 事 —— 這是一個看得見的無障礙選擇，不是一個效能參數（它對 GPU 一點影響都沒有）。
+ * 所以它自成一區，而 `applyPreset` 永遠碰不到它。
+ */
+export interface UiSettings {
+  /**
+   * HUD 縮放檔位：技能列 + 敵方資訊面板的**整體圖案框架與字體**一起縮。
+   * 七個檔位與它們的適用場景住在 `ui/hudScale.ts`（⛔ 不要在這裡再抄一份倍率）。
+   * 出貨值 "medium" = 100% = 今天的行為。
+   */
+  hudScale: HudScaleTier;
+}
+
 export interface Settings {
   version: number;
   graphics: GraphicsSettings;
   network: NetworkSettings;
+  ui: UiSettings;
 }
 
 /** Bump when the persisted shape changes; migrateSettings deep-merges forward. */
-export const SETTINGS_VERSION = 4;
+export const SETTINGS_VERSION = 5;
 
 /**
  * Floor for the interpolation-delay slider, DERIVED from the snapshot rate.
@@ -190,10 +210,19 @@ export const DEFAULT_NETWORK: NetworkSettings = {
   intentHz: INTENT_HZ_DEFAULT,
 };
 
+/**
+ * ⛔ 「中」是硬要求，不是一個可以順手調的預設：owner 說中 = 目前預設，
+ * 所以**不改設定的人畫面一格都不能變**。派生自 `ui/hudScale.ts`，不是字面量。
+ */
+export const DEFAULT_UI: UiSettings = {
+  hudScale: DEFAULT_HUD_SCALE_TIER,
+};
+
 export const DEFAULT_SETTINGS: Settings = {
   version: SETTINGS_VERSION,
   graphics: { ...DEFAULT_GRAPHICS },
   network: { ...DEFAULT_NETWORK },
+  ui: { ...DEFAULT_UI },
 };
 
 /** localStorage key for the persisted settings blob. */
@@ -256,6 +285,16 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
 }
 
 /**
+ * Clamp/normalize UI values. 壞掉或不認得的檔位一律退回「中」——
+ * 退回別的檔位會讓玩家覺得「我明明沒動它，畫面自己變了」。
+ */
+export function clampUi(u: UiSettings): UiSettings {
+  return {
+    hudScale: isHudScaleTier(u.hudScale) ? u.hudScale : DEFAULT_HUD_SCALE_TIER,
+  };
+}
+
+/**
  * Migrate/merge a persisted blob (any older/partial shape) onto the current
  * defaults, clamping every field. Unknown → default; bumps to SETTINGS_VERSION.
  */
@@ -279,10 +318,14 @@ export function migrateSettings(raw: unknown, opts: { touch?: boolean } = {}): S
   if (priorVersion < 4 && touch && gg.fpsCap === LEGACY_UNIVERSAL_FPS_CAP) {
     gg.fpsCap = defaultFpsCap(true) as FpsCap;
   }
+  // v4 → v5: 多了 `ui.hudScale`（owner 2026-08-10）。沒有資料要搬 —— 任何舊 blob
+  // 都**沒有**這一格，所以它落在 `DEFAULT_UI` 也就是「中」＝今天的行為。這正是
+  // 這個遷移唯一該做的事：老玩家回來，畫面跟他上次關掉時逐位元一樣。
   return {
     version: SETTINGS_VERSION,
     graphics: clampGraphics({ ...defaultGraphicsFor(touch), ...gg }),
     network: clampNetwork({ ...DEFAULT_NETWORK, ...n }),
+    ui: clampUi({ ...DEFAULT_UI, ...((obj.ui ?? {}) as Partial<UiSettings>) }),
   };
 }
 
@@ -300,5 +343,6 @@ export function cloneSettings(s: Settings): Settings {
     version: s.version,
     graphics: { ...s.graphics },
     network: { ...s.network },
+    ui: { ...s.ui },
   };
 }

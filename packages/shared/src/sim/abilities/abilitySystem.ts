@@ -7,7 +7,6 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot, CoreAbilitySlot, CastTarget } from "../intents";
 import { Abilities } from "../content/registry";
-import { Stat } from "../stats/statTypes";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityCast } from "../stats/matchStats";
@@ -15,6 +14,8 @@ import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
 import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
+import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
+import { scopedCooldownReduction } from "../stats/scopedStat";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
@@ -274,7 +275,17 @@ export function castAbility(
 
   // ---- pay costs (mana + cooldown paid up-front, at cast-begin) ----
   hp.mana -= mana;
-  const cdr = sc.final[Stat.CooldownReduction] ?? 0;
+  // ⭐ G9 —— 冷卻縮減是**站在這一格技能的角度**問的，不是面板上那一個數字。
+  //
+  // 「[瞬步] 冷卻縮短 50% 持續 8 秒」在這一行出現之前寫不出來：全域
+  // `Stat.CooldownReduction` 會把六格一起縮短，而一次性的 `modifyCooldown`
+  // 只削得掉「現在轉著的那一圈」，接不住「持續 8 秒」。
+  //
+  // ⚠️ 沒有任何範圍限定加成時 `scopedCooldownReduction` 回的**就是**
+  // `sc.final[cdr]` 逐位元（見 scopedStat.ts 的提前回傳），所以既有錄影不變。
+  // ⛔ 不要改回讀 `sc.final` —— 帶 scope 的 modifier 刻意不在裡面
+  //（`statPipeline.ts` 那一行），改回去等於這個功能整條消失而全綠。
+  const cdr = scopedCooldownReduction(world, caster, slot, inst.abilityId);
   // world.combatEnv.cooldown: global env factor on the cooldown SECONDS (2.0 =
   // twice as long). One seam covers Q/W/E/R and the EX slot alike.
   //
@@ -383,7 +394,19 @@ export function castAbility(
   if (def.castType === "ground" && point) {
     world.emit("explosion", { caster, abilityId: inst.abilityId, x: point.x, z: point.z });
   }
-  runEffects(def.effects, {
+  // ⭐ G6-1 —— 【跨技能強化】的**主動施放**那一面（70-002「追加 500% [AP]」·
+  // 92-002）。在這一行出現之前，強化只打得到被動區塊的 hook，所以一張明說
+  // 「讓某支主動技變強」的 EX 卡片放出來跟沒放一模一樣（失敗形態②），而
+  // `abilityAugment.ts` 的檔頭自己把這件事記成已知的債。
+  //
+  // ⛔ 這一行拿掉，整個 G6 就只剩被動那一半 —— 而且**不會有任何測試紅**，
+  // 除非那條測試讀的是「打出去的傷害」而不是「schema 收不收得下」。
+  // ⚠️ 有吟唱的技能走的是 `systems/CastResolveSystem.ts`，那裡有同一行。
+  const augmentedEffects = applyAugmentToEffects(
+    def.effects,
+    collectAugmentOps(world, caster, inst.abilityId),
+  );
+  runEffects(augmentedEffects, {
     world,
     caster,
     rank: inst.rank,

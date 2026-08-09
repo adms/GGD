@@ -49,6 +49,7 @@ export const CAP_EFFECT_ZH: Readonly<Record<Stat, string>> = Object.freeze({
   [Stat.MoveSpeed]: "跑動速度的天花板 —— 夾住會同時影響追擊、風箏與逃離火圈",
   [Stat.Lifesteal]: "普攻回血佔傷害的比例天花板 —— 夾住它就是續戰能力的上限",
   [Stat.Evasion]: "普攻被閃掉的機率天花板(1.0 = 普攻打不到)",
+  [Stat.SpellVamp]: "技能傷害轉回血的比率上限(技能吸血)",
   [Stat.MaxHealth]: "生命上限的天花板 —— 夾住之後堆血裝與力量都不再變厚",
   [Stat.MaxMana]: "魔力上限的天花板 —— 夾住之後智慧與魔力裝不再擴池",
   [Stat.HealthRegen]: "每秒自動回血的天花板",

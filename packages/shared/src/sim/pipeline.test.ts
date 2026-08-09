@@ -5,7 +5,7 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type EntityId, type SeatId, type ItemId, type AugmentId, type ChampionId } from "../ids";
-import { Stat } from "./stats/statTypes";
+import { Stat, STAT_CLAMPS } from "./stats/statTypes";
 import { ATTRIBUTE_ENV_DEFAULTS } from "./combatEnv";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, detachSource, recomputeStats } from "./stats/statPipeline";
@@ -135,7 +135,10 @@ describe("stat pipeline", () => {
     recomputeStats(world, sela);
     const f = world.stats.get(sela)!.final;
     expect(f[Stat.AttackSpeed]).toBe(4.0); // 一般上限 (owner 2026-07-28,舊值 2.5)
-    expect(f[Stat.CooldownReduction]).toBe(0.45);
+    // ⚠️ 從 STAT_CLAMPS 推,不抄字面值 —— owner 2026-08-10 把 CDR 上限從 0.45
+    //    抬到 0.5（仙后座「CD 時間再減少 50%」）。抄字面值的那一版紅的時候會說
+    //    「夾取壞了」,而真相只是上限被調過。
+    expect(f[Stat.CooldownReduction]).toBe(STAT_CLAMPS[Stat.CooldownReduction]![1]);
     expect(f[Stat.CritChance]).toBe(1);
     expect(f[Stat.MoveSpeed]).toBe(14);
   });

@@ -91,6 +91,23 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
   const attrBonus = champ ? addAttrGrants(champ.attrBonus, sourceAttrGrants(sc.sources, world.tick)) : undefined;
 
   /**
+   * 2026-08-10 —— 「這個單位是誰」，餵給 `finalizeStat` 的環境倍率鏈
+   * (`STAT_ENV_CHAIN` 的 `byAttackType` 那一格：近戰吃 `moveSpeedMelee`、遠程吃
+   * `moveSpeedRanged`)。
+   *
+   * ⚠️ 來源是**英雄卡的 `attackType`**（`ChampionDef` 的必填欄位），不是「射程 > 3」
+   * 這類啟發式 —— 射程是一條會被道具、體型、`attackRange` 倍率動到的**衍生值**，
+   * 用它反推身分等於讓一件裝備把近戰變成遠程。
+   *
+   * ⚠️ 一場算一次，不是每條屬性算一次：`computeStat` 一次 recompute 會跑 16 次
+   * (第二趟還會再跑幾次)，在裡面配置物件等於每個 dirty tick 多 16 個垃圾。
+   *
+   * 召喚物同樣走這裡：它沒有 `ChampionComp` 但 `sc.championId` 指的就是一張真的
+   * 英雄卡，所以它跟著本體的攻擊型態 —— 和它讀 `championStatBase` 的理由一致。
+   */
+  const envSubject = { attackType: def.attackType };
+
+  /**
    * 算一條屬性的最終值。`derivedFlat` 是 `ModOp.PercentOf` 在**第二趟**才算得
    * 出來的那一份 flat 加成(第一趟一律 0),它和 `ModOp.Flat` 進同一個位置 ——
    * 「防禦力額外增加攻擊力的 50%」和「防禦力 +11」在管線上是同一種東西,只是
@@ -125,6 +142,13 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       const stacks = src.stacks ?? 1;
       for (const m of src.modifiers) {
         if (m.stat !== stat) continue;
+        // ⭐ G9 —— 帶 scope 的加成**完全不參與**全域折疊。這一行就是「scoped」
+        // 這個字的定義:它不進 `sc.final`,所以面板 / 商店預覽 / codex / 其他五格
+        // 技能一個都拿不到它,不會有第二個真相(#125「顯示的就是拿到的」)。
+        // 讀取端只有一個:`stats/scopedStat.ts`,消費者只有技能冷卻。
+        // ⛔ 刪掉這一行 = 「瞬步冷卻縮短 50%」變成全部技能都縮短 50%,而且會被
+        // `scopedCooldownReduction` 再算一次(疊兩份),兩個症狀都只是「數字不對」。
+        if (m.scopeSlot !== undefined || m.scopeAbilityId !== undefined) continue;
         switch (m.op) {
           case ModOp.Flat:
             flat += m.value * stacks;
@@ -170,6 +194,10 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       // `Stat.AttackRange` 上,所以其他 15 條逐位元不變;`def.bodyScale` 缺
       // (113 位裡的 89 位)時 `attackRangeScaleFactor` 回 1。
       rangeScale: attackRangeScaleFactor(def.bodyScale, world.bodyScaleRules),
+      // 近戰/遠程移速差 (2026-08-10)。⛔ 刪掉這一行,`byAttackType` 那一格永遠
+      // 拿不到身分 → 回中性 1 → 兩個旋鈕對每一位英雄都是死的,而且畫面上跟
+      // 「操作者把它設成 1.0」長得一模一樣。
+      subject: envSubject,
     });
   };
 

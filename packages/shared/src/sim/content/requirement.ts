@@ -281,7 +281,9 @@ export function scaleEffects(effects: readonly EffectDef[], k: number): EffectDe
         // ⭐ G2 —— 逐階陣列要**逐格**乘，形狀不變（見 `sim/perRank.ts`）。
         return { ...e, duration: scaleRankScalar(e.duration, k) };
       case "applyBuff":
-        return { ...e, duration: e.duration * k };
+        // ⭐ S4a：永久增益沒有 duration 可以縮放（`permanent` 與 `duration` 互斥），
+        // 所以它原封不動 —— 「把永久縮短成一半」沒有意義。
+        return e.duration === undefined ? e : { ...e, duration: e.duration * k };
       default:
         return e;
     }

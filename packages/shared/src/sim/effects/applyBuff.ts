@@ -4,8 +4,104 @@
  * Moved out of the effectRunner switch by GH#289; body unchanged.
  */
 import type { EffectKindSpec } from "./effectKind";
-import { attachSource } from "../stats/statPipeline";
+import type { SimWorld } from "../SimWorld";
+import type { EntityId } from "../../ids";
+import { attachSource, detachSource } from "../stats/statPipeline";
 import { sourceGrants } from "../stats/sourceGrants";
+import { ModOp, type ModifierSource } from "../stats/modifiers";
+import type { StatsComp } from "../stats/statsComp";
+import type { Stat } from "../stats/statTypes";
+import type { EffectOf } from "./effectKind";
+
+/**
+ * ⭐ S4b —— **這一份來源自己**貢獻了多少（`maxStat.basis: "thisSource"`）。
+ *
+ * 折法與 `statPipeline.recomputeStats` 的那一段**逐項相同**（`value × stacks`、
+ * `PercentMult` 線性），只是把 base 換成 0：問的是「這份增益疊出來的量」而不是
+ * 「這個人的面板現在是多少」。
+ *
+ * ⚠️ 一份**只有百分比**的來源在這裡是 0 —— 百分比疊出來的絕對量取決於底值，
+ * 而底值正是 `basis: "final"` 讀的那個東西。所以那種卡的上限要用 `final` 寫，
+ * 這一格算得出來的是 80-00「每次擊殺 +1 攻擊距離、上限 10」那個形狀。
+ */
+function sourceStatAmount(src: ModifierSource, stat: Stat): number {
+  const stacks = src.stacks ?? 1;
+  let flat = 0;
+  let pctAdd = 0;
+  let pctMult = 1;
+  for (const m of src.modifiers ?? []) {
+    if (m.stat !== stat) continue;
+    if (m.op === ModOp.Flat) flat += m.value * stacks;
+    else if (m.op === ModOp.PercentAdd) pctAdd += m.value * stacks;
+    else if (m.op === ModOp.PercentMult) pctMult *= 1 + m.value * stacks;
+  }
+  return flat * (1 + pctAdd) * pctMult;
+}
+
+/**
+ * ⭐ S4b —— 這條加成**已經頂到天花板**了嗎（頂到就拒絕再疊）。
+ *
+ * ⚠️ 語意是**只 refuse、不回收也不夾取**，逐字沿用 `grantAttribute.maxAttribute`
+ * 的既有先例：最後一層可能小幅越線，換到的是「玩家不會看到自己的數字被倒扣」。
+ * ⛔ 拒絕的是**整發**（含這份 buff 的其他 modifier）—— 「這條加成加到 X 就停」
+ * 的自然讀法是那一發不再生效，而不是把同一份來源拆成生效的一半與不生效的一半。
+ */
+function maxStatReached(
+  sc: StatsComp,
+  cap: NonNullable<EffectOf<"applyBuff">["maxStat"]>,
+  existing: ModifierSource | undefined,
+): boolean {
+  const now =
+    cap.basis === "thisSource"
+      ? existing === undefined
+        ? 0
+        : sourceStatAmount(existing, cap.stat)
+      : // 省略 = `final` = 玩家面板上那個最終值（#125「顯示的就是拿到的」）。
+        (sc.final[cap.stat] ?? 0);
+  return now >= cap.value;
+}
+
+/**
+ * ⭐ G5（`state.exclusive-group@1`）—— 「身上同一組只會有一份」。
+ *
+ * 回 `false` = **這一份不要掛**（`exclusiveOnExisting: "reject"` 且同組已經有人）。
+ *
+ * ⛔ 為什麼不是 `stackKey`：同 key 的第二次施加只把 `stacks` 加一，並且沿用
+ * **第一份** source 的 `modifiers`（本檔上面那段疊層路徑），所以「戰型 A → 戰型 B」
+ * 會拿到 A 的數值配 B 的名字。互斥要的是**換掉整份來源**，不是加一層。
+ *
+ * ⛔ 這裡也不是「三個 3D 形態」：換身體仍然走 `championForm` /
+ * `transform.counterpartId`。本函式只動 gameplay state（`sc.sources` 這一層），
+ * 15-02/03/04 三支要的「屬性不再相乘」全部發生在這裡。
+ *
+ * `keepId` 是這一發**自己**要用的 source id：疊層路徑的第二發與第一發同 id，
+ * 少了這個排除，一支同時填 `stackKey` 與 `exclusiveGroup` 的技能會在每一次疊層
+ * 時先把自己整份拔掉，層數永遠停在 1 —— 而畫面上跟正常一模一樣（失敗形態②）。
+ *
+ * 過期的來源不算數（`buffExpirySystem` 是在它自己的相位收的，同一 tick 內可能
+ * 還躺在陣列上）；`expiresAtTick === undefined` = 永久 = 一定算數。
+ */
+function enforceExclusiveGroup(
+  world: SimWorld,
+  target: EntityId,
+  group: string,
+  onExisting: "replace" | "reject" | undefined,
+  keepId: string,
+): boolean {
+  const sc = world.stats.get(target);
+  if (!sc) return true;
+  const held = sc.sources.filter(
+    (s) =>
+      s.exclusiveGroup === group &&
+      s.id !== keepId &&
+      (s.expiresAtTick === undefined || s.expiresAtTick > world.tick),
+  );
+  if (held.length === 0) return true;
+  // 省略 = `"replace"`（抄 `shield.onExisting` 的預設）：新的接手。
+  if ((onExisting ?? "replace") === "reject") return false;
+  for (const s of held) detachSource(world, target, s.id);
+  return true;
+}
 
 export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
   apply(e, ctx) {
@@ -16,8 +112,52 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
     const rk = e.perRank?.[Math.min(Math.max(1, ctx.rank), e.perRank.length) - 1];
     const modifiers = rk?.modifiers ?? e.modifiers;
     const duration = rk?.duration ?? e.duration;
-    const expiresAtTick = world.tick + Math.round(duration / world.dt);
-    for (const target of ctx.targets) {
+    /**
+     * ⭐ S4a —— `undefined` = **永久**。`ModifierSource.expiresAtTick` 缺席時
+     * `buffExpirySystem` 的 `s.expiresAtTick !== undefined &&` 那一半就永遠不會
+     * 收它（引擎層從第一天就做得到，缺的一直是 authoring 面）。
+     * ⛔ 這裡不可以退回 `?? 0`：那會讓一份 `permanent: true` 的文件掛上一個
+     * **同一 tick 就過期**的增益 —— schema 收得下、卡片寫著永久、遊戲裡什麼都
+     * 沒有（失敗形態②）。
+     * ⚠️ `permanent` 與 `duration` 互斥且必填其一（schema 的 `refineApplyBuff`），
+     * 所以 `duration === undefined && permanent !== true` 進不到這裡。
+     */
+    const expiresAtTick =
+      e.permanent === true || duration === undefined
+        ? undefined
+        : world.tick + Math.round(duration / world.dt);
+    /**
+     * ⭐ S9b —— 落在誰身上。省略 = `ctx.targets` = 今天（240 份既有文件逐位元
+     * 不變）。它解鎖的是「**一條** hook 讀敵人狀態、增益自己」：拆成兩條 hook
+     * 的話 ICD 記在 `src.hookLastFired[hi]`（逐 hook 一格）、機率也逐 hook 各抽
+     * 一次，所以「30% 機率對帶恐懼的敵人追加傷害**並且**自己加攻速」寫成兩條會
+     * 有 9% 的情況只發生一半，而畫面上看不出來。
+     * ⛔ 與其他九個 kind 用同一格語意（`applyStatus` / `restore` / `blink` …）。
+     */
+    const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+    for (const target of subjects) {
+      // ⭐ S4b —— 天花板在**任何一條掛載路徑之前**問，而且問的是**這個身體**
+      // （`final` 逐英雄不同，`thisSource` 逐身體各自疊）。頂到了就整發不生效。
+      if (e.maxStat !== undefined) {
+        const sc0 = world.stats.get(target);
+        if (!sc0) continue;
+        const held =
+          e.stackKey !== undefined
+            ? sc0.sources.find((s) => s.id === `buff:stack:${e.stackKey}`)
+            : undefined;
+        if (maxStatReached(sc0, e.maxStat, held)) continue;
+      }
+      // ⭐ G5 —— 互斥組先結算，**在任何一條掛載路徑之前**。位置是刻意的：拔除
+      // 必須發生在新的那一份掛上之前，否則「先掛再拔」會有一個 tick 的縫，而
+      // `statRecomputeSystem` 在那個縫裡就會把兩份乘起來一次。
+      const selfId =
+        e.stackKey !== undefined ? `buff:stack:${e.stackKey}` : `buff:${ctx.origin}#${world.tick}`;
+      if (
+        e.exclusiveGroup !== undefined &&
+        !enforceExclusiveGroup(world, target, e.exclusiveGroup, e.exclusiveOnExisting, selfId)
+      ) {
+        continue; // `reject`：同組已經有一份，這一發整個不生效。
+      }
       // #244 STACKING PATH: one source per key, `stacks` counts applications.
       // Fixes the same-tick collision the id below has (two mobs killed by one
       // AoE on one tick used to overwrite each other and only pay once) and
@@ -25,18 +165,28 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
       if (e.stackKey !== undefined) {
         const sc = world.stats.get(target);
         if (!sc) continue;
-        const id = `buff:stack:${e.stackKey}`;
+        // ⛔ 一份 id，不是兩份 —— `selfId` 就是這一格（見上）。兩份字面值分歧的
+        // 那一天，互斥組會把疊層來源當成「別人」而每次疊層都先拔掉自己。
+        const id = selfId;
         const existing = sc.sources.find((s) => s.id === id);
         if (existing) {
           const cap = e.maxStacks ?? Number.POSITIVE_INFINITY;
           existing.stacks = Math.min((existing.stacks ?? 1) + 1, cap);
-          existing.expiresAtTick = expiresAtTick;
+          // ⭐ S4a：永久那一份**不回寫**到期時間。少了這道判斷，一份永久的疊層
+          // 增益會在作者混用時被寫回一個有限的到期 tick —— 而 80-00「每次擊殺
+          // +1 層、永久」正是走疊層路徑的那個形狀。
+          if (expiresAtTick !== undefined) existing.expiresAtTick = expiresAtTick;
           sc.dirty = true;
         } else {
           attachSource(world, target, {
             id,
             kind: "buff",
             modifiers,
+            // ⭐ G4 —— 這一份 buff 是**第幾階的施放**授予的，`fireHooks` 讀它來
+            // 決定 hook payload 的 rank。⚠️ 疊層路徑也要帶（理由與下面 `hooks`
+            // 逐字相同）；同一格的既有 source 不回寫，因為第一次施放的那一階才是
+            // 這一疊的身分（`hookLastFired` 也是那一份）。
+            grantRank: Math.max(1, ctx.rank),
             // Carried on the STACKING path too — dropping it here would make
             // `hooks` silently inert the moment an author also set `stackKey`
             // (失敗形態 ②). One shared source ⇒ one shared `hookLastFired`,
@@ -52,7 +202,16 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
             // 靜默失效，而畫面上跟正常一模一樣（失敗形態 ②）。
             // ⛔ 一份轉發，不是四份 —— 見 `stats/sourceGrants.ts` 檔頭。
             ...sourceGrants(e),
-            expiresAtTick,
+            // ⭐ G5 —— 掛在**來源**上，因為互斥是那一份來源的性質；聚合成
+            // `sc.final` 的那一刻它就沒了（同 `grantRank` / `evasionScope`）。
+            ...(e.exclusiveGroup !== undefined ? { exclusiveGroup: e.exclusiveGroup } : {}),
+            // ⭐ G10 —— 這一份來源**同時是那個具名標記**。⚠️ 疊層路徑也要帶：
+            // 少了這一行，一支同時填了 `stackKey` 的【破甲】會有數值而沒有標記，
+            // 於是「他身上有沒有破甲」永遠讀 false，而護甲確實在掉（失敗形態②）。
+            // ⭐ 疊層路徑上 `stacks` 直接就是 `condition.status.minStacks` 問的
+            // 那個層數 —— 一個計數器，不是兩個。
+            ...(e.statusId !== undefined ? { statusId: e.statusId } : {}),
+            ...(expiresAtTick !== undefined ? { expiresAtTick } : {}),
             stacks: 1,
             ...(e.stackVisual ? { visualStacks: true } : {}),
           });
@@ -60,9 +219,12 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         continue;
       }
       attachSource(world, target, {
-        id: `buff:${ctx.origin}#${world.tick}`,
+        id: selfId,
         kind: "buff",
         modifiers,
+        // ⭐ G4 —— 見上面疊層路徑那一格：`fireHooks` 以這一階求值這份 buff 帶的
+        // hook payload，所以「rank 3 的大招給的增益，它的觸發也是 rank 3 的量」。
+        grantRank: Math.max(1, ctx.rank),
         // A buff may also grant a TEMPORARY PROC (`hooks`). `fireHooks` already
         // walks `src.hooks` and already skips a source past its
         // `expiresAtTick`, so the window needs no second clock — and because
@@ -81,16 +243,23 @@ export const applyBuffEffect: EffectKindSpec<"applyBuff"> = {
         // （`blockCutFor` 與 `rankedGrants` 都已經在跳過過期的 source），所以
         // 這裡沒有第二個時鐘。⛔ 一份轉發 —— 見 `stats/sourceGrants.ts` 檔頭。
         ...sourceGrants(e),
-        expiresAtTick,
+        // ⭐ G5 —— 同上，掛在來源上。
+        ...(e.exclusiveGroup !== undefined ? { exclusiveGroup: e.exclusiveGroup } : {}),
+        // ⭐ G10 —— 標記與數值是同一個物件（檔頭）。到期／淨化／detach 只有一次
+        // 串接，因為沒有第二個物件可以忘記拆。
+        ...(e.statusId !== undefined ? { statusId: e.statusId } : {}),
+        ...(expiresAtTick !== undefined ? { expiresAtTick } : {}),
       });
     }
     // ONE discrete `buffApply` cue for the status-up (audio COMBAT-AUDIO): the
     // client plays the 增益 cast on the first buffed target. Fired only when a
     // buff actually attached, so an empty target set makes no sound.
-    if (ctx.targets.length > 0) {
+    // ⭐ S9b —— 讀 `subjects` 而不是 `ctx.targets`：一發 `applyTo:"self"` 的自我
+    // 增益在沒有目標時仍然掛得上，音效卻靜音的話，玩家會以為技能沒放出去。
+    if (subjects.length > 0) {
       world.emit("buffApply", {
         source: ctx.caster,
-        target: ctx.targets[0],
+        target: subjects[0],
         origin: ctx.origin,
       });
     }

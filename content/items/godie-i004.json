@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "至尊魔戒",
   "icon": "assets/icons/items/godie-i004.webp",
-  "description": "任務\n效能\n魔力+1000\n[隱身] 永久隱身 (不會被主動索敵)，但攻擊會現身，無動作 3秒後再次隱身。\n\n解說\n馭眾王之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
+  "description": "任務\n效能\n魔力+1000\n技能吸血+20%\n[隱身] 永久隱身 (不會被主動索敵)，但攻擊會現身，無動作 3秒後再次隱身。\n\n解說\n馭眾王之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
   "cost": 0,
   "tier": 1,
   "tags": [
@@ -14,6 +14,11 @@
       "stat": "maxMana",
       "op": "flat",
       "value": 1000
+    },
+    {
+      "stat": "spellVamp",
+      "op": "flat",
+      "value": 0.2
     }
   ],
   "craftRole": "quest",

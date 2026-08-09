@@ -17,6 +17,7 @@ import { loadModelLodManifest, setModelLodTier } from "./render/modelLod";
 import { withContentVersion } from "./content/assetVersion";
 import { CONTENT_BASE_URL } from "./content/bootContent";
 import { bindGoreToSettings } from "./vfx/goreSettings";
+import { bindHudScaleToSettings } from "./settings/hudScaleBinding";
 import { perfBus } from "./perfBus";
 import { ensureContentLoaded, isContentReady } from "./content/bootContent";
 import { initCursor } from "./cursor";
@@ -40,6 +41,11 @@ qualityController.init(); // subscribe the render seam to settings/adaptive chan
 setModelLodTier(qualityController.getParams().modelLod);
 qualityController.subscribe((p) => setModelLodTier(p.modelLod));
 bindGoreToSettings(); // 濺血 style/intensity: settings -> vfx layer (task #39)
+// HUD 縮放（owner 2026-08-10）：settings -> ui/hudScale 的模組單例。
+// ⛔ 少了這一行，玩家選的檔位寫得進 localStorage 而 `applyHudScale()` 永遠沒有人
+// 呼叫 —— 設定頁顯示他選的那個、遊戲裡永遠是「中」（失敗形態②，而且是這個
+// repo 自己列為最糟的那種設定行為）。
+bindHudScaleToSettings();
 
 // dev-only introspection handle (mirrors Renderer's __ggdScene) — lets the
 // dev harness read perf stats and script the adaptive manager. No gameplay

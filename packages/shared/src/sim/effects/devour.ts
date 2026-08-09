@@ -34,10 +34,18 @@
  * ── purity ──────────────────────────────────────────────────────────────
  * 無 rng、無時鐘、無三角函式；只讀被 `shapeTargets` 排好序的目標。
  */
+import type { EntityId } from "../../ids";
 import type { EffectKindSpec } from "./effectKind";
 import { shapeTargets } from "./shapeTargets";
 import { healTarget } from "../combat/restore";
 import { eligibleShieldTotal } from "../combat/damage";
+// ⛔ 直接 import `runEffects` 是這個檔案唯一會形成的環（devour → effectRunner →
+// effectRegistry → devour），而 `randomArea` / `blink` / `weightedBranch` 三支已經
+// 走同一條路：它們都是**在同一個 tick 之內**接著跑一段巢狀效果，而 `bakeList`
+// 那條 seam 是給**延遲** payload（`leap.onLand`）用的。⛔ 不要為了避開這個環而
+// 把 onDevour 做成延遲 payload —— 那會讓「吞噬成功」與「+1 AP」跨 tick，而中間
+// 那一格裡目標可能已經被免死救回來。
+import { runEffects } from "./effectRunner";
 
 export const devourEffect: EffectKindSpec<"devour"> = {
   apply(e, ctx) {
@@ -48,6 +56,15 @@ export const devourEffect: EffectKindSpec<"devour"> = {
     if (!(pct > 0)) return;
     const healPct = e.healPct ?? 1;
     const throughShields = e.throughShields !== false;
+    /**
+     * ⭐ S9a —— **真的吞掉的那些人**。這一串就是「上一個效果成功了沒有」的答案：
+     * 空的 = 一發都沒過處決線 = {@link EffectDef.onDevour} 整段不跑。
+     *
+     * ⛔ 「用 onKill 代替」不成立：`onKill` 的三個發射點都沒有 abilitySlot、沒有
+     * incoming，所以「吞噬殺掉的」與「普攻殺掉的」在觸發器端分不出來 —— 一個
+     * 「每吞噬一名永久 +1 AP」的天生技會在整場每一次補刀上發動。
+     */
+    const devouredIds: EntityId[] = [];
 
     for (const id of shapeTargets(e, ctx)) {
       const hp = world.health.get(id);
@@ -94,6 +111,32 @@ export const devourEffect: EffectKindSpec<"devour"> = {
           origin: ctx.origin,
           score: true,
         });
+      }
+      devouredIds.push(id);
+    }
+
+    /**
+     * ⭐ S9a —— **上一個效果真的成功了才跑下一個**（92-03「每吞噬一名敵人永久
+     * +1 AP」）。
+     *
+     * ⚠️ 觸發時刻是「處決線通過、致死量已經排進佇列」那一刻，**不是**「屍體確認
+     * 了」—— 一個帶【免死】的目標會被吞噬打到卻活下來，而這一段已經跑過。那是
+     * 刻意的：等到死亡確認要跨相位（`combatResolveSystem` → `deathSystem`），
+     * 而跨相位就要記住「剛剛是誰吞的、用哪一階吞的」= 一格新的世界狀態。
+     * schema 的欄位說明逐字寫了同一句，所以作者看得到這個邊界。
+     *
+     * `onDevourPer` 省略 = `"victim"`（每吞掉一個人各跑一次）。對出貨唯一的形狀
+     * （`shape: "single"`）兩個值完全等價 —— 也就是這個預設不替任何人做決定。
+     * ⛔ 走 `runEffects` 而不是自己 `applyEffect`：巢狀那一段的 `condition` 閘、
+     * rng 預算、per-target 過濾必須與第一層是**同一套**（`effectRunner` 檔頭）。
+     */
+    if (e.onDevour !== undefined && devouredIds.length > 0) {
+      if ((e.onDevourPer ?? "victim") === "cast") {
+        runEffects(e.onDevour, { ...ctx, targets: devouredIds });
+      } else {
+        for (const victim of devouredIds) {
+          runEffects(e.onDevour, { ...ctx, targets: [victim] });
+        }
       }
     }
   },

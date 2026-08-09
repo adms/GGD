@@ -205,6 +205,15 @@ export interface ProjectileComp {
    * documents, from the other end.
    */
   critLifesteal?: number;
+  /**
+   * ⭐ G8 —— 這一箭被**哪幾條** `critStrike` 來源加成了（`ModifierSource.id`）。
+   * `undefined` = 沒有任何 grant 參與 = 這個欄位出現之前的每一發。
+   *
+   * ⚠️ 與 {@link critLifesteal} **同一個理由**騎在飛彈上：骰在放箭那一刻，而
+   * `HookDef.critSource: "thisSource"` 在命中那一刻才問。命中時再讀一次身上的
+   * grant，會讓飛行中的每一箭都算成「那一條打的」。
+   */
+  critSources?: readonly string[];
 }
 
 /** Marker/state bags filled in by later steps (stats, abilities, …). */
@@ -481,6 +490,27 @@ export interface StatusEffect {
    * 閘在 `abilities/abilitySystem.ts`，就在 stun 那一道旁邊。
    */
   silenced?: boolean;
+  /**
+   * ⭐【繳械】S8（effect.control-restriction@1，92-01「無法移動與攻擊」）——
+   * **打不出普通攻擊**。
+   *
+   * ⛔ 它**不是** `missChance` 的包裝，而這正是它存在的全部理由：實測
+   * `{root:true, missChance:1}` 的身體在 90 tick 內照樣發了 6 次 `attackWindup`
+   * 與 4 次 `basicAttack`（動畫、音效、破隱、攻擊冷卻全部照跑），只是傷害是 0。
+   * 「揮空刀」與「揮不出來」在畫面與聽覺上是兩件事。
+   *   · 要做「打得到人但會失手」→ `missChance`。
+   *   · 要做「連前搖都開不了」→ 這一格。
+   *
+   * ⚠️ 它**算硬控**（`HARD_CC_FLAGS` + `applyStatus` 的 `isCc`）：繳械是敵人塞
+   * 過來的純減益，與 `feared` 同一列 —— 免控擋得掉、記 `ccAppliedTicks`。
+   * ⛔ 它**不擋技能**：92-01 要連技能一起封請配 `silenced`（與 `feared` 的說明
+   * 逐字同一條規則）。
+   *
+   * 住在 status 上而不是新元件，理由與 `missChance` / `berserk` / `feared`
+   * 逐字相同：`statusExpirySystem` 已經擁有它的清除，所以「永久打不出普攻」在
+   * 結構上不可能發生。
+   */
+  disarmed?: boolean;
   /**
    * 【混亂】（C2，#278 → ⭐ owner 2026-08-09 改判，GH#299 第 9 條 / GH#301-3）。
    *

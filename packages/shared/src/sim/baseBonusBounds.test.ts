@@ -66,10 +66,13 @@ describe("基礎加成 區間 — sim 層 (basebonus-bounds-sim)", () => {
     }
   });
 
-  it("有 clamp 的六個 stat,上限 = 自己的區間跨度(推導,不是拍腦袋)", () => {
+  it("有 clamp 的 stat,上限 = 自己的區間跨度(推導,不是拍腦袋)", () => {
     cover("basebonus-bounds-sim");
     const clamped = ALL_STATS.filter((s) => STAT_CLAMPS[s] !== undefined);
-    expect(clamped.length, "STAT_CLAMPS 的成員數變了,這條推導要重新檢查").toBe(6);
+    // ⚠️ 不釘成員數 —— 釘了它,每加一格屬性（2026-08-10 的 spellVamp）就會用
+    //    「推導壞了」這個錯誤訊息紅。要守的是「每一個有 clamp 的都推導得出來」,
+    //    而那正是下面的迴圈。這裡只擋「整張表空了」。
+    expect(clamped.length, "STAT_CLAMPS 空了 —— 這條推導就沒有東西可驗").toBeGreaterThan(0);
     for (const s of clamped) {
       const [lo, hi] = STAT_CLAMPS[s]!;
       expect(BASE_BONUS_MAX[s], `${s} 的加成上限應等於 ${hi} - ${lo}`).toBeCloseTo(hi - lo, 10);

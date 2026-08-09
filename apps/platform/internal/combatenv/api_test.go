@@ -95,22 +95,30 @@ func TestAPIPutBounds(t *testing.T) {
 	assert.Equal(t, "bad_request", r.ErrCode())
 
 	// Below the floor / above the ceiling → 400. The exact bounds are legal.
-	r = put(map[string]any{"cooldown": 0.05})
+	//
+	// ⚠️ 2026-08-10: these probes are DERIVED from the constants, not literals.
+	// They used to be 0.05 / 10.5 / 10.0, and when MaxFactor moved 10 → 50 this
+	// test went red saying "expected 400" — i.e. it reported a BOUNDS BUG when
+	// the only thing that changed was the bound. A shipped number copied into an
+	// assertion is a fourth home for it (CLAUDE.md 第二守則), and it always
+	// expires with the wrong message.
+	r = put(map[string]any{"cooldown": combatenv.MinFactor / 2})
 	assert.Equal(t, http.StatusBadRequest, r.Status)
-	r = put(map[string]any{"damageDealt": 10.5})
+	r = put(map[string]any{"damageDealt": combatenv.MaxFactor + 0.5})
 	assert.Equal(t, http.StatusBadRequest, r.Status)
-	r = put(map[string]any{"cooldown": 0.1, "damageDealt": 10.0})
+	r = put(map[string]any{"cooldown": combatenv.MinFactor, "damageDealt": combatenv.MaxFactor})
 	assert.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
 
 	// One bad key in an otherwise-valid body rejects the WHOLE write…
-	r = put(map[string]any{"cooldown": 2.0, "healing": 99.0})
+	r = put(map[string]any{"cooldown": 2.0, "healing": combatenv.MaxFactor * 2})
 	assert.Equal(t, http.StatusBadRequest, r.Status)
 	// …and the previously saved table is untouched.
 	r = ts.Do(http.MethodGet, "/api/v1/admin/combat-env", boss.Access, nil)
 	require.Equal(t, http.StatusOK, r.Status)
 	m := multipliers(t, r)
-	assert.Equal(t, 0.1, m["cooldown"])
-	assert.Equal(t, 10.0, m["damageDealt"])
+	// 同上：讀回來的必須是**剛剛寫進去的那兩個界**，不是抄死的 0.1 / 10.0。
+	assert.Equal(t, combatenv.MinFactor, m["cooldown"])
+	assert.Equal(t, combatenv.MaxFactor, m["damageDealt"])
 }
 
 // combatenv-api-roundtrip: a sparse PUT persists — present keys keep their

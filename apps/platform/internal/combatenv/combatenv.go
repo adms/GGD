@@ -53,12 +53,26 @@ const (
 	SchemaVersion = 1
 )
 
-// Factor bounds. A factor outside this range on a PUT is a 400: 0.1..10 spans
-// every sane balance experiment while keeping a fat-fingered "100" from
-// bricking the next match.
+// Factor bounds. A factor outside this range on a PUT is a 400.
+//
+// ⚠️ CORRECTED 2026-08-10. The ceiling was 10.0 with the note "0.1..10 spans
+// every sane balance experiment". That claim was FALSE the day owner tuned
+// manaRegen 8 -> 16: the shipped content file passed (shared's Zod band is
+// 0..100) but every admin-console save of the 戰鬥系統 page would have answered
+// 400, i.e. the operator's own tuned value locked him out of the page that
+// tunes it. Nothing went red — the two bands disagreed silently.
+//
+// The ceiling's real job is catching a STRAY ZERO, and a stray zero on a small
+// factor (0.2 -> 2) is inside ANY band loose enough to let an operator double a
+// knob, so it was never catchable here. What IS catchable is a stray zero on a
+// large one: 16 -> 160. 50 admits the shipped 16 with 3x headroom and still
+// rejects 160.
+//
+// ⛔ Do not read this as "bounds are pointless" — the FLOOR still stops a 0 (a
+// zero damage multiplier bricks a match) and the ceiling still stops 160.
 const (
 	MinFactor = 0.1
-	MaxFactor = 10.0
+	MaxFactor = 50.0
 )
 
 // Bounds for the eight 三圍 COEFFICIENTS (task #248). They are not ×factors:
@@ -134,6 +148,23 @@ var Keys = []string{
 	"goldEliteKill",
 	"goldHeroKill",
 	"goldQuest",
+	// ── 2026-08-10 owner ×3 ────────────────────────────────────────────────
+	// 「config 加一格 moveSpeedByAttackType 預設為(近戰/遠戰) 0.8/0.6」+
+	// 「加一格 magicResistMult 預設 0.2」.
+	//
+	// moveSpeedMelee / moveSpeedRanged 是 owner 那一格 moveSpeedByAttackType 落成
+	// 兩個純量 —— 這張表(以及 sim 的 CombatEnvMultipliers、Zod、後台表格、線上
+	// JSON)全部是扁平的 key→float，一個巢狀物件要在五個地方多一種形狀，才能講出
+	// 兩列已經講完的事。
+	//
+	// 三個都是普通 ×factor，所以 Bounds 走 [MinFactor, MaxFactor]。
+	// ⚠️ 2026-08-10：那個區間是 [0.1, 50]，不是註解原本寫的 [0.1, 10]（推導見 MaxFactor）。
+	// ⛔ 這裡刻意**不抄數字** —— 抄一份就是第四個住處，而它一定會跟上面那兩個分岔。
+	// 出貨值 (0.8 / 0.6 / 0.2) 住在 content/config/combat-env.json，不是 DefaultFor
+	// —— 缺席一律 1.0，舊的 config / overlay 因此逐位元不變。
+	"moveSpeedMelee",
+	"moveSpeedRanged",
+	"magicResistMult",
 }
 
 // Bounds for the five 金錢發放 factors. They are ×factors like the eighteen

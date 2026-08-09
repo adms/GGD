@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "月牙魔杖",
   "icon": "assets/icons/items/godie-i06e.webp",
-  "description": "夢幻\n效能\n[流星] 流星每秒造成 100% AP 範圍傷害（距離越遠流星傷害越低）\n魔抗+66.7%\n\n解說\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
+  "description": "夢幻\n效能\n[流星] 流星每秒造成 100% AP 範圍傷害（距離越遠流星傷害越低）\nAP+369\n魔抗+66.7%\n\n解說\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
   "cost": 0,
   "tier": 3,
   "modifiers": [
@@ -11,6 +11,11 @@
       "stat": "mr",
       "op": "flat",
       "value": 200
+    },
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 369
     }
   ],
   "passive": [
@@ -26,11 +31,11 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "radius": 5.0,
+          "radius": 5,
           "falloff": 0.35,
           "maxTargets": 6
         }

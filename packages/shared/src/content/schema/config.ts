@@ -13,8 +13,11 @@ import { zAlpha, zCoreAbilitySlot, zId, zRef, zTintRgb } from "./common";
 import { zAugmentTier } from "./augment";
 import {
   COMBAT_ENV_KEYS,
+  FACTOR_BAND_MAX,
+  FACTOR_BAND_MIN,
   GOLD_FACTOR_MAX,
   GOLD_FACTOR_MIN,
+  isBandedFactorEnvKey,
   isGoldEnvKey,
   type CombatEnvKey,
 } from "../../sim/combatEnv";
@@ -2538,10 +2541,29 @@ const zEnvFactor = z.number().min(0).max(100);
  */
 const zGoldEnvFactor = z.number().min(GOLD_FACTOR_MIN).max(GOLD_FACTOR_MAX);
 
+/**
+ * 2026-08-10 的三格 (`moveSpeedMelee` / `moveSpeedRanged` / `magicResistMult`)
+ * 拿的是**平台一直在用的 ×倍率區間**（`combatenv.MinFactor/MaxFactor`
+ * 與後台 `MAX_FACTOR`），不是上面那個 0..100。0..100 存在是因為 三圍 係數需要
+ * （23 hp / STR），而十八格既有 ×倍率一路沾光沾到今天 —— 反過來把它們全部收緊
+ * **不是 no-op**（`manaRegen` 出貨 8，同一批 owner 要調到 16），所以那是一次有
+ * 傷亡名單的決定，屬於 owner，不屬於這一條 lane。新的三格先拿對的區間。
+ * 推導寫在 `sim/combatEnv.ts` 的 `FACTOR_BAND_MIN`。
+ */
+const zBandedEnvFactor = z.number().min(FACTOR_BAND_MIN).max(FACTOR_BAND_MAX);
+
 export const zCombatEnvMultipliers = z
   .object(
     Object.fromEntries(
-      COMBAT_ENV_KEYS.map((k) => [k, (isGoldEnvKey(k) ? zGoldEnvFactor : zEnvFactor).optional()]),
+      COMBAT_ENV_KEYS.map((k) => [
+        k,
+        (isGoldEnvKey(k)
+          ? zGoldEnvFactor
+          : isBandedFactorEnvKey(k)
+            ? zBandedEnvFactor
+            : zEnvFactor
+        ).optional(),
+      ]),
     ) as Record<CombatEnvKey, z.ZodOptional<z.ZodNumber>>,
   )
   .strict();

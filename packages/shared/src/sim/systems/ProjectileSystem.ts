@@ -92,6 +92,8 @@ export function projectileSystem(world: SimWorld): void {
             // swing, and a re-read here would pay the proc on every arrow in
             // flight (see ProjectileComp.critLifesteal).
             critLifesteal: proj.critLifesteal,
+            // ⭐ G8 —— 同上，從飛彈抄過來而不是在命中時重讀持有者身上的 grant。
+            critSources: proj.critSources,
           });
           world.emit("basicAttackHit", {
             id,

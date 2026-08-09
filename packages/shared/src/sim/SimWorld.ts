@@ -84,6 +84,8 @@ import { reflectHookSystem } from "./systems/ReflectHookSystem";
 import { dotTickSystem } from "./effects/dotTick";
 import { intervalHookSystem } from "./systems/IntervalHookSystem";
 import { randomAreaSystem } from "./effects/randomArea";
+import { delayedSystem } from "./effects/delayed";
+import { dashOnEndSystem } from "./effects/dashOnEnd";
 import { deathSystem } from "./systems/DeathSystem";
 import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
@@ -889,6 +891,23 @@ export class SimWorld {
   readonly randomArea: import("./effects/randomArea").RandomAreaWave[] = [];
 
   /**
+   * ⭐ G12【延遲序列】的排程佇列（20-002「連續七次斬擊…最後再給予…」）。
+   * 與 {@link randomArea} **同一個形狀、同一個理由**是陣列不是 Map（同一位施法者
+   * 可以有兩串同時在飛），⛔ 但**語意相反**：這裡的目標在施放那一刻就凍住，
+   * 到期不重解。整段論證在 `effects/delayed.ts` 檔頭①。
+   */
+  readonly delayed: import("./effects/delayed").DelayedWave[] = [];
+
+  /**
+   * ⭐ S7【衝刺結束才揮出】的待付回呼（52-04「向前衝刺 400 距離後揮出」）。
+   * ⚠️ 它**沒有到期 tick** —— 付款條件是「那一次衝刺的 `nav.override` 不見了」，
+   * 而那個真相只存在於 `MovementSystem` 的 override 迴圈裡。所以它的系統排在
+   * `movementSystem`（5）之後、`combatResolveSystem`（8）之前，⛔ 而不是改
+   * `MovementSystem` 或加寬 `DashOverride`。見 `effects/dashOnEnd.ts` 檔頭②。
+   */
+  readonly dashOnEnd: import("./effects/dashOnEnd").DashOnEndPending[] = [];
+
+  /**
    * 無敵 / 免疫 (lane P3, LANDED) — entity → the ABSOLUTE tick EACH IMMUNITY
    * AXIS lapses. A dedicated map on the `hitstop` / `knockdown` / `hitstun`
    * precedent, because `combatResolveSystem` asks this question of every queued
@@ -1370,6 +1389,15 @@ export class SimWorld {
     //                             before movementSystem, which then sees the
     //                             `leap` override and leaves the body alone.
     movementSystem(this); // 5. integrate + collide
+    dashOnEndSystem(this); // 5′. ⭐ S7 衝刺結束才揮出（52-04）。
+    //                             ⚠️ 位置是硬約束，兩個方向都是：
+    //                             · 必須在 movementSystem(5) **之後** —— 「衝刺
+    //                               結束了」這個真相只在它的 override 迴圈裡發生，
+    //                               排在前面永遠看到 override 還在（一刀不會揮）。
+    //                             · 必須在 combatResolveSystem(8) **之前** ——
+    //                               揮出來的傷害要在**同一 tick** 被減傷、記分、
+    //                               結算，否則整招晚一個 tick 而畫面上看不出來。
+    //                             佇列空的時候是 STRICT no-op（effects/dashOnEnd.ts）。
     basicAttackSystem(this); // 6. autos on attack targets in range
     toggleUpkeepSystem(this); // 6a. 【切換】維持成本 + MP 不足自動關閉
     //                             (`abilities/toggle.ts`). 20-01 風王結界
@@ -1414,6 +1442,11 @@ export class SimWorld {
     //                             already written when `refusesDamage` is asked.
     //                             Gated on `combatActive`, so every pre-existing
     //                             replay hashes byte-identically (see that file).
+    delayedSystem(this); //   7e′. ⭐ G12 延遲序列：付掉這一 tick 到期的那幾發。
+    //                             位置與 `randomArea` **同一個硬約束**（見下一段）：
+    //                             排在 drain 之前，第七刀才會在**這一 tick** 被
+    //                             減傷、記分、結算。差別只在目標從哪裡來 ——
+    //                             這裡是施放時凍住的名單（effects/delayed.ts①）。
     randomAreaSystem(this); // 7e. 隨機落點排程：付掉這一 tick 到期的落點。
     //                             ⚠️ 位置是硬約束，理由與 `dotTick` 逐字相同：
     //                             排在排空之前，一顆這一 tick 該落的流星才會在

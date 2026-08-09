@@ -95,6 +95,23 @@ export function statusStacks(world: SimWorld, id: EntityId, statusId: StatusId):
   // 而那正是 `hasStatus` / `statusStacks` 這一段檔頭警告過的形狀。
   const mk = world.marks.get(id)?.get(statusId);
   if (mk !== undefined && !markExpired(mk.expiresAtTick, world.tick)) n += mk.count;
+  // ⭐ G10 —— **第三本帳：帶 `statusId` 的 `ModifierSource`**（`applyBuff.statusId`）。
+  //
+  // 【破魔】【破甲】【狂怒】現在是**一個**物件：數值住在 `modifiers`，標記住在
+  // 這一格。少了這一段，那個物件會有一半是隱形的 —— 護甲確實在掉，而
+  // 「他身上有沒有破甲」永遠讀 false，於是任何讀狀態的條件葉對它全部說謊
+  // （失敗形態②），而畫面上護甲確實少了、看起來完全正常。
+  //
+  // ⚠️ 到期規則跟著 `buffExpirySystem`（`expiresAtTick <= world.tick` 才算沒了、
+  // 缺席 = 永久），與上面兩本帳的 `> world.tick` 是同一個判斷的兩種寫法 ——
+  // 三者分歧的那一天就會出現這一段檔頭警告的「條件說有、層數說 0」。
+  // ⚠️ 層數讀 `stacks`（疊層路徑的層數就是計數器），缺席讀 1。
+  const sc = world.stats.get(id);
+  for (const s of sc?.sources ?? []) {
+    if (s.statusId !== statusId) continue;
+    if (s.expiresAtTick !== undefined && s.expiresAtTick <= world.tick) continue;
+    n += s.stacks ?? 1;
+  }
   return clampMarkCount(n);
 }
 

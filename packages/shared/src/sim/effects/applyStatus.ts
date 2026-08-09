@@ -64,6 +64,10 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
       e.stun === true ||
       e.root === true ||
       e.feared === true ||
+      // ⭐【繳械】S8 —— 與 `feared` 同一列、同一個論證：敵人塞過來的純減益，
+      // 而且拿走的是「打不打得出去」這半個操作。免控擋得掉暈眩卻擋不掉繳械，
+      // 那個組合對玩家無法解釋。進這一行也讓它的秒數記進 `ccAppliedTicks` 戰績。
+      e.disarmed === true ||
       (moveSpeedMult !== undefined && moveSpeedMult < 1);
     // `applyTo: "self"` is the COMBO-WINDOW form: the marker belongs on the
     // caster even though the ability's own targeting resolved enemies (07-02
@@ -196,6 +200,9 @@ export const applyStatusEffect: EffectKindSpec<"applyStatus"> = {
           // C4 睡眠 —— 受傷即提早解除這一筆（`sim/statusBreak.ts`）。
           // C1 沉默 / C2 混亂（#278）。
           silenced: e.silenced,
+          // ⭐【繳械】S8 —— 打不出普通攻擊。少了這一行，schema 收得下、後台畫得
+          // 出來、而 `BasicAttackSystem` 永遠讀不到（失敗形態②）。
+          disarmed: e.disarmed,
           targetsAllies: e.targetsAllies,
           breakOnDamage: e.breakOnDamage,
           breakOnDamageMin: e.breakOnDamageMin,

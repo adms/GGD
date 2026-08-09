@@ -38,8 +38,16 @@ export type { CombatEnvKey };
 export const NEUTRAL = 1;
 /** Lower bound, mirroring combatenv.MinFactor on the platform (a 400 below it). */
 export const MIN_FACTOR = 0.1;
-/** Upper bound, mirroring combatenv.MaxFactor on the platform (a 400 above it). */
-export const MAX_FACTOR = 10;
+/**
+ * Upper bound, mirroring combatenv.MaxFactor on the platform (a 400 above it).
+ *
+ * ⚠️ 2026-08-10：10 → 50。舊的 10 在 owner 把 `manaRegen` 調到 16 的那一刻
+ * 就變成一道**把操作者鎖在自己的調校頁外面**的閘：內容檔進得去（shared 的 Zod
+ * 是 0..100），但後台一存檔整個 PUT 回 400，而且兩邊的界不一致**沒有任何東西會紅**。
+ * 完整推導寫在 `apps/platform/internal/combatenv/combatenv.go` 的 MaxFactor，
+ * ⛔ 不在這裡抄第二份。
+ */
+export const MAX_FACTOR = 50;
 /** Numeric-input step for the table's spinners. */
 export const STEP = 0.05;
 
@@ -200,6 +208,28 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
     zh: "完成任務發放金錢",
     note: "守衛塔補刀獎勵等場上目標物。殭屍王不在這一格（它算特殊殭屍那一格）。0 = 完全不發",
   },
+  // ── 2026-08-10 owner ×3 ────────────────────────────────────────────────────
+  // 「config 加一格 moveSpeedByAttackType 預設為(近戰/遠戰) 0.8/0.6」+「加一格
+  // magicResistMult 預設 0.2」。owner 那一格 moveSpeedByAttackType 落成兩列,
+  // 因為這張表(以及 sim / Zod / Go 平台 / 線上 JSON)全部是扁平的 key→數字。
+  //
+  // ⚠️ note 必須把「缺席 = 1.0」與「出貨值」分開講。1.0 是**相容性預設**:
+  // 一份寫在今天之前、沒有這三格的 config 或 overlay 必須跑出逐字相同的數字。
+  // 0.8 / 0.6 / 0.2 是 owner 挑的**出貨值**,住在 content/config/combat-env.json。
+  // 操作者按「重設」會回到 1.0(＝這一格不作用),不是回到 0.8 —— 說明要講清楚,
+  // 否則他會以為自己按下去就是「回到出廠設定」。
+  moveSpeedMelee: {
+    zh: "近戰移速倍率",
+    note: "只乘在近戰英雄的移速上（疊在上面那格全域移動速度之上）。它與遠程那一格的『差』決定近戰追不追得上遠程 —— 差距越大越追得上，一樣就是被風箏到死。1 = 這一格不作用（出貨值 0.8 由內容檔給）",
+  },
+  moveSpeedRanged: {
+    zh: "遠程移速倍率",
+    note: "只乘在遠程英雄的移速上（疊在全域移動速度之上）。調小 = 遠程更難拉開距離。與近戰那一格的『差』才是風箏與否的關鍵，單獨看一格沒有意義。1 = 這一格不作用（出貨值 0.6 由內容檔給）",
+  },
+  magicResistMult: {
+    zh: "魔法抗性倍率",
+    note: "魔抗再乘這個（疊在上面『防禦力』之上）。因為技能預設算魔法傷害而普攻是物理，這一格實際上在調『技能相對普攻有多痛』：調小 = 技能變強。1 = 這一格不作用（出貨值 0.2 由內容檔給）",
+  },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -217,8 +247,18 @@ export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
     title: "輸出 · 傷害與技能",
     keys: ["damageDealt", "cooldown", "itemCooldown", "attackDamage", "abilityPower", "abilityRange"],
   },
-  { title: "生存 · 防禦與回復", keys: ["maxHealth", "healthRegen", "defense", "shield", "healing", "lifesteal"] },
-  { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
+  {
+    // magicResistMult 排在 defense 後面,因為它是**疊在 defense 之上**的第二格,
+    // 不是替代品 —— 分開放會讓操作者以為兩格互斥。
+    title: "生存 · 防禦與回復",
+    keys: ["maxHealth", "healthRegen", "defense", "magicResistMult", "shield", "healing", "lifesteal"],
+  },
+  {
+    // 近戰／遠程兩格緊跟在全域 moveSpeed 後面:三格是同一條乘法鏈,
+    // 而且那兩格要**並排比較**才看得出「差多少」（風箏就是那個差）。
+    title: "機動 · 位移與攻擊",
+    keys: ["moveSpeed", "moveSpeedMelee", "moveSpeedRanged", "attackSpeed", "attackRange"],
+  },
   { title: "暴擊", keys: ["critChance", "critDamage"] },
   { title: "資源 · 魔力", keys: ["maxMana", "manaRegen"] },
   {

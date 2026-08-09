@@ -52,8 +52,47 @@ const WILL = "godie-i060" as ItemId;
 const AEGIS = "godie-i061" as ItemId;
 const PIECES = [SPEAR, WILL, AEGIS] as const;
 const SET_ID = "godie-set-lichking";
-/** 「總 AP 額外 + 100%」 — the number owner wrote, restated so a doc edit is visible. */
-const SET_AP_PCT = 1.0;
+/**
+ * 套裝獎勵的 pctAdd —— ⚠️ **從出貨文件讀,不抄字面值**。
+ *
+ * 這裡原本寫死 `1.0`。owner 2026-08-10 把它改成 300%,於是這一份測試用
+ * 「套裝壞了」的訊息紅了五條 —— 而真相只是數字被調過（CLAUDE.md：出貨數值
+ * 住進測試＝第四個住處,一定會過期,而且用錯誤的訊息紅）。下面那一條
+ * 「stacks ADDITIVELY」早就已經用這個做法讀惡夢魔王碎片了,這裡只是補上另一半。
+ */
+/**
+ * 套裝成員**自己**帶的 flat AP。owner 2026-08-10 給了死之王的意志 AP+174,
+ * 在那之前三件都沒有任何 AP modifier,所以下面每一條算式都可以直接寫
+ * `bare.ap * (1 + 套裝%)`。⛔ 現在不行了 —— statPipeline 是
+ * `final = (base + Σflat) · (1 + ΣpctAdd)`,忽略 flat 那一項會讓這些斷言
+ * 用「套裝壞了」的訊息紅,而真相是某一件被加了屬性。
+ */
+function flatApOf(ids: readonly ItemId[]): number {
+  return ids.reduce(
+    (sum, id) =>
+      sum +
+      (Items.get(id).modifiers ?? [])
+        .filter((m) => m.stat === Stat.AbilityPower && m.op === ModOp.Flat)
+        .reduce((a, m) => a + m.value, 0),
+    0,
+  );
+}
+
+/** 帶著這些道具、湊齊套裝時應有的最終 AP。 */
+function expectedAp(bareAp: number, ids: readonly ItemId[], extraPct = 0): number {
+  return (bareAp + flatApOf(ids)) * (1 + setApPct() + extraPct);
+}
+
+/** ⚠️ 一定要**惰性**求值 —— 註冊表要等 `beforeAll` 才有內容。 */
+function setApPct(): number {
+  const set = (Items.get(SPEAR).sets ?? []).find((x) => x.id === SET_ID);
+  if (!set) throw new Error("死之王套裝 不在 godie-i01d 的 sets 上 —— 這條測試沒有東西可驗");
+  const pct = set.modifiers
+    .filter((m) => m.stat === Stat.AbilityPower && m.op === ModOp.PercentAdd)
+    .reduce((sum, m) => sum + m.value, 0);
+  if (!(pct > 0)) throw new Error("死之王套裝 的 ap pctAdd 是 0 —— 這條測試沒有東西可驗");
+  return pct;
+}
 
 /**
  * 惡夢魔王碎片 — a DIFFERENT legendary carrying its own 「總 AP 額外 + 100%」 as a
@@ -122,7 +161,7 @@ const setSources = (world: SimWorld, id: EntityId): string[] =>
 // ---------------------------------------------------------------------------
 
 describe("死之王套裝 — the three shipped docs", () => {
-  it("all three declare the SAME set, listing all three pieces, worth ap pctAdd 1.0", () => {
+  it("all three declare the SAME set, listing all three pieces, worth the SAME ap pctAdd", () => {
     // Names the files to edit. The behaviour assertions below are the real
     // guards — this one exists so a failure says WHERE, not just WHAT.
     cover("lichking-set-doc");
@@ -136,7 +175,7 @@ describe("死之王套裝 — the three shipped docs", () => {
       // absent requiredPieces = ALL of them, which is what 「同時裝備」 says
       expect(requiredPieces(s)).toBe(3);
       expect(s.modifiers).toEqual([
-        { stat: Stat.AbilityPower, op: ModOp.PercentAdd, value: SET_AP_PCT },
+        { stat: Stat.AbilityPower, op: ModOp.PercentAdd, value: setApPct() },
       ]);
     }
   });
@@ -153,7 +192,8 @@ describe("死之王套裝 — the three shipped docs", () => {
     for (const id of PIECES) {
       const text = (byId.get(id)?.description ?? "") as string;
       expect(text, id).toContain("[死之王套裝]");
-      expect(text, id).toContain("總 AP 額外 + 100%");
+      // 百分比從 sets 推,不抄字面值 —— owner 2026-08-10 把它改成 300%。
+      expect(text, id).toContain(`總 AP 額外 + ${setApPct() * 100}%`);
     }
   });
 });
@@ -163,7 +203,7 @@ describe("死之王套裝 — the three shipped docs", () => {
 // ---------------------------------------------------------------------------
 
 describe("死之王套裝 — 同時裝備三件才給，而且只給一次", () => {
-  it("2 pieces = nothing, 3 pieces = +100 % of the champion's real AP", () => {
+  it("2 pieces = nothing, 3 pieces = the set's full ap pctAdd on the champion's real AP", () => {
     cover("lichking-set-threshold");
     const world = new SimWorld(SKELETON_ARENA, 41);
     const bare = holding(world, []);
@@ -171,21 +211,22 @@ describe("死之王套裝 — 同時裝備三件才給，而且只給一次", ()
     expect(bare.ap).toBeGreaterThan(1);
 
     const two = holding(world, [SPEAR, WILL]);
-    expect(two.ap).toBeCloseTo(bare.ap, 6);
+    expect(two.ap).toBeCloseTo(bare.ap + flatApOf([SPEAR, WILL]), 6);
     expect(setSources(world, two.id)).toEqual([]);
 
     const three = holding(world, [SPEAR, WILL, AEGIS]);
-    expect(three.ap).toBeCloseTo(bare.ap * (1 + SET_AP_PCT), 6);
+    expect(three.ap).toBeCloseTo(expectedAp(bare.ap, PIECES), 6);
     expect(setSources(world, three.id)).toEqual([itemSetSourceId(SET_ID)]);
   });
 
-  it("pays ONCE, not once per piece (+100 %, never +300 %)", () => {
+  it("pays ONCE, not once per piece (one share, never three)", () => {
     cover("lichking-set-single-payout");
     const world = new SimWorld(SKELETON_ARENA, 43);
     const bare = holding(world, []);
     const full = holding(world, PIECES);
-    expect(full.ap).toBeCloseTo(bare.ap * 2, 6);
-    expect(full.ap).not.toBeCloseTo(bare.ap * 4, 6);
+    expect(full.ap).toBeCloseTo(expectedAp(bare.ap, PIECES), 6);
+    // 三份而不是一份 = 每一件各付一次
+    expect(full.ap).not.toBeCloseTo((bare.ap + flatApOf(PIECES)) * (1 + 3 * setApPct()), 6);
     expect(setSources(world, full.id).length).toBe(1);
   });
 
@@ -196,10 +237,14 @@ describe("死之王套裝 — 同時裝備三件才給，而且只給一次", ()
     for (let slot = 0; slot < PIECES.length; slot++) {
       const { id } = holding(world, PIECES);
       const armed = apOf(world, id);
-      expect(armed).toBeCloseTo(bare.ap * 2, 6);
+      expect(armed).toBeCloseTo(expectedAp(bare.ap, PIECES), 6);
 
       expect(sellItem(world, id, slot)).toBe(true);
-      expect(apOf(world, id), `selling slot ${slot} must revoke`).toBeCloseTo(bare.ap, 6);
+      const kept = PIECES.filter((_, i) => i !== slot);
+      expect(apOf(world, id), `selling slot ${slot} must revoke`).toBeCloseTo(
+        bare.ap + flatApOf(kept),
+        6,
+      );
 
       expect(undoShopAction(world, id)).toBe("ok");
       expect(apOf(world, id), `undoing slot ${slot} must restore`).toBeCloseTo(armed, 6);
@@ -218,9 +263,12 @@ describe("死之王套裝 — 同時裝備三件才給，而且只給一次", ()
 
     const both = holding(world, [...PIECES, NIGHTMARE]);
     // pctAdd is ONE summed bracket: final = base · (1 + Σ pctAdd)
-    expect(both.ap).toBeCloseTo(bare.ap * (1 + SET_AP_PCT + nightmareAp), 6);
+    expect(both.ap).toBeCloseTo(expectedAp(bare.ap, [...PIECES, NIGHTMARE], nightmareAp), 6);
     // and NOT the multiplicative reading, which is the drift that would matter
-    expect(both.ap).not.toBeCloseTo(bare.ap * (1 + SET_AP_PCT) * (1 + nightmareAp), 6);
+    expect(both.ap).not.toBeCloseTo(
+      (bare.ap + flatApOf([...PIECES, NIGHTMARE])) * (1 + setApPct()) * (1 + nightmareAp),
+      6,
+    );
   });
 });
 

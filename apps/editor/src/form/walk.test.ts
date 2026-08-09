@@ -190,6 +190,14 @@ describe("discriminated EffectDef union (editor-02)", () => {
         "extendBuff", // 52-01 狂戰士之怒 —— 受傷延長狂怒（無狀態，連續比例）
         "manaBarrier", // 44-00 機警 —— 每點魔力抵 3 點傷害（扣血之前換成扣魔）
         "randomArea", // 13-04 龍星群 / 70-04 千年練成 —— 隨機落點排程（2×count draws）
+        // ── Lane 3（2026-08-10）的兩個新 kind ────────────────────────────
+        // 同一句話：`PreviewController.effectLines` 的兩個 case 與它們同時落地
+        // （PreviewController.ts:657 / :675），所以「只補 tag」在這裡也不是選項。
+        // ⚠️ 這兩個 kind 各自又帶 `EffectDef[]` 子欄位（delayed 的 effects /
+        // finalEffects、proxyCast 走既有技能）—— 它們正是把這支檔案的 walker
+        // 撐爆的那批遞迴邊之一，見 walk.ts 的 MAX_REENTRY。
+        "delayed", // G12 —— 凍住名單、隔幾拍才付（連擊/預告落點）
+        "proxyCast", // S5 —— 代放另一支技能（80-04 每次普攻 proc）
       ].sort(),
     );
 

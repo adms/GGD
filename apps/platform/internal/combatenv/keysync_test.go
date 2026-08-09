@@ -162,3 +162,57 @@ func TestAttributeDefaultsMatchTheSharedSimTable(t *testing.T) {
 		assert.LessOrEqual(t, combatenv.AttrDefaults[k], hi)
 	}
 }
+
+// combatenv-factor-ceiling-in-sync: the ×factor ceiling exists in THREE places
+// and each one's comment claims to mirror the others. Nothing bound them.
+//
+// WHY THIS GUARD EXISTS — it is a real 2026-08-10 split-brain, not a hypothetical.
+// owner tuned `manaRegen` 8 -> 16. The old ceiling of 10 meant the content file
+// loaded fine (shared's zEnvFactor is 0..100) while every admin-console save
+// answered 400 — the operator's own tuned value locked him out of the page that
+// tunes it. Raising it touched two of the three constants; the third stayed at
+// 10 while its comment still said "mirrors combatenv.MaxFactor and admin's
+// MAX_FACTOR". An operator typing 20 into `moveSpeedMelee` would then be
+// accepted by the console AND the platform, and rejected by the Zod band when
+// it reached content/config — where a failed content load is fail-open to the
+// 2-champion skeleton.
+//
+// ⭐ This is the `ggd-pairwise-postconditions` shape: three healthy nouns, a
+// broken RELATIONSHIP. Checking each constant in isolation can never see it, so
+// this reads all three and compares them.
+func TestFactorCeilingMatchesTheTypeScriptSides(t *testing.T) {
+	testkit.Cover(t, "combatenv-factor-ceiling-in-sync")
+
+	root, err := filepath.Abs(filepath.Join("..", "..", "..", ".."))
+	require.NoError(t, err)
+
+	read := func(rel string, re *regexp.Regexp, what string) float64 {
+		b, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(rel)))
+		require.NoError(t, err, "%s: cannot read %s", what, rel)
+		m := re.FindSubmatch(b)
+		require.NotNil(t, m, "%s: %s no longer declares it in the expected shape — "+
+			"if it was renamed, this guard must be renamed with it, not deleted", what, rel)
+		v, err := strconv.ParseFloat(string(m[1]), 64)
+		require.NoError(t, err, "%s: %q is not a number", what, m[1])
+		return v
+	}
+
+	shared := read(
+		"packages/shared/src/sim/combatEnv.ts",
+		regexp.MustCompile(`FACTOR_BAND_MAX\s*=\s*([0-9.]+)`),
+		"shared sim (the Zod band content/config is validated against)",
+	)
+	admin := read(
+		"apps/admin/src/combatEnv.ts",
+		regexp.MustCompile(`MAX_FACTOR\s*=\s*([0-9.]+)`),
+		"admin console (the number the operator's input box enforces)",
+	)
+
+	assert.Equal(t, combatenv.MaxFactor, shared,
+		"shared's FACTOR_BAND_MAX and this package's MaxFactor disagree — a value "+
+			"the console accepts would be rejected when it reaches content/config, "+
+			"and a content load that fails is fail-open to the skeleton roster")
+	assert.Equal(t, combatenv.MaxFactor, admin,
+		"admin's MAX_FACTOR and this package's MaxFactor disagree — the input box "+
+			"would accept a number the PUT then answers 400 on")
+}

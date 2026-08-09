@@ -74,6 +74,8 @@ import { distSq, len, normalize, sub, type Vec2 } from "../math/vec2";
 import { casterAttrs, casterStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
+import { runOnHitChain, selectVictims } from "./victimFilter";
+import { rollAbilityCrit } from "../combat/critStrike";
 
 /** Which way the lash goes. `aim: "target"` degrades to facing, never to nothing. */
 function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | undefined {
@@ -93,7 +95,7 @@ function lineDir(e: { aim?: "facing" | "target" }, ctx: EffectContext): Vec2 | u
 }
 
 export const damageLineEffect: EffectKindSpec<"damageLine"> = {
-  apply(e, ctx) {
+  apply(e, ctx, _bakeList, runList) {
     const { world } = ctx;
     const from = world.transform.get(ctx.caster);
     if (!from) return;
@@ -143,12 +145,19 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       victims.push({ id, d2: distSq(start, vt.pos) });
     }
     victims.sort((a, b) => (a.d2 !== b.d2 ? a.d2 - b.d2 : a.id - b.id));
-    if (victims.length > cap) victims.length = cap;
-    if (victims.length === 0) return;
+    // ⭐ G1 ① —— 膠囊**內**逐一過濾 + 切上限（`damageArea` 的同一支模板，
+    // ⛔ 不是第二份實作）。一定要在 `canCrit` 的擲骰之前，理由同 damageArea。
+    const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
+    if (struck.length === 0) {
+      // ⚠️ `emit` 的語意刻意不變:過濾到零 = 今天「一個人都沒打到」的那條路 = 不 emit。
+      // 這樣「線畫出來了但沒人挨打」不會變成一個新的、沒有人要求過的視覺狀態。
+      runOnHitChain(e, [], ctx, runList);
+      return;
+    }
 
     const stats = casterStats(ctx);
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
-    for (const v of victims) {
+    for (const v of struck) {
       let amount = base;
       // ⭐ S2（GH#299）—— 資源百分比項。與 `damage.resourcePct` 共用同一個
       // 讀取器，per-target 解算（分母是**某一個身體**的條，一次範圍技的每個
@@ -156,18 +165,26 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       if (e.resourcePct !== undefined) {
         amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
       }
+      // ⭐ ⑨（2026-08-10）—— 同 `damageArea`：走 `rollAbilityCrit`，一份判定。
       let crit = false;
+      let critSources: readonly string[] | undefined;
       if (e.canCrit) {
-        const cc = stats[Stat.CritChance] ?? 0;
-        if (cc > 0 && ctx.rng.chance(cc)) {
-          crit = true;
-          amount *= stats[Stat.CritDamage] || 1.75;
-        }
+        const cr = rollAbilityCrit(
+          world,
+          ctx.caster,
+          stats[Stat.CritChance] ?? 0,
+          stats[Stat.CritDamage] || 1.75,
+          ctx.rng,
+        );
+        crit = cr.crit;
+        if (cr.crit) amount *= cr.mult;
+        critSources = cr.critSources;
       }
       world.damageQueue.push({
         source: ctx.caster,
         target: v.id,
         amount,
+        ...(critSources !== undefined ? { critSources } : {}),
         // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
         // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
         type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
@@ -186,8 +203,15 @@ export const damageLineEffect: EffectKindSpec<"damageLine"> = {
       x2: end.x,
       z2: end.z,
       width,
-      hits: victims.length,
+      hits: struck.length,
       origin: ctx.origin,
     });
+    // ⭐ G1 ② —— emit 在前, 讓客戶端先拿到那一條線, 再收下游的狀態／傷害事件。
+    runOnHitChain(
+      e,
+      struck.map((v) => v.id),
+      ctx,
+      runList,
+    );
   },
 };

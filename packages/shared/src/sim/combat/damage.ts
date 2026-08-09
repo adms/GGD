@@ -10,6 +10,7 @@ import { DAMAGE_QUEUE_MAX_PASSES } from "../effects/reflectLimits";
 import type { StructureComp } from "../systems/GuardianSystem";
 import { Stat } from "../stats/statTypes";
 import { fireHooks } from "../effects/hooks";
+import type { HookDef } from "../stats/modifiers";
 import { recordDamage } from "../stats/matchStats";
 import { refusesDamage } from "../effects/invulnerable";
 import { rollEvadeAbility } from "./evasion";
@@ -119,6 +120,32 @@ export interface DamagePacket {
    * (`effectiveLifesteal`),理由寫在 `combat/critStrike.ts` ④。
    */
   critLifesteal?: number;
+  /**
+   * ⭐ G8 —— 這一發被**哪幾條** `critStrike` 來源加成了（`ModifierSource.id`）。
+   * ABSENT = 一條都沒有 = 這個欄位出現之前的每一發封包，所以加上它是嚴格的 no-op。
+   *
+   * 由 `combat/critStrike.ts::rollCritStrike` 在**揮擊**那一刻決定（近戰直接寫進
+   * 封包，遠程先騎飛彈），這裡只是把它交給 `TriggerDamage.critSources` ——
+   * `HookDef.critSource: "thisSource"` 讀的就是它。
+   *
+   * ⚠️ **不可以**在解算時重讀持有者身上的 grant：那會把飛行中的每一箭、以及
+   * 揮擊之後才買到的每一件裝備，都算成「那一條打的」。同一個 two-push-site 陷阱
+   * `combat/damageTypeOverride.ts` 從另一端記過。
+   */
+  critSources?: readonly string[];
+  /**
+   * ⭐ S10 —— 這一發**反彈封包**打掉的原封包是什麼（分類，不是量）。
+   * ABSENT = 這不是一發反彈封包（也就是這個欄位出現之前的每一發），嚴格 no-op。
+   *
+   * 只有 `effects/damage.ts` 的 `incomingPct` 會寫它，寫的是**觸發它的那一發**
+   * (`ctx.incoming`) 的 `origin` 與 `type`；只有 `TriggerDamage.reflectedFrom` 讀它。
+   *
+   * 為什麼非得跟著封包走：`onReflectSuccess` 是在反彈封包**落地**時發的，而那時
+   * 原封包早就結算完、沒有人記得它是普攻還是技能。60-04 迴旋斬的「若成功反彈敵方
+   * **技能** AP 傷害」是一個**連言**，兩半住在兩個不同的事件上 —— 少了這一格，
+   * 作者只能放棄「技能 AP」那一半，於是那支技能對普攻也照樣觸發。
+   */
+  reflectedFrom?: { origin: string; type: DamageType };
   /**
    * 「把這一發**實際打出去的量**折回給 `source`」—— 瑪那魔杖 godie-i020
    * 「回復己方 MP 該傷害量」。ABSENT = 不折,也就是這個欄位出現之前的每一發
@@ -696,6 +723,25 @@ function mitigate(world: SimWorld, pkt: DamagePacket): number {
   return pkt.amount * (100 / (100 + Math.max(0, resist)));
 }
 
+/**
+ * ⭐ 45-00【寫輪眼】—— 這一條 `onDamageTaken` 是不是一條**免傷**反彈
+ * （`damage.incomingPct.negateOriginal`）。
+ *
+ * 純函式、只讀作者寫下的 payload，所以它可以坐在 `fireHooks` 最前面那一族閘裡
+ * （見 `effects/hooks.ts` 的 `hookFilter`）。
+ *
+ * ⛔ 只看**這一層** effects，不遞迴：`negateOriginal` 的 schema refine 只掛得上
+ * `onDamageTaken`，而巢狀在 `delayed` / `proxyCast` 底下的一發反彈本來就落在
+ * 別的 tick、扣血早就發生了 —— 那種寫法的免傷是做不到的，靜默當成做得到才是缺陷。
+ */
+function hookNegatesDamage(hook: HookDef): boolean {
+  return hook.effects.some(
+    (fx) =>
+      fx.kind === "damage" &&
+      (fx as { incomingPct?: { negateOriginal?: boolean } }).incomingPct?.negateOriginal === true,
+  );
+}
+
 export function combatResolveSystem(world: SimWorld): void {
   // Hooks fired during resolution may queue MORE damage; drain in bounded
   // passes so chains resolve deterministically without infinite loops.
@@ -913,11 +959,96 @@ export function combatResolveSystem(world: SimWorld): void {
         if (floor !== undefined) dmg = Math.max(0, hp.hp - floor);
       }
 
+      // 三個讀數一起帶,而不是在這裡先挑一個:挑哪一個是**內容的決定**
+      // (`damage.incomingPct.basis`),而這裡三個都已經算好了,成本是零。
+      // 在來源端先選 = 把一個決策點烘進 sim(CLAUDE.md 第一守則)。
+      //   raw       = 本來的量(**已經**過了上面那一行的全域倍率,未過護甲/魔抗)
+      //   mitigated = `impact`,過了護甲/魔抗、還沒進護盾池
+      //   hpLost    = 真的從血條掉下來的那一格(在下面才知道,所以它不在 base 裡)
+      // `reflectDepth` 是反彈鏈終止性的載體(effects/damage.ts 有完整證明)。
+      // `resolvePass` 是「還來不來得及」的載體。
+      //
+      // B2 (2026-08-05) —— `type` / `crit` 這兩格**本來就在手上**(`pkt` 的第 44、
+      // 45 個欄位),而在它們被抄過來之前,【暴擊時】【這一發是 AP／AD／真傷】四個
+      // 標籤在編輯器上寫不出來。成本是零:同一個作用域、同一個物件字面。
+      const triggerBase = {
+        raw: pkt.amount,
+        mitigated: impact,
+        origin: pkt.origin,
+        reflectDepth: pkt.reflectDepth ?? 0,
+        // 這一發是在第幾輪落地的。**不是常數 0**:hook 排出來的封包(每一件
+        // [On-Hit] 道具)最早也要第 1 輪才解算,而 `reflectLimits.ts` 以前那個
+        // 「深度 d 在第 d 輪落地」的推導正是漏了這件事。反彈鏈用它算剩幾輪。
+        resolvePass: pass,
+        type: pkt.type,
+        crit: pkt.crit,
+        // ⭐ G8 / S10 —— 兩格**分類**，成本同樣是零（`pkt` 就在手上）。
+        // `critSources` 讓 `HookDef.critSource:"thisSource"` 問得出「這一發是不是
+        // 我自己那條暴擊打的」；`reflectedFrom` 讓 `onReflectSuccess` 的過濾問得出
+        // 「被我反彈掉的**原**封包是什麼」——那一半在此之前完全不存在於 payload 裡，
+        // 所以 60-04 的「若成功反彈敵方**技能** AP 傷害」只能整條放棄。
+        ...(pkt.critSources !== undefined ? { critSources: pkt.critSources } : {}),
+        ...(pkt.reflectedFrom !== undefined ? { reflectedFrom: pkt.reflectedFrom } : {}),
+      };
+
+      // ─── ⭐ 45-00【寫輪眼】反彈免傷 —— **單一判定點** ────────────────────
+      // owner 2026-08-09:「反彈的預設都是免傷,看是反彈 AP or AD or both,
+      // 但也可以設定不會免傷,這個技能是免傷」。
+      //
+      // ⚠️ 出貨預設是 `negateOriginal` **省略 = 不免傷** = 今天的行為。owner 說的
+      // 「預設免傷」是**那一類技能的設計預設**(作者填那一格),不是引擎的相容性
+      // 預設 —— 引擎改預設會靜默把已上架的反射之盾 `godie-i03m` 變成免傷神裝。
+      //
+      // ── 為什麼是「扣血前**先問一次**」而不是另外兩個實作 ────────────────
+      // 三個選項都量過:
+      //   (1) 事後補血 —— 血條會先掉再彈回來(畫面上是一格閃爍),而且死亡判定
+      //       已經在 `dmg` 上跑完了:一發致命傷會先殺死人再把屍體補滿。
+      //   (2) 第二個查詢(**選這個**)—— 扣血之前用同一個 `fireHooks` 問一次,
+      //       只放免傷那一族進來;正式那一次再把它們排除。互補的兩個謂詞 ⇒
+      //       **一條 hook 只會被其中一次收到**,所以 ICD 只燒一次、骰子只抽一次。
+      //   (3) 把 `onDamageTaken` 拆成兩個相位事件 —— 對外契約多一個事件名,
+      //       每一份既有內容都要重新回答「我掛哪一個」,而收益與 (2) 完全相同。
+      // ⛔ 這是**實作選擇不是設計選擇**,所以它不是一個後台欄位。
+      //
+      // ⚠️ 這一次的 `hpLost` 是 0,而那是字面為真的:這一發不會扣血。schema 的
+      // `refineNegateOriginal` 因此禁止 `basis: "hpLost"` 與免傷並存(否則反彈量
+      // 恆為 0 —— 卡片寫著反彈、遊戲裡什麼都沒有)。
+      //
+      // ZERO GUARANTEE:沒有任何一條免傷 hook 時 `hookFilter` 在 ICD 與骰子
+      // **之前**就全部擋掉,所以既有的每一場比賽逐位元不變。
+      const negated =
+        fireHooks(
+          world,
+          pkt.target,
+          "onDamageTaken",
+          pkt.source,
+          undefined,
+          { ...triggerBase, hpLost: 0 },
+          undefined,
+          hookNegatesDamage,
+        ) > 0;
+      // ⬇⬇ 這一行就是「免傷」的全部。拿掉它,反彈照發、血照掉 —— 而畫面上
+      //     只差一個數字,沒有任何錯誤訊息(失敗形態②)。
+      if (negated) dmg = 0;
+
       const hpBefore = hp.hp;
       if (dmg > 0) hp.hp -= dmg;
 
-      // lifesteal on basic attacks
-      if (pkt.origin === "basic" && dmg > 0) {
+      // lifesteal on basic attacks — and 技能吸血 (Stat.SpellVamp) on the other
+      // half of the stream. ⭐ ONE branch, two rates: `vampRate` below picks
+      // which stat funds the restore, and everything after it (重創, combatEnv,
+      // healTarget, the 補血 number) is byte-identical for both. Writing a
+      // second copy of this block for abilities would be the drift 第三守則 warns
+      // about — the 重創 double-multiply comment below applies to both.
+      //
+      // ⚠️ The ability side is `origin.startsWith("ability:")`, NOT
+      // `origin !== "basic"`. The loose reading would vamp off `fireRing` /
+      // `flower` / `guardian` / `mob` damage, whose `pkt.source` is the
+      // environment — a champion standing in the fire ring would heal off it.
+      // 「技能吸血」 means abilities, and `ability:<id>` is how the ability damage
+      // path stamps itself (see `abilityIdOfOrigin`).
+      const vampsAsAbility = pkt.origin.startsWith("ability:");
+      if ((pkt.origin === "basic" || vampsAsAbility) && dmg > 0) {
         const srcStats = world.stats.get(pkt.source);
         const srcHp = world.health.get(pkt.source);
         if (srcStats && srcHp && srcHp.alive) {
@@ -926,12 +1057,20 @@ export function combatResolveSystem(world: SimWorld): void {
           // owns the replace/add decision (a FIELD, `lifestealMode`). Absent
           // `pkt.critLifesteal` returns `srcStats.final[Stat.Lifesteal]`
           // unchanged, which is byte-for-byte the pre-critStrike line.
-          const ls = effectiveLifesteal(
-            world,
-            pkt.source,
-            srcStats.final[Stat.Lifesteal],
-            pkt.critLifesteal,
-          );
+          // ⬇⬇ THE line. `vampsAsAbility` picks which stat funds the restore.
+          //     Collapse it back to `srcStats.final[Stat.Lifesteal]` and 技能吸血
+          //     silently becomes a no-op — the item still equips, the panel still
+          //     shows the stat, and nothing goes red (失敗形態②).
+          //     ⛔ [暴擊吸血] (`pkt.critLifesteal`) stays on the BASIC side only:
+          //     it is funded by a crit, and crits are an auto-attack notion here.
+          const ls = vampsAsAbility
+            ? srcStats.final[Stat.SpellVamp]
+            : effectiveLifesteal(
+                world,
+                pkt.source,
+                srcStats.final[Stat.Lifesteal],
+                pkt.critLifesteal,
+              );
           if (ls > 0) {
             // combatEnv.healing scales the RESTORE (a heal), on top of the
             // lifesteal STAT already scaled by combatEnv.lifesteal. Same clamp
@@ -1066,34 +1205,23 @@ export function combatResolveSystem(world: SimWorld): void {
       applyImpact(world, pkt.source, pkt.target, impact, pkt.type, impactGateTypeOf(pkt), blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);
 
       // THE PACKET ITSELF, handed to the hooks it is about ([反彈], #GGD-legendary).
-      //
-      // 三個讀數一起帶,而不是在這裡先挑一個:挑哪一個是**內容的決定**
-      // (`damage.incomingPct.basis`),而這裡三個都已經算好了,成本是零。
-      // 在來源端先選 = 把一個決策點烘進 sim(CLAUDE.md 第一守則)。
-      //   raw       = 本來的量(**已經**過了上面那一行的全域倍率,未過護甲/魔抗)
-      //   mitigated = `impact`,過了護甲/魔抗、還沒進護盾池
-      //   hpLost    = 真的從血條掉下來的那一格
-      // `reflectDepth` 是反彈鏈終止性的載體(effects/damage.ts 有完整證明)。
-      // `resolvePass` 是「還來不來得及」的載體 —— 見下面那一段。
-      const trigger: TriggerDamage = {
-        raw: pkt.amount,
-        mitigated: impact,
-        hpLost: Math.max(0, dmg),
-        origin: pkt.origin,
-        reflectDepth: pkt.reflectDepth ?? 0,
-        // 這一發是在第幾輪落地的。**不是常數 0**:hook 排出來的封包(每一件
-        // [On-Hit] 道具)最早也要第 1 輪才解算,而 `reflectLimits.ts` 以前那個
-        // 「深度 d 在第 d 輪落地」的推導正是漏了這件事。反彈鏈用它算剩幾輪。
-        resolvePass: pass,
-        // B2 (2026-08-05) —— 這兩格**本來就在手上**。`pkt` 的第 44、45 個欄位
-        // 就是 `type` 與 `crit`，而在這兩行出現之前它們沒有被抄過來,於是
-        // 【暴擊時】【這一發是 AP／AD／真傷】四個標籤在編輯器上寫不出來。
-        // 成本是零:同一個作用域、同一個物件字面,沒有多讀任何東西。
-        type: pkt.type,
-        crit: pkt.crit,
-      };
+      // 三個讀數的來由寫在上面 `triggerBase` 那一段;這裡只補上到這一行才知道的
+      // `hpLost`(免傷那一發是 0,而那是字面為真)。
+      const trigger: TriggerDamage = { ...triggerBase, hpLost: Math.max(0, dmg) };
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target, undefined, trigger);
-      fireHooks(world, pkt.target, "onDamageTaken", pkt.source, undefined, trigger);
+      // ⭐ 45-00 —— **互補的謂詞**:免傷那一族已經在扣血前跑過了(見上)。
+      // ⛔ 少了這個否定,一條免傷反彈會在同一發封包上觸發兩次 —— 反彈量變兩倍、
+      //    ICD 被燒兩次,而畫面上只是「這張卡好像特別強」。
+      fireHooks(
+        world,
+        pkt.target,
+        "onDamageTaken",
+        pkt.source,
+        undefined,
+        trigger,
+        undefined,
+        (h) => !hookNegatesDamage(h),
+      );
 
       // ────────────────────────────────────────────────────────────────────
       // 【反彈成功時】`onReflectSuccess` —— 20-002 解放.約束勝利劍MAX /

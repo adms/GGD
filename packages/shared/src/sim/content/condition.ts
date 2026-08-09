@@ -786,6 +786,15 @@ export const STATUS_FIELD_TAGS: Readonly<
     { tag: "berserk", when: (s) => s.berserk === true },
     { tag: "uncontrollable", when: (s) => s.berserk === true },
   ],
+  /**
+   * ⭐【繳械】S8 —— 打不出普通攻擊。`cc` 那一條**必須**與
+   * `effects/applyStatus.ts` 的 `isCc` 一致（見這張表的檔頭）：繳械是敵人塞過來
+   * 的純減益，免控擋得掉。⛔ 它不是 `hard-cc`（人還走得動、技能還放得出來）。
+   */
+  disarmed: [
+    { tag: "disarm", when: (s) => s.disarmed === true },
+    { tag: "cc", when: (s) => s.disarmed === true },
+  ],
   /** 「不分敵我」是【混亂】唯一的那一格，所以它推導的就是那個名字。 */
   targetsAllies: [{ tag: "confusion", when: (s) => s.targetsAllies === true }],
   /** 沉默：不能放技能，但走得動也打得到 —— 所以有自己的 tag，不進 `cc`。 */

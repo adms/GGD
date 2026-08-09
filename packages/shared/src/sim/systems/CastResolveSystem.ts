@@ -12,6 +12,7 @@ import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
+import { applyAugmentToEffects, collectAugmentOps } from "../abilities/abilityAugment";
 import { armRecovery } from "../abilities/abilityRecovery";
 
 export function castResolveSystem(world: SimWorld): void {
@@ -78,7 +79,14 @@ export function castResolveSystem(world: SimWorld): void {
     if (groundBlast) {
       world.emit("explosion", { caster: id, abilityId: cast.abilityId, x: cast.point!.x, z: cast.point!.z });
     }
-    runEffects(def.effects, {
+    // ⭐ G6-1 —— 【跨技能強化】。有吟唱的技能在這裡結算，所以這一行是
+    // `abilitySystem.ts::castAbility` 那一行的雙胞胎。⛔ 只接一邊的話
+    // 「強化一支有吟唱的技能」會安靜地失效，而畫面上跟沒強化一模一樣。
+    const augmentedEffects = applyAugmentToEffects(
+      def.effects,
+      collectAugmentOps(world, id, cast.abilityId),
+    );
+    runEffects(augmentedEffects, {
       world,
       caster: id,
       rank: cast.rank,

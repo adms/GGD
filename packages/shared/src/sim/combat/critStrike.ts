@@ -190,6 +190,29 @@ export interface CritStrikeRoll {
   crit: boolean;
   amount: number;
   critLifesteal?: number;
+  /**
+   * ⭐ G8 —— 這一發**被哪幾條來源加成了**（`ModifierSource.id`），照 `ranked` 的
+   * 順序。缺席 = 一條 grant 都沒參與 = 這個欄位出現之前的每一發。
+   *
+   * 它一路騎到封包上（近戰直接、遠程經過投射物），最後進 `TriggerDamage.critSources`
+   * ——`HookDef.critSource: "thisSource"` 讀的就是它。
+   *
+   * ⚠️ 這是 G8「一次判定、一串結果」的載體：89-01「**這一招**的暴擊把敵人震昏」
+   * 在它之前只能寫成 hook 自己再抽一次籤，於是「暴擊了但沒震昏」與「別把武器的
+   * 暴擊也震昏」兩種錯同時存在。有了名單，那條 hook 不必填 `chance` ——
+   * 判定就只剩 `rollCritStrike` 這一次骰。
+   *
+   * ⭐ 2026-08-10（⑦「一次判定、一串結果」）—— **技能暴擊也產這份名單**了
+   * （{@link rollAbilityCrit}）。在那之前只有普攻這條路產得出來，所以「暴擊 →
+   * 追加落雷」寫在技能上時作者只剩「grant 抽一次 + hook 再抽一次」可寫，於是
+   * 必然出現「暴擊了但沒落雷」。
+   * ⛔ 這也是為什麼**沒有**第二格 `CritStrikeGrant.onProc`：那會是第二個
+   * 「暴擊時做什麼」的住處，而它拿不到 target、接不上 `victim` / `condition` /
+   * `internalCooldown` / `maxTriggers` 那一整排既有的閘（第零守則⑨）。
+   * 「一次判定」由這份名單保證（hook 不填 `chance`），「一串結果」就是那條
+   * hook 的 `effects`。
+   */
+  critSources?: readonly string[];
 }
 
 /** [0,1] 夾取(同時擋掉 NaN)—— `chance` / `lifestealFraction` 的執行期上下界。 */
@@ -201,6 +224,12 @@ function clamp01(v: number): number {
 /** 一條**合格**的來源,連同它的排序鍵。 */
 interface RankedGrant {
   g: CritStrikeGrant;
+  /**
+   * ⭐ G8 —— 攜帶它的那份 `ModifierSource.id`。hook 與 grant 本來就住在**同一份**
+   * source 上（`sourceGrants` 把 `critStrike` 與 `hooks` 一起轉發），所以
+   * 「我自己那一條」是一個**關係**，不是一個會腐爛的 join key。
+   */
+  id: string;
   /** 期望增益 `chance × damageMult` —— 排序的主鍵(降序)。 */
   weight: number;
   /** `sc.sources` 的插入序 —— 排序的次鍵(升序),唯一,所以比較器是全序。 */
@@ -230,7 +259,7 @@ function rankedGrants(world: SimWorld, id: EntityId): RankedGrant[] {
     if (src.expiresAtTick !== undefined && src.expiresAtTick <= world.tick) continue;
     const weight = clamp01(g.chance) * (g.damageMult > 0 ? g.damageMult : 0);
     if (weight <= 0) continue;
-    out.push({ g, weight, order });
+    out.push({ g, id: src.id, weight, order });
   }
   // 權重降序 + 插入序升序。`order` 唯一 ⇒ 全序 ⇒ 不依賴 sort 的穩定性,
   // 每個 replica 得到逐位元相同的順序(檔頭 ⑥)。
@@ -314,11 +343,52 @@ export function rollCritStrike(
       crit: true,
       amount: baseAmount * capTotal(m, rules),
       critLifesteal: clamp01(g.lifestealFraction),
+      // ⭐ G8 —— 回滾路徑也要報名單。少了這一行，後台把 `stackMode` 切回 `max`
+      // 的那一刻，89-01「這一招的暴擊震昏」會安靜地整條停止觸發 —— 而畫面上
+      // 暴擊照跳、傷害照對（失敗形態②，而且只在某一個設定下出現）。
+      critSources: [ranked[0]!.id],
     };
   }
 
   // ── multiply(出貨)/ add ──────────────────────────────────────────────
-  // 每一條**各抽各的骰**,抽中的把自己的倍率帶進來(owner 2026-08-09)。
+  const c = combineGrants(world, ranked, rules, ownCritMult, ownCrit);
+  return {
+    crit: ownCrit || c.anyGrant,
+    amount: baseAmount * capTotal(c.total, rules),
+    ...(c.critLifesteal !== undefined ? { critLifesteal: c.critLifesteal } : {}),
+    ...(c.contributed.length > 0 ? { critSources: c.contributed } : {}),
+  };
+}
+
+/** {@link combineGrants} 的回傳 —— 這一發合成完的樣子（還沒夾上限）。 */
+interface CombinedGrants {
+  /** 合成之後的總倍率（`multiply` 是連乘、`add` 是相加），已含英雄自己那一條。 */
+  total: number;
+  /** 有沒有**任何一條 grant** 真的吃到這一發（＝就算英雄自己沒暴擊也算暴擊）。 */
+  anyGrant: boolean;
+  critLifesteal?: number;
+  /** ⭐ G8 —— 真的吃到的那幾條的 `ModifierSource.id`，照 `ranked` 的順序。 */
+  contributed: string[];
+}
+
+/**
+ * 每一條合格的 grant **各抽各的骰**，抽中的把自己的倍率帶進來（owner 2026-08-09）。
+ *
+ * ⚠️ 抽出來的**一支獨立函式**是承重的，不是整理：普攻（{@link rollCritStrike}）
+ * 與技能（{@link rollAbilityCrit}）從此走**同一份**合成規則、同一組上限、同一份
+ * 名單。兩份實作的那一天，`stackMode` / `sourceCap` / `maxTotalMult` 三格後台旋鈕
+ * 會只對其中一條路生效，而畫面上只是「技能的暴擊好像沒那麼痛」。
+ *
+ * rng：每一條合格 grant 各 1 次、最多 `rules.sourceCap` 次。⛔ 呼叫端負責在
+ * `ranked` 是空的時候**根本不要呼叫它**（ZERO GUARANTEE，見兩個呼叫端）。
+ */
+function combineGrants(
+  world: SimWorld,
+  ranked: readonly RankedGrant[],
+  rules: CritRules,
+  ownCritMult: number,
+  ownCrit: boolean,
+): CombinedGrants {
   const cap = ranked.length < rules.sourceCap ? ranked.length : rules.sourceCap;
   const multiply = rules.stackMode === "multiply";
   // `add` 是「有貢獻的那幾條相加」,所以它要數有幾條在貢獻:一條都沒有時總倍率
@@ -328,11 +398,16 @@ export function rollCritStrike(
   let contributors = ownCrit ? 1 : 0;
   let anyGrant = false;
   let critLifesteal: number | undefined;
+  // ⭐ G8 —— 這一發被哪幾條加成了。⚠️ 只收**真的吃到**的那幾條（`empoweredBy`
+  // 之後），不是每一條合格的：一條抽輸的 grant 對這一發沒有貢獻，把它算進名單
+  // 等於把 89-01 的震昏還原成「只要暴擊就震昏」，也就是這格存在要修的那個缺陷。
+  const contributed: string[] = [];
   for (let i = 0; i < cap; i++) {
     const g = ranked[i]!.g;
     const procced = world.rng.chance(clamp01(g.chance));
     if (!empoweredBy(g, procced, ownCrit)) continue;
     anyGrant = true;
+    contributed.push(ranked[i]!.id);
     product *= multOf(g);
     sum += multOf(g);
     contributors++;
@@ -341,12 +416,85 @@ export function rollCritStrike(
     // 等於回兩倍的傷害量,那是另一個機制。
     if (critLifesteal === undefined) critLifesteal = clamp01(g.lifestealFraction);
   }
-
-  const total = multiply ? product : contributors === 0 ? 1 : sum;
   return {
-    crit: ownCrit || anyGrant,
-    amount: baseAmount * capTotal(total, rules),
+    total: multiply ? product : contributors === 0 ? 1 : sum,
+    anyGrant,
     ...(critLifesteal !== undefined ? { critLifesteal } : {}),
+    contributed,
+  };
+}
+
+/** {@link rollAbilityCrit} 的回傳 —— 一發**技能**傷害要不要暴、乘多少、算誰的。 */
+export interface AbilityCritRoll {
+  crit: boolean;
+  /** 直接乘進 `amount` 的倍率；沒暴擊 = 1。 */
+  mult: number;
+  /** ⭐ 這一發被哪幾條來源加成了 —— 一路騎上封包，`HookDef.critSource` 讀它。 */
+  critSources?: readonly string[];
+}
+
+/**
+ * 一發**技能**傷害（`damage` / `damageArea` / `damageLine` 的 `canCrit`）的暴擊判定。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 為什麼它必須存在（2026-08-10，⑨）
+ *
+ * 在它之前，那三支各自寫著同一段六行的
+ * 「`cc > 0 && rng.chance(cc)` → `amount *= critDamage`」，而那段程式**只知道
+ * 英雄自己那一條聚合屬性**。兩個可觀察的後果，兩個都不是調數字能修的：
+ *
+ *   (a) `critSources` **永遠是空的**。於是 `HookDef.critSource: "thisSource"`
+ *       （89-01「**這一招**的暴擊把敵人震昏」）掛在一支技能暴擊上是**永遠不觸發**
+ *       的，而 `.describe()` 與欄位說明都沒有寫「只有普攻」——
+ *       一格編輯器填得下、載入過得了、遊戲裡永遠不發生（失敗形態②）。
+ *   (b) owner 的暴擊規則（GH#302「每一條暴擊獨立算完傷害再帶入下一條」）
+ *       與三格後台旋鈕（`stackMode` / `sourceCap` / `maxTotalMult`）**只對普攻
+ *       成立**。一位帶著天堂之劍的英雄，他的技能暴擊看不到那把劍。
+ *
+ * ⛔ 修法不是「在三個地方各補一段」（第零守則⑨：到處改改改 = 漏了一次抽象），
+ * 是三個站點**共用這一支**，而它與 {@link rollCritStrike} 共用 {@link combineGrants}。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * 決定性 —— **ZERO GUARANTEE 原封不動**
+ *
+ * · 英雄自己那一條照舊：`ownChance > 0` 才抽，而且是**第一抽**，位置與這支存在
+ *   之前逐字相同。所以 `canCrit` 但身上沒有任何 grant 的每一份既有文件（＝出貨
+ *   內容的**全部**，只有天堂之劍帶 `critStrike`）亂數流逐位元不變。
+ * · 有 grant 時每條各抽一次，上界 `sourceCap`（出貨 5）——與普攻那一半同一條規則、
+ *   同一個理由（`critStrike.ts` ③-b）。
+ */
+export function rollAbilityCrit(
+  world: SimWorld,
+  attacker: EntityId,
+  ownChance: number,
+  ownCritDamage: number,
+  rng: { chance(p: number): boolean },
+): AbilityCritRoll {
+  const rules = world.critRules;
+  // ⚠️ 先抽英雄自己那一條，理由是位置：這一抽在此之前就是這個位置，搬到 grant
+  // 迴圈後面會讓每一份既有文件的亂數流整體位移一格。
+  const ownCrit = ownChance > 0 && rng.chance(ownChance);
+  const ownCritMult = ownCrit ? ownCritDamage : 1;
+  const ranked = rankedGrants(world, attacker);
+  // ZERO GUARANTEE —— 一條合格 grant 都沒有時**再也不碰 rng**。
+  if (ranked.length === 0) {
+    return { crit: ownCrit, mult: capTotal(ownCritMult, rules) };
+  }
+  if (rules.stackMode === "max") {
+    // 回滾路徑與普攻那一半同形：只有最強的那一條參與，整發只多抽一次。
+    const top = ranked[0]!;
+    const procced = world.rng.chance(clamp01(top.g.chance));
+    if (!empoweredBy(top.g, procced, ownCrit)) {
+      return { crit: ownCrit, mult: capTotal(ownCritMult, rules) };
+    }
+    const m = ownCritMult > multOf(top.g) ? ownCritMult : multOf(top.g);
+    return { crit: true, mult: capTotal(m, rules), critSources: [top.id] };
+  }
+  const c = combineGrants(world, ranked, rules, ownCritMult, ownCrit);
+  return {
+    crit: ownCrit || c.anyGrant,
+    mult: capTotal(c.total, rules),
+    ...(c.contributed.length > 0 ? { critSources: c.contributed } : {}),
   };
 }
 

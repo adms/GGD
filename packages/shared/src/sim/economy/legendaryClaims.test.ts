@@ -163,6 +163,11 @@ const LABEL_RULES: LabelRule[] = [
   { label: "普攻吸血", stat: Stat.Lifesteal, op: ModOp.Flat, reading: "rate" },
   { label: "全能吸血", stat: Stat.Lifesteal, op: ModOp.Flat, reading: "rate" },
   { label: "閃避", stat: Stat.Evasion, op: ModOp.Flat, reading: "rate" },
+  // 2026-08-10 owner：至尊魔戒「附加技能吸血 20%」。`吸血` ⊄ `技能吸血` 的
+  // 前綴關係跟上面 `普攻吸血` / `全能吸血` 完全一樣,靠整行錨定分開。
+  { label: "技能吸血", stat: Stat.SpellVamp, op: ModOp.Flat, reading: "rate" },
+  // 2026-08-10 owner：晨曦之光 30% / 仙后座 50%「CD 時間再減少」。
+  { label: "冷卻縮減", stat: Stat.CooldownReduction, op: ModOp.Flat, reading: "rate" },
 ];
 
 /**

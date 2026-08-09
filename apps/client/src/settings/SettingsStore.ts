@@ -8,10 +8,12 @@
  */
 import {
   DEFAULT_NETWORK,
+  DEFAULT_UI,
   SETTINGS_STORAGE_KEY,
   SETTINGS_VERSION,
   clampGraphics,
   clampNetwork,
+  clampUi,
   cloneSettings,
   defaultGraphicsFor,
   migrateSettings,
@@ -19,6 +21,7 @@ import {
   type NetworkSettings,
   type QualityPreset,
   type Settings,
+  type UiSettings,
 } from "./types";
 import { applyPreset, autoDetectPreset, type DetectEnv } from "./presets";
 import { isTouchDevice, readTouchEnv } from "../input/mobileDetect";
@@ -68,6 +71,10 @@ export class SettingsStore {
       version: SETTINGS_VERSION,
       graphics: defaultGraphicsFor(this.touch),
       network: { ...DEFAULT_NETWORK },
+      // ⛔ 新裝置一律「中」，**連觸控裝置也是**。iPhone 上直接開成「最小」很誘人，
+      // 但那是替玩家決定他的視力 —— owner 給的是七個檔位讓他自己選，而「中」是
+      // 他明說的預設。平台差異只住在 fpsCap 那一格（見 defaultGraphicsFor）。
+      ui: { ...DEFAULT_UI },
     });
   }
 
@@ -104,6 +111,10 @@ export class SettingsStore {
     return this.settings.network;
   }
 
+  ui(): UiSettings {
+    return this.settings.ui;
+  }
+
   /** Subscribe to any settings change; returns an unsubscriber. */
   subscribe(fn: (s: Settings) => void): () => void {
     this.listeners.add(fn);
@@ -122,6 +133,14 @@ export class SettingsStore {
     this.commit({
       ...this.settings,
       network: clampNetwork({ ...this.settings.network, ...partial }),
+    });
+  }
+
+  /** Merge partial UI changes (clamped) and persist + notify. */
+  patchUi(partial: Partial<UiSettings>): void {
+    this.commit({
+      ...this.settings,
+      ui: clampUi({ ...this.settings.ui, ...partial }),
     });
   }
 
@@ -146,13 +165,21 @@ export class SettingsStore {
     });
   }
 
-  /** "Reset to recommended": auto-detect the hardware and apply that preset. */
+  /**
+   * "Reset to recommended": auto-detect the hardware and apply that preset.
+   *
+   * ⚠️ **`ui` 刻意被保留下來，不跟著重設。** HUD 縮放是玩家對**他的眼睛與他的
+   * 螢幕**做的選擇（owner 講的是 32 吋 / MacBook / iPad / iPhone），不是一個效能
+   * 參數 —— 它對 GPU 的影響是零。一個按「重設為建議值」想修掉掉幀的人，不應該
+   * 因此被把字縮回看不見。同一個理由讓 `applyPreset` 從來不碰 `goreStyle`。
+   */
   resetToRecommended(env: DetectEnv): QualityPreset {
     const preset = autoDetectPreset(env);
     this.commit({
       version: SETTINGS_VERSION,
       graphics: clampGraphics(applyPreset(defaultGraphicsFor(this.touch), preset, this.touch)),
       network: { ...DEFAULT_NETWORK },
+      ui: clampUi({ ...this.settings.ui }),
     });
     return preset;
   }

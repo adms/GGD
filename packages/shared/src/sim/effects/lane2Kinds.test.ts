@@ -108,7 +108,8 @@ describe("Lane 2 的三個 effect kind", () => {
     const count = 6;
     const barrage: EffectDef = {
       kind: "randomArea",
-      shape: "single",
+      // ⛔ 沒有 `shape`：2026-08-10 拿掉了那四格孤兒（handler 一格都不讀）。
+      // 作用範圍由 `scatterRadius` + `who` 講清楚，見 `randomArea.ts` 檔頭。
       count: [count],
       intervalSec: 0.2,
       scatterRadius: 5,

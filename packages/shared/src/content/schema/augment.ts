@@ -2,7 +2,7 @@
 import { z } from "zod";
 import type { AugmentId } from "../../ids";
 import { zIdFor, zStatModifier } from "./common";
-import { SOURCE_GRANT_SHAPE, zHookDef } from "./effect";
+import { SOURCE_GRANT_SHAPE, refineUnrankedHookPerRank, zHookDef } from "./effect";
 
 export const zAugmentTier = z.enum(["silver", "gold", "prismatic"]);
 
@@ -14,7 +14,13 @@ export const zAugmentDef = z
     tier: zAugmentTier,
     weight: z.number().positive(),
     modifiers: z.array(zStatModifier).optional(),
-    hooks: z.array(zHookDef).optional(),
+    /**
+     * ⭐ G4 —— 三選一增益卡是**抽到就掛**，沒有階級概念
+     * （`economy/draft.ts::applyAugmentPick` 建來源時不帶 rank），所以掛在這裡的
+     * hook payload 只讀得到 `perRank` 的第 1 欄。⛔ 不可以只關道具那一半：
+     * 兩個載體同樣拿不到 rank，只關一邊等於留一個一模一樣的洞。
+     */
+    hooks: z.array(zHookDef.superRefine(refineUnrankedHookPerRank)).optional(),
     /**
      * ⭐ **格擋 / 暴擊來源**（owner #299 第 2 · 6 條）。
      *

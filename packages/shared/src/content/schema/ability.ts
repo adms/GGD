@@ -1,8 +1,9 @@
 /** ability@1 — mirrors `AbilityDef` in sim/content/defs.ts. */
 import { z } from "zod";
 import type { AbilityId } from "../../ids";
-import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zTintRgb } from "./common";
-import { zAbilityPassive, zEffectDef, zHookEvent } from "./effect";
+import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zStat, zTintRgb } from "./common";
+import { zEffectCondition } from "./condition";
+import { hasBudgetedLeaf, zAbilityPassive, zEffectDef, zHookEvent } from "./effect";
 import { zMarkSpec } from "./mark";
 import { zAbilityTemplateBinding } from "./template";
 import { zAbilityVfxLayers } from "./abilityVfx";
@@ -128,6 +129,50 @@ export const zAbilityToggle = z
      */
     onExit: z.array(zEffectDef),
     /**
+     * ⭐ G13-2 —— 這顆按鈕**開著的期間**，持有者身上多了什麼（20-01 風王結界的
+     * 防禦、70-00 紮根的光環）。缺席 = 開著什麼都不多 = **今天的行為逐字**
+     *（`enterToggle` 在這一格之前一次 `attachSource` 都不做）。
+     *
+     * ⭐ **刻意重用 {@link zAbilityPassive}**（`{ name?, ranks: [...] }`），
+     * ⛔ 不是寫第二份 `EffectDef[]`。三個理由，每一個都是硬的：
+     *   ① `EffectDef[]` 表達不出「開著期間」—— effect 是一次性的；要維持
+     *      「防禦×2」得寫一個 `applyBuff` 加一個 `duration`，而那個 duration
+     *      必須等於**沒有人知道多長**的切換時間。作者只能猜一個大數字，於是
+     *      關掉之後 buff 還在（失敗形態②，畫面上看不出來）。
+     *   ② `zAbilityPassiveRank` **已經是**「一段期間身上有什麼」的完整詞彙
+     *     （modifiers / hooks / auras / vision / flight / block / critStrike /
+     *      attributes / damageTypeOverride 九種 payload + `whileForm` 形態閘）。
+     *      重用它 = 這九種當天全部對切換技開放，schema 一格、handler 一支
+     *     （第零守則⑨）。
+     *   ③ rank 索引免費拿到：20-01 有 4 個 rank、四組不同的數字，而 `ranks[]`
+     *      的語意與 passive 逐字相同 —— 作者不用學第二套。
+     *
+     * ⚠️ 已知邊界（**不是**漏掉）：`syncAbilityPassives` 不碰這條來源，所以
+     * **開著的時候升級不會換 rank**。今天沒有客戶（0 份文件帶 `toggle`），
+     * ⛔ 不要為它現在就加第三格欄位。
+     *
+     * ⚠️ 它與 `champion@1.transform` 是兩件事：這一格只給**屬性與觸發器**，
+     * ⛔ 不換 3D 身體。要換身體仍然走 `championForm`。
+     */
+    whileOn: zAbilityPassive.optional(),
+    /**
+     * ⭐ G13-2 —— 關閉那一刻，`onExit` 的效果**吃不吃得到** `whileOn` 自己的
+     * 加成。省略 = `false` = 先卸下再跑 `onExit`。
+     *
+     * 這是一個會直接改變傷害數字、而且**兩邊都有人想要**的決策：
+     * 「凝聚的風能一次釋放」讀起來像是應該吃到風王結界自己的加成（`true`），
+     * 但「開著時 AP +50%、關閉時放一發吃 AP 的大招」寫成 `true` 就是一個很容易
+     * 被忽略的雙重收益（`false`）。⛔ 我不挑一邊然後在註解裡辯護；預設選
+     * 「不吃」，因為那是今天沒有這個功能時的等價行為。
+     */
+    whileOnDuringExit: z
+      .boolean()
+      .optional()
+      .describe(
+        "關閉時的效果要不要吃到「開著期間」的加成。留空＝不吃（先卸下加成，再跑關閉效果）。" +
+          "打開它，關閉那一發爆發就會用開著時的強化數值結算。",
+      ),
+    /**
      * 資源不足以支付維持成本時，要不要自動關閉。省略 = `true`
      * （20-01 文案：「[MP]不足則自動關閉」）。
      *
@@ -206,7 +251,24 @@ export const zAbilityToggle = z
  * 要更窄就填 {@link zAbilityAugmentOp} 的兩格選擇器（`hookOn` / `nodeKind`），
  * 它們一樣是**具名的**，不是位置。
  */
-export const AUGMENT_OPS = ["procChance", "durationSec", "damageCoeffAp", "thresholdPct"] as const;
+export const AUGMENT_OPS = [
+  "procChance",
+  "durationSec",
+  "damageCoeffAp",
+  "thresholdPct",
+  /**
+   * ⭐ G6-2（2026-08-10）—— 改寫目標技能**某一條 `StatModifier` 的數值**
+   *（「把那支技能的護甲加成從 +10 改成 +100」）。
+   *
+   * 在它之前這一族只能靠「複製一整份技能文件再改一個數字」表達，而那正是
+   * 第〇·五守則說的「為某支技能寫一份程式」的內容版。
+   * ⚠️ 它**必須**指名 {@link zAbilityAugmentOp} 的 `stat`（superRefine 擋）：
+   * 一個 passive 區塊的 `modifiers` 通常不只一條（護甲 +10、力量 +10、
+   * 攻速 +0.2），沒有那一格的話「改加成量」會把三條一起改成同一個數字，
+   * 而**後台看起來完全正常**。
+   */
+  "modifierValue",
+] as const;
 export type AugmentOpName = (typeof AUGMENT_OPS)[number];
 
 /**
@@ -224,6 +286,21 @@ export const AUGMENT_OP_BOUNDS: Readonly<Record<AugmentOpName, readonly [number,
   damageCoeffAp: [-10, 10],
   /** 門檻比例。59-001 的「降為低於最大生命 20%」= `set 0.2`。 */
   thresholdPct: [0, 1],
+  /**
+   * ⭐ G6-2 —— 一條 `StatModifier` 的 `value`。
+   *
+   * ⚠️ 這一格必須**同時**容納兩種量綱：`ModOp.Flat` 的絕對值（出貨最大的道具
+   * 加成量級是幾百）與 `ModOp.PercentAdd` 的比例（0.5 = +50%）。10000 不是
+   * 平衡政策，是**打錯字的閘** —— 一個真的超過 10000 的 flat 加成代表有人把
+   * w3x 原始數字直接抄進來沒換算（與 `zAuraDef.radius` 的 40 上界同一種理由）。
+   *
+   * ⚠️ 副作用寫在明處：{@link AUGMENT_VALUE_MIN}/{@link AUGMENT_VALUE_MAX} 是
+   * 整張表的 min/max，所以加這一列會把 `zAbilityAugmentOp.value` 的**外層**界
+   * 從 [-10, 600] 撐到 [-10000, 10000]。這是既有設計（外層是聯集、內層
+   * superRefine 逐 op 收緊，同 `refineModifyCooldown` 的形狀）——
+   * `procChance: 5000` 仍會被 superRefine 擋在 [0, 1]。
+   */
+  modifierValue: [-10000, 10000],
 };
 
 const AUGMENT_VALUE_MIN = Math.min(...Object.values(AUGMENT_OP_BOUNDS).map((b) => b[0]));
@@ -267,6 +344,41 @@ export const zAbilityAugmentOp = z
      * `ability-augment@1` caveat 裡，⛔ 不要假裝它會紅。
      */
     nodeKind: z.string().min(1).optional(),
+    /**
+     * ⭐ G6-1 / G6-4 —— 這條操作**打得到目標技能的哪幾個地方**。
+     *
+     * 省略 = `"all"` = 目標技能裡每一個同名數字：hook 上的（`chance` /
+     * hook 效果裡的持續與係數）、主動施放的 `effects[]` 上的，以及來源授予
+     *（`critStrike.chance`）上的。
+     *
+     * ⚠️ 這**與「今天的行為」不完全相同**（今天只有 hooks 那一條線接上了），
+     * 而它是刻意且**可觀測等價**的：全 repo 帶 `augment` 的技能文件是 **0 份**，
+     * 所以兩種預設在今天逐位元相同。選 `"all"` 是因為它等於這個檔頭已經寫死的
+     * 語意「一個操作套用在目標技能裡**每一個**同名數字上」；選 `"hooks"` 反而會
+     * 讓作者寫出一份看起來對、只生效一半的強化（失敗形態②）。
+     *
+     * ⭐ 一格收**兩個**決策（第零守則⑨，⛔ 不是兩個 boolean）：
+     *   ① 一條 `durationSec` 到底打 hook 裡的效果、主動技的 `effects`，還是兩者。
+     *   ② 一條 `procChance` 要不要順手改到 `critStrike.chance`（一支技能可能
+     *      同時有一個 15% 的 on-hit proc 與一個 6% 的暴擊來源，而作者說
+     *      「機率上升至 50%」時心裡想的通常只有其中一個）。
+     */
+    scope: z
+      .enum(["all", "hooks", "effects", "grants"])
+      .optional()
+      .describe(
+        "這條強化改到哪裡：all（預設，目標技能裡每一個同名數字）／" +
+          "hooks（只改觸發器上的）／effects（只改主動施放的效果）／" +
+          "grants（只改來源授予的，例如暴擊來源的機率）。",
+      ),
+    /**
+     * ⭐ G6-2 —— `op: "modifierValue"` 指名**哪一條屬性**的加成量。
+     * 該 op 下**必填**，其餘 op 下**不得填**（superRefine 兩個方向都關）。
+     */
+    stat: zStat.optional().describe(
+      "只有「改加成量」這種強化要填：指名要改哪一條屬性的加成（護甲／力量／攻速…）。" +
+        "不填的話一份被動上的三條加成會被一起改成同一個數字，而後台看起來完全正常。",
+    ),
   })
   .strict()
   .superRefine((o, ctx) => {
@@ -290,8 +402,29 @@ export const zAbilityAugmentOp = z
         code: z.ZodIssueCode.custom,
         path: ["nodeKind"],
         message:
-          'op "procChance" 改的是 hook 自己的 chance 欄位,沒有節點可以挑 —— ' +
-          "要縮小範圍請用 hookOn。填了 nodeKind 會是一格永遠不被讀的設定(失敗形態 ②)",
+          'op "procChance" 改的是 hook 自己的 chance 與暴擊來源的 chance,' +
+          "兩者都不是 effect 節點,所以沒有 nodeKind 可以挑 —— 要縮小範圍請用 " +
+          "hookOn 或 scope。填了 nodeKind 會是一格永遠不被讀的設定(失敗形態 ②)",
+      });
+    }
+    // ⭐ G6-2 —— `stat` 兩個方向都關死：必填那一邊擋「一次改掉三條加成」，
+    // 禁填那一邊擋「op 打錯字」（留著會讓下一次稽核讀成「設定過了」，
+    // 同 refineStatModifierFrom 的第二個方向）。
+    if (o.op === "modifierValue" && o.stat === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["stat"],
+        message:
+          'op "modifierValue" 必須指名 stat —— 一份被動的 modifiers 通常不只一條' +
+          "（護甲 +10、力量 +10、攻速 +0.2），沒有這一格會把它們一起改成同一個數字，" +
+          "而後台看起來完全正常（計畫 §13：不得套到相鄰效果）",
+      });
+    }
+    if (o.op !== "modifierValue" && o.stat !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["stat"],
+        message: `stat 只有 op "modifierValue" 讀得到 —— 掛在 "${o.op}" 上是一格永遠不被讀的設定`,
       });
     }
     if (o.op === "thresholdPct" && o.nodeKind === undefined) {
@@ -318,8 +451,41 @@ export const zAbilityAugmentTarget = z
      */
     abilityId: zRef<AbilityId>("abilities"),
     ops: z.array(zAbilityAugmentOp).min(1).max(AUGMENT_MAX_OPS),
+    /**
+     * ⭐ G6-3（77-002 御雷劍：「[裝備了某類道具時] 其雷鳴劍發動機率上升至 50%」）
+     * —— 這個目標的所有操作要不要生效的**前提**。
+     *
+     * 省略 = 無條件生效 = 這一格出現之前 `collectAugmentOps` 的行為逐字。
+     *
+     * ⭐ 為什麼掛在 **target** 而不是 augment 頂層或每一條 op：77-002 一張卡同時
+     * 強化 77-02（機率）與 77-03（持續時間），而**兩者共用同一個前提**（拿著御雷
+     * 劍）。掛在頂層就表達不出「同一支 EX 的兩個強化各有各的前提」（下一張卡一定
+     * 會出現）；掛在每條 op 上則是把同一句話抄 N 遍、N 份會分岔。target 是「一個
+     * 被強化的對象 + 它的一組操作」，前提是這個**對象層級**的性質。
+     */
+    condition: zEffectCondition.optional().describe(
+      "這個強化的前提：條件成立時這一組改寫才生效（例如「裝備了某類道具時」）。" +
+        "留空＝一直生效。⚠️ 這裡**不可以**用機率類條件，理由見錯誤訊息。",
+    ),
   })
-  .strict();
+  .strict()
+  .superRefine((t, ctx) => {
+    // ⭐ 這不是潔癖：`evaluateCondition` 每一顆機率葉都**抽一次 `world.rng`**，
+    // 而這一格的求值點在 `syncAbilityPassives` 裡 —— 那支是**冪等、會被重跑很多
+    // 次**的（spawn／升級／EX 解鎖／變身都重跑）。把一個會抽 rng 的東西放進去 =
+    // `sim/purity.test.ts` 抓不到（它不是 Math.random）、測試全綠，而兩個 replica
+    // 在第一次升級就分岔。CLAUDE.md 的 fail-loud 條款：在**載入時**擋下。
+    if (t.condition !== undefined && hasBudgetedLeaf(t.condition)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["condition"],
+        message:
+          "強化的前提**不可以**含機率條件：它在 syncAbilityPassives 裡求值，而那支在" +
+          "spawn／升級／EX 解鎖／變身都會重跑 —— 每一次都會抽一次亂數，直接把錄影打散。" +
+          "要「有機率的強化」請把機率寫在被強化技能自己的觸發器上。",
+      });
+    }
+  });
 
 /**
  * `ability@1.augment` —— 缺席 = 這支技能不強化任何東西，整條管線在它身上
@@ -362,6 +528,35 @@ export const zAbilityDef = z
      * can branch on it without also having to re-derive the slot.
      */
     innateKind: zInnateKind.optional(),
+    /**
+     * ⭐ G13-1 —— 一支**主動型天生技**（`slot:"PASSIVE"` + `innateKind:"active"`）
+     * 的 `passive` 區塊要不要真的掛上去。
+     *
+     * 省略 = `"skip"` = **今天的行為逐字**（`syncAbilityPassives` 對主動型天生技
+     * `continue`，所以那個區塊的 modifiers/hooks/vision/flight/block/critStrike
+     * 一格都不生效）。1,900 份既有技能文件一份都不帶它 → 全樹零變化。
+     *
+     * ⛔ 那個 `continue` 是一個**寫死在程式裡的決策**，而它的理由（「不讓一份寫錯
+     * 的文件把一支 40 秒的大招變成免費光環」）是對的 —— 但那是「預設值該選哪一個」
+     * 的理由，不是「這裡不該有欄位」的理由（第一守則）。WC3 裡「一支有冷卻的 D 槽
+     * 主動技，同時掛著一個常駐光環／被動」是一整族（70-00 紮根：15 秒冷卻 +
+     * 芬多精光環），而引擎今天為了其中**一種** payload（auras）養了一支 387 行的
+     * 替身系統（`sim/auraCarrier.ts`）。這一格的價值是把那個決策從程式搬到文件上。
+     *
+     * ⚠️ **生命週期不一樣，而且要說在明處**：`syncAbilityPassives` 掛上去的來源是
+     * **永久**的（rank>0 就在），而 `auraCarrier` 的替身只在**戰鬥期 + 變身中**
+     * 存在。所以「只有紮根形態才有的光環」正確寫法是**同時**在那個 rank 區塊填
+     * `whileForm: "alternate"`（那一格已經存在、`rankBlock` 已經在讀），
+     * ⛔ 不要靠這一格自己表達形態。
+     */
+    innateActivePassive: z
+      .enum(["skip", "attach"])
+      .optional()
+      .describe(
+        "主動型天生技（有冷卻、要按的那種）的「被動區塊」要不要一直掛在身上。" +
+          "留空＝不掛（安全的預設）。attach＝掛上去，用來做「一支主動技同時帶一個常駐光環／被動」。" +
+          "⚠️ 掛上去是**整場常駐**的；只想在某個形態下生效請在那一階填 whileForm。",
+      ),
     castType: zCastType,
     maxRank: z.number().int().min(1).max(6),
     /** per rank (index rank-1), seconds */
@@ -508,9 +703,36 @@ export const zAbilityDef = z
  * are already pinned to Q/W/E/R by `zChampionDoc`.
  */
 function refineInnate(
-  doc: { slot: string; innateKind?: string; effects: unknown[] },
+  doc: {
+    slot: string;
+    innateKind?: string;
+    effects: unknown[];
+    innateActivePassive?: string;
+    passive?: unknown;
+  },
   ctx: z.RefinementCtx,
 ): void {
+  // ⭐ G13-1 —— 兩個方向都關死，形狀與下面 `innateKind` 那一條逐字相同：
+  // 一格填得下、永遠不會被讀到的設定就是失敗形態②，而它在後台看起來完全正常。
+  if (doc.innateActivePassive !== undefined) {
+    if (!(doc.slot === "PASSIVE" && doc.innateKind === "active")) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["innateActivePassive"],
+        message:
+          'innateActivePassive 只在 slot "PASSIVE" + innateKind "active" 上有意義 —— ' +
+          "其他情形下 passive 區塊本來就會掛上，這一格會是一格永遠不被讀的設定",
+      });
+    } else if (doc.innateActivePassive === "attach" && doc.passive === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["passive"],
+        message:
+          'innateActivePassive: "attach" 要掛的是 passive 區塊，而這支技能沒有 passive —— ' +
+          "沒有東西可以掛上去",
+      });
+    }
+  }
   if (doc.slot === "PASSIVE") {
     if (doc.innateKind === undefined) {
       ctx.addIssue({

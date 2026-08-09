@@ -639,47 +639,50 @@ const BAND_LEDGER: readonly LedgerRow[] = [
   },
 
   // ── values the scan cannot evaluate ───────────────────────────────────────
+  //
+  // ⭐ 2026-08-10 —— 這七列在 HUD 縮放（owner 的七檔位）之後**全部重新驗過**，
+  // 不是把舊 `why` 抄到新字串上。改變的是前提：以前這些是**常數**（84 / 122 /
+  // 58），現在是 `touchMetrics()` 的欄位，最小檔位會把它們乘 0.1。
+  //
+  // ⛔ 而那正好戳破一個真的缺陷：`hudScale(84,"min") = 8` **比帶子還低**，
+  // 也就是最小檔位會把攻擊鈕壓進版本徽章底下。所以 `TouchControls.touchMetrics`
+  // 現在把錨點夾在 `HUD_STAMP_BAND + attackSize/2` 之上 —— 下面每一列的
+  // 「還在帶子之上」都是**由那道下限保證的**，不再是「84 很大所以沒事」。
   {
     file: "TouchControls.tsx",
-    value: "ATTACK_CENTER",
+    value: "m.attackCenter - m.attackSize / 2",
     count: 1,
-    why: "the touch attack button, ATTACK_CENTER (84) above the bottom edge; its lowest edge is asserted numerically by the controls test above",
+    why: "攻擊鈕自己的底邊 —— 手機上最低的那個東西。`touchMetrics` 的 anchorFloor 就是照這條式子定的（`HUD_STAMP_BAND + attackSize/2`），所以它恰好等於帶子的上緣、永遠不低於它",
   },
   {
     file: "TouchControls.tsx",
-    value: "ATTACK_CENTER - ATTACK_SIZE / 2",
+    value: "m.attackCenter + m.arcRadius + m.s(46)",
     count: 1,
-    why: "that button's own bottom edge — the single lowest thing on a phone, asserted numerically above",
+    why: "技能弧的標籤列，比它量測基準的攻擊鈕**更上面**（arcRadius 與 46 都 >= 0）",
   },
   {
     file: "TouchControls.tsx",
-    value: "ATTACK_CENTER + ARC_RADIUS + 46",
+    value: "m.attackCenter + m.arcRadius - m.abilitySize / 2",
     count: 1,
-    why: "the ability arc's label row, further UP than the attack button it is measured from",
+    why: "弧上一格的底邊。⚠️ 縮放之後這不再是「顯然」的：`abilitySize` 走 `hudScaleTappable`（有 44px 下限）而 `arcRadius` 走 `hudScale`（沒有），所以最小檔位是 12.2 - 22 = **-9.8**，比 attackCenter 低。安全的理由是 attackCenter 自己被夾在 `HUD_STAMP_BAND + attackSize/2 = 10 + 22 = 32` 之上，32 - 9.8 = 22.2 > 10 —— 由 anchorFloor 保證，不是由這一項自己保證",
   },
   {
     file: "TouchControls.tsx",
-    value: "ATTACK_CENTER + ARC_RADIUS - ABILITY_SIZE / 2",
+    value: "m.attackCenter + Math.sin(angle) * m.arcRadius",
     count: 1,
-    why: "an arc tile's bottom edge: ARC_RADIUS above the attack centre, minus half a tile — still far above the band",
+    why: "弧上一格的**中心**；`angle` 掃過的區間 sin >= 0，所以永遠不低於 attackCenter，而後者已被 anchorFloor 夾住",
   },
   {
     file: "TouchControls.tsx",
-    value: "ATTACK_CENTER + Math.sin(angle) * ARC_RADIUS",
+    value: "m.attackCenter - m.abilitySize / 2",
     count: 1,
-    why: "an arc tile's centre; sin >= 0 over the arc, so it is never below ATTACK_CENTER",
+    why: "天生技格的底邊（它與攻擊鈕同高、只是往右排）。同上：最壞情況 32 - 22 = 22 > 10",
   },
   {
     file: "TouchControls.tsx",
-    value: "PASSIVE_CENTER.bottom - ABILITY_SIZE / 2",
+    value: "bottom - m.abilitySize / 2",
     count: 1,
-    why: "the 天生技 tile, positioned off PASSIVE_CENTER which sits inside the same arc block",
-  },
-  {
-    file: "TouchControls.tsx",
-    value: "bottom - ABILITY_SIZE / 2",
-    count: 1,
-    why: "the shared tile helper: `bottom` is the caller's centre, and every caller is one of the arc positions above",
+    why: "共用的格子輔助式：`bottom` 是呼叫端的中心，而每一個呼叫端都是上面那幾個弧位置之一",
   },
   {
     file: "components/CastNotice.tsx",

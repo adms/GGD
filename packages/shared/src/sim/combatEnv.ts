@@ -48,6 +48,37 @@
  *                   re-query, and the ability projectile hit radius in
  *                   ProjectileSystem, all via resolveAbilityRange/Radius)
  *
+ * THE THREE 2026-08-10 ROWS (owner: 「config 加一格 moveSpeedByAttackType 預設為
+ * (近戰/遠戰) 0.8/0.6」+「加一格 magicResistMult 預設 0.2」) are the first entries
+ * in this table that are NOT one-factor-per-stat — they are a SECOND factor on a
+ * row that already had one, and two of them are chosen by WHO the unit is:
+ *
+ *   moveSpeedMelee   × Stat.MoveSpeed, ONLY for a 近戰 champion (statPipeline)
+ *   moveSpeedRanged  × Stat.MoveSpeed, ONLY for a 遠程 champion (statPipeline)
+ *   magicResistMult  × Stat.MagicResist, ON TOP OF `defense` (statPipeline)
+ *
+ * WHY THESE THREE AND NOT A COEFFICIENT TWEAK (measured 2026-08-10 over the
+ * shipped bundle — 119 champions, level-10 medians; recorded here so the next
+ * reader does not have to re-derive it):
+ *   · 護甲 median 11.4 (−10.2% damage) vs 魔抗 median 49.6 (−33.2%) — a 4.4×
+ *     gap, and 74/119 cards have ZERO base armour while exactly 1 has zero MR.
+ *     Meanwhile `defaultAbilityDamageType` is "magic" (137 magic / 90 physical
+ *     ability effects) and a basic attack is 100% physical. Over a 9s window a
+ *     champion actually lands 441 from basics vs 294 from one ability — so
+ *     「技能傷害太低」 is MAGIC RESIST, not the coefficients, and one global
+ *     ×factor on `Stat.MagicResist` is the smallest thing that moves it.
+ *   · ranged median attack range 8.2u vs melee 1.6u, while move speed is 5.70 vs
+ *     5.90 — a 0.20 u/s gap, i.e. 33 seconds to close, inside a 3-minute round,
+ *     and only 2 of 119 champions have a dash. So 「風箏到死」 is the ABSENT
+ *     SPEED DIFFERENTIAL, not raw move speed — which is why the knob is split by
+ *     attack type instead of moving the existing global `moveSpeed`.
+ *
+ * ⚠️ ALL THREE DEFAULT TO 1.0 WHEN ABSENT, and that is a hard requirement, not
+ * an oversight: a config/overlay written before today has none of these keys and
+ * MUST produce byte-identical numbers. The shipped 0.8 / 0.6 / 0.2 are the
+ * owner's chosen values and they live in `content/config/combat-env.json` —
+ * never here (第一守則: the shipped value has exactly one home).
+ *
  * THE FIVE 金錢發放 FACTORS (owner 2026-08-04「金錢發放有點太浮濫了」) join the
  * same table for the same reason the coefficients did — this IS the project's
  * 系統倍率 mechanism, and a second one would mean a second admin page, a second
@@ -198,6 +229,20 @@ export const COMBAT_ENV_KEYS = [
   "goldEliteKill",
   "goldHeroKill",
   "goldQuest",
+  // ── 2026-08-10 owner ×3 ──────────────────────────────────────────────────
+  // Appended at the END, same convention as `itemCooldown` / `intToMagicResist`
+  // (readable diffs; `combatenv.Keys` in apps/platform mirrors this list and
+  // keysync_test.go compares MEMBERSHIP, not position).
+  //
+  // ⚠️ `moveSpeedByAttackType` was the owner's wording; it lands here as TWO
+  // scalar keys because `CombatEnvMultipliers` is a flat `Record<key, number>`
+  // that the Go mirror, the Zod schema, the admin table and the wire JSON all
+  // walk element by element. A nested `{melee, ranged}` object would need a
+  // second shape in five places to say what two rows already say — the SEMANTICS
+  // are word-for-word the owner's, only the container is the existing one.
+  "moveSpeedMelee",
+  "moveSpeedRanged",
+  "magicResistMult",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
@@ -285,6 +330,72 @@ export function applyGoldFactor(amount: number, factor: number): number {
   if (factor === 1) return amount;
   if (!Number.isFinite(factor) || factor < 0) return amount; // same fail-safe as normalizeCombatEnv
   return Math.round(amount * factor);
+}
+
+/**
+ * The three 2026-08-10 rows. Membership here is what narrows a key's legal band
+ * from the shared `zEnvFactor` 0..100 down to the ×factor band the PLATFORM has
+ * always enforced — `combatenv.MinFactor/MaxFactor` = [0.1, 10].
+ *
+ * ⚠️ WHY A SET AND NOT 「every ×factor」. The 0..100 Zod ceiling exists because
+ * the 三圍 coefficients need it (23 hp per STR), and every legacy ×factor has
+ * been riding it for free. Retrofitting [0.1, 10] onto all of them is NOT a
+ * no-op: `manaRegen` ships at 8 today and the owner is taking it to **16** in
+ * this same batch, so a blanket tightening would make the shipped content tree
+ * illegal. Narrowing the band for the whole table is a real decision with a
+ * real casualty list and it belongs to the owner, not to this lane — so the
+ * three NEW keys get the correct band and the audit of the other eighteen is
+ * filed, not smuggled in here.
+ *
+ * ⚠️ AND `manaRegen: 16` IS ALREADY OUT OF BAND ON THE PLATFORM: a PUT of it
+ * answers 400 (`combatenv.Bounds` → MaxFactor 10). That is a content/admin-lane
+ * problem, noted here because this is the file where the number is knowable.
+ *
+ * WHY 10 AND NOT SOMETHING TIGHTER (the 「多打一個零」 derivation): shipped is
+ * 0.8 / 0.6 / 0.2, so one stray zero is 8 / 6 / 2 — inside any band that still
+ * lets an operator double a knob, and therefore not stoppable by a bound. Two
+ * stray zeros (80 / 60 / 20) is what a ceiling can catch, and this is the number
+ * the platform, the admin console (`MAX_FACTOR`) and the Go mirror already
+ * agree on, so it costs no fourth opinion.
+ *
+ * ⚠️ CORRECTED 2026-08-10. This said 10, and the line below said it "mirrors"
+ * the other two — while the other two had just moved to 50 (owner tuned
+ * `manaRegen` 8 → 16, which the old ceiling would have answered 400 on every
+ * admin save). Three constants that each CLAIM to mirror the others, with no
+ * test relating them, is the shape memory `ggd-pairwise-postconditions` names:
+ * every noun healthy, the RELATIONSHIP broken. The live consequence was real —
+ * an operator typing 20 into `moveSpeedMelee` would be accepted by the console
+ * and the platform, then REJECTED by this Zod band when it reached
+ * `content/config`, and a content load that fails is fail-open to the skeleton.
+ *
+ * ⛔ Do not "fix" a drift like this by editing one side. All three move together
+ * or the claim of mirroring is the lie, not the number.
+ */
+export const FACTOR_BAND_MIN = 0.1;
+/**
+ * @see FACTOR_BAND_MIN — mirrors `combatenv.MaxFactor` (Go) and admin's
+ * `MAX_FACTOR`. ⚠️ All three are 50 as of 2026-08-10; changing one alone is a
+ * silent split-brain (see the derivation above).
+ */
+export const FACTOR_BAND_MAX = 50;
+
+/** The keys that take the [FACTOR_BAND_MIN, FACTOR_BAND_MAX] band. */
+export type BandedFactorEnvKey = Extract<
+  CombatEnvKey,
+  "moveSpeedMelee" | "moveSpeedRanged" | "magicResistMult"
+>;
+
+const BANDED_FACTOR_KEYS: readonly BandedFactorEnvKey[] = [
+  "moveSpeedMelee",
+  "moveSpeedRanged",
+  "magicResistMult",
+];
+
+const BANDED_FACTOR_KEY_SET: ReadonlySet<string> = new Set(BANDED_FACTOR_KEYS);
+
+/** True when `k` takes the tight ×factor band instead of the shared 0..100. */
+export function isBandedFactorEnvKey(k: string): k is BandedFactorEnvKey {
+  return BANDED_FACTOR_KEY_SET.has(k);
 }
 
 /**
@@ -417,27 +528,152 @@ export function defaultForKey(k: CombatEnvKey): number {
   return isAttributeEnvKey(k) ? ATTRIBUTE_ENV_DEFAULTS[k] : 1;
 }
 
+// ------------------------------------------------- stat → env-key CHAIN ----
 /**
- * Stat → env-key map consumed by recomputeStats. Cooldown is NOT here on
- * purpose: it multiplies the cooldown SECONDS at cast time (a 2.0 factor
- * doubles cooldowns), never the CDR stat.
+ * WHO the factor is being computed for. Everything an env link is allowed to
+ * ask about the unit lives here — ONE parameter object, so a future axis
+ * (primary attribute, team, form) adds a field and a `kind` below rather than a
+ * new argument threaded through `finalizeStat` and every display panel.
  */
-export const STAT_ENV_KEY: Partial<Record<Stat, CombatEnvKey>> = {
-  [Stat.Armor]: "defense",
-  [Stat.MagicResist]: "defense",
-  [Stat.AttackDamage]: "attackDamage",
-  [Stat.AbilityPower]: "abilityPower",
-  [Stat.MaxHealth]: "maxHealth",
-  [Stat.HealthRegen]: "healthRegen",
-  [Stat.MaxMana]: "maxMana",
-  [Stat.ManaRegen]: "manaRegen",
-  [Stat.MoveSpeed]: "moveSpeed",
-  [Stat.AttackSpeed]: "attackSpeed",
-  [Stat.CritChance]: "critChance",
-  [Stat.CritDamage]: "critDamage",
-  [Stat.Lifesteal]: "lifesteal",
-  [Stat.AttackRange]: "attackRange",
+export interface StatEnvSubject {
+  /**
+   * 近戰 / 遠程, read from the champion card (`ChampionDef.attackType`, which is
+   * REQUIRED — see sim/content/defs.ts). `undefined` means the caller genuinely
+   * cannot know: 小怪 / 守衛塔 / 投射物 have no champion card at all, and a
+   * display surface may be rendering a table rather than a unit.
+   */
+  readonly attackType?: "melee" | "ranged";
+}
+
+/**
+ * ONE link in a stat's env-multiplier chain.
+ *
+ * ⭐ WHY THIS SHAPE (第零守則⑨ —— 「第二個東西跟第一個只差參數 ⇒ 先抽模板」).
+ * Before 2026-08-10 this table was `Stat → one key`, and today's batch breaks
+ * that in two independent ways at once: `Stat.MagicResist` needs a SECOND
+ * factor (`defense × magicResistMult`), and `Stat.MoveSpeed` needs a factor
+ * whose KEY depends on the unit. Writing `if (stat === MagicResist) …` plus
+ * `if (attackType === "melee") …` inside `finalizeStat` would be two special
+ * cases for two rows, and the third row (already foreseeable: 近戰/遠程 attack
+ * speed, 近戰/遠程 damage taken) would be a third.
+ *
+ * So the table becomes a CHAIN — an ordered list of links, multiplied
+ * left-to-right — and a link is DATA, not a closure:
+ *
+ *   · `fixed`        — one key, unconditional. Every pre-2026-08-10 row.
+ *   · `byAttackType` — the key is picked by `subject.attackType`.
+ *
+ * Data rather than `(subject) => key` for three concrete reasons:
+ *   1. the keys stay ENUMERABLE, so `STAT_ENV_CHAIN_KEYS` can be derived and
+ *      the 「every key is either stat-mapped or formula-site」 guard keeps working;
+ *   2. `sim/**` bans hidden non-determinism, and a table of literals cannot
+ *      smuggle any in;
+ *   3. adding an axis is a new `kind` + one arm in `statEnvFactor` — ONE place
+ *      that knows how axes resolve, which is the property a per-key `if` loses.
+ *
+ * ⚠️ A link that cannot resolve returns the NEUTRAL 1, never a guessed key —
+ * see `statEnvFactor`.
+ */
+export type StatEnvLink =
+  | { readonly kind: "fixed"; readonly key: CombatEnvKey }
+  | { readonly kind: "byAttackType"; readonly melee: CombatEnvKey; readonly ranged: CombatEnvKey };
+
+const fixed = (key: CombatEnvKey): StatEnvLink => ({ kind: "fixed", key });
+
+/**
+ * Stat → env-factor chain, consumed by `finalizeStat` (sim/baseBonus.ts).
+ * Cooldown is NOT here on purpose: it multiplies the cooldown SECONDS at cast
+ * time (a 2.0 factor doubles cooldowns), never the CDR stat.
+ *
+ * Order inside a chain is the multiplication order and is FIXED, so the answer
+ * cannot depend on iteration order. Since every link multiplies and a neutral
+ * factor is exactly 1.0, a chain whose extra links are all neutral is
+ * bit-identical to the single-factor arithmetic that preceded it.
+ */
+export const STAT_ENV_CHAIN: Partial<Record<Stat, readonly StatEnvLink[]>> = {
+  [Stat.Armor]: [fixed("defense")],
+  // 魔抗 = 全域防禦倍率 × 魔抗專屬倍率。TWO links, not a replacement: `defense`
+  // still moves armour and MR together (that is what it has always meant), and
+  // `magicResistMult` is the extra dial that moves ONLY the magic side — which
+  // is the whole point, since the measured armour/MR gap is 4.4×.
+  [Stat.MagicResist]: [fixed("defense"), fixed("magicResistMult")],
+  [Stat.AttackDamage]: [fixed("attackDamage")],
+  [Stat.AbilityPower]: [fixed("abilityPower")],
+  [Stat.MaxHealth]: [fixed("maxHealth")],
+  [Stat.HealthRegen]: [fixed("healthRegen")],
+  [Stat.MaxMana]: [fixed("maxMana")],
+  [Stat.ManaRegen]: [fixed("manaRegen")],
+  // 移速 = 全域移速倍率 × 這個單位所屬攻擊型態的倍率。`moveSpeed` is still the
+  // knob that moves EVERYONE; these two open the 近戰/遠程 gap that the census
+  // says is missing (5.90 vs 5.70 = 33 秒才追得上).
+  [Stat.MoveSpeed]: [
+    fixed("moveSpeed"),
+    { kind: "byAttackType", melee: "moveSpeedMelee", ranged: "moveSpeedRanged" },
+  ],
+  [Stat.AttackSpeed]: [fixed("attackSpeed")],
+  [Stat.CritChance]: [fixed("critChance")],
+  [Stat.CritDamage]: [fixed("critDamage")],
+  [Stat.Lifesteal]: [fixed("lifesteal")],
+  // 技能吸血 rides the SAME `lifesteal` env knob on purpose — it is the same
+  // notion on the other half of the damage stream, and a second key would have
+  // to be mirrored into Go's `combatenv.Keys` (keysync_test.go) to buy the
+  // operator a slider he would then have to remember to move in pairs.
+  [Stat.SpellVamp]: [fixed("lifesteal")],
+  [Stat.AttackRange]: [fixed("attackRange")],
 };
+
+/**
+ * Resolve ONE link to a factor. The single place that knows how an axis is
+ * answered — a new `kind` adds an arm here and nowhere else.
+ *
+ * ⭐ THE DECISION: an unknown subject answers **1 (neutral)**, not a default
+ * side. 小怪 / 守衛塔 / 投射物 have no champion card, so 「they are melee」 would
+ * be an invention, and picking either side would silently apply a balance knob
+ * to units the owner was talking about heroes when he set. The operator already
+ * has the row that moves EVERY unit — the global `moveSpeed` factor — so
+ * "neutral when unknown" costs no expressiveness, it just refuses to guess.
+ * (Mobs do not go through this path at all today: they build their stats in
+ * sim/mobs.ts, never `recomputeStats`. This keeps that true by construction
+ * instead of by luck.)
+ */
+export function statEnvFactor(
+  link: StatEnvLink,
+  env: CombatEnvMultipliers,
+  subject?: StatEnvSubject,
+): number {
+  if (link.kind === "fixed") return env[link.key];
+  const at = subject?.attackType;
+  if (at === undefined) return 1;
+  return env[at === "melee" ? link.melee : link.ranged];
+}
+
+/**
+ * Every env key that any chain mentions. Derived, so the 「a key is either
+ * stat-mapped or a formula-site key」 guard in combatEnv.test.ts cannot go stale
+ * when a chain grows a second link.
+ */
+export const STAT_ENV_CHAIN_KEYS: ReadonlySet<CombatEnvKey> = new Set(
+  Object.values(STAT_ENV_CHAIN).flatMap((links) =>
+    (links ?? []).flatMap((l) => (l.kind === "fixed" ? [l.key] : [l.melee, l.ranged])),
+  ),
+);
+
+/**
+ * @deprecated Legacy `Stat → one key` view, DERIVED from `STAT_ENV_CHAIN` so it
+ * cannot become a second truth. It answers a stat's UNCONDITIONAL link only, so
+ * `Stat.MagicResist` still reads `"defense"` and `Stat.MoveSpeed` still reads
+ * `"moveSpeed"` — byte-identical to what every pre-2026-08-10 caller saw. New
+ * code should read the chain (or call `finalizeStat`), because this view cannot
+ * express a second or a subject-dependent factor.
+ */
+export const STAT_ENV_KEY: Partial<Record<Stat, CombatEnvKey>> = Object.freeze(
+  Object.fromEntries(
+    Object.entries(STAT_ENV_CHAIN).flatMap(([stat, links]) => {
+      const f = links?.find((l): l is Extract<StatEnvLink, { kind: "fixed" }> => l.kind === "fixed");
+      return f ? [[stat, f.key] as const] : [];
+    }),
+  ),
+) as Partial<Record<Stat, CombatEnvKey>>;
 
 /**
  * Merge a partial/untrusted table onto the defaults. Unknown keys are ignored;

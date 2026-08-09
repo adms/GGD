@@ -26,7 +26,13 @@
  * needed to say so.
  */
 import { ALL_STATS, STAT_CLAMPS, Stat } from "./stats/statTypes";
-import { STAT_ENV_KEY, DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
+import {
+  STAT_ENV_CHAIN,
+  DEFAULT_COMBAT_ENV,
+  statEnvFactor,
+  type CombatEnvMultipliers,
+  type StatEnvSubject,
+} from "./combatEnv";
 import { DEFAULT_STAT_CAPS, effectiveCap, type StatCapTable } from "./statCaps";
 
 /** championId-independent, stat-keyed flat grants. Missing key = 0. */
@@ -94,9 +100,10 @@ export const BASE_BONUS_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   [Stat.AttackSpeed]: 3.8, // [0.2, 4.0]
   [Stat.MoveSpeed]: 12, // [2, 14]
   [Stat.CritChance]: 1, // [0, 1]
-  [Stat.CooldownReduction]: 0.45, // [0, 0.45]
+  [Stat.CooldownReduction]: 0.5, // [0, 0.5] —— 跟著 STAT_CLAMPS 走,見那裡的註解
   [Stat.Lifesteal]: 0.8, // [0, 0.8]
   [Stat.Evasion]: 0.8, // [0, 0.8]
+  [Stat.SpellVamp]: 0.8, // [0, 0.8]
 });
 
 /** 這一個 stat 的加成合法區間 `[min, max]`。 */
@@ -196,6 +203,16 @@ export interface FinalizeStatOptions {
    * 缺 = 1(不連動),所以每一個舊呼叫端逐位元不變。
    */
   rangeScale?: number;
+  /**
+   * 這個數字是**算給誰**的（2026-08-10）。只有 `STAT_ENV_CHAIN` 裡帶
+   * `byAttackType` 的那一格會讀它 —— 今天只有 {@link Stat.MoveSpeed}，其他 15 條
+   * 屬性傳與不傳逐位元相同。
+   *
+   * ⚠️ 缺 = **中性**，不是「當成近戰」。小怪 / 守衛塔 / 投射物根本沒有英雄卡，
+   * 猜一邊等於把一個平衡旋鈕靜默套到 owner 沒在講的單位上。要動到所有單位的
+   * 旋鈕是 `moveSpeed` 那一格，它一直都在。
+   */
+  subject?: StatEnvSubject;
 }
 
 export function finalizeStat(
@@ -204,8 +221,15 @@ export function finalizeStat(
   opts: FinalizeStatOptions = {},
 ): number {
   const env = opts.env ?? DEFAULT_COMBAT_ENV;
-  const envKey = STAT_ENV_KEY[stat];
-  let out = envKey !== undefined ? v * env[envKey] : v;
+  // 環境倍率是一條**鏈**（sim/combatEnv.ts `STAT_ENV_CHAIN`）：多數屬性只有一格，
+  // 魔抗有兩格（defense × magicResistMult），移速的第二格由 `subject` 決定。
+  // 中性 = 1.0，而 `x * 1` 對任何有限數逐位元等於 `x`，所以「三格缺席」與這條鏈
+  // 出現之前的單一倍率算式**不是近似相同，是同一個 double**。
+  let out = v;
+  const chain = STAT_ENV_CHAIN[stat];
+  if (chain !== undefined) {
+    for (const link of chain) out *= statEnvFactor(link, env, opts.subject);
+  }
   if (stat === Stat.AttackRange) {
     const rs = opts.rangeScale;
     if (typeof rs === "number" && Number.isFinite(rs) && rs > 0) out *= rs;
@@ -239,4 +263,5 @@ export const STAT_LABEL_ZH: Readonly<Record<Stat, string>> = Object.freeze({
   [Stat.Lifesteal]: "吸血",
   [Stat.AttackRange]: "攻擊距離",
   [Stat.Evasion]: "迴避",
+  [Stat.SpellVamp]: "技能吸血",
 });

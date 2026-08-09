@@ -264,7 +264,7 @@ describe("GH#189 無盡連刃 on-hit 疊層", () => {
     // 「可**無限**疊加」= 故意不寫 maxStacks (endless-edge.json 的 authoringNote)。
     expect(b.maxStacks, "出貨文件長出了 maxStacks —— 那就不是『可無限疊加』了").toBeUndefined();
     expect(b.duration, "疊層 buff 沒有持續時間 —— 歸零永遠不會發生").toBeGreaterThan(0);
-    return b.duration;
+    return b.duration!;
   }
 
   /** 出貨的那個秒數換算成 tick(`applyBuff.ts` 用的是同一條 `duration / world.dt`)。 */

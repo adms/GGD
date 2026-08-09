@@ -128,7 +128,7 @@ function capsWithoutAp(): StatCapTable {
 // ---------------------------------------------------------------------------
 
 describe("ap 上限出貨開到頂 —— 加了欄位,行為必須逐位元不變", () => {
-  it("惡夢魔王碎片 + 死之王三件 = AP ×3.0,和「沒有 ap 這一列」時同一個數字", () => {
+  it("惡夢魔王碎片 + 死之王三件:加了 ap 這一列之後,AP 跟以前逐位元相同", () => {
     cover("statcaps-ap-open");
     // 兩個世界只差一件事:cap 表裡有沒有 ap 那一列。其他全部相同。
     const after = new SimWorld(SKELETON_ARENA, 8101);
@@ -145,10 +145,14 @@ describe("ap 上限出貨開到頂 —— 加了欄位,行為必須逐位元不�
     const withCap = apOf(after, build(after, loaded));
     const withoutCap = apOf(before, build(before, loaded));
 
-    // owner 讀到的那個數字:×3.0 = 1 + 1.0(套裝)+ 1.0(碎片),同一個 pctAdd 桶。
-    expect(withCap).toBeCloseTo(bare * 3.0, 9);
-    // 而且**這一版沒有改變它**。這是這整份檔案存在的理由。
-    expect(withCap, "加了 ap 上限之後 ×3.0 變了 —— owner 明說不要夾").toBe(withoutCap);
+    // owner 讀到的那個數字。⚠️ 2026-08-10 之前這裡寫死 `bare * 3.0`,而 owner
+    // 當天把套裝從 +100% 調成 +300%、又給了死之王的意志 AP+174 —— 於是這一條
+    // 用「ap 上限把數字夾掉了」的訊息紅,真相是兩個數字被調過（第四個住處）。
+    // 現在**只斷言這個組合真的把 AP 放大了**,倍率是多少交給 lichkingSet.test.ts。
+    expect(withCap).toBeGreaterThan(bare);
+    // ⬇⬇ 而且**這一版沒有改變它**。這是這整份檔案存在的理由,也是唯一
+    //     會因為「加了 ap 這一列」而紅的斷言。
+    expect(withCap, "加了 ap 上限之後這個組合的 AP 變了 —— owner 明說不要夾").toBe(withoutCap);
   });
 
   it("出貨天花板離量到最強的 AP 組合還有 10 倍以上餘裕", () => {

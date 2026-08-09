@@ -3,8 +3,11 @@
  * by typeName string (robust across module instances). Handles the widget set:
  * text / number / boolean / enum / literal / array / tuple / object / record /
  * discriminated union (EffectDef cards keyed by "kind") / ref (from zRef's
- * description) — with a depth cap so the recursive EffectDef union terminates
- * (deeper levels fall back to a raw-JSON node).
+ * description) — with TWO bounds so the recursive EffectDef union terminates
+ * at a tree you can actually hold in memory (deeper levels fall back to a
+ * raw-JSON node): a height cap (maxDepth) and, because the tree is exponential
+ * in that height, a re-entry cap on each schema instance (MAX_REENTRY — read
+ * the note on it before touching either number).
  */
 import type { ZodTypeAny } from "zod";
 import { refFromDescription } from "@ggd/shared/content";
@@ -13,9 +16,51 @@ import { humanize, type UINode } from "./uiSchema";
 export interface WalkOptions {
   /** recursion cap; below it nodes degrade to kind:"unknown" (JSON editor) */
   maxDepth?: number;
+  /**
+   * how many times one schema INSTANCE may re-enter itself down a single
+   * chain before degrading to kind:"unknown". See MAX_REENTRY.
+   */
+  maxReentry?: number;
 }
 
 const DEFAULT_MAX_DEPTH = 12;
+
+/**
+ * ⚠️ THE DEPTH CAP ALONE IS NOT A BOUND — it caps the HEIGHT of the tree, and
+ * the tree it caps is EXPONENTIAL in that height. `zEffectDef` is a 34-member
+ * discriminated union in which many members carry `EffectDef[]` children
+ * (`onHit` / `onLand` / `onArrive` / `onHitTargets` / `effects` / `onEnd` /
+ * `onDevour` / `finalEffects` / hook `effects` …), so every extra level of
+ * `maxDepth` multiplies the node count by the number of those edges.
+ *
+ * Measured on the real shared schema (2026-08-10, `walkZod(zEffectDef)`):
+ *
+ *     maxDepth  3 →      5,306 nodes
+ *     maxDepth  5 →     54,599
+ *     maxDepth  7 →    557,195
+ *     maxDepth  9 →  5,681,741       (~10× per two levels)
+ *
+ * — so the shipped `maxDepth: 12` is on the order of 10^8 nodes. It fit in
+ * memory only because the schema had SIX `z.lazy` recursion sites; the
+ * 2026-08-10 engine batch (delayed / proxyCast / dash.onEnd / devour.onDevour /
+ * damageArea+damageLine.onHitTargets) took it to TWELVE, roughly squaring the
+ * blow-up, and `walk.test.ts` died with "Ineffective mark-compacts near heap
+ * limit — JavaScript heap out of memory". The browser would have died too:
+ * this walker builds the editor's form.
+ *
+ * The fix bounds what actually recurses. A chain carries the multiset of
+ * schema INSTANCES it passed through; re-entering an instance that is already
+ * an ancestor counts as one level of recursion, and beyond MAX_REENTRY the
+ * node degrades to `kind:"unknown"` — the same raw-JSON fallback the depth cap
+ * already produces, so nothing becomes uneditable that was editable before,
+ * it just switches widget. Non-recursive schemas are untouched: sharing a
+ * `zScaling` between SIBLINGS is not an ancestor relationship.
+ *
+ * 2 = an effect, an effect nested in it, and one more. Past that the nesting
+ * is deeper than any authored ability and the JSON editor is the honest
+ * widget. `maxDepth` stays as the belt-and-braces height limit.
+ */
+const MAX_REENTRY = 2;
 
 interface Unwrapped {
   schema: ZodTypeAny;
@@ -66,14 +111,32 @@ export function walkZod(
   label = "Document",
   opts: WalkOptions = {},
 ): UINode {
-  return walk(root, path, label, 0, opts.maxDepth ?? DEFAULT_MAX_DEPTH);
+  return walk(root, path, label, 0, opts.maxDepth ?? DEFAULT_MAX_DEPTH, new Map(), opts.maxReentry ?? MAX_REENTRY);
 }
 
-function walk(raw: ZodTypeAny, path: string, label: string, depth: number, maxDepth: number): UINode {
+function walk(
+  raw: ZodTypeAny,
+  path: string,
+  label: string,
+  depth: number,
+  maxDepth: number,
+  /** how many times each schema instance already appears on THIS chain */
+  ancestors: ReadonlyMap<ZodTypeAny, number>,
+  maxReentry: number,
+): UINode {
   const { schema, optional, description } = unwrap(raw);
   const base = { path, label, optional, ...(description && !description.startsWith("ref") ? { description } : {}) };
 
   if (depth > maxDepth) return { kind: "unknown", ...base };
+
+  // The recursion bound (see MAX_REENTRY). Counted on the unwrapped instance,
+  // because the `z.lazy(() => zEffectDef)` at every recursion site resolves to
+  // the SAME object — which is exactly what makes it detectable here.
+  const seen = ancestors.get(schema) ?? 0;
+  if (seen > maxReentry) return { kind: "unknown", ...base };
+  const chain: ReadonlyMap<ZodTypeAny, number> = new Map(ancestors).set(schema, seen + 1);
+  const down = (child: ZodTypeAny, p: string, l: string): UINode =>
+    walk(child, p, l, depth + 1, maxDepth, chain, maxReentry);
 
   const def = schema._def as { typeName?: string } & Record<string, unknown>;
   switch (def.typeName) {
@@ -114,24 +177,24 @@ function walk(raw: ZodTypeAny, path: string, label: string, depth: number, maxDe
     case "ZodLiteral":
       return { kind: "literal", ...base, value: def.value as string | number | boolean };
     case "ZodArray": {
-      const item = walk(def.type as ZodTypeAny, `${path}[]`, "Item", depth + 1, maxDepth);
+      const item = down(def.type as ZodTypeAny, `${path}[]`, "Item");
       return { kind: "array", ...base, item };
     }
     case "ZodTuple": {
       const items = (def.items as ZodTypeAny[]).map((it, i) =>
-        walk(it, `${path}[${i}]`, `#${i}`, depth + 1, maxDepth),
+        down(it, `${path}[${i}]`, `#${i}`),
       );
       return { kind: "tuple", ...base, items };
     }
     case "ZodObject": {
       const shape = (def.shape as () => Record<string, ZodTypeAny>)();
       const fields = Object.entries(shape).map(([key, child]) =>
-        walk(child, path ? `${path}.${key}` : key, humanize(key), depth + 1, maxDepth),
+        down(child, path ? `${path}.${key}` : key, humanize(key)),
       );
       return { kind: "object", ...base, fields };
     }
     case "ZodRecord": {
-      const value = walk(def.valueType as ZodTypeAny, `${path}.*`, "Value", depth + 1, maxDepth);
+      const value = down(def.valueType as ZodTypeAny, `${path}.*`, "Value");
       return { kind: "record", ...base, value };
     }
     case "ZodDiscriminatedUnion": {
@@ -145,7 +208,7 @@ function walk(raw: ZodTypeAny, path: string, label: string, depth: number, maxDe
         const fields = Object.entries(shape)
           .filter(([key]) => key !== discriminator)
           .map(([key, child]) =>
-            walk(child, path ? `${path}.${key}` : key, humanize(key), depth + 1, maxDepth),
+            down(child, path ? `${path}.${key}` : key, humanize(key)),
           );
         return { tag, fields };
       });

@@ -13,6 +13,10 @@
     "lifesteal": {
       "base": 0.8,
       "unlocked": 1.0
+    },
+    "cdr": {
+      "base": 0.5,
+      "unlocked": 0.8
     }
   }
 }

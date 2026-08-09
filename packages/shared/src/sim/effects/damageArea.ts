@@ -13,6 +13,8 @@ import { distSq } from "../math/vec2";
 import { casterAttrs, casterStats } from "./effectCommon";
 import { resourcePctAmount } from "./dynamicTerms";
 import { clampSpreadFalloff, clampSpreadRadius, clampSpreadTargets } from "./spreadLimits";
+import { runOnHitChain, selectVictims } from "./victimFilter";
+import { rollAbilityCrit } from "../combat/critStrike";
 
 /**
  * `damageArea` 的圓心, 依序: 事件受害者 → 施法點 → 施法者。
@@ -33,7 +35,7 @@ function areaCentre(ctx: EffectContext): { x: number; z: number } | undefined {
 }
 
 export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
-  apply(e, ctx) {
+  apply(e, ctx, _bakeList, runList) {
     const { world } = ctx;
     // 擴散 (task #210). 圓心 = 這次事件的受害者 (`ctx.targets[0]`), 沒有受害者
     // 就退回施法點, 再退回施法者自己 —— 一個 hook 觸發的擴散永遠走第一條,
@@ -60,11 +62,15 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
     // b.id` 這一段, 兩個等距目標的相對順序就交給了 Array.prototype.sort 的
     // 實作, 而 `maxTargets` 正好在那裡切一刀。
     victims.sort((a, b) => (a.d2 !== b.d2 ? a.d2 - b.d2 : a.id - b.id));
-    if (victims.length > cap) victims.length = cap;
+    // ⭐ G1 ① —— 圈**內**逐一過濾 + 切上限。用的是 effectRunner 那一支同款求值器
+    // (`evaluateCondition`), ⛔ 不是第二套條件系統。
+    // ⚠️ 一定要在暴擊迴圈**之前**: `canCrit` 每個受害者擲一次 rng, 被濾掉的人不可以
+    // 花掉一枚硬幣, 否則 `victimCondition` 的有無會改變 rng 串流位置 (determinism)。
+    const struck = selectVictims(victims, cap, e.victimCondition, e.maxTargetsCounts, ctx);
 
     const stats = casterStats(ctx);
     const base = resolveScaling(stats, e.amount, ctx.rank, casterAttrs(ctx));
-    for (const v of victims) {
+    for (const v of struck) {
       // 線性衰減: t=0 (圓心) 吃滿額, t=1 (半徑) 吃 falloff 倍。
       // `enemiesInCircle` 是 BODY-OVERLAP 查詢 (身體邊緣碰到就算), 所以中心
       // 距離可能略大於半徑 —— 夾住 t 讓那些人吃到最低的 falloff 倍, 而不是
@@ -78,18 +84,27 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
       if (e.resourcePct !== undefined) {
         amount += resourcePctAmount(world, ctx.caster, v.id, e.resourcePct, ctx.rank);
       }
+      // ⭐ ⑨（2026-08-10）—— 走 `combat/critStrike.ts::rollAbilityCrit`（普攻那一半
+      // 的同一支），⛔ 不是第二段就地擲骰。理由與抽籤位置見那支的檔頭。
       let crit = false;
+      let critSources: readonly string[] | undefined;
       if (e.canCrit) {
-        const cc = stats[Stat.CritChance] ?? 0;
-        if (cc > 0 && ctx.rng.chance(cc)) {
-          crit = true;
-          amount *= stats[Stat.CritDamage] || 1.75;
-        }
+        const cr = rollAbilityCrit(
+          world,
+          ctx.caster,
+          stats[Stat.CritChance] ?? 0,
+          stats[Stat.CritDamage] || 1.75,
+          ctx.rng,
+        );
+        crit = cr.crit;
+        if (cr.crit) amount *= cr.mult;
+        critSources = cr.critSources;
       }
       world.damageQueue.push({
         source: ctx.caster,
         target: v.id,
         amount,
+        ...(critSources !== undefined ? { critSources } : {}),
         // 省略 = 後台「傷害規則」頁的預設（出貨 magic）。
         // ⛔ 讀 `world.damageRules` 而不是寫死一個字串 —— 見 sim/damageRules.ts 檔頭。
         type: e.damageType ?? world.damageRules.defaultAbilityDamageType,
@@ -97,5 +112,14 @@ export const damageAreaEffect: EffectKindSpec<"damageArea"> = {
         origin: ctx.origin,
       });
     }
+    // ⭐ G1 ② —— `effect.target-set-chain@1`。順序刻意是「先把母效果的封包排進佇列,
+    // 再跑下游」: 兩者都在同一 tick 被 `combatResolveSystem` 排空, 順序只影響
+    // `damageQueue` 的排列, 而那是決定性的一部分 (同一顆 seed 兩次重播要逐字相同)。
+    runOnHitChain(
+      e,
+      struck.map((v) => v.id),
+      ctx,
+      runList,
+    );
   },
 };

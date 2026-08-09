@@ -213,7 +213,16 @@ function effectLines(
         out.push({
           depth,
           kind: e.kind,
-          summary: `buff ${e.modifiers.map((m) => `${m.stat} ${m.op} ${m.value}`).join(", ")} for ${e.duration}s`,
+          // ⭐ Lane 3 —— 這一行是作者唯一看得到「這張卡到底做了什麼」的地方，
+          // 所以三格新語意都要印出來：`permanent`（否則永久增益會印成
+          // 「for undefineds」）、`applyTo`（自我增益 vs 落在目標身上）、
+          // `statusId`（這份增益同時是一個具名標記）。印錯就是卡片說謊。
+          summary:
+            `buff ${e.modifiers.map((m) => `${m.stat} ${m.op} ${m.value}`).join(", ")} ` +
+            `${e.permanent === true ? "永久" : `for ${e.duration}s`}` +
+            `${e.applyTo === "self" ? " → 自己" : " → 目標"}` +
+            `${e.statusId !== undefined ? ` [標記 ${e.statusId}]` : ""}` +
+            `${e.exclusiveGroup !== undefined ? ` [互斥組 ${e.exclusiveGroup}]` : ""}`,
         });
         break;
       case "dash":
@@ -640,6 +649,40 @@ function effectLines(
             " · ⚠️ 引擎側尚未實作（GH#301-2），現在放出來會丟例外",
         });
         effectLines(e.onArrive ?? [], finalStats, attrs, maxRank, depth + 1, out);
+        break;
+      }
+      // ── Lane 3（2026-08-10）—— schema 與型別先行，引擎 handler 是下一階段。
+      //    ⚠️ 兩條 summary 都**明說**「引擎側尚未實作」，形狀抄上面 `blink`
+      //    當年那一句：一個看起來能用、放出去卻丟例外的預覽比空白更糟。
+      case "delayed": {
+        const shots = e.count ?? 1;
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `延遲 ${e.delaySec}s 後${shots > 1 ? `連續 ${shots} 下（每 ${e.intervalSec ?? "?"}s 一下）` : "打出一下"}` +
+            `${e.targetMode === "reresolve" ? " · 每一下重新選目標（走開就打空）" : " · 目標在施放那一刻鎖定"}` +
+            `${e.shape === "circle" ? `（半徑 ${e.radius ?? "?"} 內${e.side === "allies" ? "隊友" : "敵人"}）` : ""}` +
+            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+        });
+        effectLines(e.effects, finalStats, attrs, maxRank, depth + 1, out);
+        if (e.finalEffects) {
+          out.push({ depth: depth + 1, kind: e.kind, summary: "↑ 最後一下額外追加：" });
+          effectLines(e.finalEffects, finalStats, attrs, maxRank, depth + 2, out);
+        }
+        break;
+      }
+      case "proxyCast": {
+        out.push({
+          depth,
+          kind: e.kind,
+          summary:
+            `代放 ${e.abilityId ?? `自己的 ${e.slot} 格`}` +
+            ` · ${e.payCosts === undefined || e.payCosts === "none" ? "不付代價" : e.payCosts === "mana" ? "扣魔" : "扣魔並進冷卻"}` +
+            `${e.respectCooldown ? " · 冷卻中不代放" : ""}` +
+            `${e.rankMode === "fixed" ? ` · 固定第 ${e.fixedRank} 階` : " · 用玩家點的等級"}` +
+            " · ⚠️ 引擎側尚未實作（Lane 3），現在放出來會丟例外",
+        });
         break;
       }
       default: {

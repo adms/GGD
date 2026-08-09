@@ -396,6 +396,236 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同上,而且是**鏡像側**:同步方向永遠 standalone→embedded,所以它結構上不可能早於 field:abilities.augment 有採用。兩格要一起刪。",
   },
 
+  // ══ Lane 3（2026-08-10）—— 六個 lane 的 schemaChanges 一次落地 ══════
+  //
+  // ⭐ 這一整批的共同性質與 GH#299 那一輪逐字相同：**引擎那一半要嘛已經在跑、
+  // 要嘛 handler 排在下一階段**，而擋住作者的是 schema 上那一格。每一格省略時的
+  // 意思都等於今天的行為，所以既有內容逐位元不變 —— 零採用因此是**內容決定**
+  // 而不是機制缺席（owner 正在手動重製全部英雄技能，⛔ 不可以由我代寫）。
+  //
+  // ⚠️ 兩個新 kind（delayed / proxyCast）的 handler **還沒落地**，registry 上是
+  // 會丟具名錯誤的 stub。它們的豁免到期時要先確認 handler 在了再寫內容。
+  "field:abilities.effects[]#damageArea.victimCondition": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G1 —— 圈**內**逐一過濾（「範圍內只打帶〔恐懼〕的敵人」）。⛔ 不可以重用外層 condition：實測 effectRunner 的上游閘在 handler 被呼叫**之前**就過濾完 ctx.targets 了，所以「以自己為圓心、只打帶恐懼的人」（targets 空）永遠不發、「打 A 濺到旁邊帶恐懼的人」（A 乾淨）整圈消失 —— 兩種寫法都拿不到那張卡。缺席 = 一次求值都不做 = 零 rng = 今天逐位元不變。",
+  },
+  "field:abilities.effects[]#damageArea.maxTargetsCounts": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G1 —— 「最多幾人」數的是通過過濾的前 N 個（卡面「最多 5 名帶〔恐懼〕的敵人」）還是最近 N 個再過濾。真的 A/B，所以是欄位；預設 qualified。沒填 victimCondition 時無作用。",
+  },
+  "field:abilities.effects[]#damageArea.onHitTargets": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G1 ② —— effect.target-set-chain@1：把這一圈**真的打到的那群人**（過濾後、切完上限後）交給下一段。⛔ 交的不是上游的 ctx.targets，否則就是「畫面上打到 A、狀態蓋在 B」。⛔ 不需要 bake：與母效果同一 tick 執行，不是延遲 payload。",
+  },
+  "field:abilities.effects[]#damageArea.runOnEmptyHit": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G1 ② —— 一個人都沒打到時要不要照樣跑下游。省略 = false = 今天什麼都不會發生的那個語意。",
+  },
+  "field:abilities.effects[]#damageArea.onHitTargetsMode": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G1 ② —— 下一段收到的是整群人一次（batch，預設＝onHitTargets 檔頭已經公告過的語意，⛔ 不是新語意）還是一個一個分開跑（perTarget）。⭐ perTarget 存在的理由是**下游若是 damageArea / damageLine 這種自己解幾何的 kind**：它們只讀 ctx.targets[0] 當圓心，所以 batch 模式下 5 個受害者只會炸出一個圈，而畫面上跟壞掉一模一樣。⚠️ perTarget 讓下游 rng draw 隨受害者數線性成長（受害者清單本身是全序決定性的，決定性不破，但那是一筆看得見的成本）。",
+  },
+  "field:abilities.effects[]#damageLine.victimCondition": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同 damageArea.victimCondition 的膠囊版本。⚠️ 兩個 kind 在這一族上是同一個機制的兩個形狀，欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事 —— 所以四格同名同語意、共用同一組常數。",
+  },
+  "field:abilities.effects[]#damageLine.maxTargetsCounts": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同 damageArea.maxTargetsCounts —— 「最多幾人」數的是通過過濾的前 N 個還是最近 N 個再過濾。⛔ 兩個 kind 這一族的欄位名與語意必須完全一致，否則編輯器上長得一樣的兩格會是兩件事。",
+  },
+  "field:abilities.effects[]#damageLine.onHitTargets": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同 damageArea.onHitTargets —— 把這條線真的打到的那群人（過濾後、切完上限後）交給下一段，而不是上游交下來的 ctx.targets。⛔ 不需要 bake：與母效果同一 tick 執行。",
+  },
+  "field:abilities.effects[]#damageLine.runOnEmptyHit": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同 damageArea.runOnEmptyHit —— 一個人都沒打到時要不要照樣跑下游。省略 = 不跑 = 今天什麼都不會發生的那個語意。",
+  },
+  "field:abilities.effects[]#damageLine.onHitTargetsMode": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同 damageArea.onHitTargetsMode —— batch（預設）還是 perTarget。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。",
+  },
+  "field:abilities.effects[]#applyBuff.permanent": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S4a —— **永久**。引擎層從第一天就做得到（ModifierSource.expiresAtTick 缺席 = 永久），缺的一直是 authoring 面 —— 於是出貨已經有四份文件用 duration: 99999 假裝永久（godie-o00x.passive / godie-ogrh.passive / godie-zombiex.passive ×2）。⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的永久增益，所以兩格互斥且必填其一。那四份遷移過來時這一筆就該刪掉。",
+  },
+  "field:abilities.effects[]#applyBuff.statusId": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G10 —— 讓一份來源**同時是**標記與數值。⭐ 它把兩本會腐爛的帳變成一個物件：實測 extendBuff 把 buff 從 tick 361 推到 573 而 status 停在 361，於是 52-02 讀〔狂怒〕的那個閘在玩家還在狂怒中就關了。同一個物件之後那個裂縫在結構上消失，所以**不需要**再開 extendBuff.statusId（那是替同一個問題做第二套機制）。",
+  },
+  "field:abilities.effects[]#applyBuff.applyTo": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S9b —— 讀敵人狀態、增益自己。⛔ 拆成兩條 hook 不是一次判定：ICD 記在逐 hook 一格的 hookLastFired、機率也是逐 hook 各抽一次，所以「30% 機率對帶恐懼的敵人追加傷害**並且**自己加攻速」寫成兩條會有 9% 只發生一半，而畫面上看不出來。⛔ 沒有提進 EFFECT_COMMON_SHAPE —— 那會開在全部 kind 上，包括 handler 不讀它的那些。",
+  },
+  "field:abilities.effects[]#applyBuff.exclusiveGroup": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G5（state.exclusive-group@1）—— 互斥狀態群（15-02/03/04「身上永遠只有一種戰型」）。實測缺陷：三份形態 buff 同時掛著且乘區相乘（攻速 ratio 逐位元 = 1.4 的三次方）；stackKey **不是**答案（同 key 的第二發會把 modifiers 整組丟掉，只把層數加一）。⛔ 它只做 gameplay 狀態互斥，3D 身體那一半仍然是 championForm 的地盤（計畫 §16.15 未裁決）。",
+  },
+  "field:abilities.effects[]#applyBuff.exclusiveOnExisting": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G5 的另一半：同組已有一份時 replace（預設，抄 shield.onExisting）或 reject。⚠️ 沒有 exclusiveGroup 卻填它 = 載入時錯誤，兩格要一起填。",
+  },
+  "field:abilities.effects[]#applyBuff.maxStat": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S4b —— 「這條加成加到某個絕對值就停」（80-00「上限到 10」）。實測缺陷：同一個 stackKey 疊 21 次 +1 攻擊距離，11 一路長到 32，沒有任何東西攔它。⛔ 既有四格都不是答案：maxStacks 數的是層數（層數→屬性的換算依賴逐英雄不同的基礎值）、ModOp.CapRaise 只把 effectiveCap 抬高（是 max 不是 min，語意相反）、grantAttribute.maxAttribute 只走 attributes 那條路只給三圍、STAT_CLAMPS / config.stat-caps@1 是全域天花板不是「這一份增益的」。⭐ basis 是第一守則的決策點：final（預設＝面板上那個最終值，#125「顯示的就是拿到的」）vs thisSource（只算這份 stackKey 來源自己疊出來的量，需要 stackKey）—— 一個基礎攻擊距離已經 11 的英雄在 final 讀法下永遠疊不上第一層，對某些卡是對的、對某些卡是荒謬的。⚠️ 語意是只 refuse、不回收也不夾取（沿用 grantAttribute.maxAttribute 的既有先例），所以最後一層可能小幅越線。",
+  },
+  "field:abilities.effects[]#applyStatus.disarmed": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S8（effect.control-restriction@1）—— 【繳械】打不出普通攻擊。⛔ 它**不是** missChance 的包裝：實測 root+missChance:1 的身體 90 tick 內照樣發了 6 次 attackWindup、4 次 basicAttack（動畫／音效／破隱／攻擊冷卻全部照跑），只是傷害 0。「揮空刀」與「揮不出來」是兩件事。它算硬控（HARD_CC_FLAGS + isCc），⛔ 不擋技能。",
+  },
+  "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G9 —— 只針對某一格技能的持續性冷卻縮減（79-04 卍解「[瞬步] 冷卻縮短 50% 持續 8 秒」）。今天 Stat.CooldownReduction 是一顆全域純量，全 sim 只有一個消費點。缺席 = 全域 = 每一條既有 modifier 的行為。⚠️ 帶 scope 的加成**不進** sc.final，所以它不會出現在面板的冷卻縮減那一列 —— 那是對的（它不是全域的），但要說出來。",
+  },
+  "field:abilities.effects[]#applyBuff.modifiers[].scopeAbilityId": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G9 的另一半：指名一支具名技能而不是槽位。兩格互斥（理由與 modifyCooldown 的 slot/abilityId 逐字相同：一半的卡講的是「這一格」、另一半講的是「這一支」）。⚠️ 軟參照，打錯 id 會安靜地不生效 —— ⛔ 不要假裝它會紅。",
+  },
+  "field:items.modifiers[].scopeSlot": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同上，道具那一面。⚠️ zStatModifier 是道具／三選一／applyBuff／天生技／靈氣**五個授權面共用**的同一份，所以加一格會同時開在五處 —— 而只有冷卻縮減有讀取端。那道 superRefine（scope 只收 CooldownReduction）就是這一格不會變成一堆死設定的閘。",
+  },
+  "field:items.modifiers[].scopeAbilityId": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G9 —— 道具那一面的具名技能版本（「這件裝備只縮短瞬步的冷卻」）。與 scopeSlot 互斥；⚠️ 軟參照，打錯 id 會安靜地不生效，⛔ 不要假裝它會紅。",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].key": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].maxTriggers": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].consumeOn": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].onConsumed": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].perTarget": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].critSource": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].reflectedDamageSource": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#applyBuff.hooks[].reflectedDamageType": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].key": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].maxTriggers": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].consumeOn": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].onConsumed": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].perTarget": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].critSource": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].reflectedDamageSource": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:items.passive[].reflectedDamageType": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是道具被動那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
+  },
+  "field:abilities.effects[]#dash.onEnd": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S7 —— **衝刺結束那一刻**才跑的一段（52-04「向前衝刺 400 距離後揮出」）。⚠️ 沒有它那一刀是從**起點**揮的：實測三臂同 seed，dash 與 damageArea 寫在同一個 effects[] 裡時受害者掉血與「完全不放那個 AoE」逐字相同（43.47），而同一個 AoE 從終點放是 199.83。⭐ 選擇擴充既有的 dash 而不是開新 kind，是因為「衝刺結束了」這個真相只存在於 MovementSystem 的 override 迴圈裡，而且這樣不需要新的 step slot。",
+  },
+  "field:abilities.effects[]#dash.onEndOn": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S7 —— 被地形擋下來的衝刺算不算「衝完」。真的岔路：位移系統今天把「撞牆停下」與「跑完距離」合成同一個結束條件。預設 always，因為卡面說「衝刺後揮出」，而一刀被場景取消是玩家看不見的失敗。",
+  },
+  "field:abilities.effects[]#dash.onEndWhenDead": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S7 —— 衝刺途中陣亡還要不要揮。省略 = 不揮，形狀與精神逐字沿用 randomArea.stopOnCasterDeath。",
+  },
+  "field:abilities.innateActivePassive": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G13-1 —— 主動型天生技（slot PASSIVE + innateKind active）的 passive 區塊要不要真的掛上。實測今天不會：一支帶 modifiers 的主動天生技 spawn 之後 sources 裡根本沒有那一份 abilityPassive 來源。省略 = skip = 今天逐字。⛔ 那個 continue 是一個寫死在程式裡的決策，而它的理由是「預設值該選哪一個」的理由，不是「這裡不該有欄位」的理由。⚠️ 掛上去是**整場常駐**的（與 auraCarrier 的戰鬥期替身不同），所以「只有紮根形態才有的光環」要同時填 whileForm。",
+  },
+  "field:champions.abilities.*.innateActivePassive": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded，所以它結構上不可能早於 field:abilities.innateActivePassive 有採用。兩格要一起刪（見 ggd-mirror-authority-model）。",
+  },
+  "variant:abilities.effects[]#delayed": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "G12【延遲序列】(20-002 連續七次斬擊 · 52-002 連續 100 下) —— 一段排在未來 tick 的效果，而且**目標在施放那一刻凍住**。⭐ 它與 randomArea 的差別只有一句話：randomArea 到期用**圓心重解**（實測：目標走開就打空），delayed 用凍住的名單。今天寫「連續七次斬擊」只能寫成同一 tick 七發傷害 —— 畫面上那不是連擊。⚠️ **handler 還沒落地**（registry 上是會丟具名錯誤的 stub），所以這一筆到期時要先確認排程器在了。",
+  },
+  "variant:abilities.effects[]#proxyCast": {
+    status: "landing",
+    since: "2026-08-10",
+    why: "S5【代放】(80-04 赤兔咆哮「攻擊時有 20% 使出弒鬼神」) —— 一支技能施放另一支技能。今天只能**手抄一份 payload**，而 80-04 與 80-02 的傷害數列已經不一樣了（[10,20,30] vs [150,250,350,0,0]）。⚠️ content/templates/expand.ts 的 proxy-cast 是一個**模板家族名**，不是這個 kind。⚠️ **handler 還沒落地**（stub 會丟具名錯誤）；落地時付魔力那條路徑必須走 castAbility 的同一排閘，⛔ 不可以自己再寫一次那些 if。",
+  },
+
   // ── 傷害型別轉換 items@1.damageTypeOverride (2026-08-01) ──────────────────
   //
   // ⚠️ 2026-08-09 —— 下面四個 key **改名了，不是消失了**（第三次同型改名，理由與
@@ -2034,23 +2264,48 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
     // matched NOTHING, so `statRows` went empty and every assertion below it
     // became vacuous. That is this guard's own failure mode, caught by itself.
     //
-    // Anchored on the zStat SITE plus membership in ALL_STATS, so it survives
-    // the next rename: the `.op=` rows under the same prefix are excluded by
-    // the membership test (flat/pctAdd/… are not Stats), and the narrower stat
-    // enums on the CONDITION path (`condition|0|1|1.stat`, a 10-member subset)
-    // are excluded by the prefix.
-    const MODIFIER_STAT_SITE = "enum:abilities.effects[]#applyBuff.modifiers[].";
+    // ⚠️ AND IT HAPPENED A SECOND TIME ON 2026-08-10, FOR A DIFFERENT REASON —
+    // which is why the site is no longer written down anywhere. `applyBuff`
+    // grew `maxStat: { stat: zStat, … }` (S4b, the absolute stat ceiling). The
+    // walker names each schema INSTANCE at exactly one path and prefers the
+    // lexicographically smaller one (fieldAdoption.ts:238), and
+    // `applyBuff.maxStat.stat` sorts before `applyBuff.modifiers[].*` — so all
+    // 16 rows moved to the new field's path. Nothing about the census broke
+    // (the rows are instance-anchored: `docs`/`reach` still count every
+    // occurrence anywhere), but a hard-coded prefix pointed at a site that no
+    // longer holds them. The general lesson: ANY new field that reuses an
+    // existing zod instance can relocate that instance's rows, so a literal
+    // path in this file is a guard with an expiry date.
+    //
+    // So the site is DISCOVERED, not asserted: find the enum site that carries
+    // the complete Stat set. That excludes the narrower stat enums on the
+    // CONDITION path (`condition|0|1|1.stat`, a 10-member subset) by counting
+    // rather than by prefix, and the `.op=` rows by membership in ALL_STATS
+    // (flat/pctAdd/… are not Stats). It fails, loudly, exactly when it should:
+    // when no site in the whole census enumerates every Stat.
     const isStat = new Set<string>(ALL_STATS);
-    const statRows = census.rows.filter(
-      (r) => r.key.startsWith(MODIFIER_STAT_SITE) && isStat.has(r.key.split("=").pop() ?? ""),
-    );
-    expect(statRows.map((r) => r.key.split("=").pop()).sort()).toEqual(
-      [...ALL_STATS].sort(),
-    );
+    const statSites = new Map<string, Set<string>>();
+    for (const r of census.rows) {
+      if (r.kind !== "enum") continue;
+      const cut = r.key.lastIndexOf("=");
+      const value = r.key.slice(cut + 1);
+      if (!isStat.has(value)) continue;
+      const site = r.key.slice(0, cut);
+      let vals = statSites.get(site);
+      if (!vals) statSites.set(site, (vals = new Set()));
+      vals.add(value);
+    }
+    const fullSites = [...statSites].filter(([, vals]) => vals.size === ALL_STATS.length);
+    expect(
+      fullSites.map(([site]) => site),
+      `no census site enumerates all ${ALL_STATS.length} Stats — the zStat walk broke, ` +
+        `so "a Stat nothing references" is no longer detectable. Sites seen: ` +
+        [...statSites].map(([s, v]) => `${s} (${v.size})`).join(", "),
+    ).not.toEqual([]);
     // `evasion` is the canary: it was the audit's headline zero, and it landed
     // in content while this file was being written. The row must EXIST; this
     // test deliberately does not assert what its count is.
-    expect(statRows.some((r) => r.key.endsWith("=evasion"))).toBe(true);
+    expect(fullSites.every(([, vals]) => vals.has("evasion"))).toBe(true);
   });
 
   it("THE CASCADE RULE: a child of an unadopted container is not an independent finding", () => {

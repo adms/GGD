@@ -55,6 +55,7 @@ import type { AbilitiesComp, ToggleState } from "../stats/statsComp";
 import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { abilityInstanceFor } from "./innateActive";
+import { attachToggleWhileOn, detachToggleWhileOn } from "./abilityPassives";
 
 /** 為什麼關的。⛔ 它只影響 `costOnExit` 與事件上的字串，**不影響 onExit**。 */
 export type ToggleExitReason =
@@ -95,6 +96,11 @@ export function enterToggle(
     // 但無條件寫進去 —— 有條件地寫是欄位變成「有時候是 undefined」的做法。
     nextUpkeepTick: world.tick + upkeepIntervalTicks(world, tg.upkeepIntervalSec),
   });
+  // ⭐ G13-2 —— 「**開著的期間**」那一份加成（70-00 紮根的防禦 ×2、20-01 風王
+  // 結界的 on-attack orb）。⛔ 位置是刻意的：在 `toggles.push` **之後**，所以
+  // 任何讀 `isToggleOn` 的東西（`whileForm` 以外的閘、HUD、hook 條件）看到的
+  // 狀態是一致的。缺席 `whileOn` = 嚴格 no-op。
+  attachToggleWhileOn(world, id, def, Math.max(1, abilityInstanceFor(ab, slot)?.rank ?? 1));
   world.emit("toggleEnter", { id, slot, abilityId: def.id });
 }
 
@@ -144,6 +150,16 @@ export function exitToggle(
     }
   }
 
+  // ⭐ G13-2 —— 卸下「開著的期間」那一份加成。⛔ 這裡是**唯一**的關閉出口
+  // （手動與 MP 不足自動關閉共用），所以「關掉之後加成還留著」在結構上不可能發生。
+  //
+  // `whileOnDuringExit` 決定的**只是順序**：預設 false = 先卸下再跑 onExit
+  // （＝沒有這個功能時的等價行為）；true = 讓 onExit 的效果還吃得到那一份加成
+  // （「關閉時放出的風王鐵槌，傷害算開著時的 AP 還是關掉後的？」是一個真的
+  // 決策點，所以它是一格欄位而不是我在這裡挑一邊）。
+  const keepDuringExit = tg?.whileOnDuringExit === true;
+  if (!keepDuringExit) detachToggleWhileOn(world, id, st.abilityId);
+
   // ⭐ 風王鐵槌住在這裡，而這是**全檔唯一**跑它的地方。
   const t = world.transform.get(id);
   runEffects(tg?.onExit ?? [], {
@@ -161,6 +177,10 @@ export function exitToggle(
     abilitySlot: slot,
     rng: world.rng,
   });
+
+  // `whileOnDuringExit: true` 的那一半 —— onExit 跑完才卸下。⛔ 無條件執行，
+  // 不是「else」：卸下與否由這兩行的**聯集**保證，不由欄位保證。
+  if (keepDuringExit) detachToggleWhileOn(world, id, st.abilityId);
 
   world.emit("toggleExit", { id, slot, abilityId: st.abilityId, reason });
   return true;

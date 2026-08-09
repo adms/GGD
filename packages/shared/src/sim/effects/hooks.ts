@@ -14,6 +14,10 @@ import { requirementScale, scaleEffects } from "../content/requirement";
 import { evaluateCondition } from "../content/condition";
 import type { TriggerDamage } from "./effect";
 import { originInScope } from "../combat/damageTypeOverride";
+// ⭐ S6 `onConsumed: "detachSource"` 的出口。`stats/statPipeline.ts` 不 import 這支，
+// 所以這條邊不成環（`effectKind.ts` 檔頭那個 runtime-undefined 陷阱在這裡不成立）。
+import { detachSource } from "../stats/statPipeline";
+import { NEVER_FIRED, hookIcdTicks } from "./hookIcd";
 
 /**
  * 全隊作用域 —— every CHAMPION on `owner`'s team, ALIVE OR DEAD, owner included,
@@ -140,14 +144,9 @@ function damageSourcePasses(want: NonNullable<HookDef["damageSource"]>, origin: 
  */
 const ICD_NO_SLOT_KEY = "";
 
-/**
- * 「這一格從來沒發動過」的 sentinel。夠負,所以 `world.tick - NEVER_FIRED`
- * 一定大於任何 `icdTicks`(上界 `HOOK_INTERNAL_COOLDOWN_MAX_SEC` = 300 秒
- * = 9,000 tick)。與 `hookLastFired` 的初值是**同一個常數**,不是兩個抄過來的
- * 字面值 —— 兩份 sentinel 分歧的那一天,per-slot 的第一次觸發會跟 source 的
- * 不一樣,而那個差別只在某一張卡上看得到。
- */
-const NEVER_FIRED = -1e9;
+// ⭐ S3 —— sentinel 與 ICD 換算搬到 `effects/hookIcd.ts`（見上面的 import）。
+// 行為逐位元不變；搬家的理由是 `effects/modifyCooldown.ts` 要寫的正是這裡讀的
+// 那一格，而它**不可以** import 這支（那個環的危害寫在 hookIcd.ts 的檔頭）。
 
 /**
  * 這個 hook 這一次的觸發門檻,`undefined` = 不用抽(必定通過)。
@@ -168,6 +167,55 @@ function hookProcChance(world: SimWorld, owner: EntityId, hook: HookDef): number
   const live = liveAttribute(world, owner, from.attr, from.basis ?? "total");
   if (live === null) return from.min;
   return Math.min(from.max, Math.max(from.min, live * from.coeff));
+}
+
+/**
+ * ⭐ S6【一次性觸發器】—— `maxTriggers` / `consumeOn` / `onConsumed` / `perTarget`
+ * 的那一格帳本。15-04 卡上寫「**下一次**普攻」，而實測連續兩次 `onBasicAttack`
+ * 各打了一發 119.80 —— 缺的不是數值，是**次數**這個概念本身。
+ *
+ * ⛔ 不可以用「掛一個 duration 極短的增益」假裝一次性：那是**時間**界不是次數界，
+ * 攻速一高就會吃到兩次，而畫面上跟正確的一模一樣（失敗形態④）。
+ *
+ * `perTarget` 那一半只有**帶對象**的事件談得上（`onInterval` 由 schema 擋在載入
+ * 期），所以這裡 `target === undefined` 一律退回共用的那一格。
+ */
+function triggersUsed(
+  src: { hookFireCount?: number[]; hookFireCountByTarget?: (Map<EntityId, number> | undefined)[] },
+  hi: number,
+  perTarget: boolean,
+  target: EntityId | undefined,
+): number {
+  if (perTarget && target !== undefined) return src.hookFireCountByTarget?.[hi]?.get(target) ?? 0;
+  return src.hookFireCount?.[hi] ?? 0;
+}
+
+/** 扣掉一次額度，回傳扣完之後的用量。 */
+function consumeTrigger(
+  src: {
+    hooks?: unknown[];
+    hookFireCount?: number[];
+    hookFireCountByTarget?: (Map<EntityId, number> | undefined)[];
+  },
+  hi: number,
+  perTarget: boolean,
+  target: EntityId | undefined,
+  used: number,
+): number {
+  const n = used + 1;
+  if (perTarget && target !== undefined) {
+    if (!src.hookFireCountByTarget) src.hookFireCountByTarget = new Array(src.hooks?.length ?? 0);
+    let m = src.hookFireCountByTarget[hi];
+    if (!m) {
+      m = new Map<EntityId, number>();
+      src.hookFireCountByTarget[hi] = m;
+    }
+    m.set(target, n);
+    return n;
+  }
+  if (!src.hookFireCount) src.hookFireCount = new Array(src.hooks?.length ?? 0).fill(0);
+  src.hookFireCount[hi] = n;
+  return n;
 }
 
 export function fireHooks(
@@ -200,14 +248,32 @@ export function fireHooks(
    * 表格說話,這裡只認參數。
    */
   firesWhenOwnerDead?: boolean,
-): void {
+  /**
+   * ⭐ 45-00 —— 這一次呼叫只跑**通過這個謂詞**的 hook。省略 = 全部（＝這個參數
+   * 出現之前每一個呼叫點走的那一條路，逐位元不變）。
+   *
+   * 存在的理由只有一個：`incomingPct.negateOriginal`（反彈免傷）必須在**扣血
+   * 之前**判定，而其餘的 `onDamageTaken` 必須在扣血**之後**才讀得到 `hpLost`。
+   * 於是 `combat/damage.ts` 用同一個事件呼叫兩次，各自帶一個互補的謂詞 ——
+   * **一條 hook 只會被其中一次收到**，所以沒有「同一條發兩次」的可能。
+   *
+   * ⛔ 位置在最上面（緊跟 `hook.on`），與 `victim` / `damageSource` 同一族：
+   * 純函式、無 rng、無時鐘。被它擋掉的一發不可以燒 ICD、不可以動 seed，
+   * 否則兩次呼叫會各抽一次籤，而一支免傷反彈的機率就變成了兩倍。
+   */
+  hookFilter?: (hook: HookDef) => boolean,
+): number {
+  let fired = 0;
   const sc = world.stats.get(owner);
-  if (!sc) return;
+  if (!sc) return fired;
   const ownerHp = world.health.get(owner);
   // #293 —— 在此之前這一行沒有 `firesWhenOwnerDead`,而 `DeathSystem` 是**先**寫
   // `hp.alive = false` 再 `emit("death")` 的,所以 `onDeath` 在出貨路徑上一次都
   // 發不出來(失敗形態②:做了但沒有人收得到)。
-  if (ownerHp && !ownerHp.alive && !firesWhenOwnerDead) return;
+  if (ownerHp && !ownerHp.alive && !firesWhenOwnerDead) return fired;
+
+  /** ⭐ S6 —— `onConsumed: "detachSource"` 的待卸清單（見迴圈之後那一行）。 */
+  let detachAfter: string[] | undefined;
 
   for (const src of sc.sources) {
     if (!src.hooks) continue;
@@ -217,6 +283,8 @@ export function fireHooks(
     for (let hi = 0; hi < src.hooks.length; hi++) {
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
+      // ⭐ 45-00 —— 呼叫端的互補謂詞（見上）。rng-FREE，所以擋在 ICD 與骰子前面。
+      if (hookFilter !== undefined && !hookFilter(hook)) continue;
       if (hook.abilitySlot && hook.abilitySlot !== abilitySlot) continue;
       // #244 — WHAT died / was hit. Absent or "any" = no filter, so every
       // pre-#244 hook is untouched. An entity-less event never filters.
@@ -264,6 +332,58 @@ export function fireHooks(
         if (incoming.crit !== (hook.damageCrit === "crit")) continue;
       }
 
+      // ⭐ G8 —— 「這一發暴擊是**我自己那條** critStrike 打出來的嗎」
+      // (89-01 憤怒的頭槌:「**這一招**想起頭槌的那一下把敵人震昏」)。
+      //
+      // 在這個欄位之前,唯一寫得出來的是 `damageCrit: "crit"`,而那是一道**粗
+      // 過濾**:持有者身上任何一條暴擊來源(甚至他天生的 `Stat.CritChance`)打出
+      // 的暴擊都會觸發它。畫面上的差別是「這一招偶爾震昏」變成「這位英雄的每一
+      // 次暴擊都震昏」—— 一個沒有人設計過的控場量。
+      //
+      // ⛔ 位置與上面三條**完全相同**,理由一個字都沒變:這是「這一則事件是什麼」
+      // 的過濾,rng-FREE,必須在 ICD 閘與機率骰之前。
+      //
+      // ⚠️ 這同時是「一次判定、一串結果」的整個答案(G8 的另一半):hook 自己
+      // **不填 `chance`**,判定就只有暴擊那一次骰 —— 於是 77-02「暴擊時追加落雷」
+      // 不可能再出現「暴擊了但沒落雷」。
+      // ⛔ 所以**不需要**第二套 `CritStrikeGrant.onProc`:那會是第二個「暴擊時
+      // 做什麼」的住處,而它拿不到 target、也接不上 `victim`/`condition`/
+      // `internalCooldown`/`maxTriggers` 那一整排既有的閘(第零守則⑨)。
+      //
+      // ⚠️ 2026-08-10 —— 上面那段論證在**技能**暴擊上曾經是假的:
+      // `effects/damage.ts` 那一族只設 `crit`、**不設 `critSources`**,所以這一格
+      // 只有普攻通得過,而作者被逼回「grant 抽一次 + hook 再抽一次」。⛔ 修法**不是**
+      // 補一格 `onProc`,是把那三支的就地擲骰換成 `combat/critStrike.ts::
+      // rollAbilityCrit`（同一份合成、同一份名單）—— 那一行改完,這段論證才第一次
+      // 對全部的暴擊成立。
+      //
+      // 沒有封包 = 不通過(同 `damageSource`);`critSources` 缺席 = 這一發沒有
+      // 任何 grant 參與 = 一定不是「我那一條」。
+      if (hook.critSource === "thisSource") {
+        if (incoming?.critSources?.includes(src.id) !== true) continue;
+      }
+
+      // ⭐ S10 —— 被反彈掉的**原封包**是什麼(60-04 迴旋斬:「若成功反彈敵方
+      // **技能** AP 傷害」)。
+      //
+      // 在這兩格之前,`onReflectSuccess` 的過濾讀的是**反彈封包**自己 —— 而那一發
+      // 的 origin 永遠是反彈者的技能、type 永遠是作者填的那一個,所以「原本打過來
+      // 的是不是技能 AP」這個問題**問不出來**,60-04 的條件只能整條放棄。
+      //
+      // ⛔ 判定走 `damageSourcePasses` 那一份既有函式,不是第二份
+      // `startsWith("ability:")`(理由逐字見那個函式的檔頭)。
+      // ⚠️ 沒有原封包 = 不通過,與 `damageSource` 的不對稱一致。
+      if (hook.reflectedDamageSource !== undefined && hook.reflectedDamageSource !== "any") {
+        const from = incoming?.reflectedFrom;
+        if (from === undefined) continue;
+        if (!damageSourcePasses(hook.reflectedDamageSource, from.origin)) continue;
+      }
+      if (hook.reflectedDamageType !== undefined && hook.reflectedDamageType !== "any") {
+        const from = incoming?.reflectedFrom;
+        if (from === undefined) continue;
+        if (from.type !== hook.reflectedDamageType) continue;
+      }
+
       // 職業限定閘 (owner 2026-07-30: 近戰專用擴散 / 法師保命 / 坦克衝刺 /
       // 射手百分比傷害). See sim/content/requirement.ts for the axes and why
       // `role` is not one of them.
@@ -287,6 +407,20 @@ export function fireHooks(
       const scale = requirementScale(world, owner, hook.requires);
       if (scale === 0) continue;
 
+      // ⭐ S6 —— 額度閘（`maxTriggers`）。
+      //
+      // ⛔ 位置與 `victim` / `damageSource` / `requires` 完全同一族，理由**一個字
+      // 都沒變**：這是一條 rng-FREE 的「這條 hook 還有沒有資格發動」過濾，必須在
+      // **內部冷卻閘與機率骰之前**。搬到骰子後面 = 一條額度早就用完的 hook 每一次
+      // 普攻都偷偷推進亂數流，而那是一條只有 `world.rng.state` 前後比對才看得見的
+      // 決定性缺陷。
+      //
+      // 缺席 = **無限次** = 這個欄位出現之前每一條 hook 的行為，所以既有內容
+      // 一份都碰不到這一行。
+      const perTargetQuota = hook.perTarget === true;
+      const used = triggersUsed(src, hi, perTargetQuota, target);
+      if (hook.maxTriggers !== undefined && used >= hook.maxTriggers) continue;
+
       // Internal cooldown.
       //
       // `combatEnv.itemCooldown` (#189) scales this and ONLY this, and only for
@@ -306,8 +440,7 @@ export function fireHooks(
       const perSlot = hook.internalCooldownScope === "perAbilitySlot";
       const slotKey = abilitySlot ?? ICD_NO_SLOT_KEY;
       if (hook.internalCooldown) {
-        const factor = src.kind === "item" ? world.combatEnv.itemCooldown : 1;
-        const icdTicks = Math.round((hook.internalCooldown * factor) / world.dt);
+        const icdTicks = hookIcdTicks(world, src, hook);
         const last = perSlot
           ? (src.hookLastFiredBySlot?.[hi]?.get(slotKey) ?? NEVER_FIRED)
           : src.hookLastFired[hi]!;
@@ -355,6 +488,20 @@ export function fireHooks(
       // 一條 hook 從 per-slot 改回 source(後台切一格)不會拿到一份空的歷史,
       // 而且 `hookLastFired` 仍是「這條 hook 最後一次發動」的單一真相
       // (診斷面板、未來的 UI 都讀它)。
+      // ⭐ S6 —— 扣額度。`consumeOn` 今天只有 `"fire"`（發動的那一刻），而這一格
+      // 刻意先存在：它把「這裡有二選一」寫進契約，`"hit"`（下游真的打到人才算）
+      // 上線那天只是加一個 enum 成員，不是改語意。
+      // ⛔ 位置在**條件通過之後**：一個沒通過條件的事件不可以吃掉「下一次普攻」，
+      // 理由與它下面那行不燒 ICD 逐字相同。
+      if (hook.maxTriggers !== undefined) {
+        const nowUsed = consumeTrigger(src, hi, perTargetQuota, target, used);
+        // 用完之後整份來源卸下（圖示跟著消失）。⚠️ 真的卸下要等這一輪跑完 ——
+        // `detachSource` 會 splice 掉 `sc.sources`，而我們正在迭代它。
+        if (nowUsed >= hook.maxTriggers && hook.onConsumed === "detachSource") {
+          if (!detachAfter) detachAfter = [];
+          if (!detachAfter.includes(src.id)) detachAfter.push(src.id);
+        }
+      }
       src.hookLastFired[hi] = world.tick;
       if (perSlot) {
         if (!src.hookLastFiredBySlot) src.hookLastFiredBySlot = new Array(src.hooks.length);
@@ -375,7 +522,23 @@ export function fireHooks(
       runEffects(scaleEffects(hook.effects, scale), {
         world,
         caster: owner,
-        rank: 1,
+        // ⭐ G4 —— 這條 hook 的 payload 以**授予它的那一階**求值。
+        //
+        // 在這一行之前它寫死 `rank: 1`,所以一支被動技的 hook 效果不管學到第幾階
+        // 都只讀得到 `perRank` 的第 1 欄。代價不是三支技能而是**全 repo 的抄寫稅**:
+        // 一支七階被動的作者被迫在 `passive.ranks[]` 的每一階**各抄一份**同樣的
+        // hook 只為了換掉裡面那個數字,而抄漏一階**不會紅** —— 那一階的玩家安靜地
+        // 拿到第 1 階的數值(失敗形態 ②)。
+        //
+        // ⛔ 不在這裡回頭查 `world.abilities` 反推 rank:一份來源可能來自道具
+        //(無 rank)、augment(無 rank)、靈氣(rank 屬於發射者)、`applyBuff`
+        //(rank 屬於那一次施放)—— 四種來路四個 if 就是第〇·五守則的越線。
+        // rank 是**授予那一刻**的性質,所以它騎在 source 上(`grantRank`)。
+        //
+        // 缺席 = 1 = 這一行以前的行為,所以道具與增益卡逐位元不變;而載入時的
+        // `refineUnrankedHookPerRank` 擋掉「掛在拿不到 rank 的載體上卻寫了多欄
+        // perRank」的文件 —— fail-loud,不是靜默付第 1 欄。
+        rank: Math.max(1, src.grantRank ?? 1),
         targets: resolveAgainst,
         origin: `hook:${src.id}`,
         // 觸發這一次的那一發封包,原封不動往下傳。`damage.incomingPct` 讀它,
@@ -383,6 +546,17 @@ export function fireHooks(
         ...(incoming !== undefined ? { incoming } : {}),
         rng: world.rng,
       });
+      fired++;
     }
   }
+  // ⭐ S6 —— `onConsumed: "detachSource"`：額度用完的來源整份卸下（圖示跟著消失）。
+  // ⛔ 位置在**兩層迴圈之外**：`detachSource` 會 `splice` 掉 `sc.sources`，而上面
+  // 正在 `for…of` 迭代同一個陣列 —— 邊迭代邊 splice 會**跳過**下一份來源，而症狀
+  // 是「同一 tick 觸發的另一件裝備偶爾不生效」，看起來像機率問題。
+  if (detachAfter) for (const id of detachAfter) detachSource(world, owner, id);
+  // ⭐ 45-00 —— 「這一次呼叫真的跑了幾條 hook」。呼叫端只有一個（免傷的預掃描）
+  // 在讀它：跑了 ≥1 條免傷 hook = 這一發不扣血。⛔ 不可以改成「持有者身上有沒有
+  // 免傷 hook」—— 那讀不到 ICD、機率與條件三道閘，一支 20% 機率的寫輪眼會變成
+  // 100% 免傷（owner 2026-08-09 的 45-00 裁決正是「20% 機率」）。
+  return fired;
 }

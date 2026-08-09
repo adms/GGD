@@ -51,6 +51,19 @@ import type { CSSProperties } from "react";
 // task #245: the build stamp's reserved bottom strip. Imported rather than
 // re-stated so the badge's own geometry and this contract cannot disagree.
 import { VERSION_BADGE_BAND_PX, VERSION_BADGE_BAND_W_PX } from "@ggd/shared/versionBadge";
+// owner 2026-08-10: the player picks a HUD scale tier. ⚠️ This is a DELIBERATE
+// import cycle — hudScale reads HUD_TOUCH_TARGET back from here — and it is
+// safe in exactly one direction: neither module may touch the other at module
+// LOAD time. Everything below is called from inside a function. ⛔ Do not hoist
+// any of these into a module-level const.
+import {
+  DEFAULT_HUD_SCALE_TIER,
+  HUD_SCALE_TIERS,
+  hudScale,
+  hudScaleMult,
+  hudScaleTier,
+  type HudScaleTier,
+} from "../hudScale";
 
 export type HudCorner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
@@ -486,6 +499,147 @@ export function hudSlot(id: HudSlotId): HudSlotSpec {
   return spec;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * HUD SCALE (owner 2026-08-10) — the registry's half of the player-chosen
+ * scale tiers. The operator itself lives in ui/hudScale.ts; this block is only
+ * about WHICH slots follow it and what happens when a 300% panel no longer
+ * fits on the screen.
+ *
+ * ⚠️ The reserved geometry MUST follow the tier. A panel that paints 3× larger
+ * while reserving its 100% rectangle is failure form ① (it draws over its
+ * neighbour, or off-screen) with every layout test still green — the reserve
+ * is what the tests read, and the reserve never moved.
+ *
+ * SAFE AREA: unchanged. The notch inset is still owned once by #hud-root
+ * (module doc); scaling multiplies plain px and never introduces an env().
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Slots whose reserved geometry follows the scale tier. owner named exactly
+ * two things — the ability icons (bottom cluster, a different module) and
+ * 對手角色的資訊, this panel — so every other slot keeps its shipped size and a
+ * scale change can never move chrome nobody asked to move.
+ */
+const SCALED_SLOTS: ReadonlySet<string> = new Set(["enemy-team"]);
+
+/**
+ * What to do when the chosen tier no longer fits the viewport.
+ *   clamp — step down to the largest tier that still fits (never below 中).
+ *   allow — paint it anyway, even partly off-screen.
+ * A decision point, so it is a field (第一守則). Default `clamp`: a panel the
+ * player cannot see is strictly worse than a slightly smaller one, and 中 is
+ * the floor precisely because 中 is today's behaviour — a viewport too small
+ * for the shipped size is a pre-existing condition, not something scaling did.
+ * ⚠️ Clamping must be VISIBLE in the settings screen ("此螢幕最多 XXX%"), or it
+ * becomes "he picked it, we showed it selected, and it did nothing".
+ */
+export type HudOverflowPolicy = "clamp" | "allow";
+
+let overflowPolicy: HudOverflowPolicy = "clamp";
+
+/** Override the overflow policy (`null` = back to the shipped `clamp`). */
+export function applyHudOverflowPolicy(p: HudOverflowPolicy | null): void {
+  overflowPolicy = p === "allow" || p === "clamp" ? p : "clamp";
+}
+
+export function hudOverflowPolicy(): HudOverflowPolicy {
+  return overflowPolicy;
+}
+
+let viewportOverride: HudViewport | null = null;
+
+/**
+ * Pin the viewport the clamp measures against (`null` = read the real window).
+ * Tests pass one so the maths is deterministic; the client needs no wiring —
+ * see `ambientViewport()`.
+ */
+export function applyHudViewport(vp: HudViewport | null): void {
+  viewportOverride = vp;
+}
+
+/**
+ * The viewport to clamp against when a caller did not name one. Reading
+ * `window` LAZILY (never at module load) keeps this module node-pure: in node
+ * there is no window, so there is no clamp, so every existing test sees the
+ * unclamped registry it has always seen.
+ */
+function ambientViewport(): HudViewport | null {
+  if (viewportOverride) return viewportOverride;
+  const w = (globalThis as { window?: { innerWidth?: number; innerHeight?: number } }).window;
+  if (!w || typeof w.innerWidth !== "number" || typeof w.innerHeight !== "number") return null;
+  return { width: w.innerWidth, height: w.innerHeight };
+}
+
+/** A slot's declared (pre-scale) reserve for this pointer type. */
+function baseSize(spec: HudSlotSpec, touch: boolean): { w: number; h: number } {
+  return {
+    w: touch ? (spec.touchWidth ?? spec.width) : spec.width,
+    h: touch ? (spec.touchHeight ?? spec.height) : spec.height,
+  };
+}
+
+function scaledSize(id: HudSlotId, touch: boolean, tier: HudScaleTier): { w: number; h: number } {
+  const base = baseSize(hudSlot(id), touch);
+  if (!SCALED_SLOTS.has(id)) return base;
+  return { w: hudScale(base.w, tier), h: hudScale(base.h, tier) };
+}
+
+/**
+ * Would this slot still be fully on screen at `tier`?
+ * ⚠️ `hudSlotOffset` only ever sums the slots BEFORE this one (it breaks at
+ * its own order), so this can never recurse back into the slot being measured.
+ */
+function fitsViewport(
+  id: HudSlotId,
+  touch: boolean,
+  tier: HudScaleTier,
+  vp: HudViewport,
+): boolean {
+  const { w, h } = scaledSize(id, touch, tier);
+  const { vertical, horizontal } = cornerAxes(hudSlotCorner(id, touch));
+  const offset = hudSlotOffset(id, touch);
+  return hudRectInViewport(
+    {
+      x: horizontal === "left" ? HUD_EDGE : vp.width - HUD_EDGE - w,
+      y: vertical === "top" ? offset : vp.height - offset - h,
+      w,
+      h,
+    },
+    vp,
+  );
+}
+
+/**
+ * The tier this slot is actually laid out at — the player's choice, stepped
+ * down until it fits (see `HudOverflowPolicy`). Slots that do not follow the
+ * scale always answer 中, which the operator guarantees is a bit-for-bit
+ * no-op, so their geometry is untouched.
+ *
+ * The component that paints the slot must ask for THIS tier, not the raw
+ * `hudScaleTier()`, or the paint and the reserve disagree exactly when the
+ * clamp fires.
+ */
+export function hudSlotScaleTier(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): HudScaleTier {
+  if (!SCALED_SLOTS.has(id)) return DEFAULT_HUD_SCALE_TIER;
+  const chosen = hudScaleTier();
+  // 中 and below always stand: shrinking never overflows, and clamping UP
+  // would change the default tier's pixels.
+  if (overflowPolicy !== "clamp" || hudScaleMult(chosen) <= 1) return chosen;
+  const vp = viewport === undefined ? ambientViewport() : viewport;
+  if (!vp || vp.width <= 0 || vp.height <= 0) return chosen;
+  for (const t of HUD_SCALE_TIERS) {
+    // HUD_SCALE_TIERS is ordered large → small; skip past the player's choice
+    if (hudScaleMult(t.id) > hudScaleMult(chosen)) continue;
+    if (hudScaleMult(t.id) <= 1) break; // never clamp below 中
+    if (fitsViewport(id, touch, t.id, vp)) return t.id;
+  }
+  return DEFAULT_HUD_SCALE_TIER;
+}
+
 /**
  * The corner a slot occupies for the current pointer type. A slot may declare
  * `touchCorner` to move on coarse pointers (see the module doc — phone
@@ -520,16 +674,26 @@ export function cornerAxes(corner: HudCorner): {
   };
 }
 
-/** Reserved height of a slot for the current pointer type. */
-export function hudSlotHeight(id: HudSlotId, touch = false): number {
-  const spec = hudSlot(id);
-  return touch ? (spec.touchHeight ?? spec.height) : spec.height;
+/**
+ * Reserved height of a slot for the current pointer type, at the scale tier it
+ * is really laid out at. Pass `viewport` to pin the overflow clamp (rect maths
+ * does); omit it and the clamp reads the live window.
+ */
+export function hudSlotHeight(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): number {
+  return scaledSize(id, touch, hudSlotScaleTier(id, touch, viewport)).h;
 }
 
-/** Reserved width of a slot for the current pointer type. */
-export function hudSlotWidth(id: HudSlotId, touch = false): number {
-  const spec = hudSlot(id);
-  return touch ? (spec.touchWidth ?? spec.width) : spec.width;
+/** Reserved width of a slot for the current pointer type. See `hudSlotHeight`. */
+export function hudSlotWidth(
+  id: HudSlotId,
+  touch = false,
+  viewport?: HudViewport | null,
+): number {
+  return scaledSize(id, touch, hudSlotScaleTier(id, touch, viewport)).w;
 }
 
 /**
@@ -614,8 +778,11 @@ export interface HudViewport {
  */
 export function hudSlotRect(id: HudSlotId, viewport: HudViewport, touch = false): HudRect {
   const { vertical, horizontal } = cornerAxes(hudSlotCorner(id, touch));
-  const w = hudSlotWidth(id, touch);
-  const h = hudSlotHeight(id, touch);
+  // the rect knows its viewport, so the overflow clamp measures against THAT
+  // one rather than the ambient window — this is what makes the guard honest
+  // on the two viewports we measured as tight (375-tall touch, 780x360).
+  const w = hudSlotWidth(id, touch, viewport);
+  const h = hudSlotHeight(id, touch, viewport);
   const offset = hudSlotOffset(id, touch);
   return {
     x: horizontal === "left" ? HUD_EDGE : viewport.width - HUD_EDGE - w,

@@ -118,6 +118,8 @@ import type { HookDef, ModifierSource, StatModifier } from "../stats/modifiers";
 import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
 import { resolveAbilityRadius } from "../abilities/abilitySystem";
+// ⭐ 位置索引帳的**單一**作廢清單（型別-only 葉子檔，不成環 —— 見那支的檔頭）。
+import { invalidateHookLedgers } from "../effects/hookIcd";
 
 /**
  * Who an aura reaches, relative to its emitter.
@@ -345,14 +347,13 @@ export function auraSystem(world: SimWorld): void {
         }
         if (s.hooks !== want.def.hooks) {
           s.hooks = want.def.hooks;
-          // hookLastFired is indexed by hook position — a different hooks array
-          // invalidates it, and fireHooks rebuilds it lazily.
-          s.hookLastFired = undefined;
-          // …and so is the per-slot ledger (`internalCooldownScope:
-          // "perAbilitySlot"`), which is indexed by the SAME positions. Leaving
-          // it behind would carry one hook's cooldown onto whatever hook lands
-          // at that index next.
-          s.hookLastFiredBySlot = undefined;
+          // EVERY position-indexed ledger dies with the array it indexed —
+          // `hookLastFired`, the per-slot one, AND S6's two trigger-quota books.
+          // ⛔ 不要在這裡逐一列出它們：這一行在 S6 加了兩本帳之後**漏了兩本**整整
+          // 一批，而症狀（額度錯記到另一條 hook 頭上）在畫面上跟「這張卡有時候
+          // 壞掉」一模一樣。清單住在 `effects/hookIcd.ts::invalidateHookLedgers`，
+          // 第五本帳出現時改那裡一個地方。
+          invalidateHookLedgers(s);
           dirty = true;
         }
         if ((s.stacks ?? 1) !== want.stacks) {

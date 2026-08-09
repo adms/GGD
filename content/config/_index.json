@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "6df93cfebf04",
+  "hash": "d2f869917c8c",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -65,8 +65,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "da8b6a607808",
-      "size": 900
+      "hash": "c826e0e5d9fa",
+      "size": 984
     },
     {
       "id": "combat-feel",
@@ -173,8 +173,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "2bb076f13318",
-      "size": 268
+      "hash": "92821a451e35",
+      "size": 329
     },
     {
       "id": "stealth",

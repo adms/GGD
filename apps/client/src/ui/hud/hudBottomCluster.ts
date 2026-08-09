@@ -87,25 +87,35 @@ import {
   type HudSlotId,
   type HudViewport,
 } from "./hudLayout";
+import { abilityRowHeight, abilityRowMaxWidth } from "../components/abilityBarMetrics";
+import { HUD_SCALE_TIERS, hudScaleMult, hudScaleTier, type HudScaleTier } from "../hudScale";
+import { DEFAULT_HUD_SCALE_TIER } from "../hudScale";
 
 /* ═══════════════════════════════════════════════════════════════════════════
  * MEASURED SIZES — reservations, i.e. upper bounds on what the row paints
  * ═══════════════════════════════════════════════════════════════════════════ */
 
 /**
- * The ability row's painted height. MEASURED 2026-07-30 on the live client at
- * 1280×800: 88 px (8 px padding + a 52 px tile + the caption/rank line + 8 px).
- * It does NOT vary with the tile count — only the width does — so the arithmetic
- * in {@link hudClusterRects} is exact rather than approximate.
+ * The ability row's painted height AT THE 「中」 SCALE TIER. MEASURED 2026-07-30
+ * on the live client at 1280×800: 88 px (8 px padding + a 52 px tile + the
+ * caption/rank line + 8 px). It does NOT vary with the tile count — only the
+ * width does — so the arithmetic in {@link hudClusterRects} is exact.
+ *
+ * ⚠️ SINCE 2026-08-10 THIS IS NO LONGER THE ONLY VALUE. The player picks a HUD
+ * scale tier (owner: 最大300% … 最小10%), so the live reservation comes from
+ * {@link abilityRowHeight}, which derives it from the SAME base sizes
+ * `AbilityBar.tsx` paints with. This constant stays because it is the 「中」
+ * answer and callers/tests read it as such; `abilityBarScale.test.ts` asserts
+ * `abilityRowHeight("medium") === ABILITY_ROW_H` so the two cannot drift.
  */
 export const ABILITY_ROW_H = 88;
 
 /**
- * The ability row's WIDEST case: six tiles (天生技│Q│W│E│R│EX, #192's order).
- * Measured 306 px with five tiles on the same client; one more tile is
+ * The ability row's WIDEST case AT 「中」: six tiles (天生技│Q│W│E│R│EX, #192's
+ * order). Measured 306 px with five tiles on the same client; one more tile is
  * +52 (tile) +6 (flex gap) = 364. A champion with no innate paints 306 and this
  * reservation is simply loose, which is the contract every reserved size in
- * `hudLayout` follows.
+ * `hudLayout` follows. Live value: {@link abilityRowMaxWidth} (see above).
  */
 export const ABILITY_ROW_MAX_W = 364;
 
@@ -424,18 +434,62 @@ export function clusterSideLimits(
  * models can be compared directly — which is the whole point of writing this
  * one down instead of leaving it in two `bottom:` declarations.
  */
+/**
+ * 技能列的 overflow clamp —— 與 `hudLayout.hudSlotScaleTier` **同一條規矩**
+ * （裝不下就往下退一檔、下限是「中」），只是它問的是**寬度**而不是堆疊高度。
+ *
+ * ⚠️ 為什麼下限是「中」而不是更小：「中」等於今天的行為。一個太窄的視窗把畫面
+ * 夾到比預設還小，就變成「視窗大小會改變預設玩家的畫面」—— 那是另一個 bug。
+ *
+ * ⚠️ 為什麼不併進 `hudLayout`：技能列不是 hudLayout 的 slot（它是底部叢集，
+ * 由 `hudClusterRects` 自己算）。把它塞進 `SLOTS` 會讓 `hudLayout.test.ts` 的
+ * order 斷言與 `skipTransient` 尾端規矩全部要重排 —— 代價遠大於這 12 行。
+ */
+function clampTierToWidth(
+  vp: HudViewport,
+  touch: boolean,
+  chosen: HudScaleTier,
+  tuning: HudClusterTuning,
+): HudScaleTier {
+  if (hudScaleMult(chosen) <= 1) return chosen; // 縮小永遠塞得下
+  for (const t of HUD_SCALE_TIERS) {
+    if (hudScaleMult(t.id) > hudScaleMult(chosen)) continue; // 大於玩家選的就跳過
+    if (hudScaleMult(t.id) <= 1) break; // 永不夾到「中」以下
+    const band = { y: 0, h: abilityRowHeight(t.id) };
+    const { left, right } = clusterSideLimits(vp, touch, band);
+    if (abilityRowMaxWidth(t.id) <= right - left) return t.id;
+  }
+  return DEFAULT_HUD_SCALE_TIER;
+}
+
 export function hudClusterRects(
   vp: HudViewport,
   touch: boolean,
   rows: HudClusterRows,
   tuning: HudClusterTuning = hudClusterTuning(),
+  tier: HudScaleTier = hudScaleTier(),
 ): HudClusterLayout {
-  const abilityH = rows.abilities ? ABILITY_ROW_H : 0;
+  // ⛔ 承重的一行組：保留矩形跟著玩家選的檔位走，而且是從 AbilityBar 畫圖用的
+  //    同一組基準尺寸推導的。拿掉 `tier` 這一組就會退化成「畫的變大、保留的沒變」
+  //    —— 技能列撞進小地圖，而這個檔的既有守衛全綠（失敗形態⑤）。
+  //
+  // ⭐ 2026-08-10 —— 技能列**也要 overflow clamp**（複驗量到的洞）。
+  //    在此之前只有 `enemy-team` 走 `hudSlotScaleTier` 的退檔，技能列不是 hudLayout
+  //    的 slot 所以管不到：實測 300% 在 1280×800（owner 自己的 MacBook）算出
+  //    1092×264 的保留矩形，**同時撞小地圖與敵方面板**；780×360 橫向更是右邊
+  //    超出視窗 322px。owner 點名的第一件事就是技能圖標，而它在他自己的機器上
+  //    選最大就會蓋掉半個 HUD。
+  //    ⛔ 不開新機制：`clampTierToWidth` 用的是 `hudSlotScaleTier` 同一條規矩
+  //    （裝不下就往下退一檔、**下限是「中」**），只是換成問「寬度放不放得下」。
+  const fitTier = clampTierToWidth(vp, touch, tier, tuning);
+  const rowW = abilityRowMaxWidth(fitTier);
+  const rowH = abilityRowHeight(fitTier);
+  const abilityH = rows.abilities ? rowH : 0;
   const resourceH = rows.resources ? RESOURCE_ROW_H : 0;
   const gapPx = rows.abilities && rows.resources ? tuning.barsToAbilitiesGapPx : 0;
   const h = abilityH + gapPx + resourceH;
   const w = Math.max(
-    rows.abilities ? ABILITY_ROW_MAX_W : 0,
+    rows.abilities ? rowW : 0,
     rows.resources ? RESOURCE_ROW_W : 0,
   );
   const bottom = touch ? tuning.clusterTouchBottomPx : tuning.clusterBottomPx;
@@ -489,10 +543,10 @@ export function hudClusterRects(
     : null;
   const abilities: HudRect | null = rows.abilities
     ? {
-        x: rowX(ABILITY_ROW_MAX_W),
+        x: rowX(rowW),
         y: y + resourceH + gapPx,
-        w: ABILITY_ROW_MAX_W,
-        h: ABILITY_ROW_H,
+        w: rowW,
+        h: rowH,
       }
     : null;
   return { cluster, resources, abilities, gapPx, clamped, tight };
@@ -508,8 +562,10 @@ export function hudCastNoticeBottom(
   touch: boolean,
   rows: HudClusterRows,
   tuning: HudClusterTuning = hudClusterTuning(),
+  tier: HudScaleTier = hudScaleTier(),
 ): number {
-  const abilityH = rows.abilities ? ABILITY_ROW_H : 0;
+  // 技能列變高，提示行就要跟著抬高，否則放大之後它會被畫進技能列裡。
+  const abilityH = rows.abilities ? abilityRowHeight(tier) : 0;
   const resourceH = rows.resources ? RESOURCE_ROW_H : 0;
   const gapPx = rows.abilities && rows.resources ? tuning.barsToAbilitiesGapPx : 0;
   const bottom = touch ? tuning.clusterTouchBottomPx : tuning.clusterBottomPx;

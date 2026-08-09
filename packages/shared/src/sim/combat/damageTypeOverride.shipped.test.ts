@@ -286,9 +286,17 @@ describe("平衡 —— the AP number is REPORTED, not silently capped", () => {
     expect(baseAp).toBeGreaterThan(0);
 
     const shard = doc("godie-i067") as unknown as ItemDef;
+    // ⚠️ 碎片自己的 pctAdd 也從文件讀 —— 這裡原本寫死 ×2 / ×3.0,而 owner
+    //    2026-08-10 把套裝從 +100% 調成 +300%,於是這一條用「疊加規則壞了」
+    //    的訊息紅,真相只是數字被調過（第四個住處）。守的是**規則**:
+    //    pctAdd 共用同一個桶,所以是相加不是相乘。
+    const shardPct = (shard.modifiers ?? [])
+      .filter((m) => m.stat === Stat.AbilityPower && m.op === ModOp.PercentAdd)
+      .reduce((a, m) => a + m.value, 0);
+    expect(shardPct).toBeGreaterThan(0);
     attachSource(world, a, itemModifierSource(world, a, "godie-i067" as ItemId, 0, shard));
     recomputeStats(world, a);
-    expect(sc.final[Stat.AbilityPower]).toBeCloseTo(baseAp * 2, 6); // ×2 from the shard alone
+    expect(sc.final[Stat.AbilityPower]).toBeCloseTo(baseAp * (1 + shardPct), 6); // shard alone
 
     // The 死之王套裝 bonus is the SAME shape (`ap pctAdd 1.0`) delivered as its
     // own source, so it lands in the same pctAdd bucket. Read the number off the
@@ -307,11 +315,13 @@ describe("平衡 —— the AP number is REPORTED, not silently capped", () => {
     });
     recomputeStats(world, a);
 
-    // THE NUMBER: ×(1 + 1.0 + 1.0) = ×3.0. Written as a ratio off the measured
-    // base so it stays true when the roster's AP numbers are re-balanced — the
-    // claim under guard is the STACKING RULE, not sela's stat card.
-    expect(setAp!.value).toBeCloseTo(1.0, 6);
-    expect(sc.final[Stat.AbilityPower]).toBeCloseTo(baseAp * (1 + 1.0 + setAp!.value), 6);
-    expect(sc.final[Stat.AbilityPower] / baseAp).toBeCloseTo(3.0, 6);
+    // THE RULE: ×(1 + Σ pctAdd) —— ADDITIVE, one shared bucket. Every number
+    // is read off the shipped docs; nothing here is a literal.
+    expect(sc.final[Stat.AbilityPower]).toBeCloseTo(baseAp * (1 + shardPct + setAp!.value), 6);
+    // ⛔ and NOT the multiplicative reading — that is the drift that would matter
+    expect(sc.final[Stat.AbilityPower]).not.toBeCloseTo(
+      baseAp * (1 + shardPct) * (1 + setAp!.value),
+      6,
+    );
   });
 });

@@ -111,6 +111,10 @@ import { randomAreaEffect } from "./randomArea";
 import { manaBarrierEffect } from "./manaBarrier";
 import { extendBuffEffect } from "./extendBuff";
 
+// ── Lane 3 (2026-08-10) — G12 延遲序列 / S5 代放。界共用 ./kindLimits.ts ─────
+import { delayedEffect } from "./delayed"; // 排程器半在 ./delayed.ts::delayedSystem
+import { proxyCastEffect } from "./proxyCast"; // 終止性證明在該檔檔頭①
+
 /**
  * kind → handler. The mapped type demands EVERY member of the `EffectDef`
  * union, so growing the union without landing a handler stops the build.
@@ -197,6 +201,18 @@ export const EFFECT_HANDLERS: EffectRegistry = {
   //    (`MIN_LEAP_TICKS = 2`) 的全部差別。機制在 ../movement/blink.ts,
   //    「誰移動、移到哪」在 ./blink.ts。⛔ 它已經不再丟例外。
   blink: blinkEffect,
+
+  // ── Lane 3 (2026-08-10)：handler **已經落地**（stub 撤掉）─────────────────
+  //
+  // ⭐ G12【延遲序列】—— 一串排在未來 tick 的效果，目標在**施放那一刻凍住**。
+  //    ⛔ 與 `randomArea` 的差別是**一句話**：那邊到期用圓心重解（走開就打空），
+  //    這邊到期用凍住的名單。⚠️ 需要 `delayedSystem` 被接進 `SimWorld.step()`
+  //    的 7e′（已接），見 ./delayed.ts 檔頭③。
+  delayed: delayedEffect,
+  // ⭐ S5【代放】—— 一支技能施放另一支技能（80-04「20% 機率使出弒鬼神」）。
+  //    ⛔ `payCosts` 非 none 時走 `castAbility` 的**同一排閘**，不在 handler 裡
+  //    重寫沉默／暈眩／魔力那些 if。終止性 = 深度嚴格遞增 + 有界上限。
+  proxyCast: proxyCastEffect,
 
   // ── reserved: replace the stub module's `apply`, nothing here changes ─────
   evasion: evasionEffect, //           lane P5 — 閃避   (uses the existing Stat.Evasion)

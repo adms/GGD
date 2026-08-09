@@ -105,3 +105,82 @@ export const EXTEND_BUFF_MAX_REMAINING_SEC = 120;
  * 1 = 「承受一整條血才延長一次」，比它大的數字沒有語意。
  */
 export const EXTEND_BUFF_MAX_THRESHOLD_PCT = 1;
+
+// ═══════════════════════════════════════════════════════════════════════════
+//  Lane 3（2026-08-10）—— 六個新機制的界，住進**同一張表**
+//
+//  ⚠️ 一樣不另開第三張表（第零守則⑨）。下面每一格一樣是**誤打守衛**
+//  （0.2 打成 20、3 打成 300 那一類），不是平衡政策 —— 平衡值住在 `content/`
+//  與後台。schema 與 handler 都 `import` 這裡，⛔ 不在任何一邊抄字面值。
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * `damageArea.onHitTargets` / `damageLine.onHitTargets` 一段最多掛幾個效果
+ *（effect.target-set-chain@1）。
+ *
+ * 失敗形態與 {@link BRANCH_MAX_COUNT} 同一族：一份把 40 段效果掛在一次濺射上的
+ * 文件不是「很豐富」，是一次 tick 的預算炸掉，而症狀是掉幀不是錯誤訊息。
+ * ⚠️ 它只擋**寬度**不擋**深度** —— 一段 `onHitTargets` 裡可以再放一個帶
+ * `onHitTargets` 的 `damageArea`。JSON 不可能有環，所以深度由文件本身的巢狀
+ * 決定、必然有限；這與 `randomArea.effects` 的既有姿態一致。
+ */
+export const EFFECT_CHAIN_MAX_STEPS = 8;
+
+/**
+ * `HookDef.maxTriggers`（一條 hook 總共能發動幾次）的上界。
+ *
+ * 99 = 誤打守衛（3 打成 300 那一類）。⛔ 缺席 = **無限次** = 這個欄位出現之前
+ * 每一條 hook 的行為，所以這個上界只約束**明確填了次數**的那些。
+ */
+export const HOOK_MAX_TRIGGERS = 99;
+
+/**
+ * `dash.onEnd`（衝刺結束那一刻跑的那一段）的長度上界。
+ * 8 遠大於「AoE 傷害 + 減速 + 特效」這種真實用法。
+ */
+export const DASH_ON_END_MAX_EFFECTS = 8;
+
+/**
+ * `delayed.delaySec`（第一發要等多久）的上界。
+ * 10 秒 ≈ 一個回合的二十分之一；再長就不是「延遲斬擊」而是打錯字。
+ */
+export const DELAYED_MAX_DELAY_SEC = 10;
+/**
+ * `delayed.count`（一次施放總共落幾發）的上界，與 {@link RANDOM_AREA_MAX_COUNT}
+ * **同一個數字同一個理由**：兩者都是「一次施放排出幾個未來的 tick」。
+ * ⚠️ 52-002 卡面寫「連續 100 下」——那是一個**設計決定**，要突破就改這個常數
+ * 並知道自己在做什麼（同 ggd-faithful-import-over-rescale：明知地抬高守衛，
+ * ⛔ 不要偷偷把內容 rescale 成 32）。
+ */
+export const DELAYED_MAX_COUNT = 32;
+/**
+ * `delayed.intervalSec` 的上界。10 秒同 {@link RANDOM_AREA_MAX_INTERVAL_SEC}。
+ * ⚠️ 下界不在這裡：schema 用 `.positive()`，執行期再夾成**至少 1 tick** ——
+ * 0.001 秒與 0.033 秒在 30Hz 下是同一件事，而一個算出 0 tick 間隔的排程會把
+ * 整波塞進同一個 tick（畫面上就不是「連擊」而是「一下」）。
+ */
+export const DELAYED_MAX_INTERVAL_SEC = 10;
+
+/**
+ * `proxyCast.maxDepth` 的上界 —— ⭐ 這一格是 `proxyCast` 的**終止性證明**。
+ *
+ * 與 `reflectLimits.ts` 的 `REFLECT_MAX_CHAIN_DEPTH` 同一個角色：
+ * `EffectContext.proxyDepth` 嚴格遞增 + 一個有界的上限 ⇒ 鏈長有限 ⇒ 一定終止。
+ * ⛔ 它必須是一個**看得見的數字**：一個沒有上界的 `maxDepth` 等於把「這一場會
+ * 不會卡死」交給內容作者，而症狀是 `world.step()` 不回來 —— 不是一個看得出來
+ * 的錯誤。3 = 「A 放 B、B 放 C、C 放 D」已經沒有人看得懂了。
+ */
+export const PROXY_MAX_CHAIN_DEPTH = 3;
+
+/**
+ * `applyBuff.maxStat.value` 的上界 —— **打錯數字的護欄，不是平衡政策**。
+ *
+ * 它擋的是「多打一個零」與「沒換算的 WC3 原始值」（WC3 的距離單位是 GGD 的
+ * 約 109 倍，所以一個忘了換算的 600 會變成一個永遠咬不到的天花板 —— 而畫面上
+ * 跟「這張卡就是沒有上限」一模一樣，正是失敗形態②）。
+ *
+ * 100000 遠高於任何合理的設計值（全 repo 最大的既有屬性天花板是攻速 10、
+ * 血量以千計），但擋得住 1e6 那一級的打字錯誤。
+ * ⛔ 要調平衡請改那張卡自己的 `maxStat.value`，不是這個常數。
+ */
+export const STAT_CEILING_MAX = 100000;

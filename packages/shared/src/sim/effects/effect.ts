@@ -108,6 +108,35 @@ export interface TriggerDamage {
    * `damageCrit: "crit"` 的 hook 問的是「剛剛那一下爆了嗎」，不是「我暴擊率夠不夠」。
    */
   readonly crit: boolean;
+  /**
+   * ⭐ G8 —— 這一發封包被**哪幾條 `critStrike` 來源**加成了（`ModifierSource.id`
+   * 的清單）。`HookDef.critSource: "thisSource"` 讀它。
+   *
+   * `undefined` = 一條 grant 都沒有參與 = 這個欄位出現之前的每一發封包。
+   *
+   * ⚠️ 語意是「**加成到**這一發的來源」而不是「自己骰中的來源」—— 所以
+   * `empowers: "everyCrit"` 的 grant 在英雄自己暴擊時也會進名單，那是正確的：
+   * `empowers` 這個決策點**已經是一格欄位**，不需要在這裡再開第二個。
+   *
+   * ⚠️ 它**不是**在 TriggerDamage 上塞第二個真相（那條反對意見針對的是「原傷害
+   * 的**量**」）—— 它是同一發封包的一個**分類**，與 `type` / `crit` 兩格
+   * 2026-08-05 抄過來的理由逐字相同。
+   */
+  readonly critSources?: readonly string[];
+  /**
+   * ⭐ S10 —— 被這一發**反彈掉的原封包**的分類（60-04 迴旋斬：「若成功反彈敵方
+   * **技能** AP 傷害」）。`HookDef.reflectedDamageSource` / `reflectedDamageType`
+   * 讀它。`undefined` = 這不是一發反彈封包。
+   *
+   * ⚠️ **只有分類，沒有量**。原傷害的「量」仍然不在 payload 裡 —— 那一份由同一
+   * tick 的 `onDamageTaken` 帶著，再塞一份進來才是第二個真相。
+   *
+   * ⭐ 為什麼「分類」進得來而「量」進不來：60-04 要的是一個**連言** ——
+   *「反彈成功了」與「原封包是技能 AP」住在**兩個不同的事件**上，而掛到
+   * `onDamageTaken` 的 hook 根本不知道反彈有沒有成功。所以這一格不是第二個真相，
+   * 是唯一的真相。
+   */
+  readonly reflectedFrom?: { readonly origin: string; readonly type: DamageType };
 }
 
 /** Rank-aware scaling: flat + per-rank + stat ratios of the caster. */
@@ -326,6 +355,22 @@ type EffectVariant =
         maxChainDepth?: number;
         applyGlobalDamageMult?: boolean;
         whenTooLate?: "drop" | "spill";
+        /**
+         * ⭐ 45-00 —— 反彈的同時**這一發不扣我的血**（免傷）。
+         *
+         * 省略 = **false** = 只把傷害打回去、原本那一發照樣扣血 = 今天的行為。
+         * ⚠️ owner 2026-08-09 說的「反彈**預設**都是免傷」是**那一類技能的設計
+         * 預設**，不是引擎的相容性預設：出貨唯一用 `incomingPct` 的
+         * `content/items/godie-i03m.json`（反射之盾）是照今天的語意寫的，引擎預設
+         * 改成 true 會靜默把一件已上架的道具變成免傷神裝，而卡片上一個字都沒變。
+         *
+         * ⚠️ 免傷**不可能**做成「事後補血」：`combat/damage.ts` 在 `hp.hp -= dmg`
+         * 之後才發 `onDamageTaken`，所以擊殺判定、吸血、浮動數字、計分板四個下游
+         * 都已經看到「他受傷了」——免傷卻會死人。實作走的是與 `blockCutFor` /
+         * `manaBarrierCutFor` / `lethalSaveFor` **同一族**的預掃描（扣血之前削這
+         * 一發）。
+         */
+        negateOriginal?: boolean;
       };
       /**
        * 資源百分比項 —— 「**誰的**哪一條血/魔的多少」。形狀、上界與兩種讀法
@@ -425,6 +470,88 @@ type EffectVariant =
        * 就是雙重計費。技能想用同一個 kind 打「以自己為圓心的爆炸」時才開。
        */
       includeOrigin?: boolean;
+      /**
+       * ⭐ G1 ① —— 圈**內**逐一過濾（`condition.target-status@1` 在範圍技上的
+       * 那一半：「範圍內只打帶〔恐懼〕的敵人」）。
+       *
+       * ⛔ 與 {@link EffectCommon.condition} **不是**同一格，而這正是它必須存在
+       * 的理由（實測）：
+       *   · `condition` 讀的是**上游交下來的** `ctx.targets`，決定「這一段跑不跑」；
+       *     `effectRunner::gateOnCondition` 在 handler 被呼叫**之前**就過濾完了，
+       *     一個都沒通過就 `return undefined`（handler 完全不被呼叫，那是 owner
+       *     自己要的語意⑤）。
+       *   · 於是「以自己為圓心的爆炸，只打帶恐懼的敵人」（`ctx.targets` 是空的）
+       *     會讓 `subject:"target"` 讀 FALSE → **整圈永遠不發**；而「打 A、濺到
+       *     旁邊帶恐懼的人」在 A 乾淨時會被上游閘擋掉 → **整圈消失**。
+       *     兩種寫法都拿不到那張卡。
+       *   · 這一格讀的是**這個圓自己用 `enemiesInCircle` 解出來的人**，只在
+       *     handler 解完圈之後逐一過濾，**不參與**上游閘。
+       *
+       * 同一個型別、同一個求值器（`evaluateCondition`）、同一組葉子 ——
+       * ⛔ 不是第二套條件系統。
+       *
+       * 缺席 = 一次 `evaluateCondition` 都不呼叫 = 零 rng draw = 今天的行為逐位元
+       * 不變（既有 12 份 `damageArea` + 6 份 `damageLine` 文件全部缺席）。
+       *
+       * ⚠️ rng 預算：`conditionChanceCount(cond) × 候選數`，而且**與
+       * {@link maxTargetsCounts} 無關** —— 求值一律跑滿排序後的整份候選清單再切
+       * cap，讓 draw 次數不會因為某個人站遠一點而分叉（同 `randomArea` 檔頭②
+       * 「看得見的預算」）。
+       */
+      victimCondition?: EffectCondition;
+      /**
+       * ⭐ G1 —— `maxTargets` 數的是誰。
+       * · `"qualified"`（省略 = 這個）—— 通過 `victimCondition` 的**前 N 個**
+       *   （卡面「最多 5 名帶〔恐懼〕的敵人」讀起來就是這個）。
+       * · `"candidates"` —— 先取最近的 N 個候選**再**過濾（「最近 5 人裡帶恐懼的」）。
+       * 沒填 `victimCondition` 時這一格沒有作用。
+       */
+      maxTargetsCounts?: "qualified" | "candidates";
+      /**
+       * ⭐ G1 ② —— `effect.target-set-chain@1`：把這一圈**真的打到的那群人**
+       * 當成 `ctx.targets` 交給這一段（`victimCondition` 過濾之後、`maxTargets`
+       * 切完之後的那一份）。
+       *
+       * ⛔ 交的必須是那一份，不是 `ctx.targets`：下游看到的人要跟血條上真的掉血
+       * 的那群人是同一批，否則就是「畫面上打到 A、狀態蓋在 B」。
+       *
+       * ⛔ **不需要 bake**：這一段與母效果在**同一個 tick** 執行，不是延遲
+       * payload，所以 #247 那個「窗口在飛行途中過期」的問題在這裡不存在
+       *（對比 `leap.onLand` / `spawnProjectile.onHit` / `randomArea.effects`
+       * 三個都要 bake）。
+       *
+       * ⚠️ 深度：一段 `onHitTargets` 裡可以再放一個帶 `onHitTargets` 的
+       * `damageArea`。JSON 不可能有環，所以深度由文件本身的巢狀決定、必然有限；
+       * `EFFECT_CHAIN_MAX_STEPS` 只擋**寬度**。與 `randomArea.effects` 的既有姿態
+       * 一致，⛔ 不加深度計數器（那會是一個沒有需求的機制）。
+       */
+      onHitTargets?: EffectDef[];
+      /**
+       * ⭐ G1 ② —— 一個人都沒打到時，要不要照樣跑 {@link onHitTargets}。
+       * 省略 = **false** = 不跑（＝今天什麼都不會發生的那個語意）。
+       * 開著才寫得出「打空了也留下一個落地特效」。
+       * ⚠️ 開著時下游拿到 `targets: []`，帶 `subject:"target"` 條件的效果會退化成
+       * 整段閘並讀 FALSE（`effectRunner` 的④）—— 那是一個真的、但不該是預設的語意。
+       */
+      runOnEmptyHit?: boolean;
+      /**
+       * ⭐ G1 ② —— {@link onHitTargets} 收到的是**整群人一次**還是**一個一個**。
+       *
+       * 省略 = `"batch"` = 整群一次交下去（`ctx.targets = struck`），也就是
+       * {@link onHitTargets} 上面那段檔頭**已經公告過**的語意 —— ⛔ 這一格不是新
+       * 語意，是把那句話裡本來就藏著的二選一拿出來當欄位（第一守則：決策點）。
+       *
+       * · `batch` —— 「打到的每個人都中毒」「濺射到的人被擊退」：下游 handler 自己
+       *   會 for 過 targets，一次交完最省。
+       * · `perTarget` —— 「每個被打到的人腳下再炸一小圈」：下游是 `damageArea` /
+       *   `damageLine` 這種**自己解幾何**的 kind，而它們只讀 `ctx.targets[0]` 當
+       *   圓心 —— batch 模式下 5 個受害者只會炸出 1 個圈，而且**畫面上跟壞掉一模
+       *   一樣**（失敗形態②）。
+       *
+       * ⚠️ `perTarget` 讓下游的 rng draw 隨受害者數線性成長；受害者清單本身已經是
+       * 全序決定性的，所以決定性不破，但它是一筆看得見的成本。
+       */
+      onHitTargetsMode?: "batch" | "perTarget";
     }
   /**
    * damageLine — 面前的一條直線範圍傷害 (18-00 薔薇荊棘之刃). A CAPSULE, not a
@@ -459,6 +586,20 @@ type EffectVariant =
       canCrit?: boolean;
       /** does the entity that TRIGGERED this eat it again? default false */
       includeOrigin?: boolean;
+      /** ⭐ G1 ① —— 見 `damageArea.victimCondition`，同一份型別、同一個求值器。 */
+      victimCondition?: EffectCondition;
+      /** ⭐ G1 —— 見 `damageArea.maxTargetsCounts`。同名同語意，⛔ 不是第二件事。 */
+      maxTargetsCounts?: "qualified" | "candidates";
+      /** ⭐ G1 ② —— 見 `damageArea.onHitTargets`。同樣不需要 bake。 */
+      onHitTargets?: EffectDef[];
+      /** ⭐ G1 ② —— 見 `damageArea.runOnEmptyHit`。省略 = false。 */
+      runOnEmptyHit?: boolean;
+      /**
+       * ⭐ G1 ② —— 見 `damageArea.onHitTargetsMode`。省略 = `"batch"`。
+       * ⛔ 兩個 kind 在這一族上必須**同名同語意**：欄位名一旦分岔，編輯器上長得
+       * 一樣的兩格就會是兩件事 —— 那是最難查的一種缺陷。
+       */
+      onHitTargetsMode?: "batch" | "perTarget";
     }
   /**
    * grantAttribute — PERMANENTLY add 力/敏/智, with a 「每 N 次」 gate and a
@@ -635,6 +776,34 @@ type EffectVariant =
        * ⛔ false 的話一個帶盾的目標「進了處決線但吞不死」，而卡上寫著即死。
        */
       throughShields?: boolean;
+      /**
+       * ⭐ S9a —— **真的吞掉之後**才跑的那一段（92-03「每吞噬一名敵人 +1 AP，永久」）。
+       * 缺席 = 沒有後續 = 今天。
+       *
+       * ⛔ 「用 `onKill` 代替」不成立：`onKill` 的三個發射點都是
+       * `fireHooks(world, killer, "onKill", id)` —— **沒有 abilitySlot、沒有
+       * incoming**，所以「吞噬殺掉的」與「普攻殺掉的」在 hook 端**分不出來**，
+       * 掛上去會變成「任何擊殺都 +1 AP」。
+       * ⛔ 「掛同一組門檻的第二個效果」也不成立：那對**沒有**越過處決線的目標
+       * 也會跑（見這個 kind 的守衛突變）。
+       *
+       * ⚠️ **觸發時刻是「處決線通過、致死量已排進 `world.damageQueue`」的那一刻**，
+       * 不是「屍體確認了」。一個帶【免死】的目標（52-00 十二道試煉）會被吞噬打到
+       * 卻活下來，而這一段已經跑過。⛔ 沒有做成 `emitOn: "committed" |
+       * "confirmedKill"`：後者要一份 `world.pendingDevourConfirm` + 一支排在
+       * `deathSystem` 之後的系統，而今天**沒有任何一張卡**要求那個語意 ——
+       * 一個只有一半值真的會動的欄位是失敗形態②。
+       */
+      onDevour?: EffectDef[];
+      /**
+       * ⭐ S9a —— 一次施放吞掉三個人時，{@link onDevour} 跑幾次。
+       * · `"victim"`（省略 = 這個）—— 每個**真的被吞掉**的人各跑一次
+       *   （92-03「每吞噬一名 +1 AP」）。
+       * · `"cast"` —— 只要有人被吞掉就跑一次（「吞噬成功後回滿魔」那一類）。
+       * ⚠️ 預設對 `shape: "single"`（出貨唯一形狀）兩者**完全等價**，也就是預設值
+       * 不替任何人做決定。
+       */
+      onDevourPer?: "victim" | "cast";
     }
   /**
    * ── Lane 1（2026-08-08）四個新 kind ────────────────────────────────────
@@ -677,6 +846,49 @@ type EffectVariant =
        * 在一次性效果裡唯一與「還剩多久」無關的寫法。
        */
       basis?: "remaining" | "base";
+      /**
+       * ⭐ S3 —— 這一發改的是**哪一種**冷卻。
+       * · `"abilitySlot"`（省略 = 這個）—— `AbilityInstance.cooldownRemainingTicks`，
+       *   也就是這個 kind 今天的全部行為（三份既有文件都走這條）。
+       * · `"hookInternalCooldown"` —— 一條 hook 的**內部冷卻**
+       *   （`ModifierSource.hookLastFired`）。
+       *
+       * ⭐ 它解鎖的是 60-002 絕光斬那一族：一支 **passive-only** 的技能永遠不會被
+       * cast，所以它的 `cooldownRemainingTicks` **恆為 0**，`modifyCooldown` 今天
+       * 在第一道 `if (inst.cooldownRemainingTicks <= 0) continue;` 就跳過它 ——
+       * 「120 秒一次」與「反彈成功立即重置」於是二選一。
+       *
+       * ⛔ 為什麼不做 `MarkSpec.rechargeSec`：`sim/marks.ts` 檔頭⑤已經逐字拒絕過
+       * 同型欄位（「那會是**第二個**冷卻概念，與 `HookDef.internalCooldown` 平行、
+       * 語意重疊、兩個都填得下」），而且它只給得起「重置」，給不起「縮短 50%」。
+       * ⛔ 為什麼不「自動偵測」（找不到技能冷卻就去改 hook）：那會讓一支寫錯
+       * `abilityId` 的文件安靜地去重置某條 hook，而作者以為自己在縮短技能冷卻。
+       */
+      target?: "abilitySlot" | "hookInternalCooldown";
+      /**
+       * ⭐ S3 —— `target: "hookInternalCooldown"` 時指名**哪一條** hook
+       *（比對 {@link HookDef.key}）。省略 = 那份來源上的**每一條** hook。
+       * ⚠️ `target` 不是 `"hookInternalCooldown"` 卻填了它 = PARSE ERROR
+       *（否則它是一格填得下、永遠不被讀的欄位）。
+       */
+      hookKey?: string;
+      /**
+       * ⭐ S3 —— 這一發碰得到**誰的** hook。
+       *
+       * 省略 = `"originSource"` = 只動這一發效果**自己所屬**的那一份
+       * `ModifierSource`（由 `ctx.origin === "hook:" + src.id` 認出來）。
+       * 60-002 要的正是它：兩條 hook 住在同一份被動來源上，「反彈成功」那一條去
+       * 重置「120 秒一次」那一條。
+       *
+       * `"allSources"` = 這個身體上每一份叫得出同一個 `hookKey` 的來源
+       *（`hookKey` 因此必填，載入時擋）。
+       *
+       * ⚠️ 預設選較窄的那一個：一份打錯 `hookKey` 的文件在 `originSource` 下什麼
+       * 都不會發生，在 `allSources` 下會**安靜地**重置別件裝備的 proc。
+       * ⚠️ `originSource` 而 `ctx.origin` 不是 hook origin（例如從主動技能直接放）
+       * → 整條不做。那是誠實的：那一發沒有「自己那份來源」可言。
+       */
+      hookScope?: "originSource" | "allSources";
     }
   | {
       /**
@@ -766,12 +978,17 @@ type EffectVariant =
        * 決定性推導見 `sim/effects/randomArea.ts` 檔頭②。
        */
       kind: "randomArea";
-      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`who:"self"` 時它不參與解析。 */
-      shape: "single" | "circle";
-      radius?: number;
-      side?: "allies" | "enemies";
-      maxTargets?: number;
-      /** 以誰為圓心。省略 = `"self"`（兩支都是「自身[周圍]」）。 */
+      /**
+       * ⛔ **沒有 `shape` / `radius` / `side` / `maxTargets`**（2026-08-10 拿掉）。
+       *
+       * 它們曾經在這裡，而 `sim/effects/randomArea.ts` **一格都不讀** —— 這個 kind
+       * 解的是**落點**不是**受害者**：到期時它用 `targets: []` + `point: hit.pos`
+       * 跑 `effects`，「打到誰」是巢狀的 `damageArea` 自己拿 `ctx.point` 當圓心解的。
+       * 作用範圍由 {@link scatterRadius} + {@link who} 講清楚（E1 要的東西，只是不叫
+       * `shape`）。⛔ 想要「施放那一刻凍住的名單」請用 `delayed`，那正是它存在的理由。
+       *
+       * 以誰為圓心。省略 = `"self"`（兩支都是「自身[周圍]」）。
+       */
       who?: "self" | "target";
       /** 逐階發數。70-04 的 4/6/8 就是 `[4,6,8]`；13-04 是 `[10]`。 */
       count: number[];
@@ -1013,6 +1230,16 @@ type EffectVariant =
        */
       /** 【沉默】C1（#278）—— 不能施放技能，但走得動、打得到。 */
       silenced?: boolean;
+      /**
+       * ⭐【繳械】S8（92-01）—— **打不出普通攻擊**。省略 = 打得出來（今天）。
+       *
+       * ⛔ 它**不是** `missChance` 的包裝（實測：`missChance:1` 的人照樣發
+       * `attackWindup` / `basicAttack` 事件、燒攻擊冷卻、破隱，只是傷害 0）。
+       * ⛔ 它**不擋技能** —— 要連技能一起封請配 `silenced`。
+       * ⚠️ 它**算硬控**（`HARD_CC_FLAGS` + `applyStatus` 的 `isCc`），完整推導見
+       * `sim/components.ts` 的同名欄位。
+       */
+      disarmed?: boolean;
       /** 【混亂】C2（#278）—— 配 `berserk: true` 用：失控之後**不分敵我**。 */
       targetsAllies?: boolean;
       breakOnDamage?: boolean;
@@ -1043,8 +1270,93 @@ type EffectVariant =
   | {
       kind: "applyBuff";
       modifiers: StatModifier[];
-      duration: number;
-      perRank?: { modifiers: StatModifier[]; duration: number }[];
+      /**
+       * 這份增益掛多久（秒）。⭐ S4a 之後它是**選填**，與 {@link permanent}
+       * **互斥且必填其一**（schema 的 `refineApplyBuff` 兩個方向都關死）。
+       * ⛔ 「省略 duration」本身**不等於**永久 —— 那會讓一個打字漏填變成一份靜默
+       * 的永久增益，而那正是這個 repo 反覆踩到的那一類。
+       */
+      duration?: number;
+      /**
+       * ⭐ S4a —— **永久**（80-00「每次擊殺 +1 層、永久」/ 92-03）。
+       *
+       * 引擎層從第一天就做得到：`ModifierSource.expiresAtTick` 缺席 = 永久
+       *（`buffExpirySystem` 的 `s.expiresAtTick !== undefined &&` 那一半就是它活
+       * 下來的原因）。缺的一直是 **authoring 面** —— 於是出貨已經有四份文件用
+       * `duration: 99999` 假裝永久。
+       *
+       * 語意是**整場**（回合重置不清 buff 來源）。⛔ 不做 `permanentScope:
+       * "match" | "round"`：今天唯一能掛「回合清掉」的鉤子是 `clearForFreshBody`，
+       * 而它**復活時也會跑**，所以 `"round"` 實際的意思會是「直到你死一次」——
+       * 一個值不等於它名字的旋鈕（`extendBuff` 檔頭②同一條理由）。
+       */
+      permanent?: boolean;
+      /**
+       * ⭐ G10 —— 這份來源**同時是一個具名標記**（52-01 狂怒 / 破甲 / 破魔）。
+       *
+       * 缺席 = 不是任何標記 = 今天。⭐ 它把「標記」與「數值」變成**同一個物件**，
+       * 所以兩本帳不可能再腐爛：`extendBuff` 改的就是那一份來源的 `expiresAtTick`
+       *（實測缺陷：buff 361→573 而 status 停在 361，於是 52-02 的閘在玩家還在狂怒
+       * 中時就關了）；淨化／回合重置／到期同理。
+       *
+       * ⚠️ 讀取端是 `effectCommon.ts` 的 `hasStatus` / `statusStacks`（已經是
+       * `world.status` + `world.marks` 的統一讀取器，這是第三本帳）。
+       * ⚠️ `stackKey` 路徑的 `stacks` 直接就是 `condition.status.minStacks` 讀得到
+       * 的層數（「他身上疊了 3 層破甲嗎」）。
+       */
+      statusId?: StatusId;
+      /**
+       * ⭐ S9b —— 這一份增益落在誰身上：`"target"`（省略 = 這個，`ctx.targets`）
+       * 或 `"self"`（施法者自己）。
+       *
+       * 它解鎖的是「**一條** hook 讀敵人狀態、增益自己」：拆成兩條 hook 不是一次
+       * 判定 —— ICD 記在 `src.hookLastFired[hi]`（**逐 hook** 一格）、機率也是逐
+       * hook 各抽一次，所以「30% 機率對帶恐懼的敵人追加傷害**並且**自己加攻速」
+       * 寫成兩條 hook 會有 9% 的情況只發生一半，而畫面上看不出來。
+       *
+       * ⛔ 與其他九個 kind 用**同一格**語意（`applyStatus` / `restore` /
+       * `spendMana` / `leap` / `cycleBuff` / `blink` / `evasion` / `invulnerable`
+       * / `knockback`），`applyBuff` 是漏掉的那一個。
+       */
+      applyTo?: "self" | "target";
+      /**
+       * ⭐ G5（state.exclusive-group@1）—— 這份增益屬於哪一個**互斥組**。
+       *
+       * 缺席 = 不互斥 = 今天（實測：三個不同 origin 的形態 buff 同時掛著，攻速
+       * 乘區逐位元等於 1.4³）。⚠️ `stackKey` **不是**這題的答案：實測同 key 的
+       * 第二發會把 modifiers **整組丟掉**，只把 `stacks` 加一。
+       *
+       * 15-02/03/04 那種「身上永遠只有一種戰型」寫的就是這個。
+       * ⛔ 它只做 gameplay 狀態互斥；3D 身體那一半仍然是 `championForm` 的地盤。
+       */
+      exclusiveGroup?: string;
+      /**
+       * ⭐ G5 —— 同組已經有一份時怎麼辦。省略 = `"replace"`（新的接手、舊的整份
+       * 拔掉 —— 抄 `addShield.onExisting` 的預設，也是 owner「[變身]為唯一狀態
+       * 不可疊加」讀起來的意思）；`"reject"` = 新的不生效、舊的原地不動。
+       * ⛔ 沒有 `keepLonger`：形態不是一個量，「比較久的那個形態贏」對玩家無法解釋。
+       * ⚠️ 沒有 `exclusiveGroup` 卻填了它 = PARSE ERROR（同 `shield.onExisting`
+       * 需要 `stackKey`）。
+       */
+      exclusiveOnExisting?: "replace" | "reject";
+      /**
+       * ⭐ S4b —— 這條加成加到某個**絕對值**就停（80-00「上限到 10」）。
+       *
+       * 缺席 = 沒有絕對上限 = 今天（實測：同 stackKey 疊 21 次 +1 攻擊距離，
+       * 11 → 32，沒有任何東西攔它）。授權契約（為什麼 `maxStacks` /
+       * `ModOp.CapRaise` / `grantAttribute.maxAttribute` / `STAT_CLAMPS` 四個都
+       * 不是答案）住在 `content/schema/effect.ts` 的 `applyBuff.maxStat`，
+       * ⛔ 不在這裡重複一份（兩份會分岔）。
+       *
+       * · `basis` 省略 = `"final"` = 讀 `StatsComp.final[stat]`（玩家面板上那個數字）。
+       * · `"thisSource"` = 只算這一份 `stackKey` 來源自己貢獻的量（需要 `stackKey`，
+       *   載入時擋）。
+       *
+       * ⚠️ 語意是**只 refuse、不回收也不夾取**（同 `grantAttribute.maxAttribute`），
+       * 所以最後一層可能小幅越線 —— 那是那條先例已經接受的行為。
+       */
+      maxStat?: { stat: Stat; value: number; basis?: "final" | "thisSource" };
+      perRank?: { modifiers: StatModifier[]; duration?: number }[];
       /**
        * STACKING (task #244). Without it every application attaches a NEW
        * ModifierSource keyed `buff:<origin>#<tick>` — which has two defects for
@@ -1126,6 +1438,18 @@ type EffectVariant =
        */
       attributes?: import("../stats/attributes").AttrGrant;
       damageTypeOverride?: import("../combat/damageTypeOverride").DamageTypeOverride;
+      /**
+       * ⭐ 2026-08-09 (S11) —— 第五格授予：**限時飛行**。
+       *
+       * ⚠️ **這一行在 2026-08-10 之前漏了**，而上面那段註解逐字寫著「加一格授予時
+       * 這四行要跟 `SourceGrantFields` 一起改」—— 也就是那份鏡像自己記錄了它會
+       * 漂，然後它真的漂了：Zod 的 `SOURCE_GRANT_SHAPE` 有 `flight`、
+       * `sourceGrants()` 有 `flight`、`fieldAdoption` 有
+       * `field:abilities.effects[]#applyBuff.flight` 的豁免，只有這個型別鏡子沒有。
+       * 後果是 `packages/shared/src/sim/effects/authGatesWave1.test.ts` 那條「限時
+       * 飛行」的守衛**根本編譯不過**（`pnpm typecheck` 在 main 上就是紅的）。
+       */
+      flight?: import("../stats/sourceGrants").SourceGrantFields["flight"];
     }
   /**
    * cycleBuff (揍敵客阿福 13-00 念。攻防轉換) — 輪替增益: apply the NEXT step of a
@@ -1258,7 +1582,52 @@ type EffectVariant =
        */
       bankAs?: { statusId: StatusId; durationSec: number };
     }
-  | { kind: "dash"; mode: "forward" | "toPoint"; speed: number; maxDistance: number }
+  | {
+      kind: "dash";
+      mode: "forward" | "toPoint";
+      speed: number;
+      maxDistance: number;
+      /**
+       * ⭐ S7 —— **衝刺結束的那一刻**才跑的那一段（52-04「向前衝刺 400 距離後
+       * 揮出」）。缺席 = 沒有回呼 = 今天的行為，一個 tick 都不差。
+       *
+       * ── 為什麼它必須存在（實測，三臂同 seed）─────────────────────────────
+       *   · `dash` 單獨（對照組）                → 位移 +4.40u，受害者掉 43.47
+       *   · `[dash, damageArea]` 同一個 effects[] → 位移 +4.40u，受害者掉 43.47
+       *     ← **逐字相同：那一刀從起點揮出，完全落空**
+       *   · 同一個 AoE 從衝刺**終點**放           → 受害者掉 199.83
+       * 原因是順序：effect 在 slot 2b/3 跑完，位移在 slot 5 才發生，所以同一個
+       * `effects[]` 裡的 AoE 必然用衝刺**前**的座標。
+       *
+       * ⭐ 為什麼是擴充 `dash` 而不是開一個新 kind `dash-on-end`：
+       *   (a) 新 kind 依 E1 硬約束要帶一整組 `shape`/`radius`/`side`/`maxTargets`，
+       *       而那對「自己位移」沒有語意 —— 會生出一組永遠是 `"single"` 的死欄位；
+       *   (b) 會出現兩個「dash」概念（第零守則⑨的反面）；
+       *   (c)「衝刺結束了」這個真相**只存在於** `MovementSystem` 的 override 迴圈
+       *       裡，callback 只能掛在 override 上 —— 開新 kind 也還是要改同一行。
+       * 這個選擇同時讓它**不需要新的 step slot**：`MovementSystem` 是 slot 5、
+       * `combatResolveSystem` 是 slot 8，所以 `onEnd` 排出來的傷害仍然在**同一
+       * tick** 被減傷、計分、結算。
+       *
+       * ⚠️ 它與 `delayed` **方向相反**（兩邊的檔頭都要寫）：`delayed` 凍住的是
+       * **目標名單**（位置無關）；這一格凍不住任何東西，要的正是**結束那一刻的
+       * 位置**（名單無關）。混用會安靜地做錯。
+       */
+      onEnd?: EffectDef[];
+      /**
+       * ⭐ S7 —— 被牆擋下來的衝刺**算不算「衝完」**。
+       * 省略 = `"always"`（照樣揮出）；`"completed"` = 只有真的跑完距離才揮。
+       * ⚠️ 這是一個真的岔路：`MovementSystem` 今天把「撞牆停下」與「跑完距離」
+       * 合成**同一個**結束條件。預設選 `"always"`，因為卡面說「衝刺後揮出」，
+       * 而一刀被場景取消是玩家看不見的失敗。
+       */
+      onEndOn?: "always" | "completed";
+      /**
+       * ⭐ S7 —— 衝刺途中死掉還要不要揮。省略 = `false`。
+       * 形狀與精神逐字沿用 `randomArea.stopOnCasterDeath`。
+       */
+      onEndWhenDead?: boolean;
+    }
   /**
    * leap (task #247) — the map's own parabolic jump, ported from the nine
    * `SetUnitFlyHeightBJ(-k*Pow(i-m,2)+A)` sites in war3map.j. A SEPARATE kind
@@ -1893,6 +2262,137 @@ type EffectVariant =
        * round (`world.mobRules` is null there).
        */
       fallbackLevel?: number;
+    }
+  /**
+   * ── Lane 3（2026-08-10）兩個新 kind ──────────────────────────────────────
+   */
+  | {
+      /**
+       * ⭐ G12【延遲序列】—— 一段**排在未來 tick** 的效果，而且
+       * **目標在施放那一刻就凍住**（20-002「連續七次斬擊…最後再給予…」/
+       * 52-002「對目標連續 100 下的斬擊」）。
+       *
+       * ⭐ 它與 {@link randomArea} 的差別只有一句話，而那句話就是它存在的理由：
+       *   · `randomArea` 到期時用**圓心重解**（實測：目標走開就打空）；
+       *   · `delayed`   到期時用**施放時凍住的那一份名單**。
+       * 今天寫「連續七次斬擊」只能寫成同一 tick 七發 damage —— 畫面上那不是連擊。
+       *
+       * ⚠️ 它與 `dash.onEnd` **方向相反**：這裡凍住的是**名單**（位置無關），
+       * 那裡要的是**結束那一刻的位置**（名單無關）。兩個長得像，混用會安靜地做錯。
+       *
+       * ⭐ 決定性：這個 kind **完全不碰 rng**（沒有落點要抽），所以它連
+       * `randomArea` 的 draw 預算問題都沒有。到期一律用**絕對 tick**。
+       */
+      kind: "delayed";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。`"circle"` = 施放那一刻把圓內的人凍成名單。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 第一發等多久（秒）。上界 `DELAYED_MAX_DELAY_SEC`。 */
+      delaySec: number;
+      /** 總共幾發。省略 = 1（＝退化成純延遲）。上界 `DELAYED_MAX_COUNT`。 */
+      count?: number;
+      /** 兩發之間隔幾秒（`count > 1` 才有意義）。執行期夾成**至少 1 tick**。 */
+      intervalSec?: number;
+      /** 每一發跑的東西。 */
+      effects: EffectDef[];
+      /**
+       * **最後一發**額外跑的東西（20-002 的「最後再給予…1800 傷害」/
+       * 「最後一擊附加擊退＋恐懼」）。
+       * 省略 = 最後一發與其餘完全相同（⛔ **不是**「最後一發不跑」）。
+       */
+      finalEffects?: EffectDef[];
+      /**
+       * 目標怎麼決定。省略 = `"frozen"`（施放時凍住 —— 這個機制存在的全部理由）。
+       * `"reresolve"` = 到期才重解，也就是 `randomArea` 的語意 —— 對「原地爆的
+       * 連擊」那是**正確**的，所以留成一格下拉而不是刪掉。
+       */
+      targetMode?: "frozen" | "reresolve";
+      /** 凍住的目標死了就跳過他。省略 = `true`（不繼續鞭屍）。 */
+      dropDeadTargets?: boolean;
+      /**
+       * 施法者陣亡就整波停掉。省略 = `false`，逐字沿用 `randomArea` 的同名欄位。
+       * ⚠️ 分區決鬥結束一律停，那不是欄位。
+       */
+      stopOnCasterDeath?: boolean;
+    }
+  | {
+      /**
+       * ⭐ S5【代放】—— 一支技能**施放另一支技能**（80-04 赤兔咆哮「攻擊時有
+       * 20% 使出弒鬼神」）。
+       *
+       * 今天這一族只能靠**手抄一份 payload**：80-04 帶著 `spawnProjectile` +
+       * damage `[10,20,30]`，而 80-02 弒鬼神本人是同一個 projectileId + damage
+       * `[150,250,350,0,0]` —— 同一支技能的兩份 payload，數字**已經不一樣了**。
+       *
+       * ⚠️ `content/templates/expand.ts` 的 `"proxy-cast"` 是一個**模板家族名**，
+       * 不是這個 kind（它自己的檔頭寫著「這裡不召喚任何東西」，展開結果只有
+       * `damage` + 選配 `applyStatus`）。對外契約要把這件事講清楚，否則同一個字
+       * 會撒第三次謊。
+       *
+       * ⛔ **終止性是這個 kind 的正確性義務，不是選配**：
+       * `EffectContext.proxyDepth` 嚴格遞增，閘門是 `proxyDepth > maxDepth →
+       * return`，上界由 Zod 夾在 `PROXY_MAX_CHAIN_DEPTH`。上界 + 嚴格遞增 ⇒
+       * 鏈長有限 ⇒ 一定終止。這個證明的形狀與 `effects/damage.ts` 的
+       * `reflectDepth` 逐字相同 —— ⛔ 不要發明第二套。
+       */
+      kind: "proxyCast";
+      /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
+      shape: "single" | "circle";
+      radius?: number;
+      side?: "allies" | "enemies";
+      maxTargets?: number;
+      /** 代放**我自己的哪一格**。與 {@link abilityId} **恰好填一個**（schema 擋）。 */
+      slot?: CastableSlot;
+      /** 代放**哪一支具名技能**（軟參照）。與 {@link slot} 恰好填一個。 */
+      abilityId?: AbilityId;
+      /**
+       * 代放要不要付代價。省略 = `"none"`（不扣魔、不轉冷卻）。
+       *
+       * ⚠️ 預設的理由是可檢查的：80-04 的「攻擊時有 20% 使出弒鬼神」是每次普攻都
+       * 可能觸發的 proc；若它燒掉 80-02 那 35 秒的冷卻，這支大絕就會**自己刪掉
+       * 自己的 W**，而畫面上只看得到「W 一直是灰的」。三個值全做，讓 owner 改一格
+       * 下拉就能翻案。
+       *
+       * ⚠️ `"mana"` / `"manaAndCooldown"` 走的是 `castAbility` **同一排閘**
+       *（魔力／沉默／暈眩／擊倒／暴走）—— ⛔ 不可以在 handler 裡自己再寫一次
+       * 那些 if，那是兩份會分岔的判斷。副作用要說在明處：`castAbility` 有一道
+       * 「已在吟唱中就拒絕」，所以代放一支有 `castTimeSec` 的技能會在施法者正在
+       * 吟唱時被拒 —— 那是**正確**的（一個人不能同時吟唱兩招）。
+       */
+      payCosts?: "none" | "mana" | "manaAndCooldown";
+      /** 代放要不要看那一格真按鈕的冷卻。省略 = `false`。⛔ 與 {@link payCosts} 是兩個問題。 */
+      respectCooldown?: boolean;
+      /** rank 0（沒點那一招）時什麼都不發生。省略 = `true`。 */
+      requireLearned?: boolean;
+      /** 用哪一階施放。省略 = `"casterRank"`（玩家的投資）。 */
+      rankMode?: "casterRank" | "fixed";
+      /** `rankMode: "fixed"` 的那一階。 */
+      fixedRank?: number;
+      /** 目標從哪來。省略 = `"inherit"`（沿用觸發事件的 targets/point/direction）。 */
+      targetMode?: "inherit" | "reresolve";
+      /**
+       * 代放鏈最多再往下幾層。省略 = **0**（A 代放 B，B 自己的 `proxyCast` 直接
+       * 被擋）—— 逐字沿用 `damage.incomingPct.maxChainDepth` 的預設與理由。
+       * 上界 `PROXY_MAX_CHAIN_DEPTH`。
+       */
+      maxDepth?: number;
+      /**
+       * ⭐ 第一守則（2026-08-10）—— `payCosts:"none"` 要不要發 `onAbilityCast` /
+       * `onAbilityHit`。省略 = **false** = 今天的行為（那條路直接 `runEffects`，
+       * 繞過 `castAbility`，所以兩個事件從來不發）。
+       *
+       * ⛔ 在這一格出現之前，「不發」是一個**沒有欄位的選擇** —— 而
+       * 「代放算不算一次施法」是設計偏好不是引擎事實：80-04 那種每次普攻都可能
+       * 觸發的 proc 不該再觸發一輪「施法時」被動，但「大絕結束後自動再放一次 Q」
+       * 會希望它算數。
+       *
+       * ⚠️ 打開它之後遞迴由既有的深度計數擋（{@link maxDepth} +
+       * `proxyStackDepth`），⛔ 不是靠這一格關著。`"mana"` / `"manaAndCooldown"`
+       * 走 `castAbility`，兩個事件本來就會發，所以這一格對它們沒有作用。
+       */
+      emitCastEvents?: boolean;
     };
 
 /**
@@ -1950,10 +2450,18 @@ export interface EffectCommon {
    *
    * ── 已知的邊界（named gap，不是漏掉）────────────────────────────────────
    * 過濾只作用在 `ctx.targets`,也就是**執行器交給 handler 的那一份清單**。
-   * 自己在內部重新解算身體的 kind(`damageArea` / `damageLine` / `randomArea`
-   * / `leap.onLand` 的落地圈)不會被逐一過濾;對它們,③ 的結果只決定
-   * 「這段效果整段跑不跑」。要讓圓圈**內部**也逐一過濾是另一個機制
-   *（等於「範圍內只打有某狀態的人」),⛔ 不要用這一格假裝有做。
+   * 自己在內部重新解算身體的 kind(`damageArea` / `damageLine` / `randomArea`)
+   * 不會被逐一過濾;對它們,③ 的結果只決定「這段效果整段跑不跑」。
+   * ⭐ 要讓圓圈／膠囊**內部**也逐一過濾，用 `damageArea.victimCondition` /
+   * `damageLine.victimCondition`（G1，同一個型別、同一個求值器）——
+   * ⛔ 不要用這一格假裝有做。
+   *
+   * ⚠️ **這一段在 2026-08-10 之前把 `leap.onLand 的落地圈` 也列在這裡，而那是
+   * 假的**（第三守則，實測推翻）：`systems/LeapSystem.ts::detonate` 把
+   * `enemiesInCircle(...)` 直接餵成 `ctx.targets`，所以 `onLand` 走的正是 ③ 那條
+   * **逐一過濾**的路。實測：帶 `condition:{status,target,fear}` 時只有帶恐懼的
+   * 身體挨打，乾淨的那個沒有；拿掉 condition 兩個都挨打。同一句謊話當時同時
+   * 寫在 `effectRunner.ts` 與這裡 —— 兩份自洽的註解在同一件事上撒謊。
    */
   condition?: EffectCondition;
 }
@@ -1987,6 +2495,18 @@ export interface EffectContext {
    * 情況下**整條不執行**,不會退化成一個只有 flat 項的半吊子傷害。
    */
   incoming?: TriggerDamage;
+  /**
+   * ⭐ S5 —— 這一次執行**已經是第幾層代放**（RUNTIME、從不 authored、無 Zod）。
+   *
+   * **缺席 = 0**，所以每一個既有呼叫點（`castResolveSystem` / `abilitySystem` /
+   * `fireHooks` / `dotTick` / `randomAreaSystem` / `projectileSystem` /
+   * `leapSystem` …）一個字都不用改，行為完全不變。
+   *
+   * ⚠️ 深度必須騎在 `ctx` 上而不是存進 `SimWorld`：它是**一次執行**的性質不是
+   * 世界的性質 —— 兩支技能同一 tick 各自代放時，一個世界層的計數器會把它們算成
+   * 同一條鏈。`TriggerDamage.reflectDepth` 走的正是這條路。
+   */
+  proxyDepth?: number;
   rng: Rng;
 }
 

@@ -7,7 +7,7 @@
 import type { Stat } from "./statTypes";
 import type { AttrBasis, AttrBonus, AttrGrant, AttrKey } from "./attributes";
 import type { EffectDef } from "../effects/effect";
-import type { AbilityId } from "../../ids";
+import type { AbilityId, EntityId, StatusId } from "../../ids";
 import type { CastableSlot } from "../intents";
 import type { AuraDef, AuraOrigin } from "../aura/aura";
 import type { VisionGrant } from "../stealth";
@@ -112,6 +112,30 @@ export interface StatModifier {
    * `sim/content/condition.ts` 的 `ResourceStat`,不是新發明的。
    */
   fromResource?: import("../content/condition").ResourceStat;
+  /**
+   * ⭐ G9 —— 這條加成**只對某一格技能生效**（79-04 卍解「[瞬步] 冷卻縮短 50%
+   * 持續 8 秒」）。缺席 = **全域** = 折進 `sc.final[stat]`，也就是這個欄位出現
+   * 之前每一條 modifier 的行為。
+   *
+   * ⛔ 帶 scope 的 modifier **完全不參與** `recomputeStats` 的全域折疊。這正是
+   * 「scoped」這個字的定義：它不在 `sc.final` 裡，所以任何讀 `sc.final` 的地方
+   *（面板、商店預覽、codex、其他五格技能）都拿不到它 —— 不會有第二個真相。
+   * 讀取端是 `stats/scopedStat.ts`，唯一的消費者是技能冷卻的計算。
+   *
+   * ⚠️ 與 {@link scopeAbilityId} **互斥**（schema 擋）：「哪一格」與「哪一支」
+   * 是兩個不同的問題，而管線只會採用其中一個。
+   */
+  scopeSlot?: CastableSlot;
+  /**
+   * ⭐ G9 —— {@link scopeSlot} 的另一半：指名**一支具體的技能**，不管它裝在
+   * 哪一格。缺席 = 全域（同上）。
+   *
+   * ⚠️ **軟參照**：打錯 id = 這條 modifier 匹配不到任何技能、靜默無效。
+   * 硬參照要把 `content/refs.ts` 那條邊拉進 `schema/common.ts`（最底層、被四份
+   * schema 同時 import），而軟參照的代價已有前例（`EquipmentItemLeaf.itemId`：
+   * 「條件寫得出來」不該被「道具還沒上架」擋住）。⛔ 不要假裝它今天會紅。
+   */
+  scopeAbilityId?: string;
 }
 
 /** Game events hooks can react to. */
@@ -288,6 +312,17 @@ export type HookEvent =
 
 export interface HookDef {
   on: HookEvent;
+  /**
+   * ⭐ S3 —— 這條 hook 在它所屬的那一份來源裡的**穩定名字**，讓
+   * `modifyCooldown{target:"hookInternalCooldown"}` 指得到它。
+   * 缺席 = 這條 hook 沒有名字 = 沒有任何效果指得到它（也就是今天）。
+   *
+   * ⭐ 形狀直接抄 `AuraDef.key`（「stable name, unique within the passive」）——
+   * 這個 repo 已經為「指名一份陣列裡的第 N 個」解過一次這個問題。
+   * ⛔ **不可以用陣列索引定址**：`hooks[2]` 在作者插入一條新 hook 的那一刻就
+   * 指到別人身上，而畫面上完全看不出來。
+   */
+  key?: string;
   /** optional condition: restrict to a specific ability slot (incl. "PASSIVE") */
   abilitySlot?: CastableSlot;
   /** effects run with the hook owner as caster and the event target as target */
@@ -442,6 +477,93 @@ export interface HookDef {
    * ⚠️ 主詞是**那一發封包**，不是持有者的暴擊率。`"crit"` 問「剛剛那一下爆了嗎」。
    */
   damageCrit?: "any" | "crit" | "nonCrit";
+  /**
+   * ⭐ G8 —— 觸發這個 hook 的那一發暴擊，**是不是這一份來源自己那條
+   * `critStrike` 造成的**（89-01 憤怒的頭槌：「**這一招**想起頭槌的那一下把敵人
+   * 震昏」，不是「這位英雄任何一次暴擊都震昏」）。
+   *
+   * · `"any"`（缺席 = 這個）—— 不過濾，逐字等於 {@link damageCrit} 今天的行為。
+   * · `"thisSource"` —— 只有 `incoming.critSources` 含**這一份 source 的 id**
+   *   時才算。hook 與 grant 本來就住在**同一個** `ModifierSource` 上
+   *  （`abilityPassives` 的 `...sourceGrants(block)` 把 `critStrike` 與 `hooks`
+   *   一起轉發），所以「我自己那一條」是一個**關係**不是一個字串。
+   *
+   * ⛔ 不做「填一個 source id」：那會多一個會腐爛的 join key。
+   * ⛔ 不做第三個值 `"otherSource"`：今天沒有任何一支技能要它，而同義詞是最貴
+   * 的一種技術債。
+   *
+   * ── 哪些傷害**產得出** `critSources`（2026-08-10 之前只有一種，那是一個缺陷）──
+   * 普攻（`BasicAttackSystem`／投射物）**與**技能傷害（`damage` / `damageArea` /
+   * `damageLine` 的 `canCrit`）都走 `combat/critStrike.ts`，所以兩邊都產。
+   * ⚠️ 在 2026-08-10 之前，`effects/damage.ts` 那一族只設 `crit = true` 而
+   * **從不設 `critSources`** —— 於是這一格寫在**技能**暴擊上是永遠不觸發的，
+   * 而這段說明與 `.describe()` 都沒有提到「只有普攻」（失敗形態②：一格填得下、
+   * 載入過得了、遊戲裡永遠不發生）。
+   *
+   * ⚠️ 仍然成立的前提（這是**關係**，不是漏洞）：這條 hook 與那條 `critStrike`
+   * 必須在**同一份來源**上。掛在別件裝備上的 hook 讀不到這一份的 id，那正是
+   * 「這一招自己的暴擊」要的語意。
+   *
+   * ⭐ 這一格同時是「**一次判定、一串結果**」的整個答案：hook 自己**不填**
+   * `chance`，判定就只有暴擊那一次骰 —— 所以「暴擊了但沒落雷」在結構上不可能。
+   */
+  critSource?: "any" | "thisSource";
+  /**
+   * ⭐ S10 —— 被這一發**反彈掉的原封包**是不是普通攻擊（60-04 迴旋斬：
+   * 「若成功反彈敵方**技能** AP 傷害」）。
+   *
+   * 字彙與 {@link damageSource} **完全相同**，因為它問的是完全相同的問題，
+   * 只是主詞換成原封包。⛔ 判定一律走 `damageSourcePasses` 那一份既有函式 ——
+   * 兩份就會有兩種「什麼算技能傷害」，而它們分歧的那一天，惡夢魔王碎片與這個
+   * 欄位會對同一發封包給出不同的答案。
+   *
+   * ⚠️ 只有 `onReflectSuccess` 帶得到原封包（schema 擋）。
+   * 缺席 = 不過濾 = 今天（每一條 `onReflectSuccess` 都是無條件觸發）。
+   * ⚠️ 「沒有原封包 = 不通過」，與 `damageSource` 的不對稱一致。
+   */
+  reflectedDamageSource?: "any" | "basic" | "nonBasic" | "ability" | "other";
+  /**
+   * ⭐ S10 —— 被反彈掉的**原封包是什麼型別**（60-04 的「AP」那一半）。
+   * 讀的是原封包**最後一次型別轉換之後**的型別（＝護甲／魔抗真的吃到的那一個），
+   * 與 {@link damageType} 逐字同一句話，所以作者不用學第二個概念。
+   * 缺席 = 不過濾 = 今天。
+   */
+  reflectedDamageType?: "any" | "physical" | "magic" | "true";
+  /**
+   * ⭐ S6 —— 這條 hook **總共**能發動幾次（15-04 千之雷的「**下一次**普攻」）。
+   *
+   * 缺席 = **無限次** = 這個欄位出現之前每一條 hook 的行為（全樹 64 條 hook
+   * 一條都不填，所以掛上它是嚴格的 no-op）。上界
+   * {@link import("../effects/kindLimits").HOOK_MAX_TRIGGERS}。
+   *
+   * ⛔ 不要用「掛一個 duration 極短的 buff」假裝一次性：那是**時間**界不是
+   * **次數**界，攻速一高就會吃到兩次，而畫面上跟正確的一模一樣（只有數字對不上）。
+   */
+  maxTriggers?: number;
+  /**
+   * ⭐ S6 —— {@link maxTriggers} 的額度**什麼時候被扣掉**。
+   *
+   * 今天只有一個值 `"fire"`（hook 真的發動的那一刻）。⚠️ 這一格刻意先存在：
+   * 它把「這裡有二選一」寫進契約，而 `"hit"`（下游真的打到人才算）上線那天只是
+   * 加一個 enum 成員、不是改語意。⛔ 不先開 `"hit"`：那需要把扣帳搬到
+   * `combatResolveSystem` 的落地路徑，也就是**第二條接線** —— schema 開了
+   * handler 沒接正是失敗形態②。
+   */
+  consumeOn?: "fire";
+  /**
+   * ⭐ S6 —— 額度用完之後，這份來源怎麼辦。
+   * · `"stop"`（缺席 = 這個）—— hook 不再觸發，但來源與它的屬性加成留在身上。
+   *   **嚴格小於** `detachSource` 的改變量，所以它是保守的那一邊。
+   * · `"detachSource"` —— 整份來源卸下（增益圖示跟著消失）。
+   */
+  onConsumed?: "stop" | "detachSource";
+  /**
+   * ⭐ S6 —— 額度是**一份共用**還是**每個敵人各一份**。
+   * 缺席 = `false` = 一份共用（「一次性」最直觀的意思）。
+   * `true` = 「對每個敵人只吃一次」那一族（WC3 常見）。
+   * ⚠️ 只有帶 target 的事件談得上「每個敵人」（schema 擋 `onInterval`）。
+   */
+  perTarget?: boolean;
   /** internal cooldown in seconds (0/undefined = every trigger) */
   internalCooldown?: number;
   /**
@@ -619,6 +741,60 @@ export interface ModifierSource {
   attrEarned?: AttrBonus;
   hooks?: HookDef[];
   grantedAbilities?: AbilityId[];
+  /**
+   * ⭐ G4 —— **這份來源是第幾階授予的**（RUNTIME、NEVER AUTHORED、無 Zod 鏡像）。
+   *
+   * 缺席 = **1** = `fireHooks` 在這個欄位之前寫死的那一欄，逐位元不變。
+   * 寫入端保證整數且 ≥ 1；讀取端一律 `Math.max(1, src.grantRank ?? 1)`。
+   *
+   * 「這條 hook 是第幾階授予的」是**那個來源**的性質 —— 與 `evasionScope` /
+   * `vision` / `block` / `critStrike` 騎在 source 上是同一個論證：聚合成任何
+   * 東西的那一刻它就沒了。
+   * ⛔ 不可以在 `fireHooks` 裡回頭查 `world.abilities` 反推 rank：一份來源可能
+   * 來自道具（無 rank）、augment（無 rank）、靈氣（rank 屬於**發射者**不是接收
+   * 者）、`applyBuff`（rank 屬於**那一次施放**）—— 四種來路查法各不相同，寫成
+   * 四個 if 就是第〇·五守則的越線。
+   *
+   * ⚠️ 只有**技能 `passive.ranks[]` / `applyBuff` / 靈氣**三條載體帶得到它。
+   * 道具與增益卡的 hook 永遠是第 1 欄（schema 的 refine 會把那種 `perRank`
+   * 擋在載入時）。
+   */
+  grantRank?: number;
+  /**
+   * ⭐ G5（state.exclusive-group@1）—— 這份來源屬於哪一個**互斥組**。
+   *
+   * 缺席 = 不屬於任何組 = 永遠不會被別人拔掉，也不會拔掉別人（也就是今天：
+   * `attachSource` 是無條件 push，三份形態 buff 會同時掛著且乘區相乘）。
+   *
+   * 同組的新來源掛上時，舊的整份被拔掉（或被回絕，見
+   * `applyBuff.exclusiveOnExisting`）—— 15-02/03/04 那種「身上永遠只有一種
+   * 戰型」寫的就是這個。
+   * ⛔ 它與 `championForm` / `transform.counterpartId`（3D 身體那一半）**不是**
+   * 同一件事，⛔ 也不可以拿它假裝三個 3D 形態。
+   *
+   * ⛔ 刻意**不**放進 `SOURCE_GRANT_SHAPE`：那一族的共同性質是「sim 端不問
+   * kind、四個授權面都真的生效」，而互斥的**執行者**只有 `applyBuff`（拔除發生
+   * 在掛上的那一刻）。放進去會讓一件道具寫得出 `exclusiveGroup` 而永遠沒有東西
+   * 去拔它 —— 失敗形態②的鏡像。
+   */
+  exclusiveGroup?: string;
+  /**
+   * ⭐ G10 —— 這份來源**同時是一個具名標記**（`applyBuff.statusId`）。
+   *
+   * 缺席 = 這份來源不是任何標記 = 今天（240 份用 `applyBuff` 的文件逐位元不變）。
+   *
+   * ⭐ 為什麼是「同一個物件」而不是「applyStatus 順便掛 modifiers」：後者要把
+   * `ModifierSource` 掛成 status 的衛星，於是**每一個 status 移除點都要串接
+   * 拆除**（到期 / `statusBreak` / `clearPools` / `clearForFreshBody` / stacks
+   * 歸零那條 splice —— 五處），而漏掉任何一處的後果是一條**永遠拔不掉的屬性
+   * 修改**，沒有錯誤訊息。同一個物件的串接數是**零**：來源消失（到期／淨化／
+   * detach）標記就跟著消失，因為沒有第二個物件。
+   *
+   * ⚠️ 它是**身分**不是行為：CC 語意（stun/root/…）仍然只住在 `StatusEffect`
+   * 上。讀取端是 `effects/effectCommon.ts` 的 `hasStatus` / `statusStacks`
+   *（它們已經是 `world.status` + `world.marks` 兩本帳的統一讀取器，這是第三本）。
+   */
+  statusId?: StatusId;
   /** for buffs: expiry tick (undefined = permanent) */
   expiresAtTick?: number;
   /**
@@ -678,6 +854,23 @@ export interface ModifierSource {
    * 迭代順序決定行為」,而這裡的 key 只被用來查一個數字。
    */
   hookLastFiredBySlot?: (Map<string, number> | undefined)[];
+  /**
+   * ⭐ S6 RUNTIME（never authored）—— `hooks[hi]` 已經發動過幾次。
+   * 只有填了 {@link HookDef.maxTriggers} 的 hook 才會長出這一格。
+   *
+   * ⚠️ 依 `hooks[hi]` **位置**索引，理由與 {@link hookLastFired} 逐字相同 ——
+   * 所以 `hooks` 陣列被換掉時（變身 re-resolve、靈氣 rank-up）這一份**必須**
+   * 跟著一起作廢。`aura/aura.ts` 是那個清除點；漏掉它的後果是一次靈氣重新落座
+   * 就把已經用掉的那一發**還給玩家**，而全套測試會是綠的。
+   */
+  hookFireCount?: number[];
+  /**
+   * ⭐ S6 RUNTIME —— {@link HookDef.perTarget} 的那一半：`hooks[hi]` ↔
+   *「對這個身體發動過幾次」。索引順序同上，作廢規則同上。
+   * ⚠️ 只做 `get`/`set`，**從不迭代**（`sim/purity.test.ts` 禁的是靠 Map 迭代
+   * 順序決定行為，而這裡的 key 只被用來查一個數字）。
+   */
+  hookFireCountByTarget?: (Map<EntityId, number> | undefined)[];
   /**
    * RUNTIME, `kind: "aura"` only: which emitter/aura projected this source.
    * Written by `auraSystem` when it attaches, read by it when it removes (the

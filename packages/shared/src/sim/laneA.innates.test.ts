@@ -271,7 +271,7 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
       expect(buff.stackKey).toBe("krauser-hellscream");
       expect(buff.maxStacks).toBe(1);
       // 0.4 秒 = 12 tick,過得了「空包彈下限 0.067 秒」。
-      expect(Math.round(buff.duration * 30)).toBe(12);
+      expect(Math.round((buff.duration ?? 0) * 30)).toBe(12);
     }
 
     // 行為:餵傷害直到 4% 擲中一次,攻速必須真的變成 4 倍。

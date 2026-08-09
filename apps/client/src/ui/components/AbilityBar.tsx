@@ -80,6 +80,7 @@ import { IconImg } from "./IconImg";
 import { Tooltip, type TooltipMeta } from "./Tooltip";
 import { castTypeLabel, docDescription, stripAbilityNumber } from "./abilityText";
 import { SfxButton } from "../SfxButton";
+import { abilityBarMetrics, scaleBorderWidth } from "./abilityBarMetrics";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
@@ -186,6 +187,7 @@ export function paintCastFlash(
  * the name and carry no icon, so they don't need this (see TouchControls).
  */
 function TileName({ label, color }: { label: string; color?: string }): React.JSX.Element {
+  const m = abilityBarMetrics();
   return (
     <div
       style={{
@@ -193,9 +195,9 @@ function TileName({ label, color }: { label: string; color?: string }): React.JS
         left: 0,
         right: 0,
         bottom: 0,
-        padding: "1px 2px 2px",
-        fontSize: 8,
-        lineHeight: "9px",
+        padding: `${m.s(1)}px ${m.s(2)}px ${m.s(2)}px`,
+        fontSize: m.s(8),
+        lineHeight: `${m.s(9)}px`,
         color: color ?? TEXT_MAIN,
         // dark scrim, fading up, so the name is legible over a bright icon
         background: "linear-gradient(to top, rgba(6,8,14,0.92) 0%, rgba(6,8,14,0.7) 55%, rgba(6,8,14,0) 100%)",
@@ -257,6 +259,13 @@ export function AbilityBar(): React.JSX.Element | null {
   const def = Champions.tryGet(seat.championId as ChampionId);
   if (!def) return null;
 
+  // ── HUD 縮放（owner 2026-08-10）─────────────────────────────────────────
+  // 「整體圖案框架與字體」一起縮：下面每一個 px 都走 `m.s()`（一般尺寸）或
+  // `m.tap()`（可點擊元素，套 44px 觸控下限）。⛔ 不要在這裡自己寫 `* 倍率`——
+  // 倍率、四捨五入、觸控下限只有 `ui/hudScale.ts` 一個住處。
+  // 「中」檔位下 `m.s(px) === px` 逐位元，所以不改設定的人畫面一格都不變。
+  const m = abilityBarMetrics();
+
   return (
     <div
       ref={rootRef}
@@ -269,11 +278,12 @@ export function AbilityBar(): React.JSX.Element | null {
         // 「緊鄰但不重疊」 and what replaced it.
         position: "relative",
         display: "flex",
-        gap: 6,
-        padding: "8px 10px",
+        gap: m.gap,
+        padding: `${m.padY}px ${m.padX}px`,
         background: PANEL_BG,
-        border: PANEL_BORDER,
-        borderRadius: 8,
+        // 框跟著縮：只換寬度那一段，顏色是主題的事
+        border: scaleBorderWidth(PANEL_BORDER, m.border),
+        borderRadius: m.s(8),
         pointerEvents: "auto",
       }}
     >
@@ -321,7 +331,7 @@ export function AbilityBar(): React.JSX.Element | null {
         }
         meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
         return (
-          <div style={{ position: "relative", width: 52, textAlign: "center" }}>
+          <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
             <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
             <div
               data-slot-key="PASSIVE"
@@ -341,12 +351,12 @@ export function AbilityBar(): React.JSX.Element | null {
               )}
               style={{
                 position: "relative",
-                width: 52,
-                height: 52,
-                borderRadius: 6,
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
                 overflow: "hidden",
                 background: active ? "#2b2340" : "#1e1b2c",
-                border: `${active ? 2 : 1}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
+                border: `${m.s(active ? 2 : 1)}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
                 color: TEXT_MAIN,
                 // An INERT permanent innate (no modifier/hook/aura in its doc)
                 // is dimmed on top of the dashed border every passive gets, so
@@ -360,7 +370,14 @@ export function AbilityBar(): React.JSX.Element | null {
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
-              <div style={{ fontSize: 12, fontWeight: "bold", marginTop: 7, color: PASSIVE_ACCENT }}>
+              <div
+                style={{
+                  fontSize: m.s(12),
+                  fontWeight: "bold",
+                  marginTop: m.s(7),
+                  color: PASSIVE_ACCENT,
+                }}
+              >
                 {PASSIVE_SLOT_LABEL}
               </div>
               <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
@@ -372,12 +389,12 @@ export function AbilityBar(): React.JSX.Element | null {
                   position: "absolute",
                   left: 0,
                   top: 0,
-                  padding: "0 3px",
-                  borderBottomRightRadius: 5,
+                  padding: `0 ${m.s(3)}px`,
+                  borderBottomRightRadius: m.s(5),
                   background: "rgba(10,8,20,0.85)",
                   color: PASSIVE_ACCENT,
-                  fontSize: 8,
-                  lineHeight: "11px",
+                  fontSize: m.s(8),
+                  lineHeight: `${m.s(11)}px`,
                 }}
               >
                 Lv1
@@ -388,12 +405,12 @@ export function AbilityBar(): React.JSX.Element | null {
                   position: "absolute",
                   right: 0,
                   bottom: 0,
-                  padding: "0 3px",
-                  borderTopLeftRadius: 5,
+                  padding: `0 ${m.s(3)}px`,
+                  borderTopLeftRadius: m.s(5),
                   background: "rgba(10,8,20,0.85)",
                   color: PASSIVE_ACCENT,
-                  fontSize: 8,
-                  lineHeight: "11px",
+                  fontSize: m.s(8),
+                  lineHeight: `${m.s(11)}px`,
                 }}
               >
                 {innateKindLabel(innate.innateKind)}
@@ -401,7 +418,7 @@ export function AbilityBar(): React.JSX.Element | null {
               {/* cooldown chrome — the same overlay stack every tile on every
                   surface wears (ui/components/CooldownChrome). Only an active
                   innate can ever be on cooldown. */}
-              <CooldownChrome cd={innateCd} fontSize={20} />
+              <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
               {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
                   mounted for a castable innate: a tile that cannot cast must
                   never carry a cast surface that could half-paint. */}
@@ -429,10 +446,10 @@ export function AbilityBar(): React.JSX.Element | null {
                 nothing, because those two must not look the same. */}
             <div
               style={{
-                marginTop: 3,
-                fontSize: castableInnate ? 9 : 8,
+                marginTop: m.s(3),
+                fontSize: m.s(castableInnate ? 9 : 8),
                 color: castableInnate ? PASSIVE_ACCENT : inert ? "#c98a8a" : TEXT_DIM,
-                letterSpacing: castableInnate ? 1 : 0.5,
+                letterSpacing: m.s(castableInnate ? 1 : 0.5),
               }}
             >
               {active ? (castableInnate ? "D" : "自動擁有 · 待接") : inert ? "未實作" : "無需施放"}
@@ -462,26 +479,26 @@ export function AbilityBar(): React.JSX.Element | null {
         ];
         if (manaMeta > 0) meta.push({ label: "魔力", value: `${manaMeta}` });
         return (
-          <div key={slot} style={{ position: "relative", width: 52, textAlign: "center" }}>
+          <div key={slot} style={{ position: "relative", width: m.tile, textAlign: "center" }}>
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
               data-slot-key={slot}
               {...holdProps(slot, { denied: !learned || cd.onCd, passive })}
               style={{
                 position: "relative",
-                width: 52,
-                height: 52,
-                borderRadius: 6,
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
                 overflow: "hidden",
                 background: learned ? "#243252" : "#161b26",
                 // passive skills read as a DASHED outline so they're easy to
                 // tell apart from active/castable tiles (虛線外框)
-                border: `1px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
+                border: `${m.s(1)}px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
                 color: learned ? TEXT_MAIN : TEXT_DIM,
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
-              <div style={{ fontSize: 18, fontWeight: "bold", marginTop: 6 }}>{slot}</div>
+              <div style={{ fontSize: m.s(18), fontWeight: "bold", marginTop: m.s(6) }}>{slot}</div>
               {/* w3x icon covers the letter tile when present; missing/404 →
                   renders nothing and the letter tile above stays visible.
                   Cooldown sweep + cast fill come AFTER in the DOM → on top. */}
@@ -498,7 +515,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 color={learned ? TEXT_MAIN : TEXT_DIM}
               />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={20} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} />
               {/* cast-fill overlay (imperative; grows while this slot casts) */}
               <div
                 data-cast-slot={i}
@@ -514,14 +531,14 @@ export function AbilityBar(): React.JSX.Element | null {
               />
             </div>
             </Tooltip>
-            <div style={{ display: "flex", justifyContent: "center", gap: 2, marginTop: 3 }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: m.s(2), marginTop: m.s(3) }}>
               {Array.from({ length: ability.maxRank }, (_, r) => (
                 <div
                   key={r}
                   style={{
-                    width: 6,
-                    height: 4,
-                    borderRadius: 1,
+                    width: m.s(6),
+                    height: m.s(4),
+                    borderRadius: m.s(1),
                     background: r < rank ? GOLD : "#333c4f",
                   }}
                 />
@@ -535,17 +552,20 @@ export function AbilityBar(): React.JSX.Element | null {
                 onClick={() => hudActions.sendCommand({ kind: "rankUpAbility", slot })}
                 style={{
                   position: "absolute",
-                  top: -12,
+                  // ⚠️ 這裡的 `left` 必須留著字串 "50%"（hudLayout.test.ts 的
+                  //    「no HUD file hard-codes a corner position」掃的是數字字面值）。
+                  top: -m.s(12),
                   left: "50%",
                   transform: "translateX(-50%)",
-                  width: 20,
-                  height: 20,
-                  borderRadius: 10,
-                  border: "1px solid #f2c637",
+                  // 可點擊 → 走觸控下限；它今天就小於 44，所以下限在「中」檔位不會放大它
+                  width: m.tap(20),
+                  height: m.tap(20),
+                  borderRadius: m.tap(20) / 2,
+                  border: `${m.s(1)}px solid #f2c637`,
                   background: "#5d4a12",
                   color: GOLD,
-                  fontSize: 12,
-                  lineHeight: "16px",
+                  fontSize: m.s(12),
+                  lineHeight: `${m.s(16)}px`,
                   cursor: "pointer",
                   padding: 0,
                 }}
@@ -574,31 +594,33 @@ export function AbilityBar(): React.JSX.Element | null {
         if (ex.manaCost !== undefined) exMeta.push({ label: "魔力", value: `${ex.manaCost}` });
         exMeta.push({ label: "快捷", value: "F / Back" });
         return (
-          <div style={{ position: "relative", width: 52, textAlign: "center" }}>
+          <div style={{ position: "relative", width: m.tile, textAlign: "center" }}>
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
               data-slot-key="EX"
               {...holdProps("EX", { denied: cd.onCd, passive: exPassive })}
               style={{
                 position: "relative",
-                width: 52,
-                height: 52,
-                borderRadius: 6,
+                width: m.tile,
+                height: m.tile,
+                borderRadius: m.s(6),
                 overflow: "hidden",
                 background: "#3a2a12",
-                border: `2px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
-                boxShadow: `0 0 8px ${EX_ACCENT}88`,
+                border: `${m.s(2)}px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
+                boxShadow: `0 0 ${m.s(8)}px ${EX_ACCENT}88`,
                 color: TEXT_MAIN,
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
-              <div style={{ fontSize: 15, fontWeight: "bold", marginTop: 7, color: EX_ACCENT }}>EX</div>
+              <div style={{ fontSize: m.s(15), fontWeight: "bold", marginTop: m.s(7), color: EX_ACCENT }}>
+                EX
+              </div>
               {/* w3x EX icon under the sweep/cast overlays; fallback = amber tile */}
               <IconImg fill src={iconSrc(ex.icon)} alt={ex.name} />
               {/* EX name ON the button, after the icon so it isn't occluded (#152) */}
               <TileName label={stripAbilityNumber(ex.name)} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
-              <CooldownChrome cd={cd} fontSize={20} />
+              <CooldownChrome cd={cd} fontSize={m.s(20)} />
               <div
                 data-cast-slot={4}
                 style={{
@@ -613,7 +635,11 @@ export function AbilityBar(): React.JSX.Element | null {
               />
             </div>
             </Tooltip>
-            <div style={{ marginTop: 3, fontSize: 9, color: EX_ACCENT, letterSpacing: 1 }}>F</div>
+            <div
+              style={{ marginTop: m.s(3), fontSize: m.s(9), color: EX_ACCENT, letterSpacing: m.s(1) }}
+            >
+              F
+            </div>
           </div>
         );
       })()}

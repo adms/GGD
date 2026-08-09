@@ -23,16 +23,32 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { AbilityDef } from "../content/defs";
+import type { AbilityDef, AbilityPassive } from "../content/defs";
 import type { ModifierSource } from "../stats/modifiers";
 import { Abilities } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
 import { hasSourceGrant, sourceGrants } from "../stats/sourceGrants";
-import { applyAugmentToHooks, collectAugmentOps } from "./abilityAugment";
+import {
+  applyAugmentToCritStrike,
+  applyAugmentToHooks,
+  applyAugmentToModifiers,
+  collectAugmentOps,
+} from "./abilityAugment";
 
 /** Stable, collision-free source id for one ability's passive. */
 export function abilityPassiveSourceId(abilityId: string): string {
   return `abilityPassive:${abilityId}`;
+}
+
+/**
+ * ⭐ G13-2 —— 一支【切換】技**開著的期間**那一份來源的 id。
+ *
+ * 刻意和 {@link abilityPassiveSourceId} 分開：70-00 紮根同時是一支切換技與一支
+ * 天生技，兩份 payload 可以同時存在（「常駐的芬多精光環」＋「紮根期間防禦×2」），
+ * 共用一個 id 的話後掛的那一份會把前一份**擠掉**，而畫面上只是「數字小一點」。
+ */
+export function abilityToggleSourceId(abilityId: string): string {
+  return `abilityToggleOn:${abilityId}`;
 }
 
 /** True when the ability can only ever be passive (no castable effects). */
@@ -94,14 +110,24 @@ export function innateSupersedesLegacyPassive(champ: {
   return innate !== undefined && isPassiveInnate(innate) && innate.passive !== undefined;
 }
 
+/**
+ * 一份 rank 區塊 → 一個 `ModifierSource`（或 null = 這個 rank 什麼都不給）。
+ *
+ * ⭐ 2026-08-10：參數化成 `(p, sourceId)`，因為現在有**兩種**載體走這條路 ——
+ * `AbilityDef.passive`（天生技 / 被動技，永久）與 `AbilityToggle.whileOn`
+ *（切換技開著的期間）。⛔ 不是兩份程式：形態閘、空值測試、六種授予的轉發、
+ * 跨技能強化的四個面全部只有一份，所以「開著期間才有的格擋」不用等第二次接線
+ *（第零守則⑨：N 個同型 = K 個模板）。
+ */
 function rankBlock(
   world: SimWorld,
   id: EntityId,
   def: AbilityDef,
+  p: AbilityPassive,
   rank: number,
+  sourceId: string,
 ): ModifierSource | null {
-  const p = def.passive;
-  if (!p || rank <= 0 || p.ranks.length === 0) return null;
+  if (rank <= 0 || p.ranks.length === 0) return null;
   const block = p.ranks[Math.min(rank, p.ranks.length) - 1]!;
   // 形態閘 (task #249). Absent / "any" = attached in both bodies, which is every
   // passive authored before the field existed.
@@ -137,13 +163,19 @@ function rankBlock(
   // attach，而它在升級 / EX 解鎖 / 變身時都會重跑，所以「學會強化技的那一刻
   // 被強化的那支就變強」不需要第二條通知路徑。
   // ⛔ 不可以就地改 `block.hooks`：那是註冊表裡的那一份，改下去會跨英雄、跨場次。
-  // ⚠️ 只有這一個 seam 接上了；主動施放路徑的落差寫在
-  //    `abilityAugment.ts` 檔頭與 `editorCapabilities` 的 caveat 裡。
+  //
+  // ⭐ 2026-08-10（G6）—— 這裡從**一面**變成**三面**：hooks（機率／持續／係數）、
+  // modifiers（`op:"modifierValue"` 改加成量）、grants（暴擊來源的機率）。
+  // 上一版註解說的「只有這一個 seam 接上了」已經過期 —— 主動施放那一面在
+  // `abilitySystem.ts::castAbility` 與 `systems/CastResolveSystem.ts`。
+  // ⛔ 三行都走 `abilityAugment.ts` 的同一組 applier，不是三段就地展開的 if。
   const augmentOps = collectAugmentOps(world, id, def.id);
   const hooks = applyAugmentToHooks(block.hooks, augmentOps);
+  const modifiers = applyAugmentToModifiers(block.modifiers, augmentOps);
+  const critStrike = applyAugmentToCritStrike(block.critStrike, augmentOps);
 
   if (
-    !block.modifiers?.length &&
+    !modifiers?.length &&
     !hooks?.length &&
     !block.auras?.length &&
     !block.vision &&
@@ -169,9 +201,17 @@ function rankBlock(
   )
     return null;
   return {
-    id: abilityPassiveSourceId(def.id),
+    id: sourceId,
     kind: "passive",
-    ...(block.modifiers ? { modifiers: block.modifiers } : {}),
+    // ⭐ G4 —— **這一份來源是第幾階授予的**。`fireHooks` 讀它來決定 hook payload
+    // 的 rank（在它之前那裡寫死 `rank: 1`）。
+    //
+    // ⚠️ 這是四條載體裡**唯一**真的有「階」的那一條，也是抄寫稅的來源：少了它，
+    // 一支七階被動的作者要在 `passive.ranks[]` 的每一階各抄一份同樣的 hook 只為了
+    // 換掉裡面那個數字，而抄漏一階不會紅（那一階安靜地付第 1 欄）。
+    // ⛔ 不從 `world.abilities` 回頭查 —— 理由寫在 `fireHooks` 的那一行上。
+    grantRank: Math.max(1, rank),
+    ...(modifiers ? { modifiers: modifiers as typeof block.modifiers } : {}),
     ...(hooks ? { hooks: hooks as typeof block.hooks } : {}),
     ...(block.auras ? { auras: block.auras } : {}),
     ...(block.vision ? { vision: block.vision } : {}),
@@ -198,6 +238,12 @@ function rankBlock(
     // 「一條自己的機率 + 自己的倍率」的暴擊來源在此之前只有道具寫得出來。
     // ⛔ 一份轉發,不是兩行 —— 見 `stats/sourceGrants.ts` 檔頭。
     ...sourceGrants(block),
+    // ⭐ G6-4 —— 【跨技能強化】改寫過的暴擊機率覆蓋上去。位置在 `sourceGrants`
+    // **之後**是承重的：那一份轉發的是註冊表裡的原值，寫在前面會被它蓋回去，
+    // 而畫面上只是「機率沒有上升」（失敗形態②）。
+    // ⛔ 不要改成在 `sourceGrants` 之前 —— 沒有強化時 `critStrike === block.critStrike`
+    // （同一個參照），所以這一行對 1,900 份既有文件逐鍵不變。
+    ...(critStrike !== undefined ? { critStrike } : {}),
   };
 }
 
@@ -227,15 +273,64 @@ export function syncAbilityPassives(world: SimWorld, id: EntityId): void {
   for (const inst of instances) {
     const def = Abilities.tryGet(inst.abilityId as never) as AbilityDef | undefined;
     if (!def?.passive) continue;
-    // An ACTIVE innate is a real cast, not a permanent buff. Content never
-    // authors a `passive` block on one, but assert it here too so a future
-    // mis-authored doc cannot silently turn a 40 s nuke into a free aura.
-    if (isActiveInnate(def)) continue;
-    const want = rankBlock(world, id, def, inst.rank);
+    // An ACTIVE innate is a real cast, not a permanent buff — so by DEFAULT its
+    // `passive` block is not attached (a 40 s nuke must not become a free aura).
+    //
+    // ⭐ G13-1（2026-08-10）—— 但那是一個**決策**，不是一條物理定律，and WC3 真的
+    // 有這一族：70-00 紮根 = 15 秒冷卻的 D 槽主動技 **加上**一圈常駐芬多精光環。
+    // 在這一格出現之前，那種天生技的 passive 區塊**永遠掛不上去**（實測
+    // `stats.sources` 是空的），所以「切換開著時 防禦×2」這種**相對**加成在
+    // 天生技槽位上結構性寫不出來。第一守則：決策點變欄位，預設值選今天的行為。
+    // ⛔ `!== "attach"` 而不是 `=== "skip"` —— 省略要走 skip 那一邊。
+    if (isActiveInnate(def) && def.innateActivePassive !== "attach") continue;
     const sourceId = abilityPassiveSourceId(def.id);
+    const want = rankBlock(world, id, def, def.passive, inst.rank, sourceId);
     // Always detach first: a rank-up must REPLACE the previous rank's block,
     // never stack with it.
     detachSource(world, id, sourceId);
     if (want) attachSource(world, id, want);
   }
+}
+
+/**
+ * ⭐ G13-2 —— 一支【切換】技**打開**的那一刻，掛上 `toggle.whileOn` 那一份加成。
+ *
+ * 由 `abilities/toggle.ts::enterToggle` 呼叫，也就是**唯一的開啟出口**。
+ * 缺席 `whileOn` = 嚴格 no-op（連 detach 都只是找不到就回 false），所以出貨的
+ * 兩支切換技在內容補上這一格之前逐位元不變。
+ *
+ * ⚠️ 它走的是**和天生技一模一樣的** {@link rankBlock}：同一個形態閘、同一組
+ * 六種授予轉發、同一組跨技能強化。所以「紮根期間才有的格擋」「風王結界期間
+ * 才有的 on-attack orb」不需要第二次接線 —— 那正是 `whileOn` 重用
+ * `AbilityPassive` 而不是另開一份 `EffectDef[]` 的整個理由。
+ *
+ * ⚠️ 已知邊界（schema 明說）：`syncAbilityPassives` **不碰**這條來源，所以
+ * 開著的時候升級不換 rank。⛔ 不要順手在 `syncAbilityPassives` 裡補一格 ——
+ * 那會讓「升級」變成一條會偷偷重置切換態的路徑。
+ */
+export function attachToggleWhileOn(
+  world: SimWorld,
+  id: EntityId,
+  def: AbilityDef,
+  rank: number,
+): void {
+  const w = def.toggle?.whileOn;
+  const sourceId = abilityToggleSourceId(def.id);
+  // 先 detach：重複開啟（理論上 `enterToggle` 擋掉了）不可以疊兩份。
+  detachSource(world, id, sourceId);
+  if (!w) return;
+  const want = rankBlock(world, id, def, w, rank, sourceId);
+  if (want) attachSource(world, id, want);
+}
+
+/**
+ * ⭐ G13-2 —— 關閉時卸下那一份加成。由 `toggle.ts::exitToggle`（**唯一**的關閉
+ * 出口，手動與 MP 不足自動關閉共用）呼叫，所以「關掉之後加成還留著」在結構上
+ * 不可能發生。
+ *
+ * `whileOnDuringExit` 決定的**只是順序**（在 `onExit` 之前還是之後卸下），
+ * 不是「會不會卸下」—— 見 `sim/content/defs.ts` 上那一格。
+ */
+export function detachToggleWhileOn(world: SimWorld, id: EntityId, abilityId: string): void {
+  detachSource(world, id, abilityToggleSourceId(abilityId));
 }

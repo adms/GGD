@@ -306,9 +306,15 @@ describe("displayFinal HP final + damage factor (hud-display-final)", () => {
     // and it must hold whatever the factor happens to be.
     expect(envFactor("damage", LIVE)).toBe(LIVE.damageDealt);
     expect(displayFinal(650, "damage", LIVE)).toBe(Math.round(650 * LIVE.damageDealt));
-    // champ ATTACK range must NOT ride the ability-range ×0.6 alias
+    // champ ATTACK range must NOT ride the ABILITY-range alias. The mechanism is
+    // WHICH KEY it resolves to — that string comparison is the whole guard and it
+    // is never vacuous. ⛔ This block used to end `.toBe(6)`, which was only true
+    // while the shipped `attackRange` happened to be 1.0; owner tuned it to 0.6 on
+    // 2026-08-10 and a balance decision surfaced as a red test — exactly backwards
+    // (CLAUDE.md 第二守則:守衛驗機制,出貨數值不進斷言).
     expect(statDisplayFactor("range")).toBe("attackRange");
-    expect(displayFinal(6, statDisplayFactor("range"), LIVE)).toBe(6);
+    expect(envFactor(statDisplayFactor("range"), LIVE)).toBe(LIVE.attackRange);
+    expect(displayFinal(6, statDisplayFactor("range"), LIVE)).toBeCloseTo(6 * LIVE.attackRange, 9);
   });
 });
 

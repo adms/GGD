@@ -22,8 +22,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { createElement } from "react";
 import { cover } from "@ggd/shared/testkit/cover";
-import { Stat } from "@ggd/shared/sim/stats/statTypes";
-import { effectiveCap, statCapsFromDoc } from "@ggd/shared/sim/statCaps";
+import { Stat, STAT_CLAMPS } from "@ggd/shared/sim/stats/statTypes";
+import { effectiveCap, statCapsFromDoc, DEFAULT_STAT_CAPS } from "@ggd/shared/sim/statCaps";
 import { StatCapsPage } from "./ui/StatCapsPage";
 import { CAPS_DOC_ID, CAPS_SCHEMA } from "./statCaps";
 import { mount } from "./testkit/headlessUi";
@@ -107,7 +107,12 @@ describe("屬性上限 儲存送出的東西 (adminui-stat-caps-save)", () => {
     expect(Object.keys(caps)).toContain(Stat.MoveSpeed);
     expect(Object.keys(caps)).toContain(Stat.CooldownReduction);
     expect(effectiveCap(table, Stat.MoveSpeed, 0)).toBe(14);
-    expect(effectiveCap(table, Stat.CooldownReduction, 0)).toBe(0.45);
+    // ⚠️ 從 STAT_CLAMPS 推,不抄 0.45 —— owner 2026-08-10 把 CDR 上限抬到 0.5
+    //    （仙后座「CD 時間再減少 50%」）。這一條要守的是「沒有被這次存檔關掉」,
+    //    不是那個數字本身。
+    expect(effectiveCap(table, Stat.CooldownReduction, 0)).toBe(
+      DEFAULT_STAT_CAPS[Stat.CooldownReduction]?.base ?? STAT_CLAMPS[Stat.CooldownReduction]![1],
+    );
   });
 
   it("第一次儲存(overlay 還是空的)寫的是出貨預設 + 這次的編輯,不是全 0", async () => {

@@ -27,6 +27,22 @@ export enum Stat {
    * content opts in.
    */
   Evasion = "evasion", // 0..1
+  /**
+   * 技能吸血 — the same rate as {@link Lifesteal}, on the OTHER half of the
+   * damage stream. `Lifesteal` is gated on `pkt.origin === "basic"` in
+   * `combat/damage.ts`, so before this stat existed an item could only ever
+   * vamp off autos, and 「全能吸血」 was unauthorable.
+   *
+   * ⭐ 第〇·五守則 —— this is one MECHANISM, not two item-shaped ifs. It unblocks
+   * both 至尊魔戒 (godie-i004, owner 2026-08-10 「附加技能吸血 20%」) and
+   * 落魂的嗜血劍 (godie-i00l), whose 「全能吸血+30%」 shipped as plain lifesteal
+   * and whose authoringNote already named this exact gap and this exact fix.
+   * 全能吸血 = `lifesteal` + `spellVamp` on the same doc — no third stat.
+   *
+   * 0 on every champion and every item that does not opt in, so it is a strict
+   * no-op until content asks for it (same shape as {@link Evasion}).
+   */
+  SpellVamp = "spellVamp", // 0..1 of NON-basic damage
 }
 
 export type StatBlock = Record<Stat, number>;
@@ -47,7 +63,14 @@ export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
    * (BasicAttackSystem 的前搖隨攻速縮短),所以放寬才有意義。**兩者不可分開。**
    */
   [Stat.AttackSpeed]: [0.2, 4.0],
-  [Stat.CooldownReduction]: [0, 0.45],
+  /**
+   * ⚠️ 0.5 是**結構性預設**,真正生效的是 `config.stat-caps@1` 的 `cdr`(後台可調),
+   * 和上面攻速那一條同一個分層。2026-08-10 之前這裡是 0.45,而 owner 當天要
+   * 仙后座「CDR 再減少 50%」—— 那件道具會在**兩個地方**被無聲吃掉:道具欄位帶
+   * (`ITEM_VALUE_LIMIT`) 直接 Zod 拒收,或者收下之後在這裡被夾成 0.45。
+   * 兩種都是「後台存得下去、玩家拿不到」。上界跟著 owner 明說的最大單件值走。
+   */
+  [Stat.CooldownReduction]: [0, 0.5],
   [Stat.CritChance]: [0, 1],
   [Stat.MoveSpeed]: [2, 14],
   [Stat.Lifesteal]: [0, 0.8],
@@ -61,6 +84,8 @@ export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
    * verified WC3 value ever exceeds it — do not rescale the content.
    */
   [Stat.Evasion]: [0, 0.8],
+  /** 技能吸血 —— 與 {@link Stat.Lifesteal} 同一個區間,理由也同一條。 */
+  [Stat.SpellVamp]: [0, 0.8],
 };
 
 /*

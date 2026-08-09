@@ -154,6 +154,39 @@ export const zStatModifierFields = z
      * `sim/stats/resourceStats.ts`。
      */
     fromResource: z.enum(["hp", "mp"]).optional(),
+    /**
+     * ⭐ G9 —— 「這條加成只對**哪一格**技能生效」（79-04 卍解「[瞬步] 冷卻縮短
+     * 50% 持續 8 秒」、79-002 虛化）。
+     *
+     * 省略 = **全域** = 折進 `sc.final[stat]`、每一支技能都吃到 —— 也就是這個
+     * 欄位出現之前每一條 modifier 的行為（全樹零份文件帶它）。
+     *
+     * ⚠️ 帶 scope 的加成**不會出現在面板上**，而那是對的：它不是全域的。
+     * ⛔ 與 {@link scopeAbilityId} 互斥（見 refineStatModifierScope）。
+     */
+    scopeSlot: zCastableSlot.optional().describe(
+      "只對某一格技能生效（Q/W/E/R/EX/天生技）。留空＝對全部技能生效。" +
+        "「瞬步的冷卻縮短 50%」填的是這一格；它不會顯示在角色面板的冷卻縮減上，" +
+        "因為它只影響那一格技能的冷卻圈。",
+    ),
+    /**
+     * ⭐ G9 —— {@link scopeSlot} 的另一半：指名**一支具體的技能**（不管它裝在
+     * 哪一格）。省略 = 全域。
+     *
+     * ⚠️ **軟參照**（`z.string()` 而不是 `zRef("abilities")`）：這個檔是被
+     * item / effect / augment / ability 四份 schema 共同 import 的最底層，把
+     * `zRef` 的那條邊拉進來要先確認不成環。代價寫在明處：打錯 id = 這條 modifier
+     * 匹配不到任何技能、靜默無效。⛔ 不要假裝它今天會紅。
+     */
+    scopeAbilityId: z
+      .string()
+      .min(1)
+      .max(64)
+      .optional()
+      .describe(
+        "只對某一支具名技能生效（填技能 id）。留空＝對全部技能生效。" +
+          "⚠️ 打錯 id 不會有錯誤訊息，這條加成會安靜地不生效。",
+      ),
   })
   .strict();
 
@@ -200,7 +233,57 @@ export const refineStatModifierFrom = (
   }
 };
 
-export const zStatModifier = zStatModifierFields.superRefine(refineStatModifierFrom);
+/**
+ * ⭐ G9 —— `scopeSlot` / `scopeAbilityId` 的三道閘。
+ *
+ * ⚠️ 這條 refine 才是這個機制**不會變成一堆死設定**的原因。加一格到
+ * `zStatModifier` = 同時開放給道具／三選一／`applyBuff`／天生技／靈氣**五個**
+ * 授權面，而其中只有「冷卻縮減」有讀取端（`abilities/abilitySystem.ts` 是全 sim
+ * 唯一的 cdr 消費點）。沒有它，後台會多出五個地方畫得出「限定 Q 槽的最大生命
+ * 加成」而它什麼都不會做 —— 失敗形態②，也正是 S8 普查在數的東西。
+ *
+ * CLAUDE.md 的 fail-loud 條款：錯誤要在**編輯發生的當下**響，不是等某條剛好跑到
+ * 它的測試。
+ */
+export const refineStatModifierScope = (
+  m: { stat: Stat; op: ModOp; scopeSlot?: string; scopeAbilityId?: string },
+  ctx: z.RefinementCtx,
+): void => {
+  const scoped = m.scopeSlot !== undefined || m.scopeAbilityId !== undefined;
+  if (!scoped) return;
+  if (m.scopeSlot !== undefined && m.scopeAbilityId !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["scopeAbilityId"],
+      message:
+        "scopeSlot 與 scopeAbilityId 只能填一個 —— 「哪一格」與「哪一支」是兩個不同的問題，" +
+        "而管線只會採用其中一個。同時寫 = 作者以為自己拿到兩者之一，實際拿到的是另一個。",
+    });
+  }
+  if (m.stat !== Stat.CooldownReduction) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["scopeSlot"],
+      message:
+        "今天全 sim 只有技能冷卻的計算是 scope-aware 的（abilities/abilitySystem.ts）。" +
+        "把 scope 寫在別的屬性上會得到一格在後台畫得出來、引擎永遠讀不到的設定。" +
+        "要多開一條屬性，先在 sim/stats/scopedStat.ts 加它的讀取點。",
+    });
+  }
+  if (m.op === ModOp.PercentOf || m.op === ModOp.CapRaise) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["op"],
+      message:
+        `op "${m.op}" 不支援 scope —— percentOf 的求值住在 recomputeStats 的第二趟、` +
+        "capRaise 住在上限表，兩者都是全域的一步，scope 對它們沒有語意。",
+    });
+  }
+};
+
+export const zStatModifier = zStatModifierFields
+  .superRefine(refineStatModifierFrom)
+  .superRefine(refineStatModifierScope);
 
 /**
  * Per-stat sanity band for ONE item modifier, as an absolute magnitude.
@@ -270,7 +353,7 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // RESCALE_EXEMPT entry in tools/economy/rescale_items.py; if this band ever
   // looks unused, check there before lowering it.
   [Stat.CritDamage]: 50, // shipped max is 8.25 (天堂之劍, owner-rescaled); band sized for the w3x source value 48.25
-  [Stat.CooldownReduction]: 0.45, // STAT_CLAMPS upper bound
+  [Stat.CooldownReduction]: 0.5, // STAT_CLAMPS upper bound
   [Stat.Lifesteal]: 1, // a rate, not a count — 0..1
   [Stat.AttackRange]: 5,
   // A rate, not a count — 0..1, and STAT_CLAMPS additionally folds the RESOLVED
@@ -278,6 +361,8 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // active's 250 range read as a dodge chance), not a balance statement; the
   // strongest authored evasion in the source map is 0.20.
   [Stat.Evasion]: 1,
+  // 技能吸血 —— a rate, not a count, exactly like Lifesteal above.
+  [Stat.SpellVamp]: 1,
 };
 
 /** Percentage ops are a multiplier delta (0.3 = +30%), so they share one band. */

@@ -104,6 +104,10 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   [Stat.AttackSpeed]: Object.freeze({ base: 4.0, unlocked: 10.0 }),
   [Stat.AbilityPower]: Object.freeze({ base: AP_CAP_OPEN, unlocked: AP_CAP_OPEN }),
   [Stat.Lifesteal]: Object.freeze({ base: 0.8, unlocked: 1.0 }),
+  // 2026-08-10 —— owner 要仙后座「CD 時間再減少 50%」。base 就是那個最大單件值;
+  // unlocked 0.8 留給未來的 CapRaise。⚠️ 這一列與 content/config/stat-caps.json
+  // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。
+  [Stat.CooldownReduction]: Object.freeze({ base: 0.5, unlocked: 0.8 }),
 });
 
 // ------------------------------------------------------------- bounds ------
@@ -158,6 +162,8 @@ export const STAT_CAP_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   // 吸血 > 1 仍然有意義(回血多於打出的傷害),所以它不在上面那一組。
   [Stat.Lifesteal]: 10,
   [Stat.Evasion]: 1,
+  // 技能吸血與吸血同理:> 1 仍然有意義(回血多於打出的傷害)。
+  [Stat.SpellVamp]: 10,
 });
 
 /**

@@ -34,7 +34,10 @@ export function applyEffect(e: EffectDef, ctx: EffectContext): void {
   const gated = gateOnCondition(e.condition, ctx);
   if (gated === undefined) return;
   const spec = EFFECT_HANDLERS[e.kind] as AnyKindSpec;
-  spec.apply(e, gated, bakeCastTimeConditionals);
+  // 第四個引數是 G1 ② 的接縫（`RunList`）：自己解目標的 kind 用它把**真的打到
+  // 的那群人**當成 `ctx.targets` 再跑一段。傳進去而不是讓 handler import，理由與
+  // `bakeCastTimeConditionals` 相同（effectKind.ts 檔頭的依賴環）。
+  spec.apply(e, gated, bakeCastTimeConditionals, runEffects);
 }
 
 /**
@@ -71,9 +74,27 @@ export function applyEffect(e: EffectDef, ctx: EffectContext): void {
  * 這是刻意的,但它是一筆真的預算。
  *
  * ── named gap（不是漏掉）────────────────────────────────────────────────
- * 過濾只作用在 `ctx.targets`。自己重新解算身體的 kind（`damageArea` /
- * `damageLine` / `randomArea` / `leap.onLand` 的落地圈）不逐一過濾;對它們③
- * 只決定「整段跑不跑」。⛔ 不要用這一格假裝有做「範圍內只打有某狀態的人」。
+ * 過濾只作用在 `ctx.targets`。自己重新解算身體的 kind 在**這一格**上只被③決定
+ * 「整段跑不跑」—— 圈**內**要不要逐一過濾是另一格：
+ *   · `damageArea` / `damageLine` —— ⭐ 2026-08-10 落地：它們自己解完幾何之後會用
+ *     `effects/victimFilter.ts::selectVictims` 逐一求值 `victimCondition`
+ *     （**同一支** `evaluateCondition`、同一組葉子），並用 `onHitTargets` 把真的
+ *     打到的那群人交給下游。所以「範圍內只打帶〔恐懼〕的敵人」寫得出來，
+ *     ⛔ 但要寫在 `victimCondition` 那一格，不是這一格。
+ *   · `randomArea` —— 它解的是**落點**不是受害者（`targets: []` + `point`，
+ *     `effects/randomArea.ts` 的刻意設計）。「這一波打到誰」由巢狀的 `damageArea`
+ *     用 `ctx.point` 當圓心自己解，所以過濾與鏈結寫在那個巢狀 kind 上。
+ *     ⛔ 不要在 `randomArea` 自己身上再開一份，那是同一件事的第二個住處。
+ *
+ * ⭐ `leap.onLand` **不在**這份清單裡（2026-08-10 更正，第三守則）。
+ * `systems/LeapSystem.ts::detonate` 把 `enemiesInCircle(...)` 直接餵成
+ * `ctx.targets`，所以它走的正是 ③ 那條**逐一過濾**的路。實測：`onLand` 帶
+ * `condition:{status,target,fear}` 時只有帶恐懼的身體挨打，乾淨的那個沒有；
+ * 拿掉 condition 兩個都挨打。⚠️ 這一行在此之前把它列在這裡，而
+ * `effects/effect.ts` 的 `EffectCommon.condition` 抄了同一句 —— 兩份自洽的註解
+ * 在同一件事上撒謊，而下一個人會照著去實作一個已經存在的機制。
+ * ⚠️ 真的邊界（要記住，不要當成 bug 修）：`landRadius` 省略或 0 時 `targets` 是
+ * 空的，此時 `onLand` 上的 condition 退化成整段閘且 `subject:"target"` 讀 FALSE。
  *
  * ── 為什麼不在 `bakeCastTimeConditionals` 裡求值 ──────────────────────────
  * 延遲 payload（`leap.onLand` / `spawnProjectile.onHit`）在**發射**時被 bake,

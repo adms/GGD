@@ -17,6 +17,10 @@ import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
 // 所以下一個授予加進 `SourceGrantFields` 一格，三個授權面自動全部拿到，
 // 而不是三個檔各補一行（漏掉的那一行**不會紅**）。見 sim/stats/sourceGrants.ts。
 import type { SourceGrantFields } from "../stats/sourceGrants";
+// ⚠️ `import type` 是**編譯期擦除**的，所以這一行與 `abilityAugment.ts` 反向
+// import `AbilityDef` 之間沒有 runtime 環（`effectRegistry.ts` 檔頭記的那一種
+// 「不是編譯錯誤、是某個打包順序下的執行期 undefined」在這裡不成立）。
+import type { AbilityAugment } from "../abilities/abilityAugment";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 
@@ -136,6 +140,23 @@ export interface AbilityDef {
    * Mirrors `zInnateKind`; absent on every other slot.
    */
   innateKind?: "passive" | "active";
+  /**
+   * ⭐ G13-1 —— 一支 `innateKind: "active"` 的天生技，它的 `passive` 區塊要不要
+   * **也**掛上去。Mirrors `zAbilityDoc.innateActivePassive`。
+   *
+   * 省略 = `"skip"` = 今天的行為逐字（`syncAbilityPassives` 對主動型天生技
+   * `continue`，那個 passive 區塊一格都不掛）。1,900 份既有文件一份都不帶它
+   *（grep 實測 0），所以全樹零變化。
+   *
+   * ⭐ 為什麼它是一格欄位而不是寫死：「一支有冷卻的 D 槽主動技能不能同時掛一個
+   * 常駐光環」今天是寫死在程式裡的**決策**，而 WC3 那一族真的存在
+   *（70-00 紮根 = 15 秒冷卻 + 芬多精光環）。第一守則：決策點變欄位，預設值選
+   * 今天的行為。
+   *
+   * ⚠️ 掛上去的來源是**永久**的。「只有紮根形態才有的光環」要靠同一個 rank 區塊的
+   * `whileForm: "alternate"`（`rankBlock` 已經在讀），⛔ 不是靠這一格。
+   */
+  innateActivePassive?: "skip" | "attach";
   castType: CastType;
   maxRank: number;
   /** per rank (index rank-1) */
@@ -212,6 +233,20 @@ export interface AbilityDef {
    * full authoring contract. Absent = 一般的一次性施放，切換管線整條不存在。
    */
   toggle?: AbilityToggle;
+  /**
+   * ⭐ G6 —— 【跨技能強化】：這支技能改寫**另一支**技能的數字
+   *（70-002 / 77-002 / 92-002 那一族的 EX）。Mirrors `zAbilityAugment`；
+   * ⛔ 授權契約（欄位語意、界、為什麼操作是 enum 而不是 JSON Pointer）住在
+   * `content/schema/ability.ts`，執行期語意住在 `sim/abilities/abilityAugment.ts`
+   * 的檔頭，這裡只放型別。
+   *
+   * 缺席 = 這支技能不強化任何東西 = 今天逐字（`content/` 帶 `augment` 的文件
+   * grep 實測 **0 份**）。
+   *
+   * ⚠️ 這一格存在之前，`abilityAugment.ts::augmentOf` 用一個 `as` cast 繞過型別，
+   * 而那支檔自己把它標記成暫時的 —— 現在 sim 端只有一份真相。
+   */
+  augment?: AbilityAugment;
 }
 
 /**
@@ -227,6 +262,29 @@ export interface AbilityToggle {
   exitOnResourceEmpty?: boolean;
   costOnExit?: boolean;
   cooldownOnExit?: boolean;
+  /**
+   * ⭐ G13-2 —— **開著的期間**身上多的那一份東西（70-00 紮根 · 20-01 風王結界）。
+   * Mirrors `zAbilityToggle.whileOn`；⛔ 語意住在 schema 上。
+   *
+   * 缺席 = 開著什麼都不多 = 今天逐字（實測：`whileOn.ranks[0].modifiers` 填了
+   * armor +77，開前開後 `final[armor]` 都是 37.3，`sources` 也完全沒變）。
+   *
+   * ⭐ **重用 `AbilityPassive`**（`{ name?, ranks: AbilityPassiveRank[] }`），
+   * ⛔ 不是第二份 `EffectDef[]`：`EffectDef[]` 表達不出「開著期間」，因為那需要
+   * 一個沒有人知道多長的 `duration`。
+   *
+   * ⚠️ 已知邊界（schema 明說，⛔ 不要順手補第三格）：`syncAbilityPassives` 不碰
+   * 這條來源，所以**開著的時候升級不換 rank**。
+   */
+  whileOn?: AbilityPassive;
+  /**
+   * ⭐ G13-2 —— 關掉的時候，`whileOn` 的加成在 `onExit` **之前**卸下還是**之後**。
+   *
+   * 省略 = `false` = 先卸下加成再跑 `onExit`（＝沒有這個功能時的等價行為）。
+   * ⚠️ 這一格決定的**只是順序** —— 「一定會卸下」不由欄位決定，所以「關掉之後加成
+   * 還留著」在結構上不可能發生。
+   */
+  whileOnDuringExit?: boolean;
 }
 
 export interface ChampionDef {

@@ -20,6 +20,7 @@ import { registerSkeletonContent, THORNE, SELA } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import { normalizeCombatEnv, DEFAULT_COMBAT_ENV } from "./combatEnv";
+import { zCombatEnvMultipliers } from "../content/schema/config";
 import { championStatBase, championStatGrowth } from "./stats/attributes";
 import { DEFAULT_BASE_BONUS, baseBonusFor, baseBonusFromDoc, normalizeBaseBonus } from "./baseBonus";
 import { attachSource, recomputeStats } from "./stats/statPipeline";
@@ -157,13 +158,31 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(lv5 - lv1).toBeCloseTo(perLevel * 4 * DEFAULT_COMBAT_ENV.maxHealth, 6);
   });
 
-  it("出貨的 combat-env 表把生命倍率鎖在 5.0 (owner 2026-08-02 二次裁決，配合火圈 90/180)", () => {
+  it("出貨的 combat-env 表真的載得到生命倍率這一格，而且它在 Zod 的合法區間裡", () => {
     cover("balance-265-env-multiplier");
-    // 這個數字 owner 來回改過五次:#265 從 4 降到 3、2026-07-29 升回 4、
+    // ⛔ 2026-08-10 —— 這條原本寫 `expect(doc.multipliers.maxHealth).toBe(5.0)`,
+    // 也就是 CLAUDE.md 第二守則點名的**第四個住處**:出貨數值已經有三個家
+    // (content/config/combat-env.json + Zod `zCombatEnvMultipliers` + 後台
+    // `COMBAT_ENV_KEYS` 導出的表單),三者之間有 drift 測試在守,測試裡再抄一份
+    // 就一定會過期 —— 而且**用錯誤的訊息紅**。它真的發生了:owner 今天把這一格
+    // 改成 4,紅的卻是一條叫「#265 初始生命加成」的測試,訊息是「expected 4 to
+    // be 5」,查的人會先去翻 baseBonus 而不是翻 combat-env。
+    //
+    // 留下來的是**機制**:出貨文件解析得開、這一格存在、而且落在 Zod 收的區間內
+    // (超出上下界的內容會在 `content:build` 就被擋掉,這裡只是同一件事的近端警報)。
+    // ⛔ 不要再把任何一個出貨數字寫回這個 `expect` 裡。
+    //
+    // 下面整段是**為什麼 owner 會反覆改這一格**的紀錄,對下一個調它的人有用,
+    // 所以留著 —— 它是理由,不是斷言。
+    //
+    // 這個數字 owner 來回改過六次:#265 從 4 降到 3、2026-07-29 升回 4、
     // 2026-07-30 升到 6(「目前玩家太容易死了」,同批還把 agiToArmor 0.15→0.3
     // 與初始生命 300→650),同日再依 TTK sweep 升到 9,2026-08-02 直接指定回 **4**。
     //
-    // ⚠️ **5.0 不是單獨的一個數字,它是三個欄位一起改的其中一格。** 另外兩格是
+    // 2026-08-02 直接指定回 5,**2026-08-10 owner 再指定 4**(同一批還有
+    // attackRange 1.0→0.6、abilityRange 0.6→0.8、manaRegen 8→16)。
+    //
+    // ⚠️ **這一格不是單獨的一個數字,它是三個欄位一起改的其中一格。** 另外兩格是
     // `config.match.json` 的 `fireRing.startSec 90` 與 `combatMaxSec 180`。
     // 只改這一格而不動火圈,實測互殺率只有 54%(480 場)。
     //
@@ -181,15 +200,18 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     //
     // ⚠️ 下次有人只改這一格之前:三格是一組,拆開改會回到「沒有一個值可以」的死角。
     //
-    // 它是 combat-env 的動態設定,後台改存檔就生效 —— 這條測試只釘「出貨預設值」,
-    // 不是釘「唯一合法值」。owner 再改時,改 content/config/combat-env.json 與這一行即可
-    // (`docs/_execution-batches.md` 第 6 條那一行也要,`docEnvTruth` 守衛會提醒)。
+    // 它是 combat-env 的動態設定,後台改存檔就生效 —— 出貨值住在
+    // content/config/combat-env.json,**只有那一份**。
+    // ⚠️ `docs/_execution-batches.md` 第 6 條那一行寫的還是舊值,而註解宣稱的
+    // 「`docEnvTruth` 守衛會提醒」**不存在**(第三守則:註解會說謊,去驗證)。
     const doc = JSON.parse(
       readFileSync(join(__dirname, "../../../../content/config/combat-env.json"), "utf8"),
     ) as { multipliers: Record<string, number> };
-    expect(doc.multipliers.maxHealth).toBe(5.0);
-    // 回血倍率沒有跟著動 —— 這是 #265 第三問的調查結論，不是順手改的。
-    expect(doc.multipliers.healthRegen).toBe(1.0);
+    for (const k of ["maxHealth", "healthRegen"] as const) {
+      const v = doc.multipliers[k];
+      expect(typeof v, k).toBe("number");
+      expect(zCombatEnvMultipliers.safeParse({ [k]: v }).success, `${k}=${v} 落在 Zod 區間`).toBe(true);
+    }
   });
 
   it("出貨的 config.base-bonus@1 內容文件就是後台預設值", () => {

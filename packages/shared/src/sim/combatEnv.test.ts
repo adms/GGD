@@ -37,6 +37,7 @@ import {
   ATTRIBUTE_ENV_DEFAULTS,
   COMBAT_ENV_KEYS,
   DEFAULT_COMBAT_ENV,
+  STAT_ENV_CHAIN_KEYS,
   STAT_ENV_KEY,
   normalizeCombatEnv,
   parseCombatEnvJson,
@@ -96,6 +97,9 @@ const STAT_CASES: { key: CombatEnvKey; stat: Stat; pin: number }[] = [
   { key: "moveSpeed", stat: Stat.MoveSpeed, pin: 5 },
   { key: "attackSpeed", stat: Stat.AttackSpeed, pin: 0.8 },
   { key: "critChance", stat: Stat.CritChance, pin: 0.3 },
+  // 技能吸血刻意與吸血共用 `lifesteal` 這一格（sim/combatEnv.ts 的 STAT_ENV），
+  // 所以這裡出現同一個 key 的第二列 —— 就跟 defense 服務 armor + mr 一樣。
+  { key: "lifesteal", stat: Stat.SpellVamp, pin: 0.2 },
   { key: "critDamage", stat: Stat.CritDamage, pin: 1.5 },
   { key: "lifesteal", stat: Stat.Lifesteal, pin: 0.2 },
   { key: "attackRange", stat: Stat.AttackRange, pin: 4 },
@@ -109,8 +113,10 @@ describe("combat-env stat multipliers (env-01)", () => {
     // the only env keys WITHOUT a stat mapping are the formula-site ones and
     // the eight #248 三圍 coefficients (which BUILD a stat's base rather than
     // multiplying the finished value — see stats/attributes.ts).
-    const statKeys = new Set(Object.values(STAT_ENV_KEY));
-    const nonStat = COMBAT_ENV_KEYS.filter((k) => !statKeys.has(k));
+    // 讀的是**整條鏈**的 key（2026-08-10 起一條屬性可能有兩格），不是
+    // `STAT_ENV_KEY` 那個只答無條件那一格的相容視圖 —— 否則 `magicResistMult` /
+    // `moveSpeedMelee` / `moveSpeedRanged` 會被誤判成「沒有對應屬性」的公式格。
+    const nonStat = COMBAT_ENV_KEYS.filter((k) => !STAT_ENV_CHAIN_KEYS.has(k));
     expect(nonStat.sort()).toEqual(
       [
         "cooldown",

@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "天地崩裂魔杖",
   "icon": "assets/icons/items/godie-i03h.webp",
-  "description": "法器\n效能\nAP + 87\n總AP + 10%\n[暈眩] 施展技能的時候有 5%的機率招喚隕石流星雨，造成範圍 100% AP傷害及 2秒暈眩\n\n解說\n隱藏巨大魔力使天地崩裂的可怕魔杖。咦，怎麼這根杖有時候發出藍光阿？",
+  "description": "法器\n效能\nAP + 255\n總AP + 10%\n[暈眩] 施展技能的時候有 5%的機率招喚隕石流星雨，造成範圍 100% AP傷害及 2秒暈眩\n\n解說\n隱藏巨大魔力使天地崩裂的可怕魔杖。咦，怎麼這根杖有時候發出藍光阿？",
   "cost": 0,
   "tier": 2,
   "tags": [
@@ -21,7 +21,7 @@
     {
       "stat": "ap",
       "op": "flat",
-      "value": 87
+      "value": 255
     },
     {
       "stat": "ap",
@@ -41,11 +41,11 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
-          "radius": 4.0,
+          "radius": 4,
           "maxTargets": 6,
           "includeOrigin": true
         },

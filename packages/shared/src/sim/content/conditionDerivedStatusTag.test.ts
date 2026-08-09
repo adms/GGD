@@ -162,6 +162,11 @@ const CC_PROBES: readonly { readonly label: string; readonly patch: StatusPatch 
   { label: "stun", patch: { stun: true } },
   { label: "root", patch: { root: true } },
   { label: "feared", patch: { feared: true } },
+  // ⭐ S8【繳械】—— 2026-08-10 加進推導表的第五個 cc 旗標。這一列是被**這條測試
+  // 本身**要出來的：`condition.ts` 標了 `cc`，樣本數還是 4，所以它紅了並指名
+  // 「推導表多了一個 cc 旗標，這裡卻沒有樣本」。它問的不是「有沒有這個欄位」，
+  // 而是「免控擋不擋得掉繳械」—— 少了 `applyStatus.ts::isCc` 那一行就會紅。
+  { label: "disarmed", patch: { disarmed: true } },
   { label: "slow", patch: { moveSpeedMult: DERIVED_NEUTRAL_MULT - 0.6 } },
 ];
 

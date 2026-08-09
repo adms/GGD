@@ -169,8 +169,16 @@ export function basicAttackSystem(world: SimWorld): void {
     }
 
     // Stun cancels any wind-up and blocks starting a new swing.
+    //
+    // ⭐【繳械】S8（`effect.control-restriction@1`，92-01「無法移動與攻擊」的
+    // 攻擊那一半）跟暈眩共用**同一道閘**，而這正是它與 `missChance` 的全部差別：
+    // 這一行在 `breakStealth` / 冷卻 commit / `attackWindup` **之前**，所以繳械的
+    // 人連前搖都開不了 —— 沒有動畫、沒有音效、不破隱、不燒攻擊間隔。
+    // `missChance: 1` 只是讓那一刀的傷害變 0，人照樣揮（實測 90 tick 內 6 次
+    // `attackWindup`），而「揮空刀」與「揮不出來」在畫面與聽覺上是兩件事。
+    // ⛔ 它**不擋技能** —— 要連技能一起封請配【沉默】（那道閘在 abilitySystem）。
     const st = world.status.get(id);
-    if (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick)) {
+    if (st?.effects.some((e) => (e.stun || e.disarmed) && e.expiresAtTick > world.tick)) {
       ab.windup = null;
       continue;
     }
@@ -445,6 +453,11 @@ function resolveAttack(
       // 陷阱的解藥:普攻有**兩個**傷害 push 站點,只接近戰的話遠程英雄拿到的是
       // 一把只有 10 倍傷害、完全不吸血的劍(失敗形態 ②)。
       critLifesteal,
+      // ⭐ G8 —— 「這一發是被哪幾條暴擊來源加成的」也必須騎上飛彈,而且理由與
+      // `critLifesteal` **逐字相同**:骰在放箭那一刻,而 hook 在命中那一刻才問。
+      // 少了這一行,89-01 那一族在遠程英雄身上就是死的,而近戰是好的 ——
+      // 一個只有一半英雄看得到的缺陷。
+      critSources: cs.critSources,
     });
     // the swing itself happens now; the hit lands at impact.
     // `projectileSpawn` is what the client hangs the MUZZLE FLASH on (see the
@@ -495,6 +508,9 @@ function resolveAttack(
     // [暴擊吸血] — `undefined` on every swing that did not proc, which is what
     // keeps `combat/damage.ts`'s 「持有者原本的吸血」 branch untouched.
     critLifesteal,
+    // ⭐ G8 —— 近戰半邊（遠程那一半騎在飛彈上，見上）。`undefined` = 這一發沒有
+    // 任何 grant 參與 = 這個欄位出現之前的每一發。
+    critSources: cs.critSources,
   });
   fireHooks(world, id, "onBasicAttack", targetId);
 }

@@ -10,6 +10,7 @@ import {
 } from "./common";
 import {
   refineHookDamageContext,
+  refineUnrankedHookPerRank,
   zAttrGrant,
   zAuraDef,
   zBlockGrant,
@@ -83,7 +84,12 @@ export const zItemHookDef = zHookDefBase
   // 而 `ZodEffects` 沒有 `.extend()`(`zItemAuraDef` 用 `.innerType()` 繞開的
   // 是同一個坑)。兩邊共用**同一個函式**,所以「只有帶傷害的事件才談得上那一發」
   // 不可能只在 ability 那半邊生效 —— 而反射之盾正是走 item 這半邊。
-  .superRefine(refineHookDamageContext);
+  .superRefine(refineHookDamageContext)
+  // ⭐ G4 —— 道具**沒有階級**：`economy/itemSource.ts` 建的來源永遠拿不到
+  // `grantRank`，所以一條掛在道具上的 hook payload 只讀得到 `perRank` 的第 1 欄。
+  // ⚠️ `zItemAuraDef`（`hooks: z.array(zItemHookDef)`）走同一份 schema，所以
+  // 道具靈氣那一半自動一起關上 —— ⛔ 不要在那裡再抄一次。
+  .superRefine(refineUnrankedHookPerRank);
 
 /**
  * A STATIC modifier authorable on an ITEM — `zStatModifier` plus the item range
