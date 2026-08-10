@@ -168,6 +168,7 @@ export type Page =
   | "critRules"
   | "berserkRules"
   | "dispelRules"
+  | "cooldownRules"
   | "woundRules"
   | "weaknessRules"
   | "damageRules"
@@ -477,6 +478,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "critRules",
   "berserkRules",
   "dispelRules",
+  "cooldownRules",
   "woundRules",
   "weaknessRules",
   "damageRules",

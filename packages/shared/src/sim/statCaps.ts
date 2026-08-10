@@ -107,7 +107,7 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   // 2026-08-10 —— owner 要仙后座「CD 時間再減少 50%」。base 就是那個最大單件值;
   // unlocked 0.8 留給未來的 CapRaise。⚠️ 這一列與 content/config/stat-caps.json
   // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。
-  [Stat.CooldownReduction]: Object.freeze({ base: 0.5, unlocked: 0.8 }),
+  [Stat.CooldownReduction]: Object.freeze({ base: 0.99, unlocked: 0.99 }),
 });
 
 // ------------------------------------------------------------- bounds ------

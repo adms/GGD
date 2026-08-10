@@ -100,7 +100,7 @@ export const BASE_BONUS_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   [Stat.AttackSpeed]: 3.8, // [0.2, 4.0]
   [Stat.MoveSpeed]: 12, // [2, 14]
   [Stat.CritChance]: 1, // [0, 1]
-  [Stat.CooldownReduction]: 0.5, // [0, 0.5] —— 跟著 STAT_CLAMPS 走,見那裡的註解
+  [Stat.CooldownReduction]: 0.99, // [0, 0.99] —— 跟著 STAT_CLAMPS 走,見那裡的註解
   [Stat.Lifesteal]: 0.8, // [0, 0.8]
   [Stat.Evasion]: 0.8, // [0, 0.8]
   [Stat.SpellVamp]: 0.8, // [0, 0.8]

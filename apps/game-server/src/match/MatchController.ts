@@ -48,6 +48,11 @@ import {
   type DispelRules,
 } from "@ggd/shared/sim/dispelRules";
 import {
+  COOLDOWN_RULES_DOC_ID,
+  cooldownRulesFromDoc,
+  type CooldownRules,
+} from "@ggd/shared/sim/cooldownRules";
+import {
   woundRulesFromDoc,
   WOUNDS_DOC_ID,
   type WoundRules,
@@ -848,6 +853,7 @@ export class MatchController {
      * 和 `blockRules` 完全同一條路（含同一個已知限制：後台改了要重啟 shard）。
      */
     dispelRules: DispelRules = dispelRulesFromDoc(Configs.tryGet(DISPEL_DOC_ID)),
+    cooldownRules: CooldownRules = cooldownRulesFromDoc(Configs.tryGet(COOLDOWN_RULES_DOC_ID)),
     woundRules: WoundRules = woundRulesFromDoc(Configs.tryGet(WOUNDS_DOC_ID)),
     /**
      * 虛弱規則 (`config.weakness@1`, GH#301-4) —— 哪個 tag 算虛弱、攻速倍率、
@@ -946,6 +952,7 @@ export class MatchController {
     this.world.berserkRules = berserkRules;
     // 淨化規則 (`config.dispel@1`) —— 同樣在 tick 0 之前定格。
     this.world.dispelRules = dispelRules;
+    this.world.cooldownRules = cooldownRules;
     this.world.woundRules = woundRules;
     this.world.weaknessRules = weaknessRules;
     this.world.damageRules = damageRules;

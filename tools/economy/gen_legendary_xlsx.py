@@ -369,6 +369,11 @@ NOTES = [
     ["特殊機制欄位", "三圍/視野/飛行/傷害轉換/格擋/暴擊 —— 這六個是頂層欄位，不在 modifiers 裡。"],
     ["", "⚠️ 只看 modifiers 會漏掉它們（2026-08-10 我就是這樣看漏的）。"],
     ["完整 JSON", "原始文件全文，可以直接貼回 content/items/<id>.json。"],
+    ["", ""],
+    ["JSON 可組性", "每一件「需不需要額外程式」。今天 49/49 都是「不用」——"],
+    ["", "機制全部由現有的 item@1 欄位組出來。這一欄有一天變成「需要」時，說明欄會寫出卡在哪一個機制。"],
+    ["機制詞彙表", "引擎目前提供的 12 個機制欄位各自能表達什麼、誰在用。"],
+    ["", "這一頁就是「JSON 能組出什麼」的完整答案 —— 要新機制才寫得出來的東西，不會出現在這裡。"],
 ]
 ws4.append(["項目", "說明"])
 for a, b in NOTES:
@@ -377,6 +382,58 @@ style_sheet(ws4, widths=[34, 96], wrap_cols=set("B"))
 for r in range(2, ws4.max_row + 1):
     if ws4.cell(row=r, column=2).value == "":
         ws4.cell(row=r, column=1).font = Font(bold=True, color="1F3864", size=12)
+
+
+# ============================ Sheet 5：JSON 可組性 ============================
+ws5 = wb.create_sheet("JSON 可組性")
+ws5.append(["#", "名稱", "ID", "效能行數", "用到的實作面", "面數",
+            "需要額外程式嗎", "說明"])
+NEED_CODE = {}  # id -> 說明；今天是空的，欄位留著是為了「有一天不是空的」時看得見
+for n, iid in enumerate(ids, start=1):
+    d = docs.get(iid)
+    if not d:
+        continue
+    used = [zh for k, zh in SURF if d.get(k) and (len(d[k]) > 0 if isinstance(d[k], (list, dict)) else True)]
+    _, eff, _ = split_description(d.get("description", ""))
+    why = NEED_CODE.get(iid)
+    ws5.append([
+        n, d["name"], d["id"], len(eff), "、".join(used), len(used),
+        "❌ 需要" if why else "✅ 不用",
+        why or "全部機制都由現有的 item@1 欄位組出來（modifiers／passive／auras／sets ＋ 六個頂層機制欄位）。",
+    ])
+style_sheet(ws5, widths=[4, 16, 14, 10, 40, 6, 12, 62], wrap_cols=set("EH"))
+
+# ============================ Sheet 6：機制詞彙表 ============================
+ws6 = wb.create_sheet("機制詞彙表")
+ws6.append(["機制欄位", "住在哪", "它能表達什麼", "這 49 件裡誰在用"])
+VOCAB = [
+    ("modifiers", "item@1.modifiers",
+     "常駐屬性。op 決定怎麼疊：flat 相加／pctAdd 進**同一個總和桶**（+100% 與 +300% ⇒ ×5.0，不是 ×8.0）／"
+     "pctMult 各自相乘／percentOf 取另一條屬性或當下資源的百分比／capRaise 抬高上限。"),
+    ("passive", "item@1.passive",
+     "[xxx時] 觸發。on = 普攻命中／施放技能／受到傷害／擊殺／每隔一段時間；再配 chance 機率、"
+     "internalCooldown 內部冷卻、condition 條件葉。effects 是效果陣列，順序就是執行順序。"),
+    ("auras", "item@1.auras",
+     "光環。半徑 × 影響誰（敵／友／全體）× 一組 modifiers 或 hook。"),
+    ("sets", "item@1.sets",
+     "套裝。pieces 列出成員、requiredPieces 決定湊幾件生效、modifiers 是獎勵（只發一次，不是每件一份）。"),
+    ("attributes", "item@1.attributes", "力/敏/智三圍。走 sim/stats/attrSources.ts，會再換算成 AD／攻速／AP。"),
+    ("vision", "item@1.vision", "看穿隱形（trueSightRadius）／自身隱身的再隱身延遲（stealthFadeDelaySec）。"),
+    ("flight", "item@1.flight", "飛行形態：無視單位碰撞／無視障礙／是否仍受場地邊界限制。"),
+    ("damageTypeOverride", "item@1.damageTypeOverride",
+     "傷害轉換。scope 選普攻／技能／全部，becomes 改判成 true（真傷）等，impactType 可保留原本特效類型。"),
+    ("block", "item@1.block", "格擋。擋哪幾種傷害 × 機率 × 擋掉幾成 × 是否只擋致命那一擊 × 內部冷卻。"),
+    ("critStrike", "item@1.critStrike",
+     "暴擊。機率 × 倍率 × 暴擊時吸血比例（取代或相加）× 作用範圍。"),
+    ("requiresAttackType", "item@1.requiresAttackType", "限定近戰或遠戰英雄才能裝備。"),
+    ("recipe", "item@1.recipe", "合成材料。"),
+]
+for key, home, what in VOCAB:
+    users = [docs[i]["name"] for i in ids
+             if docs.get(i) and docs[i].get(key)
+             and (len(docs[i][key]) > 0 if isinstance(docs[i][key], (list, dict)) else True)]
+    ws6.append([key, home, what, f"{len(users)} 件：" + "、".join(users[:8]) + ("…" if len(users) > 8 else "")])
+style_sheet(ws6, widths=[22, 30, 76, 56], wrap_cols=set("CD"))
 
 wb.save(OUT)
 print("寫出：", OUT)

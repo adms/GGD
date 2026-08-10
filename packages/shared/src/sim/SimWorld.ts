@@ -41,6 +41,7 @@ import {
 import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./stealth";
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
+import { DEFAULT_COOLDOWN_RULES, type CooldownRules } from "./cooldownRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
 import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
 import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
@@ -1044,6 +1045,11 @@ export class SimWorld {
    * 沒標 `dispellable` 的東西算不算可拔。見 `sim/dispelRules.ts`。
    */
   dispelRules: DispelRules = DEFAULT_DISPEL_RULES;
+  /**
+   * 冷卻規則 (`config.cooldown-rules@1`) —— 冷卻縮到最短能有多短。
+   * owner 2026-08-10：cdr 天花板 0.99，但秒數卡 0.1。見 `sim/cooldownRules.ts`。
+   */
+  cooldownRules: CooldownRules = DEFAULT_COOLDOWN_RULES;
   /** 【重創】多筆同時在身上時怎麼疊（A6，#278）。 */
   woundRules: WoundRules = DEFAULT_WOUND_RULES;
   /**

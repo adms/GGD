@@ -54,6 +54,7 @@ import {
   zConfigCritDoc,
   zConfigBerserkDoc,
   zConfigDispelDoc,
+  zConfigCooldownRulesDoc,
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
@@ -638,6 +639,39 @@ const WEAKNESS_SPEC: ConfigDocSpec = {
     },
   ],
   // 這一頁三格純量,沒有任何不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
+  page: "cooldownRules",
+  collection: "config",
+  docId: "cooldown-rules",
+  schemaTag: "config.cooldown-rules@1",
+  zod: zConfigCooldownRulesDoc,
+  title: "冷卻規則",
+  intro: [
+    "冷卻能縮到多短。owner 2026-08-10：「cdr 天花板可以是 0.99（99%減免），但要卡最低秒數 0.1 秒」。",
+    "⭐ **那是兩個旋鈕，住在兩頁**：比率天花板在「屬性上限」頁的 `cdr`（現在 0.99），秒數地板在這一頁。兩個一起才蓋得住整個值域 —— 比率上限對短冷卻的技能沒用（一支 1 秒的技能在 99% 減免下是 0.01 秒，等於每個 tick 都放得出來），秒數地板對長冷卻的技能沒用（120 秒的 EX 永遠碰不到 0.1）。",
+    "算式是：`基礎冷卻[等級] × (1 − 冷卻縮減) × 全域冷卻倍率 × 暴走倍率`，**然後**才夾這個地板。地板放在最後一步，否則「全域冷卻 ×2」會把已經觸底的技能推回地板之上，讀起來像 bug。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cooldown-rules.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/cooldownRules.ts 的 applyCooldownFloor（唯一知道地板怎麼作用的地方）← abilities/abilitySystem.ts 每一次付冷卻成本時呼叫；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.cooldownRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 淨化規則／格擋規則／暴走規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "秒數地板總開關",
+      note: "關掉之後冷卻可以被縮到任意短（受比率天花板限制）。⚠️ 它**不**關掉冷卻縮減本身 —— 那是一格屬性，天花板在「屬性上限」頁。",
+    },
+    {
+      path: "minSeconds",
+      zh: "最短冷卻秒數",
+      note: "一支技能的實際冷卻不會低於這個秒數。出貨 **0.1**（owner 指定）。填 0 ＝ 沒有地板。⚠️ 上界 10：再高就會把大多數技能的冷卻**拉長**而不是設地板（一支 3 秒 CD 的技能配一個 30 秒的「地板」），那是打錯數字的樣子。",
+    },
+  ],
+  // 兩格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -1796,6 +1830,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   CRIT_SPEC,
   BERSERK_SPEC,
   DISPEL_SPEC,
+  COOLDOWN_RULES_SPEC,
   WOUNDS_SPEC,
   WEAKNESS_SPEC,
   DAMAGE_RULES_SPEC,

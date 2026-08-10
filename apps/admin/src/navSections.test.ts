@@ -78,6 +78,9 @@ const BASELINE_PAGES: readonly Page[] = [
   "berserkRules",
   // #278 A4b —— 【淨化】的十一個旋鈕。
   "dispelRules",
+  // 冷卻規則 —— owner 2026-08-10「cdr 天花板 0.99，但卡最低 0.1 秒」的**秒數**
+  // 那一半（比率那一半在「屬性上限」頁，兩頁刻意相鄰）。
+  "cooldownRules",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -110,7 +113,21 @@ const navPages = (): Page[] => NAV.map((n) => n.page);
 /** owner 2026-08-02 核准的四個新分類，以及他點名要搬進去的成員。 */
 const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
   // 戰鬥系統 · 基礎加成 · 屬性上限 · 戰鬥手感 · 對戰設定 · 體型與射程
-  { section: "戰鬥規則", pages: ["combatEnv", "baseBonus", "statCaps", "combatFeel", "matchConfig", "bodyScale"] },
+  // ⚠️ 2026-08-10 加入 cooldownRules —— 它刻意排在 statCaps 旁邊：owner 那一句
+  //「cdr 天花板 0.99，但卡最低 0.1 秒」是**兩個**旋鈕，比率那一半在 statCaps，
+  //  秒數那一半在 cooldownRules。分到兩個不同分類會讓操作者只找到一半。
+  {
+    section: "戰鬥規則",
+    pages: [
+      "combatEnv",
+      "baseBonus",
+      "statCaps",
+      "cooldownRules",
+      "combatFeel",
+      "matchConfig",
+      "bodyScale",
+    ],
+  },
   // 商店經濟 · 傳說武器池
   { section: "武器道具", pages: ["storeEconomy", "itemDraft"] },
   // 小怪波設定 · 殭屍王
@@ -197,10 +214,13 @@ describe("收納直接決定「點得到什麼」", () => {
     const visible = visibleRows(all, collapsed, "hub").filter(isNavItem).map((n) => n.page);
     const expected = navPages().filter((p) => NAV.find((n) => n.page === p)!.section !== "戰鬥規則");
     expect(new Set(visible)).toEqual(new Set(expected));
-    // 方向斷言：那六頁真的不見了（少了這一行，一個「collapsed 永遠被忽略」的實作
+    // 方向斷言：那一組真的不見了（少了這一行，一個「collapsed 永遠被忽略」的實作
     // 也會讓上面那條過 —— 因為 expected 會等於全部）。
+    // ⚠️ 少掉幾頁**從 NAV 推導**，不抄 6 —— 這一組會長大（2026-08-10 加了
+    //    冷卻規則），抄字面值的那一版會用「收納壞了」的訊息紅。
+    const combatCount = NAV.filter((n) => n.section === "戰鬥規則").length;
     expect(visible).not.toContain("combatEnv");
-    expect(visible.length).toBe(navPages().length - 6);
+    expect(visible.length).toBe(navPages().length - combatCount);
   });
 
   it("目前所在的那一組就算被收起來也還是看得到自己", () => {

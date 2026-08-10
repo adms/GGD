@@ -16,6 +16,7 @@ import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
 import { scopedCooldownReduction } from "../stats/scopedStat";
+import { applyCooldownFloor } from "../cooldownRules";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
@@ -296,11 +297,20 @@ export function castAbility(
   // ⚠️ 讀的是**開始施放的那一刻**的狀態,所以 EX 自己的 120 秒不會被自己剛掛上
   // 的暴走加倍(效果在付完成本之後才跑),而暴走**之前**就已經在轉的冷卻也不會
   // 被追溯加倍 —— 那會讓玩家看到冷卻進度條倒退。
-  const cdSecs =
+  //
+  // ⬇⬇ 秒數地板是**最後**一步（owner 2026-08-10：「要卡最低秒數 0.1 秒」）。
+  //    比率天花板（`config.stat-caps@1` 的 cdr，現在 0.99）管的是長技能；
+  //    地板管的是短技能 —— 一支 1 秒的技能在 99% 減免下是 0.01 秒，也就是
+  //    每個 tick 都放得出來，而那個天花板再怎麼調都擋不住它。
+  //    ⛔ 放在乘法中間會讓「全域冷卻 ×2」把已經觸底的技能推回地板之上，
+  //    讀起來像 bug。`applyCooldownFloor` 是唯一知道地板怎麼作用的地方。
+  const cdSecs = applyCooldownFloor(
+    world.cooldownRules,
     (def.cooldown[inst.rank - 1] ?? 0) *
-    (1 - cdr) *
-    world.combatEnv.cooldown *
-    berserkCooldownFactor(world, caster);
+      (1 - cdr) *
+      world.combatEnv.cooldown *
+      berserkCooldownFactor(world, caster),
+  );
   inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
 
   // ── 【切換】打開 ───────────────────────────────────────────────────────

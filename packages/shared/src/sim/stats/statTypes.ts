@@ -68,9 +68,12 @@ export const STAT_CLAMPS: Partial<Record<Stat, [number, number]>> = {
    * 和上面攻速那一條同一個分層。2026-08-10 之前這裡是 0.45,而 owner 當天要
    * 仙后座「CDR 再減少 50%」—— 那件道具會在**兩個地方**被無聲吃掉:道具欄位帶
    * (`ITEM_VALUE_LIMIT`) 直接 Zod 拒收,或者收下之後在這裡被夾成 0.45。
-   * 兩種都是「後台存得下去、玩家拿不到」。上界跟著 owner 明說的最大單件值走。
+   * 兩種都是「後台存得下去、玩家拿不到」。
+   * ⭐ 2026-08-10 owner 再放寬到 **0.99**（「99% 減免」），並且加了另一半:
+   * **秒數地板 0.1**（`config.cooldown-rules@1`）。比率上限管長技能、秒數地板
+   * 管短技能 —— 只有比率的話，一支 1 秒的技能在 99% 減免下是 0.01 秒。
    */
-  [Stat.CooldownReduction]: [0, 0.5],
+  [Stat.CooldownReduction]: [0, 0.99],
   [Stat.CritChance]: [0, 1],
   [Stat.MoveSpeed]: [2, 14],
   [Stat.Lifesteal]: [0, 0.8],

@@ -27,6 +27,12 @@ import { ALL_STATS, Stat } from "../../sim/stats/statTypes";
 import { baseBonusBounds } from "../../sim/baseBonus";
 // 屬性上限的 per-stat 區間 —— 同一條規矩:數字定義在 sim,schema 只是搬上 Zod。
 import { STAT_CAP_CEILING, statCapBounds } from "../../sim/statCaps";
+import {
+  COOLDOWN_MIN_SECONDS_MAX,
+  COOLDOWN_MIN_SECONDS_MIN,
+  COOLDOWN_RULES_DOC_ID,
+  DEFAULT_COOLDOWN_RULES,
+} from "../../sim/cooldownRules";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -4027,6 +4033,40 @@ export const SHIPPED_CRIT: ConfigCritDoc = {
  * 而出貨值是**刻意不對稱**的（理由逐格寫在下面）。它們是這一份文件裡唯一
  * 會**真的改變平衡**的三格 —— 其餘都是「拔幾層 / 先拔誰」這種手感旋鈕。
  */
+/**
+ * config.cooldown-rules@1 — 冷卻規則（owner 2026-08-10）。
+ *
+ * owner：「cdr 天花板可以是 0.99（99%減免），但要卡最低秒數 0.1 秒，
+ * 這些都可以在後台設定」。⭐ 那是**兩個**旋鈕，住在兩份文件裡：
+ *   · 比率天花板 → `config.stat-caps@1` 的 `cdr`（跟攻速上限同一張表）
+ *   · 秒數地板   → 這裡的 `minSeconds`
+ * 語意與「為什麼要兩個」寫在 `sim/cooldownRules.ts`。
+ */
+export const zConfigCooldownRulesDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.cooldown-rules@1"),
+    note: z.string().optional(),
+    /** 止血閥。false = 地板不作用（但看得見它是關的）。 */
+    enabled: z.boolean(),
+    /**
+     * 實際冷卻**最短**幾秒。出貨 0.1。
+     *
+     * 0 = 沒有地板（合法，是「我知道我在做什麼」的寫法）。
+     * 上界 10 —— 再高就會把大多數技能的冷卻**拉長**而不是設地板，那是打錯
+     * 數字的樣子（3 秒 CD 的技能配一個 30 秒的「地板」）。
+     */
+    minSeconds: z.number().min(COOLDOWN_MIN_SECONDS_MIN).max(COOLDOWN_MIN_SECONDS_MAX),
+  })
+  .strict();
+
+export const DEFAULT_COOLDOWN_RULES_DOC = {
+  id: COOLDOWN_RULES_DOC_ID,
+  schema: "config.cooldown-rules@1",
+  enabled: DEFAULT_COOLDOWN_RULES.enabled,
+  minSeconds: DEFAULT_COOLDOWN_RULES.minSeconds,
+} as const;
+
 export const zConfigDispelDoc = z
   .object({
     id: zId,
@@ -5049,6 +5089,7 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
   zConfigDispelDoc,
+  zConfigCooldownRulesDoc,
   // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證
   // 失敗 → main.tsx 的 fail-open 退回 2 隻骨架英雄**,而網站看起來完全正常。
   // 那正是 2026-08-02 線上壞掉四小時的形狀,理由寫在下面那一段。

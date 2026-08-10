@@ -328,7 +328,7 @@ var BaseBonusMax = map[string]float64{
 	"as":          3.8,
 	"ms":          12,
 	"critChance":  1,
-	"cdr":         0.5, // 2026-08-10 owner：仙后座「CD 時間再減少 50%」
+	"cdr":         0.99, // 2026-08-10 owner：「天花板可以是 0.99」，另配秒數地板 0.1
 	"lifesteal":   0.8,
 	"evasion":     0.8,
 	"spellVamp":   0.8, // 2026-08-10 新增的技能吸血，區間與 lifesteal 同

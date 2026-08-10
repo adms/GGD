@@ -127,7 +127,10 @@ describe("stat pipeline", () => {
       kind: "buff",
       modifiers: [
         { stat: Stat.AttackSpeed, op: ModOp.Flat, value: 99 },
-        { stat: Stat.CooldownReduction, op: ModOp.Flat, value: 0.9 },
+        // ⚠️ 這一格要**遠遠超過**上限才驗得到夾取（其餘三格寫 99/5/99 就是這個
+        //    用意）。2026-08-10 之前寫 0.9，而當天上限被抬到 0.99 —— 於是
+        //    「夾取」這一條變成在驗「0.9 還是 0.9」，一條驗不到東西的測試。
+        { stat: Stat.CooldownReduction, op: ModOp.Flat, value: 5 },
         { stat: Stat.CritChance, op: ModOp.Flat, value: 5 },
         { stat: Stat.MoveSpeed, op: ModOp.Flat, value: 99 },
       ],
@@ -135,8 +138,8 @@ describe("stat pipeline", () => {
     recomputeStats(world, sela);
     const f = world.stats.get(sela)!.final;
     expect(f[Stat.AttackSpeed]).toBe(4.0); // 一般上限 (owner 2026-07-28,舊值 2.5)
-    // ⚠️ 從 STAT_CLAMPS 推,不抄字面值 —— owner 2026-08-10 把 CDR 上限從 0.45
-    //    抬到 0.5（仙后座「CD 時間再減少 50%」）。抄字面值的那一版紅的時候會說
+    // ⚠️ 從 STAT_CLAMPS 推,不抄字面值 —— owner 2026-08-10 一天內把 CDR 上限
+    //    動了兩次（0.45 → 0.5 → 0.99）。抄字面值的那一版紅的時候會說
     //    「夾取壞了」,而真相只是上限被調過。
     expect(f[Stat.CooldownReduction]).toBe(STAT_CLAMPS[Stat.CooldownReduction]![1]);
     expect(f[Stat.CritChance]).toBe(1);

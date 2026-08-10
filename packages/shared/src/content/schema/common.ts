@@ -353,7 +353,7 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   // RESCALE_EXEMPT entry in tools/economy/rescale_items.py; if this band ever
   // looks unused, check there before lowering it.
   [Stat.CritDamage]: 50, // shipped max is 8.25 (天堂之劍, owner-rescaled); band sized for the w3x source value 48.25
-  [Stat.CooldownReduction]: 0.5, // STAT_CLAMPS upper bound
+  [Stat.CooldownReduction]: 1, // a rate, not a count — 0..1（STAT_CLAMPS 上界 0.99）
   [Stat.Lifesteal]: 1, // a rate, not a count — 0..1
   [Stat.AttackRange]: 5,
   // A rate, not a count — 0..1, and STAT_CLAMPS additionally folds the RESOLVED

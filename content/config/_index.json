@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c9627e5fe147",
+  "hash": "c4d6eadfe982",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -79,6 +79,12 @@
       "path": "config/config.match.json",
       "hash": "dd99e325b683",
       "size": 1466
+    },
+    {
+      "id": "cooldown-rules",
+      "path": "config/cooldown-rules.json",
+      "hash": "65d4ae9b02d9",
+      "size": 746
     },
     {
       "id": "crit",
@@ -173,8 +179,8 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "92821a451e35",
-      "size": 329
+      "hash": "69aff32e89fd",
+      "size": 331
     },
     {
       "id": "stealth",
