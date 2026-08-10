@@ -99,3 +99,6 @@ content/assets/audio/voices/lines/**/*.method
 
 # host-deploy.sh 的回滾落腳點：host 執行期狀態，不進版本控管
 .deploy-prev-commit
+
+# 傳說道具 Excel —— owner 會直接在裡面填「修改需求」，重跑會覆蓋，故不追蹤
+docs/傳說武器道具.xlsx
