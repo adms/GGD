@@ -65,9 +65,12 @@ describe("道具卡片的對照表 (adminui-config-tables)", () => {
     expect(shippedCount).toBeGreaterThan(10); // 夾具前提：出貨表不是空的
     expect(rows).toHaveLength(shippedCount);
     expect(rows[0]).toEqual({ key: "神速", value: "stat" });
-    expect(rows.find((r) => r.key === "On-Hit")?.value).toBe("active");
-    // `On-Hit` 與 `OnHit` 是兩列，因為 owner 的原稿兩種都寫過。
-    expect(rows.find((r) => r.key === "OnHit")?.value).toBe("active");
+    expect(rows.find((r) => r.key === "普通攻擊時")?.value).toBe("active");
+    // 2026-08-10 之前這裡還有一行「`On-Hit` 與 `OnHit` 是兩列，因為 owner 的
+    // 原稿兩種都寫過」。owner 當天要求標記統一，兩列併成 `[普通攻擊時]` 一列，
+    // 所以現在守的是**兩個英文拼法都不在表上**。
+    expect(rows.find((r) => r.key === "On-Hit")).toBeUndefined();
+    expect(rows.find((r) => r.key === "OnHit")).toBeUndefined();
 
     const verdict = validateTable(rows, spec);
     expect(verdict.table).toBeNull();
@@ -96,7 +99,7 @@ describe("道具卡片的對照表 (adminui-config-tables)", () => {
     expect(
       zConfigItemCardDoc.safeParse({
         ...doc,
-        markers: { ...(doc["markers"] as object), "On-Hit": "buff" },
+        markers: { ...(doc["markers"] as object), 普通攻擊時: "buff" },
       }).success,
     ).toBe(false);
     // 而後台自己也擋得下來（不是等 PUT 才炸）。

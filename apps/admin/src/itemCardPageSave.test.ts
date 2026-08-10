@@ -1,5 +1,5 @@
 /**
- * 道具卡片排版：在**真的頁面**上把 `[On-Hit]` 從主動改成被動 → 送出去的那份文件
+ * 道具卡片排版：在**真的頁面**上把 `[普通攻擊時]` 從主動改成被動 → 送出去的那份文件
  * 餵進**遊戲真的在用的**那支解析器 → 卡片上那個 chip 真的換了顏色。
  *
  * ════════════════════════════════════════════════════════════════════════════
@@ -14,7 +14,7 @@
  *      按鈕**（跑的是頁面自己的 onChange / onClick）；
  *   2. 斷言交給 `putOverlayDoc` 的那個物件；
  *   3. 把**那個物件**餵進 `applyItemCardDoc`（客戶端 ContentDb 呼叫的那一支）再問
- *      `tokenizeCardLine`（四個渲染點都用的那一支）：`[On-Hit]` 現在是什麼顏色。
+ *      `tokenizeCardLine`（四個渲染點都用的那一支）：`[普通攻擊時]` 現在是什麼顏色。
  *
  * 第 3 步是唯一擋得住失敗形態 ⑤（被測的不是出貨的那個）的東西。
  */
@@ -104,9 +104,9 @@ function saveEnabled(h: Harness): boolean {
   return btn.props["disabled"] !== true;
 }
 
-/** `[On-Hit]` 這個 chip 現在被畫成哪一類。 */
+/** `[普通攻擊時]` 這個 chip 現在被畫成哪一類。 */
 function onHitCategory(): string {
-  const tokens = tokenizeCardLine("[On-Hit] 攻擊力+87", getItemCardConfig());
+  const tokens = tokenizeCardLine("[普通攻擊時] 攻擊力+87", getItemCardConfig());
   const tag = tokens.find((t) => t.kind === "tag");
   if (!tag || tag.kind !== "tag") throw new Error("這一行沒有解析出任何標記");
   return tag.category;
@@ -125,22 +125,30 @@ describe("道具卡片排版頁 (adminui-item-card-save)", () => {
     expect(h.fieldOrNull("table.markers.0.key")).not.toBeNull();
     expect(h.fieldOrNull(`table.markers.${n - 1}.key`)).not.toBeNull();
     expect(h.fieldOrNull(`table.markers.${n}.key`)).toBeNull();
-    expect(h.field("table.markers.4.key").props["value"]).toBe("On-Hit");
-    expect(h.field("table.markers.4.value").props["value"]).toBe("active");
+    // ⚠️ 列的**位置**也從出貨文件推導。寫死「第 4 列是 On-Hit」的那一版在
+    //    owner 2026-08-10 把兩個英文拼法併成一列 [普通攻擊時] 之後就會紅，
+    //    而訊息會指向「這一頁壞了」——真相只是表少了一列（同上，第四個住處）。
+    const keys = Object.keys(shippedDoc("item-card")["markers"] as object);
+    const probe = keys.indexOf("普通攻擊時");
+    expect(probe, "出貨表上找不到 [普通攻擊時] —— 這一條沒有東西可驗").toBeGreaterThanOrEqual(0);
+    expect(h.field(`table.markers.${probe}.key`).props["value"]).toBe("普通攻擊時");
+    expect(h.field(`table.markers.${probe}.value`).props["value"]).toBe("active");
     // 另外三張表也在（純字串那一族）。
     expect(h.field("table.loreHeadings.0.key").props["value"]).toBe("解說");
     expect(h.field("table.efficacyHeadings.0.key").props["value"]).toBe("效能");
     expect(h.fieldOrNull("table.inlineValueMarkers.0.key")).not.toBeNull();
   });
 
-  it("把 [On-Hit] 改成被動 → 送出的文件裡是 passive，而且卡片上的顏色跟著換", async () => {
+  it("把 [普通攻擊時] 改成被動 → 送出的文件裡是 passive，而且卡片上的顏色跟著換", async () => {
     cover(TAG);
     // 改之前：出貨表把它畫成主動（琥珀）。
     applyItemCardDoc(shippedDoc("item-card") as never);
     expect(onHitCategory()).toBe("active");
 
     const h = await open();
-    h.type("table.markers.4.value", "passive");
+    const probe = Object.keys(shippedDoc("item-card")["markers"] as object).indexOf("普通攻擊時");
+    expect(probe, "出貨表上找不到 [普通攻擊時]").toBeGreaterThanOrEqual(0);
+    h.type(`table.markers.${probe}.value`, "passive");
     expect(saveEnabled(h)).toBe(true);
     h.click(SAVE);
     await h.flush();
@@ -150,22 +158,27 @@ describe("道具卡片排版頁 (adminui-item-card-save)", () => {
     expect(bus.puts[0]!.collection).toBe("config");
     expect(bus.puts[0]!.id).toBe("item-card");
     expect(doc["schema"]).toBe("config.item-card@1");
-    expect((doc["markers"] as Record<string, string>)["On-Hit"]).toBe("passive");
+    expect((doc["markers"] as Record<string, string>)["普通攻擊時"]).toBe("passive");
     // 其餘每一列都沒掉（整批取代，所以掉了就真的掉了）。
     // ⚠️ 長度從出貨文件推導,不抄字面值 —— 這一頁的正確性是「改了一列、
     // 其他列原封不動」,跟表有幾列無關(CLAUDE.md：驗機制不驗數字)。
     expect(Object.keys(doc["markers"] as object)).toHaveLength(
       Object.keys(shippedDoc("item-card")["markers"] as object).length,
     );
-    // ⚠️ `OnHit`（沒有連字號的那一種寫法）**不會**被一起改 —— 它是另外一列。
-    expect((doc["markers"] as Record<string, string>)["OnHit"]).toBe("active");
+    // ⚠️ 只有被改的那一列變了，隔壁列原封不動 —— 這是「整批取代」最容易壞的地方。
+    //    2026-08-10 之前這裡驗的是 `OnHit`（沒有連字號的那個拼法），owner 把兩個
+    //    英文拼法併成 [普通攻擊時] 之後那一列不存在了，改成驗它的鄰居。
+    const neighbourKey = Object.keys(shippedDoc("item-card")["markers"] as object)[probe + 1]!;
+    expect((doc["markers"] as Record<string, string>)[neighbourKey]).toBe(
+      (shippedDoc("item-card")["markers"] as Record<string, string>)[neighbourKey],
+    );
 
     // ── 送出去的那份文件，餵進客戶端真的在用的那一支。
     applyItemCardDoc(doc as never);
     expect(onHitCategory()).toBe("passive");
     expect(itemCardCategoryColor("passive")).toBe("#A9B6FF");
     // 顏色是真的換了，不只是分類字串換了。
-    const tokens = tokenizeCardLine("[On-Hit] 攻擊力+87", getItemCardConfig());
+    const tokens = tokenizeCardLine("[普通攻擊時] 攻擊力+87", getItemCardConfig());
     const tag = tokens.find((t) => t.kind === "tag")!;
     expect(itemCardCategoryColor(tag.kind === "tag" ? tag.category : "stat")).toBe("#A9B6FF");
   });

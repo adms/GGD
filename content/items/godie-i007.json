@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "虛哭神去",
   "icon": "assets/icons/items/godie-i007.webp",
-  "description": "武器\n效能\n普攻吸血+20%\n[On-Hit] 每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)] (On-Hit)\n\n解說\n上弦之壹·黑死牟在變成鬼之後，使用自己的鮮血、骨頭與血肉延伸塑形而成的「血肉妖刀」。\n「只有足夠瘋狂的人才能在戰場活下來，例如正在進食的飛鼠先生。」",
+  "description": "武器\n效能\n普攻吸血+20%\n[普通攻擊時] 每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)]\n\n解說\n上弦之壹·黑死牟在變成鬼之後，使用自己的鮮血、骨頭與血肉延伸塑形而成的「血肉妖刀」。\n「只有足夠瘋狂的人才能在戰場活下來，例如正在進食的飛鼠先生。」",
   "cost": 0,
   "tier": 3,
   "tags": [
@@ -17,7 +17,7 @@
     }
   ],
   "craftRole": "none",
-  "authoringNote": "普攻吸血+20% = modifiers lifesteal flat 0.2。\n[On-Hit]「每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)]」= passive onBasicAttack → damage.resourcePct {subject:\"self\", resource:\"health\", basis:\"missing\", scale:\"points\", perRank:[1]}（sim/effects/dynamicTerms.ts）。\n⚠️ **讀法**:文案寫的是「百分比**數值**(0~100)」,所以掉了 60% 血 = 打 **60 點**,不是「60% 的什麼」。那正是 scale:\"points\" 這個欄位存在的理由 —— 另一種讀法(ratio)是「已損生命的 100%」,在滿血倍率下差三個數量級。兩種讀法都寫得出來,預設是 ratio(保守),這一件明寫 points。\n⚠️ **owner 要看的數字**:上限 100 點(1 HP 時),典型交戰 50% 血 = 50 點。與生命上限**無關**,所以它在後期是相對變弱的一項 —— 如果 owner 要的是「已損生命的百分比傷害」(隨血量長大),把 scale 改成 \"ratio\"、perRank 改 [0.1] 這一類即可,不用改程式。\n⚠️ 滿血時這一項是 0,而 effects/damage.ts 會**不發空封包**(否則每一刀都在對方頭上跳一個 0、還會白白觸發雙方的 onDamageTaken/onDamageDealt)。\ndamageType 選 physical:妖刀是實體武器,而且 physical 會吃護甲減免 —— 出錯時傷害較小的那一個。要改成 true/magic 是編輯器上的一個下拉。",
+  "authoringNote": "普攻吸血+20% = modifiers lifesteal flat 0.2。\n[普通攻擊時]「每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)]」= passive onBasicAttack → damage.resourcePct {subject:\"self\", resource:\"health\", basis:\"missing\", scale:\"points\", perRank:[1]}（sim/effects/dynamicTerms.ts）。\n⚠️ **讀法**:文案寫的是「百分比**數值**(0~100)」,所以掉了 60% 血 = 打 **60 點**,不是「60% 的什麼」。那正是 scale:\"points\" 這個欄位存在的理由 —— 另一種讀法(ratio)是「已損生命的 100%」,在滿血倍率下差三個數量級。兩種讀法都寫得出來,預設是 ratio(保守),這一件明寫 points。\n⚠️ **owner 要看的數字**:上限 100 點(1 HP 時),典型交戰 50% 血 = 50 點。與生命上限**無關**,所以它在後期是相對變弱的一項 —— 如果 owner 要的是「已損生命的百分比傷害」(隨血量長大),把 scale 改成 \"ratio\"、perRank 改 [0.1] 這一類即可,不用改程式。\n⚠️ 滿血時這一項是 0,而 effects/damage.ts 會**不發空封包**(否則每一刀都在對方頭上跳一個 0、還會白白觸發雙方的 onDamageTaken/onDamageDealt)。\ndamageType 選 physical:妖刀是實體武器,而且 physical 會吃護甲減免 —— 出錯時傷害較小的那一個。要改成 true/magic 是編輯器上的一個下拉。",
   "passive": [
     {
       "on": "onBasicAttack",

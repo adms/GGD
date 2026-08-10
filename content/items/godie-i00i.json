@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "炎龍巨弩",
   "icon": "assets/icons/items/godie-i00i.webp",
-  "description": "傳說\n效能\n[On-Hit] 每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害(On-Hit)，持續3秒\nAP+228\n最大魔力+20%\n\n解說\n傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
+  "description": "傳說\n效能\n[普通攻擊時] 每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害，持續3秒\nAP+228\n最大魔力+20%\n\n解說\n傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
   "cost": 0,
   "tier": 2,
   "modifiers": [
@@ -49,5 +49,5 @@
       ]
     }
   ],
-  "authoringNote": "[On-Hit]「每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害」= passive[0] 的 damageArea（ratios ap 1.0、maxTargets 3 = 文案的「3名敵人」、radius 3.5 = 這一批 on-hit 範圍傷害的出貨慣例，文案沒有給半徑）。\n【仍缺】「**持續3秒**」—— 現在是**一次打完**，不是分 3 秒燒。`dot` 效果（content/schema/effect.ts）是**單體**的：它作用在 ctx.targets 上，而 `damageArea` 沒有辦法帶一個 dot payload。要補需要 (a) 給 damageArea 一個「命中者各自套用的效果」陣列，或 (b) 給 dot 一個 radius。總傷害量是對的，分佈不是 —— 差別在對手有沒有機會在燒完之前把血補回來。\n已落地：最大魔力+20%。"
+  "authoringNote": "[普通攻擊時]「每次普攻會同時發出 100% AP 傷害的炎龍怒火造成周圍 3名敵人燃燒傷害」= passive[0] 的 damageArea（ratios ap 1.0、maxTargets 3 = 文案的「3名敵人」、radius 3.5 = 這一批 on-hit 範圍傷害的出貨慣例，文案沒有給半徑）。\n【仍缺】「**持續3秒**」—— 現在是**一次打完**，不是分 3 秒燒。`dot` 效果（content/schema/effect.ts）是**單體**的：它作用在 ctx.targets 上，而 `damageArea` 沒有辦法帶一個 dot payload。要補需要 (a) 給 damageArea 一個「命中者各自套用的效果」陣列，或 (b) 給 dot 一個 radius。總傷害量是對的，分佈不是 —— 差別在對手有沒有機會在燒完之前把血補回來。\n已落地：最大魔力+20%。"
 }

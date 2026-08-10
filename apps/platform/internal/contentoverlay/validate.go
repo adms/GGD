@@ -328,9 +328,10 @@ var BaseBonusMax = map[string]float64{
 	"as":          3.8,
 	"ms":          12,
 	"critChance":  1,
-	"cdr":         0.45,
+	"cdr":         0.5, // 2026-08-10 owner：仙后座「CD 時間再減少 50%」
 	"lifesteal":   0.8,
 	"evasion":     0.8,
+	"spellVamp":   0.8, // 2026-08-10 新增的技能吸血，區間與 lifesteal 同
 }
 
 // checkBoundedFields applies the per-field numeric bounds Go knows about.

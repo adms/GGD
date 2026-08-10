@@ -133,31 +133,49 @@ describe("標記 chip 的辨識與歸類 (itemCardText.tokenizeCardLine)", () =>
 
   it("同一行可以有兩個標記(雷神之鎚就是),兩個都畫成 chip", () => {
     const t = shape(
-      "[On-Hit] 7%機率產生造成 100% AP 雷電範圍傷害 (On-Hit)，[緩慢] 並使範圍內部隊移動速度下降50%，持續1秒",
+      "[普通攻擊時] 7%機率產生造成 100% AP 雷電範圍傷害，[緩慢] 並使範圍內部隊移動速度下降50%，持續1秒",
     );
     expect(t.filter((x) => x[0] === "tag")).toEqual([
-      ["tag", "On-Hit", "active"],
+      ["tag", "普通攻擊時", "active"],
       ["tag", "緩慢", "debuff"],
     ]);
-    // 括號裡那個沒有方括號的 "(On-Hit)" 是原文的一部分,必須留在文字裡 ——
-    // 它不是標記,把它也 chip 化就是在改 owner 的排版意圖。
-    expect(t.some((x) => x[0] === "text" && String(x[1]).includes("(On-Hit)"))).toBe(true);
   });
 
-  it("owner 原稿的兩種寫法 [On-Hit] / [OnHit] 都認得 —— 因為原稿不准改", () => {
-    // 雅典娜的驚嘆號 godie-i006 是全 49 支裡唯一寫 [OnHit] 的
-    expect(shape("[OnHit] 每次攻擊造成造成額外 33% AP傷害(On-Hit)")[0]).toEqual([
+  it("沒有方括號的文字不會被 chip 化 —— 只有 [] 是標記", () => {
+    // 這一條原本釘的是「原文尾綴的 (On-Hit) 必須留在文字裡」。owner 2026-08-10
+    // 把標記統一成 [普通攻擊時] 之後那個尾綴就是同一行裡的重複,整批拿掉了。
+    // ⭐ 但它要守的**性質**沒有變,所以改成一個不依賴那個特定字串的說法:
+    //   括號 () 不是標記語法,只有方括號 [] 是。
+    // ⚠️ 括號裡不要放數字：tokenizer 會把數字切成 num token，斷言就不是在
+    //    驗「括號沒被 chip 化」而是在驗切字了（失敗形態④）。
+    const t = shape("[普通攻擊時] 攻擊額外造成傷害 (敵我距離越遠越高)");
+    expect(t.filter((x) => x[0] === "tag")).toEqual([["tag", "普通攻擊時", "active"]]);
+    expect(t.some((x) => x[0] === "text" && String(x[1]).includes("(敵我距離越遠越高)"))).toBe(true);
+  });
+
+  it("[普通攻擊時] 是唯一的寫法 —— 英文拼法已經從對照表上退場", () => {
+    // 這一條原本叫「兩種寫法都認得 —— 因為原稿不准改」：雅典娜的驚嘆號
+    // godie-i006 寫 [OnHit]、其餘 16 支寫 [On-Hit]，對照表被迫收兩列。
+    // owner 2026-08-10 親自解除：「On-hit 說明應該跟技能統一 tag []」。
+    //
+    // ⭐ 現在守的是**退場**：兩個英文拼法都必須查不到分類。查得到就代表
+    //    有人把某一列加回去了，而那正是「統一」被悄悄撤銷的樣子。
+    expect(shape("[普通攻擊時] 每次攻擊造成造成額外 33% AP傷害")[0]).toEqual([
       "tag",
-      "OnHit",
+      "普通攻擊時",
       "active",
     ]);
+    for (const old of ["On-Hit", "OnHit"]) {
+      const t = shape(`[${old}] 每次攻擊造成造成額外 33% AP傷害`);
+      expect(t[0]?.[2], `${old} 不應該還查得到分類`).not.toBe("active");
+    }
   });
 
   it("方括號裡其實是內嵌數值的那一個,畫成數值不是 chip", () => {
     // 虛哭神去 godie-i007
-    const t = shape("[On-Hit] 每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)] (On-Hit)");
+    const t = shape("[普通攻擊時] 每次攻擊造成造成額外 [自身已損失的生命百分比數值(0~100)]");
     expect(t).toContainEqual(["num", "自身已損失的生命百分比數值(0~100)"]);
-    expect(t.filter((x) => x[0] === "tag")).toEqual([["tag", "On-Hit", "active"]]);
+    expect(t.filter((x) => x[0] === "tag")).toEqual([["tag", "普通攻擊時", "active"]]);
   });
 
   it("表上沒有的新標記落到預設分類,卡片照常畫出來(不 throw、不吃掉那段字)", () => {
