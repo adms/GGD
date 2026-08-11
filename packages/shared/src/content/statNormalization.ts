@@ -143,7 +143,15 @@ export interface StatNormalization {
  */
 export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   mode: "normalized",
-  appliesTo: Object.freeze(["ms", "mr"] as const),
+  // ⚠️ **只有 ms**。魔抗的三格算好了（見下面 `bands.mr`）但**沒有開啟** ——
+  //    🔴 魔抗同時被**三圍推導**（智慧 ×0.6，`ATTR_STAT_SOURCE[MagicResist]`）
+  //    與**角色定位**管，兩者互相打架：
+  //      · 級距的數字是「等級 1 的最終值」，所以寫進 `baseStats` 前要反解掉智慧項
+  //      · 但反解只對 L1 成立 —— 到 L18 智慧仍會繼續加，
+  //        **法師的魔抗會爬到全場最高**，正好與 owner 的「法師魔抗弱」相反
+  //    ➡️ 要開它得先決定 `intToMagicResist` 要不要歸零（全域旋鈕，owner 裁決）。
+  //    ⭐ 移速沒有這個問題：它**沒有三圍來源**（`couplingNote`：純 baseStats）。
+  appliesTo: Object.freeze(["ms"] as const),
   bands: Object.freeze({
     ms: Object.freeze({ 小: 4.64, 中: 5.8, 大: 7.25 }),
     mr: Object.freeze({ 小: 31.04, 中: 38.8, 大: 48.5 }),
@@ -177,12 +185,23 @@ function isBand(v: unknown): v is NormalBand {
  * archetype 隨 JS 物件的鍵序漂移 —— 那種缺陷不會報錯。
  */
 export function primaryAttribute(def: {
-  attributes?: { str?: number; agi?: number; int?: number };
-  growth?: { str?: number; agi?: number; int?: number };
+  attributes?: {
+    str?: number;
+    agi?: number;
+    int?: number;
+    strGrowth?: number;
+    agiGrowth?: number;
+    intGrowth?: number;
+  };
 }): "str" | "agi" | "int" {
+  // 🔴 三圍的成長住在 `attributes.strGrowth`，**不是** `growth.str` ——
+  //    `growth` 那個物件放的是**屬性**的成長（maxHealth / ad / …），不是三圍。
+  //    2026-08-12 出貨過一次讀錯欄位的版本（v0.14.0）：`def.growth.str` 在真實
+  //    英雄卡上永遠是 undefined，所以 lv10 權重整個變成 no-op，
+  //    archetype 實際只用了初始值 —— 而且**不會報錯**。
   const a = def.attributes ?? {};
-  const g = def.growth ?? {};
-  const at = (k: "str" | "agi" | "int"): number => (a[k] ?? 0) + (g[k] ?? 0) * 9;
+  const at = (k: "str" | "agi" | "int"): number =>
+    (a[k] ?? 0) + (a[`${k}Growth` as "strGrowth" | "agiGrowth" | "intGrowth"] ?? 0) * 9;
   const s = at("str");
   const ag = at("agi");
   const i = at("int");
@@ -199,8 +218,7 @@ export function primaryAttribute(def: {
  */
 export function deriveArchetype(def: {
   attackType?: string;
-  attributes?: { str?: number; agi?: number; int?: number };
-  growth?: { str?: number; agi?: number; int?: number };
+  attributes?: Parameters<typeof primaryAttribute>[0]["attributes"];
 }): Archetype {
   const primary = primaryAttribute(def);
   if (primary === "int") return "mage";
@@ -261,6 +279,26 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
  *（被測的不是出貨的那個），而這一版正規化的兩項（移速/魔抗）**沒有三圍來源**，
  * 所以改 `baseStats` 就等於改最終值，行為上完全等價而且只有一個算法入口。
  */
+/**
+ * 這一項的最終值有沒有一部分來自三圍（`ATTR_STAT_SOURCE`）。
+ *
+ * ⛔ 這一版**只支援 `false` 的那些**。有三圍來源的屬性，級距的數字是
+ * 「等級 1 的最終值」而 `baseStats` 是「扣掉三圍那一項之後的值」，兩者差一個
+ * `attr(1)·coefficient` —— 直接寫進去會讓三圍被**加第二次**。
+ *
+ * 🔴 v0.14.0 真的出貨過那個版本，而且方向剛好相反：莉娜因巴斯（智慧 127）的
+ *    魔抗會變成全場最高，但設計說法師最弱。
+ *
+ * ⚠️ 這裡**不 import `ATTR_STAT_SOURCE`** —— `content/` → `sim/stats/` 那條邊會做出
+ *    模組初始化循環（2026-08-12 實測：加上去之後 `base-bonus` 的 +600 開始漏進
+ *    三個不相干的測試）。所以這是一份**兩格的鏡射**，並由
+ *    `statNormalization.test.ts` 逐格對照真的 `ATTR_STAT_SOURCE`，說謊就紅。
+ */
+export const HAS_ATTRIBUTE_SOURCE: Readonly<Record<NormalizedStatKey, boolean>> = Object.freeze({
+  ms: false, // 純 baseStats + growth，不受三圍影響
+  mr: true, // ← 智慧 ×0.6（`intToMagicResist`）
+});
+
 export function resolveChampionStats<T extends Record<string, unknown>>(
   def: T,
   cfg: StatNormalization,
@@ -279,6 +317,10 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
     const band = cfg.byArchetype[key]?.[arc];
     const value = band === undefined ? undefined : cfg.bands[key]?.[band];
     if (typeof value !== "number") continue;
+    // ⛔ 有三圍來源的屬性這一版**不做** —— 級距是「L1 最終值」而 `baseStats` 是
+    //    「扣掉三圍之後的值」，直接寫會讓三圍被加第二次（v0.14.0 的真缺陷）。
+    //    ⭐ 擋在這裡而不是靜默做錯：`appliesTo` 誤開了也只會沒反應，不會做錯。
+    if (HAS_ATTRIBUTE_SOURCE[key]) continue;
     base[key] = value;
     touched = true;
   }

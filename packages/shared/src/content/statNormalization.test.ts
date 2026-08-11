@@ -25,6 +25,10 @@ import {
 import { Champions } from "../sim/content/registry";
 import { registerAll } from "./registries";
 import type { ContentStore } from "./store";
+// ⭐ 驗「哪些屬性有三圍來源」時對照**引擎自己的那張表**，⛔ 不抄一份。
+import { ATTR_STAT_SOURCE } from "../sim/stats/attributes";
+import { Stat } from "../sim/stats/statTypes";
+import { HAS_ATTRIBUTE_SOURCE } from "./statNormalization";
 
 const ab = (id: string) => ({
   id,
@@ -49,8 +53,9 @@ const TANK = {
   attackType: "melee",
   modelKey: "m",
   baseStats: { ms: 99, mr: 99 },
-  growth: { str: 3, agi: 1, int: 1 },
-  attributes: { str: 30, agi: 10, int: 10, source: "authored" },
+  growth: {},
+  // ⚠️ 三圍的成長住在 attributes.*Growth，不是 growth.* —— 夾具要照真實形狀。
+  attributes: { str: 30, agi: 10, int: 10, strGrowth: 2, agiGrowth: 0.5, intGrowth: 0.5, primary: "STR", source: "authored" },
   // ⚠️ 四格都要在 —— `expandChampionTemplates` 逐槽讀 `.template`，缺一格就爆。
   abilities: {
     Q: ab("t.tank.q"),
@@ -69,16 +74,16 @@ describe("英雄屬性正規化（角色定位 → 級別 → 數字）", () => 
     cover("stat-normalization");
     // ⚠️ 少了這一條，下面那些在「deriveArchetype 對誰都回同一個值」的實作下也會過。
     expect(deriveArchetype(TANK)).toBe("tank");
-    expect(deriveArchetype({ ...TANK, attributes: { str: 10, agi: 10, int: 30 } })).toBe("mage");
-    expect(deriveArchetype({ ...TANK, attributes: { str: 10, agi: 30, int: 10 } })).toBe("fighter");
+    expect(deriveArchetype({ ...TANK, attributes: { str: 10, agi: 10, int: 30, strGrowth: 0, agiGrowth: 0, intGrowth: 0 } })).toBe("mage");
+    expect(deriveArchetype({ ...TANK, attributes: { str: 10, agi: 30, int: 10, strGrowth: 0, agiGrowth: 0, intGrowth: 0 } })).toBe("fighter");
     expect(
-      deriveArchetype({ ...TANK, attackType: "ranged", attributes: { str: 10, agi: 30, int: 10 } }),
+      deriveArchetype({ ...TANK, attackType: "ranged", attributes: { str: 10, agi: 30, int: 10, strGrowth: 0, agiGrowth: 0, intGrowth: 0 } }),
     ).toBe("marksman");
     // ⛔ role 說 fighter，主屬性說 tank —— 以主屬性為準（role 是匯入時的粗分類）。
     expect(TANK.role).toBe("fighter");
   });
 
-  it("⭐ 註冊之後，英雄卡上的移速/魔抗真的變成該角色定位那一格的值", () => {
+  it("⭐ 註冊之後，英雄卡上的移速真的變成該角色定位那一格的值", () => {
     cover("stat-normalization");
     Champions.clear();
     registerAll(storeOf({ champions: [TANK] }));
@@ -86,8 +91,11 @@ describe("英雄屬性正規化（角色定位 → 級別 → 數字）", () => 
     const cfg = DEFAULT_STAT_NORMALIZATION;
     // 期望值從出貨表推導，⛔ 不抄字面值。
     expect(got.ms).toBe(cfg.bands.ms[cfg.byArchetype.ms.tank]);
-    expect(got.mr).toBe(cfg.bands.mr[cfg.byArchetype.mr.tank]);
     expect(got.ms).not.toBe(99); // 原值真的被換掉了
+    // ⚠️ 魔抗**沒有**在 appliesTo 裡（三圍推導與角色定位打架，見那一格的說明），
+    //    所以它必須原封不動 —— 這一條同時是「appliesTo 真的被讀了」的守衛。
+    expect(cfg.appliesTo).not.toContain("mr");
+    expect(got.mr).toBe(99);
   });
 
   it("legacy 模式原樣返回 —— 這就是「不用部署就能回滾」的意思", () => {
@@ -128,5 +136,41 @@ describe("英雄屬性正規化（角色定位 → 級別 → 數字）", () => 
         expect(cfg.bands[key][cfg.byArchetype[key][arc]], `${key}/${arc}`).toBeTypeOf("number");
       }
     }
+  });
+});
+
+/**
+ * 🔴 迴歸守衛：v0.14.0 真的出貨過這兩個缺陷，兩個都是對抗複驗抓到的。
+ *
+ * ① 級距的三個數字是「等級 1 的**最終值**」，不是 `baseStats` 的欄位值。
+ *    魔抗有三圍來源（智慧 ×0.6），直接寫進 `baseStats.mr` 會讓智慧被**加兩次** ——
+ *    而且方向剛好相反：莉娜因巴斯（智慧 127）的魔抗會變成全場最高，
+ *    但設計說法師最弱。
+ * ② 三圍的成長住在 `attributes.strGrowth`，**不是** `growth.str`。
+ *    讀錯欄位不會報錯，只會讓 lv10 權重整個變成 no-op。
+ *
+ * 突變：把 `resolveChampionStats` 的 `- attrPart` 拿掉 → ① 那條紅。
+ */
+describe("有三圍來源的屬性被擋在門口（v0.14.0 的真缺陷）", () => {
+  it("⭐ HAS_ATTRIBUTE_SOURCE 與引擎的 ATTR_STAT_SOURCE 逐格一致 —— 說謊就紅", () => {
+    cover("stat-normalization");
+    // ⚠️ 那份鏡射是為了避開 content/ → sim/stats/ 的模組初始化循環而存在的，
+    //    所以它一定要有一條對照守衛，否則它就是一份會過期的手寫表（第〇·五守則）。
+    expect(HAS_ATTRIBUTE_SOURCE.ms).toBe(ATTR_STAT_SOURCE[Stat.MoveSpeed] !== undefined);
+    expect(HAS_ATTRIBUTE_SOURCE.mr).toBe(ATTR_STAT_SOURCE[Stat.MagicResist] !== undefined);
+  });
+
+  it("⭐ 就算 appliesTo 誤開了魔抗，它也不會被寫壞 —— 只會沒反應", () => {
+    cover("stat-normalization");
+    const cfg = DEFAULT_STAT_NORMALIZATION;
+    const withMr = { ...cfg, appliesTo: ["ms", "mr"] as const };
+    const out = resolveChampionStats(TANK as never, withMr) as { baseStats: Record<string, number> };
+    expect(out.baseStats.mr).toBe(99); // 原封不動
+    expect(out.baseStats.ms).toBeCloseTo(cfg.bands.ms[cfg.byArchetype.ms.tank], 6);
+  });
+
+  it("出貨的 appliesTo 沒有把魔抗開起來", () => {
+    cover("stat-normalization");
+    expect(DEFAULT_STAT_NORMALIZATION.appliesTo).not.toContain("mr");
   });
 });
