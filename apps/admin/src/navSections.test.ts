@@ -81,6 +81,9 @@ const BASELINE_PAGES: readonly Page[] = [
   // 冷卻規則 —— owner 2026-08-10「cdr 天花板 0.99，但卡最低 0.1 秒」的**秒數**
   // 那一半（比率那一半在「屬性上限」頁，兩頁刻意相鄰）。
   "cooldownRules",
+  // AoE 範圍四級距 —— owner 2026-08-11「原則上不寫範圍數字」。與 冷卻規則 相鄰：
+  // 兩者都是「技能的尺」，操作者會一起找。
+  "aoeTiers",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -123,6 +126,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "baseBonus",
       "statCaps",
       "cooldownRules",
+      "aoeTiers",
       "combatFeel",
       "matchConfig",
       "bodyScale",

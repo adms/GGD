@@ -5,6 +5,9 @@
  * can render union cards keyed by "kind".
  */
 import { z } from "zod";
+// AoE 四級距（owner 2026-08-11）。⛔ 不要在這裡重打一份字串陣列。
+import { AOE_TIER_NAMES } from "../aoeTiers";
+const zAoeTier = z.enum(AOE_TIER_NAMES);
 import type { EffectDef } from "../../sim/effects/effect";
 import type { AbilityId, ProjectileId, StatusId } from "../../ids";
 import { zCastableSlot, zRef, zScaling, zStat, zStatModifier } from "./common";
@@ -1494,6 +1497,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       amount: zScaling,
       /** GGD 單位。不經過 combatEnv.abilityRange — 見 sim/effects/effect.ts。 */
       radius: z.number().positive().max(SPREAD_MAX_RADIUS),
+      radiusTier: zAoeTier.optional(),
       /** 邊緣倍率: 1 = 不衰減 (預設), 0 = 邊緣歸零 */
       falloff: z
         .number()
@@ -2283,6 +2287,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        *（決鬥區半徑 24，40 蓋得住任何合理的集結範圍而擋得住漏換算的 wc3 數字）。
        */
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       to: z
@@ -2647,6 +2655,7 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 解析出來的目標上。走 `combatEnv.abilityRange`, 和其它每一個 AoE 一樣。
        */
       radius: z.number().positive().max(SPREAD_MAX_RADIUS).optional(),
+      radiusTier: zAoeTier.optional(),
       /** 一次最多拉幾個人 (由近到遠)。省略 = TAUNT_MAX_TARGETS */
       maxTargets: z.number().int().min(1).max(TAUNT_MAX_TARGETS).optional(),
     })
@@ -2711,6 +2720,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 而那該用 `target:"allies"` 的全隊語意寫，不是一個假裝有半徑的圓。
        */
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       /** `shape:"circle"` 清友軍（預設）還是清敵人。 */
       side: z.enum(["allies", "enemies"]).optional(),
       /** 圓內人數上限。省略 = 全部。上界 24 = 一場的總人數。 */
@@ -2767,6 +2780,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       shape: z.enum(["single", "circle"]),
       /** `shape:"circle"` **必填**（載入時擋）。吃 `combatEnv.abilityRange`。 */
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       /** 破盾的預設是**打敵人**（與淨化相反）。 */
       side: z.enum(["allies", "enemies"]).optional(),
       /** 圓內人數上限。省略 = 全部。上界 24 = 一場的總人數。 */
@@ -2792,6 +2809,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       /**
@@ -2855,6 +2876,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       who: z.enum(["self", "target"]).optional(),
@@ -2947,6 +2972,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       /**
@@ -2976,6 +3005,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       /** 決策點①。省略 = `"health"`。 */
@@ -2995,6 +3028,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       source: z.enum(["incomingDamage", "targetCurrentHealth"]).optional(),
@@ -3085,6 +3122,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       /** 第一發等多久（秒）。 */
@@ -3138,6 +3179,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       /** 代放**我自己的哪一格**。與 `abilityId` **恰好填一個**（superRefine 擋）。 */
@@ -3207,6 +3252,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       who: z.enum(["self", "target"]).optional(),
@@ -3236,6 +3285,10 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       /** ⭐ E1 硬約束：新 kind 一律帶 `shape`。 */
       shape: z.enum(["single", "circle"]),
       radius: z.number().positive().max(40).optional(),
+      /** ⭐ AoE 級別（owner 2026-08-11「原則上不寫範圍數字」）。填了它就不要填
+       *  `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑，兩者都填則**級別贏**。
+       *  唯一的查表處：`content/aoeTiers.ts` 的 `resolveRadiusTier`。 */
+      radiusTier: zAoeTier.optional(),
       side: z.enum(["allies", "enemies"]).optional(),
       maxTargets: z.number().int().positive().max(24).optional(),
       who: z.enum(["self", "target"]).optional(),

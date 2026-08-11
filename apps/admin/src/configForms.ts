@@ -55,6 +55,7 @@ import {
   zConfigBerserkDoc,
   zConfigDispelDoc,
   zConfigCooldownRulesDoc,
+  zConfigAoeTiersDoc,
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
@@ -672,6 +673,56 @@ const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
     },
   ],
   // 兩格純量，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const AOE_TIERS_SPEC: ConfigDocSpec = {
+  page: "aoeTiers",
+  collection: "config",
+  docId: "aoe-tiers",
+  schemaTag: "config.aoe-tiers@1",
+  zod: zConfigAoeTiersDoc,
+  title: "AoE 範圍四級距",
+  intro: [
+    "技能的範圍**寫級別不寫數字**。owner 2026-08-11：「重新對應範圍只有 小／中／大／超大，**原則上不寫範圍數字**」。技能 JSON 填 `radiusTier: \"中\"`，這一頁決定「中」是多少半徑。",
+    "⭐ 這一頁存在的理由就是**單一住處**：把數字寫在每支技能上等於 115 個住處，想把「中」從 4.5 調成 5.0 要改 115 個檔案。填了級別的技能，改這一格全部一起動。",
+    "四個級別的意思：小 ≈ 同時打到 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場。",
+    "⚠️ 這四個數字是**卡面值**。玩家實際吃到的是它再乘「戰鬥系統」頁的 `abilityRange`（出貨 0.8）—— 所以「大 = 6」畫在地上是 4.8，也就是決鬥區半徑 24 的 **1/5**，不是 1/4。要讓比例在畫面上成立，這四格要各自除以 0.8。",
+    "⚠️ AoE 命中是身體碰撞（英雄碰撞半徑 0.6），所以半徑 r 實際會掃到**圓心距離 r + 0.6** 的人。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/aoe-tiers.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/aoeTiers.ts 的 resolveRadiusTier（全專案唯一的查表處）← content/registries.ts 的 registerAll，在技能註冊時把 radiusTier 翻成 radius；standalone 與 champion-embedded 兩條路共用同一個答案",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完）。客戶端要重新載入 bundle。和 冷卻規則／淨化規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "級距總開關",
+      note: "關掉之後 `radiusTier` 不解析（填了也不生效），技能只剩手寫的 `radius`。⚠️ 關掉**不會**讓技能失去範圍 —— 手寫值一直都在。",
+    },
+    {
+      path: "radius.小",
+      zh: "小 — 半徑",
+      note: "填 `radiusTier: \"小\"` 的技能實際掃多大。約同時打到 5 人（原 WC3 100~200）。改這一格，樹上每一支標成「小」的技能同時跟著變。",
+    },
+    {
+      path: "radius.中",
+      zh: "中 — 半徑",
+      note: "填 `radiusTier: \"中\"` 的技能實際掃多大。約同時打到 10 人，是**預設級別**（原 WC3 200~300），所以動它影響的技能數最多。",
+    },
+    {
+      path: "radius.大",
+      zh: "大 — 半徑",
+      note: "填 `radiusTier: \"大\"` 的技能實際掃多大。設計意圖是 1/4 競技場（卡面座標：決鬥區半徑 24 ÷ 4），原 WC3 300~500 那一批就落在這裡。",
+    },
+    {
+      path: "radius.超大",
+      zh: "超大 — 半徑",
+      note: "1/3 競技場（卡面座標：24 ÷ 3）。原 WC3 500 以上。⚠️ 上界 24 ＝ 決鬥區半徑：大於它就是全場命中，那要走不設 radius 的寫法，不是把這格填爆。",
+    },
+  ],
+  // 四格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -1831,6 +1882,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   BERSERK_SPEC,
   DISPEL_SPEC,
   COOLDOWN_RULES_SPEC,
+  AOE_TIERS_SPEC,
   WOUNDS_SPEC,
   WEAKNESS_SPEC,
   DAMAGE_RULES_SPEC,

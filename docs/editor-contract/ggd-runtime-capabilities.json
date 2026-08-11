@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "7f2a3d75",
+  "fingerprint": "336636fc",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -245,6 +245,7 @@
     "pools",
     "projectileId",
     "radius",
+    "radiusTier",
     "rankMode",
     "ratio",
     "refresh",

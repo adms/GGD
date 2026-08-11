@@ -223,6 +223,36 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // The item side is ADOPTED (光魔杖 is the whole reason it exists); the ability
   // side is at zero and that is the honest state — no buff in the tree wants a
   // stat term that drains with a resource yet.
+  // ── `radiusTier`（AoE 四級距，owner 2026-08-11「原則上不寫範圍數字」）────────
+  // 機制已出貨並接線（`content/aoeTiers.ts` + `registries.ts` 的 withRadiusTier，
+  // 突變驗過），內容側是零 —— 而零是**刻意**的：owner 當天說「我正在手動重製
+  // 所有英雄技能，稍安勿躁」，所以這一輪⛔不碰 `content/abilities/`。
+  // 級距要由那一批重製的技能填進來（`docs/技能編輯器引擎須知 20260811.md` 是給
+  // 對方的契約，第六節逐字要求填 `radiusTier` 而不是 `radius`）。
+  // ⭐ 30 天之後這一條會自己再紅一次 —— 那正是要的：如果重製那一批交回來還是
+  //   一支都沒填級距，這個機制就是白做的，而那件事必須有人被通知。
+  // ⚠️ 兩個節點是同一個欄位（standalone 技能文件 + 英雄卡內嵌的孿生），
+  //   `registries.ts` 兩條路共用同一支解析器，所以它們一定同時變綠。
+  "field:abilities.effects[]#dispel.radiusTier": {
+    status: "landing",
+    since: "2026-08-11",
+    why: "同 field:abilities.radiusTier —— 級距落在共用的 AoE 形狀欄位群上，普查會在每一個 AoE-shaped kind 各看到一次；出貨內容還沒有任何一發圓形 dispel 用級距。",
+  },
+  "field:champions.abilities.*.radiusTier": {
+    status: "landing",
+    since: "2026-08-11",
+    why: "英雄卡內嵌的孿生節點。registries.ts 的 standalone 與 embedded 兩條路共用同一支 resolveRadiusTier，所以這一格與 field:abilities.radiusTier 一定同時變綠。",
+  },
+  "field:abilities.effects[]#damageArea.radiusTier": {
+    status: "landing",
+    since: "2026-08-11",
+    why: "同 field:abilities.radiusTier —— 級距落在共用的 AoE 形狀欄位群上，普查會在每一個 AoE-shaped kind 各看到一次。",
+  },
+  "field:abilities.radiusTier": {
+    status: "landing",
+    since: "2026-08-11",
+    why: "機制出貨且接線完成（resolveRadiusTier，突變驗過會紅），內容零採用是刻意的 —— owner 2026-08-11 正在手動重製所有英雄技能，這一輪不碰 content/abilities/。級距由那一批填入，契約寫在 docs/技能編輯器引擎須知 20260811.md 第六節。",
+  },
   "field:abilities.effects[]#applyBuff.modifiers[].fromResource": {
     status: "landing",
     since: "2026-08-01",

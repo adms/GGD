@@ -29,6 +29,8 @@ import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
 import type { TemplateDoc } from "./schema/template";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
+// AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
+import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
 import {
   hasTemplateBinding,
   resolveTemplateExpansion,
@@ -156,12 +158,28 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   );
   const onFailure = options.onTemplateFailure ?? "degrade";
   const failures: TemplateExpansionFailure[] = [];
+  // ⭐ 級距解析包在展開**之後**：模板也可以填 `radiusTier`，而且兩條路
+  //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
+  //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
   const expandStandalone = (d: AbilityDef): AbilityDef =>
-    expandIfTemplated(d, templates, true, onFailure, failures, undefined);
+    withRadiusTier(expandIfTemplated(d, templates, true, onFailure, failures, undefined));
   const expandEmbedded =
     (championId: string, slot: string) =>
     (d: AbilityDef): AbilityDef =>
-      expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot });
+      withRadiusTier(
+        expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
+      );
+
+  // AoE 級距表要在**技能之前**讀出來（owner 2026-08-11「原則上不寫範圍數字」）。
+  // ⚠️ `Configs.register` 那一圈跑在技能之後，所以這裡直接讀 store —— 讀註冊表
+  // 會拿到上一次載入留下的那一份，那是一個安靜的跨載入污染。
+  // ⚠️ 不是 `store.all<ConfigDoc>` —— 匯出的 `ConfigDoc` 其實只是
+  //    `zConfigMatchDoc` 的 infer（`schema/config.ts:5177`），不是那個
+  //    discriminated union。用它會讓這一行的 `.schema` 比對被 tsc 判成永遠 false。
+  const aoeTiers = aoeTiersFromDoc(
+    store.all<{ schema?: string }>("config").find((c) => c.schema === "config.aoe-tiers@1"),
+  );
+  const withRadiusTier = (d: AbilityDef): AbilityDef => resolveRadiusTier(d as never, aoeTiers);
 
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
   for (const d of store.all<ItemDef>("items")) Items.register(d.id, d);

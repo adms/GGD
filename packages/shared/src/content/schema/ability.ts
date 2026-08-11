@@ -7,6 +7,9 @@ import { hasBudgetedLeaf, zAbilityPassive, zEffectDef, zHookEvent } from "./effe
 import { zMarkSpec } from "./mark";
 import { zAbilityTemplateBinding } from "./template";
 import { zAbilityVfxLayers } from "./abilityVfx";
+// 四個級別名（小/中/大/超大）。⛔ 不要在這裡重打一份字串陣列 —— 後台下拉、
+// 級距表、文件都讀同一個常數，抄第二份就是 drift 的起點。
+import { AOE_TIER_NAMES } from "../aoeTiers";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -565,6 +568,17 @@ export const zAbilityDef = z
     range: z.number().min(0),
     /** skillshot width or AoE radius */
     radius: z.number().positive().optional(),
+    /**
+     * ⭐ AoE 級別（owner 2026-08-11：「**原則上不寫範圍數字**」）。
+     *
+     * 填了這一格就**不要**填 `radius` —— 註冊時由 `config.aoe-tiers@1` 翻成半徑
+     * （`content/aoeTiers.ts` 的 `resolveRadiusTier`，全專案唯一的查表處）。
+     * 兩格都填 → **級別贏**（理由寫在那支檔案：讓手寫值蓋過去等於這個機制
+     * 對那支技能靜默失效）。要留特例就不要填級別。
+     *
+     * 小 ≈ 5 人 ／ 中 ≈ 10 人（預設）／ 大 ≈ 1/4 競技場 ／ 超大 ≈ 1/3 競技場。
+     */
+    radiusTier: z.enum(AOE_TIER_NAMES).optional(),
     targetsEnemies: z.boolean().optional(),
     effects: z.array(zEffectDef),
     /**

@@ -1,12 +1,18 @@
 {
   "collection": "config",
-  "hash": "c4d6eadfe982",
+  "hash": "7b03b3f4f3f4",
   "entries": [
     {
       "id": "ambient-vfx",
       "path": "config/ambient-vfx.json",
       "hash": "b6f38074ebd6",
       "size": 1514
+    },
+    {
+      "id": "aoe-tiers",
+      "path": "config/aoe-tiers.json",
+      "hash": "036362729220",
+      "size": 374
     },
     {
       "id": "arena-rules",
