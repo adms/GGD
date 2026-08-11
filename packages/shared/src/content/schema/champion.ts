@@ -1,5 +1,7 @@
 /** champion@1 — mirrors `ChampionDef` in sim/content/defs.ts (abilities embedded). */
 import { z } from "zod";
+// 角色定位的四個值。⛔ 不要在這裡重打一份字串陣列。
+import { ARCHETYPES } from "../statNormalization";
 import type { AbilityId, ChampionId, ItemId } from "../../ids";
 import {
   zAlpha,
@@ -115,6 +117,19 @@ export const zChampionDef = z
     description: z.string().optional(),
     role: z.string().min(1),
     attackType: z.enum(["melee", "ranged"]),
+    /**
+     * ⭐ 角色定位（owner 2026-08-12）。**選填** —— 留空時由主屬性 × 攻擊型別推導
+     * （`content/statNormalization.ts` 的 `deriveArchetype`），填了就以這裡為準。
+     *
+     * 它決定「今天不區分英雄的那些屬性」該落在哪一格：
+     * owner：「遠距離攻擊 移動速度應該是中 / 近距離攻擊 應該是快 但坦克是中或慢 /
+     * 法師 中或慢 但慢的為主　魔抗則是遠距離及法師弱 近距離中 坦克高」
+     *
+     * ⛔ 不要用既有的 `role` 欄位代替它 —— `role` 只有三個值（fighter 51 /
+     * marksman 22 / tank 1），51 位 fighter 裡混了坦克與法師。那是匯入時的
+     * 粗分類，不是設計。
+     */
+    archetype: z.enum(ARCHETYPES).optional(),
     modelKey: zRef("models"),
     /**
      * The RAW stat card. Since #248 the eight attribute-derived rows hold the

@@ -56,6 +56,7 @@ import {
   zConfigDispelDoc,
   zConfigCooldownRulesDoc,
   zConfigAoeTiersDoc,
+  zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
   zConfigWeaknessDoc,
   zConfigDamageRulesDoc,
@@ -724,6 +725,63 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
   ],
   // 四格純量 + 一個開關，沒有不編輯的分支要原封帶走。
   preserved: [],
+};
+
+const STAT_NORMALIZATION_SPEC: ConfigDocSpec = {
+  page: "statNormalization",
+  collection: "config",
+  docId: "stat-normalization",
+  schemaTag: "config.stat-normalization@1",
+  zod: zConfigStatNormalizationDoc,
+  title: "英雄屬性正規化",
+  intro: [
+    "owner 2026-08-12：「我的**極大極小就是為了極端例外而誕生**(ex 牙膏 熊貓等)，**不需要考慮平均分佈問題，只有小中大才是真正的分佈**⋯極小與極大只是**限制合理的上下限**(例如攻速上限 4)」。",
+    "⭐ 所以這一頁只有**小 / 中 / 大**三格。**極小 / 極大 不在這裡** —— 它們是硬上下限，住在「屬性上限」頁（`config.stat-caps@1`）。個案 0 是正常狀態，不是缺陷。",
+    "⭐ 這一版只套用**移動速度**與**魔抗**。量到它們今天的自然跨度只有 1.20~1.22 倍（全 roster 最強與最弱只差兩成），等於**不區分英雄**；owner 因此改成由**角色定位**決定，而不是照歷史數值分帶。",
+    "角色定位怎麼判：**主屬性（lv10 權重）× 攻擊型別** —— 智慧主＝法師、力量主+近戰＝坦克、敏捷主+近戰＝近戰、遠程＝遠程。⭐ 忠於 WC3 原作模型（這個專案是 w3x 移植，英雄卡本來就帶三圍）。英雄卡上填了 `archetype` 就以那裡為準。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/stat-normalization.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/statNormalization.ts 的 resolveChampionStats（全專案唯一知道「級別怎麼變成數字」的地方）← content/registries.ts 的 registerAll，在英雄註冊時改寫 baseStats；商店預覽／選人畫面／後台全部走同一份註冊表",
+  effect:
+    "**要重啟 game-server shard 才生效**（內容在註冊時就解析完），客戶端要重新載入 bundle。和 冷卻規則／AoE 級距 同一個形態(#278)。",
+  fields: [
+    {
+      path: "mode",
+      zh: "模式（normalized / legacy）",
+      note: "`normalized` 是出貨預設，英雄的移速與魔抗由角色定位決定。`legacy` 是**回滾用的逃生口** —— 扳過去就回到英雄卡上的原值，**不需要部署**（舊數值一直留在英雄卡裡沒有被銷毀）。",
+      optionLabels: { normalized: "正規化（出貨預設）", legacy: "舊數值（回滾用）" },
+    },
+    { path: "bands.ms.小", zh: "移速 · 小（慢）", note: "坦克與法師落在這一格。錨點是 74 位母體的中位數 5.8，小 = 中 ÷ 1.25。" },
+    { path: "bands.ms.中", zh: "移速 · 中", note: "遠程角色落在這一格。這個數字是**量出來的**（74 位母體的中位數），不是挑的。" },
+    { path: "bands.ms.大", zh: "移速 · 大（快）", note: "近戰角色落在這一格。大 = 中 × 1.25。⚠️ in-game 還要再乘攻擊型別倍率（近戰 ×0.8 / 遠程 ×0.6）。" },
+    { path: "bands.mr.小", zh: "魔抗 · 小（弱）", note: "遠程與法師落在這一格 —— owner：「魔抗則是遠距離及法師弱」。⚠️ in-game 還要再乘 ×0.2（`magicResistMult`）。" },
+    { path: "bands.mr.中", zh: "魔抗 · 中", note: "近戰角色落在這一格。這個數字是量出來的（母體中位數 38.8）。" },
+    { path: "bands.mr.大", zh: "魔抗 · 大（高）", note: "坦克落在這一格 —— owner：「坦克高」。大 = 中 × 1.25。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.tank", zh: "坦克 → 移速哪一格", note: "owner：「近距離攻擊移動速度應該是快，**但坦克是中或慢**」。出貨取「小（慢）」—— 改成「中」就是另一種讀法，這一格就是給你改的。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.fighter", zh: "近戰 → 移速哪一格", note: "owner：「近距離攻擊 移動速度應該是**快**」。出貨「大」。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.marksman", zh: "遠程 → 移速哪一格", note: "owner：「遠距離攻擊 移動速度應該是**中**」。出貨「中」。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.mage", zh: "法師 → 移速哪一格", note: "owner：「技能傷害為主的法師⋯移動速度應該是中或慢，**但慢的為主**」。出貨「小」。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.tank", zh: "坦克 → 魔抗哪一格", note: "owner：「坦克**高**」。出貨「大」—— 坦克是唯一吃得住法師爆發的角色，這一格決定他能不能站在前面。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.fighter", zh: "近戰 → 魔抗哪一格", note: "owner：「近距離**中**」。出貨「中」—— 近戰要貼身，但不該像坦克一樣無視魔法傷害。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.marksman", zh: "遠程 → 魔抗哪一格", note: "owner：「遠距離⋯**弱**」。出貨「小」—— 遠程靠距離活命，不是靠抗性。" },
+    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.mage", zh: "法師 → 魔抗哪一格", note: "owner：「⋯**及法師弱**」。出貨「小」 —— 法師打魔法但不擋魔法，那是刻意的脆弱。" },
+    {
+      path: "skipTransformedBodies",
+      zh: "變身態跳過正規化",
+      note: "出貨**開著**。⚠️ 這一格是被守衛逼出來的：變身態與本體的角色定位幾乎一定相同（同主屬性、同攻擊型別），一起正規化會讓兩者的移速/魔抗變成同一個數字 —— **超級賽亞人不再比悟空快、霸氣索隆不再比索隆抗魔**，變身的強化整個消失。等你決定「變身態的級別該怎麼相對於本體」之後再關掉它。",
+    },
+  ],
+  // ⚠️ `appliesTo` 是一個陣列 —— 表單引擎只畫純量，所以它原封帶走。
+  //    要開啟別的屬性請直接改 content/config/stat-normalization.json 或用 API。
+  //    ⭐ 這一格刻意不做成表單：它決定「正規化到底動了什麼」，
+  //    誤點一下的代價是全 roster 的數值一起變，不該跟其他旋鈕一樣好按。
+  preserved: [
+    {
+      path: "appliesTo",
+      why: "它決定「正規化到底動了什麼」。掉了 = 這一頁的其餘旋鈕全部變成裝飾（存得下去、場上沒反應），而那看起來跟正常一模一樣。⭐ 刻意不做成表單欄位：誤點一下的代價是全 roster 的數值一起變。",
+    },
+  ],
 };
 
 const DISPEL_SPEC: ConfigDocSpec = {
@@ -1883,6 +1941,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   DISPEL_SPEC,
   COOLDOWN_RULES_SPEC,
   AOE_TIERS_SPEC,
+  STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,
   WEAKNESS_SPEC,
   DAMAGE_RULES_SPEC,

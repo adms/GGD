@@ -233,6 +233,18 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //   一支都沒填級距，這個機制就是白做的，而那件事必須有人被通知。
   // ⚠️ 兩個節點是同一個欄位（standalone 技能文件 + 英雄卡內嵌的孿生），
   //   `registries.ts` 兩條路共用同一支解析器，所以它們一定同時變綠。
+  // ── `archetype`（角色定位，owner 2026-08-12）────────────────────────────────
+  // 機制已出貨並接線（`statNormalization.ts` + `registries.ts`，突變驗過），
+  // 內容側是零 —— 而零是**刻意**的：archetype 有一個**推導出來的預設**
+  // （主屬性 × 攻擊型別），74 位全部都判得出來，所以英雄卡上不需要填。
+  // 這一欄只在「owner 想手動覆寫某一位」時才會有值。
+  // ⭐ 30 天之後這一條會自己再紅一次 —— 到時如果還是零，正確的回應是把它改成
+  //   `default-live`（＝行為由程式預設提供，欄位只是覆寫），不是繼續順延。
+  "field:champions.archetype": {
+    status: "landing",
+    since: "2026-08-12",
+    why: "推導有預設值（deriveArchetype：主屬性 lv10 權重 × 攻擊型別），74 位全部判得出來，所以英雄卡不需要填。這一欄是覆寫用的。機制與守衛在 content/statNormalization.ts + statNormalization.test.ts（突變驗過）。",
+  },
   "field:abilities.effects[]#dispel.radiusTier": {
     status: "landing",
     since: "2026-08-11",

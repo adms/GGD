@@ -1,0 +1,37 @@
+{
+  "id": "stat-normalization",
+  "schema": "config.stat-normalization@1",
+  "note": "英雄屬性正規化（owner 2026-08-12）。小/中/大 是分佈，極小/極大 是例外槽（＝硬上下限，住在 stat-caps）。這一版只套用移速與魔抗 —— 它們今天的自然跨度只有 1.20~1.22 倍，等於不區分英雄，所以改由角色定位決定。 ⚠️ 變身態預設跳過：它與本體的 archetype 幾乎一定相同，一起正規化會把變身的強化抹平（超級賽亞人不再比悟空快）。",
+  "mode": "normalized",
+  "appliesTo": [
+    "ms",
+    "mr"
+  ],
+  "bands": {
+    "ms": {
+      "小": 4.64,
+      "中": 5.8,
+      "大": 7.25
+    },
+    "mr": {
+      "小": 31.04,
+      "中": 38.8,
+      "大": 48.5
+    }
+  },
+  "byArchetype": {
+    "ms": {
+      "tank": "小",
+      "fighter": "大",
+      "marksman": "中",
+      "mage": "小"
+    },
+    "mr": {
+      "tank": "大",
+      "fighter": "中",
+      "marksman": "小",
+      "mage": "小"
+    }
+  },
+  "skipTransformedBodies": true
+}

@@ -199,6 +199,7 @@ export const NAV: NavItem[] = [
   { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_COMBAT },
   { page: "cooldownRules", label: "冷卻規則", emoji: "⏱", section: SEC_COMBAT },
   { page: "aoeTiers", label: "AoE 範圍四級距", emoji: "◎", section: SEC_COMBAT },
+  { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條
   // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
   // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。

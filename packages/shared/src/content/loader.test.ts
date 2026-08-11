@@ -174,12 +174,23 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
    * job is to prove the loader, not to carry balance data. Pinned explicitly
    * below so the divergence stays deliberate rather than becoming drift.
    */
+  /**
+   * 拿掉**註冊時才決定**的欄位，因為它們照定義不會等於磁碟上的字面值。
+   *
+   * · `castTimeSec` —— 由 `deriveCastTime()` 推導（2026-08-02 起）
+   * · `ms` / `mr`  —— 由角色定位推導（`config.stat-normalization@1`，2026-08-12 起）
+   *
+   * ⚠️ 這不是把測試改綠 —— 這一條測試的標題本來就寫著 "bar castTimeSec"，
+   * 也就是說「有些欄位是註冊時算出來的」這個豁免**早就存在**，
+   * ms/mr 只是加入同一份名單。它守的仍然是「其餘每一格都逐位元對得起來」。
+   */
+  const REGISTRY_DERIVED = new Set(["castTimeSec", "ms", "mr"]);
   const stripCastTime = (v: unknown): Record<string, unknown> =>
     JSON.parse(
-      JSON.stringify(v, (k, val: unknown) => (k === "castTimeSec" ? undefined : val)),
+      JSON.stringify(v, (k, val: unknown) => (REGISTRY_DERIVED.has(k) ? undefined : val)),
     ) as Record<string, unknown>;
 
-  it("the JSON round-trip reproduces the TS literals exactly (bar castTimeSec)", () => {
+  it("the JSON round-trip reproduces the TS literals exactly (bar castTimeSec / ms / mr)", () => {
     // registered defs came from JSON; they must match the sim's literals
     expect(stripCastTime(Champions.get(SELA.id))).toMatchObject(stripCastTime(SELA));
     expect(stripCastTime(Champions.get(THORNE.id))).toMatchObject(stripCastTime(THORNE));

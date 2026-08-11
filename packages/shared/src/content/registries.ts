@@ -31,6 +31,8 @@ import type { TemplateDoc } from "./schema/template";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
+// 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
+import { resolveChampionStats, statNormalizationFromDoc } from "./statNormalization";
 import {
   hasTemplateBinding,
   resolveTemplateExpansion,
@@ -181,6 +183,13 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   );
   const withRadiusTier = (d: AbilityDef): AbilityDef => resolveRadiusTier(d as never, aoeTiers);
 
+  // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
+  // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台
+  //   全部走同一份註冊表，所以不會出現「這裡顯示舊值、場上跑新值」。
+  const statNorm = statNormalizationFromDoc(
+    store.all<{ schema?: string }>("config").find((c) => c.schema === "config.stat-normalization@1"),
+  );
+
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
   for (const d of store.all<ItemDef>("items")) Items.register(d.id, d);
   for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, d);
@@ -189,7 +198,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     Abilities.register(e.id, e);
   }
   for (const d of store.all<ChampionDef>("champions")) {
-    registerChampion(expandChampionTemplates(d, expandEmbedded));
+    registerChampion(resolveChampionStats(expandChampionTemplates(d, expandEmbedded) as never, statNorm));
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);

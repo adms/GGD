@@ -42,6 +42,16 @@ import {
   AOE_TIERS_DOC_ID,
   DEFAULT_AOE_TIERS,
 } from "../aoeTiers";
+// 英雄屬性正規化（owner 2026-08-12）—— 同一條規矩：數字與語意定在
+// content/statNormalization.ts，schema 只是把它搬上 Zod。
+import {
+  ARCHETYPES,
+  BAND_VALUE_MAX,
+  BAND_VALUE_MIN,
+  DEFAULT_STAT_NORMALIZATION,
+  NORMAL_BANDS,
+  STAT_NORMALIZATION_DOC_ID,
+} from "../statNormalization";
 // 手把自動瞄準的小怪讓路幅度（GH#315）—— 同一條規矩：上下界定在 sim，schema 只搬上 Zod。
 import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../sim/combatFeel";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
@@ -4139,6 +4149,77 @@ export const DEFAULT_AOE_TIERS_DOC = {
   radius: DEFAULT_AOE_TIERS.radius,
 } as const;
 
+/** 三格的數值（小/中/大）。⛔ 極小/極大不在這裡 —— 它們是硬上下限，住 stat-caps。 */
+const zNormBandValues = z
+  .object({
+    小: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
+    中: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
+    大: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
+  })
+  .strict();
+
+/** 四個角色定位各落在哪一格。 */
+const zNormArchetypeBands = z
+  .object(
+    Object.fromEntries(ARCHETYPES.map((a) => [a, z.enum(NORMAL_BANDS)])) as {
+      [K in (typeof ARCHETYPES)[number]]: z.ZodEnum<["小", "中", "大"]>;
+    },
+  )
+  .strict();
+
+/**
+ * config.stat-normalization@1 — 英雄屬性正規化（owner 2026-08-12）。
+ *
+ * owner：「我的**極大極小就是為了極端例外而誕生**…**只有小中大才是真正的分佈**…
+ * 極小與極大只是**限制合理的上下限**(例如攻速上限 4)」
+ * → 小/中/大 住這裡；極小/極大 是硬上下限，住 `config.stat-caps@1`。
+ *
+ * 這一版只套用 **移速與魔抗** —— 量到它們今天的自然跨度只有 1.20~1.22 倍
+ * （最強與最弱差兩成），等於不區分英雄。owner 因此改成由**角色定位**決定。
+ * 語意與 archetype 怎麼判寫在 `content/statNormalization.ts`。
+ */
+export const zConfigStatNormalizationDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.stat-normalization@1"),
+    note: z.string().optional(),
+    /**
+     * ⭐ `normalized` 是出貨預設。`legacy` 是**回滾用的逃生口** ——
+     * 扳過去英雄數值就回到英雄卡上的原值，不需要部署（舊值一直留著沒被銷毀）。
+     */
+    mode: z.enum(["normalized", "legacy"]),
+    /**
+     * 這一版真的套用的屬性。空陣列 = 機制在但什麼都不動（**看得見它是空的**，
+     * 這比偷偷關掉好）。⭐ 之後要開啟任何一項，改這一格就好，不用動程式。
+     */
+    appliesTo: z.array(z.enum(["ms", "mr"])).max(2),
+    /** 三格數值。⭐ 錨點（中）是量出來的中位數，小/大 = 中 ÷/× r（r 是指定的）。 */
+    bands: z
+      .object({ ms: zNormBandValues, mr: zNormBandValues })
+      .strict(),
+    /** 角色定位 → 這一項落在哪一格。⭐ owner 那兩句話就是這張表。 */
+    byArchetype: z
+      .object({ ms: zNormArchetypeBands, mr: zNormArchetypeBands })
+      .strict(),
+    /**
+     * 變身態要不要一起正規化。出貨 `true`（跳過）。
+     * ⚠️ 不跳的話變身的強化會被抹平 —— 變身態與本體的角色定位幾乎一定相同。
+     * 語意寫在 `content/statNormalization.ts`。
+     */
+    skipTransformedBodies: z.boolean(),
+  })
+  .strict();
+
+export const DEFAULT_STAT_NORMALIZATION_DOC = {
+  id: STAT_NORMALIZATION_DOC_ID,
+  schema: "config.stat-normalization@1",
+  mode: DEFAULT_STAT_NORMALIZATION.mode,
+  appliesTo: DEFAULT_STAT_NORMALIZATION.appliesTo,
+  bands: DEFAULT_STAT_NORMALIZATION.bands,
+  byArchetype: DEFAULT_STAT_NORMALIZATION.byArchetype,
+  skipTransformedBodies: DEFAULT_STAT_NORMALIZATION.skipTransformedBodies,
+} as const;
+
 export const zConfigDispelDoc = z
   .object({
     id: zId,
@@ -5165,6 +5246,9 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // AoE 四級距（owner 2026-08-11）。⚠️ 漏掉這一行 = 一份 aoe-tiers.json 進了
   // content/ 之後整份內容驗證失敗 → 骨架英雄，理由見下面那一段。
   zConfigAoeTiersDoc,
+  // 英雄屬性正規化（owner 2026-08-12）。⚠️ 漏掉這一行 = 一份 stat-normalization.json
+  // 進了 content/ 之後整份內容驗證失敗 → 骨架英雄。
+  zConfigStatNormalizationDoc,
   // ⚠️ 批 1 (2026-08-04) 的新 schema tag。**union 漏掉這一行 = 整份內容驗證
   // 失敗 → main.tsx 的 fail-open 退回 2 隻骨架英雄**,而網站看起來完全正常。
   // 那正是 2026-08-02 線上壞掉四小時的形狀,理由寫在下面那一段。

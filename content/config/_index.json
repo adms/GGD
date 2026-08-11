@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "5732d934817f",
+  "hash": "7d3e4cbe5b72",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -187,6 +187,12 @@
       "path": "config/stat-caps.json",
       "hash": "69aff32e89fd",
       "size": 331
+    },
+    {
+      "id": "stat-normalization",
+      "path": "config/stat-normalization.json",
+      "hash": "f40c5f604b9b",
+      "size": 1046
     },
     {
       "id": "stealth",

@@ -42,7 +42,14 @@ const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../conte
  * ⛔ 不抄字面值（Q/W/E 第 1 回合、R 第 3 回合、EX 第 7 回合，而每回合給幾級是
  * owner 會調的東西）。
  */
-function unlockLevels(rules: unknown): Record<string, number> {
+/**
+ * ⚠️ 回傳型別是**具名的六格**，不是 `Record<string, number>` ——
+ * 在 `noUncheckedIndexedAccess` 下索引一個 Record 會拿到 `number | undefined`，
+ * 於是 `toBeGreaterThan(L.Q)` 在 tsc 下是紅的（2026-08-12 擋住過一次 push）。
+ */
+type UnlockLevels = { passive: number; Q: number; W: number; E: number; R: number; ex: number } & Record<string, number | undefined>;
+
+function unlockLevels(rules: unknown): UnlockLevels {
   const rounds = (rules as { rounds?: Record<string, { grantLevels?: number }> })?.rounds ?? {};
   const keys = Object.keys(rounds)
     .map(Number)
@@ -82,7 +89,7 @@ describe("技能在解鎖等級付得起（GH#314）", () => {
         const mp = (ab as { manaCost?: number[] } | undefined)?.manaCost;
         if (!Array.isArray(mp) || mp.length === 0 || !(mp[0]! > 0)) continue;
         checked++;
-        const pool = championStatBase(c, Stat.MaxMana, L[slot] ?? L.Q!) + manaBonus;
+        const pool = championStatBase(c, Stat.MaxMana, L[slot] ?? L.Q) + manaBonus;
         if (mp[0]! > pool)
           over.push(`${c.id}.${slot} MP1=${mp[0]} > 池(L${L[slot] ?? L.Q})=${Math.round(pool)}`);
       }

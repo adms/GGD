@@ -173,6 +173,9 @@ export type Page =
   // 元件、同一條 `putOverlayDoc`。刻意排在 冷卻規則 旁邊 —— 兩者都是「技能的
   // 尺」，操作者會一起找。
   | "aoeTiers"
+  // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
+  // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
+  | "statNormalization"
   | "woundRules"
   | "weaknessRules"
   | "damageRules"
@@ -485,6 +488,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "cooldownRules",
   // AoE 四級距: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "aoeTiers",
+  // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "statNormalization",
   "woundRules",
   "weaknessRules",
   "damageRules",
