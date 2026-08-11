@@ -350,11 +350,17 @@ export function applyGoldFactor(amount: number, factor: number): number {
  * three NEW keys get the correct band and the audit of the other eighteen is
  * filed, not smuggled in here.
  *
- * ⚠️ `manaRegen: 16` WAS OUT OF BAND ON THE PLATFORM: a PUT of it answered 400
- * (`combatenv.Bounds` → MaxFactor 10) —— so for as long as 16 was the shipped
- * value, **the admin console could not save that page at all**. Going back to 8
- * (2026-08-11) removes the live symptom; the Go mirror still disagrees with this
- * file's 50 and that mismatch is GH#316, not fixed here.
+ * ⚠️ **CORRECTED 2026-08-12 (GH#316 是誤報).** 這裡本來寫著「`manaRegen: 16` 在平台
+ * 上超界，PUT 會回 400（`combatenv.Bounds` → MaxFactor 10）」。**那是假的** ——
+ * Go 的 `combatenv.MaxFactor` 早在 `ed5f9b91` 就跟著改成 **50.0** 了，三處一致。
+ * 我照著這段過期註解開了 GH#316 說「後台整頁存不了」，⛔ 而那件事從來沒發生過。
+ *
+ * ⚠️ 教訓正是這份 repo 自己的第三守則：**註解會說謊，去讀原始碼**。這一段害人的
+ * 地方在於它寫得像量測結果（「answers 400」），而它只是一次沒有跟上的複述。
+ *
+ * ⚠️ 仍然成立的那一半：三個常數（Go / admin `MAX_FACTOR` / 這裡）**沒有任何測試
+ * 把它們關聯起來**。現在剛好都是 50，但下次有人只改一處，一樣不會有東西變紅 ——
+ * 那是 `ggd-pairwise-postconditions` 的形狀（每個名詞健康、關係沒人看）。
  *
  * WHY 10 AND NOT SOMETHING TIGHTER (the 「多打一個零」 derivation): shipped is
  * 0.8 / 0.6 / 0.2, so one stray zero is 8 / 6 / 2 — inside any band that still

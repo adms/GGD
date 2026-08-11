@@ -2,6 +2,7 @@
   "id": "base-bonus",
   "schema": "config.base-bonus@1",
   "bonus": {
-    "maxHealth": 650
+    "maxHealth": 650,
+    "maxMana": 600
   }
 }
