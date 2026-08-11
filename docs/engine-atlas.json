@@ -1,0 +1,907 @@
+{
+  "schema": "ggd-engine-atlas@1",
+  "capabilityFingerprint": "7f2a3d75",
+  "counts": {
+    "effectKinds": 37,
+    "hookEvents": 19,
+    "conditionLeafKinds": 5,
+    "templateFamilies": 17,
+    "effectFields": 186,
+    "stats": 17,
+    "combatEnvKeys": 36
+  },
+  "stacking": [
+    {
+      "key": "沒有任何 modifier（基準）",
+      "value": "AP 26",
+      "from": "measured",
+      "note": "下面每一列都拿它當比較基準。它是骨架英雄的值，不是平衡數字。"
+    },
+    {
+      "key": "flat（相加）",
+      "value": "基底 AP 26 → 61（×2.346154）",
+      "from": "measured",
+      "note": "flat 10 ＋ flat 25 → 直接加 35 在基底上。多條就一路加下去。"
+    },
+    {
+      "key": "⭐ pctAdd（同一個總和桶）",
+      "value": "基底 AP 26 → 130（×5）",
+      "from": "measured",
+      "note": "pctAdd +100% ＋ pctAdd +300% → 全部先相加再乘**一次**：×(1 + 1.0 + 3.0) = ×5.0。這就是「死之王套裝 +300% ＋ 惡夢魔王碎片 +100% = ×5.0 而不是 ×8.0」的原因。"
+    },
+    {
+      "key": "pctMult（各自相乘）",
+      "value": "基底 AP 26 → 208（×8）",
+      "from": "measured",
+      "note": "同樣的 +100% 與 +300%，但每一條各乘一次：×(1+1.0) × (1+3.0) = ×8.0。和上面是**不同的桶**，不會互相合併 —— 選錯 op 就是 5 倍與 8 倍的差別。"
+    },
+    {
+      "key": "flat 與 pctAdd 的先後",
+      "value": "基底 AP 26 → 252（×9.692308）",
+      "from": "measured",
+      "note": "flat +100 再 pctAdd +100%：**先加完 flat 才乘百分比**，也就是 (基底+100)×2。"
+    },
+    {
+      "key": "percentOf（取另一條屬性的百分比）",
+      "value": "基底 AP 26 → 46（×1.769231）",
+      "from": "measured",
+      "note": "「AP ＝ 5% 的最大魔力」（光魔杖那一條）。⚠️ 缺 `from` 會被 schema 拒收 —— 沒有那道閘的話這條 modifier 會**靜默無效**，而文件看起來一切正常。"
+    }
+  ],
+  "stackingNote": {
+    "buckets": [
+      "flat",
+      "pctAdd",
+      "pctMult",
+      "override",
+      "capRaise",
+      "percentOf"
+    ],
+    "itemPercentLimit": 3
+  },
+  "caps": [
+    {
+      "key": "ap",
+      "value": "預設上限 base 100000 / 解鎖 100000　·　⚙️出貨 base 100000 / 解鎖 100000　·　後台基礎加成上限 2000　·　道具欄位帶 ±400",
+      "from": "shipped"
+    },
+    {
+      "key": "as",
+      "value": "結構夾限 [0.2, 4]　·　預設上限 base 4 / 解鎖 10　·　⚙️出貨 base 4 / 解鎖 10　·　後台基礎加成上限 3.8　·　道具欄位帶 ±4",
+      "from": "shipped"
+    },
+    {
+      "key": "ms",
+      "value": "結構夾限 [2, 14]　·　後台基礎加成上限 12　·　道具欄位帶 ±5",
+      "from": "import"
+    },
+    {
+      "key": "critChance",
+      "value": "結構夾限 [0, 1]　·　後台基礎加成上限 1　·　道具欄位帶 ±1",
+      "from": "import"
+    },
+    {
+      "key": "cdr",
+      "value": "結構夾限 [0, 0.99]　·　預設上限 base 0.99 / 解鎖 0.99　·　⚙️出貨 base 0.99 / 解鎖 0.99　·　後台基礎加成上限 0.99　·　道具欄位帶 ±1",
+      "from": "shipped"
+    },
+    {
+      "key": "lifesteal",
+      "value": "結構夾限 [0, 0.8]　·　預設上限 base 0.8 / 解鎖 1　·　⚙️出貨 base 0.8 / 解鎖 1　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1",
+      "from": "shipped"
+    },
+    {
+      "key": "evasion",
+      "value": "結構夾限 [0, 0.8]　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1",
+      "from": "import"
+    },
+    {
+      "key": "spellVamp",
+      "value": "結構夾限 [0, 0.8]　·　後台基礎加成上限 0.8　·　道具欄位帶 ±1",
+      "from": "import"
+    }
+  ],
+  "capsExtra": [
+    {
+      "key": "combat-env ×倍率的合法帶",
+      "value": "0.1 – 50",
+      "from": "import"
+    },
+    {
+      "key": "冷卻秒數地板",
+      "value": "出貨 0.1 秒（欄位上界 10）",
+      "from": "import",
+      "note": "比率天花板管長技能、秒數地板管短技能 —— 兩個一起才蓋得住整個值域。"
+    },
+    {
+      "key": "全屬性最寬的上界（schema catchall 用）",
+      "value": "1000000（最寬的是 maxHealth）",
+      "from": "import"
+    }
+  ],
+  "env": [
+    {
+      "key": "cooldown",
+      "value": "×0.2",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "damageDealt",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "defense",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：armor、mr"
+    },
+    {
+      "key": "attackDamage",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：ad"
+    },
+    {
+      "key": "abilityPower",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：ap"
+    },
+    {
+      "key": "maxHealth",
+      "value": "×4",
+      "from": "shipped",
+      "note": "作用於屬性：maxHealth"
+    },
+    {
+      "key": "healthRegen",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：healthRegen"
+    },
+    {
+      "key": "maxMana",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：maxMana"
+    },
+    {
+      "key": "manaRegen",
+      "value": "×16",
+      "from": "shipped",
+      "note": "作用於屬性：manaRegen"
+    },
+    {
+      "key": "moveSpeed",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：ms"
+    },
+    {
+      "key": "attackSpeed",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：as"
+    },
+    {
+      "key": "healing",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "shield",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "critChance",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：critChance"
+    },
+    {
+      "key": "critDamage",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：critDamage"
+    },
+    {
+      "key": "lifesteal",
+      "value": "×1",
+      "from": "shipped",
+      "note": "作用於屬性：lifesteal、spellVamp"
+    },
+    {
+      "key": "attackRange",
+      "value": "×0.6",
+      "from": "shipped",
+      "note": "作用於屬性：range"
+    },
+    {
+      "key": "abilityRange",
+      "value": "×0.8",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "itemCooldown",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "strToMaxHealth",
+      "value": "×23",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "strToHealthRegen",
+      "value": "×0.04",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "strToAttackDamage",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "agiToArmor",
+      "value": "×0.3",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "agiToAttackSpeed",
+      "value": "×0.02",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "intToMaxMana",
+      "value": "×15",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "intToManaRegen",
+      "value": "×0.07",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "intToAbilityPower",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "intToMagicResist",
+      "value": "×0.6",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "goldRoundPayout",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "goldMobKill",
+      "value": "×0.5",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "goldEliteKill",
+      "value": "×0.1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "goldHeroKill",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "goldQuest",
+      "value": "×1",
+      "from": "shipped",
+      "note": "公式格（不直接乘任何一條屬性）"
+    },
+    {
+      "key": "moveSpeedMelee",
+      "value": "×0.8",
+      "from": "shipped",
+      "note": "作用於屬性：ms"
+    },
+    {
+      "key": "moveSpeedRanged",
+      "value": "×0.6",
+      "from": "shipped",
+      "note": "作用於屬性：ms"
+    },
+    {
+      "key": "magicResistMult",
+      "value": "×0.2",
+      "from": "shipped",
+      "note": "作用於屬性：mr"
+    }
+  ],
+  "geometry": {
+    "rows": [
+      {
+        "key": "AoE 半徑樣本（技能＋道具）",
+        "value": "165 個　最小 1.5 / 中位 6 / 最大 513.5",
+        "from": "shipped"
+      },
+      {
+        "key": "英雄攻擊距離（baseStats.range）",
+        "value": "0 位　最小 0 / 中位 0 / 最大 0",
+        "from": "shipped",
+        "note": "⚠️ 這是**基底**，實際射程還要乘 combat-env 的 `attackRange`（下面那張表）。"
+      }
+    ],
+    "buckets": [
+      {
+        "label": "小",
+        "range": "< 5.5",
+        "count": 48
+      },
+      {
+        "label": "中",
+        "range": "5.5 – 7.33",
+        "count": 58
+      },
+      {
+        "label": "大",
+        "range": "≥ 7.33",
+        "count": 59
+      }
+    ]
+  },
+  "oversizedAoe": {
+    "zoneRadius": 24,
+    "total": 29,
+    "over": [
+      {
+        "id": "godie-ubal.ex",
+        "name": "37-002 真‧黑核晶",
+        "radius": 513.5
+      },
+      {
+        "id": "godie-o00k.e",
+        "name": "86-03 神鳴",
+        "radius": 500
+      },
+      {
+        "id": "godie-o02p.q",
+        "name": "99-01 甩蔥歌",
+        "radius": 400
+      },
+      {
+        "id": "godie-o00k.q",
+        "name": "86-01 十萬伏特",
+        "radius": 350
+      },
+      {
+        "id": "godie-ofar.q",
+        "name": "58-01 十萬伏特",
+        "radius": 350
+      },
+      {
+        "id": "godie-edem.q",
+        "name": "45-01 火遁-豪火龍之術",
+        "radius": 330
+      },
+      {
+        "id": "godie-e00w.q",
+        "name": "77-01 百烈櫻華斬",
+        "radius": 327
+      },
+      {
+        "id": "godie-h00l.r",
+        "name": "60-04 迴旋斬",
+        "radius": 327
+      },
+      {
+        "id": "godie-u00h.r",
+        "name": "39-04 祕奧義．金色的神風",
+        "radius": 327
+      },
+      {
+        "id": "godie-u00j.e",
+        "name": "74-03 闇之天使",
+        "radius": 327
+      },
+      {
+        "id": "godie-u00v.e",
+        "name": "78-03 廬山昇龍破",
+        "radius": 327
+      },
+      {
+        "id": "godie-umal.e",
+        "name": "25-03 北斗百裂拳",
+        "radius": 327
+      },
+      {
+        "id": "godie-uvng.ex",
+        "name": "38-002 究極暴走黑龍波",
+        "radius": 327
+      },
+      {
+        "id": "godie-emfr.ex",
+        "name": "15-002 風花-武裝解除",
+        "radius": 320.5
+      },
+      {
+        "id": "godie-hjai.w",
+        "name": "04-02 炸彈陣",
+        "radius": 300
+      },
+      {
+        "id": "godie-n003.q",
+        "name": "42-01 凍結的大地",
+        "radius": 300
+      },
+      {
+        "id": "godie-o00k.r",
+        "name": "86-04 打雷絕招",
+        "radius": 300
+      },
+      {
+        "id": "godie-u00k.q",
+        "name": "71-01 死亡隕落",
+        "radius": 300
+      },
+      {
+        "id": "godie-emfr.e",
+        "name": "15-03 雷電風暴",
+        "radius": 280
+      },
+      {
+        "id": "godie-osam.ex",
+        "name": "34-002 冥道殘月破",
+        "radius": 257
+      },
+      {
+        "id": "godie-hgam.q",
+        "name": "90-01 飛葉快刀",
+        "radius": 224.5
+      },
+      {
+        "id": "godie-zombiex.r",
+        "name": "100-04 百式・哈基米",
+        "radius": 218
+      },
+      {
+        "id": "godie-o00l.w",
+        "name": "53-02 強化炸彈陣",
+        "radius": 201
+      },
+      {
+        "id": "godie-e002.r",
+        "name": "20-04 Avalon-永恆的理想鄉",
+        "radius": 200
+      },
+      {
+        "id": "godie-ogld.r",
+        "name": "72-04 黑化",
+        "radius": 200
+      },
+      {
+        "id": "godie-u00h.w",
+        "name": "39-02 無明神風流-朱雀",
+        "radius": 200
+      },
+      {
+        "id": "godie-udre.w",
+        "name": "11-02 虎狩獵",
+        "radius": 200
+      },
+      {
+        "id": "godie-zombiex.e",
+        "name": "100-03 咕咕嘎嘎",
+        "radius": 191
+      },
+      {
+        "id": "godie-zombiex.q",
+        "name": "100-01 肝泥抹德",
+        "radius": 163.5
+      }
+    ]
+  },
+  "geometryFields": {
+    "範圍與形狀": [
+      "falloff",
+      "includeOrigin",
+      "length",
+      "maxTargets",
+      "radius",
+      "shape",
+      "width"
+    ],
+    "距離與位移": [
+      "distance",
+      "distanceScale",
+      "launchDistance",
+      "maxDistance",
+      "moveSpeedMult",
+      "speed",
+      "throwDistance"
+    ],
+    "時間": [
+      "addSec",
+      "amountPerTick",
+      "delaySec",
+      "duration",
+      "durationSec",
+      "getupTicks",
+      "intervalSec",
+      "maxRemainingSec",
+      "respectCooldown",
+      "tickOnApply"
+    ],
+    "疊層與標記": [
+      "exclusiveOnExisting",
+      "maxStacks",
+      "onExisting",
+      "stackKey",
+      "stackVisual",
+      "stacking",
+      "stacks"
+    ]
+  },
+  "vocabulary": {
+    "effectKinds": [
+      "applyBuff",
+      "applyStatus",
+      "blink",
+      "championForm",
+      "cycleBuff",
+      "damage",
+      "damageArea",
+      "damageLine",
+      "dash",
+      "delayed",
+      "devour",
+      "dispel",
+      "dot",
+      "evasion",
+      "eventValueConversion",
+      "extendBuff",
+      "grantAttribute",
+      "grantGold",
+      "heal",
+      "invulnerable",
+      "knockback",
+      "leap",
+      "manaBarrier",
+      "modifyCooldown",
+      "proxyCast",
+      "randomArea",
+      "restore",
+      "revive",
+      "shield",
+      "shieldBreak",
+      "spawnProjectile",
+      "spawnVfx",
+      "spendMana",
+      "summon",
+      "swapResource",
+      "taunt",
+      "weightedBranch"
+    ],
+    "hookEvents": [
+      "onAbilityCast",
+      "onAbilityHit",
+      "onAllyDeath",
+      "onBasicAttack",
+      "onBossSpawn",
+      "onDamageDealt",
+      "onDamageTaken",
+      "onDeath",
+      "onEvade",
+      "onFireRingIgnite",
+      "onGuardianDown",
+      "onInterval",
+      "onKill",
+      "onReflectSuccess",
+      "onRevive",
+      "onShieldBroken",
+      "onShieldGained",
+      "onStatusApplied",
+      "onStunned"
+    ],
+    "conditionLeafKinds": [
+      "chance",
+      "equipment",
+      "kind",
+      "stat",
+      "status"
+    ],
+    "templateFamilies": [
+      "buff-self",
+      "charge-push",
+      "ground-nova",
+      "instant-blast",
+      "leap-strike",
+      "line-sweep",
+      "lock-combo",
+      "mark-stacks",
+      "on-attack",
+      "on-hit-react",
+      "orbit-array",
+      "proxy-cast",
+      "proxy-fanout",
+      "random-barrage",
+      "single-strike",
+      "teleport",
+      "traveling-wave"
+    ]
+  },
+  "simCapabilities": {
+    "applyBuff": {
+      "available": true
+    },
+    "applyStatus": {
+      "available": true
+    },
+    "auras": {
+      "available": true
+    },
+    "combo": {
+      "available": false
+    },
+    "conditions": {
+      "available": true
+    },
+    "dash": {
+      "available": true
+    },
+    "hooks": {
+      "available": true
+    },
+    "invulnerable": {
+      "available": true
+    },
+    "knockback": {
+      "available": true
+    },
+    "leap": {
+      "available": true
+    },
+    "marks": {
+      "available": true
+    },
+    "periodicDamage": {
+      "available": true
+    },
+    "projectile": {
+      "available": true
+    },
+    "summon": {
+      "available": true,
+      "caveat": "召喚物的擊殺歸屬 killCredit: \"owner\" 尚未實作（施放時會擲錯），其餘欄位皆可用"
+    }
+  },
+  "planned": [
+    {
+      "key": "hook.on-lethal-damage@1",
+      "plan": "§12 G4 · §13「lethal hook 在 death commit 前」",
+      "state": "partial",
+      "caveat": "攔截點在 `combat/damage.ts` 的護盾之後、扣血之前，符合計畫的「death commit 前」。⚠️ **火圈燒傷是一個要知道的例外，而它現在是一格後台開關**（GH#287）：火圈不走傷害佇列（那條路會帶來每 tick 的浮動數字、擊倒、擊殺歸屬 —— 全都不是環境傷害要的），改走 `combat/environmentalBurn.ts` 這唯一的第二條路，它直接呼叫佇列**自己在用的**`refusesDamage` 與 `lethalSaveFor`。所以：**無敵擋得住火圈**（`invulnerable` 的 `blocksTrueDamage`，無條件），而**免死擋不擋火圈是 `match.fireRing.lethalSaveApplies`**，⛔ **出貨預設關**（＝火圈無視免死，維持今天的行為，等 owner 裁決）。⇒ 寫「受到致命傷害時 ⋯」的卡片時，不要假設它在火圈裡會生效。⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「火圈燒傷攔不到 —— 直寫 `hp.hp -=`，無敵也一樣擋不住」，那是寫在 GH#287 落地**之前**的（同 `defense.mana-barrier@1` 那一格）。⭐ 2026-08-09（GH#306）**`surviveHpPct` 現在有兩種語意，而預設是舊的那一種** —— 這是寫免死卡的人一定要讀的一格：`restoreMode:\"clamp\"`（**省略時的預設**，逐位元等於這一格出現前的每一份文件）＝「這一發最多把你扣到這裡」，所以血**已經低於**地板時一格都不補；`restoreMode:\"restore\"` ＝ owner 2026-08-09 講死的那一句「到生命 0 以下，**再回到** 20%，不是停在 20%」，是一個**無條件設值**（救完血量 == 地板，與挨打前是 60% 還是 5% 無關）。⛔ 卡片文案寫「免死，並留在 N% 生命」卻沒填 `restoreMode:\"restore\"` 的話，被磨到剩 5% 血的玩家會被救活在 5% 血 —— 下一發就死，而畫面上跟正常一模一樣。⚠️ 兩種模式**只在血量已經低於地板時**行為不同，所以任何只試「滿血挨一發」的驗證看不出差別。",
+      "evidence": "packages/shared/src/sim/combat/lethalSave.ts + lethalSave.test.ts（`restoreMode` 那一條真的用**兩個起始血量**跑同一發致命傷，斷言兩者落在同一格血量；只驗高於地板的那一邊，三種實作都會過）"
+    },
+    {
+      "key": "effect.charge-ledger@1",
+      "plan": "§12 G4 · §13「十二道試煉的 ledger 跨 round 不跨 match」",
+      "state": "supported",
+      "evidence": "packages/shared/src/sim/marks.ts（具名標記：count/spent/expiresAtTick/resetOn）。`resetOn:\"match\"` 就是計畫要的「跨 round 不跨 match」——`SimWorld` 一場比賽一個。"
+    },
+    {
+      "key": "hook.on-evade@1",
+      "plan": "§7 P1 · §12 G4",
+      "state": "partial",
+      "caveat": "事件會發到**閃掉的那一方**（`WorldHookSystem` 的 actorKey=target），符合計畫的 defender hook。⛔ 尚未區分「真閃避」與「attacker fumble」，計畫 §13 要求 fumble 零次 —— 這一格還沒守。",
+      "evidence": "packages/shared/src/sim/systems/WorldHookSystem.ts + worldHook.test.ts"
+    },
+    {
+      "key": "hook.on-ability-hit@1",
+      "plan": "§2.1.1（配合 condition.target-status@1）",
+      "state": "supported",
+      "evidence": "content/schema/effect.ts 的 zHookEvent"
+    },
+    {
+      "key": "effect.modify-cooldown@1",
+      "plan": "§12 G4",
+      "state": "supported",
+      "evidence": "packages/shared/src/sim/effects/modifyCooldown.ts（`slot` 或 `abilityId` 指名一支；`reduce`/`reduceFlat`/`reset` 三種模式，`basis` 決定百分比的分母是剩餘量還是基礎冷卻）。⭐ 2026-08-10（S3）多一條路：`target` 決定縮短的是**技能槽位**（`abilitySlot`，省略時的預設＝這個 kind 在此之前的全部行為）還是**觸發器的內部冷卻**（`hookInternalCooldown` ——「重置某個 proc 的 ICD」，`hookKey` 比對 `HookDef.key`，`hookScope` 決定只碰觸發這一發的那一份來源（`originSource`，預設，較窄）還是身上全部來源（`allSources`，此時 `hookKey` 必填）)。⚠️ `hookScope:\"originSource\"` 只認得 `origin` 是 `hook:…` 的呼叫 —— 從**施放**跑出來的`modifyCooldown`（`origin` 是 `ability:…`）不屬於任何一份來源，那條路下什麼都不會發生，而且是**靜默**的：要從施放去重置 proc，請用 `allSources` + `hookKey`。守衛 packages/shared/src/sim/effects/lane1Kinds.test.ts + hookFamily.test.ts。"
+    },
+    {
+      "key": "effect.execute@1",
+      "plan": "§12 G4 · §16.13 · §5「待確認 14」",
+      "state": "partial",
+      "caveat": "計畫 §160 的最低契約有五項，`devour` 拿到三項：① **typed threshold** ✅ `thresholdPctOfMax` 是逐階陣列（3/5/7/9% 就是四格）；② **hero-only** ✅ `victim: \"champion\" | \"any\"` 是欄位；③ **kill credit** ✅ 它不寫 `hp = 0`，而是推一發 `type:\"true\"` 進 `world.damageQueue`，所以擊殺賞金 / `onKill` / 掉金幣 / 擊殺語音 / MVP 統計全部走出貨的那一條路。⛔ 缺的兩項，寫技能的人一定會撞到：④ **回復 basis 不是欄位** —— 固定讀施法瞬間的 `hp.hp`（cast-commit 快照），而計畫 §16.13 要問的「讀 cast commit 前還是實際 hpLost」今天只有一個答案且寫死；`healPct` 只是**倍率**，不是 basis。⑤ **invulnerable interaction 沒有欄位** —— 因為走傷害佇列，`refusesDamage` 會讓無敵目標**靜默吞不掉**（既沒有 `pierceInvulnerable`，也沒有「被擋下了」的回饋）。⚠️ 另外它是**吞噬風味**的處決不是中性 primitive：`healPct` 省略 = 1，要純處決得明寫 `healPct: 0`。",
+      "evidence": "packages/shared/src/sim/effects/devour.ts + devour.test.ts（護盾那條驗過 `throughShields`：致死量含當下吃得到的護盾，否則「即死」會被護盾靜默擋掉）",
+      "nearestExisting": "`devour`（`sim/effects/devour.ts` + `content/schema/effect.ts` 的 `devour` 分支）—— 它**就是**這個 capability 的實作，不是「相近的東西」。59-01 吞噬走的就是它。"
+    },
+    {
+      "key": "effect.weighted-branch@1",
+      "plan": "§12 G4 · §16.14（俄羅斯輪盤）",
+      "state": "partial",
+      "caveat": "機制已出貨：一次施放**只 draw 一次** `world.rng`（計畫 §13 的決定性要求），分支各帶自己的 `weight` 與 `effects[]`，總權重 0 在載入時就被擋下。⛔ 但 §16.14 的**機率表語意尚未 owner freeze**（1/6 是「每次獨立」還是「六發彈倉」），所以 importer 在 freeze 之前仍應拒絕 89-002 那一類文件 —— 引擎做得到，規格還沒定。",
+      "evidence": "packages/shared/src/sim/effects/weightedBranch.ts + lane1Kinds.test.ts（「只抽一次」做過突變驗證）"
+    },
+    {
+      "key": "effect.swap-resource@1",
+      "plan": "§12 G4 · §16.16（交換筆記本）",
+      "state": "supported",
+      "evidence": "packages/shared/src/sim/effects/swapResource.ts —— 依 §16.16 的建議實作：resolve tick 原子交換，各自 clamp 到 [clampMin, 自己的上限]，目標失效預設整招失敗。三個決策點（`resource` / `clampMin` / `onInvalidTarget`）都是欄位，所以 owner 之後改語意不必改程式。"
+    },
+    {
+      "key": "defense.mana-barrier@1",
+      "plan": "§12 G4",
+      "state": "partial",
+      "caveat": "primitive 已出貨（`manaBarrier`）：`manaBarrierCutFor` 在**扣血之前**把傷害換成扣魔 —— ⛔ 不是受傷後補護盾，魔力真的被扣、期間回的魔力真的會變成新的抵擋量。計畫點名的兩格都在：`perMana` 就是 damage-to-MP ratio，remainder 由函式回傳（抵不完的部分原封不動往下走進 免死 → 血條）。**四個**決策點都是欄位（`perMana` / `damageTypes` **必填明列** / `minManaReserve` / `durationSec`）。⭐ 2026-08-09（GH#307）`durationSec` 改成**選填**：省略 = **常駐**（沒有到期 tick），填數字 = 到期或魔力耗盡先到的那個停。⛔ 兩種寫法的**強制停止都是魔力耗盡** ——魔力見底時屏障是真的被**拔掉**（`detachSource`），不是「這一發抵 0」，否則常駐的那一半永遠不會結束（owner 2026-08-09 明說「共同的強制停止都是魔力耗盡」）。接線**已經接上**（`combat/damage.ts`，護盾池之後、免死之前）—— 44-00 掛上去就會擋。⚠️ 這一句在 2026-08-08 當天有過一個中間版本寫著「接線還沒接」，那是寫在接線落地**之前**的；留這句話在這裡是因為它示範了這份清單最危險的失效方式：守衛只檢查 caveat 是不是空字串，**從不讀它的內容**，所以一句過期的散文可以把一個已經可用的機制擋在門外，而且什麼都不會紅（見檔頭③與 GH#291 的同型）。",
+      "evidence": "packages/shared/src/sim/effects/manaBarrier.ts + lane2Kinds.test.ts",
+      "nearestExisting": "（2026-08-08 起不再適用 —— 這一格留著是為了說明**為什麼**那兩件零件不算數。）`shield`（`shield.absorbs` 能吸收指定型別的傷害）加上 `spendMana`（20-01 風王結界每擊扣魔）擺在一起**看起來**像魔力護盾，⛔ 但沒有任何東西把**傷害導進魔力池**。"
+    },
+    {
+      "key": "effect.control-restriction@1",
+      "plan": "§12 G4",
+      "state": "unsupported",
+      "reason": "`applyStatus` 目前有 root / stun / silenced / berserk / feared / disarmed 六個獨立布林（`feared` 是 2026-08-08 為 89-002 俄羅斯輪盤與 52-02/04/002 加的，`disarmed` 是 2026-08-10 的 S8），但**沒有可組合的 typed 控制限制模型** —— 每多一種控制就多一個布林，而「這個狀態擋住哪幾種行為」散落在各個消費端的 if 裡，不是一張表。⚠️ 所以這一列停在 `unsupported` 是**對的**，但它的 `nearestExisting` 才是對方要讀的那一半：六個布林各自都是能用的，⛔ 不要因為這一列寫 unsupported 就繞開它們。",
+      "nearestExisting": "`applyStatus` 的**六個**獨立布林（root / stun / silenced / berserk / feared / **disarmed**）—— 它們**真的擋得住**移動、施法與普攻，所以「臥草泥馬不能動」寫得出來。⭐ 2026-08-10（S8）新增的 `disarmed`【繳械】是「揮不出來」而不是「揮空刀」：它併進 `BasicAttackSystem` 的**暈眩那一道閘**，而那道閘排在 `breakStealth` / 冷卻 commit / `attackWindup` 之前，所以繳械期間不會空燒冷卻。它也算 CC（進 `isCc`，免控擋得掉、秒數進 `ccAppliedTicks`），與 `feared` 同一列。⚠️ **`berserk` 那一格是一個受詞題，不是一個布林題** —— 【暴走】與【混亂】共用同一格 `applyStatus.berserk`，差別**只在落在誰身上**：落在自己 = 暴走，落在敵人 = 混亂（owner 2026-08-09：「混亂應該是完全無法指定目標，並且會亂走路」）。⛔ 這件事有後果：**自我暴走**吃一道「血夠低才放得出來」的施法閘（`config.berserk@1`），而**對敵人下混亂**不吃。受詞由 `applyTo:\"self\"` 或 `castType:\"self\"` 判定，逐字鏡射 `effects/applyStatus.ts` 自己那一行 —— 所以一支「對敵人下混亂」的普通技⛔ **不要**寫 `applyTo:\"self\"`，寫了它就會在滿血時被拒（`cast rejected: hp-too-high`），而那是 GH#305 之前 12-01 鬥仙術真的踩過的樣子。⛔ 不算數的理由**沒有變**，而且每加一個布林就更成立一次：它不是一張表。計畫要的 move / basicAttack / cast / playerOrders / AI control 五個維度**不能分開組合**，而「這個狀態擋住哪幾種行為」散落在各個消費端的 `if` 裡。"
+    },
+    {
+      "key": "scheduler.random-area@1",
+      "plan": "§12 G4",
+      "state": "partial",
+      "caveat": "排程器已出貨（`randomArea`），而且 §13 要的 draw 預算模型是**明確**的：一次施放固定花 `2 × count` 次 `world.rng.next()`，**全部在施法那一刻抽完** —— 所以「這一波抽了幾次」不受場上人數、也不受它有沒有被打斷影響。到期是**絕對 tick**；方形→圓形用 elliptical grid mapping（`sim/**` 禁三角函式）。接線**已經接上**：`randomAreaSystem` 掛在 `SimWorld.step()` 的 slot 7e（`combatResolveSystem` 之前），13-04 / 70-04 排得出來也落得下去。（同 `effect.mana-barrier@1`：這一句 2026-08-08 當天曾寫著「接線還沒接」而接線就在那裡。）⚠️ `content/templates/expand.ts` 的 `random-barrage` 那 8 張卡**仍然走 `dot`**，遷移到這個 kind 是獨立的一批。",
+      "evidence": "packages/shared/src/sim/effects/randomArea.ts + lane2Kinds.test.ts（draw 預算做過突變驗證）",
+      "nearestExisting": "三個零件各有一半：`damageArea` / `shapeTargets` 的 `circle`（**一個**圓的落點與命中）、`dot` 與 hook 的 `internalCooldown`（**節奏**：每 N 秒一次）、`weightedBranch`（**一次** `world.rng` 抽樣的正確做法）。⛔ 不算數的理由是沒有把三者接起來的排程器：「count=10、interval=0.2s、每一發自己抽落點」沒有形狀，而更關鍵的是**沒有 draw 預算模型** —— 誰在哪一 tick 抽第幾次沒有定義，replay 就重現不出同一組落點（計畫 §13）。（2026-08-08 起不再適用 —— 留著是為了說明那三件零件為什麼不算數。）"
+    },
+    {
+      "key": "effect.extend-buff-on-damage@1",
+      "plan": "§12 G4（2026-08-08 覆蓋矩陣 X20：52-01 狂戰士之怒）",
+      "state": "supported",
+      "evidence": "packages/shared/src/sim/effects/extendBuff.ts —— 「期間每承受自身最大生命 5% 的傷害，延長 2 秒」。⭐ **無狀態**：延長量是這一發傷害的連續比例（總量與階梯式相同），所以不需要累積器、不需要任何新的 SimWorld 欄位，也**不需要任何接線**。`maxRemainingSec` 是**必填**：這條是正回饋（挨越多、越久），沒有上界會變成永久，而症狀是「這個回合打不完」——一個不會讓任何測試變紅的故障。⚠️ 現有詞彙**組不出來**（逐條查過）：`applyBuff.stackKey` 寫的是「重設到滿」不是「延長」，而 `condition@1` 的葉子與 `HookDef` 的過濾器沒有任何一格讀得到「剛剛那一下打了多少」。"
+    },
+    {
+      "key": "effect.event-value-conversion@1",
+      "plan": "§12 G4 · §16.12（太陰道）",
+      "state": "partial",
+      "caveat": "機制已出貨：來源可選 `incomingDamage`（讀 `EffectContext.incoming`）或 `targetCurrentHealth`（59-01 吞噬的「等同其剩餘生命」），轉成 mana / health，並可順帶給一段限時屬性加成（15-002 太陰道的「短暫加成至 AP」）。⛔ 但 §16.12 的**基數 `raw | mitigated | hpLost` 尚未 owner freeze** —— 所以它是一格欄位，出貨預設 `mitigated`（與 `damage.incomingPct.basis` 同一句話）。freeze 之後只要改預設值，不必改程式。",
+      "evidence": "packages/shared/src/sim/effects/eventValueConversion.ts + lane1Kinds.test.ts"
+    },
+    {
+      "key": "hook.consume-policy@1",
+      "plan": "§2.1.1.2（雷天大壯「施放技能後的下一次普攻」）· §12 G4",
+      "state": "partial",
+      "caveat": "⭐ **執行面已經落地**（2026-08-10 Lane 3 / S6，這一句前一版寫的是「只有欄位，引擎還沒讀」而那已經不成立 —— 第三守則）。`sim/effects/hooks.ts` 的額度閘坐在**內部冷卻閘與機率骰之前**（與 `victim` / `damageSource` 同一族的 rng-FREE 過濾），所以一條額度用完的 hook **不燒 ICD、不動 seed**。扣帳走 `ModifierSource.hookFireCount` / `hookFireCountByTarget`（依 `hooks[hi]` 位置索引）。⚠️ 仍然是 `partial`，剩下的限制只有一個：`consumeOn` 只有 `\"fire\"`（見下）。⛔ **不可以**改用 `internalCooldown` 近似成「每 N 秒一次」：攻速快的英雄會**多觸發**、慢的會**漏觸發**，而兩種錯法在畫面上都看不出來（只是偶爾多打或少打一下）—— 那是**時間**界，這一族要的是**次數**界。⚠️ `consumeOn` 今天刻意只有 `\"fire\"` 一個值：`\"hit\"`（下游真的打到人才算）需要把扣帳搬到傷害落地那條路，那是第二條接線，⛔ 不先開一個接不到的選項。",
+      "evidence": "packages/shared/src/content/schema/effect.ts（zHookDefBase）+ packages/shared/src/sim/effects/hooks.ts（額度閘 + consumeTrigger + detachSource）+ packages/shared/src/sim/effects/lane3Kinds.test.ts"
+    },
+    {
+      "key": "hook.on-reflect-success@1",
+      "plan": "§2.1.1 · §12 G4 · §13",
+      "state": "partial",
+      "caveat": "事件與 provenance 都出貨了：判準是「一發 `reflectDepth > 0` 的封包**真的落地**」，hook 的持有者＝**防禦者**、`target`＝**攻擊者**，而 `EffectContext.incoming` 是**那一發反彈封包自己的** `TriggerDamage`（raw / mitigated / hpLost 三個讀數都是真值），所以 20-002「每次造成 7 倍[反彈]傷害」寫得出來 —— 用 `damage.incomingPct`。⚠️ 兩個限制，寫技能的人一定會撞到：① 那一發的 `reflectDepth` 已經是 1，child chain 的 `incomingPct` 要一起寫 `maxChainDepth: 1`，否則被鏈深閘擋掉（那是終止性，不是 bug）；② ⭐ 2026-08-09 已解除：`INCOMING_PCT_MAX` 從 5 抬到 **10**，所以「7 倍」現在直接寫成 `perRank: [7]`，不必再靠 `amount` 那一項補。（在此之前那條上界自稱是「打錯數字的守衛」卻擋住了 owner 的文案 —— 護欄裝在錯的位置；10 仍然擋得住「200 打在該寫 2.00 的格子裡」。）⛔ 計畫 §2.1.1 四項 provenance 裡的**原傷害**沒有進 payload：`TriggerDamage` 是封閉型別，而同一個 tick、同一個持有者的 `onDamageTaken` 已經帶著它 —— 再塞一份進來就是第二個真相。要「原傷害的百分比」請掛在 `onDamageTaken` 上。",
+      "evidence": "packages/shared/src/sim/combat/damage.ts（push 點）+ packages/shared/src/sim/systems/ReflectHookSystem.ts（dispatch）；守衛 reflectHook.test.ts（不該發的時候不發）+ reflectSuccessProvenance.test.ts（provenance 到得了 child chain，且交給它的是反彈傷害不是原傷害；三個突變都驗過）"
+    },
+    {
+      "key": "effect.target-set-chain@1",
+      "plan": "§6 P1 · §12 G4",
+      "state": "partial",
+      "caveat": "`damageArea` / `damageLine` 現在把**自己解出來、`victimCondition` 過濾完、`maxTargets` 切完**的那一組人當成 `ctx.targets` 交給 `onHitTargets`（`onHitTargetsMode` 決定整群一次 batch 還是一個一個 perTarget；下游若是圓／線那類自己解幾何的 kind，batch 只會炸出一個圈）。`runOnEmptyHit` 決定一個人都沒打到時要不要照樣跑（預設不跑）。⛔ 仍然**不是**計畫要的『兩個具名 target set 同一 tick 並存』：`ctx.targets` 只有一個，所以「ally selector 回 MP、enemy selector 造成傷害」還是只能靠後者覆寫前者 —— 要兩組並存請維持 `unsupported-runtime`。",
+      "evidence": "packages/shared/src/sim/effects/victimFilter.ts（`selectVictims` + `runOnHitChain`，兩個 kind 共用一支模板）；守衛 areaVictimChain.test.ts（下游收到的是真的挨打的那群人而不是上游的震央；突變驗過會紅）"
+    },
+    {
+      "key": "effect.attack-dash@1",
+      "plan": "§2.1.1",
+      "state": "unsupported",
+      "reason": "「每次普攻向目標短距離衝刺」需要 collision + target invalidation + exactly-once，`dash` kind 三者都沒有。",
+      "nearestExisting": "`dash`（`sim/effects/dash.ts`，一段位移）與 `leap`（帶 `onLand` 落地 child）。⛔ 不算數的理由是兩者都是**施法者主動一次**的位移，而這裡要的是**掛在每一次普攻上**：沒有 collision 停止、沒有目標中途失效的處理、也沒有 exactly-once（同一次揮擊不可以衝兩次）。"
+    },
+    {
+      "key": "effect.dash-on-end@1",
+      "plan": "§2.1.1 P1（條件式）· §16.7",
+      "state": "supported",
+      "evidence": "packages/shared/src/sim/effects/dashOnEnd.ts（`dashOnEndSystem`，掛在 `SimWorld.step()` 的 slot 5′）+ lane3Kinds.test.ts 的三臂量測",
+      "nearestExisting": "`leap.onLand` —— **固定落點**的版本一直就精確表達得出來（`sim/effects/leap.ts`，#247 那一批）。（2026-08-10 起不再適用 —— 留著是為了說明「衝刺**結束的那一刻**」為什麼需要另一條路：effect 在 step slot 2b/3 跑完、位移在 slot 5 才發生，所以同一個 `effects[]` 裡的 AoE**必然**用衝刺前的座標。）"
+    },
+    {
+      "key": "state.exclusive-group@1",
+      "plan": "§12 G4 · §16.15（涅吉三形態）",
+      "state": "partial",
+      "caveat": "✅ 15-02/03/04 逐字寫的「([變身]為唯一狀態不可疊加)」**對變身成立，而且是結構性的**：一個實體只有一格形態、一個身體只有一個 `championId`，所以第二個形態不可能與第一個並存 —— ⛔ 技能文件**不需要、也不應該**自己檢查「我是不是已經變身了」。重複進入時「舊形態的剩餘時間怎麼辦」是欄位（`champion@1.transform.reenter`：`restart` / `keepLongest` / `reject`），預設 = 出貨現況，被回絕會走 `castRejected`。⭐ 2026-08-10（G5）：**泛化的互斥狀態群落地了** —— 這一句前一版寫的是「沒有『這三個 buff 互斥』的模型」，那已經不成立（第三守則）。`applyBuff.exclusiveGroup` 是一個自由字串群名，掛上之前先掃 `sc.sources`：同組且未過期的舊來源整份卸下（`exclusiveOnExisting:\"replace\"`，省略時的預設，形狀抄 `shield.onExisting`）或整發不掛（`\"reject\"`）。所以 15-02/03/04 逐字寫的「[變身]為唯一狀態不可疊加」在**數值那一層**已經成立：三個形態的移速倍率／攻速％／普攻附加傷害不會再連乘（⛔ 技能文件仍然不需要自己檢查）。⚠️ 它作用在 **gameplay state（buff source）** 這一層，⛔ **不可以拿它假裝三個 3D 形態** —— 那是下面 ② 的事，而 ② 還沒解。⛔ 仍缺一件，**涅吉三形態的「三個身體」今天仍然表達不出來**：② **一個英雄只有一個 `transform.counterpartId`**，而 `championForm` effect 的 `to` 只有`alternate`/`base`/`toggle`，沒有「變成指定的那一個形態」—— 所以第二個**不同**的形態根本不是目的地：再施放一次只會刷新當前形態（WC3 Metamorphosis 的語意，刻意保留）。⚠️ 它卡在計畫 §16.15 還沒裁決「三個 gameplay state 還是三個 3D body」——⛔ 在那之前不要把三形態降級成三個獨立變身，那會是一個**看起來**能用的錯誤答案。（那個裁決**不會**再回頭改 `exclusiveGroup` 那一層：數值互斥與身體選擇是兩件事。）",
+      "evidence": "packages/shared/src/sim/systems/ChampionFormSystem.ts + sim/championFormExclusive.test.ts（四個突變都驗過會紅：拿掉 `sc.championId` 的寫入、`championForm.set` 改成不覆寫、拿掉 `keepLongest`、拿掉整個 `reject` 分支）；泛化互斥群在 packages/shared/src/sim/effects/applyBuff.ts::enforceExclusiveGroup + sim/exclusiveDisarmNegate.test.ts（同一次執行裡比四臂：互斥 / 只掛一份 / 不填 group 仍然相乘 / reject）"
+    },
+    {
+      "key": "state.lifecycle@1",
+      "plan": "§12 G4（與 `state.exclusive-group@1` 同一列）· §13「風王結界手動關閉與 MP 不足自動關閉都走同一個 onExit child」",
+      "state": "partial",
+      "caveat": "✅ 計畫 §13 逐字要求的那一條**已經成立**：`exitToggle()` 是全專案唯一的關閉出口，手動關閉（`castAbility` 第二次按下，刻意排在冷卻閘之前）與 MP 不足自動關閉（`toggleUpkeepSystem`）都只是呼叫它，所以「關閉時釋放風王鐵槌」不可能只發生一半。開關成本（`ability@1.manaCost`）與維持成本（`toggle.upkeepCost`）是兩個獨立數列，節奏 `none`/`perAttack`/`perSecond` 是欄位。⭐ 2026-08-10（G13-2）：`toggle.whileOn` 落地 —— 開著的期間掛一份**被動區塊**（重用 `AbilityPassive`，⛔ 不是第二份 `EffectDef[]`），走的是 `abilityPassives.ts` 那**同一份**程式（形態閘／六種授予轉發／四個強化面只有一份）。attach 掛在 `enterToggle`、detach 掛在`exitToggle`，所以手動關閉與 MP 不足自動關閉都一定卸得掉；`whileOnDuringExit` 只決定卸下與`onExit` 的**順序**，不決定會不會卸下。⚠️ 已知邊界：開著的時候升級**不換 rank**（加成停在開啟當下那一階）。⛔ 仍缺三件：① **stable state key** —— 一顆按鈕一個切換；「這幾個狀態互斥」現在寫得出來了（`applyBuff.exclusiveGroup`，見 `state.exclusive-group@1`），但那是**buff 層**的互斥，切換本身沒有群的概念；② **duration / refresh policy** —— 切換沒有自帶時限，要限時請用 `applyBuff`；③ **死亡不觸發 onExit** —— 屍體不付維持成本但旗標留著，「大招要不要從屍體放出來」是一個還沒裁決的決策點，⛔ 不可以在遊戲端偷開第二條出口去補它。",
+      "evidence": "packages/shared/src/sim/abilities/toggle.ts + toggle.test.ts（三個突變都驗過會紅：拿掉自動關閉、拿掉 perAttack 節奏閘、拿掉 onExit 的 runEffects）"
+    },
+    {
+      "key": "condition.has-equipment@1",
+      "plan": "§2.1.1.2（77-002 御雷劍）· §12 G4",
+      "state": "supported",
+      "evidence": "packages/shared/src/content/schema/condition.ts 的 `zEquipmentItemLeaf` / `zEquipmentTagLeaf`（⭐ 一個 UNION 而不是一個帶兩個 optional 欄位的物件，所以 `{itemId, tag}` 同時寫是 **PARSE ERROR**，不會安靜地由求值端替作者決定哪一格贏）+ packages/shared/src/sim/content/condition.ts 的求值與中文標籤。✅ 計畫要的「只接穩定 itemId、禁止用顯示名稱連結」成立：`itemId` 走 `zRef<ItemId>(\"items\")`。⚠️ 對方要知道的一件事：那個 ref 是 **soft**（御雷劍那一族的道具文件還沒進 `content/items/`），所以打錯的 itemId **不會在載入時被擋**，它只是永遠不成立。"
+    },
+    {
+      "key": "condition.stack-count@1",
+      "plan": "§2.1.1.2（層數門檻）· §12 G4 · GH#301-5",
+      "state": "partial",
+      "caveat": "✅ 寫得出來的是「某個主體身上的**某一份狀態**疊到 ≥N 層」：`{kind:\"status\", subject, statusId, minStacks:N}`（缺 `minStacks` = 只問有無，與這一格出現前逐字相同）。層數由 `applyStatus.stacks` 寫入、多來源相加、上界 `MARK_MAX_COUNT`(999)。⛔ 三件**還不行**，不要繞：① 讀不到 `sim/marks.ts` 的具名標記池（`effect.charge-ledger@1` 那一套的 `count`/`spent`）——那是另一個池子。⚠️ **但「`minStacks` 只看 `StatusComp`」這句話 2026-08-10 起不成立了**（第三守則）：G10 之後 `statusStacks` 讀**三本帳** —— `StatusComp.effects`、`world.marks`，以及帶 `statusId` 的 `ModifierSource`（`applyBuff.statusId`：標記與數值變成同一個物件，所以到期／淨化／卸下只有一條路，`extendBuff` 一行都不用改就把標記一起延長了）。→ 對方要「破甲同時是狀態也是數值」時，寫 **一發** `applyBuff{stackKey, statusId, modifiers}`，⛔ 不要拆成 `applyStatus` + `applyBuff` 兩份 —— 拆了的那一份 `extendBuff` 只延長得到後者；② `tag` 那個分支**刻意沒有** `minStacks`（「【破甲】類的狀態合計幾層」沒有人定義過語意，所以它是 PARSE ERROR 而不是由求值端替作者猜）；③ 只有「≥」一種比較 —— 「剛好 N 層」「至多 N 層」寫不出來（後者用 `not` 包一個 `minStacks:N+1`）。⚠️ 還有一件對方一定要知道的：出貨的 28 份狀態文件**沒有一份**寫 `stacks`，而 `applyStatus` 只在作者明寫 `stacks` 時才累加 —— 所以對既有狀態問 `minStacks:2` 永遠是 false，那不是壞掉，是那些狀態根本不疊層。",
+      "evidence": "packages/shared/src/content/schema/condition.ts 的 `zStatusIdLeaf.minStacks` + packages/shared/src/sim/content/condition.ts 的求值（走 `statusStacks`）與中文標籤。",
+      "nearestExisting": "`sim/marks.ts` 的具名標記（`count` / `spent`）—— 那是**另一個池子**，`minStacks` 讀不到它，見下面 caveat 的第 ①點。"
+    },
+    {
+      "key": "condition.ability-state@1",
+      "plan": "§2.1.1.2（哥哥、絕。暗殺奧義、虛化）· §12 G4",
+      "state": "unsupported",
+      "reason": "「某支技能正在冷卻 / 已學會 / 正在開啟」問不出來 —— `zConditionLeaf` 沒有這一種葉。⛔ 禁止以技能顯示名稱（「哥哥」「千年練成」）連結（計畫 §2.1.1.2 逐字）。",
+      "nearestExisting": "三件東西各摸到一角，**沒有一件是可查詢的條件**：① `HookDef.abilitySlot` —— 只在事件**抵達時**過濾「這一發來自哪個槽位」，而且它是**槽位**不是 exact ability ref（計畫 §4.4 要的是後者）；② `applyBuff.whileForm` —— 綁在 buff 上的形態限定，答得了「卍解中嗎」答不了「這支技能在冷卻嗎」；③ `ability@1.toggle` 的開關旗標 —— 只有 `exitToggle()` 這條路讀得到，內容寫不出對它的判斷。"
+    },
+    {
+      "key": "ability-augment@1",
+      "plan": "§2.1.1 P1 · §12 G4 · §13",
+      "state": "partial",
+      "caveat": "✅ 計畫 §4.4 的兩條禁令都守住了：目標是 **exact ability ref**（`zRef(\"abilities\")`，不是槽位、不是名稱文字），操作是一個 **allowlist enum** —— `procChance`（改機率）/ `durationSec`（改持續時間）/ `damageCoeffAp`（加 AP 傷害係數）/ `thresholdPct`（改門檻），四個剛好對上四支出貨卡（77-002 / 77-002 / 70-002 / 59-001）加上 `modifierValue`（改一條 `StatModifier` 的數值，必填 `stat`），⛔ 沒有位置 JSON Pointer。每個 op 的 `value` **兩端都有界**（`AUGMENT_OP_BOUNDS`），`mode` 只有 `set` / `add`。**fail closed 在載入時**：目標指不到就 `DanglingRefError`（`content/refs.ts::abilityRefs` 推的是**硬** ref edge），不是執行期靜默跳過；`thresholdPct` 另外強制填 `nodeKind`，那一格就是 §13「不得套到相鄰效果」的閘（一棵 condition 樹裡通常不只一個 `value`）。⭐ 2026-08-10：**四個面全部接上了** —— `scope` 那一格（`all` 預設 / `hooks` / `effects` / `grants`）決定一條操作打得到 hook 的 `chance` 與 hook 效果樹、主動施放的 `def.effects`（`castAbility` 與 `CastResolveSystem` 兩個入口都問）、來源授予的 `critStrike.chance`，或 passive 區塊的 `modifiers`（`modifierValue`，只有預設的 `all` 打得到）。`AugmentTarget.condition` 也讀了（77-002「裝備了某類道具時」；求值主體只有 `self`，所以 `subject:\"target\"` 的葉子恆為假）。⛔ 仍缺兩件，寫技能的人一定會撞到：① **這一版是執行期，不是編譯期** —— 計畫要的 reverse dependency closure 重編需要一個住在 `content/registries.ts` 的 compiler。現在是「組出那一份 clone 的前一刻」讀 augment 表再算（**可觀測等價**：同一組 ops、同一個目標解析、同一份界），但沒有 closure、不遞迴（強化一支自己也被強化的技能不成立）；② **`nodeKind` 是自由字串**（condition 的 kind 表住在另一份 schema，抄過來就是第二份會過期的真相），所以打錯字 = 那條操作匹配不到任何節點、靜默無效。⛔ 不要假裝它會紅。",
+      "evidence": "packages/shared/src/sim/abilities/abilityAugment.ts（收集 + 純改寫 + `opHitsSurface` 是全 sim 唯一讀 `scope` 的地方）；四個 seam：abilityPassives.ts::rankBlock（hooks / modifiers / grants）、abilitySystem.ts::castAbility 與 systems/CastResolveSystem.ts（effects）；守衛 packages/shared/src/sim/abilities/abilityAugment.test.ts（被動那一面）+ abilityAugmentCastAndScope.test.ts（主動施放那一面，突變驗過會紅）"
+    },
+    {
+      "key": "defense.block-source@1",
+      "plan": "§2.1.1 P1 · §12 G4",
+      "state": "partial",
+      "caveat": "`BlockGrant`（含 `lethalOnly` / `lethalBasis` / `internalCooldown` / 鏈式獨立判定）已出貨且時序正確（`mitigate()` 之後、護盾之前）。⭐ 2026-08-09（owner #299 第 6 條「授權格要放寬」）之後寫入點有**四個**：道具（`economy/itemSource.ts`）、**技能被動**（`ability@1.passive.ranks[].block`，配 `whileForm` 就寫得出「卍解狀態下才格擋」）、**三選一增益卡**（`augment@1.block`）、以及 **`applyBuff.block`**（限時授予 ——「接下來 5 秒內格擋」，同時也是**主動技能**那一格的答案：⛔ 不需要新的 effect kind）。四者走同一個 `ModifierSource.block`（`blockCutFor` 不看 `kind`），所以鏈式判定與型別過濾逐條相同；轉發只有一份（`sim/stats/sourceGrants.ts`）。⛔ 仍然缺的是**「格擋的那一刻」這個時機** —— 擋下來不會觸發任何 hook。⚠️ 另外 `internalCooldown` 的記帳住在 source 上，而技能被動的 source 在升級 / EX 解鎖 /變身時會 detach + attach、`applyBuff` 每次施放都是新的 source，等於冷卻歸零；後者的正確讀法是「這一次施放最多擋幾次」。出貨的兩支技能格擋都沒有 ICD，所以今天不可觀測。",
+      "evidence": "packages/shared/src/sim/combat/blockFromPassive.test.ts + packages/shared/src/sim/stats/sourceGrants.test.ts（四個授權面，四個突變都驗過會紅）"
+    },
+    {
+      "key": "effect.convert-hit-damage-type@1",
+      "plan": "§2.1.1 P1 · §12 G4",
+      "state": "partial",
+      "caveat": "`damageTypeOverride` 能轉換傷害型別且有 `impactGateType` 處理擊倒閘，但計畫要的是「以逐級機率把**該次普攻**完整轉成真傷」—— 逐級機率那一格沒有。⛔ 不可以改成「另外補一段真傷」，那是不同的東西（計畫 §2.1.1 明列）。⭐ 2026-08-09（G7）之後寫入點與 `defense.block-source@1` 一樣有**四個**：道具、`ability@1.passive.ranks[].damageTypeOverride`、`augment@1.damageTypeOverride`、以及 `applyBuff.damageTypeOverride`（限時 ——「接下來 5 秒你的普攻是真傷」，到期走那份 buff 自己的 `expiresAtTick`，⛔ 不需要新的 effect kind）。同一批也把**三圍授予**（`attributes`）放寬到同樣四個面。四者走同一個 `ModifierSource` 欄位（`resolveDamageConversion` / `sourceAttrGrants` 都不看 `kind`），轉發只有一份（`sim/stats/sourceGrants.ts`）。",
+      "evidence": "packages/shared/src/sim/combat/damageTypeOverride.ts + packages/shared/src/sim/stats/sourceGrants.test.ts（授權格與轉發表逐鍵對齊，兩個突變都驗過會紅）"
+    },
+    {
+      "key": "effect.delayed-sequence@1",
+      "plan": "計畫未點名（Lane 3 / G12：20-002 連續七次斬擊 · 52-002 連續 100 下）",
+      "state": "partial",
+      "caveat": "✅ 機制已出貨並接線（`SimWorld.step()` 的 7e′，排在 `combatResolveSystem` 之前，所以這一 tick 落下的一刀在**同一個 tick** 被減傷、被護盾吃、被記分、被結算）。⭐ 它**完全不碰 rng**（沒有落點要抽），所以一次施放推進亂數流 0 步 —— ⛔ 不必像 `scheduler.random-area@1` 那樣去算 draw 預算。排程是**絕對 tick**。⛔ 四個邊界，寫技能的人一定會撞到：① **發數有硬上界**（`sim/effects/kindLimits.ts::DELAYED_MAX_COUNT`，今天是 32）——52-002 的「連續 100 下」**寫不到 100**，schema 在載入時就拒絕，⛔ 不要靠疊兩發 `delayed` 去湊，那會變成兩串各自獨立的排程（`finalEffects` 也會跑兩次）；② **間隔被夾成至少 1 tick** —— 0.001 秒與一個 tick 在 30Hz 下是同一件事，所以「瞬間 32 連擊」拿不到，那是刻意的（整波塞進同一 tick 正是這個 kind 要修的症狀）；③ `finalEffects` 是**追加**不是取代（省略 = 最後一發與其餘完全相同，⛔ 不是「最後一發不跑」）；④ 三個會讓整串**提前停掉**的情境是欄位或規則，不是 bug：目標死亡（`dropDeadTargets`，預設跳過）、施法者死亡（`stopOnCasterDeath`，**預設繼續**）、以及該分區的決鬥已經結束（`settledZones`，⛔ 不可調 —— 回合結束後還在扣血是玩家看得見的缺陷）。⚠️ payload 在**施法那一刻烘焙**（同 `randomArea.effects` / `leap.onLand`），所以第七刀用的是施法時的 `comboBonus`，不是落地當下的。",
+      "evidence": "packages/shared/src/sim/effects/delayed.ts（`delayedEffect` + `delayedSystem`）+ packages/shared/src/content/schema/effect.ts 的 `delayed` 分支 + packages/shared/src/sim/effects/lane3Kinds.test.ts（「名單在施放那一刻凍住，而且分散在不同的 tick 上落下」）",
+      "nearestExisting": "`randomArea`（同樣是排在未來 tick 的一串）—— ⛔ 但它到期時用**圓心重解**目標，所以目標走開就打空；`delayed` 到期時用**施放那一刻凍住的名單**。兩者長得像，混用會安靜地做錯（兩支檔頭都寫了這一句）。`targetMode:\"reresolve\"` 就是把這一格切回 `randomArea` 的語意，那是設計偏好不是缺陷。"
+    },
+    {
+      "key": "effect.proxy-cast@1",
+      "plan": "計畫未點名（Lane 3 / S5：80-04 赤兔咆哮「攻擊時有 20% 機率使出弒鬼神」）",
+      "state": "partial",
+      "caveat": "✅ 代放走的是**目標技能自己的 payload**，所以改 80-02 就等於改 80-04 觸發的那一發。`payCosts`（`none` 預設 / `mana` / `manaAndCooldown`）決定要不要付代價，後兩者走 `castAbility` 的**同一排閘**（魔力／沉默／暈眩／擊倒／暴走／學過沒有／已在吟唱），⛔ 不是在這裡重寫一次那些 if。⛔ 四個邊界，寫技能的人一定會撞到：① **鏈深上界**（`sim/effects/kindLimits.ts::PROXY_MAX_CHAIN_DEPTH`，今天是 3），而 `maxDepth` **省略時是 0** —— 被代放的技能自己的代放直接被擋，那是終止性不是 bug；② `abilityId` 是**軟參照**（代放一支還沒上架的技能不會讓內容載入失敗），代價是**打錯的 id 不會在載入時被擋**，它只是永遠什麼都不發生 —— ⛔ 不要假裝它會紅；③ 三個預設值是**刻意**的，改之前先想一遍：不付冷卻（`payCosts:\"none\"`）、不看那一格的冷卻（`respectCooldown` 省略 = 冷卻中照樣代放）、要求已學會（`requireLearned` 省略 = 沒點那一招時什麼都不發生）。⚠️ 一個每次普攻都可能觸發的 proc 若改成 `manaAndCooldown`，那支大招就會**自己把自己鎖住**，而畫面上只看得到「W 一直是灰的」；④ `slot` 與 `abilityId` **恰好填一個**（superRefine 擋，不是由求值端替作者挑）；代放的主詞永遠是**施法者自己**，⛔ 不會去掃 registry 找「誰有這支」。",
+      "evidence": "packages/shared/src/sim/effects/proxyCast.ts（雙載體深度：`EffectContext.proxyDepth` ＋呼叫堆疊上的 `proxyStackDepth`，閘門讀兩者最大值，所以混著走的鏈也停得下來）+ packages/shared/src/content/schema/effect.ts 的 `proxyCast` 分支 + packages/shared/src/sim/effects/lane3Kinds.test.ts（「代放的是那一支技能自己的 payload，而且鏈一定會停」）",
+      "nearestExisting": "⛔ **不是** `content/templates/expand.ts` 的 `\"proxy-cast\"` 模板家族 —— 同一個字已經指過兩件事（那個家族自己的檔頭寫著「這裡不召喚任何東西」，展開結果只有 `damage` ＋選配 `applyStatus`）。在此之前這一族只能**手抄一份 payload**：80-04 帶著自己的 `spawnProjectile` + damage 陣列，而 80-02 弒鬼神本人是另一份 —— 兩份會各自腐爛，而畫面上看不出是哪一份在跑。"
+    }
+  ],
+  "unsupported": [
+    "condition.ability-state@1",
+    "effect.attack-dash@1",
+    "effect.control-restriction@1"
+  ],
+  "knownBroken": [
+    {
+      "token": "hook:onDeath",
+      "what": "⚠️ **一半修好，一半沒有 —— 兩半的成因不同，不要只讀一句結論。** ✅ **英雄那一半已修（GH#293）**：`WorldHookSystem` 的【死亡】那一列填了 `firesWhenOwnerDead: true`，`fireHooks` 的存活閘改成逐事件放行，所以「自己死亡時 ⋯」寫得出來。⛔ **小怪（`world.mob`）那一半仍然掛不上去，但成因在 2026-08-09 換了一個** —— ⚠️ 這一段先前寫的是「`mobSystem`（slot 9d′）在 `worldHookSystem`（9f）之前就 `destroy` 掉屍體」，**那個成因已經被 GH#296 修掉了**（`MobSystem` 兩處改成 `destroyAfterHooks`，屍體留到 slot 9g）。留著這句過期的理由比沒有理由更糟：對方會照一個假的閘去繞路，而真正的閘在別的地方。**真正的閘是**：`spawnMobBody` 沒有 `world.stats.set`（殭屍沒有屬性表，owner 2026-08-04 的 A3a 裁決），而 `attachSource` 第一句就是 `if (!sc) return` —— 所以沒有任何內容掛得上小怪的 onDeath。⭐ 這是**被守著的**，不是疏忽：`mobs.statusVsStats.test.ts` 逐字斷言 `world.stats.has(mob) === false`。→ 「殺死小怪時 ⋯」用 `onKill`（會發，掛在擊殺者身上）；「**小怪死亡時** ⋯」要等殭屍拿到屬性表，⛔ 不可以用 `onKill` 近似 —— 沒有擊殺者的死亡它一次都不會發。",
+      "issue": "GH#296"
+    }
+  ]
+}
