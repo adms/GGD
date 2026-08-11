@@ -48,6 +48,10 @@ export const DEFAULT_BASE_BONUS: BaseBonusTable = Object.freeze({
   // 這個數字 owner 已經動過三次(#265 立 300、2026-07-30 提到 650),它是後台可調的
   // 動態設定 —— 這裡只是「沒設定過時生效的預設」,不是唯一合法值。
   [Stat.MaxHealth]: 650,
+  // owner 2026-08-12：「統一全英雄初始 MP +600（後台倍率預設值可改），
+  // 連帶熊貓+1000 也被回歸校正用統一做法就好」——
+  // ⭐ 一格全域欄位取代逐英雄寫死（熊貓 `godie-h02k` 的 maxMana 已從 1100 改回 100）。
+  [Stat.MaxMana]: 600,
 });
 
 /** Read one stat's grant, tolerating a partial / absent / junk table. */

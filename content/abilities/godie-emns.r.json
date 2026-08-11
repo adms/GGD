@@ -1,46 +1,46 @@
 {
   "id": "godie-emns.r",
+  "schema": "ability@1",
   "name": "44-04 心臟麻痺",
-  "icon": "assets/icons/abilities/godie-emns.r.webp",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n被死神之眼指定的人將會心臟麻痺，短時間內將會行動緩慢以及喪失(目標生命上限)*15%+450點生命並使動作緩慢持續5秒。",
+  "description": "[主動][AP加成]\n35秒冷卻\n消耗MP150/250/350\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    45.0,
-    45.0,
-    45.0
+    35.0,
+    35.0,
+    35.0
   ],
   "manaCost": [
     150.0,
     250.0,
     350.0
   ],
-  "range": 11.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
-        "perRank": [
-          450.0,
-          450.0,
-          450.0
-        ],
+  "range": 12.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 50.0,
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.7
+            "coeff": 0.4
           }
         ]
-      },
-      "damageType": "magic",
-      "castTimeSec": 0.5
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 5.0,
+      "moveSpeedMult": 0.5
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-emns.r.webp",
   "vfxKey": "fx.prim.void.nova-lg",
   "sfxKey": "wc3.gruntyesattack3",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.4
 }

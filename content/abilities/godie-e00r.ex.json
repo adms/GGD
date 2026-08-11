@@ -1,59 +1,77 @@
 {
   "id": "godie-e00r.ex",
+  "schema": "ability@1",
   "name": "59-001 完全暴走",
-  "icon": "assets/icons/abilities/godie-e00r.ex.webp",
-  "description": "[主動]\n120秒冷卻時間\n\n不等牠自己醒過來 —— 你親手把安全鎖拔掉。\n\n• 只有自身生命 ≤ 15% 時按得下去（血還夠多的時候按，按鈕會拒絕你，魔力與冷卻一格都不扣）\n• 持續 10 秒，期間【暴走】：你完全無法下移動或攻擊指令，牠自己找最近的活人追上去打\n• 攻擊速度直接設定為 10 次/秒（同時把 4.0 的一般上限解開，否則會被夾回去）\n• 吸血 100%（普攻打出多少就回多少）\n• 迴避 +50%：一半的普通攻擊會直接落空（技能照樣打得到）\n• 暴走期間放技能，冷卻時間 ×2 —— 失控的代價\n• 次數無限，每 120 秒一次",
+  "description": "[被動][暴走][迴避][吸血][加速][屬性門檻]\n150秒冷卻\n\n「什麼？竟然沒有世界末日嗎？」\n[暴走]的門檻降為低於自身[最大生命] 20%，[攻擊速度]提升至最上限 10，[吸血]120%、[迴避]50%，持續 12秒。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    120.0
+    150.0
   ],
   "manaCost": [
-    120.0
+    0.0
   ],
-  "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "duration": 10,
-      "modifiers": [
-        {
-          "stat": "lifesteal",
-          "op": "flat",
-          "value": 1.0
-        },
-        {
-          "stat": "lifesteal",
-          "op": "capRaise",
-          "value": 1.0
-        },
-        {
-          "stat": "evasion",
-          "op": "flat",
-          "value": 0.5
-        },
-        {
-          "stat": "as",
-          "op": "capRaise",
-          "value": 10
-        },
-        {
-          "stat": "as",
-          "op": "override",
-          "value": 10
-        }
-      ]
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "berserk",
-      "applyTo": "self",
-      "duration": 10,
-      "berserk": true
-    }
-  ],
-  "vfxKey": "fx.prim.void.explosion-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "59-001 完全暴走",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "target": "self",
+            "internalCooldown": 150.0,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.2
+            },
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "capRaise",
+                    "value": 10.0
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 4.0
+                  },
+                  {
+                    "stat": "lifesteal",
+                    "op": "flat",
+                    "value": 0.8
+                  },
+                  {
+                    "stat": "evasion",
+                    "op": "flat",
+                    "value": 0.5
+                  }
+                ],
+                "duration": 12.0
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "berserk",
+                "duration": 12.0,
+                "berserk": true,
+                "applyTo": "self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00r.ex.webp",
+  "vfxKey": "fx.prim.void.explosion-lg"
 }

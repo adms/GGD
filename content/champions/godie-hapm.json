@@ -54,60 +54,77 @@
     "Q": {
       "id": "godie-hapm.q",
       "name": "52-01 狂戰士之怒",
-      "icon": "assets/icons/abilities/godie-hapm.q.webp",
-      "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
+      "description": "[主動][輔助]\n60秒冷卻\n消耗MP100/140/180/220\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
       "slot": "Q",
-      "castType": "targeted",
-      "maxRank": 5,
+      "castType": "self",
+      "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        57.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        60.0,
-        110.0,
-        160.0,
-        210.0,
-        175.0
+        100.0,
+        140.0,
+        180.0,
+        220.0
       ],
-      "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.prim.physical.pulse",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              40.0,
-              80.0,
-              120.0,
-              160.0,
-              200.0
-            ],
-            "ratios": [
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.1
+            }
+          ],
+          "duration": 6.0,
+          "statusId": "rage"
+        }
+      ],
+      "passive": {
+        "name": "52-01 狂戰士之怒",
+        "ranks": [
+          {
+            "hooks": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "on": "onDamageTaken",
+                "target": "self",
+                "effects": [
+                  {
+                    "kind": "extendBuff",
+                    "shape": "single",
+                    "who": "self",
+                    "stackKey": "rage",
+                    "addSec": 2.0,
+                    "perDamagePctOfMaxHealth": 0.05,
+                    "maxRemainingSec": 30.0
+                  }
+                ]
               }
             ]
-          },
-          "damageType": "physical",
-          "castTimeSec": 0.4
-        }
-      }
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-hapm.q.webp",
+      "vfxKey": "fx.prim.physical.pulse",
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-hapm.w",
       "name": "52-02 蹂躪編年史",
-      "icon": "assets/icons/abilities/godie-hapm.w.webp",
-      "description": "[主動攻擊]\n45秒冷卻時間\n\n迅速將目標抓回再暴力的丟出去，使之撞擊前方400距離處的敵人造成350傷害。",
+      "description": "[主動][指向][範圍][AP加成]\n45秒冷卻，吟唱 1秒\n消耗MP70/95/120/145\n施法距離11\n\n「歷史是勝利者寫的，敗者只配飛出去擦地板」\n將敵方目標抓回再暴力的丟出去，使之撞擊[前方]一[直線][範圍]的敵人造成350/450/550/650+50% [AP]傷害。\n(若自身在 [狂怒] 狀態則額外附加受到 [範圍] 傷害的敵人 [恐懼] 狀態，持續 3秒)",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         45.0,
@@ -116,12 +133,13 @@
         45.0
       ],
       "manaCost": [
-        60.0,
-        155.0,
-        190.0,
-        225.0
+        70.0,
+        95.0,
+        120.0,
+        145.0
       ],
-      "range": 5.5,
+      "range": 11.0,
+      "targetsEnemies": true,
       "effects": [
         {
           "kind": "invulnerable",
@@ -162,105 +180,178 @@
           ]
         }
       ],
+      "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "vfxKey": "fx.prim.physical.shockwave",
-      "targetsEnemies": true,
       "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-hapm.e",
       "name": "52-03 無銘斧劍",
-      "icon": "assets/icons/abilities/godie-hapm.e.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n由希臘神殿石柱打造出來的斧劍，只有BARSERKER的怪力才能揮動它，被攻擊者接下攻擊後會受到額外50點傷害且行動暫時麻痺，遲緩攻擊速度40%，持續0.6秒。",
+      "description": "[被動][普攻時]\n\n「沒有名字不是低階裝備，是作者懶得取」\n每次普通 [攻擊時] 造成額外50/70/90/110 傷害且附加 [麻痺] 效果，持續0.6秒。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 11.0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.physical.slash",
-      "targetsEnemies": true,
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              50.0,
-              70.0,
-              90.0,
-              110.0
-            ],
-            "ratios": [
+      "passive": {
+        "name": "52-03 無銘斧劍",
+        "ranks": [
+          {
+            "hooks": [
               {
-                "stat": "ad",
-                "coeff": 0.5
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 50.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 0.6,
+                    "moveSpeedMult": 0.5
+                  }
+                ]
               }
             ]
           },
-          "damageType": "physical",
-          "castTimeSec": 0.3
-        }
-      }
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 70.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 0.6,
+                    "moveSpeedMult": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 90.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 0.6,
+                    "moveSpeedMult": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "physical",
+                    "amount": {
+                      "flat": 110.0
+                    }
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "slow40",
+                    "duration": 0.6,
+                    "moveSpeedMult": 0.5
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-hapm.e.webp",
+      "vfxKey": "fx.prim.physical.slash"
     },
     "R": {
       "id": "godie-hapm.r",
       "name": "52-04 巨神一擊",
-      "icon": "assets/icons/abilities/godie-hapm.r.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
+      "description": "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
       "slot": "R",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        120.0,
+        120.0,
+        120.0
       ],
       "manaCost": [
-        200.0,
-        360.0,
-        520.0
+        400.0,
+        600.0,
+        800.0
       ],
-      "range": 11.0,
+      "range": 0.0,
+      "radiusTier": "大",
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 24.0,
+          "maxDistance": 5.0
+        },
+        {
+          "kind": "damageArea",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              600,
-              1000,
-              1400
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
-              }
+              600.0,
+              1000.0,
+              1400.0
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow25",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          },
+          "radius": 6.0,
+          "radiusTier": "大",
+          "maxTargets": 6,
+          "includeOrigin": true
         }
       ],
+      "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.8
+      "castTimeSec": 0.3
     }
   },
   "skillOrder": [

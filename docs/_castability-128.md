@@ -18,15 +18,15 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：369 / 378**（97.6%）　🟣 PASSIVE：8　❌ FAIL：1
-- 把「正確的永久被動」算進可接受行為：**377 / 378**（99.7%）如預期運作，只有 **1** 格是真正的缺口。
+- **✅ PASS：343 / 378**（90.7%）　🟣 PASSIVE：30　❌ FAIL：5
+- 把「正確的永久被動」算進可接受行為：**373 / 378**（98.7%）如預期運作，只有 **5** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
 
 - 名單：**近戰 44**、**遠程 19**。
 - **普攻形態**：遠程英雄中 **19/19** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **44/44** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
-- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 8 格、近戰 20 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
+- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 6 格、近戰 15 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
 
 ## PASS 觸發頻道分佈（驗證非橡皮圖章）
 
@@ -34,14 +34,14 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 238 |
-| buff | 80 |
-| projectile | 19 |
+| damage | 216 |
+| buff | 67 |
+| projectile | 23 |
+| status | 13 |
 | heal | 9 |
 | dash | 9 |
-| status | 7 |
 | championForm | 5 |
-| shield | 2 |
+| shield | 1 |
 
 - 僅靠 `vfx`（純特效、無 gameplay 頻道）過關：**0** 格。
 
@@ -50,24 +50,24 @@
 | 英雄 | ID | 型 | Q | W | E | R | EX | 普攻 |
 | --- | --- | --- | :-: | :-: | :-: | :-: | :-: | :-: |
 | 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ |
-| 亞瑟王 - Saber | `godie-e002` | 近 | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 亞瑟王 - Saber | `godie-e002` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 火霧戰士 - 夏娜 | `godie-e008` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 戰國刺客Azumi - 安云 | `godie-e00k` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | 近 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
-| 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | 近 | ❌ | 🟣 | 🟣 | ✅ | 🟣 | ✅ |
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | 🟣 | ✅ | ❌ | 🟣 | ✅ |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
-| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 遠 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ |
+| 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
-| 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 亂世癿王者 - 呂布奉先 | `godie-h01u` | 近 | 🟣 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 國寶級的畜生 - 熊貓 | `godie-h02k` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 海克力斯 - Berserker | `godie-hapm` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
+| 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ✅ | 🟣 | ✅ |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ✅ | ❌ | ✅ | 🟣 | ✅ |
+| 亂世癿王者 - 呂布奉先 | `godie-h01u` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
+| 國寶級的畜生 - 熊貓 | `godie-h02k` | 近 | 🟣 | 🟣 | 🟣 | 🟣 | ✅ | ✅ |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | 🟣 | 🟣 | ✅ | 🟣 | ✅ |
+| 海克力斯 - Berserker | `godie-hapm` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
 | 最終幻想 - 克勞德 | `godie-hart` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 慈悲的王者 - 賈修貝爾 | `godie-hblm` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -117,7 +117,11 @@
 
 | 英雄 | ID | 槽 | castType | 型 | 原因 |
 | --- | --- | --- | --- | --- | --- |
-| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | EX | self | 近 | cast rejected: hp-too-high |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 
 ## 🟣 永久被動清單（非 bug，僅供對照）
 
@@ -125,11 +129,33 @@
 | --- | --- | --- | --- |
 | 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | W | passive:modifiers |
 | 亞瑟王 - Saber | `godie-e002` | Q | passive:modifiers |
-| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | R | passive:modifiers |
+| 亞瑟王 - Saber | `godie-e002` | EX | passive:hooks |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | W | passive:hooks |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | E | passive:hooks |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | EX | passive:hooks |
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | W | passive:hooks |
+| 白木老樹精 - 白木卡迪那 | `godie-e00s` | EX | passive:hooks |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | W | passive:hooks |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | EX | passive:hooks |
+| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | R | passive:hooks |
+| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | EX | passive:hooks |
 | 奇樂 - 夜神月 | `godie-emns` | W | passive:modifiers |
 | 治癒系公主 - 木乃香 | `godie-etyr` | W | passive:modifiers |
 | 治癒系公主 - 木乃香 | `godie-etyr` | EX | passive:modifiers |
-| 亂世癿王者 - 呂布奉先 | `godie-h01u` | Q | passive:modifiers |
+| 龍之子 - 天地志狼 | `godie-ewar` | E | passive:modifiers |
+| 時空勇者 - 林克 | `godie-h00l` | E | passive:modifiers |
+| 時空勇者 - 林克 | `godie-h00l` | EX | passive:hooks |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | EX | passive:hooks |
+| 亂世癿王者 - 呂布奉先 | `godie-h01u` | Q | passive:hooks |
+| 亂世癿王者 - 呂布奉先 | `godie-h01u` | EX | passive:modifiers |
+| 國寶級的畜生 - 熊貓 | `godie-h02k` | Q | passive:hooks |
+| 國寶級的畜生 - 熊貓 | `godie-h02k` | W | passive:hooks |
+| 國寶級的畜生 - 熊貓 | `godie-h02k` | E | passive:hooks |
+| 國寶級的畜生 - 熊貓 | `godie-h02k` | R | passive:modifiers |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | W | passive:hooks |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | E | passive:hooks |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | EX | passive:hooks |
+| 海克力斯 - Berserker | `godie-hapm` | E | passive:hooks |
 | 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | W | passive:hooks |
 
 ## 方法與抽樣說明

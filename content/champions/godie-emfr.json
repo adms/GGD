@@ -52,159 +52,237 @@
   "abilities": {
     "Q": {
       "id": "godie-emfr.q",
-      "name": "15-01 風精召喚",
-      "icon": "assets/icons/abilities/godie-emfr.q.webp",
-      "description": "[主動攻擊]\n40秒冷卻時間\n\n集合3個風的中等精靈幫助召喚者攻擊敵人，每單位風之精靈造成155點傷害。",
+      "name": "15-01 雷神槍「巨神殺手」",
+      "description": "[主動][指向][範圍][AP加成]\n30秒冷卻\n消耗[MP] 175/275/375/475\n施法距離6.42\n\n「千之雷是頂級魔法，但我還可以開掛」\n對[前方]一[直線]敵方單位造成 250/350/450/550 +30% [AP]傷害，附帶麻痺 [緩慢] [移動速度]，持續1秒",
       "slot": "Q",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        40.0,
-        40.0,
-        40.0,
-        40.0
-      ],
-      "manaCost": [
-        75.0,
-        125.0,
-        175.0,
-        225.0
-      ],
-      "range": 6.42,
-      "effects": [],
-      "vfxKey": "fx.prim.wind.tornado",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              155.0,
-              155.0,
-              155.0,
-              155.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.4
-        }
-      }
-    },
-    "W": {
-      "id": "godie-emfr.w",
-      "name": "15-02 沉睡之霧",
-      "icon": "assets/icons/abilities/godie-emfr.w.webp",
-      "description": "[輔助]\n20秒冷卻時間\n\n沉睡之霧可以讓周圍施咒範圍內的敵人陷入睡眠狀態，持續3秒。",
-      "slot": "W",
-      "castType": "targeted",
-      "maxRank": 4,
-      "cooldown": [
-        20.0,
-        20.0,
-        20.0,
-        20.0
-      ],
-      "manaCost": [
-        60.0,
-        130.0,
-        160.0,
-        190.0
-      ],
-      "range": 6.42,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              75.0,
-              75.0,
-              75.0,
-              75.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 3.0,
-          "stun": true
-        }
-      ],
-      "vfxKey": "fx.prim.wind.pulse",
-      "sfxKey": "wc3.akamapissed8",
-      "targetsEnemies": true,
-      "castTimeSec": 0.5
-    },
-    "E": {
-      "id": "godie-emfr.e",
-      "name": "15-03 雷電風暴",
-      "icon": "assets/icons/abilities/godie-emfr.e.webp",
-      "description": "[主動攻擊]\n45秒冷卻時間\n\n用魔法元素創造出來充滿雷元素的風暴攻擊範圍內的敵人給予400+智慧*4點的瞬間傷害，之後每秒會承受25點殘餘電流的傷害，持續2秒。",
-      "slot": "E",
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
+        175.0,
         275.0,
-        340.0,
-        405.0,
-        470.0
+        375.0,
+        475.0
       ],
-      "range": 8.25,
-      "effects": [],
-      "vfxKey": "fx.prim.lightning.nova",
+      "range": 6.42,
       "targetsEnemies": true,
-      "radius": 5.13,
-      "castTimeSec": 0.6,
-      "template": {
-        "ref": "tpl-instant-blast",
-        "params": {
-          "radius": 280,
-          "damage": {
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
             "perRank": [
-              400,
-              600,
-              800,
-              1000
+              250.0,
+              350.0,
+              450.0,
+              550.0
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.6
+                "coeff": 0.3
               }
             ]
           },
-          "damageType": "magic",
-          "castTimeSec": 0.6
+          "length": 6.42,
+          "width": 1.6,
+          "aim": "target",
+          "fromCaster": true,
+          "maxTargets": 5,
+          "includeOrigin": false
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.0,
+          "moveSpeedMult": 0.5
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-emfr.q.webp",
+      "vfxKey": "fx.prim.wind.tornado",
+      "castTimeSec": 0.4
+    },
+    "W": {
+      "id": "godie-emfr.w",
+      "name": "15-02 疾風迅雷",
+      "description": "[主動][輔助][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n持續12秒\n\n「質疑魔法、成為魔法、超越魔法」\n獲得 1.2倍 [移動速度] 與 30/60/90/120% [攻擊速度]，普通攻擊附加 30/45/60/75 +10% [AP] 雷電傷害。\n([變身]為唯一狀態不可疊加)",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        180.0,
+        240.0,
+        300.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 0.2
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "passive": {
+        "name": "15-02 疾風迅雷",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "rage"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 30.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.1
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-emfr.w.webp",
+      "vfxKey": "fx.prim.wind.pulse",
+      "sfxKey": "wc3.akamapissed8",
+      "castTimeSec": 0.3
+    },
+    "E": {
+      "id": "godie-emfr.e",
+      "name": "15-03 獄炎煉我",
+      "description": "[主動][變身][普攻時][範圍][AP加成]\n55秒冷卻\n消耗[MP] 180/260/340/420\n持續12秒\n\n「問問這砂鍋大的火拳？」\n普通攻擊附加 60/90/120/150 + 40% [AP] 火焰傷害，每次技能命中都會引發爆炎[燃燒]標記，對[周圍]敵人造成 100/150/200/250 +60% [AP] [範圍]傷害，但[移動速度]減半。\n([變身]為唯一狀態不可疊加)",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        55.0,
+        55.0,
+        55.0,
+        55.0
+      ],
+      "manaCost": [
+        180.0,
+        260.0,
+        340.0,
+        420.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": -0.5
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "passive": {
+        "name": "15-03 獄炎煉我",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 60.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.4
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "on": "onAbilityHit",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 100.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.6
+                        }
+                      ]
+                    },
+                    "radius": 4.5,
+                    "radiusTier": "中",
+                    "maxTargets": 6
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "burn",
+                    "duration": 3.0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-emfr.e.webp",
+      "vfxKey": "fx.prim.lightning.nova",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-emfr.r",
-      "name": "15-04 千之雷",
-      "icon": "assets/icons/abilities/godie-emfr.r.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n千之雷是涅吉。史普林，威力最強大的雷系魔法，缺點是念咒時間長，可以讓敵人850點的瑪那瞬間大量流失在電擊之中，魔力越多傷害亦越大，並造成周圍智慧*5點傷害。",
+      "name": "15-04 雷天大壯。貳式",
+      "description": "[主動][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 200/400/600\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 150/225/300 + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
       "slot": "R",
-      "castType": "skillshot",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -212,32 +290,72 @@
         60.0
       ],
       "manaCost": [
-        100.0,
-        180.0,
-        260.0
+        200.0,
+        400.0,
+        600.0
       ],
-      "range": 14.0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        },
         {
           "kind": "spawnProjectile",
           "projectileId": "imported.bolt.lightning",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  850.0,
-                  1450.0,
-                  2050.0
-                ]
-              }
-            }
-          ]
+          "onHit": []
         }
       ],
+      "passive": {
+        "name": "15-04 雷天大壯。貳式",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "consumeOn": "fire",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 150.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.7
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
-      "castTimeSec": 0.7
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

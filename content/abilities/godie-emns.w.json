@@ -1,13 +1,12 @@
 {
   "id": "godie-emns.w",
+  "schema": "ability@1",
   "name": "44-02 死神的規則",
-  "icon": "assets/icons/abilities/godie-emns.w.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n夜神月越了解死神界和筆記本的規則，越能掌控全局，將這份知識化為智慧7點。",
+  "description": "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
   "slot": "W",
   "castType": "self",
-  "maxRank": 5,
+  "maxRank": 4,
   "cooldown": [
-    0.0,
     0.0,
     0.0,
     0.0,
@@ -17,13 +16,11 @@
     0.0,
     0.0,
     0.0,
-    0.0,
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "vfxKey": "fx.prim.void.pulse",
-  "schema": "ability@1",
   "passive": {
     "name": "44-02 死神的規則",
     "ranks": [
@@ -32,12 +29,7 @@
           {
             "stat": "ap",
             "op": "flat",
-            "value": 35
-          },
-          {
-            "stat": "maxMana",
-            "op": "flat",
-            "value": 105
+            "value": 7
           }
         ]
       },
@@ -46,12 +38,7 @@
           {
             "stat": "ap",
             "op": "flat",
-            "value": 35
-          },
-          {
-            "stat": "maxMana",
-            "op": "flat",
-            "value": 105
+            "value": 12
           }
         ]
       },
@@ -60,12 +47,7 @@
           {
             "stat": "ap",
             "op": "flat",
-            "value": 35
-          },
-          {
-            "stat": "maxMana",
-            "op": "flat",
-            "value": 105
+            "value": 17
           }
         ]
       },
@@ -74,29 +56,12 @@
           {
             "stat": "ap",
             "op": "flat",
-            "value": 35
-          },
-          {
-            "stat": "maxMana",
-            "op": "flat",
-            "value": 105
-          }
-        ]
-      },
-      {
-        "modifiers": [
-          {
-            "stat": "ap",
-            "op": "flat",
-            "value": 35
-          },
-          {
-            "stat": "maxMana",
-            "op": "flat",
-            "value": 105
+            "value": 22
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-emns.w.webp",
+  "vfxKey": "fx.prim.void.pulse"
 }

@@ -1,18 +1,19 @@
 {
   "id": "godie-hapm.ex",
+  "schema": "ability@1",
   "name": "52-002 射殺百頭",
-  "icon": "assets/icons/abilities/godie-hapm.ex.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n利用手中的無銘戰斧重現最得意的寶具-射殺百頭，對目標連續100下的斬擊，造成(力量*9)+900點傷害。",
+  "description": "[主動][指定][AP加成]\n120秒冷卻，吟唱2秒\n消耗MP400\n施法距離5.29\n\n「名稱叫射殺百頭，但狂戰士狀態下減弱成斧頭砍九次」\n對目標連續 9次的斬擊，每次造成 100% [AP] +自身[最大生命] 3% 傷害，最後一擊附加 [擊退]一小段距離 及 [恐懼] 3秒。",
   "slot": "EX",
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    120.0
   ],
   "manaCost": [
     400.0
   ],
   "range": 5.29,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "invulnerable",
@@ -23,21 +24,43 @@
       "blocksControl": true
     },
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
-        "flat": 300,
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.6
+      "kind": "delayed",
+      "shape": "single",
+      "delaySec": 0.1,
+      "count": 9,
+      "intervalSec": 0.1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 50.0,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
           }
-        ]
-      }
+        }
+      ],
+      "finalEffects": [
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "fear",
+          "duration": 3.0,
+          "feared": true
+        }
+      ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-hapm.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
-  "schema": "ability@1",
-  "targetsEnemies": true,
   "castTimeSec": 0.5
 }

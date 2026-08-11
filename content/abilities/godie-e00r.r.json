@@ -2,42 +2,48 @@
   "id": "godie-e00r.r",
   "schema": "ability@1",
   "name": "59-04 野戰型陽電子砲",
-  "icon": "assets/icons/abilities/godie-e00r.r.webp",
-  "description": "[主動攻擊]\n75秒冷卻時間\n\n集中大量能源，以求一擊必殺的陽電子砲,能夠對前方一直線的敵人造成750點傷害。",
+  "description": "[主動][指向][範圍][真傷]\n90秒冷卻，吟唱3秒\n消耗MP350/500/650\n施法距離8.25\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成750/1200/1650點[真實傷害]。",
   "slot": "R",
-  "castType": "skillshot",
+  "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    75.0,
-    75.0,
-    75.0
+    90.0,
+    90.0,
+    90.0
   ],
   "manaCost": [
-    250.0,
-    400.0,
-    550.0
+    350.0,
+    500.0,
+    650.0
   ],
   "range": 8.25,
+  "targetsEnemies": true,
   "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "true",
+      "amount": {
+        "perRank": [
+          750.0,
+          1200.0,
+          1650.0
+        ]
+      },
+      "length": 8.25,
+      "width": 2.2,
+      "aim": "target",
+      "fromCaster": true,
+      "maxTargets": 5,
+      "includeOrigin": false
+    },
     {
       "kind": "spawnProjectile",
       "projectileId": "imported.wave.ki",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              750.0,
-              1200.0,
-              1650.0
-            ]
-          }
-        }
-      ]
+      "onHit": []
     }
   ],
+  "icon": "assets/icons/abilities/godie-e00r.r.webp",
   "vfxKey": "fx.prim.ki.beam-lg",
   "sfxKey": "wc3.markofchaos",
-  "castTimeSec": 0.7
+  "castTimeSec": 0.4
 }

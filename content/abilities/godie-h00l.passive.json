@@ -1,38 +1,51 @@
 {
   "id": "godie-h00l.passive",
   "schema": "ability@1",
-  "name": "60-00 聖光盾",
-  "icon": "assets/icons/abilities/godie-h00l.passive.webp",
-  "description": "[輔助]\n45秒冷卻時間\n\n一個無法穿越的護盾將會環繞著這個部隊，保護它免於所有的傷害與法術攻擊，可以持續3秒。",
+  "name": "60-00 大師之劍",
+  "description": "[被動][淨化][普攻時]\n\n「真正的大師，都是買分的」\n[普通攻擊時]造成額外 3%[最大生命]傷害。並且造成 [淨化] 效果。",
   "slot": "PASSIVE",
-  "innateKind": "active",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    45.0
+    0.0
   ],
   "manaCost": [
-    300.0
+    0.0
   ],
-  "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": 500
-        },
-        {
-          "stat": "mr",
-          "op": "flat",
-          "value": 500
-        }
-      ],
-      "duration": 3.0
-    }
-  ],
-  "vfxKey": "fx.prim.holy.pulse-lg",
-  "castTimeSec": 0.3
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "60-00 大師之劍",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 60.0
+                }
+              },
+              {
+                "kind": "dispel",
+                "shape": "single",
+                "pools": {
+                  "status": true
+                },
+                "count": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h00l.passive.webp",
+  "vfxKey": "fx.prim.holy.pulse-lg"
 }

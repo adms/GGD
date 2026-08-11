@@ -46,6 +46,5 @@
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0
+  "schema": "ability@1"
 }

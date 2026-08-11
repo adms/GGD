@@ -13,6 +13,24 @@
  * championFormsResolve.test.ts / icons.test.ts make) so the guard cannot go
  * green on a stale `_index.json`, nor red merely because `pnpm content:build`
  * has not been run.
+ *
+ * ---------------------------------------------------------------------------
+ * TWO LAYERS FEED THE SHEET, AND ONLY ONE OF THEM SWAPS
+ * ---------------------------------------------------------------------------
+ * The stat sheet is (champion doc) + (whatever abilities are attached). Only the
+ * FIRST swaps: `championForm` re-derives the doc layer from the alternate, while
+ * `spawnChampion` binds ability ids ONCE from the picked half and never re-reads
+ * them — a passive that must differ per body says so with `whileForm` on its rank
+ * block (`abilities/abilityPassives.ts`), which is the mechanism for it.
+ *
+ * Until 2026-08-12 this suite compared the post-swap sheet to a directly-spawned
+ * alternate's sheet WHOLE, which silently assumed the two halves' ability layers
+ * were identical. They were, by accident, until the 90-支重製 gave 20 感知能力 /
+ * 77 浮雲-旋一閃 / 92 憂鬱的眼神 different `evasion` on the two sides. The
+ * comparison is therefore now split: doc-layer stats must match the alternate to
+ * the bit, and a stat is skipped ONLY where the two halves' spawn-time ability
+ * docs actually disagree about it — an exemption read out of shipped content, not
+ * written down here.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
@@ -36,9 +54,17 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { runEffects } from "./effects/effectRunner";
 import { championFormIndex } from "./systems/ChampionFormSystem";
-import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
+import { innateSupersedesLegacyPassive } from "./abilities/abilityPassives";
+import {
+  asSeatId,
+  asTeamId,
+  type AbilityId,
+  type ChampionId,
+  type EntityId,
+  type SeatId,
+} from "../ids";
 import type { IntentFrame } from "./intents";
-import type { StatBlock } from "./stats/statTypes";
+import { Stat, type StatBlock } from "./stats/statTypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -89,6 +115,67 @@ function spawnOne(championId: ChampionId): { world: SimWorld; id: EntityId } {
 
 const sheetOf = (world: SimWorld, id: EntityId): StatBlock => ({ ...world.stats.get(id)!.final });
 
+/**
+ * Stats the CHAMPION DOC owns outright (baseStats + growth + 三圍). These are
+ * what `championForm` re-derives, so they are the thing this suite exists to
+ * measure and may never fall into the ability-layer exemption below.
+ */
+const DOC_OWNED_STATS: ReadonlyArray<keyof StatBlock> = [
+  Stat.MaxHealth,
+  Stat.MaxMana,
+  Stat.Armor,
+  Stat.MagicResist,
+  Stat.AttackDamage,
+  Stat.AbilityPower,
+  Stat.AttackSpeed,
+  Stat.MoveSpeed,
+  Stat.AttackRange,
+];
+
+/**
+ * A champion's SPAWN-TIME ability-layer contribution, bucketed per stat.
+ *
+ * `spawnChampion` learns exactly three things at spawn — Q at rank 1, the 天生技
+ * at rank 1, and the legacy inline `champion.passive` unless the standalone
+ * innate supersedes it (`innateSupersedesLegacyPassive`, imported rather than
+ * re-derived so this cannot drift from the real rule). Everything else spawns
+ * at rank 0 and contributes nothing.
+ */
+function spawnTimeAbilityStats(id: ChampionId): ReadonlyMap<keyof StatBlock, string> {
+  const def = Champions.get(id);
+  const mods: Array<{ stat: string; op?: string; value?: number }> = [];
+  for (const abilityId of [def.abilities.Q.id, def.passiveAbility]) {
+    if (!abilityId) continue;
+    const ab = Abilities.tryGet(abilityId as AbilityId);
+    mods.push(...((ab?.passive?.ranks[0]?.modifiers ?? []) as typeof mods));
+  }
+  if (def.passive && !innateSupersedesLegacyPassive(def)) {
+    mods.push(...(def.passive.modifiers as typeof mods));
+  }
+  const bucket = new Map<keyof StatBlock, string[]>();
+  for (const m of mods) {
+    const k = m.stat as keyof StatBlock;
+    if (!bucket.has(k)) bucket.set(k, []);
+    bucket.get(k)!.push(`${m.op}=${m.value}`);
+  }
+  // sorted so declaration ORDER never fakes a divergence
+  return new Map([...bucket].map(([k, list]) => [k, list.sort().join(",")]));
+}
+
+/** Stats where the two halves' spawn-time ability layers disagree. */
+function statsWhereAbilityLayerDiffers(
+  baseId: ChampionId,
+  altId: ChampionId,
+): ReadonlySet<keyof StatBlock> {
+  const a = spawnTimeAbilityStats(baseId);
+  const b = spawnTimeAbilityStats(altId);
+  const out = new Set<keyof StatBlock>();
+  for (const k of new Set([...a.keys(), ...b.keys()])) {
+    if (a.get(k) !== b.get(k)) out.add(k);
+  }
+  return out;
+}
+
 describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
   it("every base can become its alternate, resolve its REAL sheet, and come home", () => {
     cover("transform-forms-sim");
@@ -98,6 +185,7 @@ describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
     expect(Champions.ids().length).toBeGreaterThanOrEqual(115);
 
     const problems: string[] = [];
+    const exemptedStats: string[] = [];
     let sheetsCompared = 0;
     let genuinelyDifferent = 0;
 
@@ -150,12 +238,42 @@ describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
       // the stats that fight are the ALTERNATE doc's, not the base's
       const got = sheetOf(world, id);
       sheetsCompared += 1;
-      if (JSON.stringify(got) !== JSON.stringify(altSheet)) {
+      // owner 2026-08-12 裁決：「只要讓 EX 照技能說明正常實作 被動或主動 即可」——
+      // 舊行為：兩半的技能組碰巧寫出一樣的被動修正，所以「換身後的表 == 直接生出
+      // 替身的表」整張成立。新規格：90 支重製把 20 感知能力 (0.06 vs 替身 0.07)、
+      // 77 浮雲-旋一閃 (本體 0.1、替身沒有)、92 憂鬱的眼神 (本體沒有、替身 0.18)
+      // 三處的**技能層**寫歪了，於是同一張表出現三格 evasion 落差。
+      //
+      // ⚠️ 那三格不是變身壞了，是這條斷言一直把兩層混在一起讀：
+      //   · 文件層（baseStats / growth / attributes）——`championForm` 真的重解，
+      //     這才是本測試要守的機制；
+      //   · 技能層（Q rank1 + 天生技 rank1 + legacy inline passive）——`spawnChampion`
+      //     只綁一次、綁的是**被選的那一半**，換身後**刻意**跟著走
+      //     （要分身體才生效的被動有 `whileForm` 閘，見 abilityPassives.rankBlock）。
+      // 所以豁免是**從出貨技能文件推導**的：只有兩半技能層對該屬性寫得不一樣時，
+      // 那一格才不比較；其餘每一格照舊必須逐位等於替身的表。
+      const abilityLayerDiffers = statsWhereAbilityLayerDiffers(baseId, altId);
+      const wrong = (Object.keys(got) as Array<keyof StatBlock>).filter(
+        (k) => got[k] !== altSheet[k] && !abilityLayerDiffers.has(k),
+      );
+      if (wrong.length > 0) {
         problems.push(
           `${pair.heroNumber} ${baseId}→${altId}: stat sheet is not the alternate's ` +
-            `(armor ${got.armor} vs ${altSheet.armor}, maxHealth ${got.maxHealth} vs ${altSheet.maxHealth})`,
+            wrong.map((k) => `[${k} ${got[k]} vs ${altSheet[k]}]`).join(" "),
         );
       }
+      // …and the exemption may never swallow a stat the CHAMPION DOC owns. If a
+      // 天生技/Q 被動 ever diverges on one of these, the answer is a `whileForm`
+      // gate on that rank block, not a wider exemption here.
+      const swallowedCore = DOC_OWNED_STATS.filter((k) => abilityLayerDiffers.has(k));
+      if (swallowedCore.length > 0) {
+        problems.push(
+          `${pair.heroNumber} ${baseId}→${altId}: the ability layer diverges on ` +
+            `${swallowedCore.join("/")} — a doc-owned stat. Gate that passive rank block ` +
+            `with \`whileForm\` instead of letting it hide the transform's own stat read.`,
+        );
+      }
+      exemptedStats.push(...[...abilityLayerDiffers].map((k) => `${pair.heroNumber}:${k}`));
       if (JSON.stringify(baseSheet) !== JSON.stringify(altSheet)) genuinelyDifferent += 1;
 
       // …and going home restores the base's sheet exactly
@@ -180,6 +298,15 @@ describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
       [],
     );
     expect(sheetsCompared).toBe(26);
+    // The exemption above is DERIVED from the shipped ability docs, so it cannot
+    // be widened by editing this file — but it can be widened by editing content,
+    // and a silently growing list would mean the two halves' 天生技/Q 被動 are
+    // drifting apart rather than the transform breaking. Fewer than one exempt
+    // stat per pair keeps it a handful of cells, not a blanket.
+    expect(
+      exemptedStats.length,
+      `ability-layer exemptions: ${exemptedStats.join(", ")}`,
+    ).toBeLessThan(sheetsCompared);
     // The sheet comparison above is only meaningful if the two halves actually
     // carry different numbers. They are separate w3u units, so most do — a
     // collapse to zero would mean this test is comparing a doc with itself.

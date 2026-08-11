@@ -52,41 +52,36 @@
   "abilities": {
     "Q": {
       "id": "godie-h00l.q",
-      "name": "60-01 科奇利族的迴旋鏢",
-      "icon": "assets/icons/abilities/godie-h00l.q.webp",
-      "description": "[主動攻擊]\n15秒冷卻時間\n\n使用科奇利族的迴旋標攻擊敵人，造成150點傷害。",
+      "name": "60-01 旋風斬",
+      "description": "[主動][範圍][AD加成][擊退]\n30秒冷卻\n消耗MP100/150/200/250\n\n「看我先暈倒還是你先被我砍死」\n造成[周圍][範圍] 150/250/350/450+50% [AD]點傷害，並且[擊退]敵人。",
       "slot": "Q",
-      "castType": "targeted",
-      "maxRank": 5,
+      "castType": "self",
+      "maxRank": 4,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0,
-        15.0,
-        7.0
+        30.0,
+        30.0,
+        30.0,
+        30.0
       ],
       "manaCost": [
-        50.0,
-        85.0,
-        120.0,
-        155.0,
-        75.0
+        100.0,
+        150.0,
+        200.0,
+        250.0
       ],
-      "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.prim.wind.slash",
-      "sfxKey": "wc3.druidofthetalonmissilelaunch2",
+      "range": 0.0,
+      "radiusTier": "中",
       "targetsEnemies": true,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
             "perRank": [
-              150,
-              250,
-              350,
-              450,
-              450
+              150.0,
+              250.0,
+              350.0,
+              450.0
             ],
             "ratios": [
               {
@@ -95,24 +90,35 @@
               }
             ]
           },
-          "damageType": "physical"
+          "radius": 4.5,
+          "radiusTier": "中",
+          "maxTargets": 6,
+          "includeOrigin": true
+        },
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
         }
-      },
-      "castTimeSec": 0
+      ],
+      "icon": "assets/icons/abilities/godie-h00l.q.webp",
+      "vfxKey": "fx.prim.wind.slash",
+      "sfxKey": "wc3.druidofthetalonmissilelaunch2",
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-h00l.w",
       "name": "60-02 鎖鏈槍",
-      "icon": "assets/icons/abilities/godie-h00l.w.webp",
-      "description": "[輔助]\n35秒冷卻時間\n\n勾住一個單位，將他拉到身邊來，範圍300，並且給予額外傷害150。",
+      "description": "[主動][指向][範圍][跳躍]\n45秒冷卻\n消耗MP50/75/100/125\n\n「我喜歡勾，但不喜歡脫鉤的時候」\n[直線]距離勾住一個單位，自身[跳躍]過去，並給予 150/250/350/450傷害。",
       "slot": "W",
-      "castType": "self",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
         50.0,
@@ -120,87 +126,234 @@
         100.0,
         125.0
       ],
-      "range": 0,
+      "range": 11.0,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "shield",
-          "amount": {
-            "perRank": [
-              150.0,
-              150.0,
-              150.0,
-              150.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.45
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 0.0,
+          "durationSec": 0.4,
+          "throwDistance": 11.0,
+          "landRadius": 3.0,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  150.0,
+                  250.0,
+                  350.0,
+                  450.0
+                ]
               }
-            ]
-          },
-          "duration": 5.0
+            }
+          ]
         }
       ],
+      "icon": "assets/icons/abilities/godie-h00l.w.webp",
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-h00l.e",
-      "name": "60-03 海拉爾之盾的庇護",
-      "icon": "assets/icons/abilities/godie-h00l.e.webp",
-      "description": "[開關]\n0秒冷卻時間\n\n開啟後將受到的穿刺及法術傷害降低20%，但是會失去50%移動速度。",
+      "name": "60-03 三角神力．勇氣",
+      "description": "[被動][強化][普攻時][AP加成]\n\n喚醒勇者體內的三角神力，提高 [智慧]、[敏捷]、[力量] 3/6/9/12點，並且每三下普通攻擊則會額外造成 33% [AP]傷害。",
       "slot": "E",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        100.0,
-        100.0,
-        100.0,
-        100.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.holy.pulse",
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 12,
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "pctAdd",
-              "value": 0.2
-            },
-            {
-              "stat": "mr",
-              "op": "pctAdd",
-              "value": 0.2
-            },
-            {
-              "stat": "ms",
-              "op": "pctAdd",
-              "value": -0.5
-            }
-          ],
-          "castTimeSec": 0.3
-        }
-      }
+      "passive": {
+        "name": "60-03 三角神力．勇氣",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 3
+              },
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 3
+              },
+              {
+                "stat": "maxHealth",
+                "op": "flat",
+                "value": 30
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.33
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 6
+              },
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 6
+              },
+              {
+                "stat": "maxHealth",
+                "op": "flat",
+                "value": 60
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.33
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 9
+              },
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 9
+              },
+              {
+                "stat": "maxHealth",
+                "op": "flat",
+                "value": 90
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.33
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "ap",
+                "op": "flat",
+                "value": 12
+              },
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 12
+              },
+              {
+                "stat": "maxHealth",
+                "op": "flat",
+                "value": 120
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.33
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h00l.e.webp",
+      "vfxKey": "fx.prim.holy.pulse"
     },
     "R": {
       "id": "godie-h00l.r",
-      "name": "60-04 迴旋斬",
-      "icon": "assets/icons/abilities/godie-h00l.r.webp",
-      "description": "[主動傷害]\n60秒冷卻時間\n\n使用迴旋斬將附近敵人砍傷450點並且彈開震暈1秒，每彈開一次附加林克力量屬性0.5倍的傷害。",
+      "name": "60-04 完美盾反",
+      "description": "[主動][反彈]\n60秒冷卻 吟唱2秒\n消耗[MP] 120/150/180\n有效半徑6\n\n「唯一擋不住的是你的魅力」\n瞬間架起海拉爾之盾，[反彈]魔法([AP])及物理([AD])傷害，持續3秒，期間若成功[反彈]敵方技能[AP]傷害，立即 [回復] 8/16/24% [最大生命]，並且[擊退]敵人。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -208,17 +361,48 @@
         60.0
       ],
       "manaCost": [
-        170.0,
-        290.0,
-        410.0
+        120.0,
+        150.0,
+        180.0
       ],
       "range": 0.0,
-      "effects": [],
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 3.0
+        }
+      ],
+      "passive": {
+        "name": "60-04 完美盾反",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onReflectSuccess",
+                "target": "self",
+                "effects": [
+                  {
+                    "kind": "restore",
+                    "healthPct": 0.08,
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 4.0,
+                    "speed": 16.0,
+                    "from": "caster"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h00l.r.webp",
       "vfxKey": "godie-bladestorm-swordeffect-p0",
       "sfxKey": "wc3.axemissilelaunch1",
-      "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.8,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -226,37 +410,14 @@
         "shakeStyle": "omni",
         "sparkKind": "heavy",
         "flashColor": [
-          1.0,
+          1,
           0.9,
           0.8
         ],
         "flashMs": 186,
         "camKick": 0.466
       },
-      "template": {
-        "ref": "tpl-proxy-cast",
-        "params": {
-          "anchor": "point",
-          "radius": 327,
-          "damage": {
-            "perRank": [
-              450,
-              750,
-              1050
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "physical",
-          "castTimeSec": 0.8,
-          "statusId": "burnstun",
-          "statusDurationSec": 0.8
-        }
-      }
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

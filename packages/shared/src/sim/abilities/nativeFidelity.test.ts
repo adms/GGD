@@ -12,6 +12,18 @@
  *
  * Sources for the numbers are quoted in `docs/content/reconciliation/` and, per
  * ability, in the patch that produced the doc.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ 2026-08-12 —— 四支已經**不再驗 w3x 原作**，改驗 owner 的新版設計。
+ *
+ * owner 2026-08-12 裁決（逐字）：「**(c) 分開**，但預設**一律以我新版的優先**，
+ * 除非我的設計有明顯的缺失你可以來問我」。
+ *
+ * 被取代的是 `godie-h01u.q`（80-01 天下無雙）、`godie-h01u.passive`
+ * （80-00 飛將神弓）、`godie-h01u.e`（80-03 鬼神烈戟）、`godie-edem.r`
+ * （45-04 哥哥）。**原作的 w3a / JASS rawcode 與數值沒有丟掉** —— 逐支存在
+ * ⭐ `docs/_w3x-fidelity-superseded.md`（task #78 的結論在那裡繼續活著）。
+ * 這四條測試的斷言換了期望值與驅動方式，**沒有拔掉任何一條斷言**。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -27,6 +39,8 @@ import { spawnChampion } from "../spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilitySystem";
 import { Stat } from "../stats/statTypes";
 import { championStatBase } from "../stats/attributes";
+import { attachSource } from "../stats/statPipeline";
+import { ModOp } from "../stats/modifiers";
 import { finalizeStat } from "../baseBonus";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../../ids";
 import type { CoreAbilitySlot } from "../intents";
@@ -161,6 +175,46 @@ function autoAttack(world: SimWorld, attacker: EntityId, victim: EntityId, ticks
   return hits;
 }
 
+/**
+ * The still-live buff sources one ability's passive hook has attached.
+ *
+ * ⚠️ 前綴要**指名到那一支技能**：呂布身上同時有 80-01（Q，普攻疊加）與 80-00
+ * （天生技，擊殺疊加）兩條 hook 在掛 buff，`applyBuff` 沒有 `stackKey` 時的 id 是
+ * `buff:hook:abilityPassive:<abilityId>#<tick>`，所以「一次施加 = 一份來源」——
+ * 層數就是這個陣列的長度。過期的來源可能還躺在陣列上（`buffExpirySystem` 在它
+ * 自己的相位收），所以這裡自己濾掉。
+ */
+function passiveBuffs(world: SimWorld, id: EntityId, abilityId: string) {
+  return world.stats
+    .get(id)!
+    .sources.filter(
+      (s) =>
+        s.id.startsWith(`buff:hook:abilityPassive:${abilityId}#`) &&
+        (s.expiresAtTick === undefined || s.expiresAtTick > world.tick),
+    );
+}
+const lubuQStacks = (w: SimWorld, id: EntityId) => passiveBuffs(w, id, "godie-h01u.q");
+const lubuKillStacks = (w: SimWorld, id: EntityId) => passiveBuffs(w, id, "godie-h01u.passive");
+
+/**
+ * One tick of "keep swinging at this bag" — the same pinning `autoAttack` does
+ * （擊退會把沙包推出射程，沙包死掉會停）, but it hands the tick back so the caller
+ * can read the stat pipeline BETWEEN swings, which is the whole point for a
+ * 1-second on-attack buff.
+ */
+function swinger(world: SimWorld, attacker: EntityId, victim: EntityId): () => void {
+  const ap = { ...world.transform.get(attacker)!.pos };
+  const vp = { ...world.transform.get(victim)!.pos };
+  return () => {
+    world.nav.get(attacker)!.attackTarget = victim;
+    world.transform.get(attacker)!.pos = { ...ap };
+    world.transform.get(victim)!.pos = { ...vp };
+    const hp = world.health.get(victim)!;
+    hp.hp = hp.maxHp;
+    world.step(NO_INTENTS);
+  };
+}
+
 // ============================================================ permanent passives
 describe("WC3 permanent passives are permanent (task #78)", () => {
   it("染血的柴刀 AOcr grants the map's real crit chance AND multiplier, and cannot be cast", () => {
@@ -204,30 +258,87 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     expect(crits[0]!.amount / plain[0]!.amount).toBeCloseTo(1.25, 5);
   });
 
-  it("天下無雙 is a permanent +AD / -armor trade, replaced (not stacked) per rank", () => {
+  // owner 2026-08-12 裁決：「(c) 分開，但預設一律以我新版的優先」——
+  // 舊行為 天下無雙 = 常駐 +25/+50/+75/+100 AD 配 -3/-6/-9/-12 armor（A0N5 Iatt /
+  // A0N4 Idef，逐階取代），新規格 = 「每次[普通攻擊時]都會增加 10%[攻擊速度]並可
+  // [疊加]，持續1秒，若沒有繼續攻擊則[疊加]的[攻擊速度]增益歸零」。
+  // 原作數值存在 docs/_w3x-fidelity-superseded.md §1。
+  it("天下無雙 是普攻觸發、會疊加、一秒歸零的攻速增益 —— 站著不動一格加成都沒有", () => {
     cover("fidelity-passive-lubu-q");
     const world = new SimWorld(SKELETON_ARENA, 3);
     // Q starts LEARNED at spawn, so its passive must already be attached
-    const lubu = mk(world, "godie-h01u", 0, -3);
+    const lubu = mk(world, "godie-h01u", 0, -0.7);
+    const bag = mk(world, "godie-hart", 1, 0.7);
+    world.step(NO_INTENTS);
+    world.rebuildGrid();
     const baseAd = champBase("godie-h01u", Stat.AttackDamage);
     const baseArmor = champBase("godie-h01u", Stat.Armor);
+    const baseAs = champBase("godie-h01u", Stat.AttackSpeed);
 
-    // JASS skill1 -> A0N5 Iatt lv2 = +25 AD, A0N4 Idef lv2 = -3 armor
-    expect(stats(world, lubu)[Stat.AttackDamage]).toBeCloseTo(baseAd + 25, 4);
-    expect(stats(world, lubu)[Stat.Armor]).toBeCloseTo(baseArmor - 3, 4);
+    // 站著不動：舊版這一刻已經是 +25 AD / -3 armor，新版**什麼都沒有**
+    expect(stats(world, lubu)[Stat.AttackDamage]).toBeCloseTo(baseAd, 4);
+    expect(stats(world, lubu)[Stat.Armor]).toBeCloseTo(baseArmor, 4);
+    expect(stats(world, lubu)[Stat.AttackSpeed]).toBeCloseTo(baseAs, 6);
 
-    toRank(world, lubu, "Q", 4); // lv5 = +100 AD, -12 armor
-    expect(stats(world, lubu)[Stat.AttackDamage]).toBeCloseTo(baseAd + 100, 4);
-    expect(stats(world, lubu)[Stat.Armor]).toBeCloseTo(baseArmor - 12, 4);
+    toRank(world, lubu, "Q", 4); // 舊版 lv5 = +100 AD / -12 armor
+    expect(stats(world, lubu)[Stat.AttackDamage]).toBeCloseTo(baseAd, 4);
+    expect(stats(world, lubu)[Stat.Armor]).toBeCloseTo(baseArmor, 4);
+
+    // 真的揮出一刀 → 一份 10% 攻速的來源掛上來（這是新規格的全部機制）
+    const swing = swinger(world, lubu, bag);
+    let n = 0;
+    while (lubuQStacks(world, lubu).length === 0 && n < 200) {
+      swing();
+      n++;
+    }
+    expect(n, "普攻打了 200 tick 都沒有掛上 天下無雙 的增益").toBeLessThan(200);
+    expect(stats(world, lubu)[Stat.AttackSpeed]).toBeCloseTo(baseAs * 1.1, 6);
+
+    // 「若沒有繼續攻擊則歸零」—— 停手一秒，來源與加成一起消失
+    for (let i = 0; i < Math.round(1 / world.dt) + 3; i++) world.step(NO_INTENTS);
+    expect(lubuQStacks(world, lubu).length).toBe(0);
+    expect(stats(world, lubu)[Stat.AttackSpeed]).toBeCloseTo(baseAs, 6);
   });
 
-  it("天下無雙's kill stack (A0AU 飛將神弓) adds +10 AD on an actual kill", () => {
+  // owner 2026-08-12 裁決（同上）—— 「[疊加]」那半個規格。
+  // 出貨攻速一刀要 1.44 s，比 1 s 的持續時間長，所以兩層永遠碰不到面；這裡墊一份
+  // 攻速讓一秒打得完兩下，被測的仍然是**真的普攻走真的 hook** 掛出來的那些來源。
+  it("天下無雙 的層數真的會同時存在並且相加（不是一份來源被刷新）", () => {
+    cover("fidelity-passive-lubu-q-stacks");
+    const world = new SimWorld(SKELETON_ARENA, 71);
+    const lubu = mk(world, "godie-h01u", 0, -0.7);
+    const bag = mk(world, "godie-hart", 1, 0.7);
+    attachSource(world, lubu, {
+      id: "rig:attack-speed",
+      kind: "item",
+      modifiers: [{ stat: Stat.AttackSpeed, op: ModOp.PercentAdd, value: 1.0 }],
+    });
+    world.step(NO_INTENTS);
+    world.rebuildGrid();
+
+    const swing = swinger(world, lubu, bag);
+    const asAt = new Map<number, number>();
+    for (let i = 0; i < 200; i++) {
+      swing();
+      const k = lubuQStacks(world, lubu).length;
+      if (!asAt.has(k)) asAt.set(k, stats(world, lubu)[Stat.AttackSpeed]);
+    }
+    expect(asAt.has(1), "連一層都沒掛上").toBe(true);
+    expect(asAt.has(2), "兩下普攻只留下一層 —— 層數被刷新掉了，不是疊加").toBe(true);
+    expect(asAt.get(2)!).toBeGreaterThan(asAt.get(1)!); // 兩層真的比一層快
+  });
+
+  // owner 2026-08-12 裁決（同上）—— 舊行為 飛將神弓 A0AU = 擊殺 +10 AD、10 秒過期，
+  // 新規格 = 擊殺 +1% 攻速 +0.01 攻擊距離、duration 99999（≒永久，每殺一層）。
+  // 原作數值存在 docs/_w3x-fidelity-superseded.md §2。
+  it("飛將神弓 的擊殺疊加還在，但它現在不會過期了", () => {
     cover("fidelity-passive-lubu-onkill");
     const world = new SimWorld(SKELETON_ARENA, 5);
     const lubu = mk(world, "godie-h01u", 0, -0.7);
     const prey = mk(world, "godie-o02p", 1, 0.7);
     world.step(NO_INTENTS);
-    const before = stats(world, lubu)[Stat.AttackDamage];
+    const range0 = stats(world, lubu)[Stat.AttackRange];
+    expect(lubuKillStacks(world, lubu).length).toBe(0);
 
     // chip the victim down so the next auto that lands is a killing blow
     const lp = { ...world.transform.get(lubu)!.pos };
@@ -241,14 +352,16 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     }
     expect(world.health.get(prey)!.alive).toBe(false);
     world.step(NO_INTENTS); // let the stat recompute land
-    const withStack = stats(world, lubu)[Stat.AttackDamage];
-    expect(withStack).toBeGreaterThan(before); // the kill also levels him up
+    // 一次擊殺 = 一層，而且它真的走到 final（不是只躺在 sources 上）
+    expect(lubuKillStacks(world, lubu).length).toBe(1);
+    const withStack = stats(world, lubu)[Stat.AttackRange];
+    expect(withStack).toBeGreaterThan(range0);
 
-    // isolate the STACK from the level-up: it is a 15 s buff, so run past it.
-    // Nothing else changes in between, so the drop is exactly the stack.
+    // 舊行為在這裡就過期了（10 s 的 buff，舊斷言跑 15 s 去接那個落差）。
+    // 新規格 duration 99999 —— 跑過舊的窗口，它必須還在。
     for (let i = 0; i < Math.round(15 / world.dt) + 5; i++) world.step(NO_INTENTS);
-    const afterExpiry = stats(world, lubu)[Stat.AttackDamage];
-    expect(withStack - afterExpiry).toBeCloseTo(10, 4);
+    expect(lubuKillStacks(world, lubu).length).toBe(1);
+    expect(stats(world, lubu)[Stat.AttackRange]).toBeGreaterThanOrEqual(withStack);
   });
 
   it("魔力應援 AOae is a permanent aura buff on its owner, not a 12 s / 60-mana cast", () => {
@@ -327,16 +440,63 @@ describe("the Aamk leak: attribute buttons are stat passives, not damage nukes",
     expect(stats(world, saber)[Stat.MaxHealth]).toBeCloseTo(baseHp + 22 * 16, 4);
   });
 
-  it("哥哥 grants AGI (armor + attack speed) instead of firing a nuke", () => {
+  // owner 2026-08-12 裁決：「(c) 分開，但預設一律以我新版的優先」——
+  // 舊行為 哥哥 = Aamk 屬性強化（靈敏度加成 12 → armor +3.6、攻速 +24%，常駐），
+  // 新規格 =「當『千鳥』命中帶有[燃燒]標記的敵人時引發忍術『麒麟』雷電大爆炸」。
+  // 原作數值存在 docs/_w3x-fidelity-superseded.md §4。
+  // ⚠️ Aamk 那條「屬性按鈕不是傷害核彈」的匯入器守衛在佐助身上沒了；
+  //    主守衛仍然由上面兩條 godie-e00q（力量強化 / 魔力增幅）扛著。
+  it("哥哥 只在千鳥打中【燃燒】的敵人時才炸，而且不再給任何常駐三圍", () => {
     cover("fidelity-aamk-agi");
-    const world = new SimWorld(SKELETON_ARENA, 29);
-    const sasuke = mk(world, "godie-edem", 0, -2);
-    const baseArmor = champBase("godie-edem", Stat.Armor);
-    const baseAs = champBase("godie-edem", Stat.AttackSpeed);
+    /** 跑一次「(可選)先燒 → 再放千鳥」，回傳這一輪所有傷害的 origin。 */
+    const run = (burnFirst: boolean): string[] => {
+      const world = new SimWorld(SKELETON_ARENA, 29);
+      const sasuke = mk(world, "godie-edem", 0, -6);
+      mk(world, "godie-hart", 1, 0, 0);
+      mk(world, "godie-hart", 1, 0, 1.5);
+      world.rebuildGrid();
+      toRank(world, sasuke, "Q", 1); // 45-01 火遁：它就是【燃燒】的來源
+      toRank(world, sasuke, "E", 1); // 45-03 千鳥：hook 指名的那一格
+      toRank(world, sasuke, "R", 1); // 45-04 哥哥本人
 
-    toRank(world, sasuke, "R", 1); // w3a 靈敏度加成 12 -> armor +3.6, as +24 %
-    expect(stats(world, sasuke)[Stat.Armor]).toBeCloseTo(baseArmor + 3.6, 4);
-    expect(stats(world, sasuke)[Stat.AttackSpeed]).toBeCloseTo(baseAs * 1.24, 5);
+      // 舊版學會 R 的這一刻就有 armor +3.6 / 攻速 +24%，新版一格常駐都沒有
+      expect(stats(world, sasuke)[Stat.Armor]).toBeCloseTo(champBase("godie-edem", Stat.Armor), 4);
+      expect(stats(world, sasuke)[Stat.AttackSpeed]).toBeCloseTo(
+        champBase("godie-edem", Stat.AttackSpeed),
+        5,
+      );
+
+      const origins: string[] = [];
+      const collect = () => {
+        for (const e of world.events) {
+          if (e.type === "damage") origins.push((e.data as unknown as { origin: string }).origin);
+        }
+      };
+      const castAt = (slot: CoreAbilitySlot) => {
+        topUpMana(world, sasuke);
+        expect(castAbility(world, sasuke, slot, { type: "point", point: { x: P.x, z: P.z } })).toBe(
+          "ok",
+        );
+        windUp(world, sasuke);
+        collect();
+        for (let i = 0; i < 3; i++) {
+          world.step(NO_INTENTS);
+          collect();
+        }
+      };
+      if (burnFirst) castAt("Q");
+      castAt("E");
+      return origins;
+    };
+
+    const clean = run(false);
+    expect(clean).toContain("ability:godie-edem.e"); // 千鳥本體確實打中了
+    expect(clean.some((o) => o.includes("godie-edem.r"))).toBe(false); // 沒燒 → 不炸
+
+    const burned = run(true);
+    expect(burned).toContain("ability:godie-edem.e");
+    // 燒了 → 麒麟落下。origin 指名 R 的被動，所以它不可能是千鳥自己的傷害
+    expect(burned.filter((o) => o === "hook:abilityPassive:godie-edem.r").length).toBeGreaterThan(0);
   });
 
   it("魔力增幅 grants the Rhpt upgrade's mana pool, not 80 magic damage", () => {
@@ -398,29 +558,40 @@ describe("multi-target natives resolve as areas, not single targets", () => {
     expect(before[1]! - world.health.get(b)!.hp).toBeGreaterThan(50);
   });
 
-  it("鬼神烈戟 damages AND shreds armor in a circle around the caster, then wears off", () => {
+  // owner 2026-08-12 裁決：「(c) 分開，但預設一律以我新版的優先」——
+  // 舊行為 鬼神烈戟 = 以自己為圓心的圓形傷害 + w3a 增加防禦 -3 持續 3 秒，
+  // 新規格 =「[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。
+  // (若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)」。
+  // ⭐ 最大的一項變化：**破甲從「這一招施加的」變成「這一招要讀的條件」** ——
+  //    現在施加 armor-break 的是 W 弒鬼神。原作數值存在
+  //    docs/_w3x-fidelity-superseded.md §3。
+  it("鬼神烈戟 是衝刺 + 直線，線外的人完全沒事，而且它自己不再削護甲", () => {
     cover("fidelity-lubu-e-aoe");
     const world = new SimWorld(SKELETON_ARENA, 43);
-    const lubu = mk(world, "godie-h01u", 0, 0);
-    const v1 = mk(world, "godie-hart", 1, 2, 0);
-    const v2 = mk(world, "godie-hart", 1, -2, 0);
+    const lubu = mk(world, "godie-h01u", 0, 0, -4);
+    const onLine = mk(world, "godie-hart", 1, 0, 0); // 呂布與施法點之間
+    const offLine = mk(world, "godie-hart", 1, 5, 0); // 一樣的距離，但在線外
     world.rebuildGrid();
     toRank(world, lubu, "E", 1);
-    const armor0 = stats(world, v1)[Stat.Armor];
-    const hp0 = [v1, v2].map((e) => world.health.get(e)!.hp);
+    topUpMana(world, lubu);
+    const from = { ...world.transform.get(lubu)!.pos };
+    const armor0 = stats(world, onLine)[Stat.Armor];
+    const hp0 = [onLine, offLine].map((e) => world.health.get(e)!.hp);
 
-    expect(castAbility(world, lubu, "E", { type: "point", point: { x: P.x, z: P.z } })).toBe(
+    expect(castAbility(world, lubu, "E", { type: "point", point: { x: P.x, z: P.z + 4 } })).toBe(
       "ok",
     );
-    // 施法前搖 (0.9 s since the +0.3 pass) then the area resolves
+    // 施法前搖 then the dash carries him and the line resolves
     windUp(world, lubu);
-    for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
-    expect(world.health.get(v1)!.hp).toBeLessThan(hp0[0]!);
-    expect(world.health.get(v2)!.hp).toBeLessThan(hp0[1]!);
-    // w3a 增加防禦 -3 for 持續 3 s
-    expect(stats(world, v1)[Stat.Armor]).toBeLessThan(armor0);
-    for (let i = 0; i < 120; i++) world.step(NO_INTENTS);
-    expect(stats(world, v1)[Stat.Armor]).toBeCloseTo(armor0, 4);
+    for (let i = 0; i < 15; i++) world.step(NO_INTENTS);
+
+    // [衝刺]：他真的離開原地往施法點去（舊版原地不動）
+    expect(world.transform.get(lubu)!.pos.z).toBeGreaterThan(from.z + 1);
+    // [直線]：線上的中招，線外的一點都沒有（舊版是圓，兩個都會中）
+    expect(world.health.get(onLine)!.hp).toBeLessThan(hp0[0]!);
+    expect(world.health.get(offLine)!.hp).toBe(hp0[1]!);
+    // 舊版這裡護甲會掉 3 秒；新版破甲是**輸入**不是輸出，所以護甲不動
+    expect(stats(world, onLine)[Stat.Armor]).toBeCloseTo(armor0, 4);
   });
 });
 

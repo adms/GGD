@@ -1,14 +1,32 @@
 /**
- * 59-00 暴走 / 59-001 完全暴走 —— owner 2026-08-03 定稿的守衛。
+ * 59-00 暴走 / 59-001 完全暴走 —— owner 2026-08-12 重製規格的守衛。
  *
  * ════════════════════════════════════════════════════════════════════════════
- *              天生技(自動)                    EX(主動)
- *   門檻      HP ≤ 5%,100% 觸發              HP ≤ 15%,主動放
- *   攻速      解除上限到 10(靠自己頂)         直接設定為 10
- *   持續      10 秒                           10 秒
- *   次數      無限                            無限
- *   冷卻      120 秒                          120 秒
- *   暴走中(兩支相同):吸血 100% · 迴避 +50% · 冷卻時間 ×2
+ * ⭐ owner 2026-08-12 裁決（逐字）：
+ *   「只要讓 EX **照技能說明**正常實作 被動或主動 即可」
+ *
+ * —— 舊行為：59-001 完全暴走是**主動 EX**（按鍵 → `castHpPct` 閘 → 放得出來）；
+ *    新規格：59-001 是 `[被動]`，和 59-00 一樣掛在 `onDamageTaken` 上，
+ *    **條件達成自動觸發**。所以這一份改的是「**怎麼進入暴走**」，
+ *    ⛔ 不是暴走本身 —— 吸血 / 迴避 / 攻速天花板 / 冷卻 ×2 / 後台可關，
+ *    五個機制一條不少，只是換了入口與數字。
+ *
+ * ── 新規格（`docs/英雄技能第一批重製-90支.md` 的 59-00 與 59-001）─────────
+ *
+ *              59-00 天生技(被動)              59-001 EX(被動)
+ *   入口      挨打 + HP ≤ 5%                  挨打 + HP ≤ 20%（要先解鎖 EX）
+ *   攻速      +100%（**不**解上限）            解上限到 10 且 +400%
+ *   吸血      60%                             80%（文案寫 120%，見下方 ⚠️）
+ *   迴避      +25%                            +50%
+ *   持續      6 秒                            12 秒
+ *   冷卻      150 秒（hook 的 internalCooldown）
+ *   暴走中（兩支相同）：奪走方向盤 · 冷卻時間 ×2
+ *
+ * ⚠️ **文案 120% vs 出貨 0.8**：規格寫「[吸血]120%」，而產生器寫進文件的是
+ *    `lifesteal flat 0.8`（= `config/stat-caps.json` 的 `lifesteal.base`）。
+ *    這裡**不**替內容做決定 —— 下面驗的是「文件上那個值**原封不動**到達
+ *    `sc.final`」，所以哪一天 owner 把它調成 1.0 + `capRaise`，這條照樣是對的，
+ *    而任何一環把它夾掉就會紅。差額本身是內容問題，回報給 owner。
  *
  * ════════════════════════════════════════════════════════════════════════════
  * ⭐ 每一條都跑**真的 SimWorld**、載入**出貨的內容**、讀**最終**的 `sc.final`。
@@ -16,18 +34,22 @@
  * 這不是排場。這一族功能有三個地方會安靜地失效,而三個都只有在讀最終值時才看
  * 得見(CLAUDE.md 失敗形態 ⑤「被測的不是出貨的那個」與 ⑦「掃屬性代替掃行為」):
  *
- *   1. 攻速 `override 10` 會被 `finalizeStat` 夾回 `4.0`,除非同一份 buff 也帶
- *      `capRaise 10`。斷言「buff 掛上了」對兩種寫法都會過;斷言
- *      `sc.final[as] === 10` 只對正確的那一種過。
- *   2. 吸血 `flat 1.0` 會被 `STAT_CLAMPS[lifesteal]` 的 `0.8` 夾掉,除非
- *      `config/stat-caps.json` 也有 `lifesteal.unlocked = 1.0` **而且** buff 帶
- *      `capRaise 1.0`。三個東西缺一個,玩家拿到的是 80% 而面板寫 100%。
+ *   1. 攻速的天花板。`finalizeStat` 用 `effectiveCap` 夾,沒有 `capRaise` 的
+ *      來源時上限就是 4.0。斷言「buff 掛上了」對兩種寫法都會過;把值**頂過
+ *      4.0 再讀**只對帶著 `capRaise` 的那一種過。
+ *   2. 吸血會被 `STAT_CLAMPS` / `config/stat-caps.json` 夾掉,而面板照樣寫文件上
+ *      的數字 —— 壞掉跟正常長得一模一樣。
  *   3. 迴避是 2026-07-30 才長出來的屬性;一條沒有接上傷害結算的屬性看起來跟
  *      接上了一模一樣(失敗形態 ②)。所以下面除了讀 `sc.final[evasion]`,還有
  *      一條真的打 300 下、數有多少下落空的行為守衛。
  *
- * ⚠️ 數字**刻意寫死在測試裡**,不是從文件讀回來的。從文件讀的斷言對「文件被改成
- * 0」也會過 —— 那正是這一族守衛存在的理由(同 laneA.innates.test.ts 的做法)。
+ * ⚠️ 數字**不再寫死在測試裡**（這是 2026-08-12 的第二個改動）。舊版檔頭主張
+ * 「從文件讀的斷言對『文件被改成 0』也會過」——那個顧慮是對的,但解法錯了:
+ * owner 已經在 07-31 / 08-03 / 08-12 三次改動同一組數字,寫死的那份就是
+ * CLAUDE.md 第二守則點名的**第四個住處**,而且它紅的時候說的是「暴走壞了」。
+ * 兩件事分開驗,兩個顧慮就都顧到了(同 `laneA.innates.test.ts` 的做法):
+ *   ① {@link readBerserkSpec} 斷言文件上每一格都是**有意義的正數**(擋掉歸零);
+ *   ② 行為斷言比對「世界裡的最終值 === 文件值」(擋掉沒接上 / 被夾掉)。
  */
 import { describe, expect, it, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -49,9 +71,11 @@ import { statCapsFromDoc } from "./statCaps";
 import {
   BERSERK_COOLDOWN_MULT_BOUNDS,
   DEFAULT_BERSERK_RULES,
+  berserkCastBlock,
   berserkRulesFromDoc,
   normalizeBerserkRules,
 } from "./abilities/berserkRules";
+import type { AbilityDef } from "./content/defs";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 
@@ -61,10 +85,8 @@ const Z0 = SKELETON_ARENA.zones[0]!;
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
 
 const EVA = "godie-e00r" as ChampionId;
-
-/** 30 Hz:10 秒 = 300 tick,120 秒 = 3600 tick。絕對 tick,不是遞減計數器。 */
-const TEN_SEC_TICKS = 300;
-const CD_120_TICKS = 3600;
+/** 30 Hz —— 秒 → tick。到期一律絕對 tick,不是遞減計數器。 */
+const HZ = 30;
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
@@ -73,12 +95,87 @@ beforeAll(async () => {
   registerAll(result.store);
 });
 
+/** 一支暴走技在**出貨文件**上長什麼樣 —— 全部從 registry 讀,一個字面值都不抄。 */
+interface BerserkSpec {
+  /** hook 的 `condition.value`:HP 比例門檻。 */
+  hpPct: number;
+  /** `applyBuff.duration`(秒)。 */
+  duration: number;
+  /** `HookDef.internalCooldown`(秒)。 */
+  icd: number;
+  /** 攻速 `pctAdd`(1.0 = +100%)。 */
+  asPctAdd: number;
+  /** 攻速 `capRaise` —— `null` = 這一支**不**解天花板(59-00 就是)。 */
+  asCapRaise: number | null;
+  lifesteal: number;
+  evasion: number;
+}
+
+/**
+ * 讀出貨的那一份 def(`Abilities.get` 回的是**模板展開之後**的,失敗形態 ⑤)。
+ *
+ * ⚠️ 這支函式自己就是**反向守衛**:把文件裡任何一格改成 0 / 刪掉,它在這裡就
+ * 丟出來,而不是讓下面的行為斷言用一個 0 去比對一個 0 然後全綠。
+ */
+function readBerserkSpec(abilityId: string): BerserkSpec {
+  const def = Abilities.get(abilityId as never);
+  const hook = def.passive?.ranks[0]?.hooks?.[0];
+  expect(hook, `${abilityId} 沒有 passive hook —— 這支技能整個下線了`).toBeDefined();
+  // 新規格兩支都是 `[被動]`:入口是**挨打**,不是按鍵(owner 2026-08-12)。
+  expect(hook!.on, `${abilityId} 的入口不是「受到傷害時」—— 被動觸發沒了`).toBe("onDamageTaken");
+
+  const cond = hook!.condition;
+  expect(cond, `${abilityId} 的 hook 沒有條件 —— 門檻整個不見了(每次挨打都暴走)`).toBeDefined();
+  // `EffectCondition` 是聯集(`AllCondition` 沒有 `kind`),所以先窄化再讀。
+  const leaf = cond as { kind?: string; stat?: string; mode?: string; value?: number };
+  expect(leaf.kind, `${abilityId} 的門檻不是一條 stat 條件`).toBe("stat");
+  expect(leaf.stat, `${abilityId} 的門檻不是看生命`).toBe("hp");
+  expect(leaf.mode, `${abilityId} 的門檻不是比例 —— 絕對值的門檻跟血量上限一起漂`).toBe("percent");
+  const hpPct = leaf.value!;
+
+  const buff = hook!.effects.find((e) => e.kind === "applyBuff");
+  expect(buff, `${abilityId} 的 hook 沒有 applyBuff —— 暴走的數值全沒了`).toBeDefined();
+  const mods = (buff as { modifiers: { stat: string; op: string; value: number }[] }).modifiers;
+  const pick = (stat: string, op: string): number | null => {
+    const m = mods.find((x) => x.stat === stat && x.op === op);
+    return m === undefined ? null : m.value;
+  };
+  const spec: BerserkSpec = {
+    hpPct,
+    duration: (buff as { duration?: number }).duration ?? 0,
+    icd: hook!.internalCooldown ?? 0,
+    asPctAdd: pick(Stat.AttackSpeed, "pctAdd") ?? 0,
+    asCapRaise: pick(Stat.AttackSpeed, "capRaise"),
+    lifesteal: pick(Stat.Lifesteal, "flat") ?? 0,
+    evasion: pick(Stat.Evasion, "flat") ?? 0,
+  };
+
+  // 每一格都必須是有意義的正數。0 = 這一格等於沒有效果,而遊戲裡看不出來。
+  for (const [k, v] of [
+    ["hpPct", spec.hpPct],
+    ["duration", spec.duration],
+    ["icd", spec.icd],
+    ["asPctAdd", spec.asPctAdd],
+    ["lifesteal", spec.lifesteal],
+    ["evasion", spec.evasion],
+  ] as const) {
+    expect(v, `${abilityId} 出貨文件上的 ${k} 是 0 —— 這一格等於沒有效果`).toBeGreaterThan(0);
+  }
+  return spec;
+}
+
+/** 59-00 天生技的出貨參數。`beforeAll` 之後才讀得到,所以是 lazy。 */
+const innateSpec = (): BerserkSpec =>
+  readBerserkSpec(Champions.get(EVA).passiveAbility! as unknown as string);
+/** 59-001 EX 的出貨參數。 */
+const exSpec = (): BerserkSpec => readBerserkSpec(Champions.get(EVA).exAbility! as unknown as string);
+
 /**
  * 一個開著戰鬥的世界 + 一台初號機。
  *
- * ⚠️ `statCaps` 從**出貨的那份文件**讀,不是留在 `DEFAULT_STAT_CAPS`。整條吸血
- * 100% 的鍊子有一環就是那份文件的 `lifesteal.unlocked`,不接上去的話這裡量到的
- * 是預設表而不是玩家會拿到的表(失敗形態 ⑤)。
+ * ⚠️ `statCaps` 從**出貨的那份文件**讀,不是留在 `DEFAULT_STAT_CAPS`。攻速天花板
+ * 與吸血天花板整條鍊子有一環就是那份文件,不接上去的話這裡量到的是預設表而不是
+ * 玩家會拿到的表(失敗形態 ⑤)。
  */
 function arena(seed = 4242): { world: SimWorld; id: EntityId } {
   const world = new SimWorld(SKELETON_ARENA, seed);
@@ -113,64 +210,100 @@ function hurtTo(world: SimWorld, id: EntityId, pct: number): void {
   step(world, 2);
 }
 
-describe("59-00 暴走(天生技,自動)—— owner 2026-08-03 定稿", () => {
-  it("HP 掉到 5% 的那一 tick 暴走真的開了,而且滿血挨打不會開", () => {
+/**
+ * 三項暴走屬性的**最終值**守衛 —— 吸血 / 迴避 / 攻速倍率 / 攻速天花板。
+ *
+ * ⭐ 天花板那一段是 THE 突變守衛:先塞一根 `+8 flat` 的棒子把值頂過一般上限
+ * 4.0,再看它被夾在哪。只斷言「暴走後攻速變高」對「`capRaise` 那一格被刪掉」
+ * 也會過(失敗形態 ③)。
+ *
+ * ⛔ `capUnlocked` 是**呼叫端寫死的**,⚠️ 刻意**不從文件推導**。
+ *    第一版寫成「文件有 capRaise → 驗解鎖;沒有 → 驗被夾」,而突變驗證當場證明
+ *    那是一條假守衛:把 59-001 的 `as capRaise 10` 從文件刪掉,測試**自己換到另一
+ *    個分支**然後全綠 —— 一條可以被它所監視的東西關掉的守衛不是守衛。
+ *    這一格記的是 owner 規格上的**設計方向**(59-001「[攻擊速度]提升至最上限 10」
+ *    要解鎖 / 59-00「提升100%」不解鎖),不是數值,所以它不是第四個住處。
+ */
+function expectBerserkStats(
+  world: SimWorld,
+  id: EntityId,
+  spec: BerserkSpec,
+  asBase: number,
+  capUnlocked: boolean,
+): void {
+  const sc = world.stats.get(id)!;
+  // ① 吸血:文件值原封不動到達最終值。被 STAT_CLAMPS / stat-caps 夾掉就紅。
+  expect(sc.final[Stat.Lifesteal], "吸血被夾掉了 —— stat-caps 的 lifesteal 那一列在嗎?")
+    .toBeCloseTo(spec.lifesteal * world.combatEnv.lifesteal, 5);
+  // ② 迴避(初號機沒有任何常駐迴避,所以最終值就是這一格)。
+  expect(sc.final[Stat.Evasion], "迴避沒有接上").toBeCloseTo(spec.evasion, 5);
+  // ③ 攻速倍率 —— owner 2026-08-12 的新規格:兩支都直接給倍率。
+  expect(sc.final[Stat.AttackSpeed], "攻速倍率沒有生效").toBeCloseTo(
+    asBase * (1 + spec.asPctAdd),
+    3,
+  );
+
+  // ④ 天花板。
+  const baseCap = world.statCaps.as?.base ?? 4;
+  const unlockedCap = world.statCaps.as?.unlocked ?? 10;
+  sc.sources.push({
+    id: "test:as-stick",
+    kind: "item",
+    modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 8 }],
+  });
+  sc.dirty = true;
+  step(world, 1);
+  const pushed = world.stats.get(id)!.final[Stat.AttackSpeed];
+  if (capUnlocked) {
+    expect(spec.asCapRaise, "出貨文件上的 `as capRaise` 不見了 —— 攻速上限解不開了").not.toBeNull();
+    expect(pushed, "攻速被夾在一般上限 —— `as capRaise` 那一格掉了?").toBeGreaterThan(baseCap);
+    expect(pushed).toBeLessThanOrEqual(unlockedCap);
+  } else {
+    expect(spec.asCapRaise, "這一支不該解攻速上限,文件卻有 `as capRaise`").toBeNull();
+    expect(pushed, "沒有 capRaise,攻速卻頂破了一般上限 —— 天花板閘漏了").toBeCloseTo(baseCap, 5);
+  }
+}
+
+describe("59-00 暴走(天生技·被動·自動觸發)—— owner 2026-08-12 重製規格", () => {
+  it("HP 掉到門檻的那一 tick 暴走真的開了,而且滿血挨打不會開", () => {
+    const spec = innateSpec();
     const { world, id } = arena();
 
     // 滿血挨打 → 條件不成立。這條是「門檻真的在擋」的對照組:把 condition 拿掉,
     // 這裡就紅(否則下面那條對「永遠觸發」的實作也會過 —— 失敗形態 ④)。
     hurtTo(world, id, 1.0);
-    expect(isBerserk(world, id), "滿血就暴走了 —— 5% 的門檻沒有在擋").toBe(false);
+    expect(isBerserk(world, id), "滿血就暴走了 —— 門檻沒有在擋").toBe(false);
 
-    // 5.01% —— 門檻**外緣**,只差 0.01 個百分點。這一格是「門檻真的是 0.05」的
-    // 守衛:寫成 0.10 或 0.15 的話它會在這裡就開。
-    hurtTo(world, id, 0.0501);
-    expect(isBerserk(world, id), "5.01% 就暴走了 —— 門檻被寫寬了(0.10?0.15?)").toBe(false);
+    // 門檻**外緣**,只差 0.01 個百分點。這一格是「門檻真的是文件上那個值」的
+    // 守衛:被寫寬的話它會在這裡就開。
+    hurtTo(world, id, spec.hpPct + 0.0001);
+    expect(isBerserk(world, id), "還沒到門檻就暴走了 —— 門檻被寫寬了?").toBe(false);
 
-    // 5% —— owner 的字面門檻是「HP ≤ 5%」,必須開。
+    // 門檻上 —— owner 的字面門檻是「≤」,必須開。
     //
     // ⚠️ 誠實地說清楚這一條**沒有**在守什麼:`<` 與 `<=` 的差別在這條路上量不到。
     // `onDamageTaken` 是在那一發傷害**扣完之後**才發射的,所以 hook 讀到的血量
-    // 永遠嚴格小於觸發前的血量 —— 「正好等於 5%」在傷害路徑上是一個測度為零的
-    // 事件。(第一版的註解宣稱這一格在分辨兩個運算子,而突變驗證證明它不是:
-    //  把 `<=` 改回 `<`,這條照樣綠。CLAUDE.md 失敗形態 ④。)
-    // 文件裡留 `<=` 是因為那是 owner 用字的忠實轉錄,不是因為這裡量得出來。
-    hurtTo(world, id, 0.05);
-    expect(isBerserk(world, id), "掉到 5% 沒有觸發").toBe(true);
+    // 永遠嚴格小於觸發前的血量 —— 「正好等於門檻」在傷害路徑上是一個測度為零的
+    // 事件。文件裡留 `<=` 是因為那是 owner 用字的忠實轉錄,不是因為這裡量得出來。
+    hurtTo(world, id, spec.hpPct);
+    expect(isBerserk(world, id), "掉到門檻沒有觸發").toBe(true);
   });
 
-  it("暴走中:吸血 100%、迴避 +50%、攻速上限被解到 10(讀最終 stats)", () => {
+  it("暴走中:吸血 / 迴避 / 攻速倍率全部到位,而且天生技**不**解攻速天花板", () => {
+    const spec = innateSpec();
     const { world, id } = arena();
-    hurtTo(world, id, 0.04);
+    const asBase = world.stats.get(id)!.final[Stat.AttackSpeed];
+    hurtTo(world, id, spec.hpPct * 0.8);
     expect(isBerserk(world, id)).toBe(true);
-
-    const sc = world.stats.get(id)!;
-
-    // ① 吸血 100%。⚠️ 沒有 `stat-caps.json` 的 lifesteal 那一列 + buff 的
-    //    `capRaise 1.0`,這裡會是 **0.8**(STAT_CLAMPS 的上界)而且沒有任何
-    //    錯誤訊息 —— 面板寫 100%,實際回 80%。
-    expect(sc.final[Stat.Lifesteal], "吸血被夾掉了 —— stat-caps 的 lifesteal 那一列在嗎?")
-      .toBeCloseTo(1.0, 6);
-
-    // ② 迴避 +50%(初號機沒有任何常駐迴避,所以最終值就是這一格)。
-    expect(sc.final[Stat.Evasion]).toBeCloseTo(0.5, 6);
-
-    // ③ 攻速上限。天生技**只**抬天花板,不給數值(owner:「實際值靠自己頂」),
-    //    所以要證明天花板真的被抬高,必須先把值推到 4.0 以上再看它有沒有被夾。
-    //    只斷言「暴走後攻速變高」會對「capRaise 那一格被刪掉」也過(失敗形態 ③)。
-    sc.sources.push({
-      id: "test:as-stick",
-      kind: "item",
-      modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 8 }],
-    });
-    sc.dirty = true;
-    step(world, 1);
-    const unlocked = world.stats.get(id)!.final[Stat.AttackSpeed];
-    expect(unlocked, "攻速被夾在 4.0 —— 天生技的 `as capRaise 10` 掉了?").toBeGreaterThan(4.0);
-    expect(unlocked).toBeLessThanOrEqual(10);
+    // ⚠️ 舊規格(owner 2026-08-03)是「天生技只抬天花板、不給倍率」,新規格
+    // (2026-08-12「生命降至5%時必定[暴走],將[攻擊速度]提升100%」)是**反過來的**:
+    // 給倍率、不抬天花板。`expectBerserkStats` 兩個方向都驗,所以哪一天 owner 又
+    // 規格上 59-00 只寫「提升100%」,沒有一個字提到上限,所以 `capUnlocked: false`。
+    expectBerserkStats(world, id, spec, asBase, false);
   });
 
-  it("迴避 +50% 真的讓普攻落空 —— 不是只有面板上多一個數字", () => {
+  it("迴避真的讓普攻落空 —— 不是只有面板上多一個數字", () => {
+    const spec = innateSpec();
     const { world, id } = arena(1234);
     const attacker = spawnChampion(world, {
       championId: EVA,
@@ -189,185 +322,237 @@ describe("59-00 暴走(天生技,自動)—— owner 2026-08-03 定稿", () => {
     expect(calmDodges, "沒有暴走卻閃掉了普攻").toBe(0);
     expect(world.rng.state, "迴避 0 卻抽了亂數 —— ZERO GUARANTEE 破了").toBe(rngBefore);
 
-    hurtTo(world, id, 0.04);
+    hurtTo(world, id, spec.hpPct * 0.8);
     expect(isBerserk(world, id)).toBe(true);
 
     // ⚠️ 跑的是 `BasicAttackSystem` / `ProjectileSystem` **真的呼叫的那一支**
-    //    (sim/combat/evasion.ts),不是重寫一份機率。300 次、p = 0.5:
-    //    三個標準差大約是 ±26,所以 [110, 190] 這個窗口在正確時幾乎不可能紅,
-    //    而「迴避沒有接上」(0 次)與「迴避被當成 1.0」(300 次)都在窗口外。
+    //    (sim/combat/evasion.ts),不是重寫一份機率。窗口從文件值推導(±4σ),
+    //    所以 owner 調迴避的那一天它自己跟著移動;而「迴避沒有接上」(0 次)與
+    //    「迴避被當成必閃」(300 次)兩端都在窗口外。
+    const n = 300;
+    const p = spec.evasion;
+    const sd = Math.sqrt(n * p * (1 - p));
     let madDodges = 0;
-    for (let i = 0; i < 300; i++) if (rollEvade(world, attacker, id)) madDodges++;
-    expect(madDodges, "暴走中的迴避沒有作用在普攻上").toBeGreaterThan(110);
-    expect(madDodges, "迴避比 50% 高太多 —— 是不是變成必閃了?").toBeLessThan(190);
+    for (let i = 0; i < n; i++) if (rollEvade(world, attacker, id)) madDodges++;
+    expect(madDodges, "暴走中的迴避沒有作用在普攻上").toBeGreaterThan(n * p - 4 * sd);
+    expect(madDodges, "閃避率遠高於文件值 —— 是不是變成必閃了?").toBeLessThan(n * p + 4 * sd);
   });
 
-  it("暴走 10 秒後全部退場(吸血/迴避/方向盤一起還回來)", () => {
+  it("持續時間到就全部退場(吸血/迴避/方向盤一起還回來)", () => {
+    const spec = innateSpec();
     const { world, id } = arena();
-    hurtTo(world, id, 0.04);
+    hurtTo(world, id, spec.hpPct * 0.8);
     expect(isBerserk(world, id)).toBe(true);
 
-    // 10 秒 = 300 tick;`hurtTo` 已經走了 2 tick,再多跑幾 tick 讓 status 過期。
-    step(world, TEN_SEC_TICKS);
-    expect(isBerserk(world, id)).toBe(false);
+    // 撐過一格是為了證明它**不是**一 tick 就掉的(下面那條才有意義)。
+    step(world, Math.round(spec.duration * HZ) - 4);
+    expect(isBerserk(world, id), "還沒到期就退場了 —— duration 沒有生效?").toBe(true);
+    step(world, 8);
+    expect(isBerserk(world, id), "到期了卻沒有退場").toBe(false);
     const sc = world.stats.get(id)!;
     expect(sc.final[Stat.Lifesteal]).toBeCloseTo(0, 6);
     expect(sc.final[Stat.Evasion]).toBeCloseTo(0, 6);
   });
 
-  it("120 秒內不會再觸發第二次(冷卻真的是 120 而不是 45)", () => {
+  it("內部冷卻走完之前不會再觸發,走完之後次數無限", () => {
+    const spec = innateSpec();
+    const icdTicks = Math.round(spec.icd * HZ);
     const { world, id } = arena();
-    hurtTo(world, id, 0.04);
+    hurtTo(world, id, spec.hpPct * 0.8);
     expect(isBerserk(world, id)).toBe(true);
     const firstTick = world.tick;
 
-    // 暴走退場之後,一路把血壓在 4% 反覆挨打 —— 沒有內部冷卻的話**每一 tick**
-    // 都會重新暴走一次(而且每次都把到期往後推 10 秒 = 永久暴走)。
-    step(world, TEN_SEC_TICKS);
+    // 暴走退場之後,一路把血壓在門檻下反覆挨打 —— 沒有內部冷卻的話**每一 tick**
+    // 都會重新暴走一次(而且每次都把到期往後推 = 永久暴走)。
+    step(world, Math.round(spec.duration * HZ));
     expect(isBerserk(world, id)).toBe(false);
 
     // 冷卻剩最後 100 tick 之前:全部都必須被擋住。
-    // (舊值 45 秒 = 1350 tick,所以只要 ICD 掉回 45,這個迴圈就會在 1350 附近轉紅。)
-    while (world.tick - firstTick < CD_120_TICKS - 100) {
-      hurtTo(world, id, 0.04);
+    while (world.tick - firstTick < icdTicks - 100) {
+      hurtTo(world, id, spec.hpPct * 0.8);
       expect(
         isBerserk(world, id),
-        `第 ${world.tick - firstTick} tick(< 120 秒)就再次暴走了 —— internalCooldown 掉了?`,
+        `第 ${world.tick - firstTick} tick(冷卻還沒走完)就再次暴走了 —— internalCooldown 掉了?`,
       ).toBe(false);
     }
 
-    // 對照組:過了 120 秒,同一發傷害必須讓它再暴走一次(次數無限)。
+    // 對照組:過了冷卻,同一發傷害必須讓它再暴走一次(次數無限)。
     // 沒有這一條,上面的迴圈對「這支天生技整個壞掉、永遠不觸發」也會全綠。
-    while (world.tick - firstTick < CD_120_TICKS + 5) step(world, 1);
-    hurtTo(world, id, 0.04);
-    expect(isBerserk(world, id), "120 秒之後沒有再暴走 —— 次數應該是無限的").toBe(true);
+    while (world.tick - firstTick < icdTicks + 5) step(world, 1);
+    hurtTo(world, id, spec.hpPct * 0.8);
+    expect(isBerserk(world, id), "冷卻走完卻沒有再暴走 —— 次數應該是無限的").toBe(true);
   });
 });
 
-describe("59-001 完全暴走(EX,主動)—— owner 2026-08-03 定稿", () => {
-  /** 解鎖 EX 並回報它的實例。 */
-  function withEx(seed = 909): { world: SimWorld; id: EntityId } {
-    const w = arena(seed);
-    expect(learnEx(w.world, w.id), "初號機沒有 EX 槽?").toBe(true);
-    return w;
-  }
+/**
+ * 59-001 完全暴走 —— **B-1 的主體**。
+ *
+ * owner 2026-08-12 裁決:「只要讓 EX **照技能說明**正常實作 被動或主動 即可」
+ * —— 舊行為「按 EX 鍵 → `castHpPct` 閘 → 回 `ok`」,新規格「解鎖後,挨打且
+ * HP ≤ 20% 自動觸發」。所以下面三條**驗的是同一件事的新樣子**:
+ *   舊「血還太多按不下去」 → 新「血還太多**不會自動觸發**」;
+ *   舊「按下去 → 暴走屬性到位」 → 新「條件達成 → 暴走屬性到位」;
+ *   舊「EX 冷卻 120 秒」 → 新「hook 的 internalCooldown」(機制與天生技共用,
+ *      已由上面那條承重的線驗過,這裡不重複跑 4,500 tick —— 第零守則②)。
+ */
+describe("59-001 完全暴走(EX·被動·自動觸發)—— owner 2026-08-12 裁決", () => {
+  it("沒解鎖 EX → 到了 EX 的門檻也不會觸發;解鎖後同一發傷害就觸發", () => {
+    const spec = exSpec();
+    const { world, id } = arena(909);
+    const probe = spec.hpPct * 0.9; // 低於 EX 門檻、遠高於天生技門檻
 
-  it("血還太多的時候按不下去,而且魔力與冷卻一格都不扣", () => {
-    const { world, id } = withEx();
-    const hp = world.health.get(id)!;
-    const manaBefore = hp.mana;
+    // ⚠️ 這一條取代舊版的 `learnEx(...) === true` 斷言:入口從「按鍵」變成
+    // 「解鎖 + 條件」之後,**解鎖**才是那個閘。不解鎖就觸發 = EX 白送。
+    hurtTo(world, id, probe);
+    expect(isBerserk(world, id), "EX 還沒解鎖就自動暴走了 —— rank 閘漏了").toBe(false);
 
-    hp.hp = hp.maxHp * 0.5;
-    expect(castAbility(world, id, "EX", { type: "self" })).toBe("hp-too-high");
-    expect(hp.mana, "被門檻擋下來卻還是扣了魔力").toBe(manaBefore);
-    expect(world.abilities.get(id)!.exSlot!.cooldownRemainingTicks, "被擋下來卻轉了冷卻").toBe(0);
-
-    // 16% —— 門檻**外緣**。15% 才放得出來,所以這裡仍然要被擋。
-    hp.hp = hp.maxHp * 0.16;
-    expect(castAbility(world, id, "EX", { type: "self" })).toBe("hp-too-high");
-
-    // 15% 整 —— owner 的字面門檻是「≤ 15%」,必須放得出來。
-    hp.hp = hp.maxHp * 0.15;
-    expect(castAbility(world, id, "EX", { type: "self" }), "正好 15% 放不出來").toBe("ok");
+    expect(learnEx(world, id), "初號機沒有 EX 槽?").toBe(true);
+    hurtTo(world, id, probe);
+    expect(isBerserk(world, id), "解鎖 EX 之後條件達成卻沒有自動觸發").toBe(true);
   });
 
-  it("暴走中的【實際攻速】=== 10 —— 這一條專門抓上限夾取", () => {
-    const { world, id } = withEx();
-    const hp = world.health.get(id)!;
-    hp.hp = hp.maxHp * 0.14;
+  it("血還太多的時候不會自動觸發(EX 的門檻真的是文件上那個值)", () => {
+    const spec = exSpec();
+    const { world, id } = arena(909);
+    expect(learnEx(world, id)).toBe(true);
 
-    expect(castAbility(world, id, "EX", { type: "self" })).toBe("ok");
-    // castTimeSec 0.4 = 12 tick,效果在 CastResolveSystem 才跑。多跑幾 tick。
-    step(world, 16);
+    // 一半血 —— 離門檻很遠。
+    hurtTo(world, id, 0.5);
+    expect(isBerserk(world, id), "半血就暴走了 —— EX 的門檻沒有在擋").toBe(false);
 
-    expect(isBerserk(world, id), "EX 放完卻沒有進入暴走").toBe(true);
-    const sc = world.stats.get(id)!;
-    // ⚠️ THE 突變守衛。把 buff 裡的 `as capRaise 10` 拿掉(只留 override 10),
-    // 這一行會讀到 **4.0** —— 因為 `finalizeStat` 用 `effectiveCap` 夾,而沒有
-    // 解鎖來源時攻速的天花板就是一般上限 4.0。斷言「有沒有掛上 buff」抓不到。
-    expect(sc.final[Stat.AttackSpeed], "攻速被夾回 4.0 —— `as capRaise 10` 掉了?")
-      .toBeCloseTo(10, 6);
-    // 兩支的暴走狀態相同 —— EX 也要有吸血 100% 與迴避 50%。
-    expect(sc.final[Stat.Lifesteal]).toBeCloseTo(1.0, 6);
-    expect(sc.final[Stat.Evasion]).toBeCloseTo(0.5, 6);
+    // 門檻**外緣**,只差 0.01 個百分點。門檻被寫寬的話它會在這裡就開。
+    hurtTo(world, id, spec.hpPct + 0.0001);
+    expect(isBerserk(world, id), "還沒到 EX 門檻就暴走了 —— 門檻被寫寬了?").toBe(false);
+
+    // 門檻上 —— 必須開。
+    hurtTo(world, id, spec.hpPct);
+    expect(isBerserk(world, id), "到了 EX 門檻卻沒有自動觸發").toBe(true);
   });
 
-  it("EX 冷卻是 120 秒(過了 env 倍率之後),而且暴走 10 秒後退場", () => {
-    const { world, id } = withEx();
-    const hp = world.health.get(id)!;
-    hp.hp = hp.maxHp * 0.14;
-    expect(castAbility(world, id, "EX", { type: "self" })).toBe("ok");
+  it("EX 的暴走:攻速天花板真的被解到 10,而且吸血/迴避/倍率全部到位", () => {
+    const spec = exSpec();
+    const { world, id } = arena(909);
+    const asBase = world.stats.get(id)!.final[Stat.AttackSpeed];
+    expect(learnEx(world, id)).toBe(true);
+    hurtTo(world, id, spec.hpPct * 0.9);
+    expect(isBerserk(world, id), "條件達成卻沒有進入暴走").toBe(true);
 
-    // 120 秒 × combat-env 的 cooldown 倍率 ÷ dt。讀 env 而不是寫死 3600,是因為
-    // 那個倍率是後台旋鈕;寫死會讓這條測試在 owner 調整它的那一天變成假警報。
-    // 內容裡的 120 仍然是寫死比對的那一半。
-    const expected = Math.round((120 * world.combatEnv.cooldown) / world.dt);
-    expect(world.abilities.get(id)!.exSlot!.cooldownRemainingTicks).toBe(expected);
+    // ⚠️ THE 突變守衛(整份檔最承重的一條):把文件裡的 `as capRaise 10` 拿掉,
+    // `expectBerserkStats` 的天花板那一段會讀到 **4.0**(`finalizeStat` 的
+    // `effectiveCap` —— 沒有解鎖來源時攻速的天花板就是一般上限)。
+    // 斷言「有沒有掛上 buff」抓不到這個。⛔ `capUnlocked: true` 是規格上的設計方向
+    // (「[攻擊速度]提升至最上限 10」),⚠️ 刻意不從文件推導 —— 見
+    // `expectBerserkStats` 檔頭記的那一次失敗的突變驗證。
+    expectBerserkStats(world, id, spec, asBase, true);
+  });
 
-    step(world, 16 + TEN_SEC_TICKS);
-    expect(isBerserk(world, id)).toBe(false);
+  it("EX 的暴走持續得比天生技久,而且一樣會退場", () => {
+    const spec = exSpec();
+    const innate = innateSpec();
+    // 兩支的持續時間**關係**是規格的一部分(6 秒 vs 12 秒),而具體數字不是。
+    expect(spec.duration, "EX 的暴走沒有比天生技久 —— 兩支的差別被抹掉了").toBeGreaterThan(
+      innate.duration,
+    );
+
+    const { world, id } = arena(909);
+    expect(learnEx(world, id)).toBe(true);
+    hurtTo(world, id, spec.hpPct * 0.9);
+    expect(isBerserk(world, id)).toBe(true);
+    // 天生技的持續時間走完時**還在**暴走 —— 證明吃到的是 EX 那一份 duration。
+    step(world, Math.round(innate.duration * HZ) + 4);
+    expect(isBerserk(world, id), "EX 的暴走在天生技的秒數就退場了 —— duration 吃錯了?").toBe(true);
+    step(world, Math.round((spec.duration - innate.duration) * HZ) + 4);
+    expect(isBerserk(world, id), "EX 的暴走到期了卻沒有退場").toBe(false);
   });
 });
 
 describe("暴走期間:冷卻時間 ×2", () => {
   /**
-   * 同一支 Q、同一個世界、同一個等級,只差在有沒有暴走 —— 兩邊都量,再比。
+   * ⚠️ 2026-08-12:這一組原本拿 **W(59-02 高週波短刀)**當量尺,而新規格把 W
+   * 改成 `[被動]` —— `castAbility` 回 `"passive"`,量尺本身消失了。改用
+   * **R(59-04 野戰型陽電子砲)**:`castType: "ground"`,不需要真的找一個目標,
+   * 而且有真的冷卻。驗的機制一格沒變。
+   */
+  function castR(world: SimWorld, id: EntityId): number {
+    const ab = world.abilities.get(id)!;
+    ab.slots.R.rank = 1;
+    world.health.get(id)!.mana = 9999;
+    const t = world.transform.get(id)!;
+    expect(
+      castAbility(world, id, "R", { type: "point", point: { x: t.pos.x + 3, z: t.pos.z } }),
+      "R 放不出來 —— 這條測試量不到東西",
+    ).toBe("ok");
+    return ab.slots.R.cooldownRemainingTicks;
+  }
+
+  /**
+   * 同一支 R、同一個世界、同一個等級,只差在有沒有暴走 —— 兩邊都量,再比。
    *
    * 只斷言「暴走中的冷卻 > 某個常數」的話,對「這一版把所有冷卻都調長了」也會過
    * (失敗形態 ④)。比值才是這個功能本身。
    */
   it("暴走中放的技能,冷卻正好是平時的 2 倍", () => {
+    const spec = innateSpec();
     const base = arena(7);
-    // W 升到 rank 1 —— `spawnChampion` 給的是 rank 0,不加點放不出來。
-    // 選 W(59-02 高週波短刀)是因為它 `castType: "self"`,不用真的找一個目標。
-    base.world.abilities.get(base.id)!.slots.W.rank = 1;
-    base.world.health.get(base.id)!.mana = 9999;
-    expect(castAbility(base.world, base.id, "W", { type: "self" })).toBe("ok");
-    const calm = base.world.abilities.get(base.id)!.slots.W.cooldownRemainingTicks;
-    expect(calm, "W 的冷卻是 0 —— 這條測試量不到東西").toBeGreaterThan(0);
+    const calm = castR(base.world, base.id);
+    expect(calm, "R 的冷卻是 0 —— 這條測試量不到東西").toBeGreaterThan(0);
 
     const mad = arena(7);
-    mad.world.abilities.get(mad.id)!.slots.W.rank = 1;
-    hurtTo(mad.world, mad.id, 0.04);
+    hurtTo(mad.world, mad.id, spec.hpPct * 0.8);
     expect(isBerserk(mad.world, mad.id)).toBe(true);
-    mad.world.health.get(mad.id)!.mana = 9999;
-    expect(castAbility(mad.world, mad.id, "W", { type: "self" })).toBe("ok");
-    const rage = mad.world.abilities.get(mad.id)!.slots.W.cooldownRemainingTicks;
+    const rage = castR(mad.world, mad.id);
 
     // ⚠️ 突變守衛:把 `berserkCooldownFactor` 從 abilitySystem 的那一行拿掉,
-    // 這裡會是 1 倍。
-    expect(rage, "暴走中的冷卻沒有變成兩倍").toBe(calm * 2);
+    // 這裡會是 1 倍。倍率本身讀後台的出貨預設,不抄字面值。
+    expect(rage, "暴走中的冷卻沒有變成兩倍").toBe(calm * DEFAULT_BERSERK_RULES.cooldownMult);
   });
 
   it("後台把 trigger 關掉,兩格就整個下線(而且看得出來)", () => {
     // 「關掉」是一個**真的**要能關掉的旋鈕:出事的時候 owner 要能在後台把它
     // 停掉,而不是等一次部署。這條同時是 `trigger` 不是死欄位的守衛。
+    const spec = innateSpec();
     const w = arena(13);
     w.world.berserkRules = normalizeBerserkRules({ ...DEFAULT_BERSERK_RULES, trigger: "off" });
-    expect(learnEx(w.world, w.id)).toBe(true);
-    const hp = w.world.health.get(w.id)!;
-    hp.hp = hp.maxHp * 0.9;
-    // 閘沒了 → 滿血也放得出來。
-    expect(castAbility(w.world, w.id, "EX", { type: "self" })).toBe("ok");
-    // 冷卻倍率也沒了 → 暴走中的 W 和平時一樣長。
-    step(w.world, 16);
+
+    // ① 冷卻倍率下線 → 暴走中的 R 和平時一樣長。
+    hurtTo(w.world, w.id, spec.hpPct * 0.8);
     expect(isBerserk(w.world, w.id)).toBe(true);
-    w.world.abilities.get(w.id)!.slots.W.rank = 1;
-    w.world.health.get(w.id)!.mana = 9999;
-    expect(castAbility(w.world, w.id, "W", { type: "self" })).toBe("ok");
-    const def = Abilities.get(w.world.abilities.get(w.id)!.slots.W.abilityId);
-    expect(w.world.abilities.get(w.id)!.slots.W.cooldownRemainingTicks).toBe(
+    const cd = castR(w.world, w.id);
+    const def = Abilities.get(w.world.abilities.get(w.id)!.slots.R.abilityId);
+    expect(cd, "trigger=off 之後冷卻還是被加倍了").toBe(
       Math.round((def.cooldown[0]! * w.world.combatEnv.cooldown) / w.world.dt),
     );
+
+    // ② 施法閘下線。
+    //
+    // ⚠️ 2026-08-12 誠實聲明:owner 把 59-001 改成 `[被動]` 之後,**出貨內容裡
+    //    已經沒有任何「施放時把自己變成暴走」的主動技**,所以 `grantsBerserk`
+    //    (讀 `def.effects`)對每一支出貨的技能都是 false ——`castHpPct` 這一格
+    //    目前是**休眠**的。這裡改用一份合成的 def 直接驗閘本身,理由寫死在這:
+    //    閘還在程式裡、還會對下一支暴走系**主動**技生效,而一條被拔掉的守衛
+    //    不會在它復活的那天提醒任何人。(這一段是 CLAUDE.md 失敗形態 ⑤ 的
+    //    自覺違反 —— 被測的不是出貨的那個,因為出貨的那個不存在了。)
+    const grantor = {
+      castType: "self",
+      effects: [{ kind: "applyStatus", statusId: "berserk", berserk: true, applyTo: "self" }],
+    } as unknown as AbilityDef;
+    const full = arena(14);
+    const hp = full.world.health.get(full.id)!;
+    hp.hp = hp.maxHp;
+    expect(berserkCastBlock(full.world, grantor, full.id), "滿血的暴走主動技沒有被擋").toBe(
+      "hp-too-high",
+    );
+    hp.hp = hp.maxHp * DEFAULT_BERSERK_RULES.castHpPct;
+    expect(berserkCastBlock(full.world, grantor, full.id), "血夠低卻放不出來").toBe(null);
+    full.world.berserkRules = normalizeBerserkRules({ ...DEFAULT_BERSERK_RULES, trigger: "off" });
+    hp.hp = hp.maxHp;
+    expect(berserkCastBlock(full.world, grantor, full.id), "trigger=off 之後閘還在擋").toBe(null);
   });
 
   it("沒有暴走的人完全不受影響(這個功能對其他英雄是 no-op)", () => {
     const w = arena(11);
-    w.world.abilities.get(w.id)!.slots.W.rank = 1;
-    w.world.health.get(w.id)!.mana = 9999;
-    expect(castAbility(w.world, w.id, "W", { type: "self" })).toBe("ok");
-    const cd = w.world.abilities.get(w.id)!.slots.W.cooldownRemainingTicks;
-    const def = Abilities.get(w.world.abilities.get(w.id)!.slots.W.abilityId);
+    const cd = castR(w.world, w.id);
+    const def = Abilities.get(w.world.abilities.get(w.id)!.slots.R.abilityId);
     expect(cd).toBe(Math.round((def.cooldown[0]! * w.world.combatEnv.cooldown) / w.world.dt));
   });
 });

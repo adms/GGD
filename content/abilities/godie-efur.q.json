@@ -2,32 +2,42 @@
   "id": "godie-efur.q",
   "schema": "ability@1",
   "name": "13-01 暗步。極限之圓",
-  "icon": "assets/icons/abilities/godie-efur.q.webp",
-  "description": "[指向敵方單位]\n冷卻 14／12／10 秒　**耗魔 0 點**　射程 7.2 單位（6 個身位）　**瞬發（無前搖）**\n\n點一個敵人，然後**你就在他旁邊了**。飛行 **0.067 秒**（模擬器給得出來的最短瞬移，再快就不叫瞬移叫穿模），全程貼地、不吃地形也不吃碰撞。\n\n超過 **7.2 單位**就是「太遠了」四個字，冷卻一毛都不扣。\n本身**不造成任何傷害**，也**不收半點法力** —— owner 把這一格標成「被動」，所以它真的不收錢，只收冷卻。這一點是 EX 的命根子：**絕。暗殺奧義會把你的法力燒到 0**，如果暗步要收魔，EX 之後你連瞬移都放不出來，整套連段當場報廢。\n\n⚠️ owner 開的規格是「3／6／9 個身位」三階遞增，但技能的射程欄位目前只有**一格**（不是每階一格），所以這裡取中間值 **6 個身位 = 7.2 單位，三階通用**。升階買到的**只有冷卻 −2 秒**（14 → 12 → 10）。",
+  "description": "[主動][指定][瞬移]\n施法距離4\n4/3/2/1秒冷卻\n\n「年輕全盛時期的老朽可以把圓擴大到整個競技場呢」\n[指定一名]敵人，無視地形與碰撞[瞬移]至其身旁，並造成[致盲]效果，持續1秒。",
   "slot": "Q",
   "castType": "targeted",
-  "maxRank": 3,
+  "maxRank": 4,
   "cooldown": [
-    14.0,
-    12.0,
-    10.0
+    4.0,
+    3.0,
+    2.0,
+    1.0
   ],
   "manaCost": [
     0.0,
     0.0,
+    0.0,
     0.0
   ],
-  "range": 7.2,
+  "range": 4.0,
   "targetsEnemies": true,
   "effects": [
     {
-      "kind": "leap",
+      "kind": "blink",
+      "shape": "single",
+      "to": "targetUnit",
       "applyTo": "self",
-      "mode": "toPoint",
-      "apexHeight": 0.0,
-      "durationSec": 0.067
+      "stopShortUnits": 1.0,
+      "onArrive": [
+        {
+          "kind": "applyStatus",
+          "statusId": "blind",
+          "duration": 1.0,
+          "missChance": 0.5
+        }
+      ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-efur.q.webp",
   "vfxKey": "fx.fam.blink.ki.s65",
   "vfxLayers": [
     {

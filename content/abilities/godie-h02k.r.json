@@ -2,38 +2,248 @@
   "id": "godie-h02k.r",
   "schema": "ability@1",
   "name": "89-04 憤怒的簡諧運動",
-  "icon": "assets/icons/abilities/godie-h02k.r.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n[我心中有個夢...] 牠這樣說著，雖然牠搞不清楚是是夢遺還是夢三小，但是每當牠想起的時候，手掌就會緊握不停揮動，攻擊時有1%機率將攻速提升到最高，並且擁有8%物理迴避。",
+  "description": "[被動][機率][普攻時][迴避][迴避時][拉扯][擊退][暈眩][身上有某狀態時][混亂][AP加成]\n\n[攻擊時]有8/12/16%[機率]將對方抓取過來造成 16% [AP]傷害，並且擁有 8/12/16% 物理[迴避]，[迴避]成功的時候，將會 [擊退] 對方小一段距離，並造成 [暈眩] 1秒。\n\n(敵方 [致盲] 狀態下額外追加 [混亂] 狀態，持續 3秒)",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    12,
-    12,
-    12
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60,
-    60,
-    60
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": 25
-        }
-      ],
-      "castTimeSec": 0.3
-    }
+  "passive": {
+    "name": "89-04 憤怒的簡諧運動",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.08
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.08,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.16
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "knockback",
+                "distance": 3.0,
+                "speed": 16.0,
+                "from": "pull"
+              }
+            ]
+          },
+          {
+            "on": "onEvade",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "knockback",
+                "distance": 2.0,
+                "speed": 14.0,
+                "from": "caster"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "confusion",
+                "duration": 3.0,
+                "berserk": true,
+                "targetsAllies": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.12
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.12,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.16
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "knockback",
+                "distance": 3.0,
+                "speed": 16.0,
+                "from": "pull"
+              }
+            ]
+          },
+          {
+            "on": "onEvade",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "knockback",
+                "distance": 2.0,
+                "speed": 14.0,
+                "from": "caster"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "confusion",
+                "duration": 3.0,
+                "berserk": true,
+                "targetsAllies": true
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.16
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.16,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.16
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "knockback",
+                "distance": 3.0,
+                "speed": 16.0,
+                "from": "pull"
+              }
+            ]
+          },
+          {
+            "on": "onEvade",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "knockback",
+                "distance": 2.0,
+                "speed": 14.0,
+                "from": "caster"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "confusion",
+                "duration": 3.0,
+                "berserk": true,
+                "targetsAllies": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
+  "icon": "assets/icons/abilities/godie-h02k.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
-  "sfxKey": "wc3.pandarenbrewmasteryes1",
-  "castTimeSec": 0.3
+  "sfxKey": "wc3.pandarenbrewmasteryes1"
 }

@@ -1,10 +1,10 @@
 {
   "id": "godie-e00w.r",
+  "schema": "ability@1",
   "name": "77-04 真-雷光劍",
-  "icon": "assets/icons/abilities/godie-e00w.r.webp",
-  "description": "[主動攻擊]\n70秒冷卻時間\n\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予擊中範圍500內敵人600傷害，若範圍內含有英雄則額外受到600/(範圍內英雄數)點傷害。",
+  "description": "[主動][範圍][AD加成]\n70秒冷卻，施展時間2秒\n消耗MP150/225/300\n施法距離11\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
   "slot": "R",
-  "castType": "targeted",
+  "castType": "ground",
   "maxRank": 3,
   "cooldown": [
     70.0,
@@ -17,11 +17,13 @@
     300.0
   ],
   "range": 11.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "radiusTier": "小",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
         "perRank": [
           600.0,
           800.0,
@@ -34,12 +36,13 @@
           }
         ]
       },
-      "damageType": "physical",
-      "castTimeSec": 0.6
+      "radius": 3.0,
+      "radiusTier": "小",
+      "maxTargets": 6,
+      "includeOrigin": true
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-e00w.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.5
 }

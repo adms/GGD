@@ -1,9 +1,10 @@
 {
   "id": "godie-ewar.r",
+  "schema": "ability@1",
   "name": "12-04 龍氣爆發",
-  "description": "[主動傷害]\n60秒冷卻時間\n\n凝聚體內的龍氣造成550點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+  "description": "[主動][範圍][淨化][AP加成]\n60秒冷卻，吟唱2秒\n消耗MP250/350/450\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
   "slot": "R",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
     60.0,
@@ -11,37 +12,46 @@
     60.0
   ],
   "manaCost": [
-    215.0,
-    280.0,
-    345.0
+    250.0,
+    350.0,
+    450.0
   ],
-  "range": 11.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          650.0,
-          950.0,
-          1250.0
+          550.0,
+          750.0,
+          950.0
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.7
+            "coeff": 1.0
           }
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.6
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "dispel",
+      "shape": "circle",
+      "radius": 6.0,
+      "radiusTier": "大",
+      "polarity": "buff",
+      "count": 2
     }
-  },
+  ],
   "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-  "targetsEnemies": true,
-  "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-ewar.r.png",
-  "castTimeSec": 0.6,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,
@@ -55,5 +65,6 @@
     ],
     "flashMs": 178,
     "camKick": 0.446
-  }
+  },
+  "castTimeSec": 0.5
 }

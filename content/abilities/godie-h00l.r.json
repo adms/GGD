@@ -1,53 +1,59 @@
 {
   "id": "godie-h00l.r",
-  "name": "60-04 迴旋斬",
-  "icon": "assets/icons/abilities/godie-h00l.r.webp",
-  "description": "[主動傷害]\n60秒冷卻時間\n\n使用迴旋斬將附近敵人砍傷450點並且彈開震暈1秒，每彈開一次附加林克力量屬性0.5倍的傷害。",
+  "schema": "ability@1",
+  "name": "60-04 完美盾反",
+  "description": "[主動][反彈]\n60秒冷卻 吟唱2秒\n消耗[MP] 120/150/180\n有效半徑6\n\n「唯一擋不住的是你的魅力」\n瞬間架起海拉爾之盾，[反彈]魔法([AP])及物理([AD])傷害，持續3秒，期間若成功[反彈]敵方技能[AP]傷害，立即 [回復] 8/16/24% [最大生命]，並且[擊退]敵人。",
   "slot": "R",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    170,
-    290,
-    410
+    120.0,
+    150.0,
+    180.0
   ],
-  "range": 0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-proxy-cast",
-    "params": {
-      "anchor": "point",
-      "radius": 327,
-      "damage": {
-        "perRank": [
-          450,
-          750,
-          1050
-        ],
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "moon-combo",
+      "duration": 3.0
+    }
+  ],
+  "passive": {
+    "name": "60-04 完美盾反",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ad",
-            "coeff": 0.6
+            "on": "onReflectSuccess",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "restore",
+                "healthPct": 0.08,
+                "applyTo": "self"
+              },
+              {
+                "kind": "knockback",
+                "distance": 4.0,
+                "speed": 16.0,
+                "from": "caster"
+              }
+            ]
           }
         ]
-      },
-      "damageType": "physical",
-      "castTimeSec": 0.8,
-      "statusId": "burnstun",
-      "statusDurationSec": 0.8
-    }
+      }
+    ]
   },
+  "icon": "assets/icons/abilities/godie-h00l.r.webp",
   "vfxKey": "godie-bladestorm-swordeffect-p0",
   "sfxKey": "wc3.axemissilelaunch1",
-  "targetsEnemies": true,
-  "radius": 6,
-  "schema": "ability@1",
-  "castTimeSec": 0.8,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,
@@ -61,5 +67,6 @@
     ],
     "flashMs": 186,
     "camKick": 0.466
-  }
+  },
+  "castTimeSec": 0.4
 }

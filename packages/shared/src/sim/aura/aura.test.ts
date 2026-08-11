@@ -29,6 +29,7 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
 import { attachSource, detachSource, recomputeStats } from "../stats/statPipeline";
+import { baseBonusFor } from "../baseBonus";
 import { championStatBase } from "../stats/attributes";
 import { ModOp, type ModifierSource } from "../stats/modifiers";
 import { Stat } from "../stats/statTypes";
@@ -702,7 +703,11 @@ describe("the shape a content doc will use", () => {
     // #248: the champion's real level-1 mana is `championStatBase`, not the raw
     // `baseStats[MaxMana]` — thorne's card says 70 and he has 280 (70 + 15×INT 14).
     const baseMana = championStatBase(Champions.get("thorne" as ChampionId), Stat.MaxMana, 1);
-    expect(world.stats.get(ichigo)!.final[Stat.MaxMana]).toBeCloseTo(baseMana + 150, 6);
+    // ⚠️ `final` 走完 `finalizeStat`,所以它含**基礎加成**(owner 2026-08-12 的全域
+    //    初始 MP +600)。⛔ 不要把 600 抄進來 —— 從 world 自己那張表讀,
+    //    owner 明天把它調成 800,這條測試要跟著走而不是紅(第二守則:不驗數字)。
+    const manaBonus = baseBonusFor(world.baseBonus, Stat.MaxMana);
+    expect(world.stats.get(ichigo)!.final[Stat.MaxMana]).toBeCloseTo(baseMana + 150 + manaBonus, 6);
     expect(auraIds(world, foe)).toEqual([
       auraSourceId(ichigo, `abilityPassive:${ABILITY_ID}`, "reiatsu"),
     ]);

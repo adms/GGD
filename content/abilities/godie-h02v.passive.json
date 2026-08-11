@@ -2,10 +2,8 @@
   "id": "godie-h02v.passive",
   "schema": "ability@1",
   "name": "92-00 憂鬱的眼神",
-  "icon": "assets/icons/abilities/godie-h02v.passive.webp",
-  "description": "[輔助]\n0秒冷卻時間\n\n草泥馬天生有著極富感性的憂鬱眼神，令觀者無不動容，讓草泥馬有18%閃避敵人攻擊，對草泥馬造成傷害的部隊將降低攻擊力50%，持續3秒。",
+  "description": "[被動][受到攻擊][致盲][機率]\n0秒冷卻\n\n「你看見的是憂鬱，我看見的是沒有草」\n有 30% [機率] 對草泥馬攻擊的敵方 [致盲] ，持續6秒。",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
@@ -14,40 +12,32 @@
   "manaCost": [
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
   "passive": {
     "name": "92-00 憂鬱的眼神",
     "ranks": [
       {
-        "modifiers": [
-          {
-            "stat": "evasion",
-            "op": "flat",
-            "value": 0.18
-          }
-        ],
         "hooks": [
           {
             "on": "onDamageTaken",
+            "chance": 0.3,
             "target": "event",
-            "internalCooldown": 3.0,
+            "internalCooldown": 1.0,
             "effects": [
               {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "pctMult",
-                    "value": -0.5
-                  }
-                ],
-                "duration": 3.0
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 6.0,
+                "missChance": 0.5
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-h02v.passive.webp"
 }

@@ -1,49 +1,87 @@
 {
   "id": "godie-h01u.r",
+  "schema": "ability@1",
   "name": "80-04 赤兔咆哮",
-  "icon": "assets/icons/abilities/godie-h01u.r.webp",
-  "description": "[主動攻擊]\n15秒冷卻時間\n\n招喚赤兔馬人馬合一，於亂世中有一夫當關的氣勢，可以提升自身跑速10%並給予週遭450範圍內敵人每0.2秒10點傷害，攻擊時有20%使出弒鬼神，被攻擊時也有10%機率使出弒鬼神反擊，每秒消耗75點瑪那。",
+  "description": "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
   "slot": "R",
-  "castType": "skillshot",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    15.0,
-    15.0,
-    15.0
+    90.0,
+    90.0,
+    90.0
   ],
   "manaCost": [
-    70.0,
-    110.0,
-    150.0
+    250.0,
+    400.0,
+    550.0
   ],
-  "range": 11.0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "pctAdd",
+          "value": 1.5
+        },
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 1.5
+        }
+      ],
+      "duration": 8.0
+    },
     {
       "kind": "spawnProjectile",
       "projectileId": "imported.wave.physical",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              10.0,
-              20.0,
-              30.0
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burnstun",
-          "duration": 1.2,
-          "stun": true
-        }
-      ]
+      "onHit": []
     }
   ],
+  "passive": {
+    "name": "80-04 赤兔咆哮",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.2,
+            "target": "self",
+            "internalCooldown": 0.5,
+            "effects": [
+              {
+                "kind": "proxyCast",
+                "shape": "single",
+                "slot": "W",
+                "payCosts": "none",
+                "respectCooldown": false
+              }
+            ]
+          },
+          {
+            "on": "onDamageTaken",
+            "chance": 0.2,
+            "target": "self",
+            "internalCooldown": 0.5,
+            "effects": [
+              {
+                "kind": "proxyCast",
+                "shape": "single",
+                "slot": "W",
+                "payCosts": "none",
+                "respectCooldown": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h01u.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "sfxKey": "wc3.defendcaster",
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

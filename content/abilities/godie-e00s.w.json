@@ -2,39 +2,134 @@
   "id": "godie-e00s.w",
   "schema": "ability@1",
   "name": "70-02 大怒石",
-  "icon": "assets/icons/abilities/godie-e00s.w.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n白木具有大聯盟實力的投擲攻擊有8%機率增加50點破壞力，並敵人觸身擊暈0.4秒。",
+  "description": "[被動][普攻時][範圍]\n\n「咖啡只是一種豆漿、海洋只是一種蔬菜湯、所以大怒石只是我的尿結石，對吧?」\n[每次普通攻擊]皆能造成[小範圍] 30/40/50/60% [擴散]傷害。",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 3,
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "castTimeSec": 0.3
-    }
+  "passive": {
+    "name": "70-02 大怒石",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.4
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.6
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.earth.pulse-sm",
-  "castTimeSec": 0.3
+  "icon": "assets/icons/abilities/godie-e00s.w.webp",
+  "vfxKey": "fx.prim.earth.pulse-sm"
 }

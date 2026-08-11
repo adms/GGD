@@ -1,40 +1,58 @@
 {
   "id": "godie-e00w.w",
+  "schema": "ability@1",
   "name": "77-02 雷鳴劍",
-  "icon": "assets/icons/abilities/godie-e00w.w.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率可以使出會心一擊造成1.5倍的傷害，並且有10%的機率掉下一條落雷，造成範圍內部隊50點傷害。",
+  "description": "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方10% [AP]傷害。",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "critChance",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "castTimeSec": 0.3
-    }
+  "passive": {
+    "name": "77-02 雷鳴劍",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.1
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.lightning.beam",
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "icon": "assets/icons/abilities/godie-e00w.w.webp",
+  "vfxKey": "fx.prim.lightning.beam"
 }

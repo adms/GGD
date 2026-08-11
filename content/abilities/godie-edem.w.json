@@ -1,56 +1,57 @@
 {
   "id": "godie-edem.w",
+  "schema": "ability@1",
   "name": "45-02 千鳥流",
-  "icon": "assets/icons/abilities/godie-edem.w.webp",
-  "description": "[主動攻擊]\n23秒冷卻時間\n\n千鳥流就是將全身充滿千鳥的雷電，使周圍敵人受到雷電傷害75點生命值與麻痺減緩攻擊與移動速度各50%，持續1.5秒。",
+  "description": "[主動][範圍][減速][AP加成]\n45秒冷卻\n消耗[MP] 70/120/170/220\n有效半徑7.79\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成75/150/225/300+20% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
   "slot": "W",
-  "castType": "ground",
-  "maxRank": 5,
+  "castType": "self",
+  "maxRank": 4,
   "cooldown": [
-    23.0,
-    23.0,
-    23.0,
-    35.0,
-    35.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     70.0,
-    110.0,
-    150.0,
-    130.0,
-    130.0
+    120.0,
+    170.0,
+    220.0
   ],
   "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "damageArea",
       "damageType": "magic",
       "amount": {
         "perRank": [
           75.0,
           150.0,
           225.0,
-          300.0,
           300.0
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.6
+            "coeff": 0.2
           }
         ]
-      }
+      },
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
     },
     {
       "kind": "applyStatus",
       "statusId": "slow40",
-      "duration": 1.5,
+      "duration": 3.0,
       "moveSpeedMult": 0.5
     }
   ],
+  "icon": "assets/icons/abilities/godie-edem.w.webp",
   "vfxKey": "fx.prim.lightning.beam",
-  "targetsEnemies": true,
-  "radius": 7.79,
-  "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.4
 }

@@ -1,43 +1,61 @@
 {
   "id": "godie-h02v.q",
+  "schema": "ability@1",
   "name": "92-01 臥草泥馬",
-  "icon": "assets/icons/abilities/godie-h02v.q.webp",
-  "description": "[輔助]\n40秒冷卻時間\n\n這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期間無法移動。",
+  "description": "[主動][變身][週期]\n60秒冷卻\n消耗MP160/220/280/340\n\n「臥草，泥馬真的躺下來了」\n進入無法移動與攻擊的 [定身] 狀態，每秒 [回復] 1/2/3/4% 生命，[防禦] 提升20/40/60/80，持續6秒。\n(對方仍可施展技能，僅不能移動與普攻)",
   "slot": "Q",
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    40.0,
-    40.0,
-    20.0,
-    20.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
     160.0,
-    160.0,
-    160.0,
-    160.0
+    220.0,
+    280.0,
+    340.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
       "to": "alternate",
-      "durationSec": 10.0
+      "durationSec": 6.0
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 6.0,
+      "root": true,
+      "disarmed": true
     },
     {
       "kind": "applyBuff",
       "modifiers": [
         {
-          "stat": "maxHealth",
+          "stat": "armor",
           "op": "flat",
-          "value": 300
+          "value": 20
         }
       ],
-      "duration": 3.0
+      "duration": 6.0
+    },
+    {
+      "kind": "dot",
+      "damageType": "true",
+      "amountPerTick": {
+        "flat": -1.0
+      },
+      "intervalSec": 1.0,
+      "durationSec": 6.0,
+      "stacking": "refresh"
     }
   ],
+  "icon": "assets/icons/abilities/godie-h02v.q.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

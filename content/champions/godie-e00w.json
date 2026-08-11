@@ -52,10 +52,9 @@
     "Q": {
       "id": "godie-e00w.q",
       "name": "77-01 百烈櫻華斬",
-      "icon": "assets/icons/abilities/godie-e00w.q.webp",
-      "description": "[主動攻擊]\n40秒冷卻時間\n\n用劍捲起一陣由內往外的旋風，給予複數敵人200點傷害，並暈眩1秒，擊退1000距離。",
+      "description": "[主動][範圍][擊退][AD加成]\n40秒冷卻\n消耗MP75/110/145/180\n有效半徑6\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
       "slot": "Q",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         40.0,
@@ -70,23 +69,18 @@
         180.0
       ],
       "range": 0.0,
-      "effects": [],
-      "vfxKey": "fx.prim.physical.slash",
-      "sfxKey": "wc3.darksummoninglaunch1",
+      "radiusTier": "大",
       "targetsEnemies": true,
-      "radius": 6.0,
-      "castTimeSec": 0.7,
-      "template": {
-        "ref": "tpl-proxy-cast",
-        "params": {
-          "anchor": "point",
-          "radius": 327,
-          "damage": {
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
             "perRank": [
-              200,
-              300,
-              400,
-              500
+              200.0,
+              300.0,
+              400.0,
+              500.0
             ],
             "ratios": [
               {
@@ -95,65 +89,92 @@
               }
             ]
           },
-          "damageType": "physical",
-          "castTimeSec": 0.7,
-          "statusId": "burnstun",
-          "statusDurationSec": 0.8
+          "radius": 6.0,
+          "radiusTier": "大",
+          "maxTargets": 6,
+          "includeOrigin": true
+        },
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-e00w.q.webp",
+      "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.darksummoninglaunch1",
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-e00w.w",
       "name": "77-02 雷鳴劍",
-      "icon": "assets/icons/abilities/godie-e00w.w.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率可以使出會心一擊造成1.5倍的傷害，並且有10%的機率掉下一條落雷，造成範圍內部隊50點傷害。",
+      "description": "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方10% [AP]傷害。",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 6,
-          "modifiers": [
-            {
-              "stat": "critChance",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "castTimeSec": 0.3
-        }
-      }
+      "passive": {
+        "name": "77-02 雷鳴劍",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.1,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.1
+                        }
+                      ]
+                    },
+                    "radius": 3.0,
+                    "radiusTier": "小",
+                    "maxTargets": 6
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-e00w.w.webp",
+      "vfxKey": "fx.prim.lightning.beam"
     },
     "E": {
       "id": "godie-e00w.e",
       "name": "77-03 GLADIARIA ALAT",
-      "icon": "assets/icons/abilities/godie-e00w.e.webp",
-      "description": "[變身]\n60秒冷卻時間\n\nGLADIARIA  ALAT意指有翼的劍士，剎那不輕易展露烏鴉族的身分，一但展開翅膀，剎那就可以發揮100%的實力，提升攻擊和移動速度以及對英雄攻擊附帶額外敏捷*1傷害，副作用是裝甲下降3點，持續6秒。",
+      "description": "[主動][變身][加速][飛行]\n120秒冷卻\n消耗MP90/180/270/360\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        120.0,
+        120.0,
+        120.0,
+        120.0
       ],
       "manaCost": [
         90.0,
@@ -161,43 +182,41 @@
         270.0,
         360.0
       ],
-      "range": 11.0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 6.0
+          "durationSec": [
+            6.0,
+            9.0,
+            12.0,
+            15.0
+          ]
         },
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
-              }
-            ]
-          }
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            }
+          ],
+          "duration": 6.0
         }
       ],
+      "icon": "assets/icons/abilities/godie-e00w.e.webp",
       "vfxKey": "fx.prim.lightning.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-e00w.r",
       "name": "77-04 真-雷光劍",
-      "icon": "assets/icons/abilities/godie-e00w.r.webp",
-      "description": "[主動攻擊]\n70秒冷卻時間\n\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予擊中範圍500內敵人600傷害，若範圍內含有英雄則額外受到600/(範圍內英雄數)點傷害。",
+      "description": "[主動][範圍][AD加成]\n70秒冷卻，施展時間2秒\n消耗MP150/225/300\n施法距離11\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 3,
       "cooldown": [
         70.0,
@@ -210,14 +229,13 @@
         300.0
       ],
       "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.prim.lightning.beam-lg",
+      "radiusTier": "小",
       "targetsEnemies": true,
-      "castTimeSec": 0.6,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
             "perRank": [
               600.0,
               800.0,
@@ -230,10 +248,15 @@
               }
             ]
           },
-          "damageType": "physical",
-          "castTimeSec": 0.6
+          "radius": 3.0,
+          "radiusTier": "小",
+          "maxTargets": 6,
+          "includeOrigin": true
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-e00w.r.webp",
+      "vfxKey": "fx.prim.lightning.beam-lg",
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

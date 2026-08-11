@@ -53,32 +53,42 @@
     "Q": {
       "id": "godie-efur.q",
       "name": "13-01 暗步。極限之圓",
-      "icon": "assets/icons/abilities/godie-efur.q.webp",
-      "description": "[指向敵方單位]\n冷卻 14／12／10 秒　**耗魔 0 點**　射程 7.2 單位（6 個身位）　**瞬發（無前搖）**\n\n點一個敵人，然後**你就在他旁邊了**。飛行 **0.067 秒**（模擬器給得出來的最短瞬移，再快就不叫瞬移叫穿模），全程貼地、不吃地形也不吃碰撞。\n\n超過 **7.2 單位**就是「太遠了」四個字，冷卻一毛都不扣。\n本身**不造成任何傷害**，也**不收半點法力** —— owner 把這一格標成「被動」，所以它真的不收錢，只收冷卻。這一點是 EX 的命根子：**絕。暗殺奧義會把你的法力燒到 0**，如果暗步要收魔，EX 之後你連瞬移都放不出來，整套連段當場報廢。\n\n⚠️ owner 開的規格是「3／6／9 個身位」三階遞增，但技能的射程欄位目前只有**一格**（不是每階一格），所以這裡取中間值 **6 個身位 = 7.2 單位，三階通用**。升階買到的**只有冷卻 −2 秒**（14 → 12 → 10）。",
+      "description": "[主動][指定][瞬移]\n施法距離4\n4/3/2/1秒冷卻\n\n「年輕全盛時期的老朽可以把圓擴大到整個競技場呢」\n[指定一名]敵人，無視地形與碰撞[瞬移]至其身旁，並造成[致盲]效果，持續1秒。",
       "slot": "Q",
       "castType": "targeted",
-      "maxRank": 3,
+      "maxRank": 4,
       "cooldown": [
-        14.0,
-        12.0,
-        10.0
+        4.0,
+        3.0,
+        2.0,
+        1.0
       ],
       "manaCost": [
         0.0,
         0.0,
+        0.0,
         0.0
       ],
-      "range": 7.2,
+      "range": 4.0,
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "leap",
+          "kind": "blink",
+          "shape": "single",
+          "to": "targetUnit",
           "applyTo": "self",
-          "mode": "toPoint",
-          "apexHeight": 0.0,
-          "durationSec": 0.067
+          "stopShortUnits": 1.0,
+          "onArrive": [
+            {
+              "kind": "applyStatus",
+              "statusId": "blind",
+              "duration": 1.0,
+              "missChance": 0.5
+            }
+          ]
         }
       ],
+      "icon": "assets/icons/abilities/godie-efur.q.webp",
       "vfxKey": "fx.fam.blink.ki.s65",
       "vfxLayers": [
         {
@@ -98,22 +108,23 @@
     "W": {
       "id": "godie-efur.w",
       "name": "13-02 龍頭戲畫。牙突",
-      "icon": "assets/icons/abilities/godie-efur.w.webp",
-      "description": "[指向敵方單位]\n冷卻 16／14／12 秒　耗魔 70／90／110 點　射程 4.8 單位（4 個身位）　前搖 0.3 秒\n\n一記由下往上的牙突。招式名稱聽起來很帥，實際上是拿念力做的開瓶器。\n\n· 傷害：**40／70／100 點物理**，外加 **0.5 × 你的攻擊力**\n· 追加：**目標最大生命的 6%／9%／12%**。算的是**最大**生命不是當前生命 —— 所以他滿血還是殘血，這一刀一樣痛（對追殘血的你來說這是壞消息）\n· 暈眩 **1.0 秒**（這一格三階都一樣長）\n· 擊退：**6.0 單位 −（你們兩個之間的距離）**。站越遠推越少，這是全遊戲共用的擊退規則（擊退是近戰的工具，不給遠程拿來放風箏）；貼臉放幾乎就是滿額 6.0。落地後再**躺 6 tick（0.2 秒）**爬不起來。\n\n⚠️ 冷卻越練越短、耗魔越練越貴。",
+      "description": "[主動][指定][擊退]\n45秒冷卻\n消耗MP60/90/120/150\n施法距離2\n\n「突起的不一定是牙，也可能是老朽的愛」\n對指定敵人造成40/60/80/100 + 目標[最大生命]6/8/10/12%的傷害，並[擊退]6距離。",
       "slot": "W",
       "castType": "targeted",
-      "maxRank": 3,
+      "maxRank": 4,
       "cooldown": [
-        16.0,
-        14.0,
-        12.0
+        45.0,
+        45.0,
+        45.0,
+        45.0
       ],
       "manaCost": [
-        70.0,
+        60.0,
         90.0,
-        110.0
+        120.0,
+        150.0
       ],
-      "range": 4.8,
+      "range": 2.0,
       "targetsEnemies": true,
       "effects": [
         {
@@ -122,7 +133,8 @@
           "amount": {
             "perRank": [
               40.0,
-              70.0,
+              60.0,
+              80.0,
               100.0
             ],
             "ratios": [
@@ -131,30 +143,16 @@
                 "coeff": 0.5
               }
             ]
-          },
-          "hpPct": {
-            "basis": "max",
-            "perRank": [
-              0.06,
-              0.09,
-              0.12
-            ]
           }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "fang-stun",
-          "duration": 1.0,
-          "stun": true
         },
         {
           "kind": "knockback",
           "distance": 6.0,
-          "speed": 16.0,
-          "from": "caster",
-          "getupTicks": 6
+          "speed": 18.0,
+          "from": "caster"
         }
       ],
+      "icon": "assets/icons/abilities/godie-efur.w.webp",
       "vfxKey": "fx.prim.ki.slash",
       "vfxLayers": [
         {
@@ -175,67 +173,51 @@
     },
     "E": {
       "id": "godie-efur.e",
-      "name": "13-03 龍頭戲畫。佈壁",
-      "icon": "assets/icons/abilities/godie-efur.e.webp",
-      "description": "[地面指定]\n冷卻 18／16／14 秒　耗魔 80／100／120 點　衝刺上限 7.2 單位（6 個身位）　前搖 0.3 秒\n\n阿福整個人變成一堵會走路的牆，往你點的方向鏟過去，身後拖一條龍形衝擊波。\n\n· 衝刺：**0.28 秒**走完，最遠 **7.2 單位**，貼地（弧高 0），途中不吃碰撞\n· 直線傷害：從**你出發時的位置**沿面向拉一條 **長 7.2 × 寬 2.4 單位**的走廊（寬度正好兩個身位），裡面**最多 6 個**敵人各吃 **60／95／130 點物理 + 0.6 × 攻擊力**\n· 擊退：抵達點**半徑 3.0 單位**內的敵人，沿**你的面向**再被推 **4.5 單位 −（你和他的距離）**。因為你剛撞到他臉上，那個距離基本上是 0，所以推的就是 4.5。\n\n⚠️ 走廊是從**起點**量的，不是從終點。想撞誰，就要讓他站在你和落點之間 —— 這招懲罰的是站在路中間的人；站在終點的人只會被推走。",
+      "name": "13-03 龍頭戲畫。布陣",
+      "description": "[主動][範圍][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 150/250/350/450 + 60% [AP] 傷害。",
       "slot": "E",
-      "castType": "ground",
-      "maxRank": 3,
+      "castType": "self",
+      "maxRank": 4,
       "cooldown": [
-        18.0,
-        16.0,
-        14.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        80.0,
-        100.0,
-        120.0
+        120.0,
+        180.0,
+        240.0,
+        300.0
       ],
-      "range": 7.2,
-      "radius": 3.0,
+      "range": 0.0,
+      "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damageLine",
-          "damageType": "physical",
+          "kind": "damageArea",
+          "damageType": "magic",
           "amount": {
             "perRank": [
-              60.0,
-              95.0,
-              130.0
+              150.0,
+              250.0,
+              350.0,
+              450.0
             ],
             "ratios": [
               {
-                "stat": "ad",
+                "stat": "ap",
                 "coeff": 0.6
               }
             ]
           },
-          "length": 7.2,
-          "width": 2.4,
-          "aim": "facing",
-          "fromCaster": true,
+          "radius": 4.5,
+          "radiusTier": "中",
           "maxTargets": 6,
           "includeOrigin": true
-        },
-        {
-          "kind": "leap",
-          "applyTo": "self",
-          "mode": "toPoint",
-          "apexHeight": 0.0,
-          "durationSec": 0.28,
-          "throwDistance": 7.2,
-          "landRadius": 3.0,
-          "onLand": [
-            {
-              "kind": "knockback",
-              "distance": 4.5,
-              "speed": 15.0,
-              "from": "facing"
-            }
-          ]
         }
       ],
+      "icon": "assets/icons/abilities/godie-efur.e.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "vfxLayers": [
         {
@@ -251,20 +233,19 @@
           "alpha": 0.7
         }
       ],
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-efur.r",
       "name": "13-04 龍星群",
-      "icon": "assets/icons/abilities/godie-efur.r.webp",
-      "description": "[地面指定・可被打斷]\n冷卻 80／70／60 秒　耗魔 150／200／250 點　落點最遠 12.0 單位　**吟唱 0.6 秒**\n\n抬頭，先砸一發，再叫下 **10 顆**流星。\n\n· 範圍：以落點為圓心 **半徑 24.0 單位** —— 那是一整個決鬥區的半徑，講白了就是全場（後台「技能範圍」倍率還會再乘上去，HUD 顯示的是乘完的值）\n· 開場那一發：**180／260／340 點魔法傷害 + 0.5 × 法術強度**，吟唱結束當下結算\n· 之後的流星：每 **0.2 秒**一顆、共 **10 顆**、攤在 **2.0 秒**裡，每顆 **30／45／60 點魔法 + 0.35 × 法術強度**\n  → 流星全中是 **300／450／600 點 + 3.5 × 法術強度**，連開場那發總共 **480／710／940 點 + 4.0 × 法術強度**\n· 你死了流星**立刻停**，不會替你收屍\n\n⚠️ **吟唱期間掉一滴血就整段中斷** —— 法力和冷卻已經先扣走了，不退。\n被護盾整個擋掉的那一下**不算**（你沒有真的痛到），縮圈的火**算**（那真的在燒你）。\n\n⚠️ owner 開的規格是「ct 需要 2 秒」，但吟唱時間在 GGD 是**全域公式**導出的\n（`castTimeFormula.ts`，上限 CAST_CAP = 0.9 秒，還要再受「不得超過自身冷卻 1/8」的\n雕像不變式壓制），所以這裡出貨的是公式算出來的 **0.6 秒**。要真的 2 秒，得由 owner\n決定給那條公式開一個「長吟唱」例外類別 —— 不是這一支英雄自己能改的。\n",
+      "description": "[主動][範圍][週期][AP加成]\n120秒冷卻，吟唱0.6秒\n消耗MP150/200/250\n施法距離12\n\n「生。意。星。龍」\n自身[周圍]每0.2秒[隨機]地點落下一顆流星，共10顆；每顆造成[小範圍] 150/200/250 + 40% [AP] [魔法傷害]。",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        80.0,
-        70.0,
-        60.0
+        120.0,
+        120.0,
+        120.0
       ],
       "manaCost": [
         150.0,
@@ -272,48 +253,44 @@
         250.0
       ],
       "range": 12.0,
-      "radius": 24.0,
       "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              180.0,
-              260.0,
-              340.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.5
-              }
-            ]
-          }
-        },
-        {
-          "kind": "dot",
-          "damageType": "magic",
-          "amountPerTick": {
-            "perRank": [
-              30.0,
-              45.0,
-              60.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.35
-              }
-            ]
-          },
+          "kind": "randomArea",
+          "who": "self",
+          "count": [
+            10
+          ],
           "intervalSec": 0.2,
-          "durationSec": 2.0,
-          "stacking": "refresh",
-          "onCasterDeath": "stop"
+          "scatterRadius": 8.0,
+          "firstAtCast": true,
+          "stopOnCasterDeath": true,
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  150.0,
+                  200.0,
+                  250.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4
+                  }
+                ]
+              },
+              "radius": 3.0,
+              "radiusTier": "小",
+              "maxTargets": 6,
+              "includeOrigin": true
+            }
+          ]
         }
       ],
+      "icon": "assets/icons/abilities/godie-efur.r.webp",
       "vfxKey": "fx.fam.light-column.fire.s150",
       "vfxLayers": [
         {
@@ -335,9 +312,9 @@
           "timeScale": 1.5
         }
       ],
-      "castTimeSec": 0.7,
       "interruptOn": "damage",
-      "recoverySec": 0.8
+      "recoverySec": 0.8,
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

@@ -55,26 +55,36 @@ const LANE_A = {
 };
 
 /**
- * 出貨文件上「暴走」給的吸血值 —— 從 registry 讀,不抄字面值。
+ * 出貨文件上「暴走」給的某一格 modifier —— 從 registry 讀,不抄字面值。
  * 守衛驗機制不驗數字(CLAUDE.md 第二守則):數字是 owner 每週在調的東西,
  * 抄進測試就是給它開第四個住處,而第四個沒有 drift 守衛。
+ *
+ * 回 `null` = 出貨文件上**根本沒有這一格**(和「有這一格但值是 0」是兩件事,
+ * 呼叫端要分得出來)。
  */
-function berserkLifestealFromDoc(): number {
+function berserkModFromDoc(stat: string, op: string): number | null {
   const innate = Abilities.get(Champions.get(LANE_A.eva).passiveAbility!);
-  let found = 0;
+  let found: number | null = null;
   // 遞迴走 passive.ranks[0] 底下整棵樹(hooks → effects → applyBuff.modifiers),
-  // 因為「吸血掛在哪一層」本身就是實作細節,不該被斷言釘住。
+  // 因為「它掛在哪一層」本身就是實作細節,不該被斷言釘住。
   const walk = (node: unknown): void => {
     if (Array.isArray(node)) return void node.forEach(walk);
     if (!node || typeof node !== "object") return;
     const o = node as Record<string, unknown>;
-    if (o.stat === "lifesteal" && o.op === "flat" && typeof o.value === "number") {
-      found = Math.max(found, o.value);
+    if (o.stat === stat && o.op === op && typeof o.value === "number") {
+      found = found === null ? o.value : Math.max(found, o.value);
     }
     Object.values(o).forEach(walk);
   };
   walk(innate.passive?.ranks[0]);
   return found;
+}
+
+/** 出貨文件上暴走 buff 的持續秒數(applyBuff.duration)。 */
+function berserkDurationFromDoc(): number {
+  const innate = Abilities.get(Champions.get(LANE_A.eva).passiveAbility!);
+  const buff = innate.passive?.ranks[0]?.hooks?.[0]?.effects.find((e) => e.kind === "applyBuff");
+  return (buff as { duration?: number } | undefined)?.duration ?? 0;
 }
 
 beforeAll(async () => {
@@ -323,35 +333,51 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     // 兩件事分開驗,兩個顧慮就都顧到了:
     //   ① 文件上這一格必須是**有意義的正數**(擋掉「被改成 0」);
     //   ② 世界裡的最終值必須**等於文件值 × combatEnv**(擋掉「沒接上」)。
-    const docLifesteal = berserkLifestealFromDoc();
+    const docLifesteal = berserkModFromDoc("lifesteal", "flat");
     expect(docLifesteal, "出貨文件上的暴走吸血是 0 —— 這一格等於沒有效果").toBeGreaterThan(0);
-    expect(sc.final[Stat.Lifesteal]).toBeCloseTo(docLifesteal * world.combatEnv.lifesteal, 4);
-    // ⚠️ 這裡原本斷言 `asBase * 4`。owner 2026-08-03 把規格講死了:
-    // 「**天生技的暴走是解除上限到 10 沒錯,只有 EX 會直接設定為 10**」——
-    // 所以天生技**不給攻速倍率**,只抬天花板。攻速在暴走瞬間應該是**沒變的**,
-    // 玩家要靠自己的裝備去頂那個新天花板。
-    expect(sc.final[Stat.AttackSpeed], "天生技的暴走不該直接改攻速,只該抬上限").toBeCloseTo(asBase, 3);
+    expect(sc.final[Stat.Lifesteal]).toBeCloseTo(docLifesteal! * world.combatEnv.lifesteal, 4);
 
-    // 天花板真的被抬高了嗎 —— 這才是天生技唯一的攻速效果,也是唯一值得驗的。
-    // 把值推到一般上限 4.0 以上再看它有沒有被夾:`capRaise` 那一格從文件裡刪掉,
-    // 下面那條就紅(突變驗證第一輪真的抓到過 —— 失敗形態 ③)。
+    // ⚠️ owner 2026-08-12 裁決:「只要讓 EX **照技能說明**正常實作 被動或主動 即可」
+    // —— 重製規格把 59-00 寫成「生命降至5%時必定[暴走],將[攻擊速度]提升100%」。
+    // 舊行為(owner 2026-08-03)是**只抬天花板、不給倍率**;新規格是**反過來的**:
+    // 給倍率、天花板留給 EX(59-001 完全暴走「[攻擊速度]提升至最上限 10」)。
+    //
+    // 所以下面兩段是同一個機制(`ModOp` 管線)換了方向,不是把牙齒拔掉:
+    //   ① 倍率那一格必須真的乘進最終值(文件寫 0 / 刪掉 → 上面 readback 就紅);
+    //   ② 天花板必須**還是**一般上限 —— 天生技不該偷偷解鎖。
+    const docAsPct = berserkModFromDoc("as", "pctAdd");
+    expect(docAsPct, "出貨文件上的暴走攻速倍率不見了 —— 這支天生技等於沒有攻速效果")
+      .toBeGreaterThan(0);
+    expect(sc.final[Stat.AttackSpeed], "暴走的攻速倍率沒有乘進最終值").toBeCloseTo(
+      asBase * (1 + docAsPct!),
+      3,
+    );
+
+    // 天花板:把值頂過一般上限再讀,才分得出「有沒有 capRaise」——
+    // 只斷言「暴走後攻速變高」對兩種寫法都會過(失敗形態 ③)。
+    const baseCap = world.statCaps.as?.base ?? 4;
     world.stats.get(id)!.sources.push({
       id: "test:as-stick",
       kind: "item",
-      // ⚠️ +5 不是 +2:天生技不再給 ×4 倍率(owner 2026-08-03),所以要靠這根棒子
-      // 自己把值頂過一般上限 4.0。asBase(~0.7)+2 = 2.7 根本碰不到天花板,
-      // 那樣的話這條測試對「capRaise 被刪掉」是全綠的 —— 失敗形態 ③。
-      modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 5 }],
+      modifiers: [{ stat: Stat.AttackSpeed, op: "flat" as never, value: 8 }],
     });
     world.stats.get(id)!.dirty = true;
     step(world, 1);
-    const unlocked = world.stats.get(id)!.final[Stat.AttackSpeed];
-    // asBase + 5 ≈ 5.7 > 4.0,所以沒有解鎖的話它會**剛好等於 4.0**。
-    expect(unlocked, "攻速上限沒有被解開 —— capRaise 那一格是不是掉了?").toBeGreaterThan(4.0);
-    expect(unlocked).toBeLessThanOrEqual(world.statCaps.as?.unlocked ?? 10);
+    // ⛔ 方向寫死,⚠️ 刻意**不從文件推導**:寫成「有 capRaise 就驗解鎖、沒有就驗
+    //    被夾」的話,把那一格從文件刪掉會讓測試**自己換分支**然後全綠 ——
+    //    一條可以被它所監視的東西關掉的守衛不是守衛(2026-08-12 突變驗證實測)。
+    //    這裡記的是 owner 規格上的設計方向(59-00 只寫「提升100%」,解上限是 EX
+    //    59-001 的事),不是一個數值,所以它不是第四個住處。
+    expect(berserkModFromDoc("as", "capRaise"), "天生技不該解攻速上限,文件卻有 capRaise").toBeNull();
+    const pushed = world.stats.get(id)!.final[Stat.AttackSpeed];
+    expect(pushed, "天生技沒有 capRaise,攻速卻頂破了一般上限 —— 天花板閘漏了").toBeCloseTo(
+      baseCap,
+      5,
+    );
 
-    // 10 秒後還你方向盤(10 s = 300 tick,再多跑 2 tick 讓 status 過期)。
-    step(world, 302);
+    // 持續時間到就還你方向盤。秒數從文件讀(owner 2026-08-12 從 10 秒改成 6 秒,
+    // 寫死的話這裡就是那個數字的第四個住處 —— CLAUDE.md 第二守則)。
+    step(world, Math.round(berserkDurationFromDoc() * 30) + 2);
     expect(isBerserk(world, id)).toBe(false);
     expect(world.stats.get(id)!.final[Stat.Lifesteal]).toBeCloseTo(0, 6);
   });
@@ -380,7 +406,8 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
 
     // 對照:暴走結束之後,同一條指令必須被吃下去。否則上面那條斷言可能只是
     // 「這個世界根本不收指令」——CLAUDE.md 失敗形態 ④。
-    step(world, 302);
+    // 秒數從文件讀(owner 2026-08-12 把持續時間從 10 秒改成 6 秒)。
+    step(world, Math.round(berserkDurationFromDoc() * 30) + 2);
     expect(isBerserk(world, id)).toBe(false);
     world.step(intents);
     const nav2 = world.nav.get(id)!;

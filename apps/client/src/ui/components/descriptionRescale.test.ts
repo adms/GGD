@@ -19,7 +19,7 @@
  * tracks the shipped config, never hard-coded factors.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -57,7 +57,32 @@ const CD_QUARTER = normalizeCombatEnv({ cooldown: 0.25 });
 const DMG_HALF = normalizeCombatEnv({ damageDealt: 0.5 });
 
 /** Five REAL abilities whose prose bakes a "NN秒冷卻時間" cooldown literal. */
-const REAL_IDS = ["godie-uvng.e", "godie-h001.w", "godie-hapm.w", "godie-hblm.r", "godie-e00k.e"];
+/**
+ * ⭐ 夾具是**掃出來的**，⛔ 不是寫死的 id 清單。
+ *
+ * ⚠️ 2026-08-12 之前這裡是 5 個寫死的 id。90 支技能重製之後，其中兩支的說明改了
+ * 寫法（「35秒冷卻時間」→「35秒冷卻」、拿掉「造成 NNN 傷害」的字面值），於是這條
+ * 守衛紅了 —— 而**它守的機制一點事都沒有**（HUD 的重寫器兩種寫法本來就都認）。
+ * 那是純粹的維護稅：每次 owner 改文案就要有人回來換 id。
+ *
+ * 現在改成「掃出前 N 支同時帶兩種字面值的真實技能」。內容怎麼改都不會誤報，
+ * 而斷言驗的東西完全沒變：真的說明 → 真的重寫器 → 冷卻與傷害都變成最終值。
+ */
+function pickRealIds(n: number): string[] {
+  const dir = join(CONTENT, "abilities");
+  const out: string[] = [];
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f === "_index.json") continue;
+    const desc = docDescription(JSON.parse(readFileSync(join(dir, f), "utf8")));
+    if (typeof desc !== "string") continue;
+    if (/\d+秒冷卻(?:時間)?/.test(desc) && /造成\s*\d+\s*(?:點\s*)?傷害/.test(desc)) {
+      out.push(f.replace(/\.json$/, ""));
+      if (out.length >= n) break;
+    }
+  }
+  return out;
+}
+const REAL_IDS = pickRealIds(5);
 function loadAbility(id: string): Record<string, unknown> {
   return JSON.parse(readFileSync(join(CONTENT, "abilities", `${id}.json`), "utf8"));
 }
@@ -210,8 +235,13 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
         cd === 1
           ? desc
           : desc.replace(
-              /(\d+)秒冷卻時間/,
-              (_m, n: string) => `${Math.round(Number(n) * cd)}秒冷卻時間（WC3原 ${n}秒）`,
+              // ⚠️ 「時間」兩個字是**選配**的 —— 實作 (`abilityText.ts:269`) 的
+              //    pattern 就是 `秒\s*冷卻(?:時間)?`。2026-08-12 的 90 支重製把說明
+              //    寫成「45秒冷卻」（沒有「時間」），這裡跟著放寬之前它會誤報成
+              //    「這支沒有冷卻字面值」—— 而實際上 HUD 一直重寫得好好的。
+              /(\d+)(秒冷卻(?:時間)?)/,
+              (_m, n: string, suffix: string) =>
+                `${Math.round(Number(n) * cd)}${suffix}（WC3原 ${n}秒）`,
             );
       if (dmg !== 1) {
         e = e.replace(
@@ -228,7 +258,7 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     for (const id of REAL_IDS) {
       const desc = docDescription(loadAbility(id));
       expect(desc, `${id} has a description`).toBeDefined();
-      expect(desc!.match(/(\d+)秒冷卻時間/), `${id} carries a NN秒冷卻時間 literal`).not.toBeNull();
+      expect(desc!.match(/(\d+)秒冷卻(?:時間)?/), `${id} carries a NN秒冷卻[時間] literal`).not.toBeNull();
 
       const out = rescaleAbilityProse(desc!, LIVE);
       expect(out, `${id} rescales cooldown + flat damage to their finals`).toBe(expectedFor(desc!));

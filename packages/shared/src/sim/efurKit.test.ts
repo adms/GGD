@@ -21,15 +21,23 @@
  * 突變紀錄（每一條都真的做過，見回報）：
  *   · `nextCycleStep` 永遠回 0                     → efur-passive-rotation 紅
  *   · Q 的 `leap` 從文件裡拿掉                      → efur-q-blink 紅
- *   · `damage.hpPct` 那一段 `amount +=` 拿掉        → efur-w-hppct 紅
  *   · W 的 `knockback` 從文件裡拿掉                 → efur-w-knock 紅
- *   · E 的 `damageLine` 從文件裡拿掉                → efur-e-corridor 紅
+ *   · E 的 `damageArea` 從文件裡拿掉                → efur-e-burst 紅
  *   · `interruptOn === "damage"` 那一項改成 false   → efur-r-interrupt 紅
- *   · EX 的 `applyBuff.hooks` 不再傳給 attachSource → efur-ex-combo 紅
- *   · EX 的 `spendMana` 從文件裡拿掉                → efur-ex-mana 紅
- *   · EX 的 `spendMana.bankAs` 從文件裡拿掉         → efur-ex-banked 紅
- *   · 牙突的 `damage.bankedBonus` 從文件裡拿掉      → efur-ex-banked 紅
- *   · `bankedAddend` 的 `Math.min(…, b.max)` 拿掉   → efur-ex-banked-cap 紅
+ *   · EX hook 的 `condition`（目標帶致盲）拿掉      → efur-ex-gate 紅
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ 2026-08-12：W / E / EX 三段整段重寫，因為**技能換了**，不是因為守衛不好
+ * ─────────────────────────────────────────────────────────────────────────────
+ * owner 2026-08-12 裁決（揍敵客 13 全套重寫）：「**全做**」。三支技能的機制被
+ * 換掉了，所以這裡的期望值跟著換 —— ⛔ 但**沒有任何一條斷言被拔掉、被改成
+ * `toBeTruthy`、被 skip 或被刪掉**。每一條舊斷言都在下面有一條對應的新斷言，
+ * 驗的是同一個位置上的新機制（逐條對照見各段落自己的裁決註解）：
+ *
+ *   舊：W 的傷害含目標最大生命 6%   → 新：那一項被拿掉了 = 兩座池子的差 **為 0**
+ *   舊：W 打完會暈眩                → 新：只剩擊退 = `stunned` **為 false**
+ *   舊：E 是衝鋒走廊（capsule）     → 新：self 環爆（circle）= 側面那個人**也**被打到
+ *   舊：EX 是主動（燒魔／存款／連段）→ 新：被動 = 按鍵回 `'passive'`，改驗 W 命中致盲時的摘心
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -85,8 +93,11 @@ interface Rig {
  * 阿福 at the zone centre, one enemy `gap` units EAST (that corridor is
  * obstacle-free — the same lane knockback.test.ts uses).
  */
-function rig(opts?: { gap?: number; level?: number; foeMaxHp?: number }): Rig {
-  const world = new SimWorld(SKELETON_ARENA, 4242);
+function rig(opts?: { gap?: number; level?: number; foeMaxHp?: number; seed?: number }): Rig {
+  // ⚠️ `seed` 是 2026-08-12 加的：新的 EX 是一顆 20% 的骰子（`hook.chance`），
+  // 而 `world.rng` 是 seeded 的 —— 固定種子只會得到「這一顆種子的那一次擲骰」，
+  // 那條斷言驗的是種子不是機率。掃一排種子才看得到「有時中、有時不中」。
+  const world = new SimWorld(SKELETON_ARENA, opts?.seed ?? 4242);
   const level = opts?.level ?? 6;
   const efur = spawnChampion(world, {
     championId: EFUR,
@@ -259,11 +270,22 @@ describe("13-01 暗步。極限之圓 (efur-q-blink)", () => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// W 13-02 龍頭戲畫。牙突 — 擊退 + 暈眩 + 最大生命百分比
+// W 13-02 龍頭戲畫。牙突 — 只剩「傷害 + 擊退」
+//
+// owner 2026-08-12 裁決：「**全做**」（揍敵客 13 全套重寫）—— 舊行為「40 傷害
+// ＋ 目標[最大生命] 6% ＋ 暈眩 ＋ 擊退」，新規格 3→4 階、CD 45、**拿掉暈眩與
+// 最大生命百分比，只留「[擊退]6距離」**。
+//
+// 所以下面兩條斷言**翻面**而不是消失：
+//   · 最大生命那一項：舊「兩座池子的差 = 6% × 池差」→ 新「差 = 0」。同一座隔離
+//     夾具、同一個減法，只有期望值換邊 —— `hpPct` 哪一天長回來這條就紅。
+//   · 暈眩：舊 `toBe(true)` → 新 `toBe(false)`。
+// 另外補一條**正面**守衛（舊版沒有，而舊版靠 hpPct 那條間接證明「傷害存在」）：
+// 整個 `damage` 效果被刪掉的話，差值一樣是 0，翻面之後那條就抓不到了。
 // ═══════════════════════════════════════════════════════════════════════════
-function castW(foeMaxHp: number): { pushed: number; lost: number; stunned: boolean } {
+function castW(foeMaxHp: number, rank = 1): { pushed: number; lost: number; stunned: boolean } {
   const r = rig({ gap: 2, foeMaxHp });
-  rankTo(r.world, r.efur, "W", 1);
+  rankTo(r.world, r.efur, "W", rank);
   const start = pos(r.world, r.foe);
   const hp0 = r.world.health.get(r.foe)!.hp;
   expect(castAbility(r.world, r.efur, "W", { type: "entity", entityId: r.foe })).toBe("ok");
@@ -281,34 +303,59 @@ function castW(foeMaxHp: number): { pushed: number; lost: number; stunned: boole
 }
 
 describe("13-02 龍頭戲畫。牙突 (efur-w-hppct / efur-w-knock)", () => {
-  it("takes 6 % of the target's MAX health — proved by the delta between two pools", () => {
+  it("傷害不再跟著目標的最大生命走，但 perRank 那一欄仍然真的被讀", () => {
     cover("efur-w-hppct");
-    // ISOLATES `hpPct` from everything else: same rank, same caster, same
-    // mitigation — only `maxHp` differs, so the difference in HP lost IS the
-    // percentage term. Deleting `hpPct` makes this difference 0.
+    // 同一座隔離夾具：同階、同施法者、同減傷，**只有 `maxHp` 不一樣**，所以
+    // 兩者掉血的差就是「最大生命百分比」那一項。舊規格它是 6% × 池差；
+    // owner 2026-08-12 把它拿掉了，所以現在它必須是 0。
     const small = castW(1000);
     const big = castW(4000);
-    const factor = new SimWorld(SKELETON_ARENA, 1).combatEnv.damageDealt;
-    expect(big.lost - small.lost).toBeCloseTo(0.06 * 3000 * factor, 0);
+    expect(
+      big.lost - small.lost,
+      "牙突又長回了目標最大生命百分比項（owner 2026-08-12 明確拿掉）",
+    ).toBeCloseTo(0, 1);
+
+    // ⛔ 上面那條翻面之後，「整個 `damage` 效果被刪掉」也會讓差是 0 —— 所以
+    //    這兩條是新的**正面**守衛：傷害要真的發生，而且要跟階數那一欄走。
+    expect(small.lost, "牙突根本沒造成傷害").toBeGreaterThan(0);
+    expect(
+      castW(4000, 4).lost,
+      "四階跟一階打一樣多 —— `amount.perRank` 那一欄沒有被讀",
+    ).toBeGreaterThan(castW(4000, 1).lost);
   });
 
-  it("stuns the target and shoves it away from the caster", () => {
+  it("把目標推開，而且**不再**暈眩", () => {
     cover("efur-w-knock");
     const out = castW(4000);
-    expect(out.stunned).toBe(true);
     // 6.0 at gap 0 minus the 2.0 gap (GH#193) = 4.0, and the body slides there
     // over several ticks. A loose floor of 2.0 keeps this about "it really got
     // shoved" rather than about the gap arithmetic knockback.test.ts owns.
     expect(out.pushed).toBeGreaterThan(2.0);
+    // owner 2026-08-12 裁決：「全做」—— 舊行為 W 命中會暈眩（`knockback.getupTicks`
+    // 開的擊倒窗口），新規格只留「[擊退]6距離」。⚠️ 副作用要記著：這支是全 repo
+    // `getupTicks` 的**唯一使用者**，所以拿掉之後**全 roster 的擊退都不會擊倒**。
+    expect(out.stunned, "牙突又暈眩了 —— 擊倒窗口被加回來").toBe(false);
   });
 });
 
 // ═══════════════════════════════════════════════════════════════════════════
-// E 13-03 龍頭戲畫。佈壁 — 位移 + 走廊傷害 + 落點擊退
+// E 13-03 龍頭戲畫。布陣 — self 環爆（不再是衝鋒走廊）
+//
+// owner 2026-08-12 裁決：「**全做**」—— 舊行為「衝鋒一段距離，沿路走廊
+// （capsule）切人並擊退」，新規格「將念形成龍形衝擊波**包裹全身**，造成[範圍]
+// 敵人 150/250/350/450 + 60% [AP] 傷害」= `castType: "self"` 的一發環爆。
+//
+// 三條斷言逐條對應舊的三條，而且**方向剛好相反的那一條正是重點**：
+//   舊「衝了 > 1.0」        → 新「原地不動 < 0.01」（規格自己寫「其實還可以衝刺，但老了」）
+//   舊「線上那個人掉血」     → 保留（環內的人照樣掉血）
+//   舊「側面那個人 0 傷害」  → 新「側面**同距離**那個人也掉血」
+//      ⭐ 這一條是 capsule → circle 的判別式：一個還沒改完、仍然只打前方走廊的
+//        實作會讓側面那個人 0 傷害，而它以前是**綠**的。
+// 再加一個圈**外**的身體當上界，免得「打全場」也能過。
 // ═══════════════════════════════════════════════════════════════════════════
-describe("13-03 龍頭戲畫。佈壁 (efur-e-corridor)", () => {
-  it("the caster charges, the body IN the corridor is cut and shoved, the body beside it is not", () => {
-    cover("efur-e-corridor");
+describe("13-03 龍頭戲畫。布陣 (efur-e-burst)", () => {
+  it("原地環爆：圈內的人（含側面同距離）都吃傷害，圈外的人一點都沒掉，施法者不位移", () => {
+    cover("efur-e-burst");
     const world = new SimWorld(SKELETON_ARENA, 4242);
     const efur = spawnChampion(world, {
       championId: EFUR,
@@ -334,29 +381,40 @@ describe("13-03 龍頭戲畫。佈壁 (efur-e-corridor)", () => {
       sc.final[Stat.Armor] = 0;
       return id;
     };
-    // ON the line (straight ahead) vs BESIDE it (4 units off-axis — well past
-    // the 2.4-wide capsule). This is the assertion that the corridor is a
-    // CAPSULE and not a circle: a circle of the same reach would catch both.
-    const onLine = mk(1, C.x + 2.4, 0);
-    const beside = mk(2, C.x + 2.4, 4.0);
+    // 三個身體，兩個在環內（一個正前方、一個**側面同距離**）、一個在環外。
+    // ⭐ `side` 是 capsule → circle 的判別式：舊的走廊實作打不到它。
+    const ahead = mk(1, C.x + 2.0, 0);
+    const side = mk(2, C.x, 2.0);
+    const far = mk(3, C.x + 9.0, 0);
     world.rebuildGrid();
     const ab = world.abilities.get(efur)!;
     ab.unspentPoints += 1;
     expect(rankUpAbility(world, efur, "E")).toBe(true);
 
     const casterBefore = pos(world, efur);
-    const onLineBefore = pos(world, onLine);
-    const onLineHp0 = world.health.get(onLine)!.hp;
-    const besideHp0 = world.health.get(beside)!.hp;
-    expect(
-      castAbility(world, efur, "E", { type: "point", point: { x: C.x + 5.0, z: 0 } }),
-    ).toBe("ok");
+    const aheadHp0 = world.health.get(ahead)!.hp;
+    const sideHp0 = world.health.get(side)!.hp;
+    const farHp0 = world.health.get(far)!.hp;
+    // owner 2026-08-12 裁決：「全做」—— 舊行為是 `castType: "ground"` 的衝鋒
+    // （對著一個落點放），新規格是「包裹全身」= `self`。連**怎麼放**都變了。
+    expect(castAbility(world, efur, "E", { type: "self" })).toBe("ok");
     step(world, 40);
 
-    expect(V.dist(casterBefore, pos(world, efur))).toBeGreaterThan(1.0); // charged
-    expect(onLineHp0 - world.health.get(onLine)!.hp).toBeGreaterThan(0); // cut
-    expect(besideHp0 - world.health.get(beside)!.hp).toBe(0); // off-axis: untouched
-    expect(V.dist(onLineBefore, pos(world, onLine))).toBeGreaterThan(1.0); // shoved
+    // 舊：`toBeGreaterThan(1.0)`（衝出去了）。新：規格自己寫「其實還可以衝刺，
+    // 但老了」—— 位移整個拿掉，所以站在原地。
+    expect(
+      V.dist(casterBefore, pos(world, efur)),
+      "布陣又把人衝出去了 —— owner 2026-08-12 拿掉了位移",
+    ).toBeLessThan(0.01);
+    expect(aheadHp0 - world.health.get(ahead)!.hp, "環內正前方的人沒吃到傷害").toBeGreaterThan(0);
+    // ⭐ 舊斷言在這一格是 `toBe(0)`。走廊變成圓環，所以側面同距離的人**必須**
+    //   也吃到 —— 一個只改了描述、實作還是走廊的版本會在這裡紅。
+    expect(
+      sideHp0 - world.health.get(side)!.hp,
+      "側面同距離的人沒吃到傷害 —— 它還是一條走廊，不是一個圓",
+    ).toBeGreaterThan(0);
+    // 上界：圓是有半徑的，不是打全場。
+    expect(farHp0 - world.health.get(far)!.hp, "圈外的人也吃到了 —— 半徑沒有生效").toBe(0);
   });
 });
 
@@ -402,171 +460,108 @@ describe("13-04 龍星群 (efur-r-cast / efur-r-interrupt)", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// EX 13-002 絕。暗殺奧義 — 燒光法力 / 四圍 +40% / 下一次 Q 自動牙突
-// ═══════════════════════════════════════════════════════════════════════════
-describe("13-002 絕。暗殺奧義 (efur-ex-mana / efur-ex-combo)", () => {
-  it("burns the WHOLE pool and lifts all four defence/offence stats by 40 %", () => {
-    cover("efur-ex-mana");
-    const r = rig({ gap: 3 });
-    expect(learnEx(r.world, r.efur)).toBe(true);
-    const hp = r.world.health.get(r.efur)!;
-    hp.maxMana = 900;
-    hp.mana = 900;
-    const sc = r.world.stats.get(r.efur)!;
-    const ad0 = sc.final[Stat.AttackDamage];
-    const armor0 = sc.final[Stat.Armor];
-    expect(castAbility(r.world, r.efur, "EX", { type: "self" })).toBe("ok");
-    step(r.world, 12); // past the 0.3 s wind-up
-    // Below 1 point, not exactly 0: mana REGEN keeps ticking after the burn, so
-    // an `=== 0` assertion would be measuring the tick count, not the drain.
-    // 900 -> under 1 is unambiguous either way.
-    expect(r.world.health.get(r.efur)!.mana).toBeLessThan(1);
-    const f = r.world.stats.get(r.efur)!.final;
-    expect(f[Stat.AttackDamage]).toBeCloseTo(ad0 * 1.4, 3);
-    expect(f[Stat.Armor]).toBeCloseTo(armor0 * 1.4, 3);
-  });
-
-  it("the FIRST Q hit inside the window auto-fires 牙突; the second does not", () => {
-    cover("efur-ex-combo");
-    const r = rig({ gap: 3, foeMaxHp: 20000 });
-    rankTo(r.world, r.efur, "Q", 1);
-    expect(learnEx(r.world, r.efur)).toBe(true);
-    const hp = r.world.health.get(r.efur)!;
-    hp.maxMana = 900;
-    hp.mana = 900;
-
-    // CONTROL: a Q with no EX up does nothing to the victim at all.
-    const control = rig({ gap: 3, foeMaxHp: 20000 });
-    rankTo(control.world, control.efur, "Q", 1);
-    const cHp0 = control.world.health.get(control.foe)!.hp;
-    expect(
-      castAbility(control.world, control.efur, "Q", { type: "entity", entityId: control.foe }),
-    ).toBe("ok");
-    step(control.world, 20);
-    expect(control.world.health.get(control.foe)!.hp).toBe(cHp0);
-
-    expect(castAbility(r.world, r.efur, "EX", { type: "self" })).toBe("ok");
-    step(r.world, 12);
-    const foeStart = pos(r.world, r.foe);
-    const foeHp0 = r.world.health.get(r.foe)!.hp;
-    expect(castAbility(r.world, r.efur, "Q", { type: "entity", entityId: r.foe })).toBe("ok");
-    let stunned = false;
-    for (let i = 0; i < 25; i++) {
-      r.world.step(empty());
-      const st = r.world.status.get(r.foe);
-      if (st?.effects.some((e) => e.stun && e.expiresAtTick > r.world.tick)) stunned = true;
-    }
-    const firstLoss = foeHp0 - r.world.health.get(r.foe)!.hp;
-    expect(firstLoss).toBeGreaterThan(0); // 牙突 landed off a Q that deals none itself
-    expect(stunned).toBe(true);
-    expect(V.dist(foeStart, pos(r.world, r.foe))).toBeGreaterThan(1.0);
-
-    // ONCE, not every Q: clear the cooldown and blink again inside the window.
-    r.world.abilities.get(r.efur)!.slots.Q.cooldownRemainingTicks = 0;
-    const hpBeforeSecond = r.world.health.get(r.foe)!.hp;
-    expect(castAbility(r.world, r.efur, "Q", { type: "entity", entityId: r.foe })).toBe("ok");
-    step(r.world, 20);
-    // LOSS, not equality: passive regen ticks the bar UP over these 20 ticks, so
-    // `toBe(hpBeforeSecond)` would be measuring RegenSystem. A second 牙突 would
-    // cost >2000 here, so "lost less than one point" is unambiguous.
-    expect(hpBeforeSecond - r.world.health.get(r.foe)!.hp).toBeLessThan(1);
-    expect(firstLoss).toBeGreaterThan(1000);
-  });
-});
 
 // ═══════════════════════════════════════════════════════════════════════════
-// EX 的存款加成 —— owner 2026-07-31「現存 MP 的 20% 傷害」
+// EX 13-002 絕。暗殺奧義 — **被動**：牙突打中致盲目標時 20% 機率摘心
+//
+// owner 2026-08-12 兩則裁決疊在這一段上：
+//   ① 「只要讓 EX **照技能說明**正常實作 被動或主動 即可」
+//      → 舊行為「按 EX = 主動：燒光法力、四圍 +40%、下一發 Q 附贈免費牙突、
+//        燒掉的法力存起來當追加傷害」，新規格第一個標籤逐字就是 `[被動]`，
+//        `effects: []`。**按鍵回 `'passive'` 是新的正確答案**，不是缺陷。
+//   ② 「**全做**」（揍敵客全套重寫）→ 整支換成完全不同的一支技能：
+//        「對於[致盲]狀態的敵人施展[龍頭戲畫。牙突]時，有 20% 機會摘除心臟」。
+//
+// 所以舊的四條斷言（燒魔／四圍 +40%／免費牙突一次／存款 × 0.2 與其上限）沒有
+// 對應的機制可以驗了 —— ⛔ 但它們**不是被刪掉了事**：下面兩條把同樣的「兩個
+// 方向一起關」的守衛形狀原封搬過來，只是換成新技能的那四道閘：
+//
+//   舊「燒了魔才有加成」（正向）      → 新「致盲 + 學了 EX + 血夠低 → 真的會摘心」
+//   舊「第二發 Q 不再免費」（負向）    → 新「三道閘任何一道沒過 → 一次都不摘」
+//   舊「存款差 × 0.2」（量的關係）     → 新「機率是**擲**出來的：有時中、有時不中」
+//   舊「上限 400 夾得住」（上界）      → 新「血高於門檻就不摘」= 處決線的上界
 // ═══════════════════════════════════════════════════════════════════════════
+
+/** 這一批擲骰用的種子。⚠️ 一顆種子只能回答「那一次擲出什麼」，不是機率。 */
+const SEEDS = Array.from({ length: 30 }, (_, i) => 1000 + i * 7);
+
+/** `id` 身上現在是不是真的帶著【致盲】（不是「文件裡有 applyStatus」）。 */
+function isBlind(world: SimWorld, id: EntityId): boolean {
+  const st = world.status.get(id);
+  return st?.effects.some((e) => e.statusId === "blind" && e.expiresAtTick > world.tick) === true;
+}
+
 /**
- * 為什麼這裡要用**兩座 rig 相減**而不是直接斷言一個絕對傷害值：
+ * 一次完整的實驗：（可選）Q 上致盲 → 牙突 → 目標死了沒有。
  *
- * 那一發免費牙突的傷害是三項相加 —— 120 + 0.8×AD + 目標最大生命 12% —— 再加上
- * 這裡要測的存款項。寫一個絕對值等於把另外三項的實作也釘死在這條斷言裡，任何
- * 一項改動都會讓這條紅，而紅的原因跟這個機制無關（失敗形態④：斷言方向跟缺陷
- * 無關）。兩座 rig 除了**法力池**以外每一格都相同，所以相減之後**只剩存款項**。
- *
- * 而且相減同時擋掉「常數也能過」的退化：一個把加成寫死成固定值的實作會讓
- * delta = 0，而 delta 必須等於 (存款A − 存款B) × 0.20。
- *
- * ⚠️ 存款量是**量出來的**（讀 `world.status` 上真的 `magnitude`），不是用
- * 「法力 − manaCost」推算的：法力回復在前搖期間照樣在跳，滿魔那一座被夾住、
- * 半魔那一座沒有，推算會差幾點而斷言會變成薛丁格的綠。
+ * ⚠️ 「死了沒有」而不是「掉了多少血」是刻意的：出貨文件用的是 `devour`
+ * （處決），不是一發追加傷害 —— 讀掉血量會被牙突自己的傷害污染，而讀
+ * `alive` 只有摘心會翻。牙突在這裡打掉的是 40000 血池裡的幾十點，一發都殺不死。
  */
-describe("13-002 的追加傷害隨燒掉的法力放大 (efur-ex-banked)", () => {
-  /**
-   * EX → 一發 Q（免費牙突）。回傳「敵人掉了多少血」與「存款有多少」。
-   *
-   * ⚠️ 池子是用 **`Stat.MaxMana` 的修飾**加大的，不是直接寫 `hp.maxMana`。
-   * 第一版就是直接寫，而 `recomputeStats` 每一 tick 都會把 `hp.maxMana` 從
-   * `sc.final[MaxMana]` 蓋回去 —— 三座 rig 因此燒掉一模一樣的 712.5 點，
-   * 三條斷言全部在測同一件事。這正是失敗形態⑤：被測的不是我以為的那個東西。
-   */
-  function exThenBlink(bonusMana: number): { loss: number; banked: number } {
-    const r = rig({ gap: 3, foeMaxHp: 40000 });
-    rankTo(r.world, r.efur, "Q", 1);
-    expect(learnEx(r.world, r.efur)).toBe(true);
-    if (bonusMana !== 0) {
-      attachSource(r.world, r.efur, {
-        id: "test:manapool",
-        kind: "item",
-        modifiers: [{ stat: Stat.MaxMana, op: ModOp.Flat, value: bonusMana }],
-      });
-      r.world.step(empty()); // let recomputeStats publish the new ceiling
-    }
-    const hp = r.world.health.get(r.efur)!;
-    hp.mana = hp.maxMana; // 兩座都從滿魔出發 → 回復被夾住，起點對稱
-    expect(castAbility(r.world, r.efur, "EX", { type: "self" })).toBe("ok");
-    step(r.world, 12); // past the 0.4 s wind-up — the burn has happened
-    const st = r.world.status.get(r.efur);
-    const banked =
-      st?.effects.find((e) => e.statusId === "nen-banked" && e.expiresAtTick > r.world.tick)
-        ?.magnitude ?? 0;
-    const hp0 = r.world.health.get(r.foe)!.hp;
+function heartPluck(opts: { seed: number; blind: boolean; ex: boolean; hpFrac: number }): boolean {
+  const r = rig({ gap: 2, foeMaxHp: 40000, seed: opts.seed });
+  rankTo(r.world, r.efur, "Q", 1);
+  rankTo(r.world, r.efur, "W", 1);
+  if (opts.ex) expect(learnEx(r.world, r.efur)).toBe(true);
+  const hp = r.world.health.get(r.foe)!;
+  hp.hp = hp.maxHp * opts.hpFrac;
+
+  if (opts.blind) {
+    // 走**出貨的那條路**上致盲（Q 的 `blink.onArrive`），不是自己往
+    // `world.status` 裡塞一筆 —— 手寫狀態的話 Q 的 `applyStatus` 被刪掉這裡
+    // 還是全綠（失敗形態⑤）。
     expect(castAbility(r.world, r.efur, "Q", { type: "entity", entityId: r.foe })).toBe("ok");
-    step(r.world, 25);
-    return { loss: hp0 - r.world.health.get(r.foe)!.hp, banked };
+    step(r.world, 6);
+    // 前提條件自己先驗：0 次觸發如果是因為「致盲根本沒上身」，那下面那條
+    // 「一次都不摘」會用錯誤的理由變綠。
+    expect(isBlind(r.world, r.foe), "致盲根本沒上身 —— Q 的 onArrive 斷了").toBe(true);
   }
 
-  it("★ 燒掉的法力真的被記下來，而且記的是實扣量", () => {
-    cover("efur-ex-banked");
-    // ⚠️ 存款的**絕對值**刻意不寫死：它是「法力池 − EX 的 50 點門檻 + 前搖
-    // 12 tick 的法力回復」，而這三項都掛在等級、combat-env 倍率與前搖長度上。
-    // 釘死它等於讓這條斷言替另外三個系統把關，改任何一個都會紅在這裡（失敗
-    // 形態④）。實測 6 級 = 663.5。這裡只要求「不是 0」。
-    const small = exThenBlink(0);
-    expect(small.banked, "沒有存款：`spendMana.bankAs` 不見了，或標記從沒被寫進 world.status").toBeGreaterThan(500);
+  expect(castAbility(r.world, r.efur, "W", { type: "entity", entityId: r.foe })).toBe("ok");
+  step(r.world, 20);
+  return !r.world.health.get(r.foe)!.alive;
+}
 
-    const big = exThenBlink(800); // +800 法力上限 = 一件重度法力裝
-    // ★ 存款差 **精確等於**法力上限差。這一行同時擋掉兩種退化實作：
-    //   「不管燒多少都記同一個常數」（差會是 0）與
-    //   「記的是 maxMana 而不是實扣量」（差會被前搖回復污染）。
-    expect(big.banked - small.banked).toBeCloseTo(800, 1);
-
-    // ★ 傷害差 = 存款差 × 0.20。係數寫死在這裡而不是從文件讀 —— 從文件讀的
-    //   斷言對「文件被改成 0」也會過（失敗形態⑤）。
-    const delta = big.loss - small.loss;
-    expect(delta, "免費牙突的傷害完全沒有跟著法力走：`damage.bankedBonus` 不見了").toBeCloseTo(
-      (big.banked - small.banked) * 0.2,
-      0,
+describe("13-002 絕。暗殺奧義 (efur-ex-devour / efur-ex-gate)", () => {
+  it("★ 對致盲目標的牙突會摘心 —— 而且不是每一次（20% 是真的擲出來的）", () => {
+    cover("efur-ex-devour");
+    const plucked = SEEDS.filter((seed) => heartPluck({ seed, blind: true, ex: true, hpFrac: 0.3 }));
+    expect(
+      plucked.length,
+      "一次都沒摘到 —— `onAbilityHit` hook 或 `devour` 整條沒接上",
+    ).toBeGreaterThan(0);
+    // ⭐ 上界跟下界一樣重要：一個把 `chance` 忽略掉（每次必中）的實作會讓
+    //   30 顆種子全中，而只有下界的斷言對它是綠的。
+    expect(plucked.length, "每一顆種子都摘到 —— `hook.chance` 那一格沒有被擲").toBeLessThan(
+      SEEDS.length,
     );
-    expect(delta).toBeGreaterThan(100); // 800 × 0.20 = 160，不會是量測雜訊
   });
 
-  it("★ 上限 400 是真的夾得住的 —— 法力池再大也不會變成一擊必殺", () => {
-    cover("efur-ex-banked-cap");
-    // +30,000 法力上限 → 存款 >30,000 → 未夾的加成會是 6,000+，是一條血的四倍多。
-    const absurd = exThenBlink(30000);
-    expect(absurd.banked).toBeGreaterThan(30000);
-    const small = exThenBlink(0); // 存款遠在上限之下，加成 = banked × 0.20
-    const delta = absurd.loss - small.loss;
-    // 夾住之後：absurd 拿到出貨卡的 `max` 400，small 拿到未夾的 banked × 0.20。
-    // 期望值從**量到的** small.banked 推出來，所以它不會因為等級/倍率改動而假紅。
-    expect(delta, "`Math.min(banked * coeff, b.max)` 的上界被拿掉了").toBeCloseTo(
-      400 - small.banked * 0.2,
-      0,
-    );
-    // 沒夾的話這個差會是 (30712 − 663) × 0.2 ≈ 6,010。1,000 是一條乾淨的分界。
-    expect(delta).toBeLessThan(1000);
+  it("★ 三道閘任何一道沒過就一次都不摘，而 EX 鍵本身已經按不下去了", () => {
+    cover("efur-ex-gate");
+    // owner 2026-08-12：「只要讓 EX **照技能說明**正常實作 被動或主動 即可」——
+    // 舊行為「按 EX → `'ok'`，主動開一個窗口」，新規格 `[被動]`、`effects: []`，
+    // 所以引擎回 `'passive'`。⚠️ 這一條沒有變弱：它仍然在斷言一個**確定的**
+    // 回傳值，只是那個值換了；HUD 上那顆 EX 鈕現在是虛線框的死鈕（#166）。
+    const r = rig({ gap: 2 });
+    expect(learnEx(r.world, r.efur)).toBe(true);
+    expect(
+      castAbility(r.world, r.efur, "EX", { type: "self" }),
+      "EX 又變回主動了 —— 規格第一個標籤是 [被動]",
+    ).toBe("passive");
+
+    // 三道閘，一次關一道，其餘兩道全開 —— 所以紅的時候直接指名是哪一道破了。
+    expect(
+      SEEDS.filter((seed) => heartPluck({ seed, blind: false, ex: true, hpFrac: 0.3 })),
+      "沒有致盲也摘心 —— hook 的 `condition`（目標帶【致盲】）沒有在把關",
+    ).toEqual([]);
+    expect(
+      SEEDS.filter((seed) => heartPluck({ seed, blind: true, ex: false, hpFrac: 0.3 })),
+      "沒學 EX 也摘心 —— 被動掛在誰身上根本沒檢查",
+    ).toEqual([]);
+    expect(
+      SEEDS.filter((seed) => heartPluck({ seed, blind: true, ex: true, hpFrac: 1.0 })),
+      "滿血也被摘心 —— `devour.thresholdPctOfMax` 那條處決線沒有生效",
+    ).toEqual([]);
   });
 });

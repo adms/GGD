@@ -1,16 +1,16 @@
 {
   "id": "godie-h00l.w",
+  "schema": "ability@1",
   "name": "60-02 鎖鏈槍",
-  "icon": "assets/icons/abilities/godie-h00l.w.webp",
-  "description": "[輔助]\n35秒冷卻時間\n\n勾住一個單位，將他拉到身邊來，範圍300，並且給予額外傷害150。",
+  "description": "[主動][指向][範圍][跳躍]\n45秒冷卻\n消耗MP50/75/100/125\n\n「我喜歡勾，但不喜歡脫鉤的時候」\n[直線]距離勾住一個單位，自身[跳躍]過去，並給予 150/250/350/450傷害。",
   "slot": "W",
-  "castType": "self",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     50.0,
@@ -18,29 +18,35 @@
     100.0,
     125.0
   ],
-  "range": 0,
+  "range": 11.0,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "shield",
-      "amount": {
-        "perRank": [
-          150.0,
-          150.0,
-          150.0,
-          150.0
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.45
+      "kind": "leap",
+      "applyTo": "self",
+      "mode": "toPoint",
+      "apexHeight": 0.0,
+      "durationSec": 0.4,
+      "throwDistance": 11.0,
+      "landRadius": 3.0,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0
+            ]
           }
-        ]
-      },
-      "duration": 5.0
+        }
+      ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-h00l.w.webp",
   "vfxKey": "fx.prim.physical.beam",
   "sfxKey": "wc3.headhunteryes4",
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

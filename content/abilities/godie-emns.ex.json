@@ -1,42 +1,29 @@
 {
   "id": "godie-emns.ex",
+  "schema": "ability@1",
   "name": "44-002 交換筆記本",
-  "icon": "assets/icons/abilities/godie-emns.ex.webp",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟別人現存生命作交換，但是將會解除死神之眼的鎖定。",
+  "description": "[主動][指定]\n120秒冷卻，吟唱2秒\n消耗MP450\n施法距離5.29\n\n「計畫通！」\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟指定的敵人[現存生命]作 [交換]。",
   "slot": "EX",
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    120.0
   ],
   "manaCost": [
-    350.0
+    450.0
   ],
   "range": 5.29,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "flat": 300,
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.7
-          }
-        ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 3.0,
-      "moveSpeedMult": 0.6
+      "kind": "swapResource",
+      "shape": "single",
+      "resource": "health",
+      "clampMin": 1.0
     }
   ],
+  "icon": "assets/icons/abilities/godie-emns.ex.webp",
   "vfxKey": "fx.prim.void.pulse-lg",
   "sfxKey": "wc3.kaelyesattack3",
-  "schema": "ability@1",
-  "targetsEnemies": true,
-  "castTimeSec": 0.6
+  "castTimeSec": 0.5
 }

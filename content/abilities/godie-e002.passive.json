@@ -2,10 +2,8 @@
   "id": "godie-e002.passive",
   "schema": "ability@1",
   "name": "20-00 銀色甲胄",
-  "icon": "assets/icons/abilities/godie-e002.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\nSaber魔力化的銀色鎧甲讓Saber有相當良好的魔法抗性，當Saber魔力高於30%最大值時，有50%機率抵消(50+Saber等級*10)的傷害。",
+  "description": "[被動][格擋][機率]\n0秒冷卻\n\n「沒有魔的狀態，等於我什麼都沒穿」\n魔力化的銀色鎧甲有相當良好的魔法抗性，有30%[機率][格擋]100%魔法([AP])傷害。",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
@@ -14,7 +12,9 @@
   "manaCost": [
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
   "passive": {
     "name": "20-00 銀色甲胄",
@@ -23,21 +23,24 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.5,
+            "chance": 0.3,
             "target": "self",
-            "internalCooldown": 1.0,
+            "damageType": "magic",
+            "internalCooldown": 0.5,
             "effects": [
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 60.0
+                  "flat": 800.0
                 },
-                "duration": 1.0
+                "duration": 0.5,
+                "absorbs": "magic"
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-e002.passive.webp"
 }

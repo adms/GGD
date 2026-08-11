@@ -2,22 +2,23 @@
   "id": "godie-efur.w",
   "schema": "ability@1",
   "name": "13-02 龍頭戲畫。牙突",
-  "icon": "assets/icons/abilities/godie-efur.w.webp",
-  "description": "[指向敵方單位]\n冷卻 16／14／12 秒　耗魔 70／90／110 點　射程 4.8 單位（4 個身位）　前搖 0.3 秒\n\n一記由下往上的牙突。招式名稱聽起來很帥，實際上是拿念力做的開瓶器。\n\n· 傷害：**40／70／100 點物理**，外加 **0.5 × 你的攻擊力**\n· 追加：**目標最大生命的 6%／9%／12%**。算的是**最大**生命不是當前生命 —— 所以他滿血還是殘血，這一刀一樣痛（對追殘血的你來說這是壞消息）\n· 暈眩 **1.0 秒**（這一格三階都一樣長）\n· 擊退：**6.0 單位 −（你們兩個之間的距離）**。站越遠推越少，這是全遊戲共用的擊退規則（擊退是近戰的工具，不給遠程拿來放風箏）；貼臉放幾乎就是滿額 6.0。落地後再**躺 6 tick（0.2 秒）**爬不起來。\n\n⚠️ 冷卻越練越短、耗魔越練越貴。",
+  "description": "[主動][指定][擊退]\n45秒冷卻\n消耗MP60/90/120/150\n施法距離2\n\n「突起的不一定是牙，也可能是老朽的愛」\n對指定敵人造成40/60/80/100 + 目標[最大生命]6/8/10/12%的傷害，並[擊退]6距離。",
   "slot": "W",
   "castType": "targeted",
-  "maxRank": 3,
+  "maxRank": 4,
   "cooldown": [
-    16.0,
-    14.0,
-    12.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
-    70.0,
+    60.0,
     90.0,
-    110.0
+    120.0,
+    150.0
   ],
-  "range": 4.8,
+  "range": 2.0,
   "targetsEnemies": true,
   "effects": [
     {
@@ -26,7 +27,8 @@
       "amount": {
         "perRank": [
           40.0,
-          70.0,
+          60.0,
+          80.0,
           100.0
         ],
         "ratios": [
@@ -35,30 +37,16 @@
             "coeff": 0.5
           }
         ]
-      },
-      "hpPct": {
-        "basis": "max",
-        "perRank": [
-          0.06,
-          0.09,
-          0.12
-        ]
       }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "fang-stun",
-      "duration": 1.0,
-      "stun": true
     },
     {
       "kind": "knockback",
       "distance": 6.0,
-      "speed": 16.0,
-      "from": "caster",
-      "getupTicks": 6
+      "speed": 18.0,
+      "from": "caster"
     }
   ],
+  "icon": "assets/icons/abilities/godie-efur.w.webp",
   "vfxKey": "fx.prim.ki.slash",
   "vfxLayers": [
     {

@@ -8,22 +8,22 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 283 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 1 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 242 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 33 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 59 | permanent WC3 passive, never cast, nothing to warn about |
 
-**284 / 284 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**258 / 258 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `self` | 107 | self marker at the caster's feet |
-| `targeted` | 96 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `ground` | 50 | circle — the real `enemiesInCircle` disc; you can walk out |
-| `—` | 33 | not cast |
-| `skillshot` | 23 | line — the projectile's corridor; step sideways |
+| `self` | 102 | self marker at the caster's feet |
+| `targeted` | 79 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `—` | 59 | not cast |
+| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `skillshot` | 16 | line — the projectile's corridor; step sideways |
 | `dash` | 8 | line — the sweep of the dash body |
 
 ## Per-ability matrix
@@ -39,9 +39,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 亞瑟王 - Saber `godie-e002` | PASSIVE | 20-00 銀色甲胄 | `—` | — | 🟣 PASSIVE | never cast |
 | 亞瑟王 - Saber `godie-e002` | Q | 20-02 感知能力 | `—` | — | 🟣 PASSIVE | never cast |
 | 亞瑟王 - Saber `godie-e002` | W | 20-01 風王結界 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 亞瑟王 - Saber `godie-e002` | E | 20-03 約束與勝利之劍 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 亞瑟王 - Saber `godie-e002` | R | 20-04 Avalon-永恆的理想鄉 | `ground` | circle r=2.94u | ✅ OK | radius 3.67 × abilityRange 0.8 |
-| 亞瑟王 - Saber `godie-e002` | EX | 20-002 解放.約束勝利劍MAX | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亞瑟王 - Saber `godie-e002` | E | 20-03 約束與勝利之劍 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 亞瑟王 - Saber `godie-e002` | R | 20-04 Avalon-永恆的理想鄉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亞瑟王 - Saber `godie-e002` | EX | 20-002 解放.約束勝利劍MAX | `—` | — | 🟣 PASSIVE | never cast |
 | 火霧戰士 - 夏娜 `godie-e008` | PASSIVE | 21-00 灼眼 | `—` | — | 🟣 PASSIVE | never cast |
 | 火霧戰士 - 夏娜 `godie-e008` | Q | 21-02 拔焰刀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 火霧戰士 - 夏娜 `godie-e008` | W | 21-01 火羽 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -56,44 +56,44 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 戰國刺客Azumi - 安云 `godie-e00k` | EX | 19-002 紫色披風 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | PASSIVE | 59-00 暴走 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | Q | 59-01 吞噬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | W | 59-02 高週波短刀 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | E | 59-03 AT力場 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | R | 59-04 野戰型陽電子砲 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.ki maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | EX | 59-001 完全暴走 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | W | 59-02 高週波短刀 | `—` | — | 🟣 PASSIVE | never cast |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | E | 59-03 AT力場 | `—` | — | 🟣 PASSIVE | never cast |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | R | 59-04 野戰型陽電子砲 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 最終泛用人型決戰兵器 - 初號機 `godie-e00r` | EX | 59-001 完全暴走 | `—` | — | 🟣 PASSIVE | never cast |
 | 白木老樹精 - 白木卡迪那 `godie-e00s` | PASSIVE | 70-00 紮根 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | Q | 70-01 伸卡球 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.arcane maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | W | 70-02 大怒石 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | E | 70-03 木束縛之術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | R | 70-04 千年練成 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 白木老樹精 - 白木卡迪那 `godie-e00s` | EX | 70-002 樹海降臨 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | PASSIVE | 77-00 浮雲-旋一閃 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | Q | 77-01 百烈櫻華斬 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | W | 77-02 雷鳴劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | E | 77-03 GLADIARIA ALAT | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | R | 77-04 真-雷光劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | EX | 77-002 御雷劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | Q | 70-01 伸卡球 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | W | 70-02 大怒石 | `—` | — | 🟣 PASSIVE | never cast |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | E | 70-03 木束縛之術 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | R | 70-04 千年練成 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 白木老樹精 - 白木卡迪那 `godie-e00s` | EX | 70-002 樹海降臨 | `—` | — | 🟣 PASSIVE | never cast |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | PASSIVE | 77-00 浮雲-旋一閃 | `—` | — | 🟣 PASSIVE | never cast |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | Q | 77-01 百烈櫻華斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | W | 77-02 雷鳴劍 | `—` | — | 🟣 PASSIVE | never cast |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | E | 77-03 GLADIARIA ALAT | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | R | 77-04 真-雷光劍 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 神鳴流劍士 - 櫻綻剎那 `godie-e00w` | EX | 77-002 御雷劍 | `—` | — | 🟣 PASSIVE | never cast |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | PASSIVE | 45-00 寫輪眼 | `—` | — | 🟣 PASSIVE | never cast |
-| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | Q | 45-01 火遁-豪火龍之術 | `ground` | circle r=4.84u | ✅ OK | radius 6.05 × abilityRange 0.8 |
-| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | W | 45-02 千鳥流 | `ground` | circle r=6.23u | ✅ OK | radius 7.79 × abilityRange 0.8 |
-| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | E | 45-03 千鳥 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | Q | 45-01 火遁-豪火龍之術 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | W | 45-02 千鳥流 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | E | 45-03 千鳥 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | R | 45-04 哥哥 | `—` | — | 🟣 PASSIVE | never cast |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | EX | 45-002 天照 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | PASSIVE | 13-00 念。攻防轉換 | `—` | — | 🟣 PASSIVE | never cast |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | Q | 13-01 暗步。極限之圓 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | W | 13-02 龍頭戲畫。牙突 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | E | 13-03 龍頭戲畫。佈壁 | `ground` | circle r=2.40u | ✅ OK | radius 3 × abilityRange 0.8 |
-| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 龍星群 | `ground` | circle r=19.20u | ✅ OK | radius 24 × abilityRange 0.8 |
-| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | EX | 13-002 絕。暗殺奧義 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | PASSIVE | 15-00 天生法術書 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 風精召喚 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | W | 15-02 沉睡之霧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | E | 15-03 雷電風暴 | `ground` | circle r=4.10u | ✅ OK | radius 5.13 × abilityRange 0.8 |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | R | 15-04 千之雷 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.lightning maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
-| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | EX | 15-002 風花-武裝解除 | `ground` | circle r=4.70u | ✅ OK | radius 5.88 × abilityRange 0.8 |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | E | 13-03 龍頭戲畫。布陣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 龍星群 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | EX | 13-002 絕。暗殺奧義 | `—` | — | 🟣 PASSIVE | never cast |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | PASSIVE | 15-00 真·不死不滅 | `—` | — | 🟣 PASSIVE | never cast |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 雷神槍「巨神殺手」 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | W | 15-02 疾風迅雷 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | E | 15-03 獄炎煉我 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | R | 15-04 雷天大壯。貳式 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | EX | 15-002 敵彈吸收陣。太陰道 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 奇樂 - 夜神月 `godie-emns` | PASSIVE | 44-00 機警 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 奇樂 - 夜神月 `godie-emns` | Q | 44-01 死神之眼 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 奇樂 - 夜神月 `godie-emns` | W | 44-02 死神的規則 | `—` | — | 🟣 PASSIVE | never cast |
-| 奇樂 - 夜神月 `godie-emns` | E | 44-03 火車輾過 | `ground` | circle r=1.20u | ✅ OK | radius 1.5 × abilityRange 0.8 |
+| 奇樂 - 夜神月 `godie-emns` | E | 44-03 火車輾過 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 奇樂 - 夜神月 `godie-emns` | R | 44-04 心臟麻痺 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 奇樂 - 夜神月 `godie-emns` | EX | 44-002 交換筆記本 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 治癒系公主 - 木乃香 `godie-etyr` | PASSIVE | 14-00 召喚式神 | `ground` | circle r=5.14u | ✅ OK | radius 6.42 × abilityRange 0.8 |
@@ -104,45 +104,45 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 治癒系公主 - 木乃香 `godie-etyr` | EX | 14-002 魔力激發 | `—` | — | 🟣 PASSIVE | never cast |
 | 龍之子 - 天地志狼 `godie-ewar` | PASSIVE | 12-00 感應意脈 | `—` | — | 🟣 PASSIVE | never cast |
 | 龍之子 - 天地志狼 `godie-ewar` | Q | 12-01 鬥仙術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-ewar` | W | 12-02 仙氣．採藥 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-ewar` | E | 12-03 破凰之心-徒手空破山 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-ewar` | R | 12-04 龍氣爆發 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 龍之子 - 天地志狼 `godie-ewar` | W | 12-02 仙氣．採藥 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 龍之子 - 天地志狼 `godie-ewar` | E | 12-03 破凰之心。空破山 | `—` | — | 🟣 PASSIVE | never cast |
+| 龍之子 - 天地志狼 `godie-ewar` | R | 12-04 龍氣爆發 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 龍之子 - 天地志狼 `godie-ewar` | EX | 12-002 仙氣發勁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 時空勇者 - 林克 `godie-h00l` | PASSIVE | 60-00 聖光盾 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 時空勇者 - 林克 `godie-h00l` | Q | 60-01 科奇利族的迴旋鏢 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 時空勇者 - 林克 `godie-h00l` | W | 60-02 鎖鏈槍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 時空勇者 - 林克 `godie-h00l` | E | 60-03 海拉爾之盾的庇護 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 時空勇者 - 林克 `godie-h00l` | R | 60-04 迴旋斬 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
-| 時空勇者 - 林克 `godie-h00l` | EX | 60-002 絕光斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 時空勇者 - 林克 `godie-h00l` | PASSIVE | 60-00 大師之劍 | `—` | — | 🟣 PASSIVE | never cast |
+| 時空勇者 - 林克 `godie-h00l` | Q | 60-01 旋風斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 時空勇者 - 林克 `godie-h00l` | W | 60-02 鎖鏈槍 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 時空勇者 - 林克 `godie-h00l` | E | 60-03 三角神力．勇氣 | `—` | — | 🟣 PASSIVE | never cast |
+| 時空勇者 - 林克 `godie-h00l` | R | 60-04 完美盾反 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 時空勇者 - 林克 `godie-h00l` | EX | 60-002 勇者意志 | `—` | — | 🟣 PASSIVE | never cast |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | PASSIVE | 79-00 靈壓 | `—` | — | 🟣 PASSIVE | never cast |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | Q | 79-01 瞬步 | `skillshot` | line 9.60×0.80u | ✅ OK | imported.bolt.void maxRange 12 × abilityRange 0.8, hitRadius 0.5 ×2 × abilityRange 0.8 |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | W | 79-02 斬擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | E | 79-03 月牙天衝 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | Q | 79-01 瞬步 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | W | 79-02 月牙斬擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | E | 79-03 月牙天衝 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | R | 79-04 卍解 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | EX | 79-002 虛化 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | EX | 79-002 虛化 | `—` | — | 🟣 PASSIVE | never cast |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | PASSIVE | 80-00 飛將神弓 | `—` | — | 🟣 PASSIVE | never cast |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | Q | 80-01 天下無雙 | `—` | — | 🟣 PASSIVE | never cast |
-| 亂世癿王者 - 呂布奉先 `godie-h01u` | W | 80-02 弒鬼神 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 亂世癿王者 - 呂布奉先 `godie-h01u` | E | 80-03 鬼神烈戟 | `ground` | circle r=7.78u | ✅ OK | radius 9.72 × abilityRange 0.8 |
-| 亂世癿王者 - 呂布奉先 `godie-h01u` | R | 80-04 赤兔咆哮 | `skillshot` | line 9.60×1.44u | ✅ OK | imported.wave.physical maxRange 12 × abilityRange 0.8, hitRadius 0.9 ×2 × abilityRange 0.8 |
-| 亂世癿王者 - 呂布奉先 `godie-h01u` | EX | 80-002 戰無不勝 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亂世癿王者 - 呂布奉先 `godie-h01u` | W | 80-02 弒鬼神 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亂世癿王者 - 呂布奉先 `godie-h01u` | E | 80-03 鬼神烈戟 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 亂世癿王者 - 呂布奉先 `godie-h01u` | R | 80-04 赤兔咆哮 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 亂世癿王者 - 呂布奉先 `godie-h01u` | EX | 80-002 戰無不勝 | `—` | — | 🟣 PASSIVE | never cast |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | PASSIVE | 89-00 憤怒的門牙 | `—` | — | 🟣 PASSIVE | never cast |
-| 國寶級的畜生 - 熊貓 `godie-h02k` | Q | 89-01 憤怒的頭槌 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 國寶級的畜生 - 熊貓 `godie-h02k` | W | 89-02 憤怒的菊花 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 國寶級的畜生 - 熊貓 `godie-h02k` | E | 89-03 憤怒的胸毛 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 國寶級的畜生 - 熊貓 `godie-h02k` | R | 89-04 憤怒的簡諧運動 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 國寶級的畜生 - 熊貓 `godie-h02k` | Q | 89-01 憤怒的頭槌 | `—` | — | 🟣 PASSIVE | never cast |
+| 國寶級的畜生 - 熊貓 `godie-h02k` | W | 89-02 憤怒的菊花 | `—` | — | 🟣 PASSIVE | never cast |
+| 國寶級的畜生 - 熊貓 `godie-h02k` | E | 89-03 憤怒的胸毛 | `—` | — | 🟣 PASSIVE | never cast |
+| 國寶級的畜生 - 熊貓 `godie-h02k` | R | 89-04 憤怒的簡諧運動 | `—` | — | 🟣 PASSIVE | never cast |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | EX | 89-002 俄羅斯輪盤 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | PASSIVE | 92-00 憂鬱的眼神 | `—` | — | 🟣 PASSIVE | never cast |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | Q | 92-01 臥草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | W | 92-03 狂草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | E | 92-02 消化液 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | W | 92-03 狂草泥馬 | `—` | — | 🟣 PASSIVE | never cast |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | E | 92-02 消化液 | `—` | — | 🟣 PASSIVE | never cast |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | R | 92-04 馬勒戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | EX | 92-002 最終戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 海克力斯 - Berserker `godie-hapm` | Q | 52-01 狂戰士之怒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 海克力斯 - Berserker `godie-hapm` | W | 52-02 蹂躪編年史 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 海克力斯 - Berserker `godie-hapm` | E | 52-03 無銘斧劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 海克力斯 - Berserker `godie-hapm` | R | 52-04 巨神一擊 | `ground` | circle r=4.80u | ✅ OK | radius 6 × abilityRange 0.8 |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | EX | 92-002 最終戈壁 | `—` | — | 🟣 PASSIVE | never cast |
+| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `—` | — | 🟣 PASSIVE | never cast |
+| 海克力斯 - Berserker `godie-hapm` | Q | 52-01 狂戰士之怒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 海克力斯 - Berserker `godie-hapm` | W | 52-02 蹂躪編年史 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 海克力斯 - Berserker `godie-hapm` | E | 52-03 無銘斧劍 | `—` | — | 🟣 PASSIVE | never cast |
+| 海克力斯 - Berserker `godie-hapm` | R | 52-04 巨神一擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 海克力斯 - Berserker `godie-hapm` | EX | 52-002 射殺百頭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | PASSIVE | 01-00 怒斬 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終幻想 - 克勞德 `godie-hart` | Q | 01-01 凶斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |

@@ -54,187 +54,608 @@
     "Q": {
       "id": "godie-h02k.q",
       "name": "89-01 憤怒的頭槌",
-      "icon": "assets/icons/abilities/godie-h02k.q.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n當熊貓憤怒到極點的時候將會使出致命殺傷力的頭槌攻擊，但是牠總是忘記有這招，攻擊時有5%機率想起頭槌攻擊，造成111點破壞力，並將敵人震昏0.5秒。",
+      "description": "[被動][機率][普攻時][暈眩]\n\n「頭腦不好沒關係，頭骨夠硬就行」\n[攻擊時]有 3/4/5/6%[機率]想起頭槌攻擊，造成 10倍 [暴擊] 傷害，並將敵人[暈眩] 1秒。\n\n(敵方 [燃燒] 狀態下額外追加 [致盲] 狀態，持續 5秒)",
       "slot": "Q",
       "castType": "self",
-      "maxRank": 5,
+      "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 3,
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "castTimeSec": 0.3
-        }
-      }
+      "passive": {
+        "name": "89-01 憤怒的頭槌",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.03,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "chance": 0.03,
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.04,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "chance": 0.04,
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.05,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "chance": 0.05,
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.06,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "chance": 0.06,
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "blind",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02k.q.webp",
+      "vfxKey": "fx.prim.physical.shockwave"
     },
     "W": {
       "id": "godie-h02k.w",
       "name": "89-02 憤怒的菊花",
-      "icon": "assets/icons/abilities/godie-h02k.w.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n當敵人攻擊熊貓的時候，有3%機率會讓熊貓想起四川地震牠剛好在撇條的痛苦，會胡亂噴放排泄物使敵人造成癱瘓，累積到一定次數會讓臉色難看的熊貓一洩千里。",
+      "description": "[被動][範圍][機率]\n\n「菊花一緊，空氣力學就有了答案」\n當敵人攻擊熊貓的時候，有3%[機率][反彈]，[反彈時] 會胡亂噴放排泄物使[周圍][範圍] 敵人造成 [癱瘓] 及 [詛咒]。\n\n(敵方 [致盲] 狀態下額外追加 [混亂] 狀態，持續 10秒)",
       "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
+      "passive": {
+        "name": "89-02 憤怒的菊花",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.03,
+                "target": "self",
+                "internalCooldown": 1.0,
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 1.0
+                    },
+                    "radius": 4.5,
+                    "radiusTier": "中",
+                    "maxTargets": 6
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "curse",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02k.w.webp",
       "vfxKey": "fx.prim.nature.explosion",
-      "sfxKey": "wc3.pandarenbrewmasterpissed8",
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 3,
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "castTimeSec": 0.3
-        }
-      }
+      "sfxKey": "wc3.pandarenbrewmasterpissed8"
     },
     "E": {
       "id": "godie-h02k.e",
       "name": "89-03 憤怒的胸毛",
-      "icon": "assets/icons/abilities/godie-h02k.e.webp",
-      "description": "[輔助]\n0秒冷卻時間\n\n傳說中拔下熊貓的一根胸毛，也就是熊貓胸毛，可以讓胸毛..是熊貓復活，這份刺激的快感也讓熊貓行動加速及提升全能力，並且隨機爆炸，但是熊貓還是常常忘記這回事，只有4%機率會想起。",
+      "description": "[被動][機率]\n\n受到敵方傷害時，有 4% [機率] 拔下熊貓的一根胸毛，這份刺激的快感讓熊貓 [攻擊速度] 提升200/250/300/350%，持續4秒，但也會有 2% [機率] 拔到重要部位的毛，[自爆] 損失現存 50%生命。",
       "slot": "E",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              1000.0,
-              2000.0,
-              3000.0,
-              4000.0
-            ],
-            "ratios": [
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "89-03 憤怒的胸毛",
+        "ranks": [
+          {
+            "hooks": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "on": "onDamageTaken",
+                "chance": 0.04,
+                "target": "self",
+                "internalCooldown": 1.0,
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 2.0
+                      }
+                    ],
+                    "duration": 4.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.04,
+                "target": "self",
+                "internalCooldown": 1.0,
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 2.5
+                      }
+                    ],
+                    "duration": 4.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.04,
+                "target": "self",
+                "internalCooldown": 1.0,
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 3.0
+                      }
+                    ],
+                    "duration": 4.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.04,
+                "target": "self",
+                "internalCooldown": 1.0,
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 3.5
+                      }
+                    ],
+                    "duration": 4.0
+                  }
+                ]
               }
             ]
           }
-        },
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "ms",
-              "op": "pctAdd",
-              "value": 0.04
-            },
-            {
-              "stat": "ad",
-              "op": "flat",
-              "value": 10
-            },
-            {
-              "stat": "as",
-              "op": "pctAdd",
-              "value": 0.04
-            }
-          ],
-          "duration": 12.0
-        }
-      ],
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02k.e.webp",
       "vfxKey": "fx.prim.physical.swarm",
-      "sfxKey": "wc3.pandarenbrewmasterwarcry1",
-      "castTimeSec": 0.3
+      "sfxKey": "wc3.pandarenbrewmasterwarcry1"
     },
     "R": {
       "id": "godie-h02k.r",
       "name": "89-04 憤怒的簡諧運動",
-      "icon": "assets/icons/abilities/godie-h02k.r.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n[我心中有個夢...] 牠這樣說著，雖然牠搞不清楚是是夢遺還是夢三小，但是每當牠想起的時候，手掌就會緊握不停揮動，攻擊時有1%機率將攻速提升到最高，並且擁有8%物理迴避。",
+      "description": "[被動][機率][普攻時][迴避][迴避時][拉扯][擊退][暈眩][身上有某狀態時][混亂][AP加成]\n\n[攻擊時]有8/12/16%[機率]將對方抓取過來造成 16% [AP]傷害，並且擁有 8/12/16% 物理[迴避]，[迴避]成功的時候，將會 [擊退] 對方小一段距離，並造成 [暈眩] 1秒。\n\n(敵方 [致盲] 狀態下額外追加 [混亂] 狀態，持續 3秒)",
       "slot": "R",
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
+      "passive": {
+        "name": "89-04 憤怒的簡諧運動",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.08
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.08,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.16
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 3.0,
+                    "speed": 16.0,
+                    "from": "pull"
+                  }
+                ]
+              },
+              {
+                "on": "onEvade",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 2.0,
+                    "speed": 14.0,
+                    "from": "caster"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "confusion",
+                    "duration": 3.0,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.12
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.12,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.16
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 3.0,
+                    "speed": 16.0,
+                    "from": "pull"
+                  }
+                ]
+              },
+              {
+                "on": "onEvade",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 2.0,
+                    "speed": 14.0,
+                    "from": "caster"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "confusion",
+                    "duration": 3.0,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.16
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.16,
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.16
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "knockback",
+                    "distance": 3.0,
+                    "speed": 16.0,
+                    "from": "pull"
+                  }
+                ]
+              },
+              {
+                "on": "onEvade",
+                "target": "event",
+                "effects": [
+                  {
+                    "kind": "knockback",
+                    "distance": 2.0,
+                    "speed": 14.0,
+                    "from": "caster"
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "stun",
+                    "duration": 1.0,
+                    "stun": true
+                  }
+                ]
+              },
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "effects": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "confusion",
+                    "duration": 3.0,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02k.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "sfxKey": "wc3.pandarenbrewmasteryes1",
-      "castTimeSec": 0.3,
-      "template": {
-        "ref": "tpl-buff-self",
-        "params": {
-          "duration": 6,
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": 25
-            }
-          ],
-          "castTimeSec": 0.3
-        }
-      }
+      "sfxKey": "wc3.pandarenbrewmasteryes1"
     }
   },
   "skillOrder": [

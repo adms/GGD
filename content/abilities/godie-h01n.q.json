@@ -1,45 +1,55 @@
 {
   "id": "godie-h01n.q",
+  "schema": "ability@1",
   "name": "79-01 瞬步",
-  "icon": "assets/icons/abilities/godie-h01n.q.webp",
-  "description": "[主動攻擊]\n35秒冷卻時間\n\n以急快的速度移動至對方身旁並給予兩段式傷害，共計200點傷害。\n\n於斬擊蓄力狀態有額外力量*2點傷害加成",
+  "description": "[主動][指向][範圍][衝刺]\n30秒冷卻\n消耗[MP] 60/80/100/120\n施法距離9.17\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
   "slot": "Q",
-  "castType": "skillshot",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
   "manaCost": [
-    65.0,
-    95.0,
-    125.0,
-    155.0
+    60.0,
+    80.0,
+    100.0,
+    120.0
   ],
   "range": 9.17,
+  "targetsEnemies": true,
   "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 32.0,
+      "maxDistance": 9.17
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "flat": 1.0
+      },
+      "radius": 3.0,
+      "radiusTier": "小",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "magic-break",
+      "duration": 3.0
+    },
     {
       "kind": "spawnProjectile",
       "projectileId": "imported.bolt.void",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              200.0,
-              300.0,
-              400.0,
-              500.0
-            ]
-          }
-        }
-      ]
+      "onHit": []
     }
   ],
+  "icon": "assets/icons/abilities/godie-h01n.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.3
 }

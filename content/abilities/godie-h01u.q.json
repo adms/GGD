@@ -1,8 +1,8 @@
 {
   "id": "godie-h01u.q",
+  "schema": "ability@1",
   "name": "80-01 天下無雙",
-  "icon": "assets/icons/abilities/godie-h01u.q.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n亂世中呂布孤傲叛逆的個性，於戰鬥中追求最高戰力，犧牲3點防禦力，增進25點攻擊力。\n提升飛將神弓的攻擊加成上限為5次",
+  "description": "[被動][普攻時][層數累積]\n0秒冷卻\n\n「人中出呂布，馬中出赤兔」\n每次 [普通攻擊時] 都會增加 10% [攻擊速度] 並可[疊加]，持續1秒，若沒有繼續攻擊則[疊加]的 [攻擊速度] 增益歸零。",
   "slot": "Q",
   "castType": "self",
   "maxRank": 4,
@@ -18,69 +18,36 @@
     0.0,
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "vfxKey": "fx.prim.physical.shockwave",
-  "schema": "ability@1",
   "passive": {
     "name": "80-01 天下無雙",
     "ranks": [
       {
-        "modifiers": [
+        "hooks": [
           {
-            "stat": "ad",
-            "op": "flat",
-            "value": 25
-          },
-          {
-            "stat": "armor",
-            "op": "flat",
-            "value": -3
-          }
-        ]
-      },
-      {
-        "modifiers": [
-          {
-            "stat": "ad",
-            "op": "flat",
-            "value": 50
-          },
-          {
-            "stat": "armor",
-            "op": "flat",
-            "value": -6
-          }
-        ]
-      },
-      {
-        "modifiers": [
-          {
-            "stat": "ad",
-            "op": "flat",
-            "value": 75
-          },
-          {
-            "stat": "armor",
-            "op": "flat",
-            "value": -9
-          }
-        ]
-      },
-      {
-        "modifiers": [
-          {
-            "stat": "ad",
-            "op": "flat",
-            "value": 100
-          },
-          {
-            "stat": "armor",
-            "op": "flat",
-            "value": -12
+            "on": "onBasicAttack",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.1
+                  }
+                ],
+                "duration": 1.0,
+                "statusId": "rage"
+              }
+            ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-h01u.q.webp",
+  "vfxKey": "fx.prim.physical.shockwave"
 }

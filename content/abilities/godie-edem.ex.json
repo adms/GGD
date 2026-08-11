@@ -1,34 +1,55 @@
 {
   "id": "godie-edem.ex",
+  "schema": "ability@1",
   "name": "45-002 天照",
-  "icon": "assets/icons/abilities/godie-edem.ex.webp",
-  "description": "[輔助攻擊]\n60秒冷卻時間\n\n擁有萬花筒寫輪眼的佐助，將可發動天照，造成週遭大範圍部隊每秒受到400點灼燒傷害，並無法施展法術，同時降低40%的攻擊力，持續10秒。",
+  "description": "[主動][範圍][燃燒][沉默][虛弱][週期]\n120秒冷卻\n消耗MP650\n有效半徑7.79\n\n「寫輪眼。天照」\n發動天照，使[周圍][大範圍]敵人每秒受到400點[燃燒]傷害並附加[燃燒]標記，同時[沉默]且[攻擊力降低]40%，持續10秒。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    120.0
   ],
   "manaCost": [
-    444.0
+    650.0
   ],
-  "range": 0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 0.4
+  "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "flat": 1.0
+      },
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burn",
+      "duration": 10.0
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "paralysis",
+      "duration": 10.0,
+      "silenced": true
+    },
+    {
+      "kind": "dot",
+      "damageType": "magic",
+      "amountPerTick": {
+        "flat": 400.0
+      },
+      "intervalSec": 1.0,
+      "durationSec": 10.0,
+      "stacking": "refresh"
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-edem.ex.webp",
   "vfxKey": "fx.prim.void.explosion-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.8
 }

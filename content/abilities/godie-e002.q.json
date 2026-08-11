@@ -1,8 +1,8 @@
 {
   "id": "godie-e002.q",
+  "schema": "ability@1",
   "name": "20-02 感知能力",
-  "icon": "assets/icons/abilities/godie-e002.q.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
+  "description": "[被動][迴避][機率]\n0秒冷卻\n\n「你的魔力流向了我」\n感應魔力流向，進而有6/12/18/24%[機率][迴避]物理([AD])攻擊。",
   "slot": "Q",
   "castType": "self",
   "maxRank": 4,
@@ -18,10 +18,9 @@
     0.0,
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "vfxKey": "fx.prim.holy.pulse-sm",
-  "schema": "ability@1",
   "passive": {
     "name": "20-02 感知能力",
     "ranks": [
@@ -30,7 +29,7 @@
           {
             "stat": "evasion",
             "op": "flat",
-            "value": 0.07
+            "value": 0.06
           }
         ]
       },
@@ -39,7 +38,7 @@
           {
             "stat": "evasion",
             "op": "flat",
-            "value": 0.14
+            "value": 0.12
           }
         ]
       },
@@ -48,7 +47,7 @@
           {
             "stat": "evasion",
             "op": "flat",
-            "value": 0.21
+            "value": 0.18
           }
         ]
       },
@@ -57,10 +56,12 @@
           {
             "stat": "evasion",
             "op": "flat",
-            "value": 0.28
+            "value": 0.24
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-e002.q.webp",
+  "vfxKey": "fx.prim.holy.pulse-sm"
 }

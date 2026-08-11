@@ -1,22 +1,25 @@
 {
   "id": "godie-e002.w",
+  "schema": "ability@1",
   "name": "20-01 風王結界",
-  "icon": "assets/icons/abilities/godie-e002.w.webp",
-  "description": "[切換] 開關型 · 冷卻 12 秒 · 開關本身不花半點法力\n\nSaber 把周圍的大氣捏成一件透明雨衣穿在身上——別人看不見，所以每次她砍完人都要自己補一句「那是風」。\n\n開啟後，她的每一次普通攻擊都會多刮一刀：額外造成 10 + 攻擊力×0.5 的魔法傷害（法球效應，只吃普攻，技能沒份）。\n代價是每刮一刀就從自己身上抽走 30 點法力，一刀一刀刮，刮到見底為止。\n\n法力剩不到 30 點時，風會很有禮貌地不出現：攻擊照樣打出去、照樣算傷害，只是那一下變回一把很普通的劍——它不會擋住你的普攻，只是不再附贈。\n\n再按一次 W 收工。倒地時也會自動收工（風也是要下班的）。",
+  "description": "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
   "slot": "W",
   "castType": "self",
-  "maxRank": 3,
+  "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    0.0,
-    0.0,
-    0.0
+    50.0,
+    100.0,
+    150.0,
+    200.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
@@ -28,6 +31,18 @@
     "ranks": [
       {
         "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.4
+          }
+        ],
         "hooks": [
           {
             "on": "onBasicAttack",
@@ -44,7 +59,7 @@
               {
                 "kind": "spendMana",
                 "amount": {
-                  "flat": 30
+                  "flat": 30.0
                 },
                 "applyTo": "self"
               },
@@ -52,7 +67,160 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 10,
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.6
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 50
+            },
+            "effects": [
+              {
+                "kind": "spendMana",
+                "amount": {
+                  "flat": 50.0
+                },
+                "applyTo": "self"
+              },
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.8
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 70
+            },
+            "effects": [
+              {
+                "kind": "spendMana",
+                "amount": {
+                  "flat": 70.0
+                },
+                "applyTo": "self"
+              },
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "whileForm": "alternate",
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 1.0
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 2.0
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 90
+            },
+            "effects": [
+              {
+                "kind": "spendMana",
+                "amount": {
+                  "flat": 90.0
+                },
+                "applyTo": "self"
+              },
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 10.0,
                   "ratios": [
                     {
                       "stat": "ad",
@@ -67,7 +235,19 @@
       }
     ]
   },
+  "toggle": {
+    "upkeepCadence": "none",
+    "upkeepCost": [
+      0
+    ],
+    "onExit": [
+      {
+        "kind": "championForm",
+        "to": "toggle"
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e002.w.webp",
   "vfxKey": "fx.prim.wind.tornado",
-  "schema": "ability@1",
   "castTimeSec": 0.3
 }

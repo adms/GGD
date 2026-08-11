@@ -1,44 +1,50 @@
 {
   "id": "godie-emfr.passive",
   "schema": "ability@1",
-  "name": "15-00 天生法術書",
-  "icon": "assets/icons/abilities/godie-emfr.passive.webp",
-  "description": "[輔助]\n0秒冷卻時間\n\n記載多個涅吉可以使用的技能。\n\n暫定契約（60秒冷卻時間）：與我方英雄暫定契約，做出令人臉紅心跳又害羞的事情。\n執行契約（60秒冷卻時間）：執行契約增強契約人的能力，每秒消耗25點魔力，增加契約人20%跑速、75%攻速、20%攻擊力。",
+  "name": "15-00 真·不死不滅",
+  "description": "[被動][週期][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n每秒[回復] 5%[最大生命]，但每秒也[燒魔]魔力 5%。",
   "slot": "PASSIVE",
-  "innateKind": "active",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    0.0
   ],
   "manaCost": [
-    100.0
+    0.0
   ],
-  "range": 3.67,
+  "range": 0.0,
+  "innateKind": "passive",
   "targetsEnemies": false,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "ms",
-          "op": "pctAdd",
-          "value": 0.2
-        },
-        {
-          "stat": "as",
-          "op": "pctAdd",
-          "value": 0.75
-        },
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.2
-        }
-      ],
-      "duration": 4.0
-    }
-  ],
-  "vfxKey": "fx.prim.arcane.pulse",
-  "castTimeSec": 0.3
+  "effects": [],
+  "passive": {
+    "name": "15-00 真·不死不滅",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "internalCooldown": 1.0,
+            "target": "self",
+            "effects": [
+              {
+                "kind": "restore",
+                "healthPct": 0.05,
+                "applyTo": "self"
+              },
+              {
+                "kind": "spendMana",
+                "amount": {
+                  "flat": 0.0
+                },
+                "pctMaxMana": 0.05,
+                "applyTo": "self"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-emfr.passive.webp",
+  "vfxKey": "fx.prim.arcane.pulse"
 }

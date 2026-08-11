@@ -1,42 +1,67 @@
 {
   "id": "godie-h02k.ex",
+  "schema": "ability@1",
   "name": "89-002 俄羅斯輪盤",
-  "icon": "assets/icons/abilities/godie-h02k.ex.webp",
-  "description": "[主動攻擊]\n1秒冷卻時間\n\n在馬戲團打工的熊貓，為了保護自己不被從樹後偷襲養成了把周圍的樹木破壞掉的習慣。除此之外，他也學會了生死搏命的技藝，拿出土製左輪手槍裝填一顆子彈，生死一瞬間，有1/6的機會讓對方或1/6自己死亡，剩餘4/6相安無事。",
+  "description": "[主動][指定][範圍][輔助][恐懼][機率]\n10秒冷卻\n消耗[MP] 666\n施法距離5.29\n\n拿出土製左輪手槍裝填一顆子彈，生死一瞬間，有1/6的機會讓對方或1/6自己死亡，剩餘4/6 對方會陷入 [恐懼] 狀態，持續 2秒。\n\n(敵方 [致盲] 狀態下對方的死亡[機率]提升到 2/6)\n(敵方 [混亂] 狀態下對方的死亡[機率]提升到 3/6)",
   "slot": "EX",
   "castType": "targeted",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    10.0
   ],
   "manaCost": [
-    315.0
+    666.0
   ],
   "range": 5.29,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "physical",
-      "amount": {
-        "flat": 300,
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.6
-          }
-        ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 3.0,
-      "moveSpeedMult": 0.6
+      "kind": "weightedBranch",
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "champion",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "any",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 4,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-h02k.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
-  "sfxKey": "wc3.mortarimpact",
-  "schema": "ability@1",
-  "targetsEnemies": true,
-  "castTimeSec": 0.6
+  "sfxKey": "wc3.mortarimpact"
 }

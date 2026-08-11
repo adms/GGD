@@ -2,10 +2,8 @@
   "id": "godie-h01u.passive",
   "schema": "ability@1",
   "name": "80-00 飛將神弓",
-  "icon": "assets/icons/abilities/godie-h01u.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n身經百戰的呂布，每殺死一名敵人將會在10秒內攻擊力增加10點，基礎最高累計3次。",
+  "description": "[被動][擊殺時]\n0秒冷卻\n\n「轅門射戟只是熱身，這次我直接射你」\n每殺死一名敵人 [攻擊速度] 永久增加1%；[攻擊距離] 永久提升0.01，上限到10。",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
@@ -14,7 +12,9 @@
   "manaCost": [
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
   "passive": {
     "name": "80-00 飛將神弓",
@@ -24,23 +24,28 @@
           {
             "on": "onKill",
             "target": "self",
-            "victim": "champion",
             "effects": [
               {
                 "kind": "applyBuff",
                 "modifiers": [
                   {
-                    "stat": "ad",
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": 0.01
+                  },
+                  {
+                    "stat": "range",
                     "op": "flat",
-                    "value": 10
+                    "value": 0.01
                   }
                 ],
-                "duration": 10.0
+                "duration": 99999.0
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-h01u.passive.webp"
 }

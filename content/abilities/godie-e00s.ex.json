@@ -1,34 +1,55 @@
 {
   "id": "godie-e00s.ex",
+  "schema": "ability@1",
   "name": "70-002 樹海降臨",
-  "icon": "assets/icons/abilities/godie-e00s.ex.webp",
-  "description": "[強化]\n0秒冷卻時間\n\n集千年煉成之大成，白木將悟得樹海降臨，可以瞬間召喚樹精，召喚的樹精將獲得十倍之血量及五倍之裝甲，召喚傷害及數量也將是千年煉成的兩倍。",
+  "description": "[被動][召喚][範圍][治療][AP加成]\n\n「是誰說樹味像雞」\n集千年煉成之大成，[千年練成] 追加 500% [AP]傷害，並且[回復][周圍]自己與友方隊伍生命10%。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    0.0
   ],
   "manaCost": [
-    120.0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 0.4
-    }
+  "passive": {
+    "name": "70-002 樹海降臨",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "R",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "weightedBranch",
+                "shape": "circle",
+                "radiusTier": "大",
+                "radius": 6.0,
+                "side": "allies",
+                "maxTargets": 24,
+                "branches": [
+                  {
+                    "weight": 1,
+                    "effects": [
+                      {
+                        "kind": "restore",
+                        "healthPct": 0.1
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.blood.pulse-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-e00s.ex.webp",
+  "vfxKey": "fx.prim.blood.pulse-lg"
 }

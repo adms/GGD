@@ -2,32 +2,50 @@
   "id": "godie-edem.passive",
   "schema": "ability@1",
   "name": "45-00 寫輪眼",
-  "icon": "assets/icons/abilities/godie-edem.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n宇智波家族的血繼限界，洞察眼能夠看清所有的攻擊，迴避一般攻擊15%，每115秒抵擋一次負性魔法。",
+  "description": "[被動][反彈][機率]\n\n「我只要看一次，就知道你穿什麼內褲」\n宇智波家族的血繼限界，洞察眼能夠看清忍術並仿冒，有20%[機率][反彈]魔法([AP])傷害。",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    115.0
+    0.0
   ],
   "manaCost": [
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
   "passive": {
     "name": "45-00 寫輪眼",
     "ranks": [
       {
-        "modifiers": [
+        "hooks": [
           {
-            "stat": "evasion",
-            "op": "flat",
-            "value": 0.15
+            "on": "onDamageTaken",
+            "chance": 0.2,
+            "target": "event",
+            "damageType": "magic",
+            "internalCooldown": 0.5,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-edem.passive.webp"
 }

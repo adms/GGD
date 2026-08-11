@@ -1,10 +1,10 @@
 {
   "id": "godie-hapm.w",
+  "schema": "ability@1",
   "name": "52-02 蹂躪編年史",
-  "icon": "assets/icons/abilities/godie-hapm.w.webp",
-  "description": "[主動攻擊]\n45秒冷卻時間\n\n迅速將目標抓回再暴力的丟出去，使之撞擊前方400距離處的敵人造成350傷害。",
+  "description": "[主動][指向][範圍][AP加成]\n45秒冷卻，吟唱 1秒\n消耗MP70/95/120/145\n施法距離11\n\n「歷史是勝利者寫的，敗者只配飛出去擦地板」\n將敵方目標抓回再暴力的丟出去，使之撞擊[前方]一[直線][範圍]的敵人造成350/450/550/650+50% [AP]傷害。\n(若自身在 [狂怒] 狀態則額外附加受到 [範圍] 傷害的敵人 [恐懼] 狀態，持續 3秒)",
   "slot": "W",
-  "castType": "targeted",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
     45.0,
@@ -13,12 +13,13 @@
     45.0
   ],
   "manaCost": [
-    60.0,
-    155.0,
-    190.0,
-    225.0
+    70.0,
+    95.0,
+    120.0,
+    145.0
   ],
-  "range": 5.5,
+  "range": 11.0,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "invulnerable",
@@ -59,8 +60,7 @@
       ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-hapm.w.webp",
   "vfxKey": "fx.prim.physical.shockwave",
-  "targetsEnemies": true,
-  "schema": "ability@1",
   "castTimeSec": 0.5
 }

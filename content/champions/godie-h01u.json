@@ -53,8 +53,7 @@
     "Q": {
       "id": "godie-h01u.q",
       "name": "80-01 天下無雙",
-      "icon": "assets/icons/abilities/godie-h01u.q.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n亂世中呂布孤傲叛逆的個性，於戰鬥中追求最高戰力，犧牲3點防禦力，增進25點攻擊力。\n提升飛將神弓的攻擊加成上限為5次",
+      "description": "[被動][普攻時][層數累積]\n0秒冷卻\n\n「人中出呂布，馬中出赤兔」\n每次 [普通攻擊時] 都會增加 10% [攻擊速度] 並可[疊加]，持續1秒，若沒有繼續攻擊則[疊加]的 [攻擊速度] 增益歸零。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -70,115 +69,96 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.physical.shockwave",
       "passive": {
         "name": "80-01 天下無雙",
         "ranks": [
           {
-            "modifiers": [
+            "hooks": [
               {
-                "stat": "ad",
-                "op": "flat",
-                "value": 25
-              },
-              {
-                "stat": "armor",
-                "op": "flat",
-                "value": -3
-              }
-            ]
-          },
-          {
-            "modifiers": [
-              {
-                "stat": "ad",
-                "op": "flat",
-                "value": 50
-              },
-              {
-                "stat": "armor",
-                "op": "flat",
-                "value": -6
-              }
-            ]
-          },
-          {
-            "modifiers": [
-              {
-                "stat": "ad",
-                "op": "flat",
-                "value": 75
-              },
-              {
-                "stat": "armor",
-                "op": "flat",
-                "value": -9
-              }
-            ]
-          },
-          {
-            "modifiers": [
-              {
-                "stat": "ad",
-                "op": "flat",
-                "value": 100
-              },
-              {
-                "stat": "armor",
-                "op": "flat",
-                "value": -12
+                "on": "onBasicAttack",
+                "target": "self",
+                "effects": [
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "as",
+                        "op": "pctAdd",
+                        "value": 0.1
+                      }
+                    ],
+                    "duration": 1.0,
+                    "statusId": "rage"
+                  }
+                ]
               }
             ]
           }
         ]
-      }
+      },
+      "icon": "assets/icons/abilities/godie-h01u.q.webp",
+      "vfxKey": "fx.prim.physical.shockwave"
     },
     "W": {
       "id": "godie-h01u.w",
       "name": "80-02 弒鬼神",
-      "icon": "assets/icons/abilities/godie-h01u.w.webp",
-      "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成直線450距離敵方部隊150點傷害。",
+      "description": "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
       "slot": "W",
-      "castType": "skillshot",
-      "maxRank": 5,
+      "castType": "self",
+      "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        50.0,
-        85.0,
-        120.0,
-        120.0,
-        120.0
+        90.0,
+        180.0,
+        270.0,
+        360.0
       ],
-      "range": 11.0,
+      "range": 0.0,
+      "radiusTier": "中",
+      "targetsEnemies": true,
       "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              120.0,
+              220.0,
+              320.0,
+              420.0
+            ]
+          },
+          "radius": 4.5,
+          "radiusTier": "中",
+          "maxTargets": 6,
+          "includeOrigin": true
+        },
+        {
+          "kind": "knockback",
+          "distance": 2.5,
+          "speed": 15.0,
+          "from": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "armor-break",
+          "duration": 1.0
+        },
         {
           "kind": "spawnProjectile",
           "projectileId": "imported.wave.physical",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  150.0,
-                  250.0,
-                  350.0,
-                  0.0,
-                  0.0
-                ]
-              }
-            }
-          ]
+          "onHit": []
         }
       ],
+      "icon": "assets/icons/abilities/godie-h01u.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
       "castTimeSec": 0.4
@@ -186,8 +166,7 @@
     "E": {
       "id": "godie-h01u.e",
       "name": "80-03 鬼神烈戟",
-      "icon": "assets/icons/abilities/godie-h01u.e.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n武將殺氣凝聚為無堅不摧的巨大畫戟形象，造成範圍500內敵人350+(力量*3)點傷害。重擊敵軍的同時，氣勁化為千萬粉蝶形象追魂噬骨，並減少敵人防禦3點，持續3秒。",
+      "description": "[主動][指向][範圍][衝刺][AP加成]\n60秒冷卻\n消耗MP150/200/250/300\n有效半徑6\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -198,131 +177,168 @@
         60.0
       ],
       "manaCost": [
+        150.0,
+        200.0,
         250.0,
-        350.0,
-        450.0,
-        550.0
+        300.0
       ],
-      "range": 0,
+      "range": 10.0,
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 10.0
+        },
+        {
+          "kind": "damageLine",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              350.0,
-              550.0,
-              750.0,
-              950.0
+              150.0,
+              200.0,
+              250.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
             ]
-          }
-        },
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": -3
-            }
-          ],
-          "duration": 3.0,
-          "perRank": [
-            {
-              "modifiers": [
-                {
-                  "stat": "armor",
-                  "op": "flat",
-                  "value": -3
-                }
-              ],
-              "duration": 3.0
-            },
-            {
-              "modifiers": [
-                {
-                  "stat": "armor",
-                  "op": "flat",
-                  "value": -6
-                }
-              ],
-              "duration": 3.0
-            },
-            {
-              "modifiers": [
-                {
-                  "stat": "armor",
-                  "op": "flat",
-                  "value": -9
-                }
-              ],
-              "duration": 3.0
-            },
-            {
-              "modifiers": [
-                {
-                  "stat": "armor",
-                  "op": "flat",
-                  "value": -12
-                }
-              ],
-              "duration": 3.0
-            }
-          ]
+          },
+          "length": 10,
+          "width": 2.0,
+          "aim": "target",
+          "fromCaster": true,
+          "maxTargets": 5,
+          "includeOrigin": false
         }
       ],
+      "passive": {
+        "name": "80-03 鬼神烈戟",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onAbilityHit",
+                "abilitySlot": "E",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "armor-break"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "vfxKey": "fx.prim.physical.beam",
-      "targetsEnemies": true,
-      "radius": 9.72,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-h01u.r",
       "name": "80-04 赤兔咆哮",
-      "icon": "assets/icons/abilities/godie-h01u.r.webp",
-      "description": "[主動攻擊]\n15秒冷卻時間\n\n招喚赤兔馬人馬合一，於亂世中有一夫當關的氣勢，可以提升自身跑速10%並給予週遭450範圍內敵人每0.2秒10點傷害，攻擊時有20%使出弒鬼神，被攻擊時也有10%機率使出弒鬼神反擊，每秒消耗75點瑪那。",
+      "description": "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
       "slot": "R",
-      "castType": "skillshot",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
-        70.0,
-        110.0,
-        150.0
+        250.0,
+        400.0,
+        550.0
       ],
-      "range": 11.0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 8.0
+        },
         {
           "kind": "spawnProjectile",
           "projectileId": "imported.wave.physical",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  10.0,
-                  20.0,
-                  30.0
-                ]
-              }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "burnstun",
-              "duration": 1.2,
-              "stun": true
-            }
-          ]
+          "onHit": []
         }
       ],
+      "passive": {
+        "name": "80-04 赤兔咆哮",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "chance": 0.2,
+                "target": "self",
+                "internalCooldown": 0.5,
+                "effects": [
+                  {
+                    "kind": "proxyCast",
+                    "shape": "single",
+                    "slot": "W",
+                    "payCosts": "none",
+                    "respectCooldown": false
+                  }
+                ]
+              },
+              {
+                "on": "onDamageTaken",
+                "chance": 0.2,
+                "target": "self",
+                "internalCooldown": 0.5,
+                "effects": [
+                  {
+                    "kind": "proxyCast",
+                    "shape": "single",
+                    "slot": "W",
+                    "payCosts": "none",
+                    "respectCooldown": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h01u.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "sfxKey": "wc3.defendcaster",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

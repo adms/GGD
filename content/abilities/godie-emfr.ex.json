@@ -1,39 +1,50 @@
 {
   "id": "godie-emfr.ex",
-  "name": "15-002 風花-武裝解除",
-  "icon": "assets/icons/abilities/godie-emfr.ex.webp",
-  "description": "[輔助]\n65秒冷卻時間\n\n涅吉所有招式中最令人臉紅心跳的絕招，可以將目標的衣服爆破(誤)，造成範圍內部隊減少15點裝甲，英雄在持續時間內所受傷害將加倍，持續4秒。",
+  "schema": "ability@1",
+  "name": "15-002 敵彈吸收陣。太陰道",
+  "description": "[主動][輔助][反彈][回復][層數累積][AP加成]\n60秒冷卻\n\n「大..太陰道，吸收！」\n[反彈] 100% 魔法([AP])傷害，並且將傷害轉化為自身魔力([MP])，以及將該傷害短暫加成至 [AP] ([可累加])，持續 5秒後歸零。",
   "slot": "EX",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    65.0
+    60.0
   ],
   "manaCost": [
-    450.0
+    0.0
   ],
-  "range": 8.82,
-  "effects": [],
-  "template": {
-    "ref": "tpl-instant-blast",
-    "params": {
-      "radius": 320.5,
-      "damage": {
-        "flat": 300,
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "moon-combo",
+      "duration": 5.0
+    }
+  ],
+  "passive": {
+    "name": "15-002 敵彈吸收陣。太陰道",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 0.7
+            "on": "onReflectSuccess",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "eventValueConversion",
+                "shape": "single",
+                "source": "incomingDamage",
+                "to": "mana",
+                "ratio": 1.0,
+                "who": "self"
+              }
+            ]
           }
         ]
-      },
-      "damageType": "magic",
-      "castTimeSec": 0.6
-    }
+      }
+    ]
   },
+  "icon": "assets/icons/abilities/godie-emfr.ex.webp",
   "vfxKey": "fx.prim.wind.tornado-lg",
-  "schema": "ability@1",
-  "radius": 5.88,
-  "targetsEnemies": true,
-  "castTimeSec": 0.6
+  "castTimeSec": 0.4
 }

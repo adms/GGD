@@ -34,6 +34,10 @@
  *     · 79-00 靈壓 `A0LH` (godie-h01n) base `AOae` Chieftain - Endurance Aura.
  *       `area` 500 → 9.17, `DataB1` −0.25. The map's own prose:
  *       「降低範圍500內敵人攻擊速度25%」.
+ *       ⚠️ owner 2026-08-12 裁決:「ok」—— 2026-08-08 的 90 支重製稿把它改寫成
+ *       「[攻擊速度] 減半」,所以出貨值**不再是** w3x 的 −25%。上面那兩個 w3a
+ *       數字留著是**出處**(它們解釋這支技能從哪裡來),不是今天的出貨值;今天的
+ *       出貨值由 `reiatsuAsPct()` 從文件讀,理由寫在那支函式的檔頭。
  *     · 40-00 我~是~孩~子~王~ `A07G` (godie-n01b/godie-nman) base `Aakb`
  *       Aura - War Drums, `DataA1` −0.19, `targets_allowed` "enemies,organic".
  *       ⚠️ ITS RADIUS IS **NOT** PORTED: `A07G.area` is `{}` and the stock row
@@ -97,9 +101,37 @@ const SEER = "godie-nplh" as ChampionId;
  */
 const DUMMY = SEER;
 
-/** w3a `A0LH` `DataB1`. */
-const REIATSU_AS_PCT = -0.25;
-/** w3a `A07G` `DataA1`. */
+/**
+ * 79-00 靈壓的攻速減益 —— **從出貨文件推導**,不是抄一個字面值。
+ *
+ * owner 2026-08-12 裁決:「ok」(B-5)—— 舊行為是 w3a `A0LH` `DataB1` 的 **−25%**
+ * (2026-07-25 那一版逐字照抄 w3x),新規格是 2026-08-08 的 90 支重製稿逐字寫的
+ * 「[攻擊速度] 減半」= **−50%**。
+ *
+ * ⛔ 這一格刻意**不再**寫死一個數字。CLAUDE.md 第二守則:出貨數值已經住在
+ * `content/abilities/godie-h01n.passive.json`(而且那是後台可編輯的欄位),測試裡
+ * 再抄一份就是**第四個住處**,而它沒有守衛 —— owner 這次把 25 改成 50 就是證據:
+ * 抄一份的代價是每一次調整都要來改一條跟這個機制無關的測試。
+ *
+ * 牙齒沒有掉:這支自己 assert「它必須是一個真的減益」,所以「文件被改成 0 / 正數 /
+ * 那一格整個消失」三種退化都會在這裡當場紅,而不是靜默讓下面那條 `toBeCloseTo`
+ * 退化成 `near === far` 的恆真式。
+ */
+function reiatsuAsPct(): number {
+  const doc = docs("abilities").find((d) => d.id === "godie-h01n.passive");
+  const rank0 = (doc?.passive as { ranks?: { auras?: unknown[] }[] } | undefined)?.ranks?.[0];
+  const mods = (rank0?.auras as { modifiers?: { stat: string; value: number }[] }[] | undefined)?.[0]
+    ?.modifiers;
+  const pct = mods?.find((m) => m.stat === "as")?.value;
+  expect(pct, "godie-h01n.passive 的光環裡找不到 as 的修飾 —— 靈壓整格不見了").toBeTypeOf("number");
+  expect(pct!, "靈壓不是減益了(0 或正數)—— 這條光環現在在幫敵人").toBeLessThan(0);
+  return pct!;
+}
+/**
+ * w3a `A07G` `DataA1` —— ⚠️ 這一格**仍然**是字面值,而且是刻意的:−19% 是 w3x 的
+ * **保真度事實**(不是 owner 的平衡旋鈕),90 支重製稿一個字都沒有動它。
+ * 可調的數值才從文件推導;保真度事實留在測試裡當對照。
+ */
 const GIAN_AD_PCT = -0.19;
 /** w3a `Apiv` `Dur1`/`HeroDur1` as overridden by the map. */
 const FADE_SEC = 4;
@@ -190,7 +222,10 @@ function idle(world: SimWorld, held: Map<EntityId, { x: number; z: number }>, ti
 // ───────────────────────────────────────────────────────────── G-AURA
 
 describe("G-AURA — 天生技 that project an enemy aura", () => {
-  it("79-00 靈壓 (godie-h01n): an enemy standing inside really loses 25% attack speed", () => {
+  // owner 2026-08-12 裁決:「ok」—— 舊行為是 −25% 攻速(w3a `A0LH` DataB1),
+  // 新規格是 2026-08-08 重製稿的「[攻擊速度] 減半」。標題不再寫死百分比,因為那個
+  // 數字現在是後台旋鈕(見 `reiatsuAsPct`)。
+  it("79-00 靈壓 (godie-h01n): an enemy standing inside really loses the shipped attack speed", () => {
     const world = new SimWorld(SKELETON_ARENA, 7);
     const ichigo = spawn(world, ICHIGO, 0, P(0));
     const near = spawn(world, DUMMY, 1, P(3));
@@ -207,7 +242,7 @@ describe("G-AURA — 天生技 that project an enemy aura", () => {
 
     // `far` is the baseline: same champion, same level, outside the radius.
     expect(farAs).toBeGreaterThan(0);
-    expect(nearAs).toBeCloseTo(farAs * (1 + REIATSU_AS_PCT), 6);
+    expect(nearAs).toBeCloseTo(farAs * (1 + reiatsuAsPct()), 6);
     // ...and it is the AURA doing it, not some other source.
     expect(activeAuraSources(world, near).length).toBe(1);
     expect(activeAuraSources(world, far).length).toBe(0);

@@ -1,16 +1,16 @@
 {
   "id": "godie-emns.q",
+  "schema": "ability@1",
   "name": "44-01 死神之眼",
-  "icon": "assets/icons/abilities/godie-emns.q.webp",
-  "description": "[輔助]\n20秒冷卻時間\n\n與死神暫時交換眼睛來鎖定殺人目標，相對地以自己生命75%作交換，需要搭配6級技能-火車輾過以及9級技能-心臟麻痺才能遙控殺人，鎖定目標死亡才會解除鎖定。\n被鎖定的目標會因為死神的詛咒而暫時30%攻擊失手，持續15秒。",
+  "description": "[主動][指定][詛咒（失手）]\n60秒冷卻，吟唱2秒\n消耗MP150/200/250/300\n施法距離2\n\n「這個世界正在腐敗，腐敗的人不該活著。」\n被鎖定的目標會因為死神的[詛咒]標記而暫時50%攻擊失手，持續6/12/18/24秒。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
-    20.0,
-    20.0,
-    20.0,
-    20.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
     150.0,
@@ -18,32 +18,18 @@
     250.0,
     300.0
   ],
-  "range": 9.17,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      },
-      "damageType": "magic",
-      "castTimeSec": 0.4
+  "range": 2.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "curse",
+      "duration": 6.0,
+      "missChance": 0.5
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-emns.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
   "sfxKey": "wc3.gruntyesattack1",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.3
 }

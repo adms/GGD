@@ -1,22 +1,23 @@
 {
   "id": "godie-h01n.r",
+  "schema": "ability@1",
   "name": "79-04 卍解",
-  "icon": "assets/icons/abilities/godie-h01n.r.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\n死神中的奧義，只有踏上死神最高點才可習得的技能，黑崎的卍解是將靈氣集中於斬月上，使其爆發出最高的力量，攻擊及移動速度大幅提昇，靈壓也會隨之變強，持續8秒。",
+  "description": "[主動][輔助][變身]\n90秒冷卻\n消耗MP100/200/300\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    90.0,
+    90.0,
+    90.0
   ],
   "manaCost": [
     100.0,
     200.0,
     300.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
     {
       "kind": "championForm",
@@ -27,15 +28,23 @@
       "kind": "applyBuff",
       "modifiers": [
         {
-          "stat": "maxHealth",
-          "op": "flat",
-          "value": 300
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
         }
       ],
-      "duration": 3.0
+      "duration": 8.0
+    },
+    {
+      "kind": "modifyCooldown",
+      "shape": "single",
+      "who": "self",
+      "slot": "Q",
+      "mode": "reduce",
+      "amount": 0.5
     }
   ],
+  "icon": "assets/icons/abilities/godie-h01n.r.webp",
   "vfxKey": "fx.prim.void.pulse-lg",
-  "schema": "ability@1",
   "castTimeSec": 0.4
 }

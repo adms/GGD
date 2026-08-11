@@ -1,51 +1,69 @@
 {
   "id": "godie-hapm.q",
+  "schema": "ability@1",
   "name": "52-01 狂戰士之怒",
-  "icon": "assets/icons/abilities/godie-hapm.q.webp",
-  "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
+  "description": "[主動][輔助]\n60秒冷卻\n消耗MP100/140/180/220\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
   "slot": "Q",
-  "castType": "targeted",
-  "maxRank": 5,
+  "castType": "self",
+  "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0,
-    57.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    60.0,
-    110.0,
-    160.0,
-    210.0,
-    175.0
+    100.0,
+    140.0,
+    180.0,
+    220.0
   ],
-  "range": 11.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
-        "perRank": [
-          40.0,
-          80.0,
-          120.0,
-          160.0,
-          200.0
-        ],
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.6
+        },
+        {
+          "stat": "lifesteal",
+          "op": "flat",
+          "value": 0.1
+        }
+      ],
+      "duration": 6.0,
+      "statusId": "rage"
+    }
+  ],
+  "passive": {
+    "name": "52-01 狂戰士之怒",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ad",
-            "coeff": 0.5
+            "on": "onDamageTaken",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "extendBuff",
+                "shape": "single",
+                "who": "self",
+                "stackKey": "rage",
+                "addSec": 2.0,
+                "perDamagePctOfMaxHealth": 0.05,
+                "maxRemainingSec": 30.0
+              }
+            ]
           }
         ]
-      },
-      "damageType": "physical",
-      "castTimeSec": 0.4
-    }
+      }
+    ]
   },
+  "icon": "assets/icons/abilities/godie-hapm.q.webp",
   "vfxKey": "fx.prim.physical.pulse",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.3
 }

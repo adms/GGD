@@ -1,34 +1,79 @@
 {
   "id": "godie-e002.ex",
+  "schema": "ability@1",
   "name": "20-002 解放.約束勝利劍MAX",
-  "icon": "assets/icons/abilities/godie-e002.ex.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n理想鄉發動期間如果受到傷害，且魔力高於70%時，能給予敵人連續七次斬擊，每次斬擊造成0.6倍理想鄉啟動瞬間Saber受到攻擊的混沌傷害，最後再給予近距離的約束與勝利之劍造成1800傷害。",
+  "description": "[被動][指向][範圍][反彈][反彈成功時][AP加成]\n0秒冷卻\n\n「在這個空間所有魔法都被遮斷」\n「永恆的理想鄉」[反彈]成功時發動，給予敵人連續七次斬擊，每次造成7倍[反彈]傷害；最後施展「約束與勝利之劍」，對[前方][直線]敵人造成（[現存魔力]+[AP]）×7倍傷害。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    0.0
   ],
   "manaCost": [
-    120.0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.6
-        }
-      ],
-      "castTimeSec": 0.4
-    }
+  "passive": {
+    "name": "20-002 解放.約束勝利劍MAX",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onReflectSuccess",
+            "target": "event",
+            "internalCooldown": 1.0,
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 0.12,
+                "count": 7,
+                "intervalSec": 0.12,
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "finalEffects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    },
+                    "length": 14,
+                    "width": 2.0,
+                    "aim": "target",
+                    "fromCaster": true,
+                    "maxTargets": 5,
+                    "includeOrigin": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.holy.beam-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-e002.ex.webp",
+  "vfxKey": "fx.prim.holy.beam-lg"
 }

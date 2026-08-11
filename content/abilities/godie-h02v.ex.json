@@ -1,34 +1,80 @@
 {
   "id": "godie-h02v.ex",
+  "schema": "ability@1",
   "name": "92-002 最終戈壁",
-  "icon": "assets/icons/abilities/godie-h02v.ex.webp",
-  "description": "[輔助]\n0秒冷卻時間\n\n人人討厭的馬勒戈壁最終進化版，可以同時搶錢、搶糧、搶娘們(誤)，馬勒戈壁發動時每秒可以額外奪得75原木。",
+  "description": "[被動][週期][回復][範圍][AP加成][身上有某狀態時]\n\n「草泥馬戈壁，傷而扶壁曲」\n當 [馬勒戈壁] 施展期間，每秒對[周圍][範圍]友方單位 [回復] 10%[最大魔力]、也對 [周圍][範圍]敵人單位造成 2%[最大生命] + 100% [AP] 傷害，持續 6秒。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60
+    0.0
   ],
   "manaCost": [
-    120
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 0.4
-    }
+  "passive": {
+    "name": "92-002 最終戈壁",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityCast",
+            "abilitySlot": "R",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "delayed",
+                "shape": "single",
+                "delaySec": 1.0,
+                "count": 6,
+                "intervalSec": 1.0,
+                "effects": [
+                  {
+                    "kind": "damageArea",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    },
+                    "radius": 8.0,
+                    "radiusTier": "超大",
+                    "maxTargets": 6
+                  },
+                  {
+                    "kind": "weightedBranch",
+                    "shape": "circle",
+                    "radiusTier": "超大",
+                    "radius": 8.0,
+                    "side": "allies",
+                    "maxTargets": 24,
+                    "branches": [
+                      {
+                        "weight": 1,
+                        "effects": [
+                          {
+                            "kind": "restore",
+                            "manaPct": 0.1
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.nature.pulse-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-h02v.ex.webp",
+  "vfxKey": "fx.prim.nature.pulse-lg"
 }

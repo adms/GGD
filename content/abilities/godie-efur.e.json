@@ -1,67 +1,51 @@
 {
   "id": "godie-efur.e",
   "schema": "ability@1",
-  "name": "13-03 龍頭戲畫。佈壁",
-  "icon": "assets/icons/abilities/godie-efur.e.webp",
-  "description": "[地面指定]\n冷卻 18／16／14 秒　耗魔 80／100／120 點　衝刺上限 7.2 單位（6 個身位）　前搖 0.3 秒\n\n阿福整個人變成一堵會走路的牆，往你點的方向鏟過去，身後拖一條龍形衝擊波。\n\n· 衝刺：**0.28 秒**走完，最遠 **7.2 單位**，貼地（弧高 0），途中不吃碰撞\n· 直線傷害：從**你出發時的位置**沿面向拉一條 **長 7.2 × 寬 2.4 單位**的走廊（寬度正好兩個身位），裡面**最多 6 個**敵人各吃 **60／95／130 點物理 + 0.6 × 攻擊力**\n· 擊退：抵達點**半徑 3.0 單位**內的敵人，沿**你的面向**再被推 **4.5 單位 −（你和他的距離）**。因為你剛撞到他臉上，那個距離基本上是 0，所以推的就是 4.5。\n\n⚠️ 走廊是從**起點**量的，不是從終點。想撞誰，就要讓他站在你和落點之間 —— 這招懲罰的是站在路中間的人；站在終點的人只會被推走。",
+  "name": "13-03 龍頭戲畫。布陣",
+  "description": "[主動][範圍][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 150/250/350/450 + 60% [AP] 傷害。",
   "slot": "E",
-  "castType": "ground",
-  "maxRank": 3,
+  "castType": "self",
+  "maxRank": 4,
   "cooldown": [
-    18.0,
-    16.0,
-    14.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    80.0,
-    100.0,
-    120.0
+    120.0,
+    180.0,
+    240.0,
+    300.0
   ],
-  "range": 7.2,
-  "radius": 3.0,
+  "range": 0.0,
+  "radiusTier": "中",
   "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damageLine",
-      "damageType": "physical",
+      "kind": "damageArea",
+      "damageType": "magic",
       "amount": {
         "perRank": [
-          60.0,
-          95.0,
-          130.0
+          150.0,
+          250.0,
+          350.0,
+          450.0
         ],
         "ratios": [
           {
-            "stat": "ad",
+            "stat": "ap",
             "coeff": 0.6
           }
         ]
       },
-      "length": 7.2,
-      "width": 2.4,
-      "aim": "facing",
-      "fromCaster": true,
+      "radius": 4.5,
+      "radiusTier": "中",
       "maxTargets": 6,
       "includeOrigin": true
-    },
-    {
-      "kind": "leap",
-      "applyTo": "self",
-      "mode": "toPoint",
-      "apexHeight": 0.0,
-      "durationSec": 0.28,
-      "throwDistance": 7.2,
-      "landRadius": 3.0,
-      "onLand": [
-        {
-          "kind": "knockback",
-          "distance": 4.5,
-          "speed": 15.0,
-          "from": "facing"
-        }
-      ]
     }
   ],
+  "icon": "assets/icons/abilities/godie-efur.e.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "vfxLayers": [
     {
@@ -77,5 +61,5 @@
       "alpha": 0.7
     }
   ],
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

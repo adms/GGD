@@ -1,7 +1,8 @@
 {
   "id": "godie-edem.r",
+  "schema": "ability@1",
   "name": "45-04 哥哥",
-  "description": "[被動]\n0秒冷卻時間\n\n「我愚蠢的弟弟啊！憎恨吧！怨恨把！帶著你對我的仇恨，醜陋的苟延殘喘的活下去。」對哥哥鼬的怨念，使得佐助不斷地變強。增加12點敏捷，並且使千鳥的命中率及速度小幅度提昇；在火遁攻擊完後3秒鐘內，使用千鳥再次攻擊該目標會引發麒麟，造成目標周圍600範圍內敏捷*2點落電傷害。",
+  "description": "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n0秒冷卻\n有效半徑3.67\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成400/700/1000+ 300% [AP] 傷害。",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
@@ -15,57 +16,111 @@
     0.0,
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "vfxKey": "fx.prim.void.pulse-lg",
-  "sfxKey": "wc3.thunderboltmissiledeath",
-  "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-edem.r.png",
   "passive": {
     "name": "45-04 哥哥",
     "ranks": [
       {
-        "modifiers": [
+        "hooks": [
           {
-            "stat": "armor",
-            "op": "flat",
-            "value": 3.6
-          },
-          {
-            "stat": "as",
-            "op": "pctAdd",
-            "value": 0.24
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 400.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
           }
         ]
       },
       {
-        "modifiers": [
+        "hooks": [
           {
-            "stat": "armor",
-            "op": "flat",
-            "value": 7.2
-          },
-          {
-            "stat": "as",
-            "op": "pctAdd",
-            "value": 0.48
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 700.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
           }
         ]
       },
       {
-        "modifiers": [
+        "hooks": [
           {
-            "stat": "armor",
-            "op": "flat",
-            "value": 10.8
-          },
-          {
-            "stat": "as",
-            "op": "pctAdd",
-            "value": 0.72
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 1000.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                },
+                "radius": 3.0,
+                "radiusTier": "小",
+                "maxTargets": 6
+              }
+            ]
           }
         ]
       }
     ]
-  }
+  },
+  "vfxKey": "fx.prim.void.pulse-lg",
+  "sfxKey": "wc3.thunderboltmissiledeath",
+  "icon": "assets/icons/abilities/godie-edem.r.png"
 }

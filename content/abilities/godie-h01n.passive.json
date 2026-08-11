@@ -2,10 +2,8 @@
   "id": "godie-h01n.passive",
   "schema": "ability@1",
   "name": "79-00 靈壓",
-  "icon": "assets/icons/abilities/godie-h01n.passive.webp",
-  "description": "[靈氣]\n0秒冷卻時間\n\n一護本身具有的強大靈力，初始法力值較一般人高，且此靈力產生的強大靈壓能降低範圍500內敵人攻擊速度25%。",
+  "description": "[被動]\n0秒冷卻\n有效半徑6\n\n「看不見不代表不存在，可能只是你靈壓太低」\n此靈力產生的強大靈壓能[降低]小 [範圍] 敵人 [攻擊速度] 減半。",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
@@ -14,9 +12,9 @@
   "manaCost": [
     0.0
   ],
-  "range": 0,
-  "radius": 9.17,
-  "targetsEnemies": true,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
   "passive": {
     "name": "79-00 靈壓",
@@ -24,19 +22,20 @@
       {
         "auras": [
           {
-            "key": "reiatsu",
-            "radius": 9.17,
+            "key": "ichigo-reiatsu",
+            "radius": 4.5,
             "affects": "enemy",
             "modifiers": [
               {
                 "stat": "as",
                 "op": "pctAdd",
-                "value": -0.25
+                "value": -0.5
               }
             ]
           }
         ]
       }
     ]
-  }
+  },
+  "icon": "assets/icons/abilities/godie-h01n.passive.webp"
 }

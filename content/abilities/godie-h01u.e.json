@@ -1,8 +1,8 @@
 {
   "id": "godie-h01u.e",
+  "schema": "ability@1",
   "name": "80-03 鬼神烈戟",
-  "icon": "assets/icons/abilities/godie-h01u.e.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n武將殺氣凝聚為無堅不摧的巨大畫戟形象，造成範圍500內敵人350+(力量*3)點傷害。重擊敵軍的同時，氣勁化為千萬粉蝶形象追魂噬骨，並減少敵人防禦3點，持續3秒。",
+  "description": "[主動][指向][範圍][衝刺][AP加成]\n60秒冷卻\n消耗MP150/200/250/300\n有效半徑6\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,
@@ -13,82 +13,80 @@
     60.0
   ],
   "manaCost": [
+    150.0,
+    200.0,
     250.0,
-    350.0,
-    450.0,
-    550.0
+    300.0
   ],
-  "range": 0,
+  "range": 10.0,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 10.0
+    },
+    {
+      "kind": "damageLine",
       "damageType": "magic",
       "amount": {
         "perRank": [
-          350.0,
-          550.0,
-          750.0,
-          950.0
+          150.0,
+          200.0,
+          250.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.3
+          }
         ]
-      }
-    },
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": -3
-        }
-      ],
-      "duration": 3.0,
-      "perRank": [
-        {
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": -3
-            }
-          ],
-          "duration": 3.0
-        },
-        {
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": -6
-            }
-          ],
-          "duration": 3.0
-        },
-        {
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": -9
-            }
-          ],
-          "duration": 3.0
-        },
-        {
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": -12
-            }
-          ],
-          "duration": 3.0
-        }
-      ]
+      },
+      "length": 10,
+      "width": 2.0,
+      "aim": "target",
+      "fromCaster": true,
+      "maxTargets": 5,
+      "includeOrigin": false
     }
   ],
+  "passive": {
+    "name": "80-03 鬼神烈戟",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "E",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "armor-break"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h01u.e.webp",
   "vfxKey": "fx.prim.physical.beam",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "radius": 9.72,
-  "castTimeSec": 0.7
+  "castTimeSec": 0.3
 }

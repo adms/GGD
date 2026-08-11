@@ -194,6 +194,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // "default-live" rather than "landing": zero adoption here means 「沒有人需要
   // 覆寫」, and if it stayed red on a 30-day clock the only way to clear it
   // would be to author a set whose terms nobody wants.
+  "field:champions.archetype": {
+    status: "landing",
+    since: "2026-08-12",
+    why: "推導有預設值（deriveArchetype：主屬性 lv10 權重 × 攻擊型別），74 位全部判得出來，所以英雄卡不需要填。這一欄是覆寫用的。機制與守衛在 content/statNormalization.ts + statNormalization.test.ts（突變驗過）。",
+  },
   "field:items.sets[].requiredPieces": {
     status: "default-live",
     why: "省略 = pieces 的全部件數(sim/economy/itemSets.requiredPieces),也就是「同時裝備 A、B、C」最嚴格的讀法。死之王套裝要三件全帶,正是預設值,所以出貨文件沒有理由寫它。填比 pieces 少 = 部分套裝加成,是留給下一套的旋鈕。",
@@ -223,48 +228,16 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // The item side is ADOPTED (光魔杖 is the whole reason it exists); the ability
   // side is at zero and that is the honest state — no buff in the tree wants a
   // stat term that drains with a resource yet.
-  // ── `radiusTier`（AoE 四級距，owner 2026-08-11「原則上不寫範圍數字」）────────
-  // 機制已出貨並接線（`content/aoeTiers.ts` + `registries.ts` 的 withRadiusTier，
-  // 突變驗過），內容側是零 —— 而零是**刻意**的：owner 當天說「我正在手動重製
-  // 所有英雄技能，稍安勿躁」，所以這一輪⛔不碰 `content/abilities/`。
-  // 級距要由那一批重製的技能填進來（`docs/技能編輯器引擎須知 20260811.md` 是給
-  // 對方的契約，第六節逐字要求填 `radiusTier` 而不是 `radius`）。
-  // ⭐ 30 天之後這一條會自己再紅一次 —— 那正是要的：如果重製那一批交回來還是
-  //   一支都沒填級距，這個機制就是白做的，而那件事必須有人被通知。
-  // ⚠️ 兩個節點是同一個欄位（standalone 技能文件 + 英雄卡內嵌的孿生），
-  //   `registries.ts` 兩條路共用同一支解析器，所以它們一定同時變綠。
-  // ── `archetype`（角色定位，owner 2026-08-12）────────────────────────────────
-  // 機制已出貨並接線（`statNormalization.ts` + `registries.ts`，突變驗過），
-  // 內容側是零 —— 而零是**刻意**的：archetype 有一個**推導出來的預設**
-  // （主屬性 × 攻擊型別），74 位全部都判得出來，所以英雄卡上不需要填。
-  // 這一欄只在「owner 想手動覆寫某一位」時才會有值。
-  // ⭐ 30 天之後這一條會自己再紅一次 —— 到時如果還是零，正確的回應是把它改成
-  //   `default-live`（＝行為由程式預設提供，欄位只是覆寫），不是繼續順延。
-  "field:champions.archetype": {
-    status: "landing",
-    since: "2026-08-12",
-    why: "推導有預設值（deriveArchetype：主屬性 lv10 權重 × 攻擊型別），74 位全部判得出來，所以英雄卡不需要填。這一欄是覆寫用的。機制與守衛在 content/statNormalization.ts + statNormalization.test.ts（突變驗過）。",
-  },
-  "field:abilities.effects[]#dispel.radiusTier": {
-    status: "landing",
-    since: "2026-08-11",
-    why: "同 field:abilities.radiusTier —— 級距落在共用的 AoE 形狀欄位群上，普查會在每一個 AoE-shaped kind 各看到一次；出貨內容還沒有任何一發圓形 dispel 用級距。",
-  },
-  "field:champions.abilities.*.radiusTier": {
-    status: "landing",
-    since: "2026-08-11",
-    why: "英雄卡內嵌的孿生節點。registries.ts 的 standalone 與 embedded 兩條路共用同一支 resolveRadiusTier，所以這一格與 field:abilities.radiusTier 一定同時變綠。",
-  },
-  "field:abilities.effects[]#damageArea.radiusTier": {
-    status: "landing",
-    since: "2026-08-11",
-    why: "同 field:abilities.radiusTier —— 級距落在共用的 AoE 形狀欄位群上，普查會在每一個 AoE-shaped kind 各看到一次。",
-  },
-  "field:abilities.radiusTier": {
-    status: "landing",
-    since: "2026-08-11",
-    why: "機制出貨且接線完成（resolveRadiusTier，突變驗過會紅），內容零採用是刻意的 —— owner 2026-08-11 正在手動重製所有英雄技能，這一輪不碰 content/abilities/。級距由那一批填入，契約寫在 docs/技能編輯器引擎須知 20260811.md 第六節。",
-  },
+  // ⭐ 2026-08-12 —— `radiusTier` 的**四筆豁免全部刪除**（棘輪第一次收成）。
+  // 2026-08-11 的那一段寫著：級距要由 owner 手動重製的那一批技能填進來，
+  // 「30 天之後這一條會自己再紅一次 —— 如果重製那一批交回來還是一支都沒填級距，
+  // 這個機制就是白做的」。那一批今天交回來了，而且**填了**：
+  //   · field:abilities.radiusTier                      → 15 份
+  //   · field:abilities.effects[]#damageArea.radiusTier → 38 份
+  //   · field:champions.abilities.*.radiusTier          → 10 份（英雄卡孿生）
+  //   · field:abilities.effects[]#dispel.radiusTier     →  2 份
+  // 連「兩個節點一定同時變綠」的預測都成立（standalone 與 embedded 共用
+  // `registries.ts` 的同一支 resolveRadiusTier）。
   "field:abilities.effects[]#applyBuff.modifiers[].fromResource": {
     status: "landing",
     since: "2026-08-01",
@@ -376,11 +349,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "同 damage.applyTo,治療自己的那一種。89-002 今天靠 randomArea{who:\"self\"} → weightedBranch{side:\"allies\", maxTargets:1} 兩層包裝繞,那一支改寫時這一筆就該刪掉。",
-  },
-  "field:abilities.effects[]#restore.applyTo": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "同 heal.applyTo,百分比（SetUnitLifePercentBJ 式）回復自己的那一種。restore 與 heal 分成兩個 kind 的理由在 sim/effects/effect.ts 的 restore 註解裡:heal 的 Scaling 讀的是**施法者**的屬性,寫不出「目標最大生命的 30%」。零採用同上。",
   },
   "field:abilities.effects[]#damageArea.resourcePct": {
     status: "landing",
@@ -502,11 +470,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S4a —— **永久**。引擎層從第一天就做得到（ModifierSource.expiresAtTick 缺席 = 永久），缺的一直是 authoring 面 —— 於是出貨已經有四份文件用 duration: 99999 假裝永久（godie-o00x.passive / godie-ogrh.passive / godie-zombiex.passive ×2）。⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的永久增益，所以兩格互斥且必填其一。那四份遷移過來時這一筆就該刪掉。",
   },
-  "field:abilities.effects[]#applyBuff.statusId": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G10 —— 讓一份來源**同時是**標記與數值。⭐ 它把兩本會腐爛的帳變成一個物件：實測 extendBuff 把 buff 從 tick 361 推到 573 而 status 停在 361，於是 52-02 讀〔狂怒〕的那個閘在玩家還在狂怒中就關了。同一個物件之後那個裂縫在結構上消失，所以**不需要**再開 extendBuff.statusId（那是替同一個問題做第二套機制）。",
-  },
   "field:abilities.effects[]#applyBuff.applyTo": {
     status: "landing",
     since: "2026-08-10",
@@ -526,11 +489,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-10",
     why: "S4b —— 「這條加成加到某個絕對值就停」（80-00「上限到 10」）。實測缺陷：同一個 stackKey 疊 21 次 +1 攻擊距離，11 一路長到 32，沒有任何東西攔它。⛔ 既有四格都不是答案：maxStacks 數的是層數（層數→屬性的換算依賴逐英雄不同的基礎值）、ModOp.CapRaise 只把 effectiveCap 抬高（是 max 不是 min，語意相反）、grantAttribute.maxAttribute 只走 attributes 那條路只給三圍、STAT_CLAMPS / config.stat-caps@1 是全域天花板不是「這一份增益的」。⭐ basis 是第一守則的決策點：final（預設＝面板上那個最終值，#125「顯示的就是拿到的」）vs thisSource（只算這份 stackKey 來源自己疊出來的量，需要 stackKey）—— 一個基礎攻擊距離已經 11 的英雄在 final 讀法下永遠疊不上第一層，對某些卡是對的、對某些卡是荒謬的。⚠️ 語意是只 refuse、不回收也不夾取（沿用 grantAttribute.maxAttribute 的既有先例），所以最後一層可能小幅越線。",
-  },
-  "field:abilities.effects[]#applyStatus.disarmed": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S8（effect.control-restriction@1）—— 【繳械】打不出普通攻擊。⛔ 它**不是** missChance 的包裝：實測 root+missChance:1 的身體 90 tick 內照樣發了 6 次 attackWindup、4 次 basicAttack（動畫／音效／破隱／攻擊冷卻全部照跑），只是傷害 0。「揮空刀」與「揮不出來」是兩件事。它算硬控（HARD_CC_FLAGS + isCc），⛔ 不擋技能。",
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     status: "landing",
@@ -552,17 +510,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "G9 —— 道具那一面的具名技能版本（「這件裝備只縮短瞬步的冷卻」）。與 scopeSlot 互斥；⚠️ 軟參照，打錯 id 會安靜地不生效，⛔ 不要假裝它會紅。",
   },
-  "field:abilities.effects[]#applyBuff.hooks[].key": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
   "field:abilities.effects[]#applyBuff.hooks[].maxTriggers": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].consumeOn": {
     status: "landing",
     since: "2026-08-10",
     why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
@@ -656,16 +604,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-10",
     why: "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded，所以它結構上不可能早於 field:abilities.innateActivePassive 有採用。兩格要一起刪（見 ggd-mirror-authority-model）。",
-  },
-  "variant:abilities.effects[]#delayed": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G12【延遲序列】(20-002 連續七次斬擊 · 52-002 連續 100 下) —— 一段排在未來 tick 的效果，而且**目標在施放那一刻凍住**。⭐ 它與 randomArea 的差別只有一句話：randomArea 到期用**圓心重解**（實測：目標走開就打空），delayed 用凍住的名單。今天寫「連續七次斬擊」只能寫成同一 tick 七發傷害 —— 畫面上那不是連擊。⚠️ **handler 還沒落地**（registry 上是會丟具名錯誤的 stub），所以這一筆到期時要先確認排程器在了。",
-  },
-  "variant:abilities.effects[]#proxyCast": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S5【代放】(80-04 赤兔咆哮「攻擊時有 20% 使出弒鬼神」) —— 一支技能施放另一支技能。今天只能**手抄一份 payload**，而 80-04 與 80-02 的傷害數列已經不一樣了（[10,20,30] vs [150,250,350,0,0]）。⚠️ content/templates/expand.ts 的 proxy-cast 是一個**模板家族名**，不是這個 kind。⚠️ **handler 還沒落地**（stub 會丟具名錯誤）；落地時付魔力那條路徑必須走 castAbility 的同一排閘，⛔ 不可以自己再寫一次那些 if。",
   },
 
   // ── 傷害型別轉換 items@1.damageTypeOverride (2026-08-01) ──────────────────
@@ -763,11 +701,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "三選一增益卡授予傷害型別轉換（「這一場你的技能都是真傷」是一張典型的 prismatic 卡）。卡池重排見 #149。",
   },
 
-  "field:abilities.effects[]#applyStatus.feared": {
-    status: "landing",
-    since: "2026-08-08",
-    why: "【恐懼】的機制**刻意跑在內容前面**，而這一次「先做機制」有一個具體的理由而不是慣性：使用它的四支技能（89-002 俄羅斯輪盤、52-02 蹂躪編年史、52-04 巨神一擊、52-002 射殺百頭，見 `skill_temp_20260808.md`）的 JSON **由外部編輯器產出**，而 owner 2026-08-08 明確要求「思考會用到的技能效果機制模板要**優先**實作出來」—— 對面沒有機制就寫不出那些技能，所以順序必須是機制先行。⚠️ 這一格與其他 landing 的差別：它不是「等某人有空來用」，是「等一個**已知的、正在進行的**外部產出」。⛔ 若三十天後仍是 0，該問的是「編輯器那批技能為什麼還沒進來」，不是延長豁免。行為守衛在 `sim/fear.test.ts`（真的 `world.step()` 40 tick 讀位移方向，三個突變都驗過），所以零採用**不代表零驗證**。",
-  },
 
   "field:champions.abilities.*.marks": {
     status: "landing",
@@ -963,25 +896,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "mirror of field:abilities.rootWhileCasting.",
   },
 
-  // --- 【切換】ability@1.toggle (2026-08-08) --------------------------------
-  // 機制端整條在（schema `zAbilityToggle` + `sim/abilities/toggle.ts` +
-  // `SimWorld.step` slot 6a + `toggle.test.ts` 三個突變都驗過會紅），內容端
-  // 0 筆 —— 兩個客戶（20-01 風王結界 · 70-00 紮根）住在 `content/abilities/`，
-  // 而那個目錄正在被 owner 手動重製，這一批不准動。
-  //
-  // ⚠️ `landing` 而不是 `default-live`：缺席**不是**一個好的預設值在替它服務，
-  // 缺席就是「這支技能不是切換技」。30 天的時鐘是對的壓力來源 —— 如果那時候
-  // 還是零，誠實的結論是這個機制沒有人採用，要重新分診而不是續發豁免。
-  "field:abilities.toggle": {
-    status: "landing",
-    since: "2026-08-08",
-    why: "機制與守衛已出貨；20-01 風王結界／70-00 紮根的技能文件由 owner 手動重製中（content/abilities/ 本批禁止改動）。",
-  },
-  "field:champions.abilities.*.toggle": {
-    status: "landing",
-    since: "2026-08-08",
-    why: "mirror of field:abilities.toggle —— 鏡像規則要求兩份同時寫，所以它會與標準文件同一天離開這張表。",
-  },
+  // ⭐ 2026-08-12 —— 【切換】`ability@1.toggle` 的**兩筆豁免已刪除**（棘輪生效）。
+  // 2026-08-08 寫下的預測逐字命中：「兩個客戶（20-01 風王結界 · 70-00 紮根）
+  // 住在 content/abilities/，而那個目錄正在被 owner 手動重製」。那一批今天交
+  // 回來，20-01 風王結界（`abilities/godie-e002.w`）就是第一份寫 `toggle` 的
+  // 文件，英雄卡孿生（`champions/godie-e002`）同一天跟上 —— 舊註解「鏡像規則
+  // 要求兩份同時寫，所以它會與標準文件同一天離開這張表」也一起兌現了。
 
   // --- #205 多層特效模板: the OPTIONAL per-layer overrides ---------------------
   //
@@ -1163,12 +1083,12 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //(改它的暴擊數值是平衡決策,而它是 `craftRole: "quest"` 且 quest-rewards
   // 已在 `retiredLootTables` 裡,所以今天沒有玩家拿得到)。
   //
-  // 30 天後這四條會自己再紅一次 —— 那時該有的是原語,不是更長的理由。
-  "field:abilities.effects[]#applyBuff.hooks[].damageType": {
-    status: "landing",
-    since: "2026-08-05",
-    why: "B2 的機制今天上架且有行為守衛;唯一講得出這件事的文案(天堂之劍 godie-i01n)卡在一個不存在的原語「治療觸發這一發的 X%」。見本段上方的完整說明。",
-  },
+  // ⭐ 2026-08-12 —— 四條剩三條:`field:abilities.effects[]#applyBuff.hooks[].damageType`
+  // 的豁免**已刪除**(棘輪生效)。上面那句「全 repo 只有一份文件的文案在講這件事」
+  // 在 90 支重製技能進來之後不再成立 —— `godie-e002.passive` 與 `godie-edem.passive`
+  // 各自用 `damageType` 把觸發器窄化到一種傷害型別,而它們**不需要**那個缺席的原語。
+  // ⚠️ 真正卡在「治療觸發這一發的 X%」上的只有 `damageCrit` 那一半。
+  // 30 天後這三條會自己再紅一次 —— 那時該有的是原語,不是更長的理由。
   "field:abilities.effects[]#applyBuff.hooks[].damageCrit": {
     status: "landing",
     since: "2026-08-05",
@@ -1542,11 +1462,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 名刀-天狼 godie-i00u「敵方英雄現存生命 6%」、幻之匕首 godie-i039
   // 「敵方 20%生命傷害」、落魂的嗜血劍 godie-i00l「每秒損失 3%現存生命」。
   // "max" 仍然是 13-02 牙突的出貨值,兩個成員現在都有客戶。
-  "enum:abilities.effects[]#knockback.from=pull": {
-    status: "landing",
-    since: "2026-07-31",
-    why: "把人拉過來而不是推開。出貨的四支擊退都是推(caster / facing)。w3x 有明確的客戶:52-00 那一類鉤索與 13-002 之外的抓取投擲(godie-hapm.w 是全遊戲唯一的抓取投擲,它今天走 leap 不走 knockback)。把它改寫成 pull 是一次內容決策,不是機制缺口。",
-  },
+  // 2026-08-12 —— `enum:abilities.effects[]#knockback.from=pull` 的豁免**已刪除**
+  //(棘輪生效)。2026-07-31 的理由寫著「w3x 有明確的客戶:52-00 那一類鉤索與
+  // 13-002 之外的抓取投擲」,而真正到位的是 90 支重製裡的 79-04(`godie-h02k.r`
+  //「有機率將對方抓取過來」)加它的英雄卡孿生 —— 同一族(抓取),不同一支。
   // 2026-08-01 REMOVED — `spendMana.applyTo=target` 的豁免到期了,而且是這條測試
   // 自己抓到的。豁免的理由寫著「出貨的五支 spendMana 全部是自己付錢…w3x 的 mana
   // burn 家族還沒有被移植」,那句話在 熾天使之弓 godie-i012 出貨「每次削去敵方英雄
@@ -1594,120 +1513,29 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // `polarity` 3/3(buff 1 + debuff 2)、`count` 3/3,而
   // `sim/effects/dispel.test.ts` 從真世界兩個方向驗它。
   //
-  // 下面四格全部是「省略 = 讀 `config.dispel@1`」的那一種:寫進文件等於在
+  // 下面這幾格全部是「省略 = 讀 `config.dispel@1`」的那一種:寫進文件等於在
   // **一支道具上**烘死一個本來全域可調的決定。零採用正是它們該有的樣子 ——
   // 有人寫它的那天,意思是「這一支要跟全域規則不一樣」,那才是它存在的理由。
-  "variant:abilities.effects[]#devour": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "【吞噬】—— owner 2026-08-05 逐字給的規格（初號機 EX:「吞噬生命剩餘 3/5/7/9% " +
-      "敵方英雄(即死),並回復等值生命」)。行為在 `sim/effects/devour.ts`,五條守衛在 " +
-      "`sim/effects/devour.test.ts`,其中兩條釘的是這個 kind 特有的坑:致死量**含護盾**" +
-      "(否則帶盾的目標「進了處決線但吞不死」,而卡上寫著即死)、致死量**不吃全域傷害倍率**" +
-      "(k=0.5 的那天處決會變成「打掉一半殘血」)。零採用是因為初號機那一支 EX 的文件還沒寫 " +
-      "—— 那是內容,不是引擎。它上架的那天這條豁免就該被刪掉。",
-  },
+  //
+  // ⭐ 2026-08-12 —— 四格剩三格:`field:abilities.effects[]#dispel.pools` 的豁免
+  // **已刪除**(棘輪生效),而刪的理由正是上面那一句 —— 90 支重製裡真的出現了
+  // 三份「這一支要跟全域規則不一樣」的文件(`godie-ewar.w` 的淨化自身法術狀態、
+  // `godie-h00l.passive`,加英雄卡孿生)。⚠️ 它的子欄位 `dispel.pools.shields`
+  // 是**這一刻才第一次可回報**的(父容器跨過 MIN_REACH),記在檔尾那一段。
 
-  // ── Lane 1（2026-08-08）四個新 kind ────────────────────────────────────
-  // 四個的零採用是**同一個原因**，所以理由寫一次、逐筆指名各自的守衛：
-  // 它們擋的 90 支重製技能（79-04 / 79-002 / 60-002 / 89-002 / 44-002 /
-  // 15-002 / 59-01）由 owner 手動重製中，文件還沒進 `content/abilities/`。
-  // ⛔ **那是內容，不是引擎** —— 引擎這一半有行為守衛在
-  // `sim/effects/lane1Kinds.test.ts`（讀最終世界狀態，四條各一個機制）。
-  // 那幾支文件上架的那天，這四條豁免就該被刪掉。
-  "variant:abilities.effects[]#modifyCooldown": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "縮短**特定一支**技能的冷卻（issue #284）。⛔ 它不是全域 cdr —— 那條屬性早就存在，" +
-      "做成那個等於沒做，而且會讓「[瞬步]冷卻縮短 50%」順便縮短其他五格。" +
-      "行為在 `sim/effects/modifyCooldown.ts`；守衛 `lane1Kinds.test.ts` 的第一條" +
-      "（拿掉「只動被指名那一格」那一行 → 紅）。等 79-04 卍解 / 79-002 虛化 / 60-002 絕光斬。",
-  },
-  "variant:abilities.effects[]#weightedBranch": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "一次 RNG 抽一個加權分支（89-002 俄羅斯輪盤）。⭐ 整段執行**只 draw 一次**，" +
-      "因為 draw 次數若隨中選分支而變，之後場上每一件跟隨機有關的事都會位移（計畫 §13 的錄影決定性）。" +
-      "行為在 `sim/effects/weightedBranch.ts`；守衛 `lane1Kinds.test.ts` 的第二條讀 `rng.state`" +
-      "（改成每分支各抽一次 → 紅，已驗）。⚠️ §16.14 的機率表語意未 freeze，`editorCapabilities` 標 partial。",
-  },
-  "variant:abilities.effects[]#swapResource": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "原子交換雙方資源（44-002 交換筆記本「讓自己跟指定的敵人[現存生命]作[交換]」）。" +
-      "依計畫 §16.16：resolve tick 交換、各自 clamp 到 [clampMin, 自己的上限]、目標失效整招失敗。" +
-      "三個決策點（resource / clampMin / onInvalidTarget）都是欄位。" +
-      "守衛 `lane1Kinds.test.ts` 的第三條（拿掉「先驗後改」→ 紅，已驗）。",
-  },
-  "variant:abilities.effects[]#eventValueConversion": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "把這次事件的數值轉成另一種資源（15-002 太陰道「將傷害轉化為自身魔力，以及短暫加成至 AP」、" +
-      "59-01 吞噬「[回復]等同其剩餘生命的生命值」）。⛔ 這兩句在這個 kind 之前**寫不出來** ——" +
-      "`Scaling` 只讀得到施法者的屬性表，而「剛剛那一下」與「他剩多少血」都不是。" +
-      "⚠️ 基數 raw|mitigated|hpLost 未 freeze（§16.12），所以它是欄位、預設 mitigated。" +
-      "守衛 `lane1Kinds.test.ts` 的第四條（忽略 basis → 紅，已驗）。",
-  },
+  // ⭐ 2026-08-12 —— Lane 1 / Lane 2 / Lane 3 的**九個新 kind 豁免全部刪除**
+  // （棘輪生效，這是這張表史上最大的一次收成）。2026-08-08 與 2026-08-09 寫下的
+  // 停止條件逐字是「那幾支文件上架的那天，這幾條豁免就該被刪掉」，而 owner 的
+  // 90 支重製技能今天就是那一天：
+  //   devour 6 份 · weightedBranch 3 · randomArea 4 · delayed 3 · blink 2 ·
+  //   modifyCooldown 2 · extendBuff 2 · proxyCast 2 · swapResource 1 ·
+  //   eventValueConversion 1 · manaBarrier 1
+  // 一起走的還有 `onReflectSuccess`(4 份)與 `onEvade`(3 份)兩個 hook 事件、
+  // `applyStatus` 的 disarmed / feared / silenced / targetsAllies 四格狀態、
+  // 以及 `applyBuff.statusId` / `hooks[].key` / `hooks[].consumeOn`。
+  // ⚠️ 它們留下的**帳**寫在檔尾 2026-08-12 那一段：父容器一被採用，它們沒填的
+  // optional 子欄位就第一次跨過 MIN_REACH 而變得可回報（THE CASCADE RULE）。
 
-  // ── Lane 2（2026-08-08）三個新 kind ───────────────────────────────────
-  // 同 Lane 1：這三條豁免在 13-04 / 70-04 / 44-00 / 52-01 四支文件上架的那天就該刪掉。
-  "variant:abilities.effects[]#randomArea": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "隨機落點排程（13-04 龍星群「每 0.2 秒隨機地點落下一顆流星，共 10 顆」、" +
-      "70-04 千年練成「在周圍範圍隨機招喚樹精，總共 4/6/8 棵」）。⛔ 這兩句在這個 kind 之前" +
-      "**寫不出來**：`random-barrage` 模板把整片轟炸區寫成掛在每個人身上的 `dot`，" +
-      "它自己的檔頭就承認「每一發的隨機落點沒有被模擬」——站在哪裡完全不影響挨幾發。" +
-      "⭐ draw 預算是 `2 × count` 且**施法時一次抽完**（計畫 §13 的錄影決定性）；到期是絕對 tick。" +
-      "守衛 `lane2Kinds.test.ts` 第一條（拿掉一次 draw → 紅，已驗）。" +
-      "⚠️ `randomAreaSystem` 還沒接進 `SimWorld.step()`，`editorCapabilities` 標 partial。",
-  },
-  "variant:abilities.effects[]#manaBarrier": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "以魔力抵傷（44-00 機警「每點魔力可以抵免 3 點傷害」）。⛔ 不可以用「受傷後補一個等額護盾」" +
-      "假裝：那樣魔力沒有被扣、期間回的魔力不會變成新的抵擋量、敵人的燒魔對它無效。" +
-      "所以 `manaBarrierCutFor` 站在護盾池之後、免死與扣血之前，當場把傷害換成扣魔。" +
-      "守衛 `lane2Kinds.test.ts` 第二條（拿掉匯率 → 紅，已驗）。" +
-      "⚠️ 還沒被 `combat/damage.ts` 呼叫，`editorCapabilities` 標 partial。",
-  },
-  "variant:abilities.effects[]#extendBuff": {
-    status: "landing",
-    since: "2026-08-08",
-    why:
-      "受傷延長既有增益（52-01 狂戰士之怒「每承受自身最大生命 5% 的傷害，狂怒延長 2 秒」）。" +
-      "⛔ 現有詞彙組不出來：`applyBuff.stackKey` 寫的是「重設到滿」不是「延長」，" +
-      "而條件葉與 `HookDef` 的過濾器沒有任何一格讀得到「剛剛那一下打了多少」。" +
-      "⭐ 實作是**無狀態**的（延長量＝這一發傷害的連續比例），所以不需要累積器也不需要接線。" +
-      "`maxRemainingSec` **必填**：這條是正回饋，沒有上界會變成永久而且不會有任何東西變紅。" +
-      "守衛 `lane2Kinds.test.ts` 第三條（拿掉 `Math.min` 上界 → 紅，已驗）。",
-  },
-
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onReflectSuccess": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "【反彈成功時】—— owner 2026-08-05:「onReflect／反彈成功時 這個也要」。" +
-      "2026-08-08 更名自 `onReflect` 並補上 provenance:發射點從「反彈封包被排進佇列」" +
-      "搬到 `sim/combat/damage.ts` 那一發封包**真的落地**的地方,因為 20-002 要乘的" +
-      "「反彈傷害」三個讀數(raw / mitigated / hpLost)只有在落地那一格才是真的。" +
-      "轉成 hook 的仍是 `sim/systems/ReflectHookSystem.ts`(排在 deathSystem 之前、" +
-      "排空迴圈之外,終止性掛在這個位置上)。" +
-      "守衛:`sim/systems/reflectHook.test.ts`(**它不該發的時候不發**:任何一道閘攔下來" +
-      "都不算成功,否則「反彈時回血」會實際變成「被打時回血」)+ " +
-      "`sim/systems/reflectSuccessProvenance.test.ts`(provenance 真的到得了 child chain," +
-      "而且交給它的是**反彈傷害**不是原傷害)。" +
-      "零採用是因為使用它的 20-002 解放.約束勝利劍MAX 與 60-002 絕光斬" +
-      "**由外部技能模板編輯器產出**,文件還沒進 repo —— 那是內容,不是引擎。" +
-      "它們上架的那天這條豁免就該被刪掉。",
-  },
 
   "variant:abilities.effects[]#shieldBreak": {
     status: "landing",
@@ -1722,14 +1550,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "第一件破盾道具上架的那天,這條豁免就該被刪掉。",
   },
 
-  "field:abilities.effects[]#dispel.pools": {
-    status: "default-live",
-    why:
-      "省略 = 讀 `dispelRules.defaultPool{Status,Dot,Shields,Buffs}`(出貨:狀態✅ DoT✅ 護盾❌ 增益❌)。" +
-      "三支出貨道具全部要的就是「照全域規則」,所以零採用是對的。" +
-      "它存在是為了讓某一支未來的技能可以說「我**只**破盾」(D1 破盾正是這樣用) " +
-      "而不必替它開一個新的 effect kind。",
-  },
   "field:abilities.effects[]#dispel.order": {
     status: "default-live",
     why:
@@ -1858,35 +1678,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "regen 不經過 `healTarget`。理由同 healingTakenMult。",
   },
 
-  // ── C1 沉默 + C2 混亂的兩格「等內容」(2026-08-05, #278) ──────────────────
-  //
-  // ⚠️ 與上面那五格同一種形狀,但兩者的**閘在完全不同的地方**,所以分開記:
-  //   `silenced`     → `abilities/abilitySystem.ts` 的施法閘(緊接在暈眩之後)
-  //   `targetsAllies`→ `sim/targeting.ts` 的同隊旁路(`isConfused`)
-  // 兩條守衛在 `sim/c1c2.test.ts`,兩個突變都驗過會紅(刪掉沉默那一行 → c1 紅;
-  // 拿掉 `!isConfused(world, self)` → c2 紅)。
-  //
-  // 零採用是**內容決定**而不是機制缺席:樹上今天沒有任何一支技能是沉默系或混亂系。
-  // 第一支上架的那天,這兩條豁免就該被刪掉。
-  "field:abilities.effects[]#applyStatus.silenced": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "C1【沉默】—— 被沉默時 QWER/EX 一律施放不出去,而**魔力不扣、冷卻不進入**" +
-      "(那兩件事才是「沉默」與「施法失敗」的差別,而畫面上看不出來:兩者都是沒放出技能)。" +
-      "閘在 `abilities/abilitySystem.ts`,回傳 `\"silenced\"`,客戶端 `ui/castFeedback.ts` " +
-      "把它翻成「被沉默,無法施放技能」。守衛 `sim/c1c2.test.ts`。" +
-      "零採用是因為樹上今天沒有沉默系技能 —— 那是內容決定,不是我可以代填的。",
-  },
-  "field:abilities.effects[]#applyStatus.targetsAllies": {
-    status: "landing",
-    since: "2026-08-05",
-    why:
-      "C2【混亂】—— 自動索敵把**隊友**也算成可打的目標。⚠️ 它做成 `targeting.ts` 的" +
-      "同隊旁路而不是「換一個隊伍」,是刻意的:改隊伍會連帶影響傷害歸屬、賞金、勝負判定," +
-      "而混亂只該影響**挑誰打**這一件事。守衛 `sim/c1c2.test.ts` 兩個方向一起讀" +
-      "(掛之前挑不到隊友、掛之後挑得到)。零採用同 `silenced`:等第一支混亂系技能上架。",
-  },
+  // ⭐ 2026-08-12 —— C1【沉默】+ C2【混亂】的**兩筆豁免已刪除**(棘輪生效)。
+  // 2026-08-05 的停止條件逐字是「樹上今天沒有任何一支技能是沉默系或混亂系,
+  // 第一支上架的那天,這兩條豁免就該被刪掉」。90 支重製裡兩支都到了:
+  // `silenced` → `godie-edem.ex`;`targetsAllies` → `godie-ewar.q` /
+  // `godie-h02k.r` 加兩張英雄卡孿生。兩條行為守衛(`sim/c1c2.test.ts`)沒有動。
 
   // ── 事件流廣播的六個時刻 (2026-08-06, `sim/systems/WorldHookSystem.ts`) ──
   //
@@ -1924,11 +1720,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-06",
     why: "被復活的那一刻。持有者＝被復活的人,不是頂著圈圈的隊友 —— 兩個都合理,選前者是因為「復活後獲得無敵 2 秒」是這一格最常見的用法。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onEvade": {
-    status: "landing",
-    since: "2026-08-06",
-    why: "迴避成功的那一刻。⚠️ 持有者＝**閃掉的那個**,target＝攻擊者(與 onStunned/onReflect 同方向)。`worldHook.test.ts` 的第二條就是釘這個方向 —— 兩個 key 反了畫面上看不出差別。⭐ 這一格是仙后座 godie-i01s 文案「迴避成功時瞬間移動」變成真的的前置。",
   },
 
   "enum:abilities.effects[]#dispel.polarity=any": {
@@ -2063,18 +1854,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
-  "variant:abilities.effects[]#blink": {
-    status: "landing",
-    since: "2026-08-09",
-    why:
-      "真瞬移（owner 2026-08-09 推翻了 templates/expand.ts 那句「deliberately was not added」，GH#301-2）。" +
-      "⭐ 引擎側**已經落地**（2026-08-09 下午）：`sim/movement/blink.ts` 在**同一個 tick** 內改寫 " +
-      "`Transform.pos`，`sim/effects/blink.ts` 負責「誰移動、移到哪」，⛔ 它已經不再丟例外。" +
-      "⚠️ 它與 `leap` 的差別不是美術：`MIN_LEAP_TICKS = 2` 讓身體真的存在於中間兩格（會被範圍技掃到、" +
-      "會被地形擋），而瞬移的定義就是那兩格不存在。零採用剩下的那一半是**內容遷移**：" +
-      "11 支 JASS 成員今天仍然展開成 `leap`（`templates/expand.ts` 的 tpl-blink-strike 還沒改接），" +
-      "而 owner 正在手動重製技能 —— 那批文件進來時這一筆就該刪掉。",
-  },
   "field:abilities.effects[]#applyStatus.stacks": {
     status: "landing",
     since: "2026-08-09",
@@ -2104,6 +1883,309 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "狀態被掛上的那一刻。⚠️ 與 owner 說的「身上有某狀態時」不是同一件事:那一族的答案是效果上的 `condition`(EffectCommon.condition),因為「持續期間都成立」是狀態查詢不是時刻。✅ 發射點已接（GH#300）：`effects/applyStatus.ts` 在 `st.effects.push` 那一支發 `statusApplied`。⛔ 兩道窄化都在發射端:**續期不重觸發**(`!existing`)、**被免控擋掉的不算**(在那道 `continue` 之後)。零採用＝owner 手動重製中的技能還沒進 content/abilities/。",
+  },
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ⭐ 2026-08-12 —— owner 的 90 支重製技能落地之後，**第一次可回報**的那一批
+  // ═══════════════════════════════════════════════════════════════════════════
+  //
+  // owner 2026-08-12 裁決（逐字）：「只要讓 EX **照技能說明**正常實作 被動或主動
+  // 即可」「全做」「(c) 分開，但預設**一律以我新版的優先**」「是的，我**刻意減少
+  // 變身**的技能，減少額外設定開銷」。—— 舊行為：那 90 支的文件不在樹上，
+  // 於是 delayed / devour / randomArea / weightedBranch / dispel.pools / restore /
+  // hooks[].abilitySlot 這些容器的 reach 是 0；新規格：它們今天全部有文件了。
+  //
+  // ⚠️ 這一整段裡**沒有一筆是新的 S8**。它們是 THE CASCADE RULE 那條測試自己
+  // 寫過的那句話在兌現 ——「adopting the parent is what makes the children
+  // visible — one finding at a time, outermost first」。父容器一被採用，它**沒填
+  // 的 optional 子欄位**就第一次跨過 MIN_REACH，於是第一次進得了報表。
+  // ⛔ 所以「今天多了 29 列零」不代表引擎退步了，代表普查第一次看得到這一層。
+
+  // ── ①「填了就會紅」：`refineDispelShape` 明文禁止的六格 ────────────────────
+  // `schema/effect.ts` 的 `refineDispelShape` 對 `delayed` 與 `devour` 都生效
+  //（它的 kind 聯集逐字列著這兩個），而它的反向那一段是：`shape:"single"` 卻寫了
+  // `radius` / `side` / `maxTargets` → **載入時**就加 issue，訊息是「這一格是一個
+  // 看起來有設、其實沒有人讀的數字」。出貨的 3 份 delayed 與 6 份 devour **全部**
+  // 是 `shape:"single"`（見下面 ③ 那兩列 `shape=circle` 都是 0），所以這六格今天
+  // 在樹上是寫不進去的。
+  // ⛔ 不是 default-live：省略不是在吃一個好用的預設值，是這份文件根本不准有它。
+  // 第一發圓形的 delayed / devour 上架的那天，這六筆會自己變 stale 而被刪掉。
+  "field:abilities.effects[]#delayed.radius": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+  "field:abilities.effects[]#delayed.side": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+  "field:abilities.effects[]#delayed.maxTargets": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 3 份 delayed 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+  "field:abilities.effects[]#devour.radius": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+  "field:abilities.effects[]#devour.side": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+  "field:abilities.effects[]#devour.maxTargets": {
+    status: "schema-impossible",
+    why:
+      "`refineDispelShape` 的反向檢查：`shape:\"single\"` 填了這一格就是**載入時**的解析錯誤，" +
+      "而出貨的 6 份 devour 全部是 single。所以零採用不是「沒有人需要」，是「沒有人寫得進去」——這一格要跟 `shape:\"circle\"` 一起出現才合法。" +
+      "⛔ 不要把它降級成 default-live：那會把一條「填了就紅」的規則講成「留白剛好」，下一個作者就會以為自己可以填。",
+  },
+
+  // ── ② `radiusTier`：⚠️ 它**不在**那道 refine 裡（讀過原始碼才知道） ──────────
+  // 交辦稿說 delayed/devour 的四格（radius / radiusTier / side / maxTargets）都是
+  // `schema-impossible`。⛔ 那是錯的，而且錯得很細：`refineDispelShape` 的那個
+  // 迴圈逐字只有 `["radius", "side", "maxTargets"]` —— **`radiusTier` 不在裡面**。
+  // 也就是說一份 `shape:"single"` 的 delayed 寫 `radiusTier` 會**載入成功**，然後
+  // 那一格沒有人讀（幾何只在 circle 那一支解析）。那是一個真的、但很小的 schema
+  // 缺口（不在這個 lane 的範圍：⛔ 本輪不准動 schema/），所以這兩筆誠實地記成
+  // landing，和 ③ 的 `shape=circle` 同一個時鐘 —— 它們必然同時變綠。
+  "field:abilities.effects[]#delayed.radiusTier": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "AoE 級距落在共用的幾何欄位群上，普查在每一個 AoE-shaped kind 各看到一次。⚠️ 與同族的 radius/side/maxTargets **不同**：`refineDispelShape` 的反向迴圈只列了那三格，" +
+      "`radiusTier` 不在其中，所以 `shape:\"single\"` 寫它會載入成功而沒有人讀。零採用的真正原因是出貨的 3 份 delayed 一支都不是圓形 —— 它會與 `enum:…#delayed.shape=circle` 同一天變綠。" +
+      "⛔ 30 天後它再紅一次是對的：如果那時仍然沒有圓形的 delayed，該做的是補上那道 refine，不是續發豁免。",
+  },
+  "field:abilities.effects[]#devour.radiusTier": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "AoE 級距落在共用的幾何欄位群上，普查在每一個 AoE-shaped kind 各看到一次。⚠️ 與同族的 radius/side/maxTargets **不同**：`refineDispelShape` 的反向迴圈只列了那三格，" +
+      "`radiusTier` 不在其中，所以 `shape:\"single\"` 寫它會載入成功而沒有人讀。零採用的真正原因是出貨的 6 份 devour 一支都不是圓形 —— 它會與 `enum:…#devour.shape=circle` 同一天變綠。" +
+      "⛔ 30 天後它再紅一次是對的：如果那時仍然沒有圓形的 devour，該做的是補上那道 refine，不是續發豁免。",
+  },
+
+  // ── ③ 兩個 kind 的 `shape` 只被選了一半 ──────────────────────────────────
+  // `shape` 這一格本身是 100% 採用（它是必填），零的是 `circle` 這個**成員**。
+  // 圓形那一支的引擎路徑不是死的 —— 同一支 `shapeTargets` 被 dispel / weightedBranch
+  // 等 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 就是 `shape:"circle"`
+  // + `side:"allies"`），所以這是**內容還沒選**，不是機制缺席。
+  "enum:abilities.effects[]#delayed.shape=circle": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "`shape` 是必填所以欄位本身 100%，零的是 circle 這個成員：出貨的 3 份 delayed 全部是單體。" +
+      "⭐ 圓形那一支不是死路 —— 同一支 `shapeTargets` 已經被別的 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 是 circle + side:\"allies\"）" +
+      "，所以缺的是內容不是引擎。它變綠的那一天，上面 ① 的三格幾何與 ② 的 radiusTier 會一起解禁。",
+  },
+  "enum:abilities.effects[]#devour.shape=circle": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "`shape` 是必填所以欄位本身 100%，零的是 circle 這個成員：出貨的 6 份 devour 全部是單體。" +
+      "⭐ 圓形那一支不是死路 —— 同一支 `shapeTargets` 已經被別的 kind 以 circle 走過（`godie-h02v.ex` 的 weightedBranch 是 circle + side:\"allies\"）" +
+      "，所以缺的是內容不是引擎。它變綠的那一天，上面 ① 的三格幾何與 ② 的 radiusTier 會一起解禁。",
+  },
+
+  // ── ④ 四個新 kind 上的 `condition`：併進既有的 19 筆那一族 ────────────────
+  // 這四筆與檔案上方那 19 筆 `…#<kind>.condition` 是**同一格** schema
+  //（`EFFECT_COMMON_SHAPE.condition`），只是它們的父 variant 到 2026-08-12 才被
+  // 內容採用，所以普查現在才數得到。since 跟著**機制落地那天**（2026-08-09）走，
+  // 讓 23 筆同一個時鐘、同一天到期 —— 一個機制不該因為晚被看見就多拿 3 天寬限。
+  "field:abilities.effects[]#delayed.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，" +
+      "普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，" +
+      "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
+      "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
+  },
+  "field:abilities.effects[]#devour.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，" +
+      "普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，" +
+      "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
+      "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
+  },
+  "field:abilities.effects[]#randomArea.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，" +
+      "普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，" +
+      "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
+      "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
+  },
+  "field:abilities.effects[]#weightedBranch.condition": {
+    status: "landing",
+    since: "2026-08-09",
+    why:
+      "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，" +
+      "普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，" +
+      "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
+      "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
+  },
+
+  // ── ⑤「省略正是出貨行為」的九格旋鈕（default-live） ────────────────────────
+  // 每一格都逐字對過 sim 的那一行 `?? 預設`，不是憑印象分類的。
+  "field:abilities.effects[]#delayed.targetMode": {
+    status: "default-live",
+    why:
+      "省略 = `\"frozen\"`（`sim/effects/delayed.ts` 的 `(e.targetMode ?? \"frozen\")" +
+      "`）＝施放那一刻鎖定名單、追著他打，而那正是「連續七次斬擊」要的手感。`\"reresolve\"`（到期以落點重解、走開就打空）" +
+      "是留給「原地爆的連擊」的另一種讀法，沒有人需要它的時候零採用就是對的。",
+  },
+  "field:abilities.effects[]#delayed.dropDeadTargets": {
+    status: "default-live",
+    why:
+      "省略 = `true`（`sim/effects/delayed.ts` 的 `e.dropDeadTargets ?? true`）" +
+      "＝鎖定的目標死了就跳過他，不繼續鞭屍。寫 `false` 的意思是「屍體也要打滿七下」，那是一個 owner 會想切但今天沒有人要的決策點（第一守則）" +
+      "，所以零採用正是它該有的樣子。",
+  },
+  "field:abilities.effects[]#delayed.stopOnCasterDeath": {
+    status: "default-live",
+    why:
+      "省略 = `false`（`sim/effects/delayed.ts` 的 `e.stopOnCasterDeath ?? false`）" +
+      "＝施法者死了那一串還是會打完，與「技能一旦放出去就不回頭」的既有手感一致。寫 `true` 的是「詠唱型」的那一種招式，" +
+      "樹上還沒有。",
+  },
+  "field:abilities.effects[]#devour.onDevourPer": {
+    status: "default-live",
+    why:
+      "省略 = `\"victim\"`，而 schema 自己的註解就寫死了關鍵：「⚠️ 對 `shape:\"single\"`（出貨唯一形狀）" +
+      "兩者完全等價，也就是預設值不替任何人做決定」。6 份 devour 全部是 single，所以這一格今天**選哪個都一樣** —— 零採用不是缺席，" +
+      "是這個決策在目前的內容下還不存在。",
+  },
+  "field:abilities.effects[]#dot.onCasterDeath": {
+    status: "default-live",
+    why:
+      "省略 = `\"continue\"`（`sim/effects/dot.ts` 的 `e.onCasterDeath ?? \"continue\"`）" +
+      "＝點燃的火不會因為放火的人倒下就熄掉，那是出貨行為也是玩家預期。`\"stop\"` 是「維持型」DoT 的讀法（施法者一死就停）" +
+      "，10 份 dot 沒有一支要那個語意。",
+  },
+  "field:abilities.effects[]#knockback.getupTicks": {
+    status: "default-live",
+    why:
+      "省略 = `0`（`sim/effects/knockback.ts` 的 `clampKb(e.getupTicks, …)" +
+      "`，而 `clampKb` 的 `fallback = 0`）＝落地即可行動，沒有額外的爬起來硬直。14 份擊退全部吃這個預設是**刻意**的：多加一格硬直是設計決策，" +
+      "而它一旦有人寫就會出現在這張表上。",
+  },
+  "field:abilities.effects[]#dispel.pools.shields": {
+    status: "default-live",
+    why:
+      "省略 = 讀後台 `config.dispel@1` 的 `defaultPoolShields`（`sim/effects/dispel.ts` 的 `shields: rules.defaultPoolShields`）" +
+      "——同上面那一段「不寫最好」的三格是同一種東西，寫進文件等於在一支技能上烘死一個全域可調的決定。⭐ 而且拆掉別人護盾這件事有專屬的 kind（`shieldBreak`）" +
+      "，所以連需要覆寫的動機都被別的機制吸收了。",
+  },
+  "field:abilities.effects[]#damage.canCrit": {
+    status: "default-live",
+    why:
+      "省略 = 不暴擊（`sim/effects/damage.ts` 的 `if (e.canCrit)`）＝技能傷害預設不吃暴擊，" +
+      "那是出貨行為。⭐ 機制**不在零**：同一條 `sim/combat/critStrike.ts` 管線在 `damageArea.canCrit`（1/49）" +
+      "與 `damageLine.canCrit`（2/16）上都有客戶。90 支重製稿裡 11 處提到[暴擊]，逐字讀都是**普攻**暴擊（走 critStrike grant，" +
+      "不走這一格），所以單體技能傷害沒有人要暴擊是誠實的。",
+  },
+  "enum:abilities.effects[]#restore.applyTo=target": {
+    status: "default-live",
+    why:
+      "⚠️ 這個成員**就是預設值本身**：`sim/effects/restore.ts` 是 `e.applyTo === \"self\" ? [ctx.caster] : ctx.targets`，" +
+      "也就是省略與寫 `\"target\"` 逐字同一條路。6 份 restore 寫的都是 `\"self\"`（那個才是需要覆寫的那一邊）" +
+      "，而「回復目標」這件事每一場都在跑 —— `godie-h02v.ex` 每秒替周圍友軍回 10% 最大魔力走的正是這一支，" +
+      "它只是沒有把預設值再抄一遍。",
+  },
+
+  // ── ⑥ 五個「真的還沒有人選」的成員（landing，30 天後回來看） ────────────────
+  // 與 ⑤ 的差別是一句話：⑤ 的省略等於一個活著的預設值，這五個的省略等於**另一個
+  // 選擇被選走了**，沒有預設值在替它服務。所以它們吃 30 天的時鐘。
+  "enum:abilities.effects[]#applyBuff.hooks[].abilitySlot=EX": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "觸發器的「只算這一格放出來的傷害」過濾。⚠️ 過濾器本身**已經有客戶**（13 份文件用它，值分佈 Q1 / W3 / E8 / R3）" +
+      "，零的只有 EX 這個成員 —— 90 支重製稿裡沒有一支寫「EX 造成傷害時…」。第一支需要「大招打中才觸發」的卡出現時，" +
+      "這一筆就該被刪掉。",
+  },
+  "enum:abilities.effects[]#applyBuff.hooks[].abilitySlot=PASSIVE": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "同 abilitySlot=EX：過濾器有 13 份客戶，缺的是「天生技造成傷害時」這一種寫法。⚠️ 它不是不可能 —— 天生技照樣打得出傷害（`godie-n00p.passive` 的鞭子就是）" +
+      "，只是還沒有一支技能想把觸發條件窄化到天生技那一格。",
+  },
+  "enum:abilities.effects[]#damageLine.aim=facing": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "直線朝哪裡打。⚠️ 這一格與「朝面向」的**行為**不是同一件事：`sim/effects/damageLine.ts` 的 `lineDir` 在 `aim !== \"facing\"` 時先試目標、沒有目標才退回面向，" +
+      "所以面向那一條路每一場都在跑。`\"facing\"` 是**強制忽略目標**的那個選擇，而 12 份直線技（含 4 份自身施放）" +
+      "全部想追著目標打。第一支「不管你站哪、我就是往前劈」的招式出現時，這一筆就該被刪掉。",
+  },
+  "enum:abilities.effects[]#knockback.from=facing": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "擊退的方向來源。預設是 `\"caster\"`（`sim/effects/knockback.ts` 的 `e.from ?? \"caster\"`，" +
+      "從施法者往外推），`\"pull\"` 今天剛被 `godie-h02k.r` 的抓取採用，只剩 `\"facing\"`（照**受害者自己的面向**推）" +
+      "沒有人選。它是「把人往他自己看的方向推」那一種招式的寫法，14 份擊退沒有一支是。",
+  },
+  "enum:abilities.effects[]#randomArea.who=target": {
+    status: "landing",
+    since: "2026-08-12",
+    why:
+      "隨機落點的圓心放誰身上。預設是 `\"self\"`（`sim/effects/randomArea.ts` 的 `(e.who ?? \"self\")" +
+      "`），而 4 份 randomArea 都明寫了 `\"self\"`。`\"target\"`（以解出來的第一個目標為圓心）是「對著那個人頭上下流星雨」" +
+      "的寫法，還沒有一支技能要。",
+  },
+
+  // ── ⑦ ⛔ **這一筆是 debt，不是豁免** —— 有客戶，而且客戶被寫壞了 ────────────
+  //
+  // 交辦稿的第三個陷阱逐字是：「有客戶但寫壞了的不可以豁免……那要**回報**，
+  // 不是豁免」。`applyBuff.hooks` 正是那一種，所以它記成 `debt`：⛔ 永不到期，
+  // 而且**每一次跑都印在 KNOWN DEAD MECHANISMS 橫幅上**。
+  //
+  // 掃過整棵樹（1,959 份文件）之後，`hooks` 出現的位置只有三種：
+  //   passive.ranks[].hooks（絕大多數）· items 的 passive.hooks · auras[].hooks
+  // 一份都沒有掛在 `applyBuff` 上。而 `applyBuff.hooks` 存在的理由只有一個：
+  // 「接下來 N 秒內，每次普攻/受擊會…」—— 觸發器**跟著那個限時增益一起消失**。
+  //
+  // 四支需要它的技能被寫成了**沒有閘門的常駐 passive hook**（＝從第一回合起、
+  // 不用施放、永遠有效）：
+  //   · `godie-emfr.e`  「持續12秒…普通攻擊附加火焰傷害」→ applyBuff(12s) 只放了
+  //                      一格 ms −50%，onBasicAttack / onAbilityHit 兩條掛在常駐 passive
+  //   · `godie-emfr.r`  「持續12秒…施放技能後的下一次普攻」→ 同上，onBasicAttack 常駐
+  //   · `godie-hapm.q`  「進入狂怒…持續6秒…期間每承受…」→ applyBuff(6s, statusId:"rage")
+  //                      有了，但 onDamageTaken 那一條沒有跟著它，永遠在
+  //   · `godie-h01n.ex` 「[卍解] 狀態下…月牙天衝冷卻縮短50%」→ 少了 whileForm 閘，
+  //                      沒卍解也吃得到
+  // ⚠️ 對照組證明這不是「大家都這樣寫」：`godie-e002.w`（20-01 風王結界）的同型
+  // 觸發器**有**兩道閘（`whileForm:"alternate"` + `condition` mp ≥ N），寫法是對的。
+  //
+  // ⛔ 我沒有改內容（本輪只動測試，且第零守則⑧：順手發現的缺陷不當場修）。
+  "field:abilities.effects[]#applyBuff.hooks": {
+    status: "debt",
+    why:
+      "限時增益自己攜帶的觸發器。⛔ 這不是「沒有客戶」而是「客戶被寫成了別的東西」：`godie-emfr.e`（持續12秒的普攻附加火焰）" +
+      "、`godie-emfr.r`（持續12秒）、`godie-hapm.q`（狂怒6秒的受擊反擊）三支的持續時間寫成了 `applyBuff.duration`，" +
+      "但它們的 hook 卻掛在**常駐的** `passive.ranks[].hooks` 上而且沒有任何閘（無 condition、無 whileForm）" +
+      "，所以那些「期間限定」的效果從第一回合起就永遠生效、不用施放；`godie-h01n.ex` 則是漏了卍解的 whileForm 閘。" +
+      "⚠️ 玩家看得到的症狀是「這幾支英雄的大招好像一直開著」。對照組 `godie-e002.w` 的同型觸發器有兩道閘，證明這是四份文件的錯不是引擎的形狀問題。" +
+      "修法在內容側（把那幾條 hook 搬進 applyBuff.hooks，或補上 whileForm/condition 閘）" +
+      "，⛔ 不在這個 lane 的範圍。",
   },
 };
 

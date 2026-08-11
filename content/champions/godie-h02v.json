@@ -54,51 +54,8 @@
     "Q": {
       "id": "godie-h02v.q",
       "name": "92-01 臥草泥馬",
-      "icon": "assets/icons/abilities/godie-h02v.q.webp",
-      "description": "[輔助]\n40秒冷卻時間\n\n這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期間無法移動。",
+      "description": "[主動][變身][週期]\n60秒冷卻\n消耗MP160/220/280/340\n\n「臥草，泥馬真的躺下來了」\n進入無法移動與攻擊的 [定身] 狀態，每秒 [回復] 1/2/3/4% 生命，[防禦] 提升20/40/60/80，持續6秒。\n(對方仍可施展技能，僅不能移動與普攻)",
       "slot": "Q",
-      "castType": "self",
-      "maxRank": 4,
-      "cooldown": [
-        40.0,
-        40.0,
-        20.0,
-        20.0
-      ],
-      "manaCost": [
-        160.0,
-        160.0,
-        160.0,
-        160.0
-      ],
-      "range": 0,
-      "effects": [
-        {
-          "kind": "championForm",
-          "to": "alternate",
-          "durationSec": 10.0
-        },
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "maxHealth",
-              "op": "flat",
-              "value": 300
-            }
-          ],
-          "duration": 3.0
-        }
-      ],
-      "vfxKey": "fx.prim.nature.pulse-sm",
-      "castTimeSec": 0.3
-    },
-    "W": {
-      "id": "godie-h02v.w",
-      "name": "92-03 狂草泥馬",
-      "icon": "assets/icons/abilities/godie-h02v.w.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n草泥馬中最上等的一隻，是草泥馬中的馬王，要朝尼族騎術最好的人才能獲得，對500範圍內敵人造成(現有金錢*0.1)點傷害，最大傷害不超過400點，並增加攻速50%，增加跑速10%，持續12秒。",
-      "slot": "W",
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
@@ -108,149 +65,482 @@
         60.0
       ],
       "manaCost": [
-        90.0,
-        120.0,
-        150.0,
-        180.0
+        160.0,
+        220.0,
+        280.0,
+        340.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              400.0,
-              800.0,
-              1200.0,
-              1600.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 1.0
-              }
-            ]
-          }
+          "kind": "championForm",
+          "to": "alternate",
+          "durationSec": 6.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 6.0,
+          "root": true,
+          "disarmed": true
         },
         {
           "kind": "applyBuff",
           "modifiers": [
             {
-              "stat": "as",
+              "stat": "armor",
               "op": "flat",
-              "value": 0.4
+              "value": 20
             }
           ],
-          "duration": 8.0
+          "duration": 6.0
+        },
+        {
+          "kind": "dot",
+          "damageType": "true",
+          "amountPerTick": {
+            "flat": -1.0
+          },
+          "intervalSec": 1.0,
+          "durationSec": 6.0,
+          "stacking": "refresh"
         }
       ],
+      "icon": "assets/icons/abilities/godie-h02v.q.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
-      "sfxKey": "wc3.taunt",
-      "castTimeSec": 0.6
+      "castTimeSec": 0.4
+    },
+    "W": {
+      "id": "godie-h02v.w",
+      "name": "92-03 狂草泥馬",
+      "description": "[被動][屬性門檻][普攻時][吞噬][層數累積]\n\n「平常吃草，發瘋時吃人」\n當草泥馬生命降低到 30%時，普通 [攻擊時] 附加 [吞噬] 生命低於 3/4/5/6% 的敵方單位，並且永久增加1點 [AP]。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "92-03 狂草泥馬",
+        "ranks": [
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.3
+                },
+                "effects": [
+                  {
+                    "kind": "devour",
+                    "shape": "single",
+                    "thresholdPctOfMax": [
+                      0.03
+                    ],
+                    "victim": "any",
+                    "throughShields": true,
+                    "onDevour": [
+                      {
+                        "kind": "grantAttribute",
+                        "attr": "int",
+                        "amount": 1,
+                        "mode": "flat",
+                        "maxAttribute": 200
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.3
+                },
+                "effects": [
+                  {
+                    "kind": "devour",
+                    "shape": "single",
+                    "thresholdPctOfMax": [
+                      0.04
+                    ],
+                    "victim": "any",
+                    "throughShields": true,
+                    "onDevour": [
+                      {
+                        "kind": "grantAttribute",
+                        "attr": "int",
+                        "amount": 1,
+                        "mode": "flat",
+                        "maxAttribute": 200
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.3
+                },
+                "effects": [
+                  {
+                    "kind": "devour",
+                    "shape": "single",
+                    "thresholdPctOfMax": [
+                      0.05
+                    ],
+                    "victim": "any",
+                    "throughShields": true,
+                    "onDevour": [
+                      {
+                        "kind": "grantAttribute",
+                        "attr": "int",
+                        "amount": 1,
+                        "mode": "flat",
+                        "maxAttribute": 200
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "hp",
+                  "mode": "percent",
+                  "op": "<=",
+                  "value": 0.3
+                },
+                "effects": [
+                  {
+                    "kind": "devour",
+                    "shape": "single",
+                    "thresholdPctOfMax": [
+                      0.06
+                    ],
+                    "victim": "any",
+                    "throughShields": true,
+                    "onDevour": [
+                      {
+                        "kind": "grantAttribute",
+                        "attr": "int",
+                        "amount": 1,
+                        "mode": "flat",
+                        "maxAttribute": 200
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02v.w.webp",
+      "vfxKey": "fx.prim.nature.pulse-sm",
+      "sfxKey": "wc3.taunt"
     },
     "E": {
       "id": "godie-h02v.e",
       "name": "92-02 消化液",
-      "icon": "assets/icons/abilities/godie-h02v.e.webp",
-      "description": "[主動攻擊]\n40秒冷卻時間\n\n羊駝在驚嚇或憤怒的時候，會從嘴巴裡噴出消化液攻擊敵人，造成範圍內敵人減少3點防禦、20%攻速、5%跑速，每秒受到20點傷害，持續7秒。",
+      "description": "[被動][指向][範圍][破魔][AP加成][機率][週期]\n\n草泥馬在 [受到傷害] 的時候有 10% [機率]，會從嘴巴裡噴出消化液攻擊敵人，造成[前方][一直線] [範圍] 敵人，每秒受到20/30/40/50+ 30% [AP] 傷害，附帶 [破魔] 降低魔抗 50%，持續3秒。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        40.0,
-        40.0,
-        40.0,
-        40.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        150.0,
-        200.0,
-        250.0,
-        300.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 11.0,
-      "effects": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              20.0,
-              30.0,
-              40.0,
-              50.0
-            ],
-            "ratios": [
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "92-02 消化液",
+        "ranks": [
+          {
+            "hooks": [
               {
-                "stat": "ap",
-                "coeff": 0.6
+                "on": "onDamageTaken",
+                "chance": 0.1,
+                "target": "event",
+                "internalCooldown": 2.0,
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 20.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "length": 8,
+                    "width": 1.8,
+                    "aim": "target",
+                    "fromCaster": true,
+                    "maxTargets": 5,
+                    "includeOrigin": false
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.1,
+                "target": "event",
+                "internalCooldown": 2.0,
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 30.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "length": 8,
+                    "width": 1.8,
+                    "aim": "target",
+                    "fromCaster": true,
+                    "maxTargets": 5,
+                    "includeOrigin": false
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.1,
+                "target": "event",
+                "internalCooldown": 2.0,
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 40.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "length": 8,
+                    "width": 1.8,
+                    "aim": "target",
+                    "fromCaster": true,
+                    "maxTargets": 5,
+                    "includeOrigin": false
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onDamageTaken",
+                "chance": 0.1,
+                "target": "event",
+                "internalCooldown": 2.0,
+                "effects": [
+                  {
+                    "kind": "damageLine",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 0.3
+                        }
+                      ]
+                    },
+                    "length": 8,
+                    "width": 1.8,
+                    "aim": "target",
+                    "fromCaster": true,
+                    "maxTargets": 5,
+                    "includeOrigin": false
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "magic-break",
+                    "duration": 3.0
+                  }
+                ]
               }
             ]
           }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 7.0,
-          "moveSpeedMult": 0.8
-        }
-      ],
-      "vfxKey": "fx.prim.arcane.nova",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02v.e.webp",
+      "vfxKey": "fx.prim.arcane.nova"
     },
     "R": {
       "id": "godie-h02v.r",
       "name": "92-04 馬勒戈壁",
-      "icon": "assets/icons/abilities/godie-h02v.r.webp",
-      "description": "[投影]\n75秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒奪取周圍英雄的黃金150並造成100傷害，持續6秒。",
+      "description": "[主動][範圍][AP加成]\n90秒冷卻\n消耗MP300/420/540\n\n「將自己的心靈內景具現化並覆蓋現實世界的強力魔術」\n將[周圍] [範圍] 敵人附加 [緩慢] 及 [致盲]，持續6秒。\n(攻擊身上有 [致盲] 標記的敵人將額外附加 100/200/300% [AP] 傷害)",
       "slot": "R",
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        90.0,
+        90.0,
+        90.0
       ],
       "manaCost": [
         300.0,
         420.0,
         540.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "radiusTier": "超大",
+      "targetsEnemies": true,
       "effects": [
         {
-          "kind": "damage",
+          "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "perRank": [
-              100.0,
-              200.0,
-              300.0
-            ],
-            "ratios": [
+            "flat": 1.0
+          },
+          "radius": 8.0,
+          "radiusTier": "超大",
+          "maxTargets": 6,
+          "includeOrigin": true
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 6.0,
+          "moveSpeedMult": 0.5
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "blind",
+          "duration": 6.0,
+          "missChance": 0.5
+        }
+      ],
+      "passive": {
+        "name": "92-04 馬勒戈壁",
+        "ranks": [
+          {
+            "hooks": [
               {
-                "stat": "ap",
-                "coeff": 0.3
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             ]
           }
-        },
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "as",
-              "op": "flat",
-              "value": 0.25
-            }
-          ],
-          "duration": 3.0
-        }
-      ],
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-h02v.r.webp",
       "vfxKey": "fx.prim.nature.pulse-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

@@ -1,52 +1,175 @@
 {
   "id": "godie-h02v.e",
+  "schema": "ability@1",
   "name": "92-02 消化液",
-  "icon": "assets/icons/abilities/godie-h02v.e.webp",
-  "description": "[主動攻擊]\n40秒冷卻時間\n\n羊駝在驚嚇或憤怒的時候，會從嘴巴裡噴出消化液攻擊敵人，造成範圍內敵人減少3點防禦、20%攻速、5%跑速，每秒受到20點傷害，持續7秒。",
+  "description": "[被動][指向][範圍][破魔][AP加成][機率][週期]\n\n草泥馬在 [受到傷害] 的時候有 10% [機率]，會從嘴巴裡噴出消化液攻擊敵人，造成[前方][一直線] [範圍] 敵人，每秒受到20/30/40/50+ 30% [AP] 傷害，附帶 [破魔] 降低魔抗 50%，持續3秒。",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    40.0,
-    40.0,
-    40.0,
-    40.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    150.0,
-    200.0,
-    250.0,
-    300.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          20.0,
-          30.0,
-          40.0,
-          50.0
-        ],
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "92-02 消化液",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 0.6
+            "on": "onDamageTaken",
+            "chance": 0.1,
+            "target": "event",
+            "internalCooldown": 2.0,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 20.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "maxTargets": 5,
+                "includeOrigin": false
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "magic-break",
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "chance": 0.1,
+            "target": "event",
+            "internalCooldown": 2.0,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 30.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "maxTargets": 5,
+                "includeOrigin": false
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "magic-break",
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "chance": 0.1,
+            "target": "event",
+            "internalCooldown": 2.0,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 40.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "maxTargets": 5,
+                "includeOrigin": false
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "magic-break",
+                "duration": 3.0
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "chance": 0.1,
+            "target": "event",
+            "internalCooldown": 2.0,
+            "effects": [
+              {
+                "kind": "damageLine",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.3
+                    }
+                  ]
+                },
+                "length": 8,
+                "width": 1.8,
+                "aim": "target",
+                "fromCaster": true,
+                "maxTargets": 5,
+                "includeOrigin": false
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "magic-break",
+                "duration": 3.0
+              }
+            ]
           }
         ]
       }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 7.0,
-      "moveSpeedMult": 0.8
-    }
-  ],
-  "vfxKey": "fx.prim.arcane.nova",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h02v.e.webp",
+  "vfxKey": "fx.prim.arcane.nova"
 }

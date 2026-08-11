@@ -2,8 +2,7 @@
   "id": "godie-e00r.q",
   "schema": "ability@1",
   "name": "59-01 吞噬",
-  "icon": "assets/icons/abilities/godie-e00r.q.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\n啟動吞噬狀態可讓初號機攻擊力增加20點傷害，攻擊時獲得生命回饋15%，可持續9秒",
+  "description": "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的敵方英雄，使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,
@@ -20,26 +19,23 @@
     140.0
   ],
   "range": 11.0,
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "heal",
-      "amount": {
-        "perRank": [
-          20.0,
-          40.0,
-          60.0,
-          80.0
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.24
-          }
-        ]
-      }
+      "kind": "devour",
+      "shape": "single",
+      "thresholdPctOfMax": [
+        0.03,
+        0.05,
+        0.07,
+        0.09
+      ],
+      "healPct": 1.0,
+      "victim": "champion",
+      "throughShields": true
     }
   ],
+  "icon": "assets/icons/abilities/godie-e00r.q.webp",
   "vfxKey": "fx.prim.void.explosion",
-  "targetsEnemies": false,
   "castTimeSec": 0.3
 }

@@ -2,10 +2,8 @@
   "id": "godie-hapm.passive",
   "schema": "ability@1",
   "name": "52-00 十二道試煉",
-  "icon": "assets/icons/abilities/godie-hapm.passive.webp",
-  "description": "[被動]\n0秒冷卻\n\n「十二條命聽起來很多，直到你遇到會算數的玩家」\n初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層試煉，進入 [無敵] 狀態1.5秒，隨後 [回復] 50%最大生命，並[擊退]並[暈眩] 0.5秒 [周圍]敵人。每失去一層試煉，永久提升10%攻擊力與10%最大生命。\n(跨回合共享12次 [試煉] 標記)",
+  "description": "[被動][範圍][暈眩]\n0秒冷卻\n\n「十二條命聽起來很多，直到你遇到會算數的玩家」\n初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層試煉，進入 [無敵] 狀態1.5秒，隨後 [回復] 50%[最大生命]，並[擊退]並[暈眩] 0.5秒 [周圍]敵人。每失去一層試煉，永久提升10%攻擊力與10%[最大生命]。\n(跨回合共享12次 [試煉] 標記)",
   "slot": "PASSIVE",
-  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
@@ -14,66 +12,84 @@
   "manaCost": [
     0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
   "effects": [],
-  "marks": [
-    {
-      "markId": "godie-hapm.passive",
-      "initial": 12,
-      "max": 12,
-      "durationSec": -1,
-      "resetOn": "match",
-      "perStackLost": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.1
-        },
-        {
-          "stat": "maxHealth",
-          "op": "pctAdd",
-          "value": 0.1
-        }
-      ],
-      "lethal": {
-        "consume": 1,
-        "surviveHpPct": 0.01,
-        "damageTypes": [
-          "physical",
-          "magic",
-          "true"
-        ],
-        "internalCooldown": 0.5,
-        "aoeRadius": 8,
-        "selfEffects": [
+  "passive": {
+    "name": "52-00 十二道試煉",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "kind": "invulnerable",
-            "durationSec": 1.5,
-            "applyTo": "self",
-            "blocksDamage": "all",
-            "blocksTrueDamage": true,
-            "blocksControl": true
-          },
-          {
-            "kind": "restore",
-            "healthPct": 0.5
-          }
-        ],
-        "aoeEffects": [
-          {
-            "kind": "knockback",
-            "distance": 4,
-            "speed": 40,
-            "from": "caster"
-          },
-          {
-            "kind": "applyStatus",
-            "statusId": "trial-stun",
-            "duration": 0.5,
-            "stun": true
+            "on": "onDamageTaken",
+            "target": "self",
+            "key": "trial",
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.05
+            },
+            "internalCooldown": 1.5,
+            "effects": [
+              {
+                "kind": "invulnerable",
+                "durationSec": 1.5,
+                "applyTo": "self",
+                "blocksDamage": "all",
+                "blocksTrueDamage": true,
+                "blocksControl": true
+              },
+              {
+                "kind": "restore",
+                "healthPct": 0.5,
+                "applyTo": "self"
+              },
+              {
+                "kind": "knockback",
+                "distance": 4.0,
+                "speed": 16.0,
+                "from": "caster"
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 0.5,
+                "stun": true
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "ad",
+                    "op": "pctAdd",
+                    "value": 0.1
+                  },
+                  {
+                    "stat": "maxHealth",
+                    "op": "pctAdd",
+                    "value": 0.1
+                  }
+                ],
+                "duration": 99999.0
+              }
+            ]
           }
         ]
       }
+    ]
+  },
+  "marks": [
+    {
+      "markId": "trial",
+      "initial": 12,
+      "max": 12,
+      "durationSec": -1,
+      "resetOn": "match"
     }
-  ]
+  ],
+  "icon": "assets/icons/abilities/godie-hapm.passive.webp"
 }

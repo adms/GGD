@@ -1,56 +1,80 @@
 {
   "id": "godie-h01n.w",
-  "name": "79-02 斬擊",
-  "icon": "assets/icons/abilities/godie-h01n.w.webp",
-  "description": "[輔助]\n22秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+力量*2點傷害，蓄力最久可持續10秒。",
+  "schema": "ability@1",
+  "name": "79-02 月牙斬擊",
+  "description": "[主動][AP加成]\n60秒冷卻\n消耗MP80/160/240/320\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    22.0,
-    22.0,
-    22.0,
-    22.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    60.0,
     80.0,
-    100.0,
-    120.0
+    160.0,
+    240.0,
+    320.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.4
-        }
-      ],
-      "duration": 10.0
-    },
     {
       "kind": "damage",
       "damageType": "magic",
       "amount": {
         "perRank": [
-          100.0,
-          150.0,
           200.0,
-          250.0
+          350.0,
+          500.0,
+          650.0
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.3
+            "coeff": 0.5
           }
         ]
       }
     }
   ],
+  "passive": {
+    "name": "79-02 月牙斬擊",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "W",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "magic-break"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h01n.w.webp",
   "vfxKey": "fx.prim.physical.slash",
-  "schema": "ability@1",
   "castTimeSec": 0.4
 }

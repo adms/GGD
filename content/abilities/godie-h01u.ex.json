@@ -1,34 +1,49 @@
 {
   "id": "godie-h01u.ex",
+  "schema": "ability@1",
   "name": "80-002 戰無不勝",
-  "icon": "assets/icons/abilities/godie-h01u.ex.webp",
-  "description": "[強化]\n0秒冷卻時間\n\n演過古惑仔之戰無不勝的呂布，擁有過人的戰績，可以幫助他在戰場上發揮最大的威力，可使其增加150點攻擊力並有50%機率降低100點傷害，但會降低15點防禦作為代價。",
+  "description": "[被動]\n\n「只要一直贏，就沒有平衡問題」\n提升 [攻擊速度上限]至10、[吸血] 50%，並但 [防禦][魔抗] 降低 50%。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
+    0.0
   ],
   "manaCost": [
-    120.0
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 0.4
-    }
+  "passive": {
+    "name": "80-002 戰無不勝",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "capRaise",
+            "value": 10.0
+          },
+          {
+            "stat": "lifesteal",
+            "op": "flat",
+            "value": 0.5
+          },
+          {
+            "stat": "armor",
+            "op": "pctAdd",
+            "value": -0.5
+          },
+          {
+            "stat": "mr",
+            "op": "pctAdd",
+            "value": -0.5
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.physical.pulse-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-h01u.ex.webp",
+  "vfxKey": "fx.prim.physical.pulse-lg"
 }

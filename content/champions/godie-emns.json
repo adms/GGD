@@ -52,16 +52,15 @@
     "Q": {
       "id": "godie-emns.q",
       "name": "44-01 死神之眼",
-      "icon": "assets/icons/abilities/godie-emns.q.webp",
-      "description": "[輔助]\n20秒冷卻時間\n\n與死神暫時交換眼睛來鎖定殺人目標，相對地以自己生命75%作交換，需要搭配6級技能-火車輾過以及9級技能-心臟麻痺才能遙控殺人，鎖定目標死亡才會解除鎖定。\n被鎖定的目標會因為死神的詛咒而暫時30%攻擊失手，持續15秒。",
+      "description": "[主動][指定][詛咒（失手）]\n60秒冷卻，吟唱2秒\n消耗MP150/200/250/300\n施法距離2\n\n「這個世界正在腐敗，腐敗的人不該活著。」\n被鎖定的目標會因為死神的[詛咒]標記而暫時50%攻擊失手，持續6/12/18/24秒。",
       "slot": "Q",
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        20.0,
-        20.0,
-        20.0,
-        20.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
         150.0,
@@ -69,44 +68,29 @@
         250.0,
         300.0
       ],
-      "range": 9.17,
-      "effects": [],
+      "range": 2.0,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "curse",
+          "duration": 6.0,
+          "missChance": 0.5
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.q.webp",
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.gruntyesattack1",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.4
-        }
-      }
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-emns.w",
       "name": "44-02 死神的規則",
-      "icon": "assets/icons/abilities/godie-emns.w.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n夜神月越了解死神界和筆記本的規則，越能掌控全局，將這份知識化為智慧7點。",
+      "description": "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
       "slot": "W",
       "castType": "self",
-      "maxRank": 5,
+      "maxRank": 4,
       "cooldown": [
-        0.0,
         0.0,
         0.0,
         0.0,
@@ -116,12 +100,11 @@
         0.0,
         0.0,
         0.0,
-        0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.void.pulse",
       "passive": {
         "name": "44-02 死神的規則",
         "ranks": [
@@ -130,12 +113,7 @@
               {
                 "stat": "ap",
                 "op": "flat",
-                "value": 35
-              },
-              {
-                "stat": "maxMana",
-                "op": "flat",
-                "value": 105
+                "value": 7
               }
             ]
           },
@@ -144,12 +122,7 @@
               {
                 "stat": "ap",
                 "op": "flat",
-                "value": 35
-              },
-              {
-                "stat": "maxMana",
-                "op": "flat",
-                "value": 105
+                "value": 12
               }
             ]
           },
@@ -158,12 +131,7 @@
               {
                 "stat": "ap",
                 "op": "flat",
-                "value": 35
-              },
-              {
-                "stat": "maxMana",
-                "op": "flat",
-                "value": 105
+                "value": 17
               }
             ]
           },
@@ -172,37 +140,19 @@
               {
                 "stat": "ap",
                 "op": "flat",
-                "value": 35
-              },
-              {
-                "stat": "maxMana",
-                "op": "flat",
-                "value": 105
-              }
-            ]
-          },
-          {
-            "modifiers": [
-              {
-                "stat": "ap",
-                "op": "flat",
-                "value": 35
-              },
-              {
-                "stat": "maxMana",
-                "op": "flat",
-                "value": 105
+                "value": 22
               }
             ]
           }
         ]
-      }
+      },
+      "icon": "assets/icons/abilities/godie-emns.w.webp",
+      "vfxKey": "fx.prim.void.pulse"
     },
     "E": {
       "id": "godie-emns.e",
       "name": "44-03 火車輾過",
-      "icon": "assets/icons/abilities/godie-emns.e.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n被死神之眼鎖定的部隊身旁將會出現莫名其妙的火車撞上，使附近的敵方部隊受到650點的劇烈傷害。",
+      "description": "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
       "slot": "E",
       "castType": "ground",
       "maxRank": 4,
@@ -214,29 +164,23 @@
       ],
       "manaCost": [
         150.0,
-        200.0,
         250.0,
-        300.0
+        350.0,
+        450.0
       ],
-      "range": 0.0,
-      "effects": [],
-      "vfxKey": "fx.prim.physical.shockwave",
-      "sfxKey": "wc3.rokhanwhat2",
+      "range": 12.0,
+      "radiusTier": "大",
       "targetsEnemies": true,
-      "radius": 1.5,
-      "castTimeSec": 0.6,
-      "template": {
-        "ref": "tpl-orbit-array",
-        "params": {
-          "rayCount": 12,
-          "reach": 82,
-          "aim": "inward",
-          "damage": {
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
             "perRank": [
-              650,
-              750,
-              850,
-              950
+              650.0,
+              750.0,
+              850.0,
+              950.0
             ],
             "ratios": [
               {
@@ -245,55 +189,61 @@
               }
             ]
           },
-          "damageType": "magic",
-          "castTimeSec": 0.6
+          "radius": 6.0,
+          "radiusTier": "大",
+          "maxTargets": 6,
+          "includeOrigin": true
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.e.webp",
+      "vfxKey": "fx.prim.physical.shockwave",
+      "sfxKey": "wc3.rokhanwhat2",
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-emns.r",
       "name": "44-04 心臟麻痺",
-      "icon": "assets/icons/abilities/godie-emns.r.webp",
-      "description": "[主動攻擊]\n45秒冷卻時間\n\n被死神之眼指定的人將會心臟麻痺，短時間內將會行動緩慢以及喪失(目標生命上限)*15%+450點生命並使動作緩慢持續5秒。",
+      "description": "[主動][AP加成]\n35秒冷卻\n消耗MP150/250/350\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
       "slot": "R",
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        35.0,
+        35.0,
+        35.0
       ],
       "manaCost": [
         150.0,
         250.0,
         350.0
       ],
-      "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.prim.void.nova-lg",
-      "sfxKey": "wc3.gruntyesattack3",
+      "range": 12.0,
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              450.0,
-              450.0,
-              450.0
-            ],
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 50.0,
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.7
+                "coeff": 0.4
               }
             ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.5
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 5.0,
+          "moveSpeedMult": 0.5
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-emns.r.webp",
+      "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.gruntyesattack3",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

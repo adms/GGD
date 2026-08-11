@@ -1,48 +1,58 @@
 {
   "id": "godie-emfr.q",
-  "name": "15-01 風精召喚",
-  "icon": "assets/icons/abilities/godie-emfr.q.webp",
-  "description": "[主動攻擊]\n40秒冷卻時間\n\n集合3個風的中等精靈幫助召喚者攻擊敵人，每單位風之精靈造成155點傷害。",
+  "schema": "ability@1",
+  "name": "15-01 雷神槍「巨神殺手」",
+  "description": "[主動][指向][範圍][AP加成]\n30秒冷卻\n消耗[MP] 175/275/375/475\n施法距離6.42\n\n「千之雷是頂級魔法，但我還可以開掛」\n對[前方]一[直線]敵方單位造成 250/350/450/550 +30% [AP]傷害，附帶麻痺 [緩慢] [移動速度]，持續1秒",
   "slot": "Q",
-  "castType": "targeted",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    40.0,
-    40.0,
-    40.0,
-    40.0
+    30.0,
+    30.0,
+    30.0,
+    30.0
   ],
   "manaCost": [
-    75.0,
-    125.0,
     175.0,
-    225.0
+    275.0,
+    375.0,
+    475.0
   ],
   "range": 6.42,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          155.0,
-          155.0,
-          155.0,
-          155.0
+          250.0,
+          350.0,
+          450.0,
+          550.0
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.6
+            "coeff": 0.3
           }
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.4
+      "length": 6.42,
+      "width": 1.6,
+      "aim": "target",
+      "fromCaster": true,
+      "maxTargets": 5,
+      "includeOrigin": false
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.0,
+      "moveSpeedMult": 0.5
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-emfr.q.webp",
   "vfxKey": "fx.prim.wind.tornado",
-  "targetsEnemies": true,
-  "schema": "ability@1",
   "castTimeSec": 0.4
 }

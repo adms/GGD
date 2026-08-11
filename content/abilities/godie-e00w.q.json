@@ -1,36 +1,36 @@
 {
   "id": "godie-e00w.q",
+  "schema": "ability@1",
   "name": "77-01 百烈櫻華斬",
-  "icon": "assets/icons/abilities/godie-e00w.q.webp",
-  "description": "[主動攻擊]\n40秒冷卻時間\n\n用劍捲起一陣由內往外的旋風，給予複數敵人200點傷害，並暈眩1秒，擊退1000距離。",
+  "description": "[主動][範圍][擊退][AD加成]\n40秒冷卻\n消耗MP75/110/145/180\n有效半徑6\n\n「我的劍，成為了守護之風」\n用劍捲起一陣由內往外的旋風，給予[周圍]敵人200/300/400/500+50% [AD]點傷害，並[擊退]一段距離。",
   "slot": "Q",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    40,
-    40,
-    40,
-    40
+    40.0,
+    40.0,
+    40.0,
+    40.0
   ],
   "manaCost": [
-    75,
-    110,
-    145,
-    180
+    75.0,
+    110.0,
+    145.0,
+    180.0
   ],
-  "range": 0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-proxy-cast",
-    "params": {
-      "anchor": "point",
-      "radius": 327,
-      "damage": {
+  "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
         "perRank": [
-          200,
-          300,
-          400,
-          500
+          200.0,
+          300.0,
+          400.0,
+          500.0
         ],
         "ratios": [
           {
@@ -39,16 +39,20 @@
           }
         ]
       },
-      "damageType": "physical",
-      "castTimeSec": 0.7,
-      "statusId": "burnstun",
-      "statusDurationSec": 0.8
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "knockback",
+      "distance": 3.0,
+      "speed": 15.0,
+      "from": "caster"
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-e00w.q.webp",
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.darksummoninglaunch1",
-  "targetsEnemies": true,
-  "radius": 6,
-  "schema": "ability@1",
-  "castTimeSec": 0.7
+  "castTimeSec": 0.4
 }

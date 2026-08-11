@@ -116,12 +116,17 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     expect(delta(7.5)).toBeCloseTo(300, 6);
   });
 
-  it("出貨預設就是 300 生命,而且只有生命 —— 其餘 15 項都是 0", () => {
+  it("出貨預設只有生命與魔力兩項 —— 其餘 14 項都是 0", () => {
     cover("balance-265-default-table");
-    // 寫死 300:引用常數的話,把常數改成 0 的變異會讓期望值跟著溜走。
+    // ⚠️ 2026-08-12 從「只有生命」變成「生命 + 魔力」。owner：「統一全英雄初始
+    //    MP +600（後台倍率預設值可改），連帶熊貓+1000 也被回歸校正用統一做法就好」。
+    //    ⭐ 這條守衛的牙齒**不在**那兩個數字上，在「**其餘全部是 0**」那一圈 ——
+    //    它擋的是「有人順手在這張表上多塞一項全域加成而沒有人發現」。
+    // 寫死數字:引用常數的話,把常數改成 0 的變異會讓期望值跟著溜走。
     expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxHealth)).toBe(650);
+    expect(baseBonusFor(DEFAULT_BASE_BONUS, Stat.MaxMana)).toBe(600);
     for (const stat of ALL_STATS) {
-      if (stat === Stat.MaxHealth) continue;
+      if (stat === Stat.MaxHealth || stat === Stat.MaxMana) continue;
       expect(baseBonusFor(DEFAULT_BASE_BONUS, stat), `${stat} 不該有加成`).toBe(0);
     }
   });

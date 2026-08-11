@@ -1,50 +1,48 @@
 {
   "id": "godie-hapm.r",
+  "schema": "ability@1",
   "name": "52-04 巨神一擊",
-  "icon": "assets/icons/abilities/godie-hapm.r.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
+  "description": "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
   "slot": "R",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    120.0,
+    120.0,
+    120.0
   ],
   "manaCost": [
-    200.0,
-    360.0,
-    520.0
+    400.0,
+    600.0,
+    800.0
   ],
-  "range": 11.0,
+  "range": 0.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 24.0,
+      "maxDistance": 5.0
+    },
+    {
+      "kind": "damageArea",
       "damageType": "physical",
       "amount": {
         "perRank": [
-          600,
-          1000,
-          1400
-        ],
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.6
-          }
+          600.0,
+          1000.0,
+          1400.0
         ]
-      }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow25",
-      "duration": 1.5,
-      "moveSpeedMult": 0.6
+      },
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
     }
   ],
+  "icon": "assets/icons/abilities/godie-hapm.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
-  "targetsEnemies": true,
-  "radius": 6.0,
-  "schema": "ability@1",
-  "castTimeSec": 0.8
+  "castTimeSec": 0.3
 }

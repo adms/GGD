@@ -1,8 +1,8 @@
 {
   "id": "godie-emns.e",
+  "schema": "ability@1",
   "name": "44-03 火車輾過",
-  "icon": "assets/icons/abilities/godie-emns.e.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n被死神之眼鎖定的部隊身旁將會出現莫名其妙的火車撞上，使附近的敵方部隊受到650點的劇烈傷害。",
+  "description": "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
   "slot": "E",
   "castType": "ground",
   "maxRank": 4,
@@ -14,24 +14,23 @@
   ],
   "manaCost": [
     150.0,
-    200.0,
     250.0,
-    300.0
+    350.0,
+    450.0
   ],
-  "range": 0.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-orbit-array",
-    "params": {
-      "rayCount": 12,
-      "reach": 82,
-      "aim": "inward",
-      "damage": {
+  "range": 12.0,
+  "radiusTier": "大",
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          650,
-          750,
-          850,
-          950
+          650.0,
+          750.0,
+          850.0,
+          950.0
         ],
         "ratios": [
           {
@@ -40,14 +39,14 @@
           }
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.6
+      "radius": 6.0,
+      "radiusTier": "大",
+      "maxTargets": 6,
+      "includeOrigin": true
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-emns.e.webp",
   "vfxKey": "fx.prim.physical.shockwave",
   "sfxKey": "wc3.rokhanwhat2",
-  "targetsEnemies": true,
-  "radius": 1.5,
-  "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.4
 }

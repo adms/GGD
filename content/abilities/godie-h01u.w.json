@@ -1,49 +1,62 @@
 {
   "id": "godie-h01u.w",
+  "schema": "ability@1",
   "name": "80-02 弒鬼神",
-  "icon": "assets/icons/abilities/godie-h01u.w.webp",
-  "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成直線450距離敵方部隊150點傷害。",
+  "description": "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
   "slot": "W",
-  "castType": "skillshot",
-  "maxRank": 5,
+  "castType": "self",
+  "maxRank": 4,
   "cooldown": [
-    35.0,
-    35.0,
-    35.0,
-    35.0,
-    35.0
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    50.0,
-    85.0,
-    120.0,
-    120.0,
-    120.0
+    90.0,
+    180.0,
+    270.0,
+    360.0
   ],
-  "range": 11.0,
+  "range": 0.0,
+  "radiusTier": "中",
+  "targetsEnemies": true,
   "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          120.0,
+          220.0,
+          320.0,
+          420.0
+        ]
+      },
+      "radius": 4.5,
+      "radiusTier": "中",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "knockback",
+      "distance": 2.5,
+      "speed": 15.0,
+      "from": "caster"
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "armor-break",
+      "duration": 1.0
+    },
     {
       "kind": "spawnProjectile",
       "projectileId": "imported.wave.physical",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              0.0,
-              0.0
-            ]
-          }
-        }
-      ]
+      "onHit": []
     }
   ],
+  "icon": "assets/icons/abilities/godie-h01u.w.webp",
   "vfxKey": "fx.prim.physical.slash",
   "sfxKey": "wc3.defendcaster",
-  "schema": "ability@1",
   "castTimeSec": 0.4
 }

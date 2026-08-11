@@ -1,10 +1,10 @@
 {
   "id": "godie-emfr.r",
-  "name": "15-04 千之雷",
-  "icon": "assets/icons/abilities/godie-emfr.r.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n千之雷是涅吉。史普林，威力最強大的雷系魔法，缺點是念咒時間長，可以讓敵人850點的瑪那瞬間大量流失在電擊之中，魔力越多傷害亦越大，並造成周圍智慧*5點傷害。",
+  "schema": "ability@1",
+  "name": "15-04 雷天大壯。貳式",
+  "description": "[主動][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 200/400/600\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 150/225/300 + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
   "slot": "R",
-  "castType": "skillshot",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
     60.0,
@@ -12,31 +12,70 @@
     60.0
   ],
   "manaCost": [
-    100.0,
-    180.0,
-    260.0
+    200.0,
+    400.0,
+    600.0
   ],
-  "range": 14.0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctMult",
+          "value": 1.0
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "as",
+          "op": "capRaise",
+          "value": 10.0
+        }
+      ],
+      "duration": 12.0
+    },
     {
       "kind": "spawnProjectile",
       "projectileId": "imported.bolt.lightning",
-      "onHit": [
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              850.0,
-              1450.0,
-              2050.0
-            ]
-          }
-        }
-      ]
+      "onHit": []
     }
   ],
+  "passive": {
+    "name": "15-04 雷天大壯。貳式",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "consumeOn": "fire",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 150.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 0.7
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-emfr.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.7
+  "castTimeSec": 0.4
 }

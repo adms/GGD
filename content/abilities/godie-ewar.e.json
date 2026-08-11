@@ -1,51 +1,191 @@
 {
   "id": "godie-ewar.e",
-  "name": "12-03 破凰之心-徒手空破山",
-  "description": "[輔助]\n45秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+  "schema": "ability@1",
+  "name": "12-03 破凰之心。空破山",
+  "description": "[被動][暴擊][機率][普攻時][AP加成]\n\n「放下屠刀，換把手槍」\n[每次攻擊]有10%[機率]造成1.1/2.2/3.3/4.4倍的[暴擊]傷害且敵人身上有[混亂]標記時，額外造成 100% [AP]傷害。",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    45.0,
-    45.0,
-    45.0,
-    45.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    225.0,
-    300.0,
-    375.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 11.0,
-  "effects": [
-    {
-      "kind": "championForm",
-      "to": "alternate",
-      "durationSec": 12.0
-    },
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200
-        ],
-        "ratios": [
+  "range": 0.0,
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "12-03 破凰之心。空破山",
+    "ranks": [
+      {
+        "modifiers": [
           {
-            "stat": "ap",
-            "coeff": 0.6
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.1
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 1.1
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.1
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 2.2
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.1
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 3.3
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "critChance",
+            "op": "flat",
+            "value": 0.1
+          },
+          {
+            "stat": "critDamage",
+            "op": "override",
+            "value": 4.4
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       }
-    }
-  ],
+    ]
+  },
   "vfxKey": "fx.prim.ki.pulse-sm",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-ewar.e.png",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-ewar.e.png"
 }

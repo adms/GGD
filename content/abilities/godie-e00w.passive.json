@@ -2,42 +2,62 @@
   "id": "godie-e00w.passive",
   "schema": "ability@1",
   "name": "77-00 浮雲-旋一閃",
-  "icon": "assets/icons/abilities/godie-e00w.passive.webp",
-  "description": "[主動攻擊]\n15秒冷卻時間\n\n神鳴流的體術招式之一，閃過敵人攻擊，抓住對手後，旋轉拋摔。（每次發動限一人且為英雄）持續時間0.5秒，造成250+敏捷*5點傷害。",
+  "description": "[被動][機率][迴避][迴避時][旋轉][暈眩]\n30秒冷卻\n\n「少女的雙腿就是你的墓穴」\n有10%[機率][迴避]物理攻擊；[迴避]成功後發動，雙腿抓住對手[旋轉]拋摔，造成250+[敏捷]*5點傷害並[暈眩]2秒。",
   "slot": "PASSIVE",
-  "innateKind": "active",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    15.0
+    30.0
   ],
   "manaCost": [
-    150.0
+    0.0
   ],
-  "range": 0,
-  "radius": 3.67,
-  "targetsEnemies": true,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "flat": 250.0,
-        "ratios": [
+  "range": 0.0,
+  "innateKind": "passive",
+  "targetsEnemies": false,
+  "effects": [],
+  "passive": {
+    "name": "77-00 浮雲-旋一閃",
+    "ranks": [
+      {
+        "modifiers": [
           {
-            "stat": "ap",
-            "coeff": 0.5
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.1
+          }
+        ],
+        "hooks": [
+          {
+            "on": "onEvade",
+            "target": "event",
+            "internalCooldown": 30.0,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 250.0,
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 2.0,
+                "stun": true
+              }
+            ]
           }
         ]
       }
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "burnstun",
-      "duration": 0.5,
-      "stun": true
-    }
-  ],
-  "vfxKey": "fx.prim.wind.tornado",
-  "castTimeSec": 0.3
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-e00w.passive.webp",
+  "vfxKey": "fx.prim.wind.tornado"
 }

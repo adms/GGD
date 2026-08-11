@@ -53,6 +53,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, readFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { CHAMPION_FORM_PAIRS } from "./championForms";
+import { retiredChampionIdsFromDoc } from "./championRetirement";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -71,9 +73,11 @@ function docs(collection: string): Doc[] {
  * halves share a `modelKey` and no `form-visuals` entry gives the body a tint
  * or a scale of its own. Keyed by the ALTERNATE, matching form-visuals itself.
  *
- * 19 entries: the 18 wired in this pass (all but 20 Saber, which already has a
- * form-visuals entry) plus 70 紮根, which was ALREADY shipped invisible before
- * this pass and which nothing was measuring — this suite found it, not a human.
+ * 18 entries: the 17 still wired (of the 18 this pass wired — 20 Saber already
+ * had a form-visuals entry, and 12 天地志狼 lost its entry ability entirely when
+ * owner 2026-08-12 ruled 「刻意減少變身」) plus 70 紮根, which was ALREADY shipped
+ * invisible before this pass and which nothing was measuring — this suite found
+ * it, not a human.
  *
  * None of these is a bug in the transform: the swap and the stat sheet are
  * correct. They are art debt, and until it is paid the player feels the numbers
@@ -84,7 +88,14 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   "godie-e00n", // 22 龍宮禮奈
   "godie-e00z", // 19 安云
   "godie-e00x", // 77 櫻綻剎那
-  "godie-e007", // 12 天地志狼
+  // owner 2026-08-12 裁決：「是的，我刻意減少變身的技能，減少額外設定開銷」——
+  // 舊行為 12 天地志狼 的 12-03 破凰之心 是一支 Metamorphosis，變身成 godie-e007，
+  // 而那個第二身體跟本體共用一顆 mesh，所以它欠一筆美術債；
+  // 新規格 12-03 是 [被動][暴擊][機率][普攻時][AP加成]，一個變身字都沒有 ——
+  // 這個變身**沒有入口了**，godie-e007 也已經進 roster.json 的 retiredChampions。
+  // 一筆沒有人會看到的美術債不是債，所以它從帳本上離開的方式是「不再 reachable」，
+  // 不是「有人畫了 form-visuals」。⚠️ 這一格由下面「the ledger is exact」把關：
+  // 12 的變身若哪天重新接上入口，它會立刻要求把這個 id 放回來。
   "godie-h01o", // 79 黑崎一護 卍解
   "godie-h02u", // 92 草泥馬 臥草
   "godie-h00w", // 26 鄭先生 洨者聖臨
@@ -158,11 +169,36 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
   it("finds the reachable transforms at all — vacuity guard", () => {
     cover("champion-form-visibility");
     const found = reachableTransforms();
-    // 26 w3x pairs exist; 61 鳳凰蛋 is deliberately unreachable (death-state
-    // morph, and `godie-u011` ships maxHealth -450). A floor, so the roster may
-    // grow, but a collapse to zero — the shape a broken resolver would take —
-    // fails here instead of making every assertion below vacuously pass.
-    expect(found.length).toBeGreaterThanOrEqual(25);
+    // The floor is DERIVED, never a copied literal: 26 w3x pairs, minus the ones
+    // shipped content says nobody can reach. Two ways a pair leaves that count,
+    // and both are read back out rather than written down:
+    //
+    //   · UNREACHABLE_BY_DESIGN — 61 鳳凰蛋 is a death-state morph with no trigger
+    //     ability at all (task #119 owns it); `godie-u011` even ships maxHealth
+    //     -450, so it is not a body anyone is meant to walk around in.
+    //   · RETIRED — owner 2026-08-12 裁決:「是的，我刻意減少變身的技能，減少額外
+    //     設定開銷」—— 舊行為 12-03 破凰之心 was a Metamorphosis into godie-e007,
+    //     新規格 12-03 是 [被動][暴擊][機率][普攻時][AP加成]，所以那個變身沒有
+    //     入口了，而 e007 進了 roster.json 的 retiredChampions。
+    //
+    // Written as a floor (the roster may grow a transform that is not a w3x
+    // pair), but the interesting failure is downward: un-retire e007 without
+    // giving 12 an entry ability again and this goes red instead of every
+    // assertion below quietly passing on a shrunken set.
+    const retired = retiredChampionIdsFromDoc(
+      JSON.parse(readFileSync(join(CONTENT_DIR, "config/roster.json"), "utf-8")),
+    );
+    const UNREACHABLE_BY_DESIGN: ReadonlySet<string> = new Set(["godie-u011"]);
+    const expectedReachable = CHAMPION_FORM_PAIRS.filter(
+      (p) =>
+        !UNREACHABLE_BY_DESIGN.has(p.alternateId) &&
+        !retired.has(p.alternateId) &&
+        !retired.has(p.baseId),
+    ).length;
+    expect(expectedReachable, "the pair table or the retirement list has collapsed").toBeGreaterThan(
+      20,
+    );
+    expect(found.length).toBeGreaterThanOrEqual(expectedReachable);
     expect(found.every((r) => r.baseId !== "" && r.altId !== "")).toBe(true);
   });
 

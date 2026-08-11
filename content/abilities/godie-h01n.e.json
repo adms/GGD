@@ -1,10 +1,10 @@
 {
   "id": "godie-h01n.e",
+  "schema": "ability@1",
   "name": "79-03 月牙天衝",
-  "icon": "assets/icons/abilities/godie-h01n.e.webp",
-  "description": "[主動攻擊]\n55秒冷卻時間\n\n讓斬月吸收靈力的力量，再由刀尖放出超高密度靈壓的斬擊，造成一直線上的敵方部隊受到450傷害。\n在卍解狀態下轉變為黑色月牙，傷害加成250",
+  "description": "[主動][指向][範圍][AP加成]\n55秒冷卻\n消耗MP250/350/450/550\n施法距離11\n\n「月牙天衝！招式喊得越大聲，傷害就越強大」\n造成一[直線]上的敵方部隊受到450/600/750/900傷害。\n(若對方在 [破魔] 狀態，則額外造成 60% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 120% [AP])",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
     55.0,
@@ -13,36 +13,34 @@
     55.0
   ],
   "manaCost": [
-    150.0,
-    200.0,
     250.0,
-    300.0
+    350.0,
+    450.0,
+    550.0
   ],
   "range": 11.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          450,
-          600,
-          750,
-          900
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
+          450.0,
+          600.0,
+          750.0,
+          900.0
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.5
+      "length": 11,
+      "width": 2.0,
+      "aim": "target",
+      "fromCaster": true,
+      "maxTargets": 5,
+      "includeOrigin": false
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-h01n.e.webp",
   "vfxKey": "fx.prim.void.beam",
-  "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.4
 }

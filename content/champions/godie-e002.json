@@ -52,8 +52,7 @@
     "Q": {
       "id": "godie-e002.q",
       "name": "20-02 感知能力",
-      "icon": "assets/icons/abilities/godie-e002.q.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
+      "description": "[被動][迴避][機率]\n0秒冷卻\n\n「你的魔力流向了我」\n感應魔力流向，進而有6/12/18/24%[機率][迴避]物理([AD])攻擊。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 4,
@@ -69,9 +68,9 @@
         0.0,
         0.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [],
-      "vfxKey": "fx.prim.holy.pulse-sm",
       "passive": {
         "name": "20-02 感知能力",
         "ranks": [
@@ -80,7 +79,7 @@
               {
                 "stat": "evasion",
                 "op": "flat",
-                "value": 0.07
+                "value": 0.06
               }
             ]
           },
@@ -89,7 +88,7 @@
               {
                 "stat": "evasion",
                 "op": "flat",
-                "value": 0.14
+                "value": 0.12
               }
             ]
           },
@@ -98,7 +97,7 @@
               {
                 "stat": "evasion",
                 "op": "flat",
-                "value": 0.21
+                "value": 0.18
               }
             ]
           },
@@ -107,32 +106,36 @@
               {
                 "stat": "evasion",
                 "op": "flat",
-                "value": 0.28
+                "value": 0.24
               }
             ]
           }
         ]
-      }
+      },
+      "icon": "assets/icons/abilities/godie-e002.q.webp",
+      "vfxKey": "fx.prim.holy.pulse-sm"
     },
     "W": {
       "id": "godie-e002.w",
       "name": "20-01 風王結界",
-      "icon": "assets/icons/abilities/godie-e002.w.webp",
-      "description": "[切換] 開關型 · 冷卻 12 秒 · 開關本身不花半點法力\n\nSaber 把周圍的大氣捏成一件透明雨衣穿在身上——別人看不見，所以每次她砍完人都要自己補一句「那是風」。\n\n開啟後，她的每一次普通攻擊都會多刮一刀：額外造成 10 + 攻擊力×0.5 的魔法傷害（法球效應，只吃普攻，技能沒份）。\n代價是每刮一刀就從自己身上抽走 30 點法力，一刀一刀刮，刮到見底為止。\n\n法力剩不到 30 點時，風會很有禮貌地不出現：攻擊照樣打出去、照樣算傷害，只是那一下變回一把很普通的劍——它不會擋住你的普攻，只是不再附贈。\n\n再按一次 W 收工。倒地時也會自動收工（風也是要下班的）。",
+      "description": "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
       "slot": "W",
       "castType": "self",
-      "maxRank": 3,
+      "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0
+        60.0,
+        60.0,
+        60.0,
+        60.0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        50.0,
+        100.0,
+        150.0,
+        200.0
       ],
-      "range": 0,
+      "range": 0.0,
+      "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
@@ -144,6 +147,18 @@
         "ranks": [
           {
             "whileForm": "alternate",
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 1.0
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 1.4
+              }
+            ],
             "hooks": [
               {
                 "on": "onBasicAttack",
@@ -160,7 +175,7 @@
                   {
                     "kind": "spendMana",
                     "amount": {
-                      "flat": 30
+                      "flat": 30.0
                     },
                     "applyTo": "self"
                   },
@@ -168,7 +183,160 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10,
+                      "flat": 10.0,
+                      "ratios": [
+                        {
+                          "stat": "ad",
+                          "coeff": 0.5
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "whileForm": "alternate",
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 1.0
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 1.6
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 50
+                },
+                "effects": [
+                  {
+                    "kind": "spendMana",
+                    "amount": {
+                      "flat": 50.0
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 10.0,
+                      "ratios": [
+                        {
+                          "stat": "ad",
+                          "coeff": 0.5
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "whileForm": "alternate",
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 1.0
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 1.8
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 70
+                },
+                "effects": [
+                  {
+                    "kind": "spendMana",
+                    "amount": {
+                      "flat": 70.0
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 10.0,
+                      "ratios": [
+                        {
+                          "stat": "ad",
+                          "coeff": 0.5
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "whileForm": "alternate",
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 1.0
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 2.0
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 90
+                },
+                "effects": [
+                  {
+                    "kind": "spendMana",
+                    "amount": {
+                      "flat": 90.0
+                    },
+                    "applyTo": "self"
+                  },
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 10.0,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -183,16 +351,28 @@
           }
         ]
       },
+      "toggle": {
+        "upkeepCadence": "none",
+        "upkeepCost": [
+          0
+        ],
+        "onExit": [
+          {
+            "kind": "championForm",
+            "to": "toggle"
+          }
+        ]
+      },
+      "icon": "assets/icons/abilities/godie-e002.w.webp",
       "vfxKey": "fx.prim.wind.tornado",
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-e002.e",
       "name": "20-03 約束與勝利之劍",
-      "icon": "assets/icons/abilities/godie-e002.e.webp",
-      "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
+      "description": "[主動][指向][範圍][AP加成]\n60秒冷卻 吟唱1秒\n消耗[MP] 250/350/450/550\n施法距離14\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 350/550/750/950 + 100% [AP]點傷害。",
       "slot": "E",
-      "castType": "skillshot",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -201,15 +381,46 @@
         60.0
       ],
       "manaCost": [
-        150.0,
         250.0,
         350.0,
-        450.0
+        450.0,
+        550.0
       ],
       "range": 14.0,
-      "effects": [],
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageLine",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350.0,
+              550.0,
+              750.0,
+              950.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "length": 14,
+          "width": 2.0,
+          "aim": "target",
+          "fromCaster": true,
+          "maxTargets": 5,
+          "includeOrigin": false
+        },
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": []
+        }
+      ],
+      "icon": "assets/icons/abilities/godie-e002.e.webp",
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
-      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 6,
@@ -217,40 +428,21 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1.0,
+          1,
           0.95,
           0.72
         ],
         "flashMs": 132,
         "camKick": 0.33
       },
-      "template": {
-        "ref": "tpl-line-sweep",
-        "params": {
-          "segmentCount": 6,
-          "stepSize": 200,
-          "segmentAoe": 400,
-          "damage": {
-            "perRank": [
-              250,
-              400,
-              550,
-              700
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.5
-        }
-      },
-      "targetsEnemies": true
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-e002.r",
       "name": "20-04 Avalon-永恆的理想鄉",
-      "icon": "assets/icons/abilities/godie-e002.r.webp",
-      "description": "[輔助]\n60秒冷卻時間\n\nSaber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使Saber在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，基礎威力為等級*30+力量*5，聚集的敵人越多和敵方技能越高，額外的傷害就越高，承受時間2秒。",
+      "description": "[主動][輔助][反彈][AP加成]\n60秒冷卻\n消耗MP150/250/350\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",
       "slot": "R",
-      "castType": "ground",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -263,32 +455,17 @@
         350.0
       ],
       "range": 0.0,
-      "effects": [],
-      "vfxKey": "fx.prim.holy.nova-lg",
-      "targetsEnemies": true,
-      "radius": 3.67,
-      "castTimeSec": 0.6,
-      "template": {
-        "ref": "tpl-ground-nova",
-        "params": {
-          "radius": 200,
-          "damage": {
-            "perRank": [
-              250,
-              500,
-              750
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.6
-              }
-            ]
-          },
-          "damageType": "physical",
-          "castTimeSec": 0.6
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 2.0
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-e002.r.webp",
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

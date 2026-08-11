@@ -2,41 +2,108 @@
   "id": "godie-e00r.e",
   "schema": "ability@1",
   "name": "59-03 AT力場",
-  "icon": "assets/icons/abilities/godie-e00r.e.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n一個被稱為神的聖域的力場，有40%降低所有施加在初號機身上的傷害35點。",
+  "description": "[被動][週期][護盾]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。",
   "slot": "E",
   "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 8,
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": 20
-        }
-      ],
-      "castTimeSec": 0.3
-    }
+  "passive": {
+    "name": "59-03 AT力場",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "internalCooldown": 8.0,
+            "target": "self",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 150.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "internalCooldown": 8.0,
+            "target": "self",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 250.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "internalCooldown": 8.0,
+            "target": "self",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 350.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onInterval",
+            "internalCooldown": 8.0,
+            "target": "self",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 450.0
+                },
+                "duration": 8.0,
+                "absorbs": "magic"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
+  "icon": "assets/icons/abilities/godie-e00r.e.webp",
   "vfxKey": "fx.w3x.particle.heroeva01s2.p01",
-  "castTimeSec": 0.3,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 5,

@@ -1,46 +1,58 @@
 {
   "id": "godie-e002.e",
+  "schema": "ability@1",
   "name": "20-03 約束與勝利之劍",
-  "icon": "assets/icons/abilities/godie-e002.e.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
+  "description": "[主動][指向][範圍][AP加成]\n60秒冷卻 吟唱1秒\n消耗[MP] 250/350/450/550\n施法距離14\n\n「放了這招我就要補魔了」\n它會將所有者的魔力轉換成光後收束，對[前方][直線]敵人造成 350/550/750/950 + 100% [AP]點傷害。",
   "slot": "E",
-  "castType": "skillshot",
+  "castType": "ground",
   "maxRank": 4,
   "cooldown": [
-    60,
-    60,
-    60,
-    60
+    60.0,
+    60.0,
+    60.0,
+    60.0
   ],
   "manaCost": [
-    150,
-    250,
-    350,
-    450
+    250.0,
+    350.0,
+    450.0,
+    550.0
   ],
-  "range": 14,
-  "effects": [],
-  "template": {
-    "ref": "tpl-line-sweep",
-    "params": {
-      "segmentCount": 6,
-      "stepSize": 200,
-      "segmentAoe": 400,
-      "damage": {
+  "range": 14.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damageLine",
+      "damageType": "magic",
+      "amount": {
         "perRank": [
-          250,
-          400,
-          550,
-          700
+          350.0,
+          550.0,
+          750.0,
+          950.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
         ]
       },
-      "damageType": "magic",
-      "castTimeSec": 0.5
+      "length": 14,
+      "width": 2.0,
+      "aim": "target",
+      "fromCaster": true,
+      "maxTargets": 5,
+      "includeOrigin": false
+    },
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": []
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-e002.e.webp",
   "vfxKey": "fx.w3x.particle.holyawakening.p04",
-  "schema": "ability@1",
-  "castTimeSec": 0.5,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 6,
@@ -55,5 +67,5 @@
     "flashMs": 132,
     "camKick": 0.33
   },
-  "targetsEnemies": true
+  "castTimeSec": 0.4
 }

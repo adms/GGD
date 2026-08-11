@@ -2,15 +2,14 @@
   "id": "godie-e00s.r",
   "schema": "ability@1",
   "name": "70-04 千年練成",
-  "icon": "assets/icons/abilities/godie-e00s.r.webp",
-  "description": "[主動攻擊]\n70秒冷卻時間\n\n在指定範圍內招喚樹精並且在短時間練成千年的魔力，總共4棵樹精，每棵樹精誕生時可以造成180點傷害。",
+  "description": "[主動][AP加成][指定][範圍][召喚]\n90秒冷卻\n消耗[MP] 240/420/600\n施法距離14\n\n「想到以前某個夜晚一隻大貓跟兩個蘿莉一直要我下面長大呢」\n在[周圍][範圍]隨機[招喚]樹精，練成千年的魔力爆發，總共4/6/8棵樹精，每棵樹精造成 250/350/450 + 30% [AP] [範圍]傷害，若是被[定身]的狀態，則傷害加倍。",
   "slot": "R",
-  "castType": "targeted",
+  "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    70.0,
-    70.0,
-    70.0
+    90.0,
+    90.0,
+    90.0
   ],
   "manaCost": [
     240.0,
@@ -18,28 +17,47 @@
     600.0
   ],
   "range": 14.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-single-strike",
-    "params": {
-      "damage": {
-        "perRank": [
-          180.0,
-          180.0,
-          180.0
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.7
-          }
-        ]
-      },
-      "damageType": "magic",
-      "castTimeSec": 0.4
-    }
-  },
-  "vfxKey": "fx.prim.arcane.nova-lg",
+  "radiusTier": "大",
   "targetsEnemies": true,
-  "castTimeSec": 0.4
+  "effects": [
+    {
+      "kind": "randomArea",
+      "who": "self",
+      "count": [
+        4,
+        6,
+        8
+      ],
+      "intervalSec": 0.25,
+      "scatterRadius": 6.0,
+      "firstAtCast": true,
+      "stopOnCasterDeath": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          },
+          "radius": 3.0,
+          "radiusTier": "小",
+          "maxTargets": 6,
+          "includeOrigin": true
+        }
+      ]
+    }
+  ],
+  "icon": "assets/icons/abilities/godie-e00s.r.webp",
+  "vfxKey": "fx.prim.arcane.nova-lg",
+  "castTimeSec": 0.5
 }

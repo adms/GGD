@@ -1,13 +1,12 @@
 {
   "id": "godie-ewar.q",
+  "schema": "ability@1",
   "name": "12-01 鬥仙術",
-  "icon": "assets/icons/abilities/godie-ewar.q.webp",
-  "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成150傷害的同時可以迷惑目標1秒。",
+  "description": "[主動][指定][混亂][AP加成]\n12秒冷卻\n消耗MP30/57/83/90\n施法距離4\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成150/283/350/350+60% [AP]傷害的同時可以[混亂]目標1秒。",
   "slot": "Q",
   "castType": "targeted",
-  "maxRank": 5,
+  "maxRank": 4,
   "cooldown": [
-    12.0,
     12.0,
     12.0,
     12.0,
@@ -15,12 +14,12 @@
   ],
   "manaCost": [
     30.0,
-    50.0,
-    70.0,
-    90.0,
+    57.0,
+    83.0,
     90.0
   ],
-  "range": 8.34,
+  "range": 4.0,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
@@ -28,8 +27,7 @@
       "amount": {
         "perRank": [
           150.0,
-          250.0,
-          350.0,
+          283.0,
           350.0,
           350.0
         ],
@@ -43,13 +41,13 @@
     },
     {
       "kind": "applyStatus",
-      "statusId": "slow25",
+      "statusId": "confusion",
       "duration": 1.0,
-      "moveSpeedMult": 0.6
+      "berserk": true,
+      "targetsAllies": true
     }
   ],
+  "icon": "assets/icons/abilities/godie-ewar.q.webp",
   "vfxKey": "fx.prim.ki.nova",
-  "targetsEnemies": true,
-  "schema": "ability@1",
   "castTimeSec": 0.3
 }

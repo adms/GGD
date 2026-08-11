@@ -2,16 +2,15 @@
   "id": "godie-e00s.e",
   "schema": "ability@1",
   "name": "70-03 木束縛之術",
-  "icon": "assets/icons/abilities/godie-e00s.e.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\n讓白木周圍的敵方都受到木靈束縛綑綁，持續1.5秒。",
+  "description": "[主動][範圍][定身]\n45秒冷卻\n消耗MP100/150/150/250\n\n「這個好像叫做...資本主義的豬？」\n讓白木[周圍][範圍]的敵方都受到木靈束縛綑綁，持續0.6/1.2/1.8/2.4秒。(敵方仍可施展技能與攻擊，僅不能移動)",
   "slot": "E",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 4,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    45.0,
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     100.0,
@@ -19,16 +18,29 @@
     150.0,
     250.0
   ],
-  "range": 11.0,
+  "range": 0.0,
+  "radiusTier": "中",
+  "targetsEnemies": true,
   "effects": [
+    {
+      "kind": "damageArea",
+      "damageType": "magic",
+      "amount": {
+        "flat": 1.0
+      },
+      "radius": 4.5,
+      "radiusTier": "中",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
     {
       "kind": "applyStatus",
       "statusId": "root",
-      "duration": 1.5,
+      "duration": 0.6,
       "root": true
     }
   ],
+  "icon": "assets/icons/abilities/godie-e00s.e.webp",
   "vfxKey": "fx.prim.nature.pulse-sm",
-  "targetsEnemies": true,
   "castTimeSec": 0.4
 }

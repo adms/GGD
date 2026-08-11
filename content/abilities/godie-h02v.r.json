@@ -1,53 +1,83 @@
 {
   "id": "godie-h02v.r",
+  "schema": "ability@1",
   "name": "92-04 馬勒戈壁",
-  "icon": "assets/icons/abilities/godie-h02v.r.webp",
-  "description": "[投影]\n75秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒奪取周圍英雄的黃金150並造成100傷害，持續6秒。",
+  "description": "[主動][範圍][AP加成]\n90秒冷卻\n消耗MP300/420/540\n\n「將自己的心靈內景具現化並覆蓋現實世界的強力魔術」\n將[周圍] [範圍] 敵人附加 [緩慢] 及 [致盲]，持續6秒。\n(攻擊身上有 [致盲] 標記的敵人將額外附加 100/200/300% [AP] 傷害)",
   "slot": "R",
   "castType": "self",
   "maxRank": 3,
   "cooldown": [
-    75.0,
-    75.0,
-    75.0
+    90.0,
+    90.0,
+    90.0
   ],
   "manaCost": [
     300.0,
     420.0,
     540.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "radiusTier": "超大",
+  "targetsEnemies": true,
   "effects": [
     {
-      "kind": "damage",
+      "kind": "damageArea",
       "damageType": "magic",
       "amount": {
-        "perRank": [
-          100.0,
-          200.0,
-          300.0
-        ],
-        "ratios": [
+        "flat": 1.0
+      },
+      "radius": 8.0,
+      "radiusTier": "超大",
+      "maxTargets": 6,
+      "includeOrigin": true
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 6.0,
+      "moveSpeedMult": 0.5
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "blind",
+      "duration": 6.0,
+      "missChance": 0.5
+    }
+  ],
+  "passive": {
+    "name": "92-04 馬勒戈壁",
+    "ranks": [
+      {
+        "hooks": [
           {
-            "stat": "ap",
-            "coeff": 0.3
+            "on": "onBasicAttack",
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 50.0,
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 1.0
+                    }
+                  ]
+                }
+              }
+            ]
           }
         ]
       }
-    },
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "duration": 3.0
-    }
-  ],
+    ]
+  },
+  "icon": "assets/icons/abilities/godie-h02v.r.webp",
   "vfxKey": "fx.prim.nature.pulse-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.5
 }

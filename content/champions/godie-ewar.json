@@ -52,13 +52,11 @@
     "Q": {
       "id": "godie-ewar.q",
       "name": "12-01 鬥仙術",
-      "icon": "assets/icons/abilities/godie-ewar.q.webp",
-      "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成150傷害的同時可以迷惑目標1秒。",
+      "description": "[主動][指定][混亂][AP加成]\n12秒冷卻\n消耗MP30/57/83/90\n施法距離4\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成150/283/350/350+60% [AP]傷害的同時可以[混亂]目標1秒。",
       "slot": "Q",
       "castType": "targeted",
-      "maxRank": 5,
+      "maxRank": 4,
       "cooldown": [
-        12.0,
         12.0,
         12.0,
         12.0,
@@ -66,12 +64,12 @@
       ],
       "manaCost": [
         30.0,
-        50.0,
-        70.0,
-        90.0,
+        57.0,
+        83.0,
         90.0
       ],
-      "range": 8.34,
+      "range": 4.0,
+      "targetsEnemies": true,
       "effects": [
         {
           "kind": "damage",
@@ -79,8 +77,7 @@
           "amount": {
             "perRank": [
               150.0,
-              250.0,
-              350.0,
+              283.0,
               350.0,
               350.0
             ],
@@ -94,22 +91,22 @@
         },
         {
           "kind": "applyStatus",
-          "statusId": "slow25",
+          "statusId": "confusion",
           "duration": 1.0,
-          "moveSpeedMult": 0.6
+          "berserk": true,
+          "targetsAllies": true
         }
       ],
+      "icon": "assets/icons/abilities/godie-ewar.q.webp",
       "vfxKey": "fx.prim.ki.nova",
-      "targetsEnemies": true,
       "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-ewar.w",
       "name": "12-02 仙氣．採藥",
-      "icon": "assets/icons/abilities/godie-ewar.w.webp",
-      "description": "[輔助]\n60秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+      "description": "[主動][輔助][治療][淨化]\n60秒冷卻，吟唱3秒\n消耗MP50/100/150/200\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
       "slot": "W",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
         60.0,
@@ -123,89 +120,225 @@
         150.0,
         200.0
       ],
-      "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.prim.ki.pulse-sm",
-      "targetsEnemies": true,
-      "castTimeSec": 0.4,
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.05,
+          "applyTo": "self"
+        },
+        {
+          "kind": "dispel",
+          "shape": "single",
+          "pools": {
+            "status": true,
+            "dot": true,
+            "buffs": true
           },
-          "damageType": "magic",
-          "castTimeSec": 0.4
+          "count": 9
         }
-      }
+      ],
+      "icon": "assets/icons/abilities/godie-ewar.w.webp",
+      "vfxKey": "fx.prim.ki.pulse-sm",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-ewar.e",
-      "name": "12-03 破凰之心-徒手空破山",
-      "description": "[輔助]\n45秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+      "name": "12-03 破凰之心。空破山",
+      "description": "[被動][暴擊][機率][普攻時][AP加成]\n\n「放下屠刀，換把手槍」\n[每次攻擊]有10%[機率]造成1.1/2.2/3.3/4.4倍的[暴擊]傷害且敵人身上有[混亂]標記時，額外造成 100% [AP]傷害。",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        225.0,
-        300.0,
-        375.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "range": 11.0,
-      "effects": [
-        {
-          "kind": "championForm",
-          "to": "alternate",
-          "durationSec": 12.0
-        },
-        {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
+      "range": 0.0,
+      "targetsEnemies": false,
+      "effects": [],
+      "passive": {
+        "name": "12-03 破凰之心。空破山",
+        "ranks": [
+          {
+            "modifiers": [
               {
-                "stat": "ap",
-                "coeff": 0.6
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.1
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 1.1
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.1
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 2.2
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.1
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 3.3
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "critChance",
+                "op": "flat",
+                "value": 0.1
+              },
+              {
+                "stat": "critDamage",
+                "op": "override",
+                "value": 4.4
+              }
+            ],
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "target": "event",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "flat": 50.0,
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             ]
           }
-        }
-      ],
+        ]
+      },
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ewar.e.png",
-      "castTimeSec": 0.4
+      "icon": "assets/icons/abilities/godie-ewar.e.png"
     },
     "R": {
       "id": "godie-ewar.r",
       "name": "12-04 龍氣爆發",
-      "description": "[主動傷害]\n60秒冷卻時間\n\n凝聚體內的龍氣造成550點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+      "description": "[主動][範圍][淨化][AP加成]\n60秒冷卻，吟唱2秒\n消耗MP250/350/450\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
       "slot": "R",
-      "castType": "targeted",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         60.0,
@@ -213,16 +346,46 @@
         60.0
       ],
       "manaCost": [
-        215.0,
-        280.0,
-        345.0
+        250.0,
+        350.0,
+        450.0
       ],
-      "range": 11.0,
-      "effects": [],
-      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+      "range": 0.0,
+      "radiusTier": "大",
       "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              550.0,
+              750.0,
+              950.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          },
+          "radius": 6.0,
+          "radiusTier": "大",
+          "maxTargets": 6,
+          "includeOrigin": true
+        },
+        {
+          "kind": "dispel",
+          "shape": "circle",
+          "radius": 6.0,
+          "radiusTier": "大",
+          "polarity": "buff",
+          "count": 2
+        }
+      ],
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "icon": "assets/icons/abilities/godie-ewar.r.png",
-      "castTimeSec": 0.6,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -237,26 +400,7 @@
         "flashMs": 178,
         "camKick": 0.446
       },
-      "template": {
-        "ref": "tpl-single-strike",
-        "params": {
-          "damage": {
-            "perRank": [
-              650.0,
-              950.0,
-              1250.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.7
-              }
-            ]
-          },
-          "damageType": "magic",
-          "castTimeSec": 0.6
-        }
-      }
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

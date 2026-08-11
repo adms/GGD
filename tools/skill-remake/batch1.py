@@ -8,18 +8,33 @@
    讓「同一份資料同時產生**出貨內容**與**給 Codex 的示範文件**」——
    兩邊不可能漂移，因為它們是同一個 dict 印兩次。
 
-⛔ 這支腳本**不驗證 schema**。驗證由 `pnpm content:build` 的嚴格 Zod 那一關做
-   （2026-08-01 補上的），而且 `tools/skill-remake/validate.test.ts` 會逐份跑
-   `zAbilityDoc.safeParse`。欄位名猜錯的代價是「內容整份載入失敗 → 骨架英雄」
-   （2026-08-02 事故），所以那一關**不可以跳**。
+⛔ 寫 JSON **不是**這支腳本的最後一步。客戶端讀 `content/bundle.json`、game-server
+   開機讀 `manifest.json` + 各集合 `_index.json` —— 三者都是 `pnpm content:build`
+   的產物。所以 `main()` 末端**一定**要跑 `finalize_content()`，失敗就非零離開。
+
+⭐ 那一關同時是**唯一**會驗 schema 的地方：`packages/shared/scripts/buildIndexes.ts`
+   先跑嚴格 `ContentLoader.load()` 再寫檔，欄位名猜錯會在那裡指名檔案與欄位，
+   而不是幾分鐘後在別支測試裡以「別的文件參照不到」的形式爆出來。
+
+⚠️ 2026-08-12 訂正（第三守則）：這一段原本寫「驗證由 content:build 做，而且
+   `tools/skill-remake/validate.test.ts` 會逐份 safeParse」——**兩句都是假的**。
+   那個指令這支腳本從來沒跑過（A-2，7 條紅），而那個測試檔**不存在**。
 
 用法：
-    python3 tools/skill-remake/batch1.py            # 寫內容 + 更新文件章節
-    python3 tools/skill-remake/batch1.py --dry-run  # 只印出來
+    python3 tools/skill-remake/batch1.py               # 寫內容 + 重建產物 + 更新文件章節
+    python3 tools/skill-remake/batch1.py --dry-run     # 只印出來，什麼都不寫
+    python3 tools/skill-remake/batch1.py --no-build    # ⛔ 只在迭代表格時用，產物會過期
+    python3 tools/skill-remake/batch1.py --audit-only  # 只跑閘，一個檔案都不動
 """
 import json
 import os
+import re
+import shutil
+import subprocess
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import tag_gate  # noqa: E402  —— A-3 標籤閘（同目錄）
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 AB = os.path.join(ROOT, "content", "abilities")
@@ -34,8 +49,178 @@ HERO = {
     "60": "godie-h00l", "70": "godie-e00s", "77": "godie-e00w", "79": "godie-h01n",
     "80": "godie-h01u", "89": "godie-h02k", "92": "godie-h02v",
 }
+# ⚠️ 編號後綴**只是慣例，不是事實**。真正的槽位來自地圖本身（`OBJECTS.json`
+# 的 `<hero>.hero_abilities` 排序），而出貨樹裡 660 份有編號的技能文件有 33 支
+# 不照慣例擺。落在這 90 支身上的是 4 支 / 2 對：
+#   20-01 風王結界 在 **W**、20-02 感知能力 在 **Q**（Saber）
+#   92-02 消化液  在 **E**、92-03 狂草泥馬 在 **W**（草泥馬）
+# 所以這兩張表從「答案」降級成「查不到時的退路」，答案改由 `slot_suffix()` 查。
 SUFFIX = {"00": "passive", "01": "q", "02": "w", "03": "e", "04": "r", "002": "ex"}
 SLOT = {"00": "PASSIVE", "01": "Q", "02": "W", "03": "E", "04": "R", "002": "EX"}
+SLOT_OF_SUFFIX = {"passive": "PASSIVE", "q": "Q", "w": "W", "e": "E", "r": "R", "ex": "EX"}
+_NUM_RE = re.compile(r"^(\d{2})-(\d{2,3})(?:\s|$)")
+_SLOT_CACHE = {}
+
+
+def _git(*args):
+    return subprocess.run(["git", "-C", ROOT, *args],
+                          capture_output=True, text=True, check=True).stdout
+
+
+def _shipped_number_to_suffix():
+    """從 **git HEAD** 的出貨 ability 文件推出「技能編號 → 槽位後綴」。
+
+    ⛔ **不讀工作區。** 這支產生器自己會覆寫 `content/abilities/`，所以跑過一次
+       壞的之後，工作區裡的槽位就是上一次的錯誤答案 —— 再讀它只會把錯誤鎖成
+       不動點。git 追蹤的那一份才是出貨的那一份（同
+       `shippedBundleHasTrackedSources.test.ts` 的立場：出貨的是 git，不是這台
+       機器的工作區）。
+    ⚠️ 只收 `HERO` 名單裡的**本體** id：變身態的身體（如 `godie-e00l`）帶著
+       同一組編號，混進來會讓「編號 → 槽位」不再是函數。
+    """
+    out = {}
+    for path in _git("ls-tree", "-r", "--name-only", "HEAD", "content/abilities/").split("\n"):
+        path = path.strip()
+        if not path.endswith(".json"):
+            continue
+        stem = os.path.basename(path)[:-5]
+        if stem.startswith("_"):
+            continue
+        cid, _dot, suffix = stem.rpartition(".")
+        if cid not in HERO.values() or suffix not in SLOT_OF_SUFFIX:
+            continue
+        hit = _NUM_RE.match(json.loads(_git("show", "HEAD:" + path)).get("name", ""))
+        if hit:
+            out[f"{hit.group(1)}-{hit.group(2)}"] = suffix
+    return out
+
+
+def slot_suffix(num):
+    """技能編號 → 槽位後綴。**出貨文件優先**，查不到才退回後綴慣例。
+
+    ⭐ 這是**一條規則**，不是逐支補丁（CLAUDE.md 第零守則⑨）：任何一支
+       「編號後綴 ≠ 實際槽位」的技能都被同一條規則涵蓋，下一批不必再列例外。
+    """
+    if not _SLOT_CACHE:
+        shipped = _shipped_number_to_suffix()
+        for hero in HERO:
+            rows = [e["num"] for e in T if e["num"].split("-")[0] == hero]
+            assert len(rows) == 6, f"英雄 {hero} 在表裡有 {len(rows)} 支，應該是 6"
+            taken = {n: shipped[n] for n in rows if n in shipped}
+            for n in rows:
+                taken.setdefault(n, SUFFIX[n.split("-")[1]])
+            # ⭐ 這一行是**閘**，不是判準：六支必須剛好落在六格。編號改了、
+            #    名稱前綴打錯、兩支撞同一格 —— 任何一種都在這裡當場炸，
+            #    而不是靜默把另一支覆寫掉（那正是 A-4 一開始沒有人發現的原因）。
+            assert sorted(taken.values()) == sorted(SLOT_OF_SUFFIX), \
+                f"英雄 {hero} 的槽位解析不是雙射：{taken}"
+            _SLOT_CACHE.update(taken)
+    return _SLOT_CACHE[num]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 【變身】/【切換】→ championForm（A-1）—— 一條規則，⛔ 不是逐支補丁
+# ─────────────────────────────────────────────────────────────────────────────
+# 一支技能會不會換身體，由**兩個條件的交集**決定，缺一個都會譯錯：
+#
+#   ① 它的**標籤列**（描述的第一行）帶 [變身] 或 [切換]
+#   ② 它的英雄在 content/champions 裡真的有 `transform.role == "base"` +
+#      `counterpartId`，而且那份 `transform.triggerAbility.name` 的**編號**
+#      就是這一支
+#
+# ⛔ 少了②：15-02 / 15-03 / 15-04（godie-emfr）的標籤列逐字帶 [變身]，但那是
+#    「([變身]為唯一狀態不可疊加)」的 buff 形態 —— 那位英雄**沒有第二具身體**，
+#    譯成 championForm 的後果是每按必 `castRejected: no-form`（失敗形態②）。
+# ⛔ 少了「只讀第一行」：79-01 / 79-03 的內文寫著「(卍解 [變身] 狀態下…)」，
+#    那是**引用**不是標籤 —— 掃全文會讓一護的 Q 與 E 都變成變身技。
+#
+# join key 是**編號**不是名字（12-03 的名字在這一批從「破凰之心-徒手空破山」
+# 改成「破凰之心。空破山」，而編號永遠是 12-03 —— 記憶 ggd-naming-layer）。
+FORM_TAG_TO = {"[切換]": "toggle", "[變身]": "alternate"}
+
+# 帶著 w3x transform 連結、但這一批的規格**刻意**沒有變身標籤的編號。
+# ⛔ 這不是裝飾：留空就會 assert（見 main() 的閘），所以「某一支悄悄不再變身」
+#    不可能再無聲發生 —— B-4 就是這樣被抓到的。
+FORM_TAG_WAIVED = {
+    # 12-03 破凰之心。空破山 —— owner 2026-08-08 的規格把它改成純被動暴擊，
+    # 標籤列一個變身/切換都沒有，天地志狼 godie-e007 因此變成沒有入口的孤兒內容。
+    # owner 2026-08-12 明說 B-4 這一輪**不裁決**，⛔ 不要自己補標籤、也不要改測試。
+    "12-03": "B-4 owner 2026-08-12 尚未裁決（志狼退場 or 變身換綁別的槽）",
+}
+
+# 編號 → 這一支輸出的 ability id。build() 邊產邊記，main() 的閘讀它。
+# ⭐ 刻意記 build() 算出來的 aid，⛔ 不要在 main() 裡自己再推一次槽位 ——
+#    A-4 正在把槽位改成讀出貨文件，第二份推導就是第二個會腐爛的住處。
+FORMS_EMITTED = {}
+
+
+def lead_tags(desc):
+    """描述的**標籤列** = 第一行。⛔ 不要掃全文，見上面的 79-01/79-03。"""
+    return desc.split("\n", 1)[0]
+
+
+def form_triggers():
+    """{編號: champion id} —— w3x 自己指名的變身觸發技。
+
+    ⚠️ 讀的是 champion 文件，而產生器**只覆寫 `abilities` 那一格**、從不寫
+    `transform`，所以就算工作區已經跑過一次壞的產生器，這裡讀到的仍然是
+    w3x 的原始連結。"""
+    out = {}
+    for cid in HERO.values():
+        p = os.path.join(CH, f"{cid}.json")
+        if not os.path.exists(p):
+            continue
+        tr = json.load(open(p, encoding="utf-8")).get("transform") or {}
+        if tr.get("role") != "base" or not tr.get("counterpartId"):
+            continue
+        name = (tr.get("triggerAbility") or {}).get("name") or ""
+        num = name.split(" ", 1)[0]  # 「70-00 紮根」→「70-00」
+        if num:
+            out[num] = cid
+    return out
+
+
+FORM_TRIGGERS = form_triggers()
+
+
+# ── A-6：build() 產出整份文件，所以「哪些欄位歸產生器管」必須是一張**明表** ──
+#
+# ⛔ 這裡刻意是 denylist（黑名單）不是 allowlist。allowlist 的失敗模式是
+#    「沒被想到的欄位靜默消失」，而它已經發生過：舊版只救 icon/vfxKey/hitFeel，
+#    於是 sfxKey(19 份)、vfxLayers(6 份)、interruptOn(1)、recoverySec(2)
+#    一起被刪掉 —— efur-r-interrupt 紅，另外 27 個欄位值**沒有任何東西叫出聲**
+#    （CLAUDE.md 第二守則失敗形態②）。
+#    新規則只有一句：**規格沒有重新定義的欄位，一律原樣保留。**
+
+#: 規格重新定義的欄位 —— 由下面那張表 T 產生，舊值不算數。
+#: ⚠️ innateKind / passive / marks 一定要在這裡：一支技能在規格裡從被動改成主動
+#: （或反過來、或換槽位）時，把舊的救回來就是把重製稿改回去。
+SPEC_OWNED = frozenset({
+    "id", "schema", "name", "description", "slot", "castType", "maxRank",
+    "cooldown", "manaCost", "range", "innateKind", "radiusTier",
+    "targetsEnemies", "effects", "passive", "marks", "toggle",
+})
+
+#: 規格**刻意讓它退場**的欄位 —— 舊值存在，但救回來會造成傷害。
+#: ⚠️ 每一格都會進 DROP_LOG 印出來：丟掉是**決定**，不是遺漏。
+RETIRED = frozenset({
+    # ⛔ template：content/templates/expand.ts 的 mergeExpansion() 會先 delete
+    #    effects/castType/radius/castTimeSec/targetsEnemies/innateKind/passive/
+    #    marks（EXPANDED_KEYS），再用舊模板的展開結果蓋上去。救回它 =
+    #    **靜默回滾 36 支重製稿**，而且描述講新的、場上打舊的（失敗形態②）。
+    "template",
+    # ⛔ radius：owner 2026-08-11「原則上**不寫範圍數字**」。範圍改走 radiusTier
+    #    四級距，content/aoeTiers.ts 的 resolveRadiusTier() 在註冊時翻成 radius，
+    #    而且**級別贏過手寫值**。救回 radius 等於逆著 owner 走。
+    "radius",
+    # ⛔ castTimeSec：唯一來源是 castTimeFormula.deriveCastTime()。effects 整批
+    #    換過之後舊值一定是錯的，抄回來只會讓 castTimeCoverage 用**錯誤的訊息**
+    #    紅。正解是後處理 `pnpm exec tsx packages/shared/scripts/deriveCastTimes.ts --write`。
+    "castTimeSec",
+})
+
+#: aid → {被刻意丟掉的欄位: 舊值}。main() 收工前印出來（第二守則：靜默才是缺陷）。
+DROP_LOG = {}
 
 
 def amt(per=None, flat=None, ap=None, ad=None, **kw):
@@ -75,20 +260,59 @@ TIER_R = {"小": 3.0, "中": 4.5, "大": 6.0, "超大": 8.0}
 def area(dtype="magic", tier="中", maxt=6, **kw):
     if "per" not in kw and "flat" not in kw:
         kw["flat"] = 50
+    # ⚠️ 鍵的**順序**要跟 Zod schema 的宣告順序一致（radius 在 radiusTier 之前）。
+    #    理由不是潔癖：`zChampionDoc.parse()` 會照 schema 順序重建物件，而
+    #    `abilityScaling.test.ts` 的 fx-19 用 `JSON.stringify(standalone.effects)
+    #    !== JSON.stringify(ab.effects)` 比對「獨立檔」與「英雄卡內嵌版」——
+    #    獨立檔是生檔、內嵌版是 parse 過的，所以**只要順序不同就判定 desync**，
+    #    即使兩份內容一模一樣。實測這一格自己就製造 23 筆假 desync。
     return {"kind": "damageArea", "damageType": dtype, "amount": amt(**kw),
-            "radiusTier": tier, "radius": TIER_R[tier], "maxTargets": maxt}
+            "radius": TIER_R[tier], "radiusTier": tier, "maxTargets": maxt}
 
 
-def line(dtype="magic", length=8.0, width=1.6, maxt=5, **kw):
+def line(dtype="magic", length=8.0, width=1.6, maxt=5, aim="target", **kw):
+    # ⚠️ A-7：`aim` 以前寫死成 "target"，所以「[前方][直線]」的 ground 技全部拿到
+    #    目標瞄準，而 `damageLine.ts` 的檔頭與全 repo 唯一的 ground damageLine
+    #    （godie-efur.e）都指明「面前」= facing。開成參數，⛔ 預設不動
+    #    （改預設會一次改到 20 支，那是**沒有紅燈在守**的行為變更）。
     if "per" not in kw and "flat" not in kw:
         kw["flat"] = 50
+    # ⚠️ 鍵序 = Zod 宣告序（fromCaster 在 maxTargets 之前），理由見 area()。
     return {"kind": "damageLine", "damageType": dtype, "amount": amt(**kw),
-            "length": length, "width": width, "aim": "target", "maxTargets": maxt,
-            "fromCaster": True, "includeOrigin": False}
+            "length": length, "width": width, "aim": aim,
+            "fromCaster": True, "maxTargets": maxt, "includeOrigin": False}
 
 
-def buff(mods, dur):
-    return {"kind": "applyBuff", "modifiers": mods, "duration": float(dur)}
+def buff(mods, dur, hooks=None):
+    # ⚠️ A-7：`hooks` 以前根本沒有出口，所以 applyBuff 綁定的 proc（「開著的時候
+    #    每一刀多做一件事」）在這 90 支裡**不可能出現**。開成參數。
+    o = {"kind": "applyBuff", "modifiers": mods, "duration": float(dur)}
+    if hooks:
+        o["hooks"] = hooks
+    return o
+
+
+def _own_area(node):
+    """把**技能自己發動**的 `damageArea` 標成「震央也要吃」（A-8）。
+
+    `damageArea` 的語意是**擴散**（sim/effects/damageArea.ts 檔頭）：圓心是這次
+    事件的受害者，而那個受害者「已經吃過觸發這次擴散的那一擊」，所以 :50 那行
+    預設把 `ctx.targets` 整組跳過。技能自己放的範圍沒有那一擊 —— 而
+    abilities/abilitySystem.ts:265 在 ground 施法時把**圈內所有敵人**塞進
+    `ctx.targets`，於是整圈的人全被當成震央跳過，傷害正好是 0。
+
+    ⛔ 這不是「在第 N 列加一個參數」：規則是**位置**。在 doc["effects"] 樹裡的
+    damageArea 是技能自己發動的（含 randomArea/delayed/onLand 這些巢狀容器裡的，
+    它們一樣是這支技能放出去的）；在 passive/hooks 裡的才是真的擴散，⛔ 不要碰。
+    """
+    if isinstance(node, list):
+        for v in node:
+            _own_area(v)
+    elif isinstance(node, dict):
+        if node.get("kind") == "damageArea":
+            node.setdefault("includeOrigin", True)   # setdefault：手填的特例仍然贏
+        for v in node.values():
+            _own_area(v)
 
 
 def M(stat, op, value):
@@ -99,6 +323,147 @@ def status(sid, dur, **kw):
     o = {"kind": "applyStatus", "statusId": sid, "duration": float(dur)}
     o.update(kw)
     return o
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# A-5 ·「沉默 ≠ 移除」—— 規格沒點名的**非酬載機制**一律沿用
+#
+# `build()` 的 effects 是從零寫的字面 dict，所以舊出貨文件上任何規格沒點名的
+# 機制都會靜默消失。實測 90 支裡消失了 7 支的彈道（projectileElement 的
+# launchers 53→46）與 2 支的無敵窗（invulnerableBinding 的 EXPECTED_BOUND）。
+#
+# ⛔ 修法不是「在表格第 N 列補一個參數」—— 那是 7 個逐支補丁，下一批 90 支
+#    會再犯一次同型。這裡是一條規則：
+#      **非酬載機制（射出哪一顆彈道、施法期間免不免疫）由舊文件沿用；
+#        酬載（傷害數字、狀態、增益）由規格決定。**
+#
+# 為什麼 CARRY_KINDS 只有這兩個（量出來的，不是挑的）：對照
+# `skill-tag-manifest.json`，能表達它們的標籤是【衝擊波】→ spawnProjectile、
+# 【免疫】/【魔免】/【免控】→ invulnerable，而這 90 支的描述裡**一個都沒出現**
+# —— 規格從來沒有「說要它」，因此也不可能是在「說不要它」。其餘消失的 kind
+# （damage / applyBuff / leap / dot …）都是規格真的改寫掉的**酬載**，那些只印
+# 報表、⛔ 不自動救（自動 deep-merge 會讓新舊語意打架，也會回滾 A-6）。
+CARRY_KINDS = ("invulnerable", "spawnProjectile")
+
+# 綁模板的舊文件 `effects` 是 []，機制長在模板裡（見 testkit/expandedEffects.ts
+# 的 effectsOf()）。⚠️ 這兩列是從 `packages/shared/src/content/templates/
+# expand.ts` 讀來的，不是猜的：整份 expand.ts 只有 line-sweep 與 traveling-wave
+# 兩張卡會 spawnProjectile，兩張都硬寫 `imported.wave`。
+# expand.ts 再多一張會發射的卡，這裡要跟著補（下面的閘不會替你發現它）。
+TEMPLATE_PROJECTILE = {
+    "tpl-line-sweep": "imported.wave",
+    "tpl-traveling-wave": "imported.wave",
+}
+
+# 逐支稽核紀錄，`main()` 的閘讀它。key = ability id。
+AUDIT = {}
+
+
+def _template_refs(tpl):
+    """`ability.template` 的三種合法形狀 → ref 清單（normalizeTemplateBinding 的 py 版）。"""
+    if tpl is None:
+        return []
+    if isinstance(tpl, list):
+        return [c.get("ref") for c in tpl if isinstance(c, dict)]
+    if isinstance(tpl, dict):
+        if "cards" in tpl:
+            return [c.get("ref") for c in tpl["cards"] if isinstance(c, dict)]
+        return [tpl.get("ref")]
+    return []
+
+
+def old_top_kinds(prev):
+    """舊文件**真的會跑**的頂層 effect kind（含模板展開的那一份）。
+
+    ⚠️ 一定要含模板：`godie-e002.e`(20-03) 的舊 effects 是 []，彈道住在
+    tpl-line-sweep 裡，而 A-6 明確不把 `template` 帶回來。只讀 prev["effects"]
+    會漏掉它 → launchers 停在 52，`toBe(53)` 照樣紅。
+    """
+    out = []
+    for ef in prev.get("effects") or []:
+        if isinstance(ef, dict) and isinstance(ef.get("kind"), str):
+            out.append(ef["kind"])
+    for ref in _template_refs(prev.get("template")):
+        if ref in TEMPLATE_PROJECTILE:
+            out.append("spawnProjectile")
+    return out
+
+
+def old_projectile_ids(prev):
+    """舊文件會射出的彈道 id（inline + 模板展開）。"""
+    ids = [
+        ef["projectileId"]
+        for ef in (prev.get("effects") or [])
+        if isinstance(ef, dict) and ef.get("kind") == "spawnProjectile"
+    ]
+    ids += [
+        TEMPLATE_PROJECTILE[r]
+        for r in _template_refs(prev.get("template"))
+        if r in TEMPLATE_PROJECTILE
+    ]
+    return ids
+
+
+def carry_mechanisms(aid, prev, new_effects, row):
+    """把舊文件的非酬載機制接回新 effects，並記一筆稽核給 main() 的閘。
+
+    決策點（CLAUDE.md 第一守則：拿不定主意的決策做成欄位，不要在註解裡辯護）
+    —— 表格那一列可以填：
+      · 不填            → 沿用（預設；沉默 ≠ 移除）
+      · projectile="deliver" → 彈道**載著**新酬載飛（onHit = 規格的效果）。
+        ⚠️ 這會把整包效果關在「命中才發生」後面，自身增益型的技能填了就壞掉，
+           所以⛔ 不是預設。這一批 90 支**一列都沒有填**，是留給 owner 的旋鈕。
+      · retire={"spawnProjectile": "理由"} → 這一列**明說**要讓它退場（留紙本痕跡）
+    """
+    retire = row.get("retire") or {}
+    new_kinds = [n.get("kind") for n in new_effects if isinstance(n, dict)]
+    pre, post, carried, dropped = [], [], [], []
+
+    old_invuln = [
+        ef
+        for ef in (prev.get("effects") or [])
+        if isinstance(ef, dict) and ef.get("kind") == "invulnerable"
+    ]
+    if old_invuln and "invulnerable" not in new_kinds:
+        if "invulnerable" in retire:
+            dropped.append("invulnerable")
+        else:
+            # ⭐ 逐字沿用：`durationSec` 是 JASS 量到的窗口（52-02 的 1.05 /
+            #    52-002 的 1.5，出處記在 invulnerableBinding.test.ts 的
+            #    EXPECTED_BOUND 註解），四個決策點
+            #    (applyTo/blocksDamage/blocksTrueDamage/blocksControl) 也必須
+            #    明寫 —— 那支守衛有一條專門在守「絕不靠繼承預設值」。
+            #    ⚠️ 排在**最前面**：施法瞬間就要擋得住。
+            pre.extend(dict(x) for x in old_invuln)
+            carried.append("invulnerable")
+
+    pids = old_projectile_ids(prev)
+    if pids and "spawnProjectile" not in new_kinds:
+        if "spawnProjectile" in retire:
+            dropped.append("spawnProjectile")
+        else:
+            for pid in pids:
+                # ⛔ **不要**把舊的 onHit 帶回來 —— 那是**舊酬載**（舊的傷害
+                #    數字），帶回來等於同一支技能打兩次，而且數字還是過期的。
+                #    沿用的只有「這支技能射出哪一顆彈道」這件事，也就是 GH#251
+                #    在守的那條元素綁定（技能 vfxKey 的元素 = 彈道文件的元素）。
+                post.append(
+                    {
+                        "kind": "spawnProjectile",
+                        "projectileId": pid,
+                        "onHit": list(new_effects) if row.get("projectile") == "deliver" else [],
+                    }
+                )
+            carried.append("spawnProjectile")
+
+    body = post if (row.get("projectile") == "deliver" and post) else list(new_effects) + post
+    final = pre + body
+    AUDIT[aid] = {
+        "prev_kinds": sorted(set(old_top_kinds(prev))),
+        "carried": carried,
+        "dropped": dropped,
+    }
+    return final
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -124,12 +489,37 @@ A("20-00", "20-00 銀色甲胄", "self", [0], [0], 0,
 
 A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
   "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
-  effects=[buff([M("critChance", "flat", 1.0), M("critDamage", "override", 1.4)], 600)],
-  passive={"name": "20-01 風王結界", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "target": "event",
-       "condition": {"kind": "stat", "subject": "self", "stat": "mp",
-                     "mode": "absolute", "op": ">=", "value": 30},
-       "effects": [{"kind": "spendMana", "amount": amt(flat=30), "applyTo": "self"}]}]}]})
+  # ⛔ effects 不放 buff：切換沒有時鐘，600 秒是猜的（zAbilityToggle 的①號理由
+  #    逐字寫著這個坑）。開著期間的暴擊改由 passive 的**形態閘**表達。
+  #    身體交換由 A-1 的規則自己插進 effects[0]。
+  effects=[],
+  toggle={
+      # 「開啟時[每次攻擊][消耗]MP30/50/70/90」今天由下面 passive hook 的
+      # spendMana 出帳 —— 那是 windOrbAndFormBuffs 逐 tick 量的那一條路
+      #（「那一刀正好花了 30 點法力」）。⚠️ 兩邊都收就是每刀 60，所以這裡是 none。
+      "upkeepCadence": "none",
+      "upkeepCost": [0],
+      # ⭐ 20-01 需要 toggle 區塊的**真正**理由：castAbility 把「第二次按下＝關閉」
+      #    排在**冷卻閘之前**（abilitySystem.ts，那段註解逐字用 20-01 的
+      #    60 秒解釋這個順序）。所以 60 秒冷卻不會把按鈕鎖住，而關閉的身體交換
+      #    寫在這裡 —— exitToggle 是全專案唯一跑 onExit 的地方。
+      "onExit": [{"kind": "championForm", "to": "toggle"}],
+      # ⚠️「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍]
+      #    120 + 30% [AP]」尚未寫進來 —— 要加就加進**上面這個陣列**，不要另開出口。
+  },
+  passive={"name": "20-01 風王結界 · 法球", "ranks": [
+      {"whileForm": "alternate",
+       "modifiers": [M("critChance", "flat", 1.0), M("critDamage", "override", cdmg)],
+       "hooks": [
+           {"on": "onBasicAttack", "target": "event",
+            "condition": {"kind": "stat", "subject": "self", "stat": "mp",
+                          "mode": "absolute", "op": ">=", "value": cost},
+            "effects": [{"kind": "spendMana", "amount": amt(flat=cost), "applyTo": "self"},
+                        # ⚠️ 這一發是 A-5 的那一半：法球傷害 10 + 50% [AD] 是
+                        #    出貨檔既有的機制，規格沒點名所以重製稿把它丟了。
+                        #    windOrbAndFormBuffs 用**比值**釘死這兩個係數。
+                        dmg("magic", flat=10, ad=0.5)]}]}
+      for cdmg, cost in ((1.4, 30), (1.6, 50), (1.8, 70), (2.0, 90))]})
 
 A("20-02", "20-02 感知能力", "self", [0], [0], 0,
   "[被動][迴避][機率]\n0秒冷卻\n\n「你的魔力流向了我」\n感應魔力流向，進而有6/12/18/24%[機率][迴避]物理([AD])攻擊。",
@@ -165,13 +555,17 @@ A("59-00", "59-00 暴走", "self", [150], [0], 0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": 0.05},
        "effects": [buff([M("as", "pctAdd", 1.0), M("lifesteal", "flat", 0.6),
-                         M("evasion", "flat", 0.25)], 6.0)]}]}]})
+                         M("evasion", "flat", 0.25)], 6.0),
+                   # ⭐ [暴走] 的機制本體：拿走方向盤 + 自動尋敵（sim/berserk.ts）。
+                   #    上面那排是屬性，這一行才是「暴走」——少了它三個系統都不會動。
+                   status("berserk", 6.0, berserk=True, applyTo="self")]}]}]})
 
 A("59-01", "59-01 吞噬", "targeted", [60, 60, 60, 60], [50, 80, 110, 140], 11,
   "[主動][指定][處決][吸血][吞噬][屬性門檻]\n60秒冷卻\n消耗MP50/80/110/140\n施法距離11\n\n「有一種餓是阿嬤覺得你餓」\n可以直接[吞噬]生命剩餘3/5/7/9%的敵方英雄，使其[立即死亡]，並[回復]等同其剩餘生命的生命值。",
+  # ⚠️ 鍵序 = Zod 宣告序（healPct 在 victim 之前），理由見 area() 的註解。
   effects=[{"kind": "devour", "shape": "single",
-            "thresholdPctOfMax": [0.03, 0.05, 0.07, 0.09],
-            "victim": "champion", "throughShields": True, "healPct": 1.0}])
+            "thresholdPctOfMax": [0.03, 0.05, 0.07, 0.09], "healPct": 1.0,
+            "victim": "champion", "throughShields": True}])
 
 A("59-02", "59-02 高週波短刀", "self", [0], [0], 0,
   "[被動][普攻時][機率][真傷]\n\n「高級的美工刀，只要動得夠快也能切斷鑽石呢」\n高週波短刀[每次普攻]有10/15/20/25%[機率]將該次攻擊轉為[真實傷害]。",
@@ -202,15 +596,32 @@ A("59-002", "59-001 完全暴走", "self", [150], [0], 0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": 0.2},
        "effects": [buff([M("as", "capRaise", 10.0), M("as", "pctAdd", 4.0),
-                         M("lifesteal", "flat", 0.8), M("evasion", "flat", 0.5)], 12.0)]}]}]})
+                         M("lifesteal", "flat", 0.8), M("evasion", "flat", 0.5)], 12.0),
+                   # ⭐ 同 59-00：這一行才是「暴走」，也是施法門檻認得出這支技能的憑據
+                   #    （berserkRules.trigger = 'berserkGrantors'）。
+                   status("berserk", 12.0, berserk=True, applyTo="self")]}]}]})
 
 # ── 70 白木卡迪那 ────────────────────────────────────────────────────────────
 A("70-00", "70-00 紮根", "self", [15], [0], 0,
   "[主動][切換]\n15秒冷卻\n\n「你聽過樹人自拍嗎?」\n在地面紮根，變得無法移動，但是這可以讓它開始丟出巨大的石塊，[防禦]增加2倍、[力量]增加10點、[攻擊距離]提升到10，[切換]回行走模式則回到原本能力與狀態。",
   innate="active",
-  effects=[status("root", 8.0, root=True),
-           buff([M("armor", "pctAdd", 1.0), M("ad", "flat", 10),
-                 M("range", "flat", 6.0)], 8.0)])
+  # ⛔ effects 留空 —— A-1 的規則會插進 championForm(toggle)，而那**就是**全部。
+  #
+  # 「[防禦]增加2倍、[攻擊距離]提升到10」是**第二具身體 godie-e010 自己的數值**
+  # （w3u：armor 2→10、range 11.0→11.9），不是一段 8 秒 buff。寫成 buff 有兩個
+  # 後果：①切換沒有時鐘，8 秒後樹人站在原地卻拿回本體數值（失敗形態②）
+  #       ②championFormToggle.test.ts 的「the sheet IS godie-e010's」量的是
+  #         按下去 20 tick 後的**整張屬性表**，多一份 buff 就直接紅。
+  #
+  # ⛔ 也不可以給它 toggle 區塊：castAbility 把「第二次按下＝關閉」排在冷卻閘
+  #    **之前**，而同一支測試釘死了「冷卻內的第二次按下必須答 cooldown」。
+  #    70-00 的來回是靠 `to:"toggle"` 對**當下的身體**解算，走一般的冷卻閘。
+  #
+  # ⚠️ 已知缺口（**明說，不是漏掉**）：「變得無法移動」今天沒有地方寫 ——
+  #    godie-e010 的 ms 是 5.5 不是 0，而 70-00 是 innateKind:"active"，
+  #    測試釘死它不可以有 passive 區塊、上面又說了不可以有 toggle 區塊。
+  #    ⛔ 不要為了補這一格去改測試或改引擎（回報裡有記）。
+  effects=[])
 
 A("70-01", "70-01 伸卡球", "ground", [60, 60, 60, 60], [250, 300, 350, 400], 11,
   "[主動][指向][範圍]\n60秒冷卻\n消耗[MP] 250/300/350/400\n施法距離11\n\n「我餵人人，人人餵我」\n造成[範圍]敵人150/300/450/600+[力量]*3傷害。",
@@ -242,7 +653,14 @@ A("70-002", "70-002 樹海降臨", "self", [0], [0], 0,
   "[被動][召喚][範圍][治療][AP加成]\n\n「是誰說樹味像雞」\n集千年煉成之大成，[千年練成] 追加 500% [AP]傷害，並且[回復][周圍]自己與友方隊伍生命10%。",
   passive={"name": "70-002 樹海降臨", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
-       "effects": [{"kind": "restore", "healthPct": 0.1, "applyTo": "self"}]}]}]})
+       # ⭐「自己與友方隊伍」——原本只有 applyTo:"self"，隊友那一半靜默消失。
+       #    ⚠️ 標籤閘看不到這一格（[治療] 已經被 restore 滿足），是讀規格抓出來的。
+       #    ⚠️ shape:"circle" 的 radius 必填（見 92-002 那一列的註解）。
+       "effects": [{"kind": "weightedBranch", "shape": "circle",
+                    "radiusTier": "大", "radius": TIER_R["大"],
+                    "side": "allies", "maxTargets": 24,
+                    "branches": [{"weight": 1, "effects": [
+                        {"kind": "restore", "healthPct": 0.1}]}]}]}]}]})
 
 # ── 77 十六夜/剎那（神鳴流）────────────────────────────────────────────────
 A("77-00", "77-00 浮雲-旋一閃", "self", [30], [0], 0,
@@ -269,6 +687,10 @@ A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
 
 A("77-03", "77-03 GLADIARIA ALAT", "self", [120, 120, 120, 120], [90, 180, 270, 360], 0,
   "[主動][變身][加速][飛行]\n120秒冷卻\n消耗MP90/180/270/360\n\n「GLADIARIA  ALAT 。翼之劍士」\n[加速][攻擊速度]60/90/120/150% ，並可以變換為[飛行]狀態無視碰撞，持續6/9/12/15秒。",
+  # 規格逐字「持續6/9/12/15秒」。schema 的 durationSec 是 zRankScalar —— 逐階可以
+  # 是陣列，而那一格的註解點名的就是 77-03（「rank 4 的加速活 15 秒、翅膀只有 6 秒」
+  # 這種兩半各走各的，就是它被開放的理由）。
+  form_sec=[6.0, 9.0, 12.0, 15.0],
   effects=[buff([M("as", "pctAdd", 0.6)], 6.0)])
 
 A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
@@ -465,7 +887,10 @@ A("12-00", "12-00 感應意脈", "self", [0], [0], 0,
 A("12-01", "12-01 鬥仙術", "targeted", [12, 12, 12, 12], [30, 57, 83, 90], 4,
   "[主動][指定][混亂][AP加成]\n12秒冷卻\n消耗MP30/57/83/90\n施法距離4\n\n「我一個人無聊的時候，喜歡跟自己打麻將」\n以念體攻擊敵人，造成150/283/350/350+60% [AP]傷害的同時可以[混亂]目標1秒。",
   effects=[dmg("magic", per=[150, 283, 350, 350], ap=0.6),
-           status("confusion", 1.0, missChance=0.5)])
+           # ⭐ [混亂] = applyStatus.targetsAllies（2026-08-09 換掉的語意），
+           #    要配 berserk 一起寫：berserk 丟指令+自動尋敵，targetsAllies 才是「不分敵我」。
+           #    ⛔ 原本寫的 missChance 是[致盲]的機制，不是混亂。
+           status("confusion", 1.0, berserk=True, targetsAllies=True)])
 
 A("12-02", "12-02 仙氣．採藥", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
   "[主動][輔助][治療][淨化]\n60秒冷卻，吟唱3秒\n消耗MP50/100/150/200\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
@@ -513,7 +938,15 @@ A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
 
 A("60-02", "60-02 鎖鏈槍", "ground", [45, 45, 45, 45], [50, 75, 100, 125], 11,
   "[主動][指向][範圍][跳躍]\n45秒冷卻\n消耗MP50/75/100/125\n\n「我喜歡勾，但不喜歡脫鉤的時候」\n[直線]距離勾住一個單位，自身[跳躍]過去，並給予 150/250/350/450傷害。",
-  effects=[{"kind": "leap", "applyTo": "self", "mode": "toPoint", "apexHeight": 1.4,
+  # ⚠️ apexHeight 只能是 JASS 家族值 —— `GGD_APEX_PER_WC3 = 1/250` 把 w3a 的
+  #    0 / 300 / 600 / 1000 換成 0 / 1.2 / 2.4 / 4.0，而 `leapFraming.test.ts:411`
+  #    逐支釘死這四個。1.4 是我手打出來的第五個值，它同時**跳出畫面 51%**
+  #    （同一支測試的取景檢查）。
+  # ⚠️ 改成 1.2 之後仍然裁掉 45% —— 因為 `throwDistance: 11` 是全 roster 最長的
+  #    勾索之一，弧線本身就出框。最後取 **0.0**：規格是「[直線]距離勾住一個單位，
+  #    自身[跳躍]過去」，那是**沿地面被扯過去**不是被拋高，所以 apex 0 反而更忠實
+  #    （`godie-hart.q` 同型也是 0）。取景 0% 裁切。
+  effects=[{"kind": "leap", "applyTo": "self", "mode": "toPoint", "apexHeight": 0.0,
             "durationSec": 0.4, "throwDistance": 11.0, "landRadius": 3.0,
             "onLand": [dmg("physical", per=[150, 250, 350, 450])]}])
 
@@ -573,8 +1006,10 @@ A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550
 A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   "[主動][輔助][變身]\n90秒冷卻\n消耗MP100/200/300\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",
   maxRank=3,
-  effects=[{"kind": "championForm", "to": "alternate", "durationSec": 8.0},
-           buff([M("as", "pctAdd", 1.0)], 8.0),
+  # ⭐ 手打的 championForm 拿掉，改由 A-1 的規則產。79-04 是全檔唯一手打的一格，
+  #    而那正是另外四支的缺口整整沒有人發現的原因（第零守則⑨）。
+  form_sec=8.0,
+  effects=[buff([M("as", "pctAdd", 1.0)], 8.0),
            {"kind": "modifyCooldown", "shape": "single", "who": "self", "slot": "Q",
             "mode": "reduce", "amount": 0.5}])
 
@@ -682,11 +1117,19 @@ A("89-04", "89-04 憤怒的簡諧運動", "self", [0], [0], 0,
       {"modifiers": [M("evasion", "flat", c)],
        "hooks": [
            {"on": "onBasicAttack", "chance": c, "target": "event",
-            "effects": [dmg("magic", ap=0.16)]},
+            "effects": [dmg("magic", ap=0.16),
+                        # ⭐ [拉扯]「將對方抓取過來」= knockback.from="pull"（全 repo 第一個）
+                        {"kind": "knockback", "distance": 3.0, "speed": 16.0,
+                         "from": "pull"}]},
            {"on": "onEvade", "target": "event",
             "effects": [{"kind": "knockback", "distance": 2.0, "speed": 14.0,
                          "from": "caster"},
-                        status("stun", 1.0, stun=True)]}]}
+                        status("stun", 1.0, stun=True)]},
+           # ⭐「敵方 X 狀態下額外追加 Y」—— 熊貓六支共用的那**一個**模板，
+           #    89-00 / 89-01 已經在用（第〇·五守則：不是為這支寫的 if）。
+           {"on": "onBasicAttack", "target": "event",
+            "condition": {"kind": "status", "subject": "target", "statusId": "blind"},
+            "effects": [status("confusion", 3.0, berserk=True, targetsAllies=True)]}]}
       for c in (0.08, 0.12, 0.16)]})
 
 A("89-002", "89-002 俄羅斯輪盤", "targeted", [10], [666], 5.29,
@@ -708,6 +1151,9 @@ A("92-00", "92-00 憂鬱的眼神", "self", [0], [0], 0,
 
 A("92-01", "92-01 臥草泥馬", "self", [60, 60, 60, 60], [160, 220, 280, 340], 0,
   "[主動][變身][週期]\n60秒冷卻\n消耗MP160/220/280/340\n\n「臥草，泥馬真的躺下來了」\n進入無法移動與攻擊的 [定身] 狀態，每秒 [回復] 1/2/3/4% 生命，[防禦] 提升20/40/60/80，持續6秒。\n(對方仍可施展技能，僅不能移動與普攻)",
+  # 規格逐字「持續6秒」。⚠️ 這一支是 [變身] 不是 [切換]，所以下面那些 6 秒的
+  # payload 與身體用**同一個時鐘**，是對的（切換才不可以帶 duration）。
+  form_sec=6.0,
   effects=[status("root", 6.0, root=True, disarmed=True),
            buff([M("armor", "flat", 20)], 6.0),
            {"kind": "dot", "damageType": "true", "amountPerTick": amt(flat=-1),
@@ -753,7 +1199,19 @@ A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
   passive={"name": "92-002 最終戈壁", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
        "effects": [{"kind": "delayed", "shape": "single", "delaySec": 1.0, "count": 6, "intervalSec": 1.0,
-                    "effects": [area("magic", tier="超大", ap=1.0)]}]}]}]})
+                    "effects": [area("magic", tier="超大", ap=1.0),
+                                # ⭐ 規格的「每秒對周圍友方回復 10% 最大魔力」那一半。
+                                #    ⚠️ restore 沒有 side/radius，範圍友方只能包一層
+                                #    shape:"circle" + side:"allies" 的殼（同 89-002 的先例）。
+                                #    alliedChampions() 含自己，所以「自己與友方」一次涵蓋。
+                                #    ⚠️ shape:"circle" 的 radius 是**必填**（Zod 的
+                                #    refine 逐字說「沒有半徑的圓在執行期直接 return」），
+                                #    真正生效的仍是 radiusTier —— 同 area() 的做法。
+                                {"kind": "weightedBranch", "shape": "circle",
+                                 "radiusTier": "超大", "radius": TIER_R["超大"],
+                                 "side": "allies", "maxTargets": 24,
+                                 "branches": [{"weight": 1, "effects": [
+                                     {"kind": "restore", "manaPct": 0.1}]}]}]}]}]}]})
 
 # ── 52 Berserker ────────────────────────────────────────────────────────────
 A("52-00", "52-00 十二道試煉", "self", [0], [0], 0,
@@ -821,10 +1279,15 @@ A("52-002", "52-002 射殺百頭", "targeted", [120], [400], 5.29,
 # ─────────────────────────────────────────────────────────────────────────────
 def build(e):
     num = e["num"]
-    hero, part = num.split("-")
+    hero = num.split("-")[0]
     cid = HERO[hero]
-    aid = f"{cid}.{SUFFIX[part]}"
-    slot = SLOT[part]
+    # ⭐ 槽位是**查**出來的，不是從編號後綴算出來的（見 `slot_suffix`）。
+    #    ⚠️ 下面的 `prev` 是用 `aid` 去讀舊文件搶救 icon / vfxKey / sfxKey /
+    #    hitFeel / telegraph 的，所以算錯槽位不只是標籤錯 ——
+    #    **圖示與特效會一起對調**。
+    suffix = slot_suffix(num)
+    aid = f"{cid}.{suffix}"
+    slot = SLOT_OF_SUFFIX[suffix]
     mr = e.get("maxRank", 4 if slot in ("Q", "W", "E") else (3 if slot == "R" else 1))
     if slot in ("PASSIVE", "EX"):
         mr = 1
@@ -834,9 +1297,15 @@ def build(e):
         cd.append(cd[-1])
     while len(mp) < mr:
         mp.append(mp[-1])
-    # ⭐ 沿用**既有**文件的美術綁定。重製換的是機制，不是圖示與特效 ——
-    #   重新發明 icon 路徑會讓 `icons.test.ts` 紅（檔案不在磁碟上），
-    #   丟掉 vfxKey 會讓技能變成沒有特效的隱形技（`abilityMirror` 在守）。
+    # ⭐ 沿用**既有**文件的欄位。重製換的是**機制**，不是圖示、特效、音效與
+    #   施法手感 —— 見檔頭 SPEC_OWNED / RETIRED 那張明表：
+    #     · SPEC_OWNED  = 規格重新定義的，舊值不算數
+    #     · RETIRED     = 規格刻意讓它退場的，丟掉但**印出來**
+    #     · 其餘        = 一律原樣保留（icon / vfxKey / sfxKey / vfxLayers /
+    #                     hitFeel / interruptOn / recoverySec / 以及未來任何一格）
+    #   ⛔ 不要改回「列幾個欄位名複製」：那是 allowlist，它上一次漏掉了
+    #      sfxKey 與 vfxLayers（產生器自己的註解說要沿用美術綁定，卻沒沿用音效），
+    #      而且**沒有任何東西會紅**。
     prev = {}
     prev_path = os.path.join(AB, f"{aid}.json")
     if os.path.exists(prev_path):
@@ -845,7 +1314,6 @@ def build(e):
         "id": aid,
         "schema": "ability@1",
         "name": e["name"],
-        "icon": prev.get("icon", f"assets/icons/abilities/{aid}.webp"),
         "description": e["desc"],
         "slot": slot,
         "castType": e["cast"],
@@ -859,23 +1327,200 @@ def build(e):
     if e.get("radiusTier"):
         doc["radiusTier"] = e["radiusTier"]
     doc["targetsEnemies"] = e["cast"] != "self" or bool(e.get("radiusTier"))
-    doc["effects"] = e.get("effects", [])
+    # A-5：規格寫的是**酬載**；舊文件上規格沒點名的**非酬載機制**（彈道 / 無敵窗）
+    #      在這裡接回來。⛔ 這一行要緊貼在 effects 指派之後 —— 後面任何一步再動
+    #      `doc["effects"]` 都會被 main() 的閘抓到（它比對最終寫出去的那份）。
+    doc["effects"] = carry_mechanisms(aid, prev, e.get("effects", []), e)
+    # ── A-1：[變身]/[切換] → championForm ────────────────────────────────
+    # ⛔ 表格裡不可以再手打 championForm。79-04 就是這樣活下來的 ——
+    #    一格手打讓另外四支的缺口整整沒有人發現。
+    assert not any(
+        isinstance(x, dict) and x.get("kind") == "championForm" for x in doc["effects"]
+    ), f"{num}: ⛔ 不要在表格裡手打 championForm，它由標籤 + w3x transform 連結推導"
+    tags = lead_tags(e["desc"])
+    to = next((v for k, v in FORM_TAG_TO.items() if k in tags), None)
+    if to is not None and FORM_TRIGGERS.get(num) == cid:
+        form = {"kind": "championForm", "to": to}
+        if to == "alternate":
+            # w3a `ahdu`（可以是逐階陣列，schema/effect.ts 的 zRankScalar）。
+            assert "form_sec" in e, f"{num} 是 [變身] 技，必須填 form_sec=（規格印的持續秒數）"
+            form["durationSec"] = e["form_sec"]
+        else:
+            # ⭐ 切換**沒有** durationSec —— 缺席才是 FORM_NEVER_EXPIRES
+            #   （ChampionFormSystem.ts）。championFormToggle.test.ts 有一條
+            #   叫「a toggle is not a 15-second buff」就是在守這一格。
+            assert "form_sec" not in e, f"{num} 是 [切換] 技，⛔ 不可以有 form_sec"
+            # 切換沒有時鐘，所以帶 duration 的 payload 掛上去必然對不上：
+            # 關掉之後還在，或開著卻先退掉（失敗形態②）。開著期間要給什麼，
+            # 寫在 passive.ranks[].whileForm 或 toggle.whileOn。
+            assert not any(
+                isinstance(x, dict) and x.get("kind") in ("applyBuff", "applyStatus")
+                for x in doc["effects"]
+            ), f"{num} 是 [切換] 技，effects 不可以有 applyBuff/applyStatus（切換沒有時鐘）"
+        doc["effects"].insert(0, form)
+        FORMS_EMITTED[num] = aid
     if e.get("passive"):
         doc["passive"] = e["passive"]
     if e.get("mark"):
         doc["marks"] = [e["mark"]]
-    for k in ("vfxKey", "vfx", "hitFeel", "telegraph"):
-        if k in prev:
-            doc[k] = prev[k]
+    # 【切換】的開／關兩態（schema/ability.ts 的 zAbilityToggle）。今天只有
+    # 20-01 用得到，理由見那一列的註解 —— ⛔ 70-00 不可以有。
+    if e.get("toggle"):
+        doc["toggle"] = e["toggle"]
+    # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
+    for k, v in prev.items():
+        if k in SPEC_OWNED:
+            continue
+        if k in RETIRED:
+            DROP_LOG.setdefault(aid, {})[k] = v
+            continue
+        doc.setdefault(k, v)
+    # ── A-8：技能自己發動的 damageArea 要含震央（passive/hooks 裡的不碰）──────
+    _own_area(doc["effects"])
     # ⛔ castTimeSec **不手填** —— `deriveCastTime()` 是唯一來源，
-    #    `castTimeCoverage.test.ts` 逐支比對。由 deriveCastTimes 後處理補上。
+    #    `castTimeCoverage.test.ts` 逐支比對。由 deriveCastTimes 後處理補上
+    #    （finalize_content() 會跑它）。
     return cid, slot, doc
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ⛔ 寫完 JSON **不等於**出貨。客戶端讀 content/bundle.json，game-server 開機讀
+#    manifest.json + 各集合 _index.json —— 全部是 `pnpm content:build` 的產物。
+#    少跑這一段的代價已經量過兩次：
+#      · 2026-08-01：一份過期的 bundle 帶著全綠的測試上線，選人畫面整個空的。
+#      · 這一批 90 支重製稿：`shippedBundleIsCurrent` 4 條 +『bundle』3 條紅，
+#        而那 90 份 JSON 本身一份都沒錯。
+#    所以這不是「順手做一下」，它是產生器的**最後一段**。
+#
+# ⚠️ 任何一關失敗都非零離開。這裡 fail-open 就是 2026-08-01 事故本身。
+# ─────────────────────────────────────────────────────────────────────────────
+def finalize_content():
+    """把「內容 → 出貨產物」跑完；任何一關失敗就以非零離開碼停下來。"""
+    pnpm = shutil.which("pnpm")
+    if pnpm is None:
+        sys.exit(
+            "✖ PATH 上找不到 pnpm —— 索引與 bundle **沒有**重建。\n"
+            "  ⛔ 不要當成成功：客戶端讀的是 bundle.json，不是你剛寫的那 90 份 JSON。"
+        )
+    # 明寫 GGD_CONTENT_DIR：讓「寫進哪棵樹」與「重建哪棵樹」是同一次宣告，
+    # 而不是兩邊各自推導出來、只是碰巧相等（配對式後置條件）。
+    env = dict(os.environ, GGD_CONTENT_DIR=os.path.join(ROOT, "content"))
+    # ⭐ castTimeSec 的唯一來源是 castTimeFormula.deriveCastTime()（RETIRED 那張表
+    #    說明了為什麼舊值不可以抄回來）。這一步就是那個「後處理」。
+    print("→ deriveCastTimes --write（castTimeSec 由公式重算，含英雄卡鏡像）")
+    rc = subprocess.run(
+        [pnpm, "--filter", "@ggd/shared", "exec", "tsx", "scripts/deriveCastTimes.ts", "--write"],
+        cwd=ROOT, env=env,
+    ).returncode
+    if rc != 0:
+        sys.exit(f"✖ deriveCastTimes 失敗（exit {rc}）—— castTimeSec 沒有補上，⛔ 不要 commit。")
+    print("→ pnpm content:build（嚴格 Zod 驗證 → 重建 _index / manifest / bundle）")
+    rc = subprocess.run([pnpm, "content:build"], cwd=ROOT, env=env).returncode
+    if rc != 0:
+        sys.exit(
+            f"✖ pnpm content:build 失敗（exit {rc}）—— 索引與 bundle **沒有**重建。\n"
+            "  上面那幾行已經指名出問題的檔與欄位（buildIndexes.ts 是先驗再寫）。\n"
+            "  ⛔ 不要 commit：現在 content/ 的來源檔是新的、產物是舊的。"
+        )
+    # 2026-08-02 事故的另一半：content:build 讀的是**工作區**，看得到未追蹤的來源檔，
+    # 於是「產物進了 git、來源檔沒進」的組合會被 push 出去（deploy 走 git pull）。
+    # 守衛 shippedBundleHasTrackedSources.test.ts 只在跑測試時響；這裡當場響。
+    untracked = subprocess.run(
+        ["git", "ls-files", "--others", "--exclude-standard", "content"],
+        cwd=ROOT, capture_output=True, text=True,
+    ).stdout.splitlines()
+    if untracked:
+        sys.exit(
+            "✖ 這些來源檔已經被烘進 bundle，但**不在版控裡**（deploy 走 git pull）：\n  "
+            + "\n  ".join(untracked)
+            + "\n  修法：git add content/"
+        )
+    print("✓ 產物已重建。commit 記得 `git add content/`：bundle.json / manifest.json / 各 _index.json")
 
 
 def main():
     dry = "--dry-run" in sys.argv
+    no_build = "--no-build" in sys.argv
     docs = [build(e) for e in T]
     assert len(docs) == 90, f"表裡只有 {len(docs)} 支，應該是 90"
+    # ── A-1 的閘：w3x 指名的變身觸發技，一支都不可以無聲消失 ──────────────
+    # ⭐ 這是「閘」不是「判準」（CLAUDE.md 第零守則）：下一批 90 支再漏一次
+    #    變身詞彙，會在**產生器當場**炸掉，而不是等到某條測試用別的訊息紅。
+    missing = sorted(
+        n for n in FORM_TRIGGERS if n not in FORMS_EMITTED and n not in FORM_TAG_WAIVED
+    )
+    assert not missing, (
+        "這幾支是 w3x 指名的變身觸發技，但輸出裡沒有 championForm：\n  "
+        + "\n  ".join(f"{n} → {FORM_TRIGGERS[n]}" for n in missing)
+        + "\n（要嘛規格的標籤列漏了 [變身]/[切換]，要嘛這是一個設計變更 —— "
+        "是設計變更就把編號加進 FORM_TAG_WAIVED，並寫上是誰、哪一天裁決的）"
+    )
+    for n, why in sorted(FORM_TAG_WAIVED.items()):
+        print(f"⚠️  {n} 的變身被**明示**放掉：{why}")
+    # 反方向：帶標籤但沒有第二具身體 = buff 形態，不是換身體。印出來，不 assert。
+    orphan = [
+        x["num"]
+        for x in T
+        if any(k in lead_tags(x["desc"]) for k in FORM_TAG_TO)
+        and FORM_TRIGGERS.get(x["num"]) is None
+    ]
+    if orphan:
+        print("ℹ️  帶 [變身]/[切換] 標籤但沒有第二具身體（buff 形態，不換身體）："
+              + "、".join(orphan))
+    print(f"championForm：{len(FORMS_EMITTED)} 支（w3x 觸發技 {len(FORM_TRIGGERS)} 支，"
+          f"明示放掉 {len(FORM_TAG_WAIVED)} 支）")
+    # ── A-5 的閘 ────────────────────────────────────────────────────────────
+    # ⚠️ 讀的是**最終要寫出去的那份 doc**，不是 carry_mechanisms 的暫存 ——
+    #    所以「接上了但被後面某一步蓋掉」也會紅（第二守則失敗形態②）。
+    leaks, report = [], []
+    for _cid, _slot, d in docs:
+        a = AUDIT.get(d["id"])
+        if a is None:
+            continue
+        now = {x.get("kind") for x in d["effects"] if isinstance(x, dict)}
+        lost = [k for k in a["prev_kinds"] if k not in now]
+        for k in lost:
+            if k in CARRY_KINDS and k not in a["dropped"]:
+                leaks.append(f"  {d['id']} 掉了 {k}")
+        bits = []
+        if a["carried"]:
+            bits.append("沿用 " + "/".join(a["carried"]))
+        if a["dropped"]:
+            bits.append("明示退場 " + "/".join(a["dropped"]))
+        spec_rewrote = [k for k in lost if k not in CARRY_KINDS]
+        if spec_rewrote:
+            bits.append("規格改寫掉 " + "/".join(spec_rewrote))
+        if bits:
+            report.append(f"  {d['id']}: " + "；".join(bits))
+    assert not leaks, (
+        "A-5：規格沒點名的既有機制被靜默丟掉了 —— 沉默 ≠ 移除。\n"
+        + "\n".join(leaks)
+        + "\n真的要讓它退場，就在那一列填 retire={'<kind>': '為什麼'}，留下紙本痕跡；"
+        "⛔ 不要把它從 CARRY_KINDS 拿掉。"
+    )
+    print(f"── 機制差異報表：{len(report)} 支與舊出貨文件不同 ──")
+    for line in report:
+        print(line)
+    if DROP_LOG:
+        print(f"── A-6 明示退場的欄位：{len(DROP_LOG)} 份文件 ──")
+        for aid in sorted(DROP_LOG):
+            print(f"  {aid}: " + "、".join(sorted(DROP_LOG[aid])))
+    # ⭐ A-3 標籤閘。⛔ 一定要在寫任何檔案**之前** —— 擋下來的時候一個檔案都沒動。
+    gaps, stale = tag_gate.audit([(e["desc"], d) for e, (_c, _s, d) in zip(T, docs)])
+    if gaps or stale:
+        for aid, tag, why in gaps:
+            print(f"❌ {aid}  [{tag}]  {why}", file=sys.stderr)
+        for (aid, tag), why in stale:
+            print(f"❌ 過期豁免 {aid} [{tag}] —— 缺口已經補好了，把這一列刪掉（原理由：{why}）",
+                  file=sys.stderr)
+        print(f"\n標籤閘擋下 {len(gaps)} 個缺口 / {len(stale)} 筆過期豁免 —— 一個檔案都沒寫。\n"
+              f"修法二選一：把機制寫進表格，或在 tag_gate.WAIVERS 加一列**帶理由**的豁免。",
+              file=sys.stderr)
+        sys.exit(1)
+    print("標籤閘：90 支的標籤全部找得到對應機制（含 %d 筆有理由的豁免）"
+          % (len(tag_gate.WAIVERS) + len(tag_gate.BLOCKED_WAIVERS)))
+    if "--audit-only" in sys.argv:
+        return
     by_champ = {}
     for cid, slot, d in docs:
         by_champ.setdefault(cid, {})[slot] = d
@@ -913,6 +1558,17 @@ def main():
     with open("/private/tmp/skill-chapter.md", "w", encoding="utf-8") as f:
         f.write("\n".join(out))
     print("章節寫到 /private/tmp/skill-chapter.md")
+    # ⛔ 產生器的最後一段：內容 → 出貨產物（A-2）。
+    if dry:
+        print("（dry-run：沒有寫任何檔，所以不重建產物）")
+    elif no_build:
+        print(
+            "⚠️ --no-build：略過了 pnpm content:build。\n"
+            "   ⛔ 現在 content/ 的來源檔是新的、產物是舊的 —— 這正是 A-2 那個缺陷的狀態。\n"
+            "   `shippedBundleIsCurrent.test.ts`(4) 與 `bundle.test.ts`(3) 會紅，而且**不可以** commit。"
+        )
+    else:
+        finalize_content()
 
 
 if __name__ == "__main__":

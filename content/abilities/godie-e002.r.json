@@ -1,10 +1,10 @@
 {
   "id": "godie-e002.r",
+  "schema": "ability@1",
   "name": "20-04 Avalon-永恆的理想鄉",
-  "icon": "assets/icons/abilities/godie-e002.r.webp",
-  "description": "[輔助]\n60秒冷卻時間\n\nSaber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使Saber在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，基礎威力為等級*30+力量*5，聚集的敵人越多和敵方技能越高，額外的傷害就越高，承受時間2秒。",
+  "description": "[主動][輔助][反彈][AP加成]\n60秒冷卻\n消耗MP150/250/350\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",
   "slot": "R",
-  "castType": "ground",
+  "castType": "self",
   "maxRank": 3,
   "cooldown": [
     60.0,
@@ -17,31 +17,15 @@
     350.0
   ],
   "range": 0.0,
-  "effects": [],
-  "template": {
-    "ref": "tpl-ground-nova",
-    "params": {
-      "radius": 200,
-      "damage": {
-        "perRank": [
-          250,
-          500,
-          750
-        ],
-        "ratios": [
-          {
-            "stat": "ad",
-            "coeff": 0.6
-          }
-        ]
-      },
-      "damageType": "physical",
-      "castTimeSec": 0.6
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "moon-combo",
+      "duration": 2.0
     }
-  },
+  ],
+  "icon": "assets/icons/abilities/godie-e002.r.webp",
   "vfxKey": "fx.prim.holy.nova-lg",
-  "targetsEnemies": true,
-  "radius": 3.67,
-  "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.4
 }

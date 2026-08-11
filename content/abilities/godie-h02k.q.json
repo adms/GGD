@@ -2,41 +2,170 @@
   "id": "godie-h02k.q",
   "schema": "ability@1",
   "name": "89-01 憤怒的頭槌",
-  "icon": "assets/icons/abilities/godie-h02k.q.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n當熊貓憤怒到極點的時候將會使出致命殺傷力的頭槌攻擊，但是牠總是忘記有這招，攻擊時有5%機率想起頭槌攻擊，造成111點破壞力，並將敵人震昏0.5秒。",
+  "description": "[被動][機率][普攻時][暈眩]\n\n「頭腦不好沒關係，頭骨夠硬就行」\n[攻擊時]有 3/4/5/6%[機率]想起頭槌攻擊，造成 10倍 [暴擊] 傷害，並將敵人[暈眩] 1秒。\n\n(敵方 [燃燒] 狀態下額外追加 [致盲] 狀態，持續 5秒)",
   "slot": "Q",
   "castType": "self",
-  "maxRank": 5,
+  "maxRank": 4,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 0,
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 3,
-      "modifiers": [
-        {
-          "stat": "as",
-          "op": "flat",
-          "value": 0.25
-        }
-      ],
-      "castTimeSec": 0.3
-    }
+  "passive": {
+    "name": "89-01 憤怒的頭槌",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.03,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "chance": 0.03,
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 5.0,
+                "missChance": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "chance": 0.04,
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 5.0,
+                "missChance": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.05,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "chance": 0.05,
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 5.0,
+                "missChance": 0.5
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.06,
+            "target": "event",
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "stun",
+                "duration": 1.0,
+                "stun": true
+              }
+            ]
+          },
+          {
+            "on": "onBasicAttack",
+            "chance": 0.06,
+            "target": "event",
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "tag": "burn"
+            },
+            "effects": [
+              {
+                "kind": "applyStatus",
+                "statusId": "blind",
+                "duration": 5.0,
+                "missChance": 0.5
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.physical.shockwave",
-  "castTimeSec": 0.3
+  "icon": "assets/icons/abilities/godie-h02k.q.webp",
+  "vfxKey": "fx.prim.physical.shockwave"
 }

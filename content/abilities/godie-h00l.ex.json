@@ -1,34 +1,51 @@
 {
   "id": "godie-h00l.ex",
-  "name": "60-002 絕光斬",
-  "icon": "assets/icons/abilities/godie-h00l.ex.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n在生命低於45%的瀕死狀態，林克的絕光斬將自動覺醒，每次攻擊都能產生一道劍氣，造成325點傷害。",
+  "schema": "ability@1",
+  "name": "60-002 勇者意志",
+  "description": "[被動][反彈成功時][反彈]\n120秒冷卻\n\n「真正的勇者不是不會死，是存檔點夠近」\n生命值低於30%時，立即獲得相當於 100% [最大生命值]的[護盾]，120秒內只能觸發一次，若 [完美盾反] [反彈]成功，冷卻立即重置。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    60.0
-  ],
-  "manaCost": [
     120.0
   ],
-  "range": 0,
+  "manaCost": [
+    0.0
+  ],
+  "range": 0.0,
+  "targetsEnemies": false,
   "effects": [],
-  "template": {
-    "ref": "tpl-buff-self",
-    "params": {
-      "duration": 6,
-      "modifiers": [
-        {
-          "stat": "ad",
-          "op": "pctAdd",
-          "value": 0.35
-        }
-      ],
-      "castTimeSec": 0.4
-    }
+  "passive": {
+    "name": "60-002 勇者意志",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onDamageTaken",
+            "target": "self",
+            "internalCooldown": 120.0,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 1500.0
+                },
+                "duration": 8.0
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
-  "vfxKey": "fx.prim.holy.beam-lg",
-  "schema": "ability@1",
-  "castTimeSec": 0.4
+  "icon": "assets/icons/abilities/godie-h00l.ex.webp",
+  "vfxKey": "fx.prim.holy.beam-lg"
 }
