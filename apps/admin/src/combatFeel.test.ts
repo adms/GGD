@@ -194,12 +194,16 @@ describe("讀值：畫面顯示的是**模擬器讀出來的**，不是文件裡
 });
 
 describe("存檔的文件", () => {
-  it("永遠帶著完整四張子表 —— 只寫被改過的區塊會凍結另外三張", () => {
+  it("永遠帶著完整的每一張子表 —— 只寫被改過的區塊會凍結其餘幾張", () => {
     cover(TAG);
     const values = { ...shippedValues(), "autoEngage.enabled": "false" };
     const doc = feelDocFrom(values);
+    // ⛔ 這裡刻意**不抄**一份子表名單。抄的那一版在 2026-08-11 加第五張子表
+    //    （`aimAssist`，GH#315）時紅了，而紅的訊息是「多了一張」—— 一個純粹的
+    //    維護稅，它擋不住任何缺陷。要驗的是「每一張都被寫出去」，那就從
+    //    `COMBAT_FEEL_GROUPS` 推導（第二守則：不抄字面值）。
     expect(Object.keys(doc).sort()).toEqual(
-      ["autoEngage", "facing", "id", "knockback", "manualOrder", "schema", "standstill"].sort(),
+      [...COMBAT_FEEL_GROUPS.map((g) => g.key), "id", "schema"].sort(),
     );
     expect(doc.id).toBe(COMBAT_FEEL_DOC_ID);
     expect(doc.schema).toBe(COMBAT_FEEL_SCHEMA);

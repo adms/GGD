@@ -180,7 +180,8 @@ describe("#265 初始生命加成:進 BASE 之外、倍率之外 (balance-265-ba
     // 與初始生命 300→650),同日再依 TTK sweep 升到 9,2026-08-02 直接指定回 **4**。
     //
     // 2026-08-02 直接指定回 5,**2026-08-10 owner 再指定 4**(同一批還有
-    // attackRange 1.0→0.6、abilityRange 0.6→0.8、manaRegen 8→16)。
+    // attackRange 1.0→0.6、abilityRange 0.6→0.8、manaRegen 8→16;
+    // manaRegen 於 2026-08-11 又被 owner 指定回 8「維持以前的就好」)。
     //
     // ⚠️ **這一格不是單獨的一個數字,它是三個欄位一起改的其中一格。** 另外兩格是
     // `config.match.json` 的 `fireRing.startSec 90` 與 `combatMaxSec 180`。

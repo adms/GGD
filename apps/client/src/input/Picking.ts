@@ -44,13 +44,12 @@ export interface PickableUnit {
 /**
  * 小怪在**自動**索敵裡要被扣多少分（GH#315）。
  *
- * ⭐ 這是一個決策點（CLAUDE.md 第一守則）：一堆殭屍站在敵方英雄前面時，
- * 手把的瞄準輔助該鎖誰？出貨值 6.0 的意思是「小怪要比英雄近 6 個單位以上，
- * 才搶得走瞄準」—— 決鬥區半徑是 24，所以那是「貼臉的殭屍才會被鎖」。
+ * ⭐ owner 2026-08-11 核准把它升級成後台欄位：`config.combat-feel@1` 的
+ * `aimAssist.mobPenalty`（三個住處 = 內容檔 + Zod DEFAULT + 後台頁）。
+ * 這裡留的是**拿不到文件時的結構性回退值**，和 `statCaps` / `cooldownRules`
+ * 同一個分層 —— ⛔ 不是「真正生效的那個」。
  *
- * ⚠️ 這一格**還不是後台欄位**（它住在客戶端輸入層，`combat-feel` 那份 config
- * 目前不流到這裡）。要調就要改這個常數並重新 build client。
- * owner 想要旋鈕的話這裡就升級成 `config.combat-feel@1` 的一格。
+ * 呼叫端要傳 `penalty`；不傳＝用這個回退值，讓既有呼叫逐位元不變。
  */
 export const MOB_AIM_ASSIST_PENALTY = 6.0;
 
@@ -69,6 +68,8 @@ export function pickNearestUnit(
   units: Iterable<PickableUnit>,
   maxRange: number,
   aimDir?: Vec2 | null,
+  /** 小怪讓路幅度。省略＝結構性回退值，見 {@link MOB_AIM_ASSIST_PENALTY}。 */
+  mobPenalty: number = MOB_AIM_ASSIST_PENALTY,
 ): number | null {
   let best: number | null = null;
   let bestScore = Infinity;
@@ -85,7 +86,7 @@ export function pickNearestUnit(
     }
     // 小怪讓路給英雄 —— 見 MOB_AIM_ASSIST_PENALTY。⛔ 這是**自動**索敵才有的
     // 偏好；滑鼠直接點（pickUnit）不讀 priority。
-    score += (u.priority ?? 0) * MOB_AIM_ASSIST_PENALTY;
+    score += (u.priority ?? 0) * mobPenalty;
     if (score < bestScore) {
       bestScore = score;
       best = u.id;

@@ -27,5 +27,8 @@
     "idleSeeks": false,
     "respectLiveSteering": true,
     "ccPausesStall": true
+  },
+  "aimAssist": {
+    "mobPenalty": 6
   }
 }

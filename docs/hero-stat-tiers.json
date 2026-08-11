@@ -17,14 +17,14 @@
       "growth": "championStatBase(def, stat, 2, ENV) − championStatBase(def, stat, 1, ENV)"
     },
     "banding": "Jenks 自然斷點（一維最小類內平方差 DP 精確解，無隨機、可重現），k=5",
-    "defaultMode": "reachable-dedup"
+    "defaultMode": "reachable"
   },
   "readme": [
     "values = **卡面值**（英雄文件裡該填的數字）；ingameValues = 過完 finalizeStat 四道關卡之後**玩家吃到**的值。",
     "四道關卡：①combat-env 倍率鏈 ②體型倍率 rangeScale（只有攻擊距離）③基礎加成（+，在倍率之後）④clamp / stat-caps。",
     "界線（breaksJenks）是 4 個**上界**：v <= breaks[0] → 極小，依此類推，超過 breaks[3] → 極大。",
     "degenerate: true = 這一項的相異值不到 5 個，撐不起五帶 —— 界線是假的，landing 一律 null，也不進補償判定。",
-    "godie-zombiex 在 landing 裡但 inBoundaryDerivation=false：owner 要它被校正，但它是小怪側數值，不該定義界線。",
+    "godie-zombiex **進**界線推導（owner 2026-08-11 二次拍板：母體就是 53+21）。它在白名單種子裡，是那 53 位可選本體之一 —— 玩家選得到的英雄就該參與定義「什麼算正常」。",
     "兩軸各自跑自己的 Jenks，⛔ 不共用界線（量綱差 30 倍，共用會讓其中一軸塌成一格）。"
   ],
   "population": {
@@ -34,7 +34,7 @@
       "transform": 21,
       "mob": 1
     },
-    "boundaryDerivationTotal": 73,
+    "boundaryDerivationTotal": 74,
     "pickableTotal": 53,
     "rows": [
       {
@@ -845,7 +845,7 @@
         "name": "聖杯黑泥醬 - 喪標麥可",
         "group": "mob",
         "counterpartId": null,
-        "inBoundaryDerivation": false,
+        "inBoundaryDerivation": true,
         "attackType": "melee",
         "bodyScale": 1,
         "attrSource": "authored",
@@ -857,9 +857,10 @@
       "ApplyStarterSet 是 union-only（永不移除），而後台的 PUT /curation/whitelist 與 bulk 可以任意增減任何 id → 線上與種子的差距**上下都未知**，不要只往「線上更少」寫。",
       "要關掉這一格只有一條路：請 owner 從後台匯出 whitelist（或 #179 的遷移包）貼進來。⛔ 不可以從「線上顯示 63 隻」這個數字反推內容。",
       "伺服器側 randomChampionPool() 不呼叫 isTransformedBody，所以 bot／殭屍王抽到的身體可能超出這份母體 —— 那是另一個缺口（已記在 docs/hero-tiers-proposal.md），不影響玩家自己選得到誰。",
-      "可達母體實測 74（可選本體 52 + 可達變身 21 + zombiex 1）。⚠️ 計畫書的「75」把 godie-zombiex 算了兩次 —— 它已經在白名單種子裡（starter.go），是那 53 位可選本體之一。可選本體 53 = 52 + zombiex。",
-      "pickable 模式的母體是 52（可選本體扣掉 zombiex）—— zombiex 依 owner 裁決不進任何界線推導，三種模式都不收它。",
-      "reachable-dedup 的母體大小**逐屬性逐軸不同**（52～64），因為去重是逐屬性做的：一位變身態可能生命與本體同值、攻速不同，逐英雄丟會連真資訊一起丟。"
+      "母體 74 = 可選本體 53（含 godie-zombiex）+ 可達變身 21。owner 2026-08-11 二次拍板：**53+21 全部進統計**。",
+      "⚠️ 計畫書第一版的「75」是重複計數 —— godie-zombiex 本來就在白名單種子裡（starter.go:346），是那 53 位可選本體之一，不是第 54 位。",
+      "⚠️ 第一版把 zombiex 擋在界線推導外（inBoundaryDerivation=false），這一版取消了：玩家選得到的英雄就該參與定義「什麼算正常」，否則會出現「照界線它是極小、但界線根本沒看過它」這種自打嘴巴的表。",
+      "預設模式從 reachable-dedup 改回 **reachable**。dedup 的唯一理由是「17 位變身態與本體逐位元相同」，而那句話實測是假的（26 個非退化軸格全同的只有 1 位，中位數 23/26）。三種模式仍全部算出來供對照。"
     ]
   },
   "ownerSpecifiedTargets": {
@@ -1213,21 +1214,21 @@
             767
           ],
           "bandCounts": [
-            19,
-            15,
-            8,
-            9,
+            27,
+            22,
+            12,
+            11,
             2
           ],
           "degenerate": false,
-          "distinct": 15,
-          "min": 491,
+          "distinct": 16,
+          "min": 380,
           "max": 886,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 15,
+              "n": 74,
+              "distinct": 16,
               "breaks": [
                 518,
                 564,
@@ -1235,7 +1236,7 @@
                 767
               ],
               "bandCounts": [
-                26,
+                27,
                 22,
                 12,
                 11,
@@ -1243,8 +1244,8 @@
               ]
             },
             "reachable-dedup": {
-              "n": 53,
-              "distinct": 15,
+              "n": 54,
+              "distinct": 16,
               "breaks": [
                 518,
                 564,
@@ -1252,7 +1253,7 @@
                 767
               ],
               "bandCounts": [
-                19,
+                20,
                 15,
                 8,
                 9,
@@ -1260,20 +1261,20 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 14,
+              "n": 53,
+              "distinct": 15,
               "breaks": [
+                380,
                 518,
                 564,
-                679,
-                767
+                679
               ],
               "bandCounts": [
+                1,
                 19,
                 15,
                 8,
-                9,
-                1
+                10
               ]
             }
           }
@@ -1439,20 +1440,20 @@
           ],
           "bandCounts": [
             5,
-            12,
-            23,
-            8,
-            7
+            16,
+            32,
+            10,
+            11
           ],
           "degenerate": false,
-          "distinct": 24,
+          "distinct": 25,
           "min": 43,
           "max": 126.85,
-          "derivationN": 55,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 24,
+              "n": 74,
+              "distinct": 25,
               "breaks": [
                 51.6,
                 68.8,
@@ -1462,14 +1463,14 @@
               "bandCounts": [
                 5,
                 16,
-                31,
+                32,
                 10,
                 11
               ]
             },
             "reachable-dedup": {
-              "n": 55,
-              "distinct": 24,
+              "n": 56,
+              "distinct": 25,
               "breaks": [
                 51.6,
                 68.8,
@@ -1479,14 +1480,14 @@
               "bandCounts": [
                 5,
                 12,
-                23,
+                24,
                 8,
                 7
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 24,
+              "n": 53,
+              "distinct": 25,
               "breaks": [
                 51.6,
                 68.8,
@@ -1496,7 +1497,7 @@
               "bandCounts": [
                 5,
                 10,
-                22,
+                23,
                 8,
                 7
               ]
@@ -1671,20 +1672,20 @@
           ],
           "bandCounts": [
             2,
+            24,
+            30,
             17,
-            21,
-            13,
             1
           ],
           "degenerate": false,
-          "distinct": 25,
+          "distinct": 26,
           "min": 130,
           "max": 6905,
-          "derivationN": 54,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 25,
+              "n": 74,
+              "distinct": 26,
               "breaks": [
                 210,
                 340,
@@ -1693,15 +1694,15 @@
               ],
               "bandCounts": [
                 2,
-                23,
+                24,
                 30,
                 17,
                 1
               ]
             },
             "reachable-dedup": {
-              "n": 54,
-              "distinct": 25,
+              "n": 55,
+              "distinct": 26,
               "breaks": [
                 210,
                 340,
@@ -1710,15 +1711,15 @@
               ],
               "bandCounts": [
                 2,
-                17,
+                18,
                 21,
                 13,
                 1
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 23,
+              "n": 53,
+              "distinct": 24,
               "breaks": [
                 210,
                 340,
@@ -1727,7 +1728,7 @@
               ],
               "bandCounts": [
                 2,
-                17,
+                18,
                 18,
                 13,
                 2
@@ -1896,20 +1897,20 @@
           ],
           "bandCounts": [
             1,
-            33,
-            11,
-            7,
+            48,
+            14,
+            10,
             1
           ],
           "degenerate": false,
-          "distinct": 22,
+          "distinct": 23,
           "min": 6,
           "max": 108,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 22,
+              "n": 74,
+              "distinct": 23,
               "breaks": [
                 6,
                 51.5,
@@ -1918,15 +1919,32 @@
               ],
               "bandCounts": [
                 1,
-                47,
+                48,
                 14,
                 10,
                 1
               ]
             },
             "reachable-dedup": {
+              "n": 54,
+              "distinct": 23,
+              "breaks": [
+                6,
+                51.5,
+                69.25,
+                86
+              ],
+              "bandCounts": [
+                1,
+                34,
+                11,
+                7,
+                1
+              ]
+            },
+            "pickable": {
               "n": 53,
-              "distinct": 22,
+              "distinct": 23,
               "breaks": [
                 6,
                 51.5,
@@ -1936,23 +1954,6 @@
               "bandCounts": [
                 1,
                 33,
-                11,
-                7,
-                1
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 22,
-              "breaks": [
-                6,
-                51.5,
-                69.25,
-                86
-              ],
-              "bandCounts": [
-                1,
-                32,
                 11,
                 7,
                 1
@@ -2127,21 +2128,21 @@
             8.64
           ],
           "bandCounts": [
-            34,
-            16,
-            1,
+            49,
+            21,
+            2,
             1,
             1
           ],
           "degenerate": false,
-          "distinct": 22,
+          "distinct": 23,
           "min": 0.69,
           "max": 12.88,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 22,
+              "n": 74,
+              "distinct": 23,
               "breaks": [
                 1.09,
                 1.88,
@@ -2149,7 +2150,7 @@
                 8.64
               ],
               "bandCounts": [
-                48,
+                49,
                 21,
                 2,
                 1,
@@ -2157,6 +2158,23 @@
               ]
             },
             "reachable-dedup": {
+              "n": 54,
+              "distinct": 23,
+              "breaks": [
+                1.09,
+                1.88,
+                3.3,
+                8.64
+              ],
+              "bandCounts": [
+                35,
+                16,
+                1,
+                1,
+                1
+              ]
+            },
+            "pickable": {
               "n": 53,
               "distinct": 22,
               "breaks": [
@@ -2166,24 +2184,7 @@
                 8.64
               ],
               "bandCounts": [
-                34,
-                16,
-                1,
-                1,
-                1
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 21,
-              "breaks": [
-                1.09,
-                1.88,
-                3.3,
-                8.64
-              ],
-              "bandCounts": [
-                34,
+                35,
                 15,
                 1,
                 1,
@@ -2353,20 +2354,20 @@
           ],
           "bandCounts": [
             4,
-            13,
-            23,
-            8,
-            7
+            17,
+            31,
+            10,
+            12
           ],
           "degenerate": false,
-          "distinct": 24,
+          "distinct": 25,
           "min": 0.09,
-          "max": 0.268,
-          "derivationN": 55,
+          "max": 0.272,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 24,
+              "n": 74,
+              "distinct": 25,
               "breaks": [
                 0.108,
                 0.144,
@@ -2378,12 +2379,12 @@
                 17,
                 31,
                 10,
-                11
+                12
               ]
             },
             "reachable-dedup": {
-              "n": 55,
-              "distinct": 24,
+              "n": 56,
+              "distinct": 25,
               "breaks": [
                 0.108,
                 0.144,
@@ -2395,12 +2396,12 @@
                 13,
                 23,
                 8,
-                7
+                8
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 24,
+              "n": 53,
+              "distinct": 25,
               "breaks": [
                 0.108,
                 0.144,
@@ -2412,7 +2413,7 @@
                 11,
                 22,
                 8,
-                7
+                8
               ]
             }
           }
@@ -2581,41 +2582,58 @@
             1.43,
             2.2,
             3.64,
-            4.68
+            6.12
           ],
           "bandCounts": [
-            31,
-            19,
-            3,
-            1,
+            41,
+            26,
+            4,
+            2,
             1
           ],
           "degenerate": false,
-          "distinct": 26,
+          "distinct": 27,
           "min": 0.24,
           "max": 1008.89,
-          "derivationN": 55,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 26,
+              "n": 74,
+              "distinct": 27,
               "breaks": [
                 1.43,
                 2.2,
                 3.64,
-                4.68
+                6.12
               ],
               "bandCounts": [
                 41,
                 26,
                 4,
-                1,
+                2,
                 1
               ]
             },
             "reachable-dedup": {
-              "n": 55,
-              "distinct": 26,
+              "n": 56,
+              "distinct": 27,
+              "breaks": [
+                1.43,
+                2.2,
+                3.64,
+                6.12
+              ],
+              "bandCounts": [
+                31,
+                19,
+                3,
+                2,
+                1
+              ]
+            },
+            "pickable": {
+              "n": 53,
+              "distinct": 25,
               "breaks": [
                 1.43,
                 2.2,
@@ -2623,27 +2641,10 @@
                 4.68
               ],
               "bandCounts": [
-                31,
-                19,
+                30,
+                18,
                 3,
                 1,
-                1
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 24,
-              "breaks": [
-                1.22,
-                1.64,
-                2.2,
-                3.64
-              ],
-              "bandCounts": [
-                18,
-                21,
-                9,
-                3,
                 1
               ]
             }
@@ -2810,20 +2811,20 @@
           ],
           "bandCounts": [
             1,
-            31,
-            13,
-            7,
+            46,
+            16,
+            10,
             1
           ],
           "degenerate": false,
-          "distinct": 23,
+          "distinct": 24,
           "min": 0.02,
           "max": 0.44,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 23,
+              "n": 74,
+              "distinct": 24,
               "breaks": [
                 0.02,
                 0.196,
@@ -2832,15 +2833,32 @@
               ],
               "bandCounts": [
                 1,
-                45,
+                46,
                 16,
                 10,
                 1
               ]
             },
             "reachable-dedup": {
+              "n": 54,
+              "distinct": 24,
+              "breaks": [
+                0.02,
+                0.196,
+                0.2785,
+                0.354
+              ],
+              "bandCounts": [
+                1,
+                32,
+                13,
+                7,
+                1
+              ]
+            },
+            "pickable": {
               "n": 53,
-              "distinct": 23,
+              "distinct": 24,
               "breaks": [
                 0.02,
                 0.196,
@@ -2850,23 +2868,6 @@
               "bandCounts": [
                 1,
                 31,
-                13,
-                7,
-                1
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 23,
-              "breaks": [
-                0.02,
-                0.196,
-                0.2785,
-                0.354
-              ],
-              "bandCounts": [
-                1,
-                30,
                 13,
                 7,
                 1
@@ -3041,9 +3042,9 @@
             81
           ],
           "bandCounts": [
-            22,
-            22,
-            6,
+            31,
+            30,
+            7,
             4,
             2
           ],
@@ -3051,10 +3052,10 @@
           "distinct": 23,
           "min": 25,
           "max": 90,
-          "derivationN": 56,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 23,
               "breaks": [
                 28,
@@ -3064,14 +3065,14 @@
               ],
               "bandCounts": [
                 31,
-                29,
+                30,
                 7,
                 4,
                 2
               ]
             },
             "reachable-dedup": {
-              "n": 56,
+              "n": 57,
               "distinct": 23,
               "breaks": [
                 28,
@@ -3081,14 +3082,14 @@
               ],
               "bandCounts": [
                 22,
-                22,
+                23,
                 6,
                 4,
                 2
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 21,
               "breaks": [
                 28,
@@ -3099,7 +3100,7 @@
               "bandCounts": [
                 22,
                 13,
-                9,
+                10,
                 5,
                 3
               ]
@@ -3267,19 +3268,19 @@
           ],
           "bandCounts": [
             2,
-            12,
-            15,
-            17,
-            9
+            16,
+            19,
+            26,
+            11
           ],
           "degenerate": false,
           "distinct": 32,
           "min": 2,
           "max": 5.6,
-          "derivationN": 55,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 32,
               "breaks": [
                 2.5,
@@ -3290,13 +3291,13 @@
               "bandCounts": [
                 2,
                 16,
-                18,
+                19,
                 26,
                 11
               ]
             },
             "reachable-dedup": {
-              "n": 55,
+              "n": 56,
               "distinct": 32,
               "breaks": [
                 2.5,
@@ -3307,13 +3308,13 @@
               "bandCounts": [
                 2,
                 12,
-                15,
+                16,
                 17,
                 9
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 32,
               "breaks": [
                 2.5,
@@ -3324,7 +3325,7 @@
               "bandCounts": [
                 2,
                 10,
-                14,
+                15,
                 17,
                 9
               ]
@@ -3492,35 +3493,35 @@
             "godie-zombiex": 6
           },
           "breaksJenks": [
-            2,
+            6,
             16,
             22,
             30
           ],
           "bandCounts": [
-            1,
-            18,
-            23,
-            11,
+            2,
+            24,
+            34,
+            13,
             1
           ],
           "degenerate": false,
-          "distinct": 19,
+          "distinct": 20,
           "min": 2,
           "max": 127,
-          "derivationN": 54,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 19,
+              "n": 74,
+              "distinct": 20,
               "breaks": [
-                2,
+                6,
                 16,
                 22,
                 30
               ],
               "bandCounts": [
-                1,
+                2,
                 24,
                 34,
                 13,
@@ -3528,16 +3529,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 54,
-              "distinct": 19,
+              "n": 55,
+              "distinct": 20,
               "breaks": [
-                2,
+                6,
                 16,
                 22,
                 30
               ],
               "bandCounts": [
-                1,
+                2,
                 18,
                 23,
                 11,
@@ -3545,16 +3546,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 17,
+              "n": 53,
+              "distinct": 18,
               "breaks": [
-                2,
+                6,
                 15,
                 19,
                 23
               ],
               "bandCounts": [
-                1,
+                2,
                 15,
                 16,
                 11,
@@ -3717,35 +3718,35 @@
             "godie-zombiex": 0.8
           },
           "breaksJenks": [
-            0,
-            2,
-            2.7,
+            0.8,
+            1.8,
+            2.45,
             3.2
           ],
           "bandCounts": [
-            1,
-            36,
-            9,
-            6,
+            2,
+            45,
+            12,
+            14,
             1
           ],
           "degenerate": false,
-          "distinct": 23,
+          "distinct": 24,
           "min": 0,
           "max": 4,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 23,
+              "n": 74,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 1.8,
                 2.45,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 45,
                 12,
                 14,
@@ -3753,16 +3754,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 53,
-              "distinct": 23,
+              "n": 54,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 2,
                 2.7,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 36,
                 9,
                 6,
@@ -3770,16 +3771,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 23,
+              "n": 53,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 2,
                 2.7,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 35,
                 9,
                 6,
@@ -3949,71 +3950,71 @@
             "godie-zombiex": 0
           },
           "breaksJenks": [
-            5.2,
+            5.1,
             6.9,
             8.9,
             14.5
           ],
           "bandCounts": [
-            15,
-            24,
-            13,
+            19,
+            34,
+            17,
             2,
             2
           ],
           "degenerate": false,
-          "distinct": 32,
-          "min": 3,
+          "distinct": 33,
+          "min": 0,
           "max": 19.2,
-          "derivationN": 56,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 32,
+              "n": 74,
+              "distinct": 33,
               "breaks": [
-                5.2,
+                5.1,
                 6.9,
                 8.9,
                 14.5
               ],
               "bandCounts": [
                 19,
-                33,
+                34,
                 17,
                 2,
                 2
               ]
             },
             "reachable-dedup": {
-              "n": 56,
-              "distinct": 32,
+              "n": 57,
+              "distinct": 33,
               "breaks": [
-                5.2,
-                6.9,
+                0,
+                5.4,
                 8.9,
                 14.5
               ],
               "bandCounts": [
-                15,
-                24,
-                13,
+                1,
+                17,
+                35,
                 2,
                 2
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 28,
+              "n": 53,
+              "distinct": 29,
               "breaks": [
-                4.5,
-                5.4,
+                0,
+                5.2,
                 6.9,
                 8.9
               ],
               "bandCounts": [
-                10,
-                7,
-                22,
+                1,
+                15,
+                24,
                 12,
                 1
               ]
@@ -4180,21 +4181,21 @@
             1.42
           ],
           "bandCounts": [
-            3,
-            7,
+            4,
+            9,
+            21,
             14,
-            12,
-            16
+            26
           ],
           "degenerate": false,
-          "distinct": 27,
+          "distinct": 28,
           "min": 0.45,
           "max": 1.77,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 27,
+              "n": 74,
+              "distinct": 28,
               "breaks": [
                 0.63,
                 0.835,
@@ -4203,15 +4204,15 @@
               ],
               "bandCounts": [
                 4,
-                8,
+                9,
                 21,
                 14,
                 26
               ]
             },
             "reachable-dedup": {
-              "n": 52,
-              "distinct": 27,
+              "n": 53,
+              "distinct": 28,
               "breaks": [
                 0.63,
                 0.835,
@@ -4220,15 +4221,15 @@
               ],
               "bandCounts": [
                 3,
-                7,
+                8,
                 14,
                 12,
                 16
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 27,
+              "n": 53,
+              "distinct": 28,
               "breaks": [
                 0.63,
                 0.835,
@@ -4237,7 +4238,7 @@
               ],
               "bandCounts": [
                 3,
-                7,
+                8,
                 14,
                 12,
                 16
@@ -4406,73 +4407,73 @@
             "godie-zombiex": 0.72
           },
           "breaksJenks": [
-            37,
-            40.6,
+            3.6,
+            38.8,
             46,
             66.8
           ],
           "bandCounts": [
-            16,
-            23,
-            13,
+            1,
+            40,
+            30,
             2,
             1
           ],
           "degenerate": false,
-          "distinct": 20,
-          "min": 29.2,
+          "distinct": 21,
+          "min": 3.6,
           "max": 104.2,
-          "derivationN": 55,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 20,
+              "n": 74,
+              "distinct": 21,
               "breaks": [
-                37.6,
-                40.6,
+                3.6,
+                38.8,
                 46,
                 66.8
               ],
               "bandCounts": [
-                25,
-                29,
-                16,
+                1,
+                40,
+                30,
                 2,
                 1
               ]
             },
             "reachable-dedup": {
-              "n": 55,
-              "distinct": 20,
+              "n": 56,
+              "distinct": 21,
               "breaks": [
-                37,
-                40.6,
+                3.6,
+                39.4,
                 46,
                 66.8
               ],
               "bandCounts": [
-                16,
-                23,
-                13,
+                1,
+                32,
+                20,
                 2,
                 1
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 17,
+              "n": 53,
+              "distinct": 18,
               "breaks": [
+                3.6,
                 29.2,
-                37,
-                39.4,
-                41.8
+                37.6,
+                40.6
               ],
               "bandCounts": [
                 1,
-                15,
-                16,
-                11,
-                9
+                1,
+                18,
+                20,
+                13
               ]
             }
           }
@@ -4631,35 +4632,35 @@
             "godie-zombiex": 0.336
           },
           "breaksJenks": [
-            1.2,
-            2.4,
-            2.82,
+            1.68,
+            2.28,
+            2.67,
             3.12
           ],
           "bandCounts": [
-            1,
-            36,
-            9,
-            6,
+            2,
+            45,
+            12,
+            14,
             1
           ],
           "degenerate": false,
-          "distinct": 23,
+          "distinct": 24,
           "min": 1.2,
           "max": 3.6,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 23,
+              "n": 74,
+              "distinct": 24,
               "breaks": [
-                1.2,
+                1.68,
                 2.28,
                 2.67,
                 3.12
               ],
               "bandCounts": [
-                1,
+                2,
                 45,
                 12,
                 14,
@@ -4667,16 +4668,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 53,
-              "distinct": 23,
+              "n": 54,
+              "distinct": 24,
               "breaks": [
-                1.2,
+                1.68,
                 2.4,
                 2.82,
                 3.12
               ],
               "bandCounts": [
-                1,
+                2,
                 36,
                 9,
                 6,
@@ -4684,16 +4685,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 23,
+              "n": 53,
+              "distinct": 24,
               "breaks": [
-                1.2,
+                1.68,
                 2.4,
                 2.82,
                 3.12
               ],
               "bandCounts": [
-                1,
+                2,
                 35,
                 9,
                 6,
@@ -4873,8 +4874,8 @@
           ],
           "bandCounts": [
             1,
-            33,
-            19,
+            41,
+            22,
             7,
             3
           ],
@@ -4882,10 +4883,10 @@
           "distinct": 36,
           "min": 0.504,
           "max": 1.1667,
-          "derivationN": 63,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 36,
               "breaks": [
                 0.504,
@@ -4895,14 +4896,14 @@
               ],
               "bandCounts": [
                 1,
-                40,
+                41,
                 22,
                 7,
                 3
               ]
             },
             "reachable-dedup": {
-              "n": 63,
+              "n": 64,
               "distinct": 36,
               "breaks": [
                 0.504,
@@ -4912,14 +4913,14 @@
               ],
               "bandCounts": [
                 1,
-                33,
+                34,
                 19,
                 7,
                 3
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 25,
               "breaks": [
                 0.504,
@@ -4931,7 +4932,7 @@
                 1,
                 13,
                 14,
-                14,
+                15,
                 10
               ]
             }
@@ -5091,35 +5092,35 @@
             "godie-zombiex": 0.0307
           },
           "breaksJenks": [
-            0.026,
+            0.0307,
             0.0436,
             0.0523,
             0.0592
           ],
           "bandCounts": [
-            1,
-            17,
-            18,
-            17,
+            2,
+            22,
+            20,
+            20,
             10
           ],
           "degenerate": false,
-          "distinct": 54,
+          "distinct": 55,
           "min": 0.026,
           "max": 0.0677,
-          "derivationN": 63,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 54,
+              "n": 74,
+              "distinct": 55,
               "breaks": [
-                0.026,
+                0.0307,
                 0.0436,
                 0.0523,
                 0.0592
               ],
               "bandCounts": [
-                1,
+                2,
                 22,
                 20,
                 20,
@@ -5127,16 +5128,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 63,
-              "distinct": 54,
+              "n": 64,
+              "distinct": 55,
               "breaks": [
-                0.026,
+                0.0307,
                 0.0436,
                 0.0523,
                 0.0592
               ],
               "bandCounts": [
-                1,
+                2,
                 17,
                 18,
                 17,
@@ -5144,16 +5145,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 44,
+              "n": 53,
+              "distinct": 45,
               "breaks": [
-                0.026,
+                0.0307,
                 0.0436,
                 0.0488,
                 0.0554
               ],
               "bandCounts": [
-                1,
+                2,
                 17,
                 13,
                 7,
@@ -5326,70 +5327,70 @@
             "godie-zombiex": 2.08
           },
           "breaksJenks": [
+            2.6,
             4.8,
-            5.8,
             6.2,
             8
           ],
           "bandCounts": [
+            1,
             3,
-            27,
-            26,
+            62,
             6,
             2
           ],
           "degenerate": false,
-          "distinct": 16,
-          "min": 4,
+          "distinct": 17,
+          "min": 2.6,
           "max": 10.1,
-          "derivationN": 64,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 16,
+              "n": 74,
+              "distinct": 17,
               "breaks": [
+                2.6,
                 4.8,
-                5.8,
                 6.2,
                 8
               ],
               "bandCounts": [
+                1,
                 3,
-                32,
-                30,
+                62,
                 6,
                 2
               ]
             },
             "reachable-dedup": {
-              "n": 64,
-              "distinct": 16,
+              "n": 65,
+              "distinct": 17,
               "breaks": [
+                2.6,
                 4.8,
-                5.8,
                 6.2,
                 8
               ],
               "bandCounts": [
+                1,
                 3,
-                27,
-                26,
+                53,
                 6,
                 2
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 9,
+              "n": 53,
+              "distinct": 10,
               "breaks": [
-                4.8,
+                2.6,
                 5.3,
                 5.7,
                 5.9
               ],
               "bandCounts": [
                 1,
-                2,
+                3,
                 11,
                 21,
                 17
@@ -5557,7 +5558,7 @@
             0
           ],
           "bandCounts": [
-            52,
+            74,
             0,
             0,
             0,
@@ -5567,10 +5568,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 1,
               "breaks": [
                 0,
@@ -5579,7 +5580,7 @@
                 0
               ],
               "bandCounts": [
-                73,
+                74,
                 0,
                 0,
                 0,
@@ -5587,7 +5588,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -5596,7 +5597,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -5604,7 +5605,7 @@
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -5613,7 +5614,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -5789,21 +5790,21 @@
             10.1
           ],
           "bandCounts": [
-            41,
+            54,
             3,
-            7,
+            9,
             4,
             4
           ],
           "degenerate": false,
-          "distinct": 11,
-          "min": 1.6,
+          "distinct": 12,
+          "min": 1.2,
           "max": 12,
-          "derivationN": 59,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 11,
+              "n": 74,
+              "distinct": 12,
               "breaks": [
                 2,
                 6.4,
@@ -5811,7 +5812,7 @@
                 10.1
               ],
               "bandCounts": [
-                53,
+                54,
                 3,
                 9,
                 4,
@@ -5819,7 +5820,24 @@
               ]
             },
             "reachable-dedup": {
-              "n": 59,
+              "n": 60,
+              "distinct": 12,
+              "breaks": [
+                2,
+                6.4,
+                8.2,
+                10.1
+              ],
+              "bandCounts": [
+                42,
+                3,
+                7,
+                4,
+                4
+              ]
+            },
+            "pickable": {
+              "n": 53,
               "distinct": 11,
               "breaks": [
                 2,
@@ -5828,24 +5846,7 @@
                 10.1
               ],
               "bandCounts": [
-                41,
-                3,
-                7,
-                4,
-                4
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 10,
-              "breaks": [
-                2,
-                6.4,
-                8.2,
-                10.1
-              ],
-              "bandCounts": [
-                38,
+                39,
                 2,
                 6,
                 4,
@@ -6014,7 +6015,7 @@
             0
           ],
           "bandCounts": [
-            52,
+            74,
             0,
             0,
             0,
@@ -6024,10 +6025,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6036,7 +6037,7 @@
                 0
               ],
               "bandCounts": [
-                73,
+                74,
                 0,
                 0,
                 0,
@@ -6044,7 +6045,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6053,7 +6054,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6061,7 +6062,7 @@
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6070,7 +6071,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6249,21 +6250,21 @@
             0
           ],
           "bandCounts": [
-            52,
+            73,
             0,
             0,
             0,
-            0
+            1
           ],
           "degenerate": true,
-          "distinct": 1,
+          "distinct": 2,
           "min": 0,
-          "max": 0,
-          "derivationN": 52,
+          "max": 0.05,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 1,
+              "n": 74,
+              "distinct": 2,
               "breaks": [
                 0,
                 0,
@@ -6275,12 +6276,12 @@
                 0,
                 0,
                 0,
-                0
+                1
               ]
             },
             "reachable-dedup": {
-              "n": 52,
-              "distinct": 1,
+              "n": 53,
+              "distinct": 2,
               "breaks": [
                 0,
                 0,
@@ -6292,12 +6293,12 @@
                 0,
                 0,
                 0,
-                0
+                1
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 1,
+              "n": 53,
+              "distinct": 2,
               "breaks": [
                 0,
                 0,
@@ -6309,7 +6310,7 @@
                 0,
                 0,
                 0,
-                0
+                1
               ]
             }
           }
@@ -6474,7 +6475,7 @@
             0
           ],
           "bandCounts": [
-            52,
+            74,
             0,
             0,
             0,
@@ -6484,10 +6485,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6496,7 +6497,7 @@
                 0
               ],
               "bandCounts": [
-                73,
+                74,
                 0,
                 0,
                 0,
@@ -6504,7 +6505,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6513,7 +6514,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6521,7 +6522,7 @@
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6530,7 +6531,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6706,7 +6707,7 @@
             1.75
           ],
           "bandCounts": [
-            52,
+            74,
             0,
             0,
             0,
@@ -6716,10 +6717,10 @@
           "distinct": 1,
           "min": 1.75,
           "max": 1.75,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -6728,7 +6729,7 @@
                 1.75
               ],
               "bandCounts": [
-                73,
+                74,
                 0,
                 0,
                 0,
@@ -6736,7 +6737,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -6745,7 +6746,7 @@
                 1.75
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6753,7 +6754,7 @@
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 1.75,
@@ -6762,7 +6763,7 @@
                 1.75
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6931,7 +6932,7 @@
             0
           ],
           "bandCounts": [
-            52,
+            74,
             0,
             0,
             0,
@@ -6941,10 +6942,10 @@
           "distinct": 1,
           "min": 0,
           "max": 0,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6953,7 +6954,7 @@
                 0
               ],
               "bandCounts": [
-                73,
+                74,
                 0,
                 0,
                 0,
@@ -6961,7 +6962,7 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6970,7 +6971,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -6978,7 +6979,7 @@
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 1,
               "breaks": [
                 0,
@@ -6987,7 +6988,7 @@
                 0
               ],
               "bandCounts": [
-                52,
+                53,
                 0,
                 0,
                 0,
@@ -7159,25 +7160,25 @@
           "breaksJenks": [
             16,
             18,
-            23,
+            22,
             26
           ],
           "bandCounts": [
-            17,
-            17,
-            8,
-            8,
+            24,
+            25,
+            10,
+            12,
             3
           ],
           "degenerate": false,
-          "distinct": 14,
-          "min": 15,
+          "distinct": 15,
+          "min": 12,
           "max": 32,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 14,
+              "n": 74,
+              "distinct": 15,
               "breaks": [
                 16,
                 18,
@@ -7185,7 +7186,7 @@
                 26
               ],
               "bandCounts": [
-                23,
+                24,
                 25,
                 10,
                 12,
@@ -7193,6 +7194,23 @@
               ]
             },
             "reachable-dedup": {
+              "n": 54,
+              "distinct": 15,
+              "breaks": [
+                16,
+                18,
+                23,
+                26
+              ],
+              "bandCounts": [
+                18,
+                17,
+                8,
+                8,
+                3
+              ]
+            },
+            "pickable": {
               "n": 53,
               "distinct": 14,
               "breaks": [
@@ -7202,24 +7220,7 @@
                 26
               ],
               "bandCounts": [
-                17,
-                17,
-                8,
-                8,
-                3
-              ]
-            },
-            "pickable": {
-              "n": 52,
-              "distinct": 13,
-              "breaks": [
-                16,
                 18,
-                23,
-                26
-              ],
-              "bandCounts": [
-                17,
                 17,
                 8,
                 8,
@@ -7390,18 +7391,18 @@
           "bandCounts": [
             1,
             4,
-            12,
-            22,
-            16
+            16,
+            31,
+            22
           ],
           "degenerate": false,
           "distinct": 23,
           "min": 0,
           "max": 2.95,
-          "derivationN": 55,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
+              "n": 74,
               "distinct": 23,
               "breaks": [
                 0,
@@ -7413,12 +7414,12 @@
                 1,
                 4,
                 16,
-                30,
+                31,
                 22
               ]
             },
             "reachable-dedup": {
-              "n": 55,
+              "n": 56,
               "distinct": 23,
               "breaks": [
                 0,
@@ -7430,12 +7431,12 @@
                 1,
                 4,
                 12,
-                22,
+                23,
                 16
               ]
             },
             "pickable": {
-              "n": 52,
+              "n": 53,
               "distinct": 23,
               "breaks": [
                 0,
@@ -7447,7 +7448,7 @@
                 1,
                 4,
                 10,
-                21,
+                22,
                 16
               ]
             }
@@ -7620,21 +7621,21 @@
             27
           ],
           "bandCounts": [
-            20,
-            13,
-            10,
-            9,
+            27,
+            18,
+            16,
+            12,
             1
           ],
           "degenerate": false,
-          "distinct": 18,
-          "min": 10,
+          "distinct": 19,
+          "min": 8,
           "max": 40,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 18,
+              "n": 74,
+              "distinct": 19,
               "breaks": [
                 15,
                 19,
@@ -7642,7 +7643,7 @@
                 27
               ],
               "bandCounts": [
-                26,
+                27,
                 18,
                 16,
                 12,
@@ -7650,35 +7651,35 @@
               ]
             },
             "reachable-dedup": {
-              "n": 53,
-              "distinct": 18,
+              "n": 54,
+              "distinct": 19,
               "breaks": [
-                15,
-                19,
+                14,
+                18,
                 23,
                 27
               ],
               "bandCounts": [
-                20,
-                13,
-                10,
+                15,
+                18,
+                11,
                 9,
                 1
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 17,
+              "n": 53,
+              "distinct": 18,
               "breaks": [
-                14,
-                16,
+                10,
+                15,
                 19,
                 23
               ],
               "bandCounts": [
-                14,
-                11,
-                8,
+                2,
+                19,
+                13,
                 10,
                 9
               ]
@@ -7839,35 +7840,35 @@
             "godie-zombiex": 0.6
           },
           "breaksJenks": [
-            0,
-            1.6,
-            2.1,
-            2.6
+            0.6,
+            1.5,
+            2,
+            2.5
           ],
           "bandCounts": [
-            1,
-            14,
-            17,
-            7,
-            13
+            2,
+            15,
+            25,
+            9,
+            23
           ],
           "degenerate": false,
-          "distinct": 27,
+          "distinct": 28,
           "min": 0,
           "max": 2.9,
-          "derivationN": 52,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 27,
+              "n": 74,
+              "distinct": 28,
               "breaks": [
-                0,
+                0.6,
                 1.5,
                 2,
                 2.5
               ],
               "bandCounts": [
-                1,
+                2,
                 15,
                 25,
                 9,
@@ -7875,16 +7876,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 52,
-              "distinct": 27,
+              "n": 53,
+              "distinct": 28,
               "breaks": [
-                0,
+                0.6,
                 1.6,
                 2.1,
                 2.6
               ],
               "bandCounts": [
-                1,
+                2,
                 14,
                 17,
                 7,
@@ -7892,16 +7893,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 27,
+              "n": 53,
+              "distinct": 28,
               "breaks": [
-                0,
+                0.6,
                 1.6,
                 2.1,
                 2.6
               ],
               "bandCounts": [
-                1,
+                2,
                 14,
                 17,
                 7,
@@ -8071,35 +8072,35 @@
             "godie-zombiex": 6
           },
           "breaksJenks": [
-            2,
+            6,
             16,
             22,
             30
           ],
           "bandCounts": [
-            1,
-            18,
-            23,
-            11,
+            2,
+            24,
+            34,
+            13,
             1
           ],
           "degenerate": false,
-          "distinct": 19,
+          "distinct": 20,
           "min": 2,
           "max": 127,
-          "derivationN": 54,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 19,
+              "n": 74,
+              "distinct": 20,
               "breaks": [
-                2,
+                6,
                 16,
                 22,
                 30
               ],
               "bandCounts": [
-                1,
+                2,
                 24,
                 34,
                 13,
@@ -8107,16 +8108,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 54,
-              "distinct": 19,
+              "n": 55,
+              "distinct": 20,
               "breaks": [
-                2,
+                6,
                 16,
                 22,
                 30
               ],
               "bandCounts": [
-                1,
+                2,
                 18,
                 23,
                 11,
@@ -8124,16 +8125,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 17,
+              "n": 53,
+              "distinct": 18,
               "breaks": [
-                2,
+                6,
                 15,
                 19,
                 23
               ],
               "bandCounts": [
-                1,
+                2,
                 15,
                 16,
                 11,
@@ -8296,35 +8297,35 @@
             "godie-zombiex": 0.8
           },
           "breaksJenks": [
-            0,
-            2,
-            2.7,
+            0.8,
+            1.8,
+            2.45,
             3.2
           ],
           "bandCounts": [
-            1,
-            36,
-            9,
-            6,
+            2,
+            45,
+            12,
+            14,
             1
           ],
           "degenerate": false,
-          "distinct": 23,
+          "distinct": 24,
           "min": 0,
           "max": 4,
-          "derivationN": 53,
+          "derivationN": 74,
           "modes": {
             "reachable": {
-              "n": 73,
-              "distinct": 23,
+              "n": 74,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 1.8,
                 2.45,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 45,
                 12,
                 14,
@@ -8332,16 +8333,16 @@
               ]
             },
             "reachable-dedup": {
-              "n": 53,
-              "distinct": 23,
+              "n": 54,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 2,
                 2.7,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 36,
                 9,
                 6,
@@ -8349,16 +8350,16 @@
               ]
             },
             "pickable": {
-              "n": 52,
-              "distinct": 23,
+              "n": 53,
+              "distinct": 24,
               "breaks": [
-                0,
+                0.8,
                 2,
                 2.7,
                 3.2
               ],
               "bandCounts": [
-                1,
+                2,
                 35,
                 9,
                 6,
@@ -8401,7 +8402,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -8409,7 +8410,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -8467,7 +8468,7 @@
         "growth": "中"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -8475,7 +8476,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -8491,7 +8492,7 @@
         "growth": null
       },
       "str": {
-        "initial": "中",
+        "initial": "大",
         "growth": "極大"
       },
       "agi": {
@@ -8541,7 +8542,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -8731,7 +8732,7 @@
         "growth": "中"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -8739,7 +8740,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -8755,7 +8756,7 @@
         "growth": null
       },
       "str": {
-        "initial": "中",
+        "initial": "大",
         "growth": "極大"
       },
       "agi": {
@@ -8797,7 +8798,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -8871,7 +8872,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -8937,7 +8938,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9003,7 +9004,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9201,7 +9202,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9252,15 +9253,15 @@
       },
       "ap": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "中",
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
-        "growth": "小"
+        "initial": "小",
+        "growth": "中"
       },
       "as": {
         "initial": "中",
@@ -9292,7 +9293,7 @@
       },
       "int": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-efur": {
@@ -9325,7 +9326,7 @@
         "growth": "大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "中"
       },
       "as": {
@@ -9391,7 +9392,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "大"
       },
       "as": {
@@ -9399,7 +9400,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9450,7 +9451,7 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
         "initial": "中",
@@ -9458,14 +9459,14 @@
       },
       "mr": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9490,7 +9491,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-etyr": {
@@ -9531,7 +9532,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9597,7 +9598,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9663,7 +9664,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9721,7 +9722,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -9729,7 +9730,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9787,7 +9788,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -9853,7 +9854,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -9927,7 +9928,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -9985,7 +9986,7 @@
         "growth": "極小"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "極小"
       },
       "as": {
@@ -10059,7 +10060,7 @@
         "growth": "極大"
       },
       "ms": {
-        "initial": "極小",
+        "initial": "小",
         "growth": null
       },
       "range": {
@@ -10110,22 +10111,22 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "中",
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
-        "growth": "小"
+        "initial": "中",
+        "growth": "中"
       },
       "as": {
         "initial": "中",
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10150,7 +10151,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-h02v": {
@@ -10176,15 +10177,15 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "中",
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
-        "growth": "小"
+        "initial": "中",
+        "growth": "中"
       },
       "as": {
         "initial": "中",
@@ -10216,7 +10217,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-hapm": {
@@ -10249,7 +10250,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -10257,7 +10258,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10308,15 +10309,15 @@
       },
       "ap": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "中",
         "growth": "中"
       },
       "mr": {
-        "initial": "極小",
-        "growth": "小"
+        "initial": "小",
+        "growth": "中"
       },
       "as": {
         "initial": "小",
@@ -10348,7 +10349,7 @@
       },
       "int": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-hblm": {
@@ -10381,7 +10382,7 @@
         "growth": "小"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "中"
       },
       "as": {
@@ -10455,7 +10456,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10521,7 +10522,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10579,7 +10580,7 @@
         "growth": "中"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -10645,7 +10646,7 @@
         "growth": "大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -10719,7 +10720,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10785,7 +10786,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10843,7 +10844,7 @@
         "growth": "大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -10851,7 +10852,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10902,22 +10903,22 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
         "initial": "極小",
         "growth": "中"
       },
       "mr": {
-        "initial": "小",
-        "growth": "中"
+        "initial": "中",
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -10942,7 +10943,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-n00b": {
@@ -11034,7 +11035,7 @@
       },
       "ap": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
         "initial": "中",
@@ -11042,14 +11043,14 @@
       },
       "mr": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -11074,7 +11075,7 @@
       },
       "int": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-n01c": {
@@ -11166,22 +11167,22 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
         "initial": "極小",
         "growth": "中"
       },
       "mr": {
-        "initial": "小",
-        "growth": "中"
+        "initial": "中",
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "小"
       },
       "ms": {
-        "initial": "極小",
+        "initial": "小",
         "growth": null
       },
       "range": {
@@ -11206,7 +11207,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-nbbc": {
@@ -11239,7 +11240,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -11298,7 +11299,7 @@
       },
       "ap": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "極小",
@@ -11306,7 +11307,7 @@
       },
       "mr": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       },
       "as": {
         "initial": "小",
@@ -11338,7 +11339,7 @@
       },
       "int": {
         "initial": "中",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-nsjs": {
@@ -11364,22 +11365,22 @@
       },
       "ap": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "中"
       },
       "mr": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -11404,7 +11405,7 @@
       },
       "int": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-o00k": {
@@ -11437,7 +11438,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -11466,7 +11467,7 @@
       },
       "agi": {
         "initial": "中",
-        "growth": "大"
+        "growth": "極大"
       },
       "int": {
         "initial": "中",
@@ -11511,7 +11512,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -11635,7 +11636,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -11775,7 +11776,7 @@
         "growth": "極大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -11833,7 +11834,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "小",
+        "initial": "中",
         "growth": "小"
       },
       "as": {
@@ -11907,7 +11908,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "極小",
+        "initial": "小",
         "growth": null
       },
       "range": {
@@ -12039,7 +12040,7 @@
         "growth": "大"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -12097,7 +12098,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -12163,7 +12164,7 @@
         "growth": "大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -12222,22 +12223,22 @@
       },
       "ap": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       },
       "armor": {
         "initial": "中",
         "growth": "大"
       },
       "mr": {
-        "initial": "極小",
-        "growth": "小"
+        "initial": "小",
+        "growth": "中"
       },
       "as": {
         "initial": "中",
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -12258,11 +12259,11 @@
       },
       "agi": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       },
       "int": {
         "initial": "小",
-        "growth": "小"
+        "growth": "中"
       }
     },
     "godie-u00k": {
@@ -12303,7 +12304,7 @@
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -12361,7 +12362,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -12456,7 +12457,7 @@
       },
       "agi": {
         "initial": "極小",
-        "growth": "小"
+        "growth": "中"
       },
       "int": {
         "initial": "中",
@@ -12522,7 +12523,7 @@
       },
       "agi": {
         "initial": "極小",
-        "growth": "小"
+        "growth": "中"
       },
       "int": {
         "initial": "中",
@@ -12567,7 +12568,7 @@
         "growth": "小"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -12588,7 +12589,7 @@
       },
       "agi": {
         "initial": "極小",
-        "growth": "小"
+        "growth": "中"
       },
       "int": {
         "initial": "中",
@@ -12625,7 +12626,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -12757,7 +12758,7 @@
         "growth": "中"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -12816,7 +12817,7 @@
       },
       "ap": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       },
       "armor": {
         "initial": "極小",
@@ -12824,14 +12825,14 @@
       },
       "mr": {
         "initial": "中",
-        "growth": "中"
+        "growth": "大"
       },
       "as": {
         "initial": "小",
         "growth": "中"
       },
       "ms": {
-        "initial": "小",
+        "initial": "中",
         "growth": null
       },
       "range": {
@@ -12856,7 +12857,7 @@
       },
       "int": {
         "initial": "大",
-        "growth": "中"
+        "growth": "大"
       }
     },
     "godie-ucrl": {
@@ -12889,7 +12890,7 @@
         "growth": "中"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -13087,7 +13088,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -13153,7 +13154,7 @@
         "growth": "極大"
       },
       "mr": {
-        "initial": "極小",
+        "initial": "小",
         "growth": "小"
       },
       "as": {
@@ -13203,7 +13204,7 @@
         "growth": "極大"
       },
       "manaRegen": {
-        "initial": "極大",
+        "initial": "大",
         "growth": "小"
       },
       "ad": {
@@ -13211,8 +13212,8 @@
         "growth": "中"
       },
       "ap": {
-        "initial": "小",
-        "growth": "小"
+        "initial": "極小",
+        "growth": "極小"
       },
       "armor": {
         "initial": "極小",
@@ -13220,11 +13221,11 @@
       },
       "mr": {
         "initial": "極小",
-        "growth": "小"
+        "growth": "極小"
       },
       "as": {
         "initial": "小",
-        "growth": "小"
+        "growth": "極小"
       },
       "ms": {
         "initial": "極小",
@@ -13248,11 +13249,11 @@
       },
       "agi": {
         "initial": "極小",
-        "growth": "小"
+        "growth": "極小"
       },
       "int": {
-        "initial": "小",
-        "growth": "小"
+        "initial": "極小",
+        "growth": "極小"
       }
     }
   },
@@ -13457,7 +13458,6 @@
           "healthRegen@initial",
           "manaRegen@initial",
           "ad@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13511,7 +13511,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13529,7 +13528,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13547,7 +13545,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13564,7 +13561,6 @@
           "maxHealth@initial",
           "healthRegen@initial",
           "manaRegen@initial",
-          "ms@initial",
           "range@initial",
           "str@initial"
         ]
@@ -13617,7 +13613,6 @@
           "maxMana@initial",
           "manaRegen@initial",
           "armor@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -13634,7 +13629,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13665,7 +13659,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -13747,7 +13740,6 @@
         "anyMinimalStats": [
           "healthRegen@initial",
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13774,7 +13766,8 @@
         "group": "base",
         "axis": "growth",
         "extremeStats": [
-          "armor"
+          "armor",
+          "agi"
         ],
         "compensationStats": [],
         "anyMinimalStats": [
@@ -13906,7 +13899,6 @@
         "anyMinimalStats": [
           "maxHealth@initial",
           "healthRegen@initial",
-          "mr@initial",
           "range@initial",
           "str@initial"
         ]
@@ -13925,7 +13917,6 @@
         "anyMinimalStats": [
           "healthRegen@initial",
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -13998,7 +13989,6 @@
           "healthRegen@initial",
           "manaRegen@initial",
           "ad@initial",
-          "mr@initial",
           "range@initial",
           "str@initial"
         ]
@@ -14030,7 +14020,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -14046,7 +14035,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -14081,7 +14069,6 @@
         "anyMinimalStats": [
           "healthRegen@initial",
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -14100,29 +14087,8 @@
           "healthRegen@initial",
           "manaRegen@initial",
           "ad@initial",
-          "mr@initial",
           "range@initial",
           "str@initial"
-        ]
-      },
-      {
-        "id": "godie-zombiex",
-        "name": "聖杯黑泥醬 - 喪標麥可",
-        "group": "mob",
-        "axis": "growth",
-        "extremeStats": [
-          "healthRegen"
-        ],
-        "compensationStats": [],
-        "anyMinimalStats": [
-          "maxHealth@initial",
-          "healthRegen@initial",
-          "armor@initial",
-          "mr@initial",
-          "ms@initial",
-          "range@initial",
-          "str@initial",
-          "agi@initial"
         ]
       },
       {
@@ -14181,7 +14147,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -14220,7 +14185,6 @@
           "maxHealth@initial",
           "healthRegen@initial",
           "manaRegen@initial",
-          "ms@initial",
           "range@initial",
           "str@initial"
         ]
@@ -14238,7 +14202,6 @@
           "maxMana@initial",
           "manaRegen@initial",
           "armor@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -14334,26 +14297,6 @@
         "compensationStats": [],
         "anyMinimalStats": [
           "range@initial",
-          "agi@initial"
-        ]
-      },
-      {
-        "id": "godie-zombiex",
-        "name": "聖杯黑泥醬 - 喪標麥可",
-        "group": "mob",
-        "axis": "cross",
-        "extremeStats": [
-          "manaRegen"
-        ],
-        "compensationStats": [],
-        "anyMinimalStats": [
-          "maxHealth@initial",
-          "healthRegen@initial",
-          "armor@initial",
-          "mr@initial",
-          "ms@initial",
-          "range@initial",
-          "str@initial",
           "agi@initial"
         ]
       }
@@ -14462,12 +14405,10 @@
         ],
         "compensationStats": [
           "manaRegen",
-          "mr",
           "range"
         ],
         "anyMinimalStats": [
           "manaRegen@initial",
-          "mr@initial",
           "range@initial"
         ]
       },
@@ -14513,7 +14454,6 @@
           "maxMana",
           "manaRegen",
           "ap",
-          "mr",
           "range",
           "agi",
           "int"
@@ -14528,7 +14468,6 @@
           "ap@initial",
           "ap@growth",
           "armor@growth",
-          "mr@initial",
           "mr@growth",
           "as@growth",
           "range@initial",
@@ -14551,7 +14490,6 @@
           "maxHealth",
           "healthRegen",
           "manaRegen",
-          "ms",
           "range",
           "str"
         ],
@@ -14559,7 +14497,6 @@
           "maxHealth@initial",
           "healthRegen@initial",
           "manaRegen@initial",
-          "ms@initial",
           "range@initial",
           "str@initial"
         ]
@@ -14576,7 +14513,6 @@
           "maxMana",
           "manaRegen",
           "armor",
-          "mr",
           "range",
           "agi"
         ],
@@ -14584,7 +14520,6 @@
           "maxMana@initial",
           "manaRegen@initial",
           "armor@initial",
-          "mr@initial",
           "range@initial",
           "agi@initial"
         ]
@@ -14701,7 +14636,6 @@
         ],
         "compensationStats": [
           "as",
-          "ms",
           "agi"
         ],
         "anyMinimalStats": [
@@ -14709,7 +14643,6 @@
           "healthRegen@growth",
           "ad@growth",
           "as@initial",
-          "ms@initial",
           "agi@initial"
         ]
       },
@@ -14727,35 +14660,6 @@
         ],
         "anyMinimalStats": [
           "range@initial",
-          "agi@initial"
-        ]
-      },
-      {
-        "id": "godie-zombiex",
-        "name": "聖杯黑泥醬 - 喪標麥可",
-        "group": "mob",
-        "axis": "initial",
-        "extremeStats": [
-          "manaRegen"
-        ],
-        "compensationStats": [
-          "maxHealth",
-          "healthRegen",
-          "armor",
-          "mr",
-          "ms",
-          "range",
-          "str",
-          "agi"
-        ],
-        "anyMinimalStats": [
-          "maxHealth@initial",
-          "healthRegen@initial",
-          "armor@initial",
-          "mr@initial",
-          "ms@initial",
-          "range@initial",
-          "str@initial",
           "agi@initial"
         ]
       },
@@ -14783,6 +14687,39 @@
           "manaRegen@initial",
           "armor@growth",
           "range@initial"
+        ]
+      },
+      {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "group": "mob",
+        "axis": "growth",
+        "extremeStats": [
+          "healthRegen"
+        ],
+        "compensationStats": [
+          "ap",
+          "mr",
+          "as",
+          "agi",
+          "int"
+        ],
+        "anyMinimalStats": [
+          "maxHealth@initial",
+          "healthRegen@initial",
+          "ap@initial",
+          "ap@growth",
+          "armor@initial",
+          "mr@initial",
+          "mr@growth",
+          "as@growth",
+          "ms@initial",
+          "range@initial",
+          "str@initial",
+          "agi@initial",
+          "agi@growth",
+          "int@initial",
+          "int@growth"
         ]
       },
       {
@@ -14851,7 +14788,6 @@
           "ap@initial",
           "ap@growth",
           "armor@growth",
-          "mr@initial",
           "mr@growth",
           "as@growth",
           "range@initial",
@@ -14880,7 +14816,6 @@
           "healthRegen@growth",
           "ad@growth",
           "as@initial",
-          "ms@initial",
           "agi@initial"
         ]
       }
@@ -14930,7 +14865,7 @@
         "stat": "healthRegen",
         "axis": "initial",
         "tier": "中",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "healthRegen",
@@ -14948,7 +14883,7 @@
         "stat": "manaRegen",
         "axis": "initial",
         "tier": "大",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "manaRegen",
@@ -14984,7 +14919,7 @@
         "stat": "ap",
         "axis": "initial",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "ap",
@@ -14996,7 +14931,7 @@
         "stat": "ap",
         "axis": "growth",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "ap",
@@ -15019,6 +14954,12 @@
       {
         "stat": "mr",
         "axis": "initial",
+        "tier": "極小",
+        "count": 1
+      },
+      {
+        "stat": "mr",
+        "axis": "initial",
         "tier": "大",
         "count": 2
       },
@@ -15032,7 +14973,7 @@
         "stat": "mr",
         "axis": "growth",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "mr",
@@ -15049,6 +14990,12 @@
       {
         "stat": "as",
         "axis": "growth",
+        "tier": "極小",
+        "count": 2
+      },
+      {
+        "stat": "ms",
+        "axis": "initial",
         "tier": "極小",
         "count": 1
       },
@@ -15074,13 +15021,13 @@
         "stat": "agi",
         "axis": "growth",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "int",
         "axis": "initial",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "int",
@@ -15092,7 +15039,7 @@
         "stat": "int",
         "axis": "growth",
         "tier": "極小",
-        "count": 1
+        "count": 2
       },
       {
         "stat": "int",

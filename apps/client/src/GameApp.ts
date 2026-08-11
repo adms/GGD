@@ -68,6 +68,7 @@ import { InputCapture } from "./input/InputCapture";
 import { IntentClock } from "./input/IntentClock";
 import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/GamepadInput";
 import { PadCameraControl } from "./input/padCamera";
+import { aimAssistMobPenalty } from "./ui/displayAimAssist";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
 import type { AimAbility } from "./input/AimResolver";
 import { isTouchDevice, readTouchEnv } from "./input/mobileDetect";
@@ -908,7 +909,15 @@ export class GameApp {
         facing: this.playerFacing(player),
         ability: (slot) => this.playerAbility(player, slot),
         nearestEnemy: (from, maxRange, aimDir) =>
-          pickNearestUnit(from, this.enemyUnitsFor(this.playerTeam(player)), maxRange, aimDir),
+          pickNearestUnit(
+            from,
+            this.enemyUnitsFor(this.playerTeam(player)),
+            maxRange,
+            aimDir,
+            // GH#315：小怪讓路幅度現在住在 `config.combat-feel@1`（後台可調），
+            // ⛔ 不是客戶端常數。每次呼叫都讀，這樣後台改完重新載入就生效。
+            aimAssistMobPenalty(),
+          ),
         // what a LONG PRESS on a skill button does: spend this point, or (with
         // none) show that ability's description (owner's 2026-07-27 pad map)
         skillPoints: this.playerSkillPoints(player),

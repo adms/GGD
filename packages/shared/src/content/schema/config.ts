@@ -42,6 +42,8 @@ import {
   AOE_TIERS_DOC_ID,
   DEFAULT_AOE_TIERS,
 } from "../aoeTiers";
+// 手把自動瞄準的小怪讓路幅度（GH#315）—— 同一條規矩：上下界定在 sim，schema 只搬上 Zod。
+import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../sim/combatFeel";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -2793,6 +2795,30 @@ export const zConfigCombatFeelDoc = z
          * 只會讓這一格看起來沒作用（#277 的形狀）。
          */
         leashUnits: z.number().min(0).max(200),
+      })
+      .strict()
+      .optional(),
+    /**
+     * 手把／觸控的**自動**瞄準：一堆殭屍擋在敵方英雄前面時該鎖誰（GH#315）。
+     *
+     * ⚠️ 這是 2026-08-11 那個 T0 的另一半。修好「殭屍點得到」之後，同一份可點選
+     * 清單也餵給 `pickNearestUnit` —— 少了這個懲罰，貼臉的殭屍會把瞄準從敵方
+     * 英雄身上搶走，那是把一個缺陷換成另一個。
+     *
+     * ⛔ **只有自動索敵讀它。** 滑鼠直接點刻意不讀 —— 點到誰就是誰。
+     * 語意與出貨預設寫在 `sim/combatFeel.ts` 的 `AimAssistRules`。
+     */
+    aimAssist: z
+      .object({
+        /**
+         * 小怪被扣的「等效距離」（單位）。出貨 **6** =「殭屍要比英雄近 6 個單位
+         * 以上才搶得走瞄準」。0 = 不讓路（＝GH#315 修好之前那個被殭屍海淹沒的
+         * 行為）。上界 24 = 決鬥區半徑，再高等於「小怪永遠不會被自動瞄準」。
+         */
+        mobPenalty: z
+          .number()
+          .min(AIM_ASSIST_MOB_PENALTY_MIN)
+          .max(AIM_ASSIST_MOB_PENALTY_MAX),
       })
       .strict()
       .optional(),

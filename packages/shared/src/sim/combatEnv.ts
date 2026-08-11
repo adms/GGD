@@ -340,16 +340,21 @@ export function applyGoldFactor(amount: number, factor: number): number {
  * ⚠️ WHY A SET AND NOT 「every ×factor」. The 0..100 Zod ceiling exists because
  * the 三圍 coefficients need it (23 hp per STR), and every legacy ×factor has
  * been riding it for free. Retrofitting [0.1, 10] onto all of them is NOT a
- * no-op: `manaRegen` ships at 8 today and the owner is taking it to **16** in
- * this same batch, so a blanket tightening would make the shipped content tree
- * illegal. Narrowing the band for the whole table is a real decision with a
+ * no-op: `manaRegen` went to **16** in that batch, so a blanket tightening would
+ * have made the shipped content tree illegal.
+ * ⚠️ UPDATED 2026-08-11 — the owner took `manaRegen` back to **8**（「維持以前的
+ * 就好」）. The 50 ceiling STAYS: it was raised knowingly for the whole table's
+ * one-stray-zero derivation below, not as a favour to this one key, and lowering
+ * it back is its own decision with its own casualty list. Narrowing the band for the whole table is a real decision with a
  * real casualty list and it belongs to the owner, not to this lane — so the
  * three NEW keys get the correct band and the audit of the other eighteen is
  * filed, not smuggled in here.
  *
- * ⚠️ AND `manaRegen: 16` IS ALREADY OUT OF BAND ON THE PLATFORM: a PUT of it
- * answers 400 (`combatenv.Bounds` → MaxFactor 10). That is a content/admin-lane
- * problem, noted here because this is the file where the number is knowable.
+ * ⚠️ `manaRegen: 16` WAS OUT OF BAND ON THE PLATFORM: a PUT of it answered 400
+ * (`combatenv.Bounds` → MaxFactor 10) —— so for as long as 16 was the shipped
+ * value, **the admin console could not save that page at all**. Going back to 8
+ * (2026-08-11) removes the live symptom; the Go mirror still disagrees with this
+ * file's 50 and that mismatch is GH#316, not fixed here.
  *
  * WHY 10 AND NOT SOMETHING TIGHTER (the 「多打一個零」 derivation): shipped is
  * 0.8 / 0.6 / 0.2, so one stray zero is 8 / 6 / 2 — inside any band that still

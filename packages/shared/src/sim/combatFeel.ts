@@ -411,6 +411,8 @@ export interface CombatFeelRules {
    * `DEFAULT_AUTO_ENGAGE`。
    */
   autoEngage?: AutoEngageRules;
+  /** 手把／觸控自動瞄準的小怪讓路幅度（GH#315）。見 {@link AimAssistRules}。 */
+  aimAssist?: AimAssistRules;
   /**
    * ⚠️ 選用,而且**必須**保持選用。`combatFeelFromDoc` 與 `DEFAULT_COMBAT_FEEL`
    * 一定會填它,所以出貨路徑上它永遠存在;選用是為了那些手寫半張表的既有測試
@@ -517,6 +519,49 @@ export const DEFAULT_MANUAL_ORDER: ManualOrderRules = Object.freeze({
 });
 
 /**
+ * 手把／觸控的**自動**瞄準：一堆殭屍擋在敵方英雄前面時，該鎖誰（GH#315）。
+ *
+ * ⚠️ 這是 2026-08-11 那個 T0 的另一半。修好「殭屍點得到」之後，同一份可點選
+ * 清單也餵給 `pickNearestUnit`（手把瞄準輔助 / 觸控自動取得）—— 少了這個懲罰，
+ * 貼臉的殭屍會把瞄準從敵方英雄身上搶走，那是把一個缺陷換成另一個。
+ *
+ * ⛔ **只有自動索敵讀它。** 滑鼠直接點（`pickUnit`）刻意不讀 —— 直接點是玩家的
+ * 明確選擇，點到誰就是誰，插一個優先序進去等於「我點了殭屍，英雄卻去打別人」。
+ */
+export interface AimAssistRules {
+  /**
+   * 小怪在自動索敵裡被扣的「等效距離」（單位）。
+   *
+   * 出貨 **6.0** = 「殭屍要比英雄近 6 個單位以上，才搶得走瞄準」。決鬥區半徑是
+   * 24，所以那是「貼臉的殭屍才會被鎖」。
+   *
+   * `0` = 不讓路（誰近鎖誰，也就是 GH#315 修好之前那個會被殭屍海淹沒的行為）。
+   * 上界 **24** = 決鬥區半徑：再高就等於「小怪永遠不會被自動瞄準」，
+   * 而那是一個看起來像壞掉的值（第一守則：欄位要有上界，不是只有下界）。
+   */
+  mobPenalty: number;
+}
+
+/** 出貨預設。owner 2026-08-11 核准把這一格從客戶端常數升級成後台欄位。 */
+export const DEFAULT_AIM_ASSIST: AimAssistRules = Object.freeze({ mobPenalty: 6 });
+
+/** `mobPenalty` 的上下界。schema 與後台欄位共用這一組。 */
+export const AIM_ASSIST_MOB_PENALTY_MIN = 0;
+export const AIM_ASSIST_MOB_PENALTY_MAX = 24;
+
+export function normalizeAimAssistRules(raw: unknown): AimAssistRules {
+  const r = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
+  return Object.freeze({
+    mobPenalty: num(
+      r.mobPenalty,
+      DEFAULT_AIM_ASSIST.mobPenalty,
+      AIM_ASSIST_MOB_PENALTY_MIN,
+      AIM_ASSIST_MOB_PENALTY_MAX,
+    ),
+  });
+}
+
+/**
  * 出貨預設。
  *
  * ⚠️ 缺文件 / 壞文件 → **回這個**,不是空表。回空表的話 `minPct` 是 0(每一下
@@ -529,6 +574,7 @@ export const DEFAULT_COMBAT_FEEL: CombatFeelRules = Object.freeze({
   facing: DEFAULT_FACING,
   autoEngage: DEFAULT_AUTO_ENGAGE,
   manualOrder: DEFAULT_MANUAL_ORDER,
+  aimAssist: DEFAULT_AIM_ASSIST,
 });
 
 /** 文件的 schema 字串 —— 讀寫兩端(sim / 後台)共用這一個常數。 */
@@ -663,6 +709,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     facing?: unknown;
     autoEngage?: unknown;
     manualOrder?: unknown;
+    aimAssist?: unknown;
   };
   if (d.schema !== COMBAT_FEEL_SCHEMA) return DEFAULT_COMBAT_FEEL;
   return Object.freeze({
@@ -671,6 +718,7 @@ export function combatFeelFromDoc(doc: unknown): CombatFeelRules {
     facing: normalizeFacingRules(d.facing),
     autoEngage: normalizeAutoEngageRules(d.autoEngage),
     manualOrder: normalizeManualOrderRules(d.manualOrder),
+    aimAssist: normalizeAimAssistRules(d.aimAssist),
   });
 }
 
