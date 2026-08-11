@@ -47,11 +47,20 @@ describe("1B-1 status-aura layer has a live per-frame caller (status-aura-wiring
 });
 
 describe("1B-2 neutral objectives are pickable enemy units (neutral-pick-wiring)", () => {
-  it("enemyUnitsFor admits guardians and flowers, not just kind 0", () => {
+  it("enemyUnitsFor admits guardians, flowers AND mobs — not just kind 0", () => {
     cover("neutral-pick-wiring");
+    // ⚠️ 這一條是**掃原始碼字串**（CLAUDE.md 失敗形態⑥）。它擋得住「有人把
+    //    kind 從過濾器拿掉」，擋不住「過濾對了但選取數學是錯的」。
+    //    真正驗行為的那一條在 `src/input/mobTargeting.test.ts`（GH#315，
+    //    兩個突變都驗過會紅）—— 兩條要一起看。
     // the old gate `es.kind !== 0` filtered BOTH neutrals out of every pick path
     expect(SRC).not.toMatch(/if \(es\.kind !== 0 \|\| !es\.alive\) return;/);
-    // the widened gate keeps champions AND the two neutral kinds
-    expect(SRC).toMatch(/es\.kind !== KIND_CHAMPION && es\.kind !== KIND_GUARDIAN && es\.kind !== KIND_FLOWER/);
+    // ⭐ GH#315（2026-08-11）：KIND_MOB 加進來了。#215 的殭屍波是在這個過濾器
+    //    之後才上架的，於是第 3 回合起場上最多 60 隻殭屍**一隻都點不到** ——
+    //    而三條輸入路徑（滑鼠/手把/觸控）共用這一份清單。
+    for (const kind of ["KIND_CHAMPION", "KIND_GUARDIAN", "KIND_FLOWER", "KIND_MOB"]) {
+      expect(SRC, `enemyUnitsFor 的過濾器少了 ${kind} —— 那一類敵人任何裝置都指不到`)
+        .toMatch(new RegExp(`es\\.kind !== ${kind}`));
+    }
   });
 });

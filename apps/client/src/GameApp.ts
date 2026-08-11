@@ -2603,14 +2603,39 @@ export class GameApp {
       // must be able to click / attack-move / auto-acquire them too, not just
       // bots via direct AI orders. Neutrals carry seatId -1, so the team filter
       // below resolves to -1 and never matches myTeam (they read as "enemy").
+      // ── 🔴 GH#315：小怪（殭屍）以前**不在這張清單裡** ──────────────────────
+      // owner 2026-08-11 線上實測：「我無法點選敵方單位攻擊，然後固定會一直攻擊」。
+      // 根因就在這一行：#215 的殭屍波是在這個過濾器之後才上架的，而這裡只列了
+      // 英雄／守衛塔／花。第 3 回合起場上最多 60 隻殭屍，**一隻都點不到**。
+      //
+      // ⭐ 而且三條輸入路徑共用這一份清單 —— 滑鼠右鍵（pickEnemyAt）、
+      //    手把瞄準輔助與觸控自動取得（pickNearestUnit，GameApp ~911）——
+      //    所以「點不到」不是滑鼠的問題，是**任何裝置都指不到殭屍**。
+      //
+      // 第二個症狀是同一個根因的另一面：指不到 → `attackTarget` 永遠發不出去 →
+      // 目標只能由 `autoAcquirePass` 決定，而它有 leash/swap 遲滯而且比較器的
+      // key 是「血量低的優先」，於是它鎖住一隻就不放 —— 玩家看到的正是
+      // 「固定會一直攻擊」，而且身上不會有嘲諷/混亂/暴走，因為根本沒有狀態介入。
       if (
-        (es.kind !== KIND_CHAMPION && es.kind !== KIND_GUARDIAN && es.kind !== KIND_FLOWER) ||
+        (es.kind !== KIND_CHAMPION &&
+          es.kind !== KIND_GUARDIAN &&
+          es.kind !== KIND_FLOWER &&
+          es.kind !== KIND_MOB) ||
         !es.alive
       )
         return;
       if ((this.teamBySeat.get(es.seatId) ?? -1) === myTeam) return;
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
-      units.push({ id: es.id, x: pos.x, z: pos.z, radius: 0.6 });
+      // `priority: 1` = 只在**自動**索敵（手把/觸控）裡讓路給英雄，滑鼠直接點
+      // 不讀它（見 Picking.ts 的 PickableUnit.priority）。少了這一格，一堆貼臉
+      // 的殭屍會把手把的瞄準從敵方英雄身上搶走 —— 那是把一個缺陷換成另一個。
+      units.push({
+        id: es.id,
+        x: pos.x,
+        z: pos.z,
+        radius: 0.6,
+        priority: es.kind === KIND_MOB ? 1 : 0,
+      });
     });
     return units;
   }

@@ -31,7 +31,28 @@ export interface PickableUnit {
   x: number;
   z: number;
   radius: number;
+  /**
+   * 自動索敵時的優先序：**0 = 優先**（英雄／守衛塔／花），**1 = 次要**（小怪）。
+   *
+   * ⚠️ 只有 {@link pickNearestUnit}（手把瞄準輔助 / 觸控自動取得）讀它。
+   * {@link pickUnit}（滑鼠直接點）**刻意不讀** —— 直接點是玩家的明確選擇，
+   * 點到誰就是誰，插一個優先序進去等於「我點了殭屍，英雄卻去打別人」。
+   */
+  priority?: number;
 }
+
+/**
+ * 小怪在**自動**索敵裡要被扣多少分（GH#315）。
+ *
+ * ⭐ 這是一個決策點（CLAUDE.md 第一守則）：一堆殭屍站在敵方英雄前面時，
+ * 手把的瞄準輔助該鎖誰？出貨值 6.0 的意思是「小怪要比英雄近 6 個單位以上，
+ * 才搶得走瞄準」—— 決鬥區半徑是 24，所以那是「貼臉的殭屍才會被鎖」。
+ *
+ * ⚠️ 這一格**還不是後台欄位**（它住在客戶端輸入層，`combat-feel` 那份 config
+ * 目前不流到這裡）。要調就要改這個常數並重新 build client。
+ * owner 想要旋鈕的話這裡就升級成 `config.combat-feel@1` 的一格。
+ */
+export const MOB_AIM_ASSIST_PENALTY = 6.0;
 
 /**
  * pickUnit — nearest unit whose collision circle (+slack for clickability)
@@ -62,6 +83,9 @@ export function pickNearestUnit(
       const align = (dx * aimDir.x + dz * aimDir.z) / len; // -1..1
       score = d - align * 2.5;
     }
+    // 小怪讓路給英雄 —— 見 MOB_AIM_ASSIST_PENALTY。⛔ 這是**自動**索敵才有的
+    // 偏好；滑鼠直接點（pickUnit）不讀 priority。
+    score += (u.priority ?? 0) * MOB_AIM_ASSIST_PENALTY;
     if (score < bestScore) {
       bestScore = score;
       best = u.id;
