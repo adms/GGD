@@ -20,6 +20,7 @@
  * force allow-all for local testing.
  */
 import { isRetiredChampionId } from "@ggd/shared/content/championRetirement";
+import { isTransformedBody } from "@ggd/shared/content/championForms";
 import type { ItemId } from "@ggd/shared/ids";
 import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "../config/platformUrl";
 
@@ -77,6 +78,22 @@ export class Whitelist {
    */
   allowsChampion(id: string): boolean {
     if (isRetiredChampionId(id)) return false;
+    // ⬇⬇ 變身態的身體**永遠**不是一個可以被選的英雄（owner 2026-07-26／07-30
+    //     兩次裁定：「換成本體，變身態改由技能觸發」「不要出現讓人解鎖變身後的
+    //     英雄」）。它和下架一樣是**內容事實**不是營運狀態,所以同樣擋在
+    //     `bypass` 之前 —— 平台連不上時整份白名單消失,這一條照樣要成立。
+    //
+    // ⚠️ 為什麼放在這裡而不是 `MatchController.selectChampion`：
+    //     `randomChampionPool()` 走的是 `filterChampions` → `allowsChampion`,
+    //     **不經過** selectChampion。只在 selectChampion 加一個 if,bot 與
+    //     隨機英雄那條路會整條漏掉 —— 而那正是最可能真的抽到變身態的地方。
+    //     一個 seam 蓋住兩條路。
+    //
+    // ⛔ 這是一個真的缺口,不是理論：`ApplyStarterSet` 是 union-only 永不移除,
+    //     所以 #249 換掉的那 10 個舊 alternate id（含超級賽亞人 godie-o00x）
+    //     可能還留在線上白名單裡。客戶端的 `resolveToPickable` 擋得住玩家,
+    //     但擋不住 bot／隨機英雄／偽造或重放的 SELECT_CHAMPION。
+    if (isTransformedBody(id)) return false;
     return this.bypass || this.champions.has(id);
   }
   allowsItem(id: string): boolean {

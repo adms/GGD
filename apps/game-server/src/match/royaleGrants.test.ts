@@ -66,8 +66,13 @@ beforeAll(async () => {
  * A champion that HAS an EX skill, so rule A's 「EX 解鎖」 half is observable.
  * Pinned by an explicit precondition below rather than assumed: if the roster
  * ever drops this hero the test says so instead of silently testing nothing.
+ *
+ * ⚠️ 必須是**本體**。這裡原本坐的是 `godie-h01o`（一護的變身態），
+ * 而 `Whitelist.allowsChampion` 現在擋掉所有變身態的身體
+ * （見 `curation/transformedBodyGate.test.ts`）→ 席位會退回 `sela`，
+ * 於是下面那條前提斷言先紅。換成同樣帶 EX 的本體 `godie-h01n`。
  */
-const EX_CHAMPION = "godie-h01o"; // 外掛開很大的死神 - 黑崎一護
+const EX_CHAMPION = "godie-h01n"; // 開外掛的死神 - 黑崎一護（本體）
 
 const FAST = { champSelectTicks: 4, intermissionTicks: 24, combatMaxTicks: 300, resolutionTicks: 3 };
 
