@@ -70,7 +70,12 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
 
     // content registries (new collections)
     expect(Arenas.get("arena.skeleton").zones).toHaveLength(2);
-    expect(Configs.get("config.match").tick.tickHz).toBe(30);
+    // GH#312：`ConfigDoc` 現在是**整個 union**（以前它只是 match 那一份的
+    // infer，那讓每一個 `.schema` 比對變成永遠 false 的死比對）。所以這裡要
+    // 用 discriminant 收窄 —— 順便把 schema tag 一起釘住，比原本更強。
+    const matchCfg = Configs.get("config.match");
+    if (matchCfg.schema !== "config@1") throw new Error(`config.match 的 schema 變成 ${matchCfg.schema}`);
+    expect(matchCfg.tick.tickHz).toBe(30);
     expect(Models.get("champ.sela").glbPath).toBe("assets/models/champions/blocky-mage.glb");
     expect(VfxDefs.ids().length).toBeGreaterThanOrEqual(2);
     // `moon-combo` is #247's 者、皆、陣 combo window (war3map.j:34438) — the

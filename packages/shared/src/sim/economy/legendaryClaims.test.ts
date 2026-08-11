@@ -82,6 +82,16 @@ type Reading =
 interface LabelRule {
   label: string;
   stat: Stat;
+  /**
+   * ⭐ 同一個數字**同時**付的第二格屬性（GH#309）。今天只有「全能吸血」——
+   * omnivamp = 普攻吸血 + 技能吸血，引擎裡是 `Stat.Lifesteal` + `Stat.SpellVamp`
+   * 兩條屬性（分流在 sim/combat/damage.ts）。
+   *
+   * ⛔ 不可以改成「同一個 label 寫兩列」—— 這張表刻意把 label 歧義當成失敗
+   * （readLine 的「2 rules matched」），而那個拒絕是對的：兩列會讓「一行文案
+   * 配幾個 modifier」變成靠表的順序決定，而檔頭第一句就是「ORDER IS IRRELEVANT」。
+   */
+  alsoStat?: Stat;
   op: ModOp;
   reading: Reading;
 }
@@ -161,7 +171,18 @@ const LABEL_RULES: LabelRule[] = [
   // ── 0..1 比率:文案寫 N％,modifier 存 N/100,但 op 是 Flat 不是百分比 op ──
   { label: "吸血", stat: Stat.Lifesteal, op: ModOp.Flat, reading: "rate" },
   { label: "普攻吸血", stat: Stat.Lifesteal, op: ModOp.Flat, reading: "rate" },
-  { label: "全能吸血", stat: Stat.Lifesteal, op: ModOp.Flat, reading: "rate" },
+  // ⭐ 「全能吸血」是**兩格**（GH#309，2026-08-11）：omnivamp = 普攻吸血 +
+  //    技能吸血，而引擎裡那是 `Stat.Lifesteal` 與 `Stat.SpellVamp` 兩條屬性
+  //    （分流在 sim/combat/damage.ts，閘是 `pkt.origin.startsWith("ability:")`）。
+  //    ⛔ 不是第三條屬性 —— statTypes.ts 的 SpellVamp 註解就是這樣寫的。
+  //    所以同一個 label 出兩列，和上面 `AP` 出兩列（flat / pctAdd）同一個形狀。
+  // ⭐ 「全能吸血」是**一條規則付兩格屬性**（GH#309，2026-08-11）：omnivamp =
+  //    普攻吸血 + 技能吸血，而引擎裡那是 `Stat.Lifesteal` 與 `Stat.SpellVamp`
+  //    兩條屬性（分流在 sim/combat/damage.ts，閘是 `pkt.origin.startsWith("ability:")`）。
+  //    ⛔ 不可以寫成兩列同 label —— 這張表刻意拒絕 label 歧義（「2 rules matched」），
+  //    而那個拒絕是對的：兩列會讓「一行文案配幾個 modifier」變成靠表的順序決定。
+  //    ⭐ 所以規則多一格 `alsoStat`，語意是「同一個數字**同時**付這兩格」。
+  { label: "全能吸血", stat: Stat.Lifesteal, alsoStat: Stat.SpellVamp, op: ModOp.Flat, reading: "rate" },
   { label: "閃避", stat: Stat.Evasion, op: ModOp.Flat, reading: "rate" },
   // 2026-08-10 owner：至尊魔戒「附加技能吸血 20%」。`吸血` ⊄ `技能吸血` 的
   // 前綴關係跟上面 `普攻吸血` / `全能吸血` 完全一樣,靠整行錨定分開。
@@ -442,6 +463,9 @@ function readLine(raw: string): Read {
     } else {
       const value = r.reading === "pct" || r.reading === "rate" ? written / 100 : written;
       claims.push({ stat: r.stat, op: r.op, value, tolerance: TOL, line });
+      // 一條規則付兩格（今天只有「全能吸血」）—— 見上面那張表的說明。
+      if (r.alsoStat !== undefined)
+        claims.push({ stat: r.alsoStat, op: r.op, value, tolerance: TOL, line });
     }
   }
 
@@ -715,7 +739,8 @@ describe("傳說武器 say what they do (效能 ⇔ modifiers)", () => {
       ["總移動速度*1.2", "ms pctMult 0.2"],
       ["吸血+15％", "lifesteal flat 0.15"],
       ["普攻吸血+20%", "lifesteal flat 0.2"],
-      ["全能吸血+30%", "lifesteal flat 0.3"],
+      // GH#309（2026-08-11）：全能吸血是**兩格** —— 一條規則付 lifesteal + spellVamp。
+      ["全能吸血+30%", "lifesteal flat 0.3 + spellVamp flat 0.3"],
       ["[閃避] 閃避 + 10%", "evasion flat 0.1"],
       ["[迴避] 25%物理傷害迴避，迴避成功時瞬間移動 (前進一小段距離)", "evasion flat 0.25"],
       // crit + attributes + mechanic prose that must stay unread

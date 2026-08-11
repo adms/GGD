@@ -5174,7 +5174,18 @@ export interface VictoryFxPolicy {
   matchChicken: VictoryFireworkTier;
 }
 export type ConfigVoxelBodiesDoc = z.infer<typeof zConfigVoxelBodiesDoc>;
-export type ConfigDoc = z.infer<typeof zConfigMatchDoc>;
+/**
+ * `config` 這個集合裡的**任何一份**文件（GH#312）。
+ *
+ * ⚠️ 2026-08-11 之前這裡寫的是 `z.infer<typeof zConfigMatchDoc>` —— 也就是
+ * 只描述 match 那一份。於是任何 `store.all<ConfigDoc>("config")` 拿到的型別
+ * 都在說謊，而 `.schema === "config.xxx@1"` 的比對會被 tsc 判成
+ * 「兩個字面型別沒有交集」→ **一個永遠 false 的死比對**。
+ * 接 `config.aoe-tiers@1` 時撞到（tsc 擋下來了，所以沒有出貨）。
+ *
+ * ⭐ 「我要的就是 match 那一份」請用下一行的 {@link ConfigMatchDoc}。
+ */
+export type ConfigDoc = z.infer<typeof zConfigDoc>;
 export type ConfigMatchDoc = z.infer<typeof zConfigMatchDoc>;
 export type ConfigStoreDoc = z.infer<typeof zConfigStoreDoc>;
 export type ArenaRoundGrant = z.infer<typeof zArenaRoundGrant>;
