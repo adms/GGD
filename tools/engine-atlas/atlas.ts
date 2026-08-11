@@ -229,21 +229,41 @@ function measureGeometry(): {
 }
 
 /**
- * ⭐ 這一段是這支工具**量出來的第一個真缺陷**，所以它留在地圖上自我更新。
+ * 模板技能的 AoE 半徑 —— 讀**引擎輸出**，不讀作者填的輸入。
  *
- * 模板技能把參數存在 `template.params`，`registries.ts` 在註冊時呼叫 `expand()`
- * 把它展開**併進** AbilityDef。所以 params 不是死資料 —— 它就是上線跑的那個值。
+ * ════════════════════════════════════════════════════════════════════════════
+ * ⛔ 這一段的第一版是錯的，而且錯得很有教育性 —— 留著這段紀錄，因為它是
+ *    CLAUDE.md 失敗形態⑤「被測的不是出貨的那個」在這支工具自己身上的實例。
  *
- * 實測（2026-08-11）：29 支帶 `template.params.radius` 的技能，**29 支全部 > 24**，
- * 而 24 是一個 duel zone 的半徑（`sim/world/ArenaDef.ts`）。最大的 513.5 蓋滿
- * 整個 zone 的 21 倍 —— 那是**沒有換算的 WC3 單位**（WC3 的 500 是常見 AoE）。
+ * 第一版對整個 `AbilityDef` 做 `walk()` 收集**每一個**叫 `radius` 的數字，
+ * 再取 `Math.max`。但 `registries.ts` 的 `mergeExpansion` **刻意保留**
+ * `def.template.params`（文件存 ref+params 而不是展開結果，好讓模板升級時
+ * 能重新展開每一支引用它的技能）。於是 walk 同時撿到兩個東西：
  *
- * ⚠️ 它不會報錯、不會紅，畫面上只是「這個技能好像打得到所有人」。
+ *     def.radius                  = 9.41   ← 引擎真正用的（已換算）
+ *     def.template.params.radius  = 513.5  ← 作者填的 WC3 原始輸入
+ *
+ * `Math.max` 選了後者，於是這支工具「量到」29 支全場命中的技能，
+ * 而那是 **GH#310，一份誤報**。實際換算一直都有做：`expand.ts` 的
+ * `if (slot.unit === "wc3u") return toLen(v)`，係數 `GGD_PER_WC3 = 11/600`。
+ * 513.5 × 11/600 = 9.4142 → 9.41，與文件裡的 radius 逐位吻合。
+ *
+ * ⭐ 教訓不是「walk 很危險」，是**一個宣稱「引擎沒辦法對它說謊」的工具，
+ *    自己也要讀出貨的那一個欄位**。現在直接讀 `def.radius`，不做 walk。
+ * ════════════════════════════════════════════════════════════════════════════
+ *
+ * ⚠️ 第二個缺陷（同一段，被 `?? 24` 救起來所以沒發作）：
+ * `SKELETON_ARENA.zones[0]?.radius` —— `ZoneDef` 沒有 `radius` 欄位，
+ * 它叫 `boundaryRadius`（`sim/world/ArenaDef.ts:28`）。實測回 `undefined`，
+ * 只是剛好 fallback 就是 24 才沒被發現。一個永遠走 fallback 的讀取
+ * 跟一個正確的讀取長得一模一樣 —— 這就是為什麼下面那行不再用 `??` 兜底，
+ * 讀不到就丟出來。
  */
 async function measureOversizedAoe(): Promise<{
   zoneRadius: number;
   total: number;
   over: { id: string; name: string; radius: number }[];
+  note: string;
 }> {
   const { ContentStore } = await import("../../packages/shared/src/content/store");
   const { registerAll } = await import("../../packages/shared/src/content/registries");
@@ -257,7 +277,12 @@ async function measureOversizedAoe(): Promise<{
   }
   registerAll(store);
 
-  const zoneRadius = SKELETON_ARENA.zones[0]?.radius ?? 24;
+  // ⛔ 不用 `?? 24` 兜底：讀不到就是讀錯欄位，要當場炸掉而不是靜默走 fallback。
+  const zoneRadius = SKELETON_ARENA.zones[0]?.boundaryRadius;
+  if (typeof zoneRadius !== "number") {
+    throw new Error("讀不到 zone 的 boundaryRadius —— ArenaDef 的欄位名改了？");
+  }
+
   const over: { id: string; name: string; radius: number }[] = [];
   let total = 0;
   for (const e of bundle.collections.abilities?.entries ?? []) {
@@ -269,21 +294,24 @@ async function measureOversizedAoe(): Promise<{
     } catch {
       continue;
     }
-    const radii: number[] = [];
-    const walk = (o: any): void => {
-      if (!o || typeof o !== "object") return;
-      if (Array.isArray(o)) return o.forEach(walk);
-      for (const [k, v] of Object.entries(o)) {
-        if (k === "radius" && typeof v === "number") radii.push(v);
-        else walk(v);
-      }
-    };
-    walk(def);
-    const r = Math.max(...radii, 0);
-    if (r > zoneRadius) over.push({ id: e.doc.id, name: e.doc.name, radius: r });
+    // ⬇⬇ THE line：讀 AbilityDef **自己的** radius，那是引擎跑的那一個。
+    //     ⛔ 不要走訪整棵樹取 max —— 那會撿到 template.params 裡未換算的輸入。
+    const r = def?.radius;
+    if (typeof r === "number" && r > zoneRadius) {
+      over.push({ id: e.doc.id, name: e.doc.name, radius: r });
+    }
   }
   over.sort((a, b) => b.radius - a.radius);
-  return { zoneRadius, total, over };
+  return {
+    zoneRadius,
+    total,
+    over,
+    note:
+      over.length === 0
+        ? `${total} 支模板技能的 AoE 半徑全部在 zone 半徑 ${zoneRadius} 之內 —— ` +
+          "WC3 單位換算（GGD_PER_WC3 = 11/600）由 expand() 正確套用。"
+        : `${over.length}/${total} 支超過 zone 半徑 ${zoneRadius}。`,
+  };
 }
 
 function capsRows(): Row[] {

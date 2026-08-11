@@ -84,6 +84,9 @@ ul.tokens code{background:var(--surface);border:1px solid var(--line);padding:3p
 
 .alarm{grid-column:1/-1;border:1px solid var(--alarm);border-left-width:3px;border-radius:4px;
   background:color-mix(in srgb,var(--alarm) 7%,var(--surface));padding:18px 20px;margin:0 0 32px}
+.alarm.ok{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.alarm.ok h2,.alarm.ok .big{color:var(--accent)}
+.alarm.ok h2::before{background:var(--accent)}
 .alarm h2{color:var(--alarm)}
 .alarm h2::before{background:var(--alarm)}
 .alarm .big{font-family:var(--mono);font-size:15px;color:var(--alarm);font-weight:700;
@@ -109,13 +112,18 @@ a{color:var(--accent)}
   <div class="count"><b>37</b><span>效果 kind</span></div><div class="count"><b>19</b><span>[xxx時] 事件</span></div><div class="count"><b>5</b><span>條件葉</span></div><div class="count"><b>17</b><span>模板家族</span></div><div class="count"><b>186</b><span>參數欄位</span></div><div class="count"><b>17</b><span>屬性</span></div><div class="count"><b>36</b><span>全域倍率</span></div>
 </div>
 
-<div class="alarm">
-  <h2>這支工具量到的第一個缺陷</h2>
-  <p class="big">29 / 29 支模板技能的實際 AoE 半徑超過整個 duel zone（半徑 24）</p>
-  <p class="lede">模板技能把參數存在 <code>template.params</code>，而 <code>registries.ts</code> 在註冊時呼叫 <code>expand()</code> 把它<b>併進</b> AbilityDef —— 所以那不是死資料，就是上線跑的值。這些半徑（327–513.5）是<b>沒有換算的 WC3 單位</b>。⚠️ 它不報錯、不會紅，畫面上只是「這個技能好像打得到所有人」。</p>
-  <div class="scroll"><table><thead><tr><th>技能</th><th class="c">實際半徑</th><th class="c">是 zone 的幾倍</th></tr></thead><tbody>
-  <tr><th scope="row">37-002 真‧黑核晶 <code>godie-ubal.ex</code></th><td class="c v">513.5</td><td class="c v">×21.4</td></tr><tr><th scope="row">86-03 神鳴 <code>godie-o00k.e</code></th><td class="c v">500</td><td class="c v">×20.8</td></tr><tr><th scope="row">99-01 甩蔥歌 <code>godie-o02p.q</code></th><td class="c v">400</td><td class="c v">×16.7</td></tr><tr><th scope="row">86-01 十萬伏特 <code>godie-o00k.q</code></th><td class="c v">350</td><td class="c v">×14.6</td></tr><tr><th scope="row">58-01 十萬伏特 <code>godie-ofar.q</code></th><td class="c v">350</td><td class="c v">×14.6</td></tr><tr><th scope="row">45-01 火遁-豪火龍之術 <code>godie-edem.q</code></th><td class="c v">330</td><td class="c v">×13.8</td></tr><tr><th scope="row">77-01 百烈櫻華斬 <code>godie-e00w.q</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">60-04 迴旋斬 <code>godie-h00l.r</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">39-04 祕奧義．金色的神風 <code>godie-u00h.r</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">74-03 闇之天使 <code>godie-u00j.e</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">78-03 廬山昇龍破 <code>godie-u00v.e</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">25-03 北斗百裂拳 <code>godie-umal.e</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">38-002 究極暴走黑龍波 <code>godie-uvng.ex</code></th><td class="c v">327</td><td class="c v">×13.6</td></tr><tr><th scope="row">15-002 風花-武裝解除 <code>godie-emfr.ex</code></th><td class="c v">320.5</td><td class="c v">×13.4</td></tr><tr><th scope="row">04-02 炸彈陣 <code>godie-hjai.w</code></th><td class="c v">300</td><td class="c v">×12.5</td></tr><tr><th scope="row">42-01 凍結的大地 <code>godie-n003.q</code></th><td class="c v">300</td><td class="c v">×12.5</td></tr><tr><th scope="row">86-04 打雷絕招 <code>godie-o00k.r</code></th><td class="c v">300</td><td class="c v">×12.5</td></tr><tr><th scope="row">71-01 死亡隕落 <code>godie-u00k.q</code></th><td class="c v">300</td><td class="c v">×12.5</td></tr><tr><th scope="row">15-03 雷電風暴 <code>godie-emfr.e</code></th><td class="c v">280</td><td class="c v">×11.7</td></tr><tr><th scope="row">34-002 冥道殘月破 <code>godie-osam.ex</code></th><td class="c v">257</td><td class="c v">×10.7</td></tr><tr><th scope="row">90-01 飛葉快刀 <code>godie-hgam.q</code></th><td class="c v">224.5</td><td class="c v">×9.4</td></tr><tr><th scope="row">100-04 百式・哈基米 <code>godie-zombiex.r</code></th><td class="c v">218</td><td class="c v">×9.1</td></tr><tr><th scope="row">53-02 強化炸彈陣 <code>godie-o00l.w</code></th><td class="c v">201</td><td class="c v">×8.4</td></tr><tr><th scope="row">20-04 Avalon-永恆的理想鄉 <code>godie-e002.r</code></th><td class="c v">200</td><td class="c v">×8.3</td></tr><tr><th scope="row">72-04 黑化 <code>godie-ogld.r</code></th><td class="c v">200</td><td class="c v">×8.3</td></tr><tr><th scope="row">39-02 無明神風流-朱雀 <code>godie-u00h.w</code></th><td class="c v">200</td><td class="c v">×8.3</td></tr><tr><th scope="row">11-02 虎狩獵 <code>godie-udre.w</code></th><td class="c v">200</td><td class="c v">×8.3</td></tr><tr><th scope="row">100-03 咕咕嘎嘎 <code>godie-zombiex.e</code></th><td class="c v">191</td><td class="c v">×8.0</td></tr><tr><th scope="row">100-01 肝泥抹德 <code>godie-zombiex.q</code></th><td class="c v">163.5</td><td class="c v">×6.8</td></tr>
-  </tbody></table></div>
+<div class="alarm ok">
+  <h2>更正：先前那份「29 支全場命中」是誤報</h2>
+  <p class="big">29 / 29 支模板技能的 AoE 半徑都在 zone 半徑 24 之內</p>
+  <p class="lede">這一頁的第一版宣稱有 29 支技能「等於全場命中」（GH#310）。<b>那是錯的，錯在量尺。</b><br><br>
+  WC3 單位換算一直都有做 —— <code>expand.ts</code> 的 <code>if (slot.unit === "wc3u") return toLen(v)</code>，
+  係數 <code>GGD_PER_WC3 = 11/600</code>。513.5 × 11/600 = 9.41，與文件裡的 <code>radius</code> 逐位吻合。
+  實際上線的半徑是 3.0–9.41。<br><br>
+  第一版的量測對整個 <code>AbilityDef</code> 走訪、收集每一個叫 <code>radius</code> 的數字再取 <b>max</b>，
+  於是同時撿到引擎的輸出 <code>9.41</code> 與作者填的原始輸入 <code>513.5</code>（<code>registries.ts</code> 是
+  <b>刻意</b>保留 <code>template.params</code> 的，好讓模板升級能重新展開）。max 選了後者。<br><br>
+  ⭐ 這正是 CLAUDE.md 失敗形態⑤「<b>被測的不是出貨的那個</b>」——
+  發生在一支宣稱「引擎沒辦法對它說謊」的工具自己身上。現在直接讀 <code>def.radius</code>，不走訪。</p>
 </div>
 
 <nav class="rail" aria-label="章節">

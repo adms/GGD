@@ -215,6 +215,9 @@ ul.tokens code{background:var(--surface);border:1px solid var(--line);padding:3p
 
 .alarm{grid-column:1/-1;border:1px solid var(--alarm);border-left-width:3px;border-radius:4px;
   background:color-mix(in srgb,var(--alarm) 7%,var(--surface));padding:18px 20px;margin:0 0 32px}
+.alarm.ok{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.alarm.ok h2,.alarm.ok .big{color:var(--accent)}
+.alarm.ok h2::before{background:var(--accent)}
 .alarm h2{color:var(--alarm)}
 .alarm h2::before{background:var(--alarm)}
 .alarm .big{font-family:var(--mono);font-size:15px;color:var(--alarm);font-weight:700;
@@ -250,10 +253,11 @@ a{color:var(--accent)}
     .join("")}
 </div>
 
-<div class="alarm">
-  <h2>這支工具量到的第一個缺陷</h2>
-  <p class="big">${esc(A.oversizedAoe.over.length)} / ${esc(A.oversizedAoe.total)} 支模板技能的實際 AoE 半徑超過整個 duel zone（半徑 ${esc(A.oversizedAoe.zoneRadius)}）</p>
-  <p class="lede">模板技能把參數存在 <code>template.params</code>，而 <code>registries.ts</code> 在註冊時呼叫 <code>expand()</code> 把它<b>併進</b> AbilityDef —— 所以那不是死資料，就是上線跑的值。這些半徑（327–${esc(A.oversizedAoe.over[0]?.radius ?? "")}）是<b>沒有換算的 WC3 單位</b>。⚠️ 它不報錯、不會紅，畫面上只是「這個技能好像打得到所有人」。</p>
+${
+  A.oversizedAoe.over.length > 0
+    ? `<div class="alarm">
+  <h2>這支工具量到的缺陷</h2>
+  <p class="big">${A.oversizedAoe.over.length} / ${A.oversizedAoe.total} 支模板技能的實際 AoE 半徑超過整個 duel zone（半徑 ${A.oversizedAoe.zoneRadius}）</p>
   <div class="scroll"><table><thead><tr><th>技能</th><th class="c">實際半徑</th><th class="c">是 zone 的幾倍</th></tr></thead><tbody>
   ${A.oversizedAoe.over
     .map(
@@ -262,7 +266,21 @@ a{color:var(--accent)}
     )
     .join("")}
   </tbody></table></div>
-</div>
+</div>`
+    : `<div class="alarm ok">
+  <h2>更正：先前那份「29 支全場命中」是誤報</h2>
+  <p class="big">${A.oversizedAoe.total} / ${A.oversizedAoe.total} 支模板技能的 AoE 半徑都在 zone 半徑 ${A.oversizedAoe.zoneRadius} 之內</p>
+  <p class="lede">這一頁的第一版宣稱有 29 支技能「等於全場命中」（GH#310）。<b>那是錯的，錯在量尺。</b><br><br>
+  WC3 單位換算一直都有做 —— <code>expand.ts</code> 的 <code>if (slot.unit === "wc3u") return toLen(v)</code>，
+  係數 <code>GGD_PER_WC3 = 11/600</code>。513.5 × 11/600 = 9.41，與文件裡的 <code>radius</code> 逐位吻合。
+  實際上線的半徑是 3.0–9.41。<br><br>
+  第一版的量測對整個 <code>AbilityDef</code> 走訪、收集每一個叫 <code>radius</code> 的數字再取 <b>max</b>，
+  於是同時撿到引擎的輸出 <code>9.41</code> 與作者填的原始輸入 <code>513.5</code>（<code>registries.ts</code> 是
+  <b>刻意</b>保留 <code>template.params</code> 的，好讓模板升級能重新展開）。max 選了後者。<br><br>
+  ⭐ 這正是 CLAUDE.md 失敗形態⑤「<b>被測的不是出貨的那個</b>」——
+  發生在一支宣稱「引擎沒辦法對它說謊」的工具自己身上。現在直接讀 <code>def.radius</code>，不走訪。</p>
+</div>`
+}
 
 <nav class="rail" aria-label="章節">
   ${SECTIONS.map((s) => `<a href="#${s.id}">${esc(s.title.split(" ")[0]!.replace(/[——:：].*/, ""))}</a>`).join("")}
