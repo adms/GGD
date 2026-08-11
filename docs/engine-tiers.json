@@ -1,0 +1,7646 @@
+{
+  "schema": "ggd-engine-tiers@2",
+  "generatedBy": "tools/engine-atlas/tiers.ts",
+  "level": 10,
+  "tiers": [
+    "極小",
+    "小",
+    "中",
+    "大",
+    "極大"
+  ],
+  "method": {
+    "value": "championStatBase(doc, stat, 10, 出貨 combat-env) —— 三層相加 baseStats + attr(L)·coef + growth·(L−1)，出貨的那個函式，不是自己重算",
+    "banding": "Jenks 自然斷點（一維最小類內平方差 DP 精確解，無隨機、可重現）",
+    "whyNotQuintiles": "攻擊距離 77/119 位並列在 1.6，等分位的四個切點會全部落在同一個並列值上，前三帶會是空的",
+    "envSource": "content/config/combat-env.json（出貨值）；與程式預設不同的鍵列在 envDiffs",
+    "envDiffs": [
+      {
+        "key": "cooldown",
+        "codeDefault": 1,
+        "shipped": 0.2
+      },
+      {
+        "key": "maxHealth",
+        "codeDefault": 1,
+        "shipped": 4
+      },
+      {
+        "key": "manaRegen",
+        "codeDefault": 1,
+        "shipped": 16
+      },
+      {
+        "key": "attackRange",
+        "codeDefault": 1,
+        "shipped": 0.6
+      },
+      {
+        "key": "abilityRange",
+        "codeDefault": 1,
+        "shipped": 0.8
+      },
+      {
+        "key": "agiToArmor",
+        "codeDefault": 0.15,
+        "shipped": 0.3
+      },
+      {
+        "key": "goldMobKill",
+        "codeDefault": 1,
+        "shipped": 0.5
+      },
+      {
+        "key": "goldEliteKill",
+        "codeDefault": 1,
+        "shipped": 0.1
+      },
+      {
+        "key": "moveSpeedMelee",
+        "codeDefault": 1,
+        "shipped": 0.8
+      },
+      {
+        "key": "moveSpeedRanged",
+        "codeDefault": 1,
+        "shipped": 0.6
+      },
+      {
+        "key": "magicResistMult",
+        "codeDefault": 1,
+        "shipped": 0.2
+      }
+    ],
+    "baseBonus": {
+      "maxHealth": 650
+    },
+    "ingameNote": "ingame = lv10 × STAT_ENV_CHAIN 倍率鏈 (+ 基礎加成)。移速的倍率依 attackType 分岔（近戰 ×0.8 / 遠程 ×0.6）"
+  },
+  "hero": {
+    "total": 119,
+    "formCount": 26,
+    "fitPopulation": 116,
+    "excludedFromFit": [
+      {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "why": "attributes.source = authored（手寫，不是 w3x 匯入的英雄）"
+      },
+      {
+        "id": "sela",
+        "name": "Sela, the Ember Sage",
+        "why": "attributes.source = authored（手寫，不是 w3x 匯入的英雄）"
+      },
+      {
+        "id": "thorne",
+        "name": "Thorne, the Bramble Knight",
+        "why": "attributes.source = authored（手寫，不是 w3x 匯入的英雄）"
+      }
+    ],
+    "zh": {
+      "range": "攻擊距離",
+      "as": "攻擊速度",
+      "ms": "移動速度",
+      "maxHealth": "生命",
+      "armor": "防禦",
+      "mr": "魔抗",
+      "ad": "AD",
+      "ap": "AP"
+    },
+    "rows": [
+      {
+        "id": "godie-e001",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "form": "本體",
+        "counterpartId": "godie-e00n",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.73,
+          "ms": 5.8,
+          "maxHealth": 541,
+          "armor": 6.9,
+          "mr": 40,
+          "ad": 42,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3355,
+          "ms": 5.8,
+          "maxHealth": 1218.25,
+          "armor": 21.66,
+          "mr": 59.71,
+          "ad": 82.95,
+          "ap": 34.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3355,
+          "ms": 4.64,
+          "maxHealth": 5523,
+          "armor": 21.66,
+          "mr": 11.942,
+          "ad": 82.95,
+          "ap": 34.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e002",
+        "name": "亞瑟王 - Saber",
+        "form": "本體",
+        "counterpartId": "godie-e00l",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6947,
+          "ms": 5.8,
+          "maxHealth": 679,
+          "armor": 4.8,
+          "mr": 40,
+          "ad": 48,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1612,
+          "ms": 5.8,
+          "maxHealth": 1723.9,
+          "armor": 14.16,
+          "mr": 59.44,
+          "ad": 88.5,
+          "ap": 34.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1612,
+          "ms": 4.64,
+          "maxHealth": 7545.6,
+          "armor": 14.16,
+          "mr": 11.888,
+          "ad": 88.5,
+          "ap": 34.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e007",
+        "name": "龍之子 - 天地志狼",
+        "form": "變身",
+        "counterpartId": "godie-ewar",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.74,
+          "ms": 5.8,
+          "maxHealth": 564,
+          "armor": 7.2,
+          "mr": 37.6,
+          "ad": 28,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.3552,
+          "ms": 5.8,
+          "maxHealth": 1260.6,
+          "armor": 22.995,
+          "mr": 57.31,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.3552,
+          "ms": 3.48,
+          "maxHealth": 5692.4,
+          "armor": 22.995,
+          "mr": 11.462,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "tier": {
+          "range": "中",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e008",
+        "name": "火霧戰士 - 夏娜",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.71,
+          "ms": 6,
+          "maxHealth": 541,
+          "armor": 6.3,
+          "mr": 38.2,
+          "ad": 37,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3206,
+          "ms": 6,
+          "maxHealth": 1218.25,
+          "armor": 22.23,
+          "mr": 57.37,
+          "ad": 78.85,
+          "ap": 30.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3206,
+          "ms": 4.8,
+          "maxHealth": 5523,
+          "armor": 22.23,
+          "mr": 11.474,
+          "ad": 78.85,
+          "ap": 30.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00j",
+        "name": "皇者 - 騜",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6947,
+          "ms": 6,
+          "maxHealth": 656,
+          "armor": 4.8,
+          "mr": 36.4,
+          "ad": 32,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1358,
+          "ms": 6,
+          "maxHealth": 1269.8,
+          "armor": 13.62,
+          "mr": 56.38,
+          "ad": 59,
+          "ap": 29.3
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1358,
+          "ms": 4.8,
+          "maxHealth": 5729.2,
+          "armor": 13.62,
+          "mr": 11.276,
+          "ad": 59,
+          "ap": 29.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00k",
+        "name": "戰國刺客Azumi - 安云",
+        "form": "本體",
+        "counterpartId": "godie-e00z",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.71,
+          "ms": 6,
+          "maxHealth": 541,
+          "armor": 6.3,
+          "mr": 38.2,
+          "ad": 37,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3206,
+          "ms": 6,
+          "maxHealth": 1082.8,
+          "armor": 22.23,
+          "mr": 57.37,
+          "ad": 75.7,
+          "ap": 30.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3206,
+          "ms": 4.8,
+          "maxHealth": 4981.2,
+          "armor": 22.23,
+          "mr": 11.474,
+          "ad": 75.7,
+          "ap": 30.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00l",
+        "name": "亞瑟王 - Saber",
+        "form": "變身",
+        "counterpartId": "godie-e002",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6947,
+          "ms": 5.8,
+          "maxHealth": 679,
+          "armor": 4.8,
+          "mr": 40,
+          "ad": 48,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1612,
+          "ms": 5.8,
+          "maxHealth": 1723.9,
+          "armor": 14.16,
+          "mr": 59.44,
+          "ad": 88.5,
+          "ap": 34.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1612,
+          "ms": 4.64,
+          "maxHealth": 7545.6,
+          "armor": 14.16,
+          "mr": 11.888,
+          "ad": 88.5,
+          "ap": 34.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00n",
+        "name": "蟬在叫人壞掉 - 龍宮禮奈",
+        "form": "變身",
+        "counterpartId": "godie-e001",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.9733,
+          "ms": 7.7,
+          "maxHealth": 541,
+          "armor": 6.9,
+          "mr": 40,
+          "ad": 87,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.6629,
+          "ms": 7.7,
+          "maxHealth": 1218.25,
+          "armor": 21.66,
+          "mr": 59.71,
+          "ad": 127.95,
+          "ap": 34.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.6629,
+          "ms": 6.16,
+          "maxHealth": 5523,
+          "armor": 21.66,
+          "mr": 11.942,
+          "ad": 127.95,
+          "ap": 34.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "大",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "極大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00q",
+        "name": "英靈-亞瑟王 - 黑化Saber",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6044,
+          "ms": 5.2,
+          "maxHealth": 656,
+          "armor": 5.4,
+          "mr": 38.8,
+          "ad": 52,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1471,
+          "ms": 5.2,
+          "maxHealth": 1507.4,
+          "armor": 17.055,
+          "mr": 58.24,
+          "ad": 88,
+          "ap": 32.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1471,
+          "ms": 4.16,
+          "maxHealth": 6679.6,
+          "armor": 17.055,
+          "mr": 11.648,
+          "ad": 88,
+          "ap": 32.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00r",
+        "name": "最終泛用人型決戰兵器 - 初號機",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.72,
+          "ms": 5.8,
+          "maxHealth": 633,
+          "armor": 6.6,
+          "mr": 37.6,
+          "ad": 31,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3342,
+          "ms": 5.8,
+          "maxHealth": 1310.25,
+          "armor": 22.53,
+          "mr": 56.77,
+          "ad": 72.85,
+          "ap": 29.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3342,
+          "ms": 4.64,
+          "maxHealth": 5891,
+          "armor": 22.53,
+          "mr": 11.354,
+          "ad": 72.85,
+          "ap": 29.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00s",
+        "name": "白木老樹精 - 白木卡迪那",
+        "form": "本體",
+        "counterpartId": "godie-e010",
+        "attackType": "ranged",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 11,
+          "as": 0.64,
+          "ms": 5.3,
+          "maxHealth": 541,
+          "armor": 6.2,
+          "mr": 43,
+          "ad": 32,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 11,
+          "as": 1.005,
+          "ms": 5.3,
+          "maxHealth": 1256.95,
+          "armor": 11.87,
+          "mr": 68.92,
+          "ad": 58.55,
+          "ap": 50.2
+        },
+        "ingame": {
+          "range": 6.6,
+          "as": 1.005,
+          "ms": 3.18,
+          "maxHealth": 5677.8,
+          "armor": 11.87,
+          "mr": 13.784,
+          "ad": 58.55,
+          "ap": 50.2
+        },
+        "tier": {
+          "range": "極大",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-e00t",
+        "name": "七夜怪談 - 貞子",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6,
+          "as": 0.68,
+          "ms": 5.7,
+          "maxHealth": 472,
+          "armor": 5.4,
+          "mr": 42.4,
+          "ad": 56.5,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 6,
+          "as": 1.1696,
+          "ms": 5.7,
+          "maxHealth": 1091.2,
+          "armor": 16.2,
+          "mr": 65.08,
+          "ad": 88.9,
+          "ap": 43.8
+        },
+        "ingame": {
+          "range": 3.6,
+          "as": 1.1696,
+          "ms": 3.42,
+          "maxHealth": 5014.8,
+          "armor": 16.2,
+          "mr": 13.016,
+          "ad": 88.9,
+          "ap": 43.8
+        },
+        "tier": {
+          "range": "小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "大",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-e00u",
+        "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": true,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6,
+          "as": 0.75,
+          "ms": 5.8,
+          "maxHealth": 472,
+          "armor": 7.5,
+          "mr": 39.4,
+          "ad": 34.5,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 6,
+          "as": 1.3627,
+          "ms": 5.8,
+          "maxHealth": 1013.8,
+          "armor": 22.26,
+          "mr": 59.38,
+          "ad": 72.3,
+          "ap": 34.3
+        },
+        "ingame": {
+          "range": 3.6,
+          "as": 1.3627,
+          "ms": 3.48,
+          "maxHealth": 4705.2,
+          "armor": 22.26,
+          "mr": 11.876,
+          "ad": 72.3,
+          "ap": 34.3
+        },
+        "tier": {
+          "range": "小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00v",
+        "name": "百畝森林的霸主 - 維尼",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.66,
+          "ms": 5.8,
+          "maxHealth": 840,
+          "armor": 5.8,
+          "mr": 40,
+          "ad": 50,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.222,
+          "ms": 5.8,
+          "maxHealth": 2001,
+          "armor": 17.455,
+          "mr": 58.36,
+          "ad": 93.2,
+          "ap": 32.6
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.222,
+          "ms": 4.64,
+          "maxHealth": 8654,
+          "armor": 17.455,
+          "mr": 11.672,
+          "ad": 93.2,
+          "ap": 32.6
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00w",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "form": "本體",
+        "counterpartId": "godie-e00x",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.74,
+          "ms": 5.8,
+          "maxHealth": 564,
+          "armor": 7.2,
+          "mr": 37.6,
+          "ad": 28,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3552,
+          "ms": 5.8,
+          "maxHealth": 1260.6,
+          "armor": 22.995,
+          "mr": 57.31,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3552,
+          "ms": 4.64,
+          "maxHealth": 5692.4,
+          "armor": 22.995,
+          "mr": 11.462,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00x",
+        "name": "神鳴流劍士 - 櫻綻剎那",
+        "form": "變身",
+        "counterpartId": "godie-e00w",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.8706,
+          "ms": 10.1,
+          "maxHealth": 564,
+          "armor": 7.2,
+          "mr": 37.6,
+          "ad": 28,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.5311,
+          "ms": 10.1,
+          "maxHealth": 1260.6,
+          "armor": 22.995,
+          "mr": 57.31,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.5311,
+          "ms": 8.08,
+          "maxHealth": 5692.4,
+          "armor": 22.995,
+          "mr": 11.462,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "極大",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e00z",
+        "name": "戰國刺客Azumi - 安云",
+        "form": "變身",
+        "counterpartId": "godie-e00k",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7889,
+          "ms": 10.1,
+          "maxHealth": 541,
+          "armor": 6.3,
+          "mr": 38.2,
+          "ad": 37,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.4284,
+          "ms": 10.1,
+          "maxHealth": 1082.8,
+          "armor": 22.23,
+          "mr": 57.37,
+          "ad": 75.7,
+          "ap": 30.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.4284,
+          "ms": 8.08,
+          "maxHealth": 4981.2,
+          "armor": 22.23,
+          "mr": 11.474,
+          "ad": 75.7,
+          "ap": 30.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "極大",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e010",
+        "name": "白木老樹精 - 白木卡迪那",
+        "form": "變身",
+        "counterpartId": "godie-e00s",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 11.9,
+          "as": 0.64,
+          "ms": 5.5,
+          "maxHealth": 541,
+          "armor": 14.2,
+          "mr": 43,
+          "ad": 32,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 11.9,
+          "as": 1.005,
+          "ms": 5.5,
+          "maxHealth": 1256.95,
+          "armor": 19.87,
+          "mr": 68.92,
+          "ad": 58.55,
+          "ap": 50.2
+        },
+        "ingame": {
+          "range": 7.14,
+          "as": 1.005,
+          "ms": 3.3,
+          "maxHealth": 5677.8,
+          "armor": 19.87,
+          "mr": 13.784,
+          "ad": 58.55,
+          "ap": 50.2
+        },
+        "tier": {
+          "range": "極大",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-e012",
+        "name": "殺人劍客 - 佐佐木小次郎",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.71,
+          "ms": 5.8,
+          "maxHealth": 564,
+          "armor": 6.3,
+          "mr": 37.6,
+          "ad": 30.5,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2838,
+          "ms": 5.8,
+          "maxHealth": 1299.3,
+          "armor": 20.52,
+          "mr": 57.58,
+          "ad": 71,
+          "ap": 31.3
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2838,
+          "ms": 4.64,
+          "maxHealth": 5847.2,
+          "armor": 20.52,
+          "mr": 11.516,
+          "ad": 71,
+          "ap": 31.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-e015",
+        "name": "夜市人生 - 金居福",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.69,
+          "ms": 5.9,
+          "maxHealth": 679,
+          "armor": 5.7,
+          "mr": 37,
+          "ad": 33,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.171,
+          "ms": 5.9,
+          "maxHealth": 1569.1,
+          "armor": 16.23,
+          "mr": 55.9,
+          "ad": 70.8,
+          "ap": 28.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.171,
+          "ms": 4.72,
+          "maxHealth": 6926.4,
+          "armor": 16.23,
+          "mr": 11.18,
+          "ad": 70.8,
+          "ap": 28.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-ecen",
+        "name": "姜窩肯 - 約翰走路",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 11.9,
+          "as": 0.64,
+          "ms": 5.7,
+          "maxHealth": 541,
+          "armor": 4.2,
+          "mr": 43,
+          "ad": 32,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 11.9,
+          "as": 1.0724,
+          "ms": 5.7,
+          "maxHealth": 1256.95,
+          "armor": 13.155,
+          "mr": 68.92,
+          "ad": 63.05,
+          "ap": 50.2
+        },
+        "ingame": {
+          "range": 7.14,
+          "as": 1.0724,
+          "ms": 3.42,
+          "maxHealth": 5677.8,
+          "armor": 13.155,
+          "mr": 13.784,
+          "ad": 63.05,
+          "ap": 50.2
+        },
+        "tier": {
+          "range": "極大",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-edem",
+        "name": "寫輪眼復仇者 - 宇智波佐助",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.76,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 7.8,
+          "mr": 36.4,
+          "ad": 27,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3396,
+          "ms": 5.9,
+          "maxHealth": 1082.8,
+          "armor": 21.75,
+          "mr": 58,
+          "ad": 62.1,
+          "ap": 32
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3396,
+          "ms": 4.72,
+          "maxHealth": 4981.2,
+          "armor": 21.75,
+          "mr": 11.6,
+          "ad": 62.1,
+          "ap": 32
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-efur",
+        "name": "揍敵客大家長 - 揍敵客桀諾",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.7222,
+          "ms": 6.1,
+          "maxHealth": 495,
+          "armor": 6.5,
+          "mr": 40,
+          "ad": 45,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.2475,
+          "ms": 6.1,
+          "maxHealth": 1075.5,
+          "armor": 18.74,
+          "mr": 63.22,
+          "ad": 78.3,
+          "ap": 40.7
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.2475,
+          "ms": 3.66,
+          "maxHealth": 4952,
+          "armor": 18.74,
+          "mr": 12.644,
+          "ad": 78.3,
+          "ap": 40.7
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-ekee",
+        "name": "會叫的野獸 - 傳說中的大刀",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 9.2,
+          "as": 0.65,
+          "ms": 6.1,
+          "maxHealth": 514,
+          "armor": 6.5,
+          "mr": 42.4,
+          "ad": 36,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 9.2,
+          "as": 1.1043,
+          "ms": 6.1,
+          "maxHealth": 1094.5,
+          "armor": 15.86,
+          "mr": 68.86,
+          "ad": 65.7,
+          "ap": 50.1
+        },
+        "ingame": {
+          "range": 5.52,
+          "as": 1.1043,
+          "ms": 3.66,
+          "maxHealth": 5028,
+          "armor": 15.86,
+          "mr": 13.772,
+          "ad": 65.7,
+          "ap": 50.1
+        },
+        "tier": {
+          "range": "大",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-emfr",
+        "name": "魔法老師 - 涅吉。史普林。菲爾德",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6,
+          "as": 0.68,
+          "ms": 5.6,
+          "maxHealth": 564,
+          "armor": 7.4,
+          "mr": 40,
+          "ad": 33,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 6,
+          "as": 1.0962,
+          "ms": 5.6,
+          "maxHealth": 1183.2,
+          "armor": 14.78,
+          "mr": 67,
+          "ad": 60,
+          "ap": 47
+        },
+        "ingame": {
+          "range": 3.6,
+          "as": 1.0962,
+          "ms": 3.36,
+          "maxHealth": 5382.8,
+          "armor": 14.78,
+          "mr": 13.4,
+          "ad": 60,
+          "ap": 47
+        },
+        "tier": {
+          "range": "小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-emns",
+        "name": "奇樂 - 夜神月",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 10.1,
+          "as": 0.69,
+          "ms": 5.8,
+          "maxHealth": 495,
+          "armor": 7.7,
+          "mr": 41.2,
+          "ad": 27,
+          "ap": 22
+        },
+        "lv10": {
+          "range": 10.1,
+          "as": 1.122,
+          "ms": 5.8,
+          "maxHealth": 1172.25,
+          "armor": 16.25,
+          "mr": 66.58,
+          "ad": 58.95,
+          "ap": 46.3
+        },
+        "ingame": {
+          "range": 6.06,
+          "as": 1.122,
+          "ms": 3.48,
+          "maxHealth": 5339,
+          "armor": 16.25,
+          "mr": 13.316,
+          "ad": 58.95,
+          "ap": 46.3
+        },
+        "tier": {
+          "range": "大",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-etyr",
+        "name": "治癒系公主 - 木乃香",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.64,
+          "ms": 5.6,
+          "maxHealth": 495,
+          "armor": 4.2,
+          "mr": 46,
+          "ad": 25,
+          "ap": 30
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.0173,
+          "ms": 5.6,
+          "maxHealth": 1114.2,
+          "armor": 11.04,
+          "mr": 74.08,
+          "ad": 50.2,
+          "ap": 58.8
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.0173,
+          "ms": 3.36,
+          "maxHealth": 5106.8,
+          "armor": 11.04,
+          "mr": 14.816,
+          "ad": 50.2,
+          "ap": 58.8
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-ewar",
+        "name": "龍之子 - 天地志狼",
+        "form": "本體",
+        "counterpartId": "godie-e007",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.74,
+          "ms": 5.8,
+          "maxHealth": 564,
+          "armor": 7.2,
+          "mr": 37.6,
+          "ad": 28,
+          "ap": 16
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3552,
+          "ms": 5.8,
+          "maxHealth": 1260.6,
+          "armor": 22.995,
+          "mr": 57.31,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3552,
+          "ms": 4.64,
+          "maxHealth": 5692.4,
+          "armor": 22.995,
+          "mr": 11.462,
+          "ad": 69.4,
+          "ap": 30.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-ewrd",
+        "name": "天上天下 - 棗 真夜",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.68,
+          "ms": 6,
+          "maxHealth": 564,
+          "armor": 5.4,
+          "mr": 40,
+          "ad": 38,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2492,
+          "ms": 6,
+          "maxHealth": 1318.65,
+          "armor": 19.755,
+          "mr": 59.44,
+          "ad": 79.85,
+          "ap": 34.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2492,
+          "ms": 4.8,
+          "maxHealth": 5924.6,
+          "armor": 19.755,
+          "mr": 11.888,
+          "ad": 79.85,
+          "ap": 34.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h001",
+        "name": "地獄來襲者 - 斑剎",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.63,
+          "ms": 5.6,
+          "maxHealth": 610,
+          "armor": 3.9,
+          "mr": 41.2,
+          "ad": 30,
+          "ap": 22
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.0465,
+          "ms": 5.6,
+          "maxHealth": 1364.65,
+          "armor": 12.585,
+          "mr": 67.12,
+          "ad": 65.55,
+          "ap": 47.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.0465,
+          "ms": 4.48,
+          "maxHealth": 6108.6,
+          "armor": 12.585,
+          "mr": 13.424,
+          "ad": 65.55,
+          "ap": 47.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-h00l",
+        "name": "時空勇者 - 林克",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6526,
+          "ms": 5.7,
+          "maxHealth": 702,
+          "armor": 4.6,
+          "mr": 38.8,
+          "ad": 34,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1301,
+          "ms": 5.7,
+          "maxHealth": 1785.6,
+          "armor": 15.4,
+          "mr": 56.08,
+          "ad": 84.4,
+          "ap": 28.8
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1301,
+          "ms": 4.56,
+          "maxHealth": 7792.4,
+          "armor": 15.4,
+          "mr": 11.216,
+          "ad": 84.4,
+          "ap": 28.8
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h00w",
+        "name": "豪洨天王 - 鄭先生",
+        "form": "變身",
+        "counterpartId": "godie-harf",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.8375,
+          "ms": 5.9,
+          "maxHealth": 725,
+          "armor": 10.1,
+          "mr": 35.2,
+          "ad": 37,
+          "ap": 12
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3033,
+          "ms": 5.9,
+          "maxHealth": 1789.25,
+          "armor": 18.785,
+          "mr": 55.72,
+          "ad": 86.95,
+          "ap": 28.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3033,
+          "ms": 4.72,
+          "maxHealth": 7807,
+          "armor": 18.785,
+          "mr": 11.144,
+          "ad": 86.95,
+          "ap": 28.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h01n",
+        "name": "開外掛的死神 - 黑崎一護",
+        "form": "本體",
+        "counterpartId": "godie-h01o",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7053,
+          "ms": 5.7,
+          "maxHealth": 702,
+          "armor": 6.1,
+          "mr": 35.8,
+          "ad": 34,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1308,
+          "ms": 5.7,
+          "maxHealth": 1766.25,
+          "armor": 13.615,
+          "mr": 55.24,
+          "ad": 83.95,
+          "ap": 27.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1308,
+          "ms": 4.56,
+          "maxHealth": 7715,
+          "armor": 13.615,
+          "mr": 11.048,
+          "ad": 83.95,
+          "ap": 27.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h01o",
+        "name": "外掛開很大的死神 - 黑崎一護",
+        "form": "變身",
+        "counterpartId": "godie-h01n",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 1.1167,
+          "ms": 7.7,
+          "maxHealth": 702,
+          "armor": 6.1,
+          "mr": 35.8,
+          "ad": 34,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.6223,
+          "ms": 7.7,
+          "maxHealth": 1766.25,
+          "armor": 13.615,
+          "mr": 55.24,
+          "ad": 83.95,
+          "ap": 27.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.6223,
+          "ms": 6.16,
+          "maxHealth": 7715,
+          "armor": 13.615,
+          "mr": 11.048,
+          "ad": 83.95,
+          "ap": 27.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "大",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h01u",
+        "name": "亂世癿王者 - 呂布奉先",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.6947,
+          "ms": 5.9,
+          "maxHealth": 748,
+          "armor": 5.8,
+          "mr": 36.4,
+          "ad": 33,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.1103,
+          "ms": 5.9,
+          "maxHealth": 1831.6,
+          "armor": 13.18,
+          "mr": 56.38,
+          "ad": 83.4,
+          "ap": 29.3
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.1103,
+          "ms": 4.72,
+          "maxHealth": 7976.4,
+          "armor": 13.18,
+          "mr": 11.276,
+          "ad": 83.4,
+          "ap": 29.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "form": "變身",
+        "counterpartId": "godie-hjai",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.63,
+          "ms": 5.6,
+          "maxHealth": 518,
+          "armor": 3.9,
+          "mr": 104.2,
+          "ad": 26,
+          "ap": 127
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.0649,
+          "ms": 5.6,
+          "maxHealth": 1137.2,
+          "armor": 12.99,
+          "mr": 131.2,
+          "ad": 54.8,
+          "ap": 154
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.0649,
+          "ms": 3.36,
+          "maxHealth": 5198.8,
+          "armor": 12.99,
+          "mr": 26.24,
+          "ad": 54.8,
+          "ap": 154
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "極大",
+          "ad": "小",
+          "ap": "極大"
+        }
+      },
+      {
+        "id": "godie-h021",
+        "name": "破銅爛鐵 - 阿強一號",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6.4,
+          "as": 0.6632,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 3.9,
+          "mr": 40.6,
+          "ad": 32,
+          "ap": 21
+        },
+        "lv10": {
+          "range": 6.4,
+          "as": 1.0679,
+          "ms": 5.9,
+          "maxHealth": 1469.8,
+          "armor": 11.28,
+          "mr": 63.82,
+          "ad": 75.2,
+          "ap": 41.7
+        },
+        "ingame": {
+          "range": 3.84,
+          "as": 1.0679,
+          "ms": 3.54,
+          "maxHealth": 6529.2,
+          "armor": 11.28,
+          "mr": 12.764,
+          "ad": 75.2,
+          "ap": 41.7
+        },
+        "tier": {
+          "range": "小",
+          "as": "極小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-h022",
+        "name": "白色之翼 - 涅吉。史普林。菲爾德",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7158,
+          "ms": 6,
+          "maxHealth": 564,
+          "armor": 6.4,
+          "mr": 40,
+          "ad": 28,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2021,
+          "ms": 6,
+          "maxHealth": 1299.3,
+          "armor": 16.93,
+          "mr": 61.6,
+          "ad": 62.2,
+          "ap": 38
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2021,
+          "ms": 4.8,
+          "maxHealth": 5847.2,
+          "armor": 16.93,
+          "mr": 12.32,
+          "ad": 62.2,
+          "ap": 38
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "小",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-h02k",
+        "name": "國寶級的畜生 - 熊貓",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.65,
+          "ms": 5.9,
+          "maxHealth": 840,
+          "armor": 6.5,
+          "mr": 29.2,
+          "ad": 76.5,
+          "ap": 2
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 0.884,
+          "ms": 5.9,
+          "maxHealth": 1290,
+          "armor": 10.55,
+          "mr": 40,
+          "ad": 99,
+          "ap": 2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 0.884,
+          "ms": 4.72,
+          "maxHealth": 5810,
+          "armor": 10.55,
+          "mr": 8,
+          "ad": 99,
+          "ap": 2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "極小",
+          "ad": "大",
+          "ap": "極小"
+        }
+      },
+      {
+        "id": "godie-h02n",
+        "name": "腦包英雄 - 打我阿笨蛋",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 10.2,
+          "ms": 5.5,
+          "maxHealth": 5000,
+          "armor": 2.3,
+          "mr": 38.2,
+          "ad": 2,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 10.3836,
+          "ms": 5.5,
+          "maxHealth": 5000,
+          "armor": 2.3,
+          "mr": 58.72,
+          "ad": 2,
+          "ap": 33.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 10.3836,
+          "ms": 4.4,
+          "maxHealth": 20650,
+          "armor": 2.3,
+          "mr": 11.744,
+          "ad": 2,
+          "ap": 33.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極大",
+          "ms": "小",
+          "maxHealth": "極大",
+          "armor": "極小",
+          "mr": "小",
+          "ad": "極小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h02r",
+        "name": "種子神奇寶貝 - 妙蛙花",
+        "form": "變身",
+        "counterpartId": "godie-hgam",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 1.1667,
+          "ms": 4.6,
+          "maxHealth": 518,
+          "armor": 6,
+          "mr": 38.8,
+          "ad": 81,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.7835,
+          "ms": 4.6,
+          "maxHealth": 1098.5,
+          "armor": 16.8,
+          "mr": 62.02,
+          "ad": 108,
+          "ap": 38.7
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.7835,
+          "ms": 3.68,
+          "maxHealth": 5044,
+          "armor": 16.8,
+          "mr": 12.404,
+          "ad": 108,
+          "ap": 38.7
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "極小",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "小",
+          "ad": "極大",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-h02s",
+        "name": "死亡騎士",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6947,
+          "ms": 6.1,
+          "maxHealth": 725,
+          "armor": 6.8,
+          "mr": 35.2,
+          "ad": 35,
+          "ap": 12
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1294,
+          "ms": 6.1,
+          "maxHealth": 1618.25,
+          "armor": 15.485,
+          "mr": 55.72,
+          "ad": 75.95,
+          "ap": 28.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1294,
+          "ms": 4.88,
+          "maxHealth": 7123,
+          "armor": 15.485,
+          "mr": 11.144,
+          "ad": 75.95,
+          "ap": 28.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h02u",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "form": "變身",
+        "counterpartId": "godie-h02v",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.73,
+          "ms": 5.5,
+          "maxHealth": 518,
+          "armor": 8.9,
+          "mr": 40.6,
+          "ad": 26,
+          "ap": 21
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2988,
+          "ms": 5.5,
+          "maxHealth": 1098.5,
+          "armor": 22.85,
+          "mr": 62.2,
+          "ad": 53,
+          "ap": 39
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2988,
+          "ms": 4.4,
+          "maxHealth": 5044,
+          "armor": 22.85,
+          "mr": 12.44,
+          "ad": 53,
+          "ap": 39
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-h02v",
+        "name": "看似憂鬱的神獸 - 草泥馬",
+        "form": "本體",
+        "counterpartId": "godie-h02u",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.73,
+          "ms": 6,
+          "maxHealth": 518,
+          "armor": 8.9,
+          "mr": 40.6,
+          "ad": 26,
+          "ap": 21
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.2988,
+          "ms": 6,
+          "maxHealth": 1098.5,
+          "armor": 22.85,
+          "mr": 62.2,
+          "ad": 53,
+          "ap": 39
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.2988,
+          "ms": 4.8,
+          "maxHealth": 5044,
+          "armor": 22.85,
+          "mr": 12.44,
+          "ad": 53,
+          "ap": 39
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-h02y",
+        "name": "幕末復仇狂者 - 志志雄真實",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6842,
+          "ms": 5.9,
+          "maxHealth": 702,
+          "armor": 6.5,
+          "mr": 37,
+          "ad": 34,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1343,
+          "ms": 5.9,
+          "maxHealth": 1669.5,
+          "armor": 15.59,
+          "mr": 57.52,
+          "ad": 79,
+          "ap": 31.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1343,
+          "ms": 4.72,
+          "maxHealth": 7328,
+          "armor": 15.59,
+          "mr": 11.504,
+          "ad": 79,
+          "ap": 31.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-h02z",
+        "name": "不良少年",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6947,
+          "ms": 6.1,
+          "maxHealth": 725,
+          "armor": 6.8,
+          "mr": 35.2,
+          "ad": 35,
+          "ap": 12
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1294,
+          "ms": 6.1,
+          "maxHealth": 1618.25,
+          "armor": 15.485,
+          "mr": 55.72,
+          "ad": 75.95,
+          "ap": 28.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1294,
+          "ms": 4.88,
+          "maxHealth": 7123,
+          "armor": 15.485,
+          "mr": 11.144,
+          "ad": 75.95,
+          "ap": 28.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hapm",
+        "name": "海克力斯 - Berserker",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.6632,
+          "ms": 5.8,
+          "maxHealth": 767,
+          "armor": 3.9,
+          "mr": 36.4,
+          "ad": 36,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.0679,
+          "ms": 5.8,
+          "maxHealth": 1850.6,
+          "armor": 11.28,
+          "mr": 56.38,
+          "ad": 86.4,
+          "ap": 29.3
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.0679,
+          "ms": 4.64,
+          "maxHealth": 8052.4,
+          "armor": 11.28,
+          "mr": 11.276,
+          "ad": 86.4,
+          "ap": 29.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-harf",
+        "name": "豪洨天王 - 鄭先生",
+        "form": "本體",
+        "counterpartId": "godie-h00w",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.67,
+          "ms": 5.9,
+          "maxHealth": 725,
+          "armor": 7.1,
+          "mr": 35.2,
+          "ad": 37,
+          "ap": 12
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1009,
+          "ms": 5.9,
+          "maxHealth": 1789.25,
+          "armor": 15.785,
+          "mr": 55.72,
+          "ad": 86.95,
+          "ap": 28.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1009,
+          "ms": 4.72,
+          "maxHealth": 7807,
+          "armor": 15.785,
+          "mr": 11.144,
+          "ad": 86.95,
+          "ap": 28.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hart",
+        "name": "最終幻想 - 克勞德",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7053,
+          "ms": 6,
+          "maxHealth": 702,
+          "armor": 7.1,
+          "mr": 35.8,
+          "ad": 39,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1753,
+          "ms": 6,
+          "maxHealth": 1669.5,
+          "armor": 16.46,
+          "mr": 56.86,
+          "ad": 84,
+          "ap": 30.1
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1753,
+          "ms": 4.8,
+          "maxHealth": 7328,
+          "armor": 16.46,
+          "mr": 11.372,
+          "ad": 84,
+          "ap": 30.1
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hblm",
+        "name": "慈悲的王者 - 賈修貝爾",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6.4,
+          "as": 0.6632,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 3.9,
+          "mr": 40.6,
+          "ad": 32,
+          "ap": 21
+        },
+        "lv10": {
+          "range": 6.4,
+          "as": 1.0679,
+          "ms": 5.9,
+          "maxHealth": 1469.8,
+          "armor": 11.28,
+          "mr": 63.82,
+          "ad": 75.2,
+          "ap": 41.7
+        },
+        "ingame": {
+          "range": 3.84,
+          "as": 1.0679,
+          "ms": 3.54,
+          "maxHealth": 6529.2,
+          "armor": 11.28,
+          "mr": 12.764,
+          "ad": 75.2,
+          "ap": 41.7
+        },
+        "tier": {
+          "range": "小",
+          "as": "極小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-hgam",
+        "name": "種子神奇寶貝 - 妙蛙種子",
+        "form": "本體",
+        "counterpartId": "godie-h02r",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.7,
+          "ms": 5.8,
+          "maxHealth": 518,
+          "armor": 6,
+          "mr": 38.8,
+          "ad": 31,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.1968,
+          "ms": 5.8,
+          "maxHealth": 1098.5,
+          "armor": 16.8,
+          "mr": 62.02,
+          "ad": 58,
+          "ap": 38.7
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.1968,
+          "ms": 4.64,
+          "maxHealth": 5044,
+          "armor": 16.8,
+          "mr": 12.404,
+          "ad": 58,
+          "ap": 38.7
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "小",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-hjai",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "form": "本體",
+        "counterpartId": "godie-h020",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.63,
+          "ms": 5.6,
+          "maxHealth": 518,
+          "armor": 3.9,
+          "mr": 44.2,
+          "ad": 26,
+          "ap": 27
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.0649,
+          "ms": 5.6,
+          "maxHealth": 1137.2,
+          "armor": 12.99,
+          "mr": 71.2,
+          "ad": 54.8,
+          "ap": 54
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.0649,
+          "ms": 3.36,
+          "maxHealth": 5198.8,
+          "armor": 12.99,
+          "mr": 14.24,
+          "ad": 54.8,
+          "ap": 54
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-hlgr",
+        "name": "鋼彈 - 煌",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6632,
+          "ms": 5.8,
+          "maxHealth": 817,
+          "armor": 5.9,
+          "mr": 35.2,
+          "ad": 51,
+          "ap": 12
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.0807,
+          "ms": 5.8,
+          "maxHealth": 1735.9,
+          "armor": 14.45,
+          "mr": 56.26,
+          "ad": 93.3,
+          "ap": 29.1
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.0807,
+          "ms": 4.64,
+          "maxHealth": 7593.6,
+          "armor": 14.45,
+          "mr": 11.252,
+          "ad": 93.3,
+          "ap": 29.1
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hpal",
+        "name": "不死之身-無 - 藤井八雲",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6842,
+          "ms": 5.9,
+          "maxHealth": 702,
+          "armor": 6.5,
+          "mr": 37,
+          "ad": 34,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1471,
+          "ms": 5.9,
+          "maxHealth": 1669.5,
+          "armor": 15.86,
+          "mr": 57.52,
+          "ad": 79,
+          "ap": 31.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1471,
+          "ms": 4.72,
+          "maxHealth": 7328,
+          "armor": 15.86,
+          "mr": 11.504,
+          "ad": 79,
+          "ap": 31.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hpb1",
+        "name": "獸矛傳承使 - 蒼月潮",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.6842,
+          "ms": 6,
+          "maxHealth": 748,
+          "armor": 6.5,
+          "mr": 35.8,
+          "ad": 36,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.1725,
+          "ms": 6,
+          "maxHealth": 1560.7,
+          "armor": 17.3,
+          "mr": 55.78,
+          "ad": 73.8,
+          "ap": 28.3
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.1725,
+          "ms": 4.8,
+          "maxHealth": 6892.8,
+          "armor": 17.3,
+          "mr": 11.156,
+          "ad": 73.8,
+          "ap": 28.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-huth",
+        "name": "超級普烏 - 魔人普烏",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 5.8,
+          "maxHealth": 656,
+          "armor": 6.2,
+          "mr": 38.8,
+          "ad": 39.5,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1393,
+          "ms": 5.8,
+          "maxHealth": 1623.5,
+          "armor": 16.595,
+          "mr": 59.05,
+          "ad": 84.5,
+          "ap": 33.75
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1393,
+          "ms": 4.64,
+          "maxHealth": 7144,
+          "armor": 16.595,
+          "mr": 11.81,
+          "ad": 84.5,
+          "ap": 33.75
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hvsh",
+        "name": "梅杜莎 - Rider",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7579,
+          "ms": 5.8,
+          "maxHealth": 495,
+          "armor": 6.6,
+          "mr": 38.2,
+          "ad": 25,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3667,
+          "ms": 5.8,
+          "maxHealth": 1152.9,
+          "armor": 21.225,
+          "mr": 58.45,
+          "ad": 55.6,
+          "ap": 32.75
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3667,
+          "ms": 4.64,
+          "maxHealth": 5261.6,
+          "armor": 21.225,
+          "mr": 11.69,
+          "ad": 55.6,
+          "ap": 32.75
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-hvwd",
+        "name": "除魔巫女 - 桔梗",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 9.2,
+          "as": 0.74,
+          "ms": 5.7,
+          "maxHealth": 564,
+          "armor": 7.2,
+          "mr": 35.8,
+          "ad": 25,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 9.2,
+          "as": 1.3002,
+          "ms": 5.7,
+          "maxHealth": 1260.6,
+          "armor": 19.98,
+          "mr": 56.32,
+          "ad": 57.4,
+          "ap": 29.2
+        },
+        "ingame": {
+          "range": 5.52,
+          "as": 1.3002,
+          "ms": 3.42,
+          "maxHealth": 5692.4,
+          "armor": 19.98,
+          "mr": 11.264,
+          "ad": 57.4,
+          "ap": 29.2
+        },
+        "tier": {
+          "range": "大",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-n003",
+        "name": "黑暗福音 - 依文潔琳",
+        "form": "本體",
+        "counterpartId": "godie-n01g",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 7.3,
+          "as": 0.66,
+          "ms": 5.7,
+          "maxHealth": 610,
+          "armor": 4.8,
+          "mr": 40,
+          "ad": 38,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 7.3,
+          "as": 1.0812,
+          "ms": 5.7,
+          "maxHealth": 1074.4,
+          "armor": 13.35,
+          "mr": 64.84,
+          "ad": 65,
+          "ap": 43.4
+        },
+        "ingame": {
+          "range": 4.38,
+          "as": 1.0812,
+          "ms": 3.42,
+          "maxHealth": 4947.6,
+          "armor": 13.35,
+          "mr": 12.968,
+          "ad": 65,
+          "ap": 43.4
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-n00b",
+        "name": "小叮噹 - 哆拉A夢",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.66,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 6.8,
+          "mr": 41.8,
+          "ad": 32,
+          "ap": 23
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.124,
+          "ms": 5.9,
+          "maxHealth": 1361.8,
+          "armor": 17.195,
+          "mr": 65.83,
+          "ad": 70.7,
+          "ap": 45.05
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.124,
+          "ms": 4.72,
+          "maxHealth": 6097.2,
+          "armor": 17.195,
+          "mr": 13.166,
+          "ad": 70.7,
+          "ap": 45.05
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-n00p",
+        "name": "妖狐藏馬 - 南野秀一",
+        "form": "變身",
+        "counterpartId": "godie-nsjs",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6,
+          "as": 0.6737,
+          "ms": 5.8,
+          "maxHealth": 518,
+          "armor": 8.2,
+          "mr": 43,
+          "ad": 90,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 6,
+          "as": 1.1329,
+          "ms": 5.8,
+          "maxHealth": 1233.95,
+          "armor": 17.56,
+          "mr": 68.11,
+          "ad": 122.85,
+          "ap": 48.85
+        },
+        "ingame": {
+          "range": 3.6,
+          "as": 1.1329,
+          "ms": 3.48,
+          "maxHealth": 5585.8,
+          "armor": 17.56,
+          "mr": 13.622,
+          "ad": 122.85,
+          "ap": 48.85
+        },
+        "tier": {
+          "range": "小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "極大",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-n01b",
+        "name": "地獄歌神 - 憤怒的胖虎",
+        "form": "變身",
+        "counterpartId": "godie-nman",
+        "attackType": "ranged",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.6842,
+          "ms": 6,
+          "maxHealth": 628,
+          "armor": 4.5,
+          "mr": 35.8,
+          "ad": 43.5,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.1026,
+          "ms": 6,
+          "maxHealth": 1595.5,
+          "armor": 12.015,
+          "mr": 56.05,
+          "ad": 79.5,
+          "ap": 28.75
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.1026,
+          "ms": 3.6,
+          "maxHealth": 7032,
+          "armor": 12.015,
+          "mr": 11.21,
+          "ad": 79.5,
+          "ap": 28.75
+        },
+        "tier": {
+          "range": "中",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-n01c",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "form": "變身",
+        "counterpartId": "godie-nbbc",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.9,
+          "ms": 5.9,
+          "maxHealth": 886,
+          "armor": 19,
+          "mr": 66.8,
+          "ad": 47,
+          "ap": 28
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.5545,
+          "ms": 5.9,
+          "maxHealth": 1543.9,
+          "armor": 33.49,
+          "mr": 87.32,
+          "ad": 86.6,
+          "ap": 44.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.5545,
+          "ms": 4.72,
+          "maxHealth": 6825.6,
+          "armor": 33.49,
+          "mr": 17.464,
+          "ad": 86.6,
+          "ap": 44.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "極大",
+          "mr": "大",
+          "ad": "大",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-n01g",
+        "name": "黑暗福音 - 依文潔琳",
+        "form": "變身",
+        "counterpartId": "godie-n003",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 7.3,
+          "as": 0.66,
+          "ms": 4,
+          "maxHealth": 610,
+          "armor": 4.8,
+          "mr": 40,
+          "ad": 38,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 7.3,
+          "as": 1.0812,
+          "ms": 4,
+          "maxHealth": 1151.8,
+          "armor": 13.35,
+          "mr": 64.84,
+          "ad": 66.8,
+          "ap": 43.4
+        },
+        "ingame": {
+          "range": 4.38,
+          "as": 1.0812,
+          "ms": 2.4,
+          "maxHealth": 5257.2,
+          "armor": 13.35,
+          "mr": 12.968,
+          "ad": 66.8,
+          "ap": 43.4
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "極小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-n01l",
+        "name": "學姊 - 小派",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7,
+          "ms": 6.2,
+          "maxHealth": 495,
+          "armor": 6,
+          "mr": 40,
+          "ad": 27.5,
+          "ap": 20
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2335,
+          "ms": 6.2,
+          "maxHealth": 1036.8,
+          "armor": 18.51,
+          "mr": 63.22,
+          "ad": 60.8,
+          "ap": 40.7
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2335,
+          "ms": 4.96,
+          "maxHealth": 4797.2,
+          "armor": 18.51,
+          "mr": 12.644,
+          "ad": 60.8,
+          "ap": 40.7
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-naka",
+        "name": "猿飛佐助 - 風魔小次郎",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.68,
+          "ms": 6,
+          "maxHealth": 449,
+          "armor": 6.4,
+          "mr": 43,
+          "ad": 23,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1696,
+          "ms": 6,
+          "maxHealth": 1087.55,
+          "armor": 17.2,
+          "mr": 68.11,
+          "ad": 55.85,
+          "ap": 48.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1696,
+          "ms": 4.8,
+          "maxHealth": 5000.2,
+          "armor": 17.2,
+          "mr": 13.622,
+          "ad": 55.85,
+          "ap": 48.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-nbbc",
+        "name": "傳說的龍騎士 - 勇者小呆",
+        "form": "本體",
+        "counterpartId": "godie-n01c",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.75,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 14.5,
+          "mr": 35.8,
+          "ad": 32,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3505,
+          "ms": 5.9,
+          "maxHealth": 1198.9,
+          "armor": 28.99,
+          "mr": 56.32,
+          "ad": 71.6,
+          "ap": 29.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3505,
+          "ms": 4.72,
+          "maxHealth": 5445.6,
+          "armor": 28.99,
+          "mr": 11.264,
+          "ad": 71.6,
+          "ap": 29.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "極大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-nbst",
+        "name": "變態正義 - 瘋狂假面",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 6,
+          "maxHealth": 679,
+          "armor": 4.2,
+          "mr": 38.2,
+          "ad": 40.5,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1075,
+          "ms": 6,
+          "maxHealth": 1491.7,
+          "armor": 13.02,
+          "mr": 58.18,
+          "ad": 73.8,
+          "ap": 32.3
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1075,
+          "ms": 4.8,
+          "maxHealth": 6616.8,
+          "armor": 13.02,
+          "mr": 11.636,
+          "ad": 73.8,
+          "ap": 32.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-nman",
+        "name": "地獄歌神 - 憤怒的胖虎",
+        "form": "本體",
+        "counterpartId": "godie-n01b",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6842,
+          "ms": 6,
+          "maxHealth": 628,
+          "armor": 4.5,
+          "mr": 35.8,
+          "ad": 43.5,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1026,
+          "ms": 6,
+          "maxHealth": 1595.5,
+          "armor": 12.015,
+          "mr": 56.05,
+          "ad": 79.5,
+          "ap": 28.75
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1026,
+          "ms": 4.8,
+          "maxHealth": 7032,
+          "armor": 12.015,
+          "mr": 11.21,
+          "ad": 79.5,
+          "ap": 28.75
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-nplh",
+        "name": "通靈人 - 麻倉葉",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7053,
+          "ms": 6.1,
+          "maxHealth": 495,
+          "armor": 5.1,
+          "mr": 41.2,
+          "ad": 36,
+          "ap": 22
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.169,
+          "ms": 6.1,
+          "maxHealth": 1404.45,
+          "armor": 14.325,
+          "mr": 62.8,
+          "ad": 73.35,
+          "ap": 40
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.169,
+          "ms": 4.88,
+          "maxHealth": 6267.8,
+          "armor": 14.325,
+          "mr": 12.56,
+          "ad": 73.35,
+          "ap": 40
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "小",
+          "mr": "中",
+          "ad": "中",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-nsjs",
+        "name": "妖狐藏馬 - 南野秀一",
+        "form": "本體",
+        "counterpartId": "godie-n00p",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 2,
+          "as": 0.6737,
+          "ms": 5.8,
+          "maxHealth": 518,
+          "armor": 5.2,
+          "mr": 43,
+          "ad": 26,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 2,
+          "as": 1.1329,
+          "ms": 5.8,
+          "maxHealth": 1233.95,
+          "armor": 14.56,
+          "mr": 68.11,
+          "ad": 58.85,
+          "ap": 48.85
+        },
+        "ingame": {
+          "range": 1.2,
+          "as": 1.1329,
+          "ms": 3.48,
+          "maxHealth": 5585.8,
+          "armor": 14.56,
+          "mr": 13.622,
+          "ad": 58.85,
+          "ap": 48.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-ntin",
+        "name": "時空管理局執務官 - 菲特·泰斯塔羅沙",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.72,
+          "ms": 6.3,
+          "maxHealth": 610,
+          "armor": 8.6,
+          "mr": 38.8,
+          "ad": 35,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2485,
+          "ms": 6.3,
+          "maxHealth": 1466.8,
+          "armor": 20.84,
+          "mr": 59.32,
+          "ad": 76.4,
+          "ap": 34.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2485,
+          "ms": 5.04,
+          "maxHealth": 6517.2,
+          "armor": 20.84,
+          "mr": 11.864,
+          "ad": 76.4,
+          "ap": 34.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o00k",
+        "name": "傲嬌電氣老鼠 - 皮卡娘",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.7,
+          "ms": 6.2,
+          "maxHealth": 491,
+          "armor": 6,
+          "mr": 39.4,
+          "ad": 27,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.2702,
+          "ms": 6.2,
+          "maxHealth": 1110.2,
+          "armor": 20.22,
+          "mr": 59.38,
+          "ad": 55.8,
+          "ap": 34.3
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.2702,
+          "ms": 3.72,
+          "maxHealth": 5090.8,
+          "armor": 20.22,
+          "mr": 11.876,
+          "ad": 55.8,
+          "ap": 34.3
+        },
+        "tier": {
+          "range": "中",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o00l",
+        "name": "獸神官 - 傑洛士",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 7.3,
+          "as": 0.65,
+          "ms": 5.7,
+          "maxHealth": 541,
+          "armor": 4.5,
+          "mr": 42.4,
+          "ad": 27,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 7.3,
+          "as": 1.0554,
+          "ms": 5.7,
+          "maxHealth": 1218.25,
+          "armor": 11.88,
+          "mr": 69.94,
+          "ad": 58.95,
+          "ap": 51.9
+        },
+        "ingame": {
+          "range": 4.38,
+          "as": 1.0554,
+          "ms": 3.42,
+          "maxHealth": 5523,
+          "armor": 11.88,
+          "mr": 13.988,
+          "ad": 58.95,
+          "ap": 51.9
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-o00x",
+        "name": "超級賽亞人 - 悟空",
+        "form": "變身",
+        "counterpartId": "godie-ogrh",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 1.1333,
+          "ms": 7.7,
+          "maxHealth": 564,
+          "armor": 5.4,
+          "mr": 38.8,
+          "ad": 28,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.7977,
+          "ms": 7.7,
+          "maxHealth": 1570.2,
+          "armor": 17.91,
+          "mr": 57.7,
+          "ad": 74.8,
+          "ap": 31.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.7977,
+          "ms": 6.16,
+          "maxHealth": 6930.8,
+          "armor": 17.91,
+          "mr": 11.54,
+          "ad": 74.8,
+          "ap": 31.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "大",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o01z",
+        "name": "魔砲少女 - 高町奈葉",
+        "form": "本體",
+        "counterpartId": "godie-o02v",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.65,
+          "ms": 5.7,
+          "maxHealth": 541,
+          "armor": 4.5,
+          "mr": 43,
+          "ad": 27,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.0615,
+          "ms": 5.7,
+          "maxHealth": 1198.9,
+          "armor": 12.015,
+          "mr": 69.19,
+          "ad": 57.6,
+          "ap": 50.65
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.0615,
+          "ms": 3.42,
+          "maxHealth": 5445.6,
+          "armor": 12.015,
+          "mr": 13.838,
+          "ad": 57.6,
+          "ap": 50.65
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-o02l",
+        "name": "神騎寶貝 - 皮卡丘",
+        "form": "變身",
+        "counterpartId": "godie-ofar",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.9067,
+          "ms": 6.2,
+          "maxHealth": 491,
+          "armor": 5.4,
+          "mr": 39.4,
+          "ad": 27,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.5934,
+          "ms": 6.2,
+          "maxHealth": 1110.2,
+          "armor": 21.33,
+          "mr": 58.3,
+          "ad": 55.8,
+          "ap": 32.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.5934,
+          "ms": 4.96,
+          "maxHealth": 5090.8,
+          "armor": 21.33,
+          "mr": 11.66,
+          "ad": 55.8,
+          "ap": 32.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o02n",
+        "name": "曹操孟德 - 阿瞞大人",
+        "form": "本體",
+        "counterpartId": "godie-o02o",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.68,
+          "ms": 6.4,
+          "maxHealth": 831,
+          "armor": 12.4,
+          "mr": 39.4,
+          "ad": 39,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.243,
+          "ms": 6.4,
+          "maxHealth": 1488.9,
+          "armor": 26.62,
+          "mr": 59.38,
+          "ad": 69.6,
+          "ap": 34.3
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.243,
+          "ms": 5.12,
+          "maxHealth": 6605.6,
+          "armor": 26.62,
+          "mr": 11.876,
+          "ad": 69.6,
+          "ap": 34.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "極大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o02o",
+        "name": "曹操孟德 - 阿瞞大人",
+        "form": "變身",
+        "counterpartId": "godie-o02n",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.68,
+          "ms": 6.4,
+          "maxHealth": 491,
+          "armor": 5.4,
+          "mr": 39.4,
+          "ad": 27,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.243,
+          "ms": 6.4,
+          "maxHealth": 1148.9,
+          "armor": 19.62,
+          "mr": 59.38,
+          "ad": 57.6,
+          "ap": 34.3
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.243,
+          "ms": 5.12,
+          "maxHealth": 5245.6,
+          "armor": 19.62,
+          "mr": 11.876,
+          "ad": 57.6,
+          "ap": 34.3
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o02p",
+        "name": "夢幻之星 - 初音",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6316,
+          "ms": 6.1,
+          "maxHealth": 495,
+          "armor": 3,
+          "mr": 43,
+          "ad": 25,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.0637,
+          "ms": 6.1,
+          "maxHealth": 1233,
+          "armor": 12.09,
+          "mr": 66.22,
+          "ad": 59.2,
+          "ap": 45.7
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.0637,
+          "ms": 4.88,
+          "maxHealth": 5582,
+          "armor": 12.09,
+          "mr": 13.244,
+          "ad": 59.2,
+          "ap": 45.7
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-o02s",
+        "name": "憂鬱少女 - 涼宮八ㄦ匕",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 7.3,
+          "as": 0.65,
+          "ms": 5.7,
+          "maxHealth": 541,
+          "armor": 4.5,
+          "mr": 42.4,
+          "ad": 27,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 7.3,
+          "as": 1.0554,
+          "ms": 5.7,
+          "maxHealth": 1218.25,
+          "armor": 11.88,
+          "mr": 69.94,
+          "ad": 58.95,
+          "ap": 51.9
+        },
+        "ingame": {
+          "range": 4.38,
+          "as": 1.0554,
+          "ms": 3.42,
+          "maxHealth": 5523,
+          "armor": 11.88,
+          "mr": 13.988,
+          "ad": 58.95,
+          "ap": 51.9
+        },
+        "tier": {
+          "range": "中",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-o02v",
+        "name": "白色惡魔 - 高町奈葉",
+        "form": "變身",
+        "counterpartId": "godie-o01z",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.65,
+          "ms": 5.9,
+          "maxHealth": 541,
+          "armor": 4.5,
+          "mr": 43,
+          "ad": 27,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.1104,
+          "ms": 5.9,
+          "maxHealth": 1237.6,
+          "armor": 13.995,
+          "mr": 68.38,
+          "ad": 59.4,
+          "ap": 49.3
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.1104,
+          "ms": 3.54,
+          "maxHealth": 5600.4,
+          "armor": 13.995,
+          "mr": 13.676,
+          "ad": 59.4,
+          "ap": 49.3
+        },
+        "tier": {
+          "range": "中",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-o02w",
+        "name": "笑傲江湖 - 令狐沖",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.77,
+          "ms": 5.9,
+          "maxHealth": 495,
+          "armor": 8.1,
+          "mr": 35.8,
+          "ad": 42,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3899,
+          "ms": 5.9,
+          "maxHealth": 1210.95,
+          "armor": 22.86,
+          "mr": 54.97,
+          "ad": 75.75,
+          "ap": 26.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3899,
+          "ms": 4.72,
+          "maxHealth": 5493.8,
+          "armor": 22.86,
+          "mr": 10.994,
+          "ad": 75.75,
+          "ap": 26.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-o030",
+        "name": "電車癡漢 - 臭作",
+        "form": "變身",
+        "counterpartId": "godie-orkn",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 12,
+          "as": 0.8471,
+          "ms": 5.7,
+          "maxHealth": 495,
+          "armor": 6.6,
+          "mr": 38.8,
+          "ad": 25,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 12,
+          "as": 1.4865,
+          "ms": 5.7,
+          "maxHealth": 1152.9,
+          "armor": 21.225,
+          "mr": 59.05,
+          "ad": 55.6,
+          "ap": 33.75
+        },
+        "ingame": {
+          "range": 7.2,
+          "as": 1.4865,
+          "ms": 3.42,
+          "maxHealth": 5261.6,
+          "armor": 21.225,
+          "mr": 11.81,
+          "ad": 55.6,
+          "ap": 33.75
+        },
+        "tier": {
+          "range": "極大",
+          "as": "大",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-obla",
+        "name": "被剝削的勞工階級 - 牧太郎",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7158,
+          "ms": 6,
+          "maxHealth": 633,
+          "armor": 5.4,
+          "mr": 37,
+          "ad": 31,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2149,
+          "ms": 6,
+          "maxHealth": 1619.85,
+          "armor": 16.2,
+          "mr": 56.17,
+          "ad": 76.45,
+          "ap": 28.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2149,
+          "ms": 4.8,
+          "maxHealth": 7129.4,
+          "armor": 16.2,
+          "mr": 11.234,
+          "ad": 76.45,
+          "ap": 28.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-ofar",
+        "name": "神奇寶貝兒 - 皮卡丘",
+        "form": "本體",
+        "counterpartId": "godie-o02l",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.68,
+          "ms": 6.2,
+          "maxHealth": 491,
+          "armor": 5.4,
+          "mr": 39.4,
+          "ad": 27,
+          "ap": 19
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.2798,
+          "ms": 6.2,
+          "maxHealth": 1071.5,
+          "armor": 21.33,
+          "mr": 58.84,
+          "ad": 54,
+          "ap": 33.4
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.2798,
+          "ms": 3.72,
+          "maxHealth": 4936,
+          "armor": 21.33,
+          "mr": 11.768,
+          "ad": 54,
+          "ap": 33.4
+        },
+        "tier": {
+          "range": "中",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-ogld",
+        "name": "美白大法師 - 黑人牙膏",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 12,
+          "as": 0.504,
+          "ms": 4.8,
+          "maxHealth": 656,
+          "armor": 5.9,
+          "mr": 43,
+          "ad": 72,
+          "ap": 25
+        },
+        "lv10": {
+          "range": 12,
+          "as": 0.8874,
+          "ms": 4.8,
+          "maxHealth": 1043,
+          "armor": 14.45,
+          "mr": 61.9,
+          "ad": 90,
+          "ap": 38.5
+        },
+        "ingame": {
+          "range": 7.2,
+          "as": 0.8874,
+          "ms": 2.88,
+          "maxHealth": 4822,
+          "armor": 14.45,
+          "mr": 12.38,
+          "ad": 90,
+          "ap": 38.5
+        },
+        "tier": {
+          "range": "極大",
+          "as": "極小",
+          "ms": "極小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "中"
+        }
+      },
+      {
+        "id": "godie-ogrh",
+        "name": "賽亞人 - 悟空",
+        "form": "本體",
+        "counterpartId": "godie-o00x",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7158,
+          "ms": 6,
+          "maxHealth": 564,
+          "armor": 5.4,
+          "mr": 38.8,
+          "ad": 28,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.253,
+          "ms": 6,
+          "maxHealth": 1570.2,
+          "armor": 17.91,
+          "mr": 57.7,
+          "ad": 74.8,
+          "ap": 31.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.253,
+          "ms": 4.8,
+          "maxHealth": 6930.8,
+          "armor": 17.91,
+          "mr": 11.54,
+          "ad": 74.8,
+          "ap": 31.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-opgh",
+        "name": "常勝將軍 - 趙子龍",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.75,
+          "ms": 6.1,
+          "maxHealth": 495,
+          "armor": 7.5,
+          "mr": 36.4,
+          "ad": 30,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.326,
+          "ms": 6.1,
+          "maxHealth": 1269,
+          "armor": 21.45,
+          "mr": 55.3,
+          "ad": 66,
+          "ap": 27.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.326,
+          "ms": 4.88,
+          "maxHealth": 5726,
+          "armor": 21.45,
+          "mr": 11.06,
+          "ad": 66,
+          "ap": 27.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-orkn",
+        "name": "電車癡漢 - 臭作",
+        "form": "本體",
+        "counterpartId": "godie-o030",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 9.2,
+          "as": 0.72,
+          "ms": 5.7,
+          "maxHealth": 495,
+          "armor": 6.6,
+          "mr": 38.8,
+          "ad": 25,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 9.2,
+          "as": 1.3158,
+          "ms": 5.7,
+          "maxHealth": 1230.3,
+          "armor": 21.225,
+          "mr": 59.05,
+          "ad": 59.2,
+          "ap": 33.75
+        },
+        "ingame": {
+          "range": 5.52,
+          "as": 1.3158,
+          "ms": 3.42,
+          "maxHealth": 5571.2,
+          "armor": 21.225,
+          "mr": 11.81,
+          "ad": 59.2,
+          "ap": 33.75
+        },
+        "tier": {
+          "range": "大",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-osam",
+        "name": "犬妖 - 殺生丸",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.8105,
+          "ms": 5.9,
+          "maxHealth": 495,
+          "armor": 8.1,
+          "mr": 35.8,
+          "ad": 42,
+          "ap": 13
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.4437,
+          "ms": 5.9,
+          "maxHealth": 1210.95,
+          "armor": 22.86,
+          "mr": 54.97,
+          "ad": 75.75,
+          "ap": 26.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.4437,
+          "ms": 4.72,
+          "maxHealth": 5493.8,
+          "armor": 22.86,
+          "mr": 10.994,
+          "ad": 75.75,
+          "ap": 26.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-oshd",
+        "name": "魔鬼筋肉人 - 鬼王達",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.65,
+          "ms": 5.7,
+          "maxHealth": 541,
+          "armor": 4.5,
+          "mr": 42.4,
+          "ad": 27,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.1104,
+          "ms": 5.7,
+          "maxHealth": 1218.25,
+          "armor": 14.895,
+          "mr": 67.78,
+          "ad": 58.95,
+          "ap": 48.3
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.1104,
+          "ms": 3.42,
+          "maxHealth": 5523,
+          "armor": 14.895,
+          "mr": 13.556,
+          "ad": 58.95,
+          "ap": 48.3
+        },
+        "tier": {
+          "range": "中",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-othr",
+        "name": "X戰警 - 金鋼狼",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.67,
+          "ms": 5.8,
+          "maxHealth": 748,
+          "armor": 5.1,
+          "mr": 38.2,
+          "ad": 36,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1193,
+          "ms": 5.8,
+          "maxHealth": 1715.5,
+          "armor": 14.19,
+          "mr": 58.72,
+          "ad": 81,
+          "ap": 33.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1193,
+          "ms": 4.64,
+          "maxHealth": 7512,
+          "armor": 14.19,
+          "mr": 11.744,
+          "ad": 81,
+          "ap": 33.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00b",
+        "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 1.0462,
+          "ms": 10.1,
+          "maxHealth": 725,
+          "armor": 6.4,
+          "mr": 38.2,
+          "ad": 81,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.6327,
+          "ms": 10.1,
+          "maxHealth": 1499,
+          "armor": 17.2,
+          "mr": 59.8,
+          "ad": 117,
+          "ap": 35
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.6327,
+          "ms": 8.08,
+          "maxHealth": 6646,
+          "armor": 17.2,
+          "mr": 11.96,
+          "ad": 117,
+          "ap": 35
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "極大",
+          "maxHealth": "中",
+          "armor": "中",
+          "mr": "小",
+          "ad": "極大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00h",
+        "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.76,
+          "ms": 6,
+          "maxHealth": 495,
+          "armor": 7.8,
+          "mr": 36.4,
+          "ad": 25,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3274,
+          "ms": 6,
+          "maxHealth": 1152.9,
+          "armor": 20.58,
+          "mr": 56.11,
+          "ad": 54.7,
+          "ap": 28.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3274,
+          "ms": 4.8,
+          "maxHealth": 5261.6,
+          "armor": 20.58,
+          "mr": 11.222,
+          "ad": 54.7,
+          "ap": 28.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00j",
+        "name": "神性的流失 - 賽菲洛斯",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.76,
+          "ms": 5.7,
+          "maxHealth": 518,
+          "armor": 7.8,
+          "mr": 36.4,
+          "ad": 26,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2906,
+          "ms": 5.7,
+          "maxHealth": 1214.6,
+          "armor": 18.87,
+          "mr": 57.46,
+          "ad": 59.3,
+          "ap": 31.1
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2906,
+          "ms": 4.56,
+          "maxHealth": 5508.4,
+          "armor": 18.87,
+          "mr": 11.492,
+          "ad": 59.3,
+          "ap": 31.1
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00k",
+        "name": "邪惡意念集合體 - 死之王",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 9.2,
+          "as": 0.66,
+          "ms": 5.3,
+          "maxHealth": 518,
+          "armor": 5.8,
+          "mr": 42.4,
+          "ad": 28,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 9.2,
+          "as": 1.1424,
+          "ms": 5.3,
+          "maxHealth": 905,
+          "armor": 16.6,
+          "mr": 69.4,
+          "ad": 64,
+          "ap": 51
+        },
+        "ingame": {
+          "range": 5.52,
+          "as": 1.1424,
+          "ms": 3.18,
+          "maxHealth": 4270,
+          "armor": 16.6,
+          "mr": 13.88,
+          "ad": 64,
+          "ap": 51
+        },
+        "tier": {
+          "range": "大",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-u00l",
+        "name": "北斗之鼠 - 拳四郎",
+        "form": "變身",
+        "counterpartId": "godie-umal",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.9333,
+          "ms": 5.9,
+          "maxHealth": 610,
+          "armor": 6,
+          "mr": 37,
+          "ad": 34,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.6121,
+          "ms": 5.9,
+          "maxHealth": 1364.65,
+          "armor": 20.76,
+          "mr": 55.63,
+          "ad": 65.05,
+          "ap": 28.05
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.6121,
+          "ms": 4.72,
+          "maxHealth": 6108.6,
+          "armor": 20.76,
+          "mr": 11.126,
+          "ad": 65.05,
+          "ap": 28.05
+        },
+        "tier": {
+          "range": "極小",
+          "as": "大",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00n",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "form": "本體",
+        "counterpartId": "godie-u00o",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 6.1,
+          "maxHealth": 564,
+          "armor": 4.2,
+          "mr": 41.2,
+          "ad": 28,
+          "ap": 22
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1075,
+          "ms": 6.1,
+          "maxHealth": 1705.65,
+          "armor": 13.02,
+          "mr": 60.1,
+          "ad": 68.05,
+          "ap": 35.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1075,
+          "ms": 4.88,
+          "maxHealth": 7472.6,
+          "armor": 13.02,
+          "mr": 12.02,
+          "ad": 68.05,
+          "ap": 35.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00o",
+        "name": "草帽小子 - 蒙其.D.魯夫",
+        "form": "變身",
+        "counterpartId": "godie-u00n",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 8,
+          "maxHealth": 564,
+          "armor": 4.2,
+          "mr": 41.2,
+          "ad": 28,
+          "ap": 22
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1075,
+          "ms": 8,
+          "maxHealth": 1705.65,
+          "armor": 13.02,
+          "mr": 60.1,
+          "ad": 68.05,
+          "ap": 35.5
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1075,
+          "ms": 6.4,
+          "maxHealth": 7472.6,
+          "armor": 13.02,
+          "mr": 12.02,
+          "ad": 68.05,
+          "ap": 35.5
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "大",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u00v",
+        "name": "黑手黨老大 - 基廉列克",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 5.8,
+          "maxHealth": 656,
+          "armor": 4.2,
+          "mr": 38.8,
+          "ad": 47,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1075,
+          "ms": 5.8,
+          "maxHealth": 1662.2,
+          "armor": 13.02,
+          "mr": 58.24,
+          "ad": 84.8,
+          "ap": 32.4
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1075,
+          "ms": 4.64,
+          "maxHealth": 7298.8,
+          "armor": 13.02,
+          "mr": 11.648,
+          "ad": 84.8,
+          "ap": 32.4
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u010",
+        "name": "邪眼師 - 飛影",
+        "form": "變身",
+        "counterpartId": "godie-uvng",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.76,
+          "ms": 7,
+          "maxHealth": 495,
+          "armor": 7.8,
+          "mr": 36.4,
+          "ad": 25,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.358,
+          "ms": 7,
+          "maxHealth": 1249.65,
+          "armor": 22.155,
+          "mr": 56.11,
+          "ad": 56.95,
+          "ap": 28.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.358,
+          "ms": 5.6,
+          "maxHealth": 5648.6,
+          "armor": 22.155,
+          "mr": 11.222,
+          "ad": 56.95,
+          "ap": 28.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "大",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u011",
+        "name": "死亡老二 - 克勞薩先生",
+        "form": "變身",
+        "counterpartId": "godie-u012",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 5.5,
+          "maxHealth": 79,
+          "armor": -5.8,
+          "mr": 38.8,
+          "ad": 33,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.0948,
+          "ms": 5.5,
+          "maxHealth": 1162.6,
+          "armor": 1.85,
+          "mr": 59.32,
+          "ad": 74.4,
+          "ap": 34.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.0948,
+          "ms": 4.4,
+          "maxHealth": 5300.4,
+          "armor": 1.85,
+          "mr": 11.864,
+          "ad": 74.4,
+          "ap": 34.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極小",
+          "armor": "極小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u012",
+        "name": "重金屬樂團的怪物 - 克勞薩II世",
+        "form": "本體",
+        "counterpartId": "godie-u011",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.64,
+          "ms": 5.8,
+          "maxHealth": 679,
+          "armor": 4.2,
+          "mr": 38.8,
+          "ad": 33,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.054,
+          "ms": 5.8,
+          "maxHealth": 1762.6,
+          "armor": 11.85,
+          "mr": 59.32,
+          "ad": 74.4,
+          "ap": 34.2
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.054,
+          "ms": 4.64,
+          "maxHealth": 7700.4,
+          "armor": 11.85,
+          "mr": 11.864,
+          "ad": 74.4,
+          "ap": 34.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "小",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u01f",
+        "name": "萬夫莫敵 - 黑化張飛",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": true,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6,
+          "as": 0.8333,
+          "ms": 10.1,
+          "maxHealth": 2305,
+          "armor": 7.5,
+          "mr": 38.8,
+          "ad": 42,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 6,
+          "as": 1.5005,
+          "ms": 10.1,
+          "maxHealth": 4240,
+          "armor": 23.7,
+          "mr": 57.7,
+          "ad": 100.5,
+          "ap": 31.5
+        },
+        "ingame": {
+          "range": 3.6,
+          "as": 1.5005,
+          "ms": 6.06,
+          "maxHealth": 17610,
+          "armor": 23.7,
+          "mr": 11.54,
+          "ad": 100.5,
+          "ap": 31.5
+        },
+        "tier": {
+          "range": "小",
+          "as": "大",
+          "ms": "極大",
+          "maxHealth": "極大",
+          "armor": "大",
+          "mr": "小",
+          "ad": "大",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u01q",
+        "name": "測試英雄 - 索隆",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 5.5,
+          "maxHealth": 3506,
+          "armor": 4.2,
+          "mr": 38.8,
+          "ad": 32,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1139,
+          "ms": 5.5,
+          "maxHealth": 4589.6,
+          "armor": 13.155,
+          "mr": 58.51,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1139,
+          "ms": 4.4,
+          "maxHealth": 19008.4,
+          "armor": 13.155,
+          "mr": 11.702,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "極大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u01u",
+        "name": "三刀流劍士 - 索隆",
+        "form": "變身",
+        "counterpartId": "godie-udre",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 6.1,
+          "maxHealth": 656,
+          "armor": 19.2,
+          "mr": 60.8,
+          "ad": 32,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1139,
+          "ms": 6.1,
+          "maxHealth": 1739.6,
+          "armor": 28.155,
+          "mr": 80.51,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1139,
+          "ms": 4.88,
+          "maxHealth": 7608.4,
+          "armor": 28.155,
+          "mr": 16.102,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "極大",
+          "mr": "大",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-u034",
+        "name": "職業獵人 - 傑 富力士",
+        "form": "變身",
+        "counterpartId": "godie-ucrl",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.8667,
+          "ms": 7,
+          "maxHealth": 725,
+          "armor": 6.5,
+          "mr": 36.4,
+          "ad": 35,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.375,
+          "ms": 7,
+          "maxHealth": 1673.15,
+          "armor": 15.86,
+          "mr": 56.65,
+          "ad": 73.25,
+          "ap": 29.75
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.375,
+          "ms": 5.6,
+          "maxHealth": 7342.6,
+          "armor": 15.86,
+          "mr": 11.33,
+          "ad": 73.25,
+          "ap": 29.75
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "大",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-ubal",
+        "name": "魔界霸主 - 巴恩大魔王",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.64,
+          "ms": 5.7,
+          "maxHealth": 518,
+          "armor": 4.2,
+          "mr": 43.6,
+          "ad": 26,
+          "ap": 26
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1091,
+          "ms": 5.7,
+          "maxHealth": 1214.6,
+          "armor": 14.865,
+          "mr": 68.17,
+          "ad": 64.7,
+          "ap": 48.95
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1091,
+          "ms": 4.56,
+          "maxHealth": 5508.4,
+          "armor": 14.865,
+          "mr": 13.634,
+          "ad": 64.7,
+          "ap": 48.95
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "小",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "小",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-ucrl",
+        "name": "職業獵人 - 傑 富力士",
+        "form": "本體",
+        "counterpartId": "godie-u034",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6842,
+          "ms": 6.1,
+          "maxHealth": 725,
+          "armor": 6.5,
+          "mr": 36.4,
+          "ad": 35,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1471,
+          "ms": 6.1,
+          "maxHealth": 1673.15,
+          "armor": 15.86,
+          "mr": 56.65,
+          "ad": 73.25,
+          "ap": 29.75
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1471,
+          "ms": 4.88,
+          "maxHealth": 7342.6,
+          "armor": 15.86,
+          "mr": 11.33,
+          "ad": 73.25,
+          "ap": 29.75
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "中",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-udea",
+        "name": "至尊學長 - 飛鼠先生",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.68,
+          "ms": 6.2,
+          "maxHealth": 725,
+          "armor": 6.4,
+          "mr": 38.2,
+          "ad": 81,
+          "ap": 17
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.0472,
+          "ms": 6.2,
+          "maxHealth": 1112,
+          "armor": 11.8,
+          "mr": 70.6,
+          "ad": 126,
+          "ap": 53
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.0472,
+          "ms": 4.96,
+          "maxHealth": 5098,
+          "armor": 11.8,
+          "mr": 14.12,
+          "ad": 126,
+          "ap": 53
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "中",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "中",
+          "ad": "極大",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-udre",
+        "name": "三刀流劍士 - 索隆",
+        "form": "本體",
+        "counterpartId": "godie-u01u",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.6737,
+          "ms": 6.1,
+          "maxHealth": 656,
+          "armor": 4.2,
+          "mr": 38.8,
+          "ad": 32,
+          "ap": 18
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.1139,
+          "ms": 6.1,
+          "maxHealth": 1739.6,
+          "armor": 13.155,
+          "mr": 58.51,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.1139,
+          "ms": 4.88,
+          "maxHealth": 7608.4,
+          "armor": 13.155,
+          "mr": 11.702,
+          "ad": 71.6,
+          "ap": 32.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "大",
+          "armor": "小",
+          "mr": "小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-umal",
+        "name": "北斗神拳掌門人 - 拳四郎",
+        "form": "本體",
+        "counterpartId": "godie-u00l",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7,
+          "ms": 5.9,
+          "maxHealth": 610,
+          "armor": 6,
+          "mr": 37,
+          "ad": 34,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.2947,
+          "ms": 5.9,
+          "maxHealth": 1364.65,
+          "armor": 20.76,
+          "mr": 55.63,
+          "ad": 65.05,
+          "ap": 28.05
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.2947,
+          "ms": 4.72,
+          "maxHealth": 6108.6,
+          "armor": 20.76,
+          "mr": 11.126,
+          "ad": 65.05,
+          "ap": 28.05
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-usyl",
+        "name": "殺戮之牙 - 異形",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 6.4,
+          "as": 0.6571,
+          "ms": 6.2,
+          "maxHealth": 564,
+          "armor": 5.7,
+          "mr": 37,
+          "ad": 25,
+          "ap": 15
+        },
+        "lv10": {
+          "range": 6.4,
+          "as": 1.1713,
+          "ms": 6.2,
+          "maxHealth": 1260.6,
+          "armor": 18.075,
+          "mr": 55.36,
+          "ad": 53.8,
+          "ap": 27.6
+        },
+        "ingame": {
+          "range": 3.84,
+          "as": 1.1713,
+          "ms": 3.72,
+          "maxHealth": 5692.4,
+          "armor": 18.075,
+          "mr": 11.072,
+          "ad": 53.8,
+          "ap": 27.6
+        },
+        "tier": {
+          "range": "小",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-uvng",
+        "name": "邪眼師 - 飛影",
+        "form": "本體",
+        "counterpartId": "godie-u010",
+        "attackType": "melee",
+        "primary": "AGI",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.76,
+          "ms": 6,
+          "maxHealth": 495,
+          "armor": 7.8,
+          "mr": 36.4,
+          "ad": 25,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.358,
+          "ms": 6,
+          "maxHealth": 1249.65,
+          "armor": 22.155,
+          "mr": 56.11,
+          "ad": 56.95,
+          "ap": 28.85
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.358,
+          "ms": 4.8,
+          "maxHealth": 5648.6,
+          "armor": 22.155,
+          "mr": 11.222,
+          "ad": 56.95,
+          "ap": 28.85
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "大",
+          "mr": "小",
+          "ad": "小",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "godie-uwar",
+        "name": "食神 - 撒尿牛丸",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "w3x",
+        "retired": false,
+        "inDistribution": true,
+        "lv1": {
+          "range": 8.2,
+          "as": 0.66,
+          "ms": 5.9,
+          "maxHealth": 518,
+          "armor": 4.8,
+          "mr": 42.4,
+          "ad": 28,
+          "ap": 24
+        },
+        "lv10": {
+          "range": 8.2,
+          "as": 1.1424,
+          "ms": 5.9,
+          "maxHealth": 1233.95,
+          "armor": 15.6,
+          "mr": 66.43,
+          "ad": 67.15,
+          "ap": 46.05
+        },
+        "ingame": {
+          "range": 4.92,
+          "as": 1.1424,
+          "ms": 3.54,
+          "maxHealth": 5585.8,
+          "armor": 15.6,
+          "mr": 13.286,
+          "ad": 67.15,
+          "ap": 46.05
+        },
+        "tier": {
+          "range": "中",
+          "as": "小",
+          "ms": "中",
+          "maxHealth": "小",
+          "armor": "中",
+          "mr": "中",
+          "ad": "中",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "authored",
+        "retired": false,
+        "inDistribution": false,
+        "lv1": {
+          "range": 1.2,
+          "as": 0.7,
+          "ms": 2.6,
+          "maxHealth": 380,
+          "armor": 0,
+          "mr": 3.6,
+          "ad": 36,
+          "ap": 6
+        },
+        "lv10": {
+          "range": 1.2,
+          "as": 0.9934,
+          "ms": 2.6,
+          "maxHealth": 1157.6,
+          "armor": 7.02,
+          "mr": 18.72,
+          "ad": 70.2,
+          "ap": 13.2
+        },
+        "ingame": {
+          "range": 0.72,
+          "as": 0.9934,
+          "ms": 2.08,
+          "maxHealth": 5280.4,
+          "armor": 7.02,
+          "mr": 3.744,
+          "ad": 70.2,
+          "ap": 13.2
+        },
+        "tier": {
+          "range": "極小",
+          "as": "極小",
+          "ms": "極小",
+          "maxHealth": "極小",
+          "armor": "小",
+          "mr": "極小",
+          "ad": "中",
+          "ap": "小"
+        }
+      },
+      {
+        "id": "sela",
+        "name": "Sela, the Ember Sage",
+        "form": "本體",
+        "attackType": "ranged",
+        "primary": "INT",
+        "attrSource": "authored",
+        "retired": false,
+        "inDistribution": false,
+        "lv1": {
+          "range": 11,
+          "as": 0.65,
+          "ms": 6.6,
+          "maxHealth": 484,
+          "armor": 20,
+          "mr": 43.6,
+          "ad": 52,
+          "ap": 26
+        },
+        "lv10": {
+          "range": 11,
+          "as": 1.1334,
+          "ms": 6.6,
+          "maxHealth": 2039.2,
+          "armor": 61.4837,
+          "mr": 70.6,
+          "ad": 111.4,
+          "ap": 53
+        },
+        "ingame": {
+          "range": 6.6,
+          "as": 1.1334,
+          "ms": 3.96,
+          "maxHealth": 8806.8,
+          "armor": 61.4837,
+          "mr": 14.12,
+          "ad": 111.4,
+          "ap": 53
+        },
+        "tier": {
+          "range": "極大",
+          "as": "小",
+          "ms": "大",
+          "maxHealth": "極大",
+          "armor": "極大",
+          "mr": "中",
+          "ad": "極大",
+          "ap": "大"
+        }
+      },
+      {
+        "id": "thorne",
+        "name": "Thorne, the Bramble Knight",
+        "form": "本體",
+        "attackType": "melee",
+        "primary": "STR",
+        "attrSource": "authored",
+        "retired": false,
+        "inDistribution": false,
+        "lv1": {
+          "range": 1.6,
+          "as": 0.7,
+          "ms": 6.9,
+          "maxHealth": 592,
+          "armor": 32,
+          "mr": 40.4,
+          "ad": 62,
+          "ap": 14
+        },
+        "lv10": {
+          "range": 1.6,
+          "as": 1.3294,
+          "ms": 6.9,
+          "maxHealth": 2492.8,
+          "armor": 79.9583,
+          "mr": 69.2,
+          "ad": 134,
+          "ap": 32
+        },
+        "ingame": {
+          "range": 0.96,
+          "as": 1.3294,
+          "ms": 5.52,
+          "maxHealth": 10621.2,
+          "armor": 79.9583,
+          "mr": 13.84,
+          "ad": 134,
+          "ap": 32
+        },
+        "tier": {
+          "range": "極小",
+          "as": "中",
+          "ms": "大",
+          "maxHealth": "極大",
+          "armor": "極大",
+          "mr": "中",
+          "ad": "極大",
+          "ap": "小"
+        }
+      }
+    ],
+    "stats": [
+      {
+        "key": "range",
+        "zh": "攻擊距離",
+        "drivenBy": "無（純 baseStats，沒有 growth 也沒有三圍）",
+        "distinct": 11,
+        "min": 1.6,
+        "max": 12,
+        "bandable": true,
+        "jenksCuts": [
+          2,
+          6.4,
+          8.2,
+          10.1
+        ],
+        "quintileCuts": [
+          1.6,
+          1.6,
+          1.6,
+          7.3
+        ],
+        "quintileDegenerate": true,
+        "counts": {
+          "極小": 83,
+          "小": 8,
+          "中": 15,
+          "大": 5,
+          "極大": 5
+        },
+        "observedMedian": {
+          "極小": 1.6,
+          "小": 6,
+          "中": 8.2,
+          "大": 9.2,
+          "極大": 11.9
+        },
+        "thinBands": [],
+        "target": {
+          "極小": 1.5,
+          "小": 3,
+          "中": 5,
+          "大": 7,
+          "極大": 10
+        },
+        "targetSource": "owner 指定",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 83,
+            "小": 0,
+            "中": 5,
+            "大": 18,
+            "極大": 10
+          },
+          "regraded": 28,
+          "medianAbsPct": 6.3,
+          "maxAbsPct": 25,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 116,
+          "unchanged": 3,
+          "medianAbsPct": 6.3,
+          "maxAbsPct": 53.1,
+          "over25pct": 24,
+          "over50pct": 3,
+          "biggest": [
+            {
+              "id": "godie-h021",
+              "name": "破銅爛鐵 - 阿強一號",
+              "from": 6.4,
+              "to": 3,
+              "pct": -53.1
+            },
+            {
+              "id": "godie-hblm",
+              "name": "慈悲的王者 - 賈修貝爾",
+              "from": 6.4,
+              "to": 3,
+              "pct": -53.1
+            },
+            {
+              "id": "godie-usyl",
+              "name": "殺戮之牙 - 異形",
+              "from": 6.4,
+              "to": 3,
+              "pct": -53.1
+            },
+            {
+              "id": "godie-e00t",
+              "name": "七夜怪談 - 貞子",
+              "from": 6,
+              "to": 3,
+              "pct": -50
+            },
+            {
+              "id": "godie-e00u",
+              "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+              "from": 6,
+              "to": 3,
+              "pct": -50
+            }
+          ]
+        }
+      },
+      {
+        "key": "as",
+        "zh": "攻擊速度",
+        "drivenBy": "敏捷（乘法：base × (1 + 0.02·AGI)）",
+        "distinct": 90,
+        "min": 0.884,
+        "max": 10.3836,
+        "bandable": true,
+        "jenksCuts": [
+          1.0812,
+          1.222,
+          1.4437,
+          1.7977
+        ],
+        "quintileCuts": [
+          1.1009,
+          1.1329,
+          1.243,
+          1.3505
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 21,
+          "小": 47,
+          "中": 36,
+          "大": 11,
+          "極大": 1
+        },
+        "observedMedian": {
+          "極小": 1.0615,
+          "小": 1.1308,
+          "中": 1.3206,
+          "大": 1.6121,
+          "極大": 10.3836
+        },
+        "thinBands": [
+          {
+            "tier": "極大",
+            "count": 1
+          }
+        ],
+        "target": {
+          "極小": 1,
+          "小": 1.5,
+          "中": 2,
+          "大": 2.5,
+          "極大": 10
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [
+          "極大 目標 10 → 近戰實際 10，超過上限 4（解鎖後 10 才拿得到）"
+        ],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 74,
+            "小": 39,
+            "中": 2,
+            "大": 0,
+            "極大": 1
+          },
+          "regraded": 94,
+          "medianAbsPct": 10.9,
+          "maxAbsPct": 19.9,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 116,
+          "unchanged": 3,
+          "medianAbsPct": 35.2,
+          "maxAbsPct": 68.2,
+          "over25pct": 91,
+          "over50pct": 30,
+          "biggest": [
+            {
+              "id": "godie-o030",
+              "name": "電車癡漢 - 臭作",
+              "from": 1.4865,
+              "to": 2.5,
+              "pct": 68.2
+            },
+            {
+              "id": "godie-u01f",
+              "name": "萬夫莫敵 - 黑化張飛",
+              "from": 1.5005,
+              "to": 2.5,
+              "pct": 66.6
+            },
+            {
+              "id": "godie-e00x",
+              "name": "神鳴流劍士 - 櫻綻剎那",
+              "from": 1.5311,
+              "to": 2.5,
+              "pct": 63.3
+            },
+            {
+              "id": "godie-n01l",
+              "name": "學姊 - 小派",
+              "from": 1.2335,
+              "to": 2,
+              "pct": 62.1
+            },
+            {
+              "id": "godie-o02n",
+              "name": "曹操孟德 - 阿瞞大人",
+              "from": 1.243,
+              "to": 2,
+              "pct": 60.9
+            }
+          ]
+        }
+      },
+      {
+        "key": "ms",
+        "zh": "移動速度",
+        "drivenBy": "無（純 baseStats）",
+        "distinct": 19,
+        "min": 4,
+        "max": 10.1,
+        "bandable": true,
+        "jenksCuts": [
+          4.8,
+          5.8,
+          6.4,
+          8
+        ],
+        "quintileCuts": [
+          5.7,
+          5.8,
+          5.9,
+          6.1
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 3,
+          "小": 48,
+          "中": 55,
+          "大": 6,
+          "極大": 4
+        },
+        "observedMedian": {
+          "極小": 4.6,
+          "小": 5.7,
+          "中": 6,
+          "大": 7.7,
+          "極大": 10.1
+        },
+        "thinBands": [
+          {
+            "tier": "極小",
+            "count": 3
+          },
+          {
+            "tier": "極大",
+            "count": 4
+          }
+        ],
+        "target": {
+          "極小": 5,
+          "小": 6,
+          "中": 7.5,
+          "大": 10,
+          "極大": 15
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 11,
+            "小": 95,
+            "中": 6,
+            "大": 4,
+            "極大": 0
+          },
+          "regraded": 73,
+          "medianAbsPct": 3.2,
+          "maxAbsPct": 25,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 116,
+          "unchanged": 3,
+          "medianAbsPct": 21,
+          "maxAbsPct": 48.5,
+          "over25pct": 28,
+          "over50pct": 0,
+          "biggest": [
+            {
+              "id": "godie-e00x",
+              "name": "神鳴流劍士 - 櫻綻剎那",
+              "from": 10.1,
+              "to": 15,
+              "pct": 48.5
+            },
+            {
+              "id": "godie-e00z",
+              "name": "戰國刺客Azumi - 安云",
+              "from": 10.1,
+              "to": 15,
+              "pct": 48.5
+            },
+            {
+              "id": "godie-u00b",
+              "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+              "from": 10.1,
+              "to": 15,
+              "pct": 48.5
+            },
+            {
+              "id": "godie-u01f",
+              "name": "萬夫莫敵 - 黑化張飛",
+              "from": 10.1,
+              "to": 15,
+              "pct": 48.5
+            },
+            {
+              "id": "godie-u010",
+              "name": "邪眼師 - 飛影",
+              "from": 7,
+              "to": 10,
+              "pct": 42.9
+            }
+          ]
+        }
+      },
+      {
+        "key": "maxHealth",
+        "zh": "生命",
+        "drivenBy": "力量（+23/點）",
+        "distinct": 74,
+        "min": 905,
+        "max": 5000,
+        "bandable": true,
+        "jenksCuts": [
+          1172.25,
+          1364.65,
+          1623.5,
+          2001
+        ],
+        "quintileCuts": [
+          1148.9,
+          1233.95,
+          1364.65,
+          1669.5
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 30,
+          "小": 41,
+          "中": 19,
+          "大": 23,
+          "極大": 3
+        },
+        "observedMedian": {
+          "極小": 1098.5,
+          "小": 1249.65,
+          "中": 1560.7,
+          "大": 1735.9,
+          "極大": 4589.6
+        },
+        "thinBands": [
+          {
+            "tier": "極大",
+            "count": 3
+          }
+        ],
+        "target": {
+          "極小": 1000,
+          "小": 1500,
+          "中": 2000,
+          "大": 2500,
+          "極大": 5000
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 51,
+            "小": 53,
+            "中": 9,
+            "大": 0,
+            "極大": 3
+          },
+          "regraded": 63,
+          "medianAbsPct": 12.1,
+          "maxAbsPct": 20,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 115,
+          "unchanged": 4,
+          "medianAbsPct": 21.6,
+          "maxAbsPct": 50.4,
+          "over25pct": 40,
+          "over50pct": 1,
+          "biggest": [
+            {
+              "id": "godie-u00v",
+              "name": "黑手黨老大 - 基廉列克",
+              "from": 1662.2,
+              "to": 2500,
+              "pct": 50.4
+            },
+            {
+              "id": "godie-h02y",
+              "name": "幕末復仇狂者 - 志志雄真實",
+              "from": 1669.5,
+              "to": 2500,
+              "pct": 49.7
+            },
+            {
+              "id": "godie-hart",
+              "name": "最終幻想 - 克勞德",
+              "from": 1669.5,
+              "to": 2500,
+              "pct": 49.7
+            },
+            {
+              "id": "godie-hpal",
+              "name": "不死之身-無 - 藤井八雲",
+              "from": 1669.5,
+              "to": 2500,
+              "pct": 49.7
+            },
+            {
+              "id": "godie-u034",
+              "name": "職業獵人 - 傑 富力士",
+              "from": 1673.15,
+              "to": 2500,
+              "pct": 49.4
+            }
+          ]
+        }
+      },
+      {
+        "key": "armor",
+        "zh": "防禦",
+        "drivenBy": "敏捷（+0.3/點，出貨值）",
+        "distinct": 80,
+        "min": 1.85,
+        "max": 33.49,
+        "bandable": true,
+        "jenksCuts": [
+          2.3,
+          14.56,
+          18.87,
+          23.7
+        ],
+        "quintileCuts": [
+          13.155,
+          15.59,
+          17.56,
+          21.45
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 2,
+          "小": 38,
+          "中": 37,
+          "大": 35,
+          "極大": 4
+        },
+        "observedMedian": {
+          "極小": 2.3,
+          "小": 13.02,
+          "中": 16.595,
+          "大": 21.66,
+          "極大": 28.99
+        },
+        "thinBands": [
+          {
+            "tier": "極小",
+            "count": 2
+          },
+          {
+            "tier": "極大",
+            "count": 4
+          }
+        ],
+        "target": {
+          "極小": 2.5,
+          "小": 15,
+          "中": 20,
+          "大": 25,
+          "極大": 30
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 2,
+            "小": 67,
+            "中": 33,
+            "大": 11,
+            "極大": 3
+          },
+          "regraded": 55,
+          "medianAbsPct": 9.4,
+          "maxAbsPct": 42.2,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 116,
+          "unchanged": 3,
+          "medianAbsPct": 16.3,
+          "maxAbsPct": 42.2,
+          "over25pct": 28,
+          "over50pct": 0,
+          "biggest": [
+            {
+              "id": "godie-h02k",
+              "name": "國寶級的畜生 - 熊貓",
+              "from": 10.55,
+              "to": 15,
+              "pct": 42.2
+            },
+            {
+              "id": "godie-etyr",
+              "name": "治癒系公主 - 木乃香",
+              "from": 11.04,
+              "to": 15,
+              "pct": 35.9
+            },
+            {
+              "id": "godie-emfr",
+              "name": "魔法老師 - 涅吉。史普林。菲爾德",
+              "from": 14.78,
+              "to": 20,
+              "pct": 35.3
+            },
+            {
+              "id": "godie-u011",
+              "name": "死亡老二 - 克勞薩先生",
+              "from": 1.85,
+              "to": 2.5,
+              "pct": 35.1
+            },
+            {
+              "id": "godie-ubal",
+              "name": "魔界霸主 - 巴恩大魔王",
+              "from": 14.865,
+              "to": 20,
+              "pct": 34.5
+            }
+          ]
+        }
+      },
+      {
+        "key": "mr",
+        "zh": "魔抗",
+        "drivenBy": "智慧（+0.6/點）",
+        "distinct": 71,
+        "min": 40,
+        "max": 131.2,
+        "bandable": true,
+        "jenksCuts": [
+          40,
+          62.2,
+          74.08,
+          87.32
+        ],
+        "quintileCuts": [
+          56.32,
+          58,
+          59.44,
+          66.43
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 1,
+          "小": 81,
+          "中": 31,
+          "大": 2,
+          "極大": 1
+        },
+        "observedMedian": {
+          "極小": 40,
+          "小": 57.52,
+          "中": 68.11,
+          "大": 87.32,
+          "極大": 131.2
+        },
+        "thinBands": [
+          {
+            "tier": "極小",
+            "count": 1
+          },
+          {
+            "tier": "大",
+            "count": 2
+          },
+          {
+            "tier": "極大",
+            "count": 1
+          }
+        ],
+        "target": {
+          "極小": 40,
+          "小": 60,
+          "中": 75,
+          "大": 100,
+          "極大": 150
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 1,
+            "小": 95,
+            "中": 19,
+            "大": 0,
+            "極大": 1
+          },
+          "regraded": 16,
+          "medianAbsPct": 5.9,
+          "maxAbsPct": 14.3,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 115,
+          "unchanged": 4,
+          "medianAbsPct": 6.4,
+          "maxAbsPct": 24.2,
+          "over25pct": 0,
+          "over50pct": 0,
+          "biggest": [
+            {
+              "id": "godie-u01u",
+              "name": "三刀流劍士 - 索隆",
+              "from": 80.51,
+              "to": 100,
+              "pct": 24.2
+            },
+            {
+              "id": "godie-nplh",
+              "name": "通靈人 - 麻倉葉",
+              "from": 62.8,
+              "to": 75,
+              "pct": 19.4
+            },
+            {
+              "id": "godie-efur",
+              "name": "揍敵客大家長 - 揍敵客桀諾",
+              "from": 63.22,
+              "to": 75,
+              "pct": 18.6
+            },
+            {
+              "id": "godie-n01l",
+              "name": "學姊 - 小派",
+              "from": 63.22,
+              "to": 75,
+              "pct": 18.6
+            },
+            {
+              "id": "godie-h021",
+              "name": "破銅爛鐵 - 阿強一號",
+              "from": 63.82,
+              "to": 75,
+              "pct": 17.5
+            }
+          ]
+        }
+      },
+      {
+        "key": "ad",
+        "zh": "AD",
+        "drivenBy": "力量（+1/點）",
+        "distinct": 84,
+        "min": 2,
+        "max": 127.95,
+        "bandable": true,
+        "jenksCuts": [
+          2,
+          66,
+          79.85,
+          100.5
+        ],
+        "quintileCuts": [
+          58.95,
+          67.15,
+          74.4,
+          83.95
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 1,
+          "小": 44,
+          "中": 44,
+          "大": 22,
+          "極大": 5
+        },
+        "observedMedian": {
+          "極小": 2,
+          "小": 58.95,
+          "中": 73.8,
+          "大": 86.95,
+          "極大": 122.85
+        },
+        "thinBands": [
+          {
+            "tier": "極小",
+            "count": 1
+          }
+        ],
+        "target": {
+          "極小": 2,
+          "小": 60,
+          "中": 75,
+          "大": 100,
+          "極大": 150
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 1,
+            "小": 46,
+            "中": 55,
+            "大": 12,
+            "極大": 2
+          },
+          "regraded": 18,
+          "medianAbsPct": 5.9,
+          "maxAbsPct": 19.5,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 114,
+          "unchanged": 5,
+          "medianAbsPct": 5.9,
+          "maxAbsPct": 38.9,
+          "over25pct": 2,
+          "over50pct": 0,
+          "biggest": [
+            {
+              "id": "godie-h02r",
+              "name": "種子神奇寶貝 - 妙蛙花",
+              "from": 108,
+              "to": 150,
+              "pct": 38.9
+            },
+            {
+              "id": "godie-u00b",
+              "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+              "from": 117,
+              "to": 150,
+              "pct": 28.2
+            },
+            {
+              "id": "godie-othr",
+              "name": "X戰警 - 金鋼狼",
+              "from": 81,
+              "to": 100,
+              "pct": 23.5
+            },
+            {
+              "id": "godie-n00p",
+              "name": "妖狐藏馬 - 南野秀一",
+              "from": 122.85,
+              "to": 150,
+              "pct": 22.1
+            },
+            {
+              "id": "godie-e001",
+              "name": "蟬在叫人壞掉 - 龍宮禮奈",
+              "from": 82.95,
+              "to": 100,
+              "pct": 20.6
+            }
+          ]
+        }
+      },
+      {
+        "key": "ap",
+        "zh": "AP",
+        "drivenBy": "智慧（+1/點）—— 100% 來自智慧，baseStats.ap 全為 0",
+        "distinct": 70,
+        "min": 2,
+        "max": 154,
+        "bandable": true,
+        "jenksCuts": [
+          2,
+          35.5,
+          45.05,
+          58.8
+        ],
+        "quintileCuts": [
+          29.2,
+          32,
+          34.4,
+          45.05
+        ],
+        "quintileDegenerate": false,
+        "counts": {
+          "極小": 1,
+          "小": 76,
+          "中": 16,
+          "大": 22,
+          "極大": 1
+        },
+        "observedMedian": {
+          "極小": 2,
+          "小": 31.1,
+          "中": 40.7,
+          "大": 50.1,
+          "極大": 154
+        },
+        "thinBands": [
+          {
+            "tier": "極小",
+            "count": 1
+          },
+          {
+            "tier": "極大",
+            "count": 1
+          }
+        ],
+        "target": {
+          "極小": 2,
+          "小": 30,
+          "中": 40,
+          "大": 50,
+          "極大": 150
+        },
+        "targetSource": "本工具提案（各帶中位數收到刻度）",
+        "capWarnings": [],
+        "nearestTargetAlternative": {
+          "counts": {
+            "極小": 1,
+            "小": 74,
+            "中": 17,
+            "大": 23,
+            "極大": 1
+          },
+          "regraded": 3,
+          "medianAbsPct": 5.3,
+          "maxAbsPct": 15,
+          "over50pct": 0
+        },
+        "movement": {
+          "changed": 114,
+          "unchanged": 5,
+          "medianAbsPct": 5.3,
+          "maxAbsPct": 15.5,
+          "over25pct": 0,
+          "over50pct": 0,
+          "biggest": [
+            {
+              "id": "godie-u00n",
+              "name": "草帽小子 - 蒙其.D.魯夫",
+              "from": 35.5,
+              "to": 30,
+              "pct": -15.5
+            },
+            {
+              "id": "godie-u00o",
+              "name": "草帽小子 - 蒙其.D.魯夫",
+              "from": 35.5,
+              "to": 30,
+              "pct": -15.5
+            },
+            {
+              "id": "godie-etyr",
+              "name": "治癒系公主 - 木乃香",
+              "from": 58.8,
+              "to": 50,
+              "pct": -15
+            },
+            {
+              "id": "godie-u00b",
+              "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+              "from": 35,
+              "to": 30,
+              "pct": -14.3
+            },
+            {
+              "id": "godie-e001",
+              "name": "蟬在叫人壞掉 - 龍宮禮奈",
+              "from": 34.85,
+              "to": 30,
+              "pct": -13.9
+            }
+          ]
+        }
+      }
+    ],
+    "coupling": [
+      {
+        "pair": "AP ↔ 魔抗",
+        "attr": "智慧",
+        "samTierPct": 72.3
+      },
+      {
+        "pair": "生命 ↔ AD",
+        "attr": "力量",
+        "samTierPct": 46.2
+      },
+      {
+        "pair": "攻速 ↔ 防禦",
+        "attr": "敏捷",
+        "samTierPct": 24.4
+      }
+    ],
+    "ceilings": [
+      {
+        "key": "as",
+        "zh": "攻擊速度",
+        "top": {
+          "id": "godie-h02n",
+          "name": "腦包英雄 - 打我阿笨蛋",
+          "value": 10.3836,
+          "retired": false
+        },
+        "runnerUp": {
+          "name": "超級賽亞人 - 悟空",
+          "value": 1.7977
+        },
+        "ratio": 5.78,
+        "singleHeroCeiling": true
+      },
+      {
+        "key": "ap",
+        "zh": "AP",
+        "top": {
+          "id": "godie-h020",
+          "name": "黑魔導士 - 莉娜因巴斯",
+          "value": 154,
+          "retired": false
+        },
+        "runnerUp": {
+          "name": "治癒系公主 - 木乃香",
+          "value": 58.8
+        },
+        "ratio": 2.62,
+        "singleHeroCeiling": true
+      }
+    ],
+    "outliers": {
+      "noCompensation": [
+        {
+          "id": "godie-u01f",
+          "name": "萬夫莫敵 - 黑化張飛",
+          "form": "本體",
+          "retired": true,
+          "maxTiers": [
+            "移動速度",
+            "生命"
+          ],
+          "extremeLows": [],
+          "smallTiers": [
+            "攻擊距離",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": 4,
+          "verdict": "無補償"
+        }
+      ],
+      "compensated": [
+        {
+          "id": "godie-n01c",
+          "name": "傳說的龍騎士 - 勇者小呆",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "防禦"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [],
+          "netTierScore": 3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-u00b",
+          "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "移動速度",
+            "AD"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": 1,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-e00n",
+          "name": "蟬在叫人壞掉 - 龍宮禮奈",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "AD"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "生命",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": 0,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-u01u",
+          "name": "三刀流劍士 - 索隆",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "防禦"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "攻擊速度",
+            "AP"
+          ],
+          "netTierScore": 0,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-e00x",
+          "name": "神鳴流劍士 - 櫻綻剎那",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "移動速度"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "生命",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -1,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-e010",
+          "name": "白木老樹精 - 白木卡迪那",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "攻擊距離"
+          ],
+          "extremeLows": [
+            "攻擊速度"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "生命",
+            "AD"
+          ],
+          "netTierScore": -1,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-n00p",
+          "name": "妖狐藏馬 - 南野秀一",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "AD"
+          ],
+          "extremeLows": [],
+          "smallTiers": [
+            "攻擊距離",
+            "攻擊速度",
+            "移動速度",
+            "生命"
+          ],
+          "netTierScore": -1,
+          "verdict": "有補償（整體不高）"
+        },
+        {
+          "id": "godie-o02n",
+          "name": "曹操孟德 - 阿瞞大人",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "防禦"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -2,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-o030",
+          "name": "電車癡漢 - 臭作",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "攻擊距離"
+          ],
+          "extremeLows": [
+            "生命"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "魔抗",
+            "AD",
+            "AP"
+          ],
+          "netTierScore": -2,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-h020",
+          "name": "黑魔導士 - 莉娜因巴斯",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "魔抗",
+            "AP"
+          ],
+          "extremeLows": [
+            "攻擊速度",
+            "生命"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "防禦",
+            "AD"
+          ],
+          "netTierScore": -3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-e00s",
+          "name": "白木老樹精 - 白木卡迪那",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "攻擊距離"
+          ],
+          "extremeLows": [
+            "攻擊速度"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "生命",
+            "防禦",
+            "AD"
+          ],
+          "netTierScore": -3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-e00z",
+          "name": "戰國刺客Azumi - 安云",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "移動速度"
+          ],
+          "extremeLows": [
+            "攻擊距離",
+            "生命"
+          ],
+          "smallTiers": [
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-ecen",
+          "name": "姜窩肯 - 約翰走路",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "攻擊距離"
+          ],
+          "extremeLows": [
+            "攻擊速度"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "生命",
+            "防禦",
+            "AD"
+          ],
+          "netTierScore": -3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-nbbc",
+          "name": "傳說的龍騎士 - 勇者小呆",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "防禦"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "生命",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -3,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-h02r",
+          "name": "種子神奇寶貝 - 妙蛙花",
+          "form": "變身",
+          "retired": false,
+          "maxTiers": [
+            "AD"
+          ],
+          "extremeLows": [
+            "攻擊距離",
+            "移動速度",
+            "生命"
+          ],
+          "smallTiers": [
+            "魔抗"
+          ],
+          "netTierScore": -4,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-udea",
+          "name": "至尊學長 - 飛鼠先生",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "AD"
+          ],
+          "extremeLows": [
+            "攻擊距離",
+            "攻擊速度",
+            "生命"
+          ],
+          "smallTiers": [
+            "防禦"
+          ],
+          "netTierScore": -4,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-h02n",
+          "name": "腦包英雄 - 打我阿笨蛋",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "攻擊速度",
+            "生命"
+          ],
+          "extremeLows": [
+            "攻擊距離",
+            "防禦",
+            "AD"
+          ],
+          "smallTiers": [
+            "移動速度",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -5,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-ogld",
+          "name": "美白大法師 - 黑人牙膏",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "攻擊距離"
+          ],
+          "extremeLows": [
+            "攻擊速度",
+            "移動速度",
+            "生命"
+          ],
+          "smallTiers": [
+            "防禦",
+            "魔抗"
+          ],
+          "netTierScore": -5,
+          "verdict": "有補償（極小）"
+        },
+        {
+          "id": "godie-u01q",
+          "name": "測試英雄 - 索隆",
+          "form": "本體",
+          "retired": false,
+          "maxTiers": [
+            "生命"
+          ],
+          "extremeLows": [
+            "攻擊距離"
+          ],
+          "smallTiers": [
+            "攻擊速度",
+            "移動速度",
+            "防禦",
+            "魔抗",
+            "AP"
+          ],
+          "netTierScore": -5,
+          "verdict": "有補償（極小）"
+        }
+      ]
+    }
+  },
+  "aoe": {
+    "bands": [
+      {
+        "tier": "小",
+        "label": "約 5 人範圍",
+        "from": "< 200"
+      },
+      {
+        "tier": "中",
+        "label": "約 10 人範圍（預設）",
+        "from": "200 – 300"
+      },
+      {
+        "tier": "大",
+        "label": "1/4 競技場",
+        "from": "300 – 500"
+      },
+      {
+        "tier": "超大",
+        "label": "1/3 競技場",
+        "from": "≥ 500"
+      }
+    ],
+    "rows": [
+      {
+        "id": "godie-ubal.ex",
+        "name": "37-002 真‧黑核晶",
+        "raw": 513.5,
+        "tier": "超大"
+      },
+      {
+        "id": "godie-o00k.e",
+        "name": "86-03 神鳴",
+        "raw": 500,
+        "tier": "超大"
+      },
+      {
+        "id": "godie-o02p.q",
+        "name": "99-01 甩蔥歌",
+        "raw": 400,
+        "tier": "大"
+      },
+      {
+        "id": "godie-o00k.q",
+        "name": "86-01 十萬伏特",
+        "raw": 350,
+        "tier": "大"
+      },
+      {
+        "id": "godie-ofar.q",
+        "name": "58-01 十萬伏特",
+        "raw": 350,
+        "tier": "大"
+      },
+      {
+        "id": "godie-edem.q",
+        "name": "45-01 火遁-豪火龍之術",
+        "raw": 330,
+        "tier": "大"
+      },
+      {
+        "id": "godie-e00w.q",
+        "name": "77-01 百烈櫻華斬",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-h00l.r",
+        "name": "60-04 迴旋斬",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-u00h.r",
+        "name": "39-04 祕奧義．金色的神風",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-u00j.e",
+        "name": "74-03 闇之天使",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-u00v.e",
+        "name": "78-03 廬山昇龍破",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-umal.e",
+        "name": "25-03 北斗百裂拳",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-uvng.ex",
+        "name": "38-002 究極暴走黑龍波",
+        "raw": 327,
+        "tier": "大"
+      },
+      {
+        "id": "godie-emfr.ex",
+        "name": "15-002 風花-武裝解除",
+        "raw": 320.5,
+        "tier": "大"
+      },
+      {
+        "id": "godie-hjai.w",
+        "name": "04-02 炸彈陣",
+        "raw": 300,
+        "tier": "大"
+      },
+      {
+        "id": "godie-n003.q",
+        "name": "42-01 凍結的大地",
+        "raw": 300,
+        "tier": "大"
+      },
+      {
+        "id": "godie-o00k.r",
+        "name": "86-04 打雷絕招",
+        "raw": 300,
+        "tier": "大"
+      },
+      {
+        "id": "godie-u00k.q",
+        "name": "71-01 死亡隕落",
+        "raw": 300,
+        "tier": "大"
+      },
+      {
+        "id": "godie-emfr.e",
+        "name": "15-03 雷電風暴",
+        "raw": 280,
+        "tier": "中"
+      },
+      {
+        "id": "godie-osam.ex",
+        "name": "34-002 冥道殘月破",
+        "raw": 257,
+        "tier": "中"
+      },
+      {
+        "id": "godie-hgam.q",
+        "name": "90-01 飛葉快刀",
+        "raw": 224.5,
+        "tier": "中"
+      },
+      {
+        "id": "godie-zombiex.r",
+        "name": "100-04 百式・哈基米",
+        "raw": 218,
+        "tier": "中"
+      },
+      {
+        "id": "godie-o00l.w",
+        "name": "53-02 強化炸彈陣",
+        "raw": 201,
+        "tier": "中"
+      },
+      {
+        "id": "godie-e002.r",
+        "name": "20-04 Avalon-永恆的理想鄉",
+        "raw": 200,
+        "tier": "中"
+      },
+      {
+        "id": "godie-ogld.r",
+        "name": "72-04 黑化",
+        "raw": 200,
+        "tier": "中"
+      },
+      {
+        "id": "godie-u00h.w",
+        "name": "39-02 無明神風流-朱雀",
+        "raw": 200,
+        "tier": "中"
+      },
+      {
+        "id": "godie-udre.w",
+        "name": "11-02 虎狩獵",
+        "raw": 200,
+        "tier": "中"
+      },
+      {
+        "id": "godie-zombiex.e",
+        "name": "100-03 咕咕嘎嘎",
+        "raw": 191,
+        "tier": "小"
+      },
+      {
+        "id": "godie-zombiex.q",
+        "name": "100-01 肝泥抹德",
+        "raw": 163.5,
+        "tier": "小"
+      }
+    ]
+  }
+}
