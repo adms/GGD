@@ -52,7 +52,7 @@ export const CAP_EFFECT_ZH: Readonly<Record<Stat, string>> = Object.freeze({
   [Stat.SpellVamp]: "技能傷害轉回血的比率上限(技能吸血)",
   [Stat.MaxHealth]: "生命上限的天花板 —— 夾住之後堆血裝與力量都不再變厚",
   [Stat.MaxMana]: "魔力上限的天花板 —— 夾住之後智慧與魔力裝不再擴池",
-  [Stat.HealthRegen]: "每秒自動回血的天花板",
+  [Stat.HealthRegen]: "每秒自動回血的天花板 —— 夾住它等於限制「打不死」的續戰下限",
   [Stat.ManaRegen]: "每秒自動回魔的天花板 —— 夾住它等於限制連續施法的次數",
   [Stat.AttackDamage]: "普攻傷害基數的天花板 —— 夾住之後攻擊裝與力量都不再變痛",
   [Stat.Armor]: "物理減傷曲線吃到的護甲天花板",

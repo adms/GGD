@@ -17,6 +17,42 @@
     "cdr": {
       "base": 0.99,
       "unlocked": 0.99
+    },
+    "maxHealth": {
+      "base": 60000,
+      "unlocked": 200000
+    },
+    "maxMana": {
+      "base": 60000,
+      "unlocked": 200000
+    },
+    "healthRegen": {
+      "base": 1000,
+      "unlocked": 5000
+    },
+    "manaRegen": {
+      "base": 3000,
+      "unlocked": 8000
+    },
+    "ad": {
+      "base": 2000,
+      "unlocked": 8000
+    },
+    "armor": {
+      "base": 900,
+      "unlocked": 1900
+    },
+    "mr": {
+      "base": 900,
+      "unlocked": 1900
+    },
+    "range": {
+      "base": 24,
+      "unlocked": 40
+    },
+    "ms": {
+      "base": 14,
+      "unlocked": 18
     }
   }
 }

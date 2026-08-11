@@ -108,6 +108,44 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   // unlocked 0.8 留給未來的 CapRaise。⚠️ 這一列與 content/config/stat-caps.json
   // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。
   [Stat.CooldownReduction]: Object.freeze({ base: 0.99, unlocked: 0.99 }),
+
+  // ---- 2026-08-12 · 極小/極大 = 硬上下限（owner 授權我自己設） ----------------
+  // owner：「你自己設定就好，但可以**寬鬆一點，不要太容易被上下限擋住**，
+  //          但太離譜還是會被限制」
+  //
+  // ⭐ 所以每一格都是**量出來的**，不是憑感覺挑的整數。錨點是全 119 張英雄卡在
+  //    **等級 18** 的 `championStatBase()` 最大值（含變身態與退役卡，取最寬的母體）：
+  //
+  //      maxHealth 5,960 · maxMana 8,282 · healthRegen 78 · manaRegen 1,015
+  //      ad 198 · armor 114 · mr 155 · range 12 · ms 10.1
+  //
+  //    ⚠️ 這些是**基礎值**，還沒乘環境倍率、沒加道具。所以餘裕要留得大。
+  //    量完的結果：這九格**一個人都夾不到**（守衛 `statCapsAreFences.test.ts`）。
+  //
+  // ⛔ 這一批**不碰** as / ap / lifesteal / cdr（上面四列是既有裁決），也不碰
+  //    critChance / evasion / spellVamp —— 那三條的 1.0 / 0.8 是**語意邊界**
+  //    不是餘裕，替它們發明一個 unlocked 等於默默放寬平衡（見檔頭第 96 行）。
+  [Stat.MaxHealth]: Object.freeze({ base: 60_000, unlocked: 200_000 }),
+  [Stat.MaxMana]: Object.freeze({ base: 60_000, unlocked: 200_000 }),
+  [Stat.HealthRegen]: Object.freeze({ base: 1_000, unlocked: 5_000 }),
+  [Stat.ManaRegen]: Object.freeze({ base: 3_000, unlocked: 8_000 }),
+  [Stat.AttackDamage]: Object.freeze({ base: 2_000, unlocked: 8_000 }),
+  // 減傷是 `100 / (100 + resist)`（damage.ts:701），所以這兩格的意思是**減傷比率**：
+  //   900 → 90% 減免 · 1,900 → 95%。⛔ 沒有任何一格是 100% —— 免疫要走
+  //   `invulnerable` 那個明確的機制，不可以由一個滑到底的數值旋鈕**意外**產生。
+  [Stat.Armor]: Object.freeze({ base: 900, unlocked: 1_900 }),
+  [Stat.MagicResist]: Object.freeze({ base: 900, unlocked: 1_900 }),
+  // owner：「攻擊距離超過全地圖這種沒意義」。24 = 競技場單一 zone 的半徑
+  //   （`STAT_CAP_MAX` 的 attackRange 註解就是用這個數字推的），也就是
+  //   「站在自己這半場的邊緣打得到對面邊緣」。40 解鎖給穿場技能/傳說武器。
+  //   ⚠️ 出貨內容最遠是 12（極大那一格是 10），所以 24 不會夾到任何人。
+  [Stat.AttackRange]: Object.freeze({ base: 24, unlocked: 40 }),
+  // 🔴 移速的 unlocked **不是憑感覺挑的 —— 它是一道技術牆**。
+  //   實測（用真的 `moveWithCollision` 二分逼近）：速度超過 **18 u/s** 的位移
+  //   會**穿牆**。所以 base 留在既有的 14（`STAT_CLAMPS`），unlocked 收在 18。
+  //   owner 說的「走速快到像瞬移」在這裡有一個比體感更硬的判準：再快就是穿牆。
+  //   ⚠️ 這一格只管**屬性移速**。技能的位移速度走別條路（見 GH#318）。
+  [Stat.MoveSpeed]: Object.freeze({ base: 14, unlocked: 18 }),
 });
 
 // ------------------------------------------------------------- bounds ------
