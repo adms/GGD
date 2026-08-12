@@ -17,6 +17,7 @@ import { cover } from "../../testkit/cover";
 import {
   ARCHETYPES,
   DEFAULT_STAT_NORMALIZATION,
+  ORIGINS,
   archetypeOf,
   deriveArchetype,
   resolveChampionStats,
@@ -184,9 +185,17 @@ describe("成長通道：定位驅動的東西寫 growth，個性留在 baseStat
     // ⚠️ 要看得到反解的方向就不能被 0 夾住 —— 這裡開 allowNegativeGrowth，
     //    那正是那一格欄位存在的理由（出貨 false 是**政策**，不是機制限制）。
     const openCfg = { ...cfg, allowNegativeGrowth: true };
+    // ⚠️ 這一條只能動**一個**變因。智慧從 10 提到 200 會讓這張卡從坦克翻成法師，
+    //    而出身換了級距也跟著換 —— 那樣測到的是「級距不同」不是「反解有沒有做」。
+    //    ⭐ 所以把十個出身的魔抗全部釘成同一格，目標值就恆定，剩下的只有反解。
+    //    （referenceLevel=18 時這條碰巧還是綠的，改成 99 之後才露出來。）
+    const flat = {
+      ...openCfg,
+      byOrigin: { ...openCfg.byOrigin, mr: Object.fromEntries(ORIGINS.map((o) => [o, "中"])) },
+    } as typeof openCfg;
     const solve = (int: number): number => {
       const doc = { ...TANK, attributes: { ...TANK.attributes, int } };
-      const out = resolveChampionStats(doc as never, openCfg, deps) as { growth: Record<string, number> };
+      const out = resolveChampionStats(doc as never, flat, deps) as { growth: Record<string, number> };
       return out.growth.mr!;
     };
     expect(solve(200)).toBeLessThan(solve(10));

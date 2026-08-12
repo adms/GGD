@@ -716,6 +716,60 @@ def _mechanics_text(desc):
     return re.sub(r"「[^」]*」", "", desc, flags=re.S)
 
 
+#: 「取代」語意的用語。⭐ owner 2026-08-12：「這是**提升至**」——
+#: 判準在**字面**上，⛔ 不是每次靠人判斷。
+_SET_WORDS = ("提升至", "上升至", "增加至", "提高至", "降為", "降至", "變為", "固定為")
+
+
+def _set_semantics_gate(doc, e, num):
+    """⭐「提升 X%」vs「提升**至** X%」是**兩件事**，而它們的 JSON 差一倍。
+
+    · 「提升 X%」  → `pctAdd`（加成：本體的值還在，往上疊）
+    · 「提升**至** X%」→ `pctMult`（取代：最終值是基礎的 X 倍）
+
+    實測踩過：80-04 赤兔咆哮「[AP]與[AD]暫時提升**至** 150/200/250%」寫成
+    `pctAdd 1.5` ＝ **+150% ＝ 2.5 倍**，而規格要的是 **1.5 倍** —— 整整多一倍，
+    而卡片上兩者長得一模一樣（失敗形態②）。
+
+    ⛔ 這條閘**只在同一句話裡同時出現「至」與「%」時**才叫 —— 「生命**降至** 20%」
+    那種是**條件門檻**（59-00 暴走），不是 modifier，⛔ 不可以誤報。
+    """
+    txt = _mechanics_text(e.get("desc", ""))
+    # 只看真的講「某個屬性提升至 N%」的句子：「至」與百分比要在同一行。
+    # ⚠️ 切到**子句**再判，⛔ 不是整行 —— 15-04 一行裡同時有
+    #    「100/150/200% [攻擊速度]」（加成）與「[攻擊速度上限]提升至10」（capRaise），
+    #    整行判會把前者誤報成後者（實測 2 支假紅）。
+    clauses = re.split(r"[，。、\n]", txt)
+    suspect = [
+        c for c in clauses
+        if any(w in c for w in _SET_WORDS) and re.search(r"\d+\s*%", c)
+        # ⛔ 「上限提升至 N」是 capRaise，不是 pctMult。
+        and "上限" not in c
+        # ⛔ 「生命降至 20%」是**條件門檻**（59-00 暴走），不是 modifier。
+        and not re.search(r"(生命|血量|魔力|HP|MP)", c)
+    ]
+    if not suspect:
+        return
+    bad = []
+
+    def walk(n):
+        if isinstance(n, list):
+            for v in n:
+                walk(v)
+        elif isinstance(n, dict):
+            if n.get("op") == "pctAdd" and "stat" in n:
+                bad.append(n["stat"])
+            for v in n.values():
+                walk(v)
+
+    walk(doc.get("effects", []))
+    walk(doc.get("passive", {}))
+    if bad:
+        FINDINGS["⚠️ 規格寫「提升至」但 JSON 用 pctAdd（差一倍）"].append(
+            (num, ",".join(sorted(set(bad))))
+        )
+
+
 def _timing_gates(doc, e, num):
     """⭐ B1-M —— 時序容器沒有 helper，於是「先 A 再 B」被攤平成同一 tick 的兄弟。
 
@@ -1614,10 +1668,15 @@ A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300
 A("80-04", "80-04 赤兔咆哮", "self", [90, 90, 90], [250, 400, 550], 0,
   "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
   maxRank=3,
-  effects=[buff([M("ap", "pctAdd", 1.5), M("ad", "pctAdd", 1.5)], 8.0,
-                perRank=[{"modifiers": [M("ap", "pctAdd", v), M("ad", "pctAdd", v)],
+  # ⭐ owner 2026-08-12：「你應該要有 **×150% 的效果標籤**來實作，因為這是**提升至**」。
+  #    「提升**至** 150%」＝ 最終值是基礎的 **1.5 倍**；`pctAdd 1.5` 是 **+150% ＝ 2.5 倍**，
+  #    整整多一倍。`pctMult v` 給的是 ×(1+v)，所以 150/200/250% → v = 0.5/1.0/1.5。
+  #    ⚠️ 判準在字面上，不在我腦裡：「提升 X%」＝ pctAdd（加成）、
+  #    「提升**至** X%」＝ pctMult（取代成 X 倍）。閘在 `_set_semantics_gate()`。
+  effects=[buff([M("ap", "pctMult", 0.5), M("ad", "pctMult", 0.5)], 8.0,
+                perRank=[{"modifiers": [M("ap", "pctMult", v), M("ad", "pctMult", v)],
                           "duration": 8.0}
-                         for v in (1.5, 2.0, 2.5)])],
+                         for v in (0.5, 1.0, 1.5)])],
   passive={"name": "80-04 赤兔咆哮", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.2, "target": "self", "internalCooldown": 0.5,
        "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
@@ -2031,6 +2090,7 @@ def build(e):
     _ground_radius(doc, num)
     # ── B1-M：時序容器的三條閘（只喊，不猜）──────────────────────────────────
     _timing_gates(doc, e, num)
+    _set_semantics_gate(doc, e, num)
     # ── B2：鍵序統一照 Zod 宣告序重排（⛔ 一定要在所有會動 effects 的步驟之後）──
     doc["effects"] = _canonical_order(doc["effects"])
     if doc.get("passive"):

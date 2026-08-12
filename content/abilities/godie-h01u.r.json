@@ -24,13 +24,13 @@
       "modifiers": [
         {
           "stat": "ap",
-          "op": "pctAdd",
-          "value": 1.5
+          "op": "pctMult",
+          "value": 0.5
         },
         {
           "stat": "ad",
-          "op": "pctAdd",
-          "value": 1.5
+          "op": "pctMult",
+          "value": 0.5
         }
       ],
       "duration": 8.0,
@@ -39,13 +39,13 @@
           "modifiers": [
             {
               "stat": "ap",
-              "op": "pctAdd",
-              "value": 1.5
+              "op": "pctMult",
+              "value": 0.5
             },
             {
               "stat": "ad",
-              "op": "pctAdd",
-              "value": 1.5
+              "op": "pctMult",
+              "value": 0.5
             }
           ],
           "duration": 8.0
@@ -54,13 +54,13 @@
           "modifiers": [
             {
               "stat": "ap",
-              "op": "pctAdd",
-              "value": 2.0
+              "op": "pctMult",
+              "value": 1.0
             },
             {
               "stat": "ad",
-              "op": "pctAdd",
-              "value": 2.0
+              "op": "pctMult",
+              "value": 1.0
             }
           ],
           "duration": 8.0
@@ -69,13 +69,13 @@
           "modifiers": [
             {
               "stat": "ap",
-              "op": "pctAdd",
-              "value": 2.5
+              "op": "pctMult",
+              "value": 1.5
             },
             {
               "stat": "ad",
-              "op": "pctAdd",
-              "value": 2.5
+              "op": "pctMult",
+              "value": 1.5
             }
           ],
           "duration": 8.0

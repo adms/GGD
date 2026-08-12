@@ -89,10 +89,31 @@ export const BAND_MULTIPLIER: Readonly<Record<NormalBand, number>> = Object.free
   極大: 2,
 });
 
-/** 從「中」推出五格。⭐ 出貨表就是這樣長出來的，⛔ 不是手打五個數字。 */
-export function bandsFromMedian(mid: number): Readonly<Record<NormalBand, number>> {
+/**
+ * 從「中」推出五格。⭐ 出貨表就是這樣長出來的，⛔ 不是手打五個數字。
+ *
+ * ⭐ `cap` 是那條屬性的**系統上限**（`config.stat-caps@1` 的 base）。
+ * owner 2026-08-13：「攻速等數值有**系統上限 4 不應該成長超過**，
+ * 其他也是請設 cap **不要顯示超過**」。
+ *
+ * ⚠️ 處理方式是**把整把梯子錨到上限上**（極大 = cap），⛔ 不是把超出的那幾格砍平。
+ * 砍平會讓 中/大/極大 變成同一個數字，級距就消失了；錨定則保住五格的相對形狀。
+ *
+ * 實例：攻速在 L99 的母體中位數是 **9.98**，而系統上限是 **4** ——
+ *   ⛔ 砍平：極小 2 / 小 3.2 / 中 4 / 大 4 / 極大 4　（三格黏在一起）
+ *   ✅ 錨定：極小 1 / 小 1.6 / 中 2 / 大 2.5 / 極大 4　（五格都在，頂到上限為止）
+ */
+export function bandsFromMedian(mid: number, cap?: number): Readonly<Record<NormalBand, number>> {
+  const top = BAND_MULTIPLIER["極大"];
+  // 極大會超過上限 → 反推一個讓極大正好落在上限上的「中」。
+  const anchored = cap !== undefined && mid * top > cap ? cap / top : mid;
   const out = {} as Record<NormalBand, number>;
-  for (const b of NORMAL_BANDS) out[b] = Number((mid * BAND_MULTIPLIER[b]).toFixed(3));
+  for (const b of NORMAL_BANDS) {
+    const v = anchored * BAND_MULTIPLIER[b];
+    // ⚠️ 再夾一次是保險絲不是政策：`cap/top × top` 的浮點誤差可能高出上限 1e-13，
+    //   而那一格會在面板上顯示成「超過上限」。
+    out[b] = Number(Math.min(v, cap ?? v).toFixed(3));
+  }
   return Object.freeze(out);
 }
 
@@ -283,8 +304,17 @@ export interface StatNormalization {
   /**
    * `growth` 通道的**基準等級** —— 級距的數字是「這一級的最終總值」。
    *
-   * ⚠️ 出貨 18。⛔ 但 `LEVEL_CAP` 是 99、回合制實際會發到更高，所以這一格
-   * 遲早會想改 —— 那正是它是欄位而不是常數的理由。
+   * ⭐ 出貨 **99**（owner 2026-08-13：「我**不要用等級 18 作為終值假設，我要等級 99**」）。
+   * 那也正好是 `LEVEL_CAP`。
+   *
+   * ⚠️ 改這一格會讓 `bands` 的三十個數字**整組換一個意思** —— 它們是
+   * 「**這一級**的最終總值」。18→99 之後全部重新量過（母體 L99 中位數）：
+   *   魔抗 76.72 → 268.83 · 裝甲 25.39 → 131.36 · 生命 1,879.8 → 8,478.0
+   *
+   * 🔴 **攻速在 L99 的中位數是 9.98**，而 stat-caps 的解鎖上限是 10 ——
+   *   也就是說到了 99 級每個人的攻速都貼在天花板上，攻速的級距在那一級
+   *   **完全沒有作用**。那是內容的成長值本來就很大，不是這一版造成的，
+   *   但 owner 應該知道。
    */
   referenceLevel: number;
   /**
@@ -303,9 +333,9 @@ export interface StatNormalization {
    * 於是**變身可能比本體弱**。實測：小呆變身成龍魔人之後 AD 95.4 < 本體 97.0，
    * 索隆的霸氣形態裝甲 25.3 < 本體 33.6。⛔ 那是「變身」這件事的反面。
    *
-   * ⭐ 所以變身態改成**一起正規化，但級距往上位移 `transformBandShift` 格**：
-   * 本體「中」→ 變身「大」，本體「大」→ 變身「極大」，已經是極大就停在極大。
-   * 出貨 **1**。填 0 = 變身與本體同級（不建議，變身就沒有意義了）。
+   * ⭐ **出貨 0**（owner 2026-08-13）：變身態一視同仁，強化改由**變身技能的 buff**
+   * 負責（技能標籤組合），卡片不必為變身留一份特例。
+   * 填 1 = 回到「變身級距往上一格」的模型（本體中 → 變身大）。
    *
    * ⚠️ `skipTransformedBodies` 仍然在，而且**它贏** —— 想完全不碰變身態就把它打開。
    */
@@ -353,17 +383,19 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   ] as const),
   // 「中」= 量出來的母體中位數（73 位可達英雄，等級 18；移速那一格是等級 1）。
   // 五格由 `bandsFromMedian()` 推 —— ⛔ 不手打五個數字。
+  // ⚠️ 第二個參數是那條屬性的**系統上限**（`config.stat-caps@1` 的 base）。
+  //   ⛔ 這是一份鏡射，而 `statCapsAreFences.test.ts` 對照真的那張表 —— 說謊就紅。
   bands: Object.freeze({
-    ms: bandsFromMedian(5.0),
-    mr: bandsFromMedian(76.72),
-    armor: bandsFromMedian(25.39),
-    maxHealth: bandsFromMedian(1879.8),
-    maxMana: bandsFromMedian(1160.75),
-    ad: bandsFromMedian(106.0),
-    ap: bandsFromMedian(47.2),
-    as: bandsFromMedian(1.5),
-    healthRegen: bandsFromMedian(3.72),
-    manaRegen: bandsFromMedian(4.63),
+    ms: bandsFromMedian(5.0, 10),
+    mr: bandsFromMedian(268.833, 15344),
+    armor: bandsFromMedian(131.357, 5078),
+    maxHealth: bandsFromMedian(8477.965, 375960),
+    maxMana: bandsFromMedian(4213.735, 232150),
+    ad: bandsFromMedian(587.529, 21200),
+    ap: bandsFromMedian(185.6, 100000),
+    as: bandsFromMedian(9.98, 4),
+    healthRegen: bandsFromMedian(17.395, 744),
+    manaRegen: bandsFromMedian(16.875, 926),
   }),
   // ⚠️ 四格那張是 owner 2026-08-12 逐字給的，留著當退路（`byOrigin` 清空就回到它）。
   byArchetype: Object.freeze({
@@ -415,11 +447,21 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
     mr: "growth", armor: "growth", maxHealth: "growth", maxMana: "growth",
     ad: "growth", ap: "growth", as: "growth", healthRegen: "growth", manaRegen: "growth",
   } as const),
-  referenceLevel: 18,
+  referenceLevel: 99,
   allowNegativeGrowth: false,
-  // 🔴 從 true 改成 false + 位移 1 格 —— 理由寫在 `transformBandShift` 那一格：
-  //   十項全做之後「跳過變身」會讓變身比本體弱。
-  transformBandShift: 1,
+  // ⭐ 2026-08-13 owner 裁決 —— 變身態**一視同仁**，兩格都關掉：
+  //
+  //   「請把變身也排除考慮行列，我決定**變身所有的屬性改變都用技能標籤組合到
+  //     該變身技能中**就好，所以**屬性不用多一份考量，都是一樣**」
+  //
+  //   ⇒ 變身態不再是「數值上的另一張卡」，它就是一張照自己出身正規化的普通卡；
+  //     「變身比較強」這件事改由**變身技能本身的 buff**負責（技能標籤組合）。
+  //
+  // ⚠️ 這推翻了同一天稍早的 `transformBandShift: 1`。那一格當時是為了修
+  //   「十項全做之後變身比本體弱」，而 owner 的解法比它乾淨：讓強化住在技能裡，
+  //   卡片不必為變身留一份特例。⛔ 兩個欄位都留著（不是刪掉）——
+  //   要回到位移模型只要把這兩格改回去，不用動程式。
+  transformBandShift: 0,
   skipTransformedBodies: false,
 }) as StatNormalization;
 

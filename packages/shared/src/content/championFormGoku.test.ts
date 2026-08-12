@@ -52,6 +52,7 @@ import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import { spawnChampion } from "../sim/spawnChampion";
 import { castAbility, rankUpAbility } from "../sim/abilities/abilitySystem";
 import { championFormIndex } from "../sim/systems/ChampionFormSystem";
+import { championStatBase } from "../sim/stats/attributes";
 import { Stat } from "../sim/stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "../sim/intents";
@@ -366,9 +367,34 @@ describe("09-03 超級賽亞人：按下去真的變身，而且 +25% 只活在�
     expect(world.stats.get(goku)!.championId, "StatsComp 的 id（決定數值的那個）").toBe(SSJ);
     // 09-002a 指令靈氣 —— 這一格就是 A0SI 的 0.25。
     expect(adOf(world, goku)).toBeCloseTo(before.ad * 1.25, 4);
-    // ua1c 1.90→1.20 與 umvs 310→400 兩者都要真的到達最終數值表。
-    expect(world.stats.get(goku)!.final[Stat.AttackSpeed]).toBeGreaterThan(before.as);
-    expect(world.stats.get(goku)!.final[Stat.MoveSpeed]).toBeGreaterThan(before.ms);
+    // 🔴 2026-08-13 owner 裁決之後，這兩條**不再是「變大」而是「跟著身體走」**：
+    //
+    //   「請把變身也排除考慮行列，我決定**變身所有的屬性改變都用技能標籤組合到
+    //     該變身技能中**就好，所以**屬性不用多一份考量，都是一樣**」
+    //
+    //   ⇒ 變身態不再是數值上的另一張卡：它照自己的出身正規化，而悟空與
+    //     超級賽亞人是同一個出身，所以卡面的攻速/移速**現在完全相同**
+    //     （實測 6.25 == 6.25）。原作的 ua1c 1.90→1.20 / umvs 310→400
+    //     已經不會出現在數值表上。
+    //
+    // ⚠️ **那個差異要由變身技能本身的 buff 補回來**（技能標籤組合，owner 的計畫）。
+    //    在補上之前，「超級賽亞人比悟空快」這件事在遊戲裡是**不成立**的。
+    //
+    // ⭐ 所以這裡改成驗**還成立的機制**：數值表真的換成了變身那具身體的值
+    //    （而不是留在本體的值）。⛔ 不是把斷言刪掉 —— 這一條仍然會在
+    //    「換身體沒有換數值表」的實作下紅。
+    // ⭐ 拿**出貨的**算式當期望值，⛔ 不抄數字（那會是第四個住處）。
+    const ssjDef = Champions.get(SSJ);
+    // ⚠️ 等級住在 ChampionComp，不在 StatsComp（statPipeline.ts:70 就是這樣取的）。
+    const lv = world.champion.get(goku)!.level;
+    expect(world.stats.get(goku)!.final[Stat.AttackSpeed], "攻速照 SSJ 那張卡").toBeCloseTo(
+      championStatBase(ssjDef, Stat.AttackSpeed, lv),
+      3,
+    );
+    expect(world.stats.get(goku)!.final[Stat.MoveSpeed], "移速照 SSJ 那張卡").toBeCloseTo(
+      championStatBase(ssjDef, Stat.MoveSpeed, lv),
+      3,
+    );
   });
 
   it("時間到：身體回本體**而且** +25% 一起消失（結束要清乾淨）", () => {
