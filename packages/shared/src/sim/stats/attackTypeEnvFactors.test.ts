@@ -60,8 +60,12 @@ function statOf(championId: ChampionId, stat: Stat, env: Partial<Record<CombatEn
 describe("近戰/遠程移速倍率 + 魔抗專屬倍率 (owner 2026-08-10)", () => {
   it("同一個近戰實體：moveSpeedMelee 換一個夾具值，最終移速跟著換", () => {
     cover("combat-env-attack-type-move-speed");
-    const slow = statOf(MELEE, Stat.MoveSpeed, { moveSpeedMelee: 0.5 });
-    const fast = statOf(MELEE, Stat.MoveSpeed, { moveSpeedMelee: 1.5 });
+    // ⚠️ 夾具值要讓**兩端都落在移速的夾限帶內**（下界 2、上界 = stat-caps 的
+    //    `ms.base`，owner 2026-08-12 定 10）。原本的 0.5/1.5 在上界從 14 收到 10
+    //    之後，`fast` 會被夾住，比值就不再是 3 —— 而那時候紅的訊息會說
+    //    「倍率沒接上」，實際上倍率好好的，是天花板在說話。0.4/1.2 同樣是 3 倍。
+    const slow = statOf(MELEE, Stat.MoveSpeed, { moveSpeedMelee: 0.4 });
+    const fast = statOf(MELEE, Stat.MoveSpeed, { moveSpeedMelee: 1.2 });
     expect(fast).toBeGreaterThan(slow);
     // 是**乘**進去的，不是加一個常數：1.5/0.5 = 3 倍。
     expect(fast / slow).toBeCloseTo(3, 10);
@@ -69,7 +73,7 @@ describe("近戰/遠程移速倍率 + 魔抗專屬倍率 (owner 2026-08-10)", ()
 
   it("同一份 env、同一張卡：近戰與遠程算出不同的移速（依實體而定真的接上了）", () => {
     cover("combat-env-attack-type-move-speed");
-    const e = { moveSpeedMelee: 1.5, moveSpeedRanged: 0.5 };
+    const e = { moveSpeedMelee: 1.2, moveSpeedRanged: 0.4 }; // 同上：兩端都要在夾限帶內
     const melee = statOf(MELEE, Stat.MoveSpeed, e);
     const ranged = statOf(RANGED, Stat.MoveSpeed, e);
     expect(melee).toBeGreaterThan(ranged);

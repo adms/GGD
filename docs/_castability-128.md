@@ -24,9 +24,9 @@
 
 ## 近戰 vs 遠程（attackType 維度）
 
-- 名單：**近戰 44**、**遠程 19**。
-- **普攻形態**：遠程英雄中 **19/19** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **44/44** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
-- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 6 格、近戰 15 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
+- 名單：**近戰 46**、**遠程 17**。
+- **普攻形態**：遠程英雄中 **17/17** 的普攻確實射出投射物（`projectileSpawn`、事件 `ranged:true`）；近戰英雄中 **46/46** 的普攻是貼身直接傷害（無投射物、`ranged:false`）。這正是遠程與近戰在普攻上的行為差異，兩邊都被本次量到。
+- **技能投射（skillshot castType）**：本名單中 skillshot 技能格 遠程 5 格、近戰 16 格；skillshot 一律用施法方向生成投射物，與施法者是遠程或近戰無關（castType 獨立於 attackType）。
 
 ## PASS 觸發頻道分佈（驗證非橡皮圖章）
 
@@ -34,9 +34,9 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 216 |
+| damage | 218 |
 | buff | 67 |
-| projectile | 23 |
+| projectile | 21 |
 | status | 13 |
 | heal | 9 |
 | dash | 9 |
@@ -57,7 +57,7 @@
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | 🟣 | ✅ | ❌ | 🟣 | ✅ |
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
-| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 遠 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
+| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
@@ -81,7 +81,7 @@
 | 小叮噹 - 哆拉A夢 | `godie-n00b` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 通靈人 - 麻倉葉 | `godie-nplh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 獸神官 - 傑洛士 | `godie-o00l` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 夢幻之星 - 初音 | `godie-o02p` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
@@ -119,7 +119,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
-| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 

@@ -5,6 +5,7 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type EntityId, type SeatId, type ItemId, type AugmentId, type ChampionId } from "../ids";
+import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
 import { Stat, STAT_CLAMPS } from "./stats/statTypes";
 import { ATTRIBUTE_ENV_DEFAULTS } from "./combatEnv";
 import { ModOp } from "./stats/modifiers";
@@ -143,7 +144,8 @@ describe("stat pipeline", () => {
     //    「夾取壞了」,而真相只是上限被調過。
     expect(f[Stat.CooldownReduction]).toBe(STAT_CLAMPS[Stat.CooldownReduction]![1]);
     expect(f[Stat.CritChance]).toBe(1);
-    expect(f[Stat.MoveSpeed]).toBe(14);
+    // ⛔ 不抄字面值 —— 移速上限是出貨表的一格（owner 2026-08-12 從 14 改到 10）。
+    expect(f[Stat.MoveSpeed]).toBe(capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base);
   });
 
   it("growth raises base per level (fx-03) and level-up preserves hp ratio (fx-04)", () => {

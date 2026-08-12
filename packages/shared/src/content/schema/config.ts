@@ -4192,15 +4192,35 @@ export const zConfigStatNormalizationDoc = z
      * 這一版真的套用的屬性。空陣列 = 機制在但什麼都不動（**看得見它是空的**，
      * 這比偷偷關掉好）。⭐ 之後要開啟任何一項，改這一格就好，不用動程式。
      */
-    appliesTo: z.array(z.enum(["ms", "mr"])).max(2),
+    appliesTo: z.array(z.enum(["ms", "mr", "armor"])).max(3),
     /** 三格數值。⭐ 錨點（中）是量出來的中位數，小/大 = 中 ÷/× r（r 是指定的）。 */
     bands: z
-      .object({ ms: zNormBandValues, mr: zNormBandValues })
+      .object({ ms: zNormBandValues, mr: zNormBandValues, armor: zNormBandValues })
       .strict(),
     /** 角色定位 → 這一項落在哪一格。⭐ owner 那兩句話就是這張表。 */
     byArchetype: z
-      .object({ ms: zNormArchetypeBands, mr: zNormArchetypeBands })
+      .object({ ms: zNormArchetypeBands, mr: zNormArchetypeBands, armor: zNormArchetypeBands })
       .strict(),
+    /**
+     * 每一項寫進哪一個通道。⭐ owner 2026-08-12：「初始的屬性是用來補正角色
+     * 個性化差異，**成長是定位導向**」。
+     * ⚠️ `ms` 出貨走 `baseStats` 是**量出來的機制限制**不是偏好 —— growth 只能
+     * 往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。
+     */
+    channel: z
+      .object({
+        ms: z.enum(["baseStats", "growth"]),
+        mr: z.enum(["baseStats", "growth"]),
+        armor: z.enum(["baseStats", "growth"]),
+      })
+      .strict(),
+    /**
+     * `growth` 通道的基準等級 —— 級距的數字是「這一級的最終總值」。
+     * ⚠️ 下界 2（除以 `ref − 1`，1 會變成除以零）；上界跟著 `LEVEL_CAP`。
+     */
+    referenceLevel: z.number().int().min(2).max(99),
+    /** 反解出負成長時要不要照填。出貨 `false`（夾到 0）。 */
+    allowNegativeGrowth: z.boolean(),
     /**
      * 變身態要不要一起正規化。出貨 `true`（跳過）。
      * ⚠️ 不跳的話變身的強化會被抹平 —— 變身態與本體的角色定位幾乎一定相同。
@@ -4217,6 +4237,9 @@ export const DEFAULT_STAT_NORMALIZATION_DOC = {
   appliesTo: DEFAULT_STAT_NORMALIZATION.appliesTo,
   bands: DEFAULT_STAT_NORMALIZATION.bands,
   byArchetype: DEFAULT_STAT_NORMALIZATION.byArchetype,
+  channel: DEFAULT_STAT_NORMALIZATION.channel,
+  referenceLevel: DEFAULT_STAT_NORMALIZATION.referenceLevel,
+  allowNegativeGrowth: DEFAULT_STAT_NORMALIZATION.allowNegativeGrowth,
   skipTransformedBodies: DEFAULT_STAT_NORMALIZATION.skipTransformedBodies,
 } as const;
 

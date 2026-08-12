@@ -215,7 +215,12 @@ describe("屬性上限:一般 4.0 / 解鎖 10.0 (statcaps)", () => {
     });
     recomputeStats(w, id);
     expect(asOf(w, id)).toBe(10);
-    expect(w.stats.get(id)!.final[Stat.MoveSpeed]).toBe(STAT_CLAMPS[Stat.MoveSpeed]![1]);
+    // ⚠️ 移速在 2026-08-12 之後**有自己的 stat-caps 一格**（owner：「上限是 10」），
+    //    所以生效的上限不再是 `STAT_CLAMPS` 的上界 —— 那條只剩下界。
+    //    ⛔ 從出貨表推導，不抄字面值（第四個住處）。
+    expect(w.stats.get(id)!.final[Stat.MoveSpeed]).toBe(
+      capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base,
+    );
   });
 
   it("下限不受影響 —— 解鎖只搬天花板", () => {

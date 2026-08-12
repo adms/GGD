@@ -11,6 +11,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
+import { DEFAULT_STAT_CAPS, capFor } from "@ggd/shared/sim/statCaps";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { registerChampion, Champions, Items } from "@ggd/shared/sim/content/registry";
@@ -175,15 +176,19 @@ describe("statPreview — predict, buy, confirm equal", () => {
     const world = new SimWorld(SKELETON_ARENA, 1);
     const id = spawnHero(world);
     const ms = predictThenBuy(world, id, "tp-ms-huge");
-    expect(ms.after[Stat.MoveSpeed]).toBeCloseTo(14, 6); // MS clamp [2,14]
-    expect(ms.preview.after[Stat.MoveSpeed]).toBeCloseTo(14, 6);
+    // ⛔ 不抄字面值：移速自 2026-08-12 起有自己的 stat-caps 一格（owner：「上限是 10」），
+    //    生效的上限來自出貨表，不是 `STAT_CLAMPS` 的上界。這一條驗的是
+    //    「面板顯示的是**夾住之後**的值」，那個機制與上限是多少無關。
+    const msCap = capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base;
+    expect(ms.after[Stat.MoveSpeed]).toBeCloseTo(msCap, 6);
+    expect(ms.preview.after[Stat.MoveSpeed]).toBeCloseTo(msCap, 6);
     // the honest delta is far below the raw +100
-    expect(ms.preview.deltas[Stat.MoveSpeed]!).toBeLessThan(14);
+    expect(ms.preview.deltas[Stat.MoveSpeed]!).toBeLessThan(msCap);
 
     const world2 = new SimWorld(SKELETON_ARENA, 1);
     const id2 = spawnHero(world2);
     const as = predictThenBuy(world2, id2, "tp-as-huge");
-    expect(as.after[Stat.AttackSpeed]).toBeCloseTo(4.0, 6); // AS clamp [0.2,4.0] —— 一般上限,見 sim/stats/statTypes.ts
+    expect(as.after[Stat.AttackSpeed]).toBeCloseTo(capFor(DEFAULT_STAT_CAPS, Stat.AttackSpeed).base, 6);
     expectBlocksEqual(as.preview.after, as.after);
   });
 

@@ -23,7 +23,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { createElement } from "react";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Stat, STAT_CLAMPS } from "@ggd/shared/sim/stats/statTypes";
-import { effectiveCap, statCapsFromDoc, DEFAULT_STAT_CAPS } from "@ggd/shared/sim/statCaps";
+import { effectiveCap, statCapsFromDoc, DEFAULT_STAT_CAPS, capFor } from "@ggd/shared/sim/statCaps";
 import { StatCapsPage } from "./ui/StatCapsPage";
 import { CAPS_DOC_ID, CAPS_SCHEMA } from "./statCaps";
 import { mount } from "./testkit/headlessUi";
@@ -106,7 +106,11 @@ describe("屬性上限 儲存送出的東西 (adminui-stat-caps-save)", () => {
     const caps = doc.caps as Record<string, unknown>;
     expect(Object.keys(caps)).toContain(Stat.MoveSpeed);
     expect(Object.keys(caps)).toContain(Stat.CooldownReduction);
-    expect(effectiveCap(table, Stat.MoveSpeed, 0)).toBe(14);
+    // ⛔ 不抄字面值：移速自 2026-08-12 起有自己的一格（owner：「上限是 10」），
+    //    生效的上限來自出貨表而不是 `STAT_CLAMPS` 的上界。
+    expect(effectiveCap(table, Stat.MoveSpeed, 0)).toBe(
+      capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base,
+    );
     // ⚠️ 從 STAT_CLAMPS 推,不抄 0.45 —— owner 2026-08-10 把 CDR 上限抬到 0.5
     //    （仙后座「CD 時間再減少 50%」）。這一條要守的是「沒有被這次存檔關掉」,
     //    不是那個數字本身。
@@ -178,6 +182,8 @@ describe("屬性上限 儲存送出的東西 (adminui-stat-caps-save)", () => {
     expect(h.field("as.base").props["value"]).toBe("6");
     expect(h.field("as.unlocked").props["value"]).toBe("18");
     // 而且沒被 overlay 提到的屬性顯示的是「不可解鎖」,和 sim 的讀法一致。
-    expect(h.field("ms.unlocked").props["value"]).toBe("14");
+    // ⚠️ 這裡的期望值**不是**出貨表 —— overlay 是**整張表取代**，所以沒被提到的
+    //    屬性走 `capFor` 的退路，也就是 `STAT_CLAMPS` 的上界（見那支函式）。
+    expect(h.field("ms.unlocked").props["value"]).toBe(String(STAT_CLAMPS[Stat.MoveSpeed]![1]));
   });
 });

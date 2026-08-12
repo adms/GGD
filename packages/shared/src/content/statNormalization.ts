@@ -88,7 +88,26 @@ export const ARCHETYPE_LABEL_ZH: Readonly<Record<Archetype, string>> = Object.fr
 });
 
 /** 這一版真的會被正規化的屬性。⛔ 不在名單上的照舊讀 `baseStats`。 */
-export type NormalizedStatKey = "ms" | "mr";
+export const NORMALIZED_STAT_KEYS = ["ms", "mr", "armor"] as const;
+export type NormalizedStatKey = (typeof NORMALIZED_STAT_KEYS)[number];
+
+/**
+ * 這一項的級距值要寫進哪一個通道。
+ *
+ * ⭐ owner 2026-08-12 立的法則：「**初始的屬性是用來補正角色個性化差異，
+ * 成長是定位導向**」→ 所以定位驅動的東西原則上寫 `growth`，`baseStats` 留給個性。
+ *
+ * ⚠️ 但 `ms` **量測後不能走 growth**，這不是偏好是機制：
+ * `最終值 = baseStats + attr(L)·係數 + growth·(L−1)`，而 growth **只能往上推，
+ * 不能往下拉**。移速沒有三圍來源可以在反解時被減掉，而作者的初始移速
+ * （2.6 .. 10.1，中位 5.9）本來就跨在三格目標的上下 —— 坦克與法師的初始移速
+ * 已經**高於**「小」的目標，growth 填 0 也拉不下來。實測：坦克 15/16 位、
+ * 法師 18/18 位被夾在 0，排序變成 近戰 7.25 > 坦克 5.95 > 遠程 5.80 > 法師 5.70，
+ * **坦克跑到第二**。`armor`/`mr` 沒這個問題，因為它們有三圍項可以被減掉。
+ *
+ * ⛔ 所以這是一格**欄位**，不是註解裡的辯護（第一守則）。
+ */
+export type StatChannel = "baseStats" | "growth";
 
 export interface StatNormalization {
   /**
@@ -109,6 +128,26 @@ export interface StatNormalization {
    * 一格一格填進來 —— 想改任何一格都是後台的事，不是改程式。
    */
   byArchetype: Readonly<Record<NormalizedStatKey, Readonly<Record<Archetype, NormalBand>>>>;
+  /**
+   * 每一項寫進哪一個通道。⭐ 見 `StatChannel` —— `ms` 走 `baseStats` 是量出來的，
+   * 不是偏好。想改任何一格都是後台的事。
+   */
+  channel: Readonly<Record<NormalizedStatKey, StatChannel>>;
+  /**
+   * `growth` 通道的**基準等級** —— 級距的數字是「這一級的最終總值」。
+   *
+   * ⚠️ 出貨 18。⛔ 但 `LEVEL_CAP` 是 99、回合制實際會發到更高，所以這一格
+   * 遲早會想改 —— 那正是它是欄位而不是常數的理由。
+   */
+  referenceLevel: number;
+  /**
+   * 反解出**負成長**時要不要照填。出貨 `false`（夾到 0）。
+   *
+   * ⚠️ `false` 的代價是**目標可能達不到**：一位初始值已經高過目標的英雄，
+   * 成長填 0 也降不下來。要真的降下來只有兩條路 —— 改他的 `baseStats`（個性層，
+   * owner 的法則說那是個性不該被定位覆蓋），或把這一格開成 `true`（讓屬性隨等級下降）。
+   */
+  allowNegativeGrowth: boolean;
   /**
    * ⭐ 變身態的身體要不要一起正規化。**出貨 `true`（＝跳過）**。
    *
@@ -143,23 +182,36 @@ export interface StatNormalization {
  */
 export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   mode: "normalized",
-  // ⚠️ **只有 ms**。魔抗的三格算好了（見下面 `bands.mr`）但**沒有開啟** ——
-  //    🔴 魔抗同時被**三圍推導**（智慧 ×0.6，`ATTR_STAT_SOURCE[MagicResist]`）
-  //    與**角色定位**管，兩者互相打架：
-  //      · 級距的數字是「等級 1 的最終值」，所以寫進 `baseStats` 前要反解掉智慧項
-  //      · 但反解只對 L1 成立 —— 到 L18 智慧仍會繼續加，
-  //        **法師的魔抗會爬到全場最高**，正好與 owner 的「法師魔抗弱」相反
-  //    ➡️ 要開它得先決定 `intToMagicResist` 要不要歸零（全域旋鈕，owner 裁決）。
-  //    ⭐ 移速沒有這個問題：它**沒有三圍來源**（`couplingNote`：純 baseStats）。
-  appliesTo: Object.freeze(["ms"] as const),
+  // ⭐ 2026-08-12 第二版：魔抗解禁 + 裝甲加入。
+  //
+  //   v0.14.0 把魔抗鎖起來的理由是「智慧推導會讓法師魔抗最高，與設計相反」。
+  //   owner 當天的裁決把那個前提整個換掉了：
+  //     「是我忘了這個設定，我們**引入防禦/裝甲來平衡這個現象**」
+  //   → 順著智慧推導讓**法師魔抗大**，改用**裝甲**把坦克撐起來。
+  //   於是引擎本來就在做的事變成**對的**，不再需要對抗它。⭐ 魔抗鎖解除。
+  appliesTo: Object.freeze(["ms", "mr", "armor"] as const),
   bands: Object.freeze({
+    // ⚠️ 語意逐通道不同：
+    //   · `baseStats` 通道（ms）→ 「等級 1 的最終值」
+    //   · `growth` 通道（mr/armor）→ 「**基準等級的最終總值**」（出貨基準 = 18）
+    //   兩者不可混用，改通道就要換整組數字。
     ms: Object.freeze({ 小: 4.64, 中: 5.8, 大: 7.25 }),
-    mr: Object.freeze({ 小: 31.04, 中: 38.8, 大: 48.5 }),
+    mr: Object.freeze({ 小: 61.38, 中: 76.72, 大: 95.9 }),
+    armor: Object.freeze({ 小: 20.96, 中: 26.2, 大: 32.75 }),
   }),
   byArchetype: Object.freeze({
+    // ⭐ 逐字來自 owner 2026-08-12 的四列表：
+    //   坦克 力量主+近戰  移速 小 · 魔抗 小 · 裝甲 大
+    //   近戰 敏捷主+近戰  移速 大 · 魔抗 中 · 裝甲 中
+    //   法師 智慧主       移速 小 · 魔抗 大 · 裝甲 小
+    //   遠程 敏捷主+遠程  移速 中 · 魔抗 小 · 裝甲 小
     ms: Object.freeze({ tank: "小", fighter: "大", marksman: "中", mage: "小" } as const),
-    mr: Object.freeze({ tank: "大", fighter: "中", marksman: "小", mage: "小" } as const),
+    mr: Object.freeze({ tank: "小", fighter: "中", marksman: "小", mage: "大" } as const),
+    armor: Object.freeze({ tank: "大", fighter: "中", marksman: "小", mage: "小" } as const),
   }),
+  channel: Object.freeze({ ms: "baseStats", mr: "growth", armor: "growth" } as const),
+  referenceLevel: 18,
+  allowNegativeGrowth: false,
   skipTransformedBodies: true,
 }) as StatNormalization;
 
@@ -238,11 +290,11 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
   const mode = d["mode"] === "legacy" ? "legacy" : "normalized";
   const raw = Array.isArray(d["appliesTo"]) ? (d["appliesTo"] as unknown[]) : undefined;
   const appliesTo = (raw ?? DEFAULT_STAT_NORMALIZATION.appliesTo).filter(
-    (k): k is NormalizedStatKey => k === "ms" || k === "mr",
+    (k): k is NormalizedStatKey => (NORMALIZED_STAT_KEYS as readonly unknown[]).includes(k),
   );
   const bands = {} as Record<NormalizedStatKey, Record<NormalBand, number>>;
   const byArchetype = {} as Record<NormalizedStatKey, Record<Archetype, NormalBand>>;
-  for (const key of ["ms", "mr"] as const) {
+  for (const key of NORMALIZED_STAT_KEYS) {
     const b = (d["bands"] as Record<string, Record<string, unknown>> | undefined)?.[key];
     const a = (d["byArchetype"] as Record<string, Record<string, unknown>> | undefined)?.[key];
     bands[key] = { ...DEFAULT_STAT_NORMALIZATION.bands[key] };
@@ -258,12 +310,28 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
       if (isBand(v)) byArchetype[key][arc] = v;
     }
   }
+  const channel = {} as Record<NormalizedStatKey, StatChannel>;
+  for (const key of NORMALIZED_STAT_KEYS) {
+    const v = (d["channel"] as Record<string, unknown> | undefined)?.[key];
+    channel[key] =
+      v === "baseStats" || v === "growth" ? v : DEFAULT_STAT_NORMALIZATION.channel[key];
+  }
   const skip = d["skipTransformedBodies"];
+  const ref = d["referenceLevel"];
+  const neg = d["allowNegativeGrowth"];
   return {
     mode,
     appliesTo,
     bands,
     byArchetype,
+    channel,
+    // ⚠️ 基準等級至少是 2 —— growth 通道除以 `(ref − 1)`，1 會變成除以零。
+    referenceLevel:
+      typeof ref === "number" && Number.isFinite(ref) && ref >= 2
+        ? Math.floor(ref)
+        : DEFAULT_STAT_NORMALIZATION.referenceLevel,
+    allowNegativeGrowth:
+      typeof neg === "boolean" ? neg : DEFAULT_STAT_NORMALIZATION.allowNegativeGrowth,
     skipTransformedBodies:
       typeof skip === "boolean" ? skip : DEFAULT_STAT_NORMALIZATION.skipTransformedBodies,
   };
@@ -280,28 +348,25 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
  * 所以改 `baseStats` 就等於改最終值，行為上完全等價而且只有一個算法入口。
  */
 /**
- * 這一項的最終值有沒有一部分來自三圍（`ATTR_STAT_SOURCE`）。
+ * ⭐ 反解需要的**唯一**外部知識：出貨的 `championStatBase(def, stat, level)`。
  *
- * ⛔ 這一版**只支援 `false` 的那些**。有三圍來源的屬性，級距的數字是
- * 「等級 1 的最終值」而 `baseStats` 是「扣掉三圍那一項之後的值」，兩者差一個
- * `attr(1)·coefficient` —— 直接寫進去會讓三圍被**加第二次**。
+ * ⛔ **由呼叫端注入，`content/` 不 import `sim/stats/`。**
+ * 2026-08-12 實測：那條 import 會做出模組初始化循環，症狀是三個**完全不相干**的
+ * 測試開始紅（`aura` / `abilityShadowing` / `championFormVisibility`），
+ * 而錯誤訊息指向別人的 base-bonus +600 MP —— 追錯方向的完美陷阱。
  *
- * 🔴 v0.14.0 真的出貨過那個版本，而且方向剛好相反：莉娜因巴斯（智慧 127）的
- *    魔抗會變成全場最高，但設計說法師最弱。
- *
- * ⚠️ 這裡**不 import `ATTR_STAT_SOURCE`** —— `content/` → `sim/stats/` 那條邊會做出
- *    模組初始化循環（2026-08-12 實測：加上去之後 `base-bonus` 的 +600 開始漏進
- *    三個不相干的測試）。所以這是一份**兩格的鏡射**，並由
- *    `statNormalization.test.ts` 逐格對照真的 `ATTR_STAT_SOURCE`，說謊就紅。
+ * ⭐ 而且注入之後**不需要知道任何係數**：三圍那一項可以整段用減法消掉
+ *   （見 `resolveChampionStats`），所以這裡不用鏡射 `ATTR_STAT_SOURCE`，
+ *   也沒有第二份會過期的清單。
  */
-export const HAS_ATTRIBUTE_SOURCE: Readonly<Record<NormalizedStatKey, boolean>> = Object.freeze({
-  ms: false, // 純 baseStats + growth，不受三圍影響
-  mr: true, // ← 智慧 ×0.6（`intToMagicResist`）
-});
+export interface StatResolveDeps {
+  statAt(def: unknown, key: NormalizedStatKey, level: number): number;
+}
 
 export function resolveChampionStats<T extends Record<string, unknown>>(
   def: T,
   cfg: StatNormalization,
+  deps?: StatResolveDeps,
 ): T {
   if (cfg.mode !== "normalized" || cfg.appliesTo.length === 0) return def;
   // ⭐ 變身態預設跳過 —— 理由寫在 `skipTransformedBodies` 那一格：不跳的話
@@ -312,20 +377,46 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   }
   const arc = archetypeOf(def as never);
   const base = { ...((def["baseStats"] as Record<string, number> | undefined) ?? {}) };
-  let touched = false;
+  const growth = { ...((def["growth"] as Record<string, number> | undefined) ?? {}) };
+  let touchedBase = false;
+  let touchedGrowth = false;
   for (const key of cfg.appliesTo) {
     const band = cfg.byArchetype[key]?.[arc];
-    const value = band === undefined ? undefined : cfg.bands[key]?.[band];
-    if (typeof value !== "number") continue;
-    // ⛔ 有三圍來源的屬性這一版**不做** —— 級距是「L1 最終值」而 `baseStats` 是
-    //    「扣掉三圍之後的值」，直接寫會讓三圍被加第二次（v0.14.0 的真缺陷）。
-    //    ⭐ 擋在這裡而不是靜默做錯：`appliesTo` 誤開了也只會沒反應，不會做錯。
-    if (HAS_ATTRIBUTE_SOURCE[key]) continue;
-    base[key] = value;
-    touched = true;
+    const target = band === undefined ? undefined : cfg.bands[key]?.[band];
+    if (typeof target !== "number") continue;
+
+    if (cfg.channel[key] === "growth") {
+      // ⭐ 反解「基準等級的最終總值」。
+      //
+      //   最終值(L) = baseStats + attr(L)·係數 + growth·(L−1)
+      //   ⇒ 拿掉作者的成長項之後剩下的 = baseStats + attr(ref)·係數
+      //   ⇒ 要達到 target，需要的成長 = (target − 那個剩下的) / (ref − 1)
+      //
+      // ⛔ 這裡**一個係數都沒有出現** —— 三圍那一項整段被減法消掉了，
+      //    所以這段程式對「哪些屬性由哪個三圍推導」完全無知，也就不會過期。
+      if (!deps) continue; // 沒注入就什麼都不做（fail-safe，⛔ 不猜）
+      const ref = cfg.referenceLevel;
+      const atRef = deps.statAt(def, key, ref);
+      const authoredGrowthTerm = (growth[key] ?? 0) * (ref - 1);
+      const withoutGrowth = atRef - authoredGrowthTerm;
+      const needed = (target - withoutGrowth) / (ref - 1);
+      growth[key] = cfg.allowNegativeGrowth ? needed : Math.max(0, needed);
+      touchedGrowth = true;
+      continue;
+    }
+
+    // `baseStats` 通道：級距的數字是「等級 1 的最終值」，所以要反解掉 L1 的三圍項。
+    // ⚠️ 對移速那一項 `attrPart` 恆為 0（移速沒有三圍來源），但**照樣算** ——
+    //    寫死 0 就是替未來某一天「移速也吃某個三圍」埋一個不會報錯的缺陷。
+    const attrPart = deps ? deps.statAt(def, key, 1) - (base[key] ?? 0) : 0;
+    base[key] = target - attrPart;
+    touchedBase = true;
   }
-  if (!touched) return def;
-  return { ...def, baseStats: base };
+  if (!touchedBase && !touchedGrowth) return def;
+  const out = { ...def } as Record<string, unknown>;
+  if (touchedBase) out["baseStats"] = base;
+  if (touchedGrowth) out["growth"] = growth;
+  return out as T;
 }
 
 /** 給後台與稽核用：這位英雄在 `normalized` 下每一項落在哪一格。 */

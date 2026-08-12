@@ -1,10 +1,12 @@
 {
   "id": "stat-normalization",
   "schema": "config.stat-normalization@1",
-  "note": "英雄屬性正規化（owner 2026-08-12）。小/中/大 是分佈，極小/極大 是例外槽（＝硬上下限，住在 stat-caps）。⚠️ 這一版只套用**移動速度**。魔抗的三格已經算好放在 bands.mr，但**沒有開啟** —— 因為魔抗同時被三圍推導（智慧 ×0.6）與角色定位管，兩者互相打架：即使把 L1 校正對，到 L18 智慧仍會把法師的魔抗推到全場最高，正好與「法師魔抗弱」相反。要開它得先決定 intToMagicResist 要不要歸零（全域旋鈕，owner 裁決）。⚠️ 變身態預設跳過：它與本體的 archetype 幾乎一定相同，一起正規化會把變身的強化抹平（超級賽亞人不再比悟空快）。",
+  "note": "英雄屬性正規化（owner 2026-08-12，第二版）。小/中/大 是分佈，極小/極大 是例外槽（＝硬上下限，住在 stat-caps）。⭐ 這一版魔抗解禁並加入裝甲 —— owner：「是我忘了這個設定，我們引入防禦/裝甲來平衡這個現象」。順著智慧推導讓法師魔抗大，改用裝甲把坦克撐起來，於是引擎本來就在做的事變成對的，不再需要對抗它。⚠️ bands 的語意逐通道不同：baseStats 通道（ms）是「等級 1 的最終值」，growth 通道（mr/armor）是「基準等級（referenceLevel=18）的最終總值」。改通道就要換整組數字。⚠️ ms 不能走 growth —— 那是量出來的機制限制不是偏好：growth 只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉，實測坦克 15/16、法師 18/18 位被夾在 0，排序會變成坦克第二。⚠️ 變身態預設跳過：它與本體的 archetype 幾乎一定相同，一起正規化會把變身的強化抹平（超級賽亞人不再比悟空快）。",
   "mode": "normalized",
   "appliesTo": [
-    "ms"
+    "ms",
+    "mr",
+    "armor"
   ],
   "bands": {
     "ms": {
@@ -13,9 +15,14 @@
       "大": 7.25
     },
     "mr": {
-      "小": 31.04,
-      "中": 38.8,
-      "大": 48.5
+      "小": 61.38,
+      "中": 76.72,
+      "大": 95.9
+    },
+    "armor": {
+      "小": 20.96,
+      "中": 26.2,
+      "大": 32.75
     }
   },
   "byArchetype": {
@@ -26,11 +33,24 @@
       "mage": "小"
     },
     "mr": {
+      "tank": "小",
+      "fighter": "中",
+      "marksman": "小",
+      "mage": "大"
+    },
+    "armor": {
       "tank": "大",
       "fighter": "中",
       "marksman": "小",
       "mage": "小"
     }
   },
-  "skipTransformedBodies": true
+  "skipTransformedBodies": true,
+  "channel": {
+    "ms": "baseStats",
+    "mr": "growth",
+    "armor": "growth"
+  },
+  "referenceLevel": 18,
+  "allowNegativeGrowth": false
 }

@@ -20,6 +20,7 @@ import {
   type SeatId,
 } from "../ids";
 import { Stat, STAT_CLAMPS } from "./stats/statTypes";
+import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, recomputeStats } from "./stats/statPipeline";
 import { DEFAULT_BASE_BONUS, baseBonusFor } from "./baseBonus";
@@ -174,7 +175,12 @@ describe("combat-env stat multipliers (env-01)", () => {
       modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.Override, value: 10 }],
     });
     recomputeStats(w, sela);
-    expect(w.stats.get(sela)!.final[Stat.MoveSpeed]).toBe(STAT_CLAMPS[Stat.MoveSpeed]![1]); // 20 -> 14
+    // ⚠️ 移速在 2026-08-12 之後**有自己的 stat-caps 一格**（owner：「上限是 10」），
+    //    所以生效的上限不再是 `STAT_CLAMPS` 的上界 —— 那條只剩下界。
+    //    ⛔ 從出貨表推導，不抄字面值（第四個住處）。
+    expect(w.stats.get(sela)!.final[Stat.MoveSpeed]).toBe(
+      capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base,
+    );
   });
 
   it("maxHealth ×2 preserves the live hp RATIO (env-03)", () => {

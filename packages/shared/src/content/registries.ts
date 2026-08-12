@@ -32,7 +32,17 @@ import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
-import { resolveChampionStats, statNormalizationFromDoc } from "./statNormalization";
+import {
+  resolveChampionStats,
+  statNormalizationFromDoc,
+  type StatResolveDeps,
+  type NormalizedStatKey,
+} from "./statNormalization";
+// ⭐ 反解要用**出貨的**那支算式，⛔ 不自己抄公式（失敗形態⑤）。
+//   注入而不是讓 `statNormalization.ts` 自己 import —— `content/` → `sim/stats/`
+//   那條邊會做出模組初始化循環（2026-08-12 實測，見那個檔的 `StatResolveDeps`）。
+import { championStatBase } from "../sim/stats/attributes";
+import { Stat } from "../sim/stats/statTypes";
 import {
   hasTemplateBinding,
   resolveTemplateExpansion,
@@ -149,6 +159,25 @@ function stable(v: unknown): string {
  * `content/abilities/<id>.json` the source of truth rather than the
  * denormalised copy embedded in the champion doc. See `registerChampion`.
  */
+/** `NormalizedStatKey` → 引擎的 `Stat`。⚠️ 加新 key 時這裡漏一格 = 那一項靜默不生效。 */
+const STAT_OF: Readonly<Record<NormalizedStatKey, Stat>> = Object.freeze({
+  ms: Stat.MoveSpeed,
+  mr: Stat.MagicResist,
+  armor: Stat.Armor,
+});
+
+const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
+  // ⚠️ `championStatBase` 直接讀 `def.baseStats[stat]` 與 `def.growth[stat]`，
+  //    兩個欄位**都假設存在**。註冊路徑收得到還沒補齊的文件（骨架、測試夾具、
+  //    只寫了一半的內容），所以這裡補上預設 —— ⛔ 不改 `championStatBase`，
+  //    那支是熱路徑，而缺欄位是**這個接縫**才會遇到的事。
+  statAt: (def: unknown, key: NormalizedStatKey, level: number): number => {
+    const d = def as { baseStats?: unknown; growth?: unknown };
+    const safe = { ...(d as object), baseStats: d.baseStats ?? {}, growth: d.growth ?? {} };
+    return championStatBase(safe as never, STAT_OF[key], level);
+  },
+});
+
 export function registerAll(store: ContentStore, options: RegisterAllOptions = {}): void {
   // 鑄技工坊: build the template map first, then expand any templated ability at
   // registration time — BOTH the standalone doc AND its champion-embedded twin,
@@ -198,7 +227,13 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
     Abilities.register(e.id, e);
   }
   for (const d of store.all<ChampionDef>("champions")) {
-    registerChampion(resolveChampionStats(expandChampionTemplates(d, expandEmbedded) as never, statNorm));
+    registerChampion(
+      resolveChampionStats(
+        expandChampionTemplates(d, expandEmbedded) as never,
+        statNorm,
+        STAT_RESOLVE_DEPS,
+      ),
+    );
   }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);

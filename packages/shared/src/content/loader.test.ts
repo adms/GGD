@@ -184,7 +184,11 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
    * 也就是說「有些欄位是註冊時算出來的」這個豁免**早就存在**，
    * ms/mr 只是加入同一份名單。它守的仍然是「其餘每一格都逐位元對得起來」。
    */
-  const REGISTRY_DERIVED = new Set(["castTimeSec", "ms", "mr"]);
+  // ⚠️ 這三項由 `resolveChampionStats` 在註冊時改寫（角色定位正規化），
+  //    所以 JSON ↔ TS 字面值的往返比對必須把它們排除 —— 不然這條測試釘的是
+  //    「正規化沒有生效」，方向剛好相反。⭐ `growth` 也要排除：魔抗與裝甲
+  //    走的是**成長通道**（owner：「初始＝個性、成長＝定位」）。
+  const REGISTRY_DERIVED = new Set(["castTimeSec", "ms", "mr", "armor", "growth"]);
   const stripCastTime = (v: unknown): Record<string, unknown> =>
     JSON.parse(
       JSON.stringify(v, (k, val: unknown) => (REGISTRY_DERIVED.has(k) ? undefined : val)),

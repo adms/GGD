@@ -135,17 +135,33 @@ export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   //   `invulnerable` 那個明確的機制，不可以由一個滑到底的數值旋鈕**意外**產生。
   [Stat.Armor]: Object.freeze({ base: 900, unlocked: 1_900 }),
   [Stat.MagicResist]: Object.freeze({ base: 900, unlocked: 1_900 }),
-  // owner：「攻擊距離超過全地圖這種沒意義」。24 = 競技場單一 zone 的半徑
-  //   （`STAT_CAP_MAX` 的 attackRange 註解就是用這個數字推的），也就是
-  //   「站在自己這半場的邊緣打得到對面邊緣」。40 解鎖給穿場技能/傳說武器。
-  //   ⚠️ 出貨內容最遠是 12（極大那一格是 10），所以 24 不會夾到任何人。
-  [Stat.AttackRange]: Object.freeze({ base: 24, unlocked: 40 }),
+  // owner 2026-08-12：「這個其實我已經有給過**上限是黑人牙膏 12** 了，
+  //                      但**可以延伸到 16**」
+  //
+  // 🔴 我第一版寫成 `base 12 / unlocked 16`，那是錯的 —— **12 是卡面上限，
+  //    16 是最終值上限，中間差的是體型**。`finalizeStat` 對射程（也只有射程）
+  //    多乘一道 `rangeScale`：`config.body-scale@1` 的曲線最高 **1.30×**
+  //    （`DEFAULT_ATTACK_RANGE_CURVE`）。所以一位卡面 12 的大體型英雄，
+  //    最終射程是 **15.6** —— 被 12 夾掉 23%，而且**畫面上看不出來**。
+  //
+  // ⭐ 12 那個數字不會消失，它是**卡面規範**（`tools/hero-archetypes` 檢查
+  //    `baseStats.range`），不是這一格。這一格管的是最終值：
+  //    12 × 1.30 = 15.6 < 16，所以 16 一個人都不夾，而 17 就沒有意義了。
+  [Stat.AttackRange]: Object.freeze({ base: 16, unlocked: 16 }),
   // 🔴 移速的 unlocked **不是憑感覺挑的 —— 它是一道技術牆**。
   //   實測（用真的 `moveWithCollision` 二分逼近）：速度超過 **18 u/s** 的位移
   //   會**穿牆**。所以 base 留在既有的 14（`STAT_CLAMPS`），unlocked 收在 18。
   //   owner 說的「走速快到像瞬移」在這裡有一個比體感更硬的判準：再快就是穿牆。
   //   ⚠️ 這一格只管**屬性移速**。技能的位移速度走別條路（見 GH#318）。
-  [Stat.MoveSpeed]: Object.freeze({ base: 14, unlocked: 18 }),
+  //
+  // 🔴 2026-08-12 二次更正（複驗實測推翻我上一版的 14/18）：
+  //   · owner：「移速**會大幅影響平衡性**，上限是 10」→ base 10
+  //   · unlocked 從 18 收到 **12** —— 因為 18.0 **正好坐在穿牆的平手線上**：
+  //     門檻不是「速度 18」而是「每 tick 位移的法線分量 > 身體半徑」，
+  //     30 Hz × 半徑 0.6 = 18.0，**平手值本身就會穿**（看線段繞向），
+  //     而且**走路是 100% 必穿**（走路沒有「被擋下就結束」那條規則）。
+  //     12 = 每 tick 0.4 u = 半徑的 67%，留 33% 餘裕。
+  [Stat.MoveSpeed]: Object.freeze({ base: 10, unlocked: 12 }),
 });
 
 // ------------------------------------------------------------- bounds ------

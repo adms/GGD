@@ -25,10 +25,7 @@ import {
 import { Champions } from "../sim/content/registry";
 import { registerAll } from "./registries";
 import type { ContentStore } from "./store";
-// ⭐ 驗「哪些屬性有三圍來源」時對照**引擎自己的那張表**，⛔ 不抄一份。
-import { ATTR_STAT_SOURCE } from "../sim/stats/attributes";
-import { Stat } from "../sim/stats/statTypes";
-import { HAS_ATTRIBUTE_SOURCE } from "./statNormalization";
+import type { NormalizedStatKey } from "./statNormalization";
 
 const ab = (id: string) => ({
   id,
@@ -52,7 +49,7 @@ const TANK = {
   role: "fighter",
   attackType: "melee",
   modelKey: "m",
-  baseStats: { ms: 99, mr: 99 },
+  baseStats: { ms: 99, mr: 99, armor: 99 },
   growth: {},
   // ⚠️ 三圍的成長住在 attributes.*Growth，不是 growth.* —— 夾具要照真實形狀。
   attributes: { str: 30, agi: 10, int: 10, strGrowth: 2, agiGrowth: 0.5, intGrowth: 0.5, primary: "STR", source: "authored" },
@@ -92,9 +89,9 @@ describe("英雄屬性正規化（角色定位 → 級別 → 數字）", () => 
     // 期望值從出貨表推導，⛔ 不抄字面值。
     expect(got.ms).toBe(cfg.bands.ms[cfg.byArchetype.ms.tank]);
     expect(got.ms).not.toBe(99); // 原值真的被換掉了
-    // ⚠️ 魔抗**沒有**在 appliesTo 裡（三圍推導與角色定位打架，見那一格的說明），
-    //    所以它必須原封不動 —— 這一條同時是「appliesTo 真的被讀了」的守衛。
-    expect(cfg.appliesTo).not.toContain("mr");
+    // ⚠️ 魔抗**有**在 appliesTo 裡，但它走 growth 通道，所以 `baseStats.mr`
+    //    必須原封不動 —— 這一條同時是「channel 真的被讀了」的守衛。
+    expect(cfg.channel.mr).toBe("growth");
     expect(got.mr).toBe(99);
   });
 
@@ -151,26 +148,53 @@ describe("英雄屬性正規化（角色定位 → 級別 → 數字）", () => 
  *
  * 突變：把 `resolveChampionStats` 的 `- attrPart` 拿掉 → ① 那條紅。
  */
-describe("有三圍來源的屬性被擋在門口（v0.14.0 的真缺陷）", () => {
-  it("⭐ HAS_ATTRIBUTE_SOURCE 與引擎的 ATTR_STAT_SOURCE 逐格一致 —— 說謊就紅", () => {
+describe("成長通道：定位驅動的東西寫 growth，個性留在 baseStats", () => {
+  const cfg = DEFAULT_STAT_NORMALIZATION;
+
+  it("⭐ 魔抗/裝甲走 growth，而且 L1 一格都不動 —— 那正是「初始＝個性」", () => {
     cover("stat-normalization");
-    // ⚠️ 那份鏡射是為了避開 content/ → sim/stats/ 的模組初始化循環而存在的，
-    //    所以它一定要有一條對照守衛，否則它就是一份會過期的手寫表（第〇·五守則）。
-    expect(HAS_ATTRIBUTE_SOURCE.ms).toBe(ATTR_STAT_SOURCE[Stat.MoveSpeed] !== undefined);
-    expect(HAS_ATTRIBUTE_SOURCE.mr).toBe(ATTR_STAT_SOURCE[Stat.MagicResist] !== undefined);
+    Champions.clear();
+    registerAll(storeOf({ champions: [TANK] }));
+    const got = Champions.tryGet("t.tank" as never) as unknown as {
+      baseStats: Record<string, number>; growth: Record<string, number>;
+    };
+    // ⚠️ 走 growth 的兩項，`baseStats` 必須原封不動（作者填的個性）。
+    for (const key of ["mr", "armor"] as const) {
+      expect(cfg.channel[key], key).toBe("growth");
+      expect(got.baseStats[key], key).toBe(99);
+      expect(got.growth[key], key).toBeTypeOf("number");
+    }
+    // 走 baseStats 的那一項照舊被換掉。
+    expect(cfg.channel.ms).toBe("baseStats");
+    expect(got.baseStats.ms).not.toBe(99);
   });
 
-  it("⭐ 就算 appliesTo 誤開了魔抗，它也不會被寫壞 —— 只會沒反應", () => {
+  it("⭐ 反解真的把三圍那一項減掉了 —— 智慧翻倍，解出的魔抗成長就要變小", () => {
     cover("stat-normalization");
-    const cfg = DEFAULT_STAT_NORMALIZATION;
-    const withMr = { ...cfg, appliesTo: ["ms", "mr"] as const };
-    const out = resolveChampionStats(TANK as never, withMr) as { baseStats: Record<string, number> };
-    expect(out.baseStats.mr).toBe(99); // 原封不動
-    expect(out.baseStats.ms).toBeCloseTo(cfg.bands.ms[cfg.byArchetype.ms.tank], 6);
+    // ⚠️ 這一條是承重的：少了反解，三圍會被加第二次（v0.14.0 的真缺陷），
+    //    而那個版本在**任何**斷言下都長得跟正確的一樣，因為它不會報錯。
+    const deps = {
+      // 一個最小的假引擎：最終值 = baseStats + int × 0.6 + growth × (L−1)
+      statAt: (def: unknown, key: NormalizedStatKey, level: number): number => {
+        const d = def as { baseStats?: Record<string, number>; growth?: Record<string, number>; attributes?: Record<string, number> };
+        const coef = key === "mr" ? 0.6 : 0;
+        return (d.baseStats?.[key] ?? 0) + (d.attributes?.int ?? 0) * coef + (d.growth?.[key] ?? 0) * (level - 1);
+      },
+    };
+    // ⚠️ 要看得到反解的方向就不能被 0 夾住 —— 這裡開 allowNegativeGrowth，
+    //    那正是那一格欄位存在的理由（出貨 false 是**政策**，不是機制限制）。
+    const openCfg = { ...cfg, allowNegativeGrowth: true };
+    const solve = (int: number): number => {
+      const doc = { ...TANK, attributes: { ...TANK.attributes, int } };
+      const out = resolveChampionStats(doc as never, openCfg, deps) as { growth: Record<string, number> };
+      return out.growth.mr!;
+    };
+    expect(solve(200)).toBeLessThan(solve(10));
   });
 
-  it("出貨的 appliesTo 沒有把魔抗開起來", () => {
+  it("沒注入 deps 時 growth 通道什麼都不做 —— fail-safe，⛔ 不猜", () => {
     cover("stat-normalization");
-    expect(DEFAULT_STAT_NORMALIZATION.appliesTo).not.toContain("mr");
+    const out = resolveChampionStats(TANK as never, cfg) as { growth: Record<string, number> };
+    expect(out.growth?.mr).toBeUndefined();
   });
 });

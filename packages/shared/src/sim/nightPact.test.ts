@@ -20,6 +20,7 @@ import { registerSkeletonContent } from "./content/skeleton";
 import { Abilities, Champions } from "./content/registry";
 import { spawnChampion } from "./spawnChampion";
 import { Stat } from "./stats/statTypes";
+import { DEFAULT_STAT_CAPS, capFor } from "./statCaps";
 import { queryOverlap } from "./collision/queries";
 import { circle } from "./collision/shapes";
 import { isAutoTargetable } from "./targeting";
@@ -130,6 +131,17 @@ function mortallyWound(victim: EntityId): void {
 }
 
 const msOf = (id: EntityId): number => world.stats.get(id)!.final[Stat.MoveSpeed];
+
+/**
+ * 「加倍之後**實際**會是多少」 —— ⚠️ 移速有硬上限（owner 2026-08-12：「上限是 10」），
+ * 所以 +100% 打在一位移速 6.9 的英雄身上，最終值是 **上限**而不是 13.8。
+ *
+ * ⛔ 不要把上限抄成字面值（第四個住處），也 ⛔ 不要把夾具改小來閃過它 ——
+ * 閃過去就等於刪掉「這支技能的加成會被上限吃掉」這個**真實**的遊戲後果。
+ * 這一條驗的仍然是機制（倍率有沒有套上去），只是誠實地把天花板算進去。
+ */
+const doubled = (base: number): number =>
+  Math.min(base * 2, capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base);
 const regenOf = (id: EntityId): number => world.stats.get(id)!.final[Stat.HealthRegen];
 const hasAura = (id: EntityId): boolean =>
   world.stats.get(id)!.sources.some((s) => s.id === NIGHT_PACT_AURA_SOURCE_ID);
@@ -202,7 +214,7 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     world.transform.get(king)!.pos = P(18);
     world.step(NO_INTENTS); // attaches, marks dirty
     world.step(NO_INTENTS); // statRecomputeSystem folds it in
-    expect(msOf(king), "+100 % move speed").toBeCloseTo(base * 2, 5);
+    expect(msOf(king), "+100 % move speed（會被移速上限吃掉一部分）").toBeCloseTo(doubled(base), 5);
     expect(regenOf(king), "+30 flat hp regen").toBeCloseTo(baseRegen + CFG.healthRegenFlat, 5);
 
     // Step back OUT.
@@ -242,7 +254,7 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     world.step(NO_INTENTS);
     world.step(NO_INTENTS);
 
-    expect(msOf(mate), "the team-mate now shares 黑夜靈氣").toBeCloseTo(mateBase * 2, 5);
+    expect(msOf(mate), "the team-mate now shares 黑夜靈氣").toBeCloseTo(doubled(mateBase), 5);
     // The corpse is dead, so it holds nothing regardless of team.
     expect(hasAura(enemy)).toBe(false);
     expect(enemyBase).toBeGreaterThan(0);
@@ -290,7 +302,7 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     world.step(NO_INTENTS);
     world.step(NO_INTENTS);
     expect(nightFlagIds(world).length).toBe(1);
-    expect(msOf(king)).toBeCloseTo(base * 2, 5);
+    expect(msOf(king)).toBeCloseTo(doubled(base), 5);
 
     endCombatNightPact(world);
 
@@ -509,7 +521,7 @@ describe("71-00 暗夜契約 — 旗子 / 黑夜靈氣 / 回合結束清除", ()
     world.transform.get(king)!.pos = at(RADIUS - 0.05);
     world.step(NO_INTENTS);
     world.step(NO_INTENTS);
-    expect(msOf(king), "just inside").toBeCloseTo(base * 2, 4);
+    expect(msOf(king), "just inside").toBeCloseTo(doubled(base), 4);
 
     world.transform.get(king)!.pos = at(RADIUS + 0.5);
     world.step(NO_INTENTS);

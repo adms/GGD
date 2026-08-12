@@ -5,7 +5,7 @@
   "icon": "assets/icons/champions/godie-efur.webp",
   "description": "故事：\n來自殺手世家揍敵客家族，其才能在揍敵客家族歷史也是非常優秀。擁有超強的念能力，可以任意操縱敵人的生死。暗殺家族揍敵客家的家長。奇犽的祖父。 穿著「一日一殺」和「生涯現役」等刺繡的衣服。\n(出自:偽獵人X獵人)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.20\n智慧 + 2.30\n基礎跑速 315\n\n可學習的技能：\n暗步。極限之圓、龍頭戲畫。牙突、龍頭戲畫。佈壁、龍星群",
   "role": "marksman",
-  "attackType": "ranged",
+  "attackType": "melee",
   "modelKey": "champ.sela",
   "baseStats": {
     "maxHealth": 150,
