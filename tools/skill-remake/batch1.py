@@ -256,6 +256,34 @@ def amt(per=None, flat=None, ap=None, ad=None, **kw):
 _PROPORTIONAL = ("ap", "ad", "attrRatios", "ratios")
 
 
+def _split_res_pct(kw):
+    """⭐ B2-D —— `resourcePct` 是 `amount` 的**兄弟鍵**，⛔ 不是它的內容。
+
+    「造成目標**現存生命** 30/40/50% 的傷害」這一族在 90 支裡完全寫不出來，因為
+    三個傷害 helper 只轉發 per/flat/ap/ad，而多出來的 kwarg 會被 `amt()` 的
+    `o.update(kw)` 倒進 **amount 物件內部** —— 那裡是 `zScaling` 且 `.strict()`，
+    整份文件當場被拒收（＝ 2026-08-02 退回骨架事故的形狀）。
+
+    ⛔ **不要開 `hp_pct=`**：`hpPct` 只長在 `damage`（effect.ts:1328），
+    `damageArea` / `damageLine` **沒有這一格**，而這一族的受害者多半是後兩者。
+    `resourcePct{subject:"target", resource:"health", basis:"current"}` 語意完全
+    涵蓋它，而且四個 kind（damage / damageArea / damageLine / dot）同名同語意、
+    共用同一份 schema 與同一個讀取器（`dynamicTerms.ts::resourcePctAmount`）。
+
+    ⚠️ 上界由 `scale` 決定（`RESOURCE_PCT_RATIO_MAX` / `_POINTS_MAX`），
+    superRefine 會擋 —— 那是**打錯數字**的守衛，⛔ 不要為了塞一個大倍率去改它。
+    """
+    t = kw.pop("res_pct", None)
+    if t is None:
+        return None
+    assert isinstance(t, dict) and "perRank" in t, (
+        "res_pct= 要給完整的 resourcePct 物件："
+        '{"subject":"self|target","resource":"health|mana","basis":"current|max|missing",'
+        '"perRank":[…]}（"scale" 選填）'
+    )
+    return t
+
+
 def _require_base(kw, where):
     """⭐ B1-E（2026-08-12）：缺基礎值就**喊出來**，⛔ 不再偷塞 `flat=50`。
 
@@ -282,8 +310,12 @@ def _require_base(kw, where):
 
 
 def dmg(dtype="magic", **kw):
+    rp = _split_res_pct(kw)
     _require_base(kw, "dmg()")
-    return {"kind": "damage", "damageType": dtype, "amount": amt(**kw)}
+    o = {"kind": "damage", "damageType": dtype, "amount": amt(**kw)}
+    if rp:
+        o["resourcePct"] = rp
+    return o
 
 
 # 四級距的出貨值。⚠️ 這裡填 `radius` 只是為了滿足型別（`damageArea.radius` 必填）；
@@ -302,6 +334,7 @@ def area(dtype="magic", tier="中", maxt=None, **kw):
     90 支規格裡**沒有任何一支寫過人數上限**，所以 None 是誠實的答案：
     省略 `maxTargets` ⇒ 由後台的 `spreadLimits` 決定（第一守則：可調）。
     """
+    rp = _split_res_pct(kw)
     _require_base(kw, f"area(tier={tier!r})")
     # ⚠️ 鍵的**順序**要跟 Zod schema 的宣告順序一致（radius 在 radiusTier 之前）。
     #    理由不是潔癖：`zChampionDoc.parse()` 會照 schema 順序重建物件，而
@@ -313,6 +346,8 @@ def area(dtype="magic", tier="中", maxt=None, **kw):
          "radius": TIER_R[tier], "radiusTier": tier}
     if maxt is not None:
         o["maxTargets"] = maxt
+    if rp:
+        o["resourcePct"] = rp
     return o
 
 
@@ -323,6 +358,7 @@ def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target", **kw):
     #    （改預設會一次改到 20 支，那是**沒有紅燈在守**的行為變更）。
     # ⭐ B1-I：`maxt` 預設 5 → None（不輸出），理由見 area()。7 個 line() 呼叫點
     #    同樣一個都沒明填過。
+    rp = _split_res_pct(kw)
     _require_base(kw, f"line(length={length})")
     # ⚠️ 鍵序 = Zod 宣告序（fromCaster 在 maxTargets 之前），理由見 area()。
     o = {"kind": "damageLine", "damageType": dtype, "amount": amt(**kw),
@@ -330,16 +366,59 @@ def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target", **kw):
     if maxt is not None:
         o["maxTargets"] = maxt
     o["includeOrigin"] = False
+    if rp:
+        o["resourcePct"] = rp
     return o
 
 
-def buff(mods, dur, hooks=None):
-    # ⚠️ A-7：`hooks` 以前根本沒有出口，所以 applyBuff 綁定的 proc（「開著的時候
-    #    每一刀多做一件事」）在這 90 支裡**不可能出現**。開成參數。
-    o = {"kind": "applyBuff", "modifiers": mods, "duration": float(dur)}
+#: `buff()` 收得下的額外欄位。⛔ **具名白名單，不是裸 `**kw` 直通。**
+#:
+#: 理由是複驗實測到的一次 REJECT：v1 的修法寫「`**kw` 直通，解鎖
+#: stackKey/maxStacks/exclusiveGroup/maxStat/**onExisting** 五格」——
+#: 而 `onExisting` **不在 applyBuff 上**，它是 `shield` 的欄位（effect.ts:1727）。
+#: 裸直通寫錯一格就是**整份文件被 Zod 拒收 → content 整份載入失敗 → 退回骨架**。
+#: 白名單讓那個錯誤在**產生的當下**就喊，而不是在玩家的瀏覽器裡。
+_BUFF_FIELDS = frozenset({
+    # 疊層／互斥（G5）
+    "stackKey", "maxStacks", "stackVisual", "exclusiveGroup", "exclusiveOnExisting",
+    # 上限與逐階
+    "maxStat", "perRank",
+    # 永久 / 狀態綁定
+    "permanent", "statusId", "applyTo", "dispellable", "polarity",
+    # ⭐ B2-G：SOURCE_GRANT_SHAPE 的五格授權欄位。在此之前對這 90 支**全部不可達**
+    #    （出貨 96 份裡五格都是 0），因為 `buff()` 只有三個具名參數。
+    "block", "critStrike", "attributes", "damageTypeOverride", "flight",
+})
+
+
+def buff(mods, dur=None, hooks=None, **kw):
+    """⭐ B2-F/G —— `applyBuff` 的其餘欄位有出口了。
+
+    以前只有 `mods` / `dur` / `hooks` 三個參數，於是：
+      · **F**：逐階增益寫不出來。⚠️ `applyBuff.duration` 是 `z.number()`
+        （**不是** zRankScalar，實測傳陣列 REJECT），所以逐階的**唯一**落點是
+        `perRank=[{"modifiers": […], "duration": n}, …]` **整列覆寫**。
+      · **G**：`block` / `critStrike` / `attributes` / `damageTypeOverride` /
+        `flight` 五格授權欄位對這 90 支不可達 —— 而它們正是「30% 機率格擋」
+        「1.5 倍會心」「翅膀 6 秒」「這段期間普攻變真傷」的唯一寫法。
+
+    `dur` 可省略（配 `permanent=True` 或 `perRank=`），⚠️ 但 schema 的
+    `refineApplyBuff` 兩個方向都關死：`duration` 與 `permanent` **互斥且必填其一**。
+    """
+    bad = sorted(set(kw) - _BUFF_FIELDS)
+    assert not bad, (
+        f"buff() 不認得 {bad} —— ⛔ 這裡是**具名白名單**不是 `**kw` 直通。"
+        f"寫錯一格 = 整份文件被 Zod 拒收 = content 整份載入失敗 = 退回 2 隻骨架英雄。"
+        f"要新開一格請同時確認它真的在 applyBuff 的 schema 上"
+        f"（⚠️ `onExisting` 就不是 —— 那是 shield 的）。"
+    )
+    o = {"kind": "applyBuff", "modifiers": mods}
+    if dur is not None:
+        o["duration"] = float(dur)
     if hooks:
         o["hooks"] = hooks
-    return o
+    o.update(kw)
+    return o  # 鍵序由 build() 的 _canonical_order() 統一處理
 
 
 def _own_area(node):
@@ -371,6 +450,65 @@ def _own_area(node):
 # 這三條跟 A 類那八條是同一個形狀：改一次、90 支的輸出全變。剩下的缺陷都是
 # 「詞彙」（helper 簽章加參數，每一列還要填值），CP 值天生低一階。
 # ─────────────────────────────────────────────────────────────────────────────
+
+# ─────────────────────────────────────────────────────────────────────────────
+# B2（2026-08-12）· 鍵序這件事**升格成一條規則**
+#
+# 以前三個 helper 各自帶一段「⚠️ 鍵的順序要跟 Zod schema 的宣告順序一致」的註解，
+# 而那是**三份會各自腐爛的知識**：新開一格出口就要記得插在正確的位置，記錯了
+# `abilityScaling.test.ts` 的 fx-19 會報 desync（`area()` 的註解自己記載這個坑
+# 造過 **23 筆假 desync**）。
+#
+# 改成：helper 想怎麼塞就怎麼塞，`build()` 收尾**照這張表把整棵樹重排一次**。
+# 一個住處、一條規則，而 fx-19 仍然是它的守衛。
+#
+# ⛔ 這張表要跟 `packages/shared/src/content/schema/effect.ts` 的宣告序一致。
+#    對不上 fx-19 會紅（那正是它存在的理由），⛔ 不要改測試。
+# ─────────────────────────────────────────────────────────────────────────────
+_ORDER = {
+    "damage": ("kind", "applyTo", "damageType", "amount", "canCrit", "comboBonus",
+               "hpPct", "bankedBonus", "incomingPct", "resourcePct", "distanceScale",
+               "refund"),
+    "damageArea": ("kind", "damageType", "amount", "radius", "radiusTier", "falloff",
+                   "maxTargets", "canCrit", "includeOrigin", "victimCondition",
+                   "maxTargetsCounts", "onHitTargets", "runOnEmptyHit",
+                   "onHitTargetsMode", "resourcePct"),
+    "damageLine": ("kind", "damageType", "amount", "length", "width", "aim",
+                   "fromCaster", "maxTargets", "canCrit", "includeOrigin",
+                   "victimCondition", "maxTargetsCounts", "onHitTargets",
+                   "runOnEmptyHit", "onHitTargetsMode", "resourcePct"),
+    # ⚠️ `...SOURCE_GRANT_SHAPE`（block/critStrike/attributes/damageTypeOverride/
+    #    flight）在 applyBuff 上展開在**最後**，不是中間。
+    "applyBuff": ("kind", "modifiers", "duration", "permanent", "statusId", "applyTo",
+                  "exclusiveGroup", "exclusiveOnExisting", "maxStat", "perRank",
+                  "stackKey", "maxStacks", "stackVisual", "hooks", "dispellable",
+                  "polarity", "block", "critStrike", "attributes",
+                  "damageTypeOverride", "flight"),
+    "applyStatus": ("kind", "statusId", "stacks", "refresh", "duration", "applyTo",
+                    "moveSpeedMult", "root", "stun", "missChance", "berserk", "feared",
+                    "silenced", "disarmed", "targetsAllies", "breakOnDamage",
+                    "breakOnDamageMin", "healingTakenMult", "lifestealMult",
+                    "regenMult", "dispellable"),
+}
+
+
+def _canonical_order(node):
+    """把 effects 樹裡認得的 kind 照 `_ORDER` 重排（不認得的原樣保留順序）。"""
+    if isinstance(node, list):
+        for i, v in enumerate(node):
+            node[i] = _canonical_order(v)
+        return node
+    if not isinstance(node, dict):
+        return node
+    for k in list(node):
+        node[k] = _canonical_order(node[k])
+    seq = _ORDER.get(node.get("kind"))
+    if not seq:
+        return node
+    rank = {k: i for i, k in enumerate(seq)}
+    # 表上沒有的鍵排在最後，彼此維持原本的相對順序（穩定排序）。
+    return dict(sorted(node.items(), key=lambda kv: rank.get(kv[0], len(seq))))
+
 
 #: 折進 `onHitTargets` 的酬載 kind。⛔ 不含 `damage` —— 兩顆傷害並排是合法的
 #: 「本體 + 濺射」寫法，折進去會變成「打中才追加」，那是行為變更。
@@ -499,16 +637,22 @@ _DAMAGE_KINDS = ("damage", "damageArea", "damageLine")
 
 
 def _mechanics_text(desc):
-    """把**角色台詞**從說明裡拿掉 —— 閘只讀機制那幾行。
+    """把**角色台詞**從說明裡拿掉 —— 任何讀 desc 找機制的閘都要先過這一關。
 
-    ⛔ 這一行的存在理由是一個實測到的誤報：44-04 心臟麻痺的台詞是
+    ⭐ owner 2026-08-12 逐字立的規則：
+
+        「技能內文說明會有一個 **「」代表角色施展技能的對白，不是真正的效果**，
+         請不要被迷惑了」
+
+    ⛔ 這條規則的代價已經量到過：44-04 心臟麻痺的台詞是
     「不，還不能笑，我一定要忍住……**在35秒後**宣布勝利吧。」——
-    掃整段會判定它是一支有時序的技能，而那句話是**風味文字**。
-    複驗對另一條閘量到過同型的 **57% 誤報率**，代價是作者被 8 支假紅擋住。
+    掃整段會判定它是一支有時序的技能。複驗對另一條閘量到過同型的
+    **57% 誤報率**，代價是作者被 8 支假紅擋住。
+
+    ⚠️ 剝的是**整段 `「…」`**（含跨行、含行中），⛔ 不是「行首是「的那幾行」——
+    後者漏掉「造成 X 傷害「台詞」再造成 Y」這種寫法。
     """
-    return "\n".join(
-        ln for ln in desc.splitlines() if not ln.lstrip().startswith(("「", '"', "“"))
-    )
+    return re.sub(r"「[^」]*」", "", desc, flags=re.S)
 
 
 def _timing_gates(doc, e, num):
@@ -1598,6 +1742,16 @@ def build(e):
         FORMS_EMITTED[num] = aid
     if e.get("passive"):
         doc["passive"] = e["passive"]
+        # ⭐ B2-N —— 形態閘。「卍解狀態下額外…」這一族在此之前寫不出來：
+        #    `passive.ranks[].whileForm`（effect.ts:4020，enum any/base/alternate）
+        #    在表格裡**沒有出口**，於是變身後才有的天賦變成從第一秒就常駐。
+        #    ⚠️ `setdefault`：手填的特例仍然贏。
+        wf = e.get("while_form")
+        if wf:
+            assert wf in ("any", "base", "alternate"), f"{num}: while_form 只能是 any/base/alternate"
+            for rk in doc["passive"].get("ranks", []):
+                if isinstance(rk, dict):
+                    rk.setdefault("whileForm", wf)
     if e.get("mark"):
         doc["marks"] = [e["mark"]]
     # 【切換】的開／關兩態（schema/ability.ts 的 zAbilityToggle）。今天只有
@@ -1620,6 +1774,10 @@ def build(e):
     _ground_radius(doc, num)
     # ── B1-M：時序容器的三條閘（只喊，不猜）──────────────────────────────────
     _timing_gates(doc, e, num)
+    # ── B2：鍵序統一照 Zod 宣告序重排（⛔ 一定要在所有會動 effects 的步驟之後）──
+    doc["effects"] = _canonical_order(doc["effects"])
+    if doc.get("passive"):
+        doc["passive"] = _canonical_order(doc["passive"])
     # ⛔ castTimeSec **不手填** —— `deriveCastTime()` 是唯一來源，
     #    `castTimeCoverage.test.ts` 逐支比對。由 deriveCastTimes 後處理補上
     #    （finalize_content() 會跑它）。

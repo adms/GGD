@@ -59,8 +59,8 @@
                 "kind": "applyStatus",
                 "statusId": "berserk",
                 "duration": 6.0,
-                "berserk": true,
-                "applyTo": "self"
+                "applyTo": "self",
+                "berserk": true
               }
             ]
           }
