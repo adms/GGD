@@ -50,6 +50,7 @@ import {
   BAND_VALUE_MIN,
   DEFAULT_STAT_NORMALIZATION,
   NORMAL_BANDS,
+  NORMALIZED_STAT_KEYS,
   ORIGINS,
   STAT_NORMALIZATION_DOC_ID,
 } from "../statNormalization";
@@ -4151,84 +4152,20 @@ export const DEFAULT_AOE_TIERS_DOC = {
 } as const;
 
 /** 三格的數值（小/中/大）。⛔ 極小/極大不在這裡 —— 它們是硬上下限，住 stat-caps。 */
+const zBandName = () => z.enum(["極小", "小", "中", "大", "極大"] as const);
+
 const zNormBandValues = z
-  .object({
-    小: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
-    中: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
-    大: z.number().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX),
-  })
+  .object(Object.fromEntries(NORMAL_BANDS.map((b) => [b, z.number().finite().min(BAND_VALUE_MIN).max(BAND_VALUE_MAX)])) as Record<string, z.ZodNumber>)
   .strict();
 
 /** 四個角色定位各落在哪一格。 */
 const zNormArchetypeBands = z
-  .object(
-    Object.fromEntries(ARCHETYPES.map((a) => [a, z.enum(NORMAL_BANDS)])) as {
-      [K in (typeof ARCHETYPES)[number]]: z.ZodEnum<["小", "中", "大"]>;
-    },
-  )
+  .object(Object.fromEntries(ARCHETYPES.map((a) => [a, zBandName()])) as Record<string, ReturnType<typeof zBandName>>)
   .strict();
 
-/**
- * config.stat-normalization@1 — 英雄屬性正規化（owner 2026-08-12）。
- *
- * owner：「我的**極大極小就是為了極端例外而誕生**…**只有小中大才是真正的分佈**…
- * 極小與極大只是**限制合理的上下限**(例如攻速上限 4)」
- * → 小/中/大 住這裡；極小/極大 是硬上下限，住 `config.stat-caps@1`。
- *
- * 這一版只套用 **移速與魔抗** —— 量到它們今天的自然跨度只有 1.20~1.22 倍
- * （最強與最弱差兩成），等於不區分英雄。owner 因此改成由**角色定位**決定。
- * 語意與 archetype 怎麼判寫在 `content/statNormalization.ts`。
- */
-export const zConfigStatNormalizationDoc = z
-  .object({
-    id: zId,
-    schema: z.literal("config.stat-normalization@1"),
-    note: z.string().optional(),
-    /**
-     * ⭐ `normalized` 是出貨預設。`legacy` 是**回滾用的逃生口** ——
-     * 扳過去英雄數值就回到英雄卡上的原值，不需要部署（舊值一直留著沒被銷毀）。
-     */
-    mode: z.enum(["normalized", "legacy"]),
-    /**
-     * 這一版真的套用的屬性。空陣列 = 機制在但什麼都不動（**看得見它是空的**，
-     * 這比偷偷關掉好）。⭐ 之後要開啟任何一項，改這一格就好，不用動程式。
-     */
-    appliesTo: z.array(z.enum(["ms", "mr", "armor"])).max(3),
-    /** 三格數值。⭐ 錨點（中）是量出來的中位數，小/大 = 中 ÷/× r（r 是指定的）。 */
-    bands: z
-      .object({ ms: zNormBandValues, mr: zNormBandValues, armor: zNormBandValues })
-      .strict(),
-    /** 角色定位 → 這一項落在哪一格。⭐ owner 那兩句話就是這張表。 */
-    byArchetype: z
-      .object({ ms: zNormArchetypeBands, mr: zNormArchetypeBands, armor: zNormArchetypeBands })
-      .strict(),
-    /**
-     * 每一項寫進哪一個通道。⭐ owner 2026-08-12：「初始的屬性是用來補正角色
-     * 個性化差異，**成長是定位導向**」。
-     * ⚠️ `ms` 出貨走 `baseStats` 是**量出來的機制限制**不是偏好 —— growth 只能
-     * 往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。
-     */
-    channel: z
-      .object({
-        ms: z.enum(["baseStats", "growth"]),
-        mr: z.enum(["baseStats", "growth"]),
-        armor: z.enum(["baseStats", "growth"]),
-      })
-      .strict(),
-    /**
-     * `growth` 通道的基準等級 —— 級距的數字是「這一級的最終總值」。
-     * ⚠️ 下界 2（除以 `ref − 1`，1 會變成除以零）；上界跟著 `LEVEL_CAP`。
-     */
-    referenceLevel: z.number().int().min(2).max(99),
-    /** 反解出負成長時要不要照填。出貨 `false`（夾到 0）。 */
-    allowNegativeGrowth: z.boolean(),
-    /**
-     * 變身態要不要一起正規化。出貨 `true`（跳過）。
-     * ⚠️ 不跳的話變身的強化會被抹平 —— 變身態與本體的角色定位幾乎一定相同。
-     * 語意寫在 `content/statNormalization.ts`。
-     */
-    skipTransformedBodies: z.boolean(),
-  })
+/** 十格出身表的一列。⭐ 允許只填一部分（沒填的退回四格那張）。 */
+const zNormOriginBands = z
+  .object(Object.fromEntries(ORIGINS.map((o) => [o, zBandName().optional()])) as Record<string, z.ZodOptional<ReturnType<typeof zBandName>>>)
   .strict();
 
 /**
@@ -4236,7 +4173,7 @@ export const zConfigStatNormalizationDoc = z
  *
  * ⛔ **一個數字都不進入戰鬥計算。** owner 2026-08-12：「我沒有要你作新機制，
  * 我只是要作為**調整英雄初始與成長屬性的定位參考**，並且可以更新在**英雄選角說明**」。
- * 真正驅動數值的是 `config.stat-normalization@1` 的四格定位。
+ * 真正驅動數值的是 `config.stat-normalization@1` 的十格出身表。
  *
  * ⚠️ 為什麼要獨立成一份文件：它是**純文案**（10 個出身 × 一句話 + 32 條路線 × 三句），
  * 而 stat-normalization 那一份每一格都是會進算式的數字。兩種東西混在一起，
@@ -4270,6 +4207,47 @@ export const zConfigOriginRoutesDoc = z
     origins: z
       .object(Object.fromEntries(ORIGINS.map((o) => [o, zOriginInfo])) as Record<string, typeof zOriginInfo>)
       .strict(),
+  })
+  .strict();
+
+/**
+ * config.stat-normalization@1 — 英雄屬性正規化（owner 2026-08-12，第三版）。
+ *
+ * ⭐ owner：「你要重新寫出**定位 10 種**如何影響**極小小中大極大**的**所有屬性**」
+ * → 十格出身 × 十項屬性 × 五格級距。⛔ `range` 不在裡面（雙峰，型別不是級別）。
+ *
+ * ⚠️ 前兩版的說明（「只套用移速與魔抗」「極小/極大不是格是上下限」）**已經失效**，
+ * 那是我把範圍讀窄了 —— owner 2026-08-12：「出身跟定位**是影響所有屬性**不是這幾項而已」。
+ */
+export const zConfigStatNormalizationDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.stat-normalization@1"),
+    note: z.string().optional(),
+    mode: z.enum(["normalized", "legacy"]),
+    /** 這一版真的套用的屬性。⛔ `range` 不在清單裡（雙峰，型別不是級別）。 */
+    appliesTo: z.array(z.enum(NORMALIZED_STAT_KEYS)).max(NORMALIZED_STAT_KEYS.length),
+    /** 每一項的**五格**數值。⭐ 由「中」× 階梯推出來，⛔ 不手打。 */
+    bands: z
+      .object(Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zNormBandValues])) as Record<string, typeof zNormBandValues>)
+      .strict(),
+    /** 四格定位表 —— owner 2026-08-12 逐字給的，留著當退路。 */
+    byArchetype: z
+      .object(Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zNormArchetypeBands])) as Record<string, typeof zNormArchetypeBands>)
+      .strict(),
+    /** ⭐ 十格出身表，**優先於**上面那張。 */
+    byOrigin: z
+      .object(Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zNormOriginBands])) as Record<string, typeof zNormOriginBands>)
+      .strict(),
+    /** 每一項寫進哪個通道。⚠️ `ms` 出貨走 `baseStats` 是量出來的機制限制。 */
+    channel: z
+      .object(Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, z.enum(["baseStats", "growth"] as const)])) as Record<string, z.ZodEnum<["baseStats", "growth"]>>)
+      .strict(),
+    referenceLevel: z.number().int().min(2).max(99),
+    /** 變身態往上位移幾格。出貨 1（本體中 → 變身大）。⛔ 0 = 變身與本體同級。 */
+    transformBandShift: z.number().int().min(-4).max(4),
+    allowNegativeGrowth: z.boolean(),
+    skipTransformedBodies: z.boolean(),
   })
   .strict();
 

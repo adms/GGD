@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "de48949bf57b",
+  "hash": "db2e8acc0ca1",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -155,7 +155,7 @@
     {
       "id": "origin-routes",
       "path": "config/origin-routes.json",
-      "hash": "a2dae7c8c2b6",
+      "hash": "1b75573e79be",
       "size": 8930
     },
     {
@@ -197,8 +197,8 @@
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "2efdd26280be",
-      "size": 2014
+      "hash": "7109a783fd4d",
+      "size": 6787
     },
     {
       "id": "stealth",

@@ -164,6 +164,13 @@ const STAT_OF: Readonly<Record<NormalizedStatKey, Stat>> = Object.freeze({
   ms: Stat.MoveSpeed,
   mr: Stat.MagicResist,
   armor: Stat.Armor,
+  maxHealth: Stat.MaxHealth,
+  maxMana: Stat.MaxMana,
+  ad: Stat.AttackDamage,
+  ap: Stat.AbilityPower,
+  as: Stat.AttackSpeed,
+  healthRegen: Stat.HealthRegen,
+  manaRegen: Stat.ManaRegen,
 });
 
 const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({

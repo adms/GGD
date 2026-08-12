@@ -7,7 +7,7 @@
  * >  並且可以更新在**英雄選角說明**作為參考」
  *
  * 所以這一份的兩個用途，兩個都是「給人看」：
- *   ① 調數值時的定位參考（「這位是刃舞，那他的移速就該落在大」）
+ *   ① 調數值時的定位參考（「這位是鬥士，那他的移速就該落在大」）
  *   ② 選角畫面上的一行說明
  *
  * ⛔ **這裡一個數字都不會進入戰鬥計算。** 真正驅動數值的是
@@ -53,7 +53,7 @@ const r = (name: string, summary: string, gain: string, lose: string): RouteInfo
  * 所以它們住在內容裡，改名不需要部署，也不需要碰程式。
  */
 export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
-  壁壘: Object.freeze({
+  坦克: Object.freeze({
     rule: "力量主 · 近戰",
     tagline: "站得住的那一種 —— 血厚甲厚，跑得慢。",
     routes: Object.freeze([
@@ -63,7 +63,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("嘲哮", "拉住對面、替隊友擋，自己幾乎不輸出。", "嘲諷 · 減傷光環", "單體輸出"),
     ]),
   }),
-  重砲: Object.freeze({
+  砲手: Object.freeze({
     rule: "力量主 · 遠程",
     tagline: "笨重的遠程 —— 站得遠、打得重、動得慢。⭐ 今天 0 位，是新角色的位置。",
     routes: Object.freeze([
@@ -72,7 +72,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("鎮守", "架起來就變砲台，動了就沒有威力。", "靜止時大幅增傷", "移動中的一切"),
     ]),
   }),
-  刃舞: Object.freeze({
+  鬥士: Object.freeze({
     rule: "敏捷主 · 近戰",
     tagline: "貼上去就不放 —— 全場最快，靠節奏不靠硬度。",
     routes: Object.freeze([
@@ -82,7 +82,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("遊擊", "進進出出，不跟你正面拼。", "位移頻率 · 脫離", "正面對拼的硬度"),
     ]),
   }),
-  遊獵: Object.freeze({
+  射手: Object.freeze({
     rule: "敏捷主 · 遠程",
     tagline: "靠距離活命 —— 站位就是生命值。",
     routes: Object.freeze([
@@ -91,7 +91,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("陷阱", "先佈場再開打，控場即輸出。", "減速 · 場域 · 控場", "直接傷害"),
     ]),
   }),
-  魔劍: Object.freeze({
+  法鬥: Object.freeze({
     rule: "智慧主 · 近戰",
     tagline: "近身的法師 —— 普攻與法術同一條線上。",
     routes: Object.freeze([
@@ -100,7 +100,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("護法", "魔力就是第二條血條，枯竭就是死。", "法力護盾", "持續施法的自由"),
     ]),
   }),
-  咒術: Object.freeze({
+  法師: Object.freeze({
     rule: "智慧主 · 遠程",
     tagline: "站在後面決定勝負 —— 魔抗最高，裝甲最薄。",
     routes: Object.freeze([
@@ -109,7 +109,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("詛咒", "自己不打人，讓對面自己爛掉。", "減益 · 持續傷害", "直接傷害"),
     ]),
   }),
-  狂鬥: Object.freeze({
+  狂戰: Object.freeze({
     rule: "力量 × 敏捷（前二名相差不到兩成）",
     tagline: "又壯又快 —— 沒有短板，也沒有長板。",
     routes: Object.freeze([
@@ -118,7 +118,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("撞擊", "用身體當武器，撞到誰誰倒。", "位移撞擊傷害 · 擊退", "持續輸出（長冷卻）"),
     ]),
   }),
-  符將: Object.freeze({
+  硬輔: Object.freeze({
     rule: "力量 × 智慧（前二名相差不到兩成）",
     tagline: "力量法師 —— 用體格施法，越厚越痛。",
     routes: Object.freeze([
@@ -127,7 +127,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("圖騰", "召喚物與持續場域替你打，自己站得很後面。", "召喚 · 場域", "自身硬度"),
     ]),
   }),
-  影術: Object.freeze({
+  法刺: Object.freeze({
     rule: "敏捷 × 智慧（前二名相差不到兩成）",
     tagline: "看不見的那一種 —— 一輪定生死，失手就沒有第二次。",
     routes: Object.freeze([
@@ -136,7 +136,7 @@ export const DEFAULT_ORIGIN_ROUTES: OriginRoutes = Object.freeze({
       r("疾咒", "普攻觸發小法術，靠次數不靠威力。", "攻速 → 法術觸發", "單發威力"),
     ]),
   }),
-  全能: Object.freeze({
+  軟輔: Object.freeze({
     rule: "三圍都在門檻內",
     tagline: "沒有偏向 —— 每一項都及格，沒有任何一項出色。⭐ 今天 0 位。",
     routes: Object.freeze([
@@ -158,7 +158,7 @@ function str(v: unknown, fallback: string): string {
 /**
  * 把一份 `config.origin-routes@1` 正規化成規則物件。認不得 → 出貨值。
  *
- * ⚠️ **逐格 fallback**，不是整份取代：只改了「壁壘的第一條路線名」的文件，
+ * ⚠️ **逐格 fallback**，不是整份取代：只改了「坦克的第一條路線名」的文件，
  * 其餘 31 條仍然拿得到出貨文案。⛔ 整份取代的話，一個只寫了半份的覆蓋層會讓
  * 選角畫面上 31 條路線變成空白，而那看起來跟「這個出身沒有路線」一模一樣。
  */

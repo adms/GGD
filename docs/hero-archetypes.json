@@ -11,28 +11,28 @@
     "rule": "10 種 = 6 純血（主屬性 × 攻擊型態）+ 3 混血（前二名三圍的比 < MIXED_RATIO）+ 1 均衡（連第三名都在門檻內）",
     "mixedRatio": 1.2,
     "counts": {
-      "壁壘": 20,
-      "重砲": 0,
-      "刃舞": 21,
-      "遊獵": 5,
-      "魔劍": 4,
-      "咒術": 13,
-      "狂鬥": 2,
-      "符將": 3,
-      "影術": 5,
-      "全能": 0
+      "坦克": 20,
+      "砲手": 0,
+      "鬥士": 21,
+      "射手": 5,
+      "法鬥": 4,
+      "法師": 13,
+      "狂戰": 2,
+      "硬輔": 3,
+      "法刺": 5,
+      "軟輔": 0
     },
     "toArchetype": {
-      "壁壘": "tank",
-      "重砲": "marksman",
-      "刃舞": "fighter",
-      "遊獵": "marksman",
-      "魔劍": "mage",
-      "咒術": "mage",
-      "狂鬥": "fighter",
-      "符將": "tank",
-      "影術": "fighter",
-      "全能": "fighter"
+      "坦克": "tank",
+      "砲手": "marksman",
+      "鬥士": "fighter",
+      "射手": "marksman",
+      "法鬥": "mage",
+      "法師": "mage",
+      "狂戰": "fighter",
+      "硬輔": "tank",
+      "法刺": "fighter",
+      "軟輔": "fighter"
     }
   },
   "cardRatioRule": {
@@ -95,7 +95,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -142,7 +142,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -189,7 +189,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -236,7 +236,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -283,7 +283,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -330,7 +330,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -377,7 +377,7 @@
       "attackType": "melee",
       "bodyScale": 1.55,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -424,7 +424,7 @@
       "attackType": "ranged",
       "bodyScale": 1.1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -471,7 +471,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -518,7 +518,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -565,7 +565,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -612,7 +612,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -659,7 +659,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -706,7 +706,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "影術",
+      "出身": "法刺",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -753,7 +753,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -800,7 +800,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -847,7 +847,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -894,7 +894,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -941,7 +941,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -988,7 +988,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1035,7 +1035,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1082,7 +1082,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1129,7 +1129,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1176,7 +1176,7 @@
       "attackType": "melee",
       "bodyScale": 0.8,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1223,7 +1223,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "影術",
+      "出身": "法刺",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1270,7 +1270,7 @@
       "attackType": "melee",
       "bodyScale": 0.85,
       "primary": "agi",
-      "出身": "影術",
+      "出身": "法刺",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -1317,7 +1317,7 @@
       "attackType": "melee",
       "bodyScale": 0.85,
       "primary": "agi",
-      "出身": "影術",
+      "出身": "法刺",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -1364,7 +1364,7 @@
       "attackType": "melee",
       "bodyScale": 1.2,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1411,7 +1411,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1458,7 +1458,7 @@
       "attackType": "ranged",
       "bodyScale": 0.67,
       "primary": "int",
-      "出身": "符將",
+      "出身": "硬輔",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1505,7 +1505,7 @@
       "attackType": "melee",
       "bodyScale": 0.62,
       "primary": "int",
-      "出身": "影術",
+      "出身": "法刺",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1552,7 +1552,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1599,7 +1599,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1646,7 +1646,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1693,7 +1693,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -1740,7 +1740,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -1787,7 +1787,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "遊獵",
+      "出身": "射手",
       "定位": "marksman",
       "archetypeOverride": null,
       "attributes": {
@@ -1834,7 +1834,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1881,7 +1881,7 @@
       "attackType": "melee",
       "bodyScale": 0.65,
       "primary": "int",
-      "出身": "符將",
+      "出身": "硬輔",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1928,7 +1928,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -1975,7 +1975,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2022,7 +2022,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2069,7 +2069,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2116,7 +2116,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "符將",
+      "出身": "硬輔",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2163,7 +2163,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "法鬥",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2210,7 +2210,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "遊獵",
+      "出身": "射手",
       "定位": "marksman",
       "archetypeOverride": null,
       "attributes": {
@@ -2257,7 +2257,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2304,7 +2304,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "狂鬥",
+      "出身": "狂戰",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -2351,7 +2351,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2398,7 +2398,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "法鬥",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2445,7 +2445,7 @@
       "attackType": "ranged",
       "bodyScale": 3,
       "primary": "agi",
-      "出身": "遊獵",
+      "出身": "射手",
       "定位": "marksman",
       "archetypeOverride": null,
       "attributes": {
@@ -2492,7 +2492,7 @@
       "attackType": "ranged",
       "bodyScale": 0.6,
       "primary": "agi",
-      "出身": "遊獵",
+      "出身": "射手",
       "定位": "marksman",
       "archetypeOverride": null,
       "attributes": {
@@ -2539,7 +2539,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2586,7 +2586,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "狂鬥",
+      "出身": "狂戰",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -2633,7 +2633,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "遊獵",
+      "出身": "射手",
       "定位": "marksman",
       "archetypeOverride": null,
       "attributes": {
@@ -2680,7 +2680,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2727,7 +2727,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2774,7 +2774,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2821,7 +2821,7 @@
       "attackType": "ranged",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "法師",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -2868,7 +2868,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -2915,7 +2915,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -2962,7 +2962,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3009,7 +3009,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3056,7 +3056,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -3103,7 +3103,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3150,7 +3150,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3197,7 +3197,7 @@
       "attackType": "melee",
       "bodyScale": 1.3,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "法鬥",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -3244,7 +3244,7 @@
       "attackType": "melee",
       "bodyScale": 1.1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3291,7 +3291,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "法鬥",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -3338,7 +3338,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {
@@ -3385,7 +3385,7 @@
       "attackType": "melee",
       "bodyScale": 1.65,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -3432,7 +3432,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "鬥士",
       "定位": "fighter",
       "archetypeOverride": null,
       "attributes": {
@@ -3479,7 +3479,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "坦克",
       "定位": "tank",
       "archetypeOverride": null,
       "attributes": {

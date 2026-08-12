@@ -61,13 +61,40 @@ import type { ChampionDef } from "../sim/content/defs";
 /** `content/config/stat-normalization.json` 的文件 id。 */
 export const STAT_NORMALIZATION_DOC_ID = "stat-normalization";
 
-/** 三格分佈（小/中/大）。⛔ 極小/極大**不在這裡** —— 它們是上下限，不是格。 */
-export const NORMAL_BANDS = ["小", "中", "大"] as const;
+/**
+ * ⭐ **五格全部可以指派**（owner 2026-08-12：「你要重新寫出定位 10 種如何影響
+ * **極小小中大極大** 的所有屬性」）。
+ *
+ * ⚠️ 這一句推翻了前兩版：那時候 `NORMAL_BANDS` 只有三格，極小/極大被當成
+ * 「硬上下限」而不是可指派的級別。現在它們是**例外槽** —— 一個出身可以在
+ * 一兩項上拿到極大，代價是別的項掉到極小。
+ *
+ * 階梯（兩條都是 owner 給的）：
+ *   · 小 / 中 / 大 —— r = **1.25**（他要 1.2~1.5）
+ *   · 極小 / 極大 —— 相對於「中」是 **÷2 / ×2**（他要 2~4）
+ */
+export const NORMAL_BANDS = ["極小", "小", "中", "大", "極大"] as const;
 export type NormalBand = (typeof NORMAL_BANDS)[number];
 
-/** 完整的五個名稱（含兩個例外槽），給落點表與後台下拉用。 */
-export const ALL_BANDS = ["極小", "小", "中", "大", "極大"] as const;
-export type Band = (typeof ALL_BANDS)[number];
+/** 同一組名稱的別名，舊呼叫端還在用。 */
+export const ALL_BANDS = NORMAL_BANDS;
+export type Band = NormalBand;
+
+/** 級距階梯：`中` 乘上這些倍率。⛔ 兩條 r 都是 owner 給的，不是我挑的。 */
+export const BAND_MULTIPLIER: Readonly<Record<NormalBand, number>> = Object.freeze({
+  極小: 0.5,
+  小: 1 / 1.25,
+  中: 1,
+  大: 1.25,
+  極大: 2,
+});
+
+/** 從「中」推出五格。⭐ 出貨表就是這樣長出來的，⛔ 不是手打五個數字。 */
+export function bandsFromMedian(mid: number): Readonly<Record<NormalBand, number>> {
+  const out = {} as Record<NormalBand, number>;
+  for (const b of NORMAL_BANDS) out[b] = Number((mid * BAND_MULTIPLIER[b]).toFixed(3));
+  return Object.freeze(out);
+}
 
 /**
  * 角色定位。⭐ 判定＝主屬性 × 攻擊型別（見檔頭），不是手標。
@@ -93,20 +120,20 @@ export type Band = (typeof ALL_BANDS)[number];
  * 完整的三欄表）。兩者的關係是 {@link ORIGIN_TO_ARCHETYPE}：10 收斂成 4。
  * 等 owner 給出 10 列的表，把 `byArchetype` 換寬即可，判定邏輯一行都不用動。
  *
- * 實測分佈（母體 73）：刃舞 21 · 壁壘 20 · 咒術 13 · 影術 5 · 遊獵 5 · 魔劍 4 ·
- * 符將 3 · 狂鬥 2 · **重砲 0** · **全能 0** —— 兩個空格是新角色的位置。
+ * 實測分佈（母體 73）：鬥士 21 · 坦克 20 · 法師 13 · 法刺 5 · 射手 5 · 法鬥 4 ·
+ * 硬輔 3 · 狂戰 2 · **砲手 0** · **軟輔 0** —— 兩個空格是新角色的位置。
  */
 export const ORIGINS = [
-  "壁壘", // 力量 · 近戰
-  "重砲", // 力量 · 遠程
-  "刃舞", // 敏捷 · 近戰
-  "遊獵", // 敏捷 · 遠程
-  "魔劍", // 智慧 · 近戰　⭐ owner 說的「魔法劍士」
-  "咒術", // 智慧 · 遠程
-  "狂鬥", // 力量 × 敏捷
-  "符將", // 力量 × 智慧　⭐ owner 說的「力量法師」
-  "影術", // 敏捷 × 智慧
-  "全能", // 三圍都在門檻內
+  "坦克", // 力量 · 近戰
+  "砲手", // 力量 · 遠程
+  "鬥士", // 敏捷 · 近戰
+  "射手", // 敏捷 · 遠程
+  "法鬥", // 智慧 · 近戰　⭐ owner 說的「魔法劍士」
+  "法師", // 智慧 · 遠程
+  "狂戰", // 力量 × 敏捷
+  "硬輔", // 力量 × 智慧　⭐ owner 說的「力量法師」
+  "法刺", // 敏捷 × 智慧
+  "軟輔", // 三圍都在門檻內
 ] as const;
 export type Origin = (typeof ORIGINS)[number];
 
@@ -132,14 +159,14 @@ function rankedAttrs(def: Parameters<typeof primaryAttribute>[0]): [number, "str
 }
 
 const PURE: Readonly<Record<"str" | "agi" | "int", readonly [Origin, Origin]>> = Object.freeze({
-  str: ["壁壘", "重砲"],
-  agi: ["刃舞", "遊獵"],
-  int: ["魔劍", "咒術"],
+  str: ["坦克", "砲手"],
+  agi: ["鬥士", "射手"],
+  int: ["法鬥", "法師"],
 });
 const MIXED: Readonly<Record<string, Origin>> = Object.freeze({
-  "agi|str": "狂鬥",
-  "int|str": "符將",
-  "agi|int": "影術",
+  "agi|str": "狂戰",
+  "int|str": "硬輔",
+  "agi|int": "法刺",
 });
 
 /** 推導出身。⭐ 純推導，⛔ 沒有手標的欄位（英雄卡的 `archetype` 只覆寫 4 格那一層）。 */
@@ -153,9 +180,9 @@ export function originOf(
     [number, "str" | "agi" | "int"],
     [number, "str" | "agi" | "int"],
   ];
-  if (third[0] > 0 && first[0] / third[0] < mixedRatio) return "全能";
+  if (third[0] > 0 && first[0] / third[0] < mixedRatio) return "軟輔";
   if (second[0] > 0 && first[0] / second[0] < mixedRatio) {
-    return MIXED[[first[1], second[1]].sort().join("|")] ?? "全能";
+    return MIXED[[first[1], second[1]].sort().join("|")] ?? "軟輔";
   }
   return PURE[first[1]][def.attackType === "ranged" ? 1 : 0];
 }
@@ -165,19 +192,19 @@ export function originOf(
  *
  * ⚠️ 這一層存在是因為 owner 只給了 **4 列**的移速/魔抗/裝甲表。收斂規則：
  * 混血跟著它的**主屬性**走（`originOf` 已經把主屬性算過了，這裡只是查表），
- * 均衡歸 `fighter`（沒有偏向就是全能戰士）。
+ * 均衡歸 `fighter`（沒有偏向就是軟輔戰士）。
  */
 export const ORIGIN_TO_ARCHETYPE: Readonly<Record<Origin, Archetype>> = Object.freeze({
-  壁壘: "tank",
-  重砲: "marksman",
-  刃舞: "fighter",
-  遊獵: "marksman",
-  魔劍: "mage",
-  咒術: "mage",
-  狂鬥: "fighter",
-  符將: "tank",
-  影術: "fighter",
-  全能: "fighter",
+  坦克: "tank",
+  砲手: "marksman",
+  鬥士: "fighter",
+  射手: "marksman",
+  法鬥: "mage",
+  法師: "mage",
+  狂戰: "fighter",
+  硬輔: "tank",
+  法刺: "fighter",
+  軟輔: "fighter",
 });
 
 export const ARCHETYPES = ["tank", "fighter", "marksman", "mage"] as const;
@@ -191,7 +218,14 @@ export const ARCHETYPE_LABEL_ZH: Readonly<Record<Archetype, string>> = Object.fr
 });
 
 /** 這一版真的會被正規化的屬性。⛔ 不在名單上的照舊讀 `baseStats`。 */
-export const NORMALIZED_STAT_KEYS = ["ms", "mr", "armor"] as const;
+export const NORMALIZED_STAT_KEYS = [
+  "ms", "mr", "armor",
+  // ⭐ 2026-08-12 第三版 —— owner：「出身跟定位**是影響所有屬性**不是這幾項而已」。
+  //   前兩版只做了三項，那是我讀錯了範圍。
+  //   ⛔ `range` **不在名單上**：它的分佈是雙峰的（近戰 1.6 擠了 46 位、遠程 6–12），
+  //     組間跨度 5.75×，而近戰/遠程是**型別**不是級別。用一把尺量它一定出事。
+  "maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen",
+] as const;
 export type NormalizedStatKey = (typeof NORMALIZED_STAT_KEYS)[number];
 
 /**
@@ -232,6 +266,16 @@ export interface StatNormalization {
    */
   byArchetype: Readonly<Record<NormalizedStatKey, Readonly<Record<Archetype, NormalBand>>>>;
   /**
+   * ⭐ **出身** → 這一項落在哪一格（owner 2026-08-12：「你要重新寫出**定位 10 種**
+   * 如何影響極小小中大極大的**所有屬性**」）。
+   *
+   * ⚠️ 它**優先於** `byArchetype`：查得到就用它，查不到才退回四格那一張。
+   * 兩張表並存是刻意的 —— 四格那張是 owner 親自逐字給的，10 格這張是我依它擴出來的，
+   * 而擴的過程有幾格是設計不是量測（見 `DEFAULT_STAT_NORMALIZATION` 的註解）。
+   * 留著四格那張，扳回去只要把這一格清空。
+   */
+  byOrigin: Readonly<Record<NormalizedStatKey, Readonly<Partial<Record<Origin, NormalBand>>>>>;
+  /**
    * 每一項寫進哪一個通道。⭐ 見 `StatChannel` —— `ms` 走 `baseStats` 是量出來的，
    * 不是偏好。想改任何一格都是後台的事。
    */
@@ -252,7 +296,22 @@ export interface StatNormalization {
    */
   allowNegativeGrowth: boolean;
   /**
-   * ⭐ 變身態的身體要不要一起正規化。**出貨 `true`（＝跳過）**。
+   * 🔴 **變身態往上位移幾格**（owner 2026-08-12 之後才浮出來的問題）。
+   *
+   * ⚠️ 只做三項（移速/魔抗/裝甲）時 `skipTransformedBodies` 是對的：跳過就好。
+   * 擴到**十項**之後它變成缺陷 —— 本體被推到級距值，變身態保留作者原值，
+   * 於是**變身可能比本體弱**。實測：小呆變身成龍魔人之後 AD 95.4 < 本體 97.0，
+   * 索隆的霸氣形態裝甲 25.3 < 本體 33.6。⛔ 那是「變身」這件事的反面。
+   *
+   * ⭐ 所以變身態改成**一起正規化，但級距往上位移 `transformBandShift` 格**：
+   * 本體「中」→ 變身「大」，本體「大」→ 變身「極大」，已經是極大就停在極大。
+   * 出貨 **1**。填 0 = 變身與本體同級（不建議，變身就沒有意義了）。
+   *
+   * ⚠️ `skipTransformedBodies` 仍然在，而且**它贏** —— 想完全不碰變身態就把它打開。
+   */
+  transformBandShift: number;
+  /**
+   * ⭐ 變身態的身體要不要一起正規化。**出貨 `false`（＝一起做，但往上位移）**。
    *
    * ⚠️ 這一格是被守衛逼出來的，不是想出來的。第一版沒有它，結果：
    * 變身態與本體的 archetype 幾乎一定相同（同一個主屬性、同一種攻擊型別），
@@ -285,42 +344,95 @@ export interface StatNormalization {
  */
 export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   mode: "normalized",
-  // ⭐ 2026-08-12 第二版：魔抗解禁 + 裝甲加入。
-  //
-  //   v0.14.0 把魔抗鎖起來的理由是「智慧推導會讓法師魔抗最高，與設計相反」。
-  //   owner 當天的裁決把那個前提整個換掉了：
-  //     「是我忘了這個設定，我們**引入防禦/裝甲來平衡這個現象**」
-  //   → 順著智慧推導讓**法師魔抗大**，改用**裝甲**把坦克撐起來。
-  //   於是引擎本來就在做的事變成**對的**，不再需要對抗它。⭐ 魔抗鎖解除。
-  appliesTo: Object.freeze(["ms", "mr", "armor"] as const),
+  // ⭐ 2026-08-12 第三版 —— owner：「出身跟定位**是影響所有屬性**不是這幾項而已」。
+  //   前兩版只做了 ms/mr/armor，那是我把範圍讀窄了。
+  //   ⛔ `range` 仍然不在名單上：分佈是雙峰的（近戰 1.6 擠 46 位、遠程 6–12，
+  //     組間跨度 5.75×），而近戰/遠程是**型別**不是級別。
+  appliesTo: Object.freeze([
+    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen",
+  ] as const),
+  // 「中」= 量出來的母體中位數（73 位可達英雄，等級 18；移速那一格是等級 1）。
+  // 五格由 `bandsFromMedian()` 推 —— ⛔ 不手打五個數字。
   bands: Object.freeze({
-    // ⚠️ 語意逐通道不同：
-    //   · `baseStats` 通道（ms）→ 「等級 1 的最終值」
-    //   · `growth` 通道（mr/armor）→ 「**基準等級的最終總值**」（出貨基準 = 18）
-    //   兩者不可混用，改通道就要換整組數字。
-    ms: Object.freeze({ 小: 4.64, 中: 5.8, 大: 7.25 }),
-    mr: Object.freeze({ 小: 61.38, 中: 76.72, 大: 95.9 }),
-    armor: Object.freeze({ 小: 20.96, 中: 26.2, 大: 32.75 }),
+    ms: bandsFromMedian(5.0),
+    mr: bandsFromMedian(76.72),
+    armor: bandsFromMedian(25.39),
+    maxHealth: bandsFromMedian(1879.8),
+    maxMana: bandsFromMedian(1160.75),
+    ad: bandsFromMedian(106.0),
+    ap: bandsFromMedian(47.2),
+    as: bandsFromMedian(1.5),
+    healthRegen: bandsFromMedian(3.72),
+    manaRegen: bandsFromMedian(4.63),
   }),
+  // ⚠️ 四格那張是 owner 2026-08-12 逐字給的，留著當退路（`byOrigin` 清空就回到它）。
   byArchetype: Object.freeze({
-    // ⭐ 逐字來自 owner 2026-08-12 的四列表：
-    //   坦克 力量主+近戰  移速 小 · 魔抗 小 · 裝甲 大
-    //   近戰 敏捷主+近戰  移速 大 · 魔抗 中 · 裝甲 中
-    //   法師 智慧主       移速 小 · 魔抗 大 · 裝甲 小
-    //   遠程 敏捷主+遠程  移速 中 · 魔抗 小 · 裝甲 小
+
+
+
+    maxHealth: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    maxMana: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    ad: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    ap: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    as: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    healthRegen: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
+    manaRegen: Object.freeze({ tank: "中", fighter: "中", marksman: "中", mage: "中" } as const),
     ms: Object.freeze({ tank: "小", fighter: "大", marksman: "中", mage: "小" } as const),
     mr: Object.freeze({ tank: "小", fighter: "中", marksman: "小", mage: "大" } as const),
     armor: Object.freeze({ tank: "大", fighter: "中", marksman: "小", mage: "小" } as const),
   }),
-  channel: Object.freeze({ ms: "baseStats", mr: "growth", armor: "growth" } as const),
+  /*
+   * ⭐ 10 出身 × 10 屬性。每一列讀起來要像一句話：
+   *
+   *   坦克  生命極大 · 裝甲極大 · 魔力極小 · 回魔極小 · 法強極小   ← 最厚也最笨
+   *   砲手  攻擊力極大 · 攻速極小 · 移速極小                      ← 一發很重，動不了
+   *   鬥士  攻速極大 · 移速極大 · 法強極小                        ← 全場最快
+   *   法師  魔力/回魔/法強/魔抗**四個極大**，生命/回血/裝甲/AD 四個極小 ← 極端後排
+   *   軟輔  十項全部中                                            ← 沒有偏向
+   *
+   * ⚠️ 有幾格是**設計不是量測**，列出來讓 owner 一眼看得到要不要扳回去：
+   *   · 遠程（射手）的 AD 量到是全場最低，但表上給「中」—— 射手沒有 AD 不合理
+   *   · 坦克（坦克）的 AD 量到最高（力量推導），表上保留「大」
+   *   · 法鬥/硬輔/法刺三個混血是**新格子**（母體各只有 4/3/5 位），量測支撐弱
+   */
+  byOrigin: Object.freeze({
+    ms: Object.freeze({ 坦克: "小", 砲手: "極小", 鬥士: "極大", 射手: "中", 法鬥: "中", 法師: "小", 狂戰: "大", 硬輔: "小", 法刺: "大", 軟輔: "中" } as const),
+    mr: Object.freeze({ 坦克: "小", 砲手: "中", 鬥士: "中", 射手: "小", 法鬥: "大", 法師: "極大", 狂戰: "小", 硬輔: "大", 法刺: "中", 軟輔: "中" } as const),
+    armor: Object.freeze({ 坦克: "極大", 砲手: "中", 鬥士: "中", 射手: "小", 法鬥: "中", 法師: "極小", 狂戰: "中", 硬輔: "大", 法刺: "小", 軟輔: "中" } as const),
+    maxHealth: Object.freeze({ 坦克: "極大", 砲手: "大", 鬥士: "中", 射手: "小", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "大", 法刺: "小", 軟輔: "中" } as const),
+    maxMana: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "中", 軟輔: "中" } as const),
+    ad: Object.freeze({ 坦克: "大", 砲手: "極大", 鬥士: "大", 射手: "中", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "中", 法刺: "中", 軟輔: "中" } as const),
+    ap: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "極小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "大", 軟輔: "中" } as const),
+    as: Object.freeze({ 坦克: "小", 砲手: "極小", 鬥士: "極大", 射手: "大", 法鬥: "中", 法師: "小", 狂戰: "大", 硬輔: "小", 法刺: "大", 軟輔: "中" } as const),
+    healthRegen: Object.freeze({ 坦克: "大", 砲手: "中", 鬥士: "中", 射手: "小", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "中", 法刺: "小", 軟輔: "中" } as const),
+    manaRegen: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "大", 軟輔: "中" } as const),
+  }),
+  channel: Object.freeze({
+    // ⭐ owner：「**初始的屬性是用來補正角色個性化差異，成長是定位導向**」
+    //   → 九項走 growth。⛔ 移速是唯一的例外，而且是量出來的機制限制：
+    //     成長只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。
+    ms: "baseStats",
+    mr: "growth", armor: "growth", maxHealth: "growth", maxMana: "growth",
+    ad: "growth", ap: "growth", as: "growth", healthRegen: "growth", manaRegen: "growth",
+  } as const),
   referenceLevel: 18,
   allowNegativeGrowth: false,
-  skipTransformedBodies: true,
+  // 🔴 從 true 改成 false + 位移 1 格 —— 理由寫在 `transformBandShift` 那一格：
+  //   十項全做之後「跳過變身」會讓變身比本體弱。
+  transformBandShift: 1,
+  skipTransformedBodies: false,
 }) as StatNormalization;
 
 /** 三格數值的上下界。`schema/config.ts` 與後台欄位共用這一組。 */
 export const BAND_VALUE_MIN = 0.01;
 export const BAND_VALUE_MAX = 100000;
+
+/** 把級別往上（或往下）位移，兩端夾住。 */
+export function shiftBand(band: NormalBand, steps: number): NormalBand {
+  const i = NORMAL_BANDS.indexOf(band);
+  if (i < 0) return band;
+  return NORMAL_BANDS[Math.min(NORMAL_BANDS.length - 1, Math.max(0, i + steps))]!;
+}
 
 function isArchetype(v: unknown): v is Archetype {
   return typeof v === "string" && (ARCHETYPES as readonly string[]).includes(v);
@@ -413,12 +525,22 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
       if (isBand(v)) byArchetype[key][arc] = v;
     }
   }
+  const byOrigin = {} as Record<NormalizedStatKey, Partial<Record<Origin, NormalBand>>>;
+  for (const key of NORMALIZED_STAT_KEYS) {
+    const o = (d["byOrigin"] as Record<string, Record<string, unknown>> | undefined)?.[key];
+    byOrigin[key] = { ...(DEFAULT_STAT_NORMALIZATION.byOrigin[key] ?? {}) };
+    for (const org of ORIGINS) {
+      const v = o?.[org];
+      if (isBand(v)) byOrigin[key][org] = v;
+    }
+  }
   const channel = {} as Record<NormalizedStatKey, StatChannel>;
   for (const key of NORMALIZED_STAT_KEYS) {
     const v = (d["channel"] as Record<string, unknown> | undefined)?.[key];
     channel[key] =
       v === "baseStats" || v === "growth" ? v : DEFAULT_STAT_NORMALIZATION.channel[key];
   }
+  const shiftRaw = d["transformBandShift"];
   const skip = d["skipTransformedBodies"];
   const ref = d["referenceLevel"];
   const neg = d["allowNegativeGrowth"];
@@ -427,12 +549,17 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
     appliesTo,
     bands,
     byArchetype,
+    byOrigin,
     channel,
     // ⚠️ 基準等級至少是 2 —— growth 通道除以 `(ref − 1)`，1 會變成除以零。
     referenceLevel:
       typeof ref === "number" && Number.isFinite(ref) && ref >= 2
         ? Math.floor(ref)
         : DEFAULT_STAT_NORMALIZATION.referenceLevel,
+    transformBandShift:
+      typeof shiftRaw === "number" && Number.isFinite(shiftRaw)
+        ? Math.max(-4, Math.min(4, Math.round(shiftRaw)))
+        : DEFAULT_STAT_NORMALIZATION.transformBandShift,
     allowNegativeGrowth:
       typeof neg === "boolean" ? neg : DEFAULT_STAT_NORMALIZATION.allowNegativeGrowth,
     skipTransformedBodies:
@@ -474,35 +601,45 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   if (cfg.mode !== "normalized" || cfg.appliesTo.length === 0) return def;
   // ⭐ 變身態預設跳過 —— 理由寫在 `skipTransformedBodies` 那一格：不跳的話
   //   變身的強化會被抹平（超級賽亞人不再比悟空快）。
-  if (cfg.skipTransformedBodies) {
-    const role = (def["transform"] as { role?: unknown } | undefined)?.role;
-    if (role === "alternate") return def;
-  }
+  const isAlternate = (def["transform"] as { role?: unknown } | undefined)?.role === "alternate";
+  if (cfg.skipTransformedBodies && isAlternate) return def;
+  // ⭐ 變身態往上位移 —— 讓「變身」在數值上真的是升級。
+  const shift = isAlternate ? Math.round(cfg.transformBandShift) : 0;
   const arc = archetypeOf(def as never);
+  // ⭐ 出身（10 格）優先於定位（4 格）—— 查得到就用它。
+  //   ⚠️ 兩張表並存是刻意的，理由寫在 `byOrigin` 那一格。
+  const org = originOf(def as never);
   const base = { ...((def["baseStats"] as Record<string, number> | undefined) ?? {}) };
   const growth = { ...((def["growth"] as Record<string, number> | undefined) ?? {}) };
   let touchedBase = false;
   let touchedGrowth = false;
   for (const key of cfg.appliesTo) {
-    const band = cfg.byArchetype[key]?.[arc];
+    const raw = cfg.byOrigin[key]?.[org] ?? cfg.byArchetype[key]?.[arc];
+    const band = raw === undefined ? undefined : shiftBand(raw, shift);
     const target = band === undefined ? undefined : cfg.bands[key]?.[band];
     if (typeof target !== "number") continue;
 
     if (cfg.channel[key] === "growth") {
-      // ⭐ 反解「基準等級的最終總值」。
+      // ⭐ 反解「基準等級的最終總值」—— **用解斜率，不用減法**。
       //
-      //   最終值(L) = baseStats + attr(L)·係數 + growth·(L−1)
-      //   ⇒ 拿掉作者的成長項之後剩下的 = baseStats + attr(ref)·係數
-      //   ⇒ 要達到 target，需要的成長 = (target − 那個剩下的) / (ref − 1)
+      //   減法版（`最終值(ref) − 作者成長×(ref−1)`）只對**加法**的三圍項成立。
+      //   🔴 攻速不是：`ATTR_STAT_SOURCE[AttackSpeed]` 是 **scaleBase**（乘法），
+      //     所以 `最終值 = (baseStats + growth×(ref−1)) × (1 + 敏捷×係數)`，
+      //     減法會少扣一個倍率，而且**不會報錯** —— 只是解出一個偏小的成長。
       //
-      // ⛔ 這裡**一個係數都沒有出現** —— 三圍那一項整段被減法消掉了，
-      //    所以這段程式對「哪些屬性由哪個三圍推導」完全無知，也就不會過期。
+      //   斜率版對兩種都對，因為最終值對 growth 恆為**線性**：
+      //     g0 = 成長填 0 時的最終值 · g1 = 成長填 1 時的最終值
+      //     斜率 = g1 − g0  ⇒  需要的成長 = (target − g0) / 斜率
+      //
+      // ⛔ 這裡仍然一個係數都沒有出現 —— 兩次呼叫出貨的算式，讓它自己把倍率算進去。
       if (!deps) continue; // 沒注入就什麼都不做（fail-safe，⛔ 不猜）
       const ref = cfg.referenceLevel;
-      const atRef = deps.statAt(def, key, ref);
-      const authoredGrowthTerm = (growth[key] ?? 0) * (ref - 1);
-      const withoutGrowth = atRef - authoredGrowthTerm;
-      const needed = (target - withoutGrowth) / (ref - 1);
+      const probe = (g: number): number =>
+        deps.statAt({ ...def, growth: { ...growth, [key]: g } }, key, ref);
+      const g0 = probe(0);
+      const slope = probe(1) - g0;
+      if (!Number.isFinite(slope) || slope === 0) continue; // 這一項沒有成長通道
+      const needed = (target - g0) / slope;
       growth[key] = cfg.allowNegativeGrowth ? needed : Math.max(0, needed);
       touchedGrowth = true;
       continue;
