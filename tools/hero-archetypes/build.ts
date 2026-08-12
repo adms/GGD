@@ -60,8 +60,17 @@ const STATS = [
   ["healthRegen", Stat.HealthRegen], ["manaRegen", Stat.ManaRegen],
 ] as const;
 
+/**
+ * ⭐ **變身態不採計**（owner 2026-08-13：「變身也不採計了」）。
+ *
+ * ⚠️ 這與「變身一視同仁」不衝突，兩件事在不同的層：
+ *   · **統計母體**（算中位數的那一群）→ 只有**本體**。變身態是同一位英雄的
+ *     第二張卡，放進去等於**重複計數**，會把中位數往那些有變身的英雄拉。
+ *   · **正規化的套用對象** → 仍然**包含**變身態（`skipTransformedBodies: false`），
+ *     它照自己的出身正規化，跟本體用同一把尺。
+ */
 const rows = T.population.rows
-  .filter((r) => !RETIRED.has(r.id))
+  .filter((r) => !RETIRED.has(r.id) && r.group !== "transform")
   .map((r) => {
   const d = JSON.parse(readFileSync(join(ROOT, `content/champions/${r.id}.json`), "utf-8")) as Record<string, never>;
   // ⚠️ 攻擊型態以**英雄卡**為準，⛔ 不用快照 —— 2026-08-12 owner 把妖狐藏馬本體
@@ -74,7 +83,8 @@ const rows = T.population.rows
     const l1 = championStatBase(d, stat, 1);
     // ⭐ 「每級成長」用 L2−L1 量，⛔ 不讀 growth 欄位 —— 三圍成長也會貢獻，
     //    只讀 growth 會漏掉一半（而且不同屬性漏的比例不同）。
-    initial[key] = Number(l1.toFixed(3));
+    initial[key] = Number(l1.toFixed(2));
+    // ⚠️ 成長保留四位：攻速的每級成長是 0.0133，兩位會被捨成 0.01（差 16%）。
     perLevel[key] = Number((championStatBase(d, stat, 2) - l1).toFixed(4));
   }
   const a = (d as unknown as { attributes?: Record<string, number> }).attributes ?? {};
@@ -146,9 +156,15 @@ const out = {
 };
 writeFileSync(join(ROOT, "docs/hero-archetypes.json"), JSON.stringify(out, null, 2) + "\n");
 
-const f = (n: number, d = 2) => n.toFixed(d);
-const cell = (init: number, per: number, d = 2, dp = 3): string =>
-  `${f(init, d)}<br><sub>+${f(per, dp)}</sub>`;
+/**
+ * ⭐ owner 2026-08-13：「你**計算的位數太多了**，我建議**最多取小數點兩位**就好」
+ * → 這份文件裡**每一個**數字都走這支，一律兩位。
+ * ⚠️ 例外只有一個：每級成長對小數值屬性（攻速 0.0133）取兩位會被捨成 0.01，
+ *    所以那一欄用 `g()` 保留四位，並在表頭註明。
+ */
+const f = (n: number, d = 2) => n.toFixed(2);
+const g = (n: number) => (Math.abs(n) < 0.1 ? n.toFixed(4) : n.toFixed(2));
+const cell = (init: number, per: number): string => `${f(init)}<br><sub>+${g(per)}</sub>`;
 
 /**
  * ⭐ 規格日期是**寫死的常數**，不是 `new Date()` —— 重跑這支腳本不可以讓
@@ -349,8 +365,8 @@ ${ARC_ORDER.flatMap((a) =>
   rows.filter((r) => r.定位 === a).sort((x, y) => y.initial.maxHealth! - x.initial.maxHealth!).map((r) =>
     `| ${ARCHETYPE_LABEL_ZH[a]} | ${r.出身} | ${r.身分} | ${r.name} | ${r.attackType === "ranged" ? "遠" : "近"} | ` +
     `${cell(r.initial.ms!, r.perLevel.ms!)} | ${cell(r.initial.armor!, r.perLevel.armor!)} | ${cell(r.initial.mr!, r.perLevel.mr!)} | ` +
-    `${cell(r.initial.maxHealth!, r.perLevel.maxHealth!, 0, 1)} | ${cell(r.initial.maxMana!, r.perLevel.maxMana!, 0, 1)} | ` +
-    `${cell(r.initial.ad!, r.perLevel.ad!, 0, 2)} | ${cell(r.initial.ap!, r.perLevel.ap!, 0, 2)} | ` +
+    `${cell(r.initial.maxHealth!, r.perLevel.maxHealth!)} | ${cell(r.initial.maxMana!, r.perLevel.maxMana!)} | ` +
+    `${cell(r.initial.ad!, r.perLevel.ad!)} | ${cell(r.initial.ap!, r.perLevel.ap!)} | ` +
     `${cell(r.initial.as!, r.perLevel.as!)} | ${f(r.initial.range!)} | ` +
     `${cell(r.initial.healthRegen!, r.perLevel.healthRegen!)} | ${cell(r.initial.manaRegen!, r.perLevel.manaRegen!)} |`,
   ),

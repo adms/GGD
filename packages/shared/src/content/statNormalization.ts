@@ -80,6 +80,18 @@ export type NormalBand = (typeof NORMAL_BANDS)[number];
 export const ALL_BANDS = NORMAL_BANDS;
 export type Band = NormalBand;
 
+/**
+ * 級距值保留幾位小數。⭐ owner 2026-08-13：「你**計算的位數太多了**，
+ * 我建議**最多取小數點兩位**就好」。
+ *
+ * ⚠️ 這一格只管**級距值**（＝那三十個數字，也就是他會在後台/Excel 上看到並編輯的）。
+ * ⛔ 它**不套用在反解出來的每級成長**上 —— 那是引擎內部算出來的中間值，
+ * 而且對小數值的屬性會被捨掉：攻速「中」的每級成長是 **0.0133**，
+ * 取兩位就變成 0.01，等級 99 的終值從 2.00 掉到 1.68（差 16%）。
+ * 級距值本身取兩位是安全的（268.83 / 8477.97 / 4.00 都不失真）。
+ */
+export const BAND_DECIMALS = 2;
+
 /** 級距階梯：`中` 乘上這些倍率。⛔ 兩條 r 都是 owner 給的，不是我挑的。 */
 export const BAND_MULTIPLIER: Readonly<Record<NormalBand, number>> = Object.freeze({
   極小: 0.5,
@@ -112,7 +124,7 @@ export function bandsFromMedian(mid: number, cap?: number): Readonly<Record<Norm
     const v = anchored * BAND_MULTIPLIER[b];
     // ⚠️ 再夾一次是保險絲不是政策：`cap/top × top` 的浮點誤差可能高出上限 1e-13，
     //   而那一格會在面板上顯示成「超過上限」。
-    out[b] = Number(Math.min(v, cap ?? v).toFixed(3));
+    out[b] = Number(Math.min(v, cap ?? v).toFixed(BAND_DECIMALS));
   }
   return Object.freeze(out);
 }
@@ -379,23 +391,54 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   //   ⛔ `range` 仍然不在名單上：分佈是雙峰的（近戰 1.6 擠 46 位、遠程 6–12，
   //     組間跨度 5.75×），而近戰/遠程是**型別**不是級別。
   appliesTo: Object.freeze([
-    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen",
+    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "healthRegen", "manaRegen",
   ] as const),
-  // 「中」= 量出來的母體中位數（73 位可達英雄，等級 18；移速那一格是等級 1）。
+  // 🔴 **攻速被拿掉了 —— 它不是設計選擇，是量出來的**。
+  //
+  //   owner 給了兩條規則，而它們在攻速上**互相矛盾**：
+  //     ① 「終值假設用**等級 99**」
+  //     ② 「攻速有**系統上限 4**，級距不可超過」
+  //   而 53 位本體在 L99 的攻速中位數是 **12.2** —— 是上限的 **3 倍**。
+  //
+  //   所以把梯子錨到上限（極大 = 4）之後，每一個人的 L99 目標都遠低於他
+  //   靠三圍就能達到的值 → 反解出負成長 → 被 `allowNegativeGrowth: false` 夾成 0
+  //   → **攻速成長整個消失，只剩敏捷推導**。
+  //
+  //   實測（53 位本體）：**36 位的 `growth.as` 被夾成 0**，
+  //   L18 攻速中位數 **1.67 → 1.01，−40%**。呂布 L18 從 1.556 掉到 0.945。
+  //   ⛔ 那是一場全場暗改，而畫面上看起來只是「攻速比較低」。
+  //
+  //   ⭐ 而且攻速**本來就有自己的兩層機制**：`stat-caps` 的 4（一般）/ 10（解鎖），
+  //     由標籤「解鎖上限」（`ModOp.CapRaise`）打開。在一個大家都早已超過的
+  //     硬上限底下再疊一把級距尺，最好的情況是沒有作用，最壞是這個 −40%。
+  //
+  //   ⚠️ `bands.as` 與 `byOrigin.as` 都**留著**（不是刪掉）——
+  //     要開它只要把 "as" 加回 `appliesTo`，一格後台欄位。
+  // 「中」= 量出來的母體中位數 —— ⭐ **53 位本體、作者原值、等級 99**
+  //   （移速那一格是等級 1，因為它走 baseStats 通道）。
+  //
+  // ⚠️ 三個「不是」很重要：
+  //   ⛔ **不含變身態**（owner 2026-08-13：「變身也不採計了」）——
+  //      變身是同一位英雄的第二張卡，放進去等於重複計數。
+  //      ⚠️ 但正規化仍然**套用**到變身態（`skipTransformedBodies: false`）：
+  //      不採計是統計層，一視同仁是套用層，兩層不同。
+  //   ⛔ **不含未上架的 41 位**（已搬進 `content/_legacy/`）。
+  //   ⛔ **不是從已正規化的註冊表量的** —— 那會是循環（量到自己的輸出）。
+  //      這一組數字是直接讀英雄卡算的。
   // 五格由 `bandsFromMedian()` 推 —— ⛔ 不手打五個數字。
   // ⚠️ 第二個參數是那條屬性的**系統上限**（`config.stat-caps@1` 的 base）。
   //   ⛔ 這是一份鏡射，而 `statCapsAreFences.test.ts` 對照真的那張表 —— 說謊就紅。
   bands: Object.freeze({
-    ms: bandsFromMedian(5.0, 10),
-    mr: bandsFromMedian(268.833, 15344),
-    armor: bandsFromMedian(131.357, 5078),
-    maxHealth: bandsFromMedian(8477.965, 375960),
-    maxMana: bandsFromMedian(4213.735, 232150),
-    ad: bandsFromMedian(587.529, 21200),
-    ap: bandsFromMedian(185.6, 100000),
-    as: bandsFromMedian(9.98, 4),
-    healthRegen: bandsFromMedian(17.395, 744),
-    manaRegen: bandsFromMedian(16.875, 926),
+    ms: bandsFromMedian(5.8, 10),
+    mr: bandsFromMedian(258.7, 15344),
+    armor: bandsFromMedian(90.09, 5078),
+    maxHealth: bandsFromMedian(8149.2, 375960),
+    maxMana: bandsFromMedian(4985.5, 232150),
+    ad: bandsFromMedian(420, 21200),
+    ap: bandsFromMedian(188.5, 100000),
+    as: bandsFromMedian(12.2, 4),
+    healthRegen: bandsFromMedian(16.85, 744),
+    manaRegen: bandsFromMedian(20.22, 926),
   }),
   // ⚠️ 四格那張是 owner 2026-08-12 逐字給的，留著當退路（`byOrigin` 清空就回到它）。
   byArchetype: Object.freeze({
