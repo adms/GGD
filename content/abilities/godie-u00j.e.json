@@ -39,12 +39,12 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.5
     }
   },
   "vfxKey": "fx.prim.void.pulse",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 1.5
 }

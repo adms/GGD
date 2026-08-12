@@ -95,7 +95,7 @@
       ],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "W": {
       "id": "godie-o02l.w",
@@ -134,7 +134,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-o02l.e",
@@ -227,7 +227,7 @@
       ],
       "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     }
   },
   "skillOrder": [

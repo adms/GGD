@@ -169,7 +169,7 @@
           "alpha": 0.8
         }
       ],
-      "castTimeSec": 0.3
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-efur.e",
@@ -232,7 +232,7 @@
           "alpha": 0.7
         }
       ],
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "R": {
       "id": "godie-efur.r",
@@ -313,7 +313,7 @@
       "interruptOn": "damage",
       "recoverySec": 0.8,
       "radiusTier": "小",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     }
   },
   "skillOrder": [

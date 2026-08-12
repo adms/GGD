@@ -1229,20 +1229,24 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   effects=[area("physical", tier="小", per=[600, 800, 1000], ad=0.6)])
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
-  "[被動][機率][裝備了某類道具時]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
+  "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
   # ⭐ 規格的兩句話第一次真的實作：`ability-augment@1`。
   #    ⚠️ 兩個目標**共用同一個前提**（拿著御雷劍），所以 condition 掛在 target 層 ——
   #    掛頂層表達不出「同一支 EX 的兩個強化各有各的前提」，掛每條 op 則會分岔。
+  # ⭐ owner 2026-08-13 更正我的誤讀：**「御雷劍」就是這支 EX 自己**，
+  #    「使用⋯的剎那」＝ 擁有這支 EX 就生效，⛔ 不是「身上帶著某件道具」。
+  # ⛔ 舊 JSON 的 `{"kind":"equipment","tag":"legendary"}` 是「身上有**任何一件**
+  #    傳說道具」—— 跟御雷劍毫無關係，而且 `content/items/` 裡**沒有**這件道具
+  #    （grep 0 命中）⇒ 那個條件永遠靠別的道具偶然成立或永遠不成立，兩種都是錯的。
+  # ⇒ 條件整個拿掉：首行標籤是 [被動]，被動 EX 擁有即生效。
+  #    ⚠️ 標籤列的 [裝備了某類道具時] 因此也是贅標籤（owner 規則：內文 > 標籤）。
   augment={"targets": [
-      {"abilityId": "godie-e00w.w",   # 77-02 雷鳴劍
-       "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
+      {"abilityId": "godie-e00w.w",   # 77-02 雷鳴劍 —— 發動機率上升「至」50%
        "ops": [{"op": "procChance", "mode": "set", "value": 0.5}]},
-      {"abilityId": "godie-e00w.e",   # 77-03 GLADIARIA ALAT
-       "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
+      {"abilityId": "godie-e00w.e",   # 77-03 GLADIARIA ALAT —— 持續時間增加「至」30 秒
        "ops": [{"op": "durationSec", "mode": "set", "value": 30.0}]}]},
   passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.4, "target": "event",
-       "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
        "effects": [area("magic", tier="小", ap=0.1)]}]}]})
 
 # ── 45 宇智波（火遁/千鳥）──────────────────────────────────────────────────
@@ -1429,7 +1433,16 @@ A("44-02", "44-02 死神的規則", "self", [0], [0], 0,
   passive={"name": "44-02 死神的規則", "ranks": [
       {"attributes": {"int": v}} for v in (7, 12, 17, 22)]})
 
-A("44-03", "44-03 火車輾過", "ground", [60, 50, 40, 30], [150, 250, 350, 450], 12,
+# ⭐ owner 2026-08-13：「請修正為範圍技」。
+#    規格逐字是「使敵方 [詛咒]標記的 **[周圍]的敵方部隊**受到⋯傷害」——
+#    中心語是「周圍的部隊」，而**圓心**是那個被標記的敵人。
+# ⚠️ `ground` 施法時 `abilitySystem` 把圈內所有敵人塞進 `ctx.targets`，圓心退回施法點；
+#    改成 `targeted` 之後 `ctx.targets = [被指定的那個敵人]`，而 `damageArea` 的圓心
+#    正是 `ctx.targets[0]` ⇒ **圓心自動錨到那個敵人身上**，範圍不變。
+# ⭐ 這也讓「落點錨定」那個 engine-gap 消失 —— 引擎一直做得到，只是用錯 castType。
+# ⛔ 不可以用 `victimCondition` 表達「[詛咒]標記的」：那一格過濾的是**誰吃基礎傷害**，
+#    套上去會把規格點名要吃傷害的「周圍部隊」全部濾掉，範圍技降成單體技。
+A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 450], 12,
   "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
   radiusTier="大",
   effects=[area("magic", tier="大", per=[650, 750, 850, 950], ap=0.6)])

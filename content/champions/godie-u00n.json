@@ -150,7 +150,7 @@
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-u00n.e",
@@ -201,7 +201,7 @@
       ],
       "vfxKey": "fx.prim.physical.swarm",
       "sfxKey": "wc3.demonhuntermissilehit3",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.5
     },
     "R": {
       "id": "godie-u00n.r",
@@ -268,7 +268,7 @@
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "targetsEnemies": true,
       "radius": 6.97,
-      "castTimeSec": 0.9
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

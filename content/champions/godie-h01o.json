@@ -91,7 +91,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.867
     },
     "W": {
       "id": "godie-h01o.w",
@@ -146,7 +146,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.slash",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-h01o.e",
@@ -196,7 +196,7 @@
       ],
       "vfxKey": "fx.prim.void.dash",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.367
     },
     "R": {
       "id": "godie-h01o.r",
@@ -231,7 +231,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.pulse-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

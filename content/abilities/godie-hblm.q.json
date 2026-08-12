@@ -35,11 +35,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.633
     }
   },
   "vfxKey": "fx.prim.lightning.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.633
 }

@@ -1,0 +1,9 @@
+{
+  "id": "cast-time",
+  "schema": "config.cast-time@1",
+  "note": "吟唱規則（owner 2026-08-13）。三格是同一條算式的三個位置：先把技能算出來的吟唱夾進 [floorSec, capSec]，乘上 multiplier，再夾一次，最後對齊整數 sim tick。⭐ floorSec 出貨 0.06 = 2 個 tick，是 owner 指定的最低吟唱時間（「讓 tick 一定可以處理」）—— 比一個 tick 更短時 sim 會當它是瞬發，而客戶端照樣畫得出吟唱條與預告光束，兩邊都不報錯。capSec 出貨 4.00 是「一支技能最多讓玩家站著不動多久」的硬上界。multiplier 是全域快慢，⛔ 不要改用 combatEnv.cooldown 代替（冷卻管間隔、吟唱管前搖，兩者一起動等於沒動）。⚠️ 後台『吟唱規則』頁存的是耐久覆蓋層（data/），覆蓋層會蓋掉這一個檔案。",
+  "enabled": true,
+  "multiplier": 1,
+  "floorSec": 0.06,
+  "capSec": 4
+}

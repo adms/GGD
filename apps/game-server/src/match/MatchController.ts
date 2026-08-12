@@ -53,6 +53,11 @@ import {
   type CooldownRules,
 } from "@ggd/shared/sim/cooldownRules";
 import {
+  castTimeRulesFromDoc,
+  CAST_TIME_RULES_DOC_ID,
+  type CastTimeRules,
+} from "@ggd/shared/sim/castTimeRules";
+import {
   woundRulesFromDoc,
   WOUNDS_DOC_ID,
   type WoundRules,
@@ -854,6 +859,9 @@ export class MatchController {
      */
     dispelRules: DispelRules = dispelRulesFromDoc(Configs.tryGet(DISPEL_DOC_ID)),
     cooldownRules: CooldownRules = cooldownRulesFromDoc(Configs.tryGet(COOLDOWN_RULES_DOC_ID)),
+    // 吟唱三格（倍率/下限/上限）—— owner 2026-08-13。同 cooldownRules 的形態：
+    // 文件在開場 tick 0 之前灌進 world，之後整場不再讀。
+    castTimeRules: CastTimeRules = castTimeRulesFromDoc(Configs.tryGet(CAST_TIME_RULES_DOC_ID)),
     woundRules: WoundRules = woundRulesFromDoc(Configs.tryGet(WOUNDS_DOC_ID)),
     /**
      * 虛弱規則 (`config.weakness@1`, GH#301-4) —— 哪個 tag 算虛弱、攻速倍率、
@@ -953,6 +961,7 @@ export class MatchController {
     // 淨化規則 (`config.dispel@1`) —— 同樣在 tick 0 之前定格。
     this.world.dispelRules = dispelRules;
     this.world.cooldownRules = cooldownRules;
+    this.world.castTimeRules = castTimeRules;
     this.world.woundRules = woundRules;
     this.world.weaknessRules = weaknessRules;
     this.world.damageRules = damageRules;

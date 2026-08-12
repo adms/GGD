@@ -190,5 +190,6 @@
   ],
   "icon": "assets/icons/abilities/godie-h02k.ex.webp",
   "vfxKey": "fx.prim.fire.explosion-lg",
-  "sfxKey": "wc3.mortarimpact"
+  "sfxKey": "wc3.mortarimpact",
+  "castTimeSec": 0.267
 }

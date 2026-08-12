@@ -74,7 +74,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.beam",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -86,7 +86,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -133,7 +133,7 @@
       ],
       "vfxKey": "fx.prim.earth.shockwave",
       "sfxKey": "wc3.gluescreenmeteorhit1",
-      "castTimeSec": 0.4
+      "castTimeSec": 1.033
     },
     "E": {
       "id": "godie-u00v.e",
@@ -234,7 +234,7 @@
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 0.7,
+      "castTimeSec": 1,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,

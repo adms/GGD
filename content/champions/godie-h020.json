@@ -99,7 +99,7 @@
       ],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "W": {
       "id": "godie-h020.w",
@@ -145,7 +145,7 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-h020.e",
@@ -197,7 +197,7 @@
       "vfxKey": "fx.prim.fire.beam",
       "targetsEnemies": true,
       "radius": 8.25,
-      "castTimeSec": 0.8
+      "castTimeSec": 1.5
     },
     "R": {
       "id": "godie-h020.r",
@@ -245,7 +245,7 @@
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.7
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

@@ -80,7 +80,8 @@
           "maxDistance": 6
         }
       ],
-      "vfxKey": "fx.thorn-lash"
+      "vfxKey": "fx.thorn-lash",
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "thorne.w",
@@ -137,7 +138,8 @@
           "duration": 3
         }
       ],
-      "vfxKey": "fx.barkskin"
+      "vfxKey": "fx.barkskin",
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "thorne.e",
@@ -195,7 +197,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.root-snare"
+      "vfxKey": "fx.root-snare",
+      "castTimeSec": 0.233
     },
     "R": {
       "id": "thorne.r",
@@ -217,7 +220,7 @@
       "range": 1,
       "radius": 4.5,
       "targetsEnemies": true,
-      "castTimeSec": 0.6,
+      "castTimeSec": 1.767,
       "effects": [
         {
           "kind": "damage",

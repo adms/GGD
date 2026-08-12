@@ -108,7 +108,7 @@
       ],
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.633
     },
     "W": {
       "id": "godie-hart.w",
@@ -173,7 +173,7 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 4.58,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.867
     },
     "E": {
       "id": "godie-hart.e",
@@ -272,7 +272,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
       "radius": 6.42,
-      "castTimeSec": 0.6
+      "castTimeSec": 1.133
     },
     "R": {
       "id": "godie-hart.r",
@@ -348,7 +348,7 @@
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.8,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 9,

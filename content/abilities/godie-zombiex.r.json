@@ -38,12 +38,12 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.5,
       "statusId": "slow40",
       "statusDurationSec": 1.5
     }
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "targetsEnemies": true,
-  "castTimeSec": 0.7
+  "castTimeSec": 1.5
 }

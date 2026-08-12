@@ -561,8 +561,11 @@ describe("#247 reach — a leap cannot out-range its ability", () => {
     const click = { x: from.x, z: from.z + 60 };
     expect(castAbility(world, id, "E", { type: "point", point: click })).toBe("ok");
 
-    // 0.6 s wind-up (18 ticks) + the 43-tick flight, plus slack
-    for (let i = 0; i < 18 + leapTicks(1.44) + 4; i++) world.step(NO_INTENTS);
+    // ⚠️ 前搖從**定義**推導，⛔ 不寫死 tick 數 —— owner 2026-08-13 把吟唱下限
+    //    從 0.3 改成 0.06 秒之後，這裡原本硬寫的「18 ticks」就對不上了，
+    //    而症狀是「跳躍飛過頭」這種看起來跟吟唱無關的斷言失敗。
+    const windupTicks = Math.round((def.castTimeSec ?? 0) / world.dt);
+    for (let i = 0; i < windupTicks + leapTicks(1.44) + 4; i++) world.step(NO_INTENTS);
     expect(world.airborne.has(id)).toBe(false); // landed
     expect(world.nav.get(id)!.override).toBeNull();
 

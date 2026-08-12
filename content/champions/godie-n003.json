@@ -75,7 +75,7 @@
       "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -96,7 +96,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5,
+          "castTimeSec": 0.633,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }
@@ -143,7 +143,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.nova",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-n003.e",
@@ -187,7 +187,7 @@
         }
       ],
       "vfxKey": "fx.prim.ice.nova",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.133
     },
     "R": {
       "id": "godie-n003.r",
@@ -210,7 +210,7 @@
       "range": 8.25,
       "effects": [],
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,
@@ -239,7 +239,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.233
         }
       },
       "targetsEnemies": true

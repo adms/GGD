@@ -46,5 +46,6 @@
     }
   },
   "vfxKey": "fx.prim.void.nova",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.2
 }

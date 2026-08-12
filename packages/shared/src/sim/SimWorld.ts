@@ -42,6 +42,7 @@ import { DEFAULT_STEALTH_RULES, stealthSystem, type StealthRules } from "./steal
 import { DEFAULT_BERSERK_RULES, type BerserkRules } from "./abilities/berserkRules";
 import { DEFAULT_DISPEL_RULES, type DispelRules } from "./dispelRules";
 import { DEFAULT_COOLDOWN_RULES, type CooldownRules } from "./cooldownRules";
+import { DEFAULT_CAST_TIME_RULES, type CastTimeRules } from "./castTimeRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
 import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
 import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
@@ -1050,6 +1051,15 @@ export class SimWorld {
    * owner 2026-08-10：cdr 天花板 0.99，但秒數卡 0.1。見 `sim/cooldownRules.ts`。
    */
   cooldownRules: CooldownRules = DEFAULT_COOLDOWN_RULES;
+
+  /**
+   * 吟唱規則（倍率 / 下限 / 上限）。owner 2026-08-13 的三句話，見 `sim/castTimeRules.ts`。
+   *
+   * ⚠️ 它在**施法的當下**才套用，⛔ 不是在內容產生時烘進 `castTimeSec` ——
+   * 烘進去的話後台調了要重跑 `content:build` + 重新部署，而這一格的重點正是
+   * 「存檔就生效」（第一守則）。
+   */
+  castTimeRules: CastTimeRules = DEFAULT_CAST_TIME_RULES;
   /** 【重創】多筆同時在身上時怎麼疊（A6，#278）。 */
   woundRules: WoundRules = DEFAULT_WOUND_RULES;
   /**

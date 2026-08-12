@@ -72,7 +72,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.beam",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -84,7 +84,7 @@
               "value": 30
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -111,7 +111,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -123,7 +123,7 @@
               "value": 0.07
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -162,7 +162,7 @@
       ],
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-hvwd.e.png",
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.433,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -181,7 +181,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.433
         }
       }
     },
@@ -230,7 +230,7 @@
       ],
       "vfxKey": "fx.prim.void.swarm-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

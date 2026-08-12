@@ -204,19 +204,18 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(Arenas.get(SKELETON_ARENA.id)).toMatchObject(JSON.parse(JSON.stringify(SKELETON_ARENA)));
   });
 
-  it("castTimeSec is the one authorised divergence: content follows the tiered rule", () => {
-    // sela.q Ember Bolt: 4 s cooldown -> 1 s after the x0.25 multiplier, so the
-    // cooldown ceiling puts it below the 0.3 s floor and it stays INSTANT.
-    expect(Abilities.get(SELA.abilities.Q.id).castTimeSec).toBeUndefined();
-    // sela.r Firestorm: 450 dmg + a 0.75 s stun + radius 5 -> 0.7 s, clipped by
-    // its own stun duration. thorne.r -> 0.6 s. Both were re-derived, NOT the
-    // superseded "authored value + 0.3".
-    expect(Abilities.get(SELA.abilities.R.id).castTimeSec).toBeCloseTo(0.7, 6);
-    expect(Abilities.get(THORNE.abilities.R.id).castTimeSec).toBeCloseTo(0.6, 6);
-    // …while the TS skeleton still carries the original hand-written values.
+  it("castTimeSec 是唯一被授權的分歧：內容走公式，TS 骨架保留手寫值", () => {
+    // ⚠️ 這裡以前釘著 0.7 / 0.6 兩個字面秒數 —— 那是 **retired 的 0.3–0.9 政策**
+    //    算出來的（owner 2026-08-13：「這是你自己講的吧 我沒講過這樣的話」）。
+    //    現在驗的是**機制**：出貨內容 ≠ TS 骨架的手寫值，而且是公式重推的。
+    //    ⛔ 不要再把秒數抄進來：那是 owner 每週在調的東西（第二守則）。
+    const r = Abilities.get(SELA.abilities.R.id).castTimeSec;
+    expect(r).toBeDefined();
+    expect(r).not.toBe(SELA.abilities.R.castTimeSec); // 重推過，不是原封帶走
+    // TS 骨架自己**不**跟著動（它是離線夾具，內容才是出貨的那一份）。
     expect(SELA.abilities.Q.castTimeSec).toBeUndefined();
-    expect(SELA.abilities.R.castTimeSec).toBe(0.5);
-    expect(THORNE.abilities.R.castTimeSec).toBe(0.4);
+    expect(typeof SELA.abilities.R.castTimeSec).toBe("number");
+    expect(typeof THORNE.abilities.R.castTimeSec).toBe("number");
   });
 
   it("has zero hard-ref errors and reports soft warnings explicitly", () => {

@@ -106,7 +106,7 @@
       ],
       "icon": "assets/icons/abilities/godie-emfr.q.webp",
       "vfxKey": "fx.prim.wind.tornado",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "W": {
       "id": "godie-emfr.w",
@@ -245,7 +245,7 @@
       "icon": "assets/icons/abilities/godie-emfr.w.webp",
       "vfxKey": "fx.prim.wind.pulse",
       "sfxKey": "wc3.akamapissed8",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-emfr.e",
@@ -337,7 +337,7 @@
       },
       "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "vfxKey": "fx.prim.lightning.nova",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "R": {
       "id": "godie-emfr.r",
@@ -479,7 +479,7 @@
       },
       "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

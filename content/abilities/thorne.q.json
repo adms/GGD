@@ -29,5 +29,6 @@
       "maxDistance": 6
     }
   ],
-  "vfxKey": "fx.thorn-lash"
+  "vfxKey": "fx.thorn-lash",
+  "castTimeSec": 0.067
 }

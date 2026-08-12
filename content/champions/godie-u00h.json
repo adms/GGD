@@ -102,7 +102,7 @@
       ],
       "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.633
     },
     "W": {
       "id": "godie-u00h.w",
@@ -129,7 +129,7 @@
       "targetsEnemies": true,
       "radius": 3.67,
       "icon": "assets/icons/abilities/godie-u00h.w.png",
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.267,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -149,7 +149,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.267
         }
       }
     },
@@ -202,7 +202,7 @@
       ],
       "vfxKey": "fx.prim.ice.beam",
       "sfxKey": "wc3.flaretarget2",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.133
     },
     "R": {
       "id": "godie-u00h.r",

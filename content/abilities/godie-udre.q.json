@@ -31,12 +31,12 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     }
   },
   "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
   "schema": "ability@1",
-  "castTimeSec": 0.3,
+  "castTimeSec": 0.067,
   "hitFeel": {
     "hitstopTicks": 3,
     "hitstunTicks": 4,

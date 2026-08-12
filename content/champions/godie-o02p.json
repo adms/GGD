@@ -75,7 +75,7 @@
       "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
       "radius": 7.33,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -95,7 +95,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.633
         }
       }
     },
@@ -141,7 +141,7 @@
       ],
       "vfxKey": "fx.prim.sound.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-o02p.e",
@@ -166,7 +166,7 @@
       "range": 0.0,
       "effects": [],
       "vfxKey": "fx.prim.sound.explosion",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -183,7 +183,7 @@
               "value": 3
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -219,7 +219,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     }
   },
   "skillOrder": [

@@ -36,11 +36,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.arcane.pulse",
   "sfxKey": "wc3.spellbreakerpissed4",
   "targetsEnemies": true,
-  "castTimeSec": 0.4
+  "castTimeSec": 0.467
 }

@@ -91,7 +91,7 @@
       ],
       "vfxKey": "fx.prim.nature.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "W": {
       "id": "godie-n00p.w",
@@ -136,7 +136,7 @@
       ],
       "vfxKey": "fx.prim.nature.swarm",
       "sfxKey": "wc3.spiritofvengeanceyes3",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-n00p.e",
@@ -182,7 +182,7 @@
       "vfxKey": "fx.prim.nature.pulse",
       "sfxKey": "wc3.altarofelderswhat1",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "R": {
       "id": "godie-n00p.r",
@@ -224,7 +224,7 @@
       ],
       "vfxKey": "fx.prim.nature.shockwave-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.633
     }
   },
   "skillOrder": [

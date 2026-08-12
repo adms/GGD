@@ -73,7 +73,7 @@
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -92,7 +92,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.133
         }
       }
     },
@@ -168,7 +168,7 @@
       "vfxKey": "fx.prim.void.swarm",
       "sfxKey": "wc3.parasite",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -187,7 +187,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.667
         }
       }
     },
@@ -214,7 +214,7 @@
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.233,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -232,7 +232,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.233
         }
       }
     }

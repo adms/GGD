@@ -33,10 +33,10 @@
           "value": 0.25
         }
       ],
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     }
   },
   "vfxKey": "fx.prim.physical.beam",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.067
 }

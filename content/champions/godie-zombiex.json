@@ -96,7 +96,8 @@
           "statusId": "slow30",
           "statusDurationSec": 1.5
         }
-      }
+      },
+      "castTimeSec": 0.2
     },
     "W": {
       "id": "godie-zombiex.w",
@@ -143,7 +144,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.dash",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-zombiex.e",
@@ -192,7 +193,8 @@
           "statusId": "root",
           "statusDurationSec": 1
         }
-      }
+      },
+      "castTimeSec": 0.267
     },
     "R": {
       "id": "godie-zombiex.r",
@@ -216,7 +218,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -236,7 +238,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.7,
+          "castTimeSec": 1.5,
           "statusId": "slow40",
           "statusDurationSec": 1.5
         }

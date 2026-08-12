@@ -85,7 +85,7 @@
         }
       ],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 4,
@@ -151,7 +151,7 @@
       "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.8
     },
     "E": {
       "id": "godie-u01u.e",
@@ -202,7 +202,7 @@
       ],
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-u01u.r",
@@ -237,7 +237,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.slash-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

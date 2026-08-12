@@ -77,7 +77,7 @@
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 6.42,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -98,7 +98,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.867
         }
       }
     },
@@ -134,7 +134,7 @@
         }
       ],
       "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-o00k.e",
@@ -161,7 +161,7 @@
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 9.17,
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -181,7 +181,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.7
+          "castTimeSec": 1.5
         }
       }
     },

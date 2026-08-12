@@ -81,7 +81,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-udea.w",
@@ -109,7 +109,7 @@
       "effects": [],
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -129,7 +129,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.767
         }
       }
     },
@@ -186,7 +186,7 @@
       "vfxKey": "fx.prim.arcane.explosion",
       "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "R": {
       "id": "godie-udea.r",
@@ -216,7 +216,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     }
   },
   "skillOrder": [

@@ -88,7 +88,7 @@
         }
       ],
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-etyr.w",
@@ -200,7 +200,7 @@
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
       "radius": 1.5,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-orbit-array",
         "params": {
@@ -222,7 +222,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.867
         }
       }
     },

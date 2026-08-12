@@ -165,7 +165,7 @@
       "icon": "assets/icons/abilities/godie-h01u.w.webp",
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.defendcaster",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "E": {
       "id": "godie-h01u.e",
@@ -254,7 +254,7 @@
       },
       "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "vfxKey": "fx.prim.physical.beam",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "R": {
       "id": "godie-h01u.r",
@@ -387,7 +387,7 @@
       "icon": "assets/icons/abilities/godie-h01u.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
       "sfxKey": "wc3.defendcaster",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

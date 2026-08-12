@@ -92,7 +92,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.shockwave",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.633
     },
     "W": {
       "id": "godie-hpal.w",
@@ -143,7 +143,7 @@
       ],
       "vfxKey": "fx.prim.earth.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-hpal.e",
@@ -169,7 +169,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -188,7 +188,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.467
         }
       }
     },
@@ -214,7 +214,7 @@
       "effects": [],
       "vfxKey": "fx.prim.holy.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.367,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -232,7 +232,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.7
+          "castTimeSec": 1.367
         }
       }
     }

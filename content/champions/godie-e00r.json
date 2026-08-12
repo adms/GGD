@@ -88,7 +88,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "vfxKey": "fx.prim.void.explosion",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "W": {
       "id": "godie-e00r.w",
@@ -357,7 +357,7 @@
       "icon": "assets/icons/abilities/godie-e00r.r.webp",
       "vfxKey": "fx.prim.ki.beam-lg",
       "sfxKey": "wc3.markofchaos",
-      "castTimeSec": 0.4
+      "castTimeSec": 3
     }
   },
   "skillOrder": [

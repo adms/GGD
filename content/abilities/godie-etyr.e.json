@@ -41,12 +41,12 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.867
     }
   },
   "vfxKey": "fx.prim.holy.explosion",
   "targetsEnemies": true,
   "radius": 1.5,
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.867
 }

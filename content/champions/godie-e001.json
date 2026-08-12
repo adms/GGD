@@ -138,7 +138,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-e001.w",
@@ -274,7 +274,7 @@
       ],
       "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "R": {
       "id": "godie-e001.r",
@@ -314,7 +314,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.nova-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

@@ -72,7 +72,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.slash",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -84,7 +84,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -109,7 +109,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.slash",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -121,7 +121,7 @@
               "value": 0.5
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -178,7 +178,7 @@
       "sfxKey": "wc3.flaretarget2",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.233
     },
     "R": {
       "id": "godie-e00k.r",

@@ -35,11 +35,11 @@
         ]
       },
       "damageType": "physical",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     }
   },
   "vfxKey": "fx.prim.holy.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.467
 }

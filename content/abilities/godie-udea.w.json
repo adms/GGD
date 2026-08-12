@@ -41,11 +41,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.767
     }
   },
   "vfxKey": "fx.prim.ice.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.767
 }

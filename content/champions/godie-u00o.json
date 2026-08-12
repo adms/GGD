@@ -149,7 +149,7 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-u00o.e",
@@ -194,7 +194,7 @@
       ],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.demonhuntermissilehit3",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.5
     },
     "R": {
       "id": "godie-u00o.r",
@@ -261,7 +261,7 @@
       "vfxKey": "fx.prim.ki.bolt-lg",
       "targetsEnemies": true,
       "radius": 6.97,
-      "castTimeSec": 0.9
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

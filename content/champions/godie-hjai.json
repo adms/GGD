@@ -99,7 +99,7 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "W": {
       "id": "godie-hjai.w",
@@ -126,7 +126,7 @@
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.6,
+      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -146,7 +146,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.6
+          "castTimeSec": 0.633
         }
       }
     },
@@ -200,7 +200,7 @@
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.8
+      "castTimeSec": 1.5
     },
     "R": {
       "id": "godie-hjai.r",
@@ -248,7 +248,7 @@
       ],
       "vfxKey": "fx.prim.holy.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.7
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

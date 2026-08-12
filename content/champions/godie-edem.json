@@ -116,7 +116,7 @@
       ],
       "icon": "assets/icons/abilities/godie-edem.q.webp",
       "vfxKey": "fx.prim.fire.explosion",
-      "castTimeSec": 0.4
+      "castTimeSec": 1.033
     },
     "W": {
       "id": "godie-edem.w",
@@ -173,7 +173,7 @@
       ],
       "icon": "assets/icons/abilities/godie-edem.w.webp",
       "vfxKey": "fx.prim.lightning.beam",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     },
     "E": {
       "id": "godie-edem.e",
@@ -228,7 +228,7 @@
       "icon": "assets/icons/abilities/godie-edem.e.webp",
       "vfxKey": "fx.prim.lightning.beam",
       "radiusTier": "大",
-      "castTimeSec": 0.3
+      "castTimeSec": 2
     },
     "R": {
       "id": "godie-edem.r",

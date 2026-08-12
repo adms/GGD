@@ -100,7 +100,7 @@
       "vfxKey": "fx.prim.ice.nova",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "W": {
       "id": "godie-n01g.w",
@@ -143,7 +143,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-n01g.e",
@@ -187,7 +187,7 @@
         }
       ],
       "vfxKey": "fx.prim.ice.bolt",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.133
     },
     "R": {
       "id": "godie-n01g.r",
@@ -228,7 +228,7 @@
         }
       ],
       "vfxKey": "fx.w3x.locust.frostnova.p01",
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 8,

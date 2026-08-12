@@ -76,7 +76,7 @@
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.833,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -96,7 +96,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.833
         }
       }
     },
@@ -122,7 +122,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -140,7 +140,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -166,7 +166,7 @@
       "effects": [],
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -184,7 +184,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -211,7 +211,7 @@
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.7,
+      "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -231,7 +231,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.7,
+          "castTimeSec": 0.8,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }

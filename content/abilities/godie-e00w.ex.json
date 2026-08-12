@@ -2,7 +2,7 @@
   "id": "godie-e00w.ex",
   "schema": "ability@1",
   "name": "77-002 御雷劍",
-  "description": "[被動][機率][裝備了某類道具時]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
+  "description": "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
   "slot": "EX",
   "castType": "self",
   "maxRank": 1,
@@ -39,11 +39,6 @@
               }
             ],
             "chance": 0.4,
-            "condition": {
-              "kind": "equipment",
-              "subject": "self",
-              "tag": "legendary"
-            },
             "target": "event"
           }
         ]
@@ -54,11 +49,6 @@
     "targets": [
       {
         "abilityId": "godie-e00w.w",
-        "condition": {
-          "kind": "equipment",
-          "subject": "self",
-          "tag": "legendary"
-        },
         "ops": [
           {
             "op": "procChance",
@@ -69,11 +59,6 @@
       },
       {
         "abilityId": "godie-e00w.e",
-        "condition": {
-          "kind": "equipment",
-          "subject": "self",
-          "tag": "legendary"
-        },
         "ops": [
           {
             "op": "durationSec",

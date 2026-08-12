@@ -105,7 +105,7 @@
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.033
     },
     "W": {
       "id": "godie-u010.w",
@@ -161,7 +161,7 @@
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.6,
+      "castTimeSec": 0.633,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,
@@ -226,7 +226,7 @@
       ],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
-      "castTimeSec": 0.6,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,
@@ -281,7 +281,7 @@
       ],
       "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.dragonroostwhat1",
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.667,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

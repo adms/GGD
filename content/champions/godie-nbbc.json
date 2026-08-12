@@ -92,7 +92,7 @@
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": false,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-nbbc.w",
@@ -118,7 +118,7 @@
       "effects": [],
       "vfxKey": "fx.prim.lightning.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.767,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -137,7 +137,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.767
         }
       }
     },
@@ -184,7 +184,7 @@
       ],
       "vfxKey": "fx.prim.ki.bolt",
       "sfxKey": "wc3.thunderclapcaster",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.433
     },
     "R": {
       "id": "godie-nbbc.r",
@@ -208,7 +208,7 @@
       "effects": [],
       "vfxKey": "fx.prim.nature.slash-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.6,
+      "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -226,7 +226,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.6
+          "castTimeSec": 1.5
         }
       }
     }

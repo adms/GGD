@@ -95,7 +95,8 @@
           },
           "damageType": "magic"
         }
-      }
+      },
+      "castTimeSec": 0.167
     },
     "W": {
       "id": "godie-huth.w",
@@ -176,7 +177,7 @@
       "effects": [],
       "vfxKey": "fx.prim.arcane.swarm",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -195,7 +196,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -245,7 +246,7 @@
       ],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

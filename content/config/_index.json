@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "4f30929c2017",
+  "hash": "fa2f04920516",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -63,6 +63,12 @@
       "size": 3305
     },
     {
+      "id": "cast-time",
+      "path": "config/cast-time.json",
+      "hash": "e59392ba3734",
+      "size": 934
+    },
+    {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
       "hash": "4f9ccff9d6c8",
@@ -71,8 +77,8 @@
     {
       "id": "combat-env",
       "path": "config/combat-env.json",
-      "hash": "8e5b84c9f7c2",
-      "size": 983
+      "hash": "8276ca977132",
+      "size": 985
     },
     {
       "id": "combat-feel",

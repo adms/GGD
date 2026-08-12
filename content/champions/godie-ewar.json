@@ -141,7 +141,7 @@
       ],
       "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 3
     },
     "E": {
       "id": "godie-ewar.e",
@@ -395,7 +395,7 @@
         "flashMs": 178,
         "camKick": 0.446
       },
-      "castTimeSec": 0.5
+      "castTimeSec": 2
     }
   },
   "skillOrder": [

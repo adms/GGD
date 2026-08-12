@@ -380,7 +380,7 @@
       },
       "icon": "assets/icons/abilities/godie-e002.w.webp",
       "vfxKey": "fx.prim.wind.tornado",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-e002.e",
@@ -449,7 +449,7 @@
         "flashMs": 132,
         "camKick": 0.33
       },
-      "castTimeSec": 0.4
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-e002.r",
@@ -508,7 +508,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e002.r.webp",
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

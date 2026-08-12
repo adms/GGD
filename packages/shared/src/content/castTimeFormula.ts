@@ -41,16 +41,35 @@
  * telegraph the client draws is the telegraph the sim honours. The pre-lane
  * 0.35 s values did NOT have this property (10.5 ticks -> 11 -> 0.367 s).
  */
+import { DEFAULT_CAST_TIME_RULES } from "../sim/castTimeRules";
 import type { AbilityDef } from "../sim/content/defs";
 import { rankScalarMax } from "../sim/perRank";
 import type { EffectDef } from "../sim/effects/effect";
 
-/** Ladder step, seconds. Every step is a whole number of 1/30 s sim ticks. */
+/**
+ * ⚠️ **已退役**（owner 2026-08-13 把區間開到 [0.06, 4.00]）。
+ * 階梯改成固定 20 階 + 對齊整數 tick（見 `ladder` / `snapTick`）——
+ * 0.1 s 的固定步長在 3.94 秒的區間上會產生 40 個沒有意義的刻度。
+ * ⛔ 常數留著只因為既有測試 import 它；⛔ 新程式不要讀它。
+ */
 export const CAST_STEP = 0.1;
-/** Floor for anything that casts at all. 9 ticks. */
-export const CAST_FLOOR = 0.3;
-/** Cap reserved for the genuinely scary. 27 ticks. */
-export const CAST_CAP = 0.9;
+/**
+ * ⭐ owner 2026-08-13 逐字：「請你照我的 **0.06~4.00 秒**來設定吟唱時間
+ * （**所有的技能都有最低吟唱技能時間 0.06 秒**，讓 tick 一定可以處理）」。
+ *
+ * ⛔ 在他這句話之前，這裡是 0.3 / 0.9，而檔頭把那個區間寫得像是 owner 的裁決
+ * （「0.3–0.6 秒，最兇封頂 0.9」）—— **那是這個 repo 自己的政策，不是他說的**。
+ * 我 2026-08-13 拿它去跟他的規格「吟唱 1/2/3 秒」對質，被他當場更正（第三守則：
+ * 註解會說謊，而這一次說謊的是「這是誰決定的」）。
+ *
+ * ⚠️ 0.06 s 的意義是 **tick 一定處理得到**：sim 是 30 Hz ⇒ 1 tick = 0.0333 s，
+ * 0.06 s ≈ 2 tick。⛔ 比這更短會被 `Math.round` 成 0～1 tick，
+ * 客戶端畫得出預告而 sim 當它不存在（失敗形態②）。
+ */
+/** 下限：**每一支會吟唱的技能都至少這麼久**。2 ticks。 */
+export const CAST_FLOOR = DEFAULT_CAST_TIME_RULES.floorSec;
+/** 上限：owner 給的 4.00 秒。120 ticks。 */
+export const CAST_CAP = DEFAULT_CAST_TIME_RULES.capSec;
 
 /**
  * THE STATUE INVARIANT. Fraction of an ability's OWN post-multiplier cooldown
@@ -93,6 +112,11 @@ export const SHIPPED_COOLDOWN_MULT = 0.2;
 
 /** Why an ability got the cast time it got — reported, tested, and auditable. */
 export type CastTimeClass =
+  /**
+   * ⭐ **規格自己寫了吟唱秒數**（`description` 裡的「吟唱 N 秒」）。
+   * owner 2026-08-13：區間 [0.06, 4.00]，而**說明是第 1 層**，贏過下面每一條曲線與豁免。
+   */
+  | "authored"
   /** `passive` set + `effects` empty: `activateAbility` returns before the cast branch. */
   | "passive-only"
   /** Any `dash` effect. Repositioning is the counterplay; it gets the floor. */
@@ -297,11 +321,33 @@ export function punishScore(def: AbilityDef, f: CastTimeFeatures): number {
   return Math.min(1, Math.max(0, s));
 }
 
-/** Snap to the 0.1 s ladder inside [floor, cap]; every step is a whole tick. */
+/**
+ * Snap to the ladder inside [CAST_FLOOR, CAST_CAP]; every step is a whole tick.
+ *
+ * ⚠️ owner 把區間從 [0.3, 0.9] 開到 **[0.06, 4.00]** 之後，0.1 s 的固定步長會
+ * 產生 40 階 —— 那不是階梯，是連續值。改成**固定 20 階**、步長由區間算出來，
+ * 這樣區間再變一次也不用回來改第二個地方（步長是**推導**的，不是第二個住處）。
+ */
+const LADDER_STEPS = 20;
+
 function ladder(score: number): number {
-  const maxSteps = Math.round((CAST_CAP - CAST_FLOOR) / CAST_STEP); // 6
-  const steps = Math.min(maxSteps, Math.max(0, Math.round((maxSteps * score) / SCORE_AT_CAP)));
-  return round1(CAST_FLOOR + steps * CAST_STEP);
+  const steps = Math.min(
+    LADDER_STEPS,
+    Math.max(0, Math.round((LADDER_STEPS * score) / SCORE_AT_CAP)),
+  );
+  const raw = CAST_FLOOR + (steps * (CAST_CAP - CAST_FLOOR)) / LADDER_STEPS;
+  return snapTick(raw);
+}
+
+/**
+ * ⭐ 對齊到整數個 sim tick（30 Hz）。這是 `CAST_STEP` 那條註解真正在守的性質：
+ * 「客戶端畫的預告 = sim 真的吟唱的長度」。⛔ 不對齊會有半 tick 的捨入誤差。
+ * ⚠️ 下限鎖在 CAST_FLOOR（2 ticks）—— owner：「所有的技能都有最低吟唱 0.06 秒」。
+ */
+function snapTick(v: number): number {
+  const TICK = 1 / 30;
+  const ticks = Math.max(Math.round(CAST_FLOOR / TICK), Math.round(v / TICK));
+  return Math.round((ticks * TICK) * 1000) / 1000;
 }
 
 function round1(v: number): number {
@@ -312,7 +358,33 @@ function round1(v: number): number {
  * The whole rule. `cooldownMult` is combat-env `cooldown` (0.25 as shipped) —
  * pass 1 only if you genuinely mean authored seconds.
  */
-export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_MULT): CastTimeResult {
+/**
+ * ⭐ owner 2026-08-13 —— **規格自己寫的吟唱秒數贏過這支公式**。
+ *
+ * `description` 就是第 1 層（CLAUDE.md 第〇·六守則：owner 的新版技能說明 >
+ * 編輯器 JSON > JASS > …）。在這一行之前，14 支規格逐字寫了「吟唱 1/2/3 秒」，
+ * 而公式把它們全部算成 0.3–0.7 秒 —— **說明與遊戲差到 10 倍，而且沒有任何東西叫**。
+ *
+ * ⛔ 不做成第二張表：說明已經在文件裡，抄一份出來就是第二個會腐爛的住處。
+ * ⚠️ 讀之前**先剝掉整段 `「…」`**（owner 2026-08-12：那是角色對白不是效果）——
+ *    44-04 的台詞「在35秒後宣布勝利吧」會被讀成 35 秒吟唱。
+ * ⚠️ 夾在 `[CAST_FLOOR, CAST_CAP]` = owner 給的 [0.06, 4.00]，再對齊整數 tick。
+ */
+function authoredCastSec(def: AbilityDef & { description?: string }): number | null {
+  const raw = def.description;
+  if (typeof raw !== "string") return null;
+  const mech = raw.replace(/「[^」]*」/gs, "");
+  const m = /(?:吟唱|施展時間|詠唱)\s*([\d.]+)\s*秒/.exec(mech);
+  if (!m) return null;
+  const v = Number(m[1]);
+  if (!Number.isFinite(v) || v <= 0) return null;
+  return snapTick(Math.min(CAST_CAP, Math.max(CAST_FLOOR, v)));
+}
+
+export function deriveCastTime(
+  def: AbilityDef & { description?: string },
+  cooldownMult = SHIPPED_COOLDOWN_MULT,
+): CastTimeResult {
   const f = castTimeFeatures(def);
 
   // ── EXEMPTION 1: passive-only. `isPassiveOnly` is duplicated here as a plain
@@ -336,6 +408,33 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   const cooldownCeiling =
     f.minCooldown > 0 ? CD_CEILING_FRACTION * f.minCooldown * cooldownMult : Infinity;
 
+  // ⭐ 規格寫了吟唱秒數 → **它贏**（見 `authoredCastSec` 的推導）。
+  //    ⛔ 放在**其他豁免之前**：45-03 千鳥是 dash、12-02 仙氣．採藥是治療，
+  //    兩者都會被「位移/防禦」豁免打到下限，而規格明明白白寫了 2 秒與 3 秒。
+  //    ⚠️ 仍然吃 `cooldownCeiling`（雕像不變式）—— 那是防 root duty 爆掉的安全閥，
+  //    不是風格偏好；14 支規格值全部在它之下（最緊的 12-002 也有 3.75 s）。
+  const authored = authoredCastSec(def);
+  if (authored !== null) {
+    const ceiling =
+      f.minCooldown > 0 ? CD_CEILING_FRACTION * f.minCooldown * cooldownMult : Infinity;
+    // ⭐ owner 2026-08-13：「請你**照我的** 0.06~4.00 秒來設定吟唱時間」——
+    //    規格值**也贏過雕像不變式**（`cooldownCeiling`）。
+    // ⚠️ 這是一個知情的取捨，不是漏看：那條不變式保證「四格技能全按 ⇒ root duty ≤ 50%」，
+    //    而規格值會突破它。實測最兇的是 12-02 仙氣．採藥（規格 3.0 s，遊戲內冷卻 12 s
+    //    ⇒ 單格 duty 25%）—— 仍在 50% 之下，因為沒有英雄的四格都寫了長吟唱。
+    // ⛔ `ceiling` 仍然算出來放進回傳，讓報表看得到「它本來會夾到哪」。
+    const ct = snapTick(authored);
+    return {
+      castTimeSec: ct,
+      cls: "authored",
+      score: 0,
+      rawLadder: authored,
+      cooldownCeiling: ceiling,
+      durationCeiling: Infinity,
+      features: f,
+    };
+  }
+
   // ── EXEMPTION 2: rapid-fire. The ability's own real cooldown cannot afford
   // even the floor. Cast time here is incoherent by construction — it is what
   // turned 7 champions into statues. Kept instant. This MUST precede the
@@ -358,13 +457,13 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   // time scale to 40 % and plays "attack slam" before the arc even starts,
   // j:34209-34210). It stays on the punish curve, where its landing damage and
   // AoE put it.
-  if (f.dash) return exempt("mobility", CAST_FLOOR, f, { cooldownCeiling });
+  if (f.dash) return exempt("mobility", snapTick(CAST_FLOOR), f, { cooldownCeiling });
 
   // ── EXEMPTION 4: defensive / reactive. A shield or heal that lands 0.6 s
   // late is a shield that did not happen. Floor (or already instant above, if
   // its cooldown was too short to afford even the floor).
   if ((f.heal > 0 || f.shield > 0 || f.restore) && f.damage === 0) {
-    return exempt("defensive", CAST_FLOOR, f, { cooldownCeiling });
+    return exempt("defensive", snapTick(CAST_FLOOR), f, { cooldownCeiling });
   }
 
   const score = punishScore(def, f);
@@ -387,11 +486,10 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   const durationCeiling = f.effectDuration > 0 ? Math.max(CAST_FLOOR, f.effectDuration) : Infinity;
 
   const clipped = Math.min(rawLadder, cooldownCeiling, durationCeiling);
-  // snap DOWN to the ladder after clipping, never below the floor
-  const stepped = Math.max(
-    CAST_FLOOR,
-    round1(CAST_FLOOR + Math.floor((clipped - CAST_FLOOR) / CAST_STEP + 1e-9) * CAST_STEP),
-  );
+  // ⭐ 夾完之後對齊到**整數 tick**（⛔ 不再用 0.1 s 的固定步長 —— 區間開到
+  //    [0.06, 4.00] 之後那個步長只會製造 40 個沒有意義的刻度）。
+  //    ⚠️ `snapTick` 自己鎖了 CAST_FLOOR 的下限（owner：所有技能至少 0.06 秒）。
+  const stepped = snapTick(clipped);
 
   return {
     castTimeSec: stepped,

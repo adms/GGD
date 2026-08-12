@@ -106,7 +106,7 @@
       "icon": "assets/icons/abilities/godie-h00l.q.webp",
       "vfxKey": "fx.prim.wind.slash",
       "sfxKey": "wc3.druidofthetalonmissilelaunch2",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "W": {
       "id": "godie-h00l.w",
@@ -157,7 +157,7 @@
       "icon": "assets/icons/abilities/godie-h00l.w.webp",
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.4
+      "castTimeSec": 1.033
     },
     "E": {
       "id": "godie-h00l.e",
@@ -392,7 +392,7 @@
         "flashMs": 186,
         "camKick": 0.466
       },
-      "castTimeSec": 0.4
+      "castTimeSec": 2
     }
   },
   "skillOrder": [

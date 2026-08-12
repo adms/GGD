@@ -73,7 +73,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 4,
@@ -99,7 +99,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -128,7 +128,7 @@
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.6,
+      "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
         "params": {
@@ -149,7 +149,7 @@
             ]
           },
           "damageType": "physical",
-          "castTimeSec": 0.6,
+          "castTimeSec": 0.8,
           "statusId": "burnstun",
           "statusDurationSec": 0.8
         }
@@ -204,7 +204,7 @@
       ],
       "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-udre.r",
@@ -227,7 +227,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.wind.pulse-lg",
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -239,7 +239,7 @@
               "value": 0.4
             }
           ],
-          "castTimeSec": 0.4
+          "castTimeSec": 0.667
         }
       }
     }

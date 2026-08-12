@@ -96,7 +96,8 @@
       ],
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.peondeath",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.2
     },
     "W": {
       "id": "godie-u00l.w",
@@ -141,7 +142,7 @@
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-u00l.e",
@@ -187,7 +188,7 @@
       "vfxKey": "fx.prim.physical.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.7
+      "castTimeSec": 1.5
     },
     "R": {
       "id": "godie-u00l.r",
@@ -230,7 +231,7 @@
       "vfxKey": "fx.prim.physical.pulse-lg",
       "sfxKey": "wc3.nocute",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     }
   },
   "skillOrder": [

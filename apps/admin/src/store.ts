@@ -169,6 +169,7 @@ export type Page =
   | "berserkRules"
   | "dispelRules"
   | "cooldownRules"
+  | "castTime"
   // AoE 四級距 (owner 2026-08-11「原則上不寫範圍數字」): 同一個 `ConfigDocPage`
   // 元件、同一條 `putOverlayDoc`。刻意排在 冷卻規則 旁邊 —— 兩者都是「技能的
   // 尺」，操作者會一起找。
@@ -486,6 +487,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "berserkRules",
   "dispelRules",
   "cooldownRules",
+  "castTime",
   // AoE 四級距: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "aoeTiers",
   // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。

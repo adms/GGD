@@ -36,11 +36,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.233
     }
   },
   "vfxKey": "fx.prim.void.nova-lg",
   "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
-  "castTimeSec": 0.5
+  "castTimeSec": 1.233
 }

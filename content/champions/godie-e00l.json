@@ -183,7 +183,7 @@
         ]
       },
       "vfxKey": "fx.prim.wind.nova",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-e00l.e",
@@ -227,7 +227,7 @@
         }
       ],
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.233,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 6,

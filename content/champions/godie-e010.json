@@ -94,7 +94,7 @@
       ],
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.867
     },
     "W": {
       "id": "godie-e010.w",
@@ -131,7 +131,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-e010.e",
@@ -164,7 +164,7 @@
       ],
       "vfxKey": "fx.prim.nature.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     },
     "R": {
       "id": "godie-e010.r",
@@ -206,7 +206,7 @@
       ],
       "vfxKey": "fx.prim.arcane.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     }
   },
   "skillOrder": [

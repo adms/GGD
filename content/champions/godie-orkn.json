@@ -82,7 +82,7 @@
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
       "sfxKey": "wc3.headhunteryes4",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.367
     },
     "W": {
       "id": "godie-orkn.w",
@@ -108,7 +108,7 @@
       "effects": [],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -127,7 +127,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.467
         }
       }
     },
@@ -155,7 +155,7 @@
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -174,7 +174,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -223,7 +223,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 0.7
+      "castTimeSec": 0.767
     }
   },
   "skillOrder": [

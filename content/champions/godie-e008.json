@@ -106,7 +106,7 @@
       ],
       "sfxKey": "wc3.flaretarget3",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-e008.w",
@@ -173,7 +173,7 @@
         }
       ],
       "vfxKey": "fx.prim.fire.nova",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-e008.e",
@@ -239,7 +239,7 @@
           "attachTo": "point"
         }
       ],
-      "castTimeSec": 0.7
+      "castTimeSec": 1
     },
     "R": {
       "id": "godie-e008.r",
@@ -263,7 +263,7 @@
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.soulpreservation",
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.667,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -275,7 +275,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.4
+          "castTimeSec": 0.667
         }
       }
     }

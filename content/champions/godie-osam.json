@@ -75,7 +75,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -87,7 +87,7 @@
               "value": 0.1
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -116,7 +116,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.wind.slash",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -128,7 +128,7 @@
               "value": 0.25
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -156,7 +156,7 @@
       "effects": [],
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -175,7 +175,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -201,7 +201,7 @@
       "effects": [],
       "vfxKey": "fx.prim.ki.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.6,
+      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -219,7 +219,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.6
+          "castTimeSec": 1.133
         }
       }
     }

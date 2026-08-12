@@ -51,5 +51,6 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.scorch-ring"
+  "vfxKey": "fx.scorch-ring",
+  "castTimeSec": 0.2
 }

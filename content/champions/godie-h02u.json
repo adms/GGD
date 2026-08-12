@@ -86,7 +86,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-h02u.w",
@@ -142,7 +142,7 @@
       ],
       "vfxKey": "fx.prim.physical.shockwave",
       "sfxKey": "wc3.taunt",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.5
     },
     "E": {
       "id": "godie-h02u.e",
@@ -193,7 +193,7 @@
       ],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "R": {
       "id": "godie-h02u.r",
@@ -245,7 +245,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 1.033
     }
   },
   "skillOrder": [

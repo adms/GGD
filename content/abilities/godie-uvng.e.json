@@ -35,13 +35,13 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.5
     }
   },
   "vfxKey": "godie-tectonicfury-p0",
   "sfxKey": "wc3.dragonyes2",
   "schema": "ability@1",
-  "castTimeSec": 0.6,
+  "castTimeSec": 1.5,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 6,

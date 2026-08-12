@@ -179,7 +179,7 @@
       },
       "icon": "assets/icons/abilities/godie-hapm.q.webp",
       "vfxKey": "fx.prim.physical.pulse",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "W": {
       "id": "godie-hapm.w",
@@ -255,7 +255,7 @@
       ],
       "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.5
+      "castTimeSec": 1
     },
     "E": {
       "id": "godie-hapm.e",
@@ -446,7 +446,7 @@
       ],
       "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "vfxKey": "fx.prim.physical.shockwave-lg",
-      "castTimeSec": 0.3
+      "castTimeSec": 2
     }
   },
   "skillOrder": [

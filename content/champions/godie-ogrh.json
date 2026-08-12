@@ -76,7 +76,7 @@
       "effects": [],
       "vfxKey": "fx.prim.holy.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -96,7 +96,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.467
         }
       }
     },
@@ -130,7 +130,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.dash",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-ogrh.e",
@@ -174,7 +174,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "R": {
       "id": "godie-ogrh.r",
@@ -215,7 +215,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 0.6
+      "castTimeSec": 1.5
     }
   },
   "skillOrder": [

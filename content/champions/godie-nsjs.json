@@ -73,7 +73,7 @@
       "effects": [],
       "vfxKey": "fx.prim.wind.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.267,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -91,7 +91,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.3
+          "castTimeSec": 0.267
         }
       }
     },
@@ -137,7 +137,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.bolt",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-nsjs.e",
@@ -169,7 +169,7 @@
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "sfxKey": "wc3.altarofelderswhat1",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "R": {
       "id": "godie-nsjs.r",
@@ -193,7 +193,7 @@
       "effects": [],
       "vfxKey": "fx.prim.nature.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.633,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -211,7 +211,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.633
         }
       }
     }

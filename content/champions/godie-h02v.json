@@ -151,7 +151,7 @@
       ],
       "icon": "assets/icons/abilities/godie-h02v.q.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     },
     "W": {
       "id": "godie-h02v.w",
@@ -650,7 +650,7 @@
       },
       "icon": "assets/icons/abilities/godie-h02v.r.webp",
       "vfxKey": "fx.prim.nature.pulse-lg",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.433
     }
   },
   "skillOrder": [

@@ -35,11 +35,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.7
+      "castTimeSec": 1.367
     }
   },
   "vfxKey": "fx.prim.holy.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.7
+  "castTimeSec": 1.367
 }

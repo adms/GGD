@@ -55,6 +55,7 @@ import {
   zConfigBerserkDoc,
   zConfigDispelDoc,
   zConfigCooldownRulesDoc,
+  zConfigCastTimeDoc,
   zConfigAoeTiersDoc,
   zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
@@ -674,6 +675,50 @@ const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
     },
   ],
   // 兩格純量，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const CAST_TIME_SPEC: ConfigDocSpec = {
+  page: "castTime",
+  collection: "config",
+  docId: "cast-time",
+  schemaTag: "config.cast-time@1",
+  zod: zConfigCastTimeDoc,
+  title: "吟唱規則",
+  intro: [
+    "技能按下去到生效之間，玩家站著不動多久。owner 2026-08-13：「請你照我的 **0.06~4.00 秒**來設定吟唱時間（所有的技能都有最低吟唱技能時間 0.06 秒，讓 tick 一定可以處理）」＋「**吟唱時間倍率**也可以在系統後台設定」＋「吟唱時間**上下限**也可以一起設定」。",
+    "⭐ **三格是同一條算式的三個位置**，所以住同一頁：先把技能算出來的吟唱夾進 [下限, 上限] → 乘倍率 → **再夾一次** → 對齊整數 sim tick。夾兩次是刻意的：先夾擋作者打錯的「吟唱 10 秒」，後夾讓倍率 3 也不會把 2 秒推成 6 秒。",
+    "⚠️ **下限的下界是一個 sim tick（≈0.034 秒），不是 0。** sim 是 30 Hz，用 `round(秒數 ÷ 1/30)` 換算 tick：0.06 秒 = 2 tick（穩）、0.02 秒 = 1 tick、0.01 秒 = **0 tick ⇒ sim 當它瞬發**。而客戶端**照樣畫得出**吟唱條與向天光束預告 —— 兩邊都不報錯，只有玩家看得出來。這就是 owner 那句「讓 tick 一定可以處理」在說的事。",
+    "⛔ **不要改用「戰鬥系統」頁的冷卻倍率代替**：冷卻管「多久能再按一次」，吟唱管「按下去到生效多久」。用同一個旋鈕會把兩者一起動，等於什麼都沒調。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/cast-time.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/sim/castTimeRules.ts 的 applyCastTimeRules（唯一知道三格怎麼作用的地方）← abilities/abilitySystem.ts 每一次施法時呼叫一次，瞄準鎖窗口／實際吟唱 tick／送給客戶端畫吟唱條的秒數**三者共用同一個結果**；文件由 game-server 的 MatchController 在開場 tick 0 之前灌進 world.castTimeRules",
+  effect:
+    "**要重啟 game-server shard 才生效**，之後套用在重啟後新開的每一場。和 冷卻規則／淨化規則／格擋規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "enabled",
+      zh: "吟唱規則總開關",
+      note: "關掉之後三格全部不作用，吟唱照技能自己算出來的秒數走。⚠️ **它也關掉下限** —— 於是低於一個 tick 的技能會退回「客戶端畫得出來、sim 當它瞬發」那個狀態。這一格是給排查用的（「是不是這三格害的？」），⛔ 不是拿來常關的。",
+    },
+    {
+      path: "multiplier",
+      zh: "全域吟唱倍率",
+      note: "所有技能的吟唱一起快慢。1.0 ＝ 照算出來的值；0.5 ＝ 全部減半（更靈活、更難閃）；2.0 ＝ 全部加倍（更笨重、預告更好躲）。⚠️ 它在**夾完之後**才乘、然後**再夾一次**，所以開到 5 也不會有任何技能超過下面的上限。",
+    },
+    {
+      path: "floorSec",
+      zh: "吟唱下限（秒）",
+      note: "有吟唱的技能最短幾秒。出貨 **0.06**（owner 指定 ＝ 2 個 sim tick）。⛔ 下界是 **0.034（一個 tick）不是 0** —— 理由見上面第三段。⚠️ 它**不會**把瞬發技（吟唱 0）變成 0.06：那一格管的是「有吟唱的技能最短多長」，把每支瞬發技都推到 0.06 會讓全部技能一起變鈍。",
+    },
+    {
+      path: "capSec",
+      zh: "吟唱上限（秒）",
+      note: "任何技能最長幾秒。出貨 **4.00**（owner 指定）。這是「一支技能最多能讓玩家站著不動多久」的硬上界，也是作者在說明裡寫「吟唱 10 秒」時被夾住的地方。⚠️ 填得比下限還低時**下限贏** —— 否則夾出來的區間是空的，下限會被無聲違反。",
+    },
+  ],
+  // 四格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -1954,6 +1999,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   BERSERK_SPEC,
   DISPEL_SPEC,
   COOLDOWN_RULES_SPEC,
+  CAST_TIME_SPEC,
   AOE_TIERS_SPEC,
   STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,

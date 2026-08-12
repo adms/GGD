@@ -115,7 +115,7 @@
       ],
       "targetsEnemies": true,
       "radius": 4.12,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "W": {
       "id": "godie-h02r.w",
@@ -149,7 +149,7 @@
       "vfxKey": "fx.prim.nature.swarm",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-h02r.e",
@@ -194,7 +194,7 @@
       ],
       "vfxKey": "fx.prim.nature.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 1.133
     },
     "R": {
       "id": "godie-h02r.r",
@@ -235,7 +235,7 @@
         }
       ],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

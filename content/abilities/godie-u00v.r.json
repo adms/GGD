@@ -45,7 +45,7 @@
   "vfxKey": "fx.w3x.locust.boomnl.p01",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.7,
+  "castTimeSec": 1,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,

@@ -17,6 +17,7 @@ import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
 import { applyAugmentToEffects, collectAugmentOps } from "./abilityAugment";
 import { scopedCooldownReduction } from "../stats/scopedStat";
 import { applyCooldownFloor } from "../cooldownRules";
+import { applyCastTimeRules } from "../castTimeRules";
 import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { berserkCastBlock, berserkCooldownFactor } from "./berserkRules";
 import { armRecovery } from "./abilityRecovery";
@@ -332,7 +333,13 @@ export function castAbility(
   // 一樣立刻寫 facing，但同時宣告「接下來這幾 tick 移動方向不得覆蓋」。
   // 鎖的長度 = 吟唱時間，瞬發技至少 facing.instantCastTicks（沒有吟唱可以撐住
   // 面向，只給收招餘韻的話玩家看不到轉身），再加上收招餘韻。
-  const castTicksForAim = Math.round((def.castTimeSec ?? 0) / world.dt);
+  // ⭐ 吟唱三格（倍率/下限/上限）在這裡套用 —— 這是**唯一**的座標，
+  //    所以後台改了下一場就生效，⛔ 不必重跑 content:build。
+  //    ⚠️ 0 = 瞬發技，它**不吃地板**（地板管的是「有吟唱的技能最短多長」，
+  //    不是「把每一支瞬發技都變成 0.06 秒」—— 那會讓全部技能都變鈍）。
+  const castSec =
+    (def.castTimeSec ?? 0) > 0 ? applyCastTimeRules(world.castTimeRules, def.castTimeSec!) : 0;
+  const castTicksForAim = Math.round(castSec / world.dt);
   const fTicks = facingTicks(world); // 後台可調 (config.combat-feel@1 → facing)
   if (direction) {
     armFacingLock(
@@ -370,7 +377,9 @@ export function castAbility(
   });
 
   // ---- cast time: defer effects to CastResolveSystem when ct > 0 ----
-  const ctTicks = Math.round((def.castTimeSec ?? 0) / world.dt);
+  // ⚠️ 用上面那個**已經套過三格規則**的 `castSec`，⛔ 不要再讀一次 `def.castTimeSec`。
+  //    這裡曾經是第二個獨立換算點 —— 兩處只改一處的話，瞄準鎖用新值、實際吟唱用舊值。
+  const ctTicks = Math.round(castSec / world.dt);
   if (ctTicks > 0) {
     ab.cast = {
       slot,
@@ -392,7 +401,10 @@ export function castAbility(
       slot,
       abilityId: inst.abilityId,
       ticks: ctTicks,
-      castTimeSec: def.castTimeSec ?? 0,
+      // ⭐ 送**套用後**的秒數：客戶端拿它畫吟唱條與向天光束預告（#233）。
+      //    ⛔ 送 def.castTimeSec 的話後台調了倍率，畫面長度與 sim 就會對不上
+      //    —— 而那是「兩邊都不報錯，只有玩家看得出來」的那種缺陷。
+      castTimeSec: castSec,
     });
     return "ok";
   }

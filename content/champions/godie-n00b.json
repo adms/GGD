@@ -74,7 +74,7 @@
       "range": 9.17,
       "effects": [],
       "vfxKey": "fx.prim.wind.beam",
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-line-sweep",
         "params": {
@@ -90,7 +90,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.867
         }
       },
       "targetsEnemies": true
@@ -118,7 +118,7 @@
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.spellbreakerpissed4",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.467,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -136,7 +136,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.4
+          "castTimeSec": 0.467
         }
       }
     },
@@ -172,7 +172,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "R": {
       "id": "godie-n00b.r",
@@ -220,7 +220,7 @@
       ],
       "vfxKey": "fx.prim.wind.tornado-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 1
     }
   },
   "skillOrder": [

@@ -35,11 +35,11 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     }
   },
   "vfxKey": "fx.prim.holy.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.267
 }

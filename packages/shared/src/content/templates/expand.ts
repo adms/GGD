@@ -1837,10 +1837,24 @@ export function mergeExpansion(
   ex: ExpandResult,
 ): Record<string, unknown> {
   const out: Record<string, unknown> = { ...skeleton };
+  // ⚠️ `castTimeSec` 是**推導**欄位，不是作者的行為選擇：它由
+  //    `scripts/deriveCastTimes.ts` 從 `castTimeFormula` 蓋進每一份文件。
+  //    而 `castTimeSec` 在模板裡是一格 `optional` 參數 —— 文件沒填時
+  //    `has()` 回 false，展開結果就沒有它。
+  // ⛔ 於是下面的「先全刪、只放回展開有產出的」會把文件層那一格**無聲抹掉**，
+  //    而模板技能佔全 repo 一大半 ⇒ 它們一律變成瞬發。
+  // ⚠️ 2026-08-13 實測 5 支（godie-zombiex.q/e、godie-umal.q、godie-ubal.e、
+  //    godie-huth.q）：JSON 上有 0.2 秒，註冊表裡是 undefined，
+  //    客戶端畫不出吟唱條、sim 也沒有前搖 —— 兩邊一致地錯，所以看不出來。
+  // ⇒ 只有這一格保留：展開沒產出時，**文件自己的值贏**。
+  const authoredCastTime = out["castTimeSec"];
   for (const k of EXPANDED_KEYS) delete out[k];
   const exRec = ex as unknown as Record<string, unknown>;
   for (const k of EXPANDED_KEYS) {
     if (exRec[k] !== undefined) out[k] = exRec[k];
+  }
+  if (out["castTimeSec"] === undefined && authoredCastTime !== undefined) {
+    out["castTimeSec"] = authoredCastTime;
   }
   return out;
 }

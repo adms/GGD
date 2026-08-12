@@ -100,7 +100,7 @@
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.8
     },
     "W": {
       "id": "godie-e00x.w",
@@ -137,7 +137,7 @@
         }
       ],
       "vfxKey": "fx.prim.lightning.pulse-sm",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.267
     },
     "E": {
       "id": "godie-e00x.e",
@@ -182,7 +182,7 @@
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "R": {
       "id": "godie-e00x.r",
@@ -229,7 +229,7 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 1.767
     }
   },
   "skillOrder": [

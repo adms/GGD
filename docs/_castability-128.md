@@ -18,8 +18,8 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：341 / 378**（90.2%）　🟣 PASSIVE：29　❌ FAIL：8
-- 把「正確的永久被動」算進可接受行為：**370 / 378**（97.9%）如預期運作，只有 **8** 格是真正的缺口。
+- **✅ PASS：227 / 378**（60.1%）　🟣 PASSIVE：29　❌ FAIL：122
+- 把「正確的永久被動」算進可接受行為：**256 / 378**（67.7%）如預期運作，只有 **122** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
@@ -34,12 +34,12 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 217 |
-| buff | 70 |
-| projectile | 21 |
-| status | 9 |
-| heal | 9 |
-| dash | 9 |
+| damage | 147 |
+| buff | 29 |
+| projectile | 19 |
+| dash | 12 |
+| heal | 8 |
+| status | 6 |
 | championForm | 5 |
 | shield | 1 |
 
@@ -49,82 +49,196 @@
 
 | 英雄 | ID | 型 | Q | W | E | R | EX | 普攻 |
 | --- | --- | --- | :-: | :-: | :-: | :-: | :-: | :-: |
-| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | 近 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ |
-| 亞瑟王 - Saber | `godie-e002` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
-| 火霧戰士 - 夏娜 | `godie-e008` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 戰國刺客Azumi - 安云 | `godie-e00k` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | 近 | ❌ | 🟣 | 🟣 | ✅ | 🟣 | ✅ |
+| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | 近 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
+| 亞瑟王 - Saber | `godie-e002` | 近 | 🟣 | ✅ | ❌ | ✅ | 🟣 | ✅ |
+| 火霧戰士 - 夏娜 | `godie-e008` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 戰國刺客Azumi - 安云 | `godie-e00k` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | 近 | ❌ | 🟣 | 🟣 | ❌ | 🟣 | ✅ |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | 遠 | ✅ | 🟣 | ✅ | ❌ | 🟣 | ✅ |
-| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
-| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ❌ | 🟣 | ✅ |
+| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ❌ | ✅ | ❌ | 🟣 | ❌ | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
-| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ❌ | ❌ | ✅ |
+| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 奇樂 - 夜神月 | `godie-emns` | 遠 | ❌ | 🟣 | ✅ | ❌ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
-| 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
-| 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ✅ | 🟣 | ✅ |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ❌ | 🟣 | ❌ | ❌ | ✅ |
+| 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ❌ | 🟣 | ✅ |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ |
 | 亂世癿王者 - 呂布奉先 | `godie-h01u` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 國寶級的畜生 - 熊貓 | `godie-h02k` | 近 | 🟣 | 🟣 | 🟣 | 🟣 | ✅ | ✅ |
-| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | 🟣 | 🟣 | ✅ | 🟣 | ✅ |
-| 海克力斯 - Berserker | `godie-hapm` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
-| 最終幻想 - 克勞德 | `godie-hart` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 慈悲的王者 - 賈修貝爾 | `godie-hblm` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 不死之身-無 - 藤井八雲 | `godie-hpal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 獸矛傳承使 - 蒼月潮 | `godie-hpb1` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 超級普烏 - 魔人普烏 | `godie-huth` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 梅杜莎 - Rider | `godie-hvsh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 除魔巫女 - 桔梗 | `godie-hvwd` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 黑暗福音 - 依文潔琳 | `godie-n003` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 小叮噹 - 哆拉A夢 | `godie-n00b` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 通靈人 - 麻倉葉 | `godie-nplh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 獸神官 - 傑洛士 | `godie-o00l` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | 🟣 | 🟣 | ❌ | 🟣 | ✅ |
+| 海克力斯 - Berserker | `godie-hapm` | 近 | ✅ | ❌ | 🟣 | ❌ | ❌ | ✅ |
+| 最終幻想 - 克勞德 | `godie-hart` | 近 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 慈悲的王者 - 賈修貝爾 | `godie-hblm` | 遠 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | 近 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | 遠 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 不死之身-無 - 藤井八雲 | `godie-hpal` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 獸矛傳承使 - 蒼月潮 | `godie-hpb1` | 近 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 超級普烏 - 魔人普烏 | `godie-huth` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 梅杜莎 - Rider | `godie-hvsh` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 除魔巫女 - 桔梗 | `godie-hvwd` | 遠 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 黑暗福音 - 依文潔琳 | `godie-n003` | 遠 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 小叮噹 - 哆拉A夢 | `godie-n00b` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | 近 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 通靈人 - 麻倉葉 | `godie-nplh` | 近 | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | 遠 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 獸神官 - 傑洛士 | `godie-o00l` | 遠 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
 | 夢幻之星 - 初音 | `godie-o02p` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | 遠 | ✅ | 🟣 | ✅ | ✅ | ✅ | ✅ |
-| 美白大法師 - 黑人牙膏 | `godie-ogld` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 賽亞人 - 悟空 | `godie-ogrh` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 電車癡漢 - 臭作 | `godie-orkn` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 犬妖 - 殺生丸 | `godie-osam` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 神性的流失 - 賽菲洛斯 | `godie-u00j` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 邪惡意念集合體 - 死之王 | `godie-u00k` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 黑手黨老大 - 基廉列克 | `godie-u00v` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | 遠 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
+| 美白大法師 - 黑人牙膏 | `godie-ogld` | 遠 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 賽亞人 - 悟空 | `godie-ogrh` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 電車癡漢 - 臭作 | `godie-orkn` | 遠 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 犬妖 - 殺生丸 | `godie-osam` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | 近 | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| 神性的流失 - 賽菲洛斯 | `godie-u00j` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 邪惡意念集合體 - 死之王 | `godie-u00k` | 遠 | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 黑手黨老大 - 基廉列克 | `godie-u00v` | 近 | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ |
 | 魔界霸主 - 巴恩大魔王 | `godie-ubal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 至尊學長 - 飛鼠先生 | `godie-udea` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 邪眼師 - 飛影 | `godie-uvng` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 龍之子 - 天地志狼 | `godie-e007` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 黑魔導士 - 莉娜因巴斯 | `godie-h020` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 妖狐藏馬 - 南野秀一 | `godie-n00p` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 超級賽亞人 - 悟空 | `godie-o00x` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 北斗之鼠 - 拳四郎 | `godie-u00l` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 邪眼師 - 飛影 | `godie-u010` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 三刀流劍士 - 索隆 | `godie-u01u` | 近 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | 近 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 至尊學長 - 飛鼠先生 | `godie-udea` | 近 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 三刀流劍士 - 索隆 | `godie-udre` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 邪眼師 - 飛影 | `godie-uvng` | 近 | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 龍之子 - 天地志狼 | `godie-e007` | 遠 | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| 黑魔導士 - 莉娜因巴斯 | `godie-h020` | 遠 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | 近 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | 近 | ✅ | ❌ | ✅ | ❌ | ❌ | ✅ |
+| 妖狐藏馬 - 南野秀一 | `godie-n00p` | 遠 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | 近 | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| 超級賽亞人 - 悟空 | `godie-o00x` | 近 | ✅ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| 北斗之鼠 - 拳四郎 | `godie-u00l` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 邪眼師 - 飛影 | `godie-u010` | 近 | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ |
+| 三刀流劍士 - 索隆 | `godie-u01u` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
 
 ## FAIL 清單（英雄 + 槽 + 原因，交給技能保真／VFX 負責人）
 
 | 英雄 | ID | 槽 | castType | 型 | 原因 |
 | --- | --- | --- | --- | --- | --- |
+| 蟬在叫人壞掉 - 龍宮禮奈 | `godie-e001` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 亞瑟王 - Saber | `godie-e002` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 火霧戰士 - 夏娜 | `godie-e008` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 火霧戰士 - 夏娜 | `godie-e008` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 戰國刺客Azumi - 安云 | `godie-e00k` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 戰國刺客Azumi - 安云 | `godie-e00k` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | Q | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 奇樂 - 夜神月 | `godie-emns` | Q | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 龍之子 - 天地志狼 | `godie-ewar` | W | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 龍之子 - 天地志狼 | `godie-ewar` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 龍之子 - 天地志狼 | `godie-ewar` | EX | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 時空勇者 - 林克 | `godie-h00l` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | W | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | EX | self | 近 | passive-only but no modifier/hook source attaches (inert) |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 海克力斯 - Berserker | `godie-hapm` | W | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 海克力斯 - Berserker | `godie-hapm` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 海克力斯 - Berserker | `godie-hapm` | EX | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 最終幻想 - 克勞德 | `godie-hart` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 最終幻想 - 克勞德 | `godie-hart` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 最終幻想 - 克勞德 | `godie-hart` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 慈悲的王者 - 賈修貝爾 | `godie-hblm` | E | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 慈悲的王者 - 賈修貝爾 | `godie-hblm` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 慈悲的王者 - 賈修貝爾 | `godie-hblm` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | E | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | R | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙種子 | `godie-hgam` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | E | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-hjai` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 不死之身-無 - 藤井八雲 | `godie-hpal` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 不死之身-無 - 藤井八雲 | `godie-hpal` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 獸矛傳承使 - 蒼月潮 | `godie-hpb1` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 超級普烏 - 魔人普烏 | `godie-huth` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 超級普烏 - 魔人普烏 | `godie-huth` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 梅杜莎 - Rider | `godie-hvsh` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 梅杜莎 - Rider | `godie-hvsh` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 除魔巫女 - 桔梗 | `godie-hvwd` | E | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 除魔巫女 - 桔梗 | `godie-hvwd` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑暗福音 - 依文潔琳 | `godie-n003` | E | skillshot | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑暗福音 - 依文潔琳 | `godie-n003` | R | skillshot | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑暗福音 - 依文潔琳 | `godie-n003` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 小叮噹 - 哆拉A夢 | `godie-n00b` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 小叮噹 - 哆拉A夢 | `godie-n00b` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-nbbc` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 通靈人 - 麻倉葉 | `godie-nplh` | Q | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 通靈人 - 麻倉葉 | `godie-nplh` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 妖狐藏馬 - 南野秀一 | `godie-nsjs` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | E | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 傲嬌電氣老鼠 - 皮卡娘 | `godie-o00k` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 獸神官 - 傑洛士 | `godie-o00l` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 獸神官 - 傑洛士 | `godie-o00l` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 神奇寶貝兒 - 皮卡丘 | `godie-ofar` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 美白大法師 - 黑人牙膏 | `godie-ogld` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 賽亞人 - 悟空 | `godie-ogrh` | R | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 賽亞人 - 悟空 | `godie-ogrh` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 電車癡漢 - 臭作 | `godie-orkn` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 犬妖 - 殺生丸 | `godie-osam` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 犬妖 - 殺生丸 | `godie-osam` | EX | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | W | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 鬼畜紅王 - 鬼畜狂刀KYO | `godie-u00h` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 神性的流失 - 賽菲洛斯 | `godie-u00j` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 神性的流失 - 賽菲洛斯 | `godie-u00j` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪惡意念集合體 - 死之王 | `godie-u00k` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 邪惡意念集合體 - 死之王 | `godie-u00k` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 邪惡意念集合體 - 死之王 | `godie-u00k` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 草帽小子 - 蒙其.D.魯夫 | `godie-u00n` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 黑手黨老大 - 基廉列克 | `godie-u00v` | W | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 黑手黨老大 - 基廉列克 | `godie-u00v` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 黑手黨老大 - 基廉列克 | `godie-u00v` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 職業獵人 - 傑 富力士 | `godie-ucrl` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 至尊學長 - 飛鼠先生 | `godie-udea` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 三刀流劍士 - 索隆 | `godie-udre` | E | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 三刀流劍士 - 索隆 | `godie-udre` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 北斗神拳掌門人 - 拳四郎 | `godie-umal` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-uvng` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-uvng` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-uvng` | EX | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 聖杯黑泥醬 - 喪標麥可 | `godie-zombiex` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 龍之子 - 天地志狼 | `godie-e007` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-h020` | E | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-h020` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 黑魔導士 - 莉娜因巴斯 | `godie-h020` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | E | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | R | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 種子神奇寶貝 - 妙蛙花 | `godie-h02r` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | W | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 看似憂鬱的神獸 - 草泥馬 | `godie-h02u` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 妖狐藏馬 - 南野秀一 | `godie-n00p` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 妖狐藏馬 - 南野秀一 | `godie-n00p` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | R | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 傳說的龍騎士 - 勇者小呆 | `godie-n01c` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 超級賽亞人 - 悟空 | `godie-o00x` | R | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 超級賽亞人 - 悟空 | `godie-o00x` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 北斗之鼠 - 拳四郎 | `godie-u00l` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 北斗之鼠 - 拳四郎 | `godie-u00l` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-u010` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-u010` | E | skillshot | 近 | cast accepted but produced no measurable effect (no-op) |
+| 邪眼師 - 飛影 | `godie-u010` | EX | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 三刀流劍士 - 索隆 | `godie-u01u` | E | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
+| 三刀流劍士 - 索隆 | `godie-u01u` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
 
 ## 🟣 永久被動清單（非 bug，僅供對照）
 

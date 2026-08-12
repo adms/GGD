@@ -78,7 +78,7 @@
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 6.42,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.867,
       "template": {
         "ref": "tpl-instant-blast",
         "params": {
@@ -99,7 +99,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.867
         }
       }
     },
@@ -327,7 +327,7 @@
         }
       ],
       "vfxKey": "fx.prim.lightning.explosion-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

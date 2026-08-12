@@ -70,7 +70,7 @@
       "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.pulse-sm",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.067,
       "template": {
         "ref": "tpl-buff-self",
         "params": {
@@ -82,7 +82,7 @@
               "value": 0.5
             }
           ],
-          "castTimeSec": 0.3
+          "castTimeSec": 0.067
         }
       }
     },
@@ -147,7 +147,7 @@
       "vfxKey": "fx.prim.physical.pulse-sm",
       "sfxKey": "wc3.moongo",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -215,7 +215,7 @@
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 0.6
+      "castTimeSec": 1.633
     },
     "R": {
       "id": "godie-hpb1.r",
@@ -282,7 +282,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     }
   },
   "skillOrder": [

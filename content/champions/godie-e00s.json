@@ -104,7 +104,7 @@
       "icon": "assets/icons/abilities/godie-e00s.q.webp",
       "vfxKey": "fx.prim.arcane.bolt",
       "sfxKey": "wc3.treantready1",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.833
     },
     "W": {
       "id": "godie-e00s.w",
@@ -280,7 +280,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00s.e.webp",
       "vfxKey": "fx.prim.nature.pulse-sm",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.667
     },
     "R": {
       "id": "godie-e00s.r",
@@ -366,7 +366,7 @@
       ],
       "icon": "assets/icons/abilities/godie-e00s.r.webp",
       "vfxKey": "fx.prim.arcane.nova-lg",
-      "castTimeSec": 0.5
+      "castTimeSec": 1.433
     }
   },
   "skillOrder": [

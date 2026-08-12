@@ -39,12 +39,12 @@
         ]
       },
       "damageType": "magic",
-      "castTimeSec": 0.6
+      "castTimeSec": 0.633
     }
   },
   "vfxKey": "fx.prim.fire.bolt",
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.633
 }

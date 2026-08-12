@@ -100,7 +100,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.1
     },
     "W": {
       "id": "sela.w",
@@ -158,7 +159,7 @@
         }
       ],
       "vfxKey": "fx.cinder-ward",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "sela.e",
@@ -212,7 +213,8 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.scorch-ring"
+      "vfxKey": "fx.scorch-ring",
+      "castTimeSec": 0.2
     },
     "R": {
       "id": "sela.r",
@@ -234,7 +236,7 @@
       "range": 10,
       "radius": 5,
       "targetsEnemies": true,
-      "castTimeSec": 0.7,
+      "castTimeSec": 0.767,
       "effects": [
         {
           "kind": "damage",

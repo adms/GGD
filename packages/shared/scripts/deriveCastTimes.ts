@@ -249,7 +249,17 @@ for (const d of all) {
   } catch {
     continue; // TS-skeleton-only ability with no standalone doc
   }
-  const next = patchKey(raw, 2, "castTimeSec", derived.get(d.id)!.castTimeSec);
+  const want = derived.get(d.id)!.castTimeSec;
+  let next = patchKey(raw, 2, "castTimeSec", want);
+  // ⭐ 走模板的技能還有**第二份** `template.params.castTimeSec`，而**它贏** ——
+  //    模板展開會用 params（沒填就用模板宣告的 default 0）覆蓋文件頂層那一格。
+  // ⚠️ 2026-08-13 實測：100 支技能頂層蓋對了、註冊表裡仍是舊值，
+  //    而 `castTimeCoverage` 是唯一叫出來的東西（失敗形態⑤：被測的不是出貨的那個）。
+  // ⛔ 不能改成「把 params 那格刪掉」—— 刪了會退回模板 default 0，更糟。
+  //    ⇒ 兩處一起寫。單一住處是**這支腳本**，不是任何一份 JSON。
+  if (/\n {4}"params": \{/.test(next) && /\n {6}"castTimeSec": /.test(next)) {
+    next = patchKey(next, 6, "castTimeSec", want ?? 0);
+  }
   if (next !== raw) {
     writeFileSync(p, next);
     abilityFiles++;
@@ -273,7 +283,14 @@ for (const c of Champions.all()) {
     const range = slotRange(text, s);
     if (!range) throw new Error(`${c.id}: cannot locate abilities.${s}`);
     const block = text.slice(range[0], range[1]);
-    const patched = patchKey(block, 6, "castTimeSec", r.castTimeSec);
+    let patched = patchKey(block, 6, "castTimeSec", r.castTimeSec);
+    // ⭐ 同 standalone：embedded 複本裡的 `template.params.castTimeSec` 也要蓋，
+    //    只是縮排深兩層（slot 4 → template 6 → params 8 → 這一格 10）。
+    // ⚠️ 漏掉它的症狀是 `abilityMirror` 紅（standalone 與 embedded 各說各話），
+    //    而不是吟唱錯 —— 兩條線要一起走完才算蓋完。
+    if (/\n {8}"params": \{/.test(patched) && /\n {10}"castTimeSec": /.test(patched)) {
+      patched = patchKey(patched, 10, "castTimeSec", r.castTimeSec ?? 0);
+    }
     if (patched !== block) {
       embedded++;
       text = text.slice(0, range[0]) + patched + text.slice(range[1]);

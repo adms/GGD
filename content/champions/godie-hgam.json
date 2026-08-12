@@ -99,7 +99,7 @@
       ],
       "targetsEnemies": true,
       "radius": 4.12,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.633,
       "template": {
         "ref": "tpl-ground-nova",
         "params": {
@@ -118,7 +118,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 0.633
         }
       }
     },
@@ -154,7 +154,7 @@
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.633
     },
     "E": {
       "id": "godie-hgam.e",
@@ -180,7 +180,7 @@
       "effects": [],
       "vfxKey": "fx.root-snare",
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 1.133,
       "template": {
         "ref": "tpl-single-strike",
         "params": {
@@ -199,7 +199,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.5
+          "castTimeSec": 1.133
         }
       }
     },
@@ -224,7 +224,7 @@
       "range": 14.0,
       "effects": [],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 0.7,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
@@ -253,7 +253,7 @@
             ]
           },
           "damageType": "magic",
-          "castTimeSec": 0.7
+          "castTimeSec": 1.5
         }
       },
       "targetsEnemies": true

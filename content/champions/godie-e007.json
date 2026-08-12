@@ -146,7 +146,7 @@
       ],
       "vfxKey": "fx.prim.nature.pulse",
       "targetsEnemies": false,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.067
     },
     "E": {
       "id": "godie-e007.e",
@@ -191,7 +191,7 @@
       "vfxKey": "fx.prim.ki.shockwave",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.e.png",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.467
     },
     "R": {
       "id": "godie-e007.r",
@@ -233,7 +233,7 @@
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.r.png",
-      "castTimeSec": 0.6,
+      "castTimeSec": 1.5,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,
