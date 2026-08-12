@@ -26,6 +26,7 @@ import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
+import { hasSourceGrant } from "./stats/sourceGrants";
 import { ContentLoader } from "../content/loader";
 import { FsContentSource } from "../content/node/FsContentSource";
 import { registerAll } from "../content/registries";
@@ -210,14 +211,16 @@ describe("天生技 / innate slot — owned from level 1", () => {
       // — 「看不看得見」 is not a stat either) both make a block non-empty while
       // `modifiers` stays literally `[]`. Counting only modifiers/hooks reported
       // those correctly-attached sources as bugs.
+      // ⭐ 2026-08-13：**第四次漂移**（`block` 格擋授予 —— 20-00 銀色甲胄改成
+      // 純 BlockGrant 的 rank 之後，這條謂詞說它「沒有內容」而來源其實掛上了）。
+      // ⛔ 前三次的修法都是「再抄一格」，所以它又漂了一次。這一版改成**呼叫
+      // `rankBlock` 用的同一支 `hasSourceGrant`** —— 第八個授予出現時這裡不用再動。
       const authored = Boolean(
         block?.modifiers?.length ||
           block?.hooks?.length ||
           block?.auras?.length ||
           block?.vision ||
-          // …and a THIRD time: `flight` (04-00 翔封界 — 「碰不碰得到」 is not a
-          // stat either; sim/flight.ts). Same drift, same fix.
-          block?.flight,
+          hasSourceGrant(block ?? {}),
       );
       const { sc } = spawnOne(cid);
       const has = sc.sources.some((s) => s.id === abilityPassiveSourceId(def.id));

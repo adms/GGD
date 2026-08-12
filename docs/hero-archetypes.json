@@ -44,16 +44,6 @@
     "enforcement": "warn-only（⛔ 不擋存檔、不擋 content:build）",
     "flagged": [
       {
-        "id": "godie-zombiex",
-        "name": "聖杯黑泥醬 - 喪標麥可",
-        "stat": "armor",
-        "level": 1,
-        "value": -1.2,
-        "median": 3.4,
-        "ratio": 0,
-        "direction": "low"
-      },
-      {
         "id": "godie-h02k",
         "name": "國寶級的畜生 - 熊貓",
         "stat": "ap",
@@ -3492,7 +3482,7 @@
       },
       "initial": {
         "ms": 2.6,
-        "armor": -1.2,
+        "armor": 1.2,
         "mr": 3.6,
         "maxHealth": 380,
         "maxMana": 300,

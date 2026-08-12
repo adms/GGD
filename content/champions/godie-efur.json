@@ -143,17 +143,6 @@
                 "coeff": 0.5
               }
             ]
-          },
-          "resourcePct": {
-            "subject": "target",
-            "resource": "health",
-            "basis": "max",
-            "perRank": [
-              0.06,
-              0.08,
-              0.1,
-              0.12
-            ]
           }
         },
         {
