@@ -12,39 +12,39 @@
     },
     "lifesteal": {
       "base": 0.8,
-      "unlocked": 1.0
+      "unlocked": 20
     },
     "cdr": {
       "base": 0.99,
       "unlocked": 0.99
     },
     "maxHealth": {
-      "base": 60000,
-      "unlocked": 200000
+      "base": 375960,
+      "unlocked": 375960
     },
     "maxMana": {
-      "base": 60000,
-      "unlocked": 200000
+      "base": 232150,
+      "unlocked": 232150
     },
     "healthRegen": {
-      "base": 1000,
-      "unlocked": 5000
+      "base": 744,
+      "unlocked": 744
     },
     "manaRegen": {
-      "base": 3000,
-      "unlocked": 8000
+      "base": 926,
+      "unlocked": 926
     },
     "ad": {
-      "base": 2000,
-      "unlocked": 8000
+      "base": 21200,
+      "unlocked": 21200
     },
     "armor": {
-      "base": 900,
-      "unlocked": 1900
+      "base": 5078,
+      "unlocked": 5078
     },
     "mr": {
-      "base": 900,
-      "unlocked": 1900
+      "base": 15344,
+      "unlocked": 15344
     },
     "range": {
       "base": 16,

@@ -8,15 +8,82 @@
     "perLevel": "L2 − L1（含三圍成長那一項）"
   },
   "origins": {
-    "rule": "主屬性(str/agi/int) × 攻擊型態(melee/ranged)",
+    "rule": "10 種 = 6 純血（主屬性 × 攻擊型態）+ 3 混血（前二名三圍的比 < MIXED_RATIO）+ 1 均衡（連第三名都在門檻內）",
+    "mixedRatio": 1.2,
     "counts": {
-      "壁壘": 22,
+      "壁壘": 20,
       "重砲": 0,
-      "刃舞": 23,
+      "刃舞": 21,
       "遊獵": 5,
-      "魔劍": 9,
-      "咒術": 14
+      "魔劍": 4,
+      "咒術": 13,
+      "狂鬥": 2,
+      "符將": 3,
+      "影術": 5,
+      "全能": 0
+    },
+    "toArchetype": {
+      "壁壘": "tank",
+      "重砲": "marksman",
+      "刃舞": "fighter",
+      "遊獵": "marksman",
+      "魔劍": "mage",
+      "咒術": "mage",
+      "狂鬥": "fighter",
+      "符將": "tank",
+      "影術": "fighter",
+      "全能": "fighter"
     }
+  },
+  "cardRatioRule": {
+    "window": [
+      1.6,
+      20
+    ],
+    "scope": "純英雄屬性 —— ⛔ 不含道具、技能與其他加成",
+    "enforcement": "warn-only（⛔ 不擋存檔、不擋 content:build）",
+    "flagged": [
+      {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "stat": "armor",
+        "level": 1,
+        "value": -1.2,
+        "median": 3.4,
+        "ratio": 0,
+        "direction": "low"
+      },
+      {
+        "id": "godie-h02k",
+        "name": "國寶級的畜生 - 熊貓",
+        "stat": "ap",
+        "level": 18,
+        "value": 2,
+        "median": 47.2,
+        "ratio": 23.6,
+        "direction": "low"
+      },
+      {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "stat": "manaRegen",
+        "level": 1,
+        "value": 1008.89,
+        "median": 1.41,
+        "ratio": 715.5248226950355,
+        "direction": "high"
+      },
+      {
+        "id": "godie-h020",
+        "name": "黑魔導士 - 莉娜因巴斯",
+        "stat": "manaRegen",
+        "level": 18,
+        "value": 1014.5,
+        "median": 4.6325,
+        "ratio": 218.99622234214786,
+        "direction": "high"
+      }
+    ]
   },
   "champions": [
     {
@@ -47,7 +114,9 @@
         "ad": 42,
         "ap": 20,
         "as": 0.73,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -58,7 +127,9 @@
         "ad": 4.55,
         "ap": 1.65,
         "as": 0.0583,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -89,7 +160,9 @@
         "ad": 48,
         "ap": 20,
         "as": 0.695,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.17,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -100,7 +173,9 @@
         "ad": 4.5,
         "ap": 1.6,
         "as": 0.0461,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.248,
+        "manaRegen": 0.172
       }
     },
     {
@@ -131,7 +206,9 @@
         "ad": 37,
         "ap": 17,
         "as": 0.71,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.29
       },
       "perLevel": {
         "ms": 0,
@@ -142,7 +219,9 @@
         "ad": 4.65,
         "ap": 1.55,
         "as": 0.0586,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.1685
       }
     },
     {
@@ -173,7 +252,9 @@
         "ad": 37,
         "ap": 17,
         "as": 0.71,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.29
       },
       "perLevel": {
         "ms": 0,
@@ -184,7 +265,9 @@
         "ad": 4.3,
         "ap": 1.55,
         "as": 0.0586,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.126,
+        "manaRegen": 0.1685
       }
     },
     {
@@ -215,7 +298,9 @@
         "ad": 48,
         "ap": 20,
         "as": 0.695,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.17,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -226,7 +311,9 @@
         "ad": 4.5,
         "ap": 1.6,
         "as": 0.0461,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.248,
+        "manaRegen": 0.172
       }
     },
     {
@@ -257,7 +344,9 @@
         "ad": 87,
         "ap": 20,
         "as": 0.973,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -268,7 +357,9 @@
         "ad": 4.55,
         "ap": 1.65,
         "as": 0.0677,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -299,7 +390,9 @@
         "ad": 31,
         "ap": 16,
         "as": 0.72,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.09,
+        "manaRegen": 1.22
       },
       "perLevel": {
         "ms": 0,
@@ -310,7 +403,9 @@
         "ad": 4.65,
         "ap": 1.55,
         "as": 0.059,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.1685
       }
     },
     {
@@ -341,7 +436,9 @@
         "ad": 32,
         "ap": 25,
         "as": 0.64,
-        "range": 6
+        "range": 6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -352,7 +449,9 @@
         "ad": 2.95,
         "ap": 2.8,
         "as": 0.037,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.164,
+        "manaRegen": 0.306
       }
     },
     {
@@ -383,7 +482,9 @@
         "ad": 28,
         "ap": 16,
         "as": 0.74,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.22
       },
       "perLevel": {
         "ms": 0,
@@ -394,7 +495,9 @@
         "ad": 4.6,
         "ap": 1.65,
         "as": 0.0592,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -425,7 +528,9 @@
         "ad": 28,
         "ap": 16,
         "as": 0.871,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.22
       },
       "perLevel": {
         "ms": 0,
@@ -436,7 +541,9 @@
         "ad": 4.6,
         "ap": 1.65,
         "as": 0.0643,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -467,7 +574,9 @@
         "ad": 37,
         "ap": 17,
         "as": 0.789,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.29
       },
       "perLevel": {
         "ms": 0,
@@ -478,7 +587,9 @@
         "ad": 4.3,
         "ap": 1.55,
         "as": 0.0618,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.126,
+        "manaRegen": 0.1685
       }
     },
     {
@@ -509,7 +620,9 @@
         "ad": 32,
         "ap": 25,
         "as": 0.64,
-        "range": 12
+        "range": 12,
+        "healthRegen": 0.93,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -520,7 +633,9 @@
         "ad": 2.95,
         "ap": 2.8,
         "as": 0.037,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.164,
+        "manaRegen": 0.306
       }
     },
     {
@@ -551,7 +666,9 @@
         "ad": 27,
         "ap": 14,
         "as": 0.76,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.69,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -562,7 +679,9 @@
         "ad": 3.9,
         "ap": 2,
         "as": 0.0564,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.126,
+        "manaRegen": 0.22
       }
     },
     {
@@ -574,7 +693,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "影術",
       "archetypeOverride": null,
       "attributes": {
         "str": 15,
@@ -593,7 +712,9 @@
         "ad": 45,
         "ap": 20,
         "as": 0.722,
-        "range": 2
+        "range": 2,
+        "healthRegen": 0.85,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -604,7 +725,9 @@
         "ad": 3.7,
         "ap": 2.3,
         "as": 0.0513,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.251
       }
     },
     {
@@ -635,7 +758,9 @@
         "ad": 33,
         "ap": 20,
         "as": 0.68,
-        "range": 6
+        "range": 6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -646,7 +771,9 @@
         "ad": 3,
         "ap": 3,
         "as": 0.0418,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.33
       }
     },
     {
@@ -677,7 +804,9 @@
         "ad": 27,
         "ap": 22,
         "as": 0.69,
-        "range": 10.1
+        "range": 10.1,
+        "healthRegen": 0.85,
+        "manaRegen": 3.64
       },
       "perLevel": {
         "ms": 0,
@@ -688,7 +817,9 @@
         "ad": 3.55,
         "ap": 2.7,
         "as": 0.0432,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.259
       }
     },
     {
@@ -719,7 +850,9 @@
         "ad": 25,
         "ap": 30,
         "as": 0.64,
-        "range": 8.2
+        "range": 8.2,
+        "healthRegen": 0.85,
+        "manaRegen": 2.2
       },
       "perLevel": {
         "ms": 0,
@@ -730,7 +863,9 @@
         "ad": 2.8,
         "ap": 3.2,
         "as": 0.0381,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.354
       }
     },
     {
@@ -761,7 +896,9 @@
         "ad": 28,
         "ap": 16,
         "as": 0.74,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.22
       },
       "perLevel": {
         "ms": 0,
@@ -772,7 +909,9 @@
         "ad": 4.6,
         "ap": 1.65,
         "as": 0.0592,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -803,7 +942,9 @@
         "ad": 34,
         "ap": 18,
         "as": 0.653,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.21,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -814,7 +955,9 @@
         "ad": 5.6,
         "ap": 1.2,
         "as": 0.0467,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.252,
+        "manaRegen": 0.134
       }
     },
     {
@@ -845,7 +988,9 @@
         "ad": 34,
         "ap": 13,
         "as": 0.705,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.21,
+        "manaRegen": 1.11
       },
       "perLevel": {
         "ms": 0,
@@ -856,7 +1001,9 @@
         "ad": 5.55,
         "ap": 1.6,
         "as": 0.0426,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.25,
+        "manaRegen": 0.172
       }
     },
     {
@@ -887,7 +1034,9 @@
         "ad": 34,
         "ap": 13,
         "as": 1.117,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.21,
+        "manaRegen": 1.11
       },
       "perLevel": {
         "ms": 0,
@@ -898,7 +1047,9 @@
         "ad": 5.55,
         "ap": 1.6,
         "as": 0.0515,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.25,
+        "manaRegen": 0.172
       }
     },
     {
@@ -929,7 +1080,9 @@
         "ad": 33,
         "ap": 14,
         "as": 0.695,
-        "range": 2
+        "range": 2,
+        "healthRegen": 1.29,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -940,7 +1093,9 @@
         "ad": 5.6,
         "ap": 1.7,
         "as": 0.0417,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.252,
+        "manaRegen": 0.189
       }
     },
     {
@@ -971,7 +1126,9 @@
         "ad": 26,
         "ap": 127,
         "as": 0.63,
-        "range": 8.2
+        "range": 8.2,
+        "healthRegen": 0.89,
+        "manaRegen": 1008.89
       },
       "perLevel": {
         "ms": 0,
@@ -982,7 +1139,9 @@
         "ad": 3.2,
         "ap": 3,
         "as": 0.0429,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.33
       }
     },
     {
@@ -1013,7 +1172,9 @@
         "ad": 76.5,
         "ap": 2,
         "as": 0.65,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.45,
+        "manaRegen": 0.24
       },
       "perLevel": {
         "ms": 0,
@@ -1024,7 +1185,9 @@
         "ad": 2.5,
         "ap": 0,
         "as": 0.026,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.13,
+        "manaRegen": 0.02
       }
     },
     {
@@ -1036,7 +1199,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "影術",
       "archetypeOverride": null,
       "attributes": {
         "str": 16,
@@ -1055,7 +1218,9 @@
         "ad": 81,
         "ap": 18,
         "as": 1.167,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.89,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -1066,7 +1231,9 @@
         "ad": 3,
         "ap": 2.3,
         "as": 0.0621,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.251
       }
     },
     {
@@ -1078,7 +1245,7 @@
       "attackType": "melee",
       "bodyScale": 0.85,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "影術",
       "archetypeOverride": null,
       "attributes": {
         "str": 16,
@@ -1097,7 +1264,9 @@
         "ad": 26,
         "ap": 21,
         "as": 0.73,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.14,
+        "manaRegen": 1.57
       },
       "perLevel": {
         "ms": 0,
@@ -1108,7 +1277,9 @@
         "ad": 3,
         "ap": 2,
         "as": 0.0552,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.22
       }
     },
     {
@@ -1120,7 +1291,7 @@
       "attackType": "melee",
       "bodyScale": 0.85,
       "primary": "agi",
-      "出身": "刃舞",
+      "出身": "影術",
       "archetypeOverride": null,
       "attributes": {
         "str": 16,
@@ -1139,7 +1310,9 @@
         "ad": 26,
         "ap": 21,
         "as": 0.73,
-        "range": 2
+        "range": 2,
+        "healthRegen": 1.14,
+        "manaRegen": 1.57
       },
       "perLevel": {
         "ms": 0,
@@ -1150,7 +1323,9 @@
         "ad": 3,
         "ap": 2,
         "as": 0.0552,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.22
       }
     },
     {
@@ -1181,7 +1356,9 @@
         "ad": 36,
         "ap": 14,
         "as": 0.663,
-        "range": 2
+        "range": 2,
+        "healthRegen": 1.41,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -1192,7 +1369,9 @@
         "ad": 5.6,
         "ap": 1.7,
         "as": 0.0405,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.252,
+        "manaRegen": 0.189
       }
     },
     {
@@ -1223,7 +1402,9 @@
         "ad": 39,
         "ap": 13,
         "as": 0.705,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.21,
+        "manaRegen": 1.01
       },
       "perLevel": {
         "ms": 0,
@@ -1234,7 +1415,9 @@
         "ad": 5,
         "ap": 1.9,
         "as": 0.0465,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.22,
+        "manaRegen": 0.213
       }
     },
     {
@@ -1246,7 +1429,7 @@
       "attackType": "ranged",
       "bodyScale": 0.67,
       "primary": "int",
-      "出身": "咒術",
+      "出身": "符將",
       "archetypeOverride": null,
       "attributes": {
         "str": 17,
@@ -1265,7 +1448,9 @@
         "ad": 32,
         "ap": 21,
         "as": 0.663,
-        "range": 6.4
+        "range": 6.4,
+        "healthRegen": 0.93,
+        "manaRegen": 1.57
       },
       "perLevel": {
         "ms": 0,
@@ -1276,7 +1461,9 @@
         "ad": 4.8,
         "ap": 2.3,
         "as": 0.0405,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.216,
+        "manaRegen": 0.251
       }
     },
     {
@@ -1288,7 +1475,7 @@
       "attackType": "melee",
       "bodyScale": 0.62,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "影術",
       "archetypeOverride": null,
       "attributes": {
         "str": 16,
@@ -1307,7 +1494,9 @@
         "ad": 31,
         "ap": 18,
         "as": 0.7,
-        "range": 2
+        "range": 2,
+        "healthRegen": 0.89,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -1318,7 +1507,9 @@
         "ad": 3,
         "ap": 2.3,
         "as": 0.0488,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.251
       }
     },
     {
@@ -1349,7 +1540,9 @@
         "ad": 26,
         "ap": 27,
         "as": 0.63,
-        "range": 8.2
+        "range": 8.2,
+        "healthRegen": 0.89,
+        "manaRegen": 1.99
       },
       "perLevel": {
         "ms": 0,
@@ -1360,7 +1553,9 @@
         "ad": 3.2,
         "ap": 3,
         "as": 0.0429,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.33
       }
     },
     {
@@ -1391,7 +1586,9 @@
         "ad": 34,
         "ap": 15,
         "as": 0.684,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.46,
+        "manaRegen": 1.15
       },
       "perLevel": {
         "ms": 0,
@@ -1402,7 +1599,9 @@
         "ad": 5,
         "ap": 1.8,
         "as": 0.0457,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.22,
+        "manaRegen": 0.196
       }
     },
     {
@@ -1433,7 +1632,9 @@
         "ad": 36,
         "ap": 13,
         "as": 0.684,
-        "range": 2
+        "range": 2,
+        "healthRegen": 1.29,
+        "manaRegen": 1.01
       },
       "perLevel": {
         "ms": 0,
@@ -1444,7 +1645,9 @@
         "ad": 4.2,
         "ap": 1.7,
         "as": 0.0479,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.184,
+        "manaRegen": 0.189
       }
     },
     {
@@ -1475,7 +1678,9 @@
         "ad": 39.5,
         "ap": 18,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 12.88,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -1486,7 +1691,9 @@
         "ad": 5,
         "ap": 1.75,
         "as": 0.0458,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.22,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -1517,7 +1724,9 @@
         "ad": 25,
         "ap": 17,
         "as": 0.758,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.29
       },
       "perLevel": {
         "ms": 0,
@@ -1528,7 +1737,9 @@
         "ad": 3.4,
         "ap": 1.75,
         "as": 0.0588,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.158,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -1559,7 +1770,9 @@
         "ad": 25,
         "ap": 13,
         "as": 0.74,
-        "range": 9.2
+        "range": 9.2,
+        "healthRegen": 0.97,
+        "manaRegen": 1.01
       },
       "perLevel": {
         "ms": 0,
@@ -1570,7 +1783,9 @@
         "ad": 3.6,
         "ap": 1.8,
         "as": 0.0546,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.196
       }
     },
     {
@@ -1601,7 +1816,9 @@
         "ad": 38,
         "ap": 20,
         "as": 0.66,
-        "range": 7.3
+        "range": 7.3,
+        "healthRegen": 3.3,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -1612,7 +1829,9 @@
         "ad": 3,
         "ap": 2.6,
         "as": 0.042,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.108,
+        "manaRegen": 0.252
       }
     },
     {
@@ -1624,7 +1843,7 @@
       "attackType": "melee",
       "bodyScale": 0.65,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "符將",
       "archetypeOverride": null,
       "attributes": {
         "str": 17,
@@ -1643,7 +1862,9 @@
         "ad": 32,
         "ap": 23,
         "as": 0.66,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.71
       },
       "perLevel": {
         "ms": 0,
@@ -1654,7 +1875,9 @@
         "ad": 4.3,
         "ap": 2.45,
         "as": 0.0456,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.186,
+        "manaRegen": 0.2715
       }
     },
     {
@@ -1685,7 +1908,9 @@
         "ad": 90,
         "ap": 25,
         "as": 0.674,
-        "range": 6
+        "range": 6,
+        "healthRegen": 0.89,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -1696,7 +1921,9 @@
         "ad": 3.65,
         "ap": 2.65,
         "as": 0.0453,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.164,
+        "manaRegen": 0.2955
       }
     },
     {
@@ -1727,7 +1954,9 @@
         "ad": 47,
         "ap": 28,
         "as": 0.9,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.53,
+        "manaRegen": 2.06
       },
       "perLevel": {
         "ms": 0,
@@ -1738,7 +1967,9 @@
         "ad": 4.4,
         "ap": 1.8,
         "as": 0.0641,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.158,
+        "manaRegen": 0.196
       }
     },
     {
@@ -1769,7 +2000,9 @@
         "ad": 38,
         "ap": 20,
         "as": 0.66,
-        "range": 7.3
+        "range": 7.3,
+        "healthRegen": 3.3,
+        "manaRegen": 1.5
       },
       "perLevel": {
         "ms": 0,
@@ -1780,7 +2013,9 @@
         "ad": 3.2,
         "ap": 2.6,
         "as": 0.042,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.126,
+        "manaRegen": 0.252
       }
     },
     {
@@ -1811,7 +2046,9 @@
         "ad": 32,
         "ap": 13,
         "as": 0.75,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.01
       },
       "perLevel": {
         "ms": 0,
@@ -1822,7 +2059,9 @@
         "ad": 4.4,
         "ap": 1.8,
         "as": 0.0581,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.158,
+        "manaRegen": 0.196
       }
     },
     {
@@ -1834,7 +2073,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "魔劍",
+      "出身": "符將",
       "archetypeOverride": null,
       "attributes": {
         "str": 15,
@@ -1853,7 +2092,9 @@
         "ad": 36,
         "ap": 22,
         "as": 0.705,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.64
       },
       "perLevel": {
         "ms": 0,
@@ -1864,7 +2105,9 @@
         "ad": 4.15,
         "ap": 2,
         "as": 0.0459,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.214,
+        "manaRegen": 0.22
       }
     },
     {
@@ -1895,7 +2138,9 @@
         "ad": 26,
         "ap": 25,
         "as": 0.674,
-        "range": 2
+        "range": 2,
+        "healthRegen": 0.89,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -1906,7 +2151,9 @@
         "ad": 3.65,
         "ap": 2.65,
         "as": 0.0453,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.164,
+        "manaRegen": 0.2955
       }
     },
     {
@@ -1937,7 +2184,9 @@
         "ad": 27,
         "ap": 19,
         "as": 0.7,
-        "range": 8.2
+        "range": 8.2,
+        "healthRegen": 0.93,
+        "manaRegen": 1.43
       },
       "perLevel": {
         "ms": 0,
@@ -1948,7 +2197,9 @@
         "ad": 3.2,
         "ap": 1.7,
         "as": 0.055,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.189
       }
     },
     {
@@ -1979,7 +2230,9 @@
         "ad": 27,
         "ap": 24,
         "as": 0.65,
-        "range": 7.3
+        "range": 7.3,
+        "healthRegen": 0.93,
+        "manaRegen": 1.78
       },
       "perLevel": {
         "ms": 0,
@@ -1990,7 +2243,9 @@
         "ad": 3.55,
         "ap": 3.1,
         "as": 0.0406,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.16,
+        "manaRegen": 0.337
       }
     },
     {
@@ -2002,7 +2257,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "狂鬥",
       "archetypeOverride": null,
       "attributes": {
         "str": 18,
@@ -2021,7 +2276,9 @@
         "ad": 28,
         "ap": 18,
         "as": 1.133,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.02,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -2032,7 +2289,9 @@
         "ad": 5.2,
         "ap": 1.5,
         "as": 0.0665,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.234,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2063,7 +2322,9 @@
         "ad": 27,
         "ap": 19,
         "as": 0.907,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.93,
+        "manaRegen": 1.43
       },
       "perLevel": {
         "ms": 0,
@@ -2074,7 +2335,9 @@
         "ad": 3.2,
         "ap": 1.5,
         "as": 0.067,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.144,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2105,7 +2368,9 @@
         "ad": 25,
         "ap": 25,
         "as": 0.632,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -2116,7 +2381,9 @@
         "ad": 3.8,
         "ap": 2.3,
         "as": 0.0426,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.17,
+        "manaRegen": 0.251
       }
     },
     {
@@ -2147,7 +2414,9 @@
         "ad": 25,
         "ap": 18,
         "as": 0.847,
-        "range": 12
+        "range": 12,
+        "healthRegen": 0.85,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -2158,7 +2427,9 @@
         "ad": 3.4,
         "ap": 1.75,
         "as": 0.0623,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.158,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -2189,7 +2460,9 @@
         "ad": 27,
         "ap": 19,
         "as": 0.68,
-        "range": 8.2
+        "range": 8.2,
+        "healthRegen": 0.93,
+        "manaRegen": 1.43
       },
       "perLevel": {
         "ms": 0,
@@ -2200,7 +2473,9 @@
         "ad": 3,
         "ap": 1.6,
         "as": 0.0574,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.14,
+        "manaRegen": 0.172
       }
     },
     {
@@ -2231,7 +2506,9 @@
         "ad": 72,
         "ap": 25,
         "as": 0.504,
-        "range": 12
+        "range": 12,
+        "healthRegen": 1.88,
+        "manaRegen": 1.85
       },
       "perLevel": {
         "ms": 0,
@@ -2242,7 +2519,9 @@
         "ad": 2,
         "ap": 1.5,
         "as": 0.0378,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.09,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2254,7 +2533,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "str",
-      "出身": "壁壘",
+      "出身": "狂鬥",
       "archetypeOverride": null,
       "attributes": {
         "str": 18,
@@ -2273,7 +2552,9 @@
         "ad": 28,
         "ap": 18,
         "as": 0.716,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.02,
+        "manaRegen": 1.41
       },
       "perLevel": {
         "ms": 0,
@@ -2284,7 +2565,9 @@
         "ad": 5.2,
         "ap": 1.5,
         "as": 0.0523,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.234,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2315,7 +2598,9 @@
         "ad": 25,
         "ap": 18,
         "as": 0.72,
-        "range": 9.2
+        "range": 9.2,
+        "healthRegen": 0.85,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -2326,7 +2611,9 @@
         "ad": 3.8,
         "ap": 1.75,
         "as": 0.0574,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.166,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -2357,7 +2644,9 @@
         "ad": 42,
         "ap": 13,
         "as": 0.811,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 3.01
       },
       "perLevel": {
         "ms": 0,
@@ -2368,7 +2657,9 @@
         "ad": 3.75,
         "ap": 1.55,
         "as": 0.0614,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.164,
+        "manaRegen": 0.1685
       }
     },
     {
@@ -2399,7 +2690,9 @@
         "ad": 25,
         "ap": 14,
         "as": 0.76,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -2410,7 +2703,9 @@
         "ad": 3.3,
         "ap": 1.65,
         "as": 0.0554,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.158,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -2441,7 +2736,9 @@
         "ad": 26,
         "ap": 14,
         "as": 0.76,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.89,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -2452,7 +2749,9 @@
         "ad": 3.7,
         "ap": 1.9,
         "as": 0.0522,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.213
       }
     },
     {
@@ -2483,7 +2782,9 @@
         "ad": 28,
         "ap": 24,
         "as": 0.66,
-        "range": 9.2
+        "range": 9.2,
+        "healthRegen": 8.64,
+        "manaRegen": 4.68
       },
       "perLevel": {
         "ms": 0,
@@ -2494,7 +2795,9 @@
         "ad": 4,
         "ap": 3,
         "as": 0.0472,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.09,
+        "manaRegen": 0.33
       }
     },
     {
@@ -2525,7 +2828,9 @@
         "ad": 34,
         "ap": 15,
         "as": 0.933,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.05,
+        "manaRegen": 1.15
       },
       "perLevel": {
         "ms": 0,
@@ -2536,7 +2841,9 @@
         "ad": 3.45,
         "ap": 1.45,
         "as": 0.0665,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.178,
+        "manaRegen": 0.1615
       }
     },
     {
@@ -2567,7 +2874,9 @@
         "ad": 28,
         "ap": 22,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.64
       },
       "perLevel": {
         "ms": 0,
@@ -2578,7 +2887,9 @@
         "ad": 4.45,
         "ap": 1.5,
         "as": 0.0431,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.268,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2609,7 +2920,9 @@
         "ad": 28,
         "ap": 22,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.97,
+        "manaRegen": 1.64
       },
       "perLevel": {
         "ms": 0,
@@ -2620,7 +2933,9 @@
         "ad": 4.45,
         "ap": 1.5,
         "as": 0.0431,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.268,
+        "manaRegen": 0.165
       }
     },
     {
@@ -2651,7 +2966,9 @@
         "ad": 47,
         "ap": 18,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.13,
+        "manaRegen": 1.36
       },
       "perLevel": {
         "ms": 0,
@@ -2662,7 +2979,9 @@
         "ad": 4.2,
         "ap": 1.6,
         "as": 0.0431,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.234,
+        "manaRegen": 0.172
       }
     },
     {
@@ -2693,7 +3012,9 @@
         "ad": 25,
         "ap": 14,
         "as": 0.76,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -2704,7 +3025,9 @@
         "ad": 3.55,
         "ap": 1.65,
         "as": 0.058,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.178,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -2735,7 +3058,9 @@
         "ad": 32,
         "ap": 18,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.13,
+        "manaRegen": 3.36
       },
       "perLevel": {
         "ms": 0,
@@ -2746,7 +3071,9 @@
         "ad": 4.4,
         "ap": 1.65,
         "as": 0.0436,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.252,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -2777,7 +3104,9 @@
         "ad": 35,
         "ap": 14,
         "as": 0.867,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.25,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -2788,7 +3117,9 @@
         "ad": 4.25,
         "ap": 1.75,
         "as": 0.0507,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.218,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -2819,7 +3150,9 @@
         "ad": 26,
         "ap": 26,
         "as": 0.64,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.89,
+        "manaRegen": 1.92
       },
       "perLevel": {
         "ms": 0,
@@ -2830,7 +3163,9 @@
         "ad": 4.3,
         "ap": 2.55,
         "as": 0.0459,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.162,
+        "manaRegen": 0.2785
       }
     },
     {
@@ -2861,7 +3196,9 @@
         "ad": 35,
         "ap": 14,
         "as": 0.684,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.25,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -2872,7 +3209,9 @@
         "ad": 4.25,
         "ap": 1.75,
         "as": 0.0457,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.218,
+        "manaRegen": 0.1925
       }
     },
     {
@@ -2903,7 +3242,9 @@
         "ad": 81,
         "ap": 17,
         "as": 0.68,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.25,
+        "manaRegen": 1.34
       },
       "perLevel": {
         "ms": 0,
@@ -2914,7 +3255,9 @@
         "ad": 5,
         "ap": 4,
         "as": 0.0376,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.09,
+        "manaRegen": 0.44
       }
     },
     {
@@ -2945,7 +3288,9 @@
         "ad": 32,
         "ap": 18,
         "as": 0.674,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.13,
+        "manaRegen": 3.36
       },
       "perLevel": {
         "ms": 0,
@@ -2956,7 +3301,9 @@
         "ad": 4.4,
         "ap": 1.65,
         "as": 0.0436,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.252,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -2987,7 +3334,9 @@
         "ad": 34,
         "ap": 15,
         "as": 0.7,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 1.05,
+        "manaRegen": 1.15
       },
       "perLevel": {
         "ms": 0,
@@ -2998,7 +3347,9 @@
         "ad": 3.45,
         "ap": 1.45,
         "as": 0.0571,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.178,
+        "manaRegen": 0.1615
       }
     },
     {
@@ -3029,7 +3380,9 @@
         "ad": 25,
         "ap": 14,
         "as": 0.76,
-        "range": 1.6
+        "range": 1.6,
+        "healthRegen": 0.85,
+        "manaRegen": 1.08
       },
       "perLevel": {
         "ms": 0,
@@ -3040,7 +3393,9 @@
         "ad": 3.55,
         "ap": 1.65,
         "as": 0.058,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.178,
+        "manaRegen": 0.1855
       }
     },
     {
@@ -3071,7 +3426,9 @@
         "ad": 36,
         "ap": 6,
         "as": 0.7,
-        "range": 1.2
+        "range": 1.2,
+        "healthRegen": 0.88,
+        "manaRegen": 6.12
       },
       "perLevel": {
         "ms": 0,
@@ -3082,7 +3439,9 @@
         "ad": 3.8,
         "ap": 0.8,
         "as": 0.0307,
-        "range": 0
+        "range": 0,
+        "healthRegen": 0.272,
+        "manaRegen": 0.156
       }
     }
   ]

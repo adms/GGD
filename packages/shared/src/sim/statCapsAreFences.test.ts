@@ -44,19 +44,37 @@ describe("新加的硬上下限一個人都夾不到（圍欄不是繩索）", (
     Stat.CooldownReduction,
   ]);
 
-  it("出貨英雄卡在等級 18 沒有任何一條頂到 base 上限", () => {
+  /**
+   * 🔴 **已知會被夾的**（不是缺陷，是規則正在做它該做的事）。
+   *
+   * owner 2026-08-12 定「硬上限 = 母體中位數 × 200」，而莉娜因巴斯變身態的
+   * 每秒回魔是 **1,014.5**，母體中位是 4.63 —— **219 倍**，遠在 200× 之外。
+   * 夾到 926 之後仍然等於無限魔力（中位的 200 倍），所以實質沒有變化。
+   *
+   * ⚠️ 這一格是**名單**不是豁免：新加一位就要在這裡寫下來並說出為什麼，
+   * 而不是把斷言放寬。⛔ 名單長出來就是「上限訂得太緊」的訊號。
+   */
+  const KNOWN_OVER = new Set(["godie-h020 manaRegen"]);
+
+  it("出貨英雄卡在等級 18 沒有意料之外的一條頂到 base 上限", () => {
     cover("statcaps-unit");
     const all = Champions.all();
     expect(all.length, "空母體會讓下面整段變成真空").toBeGreaterThan(50);
     const over: string[] = [];
+    const seen: string[] = [];
     for (const stat of Object.keys(DEFAULT_STAT_CAPS) as Stat[]) {
       if (DELIBERATE.has(stat)) continue;
       const { base } = capFor(DEFAULT_STAT_CAPS, stat);
       for (const d of all) {
         const v = championStatBase(d, stat, 18);
-        if (v > base) over.push(`${d.id} ${stat}=${v} > ${base}`);
+        if (v <= base) continue;
+        const key = `${d.id} ${stat}`;
+        (KNOWN_OVER.has(key) ? seen : over).push(`${key}=${v} > ${base}`);
       }
     }
-    expect(over, "被夾住的英雄（上限太緊，或這張卡真的離譜了）").toEqual([]);
+    expect(over, "意料之外被夾住的英雄（上限太緊，或這張卡真的離譜了）").toEqual([]);
+    // ⭐ 反向也要守：名單上的那些**必須真的還在超標**。修好了就要把它從名單刪掉，
+    //    否則名單會變成一份沒有人再讀的豁免清單（第三守則）。
+    expect(seen.length, "KNOWN_OVER 有過期的項目").toBe(KNOWN_OVER.size);
   });
 });

@@ -15,7 +15,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
 import { championStatBase } from "../../packages/shared/src/sim/stats/attributes";
-import { primaryAttribute } from "../../packages/shared/src/content/statNormalization";
+import { primaryAttribute, originOf, ORIGINS, ORIGIN_TO_ARCHETYPE, MIXED_RATIO } from "../../packages/shared/src/content/statNormalization";
 
 const ROOT = join(__dirname, "../..");
 const T = JSON.parse(readFileSync(join(ROOT, "docs/hero-stat-tiers.json"), "utf-8")) as {
@@ -36,21 +36,24 @@ const RETIRED = new Set<string>(
   }).retiredChampions ?? [],
 );
 
-/** 六出身 = 主屬性(3) × 攻擊型態(2)。⛔ 這是**推導**不是欄位，英雄卡的 `archetype` 才是覆寫。 */
-export const ORIGINS = ["壁壘", "重砲", "刃舞", "遊獵", "魔劍", "咒術"] as const;
-export type Origin = (typeof ORIGINS)[number];
-
-export function originOf(primary: "str" | "agi" | "int", attackType: string): Origin {
-  const melee = attackType !== "ranged";
-  if (primary === "str") return melee ? "壁壘" : "重砲";
-  if (primary === "agi") return melee ? "刃舞" : "遊獵";
-  return melee ? "魔劍" : "咒術";
-}
+/**
+ * ⭐ 卡面設計規範：**極大/極小相對於中位數的倍率**應該落在 `[1.6, 20]`。
+ *
+ * owner 2026-08-12：「只是個警告標記，**並不會擋**，範圍可進一步擴大到 **1.6~20**」
+ *
+ * ⛔ 這**不是** `config.stat-caps@1`。兩把尺量的是不同的東西：
+ *   · 這一條  —— **純英雄屬性**（不含道具/技能/增幅），管的是「這張卡設計得合不合群」
+ *   · stat-caps —— **場中最終值**（卡片 × 道具 × buff × 增幅），owner 定 **200×**
+ * 差距有多大？AP 的卡面 L18 中位是 47.2，而實測最強道具組合是 **4,125.7** —— 88 倍。
+ */
+export const CARD_RATIO_MIN = 1.6;
+export const CARD_RATIO_MAX = 20;
 
 const STATS = [
   ["ms", Stat.MoveSpeed], ["armor", Stat.Armor], ["mr", Stat.MagicResist],
   ["maxHealth", Stat.MaxHealth], ["maxMana", Stat.MaxMana], ["ad", Stat.AttackDamage],
   ["ap", Stat.AbilityPower], ["as", Stat.AttackSpeed], ["range", Stat.AttackRange],
+  ["healthRegen", Stat.HealthRegen], ["manaRegen", Stat.ManaRegen],
 ] as const;
 
 const rows = T.population.rows
@@ -76,7 +79,7 @@ const rows = T.population.rows
     身分: r.group === "transform" ? "變身" : r.group === "mob" ? "小怪" : "本體",
     reachability: r.reachability, counterpartId: r.counterpartId,
     attackType, bodyScale: r.bodyScale,
-    primary, 出身: originOf(primary, attackType),
+    primary, 出身: originOf({ ...(d as object), attackType } as never),
     archetypeOverride: (d as unknown as { archetype?: string }).archetype ?? null,
     attributes: { str: a.str ?? 0, agi: a.agi ?? 0, int: a.int ?? 0, strGrowth: a.strGrowth ?? 0, agiGrowth: a.agiGrowth ?? 0, intGrowth: a.intGrowth ?? 0 },
     initial, perLevel,
@@ -84,6 +87,34 @@ const rows = T.population.rows
 });
 
 const byOrigin = Object.fromEntries(ORIGINS.map((o) => [o, rows.filter((r) => r.出身 === o).length]));
+
+// ---- 卡面設計規範的**警告標記**（⛔ 不擋任何東西，owner 2026-08-12）-------------
+const median = (xs: number[]): number => {
+  const b = [...xs].sort((a, z) => a - z);
+  return b[Math.floor(b.length / 2)] ?? 0;
+};
+type Flag = { id: string; name: string; stat: string; level: 1 | 18; value: number; median: number; ratio: number; direction: "high" | "low" };
+const flags: Flag[] = [];
+for (const [key] of STATS) {
+  for (const level of [1, 18] as const) {
+    const at = (r: (typeof rows)[number]): number =>
+      level === 1 ? r.initial[key]! : r.initial[key]! + r.perLevel[key]! * 17;
+    const m = median(rows.map(at));
+    if (m <= 0) continue;
+    for (const r of rows) {
+      const v = at(r);
+      // ⚠️ 非正值一律標記：負防禦在減傷公式裡被 `max(0, …)` 吃掉，所以卡面在說謊。
+      if (v <= 0) {
+        flags.push({ id: r.id, name: r.name, stat: key, level, value: v, median: m, ratio: 0, direction: "low" });
+        continue;
+      }
+      const ratio = v > m ? v / m : m / v;
+      if (ratio > CARD_RATIO_MAX) {
+        flags.push({ id: r.id, name: r.name, stat: key, level, value: v, median: m, ratio, direction: v > m ? "high" : "low" });
+      }
+    }
+  }
+}
 const out = {
   schema: "ggd-hero-archetypes@1",
   generatedBy: "tools/hero-archetypes/build.ts",
@@ -92,7 +123,19 @@ const out = {
     statFunction: "championStatBase(def, stat, L) —— 出貨的那一支，⛔ 沒有抄公式",
     initial: "L1 的最終值", perLevel: "L2 − L1（含三圍成長那一項）",
   },
-  origins: { rule: "主屬性(str/agi/int) × 攻擊型態(melee/ranged)", counts: byOrigin },
+  origins: {
+    rule: "10 種 = 6 純血（主屬性 × 攻擊型態）+ 3 混血（前二名三圍的比 < MIXED_RATIO）+ 1 均衡（連第三名都在門檻內）",
+    mixedRatio: MIXED_RATIO,
+    counts: byOrigin,
+    toArchetype: ORIGIN_TO_ARCHETYPE,
+  },
+  // ⭐ owner 2026-08-12：「**只是個警告標記，並不會擋**，範圍可進一步擴大到 1.6~20」
+  cardRatioRule: {
+    window: [CARD_RATIO_MIN, CARD_RATIO_MAX],
+    scope: "純英雄屬性 —— ⛔ 不含道具、技能與其他加成",
+    enforcement: "warn-only（⛔ 不擋存檔、不擋 content:build）",
+    flagged: flags,
+  },
   champions: rows,
 };
 writeFileSync(join(ROOT, "docs/hero-archetypes.json"), JSON.stringify(out, null, 2) + "\n");
@@ -113,4 +156,15 @@ const md = [
 ].join("\n");
 writeFileSync(join(ROOT, "docs/hero-archetypes.md"), md + "\n");
 console.log(`✓ docs/hero-archetypes.json (${rows.length} 位)  ·  docs/hero-archetypes.md`);
+if (flags.length) {
+  console.log(`\n⚠️  卡面倍率超出 [${CARD_RATIO_MIN}, ${CARD_RATIO_MAX}]（${flags.length} 筆，⛔ 警告不擋）：`);
+  for (const f of flags) {
+    console.log(
+      `   L${f.level} ${f.stat.padEnd(11)} ${f.name} = ${f.value.toFixed(2)}` +
+        `  （中位 ${f.median.toFixed(2)}，${f.ratio ? `${f.ratio.toFixed(1)}× ${f.direction === "high" ? "偏高" : "偏低"}` : "非正值"}）`,
+    );
+  }
+} else {
+  console.log("✓ 卡面倍率全部落在規範內");
+}
 console.log(JSON.stringify(byOrigin, null, 0));

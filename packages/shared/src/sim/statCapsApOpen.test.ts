@@ -135,7 +135,12 @@ describe("ap 上限出貨開到頂 —— 加了欄位,行為必須逐位元不�
     const before = new SimWorld(SKELETON_ARENA, 8101);
     before.statCaps = capsWithoutAp();
     expect(capFor(before.statCaps, Stat.AbilityPower).base).toBe(Number.POSITIVE_INFINITY);
-    expect(capFor(after.statCaps, Stat.AbilityPower).base).toBe(AP_CAP_OPEN);
+    // ⚠️ 2026-08-12：owner 的「硬上限 = 中位數 × 200」通則蓋過了 2026-08-01 的
+    //    「AP 先不要夾」。⛔ 從出貨表推導，不抄 `AP_CAP_OPEN`（那個常數現在是
+    //    「開到頂」那個**狀態的名字**，不是出貨值）。
+    expect(capFor(after.statCaps, Stat.AbilityPower).base).toBe(
+      capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower).base,
+    );
 
     const bare = apOf(after, build(after, []));
     // 測試如果建在一個 AP 是 0 的英雄身上,下面每一條都是空話。
@@ -178,13 +183,13 @@ describe("ap 上限出貨開到頂 —— 加了欄位,行為必須逐位元不�
 
     // 這一條是**早期預警**:內容膨脹到吃掉餘裕時,它會在玩家被夾到之前先紅。
     expect(
-      AP_CAP_OPEN / strongest,
+      capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower).base / strongest,
       `出貨 ap 天花板 ${AP_CAP_OPEN} 只剩 ${(AP_CAP_OPEN / strongest).toFixed(1)} 倍餘裕` +
         `(量到最強組合 ${strongest.toFixed(1)})—— 再長下去玩家就會被一個 owner 說「不要夾」` +
         `的天花板夾到。要嘛抬高 AP_CAP_OPEN,要嘛這就是 owner 想開始夾了(那是一個決定)。`,
     ).toBeGreaterThanOrEqual(10);
     // 而且它現在確實沒有夾到:最強組合仍然低於天花板。
-    expect(strongest).toBeLessThan(AP_CAP_OPEN);
+    expect(strongest).toBeLessThan(capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower).base);
   });
 });
 
@@ -210,10 +215,12 @@ describe("ap 上限真的接得到 —— 不是一格死設定", () => {
   it("單層:出貨的 ap 是 base === unlocked,所以 CapRaise 對它是 no-op", () => {
     cover("statcaps-ap-single-tier");
     const shipped = capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower);
-    expect(shipped.base).toBe(AP_CAP_OPEN);
+    expect(shipped.base).toBe(capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower).base);
     expect(shipped.unlocked).toBe(shipped.base);
     // 一個寫 999999 的解鎖來源,在單層下抬不動任何東西。
-    expect(effectiveCap(DEFAULT_STAT_CAPS, Stat.AbilityPower, 999999)).toBe(AP_CAP_OPEN);
+    expect(effectiveCap(DEFAULT_STAT_CAPS, Stat.AbilityPower, 999999)).toBe(
+      capFor(DEFAULT_STAT_CAPS, Stat.AbilityPower).base,
+    );
   });
 
   it("要兩層也做得到 —— 後台把 unlocked 拉高,解鎖語意當場成立", () => {

@@ -102,65 +102,74 @@ export const AP_CAP_OPEN = 100000;
  */
 export const DEFAULT_STAT_CAPS: StatCapTable = Object.freeze({
   [Stat.AttackSpeed]: Object.freeze({ base: 4.0, unlocked: 10.0 }),
+  // 🔴 **AP 是 200× 通則唯一撞牆的地方，所以它留在「開到頂」。**
+  //
+  //   owner 2026-08-12 定「硬上限 = 母體中位數 × 200」。AP 的 L18 卡面中位是
+  //   **47.2**，× 200 = **9,440**。看起來很寬 —— 但 `statCapsApOpen.test.ts`
+  //   在真的 SimWorld 裡量到的**最強 AP 組合是 8,937.8**（等級 99、三圍 +40、
+  //   六格塞滿 ×% AP 道具）。9,440 只高出它 **5.6%**。
+  //
+  //   ⇒ 套上去等於「**從現在開始夾**」，而且下一件 AP 道具就會把玩家推過去。
+  //     那是一個平衡決定，不是一條保險絲，所以 ⛔ 我不替 owner 做。
+  //
+  //   ⭐ 順帶一提：8,937.8 / 47.2 = **189×** —— owner 的 200× 幾乎正好落在
+  //     「現有最強組合」上。那個倍率不是憑感覺挑的，它量得出來。
+  //
+  //   要夾就把這一格改成 9440（後台一個欄位，存檔生效）。
   [Stat.AbilityPower]: Object.freeze({ base: AP_CAP_OPEN, unlocked: AP_CAP_OPEN }),
-  [Stat.Lifesteal]: Object.freeze({ base: 0.8, unlocked: 1.0 }),
+  // ⭐ 2026-08-12 owner：「**吸血可以超過 100%**，上限為 **20x**，傷害 100 回復 2000」
+  //   → `unlocked` 從 1.0 提到 **20**。`base` 留 0.8（沒有解鎖來源時的一般上限，
+  //   owner 2026-07-28 立的），所以每一件吸血裝與其餘 118 張卡逐位元不變 ——
+  //   只有帶 `ModOp.CapRaise` 的來源（59-00 / 59-001 暴走）碰得到上面那一段。
+  //   ⚠️ `STAT_CAP_MAX[Lifesteal]` 也要跟著抬，否則 20 會被 Zod 的保險絲擋在後台外面。
+  [Stat.Lifesteal]: Object.freeze({ base: 0.8, unlocked: 20 }),
   // 2026-08-10 —— owner 要仙后座「CD 時間再減少 50%」。base 就是那個最大單件值;
   // unlocked 0.8 留給未來的 CapRaise。⚠️ 這一列與 content/config/stat-caps.json
   // 必須同時存在,capUnlockContent.test.ts 比對的就是兩者相等。
   [Stat.CooldownReduction]: Object.freeze({ base: 0.99, unlocked: 0.99 }),
 
-  // ---- 2026-08-12 · 極小/極大 = 硬上下限（owner 授權我自己設） ----------------
-  // owner：「你自己設定就好，但可以**寬鬆一點，不要太容易被上下限擋住**，
-  //          但太離譜還是會被限制」
+  // ---- 2026-08-12 · 硬上限 = **中位數 × 200**（owner 直接給的倍率）---------------
   //
-  // ⭐ 所以每一格都是**量出來的**，不是憑感覺挑的整數。錨點是全 119 張英雄卡在
-  //    **等級 18** 的 `championStatBase()` 最大值（含變身態與退役卡，取最寬的母體）：
+  // owner：「至於**硬上限 場中最終值（卡片 × 道具 × buff × 增幅）的天花板則是 200x**」
   //
-  //      maxHealth 5,960 · maxMana 8,282 · healthRegen 78 · manaRegen 1,015
-  //      ad 198 · armor 114 · mr 155 · range 12 · ms 10.1
+  // ⭐ 所以這一批不再是我挑的整數，而是一條**算式**：
+  //      base = unlocked = round(該屬性在**等級 18** 的母體中位數 × 200)
+  //    中位數量自 73 位可達英雄（`docs/hero-archetypes.json`，`championStatBase`）。
   //
-  //    ⚠️ 這些是**基礎值**，還沒乘環境倍率、沒加道具。所以餘裕要留得大。
-  //    量完的結果：這九格**一個人都夾不到**（守衛 `statCapsAreFences.test.ts`）。
+  // ⚠️ 為什麼是「場中最終值」而不是卡面：卡面 × 道具 × buff × 增幅 疊起來差很多級。
+  //    實測最強 AP 組合是 **4,125.7**（`statCapsApOpen.test.ts` 在真的 SimWorld 裡跑），
+  //    而 AP 的卡面 L18 中位只有 47.2 —— **88 倍**。這就是為什麼卡面規範（1.6~20×）
+  //    與這一格（200×）是**兩把不同的尺**，見 `tools/hero-archetypes/build.ts`。
   //
-  // ⛔ 這一批**不碰** as / ap / lifesteal / cdr（上面四列是既有裁決），也不碰
-  //    critChance / evasion / spellVamp —— 那三條的 1.0 / 0.8 是**語意邊界**
-  //    不是餘裕，替它們發明一個 unlocked 等於默默放寬平衡（見檔頭第 96 行）。
-  [Stat.MaxHealth]: Object.freeze({ base: 60_000, unlocked: 200_000 }),
-  [Stat.MaxMana]: Object.freeze({ base: 60_000, unlocked: 200_000 }),
-  [Stat.HealthRegen]: Object.freeze({ base: 1_000, unlocked: 5_000 }),
-  [Stat.ManaRegen]: Object.freeze({ base: 3_000, unlocked: 8_000 }),
-  [Stat.AttackDamage]: Object.freeze({ base: 2_000, unlocked: 8_000 }),
-  // 減傷是 `100 / (100 + resist)`（damage.ts:701），所以這兩格的意思是**減傷比率**：
-  //   900 → 90% 減免 · 1,900 → 95%。⛔ 沒有任何一格是 100% —— 免疫要走
-  //   `invulnerable` 那個明確的機制，不可以由一個滑到底的數值旋鈕**意外**產生。
-  [Stat.Armor]: Object.freeze({ base: 900, unlocked: 1_900 }),
-  [Stat.MagicResist]: Object.freeze({ base: 900, unlocked: 1_900 }),
+  // ⚠️ 單層（base === unlocked）是刻意的：owner 只給了**一個**數字。多加一層
+  //    `unlocked` 等於替他發明第二個決定。要開解鎖語意，後台把 unlocked 調高就成立
+  //    （見 `effectiveCap`），一行程式都不用改。
+  //
+  // 🔴 只有一位英雄被這條規則夾到：**莉娜因巴斯的每秒回魔 1,014.5**，
+  //    而母體中位是 4.63 —— **219 倍**，遠在 200× 之外。夾到 926 之後仍然等於無限魔力
+  //    （中位的 200 倍），所以實質沒有變化；但那張卡本身值得看一眼。
+  //
+  // ⛔ 不碰 as / cdr / critChance / evasion —— 前兩者 owner 已經裁決過，
+  //    後兩者的 1.0 是**語意邊界**（每刀必暴 / 打不到），200× 對它們沒有意義。
+  [Stat.MaxHealth]: Object.freeze({ base: 375960, unlocked: 375960 }),
+  [Stat.MaxMana]: Object.freeze({ base: 232150, unlocked: 232150 }),
+  [Stat.HealthRegen]: Object.freeze({ base: 744, unlocked: 744 }),
+  [Stat.ManaRegen]: Object.freeze({ base: 926, unlocked: 926 }),
+  [Stat.AttackDamage]: Object.freeze({ base: 21200, unlocked: 21200 }),
+  [Stat.Armor]: Object.freeze({ base: 5078, unlocked: 5078 }),
+  [Stat.MagicResist]: Object.freeze({ base: 15344, unlocked: 15344 }),
   // owner 2026-08-12：「這個其實我已經有給過**上限是黑人牙膏 12** 了，
   //                      但**可以延伸到 16**」
-  //
-  // 🔴 我第一版寫成 `base 12 / unlocked 16`，那是錯的 —— **12 是卡面上限，
-  //    16 是最終值上限，中間差的是體型**。`finalizeStat` 對射程（也只有射程）
-  //    多乘一道 `rangeScale`：`config.body-scale@1` 的曲線最高 **1.30×**
-  //    （`DEFAULT_ATTACK_RANGE_CURVE`）。所以一位卡面 12 的大體型英雄，
-  //    最終射程是 **15.6** —— 被 12 夾掉 23%，而且**畫面上看不出來**。
-  //
-  // ⭐ 12 那個數字不會消失，它是**卡面規範**（`tools/hero-archetypes` 檢查
-  //    `baseStats.range`），不是這一格。這一格管的是最終值：
-  //    12 × 1.30 = 15.6 < 16，所以 16 一個人都不夾，而 17 就沒有意義了。
+  // 🔴 12 是**卡面**上限，16 是**最終值**上限，中間差的是體型：`finalizeStat` 對射程
+  //    （也只有射程）多乘一道 `rangeScale`，`config.body-scale@1` 的曲線最高 **1.30×**。
+  //    所以卡面 12 的大體型英雄最終是 **15.6** —— 用 12 當上限會夾掉 23% 而看不出來。
+  //    ⛔ 射程不套 200×：它是**空間**不是強度，24 格就已經是整個決鬥區的半徑。
   [Stat.AttackRange]: Object.freeze({ base: 16, unlocked: 16 }),
-  // 🔴 移速的 unlocked **不是憑感覺挑的 —— 它是一道技術牆**。
-  //   實測（用真的 `moveWithCollision` 二分逼近）：速度超過 **18 u/s** 的位移
-  //   會**穿牆**。所以 base 留在既有的 14（`STAT_CLAMPS`），unlocked 收在 18。
-  //   owner 說的「走速快到像瞬移」在這裡有一個比體感更硬的判準：再快就是穿牆。
-  //   ⚠️ 這一格只管**屬性移速**。技能的位移速度走別條路（見 GH#318）。
-  //
-  // 🔴 2026-08-12 二次更正（複驗實測推翻我上一版的 14/18）：
-  //   · owner：「移速**會大幅影響平衡性**，上限是 10」→ base 10
-  //   · unlocked 從 18 收到 **12** —— 因為 18.0 **正好坐在穿牆的平手線上**：
-  //     門檻不是「速度 18」而是「每 tick 位移的法線分量 > 身體半徑」，
-  //     30 Hz × 半徑 0.6 = 18.0，**平手值本身就會穿**（看線段繞向），
-  //     而且**走路是 100% 必穿**（走路沒有「被擋下就結束」那條規則）。
-  //     12 = 每 tick 0.4 u = 半徑的 67%，留 33% 餘裕。
+  // 🔴 移速二次更正：owner「移速**會大幅影響平衡性**，上限是 10」→ base 10。
+  //   unlocked 收在 **12**，因為 18.0 **正好坐在穿牆的平手線上**：門檻不是
+  //   「速度 18」而是「每 tick 位移的法線分量 > 身體半徑」，30 Hz × 0.6 = 18.0，
+  //   平手值本身就會穿，**走路更是 100% 必穿**。12 = 每 tick 0.4 u = 半徑的 67%。
+  //   ⛔ 移速也不套 200×：它是**空間速率**，1,100 u/s 不是強度，是穿模。
   [Stat.MoveSpeed]: Object.freeze({ base: 10, unlocked: 12 }),
 });
 
@@ -202,7 +211,9 @@ export const STAT_CAP_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   // (往下夾),而多打一個零(1,000,000)會被擋下來。
   [Stat.AbilityPower]: AP_CAP_OPEN,
   [Stat.Armor]: 10_000,
-  [Stat.MagicResist]: 10_000,
+  // ⚠️ 2026-08-12 抬高：200× 規則讓魔抗的出貨上限變成 15,344，舊的 10,000
+  //    保險絲會把它擋在 Zod 外面（後台存不進去，而錯誤訊息只說「超出範圍」）。
+  [Stat.MagicResist]: 100_000,
   // 暴擊傷害是倍率(1.75 = +75%),100 已經是 10000% 額外傷害。
   [Stat.CritDamage]: 100,
   // 攻擊距離:競技場單一 zone 半徑 24。
@@ -214,7 +225,8 @@ export const STAT_CAP_MAX: Readonly<Record<Stat, number>> = Object.freeze({
   [Stat.CritChance]: 1,
   [Stat.CooldownReduction]: 1,
   // 吸血 > 1 仍然有意義(回血多於打出的傷害),所以它不在上面那一組。
-  [Stat.Lifesteal]: 10,
+  // ⚠️ 2026-08-12 抬高：owner 把吸血的硬上限定在 20（傷害 100 回復 2000）。
+  [Stat.Lifesteal]: 100,
   [Stat.Evasion]: 1,
   // 技能吸血與吸血同理:> 1 仍然有意義(回血多於打出的傷害)。
   [Stat.SpellVamp]: 10,

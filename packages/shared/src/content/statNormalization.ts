@@ -77,6 +77,109 @@ export type Band = (typeof ALL_BANDS)[number];
  * · `marksman` 敏捷/力量主 + 遠程 —— 跑得中等、魔抗弱
  * · `mage`     智慧主（不分遠近）—— 跑得慢、魔抗弱
  */
+/**
+ * ⭐ **出身**（owner 2026-08-12：「可以延伸到 **40** 種，我的原意是 **10 種出身**」）。
+ *
+ * 10 = **6 純血** + **3 混血** + **1 均衡**，判定完全從英雄卡推導：
+ *
+ * · 前二名三圍的比 ≥ `MIXED_RATIO` → **純血**，再依攻擊型態分近戰/遠程 → 6 格
+ * · 前二名的比 < `MIXED_RATIO` → **混血**，依那兩個三圍的組合 → 3 格
+ * · 連第三名都在 `MIXED_RATIO` 以內 → **均衡** → 1 格
+ *
+ * 出身 × 4 條**路線**（場中經技能/道具/增幅取得，互斥）= owner 說的 40 種。
+ * ⛔ 路線今天還沒有引擎機制，所以這裡只有出身。
+ *
+ * ⚠️ 出身**不直接驅動數值** —— 驅動數值的是 {@link ARCHETYPES}（4 格，owner 給了
+ * 完整的三欄表）。兩者的關係是 {@link ORIGIN_TO_ARCHETYPE}：10 收斂成 4。
+ * 等 owner 給出 10 列的表，把 `byArchetype` 換寬即可，判定邏輯一行都不用動。
+ *
+ * 實測分佈（母體 73）：刃舞 21 · 壁壘 20 · 咒術 13 · 影術 5 · 遊獵 5 · 魔劍 4 ·
+ * 符將 3 · 狂鬥 2 · **重砲 0** · **全能 0** —— 兩個空格是新角色的位置。
+ */
+export const ORIGINS = [
+  "壁壘", // 力量 · 近戰
+  "重砲", // 力量 · 遠程
+  "刃舞", // 敏捷 · 近戰
+  "遊獵", // 敏捷 · 遠程
+  "魔劍", // 智慧 · 近戰　⭐ owner 說的「魔法劍士」
+  "咒術", // 智慧 · 遠程
+  "狂鬥", // 力量 × 敏捷
+  "符將", // 力量 × 智慧　⭐ owner 說的「力量法師」
+  "影術", // 敏捷 × 智慧
+  "全能", // 三圍都在門檻內
+] as const;
+export type Origin = (typeof ORIGINS)[number];
+
+/**
+ * 「前二名夠接近就算混血」的門檻。
+ *
+ * ⚠️ 1.20 是**挑出來的**，不是量出來的 —— 但它挑得有依據：門檻掃過
+ * 1.05 / 1.10 / 1.15 / 1.20 / 1.25 / 1.30 得到 2 / 5 / 6 / **10** / 13 / 16 位，
+ * 1.20 是唯一讓三個混血格都有人、又不會把一半的 roster 吸進去的點。
+ * ⛔ 它應該變成後台欄位（`config.stat-normalization@1`）——**還沒做**，因為
+ * 出身目前只用在報表，一格都還沒驅動數值。等它驅動數值的那天必須先做成欄位。
+ */
+export const MIXED_RATIO = 1.2;
+
+/** 三圍在 lv10 的權重值（初始 + 成長×9），由高到低。 */
+function rankedAttrs(def: Parameters<typeof primaryAttribute>[0]): [number, "str" | "agi" | "int"][] {
+  const a = def.attributes ?? {};
+  const at = (k: "str" | "agi" | "int"): number =>
+    (a[k] ?? 0) + (a[`${k}Growth` as "strGrowth" | "agiGrowth" | "intGrowth"] ?? 0) * 9;
+  return ([["str"], ["agi"], ["int"]] as const)
+    .map(([k]) => [at(k), k] as [number, "str" | "agi" | "int"])
+    .sort((x, y) => y[0] - x[0]);
+}
+
+const PURE: Readonly<Record<"str" | "agi" | "int", readonly [Origin, Origin]>> = Object.freeze({
+  str: ["壁壘", "重砲"],
+  agi: ["刃舞", "遊獵"],
+  int: ["魔劍", "咒術"],
+});
+const MIXED: Readonly<Record<string, Origin>> = Object.freeze({
+  "agi|str": "狂鬥",
+  "int|str": "符將",
+  "agi|int": "影術",
+});
+
+/** 推導出身。⭐ 純推導，⛔ 沒有手標的欄位（英雄卡的 `archetype` 只覆寫 4 格那一層）。 */
+export function originOf(
+  def: { attackType?: string } & Parameters<typeof primaryAttribute>[0],
+  mixedRatio: number = MIXED_RATIO,
+): Origin {
+  const r = rankedAttrs(def);
+  const [first, second, third] = r as [
+    [number, "str" | "agi" | "int"],
+    [number, "str" | "agi" | "int"],
+    [number, "str" | "agi" | "int"],
+  ];
+  if (third[0] > 0 && first[0] / third[0] < mixedRatio) return "全能";
+  if (second[0] > 0 && first[0] / second[0] < mixedRatio) {
+    return MIXED[[first[1], second[1]].sort().join("|")] ?? "全能";
+  }
+  return PURE[first[1]][def.attackType === "ranged" ? 1 : 0];
+}
+
+/**
+ * 10 個出身 → 4 個正規化定位。
+ *
+ * ⚠️ 這一層存在是因為 owner 只給了 **4 列**的移速/魔抗/裝甲表。收斂規則：
+ * 混血跟著它的**主屬性**走（`originOf` 已經把主屬性算過了，這裡只是查表），
+ * 均衡歸 `fighter`（沒有偏向就是全能戰士）。
+ */
+export const ORIGIN_TO_ARCHETYPE: Readonly<Record<Origin, Archetype>> = Object.freeze({
+  壁壘: "tank",
+  重砲: "marksman",
+  刃舞: "fighter",
+  遊獵: "marksman",
+  魔劍: "mage",
+  咒術: "mage",
+  狂鬥: "fighter",
+  符將: "tank",
+  影術: "fighter",
+  全能: "fighter",
+});
+
 export const ARCHETYPES = ["tank", "fighter", "marksman", "mage"] as const;
 export type Archetype = (typeof ARCHETYPES)[number];
 
