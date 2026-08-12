@@ -52,6 +52,16 @@ const LANDED: [file: string, key: string, who: string][] = [
   ["godie-hapm.r.json", "victimCondition", "52-04「若敵人具有[恐懼]則額外追加」"],
   ["godie-h01n.ex.json", "whileForm", "79-002 的格擋只在卍解狀態"],
   ["godie-e00s.e.json", "onHitTargets", "B1-B 兄弟酬載折疊（70-03）"],
+  // ── B3/B4（2026-08-13）──
+  ["godie-e002.r.json", "incomingPct", "B3-A 20-04 理想鄉「反彈量 3/5/7 倍」"],
+  ["godie-edem.passive.json", "negateOriginal", "B3-A 45-00 寫輪眼是**免傷**反彈（owner 逐字裁決）"],
+  ["godie-h00l.ex.json", "hookKey", "B3-A 60-002「反彈成功則冷卻重置」"],
+  ["godie-h02k.ex.json", "condition", "B3-C4 89-002 致盲/混亂改寫死亡權重"],
+  ["godie-e00w.ex.json", "augment", "B4-K 77-002 御雷劍改寫另外兩支技能（全 repo 第一份）"],
+  ["godie-hapm.passive.json", "lethal", "52-00 十二道試煉是**免死牌**，不是 HP≤5% 的 hook"],
+  ["godie-hapm.passive.json", "perStackLost", "52-00「每失去一層永久 +10% 攻擊力與最大生命」"],
+  ["godie-emfr.ex.json", "buff", "15-002「將該傷害短暫加成至 AP」"],
+  ["godie-h01n.w.json", "whileForm", "79-02「卍解狀態下傷害額外追加 200% AP」"],
 ];
 
 describe("重製技能的機制真的落在出貨內容上", () => {

@@ -501,11 +501,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 「我正在手動重製所有英雄技能,稍安勿躁」,而這一族的四支目標(89-00 我要活著
   // 回去 / 52-04 十二道試煉 / 79-01 斷界 / 15-04 影分身)都在那 90 支裡,將由
   // Codex 技能模板編輯器產出 JSON 匯入。第一支落地時這一筆就該刪掉。
-  "field:abilities.augment": {
-    status: "landing",
-    since: "2026-08-08",
-    why: "引擎側已通(sim/abilities/abilityAugment.ts + 行為守衛)。內容側零採用是因為 content/abilities/ 這一輪由 owner 手動重製 + Codex 編輯器產 JSON,四支目標技能都還沒寫進去。",
-  },
+  // ⭐ 2026-08-13 B4-K：landing 豁免移除 —— **它落地了**（77-002 御雷劍，
+  //    全 repo 第一份帶 `augment` 的技能文件）。
   "field:champions.abilities.*.augment": {
     status: "landing",
     since: "2026-08-08",

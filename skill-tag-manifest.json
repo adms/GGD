@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
-  "generated": "2026-08-09",
-  "supersedes": "2026-08-09 rev B（同日；再前一版 rev A、再前一版 2026-08-05）",
+  "schemaVersion": 2,
+  "generated": "2026-08-12",
+  "supersedes": "2026-08-09 rev C（schemaVersion 1）。rev D 新增 state=retired。",
   "engine": {
     "contract": "ggd-runtime-capabilities@1",
     "contractFingerprint": "ef984bcc",
@@ -16,19 +16,21 @@
     "allowed": "下拉可正常選取。",
     "allowed_with_warning": "可選取，但必須把 authorWarning 顯示在作者眼前（不是 tooltip，是常駐可見）。",
     "blocked": "⛔ 不可選取。可顯示成灰階「開發中」，但不可以存得起來。",
-    "broken": "⛔ 引擎**有**這個機制、schema 也收得下，但今天在出貨路徑上是壞的。編輯器行為與 blocked 相同（可顯示、不可存），差別只在文案：blocked 是「引擎沒有」，broken 是「引擎有，但今天是壞的，issue 在追」。issue 欄位帶追蹤編號，workaround 欄位帶替代寫法。⚠️ **本版 `tags` 裡的 broken 是 0 筆**（rev A 的兩筆都在 2026-08-09 修掉了），但這個值**仍然在列舉裡** —— 下一次出現壞掉的機制時它會直接被用上，⛔ 不要把它從 switch 裡拿掉。"
+    "broken": "⛔ 引擎**有**這個機制、schema 也收得下，但今天在出貨路徑上是壞的。編輯器行為與 blocked 相同（可顯示、不可存），差別只在文案：blocked 是「引擎沒有」，broken 是「引擎有，但今天是壞的，issue 在追」。issue 欄位帶追蹤編號，workaround 欄位帶替代寫法。⚠️ **本版 `tags` 裡的 broken 是 0 筆**（rev A 的兩筆都在 2026-08-09 修掉了），但這個值**仍然在列舉裡** —— 下一次出現壞掉的機制時它會直接被用上，⛔ 不要把它從 switch 裡拿掉。",
+    "retired": "⛔ **owner 已放棄**這個機制 —— 與 blocked（引擎沒有）**是兩件事**。編輯器行為與 blocked 相同（可顯示成灰階、不可存），差別在文案：blocked 是「引擎還沒做」（將來會做），retired 是「**不會做了**，請改用別的寫法」。⭐ 這一格是 2026-08-12 補的，成因是 owner 問「我已經有說過放棄⋯你是否沒把文件清乾淨?」—— 在此之前**放棄過的東西在表上跟「還沒做」長得一模一樣**，所以他每次看到都要再問一次。`retiredNote` 帶替代寫法。"
   },
   "stateOrder": [
     "allowed",
     "allowed_with_warning",
     "broken",
-    "blocked"
+    "blocked",
+    "retired"
   ],
   "counts": {
-    "basis": "139 個標籤來自 owner 的原始清單（8 組），順序與分組即是權威來源；四格都是逐標籤數出來的，不是估的，四格相加＝139。⚠️ rev C **一筆 state 都沒有換**（64 / 52 / 23 / 0，與 rev B 逐格相同）—— 這一版改的是**裁決的內容**：#299 剩下的四條（衝擊波 / 暴擊 / 反彈 / 格擋）三條翻盤成「已經做得到」、一條（格擋）從「待實作」變成「已放寬」，外加三筆事實反映（小怪死亡 / 疊層三軸 / 暴擊相乘）。⛔ 因此 rev B → rev C 的算式每一格都是 +0。`previous` 是**同日 rev B**（量在 8c54fdb0 ＋ 工作區）。",
+    "basis": "rev D（2026-08-12）：**owner 的三筆裁決** —— 牆 / 韌性 → retired（新狀態）、環繞衛星 → retired 但註明是**換層到渲染演出**、魔力耗盡 **留在 blocked**（owner 明說要做，客戶是風王結界與魔力護盾）。tagCount 仍是 139，四格相加＋retired ＝ 139。⛔ rev C 之前沒有 retired 這一格，所以 owner 放棄過的標籤在表上跟「還沒做」無法區分。",
     "allowed": 64,
     "allowed_with_warning": 52,
-    "blocked": 23,
+    "blocked": 20,
     "broken": 0,
     "previous": {
       "asOf": "2026-08-09（同日 rev B，量在 8c54fdb0 ＋ 未 commit 的工作區）",
@@ -40,7 +42,8 @@
     "newTags": {
       "allowed": 7,
       "allowed_with_warning": 7
-    }
+    },
+    "retired": 3
   },
   "notes": [
     "state 是閘不是建議：blocked / broken 的項目若讓作者存得起來，會產出「卡片上寫了、遊戲裡什麼都不做」的技能。",
@@ -414,13 +417,14 @@
     {
       "tag": "牆",
       "group": "effect",
-      "state": "blocked",
+      "state": "retired",
       "engineToken": null,
       "authorWarning": "沒有「站著不動的召喚物」這種形式（召喚物一律自動索敵追擊），也沒有「擋住路徑」的碰撞語意。",
       "authorNote": null,
       "workaround": null,
       "issue": null,
-      "hasShippedExample": false
+      "hasShippedExample": false,
+      "retiredNote": "owner 2026-08-12 放棄。引擎沒有「站著不動的召喚物」（召喚物一律自動索敵追擊），也沒有「擋住路徑」的碰撞語意。⛔ 不要用一排召喚物近似 —— 它們會追出去。"
     },
     {
       "tag": "吸收(護盾)",
@@ -640,13 +644,14 @@
     {
       "tag": "環繞衛星",
       "group": "effect",
-      "state": "blocked",
+      "state": "retired",
       "engineToken": null,
       "authorWarning": "缺少掛在宿主身上、每 tick 判定接觸的軌道實體。既有的「環形陣列」是一個展開成一圈射線的模板，不是繞著人轉的東西。",
       "authorNote": null,
       "workaround": null,
       "issue": null,
-      "hasShippedExample": false
+      "hasShippedExample": false,
+      "retiredNote": "⚠️ **換層不是放棄**。owner 2026-08-12：「這個可以透過**垂直旋轉目標及己方 3d 模型**來達成演出效果，跟**衝刺、跳躍**控制 3d model 一樣」——⇒ 要的是**渲染層的演出動詞**，⛔ 不是模擬層「掛在宿主身上、每 tick 判定接觸的軌道實體」。唯一客戶 77-00 浮雲-旋一閃（雙腿抓住對手旋轉拋摔）走演出那條路。"
     },
     {
       "tag": "發錢",
@@ -732,7 +737,7 @@
       "group": "effect",
       "state": "blocked",
       "engineToken": null,
-      "authorWarning": "沒有「資源跨越門檻的那一刻」這種時機。只能用【週期】輪詢近似，拿不到邊緣語意，也做不到只算一次。",
+      "authorWarning": "沒有「資源**跨越門檻的那一刻**」這種時機。只能用【週期】輪詢近似，拿不到邊緣語意，也做不到只算一次。⭐ **owner 2026-08-12 明說這個要做**：「這個有很多技能都需要，例如**風王結界、魔力護盾**等消耗 MP 換取觸發效果的技能」——真正的實作是 `toggle.upkeepCadence=perAttack`（今天不存在）。⛔ 不是 retired，是排程中。",
       "authorNote": null,
       "workaround": null,
       "issue": null,
@@ -1046,13 +1051,14 @@
     {
       "tag": "韌性",
       "group": "effect",
-      "state": "blocked",
+      "state": "retired",
       "engineToken": null,
       "authorWarning": "全遊戲唯一的持續時間倍率只作用於嘲諷。控場時間在套用當下就換成絕對時間，中間沒有任何人可以乘一個倍率。",
       "authorNote": null,
       "workaround": null,
       "issue": null,
-      "hasShippedExample": false
+      "hasShippedExample": false,
+      "retiredNote": "owner 2026-08-12 放棄。全遊戲唯一的持續時間倍率只作用於嘲諷；控場時間在**套用當下**就換成絕對 tick，中間沒有任何人可以乘一個倍率。替代：直接調降那一發控場的秒數。"
     },
     {
       "tag": "飢餓",
