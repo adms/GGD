@@ -31,17 +31,29 @@
  * rebuilt by `content:build` in the main session. Direct reads + zChampionDoc.parse
  * + ref checks against the EXISTING _index.json files keep the suite green both
  * before and after the reindex.
+ *
+ * ── 2026-08-13 LEGACY 搬遷 ───────────────────────────────────────────────────
+ * owner 把 41 位未上架英雄搬進 `content/_legacy/champions/`。**升級名單本身沒有
+ * 改** —— 25 位當年真的從 drafts 升上來過,那是歷史,不會因為今天誰上不上架而變。
+ * 改的是**母體**:下面的表現在是「這 25 位各自在哪一邊」,而所有「文件長得對不對」
+ * 的斷言只跑**營運**那一半（引擎唯一會註冊的那些）。
+ *
+ * ⛔ 歸檔 ≠ 刪除。所以每一位仍然必須**恰好**出現在其中一個目錄裡:
+ * 兩邊都沒有 = 真的掉了(那是缺陷);兩邊都有 = 搬遷搬了一半(也是缺陷)。
+ * 這比原本的 `existsSync(live)` 更嚴,不是更鬆。
  */
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import type { EffectDef } from "../sim/effects/effect";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
+/** 2026-08-13 起,未上架英雄住這裡。引擎讀不到,但檔案還在。 */
+const LEGACY_DIR = join(CONTENT_DIR, "_legacy/champions");
 
 /** The 21 kept stand-ins (drafts/PROMOTED.md is the authoritative table). */
 const STANDIN_IDS = [
@@ -124,9 +136,19 @@ const ALTERNATE_BASE: Record<string, string> = {
 /** The four KayKit voxel block model docs (pre-existing model@1 ids). */
 const VOXEL_MODELS = ["champ.sela", "champ.thorne", "champ.skin.barbarian", "champ.skin.rogue"];
 
+const livePath = (id: string): string => join(CONTENT_DIR, "champions", `${id}.json`);
+const legacyPath = (id: string): string => join(LEGACY_DIR, `${id}.json`);
+
+/** 營運名冊上嗎?(⚠️ 「不在」有兩種:歸檔了,或真的掉了 —— 別把它們混為一談) */
+const isLive = (id: string): boolean => existsSync(livePath(id));
+const isArchived = (id: string): boolean => existsSync(legacyPath(id));
+
 function readDoc(id: string): unknown {
-  return JSON.parse(readFileSync(join(CONTENT_DIR, "champions", `${id}.json`), "utf-8"));
+  return JSON.parse(readFileSync(livePath(id), "utf-8"));
 }
+
+/** 只留營運名冊上的那些 —— 引擎唯一會註冊、玩家唯一碰得到的母體。 */
+const liveIds = <T extends string>(ids: readonly T[]): T[] => ids.filter(isLive);
 
 function indexIds(collection: string): Set<string> {
   const idx = JSON.parse(
@@ -142,44 +164,95 @@ function walkEffects(effects: EffectDef[], visit: (e: EffectDef) => void): void 
   }
 }
 
-const parsedDocs = (): ChampionDoc[] => STANDIN_IDS.map((id) => zChampionDoc.parse(readDoc(id)));
+/** 升級名單裡**還在營運**的那些,已解析。文件層的斷言只跑這一半。 */
+const parsedDocs = (): ChampionDoc[] =>
+  liveIds(STANDIN_IDS).map((id) => zChampionDoc.parse(readDoc(id)));
 
 describe("voxel stand-in roster (standin-roster)", () => {
-  it("all 21 kept champion docs exist, nothing is pruned any more (draft-promote-count)", () => {
+  it("every promoted doc is in EXACTLY one of 營運/歸檔, and nothing is pruned (draft-promote-count)", () => {
     cover("draft-promote-count");
-    expect(STANDIN_IDS.length).toBe(21);
-    expect(new Set<string>(STANDIN_IDS).size).toBe(21);
+    // 名單本身不可以有重複條目(這一條跟名冊大小無關,是這份字面表的自檢)
+    expect(new Set<string>(STANDIN_IDS).size).toBe(STANDIN_IDS.length);
     for (const id of STANDIN_IDS) {
-      expect(existsSync(join(CONTENT_DIR, "champions", `${id}.json`)), id).toBe(true);
+      // ⛔ 這裡本來是 `existsSync(live) === true`。2026-08-13 把 14 位搬進 _legacy
+      // 之後那個寫法會把「歸檔」讀成「不見了」。改成 XOR:恰好一邊有。
+      // 兩邊都沒有 = 檔案真的掉了;兩邊都有 = 搬遷只搬了一半、留下一份會被引擎讀到
+      // 的孤兒 —— 兩種都是缺陷,而且都會在這裡指名道姓地紅。
+      expect(
+        [isLive(id), isArchived(id)].filter(Boolean).length,
+        `${id}: 應該恰好在 content/champions 或 content/_legacy/champions 其中一邊`,
+      ).toBe(1);
     }
+    // 而且營運那一半不是空的(否則下面每一條文件斷言都會空過)
+    expect(liveIds(STANDIN_IDS).length).toBeGreaterThan(0);
     for (const id of PRUNED_IDS) {
-      expect(existsSync(join(CONTENT_DIR, "champions", `${id}.json`)), `${id} pruned`).toBe(false);
+      expect(isLive(id) || isArchived(id), `${id} pruned`).toBe(false);
       expect(existsSync(join(CONTENT_DIR, "abilities", `${id}.ex.json`)), `${id} ex orphan`).toBe(false);
     }
   });
 
-  it("the four 變身 alternate bodies exist and mirror their base's rig (standin-alternate-forms)", () => {
+  it("每一對 變身 半身都同進同出,而且營運的那幾對鏡射本體的 rig (standin-alternate-forms)", () => {
     cover("draft-promote-count");
-    // The inverse of the pruned check above: these four MUST be on disk, because
-    // the transform re-points `championId` at them and the snapshot's
-    // `Champions.get()` throws on an id the registry never saw.
-    expect(ALTERNATE_FORM_IDS.length).toBe(4);
+    // The reason these bodies must exist at all: the transform re-points
+    // `championId` at the counterpart and the snapshot's `Champions.get()`
+    // THROWS on an id the registry never saw — 30 times a second.
+    //
+    // ⭐ 2026-08-13 之後這條變成**更強**的守衛,而不是更弱的。原本問的是「這四位在
+    // 不在 content/champions」;現在問的是「本體與變身型態**在不在同一邊**」——
+    // 那正是搬遷唯一能踩爆遊戲的方式:本體留在營運名冊、變身型態進了 _legacy,
+    // 於是玩家一按 R,`Champions.get()` 就把整個房間帶下去。
+    expect(new Set<string>(ALTERNATE_FORM_IDS).size).toBe(ALTERNATE_FORM_IDS.length);
+    let livePairs = 0;
     for (const id of ALTERNATE_FORM_IDS) {
-      expect(existsSync(join(CONTENT_DIR, "champions", `${id}.json`)), `${id} exists`).toBe(true);
+      const baseId = ALTERNATE_BASE[id]!;
+      expect(isLive(id) || isArchived(id), `${id} 檔案不見了`).toBe(true);
+      expect(isLive(baseId) || isArchived(baseId), `${baseId} 檔案不見了`).toBe(true);
+      expect(
+        isLive(id),
+        `${id} 與本體 ${baseId} 被搬到不同邊 —— 變身時 Champions.get() 會 throw`,
+      ).toBe(isLive(baseId));
+      if (!isLive(id)) continue;
+      livePairs++;
       const alt = zChampionDoc.parse(readDoc(id));
-      const base = zChampionDoc.parse(readDoc(ALTERNATE_BASE[id]!));
+      const base = zChampionDoc.parse(readDoc(baseId));
       // the rig follows the BASE hero, never the ranged/melee heuristic — this
       // is exactly what keeps a transform reading as "same character, changed"
       expect(alt.modelKey, `${id} rig mirrors ${base.id}`).toBe(base.modelKey);
       // and the link the sim actually reads points back at this body
       expect(base.transform?.counterpartId, `${base.id} → ${id}`).toBe(id);
     }
+    // 不是「四對都歸檔了所以整條空過」
+    expect(livePairs).toBeGreaterThan(0);
+  });
+
+  it("營運名冊上沒有任何一條 變身 連結指向 _legacy (standin-transform-closed)", () => {
+    cover("draft-promote-count");
+    // 上面那條只看得到四對寫死的。這一條把**整個營運名冊**掃一遍 —— 搬遷之後真正
+    // 該成立的不變式是「引擎讀得到的 counterpartId,引擎也一定註冊得到」。
+    const dangling: string[] = [];
+    for (const f of readdirSync(join(CONTENT_DIR, "champions"))) {
+      if (!f.endsWith(".json") || f.startsWith("_")) continue;
+      const doc = zChampionDoc.parse(
+        JSON.parse(readFileSync(join(CONTENT_DIR, "champions", f), "utf-8")),
+      );
+      const cp = doc.transform?.counterpartId;
+      if (cp !== undefined && !isLive(cp)) {
+        dangling.push(`${doc.id} → ${cp}${isArchived(cp) ? "(在 _legacy)" : "(檔案不存在)"}`);
+      }
+    }
+    expect(dangling, "營運英雄的變身對象不在營運名冊上 —— 一變身就 Champions.get() throw").toEqual(
+      [],
+    );
   });
 
   it("every promoted doc is a valid champion@1 with matching id (standin-schema-valid)", () => {
     cover("standin-schema-valid");
+    // ⭐ 這一條刻意**兩邊都跑**。歸檔的文件引擎讀不到,但它們是「哪天重新上架就搬
+    // 回來」的東西 —— 一份在 _legacy 裡默默腐爛的 champion@1 會在重新上架的那天
+    // 才爆,而那時候沒有人記得它是什麼。schema 驗證不花錢,兩邊一起驗。
     for (const id of STANDIN_IDS) {
-      const doc = zChampionDoc.parse(readDoc(id)); // throws on drift
+      const raw = JSON.parse(readFileSync(isLive(id) ? livePath(id) : legacyPath(id), "utf-8"));
+      const doc = zChampionDoc.parse(raw); // throws on drift
       expect(doc.id).toBe(id);
       expect(doc.schema).toBe("champion@1");
       // combined 名字+稱號 unified-name convention: non-empty, real map name
@@ -226,12 +299,18 @@ describe("voxel stand-in roster (standin-roster)", () => {
     for (const doc of parsedDocs()) {
       expect(VOXEL_MODELS, `${doc.id} uses a voxel model`).toContain(doc.modelKey);
       counts.set(doc.modelKey, (counts.get(doc.modelKey) ?? 0) + 1);
-      // ranged heroes always use the mage rig (only voxel attack clip that reads ranged)
+      // ranged heroes always use the mage rig (only voxel attack clip that reads
+      // ranged). ⭐ 這一條才是「role heuristic 真的跑過」的承重斷言,而且它與名冊
+      // 大小無關 —— 搬遷前後都一樣硬。
       if (doc.attackType === "ranged") expect(doc.modelKey).toBe("champ.sela");
     }
-    // all four voxel bodies are in use and no single model dominates the 25
-    for (const m of VOXEL_MODELS) expect(counts.get(m) ?? 0, m).toBeGreaterThan(0);
-    for (const [m, n] of counts) expect(n, `${m} over-assigned`).toBeLessThanOrEqual(12);
+    // 「不是清一色同一具」—— 這就是測試名字說的那件事,而且不需要任何出貨數字
+    expect(counts.size, "整批升級英雄擠在同一具 rig 上 —— heuristic 沒跑").toBeGreaterThan(1);
+    // ⚠️ 原本這裡還有兩條:「四具 rig 都有人用」與「單一 rig ≤ 12 位」。兩條都是
+    // 對**當年 25 位升級英雄**那個母體講的。2026-08-13 之後這個 cohort 只剩 7 位,
+    // 對 7 個樣本談分布是沒有意義的(champ.thorne 一位都沒有,而那不是缺陷)。
+    // 「四具 rig 都還有人用」本身仍然是真的守衛,只是母體要換成**整個營運名冊** ——
+    // 它搬去了 standinCensus.test.ts 的普查那一條(那裡讀得到全部 21 位借用者)。
   });
 
   it('every promoted doc is tagged "voxel-standin" for the later model swap (standin-tag)', () => {

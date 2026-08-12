@@ -2,10 +2,20 @@
  * voxelSkin/generate — the invariants that make #231 a finished feature rather
  * than a pile of colours.
  *
- * Driven against the REAL champion tree (114 docs), not a fixture. That is the
- * point: "no two champions look the same" is a property of THIS ROSTER, and a
- * fixture of three toy heroes proves nothing about it. Adding a champion that
+ * Driven against the REAL champion tree read off disk, not a fixture. That is
+ * the point: "no two champions look the same" is a property of THIS ROSTER, and
+ * a fixture of three toy heroes proves nothing about it. Adding a champion that
  * collides with an existing look turns this file red instead of shipping a twin.
+ *
+ * ⚠️ THE ROSTER SIZE IS NOT A CONSTANT AND MUST NOT BE WRITTEN DOWN HERE.
+ * It has been 114, then 119, and on 2026-08-13 it became 78 when every
+ * unreleased champion moved to `content/_legacy/` (out of `COLLECTION_NAMES`,
+ * so the engine cannot read them at all). Four assertions in this file had that
+ * number copied into them and all four went red at once while the generator was
+ * perfectly fine. Everything below is derived from `DOCS` / `ALL`; the only
+ * floors are structural ones ("not zero", "both sides of the partition are
+ * populated") that say why an empty set would make the surrounding loop a
+ * green no-op.
  */
 import { describe, it, expect } from "vitest";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
@@ -68,7 +78,10 @@ const DARKEST_TINT = 0.3137;
 describe("voxel skin — coverage over the real roster", () => {
   it("generates a look for EVERY champion doc", () => {
     cover("voxel-skin-generate");
-    expect(DOCS.length).toBeGreaterThanOrEqual(114);
+    // Structural floor only — an empty read would make the `for` below (and
+    // every other loop in this file) pass by doing nothing. The census itself
+    // is `DOCS.length`, which is the roster, not a number typed here.
+    expect(DOCS.length, "champions/ read as empty").toBeGreaterThan(0);
     expect(ROSTER.recipes.size).toBe(DOCS.length);
     for (const doc of DOCS) expect(ROSTER.recipes.has(doc.id)).toBe(true);
   });
@@ -125,33 +138,31 @@ describe("voxel skin — coverage over the real roster", () => {
   });
 
   /**
-   * 43, not the 44 this branch was written against: task #217 gave 喪標麥可
-   * (`godie-zombiex`) its OWN zombie mesh (`champ.godie-zombiex`) and dropped its
-   * `voxel-standin` tag, so it left the shared-mesh population before #231 merged.
-   * It is still both the #215 mob AND a pickable hero — nothing about that
-   * identity changed; it simply is not on a shared stand-in mesh any more.
-   * Measured distribution was sela 18 / thorne 10 / barbarian 9 / rogue 6 = 43.
+   * ⚠️ THE POPULATION OF THIS TEST IS A MOVING NUMBER — DO NOT WRITE IT DOWN.
    *
-   * BACK TO 44 at task #249: importing `godie-o02n` (曹操孟德's BASE unit O02N,
-   * whose map model is a Blizzard built-in) added one more `champ.skin.rogue`
-   * wearer — rogue 6 → 7.
+   * The shared-stand-in population has been 43 (#217 gave 喪標麥可 its own zombie
+   * mesh and it left the group), then 44 (#249 imported 曹操孟德's BASE unit
+   * O02N), then 48 (#249's transform mechanic forced the four 變身 ALTERNATE
+   * bodies to be imported for real, each wearing its BASE half's stand-in), and
+   * on 2026-08-13 it dropped again when the unreleased champions moved to
+   * `content/_legacy/`. Every one of those moves was a CORRECT change, and every
+   * one of them broke a hardcoded census here. The counts and the id list are
+   * therefore gone; what is asserted is the RELATION the counts existed to
+   * protect:
    *
-   * 44 → 48 later in #249, when the transform mechanic landed and the four
-   * 變身 ALTERNATE bodies had to be imported for real (`Champions.get()` throws
-   * on an unregistered id and the snapshot resolves the transformed body through
-   * it every tick). Each wears its BASE half's stand-in — sela +2 (godie-e010,
-   * godie-o030), barbarian +1 (godie-h00w), rogue +1 (godie-n01b) — so 20 / 10 /
-   * 10 / 8 = 48.
+   *     拿得到 WC3 模型(自己或變身對半) ⇔ 不該被鎖在體素身體上
    *
-   * ⚠️ THEY LAND IN `without`, NOT `withBlizzard`, and that is a real (recorded,
-   * not hidden) art gap rather than a mistake here: `BLIZZARD_MODEL_CHAMPIONS`
-   * is asserted id-for-id against `data/blizzard-overlay/MANIFEST.json` below,
-   * and the manifest has no entry for any of the four — the #10 extraction never
-   * pulled their models. Their four BASE halves ARE on the manifest, so today a
-   * transform on those pairs swaps a real WC3 model for a voxel stand-in. The
-   * honest fix is an extraction pass, not an edit to this list; the four pairs
-   * are also the ones whose halves share a modelKey, i.e. exactly the ones not
-   * shipped as playable transforms yet.
+   * plus a structural check that BOTH sides of that partition are populated, so
+   * the loop can never degenerate into a one-sided assertion.
+   *
+   * ⚠️ Still true and still recorded: a champion can be on a stand-in mesh and
+   * reach NO model at all, and that is a real art gap rather than a bug here.
+   * `BLIZZARD_MODEL_CHAMPIONS` is asserted id-for-id against
+   * `data/blizzard-overlay/MANIFEST.json` below; where the #10 extraction never
+   * pulled a model, the honest fix is an extraction pass, not an edit to that
+   * list. The 變身 ALTERNATE halves are the usual case — their BASE halves are on
+   * the manifest, so a transform on such a pair swaps a real WC3 model for a
+   * voxel stand-in.
    */
   it("共用替身英雄:有暴雪模型的走 glb,沒有的才留在體素身體上", () => {
     cover("voxel-skin-standin");
@@ -166,25 +177,9 @@ describe("voxel skin — coverage over the real roster", () => {
     // 兩層各自都對、各自都有測試、沒有任何東西會紅 —— 玩家看到的是 44 位共用
     // 四張臉。owner 2026-07-28:「請你都先用暴雪的 3d model」。
     const standIns = DOCS.filter((d) => STAND_IN_MODEL_KEYS.includes(d.modelKey ?? ""));
-    expect(standIns.length).toBe(48);
-
-    const withBlizzard = standIns.filter((d) => BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
-    const without = standIns.filter((d) => !BLIZZARD_MODEL_CHAMPIONS.includes(d.id));
-    expect(withBlizzard.length, "40 位的 WC3 模型已在 overlay 裡").toBe(40);
-    expect(
-      without.map((d) => d.id).sort(),
-      "manifest 沒有直接收錄的:o02n / u011 沒抽到,sela / thorne 不是地圖英雄," +
-        "e010 / h00w / n01b / o030 是 #249 進來的變身型態(overlay 沒抽到它們)",
-    ).toEqual([
-      "godie-e010",
-      "godie-h00w",
-      "godie-n01b",
-      "godie-o02n",
-      "godie-o030",
-      "godie-u011",
-      "sela",
-      "thorne",
-    ]);
+    // 結構性下界,不是普查:替身族群空了,下面那個迴圈就是一條綠色的空迴圈,
+    // 而 #231 存在的理由(不要 N 位英雄共用一張臉)也就沒有任何東西在守。
+    expect(standIns.length, "沒有任何英雄共用替身網格 —— 這條測試會退化成空迴圈").toBeGreaterThan(0);
 
     /**
      * ⚠️ 2026-07-30 (#223) —— 「拿不拿得到 WC3 模型」不等於「自己在 manifest 裡」。
@@ -206,12 +201,17 @@ describe("voxel skin — coverage over the real roster", () => {
           : `${d.id} 沒有任何模型可穿 —— 退回共用替身會讓 #231 整個任務失效`,
       ).toBe(!reachesAModel(d.id));
     }
-    // 而且兩邊都不可以是空的,否則上面那個迴圈退化成單邊斷言
-    expect(standIns.filter((d) => reachesAModel(d.id)).length).toBe(46);
-    expect(standIns.filter((d) => !reachesAModel(d.id)).map((d) => d.id)).toEqual([
-      "sela",
-      "thorne",
-    ]);
+    // 而且兩邊都不可以是空的,否則上面那個迴圈退化成單邊斷言 —— 全部 true 或
+    // 全部 false 的迴圈,對「反過來也對」的實作一樣是綠的(失敗形態④)。
+    // ⛔ 兩邊的**人數**不寫在這裡:那是名冊,名冊會變(見上面的區塊註解)。
+    expect(
+      standIns.filter((d) => reachesAModel(d.id)).length,
+      "沒有一位替身英雄拿得到 WC3 模型 —— 迴圈變成單邊斷言",
+    ).toBeGreaterThan(0);
+    expect(
+      standIns.filter((d) => !reachesAModel(d.id)).length,
+      "沒有一位替身英雄需要體素身體 —— 迴圈變成單邊斷言",
+    ).toBeGreaterThan(0);
 
     // ...and a champion with its OWN imported mesh keeps it
     const own = DOCS.filter((d) => (d.modelKey ?? "").startsWith("imported."));
@@ -433,8 +433,17 @@ describe("voxel skin — the committed roster snapshot", () => {
    * 體素名冊縮小 ⇒ 棘輪重新分配 salt ⇒ 排在後面的兩位換了配色。
    *
    * 也就是說：**這次漂移是一個好改動的正確後果，不是缺陷。** 重生成後仍是
-   * 119 位 / 119 種不同外觀（零碰撞），owner 要的那個性質沒有被破壞。
+   * 每位英雄一種外觀（零碰撞），owner 要的那個性質沒有被破壞。
    * ⚠️ 下次看到漂移時先做同一個判斷：**部件也變了嗎？** 變了才是規則或階梯出事。
+   *
+   * ── 2026-08-13 的第二次刻意重生成 —— 而它是「零漂移」的那一種 ──
+   * 未上架英雄搬進 `content/_legacy/`，名冊 119 → 78。快照因此要重生成，
+   * ⚠️ 但重生成前先量過一件事：**留下來的每一位，簽章逐字未變**（78/78 相同，
+   * 0 筆漂移）。所以這次的 diff 是**純刪掉 41 列**，沒有任何人換臉。
+   * 那個量測不是禮貌，是判斷依據：外觀走 `frac(id, salt, …)`，只有**碰撞棘輪**
+   * 會讓名冊大小影響顏色 —— 而 `ROSTER.escalated` 兩邊都是空的（上面那條
+   * determinism 測試在守），所以縮小名冊本來就不該動到任何人。量到 0 筆漂移，
+   * 就證明棘輪確實沒被驚動。⚠️ 如果哪天縮名冊卻量到漂移，先去看 escalated。
    */
   it("matches every champion's committed look signature", () => {
     cover("voxel-skin-snapshot");
@@ -444,6 +453,14 @@ describe("voxel skin — the committed roster snapshot", () => {
       signatures: Record<string, string>;
     };
     expect(snap.count).toBe(ALL.length);
+    // ⚠️ `count` is a FIELD, so it can agree with the roster while `signatures`
+    // still carries rows for champions that left it — exactly the shape of the
+    // 2026-08-13 legacy migration. The drift loop below only walks `ALL`, so it
+    // would never look at those ghosts. One line closes it.
+    expect(
+      Object.keys(snap.signatures).length,
+      "快照裡有名冊上已經沒有的英雄(或少了人) —— 重跑 voxel-skins:snapshot",
+    ).toBe(snap.count);
     const drift: string[] = [];
     for (const r of ALL) {
       const want = snap.signatures[r.championId];

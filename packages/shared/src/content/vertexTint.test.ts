@@ -20,6 +20,17 @@
  *
  * Live content is read by DIRECT path (like championVoices.test.ts) so the
  * suite is green both before and after `content:build` reindexes.
+ *
+ * ── 2026-08-13 LEGACY 搬遷 ───────────────────────────────────────────────────
+ * 41 位未上架英雄 → `content/_legacy/champions/`,他們那 41 筆 tint 與 5 筆
+ * transient → `content/_legacy/config/unit-tints-legacy.json`。兩份都不在
+ * `COLLECTION_NAMES` 裡,引擎完全讀不到。
+ *
+ * 這對本 suite 的意義是:**「這個顏色在哪裡」多了一個答案,而「這個顏色還在不在」
+ * 一個都不能少。** 所以下面的 EXPECTED 23 列一列都沒有刪 —— 那是 w3x 的萃取結果,
+ * 是知識,搬家不會改變 w3u 寫了什麼。改的是每一列去哪個目錄找,以及
+ * 「營運帳本 ↔ 營運英雄」「歸檔帳本 ↔ 歸檔英雄」必須各自對齊、兩份不重疊。
+ * ⭐ 這反而讓 #263 那條雙向守衛變強了:它現在還會抓到「搬遷把某一列弄丟了」。
  */
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
@@ -34,16 +45,26 @@ import { validateDoc } from "./loader";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
 const CHAMP_DIR = join(CONTENT, "champions");
+const LEGACY_CHAMP_DIR = join(CONTENT, "_legacy/champions");
 const MODEL_DIR = join(CONTENT, "models");
 
 type Champ = ReturnType<typeof zChampionDoc.parse>;
 
-function readChampion(id: string): Champ {
-  return zChampionDoc.parse(
-    JSON.parse(readFileSync(join(CHAMP_DIR, `${id}.json`), "utf8")),
-  );
+/** 一位英雄現在住哪一邊。`undefined` = 哪裡都沒有 = 真的掉了。 */
+type Side = "live" | "legacy";
+function championSide(id: string): Side | undefined {
+  if (existsSync(join(CHAMP_DIR, `${id}.json`))) return "live";
+  if (existsSync(join(LEGACY_CHAMP_DIR, `${id}.json`))) return "legacy";
+  return undefined;
 }
 
+/** 讀一份英雄文件,**不管他在哪一邊**。顏色是 w3x 的事實,不隨上架與否改變。 */
+function readChampion(id: string): Champ {
+  const dir = championSide(id) === "legacy" ? LEGACY_CHAMP_DIR : CHAMP_DIR;
+  return zChampionDoc.parse(JSON.parse(readFileSync(join(dir, `${id}.json`), "utf8")));
+}
+
+/** 營運名冊 —— 引擎會註冊、玩家看得到的那一份母體。 */
 function allChampions(): Champ[] {
   return readdirSync(CHAMP_DIR)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
@@ -53,6 +74,18 @@ function allChampions(): Champ[] {
 function ledger(): ConfigUnitTintsDoc {
   const raw = JSON.parse(readFileSync(join(CONTENT, "config/unit-tints.json"), "utf8"));
   return zConfigUnitTintsDoc.parse(raw);
+}
+
+/**
+ * 歸檔帳本。⛔ 它**不是**一份 content 文件(沒有 `id`/`schema`,`_legacy/` 也不在
+ * `COLLECTION_NAMES` 裡),所以不能拿 `zConfigUnitTintsDoc` 去 parse —— 那支
+ * schema 是 `.strict()` 的。但欄位形狀逐欄相同,型別借過來用。
+ */
+type TintLedgerBody = Pick<ConfigUnitTintsDoc, "units" | "transient">;
+function legacyLedger(): TintLedgerBody {
+  return JSON.parse(
+    readFileSync(join(CONTENT, "_legacy/config/unit-tints-legacy.json"), "utf8"),
+  ) as TintLedgerBody;
 }
 
 const NEUTRAL = (t: readonly number[] | undefined): boolean =>
@@ -231,16 +264,25 @@ const EXPECTED: ReadonlyArray<readonly [string, readonly [number, number, number
 describe("ported roster tints (tint-roster-values)", () => {
   it("every extracted champion tint is present and exact; no champion writes neutral", () => {
     cover("tint-roster-values");
+    // ⭐ 23 列**一列都沒少**,不管那一位今天在營運名冊還是在 _legacy。
+    // 搬家不會改變 war3map.w3u 寫了什麼,所以萃取值也不該跟著搬家消失 ——
+    // 一位英雄重新上架的那天,他的顏色必須還在原地等著。
     for (const [id, rgb] of EXPECTED) {
+      expect(championSide(id), `${id}: 這位英雄的文件哪一邊都找不到`).toBeDefined();
       const doc = readChampion(id);
       expect(doc.tint, id).toEqual([...rgb]);
       expect(NEUTRAL(doc.tint), `${id} must not be written as neutral`).toBe(false);
     }
+    const liveExpected = EXPECTED.filter(([id]) => championSide(id) === "live");
+    expect(liveExpected.length, "23 位全部歸檔了 —— 下面幾條會空過").toBeGreaterThan(0);
 
     const all = allChampions();
     // untinted champions stay ABSENT rather than [1,1,1] (never fill the field)
     const tinted = all.filter((c) => c.tint !== undefined);
-    expect(tinted).toHaveLength(EXPECTED.length);
+    // ⚠️ 母體是**營運名冊**,所以這裡比的是 EXPECTED 裡還在營運的那一半 ——
+    // 兩邊都從資料推出來,沒有任何一個出貨數字。方向仍然是雙向的:
+    // 營運名冊上多一個沒登記的 tint,或少一個登記過的,都會紅。
+    expect(tinted).toHaveLength(liveExpected.length);
     expect(all.filter((c) => NEUTRAL(c.tint))).toHaveLength(0);
     // no static w3u entry was translucent, so no champion carries alpha yet
     expect(all.filter((c) => c.alpha !== undefined)).toHaveLength(0);
@@ -276,25 +318,49 @@ describe("config.unit-tints@1 ledger (tint-ledger)", () => {
     expect(zConfigDoc.parse(doc).schema).toBe("config.unit-tints@1");
     expect(validateDoc("config", doc).ok).toBe(true);
 
-    // the full extract: 53 units (52 from #49 + U00L from #263), 21 of them
-    // mapped to a champion doc
+    // ⚠️ 這裡本來寫 `toHaveLength(53)` / `toHaveLength(EXPECTED.length)`。那兩個都是
+    // **出貨值**:2026-08-13 把 41 筆搬進歸檔帳本之後,營運帳本剩 12 筆,兩條都紅,
+    // 而搬走正是預期中的事。真正該守的從來不是「幾筆」,是**雙向對齊** ——
+    // #49 出貨的缺陷不是一個錯的數字,是一列**缺席**的資料(U00L)。
     const entries = Object.entries(doc.units);
-    expect(entries).toHaveLength(53);
     const mapped = entries.filter(([, e]) => e.championId !== undefined);
-    expect(mapped).toHaveLength(EXPECTED.length);
+    expect(entries.length, "營運帳本整份空了").toBeGreaterThan(0);
 
-    // every referenced champion id resolves to a real doc …
+    // 方向 ①:帳本 → 英雄。每一列都指向一位**營運**英雄,而且顏色逐欄相同。
     for (const [rawcode, e] of mapped) {
-      expect(existsSync(join(CHAMP_DIR, `${e.championId}.json`)), rawcode).toBe(true);
-      // … and the ledger value is the SAME number the champion doc carries
+      expect(championSide(e.championId!), `${rawcode} -> ${e.championId}`).toBe("live");
       expect(readChampion(e.championId!).tint, `${rawcode} -> ${e.championId}`).toEqual(e.tint);
     }
+    // 一位英雄不可以被兩列認領(否則下面的反向計數會被稀釋掉)
+    expect(new Set(mapped.map(([, e]) => e.championId)).size).toBe(mapped.length);
+    // 方向 ②:英雄 → 帳本。這一條才是 #49 的形狀 —— 一位帶著 tint 的營運英雄
+    // **沒有**帳本列。只走帳本的測試永遠看不到它。
+    const claimed = new Set(mapped.map(([, e]) => e.championId));
+    for (const c of allChampions()) {
+      if (c.tint === undefined) continue;
+      expect(claimed.has(c.id), `${c.id} 帶著 tint 卻沒有帳本列(這正是 #49 的缺陷形狀)`).toBe(
+        true,
+      );
+    }
     for (const s of doc.transient) {
-      expect(existsSync(join(CHAMP_DIR, `${s.championId}.json`)), s.trigger).toBe(true);
+      expect(championSide(s.championId), s.trigger).toBe("live");
     }
 
-    // rawcodes are the 4-char w3x ids, and every unit actually carries colour
-    for (const [rawcode, e] of entries) {
+    // ⭐ 搬遷是一刀切:兩份帳本不重疊,而歸檔那一份認領的英雄也一定在歸檔區。
+    // 少了這一條,「把一列從營運搬走卻忘了寫進歸檔」會在兩份帳本之間人間蒸發。
+    const legacy = legacyLedger();
+    expect(
+      Object.keys(legacy.units).filter((rc) => rc in doc.units),
+      "同一個 rawcode 同時出現在營運與歸檔帳本",
+    ).toEqual([]);
+    for (const [rawcode, e] of Object.entries(legacy.units)) {
+      if (e.championId === undefined) continue;
+      expect(championSide(e.championId), `歸檔帳本 ${rawcode} -> ${e.championId}`).toBe("legacy");
+    }
+
+    // rawcodes are the 4-char w3x ids, and every unit actually carries colour.
+    // 兩份帳本一起驗 —— 歸檔的資料腐爛了,重新上架的那天才會發現。
+    for (const [rawcode, e] of [...entries, ...Object.entries(legacy.units)]) {
       expect(rawcode).toMatch(/^[A-Za-z0-9]{4}$/);
       expect(e.tint, rawcode).toBeDefined();
       expect(NEUTRAL(e.tint), `${rawcode} is neutral — it should not be in the ledger`).toBe(false);
@@ -320,7 +386,10 @@ describe("config.unit-tints@1 ledger (tint-ledger)", () => {
     // MAP BUGS: exactly the two restores that reset a tinted hero to white.
     // Each one must name a champion that HAS a static tint to lose — that is
     // what makes it a bug — and the port must restore to champion.tint.
-    const bugs = doc.transient.filter((s) => s.erasesStaticTint === true);
+    // ⚠️ 這兩條是**原作地圖的**缺陷,是知識,不會因為誰上不上架而變成一條或三條 ——
+    // 所以名單照舊釘死,只是母體換成兩份帳本的聯集(47390 留在營運,39537 跟著
+    // godie-nman 進了歸檔)。搬遷把其中一條弄丟,這裡就會紅。
+    const bugs = [...doc.transient, ...legacy.transient].filter((s) => s.erasesStaticTint === true);
     expect(bugs.map((s) => s.line).sort((a, b) => a - b)).toEqual([39537, 47390]);
     for (const bug of bugs) {
       expect(NEUTRAL(bug.tint), `${bug.line} must be the white restore`).toBe(true);
@@ -381,13 +450,16 @@ describe("#263 inheritance chain + the owner's two reference champions (tint263-
     expect(readChampion("godie-n00b").alpha).toBeUndefined();
 
     // the ledger records WHICH step of the chain each value came from, so a
-    // future resolver change cannot quietly reclassify one
-    const units = ledger().units;
+    // future resolver change cannot quietly reclassify one.
+    // ⚠️ 出處是**萃取事實**,跟英雄上不上架無關(E00V/Ecen 今天在歸檔帳本裡),
+    // 所以這裡讀兩份帳本的聯集。不重疊由上面 tint-ledger 那條在守。
+    const units = { ...legacyLedger().units, ...ledger().units };
     expect(units.U00L?.source).toBe("w3u-base-inherited");
     expect(units.Umal?.source).toBe("w3u-static");
     expect(units.E00V?.source).toBe("w3u-static"); // green/blue are explicit mods
     expect(units.Ecen?.source).toBe("slk-inherited");
-    // 小叮噹 is not in the ledger at all — it has no colour to record
+    // 小叮噹 is not in the ledger at all — it has no colour to record.
+    // ⛔ 兩份帳本都不可以有他,否則「不要發明顏色」這條規則就從歸檔那一側破掉。
     expect(units.N00B).toBeUndefined();
   });
 });
@@ -425,14 +497,21 @@ describe("#263 resolver ↔ champion docs ↔ ledger (tint263-resolver)", () => 
     const units = Object.entries(doc.units);
     expect(units.length).toBeGreaterThan(500); // the whole w3u, not a slice
 
+    // ⭐ 2026-08-13 之後帳本有兩本。走訪母體仍然是**整份 w3u**(那是唯一的真理來源),
+    // 但每一列該落在哪一本,由那位英雄現在住哪一邊決定。這讓這條守衛多抓一種故障:
+    // 「搬遷把一列從營運拿走卻沒放進歸檔」—— 那一列會在這裡指名道姓地缺席。
     const led = ledger().units;
+    const legacyLed = legacyLedger().units;
     let checked = 0;
+    let legacySide = 0;
     for (const [rawcode, u] of units) {
       // an effective colour is (r,g,b)/255 — never a raw 0..255 channel
       expect(u.tint.every((c) => c >= 0 && c <= 1), rawcode).toBe(true);
       expect(u.neutral, rawcode).toBe(u.rgb255.every((c) => c === 255));
 
       if (!u.championId) continue;
+      const side = championSide(u.championId);
+      expect(side, `${rawcode} -> ${u.championId} 的文件哪一邊都找不到`).toBeDefined();
       const champ = readChampion(u.championId);
       if (u.neutral) {
         // NOT tinted in the w3x ⇒ must not be tinted here. This is the
@@ -440,23 +519,29 @@ describe("#263 resolver ↔ champion docs ↔ ledger (tint263-resolver)", () => 
         // matters: its blue is the mesh texture, not a vertex colour.
         expect(champ.tint, `${rawcode} is untinted in the w3x`).toBeUndefined();
         expect(led[rawcode], `${rawcode} must not be in the ledger`).toBeUndefined();
+        expect(legacyLed[rawcode], `${rawcode} must not be in the legacy ledger`).toBeUndefined();
         continue;
       }
       checked++;
+      if (side === "legacy") legacySide++;
       // the champion doc carries the resolved value, to 4dp
       expect(champ.tint, `${rawcode} -> ${u.championId}`).toBeDefined();
       for (let i = 0; i < 3; i++) {
         expect(Math.abs(champ.tint![i]! - u.tint[i]!), `${rawcode} ch${i}`).toBeLessThan(0.002);
       }
-      // …and so does the ledger (the audit document may not drift from either)
-      expect(led[rawcode], `${rawcode} missing from the ledger`).toBeDefined();
-      expect(led[rawcode]!.tint, `${rawcode} ledger`).toEqual(champ.tint);
+      // …and so does the ledger the champion belongs to (the audit document may
+      // not drift from either, on EITHER side)
+      const book = side === "legacy" ? legacyLed : led;
+      expect(book[rawcode], `${rawcode} missing from the ${side} ledger`).toBeDefined();
+      expect(book[rawcode]!.tint, `${rawcode} ${side} ledger`).toEqual(champ.tint);
     }
-    // every champion-mapped tinted unit was actually walked
+    // every champion-mapped tinted unit was actually walked — both halves
     expect(checked).toBe(EXPECTED.length);
+    expect(legacySide, "歸檔那一側整個沒走到").toBeGreaterThan(0);
+    expect(checked - legacySide, "營運那一側整個沒走到").toBeGreaterThan(0);
 
-    // and nothing in the ledger claims a colour the w3x does not have
-    for (const [rawcode, e] of Object.entries(led)) {
+    // and nothing in EITHER ledger claims a colour the w3x does not have
+    for (const [rawcode, e] of [...Object.entries(led), ...Object.entries(legacyLed)]) {
       const u = doc.units[rawcode];
       expect(u, `ledger has ${rawcode}, the w3u does not`).toBeDefined();
       expect(u!.neutral, `${rawcode} is neutral in the w3x`).toBe(false);

@@ -83,10 +83,9 @@ function loadTts(): TtsLine[] {
   return JSON.parse(readFileSync(TTS_MANIFEST_PATH, "utf8")) as TtsLine[];
 }
 
-/** Every authored champion id → its Chinese name. */
-function championNames(): Map<string, string> {
-  const dir = join(CONTENT, "champions");
+function namesIn(dir: string): Map<string, string> {
   const out = new Map<string, string>();
+  if (!existsSync(dir)) return out;
   for (const f of readdirSync(dir)) {
     if (!f.endsWith(".json") || f === "_index.json") continue;
     const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as { id: string; name: string };
@@ -94,6 +93,39 @@ function championNames(): Map<string, string> {
   }
   return out;
 }
+
+/**
+ * **營運中**的英雄 id → 中文全名。這是「每一位都要有 call-out」的母體。
+ *
+ * ── 2026-08-13:多了一棵樹 ─────────────────────────────────────────────────
+ * owner 把 41 位沒上架的英雄搬到 `content/_legacy/champions/`(不在
+ * `COLLECTION_NAMES` 裡,引擎讀不到)。語音包**沒有**跟著搬 —— 那些 mp3 與
+ * MANIFEST 條目留著,重新上架時直接可用。所以這支測試有兩個母體:
+ *   · 覆蓋率(「有沒有人沒配到」)問的是**營運中**的那些;
+ *   · 幽靈條目(「配到了一位不存在的英雄」)問的是**兩棵樹合起來** ——
+ *     否則備份區那些條目會讓這條守衛整片紅,而它們其實是對的。
+ */
+function championNames(): Map<string, string> {
+  return namesIn(join(CONTENT, "champions"));
+}
+
+/** 備份區(已下架)那些。只用來證明「這個 id 不是幽靈」,不是覆蓋率的母體。 */
+function archivedNames(): Map<string, string> {
+  return namesIn(join(CONTENT, "_legacy/champions"));
+}
+
+/** 兩棵樹合起來 —— 「這個 id 存在嗎 / 它的中文名是什麼」的唯一答案。 */
+function allNames(): Map<string, string> {
+  return new Map([...archivedNames(), ...championNames()]);
+}
+
+/**
+ * 沒有 稱號 的那幾位(全名裡沒有 `" - "`)。這是一張**名單**,不是一個數字:一位
+ * 英雄悄悄掉了 稱號,會從「有稱號」那一組掉進這一組,底下兩條測試同時紅。
+ * ⚠️ 2026-08-13 godie-h02s(死亡騎士)與 godie-h02z(不良少年)隨著未上架英雄
+ * 搬進 `content/_legacy/`,所以營運母體只剩兩位非 w3x 原創角色。
+ */
+const TITLELESS_IDS = ["sela", "thorne"];
 
 function isMp3(buf: Buffer): boolean {
   if (buf.length < 4) return false;
@@ -117,15 +149,19 @@ describe("champion call-out VO pack", () => {
     const skipped = new Set(doc.skipped.map((s) => s.id));
     expect(skipped.size).toBeGreaterThan(0);
 
+    // 覆蓋率:**營運中**的每一位都要有 call-out(或被明確宣告跳過)。
     const unmapped = [...champs.keys()].filter((id) => !doc.champions[id] && !skipped.has(id));
     expect(unmapped, `unmapped champions: ${unmapped.join(", ")}`).toEqual([]);
 
-    const unknown = Object.keys(doc.champions).filter((id) => !champs.has(id));
+    // 幽靈條目:配到的 id 必須真的是一張英雄卡 —— 營運中或備份區都算,但不能兩邊
+    // 都沒有(那就是打錯 id,或是一位英雄被真的刪掉而語音包沒跟上)。
+    const known = allNames();
+    const unknown = Object.keys(doc.champions).filter((id) => !known.has(id));
     expect(unknown, `mapped ids that are not champions: ${unknown.join(", ")}`).toEqual([]);
 
     // the skipped ones really are the placeholders, and got no clip
     for (const s of doc.skipped) {
-      expect(champs.get(s.id), `${s.id} still exists`).toBeDefined();
+      expect(known.get(s.id), `${s.id} still exists`).toBeDefined();
       expect(/測試|範例|placeholder/.test(`${s.name}${s.why}`)).toBe(true);
       expect(existsSync(join(CONTENT, NAMES_DIR, `${s.id}.mp3`))).toBe(false);
     }
@@ -141,16 +177,19 @@ describe("champion call-out VO pack", () => {
     const withTitle = [...champs.entries()].filter(
       ([id, name]) => name.includes(TITLE_SEP) && !skipped.has(id),
     );
-    // 115 of 119 champions are authored "稱號 - 全名"; one of those is the
-    // skipped test hero, leaving 114 that must speak both halves. (Was 109, then
-    // 110 when task #249 imported godie-o02n, 曹操孟德's BASE unit O02N. Now 114:
-    // the same task imported the four 變身 ALTERNATE bodies — godie-e010 /
-    // godie-h00w / godie-n01b / godie-o030 — because the transform primitive
-    // resolves the swapped body through `Champions.get()`, which throws on an
-    // unregistered id. Each carries its BASE half's authored name verbatim, so
-    // each is cast identically to it in tools/tts-gen/src/build-champ-names.mjs:
-    // same character, changed shape, same call-out.)
-    expect(withTitle.length, "champions authored with a 稱號").toBe(114);
+    // ⚠️ 以前這裡是 `toBe(114)`,而 114 是「119 隻英雄」時代的出貨值。2026-08-13
+    // 的下架搬遷把它變成 76,而**那個 76 一樣會過期** —— 每一次上架/下架都會動它
+    // (第零守則:出貨值不住在測試裡)。所以不換數字,換形狀。
+    //
+    // 這一格要擋的事沒有變:**一位英雄的 稱號 悄悄不見了**。掉了 稱號 的人會從
+    // 這一組掉進「無稱號」那一組,所以只要三組加起來剛好蓋滿整個營運母體、
+    // 不重不漏,那件事就一定會被下面那條無稱號名單抓到。
+    // ⚠️ 只算**還在營運內容裡**的跳過項:唯一那位(godie-u01q 測試英雄)2026-08-13
+    // 也搬進了備份區,拿整份 skipped 來加會多算一位。
+    const skippedLive = [...skipped].filter((id) => champs.has(id)).length;
+    const accounted = withTitle.length + TITLELESS_IDS.length + skippedLive;
+    expect(accounted, "有稱號 + 無稱號 + 跳過 要剛好蓋滿營運母體").toBe(champs.size);
+    expect(withTitle.length, "反空轉:不可以一位都沒有").toBeGreaterThan(0);
 
     for (const [id, zhName] of withTitle) {
       const e = doc.champions[id]!;
@@ -195,7 +234,7 @@ describe("champion call-out VO pack", () => {
     }
   });
 
-  it("handles the four champions authored WITHOUT a 稱號 gracefully", () => {
+  it("handles the champions authored WITHOUT a 稱號 gracefully", () => {
     cover("name-vo-titleless-champions");
     const doc = loadNames();
     const champs = championNames();
@@ -203,7 +242,8 @@ describe("champion call-out VO pack", () => {
     const titleless = [...champs.entries()]
       .filter(([id, name]) => !name.includes(TITLE_SEP) && !skipped.has(id))
       .map(([id]) => id);
-    expect(titleless.sort()).toEqual(["godie-h02s", "godie-h02z", "sela", "thorne"]);
+    // 名單比對,不是數量比對 —— 一位英雄悄悄掉了 稱號 會在這裡多出一個 id。
+    expect(titleless.sort()).toEqual([...TITLELESS_IDS].sort());
     for (const id of titleless) {
       const e = doc.champions[id]!;
       expect(e.zhTitle, `${id} has no 稱號`).toBeNull();
@@ -314,7 +354,9 @@ describe("champion call-out VO pack", () => {
   it("gives every entry the documented shape, with the live zhName", () => {
     cover("name-vo-entry-shape");
     const doc = loadNames();
-    const champs = championNames();
+    // 兩棵樹合起來:備份區那些條目的 zhName **也**不可以 drift —— 重新上架的時候
+    // 沒有人會回頭重跑這個對帳,一份對不上的語音包會直接跟著英雄一起復活。
+    const champs = allNames();
 
     for (const [id, e] of Object.entries(doc.champions)) {
       // zhName is the WHOLE authored string — display text cannot drift from content

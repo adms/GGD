@@ -54,7 +54,12 @@ const axisValue = (r: VoxelSkinRecipe, axis: string): string => {
 describe("explainVoxelSkin describes the champion that actually ships", () => {
   it("has a roster to explain at all", () => {
     cover("voxel-skin-explain");
-    expect(champions.length).toBeGreaterThan(100);
+    // STRUCTURAL floor, and it is exactly what the test's own name claims: an
+    // empty read makes every per-champion loop below a green no-op. It used to
+    // be `>100` — the operating roster's size copied into a test — and the
+    // 2026-08-13 legacy migration (119 → 78) is precisely how that kind of
+    // copy fails: red here, nothing wrong with the explainer.
+    expect(champions.length, "champions/ read as empty").toBeGreaterThan(0);
   });
 
   it("every explained value equals the generated recipe's value, for every champion", () => {
@@ -90,38 +95,67 @@ describe("explainVoxelSkin describes the champion that actually ships", () => {
 
   it("a hand-authored override is reported as L1 and nothing else claims it", () => {
     cover("voxel-skin-explain");
-    // godie-h02s is authored in _voxel-skins.json precisely BECAUSE the
-    // generator could only separate it from its clone by id entropy.
-    const input = inputs.find((i) => i.id === "godie-h02s");
-    expect(input, "the authored clone-pair example must still exist").toBeDefined();
-    const ov = overrides["godie-h02s"]!;
-    expect(ov).toBeDefined();
-    const ex = explainVoxelSkin(input!, {
-      salt: generated.recipes.get("godie-h02s")!.salt,
-      override: ov,
-    });
-    const outfit = ex.axes.find((a) => a.axis === "palette.outfitPrimary")!;
-    expect(outfit.layer).toBe("L1-override");
-    expect(outfit.value).toBe(ov.palette!.outfitPrimary);
-    expect(outfit.evidence).toContain("_voxel-skins.json");
-    // and the axes the override did NOT touch are still explained by a lower layer
-    const untouched = ex.axes.filter((a) => a.layer !== "L1-override");
-    expect(untouched.length).toBeGreaterThan(0);
+    // DERIVED FROM THE OVERRIDE FILE, not a named hero. This used to pin
+    // `godie-h02s` (authored precisely BECAUSE the generator could only separate
+    // it from its clone by id entropy) — and the 2026-08-13 legacy migration
+    // moved that champion off the operating roster, so the guard died for a
+    // reason that had nothing to do with the L1 layer. The property is: an axis
+    // a human hand-authored must be REPORTED as hand-authored, and must name the
+    // file it came from. Hold every LIVE override to it, whoever they turn out
+    // to be.
+    const authored = Object.entries(overrides).filter(
+      ([id, ov]) => ov.palette?.outfitPrimary && inputs.some((i) => i.id === id),
+    );
+    // Structural floor: with nothing authored on the roster this test is
+    // vacuous and the entire L1 layer is unguarded. That has to be red.
+    expect(
+      authored.length,
+      "no champion on the roster is hand-authored — L1 would be untested",
+    ).toBeGreaterThan(0);
+    for (const [id, ov] of authored) {
+      const input = inputs.find((i) => i.id === id)!;
+      const ex = explainVoxelSkin(input, {
+        salt: generated.recipes.get(id)!.salt,
+        override: ov,
+      });
+      const outfit = ex.axes.find((a) => a.axis === "palette.outfitPrimary")!;
+      expect(outfit.layer, id).toBe("L1-override");
+      expect(outfit.value, id).toBe(ov.palette!.outfitPrimary);
+      expect(outfit.evidence, id).toContain("_voxel-skins.json");
+      // and the axes the override did NOT touch are still explained by a lower layer
+      const untouched = ex.axes.filter((a) => a.layer !== "L1-override");
+      expect(untouched.length, id).toBeGreaterThan(0);
+    }
   });
 
   it("a keyword rule reports the WORD that fired it, not just the rule", () => {
     cover("voxel-skin-explain");
-    // 貞子 (godie-e00t, 七夜怪談) is the canonical undead-by-name case.
-    const input = inputs.find((i) => i.id === "godie-e00t");
-    expect(input).toBeDefined();
-    const ex = explainVoxelSkin(input!, { salt: generated.recipes.get("godie-e00t")!.salt });
-    const skin = ex.axes.find((a) => a.axis === "palette.skin")!;
-    expect(skin.layer).toBe("L2-keyword");
-    expect(skin.reason).toContain("關鍵字規則");
-    // the evidence is a literal substring of the champion's own words
-    const word = (skin.evidence ?? "").replace(/[「」]/g, "");
-    expect(word.length).toBeGreaterThan(0);
-    expect(ex.haystack).toContain(word);
+    // DERIVED. 貞子 (godie-e00t, 七夜怪談) was the canonical undead-by-name case
+    // and left the operating roster in the 2026-08-13 legacy migration. Naming
+    // one hero made this guard hostage to which heroes ship; the property it
+    // actually defends is 「關鍵字層報出來的那個字，必須真的出現在這位英雄自己
+    // 的字裡」 — so run it over EVERY champion whose skin tone came from L2.
+    const skinOf = (i: (typeof inputs)[number]) =>
+      explainVoxelSkin(i, { salt: generated.recipes.get(i.id)!.salt }).axes.find(
+        (a) => a.axis === "palette.skin",
+      )!;
+    const keyworded = inputs.filter((i) => skinOf(i).layer === "L2-keyword");
+    // Structural floor: a roster on which NOT ONE skin tone comes from a keyword
+    // means the L2 table stopped firing entirely — red, not a quiet pass.
+    expect(
+      keyworded.length,
+      "no champion's skin tone came from a keyword rule — L2 is dead",
+    ).toBeGreaterThan(0);
+    for (const input of keyworded) {
+      const ex = explainVoxelSkin(input, { salt: generated.recipes.get(input.id)!.salt });
+      const skin = ex.axes.find((a) => a.axis === "palette.skin")!;
+      expect(skin.layer, input.id).toBe("L2-keyword");
+      expect(skin.reason, input.id).toContain("關鍵字規則");
+      // the evidence is a literal substring of the champion's own words
+      const word = (skin.evidence ?? "").replace(/[「」]/g, "");
+      expect(word.length, input.id).toBeGreaterThan(0);
+      expect(ex.haystack, input.id).toContain(word);
+    }
   });
 
   it("every rule hit carries a match that really occurs in the haystack", () => {

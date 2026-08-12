@@ -28,7 +28,7 @@
  * 不是 `world.regenRules` 上的欄位值（失敗形態 ⑦）。
  */
 import { describe, it, expect, beforeEach } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SimWorld } from "./SimWorld";
@@ -59,6 +59,28 @@ const DUMMY = "drain-dummy" as ChampionId;
  * 「明顯壓過卡片上那條固定回血」，讓每一條斷言都能指認是哪條路在動血條。
  */
 const FIXTURE_PCT = 0.05;
+
+/**
+ * 「出貨英雄卡」的**母體** —— 直接列 `content/champions/` 這個目錄。
+ *
+ * ⚠️ 這裡原本讀 `_index.json` 並且斷言 `entries.length > 100`。owner 2026-08-13
+ * 把 41 位沒上架的英雄搬進 `content/_legacy/champions/`（那個目錄不在
+ * `COLLECTION_NAMES` 裡，引擎讀不到它），營運名單掉到 78 —— 那個 100 是一個
+ * **抄來的出貨值**，也就是 CLAUDE.md 說的「第四個住處」，所以它跟著名單過期了。
+ *
+ * 現在母體跟著目錄走：誰在營運名單裡由 `content/champions/` 定義，再搬一次
+ * 也不必回來改這一行。
+ */
+function shippedChampionCards(): { id: string; doc: ChampionDef }[] {
+  const dir = join(CONTENT_DIR, "champions");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .sort()
+    .map((f) => ({
+      id: f.slice(0, -".json".length),
+      doc: JSON.parse(readFileSync(join(dir, f), "utf-8")) as ChampionDef,
+    }));
+}
 
 /** 骨架英雄卡 + 一格自傷。除了那一格，其餘與 `SELA` 逐位元相同。 */
 function drainFixture(): ChampionDef {
@@ -105,17 +127,14 @@ describe("零使用者 —— 出貨內容裡目前沒有人在用百分比自�
     // 引擎能力，不是因為有人在用。
     // 哪天這條紅了 = 有人重新開始用它 —— 那時候請把上面那些機制守衛從合成英雄
     // 改回讀**那張真的卡**（失敗形態 ⑤：被測的不是出貨的那個）。
-    const index = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "champions/_index.json"), "utf-8"),
-    ) as { entries: { id: string; path: string }[] };
-    // 反向守衛：目錄空了這條會變成 vacuously true，所以先釘住它不是空的。
-    expect(index.entries.length).toBeGreaterThan(100);
-    const users = index.entries
-      .filter((e) => {
-        const doc = JSON.parse(readFileSync(join(CONTENT_DIR, e.path), "utf-8")) as ChampionDef;
-        return typeof doc.healthDrainPctOfMax === "number" && doc.healthDrainPctOfMax > 0;
-      })
-      .map((e) => e.id);
+    const cards = shippedChampionCards();
+    // 反向守衛：母體空了下面那條會變成 vacuously true，所以先釘住它不是空的。
+    // ⛔ 這個下界刻意是**結構性**的，不是「至少 N 位」——「一位英雄都沒有」不是
+    //    一次名單調整，那是整棵 content 樹掛了，所以它不會因為誰上下架而過期。
+    expect(cards.length).toBeGreaterThan(0);
+    const users = cards
+      .filter((c) => typeof c.doc.healthDrainPctOfMax === "number" && c.doc.healthDrainPctOfMax > 0)
+      .map((c) => c.id);
     expect(users).toEqual([]);
   });
 

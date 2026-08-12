@@ -19,8 +19,28 @@
  *
  * ⚠️ 「有內容的天生技」有**兩種形狀**(2026-08-08):`passive`(靜態屬性/hook)
  * 或 `marks`(具名標記,見 `sim/marks.ts`)。52-00 十二道試煉是第二種。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ 2026-08-13 營運名單縮編:這條 lane 的七支裡有**四支的英雄下架了**
+ *
+ * owner 把沒開放的英雄整批搬進 `content/_legacy/`(引擎讀不到 —— `_legacy` 不在
+ * `COLLECTION_NAMES` 裡)。43-00 觀音大士(`godie-uwar`)、03-00 相轉移裝甲
+ * (`godie-hlgr`)、61-00 百連我殺(`godie-u011` / `godie-u012`)四份英雄卡都在裡面。
+ *
+ * ⛔ 這一份**沒有**因此少驗任何一個機制。做法是把 lane 切成兩段:
+ *   · 上半段 = **營運名單上的**三支,走 `ContentLoader` 讀 `content/`,和 game-server
+ *     開機同一條路(原本就是這樣);
+ *   · 下半段 = **已下架的**四支,把那四份封存文件**指名**塞進同一個 store 再註冊。
+ *     斷言一個字都沒改 —— 因為它們驗的是**引擎機制**(`invulnerable` / `shield` /
+ *     chance-gated `applyBuff`),而機制沒有下架,下架的是使用它的內容。
+ *     這也讓「把某位英雄放回營運名單」變成搬一個檔案的事,而不是重寫一份守衛。
+ *
+ * ⚠️ 下半段有一條**方向相反**的守衛(`已下架的四支確實不在營運註冊表裡`):
+ * 哪一天有人把其中一位搬回 `content/champions/`,那一條就會紅,提醒把它的守衛
+ * 搬回上半段。少了它,這份檔案會靜靜地用封存文件替一位**已經上架**的英雄背書。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "../content/loader";
@@ -43,16 +63,30 @@ const CONTENT_DIR = join(HERE, "../../../../content");
 const Z0 = SKELETON_ARENA.zones[0]!;
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
 
-/** 這一條 lane 的七支英雄。寫死,不是掃出來的 —— 見檔頭。 */
+/** 這一條 lane 裡**還在營運名單上**的三支。寫死,不是掃出來的 —— 見檔頭。 */
 const LANE_A = {
   eva: "godie-e00r" as ChampionId, // 59-00 暴走
   herc: "godie-hapm" as ChampionId, // 52-00 十二道試煉
+  mafia: "godie-u00v" as ChampionId, // 78-00 銅皮鐵骨
+};
+
+/** 這一條 lane 裡**已下架**的四支,文件在 `content/_legacy/` —— 見檔頭。 */
+const RETIRED = {
   kannon: "godie-uwar" as ChampionId, // 43-00 觀音大士的守護
+  gundam: "godie-hlgr" as ChampionId, // 03-00 相轉移裝甲
   krauserA: "godie-u011" as ChampionId, // 61-00 百連我殺 (變身態)
   krauserB: "godie-u012" as ChampionId, // 61-00 百連我殺 (本體)
-  mafia: "godie-u00v" as ChampionId, // 78-00 銅皮鐵骨
-  gundam: "godie-hlgr" as ChampionId, // 03-00 相轉移裝甲
 };
+
+/**
+ * 對照組用的中立身體。
+ *
+ * 麻倉葉的天生技只給 `vision.trueSightRadius` —— 沒有 `modifiers`、沒有 `hooks`、
+ * 沒有 `marks`,所以它不可能貢獻底下量到的任何一個數字。
+ * ⚠️ 也因為它沒有 payload,它**不屬於** `LANE_A`(那個 map 有一條「不是空殼」的
+ * 守衛)—— 「受測的天生技」和「乾淨的對照身體」是兩件事,不要混在同一個清單。
+ */
+const CONTROL = "godie-nplh" as ChampionId;
 
 /**
  * 出貨文件上「暴走」給的某一格 modifier —— 從 registry 讀,不抄字面值。
@@ -87,10 +121,27 @@ function berserkDurationFromDoc(): number {
   return (buff as { duration?: number } | undefined)?.duration ?? 0;
 }
 
+const LEGACY_DIR = join(CONTENT_DIR, "_legacy");
+
+function readJson(path: string): Record<string, unknown> {
+  return JSON.parse(readFileSync(path, "utf-8")) as Record<string, unknown>;
+}
+
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
   const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  // 已下架的四支:**指名**把封存文件塞進同一個 store,再一起註冊。
+  // ⛔ 不是整棵 `_legacy` 掃進來 —— 引擎讀不到 `_legacy` 是刻意的,這裡只為
+  //    `RETIRED` 裡具名的那四支破例,而且底下有一條守衛在確認它們真的還是下架狀態。
+  for (const id of Object.values(RETIRED)) {
+    const champ = readJson(join(LEGACY_DIR, "champions", `${id}.json`));
+    result.store.add("champions", id, champ);
+    const passiveId = champ.passiveAbility as string | undefined;
+    if (passiveId !== undefined) {
+      result.store.add("abilities", passiveId, readJson(join(LEGACY_DIR, "abilities", `${passiveId}.json`)));
+    }
+  }
   registerAll(result.store);
 });
 
@@ -112,9 +163,30 @@ function step(world: SimWorld, ticks: number): void {
   for (let i = 0; i < ticks; i++) world.step(NO_INTENTS);
 }
 
-describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", () => {
+describe("Lane A 天生技 —— 文件真的動到世界裡的數字", () => {
+  /**
+   * ⚠️ 方向相反的守衛(2026-08-13 加):`RETIRED` 那四支必須**真的還是下架狀態**。
+   *
+   * 底下三條標了「已下架」的守衛跑在 `content/_legacy/` 的封存文件上。哪一天有人
+   * 把其中一位搬回營運名單,這一條就紅,提醒把它的守衛改成走 `content/` 的正規路
+   * (和上半段一樣)。少了它,這份檔案會靜靜地用**封存文件**替一位**已經上架**的
+   * 英雄背書 —— 那正是 CLAUDE.md 失敗形態⑤「被測的不是出貨的那個」。
+   */
+  it("已下架的四支確實不在營運名單上,而且封存文件還在(搬回來這條就紅)", () => {
+    for (const cid of Object.values(RETIRED)) {
+      expect(
+        existsSync(join(CONTENT_DIR, "champions", `${cid}.json`)),
+        `${cid} 回到營運名單了 —— 把它的天生技守衛改成走 content/ 的正規路`,
+      ).toBe(false);
+      expect(
+        existsSync(join(LEGACY_DIR, "champions", `${cid}.json`)),
+        `${cid} 的封存文件不見了 —— 下面那條守衛失去了它的受測對象`,
+      ).toBe(true);
+    }
+  });
+
   it("每一支的 passive 都不是空殼(反向守衛:清空任何一支,底下對應那條就紅)", () => {
-    for (const cid of Object.values(LANE_A)) {
+    for (const cid of [...Object.values(LANE_A), ...Object.values(RETIRED)]) {
       const def = Champions.get(cid);
       const innate = Abilities.get(def.passiveAbility!);
       // ⚠️ 2026-08-08:「有內容的天生技」有**兩種形狀**,這一條原本只認得第一種。
@@ -143,7 +215,7 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     expect(ad0).toBeGreaterThan(0);
 
     // 對照組:同一個世界裡一位沒有這支天生技的英雄,防禦力不含這一項。
-    const ctrl = arena(LANE_A.gundam);
+    const ctrl = arena(CONTROL);
     const ctrlSc = ctrl.world.stats.get(ctrl.id)!;
 
     // 精確關係,不是 `toBeGreaterThan(0)`:把 `from` 或 0.5 改掉這條就紅。
@@ -195,7 +267,7 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
 
     // 對照組:沒有這支天生技的英雄身上不該有這個標記。少了這一行,上面那條
     // 對「世界給每個人都發標記」也會過(失敗形態④)。
-    const ctrl = arena(LANE_A.gundam);
+    const ctrl = arena(CONTROL);
     expect(markCount(ctrl.world, ctrl.id, spec!.markId)).toBe(0);
 
     // 永久:`durationSec: -1` → 絕對到期 tick 是「永不」,跑幾秒不會被
@@ -207,8 +279,11 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
   });
 
   // ── ③ 43-00 觀音大士的守護 —— 每 10 秒一個 10% 最大生命的護盾,不疊加 ───────
-  it("43-00 觀音大士:第一 tick 就上盾,盾量 = 10% 最大生命,而且永遠只有一個", () => {
-    const { world, id } = arena(LANE_A.kannon);
+  //
+  // ⚠️ 英雄已下架(2026-08-13),受測文件是 `content/_legacy/`。斷言一個字沒改 ——
+  // 它驗的是 `onInterval` + `shield` 這組**引擎機制**,機制沒有下架。見檔頭。
+  it("[已下架] 43-00 觀音大士:第一 tick 就上盾,盾量 = 10% 最大生命,而且永遠只有一個", () => {
+    const { world, id } = arena(RETIRED.kannon);
     const max = world.stats.get(id)!.final[Stat.MaxHealth];
     expect(world.health.get(id)!.shields.length).toBe(0);
 
@@ -230,8 +305,12 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
   });
 
   // ── ⑥ 03-00 相轉移裝甲 —— 常駐魔法免疫 ────────────────────────────────────
-  it("03-00 相轉移裝甲:魔法傷害被拒絕,物理與真實傷害照吃", () => {
-    const { world, id } = arena(LANE_A.gundam);
+  //
+  // ⚠️ 英雄已下架(2026-08-13),受測文件是 `content/_legacy/`。斷言一個字沒改 ——
+  // 它驗的是 `invulnerable` + `blocksDamage` 這組**引擎機制**,而且營運名單上目前
+  // **沒有第二位**帶常駐魔免的英雄,拿掉這一條等於這條路線完全沒有內容側守衛。
+  it("[已下架] 03-00 相轉移裝甲:魔法傷害被拒絕,物理與真實傷害照吃", () => {
+    const { world, id } = arena(RETIRED.gundam);
     // 第一 tick 之前還沒有人續期過 → 三種都吃。這一行同時證明免疫是**這支天生技
     // 給的**,不是世界預設。
     expect(refusesDamage(world, id, "magic")).toBe(false);
@@ -261,8 +340,12 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
   });
 
   // ── ④ 61-00 百連我殺 —— 兩份文件都要,4% / ×4 / 0.4 秒 ─────────────────────
-  it("61-00 百連我殺:兩位克勞薩的文件是同一份效果,而且真的會發動", () => {
-    for (const cid of [LANE_A.krauserA, LANE_A.krauserB]) {
+  //
+  // ⚠️ 兩位克勞薩都已下架(2026-08-13),受測文件是 `content/_legacy/`。斷言一個字
+  // 沒改 —— 它驗的是 chance-gated `onDamageTaken` → `applyBuff` +`stackKey`/
+  // `maxStacks` 這組**引擎機制**(不可疊乘那一半)。見檔頭。
+  it("[已下架] 61-00 百連我殺:兩位克勞薩的文件是同一份效果,而且真的會發動", () => {
+    for (const cid of [RETIRED.krauserA, RETIRED.krauserB]) {
       const def = Champions.get(cid);
       const hooks = Abilities.get(def.passiveAbility!).passive!.ranks[0]!.hooks!;
       expect(hooks.length, `${cid} 沒有 hook`).toBe(1);
@@ -285,7 +368,7 @@ describe("Lane A 天生技 —— 出貨文件真的動到世界裡的數字", (
     }
 
     // 行為:餵傷害直到 4% 擲中一次,攻速必須真的變成 4 倍。
-    const { world, id } = arena(LANE_A.krauserB, 7);
+    const { world, id } = arena(RETIRED.krauserB, 7);
     const base = world.stats.get(id)!.final[Stat.AttackSpeed];
     let peak = base;
     for (let i = 0; i < 400; i++) {

@@ -14,6 +14,20 @@
  * ContentLoader/_index.json dependency — same approach as standinRoster.test.ts
  * so the suite is green regardless of when the indexes were last rebuilt), plus
  * a cross-check against the importer's own HERO_NUMBERS.json.
+ *
+ * ── 2026-08-13:兩棵樹,兩種母體 ──────────────────────────────────────────────
+ * owner 把 41 位沒上架的英雄搬到 `content/_legacy/champions/`(不在
+ * `COLLECTION_NAMES` 裡,引擎完全讀不到)。這支測試因此要分清楚兩件事:
+ *
+ *   `CORPUS` = 營運內容 + 備份區。**規則**的母體。`isSameCharacter` 是一個純函式,
+ *              它的政策 pin 是「這兩份文件是不是同一個角色」—— 把一位英雄下架
+ *              並不會讓 黑化Saber 變成 Saber。⛔ 這些 pin 不可以因為某一位被下架
+ *              就消失,那正是這個檔案存在要防的事(一個角色靜悄悄不見了)。
+ *   `LIVE`   = 只有營運內容。**出貨行為**的母體:玩家真的選得到的那些卡,去重之後
+ *              還是不是一人一列。
+ *
+ * ⛔ 讀 `_legacy/` 不等於把它接回引擎 —— 這裡只是讀檔案,註冊表由
+ * `COLLECTION_NAMES` 決定,那一份沒有變。
  */
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
@@ -37,6 +51,8 @@ import { isAlternateForm, isW3xFormPair } from "./championForms";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
 const CHAMP_DIR = join(CONTENT_DIR, "champions");
+const LEGACY_CHAMP_DIR = join(CONTENT_DIR, "_legacy/champions");
+const ABILITY_DIRS = [join(CONTENT_DIR, "abilities"), join(CONTENT_DIR, "_legacy/abilities")];
 const HERO_NUMBERS_PATH = join(
   HERE,
   "../../../../tools/w3x-import/out/GoDieEX22s-src/HERO_NUMBERS.json",
@@ -51,18 +67,25 @@ interface RawChampion {
   abilities?: Record<string, { name?: string } | undefined>;
 }
 
-/** Every champion@1 doc on disk, as the identity helper wants to see it. */
-function loadRoster(): (IdentityChampion & { exAbility?: string })[] {
+/** The EX ability's display name, from whichever tree still holds the doc. */
+function exAbilityName(id: string | undefined): string | undefined {
+  if (id === undefined) return undefined;
+  for (const dir of ABILITY_DIRS) {
+    const p = join(dir, `${id}.json`);
+    if (existsSync(p)) return (JSON.parse(readFileSync(p, "utf8")) as { name?: string }).name;
+  }
+  return undefined;
+}
+
+/** Every champion@1 doc in one tree, as the identity helper wants to see it. */
+function loadRoster(dir: string): (IdentityChampion & { exAbility?: string })[] {
   const out: (IdentityChampion & { exAbility?: string })[] = [];
-  for (const file of readdirSync(CHAMP_DIR).sort()) {
+  if (!existsSync(dir)) return out;
+  for (const file of readdirSync(dir).sort()) {
     if (!file.endsWith(".json") || file.startsWith("_")) continue;
-    const doc = JSON.parse(readFileSync(join(CHAMP_DIR, file), "utf8")) as RawChampion;
+    const doc = JSON.parse(readFileSync(join(dir, file), "utf8")) as RawChampion;
     if (doc.schema !== "champion@1") continue;
-    const exPath = doc.exAbility ? join(CONTENT_DIR, "abilities", `${doc.exAbility}.json`) : null;
-    const exName =
-      exPath && existsSync(exPath)
-        ? (JSON.parse(readFileSync(exPath, "utf8")) as { name?: string }).name
-        : undefined;
+    const exName = exAbilityName(doc.exAbility);
     out.push({
       id: doc.id,
       name: doc.name,
@@ -74,14 +97,21 @@ function loadRoster(): (IdentityChampion & { exAbility?: string })[] {
   return out;
 }
 
-const ROSTER = loadRoster();
-const byId = new Map(ROSTER.map((c) => [c.id, c]));
+/** 營運內容 —— 玩家真的選得到的那些卡(引擎的註冊表就是這一份)。 */
+const LIVE = loadRoster(CHAMP_DIR);
+/** 備份區 —— 2026-08-13 下架的那些。引擎讀不到,但**規則**仍然要對它們成立。 */
+const ARCHIVE = loadRoster(LEGACY_CHAMP_DIR);
+/** 規則的母體:兩棵樹合起來。見檔頭「兩棵樹,兩種母體」。 */
+const CORPUS = [...LIVE, ...ARCHIVE];
+const LIVE_IDS = new Set(LIVE.map((c) => c.id));
+
+const byId = new Map(CORPUS.map((c) => [c.id, c]));
 const champ = (id: string): IdentityChampion => {
   const c = byId.get(id);
-  if (!c) throw new Error(`champion ${id} missing from content/champions`);
+  if (!c) throw new Error(`champion ${id} missing from content/champions and content/_legacy`);
   return c;
 };
-const KEYS = characterKeys(ROSTER);
+const KEYS = characterKeys(CORPUS);
 const sameCharacter = (a: string, b: string): boolean => KEYS.get(a) === KEYS.get(b);
 
 // ---------------------------------------------------------------------------
@@ -125,7 +155,7 @@ describe("hero-number parsing (champion-identity-hero-number)", () => {
     );
     const disagreements: string[] = [];
     let checked = 0;
-    for (const c of ROSTER) {
+    for (const c of CORPUS) {
       const want = authority.get(c.id);
       if (want === undefined) continue;
       checked++;
@@ -133,7 +163,13 @@ describe("hero-number parsing (champion-identity-hero-number)", () => {
       if (got !== want) disagreements.push(`${c.id} ${c.name}: docs say ${got}, importer says ${want}`);
     }
     expect(disagreements).toEqual([]);
-    expect(checked).toBeGreaterThanOrEqual(100);
+    // 反空轉。以前這裡寫 `>= 100`,那是「119 隻」時代的出貨值 —— 母體一動它就紅,
+    // 而且是用錯誤的訊息紅(它會說「和 importer 不一致」,真相是有人被下架)。
+    // 現在從 importer 那張表本身推導:它認得而語料庫裡也有的 id,**一個都不能被
+    // 靜默跳過**,而且那不是三隻 —— 語料庫絕大多數英雄都出自這一次 w3x 匯入。
+    const knownHere = CORPUS.filter((c) => authority.has(c.id));
+    expect(checked).toBe(knownHere.length);
+    expect(knownHere.length).toBeGreaterThan(CORPUS.length * 0.9);
   });
 });
 
@@ -154,7 +190,7 @@ describe("黑化Saber stays a separate hero (champion-identity-saber-alter)", ()
     // …while its two genuine twins DO collapse, to one surviving entry.
     expect(sameCharacter("godie-e002", "godie-e00l")).toBe(true);
 
-    const survivors = distinctCharacters(ROSTER).map((c) => c.id);
+    const survivors = distinctCharacters(CORPUS).map((c) => c.id);
     expect(survivors).toContain("godie-e00q");
     expect(survivors).toContain("godie-e002");
     expect(survivors).not.toContain("godie-e00l");
@@ -165,7 +201,7 @@ describe("黑化Saber stays a separate hero (champion-identity-saber-alter)", ()
     // (godie-zombiex) is legitimately mud-themed (黑泥噴吐 / 黑泥硬化).
     const w = champ("godie-e00q").abilities?.["W"]?.name ?? "";
     expect(w).toContain("黑泥召喚");
-    const others = ROSTER.filter((c) => c.id !== "godie-e00q").flatMap((c) =>
+    const others = CORPUS.filter((c) => c.id !== "godie-e00q").flatMap((c) =>
       Object.values(c.abilities ?? {}).map((a) => a?.name ?? ""),
     );
     expect(others.some((n) => n.includes("黑泥召喚"))).toBe(false);
@@ -227,7 +263,7 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
 
   it("collapses every known duplicate pair to exactly one surviving entry", () => {
     cover("champion-identity-true-duplicates");
-    const survivors = new Set(distinctCharacters(ROSTER).map((c) => c.id));
+    const survivors = new Set(distinctCharacters(CORPUS).map((c) => c.id));
     for (const [num, keep, drop] of [...PAIRS, ...W3X_OVERTURNED]) {
       expect(heroNumberOf(champ(keep)), `${keep} number`).toBe(num);
       expect(heroNumberOf(champ(drop)), `${drop} number`).toBe(num);
@@ -236,8 +272,31 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
       expect(survivors.has(keep), `${keep} survives`).toBe(true);
       expect(survivors.has(drop), `${drop} folded away`).toBe(false);
     }
-    // 19 + 3 pairs fold ⇒ the roster loses exactly 22 entries and nothing else.
-    expect(ROSTER.length - survivors.size).toBe(PAIRS.length + W3X_OVERTURNED.length);
+    // 19 + 3 pairs fold ⇒ the corpus loses exactly that many entries, nothing else.
+    expect(CORPUS.length - survivors.size).toBe(PAIRS.length + W3X_OVERTURNED.length);
+  });
+
+  it("搬遷沒有把任何一對切成兩半,而營運內容自己也一人一列", () => {
+    cover("champion-identity-true-duplicates");
+    const ALL = [...PAIRS, ...W3X_OVERTURNED];
+    // ① 2026-08-13 的下架搬遷:一對的兩半必須在**同一側**。base 留在營運內容而
+    //    alternate 被搬到 _legacy = 變身時 `Champions.get()` 直接丟例外,而且只有
+    //    真的有人按下那一顆技能才會炸(第二守則失敗形態②的親戚:壞掉跟正常長得
+    //    一模一樣)。這一條是那個的閘,而且它自己推導,不抄任何隻數。
+    const split = ALL.filter(([, a, b]) => LIVE_IDS.has(a) !== LIVE_IDS.has(b));
+    expect(
+      split.map(([num, a, b]) => `${num}: ${a} ⇄ ${b}`),
+      "這幾對被下架搬遷切成了兩半",
+    ).toEqual([]);
+
+    // ② 出貨行為:留在營運內容的那些對,在**營運母體**裡仍然摺成一位 —— 摺掉的
+    //    數量剛好等於「兩半都還在」的對數,不多(沒有意外合併)也不少(沒有漏摺)。
+    const livePairs = ALL.filter(([, a, b]) => LIVE_IDS.has(a) && LIVE_IDS.has(b));
+    const liveSurvivors = new Set(distinctCharacters(LIVE).map((c) => c.id));
+    expect(LIVE.length - liveSurvivors.size).toBe(livePairs.length);
+    // 反空轉:兩棵樹都要真的有東西,否則上面兩條都是對空集合成立。
+    expect(livePairs.length).toBeGreaterThan(0);
+    expect(ARCHIVE.length).toBeGreaterThan(0);
   });
 
   it("keeps the map's own random-hero pick as the canonical id of each pair", () => {
@@ -280,7 +339,7 @@ describe("stand-in meshes never imply sameness (champion-identity-standin-mesh)"
   it("treats every champion sharing a CC0 stand-in as its own character", () => {
     cover("champion-identity-standin-mesh");
     for (const mesh of STAND_INS) {
-      const wearers = ROSTER.filter((c) => c.modelKey === mesh);
+      const wearers = CORPUS.filter((c) => c.modelKey === mesh);
       expect(wearers.length, `${mesh} wearers`).toBeGreaterThan(1);
       const keys = new Set(wearers.map((c) => KEYS.get(c.id)));
       // Every wearer keeps its own identity — no two are ever folded together,
@@ -304,7 +363,7 @@ describe("stand-in meshes never imply sameness (champion-identity-standin-mesh)"
       }
     }
     // The headline example: champ.sela is worn by 18 unrelated characters.
-    expect(ROSTER.filter((c) => c.modelKey === "champ.sela").length).toBeGreaterThanOrEqual(15);
+    expect(CORPUS.filter((c) => c.modelKey === "champ.sela").length).toBeGreaterThanOrEqual(15);
   });
 });
 
@@ -321,13 +380,13 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
 
   it("gives each an `id:` key of its own and never merges two of them", () => {
     cover("champion-identity-no-number");
-    const found = ROSTER.filter((c) => heroNumberOf(c) === null).map((c) => c.id).sort();
+    const found = CORPUS.filter((c) => heroNumberOf(c) === null).map((c) => c.id).sort();
     expect(found).toEqual([...NUMBERLESS].sort());
 
     for (const id of NUMBERLESS) {
       expect(KEYS.get(id), `${id} is its own canonical`).toBe(id);
     }
-    const groups = groupCharacters(ROSTER);
+    const groups = groupCharacters(CORPUS);
     for (const id of NUMBERLESS) {
       const g = groups.find((x) => x.canonicalId === id);
       expect(g?.key, `${id} key`).toBe(`id:${id}`);
@@ -340,7 +399,7 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
     expect(isSameCharacter(champ("godie-u01q"), champ("godie-udre"))).toBe(false);
     // 黑化張飛 vs 十六夜Sakuya: both numberless — still two heroes, not one.
     expect(isSameCharacter(champ("godie-u01f"), champ("godie-e00u"))).toBe(false);
-    expect(distinctCharacters(ROSTER).map((c) => c.id)).toEqual(
+    expect(distinctCharacters(CORPUS).map((c) => c.id)).toEqual(
       expect.arrayContaining(NUMBERLESS),
     );
   });
@@ -349,7 +408,7 @@ describe("numberless champions each stay distinct (champion-identity-no-number)"
 describe("leniency policy pins (champion-identity-leniency)", () => {
   it("keeps BOTH sides of every hero-number collision, and reports them", () => {
     cover("champion-identity-leniency");
-    const collisions = heroNumberCollisions(ROSTER);
+    const collisions = heroNumberCollisions(CORPUS);
     // Was ["05","25","53","58","61","91"]. 25 / 58 / 61 left the list at task
     // #249: the w3x `Eme1`/`Emeu` fields prove each is one hero in two bodies,
     // and the owner ruled (2026-07-26) that such evidence beats the lenient
@@ -371,7 +430,7 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
     expect([related("05"), related("53"), related("91")]).toEqual([false, false, false]);
 
     // Shipped behaviour, both flavours: every colliding champion stays.
-    const survivors = new Set(distinctCharacters(ROSTER).map((c) => c.id));
+    const survivors = new Set(distinctCharacters(CORPUS).map((c) => c.id));
     for (const c of collisions) {
       for (const g of c.characters) {
         expect(survivors.has(g.canonicalId), `${g.canonicalId} kept despite the collision`).toBe(
@@ -439,7 +498,7 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
   });
 
   it("is reflexive, symmetric and order-independent", () => {
-    for (const c of ROSTER) expect(isSameCharacter(c, c)).toBe(true);
+    for (const c of CORPUS) expect(isSameCharacter(c, c)).toBe(true);
     const pairs: [string, string][] = [
       ["godie-e002", "godie-e00l"],
       ["godie-e002", "godie-e00q"],
@@ -448,10 +507,10 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
     for (const [a, b] of pairs) {
       expect(isSameCharacter(champ(a), champ(b))).toBe(isSameCharacter(champ(b), champ(a)));
     }
-    const reversed = characterKeys([...ROSTER].reverse());
+    const reversed = characterKeys([...CORPUS].reverse());
     const groupOf = (m: Map<string, string>, id: string): string[] =>
       [...m.entries()].filter(([, k]) => k === m.get(id)).map(([i]) => i).sort();
-    for (const c of ROSTER) {
+    for (const c of CORPUS) {
       expect(groupOf(reversed, c.id), `${c.id} grouping is order-independent`).toEqual(
         groupOf(KEYS, c.id),
       );
@@ -460,9 +519,9 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
 
   it("never merges on missing evidence — a partial view can only look MORE distinct", () => {
     // Same champions, but the caller only knows id+name (no mesh, no kit).
-    const thin = ROSTER.map((c) => ({ id: c.id, name: c.name }));
+    const thin = CORPUS.map((c) => ({ id: c.id, name: c.name }));
     const thinKeys = characterKeys(thin);
-    for (const c of ROSTER) expect(thinKeys.get(c.id)).toBe(c.id);
-    expect(distinctCharacters(thin)).toHaveLength(ROSTER.length);
+    for (const c of CORPUS) expect(thinKeys.get(c.id)).toBe(c.id);
+    expect(distinctCharacters(thin)).toHaveLength(CORPUS.length);
   });
 });

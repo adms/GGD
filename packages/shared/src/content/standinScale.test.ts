@@ -60,14 +60,20 @@ const MAP_BY_RAWCODE = new Map<string, MapUnit>(
 const mapUnitFor = (championId: string): MapUnit | undefined =>
   MAP_BY_RAWCODE.get(championId.replace(/^godie-/, "").toLowerCase());
 
-function champions(): { id: string; modelKey?: string }[] {
-  const dir = join(CONTENT, "champions");
+function champions(dir: string): { id: string; modelKey?: string }[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as { id: string; modelKey?: string });
 }
 
-const ROSTER = champions();
+/** 營運名冊 —— 引擎真的會註冊、玩家真的看得到回退體型的那些。 */
+const ROSTER = champions(join(CONTENT, "champions"));
+/**
+ * 2026-08-13 搬進 `content/_legacy/champions/` 的未上架英雄。⛔ 歸檔不是刪除:
+ * 他們的 override 跟著他們一起休眠(引擎兩份都讀不到),所以下面任何「這個 id 還
+ * 在嗎」的問題都要問兩個目錄 —— 只問營運那一份,會把歸檔誤判成孤兒。
+ */
+const ARCHIVED_IDS = new Set(champions(join(CONTENT, "_legacy/champions")).map((c) => c.id));
 const STANDIN_IDS = ROSTER.filter((c) => STAND_IN_MODEL_KEYS.includes(c.modelKey ?? "")).map(
   (c) => c.id,
 );
@@ -208,16 +214,23 @@ describe("#77 stand-in fallback scale — 資料層", () => {
       "這幾筆的 relativeScale 顯然是為某具真模型算的 —— 回退到方塊人時要用哪個數字?" +
         "寫 standinRelativeScale(= 地圖 usca),或登記進 LORE_OVERRULES_MAP 並寫明理由。",
     ).toEqual([]);
-    // 名單本身不可以放水:每一位都要真的還在名冊上、真的偏離地圖
+    // 名單本身不可以放水:每一位都要真的還存在、真的偏離地圖
     const ids = new Set(ROSTER.map((c) => c.id));
+    let liveExemptions = 0;
     for (const [id, why] of Object.entries(LORE_OVERRULES_MAP)) {
-      expect(ids.has(id), `${id} 已經不在名冊上`).toBe(true);
+      // ⚠️ 「還在」現在有兩個住處(見 ARCHIVED_IDS)。哪裡都找不到才是死條目。
+      expect(ids.has(id) || ARCHIVED_IDS.has(id), `${id} 這位英雄已經不存在了`).toBe(true);
       expect(why.length).toBeGreaterThan(10);
-      expect(STANDIN_IDS.includes(id), `${id} 不會走回退,不該掛在這裡`).toBe(true);
+      // 名單的宣稱是「設定壓過地圖」—— 那就真的要跟地圖不一樣。這一條與英雄上不
+      // 上架無關(它問的是 override 這筆資料自己),所以兩邊都驗。
       const ov = OVERRIDES[id]!;
-      // 名單的宣稱是「設定壓過地圖」—— 那就真的要跟地圖不一樣
       expect(modelRelativeScaleOf(ov), `${id} 其實就等於地圖 usca`).not.toBe(ov.usca);
+      if (!ids.has(id)) continue; // 歸檔的:引擎讀不到,不會走回退,以下不適用
+      liveExemptions++;
+      expect(STANDIN_IDS.includes(id), `${id} 不會走回退,不該掛在這裡`).toBe(true);
     }
+    // 不是「豁免名單整份都歸檔了所以上面每一條都空過」
+    expect(liveExemptions).toBeGreaterThan(0);
   });
 
   it("回退倍率永遠不會超過地圖要求的大小(除了登記在案的設定例外)", () => {
@@ -226,17 +239,23 @@ describe("#77 stand-in fallback scale — 資料層", () => {
     // 6.795 而地圖只寫 usca 1.00 —— 渲染層憑空發明了 6.8 倍的體型,
     // 1.8u × 6.795 = 12.2u,站在 1.8u 的隊友旁邊。
     const invented: string[] = [];
+    let examined = 0;
     for (const id of STANDIN_IDS) {
       const ov = OVERRIDES[id];
       if (!ov || typeof ov.usca !== "number") continue;
       if (id in LORE_OVERRULES_MAP) continue; // 設定壓過地圖,各自寫明理由
+      examined++;
       const s = standinRelativeScaleOf(ov);
       if (s > ov.usca * 1.1) {
         invented.push(`${id} → ${s}× 但地圖只要 ${ov.usca}×(${(s * 1.8).toFixed(1)}u)`);
       }
     }
     expect(invented, "替身身體被放大到地圖沒有要求的尺寸").toEqual([]);
-    expect(STANDIN_IDS.length).toBeGreaterThanOrEqual(48);
+    // ⚠️ 這裡本來寫 `STANDIN_IDS.length >= 48`,那是**出貨值**:2026-08-13 營運名冊
+    // 縮到 78 位、替身借用者剩 21 位的當下它就紅了,而縮小正是預期中的事。
+    // 它要擋的其實是「上面那個迴圈一位都沒檢查到,所以 `invented` 空得毫無意義」
+    // ——那就直接數檢查了幾位,不要去釘一個會被 owner 每週改動的名冊大小。
+    expect(examined, "上面那個迴圈一位都沒檢查到 —— 空陣列不代表通過").toBeGreaterThan(0);
   });
 
   it("2× 以上的方塊人只有地圖真的寫成巨人的那一位,名單凍結", () => {

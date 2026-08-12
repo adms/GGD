@@ -16,79 +16,74 @@
   "innateKind": "passive",
   "targetsEnemies": false,
   "effects": [],
-  "passive": {
-    "name": "52-00 十二道試煉",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onDamageTaken",
-            "key": "trial",
-            "effects": [
-              {
-                "kind": "invulnerable",
-                "durationSec": 1.5,
-                "applyTo": "self",
-                "blocksDamage": "all",
-                "blocksTrueDamage": true,
-                "blocksControl": true
-              },
-              {
-                "kind": "restore",
-                "healthPct": 0.5,
-                "applyTo": "self"
-              },
-              {
-                "kind": "knockback",
-                "distance": 4.0,
-                "speed": 16.0,
-                "from": "caster"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "stun",
-                "duration": 0.5,
-                "stun": true
-              },
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "pctAdd",
-                    "value": 0.1
-                  },
-                  {
-                    "stat": "maxHealth",
-                    "op": "pctAdd",
-                    "value": 0.1
-                  }
-                ],
-                "duration": 99999.0
-              }
-            ],
-            "internalCooldown": 1.5,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.05
-            },
-            "target": "self"
-          }
-        ]
-      }
-    ]
-  },
   "marks": [
     {
       "markId": "trial",
       "initial": 12,
       "max": 12,
       "durationSec": -1,
-      "resetOn": "match"
+      "resetOn": "match",
+      "perStackLost": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        },
+        {
+          "stat": "maxHealth",
+          "op": "pctAdd",
+          "value": 0.1
+        }
+      ],
+      "lethal": {
+        "consume": 1,
+        "surviveHpPct": 0.01,
+        "damageTypes": [
+          "physical",
+          "magic",
+          "true"
+        ],
+        "internalCooldown": 1.5,
+        "selfEffects": [
+          {
+            "kind": "invulnerable",
+            "durationSec": 1.5,
+            "applyTo": "self",
+            "blocksDamage": "all",
+            "blocksTrueDamage": true,
+            "blocksControl": true
+          },
+          {
+            "kind": "delayed",
+            "shape": "single",
+            "delaySec": 1.5,
+            "count": 1,
+            "intervalSec": 1.0,
+            "effects": [
+              {
+                "kind": "restore",
+                "healthPct": 0.5,
+                "applyTo": "self"
+              }
+            ]
+          }
+        ],
+        "aoeEffects": [
+          {
+            "kind": "knockback",
+            "distance": 4.0,
+            "speed": 16.0,
+            "from": "caster"
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "stun",
+            "duration": 0.5,
+            "stun": true
+          }
+        ],
+        "aoeRadius": 6.0
+      }
     }
   ],
   "icon": "assets/icons/abilities/godie-hapm.passive.webp"

@@ -3,8 +3,8 @@
  *
  * 為什麼要多這一份:`combatJuice.test.ts` 的擊退測試全部跑在
  * `registerSkeletonContent()` 的 dummy 上,那個 dummy **沒有** `hitFeel`,所以
- * 它量到的永遠是「沒有作者覆寫」的那條分支。出貨的 115 位英雄裡有 **114 位**
- * 帶著 `hitFeel.knockbackMag`,走的是**另一條**分支。
+ * 它量到的永遠是「沒有作者覆寫」的那條分支。出貨的英雄幾乎每一位都帶著
+ * `hitFeel.knockbackMag`,走的是**另一條**分支。
  *
  * 也就是說:骨架測試證明的東西,和玩家在遊戲裡吃到的東西,是兩條不同的路。
  * (失敗形狀 ⑤:受測的不是出貨的那個東西。)
@@ -12,6 +12,7 @@
  * 這一份把真的英雄文件載進來,走真的 `combatResolveSystem`,量真的 `nav.override`。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
@@ -108,6 +109,19 @@ function roster(): ChampionId[] {
   return Champions.ids().slice().sort() as ChampionId[];
 }
 
+/**
+ * 營運名單在**磁碟上**有幾份英雄文件(`_` 開頭的索引不算)。
+ *
+ * ⚠️ 這裡刻意不寫「至少 N 位」那種出貨值(2026-08-13 下架 41 位之後,原本寫死的
+ * `> 100` 就是這樣紅的 —— 它把出貨數字變成第四個住處,而且紅的時候說的是
+ * 「擊退壞了」)。母體改由**內容目錄**決定,名單再怎麼增刪這一條都不會過期。
+ */
+function shippedChampionDocs(): number {
+  return readdirSync(join(CONTENT_DIR, "champions")).filter(
+    (f) => f.endsWith(".json") && !f.startsWith("_"),
+  ).length;
+}
+
 describe("擊退法則在出貨內容上真的成立嗎 (GH#193)", () => {
   /**
    * owner 的規格:「該傷害超過生命 5% 才會擊退、並且百分比越高擊退越遠,
@@ -119,7 +133,15 @@ describe("擊退法則在出貨內容上真的成立嗎 (GH#193)", () => {
   it("kb-roster-basic — 每位出貨英雄的普攻,一發打掉 100% 生命時真的會擊退", () => {
     cover("kb-roster-basic");
     const ids = roster();
-    expect(ids.length).toBeGreaterThan(100); // 儀器活著:內容真的載進來了
+    // 儀器活著,兩個方向一起關:
+    //   ① 營運名單不是空的 —— 否則底下那個 for 迴圈零圈,`dead` 永遠是 []
+    //      (刪掉內容等於刪掉測試,CLAUDE.md 失敗形態③)。這是**結構性**下界,
+    //      不是出貨值:名單只要還在營運就一定 > 0。
+    //   ② 磁碟上每一份英雄文件都真的進了註冊表 —— 少一份就是載入器吞掉了它,
+    //      那時候這一整份普查會少查一位而不自知。
+    const onDisk = shippedChampionDocs();
+    expect(onDisk, "content/champions 是空的 —— 這份普查會零圈空轉").toBeGreaterThan(0);
+    expect(ids.length, "註冊表裡的英雄數對不上 content/champions 的文件數").toBe(onDisk);
 
     const dead: string[] = [];
     for (const id of ids) {

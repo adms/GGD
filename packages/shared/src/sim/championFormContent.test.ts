@@ -41,6 +41,7 @@ import { ContentStore } from "../content/store";
 import { registerAll, Arenas, Configs, Models, StatusEffects, VfxDefs } from "../content/registries";
 import { CHAMPION_FORM_PAIRS } from "../content/championForms";
 import { zChampionDoc } from "../content/schema/champion";
+import { splitFormPairsByShipping } from "../../testkit/formPairShipping";
 import {
   Abilities,
   Augments,
@@ -84,6 +85,22 @@ function docs(collection: string): Array<{ file: string; doc: Record<string, unk
     }));
 }
 
+/**
+ * The pairs whose two docs are BOTH still in `content/champions`.
+ *
+ * owner 2026-08-13 moved 41 unreleased heroes into `content/_legacy/`, which is
+ * not a collection — five whole pairs went with them, so "the shipped 26" is now
+ * "the shipped 21" and will be some other number the next time the roster opens.
+ * Read off the two directories rather than written down, and the pathological
+ * case (a pair split across the move — the one that throws in the snapshot
+ * builder) is asserted empty below instead of silently shrinking this list.
+ */
+const { shipped: SHIPPED, archived: ARCHIVED, halfMigrated: HALF_MIGRATED } =
+  splitFormPairsByShipping();
+
+/** Champion docs that parsed and were handed to `registerAll`. */
+let parsedChampionCount = 0;
+
 beforeAll(() => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
@@ -94,7 +111,10 @@ beforeAll(() => {
   }
   for (const { doc } of docs("champions")) {
     const parsed = zChampionDoc.safeParse(doc);
-    if (parsed.success) store.add("champions", parsed.data.id, parsed.data);
+    if (parsed.success) {
+      store.add("champions", parsed.data.id, parsed.data);
+      parsedChampionCount += 1;
+    }
   }
   registerAll(store);
 });
@@ -176,20 +196,31 @@ function statsWhereAbilityLayerDiffers(
   return out;
 }
 
-describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
+describe("變身 on the SHIPPED pairs (transform-forms-sim)", () => {
   it("every base can become its alternate, resolve its REAL sheet, and come home", () => {
     cover("transform-forms-sim");
     // vacuity guards first — an emptied table or registry would pass a loop
     // that iterates nothing
     expect(CHAMPION_FORM_PAIRS).toHaveLength(26);
-    expect(Champions.ids().length).toBeGreaterThanOrEqual(115);
+    // A pair with one half archived and one half shipped is exactly the crash
+    // this suite measures (press the button, `Registry.get()` throws inside the
+    // snapshot builder), so it is reported — never dropped from the population.
+    expect(HALF_MIGRATED, `${HALF_MIGRATED.length} pair(s) straddle the legacy move`).toEqual([]);
+    expect(SHIPPED.length + ARCHIVED.length).toBe(CHAMPION_FORM_PAIRS.length);
+    expect(SHIPPED.length).toBeGreaterThan(0);
+    // DERIVED from the content tree, not a copied roster size: the registry must
+    // hold every doc that parsed, and at least the two each shipped pair spawns.
+    expect(Champions.ids().length, "the registry did not take every parsed doc").toBe(
+      parsedChampionCount,
+    );
+    expect(parsedChampionCount).toBeGreaterThanOrEqual(SHIPPED.length * 2);
 
     const problems: string[] = [];
     const exemptedStats: string[] = [];
     let sheetsCompared = 0;
     let genuinelyDifferent = 0;
 
-    for (const pair of CHAMPION_FORM_PAIRS) {
+    for (const pair of SHIPPED) {
       const baseId = pair.baseId as ChampionId;
       const altId = pair.alternateId as ChampionId;
       if (Champions.tryGet(baseId) === undefined || Champions.tryGet(altId) === undefined) {
@@ -297,7 +328,9 @@ describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
     expect(problems, `${problems.length} shipped pair(s) broken:\n${problems.join("\n")}`).toEqual(
       [],
     );
-    expect(sheetsCompared).toBe(26);
+    // Every shipped pair was actually run — a `continue` above that swallowed a
+    // pair would show up here rather than as a silently smaller sweep.
+    expect(sheetsCompared).toBe(SHIPPED.length);
     // The exemption above is DERIVED from the shipped ability docs, so it cannot
     // be widened by editing this file — but it can be widened by editing content,
     // and a silently growing list would mean the two halves' 天生技/Q 被動 are
@@ -310,6 +343,12 @@ describe("變身 on the SHIPPED 26 pairs (transform-forms-sim)", () => {
     // The sheet comparison above is only meaningful if the two halves actually
     // carry different numbers. They are separate w3u units, so most do — a
     // collapse to zero would mean this test is comparing a doc with itself.
-    expect(genuinelyDifferent).toBeGreaterThan(15);
+    // Expressed as a MAJORITY of what was compared rather than a copied count,
+    // so archiving or opening a hero never touches this line while the property
+    // it guards ("most pairs are two genuinely different sheets") is unchanged.
+    expect(
+      genuinelyDifferent,
+      `only ${genuinelyDifferent}/${sheetsCompared} pairs have different sheets`,
+    ).toBeGreaterThan(sheetsCompared / 2);
   });
 });

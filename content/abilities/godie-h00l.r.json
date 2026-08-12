@@ -55,7 +55,11 @@
             "effects": [
               {
                 "kind": "restore",
-                "healthPct": 0.08,
+                "healthPct": [
+                  0.08,
+                  0.16,
+                  0.24
+                ],
                 "applyTo": "self"
               },
               {
@@ -65,7 +69,7 @@
                 "from": "caster"
               }
             ],
-            "target": "self",
+            "target": "event",
             "reflectedDamageSource": "ability",
             "reflectedDamageType": "magic"
           }

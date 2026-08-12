@@ -25,6 +25,14 @@ import { validateDoc } from "./loader";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
 
+/** Champion doc ids sitting in a directory (`_index.json` is the build artifact). */
+function championIdsIn(dir: string): string[] {
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && f !== "_index.json")
+    .map((f) => f.replace(/\.json$/, ""));
+}
+
 function loadDoc(): ConfigChampionVoicesDoc {
   const raw = JSON.parse(readFileSync(join(CONTENT, "config/champion-voices.json"), "utf8"));
   return zConfigChampionVoicesDoc.parse(raw);
@@ -83,15 +91,24 @@ describe("authored content/config/champion-voices.json", () => {
   it("schema-parses and covers EVERY champion doc with exactly one entry", () => {
     cover("champion-voices-authored");
     const doc = loadDoc();
-    const champIds = readdirSync(join(CONTENT, "champions"))
-      .filter((f) => f.endsWith(".json") && f !== "_index.json")
-      .map((f) => f.replace(/\.json$/, ""));
+    const champIds = championIdsIn(join(CONTENT, "champions"));
     expect(champIds.length).toBeGreaterThan(0);
     for (const id of champIds) {
       expect(doc.champions[id], `missing champion-voices entry for ${id}`).toBeDefined();
     }
-    // no orphan entries pointing at deleted champions either
-    const known = new Set(champIds);
+    // …and no orphan entries pointing at an id that is a champion NOWHERE.
+    // The 2026-08-13 legacy migration moved the unreleased heroes out of the
+    // operating roster into `content/_legacy/champions/` (a directory that is
+    // deliberately NOT in COLLECTION_NAMES, so the engine never reads it).
+    // Those heroes are ARCHIVED, not deleted, and their voice entries are kept
+    // on purpose: un-archiving a hero has to bring its voice back with it, and
+    // silently dropping the mapping would lose knowledge no one can regenerate.
+    // A typo'd or genuinely-deleted id resolves in NEITHER directory and still
+    // fails here, which is the property this assertion was written to hold.
+    const known = new Set([
+      ...champIds,
+      ...championIdsIn(join(CONTENT, "_legacy/champions")),
+    ]);
     for (const id of Object.keys(doc.champions)) {
       expect(known.has(id), `orphan champion-voices entry ${id}`).toBe(true);
     }

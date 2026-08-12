@@ -183,6 +183,25 @@ function eventsOfType(world: SimWorld, type: string) {
   return world.events.filter((e) => e.type === type);
 }
 
+/**
+ * The sweep母體, DERIVED from the registry that was just loaded — never a count
+ * copied out of the shipping catalogue.
+ *
+ * ⚠️ 2026-08-13: this used to read `> 50 active` / `> 40 permanent`, and those
+ * two literals were the ONLY thing that went red when the未上架英雄 moved to
+ * `content/_legacy/` (119 → 78 champions, so 36 active / 39 permanent). They
+ * were a fourth住處 for a shipping number with no drift guard — CLAUDE.md 第二
+ * 守則 —— and they failed with a message about the sixth slot when nothing about
+ * the sixth slot had changed. What the sweeps are actually FOR is
+ * ① 這個 sweep 不是空轉 (a `for` over an empty list makes every assertion inside
+ *    it vacuously true), and
+ * ② 每一支天生技都落在其中一邊 (a def that is neither active nor permanent is a
+ *    hole in `isActiveInnate`/`isPassiveInnate`, and would be swept by NEITHER
+ *    sweep — silently untested).
+ * Both are structural and both are computed below, so a roster change moves the
+ * numbers without touching this file and a broken classifier still goes red.
+ */
+let shippedInnates: AbilityDef[] = [];
 let shippedActiveInnates: AbilityDef[] = [];
 let shippedPermanentInnates: AbilityDef[] = [];
 
@@ -192,6 +211,7 @@ beforeAll(async () => {
   const loaded = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
   registerAll(loaded.store);
   const innates = Abilities.all().filter((a) => a.slot === INNATE_SLOT);
+  shippedInnates = innates;
   shippedActiveInnates = innates.filter(isActiveInnate);
   shippedPermanentInnates = innates.filter(isPassiveInnate);
 
@@ -361,7 +381,14 @@ describe("innate active — the permanent half stays uncastable and free", () =>
 
   it("every SHIPPED permanent innate is refused with `passive`", () => {
     cover("innate-permanent-sweep-refused");
-    expect(shippedPermanentInnates.length).toBeGreaterThan(40);
+    // 母體是推導的 (see the note by `shippedInnates`). `> 0` is the anti-vacuity
+    // floor; the partition line is the one with teeth — it is how a 天生技 that
+    // `isPassiveInnate`/`isActiveInnate` both miss stops being invisible to
+    // BOTH sweeps.
+    expect(shippedPermanentInnates.length).toBeGreaterThan(0);
+    expect(shippedActiveInnates.length + shippedPermanentInnates.length).toBe(
+      shippedInnates.length,
+    );
     const wrong: string[] = [];
     for (const def of shippedPermanentInnates) {
       const cid = def.id.replace(/\.passive$/, "") as ChampionId;
@@ -531,12 +558,17 @@ describe("innate active — determinism and replay-neutrality", () => {
 describe("innate active — the SHIPPED catalogue, read-only", () => {
   it("every shipped active innate is accepted and does something measurable", () => {
     cover("innate-active-shipped-sweep");
-    expect(shippedActiveInnates.length).toBeGreaterThan(50);
+    // 母體是推導的 (see the note by `shippedInnates`) — `> 0` only says the loop
+    // below is not a no-op. The real coverage assertion is `swept` vs `cast`
+    // at the bottom, which is independent of how many英雄 are on the roster.
+    expect(shippedActiveInnates.length).toBeGreaterThan(0);
 
     const refused: string[] = [];
     const inert: string[] = [];
     /** innates whose level-1 mana pool cannot afford them — a CONTENT fact. */
     const underfunded: string[] = [];
+    /** innates whose champion is registered AND spawnable in this harness. */
+    let swept = 0;
     let cast = 0;
 
     for (const def of shippedActiveInnates) {
@@ -555,6 +587,7 @@ describe("innate active — the SHIPPED catalogue, read-only", () => {
       } catch {
         continue; // champion needs a model/arena this harness does not provide
       }
+      swept++;
       const hp = world.health.get(caster)!;
       const cost = def.manaCost[0] ?? 0;
       if (cost > hp.maxMana) underfunded.push(def.id);
@@ -602,7 +635,12 @@ describe("innate active — the SHIPPED catalogue, read-only", () => {
     // Not one of the 60 may be refused: a refusal here means the slot is still
     // unreachable for that hero, which is the exact bug this lane closes.
     expect(refused).toEqual([]);
-    expect(cast).toBeGreaterThan(50);
+    // 舊版寫 `cast > 50`, 也就是把「營運名單有幾位英雄」抄進斷言 —— 2026-08-13
+    // 名單縮到 78 位就紅了, 而且紅的訊息說「第六格打不開」, 完全指錯地方。
+    // 要守的性質跟名單大小無關: **掃到的每一支都真的施放成功**, 一支都沒有被
+    // 靜默跳過 (`swept` 只在 spawn 真的成功之後才 +1)。
+    expect(swept).toBeGreaterThan(0);
+    expect(cast).toBe(swept);
     // Every accepted cast must leave a trace. (A cooldown alone counts: some
     // innates are summons/toggles whose visible effect is out of this harness's
     // reach, but paying a cooldown proves the cast resolved rather than no-op'd.)

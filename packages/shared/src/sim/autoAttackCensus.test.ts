@@ -33,7 +33,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { writeFileSync } from "node:fs";
+import { readdirSync, writeFileSync } from "node:fs";
 import { ContentLoader } from "../content/loader";
 import { FsContentSource } from "../content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../content/registries";
@@ -54,6 +54,24 @@ const CONTENT_DIR = join(ROOT, "content");
 const REPORT = join(ROOT, "docs/_auto-attack-census.md");
 
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
+/**
+ * 母體 = `content/champions/` 裡真的出貨的那些文件,**推導出來的,不是一個數字**。
+ *
+ * 這條原本是 `expect(rows.length).toBeGreaterThan(100)`,而 100 是 2026-07 出貨
+ * 頭數(119 位)的近似值。2026-08-13 未上架英雄整批搬進 `content/_legacy/`
+ * (營運母體 119 → 78,而 `_legacy` 不在 `COLLECTION_NAMES` 裡、引擎讀不到)之後,
+ * 那條就用「英雄變少了」這種和普查本身毫無關係的訊息紅掉 —— CLAUDE.md 講的
+ * 「第四個住處」。
+ *
+ * 換成從內容目錄推導之後這條**變強**了:它不再只是「列數夠多」,而是
+ * 「出貨的每一份英雄文件都真的被掃過」。兩種真故障都會在這裡紅 ——
+ * 內容載入失敗退回骨架(2 位),或掃描迴圈中途少掃了誰。
+ */
+function shippedChampionDocCount(): number {
+  return readdirSync(join(CONTENT_DIR, "champions")).filter(
+    (f) => f.endsWith(".json") && !f.startsWith("_"),
+  ).length;
+}
 const Z0 = SKELETON_ARENA.zones[0]!;
 /** The clear lane autoAcquire.test.ts uses: +12 z clears the r1.8 pillars. */
 const LANE_Z = Z0.center.z + 12;
@@ -292,7 +310,10 @@ describe("auto-attack census (every champion, no orders)", () => {
         });
       }
     }
-    expect(rows.length).toBeGreaterThan(100);
+    // 儀器自檢:出貨的每一份英雄文件都被掃到了(見 `shippedChampionDocCount`)。
+    const shipped = shippedChampionDocCount();
+    expect(shipped).toBeGreaterThan(0); // 內容目錄不是空的
+    expect(rows.length).toBe(shipped); // 一份都沒漏
 
     const broken = rows.filter((r) => r.inRangeHits === 0);
     const noApproach = rows.filter((r) => r.inRangeHits > 0 && r.approachHits === 0);

@@ -22,6 +22,7 @@
  *     innates (including their rng-rolled proc hooks) live.
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
@@ -68,6 +69,22 @@ const NO_INTENTS = new Map<SeatId, IntentFrame>();
  */
 const NO_INNATE: readonly string[] = ["godie-h02n", "godie-ogld", "godie-u01q"];
 
+/**
+ * 2026-08-13 — 41 heroes were moved out of the operating roster into
+ * `content/_legacy/`. ⛔ NOT deleted: the files are still in git and one `mv`
+ * from coming back, so nothing here that records a RECOVERED FACT (the three
+ * `NO_INNATE` ids above) is trimmed. What changed is the POPULATION every
+ * census below measures: it is now whatever `content/champions/` holds, read
+ * off disk, never a number copied into this file.
+ */
+const CHAMPIONS_DIR = join(CONTENT_DIR, "champions");
+/** godie-* champion docs actually shipping today. The registry must match it. */
+function shippedGodieChampionCount(): number {
+  return readdirSync(CHAMPIONS_DIR).filter(
+    (f) => f.startsWith("godie-") && f.endsWith(".json"),
+  ).length;
+}
+
 /** Spawn one champion into a throwaway world and hand back both components. */
 function spawnOne(championId: ChampionId, seed = 1234) {
   const world = new SimWorld(SKELETON_ARENA, seed);
@@ -94,6 +111,16 @@ function statWithAndWithout(championId: ChampionId, stat: Stat): [number, number
 let godieChampions: ChampionId[];
 let passiveInnates: AbilityDef[];
 let activeInnates: AbilityDef[];
+/** The `NO_INNATE` ids still on the operating roster (the rest are archived). */
+let liveNoInnate: string[];
+/**
+ * A champion whose innate applies a PERCENTAGE modifier, chosen from the
+ * shipping roster instead of named. 32-00 青龍槍術 (godie-opgh) used to be
+ * hardcoded here and went to `_legacy/`; the assertion below cares about the
+ * `pctAdd` PATH, not about which hero walks it, so the subject is derived and
+ * the coefficient is read back off the shipped doc.
+ */
+let pctInnate: { cid: ChampionId; stat: Stat; value: number };
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
@@ -104,16 +131,44 @@ beforeAll(async () => {
   const innates = Abilities.all().filter((a) => a.slot === "PASSIVE");
   passiveInnates = innates.filter(isPassiveInnate);
   activeInnates = innates.filter(isActiveInnate);
+  liveNoInnate = NO_INNATE.filter((id) => Champions.tryGet(id as ChampionId) !== undefined);
+
+  // Pick the pctAdd subject deterministically (ids are sorted), and prove the
+  // path has a subject at all — a roster with zero percentage innates would
+  // otherwise retire the assertion below in silence.
+  for (const def of [...passiveInnates].sort((a, b) => (a.id < b.id ? -1 : 1))) {
+    const cid = def.id.replace(/\.passive$/, "") as ChampionId;
+    if (!Champions.tryGet(cid)) continue;
+    const m = def.passive?.ranks[0]?.modifiers?.find((x) => x.op === "pctAdd");
+    if (!m) continue;
+    pctInnate = { cid, stat: m.stat as Stat, value: m.value };
+    break;
+  }
 });
 
 describe("天生技 / innate slot — owned from level 1", () => {
   it("the sixth slot exists at RANK 1 on spawn for every hero that has one", () => {
     cover("innate-slot-rank1-at-spawn");
     // Guard the guard: if content ever stopped shipping innates this suite would
-    // pass vacuously, so pin the census first.
-    expect(godieChampions.length).toBeGreaterThan(100);
+    // pass vacuously, so pin the census first. ⭐ The population is READ OFF
+    // DISK, not written down — equality (not `> N`) is the stronger claim, and
+    // it catches the shape a floor never could: a loader that silently dropped
+    // some champion docs, i.e. the 2026-08-01 fail-open.
+    expect(shippedGodieChampionCount()).toBeGreaterThan(0);
+    expect(godieChampions.length, "註冊表少了磁碟上的 godie 英雄").toBe(
+      shippedGodieChampionCount(),
+    );
+    // The three `NO_INNATE` ids are a recovered fact and stay listed in full;
+    // only the ones still on the roster can take part in the arithmetic.
+    for (const id of NO_INNATE) {
+      if (liveNoInnate.includes(id)) continue;
+      expect(
+        Champions.tryGet(id as ChampionId),
+        `${id} 不在營運名單也不在註冊表 —— 若他回歸，這裡要跟著回到算式裡`,
+      ).toBeUndefined();
+    }
     expect(passiveInnates.length + activeInnates.length).toBe(
-      godieChampions.length - NO_INNATE.length,
+      godieChampions.length - liveNoInnate.length,
     );
 
     const missing: string[] = [];
@@ -192,11 +247,17 @@ describe("天生技 / innate slot — owned from level 1", () => {
     const [regenOn, regenOff] = statWithAndWithout("godie-huth" as ChampionId, Stat.HealthRegen);
     expect(regenOn - regenOff).toBeCloseTo(12, 6);
 
-    // 32-00 青龍槍術 — percentage-add +30 % attack damage, so the delta is
-    // proportional rather than flat: proves the pctAdd path, not just flat.
-    const [adOn, adOff] = statWithAndWithout("godie-opgh" as ChampionId, Stat.AttackDamage);
-    expect(adOff).toBeGreaterThan(0);
-    expect(adOn / adOff).toBeCloseTo(1.3, 6);
+    // A percentage-add innate, so the delta is PROPORTIONAL rather than flat:
+    // this is the only case in the trio that proves the pctAdd path. Subject
+    // and coefficient both come from shipped content (see `pctInnate`), so the
+    // claim survives a hero being shelved — but it must have a subject, and an
+    // empty roster of percentage innates fails here by name rather than being
+    // skipped, because that would be a content fact worth knowing.
+    expect(pctInnate, "營運名單上沒有任何百分比加值的天生技 —— pctAdd 這條路沒有人在走").toBeDefined();
+    const [pctOn, pctOff] = statWithAndWithout(pctInnate.cid, pctInnate.stat);
+    expect(pctOff).toBeGreaterThan(0);
+    expect(pctInnate.value).toBeGreaterThan(0);
+    expect(pctOn / pctOff).toBeCloseTo(1 + pctInnate.value, 6);
   });
 
   it("a proc-hook innate is armed at spawn without anyone learning anything", () => {
@@ -214,7 +275,12 @@ describe("天生技 / innate slot — owned from level 1", () => {
 describe("天生技 / innate slot — the ACTIVE innates stay honestly inert", () => {
   it("active innates grant no passive source and are not passive-only", () => {
     cover("innate-active-not-faked");
-    expect(activeInnates.length).toBeGreaterThan(50);
+    // Structural, not a headcount: `> 0` is the only thing this line is for —
+    // the sweep below is a `for` loop whose every assertion is vacuously true
+    // on an empty list. The EXACT census (passive + active === roster minus the
+    // three innate-less heroes) is pinned by the sibling test above, which is
+    // where a shrinking active pool actually shows up.
+    expect(activeInnates.length).toBeGreaterThan(0);
     const faked: string[] = [];
     for (const def of activeInnates) {
       // An active innate must grant NO permanent SELF buff — `syncAbilityPassives`
@@ -320,7 +386,7 @@ describe("天生技 / innate slot — determinism survives", () => {
       "godie-hart", // 01-00 怒斬 — 15 % onBasicAttack proc (rolls world.rng)
       "godie-h02k", // 89-00 憤怒的門牙 — 3 % onBasicAttack proc
       "godie-udea", // 65-00 古老智慧 — flat armor/mr
-      "godie-opgh", // 32-00 青龍槍術 — pctAdd ad
+      pctInnate.cid, // a pctAdd innate (was godie-opgh 32-00, now archived)
       "godie-huth", // 28-00 無限再生 — flat regen (also legacy-inline)
       "godie-e001", // 22-00 嗚鎖打! — ACTIVE innate, must stay inert
     ] as ChampionId[];

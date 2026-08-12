@@ -70,7 +70,15 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
   const launchers = ABILITIES.filter((a) => projectileIds(effectsOf(a)).length > 0);
 
   it("這批技能真的存在 —— 不是在測一個空集合", () => {
-    expect(launchers.length).toBe(53);
+    // ⚠️ 這裡本來釘著 `toBe(53)`。那個 53 是**出貨當下**會發射彈道的技能支數,
+    // 2026-08-13 營運母體縮編(119 → 78 位英雄,41 位連同技能搬進 `_legacy/`)
+    // 之後它就是一個過期的出貨值 —— CLAUDE.md 說的「第四個住處」。
+    // 這一條要的從來不是那個數字,是**下面三條不是在掃空集合**;
+    // 覆蓋率由那三條自己用機制守(元素一致、鏡像一致、共用文件只服務沒有替代品的),
+    // 不需要一個會隨著上下架浮動的計數。
+    expect(launchers.length, "沒有任何技能會發射彈道 —— projectileIds() 或內容樹壞了").toBeGreaterThan(
+      0,
+    );
   });
 
   it("每一個被引用的 projectileId 都真的有文件（referential integrity）", () => {
@@ -96,7 +104,12 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
         if (got !== want) mismatched.push(`${a.id}: 技能是 ${want}，彈道 ${pid} 是 ${got}`);
       }
     }
-    expect(checked).toBeGreaterThanOrEqual(35);
+    // 下界是**結構性**的:0 代表 elementOf() 或 projectileIds() 整個失效
+    // (那時 mismatched 會是空的 → 這條會假綠)。原本的 35 是出貨支數的一半,
+    // 隨營運母體縮編一起過期了,而「比對到幾對」本來就會跟著上下架浮動。
+    expect(checked, "一對都沒比到 —— 元素解析壞了,mismatched 是空的也證明不了任何事").toBeGreaterThan(
+      0,
+    );
     expect(mismatched).toEqual([]);
   });
 
@@ -122,19 +135,30 @@ describe("投射物：技能的元素真的跟著彈道飛出去 (GH#251)", () =
     expect(drift).toEqual([]);
   });
 
-  it("共用的兩份佔位文件仍然只服務「元素判不出來」的那些技能", () => {
-    const stillShared: string[] = [];
+  it("共用的兩份佔位文件仍然只服務「沒有元素專屬替代品」的那些技能", () => {
+    // ⚠️ 這裡本來釘著 `toHaveLength(16)`，理由是「數字降下來時會紅，提醒有人補了
+    // 原語就要回頭重指」。那個 16 有兩個毛病：① 它是出貨支數，2026-08-13 營運母體
+    // 縮編之後就過期了；② 它守的方向是**反的** —— 補了一份 `imported.bolt.<元素>`
+    // 卻**忘記**重指，數字不會動，這條照樣綠，正是它自稱要抓的那件事。
+    //
+    // 所以改成直接驗那個機制：一支技能還停在共用佔位文件上，只有兩種正當理由 ——
+    // 它的元素從 vfxKey 判不出來（w3x/godie 專屬特效），或者該元素的替代文件
+    // 根本還不存在（holy / wind 至今沒有）。替代品一旦被建出來，這條就指名道姓地紅。
+    const shouldHaveMoved: string[] = [];
     for (const a of launchers) {
+      const want = elementOf(a.vfxKey);
+      if (!want) continue; // 元素判不出來：只能停在共用文件上，不是缺陷
       for (const pid of projectileIds(effectsOf(a))) {
-        if (pid === "imported.bolt" || pid === "imported.wave") stillShared.push(a.id);
+        if (pid !== "imported.bolt" && pid !== "imported.wave") continue;
+        const replacement = `${pid}.${want}`;
+        if (PROJECTILES.has(replacement)) {
+          shouldHaveMoved.push(`${a.id}：元素是 ${want}，${replacement} 已經存在，卻還指著共用的 ${pid}`);
+        }
       }
     }
-    // 53 支發射者裡：35 支已經改指到自己元素的文件，2 支本來就有專屬文件
-    // (`thorne.e.thorn` / `sela.q.bolt`)，剩下 16 支仍然共用 —— 13 支的 vfxKey
-    // 是 w3x/godie 專屬特效（元素判不出來），3 支是 holy(2) / wind(1)，
-    // 這兩個元素**沒有** `fx.prim.*.bolt` 原語可以指。
-    // 這個數字**降下來**時這一條也會紅，那正是它該紅的時候（有人補了原語 →
-    // 要記得把這裡一起改，順便回頭看還剩誰）。
-    expect(stillShared).toHaveLength(16);
+    expect(
+      shouldHaveMoved,
+      "元素專屬的彈道文件已經有了，這些技能卻還吃共用佔位文件 —— 飛出去的顏色是錯的",
+    ).toEqual([]);
   });
 });

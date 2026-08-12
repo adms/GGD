@@ -53,8 +53,12 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readdirSync, readFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
-import { CHAMPION_FORM_PAIRS } from "./championForms";
 import { retiredChampionIdsFromDoc } from "./championRetirement";
+import {
+  LEGACY_CHAMPION_FILE_IDS,
+  OPERATIONAL_CHAMPION_FILE_IDS,
+  splitFormPairsByShipping,
+} from "../../testkit/formPairShipping";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -73,11 +77,12 @@ function docs(collection: string): Doc[] {
  * halves share a `modelKey` and no `form-visuals` entry gives the body a tint
  * or a scale of its own. Keyed by the ALTERNATE, matching form-visuals itself.
  *
- * 18 entries: the 17 still wired (of the 18 this pass wired — 20 Saber already
- * had a form-visuals entry, and 12 天地志狼 lost its entry ability entirely when
- * owner 2026-08-12 ruled 「刻意減少變身」) plus 70 紮根, which was ALREADY shipped
- * invisible before this pass and which nothing was measuring — this suite found
- * it, not a human.
+ * Originally 18 entries: the 17 still wired (of the 18 this pass wired — 20 Saber
+ * already had a form-visuals entry, and 12 天地志狼 lost its entry ability entirely
+ * when owner 2026-08-12 ruled 「刻意減少變身」) plus 70 紮根, which was ALREADY
+ * shipped invisible before this pass and which nothing was measuring — this suite
+ * found it, not a human. Four of those 18 left for {@link ARCHIVED_ART_DEBT} when
+ * owner 2026-08-13 moved their heroes into `content/_legacy/`.
  *
  * None of these is a bug in the transform: the swap and the stat sheet are
  * correct. They are art debt, and until it is paid the player feels the numbers
@@ -98,18 +103,34 @@ const ART_DEBT: ReadonlySet<string> = new Set([
   // 12 的變身若哪天重新接上入口，它會立刻要求把這個 id 放回來。
   "godie-h01o", // 79 黑崎一護 卍解
   "godie-h02u", // 92 草泥馬 臥草
-  "godie-h00w", // 26 鄭先生 洨者聖臨
   "godie-h02r", // 90 妙蛙花
   "godie-h020", // 04 莉娜因巴斯
   "godie-n01g", // 42 依文潔琳
   "godie-n01c", // 08 勇者小呆 龍魔人
-  "godie-n01b", // 40 憤怒的胖虎 萬解
-  "godie-o02v", // 81 高町奈葉 白色惡魔
-  "godie-o02o", // 87 阿瞞大人
   "godie-o030", // 30 臭作 變態紳士
   "godie-u00o", // 76 魯夫 二檔
   "godie-u01u", // 11 索隆 武裝色霸氣
   "godie-u010", // 38 飛影 邪眼全開
+]);
+
+/**
+ * Art debt that is REAL but not currently OWED: the hero moved to
+ * `content/_legacy/` on 2026-08-13 (owner:「把沒開放的英雄資料包含技能都放到一個
+ * legacy 區 預設不要再被讀取到了」), so the transform has no entry in a live match
+ * and 「一筆沒有人會看到的美術債不是債」— the same reasoning already recorded above
+ * for 12 天地志狼, whose debt left the ledger by losing its entry ability.
+ *
+ * ⛔ These ids are kept rather than deleted because CLAUDE.md's 「分開不是丟掉 ——
+ * 知識不可以無聲消失」 applies here exactly: re-shipping one of these heroes
+ * re-opens a transform the player cannot see. The case below proves each one is
+ * still archived, so the moment a doc comes back this file goes red and names
+ * the id to move up into {@link ART_DEBT}.
+ */
+const ARCHIVED_ART_DEBT: ReadonlySet<string> = new Set([
+  "godie-h00w", // 26 鄭先生 洨者聖臨
+  "godie-n01b", // 40 憤怒的胖虎 萬解
+  "godie-o02v", // 81 高町奈葉 白色惡魔
+  "godie-o02o", // 87 阿瞞大人
 ]);
 
 interface Reachable {
@@ -169,10 +190,18 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
   it("finds the reachable transforms at all — vacuity guard", () => {
     cover("champion-form-visibility");
     const found = reachableTransforms();
-    // The floor is DERIVED, never a copied literal: 26 w3x pairs, minus the ones
-    // shipped content says nobody can reach. Two ways a pair leaves that count,
-    // and both are read back out rather than written down:
+    // The floor is DERIVED, never a copied literal: the w3x pairs whose two
+    // halves are BOTH still in `content/champions`, minus the ones shipped
+    // content says nobody can reach. Three ways a pair leaves that count, and
+    // all three are read back out rather than written down:
     //
+    //   · ARCHIVED — owner 2026-08-13 moved 41 unreleased heroes into
+    //     `content/_legacy/`, which is not a collection, so five whole pairs
+    //     have no doc the engine can load. `splitFormPairsByShipping` reads the
+    //     two directories; re-shipping a hero puts its pair back with no edit
+    //     here. It also reports a pair whose halves ended up on OPPOSITE sides —
+    //     the state that throws in the per-tick snapshot builder — and that is
+    //     asserted empty rather than skipped.
     //   · UNREACHABLE_BY_DESIGN — 61 鳳凰蛋 is a death-state morph with no trigger
     //     ability at all (task #119 owns it); `godie-u011` even ships maxHealth
     //     -450, so it is not a body anyone is meant to walk around in.
@@ -185,19 +214,26 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
     // pair), but the interesting failure is downward: un-retire e007 without
     // giving 12 an entry ability again and this goes red instead of every
     // assertion below quietly passing on a shrunken set.
+    const { shipped, halfMigrated } = splitFormPairsByShipping();
+    expect(halfMigrated, "a transform pair straddles the legacy move").toEqual([]);
     const retired = retiredChampionIdsFromDoc(
       JSON.parse(readFileSync(join(CONTENT_DIR, "config/roster.json"), "utf-8")),
     );
     const UNREACHABLE_BY_DESIGN: ReadonlySet<string> = new Set(["godie-u011"]);
-    const expectedReachable = CHAMPION_FORM_PAIRS.filter(
+    const expectedReachable = shipped.filter(
       (p) =>
         !UNREACHABLE_BY_DESIGN.has(p.alternateId) &&
         !retired.has(p.alternateId) &&
         !retired.has(p.baseId),
     ).length;
-    expect(expectedReachable, "the pair table or the retirement list has collapsed").toBeGreaterThan(
-      20,
-    );
+    // Proportional, not a copied count: most shipped pairs are reachable, so an
+    // emptied pair table, an over-eager retirement list or a legacy move that
+    // swallowed the roster all land here — while opening or archiving one more
+    // hero does not.
+    expect(
+      expectedReachable,
+      "the pair table or the retirement list has collapsed",
+    ).toBeGreaterThan(shipped.length / 2);
     expect(found.length).toBeGreaterThanOrEqual(expectedReachable);
     expect(found.every((r) => r.baseId !== "" && r.altId !== "")).toBe(true);
   });
@@ -228,6 +264,28 @@ describe("every reachable 變身 is one the player can see (#249)", () => {
     ).toEqual([]);
     // and the ledger is the whole of the debt, not a sample
     expect(invisible.size).toBe(ART_DEBT.size);
+  });
+
+  it("archived art debt is archived — re-ship the hero and it comes back onto the ledger", () => {
+    cover("champion-form-visibility");
+    // The other direction of the same ledger. ART_DEBT above may only list debt
+    // a player can currently walk into; this proves the ids parked in
+    // ARCHIVED_ART_DEBT really are out of the operating tree, so the list cannot
+    // become a place to hide a live invisible transform. Both halves are read
+    // off the two directories, so returning a hero from `content/_legacy/`
+    // fails here by name instead of silently re-opening an unseeable 變身.
+    const stillOperational = [...ARCHIVED_ART_DEBT].filter((id) =>
+      OPERATIONAL_CHAMPION_FILE_IDS.has(id),
+    );
+    expect(
+      stillOperational,
+      "these are back in content/champions — move them into ART_DEBT (or give them a form-visuals entry)",
+    ).toEqual([]);
+    const lost = [...ARCHIVED_ART_DEBT].filter((id) => !LEGACY_CHAMPION_FILE_IDS.has(id));
+    expect(lost, "archived art debt whose doc is in neither tree").toEqual([]);
+    // …and the two ledgers never overlap, or an id could be "paid" on one list
+    // while still owed on the other.
+    expect([...ARCHIVED_ART_DEBT].filter((id) => ART_DEBT.has(id))).toEqual([]);
   });
 
   it("a transform with a DIFFERENT mesh needs no ledger entry", () => {

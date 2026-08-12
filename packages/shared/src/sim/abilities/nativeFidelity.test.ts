@@ -24,8 +24,26 @@
  * （45-04 哥哥）。**原作的 w3a / JASS rawcode 與數值沒有丟掉** —— 逐支存在
  * ⭐ `docs/_w3x-fidelity-superseded.md`（task #78 的結論在那裡繼續活著）。
  * 這四條測試的斷言換了期望值與驅動方式，**沒有拔掉任何一條斷言**。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⚠️ 2026-08-13 —— Saber `godie-e00q` 已經**不在營運名單上**
+ *
+ * owner 把沒上架的英雄連技能一起搬進 `content/_legacy/`（不在 `COLLECTION_NAMES`
+ * 裡，引擎預設讀不到）。Aamk 那兩條（69-01 力量強化 / 69-04 魔力增幅）的主角就是
+ * 他，而且**全營運內容裡再也沒有第二支同型技能** —— 我掃過留下的 461 支：屬性按鈕
+ * 型的常駐加值（`effects: []` + `passive.ranks[].modifiers` 給 ad/maxHealth/
+ * maxMana）在營運母體裡歸零了。
+ *
+ * ⛔ 所以這兩條不能「換一位英雄重寫」，也不可以 `.skip` 掉。做的是**把封存的那一位
+ * 明確加回這個 registry**（只有他一位，見 `ARCHIVED_SUBJECTS`），斷言一條沒動。
+ * 理由同 CLAUDE.md：⭐「『分開』不是『丟掉』…… 知識不可以無聲消失」——
+ * 「屬性按鈕被匯入成傷害核彈」是真的發生過的匯入器缺陷，守衛留著才擋得住它回來。
+ *
+ * ⚠️ 這一項要拿給 owner 決定：Saber 若確定不回來，這兩條該退役（連同 `Aamk` 匯入
+ * 器守衛整條線）；⛔ 但那是排序的決定，不是我的（第零守則⑧）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
@@ -33,6 +51,7 @@ import { ContentLoader } from "../../content/loader";
 import { FsContentSource } from "../../content/node/FsContentSource";
 import { Arenas, Configs, Models, StatusEffects, VfxDefs, registerAll } from "../../content/registries";
 import { Abilities, Augments, Champions, Items, LootTables, Projectiles } from "../content/registry";
+import type { ContentStore } from "../../content/store";
 import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { spawnChampion } from "../spawnChampion";
@@ -59,10 +78,37 @@ const Z0 = SKELETON_ARENA.zones[0]!;
 const P = { x: Z0.center.x, z: Z0.center.z + 14 };
 const NO_INTENTS = new Map();
 
+/**
+ * Heroes this suite still needs a doc for after they left the operational
+ * roster. ⛔ 刻意逐位點名, 不是「把 `content/_legacy/` 整個載進來」—— 其餘 40 位
+ * 沒有守衛在等他們, 全載進來只會讓這個 registry 跟營運母體不一樣而已。
+ */
+const ARCHIVED_SUBJECTS = ["godie-e00q"] as const;
+const ARCHIVE_DIR = join(CONTENT_DIR, "_legacy");
+
+/** Put one archived champion + all of its ability docs into the loaded store. */
+function addArchivedChampion(store: ContentStore, cid: string): void {
+  const champPath = join(ARCHIVE_DIR, "champions", `${cid}.json`);
+  // If he ever comes BACK to the operational roster this must not shadow the
+  // live doc — the loader already put it in the store, so bail out.
+  if (store.has("champions", cid)) return;
+  if (!existsSync(champPath)) {
+    throw new Error(`${cid}: 營運目錄與 content/_legacy/ 都沒有這位英雄`);
+  }
+  store.add("champions", cid, JSON.parse(readFileSync(champPath, "utf-8")));
+  const abilityDir = join(ARCHIVE_DIR, "abilities");
+  for (const f of readdirSync(abilityDir)) {
+    if (!f.startsWith(`${cid}.`) || !f.endsWith(".json")) continue;
+    const doc = JSON.parse(readFileSync(join(abilityDir, f), "utf-8")) as { id: string };
+    if (!store.has("abilities", doc.id)) store.add("abilities", doc.id, doc);
+  }
+}
+
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
   const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  for (const cid of ARCHIVED_SUBJECTS) addArchivedChampion(res.store, cid);
   registerAll(res.store);
 });
 

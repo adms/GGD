@@ -649,11 +649,19 @@ describe("GH#216 卡住就接敵 —— 後台文件真的會生效", () => {
 // `DEFAULT_AUTO_ENGAGE` 上方原本寫著:「1 秒的窗口把 hitstop/擊退全部濾掉
 // (出貨最長的 knockdown 是 13 tick)」。那句話**只算了擊退,漏了硬控**。
 //
-// 本檔案自己掃 `content/abilities/*.json` 量到的(2026-07-30):
-//     · 帶 `applyStatus` 且 `root:true` / `stun:true` 的效果   86 支
-//     · 其中持續 ≥ 1.0 秒                                      47 支
-//     · 最長 4.0 秒 = 120 tick(godie-hvsh.passive「burnstun」
-//       與 godie-hvwd.passive「root」並列)
+// 本檔案自己掃 `content/abilities/*.json` 量到的形狀(⚠️ 下面這幾個數字是
+// **當下的快照,不是斷言** —— 母體會變,見下一段):
+//     · 帶 `applyStatus` 且 `root:true` / `stun:true` 的效果   數十支
+//     · 其中一部分持續 ≥ 1.0 秒
+//     · 最長的那一支遠比接敵窗口(stallTicks 30 = 1 秒)長,而且
+//       **root 與 stun 各自都有**比窗口長的
+//
+// ⚠️ 2026-08-13:未上架英雄整批搬進 `content/_legacy/`(技能 696 → 461),
+// 這份普查的頭數當場從 86/47 掉到 56/34,而最長的 root 也從
+// `godie-hvwd.passive` 的 4.0 秒換成別人。所以**頭數不可以住在斷言裡** ——
+// 那是 CLAUDE.md 的「第四個住處」,它必然過期,而且會用「硬控變少了」這種
+// 跟本檔案要守的東西毫無關係的訊息紅掉。`ae-cc-census` 只驗結構下界,
+// 持續時間一律由 `hardCcCensus()` 現場推導。
 // `effectRunner.ts` 的 `expiresAtTick = world.tick + Math.round(e.duration /
 // world.dt)`,`MovementSystem` 對 `e.root || e.stun` 直接把速度歸零。
 //
@@ -673,11 +681,13 @@ interface CcCensus {
   /**
    * 最長的**帶 `stun:true`** 的硬控(秒)。
    *
-   * ⚠️ 分開量不是為了好看。出貨內容裡**最長的那一支是 stun 不是 root**
-   * (`godie-hvsh.passive`「石化之眼」4.0 秒 `stun:true`,和 `godie-hvwd.passive`
-   * 的 4.0 秒 `root:true` 並列最長)。只用 root 餵測試的話,把
-   * `bodyHeldByRules` 抄成一份「只認 root」的漂走版本會**全綠** —— 而那正是
-   * `movementHold.ts` 檔頭警告的那件事。實測過:23 條全過。
+   * ⚠️ 分開量不是為了好看,而且**不可以**假設哪一種比較長。2026-07-30 量到的是
+   * 「最長的那一支是 stun 不是 root」(`godie-hvsh.passive`「石化之眼」4.0 秒
+   * `stun:true` 與 `godie-hvwd.passive` 的 4.0 秒 `root:true` 並列),2026-08-13
+   * 搬遷之後最長的 root 反而變成 6.0 秒 —— 也就是說**誰最長會隨內容翻面**,
+   * 這正是要各掃各的理由。只用 root 餵測試的話,把 `bodyHeldByRules` 抄成一份
+   * 「只認 root」的漂走版本會**全綠** —— 而那正是 `movementHold.ts` 檔頭警告的
+   * 那件事。實測過:23 條全過。
    */
   longestStunSeconds: number;
 }
@@ -792,8 +802,17 @@ describe("GH#216 × 硬控 —— 被定身不等於走位卡住", () => {
    */
   it("出貨內容真的有超過接敵窗口的硬控 (ae-cc-census)", () => {
     const c = hardCcCensus();
-    expect(c.effects).toBeGreaterThanOrEqual(80); // 2026-07-30 量到 86
-    expect(c.atLeastOneSecond).toBeGreaterThanOrEqual(40); // 量到 47
+    // ⛔ 這兩條**不可以**寫出貨的頭數。它們原本是 `>= 80` / `>= 40`(2026-07-30
+    // 在 696 支技能上量到 86 / 47),而 2026-08-13 未上架英雄搬進
+    // `content/_legacy/` 之後營運母體變成 461 支,真值掉到 56 —— 測試就用
+    // 「硬控變少了」這種毫無關係的訊息紅掉了。那是 CLAUDE.md 講的「第四個住處」:
+    // 一個會跟著母體浮動的量住進斷言,必然過期。
+    //
+    // 這兩條要守的其實只有**結構**:出貨內容裡真的有硬控可測,否則下面每一條
+    // 行為守衛的夾具(持續時間全部從這裡推)都是空的。所以下界是 0,不是頭數。
+    expect(c.effects).toBeGreaterThan(0);
+    expect(c.atLeastOneSecond).toBeGreaterThan(0);
+    expect(c.atLeastOneSecond).toBeLessThanOrEqual(c.effects); // 子集不可能比母集大
     // 這一條才是前提:最長的硬控換算成 tick,必須超過 stallTicks(30)。
     const longestTicks = Math.round(c.longestSeconds / (1 / 30));
     expect(longestTicks).toBeGreaterThan(DEFAULT_AUTO_ENGAGE.stallTicks);

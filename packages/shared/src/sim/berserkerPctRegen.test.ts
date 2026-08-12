@@ -21,7 +21,7 @@
  *     「讀出貨的卡」在這裡會變成一條驗不到東西的空測試。
  */
 import { describe, it, expect, beforeEach } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { SimWorld } from "./SimWorld";
@@ -49,6 +49,29 @@ function shippedBerserker(): ChampionDef {
   return JSON.parse(
     readFileSync(join(CONTENT_DIR, "champions/godie-hapm.json"), "utf-8"),
   ) as ChampionDef;
+}
+
+/**
+ * 「出貨英雄卡」的**母體** —— 直接列 `content/champions/` 這個目錄。
+ *
+ * ⚠️ 這裡原本讀 `_index.json` 並且斷言 `entries.length > 100`。owner 2026-08-13
+ * 把 41 位沒上架的英雄搬進 `content/_legacy/champions/`(那個目錄不在
+ * `COLLECTION_NAMES` 裡,引擎讀不到它),營運名單掉到 78 —— 於是那個 100 就是
+ * 一個**抄來的出貨值**在說謊,也就是 CLAUDE.md 說的「第四個住處」。
+ *
+ * 現在母體跟著目錄走:誰在營運名單裡由 `content/champions/` 定義,再搬一次
+ * 也不必回來改這一行。⭐ 而且它比索引更貼近問題 —— 這條掃的是「有沒有人在用
+ * 這個機制」,一份躺在目錄裡但索引還沒重建的卡片一樣算使用者。
+ */
+function shippedChampionCards(): { id: string; doc: ChampionDef }[] {
+  const dir = join(CONTENT_DIR, "champions");
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .sort()
+    .map((f) => ({
+      id: f.slice(0, -".json".length),
+      doc: JSON.parse(readFileSync(join(dir, f), "utf-8")) as ChampionDef,
+    }));
 }
 
 /**
@@ -99,17 +122,14 @@ describe("owner 2026-08-02 —— 出貨內容裡沒有人在用百分比回血�
   });
 
   it("整份出貨英雄目錄都沒有人填百分比回血 —— 這一族目前是 no-op", () => {
-    const index = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "champions/_index.json"), "utf-8"),
-    ) as { entries: { id: string; path: string }[] };
-    // 反向守衛:目錄空了這條就變成 vacuously true,所以先釘住它不是空的。
-    expect(index.entries.length).toBeGreaterThan(100);
-    const withPctRegen = index.entries
-      .filter((e) => {
-        const doc = JSON.parse(readFileSync(join(CONTENT_DIR, e.path), "utf-8")) as ChampionDef;
-        return typeof doc.healthRegenPctOfMax === "number";
-      })
-      .map((e) => e.id);
+    const cards = shippedChampionCards();
+    // 反向守衛:母體空了下面那條就變成 vacuously true,所以先釘住它不是空的。
+    // ⛔ 這個下界刻意是**結構性**的,不是「至少 N 位」—— 「一位英雄都沒有」不是
+    //    一次名單調整,那是整棵 content 樹掛了,所以它不會因為誰上下架而過期。
+    expect(cards.length).toBeGreaterThan(0);
+    const withPctRegen = cards
+      .filter((c) => typeof c.doc.healthRegenPctOfMax === "number")
+      .map((c) => c.id);
     expect(withPctRegen).toEqual([]);
   });
 

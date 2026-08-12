@@ -45,6 +45,18 @@ function championDoc(id: string): Record<string, unknown> | null {
   return JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
 }
 
+/**
+ * 同一張卡,但在**下架備份區**裡。2026-08-13 owner 把 41 位未上架的英雄搬到
+ * `content/_legacy/champions/`,那個目錄不在 `COLLECTION_NAMES` 裡,引擎讀不到 ——
+ * 但檔案還在,所以「這一格的來源是什麼」仍然驗得起來。⛔ 這裡只給測試用,不是把
+ * legacy 接回引擎。
+ */
+function archivedChampionDoc(id: string): Record<string, unknown> | null {
+  const p = join(REPO, "content/_legacy/champions", `${id}.json`);
+  if (!existsSync(p)) return null;
+  return JSON.parse(readFileSync(p, "utf-8")) as Record<string, unknown>;
+}
+
 const overrides = (JSON.parse(readFileSync(OVERRIDES, "utf-8")) as OverrideFile).overrides;
 
 describe("GH#252 —— 英雄卡的 bodyScale 與渲染那份體型不可以 drift", () => {
@@ -76,9 +88,24 @@ describe("GH#252 —— 英雄卡的 bodyScale 與渲染那份體型不可以 dr
       }
     }
     expect(mismatches, mismatches.join("\n")).toEqual([]);
-    // 這個數字本身是斷言:如果哪天所有人的體型都變成 1.0,上面那一圈會空轉而
-    // 全綠 —— 一條「空集合也算通過」的守衛不是守衛。
-    expect(nonUnity).toBe(24);
+    // 反空轉:如果哪天所有人的體型都變成 1.0,上面那一圈會空轉而全綠 ——
+    // 一條「空集合也算通過」的守衛不是守衛。
+    //
+    // ⚠️ 以前這裡寫 `toBe(24)`,而 24 是「119 隻英雄時代」的出貨值。2026-08-13
+    // 未上架的英雄搬進 `content/_legacy/` 之後它變成 16,而**那個 16 一樣會過期**
+    // —— 每一次上架/下架都會動它。所以不換數字,換形狀。
+    expect(nonUnity).toBeGreaterThan(0);
+  });
+
+  it("每一筆體型設定都指得到一張真的卡(營運中或備份區),沒有幽靈條目", () => {
+    // 上面那一圈遇到 `doc === null` 就 `continue`。在搬遷之前那代表「條目指向一位
+    // 已下架的英雄」,是幾筆例外;搬遷之後它一次吞掉 26 筆,於是一個**打錯 id 的
+    // 幽靈條目**會混在裡面完全看不出來(第二守則失敗形態②:算了但沒有人收)。
+    // 這一條把那個洞補起來:每個 id 要嘛在營運內容、要嘛在備份區,兩邊都沒有就是錯。
+    const phantoms = Object.keys(overrides).filter(
+      (id) => championDoc(id) === null && archivedChampionDoc(id) === null,
+    );
+    expect(phantoms, `這些體型設定指向不存在的英雄：${phantoms.join(", ")}`).toEqual([]);
   });
 
   it("沒有任何一張卡自己憑空長出 bodyScale(它必須有渲染那邊的來源)", () => {
@@ -116,8 +143,12 @@ describe("GH#252 —— 英雄卡的 bodyScale 與渲染那份體型不可以 dr
     expect(max).toBeLessThanOrEqual(
       DEFAULT_ATTACK_RANGE_CURVE[DEFAULT_ATTACK_RANGE_CURVE.length - 1]!.bodyScale,
     );
-    // 死亡騎士的 6.795 是**網格高度修正**不是體型,絕不可以流進射程
+    // 死亡騎士的 6.795 是**網格高度修正**不是體型,絕不可以流進射程。
+    // ⚠️ 他 2026-08-13 搬進了備份區,所以第二行改讀備份區那一份 —— 直接讀
+    // `championDoc` 會拿到 null,`?.` 讓斷言恆真,那就從守衛變成裝飾品了。
     expect(standinRelativeScaleOf(overrides["godie-h02s"]!)).toBe(1);
-    expect(championDoc("godie-h02s")?.["bodyScale"]).toBeUndefined();
+    const dk = championDoc("godie-h02s") ?? archivedChampionDoc("godie-h02s");
+    expect(dk, "godie-h02s 兩邊都找不到").not.toBeNull();
+    expect(dk!["bodyScale"]).toBeUndefined();
   });
 });

@@ -198,7 +198,7 @@ FORM_TRIGGERS = form_triggers()
 SPEC_OWNED = frozenset({
     "id", "schema", "name", "description", "slot", "castType", "maxRank",
     "cooldown", "manaCost", "range", "innateKind", "radiusTier",
-    "targetsEnemies", "effects", "passive", "marks", "toggle",
+    "targetsEnemies", "effects", "passive", "marks", "toggle", "augment",
 })
 
 #: 規格**刻意讓它退場**的欄位 —— 舊值存在，但救回來會造成傷害。
@@ -1169,6 +1169,16 @@ A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
 
 A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
   "[被動][機率][裝備了某類道具時]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
+  # ⭐ 規格的兩句話第一次真的實作：`ability-augment@1`。
+  #    ⚠️ 兩個目標**共用同一個前提**（拿著御雷劍），所以 condition 掛在 target 層 ——
+  #    掛頂層表達不出「同一支 EX 的兩個強化各有各的前提」，掛每條 op 則會分岔。
+  augment={"targets": [
+      {"abilityId": "godie-e00w.w",   # 77-02 雷鳴劍
+       "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
+       "ops": [{"op": "procChance", "mode": "set", "value": 0.5}]},
+      {"abilityId": "godie-e00w.e",   # 77-03 GLADIARIA ALAT
+       "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
+       "ops": [{"op": "durationSec", "mode": "set", "value": 30.0}]}]},
   passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.4, "target": "event",
        "condition": {"kind": "equipment", "subject": "self", "tag": "legendary"},
@@ -1330,8 +1340,12 @@ A("15-002", "15-002 敵彈吸收陣。太陰道", "self", [60], [0], 0,
        "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]}])],
   passive={"name": "15-002 敵彈吸收陣。太陰道", "ranks": [{"hooks": [
       {"on": "onReflectSuccess", "target": "self",
+       # ⭐ 規格第三句「將該傷害短暫加成至 [AP]([可累加])，持續 5秒後歸零」——
+       #    `eventValueConversion.buff` 就是那一格（同一發效果，⛔ 不需要第二顆）。
+       #    ([可累加]) 是**免費**的：statPipeline 對多份 flat 來源求和。
        "effects": [{"kind": "eventValueConversion", "shape": "single", "source": "incomingDamage",
-                    "to": "mana", "ratio": 1.0, "who": "self"}]}]}]})
+                    "to": "mana", "ratio": 1.0, "who": "self",
+                    "buff": {"stat": "ap", "durationSec": 5.0, "ratio": 1.0}}]}]}]})
 
 # ── 44 夜神月 ────────────────────────────────────────────────────────────────
 A("44-00", "44-00 機警", "self", [15], [0], 0,
@@ -1468,9 +1482,14 @@ A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
       {"on": "onDamageTaken", "target": "event",
        "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]}])],
   passive={"name": "60-04 完美盾反", "ranks": [{"hooks": [
-      {"on": "onReflectSuccess", "target": "self",
+      # ⭐ `target:"event"` —— 出貨寫 "self" 的話 `ctx.targets=[自己]`，
+      #    規格說的「並且[擊退]**敵人**」會變成把自己推開。
+      #    回復仍然 `applyTo:"self"`，所以兩句話各自打對人。
+      # ⭐ `healthPct` 逐階 8/16/24%（`zRankScalar` 早就收陣列）——
+      #    原本只有一格 0.08，rank 2/3 的 16%/24% 玩家永遠拿不到。
+      {"on": "onReflectSuccess", "target": "event",
        "reflectedDamageSource": "ability", "reflectedDamageType": "magic",
-       "effects": [{"kind": "restore", "healthPct": 0.08, "applyTo": "self"},
+       "effects": [{"kind": "restore", "healthPct": [0.08, 0.16, 0.24], "applyTo": "self"},
                    {"kind": "knockback", "distance": 4.0, "speed": 16.0, "from": "caster"}]}]}]})
 
 A("60-002", "60-002 勇者意志", "self", [120], [0], 0,
@@ -1505,13 +1524,25 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
            area("magic", tier="小", flat=1),
            status("magic-break", 3.0)])
 
-A("79-02", "79-02 月牙斬擊", "self", [60, 60, 60, 60], [80, 160, 240, 320], 0,
+# ⭐ castType `self` → `targeted`：規格逐字是「給予**目標**額外…傷害」，而 self 施法讓
+#    `ctx.targets=[施法者]` ⇒ 頂層那顆 damage **打自己**，兩條 hook 也全部閘在
+#    `hitId !== caster` 上永遠不觸發（一支技能三個子句同時失效）。
+# ⚠️ 施法距離規格沒給 —— 用 2.0（近戰，同 13-02 牙突；79-03 月牙天衝才是 11 的遠程那支）。
+#    這個數字是**推斷**的，列進 owner 裁決。
+A("79-02", "79-02 月牙斬擊", "targeted", [60, 60, 60, 60], [80, 160, 240, 320], 2.0,
   "[主動][AP加成]\n60秒冷卻\n消耗MP80/160/240/320\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
   effects=[dmg("magic", per=[200, 350, 500, 650], ap=0.5)],
-  passive={"name": "79-02 月牙斬擊", "ranks": [{"hooks": [
-      {"on": "onAbilityHit", "abilitySlot": "W", "target": "event",
-       "condition": {"kind": "status", "subject": "target", "statusId": "magic-break"},
-       "effects": [dmg("magic", ap=1.0)]}]}]})
+  # ⭐ 兩個括號子句各一條 hook。第二條（卍解）在此之前**完全沒有落點**。
+  #    `whileForm:"alternate"` 讓它只在變身後掛得上（79-04 卍解是那個形態的來源）。
+  passive={"name": "79-02 月牙斬擊", "ranks": [
+      {"hooks": [
+          {"on": "onAbilityHit", "abilitySlot": "W", "target": "event",
+           "condition": {"kind": "status", "subject": "target", "statusId": "magic-break"},
+           "effects": [dmg("magic", ap=1.0)]}]},
+      {"whileForm": "alternate",
+       "hooks": [
+          {"on": "onAbilityHit", "abilitySlot": "W", "target": "event",
+           "effects": [dmg("magic", ap=2.0)]}]}]})
 
 A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550], 11,
   "[主動][指向][範圍][AP加成]\n55秒冷卻\n消耗MP250/350/450/550\n施法距離11\n\n「月牙天衝！招式喊得越大聲，傷害就越強大」\n造成一[直線]上的敵方部隊受到450/600/750/900傷害。\n(若對方在 [破魔] 狀態，則額外造成 60% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 120% [AP])",
@@ -1785,20 +1816,31 @@ A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
 A("52-00", "52-00 十二道試煉", "self", [0], [0], 0,
   "[被動][範圍][暈眩]\n0秒冷卻\n\n「十二條命聽起來很多，直到你遇到會算數的玩家」\n初始擁有十二層 [試煉] 標記。受到致命傷害時消耗一層試煉，進入 [無敵] 狀態1.5秒，隨後 [回復] 50%[最大生命]，並[擊退]並[暈眩] 0.5秒 [周圍]敵人。每失去一層試煉，永久提升10%攻擊力與10%[最大生命]。\n(跨回合共享12次 [試煉] 標記)",
   innate="passive",
+  # ⭐ 整套 `mark@1 + lethal` 是**為這一支做的**（`sim/combat/lethalSave.ts` 檔頭逐字
+  #    寫著「十二道試煉留 1%」），而在此之前 content 用它的文件數是 **0** ——
+  #    出貨的寫法是「HP ≤ 5% 時觸發一條 hook」，那不是免死：
+  #    ⛔ 一發超過 5% 的傷害直接把人打死，試煉一層都不會消耗（失敗形態②）。
   mark={"markId": "trial", "initial": 12, "max": 12, "durationSec": -1,
-        "resetOn": "match"},
-  passive={"name": "52-00 十二道試煉", "ranks": [{"hooks": [
-      {"on": "onDamageTaken", "target": "self", "key": "trial",
-       "condition": {"kind": "stat", "subject": "self", "stat": "hp",
-                     "mode": "percent", "op": "<=", "value": 0.05},
-       "internalCooldown": 1.5,
-       "effects": [{"kind": "invulnerable", "durationSec": 1.5, "applyTo": "self",
-                    "blocksDamage": "all", "blocksTrueDamage": True,
-                    "blocksControl": True},
-                   {"kind": "restore", "healthPct": 0.5, "applyTo": "self"},
-                   {"kind": "knockback", "distance": 4.0, "speed": 16.0, "from": "caster"},
-                   status("stun", 0.5, stun=True),
-                   buff([M("ad", "pctAdd", 0.1), M("maxHealth", "pctAdd", 0.1)], 99999)]}]}]})
+        "resetOn": "match",
+        # 「每失去一層試煉，永久提升 10% 攻擊力與 10% 最大生命」——
+        # ⛔ 原本寫成 buff(…, 99999) 假裝永久，而且掛在 hook 上（只有觸發那一次）。
+        "perStackLost": [M("ad", "pctAdd", 0.1), M("maxHealth", "pctAdd", 0.1)],
+        "lethal": {
+            "consume": 1,
+            "surviveHpPct": 0.01,
+            "damageTypes": ["physical", "magic", "true"],
+            "internalCooldown": 1.5,
+            "selfEffects": [
+                {"kind": "invulnerable", "durationSec": 1.5, "applyTo": "self",
+                 "blocksDamage": "all", "blocksTrueDamage": True, "blocksControl": True},
+                # 「**隨後**回復 50% 最大生命」—— 無敵窗結束才回，⛔ 不是同一 tick。
+                {"kind": "delayed", "shape": "single", "delaySec": 1.5, "count": 1,
+                 "intervalSec": 1.0,
+                 "effects": [{"kind": "restore", "healthPct": 0.5, "applyTo": "self"}]}],
+            "aoeEffects": [
+                {"kind": "knockback", "distance": 4.0, "speed": 16.0, "from": "caster"},
+                status("stun", 0.5, stun=True)],
+            "aoeRadius": 6.0}})
 
 A("52-01", "52-01 狂戰士之怒", "self", [60, 60, 60, 60], [100, 140, 180, 220], 0,
   "[主動][輔助]\n60秒冷卻\n消耗MP100/140/180/220\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
@@ -1964,6 +2006,12 @@ def build(e):
     # 20-01 用得到，理由見那一列的註解 —— ⛔ 70-00 不可以有。
     if e.get("toggle"):
         doc["toggle"] = e["toggle"]
+    # ⭐ B4-K —— `ability-augment@1`：一支技能**指名改寫另一支技能的數字**。
+    #    引擎三個呼叫點都活著，而全 repo 帶 augment 的技能文件在此之前是 **0 份**。
+    #    ⛔ 目標是硬參照（`zRef("abilities")`），打錯字在 validateReferences 就被擋，
+    #       ⛔ 不是名稱文字反推、也不是 JSON Pointer（重排 hooks 會指到隔壁效果）。
+    if e.get("augment"):
+        doc["augment"] = e["augment"]
     # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
     for k, v in prev.items():
         if k in SPEC_OWNED:

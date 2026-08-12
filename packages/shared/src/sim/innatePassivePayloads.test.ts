@@ -62,9 +62,29 @@
  *       `OBJECTS.json`. Shipping that exact figure at least makes the comment
  *       true instead of false, and the field is per-doc editable with bounds.
  *       Treat it as a design value pending owner review, not as fidelity.
+ *
+ * ---------------------------------------------------------------------------
+ * ⚠️ 2026-08-13 —— 三位主角**不在營運名單上**了, 而其中一位帶走了整個機制
+ * ---------------------------------------------------------------------------
+ * owner 把沒上架的英雄連技能一起搬進 `content/_legacy/`（不在 `COLLECTION_NAMES`
+ * 裡, 引擎預設讀不到）。這一份點名的四位裡有三位在裡面:
+ *   · G-AURA   胖虎 `godie-n01b` / `godie-nman`（40-00 我~是~孩~子~王~）
+ *   · G-STEALTH 小次郎 `godie-naka`（27-00 永久性的隱形術）
+ *
+ * ⭐ 小次郎那一位是**內容發現, 不只是測試問題**: 我掃過留下的 461 支技能,
+ * `stealthFadeDelaySec` 在營運母體裡**一支都不剩**。留下來的三支真視
+ * （21-00 灼眼 `godie-e008`、16-00 通靈能力 `godie-nplh` / `godie-u01f`）現在
+ * 沒有任何東西可以偵測 —— 也就是 CLAUDE.md 第二守則的失敗形態 ②「算出來了但玩家
+ * 拿不到」, 只是這一次是**內容側**造成的。⛔ 不在這裡修, 已回報給 owner 裁決。
+ *
+ * ⛔ 斷言一條都沒有動, 也沒有任何 `.skip` —— 改的只有那三位的文件**去哪裡拿**:
+ * 逐位點名地從封存區補進這個 store（`ARCHIVED_SUBJECTS`）, ⛔ 不是把整個
+ * `_legacy/` 載進來。理由同 CLAUDE.md ⭐「『分開』不是『丟掉』…… 知識不可以無聲
+ * 消失」: 「光環/隱形/真視的 payload 從沒送到玩家手上」是這一批補起來的缺陷,
+ * 而它會不會回來跟文件放在哪個資料夾無關。
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentStore } from "../content/store";
@@ -154,6 +174,34 @@ function docs(collection: string): Record<string, unknown>[] {
     );
 }
 
+/**
+ * Heroes named above that now live in `content/_legacy/` (see the 2026-08-13
+ * note in the header). ⛔ 逐位點名, ⛔ 不是整個封存區 —— 其餘 38 位沒有守衛在等
+ * 他們, 全載進來只會讓這個 store 跟營運母體不一樣。
+ */
+const ARCHIVED_SUBJECTS = ["godie-n01b", "godie-nman", "godie-naka"] as const;
+const ARCHIVE_DIR = join(CONTENT_DIR, "_legacy");
+
+/** Put one archived champion + its ability docs into `store`, never shadowing live. */
+function addArchivedChampion(store: ContentStore, cid: string): void {
+  // If a hero ever returns to the operational roster the live doc must win —
+  // otherwise this suite would quietly go on measuring the archived copy
+  // (失敗形態 ⑤: 被測的不是出貨的那個).
+  if (store.has("champions", cid)) return;
+  const champPath = join(ARCHIVE_DIR, "champions", `${cid}.json`);
+  if (!existsSync(champPath)) {
+    throw new Error(`${cid}: 營運目錄與 content/_legacy/ 都沒有這位英雄`);
+  }
+  store.add("champions", cid, JSON.parse(readFileSync(champPath, "utf-8")));
+  for (const f of readdirSync(join(ARCHIVE_DIR, "abilities"))) {
+    if (!f.startsWith(`${cid}.`) || !f.endsWith(".json")) continue;
+    const doc = JSON.parse(readFileSync(join(ARCHIVE_DIR, "abilities", f), "utf-8")) as {
+      id: string;
+    };
+    if (!store.has("abilities", doc.id)) store.add("abilities", doc.id, doc);
+  }
+}
+
 beforeAll(() => {
   const store = new ContentStore();
   for (const c of [
@@ -165,6 +213,7 @@ beforeAll(() => {
   ] as const) {
     for (const doc of docs(c)) store.add(c, doc.id as string, doc);
   }
+  for (const cid of ARCHIVED_SUBJECTS) addArchivedChampion(store, cid);
   registerAll(store);
 });
 

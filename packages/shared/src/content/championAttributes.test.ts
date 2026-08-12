@@ -94,7 +94,12 @@ function sheet(
 describe("#248 attr-01 — the derivation law holds for every champion", () => {
   it("derived stat == baseStats + attr(L)·coefficient + growth·(L−1), at 5 levels", () => {
     cover("attr-248-derivation-law");
-    expect(champs.length).toBeGreaterThanOrEqual(114);
+    // 母體＝**現在營運中**的英雄卡。2026-08-13 owner 把 41 位未上架的英雄搬到
+    // `content/_legacy/champions/`(不在 `COLLECTION_NAMES` 裡,引擎讀不到),
+    // 所以這裡以前抄的 114 是一個會過期的出貨值 —— 第零守則的「第四個住處」。
+    // 這一行現在只擋一件事:**空集合也算通過**。下面那個三層加法律的三重迴圈
+    // 如果一位英雄都沒跑到,它會全綠而什麼都沒驗。
+    expect(champs.length).toBeGreaterThan(0);
 
     const problems: string[] = [];
     for (const c of champs) {
@@ -292,8 +297,15 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
       Stat.Armor,
       Stat.AttackSpeed,
     ]) {
+      // 以前是「> 100 位有這一列」,那是 119 隻母體時代的出貨值。母體換成營運
+      // 內容之後,正確的形狀不是換一個數字而是**從母體推導**:這七列是每一張
+      // 英雄卡都該有的,所以斷言是「一位都沒漏」。這比舊的下界**更嚴**,而且
+      // 不會因為下一次上架/下架而過期。
       const carriers = champs.filter((c) => (c.growth as Record<string, number>)[stat] !== undefined);
-      expect(`${stat}:${carriers.length > 100}`).toBe(`${stat}:true`);
+      const without = champs.filter((c) => (c.growth as Record<string, number>)[stat] === undefined);
+      expect(`${stat}:${carriers.length}`, `缺 ${stat} growth 的英雄：${without.map((c) => c.id).join(", ")}`).toBe(
+        `${stat}:${champs.length}`,
+      );
     }
     // …and so is the growth-only one.
     expect(champs.every((c) => (c.growth as Record<string, number>)[Stat.MagicResist] !== undefined)).toBe(true);

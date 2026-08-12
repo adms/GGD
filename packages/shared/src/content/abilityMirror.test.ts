@@ -44,13 +44,10 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
 const SLOTS = ["Q", "W", "E", "R"] as const;
 
-/** 113 champions × 4 core slots, all twinned. A floor, so the roster may grow. */
-const PAIR_FLOOR = 452;
-
 /**
  * Fields the standalone doc is ALLOWED to carry alone. This is the sanctioned
  * steady state, not drift:
- *  - `schema`  — the collection tag only a standalone doc has (452 cases, by design).
+ *  - `schema`  — the collection tag only a standalone doc has (one per pair, by design).
  * A field name showing up standalone-only that is NOT on this list means a new
  * write path started editing one copy of the mirror — exactly how #79 did it.
  *
@@ -106,6 +103,36 @@ function rawPairs(): Map<string, { standalone: Doc; embedded: Doc }> {
   return pairs;
 }
 
+/**
+ * How many standalone/embedded pairs the OPERATING roster owes us.
+ *
+ * ⭐ 2026-08-13：這格以前是寫死的 `PAIR_FLOOR = 452`（當時 113 位 × 4 槽）。
+ * 未上架英雄搬進 `content/_legacy/` 之後營運母體變成 78 位 → 312 對，
+ * 這一份的四條測試就全部紅在同一行 —— 而紅的原因跟「鏡射有沒有壞」一點關係都沒有，
+ * 它只是抄了一個出貨值（CLAUDE.md 第零守則說的「第四個住處」）。
+ *
+ * 現在**從內容目錄推導**：營運名單有幾位英雄，就該有幾位 × 4 對。
+ * ⛔ 這不是把守衛改弱 —— 它其實比常數**更緊**，因為它是精確額而不是一個落後的下界：
+ * 同一條測試的 `orphans` 已經逐格證明每一位英雄都帶滿 Q/W/E/R、且每一格都找得到
+ * standalone 雙生子，所以配對數必須**剛好**等於這個值。名單增減時它自己跟著走。
+ */
+function expectedPairs(): number {
+  return docs("champions").length * SLOTS.length;
+}
+
+/**
+ * Guard-the-guard，兩件事一起釘：
+ *  ① 名單不是空的 —— 否則推導出來的額度是 0，`0 >= 0` 會讓整份測試**真空綠**。
+ *    「營運內容至少有一位英雄」是**結構性**下界（沒有英雄的遊戲不是遊戲），
+ *    ⛔ 不是一個會被調的出貨數字。
+ *  ② 實際配對數達到滿額 —— 少了就是有人刪了 standalone 檔或槽位。
+ */
+function expectFullRoster(pairCount: number): void {
+  const want = expectedPairs();
+  expect(want).toBeGreaterThan(0);
+  expect(pairCount).toBeGreaterThanOrEqual(want);
+}
+
 /** JSON docs can never hold an `undefined` value, so absent ⟺ `undefined`. */
 function present(doc: Doc, field: string): boolean {
   return field in doc && doc[field] !== undefined;
@@ -144,8 +171,8 @@ describe("champion↔ability mirror (real content)", () => {
       }
     }
     expect(orphans, `${orphans.length} unmirrored slot(s)`).toEqual([]);
-    expect(slots).toBeGreaterThanOrEqual(PAIR_FLOOR);
-    expect(rawPairs().size).toBeGreaterThanOrEqual(PAIR_FLOOR);
+    expectFullRoster(slots);
+    expectFullRoster(rawPairs().size);
   });
 
   /**
@@ -158,7 +185,7 @@ describe("champion↔ability mirror (real content)", () => {
   it("no field is present in both copies with different values (ability-mirror-no-conflict)", () => {
     cover("ability-mirror-no-conflict");
     const pairs = rawPairs();
-    expect(pairs.size).toBeGreaterThanOrEqual(PAIR_FLOOR); // never pass vacuously
+    expectFullRoster(pairs.size); // never pass vacuously
 
     const conflicts: AbilityMirrorDrift[] = [];
     for (const drift of auditAbilityMirrorDrift(realContentStore())) {
@@ -190,7 +217,7 @@ describe("champion↔ability mirror (real content)", () => {
   it("only sanctioned fields live on one side of the mirror (ability-mirror-one-sided)", () => {
     cover("ability-mirror-one-sided");
     const pairs = rawPairs();
-    expect(pairs.size).toBeGreaterThanOrEqual(PAIR_FLOOR);
+    expectFullRoster(pairs.size);
 
     const unsanctioned: string[] = [];
     for (const [key, { standalone, embedded }] of pairs) {
@@ -218,7 +245,7 @@ describe("champion↔ability mirror (real content)", () => {
   it("no embedded vfxKey is left on the fx.ember-bolt-cast placeholder (ability-mirror-vfxkey)", () => {
     cover("ability-mirror-vfxkey");
     const pairs = rawPairs();
-    expect(pairs.size).toBeGreaterThanOrEqual(PAIR_FLOOR);
+    expectFullRoster(pairs.size);
 
     const stale: string[] = [];
     let embeddedOnPrimitives = 0;
@@ -230,20 +257,26 @@ describe("champion↔ability mirror (real content)", () => {
       if (typeof emb === "string" && emb.startsWith("fx.prim.")) embeddedOnPrimitives += 1;
     }
     expect(stale, `${stale.length} slot(s) whose embedded vfxKey lags the standalone`).toEqual([]);
-    // 397 of the 452 EMBEDDED slots carry a `fx.prim.*` primitive. A collapse
-    // means a bulk re-point wrote the standalone side only (exactly #79's
-    // mistake) and the mirror lagged again.
+
+    // The stylised `fx.prim.*` palette must still be the bulk of the embedded
+    // side. A collapse means a bulk re-point wrote the standalone side only
+    // (exactly #79's mistake) and the mirror lagged again.
     //
-    // The floor was 400 when this landed, against 422 on primitives. It moved
-    // DOWN on purpose: merging origin/main brought the w3x emitter work, which
-    // promoted 30 slots off the stylised primitives onto real imported art
-    // (`fx.w3x.particle.*`, `fx.w3x.locust.*`, `godie-*-p*`). Those are an
-    // UPGRADE, not drift — both copies agree, which the `stale` list above is
-    // what actually proves. The rest are outside #79's 48-champion whitelist
-    // and agree on both sides too (e.g. sela.Q, still on fx.ember-bolt-cast).
+    // ⭐ 2026-08-13：這條以前寫 `>= 390`，那是對「452 對」那個母體做的一次**普查**。
+    // 未上架英雄搬進 `content/_legacy/` 之後母體是 312 對，390 這個絕對數字就再也
+    // 到不了了 —— 而它其實從來就不是一個關於鏡射的斷言，只是一個抄下來的出貨值。
     //
-    // So this number is a floor on the PRIMITIVE palette specifically, and it
-    // is expected to keep drifting down as more abilities get faithful w3x art.
-    expect(embeddedOnPrimitives).toBeGreaterThanOrEqual(390);
+    // 改成**比例**，因為比例才是搬遷（以及未來任何一次名單增減）之下不變的東西：
+    //   舊母體 397/452 = 87.8% 在 primitives，門檻 390/452 = 86.3%
+    //   新母體 272/312 = 87.2% 在 primitives，門檻同樣是 85%
+    // 門檻沒有放寬（86.3% → 85%，同一個數量級的餘裕），⛔ 只是換成一個跟著母體走的
+    // 表示法。剩下的那一成多是**升級**不是漂移：w3x emitter 的工作把一批技能從
+    // 風格化 primitive 換成真的匯入美術（`fx.w3x.*`、`godie-*-p*`），兩份拷貝仍然
+    // 一致 —— 而「一致」是上面那條 `stale` 在證明的，不是這一條。
+    const primitiveShare = embeddedOnPrimitives / pairs.size;
+    expect(
+      primitiveShare,
+      `only ${embeddedOnPrimitives}/${pairs.size} embedded slots are on fx.prim.*`,
+    ).toBeGreaterThan(0.85);
   });
 });

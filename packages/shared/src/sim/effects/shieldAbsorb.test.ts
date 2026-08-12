@@ -35,7 +35,7 @@
  * had already flagged the widening as "surfaced not fixed"; this is the fix.
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../testkit/cover";
@@ -370,8 +370,52 @@ describe("shield.absorbs — 兩種護盾誰先吸 (p6-shield-absorb-order)", ()
  * 4. THE SHIPPED DOCS — 破法對咒 as it will actually be cast in a match.
  * ═════════════════════════════════════════════════════════════════════════ */
 
-/** 傑洛士 E and 涼宮八ㄦ匕 R are the two mirrors of the same WC3 spell. */
-const BARRIER_DOCS = ["godie-o00l.e", "godie-o02s.r"] as const;
+/**
+ * 破法對咒 —— 出貨名單裡**現存的每一份鏡像**, 由技能編號推導出來。
+ *
+ * ⚠️ 這裡原本是寫死的 `["godie-o00l.e", "godie-o02s.r"]` (傑洛士 E 與涼宮八ㄦ匕 R,
+ * 同一支 WC3 法術的兩份鏡像)。owner 2026-08-13 把 41 位沒上架的英雄搬進
+ * `content/_legacy/` (那個目錄不在 `COLLECTION_NAMES` 裡, 引擎讀不到它),
+ * 涼宮八ㄦ匕 `godie-o02s` 在那一批 —— 於是三條測試以 ENOENT 倒下, 而**沒有任何
+ * 東西真的壞掉**。
+ *
+ * ⭐ 挑樣本的鑰匙是**技能編號**, ⛔ 不是「effects 裡填了 absorbs 的那些」。
+ *    後者是拿結論去挑樣本: 哪天有人把某一份改回吸收全類型, 那份文件就會自己從
+ *    母體裡消失, 這一整段於是變成同義反覆(而且是全綠的)。編號是 JASS 對照的
+ *    join key (CLAUDE.md 命名層), 它不會浮動, 而且「涼宮哪天從 legacy 回來」
+ *    會自動重新被蓋到 —— 不用有人記得回來改這一行。
+ * ⭐ championId / slot 一樣從文件自己身上讀 (`id` 的前綴 + `slot` 欄位),
+ *    ⛔ 不是第二份要跟著手動對齊的表。
+ */
+const BARRIER_NUMBER = "53-03"; // 53 號英雄的第三支技能 —— 編號↔技能是綁死的
+
+interface BarrierDoc {
+  abilityId: string;
+  championId: string;
+  slot: string;
+}
+
+function shippedBarrierDocs(): BarrierDoc[] {
+  const dir = join(CONTENT_DIR, "abilities");
+  const out: BarrierDoc[] = [];
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".json") || f.startsWith("_")) continue;
+    const doc = JSON.parse(readFileSync(join(dir, f), "utf8")) as {
+      id: string;
+      name?: string;
+      slot?: string;
+    };
+    if (doc.name?.startsWith(BARRIER_NUMBER) !== true || doc.slot === undefined) continue;
+    out.push({
+      abilityId: doc.id,
+      championId: doc.id.slice(0, doc.id.lastIndexOf(".")),
+      slot: doc.slot,
+    });
+  }
+  return out;
+}
+
+const BARRIER_DOCS = shippedBarrierDocs();
 
 function shippedEffects(abilityId: string): EffectDef[] {
   const raw = JSON.parse(
@@ -383,7 +427,17 @@ function shippedEffects(abilityId: string): EffectDef[] {
 }
 
 describe("破法對咒 只吸魔法 —— 出貨文件走出貨路徑 (p6-barrier-content)", () => {
-  it.each(BARRIER_DOCS)("%s: a physical hit is NOT absorbed", (abilityId) => {
+  it("出貨名單裡真的還有 破法對咒 —— 母體空了下面每一條都會靜默消失", () => {
+    cover("p6-barrier-content");
+    // 反向守衛。`it.each([])` 不會紅,它只是**不產生任何測試** —— 這一段於是
+    // 從「出貨文件真的只吸魔法」無聲地退化成零條斷言(七種失敗形態 ③)。
+    // ⛔ 下界刻意是結構性的「至少一份」,不是「兩份」:鏡像有幾份是內容決定的,
+    //    抄那個數字就是把出貨值搬進測試。
+    expect(BARRIER_DOCS.length, `content/abilities 裡找不到編號 ${BARRIER_NUMBER} 的技能`)
+      .toBeGreaterThan(0);
+  });
+
+  it.each(BARRIER_DOCS)("$abilityId: a physical hit is NOT absorbed", ({ abilityId }) => {
     cover("p6-barrier-content");
     const r = rig();
     runEffects(shippedEffects(abilityId), ctxOf(r));
@@ -397,7 +451,7 @@ describe("破法對咒 只吸魔法 —— 出貨文件走出貨路徑 (p6-barri
     expect(out.poolsLeft[0]).toBeCloseTo(before, 6);
   });
 
-  it.each(BARRIER_DOCS)("%s: a magic hit IS absorbed", (abilityId) => {
+  it.each(BARRIER_DOCS)("$abilityId: a magic hit IS absorbed", ({ abilityId }) => {
     cover("p6-barrier-content");
     const r = rig();
     runEffects(shippedEffects(abilityId), ctxOf(r));
@@ -414,11 +468,8 @@ describe("破法對咒 只吸魔法 —— 出貨文件走出貨路徑 (p6-barri
     // The mirror is what apps/editor's PreviewController and the admin 內容管理
     // page render WHOLE (see content/abilityMirror.test.ts). A standalone-only
     // edit is invisible in a match but wrong in every raw-doc consumer.
-    const pairs: [string, string, string][] = [
-      ["godie-o00l", "E", "godie-o00l.e"],
-      ["godie-o02s", "R", "godie-o02s.r"],
-    ];
-    for (const [championId, slot, abilityId] of pairs) {
+    expect(BARRIER_DOCS.length).toBeGreaterThan(0); // 同上的反向守衛
+    for (const { championId, slot, abilityId } of BARRIER_DOCS) {
       const champ = JSON.parse(
         readFileSync(join(CONTENT_DIR, "champions", `${championId}.json`), "utf8"),
       ) as { abilities: Record<string, { effects: { kind: string; absorbs?: string }[] }> };

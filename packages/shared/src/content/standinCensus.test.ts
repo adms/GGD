@@ -31,6 +31,13 @@
  * Those are owner-tuned lore numbers (#77/#150) and this suite reads them
  * without judging them — it only checks that a borrower with an override still
  * points at a stand-in, so an override cannot outlive the mapping it describes.
+ *
+ * ── 2026-08-13 LEGACY 搬遷 ───────────────────────────────────────────────────
+ * owner 把 41 位未上架英雄搬進 `content/_legacy/champions/`（不在
+ * `COLLECTION_NAMES` 裡，引擎讀不到）。這份普查的**母體因此換成營運名冊** ——
+ * 下面的 EXPECTED 名單是「現在真的會出現在遊戲裡的借用者」，不是歷史總數。
+ * ⚠️ 搬進 legacy 的英雄**沒有被刪掉**，所以任何「這個 id 還存在嗎」的檢查都要
+ * 問**兩個**目錄；只問 `content/champions/` 會把「歸檔」誤判成「不見了」。
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
@@ -51,16 +58,20 @@ import { DOC_ARCHETYPE } from "../voxel/archetypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
+/** 2026-08-13：未上架英雄的歸檔區。引擎讀不到，但檔案還在。 */
+const LEGACY_CHAMPIONS = join(CONTENT, "_legacy/champions");
 
-function champions(): ChampionLike[] {
-  const dir = join(CONTENT, "champions");
+function championsIn(dir: string): ChampionLike[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as ChampionLike)
     .sort((a, b) => (a.id < b.id ? -1 : 1));
 }
 
-const ROSTER = champions();
+/** 營運名冊 —— 引擎真的會註冊的那些。 */
+const ROSTER = championsIn(join(CONTENT, "champions"));
+/** 歸檔名冊 —— 搬走了但沒有消失的那些。 */
+const ARCHIVED_IDS = new Set(championsIn(LEGACY_CHAMPIONS).map((c) => c.id));
 
 /**
  * THE CENSUS. `modelKey` → the champion ids that render on it, for every model
@@ -86,83 +97,52 @@ const CENSUS = censusByModel();
  * "which champions currently fall through to a stand-in, and which stand-in".
  */
 const EXPECTED: Readonly<Record<string, readonly string[]>> = {
-  // 20 — blocky-mage.glb. #249 added two 變身 ALTERNATE bodies here, each
-  // wearing its base half's rig on purpose: godie-e010 (70 紮根, mirrors
-  // godie-e00s) and godie-o030 (30 變態紳士, mirrors godie-orkn). A transform
-  // that changed rig would read as a different character, not the same one
-  // changed — see ALTERNATE_FORM_IDS in standinRoster.test.ts.
+  // blocky-mage.glb. #249 added two 變身 ALTERNATE bodies here, each wearing its
+  // base half's rig on purpose: godie-e010 (70 紮根, mirrors godie-e00s) and
+  // godie-o030 (30 變態紳士, mirrors godie-orkn). A transform that changed rig
+  // would read as a different character, not the same one changed — see
+  // ALTERNATE_FORM_IDS in standinRoster.test.ts. 兩對都整對留在營運名冊上。
   "champ.sela": [
     "godie-e00s",
-    "godie-e00t",
     "godie-e00u",
     "godie-e010",
-    "godie-ecen",
     "godie-efur",
-    "godie-ekee",
-    "godie-h001",
-    "godie-h021",
     "godie-hblm",
     "godie-n00b",
     "godie-o030",
     "godie-ogld",
     "godie-orkn",
-    "godie-oshd",
     "godie-u00k",
     "godie-u01f",
-    "godie-usyl",
-    "godie-uwar",
     "sela",
   ],
-  // 10 — blocky-knight.glb
-  "champ.thorne": [
-    "godie-e015",
-    "godie-h02n",
-    "godie-h02s",
-    "godie-h02z",
-    "godie-hapm",
-    "godie-othr",
-    "godie-u012",
-    "godie-ucrl",
-    "godie-udea",
-    "thorne",
-  ],
-  // 10 — blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form
-  // swap moved him onto a shared mesh, a downgrade the owner already knows
-  // about, and #231's per-champion skin is what makes it survivable.
-  // godie-h00w (26 洨者狀態) is godie-harf's 變身 body and mirrors his rig.
-  "champ.skin.barbarian": [
-    "godie-e00v",
-    "godie-h00w",
-    "godie-h02k",
-    "godie-h02y",
-    "godie-harf",
-    "godie-hpal",
-    "godie-u00b",
-    "godie-u011",
-    "godie-ubal",
-    "godie-umal",
-  ],
-  // 8 — blocky-rogue.glb. godie-n01b (40 萬解) is godie-nman's 變身 body: it is
-  // `attackType: "ranged"` yet wears the rogue rig, because an alternate form
-  // follows its BASE half rather than the draft "ranged ⇒ champ.sela" heuristic.
-  "champ.skin.rogue": [
-    "godie-e00r",
-    "godie-n01b",
-    "godie-n01l",
-    "godie-nbst",
-    "godie-nman",
-    // 曹操本體。#249 把他從地圖裡帶進來時，這份普查已經寫好了 ——
-    // 他的變身型態 godie-o02o 早就在名單上，本體卻是新的。
-    "godie-o02n",
-    "godie-o02o",
-    "godie-obla",
-  ],
+  // blocky-knight.glb
+  "champ.thorne": ["godie-hapm", "godie-ucrl", "godie-udea", "thorne"],
+  // blocky-barbarian.glb. godie-umal 拳四郎 is here: the #249 base-form swap
+  // moved him onto a shared mesh, a downgrade the owner already knows about,
+  // and #231's per-champion skin is what makes it survivable.
+  "champ.skin.barbarian": ["godie-h02k", "godie-hpal", "godie-ubal", "godie-umal"],
+  // blocky-rogue.glb. 2026-08-13 的搬遷把這一格從 8 位削到 1 位：godie-nman /
+  // godie-n01b（萬解那一對）、godie-n01l、godie-nbst、godie-obla、以及曹操
+  // godie-o02n/godie-o02o 那一對都進了 `_legacy`。**成對的一起走**，所以沒有任何
+  // 變身連結被切斷（standinRoster.test.ts 的 same-side 檢查在守這件事）。
+  "champ.skin.rogue": ["godie-e00r"],
 };
 
 describe("#226 census: who borrows a stand-in, and which one", () => {
-  it("the roster is the size the rest of the suite assumes", () => {
+  it("the roster really loaded, and every champion on it has a modelKey", () => {
     cover("model-standin-census");
-    expect(ROSTER.length).toBeGreaterThanOrEqual(114);
+    // ⚠️ 這裡本來寫 `>= 114`。那是一個**出貨值**（CLAUDE.md 說的「第四個住處」），
+    // 2026-08-13 營運名冊縮到 78 位的當下它就紅了 —— 而縮小正是預期中的事。
+    // 它原本要擋的是「CONTENT 指錯目錄／讀到空目錄，於是每一條普查都空過」。
+    // 改成**結構性**下界：名冊至少要裝得下這份普查點名的每一位。讀錯目錄照樣紅，
+    // owner 增減營運英雄不會紅。
+    const named = [...new Set(Object.values(EXPECTED).flat())];
+    const ids = new Set(ROSTER.map((c) => c.id));
+    expect(ROSTER.length).toBeGreaterThanOrEqual(named.length);
+    for (const id of named) {
+      expect(ids.has(id), `census names ${id}, which is not on the roster`).toBe(true);
+    }
     for (const c of ROSTER) expect(typeof c.modelKey, `${c.id} has no modelKey`).toBe("string");
   });
 
@@ -175,16 +155,20 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     }
   });
 
-  it("48 champions in total have no model of their own", () => {
+  it("the borrower total is exactly the census, and nobody is double counted", () => {
     cover("model-standin-census");
-    // 44 → 48 at task #249: the four 變身 ALTERNATE bodies (godie-e010 /
-    // godie-h00w / godie-n01b / godie-o030) were imported, and each borrows the
-    // same stand-in as the base hero it is the transformed half of. The number
-    // is a census, not a budget — it moves whenever the roster does.
+    // 44 → 48 (#249) → 21 (2026-08-13 legacy 搬遷). 這個數字**從來就不是預算**,
+    // 它是普查的加總 —— 所以它現在從 EXPECTED 推出來,而不是再抄一次出貨值。
+    // 承重的斷言是下面那一行:一位英雄不可以同時掛在兩具替身底下。
     const borrowers = STAND_IN_MODEL_KEYS.flatMap((k) => CENSUS.get(k) ?? []);
-    expect(borrowers.length).toBe(48);
-    // and nobody is double counted
-    expect(new Set(borrowers).size).toBe(48);
+    const censusTotal = Object.values(EXPECTED).reduce((n, list) => n + list.length, 0);
+    expect(borrowers.length).toBe(censusTotal);
+    expect(new Set(borrowers).size).toBe(censusTotal);
+    // …and every one of the four stand-in rigs still has a live tenant, so a
+    // shipped mesh never becomes dead weight nobody renders.
+    for (const key of STAND_IN_MODEL_KEYS) {
+      expect((CENSUS.get(key) ?? []).length, `${key} has no live borrower`).toBeGreaterThan(0);
+    }
   });
 
   it("every stand-in model doc really points at a generated blocky mesh", () => {
@@ -254,27 +238,37 @@ describe("#226 census: who borrows a stand-in, and which one", () => {
     const sizes = files.map((f) => statSync(join(dir, f)).size);
     const shipped = sizes.reduce((a, b) => a + b, 0);
     for (const s of sizes) expect(s).toBeLessThan(64 * 1024);
-    // what is actually on disk for all 44 borrowers plus the undead mob
+    // what is actually on disk for every borrower plus the undead mob
     expect(shipped).toBeLessThan(300 * 1024);
-    // the file-per-champion alternative, priced at the same per-file cost
+    // the file-per-champion alternative, priced at the same per-file cost.
+    // ⚠️ 44 是 #226 當時的借用者人數 —— 這一條是**那個決策的算術**,不是今天的普查
+    // (今天是 21,見上面那條)。留著字面 44 是因為它記錄的是「當初為什麼不那樣做」。
     const perFile = Math.round(shipped / files.length);
     const alternative = perFile * 44;
     expect(alternative).toBeGreaterThan(shipped * 8);
   });
 
-  it("a scale override may only describe a champion that still exists", () => {
+  it("a scale override may only describe a champion that still exists somewhere", () => {
     cover("model-standin-census");
     // #77/#150 lore numbers are NOT re-derived here; this only stops an
     // override outliving its champion.
+    // ⚠️ 2026-08-13：「還存在」現在有兩個住處。歸檔的英雄**沒有被刪掉**,他和他的
+    // override 是一起休眠的 —— 引擎兩個都讀不到,所以那不是一筆死設定。真正要擋的
+    // 還是原來那件事:一個**哪裡都找不到**的 id(打錯字、真的刪掉)。
     const file = JSON.parse(
       readFileSync(join(CONTENT, "models", "_standin-overrides.json"), "utf8"),
     ) as { overrides: Record<string, { relativeScale?: number }> };
-    const ids = new Set(ROSTER.map((c) => c.id));
+    const live = new Set(ROSTER.map((c) => c.id));
+    let liveOverrides = 0;
     for (const id of Object.keys(file.overrides)) {
-      expect(ids.has(id), `_standin-overrides.json names ${id}, which is not on the roster`).toBe(
-        true,
-      );
+      if (live.has(id)) liveOverrides++;
+      expect(
+        live.has(id) || ARCHIVED_IDS.has(id),
+        `_standin-overrides.json names ${id}, which exists neither on the roster nor in _legacy`,
+      ).toBe(true);
     }
+    // 而且不是「全部都歸檔了所以整條空過」—— 營運名冊上真的還有人在用 override
+    expect(liveOverrides).toBeGreaterThan(0);
   });
 
   it("the four retired KayKit character files are gone and stay gone", () => {

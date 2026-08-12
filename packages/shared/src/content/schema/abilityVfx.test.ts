@@ -4,7 +4,8 @@
  * ⚠️ 這個檔案刻意**不**寫「schema 收得下這個形狀」這種斷言 —— 那是屬性,不是
  * 行為,而且對正確與壞掉的實作都會過。這裡守的是三件會讓玩家受害的事:
  *
- *   1. 出貨的 646 份 doc **必須繼續 parse 得過**,而且 parse 出來的東西還是
+ *   1. **出貨的每一份 doc**(`content/abilities/` 裡當下有幾份就是幾份,⛔ 不抄
+ *      一個會過期的支數)必須繼續 parse 得過,而且 parse 出來的東西還是
  *      「一層、零覆寫」。
  *   2. 每一層的界限**真的是**鑄技工坊那張表的界限(靠 `.pick()` 共用同一個
  *      Zod 物件,所以這裡驗的是「共用真的成立」,不是抄了一遍)。
@@ -27,6 +28,23 @@ import {
 } from "./abilityVfx";
 
 const CONTENT = fileURLToPath(new URL("../../../../../content/abilities/", import.meta.url));
+const CHAMPIONS = fileURLToPath(new URL("../../../../../content/champions/", import.meta.url));
+
+/**
+ * 現在**營運母體**裡有幾位英雄 —— 下面兩條空集合守衛的下界。
+ *
+ * ⚠️ 這兩條原本釘的是 `> 600`,那是 2026-08-13 營運母體縮編(119 → 78 位英雄,
+ * 41 位連同 236 支技能搬進讀不到的 `content/_legacy/`)之前的出貨支數,
+ * 也就是 CLAUDE.md 說的「抄一份出貨值當第四個住處」。
+ *
+ * 換成這個下界的理由是**結構性**的:每一位出貨英雄至少帶一支技能文件,
+ * 所以「技能份數 ≥ 英雄人數」在任何一次上下架之後都仍然成立,而它要是不成立,
+ * 就真的是掃描器讀錯目錄 / 內容樹壞了 —— 那正是這兩條要擋的東西
+ * (空集合什麼都證明不了)。
+ */
+const SHIPPING_CHAMPIONS = readdirSync(CHAMPIONS).filter(
+  (n) => n.endsWith(".json") && !n.startsWith("_"),
+).length;
 
 /**
  * 出貨的技能文件。
@@ -69,7 +87,10 @@ describe("向後相容:出貨的技能文件一份都不用改", () => {
       [],
     );
     // 這條測試如果掃到 0 份文件就毫無意義（空集合什麼都證明不了）
-    expect(docs.length).toBeGreaterThan(600);
+    expect(
+      docs.length,
+      `掃到的技能文件比出貨英雄還少（${docs.length} < ${SHIPPING_CHAMPIONS}）—— 讀錯目錄或內容樹壞了`,
+    ).toBeGreaterThanOrEqual(SHIPPING_CHAMPIONS);
     // 跳過的必須是零星的合併殘留，不是「半個 content 樹讀不到所以全綠」
     expect(skipped.length, `跳過太多檔案：${skipped.join(", ")}`).toBeLessThan(5);
   });
@@ -78,7 +99,10 @@ describe("向後相容:出貨的技能文件一份都不用改", () => {
     const withKey = docs.filter(
       (d) => typeof d.doc["vfxKey"] === "string" && d.doc["vfxLayers"] === undefined,
     );
-    expect(withKey.length).toBeGreaterThan(600);
+    expect(
+      withKey.length,
+      "帶 vfxKey 的出貨文件比出貨英雄還少 —— 這條會變成在掃一個空集合",
+    ).toBeGreaterThanOrEqual(SHIPPING_CHAMPIONS);
     for (const { id, doc } of withKey) {
       expect(isLegacySingleVfx(doc as never), id).toBe(true);
       const layers = resolveAbilityVfxLayers(doc as never);

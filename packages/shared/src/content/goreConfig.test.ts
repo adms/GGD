@@ -8,7 +8,7 @@
  * to the same contract, including that its champion keys resolve.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../testkit/cover";
 import { zConfigGoreDoc, zConfigDoc } from "./schema/config";
@@ -60,10 +60,30 @@ describe("config.gore@1 schema (vfx-gore-style)", () => {
     const known = new Set(
       ((champions as { entries: { id: string }[] }).entries ?? []).map((e) => e.id),
     );
+    // The 2026-08-13 legacy migration moved the unreleased heroes out of the
+    // operating roster into `content/_legacy/champions/` — a directory kept
+    // OUT of COLLECTION_NAMES so the engine never reads it. Those heroes are
+    // ARCHIVED, not deleted, so their gore overrides stay put: un-archiving a
+    // hero has to bring its 濺血 style back with it.
+    const archivedDir = CONTENT_DIR + "_legacy/champions";
+    const archived = new Set(
+      existsSync(archivedDir)
+        ? readdirSync(archivedDir)
+            .filter((f) => f.endsWith(".json") && f !== "_index.json")
+            .map((f) => f.replace(/\.json$/, ""))
+        : [],
+    );
     for (const [championId, style] of Object.entries(doc.championStyles)) {
-      // an override on a champion that does not exist is dead weight
-      expect(known.has(championId)).toBe(true);
+      // an override on a champion that exists NOWHERE — shipped or archived —
+      // is dead weight (a typo, or an id someone really deleted)
+      expect(
+        known.has(championId) || archived.has(championId),
+        `gore.championStyles override for unknown champion ${championId}`,
+      ).toBe(true);
       expect(style === "stylized" || style === "off").toBe(true);
     }
+    // …and the knob is not entirely dead weight for the roster that actually
+    // ships: at least one override still lands on a registered champion.
+    expect(Object.keys(doc.championStyles).some((id) => known.has(id))).toBe(true);
   });
 });

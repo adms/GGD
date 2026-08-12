@@ -26,6 +26,15 @@ import { zItemDoc } from "./schema/item";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
 const ICON_DIR = join(CONTENT_DIR, "assets", "icons");
+/**
+ * The retired roster (owner 2026-08-13: «把沒開放的英雄資料包含技能都放到一個
+ * legacy 區 預設不要再被讀取到了»). `_legacy` is NOT in `COLLECTION_NAMES`, so the
+ * engine, the indexer and the bundle are all blind to it — but the ART DID NOT
+ * MOVE: `content/assets/` is one flat asset tree shared by both, not a
+ * collection, so 268 icon files stayed exactly where they were while the docs
+ * that reference them stepped out of the operating roster.
+ */
+const LEGACY_DIR = join(CONTENT_DIR, "_legacy");
 
 /** Coverage floors from the extraction run (ICONS.md); regeneration may only grow them. */
 const FLOOR = { champions: 85, abilities: 13, items: 15 } as const;
@@ -79,16 +88,20 @@ function magicOk(file: string, buf: Buffer): boolean {
   );
 }
 
-function docs(collection: string): Array<{ file: string; doc: Record<string, unknown> }> {
-  return readdirSync(join(CONTENT_DIR, collection))
+function docsUnder(root: string, collection: string): Array<{ file: string; doc: Record<string, unknown> }> {
+  const dir = join(root, collection);
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => ({
       file: f,
-      doc: JSON.parse(readFileSync(join(CONTENT_DIR, collection, f), "utf-8")) as Record<
-        string,
-        unknown
-      >,
+      doc: JSON.parse(readFileSync(join(dir, f), "utf-8")) as Record<string, unknown>,
     }));
+}
+
+/** Docs in the OPERATING tree — what the engine registers and a match can reach. */
+function docs(collection: string): Array<{ file: string; doc: Record<string, unknown> }> {
+  return docsUnder(CONTENT_DIR, collection);
 }
 
 /** On-disk icon files for a kind as `{ id, file }` (file = basename with ext). */
@@ -100,21 +113,31 @@ function iconFiles(kind: string): Array<{ id: string; file: string }> {
     .map((f) => ({ id: f.slice(0, f.lastIndexOf(".")), file: f }));
 }
 
-/** Every `icon` value found anywhere in the content tree (value -> referrers). */
-function allIconRefs(): Map<string, string[]> {
+/** Every `icon` value found in a doc tree rooted at `root` (value -> referrers). */
+function iconRefsUnder(root: string): Map<string, string[]> {
   const refs = new Map<string, string[]>();
   const add = (icon: unknown, from: string) => {
     if (typeof icon !== "string") return;
     refs.set(icon, [...(refs.get(icon) ?? []), from]);
   };
-  for (const { file, doc } of docs("champions")) {
+  for (const { file, doc } of docsUnder(root, "champions")) {
     add(doc.icon, `champions/${file}`);
     const abilities = (doc.abilities ?? {}) as Record<string, { icon?: unknown }>;
     for (const slot of ["Q", "W", "E", "R"]) add(abilities[slot]?.icon, `champions/${file}#${slot}`);
   }
-  for (const { file, doc } of docs("abilities")) add(doc.icon, `abilities/${file}`);
-  for (const { file, doc } of docs("items")) add(doc.icon, `items/${file}`);
+  for (const { file, doc } of docsUnder(root, "abilities")) add(doc.icon, `abilities/${file}`);
+  for (const { file, doc } of docsUnder(root, "items")) add(doc.icon, `items/${file}`);
   return refs;
+}
+
+/** Every `icon` value found anywhere in the OPERATING content tree. */
+function allIconRefs(): Map<string, string[]> {
+  return iconRefsUnder(CONTENT_DIR);
+}
+
+/** The same, for the retired docs parked under `content/_legacy/`. */
+function legacyIconRefs(): Map<string, string[]> {
+  return iconRefsUnder(LEGACY_DIR);
 }
 
 describe("w3x original icons (icons)", () => {
@@ -306,16 +329,53 @@ describe("w3x original icons (icons)", () => {
     expect(exWithIcon).toBeGreaterThanOrEqual(1);
   });
 
+  /**
+   * ⭐ 2026-08-13 —— THE REFERRER SET IS `operating ∪ _legacy`, AND THAT IS THE
+   * SAME RULE AS BEFORE, NOT A WEAKER ONE.
+   *
+   * What this guard has always asserted is that no icon on disk belongs to a doc
+   * that NO LONGER EXISTS (its doc comment: 「art belonging to a champion that no
+   * longer exists fails there whether or not anyone remembered to add its id
+   * here」). The 41 retired champions and their 235 abilities still exist — they
+   * are authored, in git, and one `mv` away from the roster; only their
+   * REGISTRATION went away. Their 268 icons are therefore parked, not orphaned.
+   *
+   * ⛔ The alternative readings are both wrong. Deleting the 268 files would
+   * destroy art that a restore needs and cannot regenerate (they are w3x
+   * extracts and AI generations). Leaving the guard measured against the
+   * operating tree alone would have meant 268 red lines every run until someone
+   * silenced the whole test — which is how a guard dies.
+   *
+   * The teeth are intact: an icon referenced by NEITHER tree still fails here,
+   * and that is the event this exists for. Delete a champion for real — from
+   * `content/` and from `content/_legacy/` — and its art goes red immediately.
+   */
   it("no orphan or resurrected PNGs on disk (icon-no-orphans)", () => {
     cover("icon-no-orphans");
     const referenced = new Set(allIconRefs().keys());
+    const parked = new Set(legacyIconRefs().keys());
     for (const kind of ["champions", "abilities", "items"] as const) {
       for (const { id, file } of iconFiles(kind)) {
-        expect(referenced.has(`assets/icons/${kind}/${file}`), `${kind}/${file}`).toBe(true);
+        const key = `assets/icons/${kind}/${file}`;
+        expect(
+          referenced.has(key) || parked.has(key),
+          `${kind}/${file} is referenced by no doc in content/ NOR in content/_legacy/`,
+        ).toBe(true);
         for (const pruned of PRUNED_IDS) {
           expect(id === pruned || id.startsWith(`${pruned}.`), `${id} pruned champion`).toBe(false);
         }
       }
+    }
+    // Both sides must be real. Without this the `||` above is satisfiable by a
+    // referrer walk that silently reads nothing — and after 2026-08-13 the
+    // legacy side is load-bearing for 268 of the ~1,870 files on disk, so an
+    // empty `parked` would mean the guard is passing for the wrong reason.
+    expect(referenced.size, "operating docs reference some art").toBeGreaterThan(0);
+    expect(parked.size, "retired docs under content/_legacy/ reference some art").toBeGreaterThan(0);
+    // And a parked icon must still be a real file: a legacy doc pointing at art
+    // somebody deleted is exactly the half-migration this whole file guards.
+    for (const [icon, from] of legacyIconRefs()) {
+      expect(existsSync(join(CONTENT_DIR, icon)), `${icon} (from _legacy/${from[0]})`).toBe(true);
     }
   });
 });

@@ -53,9 +53,24 @@
  * 下一個看得到它的消費者已經在 tick T+1, 而每一個消費點都是嚴格大於
  * (`e.expiresAtTick > world.tick`) —— 剛好差一格, 永遠讀不到。
  * 模擬真正交付得出來的最短暈眩是 **兩個 tick**, 所以文件寫 0.067 s。
+ *
+ * ---------------------------------------------------------------------------
+ * ⚠️ 2026-08-13 —— 貞子 `godie-e00t` 已經**不在營運名單上**
+ * ---------------------------------------------------------------------------
+ * owner 把沒上架的英雄連技能一起搬進 `content/_legacy/`（那個目錄不在
+ * `COLLECTION_NAMES` 裡, 所以引擎預設讀不到它）。① 那一半的主角就在裡面。
+ *
+ * ⛔ 斷言一條都沒有動, 也沒有任何一條 `.skip` —— 改的只有**去哪裡拿那份文件**:
+ * 先找營運目錄, 找不到才找封存目錄。理由是 CLAUDE.md 那句
+ * ⭐「『分開』不是『丟掉』…… 測試可以跟著設計走, **知識不可以無聲消失**」——
+ * 「R 鍵按下去沒反應 + 一個永久免費的 -65% 攻速靈光」是這支技能真的發生過的
+ * 兩個缺陷, 而它們會不會回來, 跟這份文件現在放在哪個資料夾無關。
+ *
+ * ⚠️ 這一項要拿給 owner 決定: 如果貞子確定不回來, 這半個 describe 應該退役,
+ * ⛔ 但那是排序的決定, 不是我的（第零守則⑧）。
  */
 import { describe, it, expect, beforeAll } from "vitest";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentStore } from "../../content/store";
@@ -84,10 +99,37 @@ const MS_PCT = [-0.1, -0.2, -0.3];
 /** w3a A0IC Mana1..3. */
 const MANA = [50, 70, 90];
 
+/**
+ * 營運目錄優先, 封存目錄墊底 (see the 2026-08-13 note in the header).
+ *
+ * ⛔ 不是「兩份都讀然後挑一個」—— 順序是死的: 只要一份文件還在營運名單上, 被測的
+ * 就一定是**出貨的那一份** (失敗形態 ⑤)。封存那一格只在營運目錄真的沒有時才生效。
+ */
+const DOC_ROOTS = [CONTENT_DIR, join(CONTENT_DIR, "_legacy")];
+
+function docPath(collection: string, file: string): string {
+  for (const root of DOC_ROOTS) {
+    const p = join(root, collection, file);
+    if (existsSync(p)) return p;
+  }
+  throw new Error(`${collection}/${file}: 營運目錄與 content/_legacy/ 都沒有這份文件`);
+}
+
 function readDoc(collection: string, id: string): Record<string, unknown> {
-  return JSON.parse(
-    readFileSync(join(CONTENT_DIR, collection, `${id}.json`), "utf-8"),
-  ) as Record<string, unknown>;
+  return JSON.parse(readFileSync(docPath(collection, `${id}.json`), "utf-8")) as Record<
+    string,
+    unknown
+  >;
+}
+
+/** Every ability file belonging to `champ`, from whichever root holds the hero. */
+function abilityFilesOf(champ: string): string[] {
+  for (const root of DOC_ROOTS) {
+    const dir = join(root, "abilities");
+    if (!existsSync(join(root, "champions", `${champ}.json`))) continue;
+    return readdirSync(dir).filter((f) => f.startsWith(`${champ}.`) && f.endsWith(".json"));
+  }
+  return [];
 }
 
 beforeAll(() => {
@@ -97,11 +139,9 @@ beforeAll(() => {
   for (const champ of [SADAKO, PIKACHU]) {
     const doc = readDoc("champions", champ);
     store.add("champions", champ, doc);
-    for (const f of readdirSync(join(CONTENT_DIR, "abilities"))) {
-      if (f.startsWith(`${champ}.`) && f.endsWith(".json")) {
-        const ab = readDoc("abilities", f.slice(0, -5));
-        store.add("abilities", ab.id as string, ab);
-      }
+    for (const f of abilityFilesOf(champ)) {
+      const ab = readDoc("abilities", f.slice(0, -5));
+      store.add("abilities", ab.id as string, ab);
     }
   }
   for (const f of readdirSync(join(CONTENT_DIR, "status-effects"))) {

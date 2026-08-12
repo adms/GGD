@@ -36,6 +36,9 @@
  *     整段停用 → RED (「施法瞬間挨一發」與「免疫期間 HP 一點都不掉」)
  *  N2 `content/abilities/godie-ewrd.r.json` 的 invulnerable 效果刪掉
  *     → RED (「每一支綁上去的技能都真的免疫」逐支斷言 + 至少一支)
+ *     ⚠️ 2026-08-13 營運母體縮編之後**這個檔已經搬到 `content/_legacy/abilities/`**,
+ *        引擎讀不到它。要重跑這條突變請挑一支仍在營運母體裡的,例如
+ *        `content/abilities/godie-hart.r.json`(第三守則:註解會過期,所以標出來)。
  *  N3 `invulnerable.ts:173` `e.blocksTrueDamage ?? mode === "all"` → `?? true`
  *     → RED (火圈那條:owner 的保底「統統會被真實傷害燒死」被吃掉)
  *  N4 `invulnerable.ts:163` `world.tick + …` → `…`(窗從回合 0 起算)
@@ -45,7 +48,7 @@
 import { describe, it, expect } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { SimWorld } from "../sim/SimWorld";
 import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import { runEffects } from "../sim/effects/effectRunner";
@@ -58,6 +61,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
 const ABILITY_DIR = join(CONTENT_DIR, "abilities");
 const CHAMPION_DIR = join(CONTENT_DIR, "champions");
+/** 下架英雄的備份區。⛔ 不在 `COLLECTION_NAMES` 裡 —— 引擎完全讀不到它。 */
+const LEGACY_ABILITY_DIR = join(CONTENT_DIR, "_legacy", "abilities");
 
 type Doc = { id?: string; name?: string; slot?: string; effects?: unknown[] };
 
@@ -162,7 +167,7 @@ const advance = (r: Rig, ticks: number): void => {
 const ticksFor = (sec: number): number => Math.round(sec * 30) + 3;
 
 /**
- * 出貨的 13 支,**逐支列名**。這一張表是一個 ratchet,不是裝飾。
+ * 綁過 invulnerable 的技能,**逐支列名**。這一張表是一個 ratchet,不是裝飾。
  *
  * ⚠️ 為什麼 `BOUND.length > 0` 不夠 —— 這是量到的,不是推測的:
  * 把 13 支裡的 **12 支** 的 `invulnerable` 效果整個刪掉、只留一支,
@@ -172,10 +177,19 @@ const ticksFor = (sec: number): number => Math.round(sec * 30) + 3;
  * 它只問「有沒有 ≥1 筆採用」,剩一支照樣綠。
  * 這就是 CLAUDE.md 失敗形態 ③(可以從樹上刪掉,但測試還是全綠)。
  *
- * 所以這裡改成**集合相等**:少一支紅、多一支也紅(多的那支要自己補進表裡,
+ * 所以這裡是**集合相等**:少一支紅、多一支也紅(多的那支要自己補進表裡,
  * 順手逼人補上它的 JASS 出處)。
+ *
+ * ── ⚠️ 2026-08-13 營運母體縮編(119 → 78 位英雄)之後 ───────────────────────
+ *
+ * 這張表裡有幾支的技能文件被搬進 `content/_legacy/abilities/`,引擎讀不到,
+ * 所以它們**不該**再出現在 `BOUND` 裡。⛔ 但沒有把它們從表上劃掉 ——
+ * CLAUDE.md「**分開不是丟掉**」:名單連同 JASS 出處整份留著,由**磁碟**回答
+ * 「哪幾支現在在營運母體裡」,下面 `EXPECTED_BOUND` / `ARCHIVED_BOUND` 就是這樣分的。
+ * 於是:**檔案整個消失** ≠ **被歸檔** —— 後者以外一律紅(見「消失 ≠ 歸檔」那條),
+ * 而哪天 owner 把某位英雄重新上架,這裡會自動把他收回來繼續逐支驗。
  */
-const EXPECTED_BOUND: readonly string[] = [
+const KNOWN_BOUND: readonly string[] = [
   "godie-e00k.e", // 19-03 瞬切百殺
   "godie-e00v.r", // 84-04 給我蜂蜜   — war3map.j:51062 UnitAddAbilityBJ('Avul', udg_Bear_caster)
   "godie-e00z.e", // 19-03 瞬切百殺 (變身態鏡像)
@@ -198,6 +212,14 @@ const EXPECTED_BOUND: readonly string[] = [
   "godie-uvng.q", // 38-01 邪王炎殺劍 (鏡像)
 ];
 
+/** 這一支現在在營運母體裡嗎(`content/abilities/`,引擎唯一讀得到的地方)? */
+const isShipping = (id: string): boolean => existsSync(join(ABILITY_DIR, `${id}.json`));
+
+/** 名單裡**現在出貨**的那些 —— `BOUND` 必須一字不差對上這一組。 */
+const EXPECTED_BOUND: readonly string[] = KNOWN_BOUND.filter(isShipping);
+/** 名單裡**已下架**的那些 —— 必須真的躺在 `_legacy/`,不可以是憑空消失。 */
+const ARCHIVED_BOUND: readonly string[] = KNOWN_BOUND.filter((id) => !isShipping(id));
+
 describe("無敵綁定 — 出貨技能文件 → 真的 SimWorld (gh289-p3-invuln-content)", () => {
   it("出貨綁定名單**逐支**對齊 —— 刪掉任何一支都要紅(失敗形態 ③)", () => {
     const actual = BOUND.map((b) => b.doc.id ?? b.file).sort();
@@ -214,11 +236,32 @@ describe("無敵綁定 — 出貨技能文件 → 真的 SimWorld (gh289-p3-invu
         "少了 = 有人把一支技能的無敵效果刪掉了。在 v0.9.x 之前這會**完全靜悄悄**:",
         "  每一支的斷言是 it.each(BOUND) 從磁碟生成的,刪內容 → 測試消失而不是失敗。",
         "  實測:13 支刪到剩 1 支,這個檔從 29 條縮成 5 條,EXIT=0 全綠。",
-        "多了 = 新綁了一支,很好 —— 把它加進 EXPECTED_BOUND,並在旁邊註明它的",
+        "  ⚠️ 「這位英雄下架了」不會走到這裡 —— 文件搬進 _legacy 之後,",
+        "  EXPECTED_BOUND 自己就不再要求它(改由下面「消失 ≠ 歸檔」那條接手)。",
+        "  所以少了 = 文件還在營運母體裡,但無敵效果被拿掉了。",
+        "多了 = 新綁了一支,很好 —— 把它加進 KNOWN_BOUND,並在旁邊註明它的",
         "  war3map.j 出處(SetUnitInvulnerable / 'Avul' 的行號)。不准憑名字或鄰近",
         "  grep 認定,那是 #78 失敗的方式。",
       ].join("\n"),
     ).toEqual({ missing: [], extra: [] });
+  });
+
+  it("消失 ≠ 歸檔 —— 名單上不再出貨的那幾支,要真的躺在 _legacy 裡", () => {
+    // EXPECTED_BOUND 是從磁碟算的,所以「把文件刪掉」和「把文件搬去 _legacy」對
+    // 上面那條來說長得一模一樣(兩種都只是從營運母體消失)。這條把兩者分開:
+    // 下架是 owner 的決定,而**整份刪掉**會讓那支技能的 JASS 出處與參數一起蒸發。
+    const vanished = ARCHIVED_BOUND.filter(
+      (id) => !existsSync(join(LEGACY_ABILITY_DIR, `${id}.json`)),
+    );
+    expect(
+      vanished,
+      [
+        "這幾支既不在 content/abilities/(營運母體)也不在 content/_legacy/abilities/(備份區):",
+        "它們是被**刪掉**的,不是被下架的。CLAUDE.md:「分開」不是「丟掉」——",
+        "被取代/下架的內容要另存,知識不可以無聲消失。",
+        "如果這是刻意的,請連同 KNOWN_BOUND 上那一列與它的 JASS 出處一起處理。",
+      ].join("\n"),
+    ).toEqual([]);
   });
 
   it("至少一支出貨技能真的用了 invulnerable(否則 fieldAdoption 的 S8 又回來了)", () => {

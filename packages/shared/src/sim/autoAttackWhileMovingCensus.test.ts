@@ -39,6 +39,7 @@
  * 在 #274 之後本來就是對的,壞的是旗標到傷害之間那一段。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "../content/loader";
@@ -60,6 +61,24 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../..", "content");
 
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
+/**
+ * 母體 = `content/champions/` 裡真的出貨的那些文件,**推導出來的,不是一個數字**。
+ *
+ * 這條原本是 `expect(rows.length).toBeGreaterThan(100)`,而 100 是 2026-07 出貨
+ * 頭數(119 位)的近似值。2026-08-13 未上架英雄整批搬進 `content/_legacy/`
+ * (營運母體 119 → 78)之後,那條就用「英雄變少了」這種和這張矩陣毫無關係的
+ * 訊息紅掉 —— CLAUDE.md 講的「第四個住處」。
+ *
+ * 從內容目錄推導之後這條**變強**:它不再只是「列數夠多」,而是「出貨的每一位
+ * 英雄都真的跑過這四個情境」。內容載入失敗退回骨架(2 位)、或迴圈漏掃了誰,
+ * 兩種都會在這裡紅 —— 而下面那三條 `brokenAfter(...) === []` 的棘輪,母體被
+ * 悄悄縮小的話本來是會**變綠**的(空集合永遠通過)。
+ */
+function shippedChampionDocCount(): number {
+  return readdirSync(join(CONTENT_DIR, "champions")).filter(
+    (f) => f.endsWith(".json") && !f.startsWith("_"),
+  ).length;
+}
 const Z0 = SKELETON_ARENA.zones[0]!;
 /** 同一個木樁(#128 / autoAttackCensus 用的那個)。 */
 const DUMMY = "godie-hart" as ChampionId;
@@ -225,7 +244,10 @@ describe("GH#216 移動指令期間會不會攻擊 —— 全角色矩陣", () =
         far: one("far"),
       });
     }
-    expect(rows.length).toBeGreaterThan(100);
+    // 儀器自檢:出貨的每一位英雄都跑過了(見 `shippedChampionDocCount`)。
+    const shipped = shippedChampionDocCount();
+    expect(shipped).toBeGreaterThan(0); // 內容目錄不是空的
+    expect(rows.length).toBe(shipped); // 一位都沒漏
 
     const melee = rows.filter((r) => r.attackType === "melee");
     const ranged = rows.filter((r) => r.attackType === "ranged");

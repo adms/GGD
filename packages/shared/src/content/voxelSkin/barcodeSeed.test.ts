@@ -90,8 +90,13 @@ describe("_voxel-barcodes.json", () => {
       .map(([id]) => id)
       .filter((id) => !isPlaceholderBarcodeId(id) && !championIds.has(id));
     expect(unresolved, "barcode ids with no champion doc").toEqual([]);
-    // sanity: the set we are checking against is real, not empty
-    expect(championIds.size).toBeGreaterThan(100);
+    // Sanity: the haystack was actually read. The floor is STRUCTURAL (>0), not
+    // a roster census — it used to be `>100`, which was the operating roster's
+    // size copied into a test, and 2026-08-13 (未上架英雄搬進 content/_legacy/)
+    // took that number from 119 to 78 and turned this red for a reason that has
+    // nothing to do with barcodes. The roster size already lives in content/;
+    // a second copy here is a home nothing guards.
+    expect(championIds.size, "champions/ read as empty").toBeGreaterThan(0);
   });
 
   it("has exactly one placeholder — 香吉士, who is not on the roster", () => {

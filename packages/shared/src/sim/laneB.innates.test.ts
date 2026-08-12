@@ -18,10 +18,18 @@
  * ---------------------------------------------------------------------------
  * THE SIX, AND THE ONE ASSERTION EACH THAT CANNOT PASS BY ACCIDENT
  * ---------------------------------------------------------------------------
- *   ① 66-00 恐懼      godie-e00t  — the ATTACKER's swings start missing.
+ *   ① 92-00 憂鬱的眼神 godie-h02v — the ATTACKER's swings start missing.
  *                     Direction matters: an evasion-shaped mis-implementation
  *                     would make the attacker HARDER to kill, so the assertion
  *                     is on a THIRD body the cursed attacker then swings at.
+ *                     ⚠️ 2026-08-13: this slot used to be 66-00 恐懼 (godie-e00t,
+ *                     貞子). 貞子 left the operating roster (moved to
+ *                     `content/_legacy/champions/`), so the case was re-pointed
+ *                     at the SHIPPED champion carrying the identical mechanism —
+ *                     `onDamageTaken` → `target: "event"` → `applyStatus` with a
+ *                     `missChance`. The claim and its direction are unchanged;
+ *                     only the carrier is. ⛔ The numbers are now read off the
+ *                     shipped doc instead of being spelled out here.
  *   ② 07-00 獸化心靈  godie-hpb1  — +1 AGI on the 8th kill, NOT the 7th, and
  *                     nothing at all past 120 AGI. Both edges are asserted; the
  *                     120 one is the hidden cap the tooltip never mentioned.
@@ -53,7 +61,7 @@ import { nightPactRulesFromConfig, beginCombatNightPact, nightFlagIds, NIGHT_PAC
 import { missChanceOf } from "./combat/evasion";
 import { isFlying } from "./flight";
 import { championAttribute } from "./stats/attributes";
-import { Champions as ChampionsRegistry } from "./content/registry";
+import { Abilities as AbilitiesRegistry, Champions as ChampionsRegistry } from "./content/registry";
 import { Stat } from "./stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
@@ -63,7 +71,7 @@ const CONTENT_DIR = join(HERE, "../../../../content");
 const NO_INTENTS = new Map<SeatId, IntentFrame>();
 const Z0 = SKELETON_ARENA.zones[0]!;
 
-const SADAKO = "godie-e00t" as ChampionId; // ① 七夜怪談 - 貞子
+const ALPACA = "godie-h02v" as ChampionId; // ① 看似憂鬱的神獸 - 草泥馬
 const USHIO = "godie-hpb1" as ChampionId; // ② 獸矛傳承使 - 蒼月潮
 const DEATHLORD = "godie-u00k" as ChampionId; // ③ 邪惡意念集合體 - 死之王
 const LINA = "godie-h020" as ChampionId; // ④ 黑魔導士 - 莉娜因巴斯
@@ -134,43 +142,84 @@ function idle(world: SimWorld, held: Map<EntityId, { x: number; z: number }>, ti
   }
 }
 
-// ───────────────────────────────────────────────── ① 66-00 恐懼 (godie-e00t)
+// ─────────────────────────────────────────── ① 92-00 憂鬱的眼神 (godie-h02v)
 
-describe("① 66-00 恐懼 (godie-e00t) — 打貞子的人自己開始揮空", () => {
-  it("a unit that DAMAGES 貞子 gets a 4s 33% miss curse, and 貞子 does not", () => {
+describe("① 92-00 憂鬱的眼神 (godie-h02v) — 打草泥馬的人自己開始揮空", () => {
+  /**
+   * 出貨文件上那一格「受到攻擊 → 對攻擊者上致盲」的 hook。
+   *
+   * ⛔ 機率 / 命中率 / 持續秒數**一律從這裡讀**,不抄字面值:那三個數字在
+   * `content/` + Zod `DEFAULT_*` + admin `SHIPPED_*` 已經有住處,測試再抄一份就是
+   * 第四個住處,而且它紅的時候會說「致盲壞了」(CLAUDE.md 第二守則)。
+   * 這一份讀的是**形狀**:hook 在不在、詛咒落在誰身上、會不會過期。
+   */
+  function curse(): { chance: number; missChance: number; duration: number } {
+    const innate = AbilitiesRegistry.get(ChampionsRegistry.get(ALPACA).passiveAbility!);
+    const hook = innate.passive?.ranks[0]?.hooks?.find((h) => h.on === "onDamageTaken");
+    expect(hook, "出貨文件上沒有 onDamageTaken hook —— 這支天生技等於沒有效果").toBeDefined();
+    const st = hook!.effects.find((e) => e.kind === "applyStatus") as
+      | { missChance?: number; duration?: number }
+      | undefined;
+    expect(st, "hook 在,但它不再上任何狀態").toBeDefined();
+    return { chance: hook!.chance ?? 1, missChance: st!.missChance ?? 0, duration: st!.duration ?? 0 };
+  }
+
+  it("a unit that DAMAGES 草泥馬 gets the doc's miss curse, and 草泥馬 does not", () => {
+    const { missChance, duration } = curse();
+    // 文件上這兩格必須是**有意義的正數** —— 擋掉「被改成 0」的那一種空殼。
+    expect(missChance, "出貨文件上的命中率懲罰是 0").toBeGreaterThan(0);
+    expect(duration, "出貨文件上的致盲持續時間是 0").toBeGreaterThan(0);
+
     const world = new SimWorld(SKELETON_ARENA, 21);
-    const sadako = spawn(world, SADAKO, 0, P(0));
+    const alpaca = spawn(world, ALPACA, 0, P(0));
     const attacker = spawn(world, DUMMY, 1, P(2));
     const held = new Map([
-      [sadako, P(0)],
+      [alpaca, P(0)],
       [attacker, P(2)],
     ]);
     idle(world, held, 1);
 
     expect(missChanceOf(world, attacker)).toBe(0);
-    // A REAL damage packet through the REAL queue — the only path that fires
+
+    // REAL damage packets through the REAL queue — the only path that fires
     // `onDamageTaken`. Not a hand-called fireHooks, which would prove the hook
     // exists without proving anything ever reaches it.
-    world.damageQueue.push({
-      source: attacker,
-      target: sadako,
-      amount: 5,
-      type: "magic",
-      crit: false,
-      origin: "test",
-    });
-    idle(world, held, 1);
+    //
+    // ⚠️ 這支的 hook 是 `chance` + `internalCooldown` 的,所以一發不一定中。
+    // 迴圈有**硬上限**,到頂就 FAIL —— 訊息說的是「hook 根本不再發動」,那是真
+    // 訊號不是「今天手氣不好」(同 `alchemyShieldShipped.test.ts` 的作法)。
+    const ATTEMPTS = 80;
+    let landed = false;
+    for (let i = 0; i < ATTEMPTS && !landed; i++) {
+      world.damageQueue.push({
+        source: attacker,
+        target: alpaca,
+        amount: 5,
+        type: "magic",
+        crit: false,
+        origin: "test",
+      });
+      // 一 tick 一 tick 走,才知道詛咒**確切**是哪一 tick 落下的 —— 下面量過期
+      // 要從那一刻起算。跨過 internalCooldown 之後才會有下一次擲骰。
+      for (let k = 0; k < 40 && !landed; k++) {
+        idle(world, held, 1);
+        if (missChanceOf(world, attacker) > 0) landed = true;
+      }
+    }
 
-    // THE NUMBER, and THE DIRECTION. 0.33 is Blizzard's `Acrs.DataA1`; the
-    // curse is on the ATTACKER, never on 貞子.
-    expect(missChanceOf(world, attacker)).toBeCloseTo(0.33, 6);
-    expect(missChanceOf(world, sadako)).toBe(0);
+    // THE NUMBER (from the doc), and THE DIRECTION: the curse is on the
+    // ATTACKER, never on 草泥馬 itself. An evasion-shaped mis-implementation
+    // would put it on the wrong body and this pair separates the two.
+    expect(landed, `${ATTEMPTS} 發傷害都沒有觸發詛咒 —— hook 不再發動了`).toBe(true);
+    expect(missChanceOf(world, attacker)).toBeCloseTo(missChance, 6);
+    expect(missChanceOf(world, alpaca)).toBe(0);
 
-    // 4 s = 120 ticks at dt 1/30. Still cursed at 3 s, clean after 4.
-    idle(world, held, 89);
-    expect(missChanceOf(world, attacker)).toBeCloseTo(0.33, 6);
-    idle(world, held, 31);
-    expect(missChanceOf(world, attacker)).toBe(0);
+    // …and it EXPIRES. Ticks come from the doc's own duration (dt = 1/30).
+    const ticks = Math.round(duration * 30);
+    idle(world, held, ticks - 2);
+    expect(missChanceOf(world, attacker), "還沒到期就消失了").toBeCloseTo(missChance, 6);
+    idle(world, held, 4);
+    expect(missChanceOf(world, attacker), "詛咒自己不會過期").toBe(0);
   });
 
   it("the curse actually makes the CURSED unit's basic attacks miss a third of the time", () => {

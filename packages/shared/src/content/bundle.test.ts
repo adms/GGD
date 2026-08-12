@@ -186,6 +186,46 @@ function authoredDocIds(root: string, name: CollectionName): string[] {
 }
 
 /**
+ * Docs parked in `content/_legacy/<collection>/`.
+ *
+ * ⭐ 2026-08-13 —— owner pulled the un-shipped roster out of the operating tree
+ * («你可不可以把沒開放的英雄資料包含技能都放到一個 legacy 區 預設不要再被讀取
+ * 到了»): 41 champions and 235 abilities moved here. `_legacy` is deliberately
+ * NOT in `COLLECTION_NAMES`, so the manifest walk, the indexer and the bundle
+ * are all blind to it — which is the whole point, and also why the floors below
+ * have to look at it explicitly.
+ *
+ * Same skip rule as `authoredDocIds`: `_index.json` is not a doc. (There is no
+ * index in here at all — nothing rebuilds it — but the rule is written out so
+ * this counter cannot drift from the one above it.)
+ */
+function legacyDocCount(name: CollectionName): number {
+  const dir = join(CONTENT_DIR, "_legacy", name);
+  if (!existsSync(dir)) return 0;
+  return readdirSync(dir).filter((f) => f.endsWith(".json") && f !== "_index.json").length;
+}
+
+/**
+ * The "this load was not empty" sentinel used by the consumption / fallback
+ * tests — the whole collection, DERIVED from disk.
+ *
+ * These four call sites used to read `toBeGreaterThan(100)`. That number was
+ * doing two jobs badly: as a vacuity guard it was far weaker than it looked (a
+ * loader that dropped a third of the roster still passed), and as a floor it was
+ * a shipped count living in a test file, so the 2026-08-13 roster change turned
+ * it red with a message about the BUNDLE rather than about the roster. Reading
+ * the population off `content/` instead makes it exact and makes it immune to
+ * the owner adding or retiring heroes — the only thing it can now fail on is the
+ * transport losing documents, which is the one thing this file exists to catch.
+ */
+function expectWholeCollection(ids: readonly string[], name: CollectionName): void {
+  const onDisk = authoredDocIds(CONTENT_DIR, name).length;
+  // the reference side must itself be real, or `toBe` is satisfied by 0 === 0
+  expect(onDisk, `${name} authored on disk`).toBeGreaterThan(0);
+  expect(ids.length, `${name} delivered by the loader`).toBe(onDisk);
+}
+
+/**
  * A FLOOR on how much content each collection holds — NOT a snapshot.
  *
  * The distinction is the whole point. A pinned total (`expect(total).toBe(1598)`)
@@ -196,21 +236,37 @@ function authoredDocIds(root: string, name: CollectionName): string[] {
  * notice, because the indexer, the manifest and the bundle would all agree on the
  * smaller world and every structural invariant below would still pass.
  *
- * RAISE these deliberately when a body of content is intentionally retired.
- * NEVER lower one to make CI green — a red line here means docs left the tree.
+ * ⭐ THE FLOOR IS MEASURED AGAINST `live + _legacy`, NOT AGAINST THE OPERATING
+ * TREE ALONE. That is not a loosening, it is the numbers finally meaning what
+ * the paragraph above always said. The event being guarded is a doc CEASING TO
+ * EXIST; retiring one into `content/_legacy/` is the opposite of that — the file
+ * is still in git, still readable, still restorable by moving it back. So the
+ * 2026-08-13 migration moved 276 docs across the line without a single byte
+ * being lost, and every number below survives it UNCHANGED:
+ *   champions 78 live + 41 parked = 119 ≥ 100 · abilities 461 + 235 = 696 ≥ 600
+ * ⛔ NEVER lower one of these to make CI green. A red line here now means what it
+ * always claimed to mean: docs left the repo, not merely the roster.
+ * ⚠️ Deleting a champion for real therefore requires deleting it from BOTH trees,
+ * and that is exactly when this should stop you.
  *
- * Composition at the time of writing (1,725 docs across 12 collections), kept as
- * documentation of what the tree actually IS:
- *   abilities 662 — includes 108 天生技 / PASSIVE docs, the level-1 6th slot the
+ * The operating half is guarded separately, structurally, below — see
+ * `${name} operating tree is not empty`. A floor cannot do that job: the whole
+ * roster could be swept into `_legacy` in one `mv` and the union would not move.
+ *
+ * Composition (2026-08-13 snapshot, 1,685 operating + 277 parked = 1,962 docs
+ * across 13 collections), kept as documentation of what the tree actually IS:
+ *   abilities 461 — includes the 天生技 / PASSIVE docs, the level-1 6th slot the
  *     w3x importer dropped, one per champion that has an NN-00 in the source map
- *     (3 genuinely have none: godie-h02n / godie-u01q / godie-ogld)
- *   vfx 553 — the shared primitive library (task #123) plus the faithful w3x
+ *   vfx 632 — the shared primitive library (task #123) plus the faithful w3x
  *     emitter families `fx.w3x.{locust,orb,particle}.*.pNN` (task #183)
- *   models 119 — includes the 2 per-arena guardian props, prop.guardian.beast /
+ *   models 124 — includes the 2 per-arena guardian props, prop.guardian.beast /
  *     prop.guardian.treant (task #105)
- *   champions 113 · items 214 · augments 30 (task #149's pool expansion) ·
- *   config 11 · projectiles 5 · status-effects 5 · arenas 5 · skins 5 ·
- *   loot-tables 3
+ *   champions 78 · items 219 · augments 31 · config 47 · ability-templates 34 ·
+ *   status-effects 27 · projectiles 18 · arenas 6 · skins 5 · loot-tables 3
+ * ⚠️ `content/_legacy/config/` holds ONE file, and it is a fragment (the 41
+ * retired `unit-tints` entries) rather than a retired config doc — so the config
+ * union reads 48 where the honest retired-doc count is 0. Harmless here (the
+ * floor is 11) and called out so nobody reads 48 as「有一份 config 被退役」.
  * `content/audio-manifests/` is NOT a collection — it is absent from COLLECTIONS,
  * so the manifest walk never sees it and it contributes 0 docs.
  */
@@ -295,9 +351,19 @@ describe("content bundle — emission", () => {
         expect(stableStringify(e.doc)).toBe(stableStringify(onDisk));
         expect(hashDoc(e.doc)).toBe(e.hash);
       }
-      // no collection may quietly empty out — see DOC_FLOORS: a floor, not a
-      // snapshot, so adding content can never turn this red.
-      expect(index.entries.length, `${name} doc count`).toBeGreaterThanOrEqual(DOC_FLOORS[name]);
+      // Nothing may DISAPPEAR — see DOC_FLOORS. Counted over the operating tree
+      // plus `content/_legacy/`, because retiring a doc is not losing it.
+      expect(
+        index.entries.length + legacyDocCount(name),
+        `${name} doc count (${index.entries.length} operating + ${legacyDocCount(name)} parked in content/_legacy/)`,
+      ).toBeGreaterThanOrEqual(DOC_FLOORS[name]);
+      // …and the structural half the floor cannot express: a collection that
+      // empties out ENTIRELY is the 2026-08-01 shape (bundle, manifest and index
+      // all agree on the smaller world, every invariant above still passes, and
+      // the client silently renders nothing). One `mv` of the whole roster into
+      // `_legacy` would leave the union untouched, so this reads the live tree
+      // on its own. Structural on purpose — ⛔ not a count anybody has to bump.
+      expect(index.entries.length, `${name} operating tree is not empty`).toBeGreaterThan(0);
       total += index.entries.length;
     }
     // the doc total is DERIVED, never typed: it is whatever the manifest says the
@@ -422,7 +488,7 @@ describe("content bundle — consumption", () => {
     const res = await new ContentLoader(
       new BundleContentSource({ baseUrl: "/content", fetchFn: counting }),
     ).load();
-    expect(res.store.ids("champions").length).toBeGreaterThan(100);
+    expectWholeCollection(res.store.ids("champions"), "champions");
     expect(calls).toBe(1);
   });
 });
@@ -459,7 +525,7 @@ describe("content bundle — fallback", () => {
     // ...and the control really is a full load (strictly more than the manifest
     // plus one index each), so that equality cannot be satisfied by two no-ops.
     expect(control.reads).toBeGreaterThan(Object.keys(res.manifest.collections).length + 1);
-    expect(res.store.ids("champions").length).toBeGreaterThan(100);
+    expectWholeCollection(res.store.ids("champions"), "champions");
   });
 
   it("falls back when the bundle is CORRUPT, not just missing", async () => {
@@ -467,14 +533,14 @@ describe("content bundle — fallback", () => {
     // take the whole content set down with it.
     const { res, fb } = await load(fakeFetch(bundleText().slice(0, -20)));
     expect(fb.didFallback).toBe(true);
-    expect(res.store.ids("abilities").length).toBeGreaterThan(100);
+    expectWholeCollection(res.store.ids("abilities"), "abilities");
   });
 
   it("falls back when the payload is valid JSON of the WRONG shape", async () => {
     const { res, fb } = await load(fakeFetch(JSON.stringify({ hello: "world" })));
     expect(fb.didFallback).toBe(true);
     expect(fb.fallbackReason).toMatch(/schema/);
-    expect(res.store.ids("items").length).toBeGreaterThan(100);
+    expectWholeCollection(res.store.ids("items"), "items");
   });
 
   it("falls back on a schema-version bump it does not understand", async () => {

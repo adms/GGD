@@ -56,7 +56,12 @@
                 "source": "incomingDamage",
                 "to": "mana",
                 "ratio": 1.0,
-                "who": "self"
+                "who": "self",
+                "buff": {
+                  "stat": "ap",
+                  "durationSec": 5.0,
+                  "ratio": 1.0
+                }
               }
             ],
             "target": "self"

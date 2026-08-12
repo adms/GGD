@@ -14,9 +14,13 @@
  * so cast point is per-ability (the DOTA2 shape), the median is snappy, and
  * 0.9 s is reserved for the genuinely scary. The mapping is `castTimeFormula
  * .ts` — a pure function of fields the content already carries — and this
- * suite's central assertion is that every one of the 554 registered abilities
- * carries EXACTLY what that function derives. Content is derived data; the
- * formula is the source of truth.
+ * suite's central assertion is that EVERY registered ability carries EXACTLY
+ * what that function derives. Content is derived data; the formula is the
+ * source of truth.
+ *
+ * ⚠️ 這裡以前寫「554 支」。2026-08-13 未上架英雄搬進 `content/_legacy/` 之後
+ * 是 461 支 —— 母體會變，所以這一份**不再有任何一個母體規模的常數**：
+ * 每一條普查的下界都從註冊表或 `content/` 目錄推導。
  *
  * Two things make this suite worth its runtime:
  *
@@ -35,12 +39,14 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { readdirSync } from "node:fs";
 import { ContentLoader } from "./loader";
 import { FsContentSource } from "./node/FsContentSource";
 import { registerAll } from "./registries";
 import { Abilities, Champions } from "../sim/content/registry";
 import { isPassiveOnly } from "../sim/abilities/abilityPassives";
 import type { AbilityDef } from "../sim/content/defs";
+import type { AbilityId, ChampionId } from "../ids";
 import {
   CAST_CAP,
   CAST_FLOOR,
@@ -51,6 +57,46 @@ import {
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
+
+/** Standalone ability docs the OPERATING tree ships (`content/_legacy/` is not a collection). */
+function shippedAbilityDocCount(): number {
+  return readdirSync(join(CONTENT_DIR, "abilities")).filter(
+    (f) => f.endsWith(".json") && !f.startsWith("_"),
+  ).length;
+}
+
+/**
+ * ⭐ 2026-08-13 —— 未上架英雄搬進 `content/_legacy/` 之後，這一份裡的兩張**凍結名單**
+ * （`PRE_LANE_CAST_TIMES` 與 `EXEMPT_PASSIVE_ONLY`）各有幾列的英雄不在營運名單裡了。
+ *
+ * ⛔ 解法**不是**把那幾列刪掉。那些列記的是「當初發生過什麼」——
+ * 兩張表的 docstring 都明說它們存在的理由是「這個事實一旦檔案被改寫就再也救不回來」
+ * 與「留一份手續紀錄」。刪掉就是讓知識無聲消失，而且英雄哪天搬回營運名單時，
+ * 沒有任何東西會提醒有人該把它補回來。名單**原封不動**留著，比對的時候才過濾。
+ *
+ * ⚠️ 過濾條件刻意是「**那位英雄**還在不在營運名單」，⛔ 不是「這支技能還在不在註冊表」。
+ * 後者會把「某人默默拔掉一支技能」也一起濾掉 —— 而那正是這兩張表要抓的東西。
+ */
+function championOf(abilityId: string): ChampionId {
+  return abilityId.slice(0, abilityId.indexOf(".")) as ChampionId;
+}
+
+function inOperatingRoster(abilityId: string): boolean {
+  return Champions.tryGet(championOf(abilityId)) !== undefined;
+}
+
+/**
+ * 把上面那個假設釘死：被過濾掉的每一列，它的技能必須**同樣**不在註冊表裡。
+ * 也就是這幾列消失的唯一合法原因是「整位英雄一起離開營運名單」——
+ * 一支技能被單獨拔掉、或英雄留著但技能改了 id，都會在這裡紅。
+ */
+function expectLeftWithTheirChampion(ids: readonly string[]): void {
+  const orphaned = ids.filter((id) => Abilities.tryGet(id as AbilityId) !== undefined);
+  expect(
+    orphaned,
+    "這幾支的英雄不在營運名單裡，技能卻還註冊著 —— 搬遷不是整位走的",
+  ).toEqual([]);
+}
 
 /** The 10 abilities that carried a castTimeSec before ANY telegraph lane ran,
  *  with their original authored values. Frozen because the fact is otherwise
@@ -167,8 +213,17 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
       .filter((r) => r.d.castTimeSec !== r.want)
       .map((r) => `${r.d.id}: content ${String(r.d.castTimeSec)} != formula ${String(r.want)}`);
     expect(wrong).toEqual([]);
-    // guard the guard: this must be measuring the whole roster, not 3 docs
-    expect(all.length).toBeGreaterThan(500);
+    // Guard the guard: this must be measuring the whole roster, not 3 docs.
+    //
+    // ⭐ 2026-08-13：這行以前是 `toBeGreaterThan(500)`（當時 554 支）。未上架英雄
+    // 搬進 `content/_legacy/` 之後註冊表是 461 支，於是它紅了 —— 而 500 從來就只是
+    // 一個抄下來的出貨規模，不是一個關於「公式 vs 內容」的斷言。
+    //
+    // 改成**跟磁碟對帳**：`content/abilities/` 裡的每一份文件都必須真的進了註冊表。
+    // 這比常數強 —— 500 那個寫法擋不住「有 50 份文件載入失敗」（554−50 還是 >500），
+    // 這一條會紅。
+    expect(shippedAbilityDocCount()).toBeGreaterThan(0); // 空目錄不能真空綠
+    expect(all.length).toBeGreaterThanOrEqual(shippedAbilityDocCount());
   });
 
   it("the shipped cooldown multiplier is still the one the formula was tuned against", () => {
@@ -191,7 +246,18 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
     // castTimeSec on anything that can never be cast — is asserted on ALL of
     // them below, PASSIVE included.
     const castable = passives.filter((d) => d.slot !== "PASSIVE");
-    expect(castable.map((d) => d.id).sort()).toEqual([...EXEMPT_PASSIVE_ONLY].sort());
+
+    // ⭐ 2026-08-13：名單本身一列都沒動（見 `championOf` 那組 helper 的說明）——
+    // 只把「英雄已經不在營運名單」的那幾列排除在**這一次比對**之外，
+    // 並且立刻反過來證明它們是整位英雄一起走的，不是被誰默默拔掉一支技能。
+    const [live, gone] = [
+      EXEMPT_PASSIVE_ONLY.filter(inOperatingRoster),
+      EXEMPT_PASSIVE_ONLY.filter((id) => !inOperatingRoster(id)),
+    ];
+    expectLeftWithTheirChampion(gone);
+    expect(live.length, "整張豁免名單都離開營運名單了 —— 這條測試已經真空").toBeGreaterThan(0);
+
+    expect(castable.map((d) => d.id).sort()).toEqual([...live].sort());
     for (const d of passives) expect(d.castTimeSec).toBeUndefined();
   });
 
@@ -266,7 +332,7 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
         d.effects.some((e) => e.kind === "heal" || e.kind === "shield" || e.kind === "restore") &&
         !d.effects.some((e) => e.kind === "damage"),
     );
-    expect(saves.length).toBeGreaterThanOrEqual(15);
+    expect(saves.length, "沒有任何純防禦技 —— 這條測試已經真空").toBeGreaterThan(0);
     // Floor, OR instant when the cooldown ceiling already put it below the floor
     // — the same allowance the mobility test makes. At cooldownMult 0.2 a save
     // whose own cooldown cannot afford even the 0.3 s floor is rapid-fire, and
@@ -274,7 +340,18 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
     // (cast time ≥ cooldown), which the STATUE INVARIANT forbids. The bulk must
     // still land ON the floor so saves stay responsive-but-telegraphed.
     for (const d of saves) expect([CAST_FLOOR, undefined]).toContain(d.castTimeSec);
-    expect(saves.filter((d) => d.castTimeSec === CAST_FLOOR).length).toBeGreaterThanOrEqual(12);
+
+    // ⭐ 2026-08-13：上面那行以前是 `>= 15`、這一行以前是 `>= 12`，兩個都是對
+    // 「113 位」那個母體的一次普查。未上架英雄搬進 `content/_legacy/` 之後純防禦技
+    // 只剩 14 支，`>= 15` 就變成一個跟前搖毫無關係的紅。
+    //
+    // 「地板是常態、瞬發是例外」才是這條真正要釘的東西，而它是一個**比例**，
+    // 名單增減不會動到它：舊母體 12/15 = 80% 是門檻，新母體實測 13/14 = 93%。
+    // 門檻維持在 3/4，⛔ 沒有放寬。
+    const onFloor = saves.filter((d) => d.castTimeSec === CAST_FLOOR).length;
+    expect(onFloor * 4, `only ${onFloor}/${saves.length} saves are on the floor`).toBeGreaterThanOrEqual(
+      saves.length * 3,
+    );
   });
 
   it("no wind-up outlives the effect it produces, except against the 0.3 s floor", () => {
@@ -306,7 +383,18 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
     // The formula deliberately ignores the old number and re-derives, so the
     // whole 554-ability curve is coherent. Recorded here so the supersession
     // is visible rather than silent.
-    for (const [id, before] of Object.entries(PRE_LANE_CAST_TIMES)) {
+    // ⭐ 2026-08-13：`godie-h02s` 與 `godie-h02z` 搬進了 `content/_legacy/`，所以
+    // 這張凍結表有兩列的英雄不在營運名單裡。名單一列都沒刪（那是不可回復的歷史
+    // 事實，見 helper 說明），只把它們排除在這一次比對之外 —— 並先證明它們是
+    // 整位英雄一起走的。
+    expectLeftWithTheirChampion(
+      Object.keys(PRE_LANE_CAST_TIMES).filter((id) => !inOperatingRoster(id)),
+    );
+    const livePreLane = Object.entries(PRE_LANE_CAST_TIMES).filter(([id]) => inOperatingRoster(id));
+    expect(livePreLane.length, "整張 pre-lane 表都離開營運名單了 —— 這條測試已經真空")
+      .toBeGreaterThan(0);
+
+    for (const [id, before] of livePreLane) {
       const def = all.find((d) => d.id === id);
       expect(def, `${id} missing from the registry`).toBeDefined();
       expect(def!.castTimeSec).toBe(deriveCastTime(def!, cdMult).castTimeSec);

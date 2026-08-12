@@ -52,9 +52,15 @@ function read<T>(dir: string, file: string): T {
   return JSON.parse(readFileSync(join(CONTENT, dir, file), "utf8")) as T;
 }
 
+/** Every imported champion doc in the OPERATING tree (`content/_legacy/` is out). */
+function godieChampionFiles(): string[] {
+  return readdirSync(join(CONTENT, "champions")).filter(
+    (f) => f.startsWith("godie-") && f.endsWith(".json"),
+  );
+}
+
 function godieChampions(): ChampionDoc[] {
-  return readdirSync(join(CONTENT, "champions"))
-    .filter((f) => f.startsWith("godie-") && f.endsWith(".json"))
+  return godieChampionFiles()
     .map((f) => read<unknown>("champions", f))
     .filter((d): d is ChampionDoc => (d as ChampionDoc)?.schema === "champion@1")
     .map((d) => zChampionDoc.parse(d));
@@ -144,10 +150,22 @@ describe("imported ability stat scaling", () => {
 
   it("every imported damage/heal/shield effect with a real base scales off a stat (fx-15)", () => {
     cover("ability-scaling-present");
-    expect(champs.length).toBeGreaterThan(100);
+    // Guard-the-guard: we are looking at the WHOLE imported roster.
+    //
+    // ⭐ 2026-08-13：這行以前是 `toBeGreaterThan(100)`，抄的是「113 位」那個
+    // 出貨規模。未上架英雄搬進 `content/_legacy/` 之後只剩 76 位 godie-*，
+    // 於是它紅了 —— 紅的原因跟「技能有沒有 scaling」毫無關係。
+    //
+    // 換成兩條**結構性**的：①名單不是空的（0 位會讓下面整個迴圈真空綠）
+    // ②磁碟上每一份 `godie-*.json` 都真的進了母體。②比舊的常數**更緊**：
+    // `godieChampions()` 會用 `schema === "champion@1"` 過濾，一份被靜默丟掉的
+    // 文件在舊寫法下只是把 113 變成 112（照樣 >100，照樣綠）。
+    expect(champs.length).toBeGreaterThan(0);
+    expect(champs.length).toBe(godieChampionFiles().length);
 
     const unscaled: string[] = [];
     let scaled = 0;
+    const championsWithScaling = new Set<string>();
     for (const c of champs) {
       for (const e of amountEffects(c)) {
         if (!["damage", "heal", "shield"].includes(e.kind)) continue;
@@ -158,12 +176,29 @@ describe("imported ability stat scaling", () => {
           expect(e.amount.ratios ?? []).toEqual([]);
           continue;
         }
-        if (e.amount.ratios?.length) scaled++;
-        else unscaled.push(`${c.id}.${e.slot}`);
+        if (e.amount.ratios?.length) {
+          scaled++;
+          championsWithScaling.add(c.id);
+        } else unscaled.push(`${c.id}.${e.slot}`);
       }
     }
+    // THE GUARD: nothing with a real base is left unscaled.
     expect(unscaled).toEqual([]);
-    expect(scaled).toBeGreaterThanOrEqual(248); // champion-embedded Q/W/E/R effects
+
+    // ⭐ 2026-08-13：這裡以前是 `expect(scaled).toBeGreaterThanOrEqual(248)`。
+    // 248 當初**有意義** —— 模板化那次（見 testkit/expandedEffects.ts 檔頭）門檻
+    // 一個數字都沒動，回到 248 本身就是「行為等價」的證明。但未上架英雄搬進
+    // `content/_legacy/` 之後母體是 76 位 / 157 支，248 不但到不了，而且**已經
+    // 不再證明任何事情** —— 它變成一個純粹的出貨值（第零守則的「第四個住處」）。
+    //
+    // 換成兩條跟名單規模無關的 guard-the-guard：
+    //  ① 這份普查真的看到了東西。
+    //  ② 而且看到的是**整份名單**：過半數的英雄各自帶著至少一支會 scaling 的
+    //     傷害/治療/護盾效果。②擋的正是 expandedEffects.ts 檔頭警告的那個故障
+    //     —— 模板展開整批回傳 `[]`，於是上面每一條逐效果的斷言都真空綠而
+    //     `unscaled` 也是空的。一個全域計數擋不住它縮到 1；「過半英雄」可以。
+    expect(scaled).toBeGreaterThan(0);
+    expect(championsWithScaling.size * 2).toBeGreaterThan(champs.length);
   });
 
   it("ratios use the right stat and stay in band (fx-16)", () => {

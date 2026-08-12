@@ -27,7 +27,7 @@
  * all 18 have a null radius, so at 0 they draw nothing at all — no orphan
  * radius ring left behind.
  */
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -45,6 +45,13 @@ function standalone(): AbilityDoc[] {
   return readdirSync(dir)
     .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
     .map((f) => JSON.parse(readFileSync(join(dir, f), "utf8")) as AbilityDoc);
+}
+
+/** How many champions ship right now — the floor for the reader guards below. */
+function shippingChampionCount(): number {
+  return readdirSync(join(CONTENT, "champions")).filter(
+    (f) => f.endsWith(".json") && !f.startsWith("_"),
+  ).length;
 }
 
 /**
@@ -89,13 +96,28 @@ describe("#268 a self-cast must not advertise a range it cannot reach", () => {
   it("the embedded reader is actually reading something", () => {
     // Guard on the guard. `embedded()` walks a nested, case-sensitive path; if
     // that path ever moves, every mirror assertion below silently passes on an
-    // empty array. Both numbers are floors, not pins — content grows.
+    // empty array.
+    //
+    // The floors used to be literal 300 / 50 — shipping counts from before the
+    // 2026-08-13 roster cut (119 → 78 champions, the rest archived under
+    // content/_legacy/ where the engine cannot see them). A copied shipping
+    // number is CLAUDE.md's "fourth home": it expires the moment the roster
+    // moves, and it goes red with a misleading message. Both floors are now
+    // derived from the roster itself, and both are structural:
+    //   · every shipping champion contributes at least one Q/W/E/R slot;
+    //   · self-casts are a large, permanent slice of the kit — zero means the
+    //     filter (not the reader) broke.
     const all = embedded();
-    expect(all.length, "embedded() found no abilities — the slot path moved").toBeGreaterThan(300);
+    const champions = shippingChampionCount();
+    expect(champions, "no champion docs at all — the content tree is gone").toBeGreaterThan(0);
+    expect(
+      all.length,
+      "embedded() found fewer Q/W/E/R slots than there are champions — the slot path moved",
+    ).toBeGreaterThanOrEqual(champions);
     expect(
       all.filter((a) => a.castType === "self").length,
       "embedded() found no self-casts — filtering, not reading, is broken",
-    ).toBeGreaterThan(50);
+    ).toBeGreaterThan(0);
   });
 
   it("nor does any embedded copy — the mirror has to agree", () => {
@@ -134,8 +156,31 @@ describe("#268 a self-cast must not advertise a range it cannot reach", () => {
       return a !== undefined && (a.radius ?? null) !== null;
     });
     expect(stillDraws, "range is 0 but a radius was added — the circle is back").toEqual([]);
+
     // …and the roster itself has to still exist, or the list above is a no-op.
-    expect(FIXED.filter((id) => !byId.has(id))).toEqual([]);
+    //
+    // The 2026-08-13 roster cut archived 9 of these 18 under content/_legacy/
+    // (engine-invisible). The list is NOT trimmed to match: CLAUDE.md's
+    // 「分開」不是「丟掉」 — superseded content moves to a backup, it does not
+    // silently evaporate, and if a champion is ever re-listed the id comes back
+    // into the live half and is checked again automatically.
+    //
+    // So the ratchet splits by where the file actually lives, and each half
+    // keeps a claim: the shipping ones must be loadable and radius-free (above),
+    // the archived ones must really be in the archive. Deleting a doc outright
+    // still goes red, which is the failure this line existed to catch.
+    const archived = FIXED.filter((id) => !byId.has(id));
+    expect(
+      FIXED.filter((id) => byId.has(id)).length,
+      "none of the 18 ship any more — this whole test has become a no-op",
+    ).toBeGreaterThan(0);
+    expect(
+      archived.filter(
+        (id) => !existsSync(join(CONTENT, "_legacy", "abilities", `${id}.json`)),
+      ),
+      "these ids are in neither content/abilities/ nor content/_legacy/abilities/ — " +
+        "they were deleted, not de-listed",
+    ).toEqual([]);
   });
 
   it("11.0 specifically is gone — that number is the importer's WC3-600 default", () => {

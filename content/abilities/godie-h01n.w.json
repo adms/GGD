@@ -4,7 +4,7 @@
   "name": "79-02 月牙斬擊",
   "description": "[主動][AP加成]\n60秒冷卻\n消耗MP80/160/240/320\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
   "slot": "W",
-  "castType": "self",
+  "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
     60.0,
@@ -18,8 +18,8 @@
     240.0,
     320.0
   ],
-  "range": 0.0,
-  "targetsEnemies": false,
+  "range": 2.0,
+  "targetsEnemies": true,
   "effects": [
     {
       "kind": "damage",
@@ -70,10 +70,34 @@
             "target": "event"
           }
         ]
+      },
+      {
+        "whileForm": "alternate",
+        "hooks": [
+          {
+            "on": "onAbilityHit",
+            "abilitySlot": "W",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 2.0
+                    }
+                  ]
+                }
+              }
+            ],
+            "target": "event"
+          }
+        ]
       }
     ]
   },
   "icon": "assets/icons/abilities/godie-h01n.w.webp",
   "vfxKey": "fx.prim.physical.slash",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.5
 }

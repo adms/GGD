@@ -60,16 +60,49 @@ import { FsContentSource } from "../../content/node/FsContentSource";
 import { registerAll } from "../../content/registries";
 import { Champions, Items } from "./registry";
 import { describeRequirement, itemRequirementLabels, requirementScale } from "./requirement";
+import type { PrimaryAttr } from "../stats/attributes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 
 // ---------------------------------------------------------------------------
-// 真實英雄 —— 每一格都是 content/champions 裡真的有的組合(119 份文件實測分布:
-// melee/STR 45, melee/AGI 32, ranged/INT 23, ranged/AGI 8, melee/INT 6, ranged/STR 5)
+// 真實英雄 —— 四個**格子**,由註冊表挑代表,⛔ 不是四個寫死的 id
+//
+// ⚠️ 2026-08-13:owner 把 41 位沒上架的英雄搬進 `content/_legacy/champions/`
+// (那個目錄不在 `COLLECTION_NAMES` 裡,引擎讀不到它),而原本寫死在這裡的
+// `godie-h022`(涅吉)與 `godie-e00t`(貞子)剛好都在那一批 —— 四條測試直接
+// 以 `content not registered` 倒下。
+//
+// ⭐ 但寫死 id 的毛病不是「挑錯人」。這幾條測試從來**不在乎是誰**:它們要的是
+//    「一位近戰·智力的英雄」這個格子存不存在、閘讀不讀得到它。所以現在由註冊表
+//    挑代表(排序後第一位 = 決定性,不動 rng),名單再怎麼增減都不用回來改。
 // ---------------------------------------------------------------------------
-const MELEE_STR = "godie-e002" as ChampionId; // 亞瑟王 - Saber
-const MELEE_INT = "godie-h022" as ChampionId; // 涅吉。史普林。菲爾德
-const RANGED_INT = "godie-e00t" as ChampionId; // 七夜怪談 - 貞子
-const RANGED_AGI = "godie-e007" as ChampionId; // 龍之子 - 天地志狼
+let MELEE_STR: ChampionId;
+let MELEE_INT: ChampionId;
+let RANGED_INT: ChampionId;
+let RANGED_AGI: ChampionId;
+
+/**
+ * 出貨名單裡 `attackType × primaryStat` 那一格的代表 —— 排序後的第一位。
+ *
+ * ⛔ 空的格子**不可以**靜默略過。這個閘的兩根軸如果有一格沒有人住,
+ * 「限近戰·智力英雄」這條規則就再也匹配不到任何人 —— 那是一個要拿去問 owner 的
+ * **內容**問題(這條閘還該不該存在),不是這支測試該繞過去的事。所以它丟例外,
+ * 而且訊息裡直接寫出是哪一格空了。
+ */
+function pickChampion(attackType: "melee" | "ranged", primary: PrimaryAttr): ChampionId {
+  const hit = Champions.ids()
+    .filter((id) => {
+      const c = Champions.tryGet(id);
+      return c?.attackType === attackType && c?.attributes?.primary === primary;
+    })
+    .sort()[0];
+  if (hit === undefined) {
+    throw new Error(
+      `出貨英雄名單裡沒有任何 ${attackType}/${primary} 的英雄 —— 職業限定閘的這一格` +
+        `是空的,「限${attackType}·${primary}」這種需求寫得出來卻永遠匹配不到人。`,
+    );
+  }
+  return hit;
+}
 
 const CLEAVER = "cleaver-of-the-warden" as ItemId;
 const AMULET = "sage-ward-amulet" as ItemId;
@@ -108,6 +141,11 @@ beforeAll(async () => {
   });
   rebuildAllIndexes(dir, { write: true });
   registerAll((await new ContentLoader(new FsContentSource(dir)).load()).store);
+  // 註冊表填好之後才挑得到人 —— 四個格子各挑一位代表。
+  MELEE_STR = pickChampion("melee", "STR");
+  MELEE_INT = pickChampion("melee", "INT");
+  RANGED_INT = pickChampion("ranged", "INT");
+  RANGED_AGI = pickChampion("ranged", "AGI");
 });
 
 interface Spawned {

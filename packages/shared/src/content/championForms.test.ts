@@ -35,6 +35,7 @@ import {
   isW3xFormPair,
 } from "./championForms";
 import { zChampionDoc, type ChampionDoc } from "./schema/champion";
+import { splitFormPairsByShipping } from "../../testkit/formPairShipping";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -178,9 +179,34 @@ describe("w3x transform pairs (transform-forms-w3x-pin)", () => {
 });
 
 describe("champion docs carry the form link (transform-forms-docs)", () => {
+  it("a transform pair is never half-archived (transform-forms-legacy-wholesale)", () => {
+    cover("transform-forms-legacy-wholesale");
+    // owner 2026-08-13 moved the unreleased heroes into `content/_legacy/`,
+    // which is not a collection — so a pair that ended up straddling the move
+    // is a base whose transform points at a body the engine cannot load, and
+    // `Registry.get()` throws inside the per-tick snapshot builder rather than
+    // merely failing to render. This runs BEFORE the link sweep below because
+    // that sweep skips archived pairs, and skipping is only sound once the
+    // partition is known to be clean.
+    const { shipped, archived, halfMigrated } = splitFormPairsByShipping();
+    expect(halfMigrated, `${halfMigrated.length} pair(s) straddle the legacy move`).toEqual([]);
+    // …and the partition really is a partition of the whole w3x table, so a
+    // pair cannot vanish from both sides and take its assertions with it.
+    expect(shipped.length + archived.length).toBe(CHAMPION_FORM_PAIRS.length);
+    // Archived pairs are archived because their heroes are, not because a doc
+    // was deleted: both halves must be findable in the legacy tree, which
+    // `splitFormPairsByShipping` is what decided "archived" from.
+    expect(archived.every((p) => p.baseId !== "" && p.alternateId !== "")).toBe(true);
+  });
+
   it("both halves of every imported pair link back to each other", () => {
     cover("transform-forms-docs");
-    for (const pair of CHAMPION_FORM_PAIRS) {
+    // The population is the SHIPPED pairs — every one of them, not a sample.
+    // The archived pairs keep their `transform` blocks in `content/_legacy/`
+    // (the roster.json note calls those blocks w3x facts, 「不是可浮動的設計
+    // 偏好」); they are re-checked by this same loop the moment their docs move
+    // back into `content/champions`.
+    for (const pair of splitFormPairsByShipping().shipped) {
       const base = DOCS.get(pair.baseId);
       const alt = DOCS.get(pair.alternateId);
       expect(base, `${pair.baseId} exists (base form)`).toBeDefined();

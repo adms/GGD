@@ -60,18 +60,39 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   const champsWithEx = (): ChampionId[] =>
     Champions.ids().filter((id) => Champions.get(id).exAbility !== undefined);
 
+  const isRegistered = (cid: string): boolean => Champions.tryGet(cid as ChampionId) !== undefined;
+
+  /**
+   * EX_MAP.json is the w3x extraction over the FULL original roster, and it
+   * stays that way — it is evidence about the source map, not a roster file.
+   * Since the 2026-08-13 legacy migration the OPERATING roster is a strict
+   * subset of it: the unreleased heroes live under `content/_legacy/`, outside
+   * COLLECTION_NAMES, so the ContentLoader never registers them.
+   *
+   * Every assertion below therefore reads the map RESTRICTED to what the
+   * registry actually shipped. The population is DERIVED from the registry, so
+   * archiving or un-archiving a hero moves these numbers on its own — there is
+   * no shipped count written down in this file to go stale.
+   */
+  const liveExHeroes = (): [string, ExMap["heroes"][string]][] =>
+    Object.entries(exmap.heroes).filter(([cid]) => isRegistered(cid));
+  const liveWithoutEx = (): string[] => exmap.withoutEx.filter(isRegistered);
+
   it("EX_MAP.json is a non-empty PROPER subset unlocked at R00R/level 30 (ex-map-subset)", () => {
     cover("ex-map-subset");
     expect(existsSync(EX_MAP_PATH)).toBe(true);
     expect(exmap.unlockTech).toBe("R00R");
     expect(exmap.unlockLevel).toBe(30);
-    const withEx = Object.keys(exmap.heroes).length;
+    const withEx = liveExHeroes().length;
+    const without = liveWithoutEx().length;
     const total = Champions.ids().filter((id) => id.startsWith("godie-")).length;
     expect(withEx).toBeGreaterThan(0);
     expect(withEx).toBeLessThan(total); // NOT every hero has one
-    expect(exmap.withoutEx.length).toBeGreaterThan(0);
-    // the two numbers partition the godie roster
-    expect(withEx + exmap.withoutEx.length).toBe(total);
+    expect(without).toBeGreaterThan(0);
+    // the two lists PARTITION the shipped godie roster: every registered godie
+    // hero is classified by the map exactly once, and the map invents nobody.
+    // Ship a godie hero the extraction never saw and this goes red.
+    expect(withEx + without).toBe(total);
   });
 
   it("pseudo-EX augment cards removed; the closed 30-augment pool stays (ex-augments-removed)", () => {
@@ -91,25 +112,27 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   it("champion.exAbility is set exactly on the EX heroes (ex-champion-ability-set)", () => {
     cover("ex-champion-ability-set");
     const set = new Set(champsWithEx());
-    // every EX_MAP hero has the matching exAbility ref on its champion doc
-    for (const [cid, info] of Object.entries(exmap.heroes)) {
+    // every shipped EX_MAP hero has the matching exAbility ref on its champion doc
+    for (const [cid, info] of liveExHeroes()) {
       const def = Champions.get(cid as ChampionId);
       expect(def.exAbility).toBe(info.exAbility.length ? `${cid}.ex` : undefined);
       expect(def.exAbility).toBe(`${cid}.ex`);
       expect(set.has(cid as ChampionId)).toBe(true);
     }
-    // every EX-less hero has NO exAbility
-    for (const cid of exmap.withoutEx) {
+    // every shipped EX-less hero has NO exAbility
+    for (const cid of liveWithoutEx()) {
       expect(Champions.get(cid as ChampionId).exAbility).toBeUndefined();
       expect(set.has(cid as ChampionId)).toBe(false);
     }
-    expect(set.size).toBe(Object.keys(exmap.heroes).length);
+    // "EXACTLY": no registered champion carries an exAbility the map does not
+    // claim, so the two sides cannot drift apart in either direction.
+    expect(set.size).toBe(liveExHeroes().length);
   });
 
   it("every EX ability is a valid single-rank slot-EX ability (ex-ability-doc-valid)", () => {
     cover("ex-ability-doc-valid");
     const exIds = Abilities.ids().filter((id) => id.endsWith(".ex"));
-    expect(exIds.length).toBe(Object.keys(exmap.heroes).length);
+    expect(exIds.length).toBe(liveExHeroes().length);
     const castTypes = new Set(["targeted", "skillshot", "ground", "self", "dash"]);
     for (const id of exIds) {
       const def = Abilities.get(id);
@@ -144,7 +167,7 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   it("EX slot is locked before unlock and rejects casts (ex-slot-locked)", () => {
     cover("ex-slot-locked");
     const world = freshWorld();
-    const cid = Object.keys(exmap.heroes)[0]! as ChampionId;
+    const cid = liveExHeroes()[0]![0] as ChampionId;
     const id = spawnChampion(world, {
       championId: cid,
       seatId: asSeatId(0),
@@ -162,9 +185,9 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
     cover("ex-unlock-cast");
     const world = freshWorld();
     // pick a self-cast EX so targeting is trivial
-    const selfCid = Object.keys(exmap.heroes).find(
-      (cid) => Abilities.get(`${cid}.ex` as AbilityId).castType === "self",
-    )! as ChampionId;
+    const selfCid = liveExHeroes().find(
+      ([cid]) => Abilities.get(`${cid}.ex` as AbilityId).castType === "self",
+    )![0] as ChampionId;
     const id = spawnChampion(world, {
       championId: selfCid,
       seatId: asSeatId(0),
@@ -190,9 +213,9 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   it("an EX with cast time defers its effects (ex-cast-time)", () => {
     cover("ex-cast-time");
     const world = freshWorld();
-    const ctCid = Object.keys(exmap.heroes).find(
-      (cid) => (Abilities.get(`${cid}.ex` as AbilityId).castTimeSec ?? 0) > 0,
-    );
+    const ctCid = liveExHeroes().find(
+      ([cid]) => (Abilities.get(`${cid}.ex` as AbilityId).castTimeSec ?? 0) > 0,
+    )?.[0];
     expect(ctCid).toBeTruthy();
     const id = spawnChampion(world, {
       championId: ctCid as ChampionId,
@@ -224,7 +247,7 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
   it("heroes without an EX skill never get a slot (ex-no-slot)", () => {
     cover("ex-no-slot");
     const world = freshWorld();
-    const cid = exmap.withoutEx[0]! as ChampionId;
+    const cid = liveWithoutEx()[0]! as ChampionId;
     expect(Champions.get(cid).exAbility).toBeUndefined();
     const id = spawnChampion(world, {
       championId: cid,
