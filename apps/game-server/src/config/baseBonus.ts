@@ -35,7 +35,13 @@
  * the operator's value. So the worst case of an outage is the pre-#278 behaviour,
  * never a silent revert to the shipped 300.
  */
-import { baseBonusFromDoc, DEFAULT_BASE_BONUS, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import {
+  baseBonusFromDoc,
+  perLevelBonusFromDoc,
+  DEFAULT_BASE_BONUS,
+  type BaseBonusTable,
+  type PerLevelBonusTable,
+} from "@ggd/shared/sim/baseBonus";
 import { Configs } from "@ggd/shared/content";
 import { PLATFORM_URL, warnOnce, clearDegradation } from "./platformUrl";
 
@@ -55,6 +61,14 @@ const DEFAULT_TTL_MS = 5_000;
  */
 export function contentBaseBonus(): BaseBonusTable {
   return baseBonusFromDoc(Configs.tryGet("base-bonus"));
+}
+
+/**
+ * ⭐ 每級加成（owner 2026-08-13）—— 和上面那支**同一條規矩**：
+ * 「缺文件 = 出貨預設」，⛔ 不是「缺文件 = 沒有」。
+ */
+export function perLevelBonusFromContent(): PerLevelBonusTable {
+  return perLevelBonusFromDoc(Configs.tryGet("per-level-bonus"));
 }
 
 /**

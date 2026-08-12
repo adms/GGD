@@ -185,6 +185,22 @@
           }
         },
         {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -3
+            }
+          ],
+          "duration": 7.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "armor-break",
+          "duration": 7.0
+        },
+        {
           "kind": "applyStatus",
           "statusId": "slow40",
           "duration": 7.0,

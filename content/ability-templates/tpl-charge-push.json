@@ -10,7 +10,7 @@
       "type": "number",
       "default": 600,
       "min": 100,
-      "max": 3000,
+      "max": 1309,
       "unit": "wc3u"
     },
     "dashDurationSec": {
@@ -62,9 +62,9 @@
     },
     "pushSpeed": {
       "type": "number",
-      "default": 1000,
+      "default": 872,
       "min": 100,
-      "max": 5000,
+      "max": 2181,
       "unit": "wc3u"
     },
     "pushFrom": {

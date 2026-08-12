@@ -69,14 +69,48 @@ const stockMisc = (
  * it has to be per-key, because the two owner-designed rows are different axes
  * and a single hardcoded name would silently stop checking one of them.
  */
-type Provenance = { field: string } | { ownerDesign: string };
+type Provenance =
+  | { field: string }
+  | { ownerDesign: string }
+  /**
+   * ⭐ **第三種：owner 明知有上游來源，仍然覆寫它。**
+   *
+   * 第〇·六守則的優先序階梯：第 1 層（owner 的新版設計）贏過第 5 層
+   * （w3x 原始設定）。但同一條守則也說：「⭐ **『分開』不是『丟掉』**。
+   * 被取代的原作數值要**另存** —— 測試可以跟著設計走，**知識不可以無聲消失**。」
+   *
+   * 所以這一種要**同時**成立三件事，少一件就紅：
+   *   ① 上游來源**仍然存在**（不然它該是 `ownerDesign`）
+   *   ② 出貨值**確實不等於**上游值（不然它該是 `field` —— 覆寫已經被撤銷了）
+   *   ③ 上游那個數字**真的被記在** `docs/_w3x-fidelity-superseded.md` 裡
+   *
+   * ⛔ ③ 是這一種存在的理由。少了它，「偏離原作」就只是一個沒有人讀的註解。
+   */
+  | { overrides: string; upstream: number; why: string };
 
 const FIELD_OF: Record<AttributeEnvKey, Provenance> = {
   strToMaxHealth: { field: "StrHitPointBonus" },
   strToHealthRegen: { field: "StrRegenBonus" },
-  strToAttackDamage: { field: "StrAttackBonus" },
+  // 🔴 owner 2026-08-13 覆寫：1.0 → 0.4。
+  //   理由：「現在的玩法**普通攻擊太有利了**⋯技能傷害爆發力⋯**＝雞肋**」。
+  //   量到法師 L99 普攻每秒 1,328 而一發技能只有 388（＝普攻 0.29 秒）。
+  //   ⭐ 削 AD 比補 AP 有效，因為普攻是乘法（AD × 攻速）技能是加法。
+  strToAttackDamage: {
+    overrides: "StrAttackBonus",
+    upstream: 1.0,
+    why: "普攻 vs 技能再平衡（owner 2026-08-13）",
+  },
   agiToArmor: { field: "AgiDefenseBonus" },
-  agiToAttackSpeed: { field: "AgiAttackSpeedBonus" },
+  // 🔴 owner 2026-08-13 覆寫：0.02 → 0.01。
+  //   「我覺得問題應該是**敏捷提升攻擊速度的屬性該調整**吧，畢竟**之前等級上限只有 30**」
+  //   ⚠️ 暴雪設計 0.02 時英雄上限是 10 級；地圖拉到 30，GGD 拉到 99。
+  //   攻速是九條裡**唯一的乘法列**，所以只有它在等級外插下指數放大：
+  //   敏捷中位 L30=70 → 2.39×，L99=197 → **4.95×**。
+  agiToAttackSpeed: {
+    overrides: "AgiAttackSpeedBonus",
+    upstream: 0.02,
+    why: "等級上限 30 → 99 之後，唯一的乘法列被指數外插（owner 2026-08-13）",
+  },
   intToMaxMana: { field: "IntManaBonus" },
   intToManaRegen: { field: "IntRegenBonus" },
   // Warcraft III has no 法強 attribute axis at all — the owner's own decision.
@@ -95,6 +129,12 @@ function sourceValue(field: string): { value: number; from: "map" | "blizzard" }
   return undefined;
 }
 
+/** 被取代的原作數值台帳 —— 第〇·六守則要求「分開不是丟掉」。 */
+const SUPERSEDED = readFileSync(
+  join(__dirname, "../../../../docs/_w3x-fidelity-superseded.md"),
+  "utf8",
+);
+
 describe("三圍 coefficient provenance (#248 follow-up)", () => {
   it("attr-248-coef-provenance: every shipped coefficient equals its source file's field", () => {
     cover("attr-248-coef-provenance");
@@ -107,6 +147,26 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
     const report: string[] = [];
     for (const key of Object.keys(FIELD_OF) as AttributeEnvKey[]) {
       const prov = FIELD_OF[key];
+      if ("overrides" in prov) {
+        // ① 上游來源仍然存在 —— 不然它該被改成 ownerDesign
+        const src = sourceValue(prov.overrides);
+        expect(src, `${key} 標成 override 但上游來源不見了`).toBeDefined();
+        expect(src?.value, `${key} 記錄的上游值與檔案對不上`).toBe(prov.upstream);
+        // ② 出貨值確實偏離了 —— 不然覆寫已經被撤銷，這一列該改回 field
+        expect(
+          ATTRIBUTE_ENV_DEFAULTS[key],
+          `${key} 現在等於上游值了，把它改回 { field } 這一種`,
+        ).not.toBe(prov.upstream);
+        // ③ ⭐ 原作那個數字真的被另存了（第〇·六守則：分開不是丟掉）
+        expect(
+          SUPERSEDED,
+          `${key} 的原作值 ${prov.upstream} 沒有記在 docs/_w3x-fidelity-superseded.md`,
+        ).toContain(prov.overrides);
+        report.push(
+          `${key} = ${ATTRIBUTE_ENV_DEFAULTS[key]}  (owner 覆寫 ${src?.from}:${prov.overrides}=${prov.upstream} — ${prov.why})`,
+        );
+        continue;
+      }
       if ("ownerDesign" in prov) {
         // Owner's design: assert NO upstream source has appeared. If a future
         // MiscGame/war3mapMisc gains such a field, this fails and someone has
@@ -141,7 +201,12 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
     // …and the one the map deliberately leaves alone, which is why the fallback
     // rule has to exist at all.
     expect(mapMisc["AgiAttackSpeedBonus"]).toBeUndefined();
-    expect(Number(stockMisc["AgiAttackSpeedBonus"])).toBe(ATTRIBUTE_ENV_DEFAULTS.agiToAttackSpeed);
+    // ⚠️ 2026-08-13：owner 覆寫了它（0.02 → 0.01），所以出貨值**不再等於**暴雪值。
+    //   ⭐ 這一行改成釘住**上游那個數字沒有變** —— 覆寫的紀錄住在 FIELD_OF 的
+    //     `{ overrides, upstream }`，那邊會逐條驗「上游仍在 / 確實偏離 / 原作值有另存」。
+    //   ⛔ 不可以改成 `.toBe(0.01)`：那會把「暴雪說 0.02」這個事實從測試裡刪掉，
+    //     而那正是這一條在守的東西。
+    expect(Number(stockMisc["AgiAttackSpeedBonus"])).toBe(0.02);
   });
 
   it("attr-248-coef-unmodelled: the map constants GGD does NOT implement stay visible", () => {

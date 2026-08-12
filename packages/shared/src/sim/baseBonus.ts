@@ -39,6 +39,78 @@ import { DEFAULT_STAT_CAPS, effectiveCap, type StatCapTable } from "./statCaps";
 export type BaseBonusTable = Readonly<Partial<Record<Stat, number>>>;
 
 /**
+ * ⭐ **每級加成** —— owner 2026-08-13：「我追加一個設定，**英雄每等級都會 +1 AP**，
+ * 這個參數一樣可在後台設定」。
+ *
+ * ⚠️ 它和 `BaseBonusTable` 是**同一層**（倍率之後、夾限之前），差別只有
+ * 「乘上 (等級 − 1)」。所以它坐在同一支 `finalizeStat` 裡，⛔ 不另開一條路徑。
+ *
+ * ⭐ `appliesTo` 是**第二格**，我建議 owner 分開的那一格：
+ *   · `all`        每一位（出貨值）
+ *   · `nonPrimary` 只給**不是**該屬性主屬性的英雄（例：AP 只給非智慧主）
+ *   · `primary`    只給主屬性的英雄
+ *   ⚠️ 沒有它的話，之後想「只補償非法師」就要改程式。
+ *
+ * ⚠️ **它會壓平定位差距** —— 這是扁平加成的本質，不是缺陷：
+ *   實測 +1 AP/級（L99 = +98）讓法師/坦克的 AP 比從 1.74× 掉到 **1.48×**。
+ *   owner 因此同時把 `intToAbilityPower` 從 1 調到 2（拿回一半，1.59×）。
+ */
+export interface PerLevelBonus {
+  readonly amount: number;
+  readonly appliesTo: "all" | "primary" | "nonPrimary";
+}
+export type PerLevelBonusTable = Readonly<Partial<Record<Stat, PerLevelBonus>>>;
+
+/** 出貨值：每級 +1 法強，給每一位。 */
+export const DEFAULT_PER_LEVEL_BONUS: PerLevelBonusTable = Object.freeze({
+  [Stat.AbilityPower]: Object.freeze({ amount: 1, appliesTo: "all" as const }),
+});
+
+/** 每級加成的合法區間。⚠️ 上界 100 是保險絲：L99 時那就是 +9,800。 */
+export const PER_LEVEL_BONUS_MIN = 0;
+export const PER_LEVEL_BONUS_MAX = 100;
+
+/**
+ * 這一位英雄在這一條屬性上，每級加成該給多少（已經套用 `appliesTo`）。
+ * ⛔ 不知道主屬性（`primary` 是 undefined）時，`primary`/`nonPrimary` 一律回 0
+ * —— fail-safe，⛔ 不猜。
+ */
+export function perLevelBonusFor(
+  table: PerLevelBonusTable | undefined,
+  stat: Stat,
+  level: number,
+  primary?: "str" | "agi" | "int",
+): number {
+  const e = table?.[stat];
+  if (e === undefined || !(level > 1)) return 0;
+  if (e.appliesTo !== "all") {
+    const src = ATTR_OF_STAT[stat];
+    if (src === undefined || primary === undefined) return 0;
+    const isPrimary = primary === src;
+    if (e.appliesTo === "primary" ? !isPrimary : isPrimary) return 0;
+  }
+  return e.amount * (level - 1);
+}
+
+/**
+ * 哪一條屬性由哪個三圍推導 —— `appliesTo` 的 `primary`/`nonPrimary` 要用它。
+ * ⚠️ 這是一份**兩用**的鏡射（`ATTR_STAT_SOURCE` 在 `stats/attributes.ts`）,
+ * ⛔ 不從那邊 import：`sim/baseBonus.ts` 被 `finalizeStat` 用在熱路徑上，
+ * 而 `attributes.ts` 會把 combat-env 一起拉進來。守衛逐格對照，說謊就紅。
+ */
+const ATTR_OF_STAT: Readonly<Partial<Record<Stat, "str" | "agi" | "int">>> = Object.freeze({
+  [Stat.MaxHealth]: "str",
+  [Stat.HealthRegen]: "str",
+  [Stat.AttackDamage]: "str",
+  [Stat.Armor]: "agi",
+  [Stat.AttackSpeed]: "agi",
+  [Stat.MaxMana]: "int",
+  [Stat.ManaRegen]: "int",
+  [Stat.AbilityPower]: "int",
+  [Stat.MagicResist]: "int",
+});
+
+/**
  * Every stat is settable, but the SHIPPED table only fills the ones the owner
  * actually asked for. A zero is not a placeholder — it is the statement 「this
  * stat gets no gift」, and the admin table shows it as such.
@@ -156,6 +228,31 @@ export function normalizeBaseBonus(raw: unknown): BaseBonusTable {
  * ⚠️ 這是「缺文件 = 預設」而不是「缺文件 = 沒有」的那種預設。兩者差 300 點血,
  * 而且不會有任何錯誤訊息 —— 所以它寫在這裡一次,兩邊共用。
  */
+/**
+ * 把一份 `config.per-level-bonus@1` 正規化成規則物件。
+ * ⚠️ 認不得 → **出貨值**（不是空表）—— 和 `baseBonusFromDoc` 同一條規矩：
+ * 「缺文件 = 預設」，⛔ 不是「缺文件 = 沒有」。
+ */
+export function perLevelBonusFromDoc(doc: unknown): PerLevelBonusTable {
+  const d = doc as Record<string, unknown> | undefined;
+  if (!d || d["schema"] !== "config.per-level-bonus@1") return DEFAULT_PER_LEVEL_BONUS;
+  const raw = d["perLevel"];
+  if (typeof raw !== "object" || raw === null) return DEFAULT_PER_LEVEL_BONUS;
+  const out: Record<string, PerLevelBonus> = {};
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    const e = v as Record<string, unknown> | undefined;
+    const amount = e?.["amount"];
+    const appliesTo = e?.["appliesTo"];
+    if (typeof amount !== "number" || !Number.isFinite(amount)) continue;
+    if (appliesTo !== "all" && appliesTo !== "primary" && appliesTo !== "nonPrimary") continue;
+    out[k] = Object.freeze({
+      amount: Math.min(Math.max(amount, PER_LEVEL_BONUS_MIN), PER_LEVEL_BONUS_MAX),
+      appliesTo,
+    });
+  }
+  return Object.freeze(out) as PerLevelBonusTable;
+}
+
 export function baseBonusFromDoc(doc: unknown): BaseBonusTable {
   if (!doc || typeof doc !== "object") return DEFAULT_BASE_BONUS;
   const d = doc as { schema?: unknown; bonus?: unknown };
@@ -180,6 +277,12 @@ export function baseBonusFromDoc(doc: unknown): BaseBonusTable {
  * 系統贈禮。
  */
 export interface FinalizeStatOptions {
+  /** 每級加成表。⭐ 見 `PerLevelBonusTable`。缺席 = 出貨值（每級 +1 AP）。 */
+  perLevelBonus?: PerLevelBonusTable;
+  /** 這個單位的等級。⚠️ 缺席 = 1（＝每級加成是 0），fail-safe。 */
+  level?: number;
+  /** 主屬性，`appliesTo` 的 primary/nonPrimary 要用。缺席 = 那兩種模式回 0。 */
+  primaryAttr?: "str" | "agi" | "int";
   /** 戰鬥系統倍率表。缺 = 中性全 1.0。 */
   env?: CombatEnvMultipliers;
   /** 基礎加成表。缺 = **出貨預設**(生命 +300),不是空表。 */
@@ -241,6 +344,15 @@ export function finalizeStat(
   // 位置就是語意:在 `*=` **之後** = 不參與倍率(owner 2026-07-28);在 clamp
   // **之前** = 上限仍然管得到它。
   out += baseBonusFor(opts.baseBonus ?? DEFAULT_BASE_BONUS, stat);
+  // ⭐ 每級加成坐在**同一個位置**（倍率之後、夾限之前）—— 它就是「乘上等級」的
+  //   基礎加成。owner 2026-08-13：「英雄每等級都會 +1 AP」。
+  //   ⚠️ 加在夾限**之前**，所以 stat-caps 仍然管得到它。
+  out += perLevelBonusFor(
+    opts.perLevelBonus ?? DEFAULT_PER_LEVEL_BONUS,
+    stat,
+    opts.level ?? 1,
+    opts.primaryAttr,
+  );
   // 上界來自 cap 表 + 這個單位的解鎖量;下界永遠是 STAT_CLAMPS 的(cap 表只描述
   // 天花板,`CapRaise` 沒有「解鎖下限」的語意)。
   const clamp = STAT_CLAMPS[stat];

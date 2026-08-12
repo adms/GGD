@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "fa2f04920516",
+  "hash": "d305ecbfbab1",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -123,6 +123,12 @@
       "size": 1156
     },
     {
+      "id": "displacement-tiers",
+      "path": "config/displacement-tiers.json",
+      "hash": "383fc50f816d",
+      "size": 1231
+    },
+    {
       "id": "form-visuals",
       "path": "config/form-visuals.json",
       "hash": "93452b5fa521",
@@ -143,14 +149,20 @@
     {
       "id": "item-card",
       "path": "config/item-card.json",
-      "hash": "b63a2d54c688",
-      "size": 1959
+      "hash": "e4bd0839819a",
+      "size": 1984
     },
     {
       "id": "lobby-layout",
       "path": "config/lobby-layout.json",
       "hash": "f112e56c1d4b",
       "size": 1392
+    },
+    {
+      "id": "mitigation",
+      "path": "config/mitigation.json",
+      "hash": "3d2fdc92403a",
+      "size": 835
     },
     {
       "id": "model-lod",
@@ -163,6 +175,12 @@
       "path": "config/origin-routes.json",
       "hash": "1b75573e79be",
       "size": 8930
+    },
+    {
+      "id": "per-level-bonus",
+      "path": "config/per-level-bonus.json",
+      "hash": "4787ecfd66fb",
+      "size": 649
     },
     {
       "id": "regen",
@@ -197,14 +215,14 @@
     {
       "id": "stat-caps",
       "path": "config/stat-caps.json",
-      "hash": "3378da3ff49e",
+      "hash": "d5b8341b7d16",
       "size": 922
     },
     {
       "id": "stat-normalization",
       "path": "config/stat-normalization.json",
-      "hash": "2cc864facdac",
-      "size": 9099
+      "hash": "c98315b0e1e8",
+      "size": 9735
     },
     {
       "id": "stealth",

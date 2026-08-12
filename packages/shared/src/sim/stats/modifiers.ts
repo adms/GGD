@@ -995,6 +995,23 @@ export interface ModifierSource {
    * (`critStrikeFor` 的 ZERO GUARANTEE),所以既有 replay 逐位元不變。
    */
   critStrike?: import("../combat/critStrike").CritStrikeGrant;
+  /**
+   * [穿透] —— 這個來源授予的**護甲/魔法穿透**（LoL 四段的段③④）。霸王破甲槍
+   * `godie-i00f` 的「普攻無視敵方 100% 護甲」就是 `{scope:"basic", armorPct:1}`。
+   *
+   * 它騎在 source 上的理由跟 `damageTypeOverride` 逐字相同,而且是**同一個
+   * 論證的第二次應用**:穿透要帶**範圍**（只穿普攻 / 只穿技能 / 全部），而
+   * 一個 `Stat` 記不住範圍 —— 聚合成一個數字的那一刻,「這一件只給普攻」就沒了。
+   *
+   * 讀它的**只有** `combat/damage.ts` 的兩個 `mitigate*`（透過
+   * `combat/penetration.ts::resolvePenetration`）。統計管線一個字都不讀,
+   * 所以它不動任何屬性數字、不動面板、不動商店預覽。
+   *
+   * ABSENT on every source in the catalogue except 霸王破甲槍 —— 掛上這個欄位
+   * 對其餘所有內容是**嚴格的 no-op**（`resolvePenetration` 沒找到任何一份就回
+   * 共用的 `NO_PENETRATION`,而 `resistAfterPenetration` 對它是恆等式）。
+   */
+  penetration?: import("../combat/penetration").PenetrationGrant;
 }
 
 /**

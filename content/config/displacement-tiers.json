@@ -1,0 +1,20 @@
+{
+  "id": "displacement-tiers",
+  "schema": "config.displacement-tiers@1",
+  "note": "位移四級距 + 速度天花板（GH#318）。兩條梯子：travel = 自己動（衝刺），push = 別人被推（擊退）。兩者的出貨分佈幾乎不重疊（dash 5.0–14.67、knockback 2.0–6.0），硬塞成一條會讓 14 支擊退全部擠進「小」；要合成一條，把兩張表填成一樣的數字即可。⚠️ 速度那一欄是安全欄位不是手感欄位：穿牆的門檻是「每 tick 位移 > 身體半徑」，所以上限 = 無條件捨去(30 × 最小身體半徑 × safetyFactor) = 16，而 clampSpeed 是無條件套用的（跟有沒有填級別無關）——那一格才是 GH#318 的修復本體。關掉 clampSpeed 穿牆就會回來。",
+  "enabled": true,
+  "clampSpeed": true,
+  "safetyFactor": 0.9,
+  "travel": {
+    "小": { "distance": 5.5, "speed": 16 },
+    "中": { "distance": 8.25, "speed": 16 },
+    "大": { "distance": 11, "speed": 16 },
+    "極大": { "distance": 14.67, "speed": 16 }
+  },
+  "push": {
+    "小": { "distance": 2, "speed": 16 },
+    "中": { "distance": 3, "speed": 16 },
+    "大": { "distance": 4.5, "speed": 16 },
+    "極大": { "distance": 6, "speed": 16 }
+  }
+}

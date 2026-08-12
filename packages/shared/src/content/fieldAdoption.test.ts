@@ -720,22 +720,27 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 設計選擇**印成「ACCEPTED FAILURE」,那句話對這三格是重的。真正的修法是替
   // ExemptionStatus 加一個講「列舉比內容寬,而且是故意的」的成員 —— 但那個成員必須
   // 照樣印在 banner 上,否則它就是一個更好聽的沉默鍵,也就是這份普查存在要擋的東西。
-  "field:abilities.effects[]#applyBuff.damageTypeOverride.applyAt": {
-    status: "default-live",
-    why: "省略 = \"afterGates\",而且那個預設**真的在跑**:sim/combat/damageTypeOverride.ts 的 resolveDamageConversion 逐個來源比對 `(ov.applyAt ?? \"afterGates\") !== phase`,三件出貨武器全部走這一條。它的意思是無敵/免疫與閃避**先用原本的型別**判定,轉換只影響護甲魔抗與護盾型別過濾 —— 也就是 owner 文案「無視防禦」字面上要的東西,一點不多。寫 \"beforeGates\" 是「連魔法免疫也穿透」,那是一個沒有人要求過的隱性升級,所以零採用正是它該有的樣子。兩側都由 sim/combat/damageTypeOverride.test.ts 的「applyAt —— the conservative default leaves 魔法免疫 working」逐條驅動(預設那條與 beforeGates 那條各一),所以這一格不是「schema 有個欄位」。",
-  },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
-    status: "debt",
-    why: "sim 認得它(originInScope 的 `scope === \"all\"` 早退,由 damageTypeOverride.test.ts 的 origin 分類表逐列驅動,含 hook: / mob / guardian 三種只有 \"all\" 抓得到的封包),但沒有任何一件出貨道具要它:三件的文案分別講「普攻」與「技能」,而 \"all\" 會額外把道具 proc、小怪與守衛塔封包一起轉成真傷 —— 惡夢魔王碎片 godie-i067 的 authoringNote 就是這樣寫的:「那是另一件道具」。這一格是**列舉比內容寬**,不是壞掉的機制;掛 debt 是因為六個 status 裡只有它能讓這一列永遠留在 banner 上而不說謊(理由見上面那段)。刪掉這一條的日子,是有人真的做出「這位持有者打出去的每一發都是真傷」那件道具的日子;若 owner 裁定永遠不會有,誠實的做法是把成員從 zItemDamageTypeOverride 拿掉,不是改成一個聽起來比較舒服的 status。",
-  },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=magic": {
-    status: "debt",
-    why: "`becomes` 被**刻意**做成完整的 DamageType 而不是 `toTrue: boolean` —— 理由寫在 sim/combat/damageTypeOverride.ts 的 DamageTypeOverride.becomes:WC3 有一整族「攻擊屬性轉換」(物理↔魔法)的道具與光環,用同一個機制就寫得出來,而多開一個 boolean 才是把決策烘進程式(第一守則)。所以這一格的零是**那個決定的必然結果**,不是有人忘了填:今天三件出貨全部是 \"true\",而 GGD 還沒有匯入任何一件物理↔魔法轉換道具。sim 這一側是活的(CONVERSION_RANK 的全序由 damageTypeOverride.test.ts 的「two conflicting sources resolve the same way in EITHER attach order」用 becomes:\"magic\" 真的驅動)。掛 debt 而不是 landing:沒有遷移在路上,而 30 天的鬧鐘只會逼出一件為了餵測試而生的道具。",
-  },
-  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=physical": {
-    status: "debt",
-    why: "同 becomes=magic 的另一半:「把魔法傷害打成物理」。它比 magic 更遠 —— 出貨內容裡連一句承諾這種轉換的文案都沒有(掃過 219 份 item 文件的 description)。留著的理由是列舉鏡射 DamageType 這個決定本身,而不是有人要求過。⚠️ 它與 magic 的差別值得記一筆:magic 那格在 sim 測試裡被真的驅動過(CONVERSION_RANK 排序),physical 只作為排序表的最低位存在。所以如果 owner 裁定這一族永遠不進 GGD,physical 是第一個該被拿掉的成員,而拿掉它會同時簡化 CONVERSION_RANK。",
-  },
+  //
+  // ── 2026-08-13：這一族的四格豁免**整組被刪掉了**,因為容器 FELL BACK UNDER
+  //    MIN_REACH（形狀與上面「靈氣 (auras)」那一段逐字相同）。
+  //
+  //    霸王破甲槍 godie-i00f 是 owner 2026-08-13 點名改掉的：它從
+  //    `damageTypeOverride{becomes:"true"}` 換成 `penetration{scope:"basic",
+  //    armorPct:1}`（真傷 → 100% 護甲穿透）。於是 `damageTypeOverride` 的採用從
+  //    **3 份掉到 2 份**（死之王的長槍 godie-i01d、惡夢魔王碎片 godie-i067），
+  //    跨回 `MIN_REACH` = 3 以下 —— 普查從此對這一族的**子欄位**不再有任何宣稱，
+  //    而「一個不再有宣稱的鍵留著豁免」就是這份檔案自己定義的 STALE。
+  //
+  //    ⛔ 這不是把守衛改弱換綠燈：那四筆的作用是**壓下報告**，刪掉它們是把壓制
+  //    拿掉，不是把斷言放寬。真正的內容側守衛（機制本身有沒有在跑）沒有動：
+  //    `sim/combat/damageTypeOverride.shipped.test.ts` 的雙向 ratchet 現在釘的是
+  //    **兩件**，而 `penetration.test.ts` 釘 godie-i00f 那一件。
+  //
+  //    ⚠️ 它們會回來：只要第三份文件再採用 `damageTypeOverride`，reach 就跨回
+  //    MIN_REACH，這四個鍵會立刻以 unexplained 的身分重新出現在報告上。那一天請去
+  //    `git log -p` 這一段把原文撈回來（`applyAt` 是 default-live，另外三個 enum
+  //    成員是 debt，理由是上面那整段「列舉比內容寬，而且是故意的」）——
+  //    ⛔ 不要重寫一份新的理由，那會是第二份會分家的說法。
 
   // ══ G7 授權格第二批 2026-08-09（GH#299 第 6 條「授權格要放寬」）════════════
   //
@@ -2255,6 +2260,66 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "legacy-parked",
     witness: "content/_legacy/abilities/godie-hlgr.passive.json",
     why: "「只免疫魔法傷害」這個成員的唯一客戶是 03-00 相轉移裝甲（godie-hlgr.passive，每 3 秒續期一次的 magic-only 免疫），跟著鋼彈-煌一起進了 _legacy。留在營運樹上的 22 份 invulnerable 全部是全類型免疫（缺省），所以這一格是**列舉比現役內容寬**：sim 那一側照樣分辨得出三種 blocksDamage，只是這一版沒有一支技能挑魔法那一種。",
+  },
+
+  // ══ 2026-08-13 · 護甲穿透（`penetration`）的三個授權面 ════════════════════
+  //
+  // ⭐ **機制本身不在零**：`field:items.penetration` 已經被霸王破甲槍
+  // `godie-i00f` 採用（owner 2026-08-13 點名把它從真傷改成 100% 護甲穿透），
+  // 而 `sim/combat/penetration.test.ts` 用**真的出貨文件**裝上去打一發。
+  // 下面三格是**同一格授權**在另外三個面上的節點，不是三個機制 ——
+  // `sourceGrants.ts` 的轉發表對四個面一視同仁（該檔的雙向對齊守衛在守）。
+  "field:abilities.effects[]#applyBuff.penetration": {
+    status: "landing",
+    since: "2026-08-13",
+    why:
+      "`applyBuff` 授予的穿透（限時的「破甲藥水」那一族）。⭐ 引擎這一側是活的：" +
+      "`resolvePenetration` 走的是 `ModifierSource` 上的那一格，而 `applyBuff` 與道具" +
+      "**共用同一條**授權路徑（`sourceGrants.ts` 的轉發表），所以出貨的道具那一件就是" +
+      "這條路徑的證人。零採用＝這一批技能沒有一支的規格寫了「暫時無視 N% 護甲」，" +
+      "⛔ 不是機制缺席。憑空給某支技能加穿透就是在改設計（第〇·六守則第 1 層）。",
+  },
+  "field:abilities.passive.ranks[].penetration": {
+    status: "landing",
+    since: "2026-08-13",
+    why:
+      "天生技逐階授予的穿透。同上：同一格授權、同一條轉發路徑，只是掛在天生技的" +
+      "rank 上。零採用＝出貨的 100 支天生技沒有一支的規格寫了穿透。⚠️ 這一格存在的" +
+      "理由是**授權面要一致**：只開道具不開天生技，作者會遇到「編輯器畫得出來、" +
+      "引擎讀不到」——那正是 `sourceGrants.ts` 檔頭警告的形態。",
+  },
+  "field:augments.penetration": {
+    status: "landing",
+    since: "2026-08-13",
+    why:
+      "三選一增益卡授予的穿透。同上第三個面。31 張出貨增益卡沒有一張是穿透卡；" +
+      "⛔ 加一張是內容決策，屬於 owner 的排序，不是這一批引擎工作的一部分。",
+  },
+
+  // ══ 2026-08-13 · 位移級距（`distanceTier`，GH#318）════════════════════════
+  //
+  // ⚠️ 這一輪只做了 **P1（速度天花板）**，那一半是**無條件**的、不需要任何內容
+  // 欄位（註冊期夾在 `floor(TICK_HZ × 最小身體半徑 × safetyFactor)`），32 個出貨
+  // 速度節點已經全部改到天花板以下，`displacementTiers.test.ts` 逐份掃。
+  // `distanceTier`（P2）是**選填的距離級距**，填下去會動 8 支 dash 的距離
+  // （−14.3% .. +22.2%）—— 那是手感變更，owner 還沒勾。
+  "field:abilities.effects[]#dash.distanceTier": {
+    status: "landing",
+    since: "2026-08-13",
+    why:
+      "GH#318 位移級距的 P2。⭐ 引擎這一側是活的且有守衛：`displacementTiers.test.ts` 的" +
+      "「級別贏過手寫值」用一支只填 `distanceTier` 的技能真的跑過三條註冊路徑。" +
+      "零採用是**刻意的**：P1（速度天花板，無條件、零欄位）已經單獨修好 #318 的技術牆，" +
+      "P2 會改 8 支技能的位移距離 —— 那是 owner 沒勾過的手感變更（第〇·六守則：可以停就停）。" +
+      "⭐ 想要「零數值變更」的半套 P2，只要給**距離正好落在級距刻度上**的節點填級別即可。",
+  },
+  "field:abilities.effects[]#knockback.distanceTier": {
+    status: "landing",
+    since: "2026-08-13",
+    why:
+      "同 dash 那一格的另一半（擊退用 push 梯，距離比 travel 短）。⚠️ 它與 `launchDistance` " +
+      "**互斥**（`refineKnockbackTier` 在擋）：後者是執行期解析、跳過 gap 減法與 impactPower，" +
+      "兩格同時填就是「編輯器顯示 4.5、場上打 6.0」。零採用同上：14 支擊退的距離由 P1 一格未動。",
   },
 };
 

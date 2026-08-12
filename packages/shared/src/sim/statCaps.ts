@@ -77,7 +77,12 @@ export type StatCapTable = Readonly<Partial<Record<Stat, StatCap>>>;
  * 沒有東西打得到 base,更不可能需要解鎖。要把 AP 的解鎖語意打開,後台把
  * `unlocked` 調到比 `base` 高就成立,一行程式都不用改(見 `effectiveCap`)。
  */
-export const AP_CAP_OPEN = 100000;
+export const AP_CAP_OPEN = 500000;
+// ⚠️ 2026-08-13：100,000 → 500,000。owner 把 `intToAbilityPower` 從 1 調到 4
+//   （理由：「技能傷害跟普通攻擊傷害落差實在太大了」），量到最強 AP 組合因此從
+//   4,125.7 漲到 **16,545.5** —— 舊天花板只剩 6.0 倍餘裕，而守衛要求至少 10 倍。
+//   ⭐ 守衛的訊息自己寫著「要嘛抬高 AP_CAP_OPEN，要嘛這就是 owner 想開始夾了」。
+//   owner 2026-08-01 的裁決是「先不要夾」，所以抬高（30 倍餘裕）。
 
 /**
  * 出貨預設。

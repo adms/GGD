@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "336636fc",
+  "fingerprint": "113bbcc6",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -152,6 +152,7 @@
     "dispellable",
     "distance",
     "distanceScale",
+    "distanceTier",
     "dodgesAbilities",
     "dodgesTrueDamage",
     "dragToCaster",
@@ -235,6 +236,7 @@
     "payCosts",
     "pctCurrentMana",
     "pctMaxMana",
+    "penetration",
     "perDamageFlat",
     "perDamagePctOfMaxHealth",
     "perMana",

@@ -122,9 +122,11 @@
  *
  *   strToMaxHealth      力量 → 生命上限        (23)
  *   strToHealthRegen    力量 → 每秒回血        (0.04)
- *   strToAttackDamage   力量 → 攻擊力          (1)
+ *   strToAttackDamage   力量 → 攻擊力          (0.4, owner 2026-08-13 從 1 調降)
  *   agiToArmor          敏捷 → 護甲            (0.15)
- *   agiToAttackSpeed    敏捷 → 攻速            (0.02, MULTIPLICATIVE — see below)
+ *   agiToAttackSpeed    敏捷 → 攻速            (0.01, MULTIPLICATIVE — see below)
+ *                                              ⚠️ 暴雪預設是 0.02，owner 2026-08-13
+ *                                              砍半，因為等級上限從 30 變 99
  *   intToMaxMana        智慧 → 魔力上限        (15)
  *   intToManaRegen      智慧 → 每秒回魔        (0.07)
  *   intToAbilityPower   智慧 → 法術強度        (1)
@@ -466,17 +468,78 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   /** war3mapMisc.txt [Misc] StrRegenBonus = 0.04     (Blizzard MiscGame.txt: 0.05) */
   strToHealthRegen: 0.04,
   /** war3mapMisc.txt [Misc] StrAttackBonus = 1.0     (Blizzard MiscGame.txt: 1.0) */
-  strToAttackDamage: 1,
+  strToAttackDamage: 0.4,
   /** war3mapMisc.txt [Misc] AgiDefenseBonus = 0.15   (Blizzard MiscGame.txt: 0.30) */
   agiToArmor: 0.15,
   /** Blizzard MiscGame.txt AgiAttackSpeedBonus = 0.02 — the map never overrides it */
-  agiToAttackSpeed: 0.02,
+  // 🔴 2026-08-13 owner：0.02 → **0.01**。
+  //
+  //   ⚠️ 0.02 是**暴雪的預設**（`AgiAttackSpeedBonus`，地圖沒有覆寫），
+  //     而暴雪設計它的時候英雄上限是 **10 級**。地圖拉到 30，GGD 拉到 **99**。
+  //   ⭐ 攻速是九條三圍推導裡**唯一的乘法列**（`scaleBase`），所以只有它
+  //     在等級外插下是指數放大的：
+  //       敏捷中位  L30 = 70 → 倍率 2.39×
+  //                L99 = 197 → 倍率 **4.95×**
+  //     L99 攻速中位數因此是 **12.2**，而系統上限是 4 —— 超過 3 倍。
+  //   ⇒ 0.01 之後 L99 倍率降到 **2.97×**，中位約 7.3。
+  //
+  //   ⚠️ owner 選 0.01 而不是 0.005，理由是他自己前一則立的規則：
+  //     「計算最多取小數點兩位」。0.005 有三位。
+  //   ⚠️ 代價是**低等級的敏捷英雄變弱**：L18 倍率從 1.94× 掉到 1.47×。
+  agiToAttackSpeed: 0.01,
   /** war3mapMisc.txt [Misc] IntManaBonus = 15.0      (Blizzard MiscGame.txt: 15) */
   intToMaxMana: 15,
   /** war3mapMisc.txt [Misc] IntRegenBonus = 0.07     (Blizzard MiscGame.txt: 0.05) */
   intToManaRegen: 0.07,
   /** OWNER'S DESIGN — no WC3 source exists; Warcraft III has no 法強 attribute */
-  intToAbilityPower: 1,
+  // 🔴 2026-08-13 owner：1 → **2**。理由是他量到的落差：
+  //   「目前**技能傷害跟普通攻擊傷害落差實在太大了**」
+  //
+  //   實測（法師 L99）：普攻**每秒 1,328**，而一發技能（多半 8~15 秒冷卻）
+  //   的中位傷害只有 **420** —— 一發技能 = 普攻一秒的 **32%**。
+  //   係數 2 之後升到 638（48%）。
+  //
+  //   ⚠️ 代價是**全域的**：121 個傷害節點吃 AP 加成（AP 係數中位 0.60），
+  //     它們的 AP 那一項全部翻倍。這是一次真正的平衡改動不是微調。
+  //   ⭐ 但它是 `combat-env.json` 的一格，存檔生效、不用部署。
+  //
+  //   ⚠️ 而且這個落差**有一半不是 AP 的錯**：法師 L99 的攻速被夾在上限 4、
+  //     AD 332，所以普攻每秒 1,328。那是攻速上限與 AD 成長的問題。
+  //
+  //   ⭐ 這是 owner 自己設計的係數（w3x 沒有「法強」這個屬性），
+  //     所以調它**不偏離原作**。
+  // ═══ 2026-08-13 · 普攻 vs 技能的再平衡（owner 選了最激進的那一組）═══════
+  //
+  //   owner：「現在的玩法**普通攻擊太有利了**，可以一直輸出，不用卡冷卻 MP 消耗
+  //           吟唱，**技能傷害爆發力對於玩家及 NPC 造成不了顯著一擊＝雞肋**」
+  //
+  //   量到的落差（法師，等級 99）：
+  //     普攻 **每秒 1,328**（AD 332 × 攻速上限 4）
+  //     技能一發中位 **388**（base 200 + AP 係數 0.60 × AP 314）
+  //     ⇒ 一發技能 = **普攻 0.29 秒**，而主力技能冷卻多半 8~15 秒。
+  //
+  //   ⭐ 關鍵發現：**削 AD 比補 AP 更有效**，因為普攻是乘法（AD × 攻速）而技能是
+  //     加法。`strToAttackDamage` 1→0.5 一動就把比值從 0.58 推到 0.76，
+  //     比 AP 從 2 拉到 3 的效果還大。所以兩邊一起動。
+  //
+  //   六組配套算過之後 owner 選了最激進的那一組：
+  //     intToAbilityPower 2→4 · strToAttackDamage 1→0.4 · attackDamage 1.0→0.6
+  //     ⇒ 法師普攻 1,328 → **566/秒**，技能一發 388 → **954**
+  //     ⇒ 一發技能 = **普攻 1.68 秒**（原本 0.29 秒）
+  //
+  //   ⚠️ 三個代價，都是刻意付的：
+  //     ① `strToAttackDamage = 1.0` 是 **w3x 原作逐字匯入的**（地圖寫著
+  //        `StrAttackBonus=1.0`）。改它是明確偏離原作 —— 第〇·六守則第 1 層
+  //        （新版設計）贏過第 5 層（w3x 原始設定），但這件事要留紀錄。
+  //     ② `attackDamage` 倍率影響**每一個人**，包括殭屍與守衛塔的承受端。
+  //     ③ AP 係數 4 讓 **121 個傷害節點**的 AP 那一項變 4 倍。那些技能的形狀是
+  //        `base 200 + 0.6 × AP`，AP 從 314 變 1,256 之後**係數項（754）遠超過
+  //        base 項（200）** —— 技能傷害從此主要由智慧決定，不由作者填的 base 決定。
+  //
+  //   ⭐ 三格全部是 `combat-env.json`，**存檔生效、不用部署**。不滿意就回頭。
+  //   ⚠️ 這一批**只動數值**。owner 點名的「普攻不用卡冷卻/MP/吟唱」是**結構**問題，
+  //     數值調整碰不到它 —— 那要另一批（給普攻一個機會成本）。
+  intToAbilityPower: 4,
   /**
    * OWNER'S DESIGN (2026-07-30, GH#221「新增 智慧→每 1 點智慧增加的魔抗 0.6」).
    * No WC3 source exists: Warcraft III has no magic-resistance ATTRIBUTE at all

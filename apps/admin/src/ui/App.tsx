@@ -70,6 +70,7 @@ import { StoreEconomyPage } from "./StoreEconomyPage";
 import { ConfigDocPage } from "./ConfigDocPage";
 import { specForPage } from "../configForms";
 import { VfxForgePage } from "./VfxForgePage";
+import { HeroForgePage } from "./HeroForgePage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -235,6 +236,10 @@ export const NAV: NavItem[] = [
   // 這裡放一個指不到東西的路由。
   // 鑄技工坊 · 特效綁定 —— 每支技能綁哪一個特效家族原型 + per-invocation 參數。
   { page: "vfxForge", label: "鑄技工坊 · 特效綁定", emoji: "🔮", section: SEC_FORGE },
+  // 新英雄轉生設計 (owner 2026-08-13) —— 六步從出身生一張英雄卡，最後從鑄技工坊
+  // 挑六格技能組起來。放在 鑄技工坊 這一組而不是 內容·素材管理，因為它的第⑤步就是
+  // 鑄技工坊的目錄，操作者會把兩頁一起用。
+  { page: "heroForge", label: "新英雄轉生設計", emoji: "🧬", section: SEC_FORGE },
   // ── 系統 ──────────────────────────────────────────────────────────────────
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   // 變身外觀 (#249 GH#288) —— 26 對變身裡有 21 對前後同一個模型,所以「看不看得
@@ -951,6 +956,7 @@ function Console(): React.JSX.Element {
             {page === "baseBonus" && <BaseBonusPage />}
             {page === "formVisuals" && <FormVisualsPage />}
             {page === "vfxForge" && <VfxForgePage />}
+            {page === "heroForge" && <HeroForgePage />}
             {page === "statCaps" && <StatCapsPage />}
             {page === "combatFeel" && <CombatFeelPage />}
             {page === "matchConfig" && <MatchConfigPage />}

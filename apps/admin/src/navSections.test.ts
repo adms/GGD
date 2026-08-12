@@ -110,6 +110,10 @@ const BASELINE_PAGES: readonly Page[] = [
   "bossIntro",
   "itemDraft",
   "itemCard",
+  // 新英雄轉生設計 —— owner 2026-08-13 核准的新頁（六步從出身生一張英雄卡，最後
+  // 從鑄技工坊挑六格技能）。列在這裡的理由和 對戰錄影／回合頒獎台 一樣：不列的話
+  // 這條守衛會把「新加的一頁」誤報成分類重編出錯。它住在 鑄技工坊 那一組。
+  "heroForge",
   "serverOps",
   "dataMigration",
 ];
@@ -141,7 +145,9 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
   // 小怪波設定 · 殭屍王
   { section: "肉鴿殭屍", pages: ["mobWaves", "bossIntro"] },
   // 鑄技工坊（admin 裡的特效綁定那一頁；/editor/ 的本體是外部入口，見下面）
-  { section: "鑄技工坊", pages: ["vfxForge"] },
+  // ⚠️ 2026-08-13 加入 heroForge —— 新英雄轉生設計的第⑤步就是在挑鑄技工坊裡的技能，
+  //    所以它和特效綁定同一組，操作者會把兩頁一起用。
+  { section: "鑄技工坊", pages: ["vfxForge", "heroForge"] },
 ];
 
 describe("分類重編一頁都沒有掉", () => {

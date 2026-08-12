@@ -155,6 +155,11 @@ describe("stat pipeline", () => {
     const { sela } = duel(world);
     const hp = world.health.get(sela)!;
     const maxAt1 = hp.maxHp; // read, not asserted — see the coefficient note below
+    // ⚠️ 同一個理由要用在 AD 上（見下面）：等級 1 的 AD **自己就含**一次
+    // `strToAttackDamage × STR(1)`，所以把它抄成字面值 52 等於把那個係數偷偷
+    // 抄進測試第二次 —— owner 2026-08-13 把係數 1 → 0.4 的時候，那個 52 就一起
+    // 過期了，而紅的訊息說的是「每級成長壞了」。
+    const adAt1 = world.stats.get(sela)!.final[Stat.AttackDamage];
     hp.hp = maxAt1 / 2; // 50%
 
     grantXp(world, sela, xpToNext(1)); // -> level 2
@@ -180,8 +185,17 @@ describe("stat pipeline", () => {
     expect(hp.hp / hp.maxHp).toBeCloseTo(0.5, 6); // ratio preserved
     // Same decomposition on a stat whose two layers DISAGREE, so the test can
     // tell them apart: growth.ad is the hand-authored 3, the attribute curve is
-    // strToAttackDamage 1 × strGrowth 3.6.
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(52 + 3 + 1 * 3.6, 6);
+    // strToAttackDamage × strGrowth 3.6.
+    //
+    // ⚠️ 2026-08-13：`strToAttackDamage` 以前寫成字面值 `1`，而 owner 那天把它調成
+    // 0.4（「普通攻擊太有利了」的再平衡）—— 於是這一條用**錯誤的訊息**紅了：
+    // 它說「每級成長壞了」，真相是一個出貨係數被調過。⭐ 和上面 maxHealth 那一層
+    // 一樣改成從表裡讀：這一條測的是**分層**，⛔ 不是那個係數的值是多少
+    // （值由 attributeCoefficients.test.ts 釘）。
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(
+      adAt1 + 3 + ATTRIBUTE_ENV_DEFAULTS.strToAttackDamage * 3.6,
+      6,
+    );
   });
 
   it("attach/detach + timed buff expiry (fx-05, fx-06)", () => {
@@ -384,7 +398,14 @@ describe("abilities", () => {
     // or of thorne's card now flows through instead of going stale.
     const thorneMr = world.stats.get(thorne)!.final[Stat.MagicResist];
     expect(thorneMr).toBeCloseTo(32 + ATTRIBUTE_ENV_DEFAULTS.intToMagicResist * 14, 6);
-    expect(abilityDamage).toBeCloseTo((80 + 0.7 * 26) * (100 / (100 + thorneMr)), 1);
+    // ⚠️ 2026-08-13：AP 那一項以前寫成字面值 `26`（＝ sela INT 26 × 當時的
+    // `intToAbilityPower` 1）。owner 那天把係數調成 4（「技能傷害跟普通攻擊傷害
+    // 落差實在太大了」），於是這一條也用**錯誤的訊息**紅了：它說「技能投射物的
+    // 傷害壞了」，真相是一個出貨係數被調過。⭐ 改成讀施法者**真的**那格 AP ——
+    // 與上面 `thorneMr` 逐字同一個理由（那一格也是被 GH#221 教出來的）。
+    // 這一條測的是「flat + AP 係數 + 魔抗曲線三層都在」，⛔ 不是 AP 等於多少。
+    const selaAp = world.stats.get(sela)!.final[Stat.AbilityPower];
+    expect(abilityDamage).toBeCloseTo((80 + 0.7 * selaAp) * (100 / (100 + thorneMr)), 1);
     expect(kindlingDamage).toBeGreaterThan(0); // passive fired
     expect(world.health.get(thorne)!.hp).toBeLessThan(hpBefore);
   });

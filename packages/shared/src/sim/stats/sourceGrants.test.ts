@@ -187,6 +187,8 @@ describe("格擋 / 暴擊的授權格 —— 四種來源同一條路", () => {
         // ⭐ 2026-08-09 (S11)：飛行是第五格。這一行是這條守衛的**維護點** ——
         // 新增一格授權而忘了在這裡餵它，兩個方向的比對就會紅並指名那個鍵。
         flight: { hoverHeight: 1.2, ignoreUnits: true },
+        // ⭐ 2026-08-12：穿透是第六格（LoL 四段的段③④）。同上，這一行就是維護點。
+        penetration: { scope: "basic", armorPct: 1 },
       }),
     ).sort();
     expect(forwarded).toEqual(Object.keys(SOURCE_GRANT_SHAPE).sort());

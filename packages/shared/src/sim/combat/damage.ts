@@ -23,6 +23,7 @@ import {
   impactGateTypeOf,
   resolveDamageConversion,
 } from "./damageTypeOverride";
+import { mitigationMult, resistAfterPenetration, resolvePenetration } from "./penetration";
 import { cancelLeap } from "../movement/leap";
 import { healTarget, restoreMana } from "./restore";
 import type { DamageRefund } from "../effects/dynamicTerms";
@@ -697,8 +698,19 @@ function mitigateStructure(
 ): number {
   let dmg = pkt.amount;
   if (pkt.type !== "true") {
-    const resist = pkt.type === "physical" ? sc.armor : sc.magicResist;
-    dmg *= 100 / (100 + Math.max(0, resist));
+    // ⛔ 建築這一份**也要**走四段 + 雙分支,否則會出現「英雄吃負分支、塔不吃」,
+    // 而那個分歧沒有任何一張卡片或文件描述過(`mitigateStructure` 是第二份實作,
+    // 改了 `mitigate` 它不會自動跟著改)。
+    // ⚠️ 誠實記一筆:**這一半今天出貨零行為變化** —— 守衛塔的 armor 出貨是 0,
+    // 而破甲/破防施加不到 `StructureComp`(它沒有 StatsComp),所以 resist 永遠 ≥ 0。
+    const physical = pkt.type === "physical";
+    const raw = physical ? sc.armor : sc.magicResist;
+    const resist = resistAfterPenetration(
+      raw,
+      resolvePenetration(world, pkt.source, pkt.origin),
+      physical,
+    );
+    dmg *= mitigationMult(resist, world.mitigationRules.negativeResistAmplifyCeiling);
   }
   const hp = world.health.get(pkt.target);
   if (hp && sc.maxHitPctMaxHp > 0) {
@@ -712,15 +724,27 @@ function mitigate(world: SimWorld, pkt: DamagePacket): number {
   // structures answer to their OWN armor/MR + per-packet cap (never a StatsComp)
   const structure = world.structure.get(pkt.target);
   if (structure) return mitigateStructure(world, pkt, structure);
+  // ⭐ 真傷仍然**完全跳過**四段 —— 100% 穿透與真傷不是同義詞:前者在**數字**上
+  // 恆 ≥ 真傷(負抗性時放大),在**型別**上恆 ≤ 真傷(照樣被格擋、被物理護盾吃、
+  // 照樣觸發反傷)。見 `penetration.ts` 檔頭。
   if (pkt.type === "true") return pkt.amount;
   const targetStats = world.stats.get(pkt.target);
-  const resist = targetStats
-    ? pkt.type === "physical"
+  const physical = pkt.type === "physical";
+  // ⚠️ 沒有 StatsComp 的目標(殭屍/小怪)= 0,不是「跳過減傷」—— 0 在兩個分支上
+  // 逐位元相同,所以這一行的語意與這個功能出現之前一模一樣。
+  const raw = targetStats
+    ? physical
       ? targetStats.final[Stat.Armor]
       : targetStats.final[Stat.MagicResist]
     : 0;
-  // classic LoL mitigation: 100/(100+resist)
-  return pkt.amount * (100 / (100 + Math.max(0, resist)));
+  // 段③④(攻擊者的穿透)→ 雙分支曲線。⛔ 兩者都住在 `penetration.ts`,
+  // 這裡只負責把「誰打誰、什麼型別」餵進去。
+  const resist = resistAfterPenetration(
+    raw,
+    resolvePenetration(world, pkt.source, pkt.origin),
+    physical,
+  );
+  return pkt.amount * mitigationMult(resist, world.mitigationRules.negativeResistAmplifyCeiling);
 }
 
 /**

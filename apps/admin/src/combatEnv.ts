@@ -174,10 +174,10 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   strToHealthRegen: { zh: "力量 → 回血", note: "每 1 點力量增加的每秒回血（地圖 StrRegenBonus=0.04；暴雪 0.05）" },
   strToAttackDamage: { zh: "力量 → 攻擊力", note: "每 1 點力量增加的 AD（地圖 StrAttackBonus=1.0，與暴雪相同）" },
   agiToArmor: { zh: "敏捷 → 護甲", note: "每 1 點敏捷增加的護甲（地圖 AgiDefenseBonus=0.15；暴雪 0.30）" },
-  agiToAttackSpeed: { zh: "敏捷 → 攻速", note: "每 1 點敏捷讓攻速 +N%（地圖未覆寫，回退暴雪 AgiAttackSpeedBonus=0.02＝+2%）" },
+  agiToAttackSpeed: { zh: "敏捷 → 攻速", note: "每 1 點敏捷讓攻速 +N%。⚠️ 這是九條三圍推導裡**唯一的乘法列**，所以只有它在等級外插下是指數放大的：敏捷中位 L30=70 → 2.39 倍，L99=197 → 4.95 倍。owner 2026-08-13 從暴雪預設 0.02 砍半到 **0.01**（暴雪設計它時英雄上限是 10 級，地圖 30，我們 99）。代價是低等級敏捷英雄變弱：L18 倍率 1.94→1.47。" },
   intToMaxMana: { zh: "智慧 → 魔力", note: "每 1 點智慧增加的魔力上限（地圖 IntManaBonus=15，與暴雪相同）" },
   intToManaRegen: { zh: "智慧 → 回魔", note: "每 1 點智慧增加的每秒回魔（地圖 IntRegenBonus=0.07；暴雪 0.05）" },
-  intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP（owner 設計值 1；魔獸三代沒有法強這根軸）" },
+  intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP。⭐ owner 2026-08-13 從 1 調到 **2**，理由是量到的落差：法師 99 級普攻**每秒 1,328**，而一發技能（多半 8~15 秒冷卻）中位只有 **420** —— 一發技能只等於普攻一秒的 32%。⚠️ 這一格是全域的：**121 個傷害節點**吃 AP 加成（係數中位 0.60），調它等於同時調那 121 支技能。魔獸三代沒有法強這根軸，所以這是 GGD 自己的設計值，調它不偏離原作。" },
   // #221 owner 2026-07-30。與 intToAbilityPower 一樣是 GGD 自己發明的軸,
   // 魔獸三代沒有魔抗這個概念 —— 所以這一格沒有「原作值」可以對照,只有 owner 的設計值。
   // ⚠️ 它同時是 AP 傷害的減傷來源:調高它會讓所有法系英雄一起變弱,不只是「多一點抗性」。

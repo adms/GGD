@@ -369,7 +369,16 @@ describe("the 能力屬性強化 三選一 (#260)", () => {
     // 力量 → 生命 ×23 + 攻擊力 ×1 ⇒ 3.256 AEP per point, so a jackpot lands
     // within a couple of percent of B_SIMPLE. The 375g tick therefore tops out
     // at roughly what 300g of item buys — it never dominates the item path.
-    expect(str * maxPoints / TIER_AEP_BUDGET.SIMPLE).toBeCloseTo(1, 1);
+    // ⭐ 2026-08-13：從 `toBeCloseTo(1, 1)`（±0.05 的點）改成**設計主張本身**的
+    // 一個區間。理由：owner 那天把 `strToAttackDamage` 1 → 0.4，於是這個比值從
+    // ~1.0 掉到 **0.82** —— 而這一條要守的從來不是「剛好等於 1」，是上面那句
+    // 「375 金的一格 ≈ 300 金的道具買得到的東西，**never dominates the item path**」。
+    // ⛔ 上界 1.2 才是那句話的守衛（三選一超過道具就是壞的）；下界 0.5 擋的是
+    // 另一邊（jackpot 變成雞肋，那一格就沒有人會選）。0.82 在區間內。
+    // ⚠️ 這是我（複驗）替一個**出貨係數變動**重新釘的，⭐ 拿給 owner 確認一次。
+    const jackpotVsSimple = str * maxPoints / TIER_AEP_BUDGET.SIMPLE;
+    expect(jackpotVsSimple).toBeGreaterThan(0.5);
+    expect(jackpotVsSimple).toBeLessThan(1.2);
     // …and the 「加很少」 floor really is a dud: a twentieth of the ceiling.
     expect(str * minPoints).toBeLessThan(TIER_AEP_BUDGET.SIMPLE * 0.1);
   });
@@ -393,8 +402,23 @@ describe("the 能力屬性強化 三選一 (#260)", () => {
     // are rolled from the SAME 0.1–2.0 range therefore is not a choice between
     // equals — 力量 dominates unless the roll is lopsided. Raised in the #260
     // report; the numbers live here so the decision has something to argue with.
+    //
+    // ⭐ 2026-08-13 —— **這個「事實」被 owner 的再平衡改掉了，所以它在這裡改寫。**
+    // owner 那天把 `intToAbilityPower` 1 → 4（「技能傷害跟普通攻擊傷害落差實在
+    // 太大了」）並把 `strToAttackDamage` 1 → 0.4。兩者剛好都往同一個方向推：
+    //   · 力量那一邊少了 60% 的 AD 貢獻
+    //   · 智慧那一邊的 AP 貢獻變成 4 倍
+    // ⇒ 力/智 的比值從 **>10 掉到約 2.9**。也就是 #260 報告點名的那個
+    // 「三選一不是在三個對等的選項之間選」，**owner 這次調係數把它調掉了大半**。
+    //
+    // ⛔ 這不是把守衛放寬換綠燈：下面改成**兩側都釘**，比原本的單側更嚴 ——
+    //   · 下界 2：力量仍然領先（真的翻盤成「智慧最強」會紅）
+    //   · 上界 6：`intToAbilityPower` 被誰悄悄調回 1 的話，比值會跳回 ~11 → 紅
+    // ⛔ 而且**不要**把 2.9 抄成 `toBeCloseTo` —— 那會讓每一次係數微調都紅，
+    //   正是第零守則說的「數值住進測試裡」。
     expect(str / agi).toBeGreaterThan(3);
-    expect(str / int).toBeGreaterThan(10);
+    expect(str / int).toBeGreaterThan(2);
+    expect(str / int).toBeLessThan(6);
   });
 });
 

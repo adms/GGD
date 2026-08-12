@@ -25,7 +25,12 @@ import type { MobRules } from "./mobs";
 import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
-import { DEFAULT_BASE_BONUS, type BaseBonusTable } from "./baseBonus";
+import {
+  DEFAULT_BASE_BONUS,
+  DEFAULT_PER_LEVEL_BONUS,
+  type BaseBonusTable,
+  type PerLevelBonusTable,
+} from "./baseBonus";
 import { DEFAULT_STAT_CAPS, type StatCapTable } from "./statCaps";
 import { DEFAULT_BODY_SCALE_RULES, type BodyScaleRules } from "./bodyScale";
 import { DEFAULT_REGEN_RULES, type RegenRules } from "./regenRules";
@@ -46,6 +51,7 @@ import { DEFAULT_CAST_TIME_RULES, type CastTimeRules } from "./castTimeRules";
 import { DEFAULT_WOUND_RULES, type WoundRules } from "./grievousWounds";
 import { DEFAULT_WEAKNESS_RULES, type WeaknessRules } from "./weakness";
 import { DEFAULT_DAMAGE_RULES, type DamageRules } from "./damageRules";
+import { DEFAULT_MITIGATION_RULES, type MitigationRules } from "./combat/penetration";
 import { DEFAULT_OFFER_EXCLUDED_CRAFT_ROLES } from "./economy/offerEligibility";
 import {
   DEFAULT_TAUNT_RULES,
@@ -667,6 +673,16 @@ export class SimWorld {
   baseBonus: BaseBonusTable = DEFAULT_BASE_BONUS;
 
   /**
+   * ⭐ **每級加成** —— owner 2026-08-13：「英雄**每等級都會 +1 AP**，
+   * 這個參數一樣可在後台設定」。
+   *
+   * ⚠️ 和 `combatEnv` / `baseBonus` / `statCaps` **同一條規矩**：開賽前指派一次，
+   * 之後整場不變。它坐在 `finalizeStat` 裡與 `baseBonus` 完全同一個位置
+   * （環境倍率之後、夾限之前），差別只有「乘上 (等級 − 1)」。
+   */
+  perLevelBonus: PerLevelBonusTable = DEFAULT_PER_LEVEL_BONUS;
+
+  /**
    * 屬性上限表 (see statCaps.ts) — 一般上限 / 解鎖上限。攻速 4.0 → 最多解鎖到
    * 10.0 (owner 2026-07-28, GH#286)。和 `combatEnv` / `baseBonus` 同一條規矩:
    * 開賽前指派一次,之後不再動 —— sim 從不讀 config/globals,所以決定性自動成立。
@@ -1071,6 +1087,13 @@ export class SimWorld {
   weaknessRules: WeaknessRules = DEFAULT_WEAKNESS_RULES;
   /** 傷害規則 —— 今天只有「沒寫 `damageType` 時用哪一種」。 */
   damageRules: DamageRules = DEFAULT_DAMAGE_RULES;
+  /**
+   * 減傷曲線 (`config.mitigation@1`) —— 今天只有「負抗性最多放大到幾倍」。
+   * 同 `damageRules` 的規矩：開賽前指派一次，之後不再動。預設是**出貨表**
+   * （2.0 = LoL），⛔ 不是空物件 —— 空表會讓 `mitigationMult` 產出 NaN，
+   * 而 NaN 傷害在畫面上等於「這一發沒扣血」。見 `combat/penetration.ts`。
+   */
+  mitigationRules: MitigationRules = DEFAULT_MITIGATION_RULES;
 
   /**
    * 隱形規則 (`config.stealth@1`, see stealth.ts) —— 隱形擋不擋自動索敵／手動

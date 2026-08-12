@@ -1,6 +1,6 @@
 {
   "collection": "ability-templates",
-  "hash": "7ef045b21040",
+  "hash": "941faf5d937b",
   "entries": [
     {
       "id": "tpl-barrier-domain",
@@ -29,8 +29,8 @@
     {
       "id": "tpl-charge-push",
       "path": "ability-templates/tpl-charge-push.json",
-      "hash": "f2db68515dbf",
-      "size": 2183
+      "hash": "ee4e26d179d0",
+      "size": 2182
     },
     {
       "id": "tpl-data-no-trigger",
@@ -101,8 +101,8 @@
     {
       "id": "tpl-mark-stacks",
       "path": "ability-templates/tpl-mark-stacks.json",
-      "hash": "04c2a5472a51",
-      "size": 3561
+      "hash": "ba522c3d23c6",
+      "size": 3560
     },
     {
       "id": "tpl-on-attack",

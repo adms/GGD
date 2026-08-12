@@ -44,6 +44,7 @@ import {
   parseDescriptionSections,
 } from "./championProfile";
 import { playstyleForChampion } from "./playstyle";
+import { originBadgeForChampion, ORIGIN_ACCENT, ORIGIN_CAPTION } from "./originBadge";
 import { isStandInModel, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "./standIn";
 
 type Tab = "skills" | "stats" | "play" | "lore";
@@ -377,6 +378,9 @@ export function ChampionProfile({
   const standIn = isStandInModel(def.modelKey);
   const rows = skillRows(champSelectSkillSeat(def));
   const quote = quoteEntryFor(quotes, def.id);
+  // 出身 × 路線 (owner 2026-08-13):文案全部從 `config.origin-routes@1` 讀,
+  // 三圍缺席 → null → 整區不畫。判定與關係說明在 ./originBadge.ts 的檔頭。
+  const origin = originBadgeForChampion(def);
 
   return (
     <div
@@ -418,11 +422,46 @@ export function ChampionProfile({
         )}
       </div>
 
-      {/* ── identity header (稱號 / 全名 / 近戰·遠程) — role deliberately omitted ── */}
+      {/* ── identity header (稱號 / 全名 / 近戰·遠程 · 出身×路線) ──────────────
+          `def.role` is STILL deliberately omitted, for the reason
+          `@ggd/shared/content/statNormalization` states next to `deriveArchetype`:
+          it holds three values (fighter 51 / marksman 22 / tank 1) and those 51
+          fighters mix tanks and mages. It is the import's coarse bucket, not a
+          design — which is why that module refuses to read it either. The codex
+          DOES print it (CodexDetail 定位) because the codex is a data browser;
+          this panel faces a player.
+          出身 is a DIFFERENT kind of thing: derived from the lv10-weighted 三圍
+          × attack type by the SAME `originOf()` that drives the ten-row table in
+          `config.stat-normalization@1`. Showing it shows this champion's stat
+          skeleton — which is exactly what the owner asked the panel to carry
+          (「調整英雄初始與成長屬性的定位參考」) — not a stale imported column. */}
       <div style={{ padding: "10px 2px 8px", borderBottom: PANEL_BORDER }}>
         {title && <div style={{ fontSize: 11, color: GOLD, letterSpacing: 1 }}>{title}</div>}
         <div style={{ fontSize: 19, fontWeight: 700, color: TEXT_MAIN, lineHeight: 1.2 }}>{fullName}</div>
-        <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>{attackTypeLabel(def.attackType)}</div>
+        <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>
+          {attackTypeLabel(def.attackType)}
+          {origin && (
+            <>
+              {" · "}
+              {/* 判定規則 (「力量主 · 近戰」) 只當 tooltip:它一半是攻擊型別,
+                  攤在同一行就會把「近戰」印兩次。 */}
+              <span title={`判定：${origin.rule}`} style={{ color: ORIGIN_ACCENT, fontWeight: 700 }}>
+                出身 {origin.origin}
+              </span>
+            </>
+          )}
+        </div>
+        {origin && (
+          <>
+            <div style={{ fontSize: 11.5, color: "#c1cadd", marginTop: 4, lineHeight: 1.5 }}>{origin.tagline}</div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>
+              路線 <span style={{ color: ORIGIN_ACCENT }}>{origin.routesLine}</span>
+            </div>
+            {/* ⛔ 不可以拿掉:少了這一行,「路線 鐵壁 · 反噬」在選角畫面上讀起來
+                就是一個可以點的分支,而路線今天沒有任何引擎機制。 */}
+            <div style={{ fontSize: 9.5, color: TEXT_DIM, marginTop: 2, opacity: 0.85 }}>{ORIGIN_CAPTION}</div>
+          </>
+        )}
         {quote && <QuoteBlock entry={quote} />}
       </div>
 

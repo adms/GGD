@@ -13,7 +13,11 @@ import {
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
-import { baseBonusFromDoc, type BaseBonusTable } from "@ggd/shared/sim/baseBonus";
+import {
+  baseBonusFromDoc,
+  perLevelBonusFromDoc,
+  type BaseBonusTable,
+} from "@ggd/shared/sim/baseBonus";
 import { statCapsFromDoc, type StatCapTable } from "@ggd/shared/sim/statCaps";
 import {
   COMBAT_FEEL_DOC_ID,
@@ -72,6 +76,11 @@ import {
   DAMAGE_RULES_DOC_ID,
   type DamageRules,
 } from "@ggd/shared/sim/damageRules";
+import {
+  mitigationRulesFromDoc,
+  MITIGATION_DOC_ID,
+  type MitigationRules,
+} from "@ggd/shared/sim/combat/penetration";
 import {
   AUGMENT_ENEMY_FILTER_DOC_ID,
   augmentEnemyFilterFromDoc,
@@ -871,6 +880,12 @@ export class MatchController {
     weaknessRules: WeaknessRules = weaknessRulesFromDoc(Configs.tryGet(WEAKNESS_DOC_ID)),
     damageRules: DamageRules = damageRulesFromDoc(Configs.tryGet(DAMAGE_RULES_DOC_ID)),
     /**
+     * 減傷曲線 (`config.mitigation@1`) —— 負抗性最多把傷害放大到幾倍
+     * (1.0 = 關掉負分支 = 一鍵 rollback)。和 `damageRules` 完全同一條路
+     * (含同一個已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
+     */
+    mitigationRules: MitigationRules = mitigationRulesFromDoc(Configs.tryGet(MITIGATION_DOC_ID)),
+    /**
      * 增益卡敵方過濾 (`config.augment-filter@1`, 批 1 決策點 1-1) —— 殭屍算不算
      * `victim: "enemyChampion"` 的敵人。和 `blockRules` 完全同一條路(含同一個
      * 已知限制:`Configs` 是 boot 時載入的,後台改了要重啟 shard)。
@@ -936,6 +951,9 @@ export class MatchController {
     this.world.combatEnv = combatEnv;
     // Snapshotted before tick 0 — a match in progress can never see a change.
     this.world.baseBonus = baseBonus;
+    // ⭐ 每級加成（owner 2026-08-13「英雄每等級都會 +1 AP」）。
+    //   ⛔ 漏掉這一行，那一格就永遠是出貨預設，後台改了場上沒反應。
+    this.world.perLevelBonus = perLevelBonusFromDoc(Configs.tryGet("per-level-bonus"));
     // 屬性上限 (`config.stat-caps@1`, GH#286) —— 一般上限 / 解鎖上限。
     //
     // ⚠️ 走**建構子參數**,和 baseBonus 同一條路,不是在這裡讀 `Configs`。
@@ -965,6 +983,12 @@ export class MatchController {
     this.world.woundRules = woundRules;
     this.world.weaknessRules = weaknessRules;
     this.world.damageRules = damageRules;
+    // 減傷曲線 (`config.mitigation@1`) —— 同樣在 tick 0 之前定格。
+    // ⚠️ 少了這一行就是下面那個 `augmentEnemyFilter` 的同型故障:後台在編輯它、
+    // 說明寫著「MatchController 在開場 tick 0 之前灌進 world」,而 sim 讀到的
+    // 永遠是 `SimWorld` 的出貨預設(2.0),於是把 ceiling 調成 1.0 的 rollback
+    // **按不下去**,而畫面上一切正常。
+    this.world.mitigationRules = mitigationRules;
     // 增益卡敵方過濾 (`config.augment-filter@1`) —— 同樣在 tick 0 之前定格。
     //
     // ⛔ 2026-08-05：**這一行本來不存在，而它上面那句註解一直在那裡。**

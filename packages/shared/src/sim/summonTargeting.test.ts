@@ -150,7 +150,14 @@ describe("召喚物 is a real target for the enemy (gh289-summon)", () => {
     // damageQueue → combatResolveSystem → deathSystem, and the body dies.
     let died = false;
     let sawDamage = false;
-    for (let i = 0; i < 900 && !died; i++) {
+    // ⚠️ 2026-08-13：預算 900 → 2400。⛔ **斷言一個字沒動**（死亡路徑存在），
+    // 動的是這一條自己在上面就宣告過「不是主張的一部分」的那個東西 ——
+    // 「how long it takes」。owner 那天的再平衡（`strToAttackDamage` 1→0.4、
+    // `agiToAttackSpeed` 0.02→0.01）把普攻 DPS 砍掉約兩成，於是這一條用
+    // **錯誤的訊息**紅了：它說「召喚物不會被打死」，真相是普攻變慢了。
+    // ⭐ 量到的是 **1,065 tick**（改動前在 900 以內），2400 給 2.25× 餘裕 ——
+    // 與上面那個 `hpMult: 0.05` 是同一個旋鈕的兩半。
+    for (let i = 0; i < 2400 && !died; i++) {
       r.step(1);
       if ((r.world.health.get(s)?.hp ?? 0) < hp0) sawDamage = true;
       died = !r.world.summon.has(s);
@@ -439,7 +446,8 @@ describe("召喚物 決策點: 火圈 + 賞金 (gh289-summon)", () => {
     const paid = rig();
     const s = paid.summonOn(paid.enemy, { bountyGold: 77, hpMult: 0.05 });
     const goldBefore = paid.world.champion.get(paid.enemy)!.gold;
-    for (let i = 0; i < 900 && paid.world.summon.has(s); i++) paid.step(1);
+    // ⚠️ 900 → 2400，理由與上面那一條逐字相同（普攻 DPS 少兩成，實測 1,065 tick）。
+    for (let i = 0; i < 2400 && paid.world.summon.has(s); i++) paid.step(1);
     expect(paid.world.summon.has(s), "it never died, so the bounty never came due").toBe(false);
     expect(
       paid.world.champion.get(paid.enemy)!.gold - goldBefore,
@@ -450,7 +458,7 @@ describe("召喚物 決策點: 火圈 + 賞金 (gh289-summon)", () => {
     const free = rig(13);
     const s2 = free.summonOn(free.enemy, { hpMult: 0.05 });
     const before2 = free.world.champion.get(free.enemy)!.gold;
-    for (let i = 0; i < 900 && free.world.summon.has(s2); i++) free.step(1);
+    for (let i = 0; i < 2400 && free.world.summon.has(s2); i++) free.step(1);
     expect(free.world.summon.has(s2)).toBe(false);
     expect(
       free.world.champion.get(free.enemy)!.gold,

@@ -52,8 +52,17 @@ import {
   KB_MAX_GETUP_TICKS,
   KB_MAX_IMPACT_POWER,
   KB_MAX_LAUNCH_HEIGHT,
-  KB_MAX_SPEED,
 } from "../../sim/effects/knockbackLimits";
+// 位移級距（GH#318）。⛔ 不要在這裡重打一份級別字串或速度上界。
+// ⚠️ `KB_MAX_SPEED (200)` 已經**不再**是擊退速度的上界：200 u/s 表示一個 tick
+//    走 6.7 單位 = 身體半徑的 11 倍，那是一發保證穿牆的擊退。護欄降到
+//    `DISPLACEMENT_AUTHORED_SPEED_MAX`，真正的天花板由註冊期的 clamp 推導。
+import {
+  DISPLACEMENT_AUTHORED_SPEED_MAX,
+  DISPLACEMENT_SPEED_MIN,
+  DISPLACEMENT_TRAVEL_DISTANCE_MAX,
+} from "../displacementTiers";
+import { zDisplacementTier } from "./displacementDoc";
 import {
   INCOMING_PCT_MAX,
   INCOMING_PCT_MIN,
@@ -75,6 +84,7 @@ import {
 import { MARK_MAX_COUNT } from "../../sim/markLimits";
 import { TAUNT_MAX_DURATION_SEC, TAUNT_MAX_TARGETS } from "../../sim/taunt";
 import { FLIGHT_MAX_HOVER_HEIGHT } from "../../sim/flight";
+import { zPenetrationGrant } from "./mitigationDoc";
 import { RANK_SCALAR_MAX_COLUMNS } from "../../sim/perRank";
 // 三圍授予的上下界 —— 一份表兩個消費端（道具與其餘三個授權面），⛔ 不抄字面值。
 import { ATTR_GRANT_MAX, ATTR_GRANT_MIN } from "../../sim/stats/attributes";
@@ -777,6 +787,30 @@ function refineProxyCast(
   }
 }
 
+/**
+ * 位移級距（GH#318）與**既有的**擊飛四檔 `launchDistance` 互斥。
+ *
+ * 兩者都在回答「這一下把人推多遠」，但走的是兩套互相看不見的路：
+ *   · `distanceTier` —— **註冊期**查表，寫進 `distance`，照常跑 gap 減法與 `impactPower`；
+ *   · `launchDistance` —— **執行期**解析（`toEdge` 要讀當下的火圈半徑），而且
+ *     `sim/effects/knockback.ts` 在那條路上**整段跳過** gap 減法與 `impactPower`。
+ * 兩格同時填，編輯器會顯示級距那個數字，場上跑的是另一個 —— 那正是
+ * `aoeTiers.ts` 自己警告過的「兩份查表」，而且沒有任何東西會紅。
+ */
+function refineKnockbackTier(e: EffectDef, ctx: z.RefinementCtx): void {
+  const kb = e as { distanceTier?: unknown; launchDistance?: unknown };
+  if (kb.distanceTier !== undefined && kb.launchDistance !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["distanceTier"],
+      message:
+        "distanceTier 與 launchDistance 只能填一個 —— 兩者都在決定推多遠，" +
+        "但擊飛四檔是執行期解析而且跳過 gap 減法與 impactPower，" +
+        "同時填會讓編輯器顯示的距離與場上跑的距離永遠對不起來",
+    });
+  }
+}
+
 function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   if (e.kind === "damage") return refineNegateOriginal(e, ctx);
   if (e.kind === "applyBuff") return refineApplyBuff(e, ctx);
@@ -824,6 +858,7 @@ function refineEffectDef(e: EffectDef, ctx: z.RefinementCtx): void {
   // ⚠️ `devour` 已經在上面走 `refineDevour`（它多一條 `onDevourPer` 的規則）。
   if (e.kind === "dispel" || e.kind === "shieldBreak" || e.kind === "blink")
     return refineDispelShape(e, ctx);
+  if (e.kind === "knockback") return refineKnockbackTier(e, ctx);
   if (e.kind !== "grantAttribute") return;
   if (e.store !== "source") {
     if (e.maxSourceTotal !== undefined) {
@@ -1132,6 +1167,16 @@ export const SOURCE_GRANT_SHAPE = {
    * 到期時 `flight` 跟著整個 source 一起消失，⛔ 不需要第二支到期掃描器。
    */
   flight: zFlightGrant.optional(),
+  /**
+   * ⭐ 2026-08-12 —— [穿透]（LoL 四段的段③④）。**又是同一個授權格**：
+   * `sim/combat/penetration.ts::resolvePenetration` 走 `StatsComp.sources` 而
+   * **不問 `kind`**，所以「這張三選一卡讓你的普攻穿 30% 護甲」「這支大招期間
+   * 無視魔抗 8 秒」擋住它的只有這一格 schema 與 `sourceGrants()` 的轉發。
+   *
+   * ⚠️ 定義住在 `schema/mitigationDoc.ts` 而不是這裡，因為它的上下界要從
+   * `sim/combat/penetration.ts` import（⛔ 不抄字面值）。
+   */
+  penetration: zPenetrationGrant.optional(),
 } as const;
 
 /**
@@ -2206,8 +2251,40 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       kind: z.literal("dash"),
       ...EFFECT_COMMON_SHAPE,
       mode: z.enum(["forward", "toPoint"]),
-      speed: z.number().positive(),
-      maxDistance: z.number().positive(),
+      /**
+       * u/s。⚠️ 這個上界是 **MIS-PARSE 護欄**（w3x 的 1000 貼進來），⛔ 不是安全上限 ——
+       * 真正的天花板是註冊期推導的 `maxSpeed`（`content/displacementTiers.ts`），
+       * 因為穿牆門檻吃的是 config 裡的身體半徑，不可能是一個靜態的 Zod 數字。
+       * 填高於天花板的值不會壞，只是會被夾掉（GH#318）。
+       */
+      speed: z
+        .number()
+        .min(DISPLACEMENT_SPEED_MIN)
+        .max(DISPLACEMENT_AUTHORED_SPEED_MAX)
+        .describe("衝刺速度（GGD 單位/秒）。⚠️ 上線時會被安全上限夾住；收招時間 = 距離 ÷ 速度。"),
+      /**
+       * ⚠️ **固定發射長度，不是施法距離。** `mode:"toPoint"` 只用點算**方向**，
+       * `remaining` 一律是這一格（`sim/systems/MovementSystem.ts` 的 `startDash`）——
+       * 點在腳邊也照樣衝滿。上界 24 = 決鬥區半徑，理由見 `displacementTiers.ts`。
+       */
+      maxDistance: z
+        .number()
+        .positive()
+        .max(DISPLACEMENT_TRAVEL_DISTANCE_MAX)
+        .describe(
+          "衝刺的**固定發射長度**（GGD 單位）——⚠️ 不是施法距離：指定地點只決定方向，距離永遠是這一格。",
+        ),
+      /**
+       * ⭐ 位移級別（GH#318）。填了它就不要填 `speed` / `maxDistance` ——
+       * 註冊時由 `config.displacement-tiers@1` 的 **travel** 梯翻成兩個數字，
+       * 兩者都填則**級別贏**（同 `radiusTier`：讓手寫值蓋過級別 = 這個機制對那支
+       * 技能靜默不存在）。唯一的查表處：`content/displacementTiers.ts`。
+       */
+      distanceTier: zDisplacementTier
+        .optional()
+        .describe(
+          "位移級別（小/中/大/極大）。填了就不用填速度與距離 —— 兩個數字由後台「位移級距」頁統一給。",
+        ),
       /**
        * ⭐ S7 —— **衝刺結束那一刻**才跑的一段（52-04「向前衝刺 400 距離後揮出」）。
        * 省略 = 沒有回呼 = 今天，一個 tick 都不差（出貨 29 份帶 dash 的文件全部缺席）。
@@ -2566,7 +2643,22 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * consumers shape `spreadLimits` uses, so schema and sim cannot drift.
        */
       distance: z.number().positive().max(KB_MAX_DISTANCE),
-      speed: z.number().positive().max(KB_MAX_SPEED),
+      /**
+       * u/s。上界從 `KB_MAX_SPEED (200)` 降到位移護欄 —— 200 u/s 是一個 tick 走
+       * 6.7 單位 = 身體半徑的 11 倍，一發保證穿牆的擊退（GH#318）。
+       * ⚠️ 這仍然只是護欄；真正的天花板是註冊期推導的 `maxSpeed`。
+       */
+      speed: z.number().min(DISPLACEMENT_SPEED_MIN).max(DISPLACEMENT_AUTHORED_SPEED_MAX),
+      /**
+       * ⭐ 位移級別（GH#318）—— **push** 那條梯。與 `launchDistance` **互斥**
+       * （`refineEffectDef` 擋）：那四檔走的是完全不同的一套（執行期解析、跳過 gap
+       * 減法與 `impactPower`），兩份查表就是「編輯器顯示 4.5、場上打 6.0」。
+       */
+      distanceTier: zDisplacementTier
+        .optional()
+        .describe(
+          "擊退級別（小/中/大/極大）。填了就不用填距離與速度。⛔ 不可以和「擊飛落點」同時填。",
+        ),
       /** away from the caster (default), along the caster's facing, or a PULL */
       from: z.enum(["caster", "facing", "pull"]).optional(),
       /** each resolved target (default) or the caster (a recoil) */

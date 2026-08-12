@@ -40,6 +40,7 @@ import type { BlockGrant } from "../combat/block";
 import type { CritStrikeGrant } from "../combat/critStrike";
 import type { DamageTypeOverride } from "../combat/damageTypeOverride";
 import type { FlightGrant } from "../flight";
+import type { PenetrationGrant } from "../combat/penetration";
 import type { AttrGrant } from "./attributes";
 
 /**
@@ -78,6 +79,14 @@ export interface SourceGrantFields {
    * 到期由那個 source 自己的 `expiresAtTick` 收掉,不需要第二支掃描器。
    */
   flight?: FlightGrant;
+  /**
+   * ⭐ 2026-08-12 —— [穿透]（LoL 四段的段③④）。同前五格:
+   * `combat/penetration.ts::resolvePenetration` 走 `StatsComp.sources` 而**不問
+   * `kind`**,所以掛在 `applyBuff` 生出來的限時 source 上就是「接下來 5 秒你的
+   * 普攻穿 40% 護甲」,到期由那個 source 自己的 `expiresAtTick` 收掉,
+   * ⛔ 不需要第二支掃描器。擋住它的只有 schema 的那一格與這裡的轉發。
+   */
+  penetration?: PenetrationGrant;
 }
 
 /**
@@ -96,6 +105,7 @@ export function sourceGrants(from: SourceGrantFields): SourceGrantFields {
       ? { damageTypeOverride: from.damageTypeOverride }
       : {}),
     ...(from.flight !== undefined ? { flight: from.flight } : {}),
+    ...(from.penetration !== undefined ? { penetration: from.penetration } : {}),
   };
 }
 
@@ -114,6 +124,7 @@ export function hasSourceGrant(from: SourceGrantFields): boolean {
     from.critStrike !== undefined ||
     from.attributes !== undefined ||
     from.damageTypeOverride !== undefined ||
-    from.flight !== undefined
+    from.flight !== undefined ||
+    from.penetration !== undefined
   );
 }

@@ -57,6 +57,10 @@ import {
 // 英雄屬性正規化（owner 2026-08-12）—— 同一條規矩：數字與語意定在
 // content/statNormalization.ts，schema 只是把它搬上 Zod。
 import {
+  PER_LEVEL_BONUS_MAX,
+  PER_LEVEL_BONUS_MIN,
+} from "../../sim/baseBonus";
+import {
   ARCHETYPES,
   BAND_VALUE_MAX,
   BAND_VALUE_MIN,
@@ -68,6 +72,11 @@ import {
 } from "../statNormalization";
 // 手把自動瞄準的小怪讓路幅度（GH#315）—— 同一條規矩：上下界定在 sim，schema 只搬上 Zod。
 import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../sim/combatFeel";
+// 位移級距（GH#318）與減傷曲線／穿透（負抗性放大）—— 兩份 config schema 各自
+// 住在自己的檔案裡（那一輪 config.ts 由多個 lane 同時碰），這裡只把它們接進 union。
+// ⛔ 漏掉任何一行 = 那份 json 進了 content/ 之後整份驗證失敗 → 骨架英雄。
+import { zConfigDisplacementTiersDoc } from "./displacementDoc";
+import { zConfigMitigationDoc } from "./mitigationDoc";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -2658,6 +2667,42 @@ export const zConfigBaseBonusDoc = z
     schema: z.literal("config.base-bonus@1"),
     /** stat key ("maxHealth" / "ad" / "ap" …) -> flat grant. 缺鍵 = 0。 */
     bonus: zBaseBonusTable,
+  })
+  .strict();
+
+/**
+ * config.per-level-bonus@1 — **每級加成**（`config/per-level-bonus.json`）。
+ *
+ * owner 2026-08-13：「我追加一個設定，**英雄每等級都會 +1 AP**，
+ * 這個參數一樣可在後台設定」。
+ *
+ * ⚠️ 為什麼不塞進 `config.base-bonus@1`：那一份每格是**一個數**（一次性加數），
+ * 這一份每格是**一對**（數量 + 給誰）。兩種語意共用一張表，操作者沒有線索分辨
+ * 他填的 1 是「+1」還是「每級 +1」—— 和 stat-caps 當初分家的理由逐字相同。
+ *
+ * 語意見 `sim/baseBonus.ts` 的 `PerLevelBonus`。缺文件 = 出貨預設（法強每級 +1，
+ * 給每一位），缺鍵 = 那條屬性沒有每級加成。
+ */
+export const zPerLevelBonusEntry = z
+  .object({
+    /** 每一級加多少。⚠️ 上界 100 是保險絲：99 級時那就是 +9,800。 */
+    amount: z.number().finite().min(PER_LEVEL_BONUS_MIN).max(PER_LEVEL_BONUS_MAX),
+    /**
+     * 給誰。⭐ `nonPrimary` 存在的理由：扁平加成會**壓平定位差距**
+     * （實測 +1 AP/級讓法師/坦克的 AP 比從 1.74 掉到 1.48），
+     * 想補償非法師又不想壓平法師時就用它。
+     */
+    appliesTo: z.enum(["all", "primary", "nonPrimary"]),
+  })
+  .strict();
+
+export const zConfigPerLevelBonusDoc = z
+  .object({
+    id: zId,
+    schema: z.literal("config.per-level-bonus@1"),
+    note: z.string().optional(),
+    /** stat key → { amount, appliesTo }。缺鍵 = 那條沒有每級加成。 */
+    perLevel: z.record(z.string(), zPerLevelBonusEntry),
   })
   .strict();
 
@@ -5323,6 +5368,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigVoxelBarcodesDoc,
   zConfigVoxelBodiesDoc,
   zConfigBaseBonusDoc,
+  // 每級加成（owner 2026-08-13）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
+  zConfigPerLevelBonusDoc,
   zConfigStatCapsDoc,
   zConfigCombatFeelDoc,
   zConfigFormVisualsDoc,
@@ -5372,6 +5419,10 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigLobbyLayoutDoc,
   zConfigValhallaSandboxDoc,
   zConfigVictoryPodiumDoc,
+  // 位移級距（GH#318，owner 2026-08-13）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
+  zConfigDisplacementTiersDoc,
+  // 減傷曲線的負抗性放大上限（owner 2026-08-13）。⚠️ 同上。
+  zConfigMitigationDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */
@@ -5883,6 +5934,12 @@ export const DEFAULT_ITEM_CARD: ConfigItemCardDoc = {
     看穿: "passive", // 常駐真視
     飛昇: "passive", // 移動轉為無視碰撞的飛行形態
     無視: "passive", // 普攻無視防禦
+    // ⭐ 【穿透】—— 霸王破甲槍 2026-08-13 從「真傷」改成「100% 護甲穿透」之後
+    //   啟用的新標記。⚠️ 它**不是**【無視】的同義詞：穿透照樣被格擋擋得下、
+    //   照樣被物理護盾吃、照樣觸發反傷，只是把護甲當成 0。
+    //   ⛔ 漏掉這一列，卡片會走 `unknownCategory` 去猜分類（猜出來剛好也是
+    //   passive，所以畫面上看不出來 —— 那正是 `itemCardShipped` 要擋的形態）。
+    穿透: "passive", // 普攻無視敵方 N% 護甲
     真實傷害: "passive", // 技能傷害全部轉真實
     反彈: "passive", // 反彈普通攻擊傷害
     斬殺: "passive", // 低血直接斬殺

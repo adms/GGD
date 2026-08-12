@@ -47,6 +47,19 @@ function percentOfTargets(sc: { sources: readonly ModifierSource[] }, tick: numb
   return out;
 }
 
+/**
+ * 這張卡的主屬性 —— `perLevelBonus` 的 `primary`/`nonPrimary` 模式要用。
+ *
+ * ⚠️ 用**英雄卡自己宣告的** `attributes.primary`（"STR"/"AGI"/"INT"），
+ * ⛔ 不重算一次 lv10 權重：那是 `content/statNormalization.ts` 的判定，
+ * 而 sim 不可以依賴 content 層（模組初始化循環，2026-08-12 踩過）。
+ * 卡上沒填 → 回 undefined → 那兩種模式一律給 0（fail-safe，⛔ 不猜）。
+ */
+function primaryAttrOf(def: { attributes?: { primary?: unknown } }): "str" | "agi" | "int" | undefined {
+  const p = def.attributes?.primary;
+  return p === "STR" ? "str" : p === "AGI" ? "agi" : p === "INT" ? "int" : undefined;
+}
+
 export function recomputeStats(world: SimWorld, id: EntityId): void {
   const sc = world.stats.get(id);
   const champ = world.champion.get(id);
@@ -198,6 +211,13 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
       // 拿不到身分 → 回中性 1 → 兩個旋鈕對每一位英雄都是死的,而且畫面上跟
       // 「操作者把它設成 1.0」長得一模一樣。
       subject: envSubject,
+      // ⭐ 每級加成（owner 2026-08-13「英雄每等級都會 +1 AP」）。
+      //   ⛔ 刪掉這三行，那一格就永遠是 0 —— 而它在後台上看起來完全正常。
+      //   ⚠️ `level` 就是上面那個 `champ ? champ.level : sm?.level ?? 1`，
+      //     所以召喚物也吃得到，跟其他每一條屬性走同一個等級。
+      perLevelBonus: world.perLevelBonus,
+      level,
+      primaryAttr: primaryAttrOf(def),
     });
   };
 

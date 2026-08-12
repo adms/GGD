@@ -20,6 +20,7 @@ import {
   zHookDefBase,
   zVisionGrant,
 } from "./effect";
+import { zPenetrationGrant } from "./mitigationDoc";
 import { MISMATCH_SCALE_MAX, MISMATCH_SCALE_MIN } from "../../sim/content/requirement";
 // 套裝的上下界定義在 sim 那一份(它也是判斷「湊齊了沒」的地方),schema 只是把
 // 同一組數字接上 Zod,所以兩層守的不可能是兩個數字。
@@ -309,6 +310,15 @@ export const zItemSetBonus = z
 export const zItemDamageTypeOverride = zDamageTypeOverrideGrant;
 
 /**
+ * 穿透 —— **`zPenetrationGrant` 的別名**,定義與上下界的理由在
+ * `schema/mitigationDoc.ts`（機制本身在 `sim/combat/penetration.ts` 的檔頭）。
+ * 同 `zItemDamageTypeOverride` 的規矩:授予穿透的不只有道具（三選一卡、天生技
+ * rank、`applyBuff` 都授予得起），所以定義住在 `SOURCE_GRANT_SHAPE` 展開得到的
+ * 那一側,這裡只留一個名字。
+ */
+export const zItemPenetration = zPenetrationGrant;
+
+/**
  * 格擋 —— **`zBlockGrant` 的別名**,定義與六根軸的完整推導在
  * `schema/effect.ts`(機制本身在 `sim/combat/block.ts` 的檔頭)。
  *
@@ -486,6 +496,18 @@ export const zItemDef = z
      * 見 `sim/combat/damageTypeOverride.ts` 檔頭 ②。
      */
     damageTypeOverride: zItemDamageTypeOverride.optional(),
+    /**
+     * [穿透] —— LoL 四段的段③④。霸王破甲槍「[穿透] 普攻無視敵方 100% 護甲」
+     * 就是 `{scope:"basic", armorPct:1}`。
+     *
+     * ⚠️ 它與 {@link zItemDamageTypeOverride} **不是同義詞**,兩件事都要知道:
+     *   · 在**數字**上穿透恆 ≥ 真傷 —— 護甲 ≥ 0 時兩者相同,護甲被【破防】
+     *     打成負數時真傷仍是 1.0×,而穿透會走負分支放大(最高 `ceiling` 倍)。
+     *   · 在**型別**上穿透恆 ≤ 真傷 —— 它維持 `physical`,所以照樣被格擋擋得下、
+     *     被物理/無型別護盾吃掉、照樣觸發反傷與 on-physical。
+     * 完整對照表與地板規則在 `sim/combat/penetration.ts` 檔頭。
+     */
+    penetration: zItemPenetration.optional(),
     /**
      * 格擋 —— 「擋下一部分/整發傷害」的機率門。四支傳說武器共用同一組軸,
      * 見 {@link zItemBlockGrant} 與 `sim/combat/block.ts` 的檔頭。

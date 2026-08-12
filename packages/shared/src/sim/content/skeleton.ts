@@ -276,7 +276,12 @@ export const THORNE: ChampionDef = {
       manaCost: [40, 40, 40, 40, 40],
       range: 6,
       effects: [
-        { kind: "dash", mode: "forward", speed: 28, maxDistance: 6 },
+        // ⚠️ 28 → 16（GH#318 位移級距）。骨架是內容載入失敗時的 fail-open 副本，
+        // 它與 `content/abilities/thorne.q.json` 必須逐位元一致（`loader.test.ts`
+        // 的往返比對在守）。⭐ 而且 16 不是隨手挑的：註冊期的速度天花板是
+        // `floor(TICK_HZ × 最小身體半徑 × safetyFactor)`，28 會被夾成 16，
+        // 留著 28 只會讓這份字面值永遠說謊。
+        { kind: "dash", mode: "forward", speed: 16, maxDistance: 6 },
       ],
       vfxKey: "fx.thorn-lash",
     },

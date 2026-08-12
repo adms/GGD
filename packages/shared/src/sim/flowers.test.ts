@@ -302,7 +302,13 @@ describe("targeting filters + static prop (flw-05)", () => {
     const nav = w.nav.get(caster)!;
     nav.attackTarget = flowerId; // thorne is MELEE: chase + windup + swing
     let burst = false;
-    for (let i = 0; i < 60 && !burst; i++) {
+    // ⚠️ 2026-08-13：預算 60 → 150。⛔ **斷言一個字沒動**（「花真的被普攻打爆」），
+    // 動的是這個迴圈的**時間預算** —— 它以前剛好卡在實際值上，所以 owner 那天的
+    // 再平衡（`strToAttackDamage` 1→0.4、`agiToAttackSpeed` 0.02→0.01）一落地，
+    // 這一條就用**錯誤的訊息**紅了：它說「普攻打不到花」，真相是普攻變慢了。
+    // ⭐ 量到的是 **68 tick**（改動前在 60 以內），150 給 2.2× 餘裕 ——
+    // 留餘裕不留剛好，但**也不留無限**：TTK 真的再翻倍的那天這一條還是會紅。
+    for (let i = 0; i < 150 && !burst; i++) {
       step(w);
       burst ||= w.events.some((e) => e.type === "flowerBurst" && (e.data.id as EntityId) === flowerId);
       const hp = w.health.get(flowerId);

@@ -8,21 +8,21 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 242 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 16 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 244 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 15 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
-| 🟣 PASSIVE | 59 | permanent WC3 passive, never cast, nothing to warn about |
+| 🟣 PASSIVE | 58 | permanent WC3 passive, never cast, nothing to warn about |
 
-**258 / 258 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**259 / 259 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 102 | self marker at the caster's feet |
-| `targeted` | 79 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `—` | 59 | not cast |
-| `ground` | 53 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `targeted` | 81 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `—` | 58 | not cast |
+| `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 16 | line — the projectile's corridor; step sideways |
 | `dash` | 8 | line — the sweep of the dash body |
 
@@ -93,7 +93,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 奇樂 - 夜神月 `godie-emns` | PASSIVE | 44-00 機警 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 奇樂 - 夜神月 `godie-emns` | Q | 44-01 死神之眼 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 奇樂 - 夜神月 `godie-emns` | W | 44-02 死神的規則 | `—` | — | 🟣 PASSIVE | never cast |
-| 奇樂 - 夜神月 `godie-emns` | E | 44-03 火車輾過 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 奇樂 - 夜神月 `godie-emns` | E | 44-03 火車輾過 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 奇樂 - 夜神月 `godie-emns` | R | 44-04 心臟麻痺 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 奇樂 - 夜神月 `godie-emns` | EX | 44-002 交換筆記本 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 治癒系公主 - 木乃香 `godie-etyr` | PASSIVE | 14-00 召喚式神 | `ground` | circle r=5.14u | ✅ OK | radius 6.42 × abilityRange 0.8 |
@@ -116,7 +116,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 時空勇者 - 林克 `godie-h00l` | EX | 60-002 勇者意志 | `—` | — | 🟣 PASSIVE | never cast |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | PASSIVE | 79-00 靈壓 | `—` | — | 🟣 PASSIVE | never cast |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | Q | 79-01 瞬步 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
-| 開外掛的死神 - 黑崎一護 `godie-h01n` | W | 79-02 月牙斬擊 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 開外掛的死神 - 黑崎一護 `godie-h01n` | W | 79-02 月牙斬擊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | E | 79-03 月牙天衝 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | R | 79-04 卍解 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 開外掛的死神 - 黑崎一護 `godie-h01n` | EX | 79-002 虛化 | `—` | — | 🟣 PASSIVE | never cast |
@@ -138,7 +138,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | E | 92-02 消化液 | `—` | — | 🟣 PASSIVE | never cast |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | R | 92-04 馬勒戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | EX | 92-002 最終戈壁 | `—` | — | 🟣 PASSIVE | never cast |
-| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `—` | — | 🟣 PASSIVE | never cast |
+| 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 海克力斯 - Berserker `godie-hapm` | Q | 52-01 狂戰士之怒 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 海克力斯 - Berserker `godie-hapm` | W | 52-02 蹂躪編年史 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
 | 海克力斯 - Berserker `godie-hapm` | E | 52-03 無銘斧劍 | `—` | — | 🟣 PASSIVE | never cast |

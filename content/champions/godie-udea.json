@@ -76,7 +76,7 @@
         {
           "kind": "dash",
           "mode": "toPoint",
-          "speed": 30.0,
+          "speed": 16,
           "maxDistance": 11.0
         }
       ],
@@ -211,7 +211,7 @@
         {
           "kind": "dash",
           "mode": "toPoint",
-          "speed": 30.0,
+          "speed": 16,
           "maxDistance": 8.25
         }
       ],

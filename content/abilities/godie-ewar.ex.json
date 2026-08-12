@@ -31,7 +31,7 @@
     {
       "kind": "knockback",
       "distance": 6.0,
-      "speed": 20.0,
+      "speed": 16,
       "from": "caster"
     }
   ],

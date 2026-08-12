@@ -40,8 +40,8 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../.
  * THE ROSTER. Every item in the shipped tree that converts damage type, and the
  * exact 效能 line each one is paying for.
  *
- * ⚠️ THIS IS A RATCHET, in BOTH directions. A fourth item quietly gaining the
- * field goes red (nobody audited its scope); one of these three losing it goes
+ * ⚠️ THIS IS A RATCHET, in BOTH directions. A third item quietly gaining the
+ * field goes red (nobody audited its scope); one of these two losing it goes
  * red (the owner's prose becomes a lie again). The scope is spelled out because
  * a `"basic"` → `"all"` slip is invisible in review and would drag item procs
  * (`hook:`), mob and guardian packets into the conversion as well.
@@ -51,17 +51,18 @@ const CONTENT_DIR = join(dirname(fileURLToPath(import.meta.url)), "../../../../.
  * an ability's burn ticks with `ability:<id>` (`effects/dot.ts` → `dotTick.ts`),
  * and owner ruled that a spell's lingering burn IS 技能傷害. The behavioural
  * proof lives in `damageTypeOverride.test.ts`'s 「技能留下的延燒」 block.
+ *
+ * ⚠️⚠️ 2026-08-12 — 霸王破甲槍 `godie-i00f` LEFT this roster, 三件 → 兩件, and
+ * that is the ratchet doing its job rather than being edited around: owner ruled
+ * 「霸王破甲槍⋯改成百分百穿透」, so the doc now carries `penetration
+ * {scope:"basic", armorPct:1}` and NO `damageTypeOverride`. 它的出貨守衛搬到
+ * `combat/penetration.test.ts`（同型的雙向 ratchet + 真的裝上去打一發）。
+ * ⛔ The two mechanisms are NOT synonyms — see `combat/penetration.ts` 檔頭.
  */
 const EXPECTED: Record<
   string,
   { name: string; scope: string; becomes: string; impactType?: string; line: string }
 > = {
-  "godie-i00f": {
-    name: "霸王破甲槍",
-    scope: "basic",
-    becomes: "true",
-    line: "[無視] 普攻無視敵方防禦真實傷害",
-  },
   "godie-i01d": {
     name: "死之王的長槍",
     scope: "basic",
@@ -144,7 +145,7 @@ const doc = (id: string): ItemDoc => {
 };
 
 describe("the shipped 無視/真實傷害 roster", () => {
-  it("is exactly these three items, with exactly these scopes", () => {
+  it("is exactly these two items, with exactly these scopes", () => {
     const found = Object.fromEntries(
       items
         .filter((d) => (d as { damageTypeOverride?: unknown }).damageTypeOverride !== undefined)
@@ -184,7 +185,7 @@ describe("the shipped 無視/真實傷害 roster", () => {
 });
 
 describe("the REAL doc, equipped through the REAL attach path", () => {
-  it("霸王破甲槍 makes an equipped champion's basic attack ignore armour", () => {
+  it("死之王的長槍 makes an equipped champion's basic attack ignore armour", () => {
     const world = new SimWorld(SKELETON_ARENA, 42);
     const a = dummy(world, 0, 0, Z0.center.x);
     const b = dummy(world, 1, 1, Z0.center.x + 3, { armor: 100 });
@@ -194,8 +195,8 @@ describe("the REAL doc, equipped through the REAL attach path", () => {
 
     // …now equip the shipped doc through the ONE builder the shop/draft/preview
     // all use. Nothing here is hand-written except the slot number.
-    const def = doc("godie-i00f") as unknown as ItemDef;
-    attachSource(world, a, itemModifierSource(world, a, "godie-i00f" as ItemId, 0, def));
+    const def = doc("godie-i01d") as unknown as ItemDef;
+    attachSource(world, a, itemModifierSource(world, a, "godie-i01d" as ItemId, 0, def));
     expect(hpLost(world, a, b, 100, "physical", "basic")).toBeCloseTo(100, 9);
     // ⚠️ MUTATION: delete `damageTypeOverride: def.damageTypeOverride` from
     // `economy/itemSource.ts` — the fixture suite stays fully green and this

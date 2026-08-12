@@ -31,6 +31,12 @@ import type { TemplateDoc } from "./schema/template";
 import { zAbilityDef, zAbilityDoc } from "./schema/ability";
 // AoE 四級距 → 半徑。全專案唯一的查表處，理由寫在那支檔案。
 import { aoeTiersFromDoc, resolveRadiusTier } from "./aoeTiers";
+// 位移四級距 + **無條件的速度天花板**（GH#318）。同上，唯一的查表處。
+import {
+  displacementTiersFromDoc,
+  minBodyRadiusFromConfigs,
+  resolveDisplacementTier,
+} from "./displacementTiers";
 // 英雄屬性正規化（owner 2026-08-12）。全專案唯一知道「級別怎麼變成數字」的地方。
 import {
   resolveChampionStats,
@@ -200,11 +206,11 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   //   （standalone 與 champion-embedded）必須拿到同一個答案 —— 只包一邊就是
   //   「商店顯示 6.0、場上打 4.5」那種對不起來的死法。
   const expandStandalone = (d: AbilityDef): AbilityDef =>
-    withRadiusTier(expandIfTemplated(d, templates, true, onFailure, failures, undefined));
+    withTiers(expandIfTemplated(d, templates, true, onFailure, failures, undefined));
   const expandEmbedded =
     (championId: string, slot: string) =>
     (d: AbilityDef): AbilityDef =>
-      withRadiusTier(
+      withTiers(
         expandIfTemplated(d, templates, false, onFailure, failures, { championId, slot }),
       );
 
@@ -214,10 +220,22 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   // ⚠️ 不是 `store.all<ConfigDoc>` —— 匯出的 `ConfigDoc` 其實只是
   //    `zConfigMatchDoc` 的 infer（`schema/config.ts:5177`），不是那個
   //    discriminated union。用它會讓這一行的 `.schema` 比對被 tsc 判成永遠 false。
-  const aoeTiers = aoeTiersFromDoc(
-    store.all<{ schema?: string }>("config").find((c) => c.schema === "config.aoe-tiers@1"),
+  const configDocs = store.all<{ schema?: string }>("config");
+  const aoeTiers = aoeTiersFromDoc(configDocs.find((c) => c.schema === "config.aoe-tiers@1"));
+  // 位移級距（GH#318）。⚠️ 速度天花板是**推導**出來的，輸入是最小身體半徑 ——
+  // 所以這裡要先把 `config.arena-rules@1` 讀出來，⛔ 不可以寫死 16
+  //（有人把 mob 半徑調到 0.4 的那天，16 就再次說謊，而且沒有東西會紅）。
+  const displacementTiers = displacementTiersFromDoc(
+    configDocs.find((c) => c.schema === "config.displacement-tiers@1"),
+    minBodyRadiusFromConfigs(configDocs),
   );
-  const withRadiusTier = (d: AbilityDef): AbilityDef => resolveRadiusTier(d as never, aoeTiers);
+  /**
+   * 兩個級距合成**一個**接縫。⭐ 每一支技能（standalone / 內嵌 / 模板展開後）
+   * 與每一件道具都要走這裡，⛔ 不是只有模板技 —— 見下面 `mapChampionAbilities`
+   * 的說明，AoE 那條內嵌路徑到今天為止一次都沒真的跑過。
+   */
+  const withTiers = <T extends object>(d: T): T =>
+    resolveDisplacementTier(resolveRadiusTier(d as never, aoeTiers) as never, displacementTiers);
 
   // 英雄屬性正規化：同樣要在**英雄註冊之前**讀（`Configs.register` 那一圈在後面）。
   // ⭐ 一個 seam，接在 registerChampion 的正上方 —— 商店預覽 / 選人畫面 / 後台
@@ -227,7 +245,11 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   );
 
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
-  for (const d of store.all<ItemDef>("items")) Items.register(d.id, d);
+  // ⚠️ 道具也要過級距 —— 出貨就有一件帶 dash 的道具（近擊的巨人鎧），
+  //    而它的速度正好是 18，穿牆平手線上的那個值（GH#318）。
+  //    AoE 的接縫漏掉了 `Items`，理由是「今天 0 件道具用 radiusTier」——
+  //    那是巧合正確，不是設計，所以這裡一次把兩個機制都接上。
+  for (const d of store.all<ItemDef>("items")) Items.register(d.id, withTiers(d));
   for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, d);
   for (const d of store.all<AbilityDef>("abilities")) {
     const e = expandStandalone(d);
@@ -236,7 +258,7 @@ export function registerAll(store: ContentStore, options: RegisterAllOptions = {
   for (const d of store.all<ChampionDef>("champions")) {
     registerChampion(
       resolveChampionStats(
-        expandChampionTemplates(d, expandEmbedded) as never,
+        mapChampionAbilities(d, expandEmbedded) as never,
         statNorm,
         STAT_RESOLVE_DEPS,
       ),
@@ -309,9 +331,6 @@ export interface RegisterAllOptions {
  * ①: 畫在畫面外). Runtime only: nothing here is ever written back to disk.
  */
 export const DEGRADED_ABILITY_NOTE = "⚠️【模板展開失敗，此技能目前沒有效果】";
-
-/** A doc that MAY carry the Skill-Forge template link (the field the sim type omits). */
-type MaybeTemplated = { readonly template?: unknown };
 
 /** Where an embedded twin came from, for the failure record. */
 interface EmbeddedOrigin {
@@ -426,8 +445,24 @@ function stringOr(v: unknown, fallback: string): string {
   return typeof v === "string" ? v : fallback;
 }
 
-/** Expand the four embedded Q/W/E/R twins of a champion in place (immutably). */
-function expandChampionTemplates(
+/**
+ * Run the four embedded Q/W/E/R twins of a champion through the registration
+ * transform (template expansion + 級距解析), immutably.
+ *
+ * ⛔ IT USED TO SKIP NON-TEMPLATED SLOTS (`if (template === undefined) continue`),
+ * which quietly meant the 級距 wrapper — bolted onto the same transform — never
+ * ran on an embedded ability at all: 22 embedded slots carry `radiusTier` today
+ * and NOT ONE of them is templated. That path was saved by two accidents, not by
+ * design: `registerChampion`'s `fillGaps` lets the standalone doc win, and every
+ * embedded slot currently happens to HAVE a standalone twin (orphan = 0, and
+ * nothing guards that). 位移 would not survive the same luck — its fields live
+ * inside `effects[]`, so the first embedded-only skill with a dash would ship a
+ * speed the ceiling never saw.
+ *
+ * Expanding all four is safe: `expandIfTemplated` returns the doc untouched when
+ * there is no template binding, so the only added work is the tier walk.
+ */
+function mapChampionAbilities(
   def: ChampionDef,
   expandEmbedded: (championId: string, slot: string) => (d: AbilityDef) => AbilityDef,
 ): ChampionDef {
@@ -436,8 +471,9 @@ function expandChampionTemplates(
   const abilities = { ...def.abilities };
   for (const slot of slots) {
     const emb = def.abilities[slot];
-    if ((emb as unknown as MaybeTemplated).template === undefined) continue;
-    abilities[slot] = expandEmbedded(def.id, slot)(emb);
+    const next = expandEmbedded(def.id, slot)(emb);
+    if (next === emb) continue;
+    abilities[slot] = next;
     changed = true;
   }
   return changed ? { ...def, abilities } : def;

@@ -3,7 +3,7 @@
   "schema": "item@1",
   "name": "霸王破甲槍",
   "icon": "assets/icons/items/godie-i00f.webp",
-  "description": "神器\n效能\n[無視] 普攻無視敵方防禦真實傷害\n總防禦+10%\n總攻擊+10%\n\n解說\n霸王槍和破甲槍原是龍宮中兩把被封印的兵器，在飛鼠的戰友彼得龜的研究下，結合成攻防一體的神兵霸王破甲槍。彼得龜消失之後，兩把槍就此分開，再也沒有人能把霸王破甲槍組合起來。",
+  "description": "神器\n效能\n[穿透] 普攻無視敵方 100% 護甲\n總防禦+10%\n總攻擊+10%\n\n解說\n霸王槍和破甲槍原是龍宮中兩把被封印的兵器，在飛鼠的戰友彼得龜的研究下，結合成攻防一體的神兵霸王破甲槍。彼得龜消失之後，兩把槍就此分開，再也沒有人能把霸王破甲槍組合起來。",
   "cost": 0,
   "tier": 2,
   "modifiers": [
@@ -18,9 +18,9 @@
       "value": 0.1
     }
   ],
-  "damageTypeOverride": {
+  "penetration": {
     "scope": "basic",
-    "becomes": "true"
+    "armorPct": 1
   },
   "tags": [
     "wc3-import"
@@ -33,5 +33,5 @@
     ],
     "book": "godie-i019"
   },
-  "authoringNote": "【2026-08-01 落地】[無視]「普攻無視敵方防禦真實傷害」= damageTypeOverride {scope:\"basic\", becomes:\"true\"}。\n· 機制：sim/combat/damage.ts 的 mitigate() 在 `pkt.type === \"true\"` 就直接回傳原值，護甲/魔抗那條 100/(100+resist) 曲線整個跳過 —— 所以「無視防禦」不需要新的減傷數學，只需要有人把封包重蓋成 true。做這件事的是 sim/combat/damageTypeOverride.ts 的 resolveDamageTypeOverride()，由傷害佇列的抽乾迴圈呼叫。\n· ⚠️ 更正這份備註的舊版本：它建議「由 BasicAttackSystem 組封包時讀」，那是**錯的接縫**。普攻有兩個 push 站點 —— 近戰在 systems/BasicAttackSystem.ts、遠程在 systems/ProjectileSystem.ts —— 所以那個做法會讓遠程英雄拿到一件完全沒有效果的武器（CLAUDE.md 失敗形態 ②）。傷害佇列是全樹 9 個 push 站點的唯一匯流處。\n· 另一條路 Stat.ArmorPen 被否決：它要動 statTypes / STAT_CLAMPS / ITEM_MODIFIER_LIMITS / 面板 / 商店預覽，而且**表達不出 惡夢魔王碎片**（穿甲值對法術傷害無話可說）。\n· 省略 applyAt = 預設 \"afterGates\"：無敵/免疫與閃避仍然用**原本的**物理型別判定，轉換只影響護甲魔抗與護盾型別過濾。要連免疫一起無視就寫 applyAt:\"beforeGates\"（那是 owner 的決定，不是這次匯入偷偷做掉的）。\n已落地：總防禦+10%（armor pctAdd 0.1）、總攻擊+10%（ad pctAdd 0.1）、[無視]。\n守衛：packages/shared/src/sim/combat/damageTypeOverride.test.ts（機制）＋ damageTypeOverride.shipped.test.ts（這三件出貨文件的 scope 逐件釘死）。"
+  "authoringNote": "【2026-08-12 改機制】owner「霸王破甲槍⋯改成百分百穿透」⇒ [穿透]「普攻無視敵方 100% 護甲」= penetration {scope:\"basic\", armorPct:1}。⛔ damageTypeOverride 整格刪除。\n· 為什麼不是同一件事：真傷與 100% 穿透在**數字**上不同（護甲 ≥ 0 兩者相同；護甲被【破防】打成負數時真傷仍是 1.0×，而穿透走雙分支放大，最高 config.mitigation@1 的 negativeResistAmplifyCeiling 倍），在**型別**上也不同（穿透維持 physical：照樣被奇門盾甲的格擋擋得下、被物理/無型別護盾吃掉、照樣觸發反傷與 on-physical）。⇒ 這一次改動對玩家是「打負護甲更痛、但更容易被擋/被護盾吃」，不是純強化。\n· 機制：sim/combat/penetration.ts（段③百分比穿透 → 段④扁平穿透 → 雙分支曲線），由 sim/combat/damage.ts 的兩個 mitigate* 呼叫。⚠️ 段③④ 對**已經 ≤ 0 的抗性完全無效**（LoL 明文），所以這把槍不會把 −27 的護甲抹成 0。\n· 另一條路 Stat.ArmorPen 仍然被否決，理由多一條：Stat 記不住**範圍**（這一件只穿普攻），而且 stat pipeline 的折疊產不出 % 穿透要的乘法互補 1 − Π(1−xᵢ)。\n· requiresAttackType:\"melee\" 不動。總防禦+10%（armor pctAdd 0.1）、總攻擊+10%（ad pctAdd 0.1）不動。\n守衛：packages/shared/src/sim/combat/penetration.test.ts（機制 + 這份出貨文件的雙向 ratchet）。"
 }

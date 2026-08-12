@@ -249,6 +249,19 @@ export type Page =
    */
   | "vfxForge"
   /**
+   * 新英雄轉生設計 (owner 2026-08-13) —— 六步把一位新英雄從無到有做出來：
+   * 名稱說明 → 選出身/路線**自動生成**三圍與其他屬性 → 手動客製 → 警告（⛔ 只警告
+   * 不擋）→ 從鑄技工坊挑天生/Q/W/E/R/EX → 產出草稿上架。
+   *
+   * 與 新英雄模板（dev-only 的 `newHero`）不同的是**方向**：那一頁要作者自己把每
+   * 一格數字填出來，這一頁從「出身」把整張卡生出來（`content/heroForge.ts` 的
+   * 反向流程），所以它是 owner 用的設計頁，不是 dev 用的建檔頁。
+   *
+   * 讀 `/content`（不需要 session）但寫 `putOverlayDoc`（需要），所以下面要
+   * session-gate —— 和 鑄技工坊 · 特效綁定 同一條規則。
+   */
+  | "heroForge"
+  /**
    * 殭屍波系統 (roguelite mob waves, task #215) — the ONLY route that edits
    * `config/arena-rules.json`'s `mobWaves` block: 出怪節奏 / 逐回合上限 /
    * 殭屍能力數值 / 擊殺獎勵 / 由誰擔任. Like 內容覆蓋層 and 體素鑄造廠 its save
@@ -521,6 +534,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 少了這一行,登出的操作者會看到一個完全可以編輯的表格,填完十列才在儲存時
   // 發現從頭到尾就沒有可以寫入的 session。
   "vfxForge",
+  // 新英雄轉生設計: 同上 —— 它一次寫 5~7 份文件(技能在前、英雄最後),沒有 session
+  // 會在第一份就 401,而畫面上看起來像「草稿壞了」而不是「沒登入」。
+  "heroForge",
   // 殭屍波系統: its save is a `putOverlayDoc` — the same admin-JWT, audited
   // platform writer 內容覆蓋層 and 體素鑄造廠 use — so without a session every
   // 儲存 would 401 and read as a broken page rather than a missing sign-in.
