@@ -474,7 +474,14 @@ def _own_area(node):
     elif isinstance(node, dict):
         if node.get("kind") == "damageArea":
             node.setdefault("includeOrigin", True)   # setdefault：手填的特例仍然贏
-        for v in node.values():
+        for k, v in node.items():
+            # ⛔ 不要走進 hooks/passive/marks/onHitTargets/onHit —— 那底下的
+            #    `damageArea` 是**真的擴散**（圓心是事件的受害者，他已經吃過
+            #    觸發那一擊），灌 includeOrigin 會讓震央被打**兩次**。
+            # ⭐ 用既有常數而不是硬寫 `k == "hooks"`：同一條規則一個住處，
+            #    `_fold_onhit` 與 `_first_tier` 已經在讀它。
+            if k in _NOT_CAST_SCOPE:
+                continue
             _own_area(v)
 
 
@@ -816,11 +823,35 @@ def M(stat, op, value):
 
 
 def status(sid, dur, **kw):
-    o = {"kind": "applyStatus", "statusId": sid, "duration": float(dur)}
+    """一顆 `applyStatus`。
+
+    ⭐ `dur` 收**純量或逐階陣列**（2026-08-13）。`applyStatus.duration` 在 schema
+    裡是 `zRankScalar`（`number | number[]`），sim 走 `applyStatus.ts:48` 的
+    `rankScalar(e.duration, ctx.rank)` 讀 —— 所以四階不同秒數是**今天就寫得出來**的，
+    ⛔ 只是這支 helper 之前把它 `float()` 掉了。
+    ⚠️ 症狀是靜默的：70-03 木束縛之術規格寫 0.6/1.2/1.8/2.4，出貨四階全是 0.6，
+       而升階的玩家看到的是「點了沒有變強」。
+    """
+    o = {
+        "kind": "applyStatus",
+        "statusId": sid,
+        "duration": [float(x) for x in dur] if isinstance(dur, (list, tuple)) else float(dur),
+    }
     o.update(kw)
     return o
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# A-9 ·【位移級距 16】—— 表要跟著已出貨的再平衡走
+#
+# owner 2026-08-13「位移級距」把所有 dash/knockback 的 speed 壓到 16，
+# 而那次落地（commit 34f79b7d）**只改了 content/ 沒改這張表**。
+# ⇒ 2026-08-13 我重跑這支產生器時，6 支技能被靜默回捲成 30/32/30/24/18/20。
+#
+# ⛔ 這正是 GH#319 的形狀：產生器與編輯器（或別的批次）搶寫同一批檔、零仲裁。
+#    修法不是「不要重跑產生器」，是**讓表同意已出貨的事實**。
+#    ⚠️ 下一次有人再做全域再平衡，同一件事會再發生一次 —— 真正的閘在 #319。
+#
 # ─────────────────────────────────────────────────────────────────────────────
 # A-5 ·「沉默 ≠ 移除」—— 規格沒點名的**非酬載機制**一律沿用
 #
@@ -1282,7 +1313,7 @@ A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
   "[主動][指向][範圍][衝刺][AP加成]\n45秒冷卻，吟唱2秒\n消耗MP120/185/250/315\n施法距離12.83\n有效半徑6\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成400/500/600/700+100% [AP]點傷害。",
   cast_time=2.0,
-  effects=[{"kind": "dash", "mode": "toPoint", "speed": 30.0, "maxDistance": 12.83},
+  effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 12.83},
            area("magic", tier="大", per=[400, 500, 600, 700], ap=1.0)])
 
 A("45-04", "45-04 哥哥", "self", [0], [0], 0,
@@ -1328,7 +1359,7 @@ A("13-02", "13-02 龍頭戲畫。牙突", "targeted", [45, 45, 45, 45], [60, 90,
   #    所以照 md 讀會再犯一次（2026-08-13 我犯過一次，被那條守衛擋下來）。
   #    ⇒ 這一條列進 owner 裁決：要嘛改 md、要嘛改守衛，⛔ 不可以兩份各說各話。
   effects=[dmg("physical", per=[40, 60, 80, 100], ad=0.5),
-           {"kind": "knockback", "distance": 6.0, "speed": 18.0, "from": "caster"}])
+           {"kind": "knockback", "distance": 6.0, "speed": 16, "from": "caster"}])
 
 A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][範圍][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n\n「其實還可以衝刺，但老了」\n將念形成龍形衝擊波包裹全身，造成[範圍]敵人 150/250/350/450 + 60% [AP] 傷害。",
@@ -1506,7 +1537,7 @@ A("12-002", "12-002 仙氣發勁", "targeted", [30], [600], 2,
   "[主動][指定][擊退][AP加成]\n30秒冷卻，吟唱2秒\n消耗MP600\n施法距離2\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 1800 + 600% [AP] 傷害，並[擊退]敵方單位。",
   cast_time=2.0,
   effects=[dmg("magic", flat=1800, ap=6.0),
-           {"kind": "knockback", "distance": 6.0, "speed": 20.0, "from": "caster"}])
+           {"kind": "knockback", "distance": 6.0, "speed": 16, "from": "caster"}])
 
 # ── 60 勇者 ──────────────────────────────────────────────────────────────────
 A("60-00", "60-00 大師之劍", "self", [0], [0], 0,
@@ -1597,7 +1628,7 @@ A("79-00", "79-00 靈壓", "self", [0], [0], 0,
 
 A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
   "[主動][指向][範圍][衝刺]\n30秒冷卻\n消耗[MP] 60/80/100/120\n施法距離9.17\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
-  effects=[{"kind": "dash", "mode": "toPoint", "speed": 32.0, "maxDistance": 9.17},
+  effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 9.17},
            area("magic", tier="小", flat=1),
            status("magic-break", 3.0)])
 
@@ -1687,7 +1718,7 @@ A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
 
 A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300], 10,
   "[主動][指向][範圍][衝刺][AP加成]\n60秒冷卻\n消耗MP150/200/250/300\n有效半徑6\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
-  effects=[{"kind": "dash", "mode": "toPoint", "speed": 30.0, "maxDistance": 10.0},
+  effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 10.0},
            line("magic", length=10, width=2.0, per=[150, 200, 250, 300], ap=0.3)],
   passive={"name": "80-03 鬼神烈戟", "ranks": [{"hooks": [
       {"on": "onAbilityHit", "abilitySlot": "E", "target": "event",
@@ -1982,7 +2013,7 @@ A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
 A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
   maxRank=3, cast_time=2.0, radiusTier="大",
-  effects=[{"kind": "dash", "mode": "toPoint", "speed": 24.0, "maxDistance": 5.0},
+  effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 5.0},
            area("physical", tier="大", per=[600, 1000, 1400]),
            # ⚠️ victimCondition ⛔ 不可以當 kw 傳進 area()：會被 amt() 的 o.update(kw)
            #    倒進 amount，而 zScaling 是 .strict() ⇒ 整份文件被拒收。

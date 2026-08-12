@@ -41,15 +41,28 @@
  * **之前**，所以這一 tick 到期的一刀在**同一個 tick** 被減傷、被護盾吃、被
  * `recordDamage` 記分、被 `deathSystem` 結算。排在 drain 之後整波每一發都會晚
  * 一個 tick，而畫面上看不出來。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ④ ⭐ 觸發脈絡也凍住（20-002「每次造成 7 倍[反彈]傷害」）
+ *
+ * 名單凍住「打誰」，{@link DelayedWave.incoming} 凍住「**因為什麼**」——
+ * 一個掛在 `onReflectSuccess` 上的 `delayed`，子樹裡的 `damage.incomingPct`
+ * 在這一格出現之前**一發都不會發**（`ctx.incoming` 是 undefined，
+ * `damage.ts` 直接 early-return）。卡片寫 7 倍反彈、場上打 0，而且沒有錯誤。
+ *
+ * ⚠️ 快照跨 tick 要**定基**，⛔ 不是原封搬過去：`resolvePass` 是那一個 tick 的
+ * 排空迴圈的性質，搬到未來就是型別對、語意錯。定基規則寫在
+ * `deferredTrigger.ts`（那裡也解釋了為什麼 `reflectDepth` 絕對不能一起歸零）。
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { CastableSlot } from "../intents";
 import type { Vec2 } from "../math/vec2";
-import type { EffectContext, EffectDef } from "./effect";
+import type { EffectContext, EffectDef, TriggerDamage } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
 import { shapeTargets, type ShapedEffect } from "./shapeTargets";
 import { runEffects } from "./effectRunner";
+import { rebaseTriggerForDeferred } from "./deferredTrigger";
 import {
   DELAYED_MAX_COUNT,
   DELAYED_MAX_DELAY_SEC,
@@ -69,6 +82,19 @@ export interface DelayedWave {
   rank: number;
   origin: string;
   abilitySlot?: CastableSlot;
+  /**
+   * ⭐ 觸發這一整串的**那一發傷害**，在排程那一刻定基（`deferredTrigger.ts`）。
+   *
+   * 它與 {@link DelayedWave.frozen} 是**同一個立場的兩半**：名單凍住「打誰」，
+   * 這一格凍住「**因為什麼**」。少了它，一個掛在 `onDamageTaken` /
+   * `onReflectSuccess` 上的 `delayed`，子樹裡每一發 `damage.incomingPct` 都會走
+   * `damage.ts` 的 early-return（`ctx.incoming === undefined`）——
+   * 卡片上寫著 7 倍反彈，場上一發都不發，而且沒有任何錯誤（失敗形態②）。
+   *
+   * 缺席 = 這一串不是被一發傷害觸發的（技能施放 / 免死結算），
+   * ＝ 這一格出現以前的每一份文件，所以它是嚴格的 no-op。
+   */
+  incoming?: TriggerDamage;
   /** 每一發跑的東西。 */
   effects: EffectDef[];
   /** 最後一發**額外**跑的東西（省略 = 最後一發與其餘完全相同）。 */
@@ -136,6 +162,12 @@ export const delayedEffect: EffectKindSpec<"delayed"> = {
       rank: ctx.rank,
       origin: ctx.origin,
       ...(ctx.abilitySlot !== undefined ? { abilitySlot: ctx.abilitySlot } : {}),
+      // ⭐ 觸發脈絡跟著名單一起凍住。定基是 `resolvePass` 那一格的事（見
+      // `deferredTrigger.ts`）—— ⛔ 不可以順手把 `reflectDepth` 也歸零，
+      // 反彈鏈的終止性整個掛在它嚴格遞增上。
+      ...(ctx.incoming !== undefined
+        ? { incoming: rebaseTriggerForDeferred(ctx.incoming) }
+        : {}),
       effects: e.effects,
       ...(e.finalEffects !== undefined ? { finalEffects: e.finalEffects } : {}),
       frozen,
@@ -210,6 +242,10 @@ export function delayedSystem(world: SimWorld): void {
         ...(wave.point !== undefined ? { point: wave.point } : {}),
         origin: wave.origin,
         ...(wave.abilitySlot !== undefined ? { abilitySlot: wave.abilitySlot } : {}),
+        // ⭐ 承重的一行。掛在 `base` 上而不是逐發的 ctx 上，所以 `finalEffects`
+        // 與**整棵子樹**（`runEffects` 一路 spread 同一個 ctx；巢狀 `delayed`
+        // 會在它自己的 apply 再抄一次，定基冪等）都拿得到同一份快照。
+        ...(wave.incoming !== undefined ? { incoming: wave.incoming } : {}),
         rng: world.rng,
       };
       // ⭐ 這一行是整個機制：`frozen` 的那一份名單，不是重解出來的。

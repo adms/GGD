@@ -72,6 +72,10 @@ import { evaluateCondition } from "../content/condition";
 import { Abilities } from "../content/registry";
 import { Stat } from "../stats/statTypes";
 import { AUGMENT_OP_BOUNDS, type AugmentOpName } from "../../content/schema/ability";
+import {
+  EFFECT_CHILD_CHAINS,
+  EFFECT_CHILD_CHAIN_WRAPPERS,
+} from "../effects/effectChildChains";
 
 /** 一條操作 —— mirrors `zAbilityAugmentOp`。 */
 export interface AugmentOp {
@@ -223,6 +227,37 @@ function nextValue(op: AugmentOp, current: number): number {
   return raw < lo ? lo : raw > hi ? hi : raw;
 }
 
+/** 一格是不是**逐階持續時間**（`RankScalar` 的陣列面）。 */
+function isRankScalarArray(v: unknown): v is number[] {
+  return Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === "number");
+}
+
+/**
+ * ⭐ 把一條 op 套到一個**可能是逐階陣列**的持續時間上（2026-08-13）。
+ *
+ * ── 為什麼需要它 ────────────────────────────────────────────────────────
+ * 「持續時間」在 `sim/perRank.ts::RankScalar` 開放之後可以是 `number` 或
+ * `number[]`（`championForm.durationSec` 的 schema 就是 `zRankScalar`，出貨值是
+ * `[6,9,12,15]`）。上一版只認 `typeof === "number"` ⇒ 77-002 御雷劍的
+ * 「[GLADIARIA ALAT] 持續時間**增加至 30 秒**」**改不到任何一格**：
+ * 卡片寫 30 秒，遊戲裡四階仍然是 6/9/12/15，而且沒有任何錯誤（失敗形態②）。
+ *
+ * ── 語意：`set` 碰到四階陣列 = **每一階都變成那個值** ──────────────────
+ * owner 2026-08-12 對「增加**至** N」逐字裁決過（80-04 那一批）：**「至」是取代
+ * 不是相加**。而卡片上只印一個數字 ⇒ 四階全部 30。
+ * ⛔ 不做「只改當前階」：執行期只會讀 `rankScalar(v, ctx.rank)` 那**一格**，
+ *    所以它與「全改」在遊戲裡逐位元相同，差別只在卡片印幾個數字 ——
+ *    一個沒有可觀測差異的模式就是一格永遠不被讀的設定。
+ * ⛔ 也不做「按比例」：那需要 schema 多一格 enum，而**今天沒有任何一張卡要它**
+ *    （加了就要去 `fieldAdoption` 登記一筆零採用豁免，30 天後自己會紅）。
+ * ⇒ 需要那個語意的時候再開欄位，預設值選 owner 明說的那個。
+ */
+function rewriteRankScalar(op: AugmentOp, current: unknown): number | number[] | undefined {
+  if (typeof current === "number") return nextValue(op, current);
+  if (isRankScalarArray(current)) return current.map((v) => nextValue(op, v));
+  return undefined;
+}
+
 /** `nodeKind` 有填就要對上；沒填 = 這一種數字的每一個出現位置。 */
 function kindMatches(op: AugmentOp, kind: unknown): boolean {
   return op.nodeKind === undefined || op.nodeKind === kind;
@@ -242,9 +277,30 @@ function rewriteEffect(e: EffectDef, op: AugmentOp): EffectDef {
   if (op.op === "durationSec" && kindMatches(op, node.kind)) {
     // 兩個欄位名在出貨內容裡都存在（`applyBuff.duration` / `spawnVfx.durationSec`）,
     // 而「持續時間」是同一種數字 —— 所以兩個都認,而不是逼作者記住哪一支用哪一個。
-    if (typeof node.duration === "number") patch({ duration: nextValue(op, node.duration) });
-    const cur = (out as unknown as Record<string, unknown>).durationSec;
-    if (typeof cur === "number") patch({ durationSec: nextValue(op, cur) });
+    // ⭐ 兩格都走 `rewriteRankScalar`：逐階陣列（`championForm.durationSec` 出貨是
+    //    `[6,9,12,15]`）以前整格改不到，而症狀是「卡片寫 30 秒、遊戲裡沒有一格是 30」。
+    const nextDur = rewriteRankScalar(op, node.duration);
+    if (nextDur !== undefined) patch({ duration: nextDur });
+    const nextDurSec = rewriteRankScalar(op, node.durationSec);
+    if (nextDurSec !== undefined) patch({ durationSec: nextDurSec });
+
+    // ⚠️ 還有**第三個住處**，而且它**贏過**上面兩個：`applyBuff.ts` 讀的是
+    //    `rk?.duration ?? e.duration` —— 逐階區塊裡的那一格永遠優先。
+    //    ⛔ 所以只改頂層 `duration` 等於什麼都沒改（77-002 踩的正是這一格）。
+    //    ⛔ 不去動 `applyBuff.ts` 的優先序：那是刻意且正確的語意，
+    //       要改的是「強化也要走到逐階區塊」而不是「把逐階關掉」。
+    const perRank = node.perRank;
+    if (Array.isArray(perRank)) {
+      let changed = false;
+      const nextPerRank = (perRank as { duration?: unknown }[]).map((rk) => {
+        if (rk === null || typeof rk !== "object") return rk;
+        const d = rewriteRankScalar(op, rk.duration);
+        if (d === undefined) return rk;
+        changed = true;
+        return { ...rk, duration: d };
+      });
+      if (changed) patch({ perRank: nextPerRank });
+    }
   }
 
   if (op.op === "damageCoeffAp" && kindMatches(op, node.kind)) {
@@ -254,25 +310,42 @@ function rewriteEffect(e: EffectDef, op: AugmentOp): EffectDef {
     }
   }
 
-  // 子鏈：投射物命中、落地、加權分支。⚠️ 走訪的是**具名**欄位而不是「任何陣列」——
-  // 一個泛化的深走訪會在下一個帶陣列的 kind 出現時安靜地多改一處。
-  for (const key of ["onHit", "onLand"] as const) {
+  // ── 子鏈 ────────────────────────────────────────────────────────────────
+  // ⛔ 這裡**不再點名**。上一版走 `onHit` / `onLand` / `branches` 三格，而引擎有
+  // **十條**子鏈，於是 70-002 樹海降臨「[千年練成] 追加 500% [AP] 傷害」整條發不
+  // 出來：70-04 的傷害住在 `randomArea.effects[]`，而 `randomArea` 節點自己沒有
+  // `amount` 可改 ⇒ 產出得了、沒有消費端（失敗形態②）。
+  //
+  // ⚠️ 上一版的註解寫著「一個泛化的深走訪會在下一個帶陣列的 kind 出現時安靜地多改
+  // 一處」—— 那句話對「**任何陣列**」是真的（condition 的 `all[]` 也帶 `kind`、
+  // `applyBuff.perRank[]` 也帶 `duration`），但它推不出「所以只走三個名字」。
+  // 走訪的鍵來自 `effects/effectChildChains.ts` 的表，那張表**從 `EffectDef` 型別
+  // 推導、兩個方向都關死**：漏一條 → `pnpm typecheck` 紅；多一條 → 一樣紅。
+  //
+  // ⚠️ 迭代的是 `as const` tuple（固定序），⛔ 不是 `Object.keys(node)` ——
+  // 後者的順序取決於 JSON 解析的插入序，而改寫是可觀測的（同一支多條 op 時後者
+  // 覆蓋前者），順序不可以浮動（`sim/purity.test.ts` 的精神）。
+  //
+  // ⭐ 結構共享逐字保留：任何一層沒改到就回原參照，所以那 1,900 份沒有強化的
+  //    技能仍然是零配置、逐位元不變。
+  for (const key of EFFECT_CHILD_CHAINS) {
     const kids = (out as unknown as Record<string, unknown>)[key];
-    if (Array.isArray(kids)) {
-      const next = rewriteEffects(kids as EffectDef[], op);
-      if (next !== kids) patch({ [key]: next });
-    }
+    if (!Array.isArray(kids)) continue;
+    const next = rewriteEffects(kids as EffectDef[], op);
+    if (next !== kids) patch({ [key]: next });
   }
-  const branches = (out as unknown as Record<string, unknown>).branches;
-  if (Array.isArray(branches)) {
+  for (const key of EFFECT_CHILD_CHAIN_WRAPPERS) {
+    const wrapped = (out as unknown as Record<string, unknown>)[key];
+    if (!Array.isArray(wrapped)) continue;
     let changed = false;
-    const nextBranches = (branches as { weight: number; effects: EffectDef[] }[]).map((b) => {
-      const next = rewriteEffects(b.effects, op);
-      if (next === b.effects) return b;
+    const nextWrapped = (wrapped as { effects?: EffectDef[] }[]).map((w) => {
+      if (!Array.isArray(w.effects)) return w;
+      const next = rewriteEffects(w.effects, op);
+      if (next === w.effects) return w;
       changed = true;
-      return { ...b, effects: next };
+      return { ...w, effects: next };
     });
-    if (changed) patch({ branches: nextBranches });
+    if (changed) patch({ [key]: nextWrapped });
   }
   return out;
 }
