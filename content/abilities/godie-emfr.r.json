@@ -38,7 +38,69 @@
           "value": 10.0
         }
       ],
-      "duration": 12.0
+      "duration": 12.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctMult",
+              "value": 1.0
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 2.0
+            },
+            {
+              "stat": "as",
+              "op": "capRaise",
+              "value": 10.0
+            }
+          ],
+          "duration": 12.0
+        }
+      ]
     },
     {
       "kind": "spawnProjectile",

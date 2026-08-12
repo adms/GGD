@@ -44,7 +44,15 @@
                       ]
                     },
                     "radius": 8.0,
-                    "radiusTier": "超大"
+                    "radiusTier": "超大",
+                    "resourcePct": {
+                      "subject": "target",
+                      "resource": "health",
+                      "basis": "max",
+                      "perRank": [
+                        0.02
+                      ]
+                    }
                   },
                   {
                     "kind": "weightedBranch",

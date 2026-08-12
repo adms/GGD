@@ -283,11 +283,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 正在手寫的 90 支技能文案裡的兩支:20-00 銀色甲胄(Saber 天生技,
   // 「有30%機率格擋100%魔法傷害」)與 79-002 虛化(卍解狀態下的物理格擋,
   // 配 whileForm: "alternate")。這兩支一落地,這一筆就該刪掉。
-  "field:abilities.passive.ranks[].block": {
-    status: "landing",
-    since: "2026-08-08",
-    why: "引擎側已通:被動技能的 rank 現在可以帶 block,走的是道具那條**同一個** ModifierSource.block(所以鏈式獨立判定/型別過濾/致死判定/內部冷卻逐條相同,沒有第二套邏輯)。零採用是因為 content/abilities/ 這一輪由 owner 手動重製,20-00 與 79-002 還沒寫進去 —— 那是內容決定,不是機制缺席。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（20-00 銀色甲胄 + 79-002 虛化）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
 
   // ── 授權格放寬:格擋 / 暴擊來源(owner GH#299 第 2 · 6 條,2026-08-09) ────
   //
@@ -301,11 +298,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 零採用是**內容決定**:content/abilities/ 這一輪由 owner 手動重製、
   // content/augments/ 的 31 張卡是 #260 那一版的三圍卡,兩邊都還沒有人寫暴擊卡。
   // 第一份內容落地時這五筆就該一起刪掉。
-  "field:abilities.passive.ranks[].critStrike": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "引擎側已通:天生技/被動的 rank 現在可以帶「一條自己的機率 + 自己的倍率」的暴擊來源,走的是道具那條**同一個** ModifierSource.critStrike。⛔ 它不是 critChance/critDamage 兩條屬性的第三種寫法 —— 那兩條是聚合的,加下去之後每一次暴擊都變成那個倍率。配 whileForm 就寫得出「只有變身後才有的暴擊」。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（77-02 雷鳴劍 + 89-01 憤怒的頭槌）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   "field:abilities.effects[]#applyBuff.block": {
     status: "landing",
     since: "2026-08-09",
@@ -350,11 +344,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "同 damage.applyTo,治療自己的那一種。89-002 今天靠 randomArea{who:\"self\"} → weightedBranch{side:\"allies\", maxTargets:1} 兩層包裝繞,那一支改寫時這一筆就該刪掉。",
   },
-  "field:abilities.effects[]#damageArea.resourcePct": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "S2 —— resourcePct 以前只有 damage/dot 有,所以 20-002「對前方敵人造成(現存魔力+AP)×7」的**魔力那一項**被 .strict() 拒收,那份文件看起來完全正常卻只剩 AP×7（失敗形態②）。⛔ 共用 zResourcePctTerm 與 resourcePctAmount 同一份,不是第二套讀數。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（52-04 巨神一擊 + 92-002 最終戈壁）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   "field:abilities.effects[]#damageLine.resourcePct": {
     status: "landing",
     since: "2026-08-09",
@@ -370,11 +361,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "同上的另一半(replace/keepLarger/stack)。⛔ 兩格要一起填 —— 只填 onExisting 會被 refineEffectDef 擋下並指名那一格,免得它變成一個永遠不會被讀到的欄位。",
   },
-  "field:abilities.effects[]#applyBuff.flight": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "S11 —— 限時飛行。ModifierSource.flight 早就存在而 flightSystem 掃 sources **不問 kind**,擋住的只有 schema:flight 在此之前只掛得到 passive.ranks[].flight,而被動一到 rank>0 就是**永久**的 —— 77-03 因此出現「rank 4 加速活 15 秒、翅膀只有 6 秒」。開在 SOURCE_GRANT_SHAPE 而不是 applyBuff 自己一格,所以一次落在四個授權面上,而且到期由 source 自己的 expiresAtTick 收掉,⛔ 不需要第二支掃描器。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（77-03 GLADIARIA ALAT 的翅膀）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   "field:augments.flight": {
     status: "landing",
     since: "2026-08-09",
@@ -415,11 +403,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //
   // ⚠️ 兩個新 kind（delayed / proxyCast）的 handler **還沒落地**，registry 上是
   // 會丟具名錯誤的 stub。它們的豁免到期時要先確認 handler 在了再寫內容。
-  "field:abilities.effects[]#damageArea.victimCondition": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G1 —— 圈**內**逐一過濾（「範圍內只打帶〔恐懼〕的敵人」）。⛔ 不可以重用外層 condition：實測 effectRunner 的上游閘在 handler 被呼叫**之前**就過濾完 ctx.targets 了，所以「以自己為圓心、只打帶恐懼的人」（targets 空）永遠不發、「打 A 濺到旁邊帶恐懼的人」（A 乾淨）整圈消失 —— 兩種寫法都拿不到那張卡。缺席 = 一次求值都不做 = 零 rng = 今天逐位元不變。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（52-04「若敵人具有[恐懼]則額外追加」）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   "field:abilities.effects[]#damageArea.maxTargetsCounts": {
     status: "landing",
     since: "2026-08-10",
@@ -675,11 +660,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "限時傷害型別轉換（「接下來 5 秒你的普攻是真傷」）。同上，到期走同一個 expiresAtTick（`resolveDamageConversion` 已經在跳過過期來源）。",
   },
-  "field:abilities.passive.ranks[].attributes": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "天生技逐階授予三圍（WC3 的屬性型被動整族都是這個形狀）。與道具寫的是**同一格** `ModifierSource.attributes`，所以升級／EX 解鎖／變身都走既有的 detach+attach 生命週期。",
-  },
+  // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（60-03 三角神力．勇氣 + 44-02 死神的規則）。
+  //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
   "field:abilities.passive.ranks[].damageTypeOverride": {
     status: "landing",
     since: "2026-08-09",

@@ -94,7 +94,49 @@
               "value": 20
             }
           ],
-          "duration": 6.0
+          "duration": 6.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 20
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 40
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 60
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 80
+                }
+              ],
+              "duration": 6.0
+            }
+          ]
         },
         {
           "kind": "dot",

@@ -40,6 +40,14 @@
                 "coeff": 1.0
               }
             ]
+          },
+          "resourcePct": {
+            "subject": "self",
+            "resource": "health",
+            "basis": "max",
+            "perRank": [
+              0.03
+            ]
           }
         }
       ],

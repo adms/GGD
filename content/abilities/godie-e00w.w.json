@@ -25,6 +25,11 @@
     "name": "77-02 雷鳴劍",
     "ranks": [
       {
+        "critStrike": {
+          "chance": 0.1,
+          "damageMult": 1.5,
+          "lifestealFraction": 0.0
+        },
         "hooks": [
           {
             "on": "onBasicAttack",

@@ -19,31 +19,26 @@
     "name": "79-002 虛化",
     "ranks": [
       {
-        "hooks": [
+        "modifiers": [
           {
-            "on": "onAbilityCast",
-            "abilitySlot": "R",
-            "target": "self",
-            "effects": [
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "pctAdd",
-                    "value": 1.0
-                  },
-                  {
-                    "stat": "lifesteal",
-                    "op": "flat",
-                    "value": 0.6
-                  }
-                ],
-                "duration": 8.0
-              }
-            ]
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 1.0
+          },
+          {
+            "stat": "lifesteal",
+            "op": "flat",
+            "value": 0.6
           }
-        ]
+        ],
+        "block": {
+          "damageTypes": [
+            "physical"
+          ],
+          "chance": 0.3,
+          "fraction": 1.0
+        },
+        "whileForm": "alternate"
       }
     ]
   },

@@ -39,6 +39,29 @@
       "radius": 6.0,
       "radiusTier": "大",
       "includeOrigin": true
+    },
+    {
+      "kind": "damageArea",
+      "damageType": "physical",
+      "amount": {
+        "flat": 0.0
+      },
+      "radius": 6.0,
+      "radiusTier": "大",
+      "includeOrigin": true,
+      "victimCondition": {
+        "kind": "status",
+        "subject": "target",
+        "tag": "fear"
+      },
+      "resourcePct": {
+        "subject": "self",
+        "resource": "health",
+        "basis": "max",
+        "perRank": [
+          0.25
+        ]
+      }
     }
   ],
   "icon": "assets/icons/abilities/godie-hapm.r.webp",

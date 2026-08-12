@@ -18,8 +18,8 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：343 / 378**（90.7%）　🟣 PASSIVE：30　❌ FAIL：5
-- 把「正確的永久被動」算進可接受行為：**373 / 378**（98.7%）如預期運作，只有 **5** 格是真正的缺口。
+- **✅ PASS：342 / 378**（90.5%）　🟣 PASSIVE：30　❌ FAIL：6
+- 把「正確的永久被動」算進可接受行為：**372 / 378**（98.4%）如預期運作，只有 **6** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
@@ -37,7 +37,7 @@
 | damage | 218 |
 | buff | 67 |
 | projectile | 21 |
-| status | 13 |
+| status | 12 |
 | heal | 9 |
 | dash | 9 |
 | championForm | 5 |
@@ -58,7 +58,7 @@
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
-| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
@@ -120,6 +120,7 @@
 | 最終泛用人型決戰兵器 - 初號機 | `godie-e00r` | Q | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 

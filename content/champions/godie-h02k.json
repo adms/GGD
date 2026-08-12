@@ -77,6 +77,11 @@
         "name": "89-01 憤怒的頭槌",
         "ranks": [
           {
+            "critStrike": {
+              "chance": 0.03,
+              "damageMult": 10.0,
+              "lifestealFraction": 0.0
+            },
             "hooks": [
               {
                 "on": "onBasicAttack",
@@ -112,6 +117,11 @@
             ]
           },
           {
+            "critStrike": {
+              "chance": 0.04,
+              "damageMult": 10.0,
+              "lifestealFraction": 0.0
+            },
             "hooks": [
               {
                 "on": "onBasicAttack",
@@ -147,6 +157,11 @@
             ]
           },
           {
+            "critStrike": {
+              "chance": 0.05,
+              "damageMult": 10.0,
+              "lifestealFraction": 0.0
+            },
             "hooks": [
               {
                 "on": "onBasicAttack",
@@ -182,6 +197,11 @@
             ]
           },
           {
+            "critStrike": {
+              "chance": 0.06,
+              "damageMult": 10.0,
+              "lifestealFraction": 0.0
+            },
             "hooks": [
               {
                 "on": "onBasicAttack",

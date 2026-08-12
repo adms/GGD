@@ -109,40 +109,24 @@
         "name": "44-02 死神的規則",
         "ranks": [
           {
-            "modifiers": [
-              {
-                "stat": "ap",
-                "op": "flat",
-                "value": 7
-              }
-            ]
+            "attributes": {
+              "int": 7
+            }
           },
           {
-            "modifiers": [
-              {
-                "stat": "ap",
-                "op": "flat",
-                "value": 12
-              }
-            ]
+            "attributes": {
+              "int": 12
+            }
           },
           {
-            "modifiers": [
-              {
-                "stat": "ap",
-                "op": "flat",
-                "value": 17
-              }
-            ]
+            "attributes": {
+              "int": 17
+            }
           },
           {
-            "modifiers": [
-              {
-                "stat": "ap",
-                "op": "flat",
-                "value": 22
-              }
-            ]
+            "attributes": {
+              "int": 22
+            }
           }
         ]
       },
@@ -228,6 +212,16 @@
                 "stat": "ap",
                 "coeff": 0.4
               }
+            ]
+          },
+          "resourcePct": {
+            "subject": "target",
+            "resource": "health",
+            "basis": "current",
+            "perRank": [
+              0.3,
+              0.4,
+              0.5
             ]
           }
         },

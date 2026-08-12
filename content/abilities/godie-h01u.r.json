@@ -33,7 +33,54 @@
           "value": 1.5
         }
       ],
-      "duration": 8.0
+      "duration": 8.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 8.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "pctAdd",
+              "value": 2.0
+            },
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 2.0
+            }
+          ],
+          "duration": 8.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "pctAdd",
+              "value": 2.5
+            },
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 2.5
+            }
+          ],
+          "duration": 8.0
+        }
+      ]
     },
     {
       "kind": "spawnProjectile",

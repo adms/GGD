@@ -863,10 +863,12 @@ def A(num, name, cast, cd, mp, rng, desc, **kw):
 A("20-00", "20-00 銀色甲胄", "self", [0], [0], 0,
   "[被動][格擋][機率]\n0秒冷卻\n\n「沒有魔的狀態，等於我什麼都沒穿」\n魔力化的銀色鎧甲有相當良好的魔法抗性，有30%[機率][格擋]100%魔法([AP])傷害。",
   innate="passive",
-  passive={"name": "20-00 銀色甲胄", "ranks": [{"hooks": [
-      {"on": "onDamageTaken", "chance": 0.3, "target": "self",
-       "damageType": "magic", "internalCooldown": 0.5,
-       "effects": [{"kind": "shield", "amount": amt(flat=800), "duration": 0.5, "absorbs": "magic"}]}]}]})
+  # ⛔ 不要填 internalCooldown：syncAbilityPassives 是 detach+attach，升級／EX 解鎖／
+  #    變身會把 blockLastFired 歸零；出貨的技能格擋一律沒有 ICD，規格也只寫機率。
+  #    ⚠️ 舊寫法的 800 是規格從來沒出現過的數字，而且護盾語意與格擋不同
+  #    （超過 800 照樣全額扣血）。
+  passive={"name": "20-00 銀色甲胄", "ranks": [
+      {"block": {"damageTypes": ["magic"], "chance": 0.3, "fraction": 1.0}}]})
 
 A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
   "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
@@ -1062,7 +1064,11 @@ A("77-01", "77-01 百烈櫻華斬", "self", [40, 40, 40, 40], [75, 110, 145, 180
 A("77-02", "77-02 雷鳴劍", "self", [0], [0], 0,
   "[被動][普攻時][機率][暴擊][範圍][AP加成]\n\n「雷鳴。會心」\n[攻擊時]有10%的[機率]可以使出[會心一擊]造成1.5倍的[暴擊]傷害，並且附加落雷，造成[範圍內]敵方10% [AP]傷害。",
   innate="passive",
-  passive={"name": "77-02 雷鳴劍", "ranks": [{"hooks": [
+  passive={"name": "77-02 雷鳴劍", "ranks": [{
+      # ⛔ 不要改寫成 critChance/critDamage 兩條屬性：那兩條是聚合的，會讓這位英雄
+      #    **每一次**暴擊都變 1.5 倍，還會蓋掉道具的暴傷。
+      "critStrike": {"chance": 0.10, "damageMult": 1.5, "lifestealFraction": 0.0},
+      "hooks": [
       {"on": "onBasicAttack", "chance": 0.10, "target": "event",
        "effects": [area("magic", tier="小", ap=0.1)]}]}]})
 
@@ -1072,7 +1078,14 @@ A("77-03", "77-03 GLADIARIA ALAT", "self", [120, 120, 120, 120], [90, 180, 270, 
   # 是陣列，而那一格的註解點名的就是 77-03（「rank 4 的加速活 15 秒、翅膀只有 6 秒」
   # 這種兩半各走各的，就是它被開放的理由）。
   form_sec=[6.0, 9.0, 12.0, 15.0],
-  effects=[buff([M("as", "pctAdd", 0.6)], 6.0)])
+  # ⭐ F+G 合併：兩個出口改同一行。F 是逐階（form_sec 早就是 [6,9,12,15]，buff 卻鎖死
+  #    6 秒），G 是翅膀。合併後飛行跟著同一份 source 的 expiresAtTick 到期，⛔ 不需要
+  #    第二個時鐘。⚠️ stayInsideBoundary ⛔ 不要關（抄 04-00 翔封界），否則會走出競技場。
+  effects=[buff([M("as", "pctAdd", 0.6)], 6.0,
+                perRank=[{"modifiers": [M("as", "pctAdd", a)], "duration": d}
+                         for a, d in ((0.6, 6.0), (0.9, 9.0), (1.2, 12.0), (1.5, 15.0))],
+                flight={"hoverHeight": 0.45, "ignoreUnits": True,
+                        "ignoreObstacles": True, "stayInsideBoundary": True})])
 
 A("77-04", "77-04 真-雷光劍", "ground", [70, 70, 70], [150, 225, 300], 11,
   "[主動][範圍][AD加成]\n70秒冷卻，施展時間2秒\n消耗MP150/225/300\n施法距離11\n\n「神鳴。雷光」\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予[小範圍]敵人600/800/1000+60% [AD]傷害。",
@@ -1154,7 +1167,9 @@ A("13-01", "13-01 暗步。極限之圓", "targeted", [4, 3, 2, 1], [0, 0, 0, 0]
 
 A("13-02", "13-02 龍頭戲畫。牙突", "targeted", [45, 45, 45, 45], [60, 90, 120, 150], 2,
   "[主動][指定][擊退]\n45秒冷卻\n消耗MP60/90/120/150\n施法距離2\n\n「突起的不一定是牙，也可能是老朽的愛」\n對指定敵人造成40/60/80/100 + 目標[最大生命]6/8/10/12%的傷害，並[擊退]6距離。",
-  effects=[dmg("physical", per=[40, 60, 80, 100], ad=0.5),
+  effects=[dmg("physical", per=[40, 60, 80, 100], ad=0.5,
+               res_pct={"subject": "target", "resource": "health", "basis": "max",
+                        "perRank": [0.06, 0.08, 0.10, 0.12]}),
            {"kind": "knockback", "distance": 6.0, "speed": 18.0, "from": "caster"}])
 
 A("13-03", "13-03 龍頭戲畫。布陣", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
@@ -1194,7 +1209,10 @@ A("15-01", "15-01 雷神槍「巨神殺手」", "ground", [30, 30, 30, 30], [175
 
 A("15-02", "15-02 疾風迅雷", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][輔助][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n持續12秒\n\n「質疑魔法、成為魔法、超越魔法」\n獲得 1.2倍 [移動速度] 與 30/60/90/120% [攻擊速度]，普通攻擊附加 30/45/60/75 +10% [AP] 雷電傷害。\n([變身]為唯一狀態不可疊加)",
-  effects=[buff([M("ms", "pctMult", 0.2), M("as", "pctAdd", 0.3)], 12.0)],
+  effects=[buff([M("ms", "pctMult", 0.2), M("as", "pctAdd", 0.3)], 12.0,
+                perRank=[{"modifiers": [M("ms", "pctMult", 0.2), M("as", "pctAdd", a)],
+                          "duration": 12.0}
+                         for a in (0.3, 0.6, 0.9, 1.2)])],
   passive={"name": "15-02 疾風迅雷", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "target": "event",
        "condition": {"kind": "status", "subject": "self", "statusId": "rage"},
@@ -1213,7 +1231,11 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
   "[主動][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 200/400/600\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 150/225/300 + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
   maxRank=3,
   effects=[buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
-                 M("as", "capRaise", 10.0)], 12.0)],
+                 M("as", "capRaise", 10.0)], 12.0,
+                perRank=[{"modifiers": [M("ms", "pctMult", 1.0), M("as", "pctAdd", a),
+                                        M("as", "capRaise", 10.0)],
+                          "duration": 12.0}
+                         for a in (1.0, 1.5, 2.0)])],
   passive={"name": "15-04 雷天大壯。貳式", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "target": "event", "consumeOn": "fire", 
        "effects": [dmg("magic", flat=150, ap=0.7)]}]}]})
@@ -1242,7 +1264,7 @@ A("44-02", "44-02 死神的規則", "self", [0], [0], 0,
   "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
   innate="passive", maxRank=4,
   passive={"name": "44-02 死神的規則", "ranks": [
-      {"modifiers": [M("ap", "flat", v)]} for v in (7, 12, 17, 22)]})
+      {"attributes": {"int": v}} for v in (7, 12, 17, 22)]})
 
 A("44-03", "44-03 火車輾過", "ground", [60, 50, 40, 30], [150, 250, 350, 450], 12,
   "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
@@ -1252,7 +1274,10 @@ A("44-03", "44-03 火車輾過", "ground", [60, 50, 40, 30], [150, 250, 350, 450
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
   "[主動][AP加成]\n35秒冷卻\n消耗MP150/250/350\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
   maxRank=3,
-  effects=[dmg("magic", ap=0.4), status("slow40", 5.0, moveSpeedMult=0.5)])
+  effects=[dmg("magic", ap=0.4,
+               res_pct={"subject": "target", "resource": "health", "basis": "current",
+                        "perRank": [0.3, 0.4, 0.5]}),
+           status("slow40", 5.0, moveSpeedMult=0.5)])
 
 A("44-002", "44-002 交換筆記本", "targeted", [120], [450], 5.29,
   "[主動][指定]\n120秒冷卻，吟唱2秒\n消耗MP450\n施法距離5.29\n\n「計畫通！」\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟指定的敵人[現存生命]作 [交換]。",
@@ -1308,7 +1333,9 @@ A("60-00", "60-00 大師之劍", "self", [0], [0], 0,
   innate="passive",
   passive={"name": "60-00 大師之劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "target": "event",
-       "effects": [dmg("magic", flat=60),
+       "effects": [dmg("magic", flat=0,
+                       res_pct={"subject": "target", "resource": "health",
+                                "basis": "max", "perRank": [0.03]}),
                    {"kind": "dispel", "shape": "single", "pools": {"status": True}, "count": 1}]}]}]})
 
 A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
@@ -1335,7 +1362,7 @@ A("60-03", "60-03 三角神力．勇氣", "self", [0], [0], 0,
   "[被動][強化][普攻時][AP加成]\n\n喚醒勇者體內的三角神力，提高 [智慧]、[敏捷]、[力量] 3/6/9/12點，並且每三下普通攻擊則會額外造成 33% [AP]傷害。",
   innate="passive", maxRank=4,
   passive={"name": "60-03 三角神力．勇氣", "ranks": [
-      {"modifiers": [M("ap", "flat", v), M("ad", "flat", v), M("maxHealth", "flat", v * 10)],
+      {"attributes": {"str": v, "agi": v, "int": v},
        "hooks": [{"on": "onBasicAttack", "target": "event",
                   "effects": [dmg("magic", ap=0.33)]}]}
       for v in (3, 6, 9, 12)]})
@@ -1390,15 +1417,20 @@ A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   # ⭐ 手打的 championForm 拿掉，改由 A-1 的規則產。79-04 是全檔唯一手打的一格，
   #    而那正是另外四支的缺口整整沒有人發現的原因（第零守則⑨）。
   form_sec=8.0,
-  effects=[buff([M("as", "pctAdd", 1.0)], 8.0),
+  effects=[buff([M("as", "pctAdd", 1.0)], 8.0,
+                perRank=[{"modifiers": [M("as", "pctAdd", a)], "duration": 8.0}
+                         for a in (1.0, 1.5, 2.0)]),
            {"kind": "modifyCooldown", "shape": "single", "who": "self", "slot": "Q",
             "mode": "reduce", "amount": 0.5}])
 
 A("79-002", "79-002 虛化", "self", [0], [0], 0,
   "[被動][回復][機率]\n\n「面具才是本體」\n[卍解] 狀態下，額外獲得100%攻擊力([AD])提昇、60％[吸血] 、有30%的[機率][格擋]物理([AD])傷害、[月牙天衝]冷卻時間縮短50%。",
-  passive={"name": "79-002 虛化", "ranks": [{"hooks": [
-      {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
-       "effects": [buff([M("ad", "pctAdd", 1.0), M("lifesteal", "flat", 0.6)], 8.0)]}]}]})
+  # ⭐ G+N 合併：兩個出口改**同一段**，分開套後者會整段蓋掉前者（30% 格擋靜默消失）。
+  #    effect.ts 的 whileForm 註解逐字寫著 79-002 的格擋就是「配 whileForm:"alternate"」。
+  while_form="alternate",
+  passive={"name": "79-002 虛化", "ranks": [
+      {"modifiers": [M("ad", "pctAdd", 1.0), M("lifesteal", "flat", 0.6)],
+       "block": {"damageTypes": ["physical"], "chance": 0.3, "fraction": 1.0}}]})
 
 # ── 80 呂布 ──────────────────────────────────────────────────────────────────
 A("80-00", "80-00 飛將神弓", "self", [0], [0], 0,
@@ -1435,7 +1467,10 @@ A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300
 A("80-04", "80-04 赤兔咆哮", "self", [90, 90, 90], [250, 400, 550], 0,
   "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
   maxRank=3,
-  effects=[buff([M("ap", "pctAdd", 1.5), M("ad", "pctAdd", 1.5)], 8.0)],
+  effects=[buff([M("ap", "pctAdd", 1.5), M("ad", "pctAdd", 1.5)], 8.0,
+                perRank=[{"modifiers": [M("ap", "pctAdd", v), M("ad", "pctAdd", v)],
+                          "duration": 8.0}
+                         for v in (1.5, 2.0, 2.5)])],
   passive={"name": "80-04 赤兔咆哮", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.2, "target": "self", "internalCooldown": 0.5,
        "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
@@ -1465,7 +1500,8 @@ A("89-01", "89-01 憤怒的頭槌", "self", [0], [0], 0,
   "[被動][機率][普攻時][暈眩]\n\n「頭腦不好沒關係，頭骨夠硬就行」\n[攻擊時]有 3/4/5/6%[機率]想起頭槌攻擊，造成 10倍 [暴擊] 傷害，並將敵人[暈眩] 1秒。\n\n(敵方 [燃燒] 狀態下額外追加 [致盲] 狀態，持續 5秒)",
   innate="passive", maxRank=4,
   passive={"name": "89-01 憤怒的頭槌", "ranks": [
-      {"hooks": [
+      {"critStrike": {"chance": c, "damageMult": 10.0, "lifestealFraction": 0.0},
+       "hooks": [
           {"on": "onBasicAttack", "chance": c, "target": "event",
            "effects": [status("stun", 1.0, stun=True)]},
           {"on": "onBasicAttack", "chance": c, "target": "event",
@@ -1536,7 +1572,9 @@ A("92-01", "92-01 臥草泥馬", "self", [60, 60, 60, 60], [160, 220, 280, 340],
   # payload 與身體用**同一個時鐘**，是對的（切換才不可以帶 duration）。
   form_sec=6.0,
   effects=[status("root", 6.0, root=True, disarmed=True),
-           buff([M("armor", "flat", 20)], 6.0),
+           buff([M("armor", "flat", 20)], 6.0,
+                perRank=[{"modifiers": [M("armor", "flat", v)], "duration": 6.0}
+                         for v in (20, 40, 60, 80)]),
            {"kind": "dot", "damageType": "true", "amountPerTick": amt(flat=-1),
             "intervalSec": 1.0, "durationSec": 6.0, "stacking": "refresh"}])
 
@@ -1580,7 +1618,9 @@ A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
   passive={"name": "92-002 最終戈壁", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
        "effects": [{"kind": "delayed", "shape": "single", "delaySec": 1.0, "count": 6, "intervalSec": 1.0,
-                    "effects": [area("magic", tier="超大", ap=1.0),
+                    "effects": [area("magic", tier="超大", ap=1.0,
+                                     res_pct={"subject": "target", "resource": "health",
+                                              "basis": "max", "perRank": [0.02]}),
                                 # ⭐ 規格的「每秒對周圍友方回復 10% 最大魔力」那一半。
                                 #    ⚠️ restore 沒有 side/radius，範圍友方只能包一層
                                 #    shape:"circle" + side:"allies" 的殼（同 89-002 的先例）。
@@ -1615,9 +1655,11 @@ A("52-00", "52-00 十二道試煉", "self", [0], [0], 0,
 
 A("52-01", "52-01 狂戰士之怒", "self", [60, 60, 60, 60], [100, 140, 180, 220], 0,
   "[主動][輔助]\n60秒冷卻\n消耗MP100/140/180/220\n持續6秒\n\n「吼叫不是技能前搖，只是想嚇嚇他」\n進入[狂怒]狀態，提升60/90/120/150% [攻擊速度] 與10/15/20/25%[吸血]。\n期間每承受自身[最大生命]5%的傷害，「狂怒」持續時間延長2秒。",
-  effects=[{"kind": "applyBuff", "modifiers": [M("as", "pctAdd", 0.6),
-                                               M("lifesteal", "flat", 0.1)],
-            "duration": 6.0, "statusId": "rage"}],
+  effects=[buff([M("as", "pctAdd", 0.6), M("lifesteal", "flat", 0.1)], 6.0,
+                statusId="rage",
+                perRank=[{"modifiers": [M("as", "pctAdd", a), M("lifesteal", "flat", ls)],
+                          "duration": 6.0}
+                         for a, ls in ((0.6, 0.1), (0.9, 0.15), (1.2, 0.2), (1.5, 0.25))])],
   passive={"name": "52-01 狂戰士之怒", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "target": "self",
        "effects": [{"kind": "extendBuff", "shape": "single", "who": "self", "stackKey": "rage",
@@ -1645,13 +1687,21 @@ A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
   maxRank=3, cast_time=2.0, radiusTier="大",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 24.0, "maxDistance": 5.0},
-           area("physical", tier="大", per=[600, 1000, 1400])])
+           area("physical", tier="大", per=[600, 1000, 1400]),
+           # ⚠️ victimCondition ⛔ 不可以當 kw 傳進 area()：會被 amt() 的 o.update(kw)
+           #    倒進 amount，而 zScaling 是 .strict() ⇒ 整份文件被拒收。
+           dict(area("physical", tier="大", flat=0,
+                     res_pct={"subject": "self", "resource": "health",
+                              "basis": "max", "perRank": [0.25]}),
+                victimCondition={"kind": "status", "subject": "target", "tag": "fear"})])
 
 A("52-002", "52-002 射殺百頭", "targeted", [120], [400], 5.29,
   "[主動][指定][AP加成]\n120秒冷卻，吟唱2秒\n消耗MP400\n施法距離5.29\n\n「名稱叫射殺百頭，但狂戰士狀態下減弱成斧頭砍九次」\n對目標連續 9次的斬擊，每次造成 100% [AP] +自身[最大生命] 3% 傷害，最後一擊附加 [擊退]一小段距離 及 [恐懼] 3秒。",
   cast_time=2.0,
   effects=[{"kind": "delayed", "shape": "single", "delaySec": 0.1, "count": 9, "intervalSec": 0.1,
-            "effects": [dmg("magic", ap=1.0)],
+            "effects": [dmg("magic", ap=1.0,
+                            res_pct={"subject": "self", "resource": "health",
+                                     "basis": "max", "perRank": [0.03]})],
             "finalEffects": [{"kind": "knockback", "distance": 3.0, "speed": 15.0,
                               "from": "caster"},
                              status("fear", 3.0, feared=True)]}])

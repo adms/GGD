@@ -29,6 +29,16 @@
             "coeff": 0.4
           }
         ]
+      },
+      "resourcePct": {
+        "subject": "target",
+        "resource": "health",
+        "basis": "current",
+        "perRank": [
+          0.3,
+          0.4,
+          0.5
+        ]
       }
     },
     {

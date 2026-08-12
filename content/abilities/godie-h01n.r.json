@@ -33,7 +33,39 @@
           "value": 1.0
         }
       ],
-      "duration": 8.0
+      "duration": 8.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.0
+            }
+          ],
+          "duration": 8.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 8.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 2.0
+            }
+          ],
+          "duration": 8.0
+        }
+      ]
     },
     {
       "kind": "modifyCooldown",

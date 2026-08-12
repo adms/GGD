@@ -20,25 +20,13 @@
     "name": "20-00 銀色甲胄",
     "ranks": [
       {
-        "hooks": [
-          {
-            "on": "onDamageTaken",
-            "chance": 0.3,
-            "target": "self",
-            "damageType": "magic",
-            "internalCooldown": 0.5,
-            "effects": [
-              {
-                "kind": "shield",
-                "amount": {
-                  "flat": 800.0
-                },
-                "duration": 0.5,
-                "absorbs": "magic"
-              }
-            ]
-          }
-        ]
+        "block": {
+          "damageTypes": [
+            "magic"
+          ],
+          "chance": 0.3,
+          "fraction": 1.0
+        }
       }
     ]
   },

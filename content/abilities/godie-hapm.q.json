@@ -36,7 +36,69 @@
         }
       ],
       "duration": 6.0,
-      "statusId": "rage"
+      "statusId": "rage",
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.6
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.1
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.9
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.15
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.2
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.2
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 1.5
+            },
+            {
+              "stat": "lifesteal",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ]
     }
   ],
   "passive": {

@@ -153,8 +153,6 @@ WAIVERS = {
     # ── A-1 落地後仍然缺的那一半（A-1 的規則只補身體交換，不補傷害）──
     ("godie-e002.w", "AP加成"):
         "A-1：「關閉時風王鐵槌 120+30%AP」要加進 toggle.onExit，那一輪只留了註解",
-    ("godie-e00w.e", "飛行"):
-        "GH：77-03 的翅膀＝applyBuff.flight（SOURCE_GRANT_SHAPE，2026-08-09 才開的格），變身已補、飛行未補",
     # ── owner 未裁決 / 其他 lane ──
     ("godie-h01u.q", "層數累積"):
         "B-3（owner 2026-08-12 未裁決）：80-01 天下無雙的疊層要 applyBuff.stackKey",
@@ -163,14 +161,10 @@ WAIVERS = {
     ("godie-e00s.ex", "召喚"):
         "同上（70-002 只是引用 R 的樹精）",
     # ── 這一輪發現、要開 GH issue、⛔ 不當場修（第零守則⑧）──
-    ("godie-e002.passive", "格擋"):
-        "GH：20-00 30% 格擋 100% 魔法傷害被寫成 0.5 秒 800 點護盾，不是 BlockGrant",
     ("godie-e002.r", "AP加成"):
         "GH：20-04 的「反彈量 3/5/7 倍 + 300% AP」整段沒寫，只有一個 moon-combo status",
     ("godie-e00s.ex", "AP加成"):
         "GH：70-002「千年練成追加 500% AP」的傷害那一半沒寫",
-    ("godie-e00w.w", "暴擊"):
-        "GH：77-02 雷鳴劍的 1.5 倍會心沒寫，只剩落雷",
     ("godie-e00w.passive", "旋轉"):
         "演出動詞（雙腿抓住對手旋轉拋摔），不是 tpl-orbit-array 那種環繞衛星",
     ("godie-edem.passive", "反彈"):
@@ -186,9 +180,8 @@ WAIVERS = {
     ("godie-h01n.e", "AP加成"):
         "GH：79-03 的「破魔狀態額外 60% AP」沒寫（79-02 有，79-03 漏）",
     ("godie-h01n.ex", "回復"):
-        "GH：79-002 虛化的 60% 吸血寫成 lifesteal，30% 格擋整個沒寫",
-    ("godie-h01n.ex", "機率"):
-        "同上（那 30% 機率沒有落點）",
+        "GH：79-002 虛化的 60% 吸血寫成 lifesteal（stat），沒有 restore/heal 形狀。"
+        "⚠️ 2026-08-12 B2-G：那 30% 格擋已經補成 block grant，所以這一筆只剩吸血那一半",
     ("godie-h02v.e", "週期"):
         "GH：92-02 消化液「每秒受到 X 傷害持續 3 秒」寫成一發 damageLine，沒有 dot",
     ("godie-h02v.ex", "身上有某狀態時"):
