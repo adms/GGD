@@ -176,7 +176,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(20);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(21);
     expect(byKind("OWN_PAGE")).toHaveLength(11);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
@@ -185,9 +185,17 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 於是它從「做了一半」變成一頁真的後台（VICTORY_PODIUM_SPEC）。
     // ⚠️ 這個數字往上長 = 「做了一半」的份數變多,所以它必須是一個看得見的 diff。
     expect(byKind("DEFERRED")).toHaveLength(4);
-    // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）與 roster（英雄上下架）。
-    // 這個數字往上長就是欠債變多，而它變多的那一刻要有人按下同意。
-    expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual(["audio-map", "roster"]);
+    // ⚠️ KNOWN_GAP 是**帳單**：audio-map（混音表）、origin-routes（出身×路線文案）
+    // 與 roster（英雄上下架）。這個數字往上長就是欠債變多，
+    // 而它變多的那一刻要有人按下同意。
+    // 2026-08-12：2 → 3。origin-routes 是 owner 指名的「新英雄轉生設計」那一頁的
+    // 資料基礎 —— 110 個文案葉節點，通用長表單畫出來不叫可調。那一頁做出來時
+    // 這一列會被守衛強迫刪掉。
+    expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
+      "audio-map",
+      "origin-routes",
+      "roster",
+    ]);
   });
 
   it("OWN_PAGE 那一族：路由真的存在且 session-gated，docId 常數真的指向那份文件", () => {

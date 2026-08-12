@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c1fe55a79c7a",
+  "hash": "de48949bf57b",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -151,6 +151,12 @@
       "path": "config/model-lod.json",
       "hash": "f62fe1b47808",
       "size": 459
+    },
+    {
+      "id": "origin-routes",
+      "path": "config/origin-routes.json",
+      "hash": "a2dae7c8c2b6",
+      "size": 8930
     },
     {
       "id": "regen",
