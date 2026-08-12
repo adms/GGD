@@ -24,32 +24,33 @@
       },
       "radius": 6.0,
       "radiusTier": "大",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "burn",
-      "duration": 10.0
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "paralysis",
-      "duration": 10.0,
-      "silenced": true
-    },
-    {
-      "kind": "dot",
-      "damageType": "magic",
-      "amountPerTick": {
-        "flat": 400.0
-      },
-      "intervalSec": 1.0,
-      "durationSec": 10.0,
-      "stacking": "refresh"
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "burn",
+          "duration": 10.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "paralysis",
+          "duration": 10.0,
+          "silenced": true
+        },
+        {
+          "kind": "dot",
+          "damageType": "magic",
+          "amountPerTick": {
+            "flat": 400.0
+          },
+          "intervalSec": 1.0,
+          "durationSec": 10.0,
+          "stacking": "refresh"
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.ex.webp",
   "vfxKey": "fx.prim.void.explosion-lg",
-  "castTimeSec": 0.8
+  "castTimeSec": 0.5
 }

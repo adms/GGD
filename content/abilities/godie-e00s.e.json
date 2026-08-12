@@ -30,14 +30,15 @@
       },
       "radius": 4.5,
       "radiusTier": "中",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "root",
-      "duration": 0.6,
-      "root": true
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 0.6,
+          "root": true
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-e00s.e.webp",

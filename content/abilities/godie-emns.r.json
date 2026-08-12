@@ -23,7 +23,6 @@
       "kind": "damage",
       "damageType": "magic",
       "amount": {
-        "flat": 50.0,
         "ratios": [
           {
             "stat": "ap",

@@ -35,7 +35,6 @@
                 "kind": "damageArea",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 50.0,
                   "ratios": [
                     {
                       "stat": "ap",
@@ -44,8 +43,7 @@
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小",
-                "maxTargets": 6
+                "radiusTier": "小"
               }
             ]
           }

@@ -35,19 +35,20 @@
       },
       "radius": 4.5,
       "radiusTier": "中",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "knockback",
-      "distance": 2.5,
-      "speed": 15.0,
-      "from": "caster"
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "armor-break",
-      "duration": 1.0
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 2.5,
+          "speed": 15.0,
+          "from": "caster"
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "armor-break",
+          "duration": 1.0
+        }
+      ]
     },
     {
       "kind": "spawnProjectile",

@@ -48,7 +48,6 @@
           },
           "radius": 3.0,
           "radiusTier": "小",
-          "maxTargets": 6,
           "includeOrigin": true
         }
       ]
@@ -78,5 +77,6 @@
   ],
   "interruptOn": "damage",
   "recoverySec": 0.8,
-  "castTimeSec": 0.4
+  "radiusTier": "小",
+  "castTimeSec": 0.5
 }

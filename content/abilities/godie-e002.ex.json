@@ -36,7 +36,6 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -51,11 +50,10 @@
                     "kind": "damageLine",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 7.0
                         }
                       ]
                     },
@@ -63,7 +61,6 @@
                     "width": 2.0,
                     "aim": "target",
                     "fromCaster": true,
-                    "maxTargets": 5,
                     "includeOrigin": false
                   }
                 ]

@@ -93,14 +93,15 @@
           "width": 1.6,
           "aim": "target",
           "fromCaster": true,
-          "maxTargets": 5,
-          "includeOrigin": false
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.0,
-          "moveSpeedMult": 0.5
+          "includeOrigin": false,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 1.0,
+              "moveSpeedMult": 0.5
+            }
+          ]
         }
       ],
       "icon": "assets/icons/abilities/godie-emfr.q.webp",
@@ -259,8 +260,7 @@
                       ]
                     },
                     "radius": 4.5,
-                    "radiusTier": "中",
-                    "maxTargets": 6
+                    "radiusTier": "中"
                   },
                   {
                     "kind": "applyStatus",

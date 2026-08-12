@@ -32,13 +32,12 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 2.0
           }
         ]
       },
       "radius": 6.0,
       "radiusTier": "大",
-      "maxTargets": 6,
       "includeOrigin": true
     },
     {

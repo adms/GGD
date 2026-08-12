@@ -46,11 +46,11 @@
       },
       "radius": 6.0,
       "radiusTier": "大",
-      "maxTargets": 6,
       "includeOrigin": true
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.e.webp",
   "vfxKey": "fx.prim.lightning.beam",
+  "radiusTier": "大",
   "castTimeSec": 0.3
 }

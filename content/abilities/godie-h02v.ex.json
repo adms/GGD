@@ -36,7 +36,6 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",
@@ -45,8 +44,7 @@
                       ]
                     },
                     "radius": 8.0,
-                    "radiusTier": "超大",
-                    "maxTargets": 6
+                    "radiusTier": "超大"
                   },
                   {
                     "kind": "weightedBranch",

@@ -138,19 +138,20 @@
           },
           "radius": 4.5,
           "radiusTier": "中",
-          "maxTargets": 6,
-          "includeOrigin": true
-        },
-        {
-          "kind": "knockback",
-          "distance": 2.5,
-          "speed": 15.0,
-          "from": "caster"
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "armor-break",
-          "duration": 1.0
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "knockback",
+              "distance": 2.5,
+              "speed": 15.0,
+              "from": "caster"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "armor-break",
+              "duration": 1.0
+            }
+          ]
         },
         {
           "kind": "spawnProjectile",
@@ -212,7 +213,6 @@
           "width": 2.0,
           "aim": "target",
           "fromCaster": true,
-          "maxTargets": 5,
           "includeOrigin": false
         }
       ],
@@ -235,7 +235,6 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",

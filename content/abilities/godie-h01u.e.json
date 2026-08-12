@@ -48,7 +48,6 @@
       "width": 2.0,
       "aim": "target",
       "fromCaster": true,
-      "maxTargets": 5,
       "includeOrigin": false
     }
   ],
@@ -71,7 +70,6 @@
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "flat": 50.0,
                   "ratios": [
                     {
                       "stat": "ap",

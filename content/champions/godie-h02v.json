@@ -335,7 +335,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "maxTargets": 5,
                     "includeOrigin": false
                   },
                   {
@@ -371,7 +370,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "maxTargets": 5,
                     "includeOrigin": false
                   },
                   {
@@ -407,7 +405,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "maxTargets": 5,
                     "includeOrigin": false
                   },
                   {
@@ -443,7 +440,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "maxTargets": 5,
                     "includeOrigin": false
                   },
                   {
@@ -489,20 +485,21 @@
           },
           "radius": 8.0,
           "radiusTier": "超大",
-          "maxTargets": 6,
-          "includeOrigin": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 6.0,
-          "moveSpeedMult": 0.5
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "blind",
-          "duration": 6.0,
-          "missChance": 0.5
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 6.0,
+              "moveSpeedMult": 0.5
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "blind",
+              "duration": 6.0,
+              "missChance": 0.5
+            }
+          ]
         }
       ],
       "passive": {
@@ -523,7 +520,6 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 50.0,
                       "ratios": [
                         {
                           "stat": "ap",

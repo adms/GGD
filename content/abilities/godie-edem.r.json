@@ -42,13 +42,12 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 3.0
                     }
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小",
-                "maxTargets": 6
+                "radiusTier": "小"
               }
             ]
           }
@@ -74,13 +73,12 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 3.0
                     }
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小",
-                "maxTargets": 6
+                "radiusTier": "小"
               }
             ]
           }
@@ -106,13 +104,12 @@
                   "ratios": [
                     {
                       "stat": "ap",
-                      "coeff": 1.0
+                      "coeff": 3.0
                     }
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小",
-                "maxTargets": 6
+                "radiusTier": "小"
               }
             ]
           }

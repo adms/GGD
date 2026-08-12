@@ -41,14 +41,15 @@
       },
       "radius": 6.0,
       "radiusTier": "大",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "knockback",
-      "distance": 3.0,
-      "speed": 15.0,
-      "from": "caster"
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "knockback",
+          "distance": 3.0,
+          "speed": 15.0,
+          "from": "caster"
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-e00w.q.webp",

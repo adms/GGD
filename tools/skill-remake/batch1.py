@@ -230,25 +230,59 @@ def amt(per=None, flat=None, ap=None, ad=None, **kw):
         o["perRank"] = [float(x) for x in per]
     if flat is not None:
         o["flat"] = float(flat)
-    # ⚠️ 係數上限 1.0 —— `abilityScaling.test.ts` 的 fx-16 在守（超出區間就紅）。
-    # owner 描述裡的「300% AP」「7倍」那種寫法，落到引擎是「基礎值大」而不是
-    # 「係數大」，所以這裡夾住係數、把倍率放進 perRank/flat。
+    # ⭐ B1-L（2026-08-12）：**係數不再被夾**。
+    #
+    # 這裡以前寫 `min(float(ap), 1.0)`，理由是「`abilityScaling.test.ts` 的 fx-16
+    # 在守」—— 那是**倒果為因**：測試裡的 `RATIO_MAX = 1.0` 是一個抄下來的常數，
+    # 不是引擎的上界。於是 owner 規格的「300% AP」「500% AP」**靜默**變成 100%，
+    # 而卡片上仍然寫 300% —— 失敗形態②（算出來了但玩家拿不到），而且
+    # **是產生器自己造的**。
+    #
+    # ⛔ 不要退回 min()。要限制係數請改 `abilityScaling.test.ts` 的 RATIO_MAX，
+    #    那裡是這個決策的**單一住處**。
     r = []
     if ap is not None:
-        r.append({"stat": "ap", "coeff": min(float(ap), 1.0)})
+        r.append({"stat": "ap", "coeff": float(ap)})
     if ad is not None:
-        r.append({"stat": "ad", "coeff": min(float(ad), 1.0)})
+        r.append({"stat": "ad", "coeff": float(ad)})
     if r:
         o["ratios"] = r
     o.update(kw)
     return o
 
 
+#: 純比例的酬載也算「有基礎」。⚠️ 這些鍵**不是** `amt()` 的具名參數就是它的
+#: `**kw` 直通鍵，兩種都會讓這一發真的打得出傷害。
+_PROPORTIONAL = ("ap", "ad", "attrRatios", "ratios")
+
+
+def _require_base(kw, where):
+    """⭐ B1-E（2026-08-12）：缺基礎值就**喊出來**，⛔ 不再偷塞 `flat=50`。
+
+    這三個 helper 以前都有一句 `if "per" not in kw and "flat" not in kw:
+    kw["flat"] = 50`。動機是對的（惰性傷害＝面板有數字、場上打 0，fx-15/fx-19
+    在守），**做法是錯的**：它把「規格沒給基礎值」這件事**變成一個看起來正常的
+    50 點傷害**，於是玩家看到一個卡片解釋不了的數字，而稽核看到的是「有填」。
+
+    出貨後果量到的規模：29 顆 `flat==50 且無 perRank` 的節點 / 17 份文件，
+    而全表**手寫** `flat=50` 的呼叫點只有一個（:575，59-02 是真的 50）。
+
+    ⛔ 純比例（只有 ap/ad/attrRatios）**不算惰性** —— 它有基礎，基礎是施法者的
+       屬性。`abilityScaling.test.ts` 的 `baseOf` 同步放寬（B1-E 的另一半）。
+    """
+    if "per" in kw or "flat" in kw:
+        return
+    if any(k in kw for k in _PROPORTIONAL):
+        return
+    raise AssertionError(
+        f"{where}: 這一發沒有任何基礎值（perRank / flat / ap / ad / attrRatios 全缺）"
+        f" —— 它在面板上有數字、場上打 0。⛔ 不要靠 helper 補 50，"
+        f"回表格把規格的數值填進去。kwargs={sorted(kw)}"
+    )
+
+
 def dmg(dtype="magic", **kw):
-    # ⚠️ 沒有 perRank/flat 的傷害是**惰性的**（fx-15 / fx-19 在守）：
-    # 面板上有數字、場上打 0。缺基礎值就補一個最小值。
-    if "per" not in kw and "flat" not in kw:
-        kw["flat"] = 50
+    _require_base(kw, "dmg()")
     return {"kind": "damage", "damageType": dtype, "amount": amt(**kw)}
 
 
@@ -257,30 +291,46 @@ def dmg(dtype="magic", **kw):
 TIER_R = {"小": 3.0, "中": 4.5, "大": 6.0, "超大": 8.0}
 
 
-def area(dtype="magic", tier="中", maxt=6, **kw):
-    if "per" not in kw and "flat" not in kw:
-        kw["flat"] = 50
+def area(dtype="magic", tier="中", maxt=None, **kw):
+    """⭐ B1-I（2026-08-12）：`maxt` 的預設從 **6** 改成 **None**（＝不輸出）。
+
+    以前的預設值 6 是**寫死在簽章裡的決策**，而 28 個 `area()` 呼叫點**沒有一個**
+    明填過它（`maxt=` 在全表 grep 命中 0 次）—— 所以那個 6 不是任何人的選擇，
+    它是一個 helper 的預設值悄悄變成了 28 支技能的人數上限。
+    引擎的預設是 20（`spreadLimits.ts:70`），⇒ 上限被砍到 30%。
+
+    90 支規格裡**沒有任何一支寫過人數上限**，所以 None 是誠實的答案：
+    省略 `maxTargets` ⇒ 由後台的 `spreadLimits` 決定（第一守則：可調）。
+    """
+    _require_base(kw, f"area(tier={tier!r})")
     # ⚠️ 鍵的**順序**要跟 Zod schema 的宣告順序一致（radius 在 radiusTier 之前）。
     #    理由不是潔癖：`zChampionDoc.parse()` 會照 schema 順序重建物件，而
     #    `abilityScaling.test.ts` 的 fx-19 用 `JSON.stringify(standalone.effects)
     #    !== JSON.stringify(ab.effects)` 比對「獨立檔」與「英雄卡內嵌版」——
     #    獨立檔是生檔、內嵌版是 parse 過的，所以**只要順序不同就判定 desync**，
     #    即使兩份內容一模一樣。實測這一格自己就製造 23 筆假 desync。
-    return {"kind": "damageArea", "damageType": dtype, "amount": amt(**kw),
-            "radius": TIER_R[tier], "radiusTier": tier, "maxTargets": maxt}
+    o = {"kind": "damageArea", "damageType": dtype, "amount": amt(**kw),
+         "radius": TIER_R[tier], "radiusTier": tier}
+    if maxt is not None:
+        o["maxTargets"] = maxt
+    return o
 
 
-def line(dtype="magic", length=8.0, width=1.6, maxt=5, aim="target", **kw):
+def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target", **kw):
     # ⚠️ A-7：`aim` 以前寫死成 "target"，所以「[前方][直線]」的 ground 技全部拿到
     #    目標瞄準，而 `damageLine.ts` 的檔頭與全 repo 唯一的 ground damageLine
     #    （godie-efur.e）都指明「面前」= facing。開成參數，⛔ 預設不動
     #    （改預設會一次改到 20 支，那是**沒有紅燈在守**的行為變更）。
-    if "per" not in kw and "flat" not in kw:
-        kw["flat"] = 50
+    # ⭐ B1-I：`maxt` 預設 5 → None（不輸出），理由見 area()。7 個 line() 呼叫點
+    #    同樣一個都沒明填過。
+    _require_base(kw, f"line(length={length})")
     # ⚠️ 鍵序 = Zod 宣告序（fromCaster 在 maxTargets 之前），理由見 area()。
-    return {"kind": "damageLine", "damageType": dtype, "amount": amt(**kw),
-            "length": length, "width": width, "aim": aim,
-            "fromCaster": True, "maxTargets": maxt, "includeOrigin": False}
+    o = {"kind": "damageLine", "damageType": dtype, "amount": amt(**kw),
+         "length": length, "width": width, "aim": aim, "fromCaster": True}
+    if maxt is not None:
+        o["maxTargets"] = maxt
+    o["includeOrigin"] = False
+    return o
 
 
 def buff(mods, dur, hooks=None):
@@ -313,6 +363,193 @@ def _own_area(node):
             node.setdefault("includeOrigin", True)   # setdefault：手填的特例仍然贏
         for v in node.values():
             _own_area(v)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# B1（2026-08-12）· 三條**規則**，表格零列要動
+#
+# 這三條跟 A 類那八條是同一個形狀：改一次、90 支的輸出全變。剩下的缺陷都是
+# 「詞彙」（helper 簽章加參數，每一列還要填值），CP 值天生低一階。
+# ─────────────────────────────────────────────────────────────────────────────
+
+#: 折進 `onHitTargets` 的酬載 kind。⛔ 不含 `damage` —— 兩顆傷害並排是合法的
+#: 「本體 + 濺射」寫法，折進去會變成「打中才追加」，那是行為變更。
+_PAYLOAD_KINDS = ("applyStatus", "knockback", "dot")
+#: 有 `onHitTargets` 的形狀（effect.ts:1516 / :1566）。⛔ `damage` **沒有**這一格。
+_SHAPE_KINDS = ("damageArea", "damageLine")
+#: ⛔ 不要遞迴進去的鍵：那裡面的 `ctx.targets` 是**事件的受害者**，兄弟酬載本來
+#: 就該打在他身上（`damageArea` 的原意就是擴散）。折進 onHitTargets 反而是錯的。
+_NOT_CAST_SCOPE = ("hooks", "passive", "marks", "onHitTargets", "onHit")
+
+#: 被折進去的節點（num → [(shape, payload)]）。main() 收工印出來（靜默才是缺陷）。
+FOLD_LOG = {}
+
+#: B1 的閘收集到的東西（分類 → [(num, 細節)]）。⛔ 它**不擋** build()，
+#: 由 `b1_report()` 在收工時一次印完 —— 「撞到第一支就停」看不到全貌，
+#: 而全貌才是「N 個同型 = K 個模板」判斷得了的東西（第零守則⑨）。
+FINDINGS = __import__("collections").defaultdict(list)
+
+
+def b1_report():
+    """把 B1 三條閘收集到的清單一次印完。⚠️ 這是**清單**不是紅燈。
+
+    ⛔ 「一行沒有人讀的 log 不算」（CLAUDE.md）—— 所以真正的紅燈住在
+    `packages/shared/src/ops/` 的守衛裡，這裡負責的是**讓作者看得到要填什麼**。
+    """
+    if not FINDINGS:
+        return
+    print("\n─── B1 閘清單（⚠️ 不擋出貨，是待填清單）───")
+    for k in sorted(FINDINGS, key=lambda k: (not k.startswith("M·⛔"), k)):
+        rows = FINDINGS[k]
+        print(f"  {k} —— {len(rows)} 支")
+        print("     " + " · ".join(f"{n}{f'({d})' if d else ''}" for n, d in rows))
+
+
+def _fold_onhit(node, num, _root=True):
+    """⭐ B1-B —— 範圍技的兄弟酬載打在**施法者自己**身上，這條規則把它折回去。
+
+    `area()/line()` 從來沒有 `onhit=` 出口，所以「範圍傷害 + 暈眩」在表格裡只能
+    寫成兩顆並排的兄弟節點。而兄弟節點吃的是 `ctx.targets` ——
+    `castType:"self"` 時那就是**施法者本人**，`ground` 時 `abilitySystem.ts` 塞的是
+    圈內敵人（勉強對），`targeted` 時是單一目標（範圍白做了）。
+
+    出貨實測：`onHitTargets` 在 96 份重製檔裡出現 **0 次**，而引擎那一半是活的
+    （`victimFilter.ts:63 runOnHitChain` 由 `damageArea.ts:118` / `damageLine.ts:154`
+    呼叫，把**真的打中的人**換進 `ctx.targets`）。
+
+    ⛔ 這不是「在第 N 列加一個參數」——規則是**相鄰**：同一個 effects 陣列裡，
+       緊接在形狀之後、且沒有明寫 `applyTo:"self"` 的酬載，就是那個形狀的酬載。
+       明寫 `applyTo:"self"`（例：自己吃一個增益）一律不動。
+    """
+    if isinstance(node, list):
+        out = []
+        for v in node:
+            if (
+                out
+                and isinstance(v, dict)
+                and isinstance(out[-1], dict)
+                and v.get("kind") in _PAYLOAD_KINDS
+                and out[-1].get("kind") in _SHAPE_KINDS
+                and v.get("applyTo") != "self"
+            ):
+                out[-1].setdefault("onHitTargets", []).append(v)
+                FOLD_LOG.setdefault(num, []).append((out[-1]["kind"], v["kind"]))
+                continue
+            out.append(v)
+        node[:] = out
+        for v in node:
+            _fold_onhit(v, num, False)
+    elif isinstance(node, dict):
+        for k, v in node.items():
+            if k in _NOT_CAST_SCOPE:
+                continue
+            _fold_onhit(v, num, False)
+
+
+def _first_tier(node):
+    """cast effects 樹裡第一顆自發 `damageArea` 的 `radiusTier`（深度優先）。"""
+    if isinstance(node, list):
+        for v in node:
+            t = _first_tier(v)
+            if t:
+                return t
+    elif isinstance(node, dict):
+        if node.get("kind") == "damageArea" and node.get("radiusTier"):
+            return node["radiusTier"]
+        for k, v in node.items():
+            if k in _NOT_CAST_SCOPE:
+                continue
+            t = _first_tier(v)
+            if t:
+                return t
+    return None
+
+
+def _ground_radius(doc, num):
+    """⭐ B1-O —— `ground` 技的 doc **頂層**沒有 `radiusTier`，落點圈就退回半徑 1。
+
+    ⛔ B1-B 修不到這一條：`onAbilityHit` 是 `abilitySystem.ts:432` 對 **doc 頂層**
+    算出來的 `targets` 發的，effect 樹裡的 `radiusTier` 它看不到。⇒ 一支「在指定
+    地點造成大範圍傷害」的技能，傷害是對的（effect 自己有半徑），但所有掛在
+    `onAbilityHit` 上的東西只認 1 距離內的人。
+
+    規則：能從 effects 樹第一顆自發 `damageArea` 借就借（⚙️ 表格零列要動）。
+
+    ⛔ 借不到**不是**缺陷 —— 我第一版在這裡 `assert`，結果 7 支全部擋下來，
+       而其中 20-03 / 59-04 / 15-01 是 `damageLine`（「[前方][直線]」）、
+       60-02 是 `leap`：**線與跳躍本來就沒有圓**，拿圓的規則去要求它們是誤報。
+       借不到的記進清單交給第 5 節的閘（`_report()`）判，⛔ 不在這裡猜一個預設值。
+    """
+    if doc.get("castType") != "ground" or doc.get("radiusTier"):
+        return
+    t = _first_tier(doc.get("effects", []))
+    if t:
+        doc["radiusTier"] = t
+        FINDINGS["O·借到頂層 radiusTier"].append((num, t))
+        return
+    shapes = sorted({x.get("kind") for x in doc.get("effects", []) if isinstance(x, dict)})
+    FINDINGS["O·ground 但沒有圓（多半是線/跳躍，正常）"].append((num, ",".join(shapes)))
+
+
+#: 「這一段之後還有下一段」的規格用語。⚠️ 只用來**問**，不用來猜結構。
+#: ⛔ 「秒後」不在列裡 —— 「持續 5 秒後歸零」是**持續時間到期**，不是時序（15-002 誤報）。
+_SEQUENCE_WORDS = ("隨後", "接著", "然後", "結束時", "結束後")
+#: 傷害形狀。`spawnProjectile.onHit` 空但**旁邊有這些**＝彈道是純視覺，可接受。
+_DAMAGE_KINDS = ("damage", "damageArea", "damageLine")
+
+
+def _mechanics_text(desc):
+    """把**角色台詞**從說明裡拿掉 —— 閘只讀機制那幾行。
+
+    ⛔ 這一行的存在理由是一個實測到的誤報：44-04 心臟麻痺的台詞是
+    「不，還不能笑，我一定要忍住……**在35秒後**宣布勝利吧。」——
+    掃整段會判定它是一支有時序的技能，而那句話是**風味文字**。
+    複驗對另一條閘量到過同型的 **57% 誤報率**，代價是作者被 8 支假紅擋住。
+    """
+    return "\n".join(
+        ln for ln in desc.splitlines() if not ln.lstrip().startswith(("「", '"', "“"))
+    )
+
+
+def _timing_gates(doc, e, num):
+    """⭐ B1-M —— 時序容器沒有 helper，於是「先 A 再 B」被攤平成同一 tick 的兄弟。
+
+    這是 B（空間）的**時間軸孿生**：B 問「打到誰」，這裡問「什麼時候」。
+    出貨量到的：`spawnProjectile.onHit` **7/7 全空**（彈道飛出去什麼都不做，傷害
+    由旁邊的兄弟在**發射的那一瞬間**結算）；`dash.onEnd` **0/4**。
+
+    ⛔ **只記不擋**（`FINDINGS`），理由是複驗逐字寫的：「把兄弟塞進 onHit/onEnd
+       是語意判斷，猜錯會靜靜地改變 7 支技能。**閘產生清單，作者逐列處理**。」
+       我第一版寫成 `raise`，那是「撞到第一支就停」不是「產出清單」。
+    """
+    fx = doc.get("effects", [])
+    tree_kinds = {x.get("kind") for x in fx if isinstance(x, dict)}
+    for i, x in enumerate(fx):
+        if not isinstance(x, dict):
+            continue
+        if x.get("kind") == "spawnProjectile" and not x.get("onHit"):
+            # ⚠️ 旁邊有傷害 = 彈道是純視覺（複驗：7 顆裡 5 顆是這一種，可接受）。
+            if tree_kinds & set(_DAMAGE_KINDS):
+                FINDINGS["M·彈道純視覺（onHit 空但旁邊有傷害，可接受）"].append((num, ""))
+            else:
+                FINDINGS["M·⛔ 彈道飛出去什麼都不做（onHit 空且無傷害兄弟）"].append((num, ""))
+        if x.get("kind") == "dash" and not x.get("onEnd") and i + 1 < len(fx):
+            FINDINGS["M·dash 酬載在起跳瞬間結算（沒有 onEnd）"].append(
+                (num, ",".join(sorted(tree_kinds - {"dash"})))
+            )
+    txt = _mechanics_text(e.get("desc", ""))
+    hit = [w for w in _SEQUENCE_WORDS if w in txt]
+    if hit:
+        has_container = any(
+            isinstance(x, dict)
+            and (
+                x.get("kind") in ("delayed", "spawnProjectile", "dash", "blink")
+                or x.get("onEnd") or x.get("onArrive") or x.get("onLand")
+            )
+            for x in fx
+        )
+        if not has_container:
+            FINDINGS["M·說明有時序用語但 effects 全是平行兄弟"].append((num, ",".join(hit)))
 
 
 def M(stat, op, value):
@@ -1377,6 +1614,12 @@ def build(e):
         doc.setdefault(k, v)
     # ── A-8：技能自己發動的 damageArea 要含震央（passive/hooks 裡的不碰）──────
     _own_area(doc["effects"])
+    # ── B1-B：兄弟酬載折進 onHitTargets（規則，不是逐列參數）──────────────────
+    _fold_onhit(doc["effects"], num)
+    # ── B1-O：ground 技的頂層 radiusTier ────────────────────────────────────
+    _ground_radius(doc, num)
+    # ── B1-M：時序容器的三條閘（只喊，不猜）──────────────────────────────────
+    _timing_gates(doc, e, num)
     # ⛔ castTimeSec **不手填** —— `deriveCastTime()` 是唯一來源，
     #    `castTimeCoverage.test.ts` 逐支比對。由 deriveCastTimes 後處理補上
     #    （finalize_content() 會跑它）。
@@ -1505,6 +1748,12 @@ def main():
         print(f"── A-6 明示退場的欄位：{len(DROP_LOG)} 份文件 ──")
         for aid in sorted(DROP_LOG):
             print(f"  {aid}: " + "、".join(sorted(DROP_LOG[aid])))
+    if FOLD_LOG:
+        n = sum(len(v) for v in FOLD_LOG.values())
+        print(f"── B1-B 兄弟酬載折進 onHitTargets：{n} 個節點 / {len(FOLD_LOG)} 支 ──")
+        for num in sorted(FOLD_LOG):
+            print(f"  {num}: " + "、".join(f"{s}←{p}" for s, p in FOLD_LOG[num]))
+    b1_report()
     # ⭐ A-3 標籤閘。⛔ 一定要在寫任何檔案**之前** —— 擋下來的時候一個檔案都沒動。
     gaps, stale = tag_gate.audit([(e["desc"], d) for e, (_c, _s, d) in zip(T, docs)])
     if gaps or stale:

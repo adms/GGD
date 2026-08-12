@@ -425,11 +425,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "G1 —— 「最多幾人」數的是通過過濾的前 N 個（卡面「最多 5 名帶〔恐懼〕的敵人」）還是最近 N 個再過濾。真的 A/B，所以是欄位；預設 qualified。沒填 victimCondition 時無作用。",
   },
-  "field:abilities.effects[]#damageArea.onHitTargets": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G1 ② —— effect.target-set-chain@1：把這一圈**真的打到的那群人**（過濾後、切完上限後）交給下一段。⛔ 交的不是上游的 ctx.targets，否則就是「畫面上打到 A、狀態蓋在 B」。⛔ 不需要 bake：與母效果同一 tick 執行，不是延遲 payload。",
-  },
+  // ⭐ 2026-08-12 移除 `damageArea.onHitTargets` 的 landing 豁免 —— **它落地了**。
+  //    B1-B 把兄弟酬載自動折進 onHitTargets（`batch1.py::_fold_onhit`），採用率
+  //    從 **0** 變成 15 個節點 / 10 支。這條豁免因此過期，而**這個帳本自己叫了** ——
+  //    它是這一批唯一一個「不必人去查就會說話」的採用率訊號。
   "field:abilities.effects[]#damageArea.runOnEmptyHit": {
     status: "landing",
     since: "2026-08-10",
@@ -450,11 +449,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "同 damageArea.maxTargetsCounts —— 「最多幾人」數的是通過過濾的前 N 個還是最近 N 個再過濾。⛔ 兩個 kind 這一族的欄位名與語意必須完全一致，否則編輯器上長得一樣的兩格會是兩件事。",
   },
-  "field:abilities.effects[]#damageLine.onHitTargets": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "同 damageArea.onHitTargets —— 把這條線真的打到的那群人（過濾後、切完上限後）交給下一段，而不是上游交下來的 ctx.targets。⛔ 不需要 bake：與母效果同一 tick 執行。",
-  },
+  // ⭐ 2026-08-12 同 damageArea.onHitTargets：landing 豁免移除，它落地了（B1-B）。
   "field:abilities.effects[]#damageLine.runOnEmptyHit": {
     status: "landing",
     since: "2026-08-10",

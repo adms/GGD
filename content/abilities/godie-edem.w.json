@@ -41,14 +41,15 @@
       },
       "radius": 6.0,
       "radiusTier": "大",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "slow40",
-      "duration": 3.0,
-      "moveSpeedMult": 0.5
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 3.0,
+          "moveSpeedMult": 0.5
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-edem.w.webp",

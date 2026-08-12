@@ -35,13 +35,14 @@
       },
       "radius": 3.0,
       "radiusTier": "小",
-      "maxTargets": 6,
-      "includeOrigin": true
-    },
-    {
-      "kind": "applyStatus",
-      "statusId": "magic-break",
-      "duration": 3.0
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "applyStatus",
+          "statusId": "magic-break",
+          "duration": 3.0
+        }
+      ]
     },
     {
       "kind": "spawnProjectile",
@@ -51,5 +52,6 @@
   ],
   "icon": "assets/icons/abilities/godie-h01n.q.webp",
   "vfxKey": "fx.prim.void.pulse-sm",
+  "radiusTier": "小",
   "castTimeSec": 0.3
 }

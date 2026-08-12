@@ -35,7 +35,18 @@ import { DEFAULT_COMBAT_ENV } from "../sim/combatEnv";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
-const RATIO_MAX = 1.0;
+/**
+ * ⭐ B1-L（2026-08-12）：**1.0 → 10.0**。
+ *
+ * 這格以前是 1.0，而 `tools/skill-remake/batch1.py` 的 `amt()` 讀了它、
+ * 在產生器裡寫死了 `min(float(ap), 1.0)` —— 於是 owner 規格的「300% AP」
+ * 「500% AP」被**靜默**夾成 100%，卡片上卻仍然寫 300%（失敗形態②）。
+ *
+ * ⛔ 這條界線**不是平衡旋鈕**，它是**打字錯誤的捕手**：`coeff: 100`
+ * （想寫 1.0 卻寫成百分比）跟 `coeff: 5`（真的是 500%）長得不一樣。
+ * 平衡請走 `config.combat-env@1` 的倍率，⛔ 不要回來調這個常數。
+ */
+const RATIO_MAX = 10.0;
 
 function read<T>(dir: string, file: string): T {
   return JSON.parse(readFileSync(join(CONTENT, dir, file), "utf8")) as T;
@@ -70,7 +81,22 @@ function amountEffects(c: ChampionDoc) {
   return out;
 }
 
-const baseOf = (a: Scaling) => (a.flat ?? 0) + Math.max(0, ...(a.perRank ?? [0]));
+/**
+ * ⭐ B1-E（2026-08-12）：**純比例的酬載不是惰性的**。
+ *
+ * 這個函式以前只認 `flat` + `perRank`，看不見 `ratios` / `attrRatios` ——
+ * 所以「造成 300% AP 的傷害」（沒有固定基礎值）會被判成惰性。
+ * 而 `batch1.py` 為了繞過這條判定，在三個 helper 裡偷塞 `flat = 50`：
+ * 29 顆 `flat==50` 的節點 / 17 份文件，玩家看到一個卡片解釋不了的固定值。
+ *
+ * ⛔ 兩件事必須一起改（分開改就會紅在錯的地方）：產生器刪掉注入、這裡放寬判定。
+ */
+const hasProportional = (a: Scaling) =>
+  (a.ratios?.length ?? 0) > 0 || (a.attrRatios?.length ?? 0) > 0;
+const baseOf = (a: Scaling) =>
+  hasProportional(a)
+    ? Number.POSITIVE_INFINITY
+    : (a.flat ?? 0) + Math.max(0, ...(a.perRank ?? [0]));
 
 /**
  * Below this an ability would have no usable base to size a proportional ratio

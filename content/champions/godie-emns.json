@@ -191,7 +191,6 @@
           },
           "radius": 6.0,
           "radiusTier": "大",
-          "maxTargets": 6,
           "includeOrigin": true
         }
       ],
@@ -224,7 +223,6 @@
           "kind": "damage",
           "damageType": "magic",
           "amount": {
-            "flat": 50.0,
             "ratios": [
               {
                 "stat": "ap",

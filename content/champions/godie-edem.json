@@ -85,32 +85,33 @@
           },
           "radius": 6.0,
           "radiusTier": "大",
-          "maxTargets": 6,
-          "includeOrigin": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "burn",
-          "duration": 3.0
-        },
-        {
-          "kind": "dot",
-          "damageType": "magic",
-          "amountPerTick": {
-            "flat": 1.0
-          },
-          "resourcePct": {
-            "subject": "target",
-            "resource": "health",
-            "basis": "current",
-            "scale": "ratio",
-            "perRank": [
-              0.01
-            ]
-          },
-          "intervalSec": 1.0,
-          "durationSec": 3.0,
-          "stacking": "refresh"
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 3.0
+            },
+            {
+              "kind": "dot",
+              "damageType": "magic",
+              "amountPerTick": {
+                "flat": 1.0
+              },
+              "resourcePct": {
+                "subject": "target",
+                "resource": "health",
+                "basis": "current",
+                "scale": "ratio",
+                "perRank": [
+                  0.01
+                ]
+              },
+              "intervalSec": 1.0,
+              "durationSec": 3.0,
+              "stacking": "refresh"
+            }
+          ]
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.q.webp",
@@ -159,14 +160,15 @@
           },
           "radius": 6.0,
           "radiusTier": "大",
-          "maxTargets": 6,
-          "includeOrigin": true
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 3.0,
-          "moveSpeedMult": 0.5
+          "includeOrigin": true,
+          "onHitTargets": [
+            {
+              "kind": "applyStatus",
+              "statusId": "slow40",
+              "duration": 3.0,
+              "moveSpeedMult": 0.5
+            }
+          ]
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.w.webp",
@@ -220,12 +222,12 @@
           },
           "radius": 6.0,
           "radiusTier": "大",
-          "maxTargets": 6,
           "includeOrigin": true
         }
       ],
       "icon": "assets/icons/abilities/godie-edem.e.webp",
       "vfxKey": "fx.prim.lightning.beam",
+      "radiusTier": "大",
       "castTimeSec": 0.3
     },
     "R": {
@@ -271,13 +273,12 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 3.0
                         }
                       ]
                     },
                     "radius": 3.0,
-                    "radiusTier": "小",
-                    "maxTargets": 6
+                    "radiusTier": "小"
                   }
                 ]
               }
@@ -303,13 +304,12 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 3.0
                         }
                       ]
                     },
                     "radius": 3.0,
-                    "radiusTier": "小",
-                    "maxTargets": 6
+                    "radiusTier": "小"
                   }
                 ]
               }
@@ -335,13 +335,12 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 3.0
                         }
                       ]
                     },
                     "radius": 3.0,
-                    "radiusTier": "小",
-                    "maxTargets": 6
+                    "radiusTier": "小"
                   }
                 ]
               }
