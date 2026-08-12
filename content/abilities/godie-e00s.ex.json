@@ -50,6 +50,20 @@
       }
     ]
   },
+  "augment": {
+    "targets": [
+      {
+        "abilityId": "godie-e00s.r",
+        "ops": [
+          {
+            "op": "damageCoeffAp",
+            "mode": "add",
+            "value": 5.0
+          }
+        ]
+      }
+    ]
+  },
   "icon": "assets/icons/abilities/godie-e00s.ex.webp",
   "vfxKey": "fx.prim.blood.pulse-lg"
 }

@@ -360,6 +360,21 @@
           {
             "kind": "championForm",
             "to": "toggle"
+          },
+          {
+            "kind": "damageArea",
+            "damageType": "magic",
+            "amount": {
+              "flat": 120.0,
+              "ratios": [
+                {
+                  "stat": "ap",
+                  "coeff": 0.3
+                }
+              ]
+            },
+            "radius": 4.5,
+            "radiusTier": "中"
           }
         ]
       },

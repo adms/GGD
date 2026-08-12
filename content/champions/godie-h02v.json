@@ -374,12 +374,30 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "magic-break",
-                    "duration": 3.0
+                    "includeOrigin": false,
+                    "onHitTargets": [
+                      {
+                        "kind": "dot",
+                        "damageType": "magic",
+                        "amountPerTick": {
+                          "flat": 20.0,
+                          "ratios": [
+                            {
+                              "stat": "ap",
+                              "coeff": 0.3
+                            }
+                          ]
+                        },
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
+                        "stacking": "refresh"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "magic-break",
+                        "duration": 3.0
+                      }
+                    ]
                   }
                 ],
                 "internalCooldown": 2.0,
@@ -409,12 +427,30 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "magic-break",
-                    "duration": 3.0
+                    "includeOrigin": false,
+                    "onHitTargets": [
+                      {
+                        "kind": "dot",
+                        "damageType": "magic",
+                        "amountPerTick": {
+                          "flat": 30.0,
+                          "ratios": [
+                            {
+                              "stat": "ap",
+                              "coeff": 0.3
+                            }
+                          ]
+                        },
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
+                        "stacking": "refresh"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "magic-break",
+                        "duration": 3.0
+                      }
+                    ]
                   }
                 ],
                 "internalCooldown": 2.0,
@@ -444,12 +480,30 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "magic-break",
-                    "duration": 3.0
+                    "includeOrigin": false,
+                    "onHitTargets": [
+                      {
+                        "kind": "dot",
+                        "damageType": "magic",
+                        "amountPerTick": {
+                          "flat": 40.0,
+                          "ratios": [
+                            {
+                              "stat": "ap",
+                              "coeff": 0.3
+                            }
+                          ]
+                        },
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
+                        "stacking": "refresh"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "magic-break",
+                        "duration": 3.0
+                      }
+                    ]
                   }
                 ],
                 "internalCooldown": 2.0,
@@ -479,12 +533,30 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "magic-break",
-                    "duration": 3.0
+                    "includeOrigin": false,
+                    "onHitTargets": [
+                      {
+                        "kind": "dot",
+                        "damageType": "magic",
+                        "amountPerTick": {
+                          "flat": 50.0,
+                          "ratios": [
+                            {
+                              "stat": "ap",
+                              "coeff": 0.3
+                            }
+                          ]
+                        },
+                        "intervalSec": 1.0,
+                        "durationSec": 3.0,
+                        "stacking": "refresh"
+                      },
+                      {
+                        "kind": "applyStatus",
+                        "statusId": "magic-break",
+                        "duration": 3.0
+                      }
+                    ]
                   }
                 ],
                 "internalCooldown": 2.0,

@@ -90,7 +90,10 @@
                       }
                     ],
                     "duration": 1.0,
-                    "statusId": "rage"
+                    "statusId": "rage",
+                    "stackKey": "lubu-tianxia",
+                    "maxStacks": 20,
+                    "stackVisual": true
                   }
                 ],
                 "target": "self"

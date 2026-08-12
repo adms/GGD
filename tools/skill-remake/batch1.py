@@ -1001,9 +1001,10 @@ A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 
       #    排在**冷卻閘之前**（abilitySystem.ts，那段註解逐字用 20-01 的
       #    60 秒解釋這個順序）。所以 60 秒冷卻不會把按鈕鎖住，而關閉的身體交換
       #    寫在這裡 —— exitToggle 是全專案唯一跑 onExit 的地方。
-      "onExit": [{"kind": "championForm", "to": "toggle"}],
-      # ⚠️「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍]
-      #    120 + 30% [AP]」尚未寫進來 —— 要加就加進**上面這個陣列**，不要另開出口。
+      # ⭐ 「關閉時，凝聚的風能一次釋放『風王鐵槌』，造成前方圓形[範圍] 120+30% [AP]」
+      #    —— `exitToggle` 是全專案唯一跑 `onExit` 的地方，所以它就是這一句的家。
+      "onExit": [{"kind": "championForm", "to": "toggle"},
+                 area("magic", tier="中", flat=120, ap=0.3)],
   },
   passive={"name": "20-01 風王結界 · 法球", "ranks": [
       {"whileForm": "alternate",
@@ -1163,6 +1164,12 @@ A("70-04", "70-04 千年練成", "ground", [90, 90, 90], [240, 420, 600], 14,
 
 A("70-002", "70-002 樹海降臨", "self", [0], [0], 0,
   "[被動][召喚][範圍][治療][AP加成]\n\n「是誰說樹味像雞」\n集千年煉成之大成，[千年練成] 追加 500% [AP]傷害，並且[回復][周圍]自己與友方隊伍生命10%。",
+  # ⭐ 「[千年練成] **追加** 500% [AP] 傷害」＝ 改寫**另一支技能**的係數 ⇒ `augment`。
+  #    `mode:"add"` 正是規格的「追加」（⛔ 不是 set）。⚠️「追加」是加在 70-04 每一顆
+  #    樹精的傷害上，⛔ 不是這一支自己多打一發。
+  augment={"targets": [
+      {"abilityId": "godie-e00s.r",   # 70-04 千年練成
+       "ops": [{"op": "damageCoeffAp", "mode": "add", "value": 5.0}]}]},
   passive={"name": "70-002 樹海降臨", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
        # ⭐「自己與友方隊伍」——原本只有 applyTo:"self"，隊友那一半靜默消失。
@@ -1646,8 +1653,17 @@ A("80-01", "80-01 天下無雙", "self", [0], [0], 0,
   innate="passive",
   passive={"name": "80-01 天下無雙", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "target": "self",
+       # ⭐ 「可[疊加]…若沒有繼續攻擊則歸零」＝ `stackKey` + `maxStacks`：
+       #    同 key 的第二發只把 `stacks` 加一（statPipeline 對 `value × stacks`
+       #    求和），而 1 秒沒再打就整份 source 到期 ⇒ 「歸零」是免費的。
+       # ⛔ 不要用「每層一份 buff」近似：那會留下 N 份各自到期的來源，
+       #    「沒繼續攻擊就歸零」會變成一層一層慢慢掉。
+       # ⚠️ `maxStacks` 20 是**上界**不是平衡值（防無限疊）；攻速真正的天花板
+       #    走 `config.stat-caps@1`，⛔ 不在這裡調。
        "effects": [{"kind": "applyBuff", "modifiers": [M("as", "pctAdd", 0.1)],
-                    "duration": 1.0, "statusId": "rage"}]}]}]})
+                    "duration": 1.0, "statusId": "rage",
+                    "stackKey": "lubu-tianxia", "maxStacks": 20,
+                    "stackVisual": True}]}]}]})
 
 A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
@@ -1824,8 +1840,15 @@ A("92-02", "92-02 消化液", "self", [0], [0], 0,
   passive={"name": "92-02 消化液", "ranks": [
       {"hooks": [{"on": "onDamageTaken", "chance": 0.1, "target": "event",
                   "internalCooldown": 2.0,
-                  "effects": [line("magic", length=8, width=1.8, flat=v, ap=0.3),
-                              status("magic-break", 3.0)]}]}
+                  # ⭐ 「**每秒**受到 20/30/40/50 + 30% [AP] 傷害…**持續 3 秒**」
+                  #    ＝ `dot`，⛔ 不是一發 damageLine（原本一次打完就結束）。
+                  #    直線負責「打到誰」，dot 掛在被打到的人身上負責「每秒」。
+                  "effects": [line("magic", length=8, width=1.8, flat=v, ap=0.3,
+                                   onhit=[{"kind": "dot", "damageType": "magic",
+                                           "amountPerTick": amt(flat=v, ap=0.3),
+                                           "intervalSec": 1.0, "durationSec": 3.0,
+                                           "stacking": "refresh"},
+                                          status("magic-break", 3.0)])]}]}
       for v in (20, 30, 40, 50)]})
 
 A("92-03", "92-03 狂草泥馬", "self", [0], [0], 0,
@@ -1854,7 +1877,7 @@ A("92-04", "92-04 馬勒戈壁", "self", [90, 90, 90], [300, 420, 540], 0,
        "effects": [dmg("magic", ap=1.0)]}]}]})
 
 A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
-  "[被動][週期][回復][範圍][AP加成][身上有某狀態時]\n\n「草泥馬戈壁，傷而扶壁曲」\n當 [馬勒戈壁] 施展期間，每秒對[周圍][範圍]友方單位 [回復] 10%[最大魔力]、也對 [周圍][範圍]敵人單位造成 2%[最大生命] + 100% [AP] 傷害，持續 6秒。",
+  "[被動][週期][回復][範圍][AP加成]\n\n「草泥馬戈壁，傷而扶壁曲」\n當 [馬勒戈壁] 施展期間，每秒對[周圍][範圍]友方單位 [回復] 10%[最大魔力]、也對 [周圍][範圍]敵人單位造成 2%[最大生命] + 100% [AP] 傷害，持續 6秒。",
   passive={"name": "92-002 最終戈壁", "ranks": [{"hooks": [
       {"on": "onAbilityCast", "abilitySlot": "R", "target": "self",
        "effects": [{"kind": "delayed", "shape": "single", "delaySec": 1.0, "count": 6, "intervalSec": 1.0,

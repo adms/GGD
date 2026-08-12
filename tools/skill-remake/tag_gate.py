@@ -72,12 +72,20 @@ TAG_SHAPES = {
     "飛行": [{"flight": ANY}],                                             # FlightGrant（SOURCE_GRANT_SHAPE）
     "變身": [{"kind": "championForm", "to": "alternate"}],
     "切換": [{"kind": "championForm", "to": "toggle"}],
-    "召喚": [{"kind": "summon"}],
+    # ⚠️ `randomArea` 也算：70-04 千年練成的「隨機招喚樹精」今天是
+    #    `randomArea` 排程 N 顆落點（每一顆就是一棵樹精的傷害）。⛔ 那是**近似**，
+    #    真正的召喚實體仍在 backlog —— 但它不是「什麼都沒做」，所以標籤有落點。
+    "召喚": [{"kind": "summon"}, {"kind": "randomArea"}],
     "護盾": [{"kind": "shield"}, {"kind": "manaBarrier"}],
     "吸收(護盾)": [{"kind": "shield"}, {"kind": "manaBarrier"}],
     "治療": [{"kind": "heal"}, {"kind": "restore"}],
     "回復": [{"kind": "restore"}, {"kind": "heal"},
-             {"kind": "eventValueConversion"}],                            # 「把傷害轉成魔力」也是回復
+             {"kind": "eventValueConversion"},                             # 「把傷害轉成魔力」也是回復
+             # ⭐ 2026-08-13：**吸血就是回復**。79-002 虛化的規格逐字是「60％[吸血]」，
+             #    而 `lifesteal` 是引擎裡表達它的那一格（damage 管線每一發回血）。
+             #    ⛔ 之前為它開豁免說「沒有 restore/heal 形狀」是把**實作方式**
+             #    當成**機制有沒有做**（同一個標籤的第二個方向）。
+             {"stat": "lifesteal"}],
     "淨化": [{"kind": "dispel"}],
     "驅散": [{"kind": "dispel"}],
     "吞噬": [{"kind": "devour"}],
@@ -101,7 +109,11 @@ TAG_SHAPES = {
     #    B3-A 讓那三支真的寫了 incomingPct，所以現在刪得掉。
     "反彈": [{"incomingPct": ANY}, {"on": "onReflectSuccess"}],
     "層數累積": [{"stackKey": ANY}, {"markId": ANY}, {"stacks": ANY},
-                 {"kind": "grantAttribute"}],                              # 永久疊加也是層數
+                 {"kind": "grantAttribute"},                               # 永久疊加也是層數
+                 # ⭐ 2026-08-13：15-002 的「([可累加])」是**免費**的 ——
+                 #    `eventValueConversion.buff` 每觸發一次就掛一份獨立的 flat 來源，
+                 #    而 `statPipeline` 對多份 flat 求和。⛔ 不需要 stackKey。
+                 {"kind": "eventValueConversion", "buff": ANY}],
     "加速": [{"kind": "applyStatus", "moveSpeedMult": ANY},
              {"stat": "ms"}, {"stat": "as"}],                              # owner 的「加速」含攻速
     # event
@@ -124,7 +136,14 @@ TAG_SHAPES = {
              {"kind": "weightedBranch"}, {"critStrike": ANY}, {"block": ANY}],
     "屬性門檻": [{"kind": "stat", "mode": ANY},
                  {"thresholdPctOfMax": ANY}],                              # 處決線就是門檻
-    "AP加成": [{"stat": "ap", "coeff": ANY}],
+    # ⭐ 2026-08-13：第二種形狀 —— 15-002「將該傷害短暫加成至 [AP]」用的是
+    #    `eventValueConversion.buff{stat:"ap"}`（把事件數值換算成暫時屬性），
+    #    它跟 `ratios{stat:"ap"}` 是同一個標籤的兩個方向。⛔ 不要為它開豁免。
+    #    ⚠️ `augment{op:"damageCoeffAp"}` 是第三種：70-002「追加 500% AP」
+    #    改的是**另一支技能**的係數，那一支自己沒有 ratios。
+    "AP加成": [{"stat": "ap", "coeff": ANY},
+               {"kind": "eventValueConversion", "buff": ANY},
+               {"op": "damageCoeffAp"}],
     "AD加成": [{"stat": "ad", "coeff": ANY}],
 }
 
@@ -157,31 +176,12 @@ for _t, (_apply, _sid) in STATUS_TAGS.items():
 #    92-02 消化液 = godie-h02v.**e**、92-03 狂草泥馬 = godie-h02v.**w**。
 WAIVERS = {
     # ── A-1 落地後仍然缺的那一半（A-1 的規則只補身體交換，不補傷害）──
-    ("godie-e002.w", "AP加成"):
-        "A-1：「關閉時風王鐵槌 120+30%AP」要加進 toggle.onExit，那一輪只留了註解",
     # ── owner 未裁決 / 其他 lane ──
-    ("godie-h01u.q", "層數累積"):
-        "B-3（owner 2026-08-12 未裁決）：80-01 天下無雙的疊層要 applyBuff.stackKey",
-    ("godie-e00s.r", "召喚"):
-        "owner 待裁決：70-04 樹精今天用 randomArea 假裝，沒有真的 summon 實體",
     ("godie-e00s.ex", "召喚"):
         "同上（70-002 只是引用 R 的樹精）",
     # ── 這一輪發現、要開 GH issue、⛔ 不當場修（第零守則⑧）──
-    ("godie-e00s.ex", "AP加成"):
-        "GH：70-002「千年練成追加 500% AP」的傷害那一半沒寫",
     ("godie-e00w.passive", "旋轉"):
         "演出動詞（雙腿抓住對手旋轉拋摔），不是 tpl-orbit-array 那種環繞衛星",
-    ("godie-emfr.ex", "AP加成"):
-        "GH：15-002「將該傷害短暫加成至 AP」只寫了轉魔力那一半",
-    ("godie-emfr.ex", "層數累積"):
-        "同上（([可累加]) 那一格）",
-    ("godie-h01n.ex", "回復"):
-        "GH：79-002 虛化的 60% 吸血寫成 lifesteal（stat），沒有 restore/heal 形狀。"
-        "⚠️ 2026-08-12 B2-G：那 30% 格擋已經補成 block grant，所以這一筆只剩吸血那一半",
-    ("godie-h02v.e", "週期"):
-        "GH：92-02 消化液「每秒受到 X 傷害持續 3 秒」寫成一發 damageLine，沒有 dot",
-    ("godie-h02v.ex", "身上有某狀態時"):
-        "贅標籤：92-002 的觸發是「馬勒戈壁施展期間」= onAbilityCast R，沒有狀態條件",
     # ── 15-02/03/04：標籤列逐字帶 [變身]，但 godie-emfr **沒有第二具身體** ──
     #    「([變身]為唯一狀態不可疊加)」講的是 applyBuff.exclusiveGroup
     #    （state.exclusive-group@1），不是換身體。A-1 的規則因此**刻意**不譯它們。
