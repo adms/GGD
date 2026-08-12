@@ -160,7 +160,6 @@
             "hooks": [
               {
                 "on": "onDamageTaken",
-                "target": "self",
                 "effects": [
                   {
                     "kind": "extendBuff",
@@ -171,7 +170,8 @@
                     "perDamagePctOfMaxHealth": 0.05,
                     "maxRemainingSec": 30.0
                   }
-                ]
+                ],
+                "target": "self"
               }
             ]
           }
@@ -238,6 +238,17 @@
                   }
                 ]
               }
+            },
+            {
+              "kind": "applyStatus",
+              "condition": {
+                "kind": "status",
+                "subject": "self",
+                "statusId": "rage"
+              },
+              "statusId": "fear",
+              "duration": 3.0,
+              "feared": true
             }
           ]
         }
@@ -275,7 +286,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -290,7 +300,8 @@
                     "duration": 0.6,
                     "moveSpeedMult": 0.5
                   }
-                ]
+                ],
+                "target": "event"
               }
             ]
           },
@@ -298,7 +309,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -313,7 +323,8 @@
                     "duration": 0.6,
                     "moveSpeedMult": 0.5
                   }
-                ]
+                ],
+                "target": "event"
               }
             ]
           },
@@ -321,7 +332,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -336,7 +346,8 @@
                     "duration": 0.6,
                     "moveSpeedMult": 0.5
                   }
-                ]
+                ],
+                "target": "event"
               }
             ]
           },
@@ -344,7 +355,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -359,7 +369,8 @@
                     "duration": 0.6,
                     "moveSpeedMult": 0.5
                   }
-                ]
+                ],
+                "target": "event"
               }
             ]
           }

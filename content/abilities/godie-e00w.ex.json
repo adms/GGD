@@ -22,13 +22,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.4,
-            "target": "event",
-            "condition": {
-              "kind": "equipment",
-              "subject": "self",
-              "tag": "legendary"
-            },
             "effects": [
               {
                 "kind": "damageArea",
@@ -44,7 +37,14 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "chance": 0.4,
+            "condition": {
+              "kind": "equipment",
+              "subject": "self",
+              "tag": "legendary"
+            },
+            "target": "event"
           }
         ]
       }

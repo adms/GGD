@@ -23,7 +23,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -48,7 +47,8 @@
                 },
                 "count": 1
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       }

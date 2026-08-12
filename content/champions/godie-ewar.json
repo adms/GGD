@@ -184,12 +184,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "confusion"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -203,7 +197,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "target": "event"
               }
             ]
           },
@@ -223,12 +223,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "confusion"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -242,7 +236,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "target": "event"
               }
             ]
           },
@@ -262,12 +262,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "confusion"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -281,7 +275,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "target": "event"
               }
             ]
           },
@@ -301,12 +301,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "confusion"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -320,7 +314,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "confusion"
+                },
+                "target": "event"
               }
             ]
           }

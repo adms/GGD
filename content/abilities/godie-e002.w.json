@@ -46,15 +46,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "mp",
-              "mode": "absolute",
-              "op": ">=",
-              "value": 30
-            },
             "effects": [
               {
                 "kind": "spendMana",
@@ -76,7 +67,16 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 30
+            },
+            "target": "event"
           }
         ]
       },
@@ -97,15 +97,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "mp",
-              "mode": "absolute",
-              "op": ">=",
-              "value": 50
-            },
             "effects": [
               {
                 "kind": "spendMana",
@@ -127,7 +118,16 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 50
+            },
+            "target": "event"
           }
         ]
       },
@@ -148,15 +148,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "mp",
-              "mode": "absolute",
-              "op": ">=",
-              "value": 70
-            },
             "effects": [
               {
                 "kind": "spendMana",
@@ -178,7 +169,16 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 70
+            },
+            "target": "event"
           }
         ]
       },
@@ -199,15 +199,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "mp",
-              "mode": "absolute",
-              "op": ">=",
-              "value": 90
-            },
             "effects": [
               {
                 "kind": "spendMana",
@@ -229,7 +220,16 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "mp",
+              "mode": "absolute",
+              "op": ">=",
+              "value": 90
+            },
+            "target": "event"
           }
         ]
       }

@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-12T16:11:35.412Z",
+ "generatedAt": "2026-08-12T16:26:34.314Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-12T16:11:10.220Z"
+   "mtime": "2026-08-12T16:26:08.745Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "5adf0468723014e9",
    "bytes": 873,
-   "mtime": "2026-08-12T16:11:10.188Z"
+   "mtime": "2026-08-12T16:26:08.736Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "cde32b08a9c26e10",
-   "bytes": 15662,
-   "mtime": "2026-08-12T16:11:10.119Z"
+   "sha256": "d10bb420c6a5e9cd",
+   "bytes": 10291,
+   "mtime": "2026-08-12T16:26:08.683Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -590,7 +590,7 @@
    "drawCalls": 103,
    "animChannels": 216,
    "textureBytes": 435771,
-   "vramBytes": 67917129,
+   "vramBytes": 67829748,
    "limits": [
     {
      "key": "triangles",
@@ -638,16 +638,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 44366,
-     "drawCalls": 139,
-     "animChannels": 516,
-     "textureBytes": 211323,
-     "vramBytes": 56382801,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 44138,
+     "drawCalls": 103,
+     "animChannels": 240,
+     "textureBytes": 266116,
+     "vramBytes": 56623100,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "warn",
+      "animChannels": "ok",
       "vramBytes": "over"
      }
     },
@@ -742,7 +742,7 @@
    "drawCalls": 129,
    "animChannels": 216,
    "textureBytes": 419977,
-   "vramBytes": 62324724,
+   "vramBytes": 62237343,
    "limits": [
     {
      "key": "triangles",
@@ -790,16 +790,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 52580,
-     "drawCalls": 165,
-     "animChannels": 516,
-     "textureBytes": 195529,
-     "vramBytes": 50790396,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 52352,
+     "drawCalls": 129,
+     "animChannels": 240,
+     "textureBytes": 250322,
+     "vramBytes": 51030695,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "warn",
+      "animChannels": "ok",
       "vramBytes": "over"
      }
     },
@@ -898,7 +898,7 @@
    "drawCalls": 141,
    "animChannels": 216,
    "textureBytes": 435672,
-   "vramBytes": 67917129,
+   "vramBytes": 67829748,
    "limits": [
     {
      "key": "triangles",
@@ -946,16 +946,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 65220,
-     "drawCalls": 177,
-     "animChannels": 516,
-     "textureBytes": 211224,
-     "vramBytes": 56382801,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 64992,
+     "drawCalls": 141,
+     "animChannels": 240,
+     "textureBytes": 266017,
+     "vramBytes": 56623100,
      "verdicts": {
       "triangles": "ok",
-      "drawCalls": "warn",
-      "animChannels": "warn",
+      "drawCalls": "ok",
+      "animChannels": "ok",
       "vramBytes": "over"
      }
     },
@@ -1022,7 +1022,7 @@
    "drawCalls": 220,
    "animChannels": 266,
    "textureBytes": 382224,
-   "vramBytes": 17847628,
+   "vramBytes": 17760247,
    "limits": [
     {
      "key": "triangles",
@@ -1070,16 +1070,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 42068,
-     "drawCalls": 256,
-     "animChannels": 566,
-     "textureBytes": 157776,
-     "vramBytes": 6313300,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 41840,
+     "drawCalls": 220,
+     "animChannels": 290,
+     "textureBytes": 212569,
+     "vramBytes": 6553599,
      "verdicts": {
       "triangles": "ok",
-      "drawCalls": "over",
-      "animChannels": "warn",
+      "drawCalls": "warn",
+      "animChannels": "ok",
       "vramBytes": "ok"
      }
     },
@@ -1150,7 +1150,7 @@
    "drawCalls": 71,
    "animChannels": 216,
    "textureBytes": 325213,
-   "vramBytes": 28770294,
+   "vramBytes": 28682913,
    "limits": [
     {
      "key": "triangles",
@@ -1198,16 +1198,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 25076,
-     "drawCalls": 107,
-     "animChannels": 516,
-     "textureBytes": 100765,
-     "vramBytes": 17235966,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 24848,
+     "drawCalls": 71,
+     "animChannels": 240,
+     "textureBytes": 155558,
+     "vramBytes": 17476265,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "warn",
+      "animChannels": "ok",
       "vramBytes": "ok"
      }
     },
@@ -1290,7 +1290,7 @@
    "drawCalls": 89,
    "animChannels": 216,
    "textureBytes": 372595,
-   "vramBytes": 45547509,
+   "vramBytes": 45460128,
    "limits": [
     {
      "key": "triangles",
@@ -1338,16 +1338,16 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 negi —— 名冊面數中位數）",
-     "triangles": 35284,
-     "drawCalls": 125,
-     "animChannels": 516,
-     "textureBytes": 148147,
-     "vramBytes": 34013181,
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 35056,
+     "drawCalls": 89,
+     "animChannels": 240,
+     "textureBytes": 202940,
+     "vramBytes": 34253480,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
-      "animChannels": "warn",
+      "animChannels": "ok",
       "vramBytes": "warn"
      }
     },
@@ -1446,7 +1446,7 @@
    "drawCalls": 141,
    "animChannels": 216,
    "textureBytes": 435672,
-   "vramBytes": 67917129,
+   "vramBytes": 67829748,
    "limits": [
     {
      "key": "triangles",
@@ -1528,7 +1528,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "10 位英雄使用：百畝森林的霸主 - 維尼、豪洨天王 - 鄭先生、國寶級的畜生 - 熊貓、幕末復仇狂者 - 志志雄真實、豪洨天王 - 鄭先生、不死之身-無 - 藤井八雲、最M的魔法Jizz - 清蒸 飛鼠先生、死亡老二 - 克勞薩先生、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
+     "detail": "4 位英雄使用：國寶級的畜生 - 熊貓、不死之身-無 - 藤井八雲、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
     },
     {
      "kind": "COMBAT",
@@ -1579,7 +1579,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "10 位英雄使用：夜市人生 - 金居福、腦包英雄 - 打我阿笨蛋、死亡騎士、不良少年、海克力斯 - Berserker、X戰警 - 金鋼狼、重金屬樂團的怪物 - 克勞薩II世、職業獵人 - 傑 富力士、至尊學長 - 飛鼠先生、Thorne, the Bramble Knight"
+     "detail": "4 位英雄使用：海克力斯 - Berserker、職業獵人 - 傑 富力士、至尊學長 - 飛鼠先生、Thorne, the Bramble Knight"
     }
    ],
    "broken": "",
@@ -1624,7 +1624,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "20 位英雄使用：白木老樹精 - 白木卡迪那、七夜怪談 - 貞子、完全而瀟灑的女僕 - 十六夜Sakuya、白木老樹精 - 白木卡迪那、姜窩肯 - 約翰走路、揍敵客大家長 - 揍敵客桀諾、會叫的野獸 - 傳說中的大刀、地獄來襲者 - 斑剎、破銅爛鐵 - 阿強一號、慈悲的王者 - 賈修貝爾、小叮噹 - 哆拉A夢、電車癡漢 - 臭作、美白大法師 - 黑人牙膏、電車癡漢 - 臭作、魔鬼筋肉人 - 鬼王達、邪惡意念集合體 - 死之王、萬夫莫敵 - 黑化張飛、殺戮之牙 - 異形、食神 - 撒尿牛丸、Sela, the Ember Sage"
+     "detail": "12 位英雄使用：白木老樹精 - 白木卡迪那、完全而瀟灑的女僕 - 十六夜Sakuya、白木老樹精 - 白木卡迪那、揍敵客大家長 - 揍敵客桀諾、慈悲的王者 - 賈修貝爾、小叮噹 - 哆拉A夢、電車癡漢 - 臭作、美白大法師 - 黑人牙膏、電車癡漢 - 臭作、邪惡意念集合體 - 死之王、萬夫莫敵 - 黑化張飛、Sela, the Ember Sage"
     }
    ],
    "broken": "",
@@ -1669,7 +1669,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "8 位英雄使用：最終泛用人型決戰兵器 - 初號機、地獄歌神 - 憤怒的胖虎、學姊 - 小派、變態正義 - 瘋狂假面、地獄歌神 - 憤怒的胖虎、曹操孟德 - 阿瞞大人、曹操孟德 - 阿瞞大人、被剝削的勞工階級 - 牧太郎"
+     "detail": "1 位英雄使用：最終泛用人型決戰兵器 - 初號機"
     },
     {
      "kind": "COMBAT",
@@ -3860,7 +3860,7 @@
    "path": "assets/models/imported/gumdam.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 474,
    "vertices": 882,
    "drawCalls": 4,
@@ -3888,23 +3888,11 @@
     }
    ],
    "fileBytes": 284592,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：鋼彈 - 煌"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "maxTextureEdge": "ok",
-    "animChannels": "over"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.gx",
@@ -4250,7 +4238,7 @@
    "path": "assets/models/imported/herofate.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 2372,
    "vertices": 1602,
    "drawCalls": 8,
@@ -4272,23 +4260,11 @@
     }
    ],
    "fileBytes": 330916,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：時空管理局執務官 - 菲特·泰斯塔羅沙"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "over",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "assets/models/imported/herofatezemberform.glb",
@@ -4373,7 +4349,7 @@
    "path": "assets/models/imported/herogirl.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 1397,
    "vertices": 1041,
    "drawCalls": 3,
@@ -4401,30 +4377,18 @@
     }
    ],
    "fileBytes": 272392,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：天上天下 - 棗 真夜"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.herohanzouhattori",
    "path": "assets/models/imported/herohanzouhattori.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 719,
    "vertices": 565,
    "drawCalls": 4,
@@ -4452,23 +4416,11 @@
     }
    ],
    "fileBytes": 262864,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：猿飛佐助 - 風魔小次郎"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.herohehi",
@@ -4526,7 +4478,7 @@
    "path": "assets/models/imported/herohimurakenshin.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 590,
    "vertices": 579,
    "drawCalls": 5,
@@ -4566,23 +4518,11 @@
     }
    ],
    "fileBytes": 345644,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：殺人劍客 - 佐佐木小次郎"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.heroichigo",
@@ -4950,7 +4890,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "3 位英雄使用：測試英雄 - 索隆、三刀流劍士 - 索隆、三刀流劍士 - 索隆"
+     "detail": "2 位英雄使用：三刀流劍士 - 索隆、三刀流劍士 - 索隆"
     }
    ],
    "broken": "",
@@ -5285,7 +5225,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "3 位英雄使用：亞瑟王 - Saber、亞瑟王 - Saber、英靈-亞瑟王 - 黑化Saber"
+     "detail": "2 位英雄使用：亞瑟王 - Saber、亞瑟王 - Saber"
     }
    ],
    "broken": "",
@@ -5764,7 +5704,7 @@
    "path": "assets/models/imported/hzyn.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 1813,
    "vertices": 2090,
    "drawCalls": 1,
@@ -5786,23 +5726,11 @@
     }
    ],
    "fileBytes": 360952,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：笑傲江湖 - 令狐沖"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.japanesecherry",
@@ -6029,7 +5957,7 @@
    "path": "assets/models/imported/lgcr.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 1296,
    "vertices": 1205,
    "drawCalls": 1,
@@ -6051,23 +5979,11 @@
     }
    ],
    "fileBytes": 211932,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：憂鬱少女 - 涼宮八ㄦ匕"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "assets/models/imported/lightningnova.glb",
@@ -6461,7 +6377,7 @@
    "path": "assets/models/imported/ma.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 706,
    "vertices": 535,
    "drawCalls": 1,
@@ -6483,23 +6399,11 @@
     }
    ],
    "fileBytes": 269500,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：皇者 - 騜"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.magical-sword",
@@ -6798,7 +6702,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "2 位英雄使用：魔法老師 - 涅吉。史普林。菲爾德、白色之翼 - 涅吉。史普林。菲爾德"
+     "detail": "1 位英雄使用：魔法老師 - 涅吉。史普林。菲爾德"
     }
    ],
    "broken": "",
@@ -6848,7 +6752,7 @@
    "path": "assets/models/imported/niya.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 2462,
    "vertices": 1521,
    "drawCalls": 4,
@@ -6870,23 +6774,11 @@
     }
    ],
    "fileBytes": 338552,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "2 位英雄使用：魔砲少女 - 高町奈葉、白色惡魔 - 高町奈葉"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "warn",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "imported.oblivionaura",
@@ -7688,7 +7580,7 @@
    "path": "assets/models/imported/zy3.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 1335,
    "vertices": 1366,
    "drawCalls": 1,
@@ -7710,23 +7602,11 @@
     }
    ],
    "fileBytes": 447428,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：常勝將軍 - 趙子龍"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
-   "note": ""
+   "verdicts": {},
+   "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
    "id": "assets/models/menu/dragon2.glb",
@@ -10717,6 +10597,6 @@
   "vramBytes": 219572151,
   "zeroGeometry": 11,
   "nearZero": 25,
-  "unused": 84
+  "unused": 94
  }
 }

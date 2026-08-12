@@ -28,9 +28,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.1,
-            "target": "event",
-            "internalCooldown": 2.0,
             "effects": [
               {
                 "kind": "damageLine",
@@ -55,7 +52,10 @@
                 "statusId": "magic-break",
                 "duration": 3.0
               }
-            ]
+            ],
+            "internalCooldown": 2.0,
+            "chance": 0.1,
+            "target": "event"
           }
         ]
       },
@@ -63,9 +63,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.1,
-            "target": "event",
-            "internalCooldown": 2.0,
             "effects": [
               {
                 "kind": "damageLine",
@@ -90,7 +87,10 @@
                 "statusId": "magic-break",
                 "duration": 3.0
               }
-            ]
+            ],
+            "internalCooldown": 2.0,
+            "chance": 0.1,
+            "target": "event"
           }
         ]
       },
@@ -98,9 +98,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.1,
-            "target": "event",
-            "internalCooldown": 2.0,
             "effects": [
               {
                 "kind": "damageLine",
@@ -125,7 +122,10 @@
                 "statusId": "magic-break",
                 "duration": 3.0
               }
-            ]
+            ],
+            "internalCooldown": 2.0,
+            "chance": 0.1,
+            "target": "event"
           }
         ]
       },
@@ -133,9 +133,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.1,
-            "target": "event",
-            "internalCooldown": 2.0,
             "effects": [
               {
                 "kind": "damageLine",
@@ -160,7 +157,10 @@
                 "statusId": "magic-break",
                 "duration": 3.0
               }
-            ]
+            ],
+            "internalCooldown": 2.0,
+            "chance": 0.1,
+            "target": "event"
           }
         ]
       }

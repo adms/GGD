@@ -16,9 +16,30 @@
   "targetsEnemies": false,
   "effects": [
     {
-      "kind": "applyStatus",
-      "statusId": "moon-combo",
-      "duration": 5.0
+      "kind": "applyBuff",
+      "modifiers": [],
+      "duration": 5.0,
+      "hooks": [
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 0.0
+              },
+              "incomingPct": {
+                "perRank": [
+                  1.0
+                ]
+              }
+            }
+          ],
+          "target": "event",
+          "damageType": "magic"
+        }
+      ]
     }
   ],
   "passive": {
@@ -28,7 +49,6 @@
         "hooks": [
           {
             "on": "onReflectSuccess",
-            "target": "self",
             "effects": [
               {
                 "kind": "eventValueConversion",
@@ -38,7 +58,8 @@
                 "ratio": 1.0,
                 "who": "self"
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

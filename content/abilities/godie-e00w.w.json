@@ -33,8 +33,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.1,
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -50,7 +48,9 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "chance": 0.1,
+            "target": "event"
           }
         ]
       }

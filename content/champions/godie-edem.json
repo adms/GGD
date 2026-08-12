@@ -258,12 +258,6 @@
               {
                 "on": "onAbilityHit",
                 "abilitySlot": "E",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "tag": "burn"
-                },
                 "effects": [
                   {
                     "kind": "damageArea",
@@ -280,7 +274,13 @@
                     "radius": 3.0,
                     "radiusTier": "小"
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
               }
             ]
           },
@@ -289,12 +289,6 @@
               {
                 "on": "onAbilityHit",
                 "abilitySlot": "E",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "tag": "burn"
-                },
                 "effects": [
                   {
                     "kind": "damageArea",
@@ -311,7 +305,13 @@
                     "radius": 3.0,
                     "radiusTier": "小"
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
               }
             ]
           },
@@ -320,12 +320,6 @@
               {
                 "on": "onAbilityHit",
                 "abilitySlot": "E",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "tag": "burn"
-                },
                 "effects": [
                   {
                     "kind": "damageArea",
@@ -342,7 +336,13 @@
                     "radius": 3.0,
                     "radiusTier": "小"
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
+                "target": "event"
               }
             ]
           }

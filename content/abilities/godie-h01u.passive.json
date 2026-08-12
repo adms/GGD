@@ -23,7 +23,6 @@
         "hooks": [
           {
             "on": "onKill",
-            "target": "self",
             "effects": [
               {
                 "kind": "applyBuff",
@@ -41,7 +40,8 @@
                 ],
                 "duration": 99999.0
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

@@ -28,9 +28,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.03,
-            "target": "self",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "damageArea",
@@ -39,7 +36,21 @@
                   "flat": 1.0
                 },
                 "radius": 4.5,
-                "radiusTier": "中"
+                "radiusTier": "中",
+                "onHitTargets": [
+                  {
+                    "kind": "applyStatus",
+                    "condition": {
+                      "kind": "status",
+                      "subject": "target",
+                      "statusId": "blind"
+                    },
+                    "statusId": "confusion",
+                    "duration": 10.0,
+                    "berserk": true,
+                    "targetsAllies": true
+                  }
+                ]
               },
               {
                 "kind": "applyStatus",
@@ -53,7 +64,10 @@
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.03,
+            "target": "self"
           }
         ]
       }

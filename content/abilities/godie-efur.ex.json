@@ -23,13 +23,6 @@
           {
             "on": "onAbilityHit",
             "abilitySlot": "W",
-            "chance": 0.2,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "blind"
-            },
             "effects": [
               {
                 "kind": "devour",
@@ -40,7 +33,14 @@
                 "victim": "champion",
                 "throughShields": true
               }
-            ]
+            ],
+            "chance": 0.2,
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
           }
         ]
       }

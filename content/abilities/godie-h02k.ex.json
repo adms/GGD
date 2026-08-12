@@ -17,6 +17,133 @@
   "effects": [
     {
       "kind": "weightedBranch",
+      "condition": {
+        "kind": "status",
+        "subject": "target",
+        "statusId": "confusion"
+      },
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 3,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "champion",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "any",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 2,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "weightedBranch",
+      "condition": {
+        "all": [
+          {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "blind"
+          },
+          {
+            "not": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            }
+          }
+        ]
+      },
+      "shape": "single",
+      "branches": [
+        {
+          "weight": 2,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "champion",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 1,
+          "effects": [
+            {
+              "kind": "devour",
+              "shape": "single",
+              "thresholdPctOfMax": [
+                0.5
+              ],
+              "victim": "any",
+              "throughShields": true
+            }
+          ]
+        },
+        {
+          "weight": 3,
+          "effects": [
+            {
+              "kind": "applyStatus",
+              "statusId": "fear",
+              "duration": 2.0,
+              "feared": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "weightedBranch",
+      "condition": {
+        "not": {
+          "any": [
+            {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "confusion"
+            }
+          ]
+        }
+      },
       "shape": "single",
       "branches": [
         {

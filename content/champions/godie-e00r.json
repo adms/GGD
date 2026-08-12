@@ -119,8 +119,24 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "true",
+                    "amount": {
+                      "flat": 50.0
+                    }
+                  }
+                ],
                 "chance": 0.1,
-                "target": "event",
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "damage",
@@ -129,16 +145,16 @@
                       "flat": 50.0
                     }
                   }
-                ]
-              }
-            ]
-          },
-          {
-            "hooks": [
-              {
-                "on": "onBasicAttack",
+                ],
                 "chance": 0.15,
-                "target": "event",
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
                 "effects": [
                   {
                     "kind": "damage",
@@ -147,25 +163,9 @@
                       "flat": 50.0
                     }
                   }
-                ]
-              }
-            ]
-          },
-          {
-            "hooks": [
-              {
-                "on": "onBasicAttack",
+                ],
                 "chance": 0.2,
-                "target": "event",
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "true",
-                    "amount": {
-                      "flat": 50.0
-                    }
-                  }
-                ]
+                "target": "event"
               }
             ]
           },
@@ -173,8 +173,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "chance": 0.25,
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -183,7 +181,9 @@
                       "flat": 50.0
                     }
                   }
-                ]
+                ],
+                "chance": 0.25,
+                "target": "event"
               }
             ]
           }
@@ -221,8 +221,6 @@
             "hooks": [
               {
                 "on": "onInterval",
-                "internalCooldown": 8.0,
-                "target": "self",
                 "effects": [
                   {
                     "kind": "shield",
@@ -232,7 +230,9 @@
                     "duration": 8.0,
                     "absorbs": "magic"
                   }
-                ]
+                ],
+                "internalCooldown": 8.0,
+                "target": "self"
               }
             ]
           },
@@ -240,8 +240,6 @@
             "hooks": [
               {
                 "on": "onInterval",
-                "internalCooldown": 8.0,
-                "target": "self",
                 "effects": [
                   {
                     "kind": "shield",
@@ -251,7 +249,9 @@
                     "duration": 8.0,
                     "absorbs": "magic"
                   }
-                ]
+                ],
+                "internalCooldown": 8.0,
+                "target": "self"
               }
             ]
           },
@@ -259,8 +259,6 @@
             "hooks": [
               {
                 "on": "onInterval",
-                "internalCooldown": 8.0,
-                "target": "self",
                 "effects": [
                   {
                     "kind": "shield",
@@ -270,7 +268,9 @@
                     "duration": 8.0,
                     "absorbs": "magic"
                   }
-                ]
+                ],
+                "internalCooldown": 8.0,
+                "target": "self"
               }
             ]
           },
@@ -278,8 +278,6 @@
             "hooks": [
               {
                 "on": "onInterval",
-                "internalCooldown": 8.0,
-                "target": "self",
                 "effects": [
                   {
                     "kind": "shield",
@@ -289,7 +287,9 @@
                     "duration": 8.0,
                     "absorbs": "magic"
                   }
-                ]
+                ],
+                "internalCooldown": 8.0,
+                "target": "self"
               }
             ]
           }

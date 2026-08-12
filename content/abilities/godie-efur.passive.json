@@ -23,7 +23,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "self",
             "effects": [
               {
                 "kind": "cycleBuff",
@@ -72,7 +71,8 @@
                   }
                 ]
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

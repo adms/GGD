@@ -95,14 +95,20 @@ TAG_SHAPES = {
     "迴避": [{"stat": "evasion"}, {"kind": "evasion"}],
     "破魔": [{"stat": "mr"}, {"kind": "applyStatus", "statusId": "magic-break"}],
     "虛弱": [{"kind": "applyStatus"}],                                     # status-effects 的 tags:["weakness"]
-    "反彈": [{"kind": "applyStatus", "statusId": "moon-combo"},
-             {"incomingPct": ANY}, {"on": "onReflectSuccess"}],
+    # ⛔ 2026-08-13 刪掉 `{"kind":"applyStatus","statusId":"moon-combo"}` ——
+    #    那是一句謊話：moon-combo 是蒼月潮 07-03 的 1 秒連段窗口，跟反彈完全無關，
+    #    卻讓 20-04 / 60-04 / 15-002 三支拿別人的空殼 status 就通過標籤閘。
+    #    B3-A 讓那三支真的寫了 incomingPct，所以現在刪得掉。
+    "反彈": [{"incomingPct": ANY}, {"on": "onReflectSuccess"}],
     "層數累積": [{"stackKey": ANY}, {"markId": ANY}, {"stacks": ANY},
                  {"kind": "grantAttribute"}],                              # 永久疊加也是層數
     "加速": [{"kind": "applyStatus", "moveSpeedMult": ANY},
              {"stat": "ms"}, {"stat": "as"}],                              # owner 的「加速」含攻速
     # event
-    "普攻時": [{"on": "onBasicAttack"}],
+    # 「普攻打出去的那一發」是同一件事的第二種形狀（89-01 需要 onDamageDealt
+    # 才帶得到 damageCrit / critSource 那一發封包）。⛔ 不要為它開豁免。
+    "普攻時": [{"on": "onBasicAttack"},
+               {"on": "onDamageDealt", "damageSource": "basic"}],
     "週期": [{"on": "onInterval"}, {"intervalSec": ANY}],                  # dot/delayed/randomArea 自帶週期
     "受到傷害時": [{"on": "onDamageTaken"}],
     "擊殺時": [{"on": "onKill"}],
@@ -161,24 +167,14 @@ WAIVERS = {
     ("godie-e00s.ex", "召喚"):
         "同上（70-002 只是引用 R 的樹精）",
     # ── 這一輪發現、要開 GH issue、⛔ 不當場修（第零守則⑧）──
-    ("godie-e002.r", "AP加成"):
-        "GH：20-04 的「反彈量 3/5/7 倍 + 300% AP」整段沒寫，只有一個 moon-combo status",
     ("godie-e00s.ex", "AP加成"):
         "GH：70-002「千年練成追加 500% AP」的傷害那一半沒寫",
     ("godie-e00w.passive", "旋轉"):
         "演出動詞（雙腿抓住對手旋轉拋摔），不是 tpl-orbit-array 那種環繞衛星",
-    ("godie-edem.passive", "反彈"):
-        "GH：45-00 寫輪眼寫成「反擊一發等量傷害」，不是 damage.incomingPct 的反彈",
     ("godie-emfr.ex", "AP加成"):
         "GH：15-002「將該傷害短暫加成至 AP」只寫了轉魔力那一半",
     ("godie-emfr.ex", "層數累積"):
         "同上（([可累加]) 那一格）",
-    ("godie-h00l.ex", "反彈"):
-        "GH：60-002「完美盾反反彈成功則冷卻重置」整段沒寫",
-    ("godie-h00l.ex", "反彈成功時"):
-        "同上",
-    ("godie-h01n.e", "AP加成"):
-        "GH：79-03 的「破魔狀態額外 60% AP」沒寫（79-02 有，79-03 漏）",
     ("godie-h01n.ex", "回復"):
         "GH：79-002 虛化的 60% 吸血寫成 lifesteal（stat），沒有 restore/heal 形狀。"
         "⚠️ 2026-08-12 B2-G：那 30% 格擋已經補成 block grant，所以這一筆只剩吸血那一半",

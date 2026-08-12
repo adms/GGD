@@ -32,35 +32,30 @@
         },
         "hooks": [
           {
-            "on": "onBasicAttack",
-            "chance": 0.03,
-            "target": "event",
+            "on": "onDamageDealt",
             "effects": [
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
                 "duration": 1.0,
                 "stun": true
-              }
-            ]
-          },
-          {
-            "on": "onBasicAttack",
-            "chance": 0.03,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "tag": "burn"
-            },
-            "effects": [
+              },
               {
                 "kind": "applyStatus",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
                 "statusId": "blind",
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "target": "event",
+            "damageSource": "basic",
+            "damageCrit": "crit",
+            "critSource": "thisSource"
           }
         ]
       },
@@ -72,35 +67,30 @@
         },
         "hooks": [
           {
-            "on": "onBasicAttack",
-            "chance": 0.04,
-            "target": "event",
+            "on": "onDamageDealt",
             "effects": [
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
                 "duration": 1.0,
                 "stun": true
-              }
-            ]
-          },
-          {
-            "on": "onBasicAttack",
-            "chance": 0.04,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "tag": "burn"
-            },
-            "effects": [
+              },
               {
                 "kind": "applyStatus",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
                 "statusId": "blind",
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "target": "event",
+            "damageSource": "basic",
+            "damageCrit": "crit",
+            "critSource": "thisSource"
           }
         ]
       },
@@ -112,35 +102,30 @@
         },
         "hooks": [
           {
-            "on": "onBasicAttack",
-            "chance": 0.05,
-            "target": "event",
+            "on": "onDamageDealt",
             "effects": [
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
                 "duration": 1.0,
                 "stun": true
-              }
-            ]
-          },
-          {
-            "on": "onBasicAttack",
-            "chance": 0.05,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "tag": "burn"
-            },
-            "effects": [
+              },
               {
                 "kind": "applyStatus",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
                 "statusId": "blind",
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "target": "event",
+            "damageSource": "basic",
+            "damageCrit": "crit",
+            "critSource": "thisSource"
           }
         ]
       },
@@ -152,35 +137,30 @@
         },
         "hooks": [
           {
-            "on": "onBasicAttack",
-            "chance": 0.06,
-            "target": "event",
+            "on": "onDamageDealt",
             "effects": [
               {
                 "kind": "applyStatus",
                 "statusId": "stun",
                 "duration": 1.0,
                 "stun": true
-              }
-            ]
-          },
-          {
-            "on": "onBasicAttack",
-            "chance": 0.06,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "tag": "burn"
-            },
-            "effects": [
+              },
               {
                 "kind": "applyStatus",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "burn"
+                },
                 "statusId": "blind",
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "target": "event",
+            "damageSource": "basic",
+            "damageCrit": "crit",
+            "critSource": "thisSource"
           }
         ]
       }

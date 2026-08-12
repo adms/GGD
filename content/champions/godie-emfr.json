@@ -216,12 +216,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -236,7 +230,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "self",
+                  "statusId": "rage"
+                },
+                "target": "event"
               }
             ]
           }
@@ -288,7 +288,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damage",
@@ -303,11 +302,11 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "target": "event"
               },
               {
                 "on": "onAbilityHit",
-                "target": "event",
                 "effects": [
                   {
                     "kind": "damageArea",
@@ -329,7 +328,8 @@
                     "statusId": "burn",
                     "duration": 3.0
                   }
-                ]
+                ],
+                "target": "event"
               }
             ]
           }
@@ -455,8 +455,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "consumeOn": "fire",
                 "effects": [
                   {
                     "kind": "damage",
@@ -471,7 +469,9 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "target": "event",
+                "consumeOn": "fire"
               }
             ]
           }

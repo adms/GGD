@@ -1,6 +1,6 @@
 {
   "collection": "champions",
-  "hash": "3ba95a9a33f9",
+  "hash": "34a642fd9a1b",
   "entries": [
     {
       "id": "godie-e001",
@@ -11,8 +11,8 @@
     {
       "id": "godie-e002",
       "path": "champions/godie-e002.json",
-      "hash": "681833a48ec9",
-      "size": 13173
+      "hash": "12bdc6695b09",
+      "size": 13938
     },
     {
       "id": "godie-e007",
@@ -25,12 +25,6 @@
       "path": "champions/godie-e008.json",
       "hash": "ba1201acde0d",
       "size": 7342
-    },
-    {
-      "id": "godie-e00j",
-      "path": "champions/godie-e00j.json",
-      "hash": "56ca1558e88c",
-      "size": 6929
     },
     {
       "id": "godie-e00k",
@@ -51,12 +45,6 @@
       "size": 5613
     },
     {
-      "id": "godie-e00q",
-      "path": "champions/godie-e00q.json",
-      "hash": "90b041264c15",
-      "size": 8970
-    },
-    {
       "id": "godie-e00r",
       "path": "champions/godie-e00r.json",
       "hash": "fb2afde7734b",
@@ -65,26 +53,14 @@
     {
       "id": "godie-e00s",
       "path": "champions/godie-e00s.json",
-      "hash": "4100ad187aa5",
-      "size": 10213
-    },
-    {
-      "id": "godie-e00t",
-      "path": "champions/godie-e00t.json",
-      "hash": "dd3e8ef39b99",
-      "size": 6823
+      "hash": "46118c6801a7",
+      "size": 10886
     },
     {
       "id": "godie-e00u",
       "path": "champions/godie-e00u.json",
       "hash": "7470c21ea6f4",
       "size": 4867
-    },
-    {
-      "id": "godie-e00v",
-      "path": "champions/godie-e00v.json",
-      "hash": "5cade0ea8297",
-      "size": 6392
     },
     {
       "id": "godie-e00w",
@@ -111,24 +87,6 @@
       "size": 5483
     },
     {
-      "id": "godie-e012",
-      "path": "champions/godie-e012.json",
-      "hash": "759ad2efb577",
-      "size": 5623
-    },
-    {
-      "id": "godie-e015",
-      "path": "champions/godie-e015.json",
-      "hash": "19e1593f22ca",
-      "size": 6742
-    },
-    {
-      "id": "godie-ecen",
-      "path": "champions/godie-ecen.json",
-      "hash": "5c27a8d84d94",
-      "size": 6649
-    },
-    {
       "id": "godie-edem",
       "path": "champions/godie-edem.json",
       "hash": "282a57518a6c",
@@ -141,12 +99,6 @@
       "size": 8946
     },
     {
-      "id": "godie-ekee",
-      "path": "champions/godie-ekee.json",
-      "hash": "77c1a987a2a3",
-      "size": 6489
-    },
-    {
       "id": "godie-emfr",
       "path": "champions/godie-emfr.json",
       "hash": "2681170661f2",
@@ -155,8 +107,8 @@
     {
       "id": "godie-emns",
       "path": "champions/godie-emns.json",
-      "hash": "73a6c2e99da8",
-      "size": 6529
+      "hash": "7ff5e37c7aa2",
+      "size": 6795
     },
     {
       "id": "godie-etyr",
@@ -171,34 +123,16 @@
       "size": 11326
     },
     {
-      "id": "godie-ewrd",
-      "path": "champions/godie-ewrd.json",
-      "hash": "0fc9667b80a0",
-      "size": 6162
-    },
-    {
-      "id": "godie-h001",
-      "path": "champions/godie-h001.json",
-      "hash": "9d8977de0dc3",
-      "size": 6032
-    },
-    {
       "id": "godie-h00l",
       "path": "champions/godie-h00l.json",
-      "hash": "ac420ac1b405",
-      "size": 10122
-    },
-    {
-      "id": "godie-h00w",
-      "path": "champions/godie-h00w.json",
-      "hash": "ec5102561a96",
-      "size": 5814
+      "hash": "df1b635906a7",
+      "size": 10718
     },
     {
       "id": "godie-h01n",
       "path": "champions/godie-h01n.json",
-      "hash": "e2daa5034638",
-      "size": 9015
+      "hash": "75cc6ee4b895",
+      "size": 9507
     },
     {
       "id": "godie-h01o",
@@ -219,40 +153,16 @@
       "size": 7273
     },
     {
-      "id": "godie-h021",
-      "path": "champions/godie-h021.json",
-      "hash": "2ec85afc647a",
-      "size": 5330
-    },
-    {
-      "id": "godie-h022",
-      "path": "champions/godie-h022.json",
-      "hash": "cf48fea999d1",
-      "size": 6950
-    },
-    {
       "id": "godie-h02k",
       "path": "champions/godie-h02k.json",
-      "hash": "12e7c5dd1107",
-      "size": 20499
-    },
-    {
-      "id": "godie-h02n",
-      "path": "champions/godie-h02n.json",
-      "hash": "f60857c22631",
-      "size": 4494
+      "hash": "7051a90eab4d",
+      "size": 20740
     },
     {
       "id": "godie-h02r",
       "path": "champions/godie-h02r.json",
       "hash": "572f3fa19805",
       "size": 6503
-    },
-    {
-      "id": "godie-h02s",
-      "path": "champions/godie-h02s.json",
-      "hash": "b1d0a60ecaa0",
-      "size": 5584
     },
     {
       "id": "godie-h02u",
@@ -267,28 +177,10 @@
       "size": 17375
     },
     {
-      "id": "godie-h02y",
-      "path": "champions/godie-h02y.json",
-      "hash": "b5d3c553da5f",
-      "size": 6285
-    },
-    {
-      "id": "godie-h02z",
-      "path": "champions/godie-h02z.json",
-      "hash": "65cf297cf070",
-      "size": 5528
-    },
-    {
       "id": "godie-hapm",
       "path": "champions/godie-hapm.json",
-      "hash": "073b1019268e",
-      "size": 12361
-    },
-    {
-      "id": "godie-harf",
-      "path": "champions/godie-harf.json",
-      "hash": "2555de70bb31",
-      "size": 5933
+      "hash": "a9e4848bd9c3",
+      "size": 12671
     },
     {
       "id": "godie-hart",
@@ -313,12 +205,6 @@
       "path": "champions/godie-hjai.json",
       "hash": "df932be50933",
       "size": 7257
-    },
-    {
-      "id": "godie-hlgr",
-      "path": "champions/godie-hlgr.json",
-      "hash": "5fe50c078626",
-      "size": 6311
     },
     {
       "id": "godie-hpal",
@@ -369,12 +255,6 @@
       "size": 6573
     },
     {
-      "id": "godie-n01b",
-      "path": "champions/godie-n01b.json",
-      "hash": "9cb22c573e55",
-      "size": 6524
-    },
-    {
       "id": "godie-n01c",
       "path": "champions/godie-n01c.json",
       "hash": "ce96c154e876",
@@ -387,34 +267,10 @@
       "size": 7046
     },
     {
-      "id": "godie-n01l",
-      "path": "champions/godie-n01l.json",
-      "hash": "f32f15494a84",
-      "size": 5677
-    },
-    {
-      "id": "godie-naka",
-      "path": "champions/godie-naka.json",
-      "hash": "4b1524ab04c7",
-      "size": 6705
-    },
-    {
       "id": "godie-nbbc",
       "path": "champions/godie-nbbc.json",
       "hash": "29401f9acae6",
       "size": 6791
-    },
-    {
-      "id": "godie-nbst",
-      "path": "champions/godie-nbst.json",
-      "hash": "183ce9225f7d",
-      "size": 5928
-    },
-    {
-      "id": "godie-nman",
-      "path": "champions/godie-nman.json",
-      "hash": "2c3917ad2a61",
-      "size": 6961
     },
     {
       "id": "godie-nplh",
@@ -427,12 +283,6 @@
       "path": "champions/godie-nsjs.json",
       "hash": "7541f4aa072b",
       "size": 6403
-    },
-    {
-      "id": "godie-ntin",
-      "path": "champions/godie-ntin.json",
-      "hash": "2e5340b55175",
-      "size": 7248
     },
     {
       "id": "godie-o00k",
@@ -453,28 +303,10 @@
       "size": 6769
     },
     {
-      "id": "godie-o01z",
-      "path": "champions/godie-o01z.json",
-      "hash": "3d365b9bc6a1",
-      "size": 7361
-    },
-    {
       "id": "godie-o02l",
       "path": "champions/godie-o02l.json",
       "hash": "b8a947300f4b",
       "size": 6129
-    },
-    {
-      "id": "godie-o02n",
-      "path": "champions/godie-o02n.json",
-      "hash": "115a035bb537",
-      "size": 5944
-    },
-    {
-      "id": "godie-o02o",
-      "path": "champions/godie-o02o.json",
-      "hash": "093809fe88bd",
-      "size": 5831
     },
     {
       "id": "godie-o02p",
@@ -483,34 +315,10 @@
       "size": 6273
     },
     {
-      "id": "godie-o02s",
-      "path": "champions/godie-o02s.json",
-      "hash": "606d5d00e1cd",
-      "size": 6218
-    },
-    {
-      "id": "godie-o02v",
-      "path": "champions/godie-o02v.json",
-      "hash": "3a2ca08c189a",
-      "size": 7557
-    },
-    {
-      "id": "godie-o02w",
-      "path": "champions/godie-o02w.json",
-      "hash": "900d999234fb",
-      "size": 6460
-    },
-    {
       "id": "godie-o030",
       "path": "champions/godie-o030.json",
       "hash": "a81d6812ccba",
       "size": 6566
-    },
-    {
-      "id": "godie-obla",
-      "path": "champions/godie-obla.json",
-      "hash": "1e8272e29f51",
-      "size": 6261
     },
     {
       "id": "godie-ofar",
@@ -531,12 +339,6 @@
       "size": 6583
     },
     {
-      "id": "godie-opgh",
-      "path": "champions/godie-opgh.json",
-      "hash": "14d273e70dd2",
-      "size": 5912
-    },
-    {
       "id": "godie-orkn",
       "path": "champions/godie-orkn.json",
       "hash": "dd89c7ae5709",
@@ -547,24 +349,6 @@
       "path": "champions/godie-osam.json",
       "hash": "72bca0261deb",
       "size": 5846
-    },
-    {
-      "id": "godie-oshd",
-      "path": "champions/godie-oshd.json",
-      "hash": "d495d3f406da",
-      "size": 6460
-    },
-    {
-      "id": "godie-othr",
-      "path": "champions/godie-othr.json",
-      "hash": "fda980a55c6e",
-      "size": 6795
-    },
-    {
-      "id": "godie-u00b",
-      "path": "champions/godie-u00b.json",
-      "hash": "ff623869290f",
-      "size": 5724
     },
     {
       "id": "godie-u00h",
@@ -615,28 +399,10 @@
       "size": 8209
     },
     {
-      "id": "godie-u011",
-      "path": "champions/godie-u011.json",
-      "hash": "a31ea314a9a6",
-      "size": 5715
-    },
-    {
-      "id": "godie-u012",
-      "path": "champions/godie-u012.json",
-      "hash": "b4f261174fcd",
-      "size": 6351
-    },
-    {
       "id": "godie-u01f",
       "path": "champions/godie-u01f.json",
       "hash": "b8303fe990a6",
       "size": 4626
-    },
-    {
-      "id": "godie-u01q",
-      "path": "champions/godie-u01q.json",
-      "hash": "e6043c878217",
-      "size": 4512
     },
     {
       "id": "godie-u01u",
@@ -681,28 +447,16 @@
       "size": 6737
     },
     {
-      "id": "godie-usyl",
-      "path": "champions/godie-usyl.json",
-      "hash": "67f1e44b57a5",
-      "size": 5609
-    },
-    {
       "id": "godie-uvng",
       "path": "champions/godie-uvng.json",
       "hash": "8942bcf755e5",
       "size": 8120
     },
     {
-      "id": "godie-uwar",
-      "path": "champions/godie-uwar.json",
-      "hash": "eeddb3ebbd63",
-      "size": 5904
-    },
-    {
       "id": "godie-zombiex",
       "path": "champions/godie-zombiex.json",
-      "hash": "30523e52e021",
-      "size": 6694
+      "hash": "1fdd7e98ea10",
+      "size": 6691
     },
     {
       "id": "sela",

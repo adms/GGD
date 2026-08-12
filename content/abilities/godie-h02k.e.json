@@ -28,9 +28,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.04,
-            "target": "self",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "applyBuff",
@@ -43,7 +40,10 @@
                 ],
                 "duration": 4.0
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.04,
+            "target": "self"
           }
         ]
       },
@@ -51,9 +51,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.04,
-            "target": "self",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "applyBuff",
@@ -66,7 +63,10 @@
                 ],
                 "duration": 4.0
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.04,
+            "target": "self"
           }
         ]
       },
@@ -74,9 +74,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.04,
-            "target": "self",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "applyBuff",
@@ -89,7 +86,10 @@
                 ],
                 "duration": 4.0
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.04,
+            "target": "self"
           }
         ]
       },
@@ -97,9 +97,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.04,
-            "target": "self",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "applyBuff",
@@ -112,7 +109,10 @@
                 ],
                 "duration": 4.0
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.04,
+            "target": "self"
           }
         ]
       }

@@ -22,7 +22,16 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "target": "self",
+            "key": "brave-will",
+            "effects": [
+              {
+                "kind": "shield",
+                "amount": {
+                  "flat": 1500.0
+                },
+                "duration": 8.0
+              }
+            ],
             "internalCooldown": 120.0,
             "condition": {
               "kind": "stat",
@@ -32,15 +41,22 @@
               "op": "<=",
               "value": 0.3
             },
+            "target": "self"
+          },
+          {
+            "on": "onReflectSuccess",
             "effects": [
               {
-                "kind": "shield",
-                "amount": {
-                  "flat": 1500.0
-                },
-                "duration": 8.0
+                "kind": "modifyCooldown",
+                "shape": "single",
+                "who": "self",
+                "mode": "reset",
+                "target": "hookInternalCooldown",
+                "hookKey": "brave-will",
+                "hookScope": "originSource"
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

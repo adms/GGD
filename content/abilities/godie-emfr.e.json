@@ -40,7 +40,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -55,11 +54,11 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event"
           },
           {
             "on": "onAbilityHit",
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -81,7 +80,8 @@
                 "statusId": "burn",
                 "duration": 3.0
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       }

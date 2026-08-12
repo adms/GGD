@@ -52,12 +52,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "blind"
-            },
             "effects": [
               {
                 "kind": "damage",
@@ -71,7 +65,13 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
           }
         ]
       }

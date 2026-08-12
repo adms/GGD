@@ -23,9 +23,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.3,
-            "target": "event",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "applyStatus",
@@ -33,7 +30,10 @@
                 "duration": 6.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.3,
+            "target": "event"
           }
         ]
       }

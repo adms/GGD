@@ -162,15 +162,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "stat",
-                  "subject": "self",
-                  "stat": "mp",
-                  "mode": "absolute",
-                  "op": ">=",
-                  "value": 30
-                },
                 "effects": [
                   {
                     "kind": "spendMana",
@@ -192,7 +183,16 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 30
+                },
+                "target": "event"
               }
             ]
           },
@@ -213,15 +213,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "stat",
-                  "subject": "self",
-                  "stat": "mp",
-                  "mode": "absolute",
-                  "op": ">=",
-                  "value": 50
-                },
                 "effects": [
                   {
                     "kind": "spendMana",
@@ -243,7 +234,16 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 50
+                },
+                "target": "event"
               }
             ]
           },
@@ -264,15 +264,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "stat",
-                  "subject": "self",
-                  "stat": "mp",
-                  "mode": "absolute",
-                  "op": ">=",
-                  "value": 70
-                },
                 "effects": [
                   {
                     "kind": "spendMana",
@@ -294,7 +285,16 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 70
+                },
+                "target": "event"
               }
             ]
           },
@@ -315,15 +315,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "event",
-                "condition": {
-                  "kind": "stat",
-                  "subject": "self",
-                  "stat": "mp",
-                  "mode": "absolute",
-                  "op": ">=",
-                  "value": 90
-                },
                 "effects": [
                   {
                     "kind": "spendMana",
@@ -345,7 +336,16 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "stat",
+                  "subject": "self",
+                  "stat": "mp",
+                  "mode": "absolute",
+                  "op": ">=",
+                  "value": 90
+                },
+                "target": "event"
               }
             ]
           }
@@ -457,9 +457,38 @@
       "targetsEnemies": false,
       "effects": [
         {
-          "kind": "applyStatus",
-          "statusId": "moon-combo",
-          "duration": 2.0
+          "kind": "applyBuff",
+          "modifiers": [],
+          "duration": 2.0,
+          "hooks": [
+            {
+              "on": "onDamageTaken",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "flat": 0.0,
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 3.0
+                      }
+                    ]
+                  },
+                  "incomingPct": {
+                    "perRank": [
+                      3.0,
+                      5.0,
+                      7.0
+                    ]
+                  }
+                }
+              ],
+              "target": "event",
+              "damageType": "magic"
+            }
+          ]
         }
       ],
       "icon": "assets/icons/abilities/godie-e002.r.webp",

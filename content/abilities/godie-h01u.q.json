@@ -28,7 +28,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "self",
             "effects": [
               {
                 "kind": "applyBuff",
@@ -42,7 +41,8 @@
                 "duration": 1.0,
                 "statusId": "rage"
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

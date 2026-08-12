@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "130c7a8ad6b0",
+  "hash": "79876d33ff41",
   "entries": [
     {
       "id": "godie-e001.e",
@@ -65,8 +65,8 @@
     {
       "id": "godie-e002.r",
       "path": "abilities/godie-e002.r.json",
-      "hash": "998cf31343b5",
-      "size": 788
+      "hash": "37876b11273f",
+      "size": 1437
     },
     {
       "id": "godie-e002.w",
@@ -145,42 +145,6 @@
       "path": "abilities/godie-e008.w.json",
       "hash": "4cc8f4c46e6c",
       "size": 1315
-    },
-    {
-      "id": "godie-e00j.e",
-      "path": "abilities/godie-e00j.e.json",
-      "hash": "da6bcc589e25",
-      "size": 1177
-    },
-    {
-      "id": "godie-e00j.ex",
-      "path": "abilities/godie-e00j.ex.json",
-      "hash": "151aec1c32c7",
-      "size": 878
-    },
-    {
-      "id": "godie-e00j.passive",
-      "path": "abilities/godie-e00j.passive.json",
-      "hash": "7e0e0883b624",
-      "size": 709
-    },
-    {
-      "id": "godie-e00j.q",
-      "path": "abilities/godie-e00j.q.json",
-      "hash": "777740f04f25",
-      "size": 1289
-    },
-    {
-      "id": "godie-e00j.r",
-      "path": "abilities/godie-e00j.r.json",
-      "hash": "5deb51deaf6e",
-      "size": 1043
-    },
-    {
-      "id": "godie-e00j.w",
-      "path": "abilities/godie-e00j.w.json",
-      "hash": "8974c9e90b3b",
-      "size": 939
     },
     {
       "id": "godie-e00k.e",
@@ -291,42 +255,6 @@
       "size": 723
     },
     {
-      "id": "godie-e00q.e",
-      "path": "abilities/godie-e00q.e.json",
-      "hash": "ff258a6ba80c",
-      "size": 1509
-    },
-    {
-      "id": "godie-e00q.ex",
-      "path": "abilities/godie-e00q.ex.json",
-      "hash": "c603f54e8eb7",
-      "size": 797
-    },
-    {
-      "id": "godie-e00q.passive",
-      "path": "abilities/godie-e00q.passive.json",
-      "hash": "5bd60474e61e",
-      "size": 910
-    },
-    {
-      "id": "godie-e00q.q",
-      "path": "abilities/godie-e00q.q.json",
-      "hash": "8e29baf56ca9",
-      "size": 1895
-    },
-    {
-      "id": "godie-e00q.r",
-      "path": "abilities/godie-e00q.r.json",
-      "hash": "e4d06453991d",
-      "size": 1694
-    },
-    {
-      "id": "godie-e00q.w",
-      "path": "abilities/godie-e00q.w.json",
-      "hash": "0d02ab5a4247",
-      "size": 953
-    },
-    {
       "id": "godie-e00r.e",
       "path": "abilities/godie-e00r.e.json",
       "hash": "9f9afc310fc5",
@@ -389,50 +317,14 @@
     {
       "id": "godie-e00s.r",
       "path": "abilities/godie-e00s.r.json",
-      "hash": "21877ca2ea49",
-      "size": 1549
+      "hash": "5c2a499dd0b0",
+      "size": 2122
     },
     {
       "id": "godie-e00s.w",
       "path": "abilities/godie-e00s.w.json",
       "hash": "e3f2261e6c45",
       "size": 3098
-    },
-    {
-      "id": "godie-e00t.e",
-      "path": "abilities/godie-e00t.e.json",
-      "hash": "2a2cd4d5de11",
-      "size": 915
-    },
-    {
-      "id": "godie-e00t.ex",
-      "path": "abilities/godie-e00t.ex.json",
-      "hash": "3e6e3bdb0b18",
-      "size": 777
-    },
-    {
-      "id": "godie-e00t.passive",
-      "path": "abilities/godie-e00t.passive.json",
-      "hash": "b52164d4b09d",
-      "size": 1974
-    },
-    {
-      "id": "godie-e00t.q",
-      "path": "abilities/godie-e00t.q.json",
-      "hash": "3516696bd288",
-      "size": 817
-    },
-    {
-      "id": "godie-e00t.r",
-      "path": "abilities/godie-e00t.r.json",
-      "hash": "6f45cd1e8797",
-      "size": 1901
-    },
-    {
-      "id": "godie-e00t.w",
-      "path": "abilities/godie-e00t.w.json",
-      "hash": "7c761291edbe",
-      "size": 762
     },
     {
       "id": "godie-e00u.e",
@@ -463,42 +355,6 @@
       "path": "abilities/godie-e00u.w.json",
       "hash": "c7ef6b07e336",
       "size": 693
-    },
-    {
-      "id": "godie-e00v.e",
-      "path": "abilities/godie-e00v.e.json",
-      "hash": "34fcfae464ca",
-      "size": 974
-    },
-    {
-      "id": "godie-e00v.ex",
-      "path": "abilities/godie-e00v.ex.json",
-      "hash": "0c99ae7d47a0",
-      "size": 896
-    },
-    {
-      "id": "godie-e00v.passive",
-      "path": "abilities/godie-e00v.passive.json",
-      "hash": "8a9302d1c5ad",
-      "size": 1090
-    },
-    {
-      "id": "godie-e00v.q",
-      "path": "abilities/godie-e00v.q.json",
-      "hash": "431e29a972a7",
-      "size": 701
-    },
-    {
-      "id": "godie-e00v.r",
-      "path": "abilities/godie-e00v.r.json",
-      "hash": "c333e1ab0515",
-      "size": 1236
-    },
-    {
-      "id": "godie-e00v.w",
-      "path": "abilities/godie-e00v.w.json",
-      "hash": "4a4a09ea5d42",
-      "size": 1080
     },
     {
       "id": "godie-e00w.e",
@@ -639,108 +495,6 @@
       "size": 742
     },
     {
-      "id": "godie-e012.e",
-      "path": "abilities/godie-e012.e.json",
-      "hash": "363ab75b25a0",
-      "size": 1070
-    },
-    {
-      "id": "godie-e012.passive",
-      "path": "abilities/godie-e012.passive.json",
-      "hash": "0e0543967c9a",
-      "size": 923
-    },
-    {
-      "id": "godie-e012.q",
-      "path": "abilities/godie-e012.q.json",
-      "hash": "5b13f6021855",
-      "size": 894
-    },
-    {
-      "id": "godie-e012.r",
-      "path": "abilities/godie-e012.r.json",
-      "hash": "7e7c745be281",
-      "size": 917
-    },
-    {
-      "id": "godie-e012.w",
-      "path": "abilities/godie-e012.w.json",
-      "hash": "ea8de3b80b51",
-      "size": 626
-    },
-    {
-      "id": "godie-e015.e",
-      "path": "abilities/godie-e015.e.json",
-      "hash": "b033885574bc",
-      "size": 1089
-    },
-    {
-      "id": "godie-e015.ex",
-      "path": "abilities/godie-e015.ex.json",
-      "hash": "018953b780c8",
-      "size": 931
-    },
-    {
-      "id": "godie-e015.passive",
-      "path": "abilities/godie-e015.passive.json",
-      "hash": "1c758a38f8f3",
-      "size": 713
-    },
-    {
-      "id": "godie-e015.q",
-      "path": "abilities/godie-e015.q.json",
-      "hash": "a6ce1c66d020",
-      "size": 1049
-    },
-    {
-      "id": "godie-e015.r",
-      "path": "abilities/godie-e015.r.json",
-      "hash": "9ca63ec7cf85",
-      "size": 1026
-    },
-    {
-      "id": "godie-e015.w",
-      "path": "abilities/godie-e015.w.json",
-      "hash": "6bc9eb8f6865",
-      "size": 1161
-    },
-    {
-      "id": "godie-ecen.e",
-      "path": "abilities/godie-ecen.e.json",
-      "hash": "6603f1d454a4",
-      "size": 881
-    },
-    {
-      "id": "godie-ecen.ex",
-      "path": "abilities/godie-ecen.ex.json",
-      "hash": "993725aae62e",
-      "size": 777
-    },
-    {
-      "id": "godie-ecen.passive",
-      "path": "abilities/godie-ecen.passive.json",
-      "hash": "bfa7ff98274f",
-      "size": 733
-    },
-    {
-      "id": "godie-ecen.q",
-      "path": "abilities/godie-ecen.q.json",
-      "hash": "73795fc70b24",
-      "size": 1014
-    },
-    {
-      "id": "godie-ecen.r",
-      "path": "abilities/godie-ecen.r.json",
-      "hash": "53326480ebb5",
-      "size": 984
-    },
-    {
-      "id": "godie-ecen.w",
-      "path": "abilities/godie-ecen.w.json",
-      "hash": "b77beab4f8fc",
-      "size": 1077
-    },
-    {
       "id": "godie-edem.e",
       "path": "abilities/godie-edem.e.json",
       "hash": "6f6a2f4dff09",
@@ -755,8 +509,8 @@
     {
       "id": "godie-edem.passive",
       "path": "abilities/godie-edem.passive.json",
-      "hash": "258a53d0b1c8",
-      "size": 1232
+      "hash": "eca13efc7b38",
+      "size": 1266
     },
     {
       "id": "godie-edem.q",
@@ -813,42 +567,6 @@
       "size": 1603
     },
     {
-      "id": "godie-ekee.e",
-      "path": "abilities/godie-ekee.e.json",
-      "hash": "cb56940757fe",
-      "size": 1111
-    },
-    {
-      "id": "godie-ekee.ex",
-      "path": "abilities/godie-ekee.ex.json",
-      "hash": "e83478ea8760",
-      "size": 687
-    },
-    {
-      "id": "godie-ekee.passive",
-      "path": "abilities/godie-ekee.passive.json",
-      "hash": "40f845035b59",
-      "size": 952
-    },
-    {
-      "id": "godie-ekee.q",
-      "path": "abilities/godie-ekee.q.json",
-      "hash": "7f10087f636e",
-      "size": 1158
-    },
-    {
-      "id": "godie-ekee.r",
-      "path": "abilities/godie-ekee.r.json",
-      "hash": "a683311d2b2f",
-      "size": 946
-    },
-    {
-      "id": "godie-ekee.w",
-      "path": "abilities/godie-ekee.w.json",
-      "hash": "5aef0b980df1",
-      "size": 808
-    },
-    {
       "id": "godie-emfr.e",
       "path": "abilities/godie-emfr.e.json",
       "hash": "e69ebf4e0a9c",
@@ -857,8 +575,8 @@
     {
       "id": "godie-emfr.ex",
       "path": "abilities/godie-emfr.ex.json",
-      "hash": "f919ec360110",
-      "size": 1290
+      "hash": "e4801b7acf94",
+      "size": 1739
     },
     {
       "id": "godie-emfr.passive",
@@ -911,8 +629,8 @@
     {
       "id": "godie-emns.r",
       "path": "abilities/godie-emns.r.json",
-      "hash": "436961077e8a",
-      "size": 1230
+      "hash": "b0b807bee9b1",
+      "size": 1456
     },
     {
       "id": "godie-emns.w",
@@ -993,78 +711,6 @@
       "size": 954
     },
     {
-      "id": "godie-ewrd.e",
-      "path": "abilities/godie-ewrd.e.json",
-      "hash": "6c8fdc8c8210",
-      "size": 900
-    },
-    {
-      "id": "godie-ewrd.ex",
-      "path": "abilities/godie-ewrd.ex.json",
-      "hash": "59d0948bb1cd",
-      "size": 808
-    },
-    {
-      "id": "godie-ewrd.passive",
-      "path": "abilities/godie-ewrd.passive.json",
-      "hash": "5067d9173f25",
-      "size": 806
-    },
-    {
-      "id": "godie-ewrd.q",
-      "path": "abilities/godie-ewrd.q.json",
-      "hash": "222c65a8fdf5",
-      "size": 711
-    },
-    {
-      "id": "godie-ewrd.r",
-      "path": "abilities/godie-ewrd.r.json",
-      "hash": "efc7b007486e",
-      "size": 1185
-    },
-    {
-      "id": "godie-ewrd.w",
-      "path": "abilities/godie-ewrd.w.json",
-      "hash": "b2ab0cdad8be",
-      "size": 1025
-    },
-    {
-      "id": "godie-h001.e",
-      "path": "abilities/godie-h001.e.json",
-      "hash": "6e3fce2564ca",
-      "size": 891
-    },
-    {
-      "id": "godie-h001.ex",
-      "path": "abilities/godie-h001.ex.json",
-      "hash": "4c6d45d08c0a",
-      "size": 691
-    },
-    {
-      "id": "godie-h001.passive",
-      "path": "abilities/godie-h001.passive.json",
-      "hash": "f788f4418596",
-      "size": 984
-    },
-    {
-      "id": "godie-h001.q",
-      "path": "abilities/godie-h001.q.json",
-      "hash": "6138de2532e3",
-      "size": 927
-    },
-    {
-      "id": "godie-h001.r",
-      "path": "abilities/godie-h001.r.json",
-      "hash": "b008e651e1a0",
-      "size": 904
-    },
-    {
-      "id": "godie-h001.w",
-      "path": "abilities/godie-h001.w.json",
-      "hash": "970d2b4c4493",
-      "size": 1051
-    },
-    {
       "id": "godie-h00l.e",
       "path": "abilities/godie-h00l.e.json",
       "hash": "bf2a5340a344",
@@ -1073,8 +719,8 @@
     {
       "id": "godie-h00l.ex",
       "path": "abilities/godie-h00l.ex.json",
-      "hash": "b6b47b88b019",
-      "size": 1336
+      "hash": "5f76e6184ae8",
+      "size": 1809
     },
     {
       "id": "godie-h00l.passive",
@@ -1091,8 +737,8 @@
     {
       "id": "godie-h00l.r",
       "path": "abilities/godie-h00l.r.json",
-      "hash": "46a9ede066f4",
-      "size": 1696
+      "hash": "2acd76d108de",
+      "size": 2204
     },
     {
       "id": "godie-h00l.w",
@@ -1101,46 +747,10 @@
       "size": 1158
     },
     {
-      "id": "godie-h00w.e",
-      "path": "abilities/godie-h00w.e.json",
-      "hash": "b11977472055",
-      "size": 670
-    },
-    {
-      "id": "godie-h00w.ex",
-      "path": "abilities/godie-h00w.ex.json",
-      "hash": "9d4af90cd468",
-      "size": 782
-    },
-    {
-      "id": "godie-h00w.passive",
-      "path": "abilities/godie-h00w.passive.json",
-      "hash": "de7c26a93fad",
-      "size": 803
-    },
-    {
-      "id": "godie-h00w.q",
-      "path": "abilities/godie-h00w.q.json",
-      "hash": "270d77149a2b",
-      "size": 798
-    },
-    {
-      "id": "godie-h00w.r",
-      "path": "abilities/godie-h00w.r.json",
-      "hash": "bdd79b7a4d97",
-      "size": 867
-    },
-    {
-      "id": "godie-h00w.w",
-      "path": "abilities/godie-h00w.w.json",
-      "hash": "8027c8a9d373",
-      "size": 876
-    },
-    {
       "id": "godie-h01n.e",
       "path": "abilities/godie-h01n.e.json",
-      "hash": "5b883c7365c3",
-      "size": 1113
+      "hash": "0e5dea73d302",
+      "size": 1529
     },
     {
       "id": "godie-h01n.ex",
@@ -1281,72 +891,6 @@
       "size": 993
     },
     {
-      "id": "godie-h021.e",
-      "path": "abilities/godie-h021.e.json",
-      "hash": "33073f8ec24d",
-      "size": 732
-    },
-    {
-      "id": "godie-h021.passive",
-      "path": "abilities/godie-h021.passive.json",
-      "hash": "028ca82d97a8",
-      "size": 780
-    },
-    {
-      "id": "godie-h021.q",
-      "path": "abilities/godie-h021.q.json",
-      "hash": "308600053113",
-      "size": 813
-    },
-    {
-      "id": "godie-h021.r",
-      "path": "abilities/godie-h021.r.json",
-      "hash": "b0c8de3477f4",
-      "size": 1073
-    },
-    {
-      "id": "godie-h021.w",
-      "path": "abilities/godie-h021.w.json",
-      "hash": "b67713ab76a3",
-      "size": 659
-    },
-    {
-      "id": "godie-h022.e",
-      "path": "abilities/godie-h022.e.json",
-      "hash": "89e2de52005c",
-      "size": 1309
-    },
-    {
-      "id": "godie-h022.ex",
-      "path": "abilities/godie-h022.ex.json",
-      "hash": "b6a21dedfde5",
-      "size": 810
-    },
-    {
-      "id": "godie-h022.passive",
-      "path": "abilities/godie-h022.passive.json",
-      "hash": "87a45e9e06cc",
-      "size": 1163
-    },
-    {
-      "id": "godie-h022.q",
-      "path": "abilities/godie-h022.q.json",
-      "hash": "ce17bed3902a",
-      "size": 1050
-    },
-    {
-      "id": "godie-h022.r",
-      "path": "abilities/godie-h022.r.json",
-      "hash": "2b2d00c20898",
-      "size": 1444
-    },
-    {
-      "id": "godie-h022.w",
-      "path": "abilities/godie-h022.w.json",
-      "hash": "b206f4711ef9",
-      "size": 725
-    },
-    {
       "id": "godie-h02k.e",
       "path": "abilities/godie-h02k.e.json",
       "hash": "f8c63d1b4177",
@@ -1355,20 +899,20 @@
     {
       "id": "godie-h02k.ex",
       "path": "abilities/godie-h02k.ex.json",
-      "hash": "340e2777caaf",
-      "size": 1784
+      "hash": "e91840ed0fa5",
+      "size": 4529
     },
     {
       "id": "godie-h02k.passive",
       "path": "abilities/godie-h02k.passive.json",
-      "hash": "fe4d9746e77c",
-      "size": 1760
+      "hash": "9a0d3ae06eb8",
+      "size": 1623
     },
     {
       "id": "godie-h02k.q",
       "path": "abilities/godie-h02k.q.json",
-      "hash": "e13d6f5d5b6c",
-      "size": 4651
+      "hash": "9f343704371f",
+      "size": 4435
     },
     {
       "id": "godie-h02k.r",
@@ -1379,32 +923,8 @@
     {
       "id": "godie-h02k.w",
       "path": "abilities/godie-h02k.w.json",
-      "hash": "262415c10d09",
-      "size": 1689
-    },
-    {
-      "id": "godie-h02n.e",
-      "path": "abilities/godie-h02n.e.json",
-      "hash": "3d02925da01f",
-      "size": 693
-    },
-    {
-      "id": "godie-h02n.q",
-      "path": "abilities/godie-h02n.q.json",
-      "hash": "6454dbab0490",
-      "size": 693
-    },
-    {
-      "id": "godie-h02n.r",
-      "path": "abilities/godie-h02n.r.json",
-      "hash": "f57806a16244",
-      "size": 626
-    },
-    {
-      "id": "godie-h02n.w",
-      "path": "abilities/godie-h02n.w.json",
-      "hash": "3bb60da1b5a6",
-      "size": 693
+      "hash": "956d51c48171",
+      "size": 2170
     },
     {
       "id": "godie-h02r.e",
@@ -1441,42 +961,6 @@
       "path": "abilities/godie-h02r.w.json",
       "hash": "1dd7a71bd5cf",
       "size": 698
-    },
-    {
-      "id": "godie-h02s.e",
-      "path": "abilities/godie-h02s.e.json",
-      "hash": "7c9319c7c672",
-      "size": 1184
-    },
-    {
-      "id": "godie-h02s.ex",
-      "path": "abilities/godie-h02s.ex.json",
-      "hash": "a8ed81fce26f",
-      "size": 991
-    },
-    {
-      "id": "godie-h02s.passive",
-      "path": "abilities/godie-h02s.passive.json",
-      "hash": "39d06c3e0f04",
-      "size": 978
-    },
-    {
-      "id": "godie-h02s.q",
-      "path": "abilities/godie-h02s.q.json",
-      "hash": "296af22eeea3",
-      "size": 794
-    },
-    {
-      "id": "godie-h02s.r",
-      "path": "abilities/godie-h02s.r.json",
-      "hash": "8f9b3812100a",
-      "size": 675
-    },
-    {
-      "id": "godie-h02s.w",
-      "path": "abilities/godie-h02s.w.json",
-      "hash": "d375ef30ff0d",
-      "size": 806
     },
     {
       "id": "godie-h02u.e",
@@ -1551,78 +1035,6 @@
       "size": 4469
     },
     {
-      "id": "godie-h02y.e",
-      "path": "abilities/godie-h02y.e.json",
-      "hash": "a29881c92666",
-      "size": 707
-    },
-    {
-      "id": "godie-h02y.ex",
-      "path": "abilities/godie-h02y.ex.json",
-      "hash": "597e4686d88c",
-      "size": 802
-    },
-    {
-      "id": "godie-h02y.passive",
-      "path": "abilities/godie-h02y.passive.json",
-      "hash": "7ef28529a5b7",
-      "size": 645
-    },
-    {
-      "id": "godie-h02y.q",
-      "path": "abilities/godie-h02y.q.json",
-      "hash": "b4213fc3f08a",
-      "size": 1164
-    },
-    {
-      "id": "godie-h02y.r",
-      "path": "abilities/godie-h02y.r.json",
-      "hash": "6d16bc03c4ad",
-      "size": 986
-    },
-    {
-      "id": "godie-h02y.w",
-      "path": "abilities/godie-h02y.w.json",
-      "hash": "45e27a871a6e",
-      "size": 1040
-    },
-    {
-      "id": "godie-h02z.e",
-      "path": "abilities/godie-h02z.e.json",
-      "hash": "618da7e24500",
-      "size": 1184
-    },
-    {
-      "id": "godie-h02z.ex",
-      "path": "abilities/godie-h02z.ex.json",
-      "hash": "43cd5948567a",
-      "size": 991
-    },
-    {
-      "id": "godie-h02z.passive",
-      "path": "abilities/godie-h02z.passive.json",
-      "hash": "6b4cff020e18",
-      "size": 978
-    },
-    {
-      "id": "godie-h02z.q",
-      "path": "abilities/godie-h02z.q.json",
-      "hash": "ccf747ea11d0",
-      "size": 794
-    },
-    {
-      "id": "godie-h02z.r",
-      "path": "abilities/godie-h02z.r.json",
-      "hash": "f1f3518c93df",
-      "size": 675
-    },
-    {
-      "id": "godie-h02z.w",
-      "path": "abilities/godie-h02z.w.json",
-      "hash": "070df9b1f49c",
-      "size": 806
-    },
-    {
       "id": "godie-hapm.e",
       "path": "abilities/godie-hapm.e.json",
       "hash": "cf417394662f",
@@ -1655,44 +1067,8 @@
     {
       "id": "godie-hapm.w",
       "path": "abilities/godie-hapm.w.json",
-      "hash": "cd71e49235b3",
-      "size": 1674
-    },
-    {
-      "id": "godie-harf.e",
-      "path": "abilities/godie-harf.e.json",
-      "hash": "106b0075a00d",
-      "size": 670
-    },
-    {
-      "id": "godie-harf.ex",
-      "path": "abilities/godie-harf.ex.json",
-      "hash": "ae64b2408110",
-      "size": 782
-    },
-    {
-      "id": "godie-harf.passive",
-      "path": "abilities/godie-harf.passive.json",
-      "hash": "ca36d5ca8215",
-      "size": 803
-    },
-    {
-      "id": "godie-harf.q",
-      "path": "abilities/godie-harf.q.json",
-      "hash": "0483ea3dcc24",
-      "size": 798
-    },
-    {
-      "id": "godie-harf.r",
-      "path": "abilities/godie-harf.r.json",
-      "hash": "e1b5483886f5",
-      "size": 960
-    },
-    {
-      "id": "godie-harf.w",
-      "path": "abilities/godie-harf.w.json",
-      "hash": "c13b10339ce5",
-      "size": 857
+      "hash": "feaa0e68a9e4",
+      "size": 1940
     },
     {
       "id": "godie-hart.e",
@@ -1837,42 +1213,6 @@
       "path": "abilities/godie-hjai.w.json",
       "hash": "80394a6caf72",
       "size": 1064
-    },
-    {
-      "id": "godie-hlgr.e",
-      "path": "abilities/godie-hlgr.e.json",
-      "hash": "e103a1fd4934",
-      "size": 1062
-    },
-    {
-      "id": "godie-hlgr.ex",
-      "path": "abilities/godie-hlgr.ex.json",
-      "hash": "6cade6e5390a",
-      "size": 729
-    },
-    {
-      "id": "godie-hlgr.passive",
-      "path": "abilities/godie-hlgr.passive.json",
-      "hash": "086d71a59230",
-      "size": 1645
-    },
-    {
-      "id": "godie-hlgr.q",
-      "path": "abilities/godie-hlgr.q.json",
-      "hash": "695935aea9a1",
-      "size": 1058
-    },
-    {
-      "id": "godie-hlgr.r",
-      "path": "abilities/godie-hlgr.r.json",
-      "hash": "7e01ff9be91a",
-      "size": 874
-    },
-    {
-      "id": "godie-hlgr.w",
-      "path": "abilities/godie-hlgr.w.json",
-      "hash": "e91107bff83b",
-      "size": 980
     },
     {
       "id": "godie-hpal.e",
@@ -2163,42 +1503,6 @@
       "size": 1005
     },
     {
-      "id": "godie-n01b.e",
-      "path": "abilities/godie-n01b.e.json",
-      "hash": "f6016be26220",
-      "size": 957
-    },
-    {
-      "id": "godie-n01b.ex",
-      "path": "abilities/godie-n01b.ex.json",
-      "hash": "8f343d3ed3be",
-      "size": 812
-    },
-    {
-      "id": "godie-n01b.passive",
-      "path": "abilities/godie-n01b.passive.json",
-      "hash": "f79b78742c34",
-      "size": 941
-    },
-    {
-      "id": "godie-n01b.q",
-      "path": "abilities/godie-n01b.q.json",
-      "hash": "f5f7eaad5621",
-      "size": 742
-    },
-    {
-      "id": "godie-n01b.r",
-      "path": "abilities/godie-n01b.r.json",
-      "hash": "8e3a3a769b81",
-      "size": 1007
-    },
-    {
-      "id": "godie-n01b.w",
-      "path": "abilities/godie-n01b.w.json",
-      "hash": "ba065e534e9c",
-      "size": 995
-    },
-    {
       "id": "godie-n01c.e",
       "path": "abilities/godie-n01c.e.json",
       "hash": "6292404db55c",
@@ -2271,78 +1575,6 @@
       "size": 846
     },
     {
-      "id": "godie-n01l.e",
-      "path": "abilities/godie-n01l.e.json",
-      "hash": "edd2da9c2e05",
-      "size": 856
-    },
-    {
-      "id": "godie-n01l.ex",
-      "path": "abilities/godie-n01l.ex.json",
-      "hash": "43c5a7714f48",
-      "size": 848
-    },
-    {
-      "id": "godie-n01l.passive",
-      "path": "abilities/godie-n01l.passive.json",
-      "hash": "8f1f8f3e35c8",
-      "size": 791
-    },
-    {
-      "id": "godie-n01l.q",
-      "path": "abilities/godie-n01l.q.json",
-      "hash": "98e6553209a6",
-      "size": 781
-    },
-    {
-      "id": "godie-n01l.r",
-      "path": "abilities/godie-n01l.r.json",
-      "hash": "c7037630677c",
-      "size": 897
-    },
-    {
-      "id": "godie-n01l.w",
-      "path": "abilities/godie-n01l.w.json",
-      "hash": "2057861ccabc",
-      "size": 1056
-    },
-    {
-      "id": "godie-naka.e",
-      "path": "abilities/godie-naka.e.json",
-      "hash": "f3d5123a8beb",
-      "size": 1331
-    },
-    {
-      "id": "godie-naka.ex",
-      "path": "abilities/godie-naka.ex.json",
-      "hash": "a7fdab00dee3",
-      "size": 830
-    },
-    {
-      "id": "godie-naka.passive",
-      "path": "abilities/godie-naka.passive.json",
-      "hash": "6b9477af2e5c",
-      "size": 640
-    },
-    {
-      "id": "godie-naka.q",
-      "path": "abilities/godie-naka.q.json",
-      "hash": "52370d13e48b",
-      "size": 882
-    },
-    {
-      "id": "godie-naka.r",
-      "path": "abilities/godie-naka.r.json",
-      "hash": "f7021cc0146b",
-      "size": 1033
-    },
-    {
-      "id": "godie-naka.w",
-      "path": "abilities/godie-naka.w.json",
-      "hash": "6e6183fe6006",
-      "size": 1067
-    },
-    {
       "id": "godie-nbbc.e",
       "path": "abilities/godie-nbbc.e.json",
       "hash": "4f27ace9e4f7",
@@ -2377,78 +1609,6 @@
       "path": "abilities/godie-nbbc.w.json",
       "hash": "c5001b47d52e",
       "size": 1021
-    },
-    {
-      "id": "godie-nbst.e",
-      "path": "abilities/godie-nbst.e.json",
-      "hash": "e5601f5b1403",
-      "size": 926
-    },
-    {
-      "id": "godie-nbst.ex",
-      "path": "abilities/godie-nbst.ex.json",
-      "hash": "c096f51b7cb0",
-      "size": 1108
-    },
-    {
-      "id": "godie-nbst.passive",
-      "path": "abilities/godie-nbst.passive.json",
-      "hash": "811c9f6ea013",
-      "size": 742
-    },
-    {
-      "id": "godie-nbst.q",
-      "path": "abilities/godie-nbst.q.json",
-      "hash": "8e349c840f51",
-      "size": 1039
-    },
-    {
-      "id": "godie-nbst.r",
-      "path": "abilities/godie-nbst.r.json",
-      "hash": "d067ad93f865",
-      "size": 794
-    },
-    {
-      "id": "godie-nbst.w",
-      "path": "abilities/godie-nbst.w.json",
-      "hash": "e2f805dcf329",
-      "size": 850
-    },
-    {
-      "id": "godie-nman.e",
-      "path": "abilities/godie-nman.e.json",
-      "hash": "ca51ef05b60f",
-      "size": 1051
-    },
-    {
-      "id": "godie-nman.ex",
-      "path": "abilities/godie-nman.ex.json",
-      "hash": "73953da62afb",
-      "size": 812
-    },
-    {
-      "id": "godie-nman.passive",
-      "path": "abilities/godie-nman.passive.json",
-      "hash": "0815fc1e9920",
-      "size": 941
-    },
-    {
-      "id": "godie-nman.q",
-      "path": "abilities/godie-nman.q.json",
-      "hash": "85b121b5e231",
-      "size": 742
-    },
-    {
-      "id": "godie-nman.r",
-      "path": "abilities/godie-nman.r.json",
-      "hash": "3157cf0b2ac3",
-      "size": 1007
-    },
-    {
-      "id": "godie-nman.w",
-      "path": "abilities/godie-nman.w.json",
-      "hash": "f70643d839d8",
-      "size": 1323
     },
     {
       "id": "godie-nplh.e",
@@ -2521,42 +1681,6 @@
       "path": "abilities/godie-nsjs.w.json",
       "hash": "0bc271cdaa9d",
       "size": 963
-    },
-    {
-      "id": "godie-ntin.e",
-      "path": "abilities/godie-ntin.e.json",
-      "hash": "c09e240041bf",
-      "size": 1251
-    },
-    {
-      "id": "godie-ntin.ex",
-      "path": "abilities/godie-ntin.ex.json",
-      "hash": "a10e5d673364",
-      "size": 743
-    },
-    {
-      "id": "godie-ntin.passive",
-      "path": "abilities/godie-ntin.passive.json",
-      "hash": "c4ab943ba418",
-      "size": 785
-    },
-    {
-      "id": "godie-ntin.q",
-      "path": "abilities/godie-ntin.q.json",
-      "hash": "69adea7c9094",
-      "size": 1294
-    },
-    {
-      "id": "godie-ntin.r",
-      "path": "abilities/godie-ntin.r.json",
-      "hash": "e2393d5e5dba",
-      "size": 1283
-    },
-    {
-      "id": "godie-ntin.w",
-      "path": "abilities/godie-ntin.w.json",
-      "hash": "b3660dd95b7c",
-      "size": 771
     },
     {
       "id": "godie-o00k.e",
@@ -2667,42 +1791,6 @@
       "size": 735
     },
     {
-      "id": "godie-o01z.e",
-      "path": "abilities/godie-o01z.e.json",
-      "hash": "fe1309a3fc0b",
-      "size": 1014
-    },
-    {
-      "id": "godie-o01z.ex",
-      "path": "abilities/godie-o01z.ex.json",
-      "hash": "fc85066bc6b7",
-      "size": 879
-    },
-    {
-      "id": "godie-o01z.passive",
-      "path": "abilities/godie-o01z.passive.json",
-      "hash": "fbf5cb36d96d",
-      "size": 750
-    },
-    {
-      "id": "godie-o01z.q",
-      "path": "abilities/godie-o01z.q.json",
-      "hash": "f85d726db044",
-      "size": 1191
-    },
-    {
-      "id": "godie-o01z.r",
-      "path": "abilities/godie-o01z.r.json",
-      "hash": "574a86d4efa8",
-      "size": 1127
-    },
-    {
-      "id": "godie-o01z.w",
-      "path": "abilities/godie-o01z.w.json",
-      "hash": "2b7c1ae051b6",
-      "size": 1114
-    },
-    {
       "id": "godie-o02l.e",
       "path": "abilities/godie-o02l.e.json",
       "hash": "d69ffa59e9e2",
@@ -2737,66 +1825,6 @@
       "path": "abilities/godie-o02l.w.json",
       "hash": "290c79f024e9",
       "size": 777
-    },
-    {
-      "id": "godie-o02n.e",
-      "path": "abilities/godie-o02n.e.json",
-      "hash": "b9f315975bf4",
-      "size": 912
-    },
-    {
-      "id": "godie-o02n.passive",
-      "path": "abilities/godie-o02n.passive.json",
-      "hash": "62159d7e4824",
-      "size": 996
-    },
-    {
-      "id": "godie-o02n.q",
-      "path": "abilities/godie-o02n.q.json",
-      "hash": "5a3820ee8d2c",
-      "size": 998
-    },
-    {
-      "id": "godie-o02n.r",
-      "path": "abilities/godie-o02n.r.json",
-      "hash": "f0a6f1344ce5",
-      "size": 793
-    },
-    {
-      "id": "godie-o02n.w",
-      "path": "abilities/godie-o02n.w.json",
-      "hash": "73276aa76607",
-      "size": 675
-    },
-    {
-      "id": "godie-o02o.e",
-      "path": "abilities/godie-o02o.e.json",
-      "hash": "249f00b7132b",
-      "size": 819
-    },
-    {
-      "id": "godie-o02o.passive",
-      "path": "abilities/godie-o02o.passive.json",
-      "hash": "d2d0d3d81b7b",
-      "size": 996
-    },
-    {
-      "id": "godie-o02o.q",
-      "path": "abilities/godie-o02o.q.json",
-      "hash": "dd1a7d07140d",
-      "size": 998
-    },
-    {
-      "id": "godie-o02o.r",
-      "path": "abilities/godie-o02o.r.json",
-      "hash": "22214efa4d3a",
-      "size": 793
-    },
-    {
-      "id": "godie-o02o.w",
-      "path": "abilities/godie-o02o.w.json",
-      "hash": "450592cd28eb",
-      "size": 675
     },
     {
       "id": "godie-o02p.e",
@@ -2835,108 +1863,6 @@
       "size": 1024
     },
     {
-      "id": "godie-o02s.e",
-      "path": "abilities/godie-o02s.e.json",
-      "hash": "1e1e9fb5c8d5",
-      "size": 1167
-    },
-    {
-      "id": "godie-o02s.passive",
-      "path": "abilities/godie-o02s.passive.json",
-      "hash": "3a97cf5e908c",
-      "size": 658
-    },
-    {
-      "id": "godie-o02s.q",
-      "path": "abilities/godie-o02s.q.json",
-      "hash": "0a9bb4925f6b",
-      "size": 869
-    },
-    {
-      "id": "godie-o02s.r",
-      "path": "abilities/godie-o02s.r.json",
-      "hash": "c014b6b2cb41",
-      "size": 905
-    },
-    {
-      "id": "godie-o02s.w",
-      "path": "abilities/godie-o02s.w.json",
-      "hash": "db1ba1b2efbf",
-      "size": 940
-    },
-    {
-      "id": "godie-o02v.e",
-      "path": "abilities/godie-o02v.e.json",
-      "hash": "fc29d76e372b",
-      "size": 1014
-    },
-    {
-      "id": "godie-o02v.ex",
-      "path": "abilities/godie-o02v.ex.json",
-      "hash": "ccdb8d67b74b",
-      "size": 785
-    },
-    {
-      "id": "godie-o02v.passive",
-      "path": "abilities/godie-o02v.passive.json",
-      "hash": "8b952544e1e7",
-      "size": 750
-    },
-    {
-      "id": "godie-o02v.q",
-      "path": "abilities/godie-o02v.q.json",
-      "hash": "8ab5e5cff531",
-      "size": 1191
-    },
-    {
-      "id": "godie-o02v.r",
-      "path": "abilities/godie-o02v.r.json",
-      "hash": "7981dab60b79",
-      "size": 1127
-    },
-    {
-      "id": "godie-o02v.w",
-      "path": "abilities/godie-o02v.w.json",
-      "hash": "7708b037fbde",
-      "size": 1269
-    },
-    {
-      "id": "godie-o02w.e",
-      "path": "abilities/godie-o02w.e.json",
-      "hash": "b0a2c2ee27ab",
-      "size": 1046
-    },
-    {
-      "id": "godie-o02w.ex",
-      "path": "abilities/godie-o02w.ex.json",
-      "hash": "0c73190c0a9b",
-      "size": 834
-    },
-    {
-      "id": "godie-o02w.passive",
-      "path": "abilities/godie-o02w.passive.json",
-      "hash": "fd3542d6c0e2",
-      "size": 738
-    },
-    {
-      "id": "godie-o02w.q",
-      "path": "abilities/godie-o02w.q.json",
-      "hash": "1bfe3e37a591",
-      "size": 1076
-    },
-    {
-      "id": "godie-o02w.r",
-      "path": "abilities/godie-o02w.r.json",
-      "hash": "6d33bc472bd5",
-      "size": 851
-    },
-    {
-      "id": "godie-o02w.w",
-      "path": "abilities/godie-o02w.w.json",
-      "hash": "70414e4ba8af",
-      "size": 1094
-    },
-    {
       "id": "godie-o030.e",
       "path": "abilities/godie-o030.e.json",
       "hash": "611002053b6d",
@@ -2971,42 +1897,6 @@
       "path": "abilities/godie-o030.w.json",
       "hash": "3bfe28e3c0f8",
       "size": 1022
-    },
-    {
-      "id": "godie-obla.e",
-      "path": "abilities/godie-obla.e.json",
-      "hash": "fd7aa5865055",
-      "size": 1100
-    },
-    {
-      "id": "godie-obla.ex",
-      "path": "abilities/godie-obla.ex.json",
-      "hash": "4205f89c0c6a",
-      "size": 710
-    },
-    {
-      "id": "godie-obla.passive",
-      "path": "abilities/godie-obla.passive.json",
-      "hash": "732fa4f2981b",
-      "size": 662
-    },
-    {
-      "id": "godie-obla.q",
-      "path": "abilities/godie-obla.q.json",
-      "hash": "71348844242e",
-      "size": 1040
-    },
-    {
-      "id": "godie-obla.r",
-      "path": "abilities/godie-obla.r.json",
-      "hash": "bbf86032ca55",
-      "size": 890
-    },
-    {
-      "id": "godie-obla.w",
-      "path": "abilities/godie-obla.w.json",
-      "hash": "a07268a13e32",
-      "size": 842
     },
     {
       "id": "godie-ofar.e",
@@ -3111,42 +2001,6 @@
       "size": 735
     },
     {
-      "id": "godie-opgh.e",
-      "path": "abilities/godie-opgh.e.json",
-      "hash": "6c39807b46be",
-      "size": 1000
-    },
-    {
-      "id": "godie-opgh.ex",
-      "path": "abilities/godie-opgh.ex.json",
-      "hash": "040c2182c6c2",
-      "size": 876
-    },
-    {
-      "id": "godie-opgh.passive",
-      "path": "abilities/godie-opgh.passive.json",
-      "hash": "e56e5ecebdfb",
-      "size": 748
-    },
-    {
-      "id": "godie-opgh.q",
-      "path": "abilities/godie-opgh.q.json",
-      "hash": "05a3e85ffab1",
-      "size": 1044
-    },
-    {
-      "id": "godie-opgh.r",
-      "path": "abilities/godie-opgh.r.json",
-      "hash": "5c74d062731e",
-      "size": 806
-    },
-    {
-      "id": "godie-opgh.w",
-      "path": "abilities/godie-opgh.w.json",
-      "hash": "dff22ba8ec7b",
-      "size": 721
-    },
-    {
       "id": "godie-orkn.e",
       "path": "abilities/godie-orkn.e.json",
       "hash": "0f4b1ae9bd63",
@@ -3217,108 +2071,6 @@
       "path": "abilities/godie-osam.w.json",
       "hash": "cc59d5bc0d43",
       "size": 760
-    },
-    {
-      "id": "godie-oshd.e",
-      "path": "abilities/godie-oshd.e.json",
-      "hash": "2f554227b3b4",
-      "size": 1014
-    },
-    {
-      "id": "godie-oshd.ex",
-      "path": "abilities/godie-oshd.ex.json",
-      "hash": "8fe3e9530735",
-      "size": 711
-    },
-    {
-      "id": "godie-oshd.passive",
-      "path": "abilities/godie-oshd.passive.json",
-      "hash": "bae3f3560e96",
-      "size": 719
-    },
-    {
-      "id": "godie-oshd.q",
-      "path": "abilities/godie-oshd.q.json",
-      "hash": "0d57bbc64e2d",
-      "size": 1012
-    },
-    {
-      "id": "godie-oshd.r",
-      "path": "abilities/godie-oshd.r.json",
-      "hash": "481d86dbeeb9",
-      "size": 1149
-    },
-    {
-      "id": "godie-oshd.w",
-      "path": "abilities/godie-oshd.w.json",
-      "hash": "23e5997ad3e0",
-      "size": 916
-    },
-    {
-      "id": "godie-othr.e",
-      "path": "abilities/godie-othr.e.json",
-      "hash": "d9a26e7cbde2",
-      "size": 800
-    },
-    {
-      "id": "godie-othr.ex",
-      "path": "abilities/godie-othr.ex.json",
-      "hash": "ec6b04938c79",
-      "size": 724
-    },
-    {
-      "id": "godie-othr.passive",
-      "path": "abilities/godie-othr.passive.json",
-      "hash": "8c983d4c5889",
-      "size": 683
-    },
-    {
-      "id": "godie-othr.q",
-      "path": "abilities/godie-othr.q.json",
-      "hash": "4c3c28082c22",
-      "size": 981
-    },
-    {
-      "id": "godie-othr.r",
-      "path": "abilities/godie-othr.r.json",
-      "hash": "9aa56f907d65",
-      "size": 785
-    },
-    {
-      "id": "godie-othr.w",
-      "path": "abilities/godie-othr.w.json",
-      "hash": "34fe1a94961c",
-      "size": 1712
-    },
-    {
-      "id": "godie-u00b.e",
-      "path": "abilities/godie-u00b.e.json",
-      "hash": "8cb89f336eaa",
-      "size": 937
-    },
-    {
-      "id": "godie-u00b.passive",
-      "path": "abilities/godie-u00b.passive.json",
-      "hash": "24e84433eded",
-      "size": 784
-    },
-    {
-      "id": "godie-u00b.q",
-      "path": "abilities/godie-u00b.q.json",
-      "hash": "fd8cb3468c1a",
-      "size": 852
-    },
-    {
-      "id": "godie-u00b.r",
-      "path": "abilities/godie-u00b.r.json",
-      "hash": "ce4a227afc4d",
-      "size": 895
-    },
-    {
-      "id": "godie-u00b.w",
-      "path": "abilities/godie-u00b.w.json",
-      "hash": "b137bbeb058b",
-      "size": 1078
     },
     {
       "id": "godie-u00h.e",
@@ -3609,78 +2361,6 @@
       "size": 1376
     },
     {
-      "id": "godie-u011.e",
-      "path": "abilities/godie-u011.e.json",
-      "hash": "54198f73999a",
-      "size": 785
-    },
-    {
-      "id": "godie-u011.ex",
-      "path": "abilities/godie-u011.ex.json",
-      "hash": "e9a1915f8662",
-      "size": 725
-    },
-    {
-      "id": "godie-u011.passive",
-      "path": "abilities/godie-u011.passive.json",
-      "hash": "ae9abc63fa61",
-      "size": 1635
-    },
-    {
-      "id": "godie-u011.q",
-      "path": "abilities/godie-u011.q.json",
-      "hash": "4213495ed292",
-      "size": 1015
-    },
-    {
-      "id": "godie-u011.r",
-      "path": "abilities/godie-u011.r.json",
-      "hash": "f0e204a18ba6",
-      "size": 709
-    },
-    {
-      "id": "godie-u011.w",
-      "path": "abilities/godie-u011.w.json",
-      "hash": "c117dfbe4bc1",
-      "size": 1061
-    },
-    {
-      "id": "godie-u012.e",
-      "path": "abilities/godie-u012.e.json",
-      "hash": "f23519ce8d4e",
-      "size": 785
-    },
-    {
-      "id": "godie-u012.ex",
-      "path": "abilities/godie-u012.ex.json",
-      "hash": "98eae4b8b2b5",
-      "size": 725
-    },
-    {
-      "id": "godie-u012.passive",
-      "path": "abilities/godie-u012.passive.json",
-      "hash": "2fb116814b22",
-      "size": 1635
-    },
-    {
-      "id": "godie-u012.q",
-      "path": "abilities/godie-u012.q.json",
-      "hash": "e3fe98bdf9d7",
-      "size": 1015
-    },
-    {
-      "id": "godie-u012.r",
-      "path": "abilities/godie-u012.r.json",
-      "hash": "a63bd7b82284",
-      "size": 709
-    },
-    {
-      "id": "godie-u012.w",
-      "path": "abilities/godie-u012.w.json",
-      "hash": "a8499542393b",
-      "size": 1061
-    },
-    {
       "id": "godie-u01f.e",
       "path": "abilities/godie-u01f.e.json",
       "hash": "9728980155fa",
@@ -3708,30 +2388,6 @@
       "id": "godie-u01f.w",
       "path": "abilities/godie-u01f.w.json",
       "hash": "d676ed40b6d8",
-      "size": 693
-    },
-    {
-      "id": "godie-u01q.e",
-      "path": "abilities/godie-u01q.e.json",
-      "hash": "5e7f2106d4cd",
-      "size": 693
-    },
-    {
-      "id": "godie-u01q.q",
-      "path": "abilities/godie-u01q.q.json",
-      "hash": "a53cec0a3107",
-      "size": 693
-    },
-    {
-      "id": "godie-u01q.r",
-      "path": "abilities/godie-u01q.r.json",
-      "hash": "dbf5fe98a53e",
-      "size": 626
-    },
-    {
-      "id": "godie-u01q.w",
-      "path": "abilities/godie-u01q.w.json",
-      "hash": "46f1023129bb",
       "size": 693
     },
     {
@@ -3987,42 +2643,6 @@
       "size": 958
     },
     {
-      "id": "godie-usyl.e",
-      "path": "abilities/godie-usyl.e.json",
-      "hash": "26e6e81739ec",
-      "size": 925
-    },
-    {
-      "id": "godie-usyl.ex",
-      "path": "abilities/godie-usyl.ex.json",
-      "hash": "39d498f19433",
-      "size": 834
-    },
-    {
-      "id": "godie-usyl.passive",
-      "path": "abilities/godie-usyl.passive.json",
-      "hash": "e72895169e2e",
-      "size": 944
-    },
-    {
-      "id": "godie-usyl.q",
-      "path": "abilities/godie-usyl.q.json",
-      "hash": "f7227dbf5c87",
-      "size": 802
-    },
-    {
-      "id": "godie-usyl.r",
-      "path": "abilities/godie-usyl.r.json",
-      "hash": "7f76d5d5d53b",
-      "size": 819
-    },
-    {
-      "id": "godie-usyl.w",
-      "path": "abilities/godie-usyl.w.json",
-      "hash": "0f9ecc89ed01",
-      "size": 858
-    },
-    {
       "id": "godie-uvng.e",
       "path": "abilities/godie-uvng.e.json",
       "hash": "942621a075bc",
@@ -4057,36 +2677,6 @@
       "path": "abilities/godie-uvng.w.json",
       "hash": "e13e85279227",
       "size": 1376
-    },
-    {
-      "id": "godie-uwar.e",
-      "path": "abilities/godie-uwar.e.json",
-      "hash": "35853874d507",
-      "size": 959
-    },
-    {
-      "id": "godie-uwar.ex",
-      "path": "abilities/godie-uwar.ex.json",
-      "hash": "099593e65c4b",
-      "size": 752
-    },
-    {
-      "id": "godie-uwar.passive",
-      "path": "abilities/godie-uwar.passive.json",
-      "hash": "f280aa24cde8",
-      "size": 1625
-    },
-    {
-      "id": "godie-uwar.q",
-      "path": "abilities/godie-uwar.q.json",
-      "hash": "156b3984c162",
-      "size": 988
-    },
-    {
-      "id": "godie-uwar.r",
-      "path": "abilities/godie-uwar.r.json",
-      "hash": "ebf273681b3a",
-      "size": 980
     },
     {
       "id": "godie-uwar.w",

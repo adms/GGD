@@ -23,8 +23,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.03,
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -37,26 +35,21 @@
                 "kind": "applyStatus",
                 "statusId": "burn",
                 "duration": 5.0
-              }
-            ]
-          },
-          {
-            "on": "onBasicAttack",
-            "chance": 0.03,
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "tag": "stun"
-            },
-            "effects": [
+              },
               {
                 "kind": "applyStatus",
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "tag": "stun"
+                },
                 "statusId": "blind",
                 "duration": 5.0,
                 "missChance": 0.5
               }
-            ]
+            ],
+            "chance": 0.03,
+            "target": "event"
           }
         ]
       }

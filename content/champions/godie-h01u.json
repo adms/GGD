@@ -79,7 +79,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "target": "self",
                 "effects": [
                   {
                     "kind": "applyBuff",
@@ -93,7 +92,8 @@
                     "duration": 1.0,
                     "statusId": "rage"
                   }
-                ]
+                ],
+                "target": "self"
               }
             ]
           }
@@ -224,12 +224,6 @@
               {
                 "on": "onAbilityHit",
                 "abilitySlot": "E",
-                "target": "event",
-                "condition": {
-                  "kind": "status",
-                  "subject": "target",
-                  "statusId": "armor-break"
-                },
                 "effects": [
                   {
                     "kind": "damage",
@@ -243,7 +237,13 @@
                       ]
                     }
                   }
-                ]
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "armor-break"
+                },
+                "target": "event"
               }
             ]
           }
@@ -349,9 +349,6 @@
             "hooks": [
               {
                 "on": "onBasicAttack",
-                "chance": 0.2,
-                "target": "self",
-                "internalCooldown": 0.5,
                 "effects": [
                   {
                     "kind": "proxyCast",
@@ -360,13 +357,13 @@
                     "payCosts": "none",
                     "respectCooldown": false
                   }
-                ]
+                ],
+                "internalCooldown": 0.5,
+                "chance": 0.2,
+                "target": "self"
               },
               {
                 "on": "onDamageTaken",
-                "chance": 0.2,
-                "target": "self",
-                "internalCooldown": 0.5,
                 "effects": [
                   {
                     "kind": "proxyCast",
@@ -375,7 +372,10 @@
                     "payCosts": "none",
                     "respectCooldown": false
                   }
-                ]
+                ],
+                "internalCooldown": 0.5,
+                "chance": 0.2,
+                "target": "self"
               }
             ]
           }

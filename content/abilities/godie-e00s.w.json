@@ -28,7 +28,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -45,7 +44,8 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -53,7 +53,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -70,7 +69,8 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -78,7 +78,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -95,7 +94,8 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -103,7 +103,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damageArea",
@@ -120,7 +119,8 @@
                 "radius": 3.0,
                 "radiusTier": "小"
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       }

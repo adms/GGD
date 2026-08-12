@@ -23,7 +23,6 @@
           {
             "on": "onAbilityCast",
             "abilitySlot": "R",
-            "target": "self",
             "effects": [
               {
                 "kind": "delayed",
@@ -75,7 +74,8 @@
                   }
                 ]
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

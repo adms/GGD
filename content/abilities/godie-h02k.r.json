@@ -33,8 +33,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.08,
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -54,11 +52,12 @@
                 "speed": 16.0,
                 "from": "pull"
               }
-            ]
+            ],
+            "chance": 0.08,
+            "target": "event"
           },
           {
             "on": "onEvade",
-            "target": "event",
             "effects": [
               {
                 "kind": "knockback",
@@ -72,16 +71,11 @@
                 "duration": 1.0,
                 "stun": true
               }
-            ]
+            ],
+            "target": "event"
           },
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "blind"
-            },
             "effects": [
               {
                 "kind": "applyStatus",
@@ -90,7 +84,13 @@
                 "berserk": true,
                 "targetsAllies": true
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
           }
         ]
       },
@@ -105,8 +105,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.12,
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -126,11 +124,12 @@
                 "speed": 16.0,
                 "from": "pull"
               }
-            ]
+            ],
+            "chance": 0.12,
+            "target": "event"
           },
           {
             "on": "onEvade",
-            "target": "event",
             "effects": [
               {
                 "kind": "knockback",
@@ -144,16 +143,11 @@
                 "duration": 1.0,
                 "stun": true
               }
-            ]
+            ],
+            "target": "event"
           },
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "blind"
-            },
             "effects": [
               {
                 "kind": "applyStatus",
@@ -162,7 +156,13 @@
                 "berserk": true,
                 "targetsAllies": true
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
           }
         ]
       },
@@ -177,8 +177,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "chance": 0.16,
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -198,11 +196,12 @@
                 "speed": 16.0,
                 "from": "pull"
               }
-            ]
+            ],
+            "chance": 0.16,
+            "target": "event"
           },
           {
             "on": "onEvade",
-            "target": "event",
             "effects": [
               {
                 "kind": "knockback",
@@ -216,16 +215,11 @@
                 "duration": 1.0,
                 "stun": true
               }
-            ]
+            ],
+            "target": "event"
           },
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "blind"
-            },
             "effects": [
               {
                 "kind": "applyStatus",
@@ -234,7 +228,13 @@
                 "berserk": true,
                 "targetsAllies": true
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
           }
         ]
       }

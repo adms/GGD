@@ -284,6 +284,28 @@ def _split_res_pct(kw):
     return t
 
 
+def _split_inc_pct(kw):
+    """⭐ B3-A（反彈）—— `incomingPct` 是 `amount` 的**兄弟鍵**，⛔ 不是它的內容。
+
+    「反彈剛剛打中我的那一發的 N%」在此之前 90 支寫不出來（引擎 0 採用），因為三個
+    傷害 helper 只轉發 per/flat/ap/ad，多出來的 kwarg 會被 `amt()` 的 `o.update(kw)`
+    倒進 **amount 物件內部** —— 那裡是 `zScaling` 且 `.strict()`，整份文件當場被拒收
+    （＝ 2026-08-02 退回骨架事故的形狀）。
+
+    ⛔ 不要開在 `area()` / `line()`：`incomingPct` 只長在 `damage`（effect.ts:1385），
+       而反彈本來就是單發。
+    ⚠️ 呼叫點一律帶 `flat=0`（逐字抄出貨的反射之盾 godie-i03m），⛔ 不要為了
+       「純反彈沒有基礎」去放寬 `_require_base` —— 那會同時放掉 29 顆惰性節點的守衛。
+    """
+    t = kw.pop("inc_pct", None)
+    if t is None:
+        return None
+    assert isinstance(t, dict) and "perRank" in t, (
+        'inc_pct= 要給完整的 incomingPct 物件：{"perRank":[…]}'
+        '（basis / maxChainDepth / applyGlobalDamageMult / whenTooLate / negateOriginal 選填）')
+    return t
+
+
 def _require_base(kw, where):
     """⭐ B1-E（2026-08-12）：缺基礎值就**喊出來**，⛔ 不再偷塞 `flat=50`。
 
@@ -311,10 +333,13 @@ def _require_base(kw, where):
 
 def dmg(dtype="magic", **kw):
     rp = _split_res_pct(kw)
+    ip = _split_inc_pct(kw)
     _require_base(kw, "dmg()")
     o = {"kind": "damage", "damageType": dtype, "amount": amt(**kw)}
     if rp:
         o["resourcePct"] = rp
+    if ip:
+        o["incomingPct"] = ip
     return o
 
 
@@ -323,7 +348,7 @@ def dmg(dtype="magic", **kw):
 TIER_R = {"小": 3.0, "中": 4.5, "大": 6.0, "超大": 8.0}
 
 
-def area(dtype="magic", tier="中", maxt=None, **kw):
+def area(dtype="magic", tier="中", maxt=None, onhit=None, **kw):
     """⭐ B1-I（2026-08-12）：`maxt` 的預設從 **6** 改成 **None**（＝不輸出）。
 
     以前的預設值 6 是**寫死在簽章裡的決策**，而 28 個 `area()` 呼叫點**沒有一個**
@@ -346,12 +371,19 @@ def area(dtype="magic", tier="中", maxt=None, **kw):
          "radius": TIER_R[tier], "radiusTier": tier}
     if maxt is not None:
         o["maxTargets"] = maxt
+    # ⭐ B3-C1 —— onHitTargets 收到的是**這個圓真的打到的那群人**
+    #    （victimFilter.ts:63 runOnHitChain），「打中的人裡帶 X 狀態的再追加 Y」
+    #    的條件要寫在巢狀那顆效果自己的 `condition` 上。
+    # ⛔ 不要拿 victimCondition 做「加成」：那一格過濾的是誰吃**基礎**傷害。
+    if onhit:
+        o["onHitTargets"] = list(onhit)
     if rp:
         o["resourcePct"] = rp
     return o
 
 
-def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target", **kw):
+def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target",
+         onhit=None, **kw):
     # ⚠️ A-7：`aim` 以前寫死成 "target"，所以「[前方][直線]」的 ground 技全部拿到
     #    目標瞄準，而 `damageLine.ts` 的檔頭與全 repo 唯一的 ground damageLine
     #    （godie-efur.e）都指明「面前」= facing。開成參數，⛔ 預設不動
@@ -365,6 +397,8 @@ def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target", **kw):
          "length": length, "width": width, "aim": aim, "fromCaster": True}
     if maxt is not None:
         o["maxTargets"] = maxt
+    if onhit:
+        o["onHitTargets"] = list(onhit)
     o["includeOrigin"] = False
     if rp:
         o["resourcePct"] = rp
@@ -466,30 +500,39 @@ def _own_area(node):
 #    對不上 fx-19 會紅（那正是它存在的理由），⛔ 不要改測試。
 # ─────────────────────────────────────────────────────────────────────────────
 _ORDER = {
-    "damage": ("kind", "applyTo", "damageType", "amount", "canCrit", "comboBonus",
+    "damage": ("kind", "condition", "applyTo", "damageType", "amount", "canCrit", "comboBonus",
                "hpPct", "bankedBonus", "incomingPct", "resourcePct", "distanceScale",
                "refund"),
-    "damageArea": ("kind", "damageType", "amount", "radius", "radiusTier", "falloff",
+    "damageArea": ("kind", "condition", "damageType", "amount", "radius", "radiusTier", "falloff",
                    "maxTargets", "canCrit", "includeOrigin", "victimCondition",
                    "maxTargetsCounts", "onHitTargets", "runOnEmptyHit",
                    "onHitTargetsMode", "resourcePct"),
-    "damageLine": ("kind", "damageType", "amount", "length", "width", "aim",
+    "damageLine": ("kind", "condition", "damageType", "amount", "length", "width", "aim",
                    "fromCaster", "maxTargets", "canCrit", "includeOrigin",
                    "victimCondition", "maxTargetsCounts", "onHitTargets",
                    "runOnEmptyHit", "onHitTargetsMode", "resourcePct"),
     # ⚠️ `...SOURCE_GRANT_SHAPE`（block/critStrike/attributes/damageTypeOverride/
     #    flight）在 applyBuff 上展開在**最後**，不是中間。
-    "applyBuff": ("kind", "modifiers", "duration", "permanent", "statusId", "applyTo",
+    "applyBuff": ("kind", "condition", "modifiers", "duration", "permanent", "statusId", "applyTo",
                   "exclusiveGroup", "exclusiveOnExisting", "maxStat", "perRank",
                   "stackKey", "maxStacks", "stackVisual", "hooks", "dispellable",
                   "polarity", "block", "critStrike", "attributes",
                   "damageTypeOverride", "flight"),
-    "applyStatus": ("kind", "statusId", "stacks", "refresh", "duration", "applyTo",
+    "applyStatus": ("kind", "condition", "statusId", "stacks", "refresh", "duration", "applyTo",
                     "moveSpeedMult", "root", "stun", "missChance", "berserk", "feared",
                     "silenced", "disarmed", "targetsAllies", "breakOnDamage",
                     "breakOnDamageMin", "healingTakenMult", "lifestealMult",
                     "regenMult", "dispellable"),
 }
+
+
+#: `zHookDef` 的宣告序。⚠️ HookDef 沒有 `kind`，所以 `_ORDER` 那張表管不到它 —— 見 G-4。
+_HOOK_ORDER = (
+    "on", "key", "abilitySlot", "effects", "internalCooldown", "chance", "chanceFrom",
+    "condition", "target", "victim", "internalCooldownScope", "damageSource",
+    "damageType", "damageCrit", "critSource", "reflectedDamageSource",
+    "reflectedDamageType", "maxTriggers", "consumeOn", "onConsumed", "perTarget",
+)
 
 
 def _canonical_order(node):
@@ -504,7 +547,25 @@ def _canonical_order(node):
         node[k] = _canonical_order(node[k])
     seq = _ORDER.get(node.get("kind"))
     if not seq:
-        return node
+        # ⭐ G-4（B3）—— HookDef **沒有 `kind`**，所以它從來沒被這張表管過。
+        #    在此之前 hooks 只住在 `passive`（fx-19 不比對），而 B3-A 的反彈把 hooks
+        #    搬進了 `applyBuff.hooks` ⇒ 它落在 `doc["effects"]` 裡，**fx-19 會比對到**。
+        #    `zHookDef` 把 `effects` 宣告在第 4 格，helper 寫出來是
+        #    on→target→damageType→effects ⇒ 生檔與 Zod 重建版不相等 ⇒ 判 desync。
+        #    ⚠️ 實測：不加這一段，20-04 與 60-04（**兩支都是 R 槽＝會鏡射進英雄卡**）
+        #    判 desync，`abilityScaling.test.ts` 的 fx-19 紅。
+        #    ⛔ 逐筆複驗抓不到它：A 類只跑 validateDoc（鍵序不影響），C 類跑了 fx-19
+        #    但沒有一筆把 hook 放進 effects —— 是**兩批的組合**生出來的。
+        if "kind" not in node and "on" in node and "effects" in node:
+            seq = _HOOK_ORDER
+        # ⭐ G-2 —— `condition` 是 EFFECT_COMMON_SHAPE 的唯一一格，34 個聯集成員全部
+        #    把它展開在 `kind` 正下方；即使這個 kind 不在 _ORDER 裡也必須排第二
+        #    （例：`weightedBranch`）。
+        elif "kind" in node and "condition" in node:
+            return dict(sorted(node.items(),
+                               key=lambda kv: {"kind": 0, "condition": 1}.get(kv[0], 2)))
+        else:
+            return node
     rank = {k: i for i, k in enumerate(seq)}
     # 表上沒有的鍵排在最後，彼此維持原本的相對順序（穩定排序）。
     return dict(sorted(node.items(), key=lambda kv: rank.get(kv[0], len(seq))))
@@ -918,7 +979,12 @@ A("20-03", "20-03 約束與勝利之劍", "ground", [60, 60, 60, 60], [250, 350,
 A("20-04", "20-04 Avalon-永恆的理想鄉", "self", [60, 60, 60], [150, 250, 350], 0,
   "[主動][輔助][反彈][AP加成]\n60秒冷卻\n消耗MP150/250/350\n\n「也可能只是我在發呆而已，要不要試試看？」\n在2秒內[反彈]承受的[魔法傷害]，[反彈]量為原傷害的 3/5/7倍，另加 300% [AP]傷害。",
   maxRank=3,
-  effects=[status("moon-combo", 2.0)])
+  # ⭐ B3-A —— 反彈第一次真的發得出來。⛔ 原本只有一個 moon-combo 空殼
+  #    （那是蒼月潮 07-03 的 1 秒連段窗口，跟反彈完全無關）。
+  effects=[buff([], 2.0, hooks=[
+      {"on": "onDamageTaken", "target": "event", "damageType": "magic",
+       "effects": [dmg("magic", flat=0, ap=3.0,
+                       inc_pct={"perRank": [3.0, 5.0, 7.0]})]}])])
 
 A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
   "[被動][指向][範圍][反彈][反彈成功時][AP加成]\n0秒冷卻\n\n「在這個空間所有魔法都被遮斷」\n「永恆的理想鄉」[反彈]成功時發動，給予敵人連續七次斬擊，每次造成7倍[反彈]傷害；最後施展「約束與勝利之劍」，對[前方][直線]敵人造成（[現存魔力]+[AP]）×7倍傷害。",
@@ -1030,7 +1096,16 @@ A("70-04", "70-04 千年練成", "ground", [90, 90, 90], [240, 420, 600], 14,
   maxRank=3, radiusTier="大",
   effects=[{"kind": "randomArea", "who": "self", "count": [4, 6, 8], "intervalSec": 0.25,
             "scatterRadius": 6.0, "firstAtCast": True, "stopOnCasterDeath": True,
-            "effects": [area("magic", tier="小", per=[250, 350, 450], ap=0.3)]}])
+            "effects": [area("magic", tier="小", per=[250, 350, 450], ap=0.3),
+                        # ⭐「傷害加倍」= 同量再打一次，但**只打被定身的人**。
+                        #    victimCondition 是圈**內**逐一過濾，這正是它唯一正確的用途。
+                        # ⛔ victimCondition 不可以當 kw 傳進 area()：會被 amt() 的
+                        #    o.update(kw) 倒進 amount，zScaling 是 .strict() ⇒ 整份拒收。
+                        # ⚠️ 代價：兩發同量而不是一發乘二 ⇒ 兩個跳字、on-hit 各觸發兩次。
+                        #    引擎詞彙裡沒有「條件式傷害倍率」這一格（engine-gap）。
+                        dict(area("magic", tier="小", per=[250, 350, 450], ap=0.3),
+                             victimCondition={"kind": "status", "subject": "target",
+                                              "tag": "root"})]}])
 
 A("70-002", "70-002 樹海降臨", "self", [0], [0], 0,
   "[被動][召喚][範圍][治療][AP加成]\n\n「是誰說樹味像雞」\n集千年煉成之大成，[千年練成] 追加 500% [AP]傷害，並且[回復][周圍]自己與友方隊伍生命10%。",
@@ -1104,9 +1179,14 @@ A("45-00", "45-00 寫輪眼", "self", [0], [0], 0,
   "[被動][反彈][機率]\n\n「我只要看一次，就知道你穿什麼內褲」\n宇智波家族的血繼限界，洞察眼能夠看清忍術並仿冒，有20%[機率][反彈]魔法([AP])傷害。",
   innate="passive",
   passive={"name": "45-00 寫輪眼", "ranks": [{"hooks": [
+      # ⭐ B3-A —— 真的反彈，而且**免傷**。owner 2026-08-09 的裁決逐字寫在
+      #    `sim/combat/damage.ts`：「反彈的預設都是免傷…這個技能是免傷」。
+      # ⛔ 刪掉 ap=1.0 是對的：首行標籤是 [被動][反彈][機率]，**沒有** [AP加成]；
+      #    「魔法([AP])」是在指**哪一種**傷害被反彈，不是係數。
       {"on": "onDamageTaken", "chance": 0.2, "target": "event", "damageType": "magic",
        "internalCooldown": 0.5,
-       "effects": [dmg("magic", ap=1.0)]}]}]})
+       "effects": [dmg("magic", flat=0,
+                       inc_pct={"perRank": [1.0], "negateOriginal": True})]}]}]})
 
 A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190, 230, 240], 14.67,
   "[主動][指定][範圍][燃燒][週期]\n45秒冷卻\n消耗MP150/190/230/240\n施法距離14.67\n有效半徑6.05\n\n「接招吧！我的復仇之火」\n將吐出的火焰化為龍形，對[指定範圍]內敵人造250/350/450/550傷害，並附加[燃燒]標記，使其每秒受到當下[現存生命]1%的傷害，持續3秒。",
@@ -1242,7 +1322,12 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
 
 A("15-002", "15-002 敵彈吸收陣。太陰道", "self", [60], [0], 0,
   "[主動][輔助][反彈][回復][層數累積][AP加成]\n60秒冷卻\n\n「大..太陰道，吸收！」\n[反彈] 100% 魔法([AP])傷害，並且將傷害轉化為自身魔力([MP])，以及將該傷害短暫加成至 [AP] ([可累加])，持續 5秒後歸零。",
-  effects=[status("moon-combo", 5.0)],
+  # ⭐ B3-A —— 有了反彈，下面那條 onReflectSuccess（轉魔力）才第一次收得到事件。
+  # ⚠️ 規格第三句「將該傷害短暫加成至 [AP]([可累加])」**仍然沒實作**（engine-gap：
+  #    需要「把事件數值換算成暫時屬性」的機制），兩筆豁免因此保持有效。
+  effects=[buff([], 5.0, hooks=[
+      {"on": "onDamageTaken", "target": "event", "damageType": "magic",
+       "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]}])],
   passive={"name": "15-002 敵彈吸收陣。太陰道", "ranks": [{"hooks": [
       {"on": "onReflectSuccess", "target": "self",
        "effects": [{"kind": "eventValueConversion", "shape": "single", "source": "incomingDamage",
@@ -1274,10 +1359,15 @@ A("44-03", "44-03 火車輾過", "ground", [60, 50, 40, 30], [150, 250, 350, 450
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
   "[主動][AP加成]\n35秒冷卻\n消耗MP150/250/350\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
   maxRank=3,
-  effects=[dmg("magic", ap=0.4,
-               res_pct={"subject": "target", "resource": "health", "basis": "current",
-                        "perRank": [0.3, 0.4, 0.5]}),
-           status("slow40", 5.0, moveSpeedMult=0.5)])
+  # ⭐ 44-04 是 targeted，`damage` **沒有** victimCondition（那格只開在
+  #    damageArea / damageLine），所以「[詛咒]標記的」唯一的落點是**效果層 condition**。
+  effects=[dict(dmg("magic", ap=0.4,
+                    res_pct={"subject": "target", "resource": "health",
+                             "basis": "current", "perRank": [0.3, 0.4, 0.5]}),
+                condition={"kind": "status", "subject": "target", "statusId": "curse"}),
+           # 同一句話的第二半：[緩慢] 也只落在被標記的目標身上。
+           status("slow40", 5.0, moveSpeedMult=0.5,
+                  condition={"kind": "status", "subject": "target", "statusId": "curse"})])
 
 A("44-002", "44-002 交換筆記本", "targeted", [120], [450], 5.29,
   "[主動][指定]\n120秒冷卻，吟唱2秒\n消耗MP450\n施法距離5.29\n\n「計畫通！」\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟指定的敵人[現存生命]作 [交換]。",
@@ -1370,20 +1460,36 @@ A("60-03", "60-03 三角神力．勇氣", "self", [0], [0], 0,
 A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
   "[主動][反彈]\n60秒冷卻 吟唱2秒\n消耗[MP] 120/150/180\n有效半徑6\n\n「唯一擋不住的是你的魅力」\n瞬間架起海拉爾之盾，[反彈]魔法([AP])及物理([AD])傷害，持續3秒，期間若成功[反彈]敵方技能[AP]傷害，立即 [回復] 8/16/24% [最大生命]，並且[擊退]敵人。",
   maxRank=3, cast_time=2.0,
-  effects=[status("moon-combo", 3.0)],
+  # ⭐ B3-A —— ⛔ 刻意不填 damageType：規格是魔法**及**物理都反彈。
+  # ⚠️ 兩題要拿給 owner：`perRank=[1.0]` 是**發明的數字**（規格只給了回復 8/16/24%，
+  #    沒給反彈比）；`negateOriginal` 沒填 ⇒ 照樣掉血只是打回去。
+  # ⚠️ engine-gap：反彈封包一律以 magic 送出 ⇒ 反彈物理傷害會走魔抗而不是護甲。
+  effects=[buff([], 3.0, hooks=[
+      {"on": "onDamageTaken", "target": "event",
+       "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]}])],
   passive={"name": "60-04 完美盾反", "ranks": [{"hooks": [
       {"on": "onReflectSuccess", "target": "self",
+       "reflectedDamageSource": "ability", "reflectedDamageType": "magic",
        "effects": [{"kind": "restore", "healthPct": 0.08, "applyTo": "self"},
                    {"kind": "knockback", "distance": 4.0, "speed": 16.0, "from": "caster"}]}]}]})
 
 A("60-002", "60-002 勇者意志", "self", [120], [0], 0,
   "[被動][反彈成功時][反彈]\n120秒冷卻\n\n「真正的勇者不是不會死，是存檔點夠近」\n生命值低於30%時，立即獲得相當於 100% [最大生命值]的[護盾]，120秒內只能觸發一次，若 [完美盾反] [反彈]成功，冷卻立即重置。",
   passive={"name": "60-002 勇者意志", "ranks": [{"hooks": [
-      {"on": "onDamageTaken", "target": "self", "internalCooldown": 120.0,
+      {"on": "onDamageTaken", "key": "brave-will", "target": "self",
+       "internalCooldown": 120.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": 0.3},
        "effects": [{"kind": "shield", "amount": amt(flat=1500),
-                    "duration": 8.0}]}]}]})
+                    "duration": 8.0}]},
+      # ⭐ B3-A —— 「若完美盾反反彈成功，冷卻立即重置」。
+      # ⚠️ 這一筆的存活條件是 60-04 同批落地：onReflectSuccess 由反彈封包落地時發，
+      #    而 godie-h00l 整組在這一批之前沒有任何 damage.incomingPct
+      #    ⇒ 單獨套用 = 卡片寫了、遊戲裡永遠不觸發（失敗形態②）。
+      {"on": "onReflectSuccess", "target": "self",
+       "effects": [{"kind": "modifyCooldown", "shape": "single", "who": "self",
+                    "mode": "reset", "target": "hookInternalCooldown",
+                    "hookKey": "brave-will", "hookScope": "originSource"}]}]}]})
 
 # ── 79 黑崎一護 ──────────────────────────────────────────────────────────────
 A("79-00", "79-00 靈壓", "self", [0], [0], 0,
@@ -1409,7 +1515,14 @@ A("79-02", "79-02 月牙斬擊", "self", [60, 60, 60, 60], [80, 160, 240, 320], 
 
 A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550], 11,
   "[主動][指向][範圍][AP加成]\n55秒冷卻\n消耗MP250/350/450/550\n施法距離11\n\n「月牙天衝！招式喊得越大聲，傷害就越強大」\n造成一[直線]上的敵方部隊受到450/600/750/900傷害。\n(若對方在 [破魔] 狀態，則額外造成 60% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 120% [AP])",
-  effects=[line("magic", length=11, width=2.0, per=[450, 600, 750, 900])])
+  # ⭐ B3-C1 —— 79-02 用 hook 是因為它是單體；79-03 是線，hook 收不到「線上的每一個人」，
+  #    所以走 onHitTargets。⛔ 不可以改寫成兄弟 damage：79-03 是 ground 技而它**沒有圓**，
+  #    doc 頂層的 ctx.targets 只認 1 距離內的人。
+  # ⚠️ 第二個括號「(卍解變身狀態下傷害額外追加 120% AP)」這一版仍然沒寫（已知殘留）。
+  effects=[line("magic", length=11, width=2.0, per=[450, 600, 750, 900],
+                onhit=[dict(dmg("magic", ap=0.6),
+                            condition={"kind": "status", "subject": "target",
+                                       "statusId": "magic-break"})])])
 
 A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   "[主動][輔助][變身]\n90秒冷卻\n消耗MP100/200/300\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",
@@ -1490,11 +1603,14 @@ A("89-00", "89-00 憤怒的門牙", "self", [0], [0], 0,
   "[被動][普攻時][機率][暈眩]\n0秒冷卻\n\n「我的門牙不是裝飾，是開罐器」\n有3%的[機率]可以使出超會心一擊造成 999點 [真實傷害]，並造成敵人 1%生命傷害的 [燃燒] 狀態，持續5秒。\n\n(敵方 [暈眩] 狀態下額外追加 [致盲] 狀態，持續 5秒)",
   innate="passive",
   passive={"name": "89-00 憤怒的門牙", "ranks": [{"hooks": [
+      # ⭐ 兩顆各帶 chance:0.03 的 hook 合成**一顆**（＝擲一次骰）。
+      #    原本「超會心 ∧ 致盲」只有 0.03×0.03 = 0.09%（規格是 3%，少 33 倍），
+      #    而且致盲會在完全沒有超會心的平砍上單獨發動 3% —— 那不是「額外追加」。
       {"on": "onBasicAttack", "chance": 0.03, "target": "event",
-       "effects": [dmg("true", flat=999), status("burn", 5.0)]},
-      {"on": "onBasicAttack", "chance": 0.03, "target": "event",
-       "condition": {"kind": "status", "subject": "target", "tag": "stun"},
-       "effects": [status("blind", 5.0, missChance=0.5)]}]}]})
+       "effects": [dmg("true", flat=999), status("burn", 5.0),
+                   status("blind", 5.0, missChance=0.5,
+                          condition={"kind": "status", "subject": "target",
+                                     "tag": "stun"})]}]}]})
 
 A("89-01", "89-01 憤怒的頭槌", "self", [0], [0], 0,
   "[被動][機率][普攻時][暈眩]\n\n「頭腦不好沒關係，頭骨夠硬就行」\n[攻擊時]有 3/4/5/6%[機率]想起頭槌攻擊，造成 10倍 [暴擊] 傷害，並將敵人[暈眩] 1秒。\n\n(敵方 [燃燒] 狀態下額外追加 [致盲] 狀態，持續 5秒)",
@@ -1502,11 +1618,20 @@ A("89-01", "89-01 憤怒的頭槌", "self", [0], [0], 0,
   passive={"name": "89-01 憤怒的頭槌", "ranks": [
       {"critStrike": {"chance": c, "damageMult": 10.0, "lifestealFraction": 0.0},
        "hooks": [
-          {"on": "onBasicAttack", "chance": c, "target": "event",
-           "effects": [status("stun", 1.0, stun=True)]},
-          {"on": "onBasicAttack", "chance": c, "target": "event",
-           "condition": {"kind": "status", "subject": "target", "tag": "burn"},
-           "effects": [status("blind", 5.0, missChance=0.5)]}]}
+          # ⭐ 一次判定、一串結果。⛔ 不可以寫 `chance: c`：critStrike 自己已經擲過
+          #    一次，hook 再擲一次就是 c×c（rank1 0.09%），而畫面上是「暴擊了卻沒暈」。
+          #    `critSource:"thisSource"` 是引擎替這一支開的那一格（grant 與 hook
+          #    住在同一份 source 上）。
+          # ⚠️ 事件必須是 onDamageDealt —— damageCrit / critSource 只有
+          #    DAMAGE_BEARING_EVENTS 帶得到那一發封包，掛在 onBasicAttack 上載入
+          #    時就被 refineHookDamageContext 拒收 ⇒ tag_gate 的「普攻時」要同批
+          #    補第二種形狀。
+          {"on": "onDamageDealt", "target": "event",
+           "damageSource": "basic", "damageCrit": "crit", "critSource": "thisSource",
+           "effects": [status("stun", 1.0, stun=True),
+                       status("blind", 5.0, missChance=0.5,
+                              condition={"kind": "status", "subject": "target",
+                                         "tag": "burn"})]}]}
       for c in (0.03, 0.04, 0.05, 0.06)]})
 
 A("89-02", "89-02 憤怒的菊花", "self", [0], [0], 0,
@@ -1514,7 +1639,15 @@ A("89-02", "89-02 憤怒的菊花", "self", [0], [0], 0,
   innate="passive",
   passive={"name": "89-02 憤怒的菊花", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "chance": 0.03, "target": "self", "internalCooldown": 1.0,
-       "effects": [area("magic", tier="中", flat=1),
+       "effects": [area("magic", tier="中", flat=1,
+                        # ⛔ 不可以補成第二顆帶 chance 的 hook（那是 89-00/89-01 的
+                        #    0.03×0.03 = 0.09% 缺陷再造一次）。
+                        # ⛔ 也不可以掛 hook 層 condition：這條 hook 是 onDamageTaken
+                        #    + target:"self"，ctx.targets=[熊貓自己]，而 hook.condition
+                        #    的 target 是**攻擊者** —— 條件問對了人、混亂卻蓋在自己身上。
+                        onhit=[status("confusion", 10.0, berserk=True, targetsAllies=True,
+                                      condition={"kind": "status", "subject": "target",
+                                                 "statusId": "blind"})]),
                    status("stun", 1.0, stun=True),
                    status("curse", 5.0, missChance=0.5)]}]}]})
 
@@ -1551,12 +1684,26 @@ A("89-04", "89-04 憤怒的簡諧運動", "self", [0], [0], 0,
 
 A("89-002", "89-002 俄羅斯輪盤", "targeted", [10], [666], 5.29,
   "[主動][指定][範圍][輔助][恐懼][機率]\n10秒冷卻\n消耗[MP] 666\n施法距離5.29\n\n拿出土製左輪手槍裝填一顆子彈，生死一瞬間，有1/6的機會讓對方或1/6自己死亡，剩餘4/6 對方會陷入 [恐懼] 狀態，持續 2秒。\n\n(敵方 [致盲] 狀態下對方的死亡[機率]提升到 2/6)\n(敵方 [混亂] 狀態下對方的死亡[機率]提升到 3/6)",
-  effects=[{"kind": "weightedBranch", "shape": "single", "branches": [
-      {"weight": 1, "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [0.5],
-                                 "victim": "champion", "throughShields": True}]},
+  # ⭐ B3-C4 —— 條件改寫**權重**。⛔ 不可以寫進 branches[]：那是 .strict()，只收
+  #    {weight, effects}，多一格 condition 整份被拒收。
+  # ⚠️ 三顆**必須互斥**：兩顆同時通過 = 擲兩次骰 = 一次施放死兩次。
+  # ⚠️ 混亂與致盲同時在身上時混亂贏（3/6 > 2/6）—— 這是裁決不是推導。
+  effects=[{"kind": "weightedBranch", "shape": "single", "condition": cond, "branches": [
+      {"weight": foe, "effects": [{"kind": "devour", "shape": "single",
+                                   "thresholdPctOfMax": [0.5],
+                                   "victim": "champion", "throughShields": True}]},
       {"weight": 1, "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [0.5],
                                  "victim": "any", "throughShields": True}]},
-      {"weight": 4, "effects": [status("fear", 2.0, feared=True)]}]}])
+      {"weight": 6 - 1 - foe, "effects": [status("fear", 2.0, feared=True)]}]}
+      for cond, foe in (
+          ({"kind": "status", "subject": "target", "statusId": "confusion"}, 3),
+          ({"all": [{"kind": "status", "subject": "target", "statusId": "blind"},
+                    {"not": {"kind": "status", "subject": "target",
+                             "statusId": "confusion"}}]}, 2),
+          ({"not": {"any": [{"kind": "status", "subject": "target", "statusId": "blind"},
+                            {"kind": "status", "subject": "target",
+                             "statusId": "confusion"}]}}, 1),
+      )])
 
 # ── 92 草泥馬 ────────────────────────────────────────────────────────────────
 A("92-00", "92-00 憂鬱的眼神", "self", [0], [0], 0,
@@ -1672,7 +1819,16 @@ A("52-02", "52-02 蹂躪編年史", "ground", [45, 45, 45, 45], [70, 95, 120, 14
   effects=[{"kind": "leap", "applyTo": "target", "mode": "toPoint", "apexHeight": 1.2,
             "durationSec": 0.42, "throwDistance": 7.33, "dragToCaster": True,
             "landRadius": 4.95,
-            "onLand": [dmg("magic", per=[350, 450, 550, 650], ap=0.5)]}])
+            "onLand": [dmg("magic", per=[350, 450, 550, 650], ap=0.5),
+                       # ⭐ LeapSystem 把 enemiesInCircle(landRadius) 直接餵成 ctx.targets，
+                       #    所以 onLand 上的 condition 走的正是逐一過濾＝規格說的
+                       #    「受到範圍傷害的敵人」。
+                       # ⛔ statusId:"rage" 不是 tag:"rage"：狂怒是 52-01 用
+                       #    applyBuff(statusId="rage") 掛的，只寫進 ModifierSource，
+                       #    而 hasStatusTag 只走 world.status ⇒ tag 永遠讀 false。
+                       status("fear", 3.0, feared=True,
+                              condition={"kind": "status", "subject": "self",
+                                         "statusId": "rage"})]}])
 
 A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
   "[被動][普攻時]\n\n「沒有名字不是低階裝備，是作者懶得取」\n每次普通 [攻擊時] 造成額外50/70/90/110 傷害且附加 [麻痺] 效果，持續0.6秒。",

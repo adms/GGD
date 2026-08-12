@@ -22,16 +22,6 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "target": "self",
-            "internalCooldown": 150.0,
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.2
-            },
             "effects": [
               {
                 "kind": "applyBuff",
@@ -66,7 +56,17 @@
                 "applyTo": "self",
                 "berserk": true
               }
-            ]
+            ],
+            "internalCooldown": 150.0,
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.2
+            },
+            "target": "self"
           }
         ]
       }

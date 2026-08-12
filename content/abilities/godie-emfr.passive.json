@@ -23,8 +23,6 @@
         "hooks": [
           {
             "on": "onInterval",
-            "internalCooldown": 1.0,
-            "target": "self",
             "effects": [
               {
                 "kind": "restore",
@@ -39,7 +37,9 @@
                 "pctMaxMana": 0.05,
                 "applyTo": "self"
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "target": "self"
           }
         ]
       }

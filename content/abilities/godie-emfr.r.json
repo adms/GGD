@@ -115,8 +115,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "consumeOn": "fire",
             "effects": [
               {
                 "kind": "damage",
@@ -131,7 +129,9 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event",
+            "consumeOn": "fire"
           }
         ]
       }

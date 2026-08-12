@@ -48,12 +48,6 @@
           {
             "on": "onAbilityHit",
             "abilitySlot": "W",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "magic-break"
-            },
             "effects": [
               {
                 "kind": "damage",
@@ -67,7 +61,13 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "magic-break"
+            },
+            "target": "event"
           }
         ]
       }

@@ -23,7 +23,6 @@
           {
             "on": "onAbilityCast",
             "abilitySlot": "R",
-            "target": "self",
             "effects": [
               {
                 "kind": "weightedBranch",
@@ -44,7 +43,8 @@
                   }
                 ]
               }
-            ]
+            ],
+            "target": "self"
           }
         ]
       }

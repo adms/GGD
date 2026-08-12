@@ -52,6 +52,31 @@
           "radius": 3.0,
           "radiusTier": "小",
           "includeOrigin": true
+        },
+        {
+          "kind": "damageArea",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          },
+          "radius": 3.0,
+          "radiusTier": "小",
+          "includeOrigin": true,
+          "victimCondition": {
+            "kind": "status",
+            "subject": "target",
+            "tag": "root"
+          }
         }
       ]
     }

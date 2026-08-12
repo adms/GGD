@@ -22,8 +22,6 @@
         "hooks": [
           {
             "on": "onReflectSuccess",
-            "target": "event",
-            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "delayed",
@@ -65,7 +63,9 @@
                   }
                 ]
               }
-            ]
+            ],
+            "internalCooldown": 1.0,
+            "target": "event"
           }
         ]
       }

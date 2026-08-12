@@ -28,15 +28,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "stat",
-              "subject": "self",
-              "stat": "hp",
-              "mode": "percent",
-              "op": "<=",
-              "value": 0.3
-            },
             "effects": [
               {
                 "kind": "devour",
@@ -56,15 +47,7 @@
                   }
                 ]
               }
-            ]
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "target": "event",
+            ],
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -73,6 +56,14 @@
               "op": "<=",
               "value": 0.3
             },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
             "effects": [
               {
                 "kind": "devour",
@@ -92,15 +83,7 @@
                   }
                 ]
               }
-            ]
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "target": "event",
+            ],
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -109,6 +92,14 @@
               "op": "<=",
               "value": 0.3
             },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
             "effects": [
               {
                 "kind": "devour",
@@ -128,15 +119,7 @@
                   }
                 ]
               }
-            ]
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "target": "event",
+            ],
             "condition": {
               "kind": "stat",
               "subject": "self",
@@ -145,6 +128,14 @@
               "op": "<=",
               "value": 0.3
             },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
             "effects": [
               {
                 "kind": "devour",
@@ -164,7 +155,16 @@
                   }
                 ]
               }
-            ]
+            ],
+            "condition": {
+              "kind": "stat",
+              "subject": "self",
+              "stat": "hp",
+              "mode": "percent",
+              "op": "<=",
+              "value": 0.3
+            },
+            "target": "event"
           }
         ]
       }

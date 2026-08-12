@@ -36,7 +36,26 @@
       "width": 2.0,
       "aim": "target",
       "fromCaster": true,
-      "includeOrigin": false
+      "includeOrigin": false,
+      "onHitTargets": [
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "magic-break"
+          },
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-h01n.e.webp",

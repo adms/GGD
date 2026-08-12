@@ -59,12 +59,6 @@
           {
             "on": "onAbilityHit",
             "abilitySlot": "E",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "armor-break"
-            },
             "effects": [
               {
                 "kind": "damage",
@@ -78,7 +72,13 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "armor-break"
+            },
+            "target": "event"
           }
         ]
       }

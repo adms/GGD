@@ -56,6 +56,17 @@
               }
             ]
           }
+        },
+        {
+          "kind": "applyStatus",
+          "condition": {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "rage"
+          },
+          "statusId": "fear",
+          "duration": 3.0,
+          "feared": true
         }
       ]
     }

@@ -205,6 +205,11 @@
       "effects": [
         {
           "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
           "damageType": "magic",
           "amount": {
             "ratios": [
@@ -227,6 +232,11 @@
         },
         {
           "kind": "applyStatus",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "curse"
+          },
           "statusId": "slow40",
           "duration": 5.0,
           "moveSpeedMult": 0.5

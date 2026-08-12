@@ -18,8 +18,8 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：342 / 378**（90.5%）　🟣 PASSIVE：30　❌ FAIL：6
-- 把「正確的永久被動」算進可接受行為：**372 / 378**（98.4%）如預期運作，只有 **6** 格是真正的缺口。
+- **✅ PASS：341 / 378**（90.2%）　🟣 PASSIVE：29　❌ FAIL：8
+- 把「正確的永久被動」算進可接受行為：**370 / 378**（97.9%）如預期運作，只有 **8** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
@@ -34,10 +34,10 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 218 |
-| buff | 67 |
+| damage | 217 |
+| buff | 70 |
 | projectile | 21 |
-| status | 12 |
+| status | 9 |
 | heal | 9 |
 | dash | 9 |
 | championForm | 5 |
@@ -59,11 +59,11 @@
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ✅ | ✅ | ✅ | 🟣 | ✅ | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ✅ | ❌ | ✅ |
+| 奇樂 - 夜神月 | `godie-emns` | 遠 | ✅ | 🟣 | ✅ | ❌ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ✅ | 🟣 | ✅ | ✅ | ✅ |
 | 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ✅ | 🟣 | ✅ |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ✅ | ❌ | ✅ | 🟣 | ✅ |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ |
 | 亂世癿王者 - 呂布奉先 | `godie-h01u` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 國寶級的畜生 - 熊貓 | `godie-h02k` | 近 | 🟣 | 🟣 | 🟣 | 🟣 | ✅ | ✅ |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | 🟣 | 🟣 | ✅ | 🟣 | ✅ |
@@ -121,8 +121,10 @@
 | 白木老樹精 - 白木卡迪那 | `godie-e00s` | R | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 奇樂 - 夜神月 | `godie-emns` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | EX | self | 近 | passive-only but no modifier/hook source attaches (inert) |
 
 ## 🟣 永久被動清單（非 bug，僅供對照）
 
@@ -140,13 +142,12 @@
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | EX | passive:hooks |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | R | passive:hooks |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | EX | passive:hooks |
-| 奇樂 - 夜神月 | `godie-emns` | W | passive:modifiers |
+| 奇樂 - 夜神月 | `godie-emns` | W | passive:hooks |
 | 治癒系公主 - 木乃香 | `godie-etyr` | W | passive:modifiers |
 | 治癒系公主 - 木乃香 | `godie-etyr` | EX | passive:modifiers |
 | 龍之子 - 天地志狼 | `godie-ewar` | E | passive:modifiers |
-| 時空勇者 - 林克 | `godie-h00l` | E | passive:modifiers |
+| 時空勇者 - 林克 | `godie-h00l` | E | passive:hooks |
 | 時空勇者 - 林克 | `godie-h00l` | EX | passive:hooks |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | EX | passive:hooks |
 | 亂世癿王者 - 呂布奉先 | `godie-h01u` | Q | passive:hooks |
 | 亂世癿王者 - 呂布奉先 | `godie-h01u` | EX | passive:modifiers |
 | 國寶級的畜生 - 熊貓 | `godie-h02k` | Q | passive:hooks |

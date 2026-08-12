@@ -23,24 +23,25 @@
         "hooks": [
           {
             "on": "onDamageTaken",
-            "chance": 0.2,
-            "target": "event",
-            "damageType": "magic",
-            "internalCooldown": 0.5,
             "effects": [
               {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 1.0
-                    }
-                  ]
+                  "flat": 0.0
+                },
+                "incomingPct": {
+                  "perRank": [
+                    1.0
+                  ],
+                  "negateOriginal": true
                 }
               }
-            ]
+            ],
+            "internalCooldown": 0.5,
+            "chance": 0.2,
+            "target": "event",
+            "damageType": "magic"
           }
         ]
       }

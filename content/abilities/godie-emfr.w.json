@@ -107,12 +107,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
             "effects": [
               {
                 "kind": "damage",
@@ -127,7 +121,13 @@
                   ]
                 }
               }
-            ]
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "rage"
+            },
+            "target": "event"
           }
         ]
       }

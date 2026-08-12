@@ -33,7 +33,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -47,7 +46,8 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -60,7 +60,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -74,7 +73,8 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -87,7 +87,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -101,7 +100,8 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       },
@@ -114,7 +114,6 @@
         "hooks": [
           {
             "on": "onBasicAttack",
-            "target": "event",
             "effects": [
               {
                 "kind": "damage",
@@ -128,7 +127,8 @@
                   ]
                 }
               }
-            ]
+            ],
+            "target": "event"
           }
         ]
       }

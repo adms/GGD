@@ -30,8 +30,6 @@
         "hooks": [
           {
             "on": "onEvade",
-            "target": "event",
-            "internalCooldown": 30.0,
             "effects": [
               {
                 "kind": "damage",
@@ -52,7 +50,9 @@
                 "duration": 2.0,
                 "stun": true
               }
-            ]
+            ],
+            "internalCooldown": 30.0,
+            "target": "event"
           }
         ]
       }

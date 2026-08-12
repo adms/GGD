@@ -85,6 +85,7 @@
  * run on every commit; that is the point of it existing at all.
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ContentLoader } from "./loader";
@@ -101,7 +102,8 @@ import type { ContentStore } from "./store";
 import { ALL_STATS } from "../sim/stats/statTypes";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const CONTENT_DIR = join(HERE, "../../../../content");
+const REPO_ROOT = join(HERE, "../../../..");
+const CONTENT_DIR = join(REPO_ROOT, "content");
 
 /**
  * How long a `"landing"` exemption may suppress a failure. 30 days is roughly
@@ -122,6 +124,25 @@ type ExemptionStatus =
   | "schema-impossible"
   /** a dead field kept for compatibility; adopting it would be the bug. */
   | "superseded"
+  /**
+   * ⭐ 2026-08-13 —— the mechanism HAS content, and that content is sitting in
+   * `content/_legacy/`. owner 2026-08-13 pulled 41 champions + 236 abilities out
+   * of the operating tree («沒開放的英雄…預設不要再被讀取到了»), so a handful of
+   * keys went to zero WITHOUT anything being new, broken, or defaulted.
+   *
+   * None of the other five statuses tells that truth: it is not `debt` (nothing
+   * is broken — the doc is authored and correct), not `landing` (no migration is
+   * in flight, and a 30-day alarm can only be cleared by inventing content
+   * nobody asked for), and certainly not `default-live` (there is no code
+   * default covering for the zero — the mechanism genuinely does not happen in
+   * any shipped match right now).
+   *
+   * ⛔ It is NOT a free pass. Every entry must name a `witness` — the legacy doc
+   * that adopts the key — and the well-formedness test below opens that file.
+   * So the exemption dies the moment its evidence does, and the STALE test above
+   * kills it the moment the champion is brought back into the roster.
+   */
+  | "legacy-parked"
   /** a REAL S8. Never expires, but is printed as a loud banner every run. */
   | "debt"
   /** brand new; adoption expected. EXPIRES after GRACE_DAYS — see above. */
@@ -133,6 +154,12 @@ interface Exemption {
   readonly why: string;
   /** ISO date. Required for `landing`; the grace counts from here. */
   readonly since?: string;
+  /**
+   * Required for `legacy-parked`: a repo-relative path under `content/_legacy/`
+   * holding a doc that DOES adopt this key. Checked on disk, not trusted as
+   * prose — see the well-formedness test.
+   */
+  readonly witness?: string;
 }
 
 /**
@@ -153,6 +180,97 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#damage.incomingPct.basis": {
+    status: "default-live",
+    why: "省略＝反彈基數用「這一發打進來的量」。B3-A 的五支反彈全部要的就是那個讀法，所以零採用正是它該有的樣子 —— 這一格是換一種基數時才寫的覆寫鈕。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#damage.incomingPct.whenTooLate": {
+    status: "default-live",
+    why: "省略＝引擎預設的「反彈封包比原傷害晚到」處理（照樣送出，不丟棄）。B3-A 的五支反彈（20-04 理想鄉 · 45-00 寫輪眼 · 60-04 完美盾反 · 15-002 太陰道）都沒有要改這個時序邊界，而改它會影響的是「同一 tick 內兩面互相反彈」這種罕見情況 —— 沒有客戶就不該填，填了反而多一份沒有人驗過的行為。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#damage.incomingPct.maxChainDepth": {
+    status: "default-live",
+    why: "省略＝預設的連鎖深度上限，那是防「A 反彈給 B、B 又反彈回 A」無限對彈的安全閥。五支反彈沒有一支需要更深或更淺的鏈；把它調高是設計決策（會做出反彈流派），調低則是在修一個還沒發生的效能問題。⇒ 零採用是它正確的狀態。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#damage.incomingPct.applyGlobalDamageMult": {
+    status: "default-live",
+    why: "省略＝反彈量**不再**吃一次全域傷害倍率（`config.combat-env@1` 的 damageDealt）。原傷害進來時已經乘過一次，反彈量若再乘一次就是同一發被放大兩次 —— 保守的那一邊才是預設。要打開它是平衡決策，屬於 owner 的旋鈕，不是這一批技能的內容。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#applyBuff.hooks[].damageType=any": {
+    status: "default-live",
+    why: "**省略這一格就等於 any**（60-04 完美盾反正是靠省略來同時反彈魔法與物理），所以明寫 any 的文件永遠是 0 —— 零採用是這個列舉值的正確狀態。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#applyBuff.hooks[].damageType=physical": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "B3-A 的五支反彈裡，只有 45-00 寫輪眼與 15-002 太陰道指定了型別，而兩支都指定 magic（規格逐字是「反彈魔法([AP])傷害」）；60-04 完美盾反刻意省略以同時反彈魔法與物理。「只反彈物理」這個讀法在這 90 支裡沒有客戶 —— 下一批出現時填這一格就好。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#applyBuff.hooks[].damageType=true": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "真傷專屬的觸發在這 90 支裡沒有客戶：真傷本來就是「穿透一切」的那一類，設計上很少有技能只對它反應。這一格留著是為了下一批（例：對真傷免疫的護盾），今天寫它會做出一個沒有人驗過的分支。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.abilityId": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "60-002 用 hookKey 指名一條 hook 的 ICD，不是指名一支技能。指名技能的客戶還沒出現。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.basis": {
+    status: "default-live",
+    why: "省略＝以**剩餘**冷卻為基準。60-002 是 mode:「reset」，基準不參與。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.condition": {
+    status: "default-live",
+    why: "省略＝無條件。60-002 的條件寫在 hook 上（onReflectSuccess 本身就是條件）。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.maxTargets": {
+    status: "default-live",
+    why: "省略＝單體（shape:「single」）。三支出貨的 modifyCooldown 都是對自己。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.radius": {
+    status: "default-live",
+    why: "三支出貨的 modifyCooldown（79-04 卍解 · 79-002 虛化 · 60-002 勇者意志）全部是`shape:「single」` 對自己，單體不需要半徑。範圍式的冷卻操作（例：對周圍友軍集體減冷卻）是一個還沒有人設計的技能形狀，⛔ 不要為了讓這一列變綠去發明一支技能。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.radiusTier": {
+    status: "default-live",
+    why: "同 radius —— 三支都是單體對自己。radiusTier 是「小/中/大/超大」那張級距表的入口，它只有在 shape 是 circle 的時候才有意義，而今天沒有一支是。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "field:abilities.effects[]#modifyCooldown.side": {
+    status: "default-live",
+    why: "省略＝跟著 who 決定敵我。三支都是 `who:「self」`，所以 side 沒有可以表達的東西。它要等到出現「縮短友軍冷卻」或「延長敵人冷卻」那一類技能才有第一個客戶。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#modifyCooldown.shape=circle": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "範圍式的冷卻操作在這 90 支裡沒有客戶：三支全部是對施法者自己一個人。circle 這個成員的存在是為了「光環式的冷卻縮減」那一族，而那一族要等到下一批內容。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#modifyCooldown.who=target": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "「延長敵人的冷卻」是一個很強的控場設計，這 90 支裡沒有任何一支規格寫了它。三支出貨的 modifyCooldown 都是 self（自己的技能冷卻縮短或重置）。⛔ 零採用是正確的 —— 憑空給某支技能加這個效果就是在改設計。",
+  },
+  // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
+  "enum:abilities.effects[]#modifyCooldown.mode=reduceFlat": {
+    status: "landing",
+    since: "2026-08-13",
+    why: "出貨的三支用的是 `reduce`（按比例縮短 50%，79-04／79-002）與 `reset`（直接重置，60-002），規格寫的都是比例或重置。「固定縮短 N 秒」這個讀法在這 90 支裡沒有客戶，而它與 reduce 是**真的兩件事**（比例對長冷卻更有價值），所以留著等第一個客戶。",
+  },
   // --- 職業限定閘 / 道具光環 (owner 2026-07-30 的四類傳說武器) --------------
   // Three keys became REACHABLE today because `item@1` grew two surfaces:
   // `auras` (so an item can project 「周圍的友軍…」 — the three tier-5 積分獎勵
@@ -505,21 +623,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
   },
-  "field:abilities.effects[]#applyBuff.hooks[].critSource": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].reflectedDamageSource": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].reflectedDamageType": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（89-01 憤怒的頭槌）。
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（60-04 完美盾反）。
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（60-04 完美盾反）。
   "field:items.passive[].key": {
     status: "landing",
     since: "2026-08-10",
@@ -1035,10 +1141,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "debt",
     why: "task #144 (per-champion w3x movement/attack speed) is still pending, so all 113 champions use BasicAttackSystem.ts:173's `?? 1.0` and every hero attacks at the same base cadence — the w3x per-hero values were never imported.",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].on=onDamageDealt": {
-    status: "debt",
-    why: "sim/combat/damage.ts:582 FIRES this hook every time damage is dealt, and no content subscribes to it across all 43 hook-carrying docs (abilities, items, augments, champion passives). Every on-damage-dealt proc in the source map is currently unimported.",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（89-01）。
   // --- B2 · damageType / damageCrit (2026-08-05) ----------------------------
   //
   // 機制今天上架:`TriggerDamage` 多了 `type` 與 `crit`,`hooks.ts` 兩道閘坐在
@@ -1066,11 +1169,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 各自用 `damageType` 把觸發器窄化到一種傷害型別,而它們**不需要**那個缺席的原語。
   // ⚠️ 真正卡在「治療觸發這一發的 X%」上的只有 `damageCrit` 那一半。
   // 30 天後這三條會自己再紅一次 —— 那時該有的是原語,不是更長的理由。
-  "field:abilities.effects[]#applyBuff.hooks[].damageCrit": {
-    status: "landing",
-    since: "2026-08-05",
-    why: "同上 —— B2 的另一半。【暴擊時】的第一個消費者是天堂之劍的第二句,而那一句需要的原語還沒有。",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（89-01）。
   "field:items.passive[].damageType": {
     status: "landing",
     since: "2026-08-05",
@@ -1302,11 +1401,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   //    被採用了(反射之盾 godie-i03m 的 `damageSource: "basic"` —— 沒有它,
   //    owner 文案裡的「反彈**普通攻擊**傷害」會變成「反彈所有傷害」),下面這個
   //    是 applyBuff 臨時 proc 的那一個節點,它是新的、而且還沒有客戶。
-  "field:abilities.effects[]#applyBuff.hooks[].damageSource": {
-    status: "landing",
-    since: "2026-08-01",
-    why: "同一個欄位的第二個 census 節點(item 那個節點已被 godie-i03m 採用)。這裡指的是「一個**暫時**的 buff 授予的 proc」要不要只吃普攻,自然的第一個客戶是 25-04 無想轉生 / CP-00 棘刺之光 這一族的荊棘 —— 它們今天是 `abilities.passive.ranks[].auras[].hooks`(也還在 landing)而不是 applyBuff。30 天後若仍為 0,該重新分流的是「反彈要不要也做成一個限時 buff」,不是把這一條續期。",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（89-01）。
   // ⚠️ 上面那條是 `field:`(「有沒有人寫這個欄位」),下面兩條是 `enum:`
   //    (「這個下拉選單的每一個選項有沒有人選」)。兩者**不是**同一個 key,而
   //    2026-08-01 [反彈] 上線時只登記了前者 —— 於是 census 一天後就把兩個
@@ -1741,21 +1836,13 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
-  "field:abilities.effects[]#applyStatus.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-C 條件葉：8 份文件）。
   "field:abilities.effects[]#championForm.condition": {
     status: "landing",
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
-  "field:abilities.effects[]#damage.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-C：44-04 · 79-03）。
   "field:abilities.effects[]#damageArea.condition": {
     status: "landing",
     since: "2026-08-09",
@@ -2008,15 +2095,7 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
       "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
   },
-  "field:abilities.effects[]#weightedBranch.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why:
-      "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，" +
-      "普查在每一個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。⚠️ 這一個 kind 的節點是 2026-08-12 才**第一次可回報**的（父 variant 被採用，" +
-      "reach 跨過 MIN_REACH），所以 since 跟著機制落地的那天走，與另外 19 筆同一個時鐘、同一天到期。" +
-      "零採用＝重製那一批沒有一支需要逐目標過濾，⛔ 不是機制缺席。",
-  },
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-C4：89-002 俄羅斯輪盤）。
 
   // ── ⑤「省略正是出貨行為」的九格旋鈕（default-live） ────────────────────────
   // 每一格都逐字對過 sim 的那一行 `?? 預設`，不是憑印象分類的。
@@ -2153,16 +2232,32 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 觸發器**有**兩道閘（`whileForm:"alternate"` + `condition` mp ≥ N），寫法是對的。
   //
   // ⛔ 我沒有改內容（本輪只動測試，且第零守則⑧：順手發現的缺陷不當場修）。
-  "field:abilities.effects[]#applyBuff.hooks": {
-    status: "debt",
-    why:
-      "限時增益自己攜帶的觸發器。⛔ 這不是「沒有客戶」而是「客戶被寫成了別的東西」：`godie-emfr.e`（持續12秒的普攻附加火焰）" +
-      "、`godie-emfr.r`（持續12秒）、`godie-hapm.q`（狂怒6秒的受擊反擊）三支的持續時間寫成了 `applyBuff.duration`，" +
-      "但它們的 hook 卻掛在**常駐的** `passive.ranks[].hooks` 上而且沒有任何閘（無 condition、無 whileForm）" +
-      "，所以那些「期間限定」的效果從第一回合起就永遠生效、不用施放；`godie-h01n.ex` 則是漏了卍解的 whileForm 閘。" +
-      "⚠️ 玩家看得到的症狀是「這幾支英雄的大招好像一直開著」。對照組 `godie-e002.w` 的同型觸發器有兩道閘，證明這是四份文件的錯不是引擎的形狀問題。" +
-      "修法在內容側（把那幾條 hook 搬進 applyBuff.hooks，或補上 whileForm/condition 閘）" +
-      "，⛔ 不在這個 lane 的範圍。",
+  // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-A 反彈：20-04 · 60-04 · 15-002 把 hook 掛進限時 buff）。
+
+  // ── ⑧ 營運母體縮編的三個副作用（owner 2026-08-13 的 legacy 搬遷）────────────
+  //
+  // 41 位未上架英雄 + 236 支技能搬進 `content/_legacy/`（不在 COLLECTION_NAMES 裡，
+  // 引擎讀不到）。這三個 key 的**唯一**採用者剛好全在那 41 位裡面，所以它們是
+  // 「零採用」的第七種原因：不是新的、不是壞的、也不是有預設值頂著 —— 是內容被
+  // 停用了。⭐ 三筆都帶 `witness`，測試會真的去開那個檔（見 well-formed 那條）。
+  //
+  // ⚠️ 這三筆與上面任何一筆的差別值得說清楚：它們**曾經是綠的**，而且是靠一份
+  // 真的文件綠的。所以它們不需要「先做出第一份客戶」，只需要那位英雄回到名單上 ——
+  // 而那一天 STALE 那條測試會自己紅並要求刪掉這裡的條目。
+  "tag:weaponClass=gun": {
+    status: "legacy-parked",
+    witness: "content/_legacy/champions/godie-hlgr.json",
+    why: "全名單唯一的槍械英雄是 03 鋼彈-煌（godie-hlgr，tags 帶 \"gun\"），而他在 2026-08-13 隨未上架名單搬進 _legacy。⚠️ 這一格不是裝飾：WEAPON_TAGS → client audio/combatSfx.ts WEAPON_SFX 是普攻音效的選擇鍵，所以零採用的實際意思是「這一版沒有任何英雄會發出槍聲」。引擎與音效表都還在，缺的只是一位持槍的英雄回到營運名單。",
+  },
+  "field:abilities.vfxLayers[].flyHeight": {
+    status: "legacy-parked",
+    witness: "content/_legacy/abilities/godie-nman.w.json",
+    why: "唯一填過分層高度的是 40-02 必殺！爆熱神音（godie-nman.w，三層 sonicbreathstream 各自 148/161/169 的離地高度），而 40 號英雄在 2026-08-13 隨未上架名單搬進 _legacy。省略時特效貼地，所以留下來的 17 份 vfxLayers 文件逐字不變、畫面上也沒有東西壞掉 —— 這是一個「沒有人需要抬高特效」的零，不是一條死掉的渲染路徑。",
+  },
+  "enum:abilities.effects[]#invulnerable.blocksDamage=magic": {
+    status: "legacy-parked",
+    witness: "content/_legacy/abilities/godie-hlgr.passive.json",
+    why: "「只免疫魔法傷害」這個成員的唯一客戶是 03-00 相轉移裝甲（godie-hlgr.passive，每 3 秒續期一次的 magic-only 免疫），跟著鋼彈-煌一起進了 _legacy。留在營運樹上的 22 份 invulnerable 全部是全類型免疫（缺省），所以這一格是**列舉比現役內容寬**：sim 那一側照樣分辨得出三種 blocksDamage，只是這一版沒有一支技能挑魔法那一種。",
   },
 };
 
@@ -2247,7 +2342,9 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
             `     that says WHY: "default-live" (the behaviour ships from a code default`,
             `     and the field only overrides it), "runtime-authored" (code synthesizes`,
             `     the doc), "schema-impossible" (another rule forbids setting it here),`,
-            `     "superseded" (dead field kept for compat), or "debt" (it IS broken,`,
+            `     "superseded" (dead field kept for compat), "legacy-parked" (the only`,
+            `     doc that adopts it moved to content/_legacy/ — name it as \`witness\`),`,
+            `     or "debt" (it IS broken,`,
             "     you are recording it rather than fixing it now — debts print as a loud",
             "     banner on every run).",
             "",
@@ -2325,6 +2422,33 @@ describe("field adoption census (recipe S8: mechanism shipped, content 0)", () =
       if (e.status === "landing" && e.since === undefined) bad.push(`${key}: landing needs since`);
       if (e.since !== undefined && Number.isNaN(Date.parse(e.since))) {
         bad.push(`${key}: since is not a date`);
+      }
+      // ⭐ `legacy-parked` is the one status that claims a FACT about another
+      // file ("the adopter is parked in content/_legacy/"), so it is the one
+      // status that can be checked instead of believed. Open the witness and
+      // look for the doc. A witness that vanished (deleted, or restored into the
+      // operating roster) makes the exemption a lie, and this goes red before
+      // anyone has to notice the census row.
+      if (e.status === "legacy-parked") {
+        if (e.witness === undefined) {
+          bad.push(`${key}: legacy-parked needs a witness doc under content/_legacy/`);
+        } else if (!e.witness.startsWith("content/_legacy/")) {
+          bad.push(`${key}: witness ${e.witness} is not under content/_legacy/`);
+        } else if (!existsSync(join(REPO_ROOT, e.witness))) {
+          bad.push(`${key}: witness ${e.witness} does not exist — the exemption's evidence is gone`);
+        } else {
+          // …and the witness must actually MENTION the thing. A cheap textual
+          // check on purpose: it costs one read and it is the difference between
+          // "a path that resolves" and "a doc that adopts the key".
+          const needle = key.slice(key.lastIndexOf(key.includes("=") ? "=" : ".") + 1);
+          const text = readFileSync(join(REPO_ROOT, e.witness), "utf8");
+          if (!text.includes(needle)) {
+            bad.push(`${key}: witness ${e.witness} never mentions "${needle}"`);
+          }
+        }
+      }
+      if (e.status !== "legacy-parked" && e.witness !== undefined) {
+        bad.push(`${key}: witness only means something for legacy-parked`);
       }
     }
     expect(bad).toEqual([]);
