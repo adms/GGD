@@ -28,7 +28,6 @@ from __future__ import annotations
 import json
 import os
 import re
-import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -214,11 +213,11 @@ def esc(s: str) -> str:
 def render() -> str:
     data = collect()
     total = sum(len(r) for _, _, r in data)
-    try:
-        ver = subprocess.run(["git", "describe", "--tags", "--always"], cwd=ROOT,
-                             capture_output=True, text=True).stdout.strip()
-    except Exception:
-        ver = "?"
+    # ⛔ 這裡以前烙了 `git describe` 的版本號。那是一個**自製的過期來源**：
+    #    版本號每 commit 一次就變，於是索引每 commit 一次就「過期」，
+    #    守衛每天紅一次而且理由跟 legacy 的內容無關 —— 一條會誤報的守衛
+    #    三個月後沒有人會讀（`noScratchProbes.test.ts` 檔頭記過同一個教訓）。
+    #    索引要釘的是**檔案清單**，⛔ 不是產生它的那一刻。
     L = []
     L.append("# GGD · legacy 記憶索引")
     L.append("")
@@ -245,7 +244,7 @@ def render() -> str:
     L.append("測試可以跟著設計走，**知識不可以無聲消失**」。")
     L.append("所以每一份都留著，而這一份是找回它們的地圖。")
     L.append("")
-    L.append(f"**目前共 {total} 個檔案**，分佈在 {len(data)} 個隔離區。（快照版本：`{ver}`）")
+    L.append(f"**目前共 {total} 個檔案**，分佈在 {len(data)} 個隔離區。")
     L.append("")
     L.append("| 隔離區 | 檔數 | 是什麼 |")
     L.append("|---|---:|---|")
