@@ -7,15 +7,36 @@
 
 ---
 
-## 📌 現況（2026-08-14 凌晨，**v0.16.0 已部署且煙霧測試通過**）
+## 📌 現況（2026-08-14，**v0.16.2 已部署且煙霧測試通過** —— 全 repo 第一次全綠）
 
 | | |
 |---|---|
-| main | `b1de43b5` = **v0.16.0**（跨天 ⇒ minor+1） |
-| 煙霧測試 | ✅ 全新分頁 console：`content loaded: **78 champions** (cv_b0a168fa5bbe) via bundle` · 零錯誤 |
-| 後置條件 | 6/6 綠（含配對式那一條）· 帳號 **174 → 174** |
-| `packages/shared` | ✅ **3475 / 3475** |
-| castability 掃描 | ✅ **343 / 378**（改吟唱前 342） |
+| main | `bc52a5d3` = **v0.16.2**（同天 ⇒ patch+1；v0.16.1 未部署，內容併進這一版） |
+| 煙霧測試 | ✅ console：`content loaded: **78 champions** (cv_b0a168fa5bbe) via bundle` · 零錯誤 · 徽章 `bc52a5d3` |
+| 後置條件 | 6/6 綠（含配對式那一條）· 帳號 **174 → 174** · 白名單 63 |
+| **`pnpm test`** | ✅ **EXIT=0，15 個套件全綠** —— admin 89 · client 459 · game-server 110 · shared 343 · editor 16 · w3x-import 4 + 8 個工具包 |
+| `pnpm typecheck` | ✅ EXIT=0 |
+
+### ⚠️ 這一版修的是**回報管道自己在說謊**（GH#322 / #323）
+
+`pnpm -r` 預設 bail：第一個紅的套件中止整串，後面的**一次都沒跑**。實測 admin 紅 10 條，
+於是 w3x-import(1) / client(29) / game-server(6) 全部沒被執行 —— 看起來像 10 條，真相 **46 條**。
+改成 `--no-bail`（守衛 `packages/shared/src/ops/rootTestNoBail.test.ts`）。
+
+那 36 條全是 2026-08-13 的 41 位英雄退場（`content/_legacy/`）之後，寫死 id 或抄出貨規模的斷言。
+修法是**一個模板**（`{apps/client,apps/game-server}/src/testkit/contentFixtures.ts`），判準一句話：
+**「這條測試如果名單再縮一次，應該紅嗎？」** ⛔ 沒有把 40 改成 19。
+
+⭐ **三個順帶撿到的**（都不是測試問題）：
+1. **向天光束的前提翻過來了** —— 90 支重製寫進真吟唱時間後，`reactable 184 > notice 128`。
+   那個檔自己寫著這種翻轉要「重讀宣稱、⛔ 不是默默升級」⇒ 斷言翻面並鎖成新棘輪。
+2. **差點刪掉鋼彈的刀光** —— `godie-gumdam-p0/p2` 的 `ambient:true` 抽取器不產生，照
+   錯誤訊息重跑後刀光從 8 條掉成 7 條。那是 `isSwingTrailDoc()` 的開關 ⇒ 內容全數還原，
+   改成新鮮度閘單向放行（同 `castTimeSec` 先例）。
+3. **錯誤訊息會誣賴功能** —— `legendaryReachability` 紅的訊息是「攻擊型態閘沒擋住任何東西」，
+   聽起來像 #189 破了，真相只是取樣英雄退場。
+
+⚠️ **執行期只動一行**：`marqueeRoster.ts` 的重複頭像表 25 → 18 組（刪掉的都是已退場英雄，畫面等效不變）。內容零改動。
 
 ### 90 支重製技能：驗收標準兩半都成立
 
