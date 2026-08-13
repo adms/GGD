@@ -1,9 +1,14 @@
 # 交付給 Codex 技能編輯器 —— 從這裡開始
 
-> **一句話**：讀 3 份**必給**，其餘照需要。⛔ 有一份是活的端點不是文件，
-> 而**定價規則目前還只是散文**（端點還沒做）—— 那一格下面明講。
+> **一句話**：讀 3 份**必給**，其餘照需要。⛔ 權威是**端點**不是文件；
+> 而定價規則目前**還只是散文**（端點沒做）—— 那一格下面明講。
 
-最後更新：2026-08-12（v0.14.3）
+最後更新：**2026-08-14（v0.16.2）** · 引擎能力指紋 **`8d30566f`**
+
+> ⚠️ **這一頁本身也會過期，所以它現在有守衛。**
+> `packages/shared/src/ops/codexHandoffFresh.test.ts` 逐一檢查下面每一個檔案路徑
+> 真的存在；`codexContractFresh.test.ts` 檢查合約文件貼的指紋等於引擎算出來的。
+> 兩條都是 2026-08-14 補的，因為**這一頁當天同時在說兩個謊**（見文末「這一頁的病歷」）。
 
 ---
 
@@ -38,13 +43,13 @@
 | 路徑 | 為什麼 |
 |---|---|
 | [`docs/_skill-remake-batch1-真因分析.md`](_skill-remake-batch1-真因分析.md) | **8 個模板缺口的完整清單** —— 那是「一個外部作者翻譯 90 支技能會犯的錯」的**實測**名單，不是想像的 |
-| [`docs/_w3x-fidelity-superseded.md`](_w3x-fidelity-superseded.md) | 第〇章第 3–5 層的具體範例：被新版取代的原作數值長什麼樣、誰在哪天裁的 |
+| [`docs/legacy/_w3x-fidelity-superseded.md`](legacy/_w3x-fidelity-superseded.md) | 第〇章第 3–5 層的具體範例：被新版取代的原作數值長什麼樣、誰在哪天裁的。⚠️ 2026-08-13 起在 `legacy/` 底下（`c24fc429` 把舊規格整批退場），這一頁的舊連結曾經指錯 |
 
 ---
 
 ## 3 · ⛔ 不要給
 
-`legacy/_skill-mechanics-coverage-20260808.md` · `_skill-judgment-values.md` · `skill-forge-design.md`
+`docs/legacy/_skill-mechanics-coverage-20260808.md` · `_skill-judgment-values.md` · `skill-forge-design.md`
 
 都是**內部工作紀錄**，而且部分已經過期（08-08 的機制盤點在 A 類修完後不準了）。
 給了只會製造**第二個真相來源** —— 那正是第〇章要防的事。
@@ -63,11 +68,27 @@ GET  <content-api prefix>/active/target-profile
 GET  <content-api prefix>/health
 ```
 
-`capabilities` 回 `ggd-runtime-capabilities@1`，內容全部是**推導**的：
-`effectKinds` / `hookEvents` / `conditionLeafKinds` / `effectFields` / `templateFamilies`
-＋ 每一筆 planned capability 的 supported / partial / unsupported ＋ `KNOWN_BROKEN`。
+實作在 [`apps/content-api/src/importRoutes.ts`](../apps/content-api/src/importRoutes.ts)。
+`capabilities` 回 `ggd-runtime-capabilities@1`，內容全部是**推導**的。
+2026-08-14 量到的規模：
 
-⭐ 它有 `fingerprint` —— 拿它 pin base，引擎一變你就知道。
+| 欄位 | 現在 |
+|---|---:|
+| `effectKinds` | **37** |
+| `hookEvents` | **19** |
+| `conditionLeafKinds` | **5** |
+| `templateFamilies` | **17** |
+| `effectFields` | 190 |
+| `planned`（逐筆 supported / partial / unsupported） | 28 |
+| `knownBroken` | **1** |
+
+⭐ 它有 `fingerprint`（現在是 `8d30566f`）—— 拿它 pin base，引擎一變你就知道。
+
+> ⚠️ **但別忘了文件裡那一份是快照。** 2026-08-14 實測：引擎已經走到 `8d30566f`，
+> 合約文件卻還貼著 `7f2a3d75`，而**四個數字（37/19/5/17）當時全部還是對的** ——
+> 逐項核對也看不出來。變的是 `knownBroken` 的內文。
+> ⇒ **每次交付前先打一次端點，用回來的 fingerprint 對一次文件。**
+> （現在 `codexContractFresh.test.ts` 會替你紅。）
 
 ### ⛔ **還不存在**：`GET /authoring-rules`
 
@@ -82,6 +103,7 @@ GET  <content-api prefix>/health
 | 標籤 → engineToken | `skill-tag-manifest.json` | ⚠️ 檔案，但有守衛在對帳 |
 | **MP 公式、冷卻界線** | **第九章的散文** | ⚠️ **會**。端點做好前這是唯一來源 |
 | 90 支的 JSON 範例 | 第 2 份文件 | ❌ 有守衛（見下） |
+| **哪些能力已知壞掉** | `capabilities.knownBroken` | ❌ 活的。⛔ 別抄第十一章的散文 |
 
 ---
 
@@ -103,18 +125,42 @@ python3 tools/skill-remake/refresh_docs.py --check  # 過期就回非零
 
 ---
 
-## 6 · 交付前對一次
+## 6 · ⚠️ 內容名單在 2026-08-13 縮過一次
+
+41 位英雄（235 支技能）從 `content/` 搬進 **`content/_legacy/`**。對編輯器的影響：
+
+- **出貨英雄 78 位 / 技能 461 支**（`content/` 底下），⛔ 不是舊文件裡的 119 / 696
+- 引用一支技能的 id 之前，先確認它在 `content/abilities/` 而不是 `content/_legacy/abilities/`
+- ⚠️ 退場**不是刪除**：`_legacy/` 裡的文件留著是刻意的（將來可能復活），
+  所以「這個 id 存在」不等於「這個 id 出貨」
+
+---
+
+## 7 · 交付前對一次
 
 - [ ] 三份必給都給了，而且 **`skill-tag-manifest.json` 沒有漏**
+- [ ] **打一次 `GET /capabilities`，用回來的 `fingerprint` 對一次合約文件的檔頭**
 - [ ] 講清楚 **`/capabilities` 是活的、第九章的定價是暫時的散文**
 - [ ] 講清楚 **第〇章的五層階梯**是衝突時的唯一判準，而且
       「可以停就列表確認、不能停就做成開關（**預設走高層級**）」
 - [ ] 講清楚 **測試只做預設啟動的那一邊**（不需要全做選項）
+- [ ] 講清楚 **出貨名單是 78 位英雄**，`_legacy/` 裡的不算
 
 ---
 
-## 7 · 這份文件本身
+## 8 · 這一頁的病歷（⚠️ 留著，因為它解釋了為什麼有守衛）
 
-⚠️ 它是**手寫**的（不像上面那兩份是生成的），所以它**會**過期。
-改了給 Codex 的清單就回來改這裡 —— 或者更好：等 `/authoring-rules` 做好之後，
-把第 4 節那張表換成「打端點」，讓這一份只剩「哪三個檔」。
+**2026-08-14 稽核，這一頁同時在說兩個謊，而且都沒有東西叫：**
+
+| # | 謊 | 代價 |
+|---|---|---|
+| 1 | 合約文件貼 `指紋 7f2a3d75`，引擎已經是 `8d30566f` | 對方被叫去「拿指紋 pin base」，而 pin 到一個不存在的基準；`knownBroken` 的內文早就改了（GH#296 的成因在 08-09 換過），對方會照舊的去繞一條不存在的路 |
+| 2 | 「建議給」指向 `docs/_w3x-fidelity-superseded.md` | **檔案不在那裡**（`c24fc429` 搬去 `docs/legacy/`）。交付時那一份會直接漏掉 |
+
+⭐ 兩個都不是「忘了改」的個案 —— 是**手寫索引必然的衰變**。所以現在：
+
+- `codexContractFresh.test.ts` —— 指紋對帳（突變驗過：改一個字元會紅並指名行號）
+- `codexHandoffFresh.test.ts` —— **這一頁列的每一個 repo 路徑都必須存在**
+  （突變驗過：把任一路徑改錯會紅並印出那一行）
+
+⛔ 這兩條紅了不要改測試，改這一頁 / 改文件。
