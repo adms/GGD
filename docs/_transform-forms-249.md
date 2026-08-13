@@ -70,7 +70,7 @@
 
 ### 順帶推翻 #113
 
-`docs/_champion-dedup-113.md` 把 14 組「同名同模型」判成重複匯入，建議（幸好只是）報告不刪。
+`docs/legacy/_champion-dedup-113.md` 把 14 組「同名同模型」判成重複匯入，建議（幸好只是）報告不刪。
 **這 14 組全部都是本體↔第二形態，一組重複匯入都沒有。** #113 比對的是 name / model / baseStats /
 四支英雄技能名——那正好是 WC3 變身**規定要保持一致**的欄位（否則 HUD 會整個換掉）。真正的差異全在
 它沒比的地方：`uabi` 一般技能列（球體、額外被動、法術書都在這裡）、`uspe`/`umvs` 移速、
@@ -1435,7 +1435,7 @@ trigger 驅動**實質 0**（`raw/war3map.j` 56,765 行裡 `SetUnitModel` **0 �
 | `packages/shared/src/content/schema/champion.ts` | `champion@1`，`.strict()` |
 | `packages/shared/src/content/championIdentity.ts` | `isSameCharacter` |
 | `apps/client/src/ui/platform/marqueeRoster.ts` | `SHARED_PORTRAIT_GROUPS` |
-| `docs/_champion-dedup-113.md` | 被推翻的那份 |
+| `docs/legacy/_champion-dedup-113.md` | 被推翻的那份 |
 
 ---
 

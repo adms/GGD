@@ -9,7 +9,7 @@
 > 兩份是同一支產生器、同一份記憶體資料產的（`ability_ledger.py --json --md`），
 > JSON 版多帶 `castType` / `cooldown` / `isPassiveOnly` / `vfxAuthority` / `vfxEditable` /
 > `effectsSource` 這些介面需要、md 表格塞不下的欄位。形狀見
-> `docs/_ability-ledger-editor-spec.md` §7。
+> `docs/legacy/_ability-ledger-editor-spec.md` §7。
 >
 > 這份 md 有四節：**總覽 → 特效由誰說了算 → 技能模板 → vfx 族 → 逐支明細**。
 

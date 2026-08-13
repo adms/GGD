@@ -65,7 +65,7 @@ shrinks `SHARED_PORTRAIT_GROUPS` (its test fails until the stale entry is delete
 | ident-12 | THE ONE EXCEPTION (owner 2026-07-26): where the w3x carries `Eme1`/`Emeu` evidence for a pair, that evidence wins — heroes 25 拳四郎 / 58 皮卡丘 / 61 克勞薩 now resolve as ONE hero each. Absent such evidence the lenient default is UNCHANGED: 05 / 53 / 91 stay two heroes, a shared name component alone still never merges, and the exception can never cross a hero 編號 (黑化Saber) | champion-identity-form-exception | regression | done |
 
 **#113 investigation (2026-07-23) — 14 same-name doc pairs → all DEDUP, no doc removed.**
-See `docs/_champion-dedup-113.md`. All 14 pairs resolve to `isSameCharacter = true`
+See `docs/legacy/_champion-dedup-113.md`. All 14 pairs resolve to `isSameCharacter = true`
 (same hero 編號 + identical name + identical kit), so none is a #55 "distinct heroes /
 shared mesh" case. Pairs 4 (妖狐藏馬 fox/fox2) and 8 (傑富力士 herobiggon/champ.thorne
 stand-in) are the same character on a different mesh; the rest share the exact mesh with

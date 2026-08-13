@@ -20,7 +20,7 @@ EVERY VALUE CARRIES A CONFIDENCE TAG.  Nothing is guessed silently:
   INFERRED    the value/binding required a documented inference (named in `why`)
   UNRESOLVED  present in the source but not resolvable here (runtime variable, cross-function flow)
 
-METHOD NOTES (each of these was a real trap; see docs/_vfx-fidelity-w3x.md)
+METHOD NOTES (each of these was a real trap; see docs/legacy/_vfx-fidelity-w3x.md)
   * Trigger grouping regex is  ^Trig_(.+?)_(?:Conditions|Actions|Func\\d.*)$  .  Adding a `|.*`
     catch-all makes `.+?` stop at the first underscore and silently merges `Trig_Love_Surrender_*`
     into a bogus `Love` bucket, crediting one ability with six unrelated spawns.

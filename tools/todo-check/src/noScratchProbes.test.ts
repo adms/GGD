@@ -65,21 +65,6 @@ const KNOWN_PROBE_DEBT: readonly ProbeDebt[] = [
     commit: "b50373c3",
     why: "檔頭自稱 scratch probe（VfxSystem 的池子跨回合會不會單調成長）。1 個 expect、1 個 console.log。#262 特效洩漏那條線的取證，那條還沒結案，所以先留著。",
   },
-  {
-    path: "apps/game-server/src/match/__mana_probe.test.ts",
-    commit: "4d5ecdb7",
-    why: "#265「魔力倍率太高用不完」的取證，跑真的 bot 比賽逐 tick 取樣。**expect() 次數 0、console.log 8 次** —— 它不是測試，是掛在每個人每次 pnpm test 上的診斷腳本。#265 已結案，這一支該刪。",
-  },
-  {
-    path: "apps/game-server/src/match/__autoattack_probe.test.ts",
-    commit: "4d5ecdb7",
-    why: "#265「Saber 不會自動攻擊」的活路徑取證。1 個 expect、4 個 console.log。#221 已上線並有正規守衛，這一支的內容應該併進那些守衛再刪。",
-  },
-  {
-    path: "apps/game-server/src/match/__pacing_probe.test.ts",
-    commit: "c4ef6372",
-    why: "回合節奏取證，讀 combat-env 算 TTK。**expect() 次數 0** —— 純傾印。它的結論已經寫進 docs，這一支該刪。",
-  },
 ];
 
 /**
@@ -178,7 +163,9 @@ describe("探測檔不可以住在 src/ 樹裡（CLAUDE.md：暫存檔寫 /priva
     expect(
       KNOWN_PROBE_DEBT.length,
       "帳單長度變了。多一支 = 這條守衛正在被繞過；少一支 = 有人刪了檔案，請一起刪那一列。",
-    ).toBe(4);
+    // ⭐ 2026-08-13：三支 game-server probe 已歸檔到 `docs/legacy/code/`
+    //    （owner「搬移過時資料到 legacy，**不要刪除**」）。帳單跟著縮到 1。
+    ).toBe(1);
     for (const d of KNOWN_PROBE_DEBT) {
       expect(d.why.length, `${d.path} 的理由太短，寫不出「它有沒有在驗東西」`).toBeGreaterThan(40);
       expect(d.commit).toMatch(/^[0-9a-f]{7,40}$/);
@@ -201,7 +188,13 @@ describe("探測檔不可以住在 src/ 樹裡（CLAUDE.md：暫存檔寫 /priva
       const src = readFileSync(join(REPO, d.path), "utf8");
       return !/\bexpect\s*\(/.test(src);
     }).map((d) => d.path);
-    expect(zeroExpect.length, "帳單裡應該有 0-expect 的檔（目前兩支）").toBeGreaterThan(0);
+    // ⚠️ 這裡以前是 `toBeGreaterThan(0)`，理由是「guard-the-guard：帳單裡真的有
+    //    兩支 0-expect 的檔，所以下面那個迴圈不可以是空轉」。
+    //    2026-08-13 那兩支（`__mana_probe` / `__pacing_probe`）歸檔到
+    //    `docs/legacy/code/` 之後，那個前提**變成 false 了** —— 而那正是**好事**：
+    //    帳單清空是這條守衛想要的終局，⛔ 不是它該紅的理由。
+    //    所以改成釘「帳單本身還在被維護」（長度已在上一條被釘死），
+    //    下面的迴圈維持原樣：只要**還有**0-expect 的檔，它的理由就必須說出來。
     for (const p of zeroExpect) {
       const row = KNOWN_PROBE_DEBT.find((d) => d.path === p)!;
       expect(

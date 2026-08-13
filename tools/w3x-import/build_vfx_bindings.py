@@ -109,7 +109,7 @@ LIGHTNING_IDS = {
 ORB_BASE = "Asph"          # WC3 "Item Sphere" — the permanent attached-model base
 LOCUST_SWARM_BASE = "AUls"  # Crypt Lord Locust Swarm
 
-# The 蝗蟲群 cases docs/_vfx-fidelity-w3x.md §3.2 identified BY HAND. Used as a golden
+# The 蝗蟲群 cases docs/legacy/_vfx-fidelity-w3x.md §3.2 identified BY HAND. Used as a golden
 # set to measure this file's mechanical detector — a detector nobody scored is a guess.
 SWARM_GOLDEN = {
     "A0IB": "66-03 七夜怪談 — base AUls, 22 red Nether Dragons",
@@ -207,7 +207,7 @@ def classify_form(value):
 def load_stock_ability_func():
     """Merge Units\\*AbilityFunc.txt from the retail MPQs (later archive wins).
 
-    This is correction M2 from docs/_vfx-fidelity-w3x.md: war3map.w3a stores only
+    This is correction M2 from docs/legacy/_vfx-fidelity-w3x.md: war3map.w3a stores only
     OVERRIDES. An ability with no art override does NOT mean 'no art' — it means
     'inherits the base ability's stock art'. Skipping this file mis-reports about
     a third of the map's abilities as having no visual at all.

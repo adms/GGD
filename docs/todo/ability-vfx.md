@@ -197,7 +197,7 @@ deleted. What each new effect is meant to REPLACE is declared per effect in
   `_`-prefixed sidecar. That mismatch is why the composite lives at
   `content/assets/vfx/w3x-families.json` instead of `content/vfx/_w3x-families.json`.
 - **Binding.** `vfxKey` is still one string and `ability@1` still has no
-  `attachedModels` / `missile` / `beam` (L0 in `_vfx-fidelity-w3x.md`). Every
+  `attachedModels` / `missile` / `beam` (L0 in `legacy/_vfx-fidelity-w3x.md`). Every
   effect here carries `usedBy` (the w3x object ids and fields) so the bind is a
   lookup, not another archaeology pass.
 

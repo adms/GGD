@@ -8,9 +8,9 @@ owner 2026-08-02:
 > 之後也可以對照給 P1 · 模板開 vfx 欄位, P2 · 接上 6 張零採用模板 來作為進度參考使用
 
 用法：
-    python3 docs/tools/ability_ledger.py > docs/_ability-fidelity-ledger.md   # md（預設）
+    python3 docs/tools/ability_ledger.py > docs/legacy/_ability-fidelity-ledger.md   # md（預設）
     python3 docs/tools/ability_ledger.py --json                               # 寫 JSON 檔
-    python3 docs/tools/ability_ledger.py --json --md > docs/_ability-fidelity-ledger.md
+    python3 docs/tools/ability_ledger.py --json --md > docs/legacy/_ability-fidelity-ledger.md
 
 ⚠️ md 與 JSON **走同一份 `build_ledger()` 的結果**，不各自重算 —— 兩條路徑重算會分岔，
    而分岔的那一刻沒有人會發現（失敗形態 ⑤：被測的不是出貨的那個）。
@@ -31,7 +31,10 @@ GENERATOR_VERSION = 'ledger@4'
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 p = lambda *a: os.path.join(ROOT, *a)
 
-JSON_OUT = p('docs/_ability-fidelity-ledger.json')
+# ⭐ 2026-08-13：帳本本體已歸檔到 docs/legacy/（owner「舊規格搬 legacy」）。
+#    ⛔ 輸出路徑必須跟著走 —— 留在 docs/ 第一層的話，這支腳本下次一跑就把
+#    一份**沒有過期標頭**的帳本再生回現役目錄，並撞上 legacySpecQuarantine 閘。
+JSON_OUT = p('docs/legacy/_ability-fidelity-ledger.json')
 
 W3X_ABILITY_ART_TS = p('apps/client/src/render/vfx/w3xAbilityArt.ts')
 W3X_FAMILY_ART_TS = p('apps/client/src/render/vfx/w3xFamilyArt.ts')

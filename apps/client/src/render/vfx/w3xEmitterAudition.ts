@@ -118,7 +118,7 @@ const DIVINE_RING: AuditionEffect = {
         // were carried through.
         //
         // HONESTY NOTE: the emitter parameters above are DECODED from the
-        // binary (docs/_vfx-fidelity-w3x.md §4.4). This RADIUS is not — the
+        // binary (docs/legacy/_vfx-fidelity-w3x.md §4.4). This RADIUS is not — the
         // archaeology did not decode DivineRing's PIVT chunk, so 18 model units
         // is an ILLUSTRATIVE layout chosen to show what pivots do, and the page
         // says so. Do not treat it as a ported value

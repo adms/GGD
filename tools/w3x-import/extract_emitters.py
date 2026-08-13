@@ -120,7 +120,7 @@ LEVELED = {"war3map.w3a": True, "war3map.w3u": False, "war3map.w3h": False}
 # (targets-allowed / death type / move type), so this is a whitelist.
 #
 # NOTE: `right,hand` is ONE attachment point spelled as two tokens. Never split
-# these on commas — that is the M6 trap in docs/_vfx-fidelity-w3x.md.
+# these on commas — that is the M6 trap in docs/legacy/_vfx-fidelity-w3x.md.
 ATTACH_FIELDS = {
     "war3map.w3a": {
         "acap": ("ability.casterArt", "caster"),
@@ -189,7 +189,7 @@ def track_json(tr) -> dict:
 def classify_model_value(value: str, imported_index: dict[str, str]) -> list[dict]:
     """Split a model-valued object-data field and classify each entry.
 
-    The four forms the map actually uses (see docs/_vfx-fidelity-w3x.md):
+    The four forms the map actually uses (see docs/legacy/_vfx-fidelity-w3x.md):
       * a path containing `\\`  -> stock Blizzard asset, NOT in this repo
       * a bare `name.mdx|.mdl`  -> imported into the map; the file lives at
         raw/<name>, and CASE MUST BE FOLDED (the map writes `Darkraor.mdl` in

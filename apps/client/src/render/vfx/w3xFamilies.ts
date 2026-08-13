@@ -177,7 +177,7 @@ export function emitterShape(em: W3xParticleEmitter): W3xEmitterShape {
  * unit and stays. Buff art (`buff.targetArt` / `buff.specialArt` /
  * `buff.effectArt`) persists for the buff's duration — which is why every
  * passive / DoT / aura visual lives there and why they all read as missing
- * today (correction M3 in `docs/_vfx-fidelity-w3x.md`).
+ * today (correction M3 in `docs/legacy/_vfx-fidelity-w3x.md`).
  */
 export function isPersistentAttachmentRef(ref: {
   field: string;

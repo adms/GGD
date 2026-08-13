@@ -44,7 +44,7 @@
 
 ## 3 · ⛔ 不要給
 
-`_skill-mechanics-coverage-20260808.md` · `_skill-judgment-values.md` · `skill-forge-design.md`
+`legacy/_skill-mechanics-coverage-20260808.md` · `_skill-judgment-values.md` · `skill-forge-design.md`
 
 都是**內部工作紀錄**，而且部分已經過期（08-08 的機制盤點在 A 類修完後不準了）。
 給了只會製造**第二個真相來源** —— 那正是第〇章要防的事。

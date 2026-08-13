@@ -3,7 +3,7 @@
  *
  * WHY THIS FILE EXISTS
  * --------------------
- * The archaeology (`docs/_vfx-fidelity-w3x.md`) settled #98: a WC3 orb / locust
+ * The archaeology (`docs/legacy/_vfx-fidelity-w3x.md`) settled #98: a WC3 orb / locust
  * swarm / "particle effect" is a PARTICLE EMITTER BOUND TO AN ATTACHMENT POINT,
  * not a mesh. That is why `mdx→glb` produced ~1 KB shells — the geometry never
  * existed. 238 `PRE2` emitters across 132 imported models were dropped by the
@@ -23,7 +23,7 @@
  * animated emission tracks, pooling and disposal) live in `W3xEmitterRig.ts`,
  * which consumes `W3xEmitterRuntimeFlags` returned from here.
  *
- * THE BINARY THIS MIRRORS (`docs/_vfx-fidelity-w3x.md` §4.4, 171-byte payload)
+ * THE BINARY THIS MIRRORS (`docs/legacy/_vfx-fidelity-w3x.md` §4.4, 171-byte payload)
  * -------------------------------------------------------------------------
  *   float32 speed, variation, latitude, gravity, lifespan, emissionRate,
  *           length, width

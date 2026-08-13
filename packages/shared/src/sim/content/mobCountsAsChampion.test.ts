@@ -17,7 +17,7 @@ import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { entityIsKind } from "./condition";
 import type { MobRules } from "../mobs";
-import type { EntityId } from "../ids";
+import type { EntityId } from "../../ids";
 
 /** 造一隻指定 kind 的小怪，並掛上兩格開關的組合。 */
 function worldWith(

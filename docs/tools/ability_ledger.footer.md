@@ -7,7 +7,7 @@
 # md（這一份）
 python3 docs/tools/ability_ledger.py > docs/_ability-fidelity-ledger.md
 
-# JSON（編輯器吃的那一份，形狀見 docs/_ability-ledger-editor-spec.md §7）
+# JSON（編輯器吃的那一份，形狀見 docs/legacy/_ability-ledger-editor-spec.md §7）
 python3 docs/tools/ability_ledger.py --json
 
 # 兩份一起（同一份記憶體資料，不會分岔）

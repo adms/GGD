@@ -4,7 +4,7 @@
  * The owner's acceptance bar for an approximation is that the ORIGINAL
  * PARAMETERS were genuinely read. So the two anchor cases here are the two
  * emitters the archaeology decoded by hand out of the binary
- * (`docs/_vfx-fidelity-w3x.md` §4.4) — `DivineRing.mdx` emitter 1/20 and
+ * (`docs/legacy/_vfx-fidelity-w3x.md` §4.4) — `DivineRing.mdx` emitter 1/20 and
  * `flamessmoke.mdx` emitters 1/4 and 3/4. Every number below is transcribed
  * from that decode, and the expectations are computed from the WC3 values, not
  * from whatever the implementation happens to produce.

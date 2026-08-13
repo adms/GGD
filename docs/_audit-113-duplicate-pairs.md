@@ -1,7 +1,7 @@
 # #113 十四對「逐位元相同」英雄文件 —— 逐對裁決
 
 > 稽核日期 2026-07-30 · 唯讀工作流（沒有動任何 `content/` · `apps/` · `packages/` 檔）
-> 本檔**取代** `docs/_champion-dedup-113.md` 的裁決表（那份的結論方向對、理由是錯的，
+> 本檔**取代** `docs/legacy/_champion-dedup-113.md` 的裁決表（那份的結論方向對、理由是錯的，
 > 見文末〈舊檔哪裡錯了〉）。舊檔按規定不動。
 
 ---
@@ -66,7 +66,7 @@
 | `name` + `modelKey` 相同 | 17 |
 | `name` + `modelKey` + `baseStats` + `growth` 逐位元相同 | **3** |
 
-- 「14」是 `_champion-dedup-113.md` 當時的清單。之後 #248 重抓三圍改了數值、
+- 「14」是 `legacy/_champion-dedup-113.md` 當時的清單。之後 #248 重抓三圍改了數值、
   #249 補匯入了 4 個缺的變身態文件（`godie-h00w` / `godie-o030` / `godie-n01b` / `godie-e010`），
   所以現在多出 5 對：
   40 地獄歌神(`nman`/`n01b`)、87 曹操孟德(`o02n`/`o02o`)、70 白木老樹精(`e00s`/`e010`)、
@@ -170,7 +170,7 @@ w3u `umvs = 0` 的 4 個單位，出貨 `baseStats.ms` **全部是 5.5**：
 
 ---
 
-## 舊檔哪裡錯了（`docs/_champion-dedup-113.md`）
+## 舊檔哪裡錯了（`docs/legacy/_champion-dedup-113.md`）
 
 | 舊檔的話 | 實際 |
 |---|---|
