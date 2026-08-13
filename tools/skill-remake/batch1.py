@@ -1190,6 +1190,17 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
   #    —— `STAT_CLAMPS[MoveSpeed]` 的下界是 2，所以連直接改 `baseStats.ms` 都只能到 2；
   #    而 applyStatus 的 root 需要秒數，切換技沒有時鐘。
   #    ⇒ 這是**真的引擎缺口**（MoveSpeed 下界要變可調，或開一格非 CC 的 immobile 授予）。
+  #
+  # ⚠️⚠️ 2026-08-13 量到的症狀**比「沒做」更糟：它是反過來的**。
+  #    紮根換的是整張卡，而 `godie-e010` 的 `baseStats.ms` 是 **5.5**、本體
+  #    `godie-e00s` 是 **5.3** ⇒ 「代價是不能移動」在遊戲裡是「紮根之後跑得**更快**」，
+  #    這支切換技變成純加成、零代價。
+  #    ⛔ 這不是「規格還沒實作」，是**規格被實作成相反的東西**，而畫面上沒有任何東西
+  #       會說出來（失敗形態②）。
+  #    ⚠️ 也⛔不要用 `M("ms","override",2.0)` 假裝補上：2 是 clamp 下界不是 0，那是
+  #       「爬行」不是「不能移動」，而且它會讓這個缺口**從此看起來像做完了**。
+  #    ⇒ 分成兩件事排：①「形態閘住的移動封鎖」機制（引擎，非 CC、無秒數、跟著
+  #       championForm 進出）②替身卡的 ms 不可以比本體快（純內容，改 godie-e010）。
   #    ⛔ 不要用「每秒重掛 root」繞過去：那是硬控，會被自己的免控 buff 拒絕、
   #       計進 ccAppliedTicks 戰績、被【淨化】剝掉 —— 三個都是玩家看得出來的錯。
   #
@@ -1245,7 +1256,20 @@ A("70-04", "70-04 千年練成", "ground", [90, 90, 90], [240, 420, 600], 14,
   maxRank=3, radiusTier="大",
   effects=[{"kind": "randomArea", "who": "self", "count": [4, 6, 8], "intervalSec": 0.25,
             "scatterRadius": 6.0, "firstAtCast": True, "stopOnCasterDeath": True,
-            "effects": [area("magic", tier="小", per=[250, 350, 450], ap=0.3),
+            # ⭐「隨機[招喚]樹精⋯總共 4/6/8 棵」的**看得見**那一半（2026-08-13）。
+            #    ⚠️ 技能層級那一格 `vfxKey` 是跟著**施法事件**送的
+            #    （abilitySystem.ts:375 `vfxKey: def.vfxKey`）—— 一次、在施法者身上，
+            #    ⛔ 不會跟著 randomArea 的每一個落點播。所以在此之前那 4/6/8 棵樹精
+            #    在畫面上是**零表現**：玩家只看到敵人身上每 0.25 秒莫名跳一次傷害，
+            #    數不出「幾棵」，也沒有任何線索判斷落點在哪、該往哪閃（失敗形態②）。
+            #    `spawnVfx` 的 `at:"point"` 讀的正是 `ctx.point`，而 randomArea 到期時
+            #    就是用 `targets:[] + point:hit.pos` 跑這一串 ⇒ **一棵樹精一個落點**。
+            # ⛔ 它要排在兩發 damageArea **前面**：`_fold_onhit` 折的是「形狀後面的
+            #    酬載」，排前面就不可能被折進 onHitTargets（spawnVfx 也不在
+            #    `_PAYLOAD_KINDS` 裡，兩道保險）。
+            "effects": [{"kind": "spawnVfx", "vfxId": "fx.prim.nature.explosion-lg",
+                         "at": "point"},
+                        area("magic", tier="小", per=[250, 350, 450], ap=0.3),
                         # ⭐「傷害加倍」= 同量再打一次，但**只打被定身的人**。
                         #    victimCondition 是圈**內**逐一過濾，這正是它唯一正確的用途。
                         # ⛔ victimCondition 不可以當 kw 傳進 area()：會被 amt() 的
@@ -1339,6 +1363,25 @@ A("77-002", "77-002 御雷劍", "self", [0], [0], 0,
        "ops": [{"op": "procChance", "mode": "set", "value": 0.5}]},
       {"abilityId": "godie-e00w.e",   # 77-03 GLADIARIA ALAT —— 持續時間增加「至」30 秒
        "ops": [{"op": "durationSec", "mode": "set", "value": 30.0}]}]},
+  # ⚠️⚠️ 這一段 passive 在**五層裡一層都沒有**（2026-08-13 逐層量的，⛔ 不是推測）：
+  #    · 第 1 層 owner 新版說明：剝掉台詞「御雷劍。飛行」之後只剩兩句話，兩句都是
+  #      「改別支技能的數字」，上面那個 augment 已經是它們的家。⛔ 沒有第三句。
+  #    · 第 3–5 層 w3x：A10G「御雷劍」base=AIxk，ubertip 逐字是「其雷鳴劍發動機率
+  #      上升至 50%，並且可以減免 33% 傷害，持續 15 秒」—— 原作也**沒有**它自己的落雷。
+  #    ⇒ `chance: 0.4` 這個數字是這支產生器自己造的（同 `_require_base` 檔頭記的
+  #      `flat=50` 那個坑：一個看起來正常、卡片解釋不了的數字）。
+  # ⛔ 而且它**與 augment 重複計數**：77-02 雷鳴劍的落雷已經被 `procChance set 0.5`
+  #    抬到 50%，這一條再獨立抽 40% ⇒ 實際約 70% 會落雷、而且兩發可以同時落。
+  #    規格寫的是「上升**至** 50%」，不是「50% 再加一份 40%」。
+  # ⛔ 但**這一輪不刪**，因為刪掉會讓產生器當場非零離開，而不是靜默出錯：
+  #    `tag_gate.audit()` 對 `[被動]` 問的是 `doc.get("passive") is not None or marks`，
+  #    對 `[機率]` 問的是 `{"chance": ANY}` 那一組形狀 —— 兩個今天**都只由這段
+  #    passive 滿足**，`augment` 的 `{"op":"procChance"}` 兩張表都不認得。
+  #    ⇒ 正解是**同時**在 tag_gate.py 讓一支「純 augment 的被動 EX」也算數
+  #      （`[被動]` 接受 `doc.get("augment")`、`[機率]` 接受 `{"op":"procChance"}`，
+  #      形狀抄 70-002 的 `{"op":"damageCoeffAp"}` 那一列），那是兩個檔的改動。
+  # ⭐ 順帶：gap 報告說「augment.targets 少了 condition」的那一條**已經被上面
+  #    owner 2026-08-13 的裁決取代**（御雷劍就是這支 EX 自己），⛔ 不要再補回去。
   passive={"name": "77-002 御雷劍", "ranks": [{"hooks": [
       {"on": "onBasicAttack", "chance": 0.4, "target": "event",
        "effects": [area("magic", tier="小", ap=0.1)]}]}]})
@@ -1476,6 +1519,16 @@ EMFR_FORM_SEC = 12.0         # 規格三支逐字都寫「持續12秒」
 #: 那是一個決策點（第一守則），所以給它自己的常數。
 #: ⛔ 不要沿用 EMFR_FORM_SEC：那是形態的 12 秒，借用等於把兩個決策綁成一格。
 EMFR_ARM_SEC = 3.0
+#: 武裝標記的**疊層鍵**。⚠️ 沒有它，`applyBuff.ts:154` 會把來源算成
+#: `buff:${ctx.origin}#${world.tick}` —— **每一次施放都是一份全新的來源**，而
+#: `maxTriggers` 的額度記在**逐來源一格**的 `src.hookFireCount[hi]`（hooks.ts）。
+#: ⇒ R 開著的 12 秒內先放 Q 再放 EX（30s / 60s CD，3 秒窗口內完全放得出來）
+#:   ＝ 身上兩份武裝，下一次普攻被兩份各扣一次額度、打出**兩發**雷神一擊
+#:   ＝ 三階 600 + 140% AP 而不是 300 + 70% AP，而畫面上只是「這一下特別痛」
+#:   （失敗形態②）。規格逐字是「施放技能後的**下一次**普通攻擊」一次。
+#: ⭐ 同 key 只會有一份來源、一份額度；`onConsumed:"detachSource"` 打出去之後
+#:   把整份卸掉（hooks.ts:500 推 `src.id`），所以下一次施放仍然重新武裝得起來。
+EMFR_ARM_KEY = "emfr-thunder-arm"
 
 
 def form_buff(mods, hooks=None, perRank=None):
@@ -1516,6 +1569,14 @@ A("15-02", "15-02 疾風迅雷", "self", [60, 60, 60, 60], [120, 180, 240, 300],
 
 A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420], 0,
   "[主動][變身][普攻時][範圍][AP加成]\n55秒冷卻\n消耗[MP] 180/260/340/420\n持續12秒\n\n「問問這砂鍋大的火拳？」\n普通攻擊附加 60/90/120/150 + 40% [AP] 火焰傷害，每次技能命中都會引發爆炎[燃燒]標記，對[周圍]敵人造成 100/150/200/250 +60% [AP] [範圍]傷害，但[移動速度]減半。\n([變身]為唯一狀態不可疊加)",
+  # ⭐ 「獄炎」是**火**技，但這一格從舊文件繼承下來的是 `fx.prim.lightning.nova`
+  #    —— 從同英雄的雷系兄弟技（Q/W/R 都是雷）複製過去沒改的一格。
+  #    `apps/client/src/GameApp.ts:651` 是 `def.vfxKey ? vfxFor(def.vfxKey) : null`，
+  #    施放特效直接讀這一格 ⇒ 一支內文講三次火（火焰傷害／爆炎／燃燒）的技能，
+  #    在畫面上炸開的是藍色雷電，三支變身技分不出是哪一種。
+  # ⛔ 不要改 `content/abilities/godie-emfr.e.json` —— 那是這支產生器的輸出，
+  #    下次一跑就被覆寫。唯一的出口是這一格表格欄位（見 build() 的覆寫閘）。
+  vfx_key="fx.prim.fire.nova",
   # ⭐ 四條缺口一起關：①普攻火焰逐階 60/90/120/150 ②爆炎逐階 100/150/200/250
   #    ③⚠️ 兩條追打搬進 12 秒 buff —— 在此之前它們掛在**常駐 passive**，所以
   #    **不按 E 也永遠生效**，而按了 E 只換來移速減半的**純負面**（玩家一定看得出來）
@@ -1523,7 +1584,28 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
   effects=[form_buff([M("ms", "pctMult", -0.5)],
                      hooks=[{"on": "onBasicAttack", "target": "event",
                              "effects": [dmg("magic", per=[60, 90, 120, 150], ap=0.4)]},
-                            {"on": "onAbilityHit", "target": "event",
+                            # ⭐ 「每次**技能命中**都會引發爆炎」的落點是
+                            #    `onDamageDealt` + `damageSource:"ability"`，
+                            #    ⛔ **不是** `onAbilityHit`。理由是發射點：
+                            #    `onAbilityHit` 只在 `abilitySystem.ts:445` /
+                            #    `CastResolveSystem.ts:102` 對**施法當下算出的 targets**
+                            #    發（而且 `hitId !== caster` 排掉自己），
+                            #    `sim/effects/damageLine.ts` 裡一行 `fireHooks` 都沒有。
+                            # ⚠️ 涅吉五格技能裡唯一會傷人的是 Q，而 Q 是 ground + damageLine
+                            #    ⇒ 那條線上真正被打中的人一個都不算「命中」；
+                            #    W/E/R/EX 全是 self ⇒ targets=[caster] ⇒ 被 `hitId !== id` 濾掉。
+                            #    ＝ 這一句規格在場上**一次都不會發生**（失敗形態②：
+                            #    卡片上最顯眼的那一句，玩家只換到普攻附火 + 移速減半）。
+                            #    `combat/damage.ts:1235` 對每一發**真的落地**的封包都發
+                            #    `onDamageDealt`，那才是「命中」。
+                            # ⛔ 不會遞迴：hook 效果的 origin 是 `hook:…`（hooks.ts:543），
+                            #    而 `damageSource:"ability"` 走 `originInScope`（只認
+                            #    `ability:` **開頭**），所以爆炎自己打不出第二發爆炎。
+                            # ⚠️ 節奏（一條線打中三個人＝三次爆炎）刻意**不寫死**：
+                            #    要節流就是 hook 的 `internalCooldown` 一格，留空＝規格
+                            #    逐字的「每次」（第一守則：決策留在欄位，不在註解裡辯護）。
+                            {"on": "onDamageDealt", "target": "event",
+                             "damageSource": "ability",
                              "effects": [area("magic", tier="中",
                                               per=[100, 150, 200, 250], ap=0.6),
                                          status("burn", 3.0)]}])])
@@ -1531,6 +1613,18 @@ A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420],
 A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600], 0,
   "[主動][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 200/400/600\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 150/225/300 + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
   maxRank=3,
+  # ⛔ 舊文件那顆 `spawnProjectile`（`imported.bolt.lightning`）**明示退場**。
+  #    它是 A-5「沉默 ≠ 移除」的沿用機制帶回來的，但在新版規格下它是一發**空包彈**：
+  #    castType 是 self ⇒ 按下 R 的瞬間就往 `t.facing` 射出去（`spawnProjectile.ts`
+  #    沒有 point/direction 時的退路），而 `onHit: []` ⇒ `runEffects([])` = 0 傷害。
+  #    更糟的是 `ProjectileSystem.ts:122` 會因為 origin 有 `ability:` 前綴，替這發
+  #    空包彈補一次 `fireHooks(onAbilityHit)` 與一次 `recordAbilityHit`（戰績多一筆
+  #    假命中）。規格的「雷神一擊」是**下一次普通攻擊**打出去的，不是施法瞬間飛出去的
+  #    東西 —— 玩家會把那道不痛的閃電當成雷神一擊，照著它去站位對線（失敗形態②）。
+  #    視覺改掛在真正打出去的那一發上（見下面那顆 spawnVfx）。
+  retire={"spawnProjectile": "15-04 的雷神一擊由下一次普攻打出（onAbilityCast→onBasicAttack 武裝鏈），"
+                             "施法瞬間那顆 imported.bolt.lightning 是 onHit 空的空包彈：0 傷害、"
+                             "誤導站位、還記一次假命中。視覺改用 spawnVfx 掛在真正打出去的那一發上。"},
   # ⭐ 五條缺口一起關（⛔ 不是逐條補丁，是把整條時序寫出來）：
   #    ①觸發條件「**施放技能後**」—— 武裝來源是 `onAbilityCast`（在此之前整個沒有）
   #    ②「**下一次**」一次性 —— `maxTriggers: 1`；`consumeOn` 單獨填是**沒有用的**
@@ -1545,12 +1639,32 @@ A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600],
   effects=[form_buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
                       M("as", "capRaise", 10.0)],
                      hooks=[{"on": "onAbilityCast", "target": "self",
-                             "effects": [buff([], EMFR_ARM_SEC, hooks=[
+                             "effects": [buff([], EMFR_ARM_SEC,
+                                              # ⭐ 一份武裝 = 一份來源 = 一次額度
+                                              #    （為什麼一定要有 key 見 EMFR_ARM_KEY）。
+                                              # ⚠️ `maxStacks=1`：這顆 buff 的 modifiers 是空的，
+                                              #    層數對數值沒有任何作用，釘成 1 才不會讓一個
+                                              #    沒有意義的計數在面板上長出來。
+                                              #    ⛔ 疊層路徑**不重置** `hookFireCount` ——
+                                              #    那正是要的：窗口內再施放只刷新到期時間，
+                                              #    不會補一份新的額度。
+                                              stackKey=EMFR_ARM_KEY, maxStacks=1,
+                                              hooks=[
                                  {"on": "onBasicAttack", "target": "event",
                                   "maxTriggers": 1, "consumeOn": "fire",
                                   "onConsumed": "detachSource",
+                                  # ⭐ 規格那一句的「視覺」那一半就掛在這裡 ——
+                                  #    真正打出 150/225/300 + 70% AP 的是這一發，而它
+                                  #    在此之前**畫面上什麼都沒有**：它的 origin 是
+                                  #    `hook:buff:…`，不走 `def.vfxKey` 那條施放特效路徑，
+                                  #    所以三階最高 300 的那一下看起來只是一次普攻。
+                                  # ⚠️ `at:"target"` = 打在被打的那個人身上，⛔ 不是施法者
+                                  #    （`spawnVfx.ts` 的 at 省略時退回 caster）。
                                   "effects": [dmg("magic", per=[150, 225, 300],
-                                                  ap=0.7)]}])]}],
+                                                  ap=0.7),
+                                              {"kind": "spawnVfx",
+                                               "vfxId": "fx.prim.lightning.bolt",
+                                               "at": "target"}]}])]}],
                      perRank=[{"modifiers": [M("ms", "pctMult", 1.0), M("as", "pctAdd", a),
                                              M("as", "capRaise", 10.0)],
                                "duration": 12.0}
@@ -1604,7 +1718,19 @@ A("44-02", "44-02 死神的規則", "self", [0], [0], 0,
 A("44-03", "44-03 火車輾過", "targeted", [60, 50, 40, 30], [150, 250, 350, 450], 12,
   "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
   radiusTier="大",
-  effects=[area("magic", tier="大", per=[650, 750, 850, 950], ap=0.6)])
+  # ⭐ 「使敵方 [詛咒]標記的 …」是一個**前提**，而它在此之前一個落點都沒有 ——
+  #    44-01 死神之眼有沒有先掛上【詛咒】完全不影響這一發（失敗形態②：
+  #    連招的前提消失，而畫面上跟正常一模一樣）。
+  #    `targeted` 施法下 `ctx.targets = [被指定的那個敵人]`，而
+  #    `effectRunner.ts::gateOnCondition` 用 `subject:"target"` 讀的正是他 ⇒
+  #    這一格問的是「**圓心那個人**身上有沒有【詛咒】」。
+  #    姊妹技 44-04 心臟麻痺對**同一句話**用的就是這顆葉子（兩顆效果各掛一份）。
+  # ⛔ 仍然不可以改用 victimCondition（理由見上面那段）：那一格過濾的是誰吃
+  #    **基礎**傷害，套上去會把規格點名要吃傷害的「周圍部隊」全部濾掉。
+  # ⚠️ 要用 `dict(area(...), condition=...)` 包 —— 直接當 kw 傳進 area() 會被
+  #    `amt()` 的 `o.update(kw)` 倒進 amount，而 zScaling 是 .strict()（同 52-04）。
+  effects=[dict(area("magic", tier="大", per=[650, 750, 850, 950], ap=0.6),
+                condition={"kind": "status", "subject": "target", "statusId": "curse"})])
 
 A("44-04", "44-04 心臟麻痺", "targeted", [35, 35, 35], [150, 250, 350], 12,
   "[主動][AP加成]\n35秒冷卻\n消耗MP150/250/350\n\n「不，還不能笑，我一定要忍住……在35秒後宣布勝利吧。」\n造成敵方[詛咒]標記的[現存生命] 30/40/50% + 40% [AP] 傷害，並使動作[緩慢]持續5秒。",
@@ -1754,6 +1880,35 @@ A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
 
 A("60-002", "60-002 勇者意志", "self", [120], [0], 0,
   "[被動][反彈成功時][反彈]\n120秒冷卻\n\n「真正的勇者不是不會死，是存檔點夠近」\n生命值低於30%時，立即獲得相當於 100% [最大生命值]的[護盾]，120秒內只能觸發一次，若 [完美盾反] [反彈]成功，冷卻立即重置。",
+  # ⚠️ engine-gap（2026-08-13 量到的）——「120秒冷卻」這一句的**機制**是好的：
+  #    hook 的 `internalCooldown` 真的鎖得住，`onReflectSuccess` 那一條也真的把
+  #    `hookLastFired` 寫回 `NEVER_FIRED`（＝逐字等於「從來沒發動過」）。壞的是它
+  #    在**畫面上**與**後台上**都不存在，而兩半都不在這張表的射程內：
+  #
+  #    ① 玩家看不到：`apps/game-server/src/net/snapshot.ts` 沒有投影
+  #       `hookLastFired` / `internalCooldown`（`apps/client/src/ui/hud/` 唯一一筆
+  #       `internalCooldown` 在 `markModel.ts`，而它自己註明跟 sim 的 hook ICD 無關）。
+  #       EX 圖示讀的是 `seat.exCooldown` ＝ `exSlot.cooldownRemainingTicks`，而這支
+  #       `effects: []` 是**純被動**、永遠不會被 cast ⇒ 那一格恆為 0 ⇒ 圖示永遠亮著，
+  #       沒有掃描也沒有秒數，「反彈成功立即重置」也沒有任何回饋。
+  #       ⛔ 不可以用 `modifyCooldown{target:"abilitySlot"}` 去「把 EX 推上冷卻」湊一個
+  #       掃描出來：`sim/effects/modifyCooldown.ts` 那條路第一道就是
+  #       `if (inst.cooldownRemainingTicks <= 0) continue;` —— 它只縮短**已經在跑**的
+  #       冷卻，起不了一格新的（`mode` 也沒有 `set`）。
+  #       ⛔ 也不可以改寫成「狀態當鎖」：`schema/condition.ts` 的 `zStatusIdLeaf` 只有
+  #       `minStacks ≥ 1`，**沒有**「不帶某狀態」這一葉，寫不出「上次觸發過就別再觸發」。
+  #
+  #    ② 後台旋鈕碰不到：`sim/effects/hookIcd.ts` 的 factor 是
+  #       `src.kind === "item" ? combatEnv.itemCooldown : 1` ⇒ 英雄被動一律 1，所以這
+  #       120 秒是**真的 120 秒**；而同一位英雄 60-04 的「60秒冷卻」走技能槽位、吃出貨
+  #       `content/config/combat-env.json` 的 `cooldown: 0.2` ⇒ 實際 12 秒。規格寫的是
+  #       2 倍稀有度，出貨是 10 倍。
+  #       ⛔ 這裡**不可以**把 120 改成 24 去湊比例 —— 那是把一個 config 值烘進內容
+  #       （第一守則），owner 下次調 `cooldown` 這一格就再度說謊，而且沒有任何守衛會紅。
+  #
+  #    ⚠️ 這是 37 支 `effects: []` 純被動 EX **共有**的形態（這 15 位英雄裡佔 9 支），
+  #       ⛔ 不是 60-002 自己的內容錯 —— 修它要動引擎（多一條投影 + 一格冷卻縮放範圍），
+  #       不是動這張表。
   passive={"name": "60-002 勇者意志", "ranks": [{"hooks": [
       {"on": "onDamageTaken", "key": "brave-will", "target": "self",
        "internalCooldown": 120.0,
@@ -1808,16 +1963,26 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
 A("79-02", "79-02 月牙斬擊", "targeted", [60, 60, 60, 60], [80, 160, 240, 320], 2.0,
   "[主動][AP加成]\n60秒冷卻\n消耗MP80/160/240/320\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
   effects=[dmg("magic", per=[200, 350, 500, 650], ap=0.5)],
-  # ⭐ 兩個括號子句各一條 hook。第二條（卍解）在此之前**完全沒有落點**。
-  #    `whileForm:"alternate"` 讓它只在變身後掛得上（79-04 卍解是那個形態的來源）。
+  # ⭐ 兩個括號子句是**同一階的兩條 hook**，⛔ 不是兩個 rank。
+  #    ⚠️ `abilityPassives.ts::rankBlock` 一次只掛**一格**
+  #    （`p.ranks[min(rank, len(ranks)) - 1]`）。上一版把破魔放 ranks[0]、卍解放
+  #    ranks[1]，於是 W 一升到 2 階（4 階技，玩家一定會升）破魔那條就整個不存在；
+  #    而 ranks[1] 又帶 `whileForm:"alternate"`（形態不合直接 return null）
+  #    ⇒ 未卍解的常態下 2 階以上**一格都掛不上**，兩句話同時失效。
+  #    ⛔ 兩句話也因此永遠不可能同時成立 —— 而規格是兩個獨立的括號，不是二選一。
+  # ⭐ 卍解那一條改用**條件葉**而不是 `whileForm`：79-04 的增益帶
+  #    `statusId:"bankai"`（G10），而 `effectCommon.ts::hasStatus` 連具名標記
+  #    一起讀 ⇒ `status/self/bankai` 問得到它。這正是兄弟技 79-03 月牙天衝對
+  #    **同兩句話**用的形狀，差別只在 subject：破魔問敵人、卍解問自己。
+  # ⚠️ 一格 rank 區塊 = 四階共用（`min(rank, 1) - 1` 永遠是 0），這是對的：
+  #    兩個括號的係數是固定的 100% / 200%，規格沒有逐階。
   passive={"name": "79-02 月牙斬擊", "ranks": [
       {"hooks": [
           {"on": "onAbilityHit", "abilitySlot": "W", "target": "event",
            "condition": {"kind": "status", "subject": "target", "statusId": "magic-break"},
-           "effects": [dmg("magic", ap=1.0)]}]},
-      {"whileForm": "alternate",
-       "hooks": [
+           "effects": [dmg("magic", ap=1.0)]},
           {"on": "onAbilityHit", "abilitySlot": "W", "target": "event",
+           "condition": {"kind": "status", "subject": "self", "statusId": "bankai"},
            "effects": [dmg("magic", ap=2.0)]}]}]})
 
 A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550], 11,
@@ -1975,7 +2140,17 @@ A("89-02", "89-02 憤怒的菊花", "self", [0], [0], 0,
       #    熊貓把傷害反彈到**自己**身上。onDamageTaken 是帶傷害封包的事件，
       #    所以 inc_pct 收得到那一發。
       # ⚠️ perRank 1.0 是**規格沒給的數字**（同 60-04 那一筆，逐字同一個坑），要問 owner。
-      {"on": "onDamageTaken", "chance": 0.03, "target": "event", "internalCooldown": 1.0,
+      # ⭐「當**敵人**攻擊熊貓的時候」—— `victim:"enemy"` 就是規格裡那兩個字。
+      # ⛔ 省略它**不等於**「敵人打的」：`sim/effects/hooks.ts::victimPasses` 對缺席的
+      #    `victim` 走 `default: return true`，也就是**任何一發進 damageQueue 的封包**
+      #    都算數 —— 含熊貓自己的自傷（89-03 的 2% 自爆、89-002 的 1/6 自殺分支，
+      #    兩者 `pkt.source === pkt.target === 熊貓`）。畫面上就是「沒人打我，怎麼
+      #    開始噴屎了」，而規格裡沒有這個互動。
+      # ⚠️ 這一格是 #244 開的**既有機制**（全 repo 13 個位置在用），⛔ 不是為熊貓寫的 if。
+      # ⚠️ 殭屍與守護者照樣算敵人：`MONSTER_TEAM = 255`（mobs.ts:340）與英雄隊伍不同
+      #    ⇒ `sameTeam(...) === false` ⇒ 通過。被擋掉的**只有自己**。
+      {"on": "onDamageTaken", "chance": 0.03, "target": "event", "victim": "enemy",
+       "internalCooldown": 1.0,
        "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]},
       # ②③「[反彈時] 會…使[周圍][範圍]敵人造成[癱瘓]及[詛咒]」
       # ⭐「[反彈時]」逐字就是 onReflectSuccess —— ⛔ **不是**第二顆帶 chance 的 hook
@@ -1999,8 +2174,13 @@ A("89-03", "89-03 憤怒的胸毛", "self", [0], [0], 0,
   "[被動][機率]\n\n受到敵方傷害時，有 4% [機率] 拔下熊貓的一根胸毛，這份刺激的快感讓熊貓 [攻擊速度] 提升200/250/300/350%，持續4秒，但也會有 2% [機率] 拔到重要部位的毛，[自爆] 損失現存 50%生命。",
   innate="passive", maxRank=4,
   passive={"name": "89-03 憤怒的胸毛", "ranks": [
+      # ⭐「受到**敵方**傷害時」—— `victim:"enemy"` 就是「敵方」那兩個字，理由與
+      #    89-02 那一顆逐字相同（缺席的 victim ⇒ `victimPasses` 回 true ⇒ 任何封包
+      #    都算，含自己 2% 自爆與 89-002 輪盤自殺那一發）。
+      # ⚠️ `target` 與 `victim` 是**兩條軸**，並存不矛盾：`target:"self"` 說「攻速加給誰」
+      #    （熊貓），`victim:"enemy"` 說「誰打的才算」（事件那一端＝攻擊者）。
       {"hooks": [{"on": "onDamageTaken", "chance": 0.04, "target": "self",
-                  "internalCooldown": 1.0,
+                  "victim": "enemy", "internalCooldown": 1.0,
                   "effects": [buff([M("as", "pctAdd", v)], 4.0)]},
                  # ⭐「但也會有 2%[機率]拔到重要部位的毛，[自爆]損失現存 50%生命」
                  # ⛔ 不巢狀在 4% 裡：0.04×0.02 = 0.08%，一整場都不會發生一次
@@ -2012,8 +2192,14 @@ A("89-03", "89-03 憤怒的胸毛", "self", [0], [0], 0,
                  # ⭐ damageType "true"：自爆是「損失生命」不是一發攻擊，不吃護甲魔抗。
                  # ⚠️「打不死人」只在**今天**字面為真（0.5 × 現存 < 現存，而
                  #    damageDealt=1.0）—— 那是 config 保證不是結構保證。
+                 # ⭐ 同一句「受到**敵方**傷害時」也管到這一顆 —— 規格的 2% 與上面的
+                 #    4% 共用同一個觸發詞，所以「敵方」那兩個字必須也在這裡。
+                 # ⚠️ 少了它會**自我餵食**：自爆那一發（`applyTo:"self"`）是一個
+                 #    `pkt.source === pkt.target === 熊貓` 的正常封包，落地時再發一次
+                 #    `onDamageTaken` ⇒ 4% 那一顆（`hookLastFired[hi]` 各記各的 ICD）
+                 #    可能立刻白拿一層攻速，而畫面上沒有任何敵人參與。
                  {"on": "onDamageTaken", "chance": 0.02, "target": "self",
-                  "internalCooldown": 1.0,
+                  "victim": "enemy", "internalCooldown": 1.0,
                   "effects": [dict(dmg("true", flat=0,
                                        res_pct={"subject": "self", "resource": "health",
                                                 "basis": "current", "perRank": [0.5]}),
@@ -2061,6 +2247,21 @@ A("89-002", "89-002 俄羅斯輪盤", "targeted", [10], [666], 5.29,
       #    立過的裁決，我換成 damage 時把它弄丟了）。
       # ⚠️ 「特殊殭屍/殭屍王算英雄」那一半**沒做** —— 它們今天的 entity kind 是 `mob`，
       #    要它們被這條讀成 champion 得動分類（新 kind 或重新歸類），那是另一張卡。
+      # ⚠️ 「死亡」今天**打不死帶護盾的滿血目標** —— 明說，不是漏掉（第三守則）。
+      #    這一發走一般 damageQueue，而 `combat/damage.ts::eligibleShields` 的濾鏡是
+      #    `s.absorbs === undefined || s.absorbs === "all" || s.absorbs === type`
+      #    ⇒ **真傷照樣被護盾吃掉**。滿血時 current === max，扣完剛好剩下「護盾量」點血：
+      #    身上有任何一片盾就活下來。content/abilities 有 7 支發 `shield`、1 支
+      #    `manaBarrier`（後者連 `shieldBreak` 都碰不到 —— 它是 damage.ts:964 的另一條
+      #    扣減），所以這不是理論值。同一發還乘 `world.combatEnv.damageDealt`
+      #    （damage.ts:875；出貨值 1.0）⇒ owner 一旦調到 <1，兩格死亡分支對滿血目標就
+      #    **結構性**永遠不致命 —— 今天字面為真只是 config 保證，不是結構保證。
+      # ⛔ 這裡**不補**：JSON 側沒有出口。`devour` 有 `throughShields` 但
+      #    `thresholdPctOfMax` 上界 0.5（滿血抽中也毫髮無傷）；`shieldBreak` 沒有
+      #    `applyTo`，救不了「自己死亡」那一格，也碰不到 manaBarrier。缺的是引擎的
+      #    `damage.throughShields`（鏡射 `devour.throughShields`，effect.ts:2927）＋
+      #    一格 `damage.skipGlobalDamageMult`（`DamagePacket` 已經有這個欄位，只是
+      #    content schema 沒開）。⛔ 為這一支寫 if 是第〇·五守則的紅線。
       {"weight": foe, "effects": [dict(dmg("true", flat=0,
           res_pct={"subject": "target", "resource": "health",
                    "basis": "max", "perRank": [1.0]}),
@@ -2249,17 +2450,31 @@ A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
       {"hooks": [{"on": "onBasicAttack", "target": "event",
                   "effects": [dmg("physical", flat=v),
                               # ⭐ [麻痺] = content/status-effects/numbness.json，
-                              #    那份文件的描述**逐字點名這一支**（「52-03 無銘斧劍
-                              #   『附加[麻痺]效果，持續0.6秒』那種**沒有修飾詞**的寫法」）
-                              #    —— 也就是說那一格是專門為它開的。
-                              # ⛔ slow40 是【減速】那一族（15-01「麻痺[緩慢][移動速度]」
-                              #    才走那邊），掛在這裡等於卡片寫麻痺、身上長減速。
-                              # ⚠️ moveSpeedMult 留著：numbness 的機制「由施加它的那支
-                              #    技能的 applyStatus 決定」，而規格沒給第二個修飾詞。
-                              #    要不要改成 stun 是 owner 的一句話（0.6 秒 × 每一次
-                              #    普攻 = 永久暈眩鎖，那是平衡決定不是填空）。
-                              status("numbness", 0.6, moveSpeedMult=0.5)]}]}
-      for v in (50, 70, 90, 110)]})
+                              #    那份文件的描述**逐字點名這一支**，而且說得很清楚：
+                              #    「它擋住哪幾格**不在這個標記上** —— 由施加它的那支
+                              #    技能的 applyStatus 決定；這份文件只負責身分。」
+                              #    ⇒ 這一顆只掛**身分**，⛔ 不帶任何修飾詞。
+                              status("numbness", 0.6),
+                              # ⭐ 麻痺**做了什麼**由階梯的下層回答，⛔ 不是我猜的。
+                              #    規格（第 1 層）只寫「附加 [麻痺] 效果，持續0.6秒」，
+                              #    對「擋住哪一格」保持沉默 ⇒ 由 w3x 說明（第 4 層）
+                              #    與 w3a 欄位（第 5 層）填。A0BA 的 ubertip 逐字：
+                              #    「行動暫時麻痺，**遲緩攻擊速度40%**，持續0.6秒」，
+                              #    learn_ubertip「每等級增加20%減緩攻速」，
+                              #    w3a data 欄位 3 = 0.4/0.6/0.8/1.0（逐階）。
+                              #    額外傷害 50/70/90/110 與 0.6 秒也逐字對得上 ⇒ 同一支。
+                              # ⛔ 出貨到今天的 `moveSpeedMult=0.5` 在**五層裡一層都沒有**
+                              #    —— 原作減的是攻速不是移速，而 0.5 這個數字沒有來源。
+                              # ⛔ 也不要改成 stun：原作不是硬控，而 0.6 秒 × 每一次普攻
+                              #    = 永久暈眩鎖 —— 那是我編出來的平衡，不是規格說的。
+                              # ⚠️ 形狀抄 79-01 破魔（`status()` 掛身分 +
+                              #    `buff(polarity="debuff")` 掛真正的數值），因為
+                              #    applyStatus **沒有**攻速那一格（stun/root/disarmed/
+                              #    silenced/moveSpeedMult 五格裡沒有攻速）。
+                              #    攻速地板是 STAT_CLAMPS 的 0.2，所以 -100% 不會除以零。
+                              buff([M("as", "pctAdd", -sl)], 0.6,
+                                   polarity="debuff", dispellable=True)]}]}
+      for v, sl in ((50, 0.4), (70, 0.6), (90, 0.8), (110, 1.0))]})
 
 A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,
   "[主動][衝刺][範圍]\n120秒冷卻，吟唱2秒\n消耗[MP] 400/600/800\n\n「體型差不是霸凌，是傷害公式」\n向前[衝刺]一小段距離後揮出致命的一擊，對[周圍][範圍] 敵人造成600/1000/1400 傷害。\n(若敵人具有[恐懼]狀態，則額外追加 自身[最大生命]25%傷害)",
@@ -2407,6 +2622,17 @@ def build(e):
     #       ⛔ 不是名稱文字反推、也不是 JSON Pointer（重排 hooks 會指到隔壁效果）。
     if e.get("augment"):
         doc["augment"] = e["augment"]
+    # ── 美術綁定的**覆寫閘**（`vfx_key=`）────────────────────────────────
+    # A-6 的規則是「規格沒有重新定義的欄位，一律原樣保留」，而 `vfxKey` 不在
+    # SPEC_OWNED 裡 ⇒ 舊文件的值一路繼承下來。那對 90 支裡的絕大多數是對的
+    # （重製換的是機制不是美術），但**元素講錯**的那幾格不是美術偏好，是內容缺陷：
+    # 一支內文講火的技能掛著雷電特效，玩家分不出三支變身技是哪一種（15-03）。
+    # ⛔ 這裡刻意是一格**表格欄位**（同 radiusTier / mark / augment / toggle），
+    #    不是「if 這支技能就換特效」—— 逐支 if 是第〇·五守則的紅線。
+    # ⚠️ 位置必須在下面那個 `doc.setdefault(k, v)` **之前**：setdefault 不會覆蓋
+    #    已經存在的鍵，所以先填就是贏；放到迴圈後面則永遠是舊值贏（靜默失效）。
+    if e.get("vfx_key"):
+        doc["vfxKey"] = e["vfx_key"]
     # ── A-6：denylist —— 規格沒有重新定義的欄位，一律原樣保留 ──────────────
     for k, v in prev.items():
         if k in SPEC_OWNED:

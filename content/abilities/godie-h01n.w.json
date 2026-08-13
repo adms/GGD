@@ -69,12 +69,7 @@
               "statusId": "magic-break"
             },
             "target": "event"
-          }
-        ]
-      },
-      {
-        "whileForm": "alternate",
-        "hooks": [
+          },
           {
             "on": "onAbilityHit",
             "abilitySlot": "W",
@@ -92,6 +87,11 @@
                 }
               }
             ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "bankai"
+            },
             "target": "event"
           }
         ]

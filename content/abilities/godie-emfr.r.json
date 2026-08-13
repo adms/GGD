@@ -111,6 +111,8 @@
               "kind": "applyBuff",
               "modifiers": [],
               "duration": 3.0,
+              "stackKey": "emfr-thunder-arm",
+              "maxStacks": 1,
               "hooks": [
                 {
                   "on": "onBasicAttack",
@@ -131,6 +133,11 @@
                           }
                         ]
                       }
+                    },
+                    {
+                      "kind": "spawnVfx",
+                      "vfxId": "fx.prim.lightning.bolt",
+                      "at": "target"
                     }
                   ],
                   "target": "event",
@@ -144,11 +151,6 @@
           "target": "self"
         }
       ]
-    },
-    {
-      "kind": "spawnProjectile",
-      "projectileId": "imported.bolt.lightning",
-      "onHit": []
     }
   ],
   "icon": "assets/icons/abilities/godie-emfr.r.webp",

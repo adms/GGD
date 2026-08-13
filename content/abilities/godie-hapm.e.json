@@ -40,8 +40,20 @@
               {
                 "kind": "applyStatus",
                 "statusId": "numbness",
+                "duration": 0.6
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.4
+                  }
+                ],
                 "duration": 0.6,
-                "moveSpeedMult": 0.5
+                "dispellable": true,
+                "polarity": "debuff"
               }
             ],
             "target": "event"
@@ -63,8 +75,20 @@
               {
                 "kind": "applyStatus",
                 "statusId": "numbness",
+                "duration": 0.6
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.6
+                  }
+                ],
                 "duration": 0.6,
-                "moveSpeedMult": 0.5
+                "dispellable": true,
+                "polarity": "debuff"
               }
             ],
             "target": "event"
@@ -86,8 +110,20 @@
               {
                 "kind": "applyStatus",
                 "statusId": "numbness",
+                "duration": 0.6
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.8
+                  }
+                ],
                 "duration": 0.6,
-                "moveSpeedMult": 0.5
+                "dispellable": true,
+                "polarity": "debuff"
               }
             ],
             "target": "event"
@@ -109,8 +145,20 @@
               {
                 "kind": "applyStatus",
                 "statusId": "numbness",
+                "duration": 0.6
+              },
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -1.0
+                  }
+                ],
                 "duration": 0.6,
-                "moveSpeedMult": 0.5
+                "dispellable": true,
+                "polarity": "debuff"
               }
             ],
             "target": "event"

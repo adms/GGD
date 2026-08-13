@@ -269,7 +269,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.03,
-                "target": "event"
+                "target": "event",
+                "victim": "enemy"
               },
               {
                 "on": "onReflectSuccess",
@@ -365,7 +366,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.04,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               },
               {
                 "on": "onDamageTaken",
@@ -389,7 +391,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.02,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               }
             ]
           },
@@ -412,7 +415,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.04,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               },
               {
                 "on": "onDamageTaken",
@@ -436,7 +440,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.02,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               }
             ]
           },
@@ -459,7 +464,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.04,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               },
               {
                 "on": "onDamageTaken",
@@ -483,7 +489,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.02,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               }
             ]
           },
@@ -506,7 +513,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.04,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               },
               {
                 "on": "onDamageTaken",
@@ -530,7 +538,8 @@
                 ],
                 "internalCooldown": 1.0,
                 "chance": 0.02,
-                "target": "self"
+                "target": "self",
+                "victim": "enemy"
               }
             ]
           }

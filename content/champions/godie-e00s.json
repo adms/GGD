@@ -326,6 +326,11 @@
           "stopOnCasterDeath": true,
           "effects": [
             {
+              "kind": "spawnVfx",
+              "vfxId": "fx.prim.nature.explosion-lg",
+              "at": "point"
+            },
+            {
               "kind": "damageArea",
               "damageType": "magic",
               "amount": {

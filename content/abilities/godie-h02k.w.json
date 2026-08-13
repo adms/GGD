@@ -46,7 +46,8 @@
             ],
             "internalCooldown": 1.0,
             "chance": 0.03,
-            "target": "event"
+            "target": "event",
+            "victim": "enemy"
           },
           {
             "on": "onReflectSuccess",

@@ -82,7 +82,7 @@ type Provenance =
    * 所以這一種要**同時**成立三件事，少一件就紅：
    *   ① 上游來源**仍然存在**（不然它該是 `ownerDesign`）
    *   ② 出貨值**確實不等於**上游值（不然它該是 `field` —— 覆寫已經被撤銷了）
-   *   ③ 上游那個數字**真的被記在** `docs/_w3x-fidelity-superseded.md` 裡
+   *   ③ 上游那個數字**真的被記在** `docs/legacy/_w3x-fidelity-superseded.md` 裡
    *
    * ⛔ ③ 是這一種存在的理由。少了它，「偏離原作」就只是一個沒有人讀的註解。
    */
@@ -131,7 +131,7 @@ function sourceValue(field: string): { value: number; from: "map" | "blizzard" }
 
 /** 被取代的原作數值台帳 —— 第〇·六守則要求「分開不是丟掉」。 */
 const SUPERSEDED = readFileSync(
-  join(__dirname, "../../../../docs/_w3x-fidelity-superseded.md"),
+  join(__dirname, "../../../../docs/legacy/_w3x-fidelity-superseded.md"),
   "utf8",
 );
 
@@ -160,7 +160,7 @@ describe("三圍 coefficient provenance (#248 follow-up)", () => {
         // ③ ⭐ 原作那個數字真的被另存了（第〇·六守則：分開不是丟掉）
         expect(
           SUPERSEDED,
-          `${key} 的原作值 ${prov.upstream} 沒有記在 docs/_w3x-fidelity-superseded.md`,
+          `${key} 的原作值 ${prov.upstream} 沒有記在 docs/legacy/_w3x-fidelity-superseded.md`,
         ).toContain(prov.overrides);
         report.push(
           `${key} = ${ATTRIBUTE_ENV_DEFAULTS[key]}  (owner 覆寫 ${src?.from}:${prov.overrides}=${prov.upstream} — ${prov.why})`,

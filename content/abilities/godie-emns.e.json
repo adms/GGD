@@ -25,6 +25,11 @@
   "effects": [
     {
       "kind": "damageArea",
+      "condition": {
+        "kind": "status",
+        "subject": "target",
+        "statusId": "curse"
+      },
       "damageType": "magic",
       "amount": {
         "perRank": [

@@ -25,14 +25,28 @@ import { cover } from "../../testkit/cover";
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content/abilities");
 
 /** 深度搜尋：這份文件的任何一層有沒有這個鍵。 */
-function hasKey(node: unknown, key: string): boolean {
-  if (Array.isArray(node)) return node.some((v) => hasKey(v, key));
-  if (node && typeof node === "object") {
-    const o = node as Record<string, unknown>;
-    if (key in o) return true;
-    return Object.values(o).some((v) => hasKey(v, key));
-  }
-  return false;
+/**
+ * `"key"` 找**欄位存在**；`"key=value"` 找**欄位帶著那個值**。
+ *
+ * ⭐ 後者是 2026-08-13 加的，理由是有些子句的落點是一個**值**而不是一個欄位：
+ *    79-02 的「卍解狀態下」現在寫成 `condition.statusId === "bankai"`，
+ *    而 `condition` 這個欄位太泛（同一支的破魔那條也有一個）——
+ *    只釘 `condition` 的話，把卍解那條整個刪掉它照樣綠（失敗形態④）。
+ */
+function hasKey(node: unknown, spec: string): boolean {
+  const eq = spec.indexOf("=");
+  const key = eq < 0 ? spec : spec.slice(0, eq);
+  const want = eq < 0 ? undefined : spec.slice(eq + 1);
+  const walk = (n: unknown): boolean => {
+    if (Array.isArray(n)) return n.some(walk);
+    if (n && typeof n === "object") {
+      const o = n as Record<string, unknown>;
+      if (key in o && (want === undefined || String(o[key]) === want)) return true;
+      return Object.values(o).some(walk);
+    }
+    return false;
+  };
+  return walk(node);
 }
 
 /**
@@ -62,7 +76,16 @@ const LANDED: [file: string, key: string, who: string][] = [
   ["godie-hapm.passive.json", "lethal", "52-00 十二道試煉是**免死牌**，不是 HP≤5% 的 hook"],
   ["godie-hapm.passive.json", "perStackLost", "52-00「每失去一層永久 +10% 攻擊力與最大生命」"],
   ["godie-emfr.ex.json", "buff", "15-002「將該傷害短暫加成至 AP」"],
-  ["godie-h01n.w.json", "whileForm", "79-02「卍解狀態下傷害額外追加 200% AP」"],
+  // ⚠️ 2026-08-13：這一列的鍵從 `whileForm` 改成 `bankai`。⛔ 不是放寬守衛 ——
+  //    這張表釘的是**那一句規格有沒有落在出貨文件上**，而 79-02 的落點換了形狀：
+  //    `abilityPassives.ts::rankBlock` 一次只掛**一格** rank，而上一版把破魔放
+  //    ranks[0]、卍解放 ranks[1] ⇒ W 一升到 2 階，破魔那條就整個不存在，而
+  //    ranks[1] 的 `whileForm` 又讓未卍解時一格都掛不上 —— 兩句話同時失效。
+  //    現在兩條 hook 在**同一格**，卍解那條改用 `status/self/bankai` 條件葉
+  //    （兄弟技 79-03 月牙天衝對同兩句話用的就是這個形狀）。
+  //    `whileForm` 機制本身沒有消失：仍有 4 份文件在用（e002.w / e00l.w /
+  //    e00s.passive / h01n.ex），所以這不是「機制退場」而是「這一句換了載體」。
+  ["godie-h01n.w.json", "statusId=bankai", "79-02「卍解狀態下傷害額外追加 200% AP」"],
 ];
 
 describe("重製技能的機制真的落在出貨內容上", () => {

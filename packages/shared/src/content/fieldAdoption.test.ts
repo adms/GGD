@@ -831,16 +831,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-04",
     why: "`enemyChampion` 的另一半（同一次列舉加寬）。它比 enemyChampion 更遠：17 張卡裡沒有一張需要「只對隊友觸發」，留著是因為做成單邊的過濾器會讓下一張『鼓舞隊友』的卡再改一次 union。守衛同上 ①。",
   },
-  "enum:abilities.effects[]#applyBuff.hooks[].victim=enemy": {
-    status: "landing",
-    since: "2026-08-04",
-    why: "⭐ 批 1 決策點 1-1，全計畫最重要的一格：owner 已裁決不給殭屍 StatsComp，所以 9 張在殭屍波裡半殘的卡唯一的活路就是這個成員。零採用是因為那 9 張卡本身還沒寫（跨批 2/3/4/5）。全域覆寫在 config/augment-filter.json，守衛在 sim/effects/hookVocabulary.test.ts ①。",
-  },
-  "enum:abilities.effects[]#applyBuff.hooks[].damageSource=ability": {
-    status: "landing",
-    since: "2026-08-04",
-    why: "批 1 決策點 1-3：`nonBasic` 把技能、DoT、火圈、守衛、小怪混成一堆，而戰爭交響曲說的是「普攻**或技能**」—— 火圈燒到人不該回血。判斷重用 combat/damageTypeOverride.ts 的 originInScope（不是第二份 startsWith）。第一個消費者是 symphony-of-war，它跨 5 批。守衛：hookVocabulary.test.ts ②，突變驗證過。",
-  },
   "enum:abilities.effects[]#applyBuff.hooks[].damageSource=other": {
     status: "landing",
     since: "2026-08-04",
@@ -1807,11 +1797,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
   },
   // ⭐ 2026-08-13 B3：landing 豁免移除 —— 它落地了（B3-C：44-04 · 79-03）。
-  "field:abilities.effects[]#damageArea.condition": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
   "field:abilities.effects[]#damageLine.condition": {
     status: "landing",
     since: "2026-08-09",

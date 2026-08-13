@@ -444,6 +444,16 @@ describe("voxel skin — the committed roster snapshot", () => {
    * 會讓名冊大小影響顏色 —— 而 `ROSTER.escalated` 兩邊都是空的（上面那條
    * determinism 測試在守），所以縮小名冊本來就不該動到任何人。量到 0 筆漂移，
    * 就證明棘輪確實沒被驚動。⚠️ 如果哪天縮名冊卻量到漂移，先去看 escalated。
+   *
+   * ── 2026-08-13 的第三次刻意重生成 —— **一位英雄，只有顏色** ──
+   * 15-03 獄炎煉我的 `vfxKey` 從繼承來的 `fx.prim.lightning.nova` 改成
+   * `fx.prim.fire.nova`（一支內文講三次火的技能，畫面上炸開的是藍色雷電）。
+   * ⭐ 而配色的**元素帶**正是從 `input.vfxKeys` 推的（`generate.ts` 的 L3），
+   *   所以涅吉 `godie-emfr` 的主/次元素跟著移 ⇒ 前兩格顏色變了。
+   * ⚠️ 照這份檔自己立的判準先問「**部件也變了嗎？**」——
+   *   `bowl|single-eyepatch|tunic|shorts|eye|headband|spikes|tail` **逐字未變**。
+   *   ⇒ 這是一個好改動的正確後果，⛔ 不是規則或階梯出事。
+   *   漂移 1 位，其餘 77 位逐字相同。
    */
   it("matches every champion's committed look signature", () => {
     cover("voxel-skin-snapshot");

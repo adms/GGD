@@ -59,7 +59,7 @@
           "target": "event"
         },
         {
-          "on": "onAbilityHit",
+          "on": "onDamageDealt",
           "effects": [
             {
               "kind": "damageArea",
@@ -87,12 +87,13 @@
               "duration": 3.0
             }
           ],
-          "target": "event"
+          "target": "event",
+          "damageSource": "ability"
         }
       ]
     }
   ],
+  "vfxKey": "fx.prim.fire.nova",
   "icon": "assets/icons/abilities/godie-emfr.e.webp",
-  "vfxKey": "fx.prim.lightning.nova",
   "castTimeSec": 0.267
 }

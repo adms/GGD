@@ -18,8 +18,8 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：227 / 378**（60.1%）　🟣 PASSIVE：29　❌ FAIL：122
-- 把「正確的永久被動」算進可接受行為：**256 / 378**（67.7%）如預期運作，只有 **122** 格是真正的缺口。
+- **✅ PASS：226 / 378**（59.8%）　🟣 PASSIVE：29　❌ FAIL：123
+- 把「正確的永久被動」算進可接受行為：**255 / 378**（67.5%）如預期運作，只有 **123** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
@@ -34,9 +34,9 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 148 |
-| buff | 29 |
-| projectile | 19 |
+| damage | 147 |
+| buff | 30 |
+| projectile | 18 |
 | dash | 11 |
 | heal | 8 |
 | status | 6 |
@@ -59,7 +59,7 @@
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ❌ | ✅ | ❌ | 🟣 | ❌ | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
-| 奇樂 - 夜神月 | `godie-emns` | 遠 | ❌ | 🟣 | ✅ | ❌ | ❌ | ✅ |
+| 奇樂 - 夜神月 | `godie-emns` | 遠 | ❌ | 🟣 | ❌ | ❌ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ❌ | 🟣 | ❌ | ❌ | ✅ |
 | 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ❌ | 🟣 | ✅ |
@@ -134,6 +134,7 @@
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | Q | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
+| 奇樂 - 夜神月 | `godie-emns` | E | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | R | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | EX | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 龍之子 - 天地志狼 | `godie-ewar` | W | self | 近 | cast accepted but produced no measurable effect (no-op) |
