@@ -30,6 +30,7 @@
  *      → 「每個被丟掉的變身態，它的本體都還在」紅
  */
 import { describe, it, expect } from "vitest";
+import { isShipped } from "../../testkit/contentFixtures";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync, readdirSync } from "node:fs";
@@ -138,6 +139,10 @@ describe("變身態永遠不可選 (client-champ-no-transformed-bodies)", () => 
     // 線上 operator 的白名單真的手動勾了十個變身態（見 ui/platform/valhalla.ts）。
     // 「濾掉」會讓那十位英雄靜悄悄消失 = #55 黑化Saber 的形狀。
     for (const pair of CHAMPION_FORM_PAIRS) {
+      // GH#323 —— 變身對照表（`CHAMPION_FORM_PAIRS`）記的是「誰是誰的第二形態」，
+      // 而 2026-08-13 有 41 位英雄搬進 `content/_legacy/`。表上留著它們沒有錯，
+      // ⛔ 錯的是拿一位**不在出貨名單上**的本體去期待它出現在選人格子裡。
+      if (!isShipped("champions", pair.baseId)) continue;
       const onlyAlternate: Whitelist = {
         enforced: true,
         champions: new Set([pair.alternateId]),

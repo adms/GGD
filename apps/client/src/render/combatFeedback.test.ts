@@ -428,7 +428,9 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
     }
     // guard the guard: if curation ever strips every authored doc this test
     // would silently pass on an empty loop.
-    expect(authored).toBeGreaterThanOrEqual(30);
+    // GH#323 —— ⛔ 不釘 30（那是 2026-08-13 搬家前手寫 hitFeel 的份數）。
+    //    這一條在守的是「迴圈不是空的」，⛔ 不是「有幾份」。
+    expect(authored, "一份手寫 hitFeel 的技能都沒有 —— 上面整個迴圈空跑").toBeGreaterThan(0);
   });
 });
 

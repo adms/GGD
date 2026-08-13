@@ -532,9 +532,16 @@ describe("#223 組裝點 —— GameApp 沒有自己再寫一份形態盲的解�
  * 出貨內容**正好相反**,而且下面這一組就是重量本身。
  */
 function shippedModelKey(championId: string): string | null {
-  const p = join(REPO, "content/champions", `${championId}.json`);
-  if (!existsSync(p)) return null;
-  return (JSON.parse(readFileSync(p, "utf8")) as { modelKey?: string }).modelKey ?? null;
+  // GH#323 —— 26 對變身裡有一部分在 2026-08-13 搬進 `content/_legacy/`。
+  // 這個普查量的是**兩半各自穿什麼身體**，那是一個對照關係，跟「這位還在不在
+  // 出貨名單上」無關 ⇒ 兩個目錄都找。⛔ 回 null 會讓整份普查靜靜地少掉幾對。
+  for (const dir of ["content/champions", "content/_legacy/champions"]) {
+    const p = join(REPO, dir, `${championId}.json`);
+    if (existsSync(p)) {
+      return (JSON.parse(readFileSync(p, "utf8")) as { modelKey?: string }).modelKey ?? null;
+    }
+  }
+  return null;
 }
 function shippedGlb(modelKey: string | null): string | null {
   if (!modelKey) return null;

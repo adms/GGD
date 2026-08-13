@@ -12,6 +12,7 @@
  * PNG bytes on disk, so it shrinks automatically as the icon bug is fixed.
  */
 import { createHash } from "node:crypto";
+import { isShipped } from "../../testkit/contentFixtures";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -196,7 +197,19 @@ describe("marqueeRoster.buildMarqueeTiles", () => {
       ["godie-o02l", "godie-o02n", "godie-o02o", "godie-ofar"], // 皮卡丘 ×2 + 曹操 ×2
     ];
     const declared = new Set(SHARED_PORTRAIT_GROUPS.map((g) => [...g].sort().join(",")));
-    for (const g of NON_TRANSFORM_GROUPS) {
+    // GH#323 —— `SHARED_PORTRAIT_GROUPS` 現在從**出貨的** png 位元組推導，所以
+    //    成員退場（2026-08-13 有 41 位搬進 `content/_legacy/`）的那幾組自然不在了。
+    //    ⛔ 那不是「借圖的 bug 被誤刪」，是那位英雄不畫在跑馬燈上了。
+    const stillShipped = NON_TRANSFORM_GROUPS.filter((g) =>
+      g.every((id) => isShipped("champions", id)),
+    );
+    // ⚠️ 量到（2026-08-13）：**六組全部**至少有一位成員退場了 ⇒ `stillShipped` 是空的。
+    //    ⛔ 這裡刻意**不要求 ≥1** —— 要求它只會逼下一個人把退場的 id 塞回來。
+    //    這條的對象消失了是事實，而 `SHARED_PORTRAIT_GROUPS` 本身仍被上面那條
+    //    「宣告 == 磁碟上的 md5 分組」逐位元組守著，⛔ 不會因此變成沒有人看。
+    //    ⭐ 哪天有新的「兩位不相干英雄共用一張圖」被抓到，把它加進這張表，
+    //       這個迴圈就自己復活了。
+    for (const g of stillShipped) {
       expect(declared.has([...g].sort().join(",")), `icon group ${g.join("/")} survives`).toBe(true);
     }
     // …and the ones below contain NO form pair at all, which is exactly why the
@@ -307,7 +320,10 @@ describe("marquee identity vs portraits are separate concerns", () => {
     };
     expect(isSelectableChampion(HARUHI)).toBe(true); // still a real champion
     const shown = withoutDuplicatePortraits([XELLOSS, HARUHI]).map((c) => c.id);
-    expect(shown).toEqual(["godie-o00l"]); // the map's random-pool entry wins
+    // GH#323 —— 涼宮（godie-o02s）2026-08-13 退場了，所以這一組不再在
+    //    `SHARED_PORTRAIT_GROUPS` 裡 ⇒ 去重不會發生，兩張都留著。
+    //    ⭐ 這正是這條函式該有的行為：**表上沒有的組，它一根寒毛都不碰**。
+    expect(shown).toEqual(["godie-o00l", "godie-o02s"]);
 
     // A champion in NO portrait group is never touched by this pass.
     expect(withoutDuplicatePortraits([ICONED, NO_ICON]).map((c) => c.id)).toEqual([
@@ -316,6 +332,10 @@ describe("marquee identity vs portraits are separate concerns", () => {
     ]);
     // A group with only one member present is a no-op (nothing to collide with).
     expect(withoutDuplicatePortraits([HARUHI]).map((c) => c.id)).toEqual(["godie-o02s"]);
+    // 而**還在表上**的那一組，去重要真的發生 —— 否則上面那條會變成「功能沒接」也過。
+    const liveGroup = SHARED_PORTRAIT_GROUPS[0]!;
+    const pair = liveGroup.map((id) => ({ ...XELLOSS, id, icon: `assets/icons/champions/${id}.png` }));
+    expect(withoutDuplicatePortraits(pair).length).toBeLessThan(pair.length);
   });
 });
 

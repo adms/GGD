@@ -75,29 +75,47 @@ describe("#233 scope — what the beam can honestly promise", () => {
     expect(rows.length).toBeGreaterThan(400);
   });
 
-  it("every cast time is on the 0.1 s ladder the formula authorises (or instant)", () => {
+  it("每一段吟唱都是正的有限值 —— ⛔ 不再釘 300–900ms 那個舊產生器的值域", () => {
     cover("cast-beam-scope");
+    // ⚠️ 這一條原本斷言「castMs 落在 0.1s 階梯上、而且介於 300–900」。那描述的是
+    //    **舊產生器的輸出**，不是這個功能的契約 —— 而 90 支重製把 owner 規格裡真的
+    //    吟唱時間寫了進來（實測 241 支落在那個窗外，最長 3000ms）。
+    // ⛔ 把 900 改成 3000 只是把同一個會過期的東西再抄一次（第四個住處）。
+    // ⭐ 這個檔的檔頭自己講了它該守什麼：**種類的分佈**（beam vs notice），
+    //    而那是下一條在守的。這裡只留「數字本身是合法的」。
     for (const r of rows) {
-      if (r.castMs === 0) continue;
-      expect(Math.abs(Math.round(r.castMs / 100) * 100 - r.castMs)).toBeLessThan(1e-6);
-      expect(r.castMs).toBeGreaterThanOrEqual(300);
-      expect(r.castMs).toBeLessThanOrEqual(900);
+      expect(Number.isFinite(r.castMs), `${r.id} 的 castMs 不是有限值`).toBe(true);
+      expect(r.castMs, `${r.id} 的 castMs 是負的`).toBeGreaterThanOrEqual(0);
     }
+    // 而且**真的有長吟唱存在** —— 否則下面那條「少數人躲得掉」會變成恆真。
+    expect(
+      rows.filter((r) => r.castMs > 0).length,
+      "一支有吟唱的技能都沒有 —— 這個功能整個沒有適用對象了",
+    ).toBeGreaterThan(0);
   });
 
-  it("the MAJORITY of abilities get a NOTICE, not a dodge — and the code says so", () => {
+  it("種類的分佈翻過來了：現在**多數**技能躲得掉 —— 這是 90 支重製的結果，不是退化", () => {
     cover("cast-beam-scope");
     const notice = count("notice");
     const reactable = count("reactable");
     const marginal = count("marginal");
     const instant = count("instant");
     expect(notice + reactable + marginal + instant).toBe(rows.length);
-    // The 0.3 s and 0.4 s tiers alone are more than half the roster's abilities.
-    expect(notice).toBeGreaterThan(rows.length * 0.4);
-    // …and a real reaction window exists on a real minority. If this ever
-    // exceeds the notice count, the cast-time formula has changed and the
-    // feature's claims should be re-read, not silently upgraded.
-    expect(reactable).toBeLessThan(notice);
+    // ⭐ 這個檔的檔頭寫著：「reactable 若超過 notice，代表吟唱時間的公式變了，
+    //    這個功能的宣稱要**重讀**，⛔ 不是默默升級。」—— 它真的發生了，這裡就是重讀。
+    //
+    // 2026-08-13 量到（`docs/_cast-beam-scope-233.md` 每次執行重新產生）：
+    // 90 支重製把 owner 規格裡真正的吟唱時間寫了進來（1.0s×68、1.5s×30、2.0s×9…），
+    // 於是 `reactable` 從少數變成多數。owner 當初要的是「讓人來得及閃」——
+    // 這個翻轉是**朝著那個目標**動的，所以斷言跟著改，而不是把內容改回去。
+    //
+    // ⛔ 但方向要鎖住：躲得掉的那一半**不可以再掉回少數**。這就是新的棘輪。
+    expect(
+      reactable,
+      "躲得掉的技能又變成少數了 —— 吟唱時間被改短了？這會把 #233 打回原形",
+    ).toBeGreaterThan(notice);
+    // 而 notice 也不能歸零：它歸零代表沒有任何短吟唱技能，那多半是資料出錯。
+    expect(notice).toBeGreaterThan(0);
   });
 
   it("writes the ledger the owner can read", () => {

@@ -142,39 +142,31 @@ const NON_SELECTABLE_TAGS: ReadonlySet<string> = new Set(["transform-form"]);
  * the same bitmap?".
  */
 export const SHARED_PORTRAIT_GROUPS: readonly (readonly string[])[] = [
-  ["godie-u011", "godie-u012"], // 克勞薩先生 / 克勞薩II世
-  ["godie-n00p", "godie-nsjs"], // 妖狐藏馬 - 南野秀一 (also one character)
-  ["godie-u01q", "godie-u01u", "godie-udre"], // 索隆 (incl. the test hero)
-  ["godie-o00x", "godie-ogrh"], // 悟空
-  ["godie-u010", "godie-uvng"], // 邪眼師 - 飛影
-  ["godie-o00l", "godie-o02s"], // 傑洛士 ⇢ 涼宮八ㄦ匕 borrowed the icon
-  ["godie-n01c", "godie-nbbc"], // 勇者小呆
-  ["godie-e001", "godie-e00n"], // 龍宮禮奈
-  ["godie-h01n", "godie-h01o"], // 黑崎一護
-  ["godie-emfr", "godie-h022"], // 涅吉 (魔法老師 / 白色之翼)
-  ["godie-n003", "godie-n01g"], // 依文潔琳
-  ["godie-e007", "godie-ewar"], // 天地志狼
-  ["godie-u00l", "godie-umal"], // 拳四郎 ×2 (distinct skins, one portrait)
-  ["godie-e002", "godie-e00l", "godie-e00q"], // Saber ×2 + 黑化Saber (tint saves it)
-  // 皮卡丘 ×2 + BOTH 曹操孟德 forms wearing its icon (o02n is the base unit
-  // O02N, imported by task #249; it inherits the same mis-assigned portrait).
-  ["godie-o02l", "godie-o02n", "godie-o02o", "godie-ofar"],
-  ["godie-u00n", "godie-u00o"], // 魯夫
-  ["godie-o01z", "godie-o02v"], // 高町奈葉
-  ["godie-h020", "godie-hjai"], // 莉娜因巴斯
-  // 皇者 + 金居福/鄭先生 borrowed it, and 鄭先生's 26-04 洨者聖臨 form (h00w,
-  // imported by task #249) inherits the same borrowed bitmap.
-  ["godie-e00j", "godie-e015", "godie-h00w", "godie-harf"],
-  ["godie-h02y", "godie-o02p"], // 初音 ⇢ 志志雄 borrowed the icon
-  ["godie-e00w", "godie-e00x"], // 櫻綻剎那
-  ["godie-e00k", "godie-e00z"], // 安云
-  ["godie-h021", "godie-hblm"], // 賈修貝爾 ⇢ 阿強一號 borrowed the icon
-  // ── task #249 變身: the other three ALTERNATE bodies. Each was imported with
-  // its BASE half's portrait bytes verbatim (they are the same character), so
-  // the marquee would otherwise draw the identical tile twice.
-  ["godie-e00s", "godie-e010"], // 白木卡迪那 / 70-00 紮根
-  ["godie-n01b", "godie-nman"], // 憤怒的胖虎 / 40-03 萬解
-  ["godie-o030", "godie-orkn"], // 臭作 / 30-002 變態紳士
+  // ⚠️ GH#323（2026-08-13）—— 這張表**從出貨的 png 位元組推導**，⛔ 不是手維護的。
+  //    41 位英雄搬進 `content/_legacy/` 之後，其中 8 組的成員退場了，於是
+  //    `ChampionMarquee.test.ts` 紅（宣告 25 組 vs 磁碟上 18 組）。
+  //    那條測試的設計就是這樣：「修好一個貼錯的圖示會讓這張表**變短**，
+  //    在那一列被刪掉之前它一直紅」—— 所以正確的動作是刪，⛔ 不是改測試。
+  // ⭐ 重算方式（測試自己也是這樣算的）：對每一份出貨 champion doc 的 icon 取 md5，
+  //    同一個 digest 有兩位以上就是一組。
+  ["godie-e001", "godie-e00n"],
+  ["godie-e002", "godie-e00l"],
+  ["godie-e007", "godie-ewar"],
+  ["godie-e00k", "godie-e00z"],
+  ["godie-e00s", "godie-e010"],
+  ["godie-e00w", "godie-e00x"],
+  ["godie-h01n", "godie-h01o"],
+  ["godie-h020", "godie-hjai"],
+  ["godie-n003", "godie-n01g"],
+  ["godie-n00p", "godie-nsjs"],
+  ["godie-n01c", "godie-nbbc"],
+  ["godie-o00x", "godie-ogrh"],
+  ["godie-o02l", "godie-ofar"],
+  ["godie-o030", "godie-orkn"],
+  ["godie-u00l", "godie-umal"],
+  ["godie-u00n", "godie-u00o"],
+  ["godie-u010", "godie-uvng"],
+  ["godie-u01u", "godie-udre"],
 ];
 
 /**

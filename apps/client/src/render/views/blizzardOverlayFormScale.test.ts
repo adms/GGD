@@ -21,6 +21,7 @@
  * TARGET_HEIGHT × relativeScale with no measurement noise.
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
+import { readContentJson } from "../../testkit/contentFixtures";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -331,8 +332,11 @@ describe("變身體素閘已開 —— 尺寸耦合到期 (blizzard-overlay-form
 
 /** 出貨文件裡這位英雄的 modelKey —— 不是測試自己抄一份表。 */
 function shippedModelKeyOf(id: string): string {
-  const p = new URL(`../../../../../content/champions/${id}.json`, import.meta.url);
-  return (JSON.parse(readFileSync(p, "utf8")) as { modelKey: string }).modelKey;
+  // GH#323 —— 這六具裡有四具（h00w / n01b / o02n / u011）在 2026-08-13 隨變身系統
+  // 整理搬進 `content/_legacy/`。這條驗的是**閘有沒有開**（preferVoxelBody 不再把
+  // 它們擋在方塊人裡），modelKey 只是拿來餵那個函式的真欄位 ⇒ 走 `_legacy/` 後備，
+  // ⛔ 不是把它們從清單刪掉（刪了就看不出「哪幾具還在、閘對它們仍然開著」）。
+  return (readContentJson(`champions/${id}.json`) as { modelKey: string }).modelKey;
 }
 
 function overridesOf(id: string): { relativeScale: number } {
