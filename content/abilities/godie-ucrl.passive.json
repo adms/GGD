@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "06-00 猜猜拳",
   "icon": "assets/icons/abilities/godie-ucrl.passive.webp",
+  "provenance": "w3x-import",
   "description": "[主動傷害]\n45秒冷卻時間\n\n小傑的「發」，由猜拳遊戲而來的必殺技，能根據敵人位置使出不同拳法應對。\n若敵人在近距離之內則使出石頭，擊飛目標並給予350點傷害。\n若敵人在中遠距離則使出剪刀，給予穿刺傷害250點。\n若敵人在遠距離則使出布，給予範圍傷害225點。",
   "slot": "PASSIVE",
   "innateKind": "active",

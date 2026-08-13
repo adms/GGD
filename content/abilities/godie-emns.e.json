@@ -2,6 +2,7 @@
   "id": "godie-emns.e",
   "schema": "ability@1",
   "name": "44-03 火車輾過",
+  "provenance": "owner-spec",
   "description": "[主動][範圍][AP加成]\n60/50/40/30秒冷卻\n消耗MP150/250/350/450\n有效半徑6\n\n「我就是正義！」\n使敵方 [詛咒]標記的 [周圍]的敵方部隊受到650/750/850/950+ 60% [AP]點的劇烈傷害。",
   "slot": "E",
   "castType": "targeted",

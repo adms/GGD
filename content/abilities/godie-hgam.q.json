@@ -2,6 +2,7 @@
   "id": "godie-hgam.q",
   "name": "90-01 飛葉快刀",
   "icon": "assets/icons/abilities/godie-hgam.q.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n發出飛快的葉子進行攻擊，每秒對附近的敵人造成100點傷害，持續2秒。",
   "slot": "Q",
   "castType": "ground",

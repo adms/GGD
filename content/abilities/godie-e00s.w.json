@@ -2,6 +2,7 @@
   "id": "godie-e00s.w",
   "schema": "ability@1",
   "name": "70-02 大怒石",
+  "provenance": "owner-spec",
   "description": "[被動][普攻時][範圍]\n\n「咖啡只是一種豆漿、海洋只是一種蔬菜湯、所以大怒石只是我的尿結石，對吧?」\n[每次普通攻擊]皆能造成[小範圍] 30/40/50/60% [擴散]傷害。",
   "slot": "W",
   "castType": "self",

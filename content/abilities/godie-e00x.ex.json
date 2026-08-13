@@ -2,6 +2,7 @@
   "id": "godie-e00x.ex",
   "name": "77-002 御雷劍",
   "icon": "assets/icons/abilities/godie-e00x.ex.webp",
+  "provenance": "w3x-import",
   "description": "[強化]\n75秒冷卻時間\n\n使用從者道具\"御雷劍\"的剎那，在效果期間，其雷鳴劍發動機率上升至50%，並且可以減免33%傷害，持續15秒。",
   "slot": "EX",
   "castType": "self",

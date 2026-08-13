@@ -2,6 +2,7 @@
   "id": "godie-o00k.r",
   "name": "86-04 打雷絕招",
   "icon": "assets/icons/abilities/godie-o00k.r.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n放出全身積蓄的電壓瘋狂電擊範圍300距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成150點傷害並向旁邊的單位傳遞，共傳遞16次，聚集越多敵人則造成的傷害會越大。",
   "slot": "R",
   "castType": "ground",

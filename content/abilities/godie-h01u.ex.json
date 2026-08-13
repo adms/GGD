@@ -2,6 +2,7 @@
   "id": "godie-h01u.ex",
   "schema": "ability@1",
   "name": "80-002 戰無不勝",
+  "provenance": "owner-spec",
   "description": "[被動]\n\n「只要一直贏，就沒有平衡問題」\n提升 [攻擊速度上限]至10、[吸血] 50%，並但 [防禦][魔抗] 降低 50%。",
   "slot": "EX",
   "castType": "self",

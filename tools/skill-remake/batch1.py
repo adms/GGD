@@ -2323,6 +2323,13 @@ def build(e):
         "id": aid,
         "schema": "ability@1",
         "name": e["name"],
+        # ⭐【這一份是階梯第 1 層】—— 2026-08-13 事故的直接修法。
+        #    461 份 ability 文件裡只有這 90 支是 owner 新版技能說明，其餘 371 支
+        #    是 w3x 匯入的文案（第 4 層），而在這一格出現之前**兩者長得一樣權威**：
+        #    29 個頂層欄位沒有任何一個說得出來源。owner：「怎麼會搞混呢?」
+        #    ⚠️ 其餘 371 支由 `tools/skill-remake/stamp_provenance.py` 蓋 w3x-import，
+        #    兩邊必須一致 —— 守衛 `content/abilityProvenance.test.ts` 在對。
+        "provenance": "owner-spec",
         "description": e["desc"],
         "slot": slot,
         "castType": e["cast"],

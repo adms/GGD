@@ -2,6 +2,7 @@
   "id": "godie-efur.ex",
   "schema": "ability@1",
   "name": "13-002 絕。暗殺奧義",
+  "provenance": "owner-spec",
   "description": "[被動][技能命中時][身上有某狀態時][機率][處決]\n\n對於[致盲]狀態的敵人施展 [龍頭戲畫。牙突] 時，有20%機會摘除心臟，造成額外40%目標[最大生命]傷害。",
   "slot": "EX",
   "castType": "self",

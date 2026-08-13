@@ -2,6 +2,7 @@
   "id": "godie-nsjs.ex",
   "name": "18-002 魔界吸血植物",
   "icon": "assets/icons/abilities/godie-nsjs.ex.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n培養殘暴的魔界吸血植物，當聞到血的味道將會自動追上敵人，使寄生種子額外造成敵人最大生命40%傷害，如果妖狐藏馬的生命低於50%，傷害將會加倍，而憶年樹發動老樹跟機率變為100%。",
   "slot": "EX",
   "castType": "self",

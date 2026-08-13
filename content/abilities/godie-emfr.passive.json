@@ -2,6 +2,7 @@
   "id": "godie-emfr.passive",
   "schema": "ability@1",
   "name": "15-00 真·不死不滅",
+  "provenance": "owner-spec",
   "description": "[被動][週期][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n每秒[回復] 5%[最大生命]，但每秒也[燒魔]魔力 5%。",
   "slot": "PASSIVE",
   "castType": "self",

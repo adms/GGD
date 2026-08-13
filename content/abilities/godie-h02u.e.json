@@ -2,6 +2,7 @@
   "id": "godie-h02u.e",
   "name": "92-03 消化液",
   "icon": "assets/icons/abilities/godie-h02u.e.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n40秒冷卻時間\n\n羊駝在驚嚇或憤怒的時候，會從嘴巴裡噴出消化液攻擊敵人，造成範圍內敵人減少3點防禦、20%攻速、5%跑速，每秒受到20點傷害，持續7秒。",
   "slot": "E",
   "castType": "targeted",

@@ -2,6 +2,7 @@
   "id": "godie-efur.q",
   "schema": "ability@1",
   "name": "13-01 暗步。極限之圓",
+  "provenance": "owner-spec",
   "description": "[主動][指定][瞬移]\n施法距離4\n4/3/2/1秒冷卻\n\n「年輕全盛時期的老朽可以把圓擴大到整個競技場呢」\n[指定一名]敵人，無視地形與碰撞[瞬移]至其身旁，並造成[致盲]效果，持續1秒。",
   "slot": "Q",
   "castType": "targeted",

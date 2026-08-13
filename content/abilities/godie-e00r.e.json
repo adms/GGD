@@ -2,6 +2,7 @@
   "id": "godie-e00r.e",
   "schema": "ability@1",
   "name": "59-03 AT力場",
+  "provenance": "owner-spec",
   "description": "[被動][週期][護盾]\n\n「所謂的心之壁，就是我不想跟你講話的意思」\n每8秒生成一個可抵擋150/250/350/450點魔法([AP])傷害的[護盾]，[護盾]不會疊加。",
   "slot": "E",
   "castType": "self",

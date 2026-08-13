@@ -2,6 +2,7 @@
   "id": "godie-huth.r",
   "name": "28-04 破滅能量彈",
   "icon": "assets/icons/abilities/godie-huth.r.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到300點傷害，持續5秒。",
   "slot": "R",
   "castType": "targeted",

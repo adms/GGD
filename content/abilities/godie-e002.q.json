@@ -2,6 +2,7 @@
   "id": "godie-e002.q",
   "schema": "ability@1",
   "name": "20-02 感知能力",
+  "provenance": "owner-spec",
   "description": "[被動][迴避][機率]\n0秒冷卻\n\n「你的魔力流向了我」\n感應魔力流向，進而有6/12/18/24%[機率][迴避]物理([AD])攻擊。",
   "slot": "Q",
   "castType": "self",

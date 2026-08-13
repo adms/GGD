@@ -2,6 +2,7 @@
   "id": "godie-ucrl.ex",
   "name": "06-002 殺意",
   "icon": "assets/icons/abilities/godie-ucrl.ex.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n平時的小傑雖然固執卻不喜歡殺害生命，但一旦被激起憤怒，將殺意注入攻擊之中便會瞬間成為人間兇器。\n猜猜拳使用後將追加以下效果：\n石頭：擊飛後追擊至目標身旁並造成範圍暈眩1秒。\n剪刀：強化後的斬擊造目標持續出血，每秒損失60點生命，持續8秒。\n布：念彈爆發後的疾風造成範圍內部隊移動困難，降低速度50%，持續5秒。",
   "slot": "EX",
   "castType": "self",

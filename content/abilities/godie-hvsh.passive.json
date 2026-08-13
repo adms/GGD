@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "48-00 石化之眼",
   "icon": "assets/icons/abilities/godie-hvsh.passive.webp",
+  "provenance": "w3x-import",
   "description": "[輔助]\n45秒冷卻時間\n\n開啟石化之眼，將Rider附近250範圍的部隊予以石化，持續4秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

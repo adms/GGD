@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "70-04 千年練成",
   "icon": "assets/icons/abilities/godie-e010.r.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n70秒冷卻時間\n\n在指定範圍內招喚樹精並且在短時間練成千年的魔力，總共4棵樹精，每棵樹精誕生時可以造成180點傷害。",
   "slot": "R",
   "castType": "targeted",

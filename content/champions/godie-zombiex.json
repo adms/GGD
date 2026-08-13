@@ -52,6 +52,7 @@
     "Q": {
       "id": "godie-zombiex.q",
       "name": "100-01 肝泥抹德",
+      "provenance": "w3x-import",
       "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
       "slot": "Q",
       "castType": "ground",
@@ -102,6 +103,7 @@
     "W": {
       "id": "godie-zombiex.w",
       "name": "100-02 黑天覆七重咖哩・硬啦",
+      "provenance": "w3x-import",
       "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。\n衝撞的同時黑泥瞬間硬化成殼，短時間大幅提升護甲與魔抗 —— 對一隻護甲魔抗都是 0 的喪屍來說，這 4 秒是他全部的生存視窗。",
       "slot": "W",
       "castType": "dash",
@@ -149,6 +151,7 @@
     "E": {
       "id": "godie-zombiex.e",
       "name": "100-03 咕咕嘎嘎",
+      "provenance": "w3x-import",
       "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
       "slot": "E",
       "castType": "ground",
@@ -199,6 +202,7 @@
     "R": {
       "id": "godie-zombiex.r",
       "name": "100-04 百式・哈基米",
+      "provenance": "w3x-import",
       "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
       "slot": "R",
       "castType": "ground",

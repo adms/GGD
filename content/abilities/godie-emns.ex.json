@@ -2,6 +2,7 @@
   "id": "godie-emns.ex",
   "schema": "ability@1",
   "name": "44-002 交換筆記本",
+  "provenance": "owner-spec",
   "description": "[主動][指定]\n120秒冷卻，吟唱2秒\n消耗MP450\n施法距離5.29\n\n「計畫通！」\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟指定的敵人[現存生命]作 [交換]。",
   "slot": "EX",
   "castType": "targeted",

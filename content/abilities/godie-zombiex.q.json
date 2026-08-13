@@ -2,6 +2,7 @@
   "id": "godie-zombiex.q",
   "schema": "ability@1",
   "name": "100-01 肝泥抹德",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
   "slot": "Q",
   "castType": "ground",

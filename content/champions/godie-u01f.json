@@ -94,7 +94,8 @@
       ],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import"
     },
     "W": {
       "id": "godie-u01f.w",
@@ -140,7 +141,8 @@
       ],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import"
     },
     "E": {
       "id": "godie-u01f.e",
@@ -186,7 +188,8 @@
       ],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import"
     },
     "R": {
       "id": "godie-u01f.r",
@@ -226,7 +229,8 @@
       ],
       "vfxKey": "fx.prim.physical.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.3,
+      "provenance": "w3x-import"
     }
   },
   "skillOrder": [

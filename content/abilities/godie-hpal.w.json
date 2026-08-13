@@ -2,6 +2,7 @@
   "id": "godie-hpal.w",
   "name": "35-02 石絲",
   "icon": "assets/icons/abilities/godie-hpal.w.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n使生物短時間內不能活動，使敵身體硬化0.75秒，每秒承受50點傷害。",
   "slot": "W",
   "castType": "targeted",

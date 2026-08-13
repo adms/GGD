@@ -2,6 +2,7 @@
   "id": "godie-e00s.q",
   "schema": "ability@1",
   "name": "70-01 伸卡球",
+  "provenance": "owner-spec",
   "description": "[主動][指向][範圍]\n60秒冷卻\n消耗[MP] 250/300/350/400\n施法距離11\n\n「我餵人人，人人餵我」\n造成[範圍]敵人150/300/450/600+[力量]*3傷害。",
   "slot": "Q",
   "castType": "ground",

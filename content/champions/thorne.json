@@ -81,7 +81,8 @@
         }
       ],
       "vfxKey": "fx.thorn-lash",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "provenance": "w3x-import"
     },
     "W": {
       "id": "thorne.w",
@@ -139,7 +140,8 @@
         }
       ],
       "vfxKey": "fx.barkskin",
-      "castTimeSec": 0.067
+      "castTimeSec": 0.067,
+      "provenance": "w3x-import"
     },
     "E": {
       "id": "thorne.e",
@@ -198,7 +200,8 @@
         }
       ],
       "vfxKey": "fx.root-snare",
-      "castTimeSec": 0.233
+      "castTimeSec": 0.233,
+      "provenance": "w3x-import"
     },
     "R": {
       "id": "thorne.r",
@@ -246,7 +249,8 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.bramble-burst"
+      "vfxKey": "fx.bramble-burst",
+      "provenance": "w3x-import"
     }
   },
   "passive": {

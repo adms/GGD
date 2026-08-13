@@ -2,6 +2,7 @@
   "id": "godie-h02v.passive",
   "schema": "ability@1",
   "name": "92-00 憂鬱的眼神",
+  "provenance": "owner-spec",
   "description": "[被動][受到攻擊][致盲][機率]\n0秒冷卻\n\n「你看見的是憂鬱，我看見的是沒有草」\n有 30% [機率] 對草泥馬攻擊的敵方 [致盲] ，持續6秒。",
   "slot": "PASSIVE",
   "castType": "self",

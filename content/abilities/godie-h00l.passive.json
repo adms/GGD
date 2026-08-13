@@ -2,6 +2,7 @@
   "id": "godie-h00l.passive",
   "schema": "ability@1",
   "name": "60-00 大師之劍",
+  "provenance": "owner-spec",
   "description": "[被動][淨化][普攻時]\n\n「真正的大師，都是買分的」\n[普通攻擊時]造成額外 3%[最大生命]傷害。並且造成 [淨化] 效果。",
   "slot": "PASSIVE",
   "castType": "self",

@@ -2,6 +2,7 @@
   "id": "godie-hapm.ex",
   "schema": "ability@1",
   "name": "52-002 射殺百頭",
+  "provenance": "owner-spec",
   "description": "[主動][指定][AP加成]\n120秒冷卻，吟唱2秒\n消耗MP400\n施法距離5.29\n\n「名稱叫射殺百頭，但狂戰士狀態下減弱成斧頭砍九次」\n對目標連續 9次的斬擊，每次造成 100% [AP] +自身[最大生命] 3% 傷害，最後一擊附加 [擊退]一小段距離 及 [恐懼] 3秒。",
   "slot": "EX",
   "castType": "targeted",

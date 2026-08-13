@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "11-00 三刀流",
   "icon": "assets/icons/abilities/godie-u01u.passive.webp",
+  "provenance": "w3x-import",
   "description": "[輔助]\n30秒冷卻時間\n\n使出三刀流，增加自身攻擊速度75%，但是每秒損失12點生命值，持續15秒，期間可增加鬼氣九刀流和三千世界傷害。",
   "slot": "PASSIVE",
   "innateKind": "active",

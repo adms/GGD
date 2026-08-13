@@ -2,6 +2,7 @@
   "id": "godie-e00s.passive",
   "schema": "ability@1",
   "name": "70-00 紮根",
+  "provenance": "owner-spec",
   "description": "[主動][切換]\n15秒冷卻\n\n「你聽過樹人自拍嗎?」\n在地面紮根，變得無法移動，但是這可以讓它開始丟出巨大的石塊，[防禦]增加2倍、[力量]增加10點、[攻擊距離]提升到10，[切換]回行走模式則回到原本能力與狀態。",
   "slot": "PASSIVE",
   "castType": "self",

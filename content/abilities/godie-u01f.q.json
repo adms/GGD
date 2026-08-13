@@ -43,5 +43,6 @@
   ],
   "vfxKey": "fx.prim.physical.nova",
   "targetsEnemies": true,
-  "castTimeSec": 0.3
+  "castTimeSec": 0.3,
+  "provenance": "w3x-import"
 }

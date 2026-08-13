@@ -2,6 +2,7 @@
   "id": "godie-edem.e",
   "schema": "ability@1",
   "name": "45-03 千鳥",
+  "provenance": "owner-spec",
   "description": "[主動][指向][範圍][衝刺][AP加成]\n45秒冷卻，吟唱2秒\n消耗MP120/185/250/315\n施法距離12.83\n有效半徑6\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成400/500/600/700+100% [AP]點傷害。",
   "slot": "E",
   "castType": "ground",

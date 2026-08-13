@@ -2,6 +2,7 @@
   "id": "godie-h01u.e",
   "schema": "ability@1",
   "name": "80-03 鬼神烈戟",
+  "provenance": "owner-spec",
   "description": "[主動][指向][範圍][衝刺][AP加成]\n60秒冷卻\n消耗MP150/200/250/300\n有效半徑6\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
   "slot": "E",
   "castType": "ground",

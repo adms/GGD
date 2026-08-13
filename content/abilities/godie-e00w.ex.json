@@ -2,6 +2,7 @@
   "id": "godie-e00w.ex",
   "schema": "ability@1",
   "name": "77-002 御雷劍",
+  "provenance": "owner-spec",
   "description": "[被動][機率]\n\n「御雷劍。飛行」\n使用從者道具「御雷劍」的剎那，其雷鳴劍發動[機率]上升至50%，[GLADIARIA ALAT] 持續時間增加至30秒。",
   "slot": "EX",
   "castType": "self",

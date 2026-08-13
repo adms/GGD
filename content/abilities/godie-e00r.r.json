@@ -2,6 +2,7 @@
   "id": "godie-e00r.r",
   "schema": "ability@1",
   "name": "59-04 野戰型陽電子砲",
+  "provenance": "owner-spec",
   "description": "[主動][指向][範圍][真傷]\n90秒冷卻，吟唱3秒\n消耗MP350/500/650\n施法距離8.25\n\n「站著不要動，我...我要射了」\n對[前方][直線]敵人造成750/1200/1650點[真實傷害]。",
   "slot": "R",
   "castType": "ground",

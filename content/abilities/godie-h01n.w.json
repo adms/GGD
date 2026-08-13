@@ -2,6 +2,7 @@
   "id": "godie-h01n.w",
   "schema": "ability@1",
   "name": "79-02 月牙斬擊",
+  "provenance": "owner-spec",
   "description": "[主動][AP加成]\n60秒冷卻\n消耗MP80/160/240/320\n\n「月牙。斬魄刀」\n給予目標額外200/350/500/650傷害。\n(若對方在 [破魔] 狀態，則額外造成 100% [AP] 傷害)\n(卍解 [變身] 狀態下傷害額外追加 200% [AP])",
   "slot": "W",
   "castType": "targeted",

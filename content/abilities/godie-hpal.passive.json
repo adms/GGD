@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "35-00 召喚佩",
   "icon": "assets/icons/abilities/godie-hpal.passive.webp",
+  "provenance": "w3x-import",
   "description": "[輔助]\n60秒冷卻時間\n\n召喚佩，只要佩在八雲身邊，每秒可以回復八雲1%的生命點數，並且依照佩的狀況可以適時的增強八雲的招式。",
   "slot": "PASSIVE",
   "innateKind": "active",

@@ -2,6 +2,7 @@
   "id": "godie-edem.passive",
   "schema": "ability@1",
   "name": "45-00 寫輪眼",
+  "provenance": "owner-spec",
   "description": "[被動][反彈][機率]\n\n「我只要看一次，就知道你穿什麼內褲」\n宇智波家族的血繼限界，洞察眼能夠看清忍術並仿冒，有20%[機率][反彈]魔法([AP])傷害。",
   "slot": "PASSIVE",
   "castType": "self",

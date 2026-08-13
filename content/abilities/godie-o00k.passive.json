@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "86-00 裝可愛",
   "icon": "assets/icons/abilities/godie-o00k.passive.webp",
+  "provenance": "w3x-import",
   "description": "[輔助]\n3秒冷卻時間\n\n裝可愛是皮卡的絕技，只可惜在戰場上裝可愛只會讓別人更想打他，有效範圍為1600。\n\n（GGD 註記 2026-08-11 · GH#310）原作 WC3 `A0BX`（base `Atau` 嘲諷）area 1600，忠實換算 ≡ 29.33；但 GGD 的決鬥區半徑只有 24（≡ 1309 WC3 單位），所以那個數字在縮小的場地裡溢出成「比全場還大」。收斂成決鬥區半徑本身 24，語意不變（就是全場），跟 13-04 龍星群同一個寫法。",
   "slot": "PASSIVE",
   "innateKind": "active",

@@ -2,6 +2,7 @@
   "id": "godie-e00r.w",
   "schema": "ability@1",
   "name": "59-02 高週波短刀",
+  "provenance": "owner-spec",
   "description": "[被動][普攻時][機率][真傷]\n\n「高級的美工刀，只要動得夠快也能切斷鑽石呢」\n高週波短刀[每次普攻]有10/15/20/25%[機率]將該次攻擊轉為[真實傷害]。",
   "slot": "W",
   "castType": "self",

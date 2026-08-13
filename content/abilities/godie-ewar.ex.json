@@ -2,6 +2,7 @@
   "id": "godie-ewar.ex",
   "schema": "ability@1",
   "name": "12-002 仙氣發勁",
+  "provenance": "owner-spec",
   "description": "[主動][指定][擊退][AP加成]\n30秒冷卻，吟唱2秒\n消耗MP600\n施法距離2\n\n「Hey Siri，打開電風扇」\n近身最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成 1800 + 600% [AP] 傷害，並[擊退]敵方單位。",
   "slot": "EX",
   "castType": "targeted",

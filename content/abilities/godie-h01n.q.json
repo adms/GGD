@@ -2,6 +2,7 @@
   "id": "godie-h01n.q",
   "schema": "ability@1",
   "name": "79-01 瞬步",
+  "provenance": "owner-spec",
   "description": "[主動][指向][範圍][衝刺]\n30秒冷卻\n消耗[MP] 60/80/100/120\n施法距離9.17\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
   "slot": "Q",
   "castType": "ground",

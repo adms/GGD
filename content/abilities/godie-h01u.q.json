@@ -2,6 +2,7 @@
   "id": "godie-h01u.q",
   "schema": "ability@1",
   "name": "80-01 天下無雙",
+  "provenance": "owner-spec",
   "description": "[被動][普攻時][層數累積]\n0秒冷卻\n\n「人中出呂布，馬中出赤兔」\n每次 [普通攻擊時] 都會增加 10% [攻擊速度] 並可[疊加]，持續1秒，若沒有繼續攻擊則[疊加]的 [攻擊速度] 增益歸零。",
   "slot": "Q",
   "castType": "self",

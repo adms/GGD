@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "71-02 靈魂吸取",
   "icon": "assets/icons/abilities/godie-u00k.w.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n死之王每次攻擊可造成部隊的靈魂凍結0.01秒，並於部隊死亡後20秒內增加死之王全能力1點(最高累計10次)。",
   "slot": "W",
   "castType": "targeted",

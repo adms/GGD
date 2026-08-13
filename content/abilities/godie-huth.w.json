@@ -2,6 +2,7 @@
   "id": "godie-huth.w",
   "name": "28-02 把你變成餅乾",
   "icon": "assets/icons/abilities/godie-huth.w.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成250傷害。",
   "slot": "W",
   "castType": "targeted",

@@ -2,6 +2,7 @@
   "id": "godie-h01u.passive",
   "schema": "ability@1",
   "name": "80-00 飛將神弓",
+  "provenance": "owner-spec",
   "description": "[被動][擊殺時]\n0秒冷卻\n\n「轅門射戟只是熱身，這次我直接射你」\n每殺死一名敵人 [攻擊速度] 永久增加1%；[攻擊距離] 永久提升0.01，上限到10。",
   "slot": "PASSIVE",
   "castType": "self",

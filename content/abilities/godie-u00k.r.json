@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "71-04 萬惡歸宗",
   "icon": "assets/icons/abilities/godie-u00k.r.webp",
+  "provenance": "w3x-import",
   "description": "[主動攻擊]\n60秒冷卻時間\n抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。\n\n夜間施法傷害加成500",
   "slot": "R",
   "castType": "targeted",

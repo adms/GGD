@@ -2,6 +2,7 @@
   "id": "godie-ogrh.e",
   "name": "09-03 超級賽亞人",
   "icon": "assets/icons/abilities/godie-ogrh.e.webp",
+  "provenance": "w3x-import",
   "description": "[變身]\n60秒冷卻時間\n\n帶著憤怒的情緒，將氣發揮到極致，變身成為超級賽亞人，攻擊和移動速度將會大幅提升，持續8秒。\n\n變身期間換成【超級賽亞人 - 悟空】的身體：攻擊速度 ×1.58（w3x 攻擊間隔 1.90→1.20 秒）、移動速度 ×1.28（w3x 310→400），並獲得只在變身時存在的隱藏被動【09-002a 悟空指令靈氣】攻擊力 +25%。變回本體時三者同時消失。",
   "slot": "E",
   "castType": "self",

@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "74-00 JENOVA",
   "icon": "assets/icons/abilities/godie-u00j.passive.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n擁有JENOVA優越物種的DNA，使得戰鬥能力相當卓越，有15%的機會閃避攻擊，而且有15%機會造成攻擊3倍的傷害，無視對方迴避能力。",
   "slot": "PASSIVE",
   "innateKind": "passive",

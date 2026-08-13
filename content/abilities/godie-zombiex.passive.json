@@ -2,6 +2,7 @@
   "id": "godie-zombiex.passive",
   "schema": "ability@1",
   "name": "100-00 黑泥吞噬",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n黑化聖杯溢出的惡意邪念，吞下去的東西全部變成自己的血肉。每擊殺一隻部隊永久增加 8 點最大生命，每擊殺一名敵方英雄永久增加 40 點最大生命，持續整場對戰。\n\n疊到 20 層時身體開始腫脹發黑，疊到 50 層時整個人大上一號、腳邊拖出一圈化不開的黑泥。",
   "slot": "PASSIVE",
   "innateKind": "passive",

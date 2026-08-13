@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "57-04 竹蜻蜓",
   "icon": "assets/icons/abilities/godie-n00b.r.webp",
+  "provenance": "w3x-import",
   "description": "[輔助]\n55秒冷卻時間\n\n給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著150點傷害。",
   "slot": "R",
   "castType": "targeted",

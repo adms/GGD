@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "65-00 古老智慧",
   "icon": "assets/icons/abilities/godie-udea.passive.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n由於飛鼠先生熟讀世間所有魔法的根基，繼承著最古老的智慧，對於穿刺與魔法攻擊的傷害能降低50%。",
   "slot": "PASSIVE",
   "innateKind": "passive",

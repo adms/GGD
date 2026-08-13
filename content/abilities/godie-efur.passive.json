@@ -2,6 +2,7 @@
   "id": "godie-efur.passive",
   "schema": "ability@1",
   "name": "13-00 念。攻防轉換",
+  "provenance": "owner-spec",
   "description": "[被動][輪替增益][普攻時]\n0秒冷卻\n\n「年輕人，知道你想把念轉移到哪裡，勸你不要」\n[每次普通攻擊]的時候，依照順序循環強化① 法術強度([AP]) +10% ② 攻擊力([AD]) +10% ③ [防禦] +10% ④ [魔法抗性] +10% ，每一個各自持續 1.0 秒，[攻擊速度]夠快的話四個強化可以同時存在。",
   "slot": "PASSIVE",
   "castType": "self",

@@ -2,6 +2,7 @@
   "id": "godie-h01u.w",
   "schema": "ability@1",
   "name": "80-02 弒鬼神",
+  "provenance": "owner-spec",
   "description": "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
   "slot": "W",
   "castType": "self",

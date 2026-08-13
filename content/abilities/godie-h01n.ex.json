@@ -2,6 +2,7 @@
   "id": "godie-h01n.ex",
   "schema": "ability@1",
   "name": "79-002 虛化",
+  "provenance": "owner-spec",
   "description": "[被動][回復][機率]\n\n「面具才是本體」\n[卍解] 狀態下，額外獲得100%攻擊力([AD])提昇、60％[吸血] 、有30%的[機率][格擋]物理([AD])傷害、[月牙天衝]冷卻時間縮短50%。",
   "slot": "EX",
   "castType": "self",

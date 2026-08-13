@@ -3,6 +3,7 @@
   "schema": "ability@1",
   "name": "12-00 感應意脈",
   "icon": "assets/icons/abilities/godie-e007.passive.webp",
+  "provenance": "w3x-import",
   "description": "[被動]\n0秒冷卻時間\n\n志狼矇眼修行後，領悟到感應人意識流動，神一般的技巧，可以使自身物理攻擊迴避達到20%。",
   "slot": "PASSIVE",
   "innateKind": "passive",

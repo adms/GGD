@@ -504,9 +504,38 @@ export const zAbilityDef = z
     id: zIdFor<AbilityId>(),
     name: z.string().min(1),
     /**
-     * Human-readable ability tooltip recovered from the w3x source (WC3 color
-     * codes stripped, line breaks normalized). Optional metadata — absent when
-     * the map yields no text. Not consumed by the sim; drives editor/UI display.
+     * ⭐【這一份文件的說明是**哪一層**的】—— 2026-08-13 事故的直接修法。
+     *
+     * owner 給了 70-002 樹海降臨的裁決，而助手把它套到 70-00 的 w3x 遺留光環上，
+     * 因為它讀了那支技能 JSON 裡**舊的** description。owner 的話是
+     *   「你不是有做一個最新版本的英雄的技能列表及說明(JSON & MD)? **怎麼會搞混呢?**」
+     *
+     * ⛔ 根因不是不小心：461 份 ability 文件的 **29 個頂層欄位裡沒有任何一個**
+     *    說得出「這段字是階梯的第幾層」。兩種來源的文件長得一模一樣權威。
+     *
+     * 第〇·六守則的階梯：
+     *   `"owner-spec"`  第 1 層 —— owner 新版技能說明（90 支重製，`batch1.py` 產生）
+     *   `"w3x-import"`  第 4 層 —— 從 w3x 匯入的文案。⛔ **它不是規格，是考古**
+     *
+     * ⛔ 這裡**沒有** `"authored"`（GGD 自己從零寫的）。第一版有，而
+     *    `fieldAdoption.test.ts` 當場擋下來：**0 份文件用它**。
+     *    一個沒有人用的枚舉成員就是 S8（機制上架、內容零採用）——
+     *    真的有人從零寫一支技能時再加，那時它會有第一份證據。
+     *
+     * ⚠️ 它描述的是**這份文件的出身**，⛔ 不是「每一個字都逐字未改」——
+     *    一份 `w3x-import` 的文件後來被人手改過，它仍然不是 owner 新版規格。
+     *
+     * ⚠️ optional 是為了讓舊文件載得進來（fail-open），但**有一條會紅的守衛**
+     *    要求每一份出貨文件都宣告它：`content/abilityProvenance.test.ts`。
+     *    ——「選擇 fail-open 的同時，必須有一個會回非零的東西說出來」。
+     */
+    provenance: z.enum(["owner-spec", "w3x-import"]).optional(),
+    /**
+     * Human-readable ability tooltip. ⚠️ **哪一層由 `provenance` 說**，⛔ 不要
+     * 假設它是 w3x 的（這一行以前寫著 "recovered from the w3x source"，而那對
+     * 90 支重製技能是假的 —— 第三守則：註解會說謊）。
+     * WC3 color codes stripped, line breaks normalized. Optional metadata.
+     * Not consumed by the sim; drives editor/UI display.
      */
     description: z.string().optional(),
     /**
