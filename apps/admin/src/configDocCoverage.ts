@@ -92,6 +92,12 @@ export interface ConfigDocExemption {
  * ⚠️ 列的順序沒有意義；分類有。
  */
 export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
+  {
+    docId: "per-level-bonus",
+    kind: "KNOWN_GAP",
+    why: "⚠️ 這份文件的 `perLevel` 是一個 **`z.record`**（鍵是屬性名，不是固定欄位），而通用表單引擎只走得動**固定形狀的葉節點** —— 它列不出「有哪些鍵」，於是頁面會是空的。做一個空頁比沒有頁更糟：操作者點進去看到什麼都沒有，會以為壞了。",
+    expiresWhen: "⚠️ 通用引擎長出「record 型欄位」的支援（新增/刪除鍵 + 每個鍵一組子欄位）的那一天，這一列就該退場，改成一頁真的能編的表。⭐ `config.stat-caps@1` 的 `caps` 是同一個形狀，兩份會一起解鎖。",
+  },
   // ── ① OWN_PAGE：有專屬頁。會腐爛，所以每一列都被機器驗兩件事 ────────────
   {
     docId: "arena-rules",

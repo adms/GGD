@@ -87,6 +87,13 @@ const BASELINE_PAGES: readonly Page[] = [
   // 英雄屬性正規化 —— owner 2026-08-12「只有小中大才是真正的分佈」。
   // 與 AoE 級距、屬性上限 相鄰：三者都是「英雄與技能的尺」。
   "statNormalization",
+  // GH#322（2026-08-13）：這四頁的 spec 早就註冊了，但導覽列沒有那一列 ⇒ 操作者
+  // 點不到。⚠️ 加進基準線是一個**決定**（這一行的 diff 就是那個決定的痕跡），
+  // ⛔ 不是為了讓紅燈變綠 —— 少了這四列，那四份 config 只有 API 改得動。
+  "castTime",
+  "mitigation",
+  "displacementTiers",
+  "perLevelBonus",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -135,6 +142,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "cooldownRules",
       "aoeTiers",
       "statNormalization",
+      "castTime",
+      "mitigation",
+      "displacementTiers",
+      "perLevelBonus",
       "combatFeel",
       "matchConfig",
       "bodyScale",

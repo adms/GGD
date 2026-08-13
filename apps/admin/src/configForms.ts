@@ -70,6 +70,9 @@ import {
   zConfigVfxCleanupDoc,
   zConfigVictoryFxDoc,
 } from "@ggd/shared/content";
+// ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
+import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
+import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
 // 一次，所以這裡走 package.json 的 `"./*"` 子路徑。`laneConfigDocs.test.ts` 走的是
@@ -772,6 +775,154 @@ const AOE_TIERS_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+
+/**
+ * ⭐【正規化那 209 個葉節點：K 個模板 + 一張表，⛔ 不是 209 列手寫標籤】
+ *
+ * `config.stat-normalization@1` 的形狀是**完全規則**的四族：
+ *   · `bands.<屬性>.<級距>`      10 × 5  = 50
+ *   · `byArchetype.<屬性>.<定位>` 10 × 4  = 40
+ *   · `byOrigin.<屬性>.<出身>`    10 × 10 = 100
+ *   · `channel.<屬性>`            10
+ *
+ * 2026-08-13 的平衡批把屬性從 3 條擴到 10 條、又加了 `byOrigin` 整族，
+ * 而標籤表停在 27 列 ⇒ `configForms.test.ts` 紅，**177 格在後台沒有中文標籤**
+ *（畫不出來或顯示原始鍵名）。第一守則的三個住處缺了第三個。
+ *
+ * ⛔ 補法不是貼 177 列。第零守則⑨：「N 個同型項目 = K 個模板 + 一張表」——
+ *    這裡是**三張詞彙表 + 一個產生器**，下一次再加一條屬性或一個出身，
+ *    標籤自動長出來，⛔ 不需要有人記得回來補。
+ *
+ * ⭐ 手寫的那些**不會被蓋掉**：`generatedNormalizationFields()` 只補
+ *    「還沒有人寫過的 path」。帶著 owner 裁決理由的註解（坦克吃裝甲不吃魔抗、
+ *    移速為什麼只能走初始值⋯）全部原樣保留 —— 那才是人寫的價值所在。
+ */
+const NORM_STAT_ZH: Record<string, string> = {
+  ms: "移速",
+  mr: "魔抗",
+  armor: "裝甲",
+  maxHealth: "生命上限",
+  maxMana: "魔力上限",
+  ad: "攻擊力",
+  ap: "法術強度",
+  as: "攻速",
+  healthRegen: "生命回復",
+  manaRegen: "魔力回復",
+};
+const NORM_BANDS = ["極小", "小", "中", "大", "極大"] as const;
+const NORM_ARCHETYPE_ZH: Record<string, string> = {
+  tank: "坦克",
+  fighter: "近戰",
+  marksman: "遠程",
+  mage: "法師",
+};
+/** 級距下拉的選項標籤 —— 五格都要有，⛔ 少一個 `configForms.test.ts` 就紅。 */
+const NORM_BAND_OPTIONS: Record<string, string> = Object.fromEntries(
+  NORM_BANDS.map((b) => [b, b]),
+);
+const NORM_CHANNEL_OPTIONS = { baseStats: "初始值", growth: "每級成長" };
+
+/** 選角出身（`byOrigin` 的第二層鍵）—— 出貨十種。 */
+const NORM_ORIGINS = [
+  "坦克", "砲手", "鬥士", "射手", "法鬥", "法師", "狂戰", "硬輔", "法刺", "軟輔",
+] as const;
+
+/**
+ * 把四族的每一格補齊，跳過 `written` 裡已經有人手寫的 path。
+ *
+ * ⚠️ 詞彙表是**宣告的**（上面四個常數），⛔ 不是從檔案讀的 —— 這支模組進 client
+ * bundle，不能碰 fs。閘在 `configForms.test.ts`：它拿 **Zod schema 的葉節點**
+ * 對照這裡產出的 path，schema 多一條屬性而詞彙表沒跟上就**當場紅**並指名那一格。
+ * ⇒ 詞彙表過期不會靜默，這正是「第四個住處」與「有閘的第三個住處」的差別。
+ */
+function generatedNormalizationFields(written: ReadonlySet<string>): ConfigFieldLabel[] {
+  const out: ConfigFieldLabel[] = [];
+  const zh = (k: string): string => NORM_STAT_ZH[k] ?? k;
+  const push = (f: ConfigFieldLabel): void => {
+    if (!written.has(f.path)) out.push(f);
+  };
+  for (const stat of Object.keys(NORM_STAT_ZH)) {
+    for (const band of NORM_BANDS) {
+      push({
+        path: `bands.${stat}.${band}`,
+        zh: `${zh(stat)} · ${band}`,
+        note: `${zh(stat)} 落在「${band}」這一格時的數值。⚠️ 它是**基準等級**（見「成長通道的基準等級」）的最終總值，不是初始值。`,
+      });
+    }
+    for (const [role, roleZh] of Object.entries(NORM_ARCHETYPE_ZH)) {
+      push({
+        path: `byArchetype.${stat}.${role}`,
+        zh: `${roleZh} → ${zh(stat)}哪一格`,
+        note: `決定「${roleZh}」這個定位的英雄，${zh(stat)} 要落在哪一格級距 —— 改它會同時影響**每一位**判定為這個定位的英雄，不是單一個案。`,
+        optionLabels: NORM_BAND_OPTIONS,
+      });
+    }
+    for (const origin of NORM_ORIGINS) {
+      push({
+        path: `byOrigin.${stat}.${origin}`,
+        zh: `${origin} → ${zh(stat)}哪一格`,
+        note: `選角出身「${origin}」的 ${zh(stat)} 落在哪一格級距。⚠️ 出身比定位**更細** —— 同一個定位的兩位英雄可以走不同出身。`,
+        optionLabels: NORM_BAND_OPTIONS,
+      });
+    }
+    push({
+      path: `channel.${stat}`,
+      zh: `${zh(stat)}寫進哪個通道`,
+      note: "「初始值」= 等級 1 就看得出差別；「每級成長」= 差異隨等級拉開，⚠️ 選人畫面上等級 1 看起來會一樣。",
+      optionLabels: NORM_CHANNEL_OPTIONS,
+    });
+  }
+  return out;
+}
+
+/** 手寫的那些 —— 帶著 owner 裁決理由，⛔ 產生器不會蓋掉它們。 */
+const NORM_HAND_WRITTEN: ConfigFieldLabel[] = [
+    {
+      path: "mode",
+      zh: "模式（normalized / legacy）",
+      note: "`normalized` 是出貨預設，英雄的移速與魔抗由角色定位決定。`legacy` 是**回滾用的逃生口** —— 扳過去就回到英雄卡上的原值，**不需要部署**（舊數值一直留在英雄卡裡沒有被銷毀）。",
+      optionLabels: { normalized: "正規化（出貨預設）", legacy: "舊數值（回滾用）" },
+    },
+    { path: "bands.ms.小", zh: "移速 · 小（慢）", note: "坦克與法師落在這一格。錨點是 74 位母體的中位數 5.8，小 = 中 ÷ 1.25。" },
+    { path: "bands.ms.中", zh: "移速 · 中", note: "遠程角色落在這一格。這個數字是**量出來的**（74 位母體的中位數），不是挑的。" },
+    { path: "bands.ms.大", zh: "移速 · 大（快）", note: "近戰角色落在這一格。大 = 中 × 1.25。⚠️ in-game 還要再乘攻擊型別倍率（近戰 ×0.8 / 遠程 ×0.6）。" },
+    { path: "bands.mr.小", zh: "魔抗 · 小（弱）", note: "遠程與法師落在這一格 —— owner：「魔抗則是遠距離及法師弱」。⚠️ in-game 還要再乘 ×0.2（`magicResistMult`）。" },
+    { path: "bands.mr.中", zh: "魔抗 · 中", note: "近戰角色落在這一格。這個數字是量出來的（母體中位數 38.8）。" },
+    { path: "bands.mr.大", zh: "魔抗 · 大（高）", note: "坦克落在這一格 —— owner：「坦克高」。大 = 中 × 1.25。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.ms.tank", zh: "坦克 → 移速哪一格", note: "owner：「近距離攻擊移動速度應該是快，**但坦克是中或慢**」。出貨取「小（慢）」—— 改成「中」就是另一種讀法，這一格就是給你改的。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.ms.fighter", zh: "近戰 → 移速哪一格", note: "owner：「近距離攻擊 移動速度應該是**快**」。出貨「大」。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.ms.marksman", zh: "遠程 → 移速哪一格", note: "owner：「遠距離攻擊 移動速度應該是**中**」。出貨「中」。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.ms.mage", zh: "法師 → 移速哪一格", note: "owner：「技能傷害為主的法師⋯移動速度應該是中或慢，**但慢的為主**」。出貨「小」。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.mr.tank", zh: "坦克 → 魔抗哪一格", note: "⚠️ **2026-08-12 整組反轉**。owner 原本說「坦克高」，但那和「智慧→魔抗」的推導打架。他的新裁決是「**我們引入防禦/裝甲來平衡這個現象**」→ 坦克改吃**裝甲**，魔抗讓給法師。出貨「小」。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.mr.fighter", zh: "近戰 → 魔抗哪一格", note: "owner：「近距離**中**」。出貨「中」—— 近戰要貼身，但不該像坦克一樣無視魔法傷害。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.mr.marksman", zh: "遠程 → 魔抗哪一格", note: "owner：「遠距離⋯**弱**」。出貨「小」—— 遠程靠距離活命，不是靠抗性。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.mr.mage", zh: "法師 → 魔抗哪一格", note: "⭐ 出貨「大」。法師的智慧最高，而智慧本來就推導魔抗 —— 這一格讓**引擎本來就在做的事變成對的**，不再需要對抗它。坦克那一邊改由裝甲負責。" },
+
+    { path: "bands.armor.小", zh: "裝甲 · 小（薄）", note: "法師與遠程落在這一格。⚠️ 這是**等級 18 的最終總值**（裝甲走成長通道），不是初始值。小 = 中 ÷ 1.25。" },
+    { path: "bands.armor.中", zh: "裝甲 · 中", note: "近戰落在這一格。錨點 = 73 位可達英雄在等級 18 的**中位數**（量出來的），所以改制前後全場的防禦總量不變，只是重新分配。" },
+    { path: "bands.armor.大", zh: "裝甲 · 大", note: "坦克落在這一格。大 = 中 × 1.25。⚠️ 這一格是坦克唯一的硬度來源 —— 裝甲由**敏捷**推導，而坦克是力量主，自然裝甲全場最低（改制前坦克排第三）。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.armor.tank", zh: "坦克 → 裝甲哪一格", note: "owner 2026-08-12：坦克**大**。這一格是整次改制的重點 —— 它取代了原本「坦克魔抗高」的角色。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.armor.fighter", zh: "近戰 → 裝甲哪一格", note: "owner：近戰**中**。⚠️ 改制前近戰的裝甲其實是全場第一（敏捷主），這一格會把它拉回中間。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.armor.marksman", zh: "遠程 → 裝甲哪一格", note: "owner：遠程**小**。⚠️ 改制前遠程的裝甲排全場第二（敏捷主），這一格把它拉到最低 —— 遠程靠站位活命，被貼上就該死。" },
+    { optionLabels: NORM_BAND_OPTIONS, path: "byArchetype.armor.mage", zh: "法師 → 裝甲哪一格", note: "owner：法師**小**。法師拿魔抗不拿裝甲 —— 這一格與「法師 → 魔抗＝大」是同一個設計的兩半，一起改才有意義。" },
+
+    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.ms", zh: "移速寫進哪個通道", note: "⛔ 出貨「初始值」，而這**不是偏好，是量出來的機制限制**：成長只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。實測改成「每級成長」會讓坦克 15/16 位、法師 18/18 位被夾在 0，排序變成坦克第二。" },
+    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.mr", zh: "魔抗寫進哪個通道", note: "出貨「每級成長」。owner：「**初始的屬性是用來補正角色個性化差異，成長是定位導向**」。⚠️ 走成長的代價是**等級 1 看不出差別** —— 選人畫面上四個定位的魔抗會一樣。" },
+    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.armor", zh: "裝甲寫進哪個通道", note: "出貨「每級成長」，理由同魔抗：初始值留給角色個性，定位差異由成長拉開。⚠️ 裝甲改走成長之後，坦克的硬度要到中後期才浮出來，等級 1 的選人畫面上四個定位是一樣的。" },
+    { path: "referenceLevel", zh: "成長通道的基準等級", note: "級距那三個數字是「**這一級**的最終總值」。出貨 18。⚠️ 改它會讓三格的數字整組換一個意思 —— 基準拉到 30，同樣填 26.2 就變成「30 級時是 26.2」，於是每一級的成長變小。" },
+    { path: "allowNegativeGrowth", zh: "允許反解出負成長", note: "出貨**關著**（負的夾成 0）。⚠️ 關著的代價是**目標可能達不到**：一位初始值已經高過目標的英雄，成長填 0 也降不下來。打開它會讓那條屬性**隨等級下降** —— 那在數學上成立，但在遊戲裡幾乎一定看起來像 bug。" },
+    {
+      path: "transformBandShift",
+      zh: "變身態的級距位移",
+      note: "變身態相對於本體要**往上位移幾格**。0 = 同一格（等於沒有強化）、1 = 高一格（本體「中」→ 變身「大」）。⚠️ 只有在上面那格「變身態跳過正規化」**關掉**時才會被讀到 —— 兩格一起看才知道變身態拿到什麼。",
+    },
+    {
+      path: "skipTransformedBodies",
+      zh: "變身態跳過正規化",
+      note: "出貨**開著**。⚠️ 這一格是被守衛逼出來的：變身態與本體的角色定位幾乎一定相同（同主屬性、同攻擊型別），一起正規化會讓兩者的移速/魔抗變成同一個數字 —— **超級賽亞人不再比悟空快、霸氣索隆不再比索隆抗魔**，變身的強化整個消失。等你決定「變身態的級別該怎麼相對於本體」之後再關掉它。",
+    },
+];
+
 const STAT_NORMALIZATION_SPEC: ConfigDocSpec = {
   page: "statNormalization",
   collection: "config",
@@ -790,46 +941,10 @@ const STAT_NORMALIZATION_SPEC: ConfigDocSpec = {
     "packages/shared/src/content/statNormalization.ts 的 resolveChampionStats（全專案唯一知道「級別怎麼變成數字」的地方）← content/registries.ts 的 registerAll，在英雄註冊時改寫 baseStats；商店預覽／選人畫面／後台全部走同一份註冊表",
   effect:
     "**要重啟 game-server shard 才生效**（內容在註冊時就解析完），客戶端要重新載入 bundle。和 冷卻規則／AoE 級距 同一個形態(#278)。",
+  // ⭐ 手寫的在前（順序＝後台頁的顯示順序），產生的補在後面。
   fields: [
-    {
-      path: "mode",
-      zh: "模式（normalized / legacy）",
-      note: "`normalized` 是出貨預設，英雄的移速與魔抗由角色定位決定。`legacy` 是**回滾用的逃生口** —— 扳過去就回到英雄卡上的原值，**不需要部署**（舊數值一直留在英雄卡裡沒有被銷毀）。",
-      optionLabels: { normalized: "正規化（出貨預設）", legacy: "舊數值（回滾用）" },
-    },
-    { path: "bands.ms.小", zh: "移速 · 小（慢）", note: "坦克與法師落在這一格。錨點是 74 位母體的中位數 5.8，小 = 中 ÷ 1.25。" },
-    { path: "bands.ms.中", zh: "移速 · 中", note: "遠程角色落在這一格。這個數字是**量出來的**（74 位母體的中位數），不是挑的。" },
-    { path: "bands.ms.大", zh: "移速 · 大（快）", note: "近戰角色落在這一格。大 = 中 × 1.25。⚠️ in-game 還要再乘攻擊型別倍率（近戰 ×0.8 / 遠程 ×0.6）。" },
-    { path: "bands.mr.小", zh: "魔抗 · 小（弱）", note: "遠程與法師落在這一格 —— owner：「魔抗則是遠距離及法師弱」。⚠️ in-game 還要再乘 ×0.2（`magicResistMult`）。" },
-    { path: "bands.mr.中", zh: "魔抗 · 中", note: "近戰角色落在這一格。這個數字是量出來的（母體中位數 38.8）。" },
-    { path: "bands.mr.大", zh: "魔抗 · 大（高）", note: "坦克落在這一格 —— owner：「坦克高」。大 = 中 × 1.25。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.tank", zh: "坦克 → 移速哪一格", note: "owner：「近距離攻擊移動速度應該是快，**但坦克是中或慢**」。出貨取「小（慢）」—— 改成「中」就是另一種讀法，這一格就是給你改的。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.fighter", zh: "近戰 → 移速哪一格", note: "owner：「近距離攻擊 移動速度應該是**快**」。出貨「大」。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.marksman", zh: "遠程 → 移速哪一格", note: "owner：「遠距離攻擊 移動速度應該是**中**」。出貨「中」。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.ms.mage", zh: "法師 → 移速哪一格", note: "owner：「技能傷害為主的法師⋯移動速度應該是中或慢，**但慢的為主**」。出貨「小」。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.tank", zh: "坦克 → 魔抗哪一格", note: "⚠️ **2026-08-12 整組反轉**。owner 原本說「坦克高」，但那和「智慧→魔抗」的推導打架。他的新裁決是「**我們引入防禦/裝甲來平衡這個現象**」→ 坦克改吃**裝甲**，魔抗讓給法師。出貨「小」。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.fighter", zh: "近戰 → 魔抗哪一格", note: "owner：「近距離**中**」。出貨「中」—— 近戰要貼身，但不該像坦克一樣無視魔法傷害。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.marksman", zh: "遠程 → 魔抗哪一格", note: "owner：「遠距離⋯**弱**」。出貨「小」—— 遠程靠距離活命，不是靠抗性。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.mr.mage", zh: "法師 → 魔抗哪一格", note: "⭐ 出貨「大」。法師的智慧最高，而智慧本來就推導魔抗 —— 這一格讓**引擎本來就在做的事變成對的**，不再需要對抗它。坦克那一邊改由裝甲負責。" },
-
-    { path: "bands.armor.小", zh: "裝甲 · 小（薄）", note: "法師與遠程落在這一格。⚠️ 這是**等級 18 的最終總值**（裝甲走成長通道），不是初始值。小 = 中 ÷ 1.25。" },
-    { path: "bands.armor.中", zh: "裝甲 · 中", note: "近戰落在這一格。錨點 = 73 位可達英雄在等級 18 的**中位數**（量出來的），所以改制前後全場的防禦總量不變，只是重新分配。" },
-    { path: "bands.armor.大", zh: "裝甲 · 大", note: "坦克落在這一格。大 = 中 × 1.25。⚠️ 這一格是坦克唯一的硬度來源 —— 裝甲由**敏捷**推導，而坦克是力量主，自然裝甲全場最低（改制前坦克排第三）。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.armor.tank", zh: "坦克 → 裝甲哪一格", note: "owner 2026-08-12：坦克**大**。這一格是整次改制的重點 —— 它取代了原本「坦克魔抗高」的角色。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.armor.fighter", zh: "近戰 → 裝甲哪一格", note: "owner：近戰**中**。⚠️ 改制前近戰的裝甲其實是全場第一（敏捷主），這一格會把它拉回中間。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.armor.marksman", zh: "遠程 → 裝甲哪一格", note: "owner：遠程**小**。⚠️ 改制前遠程的裝甲排全場第二（敏捷主），這一格把它拉到最低 —— 遠程靠站位活命，被貼上就該死。" },
-    { optionLabels: { 小: "小", 中: "中", 大: "大" }, path: "byArchetype.armor.mage", zh: "法師 → 裝甲哪一格", note: "owner：法師**小**。法師拿魔抗不拿裝甲 —— 這一格與「法師 → 魔抗＝大」是同一個設計的兩半，一起改才有意義。" },
-
-    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.ms", zh: "移速寫進哪個通道", note: "⛔ 出貨「初始值」，而這**不是偏好，是量出來的機制限制**：成長只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。實測改成「每級成長」會讓坦克 15/16 位、法師 18/18 位被夾在 0，排序變成坦克第二。" },
-    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.mr", zh: "魔抗寫進哪個通道", note: "出貨「每級成長」。owner：「**初始的屬性是用來補正角色個性化差異，成長是定位導向**」。⚠️ 走成長的代價是**等級 1 看不出差別** —— 選人畫面上四個定位的魔抗會一樣。" },
-    { optionLabels: { baseStats: "初始值", growth: "每級成長" }, path: "channel.armor", zh: "裝甲寫進哪個通道", note: "出貨「每級成長」，理由同魔抗：初始值留給角色個性，定位差異由成長拉開。⚠️ 裝甲改走成長之後，坦克的硬度要到中後期才浮出來，等級 1 的選人畫面上四個定位是一樣的。" },
-    { path: "referenceLevel", zh: "成長通道的基準等級", note: "級距那三個數字是「**這一級**的最終總值」。出貨 18。⚠️ 改它會讓三格的數字整組換一個意思 —— 基準拉到 30，同樣填 26.2 就變成「30 級時是 26.2」，於是每一級的成長變小。" },
-    { path: "allowNegativeGrowth", zh: "允許反解出負成長", note: "出貨**關著**（負的夾成 0）。⚠️ 關著的代價是**目標可能達不到**：一位初始值已經高過目標的英雄，成長填 0 也降不下來。打開它會讓那條屬性**隨等級下降** —— 那在數學上成立，但在遊戲裡幾乎一定看起來像 bug。" },
-    {
-      path: "skipTransformedBodies",
-      zh: "變身態跳過正規化",
-      note: "出貨**開著**。⚠️ 這一格是被守衛逼出來的：變身態與本體的角色定位幾乎一定相同（同主屬性、同攻擊型別），一起正規化會讓兩者的移速/魔抗變成同一個數字 —— **超級賽亞人不再比悟空快、霸氣索隆不再比索隆抗魔**，變身的強化整個消失。等你決定「變身態的級別該怎麼相對於本體」之後再關掉它。",
-    },
+    ...NORM_HAND_WRITTEN,
+    ...generatedNormalizationFields(new Set(NORM_HAND_WRITTEN.map((f) => f.path))),
   ],
   // ⚠️ `appliesTo` 是一個陣列 —— 表單引擎只畫純量，所以它原封帶走。
   //    要開啟別的屬性請直接改 content/config/stat-normalization.json 或用 API。
@@ -1988,7 +2103,71 @@ const ITEM_CARD_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+
+/**
+ * ⭐ GH#322 —— 2026-08-13 的平衡批新開了三份 config，但**沒有任何後台入口**。
+ *
+ * `configDocCoverage.test.ts` 抓到的正是這個：「這幾份 config 沒有任何後台入口，
+ * 也沒有在豁免表上：要嘛做一頁，要嘛寫下為什麼不做」。
+ * ⛔ 選「做一頁」而不是豁免 —— 這三份**全部是 owner 會調的平衡旋鈕**
+ * （減傷天花板 / 位移級距 / 每級加成），豁免它們就是第一守則的三個住處缺第三個。
+ */
+const MITIGATION_SPEC: ConfigDocSpec = {
+  page: "mitigation",
+  collection: "config",
+  docId: "mitigation",
+  schemaTag: "config.mitigation@1",
+  zod: zConfigMitigationDoc,
+  title: "減傷規則",
+  intro: [
+    "LoL 式減傷四段的最後一格：**負抗性的放大上限**。護甲/魔抗被穿到負值時，傷害會被放大，這一格是那個放大倍率的天花板。",
+    "⚠️ 沒有天花板的話，一件穿透道具疊到極端就會讓一發普攻打出天文數字 —— 這一格是保險絲，不是手感旋鈕。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/mitigation.json`**。",
+  ],
+  consumer: "packages/shared/src/sim/combat/penetration.ts 與 mitigate()（全專案唯一算減傷的地方）",
+  effect: "**要重啟 game-server shard 才生效**。和 冷卻規則／吟唱規則 同一個形態(#278)。",
+  fields: [
+    {
+      path: "negativeResistAmplifyCeiling",
+      zh: "負抗性放大上限",
+      note: "護甲/魔抗被穿成負數時，傷害最多被放大到幾倍。⚠️ 這是**保險絲**：調高等於允許穿透流一擊必殺，調低等於穿透道具的收益封頂。",
+    },
+  ],
+  preserved: [],
+};
+
+const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
+  page: "displacementTiers",
+  collection: "config",
+  docId: "displacement-tiers",
+  schemaTag: "config.displacement-tiers@1",
+  zod: zConfigDisplacementTiersDoc,
+  title: "位移級距",
+  intro: [
+    "位移距離走**四級距**（小/中/大/極大），⛔ 技能不再寫死距離數字 —— 和 AoE 級距、冷卻規則同一個形態。",
+    "⭐ **兩條梯子**：`travel` = 自己動（衝刺），`push` = 別人被推（擊退）。出貨分佈幾乎不重疊（衝刺 5.0–14.67、擊退 2.0–6.0），硬塞成一條會讓 14 支擊退全部擠進「小」。要合成一條就把兩張表填成一樣的數字。",
+    "⚠️ **速度那一欄是安全欄位不是手感欄位**（GH#318）：穿牆的門檻是「每 tick 位移 > 身體半徑」，所以上限 = ⌊30 × 最小身體半徑 × 安全係數⌋。**關掉「夾住速度」穿牆就會回來**。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/displacement-tiers.json`**。",
+  ],
+  consumer: "packages/shared/src/content/displacementTiers.ts 的 resolveDisplacementTier（註冊時把級別翻成距離/速度）",
+  effect: "**要重啟 game-server shard 才生效**，客戶端要重新載入 bundle。",
+  fields: [
+    { path: "enabled", zh: "級距總開關", note: "關掉之後技能照自己文件裡寫的距離走，等於這套級距沒有存在過。⚠️ 它**不會**連帶關掉速度夾限（那是下面獨立的一格）。" },
+    { path: "clampSpeed", zh: "夾住位移速度（穿牆修復本體）", note: "⛔ **這一格才是 GH#318 的修復本體**，而且它**無條件套用**（跟有沒有填級別無關）。關掉它，出貨 35 個位移效果裡有 29 個會穿牆。" },
+    { path: "safetyFactor", zh: "速度上限的安全係數", note: "速度上限 = ⌊30 × 最小身體半徑 × 這一格⌋。1.0 = 剛好貼著穿牆門檻，出貨 0.9 留一成餘裕。⚠️ 調高會讓位移更快但逼近穿牆。" },
+    ...(["小", "中", "大", "極大"] as const).flatMap((tier) => [
+      { path: `travel.${tier}.distance`, zh: `衝刺 · ${tier} · 距離`, note: `自己位移（衝刺類）在「${tier}」這一格走多遠。⚠️ 改它會同時影響**每一支**填了這個級別的技能。` },
+      { path: `travel.${tier}.speed`, zh: `衝刺 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 這是安全欄位：超過上限會被「夾住位移速度」那一格截掉，⛔ 不是拿來調手感的。` },
+      { path: `push.${tier}.distance`, zh: `擊退 · ${tier} · 距離`, note: `被別人推（擊退類）在「${tier}」這一格推多遠。⚠️ 與衝刺是**兩條獨立的梯子**，改這裡不影響衝刺。` },
+      { path: `push.${tier}.speed`, zh: `擊退 · ${tier} · 速度`, note: `每秒幾單位。⚠️ 同衝刺那一欄：這是**安全欄位不是手感欄位**，超過上限會被「夾住位移速度」截掉。` },
+    ]),
+  ],
+  preserved: [],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
+  MITIGATION_SPEC,
+  DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,
   VFX_CLEANUP_SPEC,
   GORE_SPEC,

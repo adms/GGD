@@ -176,7 +176,7 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(21);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(22);
     expect(byKind("OWN_PAGE")).toHaveLength(11);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
@@ -191,7 +191,11 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     // 2026-08-12：2 → 3。origin-routes 是 owner 指名的「新英雄轉生設計」那一頁的
     // 資料基礎 —— 110 個文案葉節點，通用長表單畫出來不叫可調。那一頁做出來時
     // 這一列會被守衛強迫刪掉。
+    // 2026-08-13：3 → 4。per-level-bonus 的 `perLevel` 是 `z.record`（鍵不固定），
+    // 通用引擎走不動 —— 它列不出「有哪些鍵」，畫出來會是一頁空的。這是引擎的
+    // 缺口不是這份文件的特權，⛔ 所以它記在帳單裡而不是 NOT_TUNABLE。
     expect(byKind("KNOWN_GAP").map((e) => e.docId)).toEqual([
+      "per-level-bonus",
       "audio-map",
       "origin-routes",
       "roster",

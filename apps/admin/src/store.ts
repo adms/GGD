@@ -177,6 +177,10 @@ export type Page =
   // 英雄屬性正規化 (owner 2026-08-12): 小/中/大 的三格 + 角色定位對照表。
   // 極小/極大 不在這裡 —— 它們是硬上下限，住「屬性上限」頁。
   | "statNormalization"
+  /** GH#322 —— 減傷天花板 / 位移級距 / 每級加成，2026-08-13 平衡批新開的三份 config。 */
+  | "mitigation"
+  | "displacementTiers"
+  | "perLevelBonus"
   | "woundRules"
   | "weaknessRules"
   | "damageRules"
@@ -505,6 +509,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "aoeTiers",
   // 英雄屬性正規化: 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "statNormalization",
+  // GH#322 —— 2026-08-13 平衡批新開的三頁。三頁都走 `putOverlayDoc`（沒有 session
+  // 一律 401），⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
+  "mitigation",
+  "displacementTiers",
+  "perLevelBonus",
   "woundRules",
   "weaknessRules",
   "damageRules",

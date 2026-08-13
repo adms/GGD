@@ -53,18 +53,21 @@ describe("buildSheet over the real roster", () => {
     expect(sheet.stats.recipeBytes).toBeLessThan(32 * 1024);
   });
 
-  // 43, not 44: #217 moved 喪標麥可 (godie-zombiex) onto its own zombie mesh,
-  // so it left the shared-stand-in population. Same number the shared-side
-  // `voxelSkin/generate.test.ts` asserts — the two must agree.
   it("flags the shared-stand-in population and the hand-authored overrides", () => {
-    // 48 since task #249 imported four more transform-form units that had no
-    // champion doc: godie-o02n (曹操孟德 BASE O02N), godie-e010 (白木老樹精 紮根態,
-    // a champ.sela wearer), godie-n01b (地獄歌神 變身態) and one more. Each one is
-    // a REAL second form the map declares — `Champions.get()` throws on an
-    // unregistered id and the snapshot resolves the transformed body through it
-    // every tick, so importing them was mandatory, not cosmetic.
-    expect(sheet.stats.standInChampions).toBe(48);
-    expect(sheet.stats.overriddenChampions).toBe(Object.keys(overrides).length);
+    // ⛔ 這裡**不抄一個出貨規模**。它抄過三次（43 → 48 → …），每一次名單一動
+    // 就用「48 變成 21」這種跟缺陷無關的訊息紅 —— 2026-08-13 那 41 隻搬進
+    // `_legacy/` 就是這樣紅的。⭐ 要釘的是**共用替身這件事還在被算**：
+    // 統計數字必須等於 rows 自己數出來的，而且不能是 0（0 = 整個族群消失了，
+    // 那才是真的壞掉）。
+    const counted = sheet.rows.filter((r) => r.sharedStandIn).length;
+    expect(sheet.stats.standInChampions).toBe(counted);
+    expect(counted, "共用替身族群整個空掉 —— 這一頁就沒有東西可審了").toBeGreaterThan(0);
+    expect(counted).toBeLessThan(sheet.rows.length);
+    // ⚠️ ⛔ 不是 `Object.keys(overrides).length` —— 覆寫檔可以（而且現在真的）
+    //    指到已經搬去 `_legacy/` 的英雄。拿檔案的長度當答案，會在名單一動時
+    //    用「3 變成 1」報一個跟覆寫機制無關的錯。⭐ 要對的是：**畫出來的那幾列**
+    //    與統計數字一致，而且每一列都真的在覆寫檔裡。
+    expect(sheet.stats.overriddenChampions).toBe(sheet.rows.filter((r) => r.overridden).length);
     for (const row of sheet.rows) {
       // GH#31 —— 共用替身 ≠ 一定穿體素。40 位的暴雪模型早就抽出來了,
       // 舊的 `toBe(true)` 正是把那扇門關上的那一行。
@@ -85,14 +88,20 @@ describe("buildSheet over the real roster", () => {
     }
   });
 
-  it("the champions sharing champ.sela get 20 different looks", () => {
-    // 18 → 20: #249 imported two more champ.sela wearers (the 白木老樹精 紮根態
-    // pair). The point of the assertion is unchanged — every sharer must still
-    // get a DISTINCT signature, which is what the Set size checks.
-    const group = sheet.rows.filter((r) => r.modelKey === "champ.sela");
-    expect(group.length).toBe(20);
-    expect(new Set(group.map((r) => r.signature)).size).toBe(20);
-    for (const r of group) expect(r.modelKeyShareCount).toBe(20);
+  it("共用同一個 modelKey 的英雄，每一位都拿到不一樣的外觀", () => {
+    // ⛔ 不寫死 `champ.sela` 也不寫死 20 —— 那兩個都是**出貨名單的形狀**，
+    // 名單一動就紅，而紅的訊息（「20 變成 12」）跟「外觀會不會撞」無關。
+    // ⭐ 機制是：分享數最多的那一群，簽章必須**兩兩不同**。
+    const byKey = new Map<string, typeof sheet.rows>();
+    for (const r of sheet.rows) {
+      const g = byKey.get(r.modelKey) ?? [];
+      g.push(r);
+      byKey.set(r.modelKey, g);
+    }
+    const group = [...byKey.values()].sort((a, b) => b.length - a.length)[0]!;
+    expect(group.length, "沒有任何一個模型被兩位以上的英雄共用 —— 這條守衛會空跑").toBeGreaterThan(1);
+    expect(new Set(group.map((r) => r.signature)).size).toBe(group.length);
+    for (const r of group) expect(r.modelKeyShareCount).toBe(group.length);
   });
 
   it("is order-independent — the sheet does not depend on directory order", () => {
@@ -126,7 +135,10 @@ describe("filters, sorts and the review loop", () => {
     const all = applyFilter(sheet.rows, EMPTY_FILTER);
     expect(all.length).toBe(sheet.rows.length);
     const standIn = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyStandIn: true });
-    expect(standIn.length).toBe(48);
+    // 同上：篩出來的數量要等於**資料裡真的有幾筆**，⛔ 不是一個抄下來的出貨規模。
+    expect(standIn.length).toBe(sheet.rows.filter((r) => r.sharedStandIn).length);
+    expect(standIn.length).toBeGreaterThan(0);
+    expect(standIn.every((r) => r.sharedStandIn)).toBe(true);
     const tinted = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyTinted: true });
     expect(tinted.length).toBeGreaterThan(0);
     expect(tinted.every((r) => r.tint)).toBe(true);

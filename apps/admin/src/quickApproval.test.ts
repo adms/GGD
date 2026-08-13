@@ -27,7 +27,7 @@
  * the trap; fixing the code without fixing the suite would leave it armed.
  */
 import { describe, it, expect } from "vitest";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -403,34 +403,61 @@ describe("數值體檢 on the SHIPPED champion documents (the #248 regression)",
     expect(audit.line).not.toContain("血量 150");
   });
 
-  it("godie-zombiex still fires 護甲 — the finding #244 asked for", () => {
+  it("護甲 finding 沒有變成死碼 —— 出貨名單的中位數還撐得起這個判斷", () => {
     cover("adminui-quick-approval");
-    // 喪標麥可 is the deliberately fragile one: #244 pinned him at a low base
-    // and his agility buys almost no armour, so the roster's armour median
-    // still leaves him at or below zero. Before this fix the finding was dead
-    // code (peer median armour had collapsed to 0), so it silently stopped.
-    const zx = parseChampionStats("godie-zombiex", realDoc("godie-zombiex"));
-    const audit = auditStats(zx, peerBaseline(realRoster()));
-    expect(zx.armor).toBeLessThanOrEqual(0);
+    // ⚠️ #244 真正壞掉的不是某一隻英雄，是**判斷的前提**：`base.armor > 0` 崩成 0
+    // 之後，這條 finding 對任何人都不再發射，而且長得跟「大家護甲都很好」一模一樣。
+    // ⛔ 所以這裡**不釘任何一隻英雄的護甲數字**（那是 owner 每週在調的東西，
+    //    釘住只會用錯誤的訊息紅）—— 釘的是「機制還會不會發生」。
+    const base = peerBaseline(realRoster());
+    expect(base.count).toBeGreaterThan(10);
+    expect(
+      base.armor ?? 0,
+      "出貨名單的護甲中位數掉到 0 —— 這條 finding 從此對任何人都不會發射（#244 的原始故障）",
+    ).toBeGreaterThan(0);
+
+    // 另一半：前提活著，發射也要真的發生。拿一隻**真的**英雄把護甲歸零，
+    // ⛔ 不是自己捏一個假的 ChampionStats（失敗形態⑤：被測的不是出貨的那個）。
+    const real = realRoster().find((p) => (p.armor ?? 0) > 0);
+    expect(real, "出貨名單裡一隻有護甲的英雄都沒有").toBeDefined();
+    const audit = auditStats({ ...real!, armor: 0 }, base);
     expect(audit.ok).toBe(false);
     expect(audit.findings.some((f) => f.includes("護甲"))).toBe(true);
   });
 
-  it("godie-u011 is judged on 79 real HP, never on his -450 raw card", () => {
+  it("負數血量的卡片一律用三圍推出來的真血量判斷，⛔ 不是照卡片唸", () => {
     cover("adminui-quick-approval");
-    // 克勞薩先生's w3x card really does say maxHealth -450 / armor -10; the
-    // 三圍 term is what makes him a playable −450 + 23×23 = 79. Reading the card
-    // raw produced 「血量 -450 … -300% — 會被秒殺」, a number that appears
-    // nowhere in the game.
-    const k = parseChampionStats("godie-u011", realDoc("godie-u011"));
-    expect(k.maxHealth).toBeCloseTo(79, 6);
-    const audit = auditStats(k, peerBaseline(realRoster()));
-    expect(audit.line).not.toContain("-450");
-    // 79 against a ~560 median is a genuine 會被秒殺 — the finding SHOULD fire,
-    // it just has to fire on the real number.
-    expect(audit.ok).toBe(false);
-    expect(audit.findings.some((f) => f.includes("會被秒殺"))).toBe(true);
-    expect(audit.findings.join(" ")).toContain("79");
+    // 克勞薩先生（godie-u011）的 w3x 卡片真的寫 maxHealth -450 / armor -10，
+    // 三圍那一項才讓他變成能玩的 −450 + 23×23 = 79。照卡片唸會印出
+    // 「血量 -450 … -300% — 會被秒殺」，那個數字在遊戲裡任何地方都不存在。
+    //
+    // ⚠️ 這裡**掃兩個目錄**（出貨 + `_legacy/`），⛔ 不是寫死 `godie-u011` ——
+    //    2026-08-13 那 41 隻搬進 `_legacy/` 的時候，寫死 id 的版本是 ENOENT 紅的，
+    //    而它紅的訊息是「檔案不見了」，跟這條在守的機制一點關係都沒有。
+    const cards = [join(CONTENT, "champions"), join(CONTENT, "_legacy", "champions")]
+      .filter((dir) => existsSync(dir))
+      .flatMap((dir) =>
+        readdirSync(dir)
+          .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+          .map((f) => ({ id: f.slice(0, -5), doc: JSON.parse(readFileSync(join(dir, f), "utf8")) }))
+          .filter(({ doc }) => {
+            const mh = (doc as { baseStats?: { maxHealth?: unknown } }).baseStats?.maxHealth;
+            return typeof mh === "number" && mh < 0;
+          }),
+      );
+    // ⛔ 零筆 = 這條測試靜靜地什麼都沒驗（失敗形態③）。已知最後一張在
+    //    content/_legacy/champions/godie-u011.json。
+    expect(cards.length, "一張負數血量的卡片都找不到 —— 這條守衛會變成空跑").toBeGreaterThan(0);
+
+    const base = peerBaseline(realRoster());
+    for (const { id, doc } of cards) {
+      const s2 = parseChampionStats(id, doc);
+      const raw = (doc as { baseStats: { maxHealth: number } }).baseStats.maxHealth;
+      expect(s2.maxHealth, `${id} 的有效血量不是正的`).toBeGreaterThan(0);
+      const audit = auditStats(s2, base);
+      expect(audit.line, `${id} 的體檢把卡片上的原始負值印出來了`).not.toContain(String(raw));
+      expect(audit.findings.join(" ")).toContain(String(Math.round(s2.maxHealth ?? 0)));
+    }
   });
 
   it("no shipped champion makes the readout print a raw-card artefact", () => {
