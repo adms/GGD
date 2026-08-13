@@ -4,6 +4,7 @@
  * (whitelisted ids, ascending cost, within the inventory).
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { isShipped } from "../testkit/contentFixtures";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "../../../../packages/shared/testkit/cover";
@@ -114,7 +115,13 @@ describe("authored starter ladders are executable (ai-build-path)", () => {
   });
 
   it("every starter build is non-trivial, ascending, distinct and slot-sized", () => {
+    // GH#323 —— 這 13 位裡的 `godie-e00q` 在 2026-08-13 隨變身系統整理退場了。
+    // ⛔ 從清單刪掉會讓「哪幾位還在、他們的 ladder 還對」看不出來 ⇒ 跳過即可，
+    //    但**不能全部退場**（下面那條擋著），否則這個迴圈就變成空跑。
+    let checked = 0;
     for (const id of STARTERS) {
+      if (!isShipped("champions", id)) continue;
+      checked++;
       const def = Champions.get(id as never);
       const build = def.buildPriority;
       expect(build.length, `${id} still has a placeholder build`).toBeGreaterThan(2);
@@ -167,6 +174,7 @@ describe("authored starter ladders are executable (ai-build-path)", () => {
         expect(owned, `${id}'s bot never reached rung ${i} — its ladder stalls`).toContain(i);
       }
     }
+    expect(checked, "13 位 starter 全部退場了 —— 這條守衛已經沒有對象").toBeGreaterThan(0);
   });
 
   it("a 0g draft reward on a ladder is SKIPPED, never bought for free", () => {

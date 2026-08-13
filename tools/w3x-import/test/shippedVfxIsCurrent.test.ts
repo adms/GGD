@@ -168,6 +168,23 @@ function flatten(value: unknown, prefix = "", out: Flat = new Map()): Flat {
   return out;
 }
 
+/**
+ * ⭐ GH#323 —— 抽取器**不產生**、但出貨端刻意手加的鍵，不算漂移。
+ *
+ * `ambient` 是唯一一筆（2026-08-13 量到，`godie-gumdam-p0` / `p2`）。
+ * ⛔ 它不是殘留：`isSwingTrailDoc()`（`apps/client/src/vfx/swingTrailMath.ts`）
+ *    正是用 `ambient === true && mode === "continuous" && anchorBone !== undefined`
+ *    認出「這是一條刀光殘影」。把它當漂移刪掉，鋼彈的刀光就**當場消失**
+ *    —— 實測 `swingTrailMath.test.ts` 的 8 條 trail 掉成 7 條。
+ *
+ * ⚠️ 這與 `skillRemakeJsonFresh.test.ts` 排除 `castTimeSec` 是**同一個形狀**：
+ *    一個欄位由產生器以外的人擁有，新鮮度閘就不該拿它當證據，
+ *    否則它會在每一次乾淨重跑都紅，而永遠紅的守衛沒有人會看。
+ * ⚠️ 這張表要保持很短。多一筆就是多一個「產生器不知道的事實」，
+ *    加之前先問：這個鍵能不能改成由抽取器自己推導？
+ */
+const HAND_OWNED_KEYS = new Set(["ambient"]);
+
 /** `id.field: shipped → tool` lines. Empty array means the docs agree. */
 function fieldDrift(id: string, shipped: unknown, fresh: unknown): string[] {
   const a = flatten(shipped);
@@ -177,6 +194,9 @@ function fieldDrift(id: string, shipped: unknown, fresh: unknown): string[] {
     const av = a.get(key);
     const bv = b.get(key);
     if (av === bv) continue;
+    // 手加的鍵：出貨有、工具沒有 ⇒ 不算漂移（見 HAND_OWNED_KEYS 的理由）。
+    // ⚠️ 反方向仍然要紅：工具開始產生它、而出貨沒有，那是真的落後。
+    if (bv === undefined && HAND_OWNED_KEYS.has(key.split(".").pop() ?? "")) continue;
     if (av === undefined) lines.push(`${id}.${key}: (出貨的沒有這個欄位) → ${bv}`);
     else if (bv === undefined) lines.push(`${id}.${key}: ${av} → (工具不再產生這個欄位)`);
     else lines.push(`${id}.${key}: ${av} → ${bv}`);

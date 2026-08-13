@@ -72,6 +72,7 @@
  *    這個閘就在守備範圍內了(表裡有 5 melee + 1 ranged)。
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { CONTENT, shippedChampionIds } from "../testkit/contentFixtures";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -102,8 +103,21 @@ const OFFER_COUNT = 3;
  * 兩支都必要:只用一種攻擊型態取樣,會把「白名單漏了」跟「攻擊型態擋住」混成
  * 同一個紅燈。
  */
-const MELEE_HERO = "godie-e002" as ChampionId; // 亞瑟王 - Saber
-const RANGED_HERO = "godie-e00t" as ChampionId; // 七夜怪談 - 貞子
+// GH#323 —— 取樣英雄從**出貨內容推導**，⛔ 不寫死 id：`godie-e00t`（貞子）
+// 在 2026-08-13 退場了，而寫死的版本紅的訊息是「forbidden 一件都沒有」——
+// 那聽起來像 #189 的閘破了，真相只是這位英雄不在名單上，`attackTypeOf` 拿不到她。
+// ⭐ 判準不變：一近戰一遠程，兩邊都要真的有「被擋的武器」才有鑑別力。
+function pickHero(want: "melee" | "ranged"): ChampionId {
+  for (const id of shippedChampionIds()) {
+    const doc = JSON.parse(
+      readFileSync(join(CONTENT, "champions", `${id}.json`), "utf8"),
+    ) as { attackType?: string };
+    if ((doc.attackType ?? "melee") === want) return id as ChampionId;
+  }
+  throw new Error(`出貨名單裡一位 ${want} 英雄都沒有 —— 取樣不可能有鑑別力`);
+}
+const MELEE_HERO = pickHero("melee");
+const RANGED_HERO = pickHero("ranged");
 
 /** 出貨的棱彩池,原封不動 —— 斷言全部從這裡推導,沒有第二份清單可以漂移。 */
 function poolEntries(): string[] {

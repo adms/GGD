@@ -31,6 +31,7 @@
  * they ever stop being written even when the model-key case still passes.
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { readContentJson } from "../testkit/contentFixtures";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -82,9 +83,9 @@ const allBots = (): SeatSpec[] =>
 function registerPairs(): void {
   const store = new ContentStore();
   for (const id of [VISIBLE_PAIR.base, VISIBLE_PAIR.alt, HIDDEN_PAIR.base, HIDDEN_PAIR.alt]) {
-    const doc = JSON.parse(
-      readFileSync(join(CONTENT, "champions", `${id}.json`), "utf8"),
-    ) as Record<string, unknown>;
+    // GH#323 —— 變身對照的兩半有一部分退場了。這條驗的是**協定**（FORM bits
+    // 有沒有寫進 snapshot），doc 只是夾具 ⇒ 走 `content/_legacy/` 後備。
+    const doc = readContentJson<Record<string, unknown>>(`champions/${id}.json`);
     store.add("champions", id, doc);
   }
   registerAll(store);

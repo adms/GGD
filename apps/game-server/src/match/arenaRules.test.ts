@@ -9,6 +9,7 @@
  * it was derived from.
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { shippedChampionIds } from "../testkit/contentFixtures";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -568,7 +569,10 @@ describe("full arena match on the imported roster (arena-10, arena-11)", () => {
     // roster is live: picks come from the imported 93-champion pool
     const picks = [...ctl.seats.values()].map((s) => s.championId);
     console.log(`[roster] bot picks (seed 4242): ${picks.join(", ")}`);
-    expect(Champions.ids().length).toBeGreaterThanOrEqual(90);
+    // GH#323 —— ⛔ 不釘 90（搬家前的名單大小）。這一條在守「roster 是活的、
+    //    不是兩隻骨架」，⛔ 不是「有幾隻」⇒ 從出貨內容推導。
+    expect(Champions.ids().length).toBe(shippedChampionIds().length);
+    expect(Champions.ids().length, "roster 塌成骨架了").toBeGreaterThan(10);
     expect(new Set(picks).size).toBeGreaterThanOrEqual(6); // spread, not 2 skeletons
     expect(picks.some((p) => p.startsWith("godie-"))).toBe(true); // imported champs
     for (const p of picks) expect(Champions.tryGet(p as never)).toBeDefined();

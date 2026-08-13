@@ -8,8 +8,8 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 244 | shape derived from the ability's own authored data |
-| 🟡 AMBIGUOUS | 15 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
+| ✅ OK | 245 | shape derived from the ability's own authored data |
+| 🟡 AMBIGUOUS | 14 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 58 | permanent WC3 passive, never cast, nothing to warn about |
 
@@ -20,9 +20,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | castType | cells | shape language |
 | --- | ---: | --- |
 | `self` | 102 | self marker at the caster's feet |
-| `targeted` | 81 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 82 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `—` | 58 | not cast |
-| `ground` | 52 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `ground` | 51 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `skillshot` | 16 | line — the projectile's corridor; step sideways |
 | `dash` | 8 | line — the sweep of the dash body |
 
@@ -110,7 +110,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 龍之子 - 天地志狼 `godie-ewar` | EX | 12-002 仙氣發勁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 時空勇者 - 林克 `godie-h00l` | PASSIVE | 60-00 大師之劍 | `—` | — | 🟣 PASSIVE | never cast |
 | 時空勇者 - 林克 `godie-h00l` | Q | 60-01 旋風斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 時空勇者 - 林克 `godie-h00l` | W | 60-02 鎖鏈槍 | `ground` | circle r=0.80u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.8 |
+| 時空勇者 - 林克 `godie-h00l` | W | 60-02 鎖鏈槍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 時空勇者 - 林克 `godie-h00l` | E | 60-03 三角神力．勇氣 | `—` | — | 🟣 PASSIVE | never cast |
 | 時空勇者 - 林克 `godie-h00l` | R | 60-04 完美盾反 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 時空勇者 - 林克 `godie-h00l` | EX | 60-002 勇者意志 | `—` | — | 🟣 PASSIVE | never cast |
