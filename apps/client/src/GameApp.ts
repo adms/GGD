@@ -3106,11 +3106,16 @@ export class GameApp {
         zone: es.zone,
         moveSpeed,
         attackRange,
+        // GH#321 —— 影子要知道它是哪一具身體，`movementHold` 才查得到 `immobile`。
+        championId: seat?.championId ?? "",
       });
       this.predictedEntityId = entityId;
     } else {
       this.prediction.setMoveSpeed(moveSpeed);
       this.prediction.setAttackRange(attackRange);
+      // ⚠️ 變身**不換 entityId**（同一個座位換一張卡），所以這一行必須在 else 分支：
+      //    寫在 spawn 裡的話紮根之後影子還帶著本體的卡，`immobile` 永遠看不到。
+      this.prediction.setChampionId(seat?.championId ?? "");
     }
   }
 

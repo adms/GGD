@@ -65,8 +65,16 @@ export function movementHold(world: SimWorld, id: EntityId): MovementHold {
   //    就是兩份會各自腐爛的程式。
   // ⭐ 而且它跟著 `championForm` 進出：切回行走形態的那一 tick，`championId`
   //    換回本體、這一格自然消失。⛔ 不需要時鐘（切換技沒有時鐘）。
-  const champ = world.champion.get(id);
-  if (champ !== undefined && Champions.tryGet(champ.championId)?.immobile === true) {
+  // ⚠️ 讀的是 `world.stats` 的 `championId`，⛔ 不是 `world.champion` —— 兩個理由：
+  //   ① 與 `RegenSystem` 同一個取用習慣（那裡也是 `world.stats.get(id).championId`
+  //      → `Champions.tryGet`），一份慣例不要有兩種寫法。
+  //   ② ⭐ **客戶端預測的影子只有 `stats`，沒有 `champion` 元件**
+  //      （`predict/LocalPrediction.ts` 只鋪 transform/nav/status/health/stats）。
+  //      讀 `world.champion` 會讓影子永遠看不到 `immobile` ⇒ 按下紮根的**玩家自己**
+  //      會看到橡皮筋：影子照常走出去，伺服器每個 snapshot 把他 snap 回來。
+  //      ⛔ 別人看他是正常的，只有本人看得到那個 bug（GH#321）。
+  const sc = world.stats.get(id);
+  if (sc !== undefined && Champions.tryGet(sc.championId)?.immobile === true) {
     rooted = true;
   }
   // Knockdown (prone): rooted like a hard CC. The knockback override is

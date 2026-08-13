@@ -99,6 +99,20 @@ export interface LocalChampionSetup {
    * range — a permanent reconcile snap on the local hero.
    */
   attackRange?: number;
+  /**
+   * ⭐ GH#321 —— 本地英雄**當下這具身體**的 championId。
+   *
+   * 影子跑的是**出貨的** `movementSystem`，而它問 `movementHold()`「這一 tick 身體
+   * 被按住了嗎」；`movementHold` 從 `stats.championId` 查英雄卡的 `immobile`
+   * （70-00 紮根「可攻擊、可施法、不能移動」）。缺這一格 = 影子照常走出去、
+   * 伺服器每個 snapshot 把他 snap 回來 ⇒ **按下紮根的玩家自己**看到橡皮筋。
+   *
+   * ⚠️ 它會**跟著變身走**：切換形態時 `seat.championId` 換成替身卡，
+   * 所以呼叫端在同一個地方更新它（見 {@link LocalPrediction.setChampionId}），
+   * 與 `setMoveSpeed` / `setAttackRange` 完全同一個節奏。
+   * 省略 = `""` = 查不到卡 = 影子不會被任何 `immobile` 按住（今天以外的每一支）。
+   */
+  championId?: string;
 }
 
 export interface RenderPose {
@@ -171,7 +185,7 @@ export class LocalPrediction {
     final[Stat.MoveSpeed] = setup.moveSpeed;
     final[Stat.AttackRange] = setup.attackRange ?? 0;
     this.world.stats.set(id, {
-      championId: "" as ChampionId,
+      championId: (setup.championId ?? "") as ChampionId,
       final,
       dirty: false,
       sources: [],
@@ -193,6 +207,19 @@ export class LocalPrediction {
     this.history = [];
     this.baseOrder = null;
     this.aimHold.clear();
+  }
+
+  /**
+   * ⭐ GH#321 —— 讓影子知道它現在是**哪一具身體**（變身會換）。
+   *
+   * ⛔ 不是裝飾：`movementHold` 從這一格查 `immobile`，而變身是**唯一**會讓
+   * 「同一個座位、同一 tick、能不能走」改變的東西。少了這一行，紮根之後
+   * 影子繼續走 ⇒ 橡皮筋，而且只有本人看得到。
+   */
+  setChampionId(championId: string): void {
+    if (this.id === null) return;
+    const sc = this.world.stats.get(this.id);
+    if (sc !== undefined) sc.championId = championId as ChampionId;
   }
 
   /** Keep the shadow's speed in sync with authoritative stat changes. */
