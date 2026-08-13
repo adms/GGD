@@ -403,22 +403,25 @@ describe("the 能力屬性強化 三選一 (#260)", () => {
     // equals — 力量 dominates unless the roll is lopsided. Raised in the #260
     // report; the numbers live here so the decision has something to argue with.
     //
-    // ⭐ 2026-08-13 —— **這個「事實」被 owner 的再平衡改掉了，所以它在這裡改寫。**
-    // owner 那天把 `intToAbilityPower` 1 → 4（「技能傷害跟普通攻擊傷害落差實在
-    // 太大了」）並把 `strToAttackDamage` 1 → 0.4。兩者剛好都往同一個方向推：
+    // ⭐ 2026-08-13 —— **這個「事實」被 owner 的再平衡改掉了兩次，所以它在這裡改寫。**
+    // owner 那天把 `intToAbilityPower` **1 → 4 → 6.5**（「技能傷害跟普通攻擊
+    // 傷害落差實在太大了」「int to ap lift to 6.5」）並把 `strToAttackDamage`
+    // 1 → 0.4。三者都往同一個方向推：
     //   · 力量那一邊少了 60% 的 AD 貢獻
-    //   · 智慧那一邊的 AP 貢獻變成 4 倍
-    // ⇒ 力/智 的比值從 **>10 掉到約 2.9**。也就是 #260 報告點名的那個
-    // 「三選一不是在三個對等的選項之間選」，**owner 這次調係數把它調掉了大半**。
+    //   · 智慧那一邊的 AP 貢獻變成 6.5 倍
+    // ⇒ 力/智 的比值從 **>10 → 2.9 → 約 1.85**。
+    // ⭐ 也就是 #260 報告點名的那個「三選一不是在三個對等的選項之間選」，
+    //   **owner 這兩次調係數幾乎把它調平了** —— 1.85 已經接近「差不多對等」。
     //
     // ⛔ 這不是把守衛放寬換綠燈：下面改成**兩側都釘**，比原本的單側更嚴 ——
-    //   · 下界 2：力量仍然領先（真的翻盤成「智慧最強」會紅）
-    //   · 上界 6：`intToAbilityPower` 被誰悄悄調回 1 的話，比值會跳回 ~11 → 紅
-    // ⛔ 而且**不要**把 2.9 抄成 `toBeCloseTo` —— 那會讓每一次係數微調都紅，
+    //   · 下界 1：力量仍然**領先**智慧（真的翻盤成「智慧最強」會紅 ——
+    //     那是一個 owner 應該親自決定的跨越點，不該悄悄發生）
+    //   · 上界 4：`intToAbilityPower` 被誰悄悄調回 1 的話，比值會跳回 ~11 → 紅
+    // ⛔ 而且**不要**把 1.85 抄成 `toBeCloseTo` —— 那會讓每一次係數微調都紅，
     //   正是第零守則說的「數值住進測試裡」。
     expect(str / agi).toBeGreaterThan(3);
-    expect(str / int).toBeGreaterThan(2);
-    expect(str / int).toBeLessThan(6);
+    expect(str / int).toBeGreaterThan(1);
+    expect(str / int).toBeLessThan(4);
   });
 });
 

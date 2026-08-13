@@ -539,7 +539,10 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
   //   ⭐ 三格全部是 `combat-env.json`，**存檔生效、不用部署**。不滿意就回頭。
   //   ⚠️ 這一批**只動數值**。owner 點名的「普攻不用卡冷卻/MP/吟唱」是**結構**問題，
   //     數值調整碰不到它 —— 那要另一批（給普攻一個機會成本）。
-  intToAbilityPower: 4,
+  // ⚠️ 2026-08-13 第二次調整：4 → **6.5**（owner「int to ap lift to 6.5」）。
+  //   4 之後量到 L99 的一發技能 = 普攻 2.01 秒（法師）/ 0.71 秒（射手），
+  //   而 owner 要的曲線是「60 級以下技能更強」。6.5 把整條曲線再往技能那一側推。
+  intToAbilityPower: 6.5,
   /**
    * OWNER'S DESIGN (2026-07-30, GH#221「新增 智慧→每 1 點智慧增加的魔抗 0.6」).
    * No WC3 source exists: Warcraft III has no magic-resistance ATTRIBUTE at all
