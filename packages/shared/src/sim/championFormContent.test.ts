@@ -161,9 +161,13 @@ const DOC_OWNED_STATS: ReadonlyArray<keyof StatBlock> = [
  * re-derived so this cannot drift from the real rule). Everything else spawns
  * at rank 0 and contributes nothing.
  */
-function spawnTimeAbilityStats(id: ChampionId): ReadonlyMap<keyof StatBlock, string> {
+function spawnTimeAbilityStats(id: ChampionId): {
+  readonly stats: ReadonlyMap<keyof StatBlock, string>;
+  readonly formGated: ReadonlySet<keyof StatBlock>;
+} {
   const def = Champions.get(id);
   const mods: Array<{ stat: string; op?: string; value?: number }> = [];
+  const formGated: Array<{ stat: string; op?: string; value?: number }> = [];
   for (const abilityId of [def.abilities.Q.id, def.passiveAbility]) {
     if (!abilityId) continue;
     const ab = Abilities.tryGet(abilityId as AbilityId);
@@ -172,6 +176,36 @@ function spawnTimeAbilityStats(id: ChampionId): ReadonlyMap<keyof StatBlock, str
   if (def.passive && !innateSupersedesLegacyPassive(def)) {
     mods.push(...(def.passive.modifiers as typeof mods));
   }
+  // ⭐ 2026-08-13 —— **屬性授予也算技能層**。三圍不是 Stat，它走 attributes 那條
+  //    授權面，但它**推導出** maxHealth / healthRegen / ad（力量）等最終屬性。
+  //    ⛔ 只看 modifiers 會漏掉：70-00 紮根用 `attributes:{str:10}` 補規格的
+  //    「[力量]增加10點」，於是紮根後的表**刻意**比 godie-e010 的卡高，
+  //    而這支測試會報「stat sheet is not the alternate's」——
+  //    那是**設計**不是缺陷（owner 2026-08-13 逐字裁決走新版說明）。
+  // ⚠️ 這裡不算係數、只登記「哪幾格會被影響」——係數住在 combat-env，
+  //    抄一份到測試裡就是第四個住處（第二守則：驗機制不驗數字）。
+  const ATTR_DERIVED: Readonly<Record<string, readonly string[]>> = {
+    str: ["maxHealth", "healthRegen", "ad"],
+    agi: ["armor", "as"],
+    int: ["maxMana", "manaRegen", "ap", "mr"],
+  };
+  for (const abilityId of [def.abilities.Q.id, def.passiveAbility]) {
+    if (!abilityId) continue;
+    const ab = Abilities.tryGet(abilityId as AbilityId);
+    const rk = ab?.passive?.ranks[0] as
+      | { attributes?: Record<string, number>; whileForm?: string }
+      | undefined;
+    if (!rk?.attributes) continue;
+    // ⭐ **被 `whileForm` 閘住的區塊不算 spawn-time** —— 它只在那一半身體上生效，
+    //    而那正是這支測試的錯誤訊息自己開的處方（「Gate that passive rank block
+    //    with `whileForm`」）。⇒ 記進 formGated，讓下游知道這是**內容宣告過**的
+    //    分歧，⛔ 不是一格偷偷蓋掉替身讀數的加成。
+    for (const [attr, amount] of Object.entries(rk.attributes)) {
+      for (const stat of ATTR_DERIVED[attr] ?? []) {
+        (rk.whileForm ? formGated : mods).push({ stat, op: `attr:${attr}`, value: amount });
+      }
+    }
+  }
   const bucket = new Map<keyof StatBlock, string[]>();
   for (const m of mods) {
     const k = m.stat as keyof StatBlock;
@@ -179,21 +213,27 @@ function spawnTimeAbilityStats(id: ChampionId): ReadonlyMap<keyof StatBlock, str
     bucket.get(k)!.push(`${m.op}=${m.value}`);
   }
   // sorted so declaration ORDER never fakes a divergence
-  return new Map([...bucket].map(([k, list]) => [k, list.sort().join(",")]));
+  return {
+    stats: new Map([...bucket].map(([k, list]) => [k, list.sort().join(",")])),
+    formGated: new Set(formGated.map((m) => m.stat as keyof StatBlock)),
+  };
 }
 
 /** Stats where the two halves' spawn-time ability layers disagree. */
 function statsWhereAbilityLayerDiffers(
   baseId: ChampionId,
   altId: ChampionId,
-): ReadonlySet<keyof StatBlock> {
+): { readonly ungated: ReadonlySet<keyof StatBlock>; readonly formGated: ReadonlySet<keyof StatBlock> } {
   const a = spawnTimeAbilityStats(baseId);
   const b = spawnTimeAbilityStats(altId);
-  const out = new Set<keyof StatBlock>();
-  for (const k of new Set([...a.keys(), ...b.keys()])) {
-    if (a.get(k) !== b.get(k)) out.add(k);
+  const ungated = new Set<keyof StatBlock>();
+  for (const k of new Set([...a.stats.keys(), ...b.stats.keys()])) {
+    if (a.stats.get(k) !== b.stats.get(k)) ungated.add(k);
   }
-  return out;
+  // ⭐ 兩種分歧要分開：`ungated` 是「兩半技能層真的寫得不一樣」（可疑，
+  //    doc-owned 的那幾格不准被它吞掉）；`formGated` 是「內容用 whileForm
+  //    明說了這一格只在某一半生效」（sanctioned —— 那是守衛自己開的處方）。
+  return { ungated, formGated: new Set([...a.formGated, ...b.formGated]) };
 }
 
 describe("變身 on the SHIPPED pairs (transform-forms-sim)", () => {
@@ -283,9 +323,9 @@ describe("變身 on the SHIPPED pairs (transform-forms-sim)", () => {
       //     （要分身體才生效的被動有 `whileForm` 閘，見 abilityPassives.rankBlock）。
       // 所以豁免是**從出貨技能文件推導**的：只有兩半技能層對該屬性寫得不一樣時，
       // 那一格才不比較；其餘每一格照舊必須逐位等於替身的表。
-      const abilityLayerDiffers = statsWhereAbilityLayerDiffers(baseId, altId);
+      const layer = statsWhereAbilityLayerDiffers(baseId, altId);
       const wrong = (Object.keys(got) as Array<keyof StatBlock>).filter(
-        (k) => got[k] !== altSheet[k] && !abilityLayerDiffers.has(k),
+        (k) => got[k] !== altSheet[k] && !layer.ungated.has(k) && !layer.formGated.has(k),
       );
       if (wrong.length > 0) {
         problems.push(
@@ -296,7 +336,9 @@ describe("變身 on the SHIPPED pairs (transform-forms-sim)", () => {
       // …and the exemption may never swallow a stat the CHAMPION DOC owns. If a
       // 天生技/Q 被動 ever diverges on one of these, the answer is a `whileForm`
       // gate on that rank block, not a wider exemption here.
-      const swallowedCore = DOC_OWNED_STATS.filter((k) => abilityLayerDiffers.has(k));
+      // ⚠️ 只看 `ungated`：被 whileForm 閘住的那一種**就是**這條訊息推薦的做法，
+      //    拿它來報「豁免吞掉了 doc-owned 屬性」等於叫人照做又罰他照做。
+      const swallowedCore = DOC_OWNED_STATS.filter((k) => layer.ungated.has(k));
       if (swallowedCore.length > 0) {
         problems.push(
           `${pair.heroNumber} ${baseId}→${altId}: the ability layer diverges on ` +
@@ -304,7 +346,9 @@ describe("變身 on the SHIPPED pairs (transform-forms-sim)", () => {
             `with \`whileForm\` instead of letting it hide the transform's own stat read.`,
         );
       }
-      exemptedStats.push(...[...abilityLayerDiffers].map((k) => `${pair.heroNumber}:${k}`));
+      exemptedStats.push(
+        ...[...layer.ungated, ...layer.formGated].map((k) => `${pair.heroNumber}:${k}`),
+      );
       if (JSON.stringify(baseSheet) !== JSON.stringify(altSheet)) genuinelyDifferent += 1;
 
       // …and going home restores the base's sheet exactly

@@ -181,10 +181,6 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⭐ 2026-08-13 內容批新曝光：父欄位被採用之後這三格才進普查母體。
-  "field:abilities.innateActivePassive": {
-    status: "debt",
-    why: "主動型天生技的 passive 區塊要不要也掛上去。⚠️ 2026-08-13 **試過了、撤回了**：70-00 紮根用它補「[力量]增加10點」，schema 與載入都過，但打壞三條既有守衛，其中一條是真的行為回歸 —— `auraIncludeSelf` 量到白木開始**回自己的血**（w3a A0GM 明說 only allies）。掛上去的 passive 區塊被當成光環載體。⇒ 引擎要先把「主動天生技的 passive」與「光環載體」分開，這一格才有第一個客戶。",
-  },
   "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
     status: "default-live",
     why: "59-02 高週波短刀的規格逐字是「將**該次攻擊**轉為真傷」⇒ `scope:\"basic\"`（只蓋普攻）。`all` 要的是「這段期間**連技能傷害**也一起變真傷」—— 那是一個強得多的效果，出貨內容裡沒有任何一支這樣寫。⇒ 零採用是對的。",

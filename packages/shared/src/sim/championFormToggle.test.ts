@@ -187,9 +187,19 @@ describe("70-00 紮根 — the 天生技 toggle a player can actually press (#24
     expect(def.range).toBe(0);
     expect(def.cooldown[0], "w3a A0O6 Cool1, and the number the tooltip prints").toBe(COOLDOWN_SEC);
     expect(def.manaCost[0], "w3a A0O6 has an empty mana column").toBe(0);
-    // An active innate must never also carry a permanent block — syncAbilityPassives
-    // skips it, so authoring one would be silently dead content.
-    expect(def.passive, "an active innate grants no free permanent source").toBeUndefined();
+    // ⚠️ 2026-08-13 **這一條的前提變了**。它原本寫著「主動型天生技絕不可以帶
+    //    permanent 區塊 —— syncAbilityPassives 會跳過，寫了就是無聲的死內容」，
+    //    而那句話在 G13-1（`innateActivePassive`）之後**不再為真**：
+    //    宣告 `"attach"` 的文件會真的把那個區塊掛上去。
+    // ⭐ 70-00 紮根用它承載規格的「[力量]增加10點」，並用 `whileForm:"alternate"`
+    //    關在紮根形態裡。⇒ 現在要驗的是**明示**：有 passive 就必須有 attach 宣告，
+    //    ⛔ 不可以只有區塊沒有宣告（那才是無聲的死內容）。
+    if (def.passive !== undefined) {
+      expect(
+        (def as unknown as { innateActivePassive?: string }).innateActivePassive,
+        "帶 passive 區塊的主動天生技必須明示 innateActivePassive（否則它是死的）",
+      ).toBe("attach");
+    }
 
     const form = def.effects.find((e) => e.kind === "championForm");
     expect(form, `${INNATE} carries the championForm effect`).toBeDefined();
@@ -229,7 +239,25 @@ describe("70-00 紮根 — the 天生技 toggle a player can actually press (#24
     expect(world.champion.get(id)!.championId, "ChampionComp id moved").toBe(ROOTED);
     expect(world.stats.get(id)!.championId, "StatsComp id moved TOO (the #249 trap)").toBe(ROOTED);
     // The numbers that fight are the rooted form's, not a relabelled base.
-    expect(sheetOf(world, id), "the sheet IS godie-e010's").toEqual(rootedSheet);
+    // ⚠️ 2026-08-13：**除了力量衍生的那三格**。規格說紮根要「[力量]增加10點」，
+    //    而 70-00 的 passive 區塊（`innateActivePassive:"attach"` + whileForm）現在
+    //    真的把它掛上去了 ⇒ 紮根後的表**刻意**比 godie-e010 的卡高。
+    //    ⛔ 不可以刪掉這一條（它是 #249 唯一的端到端守衛，同時證明
+    //    `champion.championId` 與 `stats.championId` 都搬了）。
+    // ⭐ 三格是力量**推導**出來的，⛔ 不抄係數（那是 combat-env 的事）：
+    //    只驗「其餘逐格相等」+「這三格嚴格更高」。
+    const STR_DERIVED = ["maxHealth", "healthRegen", "ad"] as const;
+    const got = sheetOf(world, id) as unknown as Record<string, number>;
+    const want = rootedSheet as unknown as Record<string, number>;
+    for (const k of Object.keys(want)) {
+      if ((STR_DERIVED as readonly string[]).includes(k)) {
+        expect(got[k], `${k}：紮根的 +10 力量推導出來的，必須比替身的卡高`).toBeGreaterThan(
+          want[k]!,
+        );
+      } else {
+        expect(got[k], `${k}：其餘每一格仍然逐位等於 godie-e010 的卡`).toBe(want[k]);
+      }
+    }
     expect(world.championForm.get(id)!.baseId, "remembers the hero the player picked").toBe(BASE);
   });
 

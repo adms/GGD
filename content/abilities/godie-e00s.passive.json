@@ -14,6 +14,7 @@
   ],
   "range": 0.0,
   "innateKind": "active",
+  "innateActivePassive": "attach",
   "targetsEnemies": false,
   "effects": [
     {
@@ -21,6 +22,17 @@
       "to": "toggle"
     }
   ],
+  "passive": {
+    "name": "70-00 紮根",
+    "ranks": [
+      {
+        "attributes": {
+          "str": 10
+        },
+        "whileForm": "alternate"
+      }
+    ]
+  },
   "icon": "assets/icons/abilities/godie-e00s.passive.webp",
   "castTimeSec": 0.267
 }

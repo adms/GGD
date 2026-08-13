@@ -145,3 +145,42 @@ owner 從六組配套裡選了最激進的一組（三格一起動，全部在 `
 
 owner 點名的「普攻**不用卡冷卻 MP 消耗吟唱**」是**結構**問題 ——
 數值調整碰不到它。要真正對稱，還需要給普攻一個機會成本（另一批）。
+
+---
+
+## 70-00 芬多精：**光環也治療白木自己**（2026-08-13）
+
+owner 逐字：
+
+> 「70-00 follow new rule not w3a. **healing friend and self**.」
+
+| 層 | 來源 | 說什麼 |
+|---:|---|---|
+| **1** | **owner 新版說明** | 友軍**與自己**都回血 ⇒ `includeSelf: true` ✅ **採用** |
+| 5 | w3x 原始設定 | ⛔ 被取代 —— 見下 |
+
+### ⛔ 被取代的原作事實（存這裡，⛔ 不要讓它無聲消失）
+
+w3a `A0GM`「70-00 芬多精(效果)」的 `base = Aoar`，只寫了 `area{1} = 250` 與
+`data{1}{1} = 0.05`，`targets_allowed` 是**空的** ⇒ 由 stock 那一列作主。
+Blizzard 的 `Units\AbilityData.slk`：
+
+```
+Aoar  targs1 = ground,air,organic,vuln,invu,friend,neutral
+```
+
+—— **沒有 `self`**。而且那不是筆誤：stock 的友方光環（Devotion `Adev`、
+Command `Acoa`、Endurance、Brilliance、Trueshot、Thorns、Unholy、Vampiric
+與每一個 `ItemAura*`）**全部帶 `self`**，不帶的恰好是據點型的回復光環
+`Aoar`(Ward) 與 `Aabr`(Statue)；而 `AIgx` —— 同一個回復光環由**英雄**以道具攜帶時
+—— 又把 `self` 加回來。Blizzard 是**刻意**區分「發出光環的東西會不會治療自己」的，
+而 70-00 原作站在「不會」那一邊。
+
+⇒ ⭐ **GGD 站在「會」那一邊，因為那是 owner 的設計。** 考證留著，是為了下次有人
+問「原作是不是這樣」時不必再挖一次 MPQ。
+
+### 這一筆同時解鎖了什麼
+
+`70-00 紮根` 的「[力量]增加10點」原本因為打壞 `auraIncludeSelf` 而被撤回
+（見 `tools/skill-remake/batch1.py` 那一列的註解）。裁決之後兩件事一起落地：
+光環含自己 ✅、力量+10 ✅。

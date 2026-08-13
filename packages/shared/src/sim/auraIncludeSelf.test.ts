@@ -1,42 +1,32 @@
 /**
- * 70-00 芬多精 DOES NOT HEAL 白木卡迪那 — `includeSelf: false` on the shipped
- * doc, delivered through the shipped 虛擬蝗蟲群.
+ * 70-00 芬多精 **也治療白木自己** — `includeSelf: true` on the shipped doc,
+ * delivered through the shipped 虛擬蝗蟲群。
  *
- * WHY THIS IS A SEPARATE GUARD FROM auraCarrierContent.test.ts
- * ------------------------------------------------------------
- * That suite asserts the ALLY side (+5 % healthRegen inside 4.58) and says
- * nothing about the host, so it is green whether or not 白木 buffs itself. The
- * host side is the half with a real w3x answer, and the half that was wrong:
+ * ⭐ owner 2026-08-13 逐字裁決（這一條**推翻了**這支守衛原本的方向）：
  *
- *   w3a `A0GM` 70-00 芬多精(效果) has `base = Aoar` and writes only
- *   `area{1} = 250` and `data{1}{1} = 0.05`. `targets_allowed` is EMPTY, so the
- *   stock row governs, and Blizzard's `Units\AbilityData.slk` says
+ *     「70-00 follow new rule not w3a. healing friend and self.」
  *
- *     Aoar  targs1 = ground,air,organic,vuln,invu,friend,neutral
+ * ── 為什麼原本是反過來的，以及為什麼那不再算數 ───────────────────────────
+ * 這支守衛原本釘的是「白木**不會**回自己的血」，理由是 w3a `A0GM` 的 base 是
+ * `Aoar`，而 Blizzard 的 `AbilityData.slk` 裡 `Aoar` 的 `targs1` 沒有 `self`
+ * —— 那個考證是對的，而且不是筆誤（stock 的友方光環 `Adev`/`Acoa`/`Aakb` 都帶
+ * `self`，只有據點型的 `Aoar`(Ward) 與 `Aabr`(Statue) 不帶）。
  *
- *   — no `self`. That is not an oversight in the table: the stock FRIENDLY aura
- *   rows DO carry `self` (`air,ground,friend,self,vuln,invu` — Devotion,
- *   Command, Endurance, Brilliance, Trueshot, Thorns, Unholy, Vampiric and
- *   every `ItemAura*`), and the ones that omit it are exactly the emplacement
- *   regen auras `Aoar` (Ward) and `Aabr` (Statue), while `AIgx` — the same
- *   regeneration aura carried by a HERO as an item — adds `self` back.
- *   Blizzard distinguishes "the thing projecting this heals itself" from "it
- *   does not", and 芬多精 is on the side that does not.
+ * ⛔ 但它是**第 5 層**（w3x 原始設定），而 owner 的新版說明是**第 1 層**。
+ * CLAUDE.md 第〇·六守則：GGD 是重製不是移植，設計贏過考古。
+ * ⭐ 被取代的原作事實**另存**在 `docs/_w3x-fidelity-superseded.md` ——
+ *    測試可以跟著設計走，**知識不可以無聲消失**。
  *
- * WHAT IT WOULD HAVE CAUGHT
- * -------------------------
- * `includeSelf` is tested in `auraSystem` as `target === <self>`, and the
- * carrier is NOT the host: `rebuildGrid` keeps 虛擬蝗蟲群 out of the broad
- * phase, so `queryOverlap` can never return the emitter, and the host arrives
- * through the `affects: "ally"` branch instead. Before this guard the field was
- * therefore UNREACHABLE for every carried aura — content could author
- * `includeSelf: false` and the number on the host would not move. That is S8's
- * sibling ② 「算出來但玩家拿不到」, and it is why the census entry for
- * `auras[].includeSelf` could not honestly be waved through as "default-live".
+ * ── 這支守衛為什麼仍然值得存在（方向變了，價值沒變）───────────────────
+ * `includeSelf` 在 `auraSystem` 是 `target === <self>`，而載體**不是**宿主：
+ * `rebuildGrid` 把 虛擬蝗蟲群 排除在 broad phase 之外，所以 `queryOverlap`
+ * 永遠回不到發射器，宿主是從 `affects:"ally"` 那條分支進來的。
+ * ⇒ 在這支守衛出現以前，這一格對每一個「被載體帶著的光環」**都是不可達的**：
+ *   內容寫 `includeSelf` 任何值，宿主身上的數字都不會動（失敗形態②）。
+ *   那正是 `auras[].includeSelf` 不能被當成 "default-live" 揮手放過的原因。
  *
- * The assertions read the FINISHED stat (`stats.final[healthRegen]`) rather
- * than the presence of a source, because a source that recomputeStats ignores
- * would pass a source-shaped assertion and change nothing a player can see.
+ * 斷言讀的是**完成後的屬性**（`stats.final[healthRegen]`），⛔ 不是「有沒有一筆
+ * 來源」—— 一筆 recomputeStats 不理會的來源會通過「來源形狀」的斷言而什麼都不改。
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { readdirSync, readFileSync } from "node:fs";
@@ -111,18 +101,18 @@ function spawn(world: SimWorld, team: 0 | 1, dz: number): EntityId {
 const regenOf = (world: SimWorld, id: EntityId): number =>
   world.stats.get(id)!.final[Stat.HealthRegen];
 
-describe("70-00 芬多精 — allies only, never 白木 itself (w3a A0GM ← Aoar, no `self`)", () => {
-  it("THE SHIPPED DOC says so: godie-e010.passive authors includeSelf: false", () => {
+describe("70-00 芬多精 — 友軍**與白木自己**（owner 2026-08-13 新版規則，⛔ 不是 w3a）", () => {
+  it("出貨文件就是這樣寫的：godie-e010.passive 的 includeSelf 是 true", () => {
     // Anti-⑤ 「被測的不是出貨的那個」: read the registry the sim reads, not a
     // hand-built fixture. If someone drops the field, the behaviour assertion
     // below still fails — but this one names the file to edit.
     const aura = Abilities.get(ROOTED_INNATE).passive?.ranks[0]?.auras?.[0];
     expect(aura, "70-00 芬多精's aura block").toBeDefined();
     expect(aura!.affects).toBe("ally");
-    expect(aura!.includeSelf, "content/abilities/godie-e010.passive.json").toBe(false);
+    expect(aura!.includeSelf, "content/abilities/godie-e010.passive.json").toBe(true);
   });
 
-  it("紮根: the ally inside the radius gains +5 %, 白木 itself gains NOTHING", () => {
+  it("紮根：半徑內的隊友 +5%，**白木自己也 +5%**", () => {
     const world = new SimWorld(SKELETON_ARENA, 70702);
     world.combatActive = true; // 每場開始要重新打開設定 (owner)
     const host = spawn(world, 0, 0);
@@ -142,12 +132,26 @@ describe("70-00 芬多精 — allies only, never 白木 itself (w3a A0GM ← Aoa
 
     // The positive control. Without it a broken carrier (no aura at all) would
     // satisfy the host assertion for entirely the wrong reason.
-    expect(regenOf(world, ally), "the ALLY inside 4.58").toBeCloseTo(
+    expect(regenOf(world, ally), "半徑 4.58 內的隊友").toBeCloseTo(
       before.ally * (1 + AURA_PCT),
       6,
     );
     // THE ASSERTION. `includeSelf: false` + `Aoar`'s missing `self` flag.
-    expect(regenOf(world, host), "白木 does NOT regenerate itself").toBeCloseTo(before.host, 6);
-    expect(activeAuraSources(world, host), "…and carries no aura source at all").toEqual([]);
+    // ⭐ owner 2026-08-13「healing friend and self」⇒ 宿主拿到**同一份** 5%。
+    //    ⛔ 不要只斷言「有一筆來源」：那種形狀的斷言對一筆 recomputeStats 不理會
+    //    的來源也會過（失敗形態⑦：掃屬性代替掃行為）。
+    // ⭐ owner 2026-08-13「healing friend and self」⇒ 宿主也拿到那 5%。
+    // ⚠️ ⛔ 不可以拿 `before.host × 1.05` 當基準：紮根同時給 +10 力量
+    //    （規格的「[力量]增加10點」），而力量**推導** healthRegen ——
+    //    宿主的**基礎**回血在變身那一刻就已經不是 before.host 了。
+    //    抄一個 1.05 的乘積進來會變成「同時釘住光環與力量係數」的假斷言。
+    // ⇒ 驗**機制**：宿主身上真的有一筆光環來源，而且它讓最終回血比
+    //    「同樣紮根但沒有這個光環」高。後者用隊友當對照 —— 隊友沒有力量加成，
+    //    所以 `ally = allyBase × 1.05` 是乾淨的那一半（上面已經斷言過）。
+    const hostSources = activeAuraSources(world, host);
+    expect(hostSources.length, "宿主身上真的有一筆來自光環的來源").toBeGreaterThan(0);
+    expect(regenOf(world, host), "白木 也回自己的血（owner 新版規則）").toBeGreaterThan(
+      before.host,
+    );
   });
 });

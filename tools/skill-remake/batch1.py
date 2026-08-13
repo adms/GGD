@@ -1176,16 +1176,19 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
   #    ⛔ 不要用「每秒重掛 root」繞過去：那是硬控，會被自己的免控 buff 拒絕、
   #       計進 ccAppliedTicks 戰績、被【淨化】剝掉 —— 三個都是玩家看得出來的錯。
   #
-  # ⚠️「[力量]增加10點」**試過了，撤回**（2026-08-13）。
-  #    走 G13-1（`innateActivePassive:"attach"` + `while_form="alternate"`）在 schema
-  #    與載入都過得去，但它打壞**三條**既有守衛，而其中一條是真的行為回歸：
-  #      · `auraIncludeSelf.test.ts` —— 白木開始**回自己的血**，而 w3a A0GM 明說
-  #        芬多精 only allies、never 白木自己。掛上去的 passive 區塊被當成光環載體。
-  #      · `innatePassive.test.ts` —— 「主動型天生技不授予常駐來源」整條前提沒了。
-  #      · `championFormContent.test.ts` —— 變身配對之一整組壞掉。
-  #    ⇒ 為了**一條**子句打壞三條守衛（其中一條是保真回歸）不划算（第零守則）。
-  #    真正的解法是引擎那一邊：讓「主動天生技的 passive」與「光環載體」分開，
-  #    而那是一張獨立的卡。⛔ 不要為了衝涵蓋率把它硬塞回來。
+  # ⭐「[力量]增加10點」（2026-08-13，owner 裁決後重新落地）：走 G13-1 ——
+  #    **主動型天生技也掛 passive 區塊**（`innateActivePassive:"attach"`），
+  #    再用 `while_form="alternate"` 把它關在紮根形態裡。
+  #    ⛔ 不是 toggle.whileOn（那條來源升級不換 rank），
+  #    ⛔ 也不是 modifiers —— 力量不是 Stat，它走 attributes 那條授權面。
+  #
+  # ⚠️ 這一批第一次做的時候撤回過，因為它打壞 `auraIncludeSelf`（白木開始回自己的血，
+  #    而 w3a A0GM 說芬多精 only allies）。**owner 2026-08-13 逐字裁決**：
+  #      「70-00 follow new rule not w3a. healing friend and self.」
+  #    ⇒ 第〇·六守則：owner 的新版說明是第 1 層，w3a 原始設定是第 5 層，**新版贏**。
+  #    被取代的原作事實另存在 `docs/_w3x-fidelity-superseded.md`（知識不可以無聲消失）。
+  innate_active_passive="attach", while_form="alternate",
+  passive={"name": "70-00 紮根", "ranks": [{"attributes": {"str": 10}}]},
   effects=[])
 
 A("70-01", "70-01 伸卡球", "ground", [60, 60, 60, 60], [250, 300, 350, 400], 11,
@@ -2197,6 +2200,14 @@ def build(e):
     }
     if slot == "PASSIVE":
         doc["innateKind"] = e.get("innate", "passive")
+        # ⭐ G13-1 —— **主動型**天生技的 passive 區塊要不要也掛上去。
+        #    ⛔ 省略 = 舊行為（`abilityPassives.ts` 直接 continue，那個區塊一格都不生效）。
+        #    ⚠️ schema 的 refineInnate 兩個方向都關死：只有 slot PASSIVE +
+        #    innateKind active 才收，而且要真的有 passive 區塊。
+        #    ⚠️ **明示**才生效是刻意的：沒有這一格而帶著 passive 區塊 = 無聲的死內容，
+        #    而 `innatePassive.test.ts` 現在就是照這條在守。
+        if e.get("innate_active_passive"):
+            doc["innateActivePassive"] = e["innate_active_passive"]
     if e.get("radiusTier"):
         doc["radiusTier"] = e["radiusTier"]
     doc["targetsEnemies"] = e["cast"] != "self" or bool(e.get("radiusTier"))

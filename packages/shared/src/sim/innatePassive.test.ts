@@ -307,9 +307,16 @@ describe("天生技 / innate slot — the ACTIVE innates stay honestly inert", (
             [],
           );
           expect(rank.hooks ?? [], `${def.id}: active innate hooks are dead`).toEqual([]);
-          expect(rank.auras?.length ?? 0, `${def.id}: an auras-only carrier block`).toBeGreaterThan(
-            0,
-          );
+          // ⚠️ 2026-08-13：`auras` 不再是唯一的例外。G13-1 之後，一份**明示**
+          //    `innateActivePassive:"attach"` 的主動天生技可以帶 attributes ——
+          //    70-00 紮根的「[力量]增加10點」走的就是這條（配 whileForm 關在形態裡）。
+          // ⛔ 沒有明示 attach 的仍然只准 auras：那種區塊是無聲的死內容。
+          const attaches =
+            (def as unknown as { innateActivePassive?: string }).innateActivePassive === "attach";
+          expect(
+            (rank.auras?.length ?? 0) + (attaches ? Object.keys(rank.attributes ?? {}).length : 0),
+            `${def.id}: 主動天生技的 passive 區塊只能是「光環載體」或「明示 attach 的屬性授予」`,
+          ).toBeGreaterThan(0);
         }
       }
       expect(def.effects.length).toBeGreaterThan(0);
