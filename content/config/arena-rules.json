@@ -8,7 +8,10 @@
     "shortPoolMode": "short",
     "fallbackTable": "",
     "maxDraws": 64,
-    "excludedCraftRoles": ["token", "service"]
+    "excludedCraftRoles": [
+      "token",
+      "service"
+    ]
   },
   "retiredLootTables": [
     "quest-rewards"
@@ -196,7 +199,11 @@
       "championSource": "fixed",
       "baseLevel": 3,
       "levelPerRound": 1,
-      "levelCurve": { "perRoundSq": 0, "perRound": 2, "flat": 1 },
+      "levelCurve": {
+        "perRoundSq": 0,
+        "perRound": 2,
+        "flat": 1
+      },
       "baseHp": 20,
       "hpPerLevel": 20,
       "baseRegen": 0,
@@ -233,7 +240,11 @@
       "moveSpeedMult": 0.2,
       "heroLevel": 99,
       "heroLevelSource": "curve",
-      "levelCurve": { "perRoundSq": 1, "perRound": 0, "flat": 10 },
+      "levelCurve": {
+        "perRoundSq": 1,
+        "perRound": 0,
+        "flat": 10
+      },
       "bountyLevels": 50,
       "lastHitMode": "bonus",
       "countOverkill": false,
@@ -247,7 +258,8 @@
       "healthBar": true,
       "healthBarAnchor": "top",
       "healthBarReveal": "summon",
-      "settlementTitle": "殭屍王 分紅結算"
+      "settlementTitle": "殭屍王 分紅結算",
+      "countsAsChampion": true
     },
     "special": {
       "chancePercent": 1.25,
@@ -262,7 +274,11 @@
       "heroDamageMult": 2,
       "hpFlatBonus": 2000,
       "heroLevelSource": "curve",
-      "levelCurve": { "perRoundSq": 0, "perRound": 3, "flat": 5 },
+      "levelCurve": {
+        "perRoundSq": 0,
+        "perRound": 3,
+        "flat": 5
+      },
       "bountyGold": 5000,
       "bountyXp": 200,
       "bountyLevels": 5,
@@ -271,7 +287,8 @@
       "splitByDamage": true,
       "countOverkill": false,
       "settlementTitle": "特殊殭屍 分紅結算",
-      "settlementMode": "panel"
+      "settlementMode": "panel",
+      "countsAsChampion": true
     }
   },
   "nightPact": {

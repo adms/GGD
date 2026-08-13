@@ -222,6 +222,8 @@ const TYPED: Record<MobWavesFieldKey, string> = {
   "boss.attackRange": "3.1",
   "boss.moveSpeed": "2.9",
   "boss.radius": "2.1",
+  "boss.countsAsChampion": "",
+  "special.countsAsChampion": "",
   "boss.championId": "godie-efur",
   "boss.championSource": "fixed",
   "boss.sizeMult": "7.5",

@@ -1677,6 +1677,19 @@ export const zMobWavesConfig = z
         attackRange: z.number().positive(),
         /** melee cooldown in seconds */
         attackCdSec: z.number().positive(),
+        /**
+         * ⭐【殭屍王算不算英雄單位】—— owner 2026-08-13：
+         *   「只能吃掉英雄，**特殊殭屍跟殭屍王可以被考慮是英雄單位**」
+         *   「**這兩個是獨立欄位，都要有**」
+         *
+         * 它決定 `condition{kind, is:"champion"}` 讀不讀得到殭屍王 ——
+         * 89-002 輪盤的「只吃英雄」、以及未來每一條寫「對英雄才生效」的技能。
+         *
+         * ⚠️ 這是一個**決策點**不是數值（第一守則）：owner 上一句才說「只能吃掉
+         * 英雄」，下一句又把精英怪算進去 —— 那正是「他會改」的形狀。
+         * ABSENT ⇒ `true`（第〇·六守則：優先權大的更新**預設啟動**，開關是為了回頭）。
+         */
+        countsAsChampion: z.boolean().optional(),
         /** collision/body radius — also what makes the king LOOK like a king */
         radius: z.number().positive(),
         /** model doc id (resolved client-side); absent = the normal mob's */
@@ -1958,6 +1971,19 @@ export const zMobWavesConfig = z
         moveSpeedMult: z.number().min(0),
         /** body-radius multiplier — the SIM's body (melee reach scales with it) */
         radiusMult: z.number().positive(),
+        /**
+         * ⭐【特殊殭屍算不算英雄單位】—— owner 2026-08-13：
+         *   「只能吃掉英雄，**特殊殭屍跟殭屍王可以被考慮是英雄單位**」
+         *   「**這兩個是獨立欄位，都要有**」
+         *
+         * 它決定 `condition{kind, is:"champion"}` 讀不讀得到一隻特殊殭屍 ——
+         * 89-002 輪盤的「只吃英雄」、以及未來每一條寫「對英雄才生效」的技能。
+         *
+         * ⚠️ 這是一個**決策點**不是數值（第一守則）：owner 上一句才說「只能吃掉
+         * 英雄」，下一句又把精英怪算進去 —— 那正是「他會改」的形狀。
+         * ABSENT ⇒ `true`（第〇·六守則：優先權大的更新**預設啟動**，開關是為了回頭）。
+         */
+        countsAsChampion: z.boolean().optional(),
         /** GH#206 — same three as the boss; see the notes on `boss.heroHpMult` */
         heroHpMult: z.number().positive().max(1000).optional(),
         heroDamageMult: z.number().positive().max(1000).optional(),
@@ -2211,6 +2237,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // the hitbox stay the same size. It is still 1.5× a zombie, which keeps the
     // silhouette cue that says 「這不是雜魚」 before any model loads. WAS 1.8.
     radius: 0.9,
+    // ⭐ owner 2026-08-13「殭屍王可以被考慮是英雄單位」—— 預設啟動。
+    countsAsChampion: true,
     // ⚠️ MERGE SEAM (v0.9.12): two lanes each landed ONE owner instruction here
     // and the conflict looked like a choice. It is not — BOTH must survive, and
     // dropping either one is invisible to every test in the repo:
@@ -2338,6 +2366,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // faster than the 3.0 zombie it is supposed to be a slowed version of.
     moveSpeedMult: 0.5,
     radiusMult: 1.8,
+    // ⭐ owner 2026-08-13「特殊殭屍可以被考慮是英雄單位」—— 預設啟動。
+    countsAsChampion: true,
     // GH#192 — the RENDERED size now says the same thing the hitbox does. No
     // `modelKey`: like the king, it wears the round's champion.
     // GH#206 shipped 3; owner walked it to **2** on 2026-07-29 (same playtest

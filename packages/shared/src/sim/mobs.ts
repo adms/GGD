@@ -474,6 +474,13 @@ export type { MobKind } from "./components";
 /** 殭屍王 rules in TICKS / squared distances (converted from the config doc). */
 export interface MobBossRules {
   enabled: boolean;
+  /**
+   * ⭐【殭屍王算不算英雄單位】—— owner 2026-08-13：
+   *   「只能吃掉英雄，**特殊殭屍跟殭屍王可以被考慮是英雄單位**」「這兩個是獨立欄位」
+   * 由 `entityIsKind` 讀，決定 `condition{kind, is:"champion"}` 認不認牠。
+   * `undefined` = 沿用出貨預設 `true`（第〇·六守則：高層級更新預設啟動）。
+   */
+  countsAsChampion?: boolean;
   /** ONE champion's cumulative `world.mobKills` that summons the king */
   killThreshold: number;
   /** true = every Nth kill summons another; false = once per champion per match */
@@ -772,6 +779,13 @@ export interface MobSpecialRules {
   /** gold AND xp multiplier on the kill reward */
   rewardMult: number;
   modelKey: string;
+  /**
+   * ⭐【特殊殭屍算不算英雄單位】—— owner 2026-08-13：
+   *   「只能吃掉英雄，**特殊殭屍跟殭屍王可以被考慮是英雄單位**」「這兩個是獨立欄位」
+   * 由 `entityIsKind` 讀，決定 `condition{kind, is:"champion"}` 認不認牠。
+   * `undefined` = 沿用出貨預設 `true`（第〇·六守則：高層級更新預設啟動）。
+   */
+  countsAsChampion?: boolean;
 
   /* ── 從英雄推導的絕對值 (GH#206, owner 2026-07-29) ─────────────────────────
    *
@@ -1102,6 +1116,8 @@ export interface MobWavesConfigLike {
     attackRange: number;
     attackCdSec: number;
     radius: number;
+    /** ⭐ owner 2026-08-13「殭屍王可以被考慮是英雄單位」（獨立欄位，缺席 = true） */
+    countsAsChampion?: boolean;
     modelKey?: string;
     /** GH#192 — ×N the normal mob's hp for that round; wins over `maxHp` */
     hpMult?: number;
@@ -1165,6 +1181,8 @@ export interface MobWavesConfigLike {
     damageMult: number;
     moveSpeedMult: number;
     radiusMult: number;
+    /** ⭐ owner 2026-08-13「特殊殭屍可以被考慮是英雄單位」（獨立欄位，缺席 = true） */
+    countsAsChampion?: boolean;
     rewardMult: number;
     modelKey?: string;
     /** GH#192 體型倍率 (default = `radiusMult`, so old docs keep one number) */
@@ -1923,6 +1941,9 @@ export function mobRulesFromConfig(
             attackRangeSq: cfg.boss.attackRange * cfg.boss.attackRange,
             attackCdTicks: ticks(cfg.boss.attackCdSec),
             radius: cfg.boss.radius,
+            ...(cfg.boss.countsAsChampion === undefined
+              ? {}
+              : { countsAsChampion: cfg.boss.countsAsChampion }),
             // GH#192 — same precedence as the normal mob: explicit override,
             // else the CHAMPION's mesh (its own, when the block names one).
             // #289 — `bossFace.own` replaces the old
@@ -1987,6 +2008,9 @@ export function mobRulesFromConfig(
             damageMult: cfg.special.damageMult,
             moveSpeedMult: cfg.special.moveSpeedMult,
             radiusMult: cfg.special.radiusMult,
+            ...(cfg.special.countsAsChampion === undefined
+              ? {}
+              : { countsAsChampion: cfg.special.countsAsChampion }),
             // GH#206 — `null` when the arena authored no `heroHpMult`, and then
             // `mobProfile` runs the pre-#206 multiplier expression unchanged.
             maxHp: specialHero.maxHp,

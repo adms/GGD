@@ -627,10 +627,41 @@ export function readConditionStat(
 }
 
 /** Is `id` a body of kind `is`? Four positive tests, no fallthrough. */
+/**
+ * 這一隻小怪**被算成英雄單位**嗎？（owner 2026-08-13 的兩格獨立欄位）
+ *
+ * ⚠️ 缺 `mobRules` 的世界（單元測試夾具、客戶端預測影子、#215 之前的存檔）
+ * 一律 false —— 沒有小怪規則就沒有精英怪，也就沒有這個問題。
+ *
+ * 純度：讀兩個 Map + 兩個布林，沒有 rng、沒有時鐘、沒有 Map 迭代。
+ */
+function mobCountsAsChampion(world: SimWorld, id: EntityId): boolean {
+  const mob = world.mob.get(id);
+  if (mob === undefined) return false;
+  const rules = world.mobRules;
+  if (rules === null) return false;
+  if (mob.kind === "special") return rules.special?.countsAsChampion ?? true;
+  if (mob.kind === "boss") return rules.boss?.countsAsChampion ?? true;
+  return false; // 一般殭屍永遠不是英雄單位
+}
+
 export function entityIsKind(world: SimWorld, id: EntityId, is: ConditionEntityKind): boolean {
   switch (is) {
     case "champion":
-      return world.champion.has(id);
+      // ⭐ owner 2026-08-13：「只能吃掉英雄，**特殊殭屍跟殭屍王可以被考慮是英雄
+      //    單位**」，而且「**這兩個是獨立欄位，都要有**」。
+      //
+      // ⛔ 沒有把精英怪搬進 `world.champion` —— 那個 Map 是「有 ChampionComp 的
+      //    身體」，一隻殭屍沒有背包、沒有座位、沒有技能欄，硬塞進去會讓每一個
+      //    讀 `world.champion` 的地方（結算、排行、商店、復活圈）多出一個不存在
+      //    的玩家。這裡回答的是**這一格條件**的問題，不是身分的問題。
+      //
+      // ⚠️ 兩格分開讀，⛔ 不共用一個布林：owner 明說是獨立欄位，
+      //    「只讓殭屍王算英雄、特殊殭屍不算」必須寫得出來。
+      // ⚠️ `?? true` 是預設啟動（第〇·六守則），⛔ 不是 `=== true`：
+      //    一份沒有這格的舊 config 應該拿到他現在要的行為，不是舊行為。
+      if (world.champion.has(id)) return true;
+      return mobCountsAsChampion(world, id);
     case "mob":
       return world.mob.has(id);
     case "summon":

@@ -192,6 +192,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     attackRange: 2.6,
     attackCdSec: 1.4,
     radius: 0.9,
+    // ⭐ owner 2026-08-13「殭屍王可以被考慮是英雄單位」
+    countsAsChampion: true,
     // ⚠️ MERGE SEAM (v0.9.12) — see the same note in
     // packages/shared/src/content/schema/config.ts. Two lanes each landed ONE
     // owner instruction and BOTH must survive: #187's 30,000 bounty AND #192's
@@ -257,6 +259,8 @@ export const SHIPPED_MOB_WAVES: MobWavesConfig = {
     // GH#206 owner 2026-07-29 「移動速度 −50%」 — was 1.25 (FASTER than a zombie).
     moveSpeedMult: 0.5,
     radiusMult: 1.8,
+    // ⭐ owner 2026-08-13「特殊殭屍可以被考慮是英雄單位」
+    countsAsChampion: true,
     // GH#206 shipped 3; owner 2026-07-29 walked it to 2 (same playtest as the
     // king's 30 → 10).
     sizeMult: 2,
@@ -352,6 +356,7 @@ export type MobWavesFieldKey =
   | "boss.attackRange"
   | "boss.moveSpeed"
   | "boss.radius"
+  | "boss.countsAsChampion"
   | "boss.modelKey"
   | "boss.championId"
   | "boss.championSource"
@@ -391,6 +396,7 @@ export type MobWavesFieldKey =
   | "special.damageMult"
   | "special.moveSpeedMult"
   | "special.radiusMult"
+  | "special.countsAsChampion"
   | "special.rewardMult"
   | "special.modelKey"
   | "special.championId"
@@ -524,6 +530,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "boss.attackRange",
   "boss.moveSpeed",
   "boss.radius",
+  "boss.countsAsChampion",
   "boss.bountyGold",
   "boss.bountyXp",
   "boss.bountyLevels",
@@ -564,6 +571,7 @@ export const MOB_WAVES_FIELD_ORDER: readonly MobWavesFieldKey[] = [
   "special.damageMult",
   "special.moveSpeedMult",
   "special.radiusMult",
+  "special.countsAsChampion",
   "special.rewardMult",
   // 分紅獎池 (#288) — LAST in the special's run, mirroring where the king's
   // bounty sits in its own: 「牠是什麼」 first, 「殺了牠給什麼」 after.
@@ -1266,6 +1274,15 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     kind: "num",
     optional: false,
   },
+  "boss.countsAsChampion": {
+    zh: "殭屍王算不算英雄單位",
+    note: "owner 2026-08-13「只能吃掉英雄，特殊殭屍跟殭屍王可以被考慮是英雄單位」。開（預設）＝任何寫「對英雄才生效」的技能都吃得到殭屍王（89-002 憤怒的輪盤就是靠這格才吃得掉牠）。關＝殭屍王被當成一般小怪，那些技能對牠完全沒反應。⚠️ 這一格與旁邊那一格是**獨立的**：可以只讓殭屍王算英雄、特殊殭屍不算",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "算英雄單位", off: "只是小怪" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「算英雄單位」",
+  },
   "boss.bountyGold": {
     zh: "殭屍王獎金池",
     // ⚠️ 第三守則，這句話**第三次**因為同型理由被改寫（2026-08-04）。
@@ -1491,6 +1508,15 @@ export const MOB_WAVES_LABELS: Record<MobWavesFieldKey, MobWavesFieldSpec> = {
     kind: "num",
     optional: false,
   },
+  "special.countsAsChampion": {
+    zh: "特殊殭屍算不算英雄單位",
+    note: "owner 2026-08-13「只能吃掉英雄，特殊殭屍跟殭屍王可以被考慮是英雄單位」。開（預設）＝任何寫「對英雄才生效」的技能都吃得到特殊殭屍（89-002 憤怒的輪盤就是靠這格才吃得掉牠）。關＝特殊殭屍被當成一般小怪，那些技能對牠完全沒反應。⚠️ 這一格與旁邊那一格是**獨立的**：可以只讓殭屍王算英雄、特殊殭屍不算",
+    unit: "",
+    kind: "bool",
+    boolLabels: { on: "算英雄單位", off: "只是小怪" },
+    optional: true,
+    emptyMeans: "沿用出貨預設「算英雄單位」",
+  },
   "special.rewardMult": {
     zh: "獎勵倍率",
     note: "打死牠給的金錢與經驗都乘這個數（升級進度算一隻，不變）。⚠️ 下面的「分紅獎金」有填的話這格完全不會被用到 —— 獎池就是獎勵，兩者不疊加",
@@ -1698,6 +1724,7 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "boss.attackRange",
       "boss.moveSpeed",
       "boss.radius",
+      "boss.countsAsChampion",
       "boss.bountyGold",
       "boss.bountyXp",
       "boss.bountyLevels",
@@ -1739,6 +1766,7 @@ export const MOB_WAVES_GROUPS: MobWavesGroup[] = [
       "special.damageMult",
       "special.moveSpeedMult",
       "special.radiusMult",
+      "special.countsAsChampion",
       "special.rewardMult",
     ],
   },
@@ -1897,6 +1925,8 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.boss?.moveSpeed);
     case "boss.radius":
       return formatNum(cfg.boss?.radius);
+    case "boss.countsAsChampion":
+      return cfg.boss?.countsAsChampion === undefined ? "" : cfg.boss.countsAsChampion ? "1" : "0";
     case "boss.modelKey":
       return cfg.boss?.modelKey ?? "";
     case "boss.championSource":
@@ -1981,6 +2011,12 @@ export function readField(cfg: MobWavesConfig, key: MobWavesFieldKey): string {
       return formatNum(cfg.special?.moveSpeedMult);
     case "special.radiusMult":
       return formatNum(cfg.special?.radiusMult);
+    case "special.countsAsChampion":
+      return cfg.special?.countsAsChampion === undefined
+        ? ""
+        : cfg.special.countsAsChampion
+          ? "1"
+          : "0";
     case "special.rewardMult":
       return formatNum(cfg.special?.rewardMult);
     case "special.modelKey":
@@ -2625,6 +2661,9 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
       attackRange: num("boss.attackRange", sb.attackRange),
       attackCdSec: num("boss.attackCdSec", sb.attackCdSec),
       radius: num("boss.radius", sb.radius),
+      ...(optBool("boss.countsAsChampion") === undefined
+        ? {}
+        : { countsAsChampion: optBool("boss.countsAsChampion") }),
       bountyGold: num("boss.bountyGold", sb.bountyGold),
       bountyXp: num("boss.bountyXp", sb.bountyXp),
       bountyLevels: num("boss.bountyLevels", sb.bountyLevels),
@@ -2702,6 +2741,9 @@ export function configFromForm(form: MobWavesForm): MobWavesConfig {
       damageMult: num("special.damageMult", ss.damageMult),
       moveSpeedMult: num("special.moveSpeedMult", ss.moveSpeedMult),
       radiusMult: num("special.radiusMult", ss.radiusMult),
+      ...(optBool("special.countsAsChampion") === undefined
+        ? {}
+        : { countsAsChampion: optBool("special.countsAsChampion") }),
       rewardMult: num("special.rewardMult", ss.rewardMult),
     };
     const sm = optText("special.modelKey");
