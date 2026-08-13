@@ -3028,6 +3028,46 @@ def main():
           % (len(tag_gate.WAIVERS) + len(tag_gate.BLOCKED_WAIVERS)))
     if "--audit-only" in sys.argv:
         return
+
+    # ⭐ GH#319 —— 「帶印記的文件必須等於現在跑產生器的輸出」。
+    #
+    # 症狀（issue 逐字）：在後台／Codex 編輯器改一支「90 支重製」裡的技能，存檔成功；
+    # 任何人下次跑這支產生器，**那筆編輯被無聲覆寫** —— 沒有紅燈、沒有 log、
+    # 跟正常一模一樣。問題不是「誰該贏」（第〇·五守則已經回答：產生器贏），
+    # 是**沒有人宣告誰該贏**，所以變成「誰最後跑誰贏」。
+    #
+    # ⛔ 這一格不是「改成不要覆寫」——那會讓 90 支從推導資料變回手寫資料。
+    #    它是**讓覆寫變成看得見的**：手改之後 `--check` 當場回非零並指名檔案，
+    #    而不是等下一次重生成才無聲消失。守衛在
+    #    `packages/shared/src/ops/skillRemakeJsonFresh.test.ts`。
+    if "--check" in sys.argv:
+        drift = []
+        for cid, slot, d in docs:
+            p = os.path.join(AB, f"{d['id']}.json")
+            try:
+                have = json.load(open(p, encoding="utf-8"))
+            except FileNotFoundError:
+                drift.append(f"{d['id']}.json（不存在）")
+                continue
+            # ⚠️ `castTimeSec` **不比** —— 它由後處理器 `deriveCastTimes.ts --write`
+            #    在這支寫完之後才蓋上去（見 main() 尾端）。把它算進來的話，
+            #    這條閘會在**每一次乾淨的重跑**都紅（實測 50/90 份），
+            #    那就是一個永遠紅的守衛 = 一個沒有人會看的守衛。
+            if {k: v for k, v in have.items() if k != "castTimeSec"} != {
+                k: v for k, v in d.items() if k != "castTimeSec"
+            }:
+                drift.append(f"{d['id']}.json")
+        if drift:
+            print(f"⛔ {len(drift)} 份出貨技能與產生器的輸出不一致："
+                  f"{'、'.join(drift[:8])}{' …' if len(drift) > 8 else ''}", file=sys.stderr)
+            print("  這 90 支是**產生器的輸出**（第〇·五守則）。手改會在下一次重生成時"
+                  "被無聲覆寫 —— 所以這裡先紅。", file=sys.stderr)
+            print("  要改請改 `tools/skill-remake/batch1.py`，然後跑："
+                  "\n    python3 tools/skill-remake/batch1.py", file=sys.stderr)
+            sys.exit(1)
+        print(f"產生器印記一致：{len(docs)} 支")
+        return
+
     by_champ = {}
     for cid, slot, d in docs:
         by_champ.setdefault(cid, {})[slot] = d

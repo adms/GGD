@@ -98,6 +98,29 @@ export interface ForgePlan {
 }
 
 /**
+ * ⭐ GH#319 —— 這一支是**產生器擁有的**嗎？
+ *
+ * 那 90 支重製技能的唯一真相來源是 `tools/skill-remake/batch1.py`，而那支產生器
+ * 自己的註解寫著「⛔ 不讀工作區。這支產生器**自己會覆寫** `content/abilities/`」。
+ * ⇒ 在編輯器裡改它會**存檔成功**，然後在任何人下次跑產生器時被**無聲覆寫** ——
+ *   沒有紅燈、沒有 log、跟正常一模一樣。
+ *
+ * ⚠️ 判斷用的是 `provenance: "owner-spec"`，⛔ 不是一份手抄的 id 清單：
+ *    那一格由產生器自己蓋，而「owner-spec 這一集合恰好等於產生器管的那一批」
+ *    有守衛在對（`content/abilityProvenance.test.ts`）。
+ *
+ * ⛔ 這裡是**擋下**不是警告：一個「存了但會消失」的存檔比存不下去更糟。
+ */
+export function generatorOwnedBlockers(after: Record<string, unknown>): string[] {
+  if (after["provenance"] !== "owner-spec") return [];
+  return [
+    `這一支是「90 支重製技能」之一，由 tools/skill-remake/batch1.py 產生 —— ` +
+      `在這裡存下去會成功，但下一次有人重跑產生器時**會被無聲覆寫**。` +
+      `要改請改產生器那張表，然後跑 \`python3 tools/skill-remake/batch1.py\`。`,
+  ];
+}
+
+/**
  * Would this doc survive `registerAll()`? Returns the operator-facing reasons it
  * would not (empty = fine). Non-templated docs are always fine.
  */
@@ -170,7 +193,14 @@ export function planForgeWrite(
     }
   }
 
-  return { steps, abilityPatch, mirror, blockers: templateWriteBlockers(after, templates) };
+  return {
+    steps,
+    abilityPatch,
+    mirror,
+    // ⛔ 兩種阻擋都要列出來（⛔ 不是 `||`）：一支技能可以同時「模板展開會失敗」
+    //    與「它是產生器擁有的」，操作者需要看到全部理由才知道下一步該做什麼。
+    blockers: [...generatorOwnedBlockers(after), ...templateWriteBlockers(after, templates)],
+  };
 }
 
 export interface ForgeSaveResult {
