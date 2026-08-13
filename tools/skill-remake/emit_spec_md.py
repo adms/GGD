@@ -86,7 +86,7 @@ def main() -> None:
     L.append("其中 CP 值最高的一格是 **A-2：產生器從來沒跑過 `pnpm content:build`** —— 一行指令消 7 條紅。")
     L.append("")
     L.append("B 類 5 組由 owner 逐項裁決：B-1 EX 照說明實作 · B-2 揍敵客全做 · B-3 新版優先")
-    L.append("（w3x 原作數值另存 [`_w3x-fidelity-superseded.md`](_w3x-fidelity-superseded.md)）·")
+    L.append("（w3x 原作數值另存 [`_w3x-fidelity-superseded.md`](legacy/_w3x-fidelity-superseded.md)）·")
     L.append("B-4 志狼變身退場（「刻意減少變身」）· B-5 一護靈壓 −50%。")
     L.append("")
     L.append("完整分析：[`_skill-remake-batch1-真因分析.md`](_skill-remake-batch1-真因分析.md)")

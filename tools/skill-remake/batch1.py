@@ -1199,11 +1199,21 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
   #    ⛔ 不是 toggle.whileOn（那條來源升級不換 rank），
   #    ⛔ 也不是 modifiers —— 力量不是 Stat，它走 attributes 那條授權面。
   #
-  # ⚠️ 這一批第一次做的時候撤回過，因為它打壞 `auraIncludeSelf`（白木開始回自己的血，
-  #    而 w3a A0GM 說芬多精 only allies）。**owner 2026-08-13 逐字裁決**：
-  #      「70-00 follow new rule not w3a. healing friend and self.」
-  #    ⇒ 第〇·六守則：owner 的新版說明是第 1 層，w3a 原始設定是第 5 層，**新版贏**。
-  #    被取代的原作事實另存在 `docs/_w3x-fidelity-superseded.md`（知識不可以無聲消失）。
+  # ⚠️ 這一批第一次做的時候撤回過，因為它打壞 `auraIncludeSelf`。
+  #
+  # ⛔ 而我當時對那次撤回的**修法是錯的**，owner 2026-08-13 當場抓到：
+  #    他的「healing friend and self」講的是 **70-002 樹海降臨**的
+  #    「[回復][周圍]**自己與友方隊伍**生命 10%」（那一條**本來就已經實作**，
+  #    走 `side:"allies"` 的圈），⛔ **不是** 70-00 的芬多精光環。
+  #    我卻去改了芬多精的 `includeSelf` —— 因為我讀了那支技能 JSON 裡
+  #    **w3x 時代的 description**，而不是上面這一段 owner 規格。他的回覆是
+  #      「你不是有做一個最新版本的英雄的技能列表及說明(JSON & MD)? 怎麼會搞混呢?」
+  #
+  # ⭐ 上面這段 70-00 的 owner 規格**從頭到尾沒有提芬多精**。以它為準。
+  #    芬多精照 w3a 維持 `includeSelf: false`，原作事實在
+  #    `docs/legacy/_w3x-fidelity-superseded.md`（知識不可以無聲消失）。
+  #    ⚠️ 舊規格從此只住 `docs/legacy/`（owner：「不要再發生了」），
+  #    閘在 `packages/shared/src/ops/legacySpecQuarantine.test.ts`。
   innate_active_passive="attach", while_form="alternate",
   passive={"name": "70-00 紮根", "ranks": [{"attributes": {"str": 10}}]},
   effects=[])
