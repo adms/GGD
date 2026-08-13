@@ -1,6 +1,6 @@
 {
   "schema": "ggd-runtime-capabilities@1",
-  "fingerprint": "113bbcc6",
+  "fingerprint": "8d30566f",
   "effectKinds": [
     "applyBuff",
     "applyStatus",
@@ -256,6 +256,7 @@
     "requireLearned",
     "resource",
     "resourcePct",
+    "resourcePctPhase",
     "respectCooldown",
     "root",
     "runOnEmptyHit",
