@@ -71,15 +71,21 @@ const ORB_MANA_COST = 30;
 const DOZY = "godie-nbbc" as ChampionId;
 const DRAGONOID = "godie-n01c" as ChampionId;
 /**
- * EX 從按下到「形態真的換好」之間的固定前搖,以 tick 計。
+ * ⛔【已刪除】`EX_FORM_WINDUP_TICKS = 11` —— 一個**抄下來的前搖**，而它在
+ * 2026-08-13 讓兩條守衛用**錯誤的訊息**紅。
  *
- * ⚠️ 這個常數存在的理由,是 2026-07-31 我自己踩到的坑：形態是在
- * `castExAndSettle` **內部**就生效的,所以拿 settle **之後**的 `w.tick` 當基準
- * 會短算。實測兩支 EX 都一樣：`preCast=2` → 形態在 tick 13 生效 → 前搖 11 tick。
- * 兩支共用同一個數字不是巧合,它們走的是同一條施法管線。
- * 前搖改了這裡就要跟著改 —— 而那正是我們希望有人被迫看一眼的時刻。
+ * 它原本的註解自己寫著「前搖改了這裡就要跟著改 —— 而那正是我們希望有人被迫看一眼
+ * 的時刻」。⚠️ 那是一條**判準**，而判準擋不住：owner 當天把吟唱規則改成
+ * 「所有技能 0.06~4.00 秒」，前搖 11 → 31，沒有任何人被迫看一眼，
+ * 兩條斷言直接說「龍魔人必須整整持有 20 秒 …… 改短 durationSec 這裡就紅」——
+ * 而 durationSec 一個字都沒動。
+ *
+ * ⭐ 取代它的是**量出來的閉區間** `[firstInForm, lastInForm]`（見下面兩條斷言）：
+ * 從形態真的上身那一 tick 算起，所以這份檔案**再也不需要知道前搖是多少**。
+ * owner 2026-08-13：「吟唱不代表施展成功，而且被攻擊會被打斷吟唱，
+ * 所以不能算變身時間。」—— 引擎本來就是這樣做的（實測：按下 tick 2 →
+ * 形態 tick 33 上身 → tick 633 退場 = 整整 600 tick），壞的一直是這個常數。
  */
-const EX_FORM_WINDUP_TICKS = 11;
 
 const DRAGON_SEC = 20;
 /** 三刀流劍士 - 索隆 #11. `UDRE` → `U01U`, EX `A10N`, 15 秒。 */
@@ -503,8 +509,22 @@ describe("08-002 龍魔人 —— 全能力 +15 / 防禦 ×2 / 魔抗 50%，20 �
       w.step(NO_INTENTS);
     }
     expect(firstInForm, "變身確實發生過").toBeGreaterThanOrEqual(0);
+    // ⭐ owner 2026-08-13：「**吟唱不代表施展成功**，而且**被攻擊會被打斷吟唱**，
+    //    所以**不能算變身時間**。」⇒ 時長要從**形態真的上身的那一 tick**量起。
+    //
+    // ⛔ 這一行以前是 `lastInForm - preCastD - EX_FORM_WINDUP_TICKS`，也就是
+    //    「按下的 tick + 一個**寫死的前搖 11**」。那個 11 是 2026-07-31 吟唱 0.4 秒
+    //    時抄下來的，而 owner 當天把吟唱改成 0.06~4.00 秒之後前搖變成 31 ——
+    //    於是這一條用 **619 vs 600** 紅，訊息說「改短 durationSec 這裡就紅」，
+    //    而 durationSec 一個字都沒動。**它指著錯的地方**。
+    //    （實測：按下 tick 2 → 形態 tick 33 上身 → tick 633 退場 ⇒ 引擎給的是
+    //      整整 600 tick，吟唱**本來就沒有**被算進去。壞的一直是這條斷言。）
+    //
+    // ⭐ 改成量閉區間 `[firstInForm, lastInForm]` 之後，這一條**再也不必知道前搖**
+    //    —— 前搖、吟唱倍率、後台改設定都不會再讓它說謊，而「durationSec 改短就紅」
+    //    這句話從此是真的。
     expect(
-      lastInForm - preCastD - EX_FORM_WINDUP_TICKS,
+      lastInForm - firstInForm + 1,
       `龍魔人必須整整持有 ${DRAGON_SEC} 秒（${dragonTicks} tick）—— 改短 durationSec 這裡就紅`,
     ).toBe(dragonTicks);
 
@@ -565,7 +585,9 @@ describe("11-002 武裝色霸氣 —— 防禦 +15 / 魔抗 50% / AD ×1.5，15 
     }
     expect(hakiFirst, "變身確實發生過").toBeGreaterThanOrEqual(0);
     expect(
-      hakiLast - preCastH - EX_FORM_WINDUP_TICKS,
+      // 同上（owner 2026-08-13「吟唱不能算變身時間」）—— 從形態上身那一 tick 量起，
+      // ⛔ 不再減一個寫死的前搖。
+      hakiLast - hakiFirst + 1,
       `霸氣形態必須整整持有 ${HAKI_SEC} 秒（${hakiTicks} tick）—— 改短 durationSec 這裡就紅`,
     ).toBe(hakiTicks);
     expect(championFormIndex(w, zoro), `${HAKI_SEC} 秒後變回索隆`).toBe(0);
@@ -578,3 +600,4 @@ describe("11-002 武裝色霸氣 —— 防禦 +15 / 魔抗 50% / AD ×1.5，15 
     expect(back[Stat.MagicResist]).toBeCloseTo(before[Stat.MagicResist]!, 6);
   });
 });
+
