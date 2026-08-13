@@ -36,7 +36,8 @@
               "incomingPct": {
                 "perRank": [
                   1.0
-                ]
+                ],
+                "negateOriginal": true
               }
             }
           ],

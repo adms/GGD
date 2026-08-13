@@ -27,6 +27,13 @@ import { cooldownView } from "./cooldownView";
 import { CooldownChrome } from "./components/CooldownChrome";
 import { displayFinal, useDisplayEnv } from "./displayFinal";
 import { innateKindLabel, passiveSlotView, PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
+import {
+  abilityReadyFrameStyle,
+  isAbilityTileReady,
+  READY_RGB_ACTIVE,
+  READY_RGB_EX,
+  READY_RGB_PASSIVE,
+} from "./abilityReadyFrame";
 import { INNATE_ACTIVE_CASTABLE } from "./castAnnounce";
 import { setHeldAbility } from "./abilityHold";
 import { abilityActivationCue } from "./abilityCue";
@@ -167,6 +174,8 @@ export function TouchControls(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
   const localAlive = useHud((s) => s.localAlive);
   const localMaxHp = useHud((s) => s.localMaxHp);
+  // ⭐ 就緒框的第二個條件（owner：「CD 好了、**MP 足夠**」）。
+  const localMana = useHud((s) => s.localMana);
   // live combat-env table — the cooldown denominator must be the env-scaled
   // final the sim charged, not the authored base (#219; see ui/cooldownView)
   const env = useDisplayEnv();
@@ -335,7 +344,9 @@ export function TouchControls(): React.JSX.Element | null {
               // with a click cue (or the refusal cue when cooling down),
               // haptic pulse, and a scale/flash — even an unlearned tile.
               onTouchStart={(e) => {
-                pressVisualDown(e.currentTarget);
+                // ⭐ owner 2026-08-13：「被動技的按鈕應該不能被按下」——
+                //    ⇒ 被動不播按下動畫（桌機 `holdProps` 的同一條規則）。
+                if (!passive) pressVisualDown(e.currentTarget);
                 if (learned) {
                   pressHandler(slot)(e);
                   setHeldAbility(slot);
@@ -380,6 +391,13 @@ export function TouchControls(): React.JSX.Element | null {
               </div>
               {/* cooldown chrome — the shared radial wipe + number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
+              {isAbilityTileReady({
+                pressable: !passive,
+                offCooldown: !cd.onCd,
+                manaOk: localMana >= (ability.manaCost[Math.max(0, rank - 1)] ?? 0),
+                learned,
+              }) && <div style={abilityReadyFrameStyle(READY_RGB_ACTIVE)} />}
             </div>
             {seat.unspentPoints > 0 && rank < ability.maxRank && (
               <SfxButton
@@ -470,6 +488,12 @@ export function TouchControls(): React.JSX.Element | null {
                 and NO NUMBER at all — the phone could see that the EX was down
                 but never how long for. Same component as every other tile. */}
             <CooldownChrome cd={cd} fontSize={m.s(20)} />
+            {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
+            {isAbilityTileReady({
+              pressable: !exPassive,
+              offCooldown: !cd.onCd,
+              manaOk: localMana >= (ex.manaCost ?? 0),
+            }) && <div style={abilityReadyFrameStyle(READY_RGB_EX)} />}
           </div>
         );
       })()}
@@ -558,6 +582,12 @@ export function TouchControls(): React.JSX.Element | null {
                 its whole 40 s. Before #219 this tile showed the dark rect and
                 NO NUMBER; it now speaks the same language as every other. */}
             <CooldownChrome cd={cd} fontSize={m.s(20)} />
+            {/* ⭐ 就緒框（owner 2026-08-13）—— 被動的 pressable 是 false ⇒ 永遠不亮 */}
+            {isAbilityTileReady({
+              pressable: castable,
+              offCooldown: !cd.onCd,
+              manaOk: localMana >= (innate.manaCost ?? 0),
+            }) && <div style={abilityReadyFrameStyle(READY_RGB_PASSIVE)} />}
           </div>
         );
       })()}

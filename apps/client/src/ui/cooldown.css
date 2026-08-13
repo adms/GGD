@@ -36,3 +36,34 @@
     }
   }
 }
+
+/*
+ * ⭐【就緒框】—— owner 2026-08-13：「CD 好了、MP 足夠 要有變色動畫框」。
+ *
+ * 跟上面那支 `ggd-cd-ready` 是**兩件事**，⛔ 不要合併：
+ *   · `ggd-cd-ready`     一次性、340 ms —— 「它**剛剛**好了」（事件）
+ *   · `ggd-ability-ready` 常駐、無限循環 —— 「它**現在**按得動」（狀態）
+ *
+ * 動的是 opacity（不是 transform）—— 磚自己的 transform 被按下動畫與拒絕抖動
+ * 佔走了，而這一圈是畫在子元素上的 boxShadow，只有透明度可以安全地脈動。
+ * 掛載點：`ui/abilityReadyFrame.ts::abilityReadyFrameStyle()`。
+ */
+@keyframes ggd-ability-ready {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 減少動態：保留「它是亮的」這句話，拿掉脈動。 */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes ggd-ability-ready {
+    0%,
+    100% {
+      opacity: 0.85;
+    }
+  }
+}

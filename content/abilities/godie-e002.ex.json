@@ -40,7 +40,8 @@
                       "perRank": [
                         7.0
                       ],
-                      "maxChainDepth": 1
+                      "maxChainDepth": 1,
+                      "negateOriginal": true
                     }
                   }
                 ],

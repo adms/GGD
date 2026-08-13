@@ -412,7 +412,7 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -0.5
+                            "value": -1.0
                           }
                         ],
                         "duration": 3.0,
@@ -478,7 +478,7 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -0.5
+                            "value": -1.0
                           }
                         ],
                         "duration": 3.0,
@@ -544,7 +544,7 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -0.5
+                            "value": -1.0
                           }
                         ],
                         "duration": 3.0,
@@ -610,7 +610,7 @@
                           {
                             "stat": "mr",
                             "op": "pctAdd",
-                            "value": -0.5
+                            "value": -1.0
                           }
                         ],
                         "duration": 3.0,

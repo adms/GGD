@@ -29,6 +29,11 @@
           "effects": [
             {
               "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
               "damageType": "true",
               "amount": {
                 "flat": 0.0
@@ -103,6 +108,11 @@
           "effects": [
             {
               "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
               "damageType": "true",
               "amount": {
                 "flat": 0.0
@@ -177,6 +187,11 @@
           "effects": [
             {
               "kind": "damage",
+              "condition": {
+                "kind": "kind",
+                "subject": "target",
+                "is": "champion"
+              },
               "damageType": "true",
               "amount": {
                 "flat": 0.0

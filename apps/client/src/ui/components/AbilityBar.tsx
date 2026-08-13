@@ -64,6 +64,14 @@ import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
 import { exSlotView } from "../exSlot";
 import { cooldownView } from "../cooldownView";
+import {
+  abilityReadyFrameStyle,
+  abilityTileCursor,
+  isAbilityTileReady,
+  READY_RGB_ACTIVE,
+  READY_RGB_EX,
+  READY_RGB_PASSIVE,
+} from "../abilityReadyFrame";
 import { CooldownChrome } from "./CooldownChrome";
 import { displayFinal, useDisplayEnv } from "../displayFinal";
 import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
@@ -112,12 +120,16 @@ function pressVisualClear(el: HTMLElement): void {
 function holdProps(
   slot: ChampionAbilitySlot,
   cue: { denied?: boolean; passive?: boolean },
+  pressable = true,
 ): React.DOMAttributes<HTMLDivElement> {
   return {
     onPointerDown: (e) => {
       setHeldAbility(slot);
       abilityActivationCue(slot, cue);
-      pressVisualDown(e.currentTarget);
+      // ⭐ owner 2026-08-13：「**被動技的按鈕應該不能被按下**」。
+      //    ⇒ 被動不播按下動畫（縮放/亮度）。按住仍然叫得出說明面板 ——
+      //    那是**讀**不是**按**，而被動的說明正是玩家唯一能對它做的事。
+      if (pressable) pressVisualDown(e.currentTarget);
     },
     onPointerUp: (e) => {
       setHeldAbility(null);
@@ -222,6 +234,10 @@ export function AbilityBar(): React.JSX.Element | null {
   // `authored × env.cooldown` seconds, so a denominator of the authored base
   // capped the old sweep at 20% and hid it inside the name scrim (#219).
   const env = useDisplayEnv();
+  // ⭐ 就緒框要的第二個條件。⚠️ `localMana` 在 RoomStore 被 `Math.round` 過，
+  //    所以邊界 ±0.5 —— 這裡刻意**不**補償：一格框亮著但伺服器少半點魔力而拒絕，
+  //    比框沒亮卻放得出來好（後者玩家根本不會去按）。
+  const localMana = useHud((s) => s.localMana);
 
   // Imperative cast-fill overlay: reads frameBus.localCast every frame and
   // grows the fill on the slot that's casting — off the React/per-frame path.
@@ -348,6 +364,7 @@ export function AbilityBar(): React.JSX.Element | null {
               {...holdProps(
                 "PASSIVE",
                 castableInnate ? { denied: innateCd.onCd } : { passive: true },
+                castableInnate,
               )}
               style={{
                 position: "relative",
@@ -366,7 +383,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 // A pointer cursor on a tile that cannot fire is the exact lie
                 // #166 removed from pure passives — so it appears only for an
                 // innate that really is pressable.
-                cursor: castableInnate ? "pointer" : "default",
+                cursor: abilityTileCursor(castableInnate),
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
@@ -419,6 +436,12 @@ export function AbilityBar(): React.JSX.Element | null {
                   surface wears (ui/components/CooldownChrome). Only an active
                   innate can ever be on cooldown. */}
               <CooldownChrome cd={innateCd} fontSize={m.s(20)} />
+              {/* ⭐ 就緒框 —— 被動永遠沒有（castableInnate=false 直接擋掉）。 */}
+              {isAbilityTileReady({
+                pressable: castableInnate,
+                offCooldown: !innateCd.onCd,
+                manaOk: localMana >= (innate.manaCost ?? 0),
+              }) && <div style={abilityReadyFrameStyle(READY_RGB_PASSIVE)} />}
               {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
                   mounted for a castable innate: a tile that cannot cast must
                   never carry a cast surface that could half-paint. */}
@@ -483,7 +506,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
               data-slot-key={slot}
-              {...holdProps(slot, { denied: !learned || cd.onCd, passive })}
+              {...holdProps(slot, { denied: !learned || cd.onCd, passive }, !passive)}
               style={{
                 position: "relative",
                 width: m.tile,
@@ -494,6 +517,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 // passive skills read as a DASHED outline so they're easy to
                 // tell apart from active/castable tiles (虛線外框)
                 border: `${m.s(1)}px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
+                cursor: abilityTileCursor(!passive),
                 color: learned ? TEXT_MAIN : TEXT_DIM,
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
@@ -516,6 +540,14 @@ export function AbilityBar(): React.JSX.Element | null {
               />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ 就緒框。⚠️ `learned` 一定要傳：沒點的技能冷卻是 0、魔力也「夠」，
+                  漏了它整排未學技能會亮著框說「可以放」。 */}
+              {isAbilityTileReady({
+                pressable: !passive,
+                offCooldown: !cd.onCd,
+                manaOk: localMana >= manaMeta,
+                learned,
+              }) && <div style={abilityReadyFrameStyle(READY_RGB_ACTIVE)} />}
               {/* cast-fill overlay (imperative; grows while this slot casts) */}
               <div
                 data-cast-slot={i}
@@ -598,7 +630,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
               data-slot-key="EX"
-              {...holdProps("EX", { denied: cd.onCd, passive: exPassive })}
+              {...holdProps("EX", { denied: cd.onCd, passive: exPassive }, !exPassive)}
               style={{
                 position: "relative",
                 width: m.tile,
@@ -607,6 +639,7 @@ export function AbilityBar(): React.JSX.Element | null {
                 overflow: "hidden",
                 background: "#3a2a12",
                 border: `${m.s(2)}px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
+                cursor: abilityTileCursor(!exPassive),
                 boxShadow: `0 0 ${m.s(8)}px ${EX_ACCENT}88`,
                 color: TEXT_MAIN,
                 transition: "transform 80ms ease, filter 80ms ease",
@@ -621,6 +654,12 @@ export function AbilityBar(): React.JSX.Element | null {
               <TileName label={stripAbilityNumber(ex.name)} />
               {/* cooldown chrome — radial wipe + legible number + ready bloom */}
               <CooldownChrome cd={cd} fontSize={m.s(20)} />
+              {/* ⭐ 就緒框（EX 金） */}
+              {isAbilityTileReady({
+                pressable: !exPassive,
+                offCooldown: !cd.onCd,
+                manaOk: localMana >= (ex.manaCost ?? 0),
+              }) && <div style={abilityReadyFrameStyle(READY_RGB_EX)} />}
               <div
                 data-cast-slot={4}
                 style={{

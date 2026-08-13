@@ -300,6 +300,16 @@ def _split_inc_pct(kw):
     t = kw.pop("inc_pct", None)
     if t is None:
         return None
+    # ⭐ owner 2026-08-13 逐字：「**預設都是 100%反彈 免受傷**」。
+    #    ⇒ 兩格都在這裡給預設，⛔ 不是逐支填（第零守則⑨：規則不是補丁）。
+    #    · `negateOriginal` 省略 ⇒ 被打的人**照樣掉血**，只是把傷害也打回去 ——
+    #      那不是「反彈」是「反擊」。owner 2026-08-09 就說過「反彈預設都是免傷」，
+    #      但那是**設計**預設，引擎預設是 false ⇒ 90 支裡 5 支靜默走了錯的那一邊。
+    #    · `perRank` 省略 ⇒ 100%（規格只寫「[反彈]」沒寫比例時的答案）。
+    #    ⚠️ 逐支仍然可以明寫覆蓋（20-04 的 3/5/7 倍、20-002 的 7 倍就是）。
+    if isinstance(t, dict):
+        t = {"perRank": [1.0], **t} if "perRank" not in t else dict(t)
+        t.setdefault("negateOriginal", True)
     assert isinstance(t, dict) and "perRank" in t, (
         'inc_pct= 要給完整的 incomingPct 物件：{"perRank":[…]}'
         '（basis / maxChainDepth / applyGlobalDamageMult / whenTooLate / negateOriginal 選填）')
@@ -1768,8 +1778,10 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
            # ⛔ 標記那一半**留在** applyStatus：快照的 statusIds 只讀 world.status，
            #    改用 applyBuff.statusId 會讓受害者 HUD 上的【破魔】圖示整個消失。
            #    兩格秒數同為 3.0，polarity/dispellable 讓【淨化】一次拔乾淨。
+           # ⭐ owner 2026-08-13：【破魔】是「魔抗**暫時降為 0**」，⛔ 不是減半。
+           #    `pctAdd -1.0` ⇒ final = base × (1 − 1) = 0。
            status("magic-break", 3.0),
-           buff([M("mr", "pctAdd", -0.5)], 3.0, polarity="debuff", dispellable=True)])
+           buff([M("mr", "pctAdd", -1.0)], 3.0, polarity="debuff", dispellable=True)])
 
 # ⭐ castType `self` → `targeted`：規格逐字是「給予**目標**額外…傷害」，而 self 施法讓
 #    `ctx.targets=[施法者]` ⇒ 頂層那顆 damage **打自己**，兩條 hook 也全部閘在
@@ -2026,9 +2038,16 @@ A("89-002", "89-002 俄羅斯輪盤", "targeted", [10], [666], 5.29,
       # ⚠️ owner 2026-08-13 裁決「1/6 自己死亡**算擊殺**」= yes（見稽核文件）。
       # ⚠️ 副作用要明說：`devour.victim:"champion"` 這一格消失了 ⇒ **輪盤現在吃得掉
       #    殭屍**。那是 owner 立過的裁決（devour.ts 的註解），列進 owner 表。
-      {"weight": foe, "effects": [dmg("true", flat=0,
+      # ⭐ owner 2026-08-13：「**只能吃掉英雄**，特殊殭屍跟殭屍王可以被考慮是英雄單位」。
+      #    ⇒ 用 `condition{kind:"kind", is:"champion"}` 把非英雄擋掉。
+      #    ⚠️ 這一格是**回收**上一版丟掉的 `devour.victim:"champion"`（那是 owner
+      #    立過的裁決，我換成 damage 時把它弄丟了）。
+      # ⚠️ 「特殊殭屍/殭屍王算英雄」那一半**沒做** —— 它們今天的 entity kind 是 `mob`，
+      #    要它們被這條讀成 champion 得動分類（新 kind 或重新歸類），那是另一張卡。
+      {"weight": foe, "effects": [dict(dmg("true", flat=0,
           res_pct={"subject": "target", "resource": "health",
-                   "basis": "max", "perRank": [1.0]})]},
+                   "basis": "max", "perRank": [1.0]}),
+          condition={"kind": "kind", "subject": "target", "is": "champion"})]},
       # ⭐「或 1/6 **自己**死亡」—— devour 沒有 applyTo，所以這一支從頭到尾打在
       #    敵人身上（＝兩顆分支都是「對方死」，玩家自己的 1/6 風險**根本不存在**）。
       #    `damage.applyTo:"self"` 是唯一的落點。
@@ -2091,7 +2110,8 @@ A("92-02", "92-02 消化液", "self", [0], [0], 0,
                                           # 只讀 world.status，換成 applyBuff.statusId
                                           # 會讓受害者 HUD 的圖示整個消失。
                                           status("magic-break", 3.0),
-                                          buff([M("mr", "pctAdd", -0.5)], 3.0,
+                                          # ⭐ owner 2026-08-13：魔抗**降為 0**（同 79-01）。
+                                          buff([M("mr", "pctAdd", -1.0)], 3.0,
                                                polarity="debuff",
                                                dispellable=True)])]}]}
       for v in (20, 30, 40, 50)]})
