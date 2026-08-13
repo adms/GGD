@@ -42,6 +42,8 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility, learnEx } from "./abilities/abilitySystem";
+import { Abilities, Champions } from "./content/registry";
+import { TICK_HZ } from "../constants";
 import { syncAbilityPassives } from "./abilities/abilityPassives";
 import { attachSource } from "./stats/statPipeline";
 import { championFormIndex } from "./systems/ChampionFormSystem";
@@ -412,10 +414,31 @@ function altFormSheet(championId: ChampionId, level: number): Record<string, num
   return { ...w.stats.get(id)!.final };
 }
 
+/**
+ * ⚠️ 等待長度**從技能自己的吟唱秒數推**，⛔ 不是一個寫死的 30。
+ *
+ * 2026-08-13：owner 把吟唱規則改成「所有技能 0.06~4.00 秒」
+ *（`config.cast-time@1`），08-002 龍魔人從 0.4 → **1.033 秒 = 31 tick**，
+ * 而這裡等 30 tick ⇒ 變身在窗口關掉的**下一格**才發生，測試回報
+ *「身體換成龍魔人: expected +0 to be 1」—— 技能是好的，**是等的人先走了**。
+ * 同一天 `castabilitySweep.test.ts` 的 `WINDOW = 26` 用一模一樣的方式壞掉 120 格。
+ *
+ * ⛔ 不要把 30 改成 40 了事：下一次 owner 調吟唱倍率它會再壞一次，
+ *    而且**用錯誤的訊息紅**（看起來像變身壞了）。
+ */
 function castExAndSettle(w: SimWorld, id: EntityId): void {
   expect(learnEx(w, id), "EX 解鎖").toBe(true);
+  const exId = Champions.tryGet(w.champion.get(id)!.championId)?.exAbility;
+  const sec = (exId ? Abilities.tryGet(exId)?.castTimeSec : undefined) ?? 0;
   expect(castAbility(w, id, "EX", { type: "self" }), "EX 按得下去").toBe("ok");
-  for (let i = 0; i < 30; i++) w.step(NO_INTENTS);
+  // ⛔ **不可以固定跑滿**：下面兩條測試量的是「第一次到最後一次在形態上」的
+  //    閉區間，而 `firstInForm` 是從**呼叫端的迴圈**裡記的 —— 這裡多跑一 tick，
+  //    那個區間就短一 tick。所以一看到形態上身就**立刻停手**，把第一格留給呼叫端。
+  const cap = Math.round(sec * TICK_HZ) + 31;
+  for (let i = 0; i < cap; i++) {
+    if (championFormIndex(w, id) !== 0) return;
+    w.step(NO_INTENTS);
+  }
 }
 
 describe("08-002 龍魔人 —— 全能力 +15 / 防禦 ×2 / 魔抗 50%，20 秒 (#249)", () => {

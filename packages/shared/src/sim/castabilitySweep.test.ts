@@ -79,6 +79,7 @@ import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import type { AbilityDef, CastType } from "./content/defs";
 import type { AbilitySlot, CastTarget, CoreAbilitySlot } from "./intents";
 import { leapTicks } from "./movement/leap";
+import { TICK_HZ } from "../constants";
 import type { EffectDef } from "./effects/effect";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -113,7 +114,12 @@ const ROSTER_SIZE = 53;
  * Do NOT lower this to green a red run: a drop means a slot that used to fire
  * no longer does.
  */
-const WORKING_CELL_FLOOR = 300;
+const WORKING_CELL_FLOOR = 312;
+// 2026-08-13：300 → 312，量出來的（`docs/_castability-128.md` 首發 53 人 312/318）。
+// ⚠️ 這一次的棘輪**不是**內容變好，是 {@link castWindow} 讓觀察者看得夠久 ——
+//    同一天 owner 把吟唱改成 0.06~4.00 秒，141 支技能吃到 ≥1 秒的前搖，
+//    而窗口還停在 26 tick（0.867 秒）⇒ 120 格假 FAIL（342→228）。
+//    修好之後 **343 PASS / 6 FAIL**，比改吟唱前的 342 還多一格。
 
 const NO_INTENTS = new Map();
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -126,19 +132,38 @@ const DUMMY = "godie-hart" as ChampionId;
 /**
  * Ticks stepped after each cast so a wind-up can resolve.
  *
- * KNOWN HARNESS ARTEFACT (do not "fix" silently — it moves a measurement).
- * The old comment here claimed the max authored cast time was 0.6 s = 18 ticks.
- * It is not: `godie-u00n.r` and `godie-u00o.r` carry castTimeSec 0.9, and
- * abilitySystem.ts resolves at `round(0.9 × TICK_HZ 30)` = tick 27 — ONE tick
- * after this window closes. That is the whole explanation for the single ❌ in
- * docs/_castability-128.md ("cast accepted but produced no measurable effect"):
- * the cast is fine, the observer stops watching too early. Raising WINDOW to
- * ~34 would very likely green that cell and let the floor go to 300/300, but
- * that is a change to what the harness MEASURES and belongs to #128/#198
- * together with the non-determinism hunt — not to a roster change. Recorded
- * here so the next reader does not re-derive it.
+ * ⚠️ 這是**基礎**窗口（動作解析、投射物飛行、狀態落地）。吟唱的那一段
+ * **不在這裡**，它由 {@link castWindow} 逐支加上去 —— 理由見那一支。
+ *
+ * ── 歷史：這個常數曾經自己吞掉吟唱，而那讓它在 2026-08-13 整批說謊 ──────────
+ * 舊註解寫「作者填的最長吟唱是 0.6 秒 = 18 tick，26 夠用」，然後 `godie-u00n.r`
+ * 的 0.9 秒把它戳破一次（解析在 tick 27，窗口的**下一格**）。當時的結論是
+ * 「記下來，不要偷偷改」——⛔ 但記下來的是**現象**，沒有人把它變成閘。
+ *
+ * 2026-08-13 owner 把吟唱規則改成「所有技能 0.06~4.00 秒」（`config.cast-time@1`），
+ * 於是 **141 支**技能的 castTimeSec ≥ 1.0 秒（前一天是 **0** 支）。一個寫死 26 的
+ * 觀察窗立刻讓 **120 格**回報「cast accepted but produced no measurable effect」——
+ * 技能全部是好的，**是觀察者在該看的時候閉眼**。
+ * 這正是 CLAUDE.md 的元規則：判準（「下次記得看一下」）擋不住，只有閘擋得住。
  */
 const WINDOW = 26;
+/**
+ * ⭐ 吟唱多久，就多看多久 —— 和 {@link leapWindow} **完全同一條原理**：
+ * 「效果被一段作者填的時間延後」時，觀察窗要涵蓋那一段，否則量到的是窗口長度，
+ * 不是技能。
+ *
+ * ⛔ 這**不是**放寬判定：一格仍然要在窗口內產生**可量測的效果**才算 PASS，
+ *    只是窗口不再假設吟唱是 0。⛔ 也不可以改成「把地板調低來變綠」——
+ *    地板往下 = 一格本來會動的技能不動了也沒人叫。
+ */
+function castWindow(castTimeSec: number | undefined): number {
+  if (typeof castTimeSec !== "number" || !Number.isFinite(castTimeSec) || castTimeSec <= 0) {
+    return 0;
+  }
+  // `abilitySystem.ts` 用 `round(sec × TICK_HZ)` 決定解析 tick，這裡 +1 是為了
+  // 看到解析**那一格**之後的結算（傷害事件在同一 tick 發，但狀態/投射物要下一格）。
+  return Math.round(castTimeSec * TICK_HZ) + 1;
+}
 /**
  * TASK #247 — an ability whose effects are DEFERRED BEHIND A FLIGHT TIME needs a
  * window that covers the flight, or the harness stops watching before the thing
@@ -405,7 +430,7 @@ function testSlot(championId: string, slot: AbilitySlot): Cell {
     }
     events.push(...world.events.map((e) => e.type));
 
-    const window = WINDOW + leapWindow(def.effects);
+    const window = WINDOW + leapWindow(def.effects) + castWindow(def.castTimeSec);
     for (let i = 0; i < window; i++) {
       world.step(NO_INTENTS);
       events.push(...world.events.map((e) => e.type));
