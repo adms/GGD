@@ -187,7 +187,7 @@ import {
   EX_PUNCH_MS,
 } from "./render/combatFeedback";
 import { prefersReducedMotion } from "./ui/buttonSfx";
-import { installInputGuard, type InputGuard } from "./input/inputGuard";
+import { installInputGuard, shouldRelockFollow, type InputGuard } from "./input/inputGuard";
 import { settingsStore } from "./settings";
 import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
@@ -3098,8 +3098,7 @@ export class GameApp {
     const inCombat = state.phase === "combat";
     const was = this.wasInCombat.get(player) ?? false;
     this.wasInCombat.set(player, inCombat);
-    if (!inCombat || was) return; // 只在 非combat → combat 那一幀
-    if (rig.spectating) return; // 觀戰中的自由視角不搶
+    if (!shouldRelockFollow(inCombat, was, rig.spectating)) return;
     rig.followLock = true;
     if (selfPos) rig.jumpTo(selfPos);
   }

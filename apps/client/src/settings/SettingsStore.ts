@@ -6,6 +6,7 @@
  * persists to localStorage immediately and notifies subscribers so graphics +
  * network changes apply live.
  */
+import { DEFAULT_INPUT_GUARD } from "../input/inputGuard";
 import {
   DEFAULT_NETWORK,
   DEFAULT_UI,
@@ -71,6 +72,7 @@ export class SettingsStore {
       version: SETTINGS_VERSION,
       graphics: defaultGraphicsFor(this.touch),
       network: { ...DEFAULT_NETWORK },
+      input: { ...DEFAULT_INPUT_GUARD },
       // ⛔ 新裝置一律「中」，**連觸控裝置也是**。iPhone 上直接開成「最小」很誘人，
       // 但那是替玩家決定他的視力 —— owner 給的是七個檔位讓他自己選，而「中」是
       // 他明說的預設。平台差異只住在 fpsCap 那一格（見 defaultGraphicsFor）。
@@ -179,6 +181,7 @@ export class SettingsStore {
       version: SETTINGS_VERSION,
       graphics: clampGraphics(applyPreset(defaultGraphicsFor(this.touch), preset, this.touch)),
       network: { ...DEFAULT_NETWORK },
+      input: { ...DEFAULT_INPUT_GUARD },
       ui: clampUi({ ...this.settings.ui }),
     });
     return preset;

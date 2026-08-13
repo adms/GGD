@@ -6,6 +6,7 @@
  * onto the Babylon engine + vfx budgets.
  */
 import { INTERP_DELAY_MS, SNAPSHOT_MS } from "@ggd/shared/constants";
+import { DEFAULT_INPUT_GUARD, type InputGuardConfig } from "../input/inputGuard";
 import { defaultFpsCap } from "../render/frameCap";
 import { INTENT_HZ_DEFAULT, clampIntentHz } from "../input/IntentClock";
 import { DEFAULT_HUD_SCALE_TIER, isHudScaleTier, type HudScaleTier } from "../ui/hudScale";
@@ -140,10 +141,17 @@ export interface Settings {
   graphics: GraphicsSettings;
   network: NetworkSettings;
   ui: UiSettings;
+  /**
+   * ⭐ 誤觸防護（owner 2026-08-14：「滑鼠右鍵 WIN鍵等按鍵要鎖住」）。
+   * 每一格都是**決策點**不是數字 ⇒ 第一守則：全部可切換，⛔ 不寫死。
+   * ⚠️ 擋得掉什麼、擋不掉什麼寫在 `input/inputGuard.ts` 的檔頭 —— Win 鍵
+   *    在**非全螢幕**時網頁一律擋不掉，那不是 bug 是瀏覽器的邊界。
+   */
+  input: InputGuardConfig;
 }
 
 /** Bump when the persisted shape changes; migrateSettings deep-merges forward. */
-export const SETTINGS_VERSION = 5;
+export const SETTINGS_VERSION = 6;
 
 /**
  * Floor for the interpolation-delay slider, DERIVED from the snapshot rate.
@@ -223,6 +231,7 @@ export const DEFAULT_SETTINGS: Settings = {
   graphics: { ...DEFAULT_GRAPHICS },
   network: { ...DEFAULT_NETWORK },
   ui: { ...DEFAULT_UI },
+  input: { ...DEFAULT_INPUT_GUARD },
 };
 
 /** localStorage key for the persisted settings blob. */
@@ -326,6 +335,10 @@ export function migrateSettings(raw: unknown, opts: { touch?: boolean } = {}): S
     graphics: clampGraphics({ ...defaultGraphicsFor(touch), ...gg }),
     network: clampNetwork({ ...DEFAULT_NETWORK, ...n }),
     ui: clampUi({ ...DEFAULT_UI, ...((obj.ui ?? {}) as Partial<UiSettings>) }),
+    // v5 → v6: 多了 `input`（誤觸防護）。跟 v4→v5 一樣沒有資料要搬 —— 舊 blob
+    // 沒有這一格，落在 `DEFAULT_INPUT_GUARD`。⚠️ 而那組預設**改變了行為**
+    // （右鍵選單在 HUD 上不再跳出來），那是 owner 明確要的，不是回歸。
+    input: { ...DEFAULT_INPUT_GUARD, ...((obj.input ?? {}) as Partial<InputGuardConfig>) },
   };
 }
 
@@ -344,5 +357,6 @@ export function cloneSettings(s: Settings): Settings {
     graphics: { ...s.graphics },
     network: { ...s.network },
     ui: { ...s.ui },
+    input: { ...s.input },
   };
 }
