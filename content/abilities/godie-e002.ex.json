@@ -62,7 +62,7 @@
                     "width": 2.0,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false,
+                    "includeOrigin": true,
                     "resourcePct": {
                       "subject": "self",
                       "resource": "mana",

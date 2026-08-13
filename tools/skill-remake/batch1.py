@@ -409,7 +409,18 @@ def line(dtype="magic", length=8.0, width=1.6, maxt=None, aim="target",
         o["maxTargets"] = maxt
     if onhit:
         o["onHitTargets"] = list(onhit)
-    o["includeOrigin"] = False
+    # ⭐ 2026-08-13 —— 這裡**不再**無條件寫 `includeOrigin = False`。
+    #    那一行是產生器層級的缺陷：7 個 `line()` 呼叫點全部拿到「排除觸發者」，
+    #    而其中 5 支是 ground 的「[前方][直線]」技（20-03 / 59-04 / 15-01 / 79-03 / 80-03）
+    #    —— 它們的 `ctx.targets` 是 `abilitySystem.ts:266` 用落點圈查出來的**敵人本人**，
+    #    於是 `damageLine.ts` 的 `skip = new Set(ctx.targets)` 把瞄準的那個人整個跳過：
+    #    **瞄得越準打得越少**（點在敵人身上 0 傷害、點在他旁邊一點吃滿）。
+    # ⛔ 修法不是「在第 N 列加一個參數」，是**位置**（同 A-8）：交給 `_own_area()` 走一次
+    #    —— 技能自己發動的（`doc["effects"]` 樹）→ True；passive/hooks 底下的
+    #    （92-02 消化液那種「被打到才往前掃」的真擴散）→ 不寫 ⇒ schema 預設 false
+    #    ⇒ 行為逐字不變（`includeOrigin` 是 optional，sim 讀的是 `=== true`）。
+    # ⚠️ 住在 `doc["passive"]` 裡而**又該**含觸發者的（20-002 的最後一發）walker 走不到，
+    #    那一支在呼叫點用 `dict(line(...), includeOrigin=True)` 明填（setdefault 讓明填贏）。
     if rp:
         o["resourcePct"] = rp
     return o
@@ -482,7 +493,12 @@ def _own_area(node):
         for v in node:
             _own_area(v)
     elif isinstance(node, dict):
-        if node.get("kind") == "damageArea":
+        # ⭐ 2026-08-13 —— `damageLine` 一起走這條規則（原本只有 `damageArea`）。
+        #    兩個 kind 在 sim 裡是**同一個機制的兩個形狀**：`damageArea.ts:52` 與
+        #    `damageLine.ts:128` 是逐字相同的那一行
+        #    `includeOrigin === true ? null : new Set(ctx.targets)`。
+        #    只修一半 = 5 支「[前方][直線]」ground 技繼續把瞄準的那個人跳過。
+        if node.get("kind") in ("damageArea", "damageLine"):
             node.setdefault("includeOrigin", True)   # setdefault：手填的特例仍然贏
         for k, v in node.items():
             # ⛔ 不要走進 hooks/passive/marks/onHitTargets/onHit —— 那底下的
@@ -1027,17 +1043,29 @@ A("20-00", "20-00 銀色甲胄", "self", [0], [0], 0,
       {"block": {"damageTypes": ["magic"], "chance": 0.3, "fraction": 1.0}}]})
 
 A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
-  "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
+  "[主動][切換][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
   # ⛔ effects 不放 buff：切換沒有時鐘，600 秒是猜的（zAbilityToggle 的①號理由
   #    逐字寫著這個坑）。開著期間的暴擊改由 passive 的**形態閘**表達。
   #    身體交換由 A-1 的規則自己插進 effects[0]。
   effects=[],
   toggle={
-      # 「開啟時[每次攻擊][消耗]MP30/50/70/90」今天由下面 passive hook 的
-      # spendMana 出帳 —— 那是 windOrbAndFormBuffs 逐 tick 量的那一條路
-      #（「那一刀正好花了 30 點法力」）。⚠️ 兩邊都收就是每刀 60，所以這裡是 none。
-      "upkeepCadence": "none",
-      "upkeepCost": [0],
+      # ⭐ 2026-08-13 —— 「開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉」
+      #    整句搬回 toggle 自己身上。
+      # ⚠️ 之前這裡是 `"none"` + `[0]`，扣款掛在下面 passive hook 的 `spendMana` 上，
+      #    而 `toggleUpkeepSystem` 的第一道閘就是
+      #    `if (!tg || tg.upkeepCadence === "none") continue;` ⇒ 整段被 continue 掉。
+      #    `exitToggle(world, id, slot, "resourceEmpty")` 是**全專案唯一**會自動關閉的
+      #    那一行 ⇒ 「[MP]不足則自動關閉」在出貨版本裡**一次都不會發生**：魔力見底之後
+      #    hook 的條件只是安靜地不再扣款，結界永遠開著、100% 暴擊、1.4~2.0 倍傷害
+      #    一路吃到底，而「關閉時的風王鐵槌」也永遠不會自己觸發（只剩手動按第二次）。
+      # ⭐ `perAttack` 的依據是「揮出」不是「打中」（`toggle.ts` 檔頭）—— 規格寫的正是
+      #    「每次**攻擊**」，而 `basicAttack` 事件在迴避／失手判定之前發射。
+      # ⚠️ `exitOnResourceEmpty` 刻意不填 —— 省略即 true，正好是規格那一句；
+      #    填 false 才是「付不出來就免費繼續開著」的另一種設計（第一守則：它是一格）。
+      # ⚠️ 這四個數字與下面 hook 那條 `mp >= cost` 的 `cost` 是**同一組**，
+      #    只調一邊就會變成「扣得起但不刮風」或「刮了風卻扣不到錢」，兩種都靜默。
+      "upkeepCadence": "perAttack",
+      "upkeepCost": [30, 50, 70, 90],
       # ⭐ 20-01 需要 toggle 區塊的**真正**理由：castAbility 把「第二次按下＝關閉」
       #    排在**冷卻閘之前**（abilitySystem.ts，那段註解逐字用 20-01 的
       #    60 秒解釋這個順序）。所以 60 秒冷卻不會把按鈕鎖住，而關閉的身體交換
@@ -1054,7 +1082,16 @@ A("20-01", "20-01 風王結界", "self", [60, 60, 60, 60], [50, 100, 150, 200], 
            {"on": "onBasicAttack", "target": "event",
             "condition": {"kind": "stat", "subject": "self", "stat": "mp",
                           "mode": "absolute", "op": ">=", "value": cost},
-            "effects": [{"kind": "spendMana", "amount": amt(flat=cost), "applyTo": "self"},
+            # ⭐ 2026-08-13 —— `spendMana` 從這條 hook 拿掉了：「每次攻擊消耗 MP」
+            #    現在由上面 `toggle.upkeepCadence: "perAttack"` 出帳。
+            #    ⛔ 兩邊都收就是每刀扣兩次（30 → 60）。
+            # ⭐ 上面那條 `condition {mp >= cost}` **刻意留著**，但它的角色換了：
+            #    不再是「有錢才扣款」，而是「付不出來的那一刀不刮風」。
+            #    ⚠️ 拿掉它會多出一發免費法球 —— `basicAttackSystem`（法球在這裡發）
+            #      排在 `toggleUpkeepSystem`（那一刀才發現付不出來 → 自動關閉）**之前**，
+            #      所以觸發自動關閉的那一刀會白拿一次法球，
+            #      而 `windOrbAndFormBuffs.test.ts`「法力不足 30 時法球不觸發」會紅。
+            "effects": [
                         # ⚠️ 這一發是 A-5 的那一半：法球傷害 10 + 50% [AD] 是
                         #    出貨檔既有的機制，規格沒點名所以重製稿把它丟了。
                         #    windOrbAndFormBuffs 用**比值**釘死這兩個係數。
@@ -1099,9 +1136,20 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
          #    而「有傷害」跟「傷害少一半」在畫面上長得一模一樣（失敗形態②）。
          #    `resourcePct{subject:"self", resource:"mana", basis:"current"}`
          #    就是「我現在有多少魔力」，係數 7 = 規格的 ×7 倍。
-         "finalEffects": [line("magic", length=14, width=2.0, ap=7.0,
-                               res_pct={"subject": "self", "resource": "mana",
-                                        "basis": "current", "perRank": [7.0]})]}]}]}]})
+         "finalEffects": [dict(line("magic", length=14, width=2.0, ap=7.0,
+                                    res_pct={"subject": "self", "resource": "mana",
+                                             "basis": "current", "perRank": [7.0]}),
+                               # ⭐ `includeOrigin` 明填 True —— 這一發**必須**打到被反彈
+                               #    的那個人。這條 hook 是 onReflectSuccess + target:"event"，
+                               #    `delayed` 排程那一刻凍住的名單裡**只有他一個**，而
+                               #    `damageLine.ts:128` 的
+                               #    `skip = includeOrigin===true ? null : new Set(ctx.targets)`
+                               #    正好把他排除 ⇒ 1v1 決鬥區裡**全技能最大的那一發**
+                               #    （現存魔力×7 + AP×7）一滴血都不扣，七刀照跳字、
+                               #    完全不報錯（失敗形態②）。
+                               # ⛔ 這裡要明填而不是靠 `_own_area()` 的規則：那支 walker
+                               #    只走 `doc["effects"]`，這一發住在 `doc["passive"]` 底下。
+                               includeOrigin=True)]}]}]}]})
 
 # ── 59 初號機 ────────────────────────────────────────────────────────────────
 A("59-00", "59-00 暴走", "self", [150], [0], 0,
@@ -1405,6 +1453,15 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
   radiusTier="大",
   effects=[area("magic", tier="大", per=[250, 350, 450, 550]),
            status("burn", 3.0),
+           # ⚙️ 引擎缺機制（2026-08-13 量到，⛔ 這裡**不改行為**，只留紙本痕跡）：
+           #    規格寫的是「每秒受到**當下**[現存生命] 1% 的傷害」，但 `dot.ts:191` 在
+           #    **施加的那一刻**就把 `resourcePct` 解算掉、折進 `DotInstance.amountPerTick`
+           #    （該處註解逐字寫「在這裡就凍住」），`dotTick.ts` 從頭到尾只認那個純量、
+           #    不再讀受害者的血 ⇒ 三跳付的都是「中招那一瞬間的 1%」。
+           #    滿血中招 → 三跳都照滿血收；殘血中招 → 燃燒形同不存在。
+           #    修法是引擎加一格 `dot.resourcePctPhase: "onApply" | "onTick"`
+           #    （預設 onApply ＝今天的行為；第一守則：決策點變欄位），
+           #    ⛔ 今天沒有任何欄位能要它每 tick 重算，所以這一列**不動**。
            {"kind": "dot", "damageType": "magic", "amountPerTick": amt(flat=1),
             "resourcePct": {"subject": "target", "resource": "health", "basis": "current",
                             "scale": "ratio", "perRank": [0.01]},
@@ -1425,8 +1482,32 @@ A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
   "[主動][指向][範圍][衝刺][AP加成]\n45秒冷卻，吟唱2秒\n消耗MP120/185/250/315\n施法距離12.83\n有效半徑6\n\n「千鳥・雷切」\n將查克拉集中在手上，以高速[直線][衝刺]，對沿途[周圍]敵人造成400/500/600/700+100% [AP]點傷害。",
   cast_time=2.0,
+  # ⭐ 頂層 `radiusTier` 從「借」改成「明填」。原本 `_ground_radius()` 是從 effects 樹裡
+  #    第一顆 `damageArea` 借 "大" 上來的，而下面那顆被換成 `damageLine` 之後就借不到了
+  #    ⇒ `def.radius` 退回 1 ⇒ 落點圈 0.8 ⇒ `onAbilityHit` 幾乎不發 ⇒ 45-04【哥哥】
+  #    的麒麟連帶失效（它掛在 `abilitySlot: "E"` 的 `onAbilityHit` 上）。
+  #    ⛔ 這一行不是裝飾 —— 拿掉會**靜默弄壞另一支技能**。
+  radiusTier="大",
+  # ⭐「對**沿途**[周圍]敵人造成…」——【衝刺】的傷害形狀是**線**，不是圓。
+  # ⚠️ 原本 `damageArea` 與 `dash` 是**兄弟節點**：effects 在 CastResolveSystem（step 2b/3）
+  #    就跑完，位移要到 MovementSystem（step 5）之後好幾個 tick 才發生 ⇒ `areaCentre()`
+  #    退回 `ctx.point` ＝ 12.83 單位外的落點，於是「沿途」變成「在終點開場先炸一個圓」：
+  #    貼在佐助臉上的敵人（起點 0~6.8 那一段，超過一半的衝刺距離）一滴血都不掉，
+  #    而爆炸在他還沒起步時就先在遠處亮起來。
+  # ⭐ 改成從施法者身上往前掃的膠囊：`length` = 衝刺距離 12.83、
+  #    `width` = 規格「有效半徑 6」的**直徑** 12.0（膠囊吃的是寬度不是半徑）。
+  #    `aim="facing"` —— ground 技的 facing 在 `castAbility` 就被 `armFacingLock` 鎖成
+  #    「自己 → 落點」，鎖的長度 = 吟唱 2 秒，所以結算那一刻它正好是衝刺方向。
+  #    ⛔ 不用預設的 `aim="target"`：那條線會穿過 `ctx.targets[0]`（落點圈裡的第一個人），
+  #      沒有人時才退回 facing —— 同一支技能的線會因為場上有沒有人而換方向。
+  #    ⭐ `includeOrigin` 由 `_own_area()` 補 True（cast scope），所以落點圈裡那個人
+  #      也吃得到 —— 這正是 20-03 那個「瞄得越準打得越少」的同一個缺陷。
+  # ⚠️ 已知取捨：`damageLine` **沒有** `radiusTier` 這一格（schema 是 `.strict()`），
+  #    所以 12.0 這個寬度不再受 `config.aoe-tiers@1` 調整。要補是引擎側加一格
+  #    寬度級距，⛔ 不是在這裡自己發明一個欄位。
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 12.83},
-           area("magic", tier="大", per=[400, 500, 600, 700], ap=1.0)])
+           line("magic", length=12.83, width=12.0, aim="facing",
+                per=[400, 500, 600, 700], ap=1.0)])
 
 A("45-04", "45-04 哥哥", "self", [0], [0], 0,
   "[被動][技能命中時][身上有某狀態時][範圍][AP加成]\n0秒冷卻\n有效半徑3.67\n\n「我愚蠢的弟弟啊！憎恨吧！」\n當「千鳥」命中帶有[燃燒]標記的敵人時引發忍術「麒麟」雷電大爆炸，對目標[周圍][小範圍]敵人造成400/700/1000+ 300% [AP] 傷害。",
@@ -1434,7 +1515,23 @@ A("45-04", "45-04 哥哥", "self", [0], [0], 0,
   passive={"name": "45-04 哥哥", "ranks": [
       {"hooks": [{"on": "onAbilityHit", "abilitySlot": "E", "target": "event",
                   "condition": {"kind": "status", "subject": "target", "tag": "burn"},
-                  "effects": [area("magic", tier="小", flat=v, ap=3.0)]}]}
+                  "effects": [dict(area("magic", tier="小", flat=v, ap=3.0),
+                                   # ⭐「引發忍術『麒麟』雷電大爆炸，對**目標**[周圍]
+                                   #    [小範圍]敵人造成…」—— 中了[燃燒]的那個目標**自己**
+                                   #    就是這一發的主要受害者，⛔ 不是被排除的那一個。
+                                   #    hook 的 target:"event" ⇒ ctx.targets = [他]，
+                                   #    而 `damageArea.ts:52` 的
+                                   #    `epicentre = includeOrigin===true ? null
+                                   #                 : new Set(ctx.targets)`
+                                   #    在缺席時把圓心那個人整個跳過 ⇒ 單挑（或他身邊
+                                   #    3 單位內沒有第二個敵人）時**這支大絕整個打 0**：
+                                   #    千鳥命中、燃燒還在、麒麟的特效與音效都播，血條不動。
+                                   # ⛔ 這裡用 `dict(...)` 明填，⛔ 不動 `_own_area()` 的規則
+                                   #    —— 那條規則刻意不走進 passive/hooks，因為那裡的
+                                   #    `damageArea` 多半是**真的濺射**（震央已經吃過觸發
+                                   #    那一擊，例：92-02 消化液）。45-04 不是濺射，
+                                   #    它是規格明寫的獨立大爆炸。
+                                   includeOrigin=True)]}]}
       for v in (400, 700, 1000)]})
 
 A("45-002", "45-002 天照", "self", [120], [650], 0,
@@ -1490,12 +1587,23 @@ A("13-04", "13-04 龍星群", "ground", [120, 120, 120], [150, 200, 250], 12,
             "effects": [area("magic", tier="小", per=[150, 200, 250], ap=0.4)]}])
 
 A("13-002", "13-002 絕。暗殺奧義", "self", [0], [0], 0,
-  "[被動][技能命中時][身上有某狀態時][機率][處決]\n\n對於[致盲]狀態的敵人施展 [龍頭戲畫。牙突] 時，有20%機會摘除心臟，造成額外40%目標[最大生命]傷害。",
+  "[被動][技能命中時][身上有某狀態時][機率]\n\n對於[致盲]狀態的敵人施展 [龍頭戲畫。牙突] 時，有20%機會摘除心臟，造成額外40%目標[最大生命]傷害。",
   passive={"name": "13-002 絕。暗殺奧義", "ranks": [{"hooks": [
       {"on": "onAbilityHit", "abilitySlot": "W", "chance": 0.2, "target": "event",
        "condition": {"kind": "status", "subject": "target", "statusId": "blind"},
-       "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [0.4],
-                    "victim": "champion", "throughShields": True}]}]}]})
+       # ⭐ 內文是「造成**額外 40% 目標最大生命傷害**」，所以它是一發傷害，⛔ 不是處決。
+       #    第〇·六守則細則①：內文 > 方括號標籤 —— 標頭那個 [處決] 要跟著內文被修正。
+       # ⛔ `devour` 是處決線：`sim/effects/devour.ts:80` 逐字是
+       #    `if (hp.hp > hp.maxHp * pct) continue;` ⇒ 目標血量高於 40% 就**一點傷害都不打**，
+       #    低於門檻時打的是「剛好致死量」而不是 40% 最大生命 ⇒ 規格那一句只在血量剛好
+       #    等於 40% 的那一個點上湊巧成立（失敗形態②）。
+       #    它還附帶兩筆規格沒有的副作用：`healPct` 預設 1（吞多少回多少）、
+       #    `victim:"champion"`（對殭屍無效，而第 3 回合之後場上大多是殭屍）。
+       # ⚠️ 一樣走 `res_pct=`（先例 60-00「[普通攻擊時]造成額外 3%[最大生命]傷害」）：
+       #    subject="target" 的 ratio 上界是 1，0.4 在界內，⛔ 不需要動任何引擎上界。
+       "effects": [dmg("magic", flat=0,
+                       res_pct={"subject": "target", "resource": "health",
+                                "basis": "max", "perRank": [0.4]})]}]}]})
 
 # ⭐ S1 涅吉三支形態技的**共用模板**（第零守則⑨：N 個同型 = K 個模板 + 一張表）
 #
@@ -1767,7 +1875,11 @@ A("12-01", "12-01 鬥仙術", "targeted", [12, 12, 12, 12], [30, 57, 83, 90], 4,
 A("12-02", "12-02 仙氣．採藥", "self", [60, 60, 60, 60], [50, 100, 150, 200], 0,
   "[主動][輔助][治療][淨化]\n60秒冷卻，吟唱3秒\n消耗MP50/100/150/200\n\n「OGC 身體好」\n利用身體小周天循環[治療]自己[回復] 5/7/9/11%[最大生命]，並且除去身上任何附加法術狀態([淨化])。",
   cast_time=3.0,
-  effects=[{"kind": "restore", "healthPct": 0.05, "applyTo": "self"},
+  # ⭐ 逐階回血 —— `restore.healthPct` 是 `zRankScalar`（effect.ts:2204），四欄陣列收得下，
+  #    而 `sim/effects/restore.ts` 開頭就是 `rankScalar(e.healthPct, ctx.rank)` 逐階解算。
+  #    ⛔ 填**單一純量** = 2/3/4 階根本沒有第二、三、四欄可讀 ⇒ 面板寫 11%、場上永遠回 5%
+  #    （失敗形態②：算出來了但玩家拿不到）。規格逐字是 5/7/9/11%。
+  effects=[{"kind": "restore", "healthPct": [0.05, 0.07, 0.09, 0.11], "applyTo": "self"},
            {"kind": "dispel", "shape": "single", "pools": {"status": True, "dot": True, "buffs": True}, "count": 9}])
 
 A("12-03", "12-03 破凰之心。空破山", "self", [0], [0], 0,
@@ -1784,7 +1896,18 @@ A("12-04", "12-04 龍氣爆發", "self", [60, 60, 60], [250, 350, 450], 0,
   "[主動][範圍][淨化][AP加成]\n60秒冷卻，吟唱2秒\n消耗MP250/350/450\n\n「使命創造命運」\n凝聚體內的龍氣造成[周圍][大範圍]敵方單位 550/750/950 + 200% [AP] 傷害，附帶[淨化]效果。",
   maxRank=3, cast_time=2.0, radiusTier="大",
   effects=[area("magic", tier="大", per=[550, 750, 950], ap=2.0),
+           # ⭐ 這一圈淨化打的是**敵人**。⛔ 省略 `side` 走的是 `shapeTargets.ts:54` 的
+           #    else 分支 = `alliedChampions` ⇒ 規格寫「敵方單位…附帶[淨化]」，出貨卻是
+           #    把**自己與隊友**身上的正面狀態清掉 2 層（卍解/暴走/狂怒），而傷害正常，
+           #    所以畫面上看不出是這一招做的（失敗形態②）。
+           # ⚠️ `pools` 是**整包取代**不是逐鍵合併（`dispel.ts:37` 的 `e.pools ?? {四個後台預設}`）
+           #    —— 省略它會退回 `config.dispel@1` 的 `defaultPoolBuffs: false`，而
+           #    `polarity:"buff"` 要拔的敵方增益正住在 buffs 那一池 ⇒ 兩道閘相乘為零。
+           #    dot / shields 刻意不填（＝關）：那兩池是減益與護盾，`polarity:"buff"` 本來就選不到它們。
+           # ⚠️ buffs 那一池後面還有第二道閘：`buffDefaultDispellable: false`，
+           #    所以只拔得到來源自己標了 `dispellable: true` 的增益 —— 那是後台的決策，⛔ 不在這裡繞過。
            {"kind": "dispel", "shape": "circle", "radius": 6.0, "radiusTier": "大",
+            "side": "enemies", "pools": {"status": True, "buffs": True},
             "polarity": "buff", "count": 2}])
 
 A("12-002", "12-002 仙氣發勁", "targeted", [30], [600], 2,
@@ -2056,18 +2179,60 @@ A("80-01", "80-01 天下無雙", "self", [0], [0], 0,
 A("80-02", "80-02 弒鬼神", "self", [60, 60, 60, 60], [90, 180, 270, 360], 0,
   "[主動][範圍]\n60秒冷卻\n消耗MP90/180/270/360\n\n「鬼神都殺了，剩下的只是血條」\n造成[周圍][範圍]敵方部隊 120/220/320/420 傷害，並 [擊退]及造成敵人 [破甲]，持續1秒。",
   radiusTier="中",
-  effects=[area("physical", tier="中", per=[120, 220, 320, 420]),
-           {"kind": "knockback", "distance": 2.5, "speed": 15.0, "from": "caster"},
-           status("armor-break", 1.0)])
+  # ⭐【破甲】的**數值**那一半（形狀逐字比照 79-01 / 92-02 的【破魔】）。
+  #    `armor-break` 在引擎裡是**純標記**：`status-effect@1` 只有 name/description/
+  #    iconKey/polarity/tags，**沒有 modifiers**，而 `content/status-effects/
+  #    armor-break.json` 自己的說明就寫著「防禦掉多少、掉多久，寫在施加它的
+  #    那張卡上」—— 而這張卡上沒有。⇒ 敵人頭上亮圖示、80-03 的條件葉也讀得到，
+  #    但他吃到的物理傷害一點都沒變（失敗形態②）。
+  # ⛔ 這三顆一定要住在 `onhit=` 裡，⛔ 不可以當兄弟節點：`applyBuff` 不在
+  #    `_PAYLOAD_KINDS`，`_fold_onhit` 折不到它，而 80-02 是 castType:"self"
+  #    ⇒ ctx.targets 是**呂布自己**，破甲會扣在施法者身上。knockback 與
+  #    applyStatus 本來會被折進來，這裡一併寫明：同一個容器、同一群受害者。
+  effects=[area("physical", tier="中", per=[120, 220, 320, 420],
+                onhit=[{"kind": "knockback", "distance": 2.5, "speed": 15.0,
+                        "from": "caster"},
+                       # ⛔ 標記留在 applyStatus：快照的 statusIds 只讀
+                       #    world.status，換成 applyBuff.statusId 會讓受害者
+                       #    HUD 的圖示整個消失（同 92-02 的註解）。
+                       status("armor-break", 1.0),
+                       # ⚠️ -1.0 ＝ 護甲**歸零**，逐字比照 owner 2026-08-13 對
+                       #    【破魔】的裁決（79-01 / 92-02 都是 mr pctAdd -1.0）。
+                       #    ⛔ 破甲這個數字 owner **還沒**裁決過 —— 它是一格 JSON
+                       #    數值（第一守則：可調），要 30% 就把 -1.0 改成 -0.3，
+                       #    不用動任何程式。持續 1 秒逐字照規格。
+                       buff([M("armor", "pctAdd", -1.0)], 1.0,
+                            dispellable=True, polarity="debuff")])])
 
 A("80-03", "80-03 鬼神烈戟", "ground", [60, 60, 60, 60], [150, 200, 250, 300], 10,
   "[主動][指向][範圍][衝刺][AP加成]\n60秒冷卻\n消耗MP150/200/250/300\n有效半徑6\n\n「方天畫戟是中國最早的圓規」\n[衝刺] 一段距離並造成一[直線][範圍] 150/200/250/300 + 30% [AP] 傷害。\n(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)",
+  # ⭐ 規格逐字「有效半徑6」。⛔ 不寫 `radius: 6`（它在 RETIRED 裡 —— owner
+  #    2026-08-11「原則上不寫範圍數字」），走四級距：`config.aoe-tiers@1` 的
+  #    「大」就是 6。
+  # ⚠️ 這一格是 **doc 頂層**的，不是效果樹裡的：`abilitySystem.ts` 對 ground 技
+  #    是用頂層半徑解 `ctx.targets`，缺席就退回 `def.radius ?? 1`（再乘
+  #    combat-env 的 abilityRange 0.6 ⇒ 約 0.6 單位的小圈）。`_ground_radius()`
+  #    幫不上忙 —— 它只從效果樹第一顆自發 damageArea 借，而 80-03 是**線**
+  #    （它自己的註解就寫著「線與跳躍本來就沒有圓」）。
+  # ⚠️ #152 的地板虛線預告與技能面板讀的也是這一格，缺席時畫出來的圈是錯的。
+  radiusTier="大",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 10.0},
-           line("magic", length=10, width=2.0, per=[150, 200, 250, 300], ap=0.3)],
-  passive={"name": "80-03 鬼神烈戟", "ranks": [{"hooks": [
-      {"on": "onAbilityHit", "abilitySlot": "E", "target": "event",
-       "condition": {"kind": "status", "subject": "target", "statusId": "armor-break"},
-       "effects": [dmg("magic", ap=1.0)]}]}]})
+           # ⭐ B3-C1 —— 「(若對方在 [破甲] 狀態，則額外造成 100% [AP] 傷害)」
+           #    住在**這條線自己的 onHitTargets** 上，⛔ 不是 onAbilityHit hook。
+           #    `onAbilityHit` 發的是**施法解析**出來的那一組目標
+           #    （abilitySystem.ts / CastResolveSystem.ts），對 ground 技就是落點
+           #    上那個圓；而真正吃到傷害的是 `damageLine` 掃出來的膠囊，
+           #    **damageLine 從不發 onAbilityHit**。⇒ 先 W 破甲再放 E，那 100% AP
+           #    追加幾乎永遠不發，這支技能的整個 combo 賣點看不出來。
+           #    ⭐ 兄弟技 79-03 月牙天衝對**同一句話**用的就是這個形狀，產生器
+           #    在那一列把規則寫下來了（「79-03 是線，hook 收不到線上的每一個
+           #    人，所以走 onHitTargets」）—— 80-03 當時沒有跟著改。
+           # ⛔ 兩條路不可以並存：留著 hook 又加 onHitTargets ＝ 站在落點圈裡的
+           #    破甲敵人吃兩份追加。所以整個 passive 區塊在這裡退場。
+           line("magic", length=10, width=2.0, per=[150, 200, 250, 300], ap=0.3,
+                onhit=[dict(dmg("magic", ap=1.0),
+                            condition={"kind": "status", "subject": "target",
+                                       "statusId": "armor-break"})])])
 
 A("80-04", "80-04 赤兔咆哮", "self", [90, 90, 90], [250, 400, 550], 0,
   "[主動][輔助][機率][普攻時]\n90秒冷卻\n消耗MP250/400/550\n\n「赤兔不是交通工具，是交通事故」\n[AP] 與 [AD] 暫時提升至 150/200/250%，[攻擊時]與 [受傷時] 都有 20%[機率]使出弒鬼神反擊，持續 8秒。",
@@ -2077,17 +2242,32 @@ A("80-04", "80-04 赤兔咆哮", "self", [90, 90, 90], [250, 400, 550], 0,
   #    整整多一倍。`pctMult v` 給的是 ×(1+v)，所以 150/200/250% → v = 0.5/1.0/1.5。
   #    ⚠️ 判準在字面上，不在我腦裡：「提升 X%」＝ pctAdd（加成）、
   #    「提升**至** X%」＝ pctMult（取代成 X 倍）。閘在 `_set_semantics_gate()`。
+  # ⭐ 「持續 8秒」管的是**三件事**：AP、AD、以及那兩條 20% 的弒鬼神反擊。
+  #    ⛔ 反擊不可以住在 `passive` 裡：`abilityPassives.ts::rankBlock` 只要
+  #    `rank > 0` 就把整塊掛上去，再由 `syncAbilityPassives` **常駐** ——
+  #    R 點了一點之後整場都在噴弒鬼神（＝這支英雄常駐一個 20% 的 AoE proc），
+  #    而那 8 秒只活在 applyBuff 的 expiresAtTick 上、只管 AP/AD。
+  #    ⭐ `applyBuff.hooks` 正是引擎替這件事開的那一格（effect.ts 逐字：
+  #    「the first way to attach one with a DEADLINE… a proc granted here
+  #    cannot outlive the buff that granted it」）—— 到期由這份 buff 自己的
+  #    `expiresAtTick` 管，`fireHooks` 走 `src.hooks` 並跳過過期來源。
+  #    ⛔ 不要改用「發一個 statusId 再讓 hook 去問」：那要多一份
+  #    content/status-effects 文件，而且變成兩本會各自腐爛的帳（G10 的教訓）。
+  # ⚠️ `perRank` 只覆寫 modifiers / duration，`hooks` 留在頂層 ⇒ 三階共用。
+  #    這是對的：規格的 20% 與 8 秒都沒有逐階。
   effects=[buff([M("ap", "pctMult", 0.5), M("ad", "pctMult", 0.5)], 8.0,
+                hooks=[
+                    {"on": "onBasicAttack", "chance": 0.2, "target": "self",
+                     "internalCooldown": 0.5,
+                     "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
+                                  "payCosts": "none", "respectCooldown": False}]},
+                    {"on": "onDamageTaken", "chance": 0.2, "target": "self",
+                     "internalCooldown": 0.5,
+                     "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
+                                  "payCosts": "none", "respectCooldown": False}]}],
                 perRank=[{"modifiers": [M("ap", "pctMult", v), M("ad", "pctMult", v)],
                           "duration": 8.0}
-                         for v in (0.5, 1.0, 1.5)])],
-  passive={"name": "80-04 赤兔咆哮", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "chance": 0.2, "target": "self", "internalCooldown": 0.5,
-       "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
-                    "payCosts": "none", "respectCooldown": False}]},
-      {"on": "onDamageTaken", "chance": 0.2, "target": "self", "internalCooldown": 0.5,
-       "effects": [{"kind": "proxyCast", "shape": "single", "slot": "W",
-                    "payCosts": "none", "respectCooldown": False}]}]}]})
+                         for v in (0.5, 1.0, 1.5)])])
 
 A("80-002", "80-002 戰無不勝", "self", [0], [0], 0,
   "[被動]\n\n「只要一直贏，就沒有平衡問題」\n提升 [攻擊速度上限]至10、[吸血] 50%，並但 [防禦][魔抗] 降低 50%。",
@@ -2343,9 +2523,30 @@ A("92-03", "92-03 狂草泥馬", "self", [0], [0], 0,
                                 "mode": "percent", "op": "<=", "value": 0.3},
                   "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [t],
                                "victim": "any", "throughShields": True,
-                               "onDevour": [{"kind": "grantAttribute", "attr": "int",
-                                             "amount": 1, "mode": "flat",
-                                             "maxAttribute": 200}]}]}]}
+                               # ⭐ 規格逐字「並且永久增加1點 [AP]」。
+                               # ⛔ 不是 `grantAttribute attr:"int"`：`int` 是**三圍**，
+                               #    `sim/stats/attributes.ts` 把它同時餵給
+                               #    AbilityPower(×6.5)、MaxMana、ManaRegen、MagicResist
+                               #    ⇒ 一次吞噬實得約 6.5 AP 外加三條沒寫在卡上的加成，
+                               #    而卡片上寫 1（面板與說明對不上，後期強度 6.5 倍）。
+                               # ⛔ 而且**收件人是錯的**：`grantAttribute` 走
+                               #    `for (const id of ctx.targets)`，而 devour 是
+                               #    `runEffects(onDevour, {targets:[victim]})`
+                               #    ⇒ 那 1 點三圍加在**被吞掉的敵人**身上，草泥馬
+                               #    一點都沒拿到。`grantAttribute` 沒有 `applyTo`，
+                               #    所以那條路在 devour 底下本來就走不通。
+                               # ⭐ `applyBuff` + `applyTo:"self"` 一次修好兩件事：
+                               #    給的是 AP、給的是施法者。
+                               # ⚠️ 上限 200 是從退場的 `maxAttribute: 200` 帶過來的
+                               #    同一個數字（一格 JSON 數值，第一守則：可調）；
+                               #    `basis:"thisSource"` ＝「這份增益自己最多加 200
+                               #    AP」，它需要 stackKey（refineApplyBuff 會擋），
+                               #    而 stackKey 也順便讓 N 次吞噬共用一份來源。
+                               "onDevour": [buff([M("ap", "flat", 1.0)],
+                                                 permanent=True, applyTo="self",
+                                                 maxStat={"stat": "ap", "value": 200.0,
+                                                          "basis": "thisSource"},
+                                                 stackKey="caonima-devour-ap")]}]}]}
       for t in (0.03, 0.04, 0.05, 0.06)]})
 
 A("92-04", "92-04 馬勒戈壁", "self", [90, 90, 90], [300, 420, 540], 0,

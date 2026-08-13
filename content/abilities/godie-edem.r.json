@@ -42,7 +42,8 @@
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小"
+                "radiusTier": "小",
+                "includeOrigin": true
               }
             ],
             "condition": {
@@ -73,7 +74,8 @@
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小"
+                "radiusTier": "小",
+                "includeOrigin": true
               }
             ],
             "condition": {
@@ -104,7 +106,8 @@
                   ]
                 },
                 "radius": 3.0,
-                "radiusTier": "小"
+                "radiusTier": "小",
+                "includeOrigin": true
               }
             ],
             "condition": {

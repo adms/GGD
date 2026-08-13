@@ -362,7 +362,7 @@
           "width": 2.2,
           "aim": "target",
           "fromCaster": true,
-          "includeOrigin": false
+          "includeOrigin": true
         },
         {
           "kind": "spawnProjectile",

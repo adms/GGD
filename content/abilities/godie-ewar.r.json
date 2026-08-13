@@ -46,6 +46,11 @@
       "shape": "circle",
       "radius": 6.0,
       "radiusTier": "大",
+      "side": "enemies",
+      "pools": {
+        "status": true,
+        "buffs": true
+      },
       "polarity": "buff",
       "count": 2
     }

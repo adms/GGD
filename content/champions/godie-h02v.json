@@ -204,11 +204,22 @@
                     "throughShields": true,
                     "onDevour": [
                       {
-                        "kind": "grantAttribute",
-                        "attr": "int",
-                        "amount": 1,
-                        "mode": "flat",
-                        "maxAttribute": 200
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "ap",
+                            "op": "flat",
+                            "value": 1.0
+                          }
+                        ],
+                        "permanent": true,
+                        "applyTo": "self",
+                        "maxStat": {
+                          "stat": "ap",
+                          "value": 200.0,
+                          "basis": "thisSource"
+                        },
+                        "stackKey": "caonima-devour-ap"
                       }
                     ]
                   }
@@ -240,11 +251,22 @@
                     "throughShields": true,
                     "onDevour": [
                       {
-                        "kind": "grantAttribute",
-                        "attr": "int",
-                        "amount": 1,
-                        "mode": "flat",
-                        "maxAttribute": 200
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "ap",
+                            "op": "flat",
+                            "value": 1.0
+                          }
+                        ],
+                        "permanent": true,
+                        "applyTo": "self",
+                        "maxStat": {
+                          "stat": "ap",
+                          "value": 200.0,
+                          "basis": "thisSource"
+                        },
+                        "stackKey": "caonima-devour-ap"
                       }
                     ]
                   }
@@ -276,11 +298,22 @@
                     "throughShields": true,
                     "onDevour": [
                       {
-                        "kind": "grantAttribute",
-                        "attr": "int",
-                        "amount": 1,
-                        "mode": "flat",
-                        "maxAttribute": 200
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "ap",
+                            "op": "flat",
+                            "value": 1.0
+                          }
+                        ],
+                        "permanent": true,
+                        "applyTo": "self",
+                        "maxStat": {
+                          "stat": "ap",
+                          "value": 200.0,
+                          "basis": "thisSource"
+                        },
+                        "stackKey": "caonima-devour-ap"
                       }
                     ]
                   }
@@ -312,11 +345,22 @@
                     "throughShields": true,
                     "onDevour": [
                       {
-                        "kind": "grantAttribute",
-                        "attr": "int",
-                        "amount": 1,
-                        "mode": "flat",
-                        "maxAttribute": 200
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "ap",
+                            "op": "flat",
+                            "value": 1.0
+                          }
+                        ],
+                        "permanent": true,
+                        "applyTo": "self",
+                        "maxStat": {
+                          "stat": "ap",
+                          "value": 200.0,
+                          "basis": "thisSource"
+                        },
+                        "stackKey": "caonima-devour-ap"
                       }
                     ]
                   }
@@ -386,7 +430,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false,
                     "onHitTargets": [
                       {
                         "kind": "dot",
@@ -452,7 +495,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false,
                     "onHitTargets": [
                       {
                         "kind": "dot",
@@ -518,7 +560,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false,
                     "onHitTargets": [
                       {
                         "kind": "dot",
@@ -584,7 +625,6 @@
                     "width": 1.8,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false,
                     "onHitTargets": [
                       {
                         "kind": "dot",

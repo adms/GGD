@@ -573,20 +573,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "同 damageArea.onHitTargetsMode —— batch（預設）還是 perTarget。⛔ 兩個 kind 在這一族上必須同名同語意：欄位名一旦分岔，編輯器上長得一樣的兩格就會是兩件事，那是最難查的一種缺陷。",
   },
-  "field:abilities.effects[]#applyBuff.permanent": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S4a —— **永久**。引擎層從第一天就做得到（ModifierSource.expiresAtTick 缺席 = 永久），缺的一直是 authoring 面 —— 於是出貨已經有四份文件用 duration: 99999 假裝永久（godie-o00x.passive / godie-ogrh.passive / godie-zombiex.passive ×2）。⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的永久增益，所以兩格互斥且必填其一。那四份遷移過來時這一筆就該刪掉。",
-  },
   "field:abilities.effects[]#applyBuff.exclusiveOnExisting": {
     status: "landing",
     since: "2026-08-10",
     why: "G5 的另一半：同組已有一份時 replace（預設，抄 shield.onExisting）或 reject。⚠️ 沒有 exclusiveGroup 卻填它 = 載入時錯誤，兩格要一起填。",
-  },
-  "field:abilities.effects[]#applyBuff.maxStat": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S4b —— 「這條加成加到某個絕對值就停」（80-00「上限到 10」）。實測缺陷：同一個 stackKey 疊 21 次 +1 攻擊距離，11 一路長到 32，沒有任何東西攔它。⛔ 既有四格都不是答案：maxStacks 數的是層數（層數→屬性的換算依賴逐英雄不同的基礎值）、ModOp.CapRaise 只把 effectiveCap 抬高（是 max 不是 min，語意相反）、grantAttribute.maxAttribute 只走 attributes 那條路只給三圍、STAT_CLAMPS / config.stat-caps@1 是全域天花板不是「這一份增益的」。⭐ basis 是第一守則的決策點：final（預設＝面板上那個最終值，#125「顯示的就是拿到的」）vs thisSource（只算這份 stackKey 來源自己疊出來的量，需要 stackKey）—— 一個基礎攻擊距離已經 11 的英雄在 final 讀法下永遠疊不上第一層，對某些卡是對的、對某些卡是荒謬的。⚠️ 語意是只 refuse、不回收也不夾取（沿用 grantAttribute.maxAttribute 的既有先例），所以最後一層可能小幅越線。",
   },
   "field:abilities.effects[]#applyBuff.modifiers[].scopeSlot": {
     status: "landing",
@@ -2126,14 +2116,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why:
       "同 abilitySlot=EX：過濾器有 13 份客戶，缺的是「天生技造成傷害時」這一種寫法。⚠️ 它不是不可能 —— 天生技照樣打得出傷害（`godie-n00p.passive` 的鞭子就是）" +
       "，只是還沒有一支技能想把觸發條件窄化到天生技那一格。",
-  },
-  "enum:abilities.effects[]#damageLine.aim=facing": {
-    status: "landing",
-    since: "2026-08-12",
-    why:
-      "直線朝哪裡打。⚠️ 這一格與「朝面向」的**行為**不是同一件事：`sim/effects/damageLine.ts` 的 `lineDir` 在 `aim !== \"facing\"` 時先試目標、沒有目標才退回面向，" +
-      "所以面向那一條路每一場都在跑。`\"facing\"` 是**強制忽略目標**的那個選擇，而 12 份直線技（含 4 份自身施放）" +
-      "全部想追著目標打。第一支「不管你站哪、我就是往前劈」的招式出現時，這一筆就該被刪掉。",
   },
   "enum:abilities.effects[]#knockback.from=facing": {
     status: "landing",

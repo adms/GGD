@@ -20,6 +20,7 @@
     300.0
   ],
   "range": 10.0,
+  "radiusTier": "大",
   "targetsEnemies": true,
   "effects": [
     {
@@ -49,42 +50,28 @@
       "width": 2.0,
       "aim": "target",
       "fromCaster": true,
-      "includeOrigin": false
+      "includeOrigin": true,
+      "onHitTargets": [
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "target",
+            "statusId": "armor-break"
+          },
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
-  "passive": {
-    "name": "80-03 鬼神烈戟",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onAbilityHit",
-            "abilitySlot": "E",
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 1.0
-                    }
-                  ]
-                }
-              }
-            ],
-            "condition": {
-              "kind": "status",
-              "subject": "target",
-              "statusId": "armor-break"
-            },
-            "target": "event"
-          }
-        ]
-      }
-    ]
-  },
   "icon": "assets/icons/abilities/godie-h01u.e.webp",
   "vfxKey": "fx.prim.physical.beam",
   "castTimeSec": 0.067

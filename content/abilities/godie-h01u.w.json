@@ -48,6 +48,19 @@
           "kind": "applyStatus",
           "statusId": "armor-break",
           "duration": 1.0
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": -1.0
+            }
+          ],
+          "duration": 1.0,
+          "dispellable": true,
+          "polarity": "debuff"
         }
       ]
     },

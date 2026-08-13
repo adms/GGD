@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "20-01 風王結界",
   "provenance": "owner-spec",
-  "description": "[主動][切換][燒魔][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
+  "description": "[主動][切換][普攻時][魔力耗盡][暴擊][屬性門檻][AP加成][範圍]\n60秒冷卻\n每次[開關]耗[MP] 50/100/150/200\n\n「我不喜歡沒有放假的颱風」\n開啟時[每次攻擊][消耗]MP30/50/70/90，[MP]不足則自動關閉。\n以多層纏繞的風改變光線折射，隱藏劍身與強化劍刃的攻擊力，造成1.4/1.6/1.8/2倍[暴擊]傷害。關閉時，凝聚的風能一次釋放「風王鐵槌」，造成前方圓形[範圍] 120+ 30% [AP]傷害。",
   "slot": "W",
   "castType": "self",
   "maxRank": 4,
@@ -49,13 +49,6 @@
             "on": "onBasicAttack",
             "effects": [
               {
-                "kind": "spendMana",
-                "amount": {
-                  "flat": 30.0
-                },
-                "applyTo": "self"
-              },
-              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -99,13 +92,6 @@
           {
             "on": "onBasicAttack",
             "effects": [
-              {
-                "kind": "spendMana",
-                "amount": {
-                  "flat": 50.0
-                },
-                "applyTo": "self"
-              },
               {
                 "kind": "damage",
                 "damageType": "magic",
@@ -151,13 +137,6 @@
             "on": "onBasicAttack",
             "effects": [
               {
-                "kind": "spendMana",
-                "amount": {
-                  "flat": 70.0
-                },
-                "applyTo": "self"
-              },
-              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -202,13 +181,6 @@
             "on": "onBasicAttack",
             "effects": [
               {
-                "kind": "spendMana",
-                "amount": {
-                  "flat": 90.0
-                },
-                "applyTo": "self"
-              },
-              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -237,9 +209,12 @@
     ]
   },
   "toggle": {
-    "upkeepCadence": "none",
+    "upkeepCadence": "perAttack",
     "upkeepCost": [
-      0
+      30,
+      50,
+      70,
+      90
     ],
     "onExit": [
       {

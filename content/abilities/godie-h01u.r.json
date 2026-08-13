@@ -81,6 +81,38 @@
           ],
           "duration": 8.0
         }
+      ],
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "W",
+              "payCosts": "none",
+              "respectCooldown": false
+            }
+          ],
+          "internalCooldown": 0.5,
+          "chance": 0.2,
+          "target": "self"
+        },
+        {
+          "on": "onDamageTaken",
+          "effects": [
+            {
+              "kind": "proxyCast",
+              "shape": "single",
+              "slot": "W",
+              "payCosts": "none",
+              "respectCooldown": false
+            }
+          ],
+          "internalCooldown": 0.5,
+          "chance": 0.2,
+          "target": "self"
+        }
       ]
     },
     {
@@ -89,45 +121,6 @@
       "onHit": []
     }
   ],
-  "passive": {
-    "name": "80-04 赤兔咆哮",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "effects": [
-              {
-                "kind": "proxyCast",
-                "shape": "single",
-                "slot": "W",
-                "payCosts": "none",
-                "respectCooldown": false
-              }
-            ],
-            "internalCooldown": 0.5,
-            "chance": 0.2,
-            "target": "self"
-          },
-          {
-            "on": "onDamageTaken",
-            "effects": [
-              {
-                "kind": "proxyCast",
-                "shape": "single",
-                "slot": "W",
-                "payCosts": "none",
-                "respectCooldown": false
-              }
-            ],
-            "internalCooldown": 0.5,
-            "chance": 0.2,
-            "target": "self"
-          }
-        ]
-      }
-    ]
-  },
   "icon": "assets/icons/abilities/godie-h01u.r.webp",
   "vfxKey": "fx.prim.physical.shockwave-lg",
   "sfxKey": "wc3.defendcaster",

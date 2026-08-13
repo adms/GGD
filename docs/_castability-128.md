@@ -18,8 +18,8 @@
 ## 總計
 
 - **格數**：63 英雄 × 6 槽 = **378**
-- **✅ PASS：226 / 378**（59.8%）　🟣 PASSIVE：29　❌ FAIL：123
-- 把「正確的永久被動」算進可接受行為：**255 / 378**（67.5%）如預期運作，只有 **123** 格是真正的缺口。
+- **✅ PASS：228 / 378**（60.3%）　🟣 PASSIVE：29　❌ FAIL：121
+- 把「正確的永久被動」算進可接受行為：**257 / 378**（68.0%）如預期運作，只有 **121** 格是真正的缺口。
 - 英雄生成失敗：**0**（無）
 
 ## 近戰 vs 遠程（attackType 維度）
@@ -34,10 +34,10 @@
 
 | 頻道 | PASS 格數 |
 | --- | --: |
-| damage | 147 |
+| damage | 150 |
 | buff | 30 |
 | projectile | 18 |
-| dash | 11 |
+| dash | 10 |
 | heal | 8 |
 | status | 6 |
 | championForm | 5 |
@@ -58,12 +58,12 @@
 | 神鳴流劍士 - 櫻綻剎那 | `godie-e00w` | 近 | ✅ | 🟣 | ✅ | ❌ | 🟣 | ✅ |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | 近 | ❌ | ✅ | ❌ | 🟣 | ❌ | ✅ |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | 近 | ✅ | ✅ | ✅ | ❌ | 🟣 | ✅ |
-| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | 遠 | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
 | 奇樂 - 夜神月 | `godie-emns` | 遠 | ❌ | 🟣 | ❌ | ❌ | ❌ | ✅ |
 | 治癒系公主 - 木乃香 | `godie-etyr` | 遠 | ✅ | 🟣 | ✅ | ✅ | 🟣 | ✅ |
 | 龍之子 - 天地志狼 | `godie-ewar` | 近 | ✅ | ❌ | 🟣 | ❌ | ❌ | ✅ |
 | 時空勇者 - 林克 | `godie-h00l` | 近 | ✅ | ✅ | 🟣 | ❌ | 🟣 | ✅ |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| 開外掛的死神 - 黑崎一護 | `godie-h01n` | 近 | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ |
 | 亂世癿王者 - 呂布奉先 | `godie-h01u` | 近 | 🟣 | ✅ | ✅ | ✅ | 🟣 | ✅ |
 | 國寶級的畜生 - 熊貓 | `godie-h02k` | 近 | 🟣 | 🟣 | 🟣 | 🟣 | ✅ | ✅ |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | 近 | ✅ | 🟣 | 🟣 | ❌ | 🟣 | ✅ |
@@ -131,7 +131,6 @@
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 寫輪眼復仇者 - 宇智波佐助 | `godie-edem` | EX | self | 近 | cast accepted but produced no measurable effect (no-op) |
 | 揍敵客大家長 - 揍敵客桀諾 | `godie-efur` | R | ground | 近 | cast accepted but produced no measurable effect (no-op) |
-| 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | Q | ground | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 魔法老師 - 涅吉。史普林。菲爾德 | `godie-emfr` | EX | self | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | Q | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
 | 奇樂 - 夜神月 | `godie-emns` | E | targeted | 遠 | cast accepted but produced no measurable effect (no-op) |
@@ -142,7 +141,6 @@
 | 龍之子 - 天地志狼 | `godie-ewar` | EX | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
 | 時空勇者 - 林克 | `godie-h00l` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | W | targeted | 近 | cast accepted but produced no measurable effect (no-op) |
-| 開外掛的死神 - 黑崎一護 | `godie-h01n` | E | ground | 近 | cast accepted but produced no measurable effect (no-op) |
 | 開外掛的死神 - 黑崎一護 | `godie-h01n` | EX | self | 近 | passive-only but no modifier/hook source attaches (inert) |
 | 看似憂鬱的神獸 - 草泥馬 | `godie-h02v` | R | self | 近 | cast accepted but produced no measurable effect (no-op) |
 | 海克力斯 - Berserker | `godie-hapm` | W | ground | 近 | cast accepted but produced no measurable effect (no-op) |

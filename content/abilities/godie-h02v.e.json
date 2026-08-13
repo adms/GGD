@@ -46,7 +46,6 @@
                 "width": 1.8,
                 "aim": "target",
                 "fromCaster": true,
-                "includeOrigin": false,
                 "onHitTargets": [
                   {
                     "kind": "dot",
@@ -112,7 +111,6 @@
                 "width": 1.8,
                 "aim": "target",
                 "fromCaster": true,
-                "includeOrigin": false,
                 "onHitTargets": [
                   {
                     "kind": "dot",
@@ -178,7 +176,6 @@
                 "width": 1.8,
                 "aim": "target",
                 "fromCaster": true,
-                "includeOrigin": false,
                 "onHitTargets": [
                   {
                     "kind": "dot",
@@ -244,7 +241,6 @@
                 "width": 1.8,
                 "aim": "target",
                 "fromCaster": true,
-                "includeOrigin": false,
                 "onHitTargets": [
                   {
                     "kind": "dot",

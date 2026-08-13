@@ -43,7 +43,7 @@
       "width": 1.6,
       "aim": "target",
       "fromCaster": true,
-      "includeOrigin": false,
+      "includeOrigin": true,
       "onHitTargets": [
         {
           "kind": "applyStatus",
