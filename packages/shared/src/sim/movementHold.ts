@@ -14,6 +14,7 @@
  */
 import type { EntityId } from "../ids";
 import type { SimWorld } from "./SimWorld";
+import { Champions } from "./content/registry";
 
 export interface MovementHold {
   /** 減速的連乘積(1 = 沒被減速)。 */
@@ -54,6 +55,20 @@ export function movementHold(world: SimWorld, id: EntityId): MovementHold {
   // startup already hard-roots, and stacking a second root on every ability
   // press reads as a frozen game. See abilities/abilityRecovery.ts DECISION 2.
   if (abComp?.recovery && abComp.recovery.roots && abComp.recovery.ticksLeft > 0) rooted = true;
+  // ⭐ 70-00【紮根】—— **這具身體本來就不會走**（英雄卡的 `immobile`）。
+  // owner 2026-08-13：「應該是狀態改變，類似定身（可攻擊跟施展技能但不能移動），
+  // 並非把移動速度調整到 0」。
+  //
+  // ⚠️ 它放在這裡而不是 `world.status`，是因為它**不是 CC**：不可被【淨化】剝掉、
+  //    不被免控 buff 拒絕、不計進 `ccAppliedTicks` 戰績。跟上面的施法定身
+  //    (`cast.rooted`) 與下面的擊倒完全同一個出口 —— ⛔ 開第二套並行的判斷
+  //    就是兩份會各自腐爛的程式。
+  // ⭐ 而且它跟著 `championForm` 進出：切回行走形態的那一 tick，`championId`
+  //    換回本體、這一格自然消失。⛔ 不需要時鐘（切換技沒有時鐘）。
+  const champ = world.champion.get(id);
+  if (champ !== undefined && Champions.tryGet(champ.championId)?.immobile === true) {
+    rooted = true;
+  }
   // Knockdown (prone): rooted like a hard CC. The knockback override is
   // evaluated by MovementSystem BEFORE normal steering, so the victim still
   // slides out, then lies grounded until the getup. Turning is frozen too.

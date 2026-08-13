@@ -331,6 +331,13 @@ export interface ChampionDef {
    */
   bodyScale?: number;
   /**
+   * ⭐ 70-00【紮根】—— 這具身體不會走路（owner 2026-08-13「類似定身，
+   * 可攻擊跟施展技能但不能移動，並非把移動速度調整到 0」）。
+   * 缺席 = 會走。語意與**為什麼不是改 ms** 寫在 `content/schema/champion.ts`
+   * 的同名欄位；唯一的消費端是 `sim/movementHold.ts`。
+   */
+  immobile?: boolean;
+  /**
    * 每秒回復「最大生命的百分比」(GH#253)。`0.01` = 每秒 1%。
    * 缺 = 這位英雄沒有百分比回血,只吃 `Stat.HealthRegen` 那條固定值。
    *
