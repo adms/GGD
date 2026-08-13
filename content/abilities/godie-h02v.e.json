@@ -67,6 +67,19 @@
                     "kind": "applyStatus",
                     "statusId": "magic-break",
                     "duration": 3.0
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.5
+                      }
+                    ],
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
@@ -120,6 +133,19 @@
                     "kind": "applyStatus",
                     "statusId": "magic-break",
                     "duration": 3.0
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.5
+                      }
+                    ],
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
@@ -173,6 +199,19 @@
                     "kind": "applyStatus",
                     "statusId": "magic-break",
                     "duration": 3.0
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.5
+                      }
+                    ],
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }
@@ -226,6 +265,19 @@
                     "kind": "applyStatus",
                     "statusId": "magic-break",
                     "duration": 3.0
+                  },
+                  {
+                    "kind": "applyBuff",
+                    "modifiers": [
+                      {
+                        "stat": "mr",
+                        "op": "pctAdd",
+                        "value": -0.5
+                      }
+                    ],
+                    "duration": 3.0,
+                    "dispellable": true,
+                    "polarity": "debuff"
                   }
                 ]
               }

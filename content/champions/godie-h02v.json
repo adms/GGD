@@ -139,14 +139,23 @@
           ]
         },
         {
-          "kind": "dot",
-          "damageType": "true",
-          "amountPerTick": {
-            "flat": -1.0
-          },
+          "kind": "delayed",
+          "shape": "single",
+          "delaySec": 1.0,
+          "count": 6,
           "intervalSec": 1.0,
-          "durationSec": 6.0,
-          "stacking": "refresh"
+          "effects": [
+            {
+              "kind": "restore",
+              "healthPct": [
+                0.01,
+                0.02,
+                0.03,
+                0.04
+              ],
+              "applyTo": "self"
+            }
+          ]
         }
       ],
       "icon": "assets/icons/abilities/godie-h02v.q.webp",
@@ -396,6 +405,19 @@
                         "kind": "applyStatus",
                         "statusId": "magic-break",
                         "duration": 3.0
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "mr",
+                            "op": "pctAdd",
+                            "value": -0.5
+                          }
+                        ],
+                        "duration": 3.0,
+                        "dispellable": true,
+                        "polarity": "debuff"
                       }
                     ]
                   }
@@ -449,6 +471,19 @@
                         "kind": "applyStatus",
                         "statusId": "magic-break",
                         "duration": 3.0
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "mr",
+                            "op": "pctAdd",
+                            "value": -0.5
+                          }
+                        ],
+                        "duration": 3.0,
+                        "dispellable": true,
+                        "polarity": "debuff"
                       }
                     ]
                   }
@@ -502,6 +537,19 @@
                         "kind": "applyStatus",
                         "statusId": "magic-break",
                         "duration": 3.0
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "mr",
+                            "op": "pctAdd",
+                            "value": -0.5
+                          }
+                        ],
+                        "duration": 3.0,
+                        "dispellable": true,
+                        "polarity": "debuff"
                       }
                     ]
                   }
@@ -555,6 +603,19 @@
                         "kind": "applyStatus",
                         "statusId": "magic-break",
                         "duration": 3.0
+                      },
+                      {
+                        "kind": "applyBuff",
+                        "modifiers": [
+                          {
+                            "stat": "mr",
+                            "op": "pctAdd",
+                            "value": -0.5
+                          }
+                        ],
+                        "duration": 3.0,
+                        "dispellable": true,
+                        "polarity": "debuff"
                       }
                     ]
                   }
@@ -632,6 +693,60 @@
                         {
                           "stat": "ap",
                           "coeff": 1.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 2.0
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "condition": {
+                  "kind": "status",
+                  "subject": "target",
+                  "statusId": "blind"
+                },
+                "target": "event"
+              }
+            ]
+          },
+          {
+            "hooks": [
+              {
+                "on": "onBasicAttack",
+                "effects": [
+                  {
+                    "kind": "damage",
+                    "damageType": "magic",
+                    "amount": {
+                      "ratios": [
+                        {
+                          "stat": "ap",
+                          "coeff": 3.0
                         }
                       ]
                     }

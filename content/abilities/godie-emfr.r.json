@@ -39,6 +39,7 @@
         }
       ],
       "duration": 12.0,
+      "exclusiveGroup": "emfr-form",
       "perRank": [
         {
           "modifiers": [
@@ -100,6 +101,47 @@
           ],
           "duration": 12.0
         }
+      ],
+      "hooks": [
+        {
+          "on": "onAbilityCast",
+          "effects": [
+            {
+              "kind": "applyBuff",
+              "modifiers": [],
+              "duration": 3.0,
+              "hooks": [
+                {
+                  "on": "onBasicAttack",
+                  "effects": [
+                    {
+                      "kind": "damage",
+                      "damageType": "magic",
+                      "amount": {
+                        "perRank": [
+                          150.0,
+                          225.0,
+                          300.0
+                        ],
+                        "ratios": [
+                          {
+                            "stat": "ap",
+                            "coeff": 0.7
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "target": "event",
+                  "maxTriggers": 1,
+                  "consumeOn": "fire",
+                  "onConsumed": "detachSource"
+                }
+              ]
+            }
+          ],
+          "target": "self"
+        }
       ]
     },
     {
@@ -108,35 +150,6 @@
       "onHit": []
     }
   ],
-  "passive": {
-    "name": "15-04 雷天大壯。貳式",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "flat": 150.0,
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 0.7
-                    }
-                  ]
-                }
-              }
-            ],
-            "target": "event",
-            "consumeOn": "fire"
-          }
-        ]
-      }
-    ]
-  },
   "icon": "assets/icons/abilities/godie-emfr.r.webp",
   "vfxKey": "fx.prim.lightning.beam-lg",
   "castTimeSec": 0.667

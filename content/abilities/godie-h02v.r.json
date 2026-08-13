@@ -74,6 +74,60 @@
             "target": "event"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 2.0
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ap",
+                      "coeff": 3.0
+                    }
+                  ]
+                }
+              }
+            ],
+            "condition": {
+              "kind": "status",
+              "subject": "target",
+              "statusId": "blind"
+            },
+            "target": "event"
+          }
+        ]
       }
     ]
   },

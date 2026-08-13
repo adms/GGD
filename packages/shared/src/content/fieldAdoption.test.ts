@@ -181,6 +181,10 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ⭐ 2026-08-13 內容批新曝光：父欄位被採用之後這三格才進普查母體。
+  "enum:abilities.effects[]#applyBuff.polarity=buff": {
+    status: "default-live",
+    why: "`polarity` 這一格是這一批的四支減益帶進來的（79-01/92-02 破魔、45-02 攻速、45-002 攻擊力）—— 它們**全部**要 `\"debuff\"`，因為那一格的用途就是讓【淨化】認得出「這是可以被拔掉的壞東西」。`buff` 那一邊要的是「明確標成正面、⛔ 不可以被敵方驅散」，而出貨的增益全部**省略**這一格（省略＝引擎預設就當它是正面）。⇒ 零採用是對的：要填 `buff` 只有在「有人會驅散友方增益」的時候才有意義，而 GGD 今天沒有那種技能。",
+  },
   "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
     status: "default-live",
     why: "59-02 高週波短刀的規格逐字是「將**該次攻擊**轉為真傷」⇒ `scope:\"basic\"`（只蓋普攻）。`all` 要的是「這段期間**連技能傷害**也一起變真傷」—— 那是一個強得多的效果，出貨內容裡沒有任何一支這樣寫。⇒ 零採用是對的。",
@@ -577,11 +581,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S4a —— **永久**。引擎層從第一天就做得到（ModifierSource.expiresAtTick 缺席 = 永久），缺的一直是 authoring 面 —— 於是出貨已經有四份文件用 duration: 99999 假裝永久（godie-o00x.passive / godie-ogrh.passive / godie-zombiex.passive ×2）。⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的永久增益，所以兩格互斥且必填其一。那四份遷移過來時這一筆就該刪掉。",
   },
-  "field:abilities.effects[]#applyBuff.exclusiveGroup": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G5（state.exclusive-group@1）—— 互斥狀態群（15-02/03/04「身上永遠只有一種戰型」）。實測缺陷：三份形態 buff 同時掛著且乘區相乘（攻速 ratio 逐位元 = 1.4 的三次方）；stackKey **不是**答案（同 key 的第二發會把 modifiers 整組丟掉，只把層數加一）。⛔ 它只做 gameplay 狀態互斥，3D 身體那一半仍然是 championForm 的地盤（計畫 §16.15 未裁決）。",
-  },
   "field:abilities.effects[]#applyBuff.exclusiveOnExisting": {
     status: "landing",
     since: "2026-08-10",
@@ -611,16 +610,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-10",
     why: "G9 —— 道具那一面的具名技能版本（「這件裝備只縮短瞬步的冷卻」）。與 scopeSlot 互斥；⚠️ 軟參照，打錯 id 會安靜地不生效，⛔ 不要假裝它會紅。",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].maxTriggers": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
-  },
-  "field:abilities.effects[]#applyBuff.hooks[].onConsumed": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S3/S6/S8/S10（Lane 3，2026-08-10）—— 觸發器上的六格新詞彙一次落地：key（讓「重置這條觸發器的冷卻」指得到它，⛔ 不用陣列索引定址）、maxTriggers/consumeOn/onConsumed/perTarget（「下一次普攻」那一族的**次數**界 —— ⛔ 不是靠一個 duration 極短的增益假裝，那是時間界，攻速一高就吃到兩次而畫面上一模一樣）、critSource（89-01「這一招自己的暴擊」vs「這位英雄任何一次暴擊」）、reflectedDamageSource/Type（60-04「若成功反彈敵方**技能** AP 傷害」—— 只有 onReflectSuccess 帶得到原封包，schema 已經擋住掛錯事件）。零採用是**內容決定**：content/abilities/ 這一輪由 owner 手動重製，那批技能還沒寫進樹裡。（這一筆是限時增益授予的觸發器那一面；⚠️ 同一格 zHookDefBase 欄位在普查裡會出現兩次，兩邊要一起刪。）",
   },
   "field:abilities.effects[]#applyBuff.hooks[].perTarget": {
     status: "landing",

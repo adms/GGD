@@ -145,6 +145,7 @@
             }
           ],
           "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
           "perRank": [
             {
               "modifiers": [
@@ -206,42 +207,35 @@
               ],
               "duration": 12.0
             }
+          ],
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "perRank": [
+                      30.0,
+                      45.0,
+                      60.0,
+                      75.0
+                    ],
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.1
+                      }
+                    ]
+                  }
+                }
+              ],
+              "target": "event"
+            }
           ]
         }
       ],
-      "passive": {
-        "name": "15-02 疾風迅雷",
-        "ranks": [
-          {
-            "hooks": [
-              {
-                "on": "onBasicAttack",
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "flat": 30.0,
-                      "ratios": [
-                        {
-                          "stat": "ap",
-                          "coeff": 0.1
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "condition": {
-                  "kind": "status",
-                  "subject": "self",
-                  "statusId": "rage"
-                },
-                "target": "event"
-              }
-            ]
-          }
-        ]
-      },
       "icon": "assets/icons/abilities/godie-emfr.w.webp",
       "vfxKey": "fx.prim.wind.pulse",
       "sfxKey": "wc3.akamapissed8",
@@ -278,63 +272,67 @@
               "value": -0.5
             }
           ],
-          "duration": 12.0
+          "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
+          "hooks": [
+            {
+              "on": "onBasicAttack",
+              "effects": [
+                {
+                  "kind": "damage",
+                  "damageType": "magic",
+                  "amount": {
+                    "perRank": [
+                      60.0,
+                      90.0,
+                      120.0,
+                      150.0
+                    ],
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.4
+                      }
+                    ]
+                  }
+                }
+              ],
+              "target": "event"
+            },
+            {
+              "on": "onAbilityHit",
+              "effects": [
+                {
+                  "kind": "damageArea",
+                  "damageType": "magic",
+                  "amount": {
+                    "perRank": [
+                      100.0,
+                      150.0,
+                      200.0,
+                      250.0
+                    ],
+                    "ratios": [
+                      {
+                        "stat": "ap",
+                        "coeff": 0.6
+                      }
+                    ]
+                  },
+                  "radius": 4.5,
+                  "radiusTier": "中"
+                },
+                {
+                  "kind": "applyStatus",
+                  "statusId": "burn",
+                  "duration": 3.0
+                }
+              ],
+              "target": "event"
+            }
+          ]
         }
       ],
-      "passive": {
-        "name": "15-03 獄炎煉我",
-        "ranks": [
-          {
-            "hooks": [
-              {
-                "on": "onBasicAttack",
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "flat": 60.0,
-                      "ratios": [
-                        {
-                          "stat": "ap",
-                          "coeff": 0.4
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "target": "event"
-              },
-              {
-                "on": "onAbilityHit",
-                "effects": [
-                  {
-                    "kind": "damageArea",
-                    "damageType": "magic",
-                    "amount": {
-                      "flat": 100.0,
-                      "ratios": [
-                        {
-                          "stat": "ap",
-                          "coeff": 0.6
-                        }
-                      ]
-                    },
-                    "radius": 4.5,
-                    "radiusTier": "中"
-                  },
-                  {
-                    "kind": "applyStatus",
-                    "statusId": "burn",
-                    "duration": 3.0
-                  }
-                ],
-                "target": "event"
-              }
-            ]
-          }
-        ]
-      },
       "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "vfxKey": "fx.prim.lightning.nova",
       "castTimeSec": 0.267
@@ -379,6 +377,7 @@
             }
           ],
           "duration": 12.0,
+          "exclusiveGroup": "emfr-form",
           "perRank": [
             {
               "modifiers": [
@@ -440,6 +439,47 @@
               ],
               "duration": 12.0
             }
+          ],
+          "hooks": [
+            {
+              "on": "onAbilityCast",
+              "effects": [
+                {
+                  "kind": "applyBuff",
+                  "modifiers": [],
+                  "duration": 3.0,
+                  "hooks": [
+                    {
+                      "on": "onBasicAttack",
+                      "effects": [
+                        {
+                          "kind": "damage",
+                          "damageType": "magic",
+                          "amount": {
+                            "perRank": [
+                              150.0,
+                              225.0,
+                              300.0
+                            ],
+                            "ratios": [
+                              {
+                                "stat": "ap",
+                                "coeff": 0.7
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "target": "event",
+                      "maxTriggers": 1,
+                      "consumeOn": "fire",
+                      "onConsumed": "detachSource"
+                    }
+                  ]
+                }
+              ],
+              "target": "self"
+            }
           ]
         },
         {
@@ -448,35 +488,6 @@
           "onHit": []
         }
       ],
-      "passive": {
-        "name": "15-04 雷天大壯。貳式",
-        "ranks": [
-          {
-            "hooks": [
-              {
-                "on": "onBasicAttack",
-                "effects": [
-                  {
-                    "kind": "damage",
-                    "damageType": "magic",
-                    "amount": {
-                      "flat": 150.0,
-                      "ratios": [
-                        {
-                          "stat": "ap",
-                          "coeff": 0.7
-                        }
-                      ]
-                    }
-                  }
-                ],
-                "target": "event",
-                "consumeOn": "fire"
-              }
-            ]
-          }
-        ]
-      },
       "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "vfxKey": "fx.prim.lightning.beam-lg",
       "castTimeSec": 0.667

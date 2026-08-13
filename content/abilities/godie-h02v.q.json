@@ -87,14 +87,23 @@
       ]
     },
     {
-      "kind": "dot",
-      "damageType": "true",
-      "amountPerTick": {
-        "flat": -1.0
-      },
+      "kind": "delayed",
+      "shape": "single",
+      "delaySec": 1.0,
+      "count": 6,
       "intervalSec": 1.0,
-      "durationSec": 6.0,
-      "stacking": "refresh"
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": [
+            0.01,
+            0.02,
+            0.03,
+            0.04
+          ],
+          "applyTo": "self"
+        }
+      ]
     }
   ],
   "icon": "assets/icons/abilities/godie-h02v.q.webp",

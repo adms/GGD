@@ -27,7 +27,12 @@
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 1500.0
+                  "ratios": [
+                    {
+                      "stat": "maxHealth",
+                      "coeff": 1.0
+                    }
+                  ]
                 },
                 "duration": 8.0
               }

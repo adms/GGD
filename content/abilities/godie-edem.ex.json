@@ -27,6 +27,19 @@
       "includeOrigin": true,
       "onHitTargets": [
         {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": -0.4
+            }
+          ],
+          "duration": 10.0,
+          "dispellable": true,
+          "polarity": "debuff"
+        },
+        {
           "kind": "applyStatus",
           "statusId": "burn",
           "duration": 10.0

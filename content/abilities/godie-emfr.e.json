@@ -30,63 +30,67 @@
           "value": -0.5
         }
       ],
-      "duration": 12.0
+      "duration": 12.0,
+      "exclusiveGroup": "emfr-form",
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  60.0,
+                  90.0,
+                  120.0,
+                  150.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.4
+                  }
+                ]
+              }
+            }
+          ],
+          "target": "event"
+        },
+        {
+          "on": "onAbilityHit",
+          "effects": [
+            {
+              "kind": "damageArea",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  100.0,
+                  150.0,
+                  200.0,
+                  250.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.6
+                  }
+                ]
+              },
+              "radius": 4.5,
+              "radiusTier": "中"
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burn",
+              "duration": 3.0
+            }
+          ],
+          "target": "event"
+        }
+      ]
     }
   ],
-  "passive": {
-    "name": "15-03 獄炎煉我",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "flat": 60.0,
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 0.4
-                    }
-                  ]
-                }
-              }
-            ],
-            "target": "event"
-          },
-          {
-            "on": "onAbilityHit",
-            "effects": [
-              {
-                "kind": "damageArea",
-                "damageType": "magic",
-                "amount": {
-                  "flat": 100.0,
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 0.6
-                    }
-                  ]
-                },
-                "radius": 4.5,
-                "radiusTier": "中"
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "burn",
-                "duration": 3.0
-              }
-            ],
-            "target": "event"
-          }
-        ]
-      }
-    ]
-  },
   "icon": "assets/icons/abilities/godie-emfr.e.webp",
   "vfxKey": "fx.prim.lightning.nova",
   "castTimeSec": 0.267

@@ -24,7 +24,12 @@
     {
       "kind": "applyStatus",
       "statusId": "curse",
-      "duration": 6.0,
+      "duration": [
+        6.0,
+        12.0,
+        18.0,
+        24.0
+      ],
       "missChance": 0.5
     }
   ],

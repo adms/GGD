@@ -1343,7 +1343,13 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
 A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,
   "[主動][範圍][減速][AP加成]\n45秒冷卻\n消耗[MP] 70/120/170/220\n有效半徑7.79\n\n「千鳥流。奔流」\n讓全身充滿千鳥的雷電，對[周圍][大範圍]敵人造成75/150/225/300+20% [AP]點傷害，並使其[攻擊與移動速度][降低]50%，持續3秒。",
   radiusTier="大",
-  effects=[area("magic", tier="大", per=[75, 150, 225, 300], ap=0.2),
+  # ⭐「[攻擊與移動速度][降低]50%」的**攻速**那一半：applyStatus 沒有攻速格，
+  #    唯一落點是 applyBuff 的 modifier（同 79-00 靈壓）。
+  # ⛔ 不可以寫成兄弟節點：`_fold_onhit` 只折 applyStatus/knockback/dot，
+  #    applyBuff 會留在原地讀 ctx.targets ＝ **施法者自己**（castType 是 self）。
+  effects=[area("magic", tier="大", per=[75, 150, 225, 300], ap=0.2,
+                onhit=[buff([M("as", "pctAdd", -0.5)], 3.0,
+                            polarity="debuff", dispellable=True)]),
            status("slow40", 3.0, moveSpeedMult=0.5)])
 
 A("45-03", "45-03 千鳥", "ground", [45, 45, 45, 45], [120, 185, 250, 315], 12.83,
@@ -1364,7 +1370,11 @@ A("45-04", "45-04 哥哥", "self", [0], [0], 0,
 A("45-002", "45-002 天照", "self", [120], [650], 0,
   "[主動][範圍][燃燒][沉默][虛弱][週期]\n120秒冷卻\n消耗MP650\n有效半徑7.79\n\n「寫輪眼。天照」\n發動天照，使[周圍][大範圍]敵人每秒受到400點[燃燒]傷害並附加[燃燒]標記，同時[沉默]且[攻擊力降低]40%，持續10秒。",
   radiusTier="大",
-  effects=[area("magic", tier="大", flat=1),
+  # ⭐「同時[沉默]且[攻擊力降低]40%」—— 沉默有了，AD −40% **整段沒寫**。
+  #    ⛔ 兄弟節點會落在施法者自己身上（理由同 45-02），所以走 area 的 onhit=。
+  effects=[area("magic", tier="大", flat=1,
+                onhit=[buff([M("ad", "pctAdd", -0.4)], 10.0,
+                            polarity="debuff", dispellable=True)]),
            status("burn", 10.0),
            status("paralysis", 10.0, silenced=True),
            {"kind": "dot", "damageType": "magic", "amountPerTick": amt(flat=400),
@@ -1417,6 +1427,38 @@ A("13-002", "13-002 絕。暗殺奧義", "self", [0], [0], 0,
        "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [0.4],
                     "victim": "champion", "throughShields": True}]}]}]})
 
+# ⭐ S1 涅吉三支形態技的**共用模板**（第零守則⑨：N 個同型 = K 個模板 + 一張表）
+#
+# 15-02/03/04 的規格逐字共用三句話，三支各寫一份就是三份會各自腐爛的 JSON：
+#   ①「持續12秒」→ 觸發器必須**跟著這 12 秒一起消失** ⇒ 掛進 `applyBuff.hooks`
+#      （閘在 `sim/effects/hooks.ts`：來源過期就 continue）。
+#      ⛔ 不是 `whileForm`：那一格讀 `world.championForm` 的身體索引，
+#      而 godie-emfr **沒有第二具身體**，填了永遠是 false。
+#      ⚠️ 這一條是三支裡最痛的：15-03 的兩條追打以前掛在**常駐 passive**，
+#      所以**不按 E 也永遠生效**，而按了 E 只換來移速減半的**純負面**。
+#   ②「([變身]為唯一狀態不可疊加)」→ `applyBuff.exclusiveGroup`，
+#      `enforceExclusiveGroup` 會把同組舊的整份拔掉。
+#      ⛔ 不是 championForm（不換身體）、⛔ 不是 stackKey（同 key 只加層數）。
+#      ⚠️ 刻意**不填** `exclusiveOnExisting`：省略 = "replace"（新的接手）＝規格的讀法，
+#      而留空這一格就是把「replace / reject」這個決策留在後台（第一守則）。
+#   ③ 逐階數字 → hook payload 的 `perRank`：`applyBuff` 掛 source 時帶 grantRank，
+#      `fireHooks` 以它求值。
+EMFR_FORM = "emfr-form"      # 互斥組名：身上永遠只有一種戰型
+EMFR_FORM_SEC = 12.0         # 規格三支逐字都寫「持續12秒」
+#: 15-04「施放技能後的**下一次**普通攻擊」的武裝窗。規格**沒有寫秒數** ——
+#: 那是一個決策點（第一守則），所以給它自己的常數。
+#: ⛔ 不要沿用 EMFR_FORM_SEC：那是形態的 12 秒，借用等於把兩個決策綁成一格。
+EMFR_ARM_SEC = 3.0
+
+
+def form_buff(mods, hooks=None, perRank=None):
+    """涅吉的 12 秒戰型：互斥 + 限時，觸發器掛在它身上（⛔ 不是常駐 passive）。"""
+    kw = {"exclusiveGroup": EMFR_FORM}
+    if perRank is not None:
+        kw["perRank"] = perRank
+    return buff(mods, EMFR_FORM_SEC, hooks=hooks, **kw)
+
+
 # ── 15 涅吉 ──────────────────────────────────────────────────────────────────
 A("15-00", "15-00 真·不死不滅", "self", [0], [0], 0,
   "[被動][週期][回復][燒魔]\n\n「為了拯救我的學生，以及打噴嚏」\n每秒[回復] 5%[最大生命]，但每秒也[燒魔]魔力 5%。",
@@ -1434,36 +1476,58 @@ A("15-01", "15-01 雷神槍「巨神殺手」", "ground", [30, 30, 30, 30], [175
 
 A("15-02", "15-02 疾風迅雷", "self", [60, 60, 60, 60], [120, 180, 240, 300], 0,
   "[主動][輔助][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 120/180/240/300\n持續12秒\n\n「質疑魔法、成為魔法、超越魔法」\n獲得 1.2倍 [移動速度] 與 30/60/90/120% [攻擊速度]，普通攻擊附加 30/45/60/75 +10% [AP] 雷電傷害。\n([變身]為唯一狀態不可疊加)",
-  effects=[buff([M("ms", "pctMult", 0.2), M("as", "pctAdd", 0.3)], 12.0,
-                perRank=[{"modifiers": [M("ms", "pctMult", 0.2), M("as", "pctAdd", a)],
-                          "duration": 12.0}
-                         for a in (0.3, 0.6, 0.9, 1.2)])],
-  passive={"name": "15-02 疾風迅雷", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "target": "event",
-       "condition": {"kind": "status", "subject": "self", "statusId": "rage"},
-       "effects": [dmg("magic", flat=30, ap=0.1)]}]}]})
+  # ⭐ 三條缺口一起關：①雷電追打搬進 12 秒 buff（⛔ 不再靠 `status rage` ——
+  #    全 content 施加 rage 的只有 godie-hapm.q/w 與 godie-h01u.q，這支自己不施加，
+  #    所以那個條件**永遠是 false，追打一次都不會發動**）②逐階 30/45/60/75
+  #    ③互斥組由 form_buff() 填。⛔ passive 整塊刪掉。
+  effects=[form_buff([M("ms", "pctMult", 0.2), M("as", "pctAdd", 0.3)],
+                     hooks=[{"on": "onBasicAttack", "target": "event",
+                             "effects": [dmg("magic", per=[30, 45, 60, 75], ap=0.1)]}],
+                     perRank=[{"modifiers": [M("ms", "pctMult", 0.2), M("as", "pctAdd", a)],
+                               "duration": 12.0}
+                              for a in (0.3, 0.6, 0.9, 1.2)])])
 
 A("15-03", "15-03 獄炎煉我", "self", [55, 55, 55, 55], [180, 260, 340, 420], 0,
   "[主動][變身][普攻時][範圍][AP加成]\n55秒冷卻\n消耗[MP] 180/260/340/420\n持續12秒\n\n「問問這砂鍋大的火拳？」\n普通攻擊附加 60/90/120/150 + 40% [AP] 火焰傷害，每次技能命中都會引發爆炎[燃燒]標記，對[周圍]敵人造成 100/150/200/250 +60% [AP] [範圍]傷害，但[移動速度]減半。\n([變身]為唯一狀態不可疊加)",
-  effects=[buff([M("ms", "pctMult", -0.5)], 12.0)],
-  passive={"name": "15-03 獄炎煉我", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "target": "event",
-       "effects": [dmg("magic", flat=60, ap=0.4)]},
-      {"on": "onAbilityHit", "target": "event",
-       "effects": [area("magic", tier="中", flat=100, ap=0.6), status("burn", 3.0)]}]}]})
+  # ⭐ 四條缺口一起關：①普攻火焰逐階 60/90/120/150 ②爆炎逐階 100/150/200/250
+  #    ③⚠️ 兩條追打搬進 12 秒 buff —— 在此之前它們掛在**常駐 passive**，所以
+  #    **不按 E 也永遠生效**，而按了 E 只換來移速減半的**純負面**（玩家一定看得出來）
+  #    ④互斥組由 form_buff() 填。⛔ passive 整塊刪掉。
+  effects=[form_buff([M("ms", "pctMult", -0.5)],
+                     hooks=[{"on": "onBasicAttack", "target": "event",
+                             "effects": [dmg("magic", per=[60, 90, 120, 150], ap=0.4)]},
+                            {"on": "onAbilityHit", "target": "event",
+                             "effects": [area("magic", tier="中",
+                                              per=[100, 150, 200, 250], ap=0.6),
+                                         status("burn", 3.0)]}])])
 
 A("15-04", "15-04 雷天大壯。貳式", "self", [60, 60, 60], [200, 400, 600], 0,
   "[主動][變身][普攻時][AP加成]\n60秒冷卻\n消耗[MP] 200/400/600\n持續12秒\n\n「比光更快的是思念，比思念更快的是昨天」\n獲得 2倍 [移動速度]、100/150/200% [攻擊速度]、[攻擊速度上限]提升至10。施放技能後的下一次普通攻擊將釋放雷神一擊，造成 150/225/300 + 70% [AP] 雷屬性傷害。\n([變身]為唯一狀態不可疊加)",
   maxRank=3,
-  effects=[buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
-                 M("as", "capRaise", 10.0)], 12.0,
-                perRank=[{"modifiers": [M("ms", "pctMult", 1.0), M("as", "pctAdd", a),
-                                        M("as", "capRaise", 10.0)],
-                          "duration": 12.0}
-                         for a in (1.0, 1.5, 2.0)])],
-  passive={"name": "15-04 雷天大壯。貳式", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "target": "event", "consumeOn": "fire", 
-       "effects": [dmg("magic", flat=150, ap=0.7)]}]}]})
+  # ⭐ 五條缺口一起關（⛔ 不是逐條補丁，是把整條時序寫出來）：
+  #    ①觸發條件「**施放技能後**」—— 武裝來源是 `onAbilityCast`（在此之前整個沒有）
+  #    ②「**下一次**」一次性 —— `maxTriggers: 1`；`consumeOn` 單獨填是**沒有用的**
+  #      （`hooks.ts` 只在 `maxTriggers !== undefined` 才進扣額度那一段）
+  #    ③雷神一擊逐階 150/225/300 ④只在 12 秒形態內（整棵搬進 form_buff 的 hooks）
+  #    ⑤互斥組由 form_buff() 填。⛔ passive 整塊刪掉。
+  #    ⚠️ 額度**不可以**放在常駐 passive 上：那是一份跟著英雄一整場的來源，
+  #      `maxTriggers: 1` 會變成「一場只有一次」。掛在 buff 上才是「每次武裝一次」——
+  #      每一發 onAbilityCast 都掛一份**新的** source（selfId 帶 tick），額度跟著它走。
+  #    ⚠️ 武裝標記是**獨立的一顆限時 buff**（`EMFR_ARM_SEC`）——
+  #      它**不隨形態結束消失**、也**不受 exclusiveGroup 管**。誠實記著。
+  effects=[form_buff([M("ms", "pctMult", 1.0), M("as", "pctAdd", 1.0),
+                      M("as", "capRaise", 10.0)],
+                     hooks=[{"on": "onAbilityCast", "target": "self",
+                             "effects": [buff([], EMFR_ARM_SEC, hooks=[
+                                 {"on": "onBasicAttack", "target": "event",
+                                  "maxTriggers": 1, "consumeOn": "fire",
+                                  "onConsumed": "detachSource",
+                                  "effects": [dmg("magic", per=[150, 225, 300],
+                                                  ap=0.7)]}])]}],
+                     perRank=[{"modifiers": [M("ms", "pctMult", 1.0), M("as", "pctAdd", a),
+                                             M("as", "capRaise", 10.0)],
+                               "duration": 12.0}
+                              for a in (1.0, 1.5, 2.0)])])
 
 A("15-002", "15-002 敵彈吸收陣。太陰道", "self", [60], [0], 0,
   "[主動][輔助][反彈][回復][層數累積][AP加成]\n60秒冷卻\n\n「大..太陰道，吸收！」\n[反彈] 100% 魔法([AP])傷害，並且將傷害轉化為自身魔力([MP])，以及將該傷害短暫加成至 [AP] ([可累加])，持續 5秒後歸零。",
@@ -1492,7 +1556,8 @@ A("44-00", "44-00 機警", "self", [15], [0], 0,
 A("44-01", "44-01 死神之眼", "targeted", [60, 60, 60, 60], [150, 200, 250, 300], 2,
   "[主動][指定][詛咒（失手）]\n60秒冷卻，吟唱2秒\n消耗MP150/200/250/300\n施法距離2\n\n「這個世界正在腐敗，腐敗的人不該活著。」\n被鎖定的目標會因為死神的[詛咒]標記而暫時50%攻擊失手，持續6/12/18/24秒。",
   cast_time=2.0,
-  effects=[status("curse", 6.0, missChance=0.5)])
+  # ⭐ 逐階 6/12/18/24 秒。原本四階全部是 6.0 —— 卡片寫 24 秒、場上 6 秒（失敗形態②）。
+  effects=[status("curse", [6.0, 12.0, 18.0, 24.0], missChance=0.5)])
 
 A("44-02", "44-02 死神的規則", "self", [0], [0], 0,
   "[被動]\n\n「我是新世界的神」\n將這份知識化為 [智慧] 7/12/17/22點。",
@@ -1667,7 +1732,12 @@ A("60-002", "60-002 勇者意志", "self", [120], [0], 0,
        "internalCooldown": 120.0,
        "condition": {"kind": "stat", "subject": "self", "stat": "hp",
                      "mode": "percent", "op": "<=", "value": 0.3},
-       "effects": [{"kind": "shield", "amount": amt(flat=1500),
+       # ⭐「相當於 **100% [最大生命值]**的[護盾]」—— flat 1500 是一個寫死的常數：
+       #    一個 6,000 血的滿裝英雄拿到的是 25%，而卡片說 100%。
+       # ⚠️ 副作用要明說：**低等級時它變小**（第 1 回合約 750 vs 今天 1500），
+       #    要寫進 release note。
+       "effects": [{"kind": "shield",
+                    "amount": amt(ratios=[{"stat": "maxHealth", "coeff": 1.0}]),
                     "duration": 8.0}]},
       # ⭐ B3-A —— 「若完美盾反反彈成功，冷卻立即重置」。
       # ⚠️ 這一筆的存活條件是 60-04 同批落地：onReflectSuccess 由反彈封包落地時發，
@@ -1950,11 +2020,21 @@ A("89-002", "89-002 俄羅斯輪盤", "targeted", [10], [666], 5.29,
   # ⚠️ 三顆**必須互斥**：兩顆同時通過 = 擲兩次骰 = 一次施放死兩次。
   # ⚠️ 混亂與致盲同時在身上時混亂贏（3/6 > 2/6）—— 這是裁決不是推導。
   effects=[{"kind": "weightedBranch", "shape": "single", "condition": cond, "branches": [
-      {"weight": foe, "effects": [{"kind": "devour", "shape": "single",
-                                   "thresholdPctOfMax": [0.5],
-                                   "victim": "champion", "throughShields": True}]},
-      {"weight": 1, "effects": [{"kind": "devour", "shape": "single", "thresholdPctOfMax": [0.5],
-                                 "victim": "any", "throughShields": True}]},
+      # ⭐「讓對方死亡」= 100% 目標[最大生命]的真傷。⛔ 不可以用 devour：
+      #    `thresholdPctOfMax` 上界是 0.5，**滿血的人抽中「死亡」也毫髮無傷**，
+      #    而 schema 自己就寫著「一條剩一半就吞得掉的處決線…應該用 damage 寫」。
+      # ⚠️ owner 2026-08-13 裁決「1/6 自己死亡**算擊殺**」= yes（見稽核文件）。
+      # ⚠️ 副作用要明說：`devour.victim:"champion"` 這一格消失了 ⇒ **輪盤現在吃得掉
+      #    殭屍**。那是 owner 立過的裁決（devour.ts 的註解），列進 owner 表。
+      {"weight": foe, "effects": [dmg("true", flat=0,
+          res_pct={"subject": "target", "resource": "health",
+                   "basis": "max", "perRank": [1.0]})]},
+      # ⭐「或 1/6 **自己**死亡」—— devour 沒有 applyTo，所以這一支從頭到尾打在
+      #    敵人身上（＝兩顆分支都是「對方死」，玩家自己的 1/6 風險**根本不存在**）。
+      #    `damage.applyTo:"self"` 是唯一的落點。
+      {"weight": 1, "effects": [dict(dmg("true", flat=0,
+          res_pct={"subject": "self", "resource": "health",
+                   "basis": "max", "perRank": [1.0]}), applyTo="self")]},
       {"weight": 6 - 1 - foe, "effects": [status("fear", 2.0, feared=True)]}]}
       for cond, foe in (
           ({"kind": "status", "subject": "target", "statusId": "confusion"}, 3),
@@ -1983,8 +2063,14 @@ A("92-01", "92-01 臥草泥馬", "self", [60, 60, 60, 60], [160, 220, 280, 340],
            buff([M("armor", "flat", 20)], 6.0,
                 perRank=[{"modifiers": [M("armor", "flat", v)], "duration": 6.0}
                          for v in (20, 40, 60, 80)]),
-           {"kind": "dot", "damageType": "true", "amountPerTick": amt(flat=-1),
-            "intervalSec": 1.0, "durationSec": 6.0, "stacking": "refresh"}])
+           # ⭐「每秒[回復] 1/2/3/4% 生命」。⛔ 不可以用負值 dot：`dotTick` 是
+           #    `if (amountPerTick > 0)`，負的那一發**整條被跳過** ⇒ 一滴都不回，
+           #    而且 flat=-1 也把四階壓平。模板抄 92-002（delayed + restore）。
+           # ⚠️ delayed 的 shape 與 delaySec 是**必填**，漏了 Zod 直接拒收。
+           {"kind": "delayed", "shape": "single", "delaySec": 1.0, "count": 6,
+            "intervalSec": 1.0,
+            "effects": [{"kind": "restore", "healthPct": [0.01, 0.02, 0.03, 0.04],
+                         "applyTo": "self"}]}])
 
 A("92-02", "92-02 消化液", "self", [0], [0], 0,
   "[被動][指向][範圍][破魔][AP加成][機率][週期]\n\n草泥馬在 [受到傷害] 的時候有 10% [機率]，會從嘴巴裡噴出消化液攻擊敵人，造成[前方][一直線] [範圍] 敵人，每秒受到20/30/40/50+ 30% [AP] 傷害，附帶 [破魔] 降低魔抗 50%，持續3秒。",
@@ -2000,7 +2086,14 @@ A("92-02", "92-02 消化液", "self", [0], [0], 0,
                                            "amountPerTick": amt(flat=v, ap=0.3),
                                            "intervalSec": 1.0, "durationSec": 3.0,
                                            "stacking": "refresh"},
-                                          status("magic-break", 3.0)])]}]}
+                                          # ⭐【破魔】的**數值**那一半（同 79-01）。
+                                          # ⛔ 標記留在 applyStatus：快照的 statusIds
+                                          # 只讀 world.status，換成 applyBuff.statusId
+                                          # 會讓受害者 HUD 的圖示整個消失。
+                                          status("magic-break", 3.0),
+                                          buff([M("mr", "pctAdd", -0.5)], 3.0,
+                                               polarity="debuff",
+                                               dispellable=True)])]}]}
       for v in (20, 30, 40, 50)]})
 
 A("92-03", "92-03 狂草泥馬", "self", [0], [0], 0,
@@ -2023,10 +2116,13 @@ A("92-04", "92-04 馬勒戈壁", "self", [90, 90, 90], [300, 420, 540], 0,
   effects=[area("magic", tier="超大", flat=1),
            status("slow40", 6.0, moveSpeedMult=0.5),
            status("blind", 6.0, missChance=0.5)],
-  passive={"name": "92-04 馬勒戈壁", "ranks": [{"hooks": [
-      {"on": "onBasicAttack", "target": "event",
-       "condition": {"kind": "status", "subject": "target", "statusId": "blind"},
-       "effects": [dmg("magic", ap=1.0)]}]}]})
+  # ⭐ 逐階 100/200/300% AP。`ratios.coeff` 是**純量**，所以逐階的唯一落點是
+  #    **多個 rank 區塊** —— 模板與 45-04 哥哥逐字相同。
+  passive={"name": "92-04 馬勒戈壁", "ranks": [
+      {"hooks": [{"on": "onBasicAttack", "target": "event",
+                  "condition": {"kind": "status", "subject": "target", "statusId": "blind"},
+                  "effects": [dmg("magic", ap=v)]}]}
+      for v in (1.0, 2.0, 3.0)]})
 
 A("92-002", "92-002 最終戈壁", "self", [0], [0], 0,
   "[被動][週期][回復][範圍][AP加成]\n\n「草泥馬戈壁，傷而扶壁曲」\n當 [馬勒戈壁] 施展期間，每秒對[周圍][範圍]友方單位 [回復] 10%[最大魔力]、也對 [周圍][範圍]敵人單位造成 2%[最大生命] + 100% [AP] 傷害，持續 6秒。",

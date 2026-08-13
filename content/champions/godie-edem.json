@@ -163,6 +163,19 @@
           "includeOrigin": true,
           "onHitTargets": [
             {
+              "kind": "applyBuff",
+              "modifiers": [
+                {
+                  "stat": "as",
+                  "op": "pctAdd",
+                  "value": -0.5
+                }
+              ],
+              "duration": 3.0,
+              "dispellable": true,
+              "polarity": "debuff"
+            },
+            {
               "kind": "applyStatus",
               "statusId": "slow40",
               "duration": 3.0,

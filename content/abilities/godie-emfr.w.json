@@ -36,6 +36,7 @@
         }
       ],
       "duration": 12.0,
+      "exclusiveGroup": "emfr-form",
       "perRank": [
         {
           "modifiers": [
@@ -97,42 +98,35 @@
           ],
           "duration": 12.0
         }
+      ],
+      "hooks": [
+        {
+          "on": "onBasicAttack",
+          "effects": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  30.0,
+                  45.0,
+                  60.0,
+                  75.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.1
+                  }
+                ]
+              }
+            }
+          ],
+          "target": "event"
+        }
       ]
     }
   ],
-  "passive": {
-    "name": "15-02 疾風迅雷",
-    "ranks": [
-      {
-        "hooks": [
-          {
-            "on": "onBasicAttack",
-            "effects": [
-              {
-                "kind": "damage",
-                "damageType": "magic",
-                "amount": {
-                  "flat": 30.0,
-                  "ratios": [
-                    {
-                      "stat": "ap",
-                      "coeff": 0.1
-                    }
-                  ]
-                }
-              }
-            ],
-            "condition": {
-              "kind": "status",
-              "subject": "self",
-              "statusId": "rage"
-            },
-            "target": "event"
-          }
-        ]
-      }
-    ]
-  },
   "icon": "assets/icons/abilities/godie-emfr.w.webp",
   "vfxKey": "fx.prim.wind.pulse",
   "sfxKey": "wc3.akamapissed8",
