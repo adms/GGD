@@ -279,7 +279,9 @@ function expectWholeCollection(ids: readonly string[], name: CollectionName): vo
  * · `maps`（GH#324 Phase 1）—— `map@1` 的 Zod 先隨映像上線，Phase 2 才推地圖內容。
  *   **到期條件**：`pnpm map:gen` 產出第一張圖（無限城）的那一刻。
  */
-const REGISTERED_AHEAD_OF_CONTENT = new Set<CollectionName>(["maps"]);
+// ⭐ 2026-08-14 Phase 2：`maps` 的到期條件達成了（無限城產出來了）⇒ 清空。
+// ⛔ 這個集合現在跟其他 13 個一樣，空掉就會紅。
+const REGISTERED_AHEAD_OF_CONTENT = new Set<CollectionName>([]);
 
 const DOC_FLOORS: Record<CollectionName, number> = {
   champions: 100,
@@ -291,7 +293,8 @@ const DOC_FLOORS: Record<CollectionName, number> = {
   "loot-tables": 3,
   // GH#324 Phase 1 —— `map@1` 集合剛開，出貨 0 份（母版無限城在 Phase 2 才產生）。
   // ⚠️ 0 是**刻意的**：它讓「集合註冊了但還沒有內容」與「集合被誤刪」分得開。
-  maps: 0,
+  // GH#324 Phase 2 —— 無限城出貨了。⚠️ 1 是**下限**不是現況：加圖只會往上。
+  maps: 1,
   arenas: 5,
   config: 11,
   models: 110,

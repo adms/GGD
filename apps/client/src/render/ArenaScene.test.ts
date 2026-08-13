@@ -167,16 +167,19 @@ const COMBAT_ARENA_CASES: [string, ArenaDef][] = (() => {
   return [["SKELETON_ARENA (built-in, doc-less boot arena)", SKELETON_ARENA], ...docs];
 })();
 
-function countObstacles(def: ArenaDef): { circles: number; segments: number } {
+function countObstacles(def: ArenaDef): { circles: number; segments: number; boxes: number } {
   let circles = 0;
   let segments = 0;
+  let boxes = 0;
   for (const zone of def.zones) {
     for (const ob of zone.obstacles) {
       if (ob.kind === "circle") circles++;
+      // GH#324 —— graybox 的牆是**有厚度的盒**，一個盒畫一片矮牆板（1 個 mesh）。
+      else if (ob.kind === "box") boxes++;
       else segments++;
     }
   }
-  return { circles, segments };
+  return { circles, segments, boxes };
 }
 
 describe("buildArena obstacle markers never occlude the combat camera (NullEngine, #218)", () => {
@@ -209,20 +212,20 @@ describe("buildArena obstacle markers never occlude the combat camera (NullEngin
   });
 
   it.each(COMBAT_ARENA_CASES)("%s — no obstacle mesh can hide a hero", (label, def) => {
-    const { circles, segments } = countObstacles(def);
-    expect(circles + segments, label).toBeGreaterThan(0);
+    const { circles, segments, boxes } = countObstacles(def);
+    expect(circles + segments + boxes, label).toBeGreaterThan(0);
 
     const handles = buildArena(scene, def);
 
     // stump + floor ring per circle, one low slab per segment — ALL of them
     // tracked. The segment slabs used to be built and then dropped on the
     // floor (never pushed into obstacleMeshes), so nothing could find them.
-    expect(handles.obstacleMeshes, label).toHaveLength(circles * 2 + segments);
+    expect(handles.obstacleMeshes, label).toHaveLength(circles * 2 + segments + boxes);
 
     const obstacles = handles.root
       .getChildMeshes(false)
       .filter((m) => /-ob-\d+(-|$)/.test(m.name));
-    expect(obstacles, label).toHaveLength(circles * 2 + segments);
+    expect(obstacles, label).toHaveLength(circles * 2 + segments + boxes);
 
     for (const m of obstacles) {
       const top = m.getBoundingInfo().boundingBox.maximumWorld.y;

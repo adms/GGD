@@ -272,6 +272,9 @@ export function buildArena(scene: Scene, arena: ArenaDef, groundStyle?: string):
         box.material = obstacleMat;
         box.isPickable = false;
         box.parent = root;
+        // ⚠️ **一定要推進 obstacleMeshes。** 線段當年就是被建出來然後丟在地板上
+        // （從沒推進這個陣列），於是視線守衛找不到它 —— 建了等於沒建。
+        handles.obstacleMeshes.push(box);
       } else {
         const dx = ob.b.x - ob.a.x;
         const dz = ob.b.z - ob.a.z;

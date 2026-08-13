@@ -180,34 +180,12 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
-  // ── GH#324 Phase 1：schema 先上線，內容 Phase 2 才推（四筆一起到期）─────
-  "variant:arenas.zones[].obstacles[]#box": {
-    status: "landing",
-    since: "2026-08-14",
-    why: "GH#324 Phase 1 —— **有厚度的盒**（graybox 的牆）。既有 6 張手寫場地用的是圓柱與零厚度線段，一格都不該改。⛔ 為什麼不用 4 條線段拼盒：身體若生在盒**內**，線段版會把它推向最近的一條邊，而那個位置**可能還在盒內**。**到期**：Phase 2 產出無限城的那一刻，這一筆與上面四筆一起刪。",
-  },
-  "field:arenas.zones[].bounds": {
-    status: "landing",
-    since: "2026-08-14",
-    why: "GH#324 Phase 1 —— 這是**刻意的先後順序**，不是遺漏。`content/` 是 live bind-mount 而 client/server 烘在映像裡，所以 `arena@1` 的新 Zod 必須**先隨映像上線**，Phase 2 產生的地圖內容才推得上去；順序反了就是 2026-08-02 事故的完整重演（整份內容載入失敗 → fail-open 退回 2 隻骨架英雄 → 網站看起來完全正常）。⇒ 今天零採用是**對的**：既有 6 張手寫場地一格都不該填它。**到期**：`pnpm map:gen` 產出無限城的那一刻，這四筆要一起刪掉 —— 刪不掉就代表那張圖沒有真的出貨。 這一格是**矩形可玩範圍**（owner 2026-08-14「火圈／殭屍波一樣要有」⇒ 火圈內縮成矩形、殭屍從矩形周邊生成）。",
-  },
-  "field:arenas.zones[].nav": {
-    status: "landing",
-    since: "2026-08-14",
-    why: "GH#324 Phase 1 —— 這是**刻意的先後順序**，不是遺漏。`content/` 是 live bind-mount 而 client/server 烘在映像裡，所以 `arena@1` 的新 Zod 必須**先隨映像上線**，Phase 2 產生的地圖內容才推得上去；順序反了就是 2026-08-02 事故的完整重演（整份內容載入失敗 → fail-open 退回 2 隻骨架英雄 → 網站看起來完全正常）。⇒ 今天零採用是**對的**：既有 6 張手寫場地一格都不該填它。**到期**：`pnpm map:gen` 產出無限城的那一刻，這四筆要一起刪掉 —— 刪不掉就代表那張圖沒有真的出貨。 這一格是**烘焙好的 next-hop 導航表**，runtime 只查表（零搜尋、零三角函式、零 Map 迭代序問題）。",
-  },
+  // ── GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門 ──────────────────
   "field:arenas.zones[].obstacles[]#circle.gateGroup": {
     status: "landing",
     since: "2026-08-14",
-    why: "GH#324 Phase 1 —— 這是**刻意的先後順序**，不是遺漏。`content/` 是 live bind-mount 而 client/server 烘在映像裡，所以 `arena@1` 的新 Zod 必須**先隨映像上線**，Phase 2 產生的地圖內容才推得上去；順序反了就是 2026-08-02 事故的完整重演（整份內容載入失敗 → fail-open 退回 2 隻骨架英雄 → 網站看起來完全正常）。⇒ 今天零採用是**對的**：既有 6 張手寫場地一格都不該填它。**到期**：`pnpm map:gen` 產出無限城的那一刻，這四筆要一起刪掉 —— 刪不掉就代表那張圖沒有真的出貨。 這一格是**可開關的幾何**（route swap／城門／崩塌的橋）。⚠️ 省略＝永遠擋路，也就是既有內容的行為。",
+    why: "GH#324 —— **可開關的幾何**（route swap／城門／崩塌的橋）。Phase 2 出貨的無限城 `gimmick.kind` 是 `none`，所以一個 gate 都沒有，而那是**對的**：⛔ 一張圖最多一個特殊機制，母版刻意先不上機制，讓「graybox 好不好玩」這件事單獨被驗。⚠️ 而且既有 6 張手寫場地的圓柱也一格都不該填它（省略＝永遠擋路，就是它們今天的行為）。**到期**：Phase 5 把 route swap 接上去、無限城長出第一組 gateGroup 的那一刻。",
   },
-  "field:arenas.zones[].regions": {
-    status: "landing",
-    since: "2026-08-14",
-    why: "GH#324 Phase 1 —— 這是**刻意的先後順序**，不是遺漏。`content/` 是 live bind-mount 而 client/server 烘在映像裡，所以 `arena@1` 的新 Zod 必須**先隨映像上線**，Phase 2 產生的地圖內容才推得上去；順序反了就是 2026-08-02 事故的完整重演（整份內容載入失敗 → fail-open 退回 2 隻骨架英雄 → 網站看起來完全正常）。⇒ 今天零採用是**對的**：既有 6 張手寫場地一格都不該填它。**到期**：`pnpm map:gen` 產出無限城的那一刻，這四筆要一起刪掉 —— 刪不掉就代表那張圖沒有真的出貨。 這一格是**地圖區域**（琵琶廳／庭院／月台）。⛔ 它不是 `zone` —— 那個字指的是隔離的對戰分區，兩者是相反的東西。",
-  },
-
-  // ⭐ 2026-08-13 內容批新曝光：父欄位被採用之後這三格才進普查母體。
   "enum:abilities.effects[]#applyBuff.polarity=buff": {
     status: "default-live",
     why: "`polarity` 這一格是這一批的四支減益帶進來的（79-01/92-02 破魔、45-02 攻速、45-002 攻擊力）—— 它們**全部**要 `\"debuff\"`，因為那一格的用途就是讓【淨化】認得出「這是可以被拔掉的壞東西」。`buff` 那一邊要的是「明確標成正面、⛔ 不可以被敵方驅散」，而出貨的增益全部**省略**這一格（省略＝引擎預設就當它是正面）。⇒ 零採用是對的：要填 `buff` 只有在「有人會驅散友方增益」的時候才有意義，而 GGD 今天沒有那種技能。",

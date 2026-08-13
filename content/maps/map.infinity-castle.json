@@ -1,0 +1,195 @@
+{
+  "schema": "map@1",
+  "id": "map.infinity-castle",
+  "name": "無限城",
+  "template": "CENTRAL_RING",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#.....###....###.......#",
+    "#.....#........#.......#",
+    "##....#........#....####",
+    "#.....#........#.......#",
+    "#......................#",
+    "#.....#........#.......#",
+    "##....#........#....####",
+    "#.....###....###.......#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "biwa_hall",
+      "label": "琵琶大廳",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 6,
+          "row": 4,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "inverted_room",
+      "label": "倒置房間",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 3
+        }
+      ]
+    },
+    {
+      "id": "paper_corridor",
+      "label": "紙門走廊",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 4,
+          "w": 5,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "platform",
+      "label": "月台",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 16,
+          "row": 4,
+          "w": 7,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "courtyard",
+      "label": "庭院",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 12,
+          "w": 22,
+          "h": 5
+        }
+      ]
+    }
+  ],
+  "landmark": "biwa_hall",
+  "interactions": [
+    {
+      "id": "biwa-north",
+      "kind": "channel",
+      "at": {
+        "col": 9,
+        "row": 6
+      },
+      "radius": 2,
+      "regionId": "biwa_hall",
+      "params": {}
+    },
+    {
+      "id": "biwa-south",
+      "kind": "channel",
+      "at": {
+        "col": 12,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "biwa_hall",
+      "params": {}
+    },
+    {
+      "id": "inverted-west",
+      "kind": "pickup",
+      "at": {
+        "col": 2,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "inverted_room",
+      "params": {}
+    },
+    {
+      "id": "inverted-east",
+      "kind": "pickup",
+      "at": {
+        "col": 21,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "inverted_room",
+      "params": {}
+    },
+    {
+      "id": "paper-mid",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "paper_corridor",
+      "params": {}
+    },
+    {
+      "id": "platform-mid",
+      "kind": "capture",
+      "at": {
+        "col": 20,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "platform",
+      "params": {}
+    },
+    {
+      "id": "courtyard-west",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "courtyard",
+      "params": {}
+    },
+    {
+      "id": "courtyard-east",
+      "kind": "pickup",
+      "at": {
+        "col": 20,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "courtyard",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "none",
+    "gateGroups": []
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

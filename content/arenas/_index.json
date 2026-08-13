@@ -1,6 +1,6 @@
 {
   "collection": "arenas",
-  "hash": "7e762999ac04",
+  "hash": "47702dac625e",
   "entries": [
     {
       "id": "arena.castle",
@@ -25,6 +25,12 @@
       "path": "arenas/arena.godie.json",
       "hash": "ec3a3c16cdb7",
       "size": 17405
+    },
+    {
+      "id": "arena.infinity-castle",
+      "path": "arenas/arena.infinity-castle.json",
+      "hash": "884e04142339",
+      "size": 102719
     },
     {
       "id": "arena.royale",

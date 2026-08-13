@@ -131,17 +131,27 @@ export const zZoneDef = z
   // deliberately NOT checked — props may overhang the rim for framing.)
   .superRefine((zone, ctx) => {
     zone.obstacles.forEach((ob, i) => {
-      // ⚠️ 這個檢查用的是 `boundaryRadius`（圓）。矩形場地（`bounds.kind === "rect"`）
-      // 的外接圓一定 ≥ 矩形，所以用圓檢查對矩形是**寬鬆但安全**的 —— 不會誤擋。
-      // 精確的矩形內含檢查由產生器的 validator 做（它才有 tile grid 可以判）。
+      // ⚠️ **矩形場地要用矩形判**（GH#324）。我原本讓 box 走「圓心距 + 外接圓半徑
+      // ≤ boundaryRadius」，那對盒來說**更嚴**不是更鬆：一面橫貫整張圖的牆
+      // （halfW 24、halfD 1）外接圓是 24，加上圓心距就 41 > 30，於是**每一張
+      // 矩形地圖的外牆都會被自己的 schema 拒收**。實測就是這樣紅的。
+      // ⇒ `bounds.kind === "rect"` 時改用 AABB 內含；沒有 bounds 才是舊的圓。
+      const rect = zone.bounds?.kind === "rect" ? zone.bounds : undefined;
+      const inRect = (p: { x: number; z: number }, hw = 0, hd = 0): boolean =>
+        rect !== undefined &&
+        Math.abs(p.x - zone.center.x) + hw <= rect.halfW + 1e-6 &&
+        Math.abs(p.z - zone.center.z) + hd <= rect.halfD + 1e-6;
+      const inDisc = (p: { x: number; z: number }, r = 0): boolean =>
+        dist(p, zone.center) + r <= zone.boundaryRadius + 1e-6;
+      const contains = (p: { x: number; z: number }, hw = 0, hd = 0): boolean =>
+        rect !== undefined ? inRect(p, hw, hd) : inDisc(p, Math.hypot(hw, hd));
+
       const inside =
         ob.kind === "circle"
-          ? dist(ob.center, zone.center) + ob.radius <= zone.boundaryRadius + 1e-6
+          ? contains(ob.center, ob.radius, ob.radius)
           : ob.kind === "box"
-            ? dist(ob.center, zone.center) + Math.hypot(ob.halfW, ob.halfD) <=
-              zone.boundaryRadius + 1e-6
-            : dist(ob.a, zone.center) <= zone.boundaryRadius + 1e-6 &&
-              dist(ob.b, zone.center) <= zone.boundaryRadius + 1e-6;
+            ? contains(ob.center, ob.halfW, ob.halfD)
+            : contains(ob.a) && contains(ob.b);
       if (!inside) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -152,7 +162,13 @@ export const zZoneDef = z
     });
     zone.spawns.forEach((side, si) => {
       side.forEach((s, pi) => {
-        if (dist(s, zone.center) > zone.boundaryRadius + 1e-6) {
+        const r2 = zone.bounds?.kind === "rect" ? zone.bounds : undefined;
+        const outside =
+          r2 !== undefined
+            ? Math.abs(s.x - zone.center.x) > r2.halfW + 1e-6 ||
+              Math.abs(s.z - zone.center.z) > r2.halfD + 1e-6
+            : dist(s, zone.center) > zone.boundaryRadius + 1e-6;
+        if (outside) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["spawns", si, pi],
