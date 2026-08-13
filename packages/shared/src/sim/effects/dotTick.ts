@@ -46,6 +46,7 @@
  */
 import type { SimWorld } from "../SimWorld";
 import type { DotInstance } from "./dot";
+import { resourcePctAmount } from "./dynamicTerms";
 
 /** Total order over instances on ONE victim: origin, then source. */
 function compareInstances(a: DotInstance, b: DotInstance): number {
@@ -101,11 +102,30 @@ export function dotTickSystem(world: SimWorld): void {
       if (world.tick > d.expiresAtTick) continue;
 
       if (d.nextTick <= world.tick) {
-        if (d.amountPerTick > 0) {
+        // ── 每一次付款才算的那一半（45-01 火遁-豪火龍之術）────────────────────
+        // `amountPerTick` 仍然是 apply 當下凍住的常數；這裡加上去的是實例自己帶著的
+        // 動態項（`dynamicResourcePct`，**缺席 = 沒有** = 今天出貨的每一筆）。
+        //
+        // 三個既有性質這一段都沒有破壞：
+        //  ① payout 端仍然**不回頭讀內容** —— 讀的是複製進實例的那份 term，
+        //     跟 `stacking` / `onCasterDeath` 完全同一個先例。
+        //  ② `amountPerTick` **不被寫回** —— 它進 `SimWorld.digest()`；每 tick 改寫它
+        //     會把一個 hash 欄位從「這一筆是什麼」變成「上一次付了多少」。而動態項的
+        //     唯一輸入是那條血，血本身已經在 digest 裡 ⇒ 覆蓋率一格都沒少。
+        //  ③ 順序無關 —— 傷害是**排進 `damageQueue`**、由稍後的 `combatResolveSystem`
+        //     才排空，所以同一 tick 上每一筆延燒讀到的是**同一份**血量。
+        // ⚠️ 乘 `stacks` 的方式與 `amountPerTick` 一致（那一格是預乘的）。
+        const dyn =
+          d.dynamicResourcePct === undefined
+            ? 0
+            : resourcePctAmount(world, d.sourceId, id, d.dynamicResourcePct, 1) *
+              Math.max(1, d.stacks ?? 1);
+        const payout = d.amountPerTick + dyn;
+        if (payout > 0) {
           world.damageQueue.push({
             source: d.sourceId,
             target: id,
-            amount: d.amountPerTick,
+            amount: payout,
             type: d.damageType,
             // A DoT payout never crits: the roll happened (or did not) on the
             // cast that applied it, and re-rolling per payout would make a burn

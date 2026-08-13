@@ -31,7 +31,7 @@ import { SimWorld } from "../SimWorld";
 import { SKELETON_ARENA } from "../world/ArenaDef";
 import { runEffects } from "./effectRunner";
 import type { EffectContext, EffectDef } from "./effect";
-import { zEffectDefUnion } from "../../content/schema/effect";
+import { zEffectDef, zEffectDefUnion } from "../../content/schema/effect";
 import { Stat } from "../stats/statTypes";
 import type { EntityId } from "../../ids";
 
@@ -569,5 +569,72 @@ describe("dot: the reserved slot is filled (p1-dot-seam)", () => {
     ]) {
       expect(zEffectDefUnion.safeParse(bad).success, JSON.stringify(bad)).toBe(false);
     }
+  });
+});
+
+/* ═════════════════════════════════════════════════════════════════════════
+ * ⑧ 45-01 —— `resourcePctPhase: "onTick"`：每一跳看**當下**的條，不是中招那一刻
+ * ═════════════════════════════════════════════════════════════════════════ */
+
+describe("dot: resourcePct 的解算時機是一格欄位 (p1-dot-pct-phase)", () => {
+  /** 每一次付款實際扣掉多少（相鄰兩個 HP 取樣的差）。 */
+  const payouts = (trace: number[], start: number): number[] => {
+    const out: number[] = [];
+    let prev = start;
+    for (const hp of trace) {
+      if (hp < prev - 1e-9) out.push(prev - hp);
+      prev = hp;
+    }
+    return out;
+  };
+
+  const pctBurn = (phase?: "onApply" | "onTick"): EffectDef =>
+    burn({
+      amountPerTick: { flat: 1 },
+      intervalSec: 1,
+      durationSec: 3,
+      resourcePct: {
+        subject: "target",
+        resource: "health",
+        basis: "current",
+        scale: "ratio",
+        perRank: [0.1],
+      },
+      ...(phase === undefined ? {} : { resourcePctPhase: phase }),
+    });
+
+  it("⭐ onTick：血越少燒越少 —— 三跳各自看當下的條（45-01「當下現存生命」）", () => {
+    cover("p1-dot-pct-ontick");
+    const r = rig();
+    runEffects([pctBurn("onTick")], ctxOf(r));
+    const start = r.world.health.get(r.target)!.hp;
+    const paid = payouts(hpTrace(r.world, r.target, 95), start);
+    expect(paid.length, "三跳都要付").toBe(3);
+    // ⛔ 驗**機制**不驗數字：只要求「後一跳嚴格比前一跳小」。
+    //    凍結版三跳完全相等 ⇒ 這兩條同時紅，而且訊息直接說出是哪一種。
+    expect(paid[1]!, "第二跳必須比第一跳少（血被燒掉了）").toBeLessThan(paid[0]!);
+    expect(paid[2]!, "第三跳必須比第二跳少").toBeLessThan(paid[1]!);
+    // ⚠️ 而且**凍住的那一半照付**：`amountPerTick` 的 flat 1 不可以被動態項吃掉，
+    //    否則「動態疊在凍結之上」與「動態取代凍結」這兩種實作都會過（失敗形態④）。
+    expect(paid[2]!, "凍住的 flat 那一半仍然在").toBeGreaterThan(0.1 * start * 0.7);
+  });
+
+  it("⭐ 省略 = onApply = 今天的行為：三跳一模一樣（⛔ 預設沒有被偷偷改掉）", () => {
+    cover("p1-dot-pct-onapply");
+    const r = rig();
+    runEffects([pctBurn()], ctxOf(r));
+    const start = r.world.health.get(r.target)!.hp;
+    const paid = payouts(hpTrace(r.world, r.target, 95), start);
+    expect(paid.length).toBe(3);
+    expect(paid[1]!).toBeCloseTo(paid[0]!, 9);
+    expect(paid[2]!).toBeCloseTo(paid[0]!, 9);
+  });
+
+  it("⛔ 填了 phase 卻沒有 resourcePct —— Zod 當場拒收，不可以靜默無作用", () => {
+    cover("p1-dot-pct-phase-orphan");
+    // ⚠️ 用 `zEffectDef`（帶 superRefine 的那一個），⛔ 不是 `zEffectDefUnion`
+    //    —— 後者是**沒有跨欄位規則**的裸聯集，拿它驗會永遠是綠的（失敗形態④）。
+    const orphan = { ...burn({ resourcePctPhase: "onTick" }) };
+    expect(zEffectDef.safeParse(orphan).success).toBe(false);
   });
 });

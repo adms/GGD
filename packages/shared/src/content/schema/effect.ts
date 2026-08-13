@@ -373,7 +373,22 @@ function refineDotResourceBudget(
   ctx: z.RefinementCtx,
 ): void {
   const term = e.resourcePct;
-  if (term === undefined) return;
+  // ⭐ 45-01 —— `resourcePctPhase` 沒有 `resourcePct` 可以修飾時**整格蒸發**：
+  //    載入、編輯器、執行期都不會說一句話，而作者以為他寫了「每 tick 重算」。
+  //    ⛔ 這正是 CLAUDE.md 講的「只在遠離現場的地方響的警報不是守衛」——
+  //    這一條在**編輯發生的當下**（Zod）就擋。
+  if (term === undefined) {
+    if (e.resourcePctPhase !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["resourcePctPhase"],
+        message:
+          "填了 resourcePctPhase 卻沒有 resourcePct —— 這一格是**修飾** resourcePct 的，" +
+          "單獨存在時完全沒有作用。要嘛補上 resourcePct，要嘛把這一格刪掉。",
+      });
+    }
+    return;
+  }
   const payouts =
     Math.max(1, Math.floor(e.durationSec / e.intervalSec)) +
     (e.tickOnApply === true ? 1 : 0);
@@ -2477,6 +2492,27 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
        * 是 `duration/interval` 下,守衛必須架在乘完之後。
        */
       resourcePct: zResourcePctTerm.optional(),
+      /**
+       * ⭐ 45-01【火遁-豪火龍之術】—— `resourcePct` **什麼時候**解算。
+       *
+       * owner 規格：「使其**每秒受到當下[現存生命] 1% 的傷害**，持續 3 秒。」
+       * 「當下」是這一格存在的全部理由：三跳要各自看**那一跳當下**的血。
+       *
+       * | 值 | 語意 | 誰用 |
+       * |---|---|---|
+       * | `"onApply"`（省略 = 這個） | 施加的那一刻算一次、折進實例凍住 | 熾天使之弓「每秒 3% **最大**生命」等既有每一支 |
+       * | `"onTick"` | **每一次付款**才用當下的條重算 | 45-01「當下現存生命 1%」 |
+       *
+       * ⛔ 預設**不動**：改預設會靜默改變既有內容的行為，而沒有一支要求過。
+       *
+       * ⚠️ owner 2026-08-13 指出「Berserker 不就有類似效果」—— 對，
+       * `config.regen@1` 的 `healthDrainPctOfMax` 就是每 tick 重算的百分比扣血。
+       * 但那一條是**最大**生命／**自己身上**／英雄卡靜態／**不算傷害**
+       * （不吃傷害倍率、不被護盾吸、不噴數字、扣不死人）。45-01 要的是敵人身上、
+       * 三秒、**現存**生命、而且是**傷害**（要算擊殺歸屬）。⇒ 缺的從來不是「扣血」，
+       * 是「每 tick 重算」這一格，而它現在住在共用的 dot 管線裡。
+       */
+      resourcePctPhase: z.enum(["onApply", "onTick"]).optional(),
       /** seconds between payouts — one sim tick (1/30 s) is the floor */
       intervalSec: z
         .number()

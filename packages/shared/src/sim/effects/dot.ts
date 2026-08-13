@@ -48,7 +48,9 @@ import type { DamageType } from "./effect";
 import { resolveScaling } from "./effect";
 import type { EffectKindSpec } from "./effectKind";
 import { casterAttrs, casterStats } from "./effectCommon";
+import type { ResourcePctTerm } from "./dynamicTerms";
 import { resourcePctAmount } from "./dynamicTerms";
+import { rankColumn } from "../perRank";
 
 /** Re-applying the same burn from the same caster. See `EffectDef.dot.stacking`. */
 export type DotStacking = "refresh" | "independent" | "stack";
@@ -132,6 +134,25 @@ export interface DotInstance {
   dispellable?: boolean;
   /** A4(#278) —— 極性。缺席時 `clearPools` 當 `"debuff"`（這一池只出現過那一種）。 */
   polarity?: "buff" | "debuff";
+  /**
+   * ⭐ 45-01【火遁-豪火龍之術】——「每一次付款才用**當下**的條算」的那一半
+   * （`dot.resourcePctPhase: "onTick"`）。
+   *
+   * ⭐ **缺席 = 沒有動態項**，而那一句涵蓋今天出貨的每一筆（要嘛沒寫
+   * `resourcePct`，要嘛走預設的 `"onApply"` ⇒ 已經折進 `amountPerTick`）。
+   * 所以這一格的**存在**就是「payout 要重算」的唯一訊號 —— ⛔ 不需要第二格布林，
+   * 兩格總有一天會互相矛盾而且沒有人會發現。
+   *
+   * ⚠️ 它是一份**複製品**，跟 `stacking` / `maxStacks` / `onCasterDeath` 完全同一個
+   * 先例：payout 端（`dotTick.ts`）**永遠不回頭讀內容**。`perRank` 已經在 apply
+   * 依 `ctx.rank` 折成**單欄**（payout 拿不到 rank，也不該拿得到）。
+   *
+   * ⚠️ `subject: "self"` 讀的是**施法者**的條。施法者死掉（`onCasterDeath` 預設
+   * `"continue"`）時 `resourcePctAmount` 讀不到 HealthComp 就回 0 —— 這一項靜靜
+   * 歸零，`amountPerTick` 那一半照付。要「施法者死了也照他當初的血算」就用
+   * 預設的 `"onApply"`（那條路本來就凍住了）⇒ 兩種都寫得出來。
+   */
+  dynamicResourcePct?: ResourcePctTerm;
 }
 
 /*
@@ -175,6 +196,19 @@ export const dotEffect: EffectKindSpec<"dot"> = {
     // schedule — turning the flag on must not also be a stealth nerf.
     const firstTick = e.tickOnApply === true ? world.tick : world.tick + intervalTicks;
 
+    // ⭐ 45-01 —— `resourcePct` 的**解算時機**是一格欄位（第一守則：決策點變欄位）。
+    // 省略 = `"onApply"` = 今天的行為。⛔ 預設不動：改它會靜默改變既有的每一支。
+    //
+    // ⚠️ RANK 在**這裡**折掉，跟這個實例裡其他每一格一樣 —— payout 端不回頭讀內容，
+    //    也拿不到 `ctx.rank`。折成單欄之後 `dotTick` 一律以 rank 1 讀，答案與凍結
+    //    那一條路逐字相同。
+    // ⚠️ 這一份與 target 無關（`perRank` 只看 rank），所以算在 per-target 迴圈**外面**，
+    //    就像 `base` 只 `resolveScaling` 一次。
+    const dynamicTerm: ResourcePctTerm | undefined =
+      e.resourcePct !== undefined && e.resourcePctPhase === "onTick"
+        ? { ...e.resourcePct, perRank: [rankColumn(e.resourcePct.perRank, ctx.rank)] }
+        : undefined;
+
     // ⭐ G11（GH#299）—— 燒在自己身上（獻祭型）。省略 = target = 今天的行為。
     const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
     for (const target of subjects) {
@@ -183,12 +217,16 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // can never pay and never expires against anything.
       if (!world.health.has(target)) continue;
 
-      // 資源百分比項 —— PER TARGET(分母是這一個身體的條),而且**在這裡就凍住**,
-      // 折進這個實例的 `amountPerTick`。跟 `base` 完全同一個語意與同一個時機,
-      // 所以 `effects/dotTick.ts` 一行都不用改,而一個施法者死掉之後燒傷也不會
-      // 突然跟著對方的裝備變動。熾天使之弓「每秒 3% 最大生命」走這一條。
+      // 資源百分比項 —— PER TARGET(分母是這一個身體的條)。**解算時機是一格欄位**
+      // (`resourcePctPhase`,省略 = `onApply`):
+      //   · onApply(預設) —— 在這裡就凍住,折進這個實例的 `amountPerTick`。跟 `base`
+      //     完全同一個語意與同一個時機,而施法者死掉之後燒傷也不會突然跟著對方的
+      //     裝備變動。熾天使之弓「每秒 3% 最大生命」走這一條。
+      //   · onTick —— 這一項**不**進 `amountPerTick`(所以那一格仍然是一個常數,
+      //     `SimWorld.digest()` 照舊),改由 `dotTick.ts` 每一次付款用當下的條重算。
+      //     45-01「每秒受到**當下**[現存生命] 1%」走這一條。
       const perTick =
-        e.resourcePct === undefined
+        e.resourcePct === undefined || dynamicTerm !== undefined
           ? base
           : base + resourcePctAmount(world, ctx.caster, target, e.resourcePct, ctx.rank);
 
@@ -221,6 +259,8 @@ export const dotEffect: EffectKindSpec<"dot"> = {
           // `dispelRules.dotDefaultDispellable`（出貨 true），所以這一格是
           // 「這一筆燒傷解不掉」的唯一寫法。
           dispellable: e.dispellable,
+          // 45-01 —— 只有 `resourcePctPhase: "onTick"` 才有東西。
+          dynamicResourcePct: dynamicTerm,
         };
         if (list === undefined) world.dot.set(target, [inst]);
         else list.push(inst);
@@ -234,6 +274,10 @@ export const dotEffect: EffectKindSpec<"dot"> = {
       // silently zero. Only the DEADLINE moves.
       existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
       existing.baseAmountPerTick = perTick;
+      // ⚠️ 直接指派（可能是 undefined），⛔ 不要寫成 `if (dynamicTerm) …`：同一個
+      // origin 從凍結版改成重算版（或反過來）要真的換過去，否則舊實例會帶著上一版
+      // 的語意活到期滿，而畫面上跟正確的一模一樣。
+      existing.dynamicResourcePct = dynamicTerm;
       existing.damageType = e.damageType ?? world.damageRules.defaultAbilityDamageType;
       existing.intervalTicks = intervalTicks;
       existing.stacking = stacking;

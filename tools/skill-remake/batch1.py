@@ -1453,16 +1453,20 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
   radiusTier="大",
   effects=[area("magic", tier="大", per=[250, 350, 450, 550]),
            status("burn", 3.0),
-           # ⚙️ 引擎缺機制（2026-08-13 量到，⛔ 這裡**不改行為**，只留紙本痕跡）：
-           #    規格寫的是「每秒受到**當下**[現存生命] 1% 的傷害」，但 `dot.ts:191` 在
-           #    **施加的那一刻**就把 `resourcePct` 解算掉、折進 `DotInstance.amountPerTick`
-           #    （該處註解逐字寫「在這裡就凍住」），`dotTick.ts` 從頭到尾只認那個純量、
-           #    不再讀受害者的血 ⇒ 三跳付的都是「中招那一瞬間的 1%」。
-           #    滿血中招 → 三跳都照滿血收；殘血中招 → 燃燒形同不存在。
-           #    修法是引擎加一格 `dot.resourcePctPhase: "onApply" | "onTick"`
-           #    （預設 onApply ＝今天的行為；第一守則：決策點變欄位），
-           #    ⛔ 今天沒有任何欄位能要它每 tick 重算，所以這一列**不動**。
+           # ⭐【每秒受到**當下**現存生命 1%】（2026-08-13 落地）—— `resourcePctPhase: "onTick"`。
+           #    在此之前 `dot.ts` 在**施加的那一刻**就把 `resourcePct` 解算成純量凍住
+           #    （該處註解逐字寫「在這裡就凍住」），`dotTick.ts` 只認那個純量、不再讀
+           #    受害者的血 ⇒ 三跳付的都是「中招那一瞬間的 1%」：滿血中招三跳照滿血收，
+           #    殘血中招燃燒形同不存在。**規格的關鍵字「當下」整個沒有落地。**
+           #
+           # ⚠️ owner 2026-08-13 指出「Berserker 不就有類似效果 每秒減少 1% 現存生命嗎?」
+           #    —— 對，`config.regen@1` 的 `healthDrainPctOfMax` 確實每 tick 重算。
+           #    但那一條是**最大**生命／**自己身上**／英雄卡靜態／**不算傷害**
+           #    （不吃傷害倍率、不被護盾吸、不噴數字、扣不死人、沒有擊殺歸屬）。
+           #    45-01 要的是敵人身上、三秒、**現存**生命、而且要算傷害。
+           #    ⇒ 缺的從來不是「扣血」，是「每 tick 重算」那一格。
            {"kind": "dot", "damageType": "magic", "amountPerTick": amt(flat=1),
+            "resourcePctPhase": "onTick",
             "resourcePct": {"subject": "target", "resource": "health", "basis": "current",
                             "scale": "ratio", "perRank": [0.01]},
             "intervalSec": 1.0, "durationSec": 3.0, "stacking": "refresh"}])

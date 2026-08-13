@@ -1835,6 +1835,13 @@ type EffectVariant =
        * `content/schema/effect.ts` 的 `dot` superRefine。
        */
       resourcePct?: ResourcePctTerm;
+      /**
+       * ⭐ 45-01 —— `resourcePct` 什麼時候解算。省略 = `"onApply"` = 在施加的
+       * 那一刻算一次並凍進 `DotInstance.amountPerTick`（今天每一支的行為）。
+       * `"onTick"` = **每一次付款**才用當下的條重算（「每秒受到**當下**現存生命 1%」）。
+       * 完整語意與預設值的辯護在 `content/schema/effect.ts` 的同名欄位。
+       */
+      resourcePctPhase?: "onApply" | "onTick";
       /** seconds between payouts; converted to whole ticks once, at apply */
       intervalSec: number;
       /** total seconds the effect lasts */
