@@ -1465,9 +1465,14 @@ A("45-01", "45-01 火遁-豪火龍之術", "ground", [45, 45, 45, 45], [150, 190
            #    45-01 要的是敵人身上、三秒、**現存**生命、而且要算傷害。
            #    ⇒ 缺的從來不是「扣血」，是「每 tick 重算」那一格。
            {"kind": "dot", "damageType": "magic", "amountPerTick": amt(flat=1),
-            "resourcePctPhase": "onTick",
             "resourcePct": {"subject": "target", "resource": "health", "basis": "current",
                             "scale": "ratio", "perRank": [0.01]},
+            # ⚠️ 這一格一定要排在 `resourcePct` **後面** —— 與 `content/schema/effect.ts`
+            #    的宣告序一致。`zChampionDoc.parse()` 會照 Zod 宣告序重排鍵，而
+            #    `abilityScaling.test.ts` 的 fx-19 用 `JSON.stringify` 比對
+            #    standalone 與英雄卡內嵌的兩份 ⇒ **鍵序不同就是假的 desync**。
+            #    （同一條規則寫在 `stamp_provenance.py`：provenance 插在 description 前面。）
+            "resourcePctPhase": "onTick",
             "intervalSec": 1.0, "durationSec": 3.0, "stacking": "refresh"}])
 
 A("45-02", "45-02 千鳥流", "self", [45, 45, 45, 45], [70, 120, 170, 220], 0,

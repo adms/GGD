@@ -99,7 +99,6 @@
               "amountPerTick": {
                 "flat": 1.0
               },
-              "resourcePctPhase": "onTick",
               "resourcePct": {
                 "subject": "target",
                 "resource": "health",
@@ -109,6 +108,7 @@
                   0.01
                 ]
               },
+              "resourcePctPhase": "onTick",
               "intervalSec": 1.0,
               "durationSec": 3.0,
               "stacking": "refresh"

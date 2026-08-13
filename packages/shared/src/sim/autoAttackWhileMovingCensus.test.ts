@@ -253,8 +253,18 @@ describe("GH#216 移動指令期間會不會攻擊 —— 全角色矩陣", () =
     const ranged = rows.filter((r) => r.attackType === "ranged");
     const brokenBefore = (k: "inReach" | "approach" | "far"): Row[] =>
       rows.filter((r) => r[k][0] === 0);
+    // ⭐ 走不動的身體不算「壞掉」——「移動中接敵」對它**在定義上**不成立。
+    //
+    // 2026-08-13 落地的 70-00 紮根（owner：「類似定身，可攻擊跟施展技能但不能移動」）
+    // 讓 `godie-e010` 這具替身卡帶著 `immobile: true`，於是 approach / far 兩個
+    // 需要**走過去**的情境對它永遠是 0 命中。⛔ 那不是缺陷，是規格。
+    //
+    // ⚠️ 判定從**英雄卡推導**（`Champions.tryGet(id).immobile`），
+    // ⛔ 不是把 `godie-e010` 寫成一個豁免清單 —— 下一具不會走的身體
+    // （砲台形態、雕像）不該要求有人記得回來補一列。
+    const immobile = (id: string): boolean => Champions.tryGet(id as ChampionId)?.immobile === true;
     const brokenAfter = (k: "inReach" | "approach" | "far"): Row[] =>
-      rows.filter((r) => r[k][1] === 0);
+      rows.filter((r) => r[k][1] === 0 && !(immobile(r.id) && k !== "inReach"));
 
     const pct = (n: number, d: number): string =>
       `${n}/${d} = ${((100 * n) / Math.max(1, d)).toFixed(1)}%`;
