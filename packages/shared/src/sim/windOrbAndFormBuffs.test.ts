@@ -287,12 +287,18 @@ describe("20-01 風王結界 —— 法球只在結界開著的時候刮風 (#24
     const saber = spawn(w, SABER, 0, 0, -0.6);
     const dummy = spawn(w, SABER, 1, 1, 0.6);
     w.step(NO_INTENTS);
-    // 拔掉沙包身上所有帶 hook 的來源。沙包也是 Saber，所以它自己身上有
-    // 20-00 銀色甲胄（受擊時 50% 機率獲得 60 點護盾）—— 那個護盾會把一發法球
-    // 整個吃掉，讓「這一發扣了多少血」變成 0，公式比值就會變成 0/0。
+    // 拔掉沙包身上所有會「吃掉一發法球」的來源。沙包也是 Saber，所以它自己身上有
+    // 20-00 銀色甲胄 —— 那個減免會把一發法球整個吃掉，讓「這一發扣了多少血」變成 0，
+    // 公式比值就會變成 0/0。
     // 這是把量測噪音拿掉，不是把被測的東西拿掉：法球掛在 SABER 身上，一條都沒動。
+    //
+    // ⛔ 這裡以前只濾 `hooks`，而那在 2026-08-13 之後就漏掉了銀色甲胄：
+    //    重製稿把它從「受擊時 hook 給護盾」改成 **`passive.ranks[].block`**
+    //    （30% 機率格擋 100% 魔法傷害）——**一格授權，不是 hook**，
+    //    所以舊的濾網看不到它，30% 的法球被格掉、`every(a => a > 0)` 當場 false。
+    //    ⚠️ 症狀長得像「法球壞了」，其實是**沙包變強了**（GH#311 第 2 類）。
     const dsc = w.stats.get(dummy)!;
-    dsc.sources = dsc.sources.filter((src) => !src.hooks?.length);
+    dsc.sources = dsc.sources.filter((src) => !src.hooks?.length && src.block === undefined);
     dsc.dirty = true;
     learnW(w, saber);
     return { w, saber, dummy };
