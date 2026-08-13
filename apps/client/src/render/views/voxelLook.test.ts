@@ -69,8 +69,10 @@ describe("voxelLookFor is deterministic", () => {
 });
 
 describe("the real roster comes out visually distinct", () => {
-  it("covers the 44 champions that wear a generated mesh", () => {
-    expect(ROSTER.length).toBeGreaterThanOrEqual(40);
+  it("穿體素身體的英雄都被涵蓋到 —— 而且不是空跑", () => {
+    // GH#323 —— ⛔ 不寫 `>= 40`：那是搬家前的族群大小，名單一動就用
+    //    「21 不到 40」這種跟「外觀會不會撞」無關的訊息紅。
+    expect(ROSTER.length, "沒有任何英雄穿體素身體 —— 底下每一條都會空跑").toBeGreaterThan(0);
   });
 
   it("no two champions share BOTH a palette and a prop silhouette", () => {

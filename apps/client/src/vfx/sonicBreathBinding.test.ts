@@ -31,6 +31,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { readFileSync } from "node:fs";
+import { readContentJson } from "../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -70,7 +71,9 @@ interface AbilityDocShape {
 }
 
 /** 出貨的技能文件,原封不動從磁碟讀。 */
-const shipped = readJson<Record<string, unknown>>(`content/abilities/${ABILITY}.json`);
+// GH#323 —— 這支技能在 2026-08-13 隨它的英雄退場了，但這條驗的是**綁定本身**
+// （flyHeight 是不是從原作 pivot 算出來的），doc 只是夾具 ⇒ 走 `_legacy/` 後備。
+const shipped = readContentJson<Record<string, unknown>>(`abilities/${ABILITY}.json`);
 /** 原作模型每個發射器的 pivot(綁定時 `flyHeight` 就是從這裡算的)。 */
 const sourceLayers = readJson<FamiliesFile>("content/assets/vfx/w3x-families.json").effects.find(
   (e) => e.id === SOURCE_FX,

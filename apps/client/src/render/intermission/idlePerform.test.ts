@@ -263,8 +263,10 @@ describe("idlePerform — the shipped roster actually performs", () => {
   it("found the real champion .glbs to measure", () => {
     cover("shop-idle-perform");
     // a guard on the guard: if the content tree ever moves, the census below
-    // would pass vacuously over an empty list
-    expect(roster.length).toBeGreaterThan(100);
+    // would pass vacuously over an empty list.
+    // GH#323 —— ⛔ 不寫 `> 100`：出貨名單 2026-08-13 從 119 縮到 78，而這一條
+    //    在守的是「有沒有真的 .glb 可以量」，⛔ 不是「名單有多大」。
+    expect(roster.length, "一份可量的英雄 .glb 都找不到 —— 底下整個普查會空跑").toBeGreaterThan(0);
   });
 
   it("EVERY champion gets at least one rotatable clip — nobody stands frozen", () => {

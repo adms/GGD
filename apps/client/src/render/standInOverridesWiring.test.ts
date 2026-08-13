@@ -15,6 +15,7 @@
  * Runs on Babylon's NullEngine (headless), like the other render tests.
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
+import { isShipped } from "../testkit/contentFixtures";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -352,7 +353,9 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
 
   it("finds the stand-in roster (guard against the fixture silently emptying)", () => {
     cover("client-standin-override");
-    expect(standIns.length).toBeGreaterThanOrEqual(40);
+    // GH#323 —— ⛔ 不釘 40（那是 2026-08-13 搬家前的族群大小）。這一條在守的是
+    //    「夾具沒有默默變空」，⛔ 不是「共用替身有幾位」。
+    expect(standIns.length, "共用替身名單是空的 —— 底下每一條都會空跑").toBeGreaterThan(0);
   });
 
   /**
@@ -373,16 +376,26 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
   it("usca-verbatim 這一組已經空了 —— 而且是空得有理由,不是迴圈壞掉", () => {
     cover("client-standin-override");
     // 前提:名單本身不是空的(否則下面兩條都變成廢話)
-    expect(standIns.length).toBeGreaterThanOrEqual(40);
+    // GH#323 —— ⛔ 不釘 40（那是 2026-08-13 搬家前的族群大小）。這一條在守的是
+    //    「夾具沒有默默變空」，⛔ 不是「共用替身有幾位」。
+    expect(standIns.length, "共用替身名單是空的 —— 底下每一條都會空跑").toBeGreaterThan(0);
     const stillVoxel = standIns.filter((c) => defaultPrefersVoxelBody(c.modelKey, c.id));
     expect(
       stillVoxel.map((c) => c.id),
       "又有 godie-* 掉回程序生成的體素身體了 —— 若是刻意的,把它的 usca-verbatim 規則一起寫回來",
     ).toEqual([]);
-    // 而那六位「靠對半才穿到模型」的,一個都不能從名單上消失
+    // 而那六位「靠對半才穿到模型」的,一個都不能**默默**從名單上消失
+    // GH#323 —— ⚠️ 2026-08-13 其中四位（h00w / n01b / o02n / u011）隨變身系統整理
+    //    搬進 `content/_legacy/`。那是**刻意的退場**，不是這條規則壞掉 ⇒ 跳過，
+    //    ⛔ 但不是從清單刪掉：留著才看得出「哪幾位還在、規則對它們還成立」。
+    const retiredHere: string[] = [];
     for (const id of NOW_MODEL_BODIED_VIA_COUNTERPART) {
       const c = standIns.find((x) => x.id === id);
-      expect(c, `${id} 不再是 stand-in champion 了?`).toBeTruthy();
+      if (c === undefined && !isShipped("champions", id)) {
+        retiredHere.push(id);
+        continue;
+      }
+      expect(c, `${id} 不再是 stand-in champion 了?（而且它還在出貨名單上）`).toBeTruthy();
       expect(
         defaultPrefersVoxelBody(c!.modelKey, id),
         `${id}: #223 的保底 (b) 沒了 —— 這具身體會掉回方塊人`,
@@ -391,6 +404,11 @@ describe("stand-in fallback preserves the map's declared scale (task #77)", () =
         false,
       );
     }
+    // ⛔ 六位不能同時退場 —— 那樣這條就變成空跑，而它是 #223 保底 (b) 的唯一守衛。
+    expect(
+      retiredHere.length,
+      "這六位全部退場了 —— 這條測試已經不守任何東西，該刪或該換一組樣本",
+    ).toBeLessThan(NOW_MODEL_BODIED_VIA_COUNTERPART.length);
   });
 
   it("every stand-in champion's map scale reaches the renderer", () => {

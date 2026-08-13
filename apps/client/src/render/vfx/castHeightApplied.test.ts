@@ -36,6 +36,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
+import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -155,9 +156,12 @@ function cast(abilityId: string, into: Scene = scene): { art: Drawn[]; impact: D
  * （`godie-uvng.e → w3xfx-godie-tectonicfury-p0 @ y=1`）。
  * 那也是這次修法**留下來沒做**的一塊，交接時要講清楚。
  */
+// GH#323 —— 只取**還出貨**的：235 支技能在 2026-08-13 搬進 `content/_legacy/`，
+// 而綁定表留著它們是刻意的。⛔ 拿退場的技能當分母，這條就會用「58 不到 83」這種
+// 跟「施法高度有沒有送到 Babylon」完全無關的訊息紅。
 const idsOfFamily = (family: string): string[] =>
   Object.entries(W3X_FAMILY_ART)
-    .filter(([id, r]) => r.family === family && !W3X_ABILITY_ART[id])
+    .filter(([id, r]) => r.family === family && !W3X_ABILITY_ART[id] && isShipped("abilities", id))
     .map(([id]) => id);
 
 describe("#251 施法高度真的送到 Babylon (cast-height-applied)", () => {
@@ -165,10 +169,14 @@ describe("#251 施法高度真的送到 Babylon (cast-height-applied)", () => {
     // 這一條在守「下面兩條不是恆真」。哪天有人把 config 的 0.15 改成 1.0，
     // 或這張表被清空，先紅的會是它，而不是整個檔案默默變成永遠會過。
     expect(SHIPPED.families.shockwaveRing?.heightY).toBeLessThan(SHIPPED_CAST_HEIGHT_Y);
-    // 91 = 表裡的衝擊波環總數；扣掉被硬表晉升蓋過的那幾支之後是這條測試的分母。
-    const ring = Object.values(W3X_FAMILY_ART).filter((r) => r.family === "shockwaveRing");
-    expect(ring.length, "衝擊波環的列數變了 —— 下面的覆蓋率數字要重算").toBe(91);
-    expect(idsOfFamily("shockwaveRing").length).toBeGreaterThan(80);
+    // GH#323 —— ⛔ 這裡原本釘 `91` 與 `> 80`，兩個都是**表的大小**。2026-08-13
+    //    有 235 支技能搬進 `content/_legacy/`，於是它用「59 不到 80」報一個跟
+    //    「施法高度有沒有送到 Babylon」毫無關係的錯。⭐ 真正要擋的是「分母塌成 0」
+    //    ——那才會讓下面兩條變成恆真。
+    expect(
+      idsOfFamily("shockwaveRing").length,
+      "衝擊波環一支都不出貨了 —— 下面兩條會變成恆真，這個檔案就不再守任何東西",
+    ).toBeGreaterThan(0);
     expect(idsOfFamily("boltStrike").length).toBeGreaterThan(0);
   });
 

@@ -61,6 +61,7 @@
  * emitter 必須剛好移動 (Δx,Δz)，這樣才對壞掉的實作有鑑別力。
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
+import { isShipped } from "../../testkit/contentFixtures";
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -147,6 +148,9 @@ function ctx(at: { x: number; z: number }): VfxContext {
 function oneAbilityPerFamily(): Map<string, string> {
   const out = new Map<string, string>();
   for (const [id, row] of Object.entries(W3X_FAMILY_ART)) {
+    // GH#323 —— 代表一定要挑**還出貨**的那一支。原本挑到的幾支在 2026-08-13
+    // 隨英雄退場了，於是「這個家族噴不出粒子」——⛔ 真相是那支技能根本不在名單上。
+    if (!isShipped("abilities", id)) continue;
     if (!out.has(row.family)) out.set(row.family, id);
   }
   return out;

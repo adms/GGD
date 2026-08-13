@@ -13,6 +13,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
+import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { zVfxDoc } from "@ggd/shared/content";
 import { W3X_ABILITY_ART, w3xArtFor, extraVfxDocIds } from "./w3xAbilityArt";
@@ -49,6 +50,8 @@ describe("w3x ability art promotions", () => {
 
   it("the ability's shipped vfxKey IS the promoted primary (content agrees with the table)", () => {
     for (const [abilityId, art] of rows) {
+      // GH#323 —— 表上留著已退場的技能沒有錯（復活就用得上），⛔ 錯的是拿它們斷言。
+      if (!isShipped("abilities", abilityId)) continue;
       const p = root(`content/abilities/${abilityId}.json`);
       expect(existsSync(p), `no ability doc ${abilityId}`).toBe(true);
       const doc = JSON.parse(readFileSync(p, "utf8")) as { vfxKey?: string };

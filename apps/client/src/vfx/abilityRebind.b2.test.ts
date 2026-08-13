@@ -46,6 +46,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
+import { isShipped, readContentJson } from "../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -68,7 +69,11 @@ const loadVfx = (id: string): VfxDoc =>
   JSON.parse(readFileSync(root(`content/vfx/${id}.json`), "utf8")) as VfxDoc;
 /** 讀**出貨的**技能檔 —— 不是測試自己手寫的物件(第⑤號故障)。 */
 const loadAbility = (id: string): Record<string, unknown> =>
-  JSON.parse(readFileSync(root(`content/abilities/${id}.json`), "utf8")) as Record<string, unknown>;
+  // GH#323 —— 走 `readContentJson`：先 `content/`，再 `content/_legacy/`。
+  // ⚠️ 這幾支技能在 2026-08-13 隨著它們的英雄退場了，但這條測試驗的是**引擎**
+  //    （vfxLayers 會不會變成多組發射器），doc 只是夾具 —— 它在不在名單上不影響。
+  
+  readContentJson<Record<string, unknown>>(`abilities/${id}.json`);
 
 const ABILITY = "godie-othr.w";
 const LAYER_KEYS = [
@@ -237,6 +242,10 @@ describe("家族原型不可以蓋掉一份真的出貨資產(#230 的系統性�
     );
     const out: string[] = [];
     for (const [abilityId, row] of Object.entries(W3X_FAMILY_ART)) {
+      // GH#323 —— 綁定表（`W3X_FAMILY_ART`）記的是「這支技能該用哪個原作特效」，
+      // 而 2026-08-13 有 235 支技能隨著英雄退場搬進 `content/_legacy/`。表上留著
+      // 它們沒有錯（哪天復活就用得上），⛔ 錯的是拿**已退場的**技能去斷言。
+      if (!isShipped("abilities", abilityId)) continue;
       const docs = (census.models[row.model]?.layerDocIds ?? []).filter((d) => shipped.has(d));
       if (docs.length === 0) continue;
       if (W3X_ABILITY_ART[abilityId]) continue; // 硬表已經接上真資產

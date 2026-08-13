@@ -44,6 +44,7 @@
  */
 import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { readFileSync } from "node:fs";
+import { readContentJson } from "../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 
@@ -63,7 +64,11 @@ const root = (p: string): string => fileURLToPath(new URL(`../../../../${p}`, im
 const loadVfx = (id: string): VfxDoc =>
   JSON.parse(readFileSync(root(`content/vfx/${id}.json`), "utf8")) as VfxDoc;
 const loadAbility = (id: string): Record<string, unknown> =>
-  JSON.parse(readFileSync(root(`content/abilities/${id}.json`), "utf8")) as Record<string, unknown>;
+  // GH#323 —— 走 `readContentJson`：先 `content/`，再 `content/_legacy/`。
+  // ⚠️ 這幾支技能在 2026-08-13 隨著它們的英雄退場了，但這條測試驗的是**引擎**
+  //    （vfxLayers 會不會變成多組發射器），doc 只是夾具 —— 它在不在名單上不影響。
+  
+  readContentJson<Record<string, unknown>>(`abilities/${id}.json`);
 
 /**
  * 綁定**之前**每一支技能的單值 `vfxKey`(git HEAD)。A/B 的另一半就是它:

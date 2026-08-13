@@ -19,6 +19,7 @@
  * tracks the shipped config, never hard-coded factors.
  */
 import { describe, it, expect } from "vitest";
+import { readContentJson } from "../../testkit/contentFixtures";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -84,7 +85,10 @@ function pickRealIds(n: number): string[] {
 }
 const REAL_IDS = pickRealIds(5);
 function loadAbility(id: string): Record<string, unknown> {
-  return JSON.parse(readFileSync(join(CONTENT, "abilities", `${id}.json`), "utf8"));
+  // GH#323 —— 走 `content/` → `content/_legacy/` 後備。這個檔驗的是**文案改寫器**
+  // （損害/公式傷害要原封不動、冷卻要換算），技能 doc 只是一段真的中文夾具；
+  // 它在不在出貨名單上，跟改寫器對不對完全無關。
+  return readContentJson(`abilities/${id}.json`);
 }
 
 describe("rescaleAbilityProse cooldown pass (hud-display-final)", () => {

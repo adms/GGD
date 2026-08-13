@@ -42,6 +42,7 @@
  * 是原始碼結構檢查，不是行為檢查 —— 理由與限制寫在它自己的檔頭。
  */
 import { describe, it, expect, beforeAll, beforeEach, afterEach } from "vitest";
+import { readContentJson } from "../../testkit/contentFixtures";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -176,7 +177,9 @@ const KRAUSER_ALT_KEY = "champ.skin.barbarian";
 const KRAUSER_BASE_GLB = `${BLIZZARD_LOCAL_GLB_PREFIX}U012.glb`;
 
 function championJson(id: string): ChampionDef {
-  return JSON.parse(readFileSync(join(REPO, "content/champions", `${id}.json`), "utf8"));
+  // GH#323 —— 這幾位（克勞薩／噴射人…）在 2026-08-13 隨變身系統整理搬進
+  //    `content/_legacy/`。這條驗的是**兩半長得不一樣**這個機制，doc 只是夾具。
+  return readContentJson(`champions/${id}.json`);
 }
 
 beforeAll(() => {

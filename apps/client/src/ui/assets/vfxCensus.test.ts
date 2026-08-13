@@ -17,6 +17,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { isShipped } from "../../testkit/contentFixtures";
 import { fileURLToPath } from "node:url";
 import {
   buildCensusRows,
@@ -266,6 +267,8 @@ describe("the shipped census artefacts agree with the shipped content", () => {
     const rows = buildCensusRows(abilities, [], provenance, vfxDocIds);
     const byId = new Map(rows.map((r) => [r.abilityId, r]));
     for (const id of Object.keys(W3X_ABILITY_ART)) {
+      // GH#323 —— 普查只涵蓋**出貨**的技能，退場的自然不在 rows 裡。
+      if (!isShipped("abilities", id)) continue;
       const row = byId.get(id);
       expect(row, `${id} has no ability doc`).toBeDefined();
       expect(row!.status, `${id} is promoted but the census says ${row!.status}`).toBe("TRUE-PORT");

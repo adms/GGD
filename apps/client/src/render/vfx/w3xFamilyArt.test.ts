@@ -227,11 +227,22 @@ describe("w3x family art — structure", () => {
     }
   });
 
-  it("every bound ability doc actually exists in content/abilities", () => {
-    const missing = Object.keys(W3X_FAMILY_ART).filter(
-      (id) => !existsSync(root(`content/abilities/${id}.json`)),
+  it("綁定表上的每一筆，都指得到一份真的技能文件（出貨的或已退場的）", () => {
+    // ⚠️ 2026-08-13 有 235 支技能搬進 `content/_legacy/`，於是這一條一次紅了 74 筆。
+    // ⛔ 那 74 筆**不是壞掉的綁定** —— 表記的是「這支技能該用哪個原作特效」，
+    //    技能退場不會讓那個對應變錯，哪天復活就直接用得上。
+    // ⭐ 真正該擋的是**打錯字／指到根本不存在的 id**，所以判準改成
+    //    「兩個目錄都找不到」，並且把退場的那些列出來當帳單。
+    const ids = Object.keys(W3X_FAMILY_ART);
+    const ghost = ids.filter(
+      (id) =>
+        !existsSync(root(`content/abilities/${id}.json`)) &&
+        !existsSync(root(`content/_legacy/abilities/${id}.json`)),
     );
-    expect(missing, `${missing.length} bound ability doc(s) do not exist`).toEqual([]);
+    expect(ghost, `${ghost.length} 筆綁定指到一份根本不存在的技能（打錯 id？）`).toEqual([]);
+    const retired = ids.filter((id) => !existsSync(root(`content/abilities/${id}.json`)));
+    // 帳單，不是紅燈：退場的綁定留著是刻意的，數量爆炸才值得回頭看。
+    expect(retired.length).toBeLessThan(ids.length);
   });
 
   it("a stated number is never a defaulted one — paramSource is set iff a number is present", () => {
