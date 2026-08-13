@@ -1,87 +1,102 @@
 {
-  "id": "tpl-lock-combo",
-  "schema": "template@1",
-  "name": "鎖定連段",
-  "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。",
-  "family": "lock-combo",
-  "status": "enabled",
-  "params": {
-    "hitCount": {
-      "type": "number",
-      "default": 5,
-      "min": 1,
-      "max": 20,
-      "unit": "count"
-    },
-    "hitIntervalSec": {
-      "type": "number",
-      "default": 0.4,
-      "min": 0.05,
-      "max": 3,
-      "unit": "s"
-    },
-    "perHitDamage": {
-      "type": "scaling",
-      "default": {
-        "perRank": [
-          100
-        ],
-        "ratios": []
-      }
-    },
-    "finisherDamage": {
-      "type": "scaling",
-      "default": {
-        "perRank": [
-          450
-        ],
-        "ratios": []
-      }
-    },
-    "finisherRadius": {
-      "type": "number",
-      "default": 150,
-      "min": 50,
-      "max": 1800,
-      "unit": "wc3u"
-    },
-    "damageType": {
-      "type": "enum",
-      "values": [
-        "magic",
-        "physical",
-        "true"
-      ],
-      "default": "magic"
-    },
-    "lockTarget": {
-      "type": "enum",
-      "values": [
-        "stun",
-        "root",
-        "none"
-      ],
-      "default": "stun"
-    },
-    "casterGuard": {
-      "type": "enum",
-      "values": [
-        "all",
-        "magic",
-        "none"
-      ],
-      "default": "all"
-    }
+ "id": "tpl-lock-combo",
+ "schema": "template@1",
+ "name": "鎖定連段",
+ "description": "把一個人鎖住打完一整段。命中後目標被定住、施法者進入演出狀態（這段期間打不到他），連段一擊一擊落下，最後一記終結技在收招那一刻結算並掃過周圍。「連段次數 × 每段間隔」就是整段長度 —— 它是算出來的，所以沒有『持續時間』這個欄位可以填。⚠️ 原作的連段中施法者會一擊一擊瞬移到目標身邊，這裡沒有搬過來：那段期間雙方都被 pause + 無敵，施法者站哪裡不影響任何結算，只有終結技的圓心用得到，所以收成原地演出。想要遞減間隔（52-002 射殺百頭的 CD×0.75）也還做不到。 ⭐ owner 2026-08-13：終結技可以是**另一支具名技能**（finisherAbility，走 proxyCast 代放），⛔ 不是把那支技能的傷害抄一份進來 —— 抄一份之後那支技能改了，連段裡的版本不會跟著改。留空則沿用 finisherDamage 那個數字。發動條件也是一格（trigger）：預設 onCast，20-002 是 onReflectSuccess（反彈成功才發），所以整段連段可以掛在被動 hook 上而不是主動施放。",
+ "family": "lock-combo",
+ "status": "enabled",
+ "params": {
+  "hitCount": {
+   "type": "number",
+   "default": 5,
+   "min": 1,
+   "max": 20,
+   "unit": "count"
   },
-  "requires": [
-    "periodicDamage",
-    "invulnerable",
-    "applyStatus",
-    "leap"
-  ],
-  "gapScore": 6,
-  "exemplar": {
-    "skill": "84-04 給我蜂蜜",
-    "jass": "A0CX"
+  "hitIntervalSec": {
+   "type": "number",
+   "default": 0.4,
+   "min": 0.05,
+   "max": 3,
+   "unit": "s"
+  },
+  "perHitDamage": {
+   "type": "scaling",
+   "default": {
+    "perRank": [
+     100
+    ],
+    "ratios": []
+   }
+  },
+  "finisherDamage": {
+   "type": "scaling",
+   "default": {
+    "perRank": [
+     450
+    ],
+    "ratios": []
+   }
+  },
+  "finisherRadius": {
+   "type": "number",
+   "default": 150,
+   "min": 50,
+   "max": 1800,
+   "unit": "wc3u"
+  },
+  "damageType": {
+   "type": "enum",
+   "values": [
+    "magic",
+    "physical",
+    "true"
+   ],
+   "default": "magic"
+  },
+  "lockTarget": {
+   "type": "enum",
+   "values": [
+    "stun",
+    "root",
+    "none"
+   ],
+   "default": "stun"
+  },
+  "casterGuard": {
+   "type": "enum",
+   "values": [
+    "all",
+    "magic",
+    "none"
+   ],
+   "default": "all"
+  },
+  "finisherAbility": {
+   "type": "docRef",
+   "optional": true
+  },
+  "trigger": {
+   "type": "enum",
+   "values": [
+    "onCast",
+    "onReflectSuccess",
+    "onKill",
+    "onBasicAttack",
+    "onDamageTaken"
+   ],
+   "default": "onCast"
   }
+ },
+ "requires": [
+  "periodicDamage",
+  "invulnerable",
+  "applyStatus",
+  "leap"
+ ],
+ "gapScore": 6,
+ "exemplar": {
+  "skill": "84-04 給我蜂蜜",
+  "jass": "A0CX"
+ }
 }

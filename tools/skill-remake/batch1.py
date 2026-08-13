@@ -1094,7 +1094,14 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
             #    reflectDepth 已經是 1，而預設上界是 0 ⇒ 少了它七刀一樣付 0。
             "effects": [dmg("magic", flat=0,
                             inc_pct={"perRank": [7.0], "maxChainDepth": 1})],
-            "finalEffects": [line("magic", length=14, width=2.0, ap=7.0)]}]}]}]})
+            # ⭐ owner 規格逐字：「（[現存魔力]+[AP]）×7倍傷害」。
+         #    ⚠️ 上一版**只寫了 AP 那一半** —— 現存魔力那一項整個不見了，
+         #    而「有傷害」跟「傷害少一半」在畫面上長得一模一樣（失敗形態②）。
+         #    `resourcePct{subject:"self", resource:"mana", basis:"current"}`
+         #    就是「我現在有多少魔力」，係數 7 = 規格的 ×7 倍。
+         "finalEffects": [line("magic", length=14, width=2.0, ap=7.0,
+                               res_pct={"subject": "self", "resource": "mana",
+                                        "basis": "current", "perRank": [7.0]})]}]}]}]})
 
 # ── 59 初號機 ────────────────────────────────────────────────────────────────
 A("59-00", "59-00 暴走", "self", [150], [0], 0,

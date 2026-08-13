@@ -480,11 +480,8 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   },
   // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（52-04 巨神一擊 + 92-002 最終戈壁）。
   //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
-  "field:abilities.effects[]#damageLine.resourcePct": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "同 damageArea.resourcePct 的直線版本 —— 20-002「對**前方直線**敵人造成(現存魔力+AP)×7」要的正是這個節點。兩個 kind 各接一次而不是抽一層,是因為它們的受害者集合各自在自己的 handler 裡解出來(圓 vs 膠囊),而 resourcePct 是 per-target 的:分母是某一個身體的條。",
-  },
+  // ⭐ 2026-08-13：`damageLine.resourcePct` 也移除 —— 20-002 的收尾終於帶上規格
+  //    寫了三個月的「(**現存魔力**+AP)×7」那一半（上面這一筆自己就預告了它）。
   "field:abilities.effects[]#shield.stackKey": {
     status: "landing",
     since: "2026-08-09",

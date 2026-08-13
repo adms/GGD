@@ -456,3 +456,36 @@ describe("兩台新機器的數值衛生", () => {
     expect(fin.perRank[0]).toBeLessThan(1800);
   });
 });
+
+describe("鎖定連段 —— owner 2026-08-13 的兩格（終結技是引用、發動條件是欄位）", () => {
+  it("⭐ 終結技填了技能編號 ⇒ 收尾是 proxyCast 代放**那一支**，⛔ 不是一份傷害複本", () => {
+    cover("lock-combo-finisher-ability");
+    // owner 逐字：「砍 N 下, 第 N+1 下是**某個技能** 不是寫死約束勝利之劍吧?」
+    // ⛔ 上一版只能寫一個傷害數字 ⇒ 20-002 的收尾是 20-03 的 damageLine 內嵌
+    //    複製一份，那份複本從此與本尊各走各的，而且不會有任何東西紅。
+    const t = loadTemplate("tpl-lock-combo");
+    const p = { ...defaultParamsFor(t), finisherAbility: "godie-e002.e" };
+    const leap = expand(t, p).effects.find((e) => e.kind === "leap") as
+      | { onLand?: { kind: string; abilityId?: string }[] }
+      | undefined;
+    expect(leap?.onLand?.[0]?.kind, "收尾走代放").toBe("proxyCast");
+    expect(leap?.onLand?.[0]?.abilityId, "代放的是那一支具名技能").toBe("godie-e002.e");
+    // 留空 ⇒ 沿用數字（84-04 給我蜂蜜那種沒有具名收尾的仍然寫得出來）。
+    const plain = expand(t, defaultParamsFor(t)).effects.find((e) => e.kind === "leap") as
+      | { onLand?: { kind: string }[] }
+      | undefined;
+    expect(plain?.onLand?.[0]?.kind, "沒填就還是傷害").toBe("damage");
+  });
+
+  it("⭐ 發動條件不是 onCast ⇒ 整段連段掛進被動 hook，⛔ 不是複製一份模板", () => {
+    cover("lock-combo-trigger");
+    // owner 同一則：「而且超究**發動條件也不一樣**」。20-002 是反彈成功才發。
+    const t = loadTemplate("tpl-lock-combo");
+    const out = expand(t, { ...defaultParamsFor(t), trigger: "onReflectSuccess" });
+    expect(out.effects, "主動格是空的 —— 它不是按出來的").toEqual([]);
+    expect(out.innateKind).toBe("passive");
+    expect(out.passive?.ranks[0]?.hooks?.[0]?.on).toBe("onReflectSuccess");
+    // 承重的一半：連段真的搬進 hook 了，⛔ 不是掛了一個空 hook。
+    expect(out.passive?.ranks[0]?.hooks?.[0]?.effects.some((e) => e.kind === "leap")).toBe(true);
+  });
+});

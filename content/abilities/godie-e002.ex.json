@@ -61,7 +61,15 @@
                     "width": 2.0,
                     "aim": "target",
                     "fromCaster": true,
-                    "includeOrigin": false
+                    "includeOrigin": false,
+                    "resourcePct": {
+                      "subject": "self",
+                      "resource": "mana",
+                      "basis": "current",
+                      "perRank": [
+                        7.0
+                      ]
+                    }
                   }
                 ]
               }

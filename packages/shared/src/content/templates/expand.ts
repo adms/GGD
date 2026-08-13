@@ -17,7 +17,7 @@
 import type { CastType, AbilityPassive, AbilityPassiveRank } from "../../sim/content/defs";
 import type { EffectDef, DamageType, Scaling } from "../../sim/effects/effect";
 import type { HookDef, HookEvent, StatModifier } from "../../sim/stats/modifiers";
-import type { ProjectileId, StatusId } from "../../ids";
+import type { AbilityId, ProjectileId, StatusId } from "../../ids";
 import type {
   TemplateDoc,
   ParamSlot,
@@ -1088,6 +1088,28 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       intervalSec: hitIntervalSec,
       durationSec: comboSec,
     });
+    // ⭐ 終結技 —— owner 2026-08-13 逐字：
+    //   「砍 N 下, 第 N+1 下是**某個技能** 不是寫死約束勝利之劍吧?」
+    //
+    // 填了 `finisherAbility` ⇒ 收尾是一發 `proxyCast`，代放**那一支具名技能**；
+    // 留空 ⇒ 沿用 `finisherDamage` 那個數字（84-04 給我蜂蜜那種沒有具名收尾的）。
+    //
+    // ⛔ 為什麼不可以「把那支技能的傷害抄一份進來」（20-002 上一版就是這樣，
+    //    把 20-03 約束與勝利之劍的 damageLine 內嵌複製了一份）：那份複本與本尊
+    //    **從此各走各的**。owner 調 20-03 的時候，連段裡的那一刀不會跟著改，
+    //    而且沒有任何東西會紅 —— 兩份都合法、都會發、只是不再是同一招。
+    //    這正是第〇·五守則「技能是資料不是程式」在**引用**這一邊的樣子。
+    //
+    // ⚠️ `payCosts: "none"`：代放是這一段連段的一部分，不是玩家又放了一次那支
+    //    技能。付魔／轉冷卻會讓「放了大招結果大招自己鎖住自己」。
+    const finisher: EffectDef = has(t, p, "finisherAbility")
+      ? {
+          kind: "proxyCast",
+          shape: "single",
+          abilityId: docRef(t, p, "finisherAbility") as AbilityId,
+          payCosts: "none",
+        }
+      : damageEffect(dt, scaling(t, p, "finisherDamage"));
     effects.push({
       kind: "leap",
       mode: "inPlace",
@@ -1095,8 +1117,22 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       apexHeight: 0,
       durationSec: comboSec,
       landRadius: finisherRadius,
-      onLand: [damageEffect(dt, scaling(t, p, "finisherDamage"))],
+      onLand: [finisher],
     });
+    // ⭐ 發動條件 —— owner 同一則：「而且超究**發動條件也不一樣**」。
+    //
+    // 上一版把「主動施放」寫死在回傳值裡，所以一段**由某個時刻觸發**的連段
+    // （20-002：反彈成功才發）根本套不上這個模板，只能手刻一份 JSON。
+    // 現在它是一格下拉：非 `onCast` 就整段掛進被動 hook，⛔ 不是複製一份模板。
+    const trigger = str(t, p, "trigger");
+    if (trigger !== "onCast") {
+      return {
+        castType: "self",
+        innateKind: "passive",
+        effects: [],
+        passive: { ranks: [{ hooks: [{ on: trigger as HookEvent, effects, target: "event" }] }] },
+      };
+    }
     return {
       castType: "targeted",
       targetsEnemies: true,

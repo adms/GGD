@@ -79,6 +79,7 @@ import {
   DOT_RESOURCE_PCT_RATIO_TOTAL_MAX,
   RESOURCE_PCT_POINTS_MAX,
   RESOURCE_PCT_RATIO_MAX,
+  RESOURCE_PCT_RATIO_SELF_MAX,
 } from "../../sim/effects/dynamicTerms";
 // 層數的上界 —— 一份表兩個消費端（標記系統與 `applyStatus.stacks`），⛔ 不抄字面值。
 import { MARK_MAX_COUNT } from "../../sim/markLimits";
@@ -332,10 +333,14 @@ export const zResourcePctTerm = z
   })
   .strict()
   .superRefine((t, ctx) => {
+    // ⭐ 上界看**兩件事**：模式(ratio/points)與**主體**。讀自己的條寬,讀對方
+    //    的條緊 —— 完整理由在 `dynamicTerms.ts` 的 `RESOURCE_PCT_RATIO_SELF_MAX`。
     const cap =
       (t.scale ?? "ratio") === "points"
         ? RESOURCE_PCT_POINTS_MAX
-        : RESOURCE_PCT_RATIO_MAX;
+        : t.subject === "self"
+          ? RESOURCE_PCT_RATIO_SELF_MAX
+          : RESOURCE_PCT_RATIO_MAX;
     t.perRank.forEach((v, i) => {
       if (v > cap) {
         ctx.addIssue({
