@@ -45,6 +45,19 @@
       ]
     },
     {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "mr",
+          "op": "pctAdd",
+          "value": -0.5
+        }
+      ],
+      "duration": 3.0,
+      "dispellable": true,
+      "polarity": "debuff"
+    },
+    {
       "kind": "spawnProjectile",
       "projectileId": "imported.bolt.void",
       "onHit": []

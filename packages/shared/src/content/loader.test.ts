@@ -106,6 +106,9 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // ⛔ status 文件只是**身分**（名字／極性／分類）；魔抗減半多少、每秒燒多少
       // 住在施加它的那支技能的 `applyStatus` 上。
       "armor-break",
+      // ⭐ 2026-08-13 內容批：79-04 卍解掛的具名狀態，讓 79-02/79-03 的
+      //    「(卍解狀態下…)」有一顆條件葉問得到 —— 條件系統沒有「形態」葉。
+      "bankai",
       "berserk",
       "blind",
       "burn",
@@ -160,6 +163,10 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
       // 在 `refs.ts` 是 **soft**（只發 warning），所以「文件在但沒被註冊」這一種
       // 只有這裡數得出來。新增一份 status 文件就補一行，這是它的維護成本。
       "trial-stun",
+      // ⭐ 2026-08-13 內容批：60-03「每三下」的計數器（次數不是時鐘，
+      //    ⛔ 用內部冷卻冒充會在攻速改變時走鐘）。⚠️ 字母序在 trial-stun **之後**
+      //    （tria < trif）。
+      "triforce-courage",
     ]);
   });
 

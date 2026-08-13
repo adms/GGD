@@ -54,6 +54,23 @@
               }
             ]
           }
+        },
+        {
+          "kind": "damage",
+          "condition": {
+            "kind": "status",
+            "subject": "self",
+            "statusId": "bankai"
+          },
+          "damageType": "magic",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.2
+              }
+            ]
+          }
         }
       ]
     }

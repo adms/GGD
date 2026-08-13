@@ -1078,7 +1078,12 @@ A("20-002", "20-002 解放.約束勝利劍MAX", "self", [0], [0], 0,
       {"on": "onReflectSuccess", "target": "event", "internalCooldown": 1.0,
        "effects": [
            {"kind": "delayed", "shape": "single", "delaySec": 0.12, "count": 7, "intervalSec": 0.12,
-            "effects": [dmg("magic", ap=1.0)],
+            # ⭐「每次造成 **7 倍[反彈]**傷害」—— 出貨到今天是 ap=1.0，跟反彈毫無關係。
+            #    ⚠️ 這一條要等 E1（delayed 繼承觸發脈絡）落地才有消費端，否則七刀靜默付 0。
+            # ⚠️ maxChainDepth 1 **不是選配**：onReflectSuccess 帶進來的封包
+            #    reflectDepth 已經是 1，而預設上界是 0 ⇒ 少了它七刀一樣付 0。
+            "effects": [dmg("magic", flat=0,
+                            inc_pct={"perRank": [7.0], "maxChainDepth": 1})],
             "finalEffects": [line("magic", length=14, width=2.0, ap=7.0)]}]}]}]})
 
 # ── 59 初號機 ────────────────────────────────────────────────────────────────
@@ -1106,8 +1111,20 @@ A("59-02", "59-02 高週波短刀", "self", [0], [0], 0,
   "[被動][普攻時][機率][真傷]\n\n「高級的美工刀，只要動得夠快也能切斷鑽石呢」\n高週波短刀[每次普攻]有10/15/20/25%[機率]將該次攻擊轉為[真實傷害]。",
   innate="passive", maxRank=4,
   passive={"name": "59-02 高週波短刀", "ranks": [
-      {"hooks": [{"on": "onBasicAttack", "chance": c, "target": "event",
-                  "effects": [dmg("true", flat=50)]}]}
+      # ⭐「**轉為**[真實傷害]」＝ 蓋掉這一刀自己的型別，⛔ 不是再追加 50 點真傷。
+      #    出貨到今天是 `dmg("true", flat=50)`：本體那一刀**照樣被護甲吃掉**，
+      #    旁邊多跳一個 50 —— 卡片說「轉為」，畫面上是「追加」。
+      # ⭐ 1 tick 的授予窗可行：basicAttackSystem 先把封包推進佇列、同一 tick 才發
+      #    onBasicAttack，而 combatResolveSystem 是**同一 tick** 抽乾佇列並問
+      #    resolveDamageConversion ⇒ 被蓋到的正是「該次攻擊」。
+      #    0.034 秒 = round(0.034 / (1/30)) = 1 tick。近戰 range 1.6，沒有飛行延遲。
+      # ⚠️ `tag_gate.py` 的「真傷」同批加上 `{"becomes": "true"}` —— 否則這一列拿掉
+      #    damageType:"true" 之後閘判成缺口，而 main() 在**寫檔之前**跑 audit
+      #    ⇒ 整批 90 支一份都產不出來。
+      {"hooks": [{"on": "onBasicAttack", "chance": c, "target": "self",
+                  "effects": [buff([], 0.034, applyTo="self",
+                                   damageTypeOverride={"scope": "basic",
+                                                       "becomes": "true"})]}]}
       for c in (0.10, 0.15, 0.20, 0.25)]})
 
 A("59-03", "59-03 AT力場", "self", [0], [0], 0,
@@ -1152,10 +1169,23 @@ A("70-00", "70-00 紮根", "self", [15], [0], 0,
   #    **之前**，而同一支測試釘死了「冷卻內的第二次按下必須答 cooldown」。
   #    70-00 的來回是靠 `to:"toggle"` 對**當下的身體**解算，走一般的冷卻閘。
   #
-  # ⚠️ 已知缺口（**明說，不是漏掉**）：「變得無法移動」今天沒有地方寫 ——
-  #    godie-e010 的 ms 是 5.5 不是 0，而 70-00 是 innateKind:"active"，
-  #    測試釘死它不可以有 passive 區塊、上面又說了不可以有 toggle 區塊。
-  #    ⛔ 不要為了補這一格去改測試或改引擎（回報裡有記）。
+  # ⚠️ 已知缺口（**明說，不是漏掉**）：「變得無法移動」今天**沒有任何 JSON 路徑寫得出來**
+  #    —— `STAT_CLAMPS[MoveSpeed]` 的下界是 2，所以連直接改 `baseStats.ms` 都只能到 2；
+  #    而 applyStatus 的 root 需要秒數，切換技沒有時鐘。
+  #    ⇒ 這是**真的引擎缺口**（MoveSpeed 下界要變可調，或開一格非 CC 的 immobile 授予）。
+  #    ⛔ 不要用「每秒重掛 root」繞過去：那是硬控，會被自己的免控 buff 拒絕、
+  #       計進 ccAppliedTicks 戰績、被【淨化】剝掉 —— 三個都是玩家看得出來的錯。
+  #
+  # ⚠️「[力量]增加10點」**試過了，撤回**（2026-08-13）。
+  #    走 G13-1（`innateActivePassive:"attach"` + `while_form="alternate"`）在 schema
+  #    與載入都過得去，但它打壞**三條**既有守衛，而其中一條是真的行為回歸：
+  #      · `auraIncludeSelf.test.ts` —— 白木開始**回自己的血**，而 w3a A0GM 明說
+  #        芬多精 only allies、never 白木自己。掛上去的 passive 區塊被當成光環載體。
+  #      · `innatePassive.test.ts` —— 「主動型天生技不授予常駐來源」整條前提沒了。
+  #      · `championFormContent.test.ts` —— 變身配對之一整組壞掉。
+  #    ⇒ 為了**一條**子句打壞三條守衛（其中一條是保真回歸）不划算（第零守則）。
+  #    真正的解法是引擎那一邊：讓「主動天生技的 passive」與「光環載體」分開，
+  #    而那是一張獨立的卡。⛔ 不要為了衝涵蓋率把它硬塞回來。
   effects=[])
 
 A("70-01", "70-01 伸卡球", "ground", [60, 60, 60, 60], [250, 300, 350, 400], 11,
@@ -1174,8 +1204,11 @@ A("70-02", "70-02 大怒石", "self", [0], [0], 0,
 A("70-03", "70-03 木束縛之術", "self", [45, 45, 45, 45], [100, 150, 150, 250], 0,
   "[主動][範圍][定身]\n45秒冷卻\n消耗MP100/150/150/250\n\n「這個好像叫做...資本主義的豬？」\n讓白木[周圍][範圍]的敵方都受到木靈束縛綑綁，持續0.6/1.2/1.8/2.4秒。(敵方仍可施展技能與攻擊，僅不能移動)",
   radiusTier="中",
+  # ⭐ 逐階定身 0.6/1.2/1.8/2.4 —— `applyStatus.duration` 是 zRankScalar，填陣列＝一階一格。
+  #    ⚠️ 出貨到今天四階全是 0.6：升階的玩家看到的是「點了沒有變強」。
+  #    ⚠️ root 是硬控，上界 20 秒，2.4 遠低於它。
   effects=[area("magic", tier="中", flat=1),
-           status("root", 0.6, root=True)])
+           status("root", [0.6, 1.2, 1.8, 2.4], root=True)])
 
 A("70-04", "70-04 千年練成", "ground", [90, 90, 90], [240, 420, 600], 14,
   "[主動][AP加成][指定][範圍][召喚]\n90秒冷卻\n消耗[MP] 240/420/600\n施法距離14\n\n「想到以前某個夜晚一隻大貓跟兩個蘿莉一直要我下面長大呢」\n在[周圍][範圍]隨機[招喚]樹精，練成千年的魔力爆發，總共4/6/8棵樹精，每棵樹精造成 250/350/450 + 30% [AP] [範圍]傷害，若是被[定身]的狀態，則傷害加倍。",
@@ -1556,7 +1589,10 @@ A("60-01", "60-01 旋風斬", "self", [30, 30, 30, 30], [100, 150, 200, 250], 0,
   effects=[area("physical", tier="中", per=[150, 250, 350, 450], ad=0.5),
            {"kind": "knockback", "distance": 3.0, "speed": 15.0, "from": "caster"}])
 
-A("60-02", "60-02 鎖鏈槍", "ground", [45, 45, 45, 45], [50, 75, 100, 125], 11,
+# ⭐ castType `ground` → `targeted`：內文逐字是「勾住**一個單位**」，標籤列也是
+#    [指向]。ground 讓玩家點的是一塊空地，沒有任何節點鎖定被勾住的身體。
+# ⚠️ 內文「[直線]距離」那一半（路徑阻擋、勾不過牆）**沒做** —— 明說，不是漏掉。
+A("60-02", "60-02 鎖鏈槍", "targeted", [45, 45, 45, 45], [50, 75, 100, 125], 11,
   "[主動][指向][範圍][跳躍]\n45秒冷卻\n消耗MP50/75/100/125\n\n「我喜歡勾，但不喜歡脫鉤的時候」\n[直線]距離勾住一個單位，自身[跳躍]過去，並給予 150/250/350/450傷害。",
   # ⚠️ apexHeight 只能是 JASS 家族值 —— `GGD_APEX_PER_WC3 = 1/250` 把 w3a 的
   #    0 / 300 / 600 / 1000 換成 0 / 1.2 / 2.4 / 4.0，而 `leapFraming.test.ts:411`
@@ -1575,8 +1611,18 @@ A("60-03", "60-03 三角神力．勇氣", "self", [0], [0], 0,
   innate="passive", maxRank=4,
   passive={"name": "60-03 三角神力．勇氣", "ranks": [
       {"attributes": {"str": v, "agi": v, "int": v},
+       # ⭐「每三下」是**次數**不是時鐘 —— ⛔ 不可以用 internalCooldown 冒充。
+       #    出貨到今天這條 hook **完全無條件** ⇒「每三下」變成**每一下**，
+       #    輸出是規格的 3 倍（玩家看得出來的平衡缺陷）。
+       #    計數器＝一顆疊層狀態，兩條 hook 依**陣列序**跑：第三下先 +1 變成 3、
+       #    再被下面那條 minStacks:3 讀到，然後 -3 歸零。
        "hooks": [{"on": "onBasicAttack", "target": "event",
-                  "effects": [dmg("magic", ap=0.33)]}]}
+                  "effects": [status("triforce-courage", 60.0, stacks=1, applyTo="self")]},
+                 {"on": "onBasicAttack", "target": "event",
+                  "condition": {"kind": "status", "subject": "self",
+                                "statusId": "triforce-courage", "minStacks": 3},
+                  "effects": [dmg("magic", ap=0.33),
+                              status("triforce-courage", 60.0, stacks=-3, applyTo="self")]}]}
       for v in (3, 6, 9, 12)]})
 
 A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
@@ -1597,8 +1643,19 @@ A("60-04", "60-04 完美盾反", "self", [60, 60, 60], [120, 150, 180], 0,
       #    原本只有一格 0.08，rank 2/3 的 16%/24% 玩家永遠拿不到。
       {"on": "onReflectSuccess", "target": "event",
        "reflectedDamageSource": "ability", "reflectedDamageType": "magic",
-       "effects": [{"kind": "restore", "healthPct": [0.08, 0.16, 0.24], "applyTo": "self"},
-                   {"kind": "knockback", "distance": 4.0, "speed": 16.0, "from": "caster"}]}]}]})
+       "effects": [{"kind": "restore", "healthPct": [0.08, 0.16, 0.24], "applyTo": "self"}]},
+      # ⭐「有效半徑 6」的擊退（2026-08-13）：knockback 自己**沒有圓**，唯一的圓形
+      #    目標集產生器是 damageArea 的 onHitTargets。圓心必須是林克，所以這一條的
+      #    target 是 "self"。⚠️ 舊寫法 target:"event" ⇒ 只推得到**剛才那一個攻擊者**，
+      #    規格的「半徑 6 內的敵人被擊退」在場上是一個人。
+      #    ⚠️ 上面那段註解說「出貨寫 self 會把自己推開」對**頂層 sibling** 是真的，
+      #    但搬進 onHitTargets 之後它收到的是這個圓真的打到的敵人（第三守則）。
+      #    flat=1 不是 0：damageArea 無條件 push 封包，0 會在畫面上打出一排「0」。
+      {"on": "onReflectSuccess", "target": "self",
+       "reflectedDamageSource": "ability", "reflectedDamageType": "magic",
+       "effects": [area("magic", tier="大", flat=1,
+                        onhit=[{"kind": "knockback", "distance": 4.0,
+                                "speed": 16.0, "from": "caster"}])]}]}]})
 
 A("60-002", "60-002 勇者意志", "self", [120], [0], 0,
   "[被動][反彈成功時][反彈]\n120秒冷卻\n\n「真正的勇者不是不會死，是存檔點夠近」\n生命值低於30%時，立即獲得相當於 100% [最大生命值]的[護盾]，120秒內只能觸發一次，若 [完美盾反] [反彈]成功，冷卻立即重置。",
@@ -1630,7 +1687,16 @@ A("79-01", "79-01 瞬步", "ground", [30, 30, 30, 30], [60, 80, 100, 120], 9.17,
   "[主動][指向][範圍][衝刺]\n30秒冷卻\n消耗[MP] 60/80/100/120\n施法距離9.17\n\n「不是我消失，是你反應太慢」\n以急快的速度[直線] [衝刺] 至對方身旁，造成 [範圍] 敵方單位 [破魔] 魔抗減半，持續 3秒。",
   effects=[{"kind": "dash", "mode": "toPoint", "speed": 16, "maxDistance": 9.17},
            area("magic", tier="小", flat=1),
-           status("magic-break", 3.0)])
+           # ⭐【破魔】的**數字**（2026-08-13）：`status-effect@1` 的 schema 只有
+           #    name/description/iconKey/polarity/tags —— **沒有 modifiers**，
+           #    所以「魔抗減半」必須是施加它的那張卡上的一顆 buff。
+           #    出貨到今天完全沒有落點：magic-break 是一個純標記，玩家看到圖示、
+           #    魔抗一點都沒掉。
+           # ⛔ 標記那一半**留在** applyStatus：快照的 statusIds 只讀 world.status，
+           #    改用 applyBuff.statusId 會讓受害者 HUD 上的【破魔】圖示整個消失。
+           #    兩格秒數同為 3.0，polarity/dispellable 讓【淨化】一次拔乾淨。
+           status("magic-break", 3.0),
+           buff([M("mr", "pctAdd", -0.5)], 3.0, polarity="debuff", dispellable=True)])
 
 # ⭐ castType `self` → `targeted`：規格逐字是「給予**目標**額外…傷害」，而 self 施法讓
 #    `ctx.targets=[施法者]` ⇒ 頂層那顆 damage **打自己**，兩條 hook 也全部閘在
@@ -1661,7 +1727,13 @@ A("79-03", "79-03 月牙天衝", "ground", [55, 55, 55, 55], [250, 350, 450, 550
   effects=[line("magic", length=11, width=2.0, per=[450, 600, 750, 900],
                 onhit=[dict(dmg("magic", ap=0.6),
                             condition={"kind": "status", "subject": "target",
-                                       "statusId": "magic-break"})])])
+                                       "statusId": "magic-break"}),
+                       # ⭐ 第二個括號終於有落點：與破魔那一條同一個機制
+                       #    （onHitTargets 上的條件葉），差別只在 subject ——
+                       #    破魔問「敵人」，卍解問「我自己」。
+                       dict(dmg("magic", ap=1.2),
+                            condition={"kind": "status", "subject": "self",
+                                       "statusId": "bankai"})])])
 
 A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   "[主動][輔助][變身]\n90秒冷卻\n消耗MP100/200/300\n\n「卍解。天鎖斬月」\n壓縮全部力量並進入 [卍解] 狀態，[攻擊速度]提升100/150/200%，[瞬步] 冷卻縮短 50%，持續8秒。",
@@ -1669,7 +1741,12 @@ A("79-04", "79-04 卍解", "self", [90, 90, 90], [100, 200, 300], 0,
   # ⭐ 手打的 championForm 拿掉，改由 A-1 的規則產。79-04 是全檔唯一手打的一格，
   #    而那正是另外四支的缺口整整沒有人發現的原因（第零守則⑨）。
   form_sec=8.0,
-  effects=[buff([M("as", "pctAdd", 1.0)], 8.0,
+  # ⭐ G10 —— 讓這份增益**同時是一個具名狀態**，79-03 的「(卍解狀態下…)」才有一顆
+  #    條件葉問得到它。⛔ 條件系統沒有「形態」葉，而 79-03 是 damageLine、
+  #    hook 收不到線上的人，所以 79-02 用的 whileForm 那條路在 E 上走不通。
+  # ⚠️ 這支的 championForm.durationSec 也是 8.0 —— **兩個 8 必須一起改**
+  #    （今天看不出來，但只要有人動其中一個，兩邊就會對同一個問題給不同答案）。
+  effects=[buff([M("as", "pctAdd", 1.0)], 8.0, statusId="bankai",
                 perRank=[{"modifiers": [M("as", "pctAdd", a)], "duration": 8.0}
                          for a in (1.0, 1.5, 2.0)]),
            {"kind": "modifyCooldown", "shape": "single", "who": "self", "slot": "Q",
@@ -1791,18 +1868,30 @@ A("89-02", "89-02 憤怒的菊花", "self", [0], [0], 0,
   "[被動][範圍][機率]\n\n「菊花一緊，空氣力學就有了答案」\n當敵人攻擊熊貓的時候，有3%[機率][反彈]，[反彈時] 會胡亂噴放排泄物使[周圍][範圍] 敵人造成 [癱瘓] 及 [詛咒]。\n\n(敵方 [致盲] 狀態下額外追加 [混亂] 狀態，持續 10秒)",
   innate="passive",
   passive={"name": "89-02 憤怒的菊花", "ranks": [{"hooks": [
-      {"on": "onDamageTaken", "chance": 0.03, "target": "self", "internalCooldown": 1.0,
+      # ①「有3%[機率][反彈]」—— 反彈本體。
+      # ⭐ target 從 "self" 改成 "event"：damage 的封包走 ctx.targets，"self" 會讓
+      #    熊貓把傷害反彈到**自己**身上。onDamageTaken 是帶傷害封包的事件，
+      #    所以 inc_pct 收得到那一發。
+      # ⚠️ perRank 1.0 是**規格沒給的數字**（同 60-04 那一筆，逐字同一個坑），要問 owner。
+      {"on": "onDamageTaken", "chance": 0.03, "target": "event", "internalCooldown": 1.0,
+       "effects": [dmg("magic", flat=0, inc_pct={"perRank": [1.0]})]},
+      # ②③「[反彈時] 會…使[周圍][範圍]敵人造成[癱瘓]及[詛咒]」
+      # ⭐「[反彈時]」逐字就是 onReflectSuccess —— ⛔ **不是**第二顆帶 chance 的 hook
+      #    （那是 89-00/89-01 的 0.03×0.03 = 0.09% 缺陷再造一次）。這一顆不擲骰，
+      #    閘是「反彈真的落地」。
+      # ⭐ target:"self" ⇒ ctx.targets=[熊貓] ⇒ damageArea 圓心是熊貓自己 ＝「周圍」。
+      # ⛔ 三顆狀態**必須**在 onHitTargets 裡：那一段收到的是這個圓真的打到的敵人。
+      #    掛成 hook 的頂層兄弟 ⇒ **熊貓自己暈 1 秒 + 自帶 5 秒 50% miss，敵人什麼都沒有**
+      #    —— 那正是這一支上架以來的樣子。
+      # ⭐ statusId 從 "stun" 改成 "paralysis"：content/status-effects/paralysis.json
+      #    的描述**逐字點名這一支**（「89-02 憤怒的菊花 反彈時對周圍敵人灑的就是它」）。
+      {"on": "onReflectSuccess", "target": "self",
        "effects": [area("magic", tier="中", flat=1,
-                        # ⛔ 不可以補成第二顆帶 chance 的 hook（那是 89-00/89-01 的
-                        #    0.03×0.03 = 0.09% 缺陷再造一次）。
-                        # ⛔ 也不可以掛 hook 層 condition：這條 hook 是 onDamageTaken
-                        #    + target:"self"，ctx.targets=[熊貓自己]，而 hook.condition
-                        #    的 target 是**攻擊者** —— 條件問對了人、混亂卻蓋在自己身上。
-                        onhit=[status("confusion", 10.0, berserk=True, targetsAllies=True,
+                        onhit=[status("paralysis", 1.0, stun=True),
+                               status("curse", 5.0, missChance=0.5),
+                               status("confusion", 10.0, berserk=True, targetsAllies=True,
                                       condition={"kind": "status", "subject": "target",
-                                                 "statusId": "blind"})]),
-                   status("stun", 1.0, stun=True),
-                   status("curse", 5.0, missChance=0.5)]}]}]})
+                                                 "statusId": "blind"})])]}]}]})
 
 A("89-03", "89-03 憤怒的胸毛", "self", [0], [0], 0,
   "[被動][機率]\n\n受到敵方傷害時，有 4% [機率] 拔下熊貓的一根胸毛，這份刺激的快感讓熊貓 [攻擊速度] 提升200/250/300/350%，持續4秒，但也會有 2% [機率] 拔到重要部位的毛，[自爆] 損失現存 50%生命。",
@@ -1810,7 +1899,23 @@ A("89-03", "89-03 憤怒的胸毛", "self", [0], [0], 0,
   passive={"name": "89-03 憤怒的胸毛", "ranks": [
       {"hooks": [{"on": "onDamageTaken", "chance": 0.04, "target": "self",
                   "internalCooldown": 1.0,
-                  "effects": [buff([M("as", "pctAdd", v)], 4.0)]}]}
+                  "effects": [buff([M("as", "pctAdd", v)], 4.0)]},
+                 # ⭐「但也會有 2%[機率]拔到重要部位的毛，[自爆]損失現存 50%生命」
+                 # ⛔ 不巢狀在 4% 裡：0.04×0.02 = 0.08%，一整場都不會發生一次
+                 #    （＝ 89-00/89-01 那個 0.09% 缺陷的同型）。規格的「但也會」是
+                 #    同一個觸發下的**另一條**獨立機率。
+                 # ⚠️ res_pct 必須當 dmg() 的**兄弟鍵**（_split_res_pct 會先 pop 掉它）；
+                 #    直接當 kw 傳會被倒進 amount，而 zScaling 是 .strict() ⇒ 整份被拒。
+                 #    applyTo 同理，用 dict() 包在外面。
+                 # ⭐ damageType "true"：自爆是「損失生命」不是一發攻擊，不吃護甲魔抗。
+                 # ⚠️「打不死人」只在**今天**字面為真（0.5 × 現存 < 現存，而
+                 #    damageDealt=1.0）—— 那是 config 保證不是結構保證。
+                 {"on": "onDamageTaken", "chance": 0.02, "target": "self",
+                  "internalCooldown": 1.0,
+                  "effects": [dict(dmg("true", flat=0,
+                                       res_pct={"subject": "self", "resource": "health",
+                                                "basis": "current", "perRank": [0.5]}),
+                                   applyTo="self")]}]}
       for v in (2.0, 2.5, 3.0, 3.5)]})
 
 A("89-04", "89-04 憤怒的簡諧運動", "self", [0], [0], 0,
@@ -2007,7 +2112,17 @@ A("52-03", "52-03 無銘斧劍", "self", [0], [0], 0,
   passive={"name": "52-03 無銘斧劍", "ranks": [
       {"hooks": [{"on": "onBasicAttack", "target": "event",
                   "effects": [dmg("physical", flat=v),
-                              status("slow40", 0.6, moveSpeedMult=0.5)]}]}
+                              # ⭐ [麻痺] = content/status-effects/numbness.json，
+                              #    那份文件的描述**逐字點名這一支**（「52-03 無銘斧劍
+                              #   『附加[麻痺]效果，持續0.6秒』那種**沒有修飾詞**的寫法」）
+                              #    —— 也就是說那一格是專門為它開的。
+                              # ⛔ slow40 是【減速】那一族（15-01「麻痺[緩慢][移動速度]」
+                              #    才走那邊），掛在這裡等於卡片寫麻痺、身上長減速。
+                              # ⚠️ moveSpeedMult 留著：numbness 的機制「由施加它的那支
+                              #    技能的 applyStatus 決定」，而規格沒給第二個修飾詞。
+                              #    要不要改成 stun 是 owner 的一句話（0.6 秒 × 每一次
+                              #    普攻 = 永久暈眩鎖，那是平衡決定不是填空）。
+                              status("numbness", 0.6, moveSpeedMult=0.5)]}]}
       for v in (50, 70, 90, 110)]})
 
 A("52-04", "52-04 巨神一擊", "self", [120, 120, 120], [400, 600, 800], 0,

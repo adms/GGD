@@ -4,7 +4,7 @@
   "name": "60-02 鎖鏈槍",
   "description": "[主動][指向][範圍][跳躍]\n45秒冷卻\n消耗MP50/75/100/125\n\n「我喜歡勾，但不喜歡脫鉤的時候」\n[直線]距離勾住一個單位，自身[跳躍]過去，並給予 150/250/350/450傷害。",
   "slot": "W",
-  "castType": "ground",
+  "castType": "targeted",
   "maxRank": 4,
   "cooldown": [
     45.0,
@@ -48,5 +48,5 @@
   "icon": "assets/icons/abilities/godie-h00l.w.webp",
   "vfxKey": "fx.prim.physical.beam",
   "sfxKey": "wc3.headhunteryes4",
-  "castTimeSec": 1.033
+  "castTimeSec": 0.833
 }

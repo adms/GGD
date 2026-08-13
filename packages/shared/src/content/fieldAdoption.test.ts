@@ -180,6 +180,31 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ⭐ 2026-08-13 內容批新曝光：父欄位被採用之後這三格才進普查母體。
+  "field:abilities.innateActivePassive": {
+    status: "debt",
+    why: "主動型天生技的 passive 區塊要不要也掛上去。⚠️ 2026-08-13 **試過了、撤回了**：70-00 紮根用它補「[力量]增加10點」，schema 與載入都過，但打壞三條既有守衛，其中一條是真的行為回歸 —— `auraIncludeSelf` 量到白木開始**回自己的血**（w3a A0GM 明說 only allies）。掛上去的 passive 區塊被當成光環載體。⇒ 引擎要先把「主動天生技的 passive」與「光環載體」分開，這一格才有第一個客戶。",
+  },
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.scope=all": {
+    status: "default-live",
+    why: "59-02 高週波短刀的規格逐字是「將**該次攻擊**轉為真傷」⇒ `scope:\"basic\"`（只蓋普攻）。`all` 要的是「這段期間**連技能傷害**也一起變真傷」—— 那是一個強得多的效果，出貨內容裡沒有任何一支這樣寫。⇒ 零採用是對的。",
+  },
+  "field:abilities.effects[]#applyBuff.damageTypeOverride.applyAt": {
+    status: "default-live",
+    why: "省略＝引擎預設的套用時機。59-02 是 1 tick 的授予窗（basicAttackSystem 推封包 → 同一 tick combatResolveSystem 抽乾），所以時機本來就是唯一的那一個 —— 這一格是「延後到結算的另一階段」才要填的覆寫鈕，今天沒有客戶。",
+  },
+  "enum:abilities.effects[]#applyBuff.applyTo=target": {
+    status: "default-live",
+    why: "`applyBuff.applyTo` 這一格是 59-02 高週波短刀「把這一刀**轉為**真傷」帶進來的（1 tick 的自我授予窗，所以是 self）。`target` 那一邊要的是「我放一顆 buff 到**敵人**身上」—— 出貨 90 支裡沒有一支這樣寫：負面效果全部走 `applyStatus`（因為快照的 statusIds 只讀 world.status，走 applyBuff 受害者 HUD 上就沒有圖示）。⇒ 零採用是對的，那一格留給「給隊友的增益」那一族，今天沒有。",
+  },
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=magic": {
+    status: "default-live",
+    why: "型別轉換這格是 59-02 帶進來的，而它的規格逐字是「轉為[真實傷害]」⇒ 只用得到 `true`。`magic` / `physical` 那兩邊要的是「把普攻轉成法傷」這種道具/天賦，出貨內容裡沒有。⛔ 不要為了填滿 enum 去發明一支技能 —— 那正是這個普查要防的反面。",
+  },
+  "enum:abilities.effects[]#applyBuff.damageTypeOverride.becomes=physical": {
+    status: "default-live",
+    why: "同上（`becomes=magic` 那一條）：59-02 只要 `true`，另外兩個成員今天沒有客戶。",
+  },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
   "field:abilities.effects[]#damage.incomingPct.basis": {
     status: "default-live",
@@ -191,10 +216,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "省略＝引擎預設的「反彈封包比原傷害晚到」處理（照樣送出，不丟棄）。B3-A 的五支反彈（20-04 理想鄉 · 45-00 寫輪眼 · 60-04 完美盾反 · 15-002 太陰道）都沒有要改這個時序邊界，而改它會影響的是「同一 tick 內兩面互相反彈」這種罕見情況 —— 沒有客戶就不該填，填了反而多一份沒有人驗過的行為。",
   },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
-  "field:abilities.effects[]#damage.incomingPct.maxChainDepth": {
-    status: "default-live",
-    why: "省略＝預設的連鎖深度上限，那是防「A 反彈給 B、B 又反彈回 A」無限對彈的安全閥。五支反彈沒有一支需要更深或更淺的鏈；把它調高是設計決策（會做出反彈流派），調低則是在修一個還沒發生的效能問題。⇒ 零採用是它正確的狀態。",
-  },
   // ⭐ 2026-08-13 B3 新曝光：父欄位被採用之後這一格才進普查母體。
   "field:abilities.effects[]#damage.incomingPct.applyGlobalDamageMult": {
     status: "default-live",
@@ -447,11 +468,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // 零採用因此是**內容決定**而不是機制缺席：content/abilities/ 這一輪由 owner
   // 手動重製，那 90 支還沒寫進樹裡（⛔ 不可以由我代寫，見 CLAUDE.md）。
   // 每一筆的「哪一支技能會用它」寫在 why 裡，那一支落地時這一筆就該刪掉。
-  "field:abilities.effects[]#damage.applyTo": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "G11 —— 「施法者付自己的血」。applyStatus/spendMana/leap/invulnerable/knockback 早就有 applyTo,damage/dot/heal/restore 沒有,所以 44-01 的自傷代價只能靠 randomArea{who:\"self\"} → weightedBranch 兩層包裝繞。⛔ 沒有提進 EFFECT_COMMON_SHAPE:那會開在全部 34 個 kind 上,包括 handler 不讀它的那些 —— 作者填了什麼都不會發生,是失敗形態②的鏡像。等 44-01 落地。",
-  },
   "field:abilities.effects[]#dot.applyTo": {
     status: "landing",
     since: "2026-08-09",
@@ -565,11 +581,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S4a —— **永久**。引擎層從第一天就做得到（ModifierSource.expiresAtTick 缺席 = 永久），缺的一直是 authoring 面 —— 於是出貨已經有四份文件用 duration: 99999 假裝永久（godie-o00x.passive / godie-ogrh.passive / godie-zombiex.passive ×2）。⛔ 「省略 duration」本身**不等於**永久：那會讓一個打字漏填變成一份靜默的永久增益，所以兩格互斥且必填其一。那四份遷移過來時這一筆就該刪掉。",
   },
-  "field:abilities.effects[]#applyBuff.applyTo": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "S9b —— 讀敵人狀態、增益自己。⛔ 拆成兩條 hook 不是一次判定：ICD 記在逐 hook 一格的 hookLastFired、機率也是逐 hook 各抽一次，所以「30% 機率對帶恐懼的敵人追加傷害**並且**自己加攻速」寫成兩條會有 9% 只發生一半，而畫面上看不出來。⛔ 沒有提進 EFFECT_COMMON_SHAPE —— 那會開在全部 kind 上，包括 handler 不讀它的那些。",
-  },
   "field:abilities.effects[]#applyBuff.exclusiveGroup": {
     status: "landing",
     since: "2026-08-10",
@@ -678,15 +689,10 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-10",
     why: "S7 —— 衝刺途中陣亡還要不要揮。省略 = 不揮，形狀與精神逐字沿用 randomArea.stopOnCasterDeath。",
   },
-  "field:abilities.innateActivePassive": {
-    status: "landing",
-    since: "2026-08-10",
-    why: "G13-1 —— 主動型天生技（slot PASSIVE + innateKind active）的 passive 區塊要不要真的掛上。實測今天不會：一支帶 modifiers 的主動天生技 spawn 之後 sources 裡根本沒有那一份 abilityPassive 來源。省略 = skip = 今天逐字。⛔ 那個 continue 是一個寫死在程式裡的決策，而它的理由是「預設值該選哪一個」的理由，不是「這裡不該有欄位」的理由。⚠️ 掛上去是**整場常駐**的（與 auraCarrier 的戰鬥期替身不同），所以「只有紮根形態才有的光環」要同時填 whileForm。",
-  },
   "field:champions.abilities.*.innateActivePassive": {
     status: "landing",
     since: "2026-08-10",
-    why: "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded，所以它結構上不可能早於 field:abilities.innateActivePassive 有採用。兩格要一起刪（見 ggd-mirror-authority-model）。",
+    why: "同上，而且是**鏡像側**：同步方向永遠 standalone→embedded。⚠️ 2026-08-13 更正：standalone 那一格已經被 70-00 紮根採用而刪掉了，但這一格**不可以跟著刪** —— `innateActivePassive` 只長在 slot PASSIVE 上，而鏡射迴圈只跑 Q/W/E/R，所以鏡像側是**結構性永遠 0**，刪掉會在反方向紅（unexplained zero）。⛔ 舊文案「兩格要一起刪」是錯的。",
   },
 
   // ── 傷害型別轉換 items@1.damageTypeOverride (2026-08-01) ──────────────────
@@ -762,11 +768,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "限時三圍（「這支大招期間力量 +30」）。以前只有道具授予得起，所以這句話在編輯器上沒有形狀。到期走這份 buff 自己的 expiresAtTick（`sourceAttrGrants` 已經在跳過過期來源），沒有第二個時鐘。",
-  },
-  "field:abilities.effects[]#applyBuff.damageTypeOverride": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "限時傷害型別轉換（「接下來 5 秒你的普攻是真傷」）。同上，到期走同一個 expiresAtTick（`resolveDamageConversion` 已經在跳過過期來源）。",
   },
   // ⭐ 2026-08-12 B2：landing 豁免移除 —— **它落地了**（60-03 三角神力．勇氣 + 44-02 死神的規則）。
   //    出口在 `tools/skill-remake/batch1.py` 開了、表格填了值，採用率從 0 變成有。
@@ -1313,11 +1314,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "同上。相等比較在整數軸(level / 層數)才有意義,而條件目前唯一被授權的整數軸是 level,還沒有卡用它。",
   },
 
-  "field:abilities.effects[]#applyBuff.condition|0|3|0.minStacks": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "狀態層數門檻(GH#301-5 的讀取端,owner #299 第 8 條)。零採用是**成對的**,不是這一格單獨落空:出貨的 28 份 status-effect 文件沒有一份寫 `applyStatus.stacks`,而 applyStatus 只在作者明寫時才累加 —— 所以今天全場的層數都是 1,一張問 `minStacks:2` 的卡必然永遠 false。⛔ 不要為了餵這一格去硬加一張卡:先有一支真的疊層的狀態(owner 正在手工重製技能),`minStacks` 才有東西可問。機制本身由 sim/content/conditionStacks.test.ts 走出貨的 evaluateCondition 驗過會動。",
-  },
 
   // ── 觸發條件的屬性軸 ───────────────────────────────────────────────────
   // 出貨的兩張條件卡都讀 `hp`。下面十個成員是同一個下拉選單的其他選項。
@@ -1661,22 +1657,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
       "同上,省略 = `dispelRules.dotDefaultDispellable`(出貨 **true** —— 燃燒/中毒本來就該解得掉)。" +
       "它與 status 分開一格是因為 `world.dot` 在 A4 之前完全沒有移除路徑,打開它是一次真的能力增加。",
   },
-  "field:abilities.effects[]#applyBuff.dispellable": {
-    status: "default-live",
-    why:
-      "省略 = `dispelRules.buffDefaultDispellable`,而出貨值是 **false**(「沒有人預期自己買的裝備效果" +
-      "可以被敵人剝掉 —— 打開它是一個設計決定,不是一個預設值」)。所以零採用 = 出貨行為原封不動," +
-      "正是這一版該有的樣子:GH#295 修的是「想開的人開不了」,不是「預設要改」。" +
-      "三支出貨淨化道具都沒有勾 `pools.buffs`,所以今天也沒有任何一份文件需要它。",
-  },
-  "field:abilities.effects[]#applyBuff.polarity": {
-    status: "default-live",
-    why:
-      "省略 = 這份增益沒有極性,而 `clearPools.polarityPasses` 對「不知道」一律不當成「是」—— " +
-      "也就是有方向的淨化拔不到它,正是今天的出貨行為。它與 `dispellable` 是**一對**:要讓一發" +
-      "「淨化敵方增益」(polarity:\"buff\")拔得到一份 buff,兩格都要填。" +
-      "⛔ 不可以從 modifiers 推導(一個來源可以同時帶 +移速 與 -護甲),見 sim/stats/modifiers.ts 那一格的註解。",
-  },
   // ── C4 睡眠 + A6 重創的五格「等內容」(2026-08-05, #278) ──────────────────
   //
   // ⚠️ 這五格是**兩個機制的介面**,而它們的行為守衛已經在跑真世界:
@@ -1919,11 +1899,6 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "landing",
     since: "2026-08-09",
     why: "效果上的觸發條件（owner 2026-08-09 裁決，GH#300）。共用 EFFECT_COMMON_SHAPE 的**同一格**，普查在 19 個 kind 節點各看到一次；型別/求值器/葉子與 hook 上的那一格逐字相同。零採用＝owner 手動重製中的 90 支技能還沒進 content/abilities/，⛔ 不是機制缺席。⚠️ 求值端（逐一過濾目標）由 lane A 接。",
-  },
-  "field:abilities.effects[]#applyStatus.stacks": {
-    status: "landing",
-    since: "2026-08-09",
-    why: "狀態層數（owner 2026-08-09「狀態除了有無也會是數字層數」，GH#301-5）。省略＝1＝今天的行為，所以既有 223 份文件一格都不用改 —— 但它**不是** default-live：owner 要的是〔破甲 3 層〕與〔破甲 1 層〕是兩件事，而那必須有人真的寫這一格才會發生。⚠️ 層數怎麼送到客戶端還沒裁決（ENTITY_FLAG 已滿），見 sim/effects/effect.ts。",
   },
   "field:abilities.effects[]#knockback.launchDistance": {
     status: "landing",

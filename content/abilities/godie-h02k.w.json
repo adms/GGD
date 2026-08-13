@@ -30,6 +30,26 @@
             "on": "onDamageTaken",
             "effects": [
               {
+                "kind": "damage",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 0.0
+                },
+                "incomingPct": {
+                  "perRank": [
+                    1.0
+                  ]
+                }
+              }
+            ],
+            "internalCooldown": 1.0,
+            "chance": 0.03,
+            "target": "event"
+          },
+          {
+            "on": "onReflectSuccess",
+            "effects": [
+              {
                 "kind": "damageArea",
                 "damageType": "magic",
                 "amount": {
@@ -38,6 +58,18 @@
                 "radius": 4.5,
                 "radiusTier": "中",
                 "onHitTargets": [
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "paralysis",
+                    "duration": 1.0,
+                    "stun": true
+                  },
+                  {
+                    "kind": "applyStatus",
+                    "statusId": "curse",
+                    "duration": 5.0,
+                    "missChance": 0.5
+                  },
                   {
                     "kind": "applyStatus",
                     "condition": {
@@ -51,22 +83,8 @@
                     "targetsAllies": true
                   }
                 ]
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "stun",
-                "duration": 1.0,
-                "stun": true
-              },
-              {
-                "kind": "applyStatus",
-                "statusId": "curse",
-                "duration": 5.0,
-                "missChance": 0.5
               }
             ],
-            "internalCooldown": 1.0,
-            "chance": 0.03,
             "target": "self"
           }
         ]

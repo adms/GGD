@@ -91,7 +91,11 @@ TAG_SHAPES = {
     "吞噬": [{"kind": "devour"}],
     "處決": [{"kind": "devour"}, {"hpPct": ANY}],                          # devour ／ damage.hpPct
     "燒魔": [{"kind": "spendMana"}],
-    "真傷": [{"damageType": "true"}],
+    # ⭐「這一發本來就是真傷」與「把這一發**轉成**真傷」是同一個標籤的兩個方向
+    #    （先例：同檔 STATUS_TAGS 的 apply／condition 雙形狀）。
+    #    59-02 高週波短刀的規格是「**轉為**[真實傷害]」⇒ 它走 damageTypeOverride，
+    #    而那個節點的鍵是 `becomes` 不是 `damageType`。
+    "真傷": [{"damageType": "true"}, {"becomes": "true"}],
     "免疫": [{"kind": "invulnerable"}],
     "輪替增益": [{"kind": "cycleBuff"}],
     "旋轉": [{"template": "tpl-orbit-array"}],

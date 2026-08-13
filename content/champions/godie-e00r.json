@@ -121,15 +121,18 @@
                 "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "true",
-                    "amount": {
-                      "flat": 50.0
+                    "kind": "applyBuff",
+                    "modifiers": [],
+                    "duration": 0.034,
+                    "applyTo": "self",
+                    "damageTypeOverride": {
+                      "scope": "basic",
+                      "becomes": "true"
                     }
                   }
                 ],
                 "chance": 0.1,
-                "target": "event"
+                "target": "self"
               }
             ]
           },
@@ -139,15 +142,18 @@
                 "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "true",
-                    "amount": {
-                      "flat": 50.0
+                    "kind": "applyBuff",
+                    "modifiers": [],
+                    "duration": 0.034,
+                    "applyTo": "self",
+                    "damageTypeOverride": {
+                      "scope": "basic",
+                      "becomes": "true"
                     }
                   }
                 ],
                 "chance": 0.15,
-                "target": "event"
+                "target": "self"
               }
             ]
           },
@@ -157,15 +163,18 @@
                 "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "true",
-                    "amount": {
-                      "flat": 50.0
+                    "kind": "applyBuff",
+                    "modifiers": [],
+                    "duration": 0.034,
+                    "applyTo": "self",
+                    "damageTypeOverride": {
+                      "scope": "basic",
+                      "becomes": "true"
                     }
                   }
                 ],
                 "chance": 0.2,
-                "target": "event"
+                "target": "self"
               }
             ]
           },
@@ -175,15 +184,18 @@
                 "on": "onBasicAttack",
                 "effects": [
                   {
-                    "kind": "damage",
-                    "damageType": "true",
-                    "amount": {
-                      "flat": 50.0
+                    "kind": "applyBuff",
+                    "modifiers": [],
+                    "duration": 0.034,
+                    "applyTo": "self",
+                    "damageTypeOverride": {
+                      "scope": "basic",
+                      "becomes": "true"
                     }
                   }
                 ],
                 "chance": 0.25,
-                "target": "event"
+                "target": "self"
               }
             ]
           }

@@ -38,7 +38,7 @@
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
+                "statusId": "numbness",
                 "duration": 0.6,
                 "moveSpeedMult": 0.5
               }
@@ -61,7 +61,7 @@
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
+                "statusId": "numbness",
                 "duration": 0.6,
                 "moveSpeedMult": 0.5
               }
@@ -84,7 +84,7 @@
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
+                "statusId": "numbness",
                 "duration": 0.6,
                 "moveSpeedMult": 0.5
               }
@@ -107,7 +107,7 @@
               },
               {
                 "kind": "applyStatus",
-                "statusId": "slow40",
+                "statusId": "numbness",
                 "duration": 0.6,
                 "moveSpeedMult": 0.5
               }

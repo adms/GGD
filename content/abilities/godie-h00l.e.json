@@ -35,6 +35,19 @@
             "on": "onBasicAttack",
             "effects": [
               {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": 1,
+                "duration": 60.0,
+                "applyTo": "self"
+              }
+            ],
+            "target": "event"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -45,8 +58,21 @@
                     }
                   ]
                 }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": -3,
+                "duration": 60.0,
+                "applyTo": "self"
               }
             ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "triforce-courage",
+              "minStacks": 3
+            },
             "target": "event"
           }
         ]
@@ -62,6 +88,19 @@
             "on": "onBasicAttack",
             "effects": [
               {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": 1,
+                "duration": 60.0,
+                "applyTo": "self"
+              }
+            ],
+            "target": "event"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -72,8 +111,21 @@
                     }
                   ]
                 }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": -3,
+                "duration": 60.0,
+                "applyTo": "self"
               }
             ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "triforce-courage",
+              "minStacks": 3
+            },
             "target": "event"
           }
         ]
@@ -89,6 +141,19 @@
             "on": "onBasicAttack",
             "effects": [
               {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": 1,
+                "duration": 60.0,
+                "applyTo": "self"
+              }
+            ],
+            "target": "event"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -99,8 +164,21 @@
                     }
                   ]
                 }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": -3,
+                "duration": 60.0,
+                "applyTo": "self"
               }
             ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "triforce-courage",
+              "minStacks": 3
+            },
             "target": "event"
           }
         ]
@@ -116,6 +194,19 @@
             "on": "onBasicAttack",
             "effects": [
               {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": 1,
+                "duration": 60.0,
+                "applyTo": "self"
+              }
+            ],
+            "target": "event"
+          },
+          {
+            "on": "onBasicAttack",
+            "effects": [
+              {
                 "kind": "damage",
                 "damageType": "magic",
                 "amount": {
@@ -126,8 +217,21 @@
                     }
                   ]
                 }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "triforce-courage",
+                "stacks": -3,
+                "duration": 60.0,
+                "applyTo": "self"
               }
             ],
+            "condition": {
+              "kind": "status",
+              "subject": "self",
+              "statusId": "triforce-courage",
+              "minStacks": 3
+            },
             "target": "event"
           }
         ]

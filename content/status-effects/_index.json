@@ -1,12 +1,18 @@
 {
   "collection": "status-effects",
-  "hash": "45a28b91ce41",
+  "hash": "d13929fea91c",
   "entries": [
     {
       "id": "armor-break",
       "path": "status-effects/armor-break.json",
       "hash": "583810c8d372",
       "size": 515
+    },
+    {
+      "id": "bankai",
+      "path": "status-effects/bankai.json",
+      "hash": "7e08ab09eafa",
+      "size": 994
     },
     {
       "id": "berserk",
@@ -163,6 +169,12 @@
       "path": "status-effects/trial-stun.json",
       "hash": "7017babea3f3",
       "size": 456
+    },
+    {
+      "id": "triforce-courage",
+      "path": "status-effects/triforce-courage.json",
+      "hash": "f865a67099ee",
+      "size": 907
     }
   ]
 }

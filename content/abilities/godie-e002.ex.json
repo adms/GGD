@@ -34,12 +34,13 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "ratios": [
-                        {
-                          "stat": "ap",
-                          "coeff": 1.0
-                        }
-                      ]
+                      "flat": 0.0
+                    },
+                    "incomingPct": {
+                      "perRank": [
+                        7.0
+                      ],
+                      "maxChainDepth": 1
                     }
                   }
                 ],

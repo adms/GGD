@@ -61,15 +61,34 @@
                   0.24
                 ],
                 "applyTo": "self"
-              },
-              {
-                "kind": "knockback",
-                "distance": 4.0,
-                "speed": 16.0,
-                "from": "caster"
               }
             ],
             "target": "event",
+            "reflectedDamageSource": "ability",
+            "reflectedDamageType": "magic"
+          },
+          {
+            "on": "onReflectSuccess",
+            "effects": [
+              {
+                "kind": "damageArea",
+                "damageType": "magic",
+                "amount": {
+                  "flat": 1.0
+                },
+                "radius": 6.0,
+                "radiusTier": "大",
+                "onHitTargets": [
+                  {
+                    "kind": "knockback",
+                    "distance": 4.0,
+                    "speed": 16.0,
+                    "from": "caster"
+                  }
+                ]
+              }
+            ],
+            "target": "self",
             "reflectedDamageSource": "ability",
             "reflectedDamageType": "magic"
           }
