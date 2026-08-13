@@ -239,7 +239,30 @@ function passiveBuffs(world: SimWorld, id: EntityId, abilityId: string) {
         (s.expiresAtTick === undefined || s.expiresAtTick > world.tick),
     );
 }
-const lubuQStacks = (w: SimWorld, id: EntityId) => passiveBuffs(w, id, "godie-h01u.q");
+/**
+ * ⭐ 80-01 天下無雙的層數 —— 讀的是 **`stackKey` 收合出來的那一份來源的 `stacks`**，
+ * ⛔ 不是「有幾份來源」。
+ *
+ * owner 2026-08-12 裁決「重製稿贏」之後，這一支從「每次普攻 attach 一份新來源」
+ * 改成 `stackKey: "lubu-tianxia"` + `maxStacks` —— 同 key 的第二發只把 `stacks`
+ * 加一（`statPipeline` 對 `value × stacks` 求和），而一秒沒再打就**整份 source 到期**，
+ * 「沒有繼續攻擊就歸零」是免費的。⛔ 舊寫法（每層一份 buff）會留下 N 份各自到期的
+ * 來源，歸零會變成一層一層慢慢掉。
+ *
+ * ⚠️ 所以 `passiveBuffs()`（前綴 `buff:hook:abilityPassive:<id>#`）**看不到它** ——
+ * `applyBuff` 對帶 stackKey 的來源用 `buff:stack:<key>` 當 id。這不是壞掉，
+ * 是帳本要跟著換（GH#311 第 5 類）。
+ */
+const lubuQStacks = (w: SimWorld, id: EntityId): number => {
+  const src = w.stats
+    .get(id)!
+    .sources.find(
+      (s) =>
+        s.id === "buff:stack:lubu-tianxia" &&
+        (s.expiresAtTick === undefined || s.expiresAtTick > w.tick),
+    );
+  return src === undefined ? 0 : (src.stacks ?? 1);
+};
 const lubuKillStacks = (w: SimWorld, id: EntityId) => passiveBuffs(w, id, "godie-h01u.passive");
 
 /**
@@ -333,7 +356,7 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     // 真的揮出一刀 → 一份 10% 攻速的來源掛上來（這是新規格的全部機制）
     const swing = swinger(world, lubu, bag);
     let n = 0;
-    while (lubuQStacks(world, lubu).length === 0 && n < 200) {
+    while (lubuQStacks(world, lubu) === 0 && n < 200) {
       swing();
       n++;
     }
@@ -342,7 +365,7 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
 
     // 「若沒有繼續攻擊則歸零」—— 停手一秒，來源與加成一起消失
     for (let i = 0; i < Math.round(1 / world.dt) + 3; i++) world.step(NO_INTENTS);
-    expect(lubuQStacks(world, lubu).length).toBe(0);
+    expect(lubuQStacks(world, lubu)).toBe(0);
     expect(stats(world, lubu)[Stat.AttackSpeed]).toBeCloseTo(baseAs, 6);
   });
 
@@ -366,7 +389,7 @@ describe("WC3 permanent passives are permanent (task #78)", () => {
     const asAt = new Map<number, number>();
     for (let i = 0; i < 200; i++) {
       swing();
-      const k = lubuQStacks(world, lubu).length;
+      const k = lubuQStacks(world, lubu);
       if (!asAt.has(k)) asAt.set(k, stats(world, lubu)[Stat.AttackSpeed]);
     }
     expect(asAt.has(1), "連一層都沒掛上").toBe(true);

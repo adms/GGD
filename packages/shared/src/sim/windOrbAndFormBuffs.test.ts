@@ -257,10 +257,25 @@ function learnW(w: SimWorld, id: EntityId): void {
   syncAbilityPassives(w, id);
 }
 
-/** 按下 W 並讓 0.3 秒的前搖跑完。 */
+/**
+ * 按下 W，等到**結界真的開起來**（形態換過去）為止。
+ *
+ * ⛔ 這裡以前是 `for (let i = 0; i < 20; i++)`，註解寫「讓 0.3 秒的前搖跑完」——
+ *    那個 20 是 2026-07-31 抄下來的。owner 2026-08-13 把吟唱改成 0.06~4.00 秒
+ *    之後那個常數會再壞一次，而且用錯誤的訊息紅（「法球沒扣到血」看起來像
+ *    法球壞了，其實是結界還沒開）。
+ * ⭐ 改成**盯著要等的那件事**：形態一換過去就停手。
+ */
 function pressW(w: SimWorld, id: EntityId): void {
+  // ⚠️ 等的是「形態**變了**」，⛔ 不是「形態 !== 0」—— 這支是切換技，
+  //    第二次按下是**關閉**（形態換回 0），寫成 `!== 0` 會在關閉那一次等到天荒地老。
+  const before = championFormIndex(w, id);
   expect(castAbility(w, id, "W", { type: "self" }), "W 按得下去").toBe("ok");
-  for (let i = 0; i < 20; i++) w.step(NO_INTENTS);
+  for (let i = 0; i < 90; i++) {
+    if (championFormIndex(w, id) !== before) return;
+    w.step(NO_INTENTS);
+  }
+  expect.fail(`按了 W 但形態一直沒換（90 tick 內停在 ${before}）`);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

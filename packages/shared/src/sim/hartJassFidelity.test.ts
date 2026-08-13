@@ -85,6 +85,7 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { spawnChampion } from "./spawnChampion";
 import { castAbility, rankUpAbility } from "./abilities/abilitySystem";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
+import { TICK_HZ } from "../constants";
 import type { CoreAbilitySlot } from "./intents";
 import * as V from "./math/vec2";
 
@@ -189,6 +190,24 @@ describe("GH#250 — the JASS this port is built from is really there", () => {
   });
 });
 
+
+/**
+ * ⭐「等到這一支解析完」的 tick 數 —— **從技能自己的 castTimeSec 推**，
+ * ⛔ 不是一個寫死的數字。
+ *
+ * 2026-08-13：owner 把吟唱規則改成「所有技能 0.06~4.00 秒」（`config.cast-time@1`），
+ * 01-01 凶斬 從 0.4 → **0.633 秒 = 19 tick**，而下面那條測試等 14 tick ⇒
+ * 傷害還沒發生就斷言「傷害 > 100」，紅在一個沒壞的東西上。
+ * 同一天同一個形狀壞了 `castabilitySweep`（120 格）與變身時長守衛（`= 11` 的常數）。
+ *
+ * ⛔ 不要把 14 改成 25 了事：下一次調吟唱倍率它會再壞一次，而且用錯誤的訊息紅。
+ */
+function settleTicks(slot: "Q" | "W" | "E" | "R", cid: ChampionId, extra: number): number {
+  const champ = Champions.tryGet(cid);
+  const sec = champ?.abilities?.[slot]?.castTimeSec ?? 0;
+  return Math.round(sec * TICK_HZ) + 1 + extra;
+}
+
 // ─────────────────────────────────────────────────────────────────────── Q
 describe("GH#250 A — 01-01 凶斬 really flies over", () => {
   it("carries the CASTER onto the target instead of leaving him standing", () => {
@@ -200,8 +219,8 @@ describe("GH#250 A — 01-01 凶斬 really flies over", () => {
     expect(V.len(V.sub(mark, from))).toBeCloseTo(GAP, 5);
 
     expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).toBe("ok");
-    // 0.4 s wind-up (12 ticks) + a 0.2 s flight (6 ticks); 30 is comfortably past.
-    for (let i = 0; i < 30; i++) world.step(NO_INTENTS);
+    // 吟唱（從技能自己的秒數推）+ 0.2 秒飛行（6 tick）+ 落地後的碰撞鬆弛。
+    for (let i = 0; i < settleTicks("Q", "godie-hart" as ChampionId, 18); i++) world.step(NO_INTENTS);
 
     const landed = world.transform.get(cloud)!.pos;
     const closed = V.len(V.sub(mark, landed));
@@ -217,7 +236,7 @@ describe("GH#250 A — 01-01 凶斬 really flies over", () => {
     const hp = world.health.get(foe)!;
     const before = hp.hp;
     expect(castAbility(world, cloud, "Q", { type: "entity", entityId: foe })).toBe("ok");
-    for (let i = 0; i < 14; i++) world.step(NO_INTENTS);
+    for (let i = 0; i < settleTicks("Q", "godie-hart" as ChampionId, 2); i++) world.step(NO_INTENTS);
     expect(before - hp.hp).toBeGreaterThan(100);
     expect(world.status.get(foe)!.effects.map((e) => e.statusId)).toContain("slow25");
   });
@@ -295,7 +314,10 @@ describe("GH#250 C — both bodies are locked for the performance", () => {
     toRank(world, cloud, "R", 1);
     fillMana(world, cloud);
     expect(castAbility(world, cloud, "R", { type: "entity", entityId: foe })).toBe("ok");
-    for (let i = 0; i < 30; i++) world.step(NO_INTENTS); // past the 0.8 s wind-up
+    // 吟唱從技能自己的秒數推（2026-08-13 從 0.8 → 1.5 秒 = 45 tick；
+    // 寫死的 30 已經追不上了，⛔ 不要改成 50 了事）。
+    const wait = settleTicks("R", "godie-hart" as ChampionId, 2);
+    for (let i = 0; i < wait; i++) world.step(NO_INTENTS);
 
     const stunned = (id: EntityId, statusId: string): boolean =>
       world.status.get(id)!.effects.some((e) => e.statusId === statusId && e.stun === true);
