@@ -72,6 +72,7 @@ import {
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
+import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
@@ -2112,6 +2113,51 @@ const ITEM_CARD_SPEC: ConfigDocSpec = {
  * ⛔ 選「做一頁」而不是豁免 —— 這三份**全部是 owner 會調的平衡旋鈕**
  * （減傷天花板 / 位移級距 / 每級加成），豁免它們就是第一守則的三個住處缺第三個。
  */
+const MAP_SPEC_SPEC: ConfigDocSpec = {
+  page: "mapSpec",
+  collection: "config",
+  docId: "map-spec",
+  schemaTag: "config.map-spec@1",
+  zod: zConfigMapSpecDoc,
+  title: "小地圖規格",
+  intro: [
+    "**所有動漫場地共用的一套規格**（GH#324，owner 2026-08-14）。⛔ 不要讓每張圖各自發明玩法 —— 七張圖只是套四個 layout template 之一。",
+    "⭐ owner 的黃金鐵則：**「一張圖如果很壯觀但記不住，就簡化它；拿掉一個房間不影響玩法，就拿掉；垂直感能做成背景，就做成背景。玩家該跟玩家打，不是跟地圖打。」**",
+    "⚠️ 這一頁調的是**產生器的驗收標準**，⛔ 不是任何一張已經產生出來的地圖 —— 改完要重跑 `pnpm map:gen` 才會影響輸出。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/map-spec.json`**。",
+  ],
+  consumer: "packages/shared/src/map/spec.ts（界與硬檢查清單；產生器與驗證器都從它 import）",
+  effect: "**改完要重跑 `pnpm map:gen`**。⛔ 它不會回頭改已經產生的場地 —— 那些要重新產生。",
+  fields: [
+    { path: "grid.colsMin", zh: "地圖最小寬（格）", note: "可玩區域的寬度下界。⚠️ 這是**規格窗**不是硬界 —— 產生器會擋下窗外的地圖，但 Zod 的硬界更寬（那是誤讀保險絲，不是設計意見）。" },
+    { path: "grid.colsMax", zh: "地圖最大寬（格）", note: "可玩區域的寬度上界。⚠️ 調大它 = 允許更大的圖 = 玩家更難記住地圖，那正是 owner 的黃金鐵則在防的事。" },
+    { path: "grid.rowsMin", zh: "地圖最小高（格）", note: "可玩區域的深度下界。⚠️ 與寬度同理：這是**規格窗**，Zod 的硬界更寬（那是誤讀保險絲，不是設計意見）。" },
+    { path: "grid.rowsMax", zh: "地圖最大高（格）", note: "可玩區域的深度上界。⚠️ 調大它 = 允許更大的圖 = 玩家更難記住，那正是黃金鐵則在防的事。" },
+    { path: "grid.tileSize", zh: "一格 = 幾個世界單位", note: "⭐ 出貨 2.0：24×18 格 = 48×36 單位，與今天的對戰分區（半徑 24）**同尺度**，於是 AoE 級距、火圈上界與**全部 90 支技能的射程**一格都不用重算。⚠️ 調大它等於「順便重調全部技能」。" },
+    { path: "traversal.secMin", zh: "橫跨時間下限（秒）", note: "玩家從地圖一側走到另一側的**估算**時間下界。太快 = 追人追不到、地圖沒有空間感。" },
+    { path: "traversal.secMax", zh: "橫跨時間上限（秒）", note: "橫跨時間的上界。太慢 = 死一次要走很久才回得到戰場，整場節奏被地圖拖垮 —— 那就是「跟地圖打架」。" },
+    { path: "traversal.referenceMoveSpeed", zh: "估算用的參考移速", note: "算橫跨時間的**分母**（世界單位／秒）。⚠️ 這**不是**遊戲裡的移速 —— 真正的移速在戰鬥系統倍率表；改這一格只會改變報告上的估算。" },
+    { path: "topology.regionsMin", zh: "地圖區域數下限", note: "一張圖至少幾個命名區域（琵琶廳／庭院／月台…）。⚠️ 太少的話玩家報不出位置 —— 「我在中間」對隊友沒有任何資訊。" },
+    { path: "topology.regionsMax", zh: "地圖區域數上限", note: "命名區域數的上界。⚠️ 太多就記不住 —— 而「一兩場之後能不能背下這張圖」正是黃金鐵則的第一句在守的東西。" },
+    { path: "topology.regionsPreferred", zh: "最推薦的區域數", note: "owner 定的甜蜜點（5）。⚠️ 它**只影響報告上的提示**，⛔ 不擋輸出 —— 想擋要調上面的上下限。" },
+    { path: "topology.deadEndsMax", zh: "死路上限", note: "沒有第二條出口的區域最多幾個。⚠️ 死路多會讓追人變成「堵住就贏」，被追的人完全沒有操作空間。" },
+    { path: "topology.loopsMin", zh: "主要循環路線下限", note: "⭐ 迴圈是「被追時能不能繞回來」的**唯一**來源。0 = 被追上就等於死。" },
+    { path: "topology.chokepointsMin", zh: "瓶頸數下限", note: "狹窄通道的數量下界。太少 = 沒有戰術地形，全場都是開闊地，追人只剩比誰移速快。" },
+    { path: "topology.chokepointsMax", zh: "瓶頸數上限", note: "狹窄通道的數量上界。太多 = 到處卡住，變成跟地圖打架而不是跟玩家打架（黃金鐵則的最後一句）。" },
+    { path: "topology.shortcutsMin", zh: "特殊捷徑下限", note: "捷徑數的下界。0 = 允許完全沒有捷徑。捷徑是「熟悉地圖的人才知道的路」，少一點無妨，⛔ 但不能多到讓距離感失效。" },
+    { path: "topology.shortcutsMax", zh: "特殊捷徑上限", note: "捷徑數的上界。太多會讓地圖的距離感整個失效 —— 追擊變成猜謎，而不是判斷對手往哪跑。" },
+    { path: "interactions.countMin", zh: "互動／任務點下限", note: "一張圖至少幾個可互動／任務點。⭐ 它們是除了火圈之外，逼玩家離開安全角落的另一個節奏來源。" },
+    { path: "interactions.countMax", zh: "互動／任務點上限", note: "互動點數的上界。太多 = 玩家不知道該去哪一個，每個點的重要性都被稀釋掉。" },
+    { path: "severity.deadEnds", zh: "死路超標時", note: "error = 產生器拒絕輸出、warn = 只記進報告、off = 不看。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "severity.loops", zh: "迴圈不足時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。⚠️ 調成 off 等於放棄「被追時能繞回來」的保證。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "severity.chokepoints", zh: "瓶頸數超出範圍時", note: "error = 產生器拒絕輸出、warn = 只記進報告、off = 不看。瓶頸是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "severity.shortcuts", zh: "捷徑數超出範圍時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。捷徑是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "severity.interactions", zh: "互動點數超出範圍時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。互動點數是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "severity.traversal", zh: "橫跨時間超出範圍時", note: "同上。⚠️ 它是**估算**（最長最短路徑 ÷ 參考移速），不是實測 —— 所以出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+  ],
+  preserved: [],
+};
+
 const MITIGATION_SPEC: ConfigDocSpec = {
   page: "mitigation",
   collection: "config",
@@ -2166,6 +2212,7 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
 };
 
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
+  MAP_SPEC_SPEC,
   MITIGATION_SPEC,
   DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,

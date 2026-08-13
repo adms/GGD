@@ -12,6 +12,7 @@ import { zProjectileDoc } from "./projectile";
 import { zStatusEffectDoc } from "./statusEffect";
 import { zLootTableDoc } from "./lootTable";
 import { zArenaDoc } from "./arena";
+import { zMapDoc } from "./map";
 import { zConfigDoc } from "./config";
 import { zModelDoc } from "./model";
 import { zVfxCollectionDoc } from "./vfx";
@@ -39,6 +40,9 @@ export const COLLECTIONS = {
   },
   "loot-tables": { schemaTag: "loot-table@1", schema: zLootTableDoc, label: "Loot Tables" },
   arenas: { schemaTag: "arena@1", schema: zArenaDoc, label: "Arenas" },
+  // GH#324 —— **作者層**的地圖版面。⭐ `arena@1` 是產生器從這裡編譯出來的碰撞真相，
+  // runtime 只認 arena；`map@1` 是人寫的來源。兩者的關係見 docs/_新場地計畫.md。
+  maps: { schemaTag: "map@1", schema: zMapDoc, label: "Maps" },
   config: { schemaTag: "config@1", schema: zConfigDoc, label: "Config" },
   models: { schemaTag: "model@1", schema: zModelDoc, label: "Models" },
   // the vfx collection also accepts ribbon@1 docs (union on `schema`)

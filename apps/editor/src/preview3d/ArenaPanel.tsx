@@ -89,6 +89,23 @@ export function ArenaPanel({ doc }: { doc: unknown }) {
             y: 0.06,
           });
           disc.parent = layout;
+        } else if (ob.kind === "box") {
+          // GH#324 —— 有厚度的盒（graybox 的牆）。預覽用四條邊畫出來，
+          // ⚠️ 這只是**畫**，碰撞真相仍然是 sim 的 `circleVsBox`（⛔ 不是這四條線）。
+          const { center: c, halfW, halfD } = ob;
+          const corners = [
+            { x: c.x - halfW, z: c.z - halfD },
+            { x: c.x + halfW, z: c.z - halfD },
+            { x: c.x + halfW, z: c.z + halfD },
+            { x: c.x - halfW, z: c.z + halfD },
+          ];
+          corners.forEach((a, k) => {
+            const b = corners[(k + 1) % corners.length]!;
+            const edge = createSegmentWall(scene, `ob-${zone.id}-${i}-${k}`, a, b, "#e02b2b", {
+              alpha: 0.35,
+            });
+            edge.parent = layout;
+          });
         } else {
           const wall = createSegmentWall(scene, `ob-${zone.id}-${i}`, ob.a, ob.b, "#e02b2b", {
             alpha: 0.35,

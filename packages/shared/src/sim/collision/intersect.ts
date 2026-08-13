@@ -50,6 +50,63 @@ export function circleVsSegment(c: Circle, s: Segment): CircleOverlap {
   return { hit: true, depth: c.radius - d, normal };
 }
 
+/**
+ * 圓 vs **軸對齊盒**（AABB）。GH#324 —— graybox 的牆是有厚度的盒。
+ *
+ * ⛔ 為什麼不用 4 條線段拼一個盒：身體若生在盒**內部**，線段版會把它推向
+ * 「最近的一條邊」，而那個位置**可能還在盒內**（對角線方向尤其明顯）。
+ * 有厚度的盒才知道要往**最近的那一面**外推。
+ *
+ * ⚠️ purity：只用 `Math.sqrt`（`sim/purity.test.ts` 允許），⛔ 沒有 `Math.hypot`、
+ * 沒有三角函式、沒有 `**`。
+ */
+export function circleVsBox(
+  c: Circle,
+  box: { center: Vec2; halfW: number; halfD: number },
+): CircleOverlap {
+  const dx = c.center.x - box.center.x;
+  const dz = c.center.z - box.center.z;
+  // 盒外：夾到盒面上的最近點，退化成 circle-vs-point。
+  const cx = dx < -box.halfW ? -box.halfW : dx > box.halfW ? box.halfW : dx;
+  const cz = dz < -box.halfD ? -box.halfD : dz > box.halfD ? box.halfD : dz;
+  const inside = cx === dx && cz === dz;
+  if (!inside) {
+    const ox = dx - cx;
+    const oz = dz - cz;
+    const d2 = ox * ox + oz * oz;
+    if (d2 >= c.radius * c.radius) return NO_HIT;
+    const d = Math.sqrt(d2);
+    // d 幾乎為 0 = 圓心正好落在盒面上 → 沿著被夾的那一軸往外推（決定性）。
+    const normal =
+      d > 1e-9
+        ? { x: ox / d, z: oz / d }
+        : Math.abs(cx) === box.halfW
+          ? { x: cx >= 0 ? 1 : -1, z: 0 }
+          : { x: 0, z: cz >= 0 ? 1 : -1 };
+    return { hit: true, depth: c.radius - d, normal };
+  }
+  // 盒內：往**最近的那一面**推出去（四個候選取最小穿透）。
+  const toRight = box.halfW - dx;
+  const toLeft = dx + box.halfW;
+  const toFar = box.halfD - dz;
+  const toNear = dz + box.halfD;
+  let best = toRight;
+  let normal: Vec2 = { x: 1, z: 0 };
+  if (toLeft < best) {
+    best = toLeft;
+    normal = { x: -1, z: 0 };
+  }
+  if (toFar < best) {
+    best = toFar;
+    normal = { x: 0, z: 1 };
+  }
+  if (toNear < best) {
+    best = toNear;
+    normal = { x: 0, z: -1 };
+  }
+  return { hit: true, depth: best + c.radius, normal };
+}
+
 export function circleVsCapsule(c: Circle, cap: Capsule): CircleOverlap {
   return circleVsSegment(
     { kind: "circle", center: c.center, radius: c.radius + cap.radius },

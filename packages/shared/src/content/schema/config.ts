@@ -77,6 +77,7 @@ import { AIM_ASSIST_MOB_PENALTY_MAX, AIM_ASSIST_MOB_PENALTY_MIN } from "../../si
 // ⛔ 漏掉任何一行 = 那份 json 進了 content/ 之後整份驗證失敗 → 骨架英雄。
 import { zConfigDisplacementTiersDoc } from "./displacementDoc";
 import { zConfigMitigationDoc } from "./mitigationDoc";
+import { zConfigMapSpecDoc } from "./mapSpecDoc";
 // The eleven barcode slots, in ANATOMICAL ORDER. Imported (not restated) so the
 // stored doc's keys can never drift from the model — see zConfigVoxelBarcodesDoc.
 // `voxelSkin/types` is a leaf: zero imports of its own, no zod, no sim.
@@ -5453,6 +5454,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigDisplacementTiersDoc,
   // 減傷曲線的負抗性放大上限（owner 2026-08-13）。⚠️ 同上。
   zConfigMitigationDoc,
+  // 小地圖規格（GH#324，owner 2026-08-14）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
+  zConfigMapSpecDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */

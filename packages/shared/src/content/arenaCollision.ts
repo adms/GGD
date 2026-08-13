@@ -134,6 +134,14 @@ export function auditArenaCollision(doc: ArenaDoc): CollisionAudit {
     const slack = 0.9;
     const matched = zone.obstacles.some((ob) => {
       if (ob.kind === "circle") return dist(ob.center.x, ob.center.z, dec.x, dec.z) <= wanted + slack;
+      // GH#324 —— 盒用外接圓比對就夠：這裡問的是「這件擋路的裝飾有沒有對應的碰撞」，
+      // ⛔ 不是精確的重疊測試（精確版在 sim/collision）。寬鬆＝不會誤報缺口。
+      if (ob.kind === "box") {
+        return (
+          dist(ob.center.x, ob.center.z, dec.x, dec.z) <=
+          wanted + slack + Math.hypot(ob.halfW, ob.halfD)
+        );
+      }
       return pointSegDist(dec.x, dec.z, ob.a.x, ob.a.z, ob.b.x, ob.b.z) <= wanted + slack + 0.4;
     });
     if (!matched) {

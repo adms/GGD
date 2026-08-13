@@ -270,6 +270,17 @@ function expectWholeCollection(ids: readonly string[], name: CollectionName): vo
  * `content/audio-manifests/` is NOT a collection — it is absent from COLLECTIONS,
  * so the manifest walk never sees it and it contributes 0 docs.
  */
+/**
+ * 已經註冊進 `COLLECTIONS`、但還沒有任何出貨內容的集合。
+ *
+ * ⛔ 這不是「空集合沒關係」的通行證 —— 空集合與「被誤刪」長得一模一樣，
+ * 那正是上面那條守衛存在的理由。這一格只涵蓋**刻意的先後順序**，而且要寫明何時退場。
+ *
+ * · `maps`（GH#324 Phase 1）—— `map@1` 的 Zod 先隨映像上線，Phase 2 才推地圖內容。
+ *   **到期條件**：`pnpm map:gen` 產出第一張圖（無限城）的那一刻。
+ */
+const REGISTERED_AHEAD_OF_CONTENT = new Set<CollectionName>(["maps"]);
+
 const DOC_FLOORS: Record<CollectionName, number> = {
   champions: 100,
   abilities: 600,
@@ -278,6 +289,9 @@ const DOC_FLOORS: Record<CollectionName, number> = {
   projectiles: 5,
   "status-effects": 5,
   "loot-tables": 3,
+  // GH#324 Phase 1 —— `map@1` 集合剛開，出貨 0 份（母版無限城在 Phase 2 才產生）。
+  // ⚠️ 0 是**刻意的**：它讓「集合註冊了但還沒有內容」與「集合被誤刪」分得開。
+  maps: 0,
   arenas: 5,
   config: 11,
   models: 110,
@@ -363,7 +377,15 @@ describe("content bundle — emission", () => {
       // the client silently renders nothing). One `mv` of the whole roster into
       // `_legacy` would leave the union untouched, so this reads the live tree
       // on its own. Structural on purpose — ⛔ not a count anybody has to bump.
-      expect(index.entries.length, `${name} operating tree is not empty`).toBeGreaterThan(0);
+      // GH#324 Phase 1 —— 一個集合可以**先註冊、後有內容**，而這是刻意的順序：
+      // `content/` 是 live bind-mount 而 client/server 烘在映像裡，所以
+      // `map@1` 的 Zod 必須**先隨映像上線**，Phase 2 的地圖內容才推得上去
+      // （順序反了就是 2026-08-02 事故的完整重演，見 docs/_新場地計畫.md 7.1）。
+      // ⚠️ 這一格是**帳單不是免死金牌**：Phase 2 產出無限城之後這一行要刪掉，
+      //    刪不掉就代表那張圖沒有真的出貨。
+      if (!REGISTERED_AHEAD_OF_CONTENT.has(name)) {
+        expect(index.entries.length, `${name} operating tree is not empty`).toBeGreaterThan(0);
+      }
       total += index.entries.length;
     }
     // the doc total is DERIVED, never typed: it is whatever the manifest says the

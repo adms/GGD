@@ -5,21 +5,78 @@
  */
 import type { Vec2 } from "../math/vec2";
 
+/**
+ * ⭐ GH#324 —— 可開關的幾何。省略 = 這個障礙物永遠擋路（既有內容的行為）。
+ *
+ * 有值時，它是不是擋路由 `gateStateAt(doc, absoluteTick)` 這個**絕對 tick 的純函式**
+ * 決定 ⇒ 伺服器與客戶端各自算出同一個答案，**wire 成本 0、沒有 desync 通道**。
+ */
+export type GateGroup = string | undefined;
+
 /** A circular blocking obstacle (pillar). */
 export interface ObstacleCircle {
   kind: "circle";
   center: Vec2;
   radius: number;
+  gateGroup?: GateGroup;
 }
 
-/** A blocking wall segment. */
+/** A blocking wall segment (zero thickness). */
 export interface ObstacleSegment {
   kind: "segment";
   a: Vec2;
   b: Vec2;
+  gateGroup?: GateGroup;
 }
 
-export type Obstacle = ObstacleCircle | ObstacleSegment;
+/**
+ * ⭐ GH#324 —— 有厚度的 AABB（graybox 的「盒子」）。
+ *
+ * ⛔ 為什麼不用 4 條線段拼：身體若生在盒**內**，線段版會把它推向**最近的一條邊**，
+ * 而那個位置**可能還在盒內**。有厚度的盒才知道要往外推。
+ */
+export interface ObstacleBox {
+  kind: "box";
+  center: Vec2;
+  halfW: number;
+  halfD: number;
+  gateGroup?: GateGroup;
+}
+
+export type Obstacle = ObstacleCircle | ObstacleSegment | ObstacleBox;
+
+/**
+ * 可玩範圍的形狀。省略 = 圓（`boundaryRadius`），這是既有 6 張場地的行為。
+ *
+ * ⭐ owner 2026-08-14「火圈／殭屍波一樣要有」⇒ 矩形場地的火圈**內縮成矩形**、
+ * 殭屍從**矩形周邊**生成。⛔ 不是用內接圓 —— 那會讓火圈咬到牆外的死角。
+ */
+export type ZoneBounds = { kind: "disc" } | { kind: "rect"; halfW: number; halfD: number };
+
+/**
+ * 地圖區域（琵琶廳／庭院／月台…）。
+ *
+ * ⛔ **不要**把它跟 `ZoneDef` 搞混：`zone` 在這個 codebase 裡是「一場獨立的 3v3
+ * 對戰實例」，而且是**隔離**的（zone 0 的單位對 zone 1 看不到打不到治不到）。
+ * 兩者是相反的東西，搞混會同時造成五件事而一條測試都不會紅
+ * （完整清單見 `docs/_新場地計畫.md` 第二節）。
+ */
+export interface MapRegion {
+  id: string;
+  label: string;
+  rects: { col: number; row: number; w: number; h: number }[];
+}
+
+/**
+ * 烘焙好的導航表。⭐ 產生器離線跑全點對全點最短路；runtime **只查表**，
+ * 零搜尋、零三角函式、零 Map 迭代序問題 —— 這是唯一同時滿足 purity 閘、決定性、
+ * 與「客戶端預測必須算出一模一樣的結果」三個約束的形狀。
+ */
+export interface NavTable {
+  nodes: Vec2[];
+  /** `nextHop[from * n + to]` = 從 from 走向 to 的下一個節點索引，-1 = 到不了。 */
+  nextHop: number[];
+}
 
 export interface ZoneDef {
   id: string;
@@ -29,6 +86,10 @@ export interface ZoneDef {
   obstacles: Obstacle[];
   /** Spawn points, indexed by side (0/1) then slot (0..2). */
   spawns: [Vec2[], Vec2[]];
+  /** GH#324 —— 三個 optional 擴充，既有場地一個字都不用改。 */
+  bounds?: ZoneBounds;
+  regions?: MapRegion[];
+  nav?: NavTable;
 }
 
 export interface ArenaDef {
@@ -57,15 +118,39 @@ export function arenaDefFromDoc(doc: {
       id: z.id,
       center: { x: z.center.x, z: z.center.z },
       boundaryRadius: z.boundaryRadius,
+      // ⚠️ 逐欄位重建（⛔ 不是 spread）—— 這是刻意的：doc 是 arena@1 的**超集**，
+      // spread 會把視覺欄位帶進碰撞真相。GH#324 的三個新欄位照同一條規則明列。
       obstacles: z.obstacles.map((o) =>
         o.kind === "circle"
-          ? { kind: "circle" as const, center: { x: o.center.x, z: o.center.z }, radius: o.radius }
-          : { kind: "segment" as const, a: { x: o.a.x, z: o.a.z }, b: { x: o.b.x, z: o.b.z } },
+          ? {
+              kind: "circle" as const,
+              center: { x: o.center.x, z: o.center.z },
+              radius: o.radius,
+              ...(o.gateGroup === undefined ? {} : { gateGroup: o.gateGroup }),
+            }
+          : o.kind === "box"
+            ? {
+                kind: "box" as const,
+                center: { x: o.center.x, z: o.center.z },
+                halfW: o.halfW,
+                halfD: o.halfD,
+                ...(o.gateGroup === undefined ? {} : { gateGroup: o.gateGroup }),
+              }
+            : {
+                kind: "segment" as const,
+                a: { x: o.a.x, z: o.a.z },
+                b: { x: o.b.x, z: o.b.z },
+                ...(o.gateGroup === undefined ? {} : { gateGroup: o.gateGroup }),
+              },
       ),
       spawns: [z.spawns[0].map((s) => ({ x: s.x, z: s.z })), z.spawns[1].map((s) => ({ x: s.x, z: s.z }))] as [
         Vec2[],
         Vec2[],
       ],
+      // GH#324 —— 三個 optional 擴充。省略時完全是既有行為（圓形邊界、無區域、無導航）。
+      ...(z.bounds === undefined ? {} : { bounds: z.bounds }),
+      ...(z.regions === undefined ? {} : { regions: z.regions }),
+      ...(z.nav === undefined ? {} : { nav: z.nav }),
     })),
   };
 }

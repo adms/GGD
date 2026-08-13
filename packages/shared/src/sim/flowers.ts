@@ -83,6 +83,15 @@ function clearOfObstacles(world: SimWorld, zone: number, p: Vec2, clearance: num
     if (ob.kind === "circle") {
       const min = ob.radius + clearance;
       if (distSq(p, ob.center) < min * min) return false;
+    } else if (ob.kind === "box") {
+      // GH#324 —— 夾到盒面上的最近點；圓心在盒內時 dx/dz 都被夾住 ⇒ 距離 0 ⇒ 拒絕。
+      const dx = p.x - ob.center.x;
+      const dz = p.z - ob.center.z;
+      const cx = dx < -ob.halfW ? -ob.halfW : dx > ob.halfW ? ob.halfW : dx;
+      const cz = dz < -ob.halfD ? -ob.halfD : dz > ob.halfD ? ob.halfD : dz;
+      const ox = dx - cx;
+      const oz = dz - cz;
+      if (ox * ox + oz * oz < clearance * clearance) return false;
     } else {
       const q = closestPointOnSegment(p, ob.a, ob.b);
       if (distSq(p, q) < clearance * clearance) return false;

@@ -1,0 +1,40 @@
+{
+  "id": "map-spec",
+  "schema": "config.map-spec@1",
+  "note": "小地圖規格（GH#324，owner 2026-08-14）。所有動漫場地共用這一套，⛔ 不要各張圖自己發明。tileSize 2.0 是刻意的：24×18 格 = 48×36 世界單位，與今天的對戰分區同尺度，於是 AoE 級距、火圈上界與全部 90 支技能的射程一格都不用重算。改它之前先讀 docs/_新場地計畫.md 的 A3。",
+  "grid": {
+    "colsMin": 20,
+    "colsMax": 26,
+    "rowsMin": 16,
+    "rowsMax": 20,
+    "tileSize": 2
+  },
+  "traversal": {
+    "secMin": 12,
+    "secMax": 20,
+    "referenceMoveSpeed": 6
+  },
+  "topology": {
+    "regionsMin": 4,
+    "regionsMax": 6,
+    "regionsPreferred": 5,
+    "deadEndsMax": 1,
+    "loopsMin": 2,
+    "chokepointsMin": 2,
+    "chokepointsMax": 3,
+    "shortcutsMin": 0,
+    "shortcutsMax": 2
+  },
+  "interactions": {
+    "countMin": 6,
+    "countMax": 10
+  },
+  "severity": {
+    "deadEnds": "warn",
+    "loops": "warn",
+    "chokepoints": "warn",
+    "shortcuts": "warn",
+    "interactions": "warn",
+    "traversal": "warn"
+  }
+}

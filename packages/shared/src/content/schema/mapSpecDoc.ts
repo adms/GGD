@@ -1,0 +1,233 @@
+/**
+ * `config.map-spec@1` —— 小地圖規格的**出貨值**（GH#324 Phase 1）。
+ *
+ * owner 2026-08-14 定死了一套所有動漫場地共用的規格。⭐ 它們全部是**後台可調**的
+ * （第一守則：寫死才需要理由，可調不需要），所以走三個住處：
+ *
+ *   1. `content/config/map-spec.json`                —— 出貨值
+ *   2. 這個檔（Zod + `DEFAULT_MAP_SPEC` + `resolveMapSpec`）
+ *   3. `apps/admin/src/mapSpec.ts`（`SHIPPED_MAP_SPEC` + 欄位 union + 標籤）
+ *
+ * ⚠️ **界**（每一格的合法範圍）從 `../../map/spec` import，⛔ 不抄字面值 ——
+ * 產生器與驗證器要用同一組界，抄一份就是第四個住處（第零守則）。
+ *
+ * ⛔ **驗證器與測試一律從 `DEFAULT_MAP_SPEC` 推導，不抄 24 / 18 / 12 / 20。**
+ * 那些是 owner 每週會改的數字；抄進斷言必過期，而且會用錯誤的訊息紅。
+ */
+import { z } from "zod";
+import {
+  GRID_COLS_MAX,
+  GRID_COLS_MIN,
+  GRID_ROWS_MAX,
+  GRID_ROWS_MIN,
+  INTERACTIONS_MAX,
+  REGIONS_MAX,
+  REGIONS_MIN,
+  TILE_SIZE_MAX,
+  TILE_SIZE_MIN,
+  TILE_SIZE_SHIPPED,
+} from "../../map/spec";
+
+const zSeverity = z.enum(["error", "warn", "off"]);
+
+/**
+ * 「品味項」的處置。⛔ 這裡**沒有**連通性 —— 那是正確性，產生器一律拒絕輸出，
+ * 與這格設定無關（見 `map/spec.ts::HARD_CHECKS`）。
+ */
+const zSeverityBlock = z
+  .object({
+    deadEnds: zSeverity.describe(
+      "死路超過上限時：error = 產生器拒絕輸出、warn = 只記進報告、off = 不看。" +
+        "⚠️ 死路多會讓追人變成「堵住就贏」，這是 owner 規格裡 ≤1 的理由。",
+    ),
+    loops: zSeverity.describe(
+      "迴圈少於下限時的處置。⚠️ 迴圈是「被追時能不能繞回來」的唯一來源 —— " +
+        "沒有迴圈的圖，被追上就等於死。",
+    ),
+    chokepoints: zSeverity.describe(
+      "瓶頸數量超出範圍時的處置。瓶頸太少 = 沒有戰術地形；太多 = 到處卡住。",
+    ),
+    shortcuts: zSeverity.describe("捷徑數量超出範圍時的處置。"),
+    interactions: zSeverity.describe("互動／任務點數量超出範圍時的處置。"),
+    traversal: zSeverity.describe(
+      "估算的橫跨時間落在 secMin~secMax 之外時的處置。" +
+        "⚠️ 這是**估算**（最長最短路徑 ÷ 參考移速），不是實測。",
+    ),
+  })
+  .strict();
+
+export const zConfigMapSpecDoc = z
+  .object({
+    id: z.literal("map-spec"),
+    schema: z.literal("config.map-spec@1"),
+    note: z.string().optional(),
+
+    grid: z
+      .object({
+        colsMin: z.number().int().min(GRID_COLS_MIN).max(GRID_COLS_MAX),
+        colsMax: z.number().int().min(GRID_COLS_MIN).max(GRID_COLS_MAX),
+        rowsMin: z.number().int().min(GRID_ROWS_MIN).max(GRID_ROWS_MAX),
+        rowsMax: z.number().int().min(GRID_ROWS_MIN).max(GRID_ROWS_MAX),
+        tileSize: z
+          .number()
+          .min(TILE_SIZE_MIN)
+          .max(TILE_SIZE_MAX)
+          .describe(
+            "一格等於幾個世界單位。⭐ 出貨 2.0 的唯一理由：24×18 格 = 48×36 單位，" +
+              "與今天的對戰分區（半徑 24 ⇒ 直徑 48）**同尺度**，於是 AoE 級距、" +
+              "火圈上界、**全部 90 支技能的射程**一格都不用重算。" +
+              "⚠️ 改大它 = 順便重調全部技能，改之前先讀 docs/_新場地計畫.md 的 A3。",
+          ),
+      })
+      .strict()
+      .superRefine((g, ctx) => {
+        if (g.colsMin > g.colsMax) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["colsMax"],
+            message: "colsMax 不可以小於 colsMin",
+          });
+        }
+        if (g.rowsMin > g.rowsMax) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["rowsMax"],
+            message: "rowsMax 不可以小於 rowsMin",
+          });
+        }
+      }),
+
+    traversal: z
+      .object({
+        secMin: z.number().min(1).max(120),
+        secMax: z.number().min(1).max(120),
+        referenceMoveSpeed: z
+          .number()
+          .min(0.5)
+          .max(60)
+          .describe(
+            "估算橫跨時間用的參考移速（世界單位／秒）。⚠️ 這是**估算的分母**，" +
+              "⛔ 不是遊戲裡的移速 —— 真正的移速在戰鬥系統倍率表。",
+          ),
+      })
+      .strict()
+      .superRefine((t, ctx) => {
+        if (t.secMin > t.secMax) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["secMax"],
+            message: "secMax 不可以小於 secMin",
+          });
+        }
+      }),
+
+    topology: z
+      .object({
+        regionsMin: z.number().int().min(REGIONS_MIN).max(REGIONS_MAX),
+        regionsMax: z.number().int().min(REGIONS_MIN).max(REGIONS_MAX),
+        regionsPreferred: z
+          .number()
+          .int()
+          .min(REGIONS_MIN)
+          .max(REGIONS_MAX)
+          .describe("owner 最推薦的區域數（5）。⚠️ 只影響報告上的提示，⛔ 不擋輸出。"),
+        deadEndsMax: z.number().int().min(0).max(16),
+        loopsMin: z
+          .number()
+          .int()
+          .min(0)
+          .max(16)
+          .describe("至少要有幾條主要循環路線。⭐ 這是「被追時能不能繞回來」的唯一保證。"),
+        chokepointsMin: z.number().int().min(0).max(16),
+        chokepointsMax: z.number().int().min(0).max(16),
+        shortcutsMin: z.number().int().min(0).max(16),
+        shortcutsMax: z.number().int().min(0).max(16),
+      })
+      .strict()
+      .superRefine((t, ctx) => {
+        const pairs: [number, number, string][] = [
+          [t.regionsMin, t.regionsMax, "regionsMax"],
+          [t.chokepointsMin, t.chokepointsMax, "chokepointsMax"],
+          [t.shortcutsMin, t.shortcutsMax, "shortcutsMax"],
+        ];
+        for (const [lo, hi, path] of pairs) {
+          if (lo > hi) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              path: [path],
+              message: `${path} 不可以小於它的下界`,
+            });
+          }
+        }
+        if (t.regionsPreferred < t.regionsMin || t.regionsPreferred > t.regionsMax) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["regionsPreferred"],
+            message: "regionsPreferred 必須落在 regionsMin~regionsMax 之內",
+          });
+        }
+      }),
+
+    interactions: z
+      .object({
+        countMin: z.number().int().min(0).max(INTERACTIONS_MAX),
+        countMax: z.number().int().min(0).max(INTERACTIONS_MAX),
+      })
+      .strict()
+      .superRefine((i, ctx) => {
+        if (i.countMin > i.countMax) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["countMax"],
+            message: "countMax 不可以小於 countMin",
+          });
+        }
+      }),
+
+    severity: zSeverityBlock,
+  })
+  .strict();
+
+export type ConfigMapSpecDoc = z.infer<typeof zConfigMapSpecDoc>;
+
+/**
+ * 出貨預設 —— owner 2026-08-14 的規格表逐格。
+ *
+ * ⛔ 產生器、驗證器與測試一律從**這裡**推導，不抄字面值。
+ */
+export const DEFAULT_MAP_SPEC: Omit<ConfigMapSpecDoc, "id" | "schema" | "note"> = {
+  grid: { colsMin: 20, colsMax: 26, rowsMin: 16, rowsMax: 20, tileSize: TILE_SIZE_SHIPPED },
+  traversal: { secMin: 12, secMax: 20, referenceMoveSpeed: 6 },
+  topology: {
+    regionsMin: 4,
+    regionsMax: 6,
+    regionsPreferred: 5,
+    deadEndsMax: 1,
+    loopsMin: 2,
+    chokepointsMin: 2,
+    chokepointsMax: 3,
+    shortcutsMin: 0,
+    shortcutsMax: 2,
+  },
+  interactions: { countMin: 6, countMax: 10 },
+  severity: {
+    deadEnds: "warn",
+    loops: "warn",
+    chokepoints: "warn",
+    shortcuts: "warn",
+    interactions: "warn",
+    traversal: "warn",
+  },
+};
+
+/** 讀 doc，缺的欄位回退到出貨預設。⚠️ 唯一的解析入口，⛔ 不要在別處展開 `??`。 */
+export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof DEFAULT_MAP_SPEC {
+  if (!doc) return DEFAULT_MAP_SPEC;
+  return {
+    grid: { ...DEFAULT_MAP_SPEC.grid, ...(doc.grid ?? {}) },
+    traversal: { ...DEFAULT_MAP_SPEC.traversal, ...(doc.traversal ?? {}) },
+    topology: { ...DEFAULT_MAP_SPEC.topology, ...(doc.topology ?? {}) },
+    interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
+    severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
+  };
+}

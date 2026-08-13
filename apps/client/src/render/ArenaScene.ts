@@ -259,6 +259,19 @@ export function buildArena(scene: Scene, arena: ArenaDef, groundStyle?: string):
         ring.parent = root;
         ring.freezeWorldMatrix();
         handles.obstacleMeshes.push(ring);
+      } else if (ob.kind === "box") {
+        // GH#324 —— graybox 的牆。⚠️ 高度**必須**是 OBSTACLE_MARKER_TOP_Y（0.42）：
+        // 無條件畫出來的東西一旦高過 SIGHTLINE_HEIGHT_CAP，就重新武裝了 task #218
+        // 拿掉的那個遮擋 bug。⭐ 這也是 owner「垂直感一律做成背景」在引擎裡的原因。
+        const box = MeshBuilder.CreateBox(
+          `zone-${zi}-ob-${oi}`,
+          { width: ob.halfW * 2, height: OBSTACLE_MARKER_TOP_Y, depth: ob.halfD * 2 },
+          scene,
+        );
+        box.position.set(ob.center.x, OBSTACLE_MARKER_TOP_Y / 2, ob.center.z);
+        box.material = obstacleMat;
+        box.isPickable = false;
+        box.parent = root;
       } else {
         const dx = ob.b.x - ob.a.x;
         const dz = ob.b.z - ob.a.z;

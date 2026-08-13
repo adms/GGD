@@ -8,7 +8,7 @@
  */
 import type { Vec2 } from "../math/vec2";
 import { sub, addScaled, lenSq, normalize, dot } from "../math/vec2";
-import { circleVsCircle, circleVsSegment } from "./intersect";
+import { circleVsCircle, circleVsSegment, circleVsBox } from "./intersect";
 import type { Obstacle, ZoneDef } from "../world/ArenaDef";
 
 export interface Body {
@@ -39,6 +39,10 @@ export function pushOutOfObstacle(body: Body, obstacle: Obstacle): void {
       { kind: "circle", center: body.pos, radius: body.radius },
       { kind: "circle", center: obstacle.center, radius: obstacle.radius },
     );
+    if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
+  } else if (obstacle.kind === "box") {
+    // GH#324 —— graybox 的牆。⛔ 不可以退化成 4 條線段（見 `circleVsBox` 的檔頭）。
+    const ov = circleVsBox({ kind: "circle", center: body.pos, radius: body.radius }, obstacle);
     if (ov.hit) body.pos = addScaled(body.pos, ov.normal, ov.depth);
   } else {
     const ov = circleVsSegment(

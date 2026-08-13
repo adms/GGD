@@ -187,6 +187,8 @@ import {
   EX_PUNCH_MS,
 } from "./render/combatFeedback";
 import { prefersReducedMotion } from "./ui/buttonSfx";
+import { installInputGuard, type InputGuard } from "./input/inputGuard";
+import { settingsStore } from "./settings";
 import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 
@@ -419,6 +421,14 @@ export class GameApp {
   private readonly frameRate = new FrameRateMeter();
   private renderParams: RenderParams = qualityController.getParams();
   private offParams: (() => void) | null = null;
+  /**
+   * 誤觸防護（owner 2026-08-14：「滑鼠右鍵 WIN鍵等按鍵要鎖住」）。
+   * ⚠️ 它掛在 **document** 不是畫布 —— 畫布的右鍵早就被 `InputCapture` 吃掉了
+   * （右鍵 = 移動/攻擊指令），漏的是 HUD 那一半，而 HUD 佔畫面下緣一整條。
+   */
+  private inputGuard: InputGuard | null = null;
+  /** 每個本地玩家「上一幀是不是在 combat」—— 只給 relockFollowOnRoundStart 用。 */
+  private readonly wasInCombat = new Map<number, boolean>();
   /**
    * intent 的節拍器 (task #282). **與 rAF 是兩個時鐘** —— rAF 只是餵它時刻,
    * 拍點是從時間算出來的,所以 30 fps 的手機每秒仍然剛好 `intentHz` 拍。
@@ -822,6 +832,16 @@ export class GameApp {
 
     frameBus.project = (x, y, z) => this.cameraRig.projectToScreen(x, y, z);
 
+    // ⭐ 誤觸防護：一進到比賽就裝上，`dispose()` 拆掉。
+    // ⚠️ `confirmOnLeave` **在這裡才打開** —— 那個「你確定要離開嗎」的框在大廳
+    //    是純騷擾，只有「正在打」的時候它才擋得住真正的損失（那一場沒了）。
+    //    這就是為什麼 `DEFAULT_INPUT_GUARD` 把它預設關掉：預設值屬於模組，
+    //    ⛔ 場景差異屬於呼叫端。
+    this.inputGuard = installInputGuard(document, window, {
+      ...settingsStore.get().input,
+      confirmOnLeave: true,
+    });
+
     this.input = new InputCapture(canvas, {
       screenToGround: (x, y) => this.cameraRig.screenToGround(x, y),
       getSelfPos: () => this.localSelfPos(),
@@ -1054,6 +1074,10 @@ export class GameApp {
     this.intentClock.stop(); // 第二個時鐘也要停,否則離場後還在 poll 手把
     this.offParams?.();
     this.offParams = null;
+    // ⚠️ 一定要拆：`beforeunload` 與 keyboard lock 都是**全域**的，留著會讓
+    //    離開比賽之後的大廳還在跳「你確定要離開嗎」，而且 Esc 也還被吃掉。
+    this.inputGuard?.dispose();
+    this.inputGuard = null;
     this.offQuality?.();
     this.offQuality = null;
     registerHudActions(null);
@@ -1149,7 +1173,16 @@ export class GameApp {
           obstacles: z.obstacles.map((o) =>
             o.kind === "circle"
               ? ({ kind: "circle", x: o.center.x, z: o.center.z, r: o.radius } as const)
-              : ({ kind: "segment", ax: o.a.x, az: o.a.z, bx: o.b.x, bz: o.b.z } as const),
+              : o.kind === "box"
+                ? // GH#324 —— 盒攤平成它的**外接圓**：這條路餵的是偵錯覆蓋層與小地圖，
+                  // 它們要的是「這裡有東西擋路」，⛔ 不是精確形狀（精確版在 sim/collision）。
+                  ({
+                    kind: "circle",
+                    x: o.center.x,
+                    z: o.center.z,
+                    r: Math.hypot(o.halfW, o.halfD),
+                  } as const)
+                : ({ kind: "segment", ax: o.a.x, az: o.a.z, bx: o.b.x, bz: o.b.z } as const),
           ),
           spawns: z.spawns.map((side) => side.map((s) => ({ x: s.x, z: s.z }))),
         }));
@@ -1528,6 +1561,17 @@ export class GameApp {
         continue;
       }
       if (rig.inSettlement) rig.clearSettlement(); // defensive (won't fire mid-match)
+      // ⭐ owner 2026-08-14：「戰鬥回合開始記得把視角拉回自己操作的英雄，
+      //    我剛剛有幾場沒有拉回來」。
+      //
+      // ⚠️ 「有幾場」是關鍵線索 —— 不是每場都壞，所以不是「功能沒接」，
+      //    是**狀態跨回合殘留**：`focusOn`（小地圖左鍵窺視）與邊緣平移都會把
+      //    `followLock` 設成 false，而在此之前**只有** Space 與復活（`setDead`）
+      //    會把它扣回來。上一回合（或商店裡）看過小地圖一眼，這一回合開打時
+      //    鏡頭就還停在那裡。
+      // ⭐ 修法是在**進入 combat 的那一個 edge** 重新扣上並跳到自己身上 ——
+      //    ⛔ 不是每幀都扣（那會讓玩家整場都不能平移，比原缺陷更糟）。
+      if (state) this.relockFollowOnRoundStart(p, rig, state, pos);
       // death spectator: unlock/re-lock this rig on the player's alive↔dead edge
       if (state) this.updateSpectatorCam(p, rig, state);
       // #208: once THIS player's duel is decided, jump the camera to a zone that
@@ -3030,6 +3074,36 @@ export class GameApp {
    * Only player 0 gets the offer: the button lives in the single-player HUD, and
    * a couch viewport has no HUD of its own to press it from.
    */
+  /**
+   * ⭐ 進入 combat 的那一個 edge：把跟隨鎖扣回來並跳到自己身上。
+   *
+   * owner 2026-08-14：「戰鬥回合開始記得把視角拉回自己操作的英雄，
+   * 我剛剛**有幾場**沒有拉回來」。
+   *
+   * ⚠️ 「有幾場」＝ 不是每場，所以不是功能沒接，是**狀態跨回合殘留**：
+   *    `CameraRig.focusOn()`（小地圖左鍵窺視）與邊緣平移都會把 `followLock`
+   *    設成 false，而在此之前只有 Space（`toggleFollow`）與復活（`setDead`）
+   *    會把它扣回來 —— 上一回合看過一眼小地圖，這一回合開打鏡頭就留在那裡。
+   *
+   * ⛔ 只在 edge 做，不是每幀：每幀扣的話玩家整場都不能平移，那比原缺陷更糟。
+   * ⛔ 也不碰觀戰（`rig.spectating`）—— 死掉時的自由視角是 #85 刻意給的，
+   *    它的回復由 `setDead` 擁有。
+   */
+  private relockFollowOnRoundStart(
+    player: number,
+    rig: CameraRig,
+    state: MatchState,
+    selfPos: { x: number; z: number } | null,
+  ): void {
+    const inCombat = state.phase === "combat";
+    const was = this.wasInCombat.get(player) ?? false;
+    this.wasInCombat.set(player, inCombat);
+    if (!inCombat || was) return; // 只在 非combat → combat 那一幀
+    if (rig.spectating) return; // 觀戰中的自由視角不搶
+    rig.followLock = true;
+    if (selfPos) rig.jumpTo(selfPos);
+  }
+
   private updateSpectateFollow(player: number, rig: CameraRig, state: MatchState): void {
     const inCombat = state.phase === "combat";
     const duels = this.duelViews(state);
