@@ -324,8 +324,16 @@ async function loadContent(): Promise<void> {
   const overlay = await fetchOverlayBundle(PLATFORM_URL);
 
   const loadFrom = async (label: string): Promise<boolean> => {
-    const source = overlay && label === "overlay" ? new OverlayContentSource(base, overlay) : base;
-    const result = await new ContentLoader(source).load();
+    const withOverlay = overlay !== null && label === "overlay";
+    const source = withOverlay ? new OverlayContentSource(base, overlay) : base;
+    // ⭐ GH#326 —— 兩趟的政策**必須不同**（同 client 的 bootContent.ts）：
+    //    帶 overlay 那一趟 ⛔ `fail-closed`，因為 overlay 是一**層** —— 它破一個洞
+    //    應該**露出下面的出貨樹**（下面那個 catch 就是做這件事），⛔ 不是把兩層
+    //    一起打穿。退回出貨樹那一趟才用內容說了算的 `quarantine`：那是最後一層，
+    //    沒有東西可以再退了，少一份設定好過整站退骨架。
+    const result = await new ContentLoader(source).load(
+      withOverlay ? { policy: "fail-closed" } : undefined,
+    );
     registerAll(result.store);
     // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged and thrown away,
     // while `MatchState.contentVersion` stayed "" on every room. It is the

@@ -143,11 +143,30 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
   const shippedSource = source;
   if (overlay) source = new OverlayContentSource(source, overlay);
 
-  /** One load attempt. `withOverlay` chooses which source is used. */
+  /**
+   * One load attempt. `withOverlay` chooses which source is used.
+   *
+   * ⭐【GH#326 —— 這兩趟的政策**必須不同**】
+   *
+   * | 這一趟 | 政策 | 為什麼 |
+   * |---|---|---|
+   * | **帶 overlay** | ⛔ `fail-closed` | overlay 是一**層**。它上面破一個洞應該**露出下面那層**，⛔ 不是把兩層一起打穿 |
+   * | 退回出貨樹 | 內容說了算（出貨 `quarantine`） | 這是最後一趟，沒有下面那層了 —— 少一份設定好過整站退骨架 |
+   *
+   * ⚠️ 這是一個**真的回歸**，由 `clientOverlay.test.ts` 抓到：#326 之前
+   * 「壞掉的 overlay 文件」讓整趟載入 throw，於是下面那個 retry 把出貨樹撈回來，
+   * 操作者只是「這次編輯沒生效」。改成 quarantine 之後那一趟**成功了**（帶著一個洞），
+   * retry 從此不再觸發 ⇒ `base-bonus` 直接消失，而**出貨樹裡明明有一份好的**。
+   *
+   * ⇒ 隔離在「有下一層可以退」的時候是**錯的答案**。它是止血，而這裡不需要止血，
+   *   這裡需要的是掀開上面那張紙。
+   */
   const attempt = async (
     withOverlay: boolean,
   ): Promise<{ store: ContentStore; manifest: Manifest }> =>
-    new ContentLoader(withOverlay ? source : shippedSource).load();
+    new ContentLoader(withOverlay ? source : shippedSource).load(
+      withOverlay ? { policy: "fail-closed" } : undefined,
+    );
 
   let overlayApplied = overlay !== null;
   let overlayError: string | undefined;
