@@ -113,6 +113,19 @@ function clearOfObstacles(world: SimWorld, zone: number, p: Vec2, clearance: num
  */
 export function pickFlowerSpawnPos(world: SimWorld, zone: number): Vec2 {
   const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0]!;
+
+  // ⭐ GH#324 —— 這張圖如果**作者擺了 `pickup` 互動點**，花就開在那裡。
+  //
+  // ⚠️ 這不是新玩法，是把「作者精心擺的 6–10 個點」接上一個既有機制 ——
+  // 在此之前引擎一個都不看，那些點只是資料（失敗形態②）。
+  // ⚠️ 挑哪一個仍然走 `world.rng`（⛔ 不是「照順序」）—— 抽取次數與原本一樣是
+  // 每次 spawn 一次，所以既有錄影的骰子序列不受影響。
+  const anchors = (zoneDef.interactions ?? []).filter((i) => i.kind === "pickup");
+  if (anchors.length > 0) {
+    const pick = anchors[Math.min(anchors.length - 1, Math.floor(world.rng.range(0, anchors.length)))]!;
+    return { x: pick.at.x, z: pick.at.z };
+  }
+
   const maxR = Math.max(1, zoneDef.boundaryRadius - FLOWER_RADIUS - 1);
   for (let i = 0; i < 24; i++) {
     const dx = world.rng.range(-maxR, maxR);

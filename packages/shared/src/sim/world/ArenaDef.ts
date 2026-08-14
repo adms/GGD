@@ -86,6 +86,14 @@ export interface GateHold {
   mode: "open" | "close";
 }
 
+/** GH#324 —— 作者擺的互動點；引擎拿它當**既有系統的擺放錨點**。 */
+export interface MapInteraction {
+  id: string;
+  kind: "channel" | "pickup" | "capture" | "toggleGate";
+  at: Vec2;
+  radius: number;
+}
+
 export interface ZoneDef {
   id: string;
   /** Zone is a circular arena: units are clamped inside boundary. */
@@ -99,6 +107,7 @@ export interface ZoneDef {
   regions?: MapRegion[];
   nav?: NavTable;
   gateHolds?: GateHold[];
+  interactions?: MapInteraction[];
 }
 
 export interface ArenaDef {
@@ -161,6 +170,7 @@ export function arenaDefFromDoc(doc: {
       ...(z.regions === undefined ? {} : { regions: z.regions }),
       ...(z.nav === undefined ? {} : { nav: z.nav }),
       ...(z.gateHolds === undefined ? {} : { gateHolds: z.gateHolds }),
+      ...(z.interactions === undefined ? {} : { interactions: z.interactions }),
     })),
   };
 }

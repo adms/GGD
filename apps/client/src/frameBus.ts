@@ -137,7 +137,10 @@ export interface LocalCast {
 /** A blocking obstacle of a zone, flattened to plain numbers for the minimap. */
 export type MinimapObstacle =
   | { kind: "circle"; x: number; z: number; r: number }
-  | { kind: "segment"; ax: number; az: number; bx: number; bz: number };
+  | { kind: "segment"; ax: number; az: number; bx: number; bz: number }
+  // ⭐ GH#324 —— 有厚度的牆。⛔ 不可以壓成外接圓：24 格寬的牆會變成一顆半徑 24
+  // 的大圓圈，小地圖上的地形就跟玩家撞到的牆完全不一樣。
+  | { kind: "box"; x: number; z: number; halfW: number; halfD: number };
 
 /**
  * One circular arena zone (planar) plus the STATIC terrain inside it. The
@@ -153,6 +156,11 @@ export interface ArenaZoneCircle {
   obstacles?: readonly MinimapObstacle[];
   /** spawn pads by side (0/1), each a list of points (terrain layer) */
   spawns?: readonly (readonly { x: number; z: number }[])[];
+  /**
+   * ⭐ GH#324 —— 矩形可玩範圍。有值時小地圖畫**矩形**，⛔ 不是半徑 `r` 的圓。
+   * `r` 對矩形場地是外接圓（24×18 格 ⇒ 30），畫成圓會讓地形比實際大一圈。
+   */
+  rect?: { halfW: number; halfD: number };
 }
 
 /**

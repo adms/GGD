@@ -65,6 +65,10 @@ const BASELINE_PAGES: readonly Page[] = [
   // 核准的四個新分類的搬遷表裡，所以留在「系統」，但它**必須**列在這份基準裡，
   // 否則這條守衛會把「別人加的新頁」誤報成我的搬家出錯。
   "replayPolicy",
+  // 內容載入政策 (GH#326, owner 2026-08-14) —— 同一個 `ConfigDocPage` 元件。
+  // ⚠️ 它加在「營運」而不是「系統」:除了語意（跟 Audit log 一樣是出事才打開的），
+  // 「系統」還有一條「重編後必須比 26 列短」的守衛，往那裡加會把它推回 26。
+  "contentLoad",
   "modelLod",
   "vfxCleanup",
   "gore",
@@ -97,6 +101,7 @@ const BASELINE_PAGES: readonly Page[] = [
   // GH#324 —— 小地圖規格（動漫競技場產生器的驗收標準）。
   "mapSpec",
   "mapReport",
+  "arenaPool",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -151,6 +156,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "perLevelBonus",
       "mapSpec",
       "mapReport",
+      "arenaPool",
       "combatFeel",
       "matchConfig",
       "bodyScale",

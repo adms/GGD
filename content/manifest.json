@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_8ec15c92f02f",
+  "contentVersion": "cv_8c1bf4f609bb",
   "collections": {
     "champions": {
       "hash": "0fbe3d3ee1d1",
@@ -37,18 +37,18 @@
       "path": "loot-tables/_index.json"
     },
     "arenas": {
-      "hash": "d358c9226b98",
+      "hash": "f38f4404c021",
       "count": 13,
       "path": "arenas/_index.json"
     },
     "maps": {
-      "hash": "a08f2922a10f",
+      "hash": "fcf9fb71245d",
       "count": 7,
       "path": "maps/_index.json"
     },
     "config": {
-      "hash": "7fc8ab36a958",
-      "count": 53,
+      "hash": "f40b5718c337",
+      "count": 55,
       "path": "config/_index.json"
     },
     "models": {

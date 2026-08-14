@@ -3595,7 +3595,81 @@
             "warp_east"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "core-a",
+          "kind": "capture",
+          "at": {
+            "x": -3,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "core-b",
+          "kind": "pickup",
+          "at": {
+            "x": 3,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "root-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "root-e",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "branch-mid",
+          "kind": "capture",
+          "at": {
+            "x": -17,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-mid",
+          "kind": "capture",
+          "at": {
+            "x": 13,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "warp-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "warp-e",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.world-tree-z1",
@@ -7189,7 +7263,81 @@
             "warp_east"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "core-a",
+          "kind": "capture",
+          "at": {
+            "x": 69,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "core-b",
+          "kind": "pickup",
+          "at": {
+            "x": 75,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "root-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "root-e",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "branch-mid",
+          "kind": "capture",
+          "at": {
+            "x": 55,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-mid",
+          "kind": "capture",
+          "at": {
+            "x": 85,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "warp-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "warp-e",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],

@@ -259,7 +259,13 @@ export function spawnGuardian(
   round: number,
 ): EntityId {
   const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0]!;
-  const c = zoneDef.center;
+  // ⭐ GH#324 —— 作者擺了 `capture` 互動點的話，守衛塔站在**第一個**上面。
+  //
+  // ⚠️ 取第一個（⛔ 不抽 rng）是刻意的：塔的位置是**地形設計**不是隨機事件，
+  // 而且抽 rng 會多消耗一次骰子 → 之後每一次爆擊／閃避的序列位移 → 舊錄影全毀。
+  // ⚠️ 沒有 `capture` 點的場地（既有 6 張）照樣站 `zone.center` —— 行為不變。
+  const anchor = (zoneDef.interactions ?? []).find((i) => i.kind === "capture");
+  const c = anchor === undefined ? zoneDef.center : anchor.at;
   const id = world.spawn();
   world.transform.set(id, {
     pos: { x: c.x, z: c.z },

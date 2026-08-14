@@ -56,6 +56,7 @@ import {
   zConfigDispelDoc,
   zConfigCooldownRulesDoc,
   zConfigCastTimeDoc,
+  zConfigContentLoadDoc,
   zConfigAoeTiersDoc,
   zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
@@ -679,6 +680,45 @@ const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
     },
   ],
   // 兩格純量，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const CONTENT_LOAD_SPEC: ConfigDocSpec = {
+  page: "contentLoad",
+  collection: "config",
+  docId: "content-load",
+  schemaTag: "config.content-load@1",
+  zod: zConfigContentLoadDoc,
+  title: "內容載入政策",
+  intro: [
+    "一份壞掉的內容文件，要不要殺掉**整份**內容。owner 2026-08-14：「遊戲主程式應該要把**全有全無**的這種奇怪機制改掉，應該改為**不同部分各自 check 載入成功**」。",
+    "⭐ 這一頁存在是因為那個「全有全無」其實只是一行程式的決定，不是架構限制 —— `loader.ts` 從第一天就**逐份**收集錯誤（每一份壞的都記下 collection、id、Zod 的逐條 issue），只是最後一行把整批丟掉。",
+    "⚠️ **代價已經發生過兩次**（2026-08-01、08-02）：四份 config 文件的 schema tag 不在已部署映像的 Zod union 裡 → 內容載入整份失敗 → 客戶端 fail-open 退回 2 隻骨架英雄 → 選人畫面空掉、沒有人進得去。**而網站看起來完全正常**，唯一說實話的是 console 一行 log。隔離之後，同一次的結果會是「少四份設定」。",
+    "⛔ **隔離不等於安靜**：被隔離的每一份都會出現在 game shard 的 `GET /healthz` 的 `content.quarantined` 與 `content.quarantinedDocs`，開機 log 也會逐份印出來。那是這一頁能存在的前提 —— 一個沒有人知道的隔離，比整份失敗更糟。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/），**覆蓋層會蓋掉 `content/config/content-load.json`**。線上存過一次之後，再去改 repo 裡那個檔案不會有任何效果。",
+  ],
+  consumer:
+    "packages/shared/src/content/loader.ts 的 ContentLoader.load()（唯一知道這三格怎麼作用的地方）← game-server 開機、客戶端 main.tsx 的內容載入都走它。⚠️ 政策文件自己也在被載入的那一批裡，所以它**在迴圈跑完之後才被讀**；它自己壞掉時退回出貨預設，而且會出現在隔離清單裡。",
+  effect:
+    "**要重啟 game-server shard 才生效**（客戶端則是下一次重新整理）。",
+  fields: [
+    {
+      path: "policy",
+      zh: "一份壞文件的處置",
+      note: "`quarantine`（出貨）= 壞的那幾份不進登錄表，其餘照常載入。`fail-closed` = 舊行為，任何一份壞掉整份失敗。⚠️ 舊行為在客戶端的樣子不是錯誤畫面，是**悄悄退回 2 隻骨架英雄** —— 那正是 owner 要廢掉它的理由。",
+    },
+    {
+      path: "cascadeDanglingRefs",
+      zh: "隔離會不會傳染",
+      note: "文件 A 硬參照到被隔離的 B 時，A 要不要也被隔離。⭐ 開著（出貨）擋的是**半個世界**：英雄載進來、他的 Q 沒載進來 = 一格空技能，而且沒有人會發現。寧可少一隻英雄，⛔ 不要一隻壞掉的英雄。關掉的話那些斷掉的參照會降級成警告，文件留著。",
+    },
+    {
+      path: "maxQuarantined",
+      zh: "隔離上限（超過就退回全有全無）",
+      note: "隔離超過幾份就改用 `fail-closed`。出貨 **50**。⚠️ 這是 quarantine 的安全閥：「少四份設定」與「內容整份跟這個映像不相容」是兩件事，而後者隔離出來的結果是一個**空的遊戲** —— 那比誠實地退回骨架更糟，因為骨架至少會讓 `/healthz` 的 `content.ok` 變 false。填 0 ＝ 完全不容忍（等於 fail-closed）。",
+    },
+  ],
+  // 三格純量，沒有不編輯的分支要原封帶走。
   preserved: [],
 };
 
@@ -2224,6 +2264,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   CRIT_SPEC,
   BERSERK_SPEC,
   DISPEL_SPEC,
+  CONTENT_LOAD_SPEC,
   COOLDOWN_RULES_SPEC,
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,

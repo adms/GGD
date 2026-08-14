@@ -16,6 +16,17 @@ export class ContentStore {
     return this.cols.get(collection)!.has(id);
   }
 
+  /**
+   * 拿掉一份文件。回傳它本來在不在。
+   *
+   * ⚠️ 只有 GH#326 的隔離用得到:一份文件硬參照到被隔離的目標時,它自己也要被
+   * 拿掉,否則會留下**半個世界**(英雄在、他的技能不在 = 一格空技能,而且沒有人
+   * 會發現)。⛔ 一般載入路徑不該呼叫它 —— store 建好之後就是唯讀的。
+   */
+  remove(collection: CollectionName, id: string): boolean {
+    return this.cols.get(collection)!.delete(id);
+  }
+
   get<T = unknown>(collection: CollectionName, id: string): T {
     const doc = this.cols.get(collection)!.get(id);
     if (doc === undefined) throw new Error(`content store: missing ${collection}/${id}`);

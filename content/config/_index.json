@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7fc8ab36a958",
+  "hash": "f40b5718c337",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -13,6 +13,12 @@
       "path": "config/aoe-tiers.json",
       "hash": "036362729220",
       "size": 374
+    },
+    {
+      "id": "arena-pool",
+      "path": "config/arena-pool.json",
+      "hash": "cdc175555f1c",
+      "size": 710
     },
     {
       "id": "arena-rules",
@@ -91,6 +97,12 @@
       "path": "config/config.match.json",
       "hash": "dd99e325b683",
       "size": 1466
+    },
+    {
+      "id": "content-load",
+      "path": "config/content-load.json",
+      "hash": "353591cea474",
+      "size": 513
     },
     {
       "id": "cooldown-rules",

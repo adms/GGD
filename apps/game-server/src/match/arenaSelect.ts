@@ -5,7 +5,12 @@
  * built-in SKELETON_ARENA when the id is absent, unknown, or the content tree
  * never loaded — so a match ALWAYS gets a valid, playable map.
  */
-import { Arenas } from "@ggd/shared/content";
+import { Arenas, Configs } from "@ggd/shared/content";
+import {
+  DEFAULT_ARENA_POOL,
+  resolveArenaPoolConfig,
+  type ConfigArenaPoolDoc,
+} from "@ggd/shared/content/schema/arenaPoolDoc";
 import { SKELETON_ARENA, ROYALE_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 
 export function resolveArena(mapId?: string): ArenaDef {
@@ -27,13 +32,17 @@ export function resolveArena(mapId?: string): ArenaDef {
  * if a given install has not loaded them (so a bare boot still rotates over
  * whatever it has).
  */
-export const ARENA_ROTATION_IDS: readonly string[] = [
-  "arena.skeleton",
-  "arena.castle",
-  "arena.colosseum",
-  "arena.dota",
-  "arena.godie",
-];
+/**
+ * ⚠️ **這個陣列以前是寫死的，而那是一個真的缺陷。**
+ *
+ * 2026-08-14 產出七張動漫競技場、驗證過、上線之後，**玩家一場都碰不到** ——
+ * 因為沒有人記得回來改它。那是失敗形態②（算出來了但從沒送到玩家面前），
+ * 而且寫死本身違反第一守則。
+ *
+ * ⇒ 現在它從 `config.arena-pool@1` 讀（後台可調）。這個常數只是**出貨預設**的
+ * 別名，留著是因為既有的測試與註解引用它。⛔ 不要在這裡加地圖 —— 加在 config。
+ */
+export const ARENA_ROTATION_IDS: readonly string[] = DEFAULT_ARENA_POOL.rotation;
 
 /**
  * The FINALE map (`arena.royale`) — deliberately NOT in {@link ARENA_ROTATION_IDS}.
@@ -49,7 +58,10 @@ export const ARENA_ROTATION_IDS: readonly string[] = [
  * player sees — never a second, untested geometry.
  */
 export function resolveRoyaleArena(): ArenaDef {
-  const doc = Arenas.tryGet(ROYALE_ARENA.id);
+  const cfg = resolveArenaPoolConfig(
+    (Configs.tryGet("arena-pool") ?? null) as Partial<ConfigArenaPoolDoc> | null,
+  );
+  const doc = Arenas.tryGet(cfg.finale) ?? Arenas.tryGet(ROYALE_ARENA.id);
   return doc ? arenaDefFromDoc(doc) : ROYALE_ARENA;
 }
 
@@ -61,9 +73,13 @@ export function resolveRoyaleArena(): ArenaDef {
  * rotation" — behaviour identical to the pre-#145 fixed map.
  */
 export function resolveArenaPool(): ArenaDef[] {
+  // ⭐ 池子從 config 讀（後台可調）。讀不到就是出貨預設 —— ⛔ 不是空池。
+  const cfg = resolveArenaPoolConfig(
+    (Configs.tryGet("arena-pool") ?? null) as Partial<ConfigArenaPoolDoc> | null,
+  );
   const pool: ArenaDef[] = [];
   const seen = new Set<string>();
-  for (const id of ARENA_ROTATION_IDS) {
+  for (const id of cfg.rotation) {
     let def: ArenaDef | null = null;
     if (id === SKELETON_ARENA.id) def = SKELETON_ARENA;
     else {

@@ -1,6 +1,6 @@
 {
   "collection": "arenas",
-  "hash": "d358c9226b98",
+  "hash": "f38f4404c021",
   "entries": [
     {
       "id": "arena.castle",
@@ -23,8 +23,8 @@
     {
       "id": "arena.frieren",
       "path": "arenas/arena.frieren.json",
-      "hash": "30ea672f1e87",
-      "size": 93220
+      "hash": "1f2cb61e7257",
+      "size": 96013
     },
     {
       "id": "arena.godie",
@@ -35,26 +35,26 @@
     {
       "id": "arena.heavens-arena",
       "path": "arenas/arena.heavens-arena.json",
-      "hash": "39d238178c52",
-      "size": 112216
+      "hash": "ab75eec92d28",
+      "size": 115018
     },
     {
       "id": "arena.holy-grail",
       "path": "arenas/arena.holy-grail.json",
-      "hash": "f0c9a92c829d",
-      "size": 101936
+      "hash": "1a6dcc710cf2",
+      "size": 104744
     },
     {
       "id": "arena.infinity-castle",
       "path": "arenas/arena.infinity-castle.json",
-      "hash": "a5dc1e5ad21c",
-      "size": 103213
+      "hash": "3f236b07dd7f",
+      "size": 106085
     },
     {
       "id": "arena.nazarick",
       "path": "arenas/arena.nazarick.json",
-      "hash": "086f8e6574ef",
-      "size": 85229
+      "hash": "70efcd7134d2",
+      "size": 88031
     },
     {
       "id": "arena.royale",
@@ -65,8 +65,8 @@
     {
       "id": "arena.shiganshina",
       "path": "arenas/arena.shiganshina.json",
-      "hash": "265e45f25a8c",
-      "size": 93281
+      "hash": "32362bb5da62",
+      "size": 96062
     },
     {
       "id": "arena.skeleton",
@@ -77,8 +77,8 @@
     {
       "id": "arena.world-tree",
       "path": "arenas/arena.world-tree.json",
-      "hash": "06d9b71c58e8",
-      "size": 101926
+      "hash": "b21d8c2defd9",
+      "size": 104714
     }
   ]
 }

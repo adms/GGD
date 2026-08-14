@@ -3322,7 +3322,81 @@
             "city_gate_s"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "gate-n",
+          "kind": "capture",
+          "at": {
+            "x": 1,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "gate-s",
+          "kind": "capture",
+          "at": {
+            "x": -1,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "road-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "house-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "wall-w",
+          "kind": "capture",
+          "at": {
+            "x": -17,
+            "z": 11
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-n",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-m",
+          "kind": "pickup",
+          "at": {
+            "x": 9,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-s",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.shiganshina-z1",
@@ -6643,7 +6717,81 @@
             "city_gate_s"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "gate-n",
+          "kind": "capture",
+          "at": {
+            "x": 73,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "gate-s",
+          "kind": "capture",
+          "at": {
+            "x": 71,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "road-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "house-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "wall-w",
+          "kind": "capture",
+          "at": {
+            "x": 55,
+            "z": 11
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-n",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-m",
+          "kind": "pickup",
+          "at": {
+            "x": 81,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "barr-s",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],

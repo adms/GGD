@@ -3004,7 +3004,81 @@
             "guard_south"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "throne-n",
+          "kind": "capture",
+          "at": {
+            "x": -1,
+            "z": -3
+          },
+          "radius": 2
+        },
+        {
+          "id": "throne-s",
+          "kind": "pickup",
+          "at": {
+            "x": 1,
+            "z": 3
+          },
+          "radius": 2
+        },
+        {
+          "id": "treasury-mid",
+          "kind": "pickup",
+          "at": {
+            "x": -13,
+            "z": -17
+          },
+          "radius": 2
+        },
+        {
+          "id": "tomb-mid",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "maid-n",
+          "kind": "capture",
+          "at": {
+            "x": -15,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "maid-s",
+          "kind": "pickup",
+          "at": {
+            "x": -15,
+            "z": 15
+          },
+          "radius": 2
+        },
+        {
+          "id": "colo-n",
+          "kind": "capture",
+          "at": {
+            "x": 15,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "colo-s",
+          "kind": "pickup",
+          "at": {
+            "x": 15,
+            "z": 15
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.nazarick-z1",
@@ -6007,7 +6081,81 @@
             "guard_south"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "throne-n",
+          "kind": "capture",
+          "at": {
+            "x": 71,
+            "z": -3
+          },
+          "radius": 2
+        },
+        {
+          "id": "throne-s",
+          "kind": "pickup",
+          "at": {
+            "x": 73,
+            "z": 3
+          },
+          "radius": 2
+        },
+        {
+          "id": "treasury-mid",
+          "kind": "pickup",
+          "at": {
+            "x": 59,
+            "z": -17
+          },
+          "radius": 2
+        },
+        {
+          "id": "tomb-mid",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "maid-n",
+          "kind": "capture",
+          "at": {
+            "x": 57,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "maid-s",
+          "kind": "pickup",
+          "at": {
+            "x": 57,
+            "z": 15
+          },
+          "radius": 2
+        },
+        {
+          "id": "colo-n",
+          "kind": "capture",
+          "at": {
+            "x": 87,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "colo-s",
+          "kind": "pickup",
+          "at": {
+            "x": 87,
+            "z": 15
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],

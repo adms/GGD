@@ -69,6 +69,7 @@ import { MatchConfigPage } from "./MatchConfigPage";
 import { StoreEconomyPage } from "./StoreEconomyPage";
 import { ConfigDocPage } from "./ConfigDocPage";
 import { MapReportPage } from "./MapReportPage";
+import { ArenaPoolPage } from "./ArenaPoolPage";
 import { specForPage } from "../configForms";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
@@ -158,6 +159,10 @@ export const NAV: NavItem[] = [
   // #174: the private deploy's front door — mint a code, see who used it.
   { page: "invites", label: "邀請碼", emoji: "🎟️", section: SEC_OPS },
   { page: "audit", label: "Audit log", emoji: "📜", section: SEC_OPS },
+  // GH#326 —— 一份壞文件要不要殺掉整份內容。⚠️ 它屬於「營運」而不是「內容」或
+  // 「系統」:它管的不是內容**是什麼**,是內容**載不進來的時候怎麼辦** —— 跟
+  // Audit log 一樣是出事之後才會被打開的那一類。
+  { page: "contentLoad", label: "內容載入政策", emoji: "🧯", section: SEC_OPS },
   // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
   // BEFORE this always-present member, so the whole section reads contiguously.
   { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },
@@ -210,6 +215,7 @@ export const NAV: NavItem[] = [
   { page: "perLevelBonus", label: "每級加成", emoji: "📈", section: SEC_COMBAT },
   { page: "mapSpec", label: "小地圖規格", emoji: "🗺️", section: SEC_COMBAT },
   { page: "mapReport", label: "地圖驗證報告", emoji: "📋", section: SEC_COMBAT },
+  { page: "arenaPool", label: "場地輪替", emoji: "🎲", section: SEC_COMBAT },
   // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條
   // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
   // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。
@@ -977,6 +983,7 @@ function Console(): React.JSX.Element {
             */}
             {configDocSpec !== null && <ConfigDocPage spec={configDocSpec} />}
             {page === "mapReport" && <MapReportPage />}
+            {page === "arenaPool" && <ArenaPoolPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

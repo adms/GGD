@@ -3631,7 +3631,81 @@
             "east_door"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "biwa-north",
+          "kind": "capture",
+          "at": {
+            "x": -5,
+            "z": -5
+          },
+          "radius": 2
+        },
+        {
+          "id": "biwa-south",
+          "kind": "pickup",
+          "at": {
+            "x": 1,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "inverted-west",
+          "kind": "pickup",
+          "at": {
+            "x": -19,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "inverted-east",
+          "kind": "pickup",
+          "at": {
+            "x": 19,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "paper-mid",
+          "kind": "capture",
+          "at": {
+            "x": -17,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "platform-mid",
+          "kind": "capture",
+          "at": {
+            "x": 17,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "courtyard-west",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "courtyard-east",
+          "kind": "pickup",
+          "at": {
+            "x": 17,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.infinity-castle-z1",
@@ -7261,7 +7335,81 @@
             "east_door"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "biwa-north",
+          "kind": "capture",
+          "at": {
+            "x": 67,
+            "z": -5
+          },
+          "radius": 2
+        },
+        {
+          "id": "biwa-south",
+          "kind": "pickup",
+          "at": {
+            "x": 73,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "inverted-west",
+          "kind": "pickup",
+          "at": {
+            "x": 53,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "inverted-east",
+          "kind": "pickup",
+          "at": {
+            "x": 91,
+            "z": -15
+          },
+          "radius": 2
+        },
+        {
+          "id": "paper-mid",
+          "kind": "capture",
+          "at": {
+            "x": 55,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "platform-mid",
+          "kind": "capture",
+          "at": {
+            "x": 89,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "courtyard-west",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "courtyard-east",
+          "kind": "pickup",
+          "at": {
+            "x": 89,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],

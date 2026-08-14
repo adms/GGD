@@ -1175,17 +1175,21 @@ export class GameApp {
           x: z.center.x,
           z: z.center.z,
           r: z.boundaryRadius,
+          ...(z.bounds !== undefined && z.bounds.kind === "rect"
+            ? { rect: { halfW: z.bounds.halfW, halfD: z.bounds.halfD } }
+            : {}),
           obstacles: z.obstacles.map((o) =>
             o.kind === "circle"
               ? ({ kind: "circle", x: o.center.x, z: o.center.z, r: o.radius } as const)
               : o.kind === "box"
-                ? // GH#324 —— 盒攤平成它的**外接圓**：這條路餵的是偵錯覆蓋層與小地圖，
-                  // 它們要的是「這裡有東西擋路」，⛔ 不是精確形狀（精確版在 sim/collision）。
+                ? // ⭐ GH#324 —— 盒原樣送過去。⛔ 不再壓成外接圓：一面 24 格寬的牆
+                  // 會變成半徑 24 的大圓圈，小地圖上的地形就跟玩家撞到的牆完全不一樣。
                   ({
-                    kind: "circle",
+                    kind: "box",
                     x: o.center.x,
                     z: o.center.z,
-                    r: Math.hypot(o.halfW, o.halfD),
+                    halfW: o.halfW,
+                    halfD: o.halfD,
                   } as const)
                 : ({ kind: "segment", ax: o.a.x, az: o.a.z, bx: o.b.x, bz: o.b.z } as const),
           ),

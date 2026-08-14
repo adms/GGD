@@ -93,6 +93,14 @@ export interface ConfigDocExemption {
  */
 export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
   {
+    docId: "arena-pool",
+    kind: "OWN_PAGE",
+    page: "arenaPool",
+    docIdConstant: "arena-pool",
+    why: "場地輪替有自己的頁（🎲 場地輪替）。⛔ 它不走通用引擎：那個引擎畫的是**固定形狀的純量葉**，而這裡要的是「一份會長大的場地清單 × 勾選」——硬套會變成一格要手打 id 的文字框，而打錯一個字的後果是那張圖**靜靜地不出現**（正是這一頁在修的那個缺陷）。",
+    expiresWhen: "⚠️ 通用引擎長出「從某個集合挑多個 id」的欄位型別的那一天，這一列該退場。⭐ `config.roster@1`（英雄上下架）是同一個形狀，兩份會一起解鎖。",
+  },
+  {
     docId: "map-report",
     kind: "OWN_PAGE",
     page: "mapReport",

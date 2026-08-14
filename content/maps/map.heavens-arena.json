@@ -99,7 +99,7 @@
   "interactions": [
     {
       "id": "ring-a",
-      "kind": "channel",
+      "kind": "capture",
       "at": {
         "col": 10,
         "row": 8
@@ -110,7 +110,7 @@
     },
     {
       "id": "ring-b",
-      "kind": "channel",
+      "kind": "pickup",
       "at": {
         "col": 13,
         "row": 8

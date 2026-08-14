@@ -99,7 +99,7 @@
   "interactions": [
     {
       "id": "grail-core",
-      "kind": "channel",
+      "kind": "capture",
       "at": {
         "col": 10,
         "row": 9
@@ -110,7 +110,7 @@
     },
     {
       "id": "grail-rim",
-      "kind": "channel",
+      "kind": "pickup",
       "at": {
         "col": 13,
         "row": 9

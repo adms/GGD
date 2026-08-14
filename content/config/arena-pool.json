@@ -1,0 +1,20 @@
+{
+  "id": "arena-pool",
+  "schema": "config.arena-pool@1",
+  "note": "哪幾張場地會進回合輪替。⚠️ 在 GH#324 之前這是一個寫死在 game-server 裡的 TS 陣列，於是七張新產出的動漫競技場上線之後玩家一場都碰不到（失敗形態②：算出來了但從沒送到玩家面前）。順序就是輪替順序；決賽場地刻意不在裡面。",
+  "rotation": [
+    "arena.skeleton",
+    "arena.castle",
+    "arena.colosseum",
+    "arena.dota",
+    "arena.godie",
+    "arena.infinity-castle",
+    "arena.shiganshina",
+    "arena.holy-grail",
+    "arena.nazarick",
+    "arena.frieren",
+    "arena.world-tree",
+    "arena.heavens-arena"
+  ],
+  "finale": "arena.royale"
+}

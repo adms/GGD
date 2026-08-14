@@ -514,13 +514,79 @@ export interface ZoneGround {
  * fetch, so the pre-match placeholder arena never downloads a set the real map
  * is about to replace.
  */
-export function buildZoneGround(
+/**
+ * 矩形場地的地板（GH#324）。
+ *
+ * ⚠️ 刻意**只畫一片平面 + 一圈裙邊**，⛔ 沒有圓形版本的同心環與波浪外緣 ——
+ * 那些是為圓盤設計的（`floorRingRadii` / `kerbCrestOffset` 都吃半徑）。
+ * 在矩形上硬套會讓四個角出現對不齊的弧線。graybox 階段不需要它們。
+ */
+function buildRectGround(
   scene: Scene,
   parent: TransformNode,
-  zone: { center: { x: number; z: number }; boundaryRadius: number },
+  center: { x: number; z: number },
+  bounds: { halfW: number; halfD: number },
   zoneIndex: number,
   groundStyle: string | undefined,
 ): ZoneGround {
+  const tex = groundStyle
+    ? loadGroundTextures(scene, groundTextureSet(groundStyle), Math.max(bounds.halfW, bounds.halfD))
+    : null;
+  const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;
+
+  // ⚠️ 用 `VertexData` 手搭四邊形，⛔ 不用 `MeshBuilder` —— 這個檔全程都是
+  //    VertexData（那是刻意的：不拖進 MeshBuilder 的 side-effect import）。
+  const quad = (name: string, hw: number, hd: number): Mesh => {
+    const m = new Mesh(name, scene);
+    const vd = new VertexData();
+    vd.positions = [-hw, 0, -hd, hw, 0, -hd, hw, 0, hd, -hw, 0, hd];
+    vd.normals = [0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0];
+    vd.uvs = [0, 0, hw / 4, 0, hw / 4, hd / 4, 0, hd / 4];
+    vd.indices = [0, 1, 2, 0, 2, 3];
+    vd.applyToMesh(m);
+    return m;
+  };
+
+  const floor = quad(`zone-${zoneIndex}-floor`, bounds.halfW, bounds.halfD);
+  floor.material = createFloorMaterial(scene, `zone-${zoneIndex}-floor-mat`, tex, fallback);
+
+  // 裙邊：比可玩範圍大一圈的暗色平面，讓邊界看起來有厚度而不是憑空切斷。
+  const APRON = 3;
+  const rim = quad(`zone-${zoneIndex}-rim`, bounds.halfW + APRON, bounds.halfD + APRON);
+  rim.material = createRimMaterial(scene, `zone-${zoneIndex}-rim-mat`, tex, fallback);
+
+  for (const [mesh, y] of [
+    [rim, -0.02],
+    [floor, 0],
+  ] as const) {
+    mesh.position.set(center.x, y, center.z);
+    mesh.isPickable = false;
+    mesh.parent = parent;
+    mesh.freezeWorldMatrix();
+  }
+  return { floor, rim };
+}
+
+export function buildZoneGround(
+  scene: Scene,
+  parent: TransformNode,
+  zone: {
+    center: { x: number; z: number };
+    boundaryRadius: number;
+    bounds?: { kind: "disc" } | { kind: "rect"; halfW: number; halfD: number };
+  },
+  zoneIndex: number,
+  groundStyle: string | undefined,
+): ZoneGround {
+  // ⭐ GH#324 —— **矩形場地要畫矩形地板。**
+  //
+  // ⚠️ 這不是美觀問題：矩形場地的 `boundaryRadius` 是**外接圓**（24×18 格 ⇒ 30），
+  // 而地板本來畫到 `boundaryRadius` ⇒ 圓盤會從四條牆**外面**冒出來，玩家會看到
+  // 走不到的地板，然後以為自己被卡住。這正是「畫面說的和碰撞說的不一樣」那一類。
+  const rectBounds = zone.bounds !== undefined && zone.bounds.kind === "rect" ? zone.bounds : null;
+  if (rectBounds !== null) {
+    return buildRectGround(scene, parent, zone.center, rectBounds, zoneIndex, groundStyle);
+  }
   const r = zone.boundaryRadius;
   const tex = groundStyle ? loadGroundTextures(scene, groundTextureSet(groundStyle), r) : null;
   const fallback = GROUND_BASE[groundStyle ?? "stone"] ?? GROUND_BASE.stone!;

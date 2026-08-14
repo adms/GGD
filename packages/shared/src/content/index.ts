@@ -18,7 +18,12 @@ export * from "./errors";
 export { sha256Hex } from "./sha256";
 export { HASH_HEX_LEN, stableStringify, hashDoc, hashCollection, contentVersion } from "./hash";
 export { ContentStore } from "./store";
-export { ContentLoader, validateDoc, type LoadResult } from "./loader";
+export {
+  ContentLoader,
+  validateDoc,
+  type LoadResult,
+  type QuarantineEntry,
+} from "./loader";
 // 退場的抽獎池 (owner 2026-08-01). `rulesFromDoc` 在 game-server 側讀同一支
 // `scheduledRetiredTables`,所以「退場」只有一個定義,不會有第二份漂走的規則。
 export {

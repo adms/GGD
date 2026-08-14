@@ -101,7 +101,7 @@
   "interactions": [
     {
       "id": "throne-n",
-      "kind": "channel",
+      "kind": "capture",
       "at": {
         "col": 11,
         "row": 8
@@ -112,7 +112,7 @@
     },
     {
       "id": "throne-s",
-      "kind": "channel",
+      "kind": "pickup",
       "at": {
         "col": 12,
         "row": 11

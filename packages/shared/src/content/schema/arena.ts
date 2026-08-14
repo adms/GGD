@@ -134,6 +134,28 @@ export const zZoneDef = z
      * 所有出生點與互動點可達，否則產生器拒絕輸出。
      */
     /**
+     * ⭐ GH#324 —— 作者擺的**互動／任務點**。
+     *
+     * ⚠️ 它們不是新玩法，是**既有系統的擺放錨點**：
+     *   · `pickup`  → 治療花開在這裡（⛔ 取代原本的隨機取樣）
+     *   · `capture` → 守衛塔站在這裡（⛔ 取代原本寫死的 `zone.center`）
+     * ⭐ 這樣「6–10 個互動點」才真的有意義 —— 否則作者精心擺的位置，
+     *    引擎一個都不看，那是失敗形態②（算出來了但從沒送到玩家面前）。
+     */
+    interactions: z
+      .array(
+        z
+          .object({
+            id: z.string().min(1),
+            kind: z.enum(["channel", "pickup", "capture", "toggleGate"]),
+            at: zVec2,
+            radius: z.number().positive(),
+          })
+          .strict(),
+      )
+      .optional(),
+
+    /**
      * ⭐ GH#324 —— **玩家觸發的 gate**：有人站在這個點的半徑內，那組門就被撐開／壓住。
      *
      * ⛔ 為什麼是「站著才有效」而不是「按一下就切換」：切換是**有記憶**的狀態，

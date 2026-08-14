@@ -99,7 +99,7 @@
   "interactions": [
     {
       "id": "biwa-north",
-      "kind": "channel",
+      "kind": "capture",
       "at": {
         "col": 9,
         "row": 6
@@ -110,7 +110,7 @@
     },
     {
       "id": "biwa-south",
-      "kind": "channel",
+      "kind": "pickup",
       "at": {
         "col": 12,
         "row": 9

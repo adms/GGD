@@ -3937,6 +3937,80 @@
           ]
         ]
       },
+      "interactions": [
+        {
+          "id": "ring-a",
+          "kind": "capture",
+          "at": {
+            "x": -3,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "ring-b",
+          "kind": "pickup",
+          "at": {
+            "x": 3,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "fight-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -13
+          },
+          "radius": 2
+        },
+        {
+          "id": "fight-e",
+          "kind": "pickup",
+          "at": {
+            "x": 17,
+            "z": -13
+          },
+          "radius": 2
+        },
+        {
+          "id": "gal-mid",
+          "kind": "toggleGate",
+          "at": {
+            "x": -17,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "elev-mid",
+          "kind": "toggleGate",
+          "at": {
+            "x": 17,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "back-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "back-e",
+          "kind": "pickup",
+          "at": {
+            "x": 17,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ],
       "gateHolds": [
         {
           "at": {
@@ -7892,6 +7966,80 @@
           ]
         ]
       },
+      "interactions": [
+        {
+          "id": "ring-a",
+          "kind": "capture",
+          "at": {
+            "x": 69,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "ring-b",
+          "kind": "pickup",
+          "at": {
+            "x": 75,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "fight-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -13
+          },
+          "radius": 2
+        },
+        {
+          "id": "fight-e",
+          "kind": "pickup",
+          "at": {
+            "x": 89,
+            "z": -13
+          },
+          "radius": 2
+        },
+        {
+          "id": "gal-mid",
+          "kind": "toggleGate",
+          "at": {
+            "x": 55,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "elev-mid",
+          "kind": "toggleGate",
+          "at": {
+            "x": 89,
+            "z": -1
+          },
+          "radius": 2
+        },
+        {
+          "id": "back-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "back-e",
+          "kind": "pickup",
+          "at": {
+            "x": 89,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ],
       "gateHolds": [
         {
           "at": {

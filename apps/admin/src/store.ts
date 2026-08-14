@@ -130,6 +130,12 @@ export type Page =
    * 錄不錄影、多久落地一次、留幾份留幾天。
    */
   | "replayPolicy"
+  /**
+   * 內容載入政策 (`config/content-load.json`, GH#326 owner 2026-08-14):
+   * 一份壞掉的內容文件要不要殺掉**整份**內容。出貨 `quarantine`(隔離壞的、
+   * 好的照跑)—— 舊的「全有全無」害線上悄悄退回 2 隻骨架英雄兩次。
+   */
+  | "contentLoad"
   /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
   | "modelLod"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
@@ -181,6 +187,8 @@ export type Page =
   | "mapSpec"
   /** GH#324 —— 地圖驗證報告（唯讀）。 */
   | "mapReport"
+  /** GH#324 —— 場地輪替（勾選哪幾張進輪替）。 */
+  | "arenaPool"
   /** GH#322 —— 減傷天花板 / 位移級距 / 每級加成，2026-08-13 平衡批新開的三份 config。 */
   | "mitigation"
   | "displacementTiers"
@@ -493,6 +501,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // 對戰錄影 (owner 2026-08-02): 同一個 `ConfigDocPage` 元件、同一條
   // `putOverlayDoc`,所以同一條 session 規則。
   "replayPolicy",
+  // 內容載入政策 (GH#326): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
+  "contentLoad",
   "modelLod",
   "vfxCleanup",
   "gore",
@@ -516,6 +526,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。
   "mapSpec",
   "mapReport",
+  "arenaPool",
   // GH#322 —— 2026-08-13 平衡批新開的三頁。三頁都走 `putOverlayDoc`（沒有 session
   // 一律 401），⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
   "mitigation",

@@ -22,6 +22,9 @@ import { CAMERA_YAW_RAD, mapScale, worldToMap, type MapBounds } from "./minimapM
 /** One baked terrain primitive, already in map-canvas px. */
 export type TerrainShape =
   | { kind: "zone"; x: number; y: number; r: number }
+  // ⭐ GH#324 —— 矩形可玩範圍與有厚度的牆。⛔ 不用圓近似（見 frameBus 的註解）。
+  | { kind: "zoneRect"; x: number; y: number; w: number; h: number }
+  | { kind: "boxWall"; x: number; y: number; w: number; h: number }
   | { kind: "obstacle"; x: number; y: number; r: number }
   | { kind: "wall"; x1: number; y1: number; x2: number; y2: number; width: number }
   | { kind: "spawn"; x: number; y: number; r: number; side: number };
@@ -46,7 +49,17 @@ export function terrainShapes(
   for (const z of zones) {
     if (!(z.r > 0)) continue;
     const c = worldToMap(z.x, z.z, bounds, sizePx, yawRad);
-    out.push({ kind: "zone", x: c.x, y: c.y, r: z.r * s });
+    if (z.rect !== undefined) {
+      out.push({
+        kind: "zoneRect",
+        x: c.x,
+        y: c.y,
+        w: z.rect.halfW * 2 * s,
+        h: z.rect.halfD * 2 * s,
+      });
+    } else {
+      out.push({ kind: "zone", x: c.x, y: c.y, r: z.r * s });
+    }
   }
   for (const z of zones) {
     if (!(z.r > 0)) continue;
@@ -54,6 +67,15 @@ export function terrainShapes(
       if (ob.kind === "circle") {
         const p = worldToMap(ob.x, ob.z, bounds, sizePx, yawRad);
         out.push({ kind: "obstacle", x: p.x, y: p.y, r: Math.max(MIN_OBSTACLE_PX, ob.r * s) });
+      } else if (ob.kind === "box") {
+        const p = worldToMap(ob.x, ob.z, bounds, sizePx, yawRad);
+        out.push({
+          kind: "boxWall",
+          x: p.x,
+          y: p.y,
+          w: Math.max(MIN_OBSTACLE_PX, ob.halfW * 2 * s),
+          h: Math.max(MIN_OBSTACLE_PX, ob.halfD * 2 * s),
+        });
       } else {
         const a = worldToMap(ob.ax, ob.az, bounds, sizePx, yawRad);
         const b = worldToMap(ob.bx, ob.bz, bounds, sizePx, yawRad);
@@ -113,6 +135,24 @@ export function paintTerrain(
   sizePx: number,
 ): void {
   ctx.clearRect(0, 0, sizePx, sizePx);
+  // ⭐ GH#324 —— 矩形可玩範圍。⛔ 畫在圓盤那一圈**之前**，兩者互斥（一個分區
+  // 只會產出其中一種），分開兩個迴圈只是為了讓每一段的樣式自成一體。
+  for (const s of shapes) {
+    if (s.kind !== "zoneRect") continue;
+    ctx.fillStyle = GROUND_FILL;
+    ctx.fillRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h);
+    ctx.strokeStyle = GROUND_INNER;
+    ctx.lineWidth = Math.max(2, Math.min(s.w, s.h) * 0.04);
+    ctx.strokeRect(
+      s.x - s.w / 2 + ctx.lineWidth / 2,
+      s.y - s.h / 2 + ctx.lineWidth / 2,
+      s.w - ctx.lineWidth,
+      s.h - ctx.lineWidth,
+    );
+    ctx.strokeStyle = GROUND_EDGE;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h);
+  }
   for (const s of shapes) {
     if (s.kind !== "zone") continue;
     // ground disc + a soft inner ring so the rim reads as a wall, not a line
@@ -130,6 +170,15 @@ export function paintTerrain(
     ctx.beginPath();
     ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.stroke();
+  }
+  // ⭐ 有厚度的牆。⛔ 不用圓近似 —— 一面 24 格寬的牆壓成外接圓就變成一顆大圓圈。
+  for (const s of shapes) {
+    if (s.kind !== "boxWall") continue;
+    ctx.fillStyle = OBSTACLE_FILL;
+    ctx.strokeStyle = OBSTACLE_EDGE;
+    ctx.lineWidth = 1;
+    ctx.fillRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h);
+    ctx.strokeRect(s.x - s.w / 2, s.y - s.h / 2, s.w, s.h);
   }
   for (const s of shapes) {
     if (s.kind === "obstacle") {

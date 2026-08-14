@@ -180,6 +180,16 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  "enum:maps.interactions[].kind=channel": {
+    status: "landing",
+    since: "2026-08-14",
+    why: "GH#324 —— 互動點的 `kind` 是**既有系統的擺放錨點**：`pickup` → 治療花開在這裡、`capture` → 守衛塔站在這裡、`toggleGate` → 玩家站著撐開的門。三種都有引擎消費端。⭐ `channel`（站著讀條）**還沒有消費端**，所以七張圖刻意一個都不用它 —— ⛔ 留著一個沒有人讀的 kind 在內容裡，就是「作者以為擺了東西、引擎一個都不看」那個形態本身（這一批修的正是它）。**到期**：`channel` 長出消費端（例如佔領進度條）的那一刻，把它填回地圖並刪掉這兩列。",
+  },
+  "enum:arenas.zones[].interactions[].kind=channel": {
+    status: "landing",
+    since: "2026-08-14",
+    why: "同上 —— 這是編譯後的那一份（`arena@1`），內容一樣沒有人填 `channel`。",
+  },
   // ── GH#324：兩格是「另一條路的預設」，零採用是對的 ────────────────────────
   "variant:arenas.zones[].bounds#disc": {
     status: "default-live",

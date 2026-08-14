@@ -3322,7 +3322,81 @@
             "magic_door_s"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "chest-a",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "chest-b",
+          "kind": "pickup",
+          "at": {
+            "x": -7,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "statue-a",
+          "kind": "capture",
+          "at": {
+            "x": -17,
+            "z": 7
+          },
+          "radius": 2
+        },
+        {
+          "id": "statue-b",
+          "kind": "capture",
+          "at": {
+            "x": -7,
+            "z": 7
+          },
+          "radius": 2
+        },
+        {
+          "id": "door-n",
+          "kind": "capture",
+          "at": {
+            "x": 13,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "door-s",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": -7
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-w",
+          "kind": "pickup",
+          "at": {
+            "x": 7,
+            "z": 9
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-e",
+          "kind": "pickup",
+          "at": {
+            "x": 19,
+            "z": 9
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.frieren-z1",
@@ -6643,7 +6717,81 @@
             "magic_door_s"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "chest-a",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "chest-b",
+          "kind": "pickup",
+          "at": {
+            "x": 65,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "statue-a",
+          "kind": "capture",
+          "at": {
+            "x": 55,
+            "z": 7
+          },
+          "radius": 2
+        },
+        {
+          "id": "statue-b",
+          "kind": "capture",
+          "at": {
+            "x": 65,
+            "z": 7
+          },
+          "radius": 2
+        },
+        {
+          "id": "door-n",
+          "kind": "capture",
+          "at": {
+            "x": 85,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "door-s",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": -7
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-w",
+          "kind": "pickup",
+          "at": {
+            "x": 79,
+            "z": 9
+          },
+          "radius": 2
+        },
+        {
+          "id": "shrine-e",
+          "kind": "pickup",
+          "at": {
+            "x": 91,
+            "z": 9
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],

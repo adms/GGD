@@ -3595,7 +3595,81 @@
             "mud_east"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "grail-core",
+          "kind": "capture",
+          "at": {
+            "x": -3,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "grail-rim",
+          "kind": "pickup",
+          "at": {
+            "x": 3,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "pool-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "pool-e",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "altar-mid",
+          "kind": "capture",
+          "at": {
+            "x": -17,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "bridge-mid",
+          "kind": "capture",
+          "at": {
+            "x": 13,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "tunnel-w",
+          "kind": "pickup",
+          "at": {
+            "x": -17,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "tunnel-e",
+          "kind": "pickup",
+          "at": {
+            "x": 13,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     },
     {
       "id": "arena.holy-grail-z1",
@@ -7189,7 +7263,81 @@
             "mud_east"
           ]
         ]
-      }
+      },
+      "interactions": [
+        {
+          "id": "grail-core",
+          "kind": "capture",
+          "at": {
+            "x": 69,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "grail-rim",
+          "kind": "pickup",
+          "at": {
+            "x": 75,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "pool-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "pool-e",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": -11
+          },
+          "radius": 2
+        },
+        {
+          "id": "altar-mid",
+          "kind": "capture",
+          "at": {
+            "x": 55,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "bridge-mid",
+          "kind": "capture",
+          "at": {
+            "x": 85,
+            "z": 1
+          },
+          "radius": 2
+        },
+        {
+          "id": "tunnel-w",
+          "kind": "pickup",
+          "at": {
+            "x": 55,
+            "z": 13
+          },
+          "radius": 2
+        },
+        {
+          "id": "tunnel-e",
+          "kind": "pickup",
+          "at": {
+            "x": 85,
+            "z": 13
+          },
+          "radius": 2
+        }
+      ]
     }
   ],
   "decor": [],
