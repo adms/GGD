@@ -39,6 +39,8 @@ const CONTENT = join(REPO, "content");
 
 export const EDITOR_TARGET_PROFILE_SCHEMA = "ggd-editor-target-profile@1";
 export const EDITOR_PROFILE_FILE = "editor-target-profile.json";
+/** 包格式規格的檔名（repo 根）。⭐ 對方 pin 的是它的 digest，⛔ 不是版本標籤。 */
+export const PACKAGE_SPEC_FILE = "GGD_EDITOR_PACKAGE_SPEC.md";
 
 /** 12 hex —— 與 `manifest.json` 的 collection hash 同一種長度，讀起來一致。 */
 function sha12(s: string): string {
@@ -102,6 +104,16 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
   const declaredFp = typeof tagEngine["contractFingerprint"] === "string"
     ? (tagEngine["contractFingerprint"] as string)
     : null;
+
+  // ── ② packageSpec 的 digest（計畫 §1.2 路障三）──────────────────────────
+  const specPath = join(REPO, PACKAGE_SPEC_FILE);
+  const specRaw = existsSync(specPath) ? readFileSync(specPath, "utf8") : null;
+  if (specRaw === null) {
+    unavailable.push({
+      field: "contract.packageSpec.digest",
+      reason: `${PACKAGE_SPEC_FILE} 不在 repo 根目錄 —— 對方沒有辦法 pin 包格式。`,
+    });
+  }
 
   // ── ⑥ 英雄／道具開放清單 digest ────────────────────────────────────────
   //    ⚠️ 白名單是**平台的機器狀態**（gitignore），build 機器上通常沒有 ⇒ null。
@@ -179,7 +191,23 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
     contract: {
       profileSchema: EDITOR_TARGET_PROFILE_SCHEMA,
       capabilitiesSchema: caps.schema,
-      packageSpec: "GGD_EDITOR_PACKAGE_SPEC.md（Draft 0.4）",
+      /**
+       * ⭐ 包格式的規格 —— **digest 而不是一句散文**（計畫 §1.2 的第三個路障）。
+       *
+       * ⚠️ 這裡原本寫著字串 `"GGD_EDITOR_PACKAGE_SPEC.md（Draft 0.4）"`。
+       * 計畫說那讓「importer 無法安全協商 exact schema／spec」—— 對的：
+       * 「Draft 0.4」是一個**人讀的版本號**，而那份 md 改了一個字它也不會變。
+       * 對方拿它 pin 不住任何東西。
+       *
+       * ⇒ 改成檔案內容的 sha12。規格改一個字 → digest 變 → 對方**看得出來**。
+       */
+      packageSpec: {
+        file: PACKAGE_SPEC_FILE,
+        digest: specRaw === null ? null : sha12(specRaw),
+        bytes: specRaw === null ? null : Buffer.byteLength(specRaw, "utf8"),
+        /** 人讀的版本標籤，⛔ 不可以拿它當協商依據 —— 那是 `digest` 的工作。 */
+        label: "Draft 0.4",
+      },
       compiler: {
         // ⚠️ 編譯器本身還沒有版本化的合約（GH#313／#314 未做）⇒ null 而不是假值。
         contractVersion: null,
@@ -202,6 +230,41 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
        * 跟引擎**現在**算出來的一不一樣。false ⇒ 那份標籤裁決是對舊引擎做的。
        */
       matchesEngine: declaredFp === null ? null : declaredFp === caps.fingerprint,
+      /** 引擎**現在**的指紋，讓對方不必自己去別的地方查。 */
+      engineFingerprint: caps.fingerprint,
+      /**
+       * ⭐ 對不上的時候**該怎麼辦** —— 計畫 §3.1 明列的三條，直接寫成機器讀得懂的。
+       *
+       * ⚠️ 這一格存在的理由：`matchesEngine: false` 是一個**事實**，而對方需要的是
+       * 一個**處置**。裸露的 false 有兩種合理解讀（「整包退」還是「照做」），
+       * 而它們差很多 —— 計畫的答案是「都不是」：
+       *
+       *   > Tag manifest 漂移**不應該封鎖所有 typed package**。`matchesEngine=false` 時：
+       *   > · 禁止新增／改寫 canonical tag，或以 tag 推導 mechanics
+       *   > · 仍可保留 Owner 原文與 presentation token
+       *   > · 若 authoring truth 已是完整 typed mechanics，且其 required capabilities
+       *   >   可獨立驗證，允許繼續做非 tag-authoring 的 staging validation
+       */
+      policy:
+        declaredFp === null || declaredFp === caps.fingerprint
+          ? {
+              tagAuthoring: "allowed",
+              tagDerivedMechanics: "allowed",
+              typedPackages: "allowed",
+              why: "標籤清單宣稱的引擎指紋與現在一致。",
+            }
+          : {
+              // ⛔ 這份清單的裁決是對舊引擎做的，不可以拿它新增或改寫 canonical tag。
+              tagAuthoring: "blocked",
+              // ⛔ 更不可以用 tag 反推 mechanics —— 那是把過期的裁決當成事實。
+              tagDerivedMechanics: "blocked",
+              // ⭐ 但 typed package **照走** —— 漂移不應該封鎖所有東西。
+              typedPackages: "allowed",
+              why:
+                `標籤清單宣稱 ${declaredFp}，引擎現在是 ${caps.fingerprint} —— ` +
+                "那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，" +
+                "不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。",
+            },
     },
 
     // ⑤ authoring rules

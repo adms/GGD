@@ -1,6 +1,6 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-14T11:42:08.945Z",
+  "generatedAt": "2026-08-14T11:48:59.332Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
@@ -77,7 +77,12 @@
   "contract": {
     "profileSchema": "ggd-editor-target-profile@1",
     "capabilitiesSchema": "ggd-runtime-capabilities@1",
-    "packageSpec": "GGD_EDITOR_PACKAGE_SPEC.md（Draft 0.4）",
+    "packageSpec": {
+      "file": "GGD_EDITOR_PACKAGE_SPEC.md",
+      "digest": "91a2bab45117",
+      "bytes": 47880,
+      "label": "Draft 0.4"
+    },
     "compiler": {
       "contractVersion": null,
       "fingerprint": null
@@ -663,7 +668,14 @@
     "tagCount": 139,
     "hash": "946b8c6953d6",
     "declaredEngineFingerprint": "ef984bcc",
-    "matchesEngine": false
+    "matchesEngine": false,
+    "engineFingerprint": "8d30566f",
+    "policy": {
+      "tagAuthoring": "blocked",
+      "tagDerivedMechanics": "blocked",
+      "typedPackages": "allowed",
+      "why": "標籤清單宣稱 ef984bcc，引擎現在是 8d30566f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
+    }
   },
   "authoringRules": {
     "pricingEndpoint": null,
@@ -699,5 +711,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "71635feb424c"
+  "profileDigest": "27be1b64ae3d"
 }

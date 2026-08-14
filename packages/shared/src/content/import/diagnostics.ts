@@ -47,6 +47,27 @@ const def = (d: ImportDiagnosticDef): ImportDiagnosticDef => Object.freeze(d);
  * 最後一條（「診斷碼登錄表的 key 與 code 必須一致」）。
  */
 export const IMPORT_DIAGNOSTICS = {
+  /**
+   * ⭐ 這條 route 還沒實作（計畫 §4.1）。
+   *
+   * ⚠️ 它取代了原本硬寫在 `importRoutes.ts` 裡的 `"unsupported-operation"` ——
+   * 那個字串**不在這張登錄表裡**，所以對面的 importer 查不到它、也沒辦法把它
+   * 對應到任何處置。⛔ 一個沒有登錄的碼等於沒有碼。
+   *
+   * `failClosed: true` 是刻意的：「還沒做」不可以被 `acceptedWarnings[]` 豁免。
+   */
+  OPERATION_NOT_IMPLEMENTED: def({
+    code: "OPERATION_NOT_IMPLEMENTED",
+    message:
+      "{path} 尚未實作（預計 {stage}）。{why} " +
+      "⛔ 這不是暫時性失敗，重試不會成功；請讀 target profile 的 supported 狀態，" +
+      "不要從 implementedStage 字串推算別條 route 能不能用。",
+    spec: "計畫 §1.2 / §4.1",
+    failClosed: true,
+    severity: "error",
+    origin: "ggd-extension",
+  }),
+
   // ── 規格／計畫書點名的六個碼 ──────────────────────────────────────────
   RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE: def({
     code: "RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE",

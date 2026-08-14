@@ -48,6 +48,50 @@ export const TARGET_PROFILE_SCHEMA = "ggd-content-target-profile@1";
 export const IMPORT_RESULT_SCHEMA = "ggd-content-import-result@1";
 export const IMPORT_HEALTH_SCHEMA = "ggd-content-import-health@1";
 
+/**
+ * ⭐【`ggd-content-import-error@1`】—— **operation 還沒建立**時的錯誤外殼。
+ *
+ * 計畫 §4.1 點名了目前的缺陷：
+ *
+ *   > 請修正目前 501 response：在 operation 尚未建立前，用獨立
+ *   > `ggd-content-import-error@1` envelope；⛔ 不要用缺少必填欄位、
+ *   > `operationId=null`、未登錄 code 或非法 severity 的假
+ *   > `ggd-content-import-result@1`。
+ *
+ * ⚠️ 三個問題都是真的（2026-08-14 查證）：501 回的是 `IMPORT_RESULT_SCHEMA`，
+ * 但帶著 `operationId: null`（result 外殼的必填欄位）、`code:
+ * "unsupported-operation"`（**不在** `IMPORT_DIAGNOSTICS` 登錄表裡）、
+ * `severity: "blocker"`（登錄表用的是 `error`）。
+ *
+ * ⛔ 為什麼這比「訊息不好看」嚴重：對面的 importer 會拿 schema tag 決定用哪一個
+ * parser。一個宣稱自己是 result 卻不合 result schema 的東西，讓對方在
+ * **「我解析錯了」與「你們還沒做」之間分不出來** —— 而那兩者的處置完全相反。
+ *
+ * ⭐ **成功、拒絕、未實作三種回應都必須通過自己的 machine schema**（計畫 §4.1）。
+ */
+export const IMPORT_ERROR_SCHEMA = "ggd-content-import-error@1";
+
+/** `ggd-content-import-error@1` 的形狀。⚠️ 每一格都必填 —— 沒有 optional。 */
+export interface ImportErrorEnvelope {
+  readonly schema: typeof IMPORT_ERROR_SCHEMA;
+  /** 登錄表裡的診斷碼（⛔ 不是自由字串）。 */
+  readonly code: string;
+  /** 給人看的一句話。 */
+  readonly message: string;
+  /** 打的是哪一條 route。 */
+  readonly path: string;
+  /**
+   * ⭐ 這條 route 預計在哪一階段可用（`G1`…`G5`），未實作時必填。
+   * ⚠️ 對方**不可以**從這一格推算別條 route 的狀態（計畫 §1.2）——
+   * 它只描述**這一條**。
+   */
+  readonly plannedStage: string;
+  /** 這個 shard 現在走到哪一階（roadmap 顯示用）。 */
+  readonly implementedStage: string;
+  /** 可不可以重試。未實作 = false（重試一百次還是未實作）。 */
+  readonly retryable: boolean;
+}
+
 /** 這一輪（計畫 §12）走到哪一階段。對方用它決定能不能建包。 */
 export const IMPLEMENTED_STAGE = "G1";
 

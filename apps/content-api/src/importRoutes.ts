@@ -37,10 +37,13 @@ import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
+import { IMPORT_DIAGNOSTICS, formatDiagnostic } from "@ggd/shared/content/import/diagnostics";
 import {
   IMPLEMENTED_STAGE,
+  IMPORT_ERROR_SCHEMA,
   IMPORT_HEALTH_SCHEMA,
   IMPORT_RESULT_SCHEMA,
+  type ImportErrorEnvelope,
   buildTargetProfile,
   clampImportLimits,
   type ContentFacts,
@@ -139,28 +142,30 @@ async function readContentFacts(root: string): Promise<ContentFacts | null> {
   }
 }
 
-/** 501 的統一回應：規格 §12 的結果外殼 + 指名階段的診斷。 */
+/**
+ * 501 的統一回應 —— ⭐ **獨立的 `ggd-content-import-error@1` 外殼**（計畫 §4.1）。
+ *
+ * ⚠️ 2026-08-14 之前這裡回的是 `ggd-content-import-result@1`，而且**三處違規**：
+ *   · `operationId: null` —— 那是 result 外殼的必填欄位
+ *   · `code: "unsupported-operation"` —— **不在** `IMPORT_DIAGNOSTICS` 登錄表裡
+ *   · `severity: "blocker"` —— 登錄表用的是 `error`
+ *
+ * ⛔ 為什麼這比「訊息不好看」嚴重：對面用 schema tag 決定用哪一個 parser。
+ * 一個宣稱是 result 卻不合 result schema 的東西，讓對方分不出
+ * 「我解析錯了」與「你們還沒做」—— 而那兩者的處置完全相反。
+ */
 function unsupported(reply: FastifyReply, path: string, stage: string, why: string): FastifyReply {
-  return reply.code(501).send({
-    schema: IMPORT_RESULT_SCHEMA,
-    operationId: null,
-    status: "rejected",
+  const envelope: ImportErrorEnvelope = {
+    schema: IMPORT_ERROR_SCHEMA,
+    code: IMPORT_DIAGNOSTICS.OPERATION_NOT_IMPLEMENTED.code,
+    message: formatDiagnostic("OPERATION_NOT_IMPLEMENTED", { path, stage, why }),
+    path,
+    plannedStage: stage,
     implementedStage: IMPLEMENTED_STAGE,
-    diagnostics: [
-      {
-        code: "unsupported-operation",
-        severity: "blocker",
-        path,
-        message: `${path} 尚未實作（預計 ${stage}）。${why}`,
-      },
-    ],
-    changedDocuments: [],
-    selectionRoots: [],
-    fidelityDecisions: [],
-    derivedDocuments: [],
-    distributionReachability: [],
-    authoringStoreState: "absent",
-  });
+    // ⛔ 未實作**不是**暫時性失敗 —— 重試一百次還是未實作。
+    retryable: false,
+  };
+  return reply.code(501).send(envelope);
 }
 
 export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOptions): void {
