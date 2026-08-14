@@ -1,0 +1,8 @@
+{
+  "id": "authoring-rules",
+  "schema": "config.authoring-rules@1",
+  "note": "GH#327 — 外部編輯器的『原則界』。⚠️ 違反只警告不擋（owner 2026-08-12 的原話是「原則上」，保留刻意破例的空間）。⛔ 硬界不在這裡：它們從 Zod 界與 cast-time / cooldown-rules / aoe-tiers / stat-caps 推導（packages/shared/src/content/authoringRules.ts），抄一份到這裡就是第二個住處。",
+  "singleTargetCooldown": { "min": 5, "max": 30 },
+  "aoeCooldown": { "min": 30, "max": 120 },
+  "transformCooldownMin": 120
+}

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "7fe8c9bee3d6",
+  "hash": "ec3ad2410a92",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -37,6 +37,12 @@
       "path": "config/augment-filter.json",
       "hash": "759e7cc37d82",
       "size": 1140
+    },
+    {
+      "id": "authoring-rules",
+      "path": "config/authoring-rules.json",
+      "hash": "129ef935a81b",
+      "size": 567
     },
     {
       "id": "base-bonus",
@@ -179,8 +185,8 @@
     {
       "id": "map-spec",
       "path": "config/map-spec.json",
-      "hash": "cdd7257d5a82",
-      "size": 1084
+      "hash": "f8f165df66f4",
+      "size": 1162
     },
     {
       "id": "mitigation",

@@ -5501,6 +5501,69 @@ export const DEFAULT_CONTENT_LOAD_DOC = {
 
 export type ConfigContentLoadDoc = z.infer<typeof zConfigContentLoadDoc>;
 
+// ---------------------------------------------------------------- #327 ----
+/**
+ * ⭐【`config.authoring-rules@1`】—— 外部編輯器的**原則界**（GH#327）。
+ *
+ * `docs/技能編輯器引擎須知 20260811.md` 9.2 把創作規則分成兩層：
+ *
+ * | 層 | 例 | 反應 |
+ * |---|---|---|
+ * | **硬界** | 升階冷卻上升 · AoE 半徑超過決鬥區 · 階數不符 | ⛔ 擋下,上不了線 |
+ * | **原則界** | 單體冷卻不在 5–30 · 範圍不在 30–120 · 變身沒到 120 | ⚠️ 警告但放行 |
+ *
+ * ⭐ **硬界不在這裡** —— 它們從既有的 Zod 界與 `config.cast-time@1` /
+ * `cooldown-rules@1` / `aoe-tiers@1` / `stat-caps@1` **推導**（`authoringRules.ts`）。
+ * ⛔ 抄一份到這裡就是第二個住處。
+ *
+ * 這一份只放**原則界**,因為它們是 owner 的**設計偏好**而不是引擎事實 ——
+ * 而設計偏好正是第一守則說要做成欄位的東西。owner 2026-08-12 的原話是
+ * 「**原則上**」,所以它必須保留刻意破例的空間:違反只警告,⛔ 不擋。
+ */
+export const AUTHORING_RULES_DOC_ID = "authoring-rules";
+
+/** 冷卻秒數的合理上下界。⚠️ 上界不是只有下界（第一守則）。 */
+const zCooldownBand = z
+  .object({
+    min: z.number().min(0).max(600),
+    max: z.number().min(0).max(600),
+  })
+  .strict();
+
+export const DEFAULT_AUTHORING_PRINCIPLES = {
+  id: AUTHORING_RULES_DOC_ID,
+  schema: "config.authoring-rules@1",
+  singleTargetCooldown: { min: 5, max: 30 },
+  aoeCooldown: { min: 30, max: 120 },
+  transformCooldownMin: 120,
+} as const;
+
+export const zConfigAuthoringRulesDoc = z
+  .object({
+    id: z.literal(AUTHORING_RULES_DOC_ID),
+    schema: z.literal("config.authoring-rules@1"),
+    note: z.string().optional(),
+    /**
+     * 單體技能的冷卻區間。出貨 5–30 秒。
+     *
+     * ⚠️ 超出只**警告**。這一格影響的是外部編輯器的黃字提示與後台的稽核清單,
+     * ⛔ 不影響任何技能真的能不能上線。
+     */
+    singleTargetCooldown: zCooldownBand,
+    /** 範圍技能的冷卻區間。出貨 30–120 秒 —— 它比單體長,因為它一次打很多人。 */
+    aoeCooldown: zCooldownBand,
+    /**
+     * 變身／長持續技能的冷卻**下限**。出貨 120 秒。
+     *
+     * ⭐ 只有下限沒有上限是刻意的：這一類技能的價值來自「一場只有幾次」,
+     * 冷卻太短會讓變身變成常態,而那等於直接改了那位英雄的基礎形態。
+     */
+    transformCooldownMin: z.number().min(0).max(600),
+  })
+  .strict();
+
+export type ConfigAuthoringRulesDoc = z.infer<typeof zConfigAuthoringRulesDoc>;
+
 /** The `config` collection accepts all variants (discriminated on `schema`). */
 export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigReplayDoc,
@@ -5586,6 +5649,8 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   // ⭐ 一份壞文件的處置（GH#326，owner 2026-08-14）。⚠️ 漏掉這一行的後果特別諷刺：
   //    **管「不要整份失敗」的那份文件，自己會害整份失敗**。
   zConfigContentLoadDoc,
+  // ⭐ 外部編輯器的原則界（GH#327）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
+  zConfigAuthoringRulesDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */

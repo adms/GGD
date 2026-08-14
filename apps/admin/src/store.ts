@@ -136,6 +136,11 @@ export type Page =
    * 好的照跑)—— 舊的「全有全無」害線上悄悄退回 2 隻骨架英雄兩次。
    */
   | "contentLoad"
+  /**
+   * 編輯器創作規則 (`config/authoring-rules.json`, GH#327): 外部技能編輯器建包時
+   * 的**原則界**(單體/範圍/變身冷卻區間)。⚠️ 違反只警告不擋。
+   */
+  | "authoringRules"
   /** 畫質分級 (`config/model-lod.json`): 四個畫質 preset 各自抓哪一階 .glb。 */
   | "modelLod"
   /** 特效回收 (`config/vfx-cleanup.json`): 回合邊界把共用特效池回收到什麼程度。 */
@@ -503,6 +508,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "replayPolicy",
   // 內容載入政策 (GH#326): 同一個 `ConfigDocPage` 元件、同一條 `putOverlayDoc`。
   "contentLoad",
+  "authoringRules",
   "modelLod",
   "vfxCleanup",
   "gore",

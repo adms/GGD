@@ -32,6 +32,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildCapabilityManifest } from "../src/content/editorCapabilities";
+import { buildAuthoringRules } from "../src/content/authoringRules";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "../../..");
@@ -55,6 +56,16 @@ function readJson<T>(p: string): T | null {
     return null;
   }
 }
+
+/**
+ * `content/config/<id>.json` 的直讀器。
+ *
+ * ⚠️ build 腳本跑的時候 `Configs` 登錄表是空的,所以 `buildAuthoringRules()`
+ * 要的來源是**磁碟上的出貨檔**而不是登錄表。⛔ 讓它自己去讀 `Configs` 會
+ * 安靜地拿到全部預設值,而這份 profile 會宣稱那是出貨值。
+ */
+const readShippedConfig = (id: string): unknown =>
+  readJson<unknown>(join(CONTENT, "config", `${id}.json`)) ?? undefined;
 
 interface Unavailable {
   field: string;
@@ -269,10 +280,21 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
 
     // ⑤ authoring rules
     authoringRules: {
-      /** ⚠️ 定價規則（MP 公式係數、冷卻硬界）**還沒有端點**，只有散文。 */
-      pricingEndpoint: null,
-      pricingSource: "docs/技能編輯器引擎須知 20260811.md 第九章（散文，會過期）",
-      pricingIssues: ["GH#313", "GH#314"],
+      /**
+       * ⭐ 定價／界限規則的端點（GH#327）。
+       *
+       * ⚠️ 這一格在 2026-08-14 之前是 `null`，出處指著
+       * 「docs/技能編輯器引擎須知 第九章（散文，會過期）」—— 而那一章**自己**
+       * 就寫著「權威是一個推導出來的端點」以及「⛔ 你抄一份到編輯器裡 =
+       * 第二個住處 = 它一定會過期」。**規格寫好了，沒有人實作它。**
+       *
+       * ⇒ 現在它是真的：`buildAuthoringRules()` 從出貨 Zod 界 +
+       *   `content/config/*.json` 推導，owner 在後台改一格，端點下一秒就變。
+       */
+      pricingEndpoint: "/api/v1/content-import/authoring-rules",
+      pricingSource: "packages/shared/src/content/authoringRules.ts（推導，⛔ 不是散文）",
+      /** ⭐ 內嵌一份，讓對方一個 GET 就拿得到（profile 本身就在 CDN 上）。 */
+      rules: buildAuthoringRules(readShippedConfig),
       /** ⛔ 這幾條是 normative，見 PACKAGE_SPEC。列在這裡是為了讓對方不必翻文件。 */
       normative: [
         "新建 Product 預設 host-local；只有作者明示 Promote 才建立 shared Product",

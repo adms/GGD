@@ -19,6 +19,13 @@ export { sha256Hex } from "./sha256";
 export { HASH_HEX_LEN, stableStringify, hashDoc, hashCollection, contentVersion } from "./hash";
 export { ContentStore } from "./store";
 export {
+  AUTHORING_RULES_SCHEMA,
+  buildAuthoringRules,
+  type AuthoringRule,
+  type AuthoringRulesManifest,
+  type ConfigReader,
+} from "./authoringRules";
+export {
   ContentLoader,
   validateDoc,
   type LoadResult,

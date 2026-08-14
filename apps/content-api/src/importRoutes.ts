@@ -37,6 +37,8 @@ import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import type { FastifyInstance, FastifyReply } from "fastify";
 import { buildCapabilityManifest } from "@ggd/shared/content/editorCapabilities";
+import { buildAuthoringRules } from "@ggd/shared/content/authoringRules";
+import { Configs } from "@ggd/shared/content";
 import { IMPORT_DIAGNOSTICS, formatDiagnostic } from "@ggd/shared/content/import/diagnostics";
 import {
   IMPLEMENTED_STAGE,
@@ -206,6 +208,21 @@ export function registerImportRoutes(app: FastifyInstance, opts: ImportRoutesOpt
         unavailable: profile.unavailable,
       });
     });
+
+    /**
+     * ⭐ GH#327 —— 創作規則（`ggd-authoring-rules@1`）。
+     *
+     * `docs/技能編輯器引擎須知` 第九章寫死了它:「權威是一個**推導出來的端點**」
+     * 「⛔ 你抄一份到編輯器裡 = 第二個住處 = 它一定會過期」。那一章寫完之後
+     * 沒有人實作它,於是 profile 的 `pricingEndpoint` 一直是 `null`,出處指著
+     * 那份自己說會過期的散文。
+     *
+     * ⚠️ 這裡讀的是**執行期的 `Configs` 登錄表**（含後台 override）——
+     * owner 在後台改一格,這個端點下一秒就變,對方不用改一行程式。
+     */
+    app.get(`${prefix}/authoring-rules`, async (_req, reply) =>
+      reply.send(buildAuthoringRules((id) => Configs.tryGet(id))),
+    );
 
     app.get(`${prefix}/active/target-profile`, async (_req, reply) => {
       const content = await readContentFacts(root);

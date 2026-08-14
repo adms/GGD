@@ -69,6 +69,8 @@ const BASELINE_PAGES: readonly Page[] = [
   // ⚠️ 它加在「營運」而不是「系統」:除了語意（跟 Audit log 一樣是出事才打開的），
   // 「系統」還有一條「重編後必須比 26 列短」的守衛，往那裡加會把它推回 26。
   "contentLoad",
+  // 編輯器創作規則 (GH#327) —— 同一個 `ConfigDocPage` 元件,同在「營運」。
+  "authoringRules",
   "modelLod",
   "vfxCleanup",
   "gore",

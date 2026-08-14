@@ -57,6 +57,7 @@ import {
   zConfigCooldownRulesDoc,
   zConfigCastTimeDoc,
   zConfigContentLoadDoc,
+  zConfigAuthoringRulesDoc,
   zConfigAoeTiersDoc,
   zConfigStatNormalizationDoc,
   zConfigWoundsDoc,
@@ -680,6 +681,53 @@ const COOLDOWN_RULES_SPEC: ConfigDocSpec = {
     },
   ],
   // 兩格純量，沒有不編輯的分支要原封帶走。
+  preserved: [],
+};
+
+const AUTHORING_RULES_SPEC: ConfigDocSpec = {
+  page: "authoringRules",
+  collection: "config",
+  docId: "authoring-rules",
+  schemaTag: "config.authoring-rules@1",
+  zod: zConfigAuthoringRulesDoc,
+  title: "編輯器創作規則",
+  intro: [
+    "外部技能編輯器（Codex 那一支）建包時看到的**原則界**。GH#327。",
+    "⭐ **這一頁只有原則界,⛔ 硬界不在這裡。** 硬界（升階冷卻上升、AoE 超過決鬥區、階數不符）從既有的 Zod 界與「吟唱規則 / 冷卻規則 / AoE 級距 / 屬性上限」四頁**推導**出來 —— 抄一份到這裡就是第二個住處,而它一定會過期。",
+    "⚠️ **違反原則界只警告,不擋。** owner 2026-08-12 的原話是「**原則上**附加技能升級冷卻不會增加」—— 保留刻意破例的空間。一律擋 = 想破例就得改程式;一律放 = 真缺陷跟設計選擇混在同一堆訊息裡。",
+    "⭐ 改這一頁 → 端點 `GET /api/v1/content-import/authoring-rules` **下一秒就變**,外部編輯器不用改一行程式。那正是它取代散文的理由。",
+    "⚠️ 存檔寫進的是耐久覆蓋層（data/）,**覆蓋層會蓋掉 `content/config/authoring-rules.json`**。",
+  ],
+  consumer:
+    "packages/shared/src/content/authoringRules.ts 的 buildAuthoringRules()（唯一知道這些界怎麼組的地方）← content-api 的 /authoring-rules 端點 + content/editor-target-profile.json 的內嵌副本",
+  effect: "**外部編輯器下一次讀端點就生效**;內嵌在 profile 裡的那一份要重跑 `pnpm content:build`。",
+  fields: [
+    {
+      path: "singleTargetCooldown.min",
+      zh: "單體技能冷卻下限",
+      note: "出貨 **5 秒**。低於它的單體技能等於「一直按」,而那會讓其他技能的存在感消失。⚠️ 只警告不擋。",
+    },
+    {
+      path: "singleTargetCooldown.max",
+      zh: "單體技能冷卻上限",
+      note: "出貨 **30 秒**。高於它玩家一場只放得出幾次,而單體技能的定位是常用手段。",
+    },
+    {
+      path: "aoeCooldown.min",
+      zh: "範圍技能冷卻下限",
+      note: "出貨 **30 秒** —— 比單體技能長,因為它一次打到很多人;冷卻太短會讓範圍技變成常態手段,而單體技能失去存在的理由。",
+    },
+    {
+      path: "aoeCooldown.max",
+      zh: "範圍技能冷卻上限",
+      note: "出貨 **120 秒**。高於它的範圍技一場放不到兩次,那個定位應該用「變身/長持續」那一條界,而不是把範圍技拉長。",
+    },
+    {
+      path: "transformCooldownMin",
+      zh: "變身／長持續冷卻下限",
+      note: "出貨 **120 秒**。⭐ 只有下限沒有上限是刻意的:這一類技能的價值來自「一場只有幾次」,冷卻太短會讓變身變成常態 —— 那等於直接改了那位英雄的基礎形態。",
+    },
+  ],
   preserved: [],
 };
 
@@ -2215,6 +2263,11 @@ const MAP_SPEC_SPEC: ConfigDocSpec = {
     { path: "severity.shortcuts", zh: "捷徑數超出範圍時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。捷徑是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
     { path: "severity.interactions", zh: "互動點數超出範圍時", note: "error = 拒絕輸出、warn = 只記報告、off = 不看。互動點數是品味項，出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
     { path: "severity.traversal", zh: "橫跨時間超出範圍時", note: "同上。⚠️ 它是**估算**（最長最短路徑 ÷ 參考移速），不是實測 —— 所以出貨設 warn。", optionLabels: { error: "擋下來（產生器拒絕輸出）", warn: "只記進報告", off: "不檢查" } },
+    { path: "intro.enabled", zh: "戰鬥開場要不要報地圖名", note: "開（出貨值）＝ 每一回合戰鬥開始時在畫面上方打出這一場的地圖名字（「無限城」「希干希納」…）；關＝ 完全不畫。owner 2026-08-14：「戰鬥開始的時候不會顯示這是什麼地圖，請你記得要顯示出來」。⚠️ 報的是地圖的**顯示名**不是 id，而且分割畫面時一律不畫（一行橫跨全寬的大字會蓋住兩邊）。" },
+    { path: "intro.holdSec", zh: "地圖名停留幾秒", note: "從戰鬥開始算起，名字整整不透明地停留這麼久，之後才開始淡出。2.5 秒（出貨值）是「看得完四個字又不擋開局」—— 一回合戰鬥只有 90 秒，提示佔掉的是玩家最需要看清場地的那幾秒。填 0 ＝ 直接進入淡出（等同幾乎不顯示）。",
+    },
+    { path: "intro.fadeSec", zh: "地圖名淡出幾秒", note: "停留結束之後花多久淡到全透明。0.8（出貨值）夠柔和又不拖泥帶水；填 0 ＝ 到時間直接消失。⚠️ 淡出是**逐幀算出來的透明度**不是 CSS 動畫，所以這一格填 0 是真的立刻不見，不會被瀏覽器的預設過場拖住。",
+    },
   ],
   preserved: [],
 };
@@ -2286,6 +2339,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   BERSERK_SPEC,
   DISPEL_SPEC,
   CONTENT_LOAD_SPEC,
+  AUTHORING_RULES_SPEC,
   COOLDOWN_RULES_SPEC,
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,

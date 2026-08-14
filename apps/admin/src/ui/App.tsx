@@ -163,6 +163,9 @@ export const NAV: NavItem[] = [
   // 「系統」:它管的不是內容**是什麼**,是內容**載不進來的時候怎麼辦** —— 跟
   // Audit log 一樣是出事之後才會被打開的那一類。
   { page: "contentLoad", label: "內容載入政策", emoji: "🧯", section: SEC_OPS },
+  // GH#327 —— 外部編輯器建包時的原則界。⚠️ 放營運:它管的是「別人送進來的東西」
+  // 該被怎麼看待,跟 Audit log / 內容載入政策 同一類。
+  { page: "authoringRules", label: "編輯器創作規則", emoji: "📐", section: SEC_OPS },
   // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
   // BEFORE this always-present member, so the whole section reads contiguously.
   { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },

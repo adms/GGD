@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-14T11:48:59.332Z",
+  "generatedAt": "2026-08-14T15:02:02.690Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_cc50f06b9013",
+    "contentVersion": "cv_b808723c7635",
     "collections": {
       "champions": {
         "hash": "0fbe3d3ee1d1",
@@ -43,8 +43,8 @@
         "count": 7
       },
       "config": {
-        "hash": "c54a85635750",
-        "count": 55
+        "hash": "ec3ad2410a92",
+        "count": 56
       },
       "models": {
         "hash": "38d96d54f6e6",
@@ -678,12 +678,111 @@
     }
   },
   "authoringRules": {
-    "pricingEndpoint": null,
-    "pricingSource": "docs/技能編輯器引擎須知 20260811.md 第九章（散文，會過期）",
-    "pricingIssues": [
-      "GH#313",
-      "GH#314"
-    ],
+    "pricingEndpoint": "/api/v1/content-import/authoring-rules",
+    "pricingSource": "packages/shared/src/content/authoringRules.ts（推導，⛔ 不是散文）",
+    "rules": {
+      "schema": "ggd-authoring-rules@1",
+      "hard": [
+        {
+          "id": "cast-time.floor",
+          "field": "castTimeSec",
+          "min": 0.06,
+          "unit": "sec",
+          "note": "吟唱時間的下限。⚠️ 下界是**一個 sim tick**(≈0.034 秒)不是 0 —— sim 是 30 Hz,0.01 秒換算成 0 tick ⇒ sim 當它瞬發,而客戶端照樣畫吟唱條。兩邊都不報錯,只有玩家看得出來。",
+          "source": "admin-config",
+          "configDoc": "config.cast-time@1"
+        },
+        {
+          "id": "cast-time.cap",
+          "field": "castTimeSec",
+          "max": 4,
+          "unit": "sec",
+          "note": "吟唱時間的上限。超過這個值的技能在實戰中放不出來(對手早就走開了)。",
+          "source": "admin-config",
+          "configDoc": "config.cast-time@1"
+        },
+        {
+          "id": "cooldown.floor",
+          "field": "cooldownSec",
+          "min": 0.1,
+          "unit": "sec",
+          "note": "實際冷卻的地板(套用冷卻縮減與全域倍率**之後**才夾)。低於它等於每個 tick 都放得出來。",
+          "source": "admin-config",
+          "configDoc": "config.cooldown-rules@1"
+        },
+        {
+          "id": "aoe.max-radius",
+          "field": "radius",
+          "max": 8,
+          "unit": "unit",
+          "note": "AoE 半徑上限 = 最大的那一級距。⛔ 超過決鬥區半徑的範圍技等於「打全場」,而畫面上看不出來它比場地還大。",
+          "source": "admin-config",
+          "configDoc": "config.aoe-tiers@1"
+        },
+        {
+          "id": "stat.cdr-cap",
+          "field": "cooldownReduction",
+          "max": 0.99,
+          "unit": "ratio",
+          "note": "冷卻縮減的天花板。它與 `cooldown.floor` 是**兩個旋鈕蓋住同一個值域**的兩端。",
+          "source": "admin-config",
+          "configDoc": "config.stat-caps@1"
+        },
+        {
+          "id": "levels.ranks",
+          "field": "levels",
+          "unit": "count",
+          "note": "Q/W/E 四級、R 三級。⚠️ 階數與陣列長度不符 = 硬界(那一階讀出 undefined)。⛔ 編輯器完成的線性取樣由 importer 驗證,**不再插值或裁切**。",
+          "source": "zod-bound"
+        },
+        {
+          "id": "cooldown.monotonic",
+          "field": "cooldownSec[]",
+          "unit": "sec",
+          "note": "owner:「原則上附加技能升級冷卻不會增加」⇒ **升階冷卻上升直接擋下**。⚠️ 這一條是硬界不是原則界(owner 2026-08-12)。",
+          "source": "zod-bound"
+        }
+      ],
+      "principle": [
+        {
+          "id": "principle.single-target-cooldown",
+          "field": "cooldownSec",
+          "min": 5,
+          "max": 30,
+          "unit": "sec",
+          "note": "單體技能的冷卻區間。⚠️ 超出只**警告**,owner 說的是「原則上」。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.aoe-cooldown",
+          "field": "cooldownSec",
+          "min": 30,
+          "max": 120,
+          "unit": "sec",
+          "note": "範圍技能的冷卻區間。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        },
+        {
+          "id": "principle.transform-cooldown",
+          "field": "cooldownSec",
+          "min": 120,
+          "unit": "sec",
+          "note": "變身／長持續技能的冷卻下限 —— 它們的價值來自「一場只有幾次」。",
+          "source": "admin-config",
+          "configDoc": "config.authoring-rules@1"
+        }
+      ],
+      "manaIsDerived": true,
+      "derivedFrom": [
+        "config.cast-time@1",
+        "config.cooldown-rules@1",
+        "config.aoe-tiers@1",
+        "config.stat-caps@1",
+        "config.authoring-rules@1"
+      ]
+    },
     "normative": [
       "新建 Product 預設 host-local；只有作者明示 Promote 才建立 shared Product",
       "shared Product 不得有 ownerHost；host-local 必須有",
@@ -711,5 +810,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "27be1b64ae3d"
+  "profileDigest": "5e4dc0024d1a"
 }
