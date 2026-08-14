@@ -190,6 +190,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     since: "2026-08-14",
     why: "同上 —— 這是編譯後的那一份（`arena@1`），內容一樣沒有人填 `channel`。",
   },
+  "enum:arenas.backdrop.layers[].profile=waves": {
+    status: "landing",
+    since: "2026-08-15",
+    why: "GH#324 —— `profile` 是**外緣輪廓的通用波形**（flat 平滑環／towers 城垛／peaks 山稜／shards 碎岩／waves 起伏丘陵），跟主題無關,七張圖各挑各的。⭐ 出貨的七張裡沒有一張的主題是**開闊丘陵** —— 迷宮／天空／洞窟／無限城／大墳墓／城牆／世界樹全部是垂直或封閉的景，所以它們挑了 peaks 與 towers。⛔ 為了讓這一列變綠去把別人的圖改成丘陵，就是**內容被測試壓力寫出來的**，比零採用更糟。**到期**：下一張開闊地形的圖（草原／海岸／荒野）出現的那一刻 —— 那時候 `waves` 是它的第一順位，不用再推導一次。",
+  },
   // ── GH#324：兩格是「另一條路的預設」，零採用是對的 ────────────────────────
   "variant:arenas.zones[].bounds#disc": {
     status: "default-live",

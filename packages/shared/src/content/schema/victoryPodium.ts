@@ -155,6 +155,18 @@ export type VictoryPodiumZoneSource = (typeof VICTORY_PODIUM_ZONE_SOURCES)[numbe
 export const VICTORY_WINNER_SCALE_MIN = 0.5;
 export const VICTORY_WINNER_SCALE_MAX = 3.0;
 
+/**
+ * 頒獎台佔著螢幕的秒數上下界。
+ *
+ * ⚠️ 上界不是裝飾：這一格結束前**進不了商店**，所以把它調到 60 秒就是每一個回合
+ * 之間多罰玩家一分鐘，而畫面上只有三個站著不動的模型。15 秒已經比最長的嘲諷剪輯
+ * （實測 60 支，最長 6.4 秒）加上開口延遲寬一倍。
+ * 下界 0.5 允許「幾乎不停」，但不允許 0 —— 0 會讓頒獎台在同一幀開又關，
+ * 三個 WebGL context 建起來就丟掉。
+ */
+export const VICTORY_ROUND_PRESENT_SEC_MIN = 0.5;
+export const VICTORY_ROUND_PRESENT_SEC_MAX = 15;
+
 export const zConfigVictoryPodiumDoc = z
   .object({
     id: z.string().min(1),
@@ -200,7 +212,11 @@ export const zConfigVictoryPodiumDoc = z
      *
      * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.roundPresentSec`。
      */
-    roundPresentSec: z.number().min(0.5).max(15).optional(),
+    roundPresentSec: z
+      .number()
+      .min(VICTORY_ROUND_PRESENT_SEC_MIN)
+      .max(VICTORY_ROUND_PRESENT_SEC_MAX)
+      .optional(),
   })
   .strict();
 
@@ -385,5 +401,14 @@ export const VICTORY_PODIUM_FIELDS = [
     kind: "enum" as const,
     options: VICTORY_PODIUM_ZONE_SOURCES,
     help: "一回合有兩個競技場、兩個勝方。localSeat = 永遠演你自己英雄站的那一區(就算你按了『前往觀戰』跑去看別區);spectated = 演你鏡頭當下正在看的那一區。改這一格不會改變任何人的勝負或分數,只改變你死後/觀戰時看到誰在領獎。",
+  },
+  {
+    key: "roundPresentSec",
+    label: "頒獎台停留秒數",
+    group: "頒獎台",
+    kind: "number" as const,
+    min: VICTORY_ROUND_PRESENT_SEC_MIN,
+    max: VICTORY_ROUND_PRESENT_SEC_MAX,
+    help: "回合結束後三位模型加灰幕佔著螢幕幾秒,時間到就收掉、進商店。⚠️ 這一格已經不會切掉嘲諷語音了(畫面收掉、聲音自己講完),所以它純粹是「你想看模型看多久」;調大只是延後進商店,不會延長回合結算(那是戰鬥系統的 resolutionSec)。",
   },
 ] as const;

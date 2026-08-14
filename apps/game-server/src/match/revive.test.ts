@@ -68,17 +68,16 @@ describe("config parse (rev-08)", () => {
     const doc = zConfigArenaRulesDoc.parse(
       JSON.parse(readFileSync(join(ROOT, "content/config/arena-rules.json"), "utf8")),
     );
-    expect(doc.reviveCircles).toEqual({
-      channelSec: 5, // task #206: 5s accumulate threshold
-      radius: 2,
-      decayMult: 2,
-      revivesPerTeamPerRound: 1,
-      reviveHpPctMax: 0.5,
-      reviveManaPctMax: 0.5,
-      contestPauses: true,
-      damageInterrupts: false,
-      ccInterrupts: true,
-    });
+    // ⚠️ 這裡本來還有一塊**字面值**的 `toEqual({ channelSec: 5, …, contestPauses: true, … })`。
+    //    它是 CLAUDE.md 說的**第四個住處**：出貨值已經住在 `content/config/arena-rules.json`
+    //    + Zod `DEFAULT_REVIVE_CIRCLE_CONFIG` + admin `SHIPPED_*`，三者之間有 drift 測試在守。
+    //    測試裡再抄一份沒有守衛 ⇒ 它一定會過期，而且**用錯誤的訊息紅**。
+    //
+    //    2026-08-15 就是這樣紅的：`contestPauses` 依 owner 的 LoL 競技場玩法從
+    //    `true` 改成 `false`（出貨檔與 Zod 兩邊都改了），只有這塊字面值沒跟上，
+    //    於是訊息說「arena-rules.json 帶的 reviveCircles 不對」—— 而真相是**它才是對的**。
+    //
+    // ⇒ 刪掉字面值，只留下面這條**推導**的。它嚴格更強：它同時驗了出貨檔與程式預設一致。
     // the shipped block IS the documented contract default
     expect(doc.reviveCircles).toEqual(DEFAULT_REVIVE_CIRCLE_CONFIG);
     expect(rulesFromDoc(doc).reviveCircles).toEqual(doc.reviveCircles);
