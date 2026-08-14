@@ -53,10 +53,13 @@ async function dressAndCount(policy = DEFAULT_ARENA_BACKDROP): Promise<number> {
 }
 
 describe("圓盤外的 2D 景深背景 —— 接線", () => {
-  it("★ dressArena 真的把背景建進場景（刪掉那一行這條就紅）", async () => {
-    const zones = DEF.zones.length;
-    const layers = DOC.backdrop!.layers.length;
-    expect(await dressAndCount()).toBe(zones * Math.min(layers, DEFAULT_ARENA_BACKDROP.maxLayers));
+  it("★ dressArena 真的把背景建進場景，逆光邊緣也一起（刪掉那一行這條就紅）", async () => {
+    // ⚠️ 從**文件**推導預期值，⛔ 不寫死一個數字 —— 內容改了層數／描邊，
+    //    寫死的那個數字會用「背景壞了」這種錯誤訊息紅（第二守則）。
+    const visible = DOC.backdrop!.layers.slice(0, DEFAULT_ARENA_BACKDROP.maxLayers);
+    const perZone = visible.length + visible.filter((l) => l.rim !== undefined).length;
+    expect(perZone).toBeGreaterThan(visible.length); // 出貨內容真的有描邊，否則下面那條是空的
+    expect(await dressAndCount()).toBe(DEF.zones.length * perZone);
   });
 
   it("★ 後台關掉就一個都不建 —— 這一格真的接到場上（第②號故障）", async () => {

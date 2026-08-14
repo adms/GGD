@@ -187,18 +187,24 @@ export function MapPanel({ doc }: { doc: unknown }) {
     if (compiled.arena.backdrop) {
       const seed = backdropSeed(compiled.arena.id);
       compiled.arena.backdrop.layers.forEach((layer, li) => {
-        const geo = buildBackdropLayer(layer, zone.boundaryRadius, seed);
-        const m = new Mesh(`backdrop-${li}`, scene);
-        const vd = new VertexData();
-        vd.positions = geo.positions;
-        vd.indices = geo.indices;
-        vd.normals = geo.positions.map((_, i) => (i % 3 === 1 ? 1 : 0));
-        vd.applyToMesh(m);
-        m.material = flatColorMaterial(scene, `backdrop-${li}-mat`, layer.color, {
-          alpha: layer.alpha,
-        });
-        m.position.set(zone.center.x, 0, zone.center.z);
-        m.parent = layout;
+        // ⭐ 本體 + 逆光邊緣，跟客戶端**同一個函式、同一組參數** ——
+        // 編輯器看到的剪影就是玩家看到的剪影。
+        const parts: [string, string, number | undefined, number][] = [["", layer.color, undefined, 0]];
+        if (layer.rim) parts.push(["-rim", layer.rim.color, layer.rim.width, 0.02]);
+        for (const [suffix, hex, rimWidth, lift] of parts) {
+          const geo = buildBackdropLayer(layer, zone.boundaryRadius, seed, rimWidth);
+          const m = new Mesh(`backdrop-${li}${suffix}`, scene);
+          const vd = new VertexData();
+          vd.positions = geo.positions;
+          vd.indices = geo.indices;
+          vd.normals = geo.positions.map((_, i) => (i % 3 === 1 ? 1 : 0));
+          vd.applyToMesh(m);
+          m.material = flatColorMaterial(scene, `backdrop-${li}${suffix}-mat`, hex, {
+            alpha: layer.alpha,
+          });
+          m.position.set(zone.center.x, lift, zone.center.z);
+          m.parent = layout;
+        }
       });
     }
 

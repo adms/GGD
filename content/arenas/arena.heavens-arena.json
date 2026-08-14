@@ -8068,37 +8068,49 @@
         "fromRadius": 1,
         "toRadius": 2.1,
         "y": -5,
-        "color": "#8d97a8",
+        "color": "#e8eef7",
         "alpha": 1,
-        "profile": "waves",
-        "jitter": 0.4,
-        "segments": 36
+        "profile": "cloudSea",
+        "rim": {
+          "color": "#ffffff",
+          "width": 2.2
+        },
+        "jitter": 0.5,
+        "segments": 42
       },
       {
         "fromRadius": 1.9,
         "toRadius": 3.5,
         "y": -16,
-        "color": "#5f6b7d",
+        "color": "#8fa6c9",
         "alpha": 1,
-        "profile": "waves",
-        "jitter": 0.5,
-        "segments": 40
+        "profile": "cloudSea",
+        "rim": {
+          "color": "#dfe9f7",
+          "width": 1.8
+        },
+        "jitter": 0.55,
+        "segments": 42
       },
       {
         "fromRadius": 3.2,
         "toRadius": 5.2,
         "y": -38,
-        "color": "#3a4658",
+        "color": "#4a5f88",
         "alpha": 1,
-        "profile": "waves",
-        "jitter": 0.55,
-        "segments": 44
+        "profile": "lightning",
+        "rim": {
+          "color": "#ffe98a",
+          "width": 1.4
+        },
+        "jitter": 0.7,
+        "segments": 45
       },
       {
         "fromRadius": 4.8,
         "toRadius": 6,
         "y": -80,
-        "color": "#1d2634",
+        "color": "#1e2b45",
         "alpha": 1,
         "profile": "flat",
         "jitter": 0,

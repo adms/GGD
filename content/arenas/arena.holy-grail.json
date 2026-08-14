@@ -7344,39 +7344,51 @@
     "layers": [
       {
         "fromRadius": 1,
-        "toRadius": 2,
+        "toRadius": 2.05,
         "y": -4,
-        "color": "#2b3348",
+        "color": "#2b3a63",
         "alpha": 1,
         "profile": "towers",
-        "jitter": 0.6,
-        "segments": 30
+        "rim": {
+          "color": "#ffe27a",
+          "width": 2
+        },
+        "jitter": 0.75,
+        "segments": 36
       },
       {
         "fromRadius": 1.8,
         "toRadius": 3.4,
         "y": -13,
-        "color": "#1e2434",
+        "color": "#1e2a4c",
         "alpha": 1,
-        "profile": "towers",
-        "jitter": 0.7,
+        "profile": "torii",
+        "rim": {
+          "color": "#e0483c",
+          "width": 1.6
+        },
+        "jitter": 0.8,
         "segments": 36
       },
       {
         "fromRadius": 3.1,
         "toRadius": 5.1,
         "y": -30,
-        "color": "#141a26",
+        "color": "#141d33",
         "alpha": 1,
-        "profile": "waves",
-        "jitter": 0.4,
-        "segments": 32
+        "profile": "cloudSea",
+        "rim": {
+          "color": "#4a6ba8",
+          "width": 1.2
+        },
+        "jitter": 0.45,
+        "segments": 36
       },
       {
         "fromRadius": 4.7,
         "toRadius": 6,
         "y": -64,
-        "color": "#0a0d14",
+        "color": "#080c17",
         "alpha": 1,
         "profile": "flat",
         "jitter": 0,

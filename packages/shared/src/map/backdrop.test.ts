@@ -8,8 +8,12 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildBackdropLayer, backdropSeed, profileInset } from "./backdrop";
+import type { BackdropProfile } from "./backdrop";
 import { zBackdropLayer, zArenaDoc } from "../content/schema/arena";
 import { arenaDefFromDoc } from "../sim/world/ArenaDef";
+
+/** ⚠️ 從 **schema** 讀 enum，⛔ 不手抄清單 —— 手抄的那份加了新母題不會紅。 */
+const PROFILES = zBackdropLayer._def.schema.shape.profile.options as BackdropProfile[];
 
 const LAYER = {
   fromRadius: 1,
@@ -25,16 +29,44 @@ const LAYER = {
 const REPO = join(__dirname, "..", "..", "..", "..");
 
 describe("圓盤外的 2D 景深背景", () => {
-  it("★ 環帶是閉合的 —— 最後一段接得回第 0 段（裂縫會是一道黑色的縫）", () => {
-    for (const profile of ["flat", "towers", "peaks", "shards", "waves"] as const) {
-      const segments = 24;
-      const seed = 12345;
-      // profileInset 必須是 k 的週期函式：k = segments 要等於 k = 0。
-      expect(profileInset(profile, segments, segments, seed)).toBeCloseTo(
-        profileInset(profile, 0, segments, seed),
-        10,
-      );
+  it("★ 每一種輪廓都是閉合的 —— 最後一段接得回第 0 段（裂縫會是一道黑色的縫）", () => {
+    // ⚠️ 逐個 profile，⛔ 不是只測其中一個 —— 五個動漫母題各自用不同的週期
+    //    （鳥居 6 瓣、五重塔 8 瓣、稲妻 9 瓣…），會裂的正是那個 `% lobes`。
+    for (const profile of PROFILES) {
+      for (const segments of [24, 36, 42, 45]) {
+        expect(
+          profileInset(profile, segments, segments, 12345),
+          `${profile} @ ${segments}`,
+        ).toBeCloseTo(profileInset(profile, 0, segments, 12345), 10);
+      }
     }
+  });
+
+  it("★ 每一種輪廓都真的起伏 —— 一條退化成 flat 的母題等於沒做", () => {
+    for (const profile of PROFILES) {
+      const segments = 36;
+      const vals = Array.from({ length: segments }, (_, k) =>
+        profileInset(profile, k, segments, 12345),
+      );
+      // 回傳值必須落在 [0,1]，否則外緣會衝出 toRadius（被遠裁面切掉）或縮進地板下
+      expect(Math.min(...vals), `${profile} 下界`).toBeGreaterThanOrEqual(0);
+      expect(Math.max(...vals), `${profile} 上界`).toBeLessThanOrEqual(1);
+      if (profile === "flat") continue;
+      expect(Math.max(...vals) - Math.min(...vals), `${profile} 沒有起伏`).toBeGreaterThan(0.25);
+    }
+  });
+
+  it("★ 逆光邊緣貼著本體的剪影，⛔ 不是另外算一次輪廓", () => {
+    const body = buildBackdropLayer(LAYER, 30, 777);
+    const rim = buildBackdropLayer(LAYER, 30, 777, 2);
+    // 外緣（每段的第 2 個頂點）必須逐位元組相同 —— 錯開一格就會浮出一條亮線
+    const outerOf = (m: { positions: number[] }): number[] =>
+      m.positions.filter((_, i) => Math.floor(i / 3) % 2 === 1);
+    expect(outerOf(rim)).toEqual(outerOf(body));
+    // 而內緣必須真的往內縮（否則亮帶是零寬 = 看不見）
+    const innerR = (m: { positions: number[] }, k: number): number =>
+      Math.hypot(m.positions[k * 6]!, m.positions[k * 6 + 2]!);
+    expect(innerR(rim, 0)).toBeGreaterThan(innerR(body, 0));
   });
 
   it("★ 同一個 id 永遠算出逐位元組相同的頂點（客戶端與編輯器要看到同一張圖）", () => {

@@ -234,37 +234,49 @@
         "fromRadius": 1.0,
         "toRadius": 2.1,
         "y": -4,
-        "color": "#5b6a7a",
+        "color": "#5e7fa8",
         "alpha": 1,
         "profile": "peaks",
-        "jitter": 0.55,
-        "segments": 30
+        "jitter": 0.6,
+        "segments": 36,
+        "rim": {
+          "color": "#e8f4ff",
+          "width": 2.2
+        }
       },
       {
         "fromRadius": 1.9,
         "toRadius": 3.5,
         "y": -13,
-        "color": "#3f4c5c",
+        "color": "#3d5878",
         "alpha": 1,
         "profile": "peaks",
-        "jitter": 0.65,
-        "segments": 36
+        "jitter": 0.7,
+        "segments": 40,
+        "rim": {
+          "color": "#9fd6e8",
+          "width": 1.6
+        }
       },
       {
         "fromRadius": 3.2,
         "toRadius": 5.2,
         "y": -31,
-        "color": "#28323f",
+        "color": "#26374f",
         "alpha": 1,
         "profile": "peaks",
-        "jitter": 0.75,
-        "segments": 42
+        "jitter": 0.8,
+        "segments": 42,
+        "rim": {
+          "color": "#5d94b5",
+          "width": 1.2
+        }
       },
       {
         "fromRadius": 4.8,
         "toRadius": 6.0,
         "y": -66,
-        "color": "#151b24",
+        "color": "#101a28",
         "alpha": 1,
         "profile": "flat",
         "jitter": 0.0,

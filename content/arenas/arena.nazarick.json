@@ -6162,39 +6162,51 @@
     "layers": [
       {
         "fromRadius": 1,
-        "toRadius": 1.8,
+        "toRadius": 1.9,
         "y": -3,
-        "color": "#3a2f3d",
+        "color": "#3d2a48",
         "alpha": 1,
-        "profile": "flat",
-        "jitter": 0,
-        "segments": 24
+        "profile": "pagoda",
+        "rim": {
+          "color": "#7dffc2",
+          "width": 1.8
+        },
+        "jitter": 0.7,
+        "segments": 32
       },
       {
         "fromRadius": 1.6,
         "toRadius": 3,
         "y": -11,
-        "color": "#28202b",
+        "color": "#2a1c33",
         "alpha": 1,
         "profile": "shards",
-        "jitter": 0.5,
-        "segments": 28
+        "rim": {
+          "color": "#4fbf8f",
+          "width": 1.4
+        },
+        "jitter": 0.6,
+        "segments": 32
       },
       {
         "fromRadius": 2.8,
         "toRadius": 4.6,
         "y": -28,
-        "color": "#17121a",
+        "color": "#180f1d",
         "alpha": 1,
         "profile": "shards",
-        "jitter": 0.7,
-        "segments": 32
+        "rim": {
+          "color": "#2e6b52",
+          "width": 1
+        },
+        "jitter": 0.75,
+        "segments": 36
       },
       {
         "fromRadius": 4.3,
         "toRadius": 6,
         "y": -60,
-        "color": "#0b080d",
+        "color": "#08050b",
         "alpha": 1,
         "profile": "flat",
         "jitter": 0,

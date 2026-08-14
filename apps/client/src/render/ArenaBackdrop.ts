@@ -72,32 +72,48 @@ export function buildBackdrop(
   zones.forEach((zone, zi) => {
     for (let li = 0; li < count; li++) {
       const layer = backdrop.layers[li]!;
-      const geo = buildBackdropLayer(layer, zone.boundaryRadius, seed);
-      const mesh = new Mesh(`backdrop-${zi}-${li}`, scene);
-      const vd = new VertexData();
-      vd.positions = geo.positions;
-      vd.indices = geo.indices;
-      // 平面環帶 —— 法線全部朝上，⛔ 不用 ComputeNormals（同一個答案，多一趟迴圈）。
-      vd.normals = geo.positions.map((_, i) => (i % 3 === 1 ? 1 : 0));
-      vd.applyToMesh(mesh);
+      // ⭐ 本體 + 逆光邊緣。邊緣**共用同一個輪廓函式**，所以不可能錯開。
+      const parts: { suffix: string; hex: string; rimWidth?: number; lift: number }[] = [
+        { suffix: "", hex: layer.color, lift: 0 },
+      ];
+      if (layer.rim) {
+        // ⚠️ 抬高一點點，否則兩層共面 → z-fighting → 亮帶會隨鏡頭閃爍，
+        //    而閃爍看起來像 bug 不像逆光。
+        parts.push({ suffix: "-rim", hex: layer.rim.color, rimWidth: layer.rim.width, lift: 0.02 });
+      }
 
-      const mat = new StandardMaterial(`backdrop-${zi}-${li}-mat`, scene);
-      const c = parseHexColor(layer.color);
-      mat.diffuseColor = c;
-      // ⚠️ 一點自發光，否則沉在 y=-24 的層完全吃不到方向光而變成純黑，
-      //    「有景深」就退化成「一片黑」（＝跟沒做一樣，失敗形態①）。
-      mat.emissiveColor = c.scale(0.35);
-      mat.specularColor = new Color3(0, 0, 0);
-      mat.alpha = layer.alpha * policy.alphaScale;
-      mat.backFaceCulling = true;
-      mesh.material = mat;
+      for (const part of parts) {
+        const geo = buildBackdropLayer(layer, zone.boundaryRadius, seed, part.rimWidth);
+        const mesh = new Mesh(`backdrop-${zi}-${li}${part.suffix}`, scene);
+        const vd = new VertexData();
+        vd.positions = geo.positions;
+        vd.indices = geo.indices;
+        // 平面環帶 —— 法線全部朝上，⛔ 不用 ComputeNormals（同一個答案，多一趟迴圈）。
+        vd.normals = geo.positions.map((_, i) => (i % 3 === 1 ? 1 : 0));
+        vd.applyToMesh(mesh);
 
-      mesh.position.set(zone.center.x, 0, zone.center.z);
-      mesh.isPickable = false;
-      mesh.parent = parent;
-      mesh.doNotSyncBoundingInfo = true;
-      mesh.freezeWorldMatrix();
-      built.push(mesh);
+        const mat = new StandardMaterial(`backdrop-${zi}-${li}${part.suffix}-mat`, scene);
+        const c = parseHexColor(part.hex);
+        // ⭐ **完全不吃燈光**（セル画）—— 動漫背景是平塗的，沒有 3D 明暗。
+        // ⚠️ 這同時修掉一個真缺陷：沉在 y=-70 的層幾乎吃不到方向光，
+        //    只靠 diffuse 會變成近乎純黑 ⇒「有景深」退化成「一片黑」，
+        //    而那跟這個功能沒做長得一模一樣（失敗形態①）。
+        //    現在**作者填什麼顏色，畫面上就是什麼顏色**。
+        mat.disableLighting = true;
+        mat.emissiveColor = c;
+        mat.diffuseColor = new Color3(0, 0, 0);
+        mat.specularColor = new Color3(0, 0, 0);
+        mat.alpha = layer.alpha * policy.alphaScale;
+        mat.backFaceCulling = true;
+        mesh.material = mat;
+
+        mesh.position.set(zone.center.x, part.lift, zone.center.z);
+        mesh.isPickable = false;
+        mesh.parent = parent;
+        mesh.doNotSyncBoundingInfo = true;
+        mesh.freezeWorldMatrix();
+        built.push(mesh);
+      }
     }
   });
 

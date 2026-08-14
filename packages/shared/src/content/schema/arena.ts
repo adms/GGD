@@ -290,10 +290,45 @@ export const zBackdropLayer = z
       .describe("這一層的顏色。⭐ 越外圈越暗＝空氣透視，那是深度的主要來源。"),
     alpha: z.number().min(0).max(1).default(1).describe("透明度。外圈調低會有霧化的遠景感。"),
     profile: z
-      .enum(["flat", "towers", "peaks", "shards", "waves"])
+      .enum([
+        "flat",
+        "towers",
+        "peaks",
+        "shards",
+        "waves",
+        // ⭐ 動漫母題（owner 2026-08-14「2d 圖風格是日本動漫風格」）。
+        "cloudSea",
+        "sakura",
+        "torii",
+        "pagoda",
+        "lightning",
+      ])
       .describe(
-        "外緣輪廓：flat 平滑環／towers 城垛屋頂／peaks 山稜／shards 碎裂岩塊／waves 雲海丘陵。",
+        "外緣輪廓。通用波形：flat 平滑環／towers 城垛屋頂／peaks 山稜／shards 碎裂岩塊／waves 起伏丘陵。" +
+          "動漫母題：cloudSea 雲海（渾圓的瓣）／sakura 櫻花樹冠／torii 一整排鳥居／pagoda 五重塔屋簷／lightning 稲妻。" +
+          "⚠️ 動漫感來自**剪影**不是顏色 —— 一條塗成粉紅色的正弦波不會變成櫻花。",
       ),
+    /**
+     * ⭐ **逆光邊緣**（リムライト）—— 動漫背景最強的一個訊號。
+     *
+     * ⚠️ 這一格是**幾何**，⛔ 不是作者調得出來的東西：它沿著這一層外緣的
+     * 剪影再畫一條窄亮帶，所以剪影本身被「描邊」出來。少了它，四層平塗色塊
+     * 只是四層平塗色塊；有了它，那些鳥居／雲瓣才會**跳出來**。
+     */
+    rim: z
+      .object({
+        color: z
+          .string()
+          .regex(/^#[0-9a-fA-F]{6}$/, "顏色要寫成 #rrggbb")
+          .describe("逆光的顏色。⭐ 要比本體亮**很多**（低對比的描邊等於沒描）。"),
+        width: z
+          .number()
+          .min(0.2)
+          .max(12)
+          .describe("亮帶多寬（世界單位）。⚠️ 太寬會變成第二層色塊，1–3 是描邊的感覺。"),
+      })
+      .strict()
+      .optional(),
     jitter: z
       .number()
       .min(0)

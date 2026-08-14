@@ -228,39 +228,51 @@
     "layers": [
       {
         "fromRadius": 1.0,
-        "toRadius": 2.0,
+        "toRadius": 2.05,
         "y": -4,
-        "color": "#2a2036",
+        "color": "#3b2a5c",
         "alpha": 1,
-        "profile": "shards",
-        "jitter": 0.55,
-        "segments": 28
+        "profile": "torii",
+        "jitter": 0.85,
+        "segments": 36,
+        "rim": {
+          "color": "#ffb765",
+          "width": 2.2
+        }
       },
       {
         "fromRadius": 1.8,
         "toRadius": 3.4,
         "y": -14,
-        "color": "#1c1526",
+        "color": "#2a1c46",
         "alpha": 1,
         "profile": "shards",
         "jitter": 0.7,
-        "segments": 32
+        "segments": 32,
+        "rim": {
+          "color": "#8f6ad6",
+          "width": 1.6
+        }
       },
       {
         "fromRadius": 3.1,
         "toRadius": 5.2,
         "y": -34,
-        "color": "#120e19",
+        "color": "#1a1230",
         "alpha": 1,
-        "profile": "shards",
-        "jitter": 0.85,
-        "segments": 40
+        "profile": "pagoda",
+        "jitter": 0.8,
+        "segments": 40,
+        "rim": {
+          "color": "#5b3f9e",
+          "width": 1.2
+        }
       },
       {
         "fromRadius": 4.8,
         "toRadius": 6.0,
         "y": -70,
-        "color": "#08060c",
+        "color": "#0d0a1a",
         "alpha": 1,
         "profile": "flat",
         "jitter": 0.0,
