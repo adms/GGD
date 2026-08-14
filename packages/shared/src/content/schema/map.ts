@@ -22,6 +22,7 @@
  */
 import { z } from "zod";
 import { zId } from "./common";
+import { zBackdrop } from "./arena";
 import {
   GIMMICKS_PER_MAP_MAX,
   GRID_COLS_MAX,
@@ -213,6 +214,18 @@ const zMapBase = z
 
     landmarkProps: z.array(zLandmarkProp).default([]),
     backgroundProps: z.array(zBackgroundProp).default([]),
+
+    /**
+     * ⭐ 第三層的**主力** —— 圓盤外的 2D 景深背景（owner 2026-08-14）。
+     *
+     * `backgroundProps` 擺的是「一件一件的道具」，那要有模型才有東西看，
+     * 而 graybox 階段一個模型都沒有 ⇒ 七張圖的 `backgroundProps` 全是 `[]`，
+     * **圓盤外就是一片純黑**。這一格用**程序產生的平面環帶**把那片黑填掉，
+     * ⛔ 不需要任何美術資產。
+     *
+     * ⚠️ 它**不吃 tile 座標**：背景是繞著整個場地的環，跟格線無關。
+     */
+    backdrop: zBackdrop.optional(),
   })
   .strict();
 

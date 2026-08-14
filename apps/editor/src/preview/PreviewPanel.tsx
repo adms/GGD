@@ -214,6 +214,9 @@ export function PreviewPanel({ collection, doc }: { collection: CollectionName; 
     case "models":
     case "vfx":
     case "arenas":
+    // GH#324 —— 地圖的 3D 面板已經印出九項驗證指標，底下再貼一份 raw JSON
+    // 只會把報告推到捲軸外面（而報告正是這一頁存在的理由）。
+    case "maps":
       body = null; // the 3D panel IS the preview; the form already shows the data
       break;
     default:

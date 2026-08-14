@@ -3062,6 +3062,35 @@ export const zArenaFire = z
   })
   .strict();
 
+/**
+ * 圓盤外 2D 景深背景的**全域政策**（GH#324，owner 2026-08-14）。
+ *
+ * ⚠️ 這裡**沒有幾何**。「這一層長什麼樣」是**內容**，住在 `arena@1` 的 `backdrop`
+ * （由 `content/maps/*.json` 編譯出來）。這一格只有三個**決策點**：
+ * 要不要開、手機上畫幾層、整體要多透明。
+ *
+ * ⭐ 為什麼分開：一張圖的背景改了要重跑 `pnpm map:gen`（產生器擁有那份輸出），
+ * 而「手機掉幀 → 少畫兩層」必須是**後台存檔就生效**。
+ * 把兩者混在一起 = 調一個效能旋鈕要重新產生七張地圖（第一守則的反面）。
+ */
+export const zArenaBackdrop = z
+  .object({
+    /** 總開關。false = 一個背景 mesh 都不建（圓盤外回到純色 clearColor）。 */
+    enabled: z.boolean(),
+    /**
+     * 最多畫幾層。⚠️ 砍的是**最外圈**（最遠的先消失），所以調小不會在場地邊界
+     * 旁邊留黑洞。上限 8 跟 `zBackdrop.layers` 的上限一致 —— 兩邊不同的話，
+     * 「我明明填了 6 層卻只看到 4 層」會變成一個查不出來的謎。
+     */
+    maxLayers: z.number().int().min(0).max(8),
+    /**
+     * 透明度總倍率（乘在每一層自己的 `alpha` 上）。1 = 照內容寫的畫。
+     * 調低 = 整個背景往後退，⭐ 這是「背景太搶戲」時最先該動的一格。
+     */
+    alphaScale: z.number().min(0).max(1),
+  })
+  .strict();
+
 export const zConfigAmbientVfxDoc = z
   .object({
     id: zId,
@@ -3070,6 +3099,8 @@ export const zConfigAmbientVfxDoc = z
     bindings: z.record(z.string().min(1), z.array(zAmbientVfxBinding)),
     /** 場地布景道具的常駐火焰（GH#251）。缺席 = 用 `DEFAULT_ARENA_FIRE`。 */
     arenaFire: zArenaFire.optional(),
+    /** 圓盤外的 2D 景深背景政策（GH#324）。缺席 = 用 `DEFAULT_ARENA_BACKDROP`。 */
+    backdrop: zArenaBackdrop.optional(),
   })
   .strict();
 
@@ -5583,6 +5614,7 @@ export type CombatEnvMultipliersDoc = z.infer<typeof zCombatEnvMultipliers>;
 export type ConfigCombatEnvDoc = z.infer<typeof zConfigCombatEnvDoc>;
 export type AmbientVfxBinding = z.infer<typeof zAmbientVfxBinding>;
 export type ArenaFire = z.infer<typeof zArenaFire>;
+export type ArenaBackdropPolicy = z.infer<typeof zArenaBackdrop>;
 export type ConfigAmbientVfxDoc = z.infer<typeof zConfigAmbientVfxDoc>;
 export type AudioBgmTrack = z.infer<typeof zAudioBgmTrack>;
 export type AudioSfxEntry = z.infer<typeof zAudioSfxEntry>;
@@ -5765,6 +5797,31 @@ export function resolveArenaFire(doc: ConfigAmbientVfxDoc | null | undefined): A
 export function decorModelBurns(fire: ArenaFire, modelPath: string): boolean {
   if (!fire.enabled) return false;
   return fire.models.some((m) => modelPath.includes(m));
+}
+
+/**
+ * 出貨預設 —— 圓盤外的 2D 景深背景政策（GH#324）。
+ *
+ * ⚠️ **回退值是「開的」**，跟 `DEFAULT_ARENA_FIRE` 相反，而理由是同一條：
+ * **回退到 owner 要的那一邊**。環境火 owner 明說要拿掉 ⇒ 回退是關；
+ * 背景是 owner 明說要做的東西（「填補場景外的空缺」）⇒ 回退是開。
+ * ⛔ 如果回退是關的，「內容檔載不到」這條路會讓圓盤外變回一片黑，
+ * 而那跟「這個功能沒做」在畫面上一模一樣（失敗形態①）。
+ *
+ * ⚠️ 每一格都要和 `content/config/ambient-vfx.json` 的 `backdrop` 一字不差 ——
+ * drift 斷言在 `apps/client/src/render/arenaBackdrop.test.ts`。
+ */
+export const DEFAULT_ARENA_BACKDROP: ArenaBackdropPolicy = {
+  enabled: true,
+  maxLayers: 4,
+  alphaScale: 1,
+};
+
+/** 讀出背景政策。文件缺席 / 沒有 `backdrop` 區塊時回退到 `DEFAULT_ARENA_BACKDROP`。 */
+export function resolveArenaBackdrop(
+  doc: ConfigAmbientVfxDoc | null | undefined,
+): ArenaBackdropPolicy {
+  return doc?.backdrop ?? DEFAULT_ARENA_BACKDROP;
 }
 
 /**

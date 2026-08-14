@@ -260,6 +260,72 @@ export const zDecor = z
   })
   .strict();
 
+/**
+ * 圓盤外的 2D 景深背景（GH#324 第三層，owner 2026-08-14「填補場景外的空缺」）。
+ *
+ * ⭐ **它住在 `ArenaDoc` 而不是 `ArenaDef`**，而那是一個**結構性**的決定：
+ * `arenaDefFromDoc()` 根本不看這一格 ⇒ sim 拿不到它 ⇒
+ * ⛔ **背景在型別上就不可能變成碰撞**。比「寫一條測試檢查它沒變成障礙物」強一級。
+ *
+ * ⚠️ `y` 的上界是 **0**，理由是遮擋的結構性保證 ——
+ * 完整推導在 `packages/shared/src/map/backdrop.ts` 的檔頭（一句話版：
+ * 「眼睛→英雄頭頂」的視線整條都在 y ≥ 1.7，背景層在 y ≤ 0，兩者不可能相交）。
+ */
+export const zBackdropLayer = z
+  .object({
+    fromRadius: z
+      .number()
+      .min(1)
+      .max(12)
+      .describe("內緣半徑，**場地邊界半徑的倍數**。1 = 貼著邊界（⛔ 小於 1 會蓋到地板）。"),
+    toRadius: z.number().min(1).max(12).describe("外緣半徑（同樣是倍數）。⚠️ 必須大於 fromRadius。"),
+    y: z
+      .number()
+      .min(-120)
+      .max(0)
+      .describe("這一層的高度。⛔ 上界是 0：往下沉才有深淵感，而且高過 0 就可能擋住視線。"),
+    color: z
+      .string()
+      .regex(/^#[0-9a-fA-F]{6}$/, "顏色要寫成 #rrggbb")
+      .describe("這一層的顏色。⭐ 越外圈越暗＝空氣透視，那是深度的主要來源。"),
+    alpha: z.number().min(0).max(1).default(1).describe("透明度。外圈調低會有霧化的遠景感。"),
+    profile: z
+      .enum(["flat", "towers", "peaks", "shards", "waves"])
+      .describe(
+        "外緣輪廓：flat 平滑環／towers 城垛屋頂／peaks 山稜／shards 碎裂岩塊／waves 雲海丘陵。",
+      ),
+    jitter: z
+      .number()
+      .min(0)
+      .max(1)
+      .default(0)
+      .describe("輪廓起伏幅度。0 = 完全平滑（profile 等於沒作用）；1 = 外緣可一路凹回內緣。"),
+    segments: z
+      .number()
+      .int()
+      .min(3)
+      .max(64)
+      .default(24)
+      .describe("圓周切幾段＝輪廓有幾個齒。⚠️ 每段 2 個三角形，64 段也才 128 面。"),
+  })
+  .strict()
+  .superRefine((l, ctx) => {
+    if (l.toRadius <= l.fromRadius) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["toRadius"],
+        message: `toRadius (${l.toRadius}) 必須大於 fromRadius (${l.fromRadius})，否則這一層是空的`,
+      });
+    }
+  });
+
+export const zBackdrop = z
+  .object({
+    /** ⚠️ 由外而內或由內而外都可以，但**畫的順序就是陣列順序** —— 後面的蓋前面的。 */
+    layers: z.array(zBackdropLayer).max(8).default([]),
+  })
+  .strict();
+
 export const zArenaDef = z
   .object({
     id: zId,
@@ -272,7 +338,18 @@ export const zArenaDef = z
   })
   .strict();
 
-export const zArenaDoc = zArenaDef.extend({ schema: z.literal("arena@1") }).strict();
+export const zArenaDoc = zArenaDef
+  .extend({
+    schema: z.literal("arena@1"),
+    /**
+     * ⭐ 刻意**只在 Doc 上**，⛔ 不在 Def 上 —— 見 `zBackdrop` 的檔頭。
+     * 缺席 = 沒有背景（圓盤外維持 `Renderer` 的 clearColor 深藍黑）。
+     */
+    backdrop: zBackdrop.optional(),
+  })
+  .strict();
 
 export type ArenaDoc = z.infer<typeof zArenaDoc>;
 export type DecorDef = z.infer<typeof zDecor>;
+export type BackdropDef = z.infer<typeof zBackdrop>;
+export type BackdropLayerDef = z.infer<typeof zBackdropLayer>;

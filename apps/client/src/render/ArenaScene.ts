@@ -41,8 +41,9 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
-import type { ArenaDoc, ArenaFire } from "@ggd/shared/content";
-import { DEFAULT_ARENA_FIRE, decorModelBurns } from "@ggd/shared/content";
+import type { ArenaBackdropPolicy, ArenaDoc, ArenaFire } from "@ggd/shared/content";
+import { DEFAULT_ARENA_BACKDROP, DEFAULT_ARENA_FIRE, decorModelBurns } from "@ggd/shared/content";
+import { buildBackdrop } from "./ArenaBackdrop";
 import type { AssetManager } from "./AssetManager";
 import { CAMERA_PITCH_RAD, DOLLY_MIN } from "./CameraRig";
 import { DecorFader } from "./DecorFade";
@@ -461,7 +462,20 @@ export async function dressArena(
    * 「沒有火」而不是「有火」，因為 owner 明說要拿掉。
    */
   fire: ArenaFire = DEFAULT_ARENA_FIRE,
+  /**
+   * 圓盤外的 2D 景深背景政策（`config/ambient-vfx@1` 的 `backdrop`，GH#324）。
+   * 省略 = `DEFAULT_ARENA_BACKDROP`（**開的**）—— 呼叫端忘了接線時的結果是
+   * 「有背景」而不是「一片黑」，因為 owner 明說要填補場景外的空缺。
+   */
+  backdrop: ArenaBackdropPolicy = DEFAULT_ARENA_BACKDROP,
 ): Promise<void> {
+  // ---- 圓盤外的 2D 景深背景（GH#324 第三層）----
+  // ⚠️ 先建，⛔ 不要在 await 之後 —— 道具 GLB 可能要好幾秒，而「圓盤外一片黑」
+  //    正是這個功能要修掉的東西，它不該等模型下載完才消失。
+  if (doc.backdrop) {
+    buildBackdrop(scene, handles.root, arena.zones, doc.backdrop, arena.id, backdrop);
+  }
+
   // ---- decor props ----
   const uniquePaths = [...new Set(doc.decor.map((d) => d.model))];
   const containers = new Map<string, AssetContainer | null>();

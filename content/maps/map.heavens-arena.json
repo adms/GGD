@@ -238,5 +238,49 @@
   },
   "landmarkProps": [],
   "backgroundProps": [],
-  "note": "獵人・天空鬥技場。⭐ 機制「競技場開放／封閉」＝通用 gate。兩個 toggleGate 互動點讓玩家**站著把擂台的門撐開** —— ⛔ 不是按一下切換（那要複寫狀態，而 MatchState 是 append-only），站著才有效是當下位置的純函式，wire 成本 0。"
+  "note": "獵人・天空鬥技場。⭐ 機制「競技場開放／封閉」＝通用 gate。兩個 toggleGate 互動點讓玩家**站著把擂台的門撐開** —— ⛔ 不是按一下切換（那要複寫狀態，而 MatchState 是 append-only），站著才有效是當下位置的純函式，wire 成本 0。",
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 2.1,
+        "y": -5,
+        "color": "#8d97a8",
+        "alpha": 1,
+        "profile": "waves",
+        "jitter": 0.4,
+        "segments": 36
+      },
+      {
+        "fromRadius": 1.9,
+        "toRadius": 3.5,
+        "y": -16,
+        "color": "#5f6b7d",
+        "alpha": 1,
+        "profile": "waves",
+        "jitter": 0.5,
+        "segments": 40
+      },
+      {
+        "fromRadius": 3.2,
+        "toRadius": 5.2,
+        "y": -38,
+        "color": "#3a4658",
+        "alpha": 1,
+        "profile": "waves",
+        "jitter": 0.55,
+        "segments": 44
+      },
+      {
+        "fromRadius": 4.8,
+        "toRadius": 6.0,
+        "y": -80,
+        "color": "#1d2634",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
 }

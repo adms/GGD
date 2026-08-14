@@ -231,5 +231,49 @@
     }
   },
   "landmarkProps": [],
-  "backgroundProps": []
+  "backgroundProps": [],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 2.0,
+        "y": -4,
+        "color": "#2b3348",
+        "alpha": 1,
+        "profile": "towers",
+        "jitter": 0.6,
+        "segments": 30
+      },
+      {
+        "fromRadius": 1.8,
+        "toRadius": 3.4,
+        "y": -13,
+        "color": "#1e2434",
+        "alpha": 1,
+        "profile": "towers",
+        "jitter": 0.7,
+        "segments": 36
+      },
+      {
+        "fromRadius": 3.1,
+        "toRadius": 5.1,
+        "y": -30,
+        "color": "#141a26",
+        "alpha": 1,
+        "profile": "waves",
+        "jitter": 0.4,
+        "segments": 32
+      },
+      {
+        "fromRadius": 4.7,
+        "toRadius": 6.0,
+        "y": -64,
+        "color": "#0a0d14",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
 }

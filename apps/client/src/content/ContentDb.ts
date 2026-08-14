@@ -25,6 +25,7 @@ import type {
   FormVisual,
   AmbientVfxBinding,
   ArenaFire,
+  ArenaBackdropPolicy,
 } from "@ggd/shared/content";
 import {
   Arenas,
@@ -33,6 +34,7 @@ import {
   RibbonDefs,
   VfxDefs,
   resolveArenaFire,
+  resolveArenaBackdrop,
   resolveFormVisual,
 } from "@ggd/shared/content";
 import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
@@ -504,6 +506,15 @@ export class ContentDb {
    */
   arenaFire(): ArenaFire {
     return resolveArenaFire(this.ambientVfx);
+  }
+
+  /**
+   * 圓盤外 2D 景深背景的政策（GH#324）。文件缺席／沒有這個區塊時回傳
+   * `DEFAULT_ARENA_BACKDROP`（`enabled: true`）—— 跟火焰**相反**，因為
+   * 回退值要落在 owner 要的那一邊，而 owner 明說要填補場景外的空缺。
+   */
+  arenaBackdrop(): ArenaBackdropPolicy {
+    return resolveArenaBackdrop(this.ambientVfx);
   }
 
   get arena(): ArenaDoc | null {

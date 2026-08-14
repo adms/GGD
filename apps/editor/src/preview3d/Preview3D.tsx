@@ -9,6 +9,7 @@ import { api } from "../api/client";
 import { ModelPanel } from "./ModelPanel";
 import { VfxPanel } from "./VfxPanel";
 import { ArenaPanel } from "./ArenaPanel";
+import { MapPanel } from "./MapPanel";
 
 /** champions embed: resolve champion.modelKey -> models/<key> doc -> GLB */
 function ChampionModelEmbed({ doc }: { doc: unknown }) {
@@ -45,6 +46,8 @@ export function Preview3D({ collection, doc }: { collection: CollectionName; doc
       return <VfxPanel doc={doc} />;
     case "arenas":
       return <ArenaPanel doc={doc} />;
+    case "maps":
+      return <MapPanel doc={doc} />;
     case "champions":
       return <ChampionModelEmbed doc={doc} />;
     default:

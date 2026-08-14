@@ -233,5 +233,49 @@
     }
   },
   "landmarkProps": [],
-  "backgroundProps": []
+  "backgroundProps": [],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1.0,
+        "toRadius": 1.8,
+        "y": -3,
+        "color": "#3a2f3d",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 24
+      },
+      {
+        "fromRadius": 1.6,
+        "toRadius": 3.0,
+        "y": -11,
+        "color": "#28202b",
+        "alpha": 1,
+        "profile": "shards",
+        "jitter": 0.5,
+        "segments": 28
+      },
+      {
+        "fromRadius": 2.8,
+        "toRadius": 4.6,
+        "y": -28,
+        "color": "#17121a",
+        "alpha": 1,
+        "profile": "shards",
+        "jitter": 0.7,
+        "segments": 32
+      },
+      {
+        "fromRadius": 4.3,
+        "toRadius": 6.0,
+        "y": -60,
+        "color": "#0b080d",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0.0,
+        "segments": 20
+      }
+    ]
+  }
 }

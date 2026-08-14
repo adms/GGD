@@ -10,6 +10,8 @@ export const COLLECTIONS_WITH_3D: readonly CollectionName[] = [
   "vfx",
   "arenas",
   "champions",
+  // GH#324 —— 地圖版面：整條產生器流程（編譯 + 九項驗證 + 背景）就地跑。
+  "maps",
 ];
 
 export function has3DPreview(collection: CollectionName): boolean {

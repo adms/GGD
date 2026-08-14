@@ -6794,6 +6794,50 @@
       ]
     }
   ],
+  "backdrop": {
+    "layers": [
+      {
+        "fromRadius": 1,
+        "toRadius": 2.1,
+        "y": -4,
+        "color": "#5b6a7a",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.55,
+        "segments": 30
+      },
+      {
+        "fromRadius": 1.9,
+        "toRadius": 3.5,
+        "y": -13,
+        "color": "#3f4c5c",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.65,
+        "segments": 36
+      },
+      {
+        "fromRadius": 3.2,
+        "toRadius": 5.2,
+        "y": -31,
+        "color": "#28323f",
+        "alpha": 1,
+        "profile": "peaks",
+        "jitter": 0.75,
+        "segments": 42
+      },
+      {
+        "fromRadius": 4.8,
+        "toRadius": 6,
+        "y": -66,
+        "color": "#151b24",
+        "alpha": 1,
+        "profile": "flat",
+        "jitter": 0,
+        "segments": 20
+      }
+    ]
+  },
   "decor": [],
   "groundStyle": "stone"
 }

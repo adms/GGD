@@ -1209,6 +1209,9 @@ export class GameApp {
             doc,
             this.arenaHandles,
             this.contentDb.arenaFire(),
+            // 第 7 個參數是 GH#324 的圓盤外背景政策。同一條縫、同一個理由:
+            // 少了它後台的「畫幾層 / 要不要開」永遠調不動(第②號故障)。
+            this.contentDb.arenaBackdrop(),
           );
       })
       .catch(() => {

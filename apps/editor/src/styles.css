@@ -92,6 +92,19 @@ fieldset.field legend { color: var(--text); font-size: 12px; padding: 0 4px; }
 .preview3d-clipmap .clip-missing { border-color: var(--error); color: var(--error); opacity: 0.8; }
 .preview3d-error { color: var(--error); }
 
+/* ---- 地圖版面面板 (GH#324) —— 九項驗證指標就地顯示 ---- */
+.map-tools { display: flex; gap: 6px; margin: 8px 0 6px; flex-wrap: wrap; }
+.map-tools button { font-size: 12px; }
+.map-verdict { font-size: 12px; font-weight: 600; margin: 6px 0 4px; }
+.map-report { border-collapse: collapse; width: 100%; }
+.map-report th { text-align: left; font-weight: 400; color: var(--muted); padding: 2px 4px; font-size: 12px; }
+.map-report td { padding: 2px 4px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.map-report td:last-child { text-align: right; width: 1.5em; }
+.map-ok { color: #4ad07a; }
+.map-warn { color: var(--error); }
+.map-issues { padding-left: 16px; font-size: 12px; margin: 6px 0; }
+.map-issues li { margin: 3px 0; }
+
 /* ---- AI icon panel + AI 填空 ---- */
 .ai-icon { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; margin: 8px 0 12px; background: #16181e; }
 .ai-icon-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
