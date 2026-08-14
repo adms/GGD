@@ -72,9 +72,22 @@ export class ContentLoader {
    * 妥協,而是剛好對:要不要丟掉的決定本來就發生在最後。那份文件自己壞掉時
    * 退回 `DEFAULT_CONTENT_LOAD`(而且它自己會出現在隔離清單裡)。
    *
+   * ⭐【`opts.policy` —— 呼叫端可以硬指定,而且它贏過內容裡的那份設定】
+   *
+   * ⚠️ 這不是一個方便的旋鈕,它是一條**情境分界**:
+   *
+   * | 情境 | 政策 | 為什麼 |
+   * |---|---|---|
+   * | **執行期**(game shard / 客戶端開機) | 內容說了算(出貨 `quarantine`) | 玩家已經在等了 —— 少一份設定好過整站退回骨架 |
+   * | **產出期**(`pnpm content:build`) | ⛔ 一律 `fail-closed` | 這裡**沒有玩家在等**。靜默丟掉一份文件會產出一個「bundle 有、來源沒有」的組合,而那正是 2026-08-01 / 08-02 兩次事故的形狀 |
+   *
+   * ⛔ 所以 `buildIndexes.ts` **必須**傳 `fail-closed`。少了那一行,超過上下界的
+   *    欄位會被安靜地隔離掉,然後那份缺一塊的 bundle 照樣被 commit 出貨 ——
+   *    隔離在執行期是止血,在產出期是**製造**出血。
+   *
    * Throws ContentLoadError 當政策是 `fail-closed`,或隔離數超過 `maxQuarantined`。
    */
-  async load(): Promise<LoadResult> {
+  async load(opts?: { policy?: ContentLoadPolicy }): Promise<LoadResult> {
     const manifest = await this.source.readManifest();
     if (typeof manifest?.contentVersion !== "string" || !manifest.collections) {
       throw new ManifestError("manifest.json is malformed (contentVersion/collections missing)");
@@ -138,7 +151,9 @@ export class ContentLoader {
     // 被 authored)時退回出貨預設,而且它會出現在 `quarantined` 裡,所以
     // 「靜默地用了預設」不會發生。
     const policyDoc = store.tryGet<ConfigContentLoadDoc>("config", CONTENT_LOAD_DOC_ID);
-    const policy: ContentLoadPolicy = policyDoc?.policy ?? DEFAULT_CONTENT_LOAD.policy;
+    // ⭐ 呼叫端硬指定的贏過內容 —— 產出期一律 fail-closed(見 `load()` 的檔頭)。
+    const policy: ContentLoadPolicy =
+      opts?.policy ?? policyDoc?.policy ?? DEFAULT_CONTENT_LOAD.policy;
     const cascade = policyDoc?.cascadeDanglingRefs ?? DEFAULT_CONTENT_LOAD.cascadeDanglingRefs;
     const maxQuarantined = policyDoc?.maxQuarantined ?? DEFAULT_CONTENT_LOAD.maxQuarantined;
 

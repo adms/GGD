@@ -149,7 +149,14 @@ describe("② 有人把退場的表排回某回合 → 紅", () => {
       collection === "config" && entry.id === "arena-rules"
         ? bad
         : ((await src.readObject(collection, entry)) as unknown);
-    await expect(new ContentLoader(patched).load()).rejects.toThrow(/quest-rewards/);
+    // ⚠️ GH#326 之後執行期的出貨政策是 `quarantine`,所以這裡**不再是 throw**——
+    //    規則照樣開火,只是它把那一份隔離掉而不是殺掉整份內容。
+    //    這一條驗的仍然是 WIRING（規則對但沒有人呼叫它 = 失敗形態②）:
+    //    壞掉的 arena-rules **沒有進登錄表**,而且**說得出為什麼**。
+    const res = await new ContentLoader(patched).load();
+    expect(res.store.has("config", "arena-rules"), "排了退場抽獎池的文件竟然進了登錄表").toBe(false);
+    expect(res.quarantined.some((q) => q.id === "arena-rules" && /quest-rewards/.test(q.detail)))
+      .toBe(true);
   });
 
   it("把它從 retiredLootTables 拿掉之後才排得回去 —— 復活是兩步,而且看得見", () => {
@@ -212,6 +219,12 @@ describe("④ 回合指到一張**不存在**的表 → 紅(以前完全沒有�
       collection === "config" && entry.id === "arena-rules"
         ? bad
         : ((await src.readObject(collection, entry)) as unknown);
-    await expect(new ContentLoader(patched).load()).rejects.toThrow(/legendary-weapon/);
+    // ⚠️ GH#326 之後執行期是 `quarantine`,所以打錯字的後果從「整份載入失敗」
+    //    變成「那一份被隔離」。⭐ 這一條要守的性質沒有變:打錯的 id **不會**
+    //    安靜地變成「那一回合沒有卡」——它會被指名。
+    const res = await new ContentLoader(patched).load();
+    expect(res.store.has("config", "arena-rules"), "指到不存在的抽獎池竟然進了登錄表").toBe(false);
+    expect(res.quarantined.some((q) => q.id === "arena-rules" && /legendary-weapon/.test(q.detail)))
+      .toBe(true);
   });
 });

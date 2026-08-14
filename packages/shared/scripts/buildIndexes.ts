@@ -54,7 +54,12 @@ if (!existsSync(CONTENT_DIR)) {
  * ─────────────────────────────────────────────────────────────────────────────
  */
 try {
-  await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  // ⛔ **一定要 `fail-closed`**（GH#326）。執行期的出貨政策是 `quarantine`
+  //    ——「玩家已經在等了，少一份設定好過整站退回骨架」——但**產出期沒有玩家
+  //    在等**：這裡靜默地隔離一份文件，換來的是一個「bundle 有、來源缺一塊」
+  //    的產物被 commit 出貨，而那正是 2026-08-01 / 08-02 兩次事故的形狀。
+  //    ⚠️ 隔離在執行期是止血，在這裡是**製造**出血。
+  await new ContentLoader(new FsContentSource(CONTENT_DIR)).load({ policy: "fail-closed" });
 } catch (err) {
   const errors = (err as { errors?: unknown[] }).errors ?? [err];
   console.error(`\n✖ content 驗證失敗 —— ${errors.length} 個問題，索引與 bundle 都沒有重建：\n`);
