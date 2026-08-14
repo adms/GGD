@@ -869,7 +869,9 @@ export const zReviveCircleConfig = z
     reviveHpPctMax: z.number().min(0).max(1),
     /** fraction of the revived champion's OWN maxMana restored (0..1) */
     reviveManaPctMax: z.number().min(0).max(1),
-    /** an enemy inside the ring HOLDS progress (false = enemies are ignored) */
+    /** an enemy inside the ring HOLDS progress. ⚠️ 出貨值是 **false**（owner
+     *  2026-08-14：LoL 競技場的玩法是敵人不影響復活圈）—— true 會讓復活圈實質上
+     *  永遠用不出來，因為屍體就在剛才打架的地方。 */
     contestPauses: z.boolean(),
     /** taking damage cancels the channel (false by design — see the todo doc) */
     damageInterrupts: z.boolean(),
@@ -888,7 +890,13 @@ export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
   revivesPerTeamPerRound: 1,
   reviveHpPctMax: 0.5,
   reviveManaPctMax: 0.5,
-  contestPauses: true,
+  // owner 2026-08-14：「**LoL 競技場的玩法是敵人不影響復活圈**」。
+  // ⚠️ 這不是修一個缺陷 —— 機制本來就在動（實測敵人進到圈心 2.0 格內進度確實
+  // 停住、2.1 格外繼續）。這是一個**設計裁決**：一隊一回合只有一次復活、要詠唱
+  // 5 秒，而屍體就躺在剛才打架的地方 ⇒ 敵人幾乎必然在 2 格內
+  // ⇒ contest 開著等於「復活圈實質上永遠用不出來」。
+  // ⛔ 程式碼刻意留著：這是決策點不是 bug，owner 改主意就是後台一個勾（第一守則）。
+  contestPauses: false,
   damageInterrupts: false,
   ccInterrupts: true,
 };

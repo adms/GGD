@@ -112,7 +112,7 @@
     "revivesPerTeamPerRound": 1,
     "reviveHpPctMax": 0.5,
     "reviveManaPctMax": 0.5,
-    "contestPauses": true,
+    "contestPauses": false,
     "damageInterrupts": false,
     "ccInterrupts": true
   },
