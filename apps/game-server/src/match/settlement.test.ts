@@ -206,12 +206,17 @@ function runFullMatch(matchId: string, seed: number, doc: Record<string, unknown
 describe("per-team elimination settlement (elimination-settlement, task #193 / GH#264)", () => {
   it("出貨模式:沒有人在比賽中途出局,所以未來的冠軍拿不到「戰鬥結束」卡", () => {
     cover("elimination-settlement");
+    // GH#324 —— seed 4245 換成 4263。⚠️ 同樣不是「把測試調鬆」：Phase 3 讓單位
+    //    改走**烘焙好的路徑點**（不再撞牆卡死），bot 的走位因此改變，4245 那一場
+    //    不再有任何隊伍把血打光。實測掃 4240–4290，4263 / 4275 / 4276 都重現，
+    //    取最小的。⇒ 這正是下面那一行註解在說的事，它照著做了。
+    //
     // GH#323 —— seed 4242 換成 4245。⚠️ 這不是「把測試調鬆」：41 位英雄在
     //    2026-08-13 退場，bot 的選角因此改變，4242 那一場**不再有任何隊伍歸零**，
     //    於是這條測試的前提消失（下面那兩行原本就寫著「這一行紅了不要刪，
     //    要換一個會重現的 seed」）。4245 實測：spent=隊伍2/3，winner=隊伍2 ——
     //    冠軍本人被打光過，正是 GH#264 的重現本身。
-    const run = runFullMatch("elim1", 4245, matchDocWithCard(false));
+    const run = runFullMatch("elim1", 4263, matchDocWithCard(false));
     // 這一條測的是 OFF 那一側 —— 而且是**經由內容文件**到達控制器的。
     expect(run.ctl.settlementCardOnHealthSpent).toBe(false);
 
@@ -238,7 +243,7 @@ describe("per-team elimination settlement (elimination-settlement, task #193 / G
   it("後台打開就退回舊行為 —— 這個功能是被關掉,不是被刪掉", () => {
     cover("elimination-settlement");
     // 同上，與 OFF 那一側用同一個 seed 才比得出「打開的代價」。
-    const run = runFullMatch("elim1", 4245, matchDocWithCard(true));
+    const run = runFullMatch("elim1", 4263, matchDocWithCard(true));
     expect(run.ctl.settlementCardOnHealthSpent).toBe(true);
 
     // 血歸零的隊伍**當場**拿到一張卡:不多不少就是那些隊伍，各一張。

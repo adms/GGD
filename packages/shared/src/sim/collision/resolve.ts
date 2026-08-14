@@ -53,8 +53,32 @@ export function pushOutOfObstacle(body: Body, obstacle: Obstacle): void {
   }
 }
 
-/** Hard-clamp a body inside a circular zone boundary. */
+/**
+ * Hard-clamp a body inside the zone boundary.
+ *
+ * ⭐ GH#324 —— 矩形分區逐軸夾，圓形分區**逐字沿用原本那段**。
+ *
+ * ⚠️ 圓那一半刻意**一個字都不改**，而且這不是潔癖：`relax()` 每一步呼叫它兩次，
+ * 所以它在**移動路徑**上。第一版我把兩種形狀都改走統一的 helper，
+ * `attackStandstill.test.ts` 的「被擠在柱子上磨蹭時照樣出手」立刻紅了 ——
+ * 那條測試量的是 `(pos − before)/dt` 的抖動，而抖動對這裡的每一個浮點細節敏感。
+ * ⇒ 既有 6 張圓形場地必須走**位元相同**的那條路，新形狀才另開分支。
+ */
 export function clampToBoundary(body: Body, zone: ZoneDef): void {
+  const b = zone.bounds;
+  if (b !== undefined && b.kind === "rect") {
+    // 矩形：逐軸夾。⚠️ 只在真的出界時才指派（與圓那一半的可觀測性一致）。
+    const maxX = Math.max(0, b.halfW - body.radius);
+    const maxZ = Math.max(0, b.halfD - body.radius);
+    const dx = body.pos.x - zone.center.x;
+    const dz = body.pos.z - zone.center.z;
+    if (dx >= -maxX && dx <= maxX && dz >= -maxZ && dz <= maxZ) return;
+    body.pos = {
+      x: zone.center.x + Math.min(maxX, Math.max(-maxX, dx)),
+      z: zone.center.z + Math.min(maxZ, Math.max(-maxZ, dz)),
+    };
+    return;
+  }
   const maxR = zone.boundaryRadius - body.radius;
   const off = sub(body.pos, zone.center);
   const d2 = lenSq(off);

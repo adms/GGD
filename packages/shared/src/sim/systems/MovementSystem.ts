@@ -26,6 +26,7 @@ import { sub, len, scale, normalize, addScaled, dot, cross, perp, lenSq } from "
 import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } from "../collision/resolve";
 import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
+import { nextWaypoint } from "../map/navFollow";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
@@ -157,7 +158,20 @@ export function movementSystem(world: SimWorld): void {
     // 2) Normal steering toward moveTarget.
     let moved = false;
     if (nav.moveTarget && !rooted) {
-      const to = sub(nav.moveTarget, t.pos);
+      // ⭐ GH#324 —— **繞牆走**。`steerAroundObstacles` 是無狀態的單切線啟發式，
+      // 而且它明確跳過線段：垂直撞牆時切向分量為 0，單位會**原地卡死**
+      // （`OrderSystem.updateWalkStall` 的註解記錄的實測是 2,240 tick）。
+      //
+      // 修法不是把避讓寫得更聰明，是**換掉它的目標**：從「最終目的地」換成
+      // 「下一個路徑點」。路徑是產生器離線烘焙好的 next-hop 表，runtime 只查表 ——
+      // 零搜尋、零三角函式、零 Map 迭代序問題（三個約束缺一不可）。
+      //
+      // ⚠️ `nextWaypoint` 回 null 有兩種意思（不需要繞路 / 到不了），兩種的處置
+      // 一樣：直接朝最終目的地走，也就是**既有行為**。沒有導航表的 6 張手寫場地
+      // 因此一個字都不用改。
+      const zoneForNav = world.arena.zones[t.zone] ?? world.arena.zones[0];
+      const waypoint = nextWaypoint(zoneForNav?.nav, t.pos, nav.moveTarget);
+      const to = sub(waypoint ?? nav.moveTarget, t.pos);
       const d = len(to);
       if (d > 1e-6) {
         moved = true;

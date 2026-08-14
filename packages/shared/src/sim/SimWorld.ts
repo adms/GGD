@@ -69,6 +69,7 @@ import type { TriggerDamage } from "./effects/effect";
 import type { KillComboState } from "./combat/killCombo";
 import { SpatialHash } from "./collision/spatialHash";
 import type { ArenaDef } from "./world/ArenaDef";
+import type { GateSchedule } from "./map/gates";
 import { TICK_MS } from "../constants";
 import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
@@ -848,6 +849,14 @@ export class SimWorld {
    * identically and determinism holds.
    */
   arena: ArenaDef;
+  /**
+   * GH#324 —— 這張地圖的 gate 排程（可開關的幾何）。
+   *
+   * ⭐ 它**不上 wire**：狀態是 `(schedule, absoluteTick)` 的純函式，
+   * 伺服器與客戶端各自用已經複寫的 tick 算出同一個答案 ⇒ 沒有 desync 通道。
+   * `undefined` = 這張圖沒有機制（既有 6 張場地的行為）。
+   */
+  gateSchedule: GateSchedule | undefined = undefined;
 
   /* ═══════════════════════════════════════════════════════════════════════
    * RESERVED COMPONENT STORES (GH#289) — landed ALL AT ONCE, up front, so the

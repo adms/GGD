@@ -22,6 +22,8 @@ import type { ChampionDef } from "../content/defs";
 import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq, type Vec2 } from "../math/vec2";
+import { hasLineOfSight } from "../map/lineOfSight";
+import { activeObstacles } from "../map/gates";
 import { fireHooks } from "../effects/hooks";
 import { rollEvade, rollFumble } from "../combat/evasion";
 import { rollCritStrike } from "../combat/critStrike";
@@ -143,6 +145,24 @@ export function weaponClassOf(
   return attackType === "ranged" ? "magic" : "sword";
 }
 
+
+/**
+ * ⭐ 牆擋普攻（GH#324，owner 2026-08-14「擋普攻 不然會風箏到死 但不擋技能」）。
+ *
+ * 插在**既有的 in-range 閘**上，語意天然一致：**走出視線 ＝ 走出射程**。
+ * 兩個閘各插一次（wind-up 前 + 命中前），因為 LoL 式的規則是「命中前再確認一次」——
+ * ⛔ 只插一個的話，玩家可以在 wind-up 中途躲到牆後而那一刀照樣命中。
+ *
+ * ⚠️ 用**這一 tick 真的擋路**的障礙物（gate 過濾之後）—— 開著的門不擋普攻。
+ * ⛔ `ProjectileSystem` 不呼叫這一支：技能照樣穿牆，那是裁決不是遺漏。
+ */
+function seesTarget(world: SimWorld, zone: number, from: Vec2, to: Vec2): boolean {
+  const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
+  if (zoneDef === undefined) return true;
+  const live = activeObstacles(zoneDef.obstacles, world.gateSchedule, world.tick);
+  return hasLineOfSight(from, to, live);
+}
+
 export function basicAttackSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
     const t = world.transform.get(id);
@@ -247,7 +267,12 @@ export function basicAttackSystem(world: SimWorld): void {
       // enough to flip this `<=` and desync a replica. (The purity gate now
       // bans `**` in sim source for exactly this reason; see purity.test.ts.)
       const reach = tgtT ? reachTo(sc, t.radius, tgtT.radius) : 0;
-      const inRange = !!tgtT && tgtT.zone === t.zone && distSq(t.pos, tgtT.pos) <= reach * reach;
+      const inRange =
+        !!tgtT &&
+        tgtT.zone === t.zone &&
+        distSq(t.pos, tgtT.pos) <= reach * reach &&
+        // GH#324 —— 視線斷了就跟走出射程一樣：wind-up 取消。
+        seesTarget(world, t.zone, t.pos, tgtT.pos);
       if (!tgtT || !tgtHp?.alive || !inRange) {
         ab.windup = null;
         // WHIFF (combat-juice): if the swing had already COMMITTED (this was the
@@ -290,6 +315,8 @@ export function basicAttackSystem(world: SimWorld): void {
     }
     const reach = reachTo(sc, t.radius, tgtT.radius);
     if (distSq(t.pos, tgtT.pos) > reach * reach) continue; // still chasing
+    // GH#324 —— 目標躲到牆後 ⇒ 不開新的一刀（跟射程外同一個處置）。
+    if (!seesTarget(world, t.zone, t.pos, tgtT.pos)) continue;
     // 打就站定:走動中不開新的一刀(朝目標靠近除外)。擋在冷卻 commit **之前**,
     // 所以走位不會白白燒掉一次攻擊間隔 —— 停下來的那一 tick 就能立刻出手。
     if (standstillBlocks(ss, t.vel, t.pos, tgtT.pos)) continue;
