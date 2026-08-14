@@ -33,6 +33,7 @@ import { startContentBus, platformStatusWithContent } from "./config/contentBus"
 import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { tickHealth } from "./match/tickHealth";
+import { recordQuarantine } from "./contentHealth";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
 import { setActiveContentVersion } from "./replay/Player";
@@ -331,6 +332,10 @@ async function loadContent(): Promise<void> {
     // primary key of a replay (a recording made on cv_A must never be played on
     // cv_B), so it is published here for MatchRoom and the replay compat check.
     setActiveContentVersion(result.manifest.contentVersion);
+    // ⭐ GH#326 —— 被隔離的文件要進一個**擋不掉的**地方。`/healthz` 的
+    //    `content.quarantined` 是機器讀的那一份(部署後置條件與後台重要事件頁
+    //    都從它來)。⛔ 只寫一行 console.warn 就是這條規則要修的東西本身。
+    recordQuarantine(result.quarantined);
     const arenaRules = Configs.tryGet("arena-rules") ? "arena-rules ACTIVE" : "arena-rules absent (legacy rules)";
     const overlayNote = overlay && label === "overlay" ? ` +overlay(gen ${overlay.generation})` : "";
     console.log(
@@ -339,6 +344,16 @@ async function loadContent(): Promise<void> {
         `${Augments.ids().length} augments, ${LootTables.ids().length} loot tables — ${arenaRules}` +
         (result.warnings.length ? ` [${result.warnings.length} soft-ref warning(s)]` : ""),
     );
+    if (result.quarantined.length > 0) {
+      console.warn(
+        `[game-server] ⚠️ 隔離了 ${result.quarantined.length} 份文件(政策 ${result.policyUsed})—— ` +
+          `其餘照常載入。完整清單在 GET /healthz 的 content.quarantinedDocs,` +
+          `後台「重要事件」頁也會跳紅點。`,
+      );
+      for (const q of result.quarantined) {
+        console.warn(`[game-server]   隔離 ${q.collection}/${q.id} (${q.reason}) — ${q.detail}`);
+      }
+    }
     return true;
   };
 

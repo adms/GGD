@@ -33,6 +33,7 @@
  * `Abilities` 這三個出貨登錄表 —— 也就是失敗形態 ⑤ 的反面：被測的就是出貨的那個。
  */
 import { Abilities, Champions, Items } from "@ggd/shared/sim/content/registry";
+import type { QuarantineEntry } from "@ggd/shared/content";
 
 /**
  * 骨架內容的英雄數。低於或等於這個數字，幾乎可以確定是 fail-open 退回骨架了
@@ -43,6 +44,26 @@ import { Abilities, Champions, Items } from "@ggd/shared/sim/content/registry";
  */
 export const SKELETON_CHAMPION_COUNT = 2;
 
+/**
+ * ⭐ GH#326 —— 上一次載入隔離了哪幾份。
+ *
+ * ⚠️ 這個模組層級的變數存在的理由是 CLAUDE.md「fail-open 沒錯,**靜默**才是缺陷」:
+ * 隔離讓「一份壞文件」不再殺掉全站,但如果沒有一個**擋不掉的**地方說得出哪幾份
+ * 被隔離,它就變成「壞掉跟正常長得一模一樣」—— 也就是這條規則要修的東西本身。
+ *
+ * ⛔ 一行 console.warn 不算。這一格會出現在 `/healthz`(機器讀,部署後置條件用)
+ *    與後台的重要事件頁(人讀,導覽列帶數字紅點)。
+ */
+let lastQuarantined: readonly QuarantineEntry[] = [];
+
+export function recordQuarantine(entries: readonly QuarantineEntry[]): void {
+  lastQuarantined = entries;
+}
+
+export function quarantinedDocs(): readonly QuarantineEntry[] {
+  return lastQuarantined;
+}
+
 export interface ContentHealthSnapshot {
   /** false = 登錄表小到只可能是骨架，也就是內容載入失敗過。 */
   readonly ok: boolean;
@@ -51,6 +72,21 @@ export interface ContentHealthSnapshot {
   readonly abilities: number;
   /** 給操作者看的一句話；`ok` 為 true 時是 null。 */
   readonly reason: string | null;
+  /**
+   * ⭐ 上一次載入被隔離的文件數。0 = 全乾淨。
+   *
+   * ⚠️ 它**故意不影響 `ok`**:`ok` 回答的是「內容載入成功了嗎」,隔離的定義就是
+   * 「載入成功了,只是少了這幾份」。兩個訊號混在一起會讓部署後置條件沒辦法分辨
+   * 「少了三份設定」與「整份跟映像不相容」—— 而那正是 2026-08-02 的故障形態。
+   */
+  readonly quarantined: number;
+  /** 被隔離的每一份(collection/id/原因)。空陣列 = 全乾淨。 */
+  readonly quarantinedDocs: readonly {
+    collection: string;
+    id: string;
+    reason: string;
+    detail: string;
+  }[];
 }
 
 export function contentHealth(): ContentHealthSnapshot {
@@ -63,6 +99,13 @@ export function contentHealth(): ContentHealthSnapshot {
     champions,
     items,
     abilities,
+    quarantined: lastQuarantined.length,
+    quarantinedDocs: lastQuarantined.map((q) => ({
+      collection: q.collection,
+      id: q.id,
+      reason: q.reason,
+      detail: q.detail,
+    })),
     reason: degraded
       ? `登錄表只有 ${champions} 隻英雄 —— 內容載入失敗過，已退回骨架。` +
         `最可能的原因是 content/ 比這個映像新（新的 schema tag 或欄位不在映像的 Zod union 裡）。` +

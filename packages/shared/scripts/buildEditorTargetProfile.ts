@@ -152,6 +152,29 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
       collectionCount: Object.keys(collections).length,
     },
 
+    /**
+     * ⭐ GH#327 —— **哪一種雜湊說了算**（owner 2026-08-14:「請一定要檢查合法性
+     * (包含 check sum & MD5 & 內容沒有 injection)」)。
+     *
+     * ⚠️ 這一格必須在契約裡明說,因為兩邊對「checksum」的理解不同會**安靜地**
+     * 出錯:對方送 MD5、我們比 SHA-256,結果是每一包都被拒而診斷訊息看起來像
+     * 格式問題。⛔ 而 MD5 對防篡改**已經沒有用** —— 碰撞可以在筆電上構造出來,
+     * 所以它永遠不可以是准不准的依據。
+     */
+    digestPolicy: {
+      /** 唯一有裁決權的雜湊。package / plan / activation digest 全部用它。 */
+      authoritative: "sha-256",
+      /** 正規化:先 RFC 8785 JCS,再 SHA-256。⛔ 不是對原始 bytes 直接 hash。 */
+      canonicalization: "rfc8785-jcs",
+      /**
+       * 允許在 manifest 裡**額外**附上的雜湊,純粹當「有沒有傳壞」的快篩。
+       * ⛔ 它們不參與任何 pass/fail 判斷,附了也不會讓一包更容易通過。
+       */
+      advisoryOnly: ["md5", "crc32"],
+      /** 公開 profile 自己的短 digest 只夠偵測漂移,⛔ 不是簽章、不可當 CAS base。 */
+      shortDigestIsNotASignature: true,
+    },
+
     // ② schema / compiler contract 版本
     contract: {
       profileSchema: EDITOR_TARGET_PROFILE_SCHEMA,

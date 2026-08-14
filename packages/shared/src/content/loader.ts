@@ -16,21 +16,64 @@ import {
 import { validateReferences } from "./refs";
 import { validateRetiredLootTables } from "./retiredLootTables";
 import { COLLECTIONS, isCollectionName, type CollectionName } from "./schema/index";
+import {
+  CONTENT_LOAD_DOC_ID,
+  DEFAULT_CONTENT_LOAD,
+  type ConfigContentLoadDoc,
+  type ContentLoadPolicy,
+} from "./schema/config";
 import { ContentStore } from "./store";
 import type { ContentSource, Manifest } from "./types";
 import type { DanglingRefError } from "./errors";
+
+/**
+ * 一份被隔離的文件。⭐ 這個型別存在的理由是 CLAUDE.md「fail-open 沒錯,**靜默**
+ * 才是缺陷」—— 隔離本身是對的,但如果沒有人說得出**哪幾份**被隔離、**為什麼**,
+ * 它就從「一份壞文件不會殺掉全站」退化成「壞掉跟正常長得一模一樣」。
+ */
+export interface QuarantineEntry {
+  readonly collection: string;
+  readonly id: string;
+  readonly reason: "read" | "schema" | "id-mismatch" | "dangling-ref" | "retired-loot";
+  /** 給人看的一句話(已經含 collection/id)。 */
+  readonly detail: string;
+  /** schema 失敗時的逐條 Zod issue。 */
+  readonly issues?: FieldIssue[];
+}
 
 export interface LoadResult {
   store: ContentStore;
   manifest: Manifest;
   /** dangling SOFT refs (vfx / status-effects not authored yet) */
   warnings: DanglingRefError[];
+  /**
+   * ⭐ GH#326 —— 被隔離的文件。空陣列 = 這次載入全乾淨。
+   *
+   * ⚠️ 呼叫端**必須**把非空的這一格送到一個看得見的地方(`/healthz` 的
+   * `content.quarantined` 與後台的重要事件頁)。⛔ 一行 console.warn 不算。
+   */
+  quarantined: QuarantineEntry[];
+  /** 這次真的用了哪一種政策(可能因為超過 `maxQuarantined` 而退回 fail-closed)。 */
+  policyUsed: ContentLoadPolicy;
 }
 
 export class ContentLoader {
   constructor(private readonly source: ContentSource) {}
 
-  /** Full load. Throws ContentLoadError if any doc is invalid or a hard ref dangles. */
+  /**
+   * Full load.
+   *
+   * ── GH#326:全有全無**是一個政策,不是結構限制** ──────────────────────
+   * 這個迴圈從第一天就是**逐份**收集錯誤的(每一份壞的都記下 collection、id、
+   * Zod 的逐條 issue),只是最後一行把整批丟掉。owner 2026-08-14 把那個決定
+   * 換成一格後台欄位 `config.content-load@1`,出貨值 `quarantine`。
+   *
+   * ⚠️ 政策自己住在被載入的內容裡,所以它**只能在迴圈跑完之後讀** —— 這不是
+   * 妥協,而是剛好對:要不要丟掉的決定本來就發生在最後。那份文件自己壞掉時
+   * 退回 `DEFAULT_CONTENT_LOAD`(而且它自己會出現在隔離清單裡)。
+   *
+   * Throws ContentLoadError 當政策是 `fail-closed`,或隔離數超過 `maxQuarantined`。
+   */
   async load(): Promise<LoadResult> {
     const manifest = await this.source.readManifest();
     if (typeof manifest?.contentVersion !== "string" || !manifest.collections) {
@@ -39,6 +82,7 @@ export class ContentLoader {
 
     const store = new ContentStore();
     const errors: ContentError[] = [];
+    const quarantined: QuarantineEntry[] = [];
 
     for (const name of Object.keys(manifest.collections)) {
       if (!isCollectionName(name)) {
@@ -52,23 +96,37 @@ export class ContentLoader {
         try {
           raw = await this.source.readObject(name, entry);
         } catch (e) {
-          errors.push(new ContentError(`${name}/${entry.id}: read failed — ${String(e)}`));
+          const err = new ContentError(`${name}/${entry.id}: read failed — ${String(e)}`);
+          errors.push(err);
+          quarantined.push({ collection: name, id: entry.id, reason: "read", detail: err.message });
           continue;
         }
         try {
           const doc = spec.schema.parse(raw) as { id: string; schema: string };
           if (doc.id !== entry.id) {
-            errors.push(
-              new SchemaValidationError(name, entry.id, [
-                idMismatchIssue(doc.id, entry.id),
-              ]),
-            );
+            const issues = [idMismatchIssue(doc.id, entry.id)];
+            errors.push(new SchemaValidationError(name, entry.id, issues));
+            quarantined.push({
+              collection: name,
+              id: entry.id,
+              reason: "id-mismatch",
+              detail: issues[0]!.message,
+              issues,
+            });
             continue;
           }
           store.add(name, doc.id, doc);
         } catch (e) {
           if (e instanceof ZodError) {
-            errors.push(new SchemaValidationError(name, entry.id, zodIssues(e)));
+            const issues = zodIssues(e);
+            errors.push(new SchemaValidationError(name, entry.id, issues));
+            quarantined.push({
+              collection: name,
+              id: entry.id,
+              reason: "schema",
+              detail: issues.map((i) => `${i.path}: ${i.message}`).join("; "),
+              issues,
+            });
           } else {
             throw e;
           }
@@ -76,17 +134,82 @@ export class ContentLoader {
       }
     }
 
-    const refs = validateReferences(store);
-    errors.push(...refs.errors);
+    // ⚠️ 政策要在**這裡**讀 —— 上面的迴圈剛把它載進 store。它自己壞掉(或還沒
+    // 被 authored)時退回出貨預設,而且它會出現在 `quarantined` 裡,所以
+    // 「靜默地用了預設」不會發生。
+    const policyDoc = store.tryGet<ConfigContentLoadDoc>("config", CONTENT_LOAD_DOC_ID);
+    const policy: ContentLoadPolicy = policyDoc?.policy ?? DEFAULT_CONTENT_LOAD.policy;
+    const cascade = policyDoc?.cascadeDanglingRefs ?? DEFAULT_CONTENT_LOAD.cascadeDanglingRefs;
+    const maxQuarantined = policyDoc?.maxQuarantined ?? DEFAULT_CONTENT_LOAD.maxQuarantined;
 
     // 退場的抽獎池不可以被排回任何發放入口 (owner 2026-08-01). 這是一條**跨欄位**
     // 規則,所以它不能待在 Zod 裡:`zConfigDoc` 是 discriminated union,而它的成員
     // 必須是 ZodObject —— 一個 `.superRefine` 會讓整個 config 聯集失效。理由與
     // 規則本身都寫在 ./retiredLootTables.ts。
-    errors.push(...validateRetiredLootTables(store));
+    const retired = validateRetiredLootTables(store);
+    errors.push(...retired);
 
-    if (errors.length > 0) throw new ContentLoadError(errors);
-    return { store, manifest, warnings: refs.warnings };
+    // ── fail-closed:舊行為,一份壞掉整份失敗 ────────────────────────────
+    // ⚠️ 也涵蓋「隔離太多」:少四份設定與「內容整份跟這個映像不相容」是兩件事,
+    //    而後者隔離出來的結果是一個**空的遊戲** —— 那比誠實地退回骨架更糟,
+    //    因為骨架至少會讓 `/healthz` 的 `content.ok` 變 false。
+    const overBudget = quarantined.length > maxQuarantined;
+    if (policy === "fail-closed" || overBudget) {
+      const refs = validateReferences(store);
+      errors.push(...refs.errors);
+      if (errors.length > 0) {
+        if (overBudget) {
+          errors.unshift(
+            new ContentError(
+              `隔離了 ${quarantined.length} 份文件,超過 config.content-load@1 的 ` +
+                `maxQuarantined=${maxQuarantined} ⇒ 退回 fail-closed。` +
+                `這通常代表 content/ 與這個映像不相容(新的 schema tag 或欄位不在映像的 Zod union 裡),` +
+                `而不是幾份文件寫壞了。`,
+            ),
+          );
+        }
+        throw new ContentLoadError(errors);
+      }
+      return { store, manifest, warnings: refs.warnings, quarantined, policyUsed: policy };
+    }
+
+    // ── quarantine(出貨預設)──────────────────────────────────────────
+    // 硬參照斷掉的文件**自己也被拿掉**(cascade),否則會留下半個世界:英雄在、
+    // 他的 Q 不在 = 一格空技能,而且沒有人會發現(失敗形態②)。
+    // 每一輪至少拿掉一份 ⇒ 必然收斂,不需要額外的迴圈上界。
+    let refs = validateReferences(store);
+    while (cascade && refs.errors.length > 0) {
+      for (const e of refs.errors) {
+        if (!isCollectionName(e.fromCollection)) continue;
+        if (!store.remove(e.fromCollection, e.fromId)) continue;
+        quarantined.push({
+          collection: e.fromCollection,
+          id: e.fromId,
+          reason: "dangling-ref",
+          detail:
+            `硬參照 ${e.targetCollection}/${e.targetId}(欄位 "${e.field}")找不到 —— ` +
+            `目標可能自己被隔離了,所以這一份跟著隔離,避免留下半個世界。`,
+        });
+      }
+      refs = validateReferences(store);
+    }
+
+    // ⚠️ cascade 關掉時,斷掉的硬參照**不可以就這樣消失** —— 它們降級成 warnings,
+    //    因為文件還在 store 裡(所以說它「被隔離」會是謊話),但沒有人知道它半殘
+    //    才是真正的缺陷。
+    const softWarnings = cascade ? refs.warnings : [...refs.warnings, ...refs.errors];
+
+    for (const e of retired) {
+      if (!store.remove("config", e.docId)) continue;
+      quarantined.push({
+        collection: "config",
+        id: e.docId,
+        reason: "retired-loot",
+        detail: e.message,
+      });
+    }
+
+    return { store, manifest, warnings: softWarnings, quarantined, policyUsed: policy };
   }
 }
 

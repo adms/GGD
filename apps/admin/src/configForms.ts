@@ -706,6 +706,10 @@ const CONTENT_LOAD_SPEC: ConfigDocSpec = {
       path: "policy",
       zh: "一份壞文件的處置",
       note: "`quarantine`（出貨）= 壞的那幾份不進登錄表，其餘照常載入。`fail-closed` = 舊行為，任何一份壞掉整份失敗。⚠️ 舊行為在客戶端的樣子不是錯誤畫面，是**悄悄退回 2 隻骨架英雄** —— 那正是 owner 要廢掉它的理由。",
+      optionLabels: {
+        quarantine: "quarantine（隔離壞的、好的照跑）",
+        "fail-closed": "fail-closed（舊行為：一份壞掉整份失敗）",
+      },
     },
     {
       path: "cascadeDanglingRefs",
