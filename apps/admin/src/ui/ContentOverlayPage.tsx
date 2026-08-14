@@ -21,11 +21,17 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   deleteOverlayDoc,
+  getOverlayDocVersions,
   getOverlayLog,
   getOverlayStatus,
+  getOverlayVersions,
   getShippedDoc,
   putOverlayDoc,
+  restoreOverlayDoc,
+  restoreOverlayVersion,
   revertOverlayDoc,
+  type OverlayVersion,
+  type OverlayVersionList,
 } from "../api";
 import {
   COMMON_COLLECTIONS,
@@ -76,6 +82,25 @@ export function ContentOverlayPage(): React.JSX.Element {
     { kind: "revert" | "tombstone"; entry: OverlayStatusEntry } | null
   >(null);
 
+  // GH#326 —— 版本回滾。⚠️ 清單跟著上面那格「文件 id」走：填了就顯示**那一份
+  // 真的變過**的版本（否則選單會塞滿一堆「跟現在一樣」的選項），空的就顯示整批。
+  const [versions, setVersions] = useState<OverlayVersionList>({ entries: [] });
+
+  const loadVersions = useCallback(async (): Promise<void> => {
+    try {
+      const key = docId.trim();
+      setVersions(
+        key === "" || collection.trim() === ""
+          ? await getOverlayVersions()
+          : await getOverlayDocVersions(collection.trim(), key),
+      );
+    } catch (err) {
+      // ⚠️ 版本清單讀不到**不可以**把整頁擋掉 —— 它是附加能力，不是主功能。
+      //    但也⛔不可以靜默:把原因放進 `unavailable`，畫面上會說出來。
+      setVersions({ entries: [], unavailable: errText(err) });
+    }
+  }, [collection, docId]);
+
   const refresh = useCallback(async (): Promise<void> => {
     setBusy(true);
     try {
@@ -93,6 +118,47 @@ export function ContentOverlayPage(): React.JSX.Element {
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  useEffect(() => {
+    void loadVersions();
+  }, [loadVersions]);
+
+  /** 整批還原到某一版。⭐ 伺服器會鑄一個新版本，所以這一步本身也還原得回來。 */
+  const doRestoreAll = async (v: OverlayVersion): Promise<void> => {
+    setBusy(true);
+    try {
+      await restoreOverlayVersion(v.hash);
+      setNotice(`已把整份覆蓋層還原到 ${v.short}（${v.summary}）—— 這次還原本身是新的一版。`);
+      setError(null);
+      await refresh();
+      await loadVersions();
+    } catch (err) {
+      setError(errText(err));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /** 只還原一份文件，其餘不動 —— 但一樣鑄一個新的批次版本。 */
+  const doRestoreDoc = async (v: OverlayVersion): Promise<void> => {
+    const bad = validateKeyInput(collection.trim(), docId.trim());
+    if (bad) {
+      setError(bad);
+      return;
+    }
+    setBusy(true);
+    try {
+      await restoreOverlayDoc(v.hash, collection.trim(), docId.trim());
+      setNotice(`已把 ${collection.trim()}/${docId.trim()} 還原到 ${v.short}，其餘文件沒有動。`);
+      setError(null);
+      await refresh();
+      await loadVersions();
+    } catch (err) {
+      setError(errText(err));
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const loadShipped = async (): Promise<void> => {
     const bad = validateKeyInput(collection.trim(), docId.trim());
@@ -456,6 +522,69 @@ export function ContentOverlayPage(): React.JSX.Element {
         <div style={{ marginTop: 10, fontSize: 11, color: TEXT_DIM }}>
           每一筆寫入同時也會留在 Audit log（<code>content-overlay.put / delete / revert</code>）。
         </div>
+      </Panel>
+
+      {/* ── 5. 版本回滾（GH#326）────────────────────────────────────────── */}
+      <Panel title="版本回滾 · 往前 n 版">
+        <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8, marginBottom: 10 }}>
+          每一次儲存都留下一版（go-git，存在 <code>data/content-overlay/.git</code>）。
+          <b style={{ color: TEXT_MAIN }}>還原會鑄一個新版本</b>，⛔ 不是把指標倒回去 ——
+          所以「線上現在跑的是哪一版」永遠只有一個答案，而且還原本身也還原得回來。
+          {docId.trim() !== "" && (
+            <>
+              {" "}目前輸入的是 <code>{collection}/{docId}</code>，
+              下面的清單會只顯示<b style={{ color: TEXT_MAIN }}>那一份文件真的變過</b>的版本。
+            </>
+          )}
+        </div>
+
+        {versions.unavailable !== undefined && versions.unavailable !== "" && (
+          <div style={{ fontSize: 12, color: "#E08A5A", marginBottom: 8 }}>
+            ⚠️ 版本歷史目前讀不到：{versions.unavailable}
+            <br />
+            （⛔ 這不等於「沒有歷史」—— 存檔本身仍然成功，只是這次沒留下版本。）
+          </div>
+        )}
+
+        {versions.entries.length === 0 ? (
+          <div style={{ fontSize: 12, color: TEXT_DIM }}>還沒有任何版本 —— 存一次就會有。</div>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+              <tbody>
+                {versions.entries.map((v, i) => (
+                  <tr key={v.hash} style={{ borderTop: i === 0 ? undefined : PANEL_BORDER }}>
+                    <td style={{ padding: "6px 8px", color: TEXT_DIM, whiteSpace: "nowrap" }}>
+                      {formatWhen(v.at)}
+                    </td>
+                    <td style={{ padding: "6px 8px", fontFamily: MONO, color: TEXT_MAIN }}>
+                      {v.short}
+                    </td>
+                    <td style={{ padding: "6px 8px", color: TEXT_MAIN }}>
+                      {v.summary}
+                      {v.current && <Badge color={toneColor("ok")}>現行</Badge>}
+                    </td>
+                    <td style={{ padding: "6px 8px", fontFamily: MONO, color: TEXT_DIM }}>{v.by}</td>
+                    <td style={{ padding: "6px 8px", whiteSpace: "nowrap" }}>
+                      {!v.current && (
+                        <>
+                          <Btn onClick={() => void doRestoreAll(v)} disabled={busy}>
+                            整批還原
+                          </Btn>
+                          {docId.trim() !== "" && (
+                            <Btn onClick={() => void doRestoreDoc(v)} disabled={busy}>
+                              只還原 {docId}
+                            </Btn>
+                          )}
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </Panel>
 
       {confirm && (

@@ -314,6 +314,69 @@ export function getOverlayLog(): Promise<OverlayLogLine[]> {
   return api.request<unknown>("/content-overlay/log").then(normalizeLog);
 }
 
+// ------------------------------------------------- GH#326 版本回滾 ----------
+//
+// owner 2026-08-14：「舊版本可以有版本編號 rollback **往前 n 版都可以（下拉選單）**，
+// **可以單獨項目版本控制也可以批次版本控制**變更」。
+//
+// ⚠️ 它和上面那條 `getOverlayLog` 是**兩件事**，不要混：
+//   · log      —— 誰在什麼時候改了哪一格（純紀錄，⛔ 回不去）
+//   · versions —— 每一版的**完整內容**（go-git），⭐ 回得去
+// 舊的 log 留著是因為它按日切檔、便宜、而且是既有的稽核入口。
+
+/** 一版。`current` 標記線上正在跑的那一版（永遠是第一列）。 */
+export interface OverlayVersion {
+  hash: string;
+  short: string;
+  at: string;
+  by: string;
+  generation: number;
+  summary: string;
+  current: boolean;
+}
+
+/** ⚠️ `unavailable` 非空 = 歷史讀不到。⛔ 不可以把它當成「沒有歷史」。 */
+export interface OverlayVersionList {
+  entries: OverlayVersion[];
+  unavailable?: string;
+}
+
+/** 整批的版本清單（每一次存檔一列）。 */
+export function getOverlayVersions(limit?: number): Promise<OverlayVersionList> {
+  const q = limit === undefined ? "" : `?limit=${String(limit)}`;
+  return api.request<OverlayVersionList>(`/content-overlay/versions${q}`);
+}
+
+/** 單支文件的版本清單 —— ⚠️ 只有內容**真的變過**的那幾版。 */
+export function getOverlayDocVersions(
+  collection: string,
+  id: string,
+): Promise<OverlayVersionList> {
+  return api.request<OverlayVersionList>(
+    `/content-overlay/versions/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+  );
+}
+
+/** 整批回滾。⭐ 伺服器端會**鑄一個新版本**，⛔ 不是倒退指標。 */
+export function restoreOverlayVersion(hash: string): Promise<unknown> {
+  return api.request<unknown>(`/content-overlay/restore/${encodeURIComponent(hash)}`, {
+    method: "POST",
+  });
+}
+
+/** 單支回滾 —— 只動那一份，但**一樣鑄一個新的批次版本**。 */
+export function restoreOverlayDoc(
+  hash: string,
+  collection: string,
+  id: string,
+): Promise<unknown> {
+  return api.request<unknown>(
+    `/content-overlay/restore/${encodeURIComponent(hash)}` +
+      `/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    { method: "POST" },
+  );
+}
+
 /**
  * The overlay's OWN copy of one doc, read out of the public bundle.
  *

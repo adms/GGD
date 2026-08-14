@@ -3,6 +3,7 @@ package contentoverlay
 import (
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi/v5"
 
@@ -86,6 +87,13 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Get("/content-overlay/status", h.status)
 		ar.Get("/content-overlay/log", h.log)
 		ar.Get("/content-overlay/shipped/{collection}/{id}", h.shippedDoc)
+		// ⭐ GH#326 版本回滾（owner 2026-08-14「往前 n 版都可以（下拉選單）」）。
+		// ⚠️ 兩個 GET 是**下拉選單的內容**，兩個 POST 是**按下去的動作**；
+		//    回滾都經過 `Service.commit`，所以一樣有 audit、一樣鑄新版本。
+		ar.Get("/content-overlay/versions", h.versions)
+		ar.Get("/content-overlay/versions/{collection}/{id}", h.docVersions)
+		ar.Post("/content-overlay/restore/{hash}", h.restoreAll)
+		ar.Post("/content-overlay/restore/{hash}/{collection}/{id}", h.restoreDoc)
 	})
 }
 
@@ -125,6 +133,70 @@ func (h *Handlers) shippedDoc(w http.ResponseWriter, r *http.Request) {
 		"collection": collection, "id": id,
 		"present": doc != nil, "hash": hash, "doc": doc,
 	})
+}
+
+// ---------------------------------------------------------- GH#326 回滾 ----
+//
+// ⚠️ 四個都在 admin 閘後面：版本清單帶著操作者的帳號 ULID，而回滾是一次寫入。
+
+// versions 是「整批」下拉選單的內容 —— 每一次存檔一列。
+func (h *Handlers) versions(w http.ResponseWriter, r *http.Request) {
+	list, err := h.svc.Versions(r.Context(), atoiOr(r.URL.Query().Get("limit"), 0))
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, list)
+}
+
+// docVersions 是「單支」下拉選單 —— ⚠️ 只列這一份文件**內容真的變過**的那幾版，
+// 否則選單會塞滿一堆「跟現在一樣」的選項。
+func (h *Handlers) docVersions(w http.ResponseWriter, r *http.Request) {
+	list, err := h.svc.DocVersions(
+		r.Context(), chi.URLParam(r, "collection"), chi.URLParam(r, "id"),
+		atoiOr(r.URL.Query().Get("limit"), 0),
+	)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, list)
+}
+
+// restoreAll 把整份 overlay 換回某一版。⭐ 鑄一個新版本，⛔ 不是倒退指標。
+func (h *Handlers) restoreAll(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	hd, err := h.svc.RestoreAll(r.Context(), chi.URLParam(r, "hash"), me.AccountID)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, hd)
+}
+
+// restoreDoc 只換一份文件，其餘不動 —— 但**一樣鑄一個新的批次版本**，
+// 否則兩個下拉選單會互相矛盾，而且沒有辦法回答「線上現在跑的是什麼」。
+func (h *Handlers) restoreDoc(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	hd, err := h.svc.RestoreDoc(
+		r.Context(), chi.URLParam(r, "hash"),
+		chi.URLParam(r, "collection"), chi.URLParam(r, "id"), me.AccountID,
+	)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, hd)
+}
+
+// atoiOr 讀一個非負整數，讀不到就用預設值。⛔ 不報錯：一個亂填的 `?limit=`
+// 應該退回預設，不是把整頁擋掉（上界由 Service 那一層夾）。
+func atoiOr(s string, def int) int {
+	n, err := strconv.Atoi(s)
+	if err != nil || n < 0 {
+		return def
+	}
+	return n
 }
 
 func (h *Handlers) head(w http.ResponseWriter, r *http.Request) {

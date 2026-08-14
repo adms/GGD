@@ -634,6 +634,15 @@ func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head
 	}
 	// the durable file now parses again by construction
 	s.degraded = nil
+	// ⭐ GH#326 —— 把這一版存進 go-git 版本庫（回滾用）。
+	//
+	// ⚠️ 這裡是**唯一**的掛載點:每一條寫入路徑(PutDoc / DeleteDoc / RestoreAll /
+	// RestoreDoc)都經過 commit(),所以版本歷史不可能漏掉一次存檔。
+	// ⛔ 不要在各個 handler 裡各自呼叫 —— 那是「到處改改改」,而且漏一處是靜默的。
+	//
+	// best-effort:版本存不進去不可以讓一次成功的存檔變成失敗,但它會 warn 並且
+	// 在 `Versions()` 的 `Unavailable` 裡說出來(fail-open 沒錯,靜默才是缺陷)。
+	s.snapshot(o, by, op, k)
 	// append-only history (undo/audit trail) — best effort
 	if err := s.store.AppendLine(LogCollection, o.UpdatedAt.Format("2006-01-02"), logEntry{
 		Generation: o.Generation, At: o.UpdatedAt, By: by, Op: op, Key: k,
