@@ -1,10 +1,10 @@
 {
   "schema": "ggd-editor-target-profile@1",
-  "generatedAt": "2026-08-14T15:02:02.690Z",
+  "generatedAt": "2026-08-14T17:43:01.433Z",
   "readOnly": true,
   "note": "唯讀。給外部技能／道具編輯器 pin base 用。每一格都從出貨資料推導，⛔ 沒有手打的常數；跟著 pnpm content:build 走。",
   "content": {
-    "contentVersion": "cv_b808723c7635",
+    "contentVersion": "cv_714d4e9ad3c3",
     "collections": {
       "champions": {
         "hash": "0fbe3d3ee1d1",
@@ -43,7 +43,7 @@
         "count": 7
       },
       "config": {
-        "hash": "ec3ad2410a92",
+        "hash": "0a81cc0d32a1",
         "count": 56
       },
       "models": {
@@ -677,6 +677,25 @@
       "why": "標籤清單宣稱 ef984bcc，引擎現在是 8d30566f —— 那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。"
     }
   },
+  "authoringModel": {
+    "accepts": [
+      "ability@1",
+      "item@1"
+    ],
+    "notRequired": [
+      "effect-template@1",
+      "effect-product@1",
+      "effect-chain@1",
+      "expectedCompiled"
+    ],
+    "validatedBy": [
+      "zod:collection-schema",
+      "capabilities:ggd-runtime-capabilities@1",
+      "authoring-rules:ggd-authoring-rules@1"
+    ],
+    "intentField": "template.cards",
+    "note": "owner 2026-08-15 裁決:砍掉編譯器那一層。規格 §2 的四層模型是為多作者世界寫的,GGD 只有一個作者 —— 一種表示法 + 一個驗證器 = 沒有第二個實作可以漂移。"
+  },
   "authoringRules": {
     "pricingEndpoint": "/api/v1/content-import/authoring-rules",
     "pricingSource": "packages/shared/src/content/authoringRules.ts（推導，⛔ 不是散文）",
@@ -810,5 +829,5 @@
       "reason": "正式站沒有 authoring store base ⇒ 只支援 bootstrap 模式。delta 需要一個真的 base receipt，⛔ 不可以拿 content digest 代替。"
     }
   ],
-  "profileDigest": "5e4dc0024d1a"
+  "profileDigest": "6a63b362f90a"
 }

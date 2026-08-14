@@ -219,8 +219,22 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
         /** 人讀的版本標籤，⛔ 不可以拿它當協商依據 —— 那是 `digest` 的工作。 */
         label: "Draft 0.4",
       },
+      /**
+       * ⭐ 編譯器 —— **刻意是 null，而且它不會變成非 null**（owner 2026-08-15）。
+       *
+       * ⚠️ 這兩格以前是 null 因為「還沒做」。現在它們是 null 因為
+       * **這條路上不會有編譯器** —— 見下面的 `authoringModel`：
+       * 編輯器直接產 `ability@1` runtime JSON，所以沒有「創作真相 → 編譯 →
+       * 比對」那一段，也就沒有東西需要指紋。
+       *
+       * ⛔ 不要因為「看起來比較完整」就填一個值。一個宣稱存在的編譯器合約會讓
+       *    對方去實作重編比對 —— 而那是**我們這一側不會做的事**，於是他們每一包
+       *    都會比對失敗，而失敗訊息看起來像格式問題。
+       *
+       * ⏸️ 封存的第一步在 `src/content/authoring/primitives.ts`（沒有出貨路徑）。
+       *    GGD 若哪天真的變成多作者，那個檔案就是這一格變成非 null 的起點。
+       */
       compiler: {
-        // ⚠️ 編譯器本身還沒有版本化的合約（GH#313／#314 未做）⇒ null 而不是假值。
         contractVersion: null,
         fingerprint: null,
       },
@@ -276,6 +290,43 @@ export function buildEditorTargetProfile(opts: { generatedAt: string }): Record<
                 "那份裁決是對舊引擎做的。⭐ typed mechanics 走 capability 驗證，" +
                 "不經過 tag，所以不受影響；⛔ 但 tag 本身不可以再被新增/改寫/反推。",
             },
+    },
+
+    /**
+     * ⭐【authoring model】—— 編輯器該送**什麼形狀**進來（owner 2026-08-15）。
+     *
+     * ⚠️ `GGD_EDITOR_PACKAGE_SPEC.md` 現在寫的是四層模型（Definition → Product
+     * → Chain → CompiledEffects），而那份規格是為**多作者、共享 product、跨組織
+     * 協商**的世界寫的。GGD 是一個 owner、一個編輯器、一個遊戲。
+     *
+     * ⇒ owner 裁決：**編輯器直接產 `ability@1` / `item@1` runtime JSON**。
+     *
+     * | 規格原本要的 | 現在要的 | 為什麼可以砍 |
+     * |---|---|---|
+     * | 創作真相 + 期望編譯結果 | runtime JSON | 只有一種表示法就沒有兩個編譯器可以漂移 |
+     * | 遊戲端重編 + 逐位元比對 | Zod + capability + authoring rules 驗證 | 那個比對是為了抓編譯器漂移,而漂移的前提不存在了 |
+     * | Product / revision / exact ref | ⛔ 不需要 | 那是「多方共享同一段行為」的機制 |
+     *
+     * ⭐ **創作意圖沒有遺失**：`ability@1` 的 `template.cards` 本來就存著
+     * 「哪一個模板 + 哪些參數」,所以重新打開一支技能看到的是滑桿,⛔ 不是一堆
+     * 裸 effect。第〇·五守則（引擎做機制、JSON 做技能）反而被更直接地滿足。
+     */
+    authoringModel: {
+      /** 送進來的文件形狀。 */
+      accepts: ["ability@1", "item@1"],
+      /** ⛔ 這些**不再**是必要的（規格四層模型的上三層）。 */
+      notRequired: ["effect-template@1", "effect-product@1", "effect-chain@1", "expectedCompiled"],
+      /** 驗證靠這三樣,⛔ 沒有重編比對。 */
+      validatedBy: [
+        "zod:collection-schema",
+        "capabilities:ggd-runtime-capabilities@1",
+        "authoring-rules:ggd-authoring-rules@1",
+      ],
+      /** ⭐ 保留模板與參數的欄位 —— 編輯器請填它,重新開啟才看得到滑桿。 */
+      intentField: "template.cards",
+      note:
+        "owner 2026-08-15 裁決:砍掉編譯器那一層。規格 §2 的四層模型是為多作者世界寫的," +
+        "GGD 只有一個作者 —— 一種表示法 + 一個驗證器 = 沒有第二個實作可以漂移。",
     },
 
     // ⑤ authoring rules

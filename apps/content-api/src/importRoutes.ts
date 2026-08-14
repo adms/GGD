@@ -86,7 +86,10 @@ const UNIMPLEMENTED: readonly {
     method: "post",
     path: "/validate",
     stage: "G1（本輪只做握手層，validate 在同階段的下一步）",
-    why: "需要 transport safety、staging tree、compiler 與 compiled compare —— 一項都還沒有。",
+    why:
+      "需要 bounded transport（zipSafety 已有）+ Zod／capability／authoring-rules 三道驗證。" +
+      "⚠️ owner 2026-08-15 砍掉了「遊戲端重編 + 逐位元比對」那一段 —— 見 target profile 的 " +
+      "`authoringModel`：編輯器直接產 ability@1，所以沒有第二個編譯器可以漂移。",
   },
   {
     method: "post",
