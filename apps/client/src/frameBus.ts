@@ -415,6 +415,13 @@ export interface FrameBus {
    * so the baked background is rebuilt exactly when the map changes.
    */
   arenaId: string | null;
+  /**
+   * ⭐ 這張地圖的**顯示名**（「無限城」「希干希納」…），給戰鬥開場的報地名用
+   * （owner 2026-08-14）。⚠️ 和 `arenaId` **同一行寫入**，所以不可能出現
+   * 「id 是新圖、名字還是上一張」——那種偏差在畫面上會是一個非常難查的謊。
+   * 沒有 arena doc（開機前的骨架場地）時是 `null` ＝ 不報。
+   */
+  arenaName: string | null;
   /** primary camera's ground-plane view (written by the render loop) */
   cameraView: CameraGroundView | null;
   /**
@@ -476,6 +483,7 @@ export const frameBus: FrameBus = {
   localCast: null,
   arenaZones: null,
   arenaId: null,
+  arenaName: null,
   cameraView: null,
   spectateZone: null,
   spectateOffer: null,
@@ -797,7 +805,7 @@ export function clearCombatText(): void {
  * emptying the bus IS the teardown. Idempotent and cheap: once cleared, every
  * subsequent suppressed frame is a handful of empty checks.
  *
- * NOT cleared: `project` / `arenaZones` / `arenaId` / `cameraView` /
+ * NOT cleared: `project` / `arenaZones` / `arenaId` / `arenaName` / `cameraView` /
  * `spectateZone` are the arena's DESCRIPTION, not per-frame combat state. The
  * minimap and the projection must survive an intermission so the next combat
  * frame has geometry to draw against instead of one blank frame.

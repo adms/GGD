@@ -1196,6 +1196,9 @@ export class GameApp {
           spawns: z.spawns.map((side) => side.map((s) => ({ x: s.x, z: s.z }))),
         }));
         frameBus.arenaId = def.id;
+        // ⚠️ 名字和 id **同一行**寫 —— 分開寫遲早會出現「id 換了名字沒換」，
+        // 而那在畫面上是一個報錯地名的提示，比不報還糟（owner 2026-08-14）。
+        frameBus.arenaName = doc?.name ?? null;
         this.appliedMapId = mapId;
         this.applyingMapId = null;
         // 第 6 個參數是 GH#251 的場地環境火焰政策。少了它 `dressArena` 會退回

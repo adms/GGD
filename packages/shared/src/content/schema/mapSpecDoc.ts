@@ -185,10 +185,44 @@ export const zConfigMapSpecDoc = z
       }),
 
     severity: zSeverityBlock,
+
+    /**
+     * ⭐ 戰鬥開場報地名（owner 2026-08-14：「戰鬥開始的時候不會顯示這是什麼地圖，
+     * 請你記得要顯示出來」）。
+     *
+     * ⚠️ 為什麼住在 `map-spec` 而不是自己開一份文件：這是**地圖層級的旋鈕**，
+     * 而這份文件已經有後台頁（🗺️ 地圖規格）。新開一份 = 新開一頁 = 為三格
+     * 開關付一整頁的成本。
+     */
+    intro: z
+      .object({
+        enabled: z.boolean().describe("戰鬥開場要不要打出地圖名字。關＝ 完全不畫。"),
+        holdSec: z
+          .number()
+          .min(0)
+          .max(15)
+          .describe("名字停留幾秒（之後才開始淡出）。⚠️ 上界 15：比一個回合還久的提示就是擋畫面。"),
+        fadeSec: z.number().min(0).max(5).describe("淡出幾秒。0 = 直接消失。"),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
 export type ConfigMapSpecDoc = z.infer<typeof zConfigMapSpecDoc>;
+
+/**
+ * 開場報地名的三格。⚠️ 具名而且**非選填**，⛔ 不要直接用
+ * `DEFAULT_MAP_SPEC.intro` 去 spread —— schema 上那一格是 `.optional()`，
+ * spread 之後每一格都變成 `| undefined`，`resolveMapSpec` 的回傳型別就對不上了
+ * （tsc 在 2026-08-14 擋下過一次）。
+ */
+export type MapIntroSpec = NonNullable<ConfigMapSpecDoc["intro"]>;
+
+/** owner 2026-08-14：「戰鬥開始的時候不會顯示這是什麼地圖，請你記得要顯示出來」。
+ *  ⚠️ 回退值是**開的** —— 讀不到設定時要落在 owner 要的那一邊。
+ *  2.5 秒 = 「看得完四個字 + 不擋開局」（一回合戰鬥只有 90 秒）。 */
+export const DEFAULT_MAP_INTRO: MapIntroSpec = { enabled: true, holdSec: 2.5, fadeSec: 0.8 };
 
 /**
  * 出貨預設 —— owner 2026-08-14 的規格表逐格。
@@ -218,6 +252,7 @@ export const DEFAULT_MAP_SPEC: Omit<ConfigMapSpecDoc, "id" | "schema" | "note"> 
     interactions: "warn",
     traversal: "warn",
   },
+  intro: DEFAULT_MAP_INTRO,
 };
 
 /** 讀 doc，缺的欄位回退到出貨預設。⚠️ 唯一的解析入口，⛔ 不要在別處展開 `??`。 */
@@ -229,5 +264,6 @@ export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof D
     topology: { ...DEFAULT_MAP_SPEC.topology, ...(doc.topology ?? {}) },
     interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
     severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
+    intro: { ...DEFAULT_MAP_INTRO, ...(doc.intro ?? {}) },
   };
 }

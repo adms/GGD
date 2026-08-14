@@ -36,5 +36,10 @@
     "shortcuts": "warn",
     "interactions": "warn",
     "traversal": "warn"
+  },
+  "intro": {
+    "enabled": true,
+    "holdSec": 2.5,
+    "fadeSec": 0.8
   }
 }
