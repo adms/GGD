@@ -1,0 +1,235 @@
+{
+  "schema": "map@1",
+  "id": "map.heavens-arena",
+  "name": "天空鬥技場",
+  "template": "ARENA_RING",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#.......#....####......#",
+    "#...............#......#",
+    "#.......#.......#......#",
+    "#.......#.......#......#",
+    "#.......#..............#",
+    "#.......####....#......#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "ring",
+      "label": "競技擂台",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 7,
+          "row": 5,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "fighters",
+      "label": "選手區",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    },
+    {
+      "id": "gallery",
+      "label": "觀眾廊",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 5,
+          "w": 6,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "elevator",
+      "label": "電梯",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 17,
+          "row": 5,
+          "w": 6,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "backstage",
+      "label": "後台",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 13,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    }
+  ],
+  "landmark": "ring",
+  "interactions": [
+    {
+      "id": "ring-a",
+      "kind": "channel",
+      "at": {
+        "col": 10,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "ring",
+      "params": {}
+    },
+    {
+      "id": "ring-b",
+      "kind": "channel",
+      "at": {
+        "col": 13,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "ring",
+      "params": {}
+    },
+    {
+      "id": "fight-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "fighters",
+      "params": {}
+    },
+    {
+      "id": "fight-e",
+      "kind": "pickup",
+      "at": {
+        "col": 20,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "fighters",
+      "params": {}
+    },
+    {
+      "id": "gal-mid",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "gallery",
+      "params": {}
+    },
+    {
+      "id": "elev-mid",
+      "kind": "capture",
+      "at": {
+        "col": 20,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "elevator",
+      "params": {}
+    },
+    {
+      "id": "back-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "backstage",
+      "params": {}
+    },
+    {
+      "id": "back-e",
+      "kind": "pickup",
+      "at": {
+        "col": 20,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "backstage",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "ring_open_a",
+        "tiles": [
+          {
+            "col": 8,
+            "row": 6
+          },
+          {
+            "col": 9,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "id": "ring_open_b",
+        "tiles": [
+          {
+            "col": 15,
+            "row": 11
+          },
+          {
+            "col": 16,
+            "row": 11
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "ring_open_a"
+        ],
+        [
+          "ring_open_b"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

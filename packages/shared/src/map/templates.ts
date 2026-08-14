@@ -136,24 +136,35 @@ export function generateTiles(template: MapTemplate, grid: Grid): string[] {
       const h = Math.max(5, Math.floor(grid.rows * 0.42));
       const c0 = midC - Math.floor(w / 2);
       const r0 = midR - Math.floor(h / 2);
+      // ⚠️ 門寬 4 而不是 2：**2 格寬的門會被判成瓶頸**（通道寬度 ≤2），
+      // 四道門就是四個瓶頸，而規格只要 2–3 個。實測（無限城）把南北門加寬到 4、
+      // 東西門留 1 之後，瓶頸剛好落在 2 —— 那兩個窄門才是真正想要的戰術地形。
       hollowRect(g, c0, r0, w, h, [
-        { side: "n", at: midC - 1, width: 2 },
-        { side: "s", at: midC - 1, width: 2 },
-        { side: "w", at: midR - 1, width: 2 },
-        { side: "e", at: midR - 1, width: 2 },
+        { side: "n", at: midC - 2, width: 4 },
+        { side: "s", at: midC - 2, width: 4 },
+        { side: "w", at: midR, width: 1 },
+        { side: "e", at: midR, width: 1 },
       ]);
       break;
     }
     case "CROSS_RING": {
       // 四個角落各一塊實心街區 ⇒ 中間留下十字，外圈仍然通。
-      const bw = Math.max(3, Math.floor(grid.cols * 0.28));
-      const bh = Math.max(3, Math.floor(grid.rows * 0.28));
-      const pad = 3;
+      // ⚠️ 街區 0.28 + pad 3 讓四周只剩 3 格寬的走廊，實測回報 **8 個瓶頸**。
+      // 縮到 0.22 / pad 4 之後走廊變寬，瓶頸落回規格內 —— ⛔ 不是把規格調鬆。
+      const bw = Math.max(3, Math.floor(grid.cols * 0.22));
+      const bh = Math.max(3, Math.floor(grid.rows * 0.22));
+      // ⭐ **刻意不對稱**：兩塊貼近外牆（留 2 格 ⇒ 那就是兩個瓶頸），
+      // 兩塊退開（留 4 格 ⇒ 寬走廊）。全部對稱的話不是 8 個瓶頸就是 0 個 ——
+      // 實測兩種都試過，規格要的 2–3 只有不對稱做得到。
+      const near = 2;
+      const far = 4;
+      // ⚠️ **只有一塊**貼近外牆。兩塊貼近時實測是 4 個瓶頸（每塊在兩個方向各造一條
+      // 窄走廊），而規格要 2–3 ⇒ 一塊剛好給 2 個。
       for (const [c0, r0] of [
-        [pad, pad],
-        [grid.cols - pad - bw, pad],
-        [pad, grid.rows - pad - bh],
-        [grid.cols - pad - bw, grid.rows - pad - bh],
+        [near, near],
+        [grid.cols - far - bw, far],
+        [far, grid.rows - far - bh],
+        [grid.cols - far - bw, grid.rows - far - bh],
       ] as const) {
         for (let r = r0; r < r0 + bh; r++) {
           for (let c = c0; c < c0 + bw; c++) if (g[r]?.[c] !== undefined) g[r]![c] = WALL;
@@ -181,11 +192,12 @@ export function generateTiles(template: MapTemplate, grid: Grid): string[] {
       const h = Math.max(5, Math.floor(grid.rows * 0.38));
       const c0 = midC - Math.floor(w / 2);
       const r0 = midR - Math.floor(h / 2);
+      // ⚠️ 同 CENTRAL_RING：兩道寬門（不算瓶頸）＋ 兩道窄門（就是那 2 個瓶頸）。
       hollowRect(g, c0, r0, w, h, [
-        { side: "n", at: c0 + 1, width: 2 },
-        { side: "s", at: c0 + w - 3, width: 2 },
-        { side: "w", at: r0 + 1, width: 2 },
-        { side: "e", at: r0 + h - 3, width: 2 },
+        { side: "n", at: c0 + 1, width: 4 },
+        { side: "s", at: c0 + w - 5, width: 4 },
+        { side: "w", at: r0 + 1, width: 1 },
+        { side: "e", at: r0 + h - 2, width: 1 },
       ]);
       break;
     }

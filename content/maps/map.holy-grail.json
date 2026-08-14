@@ -1,0 +1,235 @@
+{
+  "schema": "map@1",
+  "id": "map.holy-grail",
+  "name": "大聖杯洞窟",
+  "template": "CENTRAL_RING",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......###....###......#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......................#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......###....###......#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "grail",
+      "label": "大聖杯",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 6,
+          "row": 6,
+          "w": 10,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "mana_pool",
+      "label": "魔力池",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "altar",
+      "label": "祭壇",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 1,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "stone_bridge",
+      "label": "石橋",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 18,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "tunnel",
+      "label": "地下通道",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 13,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    }
+  ],
+  "landmark": "grail",
+  "interactions": [
+    {
+      "id": "grail-core",
+      "kind": "channel",
+      "at": {
+        "col": 10,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "grail",
+      "params": {}
+    },
+    {
+      "id": "grail-rim",
+      "kind": "channel",
+      "at": {
+        "col": 13,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "grail",
+      "params": {}
+    },
+    {
+      "id": "pool-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "mana_pool",
+      "params": {}
+    },
+    {
+      "id": "pool-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "mana_pool",
+      "params": {}
+    },
+    {
+      "id": "altar-mid",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "altar",
+      "params": {}
+    },
+    {
+      "id": "bridge-mid",
+      "kind": "capture",
+      "at": {
+        "col": 18,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "stone_bridge",
+      "params": {}
+    },
+    {
+      "id": "tunnel-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "tunnel",
+      "params": {}
+    },
+    {
+      "id": "tunnel-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "tunnel",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "mud_west",
+        "tiles": [
+          {
+            "col": 6,
+            "row": 8
+          },
+          {
+            "col": 6,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "id": "mud_east",
+        "tiles": [
+          {
+            "col": 15,
+            "row": 8
+          },
+          {
+            "col": 15,
+            "row": 9
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "mud_west"
+        ],
+        [
+          "mud_east"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

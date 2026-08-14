@@ -1,0 +1,237 @@
+{
+  "schema": "map@1",
+  "id": "map.nazarick",
+  "name": "納薩力克大墳墓",
+  "template": "CROSS_RING",
+  "grid": {
+    "cols": 24,
+    "rows": 20,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#.#####................#",
+    "#.#####................#",
+    "#.#####........#####...#",
+    "#.#####........#####...#",
+    "#..............#####...#",
+    "#..............#####...#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#...#####......#####...#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "throne",
+      "label": "王座廳",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 9,
+          "row": 7,
+          "w": 6,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "treasury",
+      "label": "寶物庫",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "tomb",
+      "label": "墓室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "maid_hall",
+      "label": "女僕廊",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 7,
+          "w": 8,
+          "h": 12
+        }
+      ]
+    },
+    {
+      "id": "colosseum",
+      "label": "競技場",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 15,
+          "row": 7,
+          "w": 8,
+          "h": 12
+        }
+      ]
+    }
+  ],
+  "landmark": "throne",
+  "interactions": [
+    {
+      "id": "throne-n",
+      "kind": "channel",
+      "at": {
+        "col": 11,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "throne",
+      "params": {}
+    },
+    {
+      "id": "throne-s",
+      "kind": "channel",
+      "at": {
+        "col": 12,
+        "row": 11
+      },
+      "radius": 2,
+      "regionId": "throne",
+      "params": {}
+    },
+    {
+      "id": "treasury-mid",
+      "kind": "pickup",
+      "at": {
+        "col": 5,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "treasury",
+      "params": {}
+    },
+    {
+      "id": "tomb-mid",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 2
+      },
+      "radius": 2,
+      "regionId": "tomb",
+      "params": {}
+    },
+    {
+      "id": "maid-n",
+      "kind": "capture",
+      "at": {
+        "col": 4,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "maid_hall",
+      "params": {}
+    },
+    {
+      "id": "maid-s",
+      "kind": "pickup",
+      "at": {
+        "col": 4,
+        "row": 17
+      },
+      "radius": 2,
+      "regionId": "maid_hall",
+      "params": {}
+    },
+    {
+      "id": "colo-n",
+      "kind": "capture",
+      "at": {
+        "col": 19,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "colosseum",
+      "params": {}
+    },
+    {
+      "id": "colo-s",
+      "kind": "pickup",
+      "at": {
+        "col": 19,
+        "row": 17
+      },
+      "radius": 2,
+      "regionId": "colosseum",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "guard_north",
+        "tiles": [
+          {
+            "col": 11,
+            "row": 6
+          },
+          {
+            "col": 12,
+            "row": 6
+          }
+        ]
+      },
+      {
+        "id": "guard_south",
+        "tiles": [
+          {
+            "col": 11,
+            "row": 13
+          },
+          {
+            "col": 12,
+            "row": 13
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "guard_north"
+        ],
+        [
+          "guard_south"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

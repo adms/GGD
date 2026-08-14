@@ -180,6 +180,21 @@ interface Exemption {
  * Sorted by key, matching the census output order.
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
+  // ── GH#324：兩格是「另一條路的預設」，零採用是對的 ────────────────────────
+  "enum:maps.interactions[].kind=toggleGate": {
+    status: "landing",
+    since: "2026-08-14",
+    why: "GH#324 —— 七張圖的 gate 全部走**排程驅動**（週期性自己開闔），⛔ 沒有一張走**玩家觸發**。那是 Phase 5 刻意的界線：玩家觸發要 append Colyseus 欄位，而 append-only 加錯回不去。⇒ `toggleGate` 這個 kind 今天沒有客戶。**到期**：owner 要一張「玩家去按開關才開門」的圖的那一刻。",
+  },
+  "variant:arenas.zones[].bounds#disc": {
+    status: "default-live",
+    why: "`bounds` 整格 optional，**省略就是圓** —— 那是既有 6 張手寫場地的行為，也是引擎的預設。⇒ 顯式寫 `{kind:\"disc\"}` 沒有任何人需要（寫了跟不寫一模一樣）。產生器只在矩形場地才填這一格。⛔ 這一格留著是為了讓「這張圖刻意是圓的」講得出口，不是漏填。",
+  },
+  // ── GH#324：七張動漫圖每一張都有機制，所以「沒有機制」那一格沒人填 ────────
+  "enum:maps.gimmick.kind=none": {
+    status: "default-live",
+    why: "owner 2026-08-14 的七張圖**逐張指定了一個機制**（房間連接改變／城門關閉／黑泥封路／守護者封鎖／魔法門／傳送捷徑／競技場開闔），所以 `none` 沒有人填。⭐ 而「沒有機制」本來就是**預設行為** —— 既有 6 張手寫場地連 `map@1` 都不是，它們的世界裡根本沒有 gimmick 這個概念。⇒ 零採用是對的：`none` 是給「將來有一張刻意不上機制的圖」留的，⛔ 不是漏填。",
+  },
   // ── GH#324：gate 機制是 Phase 5，出貨的無限城還沒有門 ──────────────────
   "field:arenas.zones[].obstacles[]#circle.gateGroup": {
     status: "landing",

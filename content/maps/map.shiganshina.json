@@ -1,0 +1,227 @@
+{
+  "schema": "map@1",
+  "id": "map.shiganshina",
+  "name": "希干希納",
+  "template": "DOUBLE_LOOP",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "plaza",
+      "label": "中央廣場",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 11,
+          "row": 1,
+          "w": 2,
+          "h": 16
+        }
+      ]
+    },
+    {
+      "id": "gate_road",
+      "label": "城門大道",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "houses",
+      "label": "住宅巷",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 6,
+          "w": 10,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "wall_walk",
+      "label": "城牆步道",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 1,
+          "row": 12,
+          "w": 10,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "barracks",
+      "label": "兵營",
+      "role": "court",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 16
+        }
+      ]
+    }
+  ],
+  "landmark": "plaza",
+  "interactions": [
+    {
+      "id": "gate-n",
+      "kind": "capture",
+      "at": {
+        "col": 12,
+        "row": 1
+      },
+      "radius": 2,
+      "regionId": "plaza",
+      "params": {}
+    },
+    {
+      "id": "gate-s",
+      "kind": "capture",
+      "at": {
+        "col": 11,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "plaza",
+      "params": {}
+    },
+    {
+      "id": "road-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "gate_road",
+      "params": {}
+    },
+    {
+      "id": "house-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 8
+      },
+      "radius": 2,
+      "regionId": "houses",
+      "params": {}
+    },
+    {
+      "id": "wall-w",
+      "kind": "channel",
+      "at": {
+        "col": 3,
+        "row": 14
+      },
+      "radius": 2,
+      "regionId": "wall_walk",
+      "params": {}
+    },
+    {
+      "id": "barr-n",
+      "kind": "channel",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    },
+    {
+      "id": "barr-m",
+      "kind": "pickup",
+      "at": {
+        "col": 16,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    },
+    {
+      "id": "barr-s",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "barracks",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "city_gate_n",
+        "tiles": [
+          {
+            "col": 12,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "id": "city_gate_s",
+        "tiles": [
+          {
+            "col": 12,
+            "row": 15
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "city_gate_n"
+        ],
+        [
+          "city_gate_s"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

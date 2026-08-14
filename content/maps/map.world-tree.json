@@ -1,0 +1,235 @@
+{
+  "schema": "map@1",
+  "id": "map.world-tree",
+  "name": "世界樹核心",
+  "template": "CENTRAL_RING",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......###....###......#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......................#",
+    "#......#........#......#",
+    "#......#........#......#",
+    "#......###....###......#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "tree_core",
+      "label": "世界樹核心",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 6,
+          "row": 6,
+          "w": 10,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "roots",
+      "label": "根部",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 22,
+          "h": 5
+        }
+      ]
+    },
+    {
+      "id": "branch",
+      "label": "枝台",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 1,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "shrine",
+      "label": "祭壇",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 18,
+          "row": 6,
+          "w": 5,
+          "h": 7
+        }
+      ]
+    },
+    {
+      "id": "warp",
+      "label": "傳送台",
+      "role": "outer",
+      "rects": [
+        {
+          "col": 1,
+          "row": 13,
+          "w": 22,
+          "h": 4
+        }
+      ]
+    }
+  ],
+  "landmark": "tree_core",
+  "interactions": [
+    {
+      "id": "core-a",
+      "kind": "channel",
+      "at": {
+        "col": 10,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "tree_core",
+      "params": {}
+    },
+    {
+      "id": "core-b",
+      "kind": "channel",
+      "at": {
+        "col": 13,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "tree_core",
+      "params": {}
+    },
+    {
+      "id": "root-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "roots",
+      "params": {}
+    },
+    {
+      "id": "root-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "roots",
+      "params": {}
+    },
+    {
+      "id": "branch-mid",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "branch",
+      "params": {}
+    },
+    {
+      "id": "shrine-mid",
+      "kind": "capture",
+      "at": {
+        "col": 18,
+        "row": 9
+      },
+      "radius": 2,
+      "regionId": "shrine",
+      "params": {}
+    },
+    {
+      "id": "warp-w",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "warp",
+      "params": {}
+    },
+    {
+      "id": "warp-e",
+      "kind": "pickup",
+      "at": {
+        "col": 18,
+        "row": 15
+      },
+      "radius": 2,
+      "regionId": "warp",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "warp_west",
+        "tiles": [
+          {
+            "col": 6,
+            "row": 8
+          },
+          {
+            "col": 6,
+            "row": 9
+          }
+        ]
+      },
+      {
+        "id": "warp_east",
+        "tiles": [
+          {
+            "col": 15,
+            "row": 8
+          },
+          {
+            "col": 15,
+            "row": 9
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "warp_west"
+        ],
+        [
+          "warp_east"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}

@@ -1,0 +1,231 @@
+{
+  "schema": "map@1",
+  "id": "map.frieren",
+  "name": "芙莉蓮迷宮",
+  "template": "DOUBLE_LOOP",
+  "grid": {
+    "cols": 24,
+    "rows": 18,
+    "tileSize": 2
+  },
+  "tiles": [
+    "########################",
+    "#......................#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...####....#....####..#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#...........#..........#",
+    "#......................#",
+    "########################"
+  ],
+  "regions": [
+    {
+      "id": "ruin_hall",
+      "label": "遺跡大廳",
+      "role": "landmark",
+      "rects": [
+        {
+          "col": 11,
+          "row": 1,
+          "w": 2,
+          "h": 16
+        }
+      ]
+    },
+    {
+      "id": "chest_room",
+      "label": "寶箱室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 1,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "statue_room",
+      "label": "石像室",
+      "role": "court",
+      "rects": [
+        {
+          "col": 1,
+          "row": 9,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "magic_door",
+      "label": "魔法門",
+      "role": "corridor",
+      "rects": [
+        {
+          "col": 13,
+          "row": 1,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    },
+    {
+      "id": "shrine",
+      "label": "祭壇",
+      "role": "platform",
+      "rects": [
+        {
+          "col": 13,
+          "row": 9,
+          "w": 10,
+          "h": 8
+        }
+      ]
+    }
+  ],
+  "landmark": "ruin_hall",
+  "interactions": [
+    {
+      "id": "chest-a",
+      "kind": "pickup",
+      "at": {
+        "col": 3,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "chest_room",
+      "params": {
+        "mimic": "true"
+      }
+    },
+    {
+      "id": "chest-b",
+      "kind": "pickup",
+      "at": {
+        "col": 8,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "chest_room",
+      "params": {
+        "mimic": "true"
+      }
+    },
+    {
+      "id": "statue-a",
+      "kind": "capture",
+      "at": {
+        "col": 3,
+        "row": 12
+      },
+      "radius": 2,
+      "regionId": "statue_room",
+      "params": {}
+    },
+    {
+      "id": "statue-b",
+      "kind": "capture",
+      "at": {
+        "col": 8,
+        "row": 12
+      },
+      "radius": 2,
+      "regionId": "statue_room",
+      "params": {}
+    },
+    {
+      "id": "door-n",
+      "kind": "channel",
+      "at": {
+        "col": 18,
+        "row": 3
+      },
+      "radius": 2,
+      "regionId": "magic_door",
+      "params": {}
+    },
+    {
+      "id": "door-s",
+      "kind": "channel",
+      "at": {
+        "col": 18,
+        "row": 5
+      },
+      "radius": 2,
+      "regionId": "magic_door",
+      "params": {}
+    },
+    {
+      "id": "shrine-w",
+      "kind": "pickup",
+      "at": {
+        "col": 15,
+        "row": 13
+      },
+      "radius": 2,
+      "regionId": "shrine",
+      "params": {}
+    },
+    {
+      "id": "shrine-e",
+      "kind": "pickup",
+      "at": {
+        "col": 21,
+        "row": 13
+      },
+      "radius": 2,
+      "regionId": "shrine",
+      "params": {}
+    }
+  ],
+  "gimmick": {
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "magic_door_n",
+        "tiles": [
+          {
+            "col": 12,
+            "row": 2
+          }
+        ]
+      },
+      {
+        "id": "magic_door_s",
+        "tiles": [
+          {
+            "col": 12,
+            "row": 15
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "magic_door_n"
+        ],
+        [
+          "magic_door_s"
+        ]
+      ]
+    }
+  },
+  "landmarkProps": [],
+  "backgroundProps": []
+}
