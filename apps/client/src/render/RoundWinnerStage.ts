@@ -593,9 +593,31 @@ export class RoundWinnerStage {
   }
 
   /** Tear the stage down (dispose the previewer + remove every overlay layer). */
-  clear(): void {
+  /**
+   * 收掉這一次表演。
+   *
+   * ⚠️ **`cancelVoice` 預設 true 是為了 dispose，⛔ 不是為了「時間到了」。**
+   * owner 2026-08-14：「回合勝利 語音還沒播完 就會進商店 語音也被截斷」——
+   * 根因就在這裡：`cancel()` 會 `el.pause()`，而呼叫端在**畫面**的節拍結束時
+   * 就收掉整個舞台，把還在講的那句話一起按停。
+   *
+   * 實測（`ffprobe` 60 支嘲諷剪輯）：嘲諷在 **2200ms** 才開口、舊的節拍在
+   * **3600ms** 結束 ⇒ 只有 **1.4 秒**空檔，而剪輯中位 **3.29 秒**
+   * ⇒ **59/60（98%）被切在一半**。
+   *
+   * ⭐ 所以**預設是不按停** —— 收畫面歸收畫面，聲音自己講完。
+   * 一句嘲諷最長 4.64 秒、從 resolution 的第 2.2 秒起算 ⇒ 最晚 6.9 秒結束，
+   * 而中場有 25 秒 ⇒ ⛔ 不可能溢到下一回合。
+   *
+   * ⚠️ **預設值是這樣選的**：危險的那一邊要付出額外打字。原本反過來
+   * （預設按停、呼叫端要記得傳 `{cancelVoice:false}`），而**一個要靠呼叫端記得
+   * 的安全性等於沒有安全性** —— 實測把 GameApp 那一行的參數拿掉，
+   * 整批測試照樣全綠（失敗形態③）。現在拿掉參數得到的是**正確**行為，
+   * 要按停必須明講，而唯一明講的地方是 {@link dispose}。
+   */
+  clear(opts: { cancelVoice?: boolean } = {}): void {
     this.showSeq += 1; // any in-flight taunt resolution is now stale
-    this.taunt?.cancel();
+    if (opts.cancelVoice === true) this.taunt?.cancel();
     for (const p of this.previews) p.dispose();
     this.previews = [];
     for (const c of this.canvases) c.remove();
@@ -610,7 +632,9 @@ export class RoundWinnerStage {
   /** Idempotent teardown; safe to call from GameApp.dispose more than once. */
   dispose(): void {
     this.disposed = true;
-    this.clear();
+    // ⭐ **唯一**要按停嘴巴的地方：離開比賽／換場。一句嘲諷不可以跟著你走出
+    // 這一場（那才是 `cancel()` 當初存在的理由）。
+    this.clear({ cancelVoice: true });
   }
 }
 

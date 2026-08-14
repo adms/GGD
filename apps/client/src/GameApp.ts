@@ -89,7 +89,6 @@ import { RoundWinnerStage, planRoundWinnerShow, victoryPodiumPolicy } from "./re
 // ONE number for how long the round-win beat owns the screen: the stage's grey
 // wash, the taunt delay and this trigger window all read the same constant, so
 // the window can never be shortened below the taunt delay and silently mute it.
-import { ROUND_PRESENT_MS } from "./render/victoryPresentation";
 import type { CameraRig } from "./render/CameraRig";
 import { mayGoTo, ownDuelDecided, pickSpectateZone, spectateRelease, type DuelView } from "./render/spectateFocus";
 import { ViewportManager } from "./render/ViewportManager";
@@ -2852,11 +2851,18 @@ export class GameApp {
       );
       if (plan) {
         this.roundWinner.showTeam(plan.members, plan.ctx);
-        this.roundWinnerUntilMs = nowMs + ROUND_PRESENT_MS;
+        // ⚠️ 台上停多久是**欄位不是常數**（owner 2026-08-14）。寫死的
+        // `ROUND_PRESENT_MS = 3600` 只留作讀不到設定時的保險絲。
+        this.roundWinnerUntilMs =
+          nowMs + victoryPodiumPolicy().roundPresentSec * 1000;
       }
     }
 
-    // clear when the beat elapses OR as soon as we leave the resolution phase
+    // clear when the beat elapses OR as soon as we leave the resolution phase.
+    // ⚠️ 這兩個條件都是**畫面**的節拍（台上停多久、相位換到商店），⛔ 沒有一個
+    // 是「這句話講完了」。收畫面的同時把嘴按住就是 owner 2026-08-14 聽到的截斷
+    // （實測 59/60 支嘲諷被切在一半）。`clear()` 現在**預設不按停**，所以這裡
+    // 什麼都不用傳 —— 安全的那一邊是預設值，⛔ 不是靠這個呼叫端記得。
     if (this.roundWinner.active && (phase !== "resolution" || nowMs >= this.roundWinnerUntilMs)) {
       this.roundWinner.clear();
     }

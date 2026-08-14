@@ -189,6 +189,18 @@ export const zConfigVictoryPodiumDoc = z
      * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.podiumZoneSource`。
      */
     podiumZoneSource: z.enum(VICTORY_PODIUM_ZONE_SOURCES).optional(),
+    /**
+     * ⭐ 回合頒獎台「佔著螢幕」幾秒（owner 2026-08-14：「回合勝利 語音還沒播完
+     * 就會進商店 語音也被截斷」）。
+     *
+     * ⚠️ 在這一格出現之前它是 `render/victoryPresentation.ts` 的**寫死常數**
+     * `ROUND_PRESENT_MS = 3600`，而嘲諷在 **2200ms** 才開口
+     * ⇒ 只有 **1.4 秒**的空檔。實測 60 支剪輯中位 **3.29 秒**
+     * ⇒ **59/60（98%）被切在一半**。
+     *
+     * 缺席 ⇒ `DEFAULT_VICTORY_PODIUM.roundPresentSec`。
+     */
+    roundPresentSec: z.number().min(0.5).max(15).optional(),
   })
   .strict();
 
@@ -206,6 +218,8 @@ export interface VictoryPodiumPolicy {
   clipSilver: VictoryPodiumClip;
   clipBronze: VictoryPodiumClip;
   podiumZoneSource: VictoryPodiumZoneSource;
+  /** 回合頒獎台佔著螢幕幾秒。⚠️ 它**不再**決定嘲諷語音何時被切掉（見下）。 */
+  roundPresentSec: number;
 }
 
 /**
@@ -234,6 +248,11 @@ export const DEFAULT_VICTORY_PODIUM: VictoryPodiumPolicy = {
   clipSilver: "idle",
   clipBronze: "idle",
   podiumZoneSource: "localSeat",
+  // ⚠️ 5.5 而不是原本寫死的 3.6：嘲諷在 2.2 秒開口、剪輯中位 3.29 秒
+  // ⇒ 2.2 + 3.29 ≈ 5.5 才蓋得住一半以上的剪輯。
+  // ⛔ 但這一格**不是**語音的保命符 —— 語音現在會播完它自己（見
+  // `RoundWinnerStage.clear` 的 `cancelVoice`）。這裡只決定畫面停多久。
+  roundPresentSec: 5.5,
 };
 
 /**
@@ -273,6 +292,7 @@ export function resolveVictoryPodium(
     clipSilver: doc.clipSilver,
     clipBronze: doc.clipBronze,
     podiumZoneSource: doc.podiumZoneSource ?? DEFAULT_VICTORY_PODIUM.podiumZoneSource,
+    roundPresentSec: doc.roundPresentSec ?? DEFAULT_VICTORY_PODIUM.roundPresentSec,
   };
 }
 

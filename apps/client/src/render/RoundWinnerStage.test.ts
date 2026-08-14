@@ -200,7 +200,10 @@ describe("RoundWinnerStage", () => {
     stage.show(DOC, { championId: "godie-e001", round: 1 });
     const subtitle = subOf(divs);
     stage.clear();
-    expect(taunt.cancel).toHaveBeenCalledTimes(1);
+    // ⚠️ `clear()` **不再**按停語音（owner 2026-08-14：畫面的節拍把嘴切斷了）。
+    // ⭐ 而這條測試要的東西完全沒有變弱：擋住過期字幕的是 `showSeq`，
+    //    ⛔ 不是 `cancel()` —— 也就是說這個保證**根本不依賴音訊層**。
+    expect(taunt.cancel).not.toHaveBeenCalled();
     await Promise.resolve();
     await Promise.resolve();
     speak(); // even a scheduler that fires the stale beat anyway must not print
