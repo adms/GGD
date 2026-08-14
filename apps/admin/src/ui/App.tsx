@@ -68,6 +68,7 @@ import { CombatFeelPage } from "./CombatFeelPage";
 import { MatchConfigPage } from "./MatchConfigPage";
 import { StoreEconomyPage } from "./StoreEconomyPage";
 import { ConfigDocPage } from "./ConfigDocPage";
+import { MapReportPage } from "./MapReportPage";
 import { specForPage } from "../configForms";
 import { VfxForgePage } from "./VfxForgePage";
 import { HeroForgePage } from "./HeroForgePage";
@@ -208,6 +209,7 @@ export const NAV: NavItem[] = [
   { page: "displacementTiers", label: "位移級距", emoji: "💨", section: SEC_COMBAT },
   { page: "perLevelBonus", label: "每級加成", emoji: "📈", section: SEC_COMBAT },
   { page: "mapSpec", label: "小地圖規格", emoji: "🗺️", section: SEC_COMBAT },
+  { page: "mapReport", label: "地圖驗證報告", emoji: "📋", section: SEC_COMBAT },
   // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條
   // 規則的參數**(擊退門檻、站定門檻、面向鎖 tick、卡住判定),而且四張子表全部
   // 是 owner 口中的「決策點」。相鄰就是提醒:填的 0.05 在這一頁是「5% 的門檻」。
@@ -974,6 +976,7 @@ function Console(): React.JSX.Element {
               `specForPage` 回 null，下面這一行就什麼都不畫（而不是畫一個空表單）。
             */}
             {configDocSpec !== null && <ConfigDocPage spec={configDocSpec} />}
+            {page === "mapReport" && <MapReportPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

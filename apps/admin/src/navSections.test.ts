@@ -96,6 +96,7 @@ const BASELINE_PAGES: readonly Page[] = [
   "perLevelBonus",
   // GH#324 —— 小地圖規格（動漫競技場產生器的驗收標準）。
   "mapSpec",
+  "mapReport",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -149,6 +150,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "displacementTiers",
       "perLevelBonus",
       "mapSpec",
+      "mapReport",
       "combatFeel",
       "matchConfig",
       "bodyScale",

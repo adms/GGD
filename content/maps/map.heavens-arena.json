@@ -143,25 +143,31 @@
     },
     {
       "id": "gal-mid",
-      "kind": "capture",
+      "kind": "toggleGate",
       "at": {
         "col": 3,
         "row": 8
       },
       "radius": 2,
       "regionId": "gallery",
-      "params": {}
+      "params": {
+        "gateGroup": "ring_open_a",
+        "mode": "open"
+      }
     },
     {
       "id": "elev-mid",
-      "kind": "capture",
+      "kind": "toggleGate",
       "at": {
         "col": 20,
         "row": 8
       },
       "radius": 2,
       "regionId": "elevator",
-      "params": {}
+      "params": {
+        "gateGroup": "ring_open_b",
+        "mode": "open"
+      }
     },
     {
       "id": "back-w",
@@ -231,5 +237,6 @@
     }
   },
   "landmarkProps": [],
-  "backgroundProps": []
+  "backgroundProps": [],
+  "note": "獵人・天空鬥技場。⭐ 機制「競技場開放／封閉」＝通用 gate。兩個 toggleGate 互動點讓玩家**站著把擂台的門撐開** —— ⛔ 不是按一下切換（那要複寫狀態，而 MatchState 是 append-only），站著才有效是當下位置的純函式，wire 成本 0。"
 }

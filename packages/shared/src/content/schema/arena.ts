@@ -133,6 +133,30 @@ export const zZoneDef = z
      * ⚠️「永不困住玩家」是**驗證器**保證的：每一個組態的圖都必須全連通、
      * 所有出生點與互動點可達，否則產生器拒絕輸出。
      */
+    /**
+     * ⭐ GH#324 —— **玩家觸發的 gate**：有人站在這個點的半徑內，那組門就被撐開／壓住。
+     *
+     * ⛔ 為什麼是「站著才有效」而不是「按一下就切換」：切換是**有記憶**的狀態，
+     * 那就必須複寫，而 `MatchState` 是 append-only（加錯回不去）、
+     * `ENTITY_FLAG` 的 16 顆 bit 也已經用光。
+     * ⭐ 「站著才有效」是**當下位置的純函式** —— 伺服器與客戶端各自從已經拿到的
+     * 快照算出同一個答案，**wire 成本 0**。而且它本身是更好的機制：
+     * 要留人守著，而不是按一下就走。
+     */
+    gateHolds: z
+      .array(
+        z
+          .object({
+            at: zVec2,
+            radius: z.number().positive(),
+            gateGroup: z.string().min(1),
+            /** open = 有人站著就開；close = 有人站著就關。 */
+            mode: z.enum(["open", "close"]),
+          })
+          .strict(),
+      )
+      .optional(),
+
     gates: z
       .object({
         kind: z.literal("periodic"),

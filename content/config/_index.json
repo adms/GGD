@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "bb2c2a6c9d16",
+  "hash": "7fc8ab36a958",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -157,6 +157,12 @@
       "path": "config/lobby-layout.json",
       "hash": "f112e56c1d4b",
       "size": 1392
+    },
+    {
+      "id": "map-report",
+      "path": "config/map-report.json",
+      "hash": "6a8a64228b7a",
+      "size": 4266
     },
     {
       "id": "map-spec",

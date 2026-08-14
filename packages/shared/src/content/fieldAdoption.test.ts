@@ -181,11 +181,6 @@ interface Exemption {
  */
 const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // ── GH#324：兩格是「另一條路的預設」，零採用是對的 ────────────────────────
-  "enum:maps.interactions[].kind=toggleGate": {
-    status: "landing",
-    since: "2026-08-14",
-    why: "GH#324 —— 七張圖的 gate 全部走**排程驅動**（週期性自己開闔），⛔ 沒有一張走**玩家觸發**。那是 Phase 5 刻意的界線：玩家觸發要 append Colyseus 欄位，而 append-only 加錯回不去。⇒ `toggleGate` 這個 kind 今天沒有客戶。**到期**：owner 要一張「玩家去按開關才開門」的圖的那一刻。",
-  },
   "variant:arenas.zones[].bounds#disc": {
     status: "default-live",
     why: "`bounds` 整格 optional，**省略就是圓** —— 那是既有 6 張手寫場地的行為，也是引擎的預設。⇒ 顯式寫 `{kind:\"disc\"}` 沒有任何人需要（寫了跟不寫一模一樣）。產生器只在矩形場地才填這一格。⛔ 這一格留著是為了讓「這張圖刻意是圓的」講得出口，不是漏填。",

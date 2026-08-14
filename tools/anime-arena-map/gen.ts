@@ -32,6 +32,7 @@ const REPO = join(HERE, "..", "..");
 const MAPS = join(REPO, "content", "maps");
 const ARENAS = join(REPO, "content", "arenas");
 const REPORT = join(REPO, "docs", "_map-report.md");
+const REPORT_DOC = join(REPO, "content", "config", "map-report.json");
 
 const CHECK = process.argv.includes("--check");
 
@@ -67,6 +68,7 @@ function main(): void {
   let drift = 0;
   let rejected = 0;
   const reportLines: string[] = [];
+  const reportRows: unknown[] = [];
 
   for (const f of files) {
     const raw: unknown = JSON.parse(readFileSync(join(MAPS, f), "utf8"));
@@ -85,6 +87,31 @@ function main(): void {
     console.log(text0);
     console.log("");
     reportLines.push(`## ${f}\n\n\`\`\`\n${text0}\n\`\`\`\n`);
+    reportRows.push({
+      mapId: report.mapId,
+      template: report.template,
+      cols: report.grid.cols,
+      rows: report.grid.rows,
+      tileSize: report.grid.tileSize,
+      worldW: report.worldSize.w,
+      worldD: report.worldSize.d,
+      regions: report.regions,
+      walkableTiles: report.walkableTiles,
+      disconnectedAreas: report.disconnectedAreas,
+      deadEnds: report.deadEnds,
+      loops: report.loops,
+      chokepoints: report.chokepoints,
+      shortcuts: report.shortcuts,
+      interactions: report.interactions,
+      avgShortestPath: report.avgShortestPath,
+      longestShortestPath: report.longestShortestPath,
+      estimatedTraversalSec: report.estimatedTraversalSec,
+      duelZones: report.duelZones,
+      unreachableObjects: report.unreachableObjects,
+      invalidSpawns: report.invalidSpawns,
+      issues: report.issues,
+      ok: report.ok,
+    });
 
     if (!report.ok) {
       console.error(`⛔ ${f} 未通過驗證 —— **拒絕輸出**。`);
@@ -123,6 +150,19 @@ function main(): void {
     console.error(`\n⛔ ${rejected} 張地圖被拒絕。`);
     process.exit(1);
   }
+  if (CHECK) {
+    const want = stable({
+      id: "map-report",
+      schema: "config.map-report@1",
+      note: "⚙️ 這份是 `pnpm map:gen` 產生的，⛔ 不要手改。要改地圖請改 content/maps/*.json。",
+      maps: reportRows,
+    });
+    const have = existsSync(REPORT_DOC) ? readFileSync(REPORT_DOC, "utf8") : null;
+    if (have !== want) {
+      console.error(`⛔ ${REPORT_DOC} 與產生器現在的輸出不一致。`);
+      drift++;
+    }
+  }
   if (CHECK && drift > 0) {
     console.error(`\n⛔ ${drift} 份產出與來源不同步。`);
     process.exit(1);
@@ -138,7 +178,18 @@ function main(): void {
         "> 要改地圖請改 `content/maps/*.json`。\n\n" +
         reportLines.join("\n"),
     );
-    console.log(`✓ 報告寫入 ${REPORT}`);
+    // ⭐ 同一份報告也寫成 config 文件 —— 後台用既有管道就讀得到，
+    //    而且 `map:check` 保證它永遠等於產生器現在會算出來的東西。
+    writeFileSync(
+      REPORT_DOC,
+      stable({
+        id: "map-report",
+        schema: "config.map-report@1",
+        note: "⚙️ 這份是 `pnpm map:gen` 產生的，⛔ 不要手改。要改地圖請改 content/maps/*.json。",
+        maps: reportRows,
+      }),
+    );
+    console.log(`✓ 報告寫入 ${REPORT} 與 ${REPORT_DOC}`);
     console.log("\n⚠️ 記得跑 `pnpm content:build` 並把產物一起 commit。");
   }
 }

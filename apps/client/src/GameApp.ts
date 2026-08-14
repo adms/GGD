@@ -8,7 +8,9 @@
  * Babylon lives behind render/* and vfx/*.
  */
 import { TICK_MS } from "@ggd/shared/constants";
-import { SKELETON_ARENA, arenaDefFromDoc } from "@ggd/shared/sim/world/ArenaDef";
+import { hasLineOfSight } from "@ggd/shared/sim/map/lineOfSight";
+import { activeObstacles } from "@ggd/shared/sim/map/gates";
+import { SKELETON_ARENA, arenaDefFromDoc, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import {
   Abilities,
@@ -376,6 +378,8 @@ export class GameApp {
   private readonly contentDb = new ContentDb();
   private readonly assets: AssetManager;
   private arenaHandles: ArenaHandles;
+  /** GH#324 —— 目前這張場地的碰撞真相；視野遮蔽從它讀牆。 */
+  private arenaDef: ArenaDef = SKELETON_ARENA;
   /** last successfully-(re)built map; "" until the first apply */
   private appliedMapId = "";
   /** map id whose (re)build is currently in flight (dedupe/superseding) */
@@ -1157,6 +1161,7 @@ export class GameApp {
         // uses the new one, and every snapshot then hard-teleports it back. See
         // LocalPrediction.setArena for the measurements.
         this.prediction.setArena(def);
+        this.arenaDef = def;
         disposeArena(this.renderer.scene, this.arenaHandles);
         // groundStyle picks the floor's PBR texture set (task #80); it lives on
         // the authored doc, not the collision-truth ArenaDef, so it is threaded
@@ -1473,6 +1478,11 @@ export class GameApp {
           center && drawDist < DRAW_DISTANCE_MAX
             ? { cx: center.x, cz: center.z, maxDistance: drawDist }
             : undefined,
+        // ⭐ GH#324 —— 視野遮蔽。⚠️ 只在這張場地**真的有牆**時才啟用：
+        // 既有 6 張圓形場地只有幾根柱子，遮蔽會讓人在柱子後面閃來閃去而不是
+        // 「躲起來」—— 那是雜訊不是機制。⇒ 用 `bounds.kind === "rect"` 當判準
+        // （產生器出來的圖才有），⛔ 不是寫死地圖 id。
+        occlude: this.occludeArgs(center),
       });
 
       // 4·五 「四拍令咒」 (#257). AFTER sync, deliberately: the dance is an
@@ -3227,6 +3237,29 @@ export class GameApp {
     // or prediction diverges the moment an admin sets moveSpeed != 1.
     ms *= this.combatEnv.moveSpeed;
     return Math.max(2, Math.min(14, ms));
+  }
+
+  /**
+   * ⭐ GH#324 —— 視野遮蔽的參數。回 undefined = 這張場地不做遮蔽。
+   *
+   * ⚠️ 只對**產生器出來的矩形場地**啟用（`bounds.kind === "rect"`）：
+   * 既有 6 張圓形場地只有柱子，遮蔽會讓敵人在柱子後面閃爍 —— 雜訊不是機制。
+   * ⛔ 判準是資料（有沒有矩形範圍），不是寫死的地圖 id。
+   */
+  private occludeArgs(
+    center: { x: number; z: number } | null,
+  ): { cx: number; cz: number; blocked: (x: number, z: number) => boolean } | undefined {
+    if (!center) return undefined;
+    const zone = this.arenaDef.zones.find(
+      (z) => z.bounds !== undefined && z.bounds.kind === "rect",
+    );
+    if (zone === undefined) return undefined;
+    const live = activeObstacles(zone.obstacles, undefined, 0);
+    return {
+      cx: center.x,
+      cz: center.z,
+      blocked: (x: number, z: number): boolean => !hasLineOfSight(center, { x, z }, live),
+    };
   }
 
   private updateFrameBus(state: MatchState, nowMs: number): void {

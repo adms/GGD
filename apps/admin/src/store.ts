@@ -179,6 +179,8 @@ export type Page =
   | "statNormalization"
   /** GH#324 —— 小地圖規格（所有動漫場地共用的驗收標準）。 */
   | "mapSpec"
+  /** GH#324 —— 地圖驗證報告（唯讀）。 */
+  | "mapReport"
   /** GH#322 —— 減傷天花板 / 位移級距 / 每級加成，2026-08-13 平衡批新開的三份 config。 */
   | "mitigation"
   | "displacementTiers"
@@ -513,6 +515,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "statNormalization",
   // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。
   "mapSpec",
+  "mapReport",
   // GH#322 —— 2026-08-13 平衡批新開的三頁。三頁都走 `putOverlayDoc`（沒有 session
   // 一律 401），⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
   "mitigation",

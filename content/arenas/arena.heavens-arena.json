@@ -3936,7 +3936,27 @@
             "ring_open_b"
           ]
         ]
-      }
+      },
+      "gateHolds": [
+        {
+          "at": {
+            "x": -17,
+            "z": -1
+          },
+          "radius": 2,
+          "gateGroup": "ring_open_a",
+          "mode": "open"
+        },
+        {
+          "at": {
+            "x": 17,
+            "z": -1
+          },
+          "radius": 2,
+          "gateGroup": "ring_open_b",
+          "mode": "open"
+        }
+      ]
     },
     {
       "id": "arena.heavens-arena-z1",
@@ -7871,7 +7891,27 @@
             "ring_open_b"
           ]
         ]
-      }
+      },
+      "gateHolds": [
+        {
+          "at": {
+            "x": 55,
+            "z": -1
+          },
+          "radius": 2,
+          "gateGroup": "ring_open_a",
+          "mode": "open"
+        },
+        {
+          "at": {
+            "x": 89,
+            "z": -1
+          },
+          "radius": 2,
+          "gateGroup": "ring_open_b",
+          "mode": "open"
+        }
+      ]
     }
   ],
   "decor": [],

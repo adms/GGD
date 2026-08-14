@@ -14,7 +14,8 @@
  * 七張圖的機制**有五個是這個形狀**（希干希納城門、黑泥封路、守護者封鎖、
  * 魔法門、競技場開放／封閉）。⛔ 不要為它們各寫一個 if。
  */
-import type { Obstacle } from "../world/ArenaDef";
+import type { GateHold, Obstacle } from "../world/ArenaDef";
+import type { Vec2 } from "../math/vec2";
 
 /** 排程：週期性地在幾組「哪些 gate 關上」之間輪替。 */
 export interface GateSchedule {
@@ -57,13 +58,51 @@ export function ticksUntilGateSwap(schedule: GateSchedule | undefined, tick: num
  * ⚠️ 沒有 `gateGroup` 的障礙物永遠擋路 —— 那是既有 6 張手寫場地的行為，
  * ⛔ 不可以因為引入 gate 就改變它們。
  */
+/**
+ * ⭐ 玩家**站著**造成的覆寫。回傳兩個集合：被撐開的、被壓住的。
+ *
+ * ⛔ 為什麼不是「按一下切換」：切換是有記憶的狀態，必須複寫，而 `MatchState`
+ * 是 append-only（加錯回不去）、`ENTITY_FLAG` 也沒有空 bit 了。
+ * ⭐ 「站著才有效」是**當下位置的純函式** ⇒ 伺服器與客戶端各自從已有的快照
+ * 算出同一個答案，wire 成本 0。而且它本身是更好的機制：要留人守著。
+ *
+ * ⚠️ `positions` 要**排序過**（或至少來源順序穩定）—— 這裡只做集合運算，
+ * 所以順序不影響結果，但呼叫端不要傳未排序的 Map 迭代。
+ */
+export function heldGates(
+  holds: readonly GateHold[] | undefined,
+  positions: readonly Vec2[],
+): { opened: Set<string>; closed: Set<string> } {
+  const opened = new Set<string>();
+  const closed = new Set<string>();
+  if (holds === undefined) return { opened, closed };
+  for (const h of holds) {
+    for (const p of positions) {
+      const dx = p.x - h.at.x;
+      const dz = p.z - h.at.z;
+      if (dx * dx + dz * dz > h.radius * h.radius) continue;
+      if (h.mode === "open") opened.add(h.gateGroup);
+      else closed.add(h.gateGroup);
+      break;
+    }
+  }
+  return { opened, closed };
+}
+
 export function activeObstacles(
   obstacles: readonly Obstacle[],
   schedule: GateSchedule | undefined,
   tick: number,
+  held?: { opened: Set<string>; closed: Set<string> },
 ): Obstacle[] {
-  if (schedule === undefined) return obstacles as Obstacle[];
-  const closed = new Set(closedGatesAt(schedule, tick));
+  if (schedule === undefined && held === undefined) return obstacles as Obstacle[];
+  const closed = new Set(schedule === undefined ? [] : closedGatesAt(schedule, tick));
+  // ⚠️ 玩家的覆寫**贏過**排程 —— 「我站在這裡把門撐開」必須有效，
+  // 否則玩家會看到自己站著門卻關上，那比沒有這個機制更糟。
+  if (held !== undefined) {
+    for (const g of held.closed) closed.add(g);
+    for (const g of held.opened) closed.delete(g);
+  }
   // ⚠️ 語意：`gateGroup` 在 closed 清單裡 = 這道門**關著** = 擋路。
   //    不在清單裡 = 開著 = 這一 tick 它不存在。
   return obstacles.filter((ob) => ob.gateGroup === undefined || closed.has(ob.gateGroup));

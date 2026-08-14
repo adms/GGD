@@ -185,6 +185,8 @@ const zMapBase = z
   .object({
     id: zId,
     name: z.string().min(1),
+    /** 作者寫給下一個接手的人看的。⛔ 引擎不讀它。 */
+    note: z.string().optional(),
     template: zMapTemplate,
 
     grid: z

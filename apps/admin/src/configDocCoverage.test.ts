@@ -176,8 +176,8 @@ describe("config 文件的後台入口覆蓋率 (adminui-config-doc-coverage)", 
     cover(TAG);
     // ⚠️ 改這幾個數字是一個**決定**，不是順手。加一列的人必須在這裡留下痕跡，
     // 而 code review 看得到這一行的 diff。
-    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(22);
-    expect(byKind("OWN_PAGE")).toHaveLength(11);
+    expect(CONFIG_DOC_EXEMPTIONS).toHaveLength(23);
+    expect(byKind("OWN_PAGE")).toHaveLength(12);
     expect(byKind("NOT_TUNABLE")).toHaveLength(3);
     // 2026-08-02：2 → 5。新增的三列是 lobby-layout / valhalla-sandbox /
     // victory-podium —— 三份文件與 Zod 都接完了,只差客戶端還在讀寫死的常數。

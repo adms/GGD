@@ -160,6 +160,22 @@ export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_M
       },
       // ⭐ gate 排程逐字帶過去 —— runtime 用它 + 絕對 tick 自己算開關狀態。
       ...(doc.gimmick.schedule === undefined ? {} : { gates: doc.gimmick.schedule }),
+      // ⭐ `toggleGate` 互動點 → 玩家站著就生效的 gate 覆寫。
+      // ⚠️ `params.gateGroup` 指到不存在的群組 = 這個點永遠沒有作用 ⇒ 直接跳過，
+      //    而驗證器會把它列成「到不了的物件」讓人看得見（⛔ 不是靜靜吞掉）。
+      ...(() => {
+        const groupIds = new Set(doc.gimmick.gateGroups.map((g) => g.id));
+        const holds = doc.interactions
+          .filter((i) => i.kind === "toggleGate")
+          .map((i) => ({
+            at: tileCenter(i.at.col, i.at.row, ts, origin),
+            radius: i.radius,
+            gateGroup: String(i.params.gateGroup ?? ""),
+            mode: (i.params.mode === "close" ? "close" : "open") as "open" | "close",
+          }))
+          .filter((h) => groupIds.has(h.gateGroup));
+        return holds.length === 0 ? {} : { gateHolds: holds };
+      })(),
     });
   }
 

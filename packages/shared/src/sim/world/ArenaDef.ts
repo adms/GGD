@@ -78,6 +78,14 @@ export interface NavTable {
   nextHop: number[];
 }
 
+/** GH#324 —— 玩家站著就生效的 gate 開關（純位置函式，⛔ 零 wire）。 */
+export interface GateHold {
+  at: Vec2;
+  radius: number;
+  gateGroup: string;
+  mode: "open" | "close";
+}
+
 export interface ZoneDef {
   id: string;
   /** Zone is a circular arena: units are clamped inside boundary. */
@@ -90,6 +98,7 @@ export interface ZoneDef {
   bounds?: ZoneBounds;
   regions?: MapRegion[];
   nav?: NavTable;
+  gateHolds?: GateHold[];
 }
 
 export interface ArenaDef {
@@ -151,6 +160,7 @@ export function arenaDefFromDoc(doc: {
       ...(z.bounds === undefined ? {} : { bounds: z.bounds }),
       ...(z.regions === undefined ? {} : { regions: z.regions }),
       ...(z.nav === undefined ? {} : { nav: z.nav }),
+      ...(z.gateHolds === undefined ? {} : { gateHolds: z.gateHolds }),
     })),
   };
 }

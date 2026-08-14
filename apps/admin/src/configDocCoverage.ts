@@ -93,6 +93,14 @@ export interface ConfigDocExemption {
  */
 export const CONFIG_DOC_EXEMPTIONS: readonly ConfigDocExemption[] = [
   {
+    docId: "map-report",
+    kind: "OWN_PAGE",
+    page: "mapReport",
+    docIdConstant: "map-report",
+    why: "地圖驗證報告有自己的**唯讀**頁（📋 地圖驗證報告）。⛔ 它刻意不走通用引擎：那個引擎的存在意義是**可編輯**，而這份文件是 `pnpm map:gen` 的輸出 —— 在後台改它只會讓後台與線上實際載入的場地靜默分岔（owner 2026-08-14 確認的界線）。",
+    expiresWhen: "⚠️ 這一列在「後台可以直接編輯地圖幾何」的那一天才該退場，而那需要把產生器搬進線上服務（另一個量級，且會把 `map:check` 這個閘打掉）。⛔ 在那之前把它接上通用引擎就是製造一條靜默分岔的路。",
+  },
+  {
     docId: "per-level-bonus",
     kind: "KNOWN_GAP",
     why: "⚠️ 這份文件的 `perLevel` 是一個 **`z.record`**（鍵是屬性名，不是固定欄位），而通用表單引擎只走得動**固定形狀的葉節點** —— 它列不出「有哪些鍵」，於是頁面會是空的。做一個空頁比沒有頁更糟：操作者點進去看到什麼都沒有，會以為壞了。",

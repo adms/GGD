@@ -403,6 +403,17 @@ export interface SyncArgs {
    */
   cull?: { cx: number; cz: number; maxDistance: number };
   /**
+   * ⭐ GH#324 —— **視野遮蔽**：躲在牆後的敵人不畫出來。
+   *
+   * ⚠️ 這是**純視覺**的，⛔ 不是權威視野：伺服器照樣把每個人的位置送給每個人
+   * （快照是一份共用 state，per-client 過濾要 `@filter`／StateView，那會讓編碼
+   * 從 O(1) 變成 O(玩家數)）。⇒ 一個改過的客戶端仍然看得到 —— 這個部署是
+   * friends-only 的私人站，那個取捨是划算的，但**不可以寫成「有視野系統」**。
+   *
+   * ⛔ 只遮**敵方**：隊友與自己永遠看得見（隊伍視野）。
+   */
+  occlude?: { cx: number; cz: number; blocked: (x: number, z: number) => boolean };
+  /**
    * SEATS THAT STILL HAVE A CLAIMABLE REVIVE CIRCLE this frame (task #220's
    * exemption). A revive circle is a kind-3 entity whose `seatId` IS THE DEAD
    * OWNER'S SEAT — the wire carries no ownerId, so the SEAT is the only join
@@ -943,10 +954,20 @@ export class EntityViewRegistry {
       view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, e.airborne === true);
 
       // draw-distance cull: hide champions beyond the configured radius
-      if (args.cull) {
-        const dx = pose.x - args.cull.cx;
-        const dz = pose.z - args.cull.cz;
-        const hidden = dx * dx + dz * dz > args.cull.maxDistance * args.cull.maxDistance;
+      // ⭐ GH#324 —— 牆後的敵人不畫。⛔ 只遮敵方（`friendly !== true` 且不是自己），
+      // 而且是**純視覺**：伺服器照樣送位置，這裡只是不畫。
+      const occluded =
+        args.occlude !== undefined &&
+        e.friendly !== true &&
+        e.isLocal !== true &&
+        args.occlude.blocked(pose.x, pose.z);
+      if (args.cull || occluded) {
+        const dx = pose.x - (args.cull?.cx ?? pose.x);
+        const dz = pose.z - (args.cull?.cz ?? pose.z);
+        const far =
+          args.cull !== undefined &&
+          dx * dx + dz * dz > args.cull.maxDistance * args.cull.maxDistance;
+        const hidden = far || occluded;
         if (this.culled.get(e.id) !== hidden) {
           view.root.setEnabled(!hidden);
           this.culled.set(e.id, hidden);

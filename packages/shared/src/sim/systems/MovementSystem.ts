@@ -27,7 +27,7 @@ import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } f
 import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
 import { nextWaypoint } from "../map/navFollow";
-import { activeObstacles } from "../map/gates";
+import { activeObstacles, heldGates } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
@@ -176,7 +176,22 @@ export function movementSystem(world: SimWorld): void {
       const liveObstacles =
         zoneForNav === undefined
           ? []
-          : activeObstacles(zoneForNav.obstacles, world.gateSchedule, world.tick);
+          : activeObstacles(
+              zoneForNav.obstacles,
+              world.gateSchedule,
+              world.tick,
+              // ⭐ 玩家站著撐開／壓住的門。⚠️ 位置**按 entity id 排序**取出來 ——
+              //    Map 的插入序在 sim 裡是禁止的（purity 閘）。
+              zoneForNav.gateHolds === undefined
+                ? undefined
+                : heldGates(
+                    zoneForNav.gateHolds,
+                    [...world.transform.keys()]
+                      .sort((a, b) => a - b)
+                      .filter((eid) => world.transform.get(eid)?.zone === t.zone)
+                      .map((eid) => world.transform.get(eid)!.pos),
+                  ),
+            );
       const waypoint = nextWaypoint(zoneForNav?.nav, t.pos, nav.moveTarget);
       const to = sub(waypoint ?? nav.moveTarget, t.pos);
       const d = len(to);
