@@ -31,6 +31,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
 const MAPS = join(REPO, "content", "maps");
 const ARENAS = join(REPO, "content", "arenas");
+const REPORT = join(REPO, "docs", "_map-report.md");
 
 const CHECK = process.argv.includes("--check");
 
@@ -65,6 +66,7 @@ function main(): void {
 
   let drift = 0;
   let rejected = 0;
+  const reportLines: string[] = [];
 
   for (const f of files) {
     const raw: unknown = JSON.parse(readFileSync(join(MAPS, f), "utf8"));
@@ -79,8 +81,10 @@ function main(): void {
     }
 
     const { arena, report } = compileMap(parsed.data, spec);
-    console.log(formatReport(report));
+    const text0 = formatReport(report);
+    console.log(text0);
     console.log("");
+    reportLines.push(`## ${f}\n\n\`\`\`\n${text0}\n\`\`\`\n`);
 
     if (!report.ok) {
       console.error(`⛔ ${f} 未通過驗證 —— **拒絕輸出**。`);
@@ -124,6 +128,17 @@ function main(): void {
     process.exit(1);
   }
   if (!CHECK) {
+    // ⭐ 報告寫成檔並進版控：owner 常設「視覺化一律留歷史紀錄」。
+    // ⚠️ 這一份**沒有時間戳** —— 有的話乾淨的重跑會變成 diff，而那會逼人
+    //    把 `--check` 放寬成模糊比對，⛔ 放寬的閘不是閘。
+    writeFileSync(
+      REPORT,
+      "# 地圖驗證報告\n\n" +
+        "> ⚙️ **這份是 `pnpm map:gen` 產生的，⛔ 不要手改。**\n" +
+        "> 要改地圖請改 `content/maps/*.json`。\n\n" +
+        reportLines.join("\n"),
+    );
+    console.log(`✓ 報告寫入 ${REPORT}`);
     console.log("\n⚠️ 記得跑 `pnpm content:build` 並把產物一起 commit。");
   }
 }

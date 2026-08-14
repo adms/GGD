@@ -124,6 +124,24 @@ export const zZoneDef = z
       })
       .strict()
       .optional(),
+
+    /**
+     * ⭐ GH#324 —— gate 排程（可開關的幾何）。
+     *
+     * 狀態是 `(schedule, absoluteTick)` 的**純函式** ⇒ 伺服器與客戶端各自算出
+     * 同一個答案，**wire 成本 0、沒有 desync 通道**。
+     * ⚠️「永不困住玩家」是**驗證器**保證的：每一個組態的圖都必須全連通、
+     * 所有出生點與互動點可達，否則產生器拒絕輸出。
+     */
+    gates: z
+      .object({
+        kind: z.literal("periodic"),
+        periodTicks: z.number().int().positive(),
+        telegraphTicks: z.number().int().min(0),
+        configurations: z.array(z.array(z.string())).min(2),
+      })
+      .strict()
+      .optional(),
   })
   .strict()
   // Gameplay truth is `obstacles` + `spawns`: they must sit inside the circular

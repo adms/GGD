@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-08-13T18:29:46.415Z",
+ "generatedAt": "2026-08-14T03:25:16.646Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "dc20d995ac6b2d40",
    "bytes": 17832,
-   "mtime": "2026-08-13T18:05:53.167Z"
+   "mtime": "2026-08-14T03:24:59.411Z"
   },
   {
    "path": "content/arenas/_index.json",
-   "sha256": "5adf0468723014e9",
-   "bytes": 873,
-   "mtime": "2026-08-13T18:05:53.157Z"
+   "sha256": "1ec5cbf93485d2c4",
+   "bytes": 1025,
+   "mtime": "2026-08-14T03:24:59.400Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "aed6f1fa19633314",
    "bytes": 10293,
-   "mtime": "2026-08-13T18:05:53.109Z"
+   "mtime": "2026-08-14T03:24:59.345Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -1094,6 +1094,126 @@
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
+      "animChannels": "ok",
+      "vramBytes": "ok"
+     }
+    }
+   ]
+  },
+  {
+   "id": "combat-infinity-castle",
+   "label": "戰鬥 · 無限城",
+   "note": "12 名英雄以最壞合法陣容計（12 份 cloud.glb —— champ select 與 MatchRoom 都沒有禁止重複選角）。dressArena 無條件擺滿兩個 zone，且預設 drawDistance 140 > 兩個 zone 的最大距離 128u，所以沒有東西會被 drawDistance 剔除。",
+   "models": [
+    {
+     "id": "assets/models/imported/cloud.glb",
+     "count": 12
+    }
+   ],
+   "procedural": [
+    {
+     "label": "地板 + 路緣（buildZoneGround，兩個 zone）",
+     "triangles": 18644,
+     "meshes": 4,
+     "note": "ringSegments(24)=126、floorRingRadii 22 環、RIM_PROFILE 10 段 —— 由 ArenaGround 的純函式推導，非硬編碼。"
+    },
+    {
+     "label": "障礙柱 + 牆",
+     "triangles": 384,
+     "meshes": 32,
+     "note": "0 根 CreateCylinder(tessellation 24) × 96 面 —— 這個競技場沒有 pillar 擺設，所以柱子全留著。"
+    },
+    {
+     "label": "出生台座",
+     "triangles": 960,
+     "meshes": 12,
+     "note": "12 個 CreateCylinder(tessellation 20) × 80 面。"
+    },
+    {
+     "label": "接地陰影（thin instance）",
+     "triangles": 0,
+     "meshes": 1,
+     "note": "0 個擺設各一片 140 面的漸層圓盤，thin-instanced → 整座競技場只有 1 個 draw call。"
+    }
+   ],
+   "extraDraws": null,
+   "extraVram": null,
+   "triangles": 59228,
+   "drawCalls": 97,
+   "animChannels": 216,
+   "textureBytes": 293625,
+   "vramBytes": 17498103,
+   "limits": [
+    {
+     "key": "triangles",
+     "label": "同畫面三角面數",
+     "unit": "tris",
+     "warn": 250000,
+     "limit": 400000,
+     "why": "不是時間瓶頸，是防呆線：目前資產能組出的最壞畫面約 289k（12 × 全案最重的 dragon2 19,542 + 最重競技場），上限 400k 留有真正的餘裕；400k tris @60fps = 24M tris/s，任何目標 GPU 都吃得下。",
+     "overridden": false
+    },
+    {
+     "key": "drawCalls",
+     "label": "同畫面 mesh / draw call 數",
+     "unit": "meshes",
+     "warn": 168,
+     "limit": 240,
+     "why": "6.0 ms ÷ (0.0083 ms/mesh × 3) = 241；c_mesh 來自 #80 的 A/B（279→5.6 ms、713→9.2 ms，同一場景）。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "animChannels",
+     "label": "同畫面每幀動畫通道數",
+     "unit": "channels",
+     "warn": 476,
+     "limit": 680,
+     "why": "3.0 ms ÷ (0.00148 ms/channel × 3) = 674；c_chan 來自 12 隻 KayKit = 1,476 通道 = 2.19 ms 的實測。警戒線 = 上限的 70%。",
+     "overridden": false
+    },
+    {
+     "key": "vramBytes",
+     "label": "同畫面貼圖 VRAM（RGBA8 + mipmap）",
+     "unit": "bytes",
+     "warn": 33554432,
+     "limit": 50331648,
+     "why": "不猜硬體上限：最壞戰鬥畫面真正需要的影像資訊約 12 MB（去掉 25 份同一張 24 色調色盤後），上限 = 4×、警戒 = 2.67×。超線代表「浪費超過約定」，不代表會當掉。",
+     "overridden": false
+    }
+   ],
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "animChannels": "ok",
+    "vramBytes": "ok"
+   },
+   "variants": [
+    {
+     "id": "median",
+     "label": "中位陣容（12 隻 sd2 —— 名冊面數中位數）",
+     "triangles": 30020,
+     "drawCalls": 97,
+     "animChannels": 240,
+     "textureBytes": 123970,
+     "vramBytes": 6291455,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "ok",
+      "animChannels": "ok",
+      "vramBytes": "ok"
+     }
+    },
+    {
+     "id": "best",
+     "label": "面數最輕陣容（12 隻 blocky-rogue）—— 注意它的動畫通道比中位陣容還多，軸與軸之間並不相關",
+     "triangles": 22004,
+     "drawCalls": 61,
+     "animChannels": 96,
+     "textureBytes": 1108,
+     "vramBytes": 5593770,
+     "verdicts": {
+      "triangles": "ok",
+      "drawCalls": "ok",
       "animChannels": "ok",
       "vramBytes": "ok"
      }

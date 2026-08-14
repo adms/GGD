@@ -187,8 +187,40 @@
     }
   ],
   "gimmick": {
-    "kind": "none",
-    "gateGroups": []
+    "kind": "routeSwap",
+    "gateGroups": [
+      {
+        "id": "west_door",
+        "tiles": [
+          {
+            "col": 6,
+            "row": 8
+          }
+        ]
+      },
+      {
+        "id": "east_door",
+        "tiles": [
+          {
+            "col": 15,
+            "row": 8
+          }
+        ]
+      }
+    ],
+    "schedule": {
+      "kind": "periodic",
+      "periodTicks": 900,
+      "telegraphTicks": 60,
+      "configurations": [
+        [
+          "west_door"
+        ],
+        [
+          "east_door"
+        ]
+      ]
+    }
   },
   "landmarkProps": [],
   "backgroundProps": []

@@ -3618,6 +3618,19 @@
           54,
           55
         ]
+      },
+      "gates": {
+        "kind": "periodic",
+        "periodTicks": 900,
+        "telegraphTicks": 60,
+        "configurations": [
+          [
+            "west_door"
+          ],
+          [
+            "east_door"
+          ]
+        ]
       }
     },
     {
@@ -7234,6 +7247,19 @@
           53,
           54,
           55
+        ]
+      },
+      "gates": {
+        "kind": "periodic",
+        "periodTicks": 900,
+        "telegraphTicks": 60,
+        "configurations": [
+          [
+            "west_door"
+          ],
+          [
+            "east_door"
+          ]
         ]
       }
     }

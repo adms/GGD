@@ -27,6 +27,7 @@ import { moveWithCollision, separatePair, clampToBoundary, pushOutOfObstacle } f
 import { flightIgnoresObstacles, flightIgnoresUnits, flightStaysInBoundary } from "../flight";
 import { steerAroundObstacles } from "../collision/avoid";
 import { nextWaypoint } from "../map/navFollow";
+import { activeObstacles } from "../map/gates";
 import { Stat } from "../stats/statTypes";
 import { facingLockDir } from "../facingLock";
 import { movementHold } from "../movementHold";
@@ -170,6 +171,12 @@ export function movementSystem(world: SimWorld): void {
       // 一樣：直接朝最終目的地走，也就是**既有行為**。沒有導航表的 6 張手寫場地
       // 因此一個字都不用改。
       const zoneForNav = world.arena.zones[t.zone] ?? world.arena.zones[0];
+      // ⭐ GH#324 —— 這一 tick 真的擋路的障礙物（開著的門不擋人）。
+      // ⚠️ 沒有 gateSchedule 時 `activeObstacles` 原樣回傳 ⇒ 既有場地零成本。
+      const liveObstacles =
+        zoneForNav === undefined
+          ? []
+          : activeObstacles(zoneForNav.obstacles, world.gateSchedule, world.tick);
       const waypoint = nextWaypoint(zoneForNav?.nav, t.pos, nav.moveTarget);
       const to = sub(waypoint ?? nav.moveTarget, t.pos);
       const d = len(to);
@@ -247,7 +254,7 @@ export function movementSystem(world: SimWorld): void {
           // auto-attacks in `autoAttackWhileMovingCensus`'s stalled-walk row.
           if (flightStaysInBoundary(world, id)) clampToBoundary(body, zone);
         } else {
-          moveWithCollision(body, scale(dir, stepLen), zone);
+          moveWithCollision(body, scale(dir, stepLen), zone, liveObstacles);
         }
         t.pos = body.pos;
         // Velocity is the ACTUAL post-collision displacement, never the intent:

@@ -94,10 +94,19 @@ export function clampToBoundary(body: Body, zone: ZoneDef): void {
  * relaxation passes per resolve settle corner cases (two pillars, pillar +
  * boundary). Stable at MOBA speeds; deterministic (pure position math).
  */
-export function moveWithCollision(body: Body, delta: Vec2, zone: ZoneDef): void {
+/**
+ * @param obstacles ⭐ GH#324 —— 這一 tick **真的擋路**的障礙物（gate 過濾之後）。
+ * 省略 = `zone.obstacles`，也就是既有行為（沒有 gate 的場地永遠走這一條）。
+ */
+export function moveWithCollision(
+  body: Body,
+  delta: Vec2,
+  zone: ZoneDef,
+  obstacles: readonly Obstacle[] = zone.obstacles,
+): void {
   const start = body.pos;
   body.pos = { x: start.x + delta.x, z: start.z + delta.z };
-  relax(body, zone);
+  relax(body, zone, obstacles);
 
   // Collide-and-SLIDE. `relax` only pushes straight back OUT along the surface
   // normal, so a head-on step is cancelled in full and the body does not move at
@@ -124,13 +133,21 @@ export function moveWithCollision(body: Body, delta: Vec2, zone: ZoneDef): void 
  * legal with the EXACT same relaxation the walker uses — a future change to
  * wall geometry then cannot make the two disagree about where a body may stand.
  */
-export function relaxBody(body: Body, zone: ZoneDef): void {
-  relax(body, zone);
+export function relaxBody(
+  body: Body,
+  zone: ZoneDef,
+  obstacles: readonly Obstacle[] = zone.obstacles,
+): void {
+  relax(body, zone, obstacles);
 }
 
-function relax(body: Body, zone: ZoneDef): void {
+function relax(
+  body: Body,
+  zone: ZoneDef,
+  obstacles: readonly Obstacle[] = zone.obstacles,
+): void {
   for (let pass = 0; pass < 2; pass++) {
-    for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
+    for (const ob of obstacles) pushOutOfObstacle(body, ob);
     clampToBoundary(body, zone);
   }
 }

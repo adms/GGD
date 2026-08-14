@@ -158,6 +158,8 @@ export function compileMap(doc: MapDoc, spec: Spec, duelZones = DUEL_ZONES_PER_M
         nodes: nav.nodes.map((p) => tileCenter(p.col, p.row, ts, origin)),
         nextHop: nav.nextHop,
       },
+      // ⭐ gate 排程逐字帶過去 —— runtime 用它 + 絕對 tick 自己算開關狀態。
+      ...(doc.gimmick.schedule === undefined ? {} : { gates: doc.gimmick.schedule }),
     });
   }
 

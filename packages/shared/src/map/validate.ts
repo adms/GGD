@@ -172,6 +172,32 @@ export function validateMap(
     `到不了的物件：${unreachable.join(" / ")}`,
   );
 
+  // ── gate 的每一個組態都不可以把玩家關起來（⛔ 正確性）────────────────────
+  // ⭐ 這是「永不困住玩家」的**唯一**實作處。⛔ 它不是 runtime 的 if ——
+  //    runtime 只查 (doc, tick) 的純函式；「不會困住人」是**這裡**保證的。
+  if (doc.gimmick.schedule !== undefined && doc.gimmick.gateGroups.length > 0) {
+    const gateTiles = new Map<string, { col: number; row: number }[]>();
+    for (const grp of doc.gimmick.gateGroups) gateTiles.set(grp.id, grp.tiles);
+    doc.gimmick.schedule.configurations.forEach((closed, ci) => {
+      // 把這個組態關上的門畫成牆，再檢查整張圖還連不連通
+      const rows = doc.tiles.map((r) => [...r]);
+      for (const gid of closed) {
+        for (const t of gateTiles.get(gid) ?? []) {
+          if (rows[t.row]?.[t.col] !== undefined) rows[t.row]![t.col] = "#";
+        }
+      }
+      const patched: TileGrid = { cols: doc.grid.cols, rows: doc.grid.rows, tiles: rows.map((r) => r.join("")) };
+      const c = components(patched).count;
+      hard(
+        issues,
+        "gateTrapsPlayers",
+        c !== 1,
+        `gate 組態 #${ci}（關上 ${closed.join("/") || "無"}）把地圖切成 ${c} 塊 —— ` +
+          `玩家會被關在其中一塊裡。⛔ 產生器拒絕輸出。`,
+      );
+    });
+  }
+
   // ── 模板承諾的拓撲 ───────────────────────────────────────────────────────
   const shape = describeTemplate(doc.template);
   const loops = regionLoopCount(g, doc.regions);
