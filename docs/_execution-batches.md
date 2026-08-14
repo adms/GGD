@@ -1004,3 +1004,50 @@ owner 兩則追加：
 - 背景仍是**剪影帶**不是**背景畫**。要真的畫的話 schema 需要一格貼圖路徑 ——
   ⛔ 刻意不先加，一個沒有人讀的欄位正是這個專案在修的形態
 - `landmarkProps` / `backgroundProps` 全空（graybox 先行，owner 的地圖鐵則）
+
+---
+
+## 🚢 v0.17.0 出貨（2026-08-15，跨天 ⇒ minor+1）
+
+`7e800556` · https://github.com/adms/GGD/releases/tag/v0.17.0
+
+| 群 | 東西 | 狀態 |
+|---|---|---|
+| #327 A | 編輯器技能包上線路徑（digest 政策／規格 pin／創作規則／收件模型） | ✅ |
+| #327 B | 自建編譯器 | ⛔ **砍掉**（見下） |
+| #324 | 建房間選得到七張新圖 | ✅ 線上驗到 13 項 |
+| #326 | 內容隔離的兩層修正 | ✅ |
+
+### ⭐ B 群為什麼砍：那一層的價值需要**兩位作者**
+
+原計畫是編輯器出中介格式、我們自己再編譯回 `ability@1`，**用來抓兩個實作的漂移**。
+GGD 只有一位作者，那個漂移不存在，成本卻是真的（primitive 表 + 求值器 + 指紋協商）。
+⇒ 編輯器直接產 `ability@1`，`template.cards` 留住設計意圖，驗證靠 Zod + capabilities +
+authoring-rules 三層。owner 2026-08-15 核准，並要求**寫好的不要刪**
+⇒ 封存在 `packages/shared/src/content/authoring/primitives.ts`（無出貨呼叫端）。
+
+### 出貨前四條紅 —— 四種不同的病，四種不同的修法
+
+⚠️ 這一段留著是因為**「全部改成通過」會四次都錯**：
+
+| 紅 | 病 | 修法 |
+|---|---|---|
+| `clientOverlay` | **真回歸**：quarantine 讓第一趟「成功」⇒ 退回出貨樹那條路永不觸發 | 帶 overlay 那趟改 fail-closed |
+| `revive` | 測試抄了第四份出貨值 | **刪掉**字面值（旁邊有推導的那條，更強） |
+| `victoryPodium` | 三個住處真的少一格 | **補後台欄位**（補實作不是改測試） |
+| `fieldAdoption` | 引擎有、內容 0 篇用（`waves` 輪廓） | 登記 landing，30 天後自己再紅 |
+
+⭐ 第一條與 `content:build` 那一次是**同一個形狀**：
+**隔離在「沒有下一層」的地方是止血，在「下面還有一層」的地方是製造出血。**
+政策不是全域常數，是**情境**決定的。
+
+### 六項後置條件 + 煙霧測試
+
+`content bundle 78` · `白名單 63` · **`登錄表 78 隻英雄（不是骨架）`**（配對式那條）
+· `錄影可寫` · `BUILD_STAMP 7e800556`（不是 UNSTAMPED）· **`帳號數 174 → 174`**
+全新分頁 console：`[client] content loaded: 78 champions (cv_714d4e9ad3c3) via bundle`
+
+### 這一輪順手開的 issue（第零守則⑧的回收閥，等 owner 勾）
+
+- **#328** Go 的 `KnownCollections` 少了 `maps` —— 後台存不進地圖文件（#324 漂移）。
+  ⚠️ 這一版**沒有**併進來。
