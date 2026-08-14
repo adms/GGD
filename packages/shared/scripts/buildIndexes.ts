@@ -5,6 +5,7 @@
  * Pure function of the docs on disk — no timestamps, deterministic output.
  */
 import { existsSync, readFileSync, statSync } from "node:fs";
+import { writeEditorTargetProfile } from "./buildEditorTargetProfile";
 import { gzipSync, brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -71,6 +72,16 @@ for (const name of COLLECTION_NAMES) {
   if (c) console.log(`  ${name.padEnd(15)} ${String(c.count).padStart(3)} doc(s)  ${c.hash}`);
 }
 console.log(`contentVersion: ${manifest.contentVersion}`);
+
+// ⭐ 外部編輯器的遠端資料契約（owner 2026-08-14）。跟著 content 一起產生，
+// 因為它的每一格都是 content 的函式 —— 分開跑就一定會有一天忘記跑。
+// 它落在 `content/` 底下 ⇒ 正式站直接服務：
+//     https://ggd.adms.ai/content/editor-target-profile.json
+{
+  const text = writeEditorTargetProfile(new Date().toISOString());
+  const p = JSON.parse(text) as { profileDigest: string };
+  console.log(`editor-target-profile.json  digest=${p.profileDigest}`);
+}
 
 // The one-file transport bundle (content/bundle.json). Print what the wire
 // actually costs: nginx already gzips application/json above gzip_min_length,

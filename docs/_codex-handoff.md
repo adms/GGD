@@ -84,6 +84,39 @@ Codex 拿到的是填完之後、經過 `batch1.py` 產生的 JSON。兩者不�
 
 第〇章明寫了：**權威是端點，不是文件。** 現況要講清楚，因為兩者混在一起最危險。
 
+### ⭐ 正式站的唯讀契約檔（**編輯器在別台機器上，先打這個**）
+
+```
+GET https://ggd.adms.ai/content/editor-target-profile.json
+```
+
+⚠️ **為什麼是檔不是端點**：`/capabilities` 與 `/active/target-profile` 住在
+content-api，而**正式站沒有把 content-api 對外開**。編輯器拿得到的只有
+`https://ggd.adms.ai/content/*`（edge 直接服務的 live bind-mount）⇒ 這份檔是
+遠端唯一拿得到的 base receipt。零認證、零 CORS。
+
+`ggd-editor-target-profile@1` 一次給齊（owner 2026-08-14 指定的九項）：
+
+| 欄位 | 內容 |
+|---|---|
+| `content.contentVersion` / `content.collections` | contentVersion ＋**每個集合的 hash 與 count**（14 個） |
+| `contract.*` | profile / capabilities schema 版本、compiler contract（⚠️ 目前 `null`，GH#313／#314 未做） |
+| `runtimeCapabilities` | 整份 manifest，含 `fingerprint` |
+| `tagManifest` | schemaVersion / generated / tagCount / **檔案 hash** ＋ ⭐ `matchesEngine` |
+| `authoringRules` | 定價來源（散文，會過期）＋ **6 條 normative 規則**（Promote／scope／strict params／allowlist） |
+| `curation.*` | 英雄／道具開放清單 digest ＋ count（拿不到就 `null`，另給 live 端點） |
+| `assetManifestDigest` | LOD manifest 的 digest |
+| `deltaExportAllowed` | **固定 false** —— 正式站沒有 authoring store base，只支援 `bootstrap` |
+| `unavailable[]` | **每一個 null 的出處**。⚠️ 沒有它，null 跟「忘了填」長得一模一樣 |
+
+⭐ **`tagManifest.matchesEngine` 是最該先看的一格**：標籤清單宣稱的引擎指紋
+等不等於引擎現在算出來的。⚠️ 2026-08-14 它是 **false**（清單記 `ef984bcc`、
+引擎已是 `8d30566f`）—— 代表那 139 個標籤的裁決是**對舊引擎**做的。
+
+⛔ 整份是**推導**的，跟著 `pnpm content:build` 走，守衛
+`shippedEditorProfileIsCurrent.test.ts` 比對 `profileDigest`（刻意不含
+`generatedAt`，否則每次乾淨重跑都會紅）。⛔ 不要手改那個檔。
+
 ### 已經在跑（打它，⛔ 不要抄文件）
 
 ```
