@@ -4,6 +4,7 @@
  */
 import { COLLECTIONS, COLLECTION_NAMES, type CollectionName } from "@ggd/shared/content";
 import type { ZodTypeAny } from "zod";
+import { starterMap } from "@ggd/shared/map/starter";
 
 export interface CollectionEntry {
   name: CollectionName;
@@ -76,42 +77,16 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
   }),
   // GH#324 —— 作者層的地圖版面。⭐ 這一份是**人寫的**；`arena@1` 是 `pnpm map:gen`
   // 從它編譯出來的碰撞真相，⛔ 產生器的輸出禁止手改。
-  // ⚠️ 樣板刻意給一張**最小但合法**的圖（4 區 + landmark + 無機制），
-  //    好讓「新建一張地圖」不會一開場就是一堆紅字。
-  maps: (id) => ({
-    id,
-    schema: "map@1",
-    name: "New Map",
-    template: "CENTRAL_RING",
-    grid: { cols: 20, rows: 16, tileSize: 2 },
-    tiles: [
-      "####################",
-      "#..................#",
-      "#..................#",
-      "#....##########....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....#........#....#",
-      "#....##########....#",
-      "#..................#",
-      "#..................#",
-      "#..................#",
-      "####################",
-    ],
-    regions: [
-      { id: "core", label: "中央", role: "landmark", rects: [{ col: 6, row: 4, w: 8, h: 7 }] },
-      { id: "north", label: "北側", role: "outer", rects: [{ col: 1, row: 1, w: 18, h: 2 }] },
-      { id: "south", label: "南側", role: "outer", rects: [{ col: 1, row: 12, w: 18, h: 3 }] },
-      { id: "west", label: "西廊", role: "corridor", rects: [{ col: 1, row: 3, w: 4, h: 9 }] },
-    ],
-    landmark: "core",
-    interactions: [],
-    gimmick: { kind: "none" },
-  }),
+  //
+  // ⛔ **這裡以前有 16 行手打的 tiles**，註解寫著「刻意給一張最小但合法的圖…
+  // 不會一開場就是一堆紅字」。**那句話是假的**（第三守則）—— 實測那張圖的中央
+  // 房間四面全封，`disconnectedRegions`（hard）直接紅，另外還有五項超規格，
+  // ⇒ 按「新建」拿到的是一份**產生器會拒絕輸出**的文件。
+  //
+  // ⭐ 根因不是那 16 行打錯，是它**存在**：版面的產生器就在 shared 裡，而樣板
+  // 自己抄了一份 = 第二個真相來源，⛔ 它必然漂移而且漂移時沒有東西會叫。
+  // 現在呼叫同一個產生器，守衛逐一驗證四個模板都 `report.ok`。
+  maps: (id) => starterMap(id),
   config: (id) => ({
     id,
     schema: "config@1",

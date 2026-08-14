@@ -13,11 +13,13 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import { zMapDoc, DEFAULT_MAP_SPEC } from "@ggd/shared/content";
+import { zMapDoc, DEFAULT_MAP_SPEC, type MapDoc } from "@ggd/shared/content";
 import { compileMap } from "@ggd/shared/map/compile";
 import { generateTiles } from "@ggd/shared/map/templates";
+import { starterMap } from "@ggd/shared/map/starter";
 import { has3DPreview } from "./which";
 import { MapPanel } from "./MapPanel";
+import { collectionEntry } from "../collections";
 
 const REPO = fileURLToPath(new URL("../../../../", import.meta.url));
 const readJson = (rel: string): unknown => JSON.parse(readFileSync(`${REPO}${rel}`, "utf8"));
@@ -51,6 +53,26 @@ describe("編輯器 · 地圖版面面板", () => {
     }
     expect(html).toContain("重新產生 tiles");
     expect(html).toContain("通過");
+  });
+
+  it("⛔ 「新建一張地圖」拿到的必須是**產生器會接受**的文件（四個模板都要）", () => {
+    // 在這條之前，`maps` 樣板是 16 行手打的 tiles，中央房間四面全封
+    // ⇒ `disconnectedRegions`(hard) 直接紅，另外五項超規格。
+    // ⚠️ 而樣板的註解寫著「刻意給一張最小但合法的圖」—— 註解會說謊（第三守則）。
+    for (const t of ["CENTRAL_RING", "CROSS_RING", "DOUBLE_LOOP", "ARENA_RING"] as const) {
+      const parsed = zMapDoc.safeParse(starterMap("map.new", t));
+      expect(parsed.success, `${t} 不合 map@1`).toBe(true);
+      const { report } = compileMap((parsed as { data: MapDoc }).data, DEFAULT_MAP_SPEC);
+      expect(
+        report.ok,
+        `${t}: ${report.issues.map((i) => `${i.check}(${i.kind})`).join(" ")}`,
+      ).toBe(true);
+    }
+    // ⭐ 而且新場地一開場就有背景 —— 否則圓盤外是一片黑（失敗形態①）。
+    const doc = zMapDoc.parse(starterMap("map.new"));
+    expect(doc.backdrop?.layers.length ?? 0).toBeGreaterThan(0);
+    // 編輯器的 `maps` 樣板走的就是這一個工廠，⛔ 不是另外抄一份
+    expect(collectionEntry("maps").template("map.new")).toEqual(starterMap("map.new"));
   });
 
   it("★ 「用模板重新產生」吐出的 tiles 形狀對得上 grid（否則按下去就變成一份紅字文件）", () => {
