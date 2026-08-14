@@ -143,6 +143,7 @@
  * byte-identical across replicas.
  */
 import type { SimWorld } from "./SimWorld";
+import { insideShrunkBounds } from "./map/bounds";
 import type { EntityId } from "../ids";
 import { distSq } from "./math/vec2";
 import { applyEnvironmentalBurn } from "./combat/environmentalBurn";
@@ -1224,7 +1225,14 @@ export function fireRingBurnMobs(world: SimWorld): void {
     // WHOLE BODY inside = safe. A 殭屍王's body is wider than a champion's, so
     // it stops being safe EARLIER — which is the correct reading of 「沒有生存
     // 空間」 for something that big, not a special case.
-    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) continue;
+    // ⭐ GH#324 —— 矩形場地的火圈**內縮成矩形**（owner「一樣要有」）。
+    // ⛔ 不是用內接圓：那會讓火圈提早咬到牆外的角落，玩家會在看起來安全的地方被燒。
+    // ⚠️ 圓形場地走**原本那一支**（`fireRingIsSafe`），既有行為與所有錄影不變。
+    const safe =
+      zoneDef.bounds?.kind === "rect"
+        ? insideShrunkBounds(zoneDef, t.pos, radius, t.radius)
+        : fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center));
+    if (safe) continue;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) continue;
     // GH#287 —— same gate as the champion loop, through the same one function.

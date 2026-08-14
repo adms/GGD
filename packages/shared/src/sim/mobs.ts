@@ -49,6 +49,7 @@ import type { LastHitMode } from "./mobBoss";
 import type { FlightGrant } from "./flight";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
+import { pointOnBoundary } from "./map/bounds";
 // #L1 — 殭屍王在場 → 回合延長. The round clock rides the ring's rules (it is the
 // only per-combat clock the sim has); this module owns the one moment a king
 // enters the world, so it is the module that trips it. No cycle: fireRing.ts
@@ -2391,13 +2392,26 @@ export function mixInt(a: number, b: number, c: number): number {
  */
 export function mobSpawnPos(world: SimWorld, zone: number, k: number, i: number, radius: number): Vec2 {
   const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0]!;
-  const dir = DIR_TABLE[mixInt(zone, k, i) % DIR_TABLE.length]!;
-  // inset the rim by the body radius so the whole mob starts inside the boundary
-  const inset = Math.max(0, zoneDef.boundaryRadius - radius);
-  const body = {
-    pos: { x: zoneDef.center.x + dir.x * inset, z: zoneDef.center.z + dir.z * inset },
-    radius,
-  };
+  // ⭐ GH#324 —— 矩形場地從**矩形周邊**生成（owner 2026-08-14「火圈殭屍波一樣要有」）。
+  // ⛔ 不是用內接圓：那會讓四個角落永遠不生怪，而角落正是玩家躲的地方。
+  // ⚠️ 圓形場地走**原本那一條**（DIR_TABLE 查表），既有行為一個字都沒變。
+  const idx = mixInt(zone, k, i) % DIR_TABLE.length;
+  const body =
+    zoneDef.bounds?.kind === "rect"
+      ? {
+          // 沿周長取樣：同一個 idx ⇒ 同一個位置，決定性與 DIR_TABLE 同口徑。
+          pos: pointOnBoundary(zoneDef, idx / DIR_TABLE.length, radius),
+          radius,
+        }
+      : (() => {
+          const dir = DIR_TABLE[idx]!;
+          // inset the rim by the body radius so the whole mob starts inside the boundary
+          const inset = Math.max(0, zoneDef.boundaryRadius - radius);
+          return {
+            pos: { x: zoneDef.center.x + dir.x * inset, z: zoneDef.center.z + dir.z * inset },
+            radius,
+          };
+        })();
   for (const ob of zoneDef.obstacles) pushOutOfObstacle(body, ob);
   clampToBoundary(body, zoneDef);
   return body.pos;
