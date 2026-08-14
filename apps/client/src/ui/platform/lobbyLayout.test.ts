@@ -113,6 +113,15 @@ const { appStore } = await import("./store");
 const { LobbyScreen } = await import("./LobbyScreen");
 const { RoomListPanel } = await import("./RoomListPanel");
 const { arenaOptions, DEFAULT_MAP_ID } = await import("./maps");
+// ⚠️ GH#324 之後選單是從 `Arenas` 登錄表**推導**的,而這個測試檔不載內容。
+//    註冊兩張(骨架 + 一張真的出貨場地)才有「非預設」的選項可以挑 ——
+//    否則下面那條會拿到一個只有一個選項的 <select>,設什麼都不會變。
+{
+  const { Arenas } = await import("@ggd/shared/content");
+  Arenas.clear();
+  Arenas.register({ id: "arena.skeleton", name: "Skeleton" } as never);
+  Arenas.register({ id: "arena.castle", name: "城堡競技場" } as never);
+}
 const {
   DEFAULT_LOBBY_LAYOUT,
   LOBBY_LAYOUT_BOUNDS,
@@ -481,8 +490,7 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
     // 直接用一個已知的出貨場地 id：這條測的是**選了會不會傳出去**，
     // ⛔ 不是選單裡有什麼（那是 maps.test.ts 在守）。
     const picked =
-      arenaOptions().map((a: { id: string }) => a.id).find((id: string) => id !== DEFAULT_MAP_ID) ??
-      "arena.castle";
+      arenaOptions().map((a: { id: string }) => a.id).find((id: string) => id !== DEFAULT_MAP_ID)!;
     expect(picked).not.toBe(DEFAULT_MAP_ID);
     expect(arena.value).toBe(DEFAULT_MAP_ID); // the card opens on the default
 
