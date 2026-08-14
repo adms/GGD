@@ -9,11 +9,12 @@ import { useApp } from "./store";
 import { memberSeatLabel, seatSum } from "./couch";
 import { connectedPadIndices, listPadSources } from "../../input/GamepadInput";
 import { Btn, TextInput, Panel, Badge, CodeBox, unescapeHtml, ACCENT, OK, DANGER } from "./widgets";
-import { ARENA_OPTIONS } from "./maps";
+import { arenaLabel } from "./maps";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
 
-const mapLabel = (mapId: string): string =>
-  ARENA_OPTIONS.find((m) => m.id === mapId)?.label ?? (mapId || "Skeleton (預設)");
+// ⚠️ 從登錄表查（GH#324 之後有 13 張場地）—— 以前查的是一份寫死的五筆清單,
+// 所以七張新圖在房間列表上只會顯示原始 id。
+const mapLabel = (mapId: string): string => arenaLabel(mapId);
 
 const ROOM_POLL_MS = 2000;
 const PAD_POLL_MS = 150;

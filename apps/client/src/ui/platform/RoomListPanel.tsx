@@ -33,7 +33,7 @@ import {
 } from "@ggd/shared/roomSettings";
 import { appStore, useApp } from "./store";
 import { Btn, TextInput, Panel, Badge, FieldError, ACCENT, OK } from "./widgets";
-import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { useArenaOptions, DEFAULT_MAP_ID } from "./maps";
 import { useContentReady } from "./ContentGate";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -176,6 +176,9 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
   const [name, setName] = useState("");
   const [difficulty, setDifficulty] = useState("normal");
   const [mapId, setMapId] = useState(DEFAULT_MAP_ID);
+  // ⭐ 從 `Arenas` 登錄表推導（GH#324 的七張新圖以前選不到 —— 這裡本來是一份
+  //    寫死的五筆清單）。內容是背景載入的，載完 hook 自動重算。
+  const arenaOpts = useArenaOptions();
   const [localPlayers, setLocalPlayers] = useState(1);
   // 肉鴿殭屍模式 (#215) — default CHECKED (ON) per the owner directive. Only when a
   // host UNCHECKS it does createRoom transmit `false` down the chain.
@@ -250,7 +253,7 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
           <div>
             <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>Arena</div>
             <select style={selStyle} value={mapId} onChange={(e) => setMapId(e.target.value)}>
-              {ARENA_OPTIONS.map((m) => (
+              {arenaOpts.map((m) => (
                 <option key={m.id} value={m.id}>
                   {m.label}
                 </option>

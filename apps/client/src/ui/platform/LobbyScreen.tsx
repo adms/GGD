@@ -52,7 +52,7 @@ import { ValhallaPanel } from "./ValhallaPanel";
 import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
 import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
-import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { useArenaOptions, DEFAULT_MAP_ID } from "./maps";
 import {
   DEFAULT_LOBBY_LAYOUT,
   leftColumnSlots,
@@ -206,6 +206,8 @@ function RewardBadge(props: { color: string; text: string; title: string }): Rea
 }
 
 function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }): React.JSX.Element {
+  // ⭐ 從 `Arenas` 登錄表推導(GH#324 的七張新圖以前選不到)。
+  const arenaOpts = useArenaOptions();
   const playBotMatch = useApp((s) => s.playBotMatch);
   const playOffline = useApp((s) => s.playOffline);
   const busy = useApp((s) => s.botMatchBusy);
@@ -275,7 +277,7 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
               fontSize: 12,
             }}
           >
-            {ARENA_OPTIONS.map((m) => (
+            {arenaOpts.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.label}
               </option>

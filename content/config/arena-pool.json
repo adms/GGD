@@ -1,7 +1,7 @@
 {
   "id": "arena-pool",
   "schema": "config.arena-pool@1",
-  "note": "哪幾張場地會進回合輪替。⚠️ 在 GH#324 之前這是一個寫死在 game-server 裡的 TS 陣列，於是七張新產出的動漫競技場上線之後玩家一場都碰不到（失敗形態②：算出來了但從沒送到玩家面前）。順序就是輪替順序；決賽場地刻意不在裡面。",
+  "note": "哪幾張場地會進回合輪替。⚠️ 在 GH#324 之前這是一個寫死在 game-server 裡的 TS 陣列，於是七張新產出的動漫競技場上線之後玩家一場都碰不到（失敗形態②：算出來了但從沒送到玩家面前）。⛔ 這個陣列的順序**不是**輪替順序 —— 它只是池子的成員清單：`pickRoundArena()` 用 match seed 做 seeded Fisher–Yates 洗一次牌（每一場都不同、同場連續回合不重複、同 seed 重播一致），所以寫在前面不會比較早出現。決賽場地刻意不在裡面。",
   "rotation": [
     "arena.skeleton",
     "arena.castle",

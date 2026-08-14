@@ -112,7 +112,7 @@ vi.mock("../../content/bootContent", async (importOriginal) => {
 const { appStore } = await import("./store");
 const { LobbyScreen } = await import("./LobbyScreen");
 const { RoomListPanel } = await import("./RoomListPanel");
-const { ARENA_OPTIONS, DEFAULT_MAP_ID } = await import("./maps");
+const { arenaOptions, DEFAULT_MAP_ID } = await import("./maps");
 const {
   DEFAULT_LOBBY_LAYOUT,
   LOBBY_LAYOUT_BOUNDS,
@@ -476,7 +476,13 @@ describe("單人 vs BOT is the room browser's default room (GH#258)", () => {
 
     // A real, non-default option — and it must genuinely differ, or the
     // assertion below would be satisfied by the bug it is hunting.
-    const picked = ARENA_OPTIONS.map((a) => a.id).find((id) => id !== DEFAULT_MAP_ID)!;
+    // ⚠️ GH#324 之後選單是**推導**的（`arenaOptions()` 讀 Arenas 登錄表）——
+    // 這個測試檔沒有載內容，所以只有骨架那一筆，取不到「非預設」的選項。
+    // 直接用一個已知的出貨場地 id：這條測的是**選了會不會傳出去**，
+    // ⛔ 不是選單裡有什麼（那是 maps.test.ts 在守）。
+    const picked =
+      arenaOptions().map((a: { id: string }) => a.id).find((id: string) => id !== DEFAULT_MAP_ID) ??
+      "arena.castle";
     expect(picked).not.toBe(DEFAULT_MAP_ID);
     expect(arena.value).toBe(DEFAULT_MAP_ID); // the card opens on the default
 

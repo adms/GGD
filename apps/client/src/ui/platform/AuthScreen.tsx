@@ -25,7 +25,7 @@ import {
   EMAIL_AUTOCOMPLETE,
   CODE_AUTOCOMPLETE,
 } from "./autofill";
-import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { useArenaOptions, DEFAULT_MAP_ID } from "./maps";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HomeFooter } from "./HomeFooter";
 import { ChampionMarquee } from "./ChampionMarquee";
@@ -136,6 +136,8 @@ export function AuthScreen(): React.JSX.Element {
    */
   const [ownerToken, setOwnerToken] = useState("");
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
+  // ⭐ 從 `Arenas` 登錄表推導(GH#324 的七張新圖以前選不到)。
+  const arenaOpts = useArenaOptions();
   // 用手機登入 (#197/#199): opens the QR reverse-login panel. On a keyboard-less
   // handheld this is the whole login path — no text field ever needs focus.
   const [showDeviceLogin, setShowDeviceLogin] = useState(false);
@@ -832,7 +834,7 @@ export function AuthScreen(): React.JSX.Element {
               fontSize: 13,
             }}
           >
-            {ARENA_OPTIONS.map((m) => (
+            {arenaOpts.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.label}
               </option>
