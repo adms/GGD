@@ -251,13 +251,32 @@ export const ARCHETYPE_LABEL_ZH: Readonly<Record<Archetype, string>> = Object.fr
 });
 
 /** 這一版真的會被正規化的屬性。⛔ 不在名單上的照舊讀 `baseStats`。 */
+/**
+ * 攻擊型別 —— {@link StatNormalization.bandsByAttackType} 的兩把階梯就是照這個分的。
+ * ⚠️ 與 `champion@1` 的 `attackType` 同一組值（`schema/champion.ts` 的 z.enum）。
+ */
+export const ATTACK_TYPE_KEYS = ["melee", "ranged"] as const;
+export type AttackTypeKey = (typeof ATTACK_TYPE_KEYS)[number];
+
 export const NORMALIZED_STAT_KEYS = [
   "ms", "mr", "armor",
   // ⭐ 2026-08-12 第三版 —— owner：「出身跟定位**是影響所有屬性**不是這幾項而已」。
   //   前兩版只做了三項，那是我讀錯了範圍。
-  //   ⛔ `range` **不在名單上**：它的分佈是雙峰的（近戰 1.6 擠了 46 位、遠程 6–12），
-  //     組間跨度 5.75×，而近戰/遠程是**型別**不是級別。用一把尺量它一定出事。
   "maxHealth", "maxMana", "ad", "ap", "as", "healthRegen", "manaRegen",
+  // ⭐ 2026-08-16 第十一項 —— owner：「你補充第十一個屬性 攻擊距離 進來」。
+  //
+  //   ⚠️ 它在此之前被**刻意排除**，理由寫在這裡沒有失效：分佈是**雙峰**的。
+  //   2026-08-16 重量（53 位可選本體）：
+  //     近戰 n=39 → 1.2(×1) · 1.6(×31) · 2.0(×7)，中位 **1.6**
+  //     遠程 n=14 → 6.0 ~ 12.0，中位 **8.2**
+  //   組間跨度 **5.1×**，而近戰/遠程是**型別**不是級別。
+  //
+  //   ⭐ 解法不是「硬塞一把尺」，是**兩把尺**（{@link StatNormalization.bandsByAttackType}）：
+  //   出身給的級距意思變成「**以你的型別而言**算遠還算近」，由英雄自己的
+  //   `attackType` 選階梯。這同時解掉一個單尺絕對做不到的情況 ——
+  //   **硬輔這個出身裡近戰遠程都有**（賈修貝爾 6.4 遠程 vs 另外兩位 1.6 近戰），
+  //   任何單一絕對值都會把其中一半打成另一種型別。
+  "range",
 ] as const;
 export type NormalizedStatKey = (typeof NORMALIZED_STAT_KEYS)[number];
 
@@ -293,6 +312,20 @@ export interface StatNormalization {
   appliesTo: readonly NormalizedStatKey[];
   /** 每一項的三格數值。⭐ 錨點是量出來的中位數，階梯是指定的。 */
   bands: Readonly<Record<NormalizedStatKey, Readonly<Record<NormalBand, number>>>>;
+  /**
+   * ⭐ **依攻擊型別分成兩把階梯**的屬性（2026-08-16 加入，今天只有 `range`）。
+   *
+   * 查得到就**優先於** {@link bands}：`bandsByAttackType[key][近戰或遠程]`。
+   * 查不到（或英雄卡沒填 `attackType`）才退回 `bands[key]` —— 而 `bands.range`
+   * 出貨填的是**近戰**那一把，因為型別不明時把人變成遠程是遠比變成近戰嚴重的事故。
+   *
+   * ⚠️ 這**不是**為某一項屬性寫的 if（第〇·五守則）—— 它是一個**機制**：
+   * 「這條屬性的分佈由攻擊型別切成兩群」。任何一項屬性只要填進這張表就會走這條路，
+   * ⛔ 程式裡沒有任何一行提到 `range` 這個字。
+   */
+  bandsByAttackType: Readonly<
+    Partial<Record<NormalizedStatKey, Readonly<Record<AttackTypeKey, Readonly<Record<NormalBand, number>>>>>>
+  >;
   /**
    * archetype → 這一項該落在哪一格。⭐ 這張表就是 owner 那兩句話，
    * 一格一格填進來 —— 想改任何一格都是後台的事，不是改程式。
@@ -464,8 +497,32 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
     ad: bandsFromMedian(420, 21200),
     ap: bandsFromMedian(188.5, 100000),
     as: bandsFromMedian(7.34, 4),
+    // ⚠️ `range` 的**真正**階梯是下面的 `bandsByAttackType`（兩把）。這一格是
+    //   「英雄卡沒填 attackType」時的退路，刻意填**近戰**那一把 ——
+    //   型別不明時把人變成遠程，是遠比變成近戰嚴重的事故。
+    range: Object.freeze({ 極小: 1.2, 小: 1.4, 中: 1.6, 大: 1.8, 極大: 2 }),
     healthRegen: bandsFromMedian(16.85, 744),
     manaRegen: bandsFromMedian(20.22, 926),
+  }),
+  /**
+   * ⭐ 攻擊距離的**兩把階梯**（2026-08-16）。錨點都是量出來的（53 位可選本體）：
+   *
+   *   近戰 n=39：1.2(×1) · 1.6(×31) · 2.0(×7)　⇒ 中位 **1.6**，實際跨度只有 1.67×
+   *   遠程 n=14：6.0 · 6.4 · 7.3 · 8.2 · 9.2 · 10.1 · 12.0　⇒ 中位 **8.2**
+   *
+   * ⚠️ 兩把都**不是**等比階梯，而是直接貼著觀測到的實際值鋪 ——
+   * 近戰那把整個區間只有 1.2~2.0，硬套 ÷2/×2 會產生 0.8 與 3.2 兩個
+   * 「這個遊戲裡不存在的近戰距離」。
+   *
+   * ⭐ 遠程的 極大 = **12** 不是我挑的：那是 owner 2026-08-12 自己給的卡面上限
+   * （「上限是黑人牙膏 12」，見 `statCaps.ts` 的 `AttackRange` 那一段），
+   * 而黑人牙膏正是母體裡唯一的 12.0。極大這一格因此**剛好等於現存的最遠那位**。
+   */
+  bandsByAttackType: Object.freeze({
+    range: Object.freeze({
+      melee: Object.freeze({ 極小: 1.2, 小: 1.4, 中: 1.6, 大: 1.8, 極大: 2 }),
+      ranged: Object.freeze({ 極小: 6, 小: 7, 中: 8.2, 大: 10, 極大: 12 }),
+    }),
   }),
   // ⚠️ 四格那張是 owner 2026-08-12 逐字給的，留著當退路（`byOrigin` 清空就回到它）。
   byArchetype: Object.freeze({
@@ -482,43 +539,72 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
     ms: Object.freeze({ tank: "小", fighter: "大", marksman: "中", mage: "小" } as const),
     mr: Object.freeze({ tank: "小", fighter: "中", marksman: "小", mage: "大" } as const),
     armor: Object.freeze({ tank: "大", fighter: "中", marksman: "小", mage: "小" } as const),
+    // ⚠️ 級距的意思是「**以你的攻擊型別而言**算遠還算近」（見 `bandsByAttackType`），
+    //   所以近戰的「大」是 1.8 而不是把他變成遠程。
+    range: Object.freeze({ tank: "中", fighter: "中", marksman: "大", mage: "中" } as const),
   }),
   /*
-   * ⭐ 10 出身 × 10 屬性。每一列讀起來要像一句話：
+   * ⭐ 10 出身 × 11 屬性。**2026-08-16 owner 逐格重寫了整張表**，並且第一次
+   * 給了五個級距語意標籤：**極小=缺陷 · 小=偏低 · 中=標準 · 大=優勢 · 極大=特化**。
    *
-   *   坦克  生命極大 · 裝甲極大 · 魔力極小 · 回魔極小 · 法強極小   ← 最厚也最笨
-   *   砲手  攻擊力極大 · 攻速極小 · 移速極小                      ← 一發很重，動不了
-   *   鬥士  攻速極大 · 移速極大 · 法強極小                        ← 全場最快
-   *   法師  魔力/回魔/法強/魔抗**四個極大**，生命/回血/裝甲/AD 四個極小 ← 極端後排
-   *   軟輔  十項全部中                                            ← 沒有偏向
+   * ⚠️ 這一版與前一版差了 **67/100 格** —— ⛔ 不是微調，是重寫。方向上最大的改變是
+   * **極端值變少了**：前一版鬥士拿「移速極大 + 攻速極大」、法師拿四個極大，
+   * 這一版把它們拉回中段，把「極大」留給真正的特化位（狂戰的攻速與回血、
+   * 射手/砲手的 AD、坦克的雙防、法刺的 AP）。
    *
-   * ⚠️ 有幾格是**設計不是量測**，列出來讓 owner 一眼看得到要不要扳回去：
-   *   · 遠程（射手）的 AD 量到是全場最低，但表上給「中」—— 射手沒有 AD 不合理
-   *   · 坦克（坦克）的 AD 量到最高（力量推導），表上保留「大」
-   *   · 法鬥/硬輔/法刺三個混血是**新格子**（母體各只有 4/3/5 位），量測支撐弱
+   * 每一列讀起來像一句話：
+   *
+   *   鬥士  AD大 · 回血大 · 其餘全中          ← 站得住又打得動的標準近戰
+   *   狂戰  攻速極大 · 回血極大 · 防禦全小     ← 拿命換輸出
+   *   射手  AD極大 · 攻速大 · 三防極小/小      ← 最高輸出、最脆
+   *   砲手  AD極大 · 移速大 · HP與雙防極小     ← 站得遠、一碰就碎
+   *   坦克  雙防極大 · HP大 · 回血大           ← 最厚
+   *   法鬥  AD大 + AP大                        ← 雙修
+   *   法師  AP大，其餘幾乎全中/小              ← 標準後排
+   *   法刺  AP極大，攻速/AD/HP/三防全極小      ← 一發定生死
+   *   硬輔  AP大 · HP大 · 雙防大               ← 站得住的輔助
+   *   軟輔  AP大 · 回血大 · 回魔大             ← 續航型輔助
+   *
+   * ⚠️ 有幾格仍然是**設計不是量測**（母體支撐弱），列出來讓 owner 看得到：
+   *   · 砲手 / 軟輔兩個出身**目前 0 人**，整列都是純設計
+   *   · 法鬥/硬輔/法刺三個混血母體各只有 4/3/3 位
    */
-  // 🔴 2026-08-13 owner：「**shooter minimize hp and defense**」——
-  //   射手的生命與裝甲從「小」壓到「**極小**」。
-  //   ⭐ 那是量出來的代價：射手在 L60 之後普攻 DPS 全場最高
-  //     （一發技能只等於 0.84 秒的普攻，法師是 2.62 秒），所以他該是最脆的。
-  //   ⚠️ 魔抗**沒有**跟著壓（owner 只說 hp 與 defense）—— 它留在「小」。
   byOrigin: Object.freeze({
-    ms: Object.freeze({ 坦克: "小", 砲手: "極小", 鬥士: "極大", 射手: "中", 法鬥: "中", 法師: "小", 狂戰: "大", 硬輔: "小", 法刺: "大", 軟輔: "中" } as const),
-    mr: Object.freeze({ 坦克: "小", 砲手: "中", 鬥士: "中", 射手: "小", 法鬥: "大", 法師: "極大", 狂戰: "小", 硬輔: "大", 法刺: "中", 軟輔: "中" } as const),
-    armor: Object.freeze({ 坦克: "極大", 砲手: "中", 鬥士: "中", 射手: "極小", 法鬥: "中", 法師: "極小", 狂戰: "中", 硬輔: "大", 法刺: "小", 軟輔: "中" } as const),
-    maxHealth: Object.freeze({ 坦克: "極大", 砲手: "大", 鬥士: "中", 射手: "極小", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "大", 法刺: "小", 軟輔: "中" } as const),
-    maxMana: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "中", 軟輔: "中" } as const),
-    ad: Object.freeze({ 坦克: "大", 砲手: "極大", 鬥士: "大", 射手: "中", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "中", 法刺: "中", 軟輔: "中" } as const),
-    ap: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "極小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "大", 軟輔: "中" } as const),
-    as: Object.freeze({ 坦克: "小", 砲手: "極小", 鬥士: "極大", 射手: "大", 法鬥: "中", 法師: "小", 狂戰: "大", 硬輔: "小", 法刺: "大", 軟輔: "中" } as const),
-    healthRegen: Object.freeze({ 坦克: "大", 砲手: "中", 鬥士: "中", 射手: "小", 法鬥: "中", 法師: "極小", 狂戰: "大", 硬輔: "中", 法刺: "小", 軟輔: "中" } as const),
-    manaRegen: Object.freeze({ 坦克: "極小", 砲手: "小", 鬥士: "小", 射手: "中", 法鬥: "大", 法師: "極大", 狂戰: "極小", 硬輔: "大", 法刺: "大", 軟輔: "中" } as const),
+    ms: Object.freeze({ 坦克: "小", 砲手: "大", 鬥士: "中", 射手: "中", 法鬥: "小", 法師: "中", 狂戰: "大", 硬輔: "小", 法刺: "大", 軟輔: "小" } as const),
+    mr: Object.freeze({ 坦克: "極大", 砲手: "極小", 鬥士: "中", 射手: "極小", 法鬥: "小", 法師: "小", 狂戰: "小", 硬輔: "大", 法刺: "極小", 軟輔: "小" } as const),
+    armor: Object.freeze({ 坦克: "極大", 砲手: "極小", 鬥士: "中", 射手: "極小", 法鬥: "小", 法師: "小", 狂戰: "小", 硬輔: "大", 法刺: "極小", 軟輔: "小" } as const),
+    maxHealth: Object.freeze({ 坦克: "大", 砲手: "極小", 鬥士: "中", 射手: "小", 法鬥: "中", 法師: "中", 狂戰: "小", 硬輔: "大", 法刺: "極小", 軟輔: "小" } as const),
+    maxMana: Object.freeze({ 坦克: "小", 砲手: "小", 鬥士: "中", 射手: "中", 法鬥: "中", 法師: "中", 狂戰: "中", 硬輔: "小", 法刺: "小", 軟輔: "小" } as const),
+    ad: Object.freeze({ 坦克: "中", 砲手: "極大", 鬥士: "大", 射手: "極大", 法鬥: "大", 法師: "小", 狂戰: "大", 硬輔: "小", 法刺: "極小", 軟輔: "小" } as const),
+    ap: Object.freeze({ 坦克: "中", 砲手: "小", 鬥士: "小", 射手: "極小", 法鬥: "大", 法師: "大", 狂戰: "小", 硬輔: "大", 法刺: "極大", 軟輔: "大" } as const),
+    as: Object.freeze({ 坦克: "小", 砲手: "小", 鬥士: "中", 射手: "大", 法鬥: "小", 法師: "小", 狂戰: "極大", 硬輔: "小", 法刺: "極小", 軟輔: "小" } as const),
+    healthRegen: Object.freeze({ 坦克: "大", 砲手: "小", 鬥士: "大", 射手: "小", 法鬥: "中", 法師: "中", 狂戰: "極大", 硬輔: "小", 法刺: "小", 軟輔: "大" } as const),
+    manaRegen: Object.freeze({ 坦克: "小", 砲手: "小", 鬥士: "中", 射手: "中", 法鬥: "中", 法師: "中", 狂戰: "中", 硬輔: "小", 法刺: "小", 軟輔: "大" } as const),
+    /*
+     * ⭐ **第 11 項，這一列是我提的**（owner 2026-08-16 只說「你補充第十一個屬性
+     * 攻擊距離進來」，沒有給逐格的值）。
+     *
+     * ⚠️ 級距的意思是「**以你的攻擊型別而言**算遠還算近」，⛔ 不是絕對距離 ——
+     * 近戰的「大」是 1.8u，遠程的「大」是 10u，兩把階梯見 `bandsByAttackType`。
+     * 這正是為什麼**硬輔**（近戰遠程都有）也能給一個級距而不出事。
+     *
+     * 逐格理由：
+     *   砲手 極大  ← 砲手的定義特徵就是站得最遠（0 人，純設計）
+     *   射手 大    ← 遠程輸出的身分：比法師更該有安全距離
+     *   軟輔 大    ← 站最後排
+     *   狂戰 小 / 法刺 小 ← 兩者都必須貼身才成立，短射程是他們的代價
+     *   其餘 中    ← 標準
+     */
+    range: Object.freeze({ 坦克: "中", 砲手: "極大", 鬥士: "中", 射手: "大", 法鬥: "中", 法師: "中", 狂戰: "小", 硬輔: "中", 法刺: "小", 軟輔: "大" } as const),
   }),
   channel: Object.freeze({
     // ⭐ owner：「**初始的屬性是用來補正角色個性化差異，成長是定位導向**」
-    //   → 九項走 growth。⛔ 移速是唯一的例外，而且是量出來的機制限制：
-    //     成長只能往上推不能往下拉，而移速沒有三圍來源可以在反解時被減掉。
+    //   → 九項走 growth。⛔ 移速與攻擊距離是例外，而且都是量出來的機制限制：
+    //     成長只能往上推不能往下拉，而這兩項沒有三圍來源可以在反解時被減掉。
+    //     ⚠️ `range` 更直接：**53 位可選英雄裡 0 位有 `growth.range`**，
+    //     它從來就只是一個初始值。
     ms: "baseStats",
+    range: "baseStats",
     mr: "growth", armor: "growth", maxHealth: "growth", maxMana: "growth",
     ad: "growth", ap: "growth", as: "growth", healthRegen: "growth", manaRegen: "growth",
   } as const),
@@ -657,6 +743,28 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
     channel[key] =
       v === "baseStats" || v === "growth" ? v : DEFAULT_STAT_NORMALIZATION.channel[key];
   }
+  // ⭐ 雙階梯（2026-08-16）。⚠️ 逐格夾同一組上下界，理由跟 `bands` 那一圈一樣：
+  //   這是**繞過後台與 Zod 的第三層**（手改 overlay、舊主機寫下的文件、測試夾具）。
+  const bandsByAttackType = {} as Record<
+    NormalizedStatKey,
+    Record<AttackTypeKey, Record<NormalBand, number>>
+  >;
+  for (const key of NORMALIZED_STAT_KEYS) {
+    const fallback = DEFAULT_STAT_NORMALIZATION.bandsByAttackType[key];
+    const given = (d["bandsByAttackType"] as Record<string, Record<string, Record<string, unknown>>> | undefined)?.[key];
+    if (!fallback && !given) continue; // 這一項沒有雙階梯 —— 走單一 `bands`
+    const out = {} as Record<AttackTypeKey, Record<NormalBand, number>>;
+    for (const t of ATTACK_TYPE_KEYS) {
+      out[t] = { ...(fallback?.[t] ?? bands[key]) };
+      for (const band of NORMAL_BANDS) {
+        const v = given?.[t]?.[band];
+        if (typeof v === "number" && Number.isFinite(v) && v > 0) {
+          out[t][band] = Math.min(Math.max(v, BAND_VALUE_MIN), BAND_VALUE_MAX);
+        }
+      }
+    }
+    bandsByAttackType[key] = out;
+  }
   const shiftRaw = d["transformBandShift"];
   const skip = d["skipTransformedBodies"];
   const ref = d["referenceLevel"];
@@ -665,6 +773,7 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
     mode,
     appliesTo,
     bands,
+    bandsByAttackType,
     byArchetype,
     byOrigin,
     channel,
@@ -730,10 +839,21 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   const growth = { ...((def["growth"] as Record<string, number> | undefined) ?? {}) };
   let touchedBase = false;
   let touchedGrowth = false;
+  // ⭐ 雙階梯屬性（今天只有 `range`）要知道這張卡是近戰還是遠程。
+  //   ⚠️ 沒填就是 undefined ⇒ 下面退回單階梯的 `cfg.bands`，⛔ 不猜一個型別。
+  const atk = def["attackType"];
+  const attackType: AttackTypeKey | undefined =
+    atk === "melee" || atk === "ranged" ? atk : undefined;
+
   for (const key of cfg.appliesTo) {
     const raw = cfg.byOrigin[key]?.[org] ?? cfg.byArchetype[key]?.[arc];
     const band = raw === undefined ? undefined : shiftBand(raw, shift);
-    const target = band === undefined ? undefined : cfg.bands[key]?.[band];
+    // ⭐ 兩把階梯優先：`bandsByAttackType[key][近戰或遠程]`，查不到才退回 `bands[key]`。
+    //   ⛔ 程式裡沒有任何一行提到 `range` —— 是不是雙階梯由**資料**決定（第〇·五守則）。
+    const ladder =
+      (attackType !== undefined ? cfg.bandsByAttackType[key]?.[attackType] : undefined) ??
+      cfg.bands[key];
+    const target = band === undefined ? undefined : ladder?.[band];
     if (typeof target !== "number") continue;
 
     if (cfg.channel[key] === "growth") {

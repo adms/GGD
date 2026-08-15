@@ -73,6 +73,7 @@ import {
   zConfigVictoryFxDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
+import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
 import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
 import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
 import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
@@ -902,6 +903,10 @@ const NORM_STAT_ZH: Record<string, string> = {
   as: "攻速",
   healthRegen: "生命回復",
   manaRegen: "魔力回復",
+  // ⭐ 2026-08-16 第 11 項。⚠️ 它的**真正**階梯是雙份的（近戰/遠程各一把，
+  //   見 `bandsByAttackType`）—— 這一頁列出來的 `bands.range.*` 是「英雄卡沒填
+  //   attackType」時的退路，出貨填近戰那把。
+  range: "攻擊距離",
 };
 const NORM_BANDS = ["極小", "小", "中", "大", "極大"] as const;
 const NORM_ARCHETYPE_ZH: Record<string, string> = {
@@ -965,6 +970,29 @@ function generatedNormalizationFields(written: ReadonlySet<string>): ConfigField
       note: "「初始值」= 等級 1 就看得出差別；「每級成長」= 差異隨等級拉開，⚠️ 選人畫面上等級 1 看起來會一樣。",
       optionLabels: NORM_CHANNEL_OPTIONS,
     });
+  }
+  // ⭐ 雙階梯的那幾項（2026-08-16，今天只有攻擊距離）。
+  // ⚠️ **從出貨設定推導有哪幾項**，⛔ 不寫死 "range" —— 這一頁與引擎必須對同一份
+  //   清單說話，寫死一次就是一份會過期的鏡射。
+  for (const stat of Object.keys(DEFAULT_STAT_NORMALIZATION.bandsByAttackType)) {
+    for (const [type, typeZh] of [
+      ["melee", "近戰"],
+      ["ranged", "遠程"],
+    ] as const) {
+      for (const band of NORM_BANDS) {
+        push({
+          path: `bandsByAttackType.${stat}.${type}.${band}`,
+          zh: `${zh(stat)} · ${typeZh} · ${band}`,
+          note:
+            `${typeZh}英雄的 ${zh(stat)} 落在「${band}」這一格時的數值。` +
+            `⭐ ${zh(stat)}是**唯一分兩把階梯**的屬性：它的分佈是雙峰的（實測近戰中位 1.6、` +
+            `遠程中位 8.2，跨度 5.1×），而近戰/遠程是**型別不是級別**。` +
+            `所以出身給的級距意思是「以你的型別而言算遠還算近」——` +
+            `⚠️ 近戰的「大」不會把他變成遠程。這也是為什麼**硬輔**這種近戰遠程都有的出身` +
+            `也能安全地共用一個級距。`,
+        });
+      }
+    }
   }
   return out;
 }

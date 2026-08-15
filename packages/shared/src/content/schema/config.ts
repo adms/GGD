@@ -63,6 +63,7 @@ import {
 import {
   ARCHETYPES,
   BAND_VALUE_MAX,
+  ATTACK_TYPE_KEYS,
   BAND_VALUE_MIN,
   DEFAULT_STAT_NORMALIZATION,
   NORMAL_BANDS,
@@ -4397,11 +4398,40 @@ export const zConfigStatNormalizationDoc = z
     schema: z.literal("config.stat-normalization@1"),
     note: z.string().optional(),
     mode: z.enum(["normalized", "legacy"]),
-    /** 這一版真的套用的屬性。⛔ `range` 不在清單裡（雙峰，型別不是級別）。 */
+    /**
+     * 這一版真的套用的屬性。
+     * ⚠️ `range` 自 2026-08-16 起**在 `NORMALIZED_STAT_KEYS` 裡**（第 11 項），
+     * 但要不要真的套用仍由這一格決定 —— 見 `statNormalization.ts` 的
+     * `bandsByAttackType`（雙峰要兩把階梯）與 `DEFAULT_STAT_NORMALIZATION.appliesTo`。
+     */
     appliesTo: z.array(z.enum(NORMALIZED_STAT_KEYS)).max(NORMALIZED_STAT_KEYS.length),
     /** 每一項的**五格**數值。⭐ 由「中」× 階梯推出來，⛔ 不手打。 */
     bands: z
       .object(Object.fromEntries(NORMALIZED_STAT_KEYS.map((k) => [k, zNormBandValues])) as Record<string, typeof zNormBandValues>)
+      .strict(),
+    /**
+     * ⭐ 依攻擊型別分成**兩把階梯**的屬性（2026-08-16，今天只有 `range`）。
+     * 查得到就優先於 `bands`；查不到才退回單一階梯。
+     *
+     * ⚠️ 鍵**只列真的有雙峰的那幾項**（從 `DEFAULT_STAT_NORMALIZATION` 推導），
+     * ⛔ 不是全部 11 項都開一格。理由是誠實：對 `ad`／`maxHealth` 這種沒有雙峰的
+     * 屬性開一格「近戰/遠程各一把」，等於在後台長出 100 個永遠不該被填的欄位，
+     * 而操作者沒有任何線索知道哪些是真的。
+     * ⭐ 要新增一項雙階梯屬性本來就得先量出它的兩組錨點（= 改 `DEFAULT`），
+     * 所以「schema 跟著 DEFAULT 走」不會擋住任何真實需求。
+     */
+    bandsByAttackType: z
+      .object(
+        Object.fromEntries(
+          Object.keys(DEFAULT_STAT_NORMALIZATION.bandsByAttackType).map((k) => [
+            k,
+            z
+              .object(Object.fromEntries(ATTACK_TYPE_KEYS.map((t) => [t, zNormBandValues])) as Record<string, typeof zNormBandValues>)
+              .strict(),
+          ]),
+        ) as Record<string, z.ZodObject<Record<string, typeof zNormBandValues>>>,
+      )
+      .partial()
       .strict(),
     /** 四格定位表 —— owner 2026-08-12 逐字給的，留著當退路。 */
     byArchetype: z

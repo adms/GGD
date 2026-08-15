@@ -177,6 +177,7 @@ const STAT_OF: Readonly<Record<NormalizedStatKey, Stat>> = Object.freeze({
   as: Stat.AttackSpeed,
   healthRegen: Stat.HealthRegen,
   manaRegen: Stat.ManaRegen,
+  range: Stat.AttackRange,
 });
 
 const STAT_RESOLVE_DEPS: StatResolveDeps = Object.freeze({
