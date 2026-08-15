@@ -438,8 +438,15 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   // 五格由 `bandsFromMedian()` 推 —— ⛔ 不手打五個數字。
   // ⚠️ 第二個參數是那條屬性的**系統上限**（`config.stat-caps@1` 的 base）。
   //   ⛔ 這是一份鏡射，而 `statCapsAreFences.test.ts` 對照真的那張表 —— 說謊就紅。
+  //
+  // ⭐ **`ms` 是這十項裡唯一的例外**（owner 2026-08-15「移動速度重新設計預設值：
+  // 極小5/小7/中10/大14/極大18，一般上限24，解鎖上限30」）：
+  // 這五個數字不是等比階梯（7/5=1.4、14/10=1.4、18/14≈1.29，不是常數比），
+  // `bandsFromMedian()` 產生不出這一組 ⇒ 改成手寫表，⛔ 不是先反推一個「中位數」
+  // 再假裝是推導出來的（那種倒推法在下一次 owner 微調時會產生一個沒人看得懂的
+  // 中間值）。極大 18 < 上限 24，鬥士終於有加值空間（舊值極大=上限=10）。
   bands: Object.freeze({
-    ms: bandsFromMedian(5.8, 10),
+    ms: Object.freeze({ 極小: 5, 小: 7, 中: 10, 大: 14, 極大: 18 }),
     mr: bandsFromMedian(258.7, 15344),
     armor: bandsFromMedian(90.09, 5078),
     maxHealth: bandsFromMedian(8149.2, 375960),

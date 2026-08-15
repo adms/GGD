@@ -167,17 +167,21 @@ describe("combat-env stat multipliers (env-01)", () => {
 
   it("clamps still apply AFTER the env factor (env-02)", () => {
     cover("combat-env-clamp-after");
+    // ⚠️ 2026-08-15 owner 把移速上限重新設計成 24（原本 10）—— pin×env 的組合
+    //    要跟著抬高，否則這條測試不再真的踩到上限，變成一條驗不到任何東西的綠燈
+    //    （失敗形態④：斷言方向跟缺陷無關）。pin=15 × env=2 = 30，仍然遠遠超過
+    //    新上限，這條測試要驗的「clamp 在 env 相乘之後仍然生效」才繼續成立。
     const w = makeWorld(42, env({ moveSpeed: 2 }));
     const { sela } = duel(w);
     attachSource(w, sela, {
       id: "t:pin",
       kind: "buff",
-      modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.Override, value: 10 }],
+      modifiers: [{ stat: Stat.MoveSpeed, op: ModOp.Override, value: 15 }],
     });
     recomputeStats(w, sela);
-    // ⚠️ 移速在 2026-08-12 之後**有自己的 stat-caps 一格**（owner：「上限是 10」），
-    //    所以生效的上限不再是 `STAT_CLAMPS` 的上界 —— 那條只剩下界。
-    //    ⛔ 從出貨表推導，不抄字面值（第四個住處）。
+    // ⚠️ 移速在 2026-08-12 之後**有自己的 stat-caps 一格**（owner：「上限是 10」，
+    //    2026-08-15 改成 24），所以生效的上限不再是 `STAT_CLAMPS` 的上界 ——
+    //    那條只剩下界。⛔ 從出貨表推導，不抄字面值（第四個住處）。
     expect(w.stats.get(sela)!.final[Stat.MoveSpeed]).toBe(
       capFor(DEFAULT_STAT_CAPS, Stat.MoveSpeed).base,
     );
