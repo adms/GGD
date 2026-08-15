@@ -5,6 +5,7 @@
   "description": "故事：黑崎一護除了能夠看見靈之外，是個很普通的高中生，但是有一天，出現了一個叫做〔虛〕的惡靈找上了他，此時！他遇見了死神朽木露琪亞，為了拯救家人，踏上代理死神這條路 。\n(出自:死神BLEACH)\n\n推薦玩家 : 輸出殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.75\n敏捷 + 1.45\n智慧 + 1.6\n基礎跑速 295\n\n可學習的技能：\n瞬步、斬擊、月牙天衝、卍解",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.heroichigo",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.8
   },
   "growth": {
     "maxHealth": 55,

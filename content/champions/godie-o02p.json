@@ -5,6 +5,7 @@
   "description": "故事：\n人類史上第一個紅遍全球的虛擬歌姬，儘管到了今日仍在發光發熱，甚至有專屬初音的感謝祭演場會。\n(出自:HATSUNE MIKU)\n\n推薦玩家 : 輔助戰鬥\n上手度 : 易\n\n角色成長：\n力量 + 2.00\n敏捷 + 2.30\n智慧 + 1.70\n基礎跑速 315\n\n可學習的技能：\n甩蔥歌、最初的聲音、初音未來的消失、世界第一的公主殿下",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "軟輔",
   "modelKey": "imported.heromiku",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 36,

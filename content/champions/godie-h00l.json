@@ -5,6 +5,7 @@
   "description": "故事：原本在森林中被當成『永遠不會長大的科奇利族人』般的生活著，直到某天因葛諾多夫的陰謀而知道自己真正的身世，為了對抗葛諾多夫，林克成為時空勇者 。\n(出自:薩爾達傳說)\n\n推薦玩家 : 肉盾牽制\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 2.00\n智慧 + 1.20\n基礎跑速 295\n\n可學習的技能：\n科奇利族迴旋鏢、鎖鏈槍、海拉爾之盾的庇護、迴旋斬",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.linkstik",
   "attackDamagePoint": 0.5,
   "baseStats": {

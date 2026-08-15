@@ -5,6 +5,7 @@
   "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.mfls",
   "baseStats": {
     "maxHealth": 150,

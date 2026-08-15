@@ -202,11 +202,25 @@ const MIXED: Readonly<Record<string, Origin>> = Object.freeze({
   "agi|int": "法刺",
 });
 
-/** 推導出身。⭐ 純推導，⛔ 沒有手標的欄位（英雄卡的 `archetype` 只覆寫 4 格那一層）。 */
+/** 一個值是不是合法的出身。 */
+export function isOrigin(v: unknown): v is Origin {
+  return typeof v === "string" && (ORIGINS as readonly string[]).includes(v);
+}
+
+/**
+ * 出身。⭐ **英雄卡上的 `origin` 優先**（owner 2026-08-16 逐隻指派），
+ * 填了就用它，沒填才推導 —— 跟 {@link archetypeOf} 同一個形狀（第一守則：
+ * 推導是預設值，不是唯一來源）。
+ *
+ * ⚠️ 這一格在 2026-08-16 之前**不存在**，而那是一個真的洞：`byOrigin` 在正規化裡
+ * 優先於 `byArchetype`，所以填 `archetype`（只有 4 格）**覆寫不到出身**（10 格），
+ * 會靜靜地沒有作用。owner 這一批改動了 36/49 位，全部要靠這一格。
+ */
 export function originOf(
-  def: { attackType?: string } & Parameters<typeof primaryAttribute>[0],
+  def: { attackType?: string; origin?: unknown } & Parameters<typeof primaryAttribute>[0],
   mixedRatio: number = MIXED_RATIO,
 ): Origin {
+  if (isOrigin(def.origin)) return def.origin;
   const r = rankedAttrs(def);
   const [first, second, third] = r as [
     [number, "str" | "agi" | "int"],

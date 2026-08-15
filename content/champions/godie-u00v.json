@@ -5,6 +5,7 @@
   "description": "故事：\n前黑手黨老大，被手下背叛炸爛後接合回去所以身上有須多接痕及顏色，平常安靜，必要時非常的暴躁，武功高強，刀槍不入，有潔癖，愛帆布鞋成痴。\n(出自:監獄兔)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.60\n敏捷 + 1.60\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n斬鐵拳、地走龍牙破、廬山昇龍破、死亡噴射肘擊",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.rabbit",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.2
   },
   "growth": {
     "maxHealth": 52,

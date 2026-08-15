@@ -5,6 +5,7 @@
   "description": "故事：\n夢想成為世界第一的大劍客，使用自創的三刀流劍術擊遍天下劍客。為了在戰鬥中追尋武藝的卓越加入了愛與和平奮戰。\n(出自:航海王)\n\n推薦玩家 : 連技戰士\n上手度 : 難\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.65\n智慧 + 1.65\n基礎跑速 315\n\n可學習的技能：\n燒鬼斬、虎狩獵、鬼氣九刀流、三千世界",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.heromusashimiyamoto",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.8
   },
   "growth": {
     "maxHealth": 56,

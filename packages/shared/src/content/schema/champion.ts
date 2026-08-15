@@ -1,7 +1,7 @@
 /** champion@1 — mirrors `ChampionDef` in sim/content/defs.ts (abilities embedded). */
 import { z } from "zod";
 // 角色定位的四個值。⛔ 不要在這裡重打一份字串陣列。
-import { ARCHETYPES } from "../statNormalization";
+import { ARCHETYPES, ORIGINS } from "../statNormalization";
 import type { AbilityId, ChampionId, ItemId } from "../../ids";
 import {
   zAlpha,
@@ -130,6 +130,20 @@ export const zChampionDef = z
      * 粗分類，不是設計。
      */
     archetype: z.enum(ARCHETYPES).optional(),
+    /**
+     * ⭐ **出身覆寫**（owner 2026-08-16，逐隻指派 49 位）。
+     *
+     * `originOf()` 預設是**推導**的（三圍 lv10 權重 + 攻擊型別），而推導的結果
+     * 常常跟角色印象不合 —— owner 這一批改動了 **36/49 位**。
+     *
+     * ⚠️ 它必須是**自己一格**而不是沿用 `archetype`：`archetype` 只有 4 格
+     * （tank/fighter/marksman/mage），出身有 **10 格**，而 `byOrigin` 在正規化裡
+     * **優先於** `byArchetype` —— 填 `archetype` 覆寫不到出身，會靜靜地沒有作用。
+     *
+     * ⛔ 缺席 = 照推導走（不是「沒有出身」）。跟 `archetype` 同一個形狀：
+     * 推導是預設值，填了就以填的為準（第一守則）。
+     */
+    origin: z.enum(ORIGINS).optional(),
     modelKey: zRef("models"),
     /**
      * The RAW stat card. Since #248 the eight attribute-derived rows hold the

@@ -5,6 +5,7 @@
   "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法師",
   "modelKey": "imported.linainvers",
   "missileSpeed": 18.3,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 10.0
   },
   "growth": {
     "maxHealth": 32,

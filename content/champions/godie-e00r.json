@@ -5,6 +5,7 @@
   "description": "故事：\n『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然能力強大,但是不好控制。作業系統為[J-Win95]，因此很容易發生\"應用程式錯誤\"而失控暴走 。\n\n推薦玩家 : KUSO破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 300\n\n可學習的技能：\n吞噬、高震動周波短刀、AT力場、野戰型陽電子砲",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "狂戰",
   "modelKey": "champ.skin.rogue",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 2.0
   },
   "growth": {
     "maxHealth": 35,

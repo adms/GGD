@@ -5,6 +5,7 @@
   "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.heroshana",
   "baseStats": {
     "maxHealth": 150,

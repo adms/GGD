@@ -5,6 +5,7 @@
   "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法師",
   "modelKey": "champ.sela",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 9.2
+    "range": 7.0
   },
   "growth": {
     "maxHealth": 38,

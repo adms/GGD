@@ -5,6 +5,7 @@
   "description": "故事：\n來自雛見澤的小女孩，喜歡把\"好可愛\"的東西帶回家。\n(出自:寒蟬鳴泣之時)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.80\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬼隱之擊\n、染血的柴刀、五吋釘、雛見澤症候群L5",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "狂戰",
   "modelKey": "imported.renaryugu2",
   "baseStats": {
     "maxHealth": 150,

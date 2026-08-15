@@ -5,6 +5,7 @@
   "description": "故事：\n高爾根為蛇髮女怪，她們是海神Phorcys和ceto所生的三女妖：大姐司提娜(Stheno)是代表力量，二姐尤里艾蕾(Euryale)是代表自由(飛翔)，三妹梅杜莎(Medusa)是代表悲哀(女王)。她們三姊妹當中只有梅杜沙是人類的身軀。\n(出自:Fate/stay night)\n\n推薦玩家 : 團戰牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n魔法鎖鍊、心眼、鮮血神殿、騎英之韁繩",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.herorider",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 34,

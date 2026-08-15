@@ -5,6 +5,7 @@
   "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.sesshomaru",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.8
   },
   "growth": {
     "maxHealth": 37,

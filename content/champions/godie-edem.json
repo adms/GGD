@@ -5,6 +5,7 @@
   "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法刺",
   "modelKey": "imported.herosasuke",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 28,

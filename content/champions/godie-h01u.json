@@ -5,6 +5,7 @@
   "description": "故事：呂布（公元151年—公元198年），字奉先，五原（今內蒙古包頭市）人。三國時代的著名武將。呂布因其驍勇善戰，但又勢利多變。在民間對他評價為「人中呂布，馬中赤兔」。\n(出自:東漢世紀末傳說)\n\n推薦玩家 : PK破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 305\n\n可學習的技能：\n天下無雙、弒鬼神、鬼神烈戟、赤兔咆哮",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.lubu",
   "attackDamagePoint": 0.5,
   "baseStats": {

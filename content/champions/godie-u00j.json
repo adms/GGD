@@ -5,6 +5,7 @@
   "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.herosephiroth",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6,
+    "range": 2.0,
     "evasion": 0.15
   },
   "growth": {

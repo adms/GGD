@@ -5,6 +5,7 @@
   "description": "故事：\n傳說中打敗魔王的勇者，為神魔人混血創造的龍騎士，為了維護世界和平，再度使用高超的阿邦快速劍斬殺敵人。\n(出自:神龍之謎)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.70\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n雙龍紋、萊丁快速劍、龍鬥氣砲咒文、阿邦快速劍X",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.sd2",
   "attackDamagePoint": 0.5,
   "baseStats": {

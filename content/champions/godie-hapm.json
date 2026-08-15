@@ -5,6 +5,7 @@
   "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "坦克",
   "modelKey": "champ.thorne",
   "baseStats": {
     "maxHealth": 100,

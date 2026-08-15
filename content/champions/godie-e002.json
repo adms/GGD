@@ -5,6 +5,7 @@
   "description": "故事：\n在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖靈。\n(出自:Fate/stay night)\n\n推薦玩家 : 破塔PK\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.80\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n風王結界、感知能力、約束與勝利之劍、Avalon-永恆的理想鄉",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.herosaber",
   "baseStats": {
     "maxHealth": 150,

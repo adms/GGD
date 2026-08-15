@@ -5,6 +5,7 @@
   "description": "故事：\n隸屬於獸王底下的神官，是非常高等的魔族，擁有強大的魔法破壞力，不過通常隱身在幕後扮演調查和輔助的角色。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.40\n智慧 + 3.10\n基礎跑速 295\n\n可學習的技能：\n強化炸彈陣、獸王牙操彈、破法對咒、暴爆咒",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法刺",
   "modelKey": "imported.heroxelloss",
   "missileSpeed": 20.2,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 7.3
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 35,

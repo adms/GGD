@@ -5,6 +5,7 @@
   "description": "故事：\n相當傲嬌的皮卡丘，從小就展現出超出一般水準的戰鬥能力，是個斗S，喜歡身為M的主人小智，。\n(出自:SATO X PICA)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.60\n敏捷 + 2.60\n智慧 + 1.80\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、電光一閃、神鳴、打雷絕招",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法刺",
   "modelKey": "imported.pika",
   "missileSpeed": 36.7,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 1.2
   },
   "growth": {
     "maxHealth": 32,

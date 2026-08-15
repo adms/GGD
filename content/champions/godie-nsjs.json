@@ -5,6 +5,7 @@
   "description": "故事：\n魔界高級妖魔轉生寄宿為人類，為控制魔界植物的支配者。\n(出自:幽遊白書)\n\n推薦玩家 : 追擊破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.80\n智慧 + 2.65\n基礎跑速 300\n\n可學習的技能：\n風華圓舞陣、寄生種子、妖狐變化、億年樹",
   "role": "marksman",
   "attackType": "melee",
+  "origin": "法師",
   "modelKey": "imported.fox2",
   "missileSpeed": 17.4,
   "attackDamagePoint": 0.3,
@@ -23,7 +24,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 2
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 37,

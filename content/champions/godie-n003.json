@@ -5,6 +5,7 @@
   "description": "故事：\n吸血鬼的真祖〔以怪物來說是最強的等級而且是吸血鬼中屬於最高階的人物﹞，在15年以前是被稱為『闇之福音』、『不死的魔法使』。\n(出自:魔法老師)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.20\n敏捷 + 1.50\n智慧 + 2.60\n基礎跑速 295\n*只有在夜晚才會自動回覆生命值\n\n可學習的技能：\n凍結的大地、吸血祭品、暗夜吹雪、世界終結",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法師",
   "modelKey": "imported.long",
   "attackDamagePoint": 0.3,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 7.3
+    "range": 10.0
   },
   "growth": {
     "maxHealth": 24,

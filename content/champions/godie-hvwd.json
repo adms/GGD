@@ -5,6 +5,7 @@
   "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "射手",
   "modelKey": "imported.kikyou",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 9.2
+    "range": 12.0
   },
   "growth": {
     "maxHealth": 36,

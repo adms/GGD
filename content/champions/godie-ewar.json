@@ -5,6 +5,7 @@
   "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n推薦玩家 : 團戰狙擊\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n鬥仙術、仙氣．採藥、破凰之心．徒手空破山、龍氣爆發",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.herolingtong",
   "baseStats": {
     "maxHealth": 150,

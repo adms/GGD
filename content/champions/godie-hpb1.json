@@ -5,6 +5,7 @@
   "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "狂戰",
   "modelKey": "imported.herotoshiiemaeda",
   "baseStats": {
     "maxHealth": 150,

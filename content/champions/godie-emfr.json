@@ -5,6 +5,7 @@
   "description": "故事：\n英國某間魔法學校修行的首席畢業生涅吉，目前還只是個10歲的少年。他的目標是成為「出色的魔法使」。\n(出自:魔法老師)\n\n推薦玩家 : 團戰牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.40\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n風精召喚、沉睡之霧、雷電風暴、千之雷",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "狂戰",
   "modelKey": "imported.negi",
   "attackDamagePoint": 0.3,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 32,

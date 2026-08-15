@@ -5,6 +5,7 @@
   "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "champ.thorne",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.2
   },
   "growth": {
     "maxHealth": 49,

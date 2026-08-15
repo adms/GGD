@@ -5,6 +5,7 @@
   "description": "故事：\n英俊瀟灑，謹慎且機智，雖然極有女人緣但對異性不感興趣。高中三年級時在學校撿到了死神路克遺留人間界的死亡筆記\"DEATH NOTE\"，從而擁有了操縱生死的能力，並以\"新世界的神\"的名義君臨天下。\n(出自:死亡筆記本)\n\n推薦玩家 : 心機暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.50\n智慧 + 2.70\n基礎跑速 300\n\n可學習的技能：\n死神的規則、機警、火車輾過、心臟麻痺",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "法師",
   "modelKey": "imported.herolight",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 10.1
+    "range": 10.0
   },
   "growth": {
     "maxHealth": 35,

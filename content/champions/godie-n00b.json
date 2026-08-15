@@ -6,6 +6,7 @@
   "description": "故事：\n從21世紀來的機械貓，因為感受到體內KUSO魂呼喚，所以決定在去死團大闖天下。\n(出自:小叮噹)\n\n推薦玩家 : 團戰輔助\n上手度 : 中\n\n角色成長：\n力量 + 2.00\n敏捷 + 1.85\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n空氣砲、任意門、複製鏡、竹蜻蜓",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "軟輔",
   "modelKey": "champ.sela",
   "baseStats": {
     "maxHealth": 150,
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 7.0
   },
   "growth": {
     "maxHealth": 36,

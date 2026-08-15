@@ -5,6 +5,7 @@
   "description": "故事：\nCloud的名字暗示著他神祕，不清楚的過去以及他那不可預知的將來，為了過去奮戰們的朋友，使得他不得不重新提起沉重的大刀迎敵。\n(出自:太空戰士7)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.90\n基礎跑速 310\n\n可學習的技能：\n凶斬、隕石擊、畫龍點睛、超究武神霸斬",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.cloud",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.8
   },
   "growth": {
     "maxHealth": 50,

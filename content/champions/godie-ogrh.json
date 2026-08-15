@@ -5,6 +5,7 @@
   "description": "故事：\n七龍珠中不死的傳奇英雄，每當世界有難的時候總會亂入(!?)。\n(出自:七龍珠)\n\n推薦玩家 : 追擊破塔\n上手度 : 易\n\n角色成長：\n力量 + 2.60\n敏捷 + 2.30\n智慧 + 1.50\n基礎跑速 310\n\n可學習的技能：\n界王拳、瞬間移動、超級賽亞人、龜派氣功",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "imported.goku",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 52,

@@ -5,6 +5,7 @@
   "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法師",
   "modelKey": "champ.skin.barbarian",
   "baseStats": {
     "maxHealth": 150,

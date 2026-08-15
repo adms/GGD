@@ -5,6 +5,7 @@
   "description": "故事：\n自從皮卡丘成為國際巨星後，開始也擺起架勢把小智當傭人使喚，直到有一天在森林裡吃蘋果的時候，發現已經身在這場戰鬥中。\n(出自:神奇寶貝)\n\n推薦玩家 : 游擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.90\n智慧 + 1.60\n基礎跑速 320\n\n可學習的技能：\n十萬伏特、鋼鐵尾巴、就決定是你了!小智、瘋狂皮卡丘",
   "role": "marksman",
   "attackType": "ranged",
+  "origin": "射手",
   "modelKey": "imported.heropikachu",
   "missileSpeed": 36.7,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 7.0
   },
   "growth": {
     "maxHealth": 30,

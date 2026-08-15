@@ -5,6 +5,7 @@
   "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法刺",
   "modelKey": "imported.herohehi",
   "attackDamagePoint": 0.3,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 39,

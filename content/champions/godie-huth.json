@@ -5,6 +5,7 @@
   "description": "故事：\n看似貪玩可愛，骨子裡卻充滿邪惡的魔人普烏。擁有強大的分身再生能力，摧毀敵人也只不過是他的娛樂。\n(出自:七龍珠)\n\n推薦玩家 : 破塔堵人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.85\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n吃掉你、把你變成餅乾、分身、破滅能量彈",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "坦克",
   "modelKey": "imported.herobuu",
   "baseStats": {
     "maxHealth": 150,
@@ -21,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 50,

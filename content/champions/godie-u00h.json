@@ -5,6 +5,7 @@
   "description": "故事：\n關原之戰後四年千人斬傳說復活！\n手拿五尺大刀，背上有太極圖徽紋\n臉上有如鬼般的深紅雙眼！\n懸賞一百萬兩的通緝犯\n江湖上稱他為鬼畜狂刀。\n(出自:鬼眼狂刀KYO)\n\n推薦玩家 : 團戰殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.40\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n無名神風流-白虎 、無名神風流-朱雀、無明神風流-蛟龍、四神召喚 金色神風",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "法鬥",
   "modelKey": "imported.herokyo",
   "attackDamagePoint": 0.3,
   "baseStats": {

@@ -5,6 +5,7 @@
   "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n推薦玩家 : KUSO殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔權、北斗神拳秘訣轉龍呼吸法、北斗百烈拳、ChangeDNA",
   "role": "fighter",
   "attackType": "melee",
+  "origin": "鬥士",
   "modelKey": "champ.skin.barbarian",
   "attackDamagePoint": 0.5,
   "baseStats": {
@@ -22,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.2
   },
   "growth": {
     "maxHealth": 39,
