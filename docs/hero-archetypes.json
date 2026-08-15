@@ -44,6 +44,16 @@
     "enforcement": "warn-only（⛔ 不擋存檔、不擋 content:build）",
     "flagged": [
       {
+        "id": "godie-zombiex",
+        "name": "聖杯黑泥醬 - 喪標麥可",
+        "stat": "mr",
+        "level": 1,
+        "value": 0,
+        "median": 28,
+        "ratio": 0,
+        "direction": "low"
+      },
+      {
         "id": "godie-h02k",
         "name": "國寶級的畜生 - 熊貓",
         "stat": "ap",
@@ -79,7 +89,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.45,
-        "mr": 40,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 400,
         "ad": 31.8,
@@ -92,7 +102,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.22,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 75.25,
         "maxMana": 44.75,
         "ad": 3.5,
@@ -126,7 +136,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 2.4,
-        "mr": 40,
+        "mr": 28,
         "maxHealth": 679,
         "maxMana": 400,
         "ad": 34.2,
@@ -139,7 +149,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.77,
-        "mr": 2.16,
+        "mr": 1.2,
         "maxHealth": 116.1,
         "maxMana": 43,
         "ad": 2.88,
@@ -173,7 +183,7 @@
       "initial": {
         "ms": 6,
         "armor": 3.15,
-        "mr": 38.2,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 355,
         "ad": 26.8,
@@ -186,7 +196,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.335,
-        "mr": 2.13,
+        "mr": 1.2,
         "maxHealth": 75.25,
         "maxMana": 42.25,
         "ad": 3.6,
@@ -220,7 +230,7 @@
       "initial": {
         "ms": 6,
         "armor": 3.15,
-        "mr": 38.2,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 355,
         "ad": 26.8,
@@ -233,7 +243,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.335,
-        "mr": 2.13,
+        "mr": 1.2,
         "maxHealth": 60.2,
         "maxMana": 42.25,
         "ad": 3.46,
@@ -267,7 +277,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.3,
-        "mr": 37.6,
+        "mr": 28,
         "maxHealth": 633,
         "maxMana": 340,
         "ad": 18.4,
@@ -280,7 +290,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.335,
-        "mr": 2.13,
+        "mr": 1.2,
         "maxHealth": 75.25,
         "maxMana": 42.25,
         "ad": 3.6,
@@ -314,7 +324,7 @@
       "initial": {
         "ms": 5.3,
         "armor": 4.1,
-        "mr": 43,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 475,
         "ad": 21.8,
@@ -327,7 +337,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.465,
-        "mr": 2.88,
+        "mr": 1.2,
         "maxHealth": 79.55,
         "maxMana": 76,
         "ad": 1.84,
@@ -361,7 +371,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.6,
-        "mr": 37.6,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 340,
         "ad": 17.2,
@@ -374,7 +384,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.3275,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 77.4,
         "maxMana": 44.75,
         "ad": 3.52,
@@ -408,7 +418,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 3.9,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 310,
         "ad": 16.8,
@@ -421,7 +431,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.175,
-        "mr": 2.4,
+        "mr": 1.2,
         "maxHealth": 60.2,
         "maxMana": 54,
         "ad": 3.06,
@@ -455,7 +465,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 4.25,
-        "mr": 40,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 400,
         "ad": 36,
@@ -468,7 +478,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.03,
-        "mr": 2.58,
+        "mr": 1.2,
         "maxHealth": 64.5,
         "maxMana": 62.5,
         "ad": 2.8,
@@ -502,7 +512,7 @@
       "initial": {
         "ms": 5.6,
         "armor": 4.7,
-        "mr": 40,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 400,
         "ad": 22.2,
@@ -515,7 +525,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.61,
-        "mr": 3,
+        "mr": 1.2,
         "maxHealth": 68.8,
         "maxMana": 81,
         "ad": 2.04,
@@ -549,7 +559,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 4.85,
-        "mr": 41.2,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 430,
         "ad": 18,
@@ -562,7 +572,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.725,
-        "mr": 2.82,
+        "mr": 1.2,
         "maxHealth": 75.25,
         "maxMana": 62.5,
         "ad": 2.5,
@@ -596,7 +606,7 @@
       "initial": {
         "ms": 5.6,
         "armor": 2.1,
-        "mr": 46,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 550,
         "ad": 16,
@@ -609,7 +619,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.58,
-        "mr": 3.12,
+        "mr": 1.2,
         "maxHealth": 68.8,
         "maxMana": 86,
         "ad": 1.84,
@@ -643,7 +653,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.6,
-        "mr": 37.6,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 340,
         "ad": 17.2,
@@ -656,7 +666,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.3275,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 77.4,
         "maxMana": 44.75,
         "ad": 3.52,
@@ -690,7 +700,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 2.8,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 702,
         "maxMana": 370,
         "ad": 19.6,
@@ -703,7 +713,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.9,
-        "mr": 1.92,
+        "mr": 1.2,
         "maxHealth": 120.4,
         "maxMana": 32,
         "ad": 3.92,
@@ -737,7 +747,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 3.55,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 702,
         "maxMana": 495,
         "ad": 19.6,
@@ -750,7 +760,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.6175,
-        "mr": 2.16,
+        "mr": 1.2,
         "maxHealth": 118.25,
         "maxMana": 43,
         "ad": 3.9,
@@ -784,7 +794,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 3.4,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 748,
         "maxMana": 310,
         "ad": 17.4,
@@ -797,7 +807,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.61,
-        "mr": 2.22,
+        "mr": 1.2,
         "maxHealth": 120.4,
         "maxMana": 45.5,
         "ad": 3.92,
@@ -831,7 +841,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 4.25,
-        "mr": 29.2,
+        "mr": 28,
         "maxHealth": 840,
         "maxMana": 130,
         "ad": 58.5,
@@ -878,7 +888,7 @@
       "initial": {
         "ms": 6,
         "armor": 5.45,
-        "mr": 40.6,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 415,
         "ad": 16.4,
@@ -891,7 +901,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.175,
-        "mr": 2.4,
+        "mr": 1.2,
         "maxHealth": 64.5,
         "maxMana": 54,
         "ad": 2.1,
@@ -925,7 +935,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 1.95,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 767,
         "maxMana": 210,
         "ad": 18.6,
@@ -938,7 +948,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.61,
-        "mr": 2.22,
+        "mr": 1.2,
         "maxHealth": 120.4,
         "maxMana": 45.5,
         "ad": 3.92,
@@ -972,7 +982,7 @@
       "initial": {
         "ms": 6,
         "armor": 4.55,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 702,
         "maxMana": 295,
         "ad": 24.6,
@@ -985,7 +995,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.77,
-        "mr": 2.34,
+        "mr": 1.2,
         "maxHealth": 107.5,
         "maxMana": 51.5,
         "ad": 3.5,
@@ -1019,7 +1029,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 1.95,
-        "mr": 40.6,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 415,
         "ad": 21.8,
@@ -1032,7 +1042,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.61,
-        "mr": 2.58,
+        "mr": 1.2,
         "maxHealth": 103.2,
         "maxMana": 62.5,
         "ad": 3.36,
@@ -1066,7 +1076,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 370,
         "ad": 21.4,
@@ -1079,7 +1089,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.9,
-        "mr": 2.58,
+        "mr": 1.2,
         "maxHealth": 64.5,
         "maxMana": 62.5,
         "ad": 2.1,
@@ -1113,7 +1123,7 @@
       "initial": {
         "ms": 5.6,
         "armor": 1.95,
-        "mr": 44.2,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 505,
         "ad": 16.4,
@@ -1126,7 +1136,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.755,
-        "mr": 3,
+        "mr": 1.2,
         "maxHealth": 68.8,
         "maxMana": 81,
         "ad": 2.24,
@@ -1160,7 +1170,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 4.25,
-        "mr": 37,
+        "mr": 28,
         "maxHealth": 702,
         "maxMana": 325,
         "ad": 19.6,
@@ -1173,7 +1183,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.77,
-        "mr": 2.28,
+        "mr": 1.2,
         "maxHealth": 107.5,
         "maxMana": 49,
         "ad": 3.5,
@@ -1207,7 +1217,7 @@
       "initial": {
         "ms": 6,
         "armor": 4.25,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 748,
         "maxMana": 295,
         "ad": 20.4,
@@ -1220,7 +1230,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.9,
-        "mr": 2.22,
+        "mr": 1.2,
         "maxHealth": 90.3,
         "maxMana": 45.5,
         "ad": 2.94,
@@ -1254,7 +1264,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 4.1,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 656,
         "maxMana": 370,
         "ad": 26.3,
@@ -1267,7 +1277,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.8775,
-        "mr": 2.25,
+        "mr": 1.2,
         "maxHealth": 107.5,
         "maxMana": 47.25,
         "ad": 3.5,
@@ -1301,7 +1311,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.3,
-        "mr": 38.2,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 355,
         "ad": 16,
@@ -1314,7 +1324,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.2125,
-        "mr": 2.25,
+        "mr": 1.2,
         "maxHealth": 73.1,
         "maxMana": 47.25,
         "ad": 2.38,
@@ -1348,7 +1358,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 3.6,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 295,
         "ad": 14.2,
@@ -1361,7 +1371,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.06,
-        "mr": 2.28,
+        "mr": 1.2,
         "maxHealth": 77.4,
         "maxMana": 49,
         "ad": 2.52,
@@ -1395,7 +1405,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 2.4,
-        "mr": 40,
+        "mr": 28,
         "maxHealth": 610,
         "maxMana": 400,
         "ad": 26,
@@ -1408,7 +1418,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.725,
-        "mr": 2.76,
+        "mr": 1.2,
         "maxHealth": 51.6,
         "maxMana": 61,
         "ad": 2.28,
@@ -1442,7 +1452,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 4.4,
-        "mr": 41.8,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 445,
         "ad": 21.8,
@@ -1455,7 +1465,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.8775,
-        "mr": 2.67,
+        "mr": 1.2,
         "maxHealth": 91.2,
         "maxMana": 65.75,
         "ad": 2.86,
@@ -1489,7 +1499,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 10.75,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 295,
         "ad": 21.8,
@@ -1502,7 +1512,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.205,
-        "mr": 2.28,
+        "mr": 1.2,
         "maxHealth": 73.1,
         "maxMana": 49,
         "ad": 3.38,
@@ -1536,7 +1546,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 2.55,
-        "mr": 41.2,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 430,
         "ad": 27,
@@ -1549,7 +1559,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.7625,
-        "mr": 2.4,
+        "mr": 1.2,
         "maxHealth": 101.05,
         "maxMana": 54,
         "ad": 2.74,
@@ -1583,7 +1593,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 3.1,
-        "mr": 43,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 475,
         "ad": 16.4,
@@ -1596,7 +1606,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.77,
-        "mr": 2.79,
+        "mr": 1.2,
         "maxHealth": 79.55,
         "maxMana": 71.75,
         "ad": 2.54,
@@ -1630,7 +1640,7 @@
       "initial": {
         "ms": 6.2,
         "armor": 3,
-        "mr": 39.4,
+        "mr": 28,
         "maxHealth": 491,
         "maxMana": 285,
         "ad": 16.8,
@@ -1643,7 +1653,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.19,
-        "mr": 2.22,
+        "mr": 1.2,
         "maxHealth": 68.8,
         "maxMana": 45.5,
         "ad": 2.24,
@@ -1677,7 +1687,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 2.25,
-        "mr": 42.4,
+        "mr": 28,
         "maxHealth": 541,
         "maxMana": 460,
         "ad": 16.8,
@@ -1690,7 +1700,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.61,
-        "mr": 3.06,
+        "mr": 1.2,
         "maxHealth": 75.25,
         "maxMana": 83.5,
         "ad": 2.5,
@@ -1724,7 +1734,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 1.5,
-        "mr": 43,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 475,
         "ad": 16,
@@ -1737,7 +1747,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.755,
-        "mr": 2.58,
+        "mr": 1.2,
         "maxHealth": 82,
         "maxMana": 62.5,
         "ad": 2.6,
@@ -1771,7 +1781,7 @@
       "initial": {
         "ms": 6.2,
         "armor": 2.7,
-        "mr": 39.4,
+        "mr": 28,
         "maxHealth": 491,
         "maxMana": 285,
         "ad": 16.8,
@@ -1784,7 +1794,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.335,
-        "mr": 2.16,
+        "mr": 1.2,
         "maxHealth": 64.5,
         "maxMana": 43,
         "ad": 2.1,
@@ -1818,7 +1828,7 @@
       "initial": {
         "ms": 4.8,
         "armor": 3.95,
-        "mr": 43,
+        "mr": 28,
         "maxHealth": 656,
         "maxMana": 575,
         "ad": 58.8,
@@ -1831,7 +1841,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.725,
-        "mr": 2.1,
+        "mr": 1.2,
         "maxHealth": 43,
         "maxMana": 40.5,
         "ad": 1.4,
@@ -1865,7 +1875,7 @@
       "initial": {
         "ms": 6,
         "armor": 2.7,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 370,
         "ad": 17.2,
@@ -1878,7 +1888,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.045,
-        "mr": 2.1,
+        "mr": 1.2,
         "maxHealth": 111.8,
         "maxMana": 40.5,
         "ad": 3.64,
@@ -1912,7 +1922,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 3.3,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 370,
         "ad": 16,
@@ -1925,7 +1935,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.2125,
-        "mr": 2.25,
+        "mr": 1.2,
         "maxHealth": 81.7,
         "maxMana": 47.25,
         "ad": 2.66,
@@ -1959,7 +1969,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 4.05,
-        "mr": 35.8,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 395,
         "ad": 33,
@@ -1972,7 +1982,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.22,
-        "mr": 2.13,
+        "mr": 1.2,
         "maxHealth": 79.55,
         "maxMana": 42.25,
         "ad": 2.64,
@@ -2006,7 +2016,7 @@
       "initial": {
         "ms": 6,
         "armor": 3.9,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 310,
         "ad": 16,
@@ -2019,7 +2029,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.06,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 73.1,
         "maxMana": 44.75,
         "ad": 2.28,
@@ -2053,7 +2063,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 3.9,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 310,
         "ad": 16.4,
@@ -2066,7 +2076,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.915,
-        "mr": 2.34,
+        "mr": 1.2,
         "maxHealth": 77.4,
         "maxMana": 51.5,
         "ad": 2.62,
@@ -2100,7 +2110,7 @@
       "initial": {
         "ms": 5.3,
         "armor": 3.4,
-        "mr": 42.4,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 460,
         "ad": 18.4,
@@ -2113,7 +2123,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.9,
-        "mr": 3,
+        "mr": 1.2,
         "maxHealth": 43,
         "maxMana": 81,
         "ad": 3.4,
@@ -2147,7 +2157,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 2.1,
-        "mr": 41.2,
+        "mr": 28,
         "maxHealth": 564,
         "maxMana": 430,
         "ad": 17.2,
@@ -2160,7 +2170,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.74,
-        "mr": 2.1,
+        "mr": 1.2,
         "maxHealth": 126.85,
         "maxMana": 40.5,
         "ad": 2.68,
@@ -2194,7 +2204,7 @@
       "initial": {
         "ms": 5.8,
         "armor": 2.1,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 656,
         "maxMana": 370,
         "ad": 33.8,
@@ -2207,7 +2217,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.74,
-        "mr": 2.16,
+        "mr": 1.2,
         "maxHealth": 111.8,
         "maxMana": 43,
         "ad": 2.64,
@@ -2241,7 +2251,7 @@
       "initial": {
         "ms": 5.7,
         "armor": 2.1,
-        "mr": 43.6,
+        "mr": 28,
         "maxHealth": 518,
         "maxMana": 490,
         "ad": 16.4,
@@ -2254,7 +2264,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.8925,
-        "mr": 2.73,
+        "mr": 1.2,
         "maxHealth": 77.4,
         "maxMana": 69.25,
         "ad": 3.22,
@@ -2288,7 +2298,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 4.25,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 725,
         "maxMana": 310,
         "ad": 20,
@@ -2301,7 +2311,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.77,
-        "mr": 2.25,
+        "mr": 1.2,
         "maxHealth": 105.35,
         "maxMana": 47.25,
         "ad": 2.78,
@@ -2335,7 +2345,7 @@
       "initial": {
         "ms": 6.2,
         "armor": 3.7,
-        "mr": 38.2,
+        "mr": 28,
         "maxHealth": 725,
         "maxMana": 405,
         "ad": 66,
@@ -2348,7 +2358,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.45,
-        "mr": 3.6,
+        "mr": 1.2,
         "maxHealth": 43,
         "maxMana": 108,
         "ad": 4.4,
@@ -2382,7 +2392,7 @@
       "initial": {
         "ms": 6.1,
         "armor": 2.1,
-        "mr": 38.8,
+        "mr": 28,
         "maxHealth": 656,
         "maxMana": 470,
         "ad": 18.8,
@@ -2395,7 +2405,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.7475,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 120.4,
         "maxMana": 44.75,
         "ad": 2.72,
@@ -2429,7 +2439,7 @@
       "initial": {
         "ms": 5.9,
         "armor": 3,
-        "mr": 37,
+        "mr": 28,
         "maxHealth": 610,
         "maxMana": 325,
         "ad": 22,
@@ -2442,7 +2452,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.22,
-        "mr": 2.07,
+        "mr": 1.2,
         "maxHealth": 83.85,
         "maxMana": 38.75,
         "ad": 2.28,
@@ -2476,7 +2486,7 @@
       "initial": {
         "ms": 6,
         "armor": 3.9,
-        "mr": 36.4,
+        "mr": 28,
         "maxHealth": 495,
         "maxMana": 310,
         "ad": 16,
@@ -2489,7 +2499,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 1.1975,
-        "mr": 2.19,
+        "mr": 1.2,
         "maxHealth": 83.85,
         "maxMana": 44.75,
         "ad": 2.38,
@@ -2523,7 +2533,7 @@
       "initial": {
         "ms": 2.6,
         "armor": 1.2,
-        "mr": 3.6,
+        "mr": 0,
         "maxHealth": 380,
         "maxMana": 300,
         "ad": 28.8,
@@ -2536,7 +2546,7 @@
       "perLevel": {
         "ms": 0,
         "armor": 0.69,
-        "mr": 1.68,
+        "mr": 1.2,
         "maxHealth": 86.4,
         "maxMana": 34,
         "ad": 2.72,

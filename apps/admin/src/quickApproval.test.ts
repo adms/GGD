@@ -31,6 +31,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { ATTRIBUTE_ENV_DEFAULTS } from "@ggd/shared/sim/combatEnv";
 import {
   ABILITY_SLOTS,
   abilityIdsFor,
@@ -255,10 +256,14 @@ describe("數值體檢 — a rule about numbers, not a list of names", () => {
     // 每級 is growth.maxHealth PLUS str_growth × strToMaxHealth — the only
     // reason a champion with `growth.maxHealth: 0` can still gain health.
     expect(s.growthHealth).toBeCloseTo(40 + 2 * 23, 10);
-    // #221 之後 mr **有**屬性來源了:智慧 → 魔抗 0.6。int 10 × 0.6 = 6,28 + 6 = 34。
-    // ⚠️ 這一行原本的註解寫「a stat with no attribute source is untouched」,
-    // 那句話在 intToMagicResist 上線的當下就變成謊話 —— 語意改了,舊文案就是謊話。
-    expect(s.mr).toBe(34);
+    // #221 之後 mr **有**屬性來源了:智慧 → 魔抗。⚠️ 但 2026-08-16 owner 把出貨
+    // 係數改成 **0**(「把 智慧 增加魔抗 這項拆出來 比較有機會平衡」),所以
+    // int 10 × 0 = 0,mr 停在卡上的 28。
+    // ⭐ 這一行的歷史本身就是「語意改了舊文案就是謊話」的兩次示範:
+    //   ① 原本寫「a stat with no attribute source is untouched」→ #221 上線後成謊
+    //   ② 改成寫死 34 → 係數拆掉後又成謊
+    //   ⇒ 現在**從出貨表推導**,不再抄任何一個會過期的字面值。
+    expect(s.mr).toBe(28 + 10 * ATTRIBUTE_ENV_DEFAULTS.intToMagicResist);
     expect(s.ms).toBe(5.9);
   });
 

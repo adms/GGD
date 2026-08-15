@@ -552,10 +552,27 @@ export const ATTRIBUTE_ENV_DEFAULTS = {
    *
    * It lands on `Stat.MagicResist`, which `combat/damage.ts mitigate()` already
    * reads for every non-physical, non-true packet through the SAME
-   * `100/(100+resist)` curve as armour — so this coefficient is what finally
-   * makes 智慧 a defensive attribute, not a new mitigation mechanic.
+   * `100/(100+resist)` curve as armour.
+   *
+   * 🔴 **2026-08-16 owner：0.6 → 0**（「我想把 智慧 增加魔抗 這項拆出來
+   *   比較有機會平衡」）。⛔ 機制一行都沒刪 —— `ATTR_STAT_SOURCE` 那條線、
+   *   後台那一格、`mitigate()` 的讀取全部原封不動，這是**出貨值**改成 0，
+   *   跟場地環境火焰（GH#251）同一個形狀：改主意就是後台填回 0.6。
+   *
+   *   ⭐ 拆掉的理由是量出來的，不是偏好 —— 智慧對**最終**魔抗幾乎沒有正面作用：
+   *     · **43/57 位**：`mr` 走 growth 通道，正規化為了打中出身的級距，會解出一個
+   *       `growth.mr` 把智慧的貢獻**整個抵銷掉** ⇒ 淨影響 0。
+   *     · **14/57 位**：智慧把他們頂過級距，反解出負成長被 `allowNegativeGrowth:
+   *       false` 夾成 0 ⇒ 智慧的唯一效果是**讓他們落不到指定的那一格**。
+   *   ⇒ 這個係數不是在「讓智慧變成防禦屬性」，是在跟級距表打架，而且只在輸的
+   *     時候才看得出來。拆掉之後魔抗命中率 43/57 → **57/57**。
+   *
+   *   ⚠️ 魔抗改成純線性成長：`baseStats.mr + 級距反解出的每級成長 ×(L−1)`。
+   *     實測（卡上初始中位 28）：坦克 極大 每級 +4.99 → L99 517（減傷 84%）、
+   *     射手/法刺/砲手 極小 每級 +1.03 → L99 129（減傷 56%）。
+   *   ⚠️ 副作用：**買智慧不再送魔抗**（三圍可以用金幣買，#260）。
    */
-  intToMagicResist: 0.6,
+  intToMagicResist: 0,
 } as const;
 
 /** The 三圍 coefficient keys — the subset of the table that is not a factor. */

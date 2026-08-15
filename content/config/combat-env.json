@@ -1,7 +1,7 @@
 {
   "id": "combat-env",
   "schema": "config.combat-env@1",
-  "version": 7,
+  "version": 8,
   "multipliers": {
     "cooldown": 0.2,
     "damageDealt": 1.0,
@@ -30,7 +30,7 @@
     "intToMaxMana": 15,
     "intToManaRegen": 0.07,
     "intToAbilityPower": 6.5,
-    "intToMagicResist": 0.6,
+    "intToMagicResist": 0,
     "goldRoundPayout": 1.0,
     "goldMobKill": 0.5,
     "goldEliteKill": 0.1,

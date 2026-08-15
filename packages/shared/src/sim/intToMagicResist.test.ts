@@ -134,7 +134,11 @@ const afterResist = (amount: number, resist: number): number => amount * (100 / 
 describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
   it("智慧 +100 gives +60 魔抗 on the FINAL stat, not just in the config", () => {
     cover("mr-221-int-to-mr");
-    const w = newWorld();
+    // 🔴 2026-08-16 owner 把**出貨值**改成 0（「把 智慧 增加魔抗 這項拆出來」），
+    //   所以這一條改成**明確設定係數**再驗。⭐ 這樣才對：這條測試要證明的是
+    //   「這根軸還在、而且照操作者填的數字走」，⛔ 不是「出貨值剛好是 0.6」。
+    //   出貨值本身由下面那兩條 drift 斷言負責，兩件事分開才不會一起腐爛。
+    const w = newWorld({ intToMagicResist: 0.6 });
     const id = champ(w);
 
     // thorne ships mr 32 and INT 14, so his level-1 魔抗 is already
@@ -168,7 +172,9 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
 
   it("一發 AP(magic) 傷害在魔抗高的人身上打得比較少 —— 走真的傷害佇列", () => {
     cover("mr-221-ap-mitigated");
-    const w = newWorld();
+    // ⚠️ 同上：明確設係數。這一條驗的是 `mitigate()` **有沒有讀魔抗**，
+    //   ⛔ 不是出貨值是多少 —— 出貨值改成 0 之後它仍然必須紅在「刪掉那個讀取」。
+    const w = newWorld({ intToMagicResist: 0.6 });
     const plain = champ(w);
     const smart = champ(w, 2);
     buyInt(w, smart, 100); // +60 魔抗 via the coefficient, nothing else touched
@@ -230,10 +236,14 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
     // 當時根本沒有這個 key —— 平台的 sanitize() 會把它從每一張表丟掉,後台
     // 完全改不到(第一守則的失敗)。真正的守衛在 Go 那一側,不在這裡。
     expect(isAttributeEnvKey("intToMagicResist")).toBe(true);
-    // 2) it is a COEFFICIENT (neutral = 0.6), not a ×factor (neutral = 1.0)
-    expect(isAttributeEnvKey("intToMagicResist")).toBe(true);
-    expect(ATTRIBUTE_ENV_DEFAULTS.intToMagicResist).toBe(0.6);
-    expect(DEFAULT_COMBAT_ENV.intToMagicResist).toBe(0.6);
+    // 2) it is a COEFFICIENT, not a ×factor (a factor's neutral is 1.0)
+    // 🔴 2026-08-16 owner：出貨值 0.6 → **0**（「把 智慧 增加魔抗 這項拆出來」）。
+    //   ⭐ 這裡釘的是**出貨值**，跟上面那幾條「機制還在」是兩件事：
+    //     機制的那幾條現在自己設係數，所以出貨值再怎麼調它們都不會誤報。
+    //   ⚠️ 0 對 COEFFICIENT 是一個**合法值**（「關掉這根軸」），對 ×factor 才是異常
+    //     —— 這也是為什麼下面仍然要驗它是 attribute key 而不是 factor key。
+    expect(ATTRIBUTE_ENV_DEFAULTS.intToMagicResist).toBe(0);
+    expect(DEFAULT_COMBAT_ENV.intToMagicResist).toBe(0);
     // 3) the derivation table the stat pipeline reads
     expect(ATTR_STAT_SOURCE[Stat.MagicResist]).toEqual({
       attr: "int",
@@ -242,7 +252,7 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
     });
   });
 
-  it("出貨的 content/config/combat-env.json 帶著同一個 0.6", () => {
+  it("出貨的 content/config/combat-env.json 與程式端的 DEFAULT 是同一個值", () => {
     cover("mr-221-three-places");
     // ⚠️ 這一份才是伺服器真的載入的表;程式端的 DEFAULT 只在讀不到文件時生效。
     // 兩邊不一致的話,後台顯示的和玩家實際拿到的會是兩個數字,而且沒人會說。
@@ -251,7 +261,10 @@ describe("GH#221 智慧 → 魔抗 (the ninth 三圍 coefficient)", () => {
       multipliers: Record<string, number>;
     };
     expect(doc.schema).toBe("config.combat-env@1");
-    expect(doc.multipliers.intToMagicResist).toBe(0.6);
+    // 🔴 2026-08-16 owner 把它拆掉（0.6 → 0）。⛔ 從 `ATTRIBUTE_ENV_DEFAULTS` 推導
+    //   而不是再抄一次字面值 —— 抄一次就是第三個住處，而它會自己過期。
+    expect(doc.multipliers.intToMagicResist).toBe(ATTRIBUTE_ENV_DEFAULTS.intToMagicResist);
+    expect(doc.multipliers.intToMagicResist).toBe(0);
     // ⚠️ 這裡原本還釘住 agiToArmor 與 maxHealth,理由是「同一批決定」。那是錯的:
     // maxHealth 倍率是 owner 反覆推翻過的平衡值(#265 4→3、今天 6→9),把它釘進
     // 一個講「智慧→魔抗」的守衛,結果就是**每一次平衡調整都讓這個檔誤報**,
