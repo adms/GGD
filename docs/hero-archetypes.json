@@ -11,14 +11,14 @@
     "rule": "10 種 = 6 純血（主屬性 × 攻擊型態）+ 3 混血（前二名三圍的比 < MIXED_RATIO）+ 1 均衡（連第三名都在門檻內）",
     "mixedRatio": 1.2,
     "counts": {
-      "坦克": 15,
+      "坦克": 14,
       "砲手": 0,
-      "鬥士": 14,
+      "鬥士": 13,
       "射手": 4,
       "法鬥": 4,
       "法師": 9,
       "狂戰": 1,
-      "硬輔": 3,
+      "硬輔": 1,
       "法刺": 3,
       "軟輔": 0
     },
@@ -204,53 +204,6 @@
         "as": 0.0393,
         "range": 0,
         "healthRegen": 0.16,
-        "manaRegen": 0.1685
-      }
-    },
-    {
-      "id": "godie-e00k",
-      "name": "戰國刺客Azumi - 安云",
-      "身分": "本體",
-      "reachability": "本體·可選",
-      "counterpartId": "godie-e00z",
-      "attackType": "melee",
-      "bodyScale": 1,
-      "primary": "agi",
-      "出身": "鬥士",
-      "定位": "fighter",
-      "archetypeOverride": null,
-      "attributes": {
-        "str": 17,
-        "agi": 21,
-        "int": 17,
-        "strGrowth": 1.4,
-        "agiGrowth": 2.9,
-        "intGrowth": 1.55
-      },
-      "initial": {
-        "ms": 6,
-        "armor": 3.15,
-        "mr": 28,
-        "maxHealth": 541,
-        "maxMana": 355,
-        "ad": 26.8,
-        "ap": 110.5,
-        "as": 0.6,
-        "range": 1.6,
-        "healthRegen": 0.93,
-        "manaRegen": 1.29
-      },
-      "perLevel": {
-        "ms": 0,
-        "armor": 1.335,
-        "mr": 1.2,
-        "maxHealth": 60.2,
-        "maxMana": 42.25,
-        "ad": 3.46,
-        "ap": 10.075,
-        "as": 0.0393,
-        "range": 0,
-        "healthRegen": 0.126,
         "manaRegen": 0.1685
       }
     },
@@ -1007,53 +960,6 @@
       }
     },
     {
-      "id": "godie-hblm",
-      "name": "慈悲的王者 - 賈修貝爾",
-      "身分": "本體",
-      "reachability": "本體·可選",
-      "counterpartId": null,
-      "attackType": "ranged",
-      "bodyScale": 0.67,
-      "primary": "int",
-      "出身": "硬輔",
-      "定位": "mage",
-      "archetypeOverride": null,
-      "attributes": {
-        "str": 17,
-        "agi": 13,
-        "int": 21,
-        "strGrowth": 2.4,
-        "agiGrowth": 1.4,
-        "intGrowth": 2.3
-      },
-      "initial": {
-        "ms": 5.9,
-        "armor": 1.95,
-        "mr": 28,
-        "maxHealth": 541,
-        "maxMana": 415,
-        "ad": 21.8,
-        "ap": 136.5,
-        "as": 0.59,
-        "range": 6.4,
-        "healthRegen": 0.93,
-        "manaRegen": 1.57
-      },
-      "perLevel": {
-        "ms": 0,
-        "armor": 0.61,
-        "mr": 1.2,
-        "maxHealth": 103.2,
-        "maxMana": 62.5,
-        "ad": 3.36,
-        "ap": 14.95,
-        "as": 0.0302,
-        "range": 0,
-        "healthRegen": 0.216,
-        "manaRegen": 0.251
-      }
-    },
-    {
       "id": "godie-hgam",
       "name": "種子神奇寶貝 - 妙蛙種子",
       "身分": "本體",
@@ -1145,53 +1051,6 @@
         "range": 0,
         "healthRegen": 0.144,
         "manaRegen": 0.33
-      }
-    },
-    {
-      "id": "godie-hpal",
-      "name": "不死之身-無 - 藤井八雲",
-      "身分": "本體",
-      "reachability": "本體·可選",
-      "counterpartId": null,
-      "attackType": "melee",
-      "bodyScale": 1,
-      "primary": "str",
-      "出身": "坦克",
-      "定位": "tank",
-      "archetypeOverride": null,
-      "attributes": {
-        "str": 24,
-        "agi": 15,
-        "int": 15,
-        "strGrowth": 2.5,
-        "agiGrowth": 1.8,
-        "intGrowth": 1.8
-      },
-      "initial": {
-        "ms": 5.9,
-        "armor": 4.25,
-        "mr": 28,
-        "maxHealth": 702,
-        "maxMana": 325,
-        "ad": 19.6,
-        "ap": 97.5,
-        "as": 0.61,
-        "range": 1.6,
-        "healthRegen": 1.46,
-        "manaRegen": 1.15
-      },
-      "perLevel": {
-        "ms": 0,
-        "armor": 0.77,
-        "mr": 1.2,
-        "maxHealth": 107.5,
-        "maxMana": 49,
-        "ad": 3.5,
-        "ap": 11.7,
-        "as": 0.0328,
-        "range": 0,
-        "healthRegen": 0.22,
-        "manaRegen": 0.196
       }
     },
     {
@@ -1521,53 +1380,6 @@
         "range": 0,
         "healthRegen": 0.158,
         "manaRegen": 0.196
-      }
-    },
-    {
-      "id": "godie-nplh",
-      "name": "通靈人 - 麻倉葉",
-      "身分": "本體",
-      "reachability": "本體·可選",
-      "counterpartId": null,
-      "attackType": "melee",
-      "bodyScale": 1,
-      "primary": "int",
-      "出身": "硬輔",
-      "定位": "mage",
-      "archetypeOverride": null,
-      "attributes": {
-        "str": 15,
-        "agi": 17,
-        "int": 22,
-        "strGrowth": 2.35,
-        "agiGrowth": 1.75,
-        "intGrowth": 2
-      },
-      "initial": {
-        "ms": 6.1,
-        "armor": 2.55,
-        "mr": 28,
-        "maxHealth": 495,
-        "maxMana": 430,
-        "ad": 27,
-        "ap": 143,
-        "as": 0.62,
-        "range": 1.6,
-        "healthRegen": 0.85,
-        "manaRegen": 1.64
-      },
-      "perLevel": {
-        "ms": 0,
-        "armor": 0.7625,
-        "mr": 1.2,
-        "maxHealth": 101.05,
-        "maxMana": 54,
-        "ad": 2.74,
-        "ap": 13,
-        "as": 0.033,
-        "range": 0,
-        "healthRegen": 0.214,
-        "manaRegen": 0.22
       }
     },
     {
