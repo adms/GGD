@@ -32,6 +32,8 @@ import {
 import { useHudViewport } from "../hud/useHudSurface";
 import { hudTouch } from "../hud/HudSlot";
 import { useApp } from "../platform/store";
+import { useSettings } from "../useSettings";
+import { settingsStore } from "../../settings";
 import { championIconUrl } from "../icons";
 import { GlyphTile } from "../components/GlyphTile";
 import { Btn } from "../platform/widgets";
@@ -367,6 +369,46 @@ function cardStyle(width: number | string): React.CSSProperties {
  * suite). The `data-hud-mount="match-end"` attribute on the wash below is what
  * that guard looks for; see the comment at its declaration.
  */
+/**
+ * 收合鍵（owner 2026-08-15：「全戰鬥結算以後 戰績評價可以收到最小」）。
+ *
+ * ⚠️ 貼在卡片右上，⛔ 不是塞進底部的按鈕列 —— 那一列是出口（返回大廳／戰績變化），
+ * 而「把畫面縮小」跟「離開這個畫面」是兩種動作，混在一起會誤按。
+ */
+function MatchEndCollapseToggle({
+  collapsed,
+  onToggle,
+}: {
+  readonly collapsed: boolean;
+  readonly onToggle: () => void;
+}): React.JSX.Element {
+  return (
+    <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: -6 }}>
+      <button
+        type="button"
+        data-testid="match-end-collapse"
+        onClick={onToggle}
+        aria-expanded={!collapsed}
+        // 手把／鍵盤唸得出來的名字（#252 的教訓：一個只有圖示的按鈕對焦點沒東西可念）
+        aria-label={collapsed ? "展開完整戰績" : "收合戰績到最小"}
+        title={collapsed ? "展開完整戰績" : "收合戰績到最小"}
+        style={{
+          background: "rgba(255,255,255,0.06)",
+          border: "1px solid rgba(255,255,255,0.16)",
+          borderRadius: 6,
+          color: TEXT_DIM,
+          fontSize: 11,
+          lineHeight: 1,
+          padding: "5px 9px",
+          cursor: "pointer",
+        }}
+      >
+        {collapsed ? "▾ 展開戰績" : "▴ 收到最小"}
+      </button>
+    </div>
+  );
+}
+
 export function MatchEndPanel({
   defaultChartOpen = false,
 }: { defaultChartOpen?: boolean }): React.JSX.Element {
@@ -524,6 +566,16 @@ export function MatchEndPanel({
   // this screen opens with, and the chart is what a player asks for afterwards.
   const [showProgress, setShowProgress] = useState(defaultChartOpen);
 
+  // ⭐ 收到最小（owner 2026-08-15：「全戰鬥結算以後 戰績評價可以收到最小」）。
+  //
+  // ⚠️ 狀態住在**玩家設定**而不是這裡的 `useState`：一個每場都要重按一次的
+  //    收合鍵等於沒有做。`settings.ui.matchEndCollapsed` 會被存起來。
+  // ⛔ 收合**不會**藏掉 `返回大廳` —— 那是這個畫面的 `providesExit`（#107 的
+  //    版面表就是這樣宣告的）。把唯一的出口收進一個折疊區裡 = 玩家出不去。
+  const collapsed = useSettings((st) => st.ui.matchEndCollapsed);
+  const toggleCollapsed = (): void =>
+    settingsStore.patchUi({ matchEndCollapsed: !collapsed });
+
   // WHERE the chart opens (owner, 2026-07-30: 「查看戰績變化折線圖太低,縮小一點
   // 顯示在右邊比較好」). It used to be the LAST child of this card, under the
   // 返回大廳 row and inside `maxHeight: 92vh; overflowY: auto` — i.e. below the
@@ -666,13 +718,20 @@ export function MatchEndPanel({
         }}
       >
         <style>{AUTO_SCROLL_HIGHLIGHT_CSS}</style>
+        <MatchEndCollapseToggle collapsed={collapsed} onToggle={toggleCollapsed} />
         {local ? (
           <>
             <GradeSplash player={local} won={won} />
-            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>個人數據</div>
-            <StatBreakdown player={local} />
-            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>賽後檢討</div>
-            <Reflections player={local} />
+            {/* 收合時只留 GradeSplash（名次 + 評價 + 名字）。⛔ 不是把整張卡片
+                藏掉 —— owner 要的是「收到最小」，最小仍然要看得到自己拿了什麼。 */}
+            {collapsed ? null : (
+              <>
+                <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>個人數據</div>
+                <StatBreakdown player={local} />
+                <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>賽後檢討</div>
+                <Reflections player={local} />
+              </>
+            )}
           </>
         ) : (
           <div style={{ fontSize: 20, fontWeight: 900, marginBottom: 12, textAlign: "center", color: won ? "#f2c637" : TEXT_MAIN }}>
@@ -686,21 +745,25 @@ export function MatchEndPanel({
             函式,各自算一次遲早會在某一回合分岔而玩家分不出哪個是真的。
             這份帳的範圍與代價(重連會失去先前回合)見 panels/teamLedger §3,
             所以「累積 N 回合」也印在旁邊。 */}
-        <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>團隊累積積分</div>
-        <TeamPointsRows
-          standings={teamStandings()}
-          localTeamId={local?.teamId ?? null}
-          roundsSeen={teamLedger.roundsSeen()}
-        />
+        {collapsed ? null : (
+          <>
+            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6 }}>團隊累積積分</div>
+            <TeamPointsRows
+              standings={teamStandings()}
+              localTeamId={local?.teamId ?? null}
+              roundsSeen={teamLedger.roundsSeen()}
+            />
 
-        <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6, marginTop: 12 }}>本場排名</div>
-        <RankingTable
-          players={players}
-          localSeatId={localSeatId}
-          winnerTeam={settlement.winnerTeam}
-          nameForSeat={nameForSeat}
-          scroll={scroll}
-        />
+            <div style={{ fontSize: 11, color: TEXT_DIM, letterSpacing: 1, textTransform: "uppercase", marginBottom: 6, marginTop: 12 }}>本場排名</div>
+            <RankingTable
+              players={players}
+              localSeatId={localSeatId}
+              winnerTeam={settlement.winnerTeam}
+              nameForSeat={nameForSeat}
+              scroll={scroll}
+            />
+          </>
+        )}
 
         {/* 查看戰績變化 — expands IN PLACE (owner, 2026-07-27). It used to call
             store.viewRankChange(), which IS a navigation: it sets lobbyView and

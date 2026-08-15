@@ -134,6 +134,19 @@ export interface UiSettings {
    * 出貨值 "medium" = 100% = 今天的行為。
    */
   hudScale: HudScaleTier;
+  /**
+   * ⭐ 全場結算的戰績卡片**收到最小**（owner 2026-08-15：
+   * 「全戰鬥結算以後 戰績評價可以收到最小」）。
+   *
+   * ⚠️ 這一格住在**玩家設定**而不是 `content/config/`，理由是它是**個人偏好**
+   * 不是設計決策：想看多久自己的評價，每個人不一樣，而第一守則要 owner 做成
+   * 欄位的是「owner 之後會不會想改」的那種東西。⛔ 把它做成後台開關等於替
+   * 每一個玩家統一決定，那不是可調，那是另一種寫死。
+   *
+   * 出貨 `false`＝展開。收合是玩家按了才發生的事，而且會被記住 ——
+   * 一個每場都要重按一次的收合鍵就是沒有做。
+   */
+  matchEndCollapsed: boolean;
 }
 
 export interface Settings {
@@ -224,6 +237,8 @@ export const DEFAULT_NETWORK: NetworkSettings = {
  */
 export const DEFAULT_UI: UiSettings = {
   hudScale: DEFAULT_HUD_SCALE_TIER,
+  // 展開 —— 打完一場最想看的就是自己的評價。收合是「看完了」才按的。
+  matchEndCollapsed: false,
 };
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -300,6 +315,10 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
 export function clampUi(u: UiSettings): UiSettings {
   return {
     hudScale: isHudScaleTier(u.hudScale) ? u.hudScale : DEFAULT_HUD_SCALE_TIER,
+    // ⚠️ `=== true` 而不是直接帶過去：這一格是從 localStorage 反序列化來的，
+    //    舊版的存檔根本沒有它（會是 undefined），而 undefined 進到 React 的
+    //    `aria-expanded` 是一個沒有人會發現的壞法。
+    matchEndCollapsed: u.matchEndCollapsed === true,
   };
 }
 

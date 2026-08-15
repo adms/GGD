@@ -5501,6 +5501,142 @@ export const DEFAULT_CONTENT_LOAD_DOC = {
 
 export type ConfigContentLoadDoc = z.infer<typeof zConfigContentLoadDoc>;
 
+// ---------------------------------------------------------------- #329 ----
+/**
+ * ⭐【`config.camera@1`】—— 戰鬥鏡頭的**滾輪縮放界線**。
+ *
+ * owner 2026-08-15：
+ * > 「**最大視野減少兩節**(滑鼠滾輪)」
+ *
+ * ── 為什麼是一份文件而不是改一個常數 ─────────────────────────────────
+ * 這個數字 owner 已經動過三次（#31 預設拉到最近、#161 俯角 55°→68°、現在最大視野），
+ * 而它一直住在 `CameraRig.ts` 的 `const DOLLY_MAX = 40`。
+ * ⇒ 每動一次 = 一次 client rebuild + 一次完整部署。第一守則的原話：
+ * **「改一個寫死的數字 = 一次完整部署」**。
+ *
+ * ⚠️ 而且「視野多大」是**體感**題 —— 它一定會再被調，而且要邊玩邊調。
+ * 一格後台欄位讓那件事從「改程式」變成「存檔」。
+ *
+ * ⚠️ 這一份**只管縮放界線**，⛔ 不管俯角。俯角改變會連動遮擋安全（#29/#103 的
+ * 2.4u 道具高度上限是從角度推出來的），那是一條有幾何論證的線，
+ * 不是一格可以隨手拉的滑桿。
+ */
+export const CAMERA_DOC_ID = "camera";
+
+/**
+ * 滾輪一「節」轉多少 dolly。
+ *
+ * ⚠️ 這一格存在的理由是 owner 用「**節**」講話，而程式裡沒有「節」這個單位 ——
+ * 只有 `deltaY * wheelStep`。瀏覽器一節滾輪的 `deltaY` 是 100–120，
+ * 所以出貨的 0.02 ＝ **一節約 2.0–2.4 dolly**。
+ * ⇒「減少兩節」＝ `maxDolly` 40 → 36。這一格讓那個換算**寫得出來**，
+ * ⛔ 不是散落在註解裡的心算。
+ */
+export const CAMERA_WHEEL_STEP_MIN = 0.002;
+export const CAMERA_WHEEL_STEP_MAX = 0.2;
+/**
+ * `minDolly` 的界。下界 4：再近就穿進角色身體裡（EX 演出用的 5 已經是刻意的特寫）。
+ * 上界 40：等於出貨的最大視野，⛔ 再高就會出現「最近比最遠還遠」的空區間。
+ */
+export const CAMERA_MIN_DOLLY_MIN = 4;
+export const CAMERA_MIN_DOLLY_MAX = 40;
+/**
+ * `maxDolly` 的界。
+ *
+ * ⚠️ 上界 120 不是裝飾：拉遠等於**把整個競技場塞進同樣多的像素**，
+ * 角色會小到看不出誰是誰（而 24×18 的場地本來就只有 ~30u 對角）。
+ * 下界 8 允許「幾乎不能拉遠」這種刻意的緊繃視角。
+ */
+export const CAMERA_MAX_DOLLY_MIN = 8;
+export const CAMERA_MAX_DOLLY_MAX = 120;
+
+export const zConfigCameraDoc = z
+  .object({
+    id: z.literal(CAMERA_DOC_ID),
+    schema: z.literal("config.camera@1"),
+    note: z.string().optional(),
+    /**
+     * ⚠️ 為什麼包一層 `zoom` 而不是四格攤平在頂層：跨欄位的規則
+     *（最近不可以比最遠遠）只能用 `.superRefine()` 表達，而 `.superRefine()`
+     * 會把 ZodObject 變成 **ZodEffects** —— `zConfigDoc` 是
+     * `z.discriminatedUnion`，它**只吃 ZodObject**。頂層一加就會讓整個 union
+     * 的型別推導塌成 `{[x:string]: any}`，然後 `refs.ts` / `registries.ts` 冒出
+     * 十幾條看起來毫不相干的 tsc 錯（2026-08-15 實際踩到）。
+     * ⇒ 規則放在**巢狀區塊**上，頂層保持乾淨的 ZodObject。
+     * `mapSpecDoc` 的 grid / traversal / topology 也是同一個形狀。
+     */
+    zoom: z
+      .object({
+        /** 滾輪能推到的**最近**距離。也是開局的預設鏡頭（#31a：預設＝最近）。 */
+        minDolly: z.number().min(CAMERA_MIN_DOLLY_MIN).max(CAMERA_MIN_DOLLY_MAX),
+        /** 滾輪能拉到的**最遠**距離 —— owner 2026-08-15 要減兩節的就是這一格。 */
+        maxDolly: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX),
+        /**
+         * **陣亡觀戰**時的最遠距離。刻意比 `maxDolly` 寬很多 ——
+         * 死了以後看的是「整場打成怎樣」，不是自己的操作。
+         */
+        maxDollyDead: z.number().min(CAMERA_MAX_DOLLY_MIN).max(CAMERA_MAX_DOLLY_MAX),
+        /** 一單位 `deltaY` 推多少 dolly。見 `CAMERA_WHEEL_STEP_*` 的「節」換算。 */
+        wheelStep: z.number().min(CAMERA_WHEEL_STEP_MIN).max(CAMERA_WHEEL_STEP_MAX),
+      })
+      .strict()
+      .superRefine((v, ctx) => {
+        // ⚠️ 上下界各自合法但**組合起來**不合法的那兩格。⛔ Zod 的 min/max 抓不到。
+        if (v.minDolly > v.maxDolly) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["maxDolly"],
+            message: "最遠視野不可以比最近視野還近 —— 滾輪會整個失效",
+          });
+        }
+        if (v.maxDollyDead < v.maxDolly) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["maxDollyDead"],
+            message: "觀戰視野不可以比活著的時候還窄",
+          });
+        }
+      }),
+  })
+  .strict();
+
+/**
+ * 出貨值。
+ *
+ * ⭐ `maxDolly: 36` = 原本的 40 **減兩節**（owner 2026-08-15），
+ * 一節 = 一次滾輪 `deltaY≈100` × `wheelStep` 0.02 ≈ 2.0 dolly。
+ */
+export const DEFAULT_CAMERA = {
+  minDolly: 10,
+  maxDolly: 36,
+  maxDollyDead: 90,
+  wheelStep: 0.02,
+} as const;
+
+export const DEFAULT_CAMERA_DOC = {
+  id: CAMERA_DOC_ID,
+  schema: "config.camera@1",
+  zoom: { ...DEFAULT_CAMERA },
+} as const;
+
+export type ConfigCameraDoc = z.infer<typeof zConfigCameraDoc>;
+
+/** 生效中的鏡頭界線 —— 後台 overlay ?? `content/config/camera.json` ?? 出貨預設。 */
+export function resolveCamera(doc: Partial<ConfigCameraDoc> | null | undefined): {
+  minDolly: number;
+  maxDolly: number;
+  maxDollyDead: number;
+  wheelStep: number;
+} {
+  const z0 = doc?.zoom;
+  return {
+    minDolly: z0?.minDolly ?? DEFAULT_CAMERA.minDolly,
+    maxDolly: z0?.maxDolly ?? DEFAULT_CAMERA.maxDolly,
+    maxDollyDead: z0?.maxDollyDead ?? DEFAULT_CAMERA.maxDollyDead,
+    wheelStep: z0?.wheelStep ?? DEFAULT_CAMERA.wheelStep,
+  };
+}
+
 // ---------------------------------------------------------------- #327 ----
 /**
  * ⭐【`config.authoring-rules@1`】—— 外部編輯器的**原則界**（GH#327）。
@@ -5651,6 +5787,9 @@ export const zConfigDoc = z.discriminatedUnion("schema", [
   zConfigContentLoadDoc,
   // ⭐ 外部編輯器的原則界（GH#327）。⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
   zConfigAuthoringRulesDoc,
+  // ⭐ 戰鬥鏡頭的滾輪縮放界線（GH#329，owner 2026-08-15「最大視野減少兩節」）。
+  //    ⚠️ 漏掉這一行 = 內容整份驗證失敗 → 骨架英雄。
+  zConfigCameraDoc,
 ]);
 
 /** ConfigDoc keeps naming the canonical match config (existing consumers). */

@@ -75,6 +75,7 @@ import {
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { zConfigMitigationDoc } from "@ggd/shared/content/schema/mitigationDoc";
 import { zConfigMapSpecDoc } from "@ggd/shared/content/schema/mapSpecDoc";
+import { zConfigCameraDoc } from "@ggd/shared/content/schema/config";
 import { zConfigDisplacementTiersDoc } from "@ggd/shared/content/schema/displacementDoc";
 // ⚠️ 深路徑 import：`config.victory-podium@1` 的 Zod 住在自己的檔案裡（欄位的理由
 // 很長，而且客戶端 render/** 直接吃它），`content/schema/index.ts` **沒有**再匯出
@@ -2273,6 +2274,39 @@ const MAP_SPEC_SPEC: ConfigDocSpec = {
     },
     { path: "intro.fadeSec", zh: "地圖名淡出幾秒", note: "停留結束之後花多久淡到全透明。0.8（出貨值）夠柔和又不拖泥帶水；填 0 ＝ 到時間直接消失。⚠️ 淡出是**逐幀算出來的透明度**不是 CSS 動畫，所以這一格填 0 是真的立刻不見，不會被瀏覽器的預設過場拖住。",
     },
+    { path: "cornerLabel.enabled", zh: "戰鬥中小地圖上一直顯示地圖名", note: "開（出貨值）＝ 戰鬥全程在**小地圖的上緣**掛一行小字寫著這一回合在哪張圖打；關＝完全不畫。⭐ 沒有「貼哪一角」那一格是**刻意的**：標籤畫在小地圖自己那塊裡（小地圖畫的就是這張圖，地名是它的標題），所以小地圖搬家它就跟著搬（手機上小地圖在左上）—— 而且它佔用的新版面空間是 0。owner 2026-08-15：「場地名稱可以一直顯示在角落小字」。⚠️ 這一格跟上面的**開場報地名是兩件事**：那個是幾秒後就消失的開場大字，這個是整場都在的小標籤。關掉其中一個不會影響另一個 —— 想「只在開場報一次」就關這格，想「不要開場演出但隨時看得到」就關上面那格。",
+    },
+    { path: "cornerLabel.opacity", zh: "地名的不透明度", note: "0.62（出貨值）＝ 讀得到但不搶戰鬥的視線，也還看得見底下的地形。調到 1 會把小地圖最上緣那一條蓋成不透明。⚠️ 下界是 0.1 而不是 0：0 等於「開著但看不見」，那是最難查的壞法 —— 想關掉請用上面的開關，⛔ 不要把它調成 0。",
+    },
+  ],
+  preserved: [],
+};
+
+// ── 戰鬥鏡頭（config/camera）—— GH#329 ─────────────────────────────────────
+const CAMERA_SPEC: ConfigDocSpec = {
+  page: "camera",
+  collection: "config",
+  docId: "camera",
+  schemaTag: "config.camera@1",
+  zod: zConfigCameraDoc,
+  title: "戰鬥鏡頭",
+  intro: [
+    "⭐ owner 2026-08-15：「**最大視野減少兩節**(滑鼠滾輪)」—— 那一節就是下面的「最遠視野」。",
+    "**「一節」不是一個單位，是一個換算**：瀏覽器滾一格的 `deltaY` 是 100–120，乘上「一單位滾輪推多少」（出貨 0.02）≈ 一節 2.0–2.4。所以「減兩節」＝ 40 → 36。",
+    "⚠️ 在這一頁出現之前這四個數字**全部寫死在 client 的 CameraRig.ts**，而它們已經被改過三次 —— 每一次都是一輪 client rebuild + 一次完整部署。現在存檔就生效（客戶端重新載入 bundle 之後）。",
+    "⛔ **這一頁不管俯角。** 68° 是從遮擋安全推出來的幾何線（道具高度上限 2.4 單位是照那個角度算的），⛔ 不是一格可以隨手拉的滑桿。",
+  ],
+  consumer: "apps/client/src/render/CameraRig.ts 的 cameraLimits()（滾輪與陣亡觀戰的夾限）",
+  effect: "客戶端重新載入 bundle 之後生效；⛔ 不需要重啟 game-server（鏡頭純粹是客戶端的事）。",
+  fields: [
+    { path: "zoom.minDolly", zh: "最近視野（也是開局的預設鏡頭）", note: "滾輪能推到多近，單位是鏡頭到角色的距離。⭐ 它同時是**開局的預設值** —— 出貨的設計是「一進場就是最大」（#31a），所以調大它等於讓每一場都從比較遠的地方開始。⚠️ 下界 4：再近鏡頭會穿進角色身體裡（EX 演出用的特寫是 5，那是刻意的例外，不受這一格管）。",
+    },
+    { path: "zoom.maxDolly", zh: "最遠視野（owner 要減兩節的就是這一格）", note: "滾輪能拉到多遠。出貨 36 ＝ 原本的 40 減兩節。⚠️ 上界 120 不是裝飾：拉遠等於把整個競技場塞進同樣多的像素，角色會小到分不出誰是誰 —— 而 24×18 的場地對角線本來就只有 30 單位左右，拉到 60 以上畫面就幾乎全是地板。",
+    },
+    { path: "zoom.maxDollyDead", zh: "陣亡觀戰時的最遠視野", note: "死掉之後看整場用的。刻意比上面那格寬很多（出貨 90 對 36），因為觀戰時要看的是「這一場打成怎樣」而不是自己的操作。⚠️ 它**不可以小於**最遠視野 —— 存檔時會被擋下來，理由是那會讓「死了以後視野反而變窄」。",
+    },
+    { path: "zoom.wheelStep", zh: "一單位滾輪推多少（＝「一節」的換算）", note: "鏡頭距離 += 滾輪的 deltaY × 這一格。出貨 0.02，配上瀏覽器一節 100–120 的 deltaY ⇒ **一節約 2.0–2.4**。⭐ 這一格存在的理由就是讓「幾節」講得出來 —— 調大它滾一下跑更遠（比較跳），調小比較細膩但要滾很多下。⚠️ 觸控板的 deltaY 比滑鼠小很多，所以同一格對兩種裝置的手感不一樣。",
+    },
   ],
   preserved: [],
 };
@@ -2332,6 +2366,7 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
 
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MAP_SPEC_SPEC,
+  CAMERA_SPEC,
   MITIGATION_SPEC,
   DISPLACEMENT_TIERS_SPEC,
   MODEL_LOD_SPEC,

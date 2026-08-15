@@ -1,0 +1,11 @@
+{
+  "id": "camera",
+  "schema": "config.camera@1",
+  "note": "戰鬥鏡頭的滾輪縮放界線。⭐ owner 2026-08-15「最大視野減少兩節(滑鼠滾輪)」⇒ maxDolly 40 → 36：瀏覽器一節滾輪的 deltaY 是 100–120，乘上 wheelStep 0.02 ≈ 一節 2.0–2.4 dolly，兩節 ≈ 4。⚠️ 在這一份文件出現之前這四個數字全部寫死在 apps/client/src/render/CameraRig.ts，所以動一個就是一次 client rebuild + 一次完整部署 —— 而「視野多大」是體感題，一定會邊玩邊調。⛔ 這一份不管俯角：68° 是從遮擋安全（#29/#103 的 2.4u 道具高度上限）推出來的幾何線，不是一格可以隨手拉的滑桿。",
+  "zoom": {
+    "minDolly": 10,
+    "maxDolly": 36,
+    "maxDollyDead": 90,
+    "wheelStep": 0.02
+  }
+}

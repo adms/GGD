@@ -190,6 +190,8 @@ export type Page =
   | "statNormalization"
   /** GH#324 —— 小地圖規格（所有動漫場地共用的驗收標準）。 */
   | "mapSpec"
+  /** GH#329 —— 戰鬥鏡頭的滾輪縮放界線（owner 2026-08-15「最大視野減少兩節」）。 */
+  | "camera"
   /** GH#324 —— 地圖驗證報告（唯讀）。 */
   | "mapReport"
   /** GH#324 —— 場地輪替（勾選哪幾張進輪替）。 */
@@ -531,6 +533,8 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "statNormalization",
   // GH#324 —— 走 `putOverlayDoc`（沒有 session 一律 401）。
   "mapSpec",
+  // GH#329 —— 同上。⛔ 漏掉 gate 的話登出的操作者會填完整張表才發現存不下去。
+  "camera",
   "mapReport",
   "arenaPool",
   // GH#322 —— 2026-08-13 平衡批新開的三頁。三頁都走 `putOverlayDoc`（沒有 session

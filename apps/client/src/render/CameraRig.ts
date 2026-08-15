@@ -9,6 +9,8 @@ import type { Scene } from "@babylonjs/core/scene";
 import { TargetCamera } from "@babylonjs/core/Cameras/targetCamera";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import { Configs } from "@ggd/shared/content";
+import { CAMERA_DOC_ID, DEFAULT_CAMERA, resolveCamera } from "@ggd/shared/content";
 import { intersectRayGround } from "../input/Picking";
 import type { CursorState, PanKeys } from "../input/InputCapture";
 import type { AnchorPose, CameraGroundView } from "../frameBus";
@@ -34,12 +36,35 @@ import { settlementCameraPose } from "./settlementCamera";
  * (2.4−1.7)·3.75/(9.27−2.4)≈0.38u, and the eye stays far above the 2.4u cap.
  */
 export const CAMERA_PITCH_RAD = (68 * Math.PI) / 180;
-export const DOLLY_MIN = 10;
-/** Closest the EX cinematic punch-in may dolly (below the user's DOLLY_MIN). */
+/** Closest the EX cinematic punch-in may dolly (below the user's own floor). */
 const EX_PUNCH_MIN_DOLLY = 5;
-const DOLLY_MAX = 40;
-/** while spectating (dead), allow a much wider zoom-out to watch the whole fight */
-const DOLLY_MAX_DEAD = 90;
+
+/**
+ * ⭐ 縮放界線是**四格後台欄位**（`config.camera@1`，GH#329），⛔ 不是四個常數。
+ *
+ * owner 2026-08-15：「最大視野減少兩節(滑鼠滾輪)」—— 這是這個數字的**第三次**
+ * 改動（#31 預設拉到最近、#161 俯角、現在最大視野）。前兩次各花掉一次
+ * client rebuild + 一次完整部署，因為它一直寫死在這裡。
+ *
+ * ⚠️ 每一次讀都走 `Configs`（開機時灌進去的那一份），⛔ 不快取成模組層級的
+ * `const` —— 快取回來的值會讓後台存檔在**下一次重整之前**都不生效，
+ * 而那正是「存了沒反應」這種最難查的壞法（同 #278）。
+ * 這是滾輪事件與 setDead，不是每幀熱路徑，一次物件查表不值得優化。
+ */
+function cameraLimits(): { minDolly: number; maxDolly: number; maxDollyDead: number; wheelStep: number } {
+  return resolveCamera(Configs.tryGet(CAMERA_DOC_ID) as Parameters<typeof resolveCamera>[0]);
+}
+
+/**
+ * 開局的預設鏡頭 = 允許的**最近**（#31a：預設就是最大）。
+ *
+ * ⚠️ 這一格是 `export const` 而不是函式，因為它被當成模組層級的初始值用；
+ * 讀不到設定時（測試、開機最早期）它就是出貨的 10。真正的執行期夾限走
+ * {@link cameraLimits}，所以後台把 `minDolly` 調開之後滾輪立刻吃得到。
+ */
+// ⚠️ 顯式 `: number`。`DEFAULT_CAMERA` 是 `as const`，不標的話這一格的型別是
+//    字面量 `10`，於是每一個「把 dolly 設回預設」的賦值都會被 tsc 擋下來。
+export const DOLLY_MIN: number = DEFAULT_CAMERA.minDolly;
 /**
  * Default zoom — the CLOSEST allowed dolly, so the champion starts as large as
  * the clamp permits (#31a). Derived from DOLLY_MIN so the two can never drift.
@@ -217,11 +242,14 @@ export class CameraRig {
   }
 
   private get dollyMax(): number {
-    return this.dead ? DOLLY_MAX_DEAD : DOLLY_MAX;
+    const c = cameraLimits();
+    return this.dead ? c.maxDollyDead : c.maxDolly;
   }
 
   zoomBy(wheelDeltaY: number): void {
-    this.dolly = Math.min(this.dollyMax, Math.max(DOLLY_MIN, this.dolly + wheelDeltaY * 0.02));
+    const c = cameraLimits();
+    const max = this.dead ? c.maxDollyDead : c.maxDolly;
+    this.dolly = Math.min(max, Math.max(c.minDolly, this.dolly + wheelDeltaY * c.wheelStep));
   }
 
   /**
@@ -240,7 +268,7 @@ export class CameraRig {
       if (center) this.jumpTo(center); // frame the fight once
     } else {
       this.followLock = true; // re-lock on respawn
-      this.dolly = Math.min(this.dolly, DOLLY_MAX); // restore the normal zoom clamp
+      this.dolly = Math.min(this.dolly, cameraLimits().maxDolly); // restore the normal zoom clamp
       if (center) this.jumpTo(center); // snap back to the hero
     }
   }

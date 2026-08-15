@@ -719,6 +719,19 @@ const BAND_LEDGER: readonly LedgerRow[] = [
     why: "THE COLLISION THIS GUARD WAS REWRITTEN FOR. It used to be a bare `bottom: 6` inside a full-screen inset:0 layer — centred, 4px into the band, on top of the badge. It now DERIVES its offset from the band, so it moves if the band does",
   },
   {
+    file: "hud/MapCornerLabel.tsx",
+    value: "px(s.bottom) + box.height - MAP_CORNER_LABEL_HEIGHT",
+    count: 1,
+    why:
+      "GH#329 的常駐地名。它**不是自己定位的** —— 整條式子是「小地圖那一格解析出來的 " +
+      "bottom，再往上推一整個小地圖的高度，扣掉自己的 20px」，也就是貼在小地圖框的**上緣**。" +
+      "所以它的下緣至少在 `minimap.height - 20` 之上：桌機 208-20 = 188px、" +
+      "手機 116-20 = 96px，兩個都遠在 10px 的版號帶之上，而且是**推導**的 —— " +
+      "小地圖搬家或改尺寸它自己會跟著走。⚠️ 掃描器評估不了這條式子（它包含一個函式呼叫 " +
+      "與一個 import 進來的常數），所以這一列是答案不是壓制：真正會讓它掉進帶子裡的只有" +
+      "「小地圖高度縮到 30px 以下」，而那時候小地圖自己早就不能用了。",
+  },
+  {
     file: "panels/MatchEndPanel.tsx",
     value: '"18%"',
     count: 1,

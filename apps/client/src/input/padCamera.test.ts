@@ -7,6 +7,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { DEFAULT_CAMERA } from "@ggd/shared/content";
 import { join } from "node:path";
 import {
   GAMEPAD_ZOOM_HOME_DELTA,
@@ -18,23 +19,38 @@ import {
 
 /**
  * The real rig's clamp + scale. NOT imported: `render/CameraRig` pulls in
- * @babylonjs, and `input/` may not (client-08). Instead the numbers are PINNED
- * to the real source below, so a rig that re-tunes its dolly range fails here
- * rather than silently making 「歸位」 land somewhere else.
+ * @babylonjs, and `input/` may not (client-08).
+ *
+ * ⭐ 這裡**推導**自 `DEFAULT_CAMERA`（GH#329 之後那四個數字住在
+ * `config.camera@1`），⛔ 不再是四個抄過來的字面量。
+ *
+ * ⚠️ 它本來是這樣寫的：
+ *     const DOLLY_MAX = 40;
+ *     expect(src).toContain(`DOLLY_MAX = ${DOLLY_MAX}`);
+ * —— **掃原始碼字串代替行為**（CLAUDE.md 失敗形態⑥）。那條有兩個毛病：
+ *   ① 它證明不了任何行為，只證明某個字出現在某個檔案裡；
+ *   ② 數字一搬家（常數 → 後台欄位）它就只能紅，而且訊息完全誤導
+ *      （「rig 的常數不對」，真相是「那個常數已經不存在了，這是對的」）。
+ * ⇒ 現在改成從**同一份出貨預設**推導。真正還需要盯著原始碼的只剩「滾輪那一行
+ * 有沒有乘上設定裡的 wheelStep」—— 那是一個接線，掃字串是它唯一便宜的驗法。
  */
-const DOLLY_MIN = 10;
-const DOLLY_MAX = 40;
-const DOLLY_MAX_DEAD = 90;
+const DOLLY_MIN = DEFAULT_CAMERA.minDolly;
+const DOLLY_MAX = DEFAULT_CAMERA.maxDolly;
+const DOLLY_MAX_DEAD = DEFAULT_CAMERA.maxDollyDead;
 const DOLLY_DEFAULT = DOLLY_MIN;
-const WHEEL_SCALE = 0.02;
+const WHEEL_SCALE = DEFAULT_CAMERA.wheelStep;
 
-it("the rig constants this file emulates are the rig's real ones", () => {
+it("the rig reads its clamps from config.camera, and 歸位 uses the same floor", () => {
   const src = readFileSync(join(__dirname, "..", "render", "CameraRig.ts"), "utf8");
-  expect(src).toContain(`DOLLY_MIN = ${DOLLY_MIN}`);
-  expect(src).toContain(`DOLLY_MAX = ${DOLLY_MAX}`);
-  expect(src).toContain(`DOLLY_MAX_DEAD = ${DOLLY_MAX_DEAD}`);
+  // 接線：滾輪要乘**設定裡的**步進，⛔ 不是一個寫死的 0.02。
+  expect(src).toContain("wheelDeltaY * c.wheelStep");
+  // 夾限的兩端都要來自設定（`cameraLimits()`），⛔ 不是模組層級的常數。
+  expect(src).toContain("Math.max(c.minDolly");
+  expect(src).toContain("this.dead ? c.maxDollyDead : c.maxDolly");
   expect(src).toContain("DOLLY_DEFAULT = DOLLY_MIN");
-  expect(src).toContain(`this.dolly + wheelDeltaY * ${WHEEL_SCALE}`);
+  // ⭐ 出貨的最遠視野**比最近遠**——這是唯一會讓滾輪整個失效的組合。
+  expect(DOLLY_MAX).toBeGreaterThan(DOLLY_MIN);
+  expect(DOLLY_MAX_DEAD).toBeGreaterThanOrEqual(DOLLY_MAX);
 });
 
 function fakeRig(): PadCameraRig & { dolly: number } {

@@ -34,6 +34,7 @@ import { ZombieWaveBar } from "./hud/ZombieWaveBar";
 import { MobBossOverlay } from "./hud/MobBossOverlay";
 import { BossIntroOverlay } from "./hud/BossIntroOverlay";
 import { MapIntroOverlay } from "./hud/MapIntroOverlay";
+import { MapCornerLabel } from "./hud/MapCornerLabel";
 import { BossHealthBar } from "./hud/BossHealthBar";
 import { MobHealthBars } from "./hud/mobHealthBar";
 import { ReviveBanner } from "./components/ReviveBanner";
@@ -191,6 +192,7 @@ const HUD_LABELS: HudBoundaryLabels = new Map<unknown, string>([
   [MobBossOverlay, "殭屍王"],
   [BossIntroOverlay, "殭屍王出場演出"],
   [MapIntroOverlay, "開場地圖名"],
+  [MapCornerLabel, "常駐地圖名"],
   [BossHealthBar, "殭屍王血條"],
   [MobHealthBars, "精英小怪血條"],
   [ExUnlockToast, "EX 解鎖提示"],
@@ -389,6 +391,7 @@ export function HudRoot(): React.JSX.Element {
               （hud/bossIntroModel，從降臨橫幅下緣起算），放不下就回 null。 */}
           <BossIntroOverlay />
           <MapIntroOverlay />
+          <MapCornerLabel />
           {/* #247 —— 殭屍王長血條。掛在 MobBossOverlay **之後**只是 DOM 順序;
               誰蓋誰是 `bossHealthBarSpec` / `mobBossRect` 算出來的矩形決定的,
               兩個都 `position: absolute` + 同一個 z-index(#107)。 */}

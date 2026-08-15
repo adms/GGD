@@ -14,7 +14,13 @@
  * 變成 `null`。守衛寫在**那個轉換**上（失敗形態⑦：掃屬性代替掃行為）。
  */
 import { Configs } from "@ggd/shared/content";
-import { DEFAULT_MAP_INTRO, resolveMapSpec, type MapIntroSpec } from "@ggd/shared/content";
+import {
+  DEFAULT_MAP_CORNER_LABEL,
+  DEFAULT_MAP_INTRO,
+  resolveMapSpec,
+  type MapCornerLabelSpec,
+  type MapIntroSpec,
+} from "@ggd/shared/content";
 
 export const MAP_SPEC_DOC_ID = "map-spec";
 
@@ -22,6 +28,7 @@ export const MAP_SPEC_DOC_ID = "map-spec";
 export const MAP_INTRO_POLL_MS = 100;
 
 export type MapIntroRules = MapIntroSpec;
+export type MapCornerLabelRules = MapCornerLabelSpec;
 
 /**
  * 生效中的開場設定 —— 後台 overlay ?? `content/config/map-spec.json` ??
@@ -33,6 +40,17 @@ export type MapIntroRules = MapIntroSpec;
 export function mapIntroRules(): MapIntroRules {
   const doc = Configs.tryGet(MAP_SPEC_DOC_ID) as Parameters<typeof resolveMapSpec>[0];
   return resolveMapSpec(doc).intro ?? DEFAULT_MAP_INTRO;
+}
+
+/**
+ * 生效中的**常駐角落地名**設定（owner 2026-08-15）。
+ *
+ * ⚠️ 跟 {@link mapIntroRules} 走同一份文件但**不同一格** —— 開場演出與常駐標籤
+ * 是兩個獨立開關，關掉其中一個不可以影響另一個。
+ */
+export function mapCornerLabelRules(): MapCornerLabelRules {
+  const doc = Configs.tryGet(MAP_SPEC_DOC_ID) as Parameters<typeof resolveMapSpec>[0];
+  return resolveMapSpec(doc).cornerLabel ?? DEFAULT_MAP_CORNER_LABEL;
 }
 
 export interface MapIntroLifetime {

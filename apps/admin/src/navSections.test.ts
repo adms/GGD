@@ -104,6 +104,8 @@ const BASELINE_PAGES: readonly Page[] = [
   "mapSpec",
   "mapReport",
   "arenaPool",
+  // GH#329 —— 戰鬥鏡頭的滾輪縮放界線（owner 2026-08-15「最大視野減少兩節」）。
+  "camera",
   "woundRules",
   // 虛弱規則 —— GH#301-4 新增的一頁（與 重創規則 同族，共用 ConfigDocPage）。
   "weaknessRules",
@@ -159,6 +161,7 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "mapSpec",
       "mapReport",
       "arenaPool",
+      "camera",
       "combatFeel",
       "matchConfig",
       "bodyScale",

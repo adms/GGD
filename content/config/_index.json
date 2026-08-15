@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "861613e248a8",
+  "hash": "7a6c1ee1329e",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -73,6 +73,12 @@
       "path": "config/boss-intro.json",
       "hash": "7923400b57e3",
       "size": 3305
+    },
+    {
+      "id": "camera",
+      "path": "config/camera.json",
+      "hash": "7aa52c1b3a1b",
+      "size": 801
     },
     {
       "id": "cast-time",
@@ -185,8 +191,8 @@
     {
       "id": "map-spec",
       "path": "config/map-spec.json",
-      "hash": "f8f165df66f4",
-      "size": 1162
+      "hash": "9daf4979065c",
+      "size": 1227
     },
     {
       "id": "mitigation",

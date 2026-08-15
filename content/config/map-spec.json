@@ -41,5 +41,9 @@
     "enabled": true,
     "holdSec": 2.5,
     "fadeSec": 0.8
+  },
+  "cornerLabel": {
+    "enabled": true,
+    "opacity": 0.62
   }
 }

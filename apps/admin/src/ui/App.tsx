@@ -217,6 +217,7 @@ export const NAV: NavItem[] = [
   { page: "displacementTiers", label: "位移級距", emoji: "💨", section: SEC_COMBAT },
   { page: "perLevelBonus", label: "每級加成", emoji: "📈", section: SEC_COMBAT },
   { page: "mapSpec", label: "小地圖規格", emoji: "🗺️", section: SEC_COMBAT },
+  { page: "camera", label: "戰鬥鏡頭", emoji: "🎥", section: SEC_COMBAT },
   { page: "mapReport", label: "地圖驗證報告", emoji: "📋", section: SEC_COMBAT },
   { page: "arenaPool", label: "場地輪替", emoji: "🎲", section: SEC_COMBAT },
   // 戰鬥手感 — 第四種語意。前三頁是倍率 / 加數 / 天花板,這一頁每一格是**一條

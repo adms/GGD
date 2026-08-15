@@ -206,6 +206,36 @@ export const zConfigMapSpecDoc = z
       })
       .strict()
       .optional(),
+
+    /**
+     * ⭐ 地名**常駐**角落小字（owner 2026-08-15：「場地名稱可以一直顯示在角落小字」）。
+     *
+     * ⚠️ 這跟 `intro` 是**兩件事**，⛔ 不要合併成一格：
+     * `intro` 是**開場演出**（大字、佔中央、幾秒後消失），
+     * 這一格是**常駐標籤**（小字、待在角落、整場都在）。
+     * 一個是「告訴你這場開始了」，一個是「隨時看得到自己在哪」。
+     * 合成一格的話「關掉開場演出」就會連常駐標籤一起關掉 —— 那不是任何人要的。
+     */
+    cornerLabel: z
+      .object({
+        enabled: z.boolean().describe("戰鬥中要不要在角落一直顯示地圖名字。關＝完全不畫。"),
+        /*
+         * ⚠️ 這裡**沒有**「貼哪一角」。位置不是一個選擇 —— 標籤畫在**小地圖
+         * 自己那塊裡**（它就是那張圖的標題），所以小地圖搬到哪它就跟到哪
+         * （手機上小地圖從右下搬到左上，標籤自動跟著）。
+         * ⛔ 曾經有一格 `corner` 下拉選單，拿掉了：三個角落都已經有預算，
+         * 一行地名不值得從既有功能手上拿走空間（整段量測見
+         * `apps/client/src/ui/hud/MapCornerLabel.tsx` 的檔頭）。
+         * 一個選了也不會動的下拉選單比沒有更糟。
+         */
+        opacity: z
+          .number()
+          .min(0.1)
+          .max(1)
+          .describe("不透明度。⚠️ 下界 0.1 而不是 0：0 等於「開著但看不見」，那是最難查的壞法。"),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -223,6 +253,17 @@ export type MapIntroSpec = NonNullable<ConfigMapSpecDoc["intro"]>;
  *  ⚠️ 回退值是**開的** —— 讀不到設定時要落在 owner 要的那一邊。
  *  2.5 秒 = 「看得完四個字 + 不擋開局」（一回合戰鬥只有 90 秒）。 */
 export const DEFAULT_MAP_INTRO: MapIntroSpec = { enabled: true, holdSec: 2.5, fadeSec: 0.8 };
+
+/** 常駐角落地名的三格。⚠️ 具名而且非選填，理由同 {@link MapIntroSpec}。 */
+export type MapCornerLabelSpec = NonNullable<ConfigMapSpecDoc["cornerLabel"]>;
+
+/** owner 2026-08-15：「場地名稱可以一直顯示在角落小字」。
+ *  ⚠️ 回退值是**開的** —— 讀不到設定時要落在 owner 要的那一邊（同 intro）。
+ *  左下 order 0 是 HUD 唯一空著的常駐位；0.62 = 讀得到但不搶戰鬥的視線。 */
+export const DEFAULT_MAP_CORNER_LABEL: MapCornerLabelSpec = {
+  enabled: true,
+  opacity: 0.62,
+};
 
 /**
  * 出貨預設 —— owner 2026-08-14 的規格表逐格。
@@ -253,6 +294,7 @@ export const DEFAULT_MAP_SPEC: Omit<ConfigMapSpecDoc, "id" | "schema" | "note"> 
     traversal: "warn",
   },
   intro: DEFAULT_MAP_INTRO,
+  cornerLabel: DEFAULT_MAP_CORNER_LABEL,
 };
 
 /** 讀 doc，缺的欄位回退到出貨預設。⚠️ 唯一的解析入口，⛔ 不要在別處展開 `??`。 */
@@ -265,5 +307,6 @@ export function resolveMapSpec(doc?: Partial<ConfigMapSpecDoc> | null): typeof D
     interactions: { ...DEFAULT_MAP_SPEC.interactions, ...(doc.interactions ?? {}) },
     severity: { ...DEFAULT_MAP_SPEC.severity, ...(doc.severity ?? {}) },
     intro: { ...DEFAULT_MAP_INTRO, ...(doc.intro ?? {}) },
+    cornerLabel: { ...DEFAULT_MAP_CORNER_LABEL, ...(doc.cornerLabel ?? {}) },
   };
 }
