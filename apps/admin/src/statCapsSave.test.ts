@@ -122,18 +122,18 @@ describe("屬性上限 儲存送出的東西 (adminui-stat-caps-save)", () => {
   it("第一次儲存(overlay 還是空的)寫的是出貨預設 + 這次的編輯,不是全 0", async () => {
     cover("adminui-stat-caps-save");
     const h = await open();
-    // ⚠️ 2026-08-15 owner 把移速一般上限重新設計到 24（原本 10）—— 這裡填的解鎖值
-    //    一定要大於出貨的 base，否則會撞到下面那條「解鎖 < 一般上限時儲存鈕關閉」
-    //    的守衛，儲存鈕會被鎖住而不是這條測試在驗的東西（失敗形態④：斷言方向
-    //    跟缺陷無關）。28 落在新的 base(24) 與 unlocked(30) 之間。
-    h.type("ms.unlocked", "28");
+    // ⚠️ 2026-08-15 owner 把移速上限重新設計過兩次，出貨值現在是 base=unlocked=18
+    //    ——這裡填的解鎖值一定要大於出貨的 base，否則會撞到下面那條
+    //    「解鎖 < 一般上限時儲存鈕關閉」的守衛，儲存鈕會被鎖住而不是這條測試在驗
+    //    的東西（失敗形態④：斷言方向跟缺陷無關）。20 > 新 base(18) 即可。
+    h.type("ms.unlocked", "20");
     h.click(SAVE);
     await h.flush();
 
     const table = statCapsFromDoc(bus.puts[0]!.doc);
     // 出貨的攻速解鎖必須跟著寫進去 —— 否則按一次儲存就把攻速解鎖從 10 打成 4。
     expect(effectiveCap(table, Stat.AttackSpeed, 999)).toBe(10);
-    expect(effectiveCap(table, Stat.MoveSpeed, 999)).toBe(28);
+    expect(effectiveCap(table, Stat.MoveSpeed, 999)).toBe(20);
   });
 
   it("解鎖上限小於一般上限時,儲存鈕是關的 —— 存不出一份自相矛盾的表", async () => {
