@@ -13,10 +13,10 @@
     "counts": {
       "坦克": 4,
       "砲手": 1,
-      "鬥士": 12,
+      "鬥士": 13,
       "射手": 2,
       "法鬥": 9,
-      "法師": 7,
+      "法師": 6,
       "狂戰": 4,
       "硬輔": 2,
       "法刺": 4,
@@ -283,7 +283,7 @@
         "ad": 21.8,
         "ap": 162.5,
         "as": 0.57,
-        "range": 1.8,
+        "range": 1.6,
         "healthRegen": 0.93,
         "manaRegen": 1.85
       },
@@ -404,7 +404,7 @@
       "attackType": "melee",
       "bodyScale": 1,
       "primary": "int",
-      "出身": "法師",
+      "出身": "鬥士",
       "定位": "mage",
       "archetypeOverride": null,
       "attributes": {
@@ -424,7 +424,7 @@
         "ad": 36,
         "ap": 130,
         "as": 0.64,
-        "range": 8.2,
+        "range": 1.4,
         "healthRegen": 0.85,
         "manaRegen": 1.5
       },
@@ -847,7 +847,7 @@
         "ad": 16.4,
         "ap": 136.5,
         "as": 0.61,
-        "range": 8.2,
+        "range": 1.6,
         "healthRegen": 1.14,
         "manaRegen": 1.57
       },
@@ -1223,7 +1223,7 @@
         "ad": 14.2,
         "ap": 84.5,
         "as": 0.62,
-        "range": 12,
+        "range": 10,
         "healthRegen": 0.97,
         "manaRegen": 1.01
       },
@@ -1411,7 +1411,7 @@
         "ad": 16.4,
         "ap": 162.5,
         "as": 0.6,
-        "range": 8.2,
+        "range": 1.8,
         "healthRegen": 0.89,
         "manaRegen": 1.85
       },
@@ -1505,7 +1505,7 @@
         "ad": 16.8,
         "ap": 156,
         "as": 0.57,
-        "range": 1.4,
+        "range": 8.2,
         "healthRegen": 0.93,
         "manaRegen": 1.78
       },
@@ -1552,7 +1552,7 @@
         "ad": 16,
         "ap": 162.5,
         "as": 0.58,
-        "range": 8.2,
+        "range": 1.6,
         "healthRegen": 0.85,
         "manaRegen": 1.85
       },
@@ -1646,7 +1646,7 @@
         "ad": 58.8,
         "ap": 162.5,
         "as": 0.45,
-        "range": 8.2,
+        "range": 12,
         "healthRegen": 1.88,
         "manaRegen": 1.85
       },
@@ -2163,7 +2163,7 @@
         "ad": 66,
         "ap": 110.5,
         "as": 0.59,
-        "range": 8.2,
+        "range": 1.4,
         "healthRegen": 1.25,
         "manaRegen": 1.34
       },
