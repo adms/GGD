@@ -1,269 +1,186 @@
 # 遊戲主程式載入 Editor JSON／ZIP 的修改建議
 
-狀態：**Draft 0.7 — 納入 2026-08-08 的 90 份 Owner 技能機制回歸；只提供遊戲端實作建議；本專案不修改 GGD**  
-日期：2026-08-08  
-基線：`GGD main@81826f9ffc8f1561fe99dbd5628576645f321664`  
-共同資料契約：`GGD_EDITOR_PACKAGE_SPEC.md`  
-驗證英雄候選：`OPEN_HERO_WHITELIST.md`  
-傳說武器 census：`LEGENDARY_WEAPON_FULL_AUDIT.md`
+狀態：**Revision 2.1 — 已對 `origin/main@555e5726`、正式站公開 profile 與目前機器 schema 做第二次逆向審查**
 
-## 1. 目的
+最後驗證：2026-08-14
 
-這份文件集中列出「編輯器本身無法完成、必須由遊戲主程式／後台實作」的工作，供另一個有 GGD 修改權的任務使用。它不授權本專案修改、commit 或 PR 到 GGD。
+適用範圍：GGD 遊戲主程式、後台與 Content Import API；不是 Editor UI 實作說明。
+
+本文只定義「遊戲端還必須實作什麼」與各階段的完成閘門。Package 欄位、JCS digest、Effect Definition／Product／Chain 形狀不在此重複，以 [`GGD_EDITOR_PACKAGE_SPEC.md`](GGD_EDITOR_PACKAGE_SPEC.md) 及 `packages/shared/src/content/import/` 的機器 schema 為準。
+
+相關資料：
+
+- [`GGD_EDITOR_PACKAGE_SPEC.md`](GGD_EDITOR_PACKAGE_SPEC.md)：Package JSON／ZIP 的共同資料契約。
+- [`docs/_codex-handoff.md`](docs/_codex-handoff.md)：目前引擎能力與資料入口導覽。
+- [`OPEN_HERO_WHITELIST.md`](OPEN_HERO_WHITELIST.md)：生成的英雄參考名單，不是 live curation authority。
+- [`LEGENDARY_WEAPON_FULL_AUDIT.md`](LEGENDARY_WEAPON_FULL_AUDIT.md)：生成的傳說武器 census，不是 importer 常數。
+
+## 1. 結論與系統邊界
 
 遊戲端最終要能：
 
-1. 接受 `ggd-editor-import@1` Package JSON 或 `ggd-editor-package@1` ZIP，並明確區分 raw Runtime Document JSON。
-2. 保存 authoring truth，重新編譯 Definition／Product／Chain／Host，而不是直接相信 editor 的 compiled JSON。
-3. 在隔離 staging 建完整 content tree，跑正式 loader／runtime／scenario 驗證。
-4. 以 immutable version + CAS + atomic ACTIVE pointer 一次啟用全部文件。
-5. 安全 rollback 到前一個 verified digest。
-6. 對缺少的 gameplay/runtime capability 明確拒絕，不能把有語意差異的資料攤平後繼續載入。
-7. 提供可下載的 `ggd-content-target-profile@1`／activation receipt，讓不連後台的本機 Editor 能以精確 base 建 partial delta。
-8. 驗證已記錄的內容權威決策：技能說明優先於 JASS／runtime；只有來源缺失、資料不完整或新機制尚未支援時拒絕 apply，不重新要求 Owner 裁決既有衝突。
+1. 明確辨識 Package JSON、Package ZIP 與 raw Runtime JSON，不依副檔名猜測。
+2. 在隔離 staging 中驗 authoring truth，以遊戲端 compiler 重編並比對 expected compiled。
+3. 重建 indexes、bundle、distribution 與 champion mirrors，不信任 package 內的 derived files。
+4. 將 authoring、compiled runtime 與 derived projections 寫成同一個 immutable activation。
+5. 用 verified plan、CAS 與 ACTIVE pointer 原子啟用，支援 health read-back、冪等重試與 rollback。
+6. 對不支援、無法機器判定、known-broken、過期或不一致的 contract fail closed。
 
-## 2. 修改優先級
+### 1.1 權威不是單一排名
 
-### P0 — 沒有就不能安全匯入 Editor package
+每種資料只在自己的領域有權威性：
 
-- 新 JSON／ZIP importer 與 capability API。
-- Target profile／activation receipt export；包含 current digests、capabilities、live curation digests 與 asset manifest digest。
-- Effect Definition／Product／Host authoring store、bootstrap／full／delta lifecycle。
-- 與 editor 共用的 authoring schemas、JCS hash、安全 `effect-graph-v1` 與 deterministic compiler contract。
-- full-tree staging validation、compiled compare、derived rebuild。
-- immutable activation、CAS、health read-back、rollback。
-- distribution／reachability 重建，避免 item 載入後不可達。
-
-### P1 — 43 名英雄驗證與 49 件傳說武器 census 已知需要的 gameplay/runtime 修改
-
-- `effect.target-set-chain@1`：selector victims 可安全傳入 nested Product chain。
-- `hook.on-evade@1`：成功閃避可觸發 defender item hook，再使用既有 dash primitive。
-- 90 份新技能的跨技能狀態、事件上下文、致命傷害充能、動態數值轉換、單次觸發與 deterministic 權重分支。
-- 把現有 item-only `BlockGrant` 升為 ability／buff／item 共用的傷害前防禦來源；不可用受傷後補護盾假裝「格擋」。
-- typed `ability-augment@1`：被動技強化另一招時使用穩定 ability／status ref 與 allowlisted operation，不從技能名稱文字反推。
-- 條件式 `effect.dash-on-end@1`：只有需求明確是 collision-aware dash 的實際停止點／原因後才執行 child chain 時需要；可用 apex=0 leap 精確表達者不新增重複 primitive。
-- 完整 item refs／effect-bearing 判定，涵蓋 recipe、aura hooks 與所有現有 item payload。
-
-### P2 — 不阻擋基本匯入，但會限制 3D 驗收可信度／維護成本
-
-- 公開、版本化的 client preview／render bridge surface。
-- combat／VFX event provenance。
-- 把 code-authority VFX promotion 逐步移入 content。
-- generated README／reference／status freshness gate。
-
-### 2.1 Pinned GGD 的 template stack 現況
-
-Owner 補充的數字已在 `81826f9...` 唯讀重算確認：
-
-| 層次 | 目前 GGD 事實 | 本方案的判讀 |
+| 領域 | 權威來源 | 不可拿來代替 |
 |---|---|---|
-| Template Definition | `content/ability-templates/` 33 份 `template@1`（16 enabled／17 draft），含 params／requires／family／status | Legacy code-owned Definition；family body 仍在 `expand.ts` |
-| Filled card | 142 份 standalone ability 使用 `{ref, params}`；`tpl-buff-self` 54、`tpl-single-strike` 52；另有 106 份 champion embedded mirrors | 每張遷移為 host-local Product；mirrors 是衍生副本，不能重複算成 248 支 |
-| Flat multi-card stack | `ability.template` schema 支援 `{cards, onConflict}` 或 card array，1～8 張；正式 ability corpus 使用數 0 | 是可相容的**平面合併投影**，不是 nested temporal chain |
-| Runtime document | `content/abilities/*.json` 的 `ability@1`，載入時經 template expansion 合併 | Compiled runtime truth；不反推 Product identity |
+| 技能／道具設計意圖 | Owner source＋canonical authoring document | Runtime tooltip、彩色 tag、技能名推論 |
+| Package wire format | Zod／JCS／digest／ZIP 機器實作＋同版 spec | 本文範例、檔案副檔名 |
+| Runtime 可執行能力 | 目標環境 live capability receipt＋contract tests | Editor 自己的 union、散文 caveat |
+| 公開內容 Base | 正式站 public profile 指向的完整 content receipt | Editor 下載後的可編輯子集合 hash |
+| Activation Base | authenticated active target profile | public profile、contentVersion |
+| Curation／可取得性 | platform curation service 與 distribution receipt | Markdown 白名單、starter seed |
+| Presentation | tag manifest＋全域 palette | Gameplay mechanics |
 
-GGD 已有 `normalizeTemplateBinding`、`expandStack`／`expandStackOrThrow`、來源 trace、衝突 policy 與多個 expansion／Forge UI mutation guards。現有規則是：
+這些來源必須互相一致，不存在「高順位內容自動覆蓋低順位內容」。只要 schema、spec、profile、compiler 或 receipt 彼此矛盾，就停止 validate／apply 並回報 contract drift。
 
-- cards 有序；effects 與 passive list fields 按 card order concatenate。
-- scalar fields（castType、radius、castTimeSec、targetsEnemies、innateKind）值不同時，預設 `reject`；明示 `lastWins` 才由後卡取代，trace 保留 shadowed value。
-- loader 正式走 `resolveTemplateExpansion → expandStackOrThrow → mergeExpansion → zAbilityDoc`；release validation 必須使用 `onTemplateFailure: "throw"`，不能接受 production 的 degraded no-effect ability。
-- 任一卡 ref／params／expand 失敗時，整個 stack 失敗，不能只保留第一張；遊戲開機的 `degrade` fail-soft 只供舊 runtime 保命，Editor validate／apply 必須原子 fail-closed，且 template failure ledger 為零。
-- Binding／card 外殼雖是 strict，現行 `params` 仍是 `Record<string, unknown>`，family params parser 會容忍 unknown key；拼字錯誤可能被忽略並退回預設值，`null` 也可能被當成 absent。這是 legacy compatibility 行為，不是新 authoring contract：Editor／package strict mode 必須拒絕 unknown／`null`，並在 expansion 後再跑完整 `zAbilityDoc`。
-- Card 的 optional `version` 欄位目前沒有任何 consumer，是 inert debt；Editor V1 不得把它當真正 revision pinning，也不應為新內容輸出此欄位。
+### 1.2 目前真正的 blockers
 
-但「schema 支援、expansion unit test 通過」仍不等於已證明 production behavior：目前沒有任何 shipped ability 使用多卡，也沒有 multi-card 經 `IntentFrame → castAbility → runEffects → world.step` 的完整 SimWorld regression。因此 importer contract 必須補這個 corpus／behavior guard，不能只計算 cards 數量。
+正式站 [`editor-target-profile.json`](https://ggd.adms.ai/content/editor-target-profile.json) 已可讓外部 Editor 讀取公開 Base，但目前仍有以下阻塞：
 
-### 2.1.1 全技能審閱新增的 runtime capability 建議
-
-2026-08-05 的技能審閱已改為全自動決策：技能說明是規格來源，Q／W／E 在 Editor 輸出固定四級、R 固定三級；來源為三或五級時由 Editor 依端點保留的線性取樣產生正式級數，並在中文處理紀錄保留原始差異。遊戲 importer MUST 驗證正式 package 已符合級數規則，不能再次取樣或默默裁切。
-
-本輪 Owner 文案暴露出下列 GGD capability 缺口。Editor 可以編輯與預覽，但遊戲端沒有對應 capability 時必須回 `unsupported-runtime`，不可降級成相似但不同的效果：
-
-- `hook.on-reflect-success@1`：反彈成功後才啟動七段連擊與直線終結技，事件需帶原傷害、反彈傷害、攻擊者與防禦者 provenance。
-- `condition.cast-guard@1`：生命門檻未達時拒絕施展，而且不扣 MP、不進冷卻；guard 必須在 spend／cooldown commit 前原子判定。
-- `hook.on-basic-attack@1` 的 `chance + internalCooldown + manaOnProc`：自動觸發成功後才扣魔；MP不足時依 Product 定義跳過全部效果，或只保留前置防禦結果。
-- `effect.convert-hit-damage-type@1`：以逐級機率把該次普攻完整轉成 true damage，不是另外補一段真傷。
-- 週期護盾不新增重複 primitive：用既有 `onInterval + internalCooldown + shield{absorbs:"magic"}` 組合，但必須有「同來源重建／不疊加」的 source key 與真實 SimWorld 驗收。
-- `effect.attack-dash@1`：暴走期間每次普攻向目前目標短距離衝刺，需 collision、target invalidation 與 exactly-once 規則。
-- `condition.target-status@1 + hook.on-ability-hit@1`：指定技能命中帶有燃燒標記的目標時，對目標周圍啟動另一個 Product。
-- 反彈視窗不另造一個整包 effect：用既有限時 `applyBuff.hooks + onDamageTaken + damage.incomingPct` 表達；真正缺口是 `on-reflect-success` 的成功認定、反彈封包 provenance 與 child chain。
-- typed multiplier semantics：`pctMult` 固定解釋為最終倍率 `1 + value`，`percentOf` 解釋為來源屬性的占比；schema、compiler、runtime 與 tooltip generator 必須共用同一組 contract tests。
-
-以上皆只新增到遊戲端建議；本專案沒有修改 GGD。
-
-### 2.1.1.1 最新技能文案同步（2026-08-08）
-
-Editor 已完整套用 Owner 提供的 **15 名英雄 × 6 槽，共 90 份**技能文案來源：Saber、初號機、白木卡迪那、櫻綻剎那、宇智波佐助、揍敵客桀諾、涅吉、夜神月、天地志狼、林克、黑崎一護、呂布奉先、熊貓、草泥馬與 Berserker。機器可讀來源為 `ggd-editor-pack-v2/tools/owner_skill_descriptions_20260808.tsv`，SHA-256 是 `078be769f4641e83731eeb18423452696c6ead75b2cc99c28c3505c4a840ff76`。這批來源是 authoring description 的最高優先來源；遊戲端 importer 必須遵守以下規則：
-
-- 技能說明原文是內容規格，包含幽默敘事、引號、換行與條列；不得由 importer 重寫、縮短、潤飾、刪除或以 runtime tooltip 反向覆蓋。
-- Editor 只會補完數值型資料（等級、耗魔、冷卻、施法距離、有效半徑、百分比等）與修正第一行技能標籤。遊戲端應保存 `descriptionSource`、`descriptionResolved`、`tagSource`、`tagResolved` 及修正紀錄，不應重新推導文案。
-- Q／W／E 必須為 4 級，R 必須為 3 級；Editor 已完成線性補值／取樣。Importer 只驗證級數與型別，禁止再次插值、裁切或默默改變正式數值。
-- 被動技能不得帶 `[主動]` 或 `[輔助]`；`[輔助]` 僅代表主動技能且效果作用於我方英雄。self-cast、切換、變身或自身防禦效果不得因作用於自己而自動標成 `[輔助]`。
-- `[迴避]`、`[格擋]` 已隱含受到傷害事件；除非 effect graph 需要不同事件語意，runtime 不應要求額外重複 `[受到傷害時]` 才能執行。
-- 正文 `[直線]`、`[一直線]`、`[前方直線]` 統一映射為第一行 canonical `[指向][範圍]`；這是強制等價關係，不可只有其中一個，也不可與 `[指定]` 並存。單一敵方單位才使用 `[指定]`，地點施放才使用 `[指定][範圍]`。Importer 必須將標籤映射到 typed targeting，不得只保存顯示字串。
-- Owner issue 是追蹤紀錄，不是第二份技能規格；既有決策已採用 Editor 的數值／標籤修正，不應在匯入時重新要求 Owner 裁決。
-
-本次輸出基線為 **43 名英雄、258 個槽位、257 份實際 ability 文件、1 個來源缺件槽**。`godie-ogld.passive` 仍是 `MISSING_SOURCE`：不可猜測、不可產生 placeholder、不可因 ZIP 缺檔而自動刪除；若 package 宣稱完整匯入，必須明確回報缺件並阻止 full apply。
-
-這 90 份是全體 257 份 ability 中的最新黃金回歸子集，不可將「90 份都有檔案」誤解為全體白名單已無缺件。本輪審閱有 192 筆中文處理紀錄；其中 22 筆高程度問題全是現有 template 無法忠實表達或參數沒有生效（19 `TEMPLATE_GAP_YELLOW`、2 `TEMPLATE_INERT_PARAM`、1 `TEMPLATE_CONDITIONAL_INERT`）。Importer 不可因 ability 已經有 `template.ref` 就判定機制可上線。
-
-建議 package manifest 增加：
-
-```json
-{
-  "descriptionPolicy": "source-preserving",
-  "descriptionSourceSet": "owner-skill-descriptions-20260808",
-  "descriptionSourceDigest": "sha256:078be769f4641e83731eeb18423452696c6ead75b2cc99c28c3505c4a840ff76",
-  "mechanicsRegressionAbilityCount": 90,
-  "numericResolution": "editor-resolved",
-  "rankPolicy": { "Q": 4, "W": 4, "E": 4, "R": 3 },
-  "tagRulesVersion": "1.11.0",
-  "ownerIssuePolicy": "record-only",
-  "missingSource": ["godie-ogld.passive"]
-}
-```
-
-若 `descriptionPolicy`、`rankPolicy` 或 `tagRulesVersion` 不相容，回傳 `AUTHORING_POLICY_MISMATCH`；若 source digest 與 package 內文案不一致，回傳 `DESCRIPTION_SOURCE_DIGEST_MISMATCH`。這些檢查必須在 compiled runtime compare 之前完成。
-
-### 2.1.1.2 90 份技能產生的機制契約（2026-08-08）
-
-這批更新證明「效果模板可展開」還不夠。很多技能的真正規格不是一個 damage／buff 物件，而是「什麼事件發生、要讀取哪個當下值、條件成立後啟動哪份 Product、狀態何時失效、另一招如何被強化」。因此 package 必須同時攜帶 description truth 與 typed mechanics truth，遊戲端必須重編並跑行為驗收，不可用標籤或 tooltip 當執行碼。
-
-#### 先復用現有 primitive，不重複發明
-
-Pinned GGD 已有下列可組合能力；Editor compiler 應優先編譯到它們，遊戲端 capabilities API 則要分別宣告版本與語意，不可只回「支援 effect」：
-
-| 現有能力 | 本批技能用途 | 必須加強的驗收 |
+| Blocker | 現況 | 影響 |
 |---|---|---|
-| `damageArea`、`damageLine`、`spawnProjectile.onHit`、`leap.onLand` | 陽電子砲、雷神槍、蹂躪編年史、巨神一擊 | 直線必須產生 deterministic victims；onHit／onLand child 不得被攤平到 cast tick |
-| `onInterval + internalCooldown`、`dot`、`shield.absorbs` | AT 力場、真·不死不滅、天照 | 週期、第一 tick、重新套用、同來源不疊加與只吸收 magic 必須有狀態斷言 |
-| `applyBuff`、`cycleBuff`、`StatModifier.override/capRaise/percentOf` | 念。攻防轉換、暴走攻速上限、屬性派生與輪替增益 | 同來源 refresh／stack、每層或全層到期、override 優先度與 capRaise 不得相乘 |
-| `spendMana`、`damage.hpPct/incomingPct/refund`、`grantAttribute` | 風王結界每擊扣魔、牙突目標生命比、反彈與永久三圍 | 所有百分比的 subject、basis、結算時點與上限都是 typed field |
-| `championForm`、`whileForm`、`applyBuff.hooks` | 風王結界、卐解、虛化、限時變身後普攻效果 | 現有 base／alternate 只適用一組對應身體；三種互斥變身不可偷用同一個 boolean |
-| `condition` 的 chance／stat／kind、`HookDef.abilitySlot` | 生命門檻、指定槽位命中、英雄限定 | 它們不足以表達 status ref、指定 ability id、反彈成功、裝備與層數；缺的不可用文案名稱替代 |
+| Managed authoring／activation store | 尚不存在；只允許 `bootstrap` proposal | 不可產 production `full`／`delta` |
+| Public compiler receipt | contract／fingerprint 仍為 `null` | 不可宣稱 Editor 與 production compiler parity |
+| Public package contract | profile 仍指向舊 Draft 文字 | importer 無法安全協商 exact schema／spec |
+| Tag engine 對帳 | `matchesEngine=false` | 不可用該 manifest 證明 canonical tag 與 mechanics 一致 |
+| Authoring rules | 公開 pricing endpoint 為 `null` | MP／冷卻等規則只能當本機建議，不能當 production contract |
+| Write API | validate／apply／rollback 仍回 501 | 目前只能讀 profile、離線建包與本機自驗 |
 
-#### 本批機制要求新增或升級的 capability
+版本、數量、短 digest 與 capability 明細都只從 live receipt 讀取，不再抄入本文或程式常數。
 
-| 建議 capability | 來自本批的驗收技能 | 最低契約 |
-|---|---|---|
-| `defense.block-source@1` | `godie-e002.passive` 銀色甲胄 | 將現有 item-only `BlockGrant` 移到共用 `ModifierSource`，ability／buff／item 都可指定 damage types、chance、fraction、ICD 與 stacking order。格擋在 HP 扣除前發生，不可用 `onDamageTaken -> shield` 假裝。 |
-| `effect.convert-hit-damage-type@1` | `godie-e00r.w` 高週波短刀 | 成功時把「這一發原普攻」轉為 true damage，保留 hit id／crit／on-hit／kill credit；不另發第二個 damage packet。 |
-| `hook.on-reflect-success@1` | `godie-e002.ex`、`godie-h00l.r/ex` | 只在實際產生反彈封包時觸發，context 至少帶 source、defender、original packet、reflected packet、basis、amount、reflectDepth、castId／abilityId；被免疫或 0 傷害不觸發。 |
-| `hook.on-evade@1` | `godie-e00w.passive`、`godie-h02k.r` | 只接真正 defender evade outcome，不接 attacker fumble；context 帶 attacker、defender、channel 與 attack origin，延遲 queue 的順序固定。 |
-| `hook.on-lethal-damage@1` + `effect.charge-ledger@1` | `godie-hapm.passive` 十二道試煉 | 在 death commit 前原子判斷、消耗一層、阻止本次死亡，再執行無敵／延遲回復／周圍擊退暈眩；ledger 明訂 round／match／persistent-profile scope，本技是 match 內跨回合 12 層。 |
-| `condition.has-status@1`、`condition.ability-state@1`、`condition.has-equipment@1`、`condition.stack-count@1` | 哥哥、絕。暗殺奧義、御雷劍、虛化、最終戈壁 | 只接穩定 statusId／abilityId／itemId／state key，明訂 subject、snapshot 時點、比較與 absent 語意；禁止以「哥哥」「千年練成」等顯示名稱連結。 |
-| `ability-augment@1` | `godie-e00s.ex`、`godie-e00w.ex`、`godie-edem.r`、`godie-h01n.r/ex`、`godie-h00l.ex` | 是 authoring graph edge，不是任意 JSON Patch。可 allowlist `appendProduct`、`scaleTerm`、`setDuration`、`setChance`、`cooldownMult`、`cooldownReset`；目標以 exact ability ref 與穩定 term／edge id 定位。 |
-| `state.exclusive-group@1` + `state.lifecycle@1` | 風王結界、疾風迅雷／獄炎煉我／雷天大壯、卐解／虛化 | 狀態帶 stable key、exclusive group、onEnter、onExit、onAutoExit、duration、refresh policy。Toggle 因 MP 不足自動關閉時也必須走 onExit，才能釋放風王鐵槌。 |
-| `effect.event-value-conversion@1` | `godie-emfr.ex` 敵彈吸收陣。太陰道 | 只可從 allowlisted event field 讀取，例如 `incoming.reflectedAmount`，再依同一個 captured value 回 MP 與增 AP。必填 basis、ratio、cap、overflow、stackKey 與 expiry policy；「5秒後歸零」要明訂 `all-at-once`，不可猜成 per-stack expiry。 |
-| `hook.consume-policy@1` | 雷天大壯「施放技能後的下一次普攻」 | 支援 `maxTriggers`、`consumeOn` 的 `success`／`attempt`、`expiresAt`、`perTarget`；沒有這個契約時，限時 hook 會每次普攻都觸發。 |
-| `effect.weighted-branch@1` | `godie-h02k.ex` 俄羅斯輪盤 | 一次 seeded RNG draw 選一個互斥結果；weights 必須有窮、非負、加總一致，條件只可替換或調整權重表。不可把 1/6、1/6、4/6 編成三次獨立 chance。 |
-| `effect.execute@1`、`defense.mana-barrier@1`、`effect.swap-resource@1` | 吞噬、狂草泥馬、機警、交換筆記本 | 處決需 typed threshold、hero-only、shield／invulnerable interaction、kill credit 與回復 basis；魔力護盾需 damage-to-MP ratio 與 MP 不足時的 remainder；交換只交換 current resource，不交換 max、護盾或 modifier。 |
-| `scheduler.random-area@1` | `godie-efur.r` 龍星群 | 使用 SimWorld seeded RNG，指定 count=10、interval=0.2s、anchor、radius、placement policy、target selector 與 child Product；replay 必須有相同落點與命中順序。 |
-| `effect.target-set-chain@1` 的雙分支擴充 | `godie-h02v.ex` 最終戈壁、千年練成／樹海降臨 | 同一 tick 可用 ally selector 回 MP，enemy selector 造成傷害；兩個 named target set 不得共用 mutable `ctx.targets`，同隊與敵隊不得重疊。 |
-| `effect.control-restriction@1` + `effect.modify-cooldown@1` | 臥草泥馬、暴走、完美盾反／勇者意志、卐解／虛化 | 分開 move／basicAttack／cast／playerOrders／AI control，不可用 stun 概括；冷卻操作分為 reset current、scale remaining、scale future casts，並以 exact ability ref 指定。 |
+三個環境不可再用一句「目前 G1」混稱：repo／local 已有 package schema 與 compiler 實作；public static profile 仍缺 compiler receipt 且宣告舊 spec；production private importer 尚未提供 validate／apply／rollback。 `implementedStage` 只供 roadmap 顯示，Editor 必須讀每個 operation 的明確 `supported／unsupported` 狀態，不能從 `G1` 字串推算功能。
 
-上表是未來 runtime 契約，不會反向改寫 v0.9.45 的已知支援狀態。例如 `[格擋]` 目前仍受 tag manifest 的 item-only 限制；要等 `defense.block-source@1` 的 schema、SimWorld、scenario 與 mutation guard 全部上線後，才能由遊戲端發佈新 manifest 版本開放 ability authoring。
+### 1.3 Public descriptor 與 active receipt 必須分開
 
-`ability-augment@1` 的建議外形如下；重點是 exact ref、stable term id 與封閉 operation，不是欄位名必須照抄：
+`ggd-editor-target-profile@1` 是公開、唯讀的 discovery／Base descriptor，不是 distribution receipt，也不是 activation receipt。它目前的短 digest 只適合偵測漂移，不代表簽章或可信來源。
 
-```json
-{
-  "schema": "ability-augment@1",
-  "id": "godie-edem.r:augment-kirin",
-  "sourceAbilityRef": { "id": "godie-edem.r", "contentSha256": "sha256:..." },
-  "targetAbilityRef": { "id": "godie-edem.e", "contentSha256": "sha256:..." },
-  "when": {
-    "event": "onAbilityHit",
-    "targetHasStatus": "status:burning"
-  },
-  "operations": [
-    {
-      "op": "appendProduct",
-      "edgeId": "on-hit",
-      "productRef": { "id": "product:kirin-blast", "contentSha256": "sha256:..." }
-    }
-  ]
-}
-```
+`ggd-content-target-profile@1` 應只由遊戲後台的 authenticated active endpoint 產生。Desktop 若為 UI 相容性把 public profile 投影成類似形狀，必須標示 `source=public-adapter`，不得偽裝成後台簽發的 active receipt，也不得用它開啟 production apply。
 
-禁止用 `/effects/0/onHit/2/amount` 這類位置 JSON Pointer 當永久契約；Product 重排就會讓被動技強化錯對效果。Compiler 必須給可被強化的 term／edge 穩定 id，並在拓撲 compile 時驗 target ref、operation 與條件的型別。
+`base.contentVersion` 必須 pin 正式站完整 public Base；Editor 將 maps 或其他非編輯集合排除後得到的本機 working-set hash，不得回填成 public Base。Editor package 仍不得因此夾帶 map-authoring entries。
 
-#### Package／Loader 必須多做的驗證
+G0 應讓 profile 明示 digest algorithm、完整 SHA-256、package schema version／digest、spec digest、compiler contract／fingerprint。公開 descriptor 可在 HTTPS 下只作 discovery；production plan／activation receipt 必須來自 authenticated endpoint，離開該信任通道時還要有 `keyId`／signature。
 
-Package manifest 建議增加機制回歸身分：
+| Receipt | 用途 | 可否作 CAS Base | 是否代表已啟用 |
+|---|---|---:|---:|
+| Public editor target profile | discovery／公開 content Base | 否 | 否 |
+| Active content target profile | 建包 target／active Base | 是 | 否 |
+| Verified plan receipt | 短期 apply 授權與驗證證據 | 只限其 pinned Base，一次性 | 否 |
+| Activation receipt | immutable deployed state | 是 | 是 |
 
-```json
-{
-  "mechanicsRegression": {
-    "fixtureSet": "owner-skill-descriptions-20260808",
-    "sourceSha256": "078be769f4641e83731eeb18423452696c6ead75b2cc99c28c3505c4a840ff76",
-    "abilityCount": 90,
-    "compilerContract": "effect-graph-v1",
-    "requiredCapabilities": [
-      "ability-augment@1",
-      "hook.on-reflect-success@1",
-      "hook.on-lethal-damage@1",
-      "effect.weighted-branch@1"
-    ]
-  }
-}
-```
+### 1.4 可切換政策與不可繞過閘門
 
-`requiredCapabilities` 只是快速協商用索引。Importer 必須自己 walk authoring graph 重算實際需求，比對 manifest 並 fail closed；不可信任 package 少報 capability。另外必須：
+可以做成 Editor 開關的是兩種都能被 runtime 忠實執行的選擇，例如 Product 保持 host-local 或 Promote、是否顯示 degraded preview、匯出選取範圍，以及是否另外提出 curation proposal。
 
-1. 把 `ability-augment`、status refs、state refs、cooldown refs 納入 forward／reverse dependency closure；partial 匯出只選被動技時，仍要重編其影響的目標技能。
-2. 檢查每個 event edge 是否真的提供 child 所讀取的 context。例如 `incoming.reflectedAmount` 不可掛在 `onBasicAttack`，`evade.attacker` 不可掛在純週期事件。
-3. 同一穩定 state key 的 scope、stacking、expiry 與 exclusivity 必須一致；`match` 層數不可在 round reset 丟失，也不得進入下一場 match。
-4. 重編後要對 description 產生機制覆蓋報告：文案中已確認的處決、反彈成功、永久層數、下一次普攻、交換、互斥變身等語意，必須有 typed provenance 指向對應 node；單有彩色標籤不算覆蓋。
-5. 權重分支、隨機落點、機率 hook 都必須使用同一 deterministic RNG lineage；validate 要計算每次事件最大 draw 數與 child event 預算。
-6. 任一新 capability 尚未出現在遊戲端 registry 或缺少對應 scenario evidence 時，回 `unsupported-runtime`；不得 lower 成「看起來差不多」的舊 template。
+下列不可用開關、warning acknowledgement 或管理員勾選繞過：
 
-建議固定 diagnostics：`MECHANIC_CAPABILITY_UNSUPPORTED`、`MECHANIC_EVENT_CONTEXT_MISSING`、`ABILITY_AUGMENT_TARGET_MISSING`、`ABILITY_AUGMENT_OPERATION_UNSUPPORTED`、`STATE_SCOPE_CONFLICT`、`EVENT_VALUE_BASIS_REQUIRED`、`WEIGHTED_BRANCH_INVALID`、`DESCRIPTION_MECHANIC_UNCOVERED`。
+- schema／exact ref／JCS digest／compiler receipt 不符。
+- unknown、unsupported、無法機器判定的 partial，或命中 applicable known-broken。
+- ZIP safety 超限、stale base／profile／plan、CAS 失敗。
+- 遊戲端重編結果與 expected compiled 不同。
+- required scenario、strict refs、full-tree loader 或 candidate health 失敗。
 
-#### 90 份子集的最低行為驗收
+## 2. 唯一實作順序與可啟用範圍
 
-- Saber R／EX：2 秒反彈視窗外零觸發；視窗內只有實際反彈成功才開七段斬擊與直線終結，每段 provenance 都可追回同一原始封包。
-- 初號機 W／E：W 是「改變原普攻傷害型別」，不是多打一下；E 每 8 秒重建一個不疊加、只吸收魔法傷害的護盾。
-- 白木 R／EX：EX 是對 R 的 typed augment，傷害加成與友方回復分開 selector；不得把 EX 編成另一個需按的主動技。
-- 佐助 E／R：只有指定 E 命中且目標帶燃燒標記才觸發麒麟；比對 exact ability id，不比對中文名。
-- 桀諾 R／EX：10 顆流星每 0.2 秒一顆，同 seed 的落點與命中完全相同；EX 只在牙突命中致盲目標時抽一次 20%。
-- 涅吉 W／E／R／EX：三種變身屬於同一 exclusive group；雷天大士的次回普攻只觸發一次；太陰道用同一 reflected amount 同時回 MP 與疊 AP，5 秒到期後 AP 全部歸零。
-- 夜神月 PASSIVE／EX：魔力護盾依 1 MP:3 damage 實際消耗，MP 不足的餘傷繼續結算；交換筆記本只原子交換雙方現存 HP。
-- 林克 R／EX：反彈成功的回復、擊退與 EX 冷卻重置各只發生一次；被免疫或未實際反彈時不重置。
-- 熊貓 EX：每次施放只抽一次互斥結果；致盲／混亂只改一張權重表，不額外增加第二、第三次機率抽取。
-- 草泥馬 EX：`[馬勒戈壁]` 存在期間每秒各執行一次 ally mana restore 與 enemy area damage，兩邊 target set 、統計與事件分開。
-- Berserker PASSIVE：致命傷害一次只消耗一層，12 層跨回合、不跨 match；無敵、延遲回復、周圍擊退暈眩依固定 tick 順序各一次。
+不再維護另一套 P0–P3 優先級；只使用 G0–G5，避免同一工作在不同章節出現互相矛盾的等級。
 
-### 2.1.2 遊戲 v0.9.45 技能標籤支援同步
+| 階段 | 依賴 | 主要交付物 | 允許的結果 |
+|---|---|---|---|
+| G0 Contract alignment | 無 | 同版 schema／spec／profile、穩定 requirement IDs、golden fixtures | 讀取、離線 proposal；不可 production validate/apply |
+| G1 Read-only validate | G0 | bounded upload、staging、game recompile、derived rebuild、verified plan | 可驗證；ACTIVE 不變 |
+| G2 Atomic activation | G1 | immutable store、operation state machine、CAS、health、rollback | 僅能啟用不需要 G3/G4/G5 的 package |
+| G3 Distribution／curation | G2 | distribution index、pickability、獨立 curation transaction | 才能啟用 item／curation 影響的 package |
+| G4 Gameplay capability closure | G2 | 將 partial／unsupported 逐項變成可機器驗證的 supported | 才能啟用依賴該能力的 package |
+| G5 Preview／provenance／VFX | G2 | render bridge、event provenance、VFX authoring capability | 才能匯入 VFX document；預覽可宣稱 production parity |
 
-2026-08-05 收到遊戲端自足支援資料：`SKILL-TAG-SUPPORT.md` 與 `skill-tag-manifest.json`，對應引擎版本 **v0.9.45**。這兩份檔案是目前標籤支援的權威輸入；manifest 是機器可讀的狀態來源，支援文件提供作者警告與限制說明。
+任何 package 的可啟用階段取其所有變更與依賴所需的最高階段。例：純技能、全部 capability 已 supported、無 curation 變更，可在 G2 啟用；道具取得性變更至少 G3；partial target-set 或 evade 語意至少等對應 G4 閘門關閉；VFX document 至少 G5。
 
-技能文案權威規則：Editor 不得重寫、縮短、潤飾或移除作者原文（包含幽默敘事與條列）。Editor 只可補完數值型資料（等級、耗魔、冷卻、距離、半徑、百分比等）與修正第一行技能標籤；文案品質問題只能寫入 Issue。
+Raw runtime JSON 永遠只供檢視／除錯，不屬於上述 production apply 路徑。
 
-| state | 數量 | 編輯器行為 | 匯入行為 |
-|---|---:|---|---|
-| `allowed` | 52 | 正常可選、可輸出 | 正常驗證與編譯 |
-| `allowed_with_warning` | 46 | 可選，但 `authorWarning` 必須常駐顯示，不得藏在 tooltip | 可匯入，但 receipt 必須保留警告與 capability evidence |
-| `blocked` | 41 | 灰階顯示「開發中」，不可選、不可保存 | 直接拒絕；不得把標籤存進 runtime 或降級成相似效果 |
+## 3. G0：先把契約關閉
 
-編輯器的 tag picker、JSON validator、ZIP compiler 與遊戲 importer 必須共用同一份 manifest。`blocked` 標籤若只在 UI 禁用但仍可由手動 JSON／舊 ZIP 寫入，仍視為驗證漏洞；package validate 必須逐一檢查每個 tag 的 state。
+### 3.1 Profile 與 capability 必須可機器判定
 
-同步後的高優先限制：
+Target profile 至少要 pin：
 
-- `[指定]` 目前只送敵方目標；友方指定治療／增益不可宣稱支援，應改為 `[輔助]` 或友方範圍效果。
-- `[指向]` 不產生目標清單，只允許投射物／直線傷害語意；掛上需要目標清單的傷害、狀態、治療、護盾必須阻擋或改寫。
-- `[格擋]`、`[免死]` 只可出現在道具；`[真視]`、`[隱身（常駐）]`、`[飛行]` 依 manifest 的 `authorableIn` 限制文件類型。
-- `[破甲]`、`[破防]`、`[破魔]`、`[易傷]`、`[虛弱]`、`[凋零]` 若 `noEffectOnMinions=true`，作者畫面必須常駐提示「對小兵無效」。
-- `[血量首次低於]` 目前只能表達「目前低於 N%」，不能宣稱首次觸發；沒有對應 edge／latch 時不可輸出為一次性事件。
-- `allowed_with_warning` 不等於完整支援：例如 `[召喚]`、`[反彈]`、`[標記引爆]`、`[處決]`、`[減傷]`、`[冷凍]` 等必須把文件中的語意限制一起保存，不能只保存中文 label。
+- package schema version／digest 與 spec digest。
+- compiler contract version／fingerprint。
+- runtime capability fingerprint。
+- authoring rules、tag manifest、asset manifest、curation 與 distribution receipts。
+- supported package modes、reload mode、effective limits 與 verification method。
 
-目前審閱輸出的對照表共有 **180** 個方括號顯示項，但 canonical authoring tag 仍只有 manifest 的 **139** 個；兩者不可直接當成同一集合。多出的項目包含正文顯示別名（例如 `[小範圍]`、`[大範圍]`、`[周圍]`、`[附近]`、`[前方直線]`、`[普通攻擊]`、`[閃避]`、`[擊昏]`、`[AP]`、`[AD]`、`[防禦]`、`[魔法抗性]`、`[詛咒]`、`[擴散]`、`[蓄力]`）與作者在正文中使用的技能名稱引用，這些只供 presentation tokenizer 上色，不得進入 mechanics tag validator。正文別名必須保留作者實際用詞：「閃避」只能變成 `[閃避]`，不得被改寫成 `[迴避]`；移除新增的 presentation 方括號後，原文必須保持不變。`[離開範圍時]` 則是尚未列入 manifest 的候選機制標籤，支援文件也明確說尚未查證；在遊戲端補入 manifest 前，若出現在第一行 canonical tag block，編輯器應暫列 `blocked` 並禁止匯出。另需建立 canonical label normalization，統一全形／半形括號，例如 `衍生屬性（把 A 的 X% 加到 B）` 與 manifest 的 `衍生屬性(把 A 的 X% 加到 B)`，避免同一語意被計成兩個 tag。
+建議將它們收斂成一份 machine-readable `contractReceipt`，再加入 diagnostics registry、ZIP policy、JCS algorithm 與 validation build digests。Compiler fingerprint 至少覆蓋 compiler contract schema、primitive registry、runtime output schema、ability／item patch 規則與 golden-vector set；只 hash 一小份 surface object 不能證明 parity，遊戲端重編仍不可省略。
 
-匯入錯誤碼建議固定為：`TAG_BLOCKED`（blocked）、`TAG_AUTHORING_SCOPE`（authorableIn 不符）、`TAG_WARNING_ACK_MISSING`（警告未保留）、`TAG_MANIFEST_VERSION_MISMATCH`（manifest／runtime 版本不一致）、`TAG_CANONICAL_NAME_CONFLICT`（同義標籤名稱不一致）。
+`runtimeCapabilities.planned[]` 的散文 `caveat` 只可顯示給人，不可讓 importer 解析。每項能力應改成：
 
-### 2.1.3 技能標籤 Markdown 與全域七色色盤
+- `state`: supported／partial／unsupported。
+- `supportedVariants[]` 或 machine-readable `constraints`。
+- `applicability`: 會命中哪些 effect／event／entity／context。
+- `evidenceDigest`: 對應 contract／scenario／mutation tests。
+- 穩定 `requirementId`，不可引用會改號的 Markdown 章節。
 
-技能說明維持目前的精簡格式，不在每個標籤後重複保存色碼：
+在這個結構完成前，production importer 一律把 `partial` 視為 unsupported。`knownBroken` 也必須有 machine-readable applicability；不能只靠 issue 散文判斷 package 是否命中。
+
+Tag manifest 漂移不應封鎖所有 typed package。`matchesEngine=false` 時：
+
+- 禁止新增／改寫 canonical tag，或以 tag 推導 mechanics。
+- 仍可保留 Owner 原文與 presentation token。
+- 若 authoring truth 已是完整 typed mechanics，且其 required capabilities 可獨立驗證，允許繼續做非 tag-authoring 的 staging validation。
+
+### 3.2 Bootstrap／full／delta 的集合語意
+
+- `bootstrap`：V1 建議一次建立 importer-managed 範圍的完整 canonical authoring corpus；package 必須帶 migration fingerprint 與 managed membership digest。只輸出使用者目前選取的幾份文件，不足以把 authoring store 標成 `ready`。
+- `full`：必須明示完整 result membership；任一 base member 遺漏都是錯誤，不是 delete，也不是默默 carry forward。機器 schema 尚未有 membership contract 前，先不要宣告支援 full。
+- `delta`：必須 pin active activation／authoring digests，帶非空 selection roots、forward dependencies 與受影響的 reverse closure。
+
+每筆 `changes[].before` 都要對 immutable Base 驗 exact hash。Editor 的三方合併結果、衝突選擇與 provenance 要進 authoring／receipt；Importer 不可以改用 Editor 本機 working-set version 當 Base。
+
+V1 只允許 upsert，不支援顯式或隱式 delete。若未來要支援「部分 bootstrap overlay」，必須新增明確 mode 與 legacy adoption／carry-forward 規則，不能偷用現有 bootstrap。
+
+### 3.3 Digest 的 canonical projection
+
+Machine contract 必須補齊下列 exact projection；只寫「做一個 hash」不足以互通：
+
+- `authoringDigest`：完整 managed authoring store 的 JCS membership＋document digests。
+- `compiledDigest`：遊戲端重編後 runtime collections／bundle 的 canonical digest。
+- `derivedDigest`：mirrors、indexes 與其他 importer 重建結果。
+- `distributionDigest`：可取得性 projection 與其 curation inputs。
+- `activationDigest`：以上 digests，加上 compiler、runtime capability、authoring policy、tag、asset、curation receipts 的 canonical record。
+- `planDigest`：package、candidate activation、完整 Base/profile/compiler/capability/policy receipts、selection roots、validation build 與 evidence 的 deterministic semantic projection。
+
+Package digest 繼續採 RFC 8785 JCS 與完整 SHA-256。短版 public profile digest 不得當 package／plan／activation digest，也不得作安全簽章。
+
+Actor、environment、issuedAt／expiresAt、一次性 consumed state 不塞進 deterministic `planDigest`；它們由伺服器保存的 verified-plan record 或簽章 envelope 綁定。Apply 只引用這筆 server-side plan，不接受客戶端重送一份自稱已驗證的 plan JSON。
+
+所有 semantic object 預設使用 strict schema。需要向前擴充時只允許版本化 `extensions` namespace，且每個 extension 必須宣告 capability／schema；未知 extension fail closed。`.passthrough()` 可用於保留未知 bytes 供重新輸出，但絕不代表 importer 已理解或接受其語意。`validationPolicy` 等影響 pass/fail 的欄位不得維持 untyped `unknown`；reports 只是不可信證據，不能決定 pass/fail。
+
+### 3.4 Raw JSON 與「單檔匯入」
+
+Package endpoint 收到 `ability@1`／`item@1` 必須回 `RAW_RUNTIME_DOCUMENT_NOT_A_PACKAGE`。不再建議伺服器猜測並包裝 raw document，因為 raw runtime JSON 沒有 Product authoring truth、Base、dependency closure 與 expected compiled。
+
+若後台要提供「單檔 JSON 匯入」，Editor 應輸出一個只選一個 root、但仍含完整 closure 與 manifest 的 **Package JSON**。使用者看到的是一個 JSON 檔，系統仍走同一條安全 pipeline。
+
+### 3.5 Owner source、typed mechanics 與等級政策
+
+- Owner 原始文案在同一 source revision 內 immutable，不縮寫、不潤飾、不刪除幽默內容；Owner 合法更新會建立新 revision，保存 actor、timestamp 與 source digest。
+- Editor 只產生 resolved 數值、標籤與中文 Owner issue；Importer 不得再以 runtime tooltip 覆蓋 source。
+- 目前 versioned authoring-rules 固定 Q／W／E 四級、R 三級。Editor 完成的線性取樣只由 importer 驗證，不再插值或裁切；規則升版靠 receipt 協商，不把級數硬編進 importer。
+- Description、presentation tag 與 typed mechanics 是三種資料；任何一種都不能偷偷取代另一種。
+- 事件、條件、目標集合、資源基數、機率、時序及 cross-ability／status／state 關係必須是 typed fields＋exact refs，不能從技能名、中文或 JSON Pointer 反推。
+
+Owner regression corpus 只以 fixture-set id／digest／scenario digests 引用，不把技能數量、英雄名單或缺件寫進 importer 常數。驗證重點是 typed mechanics 完整覆蓋 authoring intent，不是技能是否已有 `template.ref`。
+
+### 3.6 `[]` Markdown 與全域七色盤
+
+儲存的說明只保留簡單 `[token]`，不在每份技能內寫 HTML 或色碼：
 
 ```markdown
 [主動][指向][範圍]
@@ -272,572 +189,251 @@ Package manifest 建議增加機制回歸身分：
 對前方[大範圍]敵人造成350+100%[AP]傷害。
 ```
 
-遊戲端把 `[...]` 視為 `ggd-tag-markdown@1` 的 inline token；標籤名稱透過 `skill-tag-manifest.json` 取得 `group`，再由一份全域色盤取得色碼。禁止輸出 `[範圍]{#1565C0}`、HTML `<span style>` 或讓每支技能自行指定顏色，避免同一標籤產生色碼漂移、增加文案長度或形成 HTML／CSS 注入面。
+| group | 用途 | 色碼 |
+|---|---|---|
+| `activation` | 主動／被動／切換 | `#7030A0` |
+| `cast` | 指向／指定／小範圍／範圍／大範圍 | `#1565C0` |
+| `effect` | 傷害／狀態／治療／防禦 | `#D84315` |
+| `event` | 觸發事件 | `#546E7A` |
+| `condition` | 觸發條件 | `#9A6700` |
+| `movement` | 位移／控制 | `#008C95` |
+| `scaling` | AP／AD／防禦／魔抗等屬性 | `#BF8F00` |
 
-全域色盤固定為：
+遊戲端以 allowlisted tokenizer 產生 presentation AST，再依內建 palette id 著色；不解析 description 內的 HTML、CSS、URL 或 script。第一行未知 canonical tag 是 error；正文未知 `[token]` 保留原文並警告。Renderer 不得把 HTML 或 tokenized 結果寫回 authoring JSON。
 
-```json
-{
-  "schema": "ggd-tag-palette@1",
-  "id": "ggd-skill-tags-seven-color@1",
-  "groups": {
-    "activation": { "label": "啟動方式", "color": "#7030A0" },
-    "cast": { "label": "施放範圍", "color": "#1565C0" },
-    "effect": { "label": "效果／狀態", "color": "#D84315" },
-    "event": { "label": "觸發事件", "color": "#546E7A" },
-    "condition": { "label": "觸發條件", "color": "#9A6700" },
-    "movement": { "label": "位移控制", "color": "#008C95" },
-    "scaling": { "label": "數值縮放", "color": "#BF8F00" }
-  },
-  "unknownInlineGroup": "effect"
-}
-```
+最低守衛：相鄰 token 不合併；`【…】`／引言不作 mechanics 推論；`GLADIARIA` 不被切成 `GL[AD]IARIA`；獨立詞 `[直線]` 正規化為 `[指向][範圍]`；重複執行 parser 必須冪等。
 
-其中 `[小範圍]`、`[範圍]`、`[大範圍]` 一律屬於 `cast`，使用亮藍 `#1565C0`；正文顯示別名 `[AP]`、`[AD]`、`[防禦]`、`[防禦力]`、`[魔抗]`、`[魔法抗性]` 屬於 `scaling`，使用金色 `#BF8F00`。`AP加成`／`AD加成` 仍是 canonical authoring tag；正文中的屬性框選只負責指出數值作用對象，不得因此重複建立 runtime effect 或把「獲得AD」誤判成「效果依AD比例縮放」。
+## 4. G1：Read-only validate
 
-Package manifest 應只宣告語法與色盤版本，不讓單一 ability 或任意 delta package改寫全域色盤：
+### 4.1 API 與 envelope
 
-```json
-{
-  "tagPresentation": {
-    "syntax": "ggd-tag-markdown@1",
-    "paletteId": "ggd-skill-tags-seven-color@1",
-    "tagRulesVersion": "1.11.0",
-    "tagManifestVersion": "v0.9.45"
-  }
-}
-```
-
-JSON bundle 與 ZIP 的 semantic manifest 都使用同一個 `tagPresentation`。正式色盤由遊戲端的 allowlisted presentation registry 提供；Editor 只宣告預期版本。Importer 不接受 package 內任意 `style`、HTML 或自訂色碼。若未來需要改色，新增 palette id 並做明確相容升級，不原地改寫既有 id。
-
-遊戲端 tokenizer／renderer 規則：
-
-1. 只辨識同一行內、沒有巢狀方括號且長度 1～48 字元的 `[token]`；換行、空標籤或不完整括號保持原文。
-2. `\[` 與 `\]` 是普通方括號，不建立 tag token；反斜線只在顯示時移除，不得改寫儲存的 authoring description。
-3. 第一行的技能標籤必須是 manifest canonical tag 或已登錄 alias；未知第一行標籤回 `TAG_UNKNOWN` 並拒絕匯入。
-4. 正文內已登錄 token 依 manifest／alias group 上色。未知正文 `[token]` 仍以 `effect` 色 `#D84315` 顯示並回報 `UNKNOWN_INLINE_TOKEN` warning，避免技能名稱引用如 `[千年練成]` 消失；warning 不得擅自改寫原文。
-5. Renderer 產生受控的 tag node，例如 `<span class="skill-tag skill-tag--cast" data-tag="範圍">[範圍]</span>`；class 與色碼只能來自 allowlisted palette，不執行描述內 HTML、CSS、URL 或 script。
-6. Markdown／tag token 只負責呈現。傷害、觸發、施法類型、目標選擇及效果鏈仍以 typed authoring／compiled JSON 為唯一 runtime truth；遊戲邏輯禁止從彩色文字反向推導機制。
-7. 無障礙模式可以替換對比更高的 theme，但 group identity、`data-tag` 與原文不得改變；顏色不可是唯一訊息，畫面仍保留完整 `[標籤]` 文字。
-8. Editor 的正文標示器必須先保護 `「…」`、`『…』`、`“…”` 引用片段，再做關鍵字標記；引用內如「其實還可以衝刺」只是文案，不可自動變成 `[衝刺]`。
-9. `AP`、`AD` 只在完整 ASCII 單字邊界上辨識，禁止把 `GLADIARIA` 之類專名切成 `GL[AD]IARIA`。檢核公式前先將正文 `[AP]`、`[AD]` 還原為 `AP`、`AD`，其他方括號 token 才移除，避免誤判 `AP加成`／`AD加成` 沒有說明依據。
-10. `[衝刺]`、`[吞噬]` 等易與笑話、同名或世界觀文字碰撞的詞，只在第一行 canonical tag block 已有對應機制且正文語境是實際效果時才框選。`[詛咒]`、`[擴散]`、`[蓄力]` 是正文 presentation alias，只讓證據可見，不另外建立 runtime effect。
-11. 每次匯出前必須做表頭與正文雙向檢核：阻擋「引用內誤標」、「英文專名被截斷」、「碰撞詞無機制依據」與「明確語意未框選」；這些守衛失敗時禁止產生正式 Excel／JSON／ZIP。
-12. 全檔規則必須對每份技能說明具有冪等性：已經處理過的說明再套用一次必須完全不變。若任一份說明再次套用後仍會增加或改變標示，回報 `INLINE_RULESET_NOT_FULLY_APPLIED` 並禁止整包匯出。
-13. Presentation parser 遇到正文 `[直線]`、`[一直線]` 或 `[前方直線]` 時，必須驗證第一行同時有 `[指向][範圍]`；缺任一個或同時出現 `[指定]` 時回 `LINE_SCOPE_PAIR_MISSING` 並拒絕匯入。Editor Script 可依規則自動校正，但必須在中文 Owner issue 記錄修正前後標籤。
-
-建議載入順序：
-
-1. 驗證 `tagPresentation.syntax`、`paletteId`、`tagRulesVersion` 與 `tagManifestVersion`。
-2. 從遊戲內建 registry 取得 palette，再載入同版本 `skill-tag-manifest.json`。
-3. 驗證第一行 canonical tags、alias normalization 與 blocked／authorableIn 規則。
-4. 保存未改寫的 description source，建立只供 UI 使用的 tokenized presentation AST；不要把渲染後 HTML 回寫 JSON。
-5. 編譯及驗證 typed mechanics；presentation warning 不得取代 mechanics error。
-6. Apply staging 成功後才原子啟用 content 與相容 presentation metadata。
-
-最低 contract tests：
-
-- manifest 139 個 canonical tags 全部能取得七群組之一及合法大寫 `#RRGGBB` 色碼。
-- `[小範圍]`、`[範圍]`、`[大範圍]` 都解析為 `cast/#1565C0`；`[AP]`、`[AD]`、`[防禦]`、`[魔法抗性]` 都解析為 `scaling/#BF8F00`。
-- 相鄰標籤 `[主動][指向][範圍]` 產生三個 token，不合併、不重複、不吞掉換行。
-- 正文 `[直線]`、`[一直線]`、`[前方直線]` 均要求表頭 `[指向][範圍]`；只有 `[範圍]`、只有 `[指向]` 或 `[指定][範圍]` 都必須檢核失敗。
-- `\[範圍\]`、`[]`、缺右括號、巢狀括號、超過48字元與包含換行者保持純文字。
-- 未知第一行標籤被拒絕；未知正文標籤保留原文、使用 effect fallback 並產 warning。
-- JSON 與 ZIP 載入同一內容時產生相同 presentation AST 與相同 package semantic digest。
-- 描述中的 HTML、`style=`、URL、script 字樣永不成為可執行 DOM；renderer 只建立 allowlisted span/class。
-- Palette／manifest 版本不相容時回 `TAG_PRESENTATION_VERSION_MISMATCH`，不得默默使用另一套顏色。
-
-### 2.2 Flat stack 與真正兩段效果的分界
-
-`template.cards` 只會把各卡輸出攤成同一份 top-level `effects[]`，而 `runEffects` 會在同一個 resolve tick 依序派發。它適合「同一施放階段、相同 target context」的效果組合，例如同一落點同時造成兩個可分辨的效果。
-
-它**不能**表達「先位移，完成後才爆炸」。目前 `dash` handler 只啟動 movement override，沒有 `onEnd／onLand` payload；平面 `[dash, instant-blast]` 會在 cast tick 立刻執行 blast。GGD 自己已在 `tpl-charge-push` 的 expander 註明此陷阱，改以 apex=0 的 `leap.onLand` 表達地面衝鋒後結算。
-
-所以遊戲端與 Editor compiler MUST：
-
-1. 同階段、同 context 的 Products 才可 lowering 成 legacy `template.cards`。
-2. 有時間、命中、落地、tick 或 selector dependency 的 chain 必須保留 `onHit／onLand／onTick／onTargets` typed child edge。
-3. 現有能力能以 `leap.onLand` 精確表達時使用它；若語意確實要求 collision-aware dash completion，新增 `effect.dash-on-end@1` 或等價正式 capability。
-4. Capability 不存在時回 `unsupported-runtime`，禁止把 nested chain 攤平成 `[dash, blast]` 後宣稱成功。
-
-即使是 flat stack，也不能把 16 個 enabled templates 任意排列就視為可組。Compiler 必須先驗 activation kind（active／passive）、cast type、target selection、target context、timing 與 singleton fields 的相容矩陣；特別是 `lastWins` 可能改變整支技能的 target selection，使前卡效果套到錯的對象。Raw `ExpandResult` 成功但合併後 `zAbilityDoc` 失敗，仍是完整失敗，不能標記為可預覽或可匯出。
-
-Compiled `ability@1` 也必須明確二選一 authority：
-
-- `legacy-template-binding`：只有完全符合現有 flat stack 語意時，才保留 `ability.template`，由 GGD resolver重展開。
-- `native-effects`：graph-v1／nested Product chain 編譯成完整原生 effects／passive，並 **MUST 移除 `ability.template`**。若仍保留 template，`mergeExpansion()` 會在載入時移除 skeleton 的 expanded keys、重新展開 cards，覆蓋 Editor 已編好的 nested effects。
-
-Importer 對同時宣稱兩種 authority 或 template 與 native effects 不一致的文件回 `COMPILED_AUTHORITY_CONFLICT`，不得猜哪份優先。Definitions／Products／graph／provenance 留在 package authoring store，不靠 runtime `ability@1` 保存。
-
-### 2.3 現有 Editor Preview 不能當行為模擬器
-
-Pinned GGD 的 `apps/editor/src/preview/PreviewController.ts` 目前只把展開結果整理成靜態 effect lines／數值摘要；它沒有建立敵我單位、送出 IntentFrame、真正 cast、推進 ticks 或核對 HP／位置／事件。`forgeStudioStack.test.ts` 又 mock 了 PreviewController，因此只能證明 UI 有呼叫 expansion，不能證明第二張卡在 gameplay 發生。
-
-在新本機 Editor 中，這個畫面只能當 read-only expansion inspector。正式驗收必須由獨立的 `PreviewScenarioWorld` 走真實 loader／registry／IntentFrame／SimWorld，再把每 tick state／events 投影到 3D renderer；沒有 mechanics assertions 時，即使粒子看起來正確也不能標綠。遊戲端 P2 的 render bridge 只負責呈現正式 sim state，不另建第二套命中／位移規則。
-
-## 3. 目標架構
-
-```text
-Editor JSON／ZIP
-       │
-       ▼
-Content Import API
-  ├─ transport safety／hash／base CAS
-  ├─ staged authoring store
-  ├─ Definition + Product-DAG + Host compiler
-  ├─ expected compiled compare
-  ├─ runtime content tree + distribution rebuild
-  ├─ ContentLoader／refs／registry／scenarios
-  └─ immutable version writer
-       │
-       ▼
-atomic ACTIVE pointer switch
-       │
-       ├─ game shards read one activation digest
-       └─ rollback switches to previous verified digest
-```
-
-Active version 必須同時保存：
-
-- authoring store digest。
-- compiled runtime content digest／contentVersion。
-- distribution index digest。
-- compiler／runtime capability fingerprint。
-- activation digest 與上一個 verified activation。
-
-Authoring 與 compiled runtime tree 不可分別切換，否則 editor 下一次 delta 會讀到不一致的 base。
-
-建議儲存布局：
-
-```text
-data/content-import/
-  active.json
-  versions/<activationDigest>/
-    manifest.json
-    authoring-bundle.json
-    runtime-bundle.json
-    distribution-index.json
-    validation.json
-    provenance/...
-  operations/<operationId>.json
-  stages/<operationId>/...
-```
-
-規則：
-
-- `active.json` 必須是小型、可原子替換的 pointer，不在其中塞完整 bundle。
-- TypeScript shared package負責 authoring schema、compiler、dependency graph 與 runtime semantic validation；Go platform 只負責管理員 API、upload、權限、operation orchestration／audit，不得重寫第二套 compiler 規則。
-- 初版 activation 後可明示要求 shard reload，狀態回 `activated-awaiting-reload`；不要在 mutable global registry 上假裝安全 hot reload。
-- 新 match 固定建立時的 activation／ContentSnapshot；既有 match 不得中途換 registry。
-- legacy content overlay 與新 activated package 的 precedence 必須固定。建議 gameplay content 進入新 importer 管理後，禁止再被舊 overlay 靜默覆蓋。
-
-## 4. P0：Importer 與 authoring store
-
-### 4.1 新 API
-
-建議：
+建議正式 API：
 
 - `GET /api/v1/content-import/capabilities`
 - `GET /api/v1/content-import/active/target-profile`
+- `GET /api/v1/content-import/health`
 - `POST /api/v1/content-import/validate`
 - `POST /api/v1/content-import/apply`
 - `POST /api/v1/content-import/rollback`
 - `GET /api/v1/content-import/operations/<operationId>`
 - `GET /api/v1/content-import/active`
 - `GET /api/v1/content-import/active/runtime-bundle`
-- `GET /api/v1/content-import/health`
 
-`validate` 與 `apply` 接受 Package JSON／ZIP；`validate` 不得改 active state。Raw `ability@1`／`item@1` Runtime Document JSON 不得被這兩個 package routes 誤認，也不得直接寫入 managed authoring store；若日後支援，另做明確命名且仍走 staging 的 single-document adapter。`apply` 必須同時要求前一次 validate 產生的 `planDigest` 與 `If-Match` 或等價 CAS，拒絕 stale plan／base。回應使用 `ggd-content-import-result@1`，至少回 package、plan、authoring、content 與 activation digests，以及 stable diagnostics。
+公開 `/content/editor-target-profile.json` 維持無認證唯讀；validate／apply／rollback 必須有管理員身分、CSRF／CORS 邊界、rate／size limit 與 audit identity。
 
-`target-profile` 回傳或下載 `ggd-content-target-profile@1`，至少包含 active activation／authoring／content／distribution digests、compiler contract／fingerprint、runtime capabilities、asset-manifest digest、live champion/item curation digests、產生時間與簽章／後台驗證資訊。本機 Editor 將此檔作離線 base receipt；缺少精確 profile 時不得產 production-ready delta。
+G0 必須固定：
 
-Capabilities 至少列：
+- Package JSON／ZIP 的 vendor Content-Type、允許的 content sniffing、upload checksum 與錯誤碼；bare `ggd-editor-package@1` manifest 不得冒充完整 Package JSON envelope。
+- `ggd-content-validate-request@1`、`ggd-content-apply-request@1`、`ggd-content-rollback-request@1`、`ggd-content-operation@1` 與 error envelope 的 Zod schema。
+- apply 的 `planDigest`、expected Base/profile pins、Idempotency-Key 與 retry semantics。
+- rollback 的 target activation、expected current activation 與 reason。
 
-- package／authoring schema versions。
-- compiler contract／fingerprint。
-- max archive／entry／document／expanded graph／scenario budgets。
-- `bootstrap | full | delta` modes。
-- atomic activation／rollback／CAS。
-- runtime effect／hook／distribution／scenario capabilities。
-- mechanics registry fingerprint，以及各 capability 的 event-context、state-scope、RNG、budget 契約版本。
-- 90 份 Owner 技能 regression fixture set 的 source digest、已通過 scenario digests 與未支援 capability 清單。
-- active activation／content／authoring digests 與 `authoringStoreState`。
-- `reloadMode: process-reload | new-match-snapshot | hot-reload`。
-- VFX-document authoring 是否啟用；核心 V1 預設 false。
-- target profile schema／freshness policy，以及 live champion／item curation digests。
+Validate／apply／rollback 可用 `202 + operationId` 非同步執行；apply 只收 `operationId + planDigest + expected active generation`，不得再上傳另一包可能不同的 ZIP。三條 route 分開授權。Package 內 `acceptedWarnings[].reviewer` 只是申請文字，真正批准必須由伺服器記錄 authenticated reviewer receipt；V1 未支援 package signature 時，收到 signature 應回 `SIGNATURE_UNSUPPORTED`，不可假裝已驗證。
 
-`active` 要能查到目前 pointer 與上一個 verified activation；`active/runtime-bundle` 是 server／client 共用的不可變 runtime snapshot；`health` 要區分 `activated`、`activated-awaiting-reload`、`degraded` 與 `rollback-required`。
+請修正目前 501 response：在 operation 尚未建立前，用獨立 `ggd-content-import-error@1` envelope；不要用缺少必填欄位、`operationId=null`、未登錄 code 或非法 severity 的假 `ggd-content-import-result@1`。成功、拒絕與未實作回應都必須通過自己的 machine schema。
 
-### 4.2 Bootstrap／full／delta
+### 4.2 Bounded transport
 
-目前基線沒有 Product authoring store，不能直接安全接受 delta：
+JSON 與 ZIP 使用同一 semantic validation pipeline，但 upload／解壓必須 streaming 或寫入有上限的 spool，不能先把整包讀進記憶體。
 
-- `bootstrap`：第一包攜帶 deterministic legacy migration 產生的完整 authoring corpus與 migration fingerprint。
-- `full`：已有 authoring store 時建立完整的新 immutable snapshot；不是直接覆寫 active tree。V1 禁止 delete，因此 package 必須包含 base 全部 membership，遺漏即 `implicit-delete-forbidden`。
-- `delta`：pin target profile 的 `base.activationDigest` 與 `base.authoringDigest`，以 target base + `selectionRoots[]`／`changes[]` 建 staging；缺少的 exact refs 只可從該 immutable store解析。
+有效上限採：
 
-第一次 bootstrap 必須將 authoring store持久化。若遊戲端不保存它，就只支援每次 full，不支援 delta 或完整 editor round-trip。
+```text
+effective limit = min(code hard ceiling, deployment policy, decoder/runtime ceiling)
+```
 
-Manifest 的 base 至少同時 pin `activationDigest` 與 `authoringDigest`，compiler 同時 pin `contractVersion` 與 `fingerprint`。Partial staging 不得讀取 package 未選入的 Editor workspace 變更；importer 先套 selected changes，再加入必要 forward dependencies 與受影響 reverse closure。
+Target profile 只宣告最後的 effective limits；`packageSchema`、`targetProfile` 與 `zipSafety` 的欄位映射要有 contract test。ZIP 先做 central-directory preflight，再做 bounded extraction；不得相信 entry 宣告大小。拒絕 encryption、未支援的 ZIP64、polyglot／trailing data，並核對 local header、central record、CRC 與實際解壓 bytes。
 
-Ready Product 不可原地更新，exact refs 也不自動跟隨新 revision。作者必須明示讓哪些 ref owners 採用新 revision；importer 才以這些 changed ref owners 為根，依 reverse dependency closure 重編直接／間接使用者。Promote to Shared 另需驗 transitive dependency scope：shared Product 不能留下對 host-local child 的引用；必須拒絕或讓作者明示一併 clone／promote dependency closure。
+必查 zip-slip、absolute path、backslash、non-UTF-8、symlink／device、duplicate path／case collision、entry／archive／expanded size、compression ratio、path length 與 depth。解壓到隔離、不可執行且不可跟隨連結的暫存區；每份 entry 驗 raw bytes hash、JCS canonical hash 與 manifest size。
 
-### 4.3 Transport safety
+Payload 與 manifest 必須雙向一對一：每份文件恰有一筆 entry、每筆 entry 恰有一份文件，ZIP 不得夾帶未列 JSON；path、role、kind、id、schema、raw／canonical hash 與 size 必須相符。Package JSON／ZIP 的 authoring、compiled、validation、reports 映射一致，並得到同一 semantic package digest。
 
-ZIP 驗證至少包含：
+### 4.3 Validate pipeline
 
-- zip-slip、symlink、device、duplicate／case collision、zip bomb、entry count／ratio／size limits。
-- allowlisted POSIX paths、UTF-8、manifest schema。
-- JCS `contentSha256`、ZIP `rawSha256`、semantic packageDigest。
-- base gameRevision／contentVersion／authoringDigest。
-- required capabilities／dependencies／asset-manifest hashes。
+1. 驗身分、Content-Type、upload checksum 與 transport safety。
+2. 驗 package schema、mode／Base invariants、JCS hash、membership 與 dependency closure。
+3. 對 live profile、compiler、capability、tag／authoring policy、curation 與 asset receipts。
+4. 建 isolated authoring staging tree，以遊戲端 compiler 重編兩次。
+5. 比對 expected compiled，重建 mirrors／indexes／bundle／distribution。
+6. 跑 strict loader／refs／registries、required scenarios 與 candidate health。
+7. 產生有期限、綁定 actor 與所有輸入 receipt 的 verified plan；ACTIVE 不變。
 
-Package JSON 提供 semantic round-trip；ZIP 另提供 byte-preserving entries。兩者使用同一 package semantic digest。Raw Runtime Document JSON 是 compiled-only 相容輸出，不保留 Product／Definition／where-used，也不提供 mirror、distribution、index 原子性。平台搬遷 ZIP importer 不得共用此 route。
+Validate 不得寫 production store、修改 curation、占用 ACTIVE 名稱或產生之後會被誤認為已啟用的 version。
 
-### 4.4 Shared schema／compiler
+### 4.4 Plan、冪等與 operation state
 
-遊戲端與 editor 必須對同一組 golden fixtures 得到相同結果：
+Server-side verified-plan record 至少綁定 actor、environment／gameId、packageDigest、candidate activationDigest、selection roots、Base profile 與 active generation、compiler/capability/tag/policy/asset/curation digests、validation build、issuedAt／expiresAt 與 required health set。任一 pin 漂移，plan 失效。
 
-- `effect-template@1`
-- `effect-product@1`
-- embedded `effect-chain@1`
-- `ability-authoring@1`
-- `item-authoring@1`
-- `release-scenario@1`
-- `ggd-editor-import@1`／`ggd-editor-package@1`
-- `fidelity-decision@1`
-- `ggd-content-target-profile@1`
+Idempotency key 的 scope 是 actor＋environment＋route。相同 key／相同 request digest 的 concurrent retry 合併並回同一 operation；相同 key／不同 digest 回 409 `IDEMPOTENCY_KEY_REUSE_MISMATCH`。紀錄需跨 restart，至少保存到 plan／operation TTL 結束；client timeout 後以 operationId 查詢，不得重做第二次 activation。Plan 成功 apply 後不可被拿來產第二個 activation，但相同冪等重試可讀回第一次結果。
 
-`effect-graph-v1` 是 P0 normative compiler contract：封閉 typed AST、deterministic finite-number semantics，明訂 rounding、overflow、NaN／Infinity、divide-by-zero 及 absent／null／default；禁止任意 script、clock、I/O、network、dynamic import 與 compile-time RNG。Compiler 必須執行 node／depth／output／target／event／runtime budgets，並以版本化 primitive registry／capability keys 驗證；unknown node、path 或 capability 一律 fail closed。
+Operation 至少有：`VALIDATING → VALIDATED → PREPARING → PREPARED → ACTIVATING → ACTIVE`，以及 `FAILED`、`ROLLBACK_REQUIRED`、`ROLLED_BACK`。每個狀態要定義可重試性、terminal 條件與 audit event，不能只回模糊的 success／failed。
 
-Compiler 驗證順序：
+## 5. Shared compiler、Product 與效果鏈
 
-1. Definitions。
-2. 建立 `Product → owned Chain → ProductRef` DAG，驗 exact contentSha256、scope、hostKinds、cycle 與 budgets。
-3. 由 leaves 拓撲 compile Products。
-4. 建立 `ability-augment@1` 的獨立 typed dependency graph；驗 source／target exact refs、stable term／edge ids、allowlisted operations、condition context、cycle 與 reverse closure。
-5. 建立 state registry；驗 state key、exclusive group、scope、stack／expiry、onEnter／onExit 與 ledger lifecycle 無衝突。
-6. 驗 Host-owned chains／Hosts，並將 augments 依拓撲順序套到對應 stable edges。
-7. 從完整 authoring graph 重算 required capabilities、event contexts、RNG draws 與 budgets，對照 target profile。
-8. 產 `ability@1`／`item@1` 與 expected runtime documents。
+Editor 與遊戲端必須共用實作，或以雙向 golden fixtures 鎖定：
 
-禁止：
+- effect-template、effect-product、ability／item authoring 與 embedded effect-chain。
+- package manifest、diagnostics、scenario 與 fidelity decision。
+- RFC 8785 JCS、exact refs、scope／revision 規則。
+- `effect-graph-v1` closed AST、finite-number／rounding、primitive registry 與 budgets。
 
-- 任意 JavaScript／expression string／動態 import。
-- unknown params 無聲忽略。
-- host-local Product 被跨 host 引用。
-- inplace 改 ready Definition／Product revision。
-- 缺 capability 時以語意不同的舊 EffectDef 近似輸出。
-- 用顯示名稱、tooltip 字串或位置 JSON Pointer 代替 exact ability／status／state／term ref。
-- 把 block、execute、damage-type conversion、reflect-success 或 lethal interception lower 成受傷後的普通 effect，因為它們的執行順序不同。
+禁止 arbitrary script、expression string、clock／network／filesystem I/O、compile-time RNG、unknown param 忽略、host-local 跨 host ref、ready revision 原地改寫，以及用 tooltip／顯示名稱當 exact ref。
 
-Fidelity enforcement：
+Legacy `template.cards` 只適合同一 resolve phase、同一 target context 的 flat stack。`onHit`、`onLand`、`onTick`、`onTargets`、dash completion 等有時序或 target-set dependency 的行為必須保留 typed child edge。Graph 已編譯為 native effects 後，compiled `ability@1` 必須移除 legacy `ability.template`；兩種 authority 同時存在要回 `COMPILED_AUTHORITY_CONFLICT`。
 
-- 不一致的 description、JASS、runtime JSON 與 runtime trace 必須有對應 `fidelity-decision@1`。
-- 合法決策是接受 runtime、依描述／JASS 以現有 typed mechanism 重做，或 request-new-capability；後者直到 capability 存在前都 blocked。
-- Decision 綁 evidence、compiler、Product、scenario hashes；任一不符即 stale。
-- `acceptedWarnings[]` 不得豁免 unresolved fidelity conflict、missing capability、compiled mismatch、target-set semantic loss 或 stale base／CAS。
-- Package 內的本機 reviewer 字串不是授權證明；正式 apply 仍需後台已驗證的操作者權限與 audit identity。
+Multi-card 最低守衛：
 
-#### 4.4.1 Legacy `template.cards` 驗收守衛
+1. 每張 card 有非零、可追溯 contribution。
+2. 任一 card 失敗時整組失敗，不保留前面 card。
+3. 真實 `ContentLoader` 與 SimWorld 都看到每張 contribution。
+4. `onLand`／`onHit` child 不被 hoist 到 cast tick。
+5. JSON／ZIP reopen 後，遊戲端重編的 trace／digest 一致。
+6. 移除第二 card、只讀第一 ref、吞 unknown param 或提前 child edge 的 mutation 會變紅。
 
-這組守衛必須分層，不能把現有 unit tests 重複命名成 E2E：
+## 6. G2：Atomic activation、health 與 rollback
 
-1. **Expansion／provenance**：沿用並擴充 `packages/shared/src/content/templates/stack.test.ts`。兩張 shipped enabled templates 展開後，第二張必須有非零 contribution，合併後 effects／hooks 依序存在，scalar conflict／shadow trace 精確。
-2. **Resolver／final schema**：三種 binding shape 的同義 fixture 都要通過；第二卡 missing ref、invalid params、active／passive 不相容或 scalar conflict 時，整組失敗且不能產生 partial card 1 result。Expansion 後必須再通過完整 `zAbilityDoc`，不能只斷言 raw `ExpandResult.ok`。
-3. **Loader／registry**：建立隔離的 synthetic `ability@1`（不進 production corpus），使用真正 `{cards:[...]}`，走 `ContentLoader → resolveTemplateExpansion → registerAll(...throw)`；registry 讀到的 ability 必須同時包含兩張卡的 compiled contributions。這一層專門防止 consumer 又退回只讀 `template.ref`。
-4. **Flat-stack SimWorld behavior**：用同 cast phase、同 target context、可分辨結果的兩張卡，從 `IntentFrame.commands → castAbility → runEffects → world.step` 施放；至少對兩張卡各有一個獨立 state／event assertion，不能只斷言 `effects.length===2`。
-5. **Nested timing behavior**：另用 `leap.onLand`／compound Product fixture；起飛後、落地前必須零爆炸傷害，落地 tick 才命中正確 victims。這不是平面 cards 測試，而是防止 compiler 將 child edge錯誤攤平。
-6. **Editor parity**：同一 fixture 經 Editor compiler、Package JSON／ZIP reopen 與遊戲 importer重編後，以上 trace／state digest 完全相同。
+建議流程：
 
-Mutation gate 至少實際證明下列變異會讓測試變紅：
+```text
+VALIDATED
+  → 寫 immutable candidate（authoring＋compiled＋derived＋receipts）
+  → fsync／object verification
+  → PREPARED：目標 game shards 預載並驗 candidate
+  → CAS ACTIVE（expected old → candidate）
+  → shard read-back／new-match pin 驗證
+  → ACTIVE
+```
 
-- `expandStack` 不 append 第二張 card 的 effects／hooks。
-- resolver 只使用第一個 `ref`，忽略 `cards[1..]`。
-- runtime 只執行 compiled effects 的第一項，或第二張 contribution 被 drop。
-- compiler 把 `onLand` child 搬到 top-level，使爆炸提早到 cast tick。
-- `onConflict=reject` 不再阻擋不同 scalar，或 `lastWins` 沒有真正換 winner。
-- 第二卡錯誤時改成靜默保留第一卡，或 `degrade` ledger 被當成 validate 成功。
-- unknown param typo／`null` 被默認值吞掉，或 raw expansion 未經 final `zAbilityDoc` 就標綠。
+Candidate 未達 required pre-load health set 前，不可切 ACTIVE。ACTIVE pointer 同時帶單調 `generation`／versionId，CAS 比對 generation 與 digest，避免 A→B→A 的 ABA 問題。若 CAS 後 read-back 失敗，只有在 current generation 仍是本次 candidate 時才自動 CAS 切回 previous activation；若已有後續 activation，禁止覆蓋並標成 `ROLLBACK_REQUIRED`。因此 CAS 前失敗保證 ACTIVE 不變；CAS 後失敗可能短暫選到 candidate，但只能用條件式 rollback 收斂。
 
-現有 `stack.test.ts` 已記錄 expansion、passive merge、conflict 與 normalizer mutation；現有 `forgeStudioStack.test.ts` 證明 UI 操作會進 `expandStack`，但它 mock 了 PreviewController。故新增工作重點是 loader + 真正 SimWorld + package parity，不是重寫已有單元測試。
+- Filesystem：temp version directory、逐檔與目錄 fsync、同 filesystem atomic rename、最後才換 pointer。
+- Object store：immutable objects、完整 checksum、conditional pointer put；不要依賴 rename 語意。
+- Cluster：profile 明示要求 all shards 或 quorum；`pointer-selected`、`shard-loaded`、`serving-new-matches` 分開回報。
+- Match：建立時 pin ContentSnapshot；進行中的 match 不熱換 registry。
+- GC：active、previous、pinned／leased activation 永不刪除；retention 到期仍要等 match lease 歸零。
 
-### 4.5 Staging 與 activation
+Audit 保存 actor、request／package／plan／activation digests、狀態轉移與 reason code，不保存 secret 或整份 bearer credential。
 
-Apply 前：
+## 7. G3：Distribution、curation 與 item reachability
 
-1. 建新的 immutable staging version。
-2. 從 pinned target base 套用 package `selectionRoots[]`／`changes[]`；驗證 partial 沒有夾帶未選的本機文件，full 沒有 implicit delete。
-3. 解析 exact forward dependencies；依作者明示的 Product ref adoption、`ability-augment` target、status／state／cooldown refs 計算 reverse dependency closure。
-4. 驗 Fidelity Decision freshness、owner authority 與 required capabilities。
-5. compile 兩次並比對 expansion／compiled hashes。
-6. 比對 package expected compiled docs。
-7. 重建 standalone abilities/items、champion mirrors、distribution、indexes、manifest、bundle、contentVersion。
-8. 跑正式 `ContentLoader`、strict refs、template expansion、mechanics registry／event-context validation、`registerAll(...throw)`、assets 與 release scenarios，並必須包含 package 宣告的 90-skill fixture 子集。
-9. 產 planDigest；以 CAS 再驗 active base。
-10. 寫完且 fsync／durable 後才切 ACTIVE pointer。
-11. 依 `reloadMode` 回 `activated` 或 `activated-awaiting-reload`；shard 真正載入後再由 health 回讀其 activation digest。
+Content 存在不代表玩家取得得到。Importer 從 candidate tree 重建 `distribution-index@1` 或等價 projection，至少分開：
 
-任何失敗都不切 ACTIVE。Rollback 只切到已存在且驗證過的 activation digest，不逐文件做 best-effort 補償。
+- `contentReachable`：content graph 可達。
+- `effectiveReachableUnderCuration`：加入 live whitelist／feature flag／ownership 後可達。
 
-Server 與 client 必須讀同一 active runtime bundle。新 match 在建立時 pin activation／ContentSnapshot；當時已在進行的 match 繼續使用舊 snapshot，不在對戰中切 registry。
+Champion manual、random、bot、timeout、mob 與 client 應共用一個 server-authoritative pickability projection；item 的 loot、offer、shop、recipe／book 亦同。`OPEN_HERO_WHITELIST.md`、audit Markdown 與 starter seed 都不能成為 live authority。
 
-## 5. P0：Item distribution／reachability
+Package 不可靜默修改 curation。Curation proposal 使用獨立權限與 transaction；verified plan pin curation digests，apply 前再次 CAS／重算。Content rollback 預設不回滾 curation，只產生 reachability impact report；需要一併回滾時要走第二個明示操作與權限。
 
-目前傳說武器正式分類來自 loot-table membership；另有 quest、round offer、orb、shop、recipe、attack-type gate，以及 Go hard-coded curation。只載入 `item@1` 可能讓內容存在但玩家拿不到。
+Refs 使用 schema-driven recursive collector，覆蓋 Product child chains、ability augment、status／state、projectile／VFX、recipe component／book、aura／hook、loot／offer／shop 與 assets。`itemHasEffect` 應由 typed capability inventory 判斷，不可只看 modifiers／passive。
 
-遊戲端建議：
+## 8. G4：Gameplay capability closure
 
-1. 新增／持久化 `distribution-index@1` derived projection。
-2. 由完整 staged `item-authoring@1.distribution` 重建各 runtime collection。
-3. 同時計算 `contentReachable` 與 `effectiveReachableUnderCuration`：前者表示內容圖可達，後者還要納入當前營運 whitelist／feature flag。
-4. Package 不得靜默覆寫管理員 curation。若 authoring 宣告 `mustBeEnabled` 但被 curation 擋住，apply 必須拒絕或要求另一次明確 curation approval；否則可啟用內容，但結果必須回報「已存在、目前不可取得」。
-5. 每個 declared channel 產 `reachable | unavailable-under-curation | unsupported | conflict`；不得把 content 存在當成營運上可取得。
-6. recipe component／book、loot table、quest、offer、orb、shop、class／attack-type refs 全部 strict validate。
-7. rename／delete impact 必須反查全部 distribution、recipe、buildPriority 與其它 hard refs；V1 package 本身仍禁止 delete。
+不在本文複製 target-set、evade 或其他會漂移的 capability 清單。每次 validate 只讀 live `runtimeCapabilities`；每關閉一個 caveat，同步更新：
 
-不能用 tag、tier、craftRole 或 item 名稱猜傳說分類。
+1. machine-readable constraints／applicability。
+2. runtime implementation。
+3. scenario、golden 與 mutation evidence。
+4. capability fingerprint 與 tag manifest 對帳。
+5. stable requirement ID 的狀態。
 
-### 5.1 Champion whitelist／pickability
+一個 effect kind 出現在 schema union，不代表 execute basis、event source、fumble 區分、exclusive lifecycle、secondary target propagation 或 nested timing 已完整支援。
 
-Pinned `starterChampions` 是 53 名 starter roster，不是部署環境當下的 live whitelist。Owner 已從這份清單選定 43 名驗證英雄，但 importer／target profile 必須另帶 live champion curation digest 與完整 IDs，不能用 starter 名單覆蓋管理員設定。Selection manifest 必須明示 258 個 slot records、257 份實際 ability docs，以及 `godie-ogld.passive = MISSING_SOURCE`；缺件不能被當成 ZIP 漏檔或自動補 placeholder。
+## 9. G5：Preview、event provenance 與 VFX
 
-遊戲端也應統一 server／client pickability authority：client 會把 transformed body 解析回 base 或排除，`MatchController.selectChampion` 與 `randomChampionPool` 目前只做 content/model/whitelist/ownership 交集，未套同一 transformed／retired 規則。若管理員 live whitelist 誤勾 alternate body，crafted select、bot、timeout random 或 mob champion pool 仍可能使用它。建議新增 shared、server-authoritative `isPickableChampionId／resolveBaseChampionId` 契約，所有 manual、random、bot、mob、ownership 與 curation validation 共用；target profile 另回報 `invalid-or-alternate-whitelist-entry` diagnostics。這是遊戲端建議，不在本專案修改 GGD。
+遊戲端應提供窄而版本化的 render bridge，只暴露 Arena／EntityView／Asset resolve／VFX event 所需 immutable interfaces，不帶登入、HUD、prediction 或完整 GameApp state machine。
 
-## 6. P1：`effect.target-set-chain@1`
+Combat／VFX events 逐步加入 castId、abilityId／itemId、ProductRef／compiled effect path、source／target／point／direction、parent event、RNG stream 與 resolved VFX key。序列化必須 deterministic；舊 consumer 用 optional fields 或新 major schema 漸進遷移。
 
-### 6.1 為何需要
+Editor 的 `IntentFrame → world.step()` 可證明數值與主要機制終態；Babylon 只呈現同一份結果。在 render bridge、secondary targets、projectile／impact timing 與 asset authority 對齊前，只能標示 degraded preview，不能聲稱 production renderer parity。
 
-49 件全量 census 中，`godie-i03h` 目前依序執行 `damageArea → applyStatus`：前者私下選 AOE victims，後者仍讀原始 `ctx.targets`。結果可能是旁人受傷卻不暈，而既有測試仍假綠。
+V1 只匯入 Host／Product 對既有 VFX 的 binding；target profile 未宣告 `vfx-document-authoring@1` 時拒絕 `authoring/vfx`。Importer 自己重建 manifest、bundle、indexes 與 generated files。
 
-只新增 importer 不能修正 handler 語意。遊戲 runtime 需要正式的 selector + nested chain primitive。
+## 10. 驗證矩陣與完成條件
 
-### 6.2 建議契約
+### Contract／transport
 
-可採任何等價的正式 schema，但必須具備：
+- JSON 與 ZIP 對同一 semantic package 得到相同 package／authoring／compiled／plan digests。
+- Node／Go／macOS／Windows 的 JCS、Unicode、路徑與 ZIP golden fixtures 一致。
+- JSON／ZIP parser、tokenizer、dependency collector 有 fuzz／property tests。
+- 篡改 manifest／authoring／compiled／scenario／report entry 全部拒絕。
+- Content-Type mismatch、raw runtime package、oversize、zip bomb、case collision 與 path traversal 有穩定中文診斷碼。
 
-- selector 輸出 deterministic、typed named target set。
-- child chain 以明確 scoped context 執行。
-- 平行下一個 effect 不繼承私有 target set。
-- victims 排序、maxTargets、team／dead／collision 規則固定。
-- nested origin／cast／Product provenance 可保存。
-- depth、node、target、event 與 recursion budgets。
-- no mutable shared `ctx.targets` side effect；避免重入與跨 effect 汙染。
+### Compiler／gameplay
 
-建議 capability key：`effect.target-set-chain@1`。
+- 遊戲端重編與 expected compiled byte-identical，unknown params／refs／capabilities 不 silent ignore。
+- Multi-card 每份 contribution 與 nested child timing 在真實 SimWorld 發生。
+- 相同 seed 的 RNG draws、targets、events 與 digest 一致。
+- Partial／known-broken 只有 machine applicability 可證明未命中時才可能通過。
+- Owner source 未改寫；presentation 不驅動 runtime。
 
-### 6.3 必測案例
+### Concurrency／durability
 
-- `i03h` primary target + 旁人：同一 victims set 同時 damage + stun。
-- self／ground cast 沒 primary target。
-- includeOrigin、maxTargets、等距 deterministic order。
-- immuneControl 只拒絕 stun，不改 damage target set。
-- child Product failure 不可留下半套 mutable context。
-- 移除 target propagation guard 的 mutation test 必須變紅。
+- concurrent apply、相同／不同 idempotency key、stale plan／Base／curation 都有測試。
+- 在 immutable write、fsync、PREPARED、CAS 與 shard ack 各點做 crash／failure injection。
+- Crash 後只看到舊完整版或新完整版；不會出現混合 authoring／runtime／distribution。
+- Rollback 不重編、不逐檔覆寫，且不覆蓋較新的合法 activation。
+- Schema／compiler downgrade、unsupported major version 與 receipt negotiation fail closed。
 
-## 7. P1：`hook.on-evade@1`
+### Distribution／presentation
 
-`godie-i01s` 已有 evasion stats、正式 evade presentation event與 dash primitive；缺的是成功閃避結果到 defender item hook 的安全 bridge。不可從共用畫面 `evade` event 反推，因為 attacker fumble 也可產生相似的呈現。
+- Champion／item 的所有取得通道使用同一 authority，無 hard-coded whitelist 遺漏。
+- Curation 漂移使舊 plan 過期；content rollback 的 reachability 影響可查。
+- `[]` tokenizer 無 HTML／CSS／URL／script injection，引用與一般字串不被錯切成 tag。
 
-建議：
+## 11. 明確不做
 
-1. 擴充 HookEvent union：`onEvade`，並定義 `basic | ability` channel。
-2. 只能由真正成功的 `rollEvade`／`rollEvadeAbility` 寫入 deterministic pending hook；`rollFumble` 必須是零觸發。
-3. 明訂 hook 在同 tick 尾端或下一 tick 執行，不能讓語意取決於系統偶然排序；建議排入 deferred hook queue，避免在 attack resolution 中同步重入 effect runner。
-4. context 至少帶 defender、attacker、channel、attack origin／direction、tick、RNG lineage。
-5. hook 的 chance／ICD／condition／target 仍走共用 HookSystem。
-6. child Product 可用既有 `dash{mode,speed,maxDistance}`，但 facing／反攻方向、牆、邊界、碰撞規則需 owner 定義。
-7. evade 已使攻擊 miss 時，不得又觸發 on-hit、lifesteal 或 damage-taken hooks。
+- 地形繪製、單位擺放、region、trigger 或完整地圖編輯。
+- Binary asset upload、arbitrary script 或 package 自訂 HTML／CSS。
+- 信任 Editor validation report 而略過遊戲端重編／重驗。
+- 用整站搬遷 ZIP importer、逐文件 PUT 或 raw runtime JSON 模擬 atomic apply。
+- 讓 game runtime 反向依賴 Electron／React／Editor UI。
 
-建議 capability key：`hook.on-evade@1`。完成前 `i01s` 維持 fidelity blocker。
+Public Base 可包含 maps、map-spec 或 arena schema，但 Editor package scope 不因此擴張。Importer 驗 public Base 全包 identity，同時拒絕未允許的 map-authoring entries。
 
-## 8. P1：Refs 與 item capability 判定
+## 12. 建議實作落點
 
-49 件傳說武器 census 與全 corpus trace 已命中：
+| 關注點 | 現行／建議路徑 |
+|---|---|
+| Package schema／digest／ZIP safety | `packages/shared/src/content/import/` |
+| Runtime capabilities | `packages/shared/src/content/editorCapabilities.ts` |
+| Target profile | `packages/shared/src/content/import/targetProfile.ts` 與 public profile builder |
+| Import routes／operation contract | `apps/content-api/src/importRoutes.ts` |
+| Authoring／graph compiler | `packages/shared/src/content/authoring/` |
+| Legacy template resolution | `packages/shared/src/content/templates/` |
+| Runtime effect／hook／combat | `packages/shared/src/sim/` |
+| Content indexes／bundle | `packages/shared/src/content/node/` |
+| Platform auth／curation／audit orchestration | `apps/platform/` |
+| Client render／VFX seam | `apps/client/src/render/`、`apps/client/src/vfx/` |
 
-- refs walk 至少漏 `leap.onLand`、buff hook effects、item recipe component／book、aura hook effects，並必須預留未來 target-set child chain 的遞迴。
-- status／VFX soft refs 不足以作 release gate。
-- `itemHasEffect` 未涵蓋 attributes、auras、vision、flight、damageTypeOverride、block、critStrike 等已存在 payload。
+Importer／authoring store 應是獨立 module，不拼進平台搬遷 ZIP route。TypeScript shared 層擁有 schema、compiler 與 semantic validation；Go platform 負責權限、upload、operation／audit 與部署編排，不重寫第二套 compiler。
 
-遊戲端應提供完整 schema-driven recursive ref collector，並分 draft／release policy；release package 的 runtime refs、distribution refs 與 assets 必須 strict。`itemHasEffect` 應由完整 typed capability inventory 取代，不再維護手寫落後清單；MerchantShop 與 reference generator 若複製相同舊判定，也要一併改成同一 authority。
+外部管理員請求先由 Go platform 認證、限流並建立 operation，再呼叫內部 Content API 做 staging／compile／validate；game shards 只回 candidate preload 與 activation health。三層都使用同一 operationId／receipt，不讓外部 request 直接碰 production content filesystem。
 
-## 9. P2：正式 Preview／Render seam
+## 13. 部署決策表
 
-Editor 在不改 GGD 的前提下可用 pinned private source bridge，但長期維護建議遊戲端提供版本化的 `@ggd/client-preview` 或等價 public package：
+以下是系統所有權／運維選擇，不是逐技能語意提問：
 
-- Arena／EntityView／AssetManager／VfxSystem 的窄 entry points。
-- 不含登入、網路、HUD、prediction 與完整 GameApp state machine。
-- 以 immutable ContentSnapshot + SimWorld state/events 驅動畫面。
-- 暴露 capability／source fingerprint，破壞性變更可被 contract test 偵測。
-- asset resolve result 明確區分 exact、runtime-derived、missing／unknown。
+| Decision ID | 建議預設 | 阻塞階段 | 需確認者 |
+|---|---|---|---|
+| `DEC-ACTIVATION-STORE` | Immutable object／version store＋具交易或 conditional write 的 ACTIVE pointer | G2 | Backend／Ops |
+| `DEC-RELOAD-MODE` | `new-match-snapshot`；registry isolation 完成前不開 hot reload | G2 | Game runtime |
+| `DEC-PLAN-TTL` | 短 TTL、可設定；過期後重新 validate，不延長舊 plan | G1 | Security／Ops |
+| `DEC-HEALTH-SET` | 單機全數、叢集由部署明示 all 或 quorum，不用隱含預設 | G2 | Game／Ops |
+| `DEC-RETENTION` | 保留 previous＋近期 versions；有 match lease／pin 者不受天數刪除 | G2 | Ops |
+| `DEC-CURATION-APPROVAL` | Content 與 curation 分開 transaction／權限／audit | G3 | Product／Ops |
+| `DEC-SIGNING` | Public descriptor 只供 discovery；跨信任通道的 production receipt 使用 keyId＋signature | G0/G2 | Security |
+| `DEC-TEST-ENV` | 專用 staging 跑 golden fixtures 與真實 SimWorld，不在合約暴露 secrets | G1 | CI／Ops |
 
-這不是 P0 importer 的必要條件，但會降低 editor 每次 GGD 升級時 private deep import 的風險。
+其餘技能語意由 Owner source、typed authoring、fidelity decisions 與 live capability constraints 決定；已結構化的決策不在 apply 時逐項重問。
 
-## 10. P2：Event provenance
+## Appendix A：穩定 requirement anchors
 
-目前部分 combat／VFX event 缺 castId、abilityId、effect path／Product origin。Editor sidecar 可輔助除錯，但不能當正式 release truth。
+Capability registry 應引用下列穩定 ID，而不是 `§6.3`、`§16.13` 等章節號；詳細狀態與 caveat 仍由 live registry 提供。
 
-建議正式 event seam逐步加入：
+- `REQ-TARGET-SET-CHILD-CONTEXT`：named target set 的 deterministic selection、private context、child timing 與 budgets。
+- `REQ-EVADE-EVENT-SOURCE`：真正 evade 與 attacker fumble 分流，miss 不誤觸 on-hit／lifesteal／damage-taken。
+- `REQ-EXECUTE-RECOVERY-BASIS`：處決／吞噬的 HP basis、damage queue、invulnerability／shield 順序必須 typed。
+- `REQ-EXCLUSIVE-FORM-VISUAL`：gameplay exclusive state 與改變 3D body／animation／asset identity 分開宣告。
 
-- castId／abilityId／itemId。
-- ProductRef／compiled effect path。
-- source／target／point／direction。
-- cause／parent event／RNG stream。
-- VFX resolved key／authority／spawn location。
-
-加入時要保持 deterministic serialization、network／replay compatibility 與 event budgets。舊 consumer 可透過 optional fields 或新 major event schema 遷移。
-
-## 11. P2：VFX authority 與文件新鮮度
-
-- 核心 V1 只編 host／Product 對既有 VFX 的 binding；不要求遊戲端支援 emitter／ribbon authoring。
-- 若日後開 `vfx-document-authoring@1`，importer 才接受 `authoring/vfx`／`compiled/vfx`，並重驗 texture／model／ribbon refs 與 GPU budgets。
-- 目前 270／696 技能的最終 VFX 由 code promotion 決定。長期可把 promotion tables 轉成 content；完成前 editor 必須唯讀。
-- importer 必須重建並 hard-gate machine indexes／manifest／bundle／distribution／mirrors；package 內的舊 derived docs不可成為 truth。
-- README／reference／status 新鮮度屬於 GGD repository CI gate；production importer 只可報告基線 stale，不應嘗試修改 source tree 或把人讀文件當 active runtime gate。
-
-## 12. 遊戲端建議實作階段
-
-### G0 — Freeze contract／golden fixtures
-
-- D19／D20 已裁決：host-local + explicit Promote、安全 `effect-graph-v1`；實作共同 contract tests。
-- freeze schemas、capabilities、hash／digest、bootstrap/full/delta、Package JSON／ZIP／raw Runtime JSON 分界與 diagnostics。
-- 匯入 owner 選定 43 名英雄的 regression manifest（257 abilities／172 QWER mirrors／1 missing-source slot）；49 件傳說武器全部列為 census fixtures。其中 2026-08-08 的 15 名英雄／90 份 Owner 技能是第一組強制行為黃金子集，必須 pin source digest。Graph primitive inventory 在這組機制契約與 43+49 census 完成後 freeze。
-- editor 與 game 共用 valid、one-fault、tampered、malicious ZIP fixtures。
-
-### G1 — Read-only validate
-
-- capabilities + validate API。
-- transport safety、authoring store staging、compiler、compiled compare、full-tree loader。
-- 不切 active；先用 bootstrap fixture證明能重建既有 base。
-
-### G2 — Atomic apply／rollback
-
-- immutable version storage、CAS、ACTIVE pointer、health read-back、operation log。
-- crash／power-loss／concurrent apply／failed health injection。
-- server／client 讀同一 active bundle；啟用後狀態明示 `activated-awaiting-reload`，新 match pin 新 activation、舊 match 保留舊 snapshot。
-
-### G3 — Distribution
-
-- distribution-index、runtime collection compiler、curation consumer 遷移、reachability gates。
-
-### G4 — Gameplay capabilities
-
-- `effect.target-set-chain@1`。
-- `hook.on-evade@1`。
-- 共用 `defense.block-source@1`、`effect.convert-hit-damage-type@1`、`hook.on-reflect-success@1`、`hook.on-lethal-damage@1`。
-- status／ability-state／equipment／stack typed conditions，以及 `ability-augment@1` 的 exact-ref compiler。
-- `state.exclusive-group@1`、`state.lifecycle@1`、`hook.consume-policy@1`、`effect.charge-ledger@1`。
-- `effect.event-value-conversion@1`、`effect.weighted-branch@1`、`effect.execute@1`、`defense.mana-barrier@1`、`effect.swap-resource@1`。
-- `scheduler.random-area@1`、`effect.control-restriction@1`、`effect.modify-cooldown@1`。
-- Legacy multi-card loader + real-cast SimWorld guard。
-- Legacy authoring strict params／all-or-nothing expansion／final-schema guard；runtime `degrade` 不得進入 importer success path。
-- `effect.dash-on-end@1` 僅在 owner 選擇 collision-aware dash completion 語意時加入；否則以既有 `leap.onLand` 精確表達可支援案例。
-- 對應 scenario、mutation、determinism tests。
-
-### G5 — Preview／provenance／VFX 後續改善
-
-- public render package。
-- event provenance。
-- content-owned VFX promotion 與選配 VFX document importer。
-
-每階段完成後仍必須保持 legacy game content 可啟動；未支援的新 capability 由 importer 明確拒絕，不做 silent downgrade。
-
-## 13. 遊戲端完成條件
-
-### Importer
-
-- 同 package 在 editor reference validator 與 game importer 得到相同 authoring／compiled／plan digests。
-- 篡改 authoring、compiled、scenario、report 或 manifest 任一 entry 都被拒絕。
-- bootstrap 能產完整 authoring store；delta base authoringDigest 不符時回 conflict。
-- Product 新 revision只對作者明示採用的 ref owners生效，再依 reverse dependency closure 重編全部直接／間接使用者；Promote 不留下 shared → host-local dependency。
-- compile 兩次完全一致；unknown params／refs／capabilities 不會 silent ignore。
-- partial selection 不洩漏未選本機變更；full 遺漏 base membership 時拒絕 implicit delete。
-- raw `ability@1`／`item@1` 不會被 package endpoint 誤認。
-- unresolved／stale fidelity decision、request-new-capability、compiled mismatch 與 stale target profile 全部 fail closed。
-
-### Activation
-
-- ability、item、mirror、distribution、indexes、bundle 永遠來自同一 activation。
-- server 與 client health 回報同一 activation digest；重載前明示 awaiting-reload，不假報已生效。
-- 任一步失敗 active digest 不變。
-- crash 後只能看到舊完整版本或新完整版本，不可看到半套。
-- rollback 不重編、不逐文件覆寫，只切到 verified immutable version。
-- 並存 match 各自繼續使用建立時的 activation，沒有中途替換 registry。
-
-### Gameplay
-
-- Synthetic legacy two-card ability 必須走完整 loader／registry／IntentFrame／cast／SimWorld；兩張 card 各有獨立 state／event assertion，刪掉第二張 contribution 的 mutation 會紅。
-- 第二張 card 的 missing ref／invalid params／conflict／final-schema failure 都使整組匯入失敗；unknown／`null` params 不得退回 default，active／passive 不相容不能只因 raw expansion 成功而放行。
-- Flat stack fixture 在同一 resolve phase 執行；nested landing fixture 在落地前零傷害、落地 tick 才命中實際 landing victims。Compiler hoist child effect 的 mutation 必須變紅。
-- `i03h` damage／stun 對同一 deterministic victims set；移除 guard 的 mutation test 失敗。
-- `i01s` 真正 basic／ability evade 後 hook 各恰好一次、attacker fumble 零次、miss 不觸發 on-hit，dash 遵守 owner collision rules。
-- 90-skill 子集的 compiled graph 不得有 `DESCRIPTION_MECHANIC_UNCOVERED`；22 個高程度 template gap 只能被真實 typed Product／capability 關閉，不得手動豁免。
-- block 在 HP 扣除前、reflect-success 在反彈封包確實建立後、lethal hook 在 death commit 前；三種時序的 mutation 互換後測試必須變紅。
-- 跨技能 augment 依 exact ref 重編 reverse closure；刪除、改名或重排 target Product 的 stable edge 時 fail closed，不得套到相鄰效果。
-- 反彈傷害轉 MP／AP 使用同一 captured value；weighted branch 每次只 draw 一次；隨機區域同 seed 的落點、目標、事件與 digest 相同。
-- 十二道試煉的 ledger 跨 round 不跨 match；多發致命封包、反彈致命、同 tick 致命與充能用完都有 exactly-once scenario。
-- 風王結界手動關閉與 MP 不足自動關閉都走同一 onExit child；涅吉三種變身不能同時存在，而形態限定的普攻／冷卻效果在切換 tick 即時更新。
-- 30Hz timing 顯示 authored seconds／resolved ticks／actual seconds；低於一 tick不被無聲吞掉。
-- block、vision、interval、RNG 與跨裝備 stacking 有 shipped-item scenarios。
-- 若啟用 `effect.dash-on-end@1`，completed／blocked／death／reset 的 trigger policy、actual stop point、exactly-once 與 collision 都有明示 schema和 mutation guards；否則 importer 不宣告此 capability。
-
-### Distribution／refs
-
-- imported legendary／quest／offer／orb／shop item 符合宣告 reachability。
-- recipe、aura hook、status、VFX、asset 與 buildPriority refs 全量掃描。
-- 不再因 hard-coded whitelist 漏掉新 item。
-- Live champion curation 中的 transformed／retired／unknown entries 被 server-authoritative pickability gate拒絕或明確正規化；manual、random、bot、mob paths 結果一致。
-
-## 14. 不應由遊戲端實作的功能
-
-- 地形／地圖／region／trigger editor。
-- 外部 binary asset upload。
-- 在 importer 執行 arbitrary script。
-- 信任 editor report 而跳過 server-side compile／validation。
-- 用現有平台搬遷 ZIP importer 載入內容包。
-- 讓 game runtime 反向依賴 Electron／React／editor UI。
-
-## 15. GGD 現行路徑與建議落點
-
-以下是 pinned commit 上的實作導航圖，不是對這些檔案的修改授權；遊戲端重構後可移動，但契約與測試不應丟失。
-
-| 關注點 | 現行路徑 | 建議工作 |
-|---|---|---|
-| Legacy template stack | `packages/shared/src/content/schema/template.ts`<br>`packages/shared/src/content/templates/expand.ts`<br>`packages/shared/src/content/templates/resolve.ts` | 保留三種 binding shape／flat merge semantics；補 loader + SimWorld multi-card E2E |
-| Effect schema | `packages/shared/src/content/schema/effect.ts` | 新 target-set child-chain schema／capability |
-| Effect runtime types／runner | `packages/shared/src/sim/effects/effect.ts`<br>`packages/shared/src/sim/effects/effectRunner.ts` | scoped child context、budget、provenance |
-| Hook／condition context | `packages/shared/src/content/schema/condition.ts`<br>`packages/shared/src/content/schema/effect.ts`<br>`packages/shared/src/sim/effects/hooks.ts`<br>`packages/shared/src/sim/stats/modifiers.ts` | 新 reflect-success／evade／lethal 事件；status／ability-state／equipment／stack 條件；context availability 載入時檢查 |
-| Ability augment／cooldown refs | `packages/shared/src/content/schema/ability.ts`<br>`packages/shared/src/sim/abilities/abilitySystem.ts`<br>`packages/shared/src/sim/abilities/abilityPassives.ts` | 獨立 `ability-augment@1` schema／compiler／reverse closure；stable term／edge ids；reset／remaining／future-cast 冷卻語意 |
-| 傷害前防禦／型別轉換 | `packages/shared/src/sim/combat/block.ts`<br>`packages/shared/src/sim/combat/damage.ts`<br>`packages/shared/src/content/schema/item.ts` | 把 item-only BlockGrant 提升為共用 source；加入原 hit damage-type conversion 與 mana barrier，固定 block／shield／hp-loss／reflect 順序 |
-| AOE／status 目標 | `packages/shared/src/sim/effects/damageArea.ts`<br>`packages/shared/src/sim/effects/applyStatus.ts` | 共用 deterministic selected target set |
-| Evasion outcome／hooks | `packages/shared/src/sim/combat/evasion.ts`<br>`packages/shared/src/sim/effects/evasion.ts`<br>`packages/shared/src/sim/stats/modifiers.ts` | 真 evade 專用 pending hook；fumble 不觸發 |
-| State／charges／exclusive forms | `packages/shared/src/sim/SimWorld.ts`<br>`packages/shared/src/sim/systems/ChampionFormSystem.ts`<br>`packages/shared/src/sim/stats/statPipeline.ts` | 穩定 state registry、round／match lifecycle、charge consume、all-at-once／per-stack expiry、exclusive group 與 digest／replay 序列化 |
-| Deterministic branch／scheduler | `packages/shared/src/sim/effects/effectRunner.ts`<br>`packages/shared/src/sim/SimWorld.ts` | 一次 RNG 的 weighted branch、random-area scheduler、draw／entity／event budgets 與 replay lineage |
-| Dash completion（條件式） | `packages/shared/src/sim/effects/dash.ts`<br>`packages/shared/src/sim/systems/MovementSystem.ts` | 只有 collision-aware stop payload 需求成立時新增 typed `onEnd` + stop reason + exactly-once guard |
-| Hard refs | `packages/shared/src/content/refs.ts` | schema-driven exhaustive recursive traversal |
-| Item tier／distribution | `packages/shared/src/sim/economy/itemTiers.ts`<br>`apps/platform/internal/curation/starter.go` | distribution index 與 curation 狀態分離 |
-| Client VFX／render seam | `apps/client/src/vfx/VfxSystem.ts`<br>`apps/client/src/render/EntityViewRegistry.ts`<br>`apps/client/src/render/ArenaScene.ts` | 公開、版本化 preview bridge |
-| 現有 Editor preview | `apps/editor/src/preview/PreviewController.ts`<br>`apps/editor/src/forge/forgeStudioStack.test.ts` | 現況只產 effect lines，UI test mock controller；不可當多卡行為驗收，需真正 IntentFrame cast + targets + ticks |
-
-Importer／authoring store 建議新增獨立 module，不要拼進現有 platform migration ZIP route；具體檔案位置由遊戲端 owner 依服務邊界決定。
-
-## 16. 需要 owner 提供／裁決
-
-1. 首次 authoring store 由 pinned migration 產生，或由第一個完整 bootstrap package 提供。
-2. active content 的 immutable storage／ACTIVE pointer 要落在哪個服務與部署邊界。
-3. 啟用後初版採 process／shard reload 或投資 per-match hot reload；本文建議前者。
-4. `i03h` damage + stun 是否確定共用 victims，以及 meteor VFX／delay／音效。
-5. `i01s` onEvade 同／下一 tick，dash distance／speed／direction／ICD／collision。
-6. `i06o` 0.01 秒量化、88 damage budget、refresh／stacking。
-7. 選定技能若含「dash 實際停止後觸發」，是否要求撞牆提前停止也觸發、stop reason與死亡／reset規則；若只是固定落點後觸發，使用既有 apex=0 `leap.onLand`。
-8. Package 可否提出 curation 變更，以及 `mustBeEnabled` 的獨立批准流程。
-9. 每個 distribution channel 的正式 runtime consumer與舊 hard-coded curation 淘汰順序。
-10. 正式 event schema 是否加 provenance；若否，Editor sidecar 只能作本機預覽診斷。
-11. 哪個 staging／CI 環境可讓遊戲端跑 importer golden fixtures；不要在對話提供 production secret。
-12. 太陰道的「反彈傷害」以 `raw | mitigated | hpLost` 哪個為基數；AP 疊層是每層各自 5 秒，或所有層數在最後一次觸發後 5 秒一次歸零。本文依「5秒後歸零」暫建議 `mitigated + all-at-once`，實作前由 Owner freeze。
-13. 處決／吞噬與十二道試煉的傷害順序：是否穿透護盾、無敵、格擋與免死；「回復等同剩餘生命」讀 cast commit 前或實際 hpLost。
-14. 俄羅斯輪盤在致盲／混亂時的機率表：文案只說對方死亡率提高到 2/6、3/6；自己死亡仍是 1/6，還是一併被重分配。未 freeze 前 importer 應拒絕此 weighted table。
-15. 疾風迅雷／獄炎煉我／雷天大壯是三個純 gameplay state，還是三個不同 3D body／animation form；這會決定使用 generalized exclusive status 或擴展 champion-form registry。
-16. 交換筆記本對死亡、1 HP、超過對方 max HP 與實際施放中目標死亡的處理。本文建議在 cast resolve tick 原子交換雙方 current HP、各自 clamp 到 `[1, ownMaxHp]`，目標失效則全招失敗。
-
-D19 Product scope、D20 graph-v1、衝突 approval policy 與 43 名英雄名單已裁決，不再列為待問。技能 CSV 的標籤、級數、缺距離與語意歧義已改由 Editor Script 直接採合理預設，中文 Owner issue 只記錄實際修改與推定依據；這不要求修改 GGD。第16節其餘項目及本輪新增的 12～16 項仍是未來遊戲端 importer／runtime 實作時才需要的部署或 capability 決策，不阻擋本機 Editor 的技能資料整理；但對應機制在 Owner freeze 前不可標記 production-ready。
+G0 要把 registry 舊章節引用遷移成 requirement ID，重新產 capability/profile digests 並跑 freshness guards；不要為了維持舊章節號，在本文保留空洞或跳號段落。
