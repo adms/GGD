@@ -85,7 +85,9 @@ describe("the shop shelf is 暫時下架 (#261)", () => {
     // …and it says what IS still available, plus that the cards still roll it
     expect(REJECT_TEXT["shelf-closed"]).toContain("能力屬性強化");
     expect(REJECT_TEXT["shelf-closed"]).toContain("傳說寶玉");
-    expect(REJECT_TEXT["shelf-closed"]).toContain("三選一");
+    // ⭐ owner 2026-08-16：武器那一層改講「寶具／顯現」，⛔ 不再講「三選一」。
+    expect(REJECT_TEXT["shelf-closed"]).toContain("顯現");
+    expect(REJECT_TEXT["shelf-closed"]).not.toContain("武器道具");
   });
 
   it("the SHOP really calls the shelf-filtered catalogue (not a raw Items.all())", () => {

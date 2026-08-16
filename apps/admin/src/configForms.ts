@@ -71,6 +71,7 @@ import {
   zConfigTauntDoc,
   zConfigVfxCleanupDoc,
   zConfigVictoryFxDoc,
+  zConfigUiLexiconDoc,
 } from "@ggd/shared/content";
 // ⚠️ 同上的深路徑理由：這兩份 Zod 住自己的檔案（欄位理由長、且 sim 直接吃）。
 import { DEFAULT_STAT_NORMALIZATION } from "@ggd/shared/content/statNormalization";
@@ -2409,6 +2410,81 @@ const DISPLACEMENT_TIERS_SPEC: ConfigDocSpec = {
   preserved: [],
 };
 
+// ───────────────────────────────────── 介面用語 (config/ui-lexicon) ─
+
+const UI_LEXICON_SPEC: ConfigDocSpec = {
+  page: "uiLexicon",
+  collection: "config",
+  docId: "ui-lexicon",
+  schemaTag: "config.ui-lexicon@1",
+  zod: zConfigUiLexiconDoc,
+  title: "介面用語（Fate）",
+  intro: [
+    "玩家在抽卡畫面與商店看到的那幾個 Fate 用語。owner 2026-08-16：「記得這些替換的介面提示等用語，應該是一個 JSON 檔，可以在後台替換設定」。",
+    "⛔ 它只管「叫什麼」，不管「做什麼」。後台與 augment@1 的 silver / gold / prismatic 一個字都沒動，改這裡不會動到任何一份技能、道具或武器內容。",
+    "⛔ 迴避／格擋／彈反／淨化／復活這一族的機制詞**刻意不在這一頁**（規則 §5：不能為了 Fate 味犧牲可讀性）。要改那些字得改程式。",
+  ],
+  consumer:
+    "apps/client/src/content/ContentDb.ts 的 applyUiLexiconDoc() → apps/client/src/ui/panels/fateLexicon.ts 的每一個讀取函式 → 抽卡面板標頭／提示、武器卡片、商店回絕訊息",
+  effect:
+    "玩家**下一次重新整理遊戲頁面**時生效（客戶端開機時才讀內容覆蓋層）。已經開著的抽卡面板不會中途換字。",
+  fields: [
+    {
+      path: "grail.systemName",
+      zh: "聖杯願望・系統名",
+      note: "每回合抽增益卡時，面板正中央那四個字。⛔ 玩家端只看得到這個，「三選一」是內部說法。填空字串存不進去（schema 下限 1 字）。",
+    },
+    {
+      path: "grail.prompt",
+      zh: "聖杯願望・面板提示",
+      note: "系統名下面那一行。⚠️ 它要同時講「這是什麼」與「選完會怎樣」—— 只寫世界觀的話，第一次玩的人不知道選完才能繼續逛商店。",
+    },
+    {
+      path: "grail.inscribeVerb",
+      zh: "聖杯願望・選取動詞",
+      note: "「已○○○○」那一句的動詞（出貨「刻入靈基」）。玩家不是「獲得一張卡」。⚠️ 目前只有選完的提示句在用它。",
+    },
+    {
+      path: "grail.inscriptionsTitle",
+      zh: "聖杯願望・已選列表標題",
+      note: "列出這一場已經刻進去的願望時的標題（出貨「靈基刻印」）。⚠️ 那個面板還沒做，改這一格現在畫面上看不到變化。",
+    },
+    {
+      path: "noblePhantasm.systemName",
+      zh: "寶具・系統名",
+      note: "抽傳說武器時面板標頭的後綴（出貨「寶具顯現」）。⛔ 不要填成聖杯那一組的字 —— 武器是裝備層，混在一起會讓玩家以為武器也在改遊戲規則。",
+    },
+    {
+      path: "noblePhantasm.defaultRank",
+      zh: "寶具・預設 Rank",
+      note: "每張武器卡左邊那兩個字（出貨 EX，因為目前開放的武器都是 EX 等級）。四個字以內，太長會把卡片撐開。",
+    },
+    {
+      path: "noblePhantasm.defaultClass",
+      zh: "寶具・預設種別",
+      note: "沒有在逐把對照表裡指定的武器算哪一種（出貨「對人」＝效果集中，最保守）。⚠️ 種別是**規模**不是強弱 —— 對人寶具不代表弱。",
+    },
+  ],
+  preserved: [
+    {
+      path: "grail.ranks",
+      why: "silver / gold / prismatic → C／A／EX 級願望的對照。⛔ 通用引擎沒有「自由文字 record」這種欄位型別（它只畫固定形狀的純量葉，以及值是 enum 的對照表），硬塞會變成一格連鍵都能打錯的文字框，而打錯鍵的後果是那一階**靜靜地退回英文 tier**。要改先走 內容管理 的 JSON 編輯器。⚠️ 通用引擎長出自由文字 record 欄位的那一天，這四列都該搬進 fields。",
+    },
+    {
+      path: "noblePhantasm.classNames",
+      why: "11 種寶具種別的中文全名（對軍 → 對軍寶具）。同上：自由文字 record。",
+    },
+    {
+      path: "noblePhantasm.itemClass",
+      why: "逐把武器的種別覆寫。⚠️ 這是 owner 最會改的一張表（種別是設計判斷），但它同樣是自由文字 record —— 通用引擎畫不了，先走 內容管理 的 JSON 編輯器。⭐ 把值改成 Zod enum 之後就能用 recordEnum 表格畫出來，那是這一列的到期條件。",
+    },
+    {
+      path: "shopLines",
+      why: "三條商店回絕訊息的 Fate 版。同上：自由文字 record，通用引擎畫不了。⚠️ 鍵必須與 shopFeedback.ts 的 ShopEventReason 一致，打錯鍵不會報錯、只是那一條永遠不會被用到 —— 這正是它現在不適合放進一格自由輸入框的理由。",
+    },
+  ],
+};
+
 export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   MAP_SPEC_SPEC,
   CAMERA_SPEC,
@@ -2428,6 +2504,7 @@ export const CONFIG_DOC_SPECS: readonly ConfigDocSpec[] = [
   COOLDOWN_RULES_SPEC,
   CAST_TIME_SPEC,
   AOE_TIERS_SPEC,
+  UI_LEXICON_SPEC,
   STAT_NORMALIZATION_SPEC,
   WOUNDS_SPEC,
   WEAKNESS_SPEC,

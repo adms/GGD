@@ -165,6 +165,10 @@ const APPROVED_MOVES: readonly { section: string; pages: readonly Page[] }[] = [
       "combatFeel",
       "matchConfig",
       "bodyScale",
+      // 2026-08-17 —— 介面用語（Fate）。⚠️ 它不是戰鬥數值，但它調的是**抽卡與
+      // 商店那幾個畫面**的文案，而那兩個畫面的其他旋鈕都在這一區；放進「系統」
+      // 會讓操作者在改抽卡文案時要跨兩區找。
+      "uiLexicon",
     ],
   },
   // 商店經濟 · 傳說武器池
@@ -183,7 +187,15 @@ describe("分類重編一頁都沒有掉", () => {
     const before = new Set<string>(BASELINE_PAGES);
     const after = new Set<string>(navPages());
     const lost = [...before].filter((p) => !after.has(p));
-    const added = [...after].filter((p) => !before.has(p));
+    // 基準線之後**刻意**新增的頁。⛔ 不改 BASELINE_PAGES —— 那是「重編那一刻」
+    // 的快照，動它會讓這條守衛失去它比較的那個時間點。新頁走這張明示的清單，
+    // 一列一個看得見的決定（同 configDocCoverage 的豁免表精神）。
+    const SINCE_BASELINE = new Set<string>([
+      // 2026-08-17：介面用語（Fate）—— owner「這些替換的介面提示等用語，
+      // 應該是一個 JSON 檔，可以在後台替換設定」。
+      "uiLexicon",
+    ]);
+    const added = [...after].filter((p) => !before.has(p) && !SINCE_BASELINE.has(p));
     expect(lost, `搬家把這些頁面弄丟了（元件還在，但左欄按不到）：${lost.join(", ")}`).toEqual([]);
     expect(
       added,

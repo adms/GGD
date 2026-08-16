@@ -26,7 +26,7 @@ import {
   AMBIENT_TIP_BAND,
   AMBIENT_TIP_LEFT,
   AMBIENT_TIP_TOP,
-  FOCUS_HINT,
+  focusHint,
   INTERMISSION_PHASE,
   INTERMISSION_Z,
   PERSISTENT_CHROME_Z,
@@ -188,11 +188,11 @@ describe("intermission focus surfaces are wired (hud-panel-cover)", () => {
     const src = readUi("panels/AugmentDraftPanel.tsx");
     expect(src).toContain("INTERMISSION_Z.focusScrim");
     expect(src).toContain("INTERMISSION_Z.focus");
-    expect(src).toContain("FOCUS_HINT");
+    expect(src).toContain("focusHint");
     // a dimmed-but-clickable card still invites the click — the scrim eats it
     expect(src).toMatch(/pointerEvents:\s*"auto"/);
     // the hint has to name the thing that is coming back, or it is just noise
-    expect(FOCUS_HINT).toContain("商店");
+    expect(focusHint()).toContain("商店");
   });
 
   it("the countdown is the ONE surface lifted over the scrim", () => {

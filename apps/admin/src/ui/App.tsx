@@ -209,6 +209,7 @@ export const NAV: NavItem[] = [
   { page: "statCaps", label: "屬性上限", emoji: "⛰️", section: SEC_COMBAT },
   { page: "cooldownRules", label: "冷卻規則", emoji: "⏱", section: SEC_COMBAT },
   { page: "aoeTiers", label: "AoE 範圍四級距", emoji: "◎", section: SEC_COMBAT },
+  { page: "uiLexicon", label: "介面用語（Fate）", emoji: "🏆", section: SEC_COMBAT },
   { page: "statNormalization", label: "英雄屬性正規化", emoji: "📐", section: SEC_COMBAT },
   // GH#322 —— 這四頁的 spec 早就寫好了，但導覽列沒有那一列 ⇒ 操作者點不到。
   // ⚠️ 「有 spec」與「到得了」是兩件事，`configDocCoverage.test.ts` 兩個方向都驗。

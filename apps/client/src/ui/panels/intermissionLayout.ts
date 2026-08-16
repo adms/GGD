@@ -86,7 +86,7 @@
  * inversion. Both the shop and ready-up now declare {@link INTERMISSION_Z.panel}
  * (= `HUD_Z.screen`), so the declaration and the pixels are the same number.
  */
-import { GRAIL_MANIFEST_PROMPT } from "./fateLexicon";
+import { grailManifestPrompt } from "./fateLexicon";
 import { HUD_Z } from "../hud/hudLayout";
 
 /**
@@ -138,7 +138,14 @@ export const FOCUS_FADE_MS = 200;
  * 「選完會怎樣」，而世界觀那一句只講「這是什麼」。P2 那個抱怨要的是**後者**，
  * ⛔ 所以不能只換成漂亮的一句就把「選完就能繼續逛商店」丟掉。
  */
-export const FOCUS_HINT = `${GRAIL_MANIFEST_PROMPT}（選完就能繼續逛商店）`;
+/**
+ * ⚠️ **函式不是常數。** 文案現在住在 `content/config/ui-lexicon.json`，而內容是
+ * 開機後才載入的 —— 一個 `export const` 會在 import 那一刻定死成出貨值，
+ * 於是後台改了完全沒反應，⛔ 而型別與測試都不會紅（失敗形態②）。
+ */
+export function focusHint(): string {
+  return `${grailManifestPrompt()}（選完就能繼續逛商店）`;
+}
 
 /** Which surface owns the player's attention right now. */
 export type IntermissionFocus = "draft" | "shop";

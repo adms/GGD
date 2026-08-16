@@ -13,6 +13,7 @@ import type { Stat } from "@ggd/shared/sim/stats/statTypes";
 import type { AbilityId, AugmentId, ItemId } from "@ggd/shared/ids";
 import { docDescription } from "../components/abilityText";
 import { statLabel } from "./statDisplay";
+import { noblePhantasmLabel } from "./fateLexicon";
 
 export interface ResolvedChoice {
   name: string;
@@ -83,7 +84,12 @@ export function resolveChoice(choice: string): ResolvedChoice {
   // weapon cards (legendary items) → item icon + cost
   const item = Items.tryGet(choice as ItemId);
   if (item) {
-    const out: ResolvedChoice = { name: item.name, desc: `${item.cost} g` };
+    // ⭐ owner 2026-08-16：武器卡不再講「傳說武器道具」，講**寶具**：Rank + 種別。
+    // ⚠️ 種別是**逐把不同**的（規模不是強弱），所以它在卡片上、不在標頭上 ——
+    // 標頭是一整盤共用的，放不下逐把的資訊。
+    // ⛔ 原本這一格是 `${item.cost} g`，而武器抽卡一律 0 g，所以那一行對玩家
+    // 的資訊量是零 —— 換掉它不會蓋掉任何有用的東西。
+    const out: ResolvedChoice = { name: item.name, desc: noblePhantasmLabel(item.id) };
     if (item.icon !== undefined) out.icon = item.icon;
     return out;
   }

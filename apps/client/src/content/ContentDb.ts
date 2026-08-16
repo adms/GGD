@@ -22,6 +22,7 @@ import type {
   ConfigVoxelBodiesDoc,
   ConfigFormVisualsDoc,
   ConfigVictoryFxDoc,
+  ConfigUiLexiconDoc,
   FormVisual,
   AmbientVfxBinding,
   ArenaFire,
@@ -61,6 +62,7 @@ import { setCastHeightSource } from "../render/vfx/familyCastHeight";
 import { setProjectileTuning } from "../render/views/projectileArt";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
+import { applyUiLexiconDoc } from "../ui/panels/fateLexicon";
 
 interface IndexFile {
   entries?: { id: string; path: string }[];
@@ -273,6 +275,11 @@ export class ContentDb {
     // 煙火打開,場上還是不會放(第②號故障:算出來了但從沒送到)。傳 null(檔案
     // 不存在／schema 不合)= `DEFAULT_VICTORY_FX`,也就是兩格都關,不是「全開」。
     applyVictoryFxDoc(this.configDoc<ConfigVictoryFxDoc>("victory-fx", "config.victory-fx@1"));
+    // 玩家端 Fate 用語（owner 2026-08-16：「應該是一個 JSON 檔，可以在後台替換設定」）。
+    // ⛔ 沒有這一行，`content/config/ui-lexicon.json` 就是一份沒有人讀的檔案：
+    // 後台把「聖杯顯現」改成別的字，畫面上完全不會變（失敗形態②）。
+    // 傳 null（檔案不存在／schema 不合）= 出貨文案，不是「沒有文字」。
+    applyUiLexiconDoc(this.configDoc<ConfigUiLexiconDoc>("ui-lexicon", "config.ui-lexicon@1"));
 
     // GH#230 L2 —— 21 個 w3x 特效家族原型 + 258 支技能的 per-invocation 參數。
     // 沒有這一行,`content/config/vfx-families.json` 就是一份沒人讀的檔案:

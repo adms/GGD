@@ -5,6 +5,7 @@
  * pattern as icons.test.ts (hand-written defs into the shared registries).
  */
 import { describe, it, expect, beforeAll } from "vitest";
+import { noblePhantasmLabel } from "./fateLexicon";
 import { cover } from "@ggd/shared/testkit/cover";
 import { Abilities, Augments, Items } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, AugmentId, ItemId } from "@ggd/shared/ids";
@@ -84,7 +85,11 @@ describe("resolveChoice (hud-draft-choice-icon)", () => {
     cover("hud-draft-choice-icon");
     const item = resolveChoice(ITEM_ICONED);
     expect(item.icon).toBe("assets/icons/items/godie-draft-weapon.png");
-    expect(item.desc).toBe("2400 g");
+    // ⭐ owner 2026-08-16：武器卡不再講價格，講**寶具**（Rank + 種別）。
+    // ⚠️ 斷言從詞彙表推導，⛔ 不抄字面值 —— 抄了就是第二個住處，而那一份會過期。
+    expect(item.desc).toBe(noblePhantasmLabel(ITEM_ICONED));
+    // ⛔ 而且畫面上不可以再出現舊詞（owner：「不要講傳說武器道具這種字眼」）。
+    expect(item.desc).not.toContain("傳說武器");
     // Augments have no w3x icon and CANNOT declare one — `augment@1` is
     // `.strict()` with no `icon` field. Their art is resolved BY CONVENTION from
     // the id instead, so the draft card gets its mandatory icon (#110) rather

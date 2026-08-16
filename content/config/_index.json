@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "1ce63506d775",
+  "hash": "2d84e427939d",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -277,6 +277,12 @@
       "path": "config/taunt.json",
       "hash": "501b1b2be7b7",
       "size": 697
+    },
+    {
+      "id": "ui-lexicon",
+      "path": "config/ui-lexicon.json",
+      "hash": "4804e90cd0f5",
+      "size": 2264
     },
     {
       "id": "unit-tints",

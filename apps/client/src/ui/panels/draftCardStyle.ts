@@ -84,7 +84,7 @@ export function tierColor(tier: string): string {
 
 /** Bespoke header labels; unknown tiers render as "<TIER> AUGMENT". */
 export const DRAFT_TIER_LABEL: Record<string, string> = {
-  weapon: "傳說武器 · WEAPON",
+  weapon: "寶具",
   [ATTR_OFFER_TIER]: "能力屬性強化 · 力／敏／智",
 };
 
@@ -96,8 +96,12 @@ export const DRAFT_TIER_LABEL: Record<string, string> = {
  * ⛔ 後台與 `augment@1` 的 tier **一個字都沒動** —— 這是純顯示層轉換。
  *
  * ⚠️ 順序是刻意的：Fate Rank 先查，查不到才走 {@link DRAFT_TIER_LABEL}。
- * 傳說武器與能力屬性強化**不是願望**（規則 §1 把它們劃給「裝備」那一層），
- * ⛔ 所以它們留著自己的標頭，不要一起改成 Fate 味。
+ *
+ * ⭐ owner 2026-08-16 第二則**推翻了第一版的判斷**：「傳說武器這些字眼也都要變得
+ * FATE 味，不要講傳說武器道具這種字眼」。⇒ 武器**也** Fate 化，但走**另一套詞**
+ * （寶具＋種別＋Rank，見 `fateLexicon.noblePhantasmLabel`），
+ * ⛔ 不是跟願望共用「聖杯顯現」—— 規則 §1 的兩層仍然分得開，只是兩層都有味道了。
+ * ⚠️ 這裡只放系統名；**種別是逐把不同的**，所以它在卡片上不在標頭上。
  */
 export function tierLabel(tier: string): string {
   return fateRankLabel(tier) ?? DRAFT_TIER_LABEL[tier] ?? `${tier.toUpperCase()} AUGMENT`;

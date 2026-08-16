@@ -71,7 +71,7 @@ import {
   draftDialogLabelId,
 } from "./draftA11y";
 import { isLegendaryOffer, revealSchedule } from "./draftReveal";
-import { FOCUS_FADE_MS, FOCUS_HINT, FOCUS_SCRIM_BG, INTERMISSION_Z } from "./intermissionLayout";
+import { FOCUS_FADE_MS, focusHint, FOCUS_SCRIM_BG, INTERMISSION_Z } from "./intermissionLayout";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 export function AugmentDraftPanel(): React.JSX.Element | null {
@@ -148,7 +148,7 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
         {/* the answer to 「四件事同時要注意力」: say which one is first, and
             promise the rest is coming back. */}
         <div style={{ marginTop: 10, textAlign: "center", fontSize: 11, color: TEXT_DIM }}>
-          {FOCUS_HINT}
+          {focusHint()}
         </div>
       </div>
     </>

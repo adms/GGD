@@ -23,87 +23,165 @@
  */
 
 /**
- * 後台階級 → 玩家端 Fate Rank（規則 §3）。
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ⭐ 2026-08-16 第二輪 —— **這些字現在住在 JSON，後台可改**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * owner：「記得這些替換的介面提示等用語，應該是一個 JSON 檔，可以在後台替換設定」。
  *
- * ⚠️ EX 的意思是「**超出正常遊戲規則衡量尺度**」，⛔ 不是「數字最大」。
- * 這一行不只是改名 —— 它是設計判準：一張 prismatic 如果只是 +100 AP，
- * 那它掛著「EX級願望」就是在說謊（規則 §3、§8）。
+ * 落點：`content/config/ui-lexicon.json`（schema `config.ui-lexicon@1`）→
+ * `ContentDb` 開機時呼叫 {@link applyUiLexiconDoc} → 下面每一個讀取函式。
+ * ⛔ 沒有那一行呼叫，這份 JSON 就是一份沒有人讀的檔案（失敗形態②：
+ * 後台改了、存檔成功、畫面完全不變）。
+ *
+ * ⚠️ **所以下面全部改成「函式」不是「常數」。** 常數在 import 那一刻就定值，
+ * 而內容是開機後才載入的 —— 一個 `export const X = LEX.foo` 會永遠是出貨值，
+ * 而後台改了完全沒反應，⛔ 且型別與測試都不會紅。
+ *
+ * ⚠️ 另一半：owner 同一則說**傳說武器也要 Fate 化**（「不要講傳說武器道具這種
+ * 字眼」）。這**推翻**了本檔第一版的判斷（見 {@link draftSuffixFor} 的舊註解：
+ * 「武器屬於裝備層，不是願望」）。照第〇·六守則，owner 的新說明是第 1 層，贏。
+ * ⇒ 武器不再叫「三選一」，改叫**寶具**，走**另一套詞**（種別 + Rank），
+ * 而不是跟願望共用「聖杯顯現」—— 兩層仍然分得開，只是兩層都有 Fate 味了。
  */
-export const FATE_RANK_LABEL: Readonly<Record<string, string>> = Object.freeze({
-  silver: "C級願望",
-  gold: "A級願望",
-  prismatic: "EX級願望",
-});
+import type { ConfigUiLexiconDoc } from "@ggd/shared/content/schema/config";
+
+/** 出貨值 —— ⛔ 這是 fallback 不是真相；真相是 `content/config/ui-lexicon.json`。 */
+const SHIPPED = {
+  grail: {
+    systemName: "聖杯顯現",
+    prompt: "聖杯自無數可能性中顯現三項願望 —— 選擇其中一項刻入靈基，直到本場聖杯戰爭結束。",
+    inscribeVerb: "刻入靈基",
+    inscriptionsTitle: "靈基刻印",
+    ranks: { silver: "C級願望", gold: "A級願望", prismatic: "EX級願望" } as Record<string, string>,
+  },
+  noblePhantasm: {
+    systemName: "寶具顯現",
+    defaultRank: "EX",
+    defaultClass: "對人",
+    classNames: {} as Record<string, string>,
+    itemClass: {} as Record<string, string>,
+  },
+  shopLines: {} as Record<string, string>,
+};
+
+let LEX: typeof SHIPPED = SHIPPED;
 
 /**
- * 系統名（規則 §2）。⚠️ 玩家端**只看得到這四個字**，不是「三選一」。
- *
- * ⛔ **但「三選一」不是全部要改** —— 同一個面板同時服務三種抽卡：
- *
- * | 抽的是什麼 | 規則 §1 把它放在 | 玩家端叫什麼 |
- * |---|---|---|
- * | 增益（silver/gold/prismatic） | **聖杯願望** | **聖杯顯現** |
- * | 傳說武器（weapon） | 裝備 | 維持「三選一」 |
- * | 能力屬性強化 | 裝備 | 維持「三選一」 |
- *
- * ⇒ 這幾處**刻意留著**「三選一」：
- *   · `shopFeedback.ts` 的 `not-purchasable` / `shelf-closed`（講的是武器抽卡）
- *   · `roundReport.ts` 的「還有 N 張三選一沒選」（`seat.offers` 兩種都算）
- *
- * ⚠️ 把它們一起 Fate 化會讓玩家以為傳說武器也在改遊戲規則 ——
- * 而規則 §11 的整個判準就建立在「這兩層是分開的」。
+ * 套用後台那份文件。傳 null（檔案不存在／schema 不合）＝ 回到出貨值，
+ * ⛔ 不是「沒有文字」——一個空白的抽卡標頭比一個舊的文案糟得多。
  */
-export const GRAIL_MANIFEST = "聖杯顯現";
+export function applyUiLexiconDoc(doc: ConfigUiLexiconDoc | null | undefined): void {
+  if (!doc) {
+    LEX = SHIPPED;
+    return;
+  }
+  LEX = {
+    grail: {
+      systemName: doc.grail.systemName,
+      prompt: doc.grail.prompt,
+      inscribeVerb: doc.grail.inscribeVerb,
+      inscriptionsTitle: doc.grail.inscriptionsTitle,
+      ranks: { ...doc.grail.ranks },
+    },
+    noblePhantasm: {
+      systemName: doc.noblePhantasm.systemName,
+      defaultRank: doc.noblePhantasm.defaultRank,
+      defaultClass: doc.noblePhantasm.defaultClass,
+      classNames: { ...doc.noblePhantasm.classNames },
+      itemClass: { ...doc.noblePhantasm.itemClass },
+    },
+    shopLines: { ...doc.shopLines },
+  };
+}
 
-/**
- * 抽卡面板的一行說明（規則 §2）。
- *
- * ⚠️ 它同時是「這是什麼」與「選完會怎樣」——
- * 舊文案「先選一張 — 選完就能繼續逛商店」只講了後者，
- * ⛔ 而前者才是玩家第一次看到這個畫面時要的。
- */
-export const GRAIL_MANIFEST_PROMPT =
-  "聖杯自無數可能性中顯現三項願望 —— 選擇其中一項刻入靈基，直到本場聖杯戰爭結束。";
+/** 測試用：回到出貨值。 */
+export function resetUiLexicon(): void {
+  LEX = SHIPPED;
+}
+
+// ── 聖杯願望側 ───────────────────────────────────────────────────────────
+
+/** 系統名（規則 §2）。 */
+export function grailManifest(): string {
+  return LEX.grail.systemName;
+}
+
+/** 抽卡面板的一行說明（規則 §2）。 */
+export function grailManifestPrompt(): string {
+  return LEX.grail.prompt;
+}
 
 /** 選取的動詞（規則 §18）。玩家不是「獲得一張卡」。 */
-export const INSCRIBE_VERB = "刻入靈基";
+export function inscribeVerb(): string {
+  return LEX.grail.inscribeVerb;
+}
 
 /** 已選願望的列表標題（規則 §18）。 */
-export const SPIRIT_ORIGIN_INSCRIPTIONS = "靈基刻印";
-
-/**
- * 「⋯已刻入靈基。」的完整句（規則 §18）。
- *
- * ⚠️ 願望名帶「」是刻意的 —— owner 的範例就是
- * 「『心眼（真）A』已刻入靈基。」而引號讓一個帶括號與 Rank 的長名字讀得出邊界。
- */
-export function inscribedLine(wishName: string): string {
-  return `「${wishName}」已${INSCRIBE_VERB}。`;
+export function inscriptionsTitle(): string {
+  return LEX.grail.inscriptionsTitle;
 }
 
 /**
- * 一個階級的玩家端說法。⛔ 查不到就原樣回大寫的 tier ——
+ * 一個階級的玩家端說法。⛔ 查不到就回 null ——
  * ⚠️ 這是**刻意的醜**：一個沒有對照的新階級應該在畫面上看起來就是漏的，
  * ⛔ 而不是被塞進「C級願望」裡假裝有人設計過它。
  */
 export function fateRankLabel(tier: string): string | null {
-  return FATE_RANK_LABEL[tier] ?? null;
+  return LEX.grail.ranks[tier] ?? null;
 }
 
-/** 傳說武器與能力屬性強化用的後綴 —— 它們**不是願望**（規則 §1）。 */
-export const PLAIN_DRAFT_SUFFIX = "三選一";
+/** 「⋯已刻入靈基。」的完整句（規則 §18）。 */
+export function inscribedLine(wishName: string): string {
+  return `「${wishName}」已${inscribeVerb()}。`;
+}
+
+// ── 寶具側（owner 2026-08-16 第二則）─────────────────────────────────────
+
+/** 武器抽卡的系統名。⛔ 不再是「三選一」，也不是「聖杯顯現」。 */
+export function noblePhantasmManifest(): string {
+  return LEX.noblePhantasm.systemName;
+}
 
 /**
- * 這個階級的標頭後綴。
+ * 這把武器的**種別全名**（「對軍寶具」）。
  *
- * 🔴 這個函式存在的理由是一個**我自己造出來又量到的缺陷**：
- * 第一版把 `DRAFT_CHOICE_SUFFIX` 整個換成「聖杯顯現」，於是傳說武器卡變成
- * 「**傳說武器 · WEAPON · 聖杯顯現**」——
- * ⛔ 那正好違反規則 §1（武器屬於裝備層，不是願望）與 §11 的整個判準。
+ * ⭐ **種別是規模不是強弱** —— owner 給的對照表逐字寫著對人寶具
+ * 「不是代表弱，而是效果集中」。⛔ 不可以拿它排序或當抽卡權重。
+ */
+export function noblePhantasmClass(itemId: string): string {
+  const np = LEX.noblePhantasm;
+  const code = np.itemClass[itemId] ?? np.defaultClass;
+  return np.classNames[code] ?? `${code}寶具`;
+}
+
+/**
+ * 這把武器的 Rank。出貨全部 **EX** ——
+ * owner 2026-08-16：「照我們目前武器道具開放都是 EX 等級才對」。
+ */
+export function noblePhantasmRank(_itemId: string): string {
+  return LEX.noblePhantasm.defaultRank;
+}
+
+/** 卡片上那一行：「EX 對軍寶具」。 */
+export function noblePhantasmLabel(itemId: string): string {
+  return `${noblePhantasmRank(itemId)} ${noblePhantasmClass(itemId)}`;
+}
+
+/** 商店回絕訊息的 Fate 版；沒設定就回 null（呼叫端用原本的機制訊息）。 */
+export function shopLine(reason: string): string | null {
+  return LEX.shopLines[reason] ?? null;
+}
+
+/**
+ * 這個階級的抽卡後綴。
  *
- * ⚠️ 這種錯不會被型別或既有測試抓到：兩個字串都合法，畫面也長得很正常。
+ * 🔴 這個函式存在的理由是一個**量到的缺陷**：第一版把後綴整個換成「聖杯顯現」，
+ * 於是傳說武器卡變成「傳說武器 · WEAPON · 聖杯顯現」。
+ * ⚠️ 那種錯不會被型別或既有測試抓到：兩個字串都合法，畫面也長得很正常。
  * ⇒ 後綴必須跟著**階級**走，⛔ 不是一個全域常數。
+ *
+ * ⭐ owner 第二則之後，武器那一邊也不再是「三選一」了 —— 它有自己的系統名。
  */
 export function draftSuffixFor(tier: string): string {
-  return fateRankLabel(tier) !== null ? GRAIL_MANIFEST : PLAIN_DRAFT_SUFFIX;
+  return fateRankLabel(tier) !== null ? grailManifest() : noblePhantasmManifest();
 }
