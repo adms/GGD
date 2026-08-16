@@ -262,6 +262,51 @@ describe("scripts/host-deploy.sh —— 部署程序是程式，不是要人記�
     ).toBe(true);
   });
 
+  it("★ 磁碟閘：build 開始**之前**就要說得出「這台機器建不完」（2026-08-16 的 502）", () => {
+    // 那次一支被 SIGPIPE 打斷的 build 把 build cache 養到 80GB → docker 的碟撞 100%
+    // → 之後每一次 build 都必定失敗 → edge 容器消失、game 進重啟迴圈 → 網站 502。
+    //
+    // ⚠️ 這一條守的**不是**「有沒有清快取」。清快取只是手段，而且清完隔天照樣會長回來。
+    // 守的是三個關係，每一個都對應那次事故的一個環節：
+
+    // ① 上限是**位元組**，不是天數。
+    //    `--filter until=<天數>` 是對「一天發幾版」的假設，而 2026-08-05 發過 5 版 ——
+    //    同一個 168h 在那一天什麼都擋不住。位元組上限不管頻率都成立。
+    expect(
+      /--max-used-space/.test(code),
+      "build cache 沒有位元組上限 —— 只用天數過濾是在假設部署頻率，那個假設破過。",
+    ).toBe(true);
+
+    // ② 量的是 **docker 自己的碟**，不是 `/`。
+    //    這台的 data-root 是 /data/docker（sdb），而 / 是另一顆。2026-08-16 我第一次
+    //    回報就讀了 `/` —— 那顆碟從頭到尾都是 11%，於是我對 owner 講了一個假的根因。
+    //    ⭐ 突變點：把 `$DOCKER_ROOT` 換成 `/` 這一條就要紅。
+    expect(
+      /DockerRootDir/.test(code) && /df\s+-Pk\s+"\$DOCKER_ROOT"/.test(code),
+      "剩餘空間量的不是 docker 的 data-root —— 量錯一顆碟等於沒量。",
+    ).toBe(true);
+
+    // ③ ⭐ 閘在 **pull 之前**。這一條是這整段的承重點：
+    //    `content/` 是 live bind-mount。先 pull 成功、再讓 build 死在沒空間，
+    //    得到的是「新內容 + 舊映像」—— 那正是 2026-08-02 那次生產故障的組合。
+    //    磁碟不夠的時候，線上那一版必須**一個位元組都沒被動到**。
+    const gateAt = code.indexOf("MIN_FREE_GB");
+    const pullAt = code.indexOf("git fetch --tags");
+    const buildAt = code.indexOf("--env-file \"$ENV_FILE\" build");
+    expect(gateAt > -1, "找不到磁碟閘").toBe(true);
+    expect(
+      gateAt < pullAt && gateAt < buildAt,
+      "磁碟閘跑在 pull／build 後面 —— 那就會先把 content/ 換成新的再讓 build 失敗，" +
+        "留下「新內容 + 舊映像」這個沒人測過、而且已經害網站掛過一次的組合。",
+    ).toBe(true);
+
+    // 空間不夠要 die。印一行警告然後照樣 build = 這個閘不存在。
+    expect(
+      /FREE_GB[\s\S]{0,300}die "磁碟不夠/.test(code),
+      "空間不夠時沒有 die —— 那就只是印一行字，等於沒驗。",
+    ).toBe(true);
+  });
+
   it("★ CLAUDE.md 的部署協定要指向這支腳本，否則下一個人還是憑記憶做", () => {
     const claude = readFileSync(join(REPO, "CLAUDE.md"), "utf8");
     expect(

@@ -719,6 +719,33 @@ client 每次載入都重抓 `bundle.json`，所以不必重建映像，只要�
    徽章寫 `UNSTAMPED-BUILD` —— 而那是「這是哪一版」的唯一答案（task #66）。
 5. ⛔ **不要跑 `family-up` 裡的 seed 步驟**（`run --rm platform -seed -starter`）——
    那會寫玩家資料。第一次建站以外一律不跑。
+6. ⛔ **不要把這條指令接到 `| head` / `| grep -m` 之類會提早關管道的東西。**
+   2026-08-16：`ssh … 'bash scripts/host-deploy.sh' | grep … | head -10` ——
+   head 讀滿就關管道 → 本地 ssh 收 SIGPIPE 而死 → 遠端腳本收 SIGHUP →
+   **docker build 死在半路**，留下 80GB 快取把 docker 的碟塞爆，
+   之後每一次 build 都失敗（edge 容器消失、game 重啟迴圈、網站 **502**）。
+   要看輸出就 `> /tmp/deploy.log 2>&1` 再讀檔。
+   ⭐ 腳本自己現在也 `trap '' HUP PIPE` —— 連線斷了 build 會跑完，
+   留下的是完整狀態而不是殘骸（散文治不了手滑，見元規則）。
+
+### 💽 磁碟：它現在會自己擋，而且量的是**對的那顆碟**
+
+腳本在 **pull 之前**（不是 build 之前）先夾 build cache 再驗剩餘空間：
+
+| | 做什麼 | 為什麼是這個 |
+|---|---|---|
+| ① | `docker builder prune -f --max-used-space 25GB` | **位元組**上限。⛔ 不是 `--filter until=168h` —— 那是對「一天發幾版」的假設，而 2026-08-05 發過 5 版 |
+| ② | 剩餘空間 ≥ 20G，否則 `die` | 這是**兩個名詞的關係**（空間 vs 一次 build 要的量），不是「快取多大」這種單一名詞 |
+
+⚠️ **閘在 pull 之前是刻意的**：`content/` 是 live bind-mount。先 pull 成功、
+再讓 build 死在沒空間 = 「新內容 + 舊映像」——那正是 2026-08-02 的生產故障組合。
+磁碟不夠的時候，線上那一版必須**一個位元組都沒被動到**。
+
+⚠️ **量的是 `docker info --format '{{.DockerRootDir}}'`，不是 `/`。**
+這台的 data-root 是 **`/data/docker`（sdb，98G）**，而 `/`（sda1）是另一顆、
+從頭到尾都在 11%。2026-08-16 我第一次回報就讀了 `/`，於是對 owner 講了一個假的根因。
+兩個門檻可用 `GGD_BUILD_CACHE_CAP` / `GGD_MIN_FREE_GB` 覆寫。
+守衛：`hostDeployScript.test.ts` 的「磁碟閘」（突變：把 `$DOCKER_ROOT` 換成 `/` → 紅）。
 
 ⚠️ **2026-08-02 的教訓：把地雷寫成清單是不夠的。** 那天同一次部署踩中了 3 與 4，
 而這份清單是同一個人幾小時前寫的。散文治不了「憑記憶重新推導一個五步序列」，

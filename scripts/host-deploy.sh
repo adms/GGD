@@ -59,6 +59,18 @@
 # 「我以為它不會動到」與「我數過了」是兩回事 —— 這一整天的教訓都是後者才算數。
 set -euo pipefail
 
+# ⛔ 一條斷掉的**連線**不可以變成一次做到一半的**部署**（2026-08-16）。
+#
+# 那天我把部署指令寫成 `ssh … 'bash scripts/host-deploy.sh' | grep … | head -10`。
+# head 讀滿 10 行就關掉管道 → 本地 ssh 收到 SIGPIPE 而死 → 遠端這支腳本收到
+# SIGHUP → **docker build 死在半路**。半死的 build 留下 80GB 快取把碟塞爆，
+# 之後每一次 build 都失敗：edge 容器消失、game 進重啟迴圈，網站 502。
+#
+# ⚠️ 治不了這件事的是「記得不要接 head」——那是散文，而散文擋不住下一次手滑
+# （CLAUDE.md 的元規則）。真正的修法是讓腳本**活過連線死掉**：
+# 忽略 HUP，ssh 斷了 build 照樣跑完，留下的是一個完整的狀態而不是一個殘骸。
+trap '' HUP PIPE
+
 COMPOSE_FILES=(-f docker/compose.yaml -f docker/compose.family.yaml)
 ENV_FILE=docker/.env
 MODE=full
@@ -105,6 +117,64 @@ COMMIT_AT_START=$(git rev-parse HEAD 2>/dev/null || echo "")
 [ "$ACCOUNTS_BEFORE" -gt 0 ] 2>/dev/null \
   || die "data/accounts 裡數到 $ACCOUNTS_BEFORE 個帳號 —— 這不對，停在這裡而不是在上面蓋東西"
 ok "部署前帳號數: $ACCOUNTS_BEFORE（住在 host 的 data/，不在映像裡）"
+
+# ── 0.5 磁碟閘 ───────────────────────────────────────────────────────────────
+# 2026-08-16：一次被 SIGPIPE 打斷的 build 把 build cache 養到 80GB，docker 的碟
+# （/data，98G）撞到 100%。之後**每一次** build 都必定失敗 → ggd-edge 容器消失、
+# ggd-game 進重啟迴圈 → 網站 502，15 分鐘。
+#
+# ⚠️ 教訓不是「快取太大」。快取本來就會長，那是它的工作。教訓是：
+# **沒有任何東西在 build 開始之前說得出「這台機器建不完」** ——
+# 於是失敗發生在最貴的地方（build 到一半、舊容器已經被動過）。
+#
+# 所以這裡做兩件事，順序不可以反：
+#   ① 先把 build cache 夾到一個**位元組**上限。
+#      ⛔ 不用 `--filter until=<天數>` —— 那是對**部署頻率**的假設，而
+#      2026-08-05 一天發過 5 版。位元組上限不管一天發幾版都成立。
+#      LRU 淘汰，所以每次都被重用的那些層（base image / node_modules / Go mod）
+#      永遠是最近使用的，一格都不會被丟掉 —— 冷 build 的代價不會回來。
+#   ② 再驗**剩餘空間 ≥ 一次 build 要的量**。這是一個**關係**（兩個名詞之間），
+#      ⛔ 不是「快取多大」或「碟多大」這種單一名詞 —— 見檔頭 2026-08-02 那次
+#      四項後置條件全綠而網站不能玩，根因就是每一項都只驗一個名詞。
+#
+# ⭐ 位置在**拉取之前**，這是刻意的：`content/` 是 live bind-mount。
+# 先 pull 再讓 build 死掉 = 新內容 + 舊映像，那正是 2026-08-02 的生產故障。
+# 磁碟不夠的時候，**線上那一版必須一個位元組都沒被動到**。
+#
+# 兩個數字都是決策點，所以是環境變數而不是寫死（CLAUDE.md 第一守則）。
+BUILD_CACHE_CAP="${GGD_BUILD_CACHE_CAP:-25GB}"
+MIN_FREE_GB="${GGD_MIN_FREE_GB:-20}"
+if [ "$MODE" = full ]; then
+  say "磁碟閘（build cache 上限 $BUILD_CACHE_CAP，可用空間下限 ${MIN_FREE_GB}G）"
+  # `--max-used-space` 要 Docker 28+。舊版沒有這個旗標，退回時間過濾器並說出來
+  # ——⛔ 不可以靜默略過，那就等於這個閘不存在（fail-open 必須有人聽得見）。
+  if docker builder prune -f --max-used-space "$BUILD_CACHE_CAP" >/dev/null 2>&1; then
+    ok "build cache 夾到 $BUILD_CACHE_CAP（LRU）"
+  else
+    docker builder prune -f --filter "until=168h" >/dev/null 2>&1 || true
+    warn "這台 docker 沒有 --max-used-space，退回 until=168h —— 那只是時間假設，擋不住一天多版"
+  fi
+  # docker 的資料**不一定**在 /：這台就是 /data/docker（sdb）。
+  # 量錯一顆碟等於沒量（2026-08-16 我第一次回報就讀了 / 而不是 /data）。
+  DOCKER_ROOT=$(docker info --format '{{.DockerRootDir}}' 2>/dev/null || echo /var/lib/docker)
+  FREE_GB=$(df -Pk "$DOCKER_ROOT" 2>/dev/null | awk 'NR==2{printf "%d", $4/1048576}')
+  [ -n "$FREE_GB" ] || die "量不到 $DOCKER_ROOT 的剩餘空間 —— 拒絕在不知道有沒有空間的情況下 build"
+  [ "$FREE_GB" -ge "$MIN_FREE_GB" ] 2>/dev/null || die "磁碟不夠建這一版。
+     $DOCKER_ROOT 只剩 ${FREE_GB}G，需要 ≥ ${MIN_FREE_GB}G。
+
+     ⭐ 停在這裡是刻意的，而且**現在線上那一版一個位元組都沒被動到** ——
+        還沒 pull、還沒 build、容器還在跑。網站是好的。
+     ⛔ 不要重跑一次期待它自己好，build 到一半沒空間會讓 edge 容器消失（2026-08-16）。
+
+     清乾淨（純快取，不碰任何資料）：
+       docker builder prune -af && docker image prune -f
+     ⛔ 不要用 image prune -a  —— 會刪掉 :prev，回滾就沒有落腳點了
+     ⛔ 不要碰 volume        —— 玩家資料在裡面
+
+     看是誰在吃空間： docker system df   與   df -h $DOCKER_ROOT
+     真的需要放寬：   GGD_MIN_FREE_GB=10 bash scripts/host-deploy.sh"
+  ok "$DOCKER_ROOT 可用 ${FREE_GB}G（≥ ${MIN_FREE_GB}G）"
+fi
 
 # ── 回滾 ─────────────────────────────────────────────────────────────────────
 # 映像回滾靠上一次部署留下的 `:prev` 標籤；content/ 靠記下來的 commit。
