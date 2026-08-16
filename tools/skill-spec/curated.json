@@ -1,0 +1,214 @@
+{
+  "_": [
+    "《技能標記機制與效果規則》裡**推導不出來**的那一半，只住在這裡一份。",
+    "",
+    "⛔ 這是這一族文件的唯一手寫檔。其餘（參數、上下界、用量、範例）全部由",
+    "tools/skill-spec/gen_spec.ts 從出貨的 schema／註冊表／content 推導。",
+    "",
+    "⚠️ 它會被**兩個方向**對帳（gen_spec.ts::reconcileLabels）：",
+    "  · 這裡有、引擎沒有的 token → 產生器回非零（＝這份檔在說謊）",
+    "  · 引擎有、這裡沒有的 token → 文件上標「待命名」（看得見，不是無聲）",
+    "所以它不可能像 docs/效果標籤詞彙表v2.md 那樣，寫著 24 個 kind 而引擎已經有 37 個。",
+    "",
+    "取代：docs/效果標籤詞彙表v2.md · docs/_status-effect-tag-vocabulary.md 的詞彙部分。"
+  ],
+
+  "effectKinds": {
+    "applyBuff": "增益／減益（改屬性）",
+    "applyStatus": "掛狀態",
+    "blink": "瞬移",
+    "championForm": "變身／切換形態",
+    "cycleBuff": "輪替增益",
+    "damage": "傷害",
+    "damageArea": "範圍傷害",
+    "damageLine": "直線傷害",
+    "dash": "衝刺（腳不離地）",
+    "delayed": "延遲落地／排程",
+    "devour": "吞噬",
+    "dispel": "淨化／驅散",
+    "dot": "持續傷害（燃燒／流血／中毒）",
+    "evasion": "迴避",
+    "eventValueConversion": "把事件的數值換算成別的",
+    "extendBuff": "延長既有增益",
+    "grantAttribute": "加三圍（力／敏／智）",
+    "grantGold": "發錢",
+    "heal": "治療（吃係數）",
+    "invulnerable": "免疫／魔免／免控",
+    "knockback": "擊退／擊飛／拉扯／擊倒",
+    "leap": "跳躍（拋物線離地）",
+    "manaBarrier": "魔力護盾",
+    "modifyCooldown": "改冷卻",
+    "proxyCast": "代放別的技能",
+    "randomArea": "隨機落點",
+    "restore": "回復（按最大值百分比）",
+    "revive": "復活",
+    "shield": "吸收（護盾）",
+    "shieldBreak": "破盾",
+    "spawnProjectile": "投射物",
+    "spawnVfx": "純演出（特效／音效）",
+    "spendMana": "燒魔",
+    "summon": "召喚",
+    "swapResource": "資源互換",
+    "taunt": "嘲諷",
+    "weightedBranch": "加權分支（隨機挑一段）"
+  },
+
+  "hookEvents": {
+    "onAbilityCast": "施法時",
+    "onAbilityHit": "技能命中時",
+    "onAllyDeath": "隊友陣亡時",
+    "onBasicAttack": "普攻時",
+    "onBossSpawn": "殭屍王出現時",
+    "onDamageDealt": "造成傷害時",
+    "onDamageTaken": "受到傷害時",
+    "onDeath": "死亡時",
+    "onEvade": "迴避成功時",
+    "onFireRingIgnite": "火圈點燃時",
+    "onGuardianDown": "守衛塔倒下時",
+    "onInterval": "週期（每 N 秒）",
+    "onKill": "擊殺時",
+    "onReflectSuccess": "反彈成功時",
+    "onRevive": "被復活時",
+    "onShieldBroken": "護盾破碎時",
+    "onShieldGained": "獲得護盾時",
+    "onStatusApplied": "被掛上狀態時",
+    "onStunned": "被暈眩時"
+  },
+
+  "conditionLeaves": {
+    "chance": "機率",
+    "equipment": "裝備了某道具時",
+    "kind": "對象是誰（小兵／英雄／BOSS）",
+    "stat": "屬性門檻（血量低於 X%…）",
+    "status": "身上有某狀態時"
+  },
+
+  "statusAxes": {
+    "stun": "暈眩 —— 走不動也打不了，施法當場被打斷",
+    "root": "定身 —— 腳黏原地，還能普攻與施法。⚠️ 擋不住位移技（dash／knockback 明文 ignores root）",
+    "moveSpeedMult": "減速／加速 —— 同一根軸的兩個方向（<1 減速、>1 加速）",
+    "missChance": "詛咒（失手）—— ⚠️ 讀的是**攻擊者**身上的狀態，方向與 evasion 相反；多來源取 MAX 不相加",
+    "berserk": "暴走 —— 失去操控權自己亂衝亂打。⚠️ 刻意**不**被免控擋"
+  },
+
+  "retiredTokens": [
+    {
+      "token": "onLevelUp",
+      "what": "升級時",
+      "why": "2026-08-05 從 enum 刪掉 —— 它從進 enum 那天起就零發射點，留著等於在下拉裡放一個「寫了什麼都不會發生」的選項"
+    },
+    {
+      "token": "onReflect",
+      "what": "反彈成功時",
+      "why": "2026-08-08 更名為 `onReflectSuccess`。⛔ 舊名今天寫下去會被 schema 拒絕"
+    },
+    {
+      "token": "onHealed",
+      "what": "被治療時／治療他人時",
+      "why": "詞彙表 v2 列為待建，⛔ 至今沒有做 —— 不要照著它設計卡片"
+    },
+    {
+      "token": "onEnterRange",
+      "what": "進入範圍時／離開範圍時",
+      "why": "同上，待建，未實作"
+    },
+    {
+      "token": "orbitingBody",
+      "what": "環繞衛星",
+      "why": "待建。summon 放得出身體但不會繞著誰轉；spawnProjectile 是直線一次性的"
+    },
+    {
+      "token": "silence",
+      "what": "沉默",
+      "why": "待建。applyStatus 的五根軸沒有一根管施法"
+    },
+    {
+      "token": "fear",
+      "what": "恐懼",
+      "why": "待建。berserk 的鏡像（移動方向從追敵變成逃離）"
+    },
+    {
+      "token": "mark",
+      "what": "標記（貼在敵人身上讓別人讀）",
+      "why": "貼那一半寫得出來；⛔ **讀**不行 —— comboBonus／bankedBonus 兩個讀取器都寫死讀 caster"
+    }
+  ],
+
+  "structuralFacts": [
+    {
+      "title": "殭屍身上吃不到 `applyBuff` / `grantAttribute`（`applyStatus` 可以）",
+      "assert": {
+        "file": "packages/shared/src/sim/mobs.ts",
+        "absent": "world.stats.set",
+        "reason": "owner 2026-08-04 裁決：建 StatusComp（A3a，已出貨）但**不建 StatsComp**（A3b/A3c 不做）。這一行一旦出現，下面整段就過期了"
+      },
+      "body": [
+        "`sim/mobs.ts` 建的是 `transform` / `health` / `nav` / `team` / `mob`（＋ boss 的 `flight`）",
+        "與 A3a 之後補的 `status`，⛔ **從不建 StatsComp**。後果逐條可驗：",
+        "",
+        "- `statPipeline.ts::attachSource` → `const sc = world.stats.get(id); if (!sc) return;` → **靜默跳過**",
+        "",
+        "所以任何改屬性的效果（破甲／破魔／破防／易傷／虛弱／凋零）對整波殭屍**一律零效果，",
+        "而且沒有任何錯誤訊息**。⛔ 卡片文案不可以承諾它在殭屍回合有用。",
+        "",
+        "⭐ 走自己 store 的四個**是有效的**，那就是要抄的形狀：",
+        "`taunt`(`world.taunt`) · `knockback`(`world.knockdown`) · `invulnerable`(`world.invulnerable`) ·",
+        "`dot`(`world.dot`，只要有 HealthComp)。",
+        "",
+        "⚠️ A3b 之所以被砍掉，是因為它比估的貴：`recomputeStats` 第一句就",
+        "`if (!sc || (!champ && !sm)) return;`，殭屍兩者都沒有 —— 那不是「惰性建立就好」，",
+        "是要教屬性管線認識**第三種身體**。"
+      ]
+    },
+    {
+      "title": "火圈不走傷害佇列 —— 所有「受傷／造成傷害」的觸發對它一次都不發",
+      "assert": {
+        "file": "packages/shared/src/sim/systems/FireRingSystem.ts",
+        "absent": "damageQueue",
+        "reason": "owner 2026-08-04 裁決 A1 不做（火圈不進傷害佇列）。它一旦進了佇列，下面三條就全部反過來"
+      },
+      "body": [
+        "`sim/fireRing.ts` 與 `systems/FireRingSystem.ts` 都是 `hp.hp -= dmg` **直接扣血**",
+        "＋ 發一個 `fireRingDamage` 事件，⛔ 完全不進 `world.damageQueue`。",
+        "",
+        "⛔ **這是永久事實，不是待補的缺口**（owner 2026-08-04 第二輪裁決）：",
+        "",
+        "1. 任何寫「受傷時 / 造成傷害時」的卡片，**在火圈裡不會觸發**。",
+        "2. `invulnerable.blocksTrueDamage` 對火圈**永遠無效** —— 「免疫真傷」的卡片在火圈裡",
+        "   **不會保護玩家**，文案要避開。",
+        "3. 未來的易傷／反彈也看不到火圈。"
+      ]
+    },
+    {
+      "title": "⛔ `ENTITY_FLAG` 的 16 顆 bit 已經用光 —— 「別人也看得到的狀態」今天沒有頻道",
+      "assert": {
+        "file": "packages/shared/src/protocol/schema.ts",
+        "present": "ENTITY_FLAG_FREE_BITS = [] as const",
+        "reason": "還有空位 bit 的話這一段就過期了 —— 而 formFlags.test.ts 也有一條在守同一件事"
+      },
+      "body": [
+        "- **好消息**：`statusIds` + `statusRemainTicks` 兩條平行陣列已經在線上，**逐座位只送自己的**",
+        "  → 任何新的 status 文件會自動出現在**自己的** HUD 上帶名字與倒數、**零接線**。",
+        "- **壞消息**：任何「**別人也看得到**」的狀態（敵人身上的破甲光環、隊友的冰凍外觀、",
+        "  頭上的標記）今天**沒有頻道**。",
+        "",
+        "⚠️ `defineTypes` 是 APPEND-ONLY，加錯回不去 —— 所以要上線的欄位得**合併成一次追加**。",
+        "⛔ 也不要「重用」看起來閒置的 bit：16 顆全都有意義，重用會讓線上的舊客戶端 desync，",
+        "而且**任何一處都不會報錯**。"
+      ]
+    },
+    {
+      "title": "三種「疊」是三件不同的事",
+      "body": [
+        "| 寫法 | 疊的是什麼 | 語意 |",
+        "|---|---|---|",
+        "| `applyStatus.stacks` | 狀態的**層數** | 加/減 N 層；`refresh` 決定續期是延長還是保留 |",
+        "| `applyBuff` **填** `stackKey` | **同一格**來源收合 | `pctMult` 變**線性**（3 層 ×10% = +30%） |",
+        "| `applyBuff` **不填** `stackKey` | 每次施加**各自一格**來源 | `pctMult` 變**複利** (1+v)^N |",
+        "",
+        "⚠️ 要複利就不要填 `stackKey`，要線性就填 —— 這是作者的選擇，不是引擎的限制。",
+        "⚠️ `ModOp.PercentMult` 乘 `stacks` 是**線性**的，⛔ 不是複利。"
+      ]
+    }
+  ]
+}

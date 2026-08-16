@@ -1,0 +1,1007 @@
+/**
+ * 產生《技能標記機制與效果規則說明》—— **完全從出貨的 schema + registry + 內容推導**。
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * ① 為什麼這一支必須存在（owner 2026-08-16）
+ *
+ *   「請你給我一張完整即時的技能標記機制與效果規則說明 md
+ *     這個檔案應該是由**真實使用的 JSON 動態產生**出來
+ *     並且**每次 deploy 都會重 build 避免多檔案內容不一致**」
+ *
+ * 這個 repo 現在有**六份**在講同一件事的文件，其中四份是手寫的：
+ *
+ *   | 檔 | 誰寫的 |
+ *   |---|---|
+ *   | `docs/editor-contract/ggd-runtime-capabilities.md` | ✅ `pnpm caps:export` |
+ *   | `docs/engine-atlas.json` / `.html`                 | ✅ `pnpm atlas` |
+ *   | `docs/效果標籤詞彙表v2.md`                          | ⛔ 手寫 |
+ *   | `docs/_status-effect-tag-vocabulary.md`            | ⛔ 手寫（自稱「資料來源：content/status-effects/*.json」） |
+ *   | `docs/技能編輯器引擎須知 20260811.md`               | ⛔ 手寫（自稱「指紋…對帳過」） |
+ *   | `skill-tag-manifest.json`                          | ⛔ 手寫（自稱 `generated:`） |
+ *
+ * ⚠️ 手寫檔宣稱自己有資料來源，正是 CLAUDE.md 第三守則點名的形狀：
+ * **「已驗證」「資料來源」「對帳過」這類宣稱本身不會過期，被它們描述的事實會。**
+ * `editorCapabilities.ts` 的檔頭已經記錄過同一族的兩次說謊（`knockback` 寫 false
+ * 但早就有了、`invulnerable` 整列漏掉），而那份表的結論逐字是：
+ * 「a flag defended by prose outlives the prose's expiry date and **nothing goes red**」。
+ *
+ * ② 這一份與 `caps:export` 的分工（⛔ 不是第二份能力清單）
+ *
+ *   · `ggd-runtime-capabilities.md` 回答「**這個名字存不存在**」——
+ *     一張 supported/unsupported 的勾選表，給外部編輯器 pin base 用。
+ *   · 這一份回答「**它怎麼用**」—— 每個 effect 有哪些參數、參數的上下界是多少、
+ *     每個 hook 什麼時候發、持有者是誰、target 是誰、出貨內容裡誰在用它。
+ *
+ *   兩者**共用同一個 `buildCapabilityManifest()`**，所以它們不可能互相矛盾：
+ *   名詞來自同一個推導，這裡只是多長出參數那一層。
+ *
+ * ③ ⛔ 刻意沒有時間戳（與 `tools/capability-export/export.ts` 同一個理由）
+ *
+ * 任何隨時鐘變動的欄位都會讓「重新產生 → 逐位元組比對」永遠不相等，於是 `--check`
+ * 只能被放寬成模糊比對，而**一條被放寬的閘等於沒有閘**。身分由 `fingerprint` 帶，
+ * 它只在引擎事實真的變了的時候變。
+ *
+ * ④ 「每次 deploy 都會重 build」落在哪裡
+ *
+ *   · `pnpm content:build` 會連帶跑這一支（root package.json）——
+ *     CLAUDE.md 規定每一次 `content/` 編輯都要跑它，所以內容一動文件就跟著動。
+ *   · `packages/shared/src/ops/skillSpecFresh.test.ts` 用 `--check` 真的把這支跑
+ *     起來（⛔ 不是掃字串）。文件過期 = `pnpm test` 紅 = 部署協定第 1 步就擋下來。
+ *
+ *   ⚠️ 刻意**不**在 `host-deploy.sh` 裡產生：那台機器是 `git pull` 來的，在遠端
+ *   產生文件只會造出一份沒有人 commit 的工作區漂移 —— 那正是 2026-08-02
+ *   「未追蹤來源被烘進產物」事故的形狀。閘要在**編輯發生的當下**響，不是在部署時。
+ *
+ * 用法：
+ *   npx tsx tools/skill-spec/gen_spec.ts            # 產生／更新
+ *   npx tsx tools/skill-spec/gen_spec.ts --check    # 過期就回非零（閘）
+ *   npx tsx tools/skill-spec/gen_spec.ts --out <路徑>
+ */
+import { readFileSync, readdirSync, writeFileSync, existsSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import { z } from "zod";
+
+import { buildCapabilityManifest } from "../../packages/shared/src/content/editorCapabilities";
+import { zEffectDef, zHookDef, SOURCE_GRANT_SHAPE } from "../../packages/shared/src/content/schema/effect";
+import { zAugmentDoc } from "../../packages/shared/src/content/schema/augment";
+import { zEffectCondition } from "../../packages/shared/src/content/schema/condition";
+import { zScaling } from "../../packages/shared/src/content/schema/common";
+import { Stat } from "../../packages/shared/src/sim/stats/statTypes";
+import { ModOp } from "../../packages/shared/src/sim/stats/modifiers";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO = resolve(HERE, "../..");
+
+export const DEFAULT_OUT = join(REPO, "docs/技能標記機制與效果規則.md");
+
+// ---------------------------------------------------------------------------
+// 手寫的那一半 —— `curated.json`，以及把它與引擎對帳的兩個方向
+// ---------------------------------------------------------------------------
+
+interface StructuralFact {
+  title: string;
+  body: string[];
+  /**
+   * 這條事實依賴的**引擎事實**。⭐ 沒有這一格的話，這一段就只是另一份會過期的散文
+   * ——`docs/效果標籤詞彙表v2.md` 寫著「今天真的存在的 kind 有 24 個」而引擎已經有
+   * 37 個，正是這個形狀。有了它，引擎一改，產生器就回非零並指名是哪一條。
+   */
+  assert?: { file: string; absent?: string; present?: string; reason: string };
+}
+
+interface Curated {
+  effectKinds: Record<string, string>;
+  hookEvents: Record<string, string>;
+  conditionLeaves: Record<string, string>;
+  statusAxes: Record<string, string>;
+  retiredTokens: { token: string; what: string; why: string }[];
+  structuralFacts: StructuralFact[];
+}
+
+export const CURATED_PATH = join(HERE, "curated.json");
+
+function loadCurated(): Curated {
+  return JSON.parse(readFileSync(CURATED_PATH, "utf8")) as Curated;
+}
+
+/**
+ * ⭐ **兩個方向都要關**（與 `editorCapabilities.test.ts` 同一個道理）：
+ *
+ *   · 手寫檔有、引擎沒有 → **回非零**。那是一份在說謊的詞彙表，而照著它設計的卡片
+ *     上線就是死的（`onLevelUp` 曾經在文件裡活了好幾個月，發射點是零）。
+ *   · 引擎有、手寫檔沒有 → **不擋，但要印在文件上**（「待命名」）。漏一個中文名不會
+ *     讓內容壞掉，但它必須看得見 —— 無聲才是缺陷（第二守則）。
+ */
+function reconcileLabels(
+  labels: Record<string, string>,
+  real: readonly string[],
+  what: string,
+): { unnamed: string[]; lies: string[] } {
+  const realSet = new Set(real);
+  const lies = Object.keys(labels).filter((t) => !realSet.has(t));
+  const unnamed = real.filter((t) => !(t in labels));
+  if (lies.length > 0) {
+    throw new Error(
+      `⛔ curated.json 的 ${what} 有 ${lies.length} 個引擎不認得的 token：${lies.join("、")}\n` +
+        `   它們要嘛打錯字，要嘛已經被刪／改名 —— 移到 retiredTokens，或修正拼字。\n` +
+        `   （一份會說謊的詞彙表比沒有詞彙表更糟：照著它做的內容上線就是死的。）`,
+    );
+  }
+  return { unnamed, lies };
+}
+
+/** 把 `structuralFacts[].assert` 拿去對真的原始碼跑一遍。 */
+function checkStructuralFact(f: StructuralFact): void {
+  if (!f.assert) return;
+  const p = join(REPO, f.assert.file);
+  if (!existsSync(p)) {
+    throw new Error(`⛔ 結構事實「${f.title}」指到一個不存在的檔：${f.assert.file}`);
+  }
+  const src = readFileSync(p, "utf8");
+  if (f.assert.absent !== undefined && src.includes(f.assert.absent)) {
+    throw new Error(
+      `⛔ 結構事實過期了：「${f.title}」\n` +
+        `   它成立的前提是 ${f.assert.file} 裡**沒有** \`${f.assert.absent}\`，而它現在有。\n` +
+        `   ${f.assert.reason}\n` +
+        `   → 改 tools/skill-spec/curated.json 的那一條，不要改這支程式。`,
+    );
+  }
+  if (f.assert.present !== undefined && !src.includes(f.assert.present)) {
+    throw new Error(
+      `⛔ 結構事實過期了：「${f.title}」\n` +
+        `   它成立的前提是 ${f.assert.file} 裡**有** \`${f.assert.present}\`，而它不見了。\n` +
+        `   ${f.assert.reason}\n` +
+        `   → 改 tools/skill-spec/curated.json 的那一條，不要改這支程式。`,
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// zod 內省 —— 把 schema 變成一張參數表
+// ---------------------------------------------------------------------------
+
+interface Field {
+  name: string;
+  type: string;
+  optional: boolean;
+  bounds: string;
+  desc: string;
+}
+
+type AnyDef = {
+  typeName?: string;
+  innerType?: z.ZodTypeAny;
+  schema?: z.ZodTypeAny;
+  type?: z.ZodTypeAny;
+  getter?: () => z.ZodTypeAny;
+  checks?: { kind: string; value?: number }[];
+  values?: string[];
+  value?: unknown;
+  options?: z.ZodTypeAny[];
+  shape?: () => Record<string, z.ZodTypeAny>;
+};
+
+/** 剝掉 optional / default / effects / lazy 這些包裝，同時記住有沒有 optional 與說明。 */
+function unwrap(s: z.ZodTypeAny): { inner: z.ZodTypeAny; optional: boolean; desc: string } {
+  let optional = false;
+  let desc = s.description ?? "";
+  let cur: z.ZodTypeAny = s;
+  for (let i = 0; i < 16; i++) {
+    const d = cur._def as AnyDef;
+    if (d.typeName === "ZodOptional" || d.typeName === "ZodNullable" || d.typeName === "ZodDefault") {
+      optional = true;
+      cur = d.innerType as z.ZodTypeAny;
+    } else if (d.typeName === "ZodEffects") {
+      cur = (d.schema ?? d.type) as z.ZodTypeAny;
+    } else if (d.typeName === "ZodLazy" && d.getter) {
+      cur = d.getter();
+    } else if (d.typeName === "ZodBranded" || d.typeName === "ZodReadonly") {
+      cur = (d.type ?? d.innerType) as z.ZodTypeAny;
+    } else break;
+    if (!desc) desc = cur.description ?? "";
+  }
+  return { inner: cur, optional, desc };
+}
+
+const TYPE_ZH: Record<string, string> = {
+  ZodString: "文字",
+  ZodNumber: "數字",
+  ZodBoolean: "是/否",
+  ZodArray: "陣列",
+  ZodObject: "物件",
+  ZodEnum: "列舉",
+  ZodNativeEnum: "列舉",
+  ZodLiteral: "固定值",
+  ZodUnion: "多選一",
+  ZodDiscriminatedUnion: "多選一",
+  ZodRecord: "字典",
+  ZodTuple: "定長陣列",
+  ZodAny: "任意",
+  ZodUnknown: "任意",
+};
+
+/**
+ * 被十幾個 effect kind 共用的形狀，只寫一次、其餘的指過去。
+ *
+ * ⚠️ 判準是**參照相等**（`=== zScaling`），⛔ 不是名字比對 —— 名字比對會在
+ * 有人複製貼上一個長得一樣但其實是另一個 schema 的時候安靜地說謊。
+ */
+const SHARED_SHAPES: readonly { schema: z.ZodTypeAny; label: string }[] = [
+  { schema: zScaling, label: "數值式（見 §2.4）" },
+];
+
+function typeLabel(s: z.ZodTypeAny): string {
+  for (const sh of SHARED_SHAPES) if (s === sh.schema) return sh.label;
+  const d = s._def as AnyDef;
+  const tn = d.typeName ?? "?";
+  if (tn === "ZodEnum" && d.values) return d.values.map((v) => `\`${v}\``).join(" / ");
+  if (tn === "ZodNativeEnum") {
+    const vals = Object.values((d as unknown as { values: Record<string, string> }).values ?? {});
+    return vals.map((v) => `\`${v}\``).join(" / ");
+  }
+  if (tn === "ZodLiteral") return `\`${String(d.value)}\``;
+  if (tn === "ZodArray") {
+    const el = unwrap((d as unknown as { type: z.ZodTypeAny }).type).inner;
+    for (const sh of SHARED_SHAPES) if (el === sh.schema) return `${sh.label}[]`;
+    const inner = (el._def as AnyDef).shape?.();
+    if (inner) return `物件[]：\`{ ${Object.keys(inner).join(", ")} }\``;
+    return `${TYPE_ZH[(el._def as AnyDef).typeName ?? ""] ?? "?"}[]`;
+  }
+  if (tn === "ZodObject") {
+    // 一層展開就夠：作者要的是「裡面有哪幾格」，完整細節在 schema 裡。
+    const inner = (d.shape?.() ?? {}) as Record<string, z.ZodTypeAny>;
+    const keys = Object.keys(inner);
+    if (keys.length > 0) return `物件：\`{ ${keys.join(", ")} }\``;
+  }
+  return TYPE_ZH[tn] ?? tn.replace(/^Zod/, "");
+}
+
+function boundsLabel(s: z.ZodTypeAny): string {
+  const d = s._def as AnyDef;
+  const isString = d.typeName === "ZodString";
+  const isArray = d.typeName === "ZodArray";
+  const unit = isString ? " 字" : isArray ? " 項" : "";
+  const parts: string[] = [];
+  let isInt = false;
+  for (const c of d.checks ?? []) {
+    if (c.kind === "int") isInt = true;
+    else if (c.kind === "min") parts.push(`≥ ${c.value}${unit}`);
+    else if (c.kind === "max") parts.push(`≤ ${c.value}${unit}`);
+  }
+  // 陣列的長度限制不在 `checks` 裡，住在 `minLength` / `maxLength`。
+  if (isArray) {
+    const a = d as unknown as { minLength?: { value: number }; maxLength?: { value: number } };
+    if (a.minLength) parts.push(`≥ ${a.minLength.value} 項`);
+    if (a.maxLength) parts.push(`≤ ${a.maxLength.value} 項`);
+  }
+  if (isInt) parts.unshift("整數");
+  return parts.join("、");
+}
+
+/** 一句話說明：吃 `.describe()`，切到第一個句號／換行，避免表格被撐爛。 */
+function oneLine(desc: string, max = 200): string {
+  const flat = desc.replace(/\s*\n\s*/g, " ").replace(/\|/g, "／").trim();
+  return flat.length > max ? `${flat.slice(0, max - 1)}…` : flat;
+}
+
+function fieldsOf(obj: z.ZodTypeAny, skip: readonly string[] = []): Field[] {
+  const shape = (unwrap(obj).inner._def as AnyDef).shape?.();
+  if (!shape) return [];
+  const out: Field[] = [];
+  for (const [name, raw] of Object.entries(shape)) {
+    if (skip.includes(name)) continue;
+    const u = unwrap(raw);
+    out.push({
+      name,
+      type: typeLabel(u.inner),
+      optional: u.optional,
+      bounds: boundsLabel(u.inner),
+      desc: oneLine(u.desc),
+    });
+  }
+  return out;
+}
+
+/** 把 `zEffectDef` 這種 discriminated union 拆成 kind → 欄位表。 */
+function unionArmsByKind(schema: z.ZodTypeAny): Map<string, z.ZodTypeAny> {
+  const root = unwrap(schema).inner;
+  const opts = (root._def as AnyDef).options ?? [];
+  const out = new Map<string, z.ZodTypeAny>();
+  for (const arm of opts) {
+    const a = unwrap(arm).inner;
+    const shape = (a._def as AnyDef).shape?.();
+    const kind = shape?.["kind"];
+    if (!kind) continue;
+    const lit = (unwrap(kind).inner._def as AnyDef).value;
+    if (typeof lit === "string") out.set(lit, a);
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// 從原始碼抽 hook 事件的語意（TSDoc 是唯一寫著「持有者是誰」的地方）
+// ---------------------------------------------------------------------------
+
+/** `modifiers.ts` 的 `HookEvent` 聯集：每個成員前面那段 `/** … *\/` 就是它的語意。 */
+function hookDocs(): Map<string, string> {
+  const src = readFileSync(join(REPO, "packages/shared/src/sim/stats/modifiers.ts"), "utf8");
+  const start = src.indexOf("export type HookEvent");
+  const end = src.indexOf('| "onStatusApplied";', start);
+  const seg = src.slice(start, end + 40);
+  const out = new Map<string, string>();
+  const re = /\/\*\*([\s\S]*?)\*\/\s*\|\s*"([A-Za-z]+)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(seg)) !== null) {
+    const body = m[1]!
+      .split("\n")
+      .map((l) => l.replace(/^\s*\*ce?\s?/, "").replace(/^\s*\*\s?/, "").trimEnd())
+      .join("\n")
+      .replace(/\{@link\s+([^}]+)\}/g, "`$1`")
+      .trim();
+    out.set(m[2]!, body);
+  }
+  return out;
+}
+
+/** `WorldHookSystem.ts` 的廣播表：scope 決定「這一則發給誰」。 */
+function worldHookScopes(): Map<string, { simEvent: string; scope: string }> {
+  const src = readFileSync(join(REPO, "packages/shared/src/sim/systems/WorldHookSystem.ts"), "utf8");
+  const out = new Map<string, { simEvent: string; scope: string }>();
+  const re = /simEvent:\s*"([A-Za-z]+)",\s*\n?\s*hook:\s*"([A-Za-z]+)",\s*\n?\s*scope:\s*"([a-z]+)"/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(src)) !== null) out.set(m[2]!, { simEvent: m[1]!, scope: m[3]! });
+  return out;
+}
+
+const SCOPE_ZH: Record<string, string> = {
+  world: "世界廣播（場上每一位活著的單位）",
+  actor: "當事人",
+  allies: "當事人的隊友",
+};
+
+/** 直接發（不經廣播表）的那幾個：從 `fireHooks(` 呼叫點掃出來。 */
+function directFireSites(): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith(".ts") && !e.name.includes(".test.")) {
+        const src = readFileSync(p, "utf8");
+        const re = /fireHooks\(\s*world,\s*[A-Za-z0-9_.]+,\s*"([A-Za-z]+)"/g;
+        let m: RegExpExecArray | null;
+        while ((m = re.exec(src)) !== null) {
+          const rel = p.slice(REPO.length + 1);
+          const list = out.get(m[1]!) ?? [];
+          if (!list.includes(rel)) list.push(rel);
+          out.set(m[1]!, list);
+        }
+      }
+    }
+  };
+  walk(join(REPO, "packages/shared/src/sim"));
+  for (const list of out.values()) list.sort();
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// 掃出貨內容 —— 「誰在用它」這一欄必須是量到的，不是我猜的
+// ---------------------------------------------------------------------------
+
+interface Slot {
+  docs: Set<string>;
+  hits: number;
+  /** 出貨內容裡真的存在的一個實例 —— 範例必須是**抄得動的**，所以不自己編。 */
+  example?: { doc: string; collection: string; json: unknown };
+}
+
+interface Usage {
+  /** effect kind → 用到它的文件數 */
+  effectKinds: Map<string, Slot>;
+  hookEvents: Map<string, Slot>;
+  conditionLeaves: Map<string, Slot>;
+  statusTags: Map<string, number>;
+  statuses: string[];
+  collections: Map<string, number>;
+  augments: { id: string; name: string; tier: string; weight: number; hooks: string[]; mods: number }[];
+}
+
+/** 集合的偏好順序：範例優先取增益卡（本文件的主要讀者），再來道具、技能。 */
+/** 900 字元以上的範例沒有人抄得動，寧可不給。 */
+const EXAMPLE_MAX_CHARS = 900;
+
+const EXAMPLE_RANK: Record<string, number> = { augments: 0, items: 1, abilities: 2, "ability-templates": 3 };
+
+/** 大小 —— 一個 200 行的範例沒有人抄得動，寧可換一個小的。 */
+function jsonSize(v: unknown): number {
+  return JSON.stringify(v)?.length ?? Infinity;
+}
+
+function scanContent(): Usage {
+  const u: Usage = {
+    effectKinds: new Map(),
+    hookEvents: new Map(),
+    conditionLeaves: new Map(),
+    statusTags: new Map(),
+    statuses: [],
+    collections: new Map(),
+    augments: [],
+  };
+  const root = join(REPO, "content");
+
+  /**
+   * ⚠️ `kind` 是**兩個**東西的判別欄：effect（`{kind:"damage"}`）與條件葉
+   * （`{kind:"stat", subject:…}`）。分辨它們的**不是**欄位名，是**位置** ——
+   * 條件只出現在 `condition` / `victimCondition` 底下。所以走訪要帶模式，
+   * ⛔ 不可以只看 `kind` 就記帳（第一版就是這樣，條件葉全部被記成 effect kind）。
+   */
+  const CONDITION_KEYS = ["condition", "victimCondition"];
+
+  const bump = (m: Map<string, Slot>, k: string, doc: string, collection: string, node: unknown): void => {
+    const e = m.get(k) ?? { docs: new Set<string>(), hits: 0 };
+    e.docs.add(doc);
+    e.hits += 1;
+    const rank = EXAMPLE_RANK[collection] ?? 9;
+    const curRank = e.example ? (EXAMPLE_RANK[e.example.collection] ?? 9) : 99;
+    const size = jsonSize(node);
+    if (!e.example || rank < curRank || (rank === curRank && size < jsonSize(e.example.json))) {
+      if (size <= EXAMPLE_MAX_CHARS) e.example = { doc, collection, json: node };
+    }
+    m.set(k, e);
+  };
+
+  const walkJson = (node: unknown, docId: string, collection: string, inCondition: boolean): void => {
+    if (Array.isArray(node)) {
+      for (const n of node) walkJson(n, docId, collection, inCondition);
+      return;
+    }
+    if (!node || typeof node !== "object") return;
+    const o = node as Record<string, unknown>;
+    if (typeof o["kind"] === "string") {
+      bump(inCondition ? u.conditionLeaves : u.effectKinds, o["kind"], docId, collection, o);
+    }
+    if (typeof o["on"] === "string" && Array.isArray(o["effects"])) bump(u.hookEvents, o["on"], docId, collection, o);
+    for (const [k, v] of Object.entries(o)) {
+      walkJson(v, docId, collection, inCondition || CONDITION_KEYS.includes(k));
+    }
+  };
+
+  const walkDir = (dir: string, collection: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        // ⛔ `_` 開頭的目錄（`_legacy`）不進出貨 bundle，把它算進「誰在用」會讓
+        // 一個早就退役的用法看起來還活著。
+        if (e.name.startsWith("_")) continue;
+        walkDir(p, collection === "" ? e.name : collection);
+        continue;
+      }
+      if (!e.name.endsWith(".json") || e.name === "_index.json") continue;
+      if (collection === "assets") continue;
+      // ⛔ `content/` 頂層的三個檔（`bundle.json` / `manifest.json` /
+      // `editor-target-profile.json`）是**產物**，而 `bundle.json` 把每一份文件都
+      // 內嵌了一次。把它們算進「誰在用」= 每個用量都被數兩遍，而且範例會指到一個
+      // 沒有人在編輯的檔。頂層檔的 collection 是空字串，這就是它們的判準。
+      if (collection === "") continue;
+      let doc: Record<string, unknown>;
+      try {
+        doc = JSON.parse(readFileSync(p, "utf8")) as Record<string, unknown>;
+      } catch {
+        continue;
+      }
+      const id = typeof doc["id"] === "string" ? doc["id"] : e.name.replace(/\.json$/, "");
+      u.collections.set(collection, (u.collections.get(collection) ?? 0) + 1);
+      walkJson(doc, id, collection, false);
+
+      if (collection === "status-effects") {
+        u.statuses.push(id);
+        for (const t of (doc["tags"] as string[] | undefined) ?? [])
+          u.statusTags.set(t, (u.statusTags.get(t) ?? 0) + 1);
+      }
+      if (collection === "augments") {
+        u.augments.push({
+          id,
+          name: String(doc["name"] ?? id),
+          tier: String(doc["tier"] ?? "?"),
+          weight: Number(doc["weight"] ?? 0),
+          hooks: ((doc["hooks"] as { on?: string }[] | undefined) ?? []).map((h) => String(h.on)),
+          mods: ((doc["modifiers"] as unknown[] | undefined) ?? []).length,
+        });
+      }
+    }
+  };
+  walkDir(root, "");
+  u.augments.sort((a, b) => a.tier.localeCompare(b.tier) || b.weight - a.weight);
+  return u;
+}
+
+// ---------------------------------------------------------------------------
+// 產生 Markdown
+// ---------------------------------------------------------------------------
+
+function fieldTable(fields: Field[]): string[] {
+  if (fields.length === 0) return ["（沒有參數）", ""];
+  const out = ["| 參數 | 型別 | 必填 | 範圍 | 說明 |", "|---|---|---|---|---|"];
+  for (const f of fields) {
+    out.push(
+      `| \`${f.name}\` | ${f.type} | ${f.optional ? "選填" : "**必填**"} | ${f.bounds || "—"} | ${f.desc || "—"} |`,
+    );
+  }
+  out.push("");
+  return out;
+}
+
+function usageCell(u: Slot | undefined): string {
+  if (!u) return "**0 份**（引擎有、內容沒人用）";
+  const sample = [...u.docs].sort().slice(0, 3).join("、");
+  return `${u.docs.size} 份（${sample}${u.docs.size > 3 ? " …" : ""}）`;
+}
+
+/**
+ * 出貨內容裡真的存在的一段 JSON。
+ *
+ * ⭐ 範例**一律從 `content/` 抄**，⛔ 不自己編 —— 一個手寫的範例只要 schema 動過
+ * 就會變成一段「照著抄會被拒絕」的程式碼，而它長得跟正確的一模一樣。
+ * 從出貨內容抄的範例有一條免費的保證：它今天真的通過驗證，因為它今天真的在跑。
+ */
+function exampleBlock(u: Slot | undefined): string[] {
+  if (!u?.example) return [];
+  const { doc: id, collection } = u.example;
+  return [
+    `<details><summary>出貨內容裡的實例 — \`content/${collection}/${id}.json\`</summary>`,
+    "",
+    "```json",
+    JSON.stringify(u.example.json, null, 2),
+    "```",
+    "",
+    "</details>",
+    "",
+  ];
+}
+
+export function buildSpecMarkdown(): string {
+  const man = buildCapabilityManifest();
+  const usage = scanContent();
+  const cur = loadCurated();
+  // ⭐ 兩個方向都跑，⛔ 而且在寫任何一行之前跑 —— 說謊的詞彙表不可以產出文件。
+  const unnamedEffects = reconcileLabels(cur.effectKinds, man.effectKinds, "effectKinds").unnamed;
+  const unnamedHooks = reconcileLabels(cur.hookEvents, man.hookEvents, "hookEvents").unnamed;
+  const unnamedLeaves = reconcileLabels(cur.conditionLeaves, man.conditionLeafKinds, "conditionLeaves").unnamed;
+  for (const f of cur.structuralFacts) checkStructuralFact(f);
+  const zh = (m: Record<string, string>, k: string): string => m[k] ?? "**待命名**";
+  const docs = hookDocs();
+  const scopes = worldHookScopes();
+  const direct = directFireSites();
+  const effects = unionArmsByKind(zEffectDef);
+
+  const L: string[] = [];
+  /** ⚠️ 要吃 `p(...lines)` —— 只收一個參數的版本會把每一張表截成只剩表頭。 */
+  const p = (...lines: string[]): void => void L.push(...(lines.length === 0 ? [""] : lines));
+
+  // ── 檔頭 ────────────────────────────────────────────────────────────
+  p("# GGD 技能標記機制與效果規則");
+  p();
+  p("> ⛔ **這份檔案是產生出來的，不要手改。**");
+  p(">");
+  p("> ```bash");
+  p("> pnpm spec:build      # 重新產生");
+  p("> pnpm spec:check      # 過期就回非零（`pnpm test` 會跑它）");
+  p("> ```");
+  p(">");
+  p("> 來源：出貨的 Zod schema（參數與上下界）＋ 出貨的註冊表（哪些機制真的有處理器）");
+  p("> ＋ `content/**/*.json`（誰在用它）。所以它**不可能**與引擎不一致 —— 不一致的那一刻");
+  p("> `skillSpecFresh.test.ts` 就會紅。");
+  p(">");
+  p(`> 引擎指紋 \`${man.schema} / ${man.fingerprint}\`。`);
+  p("> ⛔ 刻意沒有產生日期：任何隨時鐘變動的欄位都會讓逐位元組比對永遠不相等，");
+  p("> 於是 `--check` 只能被放寬成模糊比對，而一條被放寬的閘等於沒有閘。");
+  p();
+  p("## 這份與 `ggd-runtime-capabilities.md` 的分工");
+  p();
+  p("| 文件 | 回答什麼 | 給誰 |");
+  p("|---|---|---|");
+  p("| `docs/editor-contract/ggd-runtime-capabilities.md` | 「這個名字**存不存在**」—— supported / unsupported 勾選表 | 外部編輯器 pin base |");
+  p("| **本檔** | 「它**怎麼用**」—— 參數、上下界、觸發時機、持有者方向、誰在用 | 設計卡片／技能的人 |");
+  p();
+  p("兩者共用同一個 `buildCapabilityManifest()`，所以名詞那一層不可能互相矛盾。");
+  p();
+
+  // ── 1 總覽 ──────────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 1. 總覽");
+  p();
+  p("| 詞彙 | 引擎有 | 出貨內容用到 | 零使用 |");
+  p("|---|---:|---:|---:|");
+  const rowFor = (label: string, all: readonly string[], used: Map<string, { docs: Set<string> }>): void => {
+    const usedCount = all.filter((k) => used.has(k)).length;
+    p(`| ${label} | ${all.length} | ${usedCount} | **${all.length - usedCount}** |`);
+  };
+  rowFor("effect 種類", man.effectKinds, usage.effectKinds);
+  rowFor("hook 事件（觸發時機）", man.hookEvents, usage.hookEvents);
+  p(
+    `| 條件葉 | ${man.conditionLeafKinds.length} | ${man.conditionLeafKinds.filter((k) => usage.conditionLeaves.has(k)).length} | **${man.conditionLeafKinds.filter((k) => !usage.conditionLeaves.has(k)).length}** |`,
+  );
+  p(`| 屬性 \`Stat\` | ${Object.keys(Stat).length} | — | — |`);
+  p(`| 運算 \`ModOp\` | ${Object.keys(ModOp).length} | — | — |`);
+  p(`| 技能模板家族 | ${man.templateFamilies.length} | — | — |`);
+  p(`| 狀態效果文件 | ${usage.statuses.length} | — | — |`);
+  p(`| 狀態標籤（相異） | ${usage.statusTags.size} | — | — |`);
+  p();
+  p("**出貨內容規模**");
+  p();
+  p("| 集合 | 文件數 |");
+  p("|---|---:|");
+  for (const [c, n] of [...usage.collections].sort((a, b) => b[1] - a[1])) p(`| \`${c}\` | ${n} |`);
+  p();
+
+  // ── 2 屬性與運算 ────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 2. 屬性與運算 —— 一條 `modifier` 寫得出什麼");
+  p();
+  p("一條 modifier 的形狀固定是 `{ stat, op, value }`。");
+  p();
+  p("### 2.1 屬性 `stat`");
+  p();
+  p("| | | | |");
+  p("|---|---|---|---|");
+  const stats = Object.values(Stat);
+  for (let i = 0; i < stats.length; i += 4) {
+    p(`| ${stats.slice(i, i + 4).map((s) => `\`${s}\``).join(" | ")} |${"  |".repeat(Math.max(0, 4 - stats.slice(i, i + 4).length))}`);
+  }
+  p();
+  p("### 2.2 運算 `op`");
+  p();
+  p("| `op` | 意思 |");
+  p("|---|---|");
+  p("| `flat` | 直接加一個絕對值 |");
+  p("| `pctAdd` | 加進**同一個加法區**（兩份 +50% = +100%） |");
+  p("| `pctMult` | 自己一個**乘區**（兩份 +50% = ×2.25）。⚠️ 乘層數是**線性**的：3 層 ×10% = +30% |");
+  p("| `override` | 直接覆蓋掉 |");
+  p("| `capRaise` | 把這條屬性的**上限抬到** `value`。多來源取 max（5 和 7 給 7，不是 12） |");
+  p("| `percentOf` | 取另一條屬性／即時資源的百分比（要一起寫 `from` 或 `fromResource`） |");
+  p();
+  p("### 2.3 `modifier` 的完整欄位");
+  p();
+  p(...fieldTableOfStatModifier());
+  p();
+  p("### 2.4 數值式 —— 傷害／治療／護盾的「多少」怎麼寫");
+  p();
+  p("十幾個 effect 的 `amount` 都是這個形狀，所以只寫在這裡一次。");
+  p("四格可以**同時**存在，最後相加。");
+  p();
+  p(...fieldTable(fieldsOf(zScaling)));
+  p("```json");
+  p('{ "flat": 40, "ratios": [{ "stat": "ap", "coeff": 0.3 }] }   // 40 +（30% 法強）');
+  p("```");
+  p();
+
+  // ── 3 hook 事件 ─────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 3. 觸發時機 `hook` —— 什麼時候發、發給誰");
+  p();
+  p("⚠️ **方向是這一節最容易寫錯的東西。** 「持有者」是卡片／技能掛在誰身上，");
+  p("「target」是 hook 裡 `target: \"event\"` 指到的那個人。兩者在「別人對我做了什麼」");
+  p("這一族（被暈眩／被反彈／迴避成功／護盾被打破）是**反的**。");
+  p();
+  p("### 3.1 一覽");
+  p();
+  p("| 事件 | 中文 | 發給誰 | 出貨內容用量 |");
+  p("|---|---|---|---|");
+  for (const ev of man.hookEvents) {
+    const sc = scopes.get(ev);
+    const where = sc ? SCOPE_ZH[sc.scope] ?? sc.scope : direct.has(ev) ? "當事人（直接發射）" : "—";
+    p(`| \`${ev}\` | ${zh(cur.hookEvents, ev)} | ${where} | ${usageCell(usage.hookEvents.get(ev))} |`);
+  }
+  if (unnamedHooks.length > 0) p("", `⚠️ 還沒有中文名的：${unnamedHooks.map((t) => `\`${t}\``).join(" · ")}`);
+  p();
+  p("### 3.2 觸發器 `hook` 自己的欄位");
+  p();
+  p(...fieldTable(fieldsOf(zHookDef, ["effects"])));
+  p("`effects` = 這個時刻要跑的效果陣列，內容見第 5 節。");
+  p();
+  p("### 3.3 逐一");
+  p();
+  for (const ev of man.hookEvents) {
+    p(`#### \`${ev}\` —— ${zh(cur.hookEvents, ev)}`);
+    p();
+    const sc = scopes.get(ev);
+    if (sc) {
+      p(`- **發射點**：\`WorldHookSystem\` 廣播表，來源事件 \`${sc.simEvent}\`，作用域 **${SCOPE_ZH[sc.scope] ?? sc.scope}**`);
+    }
+    const d = direct.get(ev);
+    if (d && d.length > 0) p(`- **發射點**：${d.map((f) => `\`${f.replace("packages/shared/src/sim/", "")}\``).join("、")}`);
+    p(`- **出貨內容用量**：${usageCell(usage.hookEvents.get(ev))}`);
+    const doc = docs.get(ev);
+    if (doc) {
+      p();
+      for (const line of doc.split("\n")) p(line.startsWith("─") || line.trim() === "" ? "" : `> ${line}`);
+    }
+    p();
+    p(...exampleBlock(usage.hookEvents.get(ev)));
+  }
+
+  // ── 4 條件 ──────────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 4. 條件 —— 怎麼把一段效果關起來");
+  p();
+  p("條件可以掛在**觸發器**上（整條不跑）或掛在**單一 effect** 上（只有這一段不跑）。");
+  p();
+  p("| 條件葉 | 中文 | 出貨內容用量 |");
+  p("|---|---|---|");
+  for (const leaf of man.conditionLeafKinds)
+    p(`| \`${leaf}\` | ${zh(cur.conditionLeaves, leaf)} | ${usageCell(usage.conditionLeaves.get(leaf))} |`);
+  if (unnamedLeaves.length > 0) p("", `⚠️ 還沒有中文名的：${unnamedLeaves.map((t) => `\`${t}\``).join(" · ")}`);
+  p();
+  for (const leaf of man.conditionLeafKinds) {
+    const ex = exampleBlock(usage.conditionLeaves.get(leaf));
+    if (ex.length > 0) {
+      p(`**\`${leaf}\`**`);
+      p();
+      p(...ex);
+    }
+  }
+  p("**所有分支的欄位聯集**（有些能力是「既有葉子多一格」，只看葉子名會漏）：");
+  p();
+  p(man.conditionLeafFields.map((f) => `\`${f}\``).join(" · "));
+  p();
+  {
+    const f = fieldsOf(zEffectCondition);
+    if (f.length > 0) {
+      p("**條件根節點的欄位**");
+      p();
+      p(...fieldTable(f));
+    }
+  }
+
+  // ── 5 effect 種類 ───────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 5. Effect 種類 —— 每一種真的做得到什麼");
+  p();
+  p("下面每一種都**在出貨引擎裡有處理器**（清單由註冊表推導）。不在這張表上的名稱");
+  p("一律被拒絕，遊戲端回 `unsupported-runtime`。");
+  p();
+  p("`condition` 這一格每一種都有，語意一樣（見第 4 節），所以逐節不重複列。");
+  p();
+  for (const kind of [...effects.keys()].sort()) {
+    const arm = effects.get(kind)!;
+    p(`### \`${kind}\` —— ${zh(cur.effectKinds, kind)}`);
+    p();
+    p(`**出貨內容用量**：${usageCell(usage.effectKinds.get(kind))}`);
+    p();
+    p(...fieldTable(fieldsOf(arm, ["kind", "condition"])));
+    p(...exampleBlock(usage.effectKinds.get(kind)));
+  }
+
+  // ── 6 授權格 ────────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 6. 授權格 —— `modifiers` / `hooks` 以外還能給什麼");
+  p();
+  p("這幾格是**道具與三選一增益卡共用**的來源授權。它們解決的是同一個問題：");
+  p("「這一場每次攻擊 20% 機率 3 倍傷害」如果退化成加 `critChance` / `critDamage`");
+  p("兩條**聚合**屬性，會讓身上**每一次**暴擊都變那個倍率，而不是這張卡自己那一次。");
+  p();
+  for (const [name, schema] of Object.entries(SOURCE_GRANT_SHAPE)) {
+    p(`### \`${name}\``);
+    p();
+    const u = unwrap(schema as z.ZodTypeAny);
+    if (u.desc) p(`> ${oneLine(u.desc, 400)}`, "");
+    p(...fieldTable(fieldsOf(schema as z.ZodTypeAny)));
+  }
+
+  // ── 7 標記與狀態標籤 ────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 7. 標記、層數與狀態標籤");
+  p();
+  p("### 7.1 三種「疊」是三件不同的事");
+  p();
+  p("| 寫法 | 疊的是什麼 | 語意 |");
+  p("|---|---|---|");
+  p("| `applyStatus.stacks` | 狀態的**層數** | 加/減 N 層；`refresh` 決定續期是延長還是保留 |");
+  p("| `applyBuff.stackKey` | **同一格**來源收合 | 收合後 `pctMult` 是**線性**的（3 層 ×10% = +30%） |");
+  p("| `applyBuff` **不填** `stackKey` | 每次施加**各自一格**來源 | 於是 `pctMult` 變成複利 (1+v)^N |");
+  p();
+  p("⚠️ 要複利就不要填 `stackKey`，要線性就填 —— 這是作者的選擇，不是引擎的限制。");
+  p();
+  p(`### 7.2 狀態標籤詞彙（從 ${usage.statuses.length} 份 \`content/status-effects/*.json\` 的 \`tags\` 推導）`);
+  p();
+  p("條件葉 `status-tag` 選得到的就是這些。");
+  p();
+  p("| 標籤 | 幾份狀態帶它 |");
+  p("|---|---:|");
+  for (const [t, n] of [...usage.statusTags].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])))
+    p(`| \`${t}\` | ${n} |`);
+  p();
+  p("**所有狀態效果 id**");
+  p();
+  p([...usage.statuses].sort().map((s) => `\`${s}\``).join(" · "));
+  p();
+
+  // ── 7.3 狀態軸（applyStatus 的五根）+ 7.4 結構事實 ──────────────────
+  p("### 7.3 `applyStatus` 的五根軸");
+  p();
+  p("⚠️ 這五根是**全部** —— `applyStatus` 沒有屬性軸。要改屬性用 `applyBuff`。");
+  p();
+  p("| 軸 | 中文 | 說明 |");
+  p("|---|---|---|");
+  for (const [k, v] of Object.entries(cur.statusAxes)) {
+    const [name, ...rest] = v.split(" —— ");
+    p(`| \`${k}\` | ${name} | ${rest.join(" —— ") || "—"} |`);
+  }
+  p();
+
+  p("---");
+  p();
+  p("## 8. ⚠️ 會撞到的牆 —— 卡片寫得出來，但在這些情境裡不會發生");
+  p();
+  p("這一節是**推導不出來**的工程事實，所以它手寫在 `tools/skill-spec/curated.json`。");
+  p("⭐ 但每一條都帶一個**對原始碼跑的斷言** —— 引擎一改，`pnpm spec:build` 就回非零");
+  p("並指名是哪一條過期了。⛔ 它不會像散文那樣無聲地爛掉。");
+  p();
+  for (const f of cur.structuralFacts) {
+    p(`### ${f.title}`);
+    p();
+    p(...f.body);
+    p();
+    if (f.assert) {
+      const what = f.assert.absent !== undefined ? `**沒有** \`${f.assert.absent}\`` : `**有** \`${f.assert.present}\``;
+      p(`> 🔒 這一條由產生器盯著：\`${f.assert.file}\` 裡必須${what}。`);
+      p();
+    }
+  }
+
+  p("---");
+  p();
+  p("## 9. ⛔ 文件上出現過、但**引擎沒有**的名字");
+  p();
+  p("⚠️ 它們散落在舊版詞彙表裡，照著寫的 JSON 會被拒收或安靜地什麼都不做。");
+  p("留在這裡是因為**知識不可以無聲消失** —— 「考慮過、沒有做」本身是資訊。");
+  p();
+  p("| 名字 | 原本想做什麼 | 為什麼今天不能用 |");
+  p("|---|---|---|");
+  for (const r of cur.retiredTokens) p(`| \`${r.token}\` | ${r.what} | ${r.why} |`);
+  p();
+
+  // ── 8 模板家族 ──────────────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 10. 技能模板家族");
+  p();
+  p("模板 = 參數化的技能骨架，填參數就展開成一組 effect。清單由展開器本人過濾，");
+  p("所以不會宣稱一個展不開的家族。");
+  p();
+  p(man.templateFamilies.map((f) => `\`${f}\``).join(" · "));
+  p();
+
+  // ── 9 不可用 / 已知壞掉 ─────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 11. ⛔ 引擎會主動拒絕 / 會安靜收下的東西");
+  p();
+  p("### 11.1 `unsupported` —— 用了會被**明確拒絕**（回 `unsupported-runtime`）");
+  p();
+  p(man.unsupported.length === 0 ? "（目前沒有）" : man.unsupported.map((t) => `- \`${t}\``).join("\n"));
+  p();
+  p("### 11.2 ⛔ `knownBroken` —— 枚舉裡有、schema 收得下、**但會被安靜地收下然後什麼都不發生**");
+  p();
+  p("⚠️ 這一格比 11.1 危險：9.1 會報錯，這裡不會。設計卡片時把它們當成不存在。");
+  p();
+  if (man.knownBroken.length === 0) {
+    p("（目前沒有）");
+  } else {
+    p("| 名稱 | 壞在哪 | issue |");
+    p("|---|---|---|");
+    for (const b of man.knownBroken) p(`| \`${b.token}\` | ${oneLine(b.what)} | ${b.issue} |`);
+  }
+  p();
+
+  // ── 10 三選一增益卡附錄 ─────────────────────────────────────────────
+  p("---");
+  p();
+  p("## 12. 附錄：回合獎勵三選一（`augment@1`）");
+  p();
+  p("### 12.1 一張卡寫得出什麼");
+  p();
+  p(...fieldTable(fieldsOf(zAugmentDoc, ["schema"])));
+  p("⚠️ 增益卡是**抽到就掛**、沒有階級概念（建來源時不帶 rank），所以掛在卡上的");
+  p("hook payload 只讀得到 `perRank` 的第 1 欄。");
+  p();
+  p("### 12.2 出貨的卡現在長什麼樣");
+  p();
+  const byTier = new Map<string, typeof usage.augments>();
+  for (const a of usage.augments) {
+    const list = byTier.get(a.tier) ?? [];
+    list.push(a);
+    byTier.set(a.tier, list);
+  }
+  p("| 階級 | 張數 | 權重合計 | 純屬性（零觸發） | 有觸發 |");
+  p("|---|---:|---:|---:|---:|");
+  for (const tier of ["silver", "gold", "prismatic"]) {
+    const list = byTier.get(tier) ?? [];
+    const flat = list.filter((a) => a.hooks.length === 0).length;
+    p(`| ${tier} | ${list.length} | ${list.reduce((s, a) => s + a.weight, 0)} | ${flat} | ${list.length - flat} |`);
+  }
+  p();
+  p("| 階級 | id | 卡名 | 權重 | 觸發時機 | 屬性條數 |");
+  p("|---|---|---|---:|---|---:|");
+  for (const tier of ["silver", "gold", "prismatic"]) {
+    for (const a of byTier.get(tier) ?? [])
+      p(`| ${tier} | \`${a.id}\` | ${a.name} | ${a.weight} | ${a.hooks.length ? a.hooks.map((h) => `\`${h}\``).join("＋") : "—（常駐）"} | ${a.mods} |`);
+  }
+  p();
+  p("### 12.3 ⭐ 設計卡片時最該看的一格");
+  p();
+  {
+    const unusedHooks = man.hookEvents.filter((h) => !usage.hookEvents.has(h));
+    const augHooks = new Set(usage.augments.flatMap((a) => a.hooks));
+    const notInAugments = man.hookEvents.filter((h) => !augHooks.has(h));
+    p(`- 引擎有 **${man.hookEvents.length}** 個觸發時機，三選一增益卡只用了 **${augHooks.size}** 個。`);
+    p(`- 增益卡**完全沒用過**的 ${notInAugments.length} 個：${notInAugments.map((h) => `\`${h}\``).join(" · ")}`);
+    if (unusedHooks.length > 0)
+      p(`- 全出貨內容（含技能與道具）都沒用過的 ${unusedHooks.length} 個：${unusedHooks.map((h) => `\`${h}\``).join(" · ")}`);
+    const flat = usage.augments.filter((a) => a.hooks.length === 0).length;
+    p(
+      `- **${flat} / ${usage.augments.length} 張是零觸發的純屬性棒**（${Math.round((flat / Math.max(1, usage.augments.length)) * 100)}%）—— 這是「抽到也翻不了盤」的直接來源。`,
+    );
+  }
+  p();
+
+  return `${L.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd()}\n`;
+}
+
+/** `zStatModifier` 走的是 `.superRefine`，用固定表比內省穩，欄位語意也更好讀。 */
+function fieldTableOfStatModifier(): string[] {
+  return fieldTable([
+    { name: "stat", type: "列舉（見 2.1）", optional: false, bounds: "", desc: "改哪一條屬性" },
+    { name: "op", type: "列舉（見 2.2）", optional: false, bounds: "", desc: "怎麼改" },
+    { name: "value", type: "數字", optional: false, bounds: "", desc: "改多少。百分比寫小數（0.35 = 35%）" },
+    { name: "from", type: "列舉（見 2.1）", optional: true, bounds: "", desc: "`percentOf` 專用：取哪一條屬性的百分比" },
+    { name: "fromResource", type: "`hp` / `mp`", optional: true, bounds: "", desc: "`percentOf` 專用：取**即時**資源的百分比" },
+    { name: "scopeSlot", type: "技能格", optional: true, bounds: "", desc: "只對某一格技能生效" },
+    { name: "scopeAbilityId", type: "文字", optional: true, bounds: "≤ 64 字", desc: "只對某一支技能生效" },
+  ]);
+}
+
+// ---------------------------------------------------------------------------
+// CLI
+// ---------------------------------------------------------------------------
+
+function main(argv: readonly string[]): number {
+  const check = argv.includes("--check");
+  const outIdx = argv.indexOf("--out");
+  const out = outIdx >= 0 ? resolve(argv[outIdx + 1] ?? "") : DEFAULT_OUT;
+
+  const md = buildSpecMarkdown();
+
+  if (check) {
+    if (!existsSync(out)) {
+      process.stderr.write(`⛔ 技能規則說明還沒產生：${out}\n   跑 \`pnpm spec:build\`。\n`);
+      return 1;
+    }
+    const cur = readFileSync(out, "utf8");
+    if (cur !== md) {
+      process.stderr.write(
+        `⛔ ${out} 已經過期 —— 引擎的 schema／註冊表／內容改過了，但這份文件沒跟上。\n` +
+          `   跑 \`pnpm spec:build\` 然後 \`git add docs/\`。⛔ 不要改測試。\n`,
+      );
+      return 1;
+    }
+    process.stdout.write(`✅ 技能規則說明是最新的（${md.split("\n").length} 行）\n`);
+    return 0;
+  }
+
+  writeFileSync(out, md);
+  process.stdout.write(`✅ 寫出 ${out}（${md.split("\n").length} 行）\n`);
+  return 0;
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
+  process.exit(main(process.argv.slice(2)));
+}

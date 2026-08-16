@@ -4,9 +4,14 @@
  * inline on the effect; these docs give statuses a display identity (name,
  * icon, tags) and an existence check (soft ref — warn only).
  *
- * `tags` 是一個**開放**的分類集合（自由字串，不是固定選單）。出貨的詞彙、每個
- * 標籤的意思、以及逐份對照表寫在 `docs/_status-effect-tag-vocabulary.md` ——
- * 那一份是給**外部編輯器專案**看的，所以規則的說明住在那裡而不是這裡。
+ * `tags` 是一個**開放**的分類集合（自由字串，不是固定選單）。出貨的詞彙與逐份
+ * 對照表在 `docs/技能標記機制與效果規則.md` §7.2，而那一張表是**從這些文件的
+ * `tags` 欄位逐檔數出來的**（`pnpm spec:build`），⛔ 不是手抄的 ——
+ * 加一份新狀態，那張表自己會長出來。
+ *
+ * ⚠️ 舊的 `docs/_status-effect-tag-vocabulary.md` 已退役（2026-08-16）：它的檔頭
+ * 宣稱「資料來源：content/status-effects/*.json（27 份、78 個標籤）」，而那是一次
+ * 手抄 —— 實際已經是 29 份、82 個，沒有任何東西叫。
  */
 import { z } from "zod";
 import type { StatusId } from "../../ids";

@@ -571,6 +571,32 @@ hosted 頁面**可以累積成歷史紀錄**，同一份計畫改版時重發同
   而 §13.10 還貼著舊的，**沒有任何東西叫**。
   守衛：`packages/shared/src/ops/skillRemakeDocsFresh.test.ts`（真的把腳本用
   `--check` 跑起來，⛔ 不是掃字串）。它紅了不要改它，跑上面那行然後 `git add docs/`。
+- 📘 **「技能／增益卡的 JSON 能寫什麼」只有一份答案：`docs/技能標記機制與效果規則.md`**，
+  ⛔ 不可以手改（它是產生的）。owner 2026-08-16：
+
+  > 「這個檔案應該是由**真實使用的 JSON 動態產生**出來，
+  >  並且**每次 deploy 都會重 build 避免多檔案內容不一致**」
+
+  ```bash
+  pnpm spec:build      # 重新產生（`pnpm content:build` 已經連帶跑它）
+  ```
+
+  它從**三個真的東西**推導：出貨的 Zod schema（每個 effect 的參數與上下界）、
+  出貨的註冊表（哪些機制真的有處理器）、`content/**/*.json`（誰在用、範例抄哪一份）。
+  ⭐ **範例一律從 `content/` 抄，⛔ 不自己編** —— 手寫的範例只要 schema 動過就變成
+  一段「照著抄會被拒絕」的程式碼，而它長得跟正確的一模一樣。
+
+  分工：`docs/editor-contract/ggd-runtime-capabilities.md`（`pnpm caps:export`）
+  回答「**這個名字存不存在**」，這一份回答「**它怎麼用**」。兩者共用同一個
+  `buildCapabilityManifest()`，所以名詞那一層不可能互相矛盾。
+
+  ⚠️ **刻意沒有產生日期**（與 `caps:export` 同一個理由）：任何隨時鐘變動的欄位都會讓
+  逐位元組比對永遠不相等，於是 `--check` 只能被放寬成模糊比對 —— 而一條被放寬的閘
+  等於沒有閘。⛔ 也刻意**不**在 `host-deploy.sh` 產生：那台是 `git pull` 來的，
+  在遠端產生只會造出一份沒人 commit 的工作區漂移（＝2026-08-02 那次事故的形狀）。
+  閘要在**編輯發生的當下**響。
+  守衛：`packages/shared/src/ops/skillSpecFresh.test.ts`（真的跑 `--check`，
+  突變驗過：文件插一行 → 紅）。它紅了不要改它，跑 `pnpm spec:build` 然後 `git add docs/`。
 - **`pnpm -s typecheck | grep error` 結構上永遠不會 match**（`-s` 吞掉子專案輸出）。
   一律看離開碼：`pnpm typecheck; echo "EXIT=$?"`。
   ⚠️ 同一個陷阱有**三種變形**，三種都真的騙過人：
