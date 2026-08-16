@@ -259,5 +259,11 @@
   ],
   "exAbility": "godie-o00l.ex",
   "passiveAbility": "godie-o00l.passive",
-  "icon": "assets/icons/champions/godie-o00l.png"
+  "icon": "assets/icons/champions/godie-o00l.png",
+  "playstyle": [
+    "隱匿",
+    "穿梭",
+    "範圍爆發"
+  ],
+  "pitch": "隱藏自己等待窗口，突然切入敵陣，以高速移動與爆炸傷害完成刺殺。"
 }

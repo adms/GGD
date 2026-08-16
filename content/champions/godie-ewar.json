@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -59,18 +59,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        30.0,
-        57.0,
-        83.0,
-        90.0
+        30,
+        57,
+        83,
+        90
       ],
-      "range": 4.0,
+      "range": 4,
       "targetsEnemies": true,
       "effects": [
         {
@@ -78,10 +78,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              150.0,
-              283.0,
-              350.0,
-              350.0
+              150,
+              283,
+              350,
+              350
             ],
             "ratios": [
               {
@@ -94,7 +94,7 @@
         {
           "kind": "applyStatus",
           "statusId": "confusion",
-          "duration": 1.0,
+          "duration": 1,
           "berserk": true,
           "targetsAllies": true
         }
@@ -112,18 +112,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        200.0
+        50,
+        100,
+        150,
+        200
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -160,18 +160,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -201,7 +201,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -240,7 +240,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -279,7 +279,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -318,7 +318,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -347,16 +347,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        250.0,
-        350.0,
-        450.0
+        250,
+        350,
+        450
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -365,25 +365,25 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              550.0,
-              750.0,
-              950.0
+              550,
+              750,
+              950
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 2.0
+                "coeff": 2
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "includeOrigin": true
         },
         {
           "kind": "dispel",
           "shape": "circle",
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "side": "enemies",
           "pools": {
@@ -403,7 +403,7 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1.0,
+          1,
           0.92,
           0.6
         ],
@@ -439,17 +439,23 @@
       "rawcode": "A02W",
       "name": "12-03 破凰之心-徒手空破山",
       "durationSec": {
-        "1": 12.0,
-        "2": 18.0,
-        "3": 24.0,
-        "4": 30.0
+        "1": 12,
+        "2": 18,
+        "3": 24,
+        "4": 30
       },
       "cooldownSec": {
-        "1": 45.0,
-        "2": 45.0,
-        "3": 45.0,
-        "4": 45.0
+        "1": 45,
+        "2": 45,
+        "3": 45,
+        "4": 45
       }
     }
-  }
+  },
+  "playstyle": [
+    "普攻擴散",
+    "自療",
+    "近戰爆發"
+  ],
+  "pitch": "能打也能撐，強化普攻進行持續壓制，再以近身絕技完成擊殺。"
 }

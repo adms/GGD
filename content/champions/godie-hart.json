@@ -414,5 +414,11 @@
       }
     ]
   },
-  "icon": "assets/icons/champions/godie-hart.png"
+  "icon": "assets/icons/champions/godie-hart.png",
+  "playstyle": [
+    "切入",
+    "劍技",
+    "多段必殺"
+  ],
+  "pitch": "用劍技闖入戰局並建立壓力，抓到機會後以連續必殺完成擊殺。"
 }

@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        250.0,
-        300.0,
-        350.0,
-        400.0
+        250,
+        300,
+        350,
+        400
       ],
-      "range": 11.0,
+      "range": 11,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -81,15 +81,15 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              150.0,
-              300.0,
-              450.0,
-              600.0
+              150,
+              300,
+              450,
+              600
             ],
             "ratios": [
               {
                 "stat": "ad",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
@@ -117,18 +117,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -143,7 +143,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -151,7 +151,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "小"
                   }
                 ],
@@ -168,7 +168,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -176,7 +176,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "小"
                   }
                 ],
@@ -193,7 +193,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -201,7 +201,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "小"
                   }
                 ],
@@ -218,7 +218,7 @@
                     "kind": "damageArea",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 30.0,
+                      "flat": 30,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -226,7 +226,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "小"
                   }
                 ],
@@ -248,18 +248,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        100.0,
-        150.0,
-        150.0,
-        250.0
+        100,
+        150,
+        150,
+        250
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -267,7 +267,7 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 1.0
+            "flat": 1
           },
           "radius": 4.5,
           "radiusTier": "中",
@@ -300,16 +300,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "manaCost": [
-        240.0,
-        420.0,
-        600.0
+        240,
+        420,
+        600
       ],
-      "range": 14.0,
+      "range": 14,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -322,7 +322,7 @@
             8
           ],
           "intervalSec": 0.25,
-          "scatterRadius": 6.0,
+          "scatterRadius": 6,
           "firstAtCast": true,
           "stopOnCasterDeath": true,
           "effects": [
@@ -336,9 +336,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  250.0,
-                  350.0,
-                  450.0
+                  250,
+                  350,
+                  450
                 ],
                 "ratios": [
                   {
@@ -347,7 +347,7 @@
                   }
                 ]
               },
-              "radius": 3.0,
+              "radius": 3,
               "radiusTier": "小",
               "includeOrigin": true
             },
@@ -356,9 +356,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  250.0,
-                  350.0,
-                  450.0
+                  250,
+                  350,
+                  450
                 ],
                 "ratios": [
                   {
@@ -367,7 +367,7 @@
                   }
                 ]
               },
-              "radius": 3.0,
+              "radius": 3,
               "radiusTier": "小",
               "includeOrigin": true,
               "victimCondition": {
@@ -403,9 +403,9 @@
   "exAbility": "godie-e00s.ex",
   "passiveAbility": "godie-e00s.passive",
   "tint": [
-    1.0,
+    1,
     0.7843,
-    1.0
+    1
   ],
   "transform": {
     "role": "base",
@@ -416,8 +416,15 @@
       "rawcode": "A0O6",
       "name": "70-00 紮根",
       "cooldownSec": {
-        "1": 15.0
+        "1": 15
       }
     }
-  }
+  },
+  "playstyle": [
+    "守點",
+    "綁人",
+    "回復",
+    "紮根"
+  ],
+  "pitch": "移動時保護隊友，需要固守時紮根化身堡壘，以控制與遠程投石守住陣地。"
 }

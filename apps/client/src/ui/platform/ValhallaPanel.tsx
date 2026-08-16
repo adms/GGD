@@ -78,6 +78,7 @@ import { StorePreviewCanvas, type PreviewStatus } from "./StorePreviewCanvas";
 import { IconImg } from "../components/IconImg";
 import { championIconUrl } from "../icons";
 import { attackTypeLabel } from "../codex/codexLabels";
+import { pitchTooltipForChampion, PITCH_ACCENT } from "../panels/champselect/pitchTooltip";
 import { useLobbyCombatEnv } from "./lobbyCombatEnv";
 import { Panel, ACCENT } from "./widgets";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -490,6 +491,9 @@ export function ValhallaPanel({
   const story = sections.story ?? (sections.hasSections ? "" : (championDescription(def) ?? ""));
   const blurb = story || display.blurb;
   const rows = skillRows(champSelectSkillSeat(def));
+  // ⭐ 選角簡短介紹（owner 2026-08-16「包含英靈殿」）。⛔ 是**多加**的一段，
+  //   上面的 `blurb`（w3x 故事）與 `attackType · 技能格數` 一個字都沒動。
+  const pitchTip = pitchTooltipForChampion(def);
   const strip = layout.mode === "strip" && !expanded;
   const stageHeight = layout.mode === "strip" ? VALHALLA_EXPANDED_STAGE : layout.stageHeight;
   // ~3 lines of 11.5px/1.6 prose, never more than a third of the detail budget
@@ -588,6 +592,23 @@ export function ValhallaPanel({
       {!strip && (
         <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 2 }}>
           {attackTypeLabel(def.attackType)} · {rows.length} 個技能格
+        </div>
+      )}
+      {/* ⭐ 選角簡短介紹（owner 2026-08-16「包含英靈殿」）。
+          ⛔ **加在上面那一行底下，不取代它** —— 兩者說的不是同一件事：
+          上面是 `attackType`（投射物 vs 近身揮擊）+ 技能格數，
+          這裡是**出身 × 距離量級**加上 owner 手寫的玩法意圖。
+          ⚠️ 出貨資料裡有 10 位兩者「看起來矛盾」（藏馬近戰揮擊卻是遠程 8.2）——
+          那是刻意的，⛔ 不要為了讓兩行一致去改任何一邊。 */}
+      {!strip && pitchTip !== null && !pitchTip.empty && (
+        <div style={{ marginTop: 4, display: "flex", flexDirection: "column", gap: 2 }}>
+          <div style={{ fontSize: 11, color: PITCH_ACCENT, fontWeight: 600 }}>
+            {pitchTip.headlineTail}
+            {pitchTip.playstyleLine && ` · ${pitchTip.playstyleLine}`}
+          </div>
+          {pitchTip.pitch && (
+            <div style={{ fontSize: 11, color: "#c8d0e0", lineHeight: 1.5 }}>{pitchTip.pitch}</div>
+          )}
         </div>
       )}
     </div>

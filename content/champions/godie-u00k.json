@@ -259,5 +259,11 @@
     "magic"
   ],
   "exAbility": "godie-u00k.ex",
-  "passiveAbility": "godie-u00k.passive"
+  "passiveAbility": "godie-u00k.passive",
+  "playstyle": [
+    "資源累積",
+    "吸魔",
+    "資源兌現"
+  ],
+  "pitch": "先透過戰鬥累積資源與狀態，再把累積成果一次轉換成巨大輸出。"
 }

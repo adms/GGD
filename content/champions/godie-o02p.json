@@ -246,5 +246,11 @@
   ],
   "exAbility": "godie-o02p.ex",
   "passiveAbility": "godie-o02p.passive",
-  "icon": "assets/icons/champions/godie-o02p.png"
+  "icon": "assets/icons/champions/godie-o02p.png",
+  "playstyle": [
+    "治療",
+    "靈氣",
+    "團隊增益"
+  ],
+  "pitch": "跟著隊伍行動，以治療與強化持續提高全隊戰力，自己活著就是團隊優勢。"
 }

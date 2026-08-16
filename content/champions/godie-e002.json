@@ -59,18 +59,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -126,18 +126,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        200.0
+        50,
+        100,
+        150,
+        200
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -154,7 +154,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1.0
+                "value": 1
               },
               {
                 "stat": "critDamage",
@@ -170,7 +170,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10.0,
+                      "flat": 10,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -198,7 +198,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1.0
+                "value": 1
               },
               {
                 "stat": "critDamage",
@@ -214,7 +214,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10.0,
+                      "flat": 10,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -242,7 +242,7 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1.0
+                "value": 1
               },
               {
                 "stat": "critDamage",
@@ -258,7 +258,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10.0,
+                      "flat": 10,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -286,12 +286,12 @@
               {
                 "stat": "critChance",
                 "op": "flat",
-                "value": 1.0
+                "value": 1
               },
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2.0
+                "value": 2
               }
             ],
             "hooks": [
@@ -302,7 +302,7 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 10.0,
+                      "flat": 10,
                       "ratios": [
                         {
                           "stat": "ad",
@@ -343,7 +343,7 @@
             "kind": "damageArea",
             "damageType": "magic",
             "amount": {
-              "flat": 120.0,
+              "flat": 120,
               "ratios": [
                 {
                   "stat": "ap",
@@ -369,18 +369,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        250.0,
-        350.0,
-        450.0,
-        550.0
+        250,
+        350,
+        450,
+        550
       ],
-      "range": 14.0,
+      "range": 14,
       "targetsEnemies": true,
       "effects": [
         {
@@ -388,20 +388,20 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              350.0,
-              550.0,
-              750.0,
-              950.0
+              350,
+              550,
+              750,
+              950
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           },
           "length": 14,
-          "width": 2.0,
+          "width": 2,
           "aim": "target",
           "fromCaster": true,
           "includeOrigin": true
@@ -439,22 +439,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        250.0,
-        350.0
+        150,
+        250,
+        350
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "applyBuff",
           "modifiers": [],
-          "duration": 2.0,
+          "duration": 2,
           "hooks": [
             {
               "on": "onDamageTaken",
@@ -463,19 +463,19 @@
                   "kind": "damage",
                   "damageType": "magic",
                   "amount": {
-                    "flat": 0.0,
+                    "flat": 0,
                     "ratios": [
                       {
                         "stat": "ap",
-                        "coeff": 3.0
+                        "coeff": 3
                       }
                     ]
                   },
                   "incomingPct": {
                     "perRank": [
-                      3.0,
-                      5.0,
-                      7.0
+                      3,
+                      5,
+                      7
                     ],
                     "negateOriginal": true
                   }
@@ -519,5 +519,11 @@
       "rawcode": "A0DZ",
       "name": "20-01 風王結界"
     }
-  }
+  },
+  "playstyle": [
+    "魔力管理",
+    "普攻強化",
+    "反擊"
+  ],
+  "pitch": "把魔力轉成普攻戰力，同時管理資源，在進攻、反擊與必殺之間做選擇。"
 }

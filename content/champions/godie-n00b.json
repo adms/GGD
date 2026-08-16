@@ -244,5 +244,12 @@
     "voxel-standin"
   ],
   "exAbility": "godie-n00b.ex",
-  "passiveAbility": "godie-n00b.passive"
+  "passiveAbility": "godie-n00b.passive",
+  "playstyle": [
+    "功能支援",
+    "道具",
+    "救援",
+    "控場"
+  ],
+  "pitch": "不靠自己殺人，而是利用各種功能手段解決問題，適合喜歡臨場應變的玩家。"
 }

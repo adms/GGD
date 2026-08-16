@@ -18,7 +18,7 @@
     "armor": 0,
     "mr": 28,
     "as": 0.5,
-    "ms": 6.0,
+    "ms": 6,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        50.0,
-        50.0
+        45,
+        45,
+        45,
+        50,
+        50
       ],
       "manaCost": [
-        85.0,
-        115.0,
-        145.0,
-        275.0,
-        275.0
+        85,
+        115,
+        145,
+        275,
+        275
       ],
       "range": 11.92,
       "effects": [
@@ -89,11 +89,11 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0,
-              650.0
+              250,
+              350,
+              450,
+              550,
+              650
             ],
             "ratios": [
               {
@@ -119,18 +119,18 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        75.0,
-        125.0,
-        175.0,
-        175.0,
-        175.0
+        75,
+        125,
+        175,
+        175,
+        175
       ],
       "range": 8.25,
       "effects": [
@@ -163,7 +163,7 @@
       "vfxKey": "godie-fireblast-p3",
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.633,
       "hitFeel": {
         "hitstopTicks": 3,
@@ -172,7 +172,7 @@
         "shakeStyle": "omni",
         "sparkKind": "heavy",
         "flashColor": [
-          1.0,
+          1,
           0.66,
           0.3
         ],
@@ -190,18 +190,18 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        215.0,
-        300.0,
-        385.0,
-        470.0
+        215,
+        300,
+        385,
+        470
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
@@ -250,14 +250,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        100.0,
-        200.0,
-        300.0
+        100,
+        200,
+        300
       ],
       "range": 0,
       "effects": [],
@@ -271,7 +271,7 @@
         "shakeStyle": "directional",
         "sparkKind": "heavy",
         "flashColor": [
-          1.0,
+          1,
           0.6,
           0.26
         ],
@@ -326,11 +326,16 @@
       "rawcode": "A0OH",
       "name": "38-00 邪眼全開",
       "durationSec": {
-        "1": 10.0
+        "1": 10
       },
       "cooldownSec": {
-        "1": 60.0
+        "1": 60
       }
     }
-  }
+  },
+  "playstyle": [
+    "高速切入",
+    "短時爆發"
+  ],
+  "pitch": "利用高速位移突然進場，把傷害集中在短時間內，殺完就走。"
 }

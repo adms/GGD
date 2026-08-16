@@ -249,5 +249,12 @@
   ],
   "exAbility": "godie-hvsh.ex",
   "passiveAbility": "godie-hvsh.passive",
-  "icon": "assets/icons/champions/godie-hvsh.png"
+  "icon": "assets/icons/champions/godie-hvsh.png",
+  "playstyle": [
+    "拉人",
+    "控制",
+    "突進",
+    "續戰"
+  ],
+  "pitch": "把敵人拉進自己的戰鬥距離，再靠控制與持續技能纏住目標。"
 }

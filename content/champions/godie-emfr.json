@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -60,16 +60,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        175.0,
-        275.0,
-        375.0,
-        475.0
+        175,
+        275,
+        375,
+        475
       ],
       "range": 6.42,
       "targetsEnemies": true,
@@ -79,10 +79,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0
+              250,
+              350,
+              450,
+              550
             ],
             "ratios": [
               {
@@ -100,7 +100,7 @@
             {
               "kind": "applyStatus",
               "statusId": "slow40",
-              "duration": 1.0,
+              "duration": 1,
               "moveSpeedMult": 0.5
             }
           ]
@@ -119,18 +119,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        120.0,
-        180.0,
-        240.0,
-        300.0
+        120,
+        180,
+        240,
+        300
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -147,7 +147,7 @@
               "value": 0.3
             }
           ],
-          "duration": 12.0,
+          "duration": 12,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -163,7 +163,7 @@
                   "value": 0.3
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -178,7 +178,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -193,7 +193,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -208,7 +208,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             }
           ],
           "hooks": [
@@ -220,10 +220,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      30.0,
-                      45.0,
-                      60.0,
-                      75.0
+                      30,
+                      45,
+                      60,
+                      75
                     ],
                     "ratios": [
                       {
@@ -253,18 +253,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        55.0,
-        55.0,
-        55.0,
-        55.0
+        55,
+        55,
+        55,
+        55
       ],
       "manaCost": [
-        180.0,
-        260.0,
-        340.0,
-        420.0
+        180,
+        260,
+        340,
+        420
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -276,7 +276,7 @@
               "value": -0.5
             }
           ],
-          "duration": 12.0,
+          "duration": 12,
           "exclusiveGroup": "emfr-form",
           "hooks": [
             {
@@ -287,10 +287,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      60.0,
-                      90.0,
-                      120.0,
-                      150.0
+                      60,
+                      90,
+                      120,
+                      150
                     ],
                     "ratios": [
                       {
@@ -311,10 +311,10 @@
                   "damageType": "magic",
                   "amount": {
                     "perRank": [
-                      100.0,
-                      150.0,
-                      200.0,
-                      250.0
+                      100,
+                      150,
+                      200,
+                      250
                     ],
                     "ratios": [
                       {
@@ -329,7 +329,7 @@
                 {
                   "kind": "applyStatus",
                   "statusId": "burn",
-                  "duration": 3.0
+                  "duration": 3
                 }
               ],
               "target": "event",
@@ -351,16 +351,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        200.0,
-        400.0,
-        600.0
+        200,
+        400,
+        600
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -369,20 +369,20 @@
             {
               "stat": "ms",
               "op": "pctMult",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             },
             {
               "stat": "as",
               "op": "capRaise",
-              "value": 10.0
+              "value": 10
             }
           ],
-          "duration": 12.0,
+          "duration": 12,
           "exclusiveGroup": "emfr-form",
           "perRank": [
             {
@@ -390,27 +390,27 @@
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1.0
+                  "value": 1
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 1.0
+                  "value": 1
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10.0
+                  "value": 10
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1.0
+                  "value": 1
                 },
                 {
                   "stat": "as",
@@ -420,30 +420,30 @@
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10.0
+                  "value": 10
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctMult",
-                  "value": 1.0
+                  "value": 1
                 },
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 2.0
+                  "value": 2
                 },
                 {
                   "stat": "as",
                   "op": "capRaise",
-                  "value": 10.0
+                  "value": 10
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             }
           ],
           "hooks": [
@@ -453,7 +453,7 @@
                 {
                   "kind": "applyBuff",
                   "modifiers": [],
-                  "duration": 3.0,
+                  "duration": 3,
                   "stackKey": "emfr-thunder-arm",
                   "maxStacks": 1,
                   "hooks": [
@@ -465,9 +465,9 @@
                           "damageType": "magic",
                           "amount": {
                             "perRank": [
-                              150.0,
-                              225.0,
-                              300.0
+                              150,
+                              225,
+                              300
                             ],
                             "ratios": [
                               {
@@ -518,5 +518,11 @@
   ],
   "exAbility": "godie-emfr.ex",
   "passiveAbility": "godie-emfr.passive",
-  "icon": "assets/icons/champions/godie-emfr.png"
+  "icon": "assets/icons/champions/godie-emfr.png",
+  "playstyle": [
+    "高回復",
+    "變身",
+    "高攻速"
+  ],
+  "pitch": "先撐過戰鬥，再透過變身把攻速與近戰能力推高，持續追擊直到敵人倒下。"
 }

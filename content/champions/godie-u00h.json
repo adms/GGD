@@ -18,7 +18,7 @@
     "armor": 0,
     "mr": 28,
     "as": 0.5,
-    "ms": 6.0,
+    "ms": 6,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        35.0,
-        55.0,
-        55.0,
-        95.0,
-        95.0
+        35,
+        55,
+        55,
+        95,
+        95
       ],
       "range": 9.17,
       "effects": [
@@ -81,11 +81,11 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              75.0,
-              175.0,
-              250.0,
-              325.0,
-              325.0
+              75,
+              175,
+              250,
+              325,
+              325
             ],
             "ratios": [
               {
@@ -98,7 +98,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow25",
-          "duration": 1.0,
+          "duration": 1,
           "moveSpeedMult": 0.6
         }
       ],
@@ -115,16 +115,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        50.0,
-        50.0,
-        50.0,
-        50.0
+        50,
+        50,
+        50,
+        50
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        50,
+        80,
+        110,
+        140
       ],
       "range": 9.17,
       "effects": [],
@@ -166,18 +166,18 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        215.0,
-        245.0,
-        275.0,
-        305.0
+        215,
+        245,
+        275,
+        305
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -188,10 +188,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  350.0,
-                  450.0,
-                  550.0,
-                  650.0
+                  350,
+                  450,
+                  550,
+                  650
                 ]
               }
             },
@@ -218,21 +218,21 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        175.0,
-        275.0,
-        375.0
+        175,
+        275,
+        375
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.tornado-lg",
       "sfxKey": "wc3.dragonyes2",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.8,
       "template": {
         "ref": "tpl-proxy-cast",
@@ -277,5 +277,11 @@
   ],
   "exAbility": "godie-u00h.ex",
   "passiveAbility": "godie-u00h.passive",
-  "icon": "assets/icons/champions/godie-u00h.png"
+  "icon": "assets/icons/champions/godie-u00h.png",
+  "playstyle": [
+    "多段劍技",
+    "擊退",
+    "連招"
+  ],
+  "pitch": "用不同劍技調整敵人位置，再把對手逼入自己的連招與必殺範圍。"
 }

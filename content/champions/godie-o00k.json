@@ -254,5 +254,10 @@
   ],
   "exAbility": "godie-o00k.ex",
   "passiveAbility": "godie-o00k.passive",
-  "icon": "assets/icons/champions/godie-o00k.png"
+  "icon": "assets/icons/champions/godie-o00k.png",
+  "playstyle": [
+    "高速進場",
+    "電擊爆發"
+  ],
+  "pitch": "靠速度搶先進入殺人距離，用一輪電系爆發迅速處理脆弱目標。"
 }

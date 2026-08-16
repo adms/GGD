@@ -280,5 +280,11 @@
   ],
   "exAbility": "godie-emns.ex",
   "passiveAbility": "godie-emns.passive",
-  "icon": "assets/icons/champions/godie-emns.png"
+  "icon": "assets/icons/champions/godie-emns.png",
+  "playstyle": [
+    "條件施法",
+    "控制",
+    "處決"
+  ],
+  "pitch": "先建立技能條件與資訊優勢，再選擇最有價值的目標進行處決。"
 }

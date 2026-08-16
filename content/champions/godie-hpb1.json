@@ -310,5 +310,11 @@
   ],
   "exAbility": "godie-hpb1.ex",
   "passiveAbility": "godie-hpb1.passive",
-  "icon": "assets/icons/champions/godie-hpb1.png"
+  "icon": "assets/icons/champions/godie-hpb1.png",
+  "playstyle": [
+    "連段",
+    "斬殺",
+    "擊殺回血"
+  ],
+  "pitch": "持續追著敵人打，完成擊殺後回復生命，再直接轉向下一個目標。"
 }

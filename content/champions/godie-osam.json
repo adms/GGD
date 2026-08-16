@@ -246,5 +246,11 @@
   ],
   "exAbility": "godie-osam.ex",
   "passiveAbility": "godie-osam.passive",
-  "icon": "assets/icons/champions/godie-osam.png"
+  "icon": "assets/icons/champions/godie-osam.png",
+  "playstyle": [
+    "劍技",
+    "持續壓制",
+    "正面纏鬥"
+  ],
+  "pitch": "用穩定普攻與劍技持續施壓，適合喜歡直接正面作戰的玩家。"
 }

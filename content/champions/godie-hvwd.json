@@ -255,5 +255,12 @@
   ],
   "exAbility": "godie-hvwd.ex",
   "passiveAbility": "godie-hvwd.passive",
-  "icon": "assets/icons/champions/godie-hvwd.png"
+  "icon": "assets/icons/champions/godie-hvwd.png",
+  "playstyle": [
+    "普攻",
+    "法球",
+    "消魔",
+    "終結射擊"
+  ],
+  "pitch": "持續用弓箭與法球壓低敵人狀態，再利用強力射擊完成收頭。"
 }

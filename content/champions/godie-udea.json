@@ -241,5 +241,12 @@
     "sword"
   ],
   "exAbility": "godie-udea.ex",
-  "passiveAbility": "godie-udea.passive"
+  "passiveAbility": "godie-udea.passive",
+  "playstyle": [
+    "瞬移",
+    "冰劍",
+    "魔力操作",
+    "反擊"
+  ],
+  "pitch": "利用瞬移選擇戰鬥位置，用劍與魔法破壞敵方資源，再靠反擊懲罰還手。"
 }

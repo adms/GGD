@@ -338,5 +338,11 @@
     "magic"
   ],
   "exAbility": "godie-efur.ex",
-  "passiveAbility": "godie-efur.passive"
+  "passiveAbility": "godie-efur.passive",
+  "playstyle": [
+    "攻速",
+    "暗殺",
+    "追擊"
+  ],
+  "pitch": "高速貼住指定目標，以密集攻擊迅速解決敵人，再尋找下一個獵物。"
 }

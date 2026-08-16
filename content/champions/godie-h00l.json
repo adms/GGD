@@ -60,18 +60,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        100.0,
-        150.0,
-        200.0,
-        250.0
+        100,
+        150,
+        200,
+        250
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "中",
       "targetsEnemies": true,
       "effects": [
@@ -80,10 +80,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              150.0,
-              250.0,
-              350.0,
-              450.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
@@ -98,8 +98,8 @@
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ]
@@ -119,38 +119,38 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        50.0,
-        75.0,
-        100.0,
-        125.0
+        50,
+        75,
+        100,
+        125
       ],
-      "range": 11.0,
+      "range": 11,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "leap",
           "applyTo": "self",
           "mode": "toPoint",
-          "apexHeight": 0.0,
+          "apexHeight": 0,
           "durationSec": 0.4,
-          "throwDistance": 11.0,
-          "landRadius": 3.0,
+          "throwDistance": 11,
+          "landRadius": 3,
           "onLand": [
             {
               "kind": "damage",
               "damageType": "physical",
               "amount": {
                 "perRank": [
-                  150.0,
-                  250.0,
-                  350.0,
-                  450.0
+                  150,
+                  250,
+                  350,
+                  450
                 ]
               }
             }
@@ -171,18 +171,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -202,7 +202,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -227,7 +227,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -255,7 +255,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -280,7 +280,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -308,7 +308,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -333,7 +333,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -361,7 +361,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": 1,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -386,7 +386,7 @@
                     "kind": "applyStatus",
                     "statusId": "triforce-courage",
                     "stacks": -3,
-                    "duration": 60.0,
+                    "duration": 60,
                     "applyTo": "self"
                   }
                 ],
@@ -414,22 +414,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        120.0,
-        150.0,
-        180.0
+        120,
+        150,
+        180
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "applyBuff",
           "modifiers": [],
-          "duration": 3.0,
+          "duration": 3,
           "hooks": [
             {
               "on": "onDamageTaken",
@@ -438,11 +438,11 @@
                   "kind": "damage",
                   "damageType": "magic",
                   "amount": {
-                    "flat": 0.0
+                    "flat": 0
                   },
                   "incomingPct": {
                     "perRank": [
-                      1.0
+                      1
                     ],
                     "negateOriginal": true
                   }
@@ -482,15 +482,15 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1.0
+                      "flat": 1
                     },
-                    "radius": 6.0,
+                    "radius": 6,
                     "radiusTier": "大",
                     "onHitTargets": [
                       {
                         "kind": "knockback",
-                        "distance": 4.0,
-                        "speed": 16.0,
+                        "distance": 4,
+                        "speed": 16,
                         "from": "caster"
                       }
                     ]
@@ -541,5 +541,11 @@
   ],
   "exAbility": "godie-h00l.ex",
   "passiveAbility": "godie-h00l.passive",
-  "icon": "assets/icons/champions/godie-h00l.png"
+  "icon": "assets/icons/champions/godie-h00l.png",
+  "playstyle": [
+    "泛用",
+    "換血",
+    "技能交替"
+  ],
+  "pitch": "沒有明顯極端弱點，可依戰況在普攻、技能、追擊與防守之間靈活切換。"
 }

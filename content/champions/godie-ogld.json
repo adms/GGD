@@ -23,14 +23,14 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 12.0
+    "range": 12
   },
   "growth": {
     "maxHealth": 20,
     "healthRegen": 0.05,
     "maxMana": 18,
     "manaRegen": 0.06,
-    "ad": 1.0,
+    "ad": 1,
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,20 +61,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        100.0,
-        200.0,
-        300.0,
-        300.0,
-        300.0
+        100,
+        200,
+        300,
+        300,
+        300
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
@@ -112,16 +112,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0
+        15,
+        15,
+        15
       ],
       "manaCost": [
-        60.0,
-        80.0,
-        110.0
+        60,
+        80,
+        110
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
@@ -157,16 +157,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        150.0,
-        225.0
+        75,
+        150,
+        225
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
@@ -202,16 +202,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "manaCost": [
-        250.0,
-        350.0,
-        450.0
+        250,
+        350,
+        450
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
@@ -264,5 +264,11 @@
     0.1961,
     0.1961,
     0.1961
-  ]
+  ],
+  "playstyle": [
+    "超遠距離",
+    "區域轟炸",
+    "反近身"
+  ],
+  "pitch": "站在敵人難以反擊的位置持續轟炸，逼對手冒險接近才能處理你。"
 }

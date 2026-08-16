@@ -17,7 +17,7 @@
     "armor": 0,
     "mr": 28,
     "as": 0.5,
-    "ms": 6.0,
+    "ms": 6,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -60,14 +60,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        75.0,
-        125.0,
-        175.0
+        75,
+        125,
+        175
       ],
       "range": 4.58,
       "effects": [
@@ -76,9 +76,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              300.0,
-              400.0,
-              500.0
+              300,
+              400,
+              500
             ],
             "ratios": [
               {
@@ -120,14 +120,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        30.0,
-        60.0,
-        90.0
+        30,
+        60,
+        90
       ],
       "range": 0,
       "effects": [
@@ -140,7 +140,7 @@
               "value": 1.5
             }
           ],
-          "duration": 6.0,
+          "duration": 6,
           "perRank": [
             {
               "modifiers": [
@@ -150,7 +150,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -160,7 +160,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -170,7 +170,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 18.0
+              "duration": 18
             }
           ]
         }
@@ -188,16 +188,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        165.0,
-        215.0,
-        265.0,
-        315.0
+        165,
+        215,
+        265,
+        315
       ],
       "range": 12.83,
       "effects": [
@@ -210,17 +210,17 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  400.0,
-                  550.0,
-                  700.0,
-                  850.0
+                  400,
+                  550,
+                  700,
+                  850
                 ]
               }
             },
             {
               "kind": "applyStatus",
               "statusId": "burnstun",
-              "duration": 1.0,
+              "duration": 1,
               "stun": true
             }
           ]
@@ -255,14 +255,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75
       ],
       "manaCost": [
-        200.0,
-        350.0,
-        500.0
+        200,
+        350,
+        500
       ],
       "range": 0,
       "effects": [],
@@ -305,5 +305,11 @@
   ],
   "exAbility": "godie-e008.ex",
   "passiveAbility": "godie-e008.passive",
-  "icon": "assets/icons/champions/godie-e008.png"
+  "icon": "assets/icons/champions/godie-e008.png",
+  "playstyle": [
+    "火焰劍",
+    "普攻強化",
+    "近戰循環"
+  ],
+  "pitch": "先用技能強化戰鬥狀態，再貼住敵人以火焰普攻與劍技持續輸出。"
 }

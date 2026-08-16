@@ -430,5 +430,10 @@
       }
     ]
   },
-  "icon": "assets/icons/champions/godie-h01u.png"
+  "icon": "assets/icons/champions/godie-h01u.png",
+  "playstyle": [
+    "高傷換血",
+    "正面壓迫"
+  ],
+  "pitch": "以高傷害逼迫敵人正面接戰，不靠複雜機制，就是用力量把對手壓下去。"
 }

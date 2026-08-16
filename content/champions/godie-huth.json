@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -60,18 +60,18 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        35.0,
-        28.0,
-        21.0,
-        14.0,
-        7.0
+        35,
+        28,
+        21,
+        14,
+        7
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0,
-        110.0
+        30,
+        50,
+        70,
+        90,
+        110
       ],
       "range": 3.67,
       "effects": [],
@@ -110,31 +110,31 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        60.0,
-        50.0,
-        40.0,
-        30.0,
-        20.0
+        60,
+        50,
+        40,
+        30,
+        20
       ],
       "manaCost": [
-        100.0,
-        160.0,
-        220.0,
-        280.0,
-        340.0
+        100,
+        160,
+        220,
+        280,
+        340
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "damage",
           "damageType": "magic",
           "amount": {
             "perRank": [
-              250.0,
-              350.0,
-              450.0,
-              550.0,
-              650.0
+              250,
+              350,
+              450,
+              550,
+              650
             ],
             "ratios": [
               {
@@ -166,18 +166,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        120.0,
-        180.0,
-        240.0,
-        300.0
+        120,
+        180,
+        240,
+        300
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.arcane.swarm",
       "targetsEnemies": true,
@@ -187,10 +187,10 @@
         "params": {
           "damage": {
             "perRank": [
-              2.0,
-              3.0,
-              4.0,
-              5.0
+              2,
+              3,
+              4,
+              5
             ],
             "ratios": [
               {
@@ -214,14 +214,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        280.0,
-        430.0,
-        580.0
+        280,
+        430,
+        580
       ],
       "range": 8.25,
       "effects": [
@@ -230,9 +230,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              300.0,
-              400.0,
-              500.0
+              300,
+              400,
+              500
             ],
             "ratios": [
               {
@@ -245,7 +245,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 5.0,
+          "duration": 5,
           "moveSpeedMult": 0.65
         }
       ],
@@ -280,5 +280,11 @@
       }
     ]
   },
-  "icon": "assets/icons/champions/godie-huth.png"
+  "icon": "assets/icons/champions/godie-huth.png",
+  "playstyle": [
+    "高生存",
+    "再生",
+    "持久戰"
+  ],
+  "pitch": "黏在戰場中央不斷承受傷害，戰鬥拖得越久，敵人越難真正解決你。"
 }

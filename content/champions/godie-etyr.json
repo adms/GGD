@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,24 +61,24 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        120.0,
-        170.0,
-        220.0
+        120,
+        170,
+        220
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "heal",
           "amount": {
             "perRank": [
-              150.0,
-              150.0,
-              150.0
+              150,
+              150,
+              150
             ],
             "ratios": [
               {
@@ -102,16 +102,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0,
       "effects": [],
@@ -188,18 +188,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        150.0,
-        180.0,
-        210.0,
-        240.0
+        150,
+        180,
+        210,
+        240
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
@@ -245,9 +245,9 @@
         0.5
       ],
       "manaCost": [
-        150.0,
-        225.0,
-        300.0
+        150,
+        225,
+        300
       ],
       "range": 8.25,
       "effects": [],
@@ -294,5 +294,12 @@
   ],
   "exAbility": "godie-etyr.ex",
   "passiveAbility": "godie-etyr.passive",
-  "icon": "assets/icons/champions/godie-etyr.png"
+  "icon": "assets/icons/champions/godie-etyr.png",
+  "playstyle": [
+    "治療",
+    "淨化",
+    "靈氣",
+    "召喚"
+  ],
+  "pitch": "保持隊伍健康，利用治療與淨化解除危機，再以靈氣提升全隊戰力。"
 }

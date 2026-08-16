@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -59,18 +59,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        40.0,
-        40.0,
-        40.0,
-        40.0
+        40,
+        40,
+        40,
+        40
       ],
       "manaCost": [
-        75.0,
-        110.0,
-        145.0,
-        180.0
+        75,
+        110,
+        145,
+        180
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -79,10 +79,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              200.0,
-              300.0,
-              400.0,
-              500.0
+              200,
+              300,
+              400,
+              500
             ],
             "ratios": [
               {
@@ -91,14 +91,14 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "knockback",
-              "distance": 3.0,
-              "speed": 15.0,
+              "distance": 3,
+              "speed": 15,
               "from": "caster"
             }
           ]
@@ -118,18 +118,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -139,7 +139,7 @@
             "critStrike": {
               "chance": 0.1,
               "damageMult": 1.5,
-              "lifestealFraction": 0.0
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -156,7 +156,7 @@
                         }
                       ]
                     },
-                    "radius": 3.0,
+                    "radius": 3,
                     "radiusTier": "小"
                   }
                 ],
@@ -179,28 +179,28 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        120.0,
-        120.0,
-        120.0,
-        120.0
+        120,
+        120,
+        120,
+        120
       ],
       "manaCost": [
-        90.0,
-        180.0,
-        270.0,
-        360.0
+        90,
+        180,
+        270,
+        360
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
           "durationSec": [
-            6.0,
-            9.0,
-            12.0,
-            15.0
+            6,
+            9,
+            12,
+            15
           ]
         },
         {
@@ -212,7 +212,7 @@
               "value": 0.6
             }
           ],
-          "duration": 6.0,
+          "duration": 6,
           "perRank": [
             {
               "modifiers": [
@@ -222,7 +222,7 @@
                   "value": 0.6
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -232,7 +232,7 @@
                   "value": 0.9
                 }
               ],
-              "duration": 9.0
+              "duration": 9
             },
             {
               "modifiers": [
@@ -242,7 +242,7 @@
                   "value": 1.2
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -252,7 +252,7 @@
                   "value": 1.5
                 }
               ],
-              "duration": 15.0
+              "duration": 15
             }
           ],
           "flight": {
@@ -276,16 +276,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        70.0,
-        70.0,
-        70.0
+        70,
+        70,
+        70
       ],
       "manaCost": [
-        150.0,
-        225.0,
-        300.0
+        150,
+        225,
+        300
       ],
-      "range": 11.0,
+      "range": 11,
       "radiusTier": "小",
       "targetsEnemies": true,
       "effects": [
@@ -294,9 +294,9 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              600.0,
-              800.0,
-              1000.0
+              600,
+              800,
+              1000
             ],
             "ratios": [
               {
@@ -305,7 +305,7 @@
               }
             ]
           },
-          "radius": 3.0,
+          "radius": 3,
           "radiusTier": "小",
           "includeOrigin": true
         }
@@ -342,17 +342,23 @@
       "rawcode": "A0JG",
       "name": "77-03 GLADIARIA ALAT",
       "durationSec": {
-        "1": 6.0,
-        "2": 12.0,
-        "3": 18.0,
-        "4": 24.0
+        "1": 6,
+        "2": 12,
+        "3": 18,
+        "4": 24
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
       }
     }
-  }
+  },
+  "playstyle": [
+    "攻速",
+    "普攻觸發",
+    "短時強化"
+  ],
+  "pitch": "攻得越快價值越高，利用高頻普攻反覆觸發效果並完成連斬。"
 }

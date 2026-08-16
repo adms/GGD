@@ -29,7 +29,7 @@
     "healthRegen": 0.2,
     "maxMana": 22,
     "manaRegen": 0.1,
-    "ad": 2.0,
+    "ad": 2,
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
@@ -59,19 +59,19 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        8.0,
-        8.0,
-        8.0,
-        8.0
+        8,
+        8,
+        8,
+        8
       ],
       "manaCost": [
-        40.0,
-        55.0,
-        70.0,
-        85.0
+        40,
+        55,
+        70,
+        85
       ],
-      "range": 7.0,
-      "radius": 3.0,
+      "range": 7,
+      "radius": 3,
       "effects": [],
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
@@ -110,24 +110,24 @@
       "castType": "dash",
       "maxRank": 4,
       "cooldown": [
-        16.0,
-        15.0,
-        14.0,
-        13.0
+        16,
+        15,
+        14,
+        13
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0
+        30,
+        50,
+        70,
+        90
       ],
-      "range": 6.0,
+      "range": 6,
       "effects": [
         {
           "kind": "dash",
           "mode": "toPoint",
           "speed": 16,
-          "maxDistance": 6.0
+          "maxDistance": 6
         },
         {
           "kind": "applyBuff",
@@ -135,15 +135,15 @@
             {
               "stat": "armor",
               "op": "flat",
-              "value": 35.0
+              "value": 35
             },
             {
               "stat": "mr",
               "op": "flat",
-              "value": 35.0
+              "value": 35
             }
           ],
-          "duration": 4.0
+          "duration": 4
         }
       ],
       "vfxKey": "fx.prim.void.dash",
@@ -158,18 +158,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        14.0,
-        13.0,
-        12.0,
-        11.0
+        14,
+        13,
+        12,
+        11
       ],
       "manaCost": [
-        70.0,
-        95.0,
-        120.0,
-        145.0
+        70,
+        95,
+        120,
+        145
       ],
-      "range": 8.0,
+      "range": 8,
       "radius": 3.5,
       "effects": [],
       "vfxKey": "fx.prim.void.shockwave",
@@ -209,17 +209,17 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        80.0,
-        70.0
+        90,
+        80,
+        70
       ],
       "manaCost": [
-        100.0,
-        150.0,
-        200.0
+        100,
+        150,
+        200
       ],
-      "range": 0.0,
-      "radius": 4.0,
+      "range": 0,
+      "radius": 4,
       "effects": [],
       "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
@@ -266,5 +266,12 @@
     "tank"
   ],
   "exAbility": "godie-zombiex.ex",
-  "passiveAbility": "godie-zombiex.passive"
+  "passiveAbility": "godie-zombiex.passive",
+  "playstyle": [
+    "高生命",
+    "控制",
+    "減速",
+    "護陣"
+  ],
+  "pitch": "站在敵人與隊友中間，用高生命與黑泥控制拖住敵人，替隊友製造空間。"
 }

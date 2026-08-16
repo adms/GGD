@@ -72,6 +72,9 @@ import {
   randomPickOwnershipMode,
 } from "./champselect/randomPickGate";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
+import { pitchTooltipForChampion, PITCH_ACCENT } from "./champselect/pitchTooltip";
+import { Tooltip } from "../components/Tooltip";
+import type { ChampionId } from "@ggd/shared/ids";
 import {
   observeLock,
   lockBanner,
@@ -705,11 +708,38 @@ export function ChampSelectPanel(): React.JSX.Element {
                   // still SHOWN so its 「🔓 解鎖」 button (below) is reachable, but
                   // dimmed + marked so a click reads as "unlock me", not "pick me".
                   const lockedOut = !!selectableIds && !selectableIds.has(c.id);
+                  // ⭐ 滑鼠移上去的簡短介紹（owner 2026-08-16）。
+                  // ⛔ **加一層，不動既有的任何一行** —— 卡片上的 `role · tags`、
+                  //   身分區的出身徽章、`description` 的故事全部原樣留著。
+                  // ⚠️ 讀的是**執行期**的英雄卡（`Champions.tryGet`），不是 `roster`
+                  //   那份快照 —— `RosterChampion` 只搬了 id/name/role/tags/icon，
+                  //   而 `playstyle`/`pitch` 是 `registerChampion` 原樣保留、
+                  //   `ChampionDef` 沒宣告的欄位（同 `description` 的處境）。
+                  const champDef = Champions.tryGet(c.id as ChampionId);
+                  const tip = champDef ? pitchTooltipForChampion(champDef) : null;
                   return (
                     // relative column wrapper: the pick button, the favourite
                     // star (absolute overlay) and the optional unlock button
                     // (in-flow, below the card) all live here.
                     <div key={c.id} style={{ position: "relative", display: "flex", flexDirection: "column", gap: 4 }}>
+                      <Tooltip
+                        title={tip?.title ?? c.name}
+                        // ⚠️ `body` 是給無障礙與純文字路徑的**平面**版本；
+                        //    `bodyNode` 只是把同樣兩行分色。⛔ 不要只給 node。
+                        body={[tip?.playstyleLine, tip?.pitch].filter(Boolean).join("\n")}
+                        bodyNode={
+                          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                            {tip?.playstyleLine && (
+                              <div style={{ color: PITCH_ACCENT, fontWeight: 600 }}>{tip.playstyleLine}</div>
+                            )}
+                            {tip?.pitch && <div>{tip.pitch}</div>}
+                          </div>
+                        }
+                        // ⛔ 內容那兩行都沒有時整張不彈 —— 只剩一個出身標籤的
+                        //   tooltip 沒有新資訊，純粹擋住畫面（見 `empty` 的註解）。
+                        disabled={tip === null || tip.empty}
+                        style={{ display: "block" }}
+                      >
                       <SfxButton
                         onClick={() => commit(c.id)}
                         disabled={locked}
@@ -760,6 +790,7 @@ export function ChampSelectPanel(): React.JSX.Element {
                           </div>
                         </div>
                       </SfxButton>
+                      </Tooltip>
                       {/* 🔒 badge on a champion the account has not unlocked yet —
                           the 「🔓 解鎖」 button (ChampMetaOverlay, below) is the way in */}
                       {lockedOut && !locked && (
