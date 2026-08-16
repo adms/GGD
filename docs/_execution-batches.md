@@ -1287,3 +1287,25 @@ owner 2026-08-15 那四項（鏡頭視野 -2 節／常駐地名／新場地殭�
 ⇒ 補開 **GH#332** 記錄那四項，引用改指過去，零行為改動。
 
 ⭐ **下次開工前先開 issue，不要事後找一個號碼貼上去。**
+
+---
+
+## v0.18.3 —— 磁碟閘上線 + issue 稽核
+
+| | |
+|---|---|
+| tag | `v0.18.3`（同天 → patch+1） · BUILD_STAMP `e5a57776 2026-08-16` |
+| 驗證 | typecheck EXIT=0 · pnpm test 4,762 檔 · go test EXIT=0（26 包） |
+| 後置條件 | 六項全綠 · 帳號數 **177 → 177** |
+| 煙霧測試 | 全新分頁 `content loaded: 78 champions (cv_99511e0b9180) via bundle` |
+
+⚠️ **磁碟閘這一次沒有跑到**（log 裡 `磁碟閘` 0 次）—— 主機執行的是 pull **之前**那一版腳本，
+新的閘要**下一次部署**才生效。這是這支腳本的固有性質（它自己 pull 自己），⛔ 不是缺陷，
+但值得記著：**改 `host-deploy.sh` 的那一版永遠是「上一版腳本跑的」。**
+
+### 併入
+
+`db0ce34a` 是另一個 session 的（Codex 合約散文四處說謊 → 補一條會紅的閘）。
+⚠️ 工作區還留著那個 session 在飛的東西（`package.json` 的 `contract:numbers` 兩行、
+未追蹤的 `tools/editor-contract/`），⛔ **一個都沒 commit** —— 那正是
+`ggd-untracked-sources-baked-into-artifacts` 的形狀。HEAD 自洽（新測試不呼叫那支腳本）。
