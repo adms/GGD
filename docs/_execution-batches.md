@@ -1170,3 +1170,68 @@ bundle 來源沒進版控 —— 每一條都指出了真問題，其中兩條�
   量過 v0.17.0 / v0.18.0 / HEAD 都是 79 個檔，而門檻是 **07-22 初始 commit** 寫的
   ⇒ **既有的紅**。它問的是「內容樹該有幾隻英雄」，要 owner 決定。
 - **#328** Go 的 `KnownCollections` 少了 `maps`（v0.17.0 那一輪開的，仍未併）。
+
+---
+
+## v0.18.2 —— 上線了，但中間網站掛了 15 分鐘，**是我弄的**
+
+### 事故：一條 `| head` 打掉了一次部署
+
+部署指令我寫成：
+
+```
+ssh -A can@… 'bash scripts/host-deploy.sh' 2>&1 | grep … | head -10
+```
+
+`head` 讀滿 10 行就關掉管道 → 本地 ssh 收 **SIGPIPE** 而死 → 遠端腳本收 **SIGHUP**
+→ **docker build 死在半路**。那個殘骸把 build cache 養到 **80.25GB**，
+把 docker 的碟（`/data`，sdb 98G）塞到 **100%** ——
+之後每一次 build 都必定失敗：`ggd-edge-1` 容器消失、`ggd-game-1` 進重啟迴圈，
+`https://ggd.adms.ai` 回 **502**。
+
+### 復原
+
+`docker builder prune -af`（77.95GB）+ `docker image prune -f`（20.51GB）
+⇒ 100% → **10%（85G 可用）**。
+⛔ 沒用 `image prune -a`（會刪 `:prev`，回滾就沒落腳點）、⛔ 沒碰 volume。
+重跑部署一次過，六項後置條件全綠，**帳號數 177 → 177**。
+
+### ⚠️ 我在報告裡講錯的那一件事（更正）
+
+我對 owner 說「系統碟滿了」。**錯的。** 我讀的是 `df -h /`：
+
+| 碟 | 掛載 | 大小 | 裝什麼 |
+|---|---|---|---|
+| sda1 | `/` | 99G | 只有作業系統，全程 11% |
+| **sdb** | **`/data`** | **98G** | **docker 全部 + GGD repo**（`/home/can/GGD` 是 symlink） |
+
+滿的是 **sdb**。⇒ 新的守衛量的是 `docker info -f '{{.DockerRootDir}}'`，⛔ 不是 `/`。
+
+### 修法：三個閘，⛔ 沒有一個是散文
+
+| | 做什麼 | 為什麼不是別的做法 |
+|---|---|---|
+| ① | `trap '' HUP PIPE` | 連線死掉不可以變成部署做到一半。ssh 斷了 build 照樣跑完 |
+| ② | `docker builder prune -f --max-used-space 25GB` | **位元組**上限。⛔ 不用 `until=168h` —— 那是對部署頻率的假設，而 2026-08-05 發過 5 版 |
+| ③ | 可用空間 < 20G ⇒ `die`，而且在 **pull 之前** | `content/` 是 live bind-mount：先 pull 再讓 build 死 =「新內容 + 舊映像」＝ 08-02 的故障組合 |
+
+②③ 的門檻用 `GGD_BUILD_CACHE_CAP` / `GGD_MIN_FREE_GB` 覆寫（第一守則）。
+守衛 `hostDeployScript.test.ts`；突變：`$DOCKER_ROOT` → `/`（＝我犯的那個錯）⇒ 紅。
+
+### ⭐ 這次事故的形態，這份文件已經記過四次
+
+「憑記憶重新推導一個序列」——`| head` 就是那個記憶。
+第五次的解法跟前四次一樣：**把判準換成一個會擋下你的數字或程式。**
+
+### 順手：全 repo 唯一一條紅
+
+`docs/legacy-index.md` 過期（`legacyIndexFresh` 自己指名了修法）⇒ 重跑產生器。
+之後 typecheck `EXIT=0` · pnpm test 全綠 · `go test ./...` `EXIT=0`（26 包）。
+
+### 📋 issue 積壓的真實狀態（推導，不是手數的）
+
+298 個 open issue 對照「repo 裡有沒有守衛測試指名它」：
+**A 有守衛 71 · B 只有原始碼 17 · C 沒有任何引用 210**。
+⚠️ 只認 `GH#nnn` —— `#nnn` 在這個 repo 同時是**任務編號**，兩套會撞
+（任務 #280 是面向鎖，issue #280 是友軍指定技）。用 `#nnn` 掃會得到「263 個已修」，那是噪音。
+A 類逐條讀了 12 條標 🔴/T0 的斷言，全部是**正向**的（不是把壞掉釘住）⇒ 極可能是修好沒關掉。
