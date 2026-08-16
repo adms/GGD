@@ -24,7 +24,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.8
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 37,
@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.28,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -62,16 +62,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        130.0,
-        195.0,
-        260.0
+        130,
+        195,
+        260
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.wind.nova",
       "targetsEnemies": true,
@@ -107,16 +107,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        80.0,
-        105.0,
-        130.0,
-        155.0
+        80,
+        105,
+        130,
+        155
       ],
       "range": 7.33,
       "effects": [
@@ -129,10 +129,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  75.0,
-                  75.0,
-                  75.0,
-                  75.0
+                  75,
+                  75,
+                  75,
+                  75
                 ]
               }
             }
@@ -152,16 +152,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0,
-        500.0
+        200,
+        300,
+        400,
+        500
       ],
       "range": 0,
       "effects": [
@@ -185,14 +185,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75
       ],
       "manaCost": [
-        200.0,
-        375.0,
-        550.0
+        200,
+        375,
+        550
       ],
       "range": 6.42,
       "effects": [],
@@ -248,16 +248,16 @@
       "rawcode": "A0IH",
       "name": "18-03 妖狐變化",
       "durationSec": {
-        "1": 8.0,
-        "2": 12.0,
-        "3": 16.0,
-        "4": 20.0
+        "1": 8,
+        "2": 12,
+        "3": 16,
+        "4": 20
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
       }
     }
   }

@@ -266,11 +266,20 @@ export const ARCHETYPE_LABEL_ZH: Readonly<Record<Archetype, string>> = Object.fr
 
 /** 這一版真的會被正規化的屬性。⛔ 不在名單上的照舊讀 `baseStats`。 */
 /**
- * 攻擊型別 —— {@link StatNormalization.bandsByAttackType} 的兩把階梯就是照這個分的。
- * ⚠️ 與 `champion@1` 的 `attackType` 同一組值（`schema/champion.ts` 的 z.enum）。
+ * **尺標** —— {@link StatNormalization.bandsByScale} 的兩把階梯照這個分。
+ *
+ * ⚠️ 名字跟 `champion@1` 的 `attackType` 一樣，但它**不是**同一個東西，
+ * ⛔ 也**不是**由它決定的。走哪一把由 {@link StatNormalization.scaleByOrigin}
+ * 從**出身**查表（owner 2026-08-16：「依出身套用普攻距離」）。
+ *
+ * 🔴 這個區別是量出來的，不是潔癖：owner 那張表裡 **10/49 位**的 `attackType`
+ * 與其出身的尺標**相反** —— 妙蛙種子／初音／南野秀一／巴恩／哆拉A夢 是 `melee`
+ * 卻要走遠程尺（8.2），皮卡娘／傑洛士／白木卡迪那／死之王／涅吉 是 `ranged`
+ * 卻要走近戰尺（1.4~1.6）。`attackType` 決定的是**投射物 vs 近身揮擊**，
+ * 尺標決定的是**這個位置的距離量級**，兩者本來就獨立。
  */
-export const ATTACK_TYPE_KEYS = ["melee", "ranged"] as const;
-export type AttackTypeKey = (typeof ATTACK_TYPE_KEYS)[number];
+export const SCALE_KEYS = ["melee", "ranged"] as const;
+export type ScaleKey = (typeof SCALE_KEYS)[number];
 
 export const NORMALIZED_STAT_KEYS = [
   "ms", "mr", "armor",
@@ -285,7 +294,7 @@ export const NORMALIZED_STAT_KEYS = [
   //     遠程 n=14 → 6.0 ~ 12.0，中位 **8.2**
   //   組間跨度 **5.1×**，而近戰/遠程是**型別**不是級別。
   //
-  //   ⭐ 解法不是「硬塞一把尺」，是**兩把尺**（{@link StatNormalization.bandsByAttackType}）：
+  //   ⭐ 解法不是「硬塞一把尺」，是**兩把尺**（{@link StatNormalization.bandsByScale}）：
   //   出身給的級距意思變成「**以你的型別而言**算遠還算近」，由英雄自己的
   //   `attackType` 選階梯。這同時解掉一個單尺絕對做不到的情況 ——
   //   **硬輔這個出身裡近戰遠程都有**（賈修貝爾 6.4 遠程 vs 另外兩位 1.6 近戰），
@@ -327,19 +336,33 @@ export interface StatNormalization {
   /** 每一項的三格數值。⭐ 錨點是量出來的中位數，階梯是指定的。 */
   bands: Readonly<Record<NormalizedStatKey, Readonly<Record<NormalBand, number>>>>;
   /**
-   * ⭐ **依攻擊型別分成兩把階梯**的屬性（2026-08-16 加入，今天只有 `range`）。
+   * ⭐ **分成兩把階梯**的屬性（2026-08-16 加入，今天只有 `range`）。
    *
-   * 查得到就**優先於** {@link bands}：`bandsByAttackType[key][近戰或遠程]`。
-   * 查不到（或英雄卡沒填 `attackType`）才退回 `bands[key]` —— 而 `bands.range`
-   * 出貨填的是**近戰**那一把，因為型別不明時把人變成遠程是遠比變成近戰嚴重的事故。
+   * 查得到（而且 {@link scaleByOrigin} 說得出走哪一把）就**優先於** {@link bands}：
+   * `bandsByScale[key][尺標]`。任何一步查不到就退回 `bands[key]`。
    *
    * ⚠️ 這**不是**為某一項屬性寫的 if（第〇·五守則）—— 它是一個**機制**：
-   * 「這條屬性的分佈由攻擊型別切成兩群」。任何一項屬性只要填進這張表就會走這條路，
-   * ⛔ 程式裡沒有任何一行提到 `range` 這個字。
+   * 「這條屬性的分佈是雙峰的，兩群各有一把尺」。任何一項屬性只要填進這張表
+   * 加上 {@link scaleByOrigin} 就會走這條路，⛔ 程式裡沒有任何一行提到 `range`。
    */
-  bandsByAttackType: Readonly<
-    Partial<Record<NormalizedStatKey, Readonly<Record<AttackTypeKey, Readonly<Record<NormalBand, number>>>>>>
+  bandsByScale: Readonly<
+    Partial<Record<NormalizedStatKey, Readonly<Record<ScaleKey, Readonly<Record<NormalBand, number>>>>>>
   >;
+  /**
+   * ⭐ **出身 → 走哪一把尺**（owner 2026-08-16：「**依出身**套用普攻距離」）。
+   *
+   * 與 {@link byOrigin} 合起來，一個出身就完整決定了這一項的絕對值：
+   * `bandsByScale[key][scaleByOrigin[key][出身]][byOrigin[key][出身]]`。
+   * 例：砲手 → `ranged` × `極大` = **12**；法刺 → `melee` × `小` = **1.4**。
+   *
+   * 🔴 **為什麼鍵是出身而不是 `attackType`**（這是量出來的，⛔ 不是口味）：
+   * owner 那張 49 位的表裡 **10 位**兩者相反 —— 妙蛙種子是 `melee` 但軟輔要 8.2，
+   * 皮卡娘是 `ranged` 但法刺要 1.4。用 `attackType` 選尺，這 10 位會靜靜地
+   * 落在**另一群**的量級上（差 5 倍），而且沒有任何東西會紅（第②號故障形態）。
+   *
+   * ⚠️ 缺一格出身 ⇒ 那個出身退回單尺 `bands[key]`，⛔ 不猜一把。
+   */
+  scaleByOrigin: Readonly<Partial<Record<NormalizedStatKey, Readonly<Partial<Record<Origin, ScaleKey>>>>>>;
   /**
    * archetype → 這一項該落在哪一格。⭐ 這張表就是 owner 那兩句話，
    * 一格一格填進來 —— 想改任何一格都是後台的事，不是改程式。
@@ -453,8 +476,14 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
   //     「解鎖上限」）在管，正規化是**第三層**。三層疊起來就是上面那個數字。
   //   ⇒ 攻速退出正規化，讓 stat-caps 那兩層單獨負責。
   //   ⚠️ `bands.as` 與 `byOrigin.as` 都留著 —— 要開只要把 "as" 加回這個陣列。
+  // ⭐ 2026-08-16 `range` **進名單**（owner：「依出身套用普攻距離」，逐格給了 49 位）。
+  //   ⚠️ 上面那條「range 不在名單上」的理由是**雙峰**，它沒有失效，是被
+  //   `bandsByScale` + `scaleByOrigin` 正面解掉了（兩把尺，出身選）。
+  //   量到的證據：owner 那張表裡射程是**出身的純函數** —— 10 個出身各只有一個值
+  //   （鬥士/法鬥/硬輔 1.6 · 坦克/狂戰/法刺 1.4 · 法師/射手/軟輔 8.2 · 砲手 12），
+  //   49/49 位零例外。⇒ 這一項本來就該由出身驅動，逐隻寫值是在抄同一張表 49 遍。
   appliesTo: Object.freeze([
-    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "healthRegen", "manaRegen",
+    "ms", "mr", "armor", "maxHealth", "maxMana", "ad", "ap", "healthRegen", "manaRegen", "range",
   ] as const),
   // 🔴 **攻速曾經被拿掉，然後 owner 修好了根因，它就回來了。** 這段留著當紀錄：
   //
@@ -511,9 +540,9 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
     ad: bandsFromMedian(420, 21200),
     ap: bandsFromMedian(188.5, 100000),
     as: bandsFromMedian(7.34, 4),
-    // ⚠️ `range` 的**真正**階梯是下面的 `bandsByAttackType`（兩把）。這一格是
-    //   「英雄卡沒填 attackType」時的退路，刻意填**近戰**那一把 ——
-    //   型別不明時把人變成遠程，是遠比變成近戰嚴重的事故。
+    // ⚠️ `range` 的**真正**階梯是下面的 `bandsByScale`（兩把）。這一格是
+    //   「`scaleByOrigin` 沒有這個出身」時的退路，刻意填**近戰**那一把 ——
+    //   不明時把人變成遠程，是遠比變成近戰嚴重的事故。
     range: Object.freeze({ 極小: 1.2, 小: 1.4, 中: 1.6, 大: 1.8, 極大: 2 }),
     healthRegen: bandsFromMedian(16.85, 744),
     manaRegen: bandsFromMedian(20.22, 926),
@@ -532,11 +561,27 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
    * （「上限是黑人牙膏 12」，見 `statCaps.ts` 的 `AttackRange` 那一段），
    * 而黑人牙膏正是母體裡唯一的 12.0。極大這一格因此**剛好等於現存的最遠那位**。
    */
-  bandsByAttackType: Object.freeze({
+  bandsByScale: Object.freeze({
     range: Object.freeze({
       melee: Object.freeze({ 極小: 1.2, 小: 1.4, 中: 1.6, 大: 1.8, 極大: 2 }),
       ranged: Object.freeze({ 極小: 6, 小: 7, 中: 8.2, 大: 10, 極大: 12 }),
     }),
+  }),
+  /**
+   * ⭐ 出身 → 走哪一把尺（owner 2026-08-16 逐格給的 49 位，反推出來的 10 格）。
+   *
+   * ⚠️ 六個近戰位裡 **法鬥（智慧·近戰）與硬輔** 走近戰、四個遠程位裡
+   * **軟輔** 走遠程 —— 前六個純血出身（坦克/砲手/鬥士/射手/法鬥/法師）的尺標
+   * 正好等於它們名字裡那一半，四個混血（狂戰/硬輔/法刺/軟輔）是 owner 指定的。
+   *
+   * 🔴 ⛔ 這一格**不可以**改成讀 `attackType`：owner 那張表裡 10/49 位兩者相反。
+   */
+  scaleByOrigin: Object.freeze({
+    range: Object.freeze({
+      坦克: "melee", 狂戰: "melee", 法刺: "melee",
+      鬥士: "melee", 法鬥: "melee", 硬輔: "melee",
+      法師: "ranged", 射手: "ranged", 軟輔: "ranged", 砲手: "ranged",
+    } as const),
   }),
   // ⚠️ 四格那張是 owner 2026-08-12 逐字給的，留著當退路（`byOrigin` 清空就回到它）。
   byArchetype: Object.freeze({
@@ -553,7 +598,7 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
     ms: Object.freeze({ tank: "小", fighter: "大", marksman: "中", mage: "小" } as const),
     mr: Object.freeze({ tank: "小", fighter: "中", marksman: "小", mage: "大" } as const),
     armor: Object.freeze({ tank: "大", fighter: "中", marksman: "小", mage: "小" } as const),
-    // ⚠️ 級距的意思是「**以你的攻擊型別而言**算遠還算近」（見 `bandsByAttackType`），
+    // ⚠️ 級距的意思是「**以你的攻擊型別而言**算遠還算近」（見 `bandsByScale`），
     //   所以近戰的「大」是 1.8 而不是把他變成遠程。
     range: Object.freeze({ tank: "中", fighter: "中", marksman: "大", mage: "中" } as const),
   }),
@@ -599,7 +644,7 @@ export const DEFAULT_STAT_NORMALIZATION: StatNormalization = Object.freeze({
      * 攻擊距離進來」，沒有給逐格的值）。
      *
      * ⚠️ 級距的意思是「**以你的攻擊型別而言**算遠還算近」，⛔ 不是絕對距離 ——
-     * 近戰的「大」是 1.8u，遠程的「大」是 10u，兩把階梯見 `bandsByAttackType`。
+     * 近戰的「大」是 1.8u，遠程的「大」是 10u，兩把階梯見 `bandsByScale`。
      * 這正是為什麼**硬輔**（近戰遠程都有）也能給一個級距而不出事。
      *
      * 逐格理由：
@@ -759,16 +804,16 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
   }
   // ⭐ 雙階梯（2026-08-16）。⚠️ 逐格夾同一組上下界，理由跟 `bands` 那一圈一樣：
   //   這是**繞過後台與 Zod 的第三層**（手改 overlay、舊主機寫下的文件、測試夾具）。
-  const bandsByAttackType = {} as Record<
+  const bandsByScale = {} as Record<
     NormalizedStatKey,
-    Record<AttackTypeKey, Record<NormalBand, number>>
+    Record<ScaleKey, Record<NormalBand, number>>
   >;
   for (const key of NORMALIZED_STAT_KEYS) {
-    const fallback = DEFAULT_STAT_NORMALIZATION.bandsByAttackType[key];
-    const given = (d["bandsByAttackType"] as Record<string, Record<string, Record<string, unknown>>> | undefined)?.[key];
+    const fallback = DEFAULT_STAT_NORMALIZATION.bandsByScale[key];
+    const given = (d["bandsByScale"] as Record<string, Record<string, Record<string, unknown>>> | undefined)?.[key];
     if (!fallback && !given) continue; // 這一項沒有雙階梯 —— 走單一 `bands`
-    const out = {} as Record<AttackTypeKey, Record<NormalBand, number>>;
-    for (const t of ATTACK_TYPE_KEYS) {
+    const out = {} as Record<ScaleKey, Record<NormalBand, number>>;
+    for (const t of SCALE_KEYS) {
       out[t] = { ...(fallback?.[t] ?? bands[key]) };
       for (const band of NORMAL_BANDS) {
         const v = given?.[t]?.[band];
@@ -777,7 +822,21 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
         }
       }
     }
-    bandsByAttackType[key] = out;
+    bandsByScale[key] = out;
+  }
+  // ⭐ 出身 → 走哪一把尺。⚠️ 只收 `SCALE_KEYS` 裡的字串，其餘一律留預設，
+  //   ⛔ 不把亂填的值當成「沒有尺標」（那會靜靜退回單尺 = 差 5 倍的射程）。
+  const scaleByOrigin = {} as Record<NormalizedStatKey, Partial<Record<Origin, ScaleKey>>>;
+  for (const key of NORMALIZED_STAT_KEYS) {
+    const fallback = DEFAULT_STAT_NORMALIZATION.scaleByOrigin[key];
+    const given = (d["scaleByOrigin"] as Record<string, Record<string, unknown>> | undefined)?.[key];
+    if (!fallback && !given) continue;
+    const out: Partial<Record<Origin, ScaleKey>> = { ...(fallback ?? {}) };
+    for (const org of ORIGINS) {
+      const v = given?.[org];
+      if (v === "melee" || v === "ranged") out[org] = v;
+    }
+    scaleByOrigin[key] = out;
   }
   const shiftRaw = d["transformBandShift"];
   const skip = d["skipTransformedBodies"];
@@ -787,7 +846,8 @@ export function statNormalizationFromDoc(doc: unknown): StatNormalization {
     mode,
     appliesTo,
     bands,
-    bandsByAttackType,
+    bandsByScale,
+    scaleByOrigin,
     byArchetype,
     byOrigin,
     channel,
@@ -853,20 +913,17 @@ export function resolveChampionStats<T extends Record<string, unknown>>(
   const growth = { ...((def["growth"] as Record<string, number> | undefined) ?? {}) };
   let touchedBase = false;
   let touchedGrowth = false;
-  // ⭐ 雙階梯屬性（今天只有 `range`）要知道這張卡是近戰還是遠程。
-  //   ⚠️ 沒填就是 undefined ⇒ 下面退回單階梯的 `cfg.bands`，⛔ 不猜一個型別。
-  const atk = def["attackType"];
-  const attackType: AttackTypeKey | undefined =
-    atk === "melee" || atk === "ranged" ? atk : undefined;
-
   for (const key of cfg.appliesTo) {
     const raw = cfg.byOrigin[key]?.[org] ?? cfg.byArchetype[key]?.[arc];
     const band = raw === undefined ? undefined : shiftBand(raw, shift);
-    // ⭐ 兩把階梯優先：`bandsByAttackType[key][近戰或遠程]`，查不到才退回 `bands[key]`。
-    //   ⛔ 程式裡沒有任何一行提到 `range` —— 是不是雙階梯由**資料**決定（第〇·五守則）。
+    // ⭐ 兩把階梯優先：`bandsByScale[key][ scaleByOrigin[key][出身] ]`，
+    //   ⛔ 任何一步查不到就退回單尺 `bands[key]`。
+    //   🔴 選尺的鍵是**出身**不是 `attackType` —— 理由（10/49 位相反）寫在
+    //     `scaleByOrigin` 那一格。⛔ 程式裡沒有任何一行提到 `range`：
+    //     是不是雙階梯、走哪一把，全部由**資料**決定（第〇·五守則）。
+    const scale = cfg.scaleByOrigin[key]?.[org];
     const ladder =
-      (attackType !== undefined ? cfg.bandsByAttackType[key]?.[attackType] : undefined) ??
-      cfg.bands[key];
+      (scale !== undefined ? cfg.bandsByScale[key]?.[scale] : undefined) ?? cfg.bands[key];
     const target = band === undefined ? undefined : ladder?.[band];
     if (typeof target !== "number") continue;
 

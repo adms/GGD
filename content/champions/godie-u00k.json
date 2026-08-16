@@ -23,14 +23,14 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 20,
     "healthRegen": 0.05,
     "maxMana": 36,
     "manaRegen": 0.12,
-    "ad": 3.0,
+    "ad": 3,
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,16 +61,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        85.0,
-        135.0,
-        185.0
+        85,
+        135,
+        185
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
@@ -108,18 +108,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.beam",
       "targetsEnemies": true,
@@ -156,18 +156,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        160.0,
-        320.0,
-        480.0,
-        640.0
+        160,
+        320,
+        480,
+        640
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.swarm",
       "sfxKey": "wc3.parasite",
@@ -205,16 +205,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        250.0,
-        350.0
+        150,
+        250,
+        350
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.nova-lg",
       "sfxKey": "wc3.taunt",

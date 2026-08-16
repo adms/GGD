@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 35,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        180.0,
-        210.0,
-        240.0,
-        270.0
+        180,
+        210,
+        240,
+        270
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -83,10 +83,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  250.0,
-                  350.0,
-                  450.0,
-                  550.0
+                  250,
+                  350,
+                  450,
+                  550
                 ]
               }
             }
@@ -106,16 +106,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        200.0
+        50,
+        100,
+        150,
+        200
       ],
       "range": 11.92,
       "effects": [],
@@ -156,18 +156,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        27.0,
-        27.0,
-        27.0,
-        27.0
+        27,
+        27,
+        27,
+        27
       ],
       "manaCost": [
-        120.0,
-        180.0,
-        240.0,
-        300.0
+        120,
+        180,
+        240,
+        300
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "shield",
@@ -185,7 +185,7 @@
               }
             ]
           },
-          "duration": 6.0,
+          "duration": 6,
           "absorbs": "magic"
         }
       ],
@@ -205,16 +205,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        300.0,
-        420.0,
-        540.0
+        300,
+        420,
+        540
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion-lg",
       "sfxKey": "wc3.taunt",

@@ -17,12 +17,12 @@
     "armor": 2,
     "mr": 28,
     "as": 0.526316,
-    "ms": 6.0,
+    "ms": 6,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 2
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 42,
@@ -60,14 +60,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        65.0,
-        55.0,
-        45.0
+        65,
+        55,
+        45
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [],
@@ -98,20 +98,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        50.0,
-        50.0,
-        50.0,
-        50.0,
-        50.0
+        50,
+        50,
+        50,
+        50,
+        50
       ],
       "manaCost": [
-        110.0,
-        140.0,
-        170.0,
-        275.0,
-        275.0
+        110,
+        140,
+        170,
+        275,
+        275
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [
         {
           "kind": "invulnerable",
@@ -126,11 +126,11 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              225.0,
-              225.0,
-              225.0,
-              225.0,
-              225.0
+              225,
+              225,
+              225,
+              225,
+              225
             ],
             "ratios": [
               {
@@ -143,7 +143,7 @@
         {
           "kind": "applyStatus",
           "statusId": "moon-combo",
-          "duration": 1.0,
+          "duration": 1,
           "applyTo": "self"
         }
       ],
@@ -162,18 +162,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        65.0,
-        65.0,
-        65.0,
-        65.0
+        65,
+        65,
+        65,
+        65
       ],
       "manaCost": [
-        220.0,
-        250.0,
-        280.0,
-        310.0
+        220,
+        250,
+        280,
+        310
       ],
-      "range": 14.0,
+      "range": 14,
       "radius": 6.05,
       "effects": [
         {
@@ -189,10 +189,10 @@
               "damageType": "physical",
               "amount": {
                 "perRank": [
-                  450.0,
-                  550.0,
-                  650.0,
-                  750.0
+                  450,
+                  550,
+                  650,
+                  750
                 ],
                 "ratios": [
                   {
@@ -231,14 +231,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        150.0,
-        300.0,
-        450.0
+        150,
+        300,
+        450
       ],
       "range": 0,
       "effects": [
@@ -251,7 +251,7 @@
               "value": 25
             }
           ],
-          "duration": 8.0,
+          "duration": 8,
           "perRank": [
             {
               "modifiers": [
@@ -261,7 +261,7 @@
                   "value": 25
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
@@ -271,7 +271,7 @@
                   "value": 25
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -281,7 +281,7 @@
                   "value": 25
                 }
               ],
-              "duration": 16.0
+              "duration": 16
             }
           ]
         }

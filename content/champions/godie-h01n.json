@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.8
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 55,
@@ -60,16 +60,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        60.0,
-        80.0,
-        100.0,
-        120.0
+        60,
+        80,
+        100,
+        120
       ],
       "range": 9.17,
       "targetsEnemies": true,
@@ -84,16 +84,16 @@
           "kind": "damageArea",
           "damageType": "magic",
           "amount": {
-            "flat": 1.0
+            "flat": 1
           },
-          "radius": 3.0,
+          "radius": 3,
           "radiusTier": "小",
           "includeOrigin": true,
           "onHitTargets": [
             {
               "kind": "applyStatus",
               "statusId": "magic-break",
-              "duration": 3.0
+              "duration": 3
             }
           ]
         },
@@ -103,10 +103,10 @@
             {
               "stat": "mr",
               "op": "pctAdd",
-              "value": -1.0
+              "value": -1
             }
           ],
-          "duration": 3.0,
+          "duration": 3,
           "dispellable": true,
           "polarity": "debuff"
         },
@@ -130,18 +130,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        80.0,
-        160.0,
-        240.0,
-        320.0
+        80,
+        160,
+        240,
+        320
       ],
-      "range": 2.0,
+      "range": 2,
       "targetsEnemies": true,
       "effects": [
         {
@@ -149,10 +149,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              200.0,
-              350.0,
-              500.0,
-              650.0
+              200,
+              350,
+              500,
+              650
             ],
             "ratios": [
               {
@@ -179,7 +179,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 1.0
+                          "coeff": 1
                         }
                       ]
                     }
@@ -203,7 +203,7 @@
                       "ratios": [
                         {
                           "stat": "ap",
-                          "coeff": 2.0
+                          "coeff": 2
                         }
                       ]
                     }
@@ -233,18 +233,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        55.0,
-        55.0,
-        55.0,
-        55.0
+        55,
+        55,
+        55,
+        55
       ],
       "manaCost": [
-        250.0,
-        350.0,
-        450.0,
-        550.0
+        250,
+        350,
+        450,
+        550
       ],
-      "range": 11.0,
+      "range": 11,
       "targetsEnemies": true,
       "effects": [
         {
@@ -252,14 +252,14 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              450.0,
-              600.0,
-              750.0,
-              900.0
+              450,
+              600,
+              750,
+              900
             ]
           },
           "length": 11,
-          "width": 2.0,
+          "width": 2,
           "aim": "target",
           "fromCaster": true,
           "includeOrigin": true,
@@ -314,22 +314,22 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "manaCost": [
-        100.0,
-        200.0,
-        300.0
+        100,
+        200,
+        300
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 8.0
+          "durationSec": 8
         },
         {
           "kind": "applyBuff",
@@ -337,10 +337,10 @@
             {
               "stat": "as",
               "op": "pctAdd",
-              "value": 1.0
+              "value": 1
             }
           ],
-          "duration": 8.0,
+          "duration": 8,
           "statusId": "bankai",
           "perRank": [
             {
@@ -348,10 +348,10 @@
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 1.0
+                  "value": 1
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
@@ -361,17 +361,17 @@
                   "value": 1.5
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             },
             {
               "modifiers": [
                 {
                   "stat": "as",
                   "op": "pctAdd",
-                  "value": 2.0
+                  "value": 2
                 }
               ],
-              "duration": 8.0
+              "duration": 8
             }
           ]
         },
@@ -416,16 +416,16 @@
       "rawcode": "A0LN",
       "name": "79-04 卍解",
       "durationSec": {
-        "1": 8.0,
-        "2": 16.0,
-        "3": 24.0,
-        "4": 25.0
+        "1": 8,
+        "2": 16,
+        "3": 24,
+        "4": 25
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 30.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 30
       }
     }
   }

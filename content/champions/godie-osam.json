@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.8
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 37,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [],
@@ -103,18 +103,18 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [],
@@ -145,18 +145,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true,
@@ -193,16 +193,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0
+        200,
+        300,
+        400
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.ki.beam-lg",
       "targetsEnemies": true,

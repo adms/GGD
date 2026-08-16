@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 2.0
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 35,
@@ -60,18 +60,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        50,
+        80,
+        110,
+        140
       ],
-      "range": 11.0,
+      "range": 11,
       "targetsEnemies": true,
       "effects": [
         {
@@ -83,7 +83,7 @@
             0.07,
             0.09
           ],
-          "healPct": 1.0,
+          "healPct": 1,
           "victim": "champion",
           "throughShields": true
         }
@@ -101,18 +101,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -216,18 +216,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -241,13 +241,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 150.0
+                      "flat": 150
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ]
@@ -260,13 +260,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 250.0
+                      "flat": 250
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ]
@@ -279,13 +279,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 350.0
+                      "flat": 350
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ]
@@ -298,13 +298,13 @@
                   {
                     "kind": "shield",
                     "amount": {
-                      "flat": 450.0
+                      "flat": 450
                     },
-                    "duration": 8.0,
+                    "duration": 8,
                     "absorbs": "magic"
                   }
                 ],
-                "internalCooldown": 8.0,
+                "internalCooldown": 8,
                 "target": "self"
               }
             ]
@@ -322,7 +322,7 @@
         "flashColor": [
           0.7,
           0.85,
-          1.0
+          1
         ],
         "flashMs": 120,
         "camKick": 0.3
@@ -337,14 +337,14 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        90.0,
-        90.0,
-        90.0
+        90,
+        90,
+        90
       ],
       "manaCost": [
-        350.0,
-        500.0,
-        650.0
+        350,
+        500,
+        650
       ],
       "range": 8.25,
       "targetsEnemies": true,
@@ -354,9 +354,9 @@
           "damageType": "true",
           "amount": {
             "perRank": [
-              750.0,
-              1200.0,
-              1650.0
+              750,
+              1200,
+              1650
             ]
           },
           "length": 8.25,

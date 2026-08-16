@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 2
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 56,
@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        100.0,
-        140.0,
-        180.0,
-        220.0
+        100,
+        140,
+        180,
+        220
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [
         {
@@ -89,7 +89,7 @@
               "value": 0.1
             }
           ],
-          "duration": 6.0,
+          "duration": 6,
           "statusId": "rage",
           "perRank": [
             {
@@ -105,7 +105,7 @@
                   "value": 0.1
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -120,7 +120,7 @@
                   "value": 0.15
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -135,7 +135,7 @@
                   "value": 0.2
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             },
             {
               "modifiers": [
@@ -150,7 +150,7 @@
                   "value": 0.25
                 }
               ],
-              "duration": 6.0
+              "duration": 6
             }
           ]
         }
@@ -168,9 +168,9 @@
                     "shape": "single",
                     "who": "self",
                     "stackKey": "rage",
-                    "addSec": 2.0,
+                    "addSec": 2,
                     "perDamagePctOfMaxHealth": 0.05,
-                    "maxRemainingSec": 30.0
+                    "maxRemainingSec": 30
                   }
                 ],
                 "target": "self"
@@ -192,18 +192,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        70.0,
-        95.0,
-        120.0,
-        145.0
+        70,
+        95,
+        120,
+        145
       ],
-      "range": 11.0,
+      "range": 11,
       "targetsEnemies": true,
       "effects": [
         {
@@ -229,10 +229,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  350.0,
-                  450.0,
-                  550.0,
-                  650.0
+                  350,
+                  450,
+                  550,
+                  650
                 ],
                 "ratios": [
                   {
@@ -250,7 +250,7 @@
                 "statusId": "rage"
               },
               "statusId": "fear",
-              "duration": 3.0,
+              "duration": 3,
               "feared": true
             }
           ]
@@ -269,18 +269,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -295,7 +295,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 50.0
+                      "flat": 50
                     }
                   },
                   {
@@ -330,7 +330,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 70.0
+                      "flat": 70
                     }
                   },
                   {
@@ -365,7 +365,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 90.0
+                      "flat": 90
                     }
                   },
                   {
@@ -400,7 +400,7 @@
                     "kind": "damage",
                     "damageType": "physical",
                     "amount": {
-                      "flat": 110.0
+                      "flat": 110
                     }
                   },
                   {
@@ -414,7 +414,7 @@
                       {
                         "stat": "as",
                         "op": "pctAdd",
-                        "value": -1.0
+                        "value": -1
                       }
                     ],
                     "duration": 0.6,
@@ -440,16 +440,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        120.0,
-        120.0,
-        120.0
+        120,
+        120,
+        120
       ],
       "manaCost": [
-        400.0,
-        600.0,
-        800.0
+        400,
+        600,
+        800
       ],
-      "range": 0.0,
+      "range": 0,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -457,19 +457,19 @@
           "kind": "dash",
           "mode": "toPoint",
           "speed": 16,
-          "maxDistance": 5.0
+          "maxDistance": 5
         },
         {
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
             "perRank": [
-              600.0,
-              1000.0,
-              1400.0
+              600,
+              1000,
+              1400
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "includeOrigin": true
         },
@@ -477,9 +477,9 @@
           "kind": "damageArea",
           "damageType": "physical",
           "amount": {
-            "flat": 0.0
+            "flat": 0
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "includeOrigin": true,
           "victimCondition": {

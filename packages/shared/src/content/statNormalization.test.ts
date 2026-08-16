@@ -201,6 +201,32 @@ describe("成長通道：定位驅動的東西寫 growth，個性留在 baseStat
     expect(solve(200)).toBeLessThan(solve(10));
   });
 
+  it("🔴 雙尺屬性走哪一把尺由**出身**決定 —— ⛔ 不是卡上的 attackType", () => {
+    cover("stat-normalization");
+    // ⚠️ 這一條是這一批承重的那條線。缺陷形態是**第②號**：用 attackType 選尺，
+    //    出貨資料裡 10/49 位會靜靜落在差 5 倍的量級上（藏馬 melee 卻該構 8.2、
+    //    皮卡娘 ranged 卻只該打 1.4），而且不會有任何東西報錯。
+    // ⭐ 所以每一格出身都用**相反**的 attackType 建卡 —— 尺標若改讀 attackType，
+    //    十格會全部翻到另一把尺上，這條就紅。
+    const N = DEFAULT_STAT_NORMALIZATION;
+    for (const key of N.appliesTo) {
+      const scales = N.scaleByOrigin[key];
+      const ladders = N.bandsByScale[key];
+      if (!scales || !ladders) continue; // 這一項不是雙尺 —— ⛔ 不寫死是哪一項
+      expect(N.channel[key]).toBe("baseStats"); // 下面讀 baseStats 才有意義
+      for (const org of ORIGINS) {
+        const scale = scales[org];
+        const band = N.byOrigin[key][org];
+        if (!scale || !band) continue;
+        const out = resolveChampionStats(
+          { ...TANK, origin: org, attackType: scale === "melee" ? "ranged" : "melee" } as never,
+          N,
+        ) as { baseStats: Record<string, number> };
+        expect(`${org}=${out.baseStats[key]}`).toBe(`${org}=${ladders[scale][band]}`);
+      }
+    }
+  });
+
   it("沒注入 deps 時 growth 通道什麼都不做 —— fail-safe，⛔ 不猜", () => {
     cover("stat-normalization");
     const out = resolveChampionStats(TANK as never, cfg) as { growth: Record<string, number> };

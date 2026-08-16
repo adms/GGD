@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.8
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 50,
@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -81,8 +81,8 @@
           {
             "critStrike": {
               "chance": 0.03,
-              "damageMult": 10.0,
-              "lifestealFraction": 0.0
+              "damageMult": 10,
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -91,7 +91,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   },
                   {
@@ -102,7 +102,7 @@
                       "tag": "burn"
                     },
                     "statusId": "blind",
-                    "duration": 5.0,
+                    "duration": 5,
                     "missChance": 0.5
                   }
                 ],
@@ -116,8 +116,8 @@
           {
             "critStrike": {
               "chance": 0.04,
-              "damageMult": 10.0,
-              "lifestealFraction": 0.0
+              "damageMult": 10,
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -126,7 +126,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   },
                   {
@@ -137,7 +137,7 @@
                       "tag": "burn"
                     },
                     "statusId": "blind",
-                    "duration": 5.0,
+                    "duration": 5,
                     "missChance": 0.5
                   }
                 ],
@@ -151,8 +151,8 @@
           {
             "critStrike": {
               "chance": 0.05,
-              "damageMult": 10.0,
-              "lifestealFraction": 0.0
+              "damageMult": 10,
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -161,7 +161,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   },
                   {
@@ -172,7 +172,7 @@
                       "tag": "burn"
                     },
                     "statusId": "blind",
-                    "duration": 5.0,
+                    "duration": 5,
                     "missChance": 0.5
                   }
                 ],
@@ -186,8 +186,8 @@
           {
             "critStrike": {
               "chance": 0.06,
-              "damageMult": 10.0,
-              "lifestealFraction": 0.0
+              "damageMult": 10,
+              "lifestealFraction": 0
             },
             "hooks": [
               {
@@ -196,7 +196,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   },
                   {
@@ -207,7 +207,7 @@
                       "tag": "burn"
                     },
                     "statusId": "blind",
-                    "duration": 5.0,
+                    "duration": 5,
                     "missChance": 0.5
                   }
                 ],
@@ -232,18 +232,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -258,17 +258,17 @@
                     "kind": "damage",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "incomingPct": {
                       "perRank": [
-                        1.0
+                        1
                       ],
                       "negateOriginal": true
                     }
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.03,
                 "target": "event",
                 "victim": "enemy"
@@ -280,7 +280,7 @@
                     "kind": "damageArea",
                     "damageType": "magic",
                     "amount": {
-                      "flat": 1.0
+                      "flat": 1
                     },
                     "radius": 4.5,
                     "radiusTier": "中",
@@ -288,13 +288,13 @@
                       {
                         "kind": "applyStatus",
                         "statusId": "paralysis",
-                        "duration": 1.0,
+                        "duration": 1,
                         "stun": true
                       },
                       {
                         "kind": "applyStatus",
                         "statusId": "curse",
-                        "duration": 5.0,
+                        "duration": 5,
                         "missChance": 0.5
                       },
                       {
@@ -305,7 +305,7 @@
                           "statusId": "blind"
                         },
                         "statusId": "confusion",
-                        "duration": 10.0,
+                        "duration": 10,
                         "berserk": true,
                         "targetsAllies": true
                       }
@@ -331,18 +331,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -359,13 +359,13 @@
                       {
                         "stat": "as",
                         "op": "pctAdd",
-                        "value": 2.0
+                        "value": 2
                       }
                     ],
-                    "duration": 4.0
+                    "duration": 4
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.04,
                 "target": "self",
                 "victim": "enemy"
@@ -378,7 +378,7 @@
                     "applyTo": "self",
                     "damageType": "true",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "resourcePct": {
                       "subject": "self",
@@ -390,7 +390,7 @@
                     }
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.02,
                 "target": "self",
                 "victim": "enemy"
@@ -411,10 +411,10 @@
                         "value": 2.5
                       }
                     ],
-                    "duration": 4.0
+                    "duration": 4
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.04,
                 "target": "self",
                 "victim": "enemy"
@@ -427,7 +427,7 @@
                     "applyTo": "self",
                     "damageType": "true",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "resourcePct": {
                       "subject": "self",
@@ -439,7 +439,7 @@
                     }
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.02,
                 "target": "self",
                 "victim": "enemy"
@@ -457,13 +457,13 @@
                       {
                         "stat": "as",
                         "op": "pctAdd",
-                        "value": 3.0
+                        "value": 3
                       }
                     ],
-                    "duration": 4.0
+                    "duration": 4
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.04,
                 "target": "self",
                 "victim": "enemy"
@@ -476,7 +476,7 @@
                     "applyTo": "self",
                     "damageType": "true",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "resourcePct": {
                       "subject": "self",
@@ -488,7 +488,7 @@
                     }
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.02,
                 "target": "self",
                 "victim": "enemy"
@@ -509,10 +509,10 @@
                         "value": 3.5
                       }
                     ],
-                    "duration": 4.0
+                    "duration": 4
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.04,
                 "target": "self",
                 "victim": "enemy"
@@ -525,7 +525,7 @@
                     "applyTo": "self",
                     "damageType": "true",
                     "amount": {
-                      "flat": 0.0
+                      "flat": 0
                     },
                     "resourcePct": {
                       "subject": "self",
@@ -537,7 +537,7 @@
                     }
                   }
                 ],
-                "internalCooldown": 1.0,
+                "internalCooldown": 1,
                 "chance": 0.02,
                 "target": "self",
                 "victim": "enemy"
@@ -559,16 +559,16 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -600,8 +600,8 @@
                   },
                   {
                     "kind": "knockback",
-                    "distance": 3.0,
-                    "speed": 16.0,
+                    "distance": 3,
+                    "speed": 16,
                     "from": "pull"
                   }
                 ],
@@ -613,14 +613,14 @@
                 "effects": [
                   {
                     "kind": "knockback",
-                    "distance": 2.0,
-                    "speed": 14.0,
+                    "distance": 2,
+                    "speed": 14,
                     "from": "caster"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   }
                 ],
@@ -632,7 +632,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "confusion",
-                    "duration": 3.0,
+                    "duration": 3,
                     "berserk": true,
                     "targetsAllies": true
                   }
@@ -672,8 +672,8 @@
                   },
                   {
                     "kind": "knockback",
-                    "distance": 3.0,
-                    "speed": 16.0,
+                    "distance": 3,
+                    "speed": 16,
                     "from": "pull"
                   }
                 ],
@@ -685,14 +685,14 @@
                 "effects": [
                   {
                     "kind": "knockback",
-                    "distance": 2.0,
-                    "speed": 14.0,
+                    "distance": 2,
+                    "speed": 14,
                     "from": "caster"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   }
                 ],
@@ -704,7 +704,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "confusion",
-                    "duration": 3.0,
+                    "duration": 3,
                     "berserk": true,
                     "targetsAllies": true
                   }
@@ -744,8 +744,8 @@
                   },
                   {
                     "kind": "knockback",
-                    "distance": 3.0,
-                    "speed": 16.0,
+                    "distance": 3,
+                    "speed": 16,
                     "from": "pull"
                   }
                 ],
@@ -757,14 +757,14 @@
                 "effects": [
                   {
                     "kind": "knockback",
-                    "distance": 2.0,
-                    "speed": 14.0,
+                    "distance": 2,
+                    "speed": 14,
                     "from": "caster"
                   },
                   {
                     "kind": "applyStatus",
                     "statusId": "stun",
-                    "duration": 1.0,
+                    "duration": 1,
                     "stun": true
                   }
                 ],
@@ -776,7 +776,7 @@
                   {
                     "kind": "applyStatus",
                     "statusId": "confusion",
-                    "duration": 3.0,
+                    "duration": 3,
                     "berserk": true,
                     "targetsAllies": true
                   }
@@ -825,7 +825,7 @@
             "kind": "damage",
             "damageType": "physical",
             "amount": {
-              "flat": 999.0
+              "flat": 999
             }
           }
         ]

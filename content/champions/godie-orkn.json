@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 7.0
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 38,
@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -60,25 +60,25 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        15.0,
-        15.0,
-        15.0,
-        15.0,
-        15.0
+        15,
+        15,
+        15,
+        15,
+        15
       ],
       "manaCost": [
-        30.0,
-        50.0,
-        70.0,
-        90.0,
-        110.0
+        30,
+        50,
+        70,
+        90,
+        110
       ],
       "range": 0,
       "effects": [
         {
           "kind": "applyStatus",
           "statusId": "root",
-          "duration": 1.0,
+          "duration": 1,
           "root": true
         }
       ],
@@ -96,18 +96,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        50.0,
-        80.0,
-        110.0,
-        140.0
+        50,
+        80,
+        110,
+        140
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
@@ -144,18 +144,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        150.0,
-        175.0,
-        200.0,
-        225.0
+        150,
+        175,
+        200,
+        225
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
@@ -192,16 +192,16 @@
       "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0
+        30,
+        30,
+        30
       ],
       "manaCost": [
-        150.0,
-        210.0,
-        270.0
+        150,
+        210,
+        270
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "spawnProjectile",
@@ -212,9 +212,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  550.0,
-                  900.0,
-                  1250.0
+                  550,
+                  900,
+                  1250
                 ]
               }
             },
@@ -259,16 +259,16 @@
       "rawcode": "A0YT",
       "name": "30-002 變態紳士",
       "durationSec": {
-        "1": 15.0,
-        "2": 15.0,
-        "3": 21.0,
-        "4": 27.0
+        "1": 15,
+        "2": 15,
+        "3": 21,
+        "4": 27
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
       }
     }
   }

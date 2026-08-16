@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 7.0
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 30,
@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -62,16 +62,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        70.0,
-        120.0,
-        170.0
+        70,
+        120,
+        170
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.nature.slash",
       "vfxLayers": [
@@ -134,29 +134,29 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        20.0,
-        50.0,
-        80.0,
-        110.0
+        20,
+        50,
+        80,
+        110
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 4.0,
+          "duration": 4,
           "moveSpeedMult": 0.4
         }
       ],
       "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 0.633
     },
     "E": {
@@ -169,16 +169,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        125.0,
-        200.0,
-        275.0,
-        350.0
+        125,
+        200,
+        275,
+        350
       ],
       "range": 9.17,
       "effects": [],
@@ -217,16 +217,16 @@
       "castType": "skillshot",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0
+        200,
+        300,
+        400
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "castTimeSec": 1.5,
@@ -237,7 +237,7 @@
         "shakeStyle": "omni",
         "sparkKind": "magic",
         "flashColor": [
-          1.0,
+          1,
           0.92,
           0.6
         ],
@@ -289,12 +289,12 @@
       "rawcode": "A0VG",
       "name": "90-002 超進化! 妙蛙花",
       "durationSec": {
-        "1": 18.0,
-        "4": 25.0
+        "1": 18,
+        "4": 25
       },
       "cooldownSec": {
-        "1": 75.0,
-        "4": 30.0
+        "1": 75,
+        "4": 30
       }
     }
   }

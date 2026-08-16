@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 35,
@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -60,18 +60,18 @@
       "castType": "self",
       "maxRank": 5,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        75.0,
-        75.0
+        30,
+        30,
+        30,
+        75,
+        75
       ],
       "manaCost": [
-        60.0,
-        110.0,
-        160.0,
-        255.0,
-        255.0
+        60,
+        110,
+        160,
+        255,
+        255
       ],
       "range": 0,
       "effects": [
@@ -84,7 +84,7 @@
               "value": 0.5
             }
           ],
-          "duration": 12.0,
+          "duration": 12,
           "perRank": [
             {
               "modifiers": [
@@ -94,7 +94,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -104,7 +104,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -114,7 +114,7 @@
                   "value": 0.5
                 }
               ],
-              "duration": 12.0
+              "duration": 12
             },
             {
               "modifiers": [
@@ -124,17 +124,17 @@
                   "value": 1.5
                 }
               ],
-              "duration": 45.0
+              "duration": 45
             },
             {
               "modifiers": [
                 {
                   "stat": "ms",
                   "op": "pctAdd",
-                  "value": 3.0
+                  "value": 3
                 }
               ],
-              "duration": 45.0
+              "duration": 45
             }
           ]
         }
@@ -152,16 +152,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "range": 0,
       "effects": [],
@@ -193,7 +193,7 @@
               {
                 "stat": "critDamage",
                 "op": "override",
-                "value": 2.0
+                "value": 2
               }
             ]
           },
@@ -238,16 +238,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        100.0,
-        140.0,
-        180.0,
-        220.0
+        100,
+        140,
+        180,
+        220
       ],
       "range": 8.25,
       "effects": [
@@ -256,10 +256,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              350.0,
-              500.0,
-              650.0,
-              800.0
+              350,
+              500,
+              650,
+              800
             ],
             "ratios": [
               {
@@ -272,7 +272,7 @@
         {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 5.0,
+          "duration": 5,
           "moveSpeedMult": 0.4
         }
       ],
@@ -290,21 +290,21 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        70.0,
-        140.0,
-        210.0
+        70,
+        140,
+        210
       ],
       "range": 0,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 7.0
+          "durationSec": 7
         },
         {
           "kind": "applyBuff",
@@ -351,16 +351,16 @@
       "rawcode": "A02Q",
       "name": "22-04 雛見澤症候群L5",
       "durationSec": {
-        "1": 7.0,
-        "2": 14.0,
-        "3": 21.0,
-        "4": 28.0
+        "1": 7,
+        "2": 14,
+        "3": 21,
+        "4": 28
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 75.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 75
       }
     }
   }

@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 10.0
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 35,
@@ -47,7 +47,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -59,28 +59,28 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        200.0,
-        250.0,
-        300.0
+        150,
+        200,
+        250,
+        300
       ],
-      "range": 2.0,
+      "range": 2,
       "targetsEnemies": true,
       "effects": [
         {
           "kind": "applyStatus",
           "statusId": "curse",
           "duration": [
-            6.0,
-            12.0,
-            18.0,
-            24.0
+            6,
+            12,
+            18,
+            24
           ],
           "missChance": 0.5
         }
@@ -99,18 +99,18 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
       "manaCost": [
-        0.0,
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0,
+        0
       ],
-      "range": 0.0,
+      "range": 0,
       "targetsEnemies": false,
       "effects": [],
       "passive": {
@@ -150,18 +150,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        50.0,
-        40.0,
-        30.0
+        60,
+        50,
+        40,
+        30
       ],
       "manaCost": [
-        150.0,
-        250.0,
-        350.0,
-        450.0
+        150,
+        250,
+        350,
+        450
       ],
-      "range": 12.0,
+      "range": 12,
       "radiusTier": "大",
       "targetsEnemies": true,
       "effects": [
@@ -175,10 +175,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              650.0,
-              750.0,
-              850.0,
-              950.0
+              650,
+              750,
+              850,
+              950
             ],
             "ratios": [
               {
@@ -187,7 +187,7 @@
               }
             ]
           },
-          "radius": 6.0,
+          "radius": 6,
           "radiusTier": "大",
           "includeOrigin": true
         }
@@ -206,16 +206,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        150.0,
-        250.0,
-        350.0
+        150,
+        250,
+        350
       ],
-      "range": 12.0,
+      "range": 12,
       "targetsEnemies": true,
       "effects": [
         {
@@ -253,7 +253,7 @@
             "statusId": "curse"
           },
           "statusId": "slow40",
-          "duration": 5.0,
+          "duration": 5,
           "moveSpeedMult": 0.5
         }
       ],

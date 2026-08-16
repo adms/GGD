@@ -22,7 +22,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 2.0,
+    "range": 1.6,
     "evasion": 0.15
   },
   "growth": {
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        120.0,
-        155.0,
-        190.0,
-        225.0
+        120,
+        155,
+        190,
+        225
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [
         {
           "kind": "invulnerable",
@@ -120,7 +120,7 @@
         "flashColor": [
           0.85,
           0.92,
-          1.0
+          1
         ],
         "flashMs": 140,
         "camKick": 0.351
@@ -136,20 +136,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        30.0,
-        30.0,
-        30.0,
-        50.0,
-        50.0
+        30,
+        30,
+        30,
+        50,
+        50
       ],
       "manaCost": [
-        150.0,
-        180.0,
-        210.0,
-        275.0,
-        275.0
+        150,
+        180,
+        210,
+        275,
+        275
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.physical.slash",
       "sfxKey": "wc3.snapdragonmissilelaunch1",
@@ -188,22 +188,22 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        200.0,
-        275.0,
-        350.0,
-        425.0
+        200,
+        275,
+        350,
+        425
       ],
       "range": 6.42,
       "effects": [],
       "vfxKey": "fx.prim.void.pulse",
       "targetsEnemies": true,
-      "radius": 6.0,
+      "radius": 6,
       "castTimeSec": 1.5,
       "template": {
         "ref": "tpl-instant-blast",
@@ -238,16 +238,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        220.0,
-        330.0,
-        440.0
+        220,
+        330,
+        440
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
@@ -293,7 +293,7 @@
   "passiveAbility": "godie-u00j.passive",
   "icon": "assets/icons/champions/godie-u00j.png",
   "tint": [
-    1.0,
+    1,
     0.7843,
     0.7843
   ]

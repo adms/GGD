@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.2
+    "range": 1.4
   },
   "growth": {
     "maxHealth": 32,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.24,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,20 +61,20 @@
       "castType": "ground",
       "maxRank": 5,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        55.0,
-        85.0,
-        115.0,
-        115.0,
-        115.0
+        55,
+        85,
+        115,
+        115,
+        115
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
@@ -114,26 +114,26 @@
       "castType": "dash",
       "maxRank": 5,
       "cooldown": [
-        25.0,
-        20.0,
-        15.0,
-        15.0,
-        15.0
+        25,
+        20,
+        15,
+        15,
+        15
       ],
       "manaCost": [
-        50.0,
-        100.0,
-        150.0,
-        150.0,
-        150.0
+        50,
+        100,
+        150,
+        150,
+        150
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "dash",
           "mode": "toPoint",
           "speed": 16,
-          "maxDistance": 11.0
+          "maxDistance": 11
         }
       ],
       "vfxKey": "fx.prim.lightning.beam",
@@ -149,16 +149,16 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        135.0,
-        220.0,
-        305.0,
-        390.0
+        135,
+        220,
+        305,
+        390
       ],
       "range": 6.42,
       "effects": [],
@@ -199,16 +199,16 @@
       "castType": "ground",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        150.0,
-        250.0,
-        350.0
+        150,
+        250,
+        350
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,

@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.2
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 49,
@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -62,16 +62,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [
@@ -80,10 +80,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              300.0,
-              375.0,
-              450.0,
-              525.0
+              300,
+              375,
+              450,
+              525
             ],
             "ratios": [
               {
@@ -102,7 +102,7 @@
               "value": 25
             }
           ],
-          "duration": 6.0
+          "duration": 6
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
@@ -119,16 +119,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [
@@ -137,15 +137,15 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              350.0,
-              450.0,
-              550.0,
-              650.0
+              350,
+              450,
+              550,
+              650
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 1
               }
             ]
           }
@@ -159,7 +159,7 @@
               "value": 0.25
             }
           ],
-          "duration": 3.0
+          "duration": 3
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
@@ -176,20 +176,20 @@
       "castType": "targeted",
       "maxRank": 5,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60,
+        60
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.earth.pulse-sm",
       "sfxKey": "wc3.mortarteampissed9",
@@ -227,21 +227,21 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0
+        200,
+        300,
+        400
       ],
       "range": 0,
       "effects": [
         {
           "kind": "championForm",
           "to": "alternate",
-          "durationSec": 7.0
+          "durationSec": 7
         }
       ],
       "vfxKey": "fx.w3x.locust.boomnl.p01",
@@ -254,7 +254,7 @@
         "shakeStyle": "omni",
         "sparkKind": "heavy",
         "flashColor": [
-          1.0,
+          1,
           0.72,
           0.34
         ],
@@ -283,7 +283,7 @@
   "icon": "assets/icons/champions/godie-ucrl.png",
   "tint": [
     0.3922,
-    1.0,
+    1,
     0.3922
   ],
   "transform": {
@@ -295,14 +295,14 @@
       "rawcode": "A0Y1",
       "name": "06-04 傑桑變化",
       "durationSec": {
-        "1": 7.0,
-        "2": 14.0,
-        "3": 21.0
+        "1": 7,
+        "2": 14,
+        "3": 21
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60
       }
     }
   }

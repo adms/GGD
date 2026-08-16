@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.8
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 56,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 2,
     "shakeMag": 0.34,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,16 +61,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [],
@@ -83,7 +83,7 @@
         "shakeStyle": "directional",
         "sparkKind": "heavy",
         "flashColor": [
-          1.0,
+          1,
           0.52,
           0.22
         ],
@@ -115,18 +115,18 @@
       "castType": "ground",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        75.0,
-        100.0,
-        125.0,
-        150.0
+        75,
+        100,
+        125,
+        150
       ],
-      "range": 0.0,
+      "range": 0,
       "effects": [],
       "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
@@ -168,16 +168,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        45.0,
-        45.0,
-        45.0,
-        45.0
+        45,
+        45,
+        45,
+        45
       ],
       "manaCost": [
-        100.0,
-        130.0,
-        160.0,
-        190.0
+        100,
+        130,
+        160,
+        190
       ],
       "range": 8.25,
       "effects": [
@@ -202,7 +202,7 @@
         {
           "kind": "applyStatus",
           "statusId": "burnstun",
-          "duration": 1.0,
+          "duration": 1,
           "stun": true
         }
       ],
@@ -220,14 +220,14 @@
       "castType": "self",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        111.0,
-        222.0,
-        333.0
+        111,
+        222,
+        333
       ],
       "range": 0,
       "effects": [],
@@ -276,16 +276,16 @@
       "rawcode": "A10N",
       "name": "11-002 武裝色霸氣",
       "durationSec": {
-        "1": 15.0,
-        "2": 15.0,
-        "3": 21.0,
-        "4": 27.0
+        "1": 15,
+        "2": 15,
+        "3": 21,
+        "4": 27
       },
       "cooldownSec": {
-        "1": 60.0,
-        "2": 60.0,
-        "3": 60.0,
-        "4": 60.0
+        "1": 60,
+        "2": 60,
+        "3": 60,
+        "4": 60
       }
     }
   }

@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.4
+    "range": 1.6
   },
   "growth": {
     "maxHealth": 34,
@@ -48,7 +48,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -61,18 +61,18 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        25.0,
-        25.0,
-        25.0,
-        25.0
+        25,
+        25,
+        25,
+        25
       ],
       "manaCost": [
-        50.0,
-        75.0,
-        100.0,
-        125.0
+        50,
+        75,
+        100,
+        125
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.arcane.beam",
       "targetsEnemies": true,
@@ -109,16 +109,16 @@
       "castType": "self",
       "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        12,
+        12,
+        12,
+        12
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "range": 0,
       "effects": [],
@@ -149,16 +149,16 @@
       "castType": "targeted",
       "maxRank": 4,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        120.0,
-        195.0,
-        270.0,
-        345.0
+        120,
+        195,
+        270,
+        345
       ],
       "range": 1.83,
       "effects": [],
@@ -197,16 +197,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        60.0,
-        60.0,
-        60.0
+        60,
+        60,
+        60
       ],
       "manaCost": [
-        230.0,
-        330.0,
-        430.0
+        230,
+        330,
+        430
       ],
-      "range": 14.0,
+      "range": 14,
       "effects": [],
       "vfxKey": "fx.prim.arcane.beam-lg",
       "targetsEnemies": true,

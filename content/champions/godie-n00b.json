@@ -23,7 +23,7 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 7.0
+    "range": 8.2
   },
   "growth": {
     "maxHealth": 36,
@@ -49,7 +49,7 @@
   "hitFeel": {
     "hitstopTicks": 1,
     "shakeMag": 0.18,
-    "knockbackMag": 0.0
+    "knockbackMag": 0
   },
   "abilities": {
     "Q": {
@@ -62,16 +62,16 @@
       "castType": "skillshot",
       "maxRank": 4,
       "cooldown": [
-        35.0,
-        35.0,
-        35.0,
-        35.0
+        35,
+        35,
+        35,
+        35
       ],
       "manaCost": [
-        65.0,
-        95.0,
-        125.0,
-        155.0
+        65,
+        95,
+        125,
+        155
       ],
       "range": 9.17,
       "effects": [],
@@ -107,16 +107,16 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        75.0,
-        75.0,
-        75.0
+        75,
+        75,
+        75
       ],
       "manaCost": [
-        200.0,
-        300.0,
-        400.0
+        200,
+        300,
+        400
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [],
       "vfxKey": "fx.prim.arcane.pulse",
       "sfxKey": "wc3.spellbreakerpissed4",
@@ -153,26 +153,26 @@
       "castType": "dash",
       "maxRank": 5,
       "cooldown": [
-        80.0,
-        60.0,
-        40.0,
-        16.0,
-        16.0
+        80,
+        60,
+        40,
+        16,
+        16
       ],
       "manaCost": [
-        225.0,
-        225.0,
-        225.0,
-        100.0,
-        100.0
+        225,
+        225,
+        225,
+        100,
+        100
       ],
-      "range": 11.0,
+      "range": 11,
       "effects": [
         {
           "kind": "dash",
           "mode": "toPoint",
           "speed": 16,
-          "maxDistance": 11.0
+          "maxDistance": 11
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
@@ -188,14 +188,14 @@
       "castType": "targeted",
       "maxRank": 3,
       "cooldown": [
-        55.0,
-        55.0,
-        55.0
+        55,
+        55,
+        55
       ],
       "manaCost": [
-        300.0,
-        500.0,
-        700.0
+        300,
+        500,
+        700
       ],
       "range": 6.42,
       "effects": [
@@ -204,9 +204,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              150.0,
-              275.0,
-              400.0
+              150,
+              275,
+              400
             ],
             "ratios": [
               {
@@ -219,7 +219,7 @@
         {
           "kind": "applyStatus",
           "statusId": "root",
-          "duration": 1.0,
+          "duration": 1,
           "root": true
         }
       ],

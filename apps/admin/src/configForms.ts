@@ -904,7 +904,7 @@ const NORM_STAT_ZH: Record<string, string> = {
   healthRegen: "生命回復",
   manaRegen: "魔力回復",
   // ⭐ 2026-08-16 第 11 項。⚠️ 它的**真正**階梯是雙份的（近戰/遠程各一把，
-  //   見 `bandsByAttackType`）—— 這一頁列出來的 `bands.range.*` 是「英雄卡沒填
+  //   見 `bandsByScale`）—— 這一頁列出來的 `bands.range.*` 是「英雄卡沒填
   //   attackType」時的退路，出貨填近戰那把。
   range: "攻擊距離",
 };
@@ -974,24 +974,41 @@ function generatedNormalizationFields(written: ReadonlySet<string>): ConfigField
   // ⭐ 雙階梯的那幾項（2026-08-16，今天只有攻擊距離）。
   // ⚠️ **從出貨設定推導有哪幾項**，⛔ 不寫死 "range" —— 這一頁與引擎必須對同一份
   //   清單說話，寫死一次就是一份會過期的鏡射。
-  for (const stat of Object.keys(DEFAULT_STAT_NORMALIZATION.bandsByAttackType)) {
+  for (const stat of Object.keys(DEFAULT_STAT_NORMALIZATION.bandsByScale)) {
     for (const [type, typeZh] of [
       ["melee", "近戰"],
       ["ranged", "遠程"],
     ] as const) {
       for (const band of NORM_BANDS) {
         push({
-          path: `bandsByAttackType.${stat}.${type}.${band}`,
+          path: `bandsByScale.${stat}.${type}.${band}`,
           zh: `${zh(stat)} · ${typeZh} · ${band}`,
           note:
-            `${typeZh}英雄的 ${zh(stat)} 落在「${band}」這一格時的數值。` +
-            `⭐ ${zh(stat)}是**唯一分兩把階梯**的屬性：它的分佈是雙峰的（實測近戰中位 1.6、` +
-            `遠程中位 8.2，跨度 5.1×），而近戰/遠程是**型別不是級別**。` +
-            `所以出身給的級距意思是「以你的型別而言算遠還算近」——` +
-            `⚠️ 近戰的「大」不會把他變成遠程。這也是為什麼**硬輔**這種近戰遠程都有的出身` +
-            `也能安全地共用一個級距。`,
+            `走「${typeZh}尺」的英雄，${zh(stat)} 落在「${band}」這一格時的數值。` +
+            `⭐ ${zh(stat)}是**唯一分兩把尺**的屬性：它的分佈是雙峰的（實測近戰中位 1.6、` +
+            `遠程中位 8.2，跨度 5.1×），⚠️ 而近戰/遠程是**量級不是級別**，` +
+            `所以出身給的級距意思是「以你這把尺而言算遠還算近」——近戰的「大」不會把他變成遠程。` +
+            `⚠️ 走哪一把尺由下面的「⋯走哪一把尺」那幾格決定，⛔ 不是英雄卡上的攻擊型別。`,
         });
       }
+    }
+  }
+  // ⭐ 出身 → 走哪一把尺（2026-08-16）。同樣**從出貨設定推導**，⛔ 不寫死 "range"。
+  for (const stat of Object.keys(DEFAULT_STAT_NORMALIZATION.scaleByOrigin)) {
+    for (const origin of NORM_ORIGINS) {
+      push({
+        path: `scaleByOrigin.${stat}.${origin}`,
+        zh: `${origin} → ${zh(stat)}走哪一把尺`,
+        note:
+          `出身「${origin}」的 ${zh(stat)} 要用近戰那把尺還是遠程那把尺量。` +
+          `搭配上面的「${origin} → ${zh(stat)}哪一格」，兩格合起來才是絕對值` +
+          `（例：砲手 = 遠程 × 極大 = 12；法刺 = 近戰 × 小 = 1.4）。` +
+          `🔴 ⚠️ 這一格**刻意不看英雄卡上的攻擊型別** —— owner 2026-08-16 那張 49 位的表裡` +
+          `有 10 位兩者相反（妙蛙種子是近戰攻擊但要 8.2 的距離、皮卡娘是遠程攻擊但只要 1.4），` +
+          `攻擊型別管的是「投射物還是近身揮擊」，這一格管的是「構多遠」。` +
+          `⛔ 改錯會讓整個出身的射程差 5 倍，而且畫面上不會有任何錯誤訊息。`,
+        optionLabels: { melee: "近戰尺（1.2~2.0）", ranged: "遠程尺（6~12）" },
+      });
     }
   }
   return out;

@@ -26,6 +26,7 @@ import {
   Projectiles,
 } from "../sim/content/registry";
 import { SELA, THORNE } from "../sim/content/skeleton";
+import { DEFAULT_STAT_NORMALIZATION } from "./statNormalization";
 import { SKELETON_ARENA } from "../sim/world/ArenaDef";
 import type { LoadResult } from "./loader";
 
@@ -191,15 +192,30 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
    * 也就是說「有些欄位是註冊時算出來的」這個豁免**早就存在**，
    * ms/mr 只是加入同一份名單。它守的仍然是「其餘每一格都逐位元對得起來」。
    */
-  // ⚠️ 這三項由 `resolveChampionStats` 在註冊時改寫（角色定位正規化），
-  //    所以 JSON ↔ TS 字面值的往返比對必須把它們排除 —— 不然這條測試釘的是
-  //    「正規化沒有生效」，方向剛好相反。⭐ `growth` 也要排除：魔抗與裝甲
-  //    走的是**成長通道**（owner：「初始＝個性、成長＝定位」）。
-  const REGISTRY_DERIVED = new Set(["castTimeSec", "ms", "mr", "armor", "growth"]);
-  const stripCastTime = (v: unknown): Record<string, unknown> =>
-    JSON.parse(
-      JSON.stringify(v, (k, val: unknown) => (REGISTRY_DERIVED.has(k) ? undefined : val)),
+  // ⚠️ 正規化在**註冊時**改寫的那幾項要排除 —— 不然這條測試釘的是
+  //    「正規化沒有生效」，方向剛好相反。
+  //
+  // 🔴 這份名單以前是手寫的 `["castTimeSec","ms","mr","armor","growth"]`，
+  //    而 2026-08-16 `range` 進 `appliesTo` 的那一刻它就過期了（第四個住處）。
+  //    ⇒ 現在**從 `appliesTo` × `channel` 推導**：走 `growth` 通道的由整個
+  //    `growth` 被剝掉涵蓋，只有走 `baseStats` 的需要逐格剝。
+  //
+  // ⛔ 而且只剝 `baseStats` 底下那幾格，⛔ 不是按鍵名整份剝 ——
+  //    `range` 同時是**技能**的欄位名（`ability@1.range`），整份剝會把技能射程
+  //    一起從比對裡拿掉，那是在削弱這條測試而不是修它。
+  const NORMALIZED_BASE_KEYS = DEFAULT_STAT_NORMALIZATION.appliesTo.filter(
+    (k) => DEFAULT_STAT_NORMALIZATION.channel[k] === "baseStats",
+  );
+  const stripCastTime = (v: unknown): Record<string, unknown> => {
+    const out = JSON.parse(
+      JSON.stringify(v, (k, val: unknown) =>
+        k === "castTimeSec" || k === "growth" ? undefined : val,
+      ),
     ) as Record<string, unknown>;
+    const base = out["baseStats"] as Record<string, unknown> | undefined;
+    if (base) for (const k of NORMALIZED_BASE_KEYS) delete base[k];
+    return out;
+  };
 
   it("the JSON round-trip reproduces the TS literals exactly (bar castTimeSec / ms / mr)", () => {
     // registered defs came from JSON; they must match the sim's literals
